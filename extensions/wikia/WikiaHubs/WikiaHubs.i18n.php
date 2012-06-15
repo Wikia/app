@@ -27,10 +27,8 @@ $messages['en'] = array(
 	'wikiahubs-suggest-article-header' => 'Suggest an Article',
 	'wikiahubs-suggest-article-submit-button' => 'Submit',
 	'wikiahubs-suggest-article-what-article' => 'What do you want to share?',
-	'wikiahubs-suggest-article-what-article-default-value' => '',
 	'wikiahubs-suggest-article-reason' => 'Why is this cool? (140 characters limit)',
 	'wikiahubs-suggest-article-success' => 'Thanks for suggesting an article, our editors will look over it. Check back often to see if it\'s up!',
 	'wikiahubs-error-invalid-article-url-length' => 'Article url requires at least 10 characters',
 	'wikiahubs-error-invalid-reason-length' => 'Comment must be between 1 and 140 characters',
-	
 );

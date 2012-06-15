@@ -16,21 +16,13 @@
 		?>
 	</div>
 	<div class="info">
-		<?
-			$owner = $video['owner'];
-			if ( !empty( $owner ) ){
-				echo 'Suggested by ';
-				if ( empty( $video['external'] ) || isset( $video['externalByUser'] ) ){
-					$ownerUrl = $video['ownerUrl'];
-					if ( !empty( $ownerUrl ) ) {
-						?><a class="added-by" data-owner="<?=$video['owner'];?>" href="<?=$video['ownerUrl'];?>"><?=$video['owner'];?></a><?
-					} else {
-						echo $video['owner'];
-					}
-				} else {
-					?><a href="<?=F::app()->wg->wikiaVideoCategoryPath;?>" /><?=wfMsg('related-videos-repo-name');?></a><?
-				}
-			}
-		?>
+		<?php $owner = $video['owner']; ?>
+		<?php if ( !empty( $owner ) ): ?>
+			<?php if( empty($video['external']) || isset($video['externalByUser']) ): ?>
+				<?= wfMsg('related-videos-hubs-suggested-by', array($owner)); ?>
+			<?php else: ?>
+				<a href="<?= F::app()->wg->wikiaVideoCategoryPath; ?>" /><?= wfMsg('related-videos-repo-name'); ?></a>
+			<?php endif; ?>
+		<?php endif; ?>
 	</div>
 </div>

@@ -44,8 +44,11 @@ $messages['en'] = array(
 	'related-videos-video-is-new' => 'New',
 	'related-videos-pagination' => '$1 of $2',
 	'related-videos-empty' => 'Be the first to add a video',
-        'related-videos-requestbutton' => 'Request New Videos',
-        'related-videos-requesttext' => 'What else would you like to see?'
+	'related-videos-requestbutton' => 'Request New Videos',
+	'related-videos-requesttext' => 'What else would you like to see?',
+
+	//popular videos on hubs
+	'related-videos-hubs-suggested-by' => 'Suggested by $1',
 );
 
 /** Message documentation (Message documentation) */
@@ -53,6 +56,7 @@ $messages['qqq'] = array(
 	'related-videos-update-summary-blacklist' => 'Appears as an edit summary in RecentChanges',
 	'related-videos-update-summary-whitelist' => 'Appears as an edit summary in RecentChanges',
 	'related-videos-embed-text' => 'This is a label for an input field holding the embed (HTML) code for the currently displayed video.',
+	'related-videos-hubs-suggested-by' => 'This is suffix text displayed after a video title in "Popular Videos" module on a hub page. $1 = a username which can be link to user page',
 );
 
 /** Breton (brezhoneg)

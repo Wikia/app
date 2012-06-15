@@ -1,6 +1,6 @@
 <?php 
 class RelatedHubsVideosController extends RelatedVideosController {
-	const MEMC_KEY_VER = '1.3';
+	const MEMC_KEY_VER = '1.4';
 	
 	public function __construct() {
 		$app = F::app();
@@ -44,14 +44,17 @@ class RelatedHubsVideosController extends RelatedVideosController {
 							)?('http://'.$hubVideoData['wikiUrl']):$hubVideoData['wikiUrl'];
 						
 						//overwrite owner's data (on Hub page we display name of user who suggested the video)
-						if( isset($result['data']['owner'])
-						 && isset($result['data']['ownerUrl'])
-						 && $result['data']['owner'] !== $videoUsername
-						) {
+						if( isset($result['data']['owner']) && $result['data']['owner'] !== $videoUsername ) {
 							$userSuggested = F::build('User', array($videoUsername), 'newFromName');
 							if( $userSuggested instanceof User ) {
-								$result['data']['owner'] = $userSuggested->getName();
-								$result['data']['ownerUrl'] = $userSuggested->getUserPage()->getFullUrl();
+								$userPage = $userSuggested->getUserPage();
+								$result['data']['owner'] = Xml::element('a', array(
+									'href' => $userPage->getFullUrl(),
+									'class' => 'added-by',
+									'data-owner' => $userSuggested->getName(),
+									'title' => $userPage->getText(),
+								), $userSuggested->getName());
+								$result['data']['ownerUrl'] = $userPage->getFullUrl();
 							}
 						}
 
