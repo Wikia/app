@@ -192,6 +192,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		AdConfig.DART.getLocKV(slotname) +
 		AdConfig.DART.getDcoptKV(slotname) +
 		((typeof top.wgEnableAdMeldAPIClient != 'undefined' && top.wgEnableAdMeldAPIClient) ? top.AdMeldAPIClient.getParamForDART(slotname) : '') +
+		AdConfig.DART.getCustomVarAB() +
 		mtfIFPath +
 		'src=' + src + ';' +
 		'sz=' + size + ';' +
@@ -550,6 +551,17 @@ AdConfig.DART.getDcoptKV = function(slotname){
 	} else {
 		return '';
 	}
+};
+
+AdConfig.DART.getCustomVarAB = function() {
+	if (typeof top.getCustomVarAB == 'function') {
+		var ab = getCustomVarAB();
+		if (ab != 'none') {
+			return 'ab=' + ab.replace(' ', '') + ';';
+		}
+	}
+	
+	return '';
 };
 
 AdConfig.DART.getTileKV = function (slotname, adProvider){
