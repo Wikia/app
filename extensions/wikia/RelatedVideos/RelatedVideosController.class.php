@@ -127,36 +127,42 @@ class RelatedVideosController extends WikiaController {
 		$this->setVal( 'data', $videoData );
 	}
 
-	public function getCaruselElement(){
-
+	public function getCaruselElement() {
 		global $wgVideoHandlersVideosMigrated;
 
 		$video = $this->getVal( 'video' );
 		$preloaded = $this->getVal( 'preloaded' );
 
-		$videoFile = wfFindFile($video['id']);
+		$videoTitle = F::build('Title', array($video['id'], NS_FILE), 'newFromText');
+		$videoFile = wfFindFile($videoTitle);
 
-		$videoThumbObj = $videoFile->transform( array('width'=>$video['thumbnailData']['width'],
-		                                              'height'=>$video['thumbnailData']['height']) );
+		if( $videoFile ) {
+			$videoThumbObj = $videoFile->transform( array('width'=>$video['thumbnailData']['width'],
+														  'height'=>$video['thumbnailData']['height']) );
 
-		$videoThumb = $videoThumbObj->toHtml( array('custom-url-link' => $video['fullUrl'],
-			                                    'linkAttribs' => array(
-			                                                        'class' => 'video-thumbnail lightbox',
-			                                                        'data-video-name' => $video['title'],
-			                                                        'data-external' => $video['external'],
-			                                                        'data-ref' => $video['prefixedUrl']
-			                                                       ),
-							    'duration' => true,
-							    'src' => $preloaded ? false : wfBlankImgUrl(),
-							    'constHeight' => RelatedVideosService::$height,
-							    'usePreloading' => true
-						      )
-					        );
+			$videoThumb = $videoThumbObj->toHtml(
+				array(
+					'custom-url-link' => $video['fullUrl'],
+					'linkAttribs' => array(
+						'class' => 'video-thumbnail lightbox',
+						'data-video-name' => $video['title'],
+						'data-external' => $video['external'],
+						'data-ref' => $video['prefixedUrl']
+					),
+					'duration' => true,
+					'src' => $preloaded ? false : wfBlankImgUrl(),
+					'constHeight' => RelatedVideosService::$height,
+					'usePreloading' => true
+				)
+			);
 
-		$this->setVal( 'videoThumb', $videoThumb );
-		$this->setVal( 'video', $video );
-		$this->setVal( 'preloaded', $preloaded );
-		$this->setVal( 'videoPlay',empty($wgVideoHandlersVideosMigrated) ? 'video-play' : 'lightbox');
+			$this->setVal( 'videoThumb', $videoThumb );
+			$this->setVal( 'video', $video );
+			$this->setVal( 'preloaded', $preloaded );
+			$this->setVal( 'videoPlay',empty($wgVideoHandlersVideosMigrated) ? 'video-play' : 'lightbox');
+		} else {
+			Wikia::log(__METHOD__, false, 'A video file not found. ID: '.$video['id']);
+		}
 	}
 
 	public function getAddVideoModal(){
