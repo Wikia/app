@@ -24,8 +24,7 @@
 		}
 		elseif ($wg->EnableCorporatePageExt) {
 			if (ArticleAdLogic::isSearch()) {
-				// (BugId:33357) removing ads from search results page
-				//echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));								
+				echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));								
 			}
 			else {
 				echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));				
