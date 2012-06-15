@@ -10,7 +10,7 @@
 				'name' => 'articleurl',
 				'isRequired' => true,
 				'label' => wfMsg('wikiahubs-suggest-article-what-article'),
-				'value' => wfMsg('wikiahubs-suggest-article-what-article-default-value'),
+				'value' => '',
 			),
 			array(
 				'type' => 'custom',
