@@ -20,7 +20,7 @@ class RelatedHubsVideosController extends RelatedVideosController {
 				$videoUsername = $hubVideoData['username'];
 				$memcKey = $this->getMemcHubsVideoKey($videoTitleTxt, $videoUsername);
 				$videoData = $this->getMemcHubsVideoData($memcKey);
-				
+
 				if( empty($videoData) ) {
 					Wikia::log( __METHOD__, 'Not from cache' );
 					$videoTitle = Title::newFromText($videoTitleTxt, NS_VIDEO);
@@ -40,12 +40,12 @@ class RelatedHubsVideosController extends RelatedVideosController {
 						$result['data']['external'] = 0;
 						$result['data']['wiki'] = (
 								(stripos($hubVideoData['wikiUrl'],'http://') === false)
-								&& (stripos($hubVideoData['wikiUrl'],'https://') === false)								 
+								&& (stripos($hubVideoData['wikiUrl'],'https://') === false)
 							)?('http://'.$hubVideoData['wikiUrl']):$hubVideoData['wikiUrl'];
 						
 						//overwrite owner's data (on Hub page we display name of user who suggested the video)
-						if( !empty($result['data']['owner'])
-						 && !empty($result['data']['ownerUrl'])
+						if( isset($result['data']['owner'])
+						 && isset($result['data']['ownerUrl'])
 						 && $result['data']['owner'] !== $videoUsername
 						) {
 							$userSuggested = F::build('User', array($videoUsername), 'newFromName');
@@ -54,7 +54,7 @@ class RelatedHubsVideosController extends RelatedVideosController {
 								$result['data']['ownerUrl'] = $userSuggested->getUserPage()->getFullUrl();
 							}
 						}
-						
+
 						if( !isset( $result['data']['error']) && !empty($result['data']) ) {
 							$videoData = $result['data'];
 							$this->setMemcHubsVideoData($memcKey, $videoData);
