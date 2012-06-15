@@ -555,7 +555,7 @@ AdConfig.DART.getDcoptKV = function(slotname){
 
 AdConfig.DART.getCustomVarAB = function() {
 	if (typeof top.getCustomVarAB == 'function') {
-		var ab = getCustomVarAB();
+		var ab = top.getCustomVarAB();
 		if (ab != 'none') {
 			return 'ab=' + ab.replace(' ', '') + ';';
 		}
