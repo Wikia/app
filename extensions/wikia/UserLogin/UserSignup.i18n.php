@@ -13,22 +13,22 @@ $messages['en'] = array(
 
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
 	'usersignup-error-invalid-user' => 'Invalid user. Please login first.',
-	'usersignup-error-invalid-email' => 'Please enter a valid email address.',
+	'usersignup-error-invalid-email' => 'Please enter a valid e-mail address.',
 	'usersignup-error-symbols-in-username' => 'Oops, your username can only contain letters and numbers.',
-	'usersignup-error-empty-email' => 'Oops, please fill in your email address.',
+	'usersignup-error-empty-email' => 'Oops, please fill in your e-mail address.',
 	'usersignup-error-empty-username' => 'Oops, please fill in the username field.',
-	'usersignup-error-already-confirmed' => "You've already confirmed this email address.",
+	'usersignup-error-already-confirmed' => "You've already confirmed this e-mail address.",
 	'usersignup-error-throttled-email' => "Oops, you've requested too many confirmation emails be sent to you today. Try again in a little while.",
 	'usersignup-error-too-many-changes' => "You've reached the maximum limit for email changes today. Please try again later.",
 	'usersignup-error-password-length' => "Oops, your password is too long. Please choose a password that's 50 characters or less.",
-	'usersignup-error-confirmed-user' => 'Looks like you\'ve already confirmed your email address for $1!  Check our your [$2 user profile].', // why is this an external link? should be internal, use interwiki if needed
+	'usersignup-error-confirmed-user' => 'Looks like you\'ve already confirmed your e-mail address for $1!  Check our your [$2 user profile].', // why is this an external link? should be internal, use interwiki if needed
 
 	// facebook sign-up
 	'usersignup-facebook-heading' => 'Finish Signing Up',
 	'usersignup-facebook-create-account' => 'Create account',
-	'usersignup-facebook-email-tooltip' => 'If you\'d like to use a different email address you can change it later in your Preferences.',
-	'usersignup-facebook-have-an-account-heading' => 'Already have an account?', 
-	'usersignup-facebook-have-an-account' => ' Connect your existing Wikia username with Facebook instead.',
+	'usersignup-facebook-email-tooltip' => 'If you would like to use a different e-mail address you can change it later in your Preferences.',
+	'usersignup-facebook-have-an-account-heading' => 'Already have an account?',
+	'usersignup-facebook-have-an-account' => 'Connect your existing Wikia username with Facebook instead.',
 	'usersignup-facebook-proxy-email' => 'Anonymous facebook email',
 
 	// user preferences
@@ -36,22 +36,22 @@ $messages['en'] = array(
 	'usersignup-user-pref-confirmemail_send' => 'Resend my confirmation email',
 	'usersignup-user-pref-emailauthenticated' => 'Thanks! Your email was confirmed on $2 at $3.',
 	'usersignup-user-pref-emailnotauthenticated' => 'Check your email and click the confirmation link to finish changing your email to: $1',
-	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Oh, no! Your email is unconfirmed. Email features won\'t work until you confirm your email address.',
-	'usersignup-user-pref-reconfirmation-email-sent' => 'Almost there! We\'ve sent a new confirmation email to $1. Check your email and click on the link to finish confirming your email address.',
-	'usersignup-user-pref-noemailprefs' => ' Looks like we don\'t have an email address for you. Please enter an email address above.',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Oh, no! Your email is unconfirmed. Email features will not work until you confirm your e-mail address.',
+	'usersignup-user-pref-reconfirmation-email-sent' => 'Almost there! We\'ve sent a new confirmation email to $1. Check your email and click on the link to finish confirming your e-mail address.',
+	'usersignup-user-pref-noemailprefs' => 'Looks like we do not have an e-mail address for you. Please enter an e-mail address above.',
 
 	// Special:ConfirmEmail
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Oh, no! Your email is unconfirmed. We\'ve sent you an email, click the confirmation link there to confirm.',
-	'usersignup-user-pref-confirmemail_noemail' => 'Looks like we don\'t have an email address for you. Go to [[Special:Preferences|user preferences]] to enter one.',
+	'usersignup-user-pref-confirmemail_noemail' => 'Looks like we do not have an e-mail address for you. Go to [[Special:Preferences|user preferences]] to enter one.',
 
 	// confirm email
 	'usersignup-confirm-page-title' => 'Confirm your email',
 	'usersignup-confirm-email-resend-email' => "Send me another confirmation email",
-	'usersignup-confirm-email-change-email-content' => "I want to use a different email address.",
-	'usersignup-confirm-email-change-email' => 'Change my email address',
+	'usersignup-confirm-email-change-email-content' => "I want to use a different e-mail address.",
+	'usersignup-confirm-email-change-email' => 'Change my e-mail address',
 	'usersignup-confirm-email-new-email-label' => 'New email',
 	'usersignup-confirm-email-update' => 'Update',
-	'usersignup-confirm-email-tooltip' => 'Did you enter an email address that you can\'t confirm, or do you want to use a different email address? Don\'t worry, use the link below to change your email address and get a new confirmation email.',
+	'usersignup-confirm-email-tooltip' => 'Did you enter an e-mail address that you can\'t confirm, or do you want to use a different e-mail address? Don\'t worry, use the link below to change your e-mail address and get a new confirmation email.',
 	'usersignup-resend-email-heading-success' => 'New email sent',
 	'usersignup-resend-email-heading-failure' => 'Email not re-sent',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Congrats!',
@@ -62,17 +62,17 @@ $messages['en'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'New email sent',
 	'usersignup-confirmation-subheading' => 'Check your email',
 	'usersignup-confirmation-email-sent' => "We sent an email to '''$1'''.
-	
+
 Click the confirmation link in your email to finish creating your account.",  // intentional line break
 	'usersignup-confirmation-email_subject' => 'Almost there! Confirm your Wikia account',
 	'usersignup-confirmation-email-greeting' => 'Hi $USERNAME,',
-	'usersignup-confirmation-email-content' => 'You\'re one step away from creating your account on Wikia! Click the link below to confirm your email address and get started.
+	'usersignup-confirmation-email-content' => 'You\'re one step away from creating your account on Wikia! Click the link below to confirm your e-mail address and get started.
 <br/><br/>
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'The Wikia Team',
 	'usersignup-confirmation-email_body' => 'Hi $2,
 
-You\'re one step away from creating your account on Wikia! Click the link below to confirm your email address and get started.
+You\'re one step away from creating your account on Wikia! Click the link below to confirm your e-mail address and get started.
 
 $3
 
@@ -86,22 +86,22 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-confirmation-email_body-html' => '',
 
 	// reconfirmation email
-	'usersignup-reconfirmation-email-sent' => "Your email address has been changed to $1. We've sent you a new confirmation email. Please confirm the new email address.",
-	'usersignup-reconfirmation-email_subject' => 'Confirm your email address change on Wikia',
+	'usersignup-reconfirmation-email-sent' => "Your e-mail address has been changed to $1. We've sent you a new confirmation email. Please confirm the new e-mail address.",
+	'usersignup-reconfirmation-email_subject' => 'Confirm your e-mail address change on Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Hi $USERNAME',
-	'usersignup-reconfirmation-email-content' => 'Please click the link below to confirm your change of email address on Wikia.
+	'usersignup-reconfirmation-email-content' => 'Please click the link below to confirm your change of e-mail address on Wikia.
 <br/><br/>
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 <br/><br/>
-You\'ll continue to recieve email at your old email address until you confirm this one.',
+You\'ll continue to recieve email at your old e-mail address until you confirm this one.',
 	'usersignup-reconfirmation-email-signature' => 'The Wikia Team',
 	'usersignup-reconfirmation-email_body' => 'Hi $2,
 
-Please click the link below to confirm your change of email address on Wikia.
+Please click the link below to confirm your change of e-mail address on Wikia.
 
 $3
 
-You\'ll continue to recieve email at your old email address until you confirm this one.
+You\'ll continue to recieve email at your old e-mail address until you confirm this one.
 
 The Wikia Team
 
@@ -243,18 +243,18 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 $messages['qqq'] = array(
 	'usersignup-page-title' => 'Page title for Special:UserSignup',
 	'usersignup-page-captcha-label' => 'Label for captcha on signup form',
-	
+
 	'usersignup-error-username-length' => "Error message stating that username is too long and over $1 amount of characters.",
 	'usersignup-error-invalid-user' => 'Generic error message when the user has been invalidated in the session for security reasons.',
-	'usersignup-error-invalid-email' => 'Error message stating that email address is invalid.',
+	'usersignup-error-invalid-email' => 'Error message stating that e-mail address is invalid.',
 	'usersignup-error-symbols-in-username' => 'Error message stating that username cannot contain weird symbols.',
-	'usersignup-error-empty-email' => 'Error message stating that email address is required.',
+	'usersignup-error-empty-email' => 'Error message stating that e-mail address is required.',
 	'usersignup-error-empty-username' => 'Error message stating that user name field is required.',
 	'usersignup-error-already-confirmed' => "Error message stating that the user has already been confirmed.",
 	'usersignup-error-throttled-email' => "Error message stating that too many email has been sent.",
-	'usersignup-error-too-many-changes' => "Error message stating that email address has been changed too many times today.",
+	'usersignup-error-too-many-changes' => "Error message stating that e-mail address has been changed too many times today.",
 	'usersignup-error-password-length' => "Error message stating that password is over 50 characters and is too long.",
-	'usersignup-error-confirmed-user' => 'Validation message stating that user has been confirmed already for $1 email address.  $2 is link to user preference page.',
+	'usersignup-error-confirmed-user' => 'Validation message stating that user has been confirmed already for $1 e-mail address.  $2 is link to user preference page.',
 
 	// facebook sign-up
 	'usersignup-facebook-heading' => 'Heading on Facebook signup modal when signing up via facebook connect',
@@ -262,16 +262,16 @@ $messages['qqq'] = array(
 	'usersignup-facebook-email-tooltip' => 'A hint to the user saying you can changed the email later in preferences.',
 	'usersignup-facebook-have-an-account-heading' => 'Heading to suggest logging in instead.',
 	'usersignup-facebook-have-an-account' => 'Suggestion to connect existing account with FB.',
-	'usersignup-facebook-proxy-email' => 'Masking label if user decides to use proxy email from FB instead of real one.  This masked label will be displayed instead of the very long FB proxy email address.',
+	'usersignup-facebook-proxy-email' => 'Masking label if user decides to use proxy email from FB instead of real one.  This masked label will be displayed instead of the very long FB proxy e-mail address.',
 
 	// user preferences
 	'usersignup-user-pref-emailconfirmlink' => 'Action link to confirm an email on Special:Preference',
 	'usersignup-user-pref-confirmemail_send' => 'Action link to re-send confirmation email',
 	'usersignup-user-pref-emailauthenticated' => 'Label stating email was already confirmed.  $2 is date (April 16, 2011), $3 is time of day (01:47).  Assume $2, and $3 is already internationalized.',
-	'usersignup-user-pref-emailnotauthenticated' => 'Alert to check email and to confirm email.  $1 is the email address email is sent to.',
+	'usersignup-user-pref-emailnotauthenticated' => 'Alert to check email and to confirm email.  $1 is the e-mail address email is sent to.',
 	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Alert that user cannot perform this action when user has not confirmed email.',
-	'usersignup-user-pref-reconfirmation-email-sent' => 'Validation message telling user that email has been sent to $1. $1 is email address.',
-	'usersignup-user-pref-noemailprefs' => 'Alert that user email does not exist.  Instructs user to enter an email address.',
+	'usersignup-user-pref-reconfirmation-email-sent' => 'Validation message telling user that email has been sent to $1. $1 is e-mail address.',
+	'usersignup-user-pref-noemailprefs' => 'Alert that user email does not exist.  Instructs user to enter an e-mail address.',
 
 	// Special:ConfirmEmail
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Alert that user\'s email is unconfirmed, and the email has already been sent.',
@@ -283,7 +283,7 @@ $messages['qqq'] = array(
 	'usersignup-confirm-email-change-email-content' => "Change email heading.",
 	'usersignup-confirm-email-change-email' => 'Action link to open a dialog to change email.',
 	'usersignup-confirm-email-new-email-label' => 'Label for email input.',
-	'usersignup-confirm-email-update' => 'Button to submit email address update form.',
+	'usersignup-confirm-email-update' => 'Button to submit e-mail address update form.',
 	'usersignup-confirm-email-tooltip' => 'Tooltip letting user know they can change their email.  Tooltip is on the same line as usersignup-confirm-email-change-email-content',
 	'usersignup-resend-email-heading-success' => 'Validation message telling the user the email has been re-sent.',
 	'usersignup-resend-email-heading-failure' => 'Error message telling the user email has not been re-sent',
@@ -294,7 +294,7 @@ $messages['qqq'] = array(
 	'usersignup-confirmation-heading' => 'Confirm page heading.',
 	'usersignup-confirmation-heading-email-resent' => 'Confirm page heading when email has been re-sent.',
 	'usersignup-confirmation-subheading' => 'Confirm page sub heading.',
-	'usersignup-confirmation-email-sent' => "Confirm page action validation stating email has been sent to $1 email address.  Bold $1, and leave a purposeful line break between line 1 and line 2.",
+	'usersignup-confirmation-email-sent' => "Confirm page action validation stating email has been sent to $1 e-mail address.  Bold $1, and leave a purposeful line break between line 1 and line 2.",
 	'usersignup-confirmation-email_subject' => 'Confirmation email subject',
 	'usersignup-confirmation-email-greeting' => 'Confirmation email template greeting.',
 	'usersignup-confirmation-email-content' => 'Confirmation email template body content.  $CONFIRMURL is full url to goto confirm email, and is displayed as-is.',
@@ -303,7 +303,7 @@ $messages['qqq'] = array(
 	'usersignup-confirmation-email_body-html' => 'Standalone HTML version of confirmation email.  Contains the same content as the templated version.  $1 is username, $2 is confirmation url.',
 
 	// reconfirmation email
-	'usersignup-reconfirmation-email-sent' => "Message telling user that the email address has been changed to $1.",
+	'usersignup-reconfirmation-email-sent' => "Message telling user that the e-mail address has been changed to $1.",
 	'usersignup-reconfirmation-email_subject' => 'Subject of Confirmation email stating email has changed',
 	'usersignup-reconfirmation-email-greeting' => 'Greeting of Confirmation email stating email has changed.',
 	'usersignup-reconfirmation-email-content' => 'Body of Confirmation email stating email has changed.  $CONFIRMURL is url to confirm the email change, and is displayed and linked as-is.',
@@ -347,8 +347,8 @@ $messages['qqq'] = array(
 
 	// account creation by email
 	'usersignup-account-creation-heading' => 'Page heading for confirm page when byemail=1 is used.',
-	'usersignup-account-creation-subheading' => 'Page subheading for confirm page when byemail=1 is used.  $1 is email address.',
-	'usersignup-account-creation-email-sent' => 'Page content for confirm page when byemail=1 is used.  $2 is the user name that the account has been created for.  $1 is email address sent to.',
+	'usersignup-account-creation-subheading' => 'Page subheading for confirm page when byemail=1 is used.  $1 is e-mail address.',
+	'usersignup-account-creation-email-sent' => 'Page content for confirm page when byemail=1 is used.  $2 is the user name that the account has been created for.  $1 is e-mail address sent to.',
 	'usersignup-account-creation-email-subject' => 'Confirmation email subject for people receiving the account when byemail=1 is used.',
 	'usersignup-account-creation-email-greeting' => 'Confirmation email greeting for people receiving the account when byemail=1 is used.',
 	'usersignup-account-creation-email-content' => 'Confirmation email body for people receiving the account when byemail=1 is used.  $USERNAME is user name, $NEWPASSWORD is new password for the user to use.',
