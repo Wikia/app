@@ -109,7 +109,7 @@ $messages['en'] = array(
 		'chat-failover-warning-title' => 'Read this carefully !!!',
 
 		'chat-failover-warning' => "This special page allows you to switch the chat to failover mode.
-		<br><br>If you're not an engineer, performing this operation requires consultation. <br><br>
+<br /><br />If you're not an engineer, performing this operation requires consultation.<br /><br />
 		If chat is operating allready in failover mode and the chat app is not working: DO not switch it beck to regular mode without consultating an operations engineer",
 
 		'chat-failover-server-list' => 'Chat servers in use:',
