@@ -1168,8 +1168,10 @@ ___________________________________________
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'follow-desc' => 'A figyelőlista működésének fejlesztései',
 	'prefs-basic' => 'Alapbeállítások',
 	'wikiafollowedpages-special-heading-category' => 'Kategóriák ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Szócikkek ($1)',
@@ -2060,11 +2062,11 @@ $messages['pfl'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'follow-desc' => 'Udoskonalenia funkcji listy obserwowanych',
+	'follow-desc' => 'Udoskonalenia funkcjonalności listy obserwowanych',
 	'prefs-basic' => 'Opcje podstawowe',
 	'wikiafollowedpages-special-heading-category' => 'Kategorie ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Artykuły ($1)',
-	'wikiafollowedpages-special-heading-blogs' => 'Blogi i posty ($1)',
+	'wikiafollowedpages-special-heading-blogs' => 'Blogi i wpisy ($1)',
 	'wikiafollowedpages-special-heading-forum' => 'Wątki na forum ($1)',
 	'wikiafollowedpages-special-heading-project' => 'Strony projektu ($1)',
 	'wikiafollowedpages-special-heading-user' => 'Strony użytkownika ($1)',
@@ -2082,7 +2084,7 @@ Dodaj strony do listy klikając „{{int:watch}}“ na górze strony.',
 	'wikiafollowedpages-special-showmore' => 'Pokaż więcej',
 	'wikiafollowedpages-special-title' => 'Obserwowane strony',
 	'wikiafollowedpages-special-delete-tooltip' => 'Usuń tę stronę',
-	'wikiafollowedpages-special-hidden' => 'Ten użytkownik zdecydował się ukryć {{GENDER:$1|swoją|swoją|ich}} listę stron obserwowanych przed widokiem publicznym.',
+	'wikiafollowedpages-special-hidden' => 'Ten użytkownik zdecydował się ukryć {{GENDER:$1|swoją|swoją}} listę stron obserwowanych przed innymi.',
 	'wikiafollowedpages-special-hidden-unhide' => 'Odkryj tę listę.',
 	'wikiafollowedpages-special-blog-by' => 'przez $1',
 	'wikiafollowedpages-masthead' => 'Obserwowane strony',
@@ -2108,8 +2110,6 @@ Strona została dodana do śledzonej kategorii na {{SITENAME}}.
 
 Przejdź na "$PAGETITLE_URL" by obejrzeć nową stronę.
 
-Zaglądaj i edytuj często...
-
 {{SITENAME}}
 
 ___________________________________________
@@ -2123,8 +2123,6 @@ Witaj $WATCHINGUSERNAME,
 Do kategorii śledzonej na stronie {{SITENAME}} została dodana strona.
 <br /><br />
 Przejdź na <a href="$PAGETITLE_URL">$PAGETITLE</a> by obejrzeć nową stronę.
-<br /><br />
-Zaglądaj i edytuj często...
 <br /><br />
 {{SITENAME}}
 <br /><hr />
@@ -2140,8 +2138,6 @@ Zmieniono coś na śledzonej przez ciebie stronie blogu {{SITENAME}}.
 
 Przejdź na "$PAGETITLE_URL" by obejrzeć nowy wpis.
 
-Zaglądaj i edytuj często...
-
 {{SITENAME}}
 
 ___________________________________________
@@ -2155,8 +2151,6 @@ Witaj $WATCHINGUSERNAME,
 Dokonano zmian na śledzonym przez ciebie blogu {{SITENAME}}.
 <br /><br />
 Rpzejdź na <a href="$PAGETITLE_URL">$PAGETITLE</a> by obejrzeć nowy wpis.
-<br /><br />
-Zaglądaj i edytuj często...
 <br /><br />
 {{SITENAME}}
 <br /><hr />
@@ -3119,6 +3113,7 @@ $messages['vi'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Trang Phương tiện Wiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Hình ảnh và đoạn phim ($1)',
 	'wikiafollowedpages-special-namespace' => '(trang $1)',
+	'wikiafollowedpages-special-heading-wall' => 'Tường tin nhắn ($1)',
 	'wikiafollowedpages-special-empty' => 'Danh sách trang theo dõi của bạn đang trống.
 Thêm nhiều trang vào danh sách này bằng cách nhấn vào "{{int:watch}}" trên đỉnh của một trang.',
 	'wikiafollowedpages-special-anon' => 'Xin vui lòng [[Special:Signup|đăng nhập]] để tạo hoặc xem danh sách các trang theo dõi.',

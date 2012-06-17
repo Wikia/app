@@ -53,9 +53,11 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author DaSch
+ * @author PtM
  */
 $messages['de'] = array(
 	'tog-disablelinksuggest' => 'Keine Link-Vorschläge im Quellcodemodus anzeigen',
+	'tog-redirected-from' => '&ndash; Weitergeleitet von $1',
 );
 
 /** Spanish (español)

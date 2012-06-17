@@ -388,6 +388,7 @@ $messages['cs'] = array(
  * @author LWChris
  * @author Laximilian scoken
  * @author MtaÄ
+ * @author PtM
  * @author The Evil IP address
  * @author Tiin
  */
@@ -445,6 +446,7 @@ $messages['de'] = array(
 	'themedesigner-unknown-error' => 'Ein Fehler ist aufgetreten, leider konnten wir ihn nicht identifizieren, bitte versuche es erneut',
 	'themedesigner-manual-upload-error' => 'Verwenden den Theme Designer um ein Wortmarke oder Wiki-Hintergrund hochzuladen',
 	'themedesigner-favicon-heading' => 'Favicon',
+	'themedesigner-wodmark-preview' => 'Vorschau',
 );
 
 /** Zazaki (Zazaki)

@@ -369,6 +369,7 @@ Inténteo de novo ou [[Special:Contact|informe do problema]].',
  * @author TK-999
  */
 $messages['hu'] = array(
+	'comboajaxlogin-desc' => 'Bejelentkezésre, jelszóemlékeztető kérésére és regisztrációra alkalmas dinamikus doboz.',
 	'comboajaxlogin-createlog' => 'Bejelentkezés vagy új felhasználói fiók létrehozása',
 	'comboajaxlogin-actionmsg' => 'A művelet végrehajtásához először hozzon létre egy fiókot, vagy jelentkezzen be',
 	'comboajaxlogin-actionmsg-protected' => 'A művelet végrehajtásához először hozzon létre egy fiókot, vagy jelentkezzen be.',

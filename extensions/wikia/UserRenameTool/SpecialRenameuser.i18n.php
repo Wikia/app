@@ -1409,7 +1409,7 @@ $messages['gl'] = array(
 	'userrenametool-desc' => "Engade unha [[Special:UserRenameTool|páxina especial]] para renomear un usuario (cómpre ter o dereito de ''renomear usuarios'') e procesar todos os datos relacionados",
 	'userrenametool-old' => 'Nome de usuario actual:',
 	'userrenametool-new' => 'Novo nome de usuario:',
-	'userrenametool-reason' => 'Razón para mudar o nome:',
+	'userrenametool-reason' => 'Motivo para mudar o nome:',
 	'userrenametool-move' => 'Mover as páxinas de usuario e de conversa (xunto coas subpáxinas) ao novo nome',
 	'userrenametool-reserve' => 'Reservar o nome de usuario vello para un uso posterior',
 	'userrenametool-notify-renamed' => 'Enviar un correo electrónico ao usuario ao rematar',
@@ -1874,6 +1874,7 @@ $messages['is'] = array(
 
 /** Italian (italiano)
  * @author .anaconda
+ * @author Beta16
  * @author BrokenArrow
  * @author Darth Kule
  * @author Gianfranco
@@ -1904,7 +1905,7 @@ $messages['it'] = array(
 	'userrenametool-logpagetext' => 'Di seguito viene presentato il registro delle modifiche ai nomi utente.',
 	'userrenametool-logentry' => 'ha rinominato $1 in "$2"',
 	'userrenametool-log' => 'Che ha {{PLURAL:$1|un contributo|$1 contributi}}. Motivo: $2',
-	'userrenametool-move-log' => 'Spostamento automatico della pagina - utente rinominato da "[[User:$1|$1]]" a "[[User:$2|$2]]"',
+	'userrenametool-move-log' => 'Pagina spostata automaticamente durante la rinomina dell\'utente "[[User:$1|$1]]" a "[[User:$2|$2]]"',
 	'right-renameuser' => 'Rinomina gli utenti',
 );
 
@@ -3041,7 +3042,7 @@ Przyczyna: "$5".',
 	'userrenametool-info-in-progress' => 'Zmiana nazwy jest w toku.
 Reszta zostanie wykonana w tle.
 Zostaniesz powiadomiony e-mailem o jej zakończeniu.',
-	'userrenametool-success' => 'Nazwa użytkownika „<nowiki>$1</nowiki>” została zmieniona na „<nowiki>$2</nowiki>”',
+	'userrenametool-success' => 'Nazwa użytkownika „$1” została zmieniona na „$2”',
 	'userrenametool-confirm-intro' => 'Na pewno chcesz to zrobić?',
 	'userrenametool-confirm-yes' => 'Tak',
 	'userrenametool-confirm-no' => 'Nie',
@@ -4204,24 +4205,40 @@ $messages['vo'] = array(
  * @author Srtxg
  */
 $messages['wa'] = array(
+	'userrenametool' => "Candjî l' no d' èn uzeu",
 	'renameuser' => 'Rilomer èn uzeu',
+	'userrenametool-desc' => "Radjoute ene [[Special:UserRenameTool|pådje sipeciåle]] po pleur rilome èn uzeu (i fåt-st aveur li droet ''renameuser'') et d' traitî totes les dnêyes aloyeyes.",
 	'userrenametool-old' => "No d' elodjaedje pol moumint:",
 	'userrenametool-new' => "Novea no d' elodjaedje:",
 	'userrenametool-reason' => 'Råjhon pol rilomaedje:',
 	'userrenametool-move' => "Displaecî les pådjes d' uzeu et d' copene (eyet leus dzo-pådjes) viè l' novea no",
+	'userrenametool-reserve' => "Espaitchî l' eployaedje do vî no",
+	'userrenametool-notify-renamed' => "Evoyî èn emile a l' uzeu on côp k' c' est fwait",
+	'userrenametool-warnings' => 'Adviertixhmints:',
+	'userrenametool-requested-rename' => "L' uzeu $1 a dmandé a candjî s' no",
+	'userrenametool-did-not-request-rename' => "L' uzeu $1 n' a nén dmandé po candjî s' no",
+	'userrenametool-previously-renamed' => "L' uzeu $1 a ddja yeu on candjmint d' no",
+	'userrenametool-phalanx-matches' => "Passetes ''phalanx'' ki corespondèt a $1:",
+	'userrenametool-confirm' => "Oyi, candjî l' no d' l' uzeu",
 	'userrenametool-submit' => 'Evoye',
 	'userrenametool-errordoesnotexist' => "L' uzeu «<nowiki>$1</nowiki>» n' egzistêye nén",
 	'userrenametool-errorexists' => "L' uzeu «<nowiki>$1</nowiki>» egzistêye dedja",
 	'userrenametool-errorinvalid' => "Li no d' elodjaedje «<nowiki>$1</nowiki>» n' est nén on no valide",
+	'userrenametool-errorinvalidnew' => "Li no d' elodjaedje «<nowiki>$1</nowiki>» n' est nén on no valide.",
 	'userrenametool-errortoomany' => "L' uzeu «<nowiki>$1</nowiki>» a $2 contribouwaedjes, rilomer èn uzeu avou pus di $3 contribouwaedjes pout aveur des consecwinces sol performance del waibe",
 	'userrenametool-success' => "L' uzeu «<nowiki>$1</nowiki>» a stî rlomé a «<nowiki>$2</nowiki>»",
+	'userrenametool-confirm-intro' => 'El voloz vs vormint fé?',
+	'userrenametool-confirm-yes' => 'Yes',
+	'userrenametool-confirm-no' => 'No',
 	'userrenametool-page-exists' => "Li pådje $1 egzistêye dedja et n' pout nén esse otomaticmint spotcheye.",
 	'userrenametool-page-moved' => 'Li pådje $1 a stî displaeceye viè $2.',
 	'userrenametool-page-unmoved' => 'Li pådje $1 èn pout nén esse displaeceye viè $2.',
 	'userrenametool-logpage' => "Djournå des candjmints d' no d' uzeus",
 	'userrenametool-logpagetext' => "Chal pa dzo c' est ene djivêye des uzeus k' ont candjî leu no d' elodjaedje.",
+	'userrenametool-logentry' => "a rlomé l' uzeu «$1» a «$2»",
 	'userrenametool-log' => "k' aveut ddja fwait $1 candjmints. $2",
 	'userrenametool-move-log' => "Pådje displaeceye otomaticmint tot rlomant l' uzeu «[[User:$1|$1]]» viè «[[User:$2|$2]]»",
+	'right-renameuser' => 'Rilomer des uzeus',
 );
 
 /** Yiddish (ייִדיש)

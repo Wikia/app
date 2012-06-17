@@ -77,12 +77,14 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author PtM
  */
 $messages['de'] = array(
 	'timeagomessaging-desc' => 'Stellt i18n für das jquery.timeago.js Plugin bereit',
 	'timeago-day' => 'vor {{PLURAL:$1|einem Tag|$1 Tagen}}',
 	'timeago-hour' => 'vor {{PLURAL:$1|einer Stunde|$1 Stunden}}',
 	'timeago-minute' => 'vor {{PLURAL:$1|einer Minute|$1 Minuten}}',
+	'timeago-month' => 'vor {{PLURAL:$1|einem Monat|$1 Monaten}}',
 	'timeago-second' => 'vor einer Minute',
 );
 
@@ -378,6 +380,7 @@ $messages['uk'] = array(
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
+	'timeagomessaging-desc' => 'Cung cấp i18n cho phần mềm jquery.timeago.js',
 	'timeago-day' => '{{PLURAL:$1|1 ngày|$1 ngày}} trước',
 	'timeago-hour' => '{{PLURAL:$1|1 giờ|$1 giờ}} trước',
 	'timeago-minute' => '{{PLURAL:$1|1 phút|$1 phút}} trước',

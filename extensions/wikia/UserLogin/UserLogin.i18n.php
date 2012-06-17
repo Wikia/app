@@ -497,6 +497,80 @@ Quere controlar os correos electrónicos que recibe? Vaia a {{fullurl:{{ns:speci
 	'wikiamobile-facebook-connect-fail' => 'Sentímolo, a súa conta do Facebook non está ligada con ningunha de Wikia.',
 );
 
+/** Interlingua (interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'userlogin-login-heading' => 'Aperir session',
+	'userlogin-forgot-password' => 'Contrasigno oblidate?',
+	'userlogin-remembermypassword' => 'Session permanente',
+	'userlogin-error-noname' => 'Per favor specifica le nomine de usator.',
+	'userlogin-error-sessionfailure' => 'Le session ha expirate. Per favor aperi session de novo.',
+	'userlogin-error-nosuchuser' => 'Iste nomine non es recognoscite. Non oblida que le nomines de usator distingue inter majusculas e minusculas.',
+	'userlogin-error-wrongpassword' => 'Contrasigno incorrecte. Assecura te que le "caps lock" es inactive e reproba.',
+	'userlogin-error-wrongpasswordempty' => 'Per favor specifica le contrasigno.',
+	'userlogin-error-resetpass_announce' => 'Il pare que tu usava un contrasigno temporari. Elige un nove contrasigno pro continuar le session.',
+	'userlogin-error-login-throttled' => 'Tu ha tentate aperir session con un contrasigno incorrecte troppo de vices. Attende un momento ante de reprobar.',
+	'userlogin-error-login-userblocked' => 'Iste nomine de usator ha essite blocate e non pote esser usate pro aperir session.',
+	'userlogin-error-edit-account-closed-flag' => 'Iste conto ha essite disactivate per Wikia.',
+	'userlogin-error-cantcreateaccount-text' => 'Iste adresse IP non ha le permission de crear nove contos.',
+	'userlogin-error-userexists' => 'Qualcuno ja possede iste nomine de usator. Tenta un altere!',
+	'userlogin-error-invalidemailaddress' => 'Per favor entra un adresse de e-mail valide.',
+	'userlogin-get-account' => 'Tu non ha un conto? [[Special:UserSignup|Inscribe te]]',
+	'userlogin-error-invalid-username' => 'Nomine de usator invalide',
+	'userlogin-error-userlogin-unable-info' => 'Regrettabilemente, nos non pote crear tu conto pro le momento.',
+	'userlogin-error-user-not-allowed' => 'Iste nomine de usator non es permittite.',
+	'userlogin-error-captcha-createaccount-fail' => 'Le parola que tu scribeva non corresponde al parola in le quadro. Essaya de novo.',
+	'userlogin-error-userlogin-bad-birthday' => 'Per favor specifica un mense, die e anno.',
+	'userlogin-error-externaldberror' => 'Nostre sito ha actualmente un problema. Per favor reproba plus tarde.',
+	'userlogin-error-noemailtitle' => 'Per favor entra un adresse de e-mail valide.',
+	'userlogin-error-acct_creation_throttle_hit' => 'Iste adresse IP ha create troppo de contos hodie. Per favor reproba plus tarde.',
+	'userlogin-error-resetpass_forbidden' => 'Le contrasignos non pote esser cambiate',
+	'userlogin-error-blocked-mailpassword' => 'Tu non pote requestar un nove contrasigno perque iste adresse IP es blocate per Wikia.',
+	'userlogin-error-throttled-mailpassword' => 'Nos ha jam inviate un rememoration de contrasigno a iste conto in le ultime {{PLURAL:$1|hora|$1 horas}}. Per favor verifica tu e-mail.',
+	'userlogin-error-mail-error' => 'Un problema occurreva durante le invio de tu e-mail. Per favor [[Special:Contact/general|contacta nos]].',
+	'userlogin-password-email-sent' => 'Nos ha inviate un nove contrasigno al adresse de e-mail pro $1.',
+	'userlogin-error-unconfirmed-user' => 'Tu non ha ancora confirmate tu adresse de e-mail. Per favor confirma lo primo.',
+	'userlogin-password-page-title' => 'Cambiar tu contrasigno',
+	'userlogin-oldpassword' => 'Ancian contrasigno',
+	'userlogin-newpassword' => 'Nove contrasigno',
+	'userlogin-retypenew' => 'Repete le nove contrasigno',
+	'userlogin-password-email-subject' => 'Requesta de contrasigno oblidate',
+	'userlogin-password-email-greeting' => 'Salute $USERNAME,',
+	'userlogin-password-email-content' => 'Per favor usa iste contrasigno temporari pro aperir session in Wikia: "$NEWPASSWORD"
+<br /><br />
+Si tu non requestava un nove contrasigno, nulle problema! Tu conto es san e salve. Tu pote ignorar iste e-mail e continuar a aperir session in Wikia con tu ancian contrasigno.
+<br /><br />
+Questiones o preoccupationes? Sia libere de contactar nos.',
+	'userlogin-password-email-signature' => 'Supporto communitari de Wikia',
+	'userlogin-password-email-body' => 'Salute $2,
+
+Per favor usa iste contrasigno temporari pro aperir session in Wikia: "$3"
+
+Si tu non requestava un nove contrasigno, nulle problema! Tu conto es san e salve. Tu pote ignorar iste e-mail e continuar a aperir session in Wikia con tu ancian contrasigno.
+
+Questiones o preoccupationes? Sia libere de contactar nos.
+
+Le equipa de supporto communitari de Wikia
+
+
+___________________________________________
+
+Pro cognoscer le ultime evenimentos in Wikia, visita http://community.wikia.com
+Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences}}',
+	'userlogin-email-footer-line1' => 'Pro cognoscer le ultime evenimentos in Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'userlogin-email-footer-line2' => 'Vole seliger le e-mails que tu recipe? Face lo in tu <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferentias</a>',
+	'userlogin-provider-or' => 'O',
+	'userlogin-provider-tooltip-facebook' => 'Clicca sur le button pro aperir session con Facebook',
+	'userlogin-provider-tooltip-facebook-signup' => 'Clicca sur le button pro inscriber te con Facebook',
+	'userlogin-facebook-show-preferences' => 'Monstrar preferentias de syndication de Facebook',
+	'userlogin-facebook-hide-preferences' => 'Celar preferentias de syndication de Facebook',
+	'userlogin-loginreqlink' => 'aperir session',
+	'userlogin-changepassword-needlogin' => 'Tu debe $1 pro cambiar tu contrasigno.',
+	'wikiamobile-sendpassword-label' => 'Inviar nove contrasigno',
+	'wikiamobile-facebook-connect-fail' => 'Tu conto de Facebook non es actualmente ligate con un conto de Wikia.',
+);
+
 /** Italian (italiano)
  * @author Minerva Titani
  */

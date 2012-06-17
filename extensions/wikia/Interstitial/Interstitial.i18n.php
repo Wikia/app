@@ -123,9 +123,15 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'interstitial-default-campaign-code' => 'A Wikia szeret téged!',
 	'interstitial-skip-ad' => 'Hirdetés átugrása',
+	'interstitial-already-logged-in-no-link' => 'Már bejelentkeztél és nincs cél beállítva.',
+	'interstitial-link-away' => 'Itt nincs semmi látnivaló!<br /><br />Szeretnél a [[{{MediaWiki:Mainpage}}|főoldalra]] vagy egy [[Special:Random|véletlenszerű oldalra]] menni?',
+	'exitstitial-register' => '<a href="#" class="register">Regisztrálj</a> vagy <a href="#" class="login">lépj be</a> a hirdetések átugrásához.',
+	'exitstitial-button' => 'Hirdetés átugrása',
 );
 
 /** Interlingua (interlingua)

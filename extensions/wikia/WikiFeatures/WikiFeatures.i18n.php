@@ -299,16 +299,16 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Kghbln
+ * @author PtM
  * @author SVG
  * @author Sebastian Wallroth
  * @author Tiin
  */
 $messages['de'] = array(
+	'wikifeatures' => 'Wiki-Funktionen',
 	'wikifeatures-title' => 'Wiki-Funktionen',
 	'wikifeatures-heading' => 'Funktionen',
-	'wikifeatures-creative' => 'Willkommen bei den Wikia Funktionen.
-Im folgenden findest du Tools, die du in deinem Wiki aktivieren und anpassen kannst.
-Ein wenig experimentieren – du kannst jederzeit die Tools deaktivieren, die du nicht möchtest.',
+	'wikifeatures-creative' => 'Willkommen bei den Wiki-Funktionen. Im Folgenden findest du eine Reihe von Funktionen, die du in deinem Wiki aktivieren und anpassen kannst. Experimentiere einfach ein wenig – du kannst jederzeit die Funktionen wieder deaktivieren, die dir nicht gefallen.',
 	'wikifeatures-labs-heading' => 'Wikia Labs',
 	'wikifeatures-labs-creative' => 'In Wikia Labs findest du Funktionen und Ideen mit denen wir gerade experimentieren. Da wir noch an verschiedenen Ecken rumschrauben, können diese Funktionen noch einige Ecken und Kanten haben, aber ihr könnt gerne schon mal hereinschnuppern! Schalte die folgenden Funktionen an und schreib uns, welche Sachen dir bei der jeweiligen Funktion gut oder auch nicht so gut gefallen.',
 	'wikifeatures-feedback' => 'Feedback abgeben',
@@ -321,10 +321,10 @@ Ein wenig experimentieren – du kannst jederzeit die Tools deaktivieren, die du
 	'wikifeatures-toggle-inactive' => 'Deaktiviert',
 	'wikifeatures-active-on' => 'Aktiv in $1 Wikis',
 	'wikifeatures-category-choose-one' => 'Wähle eine…',
-	'wikifeatures-love-this-project' => 'Mir gefällt dieses Projekt.',
-	'wikifeatures-hate-this-project' => 'Mir gefällt dieses Projekt nicht.',
-	'wikifeatures-problem-with-project' => 'Ich habe ein Problem mit diesem Projekt',
-	'wikifeatures-an-idea-for-project' => 'Ich habe eine Idee für dieses Projekt',
+	'wikifeatures-love-this-project' => 'Mir gefällt diese Funktion.',
+	'wikifeatures-hate-this-project' => 'Mir gefällt diese Funktion nicht.',
+	'wikifeatures-problem-with-project' => 'Ich möchte ein Problem mitteilen',
+	'wikifeatures-an-idea-for-project' => 'Ich habe eine Idee für diese Funktion',
 	'wikifeatures-feedback-heading' => 'Rückmeldungen',
 	'wikifeatures-feedback-description' => 'Wir mögen es Rückmeldungen über Funktionen in WikiaLabs zu bekommen. Wenn du eine Idee hast, wie wir diese Funktion verbessern können, oder wenn du einen Fehler feststellst, hinterlasse bitte unten einen Kommentar, und die Entwickler, die an dieser Funktion arbeiten, werden deine Nachricht erhalten.',
 	'wikifeatures-feedback-type-label' => 'Worum geht es?',
@@ -336,17 +336,19 @@ Ein wenig experimentieren – du kannst jederzeit die Tools deaktivieren, die du
 	'wikifeatures-deactivate-confirm-button' => 'Ja, deaktivieren',
 	'wikifeatures-deactivate-cancel-button' => 'Abbrechen',
 	'wikifeatures-promotion-new' => 'Neu',
-	'wikifeatures-oasis-only' => 'Wiki Features gibt es nicht in Monobook. Wenn Du dieses Feature nutzen willst, dann wechsle in Deine Einstellungen zur Benutzeroberfläche Wikia Skin.',
-	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Top 10-Listen',
-	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Top 10-Listen erlauben es jedem in deinem Wiki eine Top-Liste zu erstellen. Diese Listen können ganz einfach angelegt werden und noch einfacher kann man dort dann seine Stimme abgeben. Du kannst auch Bilder und Links einfügen um sie noch spannender zu gestalten. 
+	'wikifeatures-oasis-only' => 'Wiki-Funktionen ist nicht verfügbar in Monobook. Wenn Du dieses Feature nutzen willst, dann wechsle in deinen Einstellungen zum Wikia-Skin.',
+	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Top-10-Listen',
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Top-10-Listen erlauben es jedem in deinem Wiki, eine Top-Liste zu erstellen. Diese Listen können ganz einfach angelegt werden und noch einfacher kann man dort dann seine Stimme abgeben. Du kannst auch Bilder und Links einfügen, um sie noch spannender zu gestalten. 
 
-Top 10-Listen sind eine gute Möglichkeit um neuen Autoren eine Möglichkeit zu geben, untereinander und mit dem Wiki zu interagieren. Wenn du diese Funktion anschaltest, findest du einen neuen Eintrag "Top 10 Liste", wenn du "Seite erstellen" anklickst.',
+Top-10-Listen sind eine gute Möglichkeit um neuen Autoren eine Möglichkeit zu geben, untereinander und mit dem Wiki zu interagieren. Wenn du diese Funktion anschaltest, findest du einen neuen Eintrag "Top-10-Liste", wenn du "Seite erstellen" anklickst.',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Herausforderungen',
 	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Herausforderungen geben Autoren Anreize um Inhalte zum Wiki beizutragen und unterstützen so das Wachstum des Wikis. Du kannst eigene Herausforderungen erstellen und die Namen und Bilder der Auszeichnungen beliebig anpassen.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Artikel-Kommentare',
 	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Diese Erweiterung erlaubt es allen Nutzern Kommentare am Ende eines Artikels hinzuzufügen. Andere Nutzer können auf diese Kommentare antworten und Unterschriften sowie Zeitstempel werden automatisch erzeugt. Diese Erweiterung ersetzt die Diskussionsseiten in deinem Wiki.',
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Kategorie-Ausstellung',
-	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Die beliebtesten acht Seiten sind bereits als Bilder in einer Kategorie angezeigt, aber diese Funktion wird deine Seiten als Bildlinks sortierbar nach Name, Aktualität oder Beliebtheit listen!',
+	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Möchtest du schönere Kategorien haben? Ändere die Text-Links in den Kategorie-Seiten zu Vorschaubildern, um eine bessere Navigation zu erhalten. Diese Funktion findet automatisch Fotos auf den verlinkten Seiten und die Einträge können nach Beliebtheit sortiert werden!
+
+Die beliebtesten acht Seiten sind bereits als Bilder in einer Kategorie angezeigt, aber diese Funktion wird alle deine Seiten als Bildlinks sortierbar nach Name, Aktualität oder Beliebtheit listen!',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chat',
 	'wikifeatures-feature-description-wgEnableChat' => 'Kommuniziere direkt mit anderen Menschen, die dein Wiki und das Thema deines Wikis genauso lieben, wie du selbst! Jeder mit einem Wikia-Benutzerkonto kann sich nach einem Klick auf den "Chat beitreten"-Knopf in der rechten Seitenleiste beteiligen. lol omg rotfl...',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia-Editor-Neudesign',
@@ -357,10 +359,14 @@ Top 10-Listen sind eine gute Möglichkeit um neuen Autoren eine Möglichkeit zu 
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Hilf Autoren in deinem Wiki schick aussehende Seiten in kürzerer Zeit zu erstellen. Der Layout-Ersteller ermöglicht es Admins vor-formatierte Seiten zur Verfügung zu stellen, wenn jemand eine neue Seite im Wiki erstellt.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogs ermöglichen es den Nutzern im Wiki eigene Blog-Beiträge auf ihrem Profil zu verfassen. Das ist auch ein toller Weg um Neuigkeiten und Veranstaltungen in deinem Wiki anzukündigen.',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Nachrichtenseiten',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Die Kommunikation unter Autoren im Wiki ist ein essentieller Teil beim Aufbau und Erhalt einer Gemeinschaft. Nachrichtenseiten bieten Thread-Unterteilungen und ein Benachrichtigungssystem an, mit dem du genau steuern kannst, welche Diskussionen du verfolgst. Keine verpassten Nachrichten mehr!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Erweiterte Wiki-Navigation',
-	'wikifeatures-feature-description-wgOasisNavV2' => 'Get more links, ein neues Voransichtswerkzeug, eine Zusammenfassung von unterstützenden Links und ein neues "On the Wiki"-Menü, dass wichtige Features Deiner Inhalte und Deiner Community hervorhebt.',
+	'wikifeatures-feature-description-wgOasisNavV2' => 'Hiermit hast du die Möglichkeit, mehr Links in deiner Wiki-Navigation zu nutzen, eine Vorschau-Funktion zu bekommen, ein Dropdown-Menü mit Links zum Mitarbeiten, und du erhältst einen neuen "Im-Wiki"-Eintrag, der Links zu wichtigen Community-Funktionen bietet.',
 	'wikifeatures-feature-heading-emptylabs' => 'Es sieht danach aus, als würde das Labor eine Pause machen',
-	'wikifeatures-feature-description-emptylabs' => 'Unsere Technik-Mitarbeiter arbeiten hart an neuen Funktionen, damit du diese ausprobieren kannst. Siehe hier bald mehr Labor-Ergebnisse!',
+	'wikifeatures-feature-description-emptylabs' => 'Unsere Techniker arbeiten bereits an neuen Funktionen, die du dann ausprobieren kannst. Erwarte mehr an dieser Stelle!',
+	'wikifeatures-log-name' => 'Features-Logbuch',
+	'wikifeatures-log-header' => 'Dies ist das Logbuch zur (De)Aktivierung von einzelnen Wiki-Funktionen.',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -1315,11 +1321,18 @@ $messages['vi'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Sửa đổi là nền tảng của một wiki và có được một trình soạn thảo tuyệt vời là chiếc chìa để có một cách dễ dàng và kinh nghiệm thú vị khi thêm vào nội dung. Để cải thiện kinh nghiệm của bạn, chúng tôi đã thiết kế lại các trang sửa đổi của mình.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Bảng thăm dò',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Cho phép bất cứ ai trên wiki của bạn để tạo ra một cuộc thăm dò! Với các cuộc thăm dò cho phép người dùng của bạn có thể sử dụng [http://vi.wikia.com/wiki/Help:Thăm_dò thẻ thăm dò ý kiến] để thêm tính năng gọn gàng này vào bất kỳ trang nào. Tính năng này là một cách tuyệt vời để tăng sự đóng góp vào wiki của bạn.',
+	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Xây dựng Bố cục',
+	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Giúp biên tập viên trên wiki của bạn tạo ra một lượng lớn loại trang theo chủ đề trong thời gian ngắn. Xây dựng Bố cục cho phép các bảo quản viên trên wiki của bạn tạo ra các trang mẫu cho biên tập viên để lựa chọn trong khi tạo trang.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blog',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blog cho phép thành viên trên wiki của bạn tạo ra bài viết blog trên trang hồ sơ của họ và cũng có thể được sử dụng như là một cách tuyệt vời để giao tiếp tin tức và sự kiện với cộng đồng wiki.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Tường tin nhắn',
 	'wikifeatures-feature-description-wgEnableWallExt' => 'Liên lạc với những người đóng góp vào wiki của bạn là một phần thiết yếu trong xây dựng và duy trì cộng đồng. Tường tin nhắn sử dụng các hộp thoại định dạng và thông báo hệ thống mà có thể để bạn kiểm soát những cuộc hội thoại mà bạn quan tâm theo dõi. Không sót tin nhắn nào cả!',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Mở rộng Danh mục Wiki',
+	'wikifeatures-feature-description-wgOasisNavV2' => 'Nhận liên kết nhiều hơn, một công cụ Xem trước mới, củng cố bộ đóng góp liên kết và một menu mới "Trên Wiki này" nổi bật tính năng quan trọng của nội dung và cộng đồng của bạn.',
+	'wikifeatures-feature-heading-emptylabs' => 'Hình như thí nghiệm này đang nghỉ ngơi',
+	'wikifeatures-feature-description-emptylabs' => 'Các kỹ sư của chúng tôi đang nỗ lực trong công việc xây dựng các tính năng mới để bạn có thể thử. Tìm kiếm nhiều thí nghiệm hơn ở đây!',
+	'wikifeatures-log-name' => 'Nhật trình Tính năng Wiki',
+	'wikifeatures-log-header' => 'Dưới đây là danh sách các thay đổi trong thiết lập các Tính năng Wiki.',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

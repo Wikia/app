@@ -73,6 +73,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Alphakilo
  * @author Claudia Hattitten
+ * @author PtM
  */
 $messages['de'] = array(
 	'stafflog-desc' => 'Zentralisiertes Mitarbeiter-Logbuch',
@@ -86,6 +87,9 @@ $messages['de'] = array(
 	'stafflog-filter-user' => 'Benutzer:',
 	'stafflog-filter-type' => 'Typ:',
 	'stafflog-filter-apply' => 'Filter anwenden',
+	'stafflog-filter-type-block' => 'Sperren',
+	'stafflog-filter-type-piggyback' => 'Huckepack',
+	'stafflog-filter-type-renameuser' => 'Nutzer-Umbenennungen',
 	'stafflog-filter-type-wikifactory' => 'Wiki Status',
 );
 

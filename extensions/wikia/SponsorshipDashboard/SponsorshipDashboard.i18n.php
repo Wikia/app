@@ -717,6 +717,7 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'sponsorship-dashboard-serie-content-article' => 'Pekey',
@@ -729,7 +730,7 @@ $messages['diq'] = array(
 	'sponsorship-dashboard-serie-entrances' => 'Dekewtışi',
 	'sponsorship-dashboard-serie-exits' => 'Vıcyayşi',
 	'sponsorship-dashboard-serie-namespace-Media' => 'Pela Medya',
-	'sponsorship-dashboard-serie-namespace-Special' => 'Pela Xısusi',
+	'sponsorship-dashboard-serie-namespace-Special' => 'Pelê xısusiy',
 	'sponsorship-dashboard-serie-namespace-Talk' => 'Pelay qıse',
 	'sponsorship-dashboard-serie-namespace-User' => 'Pela Karberi',
 	'sponsorship-dashboard-serie-namespace-User_talk' => 'Pelay persiya Karberi',

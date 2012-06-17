@@ -183,6 +183,7 @@ $messages['br'] = array(
  * @author Kghbln
  * @author LWChris
  * @author Laximilian scoken
+ * @author PtM
  * @author Quedel
  * @author SVG
  * @author Tiin
@@ -272,28 +273,37 @@ $messages['de'] = array(
 	'founderprogressbar-user-add5-url' => 'http://hilfe.wikia.com/wiki/Hilfe:Erschaffe_eine_Gemeinschaft',
 	'founderprogressbar-recentchanges-visit-label' => 'Letzte Änderungen ansehen',
 	'founderprogressbar-recentchanges-visit-action' => 'Gehe zu Spezial:RecentChanges',
+	'founderprogressbar-recentchanges-visit-description' => 'Letzte Änderungen ist eine erweiterte Version der Wiki-Aktivitäten. Du kannst über die "Unterschiede"  die konkrete Änderung einsehen, die an einer Seite vorgenommen wurden,  Änderungen rückgängig machen, und mehr Details als auf den Wiki-Aktivitäten erhalten. Es ist eine großartiges Verwaltungswerkzeug, falls du mehr Infos benötigst.',
 	'founderprogressbar-wordmark-edit-label' => 'Lade ein Wordmark hoch',
 	'founderprogressbar-wordmark-edit-action' => 'Gehe zu Special:ThemeDesigner',
+	'founderprogressbar-wordmark-edit-description' => 'Das Logo deines Wikis ist ein identifizierendes Merkmal, es ist auf jeder Seite sichtbar und kann Nutzern dein Thema vermitteln und etwas Flair hinzufügen. Das Hochladen eines grafischen Schriftzuges ist ein großartiges Mittel um das Etikett deines Wikis noch mehr hervorzuheben.',
 	'founderprogressbar-mostvisited-visit-label' => 'Meistbesuchte Seiten anschauen',
 	'founderprogressbar-mostvisited-visit-action' => 'Zu Special:MostVisitedPages gehen',
+	'founderprogressbar-mostvisited-visit-description' => 'Sobald dein Wiki einmal in Fahrt ist, kann es helfen, die beliebtesten Seiten auszumachen, um sie zu verbessern oder weniger besuchte Seiten besser zu verlinken. Sieh dir deine meistbesuchten Seiten an, um ein Gespür für das zu kriegen, was am besten funktioniert, sodass du die gleichen Verbesserungen an anderen Seiten vornehmen kannst!',
 	'founderprogressbar-toptenlist-add-label' => 'Füge eine Top-Ten-Liste hinzu',
 	'founderprogressbar-toptenlist-add-action' => 'Füge eine Top-Ten-Liste hinzu',
+	'founderprogressbar-toptenlist-add-description' => 'Top-10-Listen ermutigen des Bearbeitens schüchterne Besucher, sich im Wiki zu beteiligen. Sie sind ein toller Gemeinschaftsfaktor und es ist Leuten ein Leichtes, Listenpunkte hoch-/runterzuwählen oder hinzuzufügen.',
 	'founderprogressbar-blogpost-add-label' => 'Schreibe einen Blogbeitrag',
 	'founderprogressbar-blogpost-add-action' => 'Gehe zu deiner Blogseite',
+	'founderprogressbar-blogpost-add-description' => 'Blog-Artikel im Wiki sind eine gute Möglichkeit, Ankündigungen zu machen, um konkrete Hilfe im Wiki zu bitten, Meinungsartikel zu schreiben oder auch Andere zum Verfassen eigener Blog-Artikel zu ermutigen. Probiers aus!',
 	'founderprogressbar-fb-likes3-label' => 'Erreiche $1 Facebook-Likes',
 	'founderprogressbar-fb-likes3-action' => 'Gehe zur Hauptseite',
+	'founderprogressbar-fb-likes3-description' => 'Teilen macht Freu(n)de, und es kann viel tun, um dein Wiki dem Rest der Welt bekannt zu machen. Ermutige hierfür deine Bearbeiter und Leser, die Hauptseite deines Wikis auf Facebook zu "liken".',
 	'founderprogressbar-uncategorized-visit-label' => 'Finde nicht kategorisierte Seiten',
 	'founderprogressbar-uncategorized-visit-action' => 'Gehe zu Spezial:UncategorizedPages',
 	'founderprogressbar-uncategorized-visit-description' => 'Wenn dein Wiki mehr Inhalte hat, kann man leicht den Überblick über die Organisation verlieren. Behalte die Übersicht indem du unkategorisiere Seiten verfolgst und bei ihnen Kategorien hinzufügst, damit sie gut erreichbar und organisiert bleiben.',
 	'founderprogressbar-total-edit300-label' => 'Erreiche {{PLURAL:$1|eine Bearbeitung|$1 Bearbeitungen}}.',
 	'founderprogressbar-total-edit300-action' => 'Eine Seite hinzufügen',
+	'founderprogressbar-total-edit300-description' => '$1 Bearbeitungen sind ein genialer Meilenstein, bei so vielen gemachten Änderungen und hinzugefügtem Inhalt wird dein Wiki auf gutem Weg zum Erfolg sein!',
 	'founderprogressbar-bonus-photo-add10-label' => '$1 weitere Fotos hinzufügen',
 	'founderprogressbar-bonus-photo-add10-action' => 'Foto hinzufügen',
+	'founderprogressbar-bonus-photo-add10-description' => 'Das Hinzufügen von Fotos ist immer ein gutes Mittel um dein Wiki zu erweitern. Füge zehn weitere hinzu und du hast eine weitere Bonusaufgabe erfüllt.',
 	'founderprogressbar-bonus-page-add5-label' => '{{PLURAL:$1|$1 weitere Seite|$1 weitere Seiten}} hinzufügen',
 	'founderprogressbar-bonus-page-add5-action' => 'Eine Seite hinzufügen',
 	'founderprogressbar-bonus-page-add5-description' => 'Welches Wiki profitiert nicht von mehr Inhalt? Ergänze fünf weitere Seiten, um das Guthaben für eine Bonus-Aufgabe zu erhalten.',
 	'founderprogressbar-bonus-edit50-label' => 'Bearbeite {{PLURAL:$1|eine weitere Seite|$1 weitere Seiten}}.',
 	'founderprogressbar-bonus-edit50-action' => 'Gehe zu Spezial:WikiActivity',
+	'founderprogressbar-bonus-edit50-description' => 'Greife nach den Sternen und mache 50 weitere Bearbeitungen, um diese Bonusaufgabe zu erfüllen.',
 	'founderprogressbar-browse-page-name' => 'Durchsuchen',
 );
 
@@ -821,6 +831,19 @@ $messages['ia'] = array(
 	'founderprogressbar-bonus-edit50-action' => 'Vader a Special:WikiActivity',
 	'founderprogressbar-bonus-edit50-description' => 'Face un effortio stellar e face 50 modificationes in addition a illos que tu ha jam facite pro completar iste carga de bonus.',
 	'founderprogressbar-browse-page-name' => 'Foliar',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'founderprogressbar-page-add10-action' => 'Rûpelekê lê zêde bike',
+	'founderprogressbar-photo-add20-action' => 'Wêneyekî lê zêde bike',
+	'founderprogressbar-total-edit75-action' => 'Rûpelekê lê zêde bike',
+	'founderprogressbar-category-add5-action' => 'Kategoriyekê lê zêde bike',
+	'founderprogressbar-total-edit300-action' => 'Rûpelekê lê zêde bike',
+	'founderprogressbar-bonus-photo-add10-action' => 'Wêneyekî lê zêde bike',
+	'founderprogressbar-bonus-page-add5-action' => 'Rûpelekê lê zêde bike',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1351,14 +1374,14 @@ $messages['nl'] = array(
 $messages['pl'] = array(
 	'founderprogressbar-credits' => 'Przewodnik i portal dla autorów nowych wiki',
 	'founderprogressbar-widget-label' => 'Postęp {{SITENAME}}',
-	'founderprogressbar-progress-label' => 'Zrobione zadania',
+	'founderprogressbar-progress-label' => 'Wykonane zadania',
 	'founderprogressbar-progress-see-full-list' => 'Pokaż pełną listę',
 	'founderprogressbar-progress-hide-full-list' => 'Ukryj pełną listę',
 	'founderprogressbar-skip-for-now' => 'Pomiń',
 	'founderprogressbar-task-completed' => 'Ukończono',
 	'founderprogressbar-list-label' => 'Zadania dla {{SITENAME}}',
 	'founderprogressbar-list-description1' => 'Gotowy na nadanie swojej wiki właściwego kierunku? Wypełnij wszystkie poniższe zadania aby doprowadzić pasek postępu do 100%! Każdy na Twojej wiki może pomóc i wszystkie edycje będą się wpływać na postęp poszczególnych zadań.',
-	'founderprogressbar-list-description2' => 'Obszar zadań to lista wszystkich zadań wymagających ukończenia. Jeśli ominiesz któreś zadanie, zostanie ono przesunięto do sekcji Odłożone Zadania ale będzie dostępne w dowolnej chwili. Jest jakieś zadanie, które nie pasuje do Twojej wiki? Nie martw się, jeżeli w Odłożonych Zadaniach pozostają jakieś cele do osiągnięcia, możesz wykonać Dodatkowe Zadania. Ich ukończenie także wpływa na pasek postępu, więc możesz osiągnąć 100% nawet jeżeli nie wykonasz wszystkich zadań.',
+	'founderprogressbar-list-description2' => 'Obszar zadań to lista wszystkich zadań wymagających ukończenia. Jeśli ominiesz któreś zadanie, zostanie ono przesunięte do sekcji Odłożone Zadania ale będzie dostępne w dowolnej chwili. Jest jakieś zadanie, które nie pasuje do Twojej wiki? Nie martw się, jeżeli w Odłożonych Zadaniach pozostają jakieś cele do osiągnięcia, możesz wykonać Dodatkowe Zadania. Ich ukończenie także wpływa na pasek postępu, więc możesz osiągnąć 100% nawet jeżeli nie wykonasz wszystkich zadań.',
 	'founderprogressbar-list-task-label' => 'Zadania',
 	'founderprogressbar-list-skipped-task-label' => 'Pominięte zadania',
 	'founderprogressbar-list-skipped-task-desc' => 'Można wykonać te zadania w dowolnym momencie.',
@@ -1412,7 +1435,7 @@ $messages['pl'] = array(
 	'founderprogressbar-category-add5-label' => 'Osiągnij $1{{PLURAL:$1|Kategorię|Kategorie|Kategorii}}',
 	'founderprogressbar-category-add5-action' => 'Dodaj kategorię',
 	'founderprogressbar-category-add5-description' => 'Teraz, gdy masz już wystarczającą liczbę stron na swojej wiki, potrzebne może być więcej kategorii aby je zorganizować.',
-	'founderprogressbar-gallery-add-label' => 'Dodaj galerię zdjęć',
+	'founderprogressbar-gallery-add-label' => 'Dodaj galerię obrazów',
 	'founderprogressbar-gallery-add-action' => 'Przejdź to strony pomocy',
 	'founderprogressbar-gallery-add-description' => 'Galerie zdjęć to świetny sposób aby zaprezentować kilka obrazów w jednym obszarze danej strony. Dodatkowo, używanie różnych narzędzi do wyświetlania obrazów, powoduje, że układ stron jest bardziej interesujący dla odwiedzających.',
 	'founderprogressbar-gallery-add-url' => 'http://spolecznosc.wikia.com/wiki/Help:Wyświetlanie_obrazów#Galeria',
@@ -1425,12 +1448,12 @@ $messages['pl'] = array(
 	'founderprogressbar-commcorner-edit-label' => 'Odwiedź Zakątek Społeczności',
 	'founderprogressbar-commcorner-edit-action' => 'Odwiedź Zakątek Społeczności',
 	'founderprogressbar-commcorner-edit-description' => 'Edytowanie Zakątka Społeczności spowoduje wyświetlenie powiadomienia dla wszystkich odwiedzających. To świetne miejsce aby umieścić komunikaty i powiedzieć innym o temacie wiki lub jak mogą pomóc.',
-	'founderprogressbar-video-add-label' => 'Dodać wideo',
-	'founderprogressbar-video-add-action' => 'Dodać wideo',
+	'founderprogressbar-video-add-label' => 'Dodaj film',
+	'founderprogressbar-video-add-action' => 'Dodaj film',
 	'founderprogressbar-video-add-description' => "Filmy to kolejne, dobre narzędzie do zachęcenia innych do współtworzenia Twojej wiki. Możesz znaleźć dobre filmy na YouTube czy Hulu. Dodaj jeden z nich, korzystając z opcji 'Filmy' w menu edytora.",
 	'founderprogressbar-user-add5-label' => 'Osiągnij 5 profili użytkownika',
 	'founderprogressbar-user-add5-action' => 'Przejdź to strony pomocy',
-	'founderprogressbar-user-add5-description' => 'Fundamentem dobre wiki jest jej społeczność. Najlepsze wiki mają mnóstwo autorów, zachęcenie 5 użytkowników do edytowania to świetny początek!',
+	'founderprogressbar-user-add5-description' => 'Fundamentem dobrej wiki jest jej społeczność. Najlepsze wiki mają mnóstwo autorów, zachęcenie 5 użytkowników do edytowania to świetny początek!',
 	'founderprogressbar-recentchanges-visit-label' => 'Odwiedź Ostatnie Zmiany',
 	'founderprogressbar-recentchanges-visit-action' => 'Odwiedź Specjalna:Ostatnie_zmiany',
 	'founderprogressbar-recentchanges-visit-description' => 'Strona Ostatnie Zmiany to bardziej zaawansowany sposób przeglądania aktywności, z dostępem do stron "diff", które pozwalają zobaczyć dokładne zmiany w artykułach. Pozwalają także łatwo cofać edycje i pokazują więcej szczegółów. Ostatnie Zmiany to świetne narzędzie do zarządzania Twoją wiki, jeżeli potrzebujesz więcej informacji.',

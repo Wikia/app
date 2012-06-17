@@ -457,6 +457,23 @@ $messages['vi'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Gợi ý chính tả cho "$1": $2',
 );
 
+/** Walloon (walon)
+ * @author Srtxg
+ */
+$messages['wa'] = array(
+	'spellchecker-desc' => "Fornixh ene eterface di coridjaedje ortografike pol module PHP ''enchant''",
+	'enablespellchecker' => 'Permete li coridjrece e môde vizuwel',
+	'spellchecker-info' => 'Infôrmåcion del coridjrece',
+	'spellchecker-info-languages' => 'Lingaedjes sopoirtés ($1)',
+	'spellchecker-info-provider' => 'Ahesseu',
+	'spellchecker-info-dictionaries' => "Motlîs k' i gn a",
+	'spellchecker-info-spellcheck-text' => 'Tecse a rwaitî',
+	'spellchecker-info-spellcheck-languages' => 'Lingaedje',
+	'spellchecker-info-spellcheck-submit' => 'Coridjî',
+	'spellchecker-info-spellcheck-is-correct' => 'Li mot «$1» est scrît comifåt',
+	'spellchecker-info-spellcheck-suggestions' => 'Po «$1» li coridjrece vos propôze: $2',
+);
+
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */

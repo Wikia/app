@@ -706,6 +706,7 @@ Příjemnou zábavu!
  * @author MF-Warburg
  * @author MtaÄ
  * @author Pill
+ * @author PtM
  * @author SVG
  * @author TOR
  * @author Tiin
@@ -729,7 +730,7 @@ $messages['de'] = array(
 	'oasis-related-video-header' => 'Ähnliche Videos',
 	'oasis-related-video-by-5min' => 'von 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Seite in<br /> diesem Wiki|Seiten in<br /> diesem Wiki}}</span>',
-	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|Bild in diesem Wiki|Bilder in diesem Wiki}}</span>',
+	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|Foto in diesem Wiki|Fotos in diesem Wiki}}</span>',
 	'oasis-latest-photos-more' => 'Mehr anzeigen >',
 	'oasis-latest-photos-inner-message' => 'Alle Bilder ansehen',
 	'oasis-latest-photos-single' => '+',
@@ -837,6 +838,7 @@ $messages['de'] = array(
 	'oasis-upload-photos-fewer-options' => 'Weniger Optionen',
 	'oasis-upload-photos-force' => 'Trotzdem hochladen',
 	'oasis-upload-photos-caption' => 'Bildunterschrift',
+	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes',
 	'oasis-modal-error-headline' => 'Bitte korrigiere die folgenden Fehler',
 	'oasis-skip-to-content' => 'Zum Inhalt springen',
 	'oasis-skip-to-wiki-navigation' => 'Zur Wiki-Navigation springen',
@@ -852,7 +854,7 @@ $messages['de'] = array(
 	'oasis-navigation-v2-level1-validation' => 'Hoppla! Dein Level 1-Menü ist zu breit. Bitte verringere die Anzahl der Buchstaben, bis es passt. Danke!',
 	'oasis-navigation-v2-level2-validation' => 'Hoppla! Dein Level 2-Menü ist zu breit. Bitte verringere die Anzahl der Buchstaben, bis es passt. Danke!',
 	'oasis-navigation-v2-level12-validation' => 'Hoppla! Dein Level 1-Menü und Level 2-Menü ist zu breit. Bitte verringere die Anzahl der Buchstaben, bis es passt. Danke!',
-	'oasis-navigation-v2-magic-word-validation' => 'Magische Wörter „Magic Words“ können nur in Level 3-Dropdowns angezeigt und somit nur in Level 2 verwendet werden.',
+	'oasis-navigation-v2-magic-word-validation' => 'Unterstützte Codewörter können nur in Level-2-Menüs angezeigt und somit nur in Level 2 verwendet werden.',
 	'oasis-navigation-v2-validation-next' => 'Vorschau',
 	'oasis-navigation-v2-validation-caption' => 'Die Vorschau erlaubt es dir, nach Fehlern zu sehen. Falls alles in Ordnung ist, kannst du es von dort aus speichern. Falls nicht, kannst du mittels "Zurück"-Button wieder zum Bearbeiten zurückkehren.',
 	'oasis-navigation-v2-new-photos' => 'Neue Fotos',
@@ -4582,6 +4584,7 @@ $messages['vi'] = array(
 	'oasis-upload-photos-fewer-options' => 'Tùy chọn ngắn gọn',
 	'oasis-upload-photos-force' => 'Tải lên bằng mọi cách',
 	'oasis-upload-photos-caption' => 'Chú thích',
+	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes',
 	'oasis-modal-error-headline' => 'Xin vui lòng sửa các lỗi sau đây',
 	'oasis-skip-to-content' => 'Chuyển đến Nội dung',
 	'oasis-skip-to-wiki-navigation' => 'Chuyển đến Danh mục Wiki',

@@ -69,6 +69,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author PtM
  */
 $messages['de'] = array(
 	'taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
@@ -76,6 +77,7 @@ $messages['de'] = array(
 	'taskmanager_tasklist' => 'Zurück zur Aufgaben-Liste',
 	'right-taskmanager' => 'Darf Hintergrund-Tasks anzeigen',
 	'right-taskmanager-action' => 'Darf Hintergrund-Tasks verwalten',
+	'taskmanager-invert' => 'Auswahl umkehren',
 );
 
 /** Spanish (español)

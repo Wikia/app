@@ -548,6 +548,8 @@ $messages['vi'] = array(
 	'unsubscribe-working' => 'Hủy đăng ký $1 {{PLURAL:$1|tài khoản|tài khoản}} cho $2',
 	'unsubscribe-working-problem' => 'vấn đề kết nối thông tin người sử dụng cho: $1',
 	'unsubscribe-working-done' => 'Hoàn thành.',
+	'unsubscribe-preferences-toggle' => 'Không nhật tất cả các email từ Wikia (bỏ chọn này để truy cập vào các tùy chọn dưới đây)',
+	'unsubscribe-preferences-notice' => 'Thư điện tử đã bị vô hiệu hóa cho tài khoản của bạn. Truy cập vào thẻ Hồ sơ người dùng để kích hoạt lại chúng.',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

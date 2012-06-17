@@ -387,6 +387,7 @@ $messages['br'] = array(
  * @author George Animal
  * @author LWChris
  * @author Pill
+ * @author PtM
  */
 $messages['de'] = array(
 	'pagelayoutbuilder' => 'Seiten-Layout-Ersteller',
@@ -422,6 +423,7 @@ $messages['de'] = array(
 	'plb-create-empty-body-error' => 'Dieses Layout scheint leer zu sein.',
 	'plb-create-empty-desc' => 'Gib bitte eine Beschreibung für dieses Layout ein.',
 	'plb-create-new-title' => 'Ein neues Layout erstellen',
+	'plb-create-new-modal-title' => 'Name',
 	'plb-create-edit-title' => '<strong>Bearbeite:</strong> $1',
 	'plb-create-preview-title' => '<strong>Vorschau:</strong> $1',
 	'plb-create-button-layout-title' => 'Änderungen speichern [Strg-S]',
@@ -495,6 +497,8 @@ $messages['de'] = array(
 	'plb-editor-overlay-edit' => 'bearbeiten',
 	'plb-editor-enter-caption' => 'Gib eine Form-Frage ein.',
 	'plb-editor-left-sidebar-tutorial' => '<b>Willkommen im Layout-Generator!</b><br /><br />Zum Hinzufügen von Elementen, klicke auf die Schaltfläche <em>Element hinzufügen</em>, und wähle den gewünschten Typ.<br /><br />Während du Elemente hinzufügst, werden neue Fragen zum Erstellungsvorgang für die Seite hinzugefügt.',
+	'plb-editor-read-only-selection-info' => 'Bitte stelle sicher, dass dein Cursor nicht innerhalb eines vorhandenen Layout-Elements ruht',
+	'plb-editor-saving-as-draft' => 'Speichere Layout-Entwurf',
 	'plb-widget-name-plb_input' => 'Eingabefeld',
 	'plb-widget-name-plb_mlinput' => 'Absatz',
 	'plb-widget-name-plb_image' => 'Bild',
@@ -553,7 +557,10 @@ $messages['de'] = array(
 	'plb-copy-delete-link' => 'Löschen',
 	'plb-copy-cat-add' => 'Hinzufügen:',
 	'plb-copy-submit-link' => 'Speichern',
+	'wikia-editor-modules-plb-insert-title' => 'Layout-Elemente einfügen',
 	'wikia-editor-modules-plb-list-title' => 'Liste wird geladen …',
+	'wikia-editor-modules-plb-list-title-count' => '$1 {{PLURAL:$1|Element|Elemente}} im Layout',
+	'wikia-editor-plb-show-static-buttons' => 'Eher <i>statische</i> Medien-Tasten wiederherstellen',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)

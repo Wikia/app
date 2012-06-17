@@ -154,11 +154,14 @@ $messages['ca'] = array(
  * @author Avatar
  * @author Geitost
  * @author Inkowik
+ * @author Kghbln
+ * @author PtM
  * @author Quedel
  * @author Tiin
  */
 $messages['de'] = array(
 	'wikiamobile-search' => 'Suche',
+	'wikiamobile-search-this-wiki' => 'Im Wiki suchen',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Anmelden',
@@ -170,12 +173,18 @@ $messages['de'] = array(
 	'wikiamobile-feedback' => 'Rückmeldung',
 	'wikiamobile-back' => 'Zurück',
 	'wikiamobile-hide-section' => 'ausblenden',
+	'wikiamobile-footer-link-license' => 'Lizenz',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entertainment]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Spiele]]',
+	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|Artikel|Artikel}}',
+	'wikiamobile-category-items-more' => 'Weitere laden',
+	'wikiamobile-category-items-prev' => 'Vorherige laden',
 	'wikiamobile-categories-expand' => 'Alle anzeigen',
 	'wikiamobile-categories-collapse' => 'Alle ausblenden',
 	'wikiamobile-sharing-media-image' => 'Bild',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 auf $2 - $3',
 	'wikiamobile-sharing-email-text' => 'Hallo,
 du solltest dir das unbedingt anschauen:
 
@@ -415,6 +424,7 @@ $messages['he'] = array(
  */
 $messages['ia'] = array(
 	'wikiamobile-search' => 'Cercar',
+	'wikiamobile-search-this-wiki' => 'Cercar in iste wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => 'Aperir session',

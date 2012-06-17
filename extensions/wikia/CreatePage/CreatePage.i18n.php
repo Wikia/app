@@ -385,6 +385,17 @@ Schreiben Sie den ersten Abschnitt Ihres Artikels hier.
 Schreiben Sie den zweiten Abschnitt Ihres Artikels hier.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'createpage-sp-title' => 'Pela newi vıraze',
+	'createpage_title' => 'Pela newi vıraze',
+	'createpage_title_caption' => 'Sername',
+	'createpage_enter_text' => 'Metın:',
+	'createpage-dialog-title' => 'Pela newi vıraze',
+);
+
 /** Greek (Ελληνικά)
  * @author Dead3y3
  * @author Evropi
@@ -683,11 +694,13 @@ $messages['he'] = array(
  * @author Dani
  * @author Enbéká
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'createpage-desc' => 'Lehetővé teszi egy új oldal létrehozását a Wikia WYSIWYG szerkesztőjével',
 	'createpage-sp-title' => 'Új szócikk létrehozása',
 	'createpage_title' => 'Új szócikk létrehozása',
-	'createpage_title_caption' => 'Cím:',
+	'createpage_title_caption' => 'Cím',
 	'createpage_enter_text' => 'Szöveg:',
 	'createpage_empty_title_error' => 'A cím megadása kötelező',
 	'createpage_empty_article_body_error' => 'A szócikk nem lehet üres',
@@ -698,10 +711,19 @@ Válassz másikat!',
 	'createpage_cant_edit' => 'Nem sikerült végrehajtani a szerkesztést',
 	'createpage-dialog-title' => 'Új szócikk létrehozása',
 	'createpage-dialog-message1' => 'Hurrá, egy új lapot hozol létre!',
+	'createpage-dialog-message2' => 'Mi legyen a címe?',
 	'createpage-dialog-choose' => 'Válaszd ki az oldal elrendezését:',
 	'createpage-dialog-format' => 'Szabványos elrendezés',
 	'createpage-dialog-blank' => 'Üres lap',
 	'createpage-error-empty-title' => 'Adj címet a lapnak',
+	'createpage-error-invalid-title' => 'Sajnos az oldal címe érvénytelen volt.
+Kérünk, használj más címet.',
+	'createpage-error-article-exists' => 'Már létezik egy oldal, ezzel a címmel.
+Elmehetsz a(z) <a href="$1 ">$2</a>-höz, vagy átnevezheted az oldalt.',
+	'createpage-error-article-spam' => 'Sajnos a spamszűrő letiltotta a lap címét
+Kérünk, használj más címet.',
+	'createpage-error-article-blocked' => 'Sajnáljuk, jelenleg nem hozhatod létre ezt az oldalt.',
+	'tog-createpagedefaultblank' => 'Üres lap alapértelmezett használata új oldal létrehozásakor',
 );
 
 /** Interlingua (interlingua)

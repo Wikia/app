@@ -405,6 +405,7 @@ $messages['da'] = array(
  * @author Geitost
  * @author Inkowik
  * @author LWChris
+ * @author PtM
  * @author SVG
  */
 $messages['de'] = array(
@@ -436,7 +437,15 @@ $messages['de'] = array(
 	'article-comments-empty-comment' => 'Ein leerer Kommentar ist nicht möglich. <a href="$1">Stattdessen löschen?</a>',
 	'wikiamobile-article-comments-header' => 'Kommentare (<span id=wkArtCnt>$1</span>)',
 	'wikiamobile-article-comments-more' => 'Weitere laden',
+	'wikiamobile-article-comments-prev' => 'Vorherige laden',
+	'wikiamobile-article-comments-none' => 'Keine Kommentare',
+	'wikiamobile-article-comments-view' => 'Antworten zeigen',
+	'wikiamobile-article-comments-replies' => 'Antworten',
+	'wikiamobile-article-comments-post-reply' => 'Antworten',
+	'wikiamobile-article-comments-post' => 'Abschicken',
 	'wikiamobile-article-comments-placeholder' => 'Kommentieren',
+	'wikiamobile-article-comments-show' => 'Zeigen',
+	'wikiamobile-article-comments-login-post' => 'Bitte melde dich zum Kommentieren an.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR hat "$PAGETITLE" auf {{SITENAME}} kommentiert',
 	'enotif_body_article_comment' => 'Hallo $WATCHINGUSERNAME,
 
@@ -821,6 +830,17 @@ Wikia
 <li>Quere controlar os correos electrónicos que recibe? <a href="{{fullurl:Special:Preferences}}">Actualice as súas preferencias<a>.</li>
 </ul>
 </p>',
+);
+
+/** Hebrew (עברית)
+ * @author Ofekalef
+ */
+$messages['he'] = array(
+	'article-comments-delete' => 'מחיקה',
+	'article-comments-edit' => 'עריכה',
+	'article-comments-history' => 'היסטוריה',
+	'article-comments-error' => 'לא ניתן היה לשמור את התגובה',
+	'article-comments-show-all' => 'הצגת כל התגובות',
 );
 
 /** Hungarian (magyar)
@@ -2087,6 +2107,7 @@ $messages['tl'] = array(
 	'article-comments-anonymous' => 'Hindi nagpapakilalang tagagamit',
 	'article-comments-comments' => 'Mga puna ($1)',
 	'article-comments-post' => 'Magpaskil ng puna',
+	'article-comments-cancel' => 'Huwag ituloy',
 	'article-comments-delete' => 'burahin',
 	'article-comments-edit' => 'baguhin',
 	'article-comments-history' => 'kasaysayan',
@@ -2101,6 +2122,7 @@ $messages['tl'] = array(
 	'article-comments-login' => 'Mangyaring <a href="$1">log in</a> upang makapagpaskil ng isang puna sa wiking ito.',
 	'article-comments-toc-item' => 'Mga puna',
 	'article-comments-comment-cannot-add' => 'Hindi ka makapagdaragdag ng isang puna sa artikulo.',
+	'article-comments-vote' => 'Bumotong paitaas',
 	'article-comments-reply' => 'Tumugon',
 	'article-comments-show-all' => 'Ipakita ang lahat ng mga puna',
 	'article-comments-prev-page' => 'Nakaraan',
@@ -2108,6 +2130,15 @@ $messages['tl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Nabura ang magulang ng artikulo / magulang ng puna.',
 	'article-comments-empty-comment' => "Hindi ka makapagpapaskil ng puna na walang laman. <a href='$1'>Burahin na lang ito?</a>",
+	'wikiamobile-article-comments-header' => 'mga puna <span class=cnt id=wkArtCnt>$1</span>',
+	'wikiamobile-article-comments-more' => 'Magkarga pa',
+	'wikiamobile-article-comments-prev' => 'Ikarga ang dati',
+	'wikiamobile-article-comments-none' => 'Walang mga puna',
+	'wikiamobile-article-comments-view' => 'Tingnan ang mga tugon',
+	'wikiamobile-article-comments-replies' => 'mga tugon',
+	'wikiamobile-article-comments-post-reply' => 'Magpaskil ng isang tugon',
+	'wikiamobile-article-comments-post' => 'Ipaskil',
+	'wikiamobile-article-comments-placeholder' => 'Magpaskil ng puna',
 	'enotif_subject_article_comment' => 'Pumuna ang $PAGEEDITOR sa "$PAGETITLE" sa {{SITENAME}}',
 	'enotif_body_article_comment' => 'Minamahal na $WATCHINGUSERNAME,
 
@@ -2239,7 +2270,7 @@ $messages['vep'] = array(
 $messages['vi'] = array(
 	'article-comments-anonymous' => 'Thành viên vô danh',
 	'article-comments-comments' => 'Bình luận ($1)',
-	'article-comments-post' => 'Đăng lên bình luận',
+	'article-comments-post' => 'Gửi bình luận',
 	'article-comments-cancel' => 'Hủy bỏ',
 	'article-comments-delete' => 'xóa',
 	'article-comments-edit' => 'sửa đổi',
@@ -2265,7 +2296,15 @@ $messages['vi'] = array(
 	'article-comments-empty-comment' => "Bạn không thể đăng một bình luận rỗng. <a href='$1'>Xóa nó thay thế?</a>",
 	'wikiamobile-article-comments-header' => 'Bình luận (<span id=wkArtCnt>$1</span>)',
 	'wikiamobile-article-comments-more' => 'Nạp thêm',
+	'wikiamobile-article-comments-prev' => 'Tải bản trước',
 	'wikiamobile-article-comments-none' => 'Không có bình luận',
+	'wikiamobile-article-comments-view' => 'Xem hồi âm',
+	'wikiamobile-article-comments-replies' => 'hồi âm',
+	'wikiamobile-article-comments-post-reply' => 'Viết một hồi âm',
+	'wikiamobile-article-comments-post' => 'Gửi',
+	'wikiamobile-article-comments-placeholder' => 'Viết một bình luận',
+	'wikiamobile-article-comments-show' => 'Hiển thị',
+	'wikiamobile-article-comments-login-post' => 'Vui lòng đăng nhập để viết bình luận.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR đã bình luận trên "$PAGETITLE" trên {{SITENAME}}',
 	'enotif_body_article_comment' => 'Xin chào $WATCHINGUSERNAME,
 

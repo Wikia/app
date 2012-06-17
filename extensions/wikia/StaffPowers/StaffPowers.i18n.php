@@ -22,6 +22,13 @@ $messages['qqq'] = array(
 	'staffpowers-ipblock-abort' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
 );
 
+/** German (Deutsch)
+ * @author PtM
+ */
+$messages['de'] = array(
+	'staffpowers-ipblock-abort' => 'Sperren von Wikia-Personal, Wikia-Helfern oder Mitgliedern des VSTF-Teams (Spam-Task-Force-Volunteer) ist nicht möglich. Bitte benutze das [[Special:Contact|Kontaktformular]], um irgendwelche Fragen oder Probleme mit einem unserer Mitarbeiter zu melden.',
+);
+
 /** Spanish (español)
  * @author Translationista
  * @author VegaDark
@@ -44,6 +51,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'staffpowers-ipblock-abort' => 'Non é posible bloquear o persoal de Wikia, os axudantes de Wikia ou os nosos voluntarios da forza de loita contra o spam. Utilice o [[Special:Contact|formulario de contacto]] para informar de calquera problema co noso persoal.',
+);
+
+/** Interlingua (interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'staffpowers-ipblock-abort' => 'Blocar le personal o assistentes de Wikia, o membros de nostre fortia voluntari anti-spam (VSTF) non es possibile. Per favor usa le [[Special:Contact|formulario de contacto]] pro reportar problemas con nostre personal.',
 );
 
 /** Italian (italiano)
@@ -95,5 +109,12 @@ $messages['pl'] = array(
  */
 $messages['ru'] = array(
 	'staffpowers-ipblock-abort' => 'Заблокировать сотрудников Викия (Wikia Staff), помощников (Wikia Helpers) или VSTF - невозможно. Пожалуйста, используйте страницу [[Special:Contact]], чтобы сообщить о любой проблеме, связанной с нашими сотрудниками.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'staffpowers-ipblock-abort' => 'Cấm Nhân viên Wikia, Hỗ trợ viên Wikia, hoặc thành viên trong nhóm tình nguyện viên chống phá hoại của chúng tôi (VSTF) là không thể. Xin vui lòng sử dụng [[Special:Contact|mẫu liên hệ này]] để báo cáo bất kỳ vấn đề hoặc sự cố về nhân viên của chúng tôi.',
 );
 

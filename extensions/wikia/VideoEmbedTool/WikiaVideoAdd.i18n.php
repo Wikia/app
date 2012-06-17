@@ -147,6 +147,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author PtM
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -160,6 +161,7 @@ $messages['de'] = array(
 	'wva-notlogged' => 'Du musst dich einloggen oder registrieren um Videos einzufügen.',
 	'wva-notallowed' => 'Du kannst in diesem Wiki keine Videos einfügen.',
 	'wva-protected' => 'Dieses Video ist geschützt',
+	'wva-thumbnail-upload-failed' => 'Videoeinbettung fehlgeschlagen, kein brauchbares Vorschaubild erhalten',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -589,6 +591,7 @@ $messages['pms'] = array(
 	'wva-notlogged' => 'A deuv rintré ant ël sistema o argistresse për anserì ëd filmà',
 	'wva-notallowed' => 'It peule pa anserì video su sta wiki-sì.',
 	'wva-protected' => "Ës filmà-sì a l'é protegiù.",
+	'wva-thumbnail-upload-failed' => "Anseriment dël filmà falì, a l'é pa podusse pijé la miniadura aproprià",
 );
 
 /** Pashto (پښتو)

@@ -1615,7 +1615,7 @@ $messages['ko'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
-	'wmu-upload-image' => 'Wêneyê barbike',
+	'wmu-upload-image' => 'Wêneyî bar bike',
 	'wmu-upload' => 'Barbike',
 	'wmu-find' => 'Bibîne',
 	'wmu-thiswiki' => 'Vê wîkîyê',
@@ -1634,6 +1634,7 @@ $messages['ku-latn'] = array(
 	'wmu-show-license-msg' => 'lîsansa nivîsê nîşan bide',
 	'wmu-gallery' => 'Galerî',
 	'wmu-gallery-btn1' => 'Wêneyên din zêde bike',
+	'wmu-file-protected' => 'Ev wêne tê parastin',
 );
 
 /** Latin (Latina)
