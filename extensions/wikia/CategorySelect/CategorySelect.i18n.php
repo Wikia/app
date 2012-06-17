@@ -235,6 +235,7 @@ $messages['cs'] = array(
  * @author Inkowik
  * @author Jan Luca
  * @author LWChris
+ * @author PtM
  */
 $messages['de'] = array(
 	'categoryselect-desc' => 'Stellt eine Oberfläche zur Verwaltung der Kategorien in einem Artikel ohne Bearbeitung des ganzen Artikels zur Verfügung.',
@@ -258,6 +259,7 @@ $messages['de'] = array(
 	'categoryselect-error-db-locked' => 'Die Datenbank ist vorübergehend gesperrt.',
 	'categoryselect-edit-abort' => 'Deine versuchte Änderung wurde durch ein Aufhängen einer Erweiterung abgebrochen',
 	'tog-disablecategoryselect' => 'Kategorie-Modul ausschalten (greift nur, wenn das grafische Bearbeiten ausgeschaltet wurde)',
+	'tog-disablecategoryselect-v2' => 'Kategorie-Modul deaktivieren (trifft nur zu, wenn der grafische Editor deaktiviert ist)',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -440,20 +442,31 @@ $messages['ha'] = array(
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'categoryselect-desc' => 'Egy felületet biztosít a szócikk kategóriáinak az egész oldal szerkesztése nélküli kezeléséhez',
 	'categoryselect-code-view' => 'Kódnézet',
+	'categoryselect-code-view-placeholder' => 'Itt add hozzá a kategüriákat, pl. [[Kategória:Név]]',
 	'categoryselect-visual-view' => 'Grafikus nézet',
 	'categoryselect-infobox-caption' => 'Kategóriabeállítások',
 	'categoryselect-infobox-category' => 'Add meg a kategória nevét:',
+	'categoryselect-infobox-sortkey' => 'A szócikk ábécérendbe sorolása az "$1" kategóriában az alábbi név szerint:',
 	'categoryselect-addcategory-button' => 'Kategória hozzáadása',
+	'categoryselect-addcategory-edit' => 'Kategória hozzáadása',
 	'categoryselect-suggest-hint' => 'Nyomj Entert, ha kész vagy',
+	'categoryselect-tooltip' => "''' Új!'' ' Kategória címkézési eszköztár. Próbáld ki, vagy tekintsd meg a [[Help:CategorySelect|dokumentációt]]",
+	'categoryselect-unhandled-syntax' => 'Kezeletlen szintaxis észlelve - nem lehetséges a visszaváltás vizuális módba.',
 	'categoryselect-edit-summary' => 'Kategóriák hozzáadása',
+	'categoryselect-empty-name' => 'Kategórianév megjelenítése ( az | előtti rész)',
 	'categoryselect-button-save' => 'Mentés',
 	'categoryselect-button-cancel' => 'Mégse',
+	'categoryselect-error-not-exist' => 'A(z) [id=$1] szócikk nem létezik.',
 	'categoryselect-error-user-rights' => 'Felhasználói jog hiba.',
 	'categoryselect-error-db-locked' => 'Az adatbázis zárolva.',
-	'tog-disablecategoryselect' => 'Kategóriacímkézés letiltása',
+	'categoryselect-edit-abort' => 'Az általad kezdeményezett módosítást nem lehet végrehajtani. (Egy bővítmény megakadályozta.)',
+	'tog-disablecategoryselect' => 'Kategóriamodul letiltása (csak a vizuális módban való szerkesztés kikapcsolása esetén érvényes)',
+	'tog-disablecategoryselect-v2' => 'Kategóriamodul letiltása (csak a vizuális mód kikapcsolása esetén érvényes)',
 );
 
 /** Interlingua (interlingua)
@@ -1145,6 +1158,7 @@ $messages['vi'] = array(
 	'categoryselect-error-db-locked' => 'Cơ sở dữ liệu bị khóa.',
 	'categoryselect-edit-abort' => 'Sửa đổi bạn cố gắng thực hiện đã bị hủy bỏ bởi một móc phần mở rộng',
 	'tog-disablecategoryselect' => 'Vô hiệu hóa mô-đun Thể loại (chỉ áp dụng khi sửa đổi trong chế độ trực quan đã bị vô hiệu)',
+	'tog-disablecategoryselect-v2' => 'Vô hiệu hóa bản Thể loại (chỉ áp dụng khi sửa đổi ở chế độ trực quan bị vô hiệu hoá)',
 );
 
 /** Wu (吴语) */
@@ -1174,6 +1188,7 @@ $messages['zh-hans'] = array(
 	'categoryselect-visual-view' => '预览视图',
 	'categoryselect-addcategory-button' => '添加分类',
 	'categoryselect-addcategory-edit' => '添加分类',
+	'categoryselect-suggest-hint' => '完成时按Enter键',
 	'categoryselect-edit-summary' => '添加分类',
 	'categoryselect-button-save' => '保存',
 	'categoryselect-button-cancel' => '取消',

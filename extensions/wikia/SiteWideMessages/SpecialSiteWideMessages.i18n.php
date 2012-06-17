@@ -586,6 +586,7 @@ $messages['cy'] = array(
  * @author Kghbln
  * @author LWChris
  * @author Laximilian scoken
+ * @author PtM
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -605,6 +606,7 @@ $messages['de'] = array(
 	'swm-label-recipient-wikis' => 'Wikis',
 	'swm-label-recipient-users' => 'Benutzer',
 	'swm-label-expiration' => 'Verfallsdatum',
+	'swm-label-expiration-hint' => '<i>Wähle eine Ablaufzeit aus dem Drop-Down oder überschreibe das Drop-Down per manueller Eingabe. Eigene Zeiteingaben müssen im Format 2012-04-01 00:00:00 erfolgen</i>',
 	'swm-label-mode-wikis-all' => 'Alle Wikis',
 	'swm-label-mode-wikis-hub' => 'Ausgewählter Hub',
 	'swm-label-mode-wikis-cluster' => 'Ausgewählter Benutzer',
@@ -615,6 +617,10 @@ $messages['de'] = array(
 	'swm-label-mode-users-group-hint' => '<i>Wähle eine Gruppe aus dem Dropdown, oder schreibe den Namen per Hand um die Dropdown-Auswahl zu überschreiben.</i>',
 	'swm-label-mode-users-user' => 'Ausgewählter Benutzer',
 	'swm-label-mode-users-user-hint' => '<i>Diese Option ignoriert die Auswahl in der Gruppe „Wikis“.</i>',
+	'swm-label-mode-users-user-multi' => 'Benutzerliste',
+	'swm-label-mode-users-user-multi-hint' => '<i>Gib einen Benutzernamen pro Zeile ein. Diese Option ignoriert die Auswahl in der Gruppe "Wikis".</i>',
+	'swm-label-mode-users-anon' => 'Alle unangemeldeten Benutzer',
+	'swm-label-mode-users-anon-hint' => '<i>Diese Auswahl funktioniert derzeit nur mit den Optionen "alle Wikis" oder "Ausgewähltes Wiki".</i>',
 	'swm-label-content' => 'Inhalt',
 	'swm-label-comment' => 'Kommentar',
 	'swm-label-dismissed' => 'Ausgeblendet',
@@ -648,9 +654,11 @@ $messages['de'] = array(
 	'swm-no' => 'Nein',
 	'swm-error-no-such-wiki' => 'Es gibt kein solches Wiki!',
 	'swm-error-no-such-user' => 'Das angegebene Benutzerkonto ist nicht vorhanden.',
+	'swm-error-no-user-list' => 'Mindestens ein Benutzer muss angegeben werden',
 	'swm-error-empty-message' => 'Gib den Inhalt der Nachricht ein.',
 	'swm-error-long-message' => 'Nachrichten sind auf 500 Zeichen beschränkt.',
 	'swm-error-empty-group' => 'Gib den Namen der Gruppe ein.',
+	'swm-error-invalid-time' => 'Ungültige Zeitangabe',
 	'swm-lang-other' => 'alle verbleibenden Sprachen',
 );
 

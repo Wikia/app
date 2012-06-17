@@ -712,6 +712,7 @@ $messages['gl'] = array(
 /** Hungarian (magyar)
  * @author Dani
  * @author Dj
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'chat' => 'Csevegés',
@@ -730,7 +731,11 @@ $messages['hu'] = array(
 	'chat-err-communicating-with-mediawiki' => 'Hiba a MediaWiki-kiszolgálóval történő kommunikáció közben.',
 	'chat-ban-cant-ban-moderator' => 'Nem tudsz kirúgni/kitiltani másik csevegő moderátort.',
 	'chat-ban-already-banned' => '$1 már ki van tiltva a wiki csevegőjéből.',
+	'chat-err-invalid-username-chatmod' => 'Hiba: Nem található "$1" felhasználó',
 	'chat-you-are-banned' => 'Engedélyezési hiba.',
+	'chat-you-are-banned-text' => 'Sajnálatos módon nem léphetsz be a chatbe ezen a wikin. Amennyiben ezt tévedésnek tartód vagy szeretnéd újratárgyaltatni, lépj kapcsolatba egy adminisztrátorral.',
+	'chat-room-is-not-on-this-wiki' => 'A belépni kívánt chat nem létezik ezen a wikin.',
+	'chat-kick-log-reason' => 'Kirúgva/kitiltva ezen wiki chatjából $1 által. Kérünk, lépj kapcsolatba vele több információért.',
 	'chat-headline' => '$1-csevegő',
 	'chat-live' => 'Élő!',
 	'chat-start-a-chat' => 'Csevegő indítása',
@@ -739,6 +744,7 @@ $messages['hu'] = array(
 	'chat-edit-count' => '$1 szerkesztés',
 	'chat-member-since' => 'Tag $1 óta',
 	'chat-great-youre-logged-in' => 'Nagyszerű! Bejelentkeztél.',
+	'chat-user-manu-profile' => 'Felhasználói oldal',
 	'chat-user-manu-contribs' => 'Közreműködések',
 	'chat-user-manu-private' => 'Privát üzenet',
 	'chat-user-manu-private-block' => 'Privát üzenetek blokkolása',

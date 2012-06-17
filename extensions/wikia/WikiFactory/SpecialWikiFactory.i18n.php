@@ -453,6 +453,40 @@ $messages['az'] = array(
 	'closed-reason' => 'Səbəb:',
 );
 
+/** Bashkir (Башҡортса)
+ * @author ҒатаУлла
+ */
+$messages['ba'] = array(
+	'closewiki' => 'Викины ябыу',
+	'wf_city_url' => 'Адрес',
+	'wf_city_id' => 'id',
+	'wf_city_title' => 'Исеме',
+	'wf_city_created' => 'Яһалған',
+	'wf_city_founding_user' => 'Нигеҙләүселәр',
+	'wf_city_public' => 'Дәрәжә',
+	'wf_city_lang' => 'Тел',
+	'wf_cc_name' => 'Төркөм',
+	'wikifactory_removevariable' => 'Вики мәғлүмәттәрҙе кэштан бөтөрөргә',
+	'wikifactory_removeconfirm' => 'Вики мәғлүмәттәр кэштан бөтөрөлде',
+	'wikifactory-label-info' => 'Мәғлүмәт',
+	'wikifactory-label-variables' => 'Үҙгәреүсән дәүмәлдәр',
+	'wikifactory-label-variables2' => 'Дөйөм',
+	'wikifactory-label-domains' => 'Домендар',
+	'wikifactory-label-clog' => 'Үҙгәртеүҙәр яҙмаһы журналы',
+	'wikifactory-label-actions' => 'Ғәмәлдәр',
+	'wikifactory-label-google' => 'Google ҡоралдары',
+	'wikifactory-label-close' => 'Ябырға',
+	'wikifactory-label-tags' => 'Тамғалар',
+	'wikifactory-label-tags2' => 'Тамғалар',
+	'wikifactory-label-masstags' => 'Күп тамғалар',
+	'wikifactory-label-findtags' => 'Тамғалар эҙләү',
+	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-compare' => 'Сағыштырырға',
+	'right-wikifactory' => 'Викиның эске көйләүҙәрен үҙгәртергә',
+	'wikifactory-domain-edit' => 'Был URL-ды үҙгәртергә',
+	'wikifactory-domain-remove' => "викинан был URL'ды юйырға",
+);
+
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
@@ -1246,14 +1280,15 @@ $messages['da'] = array(
  * @author McDutchie
  * @author Mr. Richard Bolla
  * @author MtaÄ
+ * @author PtM
  * @author SVG
  * @author Sebastian Wallroth
  * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'wikifactorypagetitle' => 'Wiki Factory-Konfigurator',
-	'wikifactory' => 'Wiki Factory-Konfigurator',
+	'wikifactorypagetitle' => 'Wiki Factory: Konfigurator',
+	'wikifactory' => 'Wiki-Factory-Konfigurator',
 	'closewiki' => 'Wiki schließen',
 	'wf_city_url' => 'Adresse',
 	'wf_city_id' => 'ID',
@@ -1292,7 +1327,7 @@ $messages['de'] = array(
 	'closewiki-confirm-button' => 'Bestätige „$1” von $2',
 	'closewiki-nbr-wiki' => '$1 Wikis',
 	'closewiki-wiki-closed' => "'''$1''' wurde geschlossen ($2)",
-	'closewiki-wiki-closed_removed' => "'''$1''' ist jetzt geschlossen und es ist geplant, gelöscht zu werden ($2)",
+	'closewiki-wiki-closed_removed' => "'''$1''' ist nun geschlossen und zur Löschung vorgesehen ($2)",
 	'closewiki-wiki-closed_redirect' => "'''$1''' wurde geschlossen ($2) und leitet jetzt weiter nach: $3",
 	'closewiki-dump-url' => 'Datenbank-Dump: $1',
 	'closewiki-images-url' => 'Bilderarchiv: $1',
@@ -1300,6 +1335,7 @@ $messages['de'] = array(
 	'closewiki-return' => 'Zurück zu $1',
 	'wikifactory-button-saveparse' => 'Auswerten &amp; Änderungen speichern',
 	'wikifactory-button-save' => 'Änderungen speichern',
+	'wikifactory-public-status-change-default-reason' => 'Status im Domänen-Reiter geändert.',
 	'awc-metrics-wikis' => 'Wikis anzeigen',
 	'awc-metrics-select' => 'Wikis anzeigen:',
 	'awc-metrics-by-language' => 'nach Sprache:',
@@ -1317,8 +1353,8 @@ $messages['de'] = array(
 	'awc-metrics-by-email' => 'oder (Benutzer-E-Mail):',
 	'awc-metrics-by-user' => 'gegründet von (Benutzername):',
 	'awc-metrics-by-dbname' => 'wo DB-Namen enthalten:',
-	'awc-metrics-by-title' => 'und Titel, beginnend ab:',
-	'awc-metrics-by-domains' => 'und Domains beinhalten:',
+	'awc-metrics-by-title' => ' und Titel, beginnend ab:',
+	'awc-metrics-by-domains' => ' und Domains beinhalten:',
 	'awc-metrics-not-found' => 'Keine Wikis gefunden',
 	'awc-metrics-nbr-result' => 'Ergebnisse:',
 	'awc-metrics-created-between' => 'erstellt zwischen $1 (JJJJ/MM/TT) und $2 (JJJJ/MM/TT)',

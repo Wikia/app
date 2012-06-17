@@ -228,3 +228,12 @@ $messages['tt-cyrl'] = array(
 	'scribeeventsrecords' => 'Язмалар',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Công cụ]] để tìm kiếm cho một tiêu đề cụ thể xuyên khắp các wiki',
+	'scribeevents' => 'Sự kiện gần đây',
+	'scribeeventsrecords' => 'Bản ghi',
+);
+

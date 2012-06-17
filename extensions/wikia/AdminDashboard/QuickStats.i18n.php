@@ -116,6 +116,7 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author PtM
  */
 $messages['de'] = array(
 	'quickstats-header-label' => 'Ministatistik',
@@ -127,6 +128,8 @@ $messages['de'] = array(
 	'quickstats-totals-label' => 'Gesamt',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Weitere Statistiken]]',
 	'quickstats-number-shortening' => '$1k',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Zazaki (Zazaki)
@@ -641,6 +644,23 @@ $messages['te'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|మరిన్ని గణాంకాలను చూడండి]]',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'quickstats-header-label' => 'Mabilisang Estadistika',
+	'quickstats-header-date' => 'Petsa',
+	'quickstats-header-views' => 'Mga pagtanaw',
+	'quickstats-header-edits' => 'Mga pagpatnugot',
+	'quickstats-header-photos' => 'Mga larawan',
+	'quickstats-header-likes' => 'Mga pagnais',
+	'quickstats-totals-label' => 'Mga kabuoan',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Tumingin ng marami pang estadistika]]',
+	'quickstats-number-shortening' => '$1,000',
+	'quickstats-number-shortening-millions' => '$1 Milyon',
+	'quickstats-number-shortening-billions' => '$1 Bilyon',
+);
+
 /** толышә зывон (толышә зывон)
  * @author Гусейн
  */
@@ -708,6 +728,8 @@ $messages['vi'] = array(
 	'quickstats-totals-label' => 'Tổng cộng',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Xem thêm các số liệu thống kê]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

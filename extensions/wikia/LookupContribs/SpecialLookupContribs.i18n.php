@@ -484,13 +484,30 @@ $messages['gl'] = array(
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'lookupcontribs' => 'Közreműködések keresése',
+	'lookupcontribstitle' => 'Közreműködések keresése',
+	'lookupcontribsrecentcontributions' => '$1 legutóbbi közreműködései',
+	'lookupcontribsfinalcontributions' => '$1 végső közreműködése',
+	'lookupcontribshelp' => 'Ez a speciális lap egy felhasználó közreműködéseit jeleníti meg az összes általa szerkesztett Wikián. A lista megtekintéséhez add meg a felhasználónevet lent.',
+	'lookupcontribusernotspecify' => 'Még nem adtál meg felhasználót!',
 	'lookupcontribsselectuser' => 'Felhasználó kiválasztása:',
+	'lookupcontribsselectfor' => 'Kiválasztás:',
 	'lookupcontribsdisplaymode' => 'Megjelenítési mód:',
+	'lookupcontribsselectmodenormal' => 'a felhasználó legutóbbi közreműködései',
+	'lookupcontribsselectmodefinal' => 'a felhasználó végső közreműködései',
+	'lookupcontribsselectmodeall' => 'a felhasználó összes közreműködése',
 	'lookupcontribsfullurls' => 'teljes URL-ek',
+	'lookupcontribslinks' => 'közreműködési oldal',
 	'lookupcontribsgo' => 'Menj',
+	'lookupcontribsinvaliduser' => '<p class="error">Nem létezik "<b>$1</b>" felhasználó.
+Ellenőrizd a megadott felhasználónevet a gépelési hibák kiszűrése végett.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" nem egy érvényes megjelenítési mód.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" nem egy érvényes mód.</p>',
 	'lookupcontribsselectwikis' => 'Wikik kiválasztása:',
+	'lookupcontribslistwikiainfo' => 'Azon wikik, melyeken vannak <b>$1</b> által szerkesztett cikkek',
 	'lookupcontribsnoresultfound' => 'Nincs találat!',
 	'lookupcontribsinvalidresults' => 'Érvénytelen eredmények!',
 	'lookupcontribswiki' => 'Wiki',
@@ -498,6 +515,8 @@ $messages['hu'] = array(
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Cím',
 	'lookupcontribswikioptions' => 'Beállítások',
+	'lookupcontribscontribslink' => 'közreműködési oldal',
+	'lookupcontribsdetails' => 'Részletek:',
 	'lookupcontribslastedited' => 'Legutóbbi szerkesztés',
 	'lookupcontribsnbrresult' => 'Találatok száma:',
 	'lookupcontribsnext' => 'következő',
@@ -628,6 +647,7 @@ $messages['ja'] = array(
 $messages['ku-latn'] = array(
 	'lookupcontribsgo' => 'Biçe',
 	'lookupcontribswikititle' => 'Sernav',
+	'lookupcontribswikioptions' => 'Vebijêrk',
 	'lookupcontribscontent' => 'naverrok',
 	'lookupcontribsnormal' => 'niha',
 	'lookupcontribsall' => 'hemû',

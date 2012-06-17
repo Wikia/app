@@ -313,6 +313,14 @@ $messages['ko'] = array(
 	'error-json-parse' => '죄송합니다. 저희 서버로 돌아오는 자료에 문제가 생겼으니.\\n나중에 다시 시도하시기 바랍니다.',
 );
 
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'window-article-button-close' => 'Bigre',
+	'window-article-menu-cancel-label' => 'Betal bike',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

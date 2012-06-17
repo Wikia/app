@@ -75,10 +75,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author PtM
  * @author SPQRobin
  */
 $messages['qqq'] = array(
 	'photopop-setup-category-label' => '{{Identical|Category}}',
+	'photopop-setup-watermark-tip' => 'https://play.google.com/store/apps/details?id=com.wikia.app.PhotoPop',
 	'photopop-game-total' => '{{Identical|Total}}',
 	'photopop-game-date' => '{{Identical|Date}}',
 );
@@ -107,6 +109,7 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author George Animal
+ * @author PtM
  * @author Quedel
  */
 $messages['de'] = array(
@@ -116,27 +119,40 @@ $messages['de'] = array(
 	'photopop-setup-icon-label' => 'Spielsymbol (120px × 120px)',
 	'photopop-setup-icon-tip' => 'Gib einen Dateiartikelnamen ein',
 	'photopop-setup-watermark-label' => 'Wasserzeichen',
+	'photopop-setup-watermark-tip' => 'Gib einen Dateiartikel-Namen an...',
 	'photopop-setup-submit-label' => 'Aktualisieren',
 	'photopop-current-settings-title' => 'Aktuelle Einstellungen',
 	'photpop-category-none' => 'N/A',
 	'photopop-error-category-non-existing' => 'Die angegebene Kategorie ist nicht vorhanden',
 	'photopop-error-field-compulsory' => 'Dieses Feld ist obligatorisch',
+	'photopop-error-file-non-existing' => 'Der angegebene Dateiartikel existiert nicht',
 	'photopop-error-db-error' => 'Ein Fehler ist aufgetreten, Einstellungen wurden nicht gespeichert',
 	'photopop-settings-saved' => 'Einstellungen wurden gespeichert',
 	'photopop-image-preview' => 'Bildervorschau:',
+	'photopop-game-round' => 'Runde',
+	'photopop-game-correct' => 'Richtig',
 	'photopop-game-points' => 'Punkte',
 	'photopop-game-total' => 'insgesamt',
 	'photopop-game-score' => 'Punkte',
 	'photopop-game-wiki' => 'Wiki',
 	'photopop-game-date' => 'Datum',
+	'photopop-game-timeup' => 'Zeit ist um!',
 	'photopop-game-please-wait' => 'Bitte warten',
 	'photopop-game-loading-image' => 'Bild laden…<br />Bitte warten',
 	'photopop-game-loading' => 'Lade …',
+	'photopop-game-highscore' => 'Highscore',
+	'photopop-game-highscores' => 'Highscores',
+	'photopop-game-continue' => 'Es ist:',
+	'photopop-game-yougot' => 'Du kriegst',
+	'photopop-game-outof' => 'von',
 	'photopop-game-progress' => 'Fotos',
 	'photopop-game-finished' => 'Fertig!',
 	'photopop-game-image-load-error' => 'Bild konnte nicht geladen werden. Bitte später wiederholen.',
+	'photopop-game-tutorial-intro' => 'Bildschirm tippen, um Blick auf das geheimnisvolle Bild darunter zu werfen',
 	'photopop-game-tutorial-continue' => 'Nachdem die Antwort angezeigt wird, mit der Schaltfläche "Nächste" zu einem weiteren Bild weitergehen.',
+	'photopop-game-tutorial-drawer' => 'Je weniger Blicke du brauchst, je weniger du raten musst und je weniger Zeit du brauchst, umso höher deine Punktzahl!',
 	'photopop-game-tutorial-tile' => 'Mit der Schaltfläche "Antwort" deine Vermutung bestätigen.',
+	'photopop-game-new-highscore' => 'Neuer Highscore',
 	'photopop-game-paused' => 'Spiel pausiert',
 	'photopop-game-loading-assets' => 'Lade Spiel',
 	'photopop-game-month-0' => 'Jan',
@@ -151,6 +167,7 @@ $messages['de'] = array(
 	'photopop-game-month-9' => 'Okt',
 	'photopop-game-month-10' => 'Nov',
 	'photopop-game-month-11' => 'Dez',
+	'photopop-game-no-highscore' => 'Kein Highscore',
 	'photopop-game-error-text' => 'Ein Fehler ist aufgetreten, bitte wiederholen.',
 	'photopop-game-error-network-text' => 'Es gibt ein Problem mit der Internetverbindung. Bitte WLAN- bzw. drahtlose Internetverbindung prüfen.',
 	'photopop-game-download-progress-text' => 'Lade Spiel herunter…',
@@ -431,6 +448,13 @@ $messages['ia'] = array(
 	'photopop-game-download-progress-text' => 'Discarga joco…',
 	'photopop-game-update-progress-text' => 'Actualisa joco…',
 	'photopop-game-download-error-text' => 'Un error ha occurrite durante le discarga del datos del joco. Per favor reproba.',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'photopop-setup-category-label' => 'Kategorî',
 );
 
 /** Macedonian (македонски)

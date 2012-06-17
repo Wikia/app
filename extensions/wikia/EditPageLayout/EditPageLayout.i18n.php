@@ -1477,7 +1477,7 @@ $messages['pl'] = array(
 	'editpagelayout-notificationsLink-none' => 'Powiadomienia',
 	'editpagelayout-edit-title' => 'Edytuj tytuł',
 	'editpagelayout-edit-info' => 'Edytuj informacje',
-	'editpagelayout-diff-header-url' => 'Help:Porównywanie',
+	'editpagelayout-diff-header-url' => 'Help:Podgląd zmian',
 	'editpagelayout-diff-header' => 'Różnice ([[{{MediaWiki:Editpagelayout-diff-header-url}}|pomoc]])',
 	'editpagelayout-myedit-header' => 'To jest Twoja edycja. Dodaj swoje zmiany do pola powyżej!',
 	'editpagelayout-captcha-title' => 'Captcha',
@@ -1530,9 +1530,9 @@ $messages['pl'] = array(
 	'semiprotectedpagewarning-notice' => "'''Ostrzeżenie:''' Ta strona została zabezpieczona i tylko zarejestrowani użytkownicy mogą ją edytować. Zaloguj się by móc edytować. [Więcej informacji]",
 	'protectedpagewarning-notice' => "'''Ostrzeżenie:''' Ta strona została zablokowana by tylko użytkownicy z uprawnieniami administratora mogli ją edytować. Lokalny administrator może zmienić ten stan. [Więcej informacji]",
 	'titleprotectedwarning-notice' => "'''Ostrzeżenie:''' Ta strona została zabezpieczona by tylko użytkownicy z prawami administratora mogli ją utworzyć. Lokalny administrator może zmienić ten stan. [Więcej informacji]",
-	'recreate-moveddeleted-warn-notice' => "'''Uwaga:''' Próbujesz utworzyć stronę, która została wcześniej usunięta. [Więcej informacji]",
+	'recreate-moveddeleted-warn-notice' => "'''Uwaga:''' Odtwarzasz stronę, która została wcześniej usunięta. [Więcej informacji]",
 	'restore-edits-notice' => "Witamy ponownie! Przywróciliśmy część zmian, które nie zostały opublikowane. <a class='notice-action restoreeditlink'>Anuluj moje zmiany i rozpocznij edytowanie na nowo</a>",
-	'restore-edits-diff-notice' => "Witamy ponownie! Przywróciliśmy część zmian, które nie zostały opublikowane. Jednak strona była edytowana w tym czasie. <a class='notice-action restoreeditlink'>Anulować moje zmiany i rozpocząć edytowanie na nowo w obecnej wersji</a> czy <a class='notice-action difflink'>zobaczyć rejestr zmian</a>.",
+	'restore-edits-diff-notice' => "Witamy ponownie! Przywróciliśmy część zmian, które nie zostały opublikowane. Jednak strona była edytowana w tym czasie. <a class='notice-action restoreeditlink'>Anulować moje zmiany i rozpocząć edytowanie na nowo w obecnej wersji</a> czy <a class='notice-action difflink'>zobaczyć porównanie zmian z najnowszą wersją</a>.",
 	'prefs-general' => 'Ogólne',
 	'prefs-starting-an-edit' => 'Rozpoczęcie edytowania',
 	'prefs-editing-experience' => 'Doświadczenie edytowania',
@@ -1541,7 +1541,7 @@ $messages['pl'] = array(
 	'tog-editsection' => 'Włącz edycję sekcji poprzez linki edycji',
 	'tog-editwidth' => 'Rozszerz ekran trybu źródłowego na cały ekran',
 	'tog-minordefault' => 'Wszystkie zmiany oznaczaj domyślnie jako drobne',
-	'tog-forceeditsummary' => 'Poinformuj mnie o niewypełnieniu opisu zmian',
+	'tog-forceeditsummary' => 'Poinformuj mnie gdy zostawię puste pole opisu zmian',
 );
 
 /** Pashto (پښتو)

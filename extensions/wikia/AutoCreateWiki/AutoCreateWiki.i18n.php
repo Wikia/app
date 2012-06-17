@@ -588,6 +588,7 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
+ * @author PtM
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -683,21 +684,20 @@ Bitte wähle eine Sprache aus der Liste.',
 	'autocreatewiki-welcomesubject' => '$1 wurde erstellt!',
 	'autocreatewiki-welcomebody' => 'Hallo $2,
 
-Das von dir erstellte Wikia ist nun unter <$1> erreichbar. Hoffentlich sehen wir dich bald dort editieren!
+das von dir erstellte Wiki ist nun unter <$1> erreichbar.
 
-Wir haben auf deiner Diskussionsseite (<$5>) ein paar Informationen und Tipps für den Start hinterlassen.
+Bereit loszulegen? Wir haben auf deiner Diskussionsseite (<$5>) ein paar Links hinterlassen, die dir für den Anfang helfen sollen und dich hoffentlich ermutigen, die Hilfen zu Wikia in Anspruch zu nehmen. Falls du mal eine Frage hast oder nicht weiter weißt, dann antworte auf diese E-Mail oder schau dir die Hilfeseiten durch <http://hilfe.wikia.com>.
 
-Falls du irgendwelche Probleme hast, kannst du unter <http://de.wikia.com/wiki/Forum:Übersicht> die Gemeinschaft um Hilfe bitten oder dich per E-Mail an community@wikia.com wenden. Du kannst auch unseren #wikia IRC-Channel besuchen <http://irc.wikia.com>.
+Du kannst auch im Gründer- und Administratoren-Blog lesen <http://de.community.wikia.com/wiki/Blog:Gr%C3%BCnder_und_Administratoren>, wie auch im Wikia-Deutschland-News-Blog <http://de.community.wikia.com/wiki/Blog:Wikia_Deutschland_News>. Dort wirst du Tips und Tricks, Infos über neue Funktionen und Neuigkeiten rund um Wikia vorfinden.
 
-Falls du noch weitere Fragen oder Probleme hast, kannst du dich auch direkt per Mail oder Diskussionsseite an mich wenden.
-
-Viel Erfolg mit deinem Projekt!
+Viel Spaß beim Schreiben!
 
 $3
-
 Wikia Community Team
+<http://de.community.wikia.com/wiki/User:$4>
 
-<http://de.wikia.com/wiki/User:$4>',
+___________________________________________
+* Wenn du weniger Nachrichten von uns erhalten möchtest, so kannst du dort deine E-Mail-Einstellungen ändern: http://de.community.wikia.com/Spezial:Einstellungen',
 	'autocreatewiki-welcometalk' => "== Willkommen! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hi \$1 -- wir freuen uns, dass '''\$4''' jetzt Teil der Wikia-Gemeinschaft ist!
 
@@ -3395,7 +3395,7 @@ ___________________________________________
 * '''Kiedy ukończysz edycję wiki – pokaż ją przyjaciołom!''' Jeśli utworzyłeś kilka stron, połącz je linkami i dodaj obrazki. Prawdopodobnie znasz ludzi, którzy mają podobne zainteresowania do Twoich, więc poleć im zajrzenie na Twoją wiki. Oni będą jej pierwszymi czytelnikami i prawdopodobnie również pomogą Ci w edycji tekstów, służ im zatem radami, jeśli będą potrzebowali pomocy.
 
 
-Jeśli masz problem, skontaktuj się z nami [[Special:Contact|formularz kontaktowy]] -- chętnie pomożemy!
+Jeśli masz problem, skontaktuj się z nami poprzez [[Special:Contact|formularz kontaktowy]] -- chętnie pomożemy!
 
 Powodzenia!
 
@@ -4431,8 +4431,14 @@ $messages['tl'] = array(
 	'autocreatewiki-empty-username' => 'Hindi maaaring walang laman ang pangalang pangtagagamit.',
 	'autocreatewiki-empty-password' => 'Hindi maaaring walang laman ang hudyat.',
 	'autocreatewiki-empty-retype-password' => 'Hindi maaaring walang laman ang muling imakinilya ang hudyat.',
+	'autocreatewiki-category-label' => 'Kategorya:',
 	'autocreatewiki-category-other' => 'Iba pa',
 	'autocreatewiki-set-username' => 'Itakda muna ang pangalan ng tagagamit.',
+	'autocreatewiki-invalid-category' => 'Hindi katanggap-tanggap na halaga ng kategorya.
+Mangyaring pumili ng angkop mula sa listahang bumabagsak pababa.',
+	'autocreatewiki-invalid-language' => 'Hindi katanggap-tanggap na halaga ng wika.
+Mangyaring pumili ng angkop mula sa listahang bumabagsak pababa.',
+	'autocreatewiki-invalid-retype-passwd' => 'Mangyaring pakimakinilya ulit ang kaparehong hudyat na katulad ng nasa itaas',
 	'autocreatewiki-invalid-birthday' => 'Hindi tanggap na petsa ng kaarawan',
 	'autocreatewiki-limit-birthday' => 'Hindi nagawang likhain ang pagpapatala.',
 	'autocreatewiki-log-title' => 'Nililikha na ang wiki mo',
@@ -4444,6 +4450,9 @@ $messages['tl'] = array(
 	'autocreatewiki-step3' => 'Itinatalaga ang likas na nakatakdang kabatiran sa loob ng kalipunan ng dato ...',
 	'autocreatewiki-step4' => 'Kinokopya ang likas na nakatakdang mga larawan at logo ...',
 	'autocreatewiki-step5' => 'Itinatalaga ang likas na nakatakdang mga nagbabago sa loob ng kalipunan ng dato ...',
+	'autocreatewiki-step6' => 'Itinatalaga ang likas na nakatakdang mga talahanayan sa kalipunan ng dato ...',
+	'autocreatewiki-step7' => 'Itinatakda ang pangsimula ng wika ...',
+	'autocreatewiki-step8' => 'Itinatakda ang mga pangkat ng tagagamit at mga kategorya ...',
 	'autocreatewiki-congratulation' => 'Maligayang bati!',
 	'autocreatewiki-welcometalk-log' => 'Pambati sa Pagdating',
 	'autocreatewiki-step2-error' => 'Umiiral ang kalipunan ng dato!',

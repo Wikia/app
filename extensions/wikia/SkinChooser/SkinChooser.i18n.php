@@ -41,11 +41,12 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author PtM
  */
 $messages['de'] = array(
 	'skinchooser-desc' => 'Ermöglicht Benutzern in ihren Einstellungen Skins zu wählen',
 	'skinchooser-customcss' => 'Für benutzerdefinierte Designs, wähle die Option "Benutzerdefiniert" im Menü oben und platziere benutzerdefinierte CSS in [[MediaWiki:Monaco.css]].',
-	'new-look' => 'Wikias neuer Look',
+	'new-look' => 'Wikias eigener Look',
 	'site-layout' => 'Seitenlayouts',
 );
 

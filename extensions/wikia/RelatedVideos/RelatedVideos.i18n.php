@@ -72,14 +72,18 @@ $messages['br'] = array(
 
 /** German (Deutsch)
  * @author Alphakilo
+ * @author PtM
  */
 $messages['de'] = array(
+	'related-videos-tally' => 'Verwandte Videos',
+	'related-videos-tally-article' => 'Videos zu diesem Artikel',
 	'related-videos-added-by' => 'Hinzugefügt von',
 	'related-videos-remove' => 'Entfernen',
 	'related-videos-add-video' => 'Ein Video hinzufügen',
 	'related-videos-leave-feedback' => 'Feedback abgeben',
 	'related-videos-add-video-to-this-page' => 'Eine Video zu dieser Seite hinzufügen',
 	'related-videod-add-video-ok' => 'Fertig',
+	'related-videod-add-video-label-name' => 'Gib die vollständige URL von einer der unterstützten Websites ein.',
 	'related-videod-add-video-label-all' => 'Alle anzeigen',
 	'related-videos-add-video-error-bad-url' => 'Die angegebene URL ist ungültig.',
 	'related-videos-add-video-error-nonexisting' => 'Dieses Video existiert nicht.',
@@ -89,6 +93,7 @@ $messages['de'] = array(
 	'related-videos-add-video-error-duplicate' => 'Dieses Video wurde bereits hinzugefügt.',
 	'related-videos-error-unknown' => 'Ein unbekannter Fehler ist aufgetreten. Code: $1.',
 	'related-videos-error-permission-article' => 'Sie können diesen Artikel nicht ändern.',
+	'related-videos-error-no-article-id' => 'Keine Zielartikel-ID angegeben.',
 	'related-videos-error-no-video-url' => 'Keine Video-URL zur Verfügung gestellt.',
 	'related-videos-error-no-video-title' => 'Kein Video Titel zur Verfügung gestellt.',
 	'related-videos-error-while-loading' => 'Fehler beim laden von Daten. Überprüfen Sie bitte Ihre Verbindung und laden sie die Seite erneut.',
@@ -98,11 +103,22 @@ $messages['de'] = array(
 	'related-videos-remove-video-error-nonexisting' => 'Das Video, das Sie entfernen möchten, existiert nicht.',
 	'related-videos-remove-confirm' => 'Sind Sie sicher, dass Sie dieses Video entfernen möchten?',
 	'related-videos-remove-call' => 'Bitte warten Sie während wir das Video entfernen.',
+	'related-videos-wiki-summary-blacklist' => '[[:$2|$1]] aus den Verwandten Videos entfernt.',
+	'related-videos-wiki-summary-whitelist' => '[[:$2|$1]] zu Verwandten Videos hinzugefügt.',
+	'related-videos-update-summary-blacklist' => 'Verwandte-Videos-Blacklist aktualisiert',
+	'related-videos-update-summary-whitelist' => 'Verwandte-Videos-Whitelist aktualisiert',
 	'related-videos-tooltip-add' => 'Eine Video zu dieser Seite hinzufügen',
+	'related-videos-tooltip-remove' => 'Dieses Video entfernen',
+	'related-videos-tooltip-embed' => 'Kopiere diese URL in das Video-Einbindungstool',
 	'related-videos-beta-feature' => 'Beta',
 	'related-videos-repo-name' => 'Wikia Video-Bibliothek',
 	'related-videos-embed-text' => 'eingebetteter Code',
 	'related-videos-video-is-new' => 'Neu',
+	'related-videos-pagination' => '$1 von $2',
+	'related-videos-empty' => 'Als Erster ein Video hinzufügen',
+	'related-videos-requestbutton' => 'Neue Videos anfordern',
+	'related-videos-requesttext' => 'Was möchtest du noch sehen?',
+	'related-videos-hubs-suggested-by' => 'Vorgeschlagen von $1',
 );
 
 /** Zazaki (Zazaki)
@@ -359,6 +375,7 @@ $messages['mk'] = array(
 	'related-videos-empty' => 'Бидете првиот што ќе додаде видео',
 	'related-videos-requestbutton' => 'Побарајте нови видеа',
 	'related-videos-requesttext' => 'Што друго би сакале да видите?',
+	'related-videos-hubs-suggested-by' => 'Предложено од $1',
 );
 
 /** Malay (Bahasa Melayu)

@@ -1250,6 +1250,7 @@ Místo toho můžete kliknout na "$2" a zobrazit aktualizovanou stránku.',
 /** German (Deutsch)
  * @author Avatar
  * @author LWChris
+ * @author PtM
  * @author The Evil IP address
  * @author Tiin
  */
@@ -1266,6 +1267,7 @@ $messages['de'] = array(
 	'wikiaPhotoGallery-error-caption' => 'Fehler',
 	'wikiaPhotoGallery-error-outdated' => 'Diese Galerie wurde bearbeitet, während du die Seite betrachtet hast.
 Bitte aktualisiere die Seite und versuche es erneut.',
+	'wikiaPhotoGallery-error-wrong-title' => 'Kein Titel für angegebene Artikel-ID',
 	'wikiaPhotoGallery-error-user-rights' => 'Fehler bei Benutzerrechten.',
 	'wikiaPhotoGallery-upload-title' => 'Bild finden und hochladen',
 	'wikiaPhotoGallery-upload-info-choose-list' => "'''ODER''' auswählen:",
@@ -5675,10 +5677,12 @@ $messages['vi'] = array(
 	'wikiaPhotoGallery-lightbox-caption' => 'Thông qua $1',
 	'wikiaPhotoGallery-add-gallery' => 'Chèn hình cho thư viện ảnh hoặc trình chiếu tự động',
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Thêm hình vào thư viện ảnh này',
+	'wikiaPhotoGallery-edit-abort' => 'Sửa đổi mà bạn cố gắng thực hiện đã bị hủy bỏ bởi một phần hệ thống mở rộng',
 	'wikiaPhotoGallery-edit-summary' => 'Chỉnh sửa một thư viện ảnh',
 	'wikiaPhotoGallery-error-caption' => 'Lỗi',
 	'wikiaPhotoGallery-error-outdated' => 'Thư viện ảnh này đã được chỉnh sửa trong khi bạn đã xem trang.
 Xin vui lòng làm mới trang và thử lại.',
+	'wikiaPhotoGallery-error-wrong-title' => 'Không có tiêu đề cho bài viết này',
 	'wikiaPhotoGallery-error-user-rights' => 'Quyền người dùng bị lỗi',
 	'wikiaPhotoGallery-upload-title' => 'Tìm và tải lên hình ảnh',
 	'wikiaPhotoGallery-upload-info-choose-list' => "''' Hoặc ''' lựa chọn:",

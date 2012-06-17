@@ -214,6 +214,7 @@ $messages['br'] = array(
  * @author Geitost
  * @author George Animal
  * @author LWChris
+ * @author PtM
  * @author SVG
  */
 $messages['de'] = array(
@@ -224,6 +225,7 @@ $messages['de'] = array(
 	'phalanx-type-summary' => 'Zusammenfassung',
 	'phalanx-type-title' => 'Seitentitel',
 	'phalanx-type-user' => 'Benutzer',
+	'phalanx-type-user-email' => 'E-Mail',
 	'phalanx-type-answers-question-title' => 'Frage-Titel',
 	'phalanx-type-answers-recent-questions' => 'Kürzliche Fragen',
 	'phalanx-type-wiki-creation' => 'Wiki-Erstellung',
@@ -276,6 +278,7 @@ Anmerkung: funktioniert nur für Wikis vom Typ Answers.',
 	'phalanx-help-type-answers-recent-questions' => 'Dieser Filter verhindert die Anzeige einer Frage (Seite) in einer Anzahl von Ausgängen (Widgets, Listen, Tag-generierte Auflistungen).
 
 Anmerkung: funktioniert nur für Wikis vom Typ Answers.',
+	'phalanx-help-type-user-email' => 'Dieser Filter verhindert die Kontoerstellung über eine blockierte E-Mail-Adresse.',
 	'phalanx-user-block-reason-ip' => 'Aufgrund von Vandalismus oder anderem Fehlverhalten durch dich oder jemanden, der deine IP-Adresse mitnutzt, wurde dieser IP-Adresse das Schreibrecht entzogen. Dies gilt für das gesamte Wikia-Netzwerk.
 Wenn du denkst, dass es sich hierbei um einen Fehler handelt, [[Special:Contact|kontaktiere Wikia]]!',
 	'phalanx-user-block-reason-exact' => 'Diesem Benutzernamen oder dieser IP-Adresse ist das Schreiben – aufgrund von Vandalismus oder anderem Fehlverhalten – im gesamten Wikia-Netzwerk verboten worden.
@@ -308,6 +311,8 @@ Bitte [[Special:Contact|kontaktiere Wikia]] im Falle eines Versehens!<br />Als S
 	'phalanx-stats-row-per-wiki' => "Benutzer '''$2''' wurde am '''$4''' von Filter ID '''$3''' ($5) geblockt (Typ: '''$1''')",
 	'phalanx-rule-log-name' => 'Phalanx Regel-Log',
 	'phalanx-rule-log-header' => 'Dies ist ein Logbuch der Änderungen an Phalanx Regeln.',
+	'phalanx-email-rule-log-name' => 'Phalanx-Mailregeln-Logbuch',
+	'phalanx-email-rule-log-header' => 'Dies ist ein Logbuch zu Änderungen der Phalanx-Regeln des Typs E-Mail.',
 	'phalanx-rule-log-add' => 'Phalanx Regel hinzugefügt: $1',
 	'phalanx-rule-log-edit' => 'Phalanx Regel bearbeitet: $1',
 	'phalanx-rule-log-delete' => 'Phalanx Regel gelöscht: $1',
@@ -316,8 +321,10 @@ Bitte [[Special:Contact|kontaktiere Wikia]] im Falle eines Versehens!<br />Als S
 	'phalanx-stats-table-wiki-name' => 'Wikiname',
 	'phalanx-stats-table-wiki-url' => 'Wiki-URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Zuletzt bearbeitet',
+	'phalanx-email-filter-hidden' => 'E-Mail Filter ausgeblendet. Keine Berechtigung zum Anzeigen des Textes.',
 	'right-phalanx' => 'Kann globale Benutzersperren und Spamfilter verwalten',
 	'right-phalanxexempt' => 'Von Phalanx-Regelungen ausgenommen',
+	'right-phalanxemailblock' => 'Kann E-Mail-bezogene Sperren ordnen, einsehen und bearbeiten',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)

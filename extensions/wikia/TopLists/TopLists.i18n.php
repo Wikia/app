@@ -390,6 +390,7 @@ Oznamování změn seznamu si můžete <a href="$4">odhlásit</a>.',
 /** German (Deutsch)
  * @author Avatar
  * @author LWChris
+ * @author PtM
  */
 $messages['de'] = array(
 	'toplists-desc' => 'Top 10 Listen',
@@ -419,6 +420,8 @@ $messages['de'] = array(
 	'toplists-editor-title-placeholder' => 'Gib der Liste einen Namen',
 	'toplists-editor-related-article-label' => 'Verwandte Seite <small>(optional, aber wählt ein Bild)</small>',
 	'toplists-editor-related-article-placeholder' => 'Gib den Namen einer bestehenden Seite an',
+	'toplists-editor-description-label' => 'Eine kurze Beschreibung der Top-10-Liste',
+	'toplists-editor-description-placeholder' => 'Gib eine Beschreibung ein',
 	'toplists-editor-image-browser-tooltip' => 'Füge ein Bild hinzu',
 	'toplists-editor-remove-item-tooltip' => 'Eintrag entfernen',
 	'toplists-editor-drag-item-tooltip' => 'Klicken und ziehen um die Reihenfolge zu ändern',

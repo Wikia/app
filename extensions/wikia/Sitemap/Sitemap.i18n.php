@@ -270,6 +270,13 @@ $messages['uk'] = array(
 	'sitemap-desc' => 'Створює мапу сайту вікі на льоту',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Xiao Qiao
+ */
+$messages['vi'] = array(
+	'sitemap-desc' => 'Tạo ra Sơ đồ web cho wiki này đang được tiến hành',
+);
+
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */

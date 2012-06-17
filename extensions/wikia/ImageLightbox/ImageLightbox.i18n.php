@@ -57,6 +57,7 @@ $messages['az'] = array(
 
 /** German (Deutsch)
  * @author George Animal
+ * @author PtM
  * @author Tiin
  */
 $messages['de'] = array(
@@ -78,6 +79,7 @@ $1
 	'lightbox-share-button-www' => 'Teilen',
 	'lightbox-share-button-embed' => 'Einbinden',
 	'lightbox-share-email-label' => 'Dieses Bild an einen Freund senden',
+	'lightbox-share-email-page-label' => 'Diese Seite an einen Freund senden',
 	'lightbox-share-email-page-label-address' => 'E-Mail-Adresse',
 	'lightbox-share-email-ok-caption' => 'Bestätigung',
 	'lightbox-share-email-ok-content' => 'Die {{PLURAL:$1|E-Mail wurde|E-Mails wurden}} gesendet.',
@@ -87,6 +89,7 @@ $1
 Details: $2',
 	'lightbox-share-email-error-login' => 'Um E-Mails zu senden, musst du dich anmelden',
 	'lightbox-share-email-error-noaddress' => 'Es wurden keine Adressen angegeben.',
+	'lightbox-visit-the-wiki' => 'Besuche das Wiki:',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)

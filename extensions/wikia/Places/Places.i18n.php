@@ -43,10 +43,28 @@ $messages['qqq'] = array(
 /** German (Deutsch)
  * @author Alphakilo
  * @author George Animal
+ * @author PtM
  */
 $messages['de'] = array(
+	'places' => 'Orte in diesem Wiki',
+	'places-desc' => 'Bietet <nowiki><place>und <places></nowiki> Parser-Hooks zum Geo-Taggen von Seiten sowie eine [[Special:Places|Karte aller getaggten Seiten]]',
+	'places-in-category' => 'Orte der Kategorie $1',
+	'places-on-map' => '$1 {{PLURAL:$1|Ort|Orte}} auf dieser Karte',
+	'places-modal-go-to-special' => '$1 {{PLURAL:$1|Ort|Orte}} angezeigt ([[Special:Places|Zeige alle]])',
+	'places-toolbar-button-tooltip' => 'Klicken, um dieser Seite Geo-Tag hinzuzufügen',
+	'places-toolbar-button-address' => 'Bitte gib für diese Seite die als Geo-Tag zu verwendende Adresse an',
 	'places-editor-search' => 'Suche',
+	'places-editor-title-create-new' => 'Geo-Tag hinzufügen',
+	'places-editor-title-edit' => 'Geo-Tag bearbeiten',
+	'places-editor-show-my-location' => 'Zu meinem Standort',
+	'places-editor-geoposition' => 'Momentaner Geo-Standort:',
+	'places-geolocation-button-label' => 'Standort hinzufügen',
+	'places-geolocation-modal-add-title' => 'Standort hinzufügen',
 	'places-geolocation-modal-error-title' => 'Fehler',
+	'places-geolocation-modal-error' => 'Beim Versuch, deinen Standort zu bestimmen, ist ein Fehler aufgetreten:<br />$1',
+	'places-geolocation-modal-not-available' => 'Hoppla! Dieses Feature ist derzeit nur auf mobilen Geräten verfügbar.<br /><br />Lust es auszuprobieren? Einfach diese Seite mit dem Mobilgerät deiner Wahl aufsuchen.',
+	'places-error-no-article' => 'Eine Seite muss angegeben werden',
+	'places-error-place-already-exists' => 'Diese Seite hat bereits einen Geo-Tag',
 	'places-updated-geolocation' => 'Diese Seite Geotaggen',
 	'places-category-switch' => 'Geotagging deaktivieren',
 	'places-category-switch-off' => 'Geotagging aktivieren',

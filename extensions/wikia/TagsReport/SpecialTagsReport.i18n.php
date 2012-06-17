@@ -310,6 +310,7 @@ $messages['ja'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'tagsreportgo' => 'Nîşan bide',
 	'tagsreportnoresults' => 'Tu encam nehate dîtin',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|page|pages}})',
 );

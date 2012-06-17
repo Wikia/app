@@ -563,12 +563,20 @@ $messages['diq'] = array(
 	'cnw-back' => 'Peyd şo',
 	'cnw-or' => 'ya na',
 	'cnw-title' => 'Wikiyo newe vıraze',
+	'cnw-name-wiki-headline' => 'Wikiyo newe pêkerdış',
+	'cnw-name-wiki-label' => 'Namey wiki da şıma',
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-login' => 'Qeyd be',
 	'cnw-signup' => 'Hesab Vıraze',
 	'cnw-auth-headline' => 'Qeyd vıraze',
 	'cnw-auth-headline2' => 'Deqew de',
+	'cnw-userauth-creative' => 'Cı kewe',
+	'cnw-userauth-signup-button' => 'Hesabo Newe Ake',
+	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-change-lang' => 'bıvurne',
+	'cnw-desc-lang' => 'Zıwan',
 	'cnw-error-database' => 'Datay $1 qedya',
+	'cnw-error-blocked-header' => 'Hesab biyo kılit',
 );
 
 /** Spanish (español)
@@ -2513,6 +2521,7 @@ $messages['vi'] = array(
 	'cnw-desc-placeholder' => 'Điều này sẽ xuất hiện trên trang chính của wiki bạn.',
 	'cnw-desc-tip1' => 'Gợi ý',
 	'cnw-desc-tip1-creative' => 'Sử dụng khoảng trống này để nói với mọi người về wiki của bạn trong một hoặc hai câu',
+	'cnw-desc-tip2' => 'Xem này',
 	'cnw-desc-tip2-creative' => 'Cung cấp cho người truy cập một số chi tiết cụ thể về chủ đề của bạn',
 	'cnw-desc-tip3' => 'Mẹo hữu dụng',
 	'cnw-desc-tip3-creative' => 'Hãy để mọi người biết họ có thể giúp wiki của bạn phát triển bằng cách sửa đổi và tạo các trang',

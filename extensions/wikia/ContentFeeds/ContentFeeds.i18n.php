@@ -142,8 +142,12 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'contentfeeds-desc' => 'Gazdag és naprakész információkat szolgáltat különféle címkéken vagy hírcsatornákon át.',
+	'contentfeeds-newimages-rss-title' => 'RSS hírcsatorna a {{#Special:NewFiles}} számára',
+	'contentfeeds-newimages-rss-desc' => 'Hírcsatorna az $1-ről',
 	'contentfeeds-firstfewarticles-tag-header' => 'Hozd létre az első néhány lapodat!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Cím',
 	'contentfeeds-firstfewarticles-tag-next' => 'Következő',

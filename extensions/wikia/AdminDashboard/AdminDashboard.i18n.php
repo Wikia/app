@@ -578,8 +578,12 @@ $messages['gl'] = array(
 /** Hebrew (עברית)
  * @author Amire80
  * @author Deror avi
+ * @author Ofekalef
  */
 $messages['he'] = array(
+	'admindashboard-controls-wiki-header' => 'ויקי',
+	'admindashboard-control-recent-changes-label' => 'שינויים אחרונים',
+	'admindashboard-controls-community-header' => 'קהילה',
 	'admindashboard-control-help-label' => 'עזרה',
 	'admindashboard-control-help-tooltip' => 'למציאת עזרה.',
 	'admindashboard-control-community-corner-label' => 'שער הקהילה',

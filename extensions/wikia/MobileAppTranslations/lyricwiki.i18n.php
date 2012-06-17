@@ -582,6 +582,16 @@ $messages['ko'] = array(
 	'ringtone-matcher-by-song' => '핸드폰에 %s 링톤을 보내세요',
 );
 
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'app-tab-search' => 'Lêgerîn',
+	'search-go' => 'Biçe!',
+	'login-username-hint' => 'Navê bikarhêner',
+	'login-password-hint' => ' Şîfre',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
