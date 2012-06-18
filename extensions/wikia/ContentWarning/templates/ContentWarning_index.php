@@ -5,4 +5,6 @@
 
 	<button id="ContentWarningApprove" class="approve"><?= $btnContinue ?></button>
 	<button id="ContentWarningCancel" class="secondary cancel"><?= $btnCancel ?></button>
+
+	<?= wfMsgExt( 'content-warning-footnote', array( 'parse' ) ) ?>
 </article>
