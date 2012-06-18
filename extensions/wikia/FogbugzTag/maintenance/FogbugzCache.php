@@ -27,7 +27,7 @@ function replaceCase( $connection, $case ) {
 
 echo "Script start...\n";
 
-require_once ( '../../../../maintenance/commandLine.inc' );
+require_once ( __DIR__ . '/../../../../maintenance/commandLine.inc' );
 
 global $wgRequest, $wgHTTPProxy, $wgFogbugzAPIConfig, $wgMemc;
 
