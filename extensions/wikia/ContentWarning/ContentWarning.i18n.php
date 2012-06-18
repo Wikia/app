@@ -14,6 +14,7 @@ $messages['en'] = array(
 In general, Wikia does not review nor do we endorse the content of this or any wiki. For more information about our policies, please visit [http://www.wikia.com/Terms_of_Use Wikia\'s Terms of Use].',
 	'content-warning-button-continue' => 'I understand and I wish to continue',
 	'content-warning-button-cancel' => 'I do not wish to continue',
+	'content-warning-footnote' => '',
 );	
 
 
@@ -82,4 +83,5 @@ $messages['qqq'] = array(
 	'content-warning-body' => 'The body of content warning. $1 is domain name.',
 	'content-warning-button-continue' => 'Button to agree to the content.',
 	'content-warning-button-cancel' => 'Button to do not agree to the content.',
+	'content-warning-footnote' => 'This is additional text to be placed after buttons. This is normally left blank (intentionally), and the message exists to let certain wikis customize this.',
 );
