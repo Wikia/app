@@ -26,9 +26,13 @@ class AdController extends WikiaController {
 				self::$config['TOP_BUTTON'] = true;
 			}
 			elseif (ArticleAdLogic::isSearch()) {
-				self::$config['TOP_LEADERBOARD'] = true;
-				self::$config['TOP_RIGHT_BOXAD'] = true;
-				self::$config['TOP_BUTTON'] = true;				
+				if (!empty($this->wg->EnableWikiaSearchAds)) {
+					// no regular ads if search ads are enabled
+				} else {
+					self::$config['TOP_LEADERBOARD'] = true;
+					self::$config['TOP_RIGHT_BOXAD'] = true;
+					self::$config['TOP_BUTTON'] = true;				
+				}
 			}
 			return;
 		}
@@ -73,10 +77,14 @@ class AdController extends WikiaController {
 			} else if($namespace == NS_SPECIAL) {
 				if (ArticleAdLogic::isSearch()) {
 					// search results page
-					self::$config['TOP_LEADERBOARD'] = true;
-					self::$config['TOP_RIGHT_BOXAD'] = true;
-					self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
-					self::$config['TOP_BUTTON'] = true;
+					if (!empty($this->wg->EnableWikiaSearchAds)) {
+						// no regular ads if search ads are enabled
+					} else {
+						self::$config['TOP_LEADERBOARD'] = true;
+						self::$config['TOP_RIGHT_BOXAD'] = true;
+						self::$config['TEST_TOP_RIGHT_BOXAD'] = true;
+						self::$config['TOP_BUTTON'] = true;
+					}
 				} else if($wgTitle->isSpecial('Leaderboard')) {
 					self::$config['TOP_LEADERBOARD'] = true;
 					self::$config['TOP_RIGHT_BOXAD'] = true;					
