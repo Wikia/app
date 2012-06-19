@@ -338,7 +338,7 @@ EOF;
 		$revision = Revision::newFromTitle(Title::newFromText($message_key, NS_MEDIAWIKI));
 		if(is_object($revision)) {
 			if(trim($revision->getText()) != '') {
-				$temp = getMessageAsArray($message_key);
+				$temp = getMessageForContentAsArray($message_key);
 				if(count($temp) > 0) {
 					wfDebugLog('lyricsminimal', sprintf('Get LOCAL %s, which contains %s lines', $message_key, count($temp)));
 					$lines = $temp;
@@ -348,7 +348,7 @@ EOF;
 
 		if(empty($lines)) {
 			if(isset($wgCat['id'])) {
-				$temp = getMessageAsArray('shared-' . $message_key . '-' . $wgCat['id']);
+				$temp = getMessageForContentAsArray('shared-' . $message_key . '-' . $wgCat['id']);
 				if(count($temp) > 0) {
 					wfDebugLog('lyricsminimal', sprintf('Get %s, which contains %s lines', 'shared-' . $message_key . '-' . $wgCat['id'], count($temp)));
 					$lines = $temp;
@@ -357,7 +357,7 @@ EOF;
 		}
 
 		if(empty($lines)) {
-			$lines = getMessageAsArray($message_key);
+			$lines = getMessageForContentAsArray($message_key);
 			wfDebugLog('lyricsminimal', sprintf('Get %s, which contains %s lines', $message_key, count($lines)));
 		}
 

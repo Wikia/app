@@ -738,7 +738,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$this->defaultAvatars = array();
-		$images = $this->app->runFunction('getMessageAsArray', 'blog-avatar-defaults');
+		$images = $this->app->runFunction('getMessageForContentAsArray', 'blog-avatar-defaults');
 
 		if( is_array($images) ) {
 			foreach( $images as $image ) {

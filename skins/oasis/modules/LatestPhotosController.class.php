@@ -166,7 +166,7 @@ class LatestPhotosController extends WikiaController {
 		static $blacklist = null;
 
 		if (is_null($blacklist)) {
-			$lines = getMessageAsArray(self::BLACKLIST_MESSAGE);
+			$lines = getMessageForContentAsArray(self::BLACKLIST_MESSAGE);
 			$blacklist = array();
 
 			if (!empty($lines)) {
