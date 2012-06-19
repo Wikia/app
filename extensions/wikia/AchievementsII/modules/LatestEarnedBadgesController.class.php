@@ -16,15 +16,16 @@ class LatestEarnedBadgesController extends WikiaController {
 		$blackList = array(BADGE_WELCOME);
 		$awardedBadges = $rankingService->getRecentAwardedBadges(null, $maxBadgesToDisplay, 3, $blackList);
 
-		$this->recents = array();
+		$recents = array();
 		$count = 1;
 
 		// getRecentAwardedBadges can sometimes return more than $max items
 		foreach ($awardedBadges as $badgeData) {
 			//$level = $badgeData['badge']->getLevel();
-			$this->recents[] = $badgeData;
+			$recents[] = $badgeData;
 			if ($count++ >= $maxBadgesToDisplay) break;
 		}
+		$this->recents = $recents;
 
 		wfProfileOut(__METHOD__);
 	}
