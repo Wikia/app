@@ -23,6 +23,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/WikiaSearch.js" ) ) );
 
 		if (!empty($this->wg->EnableWikiaSearchAds)) {
+			$this->app->registerHook('MakeGlobalVariablesScript', 'WikiaSearchAdsController', 'onMakeGlobalVariablesScript');
 			$this->response->addAsset('extensions/wikia/Search/WikiaSearchAds.js');
 		}
 		
