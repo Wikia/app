@@ -6,6 +6,7 @@ class CorporateFooterController extends WikiaController {
 		global $wgCityId, $wgUser, $wgLang, $wgMemc;
 		$catId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
 		$mKey = wfSharedMemcKey( 'mOasisFooterLinks', $wgLang->getCode(), $catId );
+
 		$this->footer_links = $wgMemc->get( $mKey );
 		$this->copyright = $wgUser->getSkin()->getCopyright();
 
@@ -44,8 +45,8 @@ class CorporateFooterController extends WikiaController {
 		$message_key = 'shared-Oasis-footer-wikia-links';
 		$nodes = array();
 
-		if ( !isset( $catId ) || null == ( $lines = getMessageAsArray( $message_key . '-' . $catId ) ) ) {
-			if ( null == ( $lines = getMessageAsArray( $message_key ) ) ) {
+		if ( !isset( $catId ) || null == ( $lines = getMessageAsArray( $message_key . '-' . $catId, false ) ) ) {
+			if ( null == ( $lines = getMessageAsArray( $message_key, false ) ) ) {
 				wfProfileOut( __METHOD__ );
 				return $nodes;
 			}
