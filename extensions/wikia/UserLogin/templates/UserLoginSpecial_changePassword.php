@@ -19,7 +19,7 @@
 			array(
 				'type' => 'hidden',
 				'name' => 'username',
-				'value' => $username
+				'value' => htmlspecialchars($username)
 			),
 			array(
 				'type' => 'hidden',
@@ -28,14 +28,14 @@
 			),
 			array(
 				'type' => 'custom',
-				'output' => '<label>'.wfMsg('yourname').'</label><p class="username">'.$username.'</p>'
+				'output' => '<label>'.wfMsg('yourname').'</label><p class="username">'.htmlspecialchars($username).'</p>'
 			),
 			array(
 				'type' => 'password',
 				'name' => 'password',
 				'id' => 'password',
 				'label' => wfMsg('userlogin-oldpassword'),
-				'value' => $password,
+				'value' => htmlspecialchars($password),
 				'isInvalid' => !empty($errParam) && $errParam === 'password',
 				'errorMsg' => !empty($msg) ? $msg : ''
 			),

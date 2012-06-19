@@ -42,7 +42,7 @@
 			array(
 				'type' => 'hidden',
 				'name' => 'username',
-				'value' => $username
+				'value' => htmlspecialchars($username)
 			),
 			array(
 				'type' => 'text',

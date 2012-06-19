@@ -26,11 +26,11 @@ if ( !empty( $result ) && $result == 'error' ) {
 	<? endif ;?>
 	<form method=post action="<?= $formPostAction ?>">
 		<input type=hidden name=editToken value="<?= $editToken ;?>">
-		<input type=hidden name=username value="<?= $username ;?>">
+		<input type=hidden name=username value="<?= htmlspecialchars($username) ;?>">
 		<input type=hidden name=returnto value="<?= $returnto ;?>">
 
 		<label for=password><?= $wf->msg( 'userlogin-oldpassword' ) ;?></label>
-		<input type=password name=password<?= ($password) ? ' value="'.$password.'"' : ''?><?= ($oldErr) ? ' class=inpErr' : ''?>>
+		<input type=password name=password<?= ($password) ? ' value="'.htmlspecialchars($password).'"' : ''?><?= ($oldErr) ? ' class=inpErr' : ''?>>
 		<? if( $oldErr ) : ?><div class=wkErr><?= $msg ?></div><? endif; ?>
 
 		<label for=newpassword><?= $wf->msg( 'userlogin-newpassword' ) ;?></label>
