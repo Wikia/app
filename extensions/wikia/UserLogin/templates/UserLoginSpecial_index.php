@@ -22,7 +22,7 @@
 		'isRequired' => true,
 		'label' => wfMsg('yourpassword'),
 		'isInvalid' => (!empty($errParam) && $errParam === 'password'),
-		'value' => $password
+		'value' => htmlspecialchars($password)
 	);
 	$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $msg : '';
 
