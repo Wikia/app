@@ -30,7 +30,7 @@
 	}
 
 	// render page type line
-	if ($pageSubtitle != '') {
+	if ( !empty($pageSubtitle) ) {
 ?>
 	<h2><?= $pageSubtitle ?></h2>
 <?php
@@ -38,7 +38,7 @@
 
 	// MW subtitle
 	// include undelete message (BugId:1137)
-	if ($subtitle != '') {
+	if ( !empty($subtitle)) {
 ?>
 	<div class="subtitle"><?= $subtitle ?></div>
 <?php
