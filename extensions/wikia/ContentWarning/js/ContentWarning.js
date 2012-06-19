@@ -42,11 +42,6 @@ jQuery(function($) {
 						domain: wgServer.split('/')[2]
 					});
 				});
-
-				// User does not wish to proceed, send them back to the home page
-				$('#ContentWarningCancel').click(function() {
-					window.location = 'http://www.wikia.com';
-				});
 			}
 		});
 	}
