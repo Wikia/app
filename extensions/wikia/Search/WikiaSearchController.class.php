@@ -23,8 +23,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->wg->Out->addHTML( F::build('JSSnippets')->addToStack( array( "/extensions/wikia/Search/WikiaSearch.js" ) ) );
 
 		if (!empty($this->wg->EnableWikiaSearchAds)) {
+		if (!empty($this->wg->NoExternals)) {
+			// don't show ads in search
+		} elseif (is_object($this->wg->User) && $this->wg->User->isLoggedIn() && !($this->wg->User->getOption('showAds') || !empty($_GET['showads']))) {
+			// don't show ads in search
+		} else {
 			$this->app->registerHook('MakeGlobalVariablesScript', 'WikiaSearchAdsController', 'onMakeGlobalVariablesScript');
 			$this->response->addAsset('extensions/wikia/Search/WikiaSearchAds.js');
+		}
 		}
 		
 		if ( $this->wg->User->getSkin() instanceof SkinMonoBook ) {
