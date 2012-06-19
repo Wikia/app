@@ -467,15 +467,9 @@ function parseItem($line) {
  * @author Inez Korczynski <inez@wikia.com>
  * @return array
  */
-function getMessageAsArray($messageKey, $forContent = true) {
+function getMessageForContentAsArray($messageKey) {
 
-	if ( $forContent ) {
-		// the message will be in the same language as the content of the wiki
-		$message = trim(wfMsgForContent($messageKey));
-	} else {
-		// the message will be in the same language as the interface
-		$message = trim(wfMsg($messageKey));
-	}
+	$message = trim(wfMsgForContent($messageKey));
 	if(!wfEmptyMsg($messageKey, $message)) {
 		$lines = explode("\n", $message);
 		if(count($lines) > 0) {
@@ -483,6 +477,20 @@ function getMessageAsArray($messageKey, $forContent = true) {
 		}
 	}
 	return null;
+}
+
+/**
+ * @author Michał Roszka (Mix) <michal@wikia-inc.com>
+ * @return array
+ */
+function getMessageAsArray( $messageKey ) {
+	$message = trim( wfMsg( $messageKey ) );
+	if( !wfEmptyMsg( $messageKey, $message ) ) {
+		$lines = explode( "\n", $message );
+		if( count( $lines ) > 0 ) {
+			return $lines;
+		}
+	}
 }
 
 /**

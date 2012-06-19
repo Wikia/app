@@ -45,8 +45,8 @@ class CorporateFooterController extends WikiaController {
 		$message_key = 'shared-Oasis-footer-wikia-links';
 		$nodes = array();
 
-		if ( !isset( $catId ) || null == ( $lines = getMessageAsArray( $message_key . '-' . $catId, false ) ) ) {
-			if ( null == ( $lines = getMessageAsArray( $message_key, false ) ) ) {
+		if ( !isset( $catId ) || null == ( $lines = getMessageAsArray( $message_key . '-' . $catId ) ) ) {
+			if ( null == ( $lines = getMessageAsArray( $message_key ) ) ) {
 				wfProfileOut( __METHOD__ );
 				return $nodes;
 			}

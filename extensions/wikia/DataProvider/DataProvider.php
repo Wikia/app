@@ -710,9 +710,9 @@ class DataProvider {
 		$message_key = 'shared-Monaco-category-list';
 		$nodes = array();
 
-		if (!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key . '-' . $wgCat['id']))) {
+		if (!isset($wgCat['id']) || null == ($lines = getMessageForContentAsArray($message_key . '-' . $wgCat['id']))) {
 			wfDebugLog('monaco', $message_key . '-' . $wgCat['id'] . ' - seems to be empty');
-			if (null == ($lines = getMessageAsArray($message_key))) {
+			if (null == ($lines = getMessageForContentAsArray($message_key))) {
 				wfDebugLog('monaco', $message_key . ' - seems to be empty');
 				wfProfileOut(__METHOD__);
 				return $nodes;
