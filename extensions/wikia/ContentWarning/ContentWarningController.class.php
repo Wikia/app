@@ -11,10 +11,15 @@ class ContentWarningController extends WikiaController {
 	 */
 	public function index() {
 		$domain = str_replace('http://', '', $this->wg->Server );
-		$this->title = $this->wf->Msg('content-warning-title');
 		$this->body = $this->wf->MsgExt( 'content-warning-body', array('parse'), $domain );
-		$this->btnContinue = $this->wf->Msg( 'content-warning-button-continue' );
-		$this->btnCancel = $this->wf->Msg( 'content-warning-button-cancel' );
+
+		$userLang = $this->wg->Lang->getCode();
+
+		if ( !empty( $this->wg->LangToCentralMap[$userLang] ) ) {
+			$this->btnCancelUrl = $this->wg->LangToCentralMap[$userLang];
+		} else {
+			$this->btnCancelUrl = 'http://www.wikia.com/';
+		}
 	}
 
 	/**
