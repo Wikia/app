@@ -13,6 +13,13 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 		$script = '';
 
+		// Load the OneDot javascript <s>after</s> before GA
+		// GA needs AB::getTreatmentGroup needs beacon
+		// TODO: refactor Track into AnalyticsProviderOnedot
+		if (class_exists('Track')) {
+			$script .= Track::getViewJS();
+		}
+
 		$setDomainName = '';
 		if(strpos($_SERVER['SCRIPT_URI'], '.wikia.com/') !== false) {
 			$setDomainName = '_gaq.push([\'_setDomainName\', \'.wikia.com\']);';
@@ -43,18 +50,20 @@ SCRIPT2;
   }
   
   function getCustomVarAB() {
-    var ab = [];
-    try {
-      for (var expId in abBeingTracked) {
-        if (abBeingTracked[expId]) {
-          ab.push('e' + expId + ' g' + abTreatments[expId]);
-        }
+    var ab = 'error';
+    
+    if (typeof getTreatmentGroup == 'function') {
+      ab = getTreatmentGroup(1) || false;
+      if (ab) {
+        ab = 'e1 g' + ab;
+      } else {
+        ab = 'no group';
       }
-    } catch(e) {
-      //console.log(e);
+    } else {
+      ab = 'no function';
     }
 
-    return ab.shift() || 'none';
+    return ab || 'none';
   }
 
   var _gaq = _gaq || [];
@@ -63,7 +72,7 @@ SCRIPT2;
 
   _gaq.push(['_setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
-  _gaq.push(['_setCustomVar', 3, 'AB',   (getCustomVarAB() || 'unknown'), 3]);
+  _gaq.push(['_setCustomVar', 3, 'AB2',  (getCustomVarAB() || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['_setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 
@@ -76,7 +85,7 @@ SCRIPT2;
 
   _gaq.push(['Ads._setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
-  _gaq.push(['Ads._setCustomVar', 3, 'AB',   (getCustomVarAB() || 'unknown'), 3]);
+  _gaq.push(['Ads._setCustomVar', 3, 'AB2',  (getCustomVarAB() || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
   _gaq.push(['Ads._setCustomVar', 5, 'user', (window.wgUserName == null) ? 'anon' : 'user', 3]);
 
@@ -88,10 +97,6 @@ SCRIPT2;
 
 </script>
 SCRIPT2;
-		// Load the OneDot javascript after GA
-		if (class_exists('Track')) {
-			$script .= Track::getViewJS();
-		}
 
 		return $script;
 	}
