@@ -38,4 +38,4 @@ $app->registerSpecialPage('UserSignup', 'UserSignupSpecialController');
 $app->registerSpecialPage('WikiaConfirmEmail', 'WikiaConfirmEmailSpecialController');
 
 // redirects from userlogin to UserLogin
-$wgSpecialPages['Signup'] = array( 'SpecialRedirectToSpecial', 'Signup', 'UserLogin', '', array('returnto') );
+$wgSpecialPages['Signup'] = array( 'SpecialRedirectToSpecial', 'Signup', 'UserLogin', '', array( 'returnto', 'type' ) );
