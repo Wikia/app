@@ -53,8 +53,8 @@ SCRIPT2;
     var ab = 'error';
     
     if (typeof getTreatmentGroup == 'function') {
-      ab = getTreatmentGroup(1) || false;
-      if (ab) {
+      ab = getTreatmentGroup(1);
+      if (ab == 1 || ab == 2 || ab == 3) {
         ab = 'e1 g' + ab;
       } else {
         ab = 'no group';
@@ -63,7 +63,8 @@ SCRIPT2;
       ab = 'no function';
     }
 
-    return ab || 'none';
+    //console.log(ab);
+    return ab || 'impossible';
   }
 
   var _gaq = _gaq || [];
