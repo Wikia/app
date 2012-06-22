@@ -170,12 +170,9 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 }
 
-.SearchAds {
+.WikiaSearchAds {
 	background-color: $color-search-ads-background;
 	padding: $form-side-padding;
-	&.disabled {
-		display: none;
-	}
 	&.SearchAdsBottom {
 		margin-top: 12px;
 	}
@@ -184,7 +181,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 	h3 {
 		font-size: 14px;
-		margin: 0 0 12px 0;
+		margin: 0;
 		padding: 0;
 	}
 	.list {
@@ -199,11 +196,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 	.unit {
 		line-height: 16px;
-		margin: 0 0 12px 0;
-
-		&:last-child {
-			margin: 0;
-		}
+		margin: 12px 0 0 0;
 	}
 	.link {
 		font-size: 16px;

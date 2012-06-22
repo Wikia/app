@@ -31,10 +31,12 @@
 
 	</form>
 
-	<div id="SearchAdsTop" class="SearchAdsTop SearchAds disabled">
-		<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
-		<ul class="list loading"></ul>
-	</div>
+	<?php if ($showSearchAds): ?>
+		<div id="SearchAdsTop" class="WikiaSearchAds SearchAdsTop">
+			<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
+			<ul class="list loading"></ul>
+		</div>
+	<?php endif; ?>
 
 	<?php if(!empty($results)): ?>
 		<?php if( $resultsFound > 0 ): ?>
@@ -89,10 +91,12 @@
 			<?php endforeach; ?>
 			</ul>
 
-		<div id="SearchAdsBottom" class="SearchAdsBottom SearchAds disabled">
-			<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
-			<ul class="list loading"></ul>
-		</div>
+			<?php if ($showSearchAds): ?>
+				<div id="SearchAdsBottom" class="WikiaSearchAds SearchAdsBottom">
+					<h3 class="subtle"><?= wfMsg( 'wikiasearch2-search-ads-header' );?></h3>
+					<ul class="list loading"></ul>
+				</div>
+			<?php endif; ?>
 			
 			<?= $paginationLinks; ?>
 		<?php else:  ?>
