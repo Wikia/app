@@ -173,6 +173,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 .WikiaSearchAds {
 	background-color: $color-search-ads-background;
 	padding: $form-side-padding;
+	padding-bottom: 0;
 	&.SearchAdsBottom {
 		margin-top: 12px;
 	}
@@ -181,22 +182,23 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 	h3 {
 		font-size: 14px;
-		margin: 0;
+		margin: 0 0 12px 0;
 		padding: 0;
 	}
 	.list {
 		list-style: none;
 		margin: 0;
-		min-height: 207px;
+		min-height: 216px;
 		padding: 0;
-
 		&.loading {
 			background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
 		}
 	}
 	.unit {
+		height: 60px;
 		line-height: 16px;
-		margin: 12px 0 0 0;
+		margin: 0;
+		padding: 0 0 12px 0;
 	}
 	.link {
 		font-size: 16px;
