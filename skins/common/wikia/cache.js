@@ -36,7 +36,7 @@
 			return (new Date()).getTime();
 		}
 	
-		if(Modernizr.localstorage){
+		if(window.localStorage){
 			ls = localStorage;
 		}else{
 			var c = window.__wkCache__ = {};

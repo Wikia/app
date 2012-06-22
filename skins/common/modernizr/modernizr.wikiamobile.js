@@ -1,5 +1,5 @@
 /* Modernizr 2.5.3 (Custom Build) | MIT & BSD
- * Build: http://modernizr.com/download/#-localstorage-touch-addtest-teststyles-prefixes
+ * Build: http://modernizr.com/download/#-cssclasses-addtest
  */
 ;
 
@@ -11,6 +11,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
     Modernizr = {},
 
+    enableClasses = true,
 
     docElement = document.documentElement,
 
@@ -21,13 +22,7 @@ window.Modernizr = (function( window, document, undefined ) {
     inputElem  ,
 
 
-    toString = {}.toString,
-
-    prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
-
-
-
-    tests = {},
+    toString = {}.toString,    tests = {},
     inputs = {},
     attrs = {},
 
@@ -35,39 +30,10 @@ window.Modernizr = (function( window, document, undefined ) {
 
     slice = classes.slice,
 
-    featureName, 
+    featureName,
 
 
-    injectElementWithStyles = function( rule, callback, nodes, testnames ) {
 
-      var style, ret, node,
-          div = document.createElement('div'),
-                body = document.body, 
-                fakeBody = body ? body : document.createElement('body');
-
-      if ( parseInt(nodes, 10) ) {
-                      while ( nodes-- ) {
-              node = document.createElement('div');
-              node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
-              div.appendChild(node);
-          }
-      }
-
-                style = ['&#173;','<style>', rule, '</style>'].join('');
-      div.id = mod;
-          (body ? div : fakeBody).innerHTML += style;
-      fakeBody.appendChild(div);
-      if(!body){
-                fakeBody.style.background = "";
-          docElement.appendChild(fakeBody);
-      }
-
-      ret = callback(div, rule);
-        !body ? fakeBody.parentNode.removeChild(fakeBody) : div.parentNode.removeChild(div);
-
-      return !!ret;
-
-    },
     _hasOwnProperty = ({}).hasOwnProperty, hasOwnProperty;
 
     if ( !is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined') ) {
@@ -159,44 +125,6 @@ window.Modernizr = (function( window, document, undefined ) {
     }
 
 
-    var testBundle = (function( styles, tests ) {
-        var style = styles.join(''),
-            len = tests.length;
-
-        injectElementWithStyles(style, function( node, rule ) {
-            var style = document.styleSheets[document.styleSheets.length - 1],
-                                                    cssText = style ? (style.cssRules && style.cssRules[0] ? style.cssRules[0].cssText : style.cssText || '') : '',
-                children = node.childNodes, hash = {};
-
-            while ( len-- ) {
-                hash[children[len].id] = children[len];
-            }
-
-                       Modernizr['touch'] = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch || (hash['touch'] && hash['touch'].offsetTop) === 9; 
-                                }, len, tests);
-
-    })([
-                       ,['@media (',prefixes.join('touch-enabled),('),mod,')',
-                                '{#touch{top:9px;position:absolute}}'].join('')           ],
-      [
-                       ,'touch'                ]);
-
-
-
-    tests['touch'] = function() {
-        return Modernizr['touch'];
-    };
-
-    tests['localstorage'] = function() {
-        try {
-            localStorage.setItem(mod, mod);
-            localStorage.removeItem(mod);
-            return true;
-        } catch(e) {
-            return false;
-        }
-    };
-
 
     for ( var feature in tests ) {
         if ( hasOwnProperty(tests, feature) ) {
@@ -226,6 +154,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
          test = typeof test == 'function' ? test() : test;
 
+              docElement.className += ' ' + (test ? '' : 'no-') + feature;
               Modernizr[feature] = test;
 
        }
@@ -240,9 +169,12 @@ window.Modernizr = (function( window, document, undefined ) {
 
     Modernizr._version      = version;
 
-    Modernizr._prefixes     = prefixes;
+    /* Wikia change start - author Federico */
+    //we add the js class in our own logic
+    if(enableClasses)
+      docElement.className += classes.join(' ');
+    /* Wikia change end */
 
-    Modernizr.testStyles    = injectElementWithStyles;
     return Modernizr;
 
 })(this, this.document);
