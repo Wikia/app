@@ -1,9 +1,6 @@
 jQuery(function($) {
 	//$().log('start', 'WikiaSearchAds');
 
-	// Show ad units
-	$('.SearchAds').removeClass('disabled');
-
 	// In the case that there aren't enough ad units to fill the ad space
 	// this function will shrink the ad wrapper to the proper height.
 	function shrinkWrap(element) {
