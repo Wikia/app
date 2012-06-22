@@ -214,6 +214,6 @@ AIC2.checkFooterAd = function() {
 	}
 };
 
-if (top == self && !(window.wgUserName && !window.wgUserShowAds) && window.wgEnableAdsInContent && window.wgIsArticle && (window.wgNamespaceNumber != 6) && ! AIC2.called && ! window.wgIsMainpage && $("#TOP_RIGHT_BOXAD").length) {
+if (top == self && !(window.wgUserName && !window.wgUserShowAds) && window.wgEnableAdsInContent && window.wgIsArticle && (window.wgNamespaceNumber != 6) && ! AIC2.called && ! window.wgIsMainpage && ($("#TOP_RIGHT_BOXAD").length > 0)) {
 	wgAfterContentAndJS.push(function(){AIC2.init();});
 }
