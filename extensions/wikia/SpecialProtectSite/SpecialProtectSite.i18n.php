@@ -73,7 +73,7 @@ $messages['az'] = array(
 	'protectsite-comment' => 'Şərh:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -282,7 +282,7 @@ $messages['fr'] = array(
 	'protectsite-nologs' => 'ne pas afficher dans les journaux',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

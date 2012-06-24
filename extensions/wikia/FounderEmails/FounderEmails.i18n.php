@@ -1025,7 +1025,7 @@ Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um 
 	'founderemails-email-lot-happening-greeting' => 'Hey $USERNAME,',
 	'founderemails-email-lot-happening-headline' => 'Glückwunsch! Heute ist viel los bei $WIKINAME!',
 	'founderemails-email-lot-happening-content' => 'Wenn du es noch nicht getan hast, kannst du zu den letzten Aktivitäten gehen und nachschauen welche großartige Arbeit verrichtet wurde. Da so viel los ist, willst du vielleicht auch die E-Mail-Benachrichtigungs-Einstellungen auf Zusammenfassungs-Modus ändern. Im Zusammenfassungs-Modus erhältst du eine Mail, die alle Aktivitäten des Tages im Wiki auflistet.',
-	'founderemails-email-lot-happening-signature' => 'Das Wikia Team',
+	'founderemails-email-lot-happening-signature' => 'Das Wikia-Team',
 	'founderemails-email-lot-happening-button' => 'Aktivitäten ansehen',
 	'founderemails-email-footer-line1' => 'Um aktuelle Ereignisse in Wikia mitzubekommen, besuche <a style="color:#2a87d5;text-decoration:none;" href="http://de.community.wikia.com">de.community.wikia.com</a>',
 	'founderemails-email-footer-line2' => 'Willst du steuern, welche E-Mails du bekommst? Gehe zu deinen <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Einstellungen</a>.',
@@ -2171,7 +2171,7 @@ Vous pouvez toujours vous rendre sur l’activité du wiki pour voir les modific
 	'founderemails-pref-complete-digest-v2' => '...un compte-rendu quotidien des premières fois, modifications et vues est prêt',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -3394,7 +3394,7 @@ $PAGEURL
 	'founderemails-email-general-edit-headline' => 'Корисникот $USERNAME штотуку изврши друго уредување на страницата $WIKINAME на $PAGETITLE.',
 	'founderemails-email-general-edit-content' => 'Појдете на $PAGETITLE за да проверите што е додадено.',
 	'founderemails-email-general-edit-signature' => 'Екипата на Викија',
-	'founderemails-email-general-edit-button' => 'Check it out!',
+	'founderemails-email-general-edit-button' => 'Погледајте го!',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Здраво $USERNAME,<br /><br />
 Регистрираниот корисник $EDITORNAME го уреди вашето вики! Зошто не пуштите поздрав на неговата <a href="$EDITORTALKPAGEURL">страница за разговор</a>?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
@@ -5261,12 +5261,13 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author Rhaijin
  * @author Waldir
  */
 $messages['pt'] = array(
 	'founderemails-desc' => 'Ajuda a informar os fundadores acerca das mudanças na sua wiki',
 	'tog-founderemailsenabled' => 'Enviar-me por correio electrónico actualizações sobre aquilo que os outros têm feito (só para fundadores)',
-	'founderemails-email-user-registered-subject' => 'Alguém registou uma conta na sua wiki!',
+	'founderemails-email-user-registered-subject' => 'Alguém novo juntou $ WikiName',
 	'founderemails-email-user-registered-body' => 'Olá $USERNAME,
 
 Parece que o utilizador $EDITORNAME se registou na sua wiki! Que tal ir à página de discussão $EDITORTALKPAGEURL e dizer-lhe olá?

@@ -963,7 +963,7 @@ $messages['fr'] = array(
 	'wikia-editor-plb-show-static-buttons' => 'Restaurer plus de boutons de média <i>statique</i>',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

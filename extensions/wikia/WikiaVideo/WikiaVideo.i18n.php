@@ -90,7 +90,7 @@ $messages['az'] = array(
 	'wikiavideo-links' => 'Keçidlər',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -354,7 +354,7 @@ $messages['fr'] = array(
 	'wikiavideo-details' => '$1 ($2 pixel{{PLURAL:$2||s}}, hébergeur : <a href="$3" class="external" target="_blank">$4</a>)',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

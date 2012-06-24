@@ -68,7 +68,7 @@ $messages['af'] = array(
 	'categoryselect-error-db-locked' => 'Databasis is gesluit.',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -143,7 +143,7 @@ $messages['bar'] = array(
 	'tog-disablecategoryselect' => 'Vaoahfochts Kategorisiern ausschoiden',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -399,7 +399,7 @@ $messages['fr'] = array(
 	'tog-disablecategoryselect-v2' => "Désactiver le module Catégorie (s'applique uniquement si le mode d'édition visuelle est désactivé)",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1186,6 +1186,7 @@ $messages['zh-hans'] = array(
 	'categoryselect-code-view' => '代码视图',
 	'categoryselect-code-view-placeholder' => '在此添加分类，例如[[Category:名称]]',
 	'categoryselect-visual-view' => '预览视图',
+	'categoryselect-infobox-category' => '输入类别的名称：',
 	'categoryselect-addcategory-button' => '添加分类',
 	'categoryselect-addcategory-edit' => '添加分类',
 	'categoryselect-suggest-hint' => '完成时按Enter键',

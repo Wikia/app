@@ -89,7 +89,7 @@ $messages['fr'] = array(
 	'cacheepoch-no-wf' => "WikiFactory n'est pas activé sur ce wiki. Impossible de modifier wgCacheEpoch.",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

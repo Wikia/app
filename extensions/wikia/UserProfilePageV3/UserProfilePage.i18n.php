@@ -834,7 +834,7 @@ $messages['fr'] = array(
 	'user-identity-remove-fail' => 'Il y a eu un problème lors de la suppression de l’avatar !',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -2042,6 +2042,32 @@ $messages['sv'] = array(
 	'blog-avatar-removed-log' => 'Tog bort $1s avatarer',
 	'blog-avatar-alt' => 'Logbok över användares tillagda eller borttagna avatarer.',
 	'user-identity-remove-confirmation' => 'Är du säker på att du vill ta bort avataren?',
+	'user-identity-remove-fail' => 'Det uppstod ett problem när avataren skulle tas bort!',
+);
+
+/** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
+ */
+$messages['te'] = array(
+	'userprofilepage-lightbox-interview-save' => 'అయిపోయింది, ఇక దాచిపెట్టండి.',
+	'userprofilepage-interview-edit-new-summary' => 'వాడుకరితో మాటామంతీ కల్పించాము.',
+	'userprofilepage-interview-section-title' => 'వాడుకరితో మాటామంతీ',
+	'user-identity-box-edit-avatar' => 'వేషం మార్చండి.',
+	'user-identity-box-delete-avatar' => 'వేషం తీసివెయ్యండి.',
+	'user-identity-box-zero-state-location' => 'చోటు',
+	'user-identity-box-zero-state-birthday' => 'పుట్టిననాడు',
+	'user-identity-box-zero-state-occupation' => 'బ్రతుకు పని',
+	'user-identity-box-about-me' => 'నా గురించి',
+	'user-identity-box-about-name' => 'మీ పేరు ఏమి?',
+	'user-identity-box-about-location' => 'మీరు ఎక్కడ ఉంటున్నారు?',
+	'user-identity-box-about-birthday' => 'మీ పుట్టిననాడు ఎప్పుడు?',
+	'user-identity-box-about-occupation' => 'మీ బ్రతుకుపని ఏమి?',
+	'user-identity-box-about-gender' => 'మీరు ఆడా మగా?',
+	'user-identity-box-import-from-fb' => 'ఫేస్ బుక్ నుండి మీ మందలను దిగుమతి చేయండి.',
+	'userprofilepage-lightbox-about-me-cancel' => 'రద్దుచేయి',
+	'userprofilepage-lightbox-about-me-save' => 'అయిపోయింది, ఇక దాచిపెట్టండి.',
+	'user-action-menu-view-source' => 'వేరును చూపండి',
+	'user-action-menu-protect' => 'కాపాడండి',
 );
 
 /** Turkish (Türkçe)

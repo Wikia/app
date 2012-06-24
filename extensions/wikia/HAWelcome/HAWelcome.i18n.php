@@ -73,8 +73,10 @@ Please leave me a message if I can help with anything!",
 
 /** Message documentation (Message documentation)
  * @author PtM
+ * @author TK-999
  */
 $messages['qqq'] = array(
+	'welcome-user-page' => '$1 is the name of the user whose page the base layout is being added to.',
 	'welcome-message-wall-user' => '$1 is the name of the page the user edited that tirggered the welcome',
 	'welcome-message-wall-user-staff' => '$1 is the name of the page edited to trigger the welcome',
 	'welcome-message-wall-anon' => '$1 is the name of the page the user edited that tirggered the welcome',
@@ -483,7 +485,7 @@ Veuillez me laisser un message si je peux vous aider pour quoi que ce soit !",
 Veuillez me laisser un message si je peux vous aider pour quoi que ce soit !",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -575,6 +577,7 @@ $messages['he'] = array(
 
 /** Hungarian (magyar)
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'welcome-user-page' => "== Magamról ==
@@ -583,7 +586,7 @@ $messages['hu'] = array(
 
 == Közreműködéseim  ==
 
-* [[Special:Contributions/{{PAGENAME}}|Felhasználó közreműködései]]
+* [[Special:Contributions/$1|Felhasználó közreműködései]]
 
 == Kedvenc lapjaim ==
 
@@ -1119,7 +1122,7 @@ $messages['pl'] = array(
 ''To Twoja strona użytkownika. Edytuj ją i powiedz społeczności coś o sobie!''
 
 == Mój wkład ==
-* [[Special:Contributions/$1|wkład]]
+* [[Special:Contributions/$1|Edycje]]
 
 == Moje ulubione strony ==
 * Dodaj tu linki do swoich ulubionych stron!

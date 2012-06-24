@@ -322,7 +322,7 @@ Si vous préférez utiliser la messagerie électronique classique ou souhaitez j
 	'specialcontact-submitcomplete' => 'Merci d’avoir contacté Wikia.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

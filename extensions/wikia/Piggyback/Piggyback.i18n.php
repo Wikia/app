@@ -102,7 +102,7 @@ Vérifiez l'orthographe.",
 	'piggyback-issysopto' => 'Vous ne pouvez pas vous connecter de manière superposée sur le compte d’un utilisateur ayant lui-même ce droit.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -347,6 +347,14 @@ Kontrollera stavningen.',
 $messages['te'] = array(
 	'piggyback-otherusername' => 'ఇతర వాడుకరిపేరు:',
 	'piggyback-wronguser' => '$1 అన్నది మీ వాడుకరి పేరు కాదు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'piggybac-desc' => 'Nagpapahintulot na lumagda bilang ibang tagagamit',
+	'piggyback-otherusername' => 'Ibang pangalan ng tagagamit:',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

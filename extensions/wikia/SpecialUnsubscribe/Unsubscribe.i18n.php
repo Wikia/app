@@ -123,15 +123,16 @@ $messages['diq'] = array(
 /** Spanish (español)
  * @author Bola
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'unsubscribe' => 'Darse de baja',
-	'unsubscribe-badaccess' => 'Lo sentimos, esta página no puede ser usada directamente. Por favor sigue el enlace desde tu e-mail.',
+	'unsubscribe-badaccess' => 'Lo sentimos, esta página no puede ser usada directamente. Por favor sigue el enlace desde tu correo electrónico.',
 	'unsubscribe-badtoken' => 'Lo sentimos, hubo un problema con la seguridad.',
-	'unsubscribe-bademail' => 'Lo sentimos, hubo un problema con el e-mail.',
+	'unsubscribe-bademail' => 'Lo sentimos, hubo un problema con el correo electrónico.',
 	'unsubscribe-badtime' => 'Lo sentimos, el enlace ha expirado. Por favor, usa un enlace con menos de siete días de antigüedad.',
-	'unsubscribe-nousers' => 'No se encontraron usuarios con esa dirección de e-mail.',
-	'unsubscribe-noconfusers' => 'No se encontraron usuarios confirmados con esa dirección de e-mail.',
+	'unsubscribe-nousers' => 'No se encontraron usuarios con esa dirección de correo electrónico.',
+	'unsubscribe-noconfusers' => 'No se encontraron usuarios confirmados con esa dirección de correo electrónico.',
 	'unsubscribe-confirm-legend' => 'Confirmar',
 	'unsubscribe-confirm-text' => '¿Dar de baja todas las cuentas con <code>$1</code>?',
 	'unsubscribe-confirm-button' => 'Sí, estoy totalmente seguro/a',
@@ -178,7 +179,7 @@ $messages['fr'] = array(
 	'unsubscribe-preferences-notice' => 'Les courriels ont été désactivés pour votre compte. Aller sur l’onglet de profil utilisateur pour les réactiver.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

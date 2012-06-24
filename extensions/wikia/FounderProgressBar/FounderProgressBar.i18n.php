@@ -591,7 +591,7 @@ $messages['fr'] = array(
 	'founderprogressbar-browse-page-name' => 'Parcourir',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

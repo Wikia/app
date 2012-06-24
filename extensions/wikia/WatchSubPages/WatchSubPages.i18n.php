@@ -22,7 +22,7 @@ $messages['af'] = array(
 	'tog-watchlistsubpages' => 'Volg subbladsye',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -88,7 +88,7 @@ $messages['fr'] = array(
 	'tog-watchlistsubpages' => 'Suivre les sous-pages',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

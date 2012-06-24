@@ -89,7 +89,7 @@ $messages['fr'] = array(
 	'performancestat-cpu' => 'Processeur : $1s',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

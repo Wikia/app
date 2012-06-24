@@ -74,7 +74,7 @@ $messages['fr'] = array(
 	'scribeeventsrecords' => 'Enregistrements',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

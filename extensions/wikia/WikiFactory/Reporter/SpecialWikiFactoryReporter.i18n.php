@@ -46,7 +46,7 @@ $messages['az'] = array(
 	'wikifactoryreporter' => 'Məruzəçi WikiFactory',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -117,7 +117,7 @@ $messages['diq'] = array(
 	'wikifactoryreporter' => 'Raporteri Wikifebrika',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -166,7 +166,7 @@ $messages['fr'] = array(
 	'wikifactoryreporter' => 'Rapporteur de WikiFactory',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -178,7 +178,7 @@ $messages['he'] = array(
 	'wikifactoryreporter' => 'המדווח של WikiFactory',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(

@@ -120,6 +120,7 @@ $messages['diq'] = array(
  * @author Benfutbol10
  * @author Ciencia Al Poder
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'lightbox_details_tooltip' => 'Ver detalles de la imagen',
@@ -139,8 +140,8 @@ $1
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Compartir',
 	'lightbox-share-button-embed' => 'Insertar',
-	'lightbox-share-email-label' => 'Enviar por e-mail esta imagen a un amigo',
-	'lightbox-share-email-page-label' => 'Enviar por e-mail esta página a un amigo',
+	'lightbox-share-email-label' => 'Enviar por correo electrónico esta imagen a un amigo',
+	'lightbox-share-email-page-label' => 'Enviar por correo electrónico esta página a un amigo',
 	'lightbox-share-email-page-label-address' => 'Dirección de correo electrónico',
 	'lightbox-share-email-ok-caption' => 'Confirmación',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|correo ha|correos han}} sido enviado.',
@@ -223,7 +224,7 @@ Détails : $2',
 	'lightbox-visit-the-wiki' => 'Visiter le wiki :',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -477,20 +478,20 @@ $messages['pfl'] = array(
  * @author Sovq
  */
 $messages['pl'] = array(
-	'lightbox_details_tooltip' => 'Pokaż szczegóły zdjęcia',
+	'lightbox_details_tooltip' => 'Pokaż szczegóły obrazu',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standardowy link',
 	'lightbox-blog-link' => 'Link do bloga',
 	'lightbox-send' => 'Wyślij',
-	'lightbox-share-description' => 'Zdjęcie na stronie $1 na $2',
-	'lightbox-share-email-subject' => '$1 wysłał ci zdjęcie na Wikia',
-	'lightbox-share-email-body' => 'Cześć,
+	'lightbox-share-description' => 'Obraz na stronie $1 na $2',
+	'lightbox-share-email-subject' => '$1 wysłał(a) Ci zdjęcie na Wikii',
+	'lightbox-share-email-body' => 'Witaj,
 
 Ktoś chciał pokazać Ci obraz na Wikii. Zobacz:
 
 $1
 
--Zespół Wikia',
+- Zespół Wikii',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Podziel się',
 	'lightbox-share-button-embed' => 'Osadź',
@@ -498,7 +499,7 @@ $1
 	'lightbox-share-email-page-label' => 'Poleć tę stronę znajomemu',
 	'lightbox-share-email-page-label-address' => 'Adres e‐mail',
 	'lightbox-share-email-ok-caption' => 'Potwierdzenie',
-	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mail został wysłany|E-maile zostały wysłane|E-maili zostało wysłanych}}.',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mail został wysłany|E-maile zostały wysłane}}.',
 	'lightbox-share-email-error-caption' => 'Błąd',
 	'lightbox-share-email-error-content' => 'Błąd przy wysyłce {{PLURAL:$1|e-maila|e-maili}}.
 Szczegóły: $2',

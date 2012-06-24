@@ -31,7 +31,7 @@ $messages['ar'] = array(
 	'quickcreate' => 'أرسل وصفتك',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -66,9 +66,10 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris
+ * @author PtM
  */
 $messages['de'] = array(
-	'quickcreate-desc' => 'Fügt einen „Neue Seite“-Button hinzu, mit der Möglichkeit für unangemeldete Benutzer, sich anzumelden',
+	'quickcreate-desc' => 'Fügt eine „Neue-Seite“Schaltfläche hinzu, mit der Aufforderung an unangemeldete Benutzer, sich anzumelden',
 	'quickcreate' => 'Sende dein Rezept',
 );
 
@@ -81,9 +82,10 @@ $messages['de-formal'] = array(
 
 /** Spanish (español)
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
-	'quickcreate-desc' => 'Agrega un botón Crear nueva página con la capacidad de iniciar sesión para usuarios anónimos',
+	'quickcreate-desc' => 'Agrega un botón crear página nueva con inicio de sesión para usuarios anónimos',
 	'quickcreate' => 'envía tu receta',
 );
 
@@ -99,17 +101,18 @@ $messages['fi'] = array(
 /** French (français)
  * @author Cywil
  * @author IAlex
+ * @author Wyz
  */
 $messages['fr'] = array(
-	'quickcreate-desc' => 'Ajoute un bouton de création de nouvelle page avec la possibilité de se connecter pour les utilisateurs anonymes',
+	'quickcreate-desc' => 'Ajoute un bouton de création de nouvelle page avec une demande de connexion pour les utilisateurs anonymes',
 	'quickcreate' => 'Proposez votre recette',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
-	'quickcreate-desc' => 'Engade un botón para crear unha nova páxina coa capacidade de acceder ao sistema para os usuarios anónimos',
+	'quickcreate-desc' => 'Engade un botón para crear unha nova páxina cunha petición de acceder ao sistema aos usuarios anónimos',
 	'quickcreate' => 'enviar a súa receita',
 );
 
@@ -119,11 +122,11 @@ $messages['he'] = array(
 	'quickcreate' => 'שליחת המתכון שלך',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
-	'quickcreate-desc' => 'Přidawa tłóčatko "Nowu stronu wutworić" z móžnosću za anonymnych wužiwarjow so přizjewić',
+	'quickcreate-desc' => 'Přidawa tłóčatko "Nowu stronu wutworić", z namołwu, zo měli so anonymni wužiwarjo přizjewić',
 	'quickcreate' => 'pósćel swój recept',
 );
 
@@ -139,7 +142,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'quickcreate-desc' => 'Adde un button pro crear un nove pagina con le possibilitate de aperir un session pro usatores anonyme',
+	'quickcreate-desc' => 'Adde un button pro crear un nove pagina con le requesta de aperir session pro usatores anonyme',
 	'quickcreate' => 'submitter tu recepta',
 );
 
@@ -187,15 +190,16 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
-	'quickcreate-desc' => 'Menambahkan butang cipta laman baru dengan kebolehan log masuk untuk pengguna tanpa nama',
+	'quickcreate-desc' => 'Menambahkan butang "cipta laman baru" dengan permohonan log masuk kepada pengguna tanpa nama',
 	'quickcreate' => 'serahkan resipi anda',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
+ * @author Audun
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
-	'quickcreate-desc' => 'Legger til en «opprett ny side»-knapp med muligheten for å logge inn for anonyme brukere',
+	'quickcreate-desc' => 'Legger til en opprett-ny-side-knapp med en innloggingsanmodning til anonyme brukere',
 	'quickcreate' => 'send inn din oppskrift',
 );
 
@@ -203,7 +207,7 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'quickcreate-desc' => 'Voegt een knop voor nieuwe pagina aanmaken toe met de mogelijkheid aan te melden voor anonieme gebruikers',
+	'quickcreate-desc' => 'Voegt een knop voor nieuwe pagina aanmaken toe met het verzoek aan te melden voor anonieme gebruikers',
 	'quickcreate' => 'recept toevoegen',
 );
 
@@ -216,10 +220,11 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'quickcreate-desc' => 'Dodaje przycisk tworzenia nowej strony z możliwością zalogowania dla użytkowników anonimowych',
+	'quickcreate-desc' => 'Dodaje przycisk tworzenia nowej strony z żądaniem logowania się dla użytkowników anonimowych',
 	'quickcreate' => 'prześlij swoją receptę',
 );
 
@@ -242,9 +247,10 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author 555
  */
 $messages['pt-br'] = array(
-	'quickcreate-desc' => 'Adiciona um botão "Criar página nova" com capacidade de autenticação para usuários anônimos',
+	'quickcreate-desc' => 'Adiciona um botão criar-nova-página com solicitação de autenticação para usuários anônimos',
 	'quickcreate' => 'envie a sua receita',
 );
 
@@ -252,11 +258,12 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
-	'quickcreate-desc' => "Aggiunge 'nu buttone de ccrejazione de 'na pàgena nove cu l'abbilità de trasè pe le utinde anonime",
+	'quickcreate-desc' => "Aggiunge 'nu buttone de ccrejazione de 'na pàgena nove cu 'a possibbilità de trasè pe le utinde anonime",
 	'quickcreate' => "conferme 'a ricetta toje",
 );
 
 /** Russian (русский)
+ * @author Kuzura
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -276,10 +283,18 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'quickcreate-desc' => 'Adds a create new page button with ability to log in for anonymous users',
+	'quickcreate-desc' => 'Lägger till en Skapa ny sida-knapp med inloggningsbegäran för anonyma användare',
 	'quickcreate' => 'skicka in ditt recept',
+);
+
+/** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
+ */
+$messages['te'] = array(
+	'quickcreate' => 'మీ సూచనల వరుసను ఇవ్వండి',
 );
 
 /** Tagalog (Tagalog)

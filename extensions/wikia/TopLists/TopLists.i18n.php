@@ -150,7 +150,7 @@ $messages['ar'] = array(
 	'toplists-error-empty-item-name' => 'لا يمكن أن يكون اسم عنصر القائمة فارغة.',
 	'toplists-item-cannot-delete' => 'فشل في حذف هذا البند.',
 	'toplists-error-image-already-exists' => 'صورة مع نفس الاسم موجود مسبقا.',
-	'toplists-error-add-item-anon' => 'ولا يسمح للمستخدمين المجهولين إضافة عناصر إلى القوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 "> الدخول</a> أو <a href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .',
+	'toplists-error-add-item-anon' => 'ولا يسمح للمستخدمين المجهولين إضافة عناصر إلى القوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 "> الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .',
 	'toplists-error-add-item-permission' => 'خطأ في إذن الوصول: الحساب الخاص بك لم يتم منح الحق في إنشاء عناصر جديدة.',
 	'toplists-error-add-item-list-not-exists' => '"$1" لا توجد في قائمة أعلى 10',
 	'toplists-upload-error-unknown' => 'حدث خطأ أثناء معالجة طلب التحميل. يرجى المحاولة مرة أخرى.',
@@ -778,7 +778,7 @@ Vous pouvez <a href="$4">vous désinscrire</a> des modifications de cette liste.
 	'toplists-create-button-msg' => 'Créer une liste',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  * @author Xanocebreiro
  */

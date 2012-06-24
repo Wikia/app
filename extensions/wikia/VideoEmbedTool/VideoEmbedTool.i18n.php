@@ -198,7 +198,7 @@ U sal moontlik die videobladsy moet opruim (purge) om die verandering te sien.',
 	'vet-protected' => 'Hierdie video is beveilig',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -257,7 +257,7 @@ $messages['be'] = array(
 	'vet-size' => 'Памер',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -826,7 +826,7 @@ $messages['fr'] = array(
 	'vet-protected' => 'Cette vidéo est protégée',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

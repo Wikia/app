@@ -75,7 +75,7 @@ $messages['bar'] = array(
 	'ircgate-channel' => 'Chat-Kanoi:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -188,7 +188,7 @@ $messages['fr'] = array(
 	'ircgate-channel' => 'Canal :',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -204,7 +204,7 @@ $messages['he'] = array(
 	'ircgate-channel' => 'ערוץ:',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(

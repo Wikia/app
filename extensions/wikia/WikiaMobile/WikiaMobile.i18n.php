@@ -349,7 +349,7 @@ $1',
 	'wikiamobile-ad-close' => 'fermer',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -368,7 +368,7 @@ $messages['gl'] = array(
 	'wikiamobile-hide-section' => 'agochar',
 	'wikiamobile-footer-link-license' => 'Licenza',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Estilo de vida]]',
-	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entretemento]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Lecer]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Xogos]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artigo|artigos}}',
 	'wikiamobile-category-items-more' => 'Cargar máis',

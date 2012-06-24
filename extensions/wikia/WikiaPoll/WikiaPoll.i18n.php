@@ -311,7 +311,7 @@ $messages['fr'] = array(
 	'wikiapoll-error-invalid-title' => 'L’intitulé de la question n’est pas valide.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -713,7 +713,7 @@ $messages['tl'] = array(
 	'wikiapoll-createpoll-headline' => 'Likhain ang Botohan',
 	'wikiapoll-editpoll-headline' => 'Baguhin ang Botohan',
 	'wikiapoll-question-label' => 'Katanungan',
-	'wikiapoll-addnewitem-label' => 'Magdagdag ang bagong bagay',
+	'wikiapoll-addnewitem-label' => 'Magdagdag ng bagong bagay',
 	'wikiapoll-cancel-label' => 'Huwag ituloy',
 	'wikiapoll-publish-label' => 'Ilathala',
 	'wikiapoll-error-duplicate' => 'Umiiral na ang ganyang botohan na may ganyang pangalan.',

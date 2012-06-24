@@ -37,7 +37,7 @@ $messages['az'] = array(
 	'wikiarelatedpages-heading' => 'Daha ətraflı',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -109,7 +109,7 @@ $messages['fr'] = array(
 	'wikiarelatedpages-heading' => 'Pour aller plus loin',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -100,7 +100,7 @@ $messages['be'] = array(
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 статыстыка]',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -332,7 +332,7 @@ $messages['fr'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 revenir à la liste]',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -93,7 +93,7 @@ $messages['fr'] = array(
 	'userdata-no-wf' => "WikiFactory n'est pas activé sur ce wiki. Impossible de modifier wgUserData.",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -279,6 +279,15 @@ $messages['sv'] = array(
 	'userdata-not-updated' => 'Det gick inte att uppdatera wgUserData.',
 	'userdata-wf-reason' => 'Värdet uppdaterat via [[Special:UserData|UserData]]',
 	'userdata-no-wf' => 'WikiFactory är inte aktiverad på denna wiki. Det är inte möjligt att ändra wgUserData.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
+ */
+$messages['te'] = array(
+	'userdata' => 'వాడుకరి మందలను తెమ్ము',
+	'userdata-userid-label' => 'అందించు వాడుకరి గుర్తింపు:',
+	'userdata-submit' => 'మందలను తెమ్ము',
 );
 
 /** Tagalog (Tagalog)

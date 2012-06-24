@@ -606,7 +606,7 @@ quelques pages',
 Écrivez la deuxième section de la page ici. N'oubliez pas d’ajouter une catégorie pour aider les gens à trouver la page.",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -777,6 +777,18 @@ Scribe hic le prime section de tu pagina. Memora de includer ligamines a altere 
 ==Titulo de section==
 
 Scribe hic le secunde section de tu pagina. Non oblida de adder un categoria pro adjutar le gente a trovar le pagina.',
+);
+
+/** Japanese (日本語)
+ * @author Shirayuki
+ */
+$messages['ja'] = array(
+	'wikibuilder-desc' => '[[Special:WikiBuilder|Wiki 作成ウィザード]]',
+	'owb-title' => 'Wiki ビルダー',
+	'owb-button-skip' => 'スキップ',
+	'owb-button-save-theme' => 'テーマを保存',
+	'owb-button-save-pages' => 'ページを保存',
+	'owb-step2-label' => 'テーマを選択',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
@@ -1573,6 +1585,31 @@ Skriv den första delen av din sida här. Kom ihåg att inkludera länkar till a
 ==Rubrik på avsnitt==
 
 Skriv den andra delen av din sida här. Glöm inte att lägga till en kategori för att hjälpa människor att hitta sidan.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
+ */
+$messages['te'] = array(
+	'owb-button-save-pages' => 'పుటలను దాయుము',
+	'owb-button-done' => 'మీ వికీకి సాగండి',
+	'owb-step1' => 'మెట్టు 1',
+	'owb-step1-label' => 'అది దేని గురించి?',
+	'owb-step1-label-formatted' => 'అది దేని గురించి?',
+	'owb-step1-sample' => 'వికీ ఇంటిపుట మాదిరి',
+	'owb-step2' => '2వ మెట్టు',
+	'owb-step2-instruction1' => 'మీ వికీని ఒకేఒక్కటిగా కనిపించేలా చేయడం తేలిక. మీ పనికి తగ్గ సంగతిని ఎంచుకొంటే చాలు.',
+	'owb-step2-instruction2' => 'మీ థీంను మీరు ఎప్పుడైనా మార్చుకోవచ్చు లేదా మీ సొంతది కల్పించుకోవచ్చు.',
+	'owb-step2-gallery' => 'థీంల చూపుచోటు',
+	'owb-step3' => '3వ మెట్టు',
+	'owb-step3-label' => 'కొన్ని పుటలను మొదలుపెట్టండి',
+	'owb-step3-instruction' => 'మీ వికీని మొదలుపెట్టేందుకు, మీరు కొన్ని పుటలను చేర్చవలసిఉంటుంది. ఆపై మీకు నచ్చినన్ని ఎప్పుడైనా చేర్చవచ్చు.',
+	'owb-step3-your-pages' => 'మీ పుటల పేర్లు',
+	'owb-step3-examples1-title' => 'మాదిరి:దెయ్యాల సినిమాల పుటల పేర్లు',
+	'owb-step3-examples2-title' => 'మాదిరి:పలక ఆటల పుటల పేర్లు',
+	'owb-step4' => '4వ మెట్టు',
+	'owb-status-saving' => 'దాస్తున్నాము',
+	'owb-api-error' => 'జాలిదలచి మరియొక మారు పూనుకొనుడి లేదా ఈ మెట్టును తప్పించుడి',
 );
 
 /** Tagalog (Tagalog)

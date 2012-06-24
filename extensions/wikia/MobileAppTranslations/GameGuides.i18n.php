@@ -179,7 +179,7 @@ $messages['fr'] = array(
 	'error-json-parse' => 'Une erreur est survenue avec les données retournées par nos serveurs, désolé.\\nVeuillez réessayer.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -436,11 +436,12 @@ $messages['pfl'] = array(
 
 /** Polish (polski)
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'activityindicator-message' => 'Wczytywanie...',
-	'window-wikis-title' => 'Przewodniki Gier Wikia',
+	'activityindicator-message' => 'Ładowanie...',
+	'window-wikis-title' => 'Przewodniki Wikia Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Nasze Najlepsze Gry',
 	'window-category-load-batch' => 'Więcej',
 	'window-article-button-close' => 'Zamknij',

@@ -54,7 +54,7 @@ $messages['az'] = array(
 	'ajaxpoll-submit' => 'Səs ver!',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -220,7 +220,7 @@ $messages['fr'] = array(
 	'ajaxpoll-submitting' => "Veuillez patienter pendant l'envoi de votre vote...",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
