@@ -69,7 +69,7 @@ $messages['az'] = array(
 * Ana səhifəyə keçid etmək üçün bu keçiddən istifadə edin: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -241,7 +241,7 @@ Article '''$1''' introuvable.
 * Pour atteindre la page d'accueil, cliquez ce lien : [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -286,7 +286,7 @@ $messages['hr'] = array(
 * Da bi došli na glavnu stranicu ovog projekta, kliknite na poveznicu: [{{SERVER}} {{sitename}}]",
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -393,6 +393,13 @@ $messages['ko'] = array(
 $messages['ksh'] = array(
 	'our404handler' => 'Fähler 404: Sigg nit jefonge!',
 	'our404handler-oops' => 'Dat sin nit de Sigge, woh De noh aam looere bes. Nemm andere!',
+	'message404' => "'''Et deihd uns leid, ävver di Sigg, di De han wullts, di jidd_et nit.'''
+
+Dä Atikel '''$1''' ham_mer nit jefonge.
+
+* Velleich helft Der dä Atikel [[$2]]
+* Do kanns övver dat Feld op de linke Sigg noh jät söhke
+* Öm op de Houpsigg ze kumme, kleck op: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)

@@ -91,7 +91,7 @@ $messages['az'] = array(
 	'multilookupwikiurl' => 'URL',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -321,7 +321,7 @@ $messages['fr'] = array(
 	'right-multilookup' => 'Rechercher des informations sur les utilisateurs dans plusieurs wikis',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

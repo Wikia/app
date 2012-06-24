@@ -131,7 +131,7 @@ $messages['fr'] = array(
 	'loggernoresult' => 'Aucun résultat trouvé',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -270,14 +270,15 @@ $messages['pfl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
-	'logger-desc' => 'Rejestrator dziennika dla skryptów wewnętrznych',
-	'logger' => 'Rejestrator dziennika backendu',
-	'loggertitle' => 'Rejestrator dziennika backendu',
-	'loggerselectlogname' => 'Wybierz nazwę dziennika:',
-	'loggerrecordswithpercent' => "'''$1''' rekordów ('''$2''' procent ukończono)",
-	'loggerrecords' => '$1 rekordów',
+	'logger-desc' => 'Rejestr skryptów back-endowych',
+	'logger' => 'Rejestr back-endu',
+	'loggertitle' => 'Rejestr back-endu',
+	'loggerselectlogname' => 'Wybierz nazwę rejestru:',
+	'loggerrecordswithpercent' => "'''$1''' wyników ('''$2''' procent ukończono)",
+	'loggerrecords' => '$1 wyników',
 	'loggergo' => 'Pokaż',
 	'loggernoresult' => 'Nic nie znaleziono',
 );

@@ -343,7 +343,7 @@ $messages['az'] = array(
 	'oasis-interlang-languages' => 'Dillər:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -1523,7 +1523,7 @@ Bonne lecture !
 — L’équipe Wikia',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1809,6 +1809,7 @@ $messages['he'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'oasis-home' => 'Kezdőlap',
@@ -1816,33 +1817,82 @@ $messages['hu'] = array(
 	'oasis-mytools' => 'Saját eszközök',
 	'oasis-follow' => 'Követés',
 	'oasis-share' => 'Megosztás',
+	'oasis-like' => 'Kedvelés',
+	'oasis-signup' => 'Regisztráció',
 	'oasis-edit-protected-article' => 'Jelentkezz be a szerkesztéshez',
 	'oasis-button-random-page' => 'Váletlen lap',
 	'oasis-button-random-wiki' => 'Véletlen wiki',
 	'oasis-button-wiki-activity' => 'Tevékenységek a wikiben',
+	'oasis-button-wiki-activity-feed' => 'Összes tevékenység megtekintése >',
 	'oasis-button-wiki-activity-watchlist' => 'Csak a követett lapokon',
+	'oasis-activity-watchlist-login' => 'Be kell lépned, ha kizárólag az általad követett lapokat szeretnéd látni.',
+	'oasis-activity-header' => 'Friss tevékenység a wikin',
 	'oasis-related-video-header' => 'Kapcsolódó videók',
+	'oasis-related-video-by-5min' => '5min Video-n keresztül',
+	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>oldal<br /> ezen a wikin</span>',
+	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">fénykép ezen a wikin</span>',
 	'oasis-latest-photos-more' => 'Továbbiak >',
+	'oasis-latest-photos-inner-message' => 'Összes fénykép megtekintése',
+	'oasis-latest-photos-empty' => 'Bárki segíthet a wiki kinézetének felüdítésében<br /><span>Fénykép hozzáadása</span>',
+	'oasis-latest-photos-by' => 'feltöltötte',
+	'oasis-latest-photos-posted-in' => 'Elhelyezve a(z)',
 	'oasis-latest-photos-more-dotdotdot' => 'tovább...',
 	'oasis-global-nav-create-wiki' => 'Wiki indítása',
-	'oasis-page-header-comments' => 'Hozzászólások',
+	'oasis-page-header-no-comments-tooltip' => 'Legyél az első, aki beszél erről az oldalról',
+	'oasis-page-header-comments' => '$1 hozzászólás',
 	'oasis-page-header-comments-k' => '$1k',
 	'oasis-page-header-comments-m' => '$1M',
 	'oasis-page-header-talk' => 'Vitalap',
+	'oasis-page-header-edited-by' => 'Szerkesztette $2 $1',
+	'oasis-page-header-edited' => 'Szerkesztve $1',
+	'oasis-page-header-read-more' => 'Olvass tovább: $1',
 	'oasis-page-header-history-link' => 'Teljes laptörténet megtekintése',
+	'oasis-page-header-back-to-article' => 'Vissza az oldalra',
+	'oasis-page-header-back-to-template' => 'Vissza a sablonra',
+	'oasis-page-header-back-to-mediawiki' => 'Vissza a MediaWiki oldalra',
+	'oasis-page-header-back-to-category' => 'Vissza a kategóriához',
+	'oasis-page-header-back-to-file' => 'Vissza a fájlhoz',
 	'oasis-page-header-add-topic' => 'Téma hozzáadása',
 	'oasis-page-header-edit-profile' => 'Profil szerkesztése',
+	'oasis-page-header-editing' => '<strong>Szerkesztés:</strong> $1',
+	'oasis-page-header-editing-section' => '<strong>Szerkesztés:</strong>  $1  (szakasz)',
+	'oasis-page-header-preview' => '<strong>Előnézet:</strong> $1',
+	'oasis-page-header-changes' => '<strong>Módosítások:</strong> $1',
+	'oasis-page-header-diff' => '<strong>Módosítások:</strong> $1',
+	'oasis-page-header-history' => '<strong>Laptörténet:</strong> $1',
+	'oasis-anon-header' => 'Nem regisztrált közreműködő<small>$1</small>',
+	'oasis-preview-confirmation' => 'Előnézeti mód: még nincsenek mentve a módosítások! Görgess lefelé a szerkesztés folytatásához.',
+	'oasis-badge-notification' => 'Megszerezted az "$2" jelvényt, $3',
+	'oasis-badge-notification-see-more' => 'További megszerezhető jelvények megtekintése',
 	'oasis-page-header-subtitle-mediawiki' => 'MediaWiki-lap',
 	'oasis-page-header-subtitle-special' => 'Speciális lap',
 	'oasis-page-header-subtitle-template' => 'Sablonlap',
 	'oasis-page-header-subtitle-category' => 'Kategórialap',
 	'oasis-page-header-subtitle-forum' => 'Fórumlap',
+	'oasis-page-header-subtitle-special-wikiactivity' => 'Összes tevékenység megtekintése >',
+	'oasis-search-results-from' => 'Eredmények megjelenítése innen: $1',
+	'oasis-search-results-from-all-wikis' => 'Eredmények megjelenítése a Wikia egészéből',
 	'oasis-user-page-change-avatar' => 'Avatár módosítása',
 	'oasis-content-picture-added-by' => 'Hozzáadta: $1',
+	'oasis-confirmation-page-deleted' => '"$1"-t törölték. ([[Special:Undelete/$1|visszaállítás]])',
+	'oasis-confirmation-comment-deleted' => 'A hozzászólást törölték.',
+	'oasis-confirmation-page-undeleted' => 'A lapot helyreállították.',
+	'oasis-confirmation-user-logout' => 'Kijelentkeztél.',
+	'oasis-notification-youhavenewmessages' => '$1 van.',
 	'oasis-member-since' => 'Tag $1 óta',
+	'oasis-edits-counter' => '$1 <sup>szerkesztés</sup>',
+	'oasis-edit-saved' => 'A szerkesztésedet elmentettük!',
+	'oasis-button-contribute-tooltip' => 'Közreműködés',
+	'oasis-button-add-video' => 'Videó hozzáadása',
+	'oasis-button-create-page' => 'Oldal hozzáadása',
+	'oasis-button-add-photo' => 'Kép hozzáadása',
+	'oasis-button-edit-wikia-local-menu' => 'Helyi Wikia menü szerkesztése',
+	'oasis-button-edit-wikia-global-menu' => 'Globális Wikia menü szerkesztése',
 	'oasis-toolbar-edit-title' => 'Eszköztár testreszabása',
 	'oasis-toolbar-edit-toolbar-list' => 'Eszköztárlista',
 	'oasis-toolbar-edit-reset-defaults' => 'alapértelmezések használata',
+	'oasis-toolbar-edit-find-a-tool' => 'Eszköz keresése',
+	'oasis-toolbar-edit-advanced-tools' => '[[Help:MyTools|speciális közreműködői eszközök listája]]',
 	'oasis-toolbar-edit-search-for-tool' => 'Eszköz keresése',
 	'oasis-toolbar-edit-popular-tools' => 'Népszerű eszközök',
 	'oasis-toolbar-edit-hide-tools' => 'Eszközök elrejtése',
@@ -1851,8 +1901,14 @@ $messages['hu'] = array(
 	'oasis-toolbar-edit-rename-item' => 'Elem átnevezése',
 	'oasis-toolbar-for-admins-only' => 'Ezt az eszközt a wiki adminisztrátorai használhatják.',
 	'oasis-toolbar-not-enabled-here' => 'Ez az eszköz nem elérhető ezen a wikin.',
+	'oasis-toolbar-more' => 'tovább&hellip;',
 	'oasis-toolbar-customize' => 'Testreszabás',
+	'oasis-toolbar-devinfo' => 'Fejlesztői információ',
+	'oasis-comments-header' => '$1 hozzászólás',
+	'oasis-comments-showing-most-recent' => '$1 legfrissebb mutatása',
+	'oasis-comments-anonymous-prompt' => 'Névtelen felhasználó<br /> <a href="#" class="ajaxLogin">Bejelentkezel?</a>',
 	'oasis-comments-show-all' => 'Összes megjelenítése',
+	'oasis-comments-added-by' => '$2 ($1)',
 	'oasis-random-wiki' => 'Véletlen wiki',
 	'oasis-add-photo' => 'Kép hozzáadása',
 	'oasis-anon-user' => 'wikiás közreműködő',
@@ -1861,14 +1917,52 @@ $messages['hu'] = array(
 	'oasis-section-edit' => 'Szerkesztés',
 	'oasis-section-edit-alt' => '$1 szakasz szerkesztése',
 	'oasis-popular-blogs-title' => 'Népszerű blog-<br />bejegyzések',
+	'oasis-spotlights-rail-title' => 'Több innen:',
 	'oasis-spotlights-footer-title' => 'A Wikia-hálózat',
 	'themedesigner' => 'Tématervező',
+	'oasis-pages-on-wiki-header' => 'Oldalak az $1-en',
+	'oasis-latest-activity-new-details' => 'létrehozta $1 $2',
+	'oasis-latest-activity-edit-details' => 'szerkesztette $1 $2',
+	'oasis-latest-activity-delete-details' => 'törölte $1 $2',
+	'oasis-edit-this-menu' => 'Menü szerkesztése',
+	'oasis-interlang-show-all' => '... összes megtekintése >',
 	'oasis-interlang-languages' => 'Nyelvek:',
+	'imageseo-featured-on' => 'Kiemelve itt:',
+	'imageseo-featured-more' => 'több&hellip;',
+	'oasis-editpage-readonlywarning' => '<h2>Bocsánat!</h2>
+<p>Jelenleg ez az oldal nem szerkeszthető. Valószínűleg hamarosan újra működőképesek leszünk. A kiváltó ok:<br /><em>$1</em></p>
+<p>Kérlek, ellenőrizd a <a href="http://twitter.com/wikia">Twittert</a> vagy a <a href="http://facebook.com/wikia">Facebookot</a> további informáciért.</p>',
+	'oasis-upload-photos-title' => 'Kép feltöltése a wikire',
 	'oasis-upload-photos-more-options' => 'További beállítások',
 	'oasis-upload-photos-fewer-options' => 'Kevesebb beállítás',
 	'oasis-upload-photos-force' => 'Mindenképp fel akarom tölteni',
 	'oasis-upload-photos-caption' => 'Felirat',
+	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes',
 	'oasis-modal-error-headline' => 'Javítsd a következő hibákat',
+	'oasis-skip-to-content' => 'Ugrás a tartalomhoz',
+	'oasis-skip-to-wiki-navigation' => 'Ugrás a wiki navigációjához',
+	'oasis-skip-to-site-navigation' => 'Ugrás az oldal navigációjához',
+	'oasis-wiki-navigation' => '$1 Navigáció',
+	'oasis-related-categories' => 'Kapcsolódó kategóriák',
+	'oasis-navigation-v2-create-page' => 'Oldal hozzáadása',
+	'oasis-navigation-v2-edit-page' => 'Oldal szerkesztése',
+	'oasis-navigation-v2-add-photo' => 'Kép hozzáadása',
+	'oasis-navigation-v2-edit-wikia-local-menu' => 'Helyi Wikia menü szerkesztése',
+	'oasis-navigation-v2-edit-wikia-global-menu' => 'Globális Wikia menü szerkesztése',
+	'oasis-navigation-v2-edit-this-menu' => 'Wiki navigáció szerkesztése',
+	'oasis-navigation-v2-level1-validation' => 'Hoppá! Az 1-es szintű menü túl széles. Csökkentsd a tartalmát a megoldáshoz. Köszönjük!',
+	'oasis-navigation-v2-level2-validation' => 'Hoppá! A 2-es szintű menü túl széles. Csökkentsd a tartalmát a megoldáshoz. Köszönjük!',
+	'oasis-navigation-v2-level12-validation' => 'Hoppá! Az 1-es és 2-es szintű menük túl szélesek. Szerkeszd őket, hogy elférjenek.',
+	'oasis-navigation-v2-validation-next' => 'Következő',
+	'oasis-navigation-v2-validation-caption' => 'Az előnézet ellenőrzi hivák jelenlétét a menüben. Ha minden rendben van, a menü elmenthető az előnézeti lapról. Amennyiben nem, a Vissza gombbal folytathatod a szerkesztést.',
+	'oasis-navigation-v2-new-photos' => 'Új fényképek',
+	'oasis-on-the-wiki' => 'A wikin',
+	'oasis-sharing-toolbar-mail-subject' => '$1 hivatkozást küldött neked a Wikián',
+	'oasis-sharing-toolbar-mail-body' => 'Szia!
+$1 ezt az oldalt küldte neked a {{SITENAME}}-ról a Wikián:
+      $2
+Jó szórakozást!
+- A Wikia csapat',
 );
 
 /** Interlingua (interlingua)

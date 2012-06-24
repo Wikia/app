@@ -148,7 +148,7 @@ $messages['fr'] = array(
 	'stafflog-filter-type-wikifactory' => 'Statut du wiki',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -309,7 +309,7 @@ $messages['af'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Selekteer',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -484,7 +484,7 @@ $messages['az'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Seç',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -2037,7 +2037,7 @@ Décrivez cette photo.",
 	'galery-slider-read-more' => 'En savoir plus &gt;',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -423,7 +423,7 @@ Vous souhaitez contrôler les courriels que vous recevez ? Allez à : {{fullurl:
 	'wikiamobile-facebook-connect-fail' => 'Désolé, votre compte Facebook n’est pour le moment pas relié à un compte Wikia.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1141,6 +1141,37 @@ Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:sp
 	'wikiamobile-facebook-connect-fail' => 'Tyvärr, ditt Facebook-konto är för tillfället inte är länkat med ett Wikia-konto.',
 );
 
+/** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
+ */
+$messages['te'] = array(
+	'userlogin-login-heading' => 'లోనికి రండి',
+	'userlogin-forgot-password' => 'మీ దాటుమాటను మరచిపోయారా?',
+	'userlogin-remembermypassword' => 'లోపలనే ఉండండి',
+	'userlogin-error-sessionfailure' => 'మీరు లోపలికి రావడానికి ఎక్కువసేపు తీసుకున్నారు. జాలిదలచి మళ్ళీ లోనికి రండి.',
+	'userlogin-error-nosuchuser' => 'ఈ పేరును మేము గుర్తించలేకపోతున్నాము. వాడుకరి పేరులో పైరాత లేదా కిందిరాతలతో తేడాలొస్తాయనే ముచ్చట మరువకండి.',
+	'userlogin-error-invalidemailaddress' => 'జాలిదలచి సరైన ఈ-తపాలా జాడను పొందుపరచండి.',
+	'userlogin-get-account' => 'మీకో పద్దు లేదా? [[Special:UserSignup|Sign up]]',
+	'userlogin-error-invalid-username' => 'తప్పుడు వాడుకరిపేరు',
+	'userlogin-error-userlogin-unable-info' => 'ఏమనుకోవద్దండి, ఇప్పుడు మీ పద్దును నమోదు చేయలేకపోతున్నాము.',
+	'userlogin-error-user-not-allowed' => 'ఈ వాడుకరిపేరుని అనుమతించలేము.',
+	'userlogin-error-captcha-createaccount-fail' => 'మీరు పొందుపరచిన మాట పెట్టెలో ఉన్న మాటతో సరిపోలలేదు, తిరిగి పూనుకోండి.',
+	'userlogin-error-acct_creation_throttle_hit' => 'ఏమనుకోవద్దండి, ఈ ఐపి జాడతో చాలా పద్దులు కల్పించినారు. జాలిదలచి మళ్ళీ తర్వాత ఎప్పుడైనా పూనుకొనుడి.',
+	'userlogin-error-resetpass_forbidden' => 'దాటుమాటలను మార్చటం కుదరదు',
+	'userlogin-error-blocked-mailpassword' => 'ఈ ఐపి జాడను వికియా వారు అడ్డుకొనుటచే, మీరు కొత్త దాటుమాట కొరకు విన్నవించడం కుదరదు',
+	'userlogin-password-email-sent' => '$1 కొరకు కొత్త దాటుమాటను ఈ ఈ-తపాలా జాడకు పంపినాము.',
+	'userlogin-password-page-title' => 'మీ దాటుమాటను మార్చుకొనుడి.',
+	'userlogin-oldpassword' => 'పాత దాటుమాట',
+	'userlogin-newpassword' => 'కొత్త దాటుమాట',
+	'userlogin-retypenew' => 'దాటుమాటను మళ్ళీ పొందుపరచండి.',
+	'userlogin-password-email-subject' => 'మరచిన దాటుమాట విన్నపము',
+	'userlogin-password-email-greeting' => 'ఏమండీ $USERNAMEగారూ,',
+	'userlogin-password-email-signature' => 'వికియా వారి మంది తోడ్పాటు',
+	'userlogin-changepassword-needlogin' => 'మీ దాటుమాటను మార్చుటకు $1 చేయవలెను.',
+	'wikiamobile-sendpassword-label' => 'కొత్త దాటుమాటను దాయండి.',
+	'wikiamobile-facebook-connect-fail' => 'ఏమనుకోవద్దండి, మీ ఫేస్ బుక్ పద్దు ఏ వికీ పద్దుతోనూ ముడివడిలేదు.',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Olvin
@@ -1184,12 +1215,14 @@ $messages['uk'] = array(
 Питання або сумніви? Звертайтеся до нас.',
 	'userlogin-password-email-signature' => 'Команда Wikia',
 	'userlogin-password-email-body' => 'Вітаю, $2,
+
 Будь ласка, використовуйте цей тимчасовий пароль для входу Wikia: " $3 "
-Якщо ви не запитували новий пароль, забийте! Ваш обліковий запис є надійним і безпечним. Ви можете ігнорувати цей лист і продовжити вхід до Wikia під старим паролем.
 
-Питання або сумніви? Звертайтесь до нас.
+Якщо ви не запитували новий пароль, не переймайтеся! Ваш обліковий запис надійний та безпечний. Ви можете ігнорувати цей лист і продовжувати ходити до Wikia зі старим паролем.
 
-Підтримка Wikia 
+Є питання чи сумніви? Сміливо звертайтеся до нас.
+
+Спільнота підтримки Wikia 
 
 ___________________________________________
 Останні події на Wikia - http://community.wikia.com

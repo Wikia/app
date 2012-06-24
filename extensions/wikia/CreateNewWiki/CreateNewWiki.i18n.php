@@ -850,7 +850,7 @@ Mettez à niveau via PayPal pour obtenir un wiki sans publicité pour seulement 
 	'cnw-error-bot-header' => 'Vous avez été détecté comme étant un robot',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -83,7 +83,7 @@ $messages['fr'] = array(
 	'signup' => 'Connexion',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

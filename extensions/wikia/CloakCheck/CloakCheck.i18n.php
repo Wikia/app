@@ -212,7 +212,7 @@ $messages['fr'] = array(
 	'cloakcheck-process-edits-no' => 'L’utilisateur n’a pas suffisamment de modifications.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

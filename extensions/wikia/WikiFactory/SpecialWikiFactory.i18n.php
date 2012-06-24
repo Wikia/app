@@ -297,7 +297,7 @@ Kom asseblief later terug.",
 	'closed-reason' => 'Rede:',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -560,7 +560,7 @@ $messages['be'] = array(
 	'closed-reason' => 'Прычына:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -1196,7 +1196,7 @@ $messages['cs'] = array(
 	'newwikisgraph-report-title' => 'Wiki tvorba po dnech',
 );
 
-/** Kashubian (Kaszëbsczi) */
+/** Kashubian (kaszëbsczi) */
 $messages['csb'] = array(
 	'wf_city_title' => 'Titel',
 	'wf_city_lang' => 'Jãzëk',
@@ -1933,7 +1933,7 @@ $messages['fr'] = array(
 	'newwikisgraph-param-other' => 'Autre',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -4227,6 +4227,7 @@ $messages['ru'] = array(
 	'closewiki-unknown' => 'Неизвестно',
 	'closewiki-return' => 'Назад к $1',
 	'wikifactory-button-save' => 'Сохранить изменения',
+	'wikifactory-public-status-change-default-reason' => 'Статус изменён для вкладки Домены.',
 	'awc-metrics-wikis' => 'Показать вики',
 	'awc-metrics-select' => 'Показать вики:',
 	'awc-metrics-by-language' => 'по языку:',
@@ -4603,18 +4604,30 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
  * @author Veeven
  */
 $messages['te'] = array(
 	'wf_city_url' => 'చిరునామా',
 	'wf_city_title' => 'శీర్షిక',
+	'wf_city_founding_user' => 'నాటినవారు',
+	'wf_city_founding_email' => 'నాటినవారి ఈ-తపా',
 	'wf_city_public' => 'స్థితి',
 	'wf_city_lang' => 'భాష',
 	'wf_cc_name' => 'వర్గం',
+	'wikifactory-label-info' => 'మందల',
+	'wikifactory-label-variables' => 'మారునవి',
+	'wikifactory-label-domains' => 'సీమలు',
+	'wikifactory-label-return' => 'జాబితాకు తిరిగిపొండి',
 	'wikifactory-label-actions' => 'చర్యలు',
 	'wikifactory-label-google' => 'గూగుల్ పనిముట్లు',
 	'wikifactory-label-close' => 'మూసివేయి',
+	'wikifactory-label-tags' => 'తోకపేర్లు',
+	'wikifactory-label-tags2' => 'తోకపేర్లు',
+	'wikifactory-label-masstags' => 'మంద తోకపేర్లు',
+	'wikifactory-label-findtags' => 'తోకపేర్లు కనుగొను',
 	'closewiki-nbr-wiki' => '$1 వికీలు',
+	'awc-metrics-by-language' => 'భాషను బట్టి:',
 	'awc-metrics-all' => 'అన్ని వికీలు',
 	'awc-metrics-all-languages' => 'అన్ని భాషలు',
 	'awc-metrics-search' => 'అన్వేషణ ఎంపికలు:',
@@ -4623,10 +4636,14 @@ $messages['te'] = array(
 	'awc-metrics-articles-per-day' => 'వ్యాసాలు<br />(రోజుకి సగటు)',
 	'awc-metrics-edits' => 'మార్పులు',
 	'awc-metrics-close' => 'మూసివేయి',
+	'awc-metrics-redirected' => 'మూసివేయబడి తిరిగిదారిమళ్ళించబడినది',
 	'awc-metrics-hubs' => 'కొత్త వికీలు (నెలసరి)',
 	'awc-metrics-news-day' => 'కొత్త వికీలు (దినసరి)',
+	'awc-metrics-sum-month' => 'లెక్కించు (నెల ఒక్కింటికి)',
+	'awc-metrics-sum-day' => 'లెక్కించు (నాడు ఒక్కింటికి)',
 	'awc-metrics-this-month' => 'ఈ నెల',
 	'awc-metrics-last-month' => 'గత {{PLURAL:$1|నెల|$1 నెలలు}}',
+	'closed-confirm-btn' => 'మూసివేతను కాయము చేయుడి',
 	'closed-reason' => 'కారణం:',
 );
 
@@ -4743,7 +4760,7 @@ $messages['tl'] = array(
 	'closed-wiki' => 'Isinarang Wiki',
 	'closed-wiki-info' => 'Isinara na ang wiking ito',
 	'disabled-wiki-info' => 'Hindi na pinagagana ang wiking ito',
-	'closed-wiki-dump-exists' => 'Mangyarin pindutin [$1 dito] kung nais mong kuhaning muli ang iyong nilalaman',
+	'closed-wiki-dump-exists' => 'Maaari mong [$1 bawiin ang nilalaman mo] kung gusto mo.<br />(Kung ang wiki mo ay kamakailang isinara, maaaring umabot ng isang maiksing panahon ng oras para malikha ang mga talaksan)',
 	'closed-wiki-dump-noexists' => 'Isinara na ang wiking ito.  Makukuha ang tapunan ng nilalaman sa loob ng 24 mga oras.  Mangyaring bumalik mamaya.',
 	'closed-wiki-create-wiki' => 'Lumikha ng isang bagong wiki',
 	'closed-wiki-policy' => 'Tingnan ang Patakaran ng Wikia sa Pagsasara',
@@ -4757,6 +4774,10 @@ $messages['tl'] = array(
 	'closed-confirm-btn' => 'Tiyakin ang pagsasara',
 	'closed-redirect-alert' => 'Pakilagay ang bagong URL ng pagpapunta sa iba!',
 	'closed-reason' => 'Dahilan:',
+	'newwikisgraph' => 'Talangguhit ng Bagong mga Wiki',
+	'newwikisgraph-report-title' => 'mga paglikha ng wiki ayon sa araw',
+	'newwikisgraph-wikis-created' => 'nalikhang mga wiki',
+	'newwikisgraph-param-all' => 'Lahat',
 );
 
 /** Tatar (Cyrillic script) (татарча)

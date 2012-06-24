@@ -257,7 +257,7 @@ $messages['az'] = array(
 	'multidelete_german_wikis' => 'almanca bütün vikilər',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -969,7 +969,7 @@ $messages['fr'] = array(
 	'multiwikirecords' => '$1 wikis trouvés',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

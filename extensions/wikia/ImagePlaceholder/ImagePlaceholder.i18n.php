@@ -27,7 +27,7 @@ $messages['ast'] = array(
 	'imgplc-notinhistory' => 'Nun pues amestar una imaxe nel mou historial.',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -130,7 +130,7 @@ $messages['fr'] = array(
 	'imgplc-notinhistory' => "Vous ne pouvez pas ajouter d'image en mode historique.",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -151,7 +151,7 @@ $messages['he'] = array(
 	'imgplc-notinhistory' => 'לא ניתן להוסיף תמונה במצב היסטוריה.',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -311,13 +311,14 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'imgplc-create' => 'Dodaj obrazek',
+	'imgplc-create' => 'Dodaj obraz',
 	'imgplc-placeholder' => 'Wypełniacz',
-	'imgplc-image' => 'Obrazek',
-	'imgplc-notinhistory' => 'Nie możesz dodać zdjęcia w trybie historii.',
+	'imgplc-image' => 'Obraz',
+	'imgplc-notinhistory' => 'Nie możesz dodać obrazu w trybie historii.',
 );
 
 /** Piedmontese (Piemontèis)

@@ -87,7 +87,7 @@ $messages['fr'] = array(
 	'paginator-back' => 'Précédent',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

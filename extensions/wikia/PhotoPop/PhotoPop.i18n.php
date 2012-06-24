@@ -318,7 +318,7 @@ $messages['fr'] = array(
 	'photopop-game-download-error-text' => 'Une erreur est survenue en téléchargeant les données de jeu, veuillez réessayer.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -977,6 +977,33 @@ $messages['sv'] = array(
 	'photopop-game-download-progress-text' => 'Laddar ned spel...',
 	'photopop-game-update-progress-text' => 'Uppdaterar spel...',
 	'photopop-game-download-error-text' => 'Ett fel uppstod när speldata skulle laddas ned, var god försök igen.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'photopop-game-new-highscore' => 'Bagong mataas na puntos',
+	'photopop-game-paused' => 'Inihinto nang panandalian ang laro',
+	'photopop-game-loading-assets' => 'Ikinakarga ang mga ari-arian ng laro',
+	'photopop-game-month-0' => 'Ene',
+	'photopop-game-month-1' => 'Peb',
+	'photopop-game-month-2' => 'Mar',
+	'photopop-game-month-3' => 'Abr',
+	'photopop-game-month-4' => 'May',
+	'photopop-game-month-5' => 'Hun',
+	'photopop-game-month-6' => 'Hul',
+	'photopop-game-month-7' => 'Ago',
+	'photopop-game-month-8' => 'Set',
+	'photopop-game-month-9' => 'Okt',
+	'photopop-game-month-10' => 'Nob',
+	'photopop-game-month-11' => 'Dis',
+	'photopop-game-no-highscore' => 'Walang matataas na mga puntos',
+	'photopop-game-error-text' => 'Naganap ang isang kamalian, paki subukan ulit.',
+	'photopop-game-error-network-text' => 'Tila walang kuneksiyon sa internet, paki buhayin ang iyong kuneksiyon sa Wi-Fi o mobil.',
+	'photopop-game-download-progress-text' => 'Ikinakargang paibaba ang laro...',
+	'photopop-game-update-progress-text' => 'Isinasapanahon ang laro...',
+	'photopop-game-download-error-text' => 'Isang kamalian ang naganap habang ikinakargang paibaba ang dato ng laro, paki subukan ulit.',
 );
 
 /** толышә зывон (толышә зывон)

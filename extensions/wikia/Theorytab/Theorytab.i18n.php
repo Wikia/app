@@ -24,7 +24,7 @@ $messages['ar'] = array(
 	'theorytab-parent-title' => 'المقالة الأصلية',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -104,7 +104,7 @@ $messages['fr'] = array(
 	'theorytab-parent-title' => 'Article Principal',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -118,7 +118,7 @@ $messages['he'] = array(
 	'theorytab-parent-title' => 'ערך הורה',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(

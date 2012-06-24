@@ -29,7 +29,7 @@ $messages['ar'] = array(
 	'randomwiki' => 'ويكي عشوائية',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -117,7 +117,7 @@ $messages['fr'] = array(
 	'randomwiki' => 'Un wiki au hasard',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

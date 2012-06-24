@@ -66,7 +66,7 @@ $messages['fr'] = array(
 	'imageserving-desc' => 'Sélectionne les images dans un ensemble défini de pages, en fonction des besoins visuels',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

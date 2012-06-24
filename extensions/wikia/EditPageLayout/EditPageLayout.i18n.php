@@ -678,7 +678,7 @@ $messages['fr'] = array(
 	'tog-forceeditsummary' => 'M’avertir si je n’ai laissé aucun résumé de modification',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1565,6 +1565,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author Rhaijin
  */
 $messages['pt'] = array(
 	'editpagelayout-more' => 'mais',
@@ -1800,12 +1801,43 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
  * @author Veeven
  */
 $messages['te'] = array(
+	'editpagelayout-helpLink-url' => 'Help:దిద్దుబాటు',
+	'editpagelayout-notificationsLink-none' => 'చూడవలసినవి',
+	'editpagelayout-edit-title' => 'పైపేరును మార్చండి',
+	'editpagelayout-edit-info' => 'మందలను సరిదిద్దండి',
+	'editpagelayout-myedit-header' => 'ఇది మీ దిద్దుబాటు. మీ మార్పులను పైనున్న పెట్టెలో అచ్చం చేయండి.',
+	'editpagelayout-captcha-title' => 'ముద్ద అక్షరాలు',
+	'editpagelayout-pageControls-pageLink' => 'పుటకు తిరిగిపొండి',
+	'editpagelayout-pageControls-minorEdit' => 'చిన్న మార్పు',
+	'editpagelayout-pageControls-summaryLabel' => 'మీ దిద్దుబాట్ల సారాన్ని చేర్చండి',
+	'editpagelayout-pageControls-newSectionLabel' => 'ఈ ముక్క తలవరుసను చేర్చండి',
+	'editpagelayout-pageControls-back' => 'తిరిగి దిద్దరికి',
 	'editpagelayout-pageControls-changes' => 'మార్పులు',
+	'editpagelayout-blocked-user' => 'మీ వాడుకరి పేరు లేదా ఐపీ జాడ అడ్డుకోబడినది',
+	'editpagelayout-edit-summary-label' => 'సారమును దిద్దండి',
+	'editpagelayout-subject-headline-label' => 'ముచ్చట/తలవరుస',
+	'wikia-editor-media-image' => 'బొమ్మ',
+	'wikia-editor-media-gallery' => 'చూపుచోటు',
+	'wikia-editor-media-slideshow' => 'ముక్కల వరుస చూపు',
+	'wikia-editor-media-video' => 'కదిలేబొమ్మ',
+	'wikia-editor-media-image-tooltip' => 'బొమ్మను చేర్చండి',
+	'wikia-editor-media-gallery-tooltip' => 'చూపుచోటును చేర్చండి',
+	'wikia-editor-source-bold-tooltip' => 'బొద్దు',
+	'wikia-editor-source-link-tooltip' => 'లంకెను చేర్చు',
 	'wikia-editor-modules-templates-title' => 'మూసలు',
-	'wikia-editor-modules-categories-title' => 'వర్గాలు',
+	'wikia-editor-modules-templates-add-tooltip' => '"$1" మూసను చేర్చు',
+	'wikia-editor-modules-templates-otherTemplates' => 'ఇతర మూసలను చేర్చండి',
+	'wikia-editor-modules-templates-showUsedList' => 'వాడిన మూసల జాబితాను చూపుము',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'వాడిన మూసల జాబితా',
+	'wikia-editor-modules-categories-title' => 'గుంపులు',
+	'wikia-editor-loadingStates-loading' => 'దిద్దరిని తెస్తున్నాము',
+	'wikia-editor-loadingStates-saving' => 'మీ దిద్దుబాటును ఎల్లరికెరుకజేయుచున్నాము...',
+	'wikia-editor-edittools-dialog-title' => 'వికిటెక్స్ట్ అడ్డదారులు',
+	'wikia-editor-notices-dialog-title' => 'చూడవలసినదాని వివరాలు',
 	'prefs-general' => 'సాధారణం',
 );
 

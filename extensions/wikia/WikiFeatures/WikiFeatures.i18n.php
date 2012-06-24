@@ -531,7 +531,7 @@ $messages['fr'] = array(
 	'wikifeatures-log-header' => 'Vous trouverez ci-dessous une liste des modifications de paramètres avec Composants de wiki.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1261,6 +1261,45 @@ $messages['sv'] = array(
 	'wikifeatures-feature-heading-emptylabs' => 'Det ser ut som labbet tar en paus',
 	'wikifeatures-feature-description-emptylabs' => 'Våra tekniker jobbar hårt med att koka ihop nya funktioner till dig att prova ut. Leta efter fler labbar här snart!',
 	'wikifeatures-log-name' => 'Logg över Wiki-funktioner',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikifeatures-feedback' => 'Magbigay ng Tugon',
+	'wikifeatures-error-permission' => 'Paumanhin,  wala kang pahintulot na ipakita ang pahinang ito.',
+	'wikifeatures-error-invalid-parameter' => 'Hindi katanggap-tanggap na parametro: $1. Paki subukan ulit.',
+	'wikifeatures-error-message' => 'Ang puna mo ay maaaring napakaiksi o napakahaba.',
+	'wikifeatures-error-spam-attempt' => 'Paki maghintay ng 60 mga segundo bago magpasa ng marami pang tugon.',
+	'wikifeatures-error-invalid-category' => 'Naku! Paki piliin kung patungkol sa ba sa ano ang tiket na ito.',
+	'wikifeatures-toggle-active' => 'Pinagagana',
+	'wikifeatures-toggle-inactive' => 'Hindi pinagagana',
+	'wikifeatures-active-on' => 'Masigla sa $1 na mga wiki',
+	'wikifeatures-category-choose-one' => 'Pumili ng isa...',
+	'wikifeatures-love-this-project' => 'Iniibig ko ang tampok na ito',
+	'wikifeatures-hate-this-project' => 'Kinamumuhian ko ang tampok na ito',
+	'wikifeatures-problem-with-project' => 'Mayroon akong iuulat na isang suliranin',
+	'wikifeatures-an-idea-for-project' => 'Mayroon akong isang ideya para sa tampok na ito',
+	'wikifeatures-feedback-heading' => 'Tugon',
+	'wikifeatures-feedback-description' => 'Naiibigan namin ang makarinig ng tugon na patungkol sa tampok na nasa loob ng mga Laboratoryo! Mayroon ka bang isang ideya sa kung paano namin mapapainam ang tampok na ito, isang ulat ng suliranin, o payak na ilang tugon sa kung ano ang nagustuhan mo at hindi nagustuhan? Ipaalam sa amin sa pamamagitan ng paggamit sa kahong nasa ibaba.',
+	'wikifeatures-feedback-type-label' => 'Patungkol ba sa ano ito?',
+	'wikifeatures-feedback-comment-label' => 'Iwanan kami ng isang puna',
+	'wikifeatures-feedback-success' => 'Salamat sa tugon mo!',
+	'wikifeatures-deactivate-heading' => 'Huwag paganahin ang $1?',
+	'wikifeatures-deactivate-notification' => 'Mabubuhay mong muli ang tampok sa kahit na anumang oras.',
+	'wikifeatures-deactivate-confirm-button' => 'Oo, huwag paganahin',
+	'wikifeatures-deactivate-cancel-button' => 'Huwag ituloy',
+	'wikifeatures-promotion-new' => 'Bago',
+	'wikifeatures-oasis-only' => 'Ang Mga Tampok ng Wiki ay hindi makukuha mula sa loob ng Monobook. Kung nais mong gamitin ang tampok na ito paki palitan ang kanaisan mo papunta sa pabalat na Wikia.',
+	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Mga Talaan ng Pinakamatataas na 10',
+	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Mga Pagpuna sa Artikulo',
+	'wikifeatures-feature-heading-wgEnableChat' => 'Makipagtalastasan',
+	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Mga Botohan',
+	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Tagapagbuo ng Latag',
+	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Mga Blog',
+	'wikifeatures-feature-heading-wgEnableWallExt' => 'Dingding ng Mensahe',
+	'wikifeatures-feature-heading-wgOasisNavV2' => 'Pinalawig na Panglibot ng Wiki',
 );
 
 /** Turkish (Türkçe)

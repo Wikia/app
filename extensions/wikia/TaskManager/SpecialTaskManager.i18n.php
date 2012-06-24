@@ -25,7 +25,7 @@ $messages['af'] = array(
 	'taskmanager_tasklist' => 'Keer terug na taaklys',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -117,7 +117,7 @@ $messages['fr'] = array(
 	'taskmanager-invert' => 'Inverser la sélection',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -136,7 +136,7 @@ $messages['he'] = array(
 	'taskmanager_tasklist' => 'חזרה לרשימת המשימות',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(

@@ -942,7 +942,7 @@ Merci de visiter ce site et de le modifier régulièrement...
 <div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -2303,6 +2303,7 @@ $messages['ps'] = array(
  * @author Giro720
  * @author Hamilton Abreu
  * @author Luckas Blade
+ * @author Rhaijin
  */
 $messages['pt'] = array(
 	'follow-desc' => 'Melhorias da funcionalidade de páginas vigiadas',
@@ -2336,7 +2337,7 @@ Adicione páginas à lista clicando "{{int:watch}}" no topo de uma página.',
 	'tog-enotiffollowedminoredits' => 'Notificar-me por correio electrónico quando uma página seguida sofrer uma edição menor',
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Opções avançadas',
 	'prefs-wikiafollowedpages-prefs-watchlist' => 'Só a lista de páginas vigiadas',
-	'tog-hidefollowedpages' => 'Tornar privada a minha lista de páginas seguidas',
+	'tog-hidefollowedpages' => 'Tornar privada a minha lista de paginas seguidas',
 	'follow-categoryadd-summary' => 'Página adicionada à categoria',
 	'follow-bloglisting-summary' => 'Mensagem publicada numa página de blogue',
 	'wikiafollowedpages-userpage-heading' => 'Páginas que estou a seguir',
@@ -2415,6 +2416,7 @@ Visite-nos sempre e edite muito...
  * @author Aristóbulo
  * @author Caio1478
  * @author Luckas Blade
+ * @author Rhaijin
  */
 $messages['pt-br'] = array(
 	'follow-desc' => 'Melhorias da funcionalidade de páginas vigiadas',
