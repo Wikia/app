@@ -67,11 +67,24 @@ SCRIPT2;
     return ab || 'impossible';
   }
 
+  function getCustomVarSlot() {
+    var slot = 'other';
+
+    if (typeof wgExtensionsPath != 'undefined') {
+      var s = wgExtensionsPath.match(/slot([0-9])/);
+      if (s) {
+        slot = s[1];
+      }
+    }
+
+    return slot;
+  }
+
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-30014103-1']);
   _gaq.push(['_setSampleRate', '10']);
 
-  _gaq.push(['_setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
+  _gaq.push(['_setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown') + ';slot=' + (getCustomVarSlot() || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 3, 'AB2',  (getCustomVarAB() || 'unknown'), 3]);
   _gaq.push(['_setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
@@ -84,7 +97,7 @@ SCRIPT2;
   _gaq.push(['Ads._setAccount', 'UA-17475676-7']);
   _gaq.push(['Ads._setSampleRate', '100']);
 
-  _gaq.push(['Ads._setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown'), 3]);
+  _gaq.push(['Ads._setCustomVar', 1, 'wiki', 'hub=' + (window.wgCatId || 'unknown') + ';lang=' + (window.wgContentLanguage || 'unknown') + ';slot=' + (getCustomVarSlot() || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 2, 'page', (getCustomVarPage() || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 3, 'AB2',  (getCustomVarAB() || 'unknown'), 3]);
   _gaq.push(['Ads._setCustomVar', 4, 'skin',  window.skin || 'unknown', 3]);
