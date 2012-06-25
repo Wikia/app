@@ -57,9 +57,16 @@ class SkinWikiaphone extends WikiaSkin {
 	}
 	
 	public function onSkinGetHeadScripts(&$scripts) {
-		global $wgJsMimeType;
+		global $wgJsMimeType, $wgEnableAbTesting;
 		
-		foreach ( AssetsManager::getInstance()->getGroupCommonURL( 'wikiaphone_js' ) as $src ) {
+		$packages = array( 'wikiaphone_js' );
+
+		//make abtesting code load before all the others
+		if ( !empty( $wgEnableAbTesting ) ) {
+			array_unshift( $packages, 'abtesting' );
+		}
+
+		foreach ( AssetsManager::getInstance()->getGroupCommonURL( $packages ) as $src ) {
 			$scripts .= "\n<script type=\"$wgJsMimeType\" src=\"{$src}\"></script>";
 		}
 		

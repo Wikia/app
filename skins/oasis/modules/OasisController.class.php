@@ -260,7 +260,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment;
+		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting;
 		wfProfileIn(__METHOD__);
 
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
@@ -269,7 +269,15 @@ class OasisController extends WikiaController {
 
 		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
 		$this->wikiaScriptLoader = '';
-		$blockingScripts = $this->assetsManager->getURL( 'blocking' );
+
+		$packages = array( 'oasis_blocking' );
+
+		//make abtesting code load before all the others
+		if ( !empty( $wgEnableAbTesting ) ) {
+			$packages[] = 'abtesting';
+		}
+
+		$blockingScripts = $this->assetsManager->getURL( $packages );
 
 		foreach($blockingScripts as $blockingFile) {
 			if( $wgSpeedBox && $wgDevelEnvironment ) {

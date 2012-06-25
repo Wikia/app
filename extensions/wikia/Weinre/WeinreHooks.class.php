@@ -29,12 +29,12 @@ class WeinreHooks extends WikiaObject {
 		return true;
 	}
 
-	public function onWikiaMobileAssetsPackages( Array &$jsPackages, Array &$scssPackages ) {
+	public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
 		$host = $this->getHost();
 
 		//allow testing from non-owned test environment or production/staging
 		if ( !empty( $host ) || !empty( $this->wg->develEnvironment ) ) {
-			$jsPackages[] = 'weinre_js';
+			$jsBodyPackages[] = 'weinre_js';
 		}
 
 		return true;

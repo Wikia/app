@@ -31,6 +31,13 @@ class AbTesting {
 		return true;
 	}
 
+	//keeping the response size (assets minification) and the number of external requests low (aggregation)
+	static public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ){
+			$jsHeadPackages[] = 'abtesting';
+
+		return true;
+	}
+
 	/**
 	 * Returns a string containing minified javascript for the configuration of experiments and test
 	 * groups.

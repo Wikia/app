@@ -29,6 +29,7 @@ class WikiaMobileService extends WikiaService {
 
 	public function index() {
 		$skin = $this->wg->user->getSkin();
+		$jsHeadPackages = array( 'wikiamobile_js_head' );
 		$jsBodyPackages = array( 'wikiamobile_js_body' );
 		$scssPackages = array( 'wikiamobile_scss' );
 		$jsBodyFiles = '';
@@ -38,14 +39,17 @@ class WikiaMobileService extends WikiaService {
 		$scripts = $skin->getScripts();
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 		$templateObject = $this->app->getSkinTemplateObj();
-		
+		$globalsScript = Skin::makeGlobalVariablesScript( $templateObject->get( 'skinname' ) );
+
+		//TODO: this should be removed when merging to 1.19, now we use the WikiaSkinTopScripts hook
+		$this->app->runHook( 'SkinGetHeadScripts', array( &$globalsScript ) );
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
 		$this->app->runHook(
 				'WikiaMobileAssetsPackages',
 				array(
-						//no access to js packages in the head, those can slow down the page sensibly, sorry ;)
+						&$jsHeadPackages,
 						&$jsBodyPackages,
 						&$scssPackages
 				)
@@ -66,12 +70,11 @@ class WikiaMobileService extends WikiaService {
 			$cssLinks .= "<link rel=stylesheet href=\"{$s['url']}\"/>";//this is a strict skin, getStyles returns only elements with a set URL
 		}
 
-		//core JS in the head section, definitely safe
-		$srcs = $assetsManager->getURL( 'wikiamobile_js_head' );
-
-		foreach ( $srcs as $src ) {
-			//HTML5 standard, no type attribute required == smaller output
-			$jsHeadFiles .= "<script src=\"{$src}\"></script>";
+		foreach ( $assetsManager->getURL( $jsHeadPackages ) as $s ) {
+			if ( $assetsManager->checkAssetUrlForSkin( $s, $skin ) ) {
+				//HTML5 standard, no type attribute required == smaller output
+				$jsHeadFiles .= "<script src=\"{$s}\"></script>";
+			}
 		}
 
 		foreach ( $assetsManager->getURL( $jsBodyPackages ) as $s ) {
@@ -97,7 +100,7 @@ class WikiaMobileService extends WikiaService {
 		$this->mimeType = $templateObject->get( 'mimetype' );
 		$this->charSet = $templateObject->get( 'charset' );
 		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript( $templateObject->get( 'skinname' ) );
+		$this->globalsScript = $globalsScript;
 		$this->bodyClasses = array( 'wkMobile', $templateObject->get( 'pageclass' ) );
 		$this->pageTitle = $this->wg->Out->getHTMLTitle();
 		$this->cssLinks = $cssLinks;
