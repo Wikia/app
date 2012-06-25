@@ -12,7 +12,7 @@
 		<meta name=apple-mobile-web-app-capable content=yes>
 		<?= $headLinks ;?>
 		<?= $cssLinks ;?>
-		<?= $globalVariablesScript ;?>
+		<?= $globalsScript ;?>
 		<?= $jsHeadFiles ;?>
 		<?= $headItems ;?>
 	</head>

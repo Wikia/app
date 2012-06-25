@@ -90,11 +90,10 @@ $config['site_user_css'] = array(
  * Keep this group small!
  **/
 
-$config['blocking'] = array(
+$config['oasis_blocking'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/wikia/js/WikiaScriptLoader.js',
-		'//extensions/wikia/AbTesting/js/AbTesting.js',
+		'//skins/wikia/js/WikiaScriptLoader.js'
 	)
 );
 
@@ -236,6 +235,7 @@ $config['oasis_user_js'] = array(
 $config['wikiaphone_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'#group_abtesting',
 		//core functionality required early in the process before jQuery
 		'//skins/common/wikia/cookies.js',
 		'//skins/common/wikia/querystring.js',
@@ -772,5 +772,14 @@ $config['imagedrop_scss'] = array(
 	'skin' => array( 'monobook', 'oasis' ),
 	'assets' => array(
 		'//extensions/wikia/ImageDrop/css/ImageDrop.scss'
+	)
+);
+
+// AbTesting
+$config['abtesting'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array( 'monobook', 'oasis', 'wikiamobile', 'wikiaphone' ),
+	'assets' => array(
+		'//extensions/wikia/AbTesting/js/AbTesting.js',
 	)
 );

@@ -23,6 +23,7 @@ $wgExtensionCredits['other'][] = array(
 
 // Embed the experiment/treatment config in the head scripts.
 $wgHooks['SkinGetHeadScripts'][] = 'AbTesting::onSkinGetHeadScripts';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
 
 $app = F::app();
 $app->registerClass('SpecialAbTestingController', $dir . '/SpecialAbTestingController.class.php' );

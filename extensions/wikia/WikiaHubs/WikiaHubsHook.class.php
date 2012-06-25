@@ -104,7 +104,7 @@ class WikiaHubsPopularVideos {
  * WikiaHubs Mobile
  */
 class WikiaHubsMobile {	
-	public static function onWikiaMobileAssetsPackages( &$jsPackages, &$scssPackages ) {
+	public static function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
 		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
 		if ( F::app()->wg->EnableWikiaHubsExt && ArticleAdLogic::isWikiaHub() ) {
 			$scssPackages[] = 'wikiahubs_scss_wikiamobile';

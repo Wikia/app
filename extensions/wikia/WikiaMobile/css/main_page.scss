@@ -3,7 +3,7 @@
  */
 
 #wkMainCnt{
-	/*.main-page-tag-rcs, */.main-page-tag-lcs{
+	.main-page-tag-lcs{
 		float: none;
 		width: auto;
 		position: static;
@@ -22,7 +22,6 @@
 	}
 
 	.main-page-tag-rcs{
-		/*clear: none;*/
 		display: none;
 	}
 

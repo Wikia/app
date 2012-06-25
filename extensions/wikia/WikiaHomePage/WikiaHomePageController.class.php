@@ -549,7 +549,7 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
-	public static function onWikiaMobileAssetsPackages(Array &$jsPackages, Array &$scssPackages) {
+	public static function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
 		//this hook is fired only by the WikiaMobile skin, no need to check for what skin is being used
 		if (F::app()->wg->EnableWikiaHomePageExt && ArticleAdLogic::isMainPage()) {
 			$scssPackages[] = 'wikiahomepage_scss_wikiamobile';
