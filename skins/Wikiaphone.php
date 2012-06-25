@@ -66,7 +66,7 @@ class SkinWikiaphone extends WikiaSkin {
 			array_unshift( $packages, 'abtesting' );
 		}
 
-		foreach ( AssetsManager::getInstance()->getGroupCommonURL( $packages ) as $src ) {
+		foreach ( AssetsManager::getInstance()->getURL( $packages ) as $src ) {
 			$scripts .= "\n<script type=\"$wgJsMimeType\" src=\"{$src}\"></script>";
 		}
 		
