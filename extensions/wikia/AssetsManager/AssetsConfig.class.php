@@ -153,7 +153,7 @@ class AssetsConfig {
 	public function getGroupSkin( $groupName ) {
 		$this->load();
 
-		if ( isset( $this->mConfig[$groupName] ) ) {
+		if ( is_string( $groupName ) && isset( $this->mConfig[$groupName] ) ) {
 			return ( isset( $this->mConfig[$groupName]['skin'] ) ) ? $this->mConfig[$groupName]['skin'] : null;
 		} else {
 			//this is being called on non-defined groups programmatically, so no need to log failure

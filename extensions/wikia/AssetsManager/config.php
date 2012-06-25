@@ -235,7 +235,6 @@ $config['oasis_user_js'] = array(
 $config['wikiaphone_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#group_abtesting',
 		//core functionality required early in the process before jQuery
 		'//skins/common/wikia/cookies.js',
 		'//skins/common/wikia/querystring.js',
