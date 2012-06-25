@@ -31,8 +31,14 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		}
 
 		if ( $useCache ) {
+			// Calculate hash of sass source files
 			$hash = wfAssetManagerGetSASShash( $this->mOid );
-			$inputHash = md5(urldecode(http_build_query($this->mParams, '', ' ')));
+			// Calculate hash of input parameters that matter
+			$inputParams = $this->mParams;
+			unset($inputParams['minify']);
+			unset($inputParams['combine']);
+			ksort($inputParams);
+			$inputHash = md5(urldecode(http_build_query($inputParams, '', ' ')));
 
 			$cacheId = "common:am:sass:$inputHash:$hash";
 
