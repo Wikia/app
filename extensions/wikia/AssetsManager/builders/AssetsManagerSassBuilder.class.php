@@ -8,7 +8,7 @@
 class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 	public function __construct(WebRequest $request) {
-		global $wgDevelEnvironment, $wgSpeedBox;
+		global $wgDevelEnvironment, $wgSpeedBox, $wgStagingEnvironment;
 		$wgDevelEnvironment ? $timeStart = microtime( true ) : null;
 
 		parent::__construct($request);
@@ -24,21 +24,29 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		//remove slashes at the beginning of the string, we need a pure relative path to open the file
 		$this->mOid = preg_replace( '/^[\/]+/', '', $this->mOid );
 
-		$hash = wfAssetManagerGetSASShash( $this->mOid );
-		$inputHash = md5(urldecode(http_build_query($this->mParams, '', ' ')));
+		$useCache = true;
+		// Prevent cache poisoning if we are serving sass from preview server
+		if ( getHostPrefix() !== null || !empty( $wgStagingEnvironment ) ) {
+			$useCache = false;
+		}
 
-		$cacheId = "/Sass-$inputHash-$hash";
+		if ( $useCache ) {
+			$hash = wfAssetManagerGetSASShash( $this->mOid );
+			$inputHash = md5(urldecode(http_build_query($this->mParams, '', ' ')));
 
-		$memc = F::App()->wg->Memc;
+			$cacheId = "common:am:sass:$inputHash:$hash";
 
-		if ( $obj = $memc->get( $cacheId ) ) {
-			$this->mContent = $obj;
-		} else {
-			$this->processContent();
-			// Prevent cache poisoning if we are serving sass from preview server
-			if (getHostPrefix() == null) {
+			$memc = F::App()->wg->Memc;
+
+			if ( $obj = $memc->get( $cacheId ) ) {
+				$this->mContent = $obj;
+			} else {
+				$this->processContent();
+				$this->mContent = "/* cache-id: $cacheId */\n" . $this->mContent;
 				$memc->set( $cacheId, $this->mContent );
 			}
+		} else {
+			$this->processContent();
 		}
 
 		$this->mContentType = AssetsManager::TYPE_CSS;
