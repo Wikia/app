@@ -132,7 +132,7 @@ class WikiaSearchResult {
 
 	}
 
-	protected function getTitleObject() {
+	public function getTitleObject() {
 	  if (!isset($this->titleObject)) {
 	    $this->titleObject = Title::makeTitle( $this->getVar('ns'), 
 												preg_replace('/^'.MWNamespace::getCanonicalName($this->getVar('ns')).':/', 

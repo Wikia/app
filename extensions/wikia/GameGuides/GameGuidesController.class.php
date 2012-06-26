@@ -8,7 +8,7 @@
 class GameGuidesController extends WikiaController {
 	const API_VERSION = 1;
 	const API_REVISION = 6;
-	const API_MINOR_REVISION = 1;
+	const API_MINOR_REVISION = 5;
 	const APP_NAME = 'GameGuides';
 	const SKIN_NAME = 'wikiaapp';
 	
