@@ -3,6 +3,8 @@
  * Simplified API for local and wikia-wide (global) search
  * 
  * @author Federico "Lox" Lucignano
+ * @deprecated
+ * @see WikiaSearch
  */
 class SimpleSearchService extends WikiaService {
 	const DEFAULT_LIMIT = 100;

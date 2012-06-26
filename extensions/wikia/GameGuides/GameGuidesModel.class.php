@@ -12,7 +12,7 @@ class GameGuidesModel{
 	const WF_WIKI_RECOMMEND_VAR = 'wgWikiaGameGuidesRecommend';
 	const MEMCHACHE_KEY_PREFIX = 'GameGuides';
 	const CACHE_DURATION = 86400;//24h
-	const SEARCH_RESULTS_LIMIT = 50;
+	const SEARCH_RESULTS_LIMIT = 100;
 	const CATEGORY_RESULTS_LIMIT = 0;//no limits for now
 
 	private $app;
@@ -193,9 +193,9 @@ class GameGuidesModel{
 		$this->app->wf->profileIn( __METHOD__ );
 
 		$term = trim( $term );
-		$ret = Array();
+		$ret = array();
 
-		if ( !empty( $term ) ) {
+		if ( !empty( $this->app->wg->EnableWikiaSearchExt ) && !empty( $term ) ) {
 			$this->app->wf->loadExtensionMessages( 'GameGuides' );
 
 			$cacheKey = $this->generateCacheKey(
@@ -207,17 +207,34 @@ class GameGuidesModel{
 			$ret = $this->loadFromCache( $cacheKey );
 
 			if ( empty( $ret ) ) {
-				// SimpleSearchService::getResults can throw an exception
-				try {
-					$searchResponse = F::app()->sendRequest( 'SimpleSearchService', 'localSearch', array(
-						'key' => $term,
-						'limit' => $totalLimit,
-						'urlParams' => array( 'useskin' => 'wikiaapp' )
-					));
+				$wikiaSearch = F::build('WikiaSearch');
 
-					$ret = $searchResponse->getData();
-				} catch (WikiaException $e) {
-					Wikia::logBacktrace(__METHOD__ . '::exception'); // BugId:18757
+				//only articles
+				$wikiaSearch->setNamespaces( array( NS_MAIN ) );
+
+				$resultSet = $wikiaSearch->doSearch( $term, array(
+					'length'=> $totalLimit, 
+					'cityId'=> $this->app->wg->CityId,
+				) );
+
+				$found = $resultSet->getRealResultsFound();
+				$count = 0;
+				$ret['textResults'] = array();
+
+				if ( !empty( $found ) ) {
+					$textResults = array();
+
+					foreach ( $resultSet as $result ) {
+						$textResults[] = array(
+							'textForm' => $result->getTitle(),
+							'urlForm' => $result->getTitleObject()->getLocalUrl( array( 'useskin' => 'wikiaapp') )
+						);
+
+						$count++;
+					}
+
+					$ret['textResults'] = $textResults;
+					$ret['count'] = $count;
 				}
 			}
 
