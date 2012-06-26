@@ -50,9 +50,9 @@ JS
 );
 		**/
 
-		global $wgJsMimeType;
+		global $wgJsMimeType, $wgExtensionsPath;
 
-		$scripts .= "\n<script type=\"{$wgJsMimeType}\" src=\"/extensions/wikia/WikiaTracker/js/analytics_prod.js?v=5\"></script>";
+		$scripts .= "\n<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiaTracker/js/analytics_prod.js?v=5\"></script>";
 
 		return true;
 	}
