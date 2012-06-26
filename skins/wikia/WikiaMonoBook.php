@@ -103,9 +103,13 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 		$packages = array( 'monobook_js' );
 
-		//make abtesting code load before all the others
 		if ( !empty( $wgEnableAbTesting ) ) {
-			array_unshift( $packages, 'abtesting' );
+			$pkg = F::build('AbTesting')->getJsPackage();
+
+			if(!empty($pkg)){
+				//make abtesting code load before all the others
+				array_unshift( $packages, $pkg  );
+			}
 		}
 
 		$srcs = AssetsManager::getInstance()->getURL( $packages );

@@ -61,9 +61,13 @@ class SkinWikiaphone extends WikiaSkin {
 		
 		$packages = array( 'wikiaphone_js' );
 
-		//make abtesting code load before all the others
 		if ( !empty( $wgEnableAbTesting ) ) {
-			array_unshift( $packages, 'abtesting' );
+			$pkg = F::build('AbTesting')->getJsPackage();
+
+			if(!empty($pkg)){
+				//make abtesting code load before all the others
+				array_unshift( $packages, $pkg  );
+			}
 		}
 
 		foreach ( AssetsManager::getInstance()->getURL( $packages ) as $src ) {
