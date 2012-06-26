@@ -272,9 +272,12 @@ class OasisController extends WikiaController {
 
 		$packages = array( 'oasis_blocking' );
 
-		//make abtesting code load before all the others
 		if ( !empty( $wgEnableAbTesting ) ) {
-			$packages[] = 'abtesting';
+			$pkg = F::build('AbTesting')->getJsPackage();
+
+			if(!empty($pkg)){
+				$packages[] = 'abtesting';
+			}
 		}
 
 		$blockingScripts = $this->assetsManager->getURL( $packages );

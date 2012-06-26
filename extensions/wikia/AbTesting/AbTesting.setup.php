@@ -8,26 +8,54 @@
  * This is the new system which is powered by our data warehouse.
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
-$dir = dirname( __FILE__ );
-$wgAutoloadClasses['AbTesting'] = "$dir/AbTesting.class.php";
-$wgExtensionMessagesFiles['AbTesting'] = "$dir/AbTesting.i18n.php";
-$wgExtensionCredits['other'][] = array(
-	'name' => 'A/B Testing',
-	//'url' => '',
-	'author' => '[http://www.seancolombo.com Sean Colombo]',
-	'descriptionmsg' => 'abtesting-desc',
-	'version' => '1.0',
-);
-
-// Embed the experiment/treatment config in the head scripts.
-$wgHooks['SkinGetHeadScripts'][] = 'AbTesting::onSkinGetHeadScripts';
-$wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This file is part of MediaWiki, it is not a valid entry point.\n";
+	exit( 1 );
+}
 
 $app = F::app();
+$dir = dirname( __FILE__ );
+
+/**
+ * info
+ */
+$app->wg->append(
+	'wgExtensionCredits',
+	array(
+		'name' => 'A/B Testing',
+		'author' => '[http://www.seancolombo.com Sean Colombo]',
+		'descriptionmsg' => 'abtesting-desc',
+		'version' => '1.0',
+	),
+	'other'
+);
+
+/**
+ * classes
+ */
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/AbTesting.class.php", 'AbTesting' );
+
+/**
+ * message files
+ */
+$app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/AbTesting.i18n.php", 'AbTesting' );
+
+/**
+ * special pages
+ */
 $app->registerClass('SpecialAbTestingController', $dir . '/SpecialAbTestingController.class.php' );
 $app->registerSpecialPage('AbTesting', 'SpecialAbTestingController');
+
+/**
+ * rights
+ */
 $wgAvailableRights[] = 'abtestpanel';
 $wgGroupPermissions['staff']['abtestpanel'] = true;
 
+/**
+ * hooks
+ */
+$app->registerHook( 'SkinGetHeadScripts', 'AbTesting', 'onSkinGetHeadScripts');
+
+//AbTesting is an Oasis-only experiment for now
+//$app->registerHook( 'WikiaMobileAssetsPackages', 'AbTesting', 'onWikiaMobileAssetsPackages' );
