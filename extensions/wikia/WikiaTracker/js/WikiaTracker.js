@@ -275,6 +275,9 @@ WikiaTracker.track = function(page, profile, events) {
 };
 
 WikiaTracker._track = function(page, profile, sample, events) {
+
+return true; // gas rollout
+
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
 
 	if (typeof events != 'undefined' && events instanceof Array) {

@@ -13,12 +13,13 @@ require_once dirname(__FILE__) . '/AnalyticsProviderQuantServe.php';
 require_once dirname(__FILE__) . '/AnalyticsProviderGA_Urchin.php';
 require_once dirname(__FILE__) . '/AnalyticsProviderComscore.php';
 require_once dirname(__FILE__) . '/AnalyticsProviderExelate.php';
+require_once dirname(__FILE__) . '/AnalyticsProviderGAS.php';
 
 class AnalyticsEngine {
 
 	const EVENT_PAGEVIEW = 'page_view';
 
-	private $providers = array('GAT', 'GA_Urchin', 'QuantServe', 'MessageQueue');
+	private $providers = array('GAT', 'GA_Urchin', 'QuantServe', 'MessageQueue', 'GAS');
 
 	static public function track($provider, $event, $eventDetails=array(), $setupParams=array()){
 		global $wgDevelEnvironment;
@@ -64,10 +65,11 @@ class AnalyticsEngine {
 	
 	private static function getProvider($provider) {
 		switch ($provider){
-		  case 'GA_Urchin': $AP = new AnalyticsProviderGA_Urchin(); break;
+		  case 'GA_Urchin': $AP = new AnalyticsProviderGAS(); break;
 		  case 'QuantServe': $AP = new AnalyticsProviderQuantServe(); break;
 		  case 'Comscore': $AP = new AnalyticsProviderComscore(); break;
 		  case 'Exelate': $AP = new AnalyticsProviderExelate(); break;
+		  case 'GAS': $AP = new AnalyticsProviderGAS; break;
 		  default: return null;
 		}
 		
