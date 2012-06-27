@@ -30,6 +30,9 @@ $wgExtensionCredits['specialpage'][] = array(
 
 class WhereIsExtension extends SpecialPage {
 	private $values;
+        
+        // number of items per page in paged view
+        const ITEMS_PER_PAGE = 50;
 
 	function  __construct() {
 		parent::__construct('WhereIsExtension' /*class*/, 'WhereIsExtension' /*restriction*/);
@@ -41,7 +44,7 @@ class WhereIsExtension extends SpecialPage {
 		$gVal = $wgRequest->getVal('val', 'true');
 		$gLikeVal = $wgRequest->getVal('likeValue', 'true');
 		$gTypeVal = $wgRequest->getVal('searchType', 'bool');
-		
+                
 		wfLoadExtensionMessages('WhereIsExtension');
 		$wgOut->SetPageTitle(wfMsg('whereisextension'));
 		$wgOut->setRobotpolicy('noindex,nofollow');
@@ -75,14 +78,47 @@ class WhereIsExtension extends SpecialPage {
 		$formData['selectedGroup'] = $gVar == '' ? 27 : '';	//default group: extensions (or all groups when looking for variable, rt#16953)
 		$formData['groups'] = WikiFactory::getGroups();
 		$formData['actionURL'] = $wgTitle->getFullURL();
+                
+                // by default, we don't need a paginator
+                $sPaginator = '';
+                
 		if (!empty($gVar)) {
 			$formData['selectedVar'] = $gVar;
-			$formData['wikis'] = $this->getListOfWikisWithVar($gVar, $gTypeVal, $gVal, $gLikeVal);
+                        
+                        // assume an empty result
+                        $formData['count'] = 0;
+                        $formData['wikis'] = array();
+                        
+                        if ( isset( $this->values[$gVal][1] ) && isset( $this->values[$gVal][2] ) ) {
+                            
+                            // check how many wikis meet the conditions
+                            $formData['count'] = WikiFactory::getCountOfWikisWithVar( $gVar, $gTypeVal, $this->values[$gVal][2], $this->values[$gVal][1], $gLikeVal );
+
+                            // if there are any, get the list and create a Paginator
+                            if (0 < $formData['count'] ) {
+                                // determine the offset (from the requested page)
+                                $iPage = $wgRequest->getVal( 'page', 1 );
+                                $iOffset = ( $iPage - 1 ) * self::ITEMS_PER_PAGE;
+                                
+                                // the list
+                                $formData['wikis'] = WikiFactory::getListOfWikisWithVar( $gVar, $gTypeVal, $this->values[$gVal][2], $this->values[$gVal][1], $gLikeVal, $iOffset, self::ITEMS_PER_PAGE );
+                                
+                                // the Paginator, if we need more than one page
+                                if ( self::ITEMS_PER_PAGE < $formData['count'] ) {
+                                    $oPaginator = Paginator::newFromArray( array_fill( 0, $formData['count'], '' ), self::ITEMS_PER_PAGE, 5 );
+                                    $oPaginator->setActivePage( $iPage - 1 );
+                                    $sPager = $oPaginator->getBarHTML( sprintf( '%s?var=%s&val=%s&likeValue=%s&searchType=%s&page=%%s', $wgTitle->getFullURL(), $gVar, $gVal, $gLikeVal, $gTypeVal ) );
+                                }
+                            }
+                        }
 		}
+                
 		$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 		$oTmpl->set_vars( array(
 				'formData' => $formData,
-				'tagResultInfo' => $tagResultInfo
+				'tagResultInfo' => $tagResultInfo,
+                                // pass the pager to the template
+                                'sPager' => $sPager
 			));
 		$wgOut->addHTML($oTmpl->execute('list'));
 	}
@@ -136,50 +172,4 @@ class WhereIsExtension extends SpecialPage {
 
 		return $msg;
 	}
-
-	//TODO: Use WikiFactory::getListOfWikisWithVar
-	//fetching wiki list with selected variable set to 'true'
-	private function getListOfWikisWithVar($varId, $type, $val, $likeVal) {
-		global $wgExternalSharedDB;
-		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-		
-		$aWikis = array();
-		if (!isset($this->values[$val][1])) {
-			return $aWikis;
-		}
-		$selectedVal = serialize($this->values[$val][1]);
-		$selectedCond = $this->values[$val][2];
-
-		$aTables = array(
-			'city_variables',
-			'city_list',
-		);
-		$varId = mysql_real_escape_string($varId);
-		$aWhere = array('city_id = cv_city_id');
-		
-		if( $type == "full" ) {
-			$aWhere[] = "cv_value like '%".$dbr->escapeLike($likeVal)."%'";
-		} else {
-			$aWhere[] = "cv_value $selectedCond '$selectedVal'";	
-		}
-		
-		$aWhere[] = "cv_variable_id = '$varId'";
-
-
-		$oRes = $dbr->select(
-			$aTables,
-			array('city_id', 'city_title', 'city_url', 'city_public'),
-			$aWhere,
-			__METHOD__,
-			array('ORDER BY' => 'city_sitename')
-		);
-
-		while ($oRow = $dbr->fetchObject($oRes)) {
-			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ) );
-		}
-		$dbr->freeResult( $oRes );
-
-		return $aWikis;
-	}
 }
-?>
