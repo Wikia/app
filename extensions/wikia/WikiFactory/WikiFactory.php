@@ -2851,7 +2851,7 @@ class WikiFactory {
 	 * @param unknown_type $likeVal
 	 */
 	
-	static public function getListOfWikisWithVar($varId, $type, $selectedCond ,$val, $likeVal = '') {
+	static public function getListOfWikisWithVar($varId, $type, $selectedCond ,$val, $likeVal = '', $offset = null, $limit = null ) {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		
@@ -2872,14 +2872,23 @@ class WikiFactory {
 		}
 		
 		$aWhere[] = "cv_variable_id = '$varId'";
-
-
+                
+                $aOptions = array( 'ORDER BY' => 'city_sitename' );
+                
+                if ( isset( $limit ) ) {
+                    $aOptions['LIMIT'] = $limit;
+                }
+                
+                if ( isset( $offset ) ) {
+                    $aOptions['OFFSET'] = $offset;
+                }
+                               
 		$oRes = $dbr->select(
 			$aTables,
 			array('city_id', 'city_title', 'city_url', 'city_public'),
 			$aWhere,
 			__METHOD__,
-			array('ORDER BY' => 'city_sitename')
+			$aOptions
 		);
 
 		while ($oRow = $dbr->fetchObject($oRes)) {
@@ -2889,4 +2898,35 @@ class WikiFactory {
 
 		return $aWikis;
 	}
+        
+        /**
+         * fetching a number of wikis with select variable set to $val
+         * @param integer $varId
+         * @param string $type
+         * @param mixed $val
+         * @param string $likeVal 
+         */
+
+        static public function getCountOfWikisWithVar( $varId, $type, $selectedCond ,$val, $likeVal = '' ) {
+            global $wgExternalSharedDB;
+            $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+            
+            $selectedVal = serialize( $val );
+            $aTables = array( 'city_variables', 'city_list' );
+            $varId = mysql_real_escape_string( $varId );
+            $aWhere = array(
+                'city_id = cv_city_id',
+                "cv_variable_id = '$varId'"
+            );
+            
+            if( 'full' == $type ) {
+                $aWhere[] = "cv_value like '%" . $dbr->escapeLike($likeVal) . "%'";
+            } else {
+                $aWhere[] = "cv_value $selectedCond '$selectedVal'";
+            }
+            
+            $oRow = $dbr->selectRow( $aTables, 'COUNT(1) AS cnt', $aWhere, __METHOD__ );
+            
+            return $oRow->cnt;
+        }
 };

@@ -96,7 +96,7 @@ select {
 	<?php
 	if (!empty($formData['wikis']) && count($formData['wikis'])) {
 		?>
-		<h3 id="headerWikis"><?php print wfMsg('whereisextension-list') ?> (<?php print count($formData['wikis']) ?>)</h3>
+		<h3 id="headerWikis"><?php print wfMsg('whereisextension-list') ?></h3>
 		<form method="post" action="<?php print $formData['actionURL'] ?>" name="wikiSelectForm">
 			<ul>
 			<?php
@@ -113,6 +113,7 @@ select {
 			}
 			?>
 			</ul>
+                        <?= $sPager ?>
 			<a href="#" id="wikiSelectAll" class="selectorLink">select all</a>&nbsp;
 			<a href="#" id="wikiDeselectAll" class="selectorLink">deselect all</a><br />
 			Tag name:&nbsp;
