@@ -41,6 +41,9 @@ function wfMakeGlobalVariablesScript($vars) {
 	if (Wikia::isMainPage()) {
 		$vars['wgIsMainpage'] = true;
 	}
+	if (Wikia::isContentNamespace()) {
+		$vars['wgIsContentNamespace'] = true;
+	}
 
 	$vars['wgStyleVersion'] = isset($wgStyleVersion) ? $wgStyleVersion : '' ;
 	if(isset($wgUser->getSkin()->themename)) {
