@@ -158,21 +158,9 @@ class GenerateSitemap extends Maintenance {
 		$this->priorities[GS_TALK] = '0.1';
 		// MediaWiki standard namespaces
 		$this->priorities[NS_MAIN] = '1.0';
-		$this->priorities[NS_TALK] = '0.1';
 		$this->priorities[NS_USER] = '0.5';
-		$this->priorities[NS_USER_TALK] = '0.1';
-		$this->priorities[NS_PROJECT] = '0.5';
-		$this->priorities[NS_PROJECT_TALK] = '0.1';
 		$this->priorities[NS_FILE] = '0.5';
-		$this->priorities[NS_FILE_TALK] = '0.1';
-		$this->priorities[NS_MEDIAWIKI] = '0.0';
-		$this->priorities[NS_MEDIAWIKI_TALK] = '0.1';
-		$this->priorities[NS_TEMPLATE] = '0.0';
-		$this->priorities[NS_TEMPLATE_TALK] = '0.1';
-		$this->priorities[NS_HELP] = '0.5';
-		$this->priorities[NS_HELP_TALK] = '0.1';
 		$this->priorities[NS_CATEGORY] = '0.5';
-		$this->priorities[NS_CATEGORY_TALK] = '0.1';
 	}
 
 	/**
