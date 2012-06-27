@@ -976,6 +976,25 @@ class Wikia {
 		wfProfileOut(__METHOD__);
 		return $result;
 	}
+	
+	public static function isContentNamespace() {
+		wfProfileIn(__METHOD__);
+
+		global $wgTitle, $wgContentNamespaces;
+
+		static $result = null;
+		
+		if (is_null($result)) {
+			if (in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
+				$result = true;
+			} else {
+				$result = false;
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $result;
+	}
 
 	/**
 	 * Returns true. Replace UNSUBSCRIBEURL with message and link to Special::Unsubscribe page
