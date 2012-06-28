@@ -51,18 +51,17 @@ class Track {
 <noscript><img src="$url&amp;nojs=1" width="1" height="1" border="0" alt="" /></noscript>
 <script type="text/javascript">
 (function() {
-	var beaconCookie;
-	if (! beaconCookie) {
-		var result = RegExp("wikia_beacon_id=([A-Za-z0-9_-]{10})").exec(document.cookie);
-		if (result) {
-			beaconCookie = result[1];
-		}
+	var result = RegExp("wikia_beacon_id=([A-Za-z0-9_-]{10})").exec(document.cookie);
+	if(result) {
+		window.beacon_id = result[1];
+	} else {
+		// something went terribly wrong
 	}
 
 	var utma = RegExp("__utma=([0-9\.]+)").exec(document.cookie);
 	var utmb = RegExp("__utmb=([0-9\.]+)").exec(document.cookie);
 
-	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf() + (beaconCookie ? "&amp;beacon=" + beaconCookie : "") + (utma && utma[1] ? "&amp;utma=" + utma[1] : "") + (utmb && utmb[1] ? "&amp;utmb=" + utmb[1] : "");
+	var trackUrl = "$url" + ((typeof document.referrer != "undefined") ? "&amp;r=" + escape(document.referrer) : "") + "&amp;cb=" + (new Date).valueOf() + (window.beacon_id ? "&amp;beacon=" + window.beacon_id : "") + (utma && utma[1] ? "&amp;utma=" + utma[1] : "") + (utmb && utmb[1] ? "&amp;utmb=" + utmb[1] : "");
 	document.write('<'+'script type="text/javascript" src="' + trackUrl + '"><'+'/script>');
 })();
 </script>
