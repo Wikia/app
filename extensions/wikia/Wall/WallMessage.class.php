@@ -146,7 +146,7 @@ class WallMessage {
 	}
 
 	public function canEdit(User $user){
-		return $this->isAuthor($user) || $user->isAllowed('walledit') || $user->isAllowed('rollback');
+		return $this->can( $user, 'edit' ) && ( $this->isAuthor($user) || $user->isAllowed('walledit') || $user->isAllowed('rollback') );
 	}
 		
 	public function doSaveComment($body, $user) {
