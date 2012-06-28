@@ -8,7 +8,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 function wfMakeGlobalVariablesScript($vars) {
 	wfProfileIn(__METHOD__);
 
-	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags, $wgDisableAnonymousEditing, $wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath;
+	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags, $wgDisableAnonymousEditing, $wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgMedusaSlot;
 
 	$cats = wfGetBreadCrumb();
 	$idx = count($cats)-2;
@@ -25,6 +25,10 @@ function wfMakeGlobalVariablesScript($vars) {
 		$vars['wgEnableAjaxLogin'] = true;
 	}
 	$vars['wgDBname'] = $wgDBname;
+	if (!empty($wgMedusaSlot)) {
+		$vars['wgMedusaSlot'] = 'slot' . $wgMedusaSlot;
+	}
+
 	$vars['wgBlankImgUrl'] = $wgBlankImgUrl;
 
 	if (!empty($wgPrivateTracker)) {
