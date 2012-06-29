@@ -67,7 +67,7 @@ Click the confirmation link in your email to finish creating your account.",  //
 	'usersignup-confirmation-email_subject' => 'Almost there! Confirm your Wikia account',
 	'usersignup-confirmation-email-greeting' => 'Hi $USERNAME,',
 	'usersignup-confirmation-email-content' => 'You\'re one step away from creating your account on Wikia! Click the link below to confirm your e-mail address and get started.
-<br/><br/>
+<br /><br />
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'The Wikia Team',
 	'usersignup-confirmation-email_body' => 'Hi $2,
@@ -90,9 +90,9 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-reconfirmation-email_subject' => 'Confirm your e-mail address change on Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Hi $USERNAME',
 	'usersignup-reconfirmation-email-content' => 'Please click the link below to confirm your change of e-mail address on Wikia.
-<br/><br/>
+<br /><br />
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br/><br/>
+<br /><br />
 You\'ll continue to recieve email at your old e-mail address until you confirm this one.',
 	'usersignup-reconfirmation-email-signature' => 'The Wikia Team',
 	'usersignup-reconfirmation-email_body' => 'Hi $2,
@@ -189,9 +189,9 @@ $2 will need to click on the link in the email we sent them to confirm their acc
 	'usersignup-account-creation-email-subject' => 'An account has been created for you on Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Hello,',
 	'usersignup-account-creation-email-content' => 'An account has been created for you on {{SITENAME}}. To access your account and change your temporary password click the link below and log in with username "$USERNAME" and password "$NEWPASSWORD".
-<br/><br/>
+<br /><br />
 Please log in at <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
-<br/><br/>
+<br /><br />
 If you did not want this account to be created you can simply ignore this email or contact our Community Support team with any questions.',
 	'usersignup-account-creation-email-signature' => 'The Wikia Team',
 	'usersignup-account-creation-email-body' => 'Hello,
@@ -215,9 +215,9 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-confirmation-reminder-email_subject' => "Don't be a stranger…",
 	'usersignup-confirmation-reminder-email-greeting' => 'Hi $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'It\'s been a few days, but it looks like you haven\'t finished creating your account on Wikia yet. It\'s easy. Just click the confirmation link below:
-<br/><br/>
+<br /><br />
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br/><br/>
+<br /><br />
 If you don\'t confirm within 23 days your username, $USERNAME, will become available again, so don\'t wait!',
 	'usersignup-confirmation-reminder-email-signature' => 'The Wikia Team',
 	'usersignup-confirmation-reminder-email_body' => 'Hi $2,
