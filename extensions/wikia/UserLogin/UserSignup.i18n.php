@@ -83,7 +83,7 @@ ___________________________________________
 
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-confirmation-email_body-html' => '',
+	'usersignup-confirmation-email_body-HTML' => '',
 
 	// reconfirmation email
 	'usersignup-reconfirmation-email-sent' => "Your e-mail address has been changed to $1. We've sent you a new confirmation email. Please confirm the new e-mail address.",
@@ -289,7 +289,7 @@ $messages['qqq'] = array(
 	'usersignup-confirmation-email-content' => 'Confirmation email template body content.  $CONFIRMURL is full url to goto confirm email, and is displayed as-is.',
 	'usersignup-confirmation-email-signature' => 'Confirmation email template footer signature.',
 	'usersignup-confirmation-email_body' => 'Text only version of the confirmation email.  Contains the same content as the templated version.  $2 is username, $3 is confirmation url.',
-	'usersignup-confirmation-email_body-html' => 'Standalone HTML version of confirmation email.  Contains the same content as the templated version.  $1 is username, $2 is confirmation url.',
+	'usersignup-confirmation-email_body-HTML' => 'Standalone HTML version of confirmation email.  Contains the same content as the templated version.  $1 is username, $2 is confirmation url.',
 	'usersignup-reconfirmation-email-sent' => 'Message telling user that the e-mail address has been changed to $1.',
 	'usersignup-reconfirmation-email_subject' => 'Subject of Confirmation email stating email has changed',
 	'usersignup-reconfirmation-email-greeting' => 'Greeting of Confirmation email stating email has changed.',
@@ -407,7 +407,7 @@ ___________________________________________
 
 Um dich zu Wikia auf dem aktuellen Stand zu halten, besuche http://de.community.wikia.com
 Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-confirmation-email_body-html' => 'Hallo $1,
+	'usersignup-confirmation-email_body-HTML' => 'Hallo $1,
 <br /><br />
 Der letzte Schritt beim Erstellen deines Wikia-Accounts! Klicke den unteren Link zur Bestätigung deiner Mail-Adresse und du kannst loslegen.
 <br /><br />
