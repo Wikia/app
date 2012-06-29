@@ -106,7 +106,7 @@ $messages['en'] = array(
 
 		'chatfailover' => 'Chatfailover control center',
 
-		'chat-failover-warning-title' => 'Read this carefully !!!',
+		'chat-failover-warning-title' => 'Read this carefully!',
 
 		'chat-failover-warning' => "This special page allows you to switch the chat to failover mode.
 <br /><br />If you're not an engineer, performing this operation requires consultation.<br /><br />
@@ -457,7 +457,7 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'group-bannedfromchat' => 'Aus dem Chat verbannt',
 	'group-bannedfromchat-member' => 'Aus dem Chat verbannt',
 	'chatfailover' => 'Chat-Ausfallsicherungssteuerung',
-	'chat-failover-warning-title' => 'Lies dies aufmerksam!!',
+	'chat-failover-warning-title' => 'Lies dies aufmerksam!',
 	'chat-failover-warning' => 'Diese Spezialseite erlaubt das Umschalten des Chats in den Ausfallsicherungs-Modus.
 <br /><br />Wenn du kein Entwickler bist, musst du vor dem Ausführen Rücksprache halten.<br /><br />
 Falls der Chat bereits im Ausfallsicherungs-Modus läuft und der Chat doch nicht funktioniert: Setze ihn NICHT ohne Rücksprache mit einem Betriebsentwickler in den Standardmodus zurück!',
@@ -711,12 +711,12 @@ $messages['fr'] = array(
 	'chat-you-are-banned-text' => "Désolé, vous n'avez pas la permission de tchater sur ce wiki. Si vous pensez que c'est une erreur ou souhaitez en discuter, veuillez contacter un administrateur.",
 	'chat-room-is-not-on-this-wiki' => 'Le salon de tchat auquel vous essayez de vous connecter ne semble pas exister sur ce wiki.',
 	'chat-kick-log-reason' => 'Banni du tchat pour ce wiki par $1. Veuillez les contacter pour plus d’informations.',
-	'chat-live2' => 'Tchat en direct !',
+	'chat-live2' => 'Tchat en direct!',
 	'chat-start-a-chat' => 'Démarrer',
 	'chat-join-the-chat' => 'Rejoindre',
 	'chat-edit-count' => '{{PLURAL:$1|$1 modification|$1 modifications}}',
 	'chat-member-since' => 'Membre depuis $1',
-	'chat-great-youre-logged-in' => 'Super ! Vous êtes connecté.',
+	'chat-great-youre-logged-in' => 'Super! Vous êtes connecté.',
 	'chat-user-menu-message-wall' => 'Mur de discussion',
 	'chat-user-menu-talk-page' => 'Page de discussion',
 	'chat-user-menu-contribs' => 'Contributions',
@@ -735,7 +735,7 @@ $messages['fr'] = array(
 	'group-bannedfromchat' => 'Bannis du tchat',
 	'group-bannedfromchat-member' => 'banni du tchat',
 	'chatfailover' => 'Centre de contrôle de secours du tchat',
-	'chat-failover-warning-title' => 'Lisez ceci attentivement !!!',
+	'chat-failover-warning-title' => 'Lisez ceci attentivement!',
 	'chat-failover-warning' => 'Cette page spéciale vous permet de passer le tchat en mode secours.
 <br /><br />Si vous n’êtes pas un ingénieur, effectuer cette opération nécessite de poser la question avant.<br /><br />
 Si le chat fonctionne déjà en mode secours et que l’application de tchat ne fonctionne pas : NE PAS le remettre en mode normal sans consulter un ingénieur des opérations',
@@ -1277,7 +1277,7 @@ $messages['mk'] = array(
 	'group-bannedfromchat-member' => 'Забранети во разговорот',
 	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
 	'chatfailover' => 'Вонреден контролен центар',
-	'chat-failover-warning-title' => 'Ова прочитајте го внимателно !!!',
+	'chat-failover-warning-title' => 'Ова прочитајте го внимателно!',
 	'chat-failover-warning' => 'Оваа специјална страница ви овозможува да ги префрлите разговорите на вонреден режим (failover mode).
 <br /><br />Доколку не сте технички стручни, ќе да се консултирате пред да ги правите овие измени.<br /><br />
 Ако разговорите веќе работат во вонреден режим, но самиот програм не работи: НЕ го враќајте во редовен режим без да се консултирате со техничко лице',
@@ -1390,7 +1390,7 @@ Sila hubungi mereka untuk penjelasan lanjut.',
 	'group-bannedfromchat-member' => 'DilarangBersembang',
 	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
 	'chatfailover' => 'Pusat kawalan kecemasan ruang sembang',
-	'chat-failover-warning-title' => 'Baca dengan teliti !!!',
+	'chat-failover-warning-title' => 'Baca dengan teliti!',
 	'chat-failover-warning' => 'Halaman khas ini membolehkan anda untuk menukar ragam ruang sembang ini kepada ragam kecemasan (failover).
 <br /><br />Jika anda bukan seorang jurutera, sila minta nasihat sebelum melakukan operasi ini.<br /><br />
 		Jika ruang sembang sudah pun beroperasi dalam ragam kecemasan, tetapi aplikasi sembang tidak berfungsi: JANGAN tukarkan kembali kepada ragam biasa tanpa meminta nasihat daripada jurutera operasi',
@@ -1546,7 +1546,7 @@ Neem alstublieft contact op met deze gebruiker voor meer informatie.',
 	'group-chatmoderator-member' => 'Chatmoderator',
 	'group-bannedfromchat' => 'Verbannen uit chat',
 	'group-bannedfromchat-member' => 'Verbannen uit chat',
-	'chat-failover-warning-title' => 'Lees dit zorgvuldig!!!',
+	'chat-failover-warning-title' => 'Lees dit zorgvuldig!',
 	'chat-failover-switchmode-failover' => 'Overschakelen naar normale modus',
 	'chat-failover-switchmode-regular' => 'Overschakelen naar failover-modus',
 	'chat-ban-log-change-ban-link' => 'verbod wijzigen',
@@ -1885,7 +1885,7 @@ $messages['ru'] = array(
 	'group-bannedfromchat' => 'Забанен в чате',
 	'group-bannedfromchat-member' => 'Забанен в чате',
 	'chatfailover' => 'Центр управления отказоустойчивости чата',
-	'chat-failover-warning-title' => 'Прочитайте внимательно!!!',
+	'chat-failover-warning-title' => 'Прочитайте внимательно!',
 	'chat-failover-warning' => 'Эта специальная страница позволяет вам переключиться в отказоустойчивый режим чата.
 <br /><br />Если вы не инженер, то выполнение этой операции требует проведения консультаций.<br /><br />
 Если чат уже работает в отказоустойчивом режиме и чат не работает: НЕ включайте его обратно в обычный режим без консультаций с инженером',
@@ -2004,7 +2004,7 @@ $messages['sv'] = array(
 	'group-chatmoderator-member' => 'Chattmoderator',
 	'group-bannedfromchat' => 'AvstängdFrånChatt',
 	'group-bannedfromchat-member' => 'AvstängdFrånChatt',
-	'chat-failover-warning-title' => 'Läs detta noggrant!!!',
+	'chat-failover-warning-title' => 'Läs detta noggrant!',
 	'chat-failover-server-list' => 'Chattservrar i användning:',
 	'chat-ban-option-list' => '2 timmar:2 hours,1 dag:1 day,3 dagar:3 days,1 vecka:1 week,2 veckor:2 weeks,1 månad:1 month,3 månader:3 months,6 månader:6 months,1 år:1 year,evigt:infinite',
 	'chat-ban-log-change-ban-link' => 'ändra förbud',
@@ -2172,7 +2172,7 @@ $messages['vi'] = array(
 	'group-bannedfromchat' => 'Bị cấm tán gẫu',
 	'group-bannedfromchat-member' => 'Bị cấm tán gẫu',
 	'chatfailover' => 'Trung tâm kiểm soát Tán gẫu Chuyển đổi Dự phòng',
-	'chat-failover-warning-title' => 'Đọc mẫu này một cách cẩn thận !!!',
+	'chat-failover-warning-title' => 'Đọc mẫu này một cách cẩn thận!',
 	'chat-failover-warning' => 'Trang đặc biệt này cho phép bạn chuyển đổi cuộc tán gẫu sang chế độ chuyển đổi dự phòng.
 <br /><br />Nếu bạn không phải là một kỹ sư, thực hiện thao tác này đòi hỏi phải tham khảo ý kiến.<br /><br />
 Nếu tán gẫu đã được cài đặt trong chế độ chuyển đổi dự phòng và các ứng dụng tán gẫu không hoạt động: KHÔNG được chuyển nó về chế độ thông thường mà không có ý kiến của một kỹ sư lập trình',
