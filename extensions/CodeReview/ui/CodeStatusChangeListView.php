@@ -1,30 +1,13 @@
 <?php
 
 // Special:Code/MediaWiki
-class CodeStatusChangeListView extends CodeView {
-	public $mRepo;
-
-	function __construct( $repoName ) {
-		parent::__construct();
-		$this->mRepo = CodeRepository::newFromName( $repoName );
-	}
-
-	function execute() {
-		global $wgOut;
-		$pager = $this->getPager();
-		$wgOut->addHTML(
-			$pager->getNavigationBar() .
-			$pager->getLimitForm() .
-			$pager->getBody() .
-			$pager->getNavigationBar()
-		);
-	}
-
+class CodeStatusChangeListView extends CodeRevisionListView {
 	function getPager() {
 		return new CodeStatusChangeTablePager( $this );
 	}
-	function getRepo() {
-		return $this->mRepo;
+
+	function getRevCount( $dbr ) {
+		return -1;
 	}
 }
 
@@ -35,17 +18,31 @@ class CodeStatusChangeTablePager extends SvnTablePager {
 		return $field == 'cpc_timestamp';
 	}
 
-	function getDefaultSort() { return 'cpc_timestamp'; }
+	function getDefaultSort() {
+		return 'cpc_timestamp';
+	}
 
 	function getQueryInfo() {
-		return array(
+		$query = array(
 			'tables' => array( 'code_prop_changes', 'code_rev' ),
 			'fields' => array_keys( $this->getFieldNames() ),
 			'conds' => array( 'cpc_repo_id' => $this->mRepo->getId(), 'cpc_attrib' => 'status' ),
 			'join_conds' => array(
 				'code_rev' => array( 'LEFT JOIN', 'cpc_repo_id = cr_repo_id AND cpc_rev_id = cr_id' )
-			)
+			),
+			'options' => array(),
 		);
+
+		if( count( $this->mView->mPath ) ) {
+			$query['tables'][] = 'code_paths';
+			$query['join_conds']['code_paths'] = array( 'INNER JOIN', 'cpc_repo_id = cp_repo_id AND cpc_rev_id = cp_rev_id' );
+			$query['conds']['cp_path'] = $this->mView->mPath;
+		}
+		if ( $this->mView->mAuthor ) {
+			$query['conds']['cpc_user_text'] = User::newFromName( $this->mView->mAuthor )->getName();
+		}
+
+		return $query;
 	}
 
 	function getFieldNames() {
@@ -53,6 +50,7 @@ class CodeStatusChangeTablePager extends SvnTablePager {
 			'cpc_timestamp' => wfMsg( 'code-field-timestamp' ),
 			'cpc_user_text' => wfMsg( 'code-field-user' ),
 			'cpc_rev_id' => wfMsg( 'code-field-id' ),
+			'cr_author' => WfMsg( 'code-field-author' ),
 			'cr_message' => wfMsg( 'code-field-message' ),
 			'cpc_removed' => wfMsg( 'code-old-status' ),
 			'cpc_added' => wfMsg( 'code-new-status' ),
@@ -61,21 +59,22 @@ class CodeStatusChangeTablePager extends SvnTablePager {
 	}
 
 	function formatValue( $name, $value ) {
-		global $wgUser, $wgLang;
 		switch( $name ) {
 		case 'cpc_rev_id':
-			return $this->mView->mSkin->link(
+			return $this->mView->skin->link(
 				SpecialPage::getTitleFor( 'Code', $this->mRepo->getName() . '/' . $value . '#code-changes' ),
 				htmlspecialchars( $value ) );
+		case 'cr_author':
+			return $this->mView->authorLink( $value );
 		case 'cr_message':
 			return $this->mView->messageFragment( $value );
 		case 'cr_status':
-			return $this->mView->mSkin->link(
+			return $this->mView->skin->link(
 				SpecialPage::getTitleFor( 'Code',
 					$this->mRepo->getName() . '/status/' . $value ),
 				htmlspecialchars( $this->mView->statusDesc( $value ) ) );
 		case 'cpc_user_text':
-			return $this->mView->mSkin->userLink( -1, $value );
+			return $this->mView->skin->userLink( - 1, $value );
 		case 'cpc_removed':
 			return wfMsgHtml( $value ? "code-status-$value" : "code-status-new" );
 		case 'cpc_added':

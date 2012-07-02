@@ -1,7 +1,8 @@
 <?php
 /**
  * MediaWiki page data importer
- * Copyright (C) 2003,2005 Brion Vibber <brion@pobox.com>
+ *
+ * Copyright © 2003,2005 Brion Vibber <brion@pobox.com>
  * http://www.mediawiki.org/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,10 +25,943 @@
  */
 
 /**
+ * XML file reader for the page data importer
  *
+ * implements Special:Import
+ * @ingroup SpecialPage
+ */
+class WikiImporter {
+	private $reader = null;
+	private $mLogItemCallback, $mUploadCallback, $mRevisionCallback, $mPageCallback;
+	private $mSiteInfoCallback, $mTargetNamespace, $mPageOutCallback;
+	private $mNoticeCallback, $mDebug;
+	private $mImportUploads, $mImageBasePath;
+	private $mNoUpdates = false;
+
+	/**
+	 * Creates an ImportXMLReader drawing from the source provided
+	 * @param $source
+	 */
+	function __construct( $source ) {
+		$this->reader = new XMLReader();
+
+		stream_wrapper_register( 'uploadsource', 'UploadSourceAdapter' );
+		$id = UploadSourceAdapter::registerSource( $source );
+		if (defined( 'LIBXML_PARSEHUGE' ) ) {
+			$this->reader->open( "uploadsource://$id", null, LIBXML_PARSEHUGE );
+		} else {
+			$this->reader->open( "uploadsource://$id" );
+		}
+
+		// Default callbacks
+		$this->setRevisionCallback( array( $this, "importRevision" ) );
+		$this->setUploadCallback( array( $this, 'importUpload' ) );
+		$this->setLogItemCallback( array( $this, 'importLogItem' ) );
+		$this->setPageOutCallback( array( $this, 'finishImportPage' ) );
+	}
+
+	private function throwXmlError( $err ) {
+		$this->debug( "FAILURE: $err" );
+		wfDebug( "WikiImporter XML error: $err\n" );
+	}
+
+	private function debug( $data ) {
+		if( $this->mDebug ) {
+			wfDebug( "IMPORT: $data\n" );
+		}
+	}
+
+	private function warn( $data ) {
+		wfDebug( "IMPORT: $data\n" );
+	}
+
+	private function notice( $msg /*, $param, ...*/ ) {
+		$params = func_get_args();
+		array_shift( $params );
+
+		if ( is_callable( $this->mNoticeCallback ) ) {
+			call_user_func( $this->mNoticeCallback, $msg, $params );
+		} else { # No ImportReporter -> CLI
+			echo wfMessage( $msg, $params )->text() . "\n";
+		}
+	}
+
+	/**
+	 * Set debug mode...
+	 * @param $debug bool
+	 */
+	function setDebug( $debug ) {
+		$this->mDebug = $debug;
+	}
+
+	/**
+	 * Set 'no updates' mode. In this mode, the link tables will not be updated by the importer
+	 * @param $noupdates bool
+	 */
+	function setNoUpdates( $noupdates ) {
+		$this->mNoUpdates = $noupdates;
+	}
+
+	/**
+	 * Set a callback that displays notice messages
+	 *
+	 * @param $callback callback
+	 * @return callback
+	 */
+	public function setNoticeCallback( $callback ) {
+		return wfSetVar( $this->mNoticeCallback, $callback );
+	}
+
+	/**
+	 * Sets the action to perform as each new page in the stream is reached.
+	 * @param $callback callback
+	 * @return callback
+	 */
+	public function setPageCallback( $callback ) {
+		$previous = $this->mPageCallback;
+		$this->mPageCallback = $callback;
+		return $previous;
+	}
+
+	/**
+	 * Sets the action to perform as each page in the stream is completed.
+	 * Callback accepts the page title (as a Title object), a second object
+	 * with the original title form (in case it's been overridden into a
+	 * local namespace), and a count of revisions.
+	 *
+	 * @param $callback callback
+	 * @return callback
+	 */
+	public function setPageOutCallback( $callback ) {
+		$previous = $this->mPageOutCallback;
+		$this->mPageOutCallback = $callback;
+		return $previous;
+	}
+
+	/**
+	 * Sets the action to perform as each page revision is reached.
+	 * @param $callback callback
+	 * @return callback
+	 */
+	public function setRevisionCallback( $callback ) {
+		$previous = $this->mRevisionCallback;
+		$this->mRevisionCallback = $callback;
+		return $previous;
+	}
+
+	/**
+	 * Sets the action to perform as each file upload version is reached.
+	 * @param $callback callback
+	 * @return callback
+	 */
+	public function setUploadCallback( $callback ) {
+		$previous = $this->mUploadCallback;
+		$this->mUploadCallback = $callback;
+		return $previous;
+	}
+
+	/**
+	 * Sets the action to perform as each log item reached.
+	 * @param $callback callback
+	 * @return callback
+	 */
+	public function setLogItemCallback( $callback ) {
+		$previous = $this->mLogItemCallback;
+		$this->mLogItemCallback = $callback;
+		return $previous;
+	}
+
+	/**
+	 * Sets the action to perform when site info is encountered
+	 * @param $callback callback
+	 * @return callback
+	 */
+	public function setSiteInfoCallback( $callback ) {
+		$previous = $this->mSiteInfoCallback;
+		$this->mSiteInfoCallback = $callback;
+		return $previous;
+	}
+
+	/**
+	 * Set a target namespace to override the defaults
+	 * @param $namespace
+	 * @return bool
+	 */
+	public function setTargetNamespace( $namespace ) {
+		if( is_null( $namespace ) ) {
+			// Don't override namespaces
+			$this->mTargetNamespace = null;
+		} elseif( $namespace >= 0 ) {
+			// @todo FIXME: Check for validity
+			$this->mTargetNamespace = intval( $namespace );
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * @param $dir
+	 */
+	public function setImageBasePath( $dir ) {
+		$this->mImageBasePath = $dir;
+	}
+
+	/**
+	 * @param $import
+	 */
+	public function setImportUploads( $import ) {
+		$this->mImportUploads = $import;
+	}
+
+	/**
+	 * Default per-revision callback, performs the import.
+	 * @param $revision WikiRevision
+	 * @return bool
+	 */
+	public function importRevision( $revision ) {
+		$dbw = wfGetDB( DB_MASTER );
+		return $dbw->deadlockLoop( array( $revision, 'importOldRevision' ) );
+	}
+
+	/**
+	 * Default per-revision callback, performs the import.
+	 * @param $rev WikiRevision
+	 * @return bool
+	 */
+	public function importLogItem( $rev ) {
+		$dbw = wfGetDB( DB_MASTER );
+		return $dbw->deadlockLoop( array( $rev, 'importLogItem' ) );
+	}
+
+	/**
+	 * Dummy for now...
+	 * @param $revision
+	 * @return bool
+	 */
+	public function importUpload( $revision ) {
+		$dbw = wfGetDB( DB_MASTER );
+		return $dbw->deadlockLoop( array( $revision, 'importUpload' ) );
+	}
+
+	/**
+	 * Mostly for hook use
+	 * @param $title
+	 * @param $origTitle
+	 * @param $revCount
+	 * @param $sRevCount
+	 * @param $pageInfo
+	 * @return
+	 */
+	public function finishImportPage( $title, $origTitle, $revCount, $sRevCount, $pageInfo ) {
+		$args = func_get_args();
+		return wfRunHooks( 'AfterImportPage', $args );
+	}
+
+	/**
+	 * Alternate per-revision callback, for debugging.
+	 * @param $revision WikiRevision
+	 */
+	public function debugRevisionHandler( &$revision ) {
+		$this->debug( "Got revision:" );
+		if( is_object( $revision->title ) ) {
+			$this->debug( "-- Title: " . $revision->title->getPrefixedText() );
+		} else {
+			$this->debug( "-- Title: <invalid>" );
+		}
+		$this->debug( "-- User: " . $revision->user_text );
+		$this->debug( "-- Timestamp: " . $revision->timestamp );
+		$this->debug( "-- Comment: " . $revision->comment );
+		$this->debug( "-- Text: " . $revision->text );
+	}
+
+	/**
+	 * Notify the callback function when a new <page> is reached.
+	 * @param $title Title
+	 */
+	function pageCallback( $title ) {
+		if( isset( $this->mPageCallback ) ) {
+			call_user_func( $this->mPageCallback, $title );
+		}
+	}
+
+	/**
+	 * Notify the callback function when a </page> is closed.
+	 * @param $title Title
+	 * @param $origTitle Title
+	 * @param $revCount Integer
+	 * @param $sucCount Int: number of revisions for which callback returned true
+	 * @param $pageInfo Array: associative array of page information
+	 */
+	private function pageOutCallback( $title, $origTitle, $revCount, $sucCount, $pageInfo ) {
+		if( isset( $this->mPageOutCallback ) ) {
+			$args = func_get_args();
+			call_user_func_array( $this->mPageOutCallback, $args );
+		}
+	}
+
+	/**
+	 * Notify the callback function of a revision
+	 * @param $revision A WikiRevision object
+	 */
+	private function revisionCallback( $revision ) {
+		if ( isset( $this->mRevisionCallback ) ) {
+			return call_user_func_array( $this->mRevisionCallback,
+					array( $revision, $this ) );
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Notify the callback function of a new log item
+	 * @param $revision A WikiRevision object
+	 */
+	private function logItemCallback( $revision ) {
+		if ( isset( $this->mLogItemCallback ) ) {
+			return call_user_func_array( $this->mLogItemCallback,
+					array( $revision, $this ) );
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Shouldn't something like this be built-in to XMLReader?
+	 * Fetches text contents of the current element, assuming
+	 * no sub-elements or such scary things.
+	 * @return string
+	 * @access private
+	 */
+	private function nodeContents() {
+		if( $this->reader->isEmptyElement ) {
+			return "";
+		}
+		$buffer = "";
+		while( $this->reader->read() ) {
+			switch( $this->reader->nodeType ) {
+			case XmlReader::TEXT:
+			case XmlReader::SIGNIFICANT_WHITESPACE:
+				$buffer .= $this->reader->value;
+				break;
+			case XmlReader::END_ELEMENT:
+				return $buffer;
+			}
+		}
+
+		$this->reader->close();
+		return '';
+	}
+
+	# --------------
+
+	/** Left in for debugging */
+	private function dumpElement() {
+		static $lookup = null;
+		if (!$lookup) {
+			$xmlReaderConstants = array(
+				"NONE",
+				"ELEMENT",
+				"ATTRIBUTE",
+				"TEXT",
+				"CDATA",
+				"ENTITY_REF",
+				"ENTITY",
+				"PI",
+				"COMMENT",
+				"DOC",
+				"DOC_TYPE",
+				"DOC_FRAGMENT",
+				"NOTATION",
+				"WHITESPACE",
+				"SIGNIFICANT_WHITESPACE",
+				"END_ELEMENT",
+				"END_ENTITY",
+				"XML_DECLARATION",
+				);
+			$lookup = array();
+
+			foreach( $xmlReaderConstants as $name ) {
+				$lookup[constant("XmlReader::$name")] = $name;
+			}
+		}
+
+		print( var_dump(
+			$lookup[$this->reader->nodeType],
+			$this->reader->name,
+			$this->reader->value
+		)."\n\n" );
+	}
+
+	/**
+	 * Primary entry point
+	 */
+	public function doImport() {
+		$this->reader->read();
+
+		if ( $this->reader->name != 'mediawiki' ) {
+			throw new MWException( "Expected <mediawiki> tag, got ".
+				$this->reader->name );
+		}
+		$this->debug( "<mediawiki> tag is correct." );
+
+		$this->debug( "Starting primary dump processing loop." );
+
+		$keepReading = $this->reader->read();
+		$skip = false;
+		while ( $keepReading ) {
+			$tag = $this->reader->name;
+			$type = $this->reader->nodeType;
+
+			if ( !wfRunHooks( 'ImportHandleToplevelXMLTag', $this ) ) {
+				// Do nothing
+			} elseif ( $tag == 'mediawiki' && $type == XmlReader::END_ELEMENT ) {
+				break;
+			} elseif ( $tag == 'siteinfo' ) {
+				$this->handleSiteInfo();
+			} elseif ( $tag == 'page' ) {
+				$this->handlePage();
+			} elseif ( $tag == 'logitem' ) {
+				$this->handleLogItem();
+			} elseif ( $tag != '#text' ) {
+				$this->warn( "Unhandled top-level XML tag $tag" );
+
+				$skip = true;
+			}
+
+			if ($skip) {
+				$keepReading = $this->reader->next();
+				$skip = false;
+				$this->debug( "Skip" );
+			} else {
+				$keepReading = $this->reader->read();
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * @return bool
+	 * @throws MWException
+	 */
+	private function handleSiteInfo() {
+		// Site info is useful, but not actually used for dump imports.
+		// Includes a quick short-circuit to save performance.
+		if ( ! $this->mSiteInfoCallback ) {
+			$this->reader->next();
+			return true;
+		}
+		throw new MWException( "SiteInfo tag is not yet handled, do not set mSiteInfoCallback" );
+	}
+
+	private function handleLogItem() {
+		$this->debug( "Enter log item handler." );
+		$logInfo = array();
+
+		// Fields that can just be stuffed in the pageInfo object
+		$normalFields = array( 'id', 'comment', 'type', 'action', 'timestamp',
+					'logtitle', 'params' );
+
+		while ( $this->reader->read() ) {
+			if ( $this->reader->nodeType == XmlReader::END_ELEMENT &&
+					$this->reader->name == 'logitem') {
+				break;
+			}
+
+			$tag = $this->reader->name;
+
+			if ( !wfRunHooks( 'ImportHandleLogItemXMLTag',
+						$this, $logInfo ) ) {
+				// Do nothing
+			} elseif ( in_array( $tag, $normalFields ) ) {
+				$logInfo[$tag] = $this->nodeContents();
+			} elseif ( $tag == 'contributor' ) {
+				$logInfo['contributor'] = $this->handleContributor();
+			} elseif ( $tag != '#text' ) {
+				$this->warn( "Unhandled log-item XML tag $tag" );
+			}
+		}
+
+		$this->processLogItem( $logInfo );
+	}
+
+	/**
+	 * @param $logInfo
+	 * @return bool|mixed
+	 */
+	private function processLogItem( $logInfo ) {
+		$revision = new WikiRevision;
+
+		$revision->setID( $logInfo['id'] );
+		$revision->setType( $logInfo['type'] );
+		$revision->setAction( $logInfo['action'] );
+		$revision->setTimestamp( $logInfo['timestamp'] );
+		$revision->setParams( $logInfo['params'] );
+		$revision->setTitle( Title::newFromText( $logInfo['logtitle'] ) );
+		$revision->setNoUpdates( $this->mNoUpdates );
+
+		if ( isset( $logInfo['comment'] ) ) {
+			$revision->setComment( $logInfo['comment'] );
+		}
+
+		if ( isset( $logInfo['contributor']['ip'] ) ) {
+			$revision->setUserIP( $logInfo['contributor']['ip'] );
+		}
+		if ( isset( $logInfo['contributor']['username'] ) ) {
+			$revision->setUserName( $logInfo['contributor']['username'] );
+		}
+
+		return $this->logItemCallback( $revision );
+	}
+
+	private function handlePage() {
+		// Handle page data.
+		$this->debug( "Enter page handler." );
+		$pageInfo = array( 'revisionCount' => 0, 'successfulRevisionCount' => 0 );
+
+		// Fields that can just be stuffed in the pageInfo object
+		$normalFields = array( 'title', 'id', 'redirect', 'restrictions' );
+
+		$skip = false;
+		$badTitle = false;
+
+		while ( $skip ? $this->reader->next() : $this->reader->read() ) {
+			if ( $this->reader->nodeType == XmlReader::END_ELEMENT &&
+					$this->reader->name == 'page') {
+				break;
+			}
+
+			$tag = $this->reader->name;
+
+			if ( $badTitle ) {
+				// The title is invalid, bail out of this page
+				$skip = true;
+			} elseif ( !wfRunHooks( 'ImportHandlePageXMLTag', array( $this,
+						&$pageInfo ) ) ) {
+				// Do nothing
+			} elseif ( in_array( $tag, $normalFields ) ) {
+				$pageInfo[$tag] = $this->nodeContents();
+				if ( $tag == 'title' ) {
+					$title = $this->processTitle( $pageInfo['title'] );
+
+					if ( !$title ) {
+						$badTitle = true;
+						$skip = true;
+					}
+
+					$this->pageCallback( $title );
+					list( $pageInfo['_title'], $origTitle ) = $title;
+				}
+			} elseif ( $tag == 'revision' ) {
+				$this->handleRevision( $pageInfo );
+			} elseif ( $tag == 'upload' ) {
+				$this->handleUpload( $pageInfo );
+			} elseif ( $tag != '#text' ) {
+				$this->warn( "Unhandled page XML tag $tag" );
+				$skip = true;
+			}
+		}
+
+		$this->pageOutCallback( $pageInfo['_title'], $origTitle,
+					$pageInfo['revisionCount'],
+					$pageInfo['successfulRevisionCount'],
+					$pageInfo );
+	}
+
+	/**
+	 * @param $pageInfo array
+	 */
+	private function handleRevision( &$pageInfo ) {
+		$this->debug( "Enter revision handler" );
+		$revisionInfo = array();
+
+		$normalFields = array( 'id', 'timestamp', 'comment', 'minor', 'text' );
+
+		$skip = false;
+
+		while ( $skip ? $this->reader->next() : $this->reader->read() ) {
+			if ( $this->reader->nodeType == XmlReader::END_ELEMENT &&
+					$this->reader->name == 'revision') {
+				break;
+			}
+
+			$tag = $this->reader->name;
+
+			if ( !wfRunHooks( 'ImportHandleRevisionXMLTag', $this,
+						$pageInfo, $revisionInfo ) ) {
+				// Do nothing
+			} elseif ( in_array( $tag, $normalFields ) ) {
+				$revisionInfo[$tag] = $this->nodeContents();
+			} elseif ( $tag == 'contributor' ) {
+				$revisionInfo['contributor'] = $this->handleContributor();
+			} elseif ( $tag != '#text' ) {
+				$this->warn( "Unhandled revision XML tag $tag" );
+				$skip = true;
+			}
+		}
+
+		$pageInfo['revisionCount']++;
+		if ( $this->processRevision( $pageInfo, $revisionInfo ) ) {
+			$pageInfo['successfulRevisionCount']++;
+		}
+	}
+
+	/**
+	 * @param $pageInfo
+	 * @param $revisionInfo
+	 * @return bool|mixed
+	 */
+	private function processRevision( $pageInfo, $revisionInfo ) {
+		$revision = new WikiRevision;
+
+		if( isset( $revisionInfo['id'] ) ) {
+			$revision->setID( $revisionInfo['id'] );
+		}
+		if ( isset( $revisionInfo['text'] ) ) {
+			$revision->setText( $revisionInfo['text'] );
+		}
+		$revision->setTitle( $pageInfo['_title'] );
+
+		if ( isset( $revisionInfo['timestamp'] ) ) {
+			$revision->setTimestamp( $revisionInfo['timestamp'] );
+		} else {
+			$revision->setTimestamp( wfTimestampNow() );
+		}
+
+		if ( isset( $revisionInfo['comment'] ) ) {
+			$revision->setComment( $revisionInfo['comment'] );
+		}
+
+		if ( isset( $revisionInfo['minor'] ) ) {
+			$revision->setMinor( true );
+		}
+		if ( isset( $revisionInfo['contributor']['ip'] ) ) {
+			$revision->setUserIP( $revisionInfo['contributor']['ip'] );
+		}
+		if ( isset( $revisionInfo['contributor']['username'] ) ) {
+			$revision->setUserName( $revisionInfo['contributor']['username'] );
+		}
+		$revision->setNoUpdates( $this->mNoUpdates );
+
+		return $this->revisionCallback( $revision );
+	}
+
+	/**
+	 * @param $pageInfo
+	 * @return mixed
+	 */
+	private function handleUpload( &$pageInfo ) {
+		$this->debug( "Enter upload handler" );
+		$uploadInfo = array();
+
+		$normalFields = array( 'timestamp', 'comment', 'filename', 'text',
+					'src', 'size', 'sha1base36', 'archivename', 'rel' );
+
+		$skip = false;
+
+		while ( $skip ? $this->reader->next() : $this->reader->read() ) {
+			if ( $this->reader->nodeType == XmlReader::END_ELEMENT &&
+					$this->reader->name == 'upload') {
+				break;
+			}
+
+			$tag = $this->reader->name;
+
+			if ( !wfRunHooks( 'ImportHandleUploadXMLTag', $this,
+						$pageInfo ) ) {
+				// Do nothing
+			} elseif ( in_array( $tag, $normalFields ) ) {
+				$uploadInfo[$tag] = $this->nodeContents();
+			} elseif ( $tag == 'contributor' ) {
+				$uploadInfo['contributor'] = $this->handleContributor();
+			} elseif ( $tag == 'contents' ) {
+				$contents = $this->nodeContents();
+				$encoding = $this->reader->getAttribute( 'encoding' );
+				if ( $encoding === 'base64' ) {
+					$uploadInfo['fileSrc'] = $this->dumpTemp( base64_decode( $contents ) );
+					$uploadInfo['isTempSrc'] = true;
+				}
+			} elseif ( $tag != '#text' ) {
+				$this->warn( "Unhandled upload XML tag $tag" );
+				$skip = true;
+			}
+		}
+
+		if ( $this->mImageBasePath && isset( $uploadInfo['rel'] ) ) {
+			$path = "{$this->mImageBasePath}/{$uploadInfo['rel']}";
+			if ( file_exists( $path ) ) {
+				$uploadInfo['fileSrc'] = $path;
+				$uploadInfo['isTempSrc'] = false;
+			}
+		}
+
+		if ( $this->mImportUploads ) {
+			return $this->processUpload( $pageInfo, $uploadInfo );
+		}
+	}
+
+	/**
+	 * @param $contents
+	 * @return string
+	 */
+	private function dumpTemp( $contents ) {
+		$filename = tempnam( wfTempDir(), 'importupload' );
+		file_put_contents( $filename, $contents );
+		return $filename;
+	}
+
+	/**
+	 * @param $pageInfo
+	 * @param $uploadInfo
+	 * @return mixed
+	 */
+	private function processUpload( $pageInfo, $uploadInfo ) {
+		$revision = new WikiRevision;
+		$text = isset( $uploadInfo['text'] ) ? $uploadInfo['text'] : '';
+
+		$revision->setTitle( $pageInfo['_title'] );
+		$revision->setID( $pageInfo['id'] );
+		$revision->setTimestamp( $uploadInfo['timestamp'] );
+		$revision->setText( $text );
+		$revision->setFilename( $uploadInfo['filename'] );
+		if ( isset( $uploadInfo['archivename'] ) ) {
+			$revision->setArchiveName( $uploadInfo['archivename'] );
+		}
+		$revision->setSrc( $uploadInfo['src'] );
+		if ( isset( $uploadInfo['fileSrc'] ) ) {
+			$revision->setFileSrc( $uploadInfo['fileSrc'],
+				!empty( $uploadInfo['isTempSrc'] ) );
+		}
+		if ( isset( $uploadInfo['sha1base36'] ) ) {
+			$revision->setSha1Base36( $uploadInfo['sha1base36'] );
+		}
+		$revision->setSize( intval( $uploadInfo['size'] ) );
+		$revision->setComment( $uploadInfo['comment'] );
+
+		if ( isset( $uploadInfo['contributor']['ip'] ) ) {
+			$revision->setUserIP( $uploadInfo['contributor']['ip'] );
+		}
+		if ( isset( $uploadInfo['contributor']['username'] ) ) {
+			$revision->setUserName( $uploadInfo['contributor']['username'] );
+		}
+		$revision->setNoUpdates( $this->mNoUpdates );
+
+		return call_user_func( $this->mUploadCallback, $revision );
+	}
+
+	/**
+	 * @return array
+	 */
+	private function handleContributor() {
+		$fields = array( 'id', 'ip', 'username' );
+		$info = array();
+
+		while ( $this->reader->read() ) {
+			if ( $this->reader->nodeType == XmlReader::END_ELEMENT &&
+					$this->reader->name == 'contributor') {
+				break;
+			}
+
+			$tag = $this->reader->name;
+
+			if ( in_array( $tag, $fields ) ) {
+				$info[$tag] = $this->nodeContents();
+			}
+		}
+
+		return $info;
+	}
+
+	/**
+	 * @param $text string
+	 * @return Array or false
+	 */
+	private function processTitle( $text ) {
+		global $wgCommandLineMode;
+
+		$workTitle = $text;
+		$origTitle = Title::newFromText( $workTitle );
+
+		if( !is_null( $this->mTargetNamespace ) && !is_null( $origTitle ) ) {
+			$title = Title::makeTitle( $this->mTargetNamespace,
+				$origTitle->getDBkey() );
+		} else {
+			$title = Title::newFromText( $workTitle );
+		}
+
+		if( is_null( $title ) ) {
+			# Invalid page title? Ignore the page
+			$this->notice( 'import-error-invalid', $workTitle );
+			return false;
+		} elseif( $title->isExternal() ) {
+			$this->notice( 'import-error-interwiki', $title->getPrefixedText() );
+			return false;
+		} elseif( !$title->canExist() ) {
+			$this->notice( 'import-error-special', $title->getPrefixedText() );
+			return false;
+		} elseif( !$title->userCan( 'edit' ) && !$wgCommandLineMode ) {
+			# Do not import if the importing wiki user cannot edit this page
+			$this->notice( 'import-error-edit', $title->getPrefixedText() );
+			return false;
+		} elseif( !$title->exists() && !$title->userCan( 'create' ) && !$wgCommandLineMode ) {
+			# Do not import if the importing wiki user cannot create this page
+			$this->notice( 'import-error-create', $title->getPrefixedText() );
+			return false;
+		}
+
+		return array( $title, $origTitle );
+	}
+}
+
+/** This is a horrible hack used to keep source compatibility */
+class UploadSourceAdapter {
+	static $sourceRegistrations = array();
+
+	private $mSource;
+	private $mBuffer;
+	private $mPosition;
+
+	/**
+	 * @param $source
+	 * @return string
+	 */
+	static function registerSource( $source ) {
+		$id = wfGenerateToken();
+
+		self::$sourceRegistrations[$id] = $source;
+
+		return $id;
+	}
+
+	/**
+	 * @param $path
+	 * @param $mode
+	 * @param $options
+	 * @param $opened_path
+	 * @return bool
+	 */
+	function stream_open( $path, $mode, $options, &$opened_path ) {
+		$url = parse_url($path);
+		$id = $url['host'];
+
+		if ( !isset( self::$sourceRegistrations[$id] ) ) {
+			return false;
+		}
+
+		$this->mSource = self::$sourceRegistrations[$id];
+
+		return true;
+	}
+
+	/**
+	 * @param $count
+	 * @return string
+	 */
+	function stream_read( $count ) {
+		$return = '';
+		$leave = false;
+
+		while ( !$leave && !$this->mSource->atEnd() &&
+				strlen($this->mBuffer) < $count ) {
+			$read = $this->mSource->readChunk();
+
+			if ( !strlen($read) ) {
+				$leave = true;
+			}
+
+			$this->mBuffer .= $read;
+		}
+
+		if ( strlen($this->mBuffer) ) {
+			$return = substr( $this->mBuffer, 0, $count );
+			$this->mBuffer = substr( $this->mBuffer, $count );
+		}
+
+		$this->mPosition += strlen($return);
+
+		return $return;
+	}
+
+	/**
+	 * @param $data
+	 * @return bool
+	 */
+	function stream_write( $data ) {
+		return false;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	function stream_tell() {
+		return $this->mPosition;
+	}
+
+	/**
+	 * @return bool
+	 */
+	function stream_eof() {
+		return $this->mSource->atEnd();
+	}
+
+	/**
+	 * @return array
+	 */
+	function url_stat() {
+		$result = array();
+
+		$result['dev'] = $result[0] = 0;
+		$result['ino'] = $result[1] = 0;
+		$result['mode'] = $result[2] = 0;
+		$result['nlink'] = $result[3] = 0;
+		$result['uid'] = $result[4] = 0;
+		$result['gid'] = $result[5] = 0;
+		$result['rdev'] = $result[6] = 0;
+		$result['size'] = $result[7] = 0;
+		$result['atime'] = $result[8] = 0;
+		$result['mtime'] = $result[9] = 0;
+		$result['ctime'] = $result[10] = 0;
+		$result['blksize'] = $result[11] = 0;
+		$result['blocks'] = $result[12] = 0;
+
+		return $result;
+	}
+}
+
+class XMLReader2 extends XMLReader {
+
+	/**
+	 * @return bool|string
+	 */
+	function nodeContents() {
+		if( $this->isEmptyElement ) {
+			return "";
+		}
+		$buffer = "";
+		while( $this->read() ) {
+			switch( $this->nodeType ) {
+			case XmlReader::TEXT:
+			case XmlReader::SIGNIFICANT_WHITESPACE:
+				$buffer .= $this->value;
+				break;
+			case XmlReader::END_ELEMENT:
+				return $buffer;
+			}
+		}
+		return $this->close();
+	}
+}
+
+/**
+ * @todo document (e.g. one-sentence class description).
  * @ingroup SpecialPage
  */
 class WikiRevision {
+	var $importer = null;
+
+	/**
+	 * @var Title
+	 */
 	var $title = null;
 	var $id = 0;
 	var $timestamp = "20010115000000";
@@ -39,7 +973,17 @@ class WikiRevision {
 	var $type = "";
 	var $action = "";
 	var $params = "";
+	var $fileSrc = '';
+	var $sha1base36 = false;
+	var $isTemp = false;
+	var $archiveName = '';
+	var $fileIsTemp;
+	private $mNoUpdates = false;
 
+	/**
+	 * @param $title
+	 * @throws MWException
+	 */
 	function setTitle( $title ) {
 		if( is_object( $title ) ) {
 			$this->title = $title;
@@ -50,111 +994,253 @@ class WikiRevision {
 		}
 	}
 
+	/**
+	 * @param $id
+	 */
 	function setID( $id ) {
 		$this->id = $id;
 	}
 
+	/**
+	 * @param $ts
+	 */
 	function setTimestamp( $ts ) {
 		# 2003-08-05T18:30:02Z
 		$this->timestamp = wfTimestamp( TS_MW, $ts );
 	}
 
+	/**
+	 * @param $user
+	 */
 	function setUsername( $user ) {
 		$this->user_text = $user;
 	}
 
+	/**
+	 * @param $ip
+	 */
 	function setUserIP( $ip ) {
 		$this->user_text = $ip;
 	}
 
+	/**
+	 * @param $text
+	 */
 	function setText( $text ) {
 		$this->text = $text;
 	}
 
+	/**
+	 * @param $text
+	 */
 	function setComment( $text ) {
 		$this->comment = $text;
 	}
 
+	/**
+	 * @param $minor
+	 */
 	function setMinor( $minor ) {
 		$this->minor = (bool)$minor;
 	}
 
+	/**
+	 * @param $src
+	 */
 	function setSrc( $src ) {
 		$this->src = $src;
 	}
 
+	/**
+	 * @param $src
+	 * @param $isTemp
+	 */
+	function setFileSrc( $src, $isTemp ) {
+		$this->fileSrc = $src;
+		$this->fileIsTemp = $isTemp;
+	}
+
+	/**
+	 * @param $sha1base36
+	 */
+	function setSha1Base36( $sha1base36 ) {
+		$this->sha1base36 = $sha1base36;
+	}
+
+	/**
+	 * @param $filename
+	 */
 	function setFilename( $filename ) {
 		$this->filename = $filename;
 	}
 
+	/**
+	 * @param $archiveName
+	 */
+	function setArchiveName( $archiveName ) {
+		$this->archiveName = $archiveName;
+	}
+
+	/**
+	 * @param $size
+	 */
 	function setSize( $size ) {
 		$this->size = intval( $size );
 	}
-	
+
+	/**
+	 * @param $type
+	 */
 	function setType( $type ) {
 		$this->type = $type;
 	}
-	
+
+	/**
+	 * @param $action
+	 */
 	function setAction( $action ) {
 		$this->action = $action;
 	}
-	
+
+	/**
+	 * @param $params
+	 */
 	function setParams( $params ) {
 		$this->params = $params;
 	}
 
+	/**
+	 * @param $noupdates
+	 */
+	public function setNoUpdates( $noupdates ) {
+		$this->mNoUpdates = $noupdates;
+	}
+
+	/**
+	 * @return Title
+	 */
 	function getTitle() {
 		return $this->title;
 	}
 
+	/**
+	 * @return int
+	 */
 	function getID() {
 		return $this->id;
 	}
 
+	/**
+	 * @return string
+	 */
 	function getTimestamp() {
 		return $this->timestamp;
 	}
 
+	/**
+	 * @return string
+	 */
 	function getUser() {
 		return $this->user_text;
 	}
 
+	/**
+	 * @return string
+	 */
 	function getText() {
 		return $this->text;
 	}
 
+	/**
+	 * @return string
+	 */
 	function getComment() {
 		return $this->comment;
 	}
 
+	/**
+	 * @return bool
+	 */
 	function getMinor() {
 		return $this->minor;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	function getSrc() {
 		return $this->src;
 	}
 
+	/**
+	 * @return bool|String
+	 */
+	function getSha1() {
+		if ( $this->sha1base36 ) {
+			return wfBaseConvert( $this->sha1base36, 36, 16 );
+		}
+		return false;
+	}
+
+	/**
+	 * @return string
+	 */
+	function getFileSrc() {
+		return $this->fileSrc;
+	}
+
+	/**
+	 * @return bool
+	 */
+	function isTempSrc() {
+		return $this->isTemp;
+	}
+
+	/**
+	 * @return mixed
+	 */
 	function getFilename() {
 		return $this->filename;
 	}
 
+	/**
+	 * @return string
+	 */
+	function getArchiveName() {
+		return $this->archiveName;
+	}
+
+	/**
+	 * @return mixed
+	 */
 	function getSize() {
 		return $this->size;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getType() {
 		return $this->type;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getAction() {
 		return $this->action;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getParams() {
 		return $this->params;
 	}
 
+	/**
+	 * @return bool
+	 */
 	function importOldRevision() {
 		$dbw = wfGetDB( DB_MASTER );
 
@@ -163,22 +1249,25 @@ class WikiRevision {
 		if( $user ) {
 			$userId = intval( $user->getId() );
 			$userText = $user->getName();
+			$userObj = $user;
 		} else {
 			$userId = 0;
 			$userText = $this->getUser();
+			$userObj = new User;
 		}
 
 		// avoid memory leak...?
 		$linkCache = LinkCache::singleton();
 		$linkCache->clear();
 
-		$article = new Article( $this->title );
-		$pageId = $article->getId();
-		if( $pageId == 0 ) {
+		$page = WikiPage::factory( $this->title );
+		if( !$page->exists() ) {
 			# must create the page...
-			$pageId = $article->insertOn( $dbw );
+			$pageId = $page->insertOn( $dbw );
 			$created = true;
+			$oldcountable = null;
 		} else {
+			$pageId = $page->getId();
 			$created = false;
 
 			$prior = $dbw->selectField( 'revision', '1',
@@ -189,14 +1278,15 @@ class WikiRevision {
 				__METHOD__
 			);
 			if( $prior ) {
-				// FIXME: this could fail slightly for multiple matches :P
+				// @todo FIXME: This could fail slightly for multiple matches :P
 				wfDebug( __METHOD__ . ": skipping existing revision for [[" .
 					$this->title->getPrefixedText() . "]], timestamp " . $this->timestamp . "\n" );
 				return false;
 			}
+			$oldcountable = $page->isCountable();
 		}
 
-		# FIXME: Use original rev_id optionally (better for backups)
+		# @todo FIXME: Use original rev_id optionally (better for backups)
 		# Insert the row
 		$revision = new Revision( array(
 			'page'       => $pageId,
@@ -207,47 +1297,30 @@ class WikiRevision {
 			'timestamp'  => $this->timestamp,
 			'minor_edit' => $this->minor,
 			) );
-		$revId = $revision->insertOn( $dbw );
-		$changed = $article->updateIfNewerOn( $dbw, $revision );
-		
-		# To be on the safe side...
-		$tempTitle = $GLOBALS['wgTitle'];
-		$GLOBALS['wgTitle'] = $this->title;
+		$revision->insertOn( $dbw );
+		$changed = $page->updateIfNewerOn( $dbw, $revision );
 
-		if( $created ) {
-			wfDebug( __METHOD__ . ": running onArticleCreate\n" );
-			Article::onArticleCreate( $this->title );
-
-			wfDebug( __METHOD__ . ": running create updates\n" );
-			$article->createUpdates( $revision );
-
-		} elseif( $changed ) {
-			wfDebug( __METHOD__ . ": running onArticleEdit\n" );
-			Article::onArticleEdit( $this->title );
-
-			wfDebug( __METHOD__ . ": running edit updates\n" );
-			$article->editUpdates(
-				$this->getText(),
-				$this->getComment(),
-				$this->minor,
-				$this->timestamp,
-				$revId );
+		if ( $changed !== false && !$this->mNoUpdates ) {
+			wfDebug( __METHOD__ . ": running updates\n" );
+			$page->doEditUpdates( $revision, $userObj, array( 'created' => $created, 'oldcountable' => $oldcountable ) );
 		}
-		$GLOBALS['wgTitle'] = $tempTitle;
 
 		return true;
 	}
-	
+
+	/**
+	 * @return mixed
+	 */
 	function importLogItem() {
 		$dbw = wfGetDB( DB_MASTER );
-		# FIXME: this will not record autoblocks
+		# @todo FIXME: This will not record autoblocks
 		if( !$this->getTitle() ) {
-			wfDebug( __METHOD__ . ": skipping invalid {$this->type}/{$this->action} log time, timestamp " . 
+			wfDebug( __METHOD__ . ": skipping invalid {$this->type}/{$this->action} log time, timestamp " .
 				$this->timestamp . "\n" );
 			return;
 		}
 		# Check if it exists already
-		// FIXME: use original log ID (better for backups)
+		// @todo FIXME: Use original log ID (better for backups)
 		$prior = $dbw->selectField( 'logging', '1',
 			array( 'log_type' => $this->getType(),
 				'log_action'    => $this->getAction(),
@@ -259,11 +1332,11 @@ class WikiRevision {
 				'log_params'    => $this->params ),
 			__METHOD__
 		);
-		// FIXME: this could fail slightly for multiple matches :P
+		// @todo FIXME: This could fail slightly for multiple matches :P
 		if( $prior ) {
-			wfDebug( __METHOD__ . ": skipping existing item for Log:{$this->type}/{$this->action}, timestamp " . 
+			wfDebug( __METHOD__ . ": skipping existing item for Log:{$this->type}/{$this->action}, timestamp " .
 				$this->timestamp . "\n" );
-			return false;
+			return;
 		}
 		$log_id = $dbw->nextSequenceValue( 'logging_log_id_seq' );
 		$data = array(
@@ -281,64 +1354,75 @@ class WikiRevision {
 		$dbw->insert( 'logging', $data, __METHOD__ );
 	}
 
+	/**
+	 * @return bool
+	 */
 	function importUpload() {
-		wfDebug( __METHOD__ . ": STUB\n" );
-
-		/**
-			// from file revert...
-			$source = $this->file->getArchiveVirtualUrl( $this->oldimage );
-			$comment = $wgRequest->getText( 'wpComment' );
-			// TODO: Preserve file properties from database instead of reloading from file
-			$status = $this->file->upload( $source, $comment, $comment );
-			if( $status->isGood() ) {
-		*/
-
-		/**
-			// from file upload...
-		$this->mLocalFile = wfLocalFile( $nt );
-		$this->mDestName = $this->mLocalFile->getName();
-		//....
-			$status = $this->mLocalFile->upload( $this->mTempPath, $this->mComment, $pageText,
-			File::DELETE_SOURCE, $this->mFileProps );
-			if ( !$status->isGood() ) {
-				$resultDetails = array( 'internal' => $status->getWikiText() );
-		*/
-
-		// @todo Fixme: upload() uses $wgUser, which is wrong here
-		// it may also create a page without our desire, also wrong potentially.
-		// and, it will record a *current* upload, but we might want an archive version here
-
-		$file = wfLocalFile( $this->getTitle() );
+		# Construct a file
+		$archiveName = $this->getArchiveName();
+		if ( $archiveName ) {
+			wfDebug( __METHOD__ . "Importing archived file as $archiveName\n" );
+			$file = OldLocalFile::newFromArchiveName( $this->getTitle(),
+				RepoGroup::singleton()->getLocalRepo(), $archiveName );
+		} else {
+			$file = wfLocalFile( $this->getTitle() );
+			wfDebug( __METHOD__ . 'Importing new file as ' . $file->getName() . "\n" );
+			if ( $file->exists() && $file->getTimestamp() > $this->getTimestamp() ) {
+				$archiveName = $file->getTimestamp() . '!' . $file->getName();
+				$file = OldLocalFile::newFromArchiveName( $this->getTitle(),
+					RepoGroup::singleton()->getLocalRepo(), $archiveName );
+				wfDebug( __METHOD__ . "File already exists; importing as $archiveName\n" );
+			}
+		}
 		if( !$file ) {
-			var_dump( $file );
-			wfDebug( "IMPORT: Bad file. :(\n" );
+			wfDebug( __METHOD__ . ': Bad file for ' . $this->getTitle() . "\n" );
 			return false;
 		}
 
-		$source = $this->downloadSource();
+		# Get the file source or download if necessary
+		$source = $this->getFileSrc();
+		$flags = $this->isTempSrc() ? File::DELETE_SOURCE : 0;
+		if ( !$source ) {
+			$source = $this->downloadSource();
+			$flags |= File::DELETE_SOURCE;
+		}
 		if( !$source ) {
-			wfDebug( "IMPORT: Could not fetch remote file. :(\n" );
+			wfDebug( __METHOD__ . ": Could not fetch remote file.\n" );
+			return false;
+		}
+		$sha1 = $this->getSha1();
+		if ( $sha1 && ( $sha1 !== sha1_file( $source ) ) ) {
+			if ( $flags & File::DELETE_SOURCE ) {
+				# Broken file; delete it if it is a temporary file
+				unlink( $source );
+			}
+			wfDebug( __METHOD__ . ": Corrupt file $source.\n" );
 			return false;
 		}
 
-		$status = $file->upload( $source,
-			$this->getComment(),
-			$this->getComment(), // Initial page, if none present...
-			File::DELETE_SOURCE,
-			false, // props...
-			$this->getTimestamp() );
+		$user = User::newFromName( $this->user_text );
 
-		if( $status->isGood() ) {
-			// yay?
-			wfDebug( "IMPORT: is ok?\n" );
-			return true;
+		# Do the actual upload
+		if ( $archiveName ) {
+			$status = $file->uploadOld( $source, $archiveName,
+				$this->getTimestamp(), $this->getComment(), $user, $flags );
+		} else {
+			$status = $file->upload( $source, $this->getComment(), $this->getComment(),
+				$flags, false, $this->getTimestamp(), $user );
 		}
 
-		wfDebug( "IMPORT: is bad? " . $status->getXml() . "\n" );
-		return false;
-
+		if ( $status->isGood() ) {
+			wfDebug( __METHOD__ . ": Succesful\n" );
+			return true;
+		} else {
+			wfDebug( __METHOD__ . ': failed: ' . $status->getXml() . "\n" );
+			return false;
+		}
 	}
 
+	/**
+	 * @return bool|string
+	 */
 	function downloadSource() {
 		global $wgEnableUploads;
 		if( !$wgEnableUploads ) {
@@ -352,7 +1436,7 @@ class WikiRevision {
 			return false;
 		}
 
-		// @todo Fixme!
+		// @todo FIXME!
 		$src = $this->getSrc();
 		$data = Http::get( $src );
 		if( !$data ) {
@@ -371,658 +1455,6 @@ class WikiRevision {
 }
 
 /**
- * implements Special:Import
- * @ingroup SpecialPage
- */
-class WikiImporter {
-	var $mDebug = false;
-	var $mSource = null;
-	var $mPageCallback = null;
-	var $mPageOutCallback = null;
-	var $mRevisionCallback = null;
-	var $mLogItemCallback = null;
-	var $mUploadCallback = null;
-	var $mTargetNamespace = null;
-	var $mXmlNamespace = false;
-	var $lastfield;
-	var $tagStack = array();
-
-	function __construct( $source ) {
-		$this->setRevisionCallback( array( $this, "importRevision" ) );
-		$this->setUploadCallback( array( $this, "importUpload" ) );
-		$this->setLogItemCallback( array( $this, "importLogItem" ) );
-		$this->mSource = $source;
-	}
-
-	function throwXmlError( $err ) {
-		$this->debug( "FAILURE: $err" );
-		wfDebug( "WikiImporter XML error: $err\n" );
-	}
-
-	function handleXmlNamespace ( $parser, $data, $prefix=false, $uri=false ) {
-		if( preg_match( '/www.mediawiki.org/',$prefix ) ) {
-			$prefix = str_replace( '/','\/',$prefix );
-			$this->mXmlNamespace='/^'.$prefix.':/';
-		 }
-	}
-
-	function stripXmlNamespace($name) {
-		if( $this->mXmlNamespace ) {
-			return(preg_replace($this->mXmlNamespace,'',$name,1));
-		}
-		else {
-			return($name);
-		}
-	}
-
-	# --------------
-
-	function doImport() {
-		if( empty( $this->mSource ) ) {
-			return new WikiErrorMsg( "importnotext" );
-		}
-
-		$parser = xml_parser_create_ns( "UTF-8" );
-
-		# case folding violates XML standard, turn it off
-		xml_parser_set_option( $parser, XML_OPTION_CASE_FOLDING, false );
-
-		xml_set_object( $parser, $this );
-		xml_set_element_handler( $parser, "in_start", "" );
-		xml_set_start_namespace_decl_handler( $parser, "handleXmlNamespace" );
-
-		$offset = 0; // for context extraction on error reporting
-		do {
-			$chunk = $this->mSource->readChunk();
-			if( !xml_parse( $parser, $chunk, $this->mSource->atEnd() ) ) {
-				wfDebug( "WikiImporter::doImport encountered XML parsing error\n" );
-				return new WikiXmlError( $parser, wfMsgHtml( 'import-parse-failure' ), $chunk, $offset );
-			}
-			$offset += strlen( $chunk );
-		} while( $chunk !== false && !$this->mSource->atEnd() );
-		xml_parser_free( $parser );
-
-		return true;
-	}
-
-	function debug( $data ) {
-		if( $this->mDebug ) {
-			wfDebug( "IMPORT: $data\n" );
-		}
-	}
-
-	function notice( $data ) {
-		global $wgCommandLineMode;
-		if( $wgCommandLineMode ) {
-			print "$data\n";
-		} else {
-			global $wgOut;
-			$wgOut->addHTML( "<li>" . htmlspecialchars( $data ) . "</li>\n" );
-		}
-	}
-
-	/**
-	 * Set debug mode...
-	 */
-	function setDebug( $debug ) {
-		$this->mDebug = $debug;
-	}
-
-	/**
-	 * Sets the action to perform as each new page in the stream is reached.
-	 * @param $callback callback
-	 * @return callback
-	 */
-	function setPageCallback( $callback ) {
-		$previous = $this->mPageCallback;
-		$this->mPageCallback = $callback;
-		return $previous;
-	}
-
-	/**
-	 * Sets the action to perform as each page in the stream is completed.
-	 * Callback accepts the page title (as a Title object), a second object
-	 * with the original title form (in case it's been overridden into a
-	 * local namespace), and a count of revisions.
-	 *
-	 * @param $callback callback
-	 * @return callback
-	 */
-	function setPageOutCallback( $callback ) {
-		$previous = $this->mPageOutCallback;
-		$this->mPageOutCallback = $callback;
-		return $previous;
-	}
-
-	/**
-	 * Sets the action to perform as each page revision is reached.
-	 * @param $callback callback
-	 * @return callback
-	 */
-	function setRevisionCallback( $callback ) {
-		$previous = $this->mRevisionCallback;
-		$this->mRevisionCallback = $callback;
-		return $previous;
-	}
-
-	/**
-	 * Sets the action to perform as each file upload version is reached.
-	 * @param $callback callback
-	 * @return callback
-	 */
-	function setUploadCallback( $callback ) {
-		$previous = $this->mUploadCallback;
-		$this->mUploadCallback = $callback;
-		return $previous;
-	}
-	
-	/**
-	 * Sets the action to perform as each log item reached.
-	 * @param $callback callback
-	 * @return callback
-	 */
-	function setLogItemCallback( $callback ) {
-		$previous = $this->mLogItemCallback;
-		$this->mLogItemCallback = $callback;
-		return $previous;
-	}
-
-	/**
-	 * Set a target namespace to override the defaults
-	 */
-	function setTargetNamespace( $namespace ) {
-		if( is_null( $namespace ) ) {
-			// Don't override namespaces
-			$this->mTargetNamespace = null;
-		} elseif( $namespace >= 0 ) {
-			// FIXME: Check for validity
-			$this->mTargetNamespace = intval( $namespace );
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Default per-revision callback, performs the import.
-	 * @param $revision WikiRevision
-	 * @private
-	 */
-	function importRevision( $revision ) {
-		$dbw = wfGetDB( DB_MASTER );
-		return $dbw->deadlockLoop( array( $revision, 'importOldRevision' ) );
-	}
-	
-	/**
-	 * Default per-revision callback, performs the import.
-	 * @param $rev WikiRevision
-	 * @private
-	 */
-	function importLogItem( $rev ) {
-		$dbw = wfGetDB( DB_MASTER );
-		return $dbw->deadlockLoop( array( $rev, 'importLogItem' ) );
-	}
-
-	/**
-	 * Dummy for now...
-	 */
-	function importUpload( $revision ) {
-		//$dbw = wfGetDB( DB_MASTER );
-		//return $dbw->deadlockLoop( array( $revision, 'importUpload' ) );
-		return false;
-	}
-
-	/**
-	 * Alternate per-revision callback, for debugging.
-	 * @param $revision WikiRevision
-	 * @private
-	 */
-	function debugRevisionHandler( &$revision ) {
-		$this->debug( "Got revision:" );
-		if( is_object( $revision->title ) ) {
-			$this->debug( "-- Title: " . $revision->title->getPrefixedText() );
-		} else {
-			$this->debug( "-- Title: <invalid>" );
-		}
-		$this->debug( "-- User: " . $revision->user_text );
-		$this->debug( "-- Timestamp: " . $revision->timestamp );
-		$this->debug( "-- Comment: " . $revision->comment );
-		$this->debug( "-- Text: " . $revision->text );
-	}
-
-	/**
-	 * Notify the callback function when a new <page> is reached.
-	 * @param $title Title
-	 * @private
-	 */
-	function pageCallback( $title ) {
-		if( is_callable( $this->mPageCallback ) ) {
-			call_user_func( $this->mPageCallback, $title );
-		}
-	}
-
-	/**
-	 * Notify the callback function when a </page> is closed.
-	 * @param $title Title
-	 * @param $origTitle Title
-	 * @param $revisionCount int
-	 * @param $successCount Int: number of revisions for which callback returned true
-	 * @private
-	 */
-	function pageOutCallback( $title, $origTitle, $revisionCount, $successCount ) {
-		if( is_callable( $this->mPageOutCallback ) ) {
-			call_user_func( $this->mPageOutCallback, $title, $origTitle,
-				$revisionCount, $successCount );
-		}
-	}
-
-	# XML parser callbacks from here out -- beware!
-	function donothing( $parser, $x, $y="" ) {
-		#$this->debug( "donothing" );
-	}
-
-	function in_start( $parser, $name, $attribs ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "in_start $name" );
-		if( $name != "mediawiki" ) {
-			return $this->throwXMLerror( "Expected <mediawiki>, got <$name>" );
-		}
-		xml_set_element_handler( $parser, "in_mediawiki", "out_mediawiki" );
-	}
-
-	function in_mediawiki( $parser, $name, $attribs ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "in_mediawiki $name" );
-		if( $name == 'siteinfo' ) {
-			xml_set_element_handler( $parser, "in_siteinfo", "out_siteinfo" );
-		} elseif( $name == 'page' ) {
-			$this->push( $name );
-			$this->workRevisionCount = 0;
-			$this->workSuccessCount = 0;
-			$this->uploadCount = 0;
-			$this->uploadSuccessCount = 0;
-			xml_set_element_handler( $parser, "in_page", "out_page" );
-		} elseif( $name == 'logitem' ) {
-			$this->push( $name );
-			$this->workRevision = new WikiRevision;
-			xml_set_element_handler( $parser, "in_logitem", "out_logitem" );
-		} else {
-			return $this->throwXMLerror( "Expected <page>, got <$name>" );
-		}
-	}
-	function out_mediawiki( $parser, $name ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "out_mediawiki $name" );
-		if( $name != "mediawiki" ) {
-			return $this->throwXMLerror( "Expected </mediawiki>, got </$name>" );
-		}
-		xml_set_element_handler( $parser, "donothing", "donothing" );
-	}
-
-
-	function in_siteinfo( $parser, $name, $attribs ) {
-		// no-ops for now
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "in_siteinfo $name" );
-		switch( $name ) {
-		case "sitename":
-		case "base":
-		case "generator":
-		case "case":
-		case "namespaces":
-		case "namespace":
-			break;
-		default:
-			return $this->throwXMLerror( "Element <$name> not allowed in <siteinfo>." );
-		}
-	}
-
-	function out_siteinfo( $parser, $name ) {
-		$name = $this->stripXmlNamespace($name);
-		if( $name == "siteinfo" ) {
-			xml_set_element_handler( $parser, "in_mediawiki", "out_mediawiki" );
-		}
-	}
-
-
-	function in_page( $parser, $name, $attribs ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "in_page $name" );
-		switch( $name ) {
-		case "id":
-		case "title":
-		case "redirect":
-		case "restrictions":
-			$this->appendfield = $name;
-			$this->appenddata = "";
-			xml_set_element_handler( $parser, "in_nothing", "out_append" );
-			xml_set_character_data_handler( $parser, "char_append" );
-			break;
-		case "revision":
-			$this->push( "revision" );
-			if( is_object( $this->pageTitle ) ) {
-				$this->workRevision = new WikiRevision;
-				$this->workRevision->setTitle( $this->pageTitle );
-				$this->workRevisionCount++;
-			} else {
-				// Skipping items due to invalid page title
-				$this->workRevision = null;
-			}
-			xml_set_element_handler( $parser, "in_revision", "out_revision" );
-			break;
-		case "upload":
-			$this->push( "upload" );
-			if( is_object( $this->pageTitle ) ) {
-				$this->workRevision = new WikiRevision;
-				$this->workRevision->setTitle( $this->pageTitle );
-				$this->uploadCount++;
-			} else {
-				// Skipping items due to invalid page title
-				$this->workRevision = null;
-			}
-			xml_set_element_handler( $parser, "in_upload", "out_upload" );
-			break;
-		default:
-			return $this->throwXMLerror( "Element <$name> not allowed in a <page>." );
-		}
-	}
-
-	function out_page( $parser, $name ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "out_page $name" );
-		$this->pop();
-		if( $name != "page" ) {
-			return $this->throwXMLerror( "Expected </page>, got </$name>" );
-		}
-		xml_set_element_handler( $parser, "in_mediawiki", "out_mediawiki" );
-
-		$this->pageOutCallback( $this->pageTitle, $this->origTitle,
-			$this->workRevisionCount, $this->workSuccessCount );
-
-		$this->workTitle = null;
-		$this->workRevision = null;
-		$this->workRevisionCount = 0;
-		$this->workSuccessCount = 0;
-		$this->pageTitle = null;
-		$this->origTitle = null;
-	}
-
-	function in_nothing( $parser, $name, $attribs ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "in_nothing $name" );
-		return $this->throwXMLerror( "No child elements allowed here; got <$name>" );
-	}
-
-	function char_append( $parser, $data ) {
-		$this->debug( "char_append '$data'" );
-		$this->appenddata .= $data;
-	}
-
-	function out_append( $parser, $name ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "out_append $name" );
-		if( $name != $this->appendfield ) {
-			return $this->throwXMLerror( "Expected </{$this->appendfield}>, got </$name>" );
-		}
-
-		switch( $this->appendfield ) {
-		case "title":
-			$this->workTitle = $this->appenddata;
-			$this->origTitle = Title::newFromText( $this->workTitle );
-			if( !is_null( $this->mTargetNamespace ) && !is_null( $this->origTitle ) ) {
-				$this->pageTitle = Title::makeTitle( $this->mTargetNamespace,
-					$this->origTitle->getDBkey() );
-			} else {
-				$this->pageTitle = Title::newFromText( $this->workTitle );
-			}
-			if( is_null( $this->pageTitle ) ) {
-				// Invalid page title? Ignore the page
-				$this->notice( "Skipping invalid page title '$this->workTitle'" );
-			} elseif( $this->pageTitle->getInterwiki() != '' ) {
-				$this->notice( "Skipping interwiki page title '$this->workTitle'" );
-				$this->pageTitle = null;
-			} else {
-				$this->pageCallback( $this->workTitle );
-			}
-			break;
-		case "id":
-			if ( $this->parentTag() == 'revision' || $this->parentTag() == 'logitem' ) {
-				if( $this->workRevision )
-					$this->workRevision->setID( $this->appenddata );
-			}
-			break;
-		case "text":
-			if( $this->workRevision )
-				$this->workRevision->setText( $this->appenddata );
-			break;
-		case "username":
-			if( $this->workRevision )
-				$this->workRevision->setUsername( $this->appenddata );
-			break;
-		case "ip":
-			if( $this->workRevision )
-				$this->workRevision->setUserIP( $this->appenddata );
-			break;
-		case "timestamp":
-			if( $this->workRevision )
-				$this->workRevision->setTimestamp( $this->appenddata );
-			break;
-		case "comment":
-			if( $this->workRevision )
-				$this->workRevision->setComment( $this->appenddata );
-			break;
-		case "type":
-			if( $this->workRevision )
-				$this->workRevision->setType( $this->appenddata );
-			break;
-		case "action":
-			if( $this->workRevision )
-				$this->workRevision->setAction( $this->appenddata );
-			break;
-		case "logtitle":
-			if( $this->workRevision )
-				$this->workRevision->setTitle( Title::newFromText( $this->appenddata ) );
-			break;
-		case "params":
-			if( $this->workRevision )
-				$this->workRevision->setParams( $this->appenddata );
-			break;
-		case "minor":
-			if( $this->workRevision )
-				$this->workRevision->setMinor( true );
-			break;
-		case "filename":
-			if( $this->workRevision )
-				$this->workRevision->setFilename( $this->appenddata );
-			break;
-		case "src":
-			if( $this->workRevision )
-				$this->workRevision->setSrc( $this->appenddata );
-			break;
-		case "size":
-			if( $this->workRevision )
-				$this->workRevision->setSize( intval( $this->appenddata ) );
-			break;
-		default:
-			$this->debug( "Bad append: {$this->appendfield}" );
-		}
-		$this->appendfield = "";
-		$this->appenddata = "";
-
-		$parent = $this->parentTag();
-		xml_set_element_handler( $parser, "in_$parent", "out_$parent" );
-		xml_set_character_data_handler( $parser, "donothing" );
-	}
-
-	function in_revision( $parser, $name, $attribs ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "in_revision $name" );
-		switch( $name ) {
-		case "id":
-		case "timestamp":
-		case "comment":
-		case "minor":
-		case "text":
-			$this->appendfield = $name;
-			xml_set_element_handler( $parser, "in_nothing", "out_append" );
-			xml_set_character_data_handler( $parser, "char_append" );
-			break;
-		case "contributor":
-			$this->push( "contributor" );
-			xml_set_element_handler( $parser, "in_contributor", "out_contributor" );
-			break;
-		default:
-			return $this->throwXMLerror( "Element <$name> not allowed in a <revision>." );
-		}
-	}
-
-	function out_revision( $parser, $name ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "out_revision $name" );
-		$this->pop();
-		if( $name != "revision" ) {
-			return $this->throwXMLerror( "Expected </revision>, got </$name>" );
-		}
-		xml_set_element_handler( $parser, "in_page", "out_page" );
-
-		if( $this->workRevision ) {
-			$ok = call_user_func_array( $this->mRevisionCallback,
-				array( $this->workRevision, $this ) );
-			if( $ok ) {
-				$this->workSuccessCount++;
-			}
-		}
-	}
-
-	function in_logitem( $parser, $name, $attribs ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "in_logitem $name" );
-		switch( $name ) {
-		case "id":
-		case "timestamp":
-		case "comment":
-		case "type":
-		case "action":
-		case "logtitle":
-		case "params":
-			$this->appendfield = $name;
-			xml_set_element_handler( $parser, "in_nothing", "out_append" );
-			xml_set_character_data_handler( $parser, "char_append" );
-			break;
-		case "contributor":
-			$this->push( "contributor" );
-			xml_set_element_handler( $parser, "in_contributor", "out_contributor" );
-			break;
-		default:
-			return $this->throwXMLerror( "Element <$name> not allowed in a <revision>." );
-		}
-	}
-
-	function out_logitem( $parser, $name ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "out_logitem $name" );
-		$this->pop();
-		if( $name != "logitem" ) {
-			return $this->throwXMLerror( "Expected </logitem>, got </$name>" );
-		}
-		xml_set_element_handler( $parser, "in_mediawiki", "out_mediawiki" );
-
-		if( $this->workRevision ) {
-			$ok = call_user_func_array( $this->mLogItemCallback,
-				array( $this->workRevision, $this ) );
-			if( $ok ) {
-				$this->workSuccessCount++;
-			}
-		}
-	}
-
-	function in_upload( $parser, $name, $attribs ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "in_upload $name" );
-		switch( $name ) {
-		case "timestamp":
-		case "comment":
-		case "text":
-		case "filename":
-		case "src":
-		case "size":
-			$this->appendfield = $name;
-			xml_set_element_handler( $parser, "in_nothing", "out_append" );
-			xml_set_character_data_handler( $parser, "char_append" );
-			break;
-		case "contributor":
-			$this->push( "contributor" );
-			xml_set_element_handler( $parser, "in_contributor", "out_contributor" );
-			break;
-		default:
-			return $this->throwXMLerror( "Element <$name> not allowed in an <upload>." );
-		}
-	}
-
-	function out_upload( $parser, $name ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "out_revision $name" );
-		$this->pop();
-		if( $name != "upload" ) {
-			return $this->throwXMLerror( "Expected </upload>, got </$name>" );
-		}
-		xml_set_element_handler( $parser, "in_page", "out_page" );
-
-		if( $this->workRevision ) {
-			$ok = call_user_func_array( $this->mUploadCallback,
-				array( $this->workRevision, $this ) );
-			if( $ok ) {
-				$this->workUploadSuccessCount++;
-			}
-		}
-	}
-
-	function in_contributor( $parser, $name, $attribs ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "in_contributor $name" );
-		switch( $name ) {
-		case "username":
-		case "ip":
-		case "id":
-			$this->appendfield = $name;
-			xml_set_element_handler( $parser, "in_nothing", "out_append" );
-			xml_set_character_data_handler( $parser, "char_append" );
-			break;
-		default:
-			$this->throwXMLerror( "Invalid tag <$name> in <contributor>" );
-		}
-	}
-
-	function out_contributor( $parser, $name ) {
-		$name = $this->stripXmlNamespace($name);
-		$this->debug( "out_contributor $name" );
-		$this->pop();
-		if( $name != "contributor" ) {
-			return $this->throwXMLerror( "Expected </contributor>, got </$name>" );
-		}
-		$parent = $this->parentTag();
-		xml_set_element_handler( $parser, "in_$parent", "out_$parent" );
-	}
-
-	private function push( $name ) {
-		array_push( $this->tagStack, $name );
-		$this->debug( "PUSH $name" );
-	}
-
-	private function pop() {
-		$name = array_pop( $this->tagStack );
-		$this->debug( "POP $name" );
-		return $name;
-	}
-
-	private function parentTag() {
-		$name = $this->tagStack[count( $this->tagStack ) - 1];
-		$this->debug( "PARENT $name" );
-		return $name;
-	}
-
-}
-
-/**
  * @todo document (e.g. one-sentence class description).
  * @ingroup SpecialPage
  */
@@ -1032,17 +1464,22 @@ class ImportStringSource {
 		$this->mRead = false;
 	}
 
+	/**
+	 * @return bool
+	 */
 	function atEnd() {
 		return $this->mRead;
 	}
 
+	/**
+	 * @return bool|string
+	 */
 	function readChunk() {
 		if( $this->atEnd() ) {
 			return false;
-		} else {
-			$this->mRead = true;
-			return $this->mString;
 		}
+		$this->mRead = true;
+		return $this->mString;
 	}
 }
 
@@ -1055,38 +1492,54 @@ class ImportStreamSource {
 		$this->mHandle = $handle;
 	}
 
+	/**
+	 * @return bool
+	 */
 	function atEnd() {
 		return feof( $this->mHandle );
 	}
 
+	/**
+	 * @return string
+	 */
 	function readChunk() {
 		return fread( $this->mHandle, 32768 );
 	}
 
+	/**
+	 * @param $filename string
+	 * @return Status
+	 */
 	static function newFromFile( $filename ) {
-		$file = @fopen( $filename, 'rt' );
+		wfSuppressWarnings();
+		$file = fopen( $filename, 'rt' );
+		wfRestoreWarnings();
 		if( !$file ) {
-			return new WikiErrorMsg( "importcantopen" );
+			return Status::newFatal( "importcantopen" );
 		}
-		return new ImportStreamSource( $file );
+		return Status::newGood( new ImportStreamSource( $file ) );
 	}
 
+	/**
+	 * @param $fieldname string
+	 * @return Status
+	 */
 	static function newFromUpload( $fieldname = "xmlimport" ) {
 		$upload =& $_FILES[$fieldname];
 
 		if( !isset( $upload ) || !$upload['name'] ) {
-			return new WikiErrorMsg( 'importnofile' );
+			return Status::newFatal( 'importnofile' );
 		}
 		if( !empty( $upload['error'] ) ) {
 			switch($upload['error']){
 				case 1: # The uploaded file exceeds the upload_max_filesize directive in php.ini.
-					return new WikiErrorMsg( 'importuploaderrorsize' );
+					return Status::newFatal( 'importuploaderrorsize' );
 				case 2: # The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.
-					return new WikiErrorMsg( 'importuploaderrorsize' );
+					return Status::newFatal( 'importuploaderrorsize' );
 				case 3: # The uploaded file was only partially uploaded
-					return new WikiErrorMsg( 'importuploaderrorpartial' );
-				case 6: #Missing a temporary folder. Introduced in PHP 4.3.10 and PHP 5.0.3.
-					return new WikiErrorMsg( 'importuploaderrortemp' );
+					return Status::newFatal( 'importuploaderrorpartial' );
+				case 6: #Missing a temporary folder.
+					return Status::newFatal( 'importuploaderrortemp' );
 				# case else: # Currently impossible
 			}
 
@@ -1095,35 +1548,48 @@ class ImportStreamSource {
 		if( is_uploaded_file( $fname ) ) {
 			return ImportStreamSource::newFromFile( $fname );
 		} else {
-			return new WikiErrorMsg( 'importnofile' );
+			return Status::newFatal( 'importnofile' );
 		}
 	}
 
+	/**
+	 * @param $url
+	 * @param $method string
+	 * @return Status
+	 */
 	static function newFromURL( $url, $method = 'GET' ) {
 		wfDebug( __METHOD__ . ": opening $url\n" );
 		# Use the standard HTTP fetch function; it times out
 		# quicker and sorts out user-agent problems which might
 		# otherwise prevent importing from large sites, such
 		# as the Wikimedia cluster, etc.
-		$data = Http::request( $method, $url );
+		$data = Http::request( $method, $url, array( 'followRedirects' => true ) );
 		if( $data !== false ) {
 			$file = tmpfile();
 			fwrite( $file, $data );
 			fflush( $file );
 			fseek( $file, 0 );
-			return new ImportStreamSource( $file );
+			return Status::newGood( new ImportStreamSource( $file ) );
 		} else {
-			return new WikiErrorMsg( 'importcantopen' );
+			return Status::newFatal( 'importcantopen' );
 		}
 	}
 
+	/**
+	 * @param $interwiki
+	 * @param $page
+	 * @param $history bool
+	 * @param $templates bool
+	 * @param $pageLinkDepth int
+	 * @return Status
+	 */
 	public static function newFromInterwiki( $interwiki, $page, $history = false, $templates = false, $pageLinkDepth = 0 ) {
 		if( $page == '' ) {
-			return new WikiErrorMsg( 'import-noarticle' );
+			return Status::newFatal( 'import-noarticle' );
 		}
 		$link = Title::newFromText( "$interwiki:Special:Export/$page" );
 		if( is_null( $link ) || $link->getInterwiki() == '' ) {
-			return new WikiErrorMsg( 'importbadinterwiki' );
+			return Status::newFatal( 'importbadinterwiki' );
 		} else {
 			$params = array();
 			if ( $history ) $params['history'] = 1;

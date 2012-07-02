@@ -2,24 +2,26 @@
 
 class MostpopularcategoriesSpecialPage extends SpecialPage {
     private $mpc = null;
+	private $showList = true;
+	private $page = '';
 
-	function __construct() {
-		wfLoadExtensionMessages('Mostpopularcategories');
-		parent::__construct( 'Mostpopularcategories' );
+	function __construct( $page = 'Mostpopularcategories' ) {
+		$this->page = $page;
+		parent::__construct( $this->page, '' );
 	}
+	
+	function setList( $showList = false ) { $this->showList = $showList; }
 
-	function execute($limit = "", $offset = "", $show = true) {
-		if (empty($limit) && empty($offset)) {
-			list( $limit, $offset ) = wfCheckLimits();
-		}
-		$this->mpc = new MostpopularcategoriesPage($show);
-		if (!empty($show)) {
+	function execute( $par = '' ) {
+		$this->mpc = new MostpopularcategoriesPage( $this->page );
+		$this->mpc->setVisible( $this->showList );
+		if (!empty($this->showList)) {
 			$this->setHeaders();
 		} else {
 			// return data as array - not like <LI> list
 			$this->mpc->setListoutput(TRUE);
 		}
-		$this->mpc->doQuery( $offset, $limit, $show );
+		$this->mpc->execute( '' );
     }
 
     function getResult() {
@@ -30,28 +32,37 @@ class MostpopularcategoriesSpecialPage extends SpecialPage {
 class MostpopularcategoriesPage extends QueryPage {
 
 	var $data = array();
-    var $show = false;
+    var $show = true;
 
-    function __construct($show = false) { $this->show = $show; }
+    function __construct( $page ) { 
+		parent::__construct( $page, '' ); 
+	}
 
+	function setVisible( $show ) { $this->show = $show; }
 	function getName() { return 'Mostpopularcategories'; }
 	function isExpensive() { return true; }
 	function isSyndicated() { return false; }
 
-	function getSQL() {
-		$dbr = wfGetDB( DB_SLAVE );
-		list( $categorylinks ) = $dbr->tableNamesN( 'categorylinks' );
-
+	function getQueryInfo() {
 		$filterWords = array('Image', 'images', 'Stub', 'stubs', 'Screenshot', 'screenshots', 'Screencap','screencaps', 'Article', 'articles', 'Copy_edit', 'Fair_use', 'File', 'files', 'Panel', 'panels', 'Redirect', 'redirects', 'Template', 'templates', 'Delete', 'deletion', 'TagSynced');
 		$filterWordsA = array();
 		foreach($filterWords as $word) {
 			$filterWordsA[] = '(cl_to not like "%'.$word.'%")';
         }
-		$where = count($filterWordsA) > 0 ? "WHERE (".implode(' AND ', $filterWordsA).")" : "";
-
-		$sql = "SELECT 'Mostpopularcategories' as type, 0 as namespace, cl_to as title, COUNT(*) as value FROM $categorylinks USE KEY (`cl_sortkey`) $where GROUP BY 3";
-
-		return $sql;
+        
+		return array (
+			'tables' => array ( 'categorylinks' ),
+			'fields' => array ( 
+				"'Mostpopularcategories' as type",
+				'0 as namespace', 
+				'cl_to as title', 
+				'COUNT(*) as value' 
+			),
+			'conds' => $filterWordsA,
+			'options' => array (
+				'GROUP BY' => 'cl_to'
+			)
+		);
 	}
 
 	function sortDescending() {

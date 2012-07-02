@@ -1,6 +1,7 @@
 <?php
 /**
- * @addtogroup Maintenance
+ * @file
+ * @ingroup Maintenance
  * @author Roan Kattouw
  */
 
@@ -34,7 +35,7 @@ function populateCategorySearch( $begin, $maxlag, $throttle, $force ) {
 	}
 	$i = 0;
 
-	while(true) {
+	while( true ) {
 		# Get the next page ID
 		$row = $dbw->selectRow(
 			'page',
@@ -43,10 +44,11 @@ function populateCategorySearch( $begin, $maxlag, $throttle, $force ) {
 			__FUNCTION__,
 			array('ORDER BY' => 'page_id')
 		);
-		if(!$row)
+		if( !$row ) {
 			# We're done
 			break;
-		$pageid = intval($row->page_id);
+		}
+		$pageid = intval( $row->page_id );
 		$where = 'page_id > ' . $pageid;
 
 		# Get all categories this page is in
@@ -57,17 +59,17 @@ function populateCategorySearch( $begin, $maxlag, $throttle, $force ) {
 			__FUNCTION__
 		);
 		$categories = array();
-		while(($row = $dbw->fetchObject($res)))
+		foreach( $res as $row ) {
 			$categories[] = $row->cl_to;
-		$ctext = implode(' ', $categories);
-		AdvancedSearchCategoryIntersector::update($pageid, $categories);
-		$i++;
-		if(!($i % REPORTING_INTERVAL))
-		{
-			echo "$pageid\n";
-			wfWaitForSlaves($maxlag);
 		}
-		usleep($throttle*1000);
+		$ctext = implode( ' ', $categories );
+		AdvancedSearchCategoryIntersector::update( $pageid, $categories );
+		$i++;
+		if( !( $i % REPORTING_INTERVAL ) ) {
+			echo "$pageid\n";
+			wfWaitForSlaves( $maxlag );
+		}
+		usleep( $throttle * 1000 );
 	}
 
 	if( $dbw->insert(

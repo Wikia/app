@@ -1,8 +1,14 @@
 <?php
 /**
+ * Cantonese (粵語)
+ *
  * @ingroup Language
  */
 class LanguageYue extends Language {
+
+	/**
+	 * @return bool
+	 */
 	function hasWordBreaks() {
 		return false;
 	}
@@ -10,14 +16,21 @@ class LanguageYue extends Language {
 	/**
 	 * Eventually this should be a word segmentation;
 	 * for now just treat each character as a word.
-	 * @todo Fixme: only do this for Han characters...
+	 * @todo FIXME: Only do this for Han characters...
+	 *
+	 * @param $string string
+	 * @return string
 	 */
-	function wordSegmentation( $string ) {
+	function segmentByWord( $string ) {
 		$reg = "/([\\xc0-\\xff][\\x80-\\xbf]*)/";
 		$s = self::insertSpace( $string, $reg );
 		return $s;
 	}
-	
+
+	/**
+	 * @param $string
+	 * @return string
+	 */
 	function normalizeForSearch( $string ) {
 		wfProfileIn( __METHOD__ );
 

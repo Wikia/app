@@ -15,11 +15,11 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( -1 );
 }
 
-// Extension credits that will show up on Special:Version    
+// Extension credits that will show up on Special:Version
 $wgExtensionCredits['parserhook'][] = array(
 	'name'         => 'Link Attributes',
 	'version'      => '1.0',
-	'author'       => 'Toby Inkster', 
+	'author'       => 'Toby Inkster',
 	'url'          => 'http://www.mediawiki.org/wiki/Extension:Link_Attributes',
 	'description'  => 'easy modification of rel/rev/class on <a> elements'
 );
@@ -38,7 +38,7 @@ function linkattr_ModifyLink (&$text, &$attribs, $isExternal = 0)
 		{
 			if ($isExternal && (strtolower($r)=='-nofollow'))
 				continue; # Not allowed!!
-		
+
 			if ((substr($r, 0, 2) == '-~' || substr($r, 0, 2) == '~-') && isset($attribs['rev']))
 				$attribs['rev'] = str_ireplace(substr($r, 2), '', $attribs['rev']);
 			elseif ((substr($r, 0, 2) == '-.' || substr($r, 0, 2) == '.-') && isset($attribs['class']))
@@ -59,7 +59,7 @@ function linkattr_ModifyLink (&$text, &$attribs, $isExternal = 0)
 			$attribs['rev'] = trim(preg_replace('/\s+/', ' ', $attribs['rev']));
 		if (isset($attribs['class']))
 			$attribs['class'] = trim(preg_replace('/\s+/', ' ', $attribs['class']));
-	}	
+	}
 }
 
 function linkattr_InternalLink ($skin, $target, $options, &$text, &$attribs, &$ret)
@@ -68,9 +68,9 @@ function linkattr_InternalLink ($skin, $target, $options, &$text, &$attribs, &$r
 	return true;
 }
 
-function linkattr_ExternalLink (&$url, &$text, &$link, &$attribs, &$linktype, $skin)
+function linkattr_ExternalLink (&$url, &$text, &$link, &$attribs, $linktype)
 {
-	$attribsText = $skin->getExternalLinkAttributes( $url, $text, 'external '.$linktype);
+	$attribsText = Linker::getExternalLinkAttributes('external '.$linktype);
 	$mergedattribs = array_merge($attribs, Sanitizer::decodeTagAttributes($attribsText));
 
 	linkattr_ModifyLink($text, $mergedattribs, 1);
@@ -79,5 +79,5 @@ function linkattr_ExternalLink (&$url, &$text, &$link, &$attribs, &$linktype, $s
 
 	$link = sprintf('<a href="%s"%s>%s</a>', $url, $attribsText, $text);
 
-	return false;	
+	return false;
 }

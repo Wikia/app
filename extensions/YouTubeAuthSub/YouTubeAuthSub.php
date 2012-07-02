@@ -5,8 +5,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
 /**#@+
  * An extension that allows users to rate articles.
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.wikihow.com/WikiHow:YouTubeAuthSub-Extension Documentation
  *
@@ -14,8 +14,6 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * @author Travis Derouin <travis@wikihow.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
-
-$wgExtensionFunctions[] = 'wfYouTubeAuthSub';
 
 $wgYTAS_UseClientLogin = true;
 
@@ -35,9 +33,8 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'YouTubeAuthSub',
 	'author'         => 'Travis Derouin',
-	'description'    => 'Allows users to upload videos directly to YouTube through the wiki',
 	'descriptionmsg' => 'youtubeauthsub-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:YouTubeAuthSub',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:YouTubeAuthSub',
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -45,12 +42,8 @@ $wgExtensionMessagesFiles['YouTubeAuthSub'] = $dir . 'YouTubeAuthSub.i18n.php';
 $wgAutoloadClasses['SpecialYouTubeAuthSub'] = $dir . 'YouTubeAuthSub_body.php';
 $wgSpecialPages['YouTubeAuthSub'] = 'SpecialYouTubeAuthSub';
 
-function wfYouTubeAuthSub() {
-	global $wgYTAS_UseNamespace, $wgExtraNamespaces;
-
-	$wgExtraNamespaces[NS_YOUTUBE] = "YouTube";
-	$wgExtraNamespaces[NS_YOUTUBE_TALK] = "YouTube_talk";
-}
+$wgExtraNamespaces[NS_YOUTUBE] = "YouTube";
+$wgExtraNamespaces[NS_YOUTUBE_TALK] = "YouTube_talk";
 
 function wfSpecialYouTubePost ($url, $content, $headers = null) {
 	// Set the date of your post

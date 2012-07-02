@@ -8,6 +8,7 @@ class ScavengerHuntTest extends WikiaBaseTest {
 	
 	public function tearDown() {
 		F::unsetInstance('GlobalTitle');
+		F::unsetInstance('ScavengerHuntGames');
 	}
 
 	public function getFakeSprite() {
@@ -103,7 +104,7 @@ class ScavengerHuntTest extends WikiaBaseTest {
 
 		$fakeRow = ( $isEmpty ) ? array() : $this->getFakeRow();
 
-		$db = $this->getMock( 'DatabaseBase' );
+		$db = $this->getMock( 'DatabaseMysql' );
 		$db->expects( $this->any() )
 			->method( 'selectRow' )
 			->will( $this->returnValue( $fakeRow ) );

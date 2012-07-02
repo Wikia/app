@@ -1,50 +1,48 @@
 <?php
 class ContributionHistory extends SpecialPage {
-	function ContributionHistory() {
-		SpecialPage::SpecialPage( 'ContributionHistory' );
+	function __construct() {
+		parent::__construct( 'ContributionHistory' );
 	}
 
-	function execute( $language = null ) {
-		global $wgRequest, $wgOut, $wgTitle, $wgLang;
+	function execute( $language ) {
+		global $wgRequest, $wgOut, $wgLang;
+
+		# Emergency short cut until post donation comments are enabled
+		$wgOut->redirect( SpecialPage::getTitleFor( 'FundraiserStatistics' )->getFullURL() );
+		return;
+
 
 		if ( !preg_match( '/^[a-z-]+$/', $language ) ) {
 			$language = 'en';
 		}
 		$this->lang = Language::factory( $language );
-		
+
 		// Get request data
 		$offset = $wgRequest->getIntOrNull( 'offset' );
 		$show = 100;
-		
-		wfLoadExtensionMessages( 'ContributionReporting' );
-		wfLoadExtensionMessages( 'ContributionReporting', $language );
-		
+
 		$this->setHeaders();
-		
+
 		$db = efContributionReportingConnection();
-		
-		$output = '<style type="text/css">';
-		$output .= 'td.left {padding-right: 10px;}';
-		$output .= 'td.right {padding-left: 10px; text-align: right;}';
-		$output .= 'td.alt {background-color: #DDDDDD;}';
-		$output .= '</style>';
-		
+
+		$wgOut->addModules( 'ext.fundraiserstatistics.table' );
+
 		// Paging controls
 		$newer = $db->selectField( 'public_reporting', 'received',
 			array_merge(
-				array( 'received > ' . strtotime( 'July 1st 2008' ) ),
+				array( 'received > ' . strtotime( 'July 1st 2011' ) ),
 				( $offset !== null ? array( 'received > ' . $offset ) : array() )
 			),
 			__METHOD__,
 			array(
 				'ORDER BY' => 'received ASC',
 				'LIMIT' => 1,
-				'OFFSET' => $show 
+				'OFFSET' => $show
 			)
 		);
 		$older = $db->selectField( 'public_reporting', 'received',
 			array_merge(
-				array( 'received > ' . strtotime( 'July 1st 2008' ) ),
+				array( 'received > ' . strtotime( 'July 1st 2011' ) ),
 				( $offset !== null ? array( 'received <= ' . $offset ) : array() )
 			),
 			__METHOD__,
@@ -54,40 +52,40 @@ class ContributionHistory extends SpecialPage {
 				'OFFSET' => $show
 			)
 		);
-		
-		$title = Title::newFromText( $wgTitle->getPrefixedText() . ( $language == 'en' ? '' : '/' . $language ) );
-		
+
+		$title = $this->getTitle( $language == 'en' ? null : $language );
+
 		$pagingLinks = array();
 		if( $offset !== null ) {
 			$pagingLinks[] = Xml::element( 'a',
 				array(
 					'href' => $title->getFullURL( 'offset=' . $newer ),
 				),
-				$this->msg( 'contrib-hist-previous' )
+				$this->chMsg( 'contrib-hist-previous' )
 			);
 		}
 		$pagingLinks[] = Xml::element( 'a',
 			array(
 				'href' => $title->getFullURL( 'offset=' . $older ),
 			),
-			$this->msg( 'contrib-hist-next' )
+			$this->chMsg( 'contrib-hist-next' )
 		);
 		$pagingDiv = Xml::openElement( 'div',
 				array( 'align' => 'right', 'style' => 'padding-bottom:20px' ) ) .
 			$wgLang->pipeList( $pagingLinks ) .
 			Xml::closeElement( 'div' );
 		$output .= $pagingDiv;
-		
+
 		$output .= '<table style="width: 100%">';
 		$output .= '<tr>';
-		$output .= '<th width="60%">' . $this->msg( 'contrib-hist-name' ) . '</th>';
-		$output .= '<th width="25%">' . $this->msg( 'contrib-hist-date' ) . '</th>';
-		$output .= '<th width="15%" align="right">' . $this->msg( 'contrib-hist-amount' ) . '</th>';
+		$output .= '<th width="60%">' . $this->chMsg( 'contrib-hist-name' ) . '</th>';
+		$output .= '<th width="25%">' . $this->chMsg( 'contrib-hist-date' ) . '</th>';
+		$output .= '<th width="15%" align="right">' . $this->chMsg( 'contrib-hist-amount' ) . '</th>';
 		$output .= '</tr>';
-		
+
 		if ( $offset == null ) {
 			$offset = $db->selectField( 'public_reporting', 'received',
-				array( 'received > ' . strtotime( 'July 1st 2008' ) ),
+				array( 'received > ' . strtotime( 'July 1st 2011' ) ),
 				__METHOD__,
 				array(
 					'ORDER BY' => 'received DESC',
@@ -95,12 +93,12 @@ class ContributionHistory extends SpecialPage {
 				)
 			);
 		}
-		
+
 		$url = SpecialPage::getTitleFor( 'ContributionHistory' )->getFullURL();
-		
+
 		$res = $db->select( 'public_reporting', '*',
 			array_merge(
-				array( 'received > ' . strtotime( 'July 1st 2008' ) ),
+				array( 'received > ' . strtotime( 'July 1st 2011' ) ),
 				( $offset !== null ? array( 'received <= ' . $offset ) : array() )
 			),
 			__METHOD__,
@@ -109,11 +107,11 @@ class ContributionHistory extends SpecialPage {
 				'LIMIT' => $show
 			)
 		);
-		$alt = TRUE;
-		while ( $row = $res->fetchRow() ) {
-            if ( $this->isTiny( $row ) ) {
-                continue; // Skip over micro payments generally < $1
-            }
+		$alt = true;
+		foreach ( $res as $row ) {
+			if ( $this->isTiny( $row ) ) {
+				continue; // Skip over micro payments generally < $1
+			}
 			$contributionId = $row['contribution_id'];
 			$name = $this->formatName( $row );
 
@@ -124,7 +122,7 @@ class ContributionHistory extends SpecialPage {
 			if ( $alt ) {
 				$class = ' alt';
 			}
-			
+
 			$output .= "<tr>";
 			$output .= "<td class=\"left $class\"><a name=\"{$contributionId}\"></a><a href=\"{$url}?offset={$offset}#{$contributionId}\">{$name}</a></td>";
 			$output .= "<td class=\"left $class\" style=\"width: 100px;\">$date</td>";
@@ -133,36 +131,36 @@ class ContributionHistory extends SpecialPage {
 
 			$alt = !$alt;
 		}
-		
+
 		$output .= '</table>';
-		
+
 		$output .= $pagingDiv;
 
 		header( 'Cache-Control: max-age=300,s-maxage=300' );
 		$wgOut->addWikiText( '{{2009/Donate-header/' . $language . '}}' );
-		$wgOut->addHTML( '<h1>' . $this->msg( 'contrib-hist-header' ) . '</h1>' );
+		$wgOut->addHTML( '<h1>' . $this->chMsg( 'contrib-hist-header' ) . '</h1>' );
 		$wgOut->addWikiText( '<strong>{{2008/Contribution history introduction/' . $language . '}}</strong>' );
 		$wgOut->addHTML( $output );
 	}
-	
-	function msg( $key ) {
+
+	function chMsg( $key ) {
 		return wfMsgExt( $key, array( 'escape', 'language' => $this->lang ) );
 	}
-	
+
 	function formatName( $row ) {
 		$name = htmlspecialchars( $row['name'] );
 		if( !$name ) {
-			$name = $this->msg( 'contrib-hist-anonymous' );
+			$name = $this->chMsg( 'contrib-hist-anonymous' );
 		}
 		$name = '<strong>' . $name . '</strong>';
-		
+
 		if( $row['note'] && !$this->isTiny( $row ) ) {
 			$name .= '<br />' . htmlspecialchars( $row['note'] );
 		}
 
 		return $name;
 	}
-	
+
 	function isTiny( $row ) {
 		$mins = array(
 			'USD' => 1,
@@ -198,7 +196,7 @@ class ContributionHistory extends SpecialPage {
 			return false;
 		}
 	}
-	
+
 	function formatDate( $row ) {
 		$ts = wfTimestamp( TS_MW, $row['received'] );
 		return $this->lang->timeanddate( $ts );
@@ -206,7 +204,7 @@ class ContributionHistory extends SpecialPage {
 
 	function formatAmount( $row ) {
 		$converted = $row['converted_amount'];
-		
+
 		if ( $row['original_currency'] ) {
 			$currency = $row['original_currency'];
 			$amount = $row['original_amount'];

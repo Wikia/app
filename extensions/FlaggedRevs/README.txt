@@ -3,12 +3,12 @@ http://www.mediawiki.org/wiki/Extension:FlaggedRevs
 
 ==Prerequisites==
 * Downloaded the extension from SVN
-* MediaWiki 1.15+
+* MediaWiki 1.19+
 * Shell access
 
 == Setup ==
-* Run 'maintenance/archives/populateSha1.php' if not already done.
-* Make sure '../extensions/FlaggedRevs/client' is readable (for CSS/JS)
+* Run 'maintenance/populateSha1.php' if not already done.
+* Make sure '../FlaggedRevs/presentation/modules' is web readable (for CSS/JS)
 * Add the following line to 'LocalSettings.php':
 	include_once('extensions/FlaggedRevs/FlaggedRevs.php');
 * Run 'maintenance/update.php' to add the SQL tables
@@ -17,15 +17,10 @@ http://www.mediawiki.org/wiki/Extension:FlaggedRevs
 * To enable article validation statistics, $wgPhpCli must be set correctly. This is not necessary
   if you set a cron job to run /FlaggedRevs/maintenance/updateStats.php every so often, which is preferable.
 
-It is important that the sha1 column is populated. This allows for image injection via key 
-rather than the (name,timestamp) pair. In the future, image moves may be supported by MediaWiki, 
-breaking the later method.
-
-Be sure to set the $wgReviewCodes variable as well. See FlaggedRevs.php for details.
-
 == Configuration ==
-There is a commented list of configurable variables in FlaggedRevs.php. The online documentation
-expains these further.
+* There is a well-commented list of configurable variables in FlaggedRevs.config.php.
+* Change settings by adding them to LocalSettings.php.
+* The online documentation expains some of these further.
 
 == Uninstallation ==
 * Remove the FlaggedRevs include line from LocalSettings.php.
@@ -41,6 +36,7 @@ expains these further.
 	DROP TABLE IF EXISTS /*_*/flaggedpage_config;
 	DROP TABLE IF EXISTS /*_*/flaggedrevs_tracking;
 	DROP TABLE IF EXISTS /*_*/flaggedrevs_promote;
+	DROP TABLE IF EXISTS /*_*/flaggedrevs_statistics;
 
 * If they exist, drop the columns 'page_ext_reviewed', 'page_ext_quality', 'page_ext_stable', 
 and the index 'ext_namespace_reviewed' from the page table. You can use the following query:

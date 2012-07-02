@@ -135,7 +135,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 			rply = realparent.lastElementChild,
 			cnt = ~~rply.getAttribute('data-replies')+1,
 			subs = realparent.getElementsByClassName('sub-comments')[0],
-			viewAll = rply.childNodes[1];
+			viewAll = rply.getElementsByClassName('viewAll')[0];
 
 		//append reply to a original place and in modal
 		if(subs){

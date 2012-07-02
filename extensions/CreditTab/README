@@ -1,0 +1,8 @@
+Options
+Default the Tab only shows up in ContentNamespace
+
+Show in all Namespaces
+$wgCreditTabNamespaces=true;
+
+Show in certain Namespaces, example:
+$wgCreditTabNamespaces=array(0,14);

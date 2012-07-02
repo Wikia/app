@@ -1,16 +1,16 @@
 <?php
-
 /**
  * Extension to enable MathML output for <math> tags
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author David Harvey <dmharvey@math.harvard.edu>
  * @author Jitse Niesen <j.niesen@latrobe.edu.au>
  * @copyright 2005, 2006 David Harvey and Jitse Niesen
  * @licence GNU General Public Licence
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	die( 1 );
 }
@@ -24,29 +24,20 @@ $wgBlahtexOptions = '--texvc-compatible-commands --mathml-version-1-fonts --disa
 
 /* Register the extension */
 
-$wgExtensionFunctions[] = 'efBlahtex';
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Blahtex',
 	'author' => 'David Harvey and Jitse Niesen',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Blahtex',
-	'description' => 'MathML output for &lt;math&gt; tags',
-	'descriptionmsg' => 'math-desc',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Blahtex',
+	'descriptionmsg' => 'blahtex-desc',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Blahtex'] = $dir . 'Blahtex.i18n.php';
 
-/**
- * Initialize Blahtex
- */
-function efBlahtex() {
-	global $wgHooks;
-	$wgHooks['MathAfterTexvc'][] = 'efBlahtexMathAfterTexvc';
-	$wgHooks['ParserBeforeTidy'][] = 'efBlahtexParserBeforeTidy';
-	$wgHooks['ParserAfterTidy'][] = 'efBlahtexParserAfterTidy';
-	wfLoadExtensionMessages( 'Blahtex' );
-}
+$wgHooks['MathAfterTexvc'][] = 'efBlahtexMathAfterTexvc';
+$wgHooks['ParserBeforeTidy'][] = 'efBlahtexParserBeforeTidy';
+$wgHooks['ParserAfterTidy'][] = 'efBlahtexParserAfterTidy';
 
 /**
  * Hook function for MathAfterTexvc
@@ -58,8 +49,8 @@ function efBlahtexMathAfterTexvc( &$mathRenderer, &$errmsg ) {
 	 $br->setState( $mathRenderer, $errmsg );
 	 $br->render();
 	 $errmsg = $br->getErrmsg();
-	 wfDebug('Blahtex MathML: ' . $br->mr->mathml . "\n");
-	 wfDebug('Blahtex errmsg: ' . $errmsg . "\n");
+	 wfDebug( 'Blahtex MathML: ' . $br->mr->mathml . "\n" );
+	 wfDebug( 'Blahtex errmsg: ' . $errmsg . "\n" );
 
 	 return true;
 }
@@ -78,10 +69,10 @@ function efBlahtexParserBeforeTidy( &$parser, &$text ) {
 	$endtag = "</math>";
 	$stripped = "";
 	$pos = 0;
-	$rand =  dechex(mt_rand(0, 0x7fffffff)) . dechex(mt_rand(0, 0x7fffffff));
+	$rand =  dechex( mt_rand( 0, 0x7fffffff ) ) . dechex( mt_rand( 0, 0x7fffffff ) );
 	$n = 1;
 
-	while(TRUE) {
+	while ( TRUE ) {
 		$res = preg_match( "/<math[^>]*>/i", $text, $matches, PREG_OFFSET_CAPTURE, $pos );
 		if ( $res == 0 )
 			break;
@@ -89,9 +80,9 @@ function efBlahtexParserBeforeTidy( &$parser, &$text ) {
 		if ( $pos2 == 0 )
 			break;
 		$stripped .= substr( $text, $pos, $matches[0][1] - $pos );
-		$marker = "UNIQ-blahtex-$rand" . sprintf('%08X', $n++) . '-QINU';
+		$marker = "UNIQ-blahtex-$rand" . sprintf( '%08X', $n++ ) . '-QINU';
 		$stripped .= $marker;
-		$pos = $pos2 + strlen($endtag);
+		$pos = $pos2 + strlen( $endtag );
 		$mathtags[$marker] = substr( $text, $matches[0][1], $pos - $matches[0][1] );
 	}
 	$parser->blahtexMathtags = $mathtags;
@@ -113,7 +104,6 @@ function efBlahtexParserAfterTidy( &$parser, &$text ) {
 }
 
 class BlahtexRenderer {
-
 	/** @privatesection */
 	var $mode = MW_MATH_MODERN; /**< @User preference for maths */
 	var $tex = '';              /**< LaTeX fragment */
@@ -171,8 +161,7 @@ class BlahtexRenderer {
 	 *  - Otherwise, the first element is @c true and the second
 	 *    element is a string containing the output of @c blahtex.
 	 */
-	function invokeBlahtex( $tex, $makePNG )
-	{
+	function invokeBlahtex( $tex, $makePNG ) {
 		global $wgBlahtex, $wgBlahtexOptions, $wgTmpDirectory;
 
 		$descriptorspec = array( 0 => array( "pipe", "r" ),
@@ -184,9 +173,9 @@ class BlahtexRenderer {
 		if ( function_exists( 'is_executable' ) && !is_executable( $wgBlahtex ) )
 			return array( false, $this->error( 'math_noblahtex', $wgBlahtex ) );
 
-		wfDebug("Blahtex command: $wgBlahtex $options\n");
-		wfDebug("Blahtex input: \\displaystyle $tex\n");
-		$process = proc_open( $wgBlahtex.' '.$options, $descriptorspec, $pipes );
+		wfDebug( "Blahtex command: $wgBlahtex $options\n" );
+		wfDebug( "Blahtex input: \\displaystyle $tex\n" );
+		$process = proc_open( $wgBlahtex . ' ' . $options, $descriptorspec, $pipes );
 		if ( !$process ) {
 			return array( false, $this->error( 'math_unknown_error' ) );
 		}
@@ -195,10 +184,10 @@ class BlahtexRenderer {
 		fclose( $pipes[0] );
 
 		$contents = '';
-		while ( !feof($pipes[1] ) ) {
+		while ( !feof( $pipes[1] ) ) {
 			$contents .= fgets( $pipes[1], 4096 );
 		}
-		wfDebug("Blahtex output: $contents\n");
+		wfDebug( "Blahtex output: $contents\n" );
 		fclose( $pipes[1] );
 		if ( proc_close( $process ) != 0 ) {
 			// exit code of blahtex is not zero; this shouldn't happen
@@ -217,11 +206,10 @@ class BlahtexRenderer {
 	 * @return HTML fragment with error message if an error
 	 *    occurred, @c false otherwise (string or boolean)
 	 */
-	function processOutput( $results )
-	{
+	function processOutput( $results ) {
 		if ( isset( $results["blahtex:logicError"] ) ) {
 			// Something went completely wrong
-			return $this->error('math_unknown_error', ' '.$results["blahtex:logicError"]);
+			return $this->error( 'math_unknown_error', ' ' . $results["blahtex:logicError"] );
 
 		} elseif ( isset( $results["blahtex:error:id"] ) ) {
 			// There was a syntax error in the input
@@ -231,7 +219,7 @@ class BlahtexRenderer {
 			// There was an error while generating the PNG
 			return $this->blahtexError( $results, "blahtex:png:error" );
 
-		} elseif (isset($results["mathmlMarkup"]) || isset($results["blahtex:png:md5"])) {
+		} elseif ( isset( $results["mathmlMarkup"] ) || isset( $results["blahtex:png:md5"] ) ) {
 			// We got some results
 			if ( isset( $results["mathmlMarkup"] ) )
 				$this->mr->mathml = $results['mathmlMarkup'];
@@ -256,11 +244,11 @@ class BlahtexRenderer {
 	 *    blahtexOutputParser::parse() .
 	 * @param $node Node in the tree that the message is stored
 	 *    under (string)
-	 * @returns HTML fragment with the error message (string)
+	 * @return HTML fragment with the error message (string)
 	 */
 	function blahtexError( $results, $node ) {
 		$id = 'math_' . $results[$node . ":id"];
-		wfDebug("Blahtex blahtexError(): node = $node, id = $id\n");
+		wfDebug( "Blahtex blahtexError(): node = $node, id = $id\n" );
 		$fallback = $results[$node . ":message"];
 		if ( isset( $results[$node . ":arg"] ) ) {
 			if ( is_array( $results[$node . ":arg"] ) ) {
@@ -297,7 +285,7 @@ class BlahtexRenderer {
 	 * @return HTML fragment with the error message (string)
 	 */
 	function error( $msg, $arg1 = '', $arg2 = '', $arg3 = '', $fallback = null ) {
-		wfDebug("Blahtex _error(): msg = $msg, arg1 = $arg1\n");
+		wfDebug( "Blahtex _error(): msg = $msg, arg1 = $arg1\n" );
 		$mf = htmlspecialchars( wfMsg( 'math_failure' ) );
 		if ( $msg ) {
 			if ( $fallback && wfMsg( $msg ) == '&lt;' . htmlspecialchars( $msg ) . '&gt;' )
@@ -307,25 +295,23 @@ class BlahtexRenderer {
 		}
 		else
 			$errmsg = '';
-		wfDebug("Blahtex _error(): errmsg = $errmsg\n");
+		wfDebug( "Blahtex _error(): errmsg = $errmsg\n" );
 		$source = htmlspecialchars( str_replace( "\n", ' ', $this->mr->tex ) );
 		// Note: the str_replace above is because the return value must not contain newlines
 		return "<strong class='error'>$mf ($errmsg): $source</strong>\n";
 	}
-
 }
 
 
 /**
  * %Parser for the blahtex's output.
  */
-class blahtexOutputParser  {
-   var $parser;  /**< \private */
+class blahtexOutputParser {
+	var $parser;  /**< \private */
 	var $stack;   /**< \private */
 	var $results; /**< \private */
 
-	function blahtexOutputParser()
-	{
+	function __construct() {
 		$this->parser = xml_parser_create( "UTF-8" );
 		$this->stack = array();
 		$this->results = array();
@@ -351,8 +337,7 @@ class blahtexOutputParser  {
 	 * @param $data Output to be parsed (string)
 	 * @return XML tree (array)
 	 */
-	function parse( $data )
-	{
+	function parse( $data ) {
 		// We splice out any segment between <markup> and </markup>
 		// so that the XML parser doesn't have to deal with all the MathML tags.
 		$markupBegin = strpos( $data, "<markup>" );
@@ -367,8 +352,7 @@ class blahtexOutputParser  {
 	}
 
 	/** @privatesection */
-	function startElement( $parser, $name, $attributes )
-	{
+	function startElement( $parser, $name, $attributes ) {
 		$this->prevCdata = false;
 		if ( count( $this->stack ) == 0 )
 			array_push( $this->stack, $name );
@@ -376,20 +360,18 @@ class blahtexOutputParser  {
 			array_push( $this->stack, $this->stack[count( $this->stack ) - 1] . ":$name" );
 	}
 
-	function stopElement($parser, $name)
-	{
+	function stopElement( $parser, $name ) {
 		$this->prevCdata = false;
 		array_pop( $this->stack );
 	}
 
-	function characterData($parser, $data)
-	{
+	function characterData( $parser, $data ) {
 		$index = $this->stack[count( $this->stack ) - 1];
 		if ( $this->prevCdata ) {
 			// Merge subsequent CDATA blocks
 			if ( is_array( $this->results[$index] ) )
 				array_push( $this->results[$index],
-					    array_pop( $this->results[$index] ) . $data);
+					    array_pop( $this->results[$index] ) . $data );
 			else
 				$this->results[$index] .= $data;
 		} else {

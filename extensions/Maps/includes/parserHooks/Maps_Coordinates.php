@@ -14,23 +14,21 @@
 class MapsCoordinates extends ParserHook {
 	
 	/**
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 */
 	public static function staticMagic( array &$magicWords, $langCode ) {
-		$className = __CLASS__;
-		$instance = new $className();
+		$instance = new self;
 		return $instance->magic( $magicWords, $langCode );
 	}
 	
 	/**
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 */	
-	public static function staticInit( Parser &$wgParser ) {
-		$className = __CLASS__;
-		$instance = new $className();
-		return $instance->init( $wgParser );
+	public static function staticInit( Parser &$parser ) {
+		$instance = new self;
+		return $instance->init( $parser );
 	}	
 	
 	/**
@@ -69,6 +67,7 @@ class MapsCoordinates extends ParserHook {
 				new CriterionIsLocation(),
 			)	
 		);
+		$params['location']->setMessage( 'maps-coordinates-par-location' );
 		
 		$params['format'] = new Parameter(
 			'format',
@@ -79,13 +78,15 @@ class MapsCoordinates extends ParserHook {
 				new CriterionInArray( $egMapsAvailableCoordNotations ),
 			)			
 		);	
-		$params['format']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );	
+		$params['format']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
+		$params['format']->setMessage( 'maps-coordinates-par-format' );
 		
 		$params['directional'] = new Parameter(
 			'directional',
 			Parameter::TYPE_BOOLEAN,
 			$egMapsCoordinateDirectional			
-		);		
+		);
+		$params['directional']->setMessage( 'maps-coordinates-par-directional' );
 		
 		return $params;
 	}
@@ -124,5 +125,14 @@ class MapsCoordinates extends ParserHook {
 		
 		return $output;		
 	}
+	
+	/**
+	 * @see ParserHook::getMessage()
+	 * 
+	 * @since 1.0
+	 */
+	public function getMessage() {
+		return 'maps-coordinates-description';
+	}	
 	
 }

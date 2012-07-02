@@ -54,23 +54,17 @@ class ImportFreeImages {
 	 * properly configured.
 	 */
 	protected function load() {
-		if ( !file_exists( $this->phpFlickrFile ) )
+		if ( !file_exists( $this->phpFlickrFile ) ) {
 			throw new MWException( 'phpFlickr can not be found at ' . $this->phpFlickrFile );
+		}
 
 		$this->suppressStrictWarnings();
 
 		require_once( $this->phpFlickrFile );
-		if ( !$this->apiKey )
+		if ( !$this->apiKey ) {
 			throw new MWException( 'No Flickr API key found' );
-		$this->flickr = new phpFlickr( $this->apiKey );
-
-		// wikia change start, @author Krzysztof Krzyżaniak (eloy)
-		global $wgHTTPProxy;
-		if( isset( $wgHTTPProxy ) ) {
-			list( $host, $port ) = explode( ':', $wgHTTPProxy );
-			$this->flickr->setProxy( $host, $port );
 		}
-		// wikia change end
+		$this->flickr = new phpFlickr( $this->apiKey );
 
 		$this->restoreStrictWarnings();
 	}
@@ -78,33 +72,34 @@ class ImportFreeImages {
 	/**
 	 * Search for Flickr photos
 	 *
-	 * @param $query string Search query
-	 * @param $page int Page number
+	 * @param $query String: search query
+	 * @param $page Integer: page number
 	 * @return array TODO
 	 */
 	public function searchPhotos( $query, $page ) {
 		$this->suppressStrictWarnings();
 		$result = $this->flickr->photos_search(
 			array(
-					$this->searchBy => $query,
-					'tag_mode' => 'any',
-					'page' => $page,
-					'per_page' => $this->resultsPerPage,
-					'license' => implode( ',', $this->licenses ),
-					'sort' => $this->sortBy,
+				$this->searchBy => $query,
+				'tag_mode' => 'any',
+				'page' => $page,
+				'per_page' => $this->resultsPerPage,
+				'license' => implode( ',', $this->licenses ),
+				'sort' => $this->sortBy,
 			)
 		);
 		$this->restoreStrictWarnings();
 
-		if ( !$result || !is_array( $result ) || !isset( $result['photo'] ) )
+		if ( !$result || !is_array( $result ) || !isset( $result['photo'] ) ) {
 			return false;
+		}
 		return $result;
 	}
 
 	/**
-	 * Get photo information for an id
+	 * Get photo information for an ID
 	 *
-	 * @param $id int id
+	 * @param $id Integer: ID
 	 * @return array
 	 */
 	public function getPhotoInfo( $id ) {
@@ -117,7 +112,7 @@ class ImportFreeImages {
 	/**
 	 * Get author information for an nsid
 	 *
-	 * @param $owner string NSID
+	 * @param $owner String: NSID
 	 * @return array TODO
 	 */
 	public function getOwnerInfo( $owner ) {

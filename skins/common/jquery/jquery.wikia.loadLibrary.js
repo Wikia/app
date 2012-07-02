@@ -44,48 +44,13 @@ $.loadLibrary = function(name, files, typeCheck, callback, failureFn) {
  * Libraries loader functions follows
  */
 
-// load YUI if not yet loaded
-$.loadYUI = (function() {
-	var queue = false;
-
-	return function(callback) {
-		// we need load YUI and use callbacks queue
-		if (typeof YAHOO === 'undefined') {
-			if (queue === false) {
-				queue = $.getResources([wgYUIPackageURL]);
-				$().log('loading on-demand', 'YUI');
-
-				queue.then(function() {
-					$().log('loaded', 'YUI');
-				});
-			}
-
-			// add to queue
-			if (typeof callback === 'function') {
-				queue.then(callback);
-			}
-
-			// return the same deferred object when loading YUI
-			return queue;
-		}
-		else {
-			$().log('already loaded', 'YUI');
-
-			// YUI is loaded
-			if (typeof callback === 'function') {
-				callback();
-			}
-
-			// promise is resolved
-			var dfd = new jQuery.Deferred();
-			dfd.resolve();
-
-			return dfd.promise();
-		}
-	};
-})();
+// load YUI using ResourceLoader
+$.loadYUI = function(callback) {
+    return mw.loader.use('wikia.yui').done(callback || $.noop);
+};
 
 // jquery.wikia.modal.js in now a part of AssetsManager package
+// @deprecated
 $.loadModalJS = function(callback) {
 	if (typeof callback === 'function') {
 		callback();
@@ -94,17 +59,14 @@ $.loadModalJS = function(callback) {
 
 // load various jQuery libraries (if not yet loaded)
 $.loadJQueryUI = function(callback) {
-	return $.loadLibrary('jQueryUI',
-		stylepath + '/common/jquery/jquery-ui-1.8.14.custom.js',
-		typeof jQuery.ui,
-		callback
-	);
+	return mw.loader.use('wikia.jquery.ui').done(callback || $.noop);
 };
 
+// autocomplete plugin - not to be confused autocomplete feature of jQuery UI
 $.loadJQueryAutocomplete = function(callback) {
 	return $.loadLibrary('jQuery Autocomplete',
 		stylepath + '/common/jquery/jquery.autocomplete.js',
-		typeof jQuery.fn.pluginAutocomplete,
+		typeof $.fn.pluginAutocomplete,
 		callback
 	);
 };
@@ -121,19 +83,11 @@ $.loadWikiaTooltip = function(callback) {
 };
 
 $.loadJQueryAIM = function(callback) {
-	return $.loadLibrary('jQuery AIM',
-		stylepath + '/common/jquery/jquery.aim.js',
-		typeof jQuery.AIM,
-		callback
-	);
+	return mw.loader.use('jquery.aim').done(callback || $.noop);
 };
 
 $.loadMustache = function(callback) {
-	return $.loadLibrary('Mustache',
-		stylepath + '/common/jquery/jquery.mustache.js',
-		typeof jQuery.mustache,
-		callback
-	);
+	return mw.loader.use('jquery.mustache').done(callback || $.noop);
 };
 
 $.loadGoogleMaps = function(callback) {

@@ -11,7 +11,6 @@ class FollowedPages extends SpecialPage {
 		global $wgRequest;
 		parent::__construct( 'Following', '', true);
 		$this->mAction = $wgRequest->getVal( 'action' );
-		wfLoadExtensionMessages( 'Follow' );
 	}
 
 	function execute( $par ) {

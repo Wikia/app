@@ -2,10 +2,9 @@
 /**
  * Internationalisation file for extension MathStatFunctions.
  *
- * @addtogroup Extensions
-*/
-
-require_once( dirname( __FILE__ ) . '/MathStatFunctions.i18n.magic.php' );
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -19,9 +18,10 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Jon Harald Søby
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'msfunc_desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'msfunc_desc' => '{{desc}}',
 	'msfunc_div_zero' => '{{Identical|Divizion by zero}}',
 );
 
@@ -33,6 +33,16 @@ $messages['af'] = array(
 	'msfunc_nan' => "Resulterende waarde is nie 'n getal nie",
 	'msfunc_inf' => 'Resulterende waarde is oneindig',
 	'msfunc_div_zero' => 'Deling deur nul',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'msfunc_desc' => 'Një koleksion të funksioneve matematikore dhe statistikore',
+	'msfunc_nan' => 'rezultojnë vlera nuk është një numër',
+	'msfunc_inf' => 'Vlera rezultojnë është pafundësi',
+	'msfunc_div_zero' => 'Ndarja nga zero',
 );
 
 /** Arabic (العربية)
@@ -65,7 +75,7 @@ $messages['ast'] = array(
 	'msfunc_div_zero' => 'Divisón por cero',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -164,10 +174,12 @@ $messages['dsb'] = array(
 );
 
 /** Greek (Ελληνικά)
+ * @author Egmontaz
  * @author Omnipaedista
  */
 $messages['el'] = array(
 	'msfunc_desc' => 'Μία συλλογή μαθηματικών και στατιστικών συναρτήσεων',
+	'msfunc_nan' => 'Η τιμή που προκύπτει δεν είναι αριθμός',
 	'msfunc_div_zero' => 'Διαίρεση διά του μηδενός',
 );
 
@@ -232,6 +244,13 @@ $messages['fr'] = array(
 	'msfunc_div_zero' => 'Division par zéro',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'msfunc_div_zero' => 'Division per zérô',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
@@ -286,8 +305,10 @@ $messages['hi'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dnik
+ * @author Herr Mlinka
  */
 $messages['hr'] = array(
+	'msfunc_desc' => 'Zbirka matematičkih i statističkih funkcija',
 	'msfunc_nan' => 'Vrijednost rezultata nije broj',
 	'msfunc_inf' => 'Vrijednost rezultata je beskonačna',
 	'msfunc_div_zero' => 'Dijeljenje nulom',
@@ -386,11 +407,13 @@ $messages['km'] = array(
  * @author Kwj2772
  */
 $messages['ko'] = array(
+	'msfunc_desc' => '수학 및 통계 함수 모음',
+	'msfunc_nan' => '결과값이 숫자가 아닙니다.',
 	'msfunc_inf' => '경과값이 무한대입니다.',
 	'msfunc_div_zero' => '0으로 나눔',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -438,6 +461,16 @@ $messages['mr'] = array(
 	'msfunc_div_zero' => 'शून्याने भागाकार',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'msfunc_desc' => 'Koleksi fungsi matematik dan statistik',
+	'msfunc_nan' => 'Nilai hasil tidak berupa nombor',
+	'msfunc_inf' => 'Nilai hasil adalah ketakterhinggaan',
+	'msfunc_div_zero' => 'Pembahagian dengan sifar',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -462,7 +495,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'msfunc_desc' => 'En samling av matematiske og statistiske funksjoner',
 	'msfunc_nan' => 'Resultatverdien er ikke et tall',
 	'msfunc_inf' => 'Resultatverdien er uendelig',
@@ -536,10 +569,10 @@ $messages['pt-br'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'msfunc_desc' => 'O colecţie de funcţii matematice şi statistice',
+	'msfunc_desc' => 'O colecție de funcții matematice și statistice',
 	'msfunc_nan' => 'Valoarea rezultată nu este număr',
 	'msfunc_inf' => 'Valoarea rezultată este infinit',
-	'msfunc_div_zero' => 'Împărţire la zero',
+	'msfunc_div_zero' => 'Împărțire la zero',
 );
 
 /** Tarandíne (Tarandíne)
@@ -573,7 +606,7 @@ $messages['sk'] = array(
 	'msfunc_div_zero' => 'Delenie nulou',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -583,7 +616,7 @@ $messages['sr-ec'] = array(
 	'msfunc_div_zero' => 'Дељиво са нулом',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -651,6 +684,16 @@ $messages['tr'] = array(
 	'msfunc_div_zero' => 'Sıfıra bölme',
 );
 
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'msfunc_desc' => 'Набір математичних і статистичних функцій',
+	'msfunc_nan' => 'Отримане значення не є числом',
+	'msfunc_inf' => 'Отримані значення дорівнює нескінченності',
+	'msfunc_div_zero' => 'Ділення на нуль',
+);
+
 /** Vèneto (Vèneto)
  * @author Candalua
  */
@@ -681,7 +724,7 @@ $messages['vo'] = array(
 	'msfunc_div_zero' => 'Müedam mü ser',
 );
 
-/** Yue (粵語) */
+/** Cantonese (粵語) */
 $messages['yue'] = array(
 	'msfunc_nan' => '結果唔係個數',
 	'msfunc_inf' => '結果數值係無限',
@@ -700,9 +743,10 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  */
 $messages['zh-hant'] = array(
-	'msfunc_desc' => '數學與統計功能的集合',
+	'msfunc_desc' => '數學與統計功能的整合',
 	'msfunc_nan' => '結果數值不是一個數字',
 	'msfunc_inf' => '結果數值是無限',
 	'msfunc_div_zero' => '除以零',

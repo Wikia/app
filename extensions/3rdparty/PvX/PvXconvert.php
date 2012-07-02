@@ -28,9 +28,6 @@ class SpecialPvXConvert extends SpecialPage{
 	 */
 	function SpecialPvXConvert()
 	{
-		global $wgMessageCache;
-		$wgMessageCache->addMessage('pvxconvert', 'PvXConvert');
-
 		SpecialPage::SpecialPage('PvXConvert');
 		$this->includable(true);
 	}

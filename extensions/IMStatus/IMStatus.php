@@ -42,8 +42,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'IM Status',
 	'version' => '1.3',
 	'author' => array( 'PatheticCockroach', 'various MediaWiki contributors' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:IM_Status',
-	'description' => 'Adds tags to show various IM online status (AIM, Google Talk, ICQ, MSN/Live Messenger, Skype, Xfire, Yahoo)',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:IM_Status',
 	'descriptionmsg' => 'imstatus-desc'
 );
 
@@ -54,17 +53,16 @@ $wgAimKey_api = "re1DoqFLUFKW4_YE";		// get a Web AIM key for this
 //*********** MANDATORY parameters - end
 
 //Tag creation
-$wgExtensionFunctions[] = "wfIMStatusPCR";
-function wfIMStatusPCR()
-{
-	global $wgParser;
-	$wgParser->setHook( "aim", "RenderAIM" );
-	$wgParser->setHook( "gtalk", "RenderGTalk" );
-	$wgParser->setHook( "icq", "RenderICQ" );
-	$wgParser->setHook( "livemessenger", "RenderLiveMessenger" );
-	$wgParser->setHook( "skype", "RenderSkype" );
-	$wgParser->setHook( "xfire", "RenderXfire" );
-	$wgParser->setHook( "yahoo", "RenderYahoo" );
+$wgHooks['ParserFirstCallInit'][] = 'wfIMStatusPCR';
+function wfIMStatusPCR( $parser ) {
+	$parser->setHook( 'aim', 'RenderAIM' );
+	$parser->setHook( 'gtalk', 'RenderGTalk' );
+	$parser->setHook( 'icq', 'RenderICQ' );
+	$parser->setHook( 'livemessenger', 'RenderLiveMessenger' );
+	$parser->setHook( 'skype', 'RenderSkype' );
+	$parser->setHook( 'xfire', 'RenderXfire' );
+	$parser->setHook( 'yahoo', 'RenderYahoo' );
+	return true;
 }
 
 // FIXME: below should be put in its own class file and use PARSERFIRSTCALLINIT to optimise resource usage
@@ -95,7 +93,7 @@ function RenderAIM( $input, $argv )
 	// prepares output
 	if(isset($argv['help']))
 	{
-		wfLoadExtensionMessages('IMStatus');
+
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;aim style="[style]"&gt;['. wfMsg("imstatus_your_name", "AIM") .']&lt;/aim&gt;</span>';
 		$output .= '<ul><li>style: '. wfMsg("imstatus_style") .'. '. wfMsg("imstatus_possible_val") .': "presence" '. wfMsg("imstatus_or") .' "api". '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'.';
@@ -162,7 +160,7 @@ function RenderGTalk( $input, $argv )
 	// prepares output
 	if(isset($argv['help']))
 	{
-		wfLoadExtensionMessages('IMStatus');
+
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;gtalk width="[width]" height="[height]"&gt;['. wfMsg("imstatus_gtalk_code") .']&lt;/gtalk&gt;</span>';
 		$output .= '<ul><li>width: '. wfMsg("imstatus_gtalk_width") .' '. wfMsg("imstatus_default") .':'.$width_default.'; '. wfMsg("imstatus_min") .':'.$width_min.'; '. wfMsg("imstatus_max") .':'.$width_max.'.</li>';
@@ -206,7 +204,7 @@ function RenderICQ( $input, $argv )
 	// prepares outupt
 	if(isset($argv['help']))
 	{
-		wfLoadExtensionMessages('IMStatus');
+
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;icq style="[style]"&gt;['. wfMsg("imstatus_icq_id") .']&lt;/icq&gt;</span>';
 		$output .= '<ul><li>style: '. wfMsg("imstatus_icq_style") .' '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'.</li></ul>';
@@ -241,7 +239,7 @@ function RenderLiveMessenger( $input, $argv )
 	// prepares output
 	if(isset($argv['help']))
 	{
-		wfLoadExtensionMessages('IMStatus');
+
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;livemessenger style="[style]"&gt;['. wfMsg("imstatus_live_code") .']&lt;/livemessenger&gt;</span>';
 		$output .= '<ul><li>style: "button", "icon" '. wfMsg("imstatus_or") .' "window". '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'.</li>';
@@ -301,7 +299,7 @@ function RenderSkype( $input, $argv )
 
 	// if style is an action style, action should match it!
 	if(in_array($style, array("add","chat","call","sendfile","userinfo","voicemail"))) $action = $style;
-	else if(isset($argv['action']))
+	elseif(isset($argv['action']))
 	{
 		$action = $argv['action'];
 		if (!in_array($action, array("add","chat","call","sendfile","userinfo","voicemail"))) $action = $action_default;
@@ -360,7 +358,7 @@ function RenderSkype( $input, $argv )
 	// prepares outupt
 	if(isset($argv['help']))
 	{
-		wfLoadExtensionMessages('IMStatus');
+
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;skype style="[style]" action="[action]"&gt;['. wfMsg("imstatus_your_name", "Skype") .']&lt;/skype&gt;</span>';
 		$output .= '<ul><li>style: '. wfMsg("imstatus_style") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'. '. wfMsg("imstatus_possible_val") .': "add","chat","call","sendfile","userinfo","voicemail","balloon","bigclassic","smallclassic","smallicon","mediumicon".</li>';
@@ -455,7 +453,7 @@ function RenderXfire( $input, $argv )
 	// prepares outupt
 	if(isset($argv['help']))
 	{
-		wfLoadExtensionMessages('IMStatus');
+
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;xfire size="[size]" style="[style]" action="[action]"&gt;['. wfMsg("imstatus_your_name", "Xfire") .']&lt;/xfire&gt;</span>';
 		$output .= '<ul><li>size: '. wfMsg("imstatus_xfire_size", "0", "4") .' '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$size_default.'.</li>';
@@ -544,7 +542,7 @@ function RenderYahoo( $input, $argv )
 	// prepares outupt
 	if(isset($argv['help']))
 	{
-		wfLoadExtensionMessages('IMStatus');
+
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;yahoo style="[style]" action="[action]"&gt;['. wfMsg("imstatus_your_name", "Yahoo") .']&lt;/xfire&gt;</span>';
 		$output .= '<ul><li>style: '. wfMsg("imstatus_yahoo_style", "0", "2", "3", "4") .' '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'.</li>';

@@ -13,6 +13,12 @@
  * @todo Needs documentation and conversion to new style message group.
  */
 class WikiExtensionFormatReader extends WikiFormatReader {
+
+	/**
+	 * @param $var
+	 * @return array
+	 * @throws MWException
+	 */
 	public function parseSections( $var ) {
 		if ( $this->filename === false ) {
 			return array( '', array() );
@@ -101,7 +107,7 @@ class WikiExtensionFormatWriter extends WikiFormatWriter {
 		$filename = $this->group->getMessageFile( '' );
 		$target = $targetDirectory . '/' . $filename;
 
-		wfMkdirParents( dirname( $target ) );
+		wfMkdirParents( dirname( $target ), null, __METHOD__ );
 		$handle = fopen( $target, 'wt' );
 		if ( $handle === false ) {
 			throw new MWException( "Unable to open target for writing" );

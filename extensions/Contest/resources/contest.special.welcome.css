@@ -1,0 +1,140 @@
+/**
+ * CSS for the Contest MediaWiki extension.
+ * @see https://www.mediawiki.org/wiki/Extension:Contest
+ * 
+ * @licence GNU GPL v3 or later
+ * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
+ */
+
+/* dialog type selection */
+#contest-challenges-list {
+	float: left;
+	width: 354px;
+	margin: 1.5em 0 0.5em 0;
+	margin-top: 1.5em;
+}
+#contest-challenges-list ul {
+	list-style: none;
+	list-style-image: none;
+	margin: 0;
+	padding: 0;
+}
+/* IGNORED BY IE6 */
+#contest-challenges-list ul > li {
+	display: inline-block;
+}
+.mw-codechallenge-box-outside {
+	list-style: none;
+	list-style-image: none;
+	position: relative;
+	display: block;
+	width: 354px;
+	padding: 0;
+	margin: 0 0 1em 0;
+	/* @embed */
+	background-image: url(images/box-sprite.png);
+	background-position: 0 0;
+	background-repeat: repeat-y;
+	cursor: pointer;
+}
+.mw-codechallenge-box-outside:hover,
+.mw-codechallenge-box-outside:focus {
+	background-position: -354px 0;
+}
+.mw-codechallenge-box-selected {
+	background-position: -708px 0 !important;
+}
+.mw-codechallenge-box-outside .mw-codechallenge-box-inside {
+	/* @embed */
+	background-image: url(images/box-bottom-sprite.png);
+	background-position: 0 bottom;
+	background-repeat: no-repeat;
+}
+.mw-codechallenge-box-outside:hover .mw-codechallenge-box-inside,
+.mw-codechallenge-box-outside:focus .mw-codechallenge-box-inside {
+	background-position: -354px bottom;
+}
+.mw-codechallenge-box-selected .mw-codechallenge-box-inside {
+	background-position: -708px bottom !important;
+}
+.mw-codechallenge-box-outside .mw-codechallenge-box-top {
+	height: 10px;
+	/* @embed */
+	background-image: url(images/box-top-sprite.png);
+	background-position: 0 top;
+	background-repeat: no-repeat;
+}
+.mw-codechallenge-box-outside:hover .mw-codechallenge-box-top,
+.mw-codechallenge-box-outside:focus .mw-codechallenge-box-top {
+	background-position: -354px top;
+}
+.mw-codechallenge-box-selected .mw-codechallenge-box-top {
+	background-position: -708px top !important;
+}
+.mw-codechallenge-box-text {
+	display: block;
+	margin-top: -10px;
+	padding: 1em 1.5em 1.25em 1.5em;
+	text-decoration: none;
+	outline: none;
+	/* @embed */
+	background-image: url(images/arrow.png);
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+.mw-codechallenge-box-outside:focus .mw-codechallenge-box-text,
+.mw-codechallenge-box-selected .mw-codechallenge-box-text {
+	/* @embed */
+	background-image: url(images/arrow-hover.png);
+	text-decoration:none;
+}
+.mw-codechallenge-box-title {
+	color: white;
+	margin: 0;
+	padding: 0 32px 0 0;
+}
+.mw-codechallenge-box-desc {
+	color: white;
+	margin: 0;
+	padding: 0 32px 0 0;
+}
+.mw-codechallenge-popup {
+	display: none;
+	position: absolute;
+	left: 354px;
+	top: 50%;
+	margin-top: -22px;
+	width: 354px;
+	padding: 1.25em;
+	border: solid 3px #3263b6;
+	-webkit-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.5);
+	box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.5);
+	background-color: white;
+	cursor: default;
+}
+.mw-codechallenge-popup-callout {
+	position: absolute;
+	left: -16px;
+	top: 3px;
+	width: 16px;
+	height: 32px;
+	/* @embed */
+	background-image: url(images/callout.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+}
+.mw-codechallenge-popup-buttons {
+	margin-top: 1em;
+	margin-bottom: -0.5em;
+	text-align: right;
+}
+
+
+
+
+
+
+
+
+

@@ -9,8 +9,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'FormatChanges',
 	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
-	'description'    => 'Reformats the [[Special:RecentChanges|recent changes]]',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Format_Changes',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Uniwiki_Format_Changes',
 	'descriptionmsg' => 'formatchanges-desc',
 );
 

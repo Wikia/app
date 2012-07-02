@@ -34,7 +34,8 @@ class PerformanceMetrics extends WikiaObject {
 	 * @return mixed report
 	 */
 	public function getReport($url, Array $options = array()) {
-		$instances = $this->getProviders( !empty($options['providers']) ? $options['providers'] : $this->wg->PerformanceMetricsProviders );
+		$providers = !empty($options['providers']) ? $options['providers'] : $this->wg->PerformanceMetricsProviders;
+		$instances = $this->getProviders($providers);
 		$metrics = array();
 
 		// apply options

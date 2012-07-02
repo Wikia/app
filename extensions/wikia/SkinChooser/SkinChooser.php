@@ -25,4 +25,4 @@ $wgExtensionMessagesFiles['SkinChooser'] = $dir . 'SkinChooser.i18n.php';
 
 // register hooks
 $wgHooks['GetPreferences'][] = 'SkinChooser::onGetPreferences';
-$wgHooks['AlternateGetSkin'][] = 'SkinChooser::onGetSkin';
+$wgHooks['RequestContextCreateSkin'][] = 'SkinChooser::onGetSkin';

@@ -1,29 +1,48 @@
 /**
-* Stylesheet for Babel extension.
-*
-* This should be added to your MediaWiki:Common.css page when installing this
-* extension and should not be modified.  You may modify the CSS code on the
-* MediaWiki:Common.css page to adjust colours etc.
-*
-* @addtogroup Extensions
-*/
+ * Stylesheet for Babel extension.
+ *
+ * You can override the CSS code on the MediaWiki:Common.css page
+ * on your wiki to adjust colours etc.
+ *
+ * @file
+ * @ingroup Extensions
+ */
 
 /* Babel wrapper layout. */
-table.mw-babel-wrapper {
+/* @noflip */table.mw-babel-wrapper {
 	width:        238px;
 	float:        right;
 	clear:        right;
 	margin:       1em;
+	background-color: white;
 	border-style: solid;
 	border-width: 1px;
 	border-color: #99B3FF;
 }
 
-/* Babel box layout. */
-div.mw-babel-box {
+/* @noflip */.mw-content-ltr table.mw-babel-wrapper {
+	float: right;
+	clear: right;
+}
+/* @noflip */.mw-content-rtl table.mw-babel-wrapper {
+	float: left;
+	clear: left;
+}
+
+/* Babel box layout */
+/* @noflip */div.mw-babel-box {
 	float:  left;
 	clear:  left;
 	margin: 1px;
+}
+
+/* @noflip */.mw-content-ltr table.mw-babel-box {
+	float: left;
+	clear: left;
+}
+/* @noflip */.mw-content-rtl table.mw-babel-box {
+	float: right;
+	clear: right;
 }
 
 div.mw-babel-box table {
@@ -46,15 +65,15 @@ div.mw-babel-box table td {
 
 /* Babel box colours. */
 div.mw-babel-box-0 {
-	border: solid #B7B7B7 1px;
+	border: solid #FFBBBB 1px;
 }
 
 div.mw-babel-box-1 {
-	border: solid #C0C8FF 1px;
+	border: solid #E0C0E0 1px;
 }
 
 div.mw-babel-box-2 {
-	border: solid #77E0E8 1px;
+	border: solid #BCB9EF 1px;
 }
 
 div.mw-babel-box-3 {
@@ -62,11 +81,11 @@ div.mw-babel-box-3 {
 }
 
 div.mw-babel-box-4 {
-	border: solid #CCCC00 1px;
+	border: solid #77E0E8 1px;
 }
 
 div.mw-babel-box-5 {
-	border: solid #F99C99 1px;
+	border: solid #CCCC00 1px;
 }
 
 div.mw-babel-box-N {
@@ -74,15 +93,15 @@ div.mw-babel-box-N {
 }
 
 div.mw-babel-box-0 table th {
-	background-color: #B7B7B7;
+	background-color: #FFBBBB;
 }
 
 div.mw-babel-box-1 table th {
-	background-color: #C0C8FF;
+	background-color: #E0C0E0;
 }
 
 div.mw-babel-box-2 table th {
-	background-color: #77E0E8;
+	background-color: #BCB9EF;
 }
 
 div.mw-babel-box-3 table th {
@@ -90,11 +109,11 @@ div.mw-babel-box-3 table th {
 }
 
 div.mw-babel-box-4 table th {
-	background-color: #CCCC00;
+	background-color: #77E0E8;
 }
 
 div.mw-babel-box-5 table th {
-	background-color: #F99C99;
+	background-color: #CCCC00;
 }
 
 div.mw-babel-box-N table th{
@@ -102,15 +121,15 @@ div.mw-babel-box-N table th{
 }
 
 div.mw-babel-box-0 table {
-	background-color: #E8E8E8;
+	background-color: #FFEEEE;
 }
 
 div.mw-babel-box-1 table {
-	background-color: #F0F8FF;
+	background-color: #F3E0F3;
 }
 
 div.mw-babel-box-2 table {
-	background-color: #D0F8FF;
+	background-color: #E9E5F9;
 }
 
 div.mw-babel-box-3 table {
@@ -118,17 +137,23 @@ div.mw-babel-box-3 table {
 }
 
 div.mw-babel-box-4 table {
-	background-color: #FFFF99;
+	background-color: #D0F8FF;
 }
 
 div.mw-babel-box-5 table {
-	background-color: #F9CBC9;
+	background-color: #FFFF99;
 }
 
 div.mw-babel-box-N table {
 	background-color: #C5FCDC;
 }
 
-.babel-box td.babel-footer {
+/* header and footer */
+.mw.babel-box th.mw-babel-header {
 	text-align: center;
+	font-weight: bold;
+}
+.mw.babel-box th.mw-babel-footer {
+	text-align: center;
+	font-weight: normal;
 }

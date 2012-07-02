@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for NSFileRepo extension.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -29,7 +30,14 @@ $messages['ar'] = array(
 	'nsfilerepo-desc' => 'يوفر خصائص معنمدة على النطاق للملفات المرفوعة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'nsfilerepo-desc' => 'Proporciona carauterístiques basaes nel espaciu de nomes pa los ficheros xubíos',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -48,6 +56,13 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'nsfilerepo-desc' => 'Omogućuje osobine zasnovane na imenskim prostorima za postavljene datoteke',
+);
+
+/** Catalan (Català)
+ * @author Solde
+ */
+$messages['ca'] = array(
+	'nsfilerepo-desc' => "Proporcionar les característiques basades en l'espai de noms per carregar fitxers",
 );
 
 /** German (Deutsch)
@@ -76,6 +91,13 @@ $messages['el'] = array(
  */
 $messages['es'] = array(
 	'nsfilerepo-desc' => 'Proveer características basadas en espacio de nombre a archivos cargados',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'nsfilerepo-desc' => 'Tarjoaa nimiavaruuden, joka perustuu lähetetyn tiedoston ominaisuuksiin.',
 );
 
 /** French (Français)
@@ -131,7 +153,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'nsfilerepo-desc' => 'Provide functiones a base de spatios de nomines pro files cargate',
+	'nsfilerepo-desc' => 'Provide functiones a base de spatio de nomines pro files incargate',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -155,7 +177,7 @@ $messages['ja'] = array(
 	'nsfilerepo-desc' => 'アップロードされたファイルに対する名前空間ベースの機能を提供する',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -173,7 +195,21 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'nsfilerepo-desc' => 'Дава елементи базирани на именскиот простор на подигнати податотеки',
+	'nsfilerepo-desc' => 'Дава својства за работа со подигнати податотеки звисно од именскиот простор',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'nsfilerepo-desc' => 'അപ്‌ലോഡ് ചെയ്യുന്ന പ്രമാണങ്ങൾക്ക് നാമമേഖലയനുസരിച്ച് വിശേഷഗുണങ്ങൾ നൽകുക',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'nsfilerepo-desc' => 'Memberikan ciri-ciri berasaskan ruang nama kepada fail-fail yang dimuat naik',
 );
 
 /** Dutch (Nederlands)
@@ -186,7 +222,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'nsfilerepo-desc' => 'Gir navneromsbaserte funksjoner til opplastede filer',
 );
 
@@ -252,6 +288,13 @@ $messages['sk'] = array(
  */
 $messages['sv'] = array(
 	'nsfilerepo-desc' => 'Ge namnrymdbaserade funktioner till uppladdade filer',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'nsfilerepo-desc' => 'Ibigay ang mga katangiang-kasangkapan na nakabatay sa puwang na pampangalan upang makapagkarga ng mga talaksan',
 );
 
 /** Turkish (Türkçe)

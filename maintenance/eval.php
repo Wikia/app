@@ -12,16 +12,29 @@
  * To get decent line editing behavior, you should compile PHP with support
  * for GNU readline (pass --with-readline to configure).
  *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @file
  * @ingroup Maintenance
  */
 
-$wgUseNormalUser = (bool)getenv('MW_WIKIUSER');
-
 $optionsWithArgs = array( 'd' );
 
 /** */
-require_once( "commandLine.inc" );
+require_once( dirname( __FILE__ ) . "/commandLine.inc" );
 
 if ( isset( $options['d'] ) ) {
 	$d = $options['d'];
@@ -30,8 +43,11 @@ if ( isset( $options['d'] ) ) {
 	}
 	if ( $d > 1 ) {
 		$lb = wfGetLB();
-		foreach ( $lb->mServers as $i => $server ) {
-			$lb->mServers[$i]['flags'] |= DBO_DEBUG;
+		$serverCount = $lb->getServerCount(); 
+		for ( $i = 0; $i < $serverCount; $i++ ) {
+			$server = $lb->getServerInfo( $i );
+			$server['flags'] |= DBO_DEBUG;
+			$lb->setServerInfo( $i, $server );
 		}
 	}
 	if ( $d > 2 ) {
@@ -39,28 +55,24 @@ if ( isset( $options['d'] ) ) {
 	}
 }
 
-if ( function_exists( 'readline_add_history' ) 
-	&& function_exists( 'posix_isatty' ) && posix_isatty( 0 /*STDIN*/ ) ) 
-{
-	$useReadline = true;
-} else {
-	$useReadline = false;
-}
+$useReadline = function_exists( 'readline_add_history' )
+			&& Maintenance::posix_isatty( 0 /*STDIN*/ );
 
 if ( $useReadline ) {
-	$historyFile = "{$_ENV['HOME']}/.mweval_history";
+	$historyFile = isset( $_ENV['HOME'] ) ?
+		"{$_ENV['HOME']}/.mweval_history" : "$IP/maintenance/.mweval_history";
 	readline_read_history( $historyFile );
 }
 
-while ( ( $line = readconsole( '> ' ) ) !== false ) {
+while ( ( $line = Maintenance::readconsole() ) !== false ) {
 	if ( $useReadline ) {
 		readline_add_history( $line );
 		readline_write_history( $historyFile );
 	}
 	$val = eval( $line . ";" );
-	if( is_null( $val ) ) {
+	if ( wfIsHipHop() || is_null( $val ) ) {
 		echo "\n";
-	} elseif( is_string( $val ) || is_numeric( $val ) ) {
+	} elseif ( is_string( $val ) || is_numeric( $val ) ) {
 		echo "$val\n";
 	} else {
 		var_dump( $val );

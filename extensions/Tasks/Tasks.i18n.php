@@ -92,9 +92,11 @@ $messages['en'] = array(
  * @author Fryed-peach
  * @author Malafaya
  * @author Purodha
+ * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'tasks_desc' => 'Short description of the Tasks extension, shown on [[Special:Version]].',
+	'tasks_desc' => '{{desc}}',
 	'tasks_form_comment' => '{{Identical|Comment}}',
 	'tasks_existing_table_header' => "{{doc-important}}
 Don't change '|' character.",
@@ -105,6 +107,8 @@ Don't change '|' character.",
 	'tasks_sidebar_title' => 'Tasks that are open.',
 	'tasks_here' => 'Used as a parameter in {{msg-mw|Tasks returnto}}',
 	'tasks_returnto' => '$1 is {{msg-mw|tasks_here}}',
+	'tasks_help_page_link' => '{{optional}}',
+	'tasks_more_like_it' => '{{Identical|More}}',
 	'tasks_task_types' => 'This is a list to select from. Do not alter numbers and interpunctuation. Do not translate the lowercase markers between <code>:</code> and <code>:</code> and do translate the words between <code>:</code> and <code>|</code> only.',
 	'tasks_link_your_assignments' => 'Used as a parameter in {{msg-mw|Tasks see your assignments}}',
 	'tasks_see_your_assignments' => "*'''$1''': number of open assignments
@@ -112,31 +116,59 @@ Don't change '|' character.",
 	'tasks_table_header_page' => '{{Identical|Page}}',
 	'tasks_search_form_title' => '{{Identical|Search}}',
 	'tasks_search_status' => '{{Identical|Status}}',
+	'tasks_search_results' => '{{Identical|Search results}}',
 	'tasks_previous' => '{{Identical|Previous}}',
 	'tasks_next' => '{{Identical|Next}}',
-	'tasks_status_open' => 'This is an adjective.',
+	'tasks_status_open' => 'This is an adjective.
+{{Identical|Open}}',
+	'tasks_status_closed' => '{{Identical|Closed}}',
 );
 
-/** Laz (Laz)
- * @author Bombola
+/** ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ (ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ)
+ * @author MooRePrabu
  */
-$messages['lzz'] = array(
-	'tasks_table_header_page' => 'Sayfe',
-	'tasks_search_form_title' => 'Mgori',
+$messages['saz'] = array(
+	'tasks_more_like_it' => 'ꢂꢖ꣄ꢔꢸꢥ꣄',
+);
+
+/** Abkhazian (Аҧсуа)
+ * @author Temuri rajavi
+ */
+$messages['ab'] = array(
+	'tasks_search_form_title' => 'Аҧшаара',
 );
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
 $messages['af'] = array(
+	'tasks' => 'Take',
+	'tasks_tab' => 'Take',
+	'tasks_title' => 'Take vir "$1"',
+	'tasks_form_new' => "Skep 'n nuwe taak",
 	'tasks_form_comment' => 'Opmerking',
 	'tasks_noone' => 'niemand',
 	'tasks_delete' => 'Skrap',
+	'tasks_here' => 'hier',
+	'tasks_more_like_it' => 'meer',
 	'tasks_table_header_page' => 'Bladsy',
 	'tasks_search_form_title' => 'Soek',
 	'tasks_search_status' => 'Status',
 	'tasks_previous' => 'Vorige',
 	'tasks_next' => 'Volgende',
+	'tasks_sort' => 'Sorteer',
+	'tasks_status_closed' => 'Gesluit',
+	'tasks_action_open' => 'Taak "$1" oopgemaak.',
+	'tasks_action_assigned' => 'Taak "$1" toegeken.',
+	'tasks_action_closed' => 'Taak "$1" gesluit.',
+	'tasks_logentry' => 'Vir "[[$1]]"',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'tasks_error1' => 'Task nuk u krijua: ka tashmë një detyrë të tillë!',
 );
 
 /** Amharic (አማርኛ)
@@ -152,7 +184,9 @@ $messages['am'] = array(
  * @author Juanpabl
  */
 $messages['an'] = array(
+	'tasks_noone' => 'dengún',
 	'tasks_delete' => 'Borrar',
+	'tasks_table_header_page' => 'Pachina',
 );
 
 /** Arabic (العربية)
@@ -179,7 +213,7 @@ $messages['ar'] = array(
 	'tasks_unassign_me' => 'أزل مهمتي',
 	'tasks_close' => 'أغلق المهمة',
 	'tasks_wontfix' => 'لن يصلح',
-	'tasks_delete' => 'أحذف',
+	'tasks_delete' => 'احذف',
 	'tasks_no_task_delete_title' => 'غير مسموح',
 	'tasks_no_task_delete_texe' => 'أنت غير مسموح لك بحذف مهمة. فقط الإداريون يمكنهم عمل هذا.',
 	'tasks_action_delete' => 'المهمة قد حذفت',
@@ -218,7 +252,7 @@ $messages['ar'] = array(
 	'tasks_next' => 'التالي',
 	'tasks_sort' => 'رتب',
 	'tasks_ascending' => 'الأقدم أولا',
-	'tasks_status_open' => 'أفتح',
+	'tasks_status_open' => 'مفتوح',
 	'tasks_status_assigned' => 'موكولة',
 	'tasks_status_closed' => 'مغلق',
 	'tasks_status_wontfix' => 'لن تصلح',
@@ -310,7 +344,18 @@ $messages['arz'] = array(
 	'tasks-pref-showtaskcomments' => 'ضمن صفحة تعليقات المهمة.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'tasks_form_comment' => 'Şərh',
+	'tasks_delete' => 'Sil',
+	'tasks_table_header_page' => 'Səhifə',
+	'tasks_search_form_title' => 'Axtar',
+	'tasks_search_status' => 'Status',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Red Winged Duck
@@ -431,21 +476,22 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'tasks' => 'Trevelloù',
-	'tasks_desc' => "Un astenn evit merañ an trevelloù d'ober",
+	'tasks_desc' => 'Un astenn da verañ an trevelloù da vezañ kaset da benn',
 	'tasks_tab' => 'Trevelloù',
 	'tasks_title' => 'Trevelloù evit "$1"',
-	'tasks_form_new' => 'Krouiñ un tervell nevez',
+	'tasks_form_new' => 'Krouiñ un trevell nevez',
 	'tasks_form_comment' => 'Addispleg',
-	'tasks_error1' => "N'eo ket bet krouet an trevell : unan eus an doare-se a zo dija !",
+	'tasks_error1' => "N'eo ket bet krouet an trevell : krouet e oa bet dija !",
 	'tasks_ok1' => 'Krouet eo bet an trevell nevez !',
 	'tasks_create_header' => 'Krouiñ un trevell nevez',
 	'tasks_existing_header' => 'Trevelloù zo anezho dija',
+	'tasks_existing_table_header' => 'Labour|Deiziadoù|Evezhiadenn orin|Deverkadur/Oberoù/Pajenn',
 	'tasks_noone' => 'hini ebet',
-	'tasks_assign_me' => 'Va deverkañ me va unan',
+	'tasks_assign_me' => 'E verkañ evidon ma-unan',
 	'tasks_assign_to' => 'Deverkañ da',
-	'tasks_unassign_me' => 'Tennañ va deverkadenn',
+	'tasks_unassign_me' => 'Tennañ ma deverkadenn',
 	'tasks_close' => 'Serriñ an trevell',
-	'tasks_wontfix' => 'Ne vo ket kempenet',
+	'tasks_wontfix' => 'Ne vo ket reizhet',
 	'tasks_delete' => 'Dilemel',
 	'tasks_no_task_delete_title' => 'Difennet',
 	'tasks_no_task_delete_texe' => "N'oc'h ket aotreet evit diverkañ ur trevell. N'eus nemet ar verourien a c'hell en ober.",
@@ -456,12 +502,12 @@ $messages['br'] = array(
 	'tasks_created_by' => 'Krouet gant $1',
 	'tasks_discussion_page_link' => 'Pajenn gaozeal an trevell',
 	'tasks_closedby' => 'Serret gant $1',
-	'tasks_assigned_myself_log' => 'Deverkañ emgefre evit an trevell "$1"',
+	'tasks_assigned_myself_log' => 'Emdeverkañ evit an trevell "$1"',
 	'tasks_discussion_page_for' => 'Evit ar bajenn "$1" eo an trevell-mañ. $2 eo roll an holl gefridioù evit ar bajenn-mañ.',
 	'tasks_sidebar_title' => 'Trevelloù digor',
 	'tasks_here' => 'amañ',
 	'tasks_returnto' => "Adkaset e viot bremañ. Ma n'oc'h ket bet adkaset a-benn un nebeut eilennoù, klikit war $1.",
-	'tasks_see_page_tasks' => '(trevelloù ar bajenn)',
+	'tasks_see_page_tasks' => '(trevelloù ar bajenn-mañ)',
 	'tasks_task_is_assigned' => '(deverket)',
 	'tasks_plain_text_only' => '(testenn blaen, 256 arouezenn hepken)',
 	'tasks_help_page' => 'Trevelloù',
@@ -469,17 +515,17 @@ $messages['br'] = array(
 	'tasks_task_types' => '1:cleanup:Netaat|2:wikify:Wikify|3:rewrite:Adskrivañ|4:delete:Dilemel|5:create:Krouiñ|6:write:Skrivañ|7:check:Gwiriañ',
 	'tasks_event_on_creation' => 'gwiriañ',
 	'tasks_event_on_creation_anon' => 'gwiriañ',
-	'tasks_on_creation_comment' => 'Trevell emgefre, krouet pa grouer ar bajenn',
+	'tasks_on_creation_comment' => 'Trevell emgefre, ganet pa vez krouet ar bajenn',
 	'tasks_link_your_assignments' => 'deverkadennoù digor',
-	'tasks_see_your_assignments' => '$1 deverkadenn{{PLURAL:$1||}} digor o peus er mare-mañ. Gwellit ho $2.',
-	'tasks_my_assignments' => 'Ho {{PLURAL:$1|deverkadenn|deverkadennoù}} a-vremañ',
+	'tasks_see_your_assignments' => "$1 {{PLURAL:$1|deverkadenn|deverkadenn}} digor hoc'h eus er mare-mañ. Gwelit ho $2.",
+	'tasks_my_assignments' => 'Ho {{PLURAL:$1|teverkadenn|teverkadennoù}} a-vremañ',
 	'tasks_table_header_page' => 'Pajenn',
-	'tasks_you_have_no_assignments' => "N'ho peus deverkadenn digor ebet",
+	'tasks_you_have_no_assignments' => "N'hoc'h eus deverkadenn digor ebet",
 	'tasks_search_form_title' => 'Klask',
 	'tasks_search_tasks' => 'Trevelloù',
 	'tasks_search_status' => 'Statud',
-	'tasks_search_no_tasks_chosen_note' => "(Dibab ebet, klask war-lec'h an holl doareoù aus an trevelloù.)",
-	'tasks_search_results' => "Disoc'h ar c'hlask",
+	'tasks_search_no_tasks_chosen_note' => '(Ma ne ziuzer netra amañ e vo klasket evit an holl seurtoù trevelloù.)',
+	'tasks_search_results' => "Disoc'hoù enklask",
 	'tasks_previous' => 'Kent',
 	'tasks_next' => "War-lerc'h",
 	'tasks_sort' => 'Urzhiañ',
@@ -487,16 +533,16 @@ $messages['br'] = array(
 	'tasks_status_open' => 'Digor',
 	'tasks_status_assigned' => 'Deverket',
 	'tasks_status_closed' => 'Serr',
-	'tasks_status_wontfix' => 'Ne vo ket graet',
+	'tasks_status_wontfix' => 'Ne vo ket reizhet',
 	'tasks_action_open' => 'Trevell "$1" digor.',
 	'tasks_action_assigned' => 'Deverket eo an trevell « $1 ».',
 	'tasks_action_closed' => 'Trevell "$1" serr.',
-	'tasks_action_wontfix' => 'Lavarit ne vo ket graet war-dro an trevell "$1".',
-	'tasks_sign_delete' => '<b>Kinniget eo bet e vefe diverket ar bajenn-mañ !</b>',
+	'tasks_action_wontfix' => 'Merkañ ne vo ket graet war-dro an trevell "$1".',
+	'tasks_sign_delete' => '<b>Kinniget eo bet diverkañ ar bajenn-mañ !</b>',
 	'tasks_logpage' => 'Marilh an trevelloù',
-	'tasks_logpagetext' => 'Istor kemmoù en trevelloù eo',
+	'tasks_logpagetext' => "Marilh istor ar c'hemmoù degaset en trevelloù eo hemañ",
 	'tasks_logentry' => 'Evit « [[$1]] »',
-	'tasks-pref-showtaskcomments' => 'Gwelet pajenn ar gemenadennoù diwar-benn an trevelloù.',
+	'tasks-pref-showtaskcomments' => 'Treuzkludañ pajenn an evezhiadennoù diwar-benn an trevelloù.',
 );
 
 /** Bosnian (Bosanski)
@@ -574,6 +620,7 @@ $messages['bs'] = array(
 );
 
 /** Catalan (Català)
+ * @author BroOk
  * @author Paucabot
  * @author Solde
  */
@@ -593,6 +640,7 @@ $messages['ca'] = array(
 	'tasks_no_task_delete_title' => 'No permès',
 	'tasks_action_delete' => 'Una tasca ha estat eliminada.',
 	'tasks_task_was_deleted' => "S'ha eliminat satisfactòriament la tasca.",
+	'tasks_created_by' => 'Creat per $1',
 	'tasks_here' => 'aquí',
 	'tasks_plain_text_only' => '(text pla, només 256 caràcters)',
 	'tasks_help_page' => 'Tasques',
@@ -609,16 +657,26 @@ $messages['ca'] = array(
 	'tasks_status_closed' => 'Tancat',
 );
 
-/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'tasks_search_form_title' => 'Лаха',
+);
+
+/** Sorani (کوردی)
  * @author Marmzok
  */
-$messages['ckb-arab'] = array(
+$messages['ckb'] = array(
+	'tasks_delete' => 'سڕینەوە',
+	'tasks_search_form_title' => 'گەڕان',
 	'tasks_previous' => 'پێشوو',
 	'tasks_next' => 'دواتر',
 );
 
 /** Czech (Česky)
  * @author Matěj Grabovský
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'tasks' => 'Úkoly',
@@ -662,8 +720,9 @@ $messages['cs'] = array(
 	'tasks_event_on_creation' => 'zkontrolovat',
 	'tasks_event_on_creation_anon' => 'zkontrolovat',
 	'tasks_on_creation_comment' => 'Automatický úkol, vytvořený při vytvoření stránky',
-	'tasks_link_your_assignments' => 'otevřít přidělené úkoly',
-	'tasks_see_your_assignments' => 'Momentálně máte {{PLURAL:$1|otevřený $1 přidělený úkol|otevřeny $1 přidělené úkoly|otevřeno $1 přidělených úkolů}}. Podívejte se na váš $2.',
+	'tasks_link_your_assignments' => 'otevřené úkoly',
+	'tasks_see_your_assignments' => 'Momentálně máte {{PLURAL:$1|otevřený $1 přidělený úkol|otevřeny $1 přidělené úkoly|otevřeno $1 přidělených úkolů}}. Podívejte se na své $2.',
+	'tasks_my_assignments' => 'Vaše aktuální {{PLURAL:$1|přidělená úloha|přidělené úlohy}}',
 	'tasks_table_header_page' => 'Stránka',
 	'tasks_you_have_no_assignments' => 'Nemáte otevřeny žádné přidělené úkoly',
 	'tasks_search_form_title' => 'Hledat',
@@ -772,7 +831,7 @@ Falls du nicht in ein paar Sekunden weitergeleitet wirst, klicke $1.',
 	'tasks-pref-showtaskcomments' => 'Aufgaben-Diskussionsseite einbinden.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Umherirrender
  */
 $messages['de-formal'] = array(
@@ -856,6 +915,13 @@ $messages['dsb'] = array(
 	'tasks_logpagetext' => 'To jo protokol změnow k nadawkam',
 	'tasks_logentry' => 'Za "[[$1]]"',
 	'tasks-pref-showtaskcomments' => 'Bok za nadawkowe komentary zapśěgnuś',
+);
+
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'tasks_delete' => 'Tutui',
+	'tasks_table_header_page' => 'Axa',
+	'tasks_search_form_title' => 'Dii',
 );
 
 /** Greek (Ελληνικά)
@@ -998,6 +1064,8 @@ $messages['eo'] = array(
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Imre
+ * @author Mor
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'tasks' => 'Tareas',
@@ -1014,7 +1082,7 @@ $messages['es'] = array(
 	'tasks_noone' => 'ninguno',
 	'tasks_assign_me' => 'Asignarme a mi mismo',
 	'tasks_assign_to' => 'Asignar a',
-	'tasks_unassign_me' => 'Remover mi asignamiento',
+	'tasks_unassign_me' => 'Quitar mi asignación',
 	'tasks_close' => 'Cerrar tarea',
 	'tasks_wontfix' => 'No se arreglará',
 	'tasks_delete' => 'Borrar',
@@ -1048,7 +1116,7 @@ $messages['es'] = array(
 	'tasks_you_have_no_assignments' => 'No tiene asignamientos abiertos',
 	'tasks_search_form_title' => 'Buscar',
 	'tasks_search_tasks' => 'Tareas',
-	'tasks_search_status' => 'Estatus',
+	'tasks_search_status' => 'Estado',
 	'tasks_search_no_tasks_chosen_note' => '(Sin selección aquí se buscará todo tipo de tareas.)',
 	'tasks_search_results' => 'Resultados de la búsqueda',
 	'tasks_previous' => 'Anterior',
@@ -1125,14 +1193,22 @@ $messages['eu'] = array(
 	'tasks_table_header_page' => 'Orri',
 	'tasks_search_form_title' => 'Bilatu',
 	'tasks_search_tasks' => 'Eginkizunak',
-	'tasks_search_status' => 'Estatusa',
+	'tasks_search_status' => 'Egoera',
 	'tasks_search_results' => 'Bilaketaren emaitzak',
 	'tasks_previous' => 'Aurrekoa',
 	'tasks_next' => 'Hurrengoa',
 	'tasks_sort' => 'Ordenatu',
 	'tasks_ascending' => 'Zaharrenak lehenago',
 	'tasks_status_open' => 'Ireki',
+	'tasks_status_assigned' => 'Esleitua',
 	'tasks_status_closed' => 'Itxita',
+);
+
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'tasks_status_open' => 'گشودن',
 );
 
 /** Finnish (Suomi)
@@ -1212,6 +1288,7 @@ Jos sinua ei ole ohjattu eteenpäin muutaman sekunnin kuluessa, napsauta $1.',
  * @author Grondin
  * @author IAlex
  * @author Korrigan
+ * @author Od1n
  * @author Verdy p
  */
 $messages['fr'] = array(
@@ -1219,7 +1296,7 @@ $messages['fr'] = array(
 	'tasks_desc' => 'Une extension servant à gérer les tâches à faire',
 	'tasks_tab' => 'Tâches',
 	'tasks_title' => 'Tâches pour « $1 »',
-	'tasks_form_new' => 'Créer tâche',
+	'tasks_form_new' => 'Créer une nouvelle tâche',
 	'tasks_form_comment' => 'Commentaire',
 	'tasks_error1' => 'Tâche non créée : il existe déjà une tâche de ce type !',
 	'tasks_ok1' => 'Nouvelle tâche créée !',
@@ -1265,7 +1342,7 @@ $messages['fr'] = array(
 	'tasks_search_tasks' => 'Tâches',
 	'tasks_search_status' => 'Statut',
 	'tasks_search_no_tasks_chosen_note' => '(Aucune sélection, recherche de tous types de tâches.)',
-	'tasks_search_results' => 'Résultats de recherche',
+	'tasks_search_results' => 'Résultats de la recherche',
 	'tasks_previous' => 'Précédent',
 	'tasks_next' => 'Suivant',
 	'tasks_sort' => 'Trier',
@@ -1291,27 +1368,85 @@ $messages['fr'] = array(
  */
 $messages['frp'] = array(
 	'tasks' => 'Travâlys',
+	'tasks_desc' => 'Una èxtension que sèrvét a administrar los travâlys a fâre.',
 	'tasks_tab' => 'Travâlys',
 	'tasks_title' => 'Travâlys por « $1 »',
 	'tasks_form_new' => 'Fâre un travâly novél',
 	'tasks_form_comment' => 'Comentèro',
+	'tasks_error1' => 'Travâly pas fêt : ègziste ja un travâly de cél tipo !',
+	'tasks_ok1' => 'Travâly novél fêt !',
+	'tasks_create_header' => 'Fâre un travâly novél',
+	'tasks_existing_header' => 'Travâlys ègzistents',
+	'tasks_existing_table_header' => 'Travâly|Dâtes|Premiér comentèro|Assignacion / Accions / Pâge',
+	'tasks_noone' => 'nion',
+	'tasks_assign_me' => 'Mè l’assignér',
+	'tasks_assign_to' => 'Assignér a',
+	'tasks_unassign_me' => 'Mè dèsassignér',
+	'tasks_close' => 'Cllôre lo travâly',
+	'tasks_wontfix' => 'Serat pas rèparâ',
 	'tasks_delete' => 'Suprimar',
+	'tasks_no_task_delete_title' => 'Pas ôtorisâ',
+	'tasks_no_task_delete_texe' => 'Vos avéd pas lo drêt de suprimar un travâly. Solament los administrators lo pôvont fâre.',
+	'tasks_action_delete' => 'Un travâly at étâ suprimâ.',
+	'tasks_task_was_deleted' => 'Lo travâly at étâ suprimâ avouéc reusséta.',
+	'tasks_reopen' => 'Tornar uvrir lo travâly',
+	'tasks_assignedto' => 'Assignê a $1',
+	'tasks_created_by' => 'Fêt per $1',
+	'tasks_discussion_page_link' => 'Pâge de discussion du travâly',
+	'tasks_closedby' => 'Cllôs per $1',
+	'tasks_assigned_myself_log' => 'Ôtoassignacion du travâly « $1 »',
+	'tasks_discussion_page_for' => 'Ceti travâly est por la pâge « $1 ». La lista de tôs los ttravâlys de cela pâge est $2.',
+	'tasks_sidebar_title' => 'Travâlys uvèrts',
 	'tasks_here' => 'ique',
+	'tasks_returnto' => 'Ora, vos voléd étre redirigiê. Se vos l’éte pas, clicâd $1.',
+	'tasks_see_page_tasks' => '(travâlys de ceta pâge)',
+	'tasks_task_is_assigned' => '(assignê)',
+	'tasks_plain_text_only' => '(tèxto bruto, 256 caractèros u més)',
 	'tasks_help_page' => 'Travâlys',
 	'tasks_more_like_it' => 'més',
 	'tasks_task_types' => '1:cleanup:Neteyér|2:wikify:Vouiquifiar|3:rewrite:Rècrire|4:delete:Suprimar|5:create:Fâre|6:write:Ècrire|7:check:Controlar',
 	'tasks_event_on_creation' => 'controlar',
 	'tasks_event_on_creation_anon' => 'controlar',
+	'tasks_on_creation_comment' => 'Travâly ôtomatico, fêt pendent la crèacion de la pâge',
+	'tasks_link_your_assignments' => 'assignacions uvèrtes',
+	'tasks_see_your_assignments' => 'Ora, vos avéd $1 {{PLURAL:$1|travâly assignê|travâlys assignês}}. Vêde voutres $2.',
+	'tasks_my_assignments' => '{{PLURAL:$1|Voutra assignacion|Voutres assignacions}} d’ora',
 	'tasks_table_header_page' => 'Pâge',
+	'tasks_you_have_no_assignments' => 'Vos avéd gins d’assignacion uvèrta',
 	'tasks_search_form_title' => 'Rechèrchiér',
 	'tasks_search_tasks' => 'Travâlys',
 	'tasks_search_status' => 'Statut',
+	'tasks_search_no_tasks_chosen_note' => '(Nion chouèx, rechèrche de tôs los tipos de travâlys.)',
 	'tasks_search_results' => 'Rèsultats de la rechèrche',
 	'tasks_previous' => 'Devant',
 	'tasks_next' => 'Aprés',
 	'tasks_sort' => 'Triyér',
+	'tasks_ascending' => 'Ples vielys d’abôrd',
 	'tasks_status_open' => 'Uvèrt',
+	'tasks_status_assigned' => 'Assignê',
+	'tasks_status_closed' => 'Cllôs',
+	'tasks_status_wontfix' => 'Serat pas rèparâ',
+	'tasks_action_open' => 'Travâly « $1 » uvèrt.',
+	'tasks_action_assigned' => 'Travâly « $1 » assignê.',
+	'tasks_action_closed' => 'Travâly « $1 » cllôs.',
+	'tasks_action_wontfix' => 'Lo travâly « $1 » serat pas rèparâ.',
+	'tasks_sign_delete' => '<b>Ceta pâge at étâ proposâ a la suprèssion !</b>',
+	'tasks_logpage' => 'Jornal des travâlys',
+	'tasks_logpagetext' => 'O est lo jornal des changements dens los travâlys.',
 	'tasks_logentry' => 'Por « [[$1]] »',
+	'tasks-pref-showtaskcomments' => 'Vêre la pâge de comentèros a propôs des travâlys.',
+);
+
+/** Simplified Gan script (‪赣语(简体)‬) */
+$messages['gan-hans'] = array(
+	'tasks_search_form_title' => '寻吖',
+);
+
+/** Traditional Gan script (‪贛語(繁體)‬)
+ * @author Symane
+ */
+$messages['gan-hant'] = array(
+	'tasks_search_form_title' => '尋吖',
 );
 
 /** Galician (Galego)
@@ -1482,6 +1617,14 @@ Wänn Du in e paar Sekunden imfall nit wytergleitet wirsch, no druck $1.',
 	'tasks-pref-showtaskcomments' => 'Ufgabe-Diskussionssyte yybinde.',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'tasks_form_comment' => 'Bahasi',
+	'tasks_delete' => 'Soke',
+	'tasks_table_header_page' => 'Shafi',
+	'tasks_search_form_title' => 'Nema',
+);
+
 /** Hawaiian (Hawai`i)
  * @author Kalani
  */
@@ -1490,6 +1633,7 @@ $messages['haw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
@@ -1522,7 +1666,7 @@ $messages['he'] = array(
 	'tasks_discussion_page_link' => 'דף השיחה של המשימה',
 	'tasks_closedby' => 'נסגרה על ידי $1',
 	'tasks_assigned_myself_log' => 'הקצאה עצמית של המשימה "$1"',
-	'tasks_discussion_page_for' => 'משימה זו הינה עבור הדף "$1". רשימת כל המשימות עבור דף זה זמינה $2.',
+	'tasks_discussion_page_for' => 'זוהי משימה עבור הדף "$1". רשימת כל המשימות עבור דף זה: $2.',
 	'tasks_sidebar_title' => 'משימות פתוחות',
 	'tasks_here' => 'כאן',
 	'tasks_returnto' => 'כעת מבוצעת הפניה. אם ההפניה לא מבוצעת תוך מספר שניות, לחצו $1.',
@@ -1861,7 +2005,24 @@ $messages['id'] = array(
 	'tasks-pref-showtaskcomments' => 'Transklusikan halaman komentar tugas.',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'tasks_delete' => 'Kàcha',
+	'tasks_more_like_it' => 'ọzȯ kwa',
+	'tasks_search_form_title' => 'Chọwa',
+);
+
+/** Iloko (Ilokano)
+ * @author Lam-ang
+ */
+$messages['ilo'] = array(
+	'tasks_search_form_title' => 'Biroken',
+);
+
 /** Italian (Italiano)
+ * @author Beta16
  * @author Darth Kule
  * @author Pietrodn
  */
@@ -1920,7 +2081,7 @@ $messages['it'] = array(
 	'tasks_previous' => 'Precedenti',
 	'tasks_next' => 'Successivi',
 	'tasks_sort' => 'Ordine',
-	'tasks_ascending' => 'Cronologico',
+	'tasks_ascending' => 'Dal più vecchio',
 	'tasks_status_open' => 'Aperta',
 	'tasks_status_assigned' => 'Assegnata',
 	'tasks_status_closed' => 'Chiusa',
@@ -2068,6 +2229,20 @@ $messages['jv'] = array(
 	'tasks_logentry' => 'Kanggo "[[$1]]"',
 );
 
+/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬)
+ * @author GaiJin
+ */
+$messages['kk-cyrl'] = array(
+	'tasks_search_form_title' => 'Іздеу',
+);
+
+/** Kalaallisut (Kalaallisut)
+ * @author Qaqqalik
+ */
+$messages['kl'] = array(
+	'tasks_search_form_title' => 'Ujarlerit',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
  * @author Thearith
@@ -2136,7 +2311,16 @@ $messages['km'] = array(
 	'tasks_logentry' => 'សម្រាប់"[[$1]]"',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'tasks_delete' => 'ಅಳಿಸು',
+	'tasks_search_form_title' => 'ಹುಡುಕು',
+	'tasks_search_status' => 'ಸ್ಥಾನಮಾನ',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -2172,7 +2356,7 @@ Dat kann nur ene {{int:group-sysadmin-member}} maache.',
 	'tasks_discussion_page_for' => 'Die Aufjab es för de Sigg „$1“,
 $2 es de Leß met alle Aufjabe för di Sigg.',
 	'tasks_sidebar_title' => 'Unjedon Aufjabe',
-	'tasks_here' => 'hee',
+	'tasks_here' => 'heh',
 	'tasks_returnto' => 'Et jeiht jlisch automattesch wigger.
 Dooht e paa Sekunde.
 Wann dat nit flupp, dann jang noh $1.',
@@ -2232,6 +2416,8 @@ $messages['lb'] = array(
 	'tasks_existing_header' => 'Aufgaben déi et gëtt',
 	'tasks_existing_table_header' => "Aufgab|Datum|Ufank's-Bemierkung|Zouuerdnung/Aktiounen/Säit",
 	'tasks_noone' => 'keen',
+	'tasks_assign_me' => 'Mir selwer assignéieren',
+	'tasks_assign_to' => 'Assignéiert un',
 	'tasks_close' => 'Aufgab ofschléissen',
 	'tasks_wontfix' => 'Gëtt net verbessert',
 	'tasks_delete' => 'Läschen',
@@ -2259,20 +2445,31 @@ $messages['lb'] = array(
 	'tasks_search_form_title' => 'Sichen',
 	'tasks_search_tasks' => 'Aufgaben',
 	'tasks_search_status' => 'Statut',
-	'tasks_search_results' => 'Resultater vun der Sich',
+	'tasks_search_results' => 'Resultater vum Sichen',
 	'tasks_previous' => 'Vireg',
 	'tasks_next' => 'Nächst',
-	'tasks_sort' => 'Sortéieren',
+	'tasks_sort' => 'Zortéieren',
 	'tasks_ascending' => "Déi eelst fir d'éischt",
 	'tasks_status_open' => 'Op',
+	'tasks_status_assigned' => 'Assignéiert',
 	'tasks_status_closed' => 'Zou',
 	'tasks_status_wontfix' => 'Gëtt net verbessert',
 	'tasks_action_open' => 'Aufgab "$1" opgemaach.',
 	'tasks_action_closed' => 'Aufgab "$1" ass fäerdeg.',
+	'tasks_action_wontfix' => 'D\'Aufgab "$1" gëtt net gemaach.',
 	'tasks_sign_delete' => '<b>Et gouf gefrot fir dëse Säit ze läschen</b>',
 	'tasks_logpage' => 'Lëscht vun den Aufgaben',
 	'tasks_logpagetext' => 'Dëst ass eng Lëscht vun den Ännerunge vun den Aufgaben',
 	'tasks_logentry' => 'Fir "[[$1]]"',
+	'tasks-pref-showtaskcomments' => 'Diskussiounssäite vun den Aufgaben abannen.',
+);
+
+/** Lazuri (Lazuri)
+ * @author Bombola
+ */
+$messages['lzz'] = array(
+	'tasks_table_header_page' => 'Sayfe',
+	'tasks_search_form_title' => 'Mgori',
 );
 
 /** Macedonian (Македонски)
@@ -2280,7 +2477,7 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'tasks' => 'Задачи',
-	'tasks_desc' => 'Проширување за раководење со задачи',
+	'tasks_desc' => 'Додаток за раководење со задачи',
 	'tasks_tab' => 'Задачи',
 	'tasks_title' => 'Задачи за „$1“',
 	'tasks_form_new' => 'Создај нова задача',
@@ -2307,7 +2504,7 @@ $messages['mk'] = array(
 	'tasks_discussion_page_link' => 'Разговор за задачата',
 	'tasks_closedby' => 'Затворена од $1',
 	'tasks_assigned_myself_log' => 'Самододелување на задачата „$1“',
-	'tasks_discussion_page_for' => 'Ова е задача за страницата „$1“. Листата на сите задачи за таа страница е $2.',
+	'tasks_discussion_page_for' => 'Ова е задача за страницата „$1“. Списокот на сите задачи за таа страница е $2.',
 	'tasks_sidebar_title' => 'Отворени задачи',
 	'tasks_here' => 'тука',
 	'tasks_returnto' => 'Сега ќе бидете пренасочени. Ако за неколку секунди не се најдете на друга страница, кликнете на $1.',
@@ -2332,7 +2529,7 @@ $messages['mk'] = array(
 	'tasks_search_results' => 'Резултати од пребарувањето',
 	'tasks_previous' => 'Претходна',
 	'tasks_next' => 'Следна',
-	'tasks_sort' => 'Сортирај',
+	'tasks_sort' => 'Подреди',
 	'tasks_ascending' => 'Прво најстарите',
 	'tasks_status_open' => 'Отворена',
 	'tasks_status_assigned' => 'Доделена',
@@ -2354,7 +2551,21 @@ $messages['mk'] = array(
  */
 $messages['mn'] = array(
 	'tasks_form_comment' => 'Тайлбар',
+	'tasks_table_header_page' => 'Хуудас',
 	'tasks_search_form_title' => 'Хайлт',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'tasks_form_comment' => 'Komen',
+	'tasks_noone' => 'tiada',
+	'tasks_delete' => 'Hapuskan',
+	'tasks_table_header_page' => 'Laman',
+	'tasks_search_form_title' => 'Cari',
+	'tasks_previous' => 'Sebelumnya',
+	'tasks_next' => 'Berikutnya',
 );
 
 /** Maltese (Malti)
@@ -2371,6 +2582,20 @@ $messages['mwl'] = array(
 	'tasks_table_header_page' => 'Páigina',
 );
 
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'tasks_delete' => 'Нардамс',
+	'tasks_no_task_delete_title' => 'А мереви',
+	'tasks_here' => 'вана',
+	'tasks_table_header_page' => 'Лопа',
+	'tasks_search_form_title' => 'Вешнемс',
+	'tasks_ascending' => 'Весемеде таштось васенцекс',
+	'tasks_status_open' => 'Панжадо',
+	'tasks_status_closed' => 'Пекстазь',
+);
+
 /** Nahuatl (Nāhuatl)
  * @author Fluence
  */
@@ -2381,6 +2606,88 @@ $messages['nah'] = array(
 	'tasks_search_form_title' => 'Titlatēmōz',
 	'tasks_previous' => 'Achto',
 	'tasks_next' => 'Niman',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'tasks' => 'Oppgaver',
+	'tasks_desc' => 'Et programtillegg for å håndtere oppgaver',
+	'tasks_tab' => 'Oppgaver',
+	'tasks_title' => 'Oppgaver for «$1»',
+	'tasks_form_new' => 'Opprett ny oppgave',
+	'tasks_form_comment' => 'Kommentar',
+	'tasks_error1' => 'Oppgave ble ikke opprettet: det finnes allerede en slik oppgave!',
+	'tasks_ok1' => 'Ny oppgave har blitt opprettet!',
+	'tasks_create_header' => 'Opprett en ny oppgave',
+	'tasks_existing_header' => 'Eksisterende oppgaver',
+	'tasks_existing_table_header' => 'Oppgave|Datoer|Første kommentar|Tildeling/Handlinger/Side',
+	'tasks_noone' => 'ingen',
+	'tasks_assign_me' => 'Tildel meg selv',
+	'tasks_assign_to' => 'Tildel til',
+	'tasks_unassign_me' => 'Fjern tildelingen min',
+	'tasks_close' => 'Lukk oppgave',
+	'tasks_wontfix' => 'Kan ikke ordne',
+	'tasks_delete' => 'Slett',
+	'tasks_no_task_delete_title' => 'Ikke tillat',
+	'tasks_no_task_delete_texe' => 'Du har ikke tillatelse til å slette en oppgave. Bare administratorer kan gjøre det.',
+	'tasks_action_delete' => 'En oppgave ble slettet.',
+	'tasks_task_was_deleted' => 'Oppgaven ble slettet.',
+	'tasks_reopen' => 'Gjenåpne oppgave',
+	'tasks_assignedto' => 'Tildelt til $1',
+	'tasks_created_by' => 'Opprettet av $1',
+	'tasks_discussion_page_link' => 'Diskusjonsside for oppgave',
+	'tasks_closedby' => 'Lukka av $1',
+	'tasks_assigned_myself_log' => 'Selvtildeling av oppgave «$1»',
+	'tasks_discussion_page_for' => 'Denne oppgaven gjelder for siden «$1». Listen over all oppgaver for den siden er $2.',
+	'tasks_sidebar_title' => 'Åpne oppgaver',
+	'tasks_here' => 'her',
+	'tasks_returnto' => 'Du vil bli omdirigert nå. Hvis du ikke har blitt omdirigert innen få sekunder, klikk $1.',
+	'tasks_see_page_tasks' => '(oppgaver for denne siden)',
+	'tasks_task_is_assigned' => '(tildelt)',
+	'tasks_plain_text_only' => '(ren tekst, kun 256 tegn)',
+	'tasks_help_page' => 'Oppgaver',
+	'tasks_more_like_it' => 'mer',
+	'tasks_task_types' => '1:cleanup:Opprydning|2:wikify:Wikifiser|3:rewrite:Omskriv|4:delete:Slett|5:create|Opprett|6:write:Skriv|7:check:Sjekk',
+	'tasks_event_on_creation' => 'sjekk',
+	'tasks_event_on_creation_anon' => 'sjekk',
+	'tasks_on_creation_comment' => 'Automatisk oppgave, laget under opprettning av side',
+	'tasks_link_your_assignments' => 'åpne tildelinger',
+	'tasks_see_your_assignments' => 'Du har for øyeblikket {{PLURAL:$1|en åpen tildeling|$1 åpne tildelinger}}. Se dine $2.',
+	'tasks_my_assignments' => '{{PLURAL:$1|Din nåværende tildeling|Dine nåværende tildelinger}}',
+	'tasks_table_header_page' => 'Side',
+	'tasks_you_have_no_assignments' => 'Du har ingen åpne tildelinger',
+	'tasks_search_form_title' => 'Søk',
+	'tasks_search_tasks' => 'Oppgaver',
+	'tasks_search_status' => 'Status',
+	'tasks_search_no_tasks_chosen_note' => '(Ingen markering her vil søke gjennom alle oppgavetyper.)',
+	'tasks_search_results' => 'Søkeresultater',
+	'tasks_previous' => 'Forrige',
+	'tasks_next' => 'Neste',
+	'tasks_sort' => 'Sorter',
+	'tasks_ascending' => 'Eldste først',
+	'tasks_status_open' => 'Åpen',
+	'tasks_status_assigned' => 'Tildelt',
+	'tasks_status_closed' => 'Lukket',
+	'tasks_status_wontfix' => 'Vil ikke ordnes',
+	'tasks_action_open' => 'Oppgave «$1» åpnet.',
+	'tasks_action_assigned' => 'Oppgave «$1» tildelt.',
+	'tasks_action_closed' => 'Oppgave «$1» lukka.',
+	'tasks_action_wontfix' => 'Kommer ikke til å ordne oppgave «$1».',
+	'tasks_sign_delete' => '<b>Det har blitt forespurt en sletting av denne siden!</b>',
+	'tasks_logpage' => 'Oppgavelogg',
+	'tasks_logpagetext' => 'Dette er en logg over endringer av oppgaver',
+	'tasks_logentry' => 'For «[[$1]]»',
+	'tasks-pref-showtaskcomments' => 'Inkluder kommentarside for oppgaver.',
+);
+
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'tasks_form_comment' => 'टिप्पणी',
 );
 
 /** Dutch (Nederlands)
@@ -2442,7 +2749,7 @@ Zie uw $2.',
 	'tasks_previous' => 'Vorige',
 	'tasks_next' => 'Volgende',
 	'tasks_sort' => 'Sorteren',
-	'tasks_ascending' => 'Oudere eerst',
+	'tasks_ascending' => 'Oudste bovenaan',
 	'tasks_status_open' => 'Open',
 	'tasks_status_assigned' => 'Toegewezen',
 	'tasks_status_closed' => 'Gesloten',
@@ -2533,80 +2840,6 @@ $messages['nn'] = array(
 	'tasks-pref-showtaskcomments' => 'Inkluder kommentarsida for oppgåver.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['no'] = array(
-	'tasks' => 'Oppgaver',
-	'tasks_desc' => 'Et programtillegg for å håndtere oppgaver',
-	'tasks_tab' => 'Oppgaver',
-	'tasks_title' => 'Oppgaver for "$1"',
-	'tasks_form_new' => 'Opprett ny oppgave',
-	'tasks_form_comment' => 'Kommentar',
-	'tasks_error1' => 'Oppgave ble ikke opprettet: det finnes allerede en slik oppgave!',
-	'tasks_ok1' => 'Ny oppgave har blitt opprettet!',
-	'tasks_create_header' => 'Opprett en ny oppgave',
-	'tasks_existing_header' => 'Eksisterende oppgaver',
-	'tasks_existing_table_header' => 'Oppgave|Datoer|Første kommentar|Tildeling/Handlinger/Side',
-	'tasks_noone' => 'ingen',
-	'tasks_assign_me' => 'Tildel meg selv',
-	'tasks_assign_to' => 'Tildel til',
-	'tasks_unassign_me' => 'Fjern tildelingen min',
-	'tasks_close' => 'Lukk oppgave',
-	'tasks_wontfix' => 'Kan ikke ordne',
-	'tasks_delete' => 'Slett',
-	'tasks_no_task_delete_title' => 'Ikke tillat',
-	'tasks_no_task_delete_texe' => 'Du har ikke tillatelse til å slette en oppgave. Bare administratorer kan gjøre det.',
-	'tasks_action_delete' => 'En oppgave ble slettet.',
-	'tasks_task_was_deleted' => 'Oppgaven ble slettet.',
-	'tasks_reopen' => 'Gjenåpne oppgave',
-	'tasks_assignedto' => 'Tildelt til $1',
-	'tasks_created_by' => 'Opprettet av $1',
-	'tasks_discussion_page_link' => 'Diskusjonsside for oppgave',
-	'tasks_closedby' => 'Lukka av $1',
-	'tasks_assigned_myself_log' => 'Selvtildeling av oppgave "$1"',
-	'tasks_discussion_page_for' => 'Denne oppgaven gjelder for siden "$1". Listen over all oppgaver for den siden er $2.',
-	'tasks_sidebar_title' => 'Åpne oppgaver',
-	'tasks_here' => 'her',
-	'tasks_returnto' => 'Du vil bli omdirigert nå. Hvis du ikke har blitt omdirigert innen få sekunder, klikk $1.',
-	'tasks_see_page_tasks' => '(oppgaver for denne siden)',
-	'tasks_task_is_assigned' => '(tildelt)',
-	'tasks_plain_text_only' => '(ren tekst, kun 256 tegn)',
-	'tasks_help_page' => 'Oppgaver',
-	'tasks_more_like_it' => 'mer',
-	'tasks_task_types' => '1:cleanup:Opprydning|2:wikify:Wikifiser|3:rewrite:Omskriv|4:delete:Slett|5:create|Opprett|6:write:Skriv|7:check:Sjekk',
-	'tasks_event_on_creation' => 'sjekk',
-	'tasks_event_on_creation_anon' => 'sjekk',
-	'tasks_on_creation_comment' => 'Automatisk oppgave, laget under opprettning av side',
-	'tasks_link_your_assignments' => 'åpne tildelinger',
-	'tasks_see_your_assignments' => 'Du har for øyeblikket {{PLURAL:$1|en åpen tildeling|$1 åpne tildelinger}}. Se dine $2.',
-	'tasks_my_assignments' => '{{PLURAL:$1|Din nåværende tildeling|Dine nåværende tildelinger}}',
-	'tasks_table_header_page' => 'Side',
-	'tasks_you_have_no_assignments' => 'Du har ingen åpne tildelinger',
-	'tasks_search_form_title' => 'Søk',
-	'tasks_search_tasks' => 'Oppgaver',
-	'tasks_search_status' => 'Status',
-	'tasks_search_no_tasks_chosen_note' => '(Ingen markering her vil søke gjennom alle oppgavetyper.)',
-	'tasks_search_results' => 'Søkeresultater',
-	'tasks_previous' => 'Forrige',
-	'tasks_next' => 'Neste',
-	'tasks_sort' => 'Sorter',
-	'tasks_ascending' => 'Eldste først',
-	'tasks_status_open' => 'Åpen',
-	'tasks_status_assigned' => 'Tildelt',
-	'tasks_status_closed' => 'Lukka',
-	'tasks_status_wontfix' => 'Vil ikke ordnes',
-	'tasks_action_open' => 'Oppgave "$1" åpnet.',
-	'tasks_action_assigned' => 'Oppgave "$1" tildelt.',
-	'tasks_action_closed' => 'Oppgave "$1" lukka.',
-	'tasks_action_wontfix' => 'Kan ikke ordne oppgave "$1".',
-	'tasks_sign_delete' => '<b>Det har blitt forespurt en sletting av denne siden!</b>',
-	'tasks_logpage' => 'Oppgavelogg',
-	'tasks_logpagetext' => 'Dette er en logg over endringer av oppgaver',
-	'tasks_logentry' => 'For "[[$1]]"',
-	'tasks-pref-showtaskcomments' => 'Inkluder kommentarside for oppgaver.',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -2681,7 +2914,19 @@ $messages['oc'] = array(
 	'tasks-pref-showtaskcomments' => 'Veire la pagina de comentaris a prepaus dels prètzfaches.',
 );
 
-/** Ossetic (Иронау)
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Odisha1
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'tasks_search_form_title' => 'ଖୋଜିବା',
+	'tasks_search_status' => 'ସ୍ଥିତି',
+	'tasks_previous' => 'ପୂର୍ବବର୍ତ୍ତୀ',
+	'tasks_next' => 'ପର',
+	'tasks_status_open' => 'ଖୋଲ',
+);
+
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -2693,17 +2938,26 @@ $messages['os'] = array(
  * @author Xqt
  */
 $messages['pdc'] = array(
-	'tasks_form_comment' => 'Anmaerricking',
+	'tasks_form_comment' => 'Aamaericking',
 	'tasks_noone' => 'ken',
-	'tasks_delete' => 'Lösche',
+	'tasks_delete' => 'Verwische',
 	'tasks_here' => 'do',
 	'tasks_help_page_link' => 'Hilf',
 	'tasks_more_like_it' => 'mehner',
 	'tasks_table_header_page' => 'Blatt',
 	'tasks_search_form_title' => 'Uffgucke',
 	'tasks_previous' => 'Letscht',
-	'tasks_next' => 'Neegscht',
+	'tasks_next' => 'Neegschter',
 	'tasks_logentry' => 'fer „[[$1]]“',
+);
+
+/** Pälzisch (Pälzisch)
+ * @author Xqt
+ */
+$messages['pfl'] = array(
+	'tasks_noone' => 'kään',
+	'tasks_previous' => 'Voriche',
+	'tasks_next' => 'Negschter',
 );
 
 /** Polish (Polski)
@@ -2763,7 +3017,7 @@ $messages['pl'] = array(
 	'tasks_search_status' => 'Status',
 	'tasks_search_no_tasks_chosen_note' => '(Brak wyboru tutaj spowoduje wyszukanie wszystkich typów zadań.)',
 	'tasks_search_results' => 'Wyniki wyszukiwania',
-	'tasks_previous' => 'Poprzednie',
+	'tasks_previous' => 'Poprzednia',
 	'tasks_next' => 'Następne',
 	'tasks_sort' => 'Sortuj',
 	'tasks_ascending' => 'Od najstarszych',
@@ -2861,17 +3115,25 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'tasks' => 'دندې',
+	'tasks_tab' => 'دندې',
+	'tasks_form_new' => 'يوه نوې دنده پيلول',
+	'tasks_form_comment' => 'تبصره',
+	'tasks_noone' => 'هېڅوک',
 	'tasks_delete' => 'ړنګول',
 	'tasks_here' => 'دلته',
 	'tasks_help_page' => 'دندې',
+	'tasks_more_like_it' => 'نور',
 	'tasks_table_header_page' => 'مخ',
 	'tasks_search_form_title' => 'پلټل',
+	'tasks_search_tasks' => 'دندې',
 	'tasks_search_status' => 'دريځ',
 	'tasks_search_results' => 'د پلټنې پايلې',
 	'tasks_previous' => 'پخوانی',
 	'tasks_next' => 'راتلونکی',
 	'tasks_sort' => 'اوډل',
 	'tasks_status_open' => 'پرانيستل',
+	'tasks_status_closed' => 'تړل شوی',
 );
 
 /** Portuguese (Português)
@@ -2915,7 +3177,7 @@ $messages['pt'] = array(
 	'tasks_returnto' => 'Será redireccionado agora. Se não for redireccionado dentro de alguns segundos, clique $1.',
 	'tasks_see_page_tasks' => '(tarefas desta página)',
 	'tasks_task_is_assigned' => '(atribuída)',
-	'tasks_plain_text_only' => '(texto pleno, 256 carateres apenas)',
+	'tasks_plain_text_only' => '(texto simples, apenas 256 caracteres)',
 	'tasks_help_page' => 'Tarefas',
 	'tasks_more_like_it' => 'mais',
 	'tasks_task_types' => '1:cleanup:Limpar|2:wikify:Wikificar|3:rewrite:Re-escrever|4:delete:Eliminar|5:create:Criar|6:write:Escrever|7:check:Verificar',
@@ -3045,8 +3307,8 @@ $messages['ro'] = array(
 	'tasks_close' => 'Încheie sarcină',
 	'tasks_delete' => 'Ştergere',
 	'tasks_no_task_delete_title' => 'Nu este permis',
-	'tasks_action_delete' => 'O sarcină a fost ştearsă.',
-	'tasks_task_was_deleted' => 'Sarcina a fost ştearsă cu succes.',
+	'tasks_action_delete' => 'O sarcină a fost ștearsă.',
+	'tasks_task_was_deleted' => 'Sarcina a fost ștearsă cu succes.',
 	'tasks_reopen' => 'Redeschide sarcină',
 	'tasks_created_by' => 'Creat de $1',
 	'tasks_here' => 'aici',
@@ -3188,11 +3450,34 @@ $messages['ru'] = array(
 	'tasks-pref-showtaskcomments' => 'Включить страницу примечаний задачи.',
 );
 
-/** Serbo-Croatian (Srpskohrvatski / Српскохрватски)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'tasks' => 'Задачі',
+	'tasks_here' => 'гев',
+	'tasks_table_header_page' => 'Сторінка',
+	'tasks_search_form_title' => 'Глядати',
+	'tasks_search_status' => 'Статус',
+	'tasks_next' => 'Далшы',
+	'tasks_sort' => 'Сортованя',
+	'tasks_ascending' => 'Найстаршый на початок',
+	'tasks_status_open' => 'Одкрыто',
+	'tasks_status_closed' => 'Заперто',
+);
+
+/** Serbo-Croatian (Srpskohrvatski)
  * @author OC Ripper
  */
 $messages['sh'] = array(
 	'tasks_previous' => 'Prethodna',
+);
+
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'tasks_delete' => 'මකා දමන්න',
 );
 
 /** Slovak (Slovenčina)
@@ -3270,12 +3555,28 @@ $messages['sk'] = array(
 	'tasks-pref-showtaskcomments' => 'Transklúzia diskusnej stránky úlohy.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'tasks_table_header_page' => 'Stran',
+	'tasks_search_status' => 'Stanje',
+);
+
+/** Somali (Soomaaliga)
+ * @author Maax
+ */
+$messages['so'] = array(
+	'tasks_search_form_title' => 'Raadi',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'tasks' => 'Задаци',
-	'tasks_desc' => 'Екстензија за руковање задацима',
+	'tasks_desc' => 'Проширење за управљање задацима',
 	'tasks_tab' => 'Задаци',
 	'tasks_title' => 'Задаци за "$1"',
 	'tasks_form_new' => 'Направи нови задатак',
@@ -3296,8 +3597,8 @@ $messages['sr-ec'] = array(
 	'tasks_task_was_deleted' => 'Задатак је успешно обрисан.',
 	'tasks_reopen' => 'Поново отвори задатак',
 	'tasks_assignedto' => 'Додељено: $1',
-	'tasks_created_by' => 'Направио $1',
-	'tasks_discussion_page_link' => 'Страна за разговор о задатку',
+	'tasks_created_by' => 'Направио/-ла $1',
+	'tasks_discussion_page_link' => 'Страница за разговор о задатку',
 	'tasks_closedby' => 'Затворио $1',
 	'tasks_assigned_myself_log' => 'Самопреузимање задатка "$1"',
 	'tasks_discussion_page_for' => 'Овај задатак је везан за страну "$1". Списак свих задатака за ту страну је $2.',
@@ -3308,6 +3609,7 @@ $messages['sr-ec'] = array(
 	'tasks_task_is_assigned' => '(додељено)',
 	'tasks_plain_text_only' => '(чист текст, само 256 карактера)',
 	'tasks_help_page' => 'Задаци',
+	'tasks_help_page_link' => '?',
 	'tasks_more_like_it' => 'више',
 	'tasks_event_on_creation' => 'провери',
 	'tasks_event_on_creation_anon' => 'провери',
@@ -3315,15 +3617,15 @@ $messages['sr-ec'] = array(
 	'tasks_link_your_assignments' => 'отворене доделе',
 	'tasks_see_your_assignments' => 'Тренутно вам је {{PLURAL:$1|додељен $1 отворен задатак|додељено $1 отворених задатака}}. Погледајте Ваше $2.',
 	'tasks_my_assignments' => '{{PLURAL:$1|Ваш тренутни задатак|Ваши тренутни задаци}}',
-	'tasks_table_header_page' => 'Чланак',
+	'tasks_table_header_page' => 'Страница',
 	'tasks_you_have_no_assignments' => 'Немате отворених задатака',
 	'tasks_search_form_title' => 'Претрага',
 	'tasks_search_tasks' => 'Задаци',
 	'tasks_search_status' => 'Статус',
 	'tasks_previous' => 'Претходни',
 	'tasks_next' => 'Следећи',
-	'tasks_sort' => 'Сортирај',
-	'tasks_ascending' => 'Најстарији прво',
+	'tasks_sort' => 'Поређај',
+	'tasks_ascending' => 'Прво старије',
 	'tasks_status_open' => 'Отвори',
 	'tasks_status_assigned' => 'Додељено',
 	'tasks_status_closed' => 'Затворено',
@@ -3334,12 +3636,13 @@ $messages['sr-ec'] = array(
 	'tasks_logentry' => 'За "[[$1]]"',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
 	'tasks' => 'Zadaci',
-	'tasks_desc' => 'Ekstenzija za rukovanje zadacima',
+	'tasks_desc' => 'Proširenje za upravljanje zadacima',
 	'tasks_tab' => 'Zadaci',
 	'tasks_title' => 'Zadaci za "$1"',
 	'tasks_form_new' => 'Napravi novi zadatak',
@@ -3360,8 +3663,8 @@ $messages['sr-el'] = array(
 	'tasks_task_was_deleted' => 'Zadatak je uspešno obrisan.',
 	'tasks_reopen' => 'Ponovo otvori zadatak',
 	'tasks_assignedto' => 'Dodeljeno: $1',
-	'tasks_created_by' => 'Napravio $1',
-	'tasks_discussion_page_link' => 'Strana za razgovor o zadatku',
+	'tasks_created_by' => 'Napravio/-la $1',
+	'tasks_discussion_page_link' => 'Stranica za razgovor o zadatku',
 	'tasks_closedby' => 'Zatvorio $1',
 	'tasks_assigned_myself_log' => 'Samopreuzimanje zadatka "$1"',
 	'tasks_discussion_page_for' => 'Ovaj zadatak je vezan za stranu "$1". Spisak svih zadataka za tu stranu je $2.',
@@ -3372,6 +3675,7 @@ $messages['sr-el'] = array(
 	'tasks_task_is_assigned' => '(dodeljeno)',
 	'tasks_plain_text_only' => '(čist tekst, samo 256 karaktera)',
 	'tasks_help_page' => 'Zadaci',
+	'tasks_help_page_link' => '?',
 	'tasks_more_like_it' => 'više',
 	'tasks_event_on_creation' => 'proveri',
 	'tasks_event_on_creation_anon' => 'proveri',
@@ -3379,15 +3683,15 @@ $messages['sr-el'] = array(
 	'tasks_link_your_assignments' => 'otvorene dodele',
 	'tasks_see_your_assignments' => 'Trenutno vam je {{PLURAL:$1|dodeljen $1 otvoren zadatak|dodeljeno $1 otvorenih zadataka}}. Pogledajte Vaše $2.',
 	'tasks_my_assignments' => '{{PLURAL:$1|Vaš trenutni zadatak|Vaši trenutni zadaci}}',
-	'tasks_table_header_page' => 'Članak',
+	'tasks_table_header_page' => 'Stranica',
 	'tasks_you_have_no_assignments' => 'Nemate otvorenih zadataka',
 	'tasks_search_form_title' => 'Pretraga',
 	'tasks_search_tasks' => 'Zadaci',
 	'tasks_search_status' => 'Status',
 	'tasks_previous' => 'Prethodni',
 	'tasks_next' => 'Sledeći',
-	'tasks_sort' => 'Sortiraj',
-	'tasks_ascending' => 'Najstariji prvo',
+	'tasks_sort' => 'Poređaj',
+	'tasks_ascending' => 'Prvo starije',
 	'tasks_status_open' => 'Otvori',
 	'tasks_status_assigned' => 'Dodeljeno',
 	'tasks_status_closed' => 'Zatvoreno',
@@ -3440,7 +3744,7 @@ Fals du nit in n poor Sekunden fääre laited wädst, klik $1.',
 	'tasks_plain_text_only' => '(Kloortext, bloot 256 Teekene)',
 	'tasks_help_page' => 'Apgoawen',
 	'tasks_more_like_it' => 'moor',
-	'tasks_task_types' => '1:cleanup:Süüwerje|2:wikify:Wikify|3:rewrite:Uumschrieuwe|4:delete:Läskje|5:create:Moakje|6:write:Schrieuwe|7:check:Wröigje',
+	'tasks_task_types' => '1:cleanup:Süüwerje|2:wikify:Wikify|3:rewrite:Uumskrieuwe|4:delete:Läskje|5:create:Moakje|6:write:Skrieuwe|7:check:Wröigje',
 	'tasks_event_on_creation' => 'wröigje',
 	'tasks_event_on_creation_anon' => 'wröigje',
 	'tasks_on_creation_comment' => 'Automatiske Apgoawe, anlaid truch Siedenmoakjen',
@@ -3581,6 +3885,7 @@ $messages['te'] = array(
 	'tasks_here' => 'ఇక్కడ',
 	'tasks_returnto' => 'మిమ్మల్ని ఇప్పుడు దారిమారుస్తాం. మరి కొద్ది క్షణాల్లో అది జరగకపోతే, $1ని నొక్కండి.',
 	'tasks_see_page_tasks' => '(ఈ పేజీ యొక్క పనులు)',
+	'tasks_task_is_assigned' => '(అప్పగించారు)',
 	'tasks_plain_text_only' => '(సాదా పాఠ్యం, 256 అక్షరాలు మాత్రమే)',
 	'tasks_help_page' => 'పనులు',
 	'tasks_more_like_it' => 'మరిన్ని',
@@ -3595,10 +3900,21 @@ $messages['te'] = array(
 	'tasks_next' => 'తర్వాతి',
 	'tasks_ascending' => 'పాతవి ముందు',
 	'tasks_status_open' => 'చేయాల్సినవి',
+	'tasks_status_assigned' => 'అప్పగించారు',
+	'tasks_action_open' => 'పని "$1"ని తెరిచారు.',
+	'tasks_action_assigned' => 'పని "$1"ని అప్పగించారు.',
 	'tasks_sign_delete' => '<b>ఈ పేజీని తొలగించమని కోరారు!</b>',
 	'tasks_logpage' => 'పనుల చిట్టా',
 	'tasks_logpagetext' => 'ఇది పనులకు జరిగిన మార్పుల చిట్టా',
 	'tasks_logentry' => '"[[$1]]" కొరకు',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'tasks_table_header_page' => 'Pájina',
+	'tasks_search_form_title' => 'Buka',
 );
 
 /** Thai (ไทย)
@@ -3627,7 +3943,7 @@ $messages['tl'] = array(
 	'tasks_tab' => 'Mga gawain',
 	'tasks_title' => 'Mga gawain para kay "$1"',
 	'tasks_form_new' => 'Lumikha ng bagong gawain',
-	'tasks_form_comment' => 'Puna/kumento',
+	'tasks_form_comment' => 'Puna/Kumento',
 	'tasks_error1' => 'Hindi nalikha ang gawain: mayroon nang ganyang isang gawain!',
 	'tasks_ok1' => 'Nalikha na ang isang bagong gawain!',
 	'tasks_create_header' => 'Lumikha ng isang bagong gawain',
@@ -3694,14 +4010,20 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Manco Capac
  * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'tasks' => 'Görevler',
 	'tasks_tab' => 'Görevler',
+	'tasks_title' => '"$1" için tasklar',
 	'tasks_form_new' => 'Yeni görev oluştur',
 	'tasks_form_comment' => 'Yorum',
+	'tasks_error1' => 'Task oluşturulmadı: zaten bu task gibi bir task var!',
+	'tasks_ok1' => 'Yeni task oluşturuldu!',
+	'tasks_create_header' => 'Yeni task oluştur',
 	'tasks_existing_header' => 'Mevcut görevler',
+	'tasks_existing_table_header' => 'Task|Tarihler|İlk yorum|Atama/İşlemler/Sayfa',
 	'tasks_noone' => 'hiç kimse',
 	'tasks_assign_me' => 'Kendimi ata',
 	'tasks_assign_to' => 'Şuna ata:',
@@ -3711,29 +4033,55 @@ $messages['tr'] = array(
 	'tasks_delete' => 'Sil',
 	'tasks_no_task_delete_title' => 'İzin verilmiyor',
 	'tasks_no_task_delete_texe' => 'Görev silme izniniz yok. Bunu sadece hizmetliler yapabilir.',
+	'tasks_action_delete' => 'Bir task silindi.',
+	'tasks_task_was_deleted' => 'Task başarıyla silindi',
+	'tasks_reopen' => 'Taskı yeniden aç',
+	'tasks_assignedto' => '$1 için atandı',
+	'tasks_created_by' => '$1 tarafından oluşturuldu',
 	'tasks_discussion_page_link' => 'Görev tartışma sayfası',
+	'tasks_closedby' => '$1 tarafından kapatıldı',
+	'tasks_discussion_page_for' => 'Bu task "$1" sayfası içindir. O sayfa için tüm taskları $2 listesinde görebilirsiniz.',
 	'tasks_sidebar_title' => 'Görevleri aç',
 	'tasks_here' => 'buraya',
 	'tasks_returnto' => 'Şimdi yönlendirileceksiniz. Birkaç saniye içinde yönlendirilmezseniz, $1 bağlantısına tıklayın.',
 	'tasks_see_page_tasks' => '(bu sayfanın görevleri)',
 	'tasks_task_is_assigned' => '(atanmış)',
+	'tasks_plain_text_only' => '(yalın metin, sadece 256 karakter)',
 	'tasks_help_page' => 'Görevler',
 	'tasks_more_like_it' => 'daha fazla',
+	'tasks_task_types' => '1:cleanup:Temizle|2:wikify:Vikile|3:rewrite:Yeniden yaz|4:delete:Sil|5:create:Oluştur|6:write:Yaz|7:check:Kontrol et',
 	'tasks_event_on_creation' => 'kontrol et',
 	'tasks_event_on_creation_anon' => 'kontrol et',
 	'tasks_on_creation_comment' => 'Sayfa oluşturmada oluşturulan otomatik görev',
+	'tasks_link_your_assignments' => 'açık atamalar',
+	'tasks_see_your_assignments' => "$1 açık {{PLURAL:$1|atamanız|atamanız}}. $2'nizi görün.",
+	'tasks_my_assignments' => 'Güncel {{PLURAL:$1|atamalarınız|atamalarınız}}',
+	'tasks_table_header_page' => 'Sayfa',
+	'tasks_you_have_no_assignments' => 'Açık atamanız yok',
+	'tasks_search_form_title' => 'Ara',
 	'tasks_search_tasks' => 'Görevler',
+	'tasks_search_status' => 'Durum',
+	'tasks_search_no_tasks_chosen_note' => '(Seçim yapılmadığı için tüm task tiplerini arayacak.)',
 	'tasks_search_results' => 'Sonuç ara',
 	'tasks_previous' => 'Önceki',
 	'tasks_next' => 'Sonraki',
 	'tasks_sort' => 'Sırala',
 	'tasks_ascending' => 'Önce en eskisi',
 	'tasks_status_open' => 'Açık',
+	'tasks_status_assigned' => 'Atandı',
 	'tasks_status_closed' => 'Kapatıldı',
+	'tasks_status_wontfix' => 'Halledemiyor',
+	'tasks_action_open' => 'Task "$1" açıldı.',
+	'tasks_action_assigned' => 'Task "$1" atandı.',
+	'tasks_action_closed' => 'Task "$1" kapandı.',
+	'tasks_action_wontfix' => 'Task "$1" halledilemiyor.',
+	'tasks_sign_delete' => '<b>Bu sayfanın silinmesi istendi!</b>',
 	'tasks_logpage' => 'Görev kayıtları',
+	'tasks_logpagetext' => 'Bu taskta olan değişikliklerin logudur.',
+	'tasks_logentry' => '"[[$1]]" için',
 );
 
-/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+/** Uyghur (Latin script) (Uyghurche‎)
  * @author Jose77
  */
 $messages['ug-latn'] = array(
@@ -3742,18 +4090,34 @@ $messages['ug-latn'] = array(
 
 /** Ukrainian (Українська)
  * @author Aleksandrit
+ * @author Тест
  */
 $messages['uk'] = array(
+	'tasks' => 'Завдання',
+	'tasks_desc' => 'Розширення для керування завданнями',
+	'tasks_tab' => 'Завдання',
+	'tasks_title' => 'Завдання для "$1"',
+	'tasks_form_new' => 'Створення нового завдання',
 	'tasks_form_comment' => 'Примітка',
 	'tasks_error1' => 'Завдання не було встановлено: таке завдання вже існує!',
 	'tasks_ok1' => 'Було встановлене нове завдання!',
 	'tasks_create_header' => 'Створення нового завдання',
 	'tasks_existing_header' => 'Існуючі завдання',
+	'tasks_existing_table_header' => 'Завдання|Дати|Початковий коментар|Призначення/Дії/Сторінка',
 	'tasks_noone' => 'ніхто',
+	'tasks_close' => 'Закрити завдання',
 	'tasks_delete' => 'Вилучити',
+	'tasks_no_task_delete_title' => 'Не дозволено',
 	'tasks_action_delete' => 'Завдання було вилучено.',
 	'tasks_task_was_deleted' => 'Завдання було успішно вилучено.',
 	'tasks_reopen' => 'Відкрити завдання знову',
+	'tasks_discussion_page_link' => 'Сторінка обговорення завдання',
+	'tasks_sidebar_title' => 'Відкриті завдання',
+	'tasks_here' => 'тут',
+	'tasks_plain_text_only' => '(звичайний текст, не більше 256 символів)',
+	'tasks_help_page' => 'Завдання',
+	'tasks_more_like_it' => 'більше',
+	'tasks_event_on_creation' => 'перевірити',
 	'tasks_event_on_creation_anon' => 'перевірити',
 	'tasks_on_creation_comment' => 'Автоматичне завдання, встановлене після створення статті',
 	'tasks_link_your_assignments' => 'поточні призначення',
@@ -3768,6 +4132,7 @@ $messages['uk'] = array(
 	'tasks_previous' => 'Назад',
 	'tasks_next' => 'Далі',
 	'tasks_sort' => 'Сортування',
+	'tasks_ascending' => 'Спочатку старіші',
 	'tasks_status_open' => 'Відкрита',
 	'tasks_status_assigned' => 'Призначена',
 	'tasks_status_closed' => 'Закрита',
@@ -3904,11 +4269,17 @@ $messages['vo'] = array(
 $messages['yi'] = array(
 	'tasks_noone' => 'קיינער',
 	'tasks_delete' => 'אויסמעקן',
+	'tasks_here' => 'דאָ',
+	'tasks_table_header_page' => 'בלאַט',
 	'tasks_search_form_title' => 'זוכן',
+	'tasks_next' => 'נעקסטער',
+	'tasks_status_open' => 'אפֿן',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Chenxiaoqino
  * @author Gzdavidwong
+ * @author Hydra
  * @author Liangent
  * @author Wmr89502270
  */
@@ -3956,7 +4327,7 @@ $messages['zh-hans'] = array(
 	'tasks_on_creation_comment' => '自动任务，于页面创建时生成',
 	'tasks_link_your_assignments' => '打开的分配',
 	'tasks_see_your_assignments' => '你当前有$1个打开的分配。参见你的$2。',
-	'tasks_my_assignments' => '你当前的分配',
+	'tasks_my_assignments' => '你目前的{{PLURAL:$1|分配|多个分配}}',
 	'tasks_table_header_page' => '页面',
 	'tasks_you_have_no_assignments' => '你没有打开的分配',
 	'tasks_search_form_title' => '搜索',
@@ -3967,7 +4338,7 @@ $messages['zh-hans'] = array(
 	'tasks_previous' => '上一个',
 	'tasks_next' => '下一个',
 	'tasks_sort' => '排序',
-	'tasks_ascending' => '从旧到新',
+	'tasks_ascending' => '从最早开始',
 	'tasks_status_open' => '打开的',
 	'tasks_status_assigned' => '已分配的',
 	'tasks_status_closed' => '已关闭的',
@@ -3980,22 +4351,24 @@ $messages['zh-hans'] = array(
 	'tasks_logpage' => '任务日志',
 	'tasks_logpagetext' => '这是一个任务修改的日志',
 	'tasks_logentry' => '用于“[[$1]]”',
+	'tasks-pref-showtaskcomments' => 'Transclude任务的评论页面',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'tasks' => '任務',
-	'tasks_desc' => '一個管理任務的擴展',
+	'tasks_desc' => '一個管理任務的擴充套件',
 	'tasks_tab' => '任務',
-	'tasks_title' => '“$1”的任務',
-	'tasks_form_new' => '創建新任務',
+	'tasks_title' => '「$1」的任務',
+	'tasks_form_new' => '建立新任務',
 	'tasks_form_comment' => '註釋',
-	'tasks_error1' => '任務沒有創建：已經有一個這樣的任務了！',
-	'tasks_ok1' => '新任務已創建！',
-	'tasks_create_header' => '創建一個新任務',
+	'tasks_error1' => '任務沒有建立：已經有一個這樣的任務了！',
+	'tasks_ok1' => '新任務已建立！',
+	'tasks_create_header' => '建立一個新任務',
 	'tasks_existing_header' => '已存在的任務',
 	'tasks_existing_table_header' => '任務|日期|初始註釋|安排/動作/頁面',
 	'tasks_noone' => '沒有人',
@@ -4010,33 +4383,33 @@ $messages['zh-hant'] = array(
 	'tasks_action_delete' => '一個任務已經被刪除。',
 	'tasks_task_was_deleted' => '任務已經成功刪除。',
 	'tasks_reopen' => '再開任務',
-	'tasks_assignedto' => '已分配給$1',
-	'tasks_created_by' => '由$1創建',
+	'tasks_assignedto' => '已分配給 $1',
+	'tasks_created_by' => '由 $1 建立',
 	'tasks_discussion_page_link' => '任務討論頁面',
-	'tasks_closedby' => '由$1關閉',
-	'tasks_assigned_myself_log' => '把任務“$1”分配給自己',
-	'tasks_discussion_page_for' => '這是頁面“$1”的任務。頁面的全部任務的列表是$2。',
-	'tasks_sidebar_title' => '打開任務',
+	'tasks_closedby' => '由 $1 關閉',
+	'tasks_assigned_myself_log' => '把任務「$1」分配給自己',
+	'tasks_discussion_page_for' => '這是頁面「$1」的任務。頁面的全部任務的列表是 $2。',
+	'tasks_sidebar_title' => '開啟任務',
 	'tasks_here' => '這裡',
-	'tasks_returnto' => '你將被重定向。如果你沒有在幾秒鐘內被重定向，點擊$1。',
+	'tasks_returnto' => '你將被重定向。如果你沒有在幾秒鐘內被重定向，點擊 $1。',
 	'tasks_see_page_tasks' => '（這個頁面的任務）',
 	'tasks_task_is_assigned' => '（已分配）',
-	'tasks_plain_text_only' => '（純文本，只允許256個字符）',
+	'tasks_plain_text_only' => '（純文字，只允許 256 個字元）',
 	'tasks_help_page' => '任務',
 	'tasks_more_like_it' => '更多',
-	'tasks_task_types' => '1:cleanup:清理|2:wikify:Wiki化|3:rewrite:重寫|4:delete:刪除|5:create:創建|6:write:編寫|7:check:檢查',
+	'tasks_task_types' => '1:cleanup:清理|2:wikify:Wiki 化|3:rewrite:重寫|4:delete:刪除|5:create:創建|6:write:編寫|7:check:檢查',
 	'tasks_event_on_creation' => '檢查',
 	'tasks_event_on_creation_anon' => '檢查',
-	'tasks_on_creation_comment' => '自動任務，於頁面創建時生成',
+	'tasks_on_creation_comment' => '自動任務，於頁面建立時產生',
 	'tasks_link_your_assignments' => '打開的分配',
-	'tasks_see_your_assignments' => '你當前有$1個打開的分配。參見你的$2。',
-	'tasks_my_assignments' => '你當前的分配',
+	'tasks_see_your_assignments' => '你目前有 $1 個打開的分配。參見你的$2。',
+	'tasks_my_assignments' => '你目前的{{PLURAL:$1|分配|多個分配}}',
 	'tasks_table_header_page' => '頁面',
 	'tasks_you_have_no_assignments' => '你沒有打開的分配',
 	'tasks_search_form_title' => '搜尋',
 	'tasks_search_tasks' => '任務',
 	'tasks_search_status' => '狀態',
-	'tasks_search_no_tasks_chosen_note' => '（在這裡不選擇意味着搜索所有任務類型。）',
+	'tasks_search_no_tasks_chosen_note' => '（在這裡不選擇意味著搜尋所有任務類型。）',
 	'tasks_search_results' => '搜尋結果',
 	'tasks_previous' => '上一個',
 	'tasks_next' => '下一個',
@@ -4047,12 +4420,13 @@ $messages['zh-hant'] = array(
 	'tasks_status_closed' => '已關閉',
 	'tasks_status_wontfix' => '不需要修理',
 	'tasks_action_open' => '任務「$1」已開放。',
-	'tasks_action_assigned' => '任務“$1”已分配。',
+	'tasks_action_assigned' => '任務「$1」已分配。',
 	'tasks_action_closed' => '任務「$1」已關閉。',
-	'tasks_action_wontfix' => '不需要修理任務“$1”。',
+	'tasks_action_wontfix' => '不需要修理任務「$1」。',
 	'tasks_sign_delete' => '<b>該頁面被要求刪除！</b>',
 	'tasks_logpage' => '任務記錄',
 	'tasks_logpagetext' => '這是一個任務修改的日誌',
-	'tasks_logentry' => '用於“[[$1]]”',
+	'tasks_logentry' => '用於「[[$1]]」',
+	'tasks-pref-showtaskcomments' => 'Transclude任務的評論頁面',
 );
 

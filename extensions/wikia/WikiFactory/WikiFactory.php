@@ -2741,7 +2741,7 @@ class WikiFactory {
 		$dbr = self::db( DB_SLAVE );
 
 		if ( in_array($cond, array( 'LIKE', 'NOT LIKE' ) ) ) {
-			$aWhere[ ] = "cv_value {$cond} '%" . $dbr->escapeLike( serialize( $val ) ) . "%'";
+			$aWhere[ ] = "cv_value " . str_replace( 'LIKE', '', $cond ) . $dbr->buildLike( $dbr->anyString(), serialize( $val ), $dbr->anyString() );
 		} elseif ( $val === 'NULL' && in_array($cond, array( 'IS', 'IS NOT' ) ) ) {
 			$aWhere[ ] = "cv_value {$cond} NULL";
 		} else {
@@ -2851,7 +2851,7 @@ class WikiFactory {
 	 * @param unknown_type $likeVal
 	 */
 	
-	static public function getListOfWikisWithVar($varId, $type, $selectedCond ,$val, $likeVal = '', $offset = null, $limit = null ) {
+	static public function getListOfWikisWithVar($varId, $type, $selectedCond ,$val, $likeVal = '', $offset = null, $limit = null) {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		
@@ -2864,14 +2864,6 @@ class WikiFactory {
 		);
 		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
-		
-		if( $type == "full" ) {
-			$aWhere[] = "cv_value like '%".$dbr->escapeLike($likeVal)."%'";
-		} else {
-			$aWhere[] = "cv_value $selectedCond '$selectedVal'";	
-		}
-		
-		$aWhere[] = "cv_variable_id = '$varId'";
                 
                 $aOptions = array( 'ORDER BY' => 'city_sitename' );
                 
@@ -2881,8 +2873,17 @@ class WikiFactory {
                 
                 if ( isset( $offset ) ) {
                     $aOptions['OFFSET'] = $offset;
-                }
-                               
+                } 
+		
+		if( $type == "full" ) {
+			$aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
+		} else {
+			$aWhere[] = "cv_value $selectedCond '$selectedVal'";	
+		}
+		
+		$aWhere[] = "cv_variable_id = '$varId'";
+
+
 		$oRes = $dbr->select(
 			$aTables,
 			array('city_id', 'city_title', 'city_url', 'city_public'),
@@ -2920,7 +2921,7 @@ class WikiFactory {
             );
             
             if( 'full' == $type ) {
-                $aWhere[] = "cv_value like '%" . $dbr->escapeLike($likeVal) . "%'";
+                $aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
             } else {
                 $aWhere[] = "cv_value $selectedCond '$selectedVal'";
             }

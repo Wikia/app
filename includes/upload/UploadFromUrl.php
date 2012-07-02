@@ -2,23 +2,28 @@
 /**
  * Implements uploading from a HTTP resource.
  *
- * @file
- * @ingroup upload
+ * @ingroup Upload
  * @author Bryan Tong Minh
  * @author Michael Dale
  */
-
 class UploadFromUrl extends UploadBase {
 	protected $mAsync, $mUrl;
 	protected $mIgnoreWarnings = true;
 
+	protected $mTempPath, $mTmpHandle;
+
 	/**
 	 * Checks if the user is allowed to use the upload-by-URL feature. If the
 	 * user is allowed, pass on permissions checking to the parent.
+	 *
+	 * @param $user User
+	 *
+	 * @return bool
 	 */
 	public static function isAllowed( $user ) {
-		if ( !$user->isAllowed( 'upload_by_url' ) )
+		if ( !$user->isAllowed( 'upload_by_url' ) ) {
 			return 'upload_by_url';
+		}
 		return parent::isAllowed( $user );
 	}
 
@@ -45,6 +50,9 @@ class UploadFromUrl extends UploadBase {
 
 		$this->mUrl = $url;
 		$this->mAsync = $wgAllowAsyncCopyUploads ? $async : false;
+		if ( $async ) {
+			throw new MWException( 'Asynchronous copy uploads are no longer possible as of r81612.' );
+		}
 
 		$tempPath = $this->mAsync ? null : $this->makeTemporaryFile();
 		# File size and removeTempFile will be filled in later
@@ -53,21 +61,23 @@ class UploadFromUrl extends UploadBase {
 
 	/**
 	 * Entry point for SpecialUpload
-	 * @param $request Object: WebRequest object
+	 * @param $request WebRequest object
 	 */
 	public function initializeFromRequest( &$request ) {
 		$desiredDestName = $request->getText( 'wpDestFile' );
-		if ( !$desiredDestName )
+		if ( !$desiredDestName ) {
 			$desiredDestName = $request->getText( 'wpUploadFileURL' );
+		}
 		return $this->initialize(
 			$desiredDestName,
-			$request->getVal( 'wpUploadFileURL' ),
+			trim( $request->getVal( 'wpUploadFileURL' ) ),
 			false
 		);
 	}
 
 	/**
-	 * @param $request Object: WebRequest object
+	 * @param $request WebRequest object
+	 * @return bool
 	 */
 	public static function isValidRequest( $request ) {
 		global $wgUser;
@@ -78,7 +88,14 @@ class UploadFromUrl extends UploadBase {
 			&& $wgUser->isAllowed( 'upload_by_url' );
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getSourceType() { return 'url'; }
 
+	/**
+	 * @return Status
+	 */
 	public function fetchFile() {
 		if ( !Http::isValidURI( $this->mUrl ) ) {
 			return Status::newFatal( 'http-invalid-url' );
@@ -97,41 +114,65 @@ class UploadFromUrl extends UploadBase {
 	protected function makeTemporaryFile() {
 		return tempnam( wfTempDir(), 'URL' );
 	}
+
 	/**
-	 * Save the result of a HTTP request to the temporary file
+	 * Callback: save a chunk of the result of a HTTP request to the temporary file
 	 *
-	 * @param $req MWHttpRequest
-	 * @return Status
+	 * @param $req mixed
+	 * @param $buffer string
+	 * @return int number of bytes handled
 	 */
-	private function saveTempFile( $req ) {
-		if ( $this->mTempPath === false ) {
-			return Status::newFatal( 'tmp-create-error' );
-		}
-		if ( file_put_contents( $this->mTempPath, $req->getContent() ) === false ) {
-			return Status::newFatal( 'tmp-write-error' );
+	public function saveTempFileChunk( $req, $buffer ) {
+		$nbytes = fwrite( $this->mTmpHandle, $buffer );
+
+		if ( $nbytes == strlen( $buffer ) ) {
+			$this->mFileSize += $nbytes;
+		} else {
+			// Well... that's not good!
+			fclose( $this->mTmpHandle );
+			$this->mTmpHandle = false;
 		}
 
-		$this->mFileSize = filesize( $this->mTempPath );
-
-		return Status::newGood();
+		return $nbytes;
 	}
+
 	/**
 	 * Download the file, save it to the temporary file and update the file
 	 * size and set $mRemoveTempFile to true.
+	 * @return Status
 	 */
 	protected function reallyFetchFile() {
-		$req = HttpRequest::factory( $this->mUrl );
+		if ( $this->mTempPath === false ) {
+			return Status::newFatal( 'tmp-create-error' );
+		}
+
+		// Note the temporary file should already be created by makeTemporaryFile()
+		$this->mTmpHandle = fopen( $this->mTempPath, 'wb' );
+		if ( !$this->mTmpHandle ) {
+			return Status::newFatal( 'tmp-create-error' );
+		}
+
+		$this->mRemoveTempFile = true;
+		$this->mFileSize = 0;
+
+		$req = MWHttpRequest::factory( $this->mUrl, array(
+			'followRedirects' => true
+		) );
+		$req->setCallback( array( $this, 'saveTempFileChunk' ) );
 		$status = $req->execute();
+
+		if ( $this->mTmpHandle ) {
+			// File got written ok...
+			fclose( $this->mTmpHandle );
+			$this->mTmpHandle = null;
+		} else {
+			// We encountered a write error during the download...
+			return Status::newFatal( 'tmp-write-error' );
+		}
 
 		if ( !$status->isOk() ) {
 			return $status;
 		}
-
-		$status = $this->saveTempFile( $req );
-		if ( !$status->isGood() ) {
-			return $status;
-		}
-		$this->mRemoveTempFile = true;
 
 		return $status;
 	}
@@ -142,7 +183,7 @@ class UploadFromUrl extends UploadBase {
 	 */
 	public function verifyUpload() {
 		if ( $this->mAsync ) {
-			return array( 'status' => self::OK );
+			return array( 'status' => UploadBase::OK );
 		}
 		return parent::verifyUpload();
 	}
@@ -163,11 +204,11 @@ class UploadFromUrl extends UploadBase {
 	 * Wrapper around the parent function in order to defer checking protection
 	 * until we are sure that the file can actually be uploaded
 	 */
-	public function verifyPermissions( $user ) {
+	public function verifyTitlePermissions( $user ) {
 		if ( $this->mAsync ) {
 			return true;
 		}
-		return parent::verifyPermissions( $user );
+		return parent::verifyTitlePermissions( $user );
 	}
 
 	/**
@@ -178,15 +219,19 @@ class UploadFromUrl extends UploadBase {
 		if ( $this->mAsync ) {
 			$sessionKey = $this->insertJob( $comment, $pageText, $watch, $user );
 
-			$status = new Status;
-			$status->error( 'async', $sessionKey );
-			return $status;
+			return Status::newFatal( 'async', $sessionKey );
 		}
 
 		return parent::performUpload( $comment, $pageText, $watch, $user );
 	}
 
-
+	/**
+	 * @param  $comment
+	 * @param  $pageText
+	 * @param  $watch
+	 * @param  $user User
+	 * @return
+	 */
 	protected function insertJob( $comment, $pageText, $watch, $user ) {
 		$sessionKey = $this->stashSession();
 		$job = new UploadFromUrlJob( $this->getTitle(), array(
@@ -204,6 +249,5 @@ class UploadFromUrl extends UploadBase {
 		$job->insert();
 		return $sessionKey;
 	}
-
 
 }

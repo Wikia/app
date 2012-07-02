@@ -1,6 +1,6 @@
 <!-- s:<?= __FILE__ ?> -->
 <p><?=wfMsg('multiwikiedit_help')?></p>
-<form name="multiwikiedit" class="highlightform" id="highlightform" enctype="multipart/form-data" method="post" action="<?=$obj->mTitle->escapeLocalURL( "action=addTask" ) ?>">
+<form name="multiwikiedit" class="highlightform" id="highlightform" enctype="multipart/form-data" method="post" action="<?=htmlspecialchars($obj->mTitle->getLocalURL( "action=addTask" )) ?>">
 <table>
 	<tr>
 		<td align="right"><?=wfMsg('multiwikiedit_as')?> :</td>

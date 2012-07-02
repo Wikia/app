@@ -287,7 +287,7 @@ class FounderEmails {
 			array( 'rev_user', 'min(rev_timestamp) as min_ts' ),
 			array( 'rev_user > 0' ),
 			__METHOD__,
-			array( 'GROUP BY' => 'rev_user', 'HAVING' => "min(rev_timestamp) like '" . $db->escapeLike( $today ) . "%'" )
+			array( 'GROUP BY' => 'rev_user', 'HAVING' => "min(rev_timestamp)" . $db->buildLike( $today, $db->anyString() ) )
 		);
 		
 		while ( $oRow = $db->fetchObject ( $oRes ) ) { 
@@ -317,7 +317,7 @@ class FounderEmails {
 					'user_id > 0' 
 				),
 				__METHOD__,
-				array( 'GROUP BY' => 'user_id', 'HAVING' => "min(ulh_timestamp) like '" . $db->escapeLike( $today ) . "%'" )
+				array( 'GROUP BY' => 'user_id', 'HAVING' => "min(ulh_timestamp)" .  $db->buildLike( $today, $db->anyString() ) )
 			);
 
 			while ( $oRow = $db->fetchObject ( $oRes ) ) { 

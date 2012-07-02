@@ -20,7 +20,7 @@ abstract class WikiaSkin extends SkinTemplate {
 
 	/**
 	 * WikiaSkin constructor
-	 * 
+	 *
 	 * @param String $templateClassName Mame of the QuickTemplate subclass to associate to this skin
 	 * @param String $skinName Name of the skin (lowercase)
 	 * @param String $styleName The style name, will use $skinName if not specified
@@ -52,15 +52,13 @@ abstract class WikiaSkin extends SkinTemplate {
 		if ( $themeName !== null ) {
 			$this->themename = $themeName;
 		} elseif ( !isset( $this->themename ) ) {
-			$this->themename = $this->skinname;
+				$this->themename = $this->skinname;
 		}
-
-		parent::__construct();
 	}
 
 	/**
-	 * Wether the skin performs strict checks on queued scripts/styles
-	 * 
+	 * Whether the skin performs strict checks on queued scripts/styles
+	 *
 	 * @return bool
 	 */
 	public function isStrict(){
@@ -68,7 +66,7 @@ abstract class WikiaSkin extends SkinTemplate {
 	}
 
 	/**
-	 * Rerturns misc items to be added to the head element
+	 * Returns misc items to be added to the head element
 	 *
 	 * @return string an html fragment containing the elements
 	 */
@@ -77,14 +75,14 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		//filter out elements that will be processed by getScripts or getStyles
 		$res = preg_replace( array( self::SCRIPT_REGEX, self::LINK_REGEX, self::STYLE_REGEX ), '', $this->wg->out->getHeadItems() );
-		
+
 		$this->wf->profileOut( __METHOD__ );
 		return $res;
 	}
 
 	/**
-	 * Rerturns the scripts to be output for this template as an array
-	 * 
+	 * Returns the scripts to be output for this template as an array
+	 *
 	 * @return array an array with the following format:
 	 * array( 'url' => 'asset URL, null if inlined code', 'tag' => 'the original tag found in the HTML output' );
 	 */
@@ -121,8 +119,8 @@ abstract class WikiaSkin extends SkinTemplate {
 	}
 
 	/**
-	 * Rerturns the link tags for stylesheets to be output for this template as an array
-	 * 
+	 * Returns the link tags for stylesheets to be output for this template as an array
+	 *
 	 * @return array an array with the following format:
 	 * array( 'url' => 'asset, null if inlined code', 'tag' => 'the original tag found in the HTML output' );
 	 */
@@ -141,7 +139,7 @@ abstract class WikiaSkin extends SkinTemplate {
 		if ( !empty( $matches[0] ) ) {
 			foreach ( $matches[0] as $m ) {
 				$hrefMatch = array();
-	
+
 				//find the src if set
 				preg_match( '/<link[^>]+href=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $m, $hrefMatch );
 
@@ -168,5 +166,60 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		$this->wf->profileOut( __METHOD__ );
 		return $res;
+	}
+
+	public function getTopScripts() {
+		$scripts = '';
+		$vars = array(
+			// macbre: quick fix for undefined JS variables
+			'EXP_AD_LOAD_TIMING' => 1,
+			'AB_CONFIG' => array(),
+			'TG_ONLOAD' => 1,
+			'TG_AFTER_DEPENDENCIES' => 2,
+			'TG_AS_WRAPPERS_ARE_RENDERED' => 3,
+		);
+
+		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+
+		return self::makeInlineVariablesScript($vars) . $scripts;
+	}
+	
+	// expose protected methods from Skin object
+	// we don't need buildSidebar()
+	
+	public function buildPersonalUrls() {
+		return parent::buildPersonalUrls();
+	}
+
+	public function buildContentNavigationUrls() {
+		return parent::buildContentNavigationUrls();
+	}
+	
+	public function buildContentActionUrls( $content_navigation ) {
+		return parent::buildContentActionUrls( $content_navigation );
+	}
+	
+	public function buildNavUrls() {
+		return parent::buildNavUrls();
+	}
+	
+	static function makeInlineVariablesScript( $data ) {
+		$wf = F::app()->wf;
+		$wf->profileIn( __METHOD__ );
+
+		if( $data ) {
+			$r = array();
+			foreach ( $data as $name => $value ) {
+				$encValue = Xml::encodeJsVar( $value );
+				$r[] = "$name=$encValue";
+			}
+
+			$js = Html::inlineScript( "\nvar " . implode( ",\n", $r ) . ";\n");
+			$wf->profileOut( __METHOD__ );
+			return $js;
+		} else {
+			$wf->profileOut(__METHOD__ );
+			return '';
+		}
 	}
 }

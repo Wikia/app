@@ -29,7 +29,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgExtensionMessagesFiles['SpecialInterwikiDispatcher'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.i18n.php';
-$wgExtensionAliasesFiles['SpecialInterwikiDispatcher'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.alias.php';
+$wgExtensionMessagesFiles['SpecialInterwikiDispatcherAliases'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.alias.php';
 
 //Register hook
 $wgHooks['GetFullURL'][] = 'InterwikiDispatcher::getInterWikiaURL';

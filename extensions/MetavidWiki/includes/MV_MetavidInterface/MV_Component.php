@@ -1,38 +1,38 @@
 <?php
 if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
-/*
+/**
  * Created on Jun 28, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
+ *
  * the base component class
  */
  class MV_Component {
  	var $name = 'MV_Component';
  	var $mv_interface = null;
- 	// default values: 
+ 	// default values:
  	var $status = 'ok';
  	var $innerHTML = '';
  	var $js_eval = false;
  	var $req = '';
  	var $mvd_tracks = array();
  	var $view_mode = '';
- 	
+
  	function __construct( $init = array() ) {
  		foreach ( $init as $k => $v ) {
  			$this->$k = $v;
  		}
  	}
- 	// process the request set (load from settings if not set in url 
+ 	// process the request set (load from settings if not set in url
 	// @@todo would be good to allow user-set preference in the future)
 	function procMVDReqSet( $only_requested = false ) {
 		global $wgRequest;
 		global $mvMVDTypeDefaultDisp, $mvMVDTypeAllAvailable;
-		// if already computed return: 
+		// if already computed return:
 		if ( count( $this->mvd_tracks ) != 0 )return $this->mvd_tracks;
-				 
-			
+
+
 		$user_tracks = $wgRequest->getVal( 'tracks' );
 
 		//set via overview request
@@ -40,7 +40,7 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 			$this->view_mode = 'overview';
 			$user_tracks = 'anno_en';
 		}
-			
+
 		// print "USER TRACKS: " . $user_tracks;
 		if ( $user_tracks != '' ) {
 			$user_set = explode( ',', $user_tracks );
@@ -51,14 +51,14 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 			}
 		} else {
 			if ( !$only_requested ) {
-				// set the default tracks (if not restricted to requested tracks)  
+				// set the default tracks (if not restricted to requested tracks)
 				foreach ( $mvMVDTypeDefaultDisp as $tk ) {
 					if ( !in_array( $tk, $mvMVDTypeAllAvailable ) ) {
 						global $wgOut;
 						$wgOut->errorPage( 'mvd_default_mismatch', 'mvd_default_mismatch_text' );
 					}
 				}
-				// just set to global default: 
+				// just set to global default:
 				$this->mvd_tracks = $mvMVDTypeDefaultDisp;
 			}
 		}
@@ -75,7 +75,7 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 				$and = '&';
 			}
 		}
-		// save tool_disp: 
+		// save tool_disp:
 		if ( $wgRequest->getVal( 'tool_disp' ) != '' ) {
 			$req .= $and . 'tool_disp=' . $wgRequest->getVal( 'tool_disp' );
 		}
@@ -109,12 +109,11 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 	}
  	function render_full() {
  		global $wgOut;
- 		// "<div >" . 		 		
+ 		// "<div >" .
  		$wgOut->addHTML( "<fieldset " . $this->getStyleOverride() . " id=\"" . get_class( $this ) . "\" >\n" .
  					"<legend id=\"mv_leg_" . get_class( $this ) . "\">" . $this->render_menu() . "</legend>\n" );
- 		// do the implemented html 
+ 		// do the implemented html
  		$this->getHTML();
  		$wgOut->addHTML( "</fieldset>\n" );
 	}
  }
-?>

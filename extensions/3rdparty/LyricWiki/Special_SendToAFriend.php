@@ -68,7 +68,6 @@ function lwSendToAFriend( $siteNotice )
 	//if( $wgTitle->getNamespace() == NS_MAIN )
 	//{
 		$title = Title::newFromText( "Special:SendToAFriend/".$wgTitle->getText() );
-		wfLoadExtensionMessages('SendToAFriend');
 		
 		$msg = wfMsg("staf-box",$title->getFullURL());
 		if( strpos($msg,"staf-box") === FALSE )

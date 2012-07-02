@@ -1,0 +1,12 @@
+
+Some TimedMediaHandler testing notes: 
+	
+	We have a base class ApiTestCaseVideoUpload that establishes the uploads. Actual uploading
+	is tested in the core uploading support so we focus these tests on timed media handler functionality 
+
+ 	We sometimes combine a few tests because fixtures don't play well with dataProvider 
+ 	since the mediawiki test framework nukes the db every time you run the next test in
+ 	a given dataProvider data set.
+ 	  
+
+		

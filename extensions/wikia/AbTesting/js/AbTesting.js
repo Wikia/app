@@ -28,7 +28,6 @@
 	c.abTreatments = treatments;
 	c.abBeingTracked = tracked;
 
-
 	/**
 	 * Will return the id of the treatment group that this user should see. If the beacon_id doesn't exist, the control group
 	 * will be returned.  If there is an error loading the config (so no control group or other group IDs can be found, this will
@@ -47,7 +46,7 @@
 				var tgId,
 					tgConfig;
 
-				if(typeof c.beacon_id == "undefined"){
+				if(/* //FIXME: 1.19 - disable ABtesting */ true || typeof c.beacon_id == "undefined"){
 					if (hasLogging) {
 						if(!c.wgJsAtBottom){
 							console.log("This type of page makes a beacon call in body but loads JS for tests in the head: A/B tests can't work this way. Will fall back to control group.");

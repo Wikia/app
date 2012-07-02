@@ -1,22 +1,22 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
  
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
     'Contact' => array(  'Contact', 'ContactForm', 'ContactWikia',  ),
 );
  
 /** German */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
     'Contact' => array(  'Kontakt',  ),
 );
 
 /** Spanish */
-$aliases['es'] = array(
+$specialPageAliases['es'] = array(
     'Contact' => array(  'Contactar',  ),
 );
 
 /** Polish */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Contact' => array( 'Kontakt' ),
 );

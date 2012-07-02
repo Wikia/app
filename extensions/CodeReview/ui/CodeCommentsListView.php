@@ -1,51 +1,52 @@
 <?php
 
-// Special:Code/MediaWiki
-class CodeCommentsListView extends CodeView {
-	public $mRepo;
-
-	function __construct( $repoName ) {
-		parent::__construct();
-		$this->mRepo = CodeRepository::newFromName( $repoName );
-	}
-
-	function execute() {
-		global $wgOut;
-		$pager = $this->getPager();
-		$wgOut->addHTML(
-			$pager->getNavigationBar() .
-			$pager->getLimitForm() .
-			$pager->getBody() .
-			$pager->getNavigationBar()
-		);
-	}
-
+// Special:Code/MediaWiki/comments
+class CodeCommentsListView extends CodeRevisionListView {
 	function getPager() {
 		return new CodeCommentsTablePager( $this );
 	}
-	function getRepo() {
-		return $this->mRepo;
-	}
 }
 
-// Pager for CodeRevisionListView
+// Pager for CodeCommentsListView
 class CodeCommentsTablePager extends SvnTablePager {
 
 	function isFieldSortable( $field ) {
 		return $field == 'cr_timestamp';
 	}
 
-	function getDefaultSort() { return 'cc_timestamp'; }
+	function getDefaultSort() {
+		return 'cc_timestamp';
+	}
 
 	function getQueryInfo() {
-		return array(
+		$query = array(
 			'tables' => array( 'code_comment', 'code_rev' ),
 			'fields' => array_keys( $this->getFieldNames() ),
 			'conds' => array( 'cc_repo_id' => $this->mRepo->getId() ),
 			'join_conds' => array(
 				'code_rev' => array( 'LEFT JOIN', 'cc_repo_id = cr_repo_id AND cc_rev_id = cr_id' )
-			)
+			),
+			'options' => array(),
 		);
+
+		if( count( $this->mView->mPath ) ) {
+			$query['tables'][] = 'code_paths';
+			$query['join_conds']['code_paths'] = array( 'INNER JOIN', 'cc_repo_id = cp_repo_id AND cc_rev_id = cp_rev_id' );
+			$query['conds']['cp_path'] = $this->mView->mPath;
+		}
+		if( $this->mView->mAuthor ) {
+			$query['conds']['cc_user_text'] = User::newFromName( $this->mView->mAuthor )->getName();
+		}
+
+	    return $query;
+	}
+
+	function getCountQuery() {
+		$query = $this->getQueryInfo();
+
+		$query['fields'] = array( 'COUNT( DISTINCT cc_id ) AS rev_count' );
+		unset( $query['options']['GROUP BY'] );
+		return $query;
 	}
 
 	function getFieldNames() {
@@ -60,24 +61,22 @@ class CodeCommentsTablePager extends SvnTablePager {
 	}
 
 	function formatValue( $name, $value ) {
-		global $wgLang;
 		switch( $name ) {
 		case 'cc_rev_id':
-			return $this->mView->mSkin->link(
-				SpecialPage::getTitleFor( 'Code', $this->mRepo->getName() . '/' . $value . '#code-comments' ),
+			return $this->mView->skin->link(
+				SpecialPage::getSafeTitleFor( 'Code', $this->mRepo->getName() . '/' . $value . '#code-comments' ),
 				htmlspecialchars( $value ) );
 		case 'cr_status':
-			return $this->mView->mSkin->link(
+			return $this->mView->skin->link(
 				SpecialPage::getTitleFor( 'Code',
 					$this->mRepo->getName() . '/status/' . $value ),
 				htmlspecialchars( $this->mView->statusDesc( $value ) ) );
 		case 'cc_user_text':
-			return $this->mView->mSkin->userLink( -1, $value );
+			return $this->mView->skin->userLink( - 1, $value );
 		case 'cr_message':
 			return $this->mView->messageFragment( $value );
 		case 'cc_text':
-			# Truncate this, blah blah...
-			return htmlspecialchars( $wgLang->truncate( $value, 300 ) );
+			return $this->mView->messageFragment( $value );
 		case 'cc_timestamp':
 			global $wgLang;
 			return $wgLang->timeanddate( $value, true );

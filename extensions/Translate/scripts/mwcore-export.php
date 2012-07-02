@@ -33,22 +33,22 @@ if ( isset( $options['help'] ) || $args === 1 ) {
 }
 
 if ( !isset( $options['target'] ) ) {
-	STDERR( "You need to specify target directory" );
+	STDERR( "You need to specify target directory." );
 	exit( 1 );
 }
 
 if ( !isset( $options['lang'] ) ) {
-	STDERR( "You need to specify languages to export" );
+	STDERR( "You need to specify languages to export." );
 	exit( 1 );
 }
 
 if ( !isset( $options['type'] ) ) {
-	STDERR( "Type must be one of the following: special magic namespace" );
+	STDERR( "Type must be one of the following: special magic namespace." );
 	exit( 1 );
 }
 
 if ( !is_writable( $options['target'] ) ) {
-	STDERR( "Target directory is not writable" );
+	STDERR( "Target directory is not writable." );
 	exit( 1 );
 }
 
@@ -70,7 +70,7 @@ foreach ( $langs as $l ) {
 			$o = new NamespaceCM( $l );
 			break;
 		default:
-			STDERR( "Invalid type: must be one of special, magic, namespace" );
+			STDERR( "Invalid type: must be one of special, magic, namespace." );
 			exit( 1 );
 	}
 
@@ -90,7 +90,7 @@ foreach ( $langs as $l ) {
 	$export = preg_replace( "~^# .*$\n~m", '', $export );
 
 	if ( strpos( $export, '#!!' ) !== false ) {
-		STDERR( "There is warnings with $l" );
+		STDERR( "There are warnings with $l." );
 	}
 
 	$variable = preg_quote( $matches[1], '~' );
@@ -98,7 +98,7 @@ foreach ( $langs as $l ) {
 	$file = $group->getMessageFileWithPath( $l );
 
 	if ( !file_exists( $file ) ) {
-		STDERR( "File $file does not exists!" );
+		STDERR( "File $file does not exist!" );
 		continue;
 	}
 
@@ -114,7 +114,7 @@ foreach ( $langs as $l ) {
 	if ( $count ) {
 		file_put_contents( $outFile, $data );
 	} else {
-		STDERR( "Adding new entry to $outFile, please double check location", $l );
+		STDERR( "Adding new entry to $outFile, please double check location.", $l );
 		$pos = strpos( $data, "*/" );
 		if ( $pos === false ) {
 			STDERR( ". FAILED! Totally new file? No header?", $l );

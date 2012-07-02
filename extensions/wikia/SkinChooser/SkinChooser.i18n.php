@@ -84,7 +84,7 @@ $messages['fr'] = array(
 	'site-layout' => 'Apparences du site',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

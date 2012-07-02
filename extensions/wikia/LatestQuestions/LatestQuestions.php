@@ -44,7 +44,6 @@ function wfLatestQuestionsAddModule( &$railModuleList ) {
 
 function wfLatestQuestionsJSVariables( &$vars ) {
 	global $wgAnswersServer, $wgAnswersScript;
-	wfLoadExtensionMessages('LatestQuestions');
 	$vars['wgAnswersServer'] = $wgAnswersServer;
 	$vars['wgAnswersScript'] = $wgAnswersScript;
 	$vars['wgLatestQuestionsHeader'] = wfMsg('latest-questions-header');

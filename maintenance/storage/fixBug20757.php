@@ -1,4 +1,25 @@
 <?php
+/**
+ * Script to fix bug 20757.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup Maintenance ExternalStorage
+ */
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
@@ -14,7 +35,7 @@ class FixBug20757 extends Maintenance {
 		$this->addOption( 'dry-run', 'Report only' );
 		$this->addOption( 'start', 'old_id to start at', false, true );
 	}
-	
+
 	function execute() {
 		$dbr = wfGetDB( DB_SLAVE );
 		$dbw = wfGetDB( DB_MASTER );
@@ -31,19 +52,29 @@ class FixBug20757 extends Maintenance {
 
 		$totalRevs = $dbr->selectField( 'text', 'MAX(old_id)', false, __METHOD__ );
 
+		if ( $dbr->getType() == 'mysql'
+			&& version_compare( $dbr->getServerVersion(), '4.1.0', '>=' ) )
+		{
+			// In MySQL 4.1+, the binary field old_text has a non-working LOWER() function
+			$lowerLeft = 'LOWER(CONVERT(LEFT(old_text,22) USING latin1))';
+		} else {
+			// No CONVERT() in MySQL 4.0
+			$lowerLeft = 'LOWER(LEFT(old_text,22))';
+		}
+
 		while ( true ) {
 			print "ID: $startId / $totalRevs\r";
 
 			$res = $dbr->select(
 				'text',
 				array( 'old_id', 'old_flags', 'old_text' ),
-				array( 
+				array(
 					'old_id > ' . intval( $startId ),
 					'old_flags LIKE \'%object%\' AND old_flags NOT LIKE \'%external%\'',
-					'LOWER(CONVERT(LEFT(old_text,22) USING latin1)) = \'o:15:"historyblobstub"\'',
+					"$lowerLeft = 'o:15:\"historyblobstub\"'",
 				),
 				__METHOD__,
-				array( 
+				array(
 					'ORDER BY' => 'old_id',
 					'LIMIT' => $this->batchSize,
 				)
@@ -68,7 +99,7 @@ class FixBug20757 extends Maintenance {
 				}
 
 				if ( !is_object( $obj ) ) {
-					print "{$row->old_id}: unrecoverable: unserialized to type " . 
+					print "{$row->old_id}: unrecoverable: unserialized to type " .
 						gettype( $obj ) . ", possible double-serialization\n";
 					++$numBad;
 					continue;
@@ -120,22 +151,21 @@ class FixBug20757 extends Maintenance {
 			}
 
 			// Process the stubs
-			$stubsToFix = array();
 			foreach ( $stubs as $primaryId => $stub ) {
 				$secondaryId = $stub['secondaryId'];
 				if ( !isset( $trackedBlobs[$secondaryId] ) ) {
 					// No tracked blob. Work out what went wrong
-					$secondaryRow = $dbr->selectRow( 
-						'text', 
+					$secondaryRow = $dbr->selectRow(
+						'text',
 						array( 'old_flags', 'old_text' ),
-						array( 'old_id' => $secondaryId ), 
+						array( 'old_id' => $secondaryId ),
 						__METHOD__
 					);
 					if ( !$secondaryRow ) {
 						print "$primaryId: unrecoverable: secondary row is missing\n";
 						++$numBad;
 					} elseif ( $this->isUnbrokenStub( $stub, $secondaryRow ) ) {
-						// Not broken yet, and not in the tracked clusters so it won't get 
+						// Not broken yet, and not in the tracked clusters so it won't get
 						// broken by the current RCT run.
 						++$numGood;
 					} elseif ( strpos( $secondaryRow->old_flags, 'external' ) !== false ) {
@@ -196,7 +226,7 @@ class FixBug20757 extends Maintenance {
 						__METHOD__
 					);
 
-					// Add a blob_tracking row so that the new reference can be recompressed 
+					// Add a blob_tracking row so that the new reference can be recompressed
 					// without needing to run trackBlobs.php again
 					$dbw->insert( 'blob_tracking',
 						array(
@@ -230,7 +260,7 @@ class FixBug20757 extends Maintenance {
 		static $iteration = 0;
 		++$iteration;
 		if ( ++$iteration > 50 == 0 ) {
-			wfWaitForSlaves( 5 );
+			wfWaitForSlaves();
 			$iteration = 0;
 		}
 	}
@@ -255,7 +285,7 @@ class FixBug20757 extends Maintenance {
 
 			$dbr = wfGetDB( DB_SLAVE );
 			$map = array();
-			$res = $dbr->select( 'revision', 
+			$res = $dbr->select( 'revision',
 				array( 'rev_id', 'rev_text_id' ),
 				array( 'rev_page' => $pageId ),
 				__METHOD__
@@ -272,11 +302,14 @@ class FixBug20757 extends Maintenance {
 	/**
 	 * This is based on part of HistoryBlobStub::getText().
 	 * Determine if the text can be retrieved from the row in the normal way.
+	 * @param $stub
+	 * @param $secondaryRow
+	 * @return bool
 	 */
 	function isUnbrokenStub( $stub, $secondaryRow ) {
 		$flags = explode( ',', $secondaryRow->old_flags );
 		$text = $secondaryRow->old_text;
-		if( in_array( 'external', $flags ) ) {
+		if ( in_array( 'external', $flags ) ) {
 			$url = $text;
 			@list( /* $proto */ , $path ) = explode( '://', $url, 2 );
 			if ( $path == "" ) {
@@ -284,17 +317,17 @@ class FixBug20757 extends Maintenance {
 			}
 			$text = ExternalStore::fetchFromUrl( $url );
 		}
-		if( !in_array( 'object', $flags ) ) {
+		if ( !in_array( 'object', $flags ) ) {
 			return false;
 		}
 
-		if( in_array( 'gzip', $flags ) ) {
+		if ( in_array( 'gzip', $flags ) ) {
 			$obj = unserialize( gzinflate( $text ) );
 		} else {
 			$obj = unserialize( $text );
 		}
 
-		if( !is_object( $obj ) ) {
+		if ( !is_object( $obj ) ) {
 			// Correct for old double-serialization bug.
 			$obj = unserialize( $obj );
 		}
@@ -310,5 +343,5 @@ class FixBug20757 extends Maintenance {
 }
 
 $maintClass = 'FixBug20757';
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );
 

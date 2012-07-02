@@ -26,7 +26,6 @@ class SortPermissions extends SpecialPage {
 			$wgOut->permissionRequired( 'grouppermissions' );
 			return;
 		}
-		loadGPMessages();
 		$wgOut->addHTML('<noscript><strong>' . wfMsg('grouppermissions-needjs') . '</strong></noscript>');
 		$this->setHeaders();
 		$wgOut->addWikiText( wfMsg( 'grouppermissions-sp-header' ) );

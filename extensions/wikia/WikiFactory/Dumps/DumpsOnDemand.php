@@ -36,7 +36,7 @@ class DumpsOnDemand {
 		$json = Http::get( $url, 5, $proxy );
 		if( $json ) {
 			wfDebug( __METHOD__ . ": getting informations about last dump from $url succeded\n" );
-			$index = (array )Wikia::json_decode( $json );
+			$index = (array )json_decode( $json );
 		}
 		else {
 			wfDebug( __METHOD__ . ": getting informations about last dump from $url failed\n" );

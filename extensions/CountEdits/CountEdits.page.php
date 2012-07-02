@@ -5,7 +5,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
 /**
  * Special page class for the CountEdits extension
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
 
@@ -14,12 +15,12 @@ class SpecialCountEdits extends SpecialPage {
 	var $target;
 
 	public function __construct() {
-		SpecialPage::SpecialPage( 'CountEdits' );
+		parent::__construct( 'CountEdits' );
 	}
 
 	public function execute( $params ) {
 		global $wgOut, $wgUser;
-		wfLoadExtensionMessages( 'CountEdits' );
+		
 		$skin = $wgUser->getSkin();
 		$this->setHeaders();
 		$this->loadRequest( $params );
@@ -53,19 +54,17 @@ class SpecialCountEdits extends SpecialPage {
 	function makeForm() {
 		$self = $this->getTitle();
 		$form  = '<form method="post" action="'. $self->getLocalUrl() . '">';
-		$form .= '<p><label for="target">' . wfMsgHtml( 'countedits-username' ) . '</label>&nbsp;';
-		$form .= '<input type="text" name="target" id="target" size="25" value="' . htmlspecialchars( $this->target ) . '" />&nbsp;';
+		$form .= '<p><label for="target">' . wfMsgHtml( 'countedits-username' ) . '</label>&#160;';
+		$form .= '<input type="text" name="target" id="target" size="25" value="' . htmlspecialchars( $this->target ) . '" />&#160;';
 		$form .= '<input type="submit" name="countedits" value="' . wfMsgHtml( 'countedits-ok' ) . '" />';
 		$form .= '</p></form>';
 		return $form;
 	}
 
 	function countEditsReal( $id, $text = false ) {
-		global $wgVersion;
 		$dbr = wfGetDB( DB_SLAVE );
-		# MediaWiki 1.9.x has a user.user_editcount column we can use,
-		# but this is not useful for older versions or anon. checks
-		if( $text === false && version_compare( $wgVersion, '1.9alpha', '>=' ) ) {
+
+		if( $text === false ) {
 			$conds = array( 'user_id' => $id );
 			return $dbr->selectField( 'user', 'user_editcount', $conds, 'CountEdits::countEditsReal' );
 		} else {

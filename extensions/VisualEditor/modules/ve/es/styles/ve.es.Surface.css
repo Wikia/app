@@ -1,0 +1,34 @@
+.es-surfaceView {
+	overflow: hidden;
+	font-size: 1em; /* to look more like MediaWiki use: 0.8em */;
+	margin-left: -1em;
+	margin-right: -1em;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select;
+	user-select: none;
+}
+
+.es-surfaceView-textarea {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+	color: white;
+	background-color: white;
+	border: none;
+	padding: 0;
+	margin: 0;
+	width: 1px;
+}
+
+.es-surfaceView-textarea:focus {
+	outline: none;
+}
+
+.es-surfaceView-cursor {
+	position: absolute;
+	background-color: black;
+	width: 1px;
+	display: none;
+}

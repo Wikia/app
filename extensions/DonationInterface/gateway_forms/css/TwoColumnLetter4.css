@@ -1,0 +1,103 @@
+.payflow-cc-form-section {
+        float: none;
+        margin-right: 0em;
+        margin-bottom: 1em;
+}
+
+#payflowpro_gateway-cc_form_container {
+        width: 100%;
+}
+
+#payflowpro_gateway-cc_form_form {
+        width: 475px;
+        float: right;
+        margin-left: 2em;
+        padding-left: 2em;
+        border-left: 1px solid #BBBBBB;
+}
+
+#payflowpro_gateway-cc_form_letter {
+        height: 100%;
+}
+
+#payflowpro_gateway-cc_form_letter p {
+        font-size: 1.125em;
+        margin-bottom: 1.2em;
+}
+
+#payflowpro_gateway-personal-info {
+	margin-right:0 !important;
+}
+
+#payflowpro_gateway-donate-addl-info-secure-logos {
+	float: left;
+	margin-right: 2em;
+}
+
+#payflowpro_gateway-cc_form_letter_inside {	
+	padding-top: .5em;
+}
+
+#payflowpro_gateway-cc_otherways {
+	padding-top: .5em;
+	display: block;
+}
+#payflowpro_gateway-donate-addl-info {
+	margin-top:3em !important;
+	margin-bottom:1em !important;
+}
+
+#appeal {
+	/* background-color:#F3F3F3; */
+	background-color: transparent;
+	/* border-color:silver; */
+	border-color: transparent;
+	border-style:solid;
+	border-width:1px 0 1px 1px;
+	padding:16px 24px 24px;
+}
+#appeal-head {
+	font-size:1.5em;
+	line-height:1.125em;
+	padding-bottom:0.5em;
+	padding-top:0.125em;
+}
+#appeal-body {
+	font-size:1.125em;
+	margin-bottom:1em;
+	padding:0.2em 0;
+}
+#donate {
+	background-color:transparent;
+	border:1px solid transparent;
+	padding:16px 24px 24px;
+	width:400px;
+}
+#donate-head {
+	border-color:#AAAAAA;
+	font-size:1.5em;
+	line-height:1.125em;
+	padding-bottom:0.5em;
+	padding-top:0.125em;
+}
+#donate-body {
+	font-size:1.125em;
+	margin-bottom:1em;
+}
+
+/* Hiding content border */
+table {
+	background-color: transparent;
+}
+div#content {
+	background-color: transparent !important;
+	background-image: none !important;
+}
+div#mw-head-base {
+	background-image: none !important;
+}
+
+/* Hiding stuff we don't need */
+h1#firstHeading, div#contentSub {
+	display: none;
+}

@@ -15,7 +15,7 @@ public class SiteWideMessagesTest extends BaseTest {
 		return msg + ' ' + Integer.toString(generator.nextInt(65536));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testSendMessageToOneUser() throws Exception {
 		uniqMessage = uniqId("Selenium test message");
 		
@@ -40,7 +40,7 @@ public class SiteWideMessagesTest extends BaseTest {
 		assertTrue(session().isTextPresent("The message has been sent."));
 	}
 	
-	@Test(groups={"CI", "verified"},dependsOnMethods={"testSendMessageToOneUser"})
+	@Test(groups={"CI", "legacy"},dependsOnMethods={"testSendMessageToOneUser"})
 	public void testReceiveMessageSentToOneUser() throws Exception {
 		loginAsRegular();
 		

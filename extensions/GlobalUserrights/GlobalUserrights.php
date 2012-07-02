@@ -10,23 +10,22 @@
  * @note Some of the code based on stuff by Lukasz 'TOR' Garczewski, as well as SpecialUserrights.php and CentralAuth
  */
 
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 // Extension credits
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'GlobalUserrights',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:GlobalUserrights',
-	'version'        => '1.0.2',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:GlobalUserrights',
+	'version'        => '1.0.3',
 	'author'         => 'Nathaniel Herman',
-	'description'    => 'Easy [[Special:GlobalUserRights|global user rights]] administration',
 	'descriptionmsg' => 'gur-desc',
 );
 
 // Set up the new special page
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['GlobalUserrights'] = $dir . 'GlobalUserrights.i18n.php';
-$wgExtensionAliasesFiles['GlobalUserrights'] = $dir . 'GlobalUserrights.alias.php';
+$wgExtensionMessagesFiles['GlobalUserrightsAlias'] = $dir . 'GlobalUserrights.alias.php';
 $wgAutoloadClasses['GlobalUserrights'] = $dir . 'GlobalUserrights_body.php';
 $wgSpecialPages['GlobalUserrights'] = 'GlobalUserrights';
 $wgSpecialPageGroups['GlobalUserrights'] = 'users';
@@ -53,7 +52,7 @@ $wgHooks['SpecialListusersQueryInfo'][] = 'efGURUpdateQueryInfo';
  */
 function efGURgetGroups( $user ) {
 	if ( $user instanceof User ) {
-		$uid = $user->mId;
+		$uid = $user->getId();
 	} else {
 		// if $user isn't an instance of user, assume it's the uid
 		$uid = $user;
@@ -62,19 +61,18 @@ function efGURgetGroups( $user ) {
 	$dbr = wfGetDB( DB_MASTER );
 	$groups = array();
 
-	$res = $dbr->select( 'global_user_groups',
+	$res = $dbr->select(
+		'global_user_groups',
 		array( 'gug_group' ),
-		array( 'gug_user' => $uid )
+		array( 'gug_user' => $uid ),
+		__FUNCTION__
 	);
 
-	while( $row = $dbr->fetchObject( $res ) ) {
+	foreach ( $res as $row ) {
 		$groups[] = $row->gug_group;
 	}
 
-	$dbr->freeResult( $res );
-
 	return $groups;
-
 }
 
 /** 
@@ -101,15 +99,20 @@ function efAddGlobalUserrights( $user, &$groups ) {
  */
 function efGURUpdateQueryInfo( $that, &$query ) {
 	$dbr = wfGetDB( DB_SLAVE );
-	list( $gug ) = $dbr->tableNamesN( 'global_user_groups' );
-	$query['tables'] .= "LEFT JOIN $gug ON user_id=gug_user";
+
+	$query['tables'][] = 'global_user_groups';
+	$query['join_conds']['global_user_groups'] = array(
+		'LEFT JOIN',
+		'user_id = gug_user'
+	);
+
 	$query['fields'][3] = 'COUNT(ug_group) + COUNT(gug_group) AS numgroups';
 	// kind of yucky statement, I blame MySQL 5.0.13 http://bugs.mysql.com/bug.php?id=15610
 	$query['fields'][4] = 'GREATEST(COALESCE(ug_group, gug_group), COALESCE(gug_group, ug_group)) AS singlegroup';
 
 	// if there's a $query['conds']['ug_group'], destroy it and make one that accounts for gug_group
-	if( isset( $query['conds']['ug_group'] ) ) {
-		unset($query['conds']['ug_group']);
+	if ( isset( $query['conds']['ug_group'] ) ) {
+		unset( $query['conds']['ug_group'] );
 		$reqgrp = $dbr->addQuotes( $that->requestedGroup );
 		$query['conds'][] = 'ug_group = ' . $reqgrp . 'OR gug_group = ' . $reqgrp;
 	}

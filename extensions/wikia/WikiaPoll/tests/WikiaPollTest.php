@@ -19,8 +19,6 @@ class WikiaPollTest extends WikiaBaseTest {
 	public static function tearDownAfterClass() {
 		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
 		$article = new Article($title, NS_WIKIA_POLL);
-		if ($article->exists())
-			$article->doDelete("Unit Testing", true);
 
 		F::unsetInstance( 'User');
 		F::unsetInstance( 'WebRequest' );
@@ -58,7 +56,9 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getArray')
 				->with($this->equalTo('answer'))
 				->will($this->returnValue(array("One", "Two", "Three")));
-		F::setInstance('WebRequest', $wgRequest);
+		$wgRequest->expects($this->any())
+				->method('getIP')
+				->will($this->returnValue('127.0.0.1'));
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 		
 		$this->mockApp();
@@ -83,7 +83,6 @@ class WikiaPollTest extends WikiaBaseTest {
 				->with($this->equalTo('pollId'))
 				->will($this->returnValue($pollId));
 
-		F::setInstance( 'WebRequest', $wgRequest );
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$result = $poll->get();
@@ -104,9 +103,7 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getArray')
 				->with($this->equalTo('answer'))
 				->will($this->returnValue(array("Three", "Two", "One")));
-
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
-		F::setInstance( 'WebRequest', $wgRequest );
 
 		$result = $poll->update();
 
@@ -125,7 +122,6 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getVal')
 				->with($this->equalTo('answer'))
 				->will($this->returnValue(2));
-		F::setInstance( 'WebRequest', $wgRequest );		
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$result = $poll->vote();
@@ -139,13 +135,16 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getVal')
 				->with($this->equalTo('pollId'))
 				->will($this->returnValue($pollId));
-		F::setInstance( 'WebRequest', $wgRequest );
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$result = $poll->hasVoted();
 		$this->assertType("array", $result, "HasVoted result is array");
 		$this->assertEquals(true, $result['hasVoted'], "HasVoted result is true");
 
+		// clean up
+		if ($article->exists())
+			$article->doDelete("Unit Testing", true);
+		
 	}
 
 	function testDuplicateCreate() {
@@ -161,8 +160,13 @@ class WikiaPollTest extends WikiaBaseTest {
 				->method('getArray')
 				->with($this->equalTo('answer'))
 				->will($this->returnValue(array("One", "Two", "Three")));
-		F::app()->setGlobal('wgRequest', $wgRequest );
-
+		$wgRequest->expects($this->any())
+				->method('getIP')
+				->will($this->returnValue('127.0.0.1'));
+		
+		$this->mockGlobalVariable('wgRequest', $wgRequest);
+		$this->mockApp();
+		
 		// Create the same poll twice
 		$result = $poll->create();
 		$result = $poll->create();
@@ -170,6 +174,12 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertType("array", $result, "Create duplicate result is array");
 		$this->assertEquals(false, $result["success"], "Create duplicate Poll success flag is false");
 		$this->assertType("string", $result["error"], "Create duplicate Poll results in an error");
+		
+		// clean up
+		$title = Title::newFromText ("Unit Testing", NS_WIKIA_POLL) ;
+		$article = new Article($title, NS_WIKIA_POLL);
+		if ($article->exists())
+			$article->doDelete("Unit Testing", true);
 
 	}
 

@@ -249,7 +249,7 @@ class Spreadsheet_Excel_Writer_Format extends PEAR
     * @param integer $index the XF index for the format.
     * @param array   $properties array with properties to be set on initialization.
     */
-    function Spreadsheet_Excel_Writer_Format($BIFF_version, $index = 0, $properties =  array())
+    function __construct($BIFF_version, $index = 0, $properties =  array())
     {
         $this->_xf_index       = $index;
         $this->_BIFF_version   = $BIFF_version;
@@ -429,7 +429,7 @@ class Spreadsheet_Excel_Writer_Format extends PEAR
 
             $header      = pack("vv",       $record, $length);
 
-            $rotation      = 0x00;
+            $rotation      = $this->_rotation;
             $biff8_options = 0x00;
             $data  = pack("vvvC", $ifnt, $ifmt, $style, $align);
             $data .= pack("CCC", $rotation, $biff8_options, $used_attrib);
@@ -996,20 +996,32 @@ class Spreadsheet_Excel_Writer_Format extends PEAR
                 $this->_rotation = 0;
                 break;
             case 90:
+                if ($this->_BIFF_version == 0x0500) {
                 $this->_rotation = 3;
+                } elseif ($this->_BIFF_version == 0x0600) {
+                    $this->_rotation = 180;
+                }
                 break;
             case 270:
+                if ($this->_BIFF_version == 0x0500) {
                 $this->_rotation = 2;
+                } elseif ($this->_BIFF_version == 0x0600) {
+                    $this->_rotation = 90;
+                }
                 break;
             case -1:
+                if ($this->_BIFF_version == 0x0500) {
                 $this->_rotation = 1;
+                } elseif ($this->_BIFF_version == 0x0600) {
+                    $this->_rotation = 255;
+                }
                 break;
             default :
                 return $this->raiseError("Invalid value for angle.".
                                   " Possible values are: 0, 90, 270 and -1 ".
                                   "for stacking top-to-bottom.");
-                $this->_rotation = 0;
-                break;
+					  $this->_rotation = 0;
+					  break;
         }
     }
 
@@ -1099,4 +1111,3 @@ class Spreadsheet_Excel_Writer_Format extends PEAR
         $this->_font_name = $font_family;
     }
 }
-?>

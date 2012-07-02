@@ -66,7 +66,6 @@ class FBConnectPushEvent {
 	static public function addPreferencesToggles( $user, &$preferences ){
 		wfProfileIn(__METHOD__);
 		global $fbPushEventClasses, $wgUser;
-		wfLoadExtensionMessages('FBConnect');
 		$id = FBConnectDB::getFacebookIDs($wgUser);
 		if( count($id) > 0 ) {
 			if(!empty($fbPushEventClasses)){
@@ -175,7 +174,6 @@ class FBConnectPushEvent {
 				}
 
 				// The push event is valid, let it initialize itself if needed.
-				$pushObj->loadMsg();
 				if( !$wgUser->getOption(self::$PREF_TO_DISABLE_ALL) ) {
 					if( $wgUser->getOption($prefName) ) {
 						$pushObj->init();
@@ -195,8 +193,6 @@ class FBConnectPushEvent {
 	 */
 	public function init(){}
 
-
-	public function loadMsg() {}
 
 
 	/**
@@ -242,15 +238,8 @@ class FBConnectPushEvent {
 				$short = str_replace($key, $value, $short);
 			}
 
-			try {
-				$status = $fb->publishStream( $href, $description, $short, $link, $image);
-				self::addEventStat($status, $class);
-			}
-			catch (Exception $ex) {
-				// Wikia: don't fatal due to uncaught exception (BugId:26681)
-				Wikia::log(__METHOD__, 'Exception', $ex->getMessage());
-			}
-
+			$status = $fb->publishStream( $href, $description, $short, $link, $image);
+			self::addEventStat($status, $class);
 			return $status;
 		}
 

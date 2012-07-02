@@ -1,6 +1,6 @@
 Replace Text Extension
 
-        Version 0.7.1
+        Version 0.9.3
         Yaron Koren and Niklas Laxström
 
 This is free software licenced under the GNU General Public Licence. Please
@@ -28,7 +28,7 @@ http://www.mediawiki.org/wiki/Extension:Replace_Text
 
 == Requirements ==
 
-This version of the Replace Text extension requires MediaWiki 1.11 or higher.
+This version of the Replace Text extension requires MediaWiki 1.16 or higher.
 
 == Installation ==
 

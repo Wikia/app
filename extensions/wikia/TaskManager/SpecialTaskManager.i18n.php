@@ -14,6 +14,7 @@ $messages['en'] = array(
 	'right-taskmanager' => "Can display background tasks",
 	'right-taskmanager-action' => "Can manage background tasks",
 	'taskmanager-invert' => 'Invert selection',
+	'action-taskmanager' => 'display and manage background tasks',
 );
 
 /** Afrikaans (Afrikaans)
@@ -25,7 +26,7 @@ $messages['af'] = array(
 	'taskmanager_tasklist' => 'Keer terug na taaklys',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -117,7 +118,7 @@ $messages['fr'] = array(
 	'taskmanager-invert' => 'Inverser la sélection',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -136,7 +137,7 @@ $messages['he'] = array(
 	'taskmanager_tasklist' => 'חזרה לרשימת המשימות',
 );
 
-/** Upper Sorbian (hornjoserbsce)
+/** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(

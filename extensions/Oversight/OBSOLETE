@@ -1,0 +1,8 @@
+As of MediaWiki 1.16.0 this extension is obsolete due to core functionality for
+revision deletion (oversight). As such, new installations of this extension are
+redundant. This extension is not actively maintained, and is only really kept around
+as it is still somewhat used on Wikimedia Wikis.
+
+It will be deleted from subversion in the near future.
+
+http://www.mediawiki.org/wiki/RevisionDelete

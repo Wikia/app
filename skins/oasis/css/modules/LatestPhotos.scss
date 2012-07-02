@@ -98,8 +98,8 @@
 }
 
 .LatestPhotosModule {
-	>h1 {
-		display: none;
+	>h1.tight {
+		margin-bottom: 10px;
 	}
 
 	.tally {
@@ -202,7 +202,7 @@
 
 	.carousel-container {
 		height: 90px;
-		left: 5px;
+		left: 2px;
 		overflow: hidden; // /** for testing **/
 		position: relative;
 		width: 258px;
@@ -213,7 +213,6 @@
 
 	ul { // /** id class: .carousel **/
 		display: block;
-		left: 4px;
 		list-style: none;
 		position: absolute;
 		width: 500px;

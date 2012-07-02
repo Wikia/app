@@ -44,17 +44,22 @@ body {
 
 	//avoid webkit's automatic text adjustment
 	-webkit-text-size-adjust: none;
+}
 
-	&.hidden::after{
-		z-index: 100;
-		content: '';
-		background-color: hsla(0, 0%, 0%, .4);
-		height: 100%;
-		width: 100%;
-		left: 0;
-		top: 0;
-		position: absolute;
-	}
+.curtain {
+	z-index: 100;
+	background-color: rgba(0,0,0,.4);
+	height: 100%;
+	width: 100%;
+	left: 0;
+	top: 0;
+	position: absolute;
+	display: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.hidden .curtain {
+	display: block;
 }
 
 #wkMainCntHdr {

@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -35,8 +36,7 @@ $wgWikilogDocumentationXML = "$WIKILOGDIR/documentation/documentation.xml";
 
 # Compatibility with MediaWiki < 1.16.
 if ( !file_exists( "$MEDIAWIKIDIR/maintenance/Maintenance.php" ) ) {
-	require( 'wikilogImportDocumentation-pre1.16.php' );
-	exit( 0 );
+	die( "MediaWiki 1.16 or later is required." );
 }
 
 # Maintenance scripts base class.
@@ -165,10 +165,10 @@ class WikilogImportDocumentation
 				$this->output( " uploading..." );
 				$filepath = dirname( $this->mFilename ) . '/' . $base;
 				$archive = $image->upload( $filepath, $this->mComment,
-					$revision->getText(), 0, false, $this->mTimeStamp,
+					$revision->getText(), 0, false, $this->mTimestamp,
 					$this->mUser);
 
-				if ( WikiError::isError( $archive ) || !$archive->isGood() ) {
+				if ( !$archive->isGood() ) {
 					$this->output( " failed.\n" );
 					return false;
 				} else {

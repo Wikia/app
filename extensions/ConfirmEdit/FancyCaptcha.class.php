@@ -31,7 +31,7 @@ class FancyCaptcha extends SimpleCaptcha {
 			return;
 		}
 		$index = $this->storeCaptcha( $info );
-		$title = Title::makeTitle( NS_SPECIAL, 'Captcha/image' );
+		$title = SpecialPage::getTitleFor( 'Captcha', 'image' );
 		$resultArr['captcha']['type'] = 'image';
 		$resultArr['captcha']['mime'] = 'image/png';
 		$resultArr['captcha']['id'] = $index;
@@ -41,10 +41,10 @@ class FancyCaptcha extends SimpleCaptcha {
 	/**
 	 * Insert the captcha prompt into the edit form.
 	 */
-	function getForm($template = 'default') {
+	function getForm() {
 		$info = $this->pickImage();
 		if ( !$info ) {
-			die( "out of captcha images; this shouldn't happen.  Please make sure wgCaptchaDirectory and wgCaptchaDirectoryLevels are configured correctly." );
+			throw new MWException( "Ran out of captcha images" );
 		}
 
 		// Generate a random key for use of this captcha image in this session.
@@ -54,16 +54,31 @@ class FancyCaptcha extends SimpleCaptcha {
 
 		wfDebug( "Captcha id $index using hash ${info['hash']}, salt ${info['salt']}.\n" );
 
-		$title = Title::makeTitle( NS_SPECIAL, 'Captcha/image' );
+		$title = SpecialPage::getTitleFor( 'Captcha', 'image' );
 
-		$captchaTemplate = new EasyTemplate(dirname(__FILE__).'/templates');
-		$captchaTemplate->set_vars(array(
-			'title' => $title,
-			'info' => $info,
-			'index' => $index
-		));
-		$resultHTML = $captchaTemplate->execute($template);
-		return $resultHTML;
+		/* Wikia change - begin */
+		return "<p>" .
+			Xml::element( 'img', array(
+				'src'    => $title->getLocalUrl( 'wpCaptchaId=' . urlencode( $index ) ),
+				'width'  => $info['width'],
+				'height' => $info['height'],
+				'alt'    => '' ) ) .
+			"</p>\n" .
+			Xml::element( 'input', array(
+				'type'  => 'hidden',
+				'name'  => 'wpCaptchaId',
+				'id'    => 'wpCaptchaId',
+				'value' => $index ) ) .
+			"<p>" .
+			Html::element( 'input', array(
+				'name' => 'wpCaptchaWord',
+				'id'   => 'wpCaptchaWord',
+				'autocorrect' => 'off',
+				'autocapitalize' => 'off',
+				'required',
+				'placeholder' => wfMsg('captcha-input-placeholder') ) ) .
+			"</p>\n";
+		/* Wikia change - end */
 	}
 
 	/**
@@ -84,6 +99,9 @@ class FancyCaptcha extends SimpleCaptcha {
 
 			// Check which subdirs are actually present...
 			$dir = opendir( $directory );
+			if ( !$dir ) {
+				return false;
+			}
 			while ( false !== ( $entry = readdir( $dir ) ) ) {
 				if ( ctype_xdigit( $entry ) && strlen( $entry ) == 1 ) {
 					$dirs[] = $entry;
@@ -156,7 +174,7 @@ class FancyCaptcha extends SimpleCaptcha {
 	}
 
 	function showImage() {
-		global $wgOut, $wgRequest;
+		global $wgOut;
 
 		$wgOut->disable();
 
@@ -216,5 +234,24 @@ class FancyCaptcha extends SimpleCaptcha {
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
 		return wfEmptyMsg( $name, $text ) ? wfMsg( 'fancycaptcha-edit' ) : $text;
+	}
+
+	/**
+	 * Delete a solved captcha image, if $wgCaptchaDeleteOnSolve is true.
+	 */
+	function passCaptcha() {
+		global $wgCaptchaDeleteOnSolve;
+
+		$info = $this->retrieveCaptcha(); // get the captcha info before it gets deleted
+		$pass = parent::passCaptcha();
+
+		if ( $pass && $wgCaptchaDeleteOnSolve ) {
+			$filename = $this->imagePath( $info['salt'], $info['hash'] );
+			if ( file_exists( $filename ) ) {
+				unlink( $filename );
+			}
+		}
+
+		return $pass;
 	}
 }

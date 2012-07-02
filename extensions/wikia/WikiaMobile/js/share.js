@@ -19,7 +19,7 @@ define('share', ['cache'], function(cache){
 				if(!link){
 					cnt.innerHTML = html.replace($1, pageUrl).replace($2, shrPageTxt).replace($3, shrMailPageTxt).replace($4, shrPageTxt);
 				}else{
-					var imgUrl = pageUrl + '?image=' + link;
+					var imgUrl = pageUrl + '?file=' + encodeURIComponent(encodeURIComponent(link));
 					cnt.innerHTML = html.replace($1,imgUrl).replace($2, shrImgTxt).replace($3, shrMailImgTxt).replace($4, shrImgTxt);
 				}
 			};

@@ -8,7 +8,7 @@ class ApiConfigure extends ApiBase {
 	}
 
 	public function execute() {
-		global $wgConf, $wgUser, $wgConfigureWikis;
+		global $wgConf, $wgUser, $wgConfigureWikis, $wgConfigureAPI;
 		$params = $this->extractRequestParams();
 		$result = $this->getResult();
 
@@ -17,6 +17,17 @@ class ApiConfigure extends ApiBase {
 		}
 
 		$prop = array_flip( $params['prop'] );
+
+		if ( isset( $prop['ajax'] ) ) {
+			$ret = $this->ajaxGetNewGroup( $params['ajaxsetting'], $params['ajaxgroup'] );
+			$result->addValue( $this->getModuleName(), $ret[0], $ret[1] );
+			return;
+		}
+
+		if ( !$wgConfigureAPI ) {
+			$this->dieUsage( "The ``configure'' module has been disabled.", 'moduledisabled' );
+		}
+
 		// Version list
 		if ( isset( $prop['versionlist'] ) ) {
 			if ( $wgUser->isAllowed( 'viewconfig' ) ) {
@@ -324,37 +335,97 @@ class ApiConfigure extends ApiBase {
 		return $settingRet;
 	}
 
+	protected function ajaxGetNewGroup( $setting, $group ) {
+		$settings = ConfigurationSettings::singleton( CONF_SETTINGS_BOTH );
+		if ( $settings->getSettingType( $setting ) != 'array' ) {
+			return array( 'error', 'notarray' );
+		}
+
+		$type = $settings->getArrayType( $setting );
+		switch( $type ) {
+		case 'group-bool':
+			if ( isset( $GLOBALS[$setting] ) && isset( $GLOBALS[$setting][$group] ) )
+				return array( 'error', 'exists' );
+
+			$row = ConfigurationPage::buildGroupSettingRow( $setting, $type, User::getAllRights(), true, $group, array() );
+
+			// Firefox seems to not like that :(
+			return array( 'ajax', str_replace( '&#160;', ' ', $row ) );
+		case 'promotion-conds':
+			if ( isset( $GLOBALS[$setting] ) && isset( $GLOBALS[$setting][$group] ) )
+				return array( 'error', 'exists' );
+
+			return array( 'ajax', ConfigurationPage::buildPromotionCondsSettingRow( $setting, true, $group, array() ) );
+		default:
+			return array( 'error', 'notvalidarray' );
+		}
+	}
+
 	protected function getAllowedParams() {
-		return array(
-			'prop' => array(
-				ApiBase::PARAM_ISMULTI => true,
-				ApiBase::PARAM_TYPE => array(
-					'versionlist',
-					'wikilist',
-					'settings',
-					'extensions',
+		global $wgConfigureAPI;
+
+		if ( $wgConfigureAPI ) {
+			return array(
+				'prop' => array(
+					ApiBase::PARAM_ISMULTI => true,
+					ApiBase::PARAM_TYPE => array(
+						'versionlist',
+						'wikilist',
+						'settings',
+						'extensions',
+						'ajax',
+					),
+					ApiBase::PARAM_DFLT => 'versionlist|wikilist',
 				),
-				ApiBase::PARAM_DFLT => 'versionlist|wikilist',
-			),
-			'version' => null,
-			'wiki' => null,
-			'group' => false,
-		);
+				'version' => null,
+				'wiki' => null,
+				'group' => false,
+				'ajaxgroup' => null,
+				'ajaxsetting' => null,
+			);
+		} else {
+			return array(
+				'prop' => array(
+					ApiBase::PARAM_ISMULTI => true,
+					ApiBase::PARAM_TYPE => array(
+						'ajax',
+					),
+				),
+				'ajaxgroup' => null,
+				'ajaxsetting' => null,
+			);
+		}
 	}
 
 	protected function getParamDescription() {
-		return array(
-			'prop' => array(
-				'Which information to get:',
-				'- versionlist: Get the list of old configurations',
-				'- wikilist:    Get the list the wikis to configuration',
-				'- settings:    Get settings of a specific version',
-				'- extensions:  List of installed extensions',
-			),
-			'version' => 'Version to get settings from',
-			'wiki' => 'Wiki to get settings from (default: current wiki)',
-			'group' => 'Whether to group settings',
-		);
+		global $wgConfigureAPI;
+
+		if ( $wgConfigureAPI ) {
+			return array(
+				'prop' => array(
+					'Which information to get:',
+					'- versionlist: Get the list of old configurations',
+					'- wikilist:    Get the list the wikis to configuration',
+					'- settings:    Get settings of a specific version',
+					'- extensions:  List of installed extensions',
+					'- ajax:        Get part of the html form on Special:Configure (for internal use)',
+				),
+				'version' => 'Version to get settings from',
+				'wiki' => 'Wiki to get settings from (default: current wiki)',
+				'group' => 'Whether to group settings',
+				'ajaxgroup' => 'for prop=ajax, new group name',
+				'ajaxsetting' =>'for prop=ajax, setting name',
+			);
+		} else {
+			return array(
+				'prop' => array(
+					'Which information to get:',
+					'- ajax:        Get part of the html form on Special:Configure (for internal use)',
+				),
+				'ajaxgroup' => 'for prop=ajax, new group name',
+				'ajaxsetting' =>'for prop=ajax, setting name',
+			);
+		}
 	}
 	
 	public function getPossibleErrors() {
@@ -369,13 +440,13 @@ class ApiConfigure extends ApiBase {
 		return 'Configure extension\'s API module';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array (
 			'api.php?action=configure',
 		);
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: Configure.api.php 64445 2010-03-31 16:42:29Z ialex $';
+		return __CLASS__ . ': $Id: Configure.api.php 82595 2011-02-22 09:59:41Z ialex $';
 	}
 }

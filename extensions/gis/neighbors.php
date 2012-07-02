@@ -38,7 +38,7 @@ class neighbors {
 	var $title;
 	var $attr;
 
-	function neighbors( $dist )
+	function __construct( $dist )
 	{
 		$this->p = new GeoParam();
 		$this->d = $dist;
@@ -57,11 +57,7 @@ class neighbors {
 		$wgOut->setPagetitle( "Neighbors" );
 
 		if (($e = $this->p->get_error()) != "") {
-			$wgOut->addHTML(
-			       "<p>" . htmlspecialchars( $e ) . "</p>");
-			$wgOut->output();
-			wfErrorExit();
-			return;
+			throw new FatalError( htmlspecialchars( $e ) );
 		}
 
 		$wgOut->addWikiText( $this->make_output() );
@@ -148,7 +144,7 @@ class neighbors {
 			$out .= "<td>$dx$d km</td>";
 		}
 		return "$out<td>{$pos['octant']}</td><td>bearing "
-		       . round($pos['heading']) . "&deg; towards "
+		       . round($pos['heading']) . "° towards "
 		       . $this->p->make_position($pos['lat'],$pos['lon'])
 		       . "</td></tr>\r\n";
 	}

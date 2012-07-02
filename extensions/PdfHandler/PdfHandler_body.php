@@ -1,36 +1,32 @@
 <?php
- /**
-  *
-  * Copyright (C) 2007 Martin Seidel (Xarax) <jodeldi@gmx.de>
-  *
-  * Inspired by djvuhandler from Tim Starling
-  * Modified and written by Xarax
-  *
-  * This program is free software; you can redistribute it and/or modify
-  * it under the terms of the GNU General Public License as published by
-  * the Free Software Foundation; either version 2 of the License, or
-  * (at your option) any later version.
-  *
-  * This program is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  * GNU General Public License for more details.
-  *
-  * You should have received a copy of the GNU General Public License along
-  * with this program; if not, write to the Free Software Foundation, Inc.,
-  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-  * http://www.gnu.org/copyleft/gpl.html
-  *
-  */
+/**
+ * Copyright © 2007 Martin Seidel (Xarax) <jodeldi@gmx.de>
+ *
+ * Inspired by djvuhandler from Tim Starling
+ * Modified and written by Xarax
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ */
 
 class PdfHandler extends ImageHandler {
 
 	function isEnabled() {
-		global $wgPdfProcessor;
-		global $wgPdfPostProcessor;
-		global $wgPdfInfo;
+		global $wgPdfProcessor, $wgPdfPostProcessor, $wgPdfInfo;
 
-		if ( !isset( $wgPdfProcessor ) || !isset( $wgPdfPostProcessor) || !isset( $wgPdfInfo ) ) {
+		if ( !isset( $wgPdfProcessor ) || !isset( $wgPdfPostProcessor ) || !isset( $wgPdfInfo ) ) {
 			wfDebug( "PdfHandler is disabled, please set the following\n" );
 			wfDebug( "variables in LocalSettings.php:\n" );
 			wfDebug( "\$wgPdfProcessor, \$wgPdfPostProcessor, \$wgPdfInfo\n" );
@@ -39,28 +35,36 @@ class PdfHandler extends ImageHandler {
 		return true;
 	}
 
-	function mustRender() { return true; }
+	function mustRender( $file ) {
+		return true;
+	}
 
-	function isMultiPage() { return true; }
+	function isMultiPage( $file ) {
+		return true;
+	}
 
 	function validateParam( $name, $value ) {
-		if ( in_array( $name, array( 'width', 'height', 'page' ) ) )
+		if ( in_array( $name, array( 'width', 'height', 'page' ) ) ) {
 			return ( $value <= 0 ) ? false : true;
-		else
+		} else {
 			return false;
+		}
 	}
 
 	function makeParamString( $params ) {
 		$page = isset( $params['page'] ) ? $params['page'] : 1;
-		if ( !isset( $params['width'] ) ) return false;
+		if ( !isset( $params['width'] ) ) {
+			return false;
+		}
 		return "page{$page}-{$params['width']}px";
 	}
 
 	function parseParamString( $str ) {
 		$m = false;
 
-		if ( preg_match( '/^page(\d+)-(\d+)px$/', $str, $m ) )
+		if ( preg_match( '/^page(\d+)-(\d+)px$/', $str, $m ) ) {
 			return array( 'width' => $m[2], 'page' => $m[1] );
+		}
 
 		return false;
 	}
@@ -78,40 +82,42 @@ class PdfHandler extends ImageHandler {
 			'img_page' => 'page',
 		);
 	}
-	
+
 	protected function doThumbError( $width, $height, $msg ) {
-		wfLoadExtensionMessages( 'PdfHandler' );
 		return new MediaTransformError( 'thumbnail_error',
 			$width, $height, wfMsgForContent( $msg ) );
 	}
 
 	function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
-		global $wgPdfProcessor;
-		global $wgPdfPostProcessor;
-		global $wgPdfHandlerDpi;
+		global $wgPdfProcessor, $wgPdfPostProcessor, $wgPdfHandlerDpi;
 
 		$metadata = $image->getMetadata();
 
-		if ( !$metadata )
+		if ( !$metadata ) {
 			return $this->doThumbError( @$params['width'], @$params['height'], 'pdf_no_metadata' );
+		}
 
-		if ( !$this->normaliseParams( $image, $params ) )
+		if ( !$this->normaliseParams( $image, $params ) ) {
 			return new TransformParameterError( $params );
+		}
 
 		$width = $params['width'];
 		$height = $params['height'];
-		$srcPath = $image->getPath();
 		$page = $params['page'];
 
-		if ( $page > $this->pageCount( $image ) )
-			return $this->doTHumbError( $width, $height, 'pdf_page_error' );
+		if ( $page > $this->pageCount( $image ) ) {
+			return $this->doThumbError( $width, $height, 'pdf_page_error' );
+		}
 
-		if ( $flags & self::TRANSFORM_LATER )
-			return new ThumbnailImage( $image, $dstUrl, $width,
-						   $height, $dstPath, $page );
+		if ( $flags & self::TRANSFORM_LATER ) {
+			return new ThumbnailImage( $image, $dstUrl, $width, $height, false, $page );
+		}
 
-		if ( !wfMkdirParents( dirname( $dstPath ) ) )
+		if ( !wfMkdirParents( dirname( $dstPath ), null, __METHOD__ ) ) {
 			return $this->doThumbError( $width, $height, 'thumbnail_dest_directory' );
+		}
+
+		$srcPath = $image->getLocalRefPath();
 
 		$cmd = '(' . wfEscapeShellArg( $wgPdfProcessor );
 		$cmd .= " -sDEVICE=jpeg -sOutputFile=- -dFirstPage={$page} -dLastPage={$page}";
@@ -119,10 +125,11 @@ class PdfHandler extends ImageHandler {
 		$cmd .= " | " . wfEscapeShellArg( $wgPdfPostProcessor );
 		$cmd .= " -depth 8 -resize {$width} - ";
 		$cmd .= wfEscapeShellArg( $dstPath ) . ")";
-		$cmd .= " 2>&1 > /dev/null"; // Wikia: prevent error msgs from breaking file
+		$cmd .= " 2>&1";
 
 		wfProfileIn( 'PdfHandler' );
-		wfDebug( __METHOD__.": $cmd\n" );
+		wfDebug( __METHOD__ . ": $cmd\n" );
+		$retval = '';
 		$err = wfShellExec( $cmd, $retval );
 		wfProfileOut( 'PdfHandler' );
 
@@ -131,7 +138,7 @@ class PdfHandler extends ImageHandler {
 		if ( $retval != 0 || $removed ) {
 			wfDebugLog( 'thumbnail',
 				sprintf( 'thumbnail failed on %s: error %d "%s" from "%s"',
-				wfHostname(), $retval, trim($err), $cmd ) );
+				wfHostname(), $retval, trim( $err ), $cmd ) );
 			return new MediaTransformError( 'thumbnail_error', $width, $height, $err );
 		} else {
 			return new ThumbnailImage( $image, $dstUrl, $width, $height, $dstPath, $page );
@@ -139,19 +146,21 @@ class PdfHandler extends ImageHandler {
 	}
 
 	function getPdfImage( $image, $path ) {
-		if ( !$image )
+		if ( !$image ) {
 			$pdfimg = new PdfImage( $path );
-		elseif ( !isset( $image->pdfImage ) )
+		} elseif ( !isset( $image->pdfImage ) ) {
 			$pdfimg = $image->pdfImage = new PdfImage( $path );
-		else
+		} else {
 			$pdfimg = $image->pdfImage;
+		}
 
 		return $pdfimg;
 	}
 
 	function getMetaArray( $image ) {
-		if ( isset( $image->pdfMetaArray ) )
+		if ( isset( $image->pdfMetaArray ) ) {
 			return $image->pdfMetaArray;
+		}
 
 		$metadata = $image->getMetadata();
 
@@ -173,7 +182,7 @@ class PdfHandler extends ImageHandler {
 		return $this->getPdfImage( $image, $path )->getImageSize();
 	}
 
-	function getThumbType( $ext, $mime ) {
+	function getThumbType( $ext, $mime, $params = null ) {
 		global $wgPdfOutputExtension;
 		static $mime;
 
@@ -189,12 +198,14 @@ class PdfHandler extends ImageHandler {
 	}
 
 	function isMetadataValid( $image, $metadata ) {
-		return !empty( $metadata ) && $metadata != serialize(array());
+		return !empty( $metadata ) && $metadata != serialize( array() );
 	}
 
 	function pageCount( $image ) {
 		$data = $this->getMetaArray( $image );
-		if ( !$data ) return false;
+		if ( !$data ) {
+			return false;
+		}
 		return intval( $data['Pages'] );
 	}
 
@@ -203,23 +214,18 @@ class PdfHandler extends ImageHandler {
 		return PdfImage::getPageSize( $data, $page );
 	}
 
-	function getPageText( $image, $page ){
+	function getPageText( $image, $page ) {
 		$data = $this->getMetaArray( $image, true );
 		if ( !$data ) {
 			return false;
 		}
-		if( ! isset( $data['text'] ) ) {
+		if( !isset( $data['text'] ) ) {
 			return false;
 		}
-		if( ! isset( $data['text'][$page-1] ) ) {
+		if( !isset( $data['text'][$page - 1] ) ) {
 			return false;
 		}
-		return $data['text'][$page-1];
+		return $data['text'][$page - 1];
 	}
 
-	/* wikia change begin */
-	function getTransform( $image, $dstPath, $dstUrl, $params ) {
-		return $this->doTransform( $image, $dstPath, $dstUrl, $params, 0 /* do the transform now */ );
-	}
-	/* wikia change end */
 }

@@ -48,7 +48,6 @@ function wfContentFeedsInit() {
 	//$wgAjaxExportList[] = '';
 
 function wfContentFeedsInitParserHooks( &$parser ) {
-	wfLoadExtensionMessages('ContentFeeds');
 
 	$parser->setHook( 'mostvisited', 'ContentFeeds::mostVisitedParserHook' );
 	$parser->setHook( 'wikitweets', 'ContentFeeds::wikiTweetsParserHook' );

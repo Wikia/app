@@ -49,8 +49,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'EditConflict',
 	'version' => '0.4.2',
 	'author' => 'QuestPC',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:EditConflict',
-	'description' => '[[Special:CurrentEdits]] page where current edits can be monitored',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:EditConflict',
 	'descriptionmsg' => 'editconflict_desc'
 );
 
@@ -58,7 +57,7 @@ EditConflict::startup();
 
 $wgExtensionMessagesFiles['EditConflict'] = EditConflict::$ExtDir . '/EditConflict_i18n.php';
 $wgAutoloadClasses['ec_CurrentEdits'] = EditConflict::$ExtDir . '/CurrentEdits.php';
-$wgSpecialPages['CurrentEdits'] = array( 'ec_CurrentEdits' );
+$wgSpecialPages['CurrentEdits'] = 'ec_CurrentEdits';
 
 $wgHooks['EditPageMergeChanges'][] = 'EditConflict::doEditConflict';
 $wgHooks['MakeGlobalVariablesScript'][] = 'EditConflict::jsWikiMessages';
@@ -110,7 +109,8 @@ class EditConflict {
 
 	static function getGroupWeight( $user ) {
 		// check, whether we have an standard or a patched version of mediawiki
-		if ( method_exists( 'User', 'getGroupParameters' ) ) {
+		$realFunction = array( 'User', 'getGroupParameters' );
+		if ( is_callable( $realFunction ) ) {
 			return $user->getGroupParameters()->weight;
 		} else {
 			if ( !isset( self::$groupWeights['*'] ) ) {
@@ -279,7 +279,6 @@ class EditConflict {
 
 	# called as the 'MakeGlobalVariablesScript' hook to make required mediawiki variables be available in JS code
 	static function jsWikiMessages( &$vars ) {
-		wfLoadExtensionMessages( 'EditConflict' );
 		$vars['ec_already_editing'] = wfMsg( 'ec_already_editing' );
 		return true;
 	}
@@ -288,16 +287,15 @@ class EditConflict {
 	# (if there are any such messages)
 	static function checkNotification( &$out, &$sk = null ) {
 		global $wgUser;
-		global $wgTitle;
 		# show the notifications only in main namespace and only for action=view
 		# (to be less annoying and to don't conflict with special pages)
-		if ( $wgTitle->getNamespace() == NS_MAIN && self::isViewAction() ) {
+		if ( $out->getTitle()->getNamespace() == NS_MAIN && self::isViewAction() ) {
 			$db = wfGetDB( DB_MASTER );
 			self::deleteExpiredData( $db );
 			# set current user's conflict notifications (if any)
-			self::processConflictNotifications( $db, $wgUser, $wgTitle );
+			self::processConflictNotifications( $db, $wgUser, $out->getTitle() );
 			# set edit link button handler, in case user of higher weight already edits this page
-			self::processEditButton( $db, $wgUser, $wgTitle );
+			self::processEditButton( $db, $wgUser, $out->getTitle() );
 		}
 		self::generateHeader( $out );
 		return true;
@@ -336,7 +334,6 @@ class EditConflict {
 		}
 		$res = $db->select( 'ec_edit_conflict', array( 'ns_user_rev_id', 'page_namespace', 'page_title', 'page_touched' ), 'ns_user_rev_id IN (' . $entries_set . ') AND user_name=' . $db->addQuotes( $user_name ), __METHOD__, array( 'ORDER'=>'page,page_touched' ) );
 		if ( $db->numRows( $res ) > 0 ) {
-			wfLoadExtensionMessages( 'EditConflict' );
 			$result .= '<span style="color:red;">' . wfMsg( 'ec_copied_revisions' ) . '</span> ';
 			$prev_title_str = '';
 			$first_elem = true;
@@ -357,7 +354,7 @@ class EditConflict {
 				}
 				$dest_title_str = $user_title_dbkey . '/' . $source_title_str;
 				$dest_title = Title::newFromDBkey( $dest_title_str );
-				$result .= '<span id="EditConflict_' . $row->ns_user_rev_id . '">(' . $skin->makeKnownLinkObj( $dest_title, 'rev. ' . $row->ns_user_rev_id . '', 'oldid=' . $row->ns_user_rev_id ) . '&nbsp;<span class="closelink" title="' . wfMsg( 'ec_close_warning' ) . '" onclick="EditConflict.clearRevId(' . $row->ns_user_rev_id . ');">&#8251;</span>' . ')</span> ';
+				$result .= '<span id="EditConflict_' . $row->ns_user_rev_id . '">(' . $skin->makeKnownLinkObj( $dest_title, 'rev. ' . $row->ns_user_rev_id . '', 'oldid=' . $row->ns_user_rev_id ) . '&#160;<span class="closelink" title="' . wfMsg( 'ec_close_warning' ) . '" onclick="EditConflict.clearRevId(' . $row->ns_user_rev_id . ');">&#8251;</span>' . ')</span> ';
 			}
 			$result .= '</li>';
 		}
@@ -548,7 +545,8 @@ class EditConflict {
 		}
 		// static properties initialization (various paths)
 		self::$ExtDir = str_replace( "\\", "/", dirname(__FILE__) ); // filesys path with windows path fix
-		$top_dir = array_pop( explode( '/', self::$ExtDir ) );
+		$dir_parts = explode( '/', self::$ExtDir );
+		$top_dir = array_pop( $dir_parts );
 		# currently two separate editings of the same page by the same user are considered a single edit
 		self::$ScriptPath = $wgScriptPath . '/extensions' . ( ( $top_dir == 'extensions' ) ? '' : '/' . $top_dir ); // apache virtual path
 		self::$alwaysEditClickEvent = false;

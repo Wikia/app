@@ -5,12 +5,11 @@ class HAWelcomeEdit extends UnlistedSpecialPage {
 	private	$mTitle;
 
 	public function __construct() {
-		wfLoadExtensionMessages('HAWelcome');
 		parent::__construct( 'HAWelcomeEdit', 'HAWelcomeEdit', null, false );
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgUser, $wgRequest;
+		global $wgUser, $wgRequest;
 
 		wfProfileIn( __METHOD__ );
 

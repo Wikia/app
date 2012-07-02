@@ -14,7 +14,6 @@ require_once( 'SpamBlacklist_body.php' );
  */
 function cleanupArticle( $rev, $regexes, $match ) {
 	$title = $rev->getTitle();
-	$reverted = false;
 	$revId = $rev->getId();
 	while ( $rev ) {
 		$matches = false;
@@ -35,7 +34,7 @@ function cleanupArticle( $rev, $regexes, $match ) {
 		}
 	}
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->immediateBegin();
+	$dbw->begin();
 	if ( !$rev ) {
 		// Didn't find a non-spammy revision, delete the page
 /*
@@ -45,37 +44,16 @@ function cleanupArticle( $rev, $regexes, $match ) {
 */
 		// Too scary, blank instead
 		print "All revisions are spam, blanking...\n";
-		$article = new Article( $title );
-		$article->updateArticle( '', "All revisions matched the spam blacklist ($match), blanking",
-			false, false );
-
+		$text = '';
+		$comment = "All revisions matched the spam blacklist ($match), blanking";
 	} else {
 		// Revert to this revision
-		$article = new Article( $title );
-		$article->updateArticle( $rev->getText(), "Cleaning up links to $match", false, false );
+		$text = $rev->getText();
+		$comment = "Cleaning up links to $match";
 	}
-	$dbw->immediateCommit();
-	wfDoUpdates();
-}
-
-
-/**
- * Do any deferred updates and clear the list
- * TODO: This could be in Wiki.php if that class made any sense at all
- */
-if ( !function_exists( 'wfDoUpdates' ) ) {
-	function wfDoUpdates()
-	{
-		global $wgPostCommitUpdateList, $wgDeferredUpdateList;
-		foreach ( $wgDeferredUpdateList as $update ) { 
-			$update->doUpdate();
-		}
-		foreach ( $wgPostCommitUpdateList as $update ) {
-			$update->doUpdate();
-		}
-		$wgDeferredUpdateList = array();
-		$wgPostCommitUpdateList = array();
-	}
+	$article = new Article( $title );
+	$article->doEdit( $text, $comment );
+	$dbw->commit();
 }
 
 //------------------------------------------------------------------------------
@@ -96,11 +74,11 @@ if ( isset( $options['n'] ) ) {
 	$dryRun = false;
 }
 
-$sb = new SpamBlacklist( $wgSpamBlacklistSettings );
-if ( $wgSpamBlacklistFiles ) {
-	$sb->files = $wgSpamBlacklistFiles;
+$sb = new SpamBlacklist( $wgBlacklistSettings['spam'] );
+if ( $wgBlacklistSettings['spam']['files'] ) {
+	$sb->files = $wgBlacklistSettings['spam']['files'];
 }
-$regexes = $sb->getregexes();
+$regexes = $sb->getBlacklists();
 if ( !$regexes ) {
 	print "Invalid regex, can't clean up spam\n";
 	exit(1);

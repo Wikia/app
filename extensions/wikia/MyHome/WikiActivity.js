@@ -113,44 +113,6 @@ var WikiActivity = {
 		});
 	},
 
-	// show popup with video player when clicked on video thumbnail
-	loadVideoPlayer: function(ev) {
-		ev.preventDefault();
-
-		var node = $(ev.target);
-		if (node.is('img') || node.is('span')) {
-			node = node.parent();
-		}
-
-		// ignore different clicks
-		if (!node.hasClass('activityfeed-video-thumbnail')) {
-			return;
-		}
-
-		var title = node.attr('ref');
-		WikiActivity.log('loading player for ' + title);
-
-		// catch doubleclicks on video thumbnails
-		if (WikiActivity.videoPlayerLock) {
-			WikiActivity.log('lock detected: video player is loading', 'WikiActivity');
-			return;
-		}
-
-		WikiActivity.videoPlayerLock = true;
-
-		WikiActivity.ajax('getVideoPlayer', {'title': title}, function(res) {
-			if (res.html) {
-				$.showModal(res.title, res.html, {
-					'id': 'activityfeed-video-player',
-					'width': res.width
-				});
-
-				// remove lock
-				delete WikiActivity.videoPlayerLock;
-			}
-		});
-	},
-
 	// load next x entries when "more" is clicked
 	fetchMore: function(ev) {
 		ev.preventDefault();

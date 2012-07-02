@@ -42,8 +42,6 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 			 * load i18n
 			 */
 			$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
-			wfLoadExtensionMessages( "AutoCreateWiki" );
-
 
 			/**
 			 * get creator from param

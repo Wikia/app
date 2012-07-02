@@ -191,7 +191,7 @@ function GetCurrentFolder()
 
 	Set oRegex = New RegExp
 	oRegex.Global		= True
-	oRegex.Pattern = "(/\.)|(//)|([\\:\*\?\""\<\>\|]|[\u0000-\u001F]|\u007F)"
+	oRegex.Pattern = "(/\.)|(//)|([\\:\;\.\*\?\""\<\>\|]|[\u0000-\u001F]|\u007F)"
 
 	if (oRegex.Test(sCurrentFolder)) Then
 		SendError 102, ""
@@ -207,7 +207,7 @@ function SanitizeFolderName( sNewFolderName )
 	oRegex.Global		= True
 
 ' remove . \ / | : ? *  " < > and control characters
-	oRegex.Pattern = "(\.|\\|\/|\||:|\?|\*|""|\<|\>|[\u0000-\u001F]|\u007F)"
+	oRegex.Pattern = "(\.|\\|\/|\||:|\?|\;|\*|""|\<|\>|[\u0000-\u001F]|\u007F)"
 	SanitizeFolderName = oRegex.Replace( sNewFolderName, "_" )
 
 	Set oRegex = Nothing
@@ -225,7 +225,7 @@ function SanitizeFileName( sNewFileName )
 	end if
 
 ' remove \ / | : ? *  " < > and control characters
-	oRegex.Pattern = "(\\|\/|\||:|\?|\*|""|\<|\>|[\u0000-\u001F]|\u007F)"
+	oRegex.Pattern = "(\\|\/|\||:|\;|\?|\*|""|\<|\>|[\u0000-\u001F]|\u007F)"
 	SanitizeFileName = oRegex.Replace( sNewFileName, "_" )
 
 	Set oRegex = Nothing

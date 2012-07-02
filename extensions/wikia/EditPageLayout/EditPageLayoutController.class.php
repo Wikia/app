@@ -8,17 +8,17 @@
 class EditPageLayoutController extends WikiaController {
 
 	const TITLE_MAX_LENGTH = 30;
-	
+
 	public function init() {
-		$this->bodytext = F::app()->getSkinTemplateObj()->data['bodytext'];
+		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
 	}
-	
+
 	/**
 	 * Render HTML for whole edit page
 	 */
 	public function executeIndex() {
 		// render edit page content
-		$body = F::app()->renderView('EditPageLayout', 'EditPage');
+		$body = $this->app->renderView('EditPageLayout', 'EditPage');
 
 		// page has one column
 		OasisController::addBodyClass('oasis-one-column');
@@ -34,26 +34,27 @@ class EditPageLayoutController extends WikiaController {
 	 * Render template for <body> tag content
 	 */
 	public function executeEditPage() {
-		$app = WF::build('App');
+		wfProfileIn(__METHOD__);
 
-		$app->wf->ProfileIn(__METHOD__);
-
-		$helper = WF::build('EditPageLayoutHelper');
+		$helper = F::build('EditPageLayoutHelper');
 		$editPage = $helper->getEditPage();
 
 		if ($helper->fullScreen) {
 			// add stylesheet
-			$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
+			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
 			$packageName = 'epl';
 			if (class_exists('RTE') && RTE::isEnabled() && !$editPage->isReadOnlyPage()) {
 				$packageName = 'eplrte';
 			}
 			$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL($packageName);
-			$wgJsMimeType = $app->wg->JsMimeType;
+			$wgJsMimeType = $this->wg->JsMimeType;
 			foreach($srcs as $src) {
-				$app->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
+				$this->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
 			}
 		}
+
+		// MW1.19: load jQuery UI module (formerly known as /skins/common/jquery/jquery-ui-1.8.14.custom.js)
+		$this->app->wg->out->addModules('wikia.jquery.ui');
 
 		// render WikiLogo
 		//$wikiHeaderData = Module::get('WikiHeader', 'Wordmark')->getData();
@@ -67,7 +68,7 @@ class EditPageLayoutController extends WikiaController {
 
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
-		$section = $app->getGlobal('wgRequest')->getVal('section');
+		$section = $this->wg->Request->getVal('section');
 
 		// Is user logged in?
 		$this->isLoggedIn = $this->wg->User->isLoggedIn();
@@ -107,7 +108,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->wpSummaryLabelText = wfMsg($wpSummaryLabelText);
 
 		// render help link and point the link to new tab
-		$this->helpLink = $app->runFunction('wfMsgExt', 'editpagelayout-helpLink', array('parseinline'));
+		$this->helpLink = $this->app->runFunction('wfMsgExt', 'editpagelayout-helpLink', array('parseinline'));
 		$this->helpLink = str_replace('<a ', '<a target="_blank" ', $this->helpLink);
 
 		// action for edit form
@@ -135,14 +136,14 @@ class EditPageLayoutController extends WikiaController {
 		// notifications link (BugId:7951)
 		$this->notificationsLink =
 			(count($this->notices) == 0)
-			? $app->runFunction('wfMsg', 'editpagelayout-notificationsLink-none')
-			: $app->runFunction('wfMsgExt', 'editpagelayout-notificationsLink', array('parsemag'), count($this->notices));
+			? $this->app->runFunction('wfMsg', 'editpagelayout-notificationsLink-none')
+			: $this->app->runFunction('wfMsgExt', 'editpagelayout-notificationsLink', array('parsemag'), count($this->notices));
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode
-		if ($app->runFunction('wfReadOnly')) {
+		if ($this->app->runFunction('wfReadOnly')) {
 			$this->bodytext = '<div id="mw-read-only-warning" class="WikiaArticle">'.
-					$app->runFunction('wfMsg', 'oasis-editpage-readonlywarning', $app->runFunction('wfReadOnlyReason')).
+					$this->app->runFunction('wfMsg', 'oasis-editpage-readonlywarning', $this->app->runFunction('wfReadOnlyReason')).
 					'</div>';
 
 			wfDebug(__METHOD__ . ": edit form disabled because read-only mode is on\n");
@@ -150,7 +151,8 @@ class EditPageLayoutController extends WikiaController {
 
 		$this->hideTitle = $editPage->hideTitle;
 
-		$this->app->wf->RunHooks('EditPageLayoutExecute', array($this));
-		$app->wf->ProfileOut(__METHOD__);
+		$this->wf->RunHooks('EditPageLayoutExecute', array($this));
+
+		wfProfileOut(__METHOD__);
 	}
 }

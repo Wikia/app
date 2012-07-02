@@ -14,12 +14,11 @@ $wgAutoloadClasses['RTE'] = "$dir/RTE.class.php";
 $wgAutoloadClasses['RTEAjax'] = "$dir/RTEAjax.class.php";
 $wgAutoloadClasses['RTEData'] = "$dir/RTEData.class.php";
 $wgAutoloadClasses['RTELang'] = "$dir/RTELang.class.php";
-$wgAutoloadClasses['RTELinker'] = "$dir/RTELinker.class.php";
+$wgAutoloadClasses['RTELinkerHooks'] = "$dir/RTELinkerHooks.class.php";
 $wgAutoloadClasses['RTEMagicWord'] = "$dir/RTEMagicWord.class.php";
 $wgAutoloadClasses['RTEMarker'] = "$dir/RTEMarker.class.php";
 $wgAutoloadClasses['RTEParser'] = "$dir/RTEParser.class.php";
 $wgAutoloadClasses['RTEReverseParser'] = "$dir/RTEReverseParser.class.php";
-$wgAutoloadClasses['CKEditor'] = "$dir/ckeditor/ckeditor_php5.php"; // used by minify.php
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
@@ -37,13 +36,14 @@ $wgHooks['LanguageGetMagic'][] = 'RTEMagicWord::get';
 $wgHooks['InternalParseBeforeLinks'][] = 'RTEMagicWord::remove';
 $wgHooks['ParserBeforeStrip'][] = 'RTEMagicWord::checkParserBeforeStrip';
 $wgHooks['EditPage::getContent::end'][] = 'RTEMagicWord::checkEditPageContent';
-//$wgHooks['Parser::FetchTemplateAndTitle'][] = 'RTEMagicWord::fetchTemplate'; # not called when doing RTE parsing
+
+// hooks for modifying MW Linker behavior
+$wgHooks['MakeHeadline'][] = 'RTELinkerHooks::onMakeHeadline';
+$wgHooks['LinkEnd'][] = 'RTELinkerHooks::onLinkEnd';
+$wgHooks['LinkerMakeExternalLink'][] = 'RTELinkerHooks::onLinkerMakeExternalLink';
 
 // i18n
 $wgExtensionMessagesFiles['RTE'] = $dir.'/i18n/RTE.i18n.php';
-
-// enable MW suggest - this needs to be set here to make API calls working
-$wgEnableMWSuggest = true;
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'RTEAjax';
@@ -56,12 +56,11 @@ function RTEAjax() {
 	$method = $wgRequest->getVal('method', false);
 
 	if ($method && method_exists('RTEAjax', $method)) {
-		wfLoadExtensionMessages('RTE');
 
 		$data = RTEAjax::$method();
 
 		if (is_array($data)) {
-			$json = Wikia::json_encode($data);
+			$json = json_encode($data);
 
 			$response = new AjaxResponse($json);
 			$response->setContentType('application/json; charset=utf-8');

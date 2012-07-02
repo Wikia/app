@@ -1,14 +1,24 @@
 <?php
 /**
+ * Search index updater
+ *
  * See deferred.txt
+ *
+ * @file
  * @ingroup Search
  */
-class SearchUpdate {
 
-	/* private */ var $mId = 0, $mNamespace, $mTitle, $mText;
-	/* private */ var $mTitleWords;
+/**
+ * Database independant search index updater
+ *
+ * @ingroup Search
+ */
+class SearchUpdate implements DeferrableUpdate {
 
-	function SearchUpdate( $id, $title, $text = false ) {
+	private $mId = 0, $mNamespace, $mTitle, $mText;
+	private $mTitleWords;
+
+	function __construct( $id, $title, $text = false ) {
 		$nt = Title::newFromText( $title );
 		if( $nt ) {
 			$this->mId = $id;
@@ -27,32 +37,32 @@ class SearchUpdate {
 		global $wgContLang, $wgDisableSearchUpdate;
 
 		if( $wgDisableSearchUpdate || !$this->mId ) {
-			return false;
+			return;
 		}
-		$fname = 'SearchUpdate::doUpdate';
-		wfProfileIn( $fname );
+
+		wfProfileIn( __METHOD__ );
 
 		$search = SearchEngine::create();
 		$lc = SearchEngine::legalSearchChars() . '&#;';
 
 		if( $this->mText === false ) {
 			$search->updateTitle($this->mId,
-				Title::indexTitle( $this->mNamespace, $this->mTitle ));
-			wfProfileOut( $fname );
+				$search->normalizeText( Title::indexTitle( $this->mNamespace, $this->mTitle ) ) );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		# Language-specific strip/conversion
 		$text = $wgContLang->normalizeForSearch( $this->mText );
 
-		wfProfileIn( $fname.'-regexps' );
+		wfProfileIn( __METHOD__ . '-regexps' );
 		$text = preg_replace( "/<\\/?\\s*[A-Za-z][^>]*?>/",
 			' ', $wgContLang->lc( " " . $text . " " ) ); # Strip HTML markup
 		$text = preg_replace( "/(^|\\n)==\\s*([^\\n]+)\\s*==(\\s)/sD",
 		  "\\1\\2 \\2 \\2\\3", $text ); # Emphasize headings
 
 		# Strip external URLs
-		$uc = "A-Za-z0-9_\\/:.,~%\\-+&;#?!=()@\\xA0-\\xFF";
+		$uc = "A-Za-z0-9_\\/:.,~%\\-+&;#?!=()@\\x80-\\xFF";
 		$protos = "http|https|ftp|mailto|news|gopher";
 		$pat = "/(^|[^\\[])({$protos}):[{$uc}]+([^{$uc}]|$)/";
 		$text = preg_replace( $pat, "\\1 \\3", $text );
@@ -92,20 +102,21 @@ class SearchUpdate {
 
 		# Strip wiki '' and '''
 		$text = preg_replace( "/''[']*/", " ", $text );
-		wfProfileOut( "$fname-regexps" );
+		wfProfileOut( __METHOD__ . '-regexps' );
 
 		wfRunHooks( 'SearchUpdate', array( $this->mId, $this->mNamespace, $this->mTitle, &$text ) );
 
 		# Perform the actual update
-		$search->update($this->mId, Title::indexTitle( $this->mNamespace, $this->mTitle ),
-				$text);
+		$search->update($this->mId, $search->normalizeText( Title::indexTitle( $this->mNamespace, $this->mTitle ) ),
+				$search->normalizeText( $text ) );
 
-		wfProfileOut( $fname );
+		wfProfileOut( __METHOD__ );
 	}
 }
 
 /**
  * Placeholder class
+ *
  * @ingroup Search
  */
 class SearchUpdateMyISAM extends SearchUpdate {

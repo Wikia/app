@@ -38,15 +38,13 @@ $wgHooks['CategoryPageView'][] = 'efCreateInCategoryForm';
 function efCreateInCategoryForm( $catpage ) {
 	global $wgOut;
 
-	wfLoadExtensionMessages( 'CreateInCategory' );
-
 	$url = 'http://techteam-qa3.wikia.com/wiki/Special:CreateInCategory';
 
 	$form = Xml::openElement( 'div', array( 'style' => 'float: right; padding: 1em; width: 33%', 'class' => 'toc' ) );
 	$form .= Xml::element( 'div', array(), wfMsg( 'createincategory-prompt' ) );
 	$form .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => $url ) );
 	$form .= Xml::input( 'wpTitle' );
-	$form .= Xml::hidden( 'wpCategory', $catpage->mTitle->getText() );
+	$form .= Html::hidden( 'wpCategory', $catpage->mTitle->getText() );
 	$form .= Xml::submitButton( wfMsg( 'createincategory-submit' ) );
 	$form .= Xml::closeElement( 'form' );
 	$form .= Xml::closeElement( 'div' );

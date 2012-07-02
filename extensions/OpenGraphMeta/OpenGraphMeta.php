@@ -29,7 +29,7 @@ $wgExtensionCredits['parserhook'][] = array (
 	"name" => "OpenGraphMeta",
 	"author" => "[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]",
 	'descriptionmsg' => 'opengraphmeta-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:OpenGraphMeta',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:OpenGraphMeta',
 );
 
 $dir = dirname( __FILE__ );
@@ -47,10 +47,9 @@ function efSetMainImagePF( $parser, $mainimage ) {
 	if ( isset($parserOutput->eHasMainImageAlready) && $parserOutput->eHasMainImageAlready )
 		return $mainimage;
 	$file = Title::newFromText( $mainimage, NS_FILE );
-	if ( $file instanceof Title ) {
-		$parserOutput->addOutputHook( 'setmainimage', array( 'dbkey' => $file->getDBkey() ) );
-		$parserOutput->eHasMainImageAlready = true;
-	}
+	$parserOutput->addOutputHook( 'setmainimage', array( 'dbkey' => $file->getDBkey() ) );
+	$parserOutput->eHasMainImageAlready = true;
+
 	return $mainimage;
 }
 
@@ -65,14 +64,14 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 	$wgXhtmlNamespaces["og"] = "http://opengraphprotocol.org/schema/";
 	$title = $out->getTitle();
 	$isMainpage = $title->equals(Title::newMainPage());
-	
+
 	$meta = array();
-	
+
 	$meta["og:type"] = $isMainpage ? "website" : "article";
 	$meta["og:site_name"] = $wgSitename;
-	
+
 	// Try to chose the most appropriate title for showing in news feeds.
-	if ((defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) || 
+	if ((defined('NS_BLOG_ARTICLE') && $title->getNamespace() == NS_BLOG_ARTICLE) ||
 		(defined('NS_BLOG_ARTICLE_TALK') && $title->getNamespace() == NS_BLOG_ARTICLE_TALK)){
 		$meta["og:title"] = $title->getSubpageText();
 	} else {
@@ -86,10 +85,10 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 			// In some edge-cases we won't have defined an object but rather a full URL.
 			$meta["og:image"] = $out->mMainImage;
 		}
-	} else if ( $isMainpage ) {
-		$meta["og:image"] = $wgLogo;
+	} elseif ( $isMainpage ) {
+		$meta["og:image"] = wfExpandUrl($wgLogo);
 	}
-	if ( isset($out->mDescription) ) {// set by Description2 extension, install it if you want proper og:description support
+	if ( isset($out->mDescription) ) { // set by Description2 extension, install it if you want proper og:description support
 		$meta["og:description"] = $out->mDescription;
 	}
 	$meta["og:url"] = $title->getFullURL();
@@ -99,13 +98,13 @@ function efOpenGraphMetaPageHook( &$out, &$sk ) {
 	if ( $egFacebookAdmins ) {
 		$meta["fb:admins"] = $egFacebookAdmins;
 	}
-	
+
 	foreach( $meta as $property => $value ) {
-		if ( $value ){
-			$out->addMeta("property:$property", $value );
-		}
+		if ( $value )
+			//$out->addMeta($property, $value ); // FB wants property= instead of name= blech, is that even valid html?
+			$out->addHeadItem("meta:property:$property", "	".Html::element( 'meta', array( 'property' => $property, 'content' => $value ) )."\n");
 	}
-	
+
 	return true;
 }
 

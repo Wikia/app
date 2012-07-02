@@ -1,0 +1,42 @@
+ConfirmEdit extension for MediaWiki
+
+This extension provides various CAPTCHA tools for MediaWiki, to allow
+for protection against spambots and other automated tools.
+
+For more information, see the extension homepage at:
+http://www.mediawiki.org/wiki/Extension:ConfirmEdit
+
+== Overview ==
+
+The following modules are included in ConfirmEdit:
+
+* SimpleCaptcha - users have to solve an arithmetic math problem
+* MathCaptcha - users have to solve a math problem that's displayed as
+an image
+* FancyCaptcha - users have to identify a series of characters, displayed
+in a stylized way
+* QuestyCaptcha - users have to answer a question, out of a series of
+questions defined by the administrator(s)
+* ReCaptcha - users have to identify a series of characters, either
+visually or audially, from a widget provided by the reCAPTCHA service
+* Asirra - users have to identify the cats in a set of photos of cats
+and dogs, from a widget provided by the Microsoft Asirra service
+
+== License ==
+
+ConfirmEdit is published under the GPL license.
+ 
+== Authors ==
+
+The main framework, and the SimpleCaptcha and FancyCaptcha modules, were
+written by Brion Vibber.
+
+The MathCaptcha module was written by Rob Church.
+
+The QuestyCaptcha module was written by Benjamin Lees.
+
+The reCAPTCHA module was written by Mike Crawford and Ben Maurer.
+
+The Asirra module was written by Bachsau.
+
+Additional maintenance work was done by Yaron Koren.

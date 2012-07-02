@@ -136,14 +136,14 @@ class ThumbnailVideo extends ThumbnailImage {
 		} elseif ( !empty( $options['file-link'] ) ) {
 			$linkAttribs = array( 'href' => $this->file->getTitle()->getLocalURL() );
 		} else {
-			$linkAttribs = false;
+			$linkAttribs = array();
 		}
-		
-		$linkAttribs['style'] = "display:inline-block;";
 
 		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
 			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
 		}
+
+		$linkAttribs['class'] = empty($linkAttribs['class']) ? 'video' : $linkAttribs['class'].' video';
 
 		$attribs = array(
 			'alt' => $alt,
@@ -153,9 +153,9 @@ class ThumbnailVideo extends ThumbnailImage {
 			'data-video' => $this->file->getTitle()->getText()
 		);
 
-		if ( !empty($options['usePreloading']) ) {
-			$attribs['data-src'] = $this->url;
-		}
+	        if ( !empty($options['usePreloading']) ) {
+	            $attribs['data-src'] = $this->url;
+	        }
 		
 		if ( $this->file instanceof OldLocalFile ) {
 			$archive_name = $this->file->getArchiveName();
@@ -201,7 +201,9 @@ class ThumbnailVideo extends ThumbnailImage {
 			if ( isset( $duration ) && !empty( $duration ) ) {
 				$html .= Xml::element( 'div', array('class'=>'timer'),  $duration );
 			}
-			$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, isset( $options['constHeight'] ) ? $options['constHeight'] : $this->height );
+			$playButtonHeight =  ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) ? $options['constHeight'] : $this->height;
+			if ( !empty( $extraBorder ) ) $playButtonHeight += ( $extraBorder*2 );
+			$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $playButtonHeight );
 			$html .= Xml::element( 'img', $attribs, '', true );
 
 		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : '';

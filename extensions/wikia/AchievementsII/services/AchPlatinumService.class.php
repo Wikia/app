@@ -68,7 +68,7 @@ class AchPlatinumService {
 
 					$badge['type_id'] = $row->id;
 					$badge['enabled'] = $row->enabled;
-					$badge['thumb_url'] = $image->getThumbnail(90)->getUrl();
+					$badge['thumb_url'] = $image->createThumb( 90 );
 					$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($row->id);
 					$badge[ 'is_sponsored' ] = $row->sponsored;
 					$badge[ 'badge_tracking_url' ] = $row->badge_tracking_url;
@@ -110,7 +110,7 @@ class AchPlatinumService {
 
 					$badge['type_id'] = $row->id;
 					$badge['enabled'] = $row->enabled;
-					$badge['thumb_url'] = $image->getThumbnail(90)->getUrl();
+					$badge['thumb_url'] = $image->createThumb( 90 );
 					$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($row->id);
 					$badge[ 'is_sponsored' ] = $row->sponsored;
 					$badge[ 'badge_tracking_url' ] = $row->badge_tracking_url;

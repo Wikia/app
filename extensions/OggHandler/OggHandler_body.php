@@ -19,18 +19,17 @@ class OggHandler extends MediaHandler {
 	}
 
 	function validateParam( $name, $value ) {
-		if ( isset( $params['thumbtime'] ) ) {
-			$length = $this->getLength( $image );
-			$time = $this->parseTimeString( $params['thumbtime'] );
-			if ( $time === false ) {
-				return false;
-			} elseif ( $time > $length - 1 ) {
-				$params['thumbtime'] = $length - 1;
-			} elseif ( $time <= 0 ) {
-				$params['thumbtime'] = 0;
-			}
+		if ( in_array( $name, array( 'width', 'height' ) ) ) {
+			return $value > 0;
 		}
-		return true;
+		if ( $name == 'thumbtime' ) {
+			$time = $this->parseTimeString( $value );
+			if ( $time === false || $time <= 0 ) {
+				return false;
+			}
+			return true;
+		}
+		return $name == 'noicon';
 	}
 
 	function parseTimeString( $seekString, $length = false ) {
@@ -79,6 +78,32 @@ class OggHandler extends MediaHandler {
 	}
 
 	function normaliseParams( $image, &$params ) {
+		$srcWidth = $image->getWidth();
+		$srcHeight = $image->getHeight();
+		$params['playertype'] = "video";
+
+		if( $srcWidth == 0 || $srcHeight == 0 ) {
+			// We presume this is an audio clip
+			$params['playertype'] = "audio";
+			$params['height'] = empty( $params['height'] ) ? 20 : $params['height'];
+			$params['width'] = empty( $params['width'] ) ? 200 : $params['width'];
+		} else {
+			// Check for height param and adjust width accordingly
+			if ( isset( $params['height'] ) && $params['height'] != -1 ) {
+				if( $params['width'] * $srcHeight > $params['height'] * $srcWidth ) {
+					$params['width'] = self::fitBoxWidth( $srcWidth, $srcHeight, $params['height'] );
+				}
+			}
+
+			// Make it no wider than the original
+			//if( $params['width'] > $srcWidth ) {
+			//	$params['width'] = $srcWidth;
+			//}
+
+			// Calculate the corresponding height based on the adjusted width
+			$params['height'] = File::scaleHeight( $srcWidth, $srcHeight, $params['width'] );
+		}
+
 		if ( isset( $params['thumbtime'] ) ) {
 			$length = $this->getLength( $image );
 			$time = $this->parseTimeString( $params['thumbtime'] );
@@ -114,8 +139,8 @@ class OggHandler extends MediaHandler {
 					$pictureWidth = $pictureWidth * $parNumerator / $parDenominator;
 				}
 				return array(
-					$pictureWidth,
-					$stream['header']['PICH']
+					intval( $pictureWidth ),
+					intval( $stream['header']['PICH'] )
 				);
 			}
 		}
@@ -180,11 +205,13 @@ class OggHandler extends MediaHandler {
 	}
 
 	function doTransform( $file, $dstPath, $dstUrl, $params, $flags = 0 ) {
+		if ( !$this->normaliseParams( $file, $params ) ) {
+			return new TransformParameterError( $params );
+		}
 
 		$width = $params['width'];
-		$srcWidth = $file->getWidth();
-		$srcHeight = $file->getHeight();
-		$height = $srcWidth == 0 ? $srcHeight : $width * $srcHeight / $srcWidth;
+		$height = $params['height'];
+
 		$length = $this->getLength( $file );
 		$noPlayer = isset( $params['noplayer'] );
 		$noIcon = isset( $params['noicon'] );
@@ -196,9 +223,8 @@ class OggHandler extends MediaHandler {
 			$this->setHeaders( $wgOut );
 		}
 
-		if ( $srcHeight == 0 || $srcWidth == 0 ) {
+		if ( $params['playertype'] == "audio" ) {
 			// Make audio player
-			$height = empty( $params['height'] ) ? 20 : $params['height'];
 			if ( $noPlayer ) {
 				if ( $height > 100 ) {
 					global $wgStylePath;
@@ -209,11 +235,6 @@ class OggHandler extends MediaHandler {
 					$iconUrl = "$scriptPath/info.png";
 					return new ThumbnailImage( $file, $iconUrl, 22, 22 );
 				}
-			}
-			if ( empty( $params['width'] ) ) {
-				$width = 200;
-			} else {
-				$width = $params['width'];
 			}
 			return new OggAudioDisplay( $file, $targetFileUrl, $width, $height, $length, $dstPath, $noIcon );
 		}
@@ -227,7 +248,6 @@ class OggHandler extends MediaHandler {
 			return new OggVideoDisplay( $file, $targetFileUrl, $dstUrl, $width, $height, $length, $dstPath, $noIcon );
 		}
 
-
 		$thumbTime = false;
 		if ( isset( $params['thumbtime'] ) ) {
 			$thumbTime = $this->parseTimeString( $params['thumbtime'], $length );
@@ -237,16 +257,16 @@ class OggHandler extends MediaHandler {
 			$thumbTime = $length / 2;
 		}
 
-		wfMkdirParents( dirname( $dstPath ) );
+		wfMkdirParents( dirname( $dstPath ), null, __METHOD__ );
 
 		global $wgOggThumbLocation;
 		if ( $wgOggThumbLocation !== false ) {
-			$status = $this->runOggThumb( $file->getPath(), $dstPath, $thumbTime );
+			$status = $this->runOggThumb( $file->getLocalRefPath(), $dstPath, $thumbTime );
 		} else {
-			$status = $this->runFFmpeg( $file->getPath(), $dstPath, $thumbTime );
+			$status = $this->runFFmpeg( $file->getLocalRefPath(), $dstPath, $thumbTime );
 		}
 		if ( $status === true ) {
-			return new OggVideoDisplay( $file, $file->getURL(), $dstUrl, $width, $height, 
+			return new OggVideoDisplay( $file, $file->getURL(), $dstUrl, $width, $height,
 				$length, $dstPath );
 		} else {
 			return new MediaTransformError( 'thumbnail_error', $width, $height, $status );
@@ -254,7 +274,7 @@ class OggHandler extends MediaHandler {
 	}
 
 	/**
-	 * Run FFmpeg to generate a still image from a video file, using a frame close 
+	 * Run FFmpeg to generate a still image from a video file, using a frame close
 	 * to the given number of seconds from the start.
 	 *
 	 * Returns true on success, or an error message on failure.
@@ -262,10 +282,10 @@ class OggHandler extends MediaHandler {
 	function runFFmpeg( $videoPath, $dstPath, $time ) {
 		global $wgFFmpegLocation;
 		wfDebug( __METHOD__." creating thumbnail at $dstPath\n" );
-		$cmd = wfEscapeShellArg( $wgFFmpegLocation ) . 
+		$cmd = wfEscapeShellArg( $wgFFmpegLocation ) .
 			# FFmpeg only supports integer numbers of seconds
 			' -ss ' . intval( $time ) . ' ' .
-			' -i ' . wfEscapeShellArg( $videoPath ) . 
+			' -i ' . wfEscapeShellArg( $videoPath ) .
 			# MJPEG, that's the same as JPEG except it's supported ffmpeg
 			# No audio, one frame
 			' -f mjpeg -an -vframes 1 ' .
@@ -293,7 +313,7 @@ class OggHandler extends MediaHandler {
 	}
 
 	/**
-	 * Run oggThumb to generate a still image from a video file, using a frame 
+	 * Run oggThumb to generate a still image from a video file, using a frame
 	 * close to the given number of seconds from the start.
 	 *
 	 * Returns true on success, or an error message on failure.
@@ -310,11 +330,11 @@ class OggHandler extends MediaHandler {
 
 		if ( $this->removeBadFile( $dstPath, $retval ) || $retval ) {
 			// oggThumb spams both stderr and stdout with useless progress
-			// messages, and then often forgets to output anything when 
+			// messages, and then often forgets to output anything when
 			// something actually does go wrong. So interpreting its output is
 			// a challenge.
 			$lines = explode( "\n", str_replace( "\r\n", "\n", $returnText ) );
-			if ( count( $lines ) > 0 
+			if ( count( $lines ) > 0
 				&& preg_match( '/invalid option -- \'n\'$/', $lines[0] ) )
 			{
 				return wfMsgForContent( 'ogg-oggThumb-version', '0.9' );
@@ -338,15 +358,15 @@ class OggHandler extends MediaHandler {
 	}
 
 	function getStreamTypes( $file ) {
-		$streamTypes = '';
+		$streamTypes = array();
 		$metadata = $this->unpackMetadata( $file->getMetadata() );
 		if ( !$metadata || isset( $metadata['error'] ) ) {
 			return false;
 		}
 		foreach ( $metadata['streams'] as $stream ) {
-			$streamTypes[$stream['type']] = true;
+			$streamTypes[] = $stream['type'];
 		}
-		return array_keys( $streamTypes );
+		return array_unique( $streamTypes );
 	}
 
 	function getShortDesc( $file ) {
@@ -403,7 +423,7 @@ class OggHandler extends MediaHandler {
 			$wgLang->formatBitrate( $bitrate ),
 			$wgLang->formatNum( $file->getWidth() ),
 			$wgLang->formatNum( $file->getHeight() )
-	   	);
+		);
 	}
 
 	function getDimensionsString( $file ) {
@@ -418,12 +438,12 @@ class OggHandler extends MediaHandler {
 	}
 
 	static function getMyScriptPath() {
-		global $wgScriptPath;
-		return "$wgScriptPath/extensions/OggHandler";
+		global $wgExtensionAssetsPath;
+		return "$wgExtensionAssetsPath/OggHandler";
 	}
 
 	function setHeaders( $out ) {
-		global $wgOggScriptVersion, $wgCortadoJarFile, $wgServer;
+		global $wgOggScriptVersion, $wgCortadoJarFile;
 
 		if ( $out->hasHeadItem( 'OggHandlerScript' ) && $out->hasHeadItem( 'OggHandlerInlineScript' ) &&
 			$out->hasHeadItem( 'OggHandlerInlineCSS' ) ) {
@@ -441,11 +461,13 @@ class OggHandler extends MediaHandler {
 		$cortadoUrl = $wgCortadoJarFile;
 		$scriptPath = self::getMyScriptPath();
 		if( substr( $cortadoUrl, 0, 1 ) != '/'
-			&& substr( $cortadoUrl, 0, 4 ) != 'http' ) {
-			$cortadoUrl = "$wgServer$scriptPath/$cortadoUrl";
+				&& substr( $cortadoUrl, 0, 4 ) != 'http' )
+		{
+			$cortadoUrl = wfExpandUrl( "$scriptPath/$cortadoUrl", PROTO_CURRENT );
 		}
 		$encCortadoUrl = Xml::encodeJsVar( $cortadoUrl );
 		$encExtPathUrl = Xml::encodeJsVar( $scriptPath );
+		$alignStart = wfUILang()->alignStart();
 
 		$out->addHeadItem( 'OggHandlerScript' , Html::linkedScript( "{$scriptPath}/OggPlayer.js?$wgOggScriptVersion" ) );
 
@@ -462,7 +484,7 @@ EOT
 .ogg-player-options {
 	border: solid 1px #ccc;
 	padding: 2pt;
-	text-align: left;
+	text-align: $alignStart;
 	font-size: 10pt;
 }
 
@@ -487,6 +509,28 @@ EOT
 		if ( $instance ) {
 			$instance->setHeaders( $outputPage );
 		}
+	}
+
+	/**
+	 * Handler for the ExtractThumbParameters hook
+	 * 
+	 * @param $thumbname string URL-decoded basename of URI
+	 * @param &$params Array Currently parsed thumbnail params
+	 */
+	public static function onExtractThumbParameters( $thumbname, array &$params ) {
+		if ( !preg_match( '/\.(?:ogg|ogv|oga)$/i', $params['f'] ) ) {
+			return true; // not an ogg file
+		}
+		// Check if the parameters can be extracted from the thumbnail name...
+		if ( preg_match( '!^(mid|seek=[0-9.]+)-[^/]*$!', $thumbname, $m ) ) {
+			list( /* all */, $timeFull ) = $m;
+			if ( $timeFull != 'mid' ) {
+				list( $seek, $thumbtime ) = explode( '=', $timeFull, 2 );
+				$params['thumbtime'] = $thumbtime;
+			}
+			return false; // valid thumbnail URL
+		}
+		return true; // pass through to next handler
 	}
 }
 
@@ -514,12 +558,7 @@ class OggTransformOutput extends MediaTransformOutput {
 
 		OggTransformOutput::$serial++;
 
-		if ( substr( $this->videoUrl, 0, 4 ) != 'http' ) {
-			global $wgServer;
-			$url = $wgServer . $this->videoUrl;
-		} else {
-			$url = $this->videoUrl;
-		}
+		$url = wfExpandUrl( $this->videoUrl, PROTO_RELATIVE );
 		// Normalize values
 		$length = floatval( $this->length );
 		$width = intval( $this->width );

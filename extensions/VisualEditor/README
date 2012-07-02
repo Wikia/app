@@ -1,0 +1,14 @@
+We're starting to merge bits from Wikidom and ParserPlayground tests here.
+Enjoy!
+
+Short-term work highlights:
+* convert parser to wikidom format & using the wikidom serializer
+* port/update/write more tests
+* Special: page to host the editor as a standalone demo
+* Opt-in test mode to switch the editor in on EditPage (initially blank)
+* Use serializer to save pages from editor
+* Use parser to load pages into editor
+
+Long-term work highlights:
+* more thorough & bulk testing
+* more extension support

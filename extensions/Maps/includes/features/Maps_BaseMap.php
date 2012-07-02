@@ -10,7 +10,7 @@
  *
  * @author Jeroen De Dauw
  */
-abstract class MapsBaseMap {
+class MapsBaseMap {
 	
 	/**
 	 * @since 0.6.x
@@ -27,18 +27,6 @@ abstract class MapsBaseMap {
 	protected $properties = array();
 	
 	/**
-	 * Returns the HTML to display the map.
-	 * 
-	 * @since 0.7.3
-	 * 
-	 * @param array $params
-	 * @param $parser
-	 * 
-	 * @return string
-	 */
-	protected abstract function getMapHTML( array $params, Parser $parser );
-	
-	/**
 	 * Constructor.
 	 * 
 	 * @param MapsMappingService $service
@@ -48,8 +36,6 @@ abstract class MapsBaseMap {
 	}
 	
 	/**
-	 * @see 
-	 * 
 	 * @since 0.7.3
 	 */	
 	public function addParameterInfo( array &$params ) {
@@ -59,7 +45,7 @@ abstract class MapsBaseMap {
 	 * Handles the request from the parser hook by doing the work that's common for all
 	 * mapping services, calling the specific methods and finally returning the resulting output.
 	 *
-	 * @since 0.7.3
+	 * @since 1.0
 	 *
 	 * @param array $params
 	 * @param Parser $parser
@@ -67,31 +53,58 @@ abstract class MapsBaseMap {
 	 * @return html
 	 */
 	public final function renderMap( array $params, Parser $parser ) {
-		global $egMapsUseRL;
-		
 		$this->setCentre( $params );
 		
-		if ( $params['zoom'] == 'null' ) {
+		if ( $params['zoom'] === false ) {
 			$params['zoom'] = $this->service->getDefaultZoom();
 		}
 		
-		$output = $this->getMapHTML( $params, $parser );
+		$mapName = $this->service->getMapId();
 		
-		if ( $egMapsUseRL ) {
-			$output .= $this->getJSON( $params, $parser );
+		$output = $this->getMapHTML( $params, $parser, $mapName ) . $this->getJSON( $params, $parser, $mapName );
+		
+		$configVars = Skin::makeVariablesScript( $this->service->getConfigVariables() );
+		
+		// MediaWiki 1.17 does not play nice with addScript, so add the vars via the globals hook.
+		if ( version_compare( $GLOBALS['wgVersion'], '1.18', '<' ) ) {
+			$GLOBALS['egMapsGlobalJSVars'] += $this->service->getConfigVariables();
 		}
 		
 		global $wgTitle;
-		if ( $wgTitle->getNamespace() == NS_SPECIAL ) {
+		if ( !is_null( $wgTitle ) && $wgTitle->isSpecialPage() ) {
 			global $wgOut;
 			$this->service->addDependencies( $wgOut );
+			$wgOut->addScript( $configVars );
 		}
 		else {
-			$this->service->addDependencies( $parser );			
+			$this->service->addDependencies( $parser );
+			$parser->getOutput()->addHeadItem( $configVars );			
 		}
 		
 		return $output;
 	}
+	
+	/**
+	 * Returns the HTML to display the map.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @param array $params
+	 * @param Parser $parser
+	 * @param string $mapName
+	 * 
+	 * @return string
+	 */
+	protected function getMapHTML( array $params, Parser $parser, $mapName ) {
+		return Html::element(
+			'div',
+			array(
+				'id' => $mapName,
+				'style' => "width: {$params['width']}; height: {$params['height']}; background-color: #cccccc; overflow: hidden;",
+			),
+			wfMsg( 'maps-loading-map' )
+		);
+	}		
 	
 	/**
 	 * Returns the JSON with the maps data.
@@ -100,18 +113,21 @@ abstract class MapsBaseMap {
 	 *
 	 * @param array $params
 	 * @param Parser $parser
+	 * @param string $mapName
 	 * 
 	 * @return string
 	 */	
-	protected function getJSON( array $params, Parser $parser ) {
+	protected function getJSON( array $params, Parser $parser, $mapName ) {
 		$object = $this->getJSONObject( $params, $parser );
 		
 		if ( $object === false ) {
 			return '';
 		}
 		
-		// TODO
-		return Html::inlineScript( "maps=[]; maps['{$this->service->getName()}']=[]; maps['{$this->service->getName()}'].push(" . json_encode( $object ) . ')' );
+		return Html::inlineScript(
+			MapsMapper::getBaseMapJSON( $this->service->getName() )
+			. "mwmaps.{$this->service->getName()}.{$mapName}=" . FormatJson::encode( $object ) . ';'
+		);
 	}
 	
 	/**
@@ -130,6 +146,10 @@ abstract class MapsBaseMap {
 	
 	/**
 	 * Translates the coordinates field to the centre field and makes sure it's set to it's default when invalid. 
+	 * 
+	 * @since 1.0
+	 * 
+	 * @param array &$params
 	 */
 	protected function setCentre( array &$params ) {
 		// If it's false, the coordinate was invalid, or geocoding failed. Either way, the default's should be used.
@@ -146,7 +166,7 @@ abstract class MapsBaseMap {
 			}
 		}
 		else {
-			$params['centre'] = MapsCoordinateParser::parseCoordinates( $params['coordinates'] );
+			$params['centre'] = $params['coordinates'];
 		}
 		
 		unset( $params['coordinates'] );

@@ -32,7 +32,7 @@ class Stomp_Frame
     public $command;
     public $headers = array();
     public $body;
-    
+
     /**
      * Constructor
      *
@@ -40,25 +40,25 @@ class Stomp_Frame
      * @param array $headers
      * @param string $body
      */
-    public function __construct ($command = null, $headers = null, $body = null)
+    public function __construct ( $command = null, $headers = null, $body = null )
     {
-        $this->_init($command, $headers, $body);
+        $this->_init( $command, $headers, $body );
     }
-    
-    protected function _init ($command = null, $headers = null, $body = null)
+
+    protected function _init ( $command = null, $headers = null, $body = null )
     {
         $this->command = $command;
-        if ($headers != null) {
+        if ( $headers != null ) {
             $this->headers = $headers;
         }
         $this->body = $body;
-        
-        if ($this->command == 'ERROR') {
-            require_once 'Stomp/Exception.php';
-            throw new Stomp_Exception($this->headers['message'], 0, $this->body);
+
+        if ( $this->command == 'ERROR' ) {
+            require_once 'Exception.php';
+            throw new Stomp_Exception( $this->headers['message'], 0, $this->body );
         }
     }
-    
+
     /**
      * Convert frame to transportable string
      *
@@ -67,14 +67,14 @@ class Stomp_Frame
     public function __toString()
     {
         $data = $this->command . "\n";
-        
-        foreach ($this->headers as $name => $value) {
+
+        foreach ( $this->headers as $name => $value ) {
             $data .= $name . ": " . $value . "\n";
         }
-        
+
         $data .= "\n";
         $data .= $this->body;
-        return $data .= "\x00\n";
+        return $data . "\x00\n";
     }
 }
 ?>

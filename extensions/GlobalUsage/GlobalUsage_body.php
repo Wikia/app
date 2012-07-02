@@ -2,6 +2,10 @@
 
 class GlobalUsage {
 	private $interwiki;
+
+	/**
+	 * @var DatabaseBase
+	 */
 	private $db;
 
 	/**
@@ -21,7 +25,7 @@ class GlobalUsage {
 	 * @param $title Title Title of the page
 	 * @param $images array Array of db keys of images used
 	 */
-	public function insertLinks( $title, $images, $pageIdFlags = GAID_FOR_UPDATE ) {
+	public function insertLinks( $title, $images, $pageIdFlags = Title::GAID_FOR_UPDATE ) {
 		$insert = array();
 		foreach ( $images as $name ) {
 			$insert[] = array(
@@ -33,20 +37,20 @@ class GlobalUsage {
 				'gil_to' => $name
 			);
 		}
-		$this->db->insert( 'globalimagelinks', $insert, __METHOD__ );
+		$this->db->insert( 'globalimagelinks', $insert, __METHOD__, array( 'IGNORE' ) );
 	}
 	/**
 	 * Get all global images from a certain page
 	 */
 	public function getLinksFromPage( $id ) {
-		$res = $this->db->select( 
-				'globalimagelinks', 
-				'gil_to', 
+		$res = $this->db->select(
+				'globalimagelinks',
+				'gil_to',
 				array(
 					'gil_wiki' => $this->interwiki,
 					'gil_page' => $id,
 				),
-				__METHOD__ 
+				__METHOD__
 		);
 		
 		$images = array();
@@ -112,7 +116,7 @@ class GlobalUsage {
 				'gil_to' => $row->il_to,
 			);
 		}
-		$this->db->insert( 'globalimagelinks', $insert, __METHOD__ );
+		$this->db->insert( 'globalimagelinks', $insert, __METHOD__, array( 'IGNORE' ) );
 	}
 
 	/**
@@ -127,7 +131,7 @@ class GlobalUsage {
 				array(
 					'gil_page_namespace_id' => $title->getNamespace(),
 					'gil_page_namespace' => $title->getNsText(),
-					'gil_page_title' => $title->getText()
+					'gil_page_title' => $title->getDBkey()
 				),
 				array(
 					'gil_wiki' => $this->interwiki,

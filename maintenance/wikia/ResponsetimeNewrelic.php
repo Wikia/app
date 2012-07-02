@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /* Fetch dashboard information from newrelic and insert into stats db
  * Author: Owen Davis
@@ -35,7 +35,7 @@ class ResponseTimeNewRelic {
 	public function getData () {
 
 		// Crazy workaround for HttpRequest not accepting user options
-		$req = HttpRequest::factory( $this->summaryDataURL, array ('method' => "GET", 'timeout' => 'default') );
+		$req = MWHttpRequest::factory( $this->summaryDataURL, array ('method' => "GET", 'timeout' => 'default') );
 		$req->setHeader("http-x-license-key", $this->licenceKey);
 		$status = $req->execute();
 		$response = $req->getContent();

@@ -10,7 +10,7 @@ import static org.testng.AssertJUnit.*;
 
 public class WikiaPollTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testSpecialCreatePoll() throws Exception {
 		loginAsStaff();
 		openAndWait("index.php?title=Special:CreatePoll");

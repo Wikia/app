@@ -3,7 +3,7 @@
  * Creates serialised database of messages that need checking for problems.
  *
  * @author Niklas Laxstrom
- * @copyright Copyright © 2008-2010, Niklas Laxström
+ * @copyright Copyright © 2008-2011, Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @file
  */
@@ -88,7 +88,6 @@ function tagFuzzy( $problematic ) {
 	}
 
 	$db = wfGetDB( DB_MASTER );
-	$id = $db->selectField( 'revtag_type', 'rtt_id', array( 'rtt_name' => 'fuzzy' ), __METHOD__ );
 	foreach ( $problematic as $p ) {
 		$title = Title::makeTitleSafe( $p[0], $p[1] );
 		$titleText = $title->getDBKey();
@@ -100,7 +99,7 @@ function tagFuzzy( $problematic ) {
 			$inserts = array(
 				'rt_page' => $r->page_id,
 				'rt_revision' => $r->page_latest,
-				'rt_type' => $id
+				'rt_type' => RevTag::getType( 'fuzzy' )
 			);
 		}
 		$db->replace( 'revtag', 'rt_type_page_revision', $inserts, __METHOD__ );

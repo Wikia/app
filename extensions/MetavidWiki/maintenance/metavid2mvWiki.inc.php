@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * metavid2mvWiki.inc.php Created on Jan 19, 2008
  *
  * All Metavid Wiki code is Released under the GPL2
@@ -261,11 +261,11 @@ function do_stream_insert( $mode, $stream_name = '' ) {
 	$dbr = wfGetDB( DB_SLAVE );
 	if ( $mode == 'all' ) {
 		$sql = "SELECT * FROM `metavid`.`streams` WHERE `sync_status`='in_sync'";
-	} else if ( $mode == 'files' ) {
+	} elseif ( $mode == 'files' ) {
 		$sql = "SELECT * FROM `metavid`.`streams` WHERE `trascoded` != 'none'";
-	} else if ( $mode == 'all_in_wiki' ) {
+	} elseif ( $mode == 'all_in_wiki' ) {
 		$sql = "SELECT `metavid`.`streams`.* FROM `$wgDBname`.`mv_streams` LEFT JOIN `metavid`.`streams` ON (`$wgDBname`.`mv_streams`.`name` = `metavid`.`streams`.`name`) ";
-	} else if ( $mode == 'all_sync_past_date' ) {
+	} elseif ( $mode == 'all_sync_past_date' ) {
 		print "doing all after: " . $args[$options['date']] . "\n";
 		list( $month, $day, $year ) = explode( '/', $args[$options['date']] );
 		$date_time = mktime( 0, 0, 0, $month, $day, $year );
@@ -483,7 +483,7 @@ function do_process_text( $stream, $force ) {
 			do_update_wiki_page( 'Ht_en:' . $page_title, $page_body, MV_NS_MVD );
 		}
 }
-/*
+/**
  * for each image add it to the image directory
  */
 function do_process_images( $stream, $force = false ) {
@@ -923,7 +923,7 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 			if( $dbKey == 'gov_track_id'){
 				//we key all to govtrack id make sure its there:
 				$page_body.="GovTrack Person ID=".$person->gov_track_id . "|\n";
-			}else if ( $dbKey == 'total_received' ) {
+			}elseif ( $dbKey == 'total_received' ) {
 				if ( !$mapk ) {
 					print 'no mapkey for total_received' . "\n";
 				} else {
@@ -933,7 +933,7 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 						$page_body .= "{$name}=\$" . $matches[1] . "|\n";
 					}
 				}
-			} else if($dbKey == 'roles'){
+			} elseif($dbKey == 'roles'){
 				if ( $person->$dbKey ) {
 					$i=1;
 					foreach($person->$dbKey as $role){
@@ -945,7 +945,7 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 						$i++;
 					}
 				}
-			} else if($dbKey == 'committee'){
+			} elseif($dbKey == 'committee'){
 				if ( isset($person->$dbKey) ) {
 					$i = 1;
 					foreach($person->$dbKey as $committee){
@@ -958,7 +958,7 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 						$i++;
 					}
 				}
-			} else if ( $dbKey == 'contribution_date_range' ) {
+			} elseif ( $dbKey == 'contribution_date_range' ) {
 				if ( !$mapk ) {
 					print 'out of order attr process missing mapk' . "\n";
 				} else {
@@ -968,7 +968,7 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 						$page_body .= "{$name}=" . $matches[1] . "|\n";
 					}
 				}
-			} else if ( $dbKey == 'maplight_id' ) {
+			} elseif ( $dbKey == 'maplight_id' ) {
 				if ( !$person->$dbKey ) {
 					// print 'do_maplight_id'."\n";
 					// try to grab the maplight id
@@ -1101,7 +1101,7 @@ function do_people_insert( $doInterestLookup = false, $forcePerson = '', $force 
 		$image = wfLocalFile( $imgTitle );
 
 		$archive = $image->publish( $local_file );
-		if ( WikiError :: isError( $archive ) ) {
+		if ( !$archive->isGood() ) {
 			echo ( "failed.\n" );
 			continue;
 		}
@@ -1236,7 +1236,7 @@ function do_proc_interest( $intrestKey, $intrestName ) {
 			if ( $matches[2][$i] == 'Support' ) {
 				$page_body .= "Supported Bill $sinx=" . str_replace( '_', ' ', $bill_name ) . "|\n";
 				$sinx++;
-			} else if ( $matches[2][$i] == 'Oppose' ) {
+			} elseif ( $matches[2][$i] == 'Oppose' ) {
 				$page_body .= "Opposed Bill $oinx=" . str_replace( '_', ' ', $bill_name ) . "|\n";
 				$oinx++;
 			}

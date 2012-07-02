@@ -4,9 +4,10 @@
  *
  * @file
  * @ingroup Extensions
- * @version 2.1.0
+ * @version 2.2.1
  * @author Inez Korczyński <korczynski(at)gmail(dot)com>
  * @author Jack Phoenix <jack@countervandalism.net>
+ * @author Ryan Schmidt <skizzerz@shoutwiki.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -18,11 +19,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'AjaxLogin',
-	'version' => '2.1.0',
-	'author' => array( 'Inez Korczyński', 'Jack Phoenix' ),
-	'description' => 'Dynamic box which allow users to login and remind password',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:AjaxLogin',
-	'descmsg' => 'ajaxlogin-desc',
+	'version' => '2.2.1',
+	'author' => array( 'Inez Korczyński', 'Jack Phoenix', 'Ryan Schmidt' ),
+	'url' => 'https://www.mediawiki.org/wiki/Extension:AjaxLogin',
+	'descriptionmsg' => 'ajaxlogin-desc',
 );
 
 // Array of skins for which AjaxLogin is enabled.
@@ -43,7 +43,7 @@ $wgExtensionMessagesFiles['AjaxLogin'] = $dir . 'AjaxLogin.i18n.php';
 // Hook things up
 $wgHooks['BeforePageDisplay'][] = 'AjaxLoginJS';
 $wgHooks['SkinAfterContent'][] = 'GetAjaxLoginForm';
-$wgHooks['MakeGlobalVariablesScript'][] = 'efAddAjaxLoginVariables';
+$wgHooks['ResourceLoaderGetConfigVars'][] = 'efAddAjaxLoginVariables';
 
 /**
  * Adds required JavaScript & CSS files to the HTML output of a page if AjaxLogin is enabled
@@ -95,13 +95,16 @@ function efAddAjaxLoginVariables( $vars ) {
  * @param $data The data, AjaxLogin form in this case, to be added to the HTML output of a page
  * @return true
  */
-function GetAjaxLoginForm( &$data ) {
-	global $wgAuth, $wgEnableEmail, $wgOut, $wgTitle, $wgUser;
+function GetAjaxLoginForm( &$data, $skin = null ) {
+	global $wgAuth, $wgEnableEmail, $wgOut, $wgUser;
 	global $wgEnableAjaxLogin;
-	if (
-		isset( $wgEnableAjaxLogin ) && $wgUser->isAnon() &&
-		$wgTitle->getNamespace() != 8 && !$wgTitle->isSpecial( 'Userlogin' )
-	) {
+	if( is_null( $skin ) ) {
+		global $wgTitle;
+		$userlogincheck = $wgTitle->getNamespace() != 8 && $wgTitle->getDBkey() != 'Userlogin';
+	} else {
+		$userlogincheck = $skin->getTitle()->getNamespace() != 8 && !$skin->getTitle()->isSpecial( 'Userlogin' );
+	}
+	if( isset( $wgEnableAjaxLogin ) && $wgUser->isAnon() && $userlogincheck ) {
 		$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 		$link = $titleObj->getLocalURL( 'type=signup' );
 		$wgOut->addHTML( '<!--[if lt IE 9]><style type="text/css">#userloginRound { width: 350px !important; }</style><![endif]-->
@@ -130,7 +133,7 @@ function GetAjaxLoginForm( &$data ) {
 		}
 		// Originally this used core message 'nologinlink' but it wouldn't work too well for Finnish, so I changed it. --Jack Phoenix
 		$wgOut->addHTML(
-			'<br /><a id="wpAjaxRegister" tabindex="107" href="' . htmlspecialchars( $link ) . '" rel="nofollow">' . wfMsg( 'ajaxlogin-create' ) . '</a>
+			'<br /><a id="wpAjaxRegister" tabindex="107" href="' . htmlspecialchars( $link ) . '">' . wfMsg( 'ajaxlogin-create' ) . '</a>
 		</form>
 	</div>
 	<b class="xbottom"><b class="xb4"></b><b class="xb3"></b><b class="xb2"></b><b class="xb1"></b></b>

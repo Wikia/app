@@ -30,6 +30,10 @@ class GlobalHeaderController extends WikiaController {
 		}
 		
 		$service = new NavigationService();
-		$this->menuNodes = $service->parseMessage($messageName, array(3, 4, 5), 60*60*3 /* 3 hours */);
+		$menuNodes = $service->parseMessage($messageName, array(3, 4, 5), 60*60*3 /* 3 hours */);
+
+		wfRunHooks( 'AfterGlobalHeader', array(&$menuNodes, $category, $messageName) );
+
+		$this->menuNodes = $menuNodes;
 	}
 }

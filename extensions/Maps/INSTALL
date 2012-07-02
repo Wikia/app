@@ -1,26 +1,40 @@
-[[Maps 0.7.2]]
+This is the install file for the Maps extension.
+	
+Extension page on mediawiki.org: http://www.mediawiki.org/wiki/Extension:Maps
+Latest version of the install file: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/Maps/INSTALL?view=co
 
-In order to use this version of Maps, you need to have Validator 0.3.6 installed. If you get a distribution
-from this page, you don't need to bother this, since Validator comes bundled with every release, and will
-automatically be loaded by Maps. If you get Maps from SVN trunk, or a tag, you must make sure you also get
-Validator.
 
-Once you have downloaded the code, place the 'Maps' directory within your MediaWiki 'extensions' directory.
-Then add the following code to your LocalSettings.php file:
+== Requirements ==
+
+Maps requires:
+
+* MediaWiki 1.17 or above
+* PHP 5.2 or above, 5.3 or above recommended
+* Validator 0.4.11 or above
+
+== Download ==
+
+You can find the current version of Maps on the Google Code download page [0],
+as well as a list of legacy downloads [1].
+
+[0] https://code.google.com/p/mwmaps/downloads/list
+[1] https://code.google.com/p/mwmaps/downloads/list?can=1
+
+You can also get the code directly from SVN. Tags can be obtained via
+
+ svn checkout http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/Maps/REL_version
+
+Where 'version' is the version number of the tag, such as 0_1
+(see the available tags at http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/Maps/).
+
+The latest code can be obtained from trunk:
+
+ svn checkout http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/Maps/
+
+== Installation ==
+
+Once you have downloaded the code, place the ''Maps'' directory within your MediaWiki
+'extensions' directory. Then add the following code to your [[Manual:LocalSettings.php|LocalSettings.php]] file:
 
 # Maps
 require_once( "$IP/extensions/Maps/Maps.php" );
-
-For using Google Maps or Yahoo! Maps, you must enter their API keys in the settings file. If you don't already
-have them, you can obtain them at the Google Maps API page and Yahoo Maps API page. Note that the Google Maps
-API key is required for both displaying maps AND for geocoding (and therefore also required when you use
-display_address with a Yahoo! Map). Also note that use of the Google Maps API is free only if your site is
-accessible to the public; otherwise it costs money - read the Google Maps terms of service [0] for further details.
-
-Once you have successfully installed Maps, please add your wiki to the Sites that use Maps section [1].
-
-More information can be found at [2].
-
-[0] http://code.google.com/apis/maps/terms.html
-[1] http://www.mediawiki.org/wiki/Extension:Maps#Sites_that_use_Maps
-[2] http://mapping.referata.com/wiki/Maps#Installation

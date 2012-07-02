@@ -8,34 +8,12 @@
  * Special page that generates a list of users
  * that have been disasbled via PasswordReset
  *
- * @addtogroup Extensions
+ * @ingroup Extensions
  * @author Tim Laqua <t.laqua@gmail.com>
  */
-
-class Disabledusers extends SpecialPage {
-	///StalePages Class Constructor
-	public function __construct() {
-		wfLoadExtensionMessages('PasswordReset');
-		SpecialPage::SpecialPage( 'Disabledusers', 'passwordreset' );
-	}
-
-	function getDescription() {
-		return wfMsg( 'disabledusers' );
-	}
-
-	function execute( $parameters ) {
-		$this->setHeaders();
-		list( $limit, $offset ) = wfCheckLimits();
-
-		$sp = new DisabledusersPage();
-
-		$sp->doQuery( $offset, $limit );
-	}
-}
-
-class DisabledusersPage extends QueryPage {
-	function getName() {
-		return "Disabledusers";
+class Disabledusers extends QueryPage {
+	public function __construct( $name = 'Disabledusers' ) {
+		parent::__construct( $name, 'passwordreset' );
 	}
 
 	function isExpensive() {
@@ -51,17 +29,15 @@ class DisabledusersPage extends QueryPage {
 		return false;
 	}
 
-	function getSQL() {
-		global $wgDBtype;
-		$db = wfGetDB( DB_SLAVE );
-		$user = $db->tableName( 'user' );
-
-		return
-			"SELECT 'Disabledusers' as type, 
-			user_id, 
-			user_name as value 
-			FROM $user
-			WHERE user_password='DISABLED'";
+	function getQueryInfo() {
+		return array(
+			'tables' => array ( 'user' ),
+			'fields' => array(
+				'user_id',
+				'user_name AS value'
+			),
+			'conds' => array ( 'user_password' => 'DISABLED' )
+		);
 	}
 
 	function sortDescending() {

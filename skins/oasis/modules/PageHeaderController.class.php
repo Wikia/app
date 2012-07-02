@@ -8,29 +8,29 @@
 class PageHeaderController extends WikiaController {
 
 	var $content_actions;
-	
+
 	public function init() {
 		$this->isMainPage = null;
 		$this->likes = null;
 		$this->total = null;
-		
+
 		$this->action = null;
 		$this->actionImage = null;
 		$this->actionName = null;
 		$this->dropdown = null;
-		
+
 		$skinVars = $this->app->getSkinTemplateObj()->data;
 		$this->content_actions = $skinVars['content_actions'];
 		$this->displaytitle = $skinVars['displaytitle']; // if true - don't encode HTML
 		$this->title = $skinVars['title'];
-		$this->subtitle = $skinVars['subtitle'];		
+		$this->subtitle = $skinVars['subtitle'];
 	}
-	
+
 	/**
 	 * Use MW core variable to generate action button
 	 */
-	private function prepareActionButton() {
-		global $wgTitle, $wgRequest;
+	protected function prepareActionButton() {
+		global $wgTitle, $wgUser, $wgRequest;
 
 		$isDiff = !is_null($wgRequest->getVal('diff'));
 
@@ -48,8 +48,7 @@ class PageHeaderController extends WikiaController {
 		// handle protected pages (they should have viewsource link and lock icon) - BugId:9494
 		if ( isset( $this->content_actions['viewsource'] ) &&
 			!$wgTitle->isProtected() &&
-			!$wgTitle->isNamespaceProtected() &&
-			!$wgTitle->isCssJsSubpage() ) {
+			!$wgTitle->isNamespaceProtected($wgUser) ) {
 			// force login to edit page that is not protected
 			$this->content_actions['edit'] = $this->content_actions['viewsource'];
 			$this->content_actions['edit']['text'] = wfMsg('edit');
@@ -95,7 +94,7 @@ class PageHeaderController extends WikiaController {
 	/**
 	 * Get content actions for dropdown
 	 */
-	private function getDropdownActions() {
+	protected function getDropdownActions() {
 		$ret = array();
 
 		// items to be added to "edit" dropdown
@@ -118,7 +117,7 @@ class PageHeaderController extends WikiaController {
 	/**
 	 * Get recent revisions of current article and format them
 	 */
-	private function getRecentRevisions() {
+	protected function getRecentRevisions() {
 		global $wgTitle, $wgMemc;
 
 		// use service to get data
@@ -190,16 +189,16 @@ class PageHeaderController extends WikiaController {
 		$this->dropdown = $this->getDropdownActions();
 
 		/** start of wikia changes @author nAndy */
-        $response = $this->getResponse();
-        if( $response instanceof WikiaResponse ) {
-            wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', array($response, $ns, $skin) );
-            /** @author Jakub */
-            $this->extraButtons = array();
-            wfRunHooks( 'PageHeaderIndexExtraButtons', array( $response ) );
-        } else {
-        //it happened on TimQ's devbox that $response was probably null fb#28747
-            Wikia::logBacktrace(__METHOD__);
-        }
+		$response = $this->getResponse();
+		if( $response instanceof WikiaResponse ) {
+			wfRunHooks( 'PageHeaderIndexAfterActionButtonPrepared', array($response, $ns, $skin) );
+			/** @author Jakub */
+			$this->extraButtons = array();
+			wfRunHooks( 'PageHeaderIndexExtraButtons', array( $response ) );
+		} else {
+			//it happened on TimQ's devbox that $response was probably null fb#28747
+			Wikia::logBacktrace(__METHOD__);
+		}
 		/** end of wikia changes */
 
 		// for not existing pages page header is a bit different
@@ -402,6 +401,7 @@ class PageHeaderController extends WikiaController {
 
 		if (!empty($wgSupressPageSubtitle)) {
 			$this->subtitle = '';
+			$this->pageSubtitle = '';
 		}
 		else {
 			// render pageType, pageSubject and pageSubtitle as one message
@@ -514,10 +514,8 @@ class PageHeaderController extends WikiaController {
 			$this->subtitle = Wikia::link($wgTitle, wfMsg('oasis-page-header-back-to-article'), array('accesskey' => 'c'), array(), 'known');
 		}
 
-		/** start of wikia changes @author nAndy */
 		// add edit button
 		if ($isDiff || ($isHistory && !$this->isUserTalkArchiveModeEnabled) ) {
-		/** end of wikia changes */
 			$this->prepareActionButton();
 
 			// show only "My Tools" dropdown on toolbar
@@ -536,8 +534,10 @@ class PageHeaderController extends WikiaController {
 				array( 'known', 'noclasses' )
 			);
 
-			$sk = new Skin();
-			$sk->setTitle($wgTitle);
+			// FIXME: Skin is now an abstract class (MW1.19)
+			// (wladek) created non-abstract FakeSkin class, is it the correct solution?
+			$sk = new FakeSkin();
+			$sk->setRelevantTitle($wgTitle);
 
 			$undeleteLink = $sk->getUndeleteLink();
 
@@ -555,9 +555,7 @@ class PageHeaderController extends WikiaController {
 			$this->comments = $service->getCommentsCount();
 		}
 
-		/** start of wikia changes @author nAndy */
 		wfRunHooks('PageHeaderEditPage', array(&$this, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory));
-		/** end of wikia changes */
 	}
 
 	/**
@@ -595,7 +593,7 @@ class PageHeaderController extends WikiaController {
 		if ( $this->canAct ) {
 			$this->prepareActionButton();
 			// dropdown actions
-			$this->dropdown = $this->getDropdownActions();			
+			$this->dropdown = $this->getDropdownActions();
 		}
 
 		// page namespace

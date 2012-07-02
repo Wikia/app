@@ -444,6 +444,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	      $params = array('mlt.match.include' => 'false',
 			      'mlt.fl' => 'title,html',
+				  'mlt.qf' => 'title^10 html^5',
 			     ) + $params;
 
 	      try {

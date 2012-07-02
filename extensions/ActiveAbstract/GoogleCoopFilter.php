@@ -30,9 +30,10 @@ require_once( 'AbstractFilter.php' );
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @author Brion Vibber <brion@pobox.com>
  * @author Jens Frank < JeLuF (at) mormo org >
- * @addtogroup maintenance
+ * @ingroup Maintenance
  *
  */
 
@@ -47,7 +48,10 @@ class GoogleCoopFilter extends AbstractFilter {
 		parent::register( $dumper );
 	}
 
-	function GoogleCoopFilter( &$sink ) {
+	/**
+	 * @param $sink ExportProgressFilter
+	 */
+	function __construct( &$sink ) {
 		$this->sink =& $sink;
 	}
 
@@ -71,7 +75,7 @@ class GoogleCoopFilter extends AbstractFilter {
 		$xml .= '      ' . Xml::element( 'Output', array( 'name' => 'title' ),
 				$wgSitename . ':' . $this->title->getPrefixedText() ) . "\n";
 		$xml .= '      ' . Xml::element( 'Output', array( 'name' => 'more_url' ),
-				$this->title->getFullUrl() ) . "\n";
+				$this->title->getCanonicalUrl() ) . "\n";
 
 		// add abstract and links when we have revision data...
 		$this->revision = null;
@@ -114,6 +118,9 @@ class GoogleCoopFilter extends AbstractFilter {
 	 *
 	 * This code needs a cleanup, it became rather ugly after adding exception
 	 * handling :-(
+	 *
+	 * @param $str
+	 * @return array|string
 	 */
 	function _threeLines( $str ) {
 		$s = array();

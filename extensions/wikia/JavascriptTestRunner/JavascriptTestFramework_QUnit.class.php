@@ -3,11 +3,11 @@
 class JavascriptTestFramework_QUnit extends JavascriptTestFramework {
 
 	public $javascriptFiles = array(
-		'/skins/common/tests/qunit/qunit.js',
+		'tests/lib/qunit/qunit.js',
 	);
 
 	public $styleFiles = array(
-		'/skins/common/tests/qunit/qunit.css',
+		'tests/lib/qunit/qunit.css',
 	);
 
 	public $forbiddenOutputs = array(

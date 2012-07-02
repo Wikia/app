@@ -2,6 +2,7 @@
 /**
  * Internationalisation file for CategoryOnUpload extension.
  *
+ * @file
  * @ingroup Extensions
  */
 
@@ -20,10 +21,12 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Jon Harald Søby
  * @author SPQRobin
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'categoryonupload-desc' => 'Description on [[Special:Version]] of the CategoryOnUpload extension. See [http://upload.wikimedia.org/wikipedia/mediawiki/5/5c/CategoryOnUpload_Screenshot.png this image] for what it does.',
 	'categoryonupload-label' => '{{identical|Category}}',
+	'categoryonupload-none' => '{{optional}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -49,12 +52,43 @@ $messages['ar'] = array(
 	'categoryonupload-label' => 'التصنيف:',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'categoryonupload-label' => 'ܣܕܪܐ:',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
 $messages['arz'] = array(
 	'categoryonupload-desc' => 'يقترح على المستخدم اختيار تصنيف عند رفع ملف',
 	'categoryonupload-label' => 'التصنيف:',
+);
+
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'categoryonupload-desc' => 'Pidi al usuariu que seleicione una categoría al xubir un ficheru',
+	'categoryonupload-label' => 'Categoría:',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'categoryonupload-desc' => 'İstifadəçiyə fayl yükləyərkən kateqoriya seçmək imkanı verir',
+	'categoryonupload-label' => 'Kateqoriya:',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'categoryonupload-desc' => 'Ҡатнашыусыға файл тейәү ваҡытында категория һайларға мөмкинлек бирә',
+	'categoryonupload-label' => 'Категория:',
 );
 
 /** Bavarian (Boarisch)
@@ -65,7 +99,14 @@ $messages['bar'] = array(
 	'categoryonupload-label' => 'Kategorie:',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'categoryonupload-label' => 'Катэгорыя:',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -114,11 +155,33 @@ $messages['ca'] = array(
 	'categoryonupload-label' => 'Categoria:',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'categoryonupload-label' => 'پۆل:',
+);
+
+/** Czech (Česky)
+ * @author Jkjk
+ */
+$messages['cs'] = array(
+	'categoryonupload-desc' => 'Při nahrávání souboru upozorní uživatele, aby vybral příslušnou kategorii',
+	'categoryonupload-label' => 'Kategorie:',
+);
+
+/** Welsh (Cymraeg)
+ * @author Xxglennxx
+ */
+$messages['cy'] = array(
+	'categoryonupload-desc' => 'Yn annog defnyddwyr i ddewis categori wrth uwchlwytho ffeil',
+	'categoryonupload-label' => 'Categori:',
+);
+
 /** German (Deutsch)
+ * @author Kghbln
  * @author Raimond Spekking
  */
 $messages['de'] = array(
-	'categoryonupload-desc' => 'Fragt einen Benutzer beim Hochladen von Dateien nach einer Kategorie',
+	'categoryonupload-desc' => 'Ermöglicht die Auswahl von Kategorien beim Hochladen von Dateien',
 	'categoryonupload-label' => 'Kategorie:',
 );
 
@@ -170,6 +233,13 @@ $messages['eu'] = array(
 	'categoryonupload-label' => 'Kategoria:',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'categoryonupload-label' => 'رده:',
+);
+
 /** Finnish (Suomi)
  * @author Jaakonam
  * @author Mobe
@@ -186,6 +256,13 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'categoryonupload-desc' => "Affiche un sélecteur de catégories lors du téléchargement d'un fichier",
 	'categoryonupload-label' => 'Catégorie :',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'categoryonupload-label' => 'Catègorie :',
 );
 
 /** Galician (Galego)
@@ -220,6 +297,11 @@ $messages['gv'] = array(
 	'categoryonupload-label' => 'Ronney:',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'categoryonupload-label' => 'Rukuni:',
+);
+
 /** Hebrew (עברית)
  * @author Agbad
  * @author Rotemliss
@@ -227,6 +309,14 @@ $messages['gv'] = array(
 $messages['he'] = array(
 	'categoryonupload-desc' => 'הצעה למשתמש לבחור קטגוריה בעת העלאת קובץ',
 	'categoryonupload-label' => 'קטגוריה:',
+);
+
+/** Croatian (Hrvatski)
+ * @author Ex13
+ */
+$messages['hr'] = array(
+	'categoryonupload-desc' => 'Traži od suradnika odabir kategorije prilikom postavljanja datoteke',
+	'categoryonupload-label' => 'Kategorija:',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -259,6 +349,22 @@ $messages['ia'] = array(
 $messages['id'] = array(
 	'categoryonupload-desc' => 'Menampilkan pilihan kategori ketika seorang pengguna akan memuatkan sebuah berkas',
 	'categoryonupload-label' => 'Kategori:',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'categoryonupload-desc' => "Gwá ọ'bànifé Í chọwá ébéonọr mgbe ȯ nè tí usòrò na élú",
+	'categoryonupload-label' => 'Ébéonọr:',
+);
+
+/** Icelandic (Íslenska)
+ * @author Ævar Arnfjörð Bjarmason
+ */
+$messages['is'] = array(
+	'categoryonupload-desc' => 'Gefur notandanum kleift að velja flokk þegar hann hleður upp skrá',
+	'categoryonupload-label' => 'Flokkur:',
 );
 
 /** Italian (Italiano)
@@ -308,7 +414,7 @@ $messages['ko'] = array(
 	'categoryonupload-label' => '분류:',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -317,12 +423,19 @@ $messages['ksh'] = array(
 	'categoryonupload-none' => '-',
 );
 
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'categoryonupload-label' => 'Kategorî:',
+);
+
 /** Cornish (Kernowek)
  * @author Kernoweger
  * @author Kw-Moon
  */
 $messages['kw'] = array(
-	'categoryonupload-label' => 'Klass:',
+	'categoryonupload-label' => 'Class:',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -348,6 +461,21 @@ $messages['lt'] = array(
 	'categoryonupload-label' => 'Kategorija:',
 );
 
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'categoryonupload-desc' => 'Piedāvā lietotājam izvēlēties kategoriju augšupielādējot failu',
+	'categoryonupload-label' => 'Kategorija:',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'categoryonupload-desc' => 'Maneho mpisafidy sokajy rehefa am-pangalana rakitra iray',
+);
+
 /** Macedonian (Македонски)
  * @author Brest
  */
@@ -356,18 +484,43 @@ $messages['mk'] = array(
 	'categoryonupload-label' => 'Категорија:',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'categoryonupload-label' => 'വർഗ്ഗം:',
+);
+
+/** Marathi (मराठी)
+ * @author Htt
+ */
+$messages['mr'] = array(
+	'categoryonupload-label' => 'वर्ग:',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Aurora
+ * @author Aviator
  */
 $messages['ms'] = array(
+	'categoryonupload-desc' => 'Meminta supaya pengguna memilih kategori ketika memuat naik fail',
 	'categoryonupload-label' => 'Kategori:',
 );
 
 /** Nahuatl (Nāhuatl)
  * @author Fluence
+ * @author Teòtlalili
  */
 $messages['nah'] = array(
-	'categoryonupload-label' => 'Neneuhcāyōtl:',
+	'categoryonupload-label' => 'Tlaìxmatkàtlàlilòtl:',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'categoryonupload-desc' => 'Ber brukere om å velge en kategori når du laster opp filer',
+	'categoryonupload-label' => 'Kategori:',
 );
 
 /** Low German (Plattdüütsch)
@@ -403,20 +556,20 @@ $messages['nn'] = array(
 	'categoryonupload-label' => 'Kategori:',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'categoryonupload-desc' => 'Ber brukere om å velge en kategori når du laster opp filer',
-	'categoryonupload-label' => 'Kategori:',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'categoryonupload-desc' => "Aficha un selector de categorias al moment del telecargament d'un fichièr",
 	'categoryonupload-label' => 'Categoria :',
+);
+
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Odisha1
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'categoryonupload-label' => 'ଶ୍ରେଣୀ:',
 );
 
 /** Picard (Picard)
@@ -455,16 +608,17 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'categoryonupload-desc' => 'د دوتنې د پورته کولو پر مهال، يو کارونکی په دې توانوي چې د دوتنې وېشنيزه وټاکي',
+	'categoryonupload-desc' => 'د دوتنې د پورته کولو پر مهال، يو کارن په دې توانوي چې د دوتنې وېشنيزه وټاکي',
 	'categoryonupload-label' => 'وېشنيزه:',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
-	'categoryonupload-desc' => 'Pede a um utilizador que seleccione uma categoria quando este carrega um ficheiro',
+	'categoryonupload-desc' => 'Pede a um utilizador que seleccione uma categoria ao fazer o upload de um ficheiro',
 	'categoryonupload-label' => 'Categoria:',
 );
 
@@ -481,7 +635,7 @@ $messages['pt-br'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'categoryonupload-desc' => 'Cere utilizatorului să aleagă o categorie atunci când încarcă un fişier',
+	'categoryonupload-desc' => 'Cere utilizatorului să aleagă o categorie atunci când încarcă un fișier',
 	'categoryonupload-label' => 'Categorie:',
 );
 
@@ -501,7 +655,14 @@ $messages['ru'] = array(
 	'categoryonupload-label' => 'Категория:',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'categoryonupload-label' => 'Катеґорія:',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -518,27 +679,38 @@ $messages['sk'] = array(
 );
 
 /** Slovenian (Slovenščina)
+ * @author Dbc334
  * @author Smihael
  */
 $messages['sl'] = array(
-	'categoryonupload-desc' => 'Pozove, da uporabnik izbere kategorijo med nalaganjem',
+	'categoryonupload-desc' => 'Pozove uporabnika, da med nalaganjem datoteke izbere kategorijo',
 	'categoryonupload-label' => 'Kategorija:',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Somali (Soomaaliga)
+ * @author Maax
+ */
+$messages['so'] = array(
+	'categoryonupload-label' => 'Qeybta:',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'categoryonupload-desc' => 'Тражи од корисника да изабере категорију када шаље фајл',
 	'categoryonupload-label' => 'Категорија:',
+	'categoryonupload-none' => '-',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
 	'categoryonupload-desc' => 'Traži od korisnika da izabere kategoriju kada šalje fajl',
 	'categoryonupload-label' => 'Kategorija:',
+	'categoryonupload-none' => '-',
 );
 
 /** Seeltersk (Seeltersk)
@@ -563,6 +735,14 @@ $messages['su'] = array(
 $messages['sv'] = array(
 	'categoryonupload-desc' => 'Låter en användare att välja en kategori när den laddar upp en fil',
 	'categoryonupload-label' => 'Kategori:',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'categoryonupload-desc' => 'கோப்பை பதிவேற்றும் சமயத்தில் பகுப்பைத் தேர்வு செய்ய பயனரைத் தூண்டுகிறது',
+	'categoryonupload-label' => 'பகுப்பு:',
 );
 
 /** Telugu (తెలుగు)
@@ -642,6 +822,13 @@ $messages['vi'] = array(
 $messages['vo'] = array(
 	'categoryonupload-desc' => 'Begon gebane ad välön kladi pö löpükam ragiva',
 	'categoryonupload-label' => 'Klad:',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'categoryonupload-label' => 'קאַטעגאריע:',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

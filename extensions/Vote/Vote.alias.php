@@ -2,276 +2,318 @@
 /**
  * Aliases for special pages
  *
+ * @file
+ * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'Vote' => array( 'Vote' ),
 );
 
 /** Afrikaans (Afrikaans) */
-$aliases['af'] = array(
+$specialPageAliases['af'] = array(
 	'Vote' => array( 'Stem' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Vote' => array( 'تصويت' ),
 );
 
+/** Aramaic (ܐܪܡܝܐ) */
+$specialPageAliases['arc'] = array(
+	'Vote' => array( 'ܗܒ_ܩܠܐ' ),
+);
+
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'Vote' => array( 'تصويت' ),
 );
 
 /** Assamese (অসমীয়া) */
-$aliases['as'] = array(
+$specialPageAliases['as'] = array(
 	'Vote' => array( 'ভোট' ),
 );
 
+/** Breton (Brezhoneg) */
+$specialPageAliases['br'] = array(
+	'Vote' => array( 'Mouezhiañ' ),
+);
+
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'Vote' => array( 'Glasaj' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Vote' => array( 'Abstimmen' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'Vote' => array( 'Wótgłosowaś' ),
 );
 
 /** Divehi (ދިވެހިބަސް) */
-$aliases['dv'] = array(
+$specialPageAliases['dv'] = array(
 	'Vote' => array( 'ވޯޓް' ),
 );
 
 /** Greek (Ελληνικά) */
-$aliases['el'] = array(
+$specialPageAliases['el'] = array(
 	'Vote' => array( 'Ψηφοφορία' ),
 );
 
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'Vote' => array( 'Voĉdoni' ),
+);
+
 /** Spanish (Español) */
-$aliases['es'] = array(
+$specialPageAliases['es'] = array(
 	'Vote' => array( 'Votar' ),
 );
 
 /** Persian (فارسی) */
-$aliases['fa'] = array(
+$specialPageAliases['fa'] = array(
 	'Vote' => array( 'رای_دادن' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
+$specialPageAliases['fi'] = array(
 	'Vote' => array( 'Äänestys' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
+$specialPageAliases['fr'] = array(
 	'Vote' => array( 'Voter' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
+$specialPageAliases['frp'] = array(
 	'Vote' => array( 'Votar' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
+$specialPageAliases['gl'] = array(
 	'Vote' => array( 'Votar' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'Vote' => array( 'Abstimme' ),
 );
 
 /** Gujarati (ગુજરાતી) */
-$aliases['gu'] = array(
+$specialPageAliases['gu'] = array(
 	'Vote' => array( 'મત' ),
 );
 
 /** Hawaiian (Hawai`i) */
-$aliases['haw'] = array(
+$specialPageAliases['haw'] = array(
 	'Vote' => array( 'Koho' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'Vote' => array( 'Wothłosować' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
+$specialPageAliases['hu'] = array(
 	'Vote' => array( 'Szavazás' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
+$specialPageAliases['ia'] = array(
 	'Vote' => array( 'Votar', 'Voto' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'Vote' => array( 'Voting', 'Beri suara', 'BeriSuara' ),
+$specialPageAliases['id'] = array(
+	'Vote' => array( 'Voting', 'Beri_suara', 'BeriSuara' ),
 );
 
 /** Italian (Italiano) */
-$aliases['it'] = array(
+$specialPageAliases['it'] = array(
 	'Vote' => array( 'Vota' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'Vote' => array( '投票' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
-$aliases['km'] = array(
+$specialPageAliases['km'] = array(
 	'Vote' => array( 'បោះឆ្នោត' ),
 );
 
 /** Korean (한국어) */
-$aliases['ko'] = array(
+$specialPageAliases['ko'] = array(
 	'Vote' => array( '투표' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'Vote' => array( 'Afstemme', 'Avstemme' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'Vote' => array( 'Ofstëmmen' ),
 );
 
 /** Lithuanian (Lietuvių) */
-$aliases['lt'] = array(
+$specialPageAliases['lt'] = array(
 	'Vote' => array( 'Balsuoti' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'Vote' => array( 'Гласање' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'Vote' => array( 'വോട്ട്' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'Vote' => array( 'मत' ),
 );
 
 /** Maltese (Malti) */
-$aliases['mt'] = array(
+$specialPageAliases['mt'] = array(
 	'Vote' => array( 'Vot' ),
 );
 
 /** Mirandese (Mirandés) */
-$aliases['mwl'] = array(
+$specialPageAliases['mwl'] = array(
 	'Vote' => array( 'Botar' ),
 );
 
-/** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'Vote' => array( 'Stemmen' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
 	'Vote' => array( 'Avstemning' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'Vote' => array( 'Stemmen' ),
+);
+
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'Vote' => array( 'Stemmen' ),
+);
+
 /** Occitan (Occitan) */
-$aliases['oc'] = array(
+$specialPageAliases['oc'] = array(
 	'Vote' => array( 'Votar' ),
 );
 
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'Vote' => array( 'Zagłosuj' ),
+);
+
 /** Pashto (پښتو) */
-$aliases['ps'] = array(
+$specialPageAliases['ps'] = array(
 	'Vote' => array( 'رايه ورکول' ),
 );
 
 /** Portuguese (Português) */
-$aliases['pt'] = array(
+$specialPageAliases['pt'] = array(
 	'Vote' => array( 'Votar' ),
 );
 
 /** Romanian (Română) */
-$aliases['ro'] = array(
+$specialPageAliases['ro'] = array(
 	'Vote' => array( 'Votează' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'Vote' => array( 'मत' ),
 );
 
+/** Sinhala (සිංහල) */
+$specialPageAliases['si'] = array(
+	'Vote' => array( 'ඡන්දය' ),
+);
+
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'Vote' => array( 'Hlasovať' ),
 );
 
 /** Albanian (Shqip) */
-$aliases['sq'] = array(
+$specialPageAliases['sq'] = array(
 	'Vote' => array( 'Voto' ),
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬) */
+$specialPageAliases['sr-ec'] = array(
+	'Vote' => array( 'Гласај' ),
+);
+
 /** Sundanese (Basa Sunda) */
-$aliases['su'] = array(
+$specialPageAliases['su'] = array(
 	'Vote' => array( 'Milih' ),
 );
 
 /** Swedish (Svenska) */
-$aliases['sv'] = array(
+$specialPageAliases['sv'] = array(
 	'Vote' => array( 'Rösta' ),
 );
 
 /** Swahili (Kiswahili) */
-$aliases['sw'] = array(
+$specialPageAliases['sw'] = array(
 	'Vote' => array( 'PigaKura' ),
 );
 
 /** Telugu (తెలుగు) */
-$aliases['te'] = array(
+$specialPageAliases['te'] = array(
 	'Vote' => array( 'వోటు' ),
 );
 
 /** Thai (ไทย) */
-$aliases['th'] = array(
+$specialPageAliases['th'] = array(
 	'Vote' => array( 'โหวต' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'Vote' => array( 'Bumoto' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'Vote' => array( 'Oyla', 'OyVer', 'OyKullan' ),
 );
 
 /** Vèneto (Vèneto) */
-$aliases['vec'] = array(
+$specialPageAliases['vec'] = array(
 	'Vote' => array( 'Vota' ),
 );
 
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'Vote' => array( 'Bỏ_phiếu' ),
+);
+
 /** Simplified Chinese (‪中文(简体)‬) */
-$aliases['zh-hans'] = array(
+$specialPageAliases['zh-hans'] = array(
 	'Vote' => array( '投票' ),
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */
-$aliases['zh-hant'] = array(
+$specialPageAliases['zh-hant'] = array(
 	'Vote' => array( '投票' ),
 );
-

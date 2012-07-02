@@ -59,7 +59,7 @@ $wgExtensionMessagesFiles[ $sSpecialPage ] = dirname(__FILE__) . "/Special{$sSpe
 /**
  * aliases file
  */
-$wgExtensionAliasesFiles[ $sSpecialPage ] = __DIR__ . "/Special{$sSpecialPage}.aliases.php";
+$wgExtensionMessagesFiles[ $sSpecialPage . 'Aliases' ] = __DIR__ . "/Special{$sSpecialPage}.aliases.php";
 
 extAddSpecialPage( dirname(__FILE__) . "/Special{$sSpecialPage}_body.php", $sSpecialPage, "{$sSpecialPage}Page" );
 $wgSpecialPageGroups[$sSpecialPage] = 'wikia';

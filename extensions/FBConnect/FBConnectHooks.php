@@ -316,7 +316,6 @@ HTML;
 		global $wgUser, $wgLang, $wgShowIPinHeader, $fbPersonalUrls, $fbConnectOnly, $wgBlankImgUrl, $wgSkin, $wgEnableUserLoginExt;
 		$skinName = get_class($wgUser->getSkin());
 
-		wfLoadExtensionMessages('FBConnect');
 		// Get the logged-in user from the Facebook API
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
@@ -639,7 +638,6 @@ HTML;
 	static function GetPreferences( $user, &$preferences ){
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgBlankImgUrl;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/prefs.js?{$wgStyleVersion}\"></script>\n");
-		wfLoadExtensionMessages('FBConnect');
 		$prefsection = 'fbconnect-prefstext';
 
 		$id = FBConnectDB::getFacebookIDs($user, DB_MASTER);
@@ -693,7 +691,6 @@ HTML;
 
 	public static function afterAjaxLoginHTML( &$html ) {
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		wfLoadExtensionMessages('FBConnect');
 		if ( !LoginForm::getLoginToken() ) {
 			LoginForm::setLoginToken();
 		}
@@ -705,7 +702,7 @@ HTML;
 
 	public static function SkinTemplatePageBeforeUserMsg(&$msg) {
 		global $wgRequest, $wgUser, $wgServer;
-		wfLoadExtensionMessages('FBConnect');
+
 		$pref = Title::newFromText("Preferences",NS_SPECIAL);
 		if ($wgRequest->getVal("fbconnected","") == 1) {
 			$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);

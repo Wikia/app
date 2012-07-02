@@ -43,7 +43,13 @@ class CommentsLikesController extends WikiaController {
 		}
 		else {
 			// link to talk page
-			$commentsLink = $this->contextTitle->getTalkPage()->getLocalUrl();
+			if ($this->contextTitle->canTalk($this->contextTitle->getNamespace())) {
+				$commentsLink = $this->contextTitle->getTalkPage()->getLocalUrl();
+			} else {
+				// This case shouldn't happen other than Special:ThemeDesignerPreview
+				// We're faking some comments to show a user what an article would look like
+				$commentsLink = '';	
+			}
 		}
 
 		wfProfileOut(__METHOD__);

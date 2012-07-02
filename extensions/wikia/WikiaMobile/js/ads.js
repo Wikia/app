@@ -21,7 +21,6 @@ define('ads', ['events'], function(ev){
 		var w = window,
 			close = d.getElementById('wkAdCls'),
 			adSlotStyle = adSlot.style,
-			//+150 to have space for the ad
 			ftr = d.getElementById('wkFtr'),
 			i = 0,
 			click = ev.click,

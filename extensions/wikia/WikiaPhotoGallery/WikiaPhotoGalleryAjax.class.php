@@ -164,7 +164,7 @@ class WikiaPhotoGalleryAjax {
 		wfProfileIn(__METHOD__);
 
 		// decode JSON-encoded gallery data
-		$gallery = Wikia::json_decode($wgRequest->getVal('gallery'), true);
+		$gallery = json_decode($wgRequest->getVal('gallery'), true);
 
 		if (empty($gallery['params']['rssfeed'])) {
 			$html = WikiaPhotoGalleryHelper::renderGalleryPreview($gallery);
@@ -186,7 +186,7 @@ class WikiaPhotoGalleryAjax {
 		wfProfileIn(__METHOD__);
 
 		// decode JSON-encoded slideshow data
-		$gallery = Wikia::json_decode($wgRequest->getVal('gallery'), true);
+		$gallery = json_decode($wgRequest->getVal('gallery'), true);
 
 		if (empty($gallery['params']['rssfeed'])) {
 			$html = WikiaPhotoGalleryHelper::renderSlideshowPreview($gallery);
@@ -208,7 +208,7 @@ class WikiaPhotoGalleryAjax {
 		wfProfileIn(__METHOD__);
 
 		// decode JSON-encoded slideshow data
-		$gallery = Wikia::json_decode($wgRequest->getVal('gallery'), true);
+		$gallery = json_decode($wgRequest->getVal('gallery'), true);
 
 		$html = WikiaPhotoGalleryHelper::renderSliderPreview($gallery);
 
@@ -266,7 +266,7 @@ class WikiaPhotoGalleryAjax {
 		// return JSON as HTML - decode it JS-side
 		//in Chrome/safari an empty div is appended to the JSON data in case of upload issues (e.g. already existing image)
 		//the solution was to append a new line at the end of the JSON string and split it in Javascript.
-		return Wikia::json_encode($result) . "\n";
+		return json_encode($result) . "\n";
 	}
 
 	/**
@@ -285,7 +285,7 @@ class WikiaPhotoGalleryAjax {
 		wfProfileOut(__METHOD__);
 
 		// return JSON as HTML - decode it JS-side
-		return Wikia::json_encode( $result );
+		return json_encode( $result );
 	}
 
 	/**
@@ -305,6 +305,6 @@ class WikiaPhotoGalleryAjax {
 		wfProfileOut(__METHOD__);
 
 		// return JSON as HTML - decode it JS-side
-		return Wikia::json_encode($result);
+		return json_encode($result);
 	}
 }

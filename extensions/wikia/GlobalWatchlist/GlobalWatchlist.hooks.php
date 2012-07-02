@@ -84,7 +84,7 @@ class GlobalWatchlistHook {
 					'method' => 'addWatch',
 					'params' => $params
 				);
-				$data = Wikia::json_encode( $message );
+				$data = json_encode( $message );
 				WScribeClient::singleton('trigger')->send($data);
 			}
 			catch( Exception $e ) {
@@ -141,7 +141,7 @@ class GlobalWatchlistHook {
 					'method' => 'removeWatch',
 					'params' => $params
 				);
-				$data = Wikia::json_encode( $message );
+				$data = json_encode( $message );
 				WScribeClient::singleton('trigger')->send($data);
 			}
 			catch( Exception $e ) {
@@ -224,7 +224,7 @@ class GlobalWatchlistHook {
 					'method' => 'updateWatch',
 					'params' => $params
 				);
-				$data = Wikia::json_encode( $message );
+				$data = json_encode( $message );
 				WScribeClient::singleton('trigger')->send($data);
 			}
 			catch( Exception $e ) {
@@ -306,7 +306,7 @@ class GlobalWatchlistHook {
 					'method' => 'updateWatch',
 					'params' => $params
 				);
-				$data = Wikia::json_encode( $message );
+				$data = json_encode( $message );
 				WScribeClient::singleton('trigger')->send($data);
 			}
 			catch( Exception $e ) {
@@ -356,7 +356,7 @@ class GlobalWatchlistHook {
 				'method' => 'removeWatch',
 				'params' => array( $params )
 			);
-			$data = Wikia::json_encode( $message );
+			$data = json_encode( $message );
 			WScribeClient::singleton('trigger')->send($data);
 		}
 		catch( Exception $e ) {

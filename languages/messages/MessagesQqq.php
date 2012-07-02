@@ -1651,6 +1651,7 @@ I guess that this should appear before an input box where you can specify that r
 
 Does not work under $wgMiserMode ([[mwr:48986|r48986]]).',
 'newsectionsummary'                => 'Default summary when adding a new section to a page.',
+'rc-old-title'                    => 'Text that shows the original title of a page, $1 is the original title text',
 
 # Recent changes linked
 'recentchangeslinked'          => 'Title of [[Special:RecentChangesLinked]] and display name of page on [[Special:SpecialPages]].',

@@ -23,11 +23,10 @@ class SpecialCrosswikiBlock extends SpecialPage {
 	 * @param mixed $par Parameter passed to the page
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgContLang, $wgLang;
-		global $wgVersion, $wgMaxNameChars, $wgCapitalLinks;
+		global $wgOut, $wgUser, $wgRequest;
 
 		# Add messages
-		wfLoadExtensionMessages( 'CrosswikiBlock' );
+
 
 		$this->setHeaders();
 
@@ -54,12 +53,12 @@ class SpecialCrosswikiBlock extends SpecialPage {
 			);
 			if ( !$blockAddress ) {
 				$this->showForm( wfMsgWikiHtml( 'crosswikiblock-nousername' ) );
-			} else if ( $this->checkUser( $blockAddress, true ) ) {
-			} else if ( !( $expiry = $this->convertExpiry( $expiryStr ) ) ) {
+			} elseif ( $this->checkUser( $blockAddress, true ) ) {
+			} elseif ( !( $expiry = $this->convertExpiry( $expiryStr ) ) ) {
 				$this->showForm( wfMsgWikiHtml( 'crosswikiblock-noexpiry', htmlspecialchars( $expiryStr ) ) );
-			} else if ( !$reason ) {
+			} elseif ( !$reason ) {
 				$this->showForm( wfMsgWikiHtml( 'crosswikiblock-noreason', htmlspecialchars( $reason ) ) );
-			} else if ( !$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
+			} elseif ( !$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
 				$this->showForm( wfMsgWikiHtml( 'crosswikiblock-notoken' ) );
 			} else {
 				CrosswikiBlock::normalizeOptions( $this->mUsername, $options );
@@ -192,7 +191,7 @@ class SpecialCrosswikiBlock extends SpecialPage {
 			</td>
 		</tr>
 		<tr id='wpAnonOnlyRow'>
-			<td>&nbsp;</td>
+			<td>&#160;</td>
 			<td>
 				" . Xml::checkLabel( wfMsgHtml( 'crosswikiblock-anononly' ),
 					'wpAnonOnly', 'wpAnonOnly', $wgRequest->getCheck( 'wpAnonOnly' ),
@@ -200,7 +199,7 @@ class SpecialCrosswikiBlock extends SpecialPage {
 			</td>
 		</tr>
 		<tr id='wpCreateAccountRow'>
-			<td>&nbsp;</td>
+			<td>&#160;</td>
 			<td>
 				" . Xml::checkLabel( wfMsgHtml( 'crosswikiblock-nocreate' ),
 					'wpCreateAccount', 'wpCreateAccount', $wgRequest->getCheck( 'wpAnonOnly' ),
@@ -208,7 +207,7 @@ class SpecialCrosswikiBlock extends SpecialPage {
 			</td>
 		</tr>
 		<tr id='wpEnableAutoblockRow'>
-			<td>&nbsp;</td>
+			<td>&#160;</td>
 			<td>
 				" . Xml::checkLabel( wfMsgHtml( 'crosswikiblock-autoblock' ),
 						'wpEnableAutoblock', 'wpEnableAutoblock', $wgRequest->getCheck( 'wpAnonOnly' ),
@@ -220,7 +219,7 @@ class SpecialCrosswikiBlock extends SpecialPage {
 		if ( $wgSysopEmailBans && $wgUser->isAllowed( 'blockemail' ) ) {
 			$wgOut->addHTML( "
 			<tr id='wpEnableEmailBan'>
-			<td>&nbsp;</td>
+			<td>&#160;</td>
 				<td>
 					" . Xml::checkLabel( wfMsgHtml( 'crosswikiblock-noemail' ),
 							'wpEmailBan', 'wpEmailBan', $wgRequest->getCheck( 'wpEmailBan' ),
@@ -232,7 +231,7 @@ class SpecialCrosswikiBlock extends SpecialPage {
 
 		$wgOut->addHTML( "
 		<tr>
-			<td style='padding-top: 1em'>&nbsp;</td>
+			<td style='padding-top: 1em'>&#160;</td>
 			<td style='padding-top: 1em'>
 				" . Xml::submitButton( wfMsg( 'crosswikiblock-submit' ),
 							array( 'name' => 'wpBlock', 'tabindex' => '11' ) ) . "
@@ -240,7 +239,7 @@ class SpecialCrosswikiBlock extends SpecialPage {
 		</tr>" );
 
 		$token = $wgUser->editToken();
-		$wgOut->addHTML( Xml::hidden( 'wpEditToken', $token ) );
+		$wgOut->addHTML( Html::Hidden( 'wpEditToken', $token ) );
 
 		$wgOut->addHTML( '		</table>
 	</form>' );
@@ -263,12 +262,9 @@ class SpecialCrosswikiUnblock extends SpecialPage {
 	 * @param mixed $par Parameter passed to the page
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgContLang, $wgLang;
-		global $wgVersion, $wgMaxNameChars, $wgCapitalLinks;
+		global $wgOut, $wgUser, $wgRequest;
 
 		# Add messages
-		wfLoadExtensionMessages( 'CrosswikiBlock' );
-
 		$this->setHeaders();
 
 		if ( !$wgUser->isAllowed( 'crosswikiblock' ) ) {
@@ -363,7 +359,7 @@ class SpecialCrosswikiUnblock extends SpecialPage {
 
 		$wgOut->addHTML( "
 		<tr>
-			<td style='padding-top: 1em'>&nbsp;</td>
+			<td style='padding-top: 1em'>&#160;</td>
 			<td style='padding-top: 1em'>
 				" . Xml::submitButton( wfMsg( 'crosswikiunblock-submit' ),
 							array( 'name' => 'wpBlock', 'tabindex' => '11' ) ) . "
@@ -371,7 +367,7 @@ class SpecialCrosswikiUnblock extends SpecialPage {
 		</tr>" );
 
 		$token = $wgUser->editToken();
-		$wgOut->addHTML( Xml::hidden( 'wpEditToken', $token ) );
+		$wgOut->addHTML( Html::Hidden( 'wpEditToken', $token ) );
 
 		$wgOut->addHTML( '</table></form>' );
 	}

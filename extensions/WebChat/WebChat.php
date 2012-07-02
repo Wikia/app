@@ -4,7 +4,8 @@
  *
  * Integrates a web chat client in to a special page, for example Mibbit.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:WebChat
  *
@@ -21,10 +22,9 @@ if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 $wgExtensionCredits[ 'specialpage' ][] = array(
 	'path'           => __FILE__,
 	'name'           => 'WebChat',
-	'description'    => 'Adds a special page used to chat in real time with other wiki users.',
 	'descriptionmsg' => 'webchat-desc',
 	'author'         => array( 'Robert Leverington', 'Marco 27' ),
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:WebChat',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:WebChat',
 	'version'        => '1.0.0',
 );
 
@@ -37,7 +37,7 @@ $wgAutoloadClasses['WebChat'] = $dir . 'WebChat_body.php';
 
 // Extension messages.
 $wgExtensionMessagesFiles['WebChat'] =  $dir . 'WebChat.i18n.php';
-$wgExtensionAliasesFiles['WebChat'] =  $dir . 'WebChat.alias.php';
+$wgExtensionMessagesFiles['WebChatAlias'] =  $dir . 'WebChat.alias.php';
 
 // Default configuration.
 $wgWebChatServer  = '';

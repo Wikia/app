@@ -4,7 +4,7 @@
 			<h1><?= wfMsg('wikiahome-page-header-heading'); ?></h1>
 			<h4><?= wfMsg('wikiahome-page-header-subheading') ?></h4>
 		</div>
-		<a class="button" href="<?= wfMsg('wikiahome-page-header-create-wiki-button-destination') ?>"><?= wfMsg('wikiahome-page-header-create-wiki-button') ?></a>
+		<a class="button create-wiki" href="<?= wfMsg('wikiahome-page-header-create-wiki-button-destination') ?>"><?= wfMsg('wikiahome-page-header-create-wiki-button') ?></a>
 		<?= wfRenderModule('Search', 'Index', array('noautocomplete' => true)) ?>
 	</header>
 	<section class="wikiahomepage-wikis">
@@ -60,25 +60,30 @@
 			<div class="wikiahomepage-community-hero wikiahomepage-community-social-hero">
 				<ul class="wikiahomepage-community-social">
 					<li>
-						<a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog">
-							<img class="wikiahomepage-community-social-wikia-blog" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-wikia-blog') ?>
+						<a href="<?= wfMsg('wikiahome-community-social-wikia-blog-link') ?>">
+							<img class="wikiahomepage-community-social-wikia-blog" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-wikia-blog') ?>
 						</a>
 					</li>
 					<li>
-						<a href="http://twitter.com/#!/wikia">
-							<img class="wikiahomepage-community-social-twitter" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-twitter') ?>
+						<a href="<?= wfMsg('wikiahome-community-social-twitter-link') ?>">
+							<img class="wikiahomepage-community-social-twitter" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-twitter') ?>
 						</a>
 					</li>
 					<li>
-						<a href="http://www.facebook.com/wikia">
-							<img class="wikiahomepage-community-social-facebook" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-facebook') ?>
+						<a href="<?= wfMsg('wikiahome-community-social-facebook-link') ?>">
+							<img class="wikiahomepage-community-social-facebook" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-facebook') ?>
 						</a>
 					</li>
+					<?php
+						$message = wfMsg('wikiahome-community-social-googleplus-link');
+						if(!empty($message)):
+					?>
 					<li>
-						<a href="http://gplus.to/wikia">
-							<img class="wikiahomepage-community-social-googleplus" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-plus') ?>
+						<a href="<?= wfMsg('wikiahome-community-social-googleplus-link') ?>">
+							<img class="wikiahomepage-community-social-googleplus" src="<?= $wg->BlankImgUrl ?>"><?= wfMsg('wikiahome-community-social-googleplus') ?>
 						</a>
 					</li>
+					<?php endif; ?>
 				</ul>
 			</div>
 		</section>

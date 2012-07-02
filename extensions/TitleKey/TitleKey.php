@@ -23,9 +23,8 @@ $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'TitleKey',
 	'author' => 'Brion Vibber',
-	'description' => 'Title prefix search suggestion backend',
 	'descriptionmsg' => 'titlekey-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:TitleKey',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:TitleKey',
 );
 
 // The 'SearchUpdate' hook would be right, but it's called in the
@@ -58,3 +57,4 @@ function efTitleKeySetup() {
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['TitleKey'] = $dir . 'TitleKey.i18n.php';
 $wgAutoloadClasses['TitleKey'] = $dir . 'TitleKey_body.php';
+$wgAutoloadClasses['RebuildTitleKeys'] = $dir . 'rebuildTitleKeys.php';

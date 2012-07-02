@@ -1,6 +1,6 @@
 <?php
 
-class ScreenplayApiWrapper extends WikiaVideoApiWrapper {
+class ScreenplayApiWrapper extends NoConnectionApiWrapper {
 	const VENDOR_ID = 1893;
 	const VIDEO_TYPE = '.mp4';
 	const THUMBNAIL_TYPE = '.jpg';

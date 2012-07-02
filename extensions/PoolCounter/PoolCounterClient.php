@@ -8,9 +8,8 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Pool Counter Client',
 	'author'         => 'Tim Starling',
-	'description'    => 'MediaWiki client for the pool counter daemon poolcounter.py',
 	'descriptionmsg' => 'poolcounter-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:PoolCounter',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:PoolCounter',
 );
 
 
@@ -32,10 +31,11 @@ $wgPoolCountClientConf = array(
 
 /**
  * Sample pool configuration:
- *   $wgPoolCounterConf = array( 'Article::view' => array(
+ *   $wgPoolCounterConf = array( 'ArticleView' => array(
  *     'class' => 'PoolCounter_Client',
- *     'waitTimeout' => 15, // wait timeout in seconds
- *     'maxThreads' => 5, // maximum number of threads in each pool
+ *     'timeout' => 15, // wait timeout in seconds
+ *     'workers' => 5, // maximum number of active threads in each pool
+ *     'maxqueue' => 50, // maximum number of total threads in each pool
  *   ) );
  */
 

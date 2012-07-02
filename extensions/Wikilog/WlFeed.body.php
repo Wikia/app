@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -476,7 +477,7 @@ abstract class WlSyndicationFeed
 	private static function getFileUrl( $file ) {
 		if ( $file instanceof File ) {
 			return $file->getFullUrl();
-		} else if ( is_string( $file ) ) {
+		} elseif ( is_string( $file ) ) {
 			return $file;
 		} else {
 			return null;
@@ -698,7 +699,7 @@ class WlAtomFeed
 	static function formatTextData( $element, $contents ) {
 		if ( is_null( $contents ) || empty( $contents ) ) {
 			return null;
-		} else if ( $contents instanceof WlTextConstruct ) {
+		} elseif ( $contents instanceof WlTextConstruct ) {
 			return $contents->getXML( $element ) . "\n";
 		} else {
 			return Xml::element( $element, null, $contents ) . "\n";
@@ -862,7 +863,7 @@ class WlRSSFeed
 	static function formatTextData( $element, $contents ) {
 		if ( is_null( $contents ) ) {
 			return null;
-		} else if ( $contents instanceof WlTextConstruct ) {
+		} elseif ( $contents instanceof WlTextConstruct ) {
 			return Xml::element( $element, null, $contents->getText() ) . "\n";
 		} else {
 			return Xml::element( $element, null, $contents ) . "\n";
@@ -940,7 +941,7 @@ class WlRSSFeed
 					$link = array_shift( $links );
 					echo Xml::element( 'link', null, $link['href'] ) . "\n";
 				}
-			} else if ( $rel == 'enclosure' ) {
+			} elseif ( $rel == 'enclosure' ) {
 				if ( !empty( $links ) ) {
 					# RSS only supports a single enclosure element.
 					$link = array_shift( $links );
@@ -951,7 +952,7 @@ class WlRSSFeed
 					);
 					echo Xml::element( 'enclosure', $attribs ) . "\n";
 				}
-			} else if ( $rel == 'replies' ) {
+			} elseif ( $rel == 'replies' ) {
 				if ( !empty( $links ) ) {
 					# RSS only supports a single comments element.
 					$link = array_shift( $links );
@@ -1002,9 +1003,9 @@ class WlRSSFeed
 		if ( $entry->getSummary() && $entry->getContent() ) {
 			$description = $entry->getSummary();
 			$content = $entry->getContent();
-		} else if ( $entry->getSummary() ) {
+		} elseif ( $entry->getSummary() ) {
 			$description = $entry->getSummary();
-		} else if ( $entry->getContent() ) {
+		} elseif ( $entry->getContent() ) {
 			$description = $entry->getContent();
 		}
 

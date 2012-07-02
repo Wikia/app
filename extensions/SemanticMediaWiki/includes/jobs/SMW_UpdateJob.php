@@ -23,7 +23,7 @@
  */
 class SMWUpdateJob extends Job {
 
-	function __construct( $title ) {
+	function __construct( Title $title ) {
 		parent::__construct( 'SMWUpdateJob', $title );
 	}
 
@@ -33,10 +33,9 @@ class SMWUpdateJob extends Job {
 	 */
 	function run() {
 		wfProfileIn( 'SMWUpdateJob::run (SMW)' );
-		global $wgParser, $smwgHeadItems;
+		global $wgParser;
 
-		$linkCache = LinkCache::singleton();
-		$linkCache->clear();
+		LinkCache::singleton()->clear();
 
 		if ( is_null( $this->title ) ) {
 			$this->error = "SMWUpdateJob: Invalid title";
@@ -56,7 +55,7 @@ class SMWUpdateJob extends Job {
 		}
 
 		wfProfileIn( __METHOD__ . '-parse' );
-		$options = new ParserOptions;
+		$options = new ParserOptions();
 		$output = $wgParser->parse( $revision->getText(), $this->title, $options, true, true, $revision->getID() );
 
 		wfProfileOut( __METHOD__ . '-parse' );

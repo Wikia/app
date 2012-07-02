@@ -37,15 +37,13 @@ $wgSpecialPages['Linkstoredirects'] = 'Linkstoredirects';
 
 class Linkstoredirects extends SpecialPage{
 
-	public function Linkstoredirects(){
-		SpecialPage::SpecialPage('Linkstoredirects');
+	public function __construct(){
+		parent::__construct('Linkstoredirects');
 	}
 
 	function execute(){
 		global $wgOut;
 		global $wgRequest, $wgUser;
-		
-		wfLoadExtensionMessages('LinksToRedirects');
 
 		GLOBAL $wgMemc;
 		$TABLE_PREFIX = "";
@@ -56,10 +54,10 @@ class Linkstoredirects extends SpecialPage{
 	/*
 		// This processes any requested for removal of an item from the list.
 		if(isset($_GET['artist']) && isset($_GET['song'])){
-		
+
 	// TODO: THIS IS WHERE WE SHOULD ALLOW A SINGLE LINK TO BE REMOVED FROM THE CACHE (IF WE DECIDE TO DO THAT).
 	// This code is largely unported from Special_Soapfailures
-		
+
 			$artist = $_GET['artist'];
 			$song = $_GET['song'];
 			$songResult = array();
@@ -121,9 +119,9 @@ class Linkstoredirects extends SpecialPage{
 			$content = $wgMemc->get($CACHE_KEY);
 			if(!$content){
 				ob_start();
-		
+
 				$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
-				
+
 				print "This page shows a list of pages which link to redirects (and which redirects they are linking to). ";
 				print "When possible, it is best to fix the source link to go directly to the page which the redirect would ";
 				print "eventually send the user to.  This helps keep those pages from being lonely, keeps their WhatLinksHere up to date, etc.<br/>\n";
@@ -131,7 +129,7 @@ class Linkstoredirects extends SpecialPage{
 				print "<br/><br/>";
 				print "This page is cached every 2 hours - \n";
 				print "last cached: <strong>".date('m/d/Y \a\t g:ia')."</strong>\n";
-				
+
 				// Make a mapping of all source page-id => targets
 				// This is an array of pairs instead of a mapping since both page-ids and targets can occur multiple times in the list.
 				$LIMIT = 1000;
@@ -150,13 +148,13 @@ class Linkstoredirects extends SpecialPage{
 							$pageId = mysql_result($result, $cnt, "from_id");
 							$target = mysql_result($result, $cnt, "links_to");
 							$allListings[] = array($pageId, $target);
-							
+
 							// Somehow, a blank from_id can slip into the results (which messes up the query).
 							if($pageId != ""){
 								$ids[] = $pageId; // will uniquify later
 							}
 						}
-						
+
 						// Find the page titles of all of the source pages by id (uniquify the id array).
 						GLOBAL $wgSitename;
 						$nsMapping = array(
@@ -195,7 +193,7 @@ class Linkstoredirects extends SpecialPage{
 								}
 							}
 						}
-						
+
 						$missing = "";
 						print "The following source pages link to redirects:<br/>\n";
 						print "<table>\n";
@@ -207,9 +205,9 @@ class Linkstoredirects extends SpecialPage{
 
 							if(isset($idToTitle[$fromId])){
 								$from = $idToTitle[$fromId];
-								
+
 								print "<tr".((($index % 2)==0)?"":" class='odd'")."><td>[[$from]]</td><td>[[$to]]</td></tr>\n";
-								
+
 	/*
 		// TODO: IMPLEMENT THIS IF WE WANT TO LET SINGLE ITEMS BE CLEARED
 								$delim = "&amp;";
@@ -218,7 +216,7 @@ class Linkstoredirects extends SpecialPage{
 								// If the short-url is in the REQUEST_URI, make sure to add the index.php?title= prefix to it.
 								if(strpos($REQUEST_URI, "index.php?title=") === false){
 									$prefix = "/index.php?title=";
-									
+
 									// If we're adding the index.php ourselves, but the request still started with a slash, remove it because that would break the request if it came after the "title="
 									if(substr($REQUEST_URI,0,1) == "/"){
 										$REQUEST_URI = substr($REQUEST_URI, 1);
@@ -243,6 +241,7 @@ class Linkstoredirects extends SpecialPage{
 						print "<em>No more links to redirects found. <strong>(Yay!)</strong></em>\n";
 					}
 				}
+
 
 				$content = ob_get_clean();
 				$wgMemc->set($CACHE_KEY, $content, strtotime("+2 hour"));

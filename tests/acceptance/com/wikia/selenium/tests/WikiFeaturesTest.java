@@ -7,7 +7,7 @@ import static org.testng.AssertJUnit.*;
 
 public class WikiFeaturesTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testWikiFeaturesPage() throws Exception {
 
 		// not login

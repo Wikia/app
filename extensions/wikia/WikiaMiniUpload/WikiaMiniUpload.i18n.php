@@ -194,7 +194,7 @@ U kan nie hier beelde byvoeg nie.',
 	'wmu-file-error' => "'n Fout het tydens die oplaai-proses voorgekom. Probeer asseblief weer.",
 );
 
-/** Aragonese (aragonés)
+/** Aragonese (Aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -286,7 +286,7 @@ $messages['az'] = array(
 	'wmu-gallery' => 'Qalereya',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -1144,7 +1144,7 @@ $messages['fr'] = array(
 	'wmu-file-error' => 'Une erreur est survenue lors de l’importation. Veuillez réessayer.',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

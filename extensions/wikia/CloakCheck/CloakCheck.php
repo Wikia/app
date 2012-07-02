@@ -15,7 +15,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgAutoloadClasses['CloakCheck'] = $dir . '/CloakCheck.body.php'; # Tell MediaWiki to load the extension body.
 $wgExtensionMessagesFiles['CloakCheck'] = $dir . '/CloakCheck.i18n.php';
-$wgExtensionAliasesFiles['CloakCheck'] = $dir . '/CloakCheck.alias.php';
+$wgExtensionMessagesFiles['CloakCheckAliases'] = $dir . '/CloakCheck.alias.php';
 $wgSpecialPages['CloakCheck'] = 'CloakCheck'; # Let MediaWiki know about your new special page.
 
 $wgSpecialPageGroups['CloakCheck'] = 'users';

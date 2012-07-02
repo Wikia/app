@@ -7,10 +7,10 @@
  *
  * @file
  * @ingroup Extensions
+ * @version 1.3
  * @author Aaron Wright
  * @author David Pean
  * @author Jack Phoenix <jack@countervandalism.net>
- * @version 1.0
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @link http://www.mediawiki.org/wiki/Extension:WikiTextLoggedInOut Documentation
  */
@@ -19,45 +19,39 @@
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'WikiTextLoggedInOut',
-	'version' => '1.1',
+	'version' => '1.3',
 	'author' => array( 'Aaron Wright', 'David Pean', 'Jack Phoenix' ),
-	'description' => 'Two parser hooks, <tt>&lt;loggedin&gt;</tt> and <tt>&lt;loggedout&gt;</tt> to show different text depending on the users\' login state',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:WikiTextLoggedInOut',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:WikiTextLoggedInOut',
 	'descriptionmsg' => 'wikitextloggedinout-desc'
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['WikiTextLoginInOut'] = $dir . 'WikiTextLoggedInOut.i18n.php';
 
-$wgHooks['ParserFirstCallInit'][] = 'wfWikiTextLoggedIn';
-function wfWikiTextLoggedIn( &$parser ) {
-	$parser->setHook( 'loggedin', 'OutputLoggedInText' );
+$wgHooks['ParserFirstCallInit'][] = 'efWikiTextLoggedInOut';
+function efWikiTextLoggedInOut( &$parser ) {
+	$parser->setHook( 'loggedin', 'outputLoggedInText' );
+	$parser->setHook( 'loggedout', 'outputLoggedOutText' );
 	return true;
 }
 
-function OutputLoggedInText( $input, $args, $parser ) {
+function outputLoggedInText( $input, $args, $parser, $frame ) {
 	global $wgUser;
 
 	if( $wgUser->isLoggedIn() ) {
-		return $parser->recursiveTagParse( $input );
+		return $parser->recursiveTagParse( $input, $frame );
 	}
 
 	return '';
 }
 
-$wgHooks['ParserFirstCallInit'][] = 'wfWikiTextLoggedOut';
-
-function wfWikiTextLoggedOut( &$parser ) {
-	$parser->setHook( 'loggedout', 'OutputLoggedOutText' );
-	return true;
-}
-
-function OutputLoggedOutText( $input, $args, $parser ) {
+function outputLoggedOutText( $input, $args, $parser, $frame ) {
 	global $wgUser;
 
 	if( !$wgUser->isLoggedIn() ) {
-		return $parser->recursiveTagParse( $input );
+		return $parser->recursiveTagParse( $input, $frame );
 	}
 
 	return '';
 }
+

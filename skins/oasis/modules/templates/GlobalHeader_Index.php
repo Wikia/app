@@ -16,7 +16,7 @@
 	
 					foreach($menuNodes[0]['children'] as $level0):
 ?>
-					<li class="<?= str_replace(' ', '_', $menuNodes[$level0]['text']); ?>">
+					<li class="<?= str_replace(' ', '_', $menuNodes[$level0]['text']); ?> <? if( !empty($menuNodes[$level0]) && !empty($menuNodes[$level0]['class']) ) { echo $menuNodes[$level0]['class']; }  ?>">
 						<a href="<?= $menuNodes[$level0]['href'] ?>"><?= $menuNodes[$level0]['text'] ?> <img src="<?= $wg->BlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
 						<ul class="subnav">
 <? 

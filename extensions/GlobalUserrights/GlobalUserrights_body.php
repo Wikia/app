@@ -1,89 +1,80 @@
 <?php
 /**
- * Special:Userrights for global groups
+ * Special:GlobalUserrights, Special:Userrights for global groups
  *
  * @file
  * @ingroup Extensions
  */
 
-if (!defined('MEDIAWIKI')) die();
-
 class GlobalUserrights extends UserrightsPage {
 
 	/* Constructor */
 	public function __construct() {
-		SpecialPage::SpecialPage( 'GlobalUserrights' );
-		wfLoadExtensionMessages( 'GlobalUserrights' );
+		SpecialPage::__construct( 'GlobalUserrights' );
 	}
-	
+
 	/**
 	 * Save global user groups changes in the DB
 	 *
 	 * @param $username String: username
 	 * @param $reason String: reason
 	 */
-	function saveUserGroups( $username, $reason = '' ) {
-		global $wgRequest;
-		$user = $this->fetchUser( $username );
-		if( !$user ) {
-			return;
-		}
-
-		$allgroups = $this->getAllGroups();
-		$addgroups = array();
-		$removegroups = array();
-
-		foreach ( $allgroups as $group ) {
-			if ( $wgRequest->getCheck( "wpGroup-$group" ) ) {
-				$addgroups[] = $group;
-			} else {
-				$removegroups[] = $group;
-			}
-		}
-
+	function doSaveUserGroups( $user, $add, $remove, $reason = '' ) {
 		$oldGroups = efGURgetGroups( $user );
 		$newGroups = $oldGroups;
 
-		if ( $removegroups ) {
-			$newGroups = array_diff($newGroups, $removegroups);
-			$dbw = wfGetDB( DB_MASTER );
+		// remove then add groups
+		if ( $remove ) {
+			$newGroups = array_diff( $newGroups, $remove );
 			$uid = $user->getId();
-			foreach( $removegroups as $group ) 
+			foreach ( $remove as $group ) {
 				// whole reason we're redefining this function is to make it use
 				// $this->removeGroup instead of $user->removeGroup, etc.
-				$this->removeGroup( $uid, $group, $dbw );
+				$this->removeGroup( $uid, $group );
+			}
 		}
-		if ( $addgroups ) {
-			$newGroups = array_merge($newGroups, $addgroups);
-			$dbw = wfGetDB( DB_MASTER );
+		if ( $add ) {
+			$newGroups = array_merge( $newGroups, $add );
 			$uid = $user->getId();
-			foreach( $addgroups as $group )
-				$this->addGroup( $uid, $group, $dbw );
+			foreach ( $add as $group ) {
+				$this->addGroup( $uid, $group );
+			}
 		}
 		// get rid of duplicate groups there might be
 		$newGroups = array_unique( $newGroups );
 
-		$user->invalidateCache(); // clear cache
+		// Ensure that caches are cleared
+		$user->invalidateCache();
 
 		// if anything changed, log it
-		if( $newGroups != $oldGroups )
-			$this->addLogEntry( $user, $oldGroups, $newGroups );
+		if ( $newGroups != $oldGroups ) {
+			$this->addLogEntry( $user, $oldGroups, $newGroups, $reason );
+		}
+		return array( $add, $remove );
 	}
 
-	function addGroup( $uid, $group, $dbw ) {
-		$dbw->insert( 'global_user_groups', array(
-			'gug_user' => $uid,
-			'gug_group' => $group),
+	function addGroup( $uid, $group ) {
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->insert(
+			'global_user_groups',
+			array(
+				'gug_user' => $uid,
+				'gug_group' => $group
+			),
 			__METHOD__,
 			'IGNORE'
 		);
 		$dbw->commit();
 	}
 	
-	function removeGroup( $uid, $group, $dbw ) {
-		$dbw->delete( 'global_user_groups', array(
-			'gug_user' => $uid,
-			'gug_group' => $group),
+	function removeGroup( $uid, $group ) {
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->delete(
+			'global_user_groups',
+			array(
+				'gug_user' => $uid,
+				'gug_group' => $group
+			),
 			__METHOD__
 		);
 		$dbw->commit();
@@ -92,28 +83,17 @@ class GlobalUserrights extends UserrightsPage {
 	/**
 	 * Add a gblrights log entry 
 	 */
-	function addLogEntry( $user, $oldGroups, $newGroups ) {
-		global $wgRequest;
+	function addLogEntry( $user, $oldGroups, $newGroups, $reason ) {
 		$log = new LogPage( 'gblrights' );
+
 		$log->addEntry( 'rights',
 			$user->getUserPage(),
-			$wgRequest->getText( 'user-reason' ),
-				array(
-					$this->makeGroupNameList( $oldGroups ),
-					$this->makeGroupNameList( $newGroups )
-				)
-			);
-	}
-
-	function fetchUser( $username ) {
-		global $wgOut;
-		$user = User::newFromName( $username );
-		if( !$user || $user->isAnon() ) {
-			$wgOut->addWikiMsg( 'nosuchusershort', $username );
-			return null;
-		}
-
-		return $user;
+			$reason,
+			array(
+				$this->makeGroupNameListForLog( $oldGroups ),
+				$this->makeGroupNameListForLog( $newGroups )
+			)
+		);
 	}
 
 	protected function showEditUserGroupsForm( $user, $groups ) {
@@ -140,7 +120,7 @@ class GlobalUserrights extends UserrightsPage {
 	}
 
 	protected function showLogFragment( $user, $output ) {
-		$output->addHtml( Xml::element( 'h2', null, LogPage::logName( 'gblrights' ) . "\n" ) );
+		$output->addHTML( Xml::element( 'h2', null, LogPage::logName( 'gblrights' ) . "\n" ) );
 		LogEventsList::showLogExtract( $output, 'gblrights', $user->getUserPage()->getPrefixedText() );
 	}
 

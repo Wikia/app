@@ -4,12 +4,23 @@
  */
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
+$wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
 
-function wfMakeGlobalVariablesScript($vars) {
+function wfJSVariablesTopScripts(Array $vars) {
+	$vars['wgAfterContentAndJS'] = array();
+	return true;
+}
+
+function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
+	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgDBname, $wgPrivateTracker, $wgExtensionsPath,
+		$wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags, $wgDisableAnonymousEditing,
+		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath;
 
-	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags, $wgDisableAnonymousEditing, $wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgMedusaSlot;
+	$skin = $out->getSkin();
+	$title = $out->getTitle();
 
+	// MW1.19 - ResourceLoaderStartUpModule class adds more variables
 	$cats = wfGetBreadCrumb();
 	$idx = count($cats)-2;
 	if(isset($cats[$idx])) {
@@ -21,7 +32,9 @@ function wfMakeGlobalVariablesScript($vars) {
 	}
 
 	$vars['wgCityId'] = $wgCityId;
-	if (is_array($wgEnableAjaxLogin) && in_array($vars['skin'], $wgEnableAjaxLogin)) {
+
+	$skinName = get_class($skin);
+	if (is_array($wgEnableAjaxLogin) && in_array($skinName, $wgEnableAjaxLogin)) {
 		$vars['wgEnableAjaxLogin'] = true;
 	}
 	$vars['wgDBname'] = $wgDBname;
@@ -35,6 +48,7 @@ function wfMakeGlobalVariablesScript($vars) {
 		$vars['wgPrivateTracker'] = true;
 	}
 
+	// TODO: load it on-demand using JSMessages
 	if($vars['wgIsArticle'] == false && !empty($vars['wgEnableAjaxLogin'])) {
 		$vars['ajaxLogin1'] = wfMsg('ajaxLogin1');
 		$vars['ajaxLogin2'] = wfMsg('ajaxLogin2');
@@ -50,24 +64,24 @@ function wfMakeGlobalVariablesScript($vars) {
 	}
 
 	$vars['wgStyleVersion'] = isset($wgStyleVersion) ? $wgStyleVersion : '' ;
-	if(isset($wgUser->getSkin()->themename)) {
-		$vars['themename'] = $wgUser->getSkin()->themename;
+	if(isset($skin->themename)) {
+		$vars['themename'] = $skin->themename;
 	}
 
 	$vars['wgExtensionsPath'] = $wgExtensionsPath;
 	$vars['wgSitename'] = $wgSitename;
 
-	$vars['wgAfterContentAndJS'] = array();
-
 	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
 	$vars['wgMWrevId'] = $wgMemc->get(wfMemcKey('wgMWrevId'));
 
+	// not used anymore - we use ResourceLoader to load YUI - @author: wladek
+	// TODO: remove after confirmation
 	// RT #21084: get URL to YUI package
-	$yuiUrl = array_pop(AssetsManager::getInstance()->getGroupCommonURL('yui', array(), true /* $combine */, true /* $minify */));
-	$vars['wgYUIPackageURL'] = $yuiUrl;
+//	$yuiUrl = array_pop(AssetsManager::getInstance()->getGroupCommonURL('yui', array(), true /* $combine */, true /* $minify */));
+//	$vars['wgYUIPackageURL'] = $yuiUrl;
 
 	// macbre: get revision ID of current article
-	if ( ( $wgTitle->isContentPage() || $wgTitle->isTalkPage() ) && !is_null($wgArticle)) {
+	if ( ( $title->isContentPage() || $title->isTalkPage() ) && !is_null($wgArticle)) {
 		$vars['wgRevisionId'] = !empty($wgArticle->mRevision) ? $wgArticle->mRevision->getId() : intval($wgArticle->mLatest);
 	}
 
@@ -86,6 +100,5 @@ function wfMakeGlobalVariablesScript($vars) {
 	$vars['wgCookiePath'] = $wgCookiePath;
 
 	wfProfileOut(__METHOD__);
-
 	return true;
 }

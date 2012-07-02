@@ -26,7 +26,6 @@ class LookupContribsHooks {
 	static public function ContributionsToolLinks( $id, $nt, &$links ) {
 		global $wgUser;
 		if( $id != 0 && $wgUser->isAllowed( 'lookupcontribs' ) ) {
-			wfLoadExtensionMessages( 'SpecialLookupContribs' );
 			$attribs = array(
 				'href' => 'http://community.wikia.com/wiki/Special:LookupContribs?target=' . urlencode( $nt->getText() ),
 				'title' => wfMsg('right-lookupcontribs')

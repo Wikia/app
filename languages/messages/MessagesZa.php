@@ -87,19 +87,12 @@ $messages = array(
 'faqpage'        => 'Project:Cam caeuq dap',
 
 # Vector skin
-'vector-action-delete'       => 'Ca',
-'vector-action-move'         => 'Daen',
-'vector-action-protect'      => 'Bauj',
-'vector-namespace-category'  => 'Faendingz',
-'vector-namespace-help'      => 'Yieb bangcoh',
-'vector-namespace-image'     => 'Vwnzgen',
-'vector-namespace-main'      => 'Yieb',
-'vector-namespace-media'     => 'Yieb moizdij',
-'vector-namespace-mediawiki' => 'Siusik',
-'vector-namespace-template'  => 'Mozbanj',
-'vector-view-create'         => 'Laeb',
-'vector-view-edit'           => 'gaij',
-'vector-view-history'        => 'Cazyawj lizsij',
+'vector-action-delete'  => 'Ca',
+'vector-action-move'    => 'Daen',
+'vector-action-protect' => 'Bauj',
+'vector-view-create'    => 'Laeb',
+'vector-view-edit'      => 'gaij',
+'vector-view-history'   => 'Cazyawj lizsij',
 
 'errorpagetitle'   => 'Loengloek',
 'tagline'          => 'okcih {{SITENAME}}',
@@ -185,14 +178,13 @@ $messages = array(
 'nologinlink'             => 'Laeb bouxdeiz',
 
 # Edit pages
-'summary'            => 'Saegmangj:',
-'minoredit'          => 'Di-nej gaij noix',
-'watchthis'          => 'Gamyawj yieb neix',
-'savearticle'        => 'Zonzdiuz mae-nej',
-'showpreview'        => 'Okqhaej piu-ngoengx',
-'showdiff'           => 'Okqhaej gaeqgaei',
-'whitelistedittitle' => 'Laezdiuz haeuj aiq naej san-zonz',
-'newarticle'         => '（Moq）',
+'summary'     => 'Saegmangj:',
+'minoredit'   => 'Di-nej gaij noix',
+'watchthis'   => 'Gamyawj yieb neix',
+'savearticle' => 'Zonzdiuz mae-nej',
+'showpreview' => 'Okqhaej piu-ngoengx',
+'showdiff'    => 'Okqhaej gaeqgaei',
+'newarticle'  => '（Moq）',
 
 # Diffs
 'editundo' => 'siu',
@@ -213,7 +205,7 @@ $messages = array(
 'searchresultshead' => 'Cwmh',
 'username'          => 'Ciu bouxdeiz:',
 
-'group-user-member' => 'Bouxsawjyungq',
+'group-user-member' => '{{GENDER:$1|Bouxsawjyungq}}',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'gaij yieb neix',
@@ -314,7 +306,6 @@ $messages = array(
 'move-watch'       => 'Demq mae-nej',
 'movepagebtn'      => 'Caen doengh mae',
 'movedto'          => 'Caen bei',
-'1movedto2'        => '[[$1]] caen bei [[$2]]',
 'movereason'       => 'Haujgaemj',
 'revertmove'       => 'siu',
 

@@ -95,7 +95,6 @@ function renderXML( $input, $argv, $parser )
 {
 	global $wgOut;
 	$localParser = new Parser();
-	wfLoadExtensionMessages('XMLParser');
 
 	// parameters
 	$feedURL = $argv["feed"];

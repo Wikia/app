@@ -11,60 +11,32 @@
 class SMOpenLayersFormInput extends SMFormInput {
 	
 	/**
-	 * @see SMFormInput::getEarthZoom
+	 * @see SMFormInput::getResourceModules
 	 * 
-	 * @since 0.6.5
+	 * @since 1.0
+	 * 
+	 * @return array of string
 	 */
-	protected function getEarthZoom() {
-		return 1;
-	}	
-	
-	/**
-	 * @see MapsMapFeature::addFormDependencies()
-	 */
-	protected function addFormDependencies() {
-		global $wgOut;
-		global $smgScriptPath, $smgStyleVersion;
-		
-		$this->service->addDependency( Html::linkedScript( "$smgScriptPath/includes/services/OpenLayers/SM_OpenLayersForms.js?$smgStyleVersion" ) );
-		$this->service->addDependencies( $wgOut );
+	protected function getResourceModules() {
+		return array_merge( parent::getResourceModules(), array( 'ext.sm.fi.openlayers' ) );
 	}
 	
 	/**
-	 * @see MapsMapFeature::addSpecificMapHTML
-	 */
-	public function addSpecificMapHTML() {
-		global $wgLang;
+	 * Returns a PHP object to encode to JSON with the map data.
+	 *
+	 * @since 1.0
+	 *
+	 * @param array $params
+	 * @param Parser $parser
+	 * 
+	 * @return mixed
+	 */	
+	protected function getJSONObject( array $params, Parser $parser ) {
+		global $egMapsGeoNamesUser;
 		
-		$mapName = $this->service->getMapId( false );
+		$params['geonamesusername'] = $egMapsGeoNamesUser;
 		
-		$this->output .= Html::element(
-			'div',
-			array(
-				'id' => $mapName,
-				'style' => "width: $this->width; height: $this->height; background-color: #cccccc; overflow: hidden;",
-			),
-			wfMsg( 'maps-loading-map' )
-		);
-		
-		$langCode = $wgLang->getCode();
-		
-		MapsMapper::addInlineScript( $this->service,<<<EOT
-		makeFormInputOpenLayer(
-			"$mapName",
-			"$this->coordsFieldName",
-			$this->centreLat,
-			$this->centreLon,
-			$this->zoom,
-			{$this->markerCoords['lat']},
-			{$this->markerCoords['lon']},
-			{$this->layers},
-			[$this->controls],
-			"$langCode"
-		);
-EOT
-		);
-		
+		return $params;
 	}
 	
 }

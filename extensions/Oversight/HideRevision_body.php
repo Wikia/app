@@ -1,11 +1,30 @@
 <?php
-
 /**
  * Special page handler function for Special:HideRevision
  */
 class HideRevisionForm extends SpecialPage {
+
+	/**
+	 * @var Title
+	 */
+	protected $mTarget;
+
+	/**
+	 * @var bool
+	 */
+	protected $mPopulated;
+
+	/**
+	 * @var array
+	 */
+	protected $mRevisions, $mTimestamps;
+
+	/**
+	 * @var string
+	 */
+	protected $mReason;
+
 	function __construct() {
-		wfLoadExtensionMessages( 'HideRevision' );
 		parent::__construct( 'HideRevision', 'hiderevision' );
 	}
 
@@ -45,7 +64,7 @@ class HideRevisionForm extends SpecialPage {
 		$submitted = $wgRequest->wasPosted() &&
 			$wgRequest->getVal( 'action' ) == 'submit' &&
 			$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) );
-		
+
 		if( $this->mPopulated && $submitted ) {
 			$this->submit();
 		} elseif( $this->mPopulated ) {
@@ -59,8 +78,8 @@ class HideRevisionForm extends SpecialPage {
 	 * If no revisions are specified, prompt for a revision id
 	 */
 	function showEmpty() {
-		global $wgOut, $wgUser;
-		$special = Title::makeTitle( NS_SPECIAL, 'HideRevision' );
+		global $wgOut;
+		$special = SpecialPage::getTitleFor( 'HideRevision' );
 
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array(
@@ -83,7 +102,7 @@ class HideRevisionForm extends SpecialPage {
 	 */
 	function showForm() {
 		global $wgOut, $wgUser;
-		$special = Title::makeTitle( NS_SPECIAL, 'HideRevision' );
+		$special = SpecialPage::getTitleFor( 'HideRevision' );
 
 		$wgOut->addWikiText( wfMsg( 'hiderevision-text' ) );
 		$wgOut->addHTML(
@@ -103,11 +122,14 @@ class HideRevisionForm extends SpecialPage {
 
 			// Hidden fields
 			$this->revisionFields() .
-			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
+			Html::hidden( 'wpEditToken', $wgUser->editToken() ) .
 
 			Xml::closeElement( 'form' ) );
 	}
 
+	/**
+	 * @return String
+	 */
 	function revisionList() {
 		if( !$this->mRevisions ) {
 			return '';
@@ -127,15 +149,16 @@ class HideRevisionForm extends SpecialPage {
 		return $this->makeList( $dbr->resultObject( $result ) );
 	}
 
+	/**
+	 * @param $resultSet ResultWrapper
+	 * @return String
+	 */
 	function makeList( $resultSet ) {
-		global $IP, $wgUser;
-		require_once( "$IP/includes/ChangesList.php" );
+		global $wgUser;
 		$changes = ChangesList::newFromUser( $wgUser );
 
-		$skin = $wgUser->getSkin();
-
 		$out = $changes->beginRecentChangesList();
-		while( $row = $resultSet->fetchObject() ) {
+		foreach ( $resultSet as $row ) {
 			$rc = RecentChange::newFromCurRow( $row );
 			$rc->counter = 0; // ???
 			$out .= $changes->recentChangesLine( $rc );
@@ -146,6 +169,9 @@ class HideRevisionForm extends SpecialPage {
 		return $out;
 	}
 
+	/**
+	 * @return string
+	 */
 	function archiveList() {
 		if( !$this->mTarget || !$this->mTimestamps ) {
 			return '';
@@ -186,16 +212,19 @@ class HideRevisionForm extends SpecialPage {
 		return $this->makeList( $dbr->resultObject( $result ) );
 	}
 
+	/**
+	 * @return string
+	 */
 	function revisionFields() {
 		$out = '';
 		foreach( $this->mRevisions as $id ) {
-			$out .= Xml::hidden( 'revision[]', $id );
+			$out .= Html::hidden( 'revision[]', $id );
 		}
 		if( $this->mTarget ) {
-			$out .= Xml::hidden( 'target', $this->mTarget->getPrefixedDbKey() );
+			$out .= Html::hidden( 'target', $this->mTarget->getPrefixedDbKey() );
 		}
 		foreach( $this->mTimestamps as $timestamp ) {
-			$out .= Xml::hidden( 'timestamp[]', wfTimestamp( TS_MW, $timestamp ) );
+			$out .= Html::hidden( 'timestamp[]', wfTimestamp( TS_MW, $timestamp ) );
 		}
 		return $out;
 	}
@@ -220,10 +249,11 @@ class HideRevisionForm extends SpecialPage {
 
 	/**
 	 * Go kill the revisions and return status information.
-	 * @param $dbw database
+	 * @param $dbw DatabaseBase
 	 * @return array of wikitext strings with success/failure messages
 	 */
 	function hideRevisions( $dbw ) {
+		$success = array();
 		// Live revisions
 		foreach( $this->mRevisions as $id ) {
 			$success[] = wfMsgHTML( 'hiderevision-status', $id,
@@ -242,11 +272,11 @@ class HideRevisionForm extends SpecialPage {
 
 	/**
 	 * Actually go in the database and kill things.
+	 * @param $dbw DatabaseBase
+	 * @param $id
 	 * @return message key string for success or failure message
 	 */
 	function hideRevision( $dbw, $id ) {
-		global $wgUser;
-
 		$dbw->begin();
 
 		$rev = Revision::newFromId( $id );
@@ -285,7 +315,7 @@ class HideRevisionForm extends SpecialPage {
 		$title->invalidateCache();
 
 		// Done with all database pieces; commit!
-		$dbw->immediateCommit();
+		$dbw->commit();
 
 		// Also purge remote proxies.
 		// Ideally this would be built into the above, but squid code is
@@ -300,6 +330,11 @@ class HideRevisionForm extends SpecialPage {
 		return 'hiderevision-success';
 	}
 
+	/**
+	 * @param $dbw DatabaseBase
+	 * @param $timestamp
+	 * @return string
+	 */
 	function hideArchivedRevision( $dbw, $timestamp ) {
 		$archive = new PageArchive( $this->mTarget );
 		$rev = $archive->getRevision( $timestamp );
@@ -324,6 +359,12 @@ class HideRevisionForm extends SpecialPage {
 		return 'hiderevision-success';
 	}
 
+	/**
+	 * @param $dbw DatabaseBase
+	 * @param $title Title
+	 * @param $rev Revision
+	 * @return bool
+	 */
 	function insertRevision( $dbw, $title, $rev ) {
 		global $wgUser;
 		return $dbw->insert( 'hidden',
@@ -340,7 +381,7 @@ class HideRevisionForm extends SpecialPage {
 				'hidden_user_text'  => $rev->getRawUserText(),
 				'hidden_timestamp'  => $dbw->timestamp( $rev->getTimestamp() ),
 				'hidden_minor_edit' => $rev->isMinor() ? 1 : 0,
-				'hidden_deleted'    => $rev->mDeleted, // FIXME: private field access
+				'hidden_deleted'    => $rev->getVisibility(),
 
 				'hidden_by_user'      => $wgUser->getId(),
 				'hidden_on_timestamp' => $dbw->timestamp(),
@@ -354,7 +395,6 @@ class HideRevisionForm extends SpecialPage {
 class SpecialOversight extends SpecialPage {
 
 	function __construct(){
-		wfLoadExtensionMessages('HideRevision');
 		parent::__construct( 'Oversight', 'oversight' );
 	}
 
@@ -378,7 +418,7 @@ class SpecialOversight extends SpecialPage {
 		$revision = $wgRequest->getIntOrNull( 'revision' );
 		if( $wgRequest->getCheck( 'diff' ) && !is_null( $revision )) {
 			$this->showDiff( $revision);
-		} else if( is_null( $revision ) ) {
+		} elseif( is_null( $revision ) ) {
 			$this->showList( $page, $user, $offender );
 		} else {
 			$this->showRevision( $revision );
@@ -386,8 +426,8 @@ class SpecialOversight extends SpecialPage {
 	}
 
 	function showList( $page, $user, $offender ) {
-		global $wgOut, $wgScript, $wgTitle;
-		
+		global $wgOut, $wgScript;
+
 		$title = Title::newFromURL( $page );
 		$u = User::newFromName( $user );
 		$page = $title ? $page : ''; // blank invalid titles
@@ -395,7 +435,7 @@ class SpecialOversight extends SpecialPage {
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'action' => $wgScript, 'method' => 'get', 'id' => 'mw-hiderevision-form' ) ) .
 			Xml::fieldset( wfMsg( 'oversight-legend' ) ) .
-			Xml::hidden( 'title', $wgTitle->getPrefixedDbKey() ) .
+			Html::hidden( 'title', $this->getTitle()->getPrefixedDbKey() ) .
 			Xml::inputLabel( wfMsg( 'oversight-oversighter' ), 'user', 'mw-oversight-user', 20, $user ) . ' ' .
 			Xml::inputLabel( wfMsg( 'speciallogtitlelabel' ), 'page', 'mw-oversight-page', 25, $page ) . ' ' .
 			Xml::inputLabel( wfMsg( 'oversight-offender' ), 'author', 'mw-oversight-author', 20, $offender ) . ' ' .
@@ -415,6 +455,11 @@ class SpecialOversight extends SpecialPage {
 		}
 	}
 
+	/**
+	 * @param $db DatabaseBase
+	 * @param $condition
+	 * @return ResultWrapper
+	 */
 	function getRevisions( $db, $condition ) {
 		return $db->select(
 			array( 'hidden', 'user' ),
@@ -426,7 +471,10 @@ class SpecialOversight extends SpecialPage {
 			array(
 				'ORDER BY' => 'hidden_on_timestamp DESC' ) );
 	}
-	
+
+	/**
+	 * @return array
+	 */
 	public function getSelectFields() {
 		return array( 'hidden_page as page_id',
 			'hidden_namespace as page_namespace',
@@ -465,37 +513,43 @@ class SpecialOversight extends SpecialPage {
 		);
 	}
 
+	/**
+	 * @param $row
+	 * @return string
+	 */
 	function listRow( $row ) {
-		global $wgUser, $wgLang;
-		$skin = $wgUser->getSkin();
+		global $wgLang;
 		$self = $this->getTitle();
 		$userPage = Title::makeTitle( NS_USER, $row->user_name );
 		$victim = Title::makeTitle( $row->page_namespace, $row->page_title );
 		return "<li>(" .
-			$skin->makeKnownLinkObj( $self, wfMsgHTML( 'oversight-view' ),
+				Linker::makeKnownLinkObj( $self, wfMsgHTML( 'oversight-view' ),
 				'revision=' . $row->rev_id ) .
 			") " .
 			"(" .
-			$skin->makeKnownLinkObj( $self, wfMsgHTML( 'diff' ),
+			Linker::makeKnownLinkObj( $self, wfMsgHTML( 'diff' ),
 				'revision=' . $row->rev_id . '&diff=1') .
 			") " .
 			$wgLang->timeanddate( wfTimestamp( TS_MW, $row->hidden_on_timestamp ) ) .
 			" " .
-			$skin->makeLinkObj( $userPage, htmlspecialchars( $userPage->getText() ) ) .
+			Linker::makeLinkObj( $userPage, htmlspecialchars( $userPage->getText() ) ) .
 			" " .
-			wfMsgHTML( 'oversight-log-hiderev', $skin->makeLinkObj( $victim ) ) .
+			wfMsgHTML( 'oversight-log-hiderev', Linker::makeLinkObj( $victim ) ) .
 			" " .
-			$skin->commentBlock( $row->hidden_reason ) .
+			Linker::commentBlock( $row->hidden_reason ) .
 			"</li>\n";
 	}
 
+	/**
+	 * @param $revision array
+	 */
 	function showRevision( $revision ) {
 		global $wgOut;
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$result = $this->getRevisions( $dbr, array( 'hidden_rev_id' => $revision ) );
 
-		while( $row = $dbr->fetchObject( $result ) ) {
+		foreach ( $result as $row ) {
 			$info = $this->listRow( $row );
 			$list = $this->revisionInfo( $row );
 			$rev = new Revision( $row );
@@ -521,9 +575,12 @@ class SpecialOversight extends SpecialPage {
 					"</div>" );
 			}
 		}
-		$dbr->freeResult( $result );
 	}
 
+	/**
+	 * @param $row
+	 * @return String
+	 */
 	function revisionInfo( $row ) {
 		global $wgUser;
 		$changes = ChangesList::newFromUser( $wgUser );
@@ -535,20 +592,25 @@ class SpecialOversight extends SpecialPage {
 		return $out;
 	}
 
+	/**
+	 * @param $revision REvision
+	 * @return mixed
+	 */
 	function showDiff( $revision ){
 		global $wgOut;
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$result = $this->getRevisions( $dbr, array( 'hidden_rev_id' => $revision ) );
 
-		while( $row = $dbr->fetchObject( $result ) ) {
+		foreach ( $result as $row ) {
 			$info = $this->listRow( $row );
 			$list = $this->revisionInfo( $row );
 			$rev = new Revision( $row );
-			$rev->mTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
-			$prevId = $rev->mTitle->getPreviousRevisionID( $row->rev_id );
+			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+			$rev->setTitle( $title );
+			$prevId = $title->getPreviousRevisionID( $row->rev_id );
 			if ( $prevId ) {
-				$prev = Revision::newFromTitle( $rev->mTitle, $prevId );
+				$prev = Revision::newFromTitle( $title, $prevId );
 				if( $prev ) {
 					$otext = strval( $prev->getText( Revision::FOR_THIS_USER ) );
 				} else {
@@ -565,7 +627,7 @@ class SpecialOversight extends SpecialPage {
 			}
 			$ntext = strval( $rev->getText( Revision::FOR_THIS_USER ) );
 
-			$diffEngine = new DifferenceEngine();
+			$diffEngine = new DifferenceEngine( $title );
 			$diffEngine->showDiffStyle();
 			$wgOut->addHTML(
 				"<ul>" .
@@ -590,16 +652,22 @@ class SpecialOversight extends SpecialPage {
 				"</table>" .
 				"</div>\n" );
 		}
-		$dbr->freeResult( $result );
 	}
 }
-	
+
 /**
  * Query to list out stable versions for a page
  */
 class HiddenRevisionsPager extends ReverseChronologicalPager {
 	public $mForm, $mConds, $namespace, $dbKey, $uid;
 
+	/**
+	 * @param $form
+	 * @param $conds array
+	 * @param $title Title|null
+	 * @param $user User|null
+	 * @param offender string
+	 */
 	function __construct( $form, $conds = array(), $title = null, $user = null, $offender = '' ) {
 		$this->mForm = $form;
 		$this->mConds = $conds;
@@ -616,10 +684,17 @@ class HiddenRevisionsPager extends ReverseChronologicalPager {
 		parent::__construct();
 	}
 
+	/**
+	 * @param $row
+	 * @return mixed
+	 */
 	function formatRow( $row ) {
 		return $this->mForm->listRow( $row );
 	}
 
+	/**
+	 * @return array
+	 */
 	function getQueryInfo() {
 		$conds = $this->mConds;
 		$conds[] = 'hidden_by_user = user_id';
@@ -642,22 +717,31 @@ class HiddenRevisionsPager extends ReverseChronologicalPager {
 		);
 	}
 
+	/**
+	 * @return string
+	 */
 	function getIndexField() {
 		return 'hidden_on_timestamp';
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getStartBody() {
 		wfProfileIn( __METHOD__ );
 		# Do a link batch query
 		$lb = new LinkBatch();
-		while( $row = $this->mResult->fetchObject() ) {
+		foreach ( $this->mResult as $row ) {
 			$lb->add( $row->page_namespace, $row->page_title );
 		}
 		$lb->execute();
 		wfProfileOut( __METHOD__ );
 		return '<ul>';
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	function getEndBody() {
 		return '</ul>';
 	}

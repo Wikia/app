@@ -8,6 +8,7 @@
  * @file
  *
  * @author Amdf
+ * @author Andrijko Z.
  */
 
 $fallback = 'ru';
@@ -17,19 +18,31 @@ $namespaceNames = array(
 	NS_SPECIAL          => 'Спецӹлӹштӓш',
 	NS_TALK             => 'Кӓнгӓшӹмӓш',
 	NS_USER             => 'Сирӹшӹ',
-	NS_USER_TALK        => 'Сирӹшӹн кӓнгӓшӹмӓшӹжӹ',
-	NS_PROJECT_TALK     => '$1 кӓнгӓшӹмӓш',
+	NS_USER_TALK        => 'Сирӹшӹм_кӓнгӓшӹмӓш',
+	NS_PROJECT_TALK     => '$1_кӓнгӓшӹмӓш',
 	NS_FILE             => 'Файл',
-	NS_FILE_TALK        => 'Файл кӓнгӓшӹмӓш',
+	NS_FILE_TALK        => 'Файлым_кӓнгӓшӹмӓш',
 	NS_MEDIAWIKI        => 'MediaWiki',
-	NS_MEDIAWIKI_TALK   => 'MediaWiki кӓнгӓшӹмӓш',
+	NS_MEDIAWIKI_TALK   => 'MediaWiki-м_кӓнгӓшӹмӓш',
 	NS_TEMPLATE         => 'Шаблон',
-	NS_TEMPLATE_TALK    => 'Шаблон кӓнгӓшӹмӓш',
+	NS_TEMPLATE_TALK    => 'Шаблоным_кӓнгӓшӹмӓш',
 	NS_HELP             => 'Палшык',
-	NS_HELP_TALK        => 'Палшыкын кӓнгӓшӹмӓш',
+	NS_HELP_TALK        => 'Палшыкым_кӓнгӓшӹмӓш',
 	NS_CATEGORY         => 'Категори',
-	NS_CATEGORY_TALK    => 'Категори кӓнгӓшӹмӓш',
+	NS_CATEGORY_TALK    => 'Категорим_кӓнгӓшӹмӓш',
 );
+
+$namespaceAliases = array(
+	'Сирӹшӹн_кӓнгӓшӹмӓшӹжӹ' => NS_USER_TALK,
+	'Файл_кӓнгӓшӹмӓш'       => NS_FILE_TALK,
+	'MediaWiki_кӓнгӓшӹмӓш'  => NS_MEDIAWIKI_TALK,
+	'Шаблон_кӓнгӓшӹмӓш'     => NS_TEMPLATE_TALK,
+	'Палшыкын_кӓнгӓшӹмӓш'   => NS_HELP_TALK,
+	'Категори_кӓнгӓшӹмӓш'   => NS_CATEGORY_TALK,
+);
+
+// Remove Russian aliases
+$namespaceGenderAliases = array();
 
 $messages = array(
 # User preference toggles
@@ -47,8 +60,7 @@ $messages = array(
 'tog-editsection'             => '«Тӧрлӓш» ажедмӓшӹм м цилӓ секцилӓнок анжыкташ',
 'tog-editsectiononrightclick' => 'Секцим тӧрлӹмӹ годым артикль лӹмӹм каля доно вургымлашты темдӓлӓш (JavaScript)',
 'tog-showtoc'                 => 'Кӧргӹштӹш лӹмвлӓм анжыкташ (3 гӹц шукырак артикль лӹмӓн ӹлӹштӓшвлӓштӹ)',
-'tog-rememberpassword'        => 'Мӹньӹн шотыш нäлмӹ сирмäшем ти компьютерӹштӹ äштäш',
-'tog-editwidth'               => 'Тöрлӹмӹ паштек цилä экран кымдык',
+'tog-rememberpassword'        => 'Мӹньӹн шотыш нӓлмӹ сирмӓшем ти компьютерӹштӹ ӓштӓш (максимум $1 {{PLURAL:$1|кечы|кечы}})',
 'tog-watchcreations'          => 'Мӹньӹн ӹштӹмӹ ӹлӹштӓшвлӓэм вӓнгӹмӹ списокыш пырташ',
 'tog-watchdefault'            => 'Мӹньӹн вашталтымы ӹлӹштӓшвлӓэм вӓнгӹмӹ списокыш пырташ',
 'tog-watchmoves'              => 'Мӹньӹн лӹмӹм вашталтымы ӹлӹштӓшвлӓэм вӓнгӹмӹ списокыш пырташ',
@@ -259,7 +271,7 @@ $messages = array(
 # Login and logout pages
 'yourname'                => 'Сирӹшӹн лӹмжӹ:',
 'yourpassword'            => 'Пароль:',
-'remembermypassword'      => 'Ти компьютерӹштӹ мӹньӹн учетный сирмӓшем ӓштӓш',
+'remembermypassword'      => 'Ти компьютерӹштӹ мӹньӹн учетный сирмӓшем ӓштӓш (максимум $1 {{PLURAL:$1|кечы|кечы}})',
 'login'                   => 'Системыш сирӓлтдӓ',
 'nav-login-createaccount' => 'Коргӹшкӹ сирӓлтдӓ/регистрируялтда',
 'userlogin'               => 'Кӧргӹшкӹ сирӓлтдӓ ӓль регистрируялтда',
@@ -279,8 +291,6 @@ $messages = array(
 'extlink_tip'     => 'Тӱнӹш ажедмӓш (префиксӹм идӓ монды  http:// )',
 'headline_sample' => 'Текстӹн лӹмжӹ',
 'headline_tip'    => '2-шы кӱкшӹцӓн тӹнг лӹм',
-'math_sample'     => 'Тишкӹ формулым шӹндӹдӓ',
-'math_tip'        => 'Математика формула (формат LaTeX)',
 'nowiki_sample'   => 'Тишкӹ форматируйымы агыл текствлӓм шӹндӹдӓ',
 'nowiki_tip'      => 'Вики-форматированим мондаш',
 'image_tip'       => 'Кӧргӹш пыртен шӹндӹмӹ файл',
@@ -475,8 +485,7 @@ $messages = array(
 'linksearch' => 'Тӱнӹш ажедмӓшвлӓ',
 
 # Special:Log/newusers
-'newuserlogpage'          => 'Сирӹшӹвлӓм регистрируйышы журнал',
-'newuserlog-create-entry' => 'У сирӹшӹ',
+'newuserlogpage' => 'Сирӹшӹвлӓм регистрируйышы журнал',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(группын списокшы)',
@@ -487,10 +496,7 @@ $messages = array(
 # Watchlist
 'watchlist'         => 'Вӓнгӹмӹ список',
 'mywatchlist'       => 'Вӓнгӹмӹ сирмӓш, список',
-'watchlistfor'      => "(сирӹшӹн '''$1''')",
-'addedwatch'        => 'Вӓнгӹмӓш списокыш пыртымы',
 'addedwatchtext'    => 'Ӹлӹштӓшӹм«[[:$1]]» тӓмдӓн вӓнгӹмӹ [[Special:Watchlist|ӹлӹштӓшӹшкӹдӓ пыртымы]]. Тидӹ паштек ӹштӹмӹ ӹлӹштӓшӹн вашталтымашвлӓ  ти списокышты анжыктымы дӓ тенгеок кӹжгӹ буквавлӓ доно у вашталтымашвлӓн списокышты пӓлдӹртӹмӹ лиэш[[Special:RecentChanges| пӓлдӹртӹмӹ лит]] нӹнӹм  айыраш куштылгырак лижӹ манын.',
-'removedwatch'      => 'Вӓнгӹмӹ список гӹц карангдымы',
 'removedwatchtext'  => 'Ӹлӹштӓш «[[:$1]]» тӓмдӓн вӓнгӹмӹ ӹлӹштӓшдӓ гӹц [[Special:Watchlist|карангдымы]].',
 'watch'             => 'Вӓнгӓш',
 'watchthispage'     => 'Ти ӹлӹштӓшӹм вӓнгӓш',
@@ -507,9 +513,8 @@ $messages = array(
 'deletepage'            => 'Ӹлӹштӓшӹм карангдаш',
 'confirmdeletetext'     => 'Тӓ ӹлӹштӓшӹн (изображенин) цилӓ информацижӹм  дӓ базышты ылшы вашталтымашвлӓн историм ӹштӹл шуаш ядыда. Пуры лидӓ, дӓ лачокат ма тенге ӹштӹнедӓ, шаналтыда. Махань последствивлӓ тидӹ паштек вычат, ынгылышашлык ылыда дӓ тидӹм  ти кӹдешӹтӹ анжыктымы правилывлӓштӹ анжалда [[{{MediaWiki:Policy-url}}]].',
 'actioncomplete'        => 'Лачокат ӹштӹмӹ',
-'deletedtext'           => '«<nowiki>$1</nowiki>» карангдымы.
+'deletedtext'           => '«$1» карангдымы.
 Анжы: $2 тидӹ мам карангдымы тӹ списокым анжыкта',
-'deletedarticle'        => '«[[$1]]» карангдымы',
 'dellogpage'            => 'Мам карангдымы анжыктышы сирмӓш',
 'deletecomment'         => 'Ӓмӓлжӹ:',
 'deleteotherreason'     => 'Вес ӓмӓл/ынгылдарал:',
@@ -526,7 +531,7 @@ $messages = array(
 'protectexpiry'               => 'Жепшӹ пӹтӓ:',
 'protect_expiry_invalid'      => 'Ӹшӹклӹмӹ жепӹм самынь анжыктымы.',
 'protect_expiry_old'          => 'Пӹтӹм жепшӹ эртен',
-'protect-text'                => "Тиштӹ тӓ ӹлӹштӓшӹн ӹшӹклӹмӹ кӱкшӹцшӹм анжал дӓ вашталтен кердӹдӓ'''<nowiki>$1</nowiki>'''.",
+'protect-text'                => "Тиштӹ тӓ ӹлӹштӓшӹн ӹшӹклӹмӹ кӱкшӹцшӹм анжал дӓ вашталтен кердӹдӓ'''$1'''.",
 'protect-locked-access'       => "Тӓмдӓн учетный карточкыдан ӹшӹклӹмӓш кӱкшӹцӹм вашталташ манын ситӓлык праважы уке. Ти ӹлӹштӓшӹм шӹндӹдӓ'''$1''':",
 'protect-cascadeon'           => 'Ти ӹлӹштӓшӹм {{PLURAL:$1|-шкы пыртымат, ӹшӹклӓлтеш, кыды ӱлнӹрӓк ылшы ӹлӹштӓшӹш|ӹлӹштӓшвлӓшкӹ ажедеш, кышкы }} каскадан ӹшӹклӹмашӹм шӹндӹмӹ. Тӓ ти ӹлӹштӓшӹн ӹшӹклӹмӹ кӱкшӹцшӹм вашталтен кердӹдӓ, но тидӹ каскадан ӹшӹклӹмашӹм ак тӹкӓл лиэш.',
 'protect-default'             => 'Ӹшӹклӹмӹ агыл',
@@ -541,8 +546,7 @@ $messages = array(
 'restriction-level'           => 'Пыраш лимӹ кӱкшӹц:',
 
 # Undelete
-'undeletelink'     => 'анжен лӓктӓш/угӹц ӹштӓш',
-'undeletedarticle' => 'мӹнгеш шӹндӹмӹ «[[$1]]»',
+'undeletelink' => 'анжен лӓктӓш/угӹц ӹштӓш',
 
 # Namespace form on various pages
 'namespace'      => 'Лӹмвлӓн кымдецӹштӹ:',
@@ -613,8 +617,6 @@ $messages = array(
 'talkexists'       => "'''Ӹлӹштӓш лӹм вашталтымы, но техень лӹмӓн ӹлӹштӓш тӹтежӓт улы, кӓнгӓшӹмӓш ӹлӹштӓшӹн лӹмжӹм вашталташ ак ли. Пуры лидӓ, кид доно нӹнӹм ушыда.'''",
 'movedto'          => 'техеньӹш вашталтымы',
 'movetalk'         => 'Ти кӓнгӓшӹмӓш ӹлӹштӓшӹн лӹмжӹм вашталташ',
-'1movedto2'        => 'лӹмӹм вашталтымы «[[$1]]» в «[[$2]]»',
-'1movedto2_redir'  => '«[[$1]]» у лӹмӹм пумы «[[$2]]» вес вӓрыш колтымы вӹлец',
 'movelogpage'      => 'Лӹмвлӓм вашталтымы журнал',
 'movereason'       => 'Ӓмӓлжӹ:',
 'revertmove'       => 'лишӹц колтымаш',
@@ -684,11 +686,10 @@ $messages = array(
 'nextdiff'     => 'Вес тӧрлӹмӓш →',
 
 # Media information
-'file-info-size'       => '($1 × $2 пиксел,  файлын размержӹ: $3, MIME-тип: $4)',
-'file-nohires'         => '<small>Кого разрешени доно верси уке.</small>',
-'svg-long-desc'        => '(SVG-файл, номинально $1 × $2 пиксель,  файлын размержӹ: $3)',
-'show-big-image'       => 'Кӱкшӹрӓк разрешениӓн изображени',
-'show-big-image-thumb' => '<small>Размер анзыц анжымы годым: $1 × $2 пиксель</small>',
+'file-info-size' => '$1 × $2 пиксел,  файлын размержӹ: $3, MIME-тип: $4',
+'file-nohires'   => 'Кого разрешени доно верси уке.',
+'svg-long-desc'  => 'SVG-файл, номинально $1 × $2 пиксель,  файлын размержӹ: $3',
+'show-big-image' => 'Кӱкшӹрӓк разрешениӓн изображени',
 
 # Bad image list
 'bad_image_list' => 'Техень форматан лишӓшлык:
@@ -709,11 +710,17 @@ $messages = array(
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength',
+* focallength
+* artist
+* copyright
+* imagedescription
+* gpslatitude
+* gpslongitude
+* gpsaltitude',
 
 # External editor support
 'edit-externally'      => 'Тӱнӹш программым кычылт, ти файлым тӧрлӓш',
-'edit-externally-help' => '(шукыракым анжал: [http://www.mediawiki.org/wiki/Manual:External_editors установкын правилывлӓжӹ])',
+'edit-externally-help' => '(шукыракым анжал: [//www.mediawiki.org/wiki/Manual:External_editors установкын правилывлӓжӹ])',
 
 # 'all' in various places, this might be different for inflected languages
 'watchlistall2' => 'цилӓ',

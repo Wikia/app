@@ -31,7 +31,7 @@ $messages = array(
 'tog-editsection'             => '允许通过点击【编辑】链接来编辑段落',
 'tog-editsectiononrightclick' => '允许右击标题编辑段落（JavaScript）',
 'tog-showtoc'                 => '显示目录（针对超过三只标题个页面）',
-'tog-rememberpassword'        => '登该台电脑浪记牢我个登录',
+'tog-rememberpassword'        => '来许箇台电脑上记牢我个密码（可维持$1{{PLURAL:$1|日|日}}）',
 'tog-watchcreations'          => '拿我创建个页面添加到我个监控列表里向',
 'tog-watchdefault'            => '拿我编辑个页面添加到我个监控列表里向',
 'tog-watchmoves'              => '拿我移动个页面添加到我个监控列表里向',
@@ -144,14 +144,6 @@ $messages = array(
 'index-category'                 => '索引拉许个页面',
 'noindex-category'               => '弗曾索引拉许个页面',
 
-'mainpagetext'      => "'''MediaWiki安装成功哉！'''",
-'mainpagedocfooter' => '请访问[http://meta.wikimedia.org/wiki/Help:Contents 用户手册]以获得使用此维基软件个信息！
-
-== 入门 ==
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings MediaWiki 配置设置列表]
-* [http://www.mediawiki.org/wiki/Manual:FAQ MediaWiki 常见问题解答]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki 发布邮件列表]',
-
 'about'         => '关于',
 'article'       => '内容页面',
 'newwindow'     => '（垃拉新窗口里向开开来）',
@@ -175,31 +167,21 @@ $messages = array(
 'faqpage'        => 'Project:FAQ',
 
 # Vector skin
-'vector-action-addsection'   => '加入话题',
-'vector-action-delete'       => '删除',
-'vector-action-move'         => '移动',
-'vector-action-protect'      => '保护',
-'vector-action-undelete'     => '反删除',
-'vector-action-unprotect'    => '反保护',
-'vector-namespace-category'  => '分类',
-'vector-namespace-help'      => '帮助页',
-'vector-namespace-image'     => '文件',
-'vector-namespace-main'      => '页面',
-'vector-namespace-media'     => '媒体页面',
-'vector-namespace-mediawiki' => '讯息',
-'vector-namespace-project'   => '项目页面',
-'vector-namespace-special'   => '特殊页面',
-'vector-namespace-talk'      => '讨论',
-'vector-namespace-template'  => '模板',
-'vector-namespace-user'      => '用户页面',
-'vector-view-create'         => '创建',
-'vector-view-edit'           => '编辑',
-'vector-view-history'        => '望历史',
-'vector-view-view'           => '阅读',
-'vector-view-viewsource'     => '查看源码',
-'actions'                    => '动作',
-'namespaces'                 => '名字空间',
-'variants'                   => '变量',
+'vector-action-addsection'       => '加入话题',
+'vector-action-delete'           => '删除',
+'vector-action-move'             => '移动',
+'vector-action-protect'          => '保护',
+'vector-action-undelete'         => '反删除',
+'vector-action-unprotect'        => '反保护',
+'vector-simplesearch-preference' => '打开高级搜索建议（仅适用于Vector皮肤）',
+'vector-view-create'             => '创建',
+'vector-view-edit'               => '编辑',
+'vector-view-history'            => '望历史',
+'vector-view-view'               => '阅读',
+'vector-view-viewsource'         => '查看源码',
+'actions'                        => '动作',
+'namespaces'                     => '名字空间',
+'variants'                       => '变量',
 
 'errorpagetitle'    => '错误',
 'returnto'          => '回转到$1。',
@@ -212,7 +194,6 @@ $messages = array(
 'history'           => '页面档案',
 'history_short'     => '历史',
 'updatedmarker'     => '上趟访问以来个更新',
-'info_short'        => '信息',
 'printableversion'  => '打印版',
 'permalink'         => '永久链接',
 'print'             => '打印',
@@ -374,25 +355,23 @@ $1',
 渠作兴已经拨别人家删除脱哉。',
 'badtitle'             => '该只标题弗来三',
 'badtitletext'         => '所请求页面个标题是无效个、弗存在，跨语言或跨wiki链接个标题错误。渠作兴包含一只或多只弗好用拉标题里向字符。',
-'perfcached'           => '下底是缓存数据，箇咾作兴弗是顶新个：',
-'perfcachedts'         => '下头是缓存数据，压末一趟更新辰光是$1。',
+'perfcached'           => '下底是缓存数据，箇咾作兴弗是顶新个. A maximum of {{PLURAL:$1|one result is|$1 results are}} available in the cache.',
+'perfcachedts'         => '下头是缓存数据，压末一趟更新辰光是$1。 A maximum of {{PLURAL:$4|one result is|$4 results are}} available in the cache.',
 'querypage-no-updates' => '当前禁止对此页面进行更新。箇搭个数据弗好立即刷新。',
 'wrong_wfQuery_params' => '错误个参数拨传递到 wfQuery（）<br />
 函数：$1<br />
 查询：$2',
 'viewsource'           => '源码',
-'viewsourcefor'        => '$1个源码',
 'actionthrottled'      => '动作已压制',
 'actionthrottledtext'  => '基于反垃圾链接个考量，限制垃拉短时间内多趟重复箇只操作。请过脱几分钟再试试看。',
 'protectedpagetext'    => '箇只页面已经锁定，以防编辑。',
 'viewsourcetext'       => '侬可以查看搭仔复制箇只页面个源码：',
 'protectedinterface'   => '箇只页面提供软件个界面文本。为著防止滥用咾已经锁定。',
-'editinginterface'     => "'''警告：''' 侬垃许编辑个页面是用于提供软件个界面文本。改变此页会得影响其他用户个界面外观。假使要翻译，请考虑使用 [http://translatewiki.net/wiki/Main_Page?setlang=zh-hans translatewiki.net]，一个用得来为MediaWiki软件本地化个计划。",
+'editinginterface'     => "'''警告：''' 侬垃许编辑个页面是用于提供软件个界面文本。改变此页会得影响其他用户个界面外观。假使要翻译，请考虑使用 [//translatewiki.net/wiki/Main_Page?setlang=zh-hans translatewiki.net]，一个用得来为MediaWiki软件本地化个计划。",
 'sqlhidden'            => '（SQL查询已隐藏）',
 'cascadeprotected'     => '箇只页面拨保护拉许，因为箇只页面拨下底已经标注“联锁保护”个{{PLURAL:$1|一只|多只}}被保护页面包含：
 $2',
 'namespaceprotected'   => "侬无没编辑'''$1'''名字空间里向页面个权限。",
-'customcssjsprotected' => '侬无权编辑箇只页面，因为渠包含其他用户个个人设定。',
 'ns-specialprotected'  => '特殊页编辑是弗来三个。',
 'titleprotected'       => "箇只标题已经拨[[User:$1|$1]]保护以防止创建。理由是''$2''。",
 
@@ -412,7 +391,7 @@ $2',
 'yourname'                   => '用户名:',
 'yourpassword'               => '密码:',
 'yourpasswordagain'          => '再拍一遍密码:',
-'remembermypassword'         => '登该台电脑浪记牢我个登录',
+'remembermypassword'         => '垃拉箇部电脑上记牢我个密码（可维持$1{{PLURAL:$1|日|日}}）',
 'yourdomainname'             => '侬个域名：',
 'externaldberror'            => '迭个作兴是由于验证数据库错误或者侬拨禁止更新侬个外部账号。',
 'login'                      => '登录',
@@ -429,6 +408,7 @@ $2',
 'gotaccount'                 => "已经有仔帐号哉？ '''$1'''。",
 'gotaccountlink'             => '登录',
 'createaccountmail'          => '通过 e-mail',
+'createaccountreason'        => '理由：',
 'badretype'                  => '倷输入个密码搭倪个档案弗配。',
 'userexists'                 => '箇只ID已经拨注册脱哉。请重新再拣个用户名。',
 'loginerror'                 => '登录错误',
@@ -439,7 +419,7 @@ $2',
 'loginsuccesstitle'          => '登录成功',
 'loginsuccess'               => "'''侬现在以 \"\$1\" 个身份登录到{{SITENAME}}。 '''",
 'nosuchuser'                 => '寻弗着用户“$1”。用户名是大小写敏感外加区分繁简体个。请检查拼写，或者[[Special:UserLogin/signup|开只新账户]]。',
-'nosuchusershort'            => '无没叫“<nowiki>$1</nowiki>”个用户。请检查侬个输入。',
+'nosuchusershort'            => '无没叫“$1”个用户。请检查侬个输入。',
 'nouserspecified'            => '侬必须选个用户名。',
 'login-userblocked'          => '箇个用户拨封锁拉许。弗允许登录。',
 'wrongpassword'              => '密码弗对。请侬再试试看。',
@@ -481,7 +461,7 @@ $2',
 'loginlanguagelabel'         => '语言：$1',
 'suspicious-userlogout'      => '侬登出个要求已经拨回头脱，因为渠可能是由已损坏个浏览器或者缓存代理传送个。',
 
-# Password reset dialog
+# Change password dialog
 'resetpass'                 => '更改密码',
 'resetpass_announce'        => '侬是通过一只临时发送到e-mail里向个代码登录的。要完成登录，侬必须垃此地设定一只新密码：',
 'resetpass_header'          => '更改密码',
@@ -510,8 +490,6 @@ $2',
 'extlink_tip'     => '外部链接（弗要忘记脱前头加http://）',
 'headline_sample' => '标题文本',
 'headline_tip'    => '2级标题文字',
-'math_sample'     => '箇搭嵌入数学公式',
-'math_tip'        => '插入数学公式 （LaTeX）',
 'nowiki_sample'   => '垃拉箇搭插入非格式文本',
 'nowiki_tip'      => '忽略wiki格式',
 'image_tip'       => '嵌入文件',
@@ -530,8 +508,10 @@ $2',
 'showlivepreview'                  => '实时预览',
 'showdiff'                         => '显示改动',
 'anoneditwarning'                  => "'''警告：''' 侬弗曾登录。侬个IP地址会得记录拉页面个编辑历史里向。",
+'anonpreviewwarning'               => "''侬弗曾登录。侬个IP位址会得记录拉此页个编辑历史里向。''",
 'missingsummary'                   => "'''提示：''' 侬弗曾提供编辑摘要。假使侬再次单击保存，侬个编辑将弗带编辑摘要保存。",
 'missingcommenttext'               => '请垃下头输入备注。',
+'missingcommentheader'             => "'''提示：''' 侬弗曾为此评论提供只标题。如果侬再次单击“{{int:savearticle}}”，侬个编辑将弗带标题保存。",
 'summary-preview'                  => '摘要预览：',
 'subject-preview'                  => '主题 / 标题 预览：',
 'blockedtitle'                     => '用户拨查封',
@@ -561,9 +541,6 @@ $2',
 
 侬个IP地址是$3，而该查封ID是 #$5。 请垃拉侬个查询里向注明以上所有资料。",
 'blockednoreason'                  => '弗曾拨原因',
-'blockedoriginalsource'            => "下头是'''$1'''个源码：",
-'blockededitsource'                => "侬对'''$1'''进行'''编辑'''个文字如下:",
-'whitelistedittitle'               => '登录仔再好编辑',
 'whitelistedittext'                => '侬必须$1才能编辑。',
 'confirmedittext'                  => '垃拉编辑此页之前侬必须确认侬个邮箱地址。请通过[[Special:Preferences|个人设置]]设置并验证侬个邮箱地址。',
 'nosuchsectiontitle'               => '寻弗着箇只段落',
@@ -584,12 +561,12 @@ $2',
 'noarticletext'                    => '箇只页面目前呒没内容。侬可以垃拉其他页面高头[[Special:Search/{{PAGENAME}}|搜索此页标题]]、<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索相关日志]或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 编辑此页]。</span>',
 'noarticletext-nopermission'       => '箇只页面目前呒没内容，侬可以垃拉其它页[[Special:Search/{{PAGENAME}}|搜索此页标题]]，
 或<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有关日志]</span>。',
-'userpage-userdoesnotexist'        => '用户账户“$1”弗曾创建。请垃拉创建／编辑迭个页面前头先检查一记。',
+'userpage-userdoesnotexist'        => '用户账户“<nowiki>$1</nowiki>”弗曾创建。请垃拉创建／编辑迭个页面前头先检查一记。',
 'userpage-userdoesnotexist-view'   => '用户账户“$1”弗曾创建。',
 'blocked-notice-logextract'        => '箇位用户箇歇畀封锁垃许。
 下头有最近个封锁纪录以供参考：',
 'clearyourcache'                   => "'''注意：垃拉保存之后，侬必须清除浏览器个缓存再好看见所作出个改变。'''
-'''Mozilla / Firefox / Safari'''：揿牢''Shift''再点击''刷新''，或揿''Ctrl-F5''或''Ctrl-R''（垃拉Macintosh上揿 ''Command-R''）；
+'''Mozilla / Firefox / Safari'''：揿牢''Shift''再点击''刷新''，或揿''Ctrl-F5''或''Ctrl-R''（垃拉Mac上揿 ''Command-R''）；
 '''Konqueror'''：只需点击''刷新''或揿''F5''；
 '''Opera'''：垃拉 ''工具→首选项''里向完整清除渠拉个缓存，或揿''Alt-F5''；
 '''Internet Explorer'''：揿牢''Ctrl''再点击''刷新''，或揿''Ctrl-F5''。",
@@ -599,7 +576,7 @@ $2',
 '''还弗曾保存！'''",
 'userjspreview'                    => "'''注意侬只是垃许测试／预览侬个 JavaScript。'''
 '''还弗曾保存！'''",
-'userinvalidcssjstitle'            => "'''警告：''' 弗存在皮肤\"\$1\"。注意自定义个 .css 搭 .js 页要使用小写标题，譬如，{{ns:user}}:Foo/monobook.css 弗同于 {{ns:user}}:Foo/Monobook.css。",
+'userinvalidcssjstitle'            => "'''警告：''' 弗存在皮肤\"\$1\"。注意自定义个 .css 搭 .js 页要使用小写标题，譬如，{{ns:user}}:Foo/vector.css 弗同于 {{ns:user}}:Foo/Vector.css。",
 'updated'                          => '（已更新）',
 'note'                             => "'''注意：'''",
 'previewnote'                      => "'''该个还只是预览；改动还朆保存！'''",
@@ -635,8 +612,6 @@ $2',
 假使侬弗希望侬个文字畀任意修改搭仔再发布，请弗要提交。<br />
 侬同时也要向我伲保证侬提交个内容是侬自家所作，或得自一个弗受版权保护或相似自由个来源（参阅$1个细节）。
 ''' 弗要垃拉弗曾获得授权个情况下头发表！'''",
-'longpagewarning'                  => "'''警告'''：箇页面个长度是$1KB；一些浏览器垃拉编辑长度接近或大于32KB个页面作兴存在问题。
-侬应该考虑拿箇只页面分成功更加小个章节。",
 'longpageerror'                    => "'''错误：侬提交个文本长度有$1KB，大于$2KB个顶大值。'''该文本弗能保存。",
 'readonlywarning'                  => "'''警告：数据库锁定垃许维护，侬箇歇弗好保存侬个修改。'''侬作兴希望先拿本段文字复制并保存到文本文件，等歇再修改。
 
@@ -801,8 +776,6 @@ $3封禁个原因是''$2''",
 'revdelete-unsuppress'        => '垃拉已恢复个修订里向移除限制',
 'revdelete-log'               => '理由：',
 'revdelete-submit'            => '应用于拣中个{{PLURAL:$1|修订}}',
-'revdelete-logentry'          => '[[$1]]个修订可见性已更改',
-'logdelete-logentry'          => '[[$1]]个事件可见性已更改',
 'revdelete-success'           => "'''修订个可见性已经成功更新。'''",
 'revdelete-failure'           => "'''修订个可见性无法更新：'''
 $1",
@@ -810,17 +783,10 @@ $1",
 'logdelete-failure'           => "'''事件个可见性无法设置：'''
 $1",
 'revdel-restore'              => '更改可见性',
+'revdel-restore-deleted'      => '已删除个修订版本',
+'revdel-restore-visible'      => '可见个修订版本',
 'pagehist'                    => '页面历史',
 'deletedhist'                 => '已删除之历史',
-'revdelete-content'           => '内容',
-'revdelete-summary'           => '编辑摘要',
-'revdelete-uname'             => '用户名',
-'revdelete-restricted'        => '已将限制应用到管理员',
-'revdelete-unrestricted'      => '已移除对管理员个限制',
-'revdelete-hid'               => '囥脱 $1',
-'revdelete-unhid'             => '显示 $1',
-'revdelete-log-message'       => '$1个$2次修订',
-'logdelete-log-message'       => '$1个$2项事件',
 'revdelete-hide-current'      => '隐藏于$1 $2之项目错误：箇个是当前个修订，弗可以隐藏。',
 'revdelete-show-no-access'    => '显示于$1 $2之项目错误：箇只项目已经标示为"已限制"，侬对渠并无通行权。',
 'revdelete-modify-no-access'  => '更改于$1 $2之项目错误：箇个项目已经标示为"已限制"，侬对渠并无通行权。',
@@ -912,6 +878,7 @@ $1",
 'searchprofile-everything-tooltip' => '搜索全部（包括讨论页面）',
 'searchprofile-advanced-tooltip'   => '垃拉自定义名字空间里向搜索',
 'search-result-size'               => '$1（$2字）',
+'search-result-category-size'      => '$1位成员（$2个子分类，$3个文件）',
 'search-result-score'              => '相关度：$1%',
 'search-redirect'                  => '（重定向 $1）',
 'search-section'                   => '（段落 $1）',
@@ -959,14 +926,13 @@ $1",
 'changepassword'                => '改密码',
 'prefs-skin'                    => '皮肤',
 'skin-preview'                  => '预览',
-'prefs-math'                    => '数学公式',
 'datedefault'                   => '呒拨偏好',
 'prefs-datetime'                => '日脚搭仔辰光',
 'prefs-personal'                => '用户档案',
 'prefs-rc'                      => '近段辰光个改动',
 'prefs-watchlist'               => '监控列表',
 'prefs-watchlist-days'          => '勒拉监控列表里向显示个日数：',
-'prefs-watchlist-days-max'      => '顶长7日天',
+'prefs-watchlist-days-max'      => 'Maximum $1 {{PLURAL:$1|day|days}}',
 'prefs-watchlist-edits'         => '勒拉扩展个监控列表里向显示个编辑趟数：',
 'prefs-watchlist-edits-max'     => '顶多：1000',
 'prefs-watchlist-token'         => '监控列表记认：',
@@ -983,8 +949,6 @@ $1",
 'columns'                       => '列：',
 'searchresultshead'             => '搜索',
 'resultsperpage'                => '每页显示链接数：',
-'contextlines'                  => '每链显示行数：',
-'contextchars'                  => '每行显示字数：',
 'stub-threshold'                => '<a href="#" class="stub">短页面链接</a>格式门槛值（字节）：',
 'recentchangesdays'             => '最近更改里向个显示日数：',
 'recentchangesdays-max'         => '最长 $1 日',
@@ -1083,34 +1047,34 @@ $1",
 'recentchangeslinked-to'      => '显示链接到指定页面个页面个改动',
 
 # Upload
-'upload'            => '上载文物',
-'uploadbtn'         => '上载文件',
-'uploadnologin'     => '朆登录',
-'uploadnologintext' => '倷板定要[[Special:UserLogin|登录]]仔再好上载文件。',
-'uploaderror'       => '上载出错',
-'uploadtext'        => "拿下头只表格来上载文件。要查看或者搜寻之前上载个图片个说法，请到[[Special:FileList|已上载文件列表]]，上载搭仔删脱也记录勒拉[[Special:Log/upload|上载日志]]里向。
+'upload'              => '上载文物',
+'uploadbtn'           => '上载文件',
+'uploadnologin'       => '朆登录',
+'uploadnologintext'   => '倷板定要[[Special:UserLogin|登录]]仔再好上载文件。',
+'uploaderror'         => '上载出错',
+'uploadtext'          => "拿下头只表格来上载文件。要查看或者搜寻之前上载个图片个说法，请到[[Special:FileList|已上载文件列表]]，上载搭仔删脱也记录勒拉[[Special:Log/upload|上载日志]]里向。
 
 要勒拉页面里向摆进图片个说法，用下头该种形式个链接
 '''<nowiki>[[{{ns:file}}:文件.jpg]]</nowiki>'''，
 '''<nowiki>[[{{ns:file}}:文件.png|替代文本]]</nowiki>''' 或者用
 '''<nowiki>[[{{ns:media}}:文件.ogg]]</nowiki>''' 直接链到文件。",
-'uploadlog'         => '文件上载日志',
-'uploadlogpage'     => '文件上载日志',
-'uploadlogpagetext' => '下底是最近上载文件列表。',
-'filename'          => '文件名',
-'filedesc'          => '小结',
-'fileuploadsummary' => '小结:',
-'filestatus'        => '版权状态:',
-'filesource'        => '来源:',
-'uploadedfiles'     => '已经上载个文件',
-'ignorewarning'     => '弗管警告，随便哪亨要保存文件。',
-'successfulupload'  => '上载成功哉',
-'uploadwarning'     => '上载警告',
-'savefile'          => '保存文件',
-'uploadedimage'     => '上载 "[[$1]]"',
-'sourcefilename'    => '源文件:',
-'destfilename'      => '目标文件名:',
-'watchthisupload'   => '监控该只页面',
+'uploadlog'           => '文件上载日志',
+'uploadlogpage'       => '文件上载日志',
+'uploadlogpagetext'   => '下底是最近上载文件列表。',
+'filename'            => '文件名',
+'filedesc'            => '小结',
+'fileuploadsummary'   => '小结:',
+'filestatus'          => '版权状态:',
+'filesource'          => '来源:',
+'uploadedfiles'       => '已经上载个文件',
+'ignorewarning'       => '弗管警告，随便哪亨要保存文件。',
+'uploadwarning'       => '上载警告',
+'savefile'            => '保存文件',
+'uploadedimage'       => '上载 "[[$1]]"',
+'sourcefilename'      => '源文件:',
+'destfilename'        => '目标文件名:',
+'watchthisupload'     => '监控该只页面',
+'upload-success-subj' => '上载成功哉',
 
 # Special:ListFiles
 'listfiles_search_for'  => '寻图片名字:',
@@ -1233,8 +1197,7 @@ $1",
 'listusers-submit' => '显示',
 
 # Special:Log/newusers
-'newuserlogpage'          => '用户创建日志',
-'newuserlog-create-entry' => '新开户',
+'newuserlogpage' => '用户创建日志',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '（成员列表）',
@@ -1252,13 +1215,10 @@ $1",
 # Watchlist
 'watchlist'         => '监控列表',
 'mywatchlist'       => '我个监控列表',
-'watchlistfor'      => "（'''$1'''个监控列表）",
 'nowatchlist'       => '倷个监控列表是空个。',
 'watchnologin'      => '朆登录',
-'addedwatch'        => '加到监控列表哉',
 'addedwatchtext'    => "该个页面 \"[[:\$1]]\" 已经加到侬个[[Special:Watchlist|监控列表]]哉。
 将来对该页面个改动搭仔搭界个讲张页个改动会列表垃该面，并且页面会垃拉[[Special:RecentChanges|近段辰光个改变列表]]里向显示成功'''黑体'''，实梗好外加便当拿渠拣出来。假使侬歇仔两日又想拿箇个页面登侬个监控列表里向拿脱个说法，垃侧条里向点击“弗要监控。",
-'removedwatch'      => '从监控列表里向拿脱哉',
 'removedwatchtext'  => '页面[[:$1]]已经从[[Special:Watchlist|侬个监控页面]]里向拿脱。',
 'watch'             => '监控',
 'watchthispage'     => '监控该只页面',
@@ -1284,8 +1244,7 @@ $1",
 'confirmdeletetext'     => '侬即将删除一只页面或图像以及其历史。
 请确定侬要进行此项操作，并且了解其后果，同时侬个行为符合[[{{MediaWiki:Policy-url}}|the policy]]。',
 'actioncomplete'        => '操作完成哉',
-'deletedtext'           => '"<nowiki>$1</nowiki>"已经删除。最近删除记录请参见$2。',
-'deletedarticle'        => '"[[$1]]" 已经删脱哉',
+'deletedtext'           => '"$1"已经删除。最近删除记录请参见$2。',
 'dellogpage'            => '删除记录',
 'deletionlog'           => '删除记录',
 'deletecomment'         => '理由:',
@@ -1308,7 +1267,7 @@ $1",
 'protectexpiry'               => '到期：',
 'protect_expiry_invalid'      => '到期辰光无效。',
 'protect_expiry_old'          => '到期辰光已经过去哉。',
-'protect-text'                => '侬好垃拉此地浏览搭仔修改页面<strong><nowiki>$1</nowiki></strong>个保护级别。',
+'protect-text'                => '侬好垃拉此地浏览搭仔修改页面<strong>$1</strong>个保护级别。',
 'protect-locked-access'       => '侬个账户权限弗好修改保护级别。
 下底是<strong>$1</strong>箇歇个保护级别：',
 'protect-cascadeon'           => '下底个{{PLURAL:$1|一只|多只}}页面包含 本页面个同时，启动了连锁保护，因此本页面目前也拨保护拉许，弗好编辑。侬可以设置本页面个保护级别，但箇个并弗会对连锁保护有所影响。',
@@ -1328,11 +1287,10 @@ $1",
 'restriction-move' => '捅荡',
 
 # Undelete
-'undeletepage'     => '查看搭仔恢复删脱个页面',
-'viewdeletedpage'  => '望望删脱个页面',
-'undeletelink'     => '查看／恢复',
-'undeletecomment'  => '理由：',
-'undeletedarticle' => '已恢复个"[[$1]]"',
+'undeletepage'    => '查看搭仔恢复删脱个页面',
+'viewdeletedpage' => '望望删脱个页面',
+'undeletelink'    => '查看／恢复',
+'undeletecomment' => '理由：',
 
 # Namespace form on various pages
 'namespace'      => '名字空间:',
@@ -1374,7 +1332,6 @@ $1",
 
 # Block/unblock
 'blockip'                  => '查封用户',
-'ipaddress'                => 'IP 地址:',
 'ipadressorusername'       => 'IP地址或用户名：',
 'ipbreason'                => '理由:',
 'ipbreasonotherlist'       => '其它原因',
@@ -1390,7 +1347,7 @@ $1",
 'contribslink'             => '贡献',
 'blocklogpage'             => '封禁日志',
 'blocklogentry'            => '“[[$1]]”拨查封拉许，终止辰光为$2 $3',
-'blocklogtext'             => '该个是用户封禁搭仔解禁操作个记录。自动封禁个IP地址弗会列勒该答。到[[Special:IPBlockList|IP 封禁列表]]去看当前生效个封禁列表。',
+'blocklogtext'             => '该个是用户封禁搭仔解禁操作个记录。自动封禁个IP地址弗会列勒该答。到[[Special:BlockList|IP 封禁列表]]去看当前生效个封禁列表。',
 'unblocklogentry'          => '$1已经拨解封',
 'block-log-flags-nocreate' => '开户已经拨禁用',
 'proxyblocksuccess'        => '好哉。',
@@ -1426,8 +1383,6 @@ $1",
 但是由于新标题下已经有对话页存在，所以对话页无法移动。请手工合并两只页面。',
 'movedto'                 => '移动到',
 'movetalk'                => '移动相关讨论页',
-'1movedto2'               => '[[$1]]捅到[[$2]]',
-'1movedto2_redir'         => '[[$1]]通过重定向捅到[[$2]]',
 'movelogpage'             => '捅荡记录',
 'movelogpagetext'         => '下底是拨拉捅荡个页面列表。',
 'movereason'              => '理由:',
@@ -1512,9 +1467,6 @@ $1",
 # Attribution
 'anonymous' => '{{SITENAME}}浪个匿名用户',
 
-# Patrol log
-'patrol-log-auto' => '（自动）',
-
 # Image deletion
 'deletedrevision' => '拨删脱个旧修订 $1',
 
@@ -1523,11 +1475,10 @@ $1",
 'nextdiff'     => '新版→',
 
 # Media information
-'file-info-size'       => '（$1×$2像素，文件大小：$3，MIME类型：$4）',
-'file-nohires'         => '<small>无更高分辨率可提供。</small>',
-'svg-long-desc'        => '（SVG文件，名义大小：$1×$2像素，文件大小：$3）',
-'show-big-image'       => '完整分辨率',
-'show-big-image-thumb' => '<small>迭幅缩略图个分辨率：$1×$2像素</small>',
+'file-info-size' => '$1×$2像素，文件大小：$3，MIME类型：$4',
+'file-nohires'   => '无更高分辨率可提供。',
+'svg-long-desc'  => 'SVG文件，名义大小：$1×$2像素，文件大小：$3',
+'show-big-image' => '完整分辨率',
 
 # Special:NewFiles
 'newimages'    => '新文件陈列室',
@@ -1564,7 +1515,13 @@ Variants for Chinese language
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength',
+* focallength
+* artist
+* copyright
+* imagedescription
+* gpslatitude
+* gpslongitude
+* gpsaltitude',
 
 # EXIF tags
 'exif-artist' => '作者',
@@ -1581,14 +1538,12 @@ Variants for Chinese language
 
 # External editor support
 'edit-externally'      => '用外部应用程序来编辑该只文件',
-'edit-externally-help' => '（请参见[http://www.mediawiki.org/wiki/Manual:External_editors 设置步骤]了解详细信息）',
+'edit-externally-help' => '（请参见[//www.mediawiki.org/wiki/Manual:External_editors 设置步骤]了解详细信息）',
 
 # 'all' in various places, this might be different for inflected languages
-'recentchangesall' => '全部',
-'imagelistall'     => '所有',
-'watchlistall2'    => '全部',
-'namespacesall'    => '全部',
-'monthsall'        => '全',
+'watchlistall2' => '全部',
+'namespacesall' => '全部',
+'monthsall'     => '全',
 
 # E-mail address confirmation
 'confirmemail'          => '确认电子邮件地址',
@@ -1647,5 +1602,9 @@ Variants for Chinese language
 
 # Special:SpecialPages
 'specialpages' => '特殊页面',
+
+# New logging system
+'revdelete-restricted'   => '已将限制应用到管理员',
+'revdelete-unrestricted' => '已移除对管理员个限制',
 
 );

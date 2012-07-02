@@ -2,6 +2,7 @@
 
 /**
  * Utility class for creating new RC entries
+ *
  * mAttribs:
  *  rc_id           id of the row in the recentchanges table
  *  rc_timestamp    time the entry was made
@@ -43,17 +44,35 @@
  */
 class RecentChange {
 	var $mAttribs = array(), $mExtra = array();
-	var $mTitle = false, $mMovedToTitle = false;
+
+	/**
+	 * @var Title
+	 */
+	var $mTitle = false;
+
+	/**
+	 * @var Title
+	 */
+	var $mMovedToTitle = false;
 	var $numberofWatchingusers = 0 ; # Dummy to prevent error message in SpecialRecentchangeslinked
+	var $notificationtimestamp;
 
 	# Factory methods
 
+	/**
+	 * @param $row
+	 * @return RecentChange
+	 */
 	public static function newFromRow( $row ) {
 		$rc = new RecentChange;
 		$rc->loadFromRow( $row );
 		return $rc;
 	}
 
+	/**
+	 * @param $row
+	 * @return RecentChange
+	 */
 	public static function newFromCurRow( $row ) {
 		$rc = new RecentChange;
 		$rc->loadFromCurRow( $row );
@@ -65,7 +84,7 @@ class RecentChange {
 	/**
 	 * Obtain the recent change with a given rc_id value
 	 *
-	 * @param $rcid rc_id value to retrieve
+	 * @param $rcid Int rc_id value to retrieve
 	 * @return RecentChange
 	 */
 	public static function newFromId( $rcid ) {
@@ -73,7 +92,6 @@ class RecentChange {
 		$res = $dbr->select( 'recentchanges', '*', array( 'rc_id' => $rcid ), __METHOD__ );
 		if( $res && $dbr->numRows( $res ) > 0 ) {
 			$row = $dbr->fetchObject( $res );
-			$dbr->freeResult( $res );
 			return self::newFromRow( $row );
 		} else {
 			return null;
@@ -87,9 +105,7 @@ class RecentChange {
 	 * @param $fname Mixed: override the method name in profiling/logs
 	 * @return RecentChange
 	 */
-	public static function newFromConds( $conds, $fname = false ) {
-		if( $fname === false )
-			$fname = __METHOD__;
+	public static function newFromConds( $conds, $fname = __METHOD__ ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
 			'recentchanges',
@@ -107,14 +123,24 @@ class RecentChange {
 
 	# Accessors
 
+	/**
+	 * @param $attribs array
+	 */
 	public function setAttribs( $attribs ) {
 		$this->mAttribs = $attribs;
 	}
 
+	/**
+	 * @param $extra array
+	 */
 	public function setExtra( $extra ) {
 		$this->mExtra = $extra;
 	}
 
+	/**
+	 *
+	 * @return Title
+	 */
 	public function &getTitle() {
 		if( $this->mTitle === false ) {
 			$this->mTitle = Title::makeTitle( $this->mAttribs['rc_namespace'], $this->mAttribs['rc_title'] );
@@ -124,6 +150,9 @@ class RecentChange {
 		return $this->mTitle;
 	}
 
+	/**
+	 * @return bool|\Title
+	 */
 	public function getMovedToTitle() {
 		if( $this->mMovedToTitle === false ) {
 			$this->mMovedToTitle = Title::makeTitle( $this->mAttribs['rc_moved_to_ns'],
@@ -132,11 +161,12 @@ class RecentChange {
 		return $this->mMovedToTitle;
 	}
 
-	# Writes the data in this object to the database
-	public function save() {
-		global $wgLocalInterwiki, $wgPutIPinRC, $wgRC2UDPAddress, $wgRC2UDPOmitBots;
-		global $wgRC2UDPPort, $wgRC2UDPPrefix, $wgRC2UDPEnabled;
-		$fname = 'RecentChange::save';
+	/**
+	 * Writes the data in this object to the database
+	 * @param $noudp bool
+	 */
+	public function save( $noudp = false ) {
+		global $wgLocalInterwiki, $wgPutIPinRC, $wgContLang;
 
 		$dbw = wfGetDB( DB_MASTER );
 		if( !is_array($this->mExtra) ) {
@@ -152,6 +182,9 @@ class RecentChange {
 		if( $dbw->strictIPs() and $this->mAttribs['rc_ip'] == '' ) {
 			unset( $this->mAttribs['rc_ip'] );
 		}
+
+		# Make sure summary is truncated (whole multibyte characters)
+		$this->mAttribs['rc_comment'] = $wgContLang->truncate( $this->mAttribs['rc_comment'], 255 );
 
 		# Fixup database timestamps
 		$this->mAttribs['rc_timestamp'] = $dbw->timestamp($this->mAttribs['rc_timestamp']);
@@ -169,7 +202,7 @@ class RecentChange {
 		/* Wikia change end */
 
 		# Insert new row
-		$dbw->insert( 'recentchanges', $this->mAttribs, $fname );
+		$dbw->insert( 'recentchanges', $this->mAttribs, __METHOD__ );
 
 		# Set the ID
 		$this->mAttribs['rc_id'] = $dbw->insertId();
@@ -178,8 +211,8 @@ class RecentChange {
 		wfRunHooks( 'RecentChange_save', array( &$this ) );
 
 		# Notify external application via UDP
-		if( $wgRC2UDPEnabled && $wgRC2UDPAddress && ( !$this->mAttribs['rc_bot'] || !$wgRC2UDPOmitBots ) ) {
-			self::sendToUDP( $this->getIRCLine() );
+		if ( !$noudp ) {
+			$this->notifyRC2UDP();
 		}
 
 		# E-mail notifications
@@ -194,10 +227,11 @@ class RecentChange {
 				$editor = ($wgUser->getName() == $this->mAttribs['rc_user_text']) ?
 					$wgUser : User::newFromName( $this->mAttribs['rc_user_text'], false );
 			}
-			# FIXME: this would be better as an extension hook
-			$enotif = new EmailNotification();
 			$title = Title::makeTitle( $this->mAttribs['rc_namespace'], $this->mAttribs['rc_title'] );
-			$enotif->notifyOnPageChange( $editor, $title,
+
+			# @todo FIXME: This would be better as an extension hook
+			$enotif = new EmailNotification();
+			$status = $enotif->notifyOnPageChange( $editor, $title,
 				$this->mAttribs['rc_timestamp'],
 				$this->mAttribs['rc_comment'],
 				$this->mAttribs['rc_minor'],
@@ -223,7 +257,7 @@ class RecentChange {
 		}
 		// temporary code end
 	}
-	
+
 	public function notifyRC2UDP() {
 		global $wgRC2UDPAddress, $wgRC2UDPOmitBots;
 		# Notify external application via UDP
@@ -233,24 +267,27 @@ class RecentChange {
 	}
 
 	/**
-	 * Send some text to UDP
+	 * Send some text to UDP.
+	 * @see RecentChange::cleanupForIRC
 	 * @param $line String: text to send
-	 * @param $prefix String
-	 * @param $address String: address
+	 * @param $address String: defaults to $wgRC2UDPAddress.
+	 * @param $prefix String: defaults to $wgRC2UDPPrefix.
+	 * @param $port Int: defaults to $wgRC2UDPPort. (Since 1.17)
 	 * @return Boolean: success
 	 */
-	public static function sendToUDP( $line, $address = '', $prefix = '' ) {
+	public static function sendToUDP( $line, $address = '', $prefix = '', $port = '' ) {
 		global $wgRC2UDPAddress, $wgRC2UDPPrefix, $wgRC2UDPPort;
 		# Assume default for standard RC case
 		$address = $address ? $address : $wgRC2UDPAddress;
 		$prefix = $prefix ? $prefix : $wgRC2UDPPrefix;
+		$port = $port ? $port : $wgRC2UDPPort;
 		# Notify external application via UDP
 		if( $address ) {
 			$conn = socket_create( AF_INET, SOCK_DGRAM, SOL_UDP );
 			if( $conn ) {
 				$line = $prefix . $line;
 				wfDebug( __METHOD__ . ": sending UDP line: $line\n" );
-				socket_sendto( $conn, $line, strlen($line), 0, $address, $wgRC2UDPPort );
+				socket_sendto( $conn, $line, strlen($line), 0, $address, $port );
 				socket_close( $conn );
 				return true;
 			} else {
@@ -274,27 +311,31 @@ class RecentChange {
 	 *
 	 * @param $change Mixed: RecentChange or corresponding rc_id
 	 * @param $auto Boolean: for automatic patrol
-	 * @return See doMarkPatrolled(), or null if $change is not an existing rc_id
+	 * @return Array See doMarkPatrolled(), or null if $change is not an existing rc_id
 	 */
 	public static function markPatrolled( $change, $auto = false ) {
+		global $wgUser;
+
 		$change = $change instanceof RecentChange
 			? $change
 			: RecentChange::newFromId($change);
+
 		if( !$change instanceof RecentChange ) {
 			return null;
 		}
-		return $change->doMarkPatrolled( $auto );
+		return $change->doMarkPatrolled( $wgUser, $auto );
 	}
 
 	/**
 	 * Mark this RecentChange as patrolled
 	 *
 	 * NOTE: Can also return 'rcpatroldisabled', 'hookaborted' and 'markedaspatrollederror-noautopatrol' as errors
+	 * @param $user User object doing the action
 	 * @param $auto Boolean: for automatic patrol
 	 * @return array of permissions errors, see Title::getUserPermissionsErrors()
 	 */
-	public function doMarkPatrolled( $auto = false ) {
-		global $wgUser, $wgUseRCPatrol, $wgUseNPPatrol;
+	public function doMarkPatrolled( User $user, $auto = false ) {
+		global $wgUseRCPatrol, $wgUseNPPatrol;
 		$errors = array();
 		// If recentchanges patrol is disabled, only new pages
 		// can be patrolled
@@ -303,13 +344,13 @@ class RecentChange {
 		}
 		// Automatic patrol needs "autopatrol", ordinary patrol needs "patrol"
 		$right = $auto ? 'autopatrol' : 'patrol';
-		$errors = array_merge( $errors, $this->getTitle()->getUserPermissionsErrors( $right, $wgUser ) );
-		if( !wfRunHooks('MarkPatrolled', array($this->getAttribute('rc_id'), &$wgUser, false)) ) {
+		$errors = array_merge( $errors, $this->getTitle()->getUserPermissionsErrors( $right, $user ) );
+		if( !wfRunHooks('MarkPatrolled', array($this->getAttribute('rc_id'), &$user, false)) ) {
 			$errors[] = array('hookaborted');
 		}
 		// Users without the 'autopatrol' right can't patrol their
 		// own revisions
-		if( $wgUser->getName() == $this->getAttribute('rc_user_text') && !$wgUser->isAllowed('autopatrol') ) {
+		if( $user->getName() == $this->getAttribute('rc_user_text') && !$user->isAllowed('autopatrol') ) {
 			$errors[] = array('markedaspatrollederror-noautopatrol');
 		}
 		if( $errors ) {
@@ -323,7 +364,7 @@ class RecentChange {
 		$this->reallyMarkPatrolled();
 		// Log this patrol event
 		PatrolLog::record( $this, $auto );
-		wfRunHooks( 'MarkPatrolledComplete', array($this->getAttribute('rc_id'), &$wgUser, false) );
+		wfRunHooks( 'MarkPatrolledComplete', array($this->getAttribute('rc_id'), &$user, false) );
 		return array();
 	}
 
@@ -346,12 +387,29 @@ class RecentChange {
 		return $dbw->affectedRows();
 	}
 
-	# Makes an entry in the database corresponding to an edit
+	/**
+	 * Makes an entry in the database corresponding to an edit
+	 *
+	 * @param $timestamp
+	 * @param $title Title
+	 * @param $minor
+	 * @param $user User
+	 * @param $comment
+	 * @param $oldId
+	 * @param $lastTimestamp
+	 * @param $bot
+	 * @param $ip string
+	 * @param $oldSize int
+	 * @param $newSize int
+	 * @param $newId int
+	 * @param $patrol int
+	 * @return RecentChange
+	 */
 	public static function notifyEdit( $timestamp, &$title, $minor, &$user, $comment, $oldId,
-		$lastTimestamp, $bot, $ip='', $oldSize=0, $newSize=0, $newId=0, $patrol=0 )
-	{
+		$lastTimestamp, $bot, $ip='', $oldSize=0, $newSize=0, $newId=0, $patrol=0 ) {
+		global $wgRequest;
 		if( !$ip ) {
-			$ip = wfGetIP();
+			$ip = $wgRequest->getIP();
 			if( !$ip ) $ip = '';
 		}
 
@@ -398,13 +456,27 @@ class RecentChange {
 	 * Makes an entry in the database corresponding to page creation
 	 * Note: the title object must be loaded with the new id using resetArticleID()
 	 * @todo Document parameters and return
+	 *
+	 * @param $timestamp
+	 * @param $title Title
+	 * @param $minor
+	 * @param $user User
+	 * @param $comment
+	 * @param $bot
+	 * @param $ip string
+	 * @param $size int
+	 * @param $newId int
+	 * @param $patrol int
+	 * @return RecentChange
 	 */
 	public static function notifyNew( $timestamp, &$title, $minor, &$user, $comment, $bot,
-		$ip='', $size=0, $newId=0, $patrol=0 )
-	{
+		$ip='', $size=0, $newId=0, $patrol=0 ) {
+		global $wgRequest;
 		if( !$ip ) {
-			$ip = wfGetIP();
-			if( !$ip ) $ip = '';
+			$ip = $wgRequest->getIP();
+			if( !$ip ) {
+				$ip = '';
+			}
 		}
 
 		$rc = new RecentChange;
@@ -446,61 +518,21 @@ class RecentChange {
 		return $rc;
 	}
 
-	# Makes an entry in the database corresponding to a rename
-	public static function notifyMove( $timestamp, &$oldTitle, &$newTitle, &$user, $comment, $ip='', $overRedir = false )
-	{
-		global $wgRequest;
-		if( !$ip ) {
-			$ip = wfGetIP();
-			if( !$ip ) $ip = '';
-		}
-
-		$rc = new RecentChange;
-		$rc->mAttribs = array(
-			'rc_timestamp'  => $timestamp,
-			'rc_cur_time'   => $timestamp,
-			'rc_namespace'  => $oldTitle->getNamespace(),
-			'rc_title'      => $oldTitle->getDBkey(),
-			'rc_type'       => $overRedir ? RC_MOVE_OVER_REDIRECT : RC_MOVE,
-			'rc_minor'      => 0,
-			'rc_cur_id'     => $oldTitle->getArticleID(),
-			'rc_user'       => $user->getId(),
-			'rc_user_text'  => $user->getName(),
-			'rc_comment'    => $comment,
-			'rc_this_oldid' => 0,
-			'rc_last_oldid' => 0,
-			'rc_bot'        => $user->isAllowed( 'bot' ) ? $wgRequest->getBool( 'bot' , true ) : 0,
-			'rc_moved_to_ns' => $newTitle->getNamespace(),
-			'rc_moved_to_title' => $newTitle->getDBkey(),
-			'rc_ip'         => $ip,
-			'rc_new'        => 0, # obsolete
-			'rc_patrolled'  => 1,
-			'rc_old_len'    => null,
-			'rc_new_len'    => null,
-			'rc_deleted'    => 0,
-			'rc_logid'      => 0, # notifyMove not used anymore
-			'rc_log_type'   => null,
-			'rc_log_action' => '',
-			'rc_params'     => ''
-		);
-
-		$rc->mExtra = array(
-			'prefixedDBkey' => $oldTitle->getPrefixedDBkey(),
-			'lastTimestamp' => 0,
-			'prefixedMoveTo' => $newTitle->getPrefixedDBkey()
-		);
-		$rc->save();
-	}
-
-	public static function notifyMoveToNew( $timestamp, &$oldTitle, &$newTitle, &$user, $comment, $ip='' ) {
-		RecentChange::notifyMove( $timestamp, $oldTitle, $newTitle, $user, $comment, $ip, false );
-	}
-
-	public static function notifyMoveOverRedirect( $timestamp, &$oldTitle, &$newTitle, &$user, $comment, $ip='' ) {
-		RecentChange::notifyMove( $timestamp, $oldTitle, $newTitle, $user, $comment, $ip, true );
-	}
-
-	public static function notifyLog( $timestamp, &$title, &$user, $actionComment, $ip='', $type, 
+	/**
+	 * @param $timestamp
+	 * @param $title
+	 * @param $user
+	 * @param $actionComment
+	 * @param $ip string
+	 * @param $type
+	 * @param $action
+	 * @param $target
+	 * @param $logComment
+	 * @param $params
+	 * @param $newId int
+	 * @return bool
+	 */
+	public static function notifyLog( $timestamp, &$title, &$user, $actionComment, $ip='', $type,
 		$action, $target, $logComment, $params, $newId=0 )
 	{
 		global $wgLogRestrictions;
@@ -514,13 +546,28 @@ class RecentChange {
 		return true;
 	}
 
+	/**
+	 * @param $timestamp
+	 * @param $title Title
+	 * @param $user User
+	 * @param $actionComment
+	 * @param $ip string
+	 * @param $type
+	 * @param $action
+	 * @param $target Title
+	 * @param $logComment
+	 * @param $params
+	 * @param $newId int
+	 * @return RecentChange
+	 */
 	public static function newLogEntry( $timestamp, &$title, &$user, $actionComment, $ip='',
-		$type, $action, $target, $logComment, $params, $newId=0 )
-	{
+		$type, $action, $target, $logComment, $params, $newId=0 ) {
 		global $wgRequest;
 		if( !$ip ) {
-			$ip = wfGetIP();
-			if( !$ip ) $ip = '';
+			$ip = $wgRequest->getIP();
+			if( !$ip ) {
+				$ip = '';
+			}
 		}
 
 		$rc = new RecentChange;
@@ -559,14 +606,22 @@ class RecentChange {
 		return $rc;
 	}
 
-	# Initialises the members of this object from a mysql row object
+	/**
+	 * Initialises the members of this object from a mysql row object
+	 *
+	 * @param $row
+	 */
 	public function loadFromRow( $row ) {
 		$this->mAttribs = get_object_vars( $row );
 		$this->mAttribs['rc_timestamp'] = wfTimestamp(TS_MW, $this->mAttribs['rc_timestamp']);
 		$this->mAttribs['rc_deleted'] = $row->rc_deleted; // MUST be set
 	}
 
-	# Makes a pseudo-RC entry from a cur row
+	/**
+	 * Makes a pseudo-RC entry from a cur row
+	 *
+	 * @param $row
+	 */
 	public function loadFromCurRow( $row ) {
 		$this->mAttribs = array(
 			'rc_timestamp' => wfTimestamp(TS_MW, $row->rev_timestamp),
@@ -601,13 +656,16 @@ class RecentChange {
 	/**
 	 * Get an attribute value
 	 *
-	 * @param $name Attribute name
+	 * @param $name String Attribute name
 	 * @return mixed
 	 */
 	public function getAttribute( $name ) {
 		return isset( $this->mAttribs[$name] ) ? $this->mAttribs[$name] : null;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getAttributes() {
 		return $this->mAttribs;
 	}
@@ -615,6 +673,8 @@ class RecentChange {
 	/**
 	 * Gets the end part of the diff URL associated with this object
 	 * Blank if no diff link should be displayed
+	 * @param $forceCur
+	 * @return string
 	 */
 	public function diffLinkTrail( $forceCur ) {
 		if( $this->mAttribs['rc_type'] == RC_EDIT ) {
@@ -631,42 +691,40 @@ class RecentChange {
 		return $trail;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getIRCLine() {
-		global $wgUseRCPatrol, $wgUseNPPatrol, $wgRC2UDPInterwikiPrefix, $wgLocalInterwiki;
+		global $wgUseRCPatrol, $wgUseNPPatrol, $wgRC2UDPInterwikiPrefix, $wgLocalInterwiki,
+			$wgCanonicalServer, $wgScript;
 
-		// FIXME: Would be good to replace these 2 extract() calls with something more explicit
-		// e.g. list ($rc_type, $rc_id) = array_values ($this->mAttribs); [or something like that]
-		extract($this->mAttribs);
-		extract($this->mExtra);
-
-		if( $rc_type == RC_LOG ) {
-			$titleObj = Title::newFromText( "Log/$rc_log_type", NS_SPECIAL );
+		if( $this->mAttribs['rc_type'] == RC_LOG ) {
+			$titleObj = Title::newFromText( 'Log/' . $this->mAttribs['rc_log_type'], NS_SPECIAL );
 		} else {
 			$titleObj =& $this->getTitle();
 		}
 		$title = $titleObj->getPrefixedText();
 		$title = self::cleanupForIRC( $title );
 
-		if( $rc_type == RC_LOG ) {
+		if( $this->mAttribs['rc_type'] == RC_LOG ) {
 			$url = $titleObj->getInternalURL(); # modified per trac #1831
 		} else {
-			if( $rc_type == RC_NEW ) {
-				$url = "oldid=$rc_this_oldid";
+			$url = $wgCanonicalServer . $wgScript;
+			if( $this->mAttribs['rc_type'] == RC_NEW ) {
+				$query = '?oldid=' . $this->mAttribs['rc_this_oldid'];
 			} else {
-				$url = "diff=$rc_this_oldid&oldid=$rc_last_oldid";
+				$query = '?diff=' . $this->mAttribs['rc_this_oldid'] . '&oldid=' . $this->mAttribs['rc_last_oldid'];
 			}
-			if( $wgUseRCPatrol || ($rc_type == RC_NEW && $wgUseNPPatrol) ) {
-				$url .= "&rcid=$rc_id";
+			if ( $wgUseRCPatrol || ( $this->mAttribs['rc_type'] == RC_NEW && $wgUseNPPatrol ) ) {
+				$query .= '&rcid=' . $this->mAttribs['rc_id'];
 			}
-			// XXX: *HACK* this should use getFullURL(), hacked for SSL madness --brion 2005-12-26
-			// XXX: *HACK^2* the preg_replace() undoes much of what getInternalURL() does, but we
-			// XXX: need to call it so that URL paths on the Wikimedia secure server can be fixed
-			// XXX: by a custom GetInternalURL hook --vyznev 2008-12-10
-			$url = preg_replace( '/title=[^&]*&/', '', $titleObj->getInternalURL( $url ) );
+			// HACK: We need this hook for WMF's secure server setup
+			wfRunHooks( 'IRCLineURL', array( &$url, &$query ) );
+			$url .= $query;
 		}
 
-		if( isset( $oldSize ) && isset( $newSize ) ) {
-			$szdiff = $newSize - $oldSize;
+		if( $this->mAttribs['rc_old_len'] !== null && $this->mAttribs['rc_new_len'] !== null ) {
+			$szdiff = $this->mAttribs['rc_new_len'] - $this->mAttribs['rc_old_len'];
 			if($szdiff < -500) {
 				$szdiff = "\002$szdiff\002";
 			} elseif($szdiff >= 0) {
@@ -677,22 +735,22 @@ class RecentChange {
 			$szdiff = '';
 		}
 
-		$user = self::cleanupForIRC( $rc_user_text );
+		$user = self::cleanupForIRC( $this->mAttribs['rc_user_text'] );
 
-		if( $rc_type == RC_LOG ) {
+		if ( $this->mAttribs['rc_type'] == RC_LOG ) {
 			$targetText = $this->getTitle()->getPrefixedText();
-			$comment = self::cleanupForIRC( str_replace("[[$targetText]]","[[\00302$targetText\00310]]",$actionComment) );
-			$flag = $rc_log_action;
+			$comment = self::cleanupForIRC( str_replace( "[[$targetText]]", "[[\00302$targetText\00310]]", $this->mExtra['actionComment'] ) );
+			$flag = $this->mAttribs['rc_log_action'];
 		} else {
-			$comment = self::cleanupForIRC( $rc_comment );
+			$comment = self::cleanupForIRC( $this->mAttribs['rc_comment'] );
 			$flag = '';
-			if( !$rc_patrolled && ($wgUseRCPatrol || $rc_new && $wgUseNPPatrol) ) {
+			if ( !$this->mAttribs['rc_patrolled'] && ( $wgUseRCPatrol || $this->mAttribs['rc_new'] && $wgUseNPPatrol ) ) {
 				$flag .= '!';
 			}
-			$flag .= ($rc_new ? "N" : "") . ($rc_minor ? "M" : "") . ($rc_bot ? "B" : "");
+			$flag .= ( $this->mAttribs['rc_new'] ? "N" : "" ) . ( $this->mAttribs['rc_minor'] ? "M" : "" ) . ( $this->mAttribs['rc_bot'] ? "B" : "" );
 		}
 
-		if ( $wgRC2UDPInterwikiPrefix === true ) {
+		if ( $wgRC2UDPInterwikiPrefix === true && $wgLocalInterwiki !== false ) {
 			$prefix = $wgLocalInterwiki;
 		} elseif ( $wgRC2UDPInterwikiPrefix ) {
 			$prefix = $wgRC2UDPInterwikiPrefix;
@@ -708,7 +766,7 @@ class RecentChange {
 		# see http://www.irssi.org/documentation/formats for some colour codes. prefix is \003,
 		# no colour (\003) switches back to the term default
 		$fullString = "$titleString\0034 $flag\00310 " .
-		              "\00302$url\003 \0035*\003 \00303$user\003 \0035*\003 $szdiff \00310$comment\003\n";
+					  "\00302$url\003 \0035*\003 \00303$user\003 \0035*\003 $szdiff \00310$comment\003\n";
 
 		return $fullString;
 	}
@@ -716,6 +774,9 @@ class RecentChange {
 	/**
 	 * Returns the change size (HTML).
 	 * The lengths can be given optionally.
+	 * @param $old int
+	 * @param $new int
+	 * @return string
 	 */
 	public function getCharacterDifference( $old = 0, $new = 0 ) {
 		if( $old === 0 ) {

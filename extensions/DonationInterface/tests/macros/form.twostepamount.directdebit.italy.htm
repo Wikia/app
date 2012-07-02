@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://wikimedia-fundraising-1.17.localhost.wikimedia.org/" />
+<title>form.twostepamount.realtimebanktransfer.enets</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">form.twostepamount.realtimebanktransfer.enets</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/index.php/Special:GlobalCollectGateway?form_name=TwoStepAmount&amp;payment_method=dd&amp;payment_submethod=dd_it&amp;country=IT</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=input_amount_other</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=other-amount</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fname</td>
+	<td>Testy</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=lname</td>
+	<td>Testerton</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=street</td>
+	<td>Middenweg 200</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=city</td>
+	<td>Amsterdam</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=emailAdd</td>
+	<td>no-reply@wikimedia.org</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=input_currency_code</td>
+	<td>label=Euro</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=account_name</td>
+	<td>Johnsen</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=account_number</td>
+	<td>7017361</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=authorization_id</td>
+	<td>123456</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=bank_name</td>
+	<td>Johnsen</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=bank_code</td>
+	<td>12</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=branch_code</td>
+	<td>12</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=state</td>
+	<td>label=Outside the U.S.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=zip</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=bank_check_digit</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.button-plain</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Thank you for your support.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTitle</td>
+	<td>Thank You/en - Wikimedia Foundation</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -23,7 +23,6 @@ class TopListHelper {
 	 */
 	public static function onArticleFromTitle( &$title, &$article ) {
 		if ( $title->getNamespace() == NS_TOPLIST ) {
-			wfLoadExtensionMessages( 'TopLists' );
 		}
 
 		return true;
@@ -99,7 +98,6 @@ class TopListHelper {
 			$params[ '$ARTICLE_OBJ' ]->getTitle()->getNamespace() == NS_TOPLIST &&
 			$params[ '$ARTICLE_OBJ' ]->getTitle()->isSubpage()
 		) {
-			wfLoadExtensionMessages( 'TopLists' );
 			$message = 'toplists-msg-fb-OnRateArticle';
 			$parentTitleText = substr( $params[ '$ARTICLENAME' ], 0, strrpos( $params[ '$ARTICLENAME' ], '/' ) );
 			$parentTitle = Title::newFromText( $parentTitleText, NS_TOPLIST );
@@ -132,7 +130,6 @@ class TopListHelper {
 		wfProfileIn( __METHOD__ );
 
 		if( ( $title instanceof Title )  && ( $title->getNamespace() == NS_TOPLIST ) ) {
-			wfLoadExtensionMessages( 'TopLists' );
 			$subject = wfMsg( 'toplists-email-subject' );
 		}
 
@@ -144,7 +141,6 @@ class TopListHelper {
 		wfProfileIn( __METHOD__ );
 
 		if( ( $title instanceof Title )  && ( $title->getNamespace() == NS_TOPLIST ) ) {
-			wfLoadExtensionMessages( 'TopLists' );
 			$summary = strtr( TOPLISTS_STATUS_SEPARATOR, "\n", $keys['$PAGESUMMARY'] );
 			$body = wfMsg( 'toplists-email-body', array( $title->getFullUrl(), $title->getText(), $summary, $title->getFullUrl( 'action=unwatch' ) ) );
 		}
@@ -162,7 +158,6 @@ class TopListHelper {
 		global $wgCdnStylePath, $wgScript, $wgShowTopListsInCreatePage;
 
 		if( !empty( $wgShowTopListsInCreatePage ) && F::app()->checkSkin( 'oasis' ) ) {
-			wfLoadExtensionMessages( 'TopLists' );
 
 			$specialPageTitle = Title::newFromText( 'CreateTopList', NS_SPECIAL );
 			$url = $specialPageTitle->getFullUrl();
@@ -200,7 +195,7 @@ class TopListHelper {
 
 		if( ( $title->getNamespace() == NS_TOPLIST ) && !$title->isSubpage() ) {
 			$list = TopList::newFromTitle( $title, true );
-			$list ->removeItems();
+			$list->removeItems();
 		}
 
 		return true;
@@ -220,15 +215,6 @@ class TopListHelper {
 			self::fixCategorySortKey( $title );
 			self::fixCategorySortKey( $nt );
 		}
-		return true;
-	}
-
-	public static function onAddPage( &$categoryPage, &$title, &$titletext, &$sortkey ){
-		if( $title->getNamespace() == NS_TOPLIST )
-		{
-			$titletext = $title->getText();
-		}
-
 		return true;
 	}
 
@@ -278,7 +264,6 @@ class TopListHelper {
 	 * @return string
 	 */
 	public static function formatTimeSpan( $seconds ) {
-		wfLoadExtensionMessages( 'TopLists' );
 
 		if ( $seconds < 60 ) {
 			return wfMsgExt( 'toplists-seconds', array( 'parsemag', 'content' ), round( $seconds ) );
@@ -333,7 +318,6 @@ class TopListHelper {
 	 */
 	static public function renderImageBrowser() {
 		global $wgRequest;
-		wfLoadExtensionMessages( 'TopLists' );
 
 		$titleText = $wgRequest->getText( 'title' );
 		$selectedImageTitle = $wgRequest->getText( 'selected' );
@@ -391,7 +375,7 @@ class TopListHelper {
 			)
 		);
 
-		$text = $tpl->execute('image_browser');
+		$text = $tpl->render( 'image_browser' );
 
 		$response = new AjaxResponse( $text );
 		$response->setContentType('text/plain; charset=utf-8');
@@ -403,7 +387,6 @@ class TopListHelper {
 		global $wgRequest, $wgUser, $wgFileExtensions, $wgLang, $wgOut;
 
 		if ( $wgRequest->wasPosted() ) {
-			wfLoadExtensionMessages( 'TopLists' );
 
 			$ret = array();
 			$upload = new UploadFromFile();
@@ -578,7 +561,7 @@ class TopListHelper {
 			}
 		}
 
-		$json = Wikia::json_encode( $ret );
+		$json = json_encode( $ret );
 		$response = new AjaxResponse( $json );
 		$response->setContentType( 'application/json; charset=utf-8' );
 
@@ -594,7 +577,6 @@ class TopListHelper {
 	public static function voteItem() {
 		global $wgRequest;
 
-		wfLoadExtensionMessages( 'TopLists' );
 		$result = array( 'result' => false );
 
 		$titleText = $wgRequest->getVal( 'title' );
@@ -610,7 +592,7 @@ class TopListHelper {
 			}
 		}
 
-		$json = Wikia::json_encode( $result );
+		$json = json_encode( $result );
 		$response = new AjaxResponse( $json );
 		$response->setContentType( 'application/json; charset=utf-8' );
 
@@ -641,7 +623,7 @@ class TopListHelper {
 			}
 		}
 
-		$json = Wikia::json_encode( $result );
+		$json = json_encode( $result );
 		$response = new AjaxResponse( $json );
 		$response->setContentType( 'application/json; charset=utf-8' );
 
@@ -650,7 +632,6 @@ class TopListHelper {
 
 	public static function addItem() {
 		global $wgRequest, $wgUser, $wgScript;
-		wfLoadExtensionMessages( 'TopLists' );
 
 		$result = array( 'result' => false );
 		$errors = array();
@@ -717,7 +698,7 @@ class TopListHelper {
 			$result[ 'errors' ] = $errors;
 		}
 
-		$json = Wikia::json_encode( $result );
+		$json = json_encode( $result );
 		$response = new AjaxResponse( $json );
 		$response->setContentType( 'application/json; charset=utf-8' );
 

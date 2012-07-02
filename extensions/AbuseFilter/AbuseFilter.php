@@ -1,6 +1,7 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) )
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die();
+}
 
 /**
  * Automatically applies heuristics to edits.
@@ -14,24 +15,23 @@ if ( !defined( 'MEDIAWIKI' ) )
  * @link http://www.mediawiki.org/wiki/Extension:AbuseFilter Documentation
  */
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits[version_compare($wgVersion, '1.17alpha', '>=') ? 'antispam' : 'other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Abuse Filter',
 	'author' => array( 'Andrew Garrett', 'River Tarnell', 'Victor Vasiliev' ),
-	'description' => 'Applies automatic heuristics to edits.',
 	'descriptionmsg' => 'abusefilter-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:AbuseFilter',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:AbuseFilter',
 );
 
 $dir = dirname( __FILE__ );
 $wgExtensionMessagesFiles['AbuseFilter'] =  "$dir/AbuseFilter.i18n.php";
-$wgExtensionAliasesFiles['AbuseFilter'] = "$dir/AbuseFilter.alias.php";
+$wgExtensionMessagesFiles['AbuseFilterAliases'] = "$dir/AbuseFilter.alias.php";
 
 $wgAutoloadClasses['AbuseFilter'] = "$dir/AbuseFilter.class.php";
 $wgAutoloadClasses['AbuseFilterParser'] = "$dir/AbuseFilter.parser.php";
 $wgAutoloadClasses['AbuseFilterHooks'] = "$dir/AbuseFilter.hooks.php";
-$wgAutoloadClasses['SpecialAbuseLog'] = "$dir/SpecialAbuseLog.php";
-$wgAutoloadClasses['SpecialAbuseFilter'] = "$dir/SpecialAbuseFilter.php";
+$wgAutoloadClasses['SpecialAbuseLog'] = "$dir/special/SpecialAbuseLog.php";
+$wgAutoloadClasses['SpecialAbuseFilter'] = "$dir/special/SpecialAbuseFilter.php";
 
 $wgAutoloadClasses['AbuseFilterViewList'] = "$dir/Views/AbuseFilterViewList.php";
 $wgAutoloadClasses['AbuseFilterView'] = "$dir/Views/AbuseFilterView.php";
@@ -54,10 +54,18 @@ $wgSpecialPages['AbuseFilter'] = 'SpecialAbuseFilter';
 $wgSpecialPageGroups['AbuseLog'] = 'changes';
 $wgSpecialPageGroups['AbuseFilter'] = 'wiki';
 
-$wgAutoloadClasses['ApiQueryAbuseLog'] = "$dir/ApiQueryAbuseLog.php";
+$wgAutoloadClasses['ApiQueryAbuseLog'] = "$dir/api/ApiQueryAbuseLog.php";
 $wgAPIListModules['abuselog'] = 'ApiQueryAbuseLog';
-$wgAutoloadClasses['ApiQueryAbuseFilters'] = "$dir/ApiQueryAbuseFilters.php";
+$wgAutoloadClasses['ApiQueryAbuseFilters'] = "$dir/api/ApiQueryAbuseFilters.php";
 $wgAPIListModules['abusefilters'] = 'ApiQueryAbuseFilters';
+$wgAutoloadClasses['ApiAbuseFilterCheckSyntax'] = "$dir/api/ApiAbuseFilterCheckSyntax.php";
+$wgAPIModules['abusefilterchecksyntax'] = 'ApiAbuseFilterCheckSyntax';
+$wgAutoloadClasses['ApiAbuseFilterEvalExpression'] = "$dir/api/ApiAbuseFilterEvalExpression.php";
+$wgAPIModules['abusefilterevalexpression'] = 'ApiAbuseFilterEvalExpression';
+$wgAutoloadClasses['ApiAbuseFilterUnblockAutopromote'] = "$dir/api/ApiAbuseFilterUnblockAutopromote.php";
+$wgAPIModules['abusefilterunblockautopromote'] = 'ApiAbuseFilterUnblockAutopromote';
+$wgAutoloadClasses['ApiAbuseFilterCheckMatch'] = "$dir/api/ApiAbuseFilterCheckMatch.php";
+$wgAPIModules['abusefiltercheckmatch'] = 'ApiAbuseFilterCheckMatch';
 
 $wgHooks['EditFilterMerged'][] = 'AbuseFilterHooks::onEditFilterMerged';
 $wgHooks['GetAutoPromoteGroups'][] = 'AbuseFilterHooks::onGetAutoPromoteGroups';
@@ -69,6 +77,7 @@ $wgHooks['ListDefinedTags'][] = 'AbuseFilterHooks::onListDefinedTags';
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'AbuseFilterHooks::onLoadExtensionSchemaUpdates';
 $wgHooks['ContributionsToolLinks'][] = 'AbuseFilterHooks::onContributionsToolLinks';
 $wgHooks['UploadVerification'][] = 'AbuseFilterHooks::onUploadVerification';
+$wgHooks['MakeGlobalVariablesScript'][] = 'AbuseFilterHooks::onMakeGlobalVariablesScript';
 
 $wgAvailableRights[] = 'abusefilter-modify';
 $wgAvailableRights[] = 'abusefilter-log-detail';
@@ -78,34 +87,71 @@ $wgAvailableRights[] = 'abusefilter-private';
 $wgAvailableRights[] = 'abusefilter-modify-restricted';
 $wgAvailableRights[] = 'abusefilter-revert';
 $wgAvailableRights[] = 'abusefilter-view-private';
+$wgAvailableRights[] = 'abusefilter-hidden-log';
+$wgAvailableRights[] = 'abusefilter-hide-log';
 
 $wgLogTypes[] = 'abusefilter';
 $wgLogNames['abusefilter']          = 'abusefilter-log-name';
 $wgLogHeaders['abusefilter']        = 'abusefilter-log-header';
 $wgLogActionsHandlers['abusefilter/modify'] = array( 'AbuseFilter', 'modifyActionText' );
+$wgLogActions['suppress/hide-afl'] = 'abusefilter-logentry-suppress';
+$wgLogActions['suppress/unhide-afl'] = 'abusefilter-logentry-unsuppress';
+
+$commonModuleInfo = array(
+	'localBasePath' => dirname( __FILE__ ) . '/modules',
+	'remoteExtPath' => 'AbuseFilter/modules',
+);
+
+$wgResourceModules['ext.abuseFilter'] = array(
+	'styles' => 'ext.abuseFilter.css',
+) + $commonModuleInfo;
+
+$wgResourceModules['ext.abuseFilter.edit'] = array(
+	'scripts' => 'ext.abuseFilter.edit.js',
+	'messages' => array(
+		'abusefilter-edit-syntaxok',
+		'abusefilter-edit-syntaxerr',
+		'unknown-error',
+	),
+	'dependencies' => array(
+		'jquery.textSelection',
+		'jquery.spinner',
+	),
+) + $commonModuleInfo;
+
+$wgResourceModules['ext.abuseFilter.tools'] = array(
+	'scripts' => 'ext.abuseFilter.tools.js',
+	'messages' => array(
+		'abusefilter-reautoconfirm-notallowed',
+		'abusefilter-reautoconfirm-none',
+		'abusefilter-reautoconfirm-done',
+	),
+	'dependencies' => array(
+		'jquery.spinner'
+	),
+) + $commonModuleInfo;
+
+$wgResourceModules['ext.abuseFilter.examine'] = array(
+	'scripts' => 'ext.abuseFilter.examine.js',
+	'messages' => array(
+		'abusefilter-examine-match',
+		'abusefilter-examine-nomatch',
+		'abusefilter-examine-syntaxerror',
+		'abusefilter-examine-notfound',
+	),
+) + $commonModuleInfo;
 
 $wgAbuseFilterAvailableActions = array( 'flag', 'throttle', 'warn', 'disallow', 'blockautopromote', 'block', 'degroup', 'tag' );
 
 $wgAbuseFilterConditionLimit = 1000;
 
 // Disable filters if they match more than X edits, constituting more than Y% of the last Z edits, if they have been changed in the last S seconds
-/* Wikia Change Begin */
-if ( !isset( $wgAbuseFilterEmergencyDisableThreshold ) ) $wgAbuseFilterEmergencyDisableThreshold = 0.05;
-if ( !isset( $wgAbuseFilterEmergencyDisableCount ) ) $wgAbuseFilterEmergencyDisableCount = 2;
-if ( !isset( $wgAbuseFilterEmergencyDisableAge ) ) $wgAbuseFilterEmergencyDisableAge = 86400; // One day.
-/* Wikia Change End */
+$wgAbuseFilterEmergencyDisableThreshold = 0.05;
+$wgAbuseFilterEmergencyDisableCount = 2;
+$wgAbuseFilterEmergencyDisableAge = 86400; // One day.
 
 // Abuse filter parser class
 $wgAbuseFilterParserClass = 'AbuseFilterParser';
-
-$wgAjaxExportList[] = 'AbuseFilter::ajaxCheckSyntax';
-$wgAjaxExportList[] = 'AbuseFilter::ajaxEvaluateExpression';
-$wgAjaxExportList[] = 'AbuseFilter::ajaxReAutoconfirm';
-$wgAjaxExportList[] = 'AbuseFilter::ajaxGetFilter';
-$wgAjaxExportList[] = 'AbuseFilter::ajaxCheckFilterWithVars';
-
-// Bump the version number every time you change any of the .css/.js files
-$wgAbuseFilterStyleVersion = 9;
 
 $wgAbuseFilterRestrictedActions = array( 'block', 'degroup' );
 
@@ -119,6 +165,7 @@ $wgAbuseFilterCentralDB = null;
 $wgAbuseFilterIsCentral = false;
 
 // Block duration
-/* Wikia Change Begin */
-if ( !isset( $wgAbuseFilterBlockDuration ) ) $wgAbuseFilterBlockDuration = 'indefinite';
-/* Wikia Change End */
+$wgAbuseFilterBlockDuration = 'indefinite';
+
+// Callback functions for custom actions
+$wgAbuseFilterCustomActionsHandlers = array();

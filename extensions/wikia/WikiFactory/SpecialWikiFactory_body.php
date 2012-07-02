@@ -26,7 +26,6 @@ class WikiFactoryPage extends SpecialPage {
 	 * constructor
 	 */
 	function  __construct() {
-		wfLoadExtensionMessages("WikiFactory");
 		parent::__construct( "WikiFactory"  /*class*/, 'wikifactory' /*restriction*/);
 	}
 
@@ -43,7 +42,6 @@ class WikiFactoryPage extends SpecialPage {
 	 */
 	public function execute( $subpage ) {
 		global $wgUser, $wgOut, $wgRequest;
-		wfLoadExtensionMessages("WikiFactory");
 
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
@@ -1216,7 +1214,7 @@ class CityListPager {
 		$sth = $dbr->select(
 			array( "city_domains" ),
 			array( "distinct city_id" ),
-			array( "city_domain like " . $dbr->addQuotes( "%" . $dbr->escapeLike($this->mPart) . "%" ) ),
+			array( "city_domain " . $dbr->buildLike( $dbs->anyString(), $this->mPart, $dbs->anyString() ) ),
 			__METHOD__,
 			array(
 				"ORDER BY" => "city_id",

@@ -2,8 +2,8 @@
  * edit box of MediaWiki to provide an easy way to add category links
  * to a specific page.
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Leon Weber <leon@leonweber.de> & Manuel Schneider <manuel.schneider@wikimedia.ch>
  * @copyright © 2006 by Leon Weber & Manuel Schneider
  * @licence GNU General Public Licence 2.0 or later
@@ -14,9 +14,6 @@
 	padding: .1em;
 }
 
-ul#SelectCategoryList {
-  list-style-image: none;
-  list-style-type: none;
+ul#SelectCategoryList, #SelectCategoryList ul {
+  list-style: none outside none !important;
 }
-
-

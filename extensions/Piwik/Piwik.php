@@ -2,9 +2,10 @@
 /**
  * Inserts Piwik script into MediaWiki pages for tracking and adds some stats
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Isb1009 <isb1009 at gmail dot com>
- * @copyright © 2008 Isb1009
+ * @copyright © 2008-2010 Isb1009
  * @licence GNU General Public Licence 2.0
  */
 
@@ -15,11 +16,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Piwik Integration',
-	'version'        => '1.5.1-piwik0.4.3',
+	'version'        => '1.5.2-piwik0.5.5',
 	'author'         => 'Isb1009',
-	'description'    => 'Inserts Piwik script into MediaWiki pages for tracking and adds [[Special:Piwik|some stats]]. Based on Google Analytics Integration by Tim Laqua.',
 	'descriptionmsg' => 'piwik-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Piwik_Integration',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Piwik_Integration',
 );
 
 $wgHooks['SkinAfterBottomScripts'][]  = 'efPiwikHookText';
@@ -31,25 +31,28 @@ $wgPiwikIgnoreBots = true;
 $wgPiwikCustomJS = "";
 $wgPiwikUsePageTitle = false;
 $wgPiwikActionName = "";
+$wgPiwikSpecialPageDate = 'yesterday';
 
 function efPiwikHookText( $skin, &$text = '' ) {
-	$text .= efAddPiwik();
+	$text .= efAddPiwik( $skin->getTitle() );
 	return true;
 }
 
-function efAddPiwik() {
-	global $wgPiwikIDSite, $wgPiwikURL, $wgPiwikIgnoreSysops, $wgPiwikIgnoreBots, $wgUser, $wgScriptPath, $wgPiwikCustomJS, $wgPiwikActionName, $wgTitle, $wgPiwikUsePageTitle;
+function efAddPiwik( $title ) {
+	global $wgPiwikIDSite, $wgPiwikURL, $wgPiwikIgnoreSysops, $wgPiwikIgnoreBots, $wgUser, $wgScriptPath, $wgPiwikCustomJS, $wgPiwikActionName, $wgPiwikUsePageTitle;
 	if ( !$wgUser->isAllowed( 'bot' ) || !$wgPiwikIgnoreBots ) {
 		if ( !$wgUser->isAllowed( 'protect' ) || !$wgPiwikIgnoreSysops ) {
 			if ( !empty( $wgPiwikIDSite ) AND !empty( $wgPiwikURL ) ) {
-				if ( $wgPiwikUsePageTitle == true ) {
-					$wgPiwikPageTitle = $wgTitle->getPrefixedText();
+				if ( $wgPiwikUsePageTitle ) {
+					$wgPiwikPageTitle = $title->getPrefixedText();
 
 					$wgPiwikFinalActionName = $wgPiwikActionName;
 					$wgPiwikFinalActionName .= $wgPiwikPageTitle;
 				} else {
 					$wgPiwikFinalActionName = $wgPiwikActionName;
 				}
+				// Stop xss since page title's can have " and stuff in them.
+				$wgPiwikFinalActionName = Xml::encodeJsVar( $wgPiwikFinalActionName );
 				$funcOutput = <<<PIWIK
 <!-- Piwik -->
 <script type="text/javascript">
@@ -62,7 +65,7 @@ document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/ja
 /* <![CDATA[ */
 try {
 var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", {$wgPiwikIDSite});
-piwikTracker.setDocumentTitle("{$wgPiwikFinalActionName}");
+piwikTracker.setDocumentTitle({$wgPiwikFinalActionName});
 piwikTracker.setIgnoreClasses("image");
 {$wgPiwikCustomJS}
 piwikTracker.trackPageView();
@@ -91,8 +94,5 @@ $wgAvailableRights[] = 'viewpiwik';
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['Piwik'] = $dir . 'Piwik_specialpage.php'; # Tell MediaWiki to load the extension body.
 $wgExtensionMessagesFiles['Piwik'] = $dir . 'Piwik.i18n.php';
-$wgExtensionAliasesFiles['Piwik'] = $dir . 'Piwik.alias.php';
+$wgExtensionMessagesFiles['PiwikAlias'] = $dir . 'Piwik.alias.php';
 $wgSpecialPages['Piwik'] = 'Piwik'; # Let MediaWiki know about your new special page.
-
-// /Alias for efAddPiwik - backwards compatibility.
-function addPiwik() { return efAddPiwik(); }

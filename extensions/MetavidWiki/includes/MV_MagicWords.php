@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * MV_MagicWords.php Created on May 16, 2007
  *
  * All Metavid Wiki code is Released under the GPL2
@@ -81,7 +81,7 @@ class MV_MagicWords {
 	function getTotalLength(){
 		$dbr = & wfGetDB( DB_READ );
 		$result =& $dbr->query('SELECT SUM( `duration` ) as `dur`
-FROM `mv_streams` ');		
+FROM `mv_streams` ');
 		if ( $dbr->numRows( $result ) == 0 ) {
 			return '';
 		} else {
@@ -101,7 +101,7 @@ FROM `mv_streams` ');
 		$ms->filters[] = array ( 'a' => 'and', 't' => 'bill', 'v' => $bill_name );
 		$ms->doSearch( $log_search = false );
 		return $ms->getUnifiedResultsHTML( $show_sidebar = false );
-	}	
+	}
 	function getPersonOut( $sp_mode = 'speech_by' ) {
 		if ( $this->params['person'] != '' ) {
 			$person_name = $this->params['person'];
@@ -154,11 +154,11 @@ FROM `mv_streams` ');
 			$outItems = Array();
 			while ( $row = $dbr->fetchObject( $result ) ) {
 				$row->stream_id = $row->id;
-				//$row->end_time =   $row->duration;				
-				//get the first speech in that day:				 
-				$o = $this->getItemOutput($row, array('use_mvd_time'=>true, 'remove_no_meta'=>true));				
+				//$row->end_time =   $row->duration;
+				//get the first speech in that day:
+				$o = $this->getItemOutput($row, array('use_mvd_time'=>true, 'remove_no_meta'=>true));
 				if($o)
-					$outItems[]=$o; 			
+					$outItems[]=$o;
 			}
 			return $this->formatOutputItems($outItems);
 		}
@@ -168,7 +168,7 @@ FROM `mv_streams` ');
 		$dbr = & wfGetDB( DB_READ );
 		$o = '';
 		$vars = array( 'query_key', 'stream_id', 'start_time', 'end_time', 'COUNT(1) as hit_count' );
-		$conds = array( 'view_date >=' . $dbr->addQuotes( $this->getStartTime() ) );		
+		$conds = array( 'view_date >=' . $dbr->addQuotes( $this->getStartTime() ) );
 		$options = 	array( 'GROUP BY' => 'query_key', 'ORDER BY' => '`hit_count`  DESC ',
 				 		'LIMIT' => intval( $this->params['num_results'] ) );
 		$result = $dbr->select( 'mv_clipview_digest',
@@ -184,18 +184,18 @@ FROM `mv_streams` ');
 			while ( $row = $dbr->fetchObject( $result ) ) {
 				$o = $this->getItemOutput($row);
 				if($o)
-					$outItems[]=$o; 
+					$outItems[]=$o;
 			}
 			return $this->formatOutputItems($outItems);
 		}
-			
+
 	}
 	function getItemOutput( $row, $opt=array() ){
 		global $wgUser;
-		$sk = $wgUser->getSkin();		
+		$sk = $wgUser->getSkin();
 		//set defaults:
 		$person_ht = $bill_ht = $category_ht = $o= '';
-		
+
 		if(!isset($row->start_time)){
 			$row->start_time=0;
 		}
@@ -213,7 +213,7 @@ FROM `mv_streams` ');
 			$options = array( 'limit' => 1 )
 		);
 		if ( count( $mvd_rows ) != 0 ) {
-			reset( $mvd_rows );		
+			reset( $mvd_rows );
 			$mvd_row = current( $mvd_rows );
 			if( isset($opt['use_mvd_time']) && $opt['use_mvd_time'] ){
 				$row->start_time = $mvd_row->start_time;
@@ -239,7 +239,7 @@ FROM `mv_streams` ');
 			}
 			global $wgContLang;
 			$mvdNStxt = $wgContLang->getNsText(MV_NS_MVD);
-			
+
 			//grab categories if no bill or speech
 			if( $this->params['display_cat'] || $mvd_out_html=='' ){
 				$dbr = wfGetDB( DB_READ );
@@ -258,29 +258,29 @@ FROM `mv_streams` ');
 					$mvd_out_html.='</span><br />';
 				 }
 			}
-		}else{		
+		}else{
 			//we have not meta
 			//if( isset($opt['remove_no_meta']) && $opt['remove_no_meta'])
 			//return false;
 		}
-		
-		
-		// first make link and stream title:		
+
+
+		// first make link and stream title:
 		$mvStream = MV_Stream::newStreamByID( $row->stream_id );
 		if( ! $mvStream->doesStreamExist() ){
 			return false;
 		}
 		//limit our output range to < 20 min
 		if( ($row->end_time - $row->start_time) > 20*60)
-			$row->end_time = $row->start_time + 20*60;			
-		
+			$row->end_time = $row->start_time + 20*60;
+
 		$nt = $mvStream->getStreamName() . '/' . seconds2npt( $row->start_time )
 		. '/' . seconds2npt( $row->end_time );
 		$mvTitle = new MV_Title( $nt, MV_NS_STREAM );
-			
+
 		$mvStreamTitle = Title :: MakeTitle( MV_NS_STREAM, $mvTitle->getNearStreamName( $extra_range = '0' ) );
-			
-			
+
+
 		// output the image:
 		$o .= $sk->makeKnownLinkObj( $mvStreamTitle,
  				'<img alt="image for ' . $mvTitle->getStreamNameText() . ' ' .
@@ -304,8 +304,8 @@ FROM `mv_streams` ');
 				$sk->makeKnownLinkObj( $mvStreamTitle,
 					$title_span,
 	 				'tl=1' ) .
- 			'</span>';		
-		//add mvd_annotative output: 
+ 			'</span>';
+		//add mvd_annotative output:
 		$o.=$mvd_out_html;
 		return $o;
 	}
@@ -366,7 +366,7 @@ FROM `mv_streams` ');
 		$dbr->tableName( 'mv_query_key_lookup' ) . '.query_key ' .
 							' ) ';
 		$conds = '`time` >= ' . $dbr->addQuotes( $this->getStartTime() );
-			
+
 		$options['GROUP BY'] = $dbr->tableName( 'mv_search_digest' ) . '.query_key';
 		$options['ORDER BY'] = '`hit_count`  DESC';
 		$options['LIMIT'] = $this->params['num_results'];

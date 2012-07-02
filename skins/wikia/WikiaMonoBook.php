@@ -48,13 +48,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	function setupSkinUserCss( OutputPage $out ) {
 		parent::setupSkinUserCss( $out );
 
-		// Wikia version of /skins/common/shared.css
-		$out->addStyle('wikia/shared.css');
-
-		// add YUI css
-		$out->addStyle('common/yui_2.5.2/container/assets/container.css');
-		$out->addStyle('common/yui_2.5.2/logger/assets/logger.css');
-		$out->addStyle('common/yui_2.5.2/tabview/assets/tabview.css');
+		$out->addModuleStyles('wikia.monobook');
 
 		// add file with fixes for IE8
 		$out->addStyle('wikia/css/IE80Fixes.css', 'screen', 'IE 8');
@@ -97,9 +91,9 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	// load skin-specific JS files from MW (wikibits, user and site JS) - BugId:960
 	public function onSkinGetHeadScripts(&$scripts) {
-		global $wgStylePath, $wgEnableAbTesting;
-		$scripts .= "\n<!--[if lt IE 8]><script src=\"". $wgStylePath ."/common/json2.js\"></script><![endif]-->";
-		$scripts .= "\n<!--[if lt IE 9]><script src=\"". $wgStylePath ."/common/wikia/html5.min.js\"></script><![endif]-->";
+		global $wgEnableAbTesting, $wgResourceBasePath;
+		$scripts .= "\n<!--[if lt IE 8]><script src=\"". $wgResourceBasePath ."/resources/wikia/libraries/json2/json2.js\"></script><![endif]-->";
+		$scripts .= "\n<!--[if lt IE 9]><script src=\"". $wgResourceBasePath ."/resources/wikia/libraries/html5/html5.min.js\"></script><![endif]-->";
 
 		$packages = array( 'monobook_js' );
 
@@ -271,9 +265,7 @@ HTML;
 	// HTML to be added between footer and end of page
 	public function bottomScripts() {
 		$analytics = $this->getAnalyticsCode();
-
-		$bottomScriptText = '';
-		wfRunHooks( 'SkinAfterBottomScripts', array( $this, &$bottomScriptText ) );
+		$bottomScriptText = parent::bottomScripts();
 
 		$html =  <<<HTML
 <!-- WikiaBottomScripts -->
@@ -313,7 +305,7 @@ HTML;
 
 } // end of class
 
-abstract class WikiaMonoBookTemplate extends WikiaQuickTemplate{
+abstract class WikiaMonoBookTemplate extends WikiaBaseTemplate{
 	public function set( $name, $value ) {
 		if ( $name == 'headelement' ) {
 			$this->wf->profileIn( __METHOD__ );
@@ -336,7 +328,7 @@ abstract class WikiaMonoBookTemplate extends WikiaQuickTemplate{
 			}
 
 			//headitems need to be replaced BEFORE csslinks and scripts as it might be a subset of those!!!
-			$value =  str_replace( array( $out->getHeadItems(), $out->buildCssLinks(), $out->getScriptsOnly()  ), array( $allowedHeadItems, $allowedStyles, $allowedScripts ), $value );
+			$value = str_replace( array( $out->getHeadItems(), $out->buildCssLinks(), $out->getScriptsOnly()  ), array( $allowedHeadItems, $allowedStyles, $allowedScripts ), $value );
 
 			$this->wf->profileOut( __METHOD__ );
 		}

@@ -3,11 +3,10 @@
 /**
  * Extension to provide customisable email notification of new user creation
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
-
-require_once( 'UserMailer.php' );
 
 class NewUserNotifier {
 
@@ -29,7 +28,6 @@ class NewUserNotifier {
 	 */
 	public function execute( $user ) {
 		$this->user = $user;
-		wfLoadExtensionMessages( 'NewUserNotifier' );
 		$this->sendExternalMails();
 		$this->sendInternalMails();
 	}
@@ -40,13 +38,11 @@ class NewUserNotifier {
 	private function sendExternalMails() {
 		global $wgNewUserNotifEmailTargets, $wgSitename;
 		foreach( $wgNewUserNotifEmailTargets as $target ) {
-			userMailer(
+			UserMailer::send(
 				new MailAddress( $target ),
 				new MailAddress( $this->sender ),
-				wfMsgForContent( 'newusernotifsubj', $wgSitename ),
-				$this->makeMessage( $target, $this->user ),
-				null,
-				'NewUserNotifier'
+				$this->makeSubject( $target, $this->user ),
+				$this->makeMessage( $target, $this->user )
 			);
 		}
 	}
@@ -60,9 +56,9 @@ class NewUserNotifier {
 			$user = $this->makeUser( $userSpec );
 			if( $user instanceof User && $user->isEmailConfirmed() ) {
 				$user->sendMail(
-					wfMsgForContent( 'newusernotifsubj', $wgSitename ),
+					$this->makeSubject( $user->getName(), $this->user ),
 					$this->makeMessage( $user->getName(), $this->user ),
-					$this->sender, null, 'NewUserNotification'
+					$this->sender
 				);
 			}
 		}
@@ -83,22 +79,41 @@ class NewUserNotifier {
 	}
 
 	/**
-	 * Build a notification email
+	 * Build a notification email subject line
+	 *
+	 * @param string $recipient Name of the recipient
+	 * @param User $user User that was created
+	 */
+	private function makeSubject( $recipient, $user ) {
+		global $wgSitename;
+		$subjectLine = "";
+		wfRunHooks( 'NewUserNotifSubject', array( &$this, &$subjectLine, $wgSitename, $recipient, $user ) );
+		if (!strlen($subjectLine) )
+			return wfMsgForContent( 'newusernotifsubj', $wgSitename );
+		return $subjectLine;
+	}
+
+	/**
+	 * Build a notification email message body
 	 *
 	 * @param string $recipient Name of the recipient
 	 * @param User $user User that was created
 	 */
 	private function makeMessage( $recipient, $user ) {
 		global $wgSitename, $wgContLang;
-		return wfMsgForContent(
-			'newusernotifbody',
-			$recipient,
-			$user->getName(),
-			$wgSitename,
-			$wgContLang->timeAndDate( wfTimestampNow() ),
-			$wgContLang->date( wfTimestampNow() ),
-			$wgContLang->time( wfTimestampNow() )
-		);
+		$messageBody = "";
+		wfRunHooks( 'NewUserNotifBody', array( &$this, &$messageBody, $wgSitename, $recipient, $user ) );
+		if (!strlen($messageBody) )
+			return wfMsgForContent(
+				'newusernotifbody',
+				$recipient,
+				$user->getName(),
+				$wgSitename,
+				$wgContLang->timeAndDate( wfTimestampNow() ),
+				$wgContLang->date( wfTimestampNow() ),
+				$wgContLang->time( wfTimestampNow() )
+			);
+		return $messageBody;
 	}
 
 	/**

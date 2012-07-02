@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension ContributorsAddon.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -42,7 +43,28 @@ $messages['arz'] = array(
 	'contributorsaddon-desc' => 'يضيف منبثقات JS onMouseOver إلى وصلات "المساهمون الأساسيون"',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'contributorsaddon-desc' => 'Amiesta ventanes emerxentes JavaScript a los enllaces de «Collaboradores principales»',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'contributorsaddon-desc' => '"Əsas müəlliflər" keçidi üçün üzə çıxan JavaScript-sahəni əlavə edir',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'contributorsaddon-desc' => '"Төп өлөш индереүселәр" һылтанмаһы өсөн JavaScript юлы өҫтәй.',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -217,6 +239,13 @@ $messages['id'] = array(
 	'contributorsaddon-desc' => 'Menambahkan pop-up JavaScript ke pranala "Kontributor utama"',
 );
 
+/** Interlingue (Interlingue)
+ * @author Renan
+ */
+$messages['ie'] = array(
+	'contributorsaddon-desc' => 'Addir popups de JavaScript por catenunes de "Principal contributores"',
+);
+
 /** Italian (Italiano)
  * @author Pietrodn
  */
@@ -247,7 +276,7 @@ $messages['ko'] = array(
 	'contributorsaddon-desc' => '자바스크립트를 이용해 ‘주 기여자’를 표시하는 기능',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -259,6 +288,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'contributorsaddon-desc' => 'Setzt de Popup JavaScript onMouseOver op d\'Linke vun den "Haaptkontributeuren"',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'contributorsaddon-desc' => "Manampy ny popup JS onMouseOver eo amin'ny rohy « Fandraisan'anjara manokana »",
 );
 
 /** Macedonian (Македонски)
@@ -273,6 +309,20 @@ $messages['mk'] = array(
  */
 $messages['mr'] = array(
 	'contributorsaddon-desc' => '"मुख्य योगदानकर्ता" दुव्यांवर माउस नेल्यानंतर येणार्‍या खिडकीसाठीची जावास्क्रीप्ट वाढविते',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'contributorsaddon-desc' => 'Menambahkan tetimbul JavaScript pada pautan "Penyumbang utama"',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'contributorsaddon-desc' => 'Maakt JavaScript-floepviensters bie de verwiezingen van de "belangriekste schrievers"',
 );
 
 /** Dutch (Nederlands)
@@ -293,7 +343,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'contributorsaddon-desc' => 'Legger til JavaScript-sprettoppvinduer med lenker til «hovedbidragsytere»',
 );
 
@@ -302,6 +352,13 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'contributorsaddon-desc' => 'Apond lo popup JS onMouseOver als ligams dels « Contributors principals »',
+);
+
+/** Papiamento (Papiamentu)
+ * @author Sdm1985
+ */
+$messages['pap'] = array(
+	'contributorsaddon-desc' => 'Esaki ta agregá un bentana outomatiko di JavaScript na e lenknan di e "Kontribuidó prinsipal"',
 );
 
 /** Plautdietsch (Plautdietsch)
@@ -326,10 +383,11 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'contributorsaddon-desc' => 'Adiciona janelas "popup" JS do tipo onMouseOver às ligações de "Principais Contribuidores"',
+	'contributorsaddon-desc' => 'Adiciona janelas "popup" JS do tipo onMouseOver aos links de "Principais Contribuidores"',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -353,7 +411,7 @@ $messages['ru'] = array(
 	'contributorsaddon-desc' => 'Добавляет всплывающее JavaScript-поле для ссылки «Основные авторы»',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -367,6 +425,13 @@ $messages['sk'] = array(
 	'contributorsaddon-desc' => 'Pridáva vyskakovacie okná nad odkazy „Hlavní prispievatelia“',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'contributorsaddon-desc' => 'Povezavam »Glavni sodelavci« doda pojavna okenca JavaScript',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
@@ -374,14 +439,15 @@ $messages['sq'] = array(
 	'contributorsaddon-desc' => 'Vendosë dritare JavaScript në lidhjet "Kontribuuesit kryesorë"',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'contributorsaddon-desc' => 'Додаје јаваскрипт поп-апове везама ка "Главним ауторима"',
+	'contributorsaddon-desc' => 'Додаје искачуће прозоре на везе „Главни доприносиоци“',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -449,5 +515,25 @@ $messages['vec'] = array(
  */
 $messages['vi'] = array(
 	'contributorsaddon-desc' => 'Thêm popup onMouseOver của JS vào liên kết "Những người đóng góp chính"',
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$messages['zh-hans'] = array(
+	'contributorsaddon-desc' => '添加JavaScript的弹出式窗口至“主要贡献者”链接',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Frankou
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'contributorsaddon-desc' => '加入JavaScript的彈出式視窗至「主要貢獻者」連結',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Pbdragonwang
+ */
+$messages['zh-tw'] = array(
+	'contributorsaddon-desc' => '添加JavaScript的彈出式窗口至“主要貢獻者”連結',
 );
 

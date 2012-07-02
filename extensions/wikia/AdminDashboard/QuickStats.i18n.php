@@ -221,7 +221,7 @@ $messages['fr'] = array(
 	'quickstats-number-shortening-billions' => '$1 Mrd',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -231,7 +231,6 @@ $messages['gl'] = array(
 	'quickstats-header-edits' => 'Edicións',
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-header-likes' => 'Gústame',
-	'quickstats-date-format' => 'd de M',
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ollar máis estatísticas]]',
 	'quickstats-number-shortening' => '$1K',

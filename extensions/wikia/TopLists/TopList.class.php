@@ -206,15 +206,10 @@ class TopList extends TopListBase {
     /**
      * Sets description field of TopList class
      *
-     * @param Title $relatedArticle a Title instance for the article to reference
-     *
-     * @return mixed true in case of success, otherwise a multidimensional array of error messages in this form: array( array( 'msg' => MESSAGE_KEY, 'params' => array() ) )
-     *
      * @author Andrzej 'nAndy' Łukaszewski
      */
     public function setDescription( $description = '' ) {
         $this->mDescription = $description;
-        return true;
     }
 	
 	/**
@@ -231,7 +226,6 @@ class TopList extends TopListBase {
 	 */
 	public function checkUserItemsRight( $action, $user = null, $forceReload = false ){
 		global $wgUser;
-		$can = false;
 		
 		if ( !( $user instanceof User ) ) {
 			$user = $wgUser;
@@ -360,7 +354,7 @@ class TopList extends TopListBase {
 				array( 'ar_page_id', 'ar_title' ),
 				array(
 					'ar_namespace' => $this->mTitle->getNamespace(),
-					"ar_title LIKE '" . $dbr->escapeLike($this->mTitle->getDBkey()) . "/" . self::ITEM_TITLE_PREFIX . "%'"
+					'ar_title' . $dbr->buildLike( $this->mTitle->getDBkey() . "/" . self::ITEM_TITLE_PREFIX, $dbr->anyString() ) 
 				),
 				__METHOD__,
 				array( 'ORDER BY' => 'ar_page_id ASC' )
@@ -388,7 +382,6 @@ class TopList extends TopListBase {
 		if ( $this->mTitle instanceof Title ) {
 			$itemsToRecover = $this->_getRemovedItems();
 			if ( count( $itemsToRecover ) > 0 ) {
-				wfLoadExtensionMessages( 'TopLists' );
 				$ircBackup = $wgRC2UDPEnabled; //backup
 				$wgRC2UDPEnabled = false; //turn off
 				foreach ($itemsToRecover as $pageId => $pageData) {
@@ -416,7 +409,7 @@ class TopList extends TopListBase {
 	 * overrides TopListBase::save
 	 */
 	public function save( $mode = TOPLISTS_SAVE_AUTODETECT ) {
-		global $wgMemc;
+		global $wgMemc, $wgUser;
 		$errors = array();
 		$mode = $this->_detectProcessingMode( $mode );
 		$checkResult = $this->checkForProcessing( $mode );
@@ -452,13 +445,12 @@ class TopList extends TopListBase {
 				$editMode = EDIT_UPDATE;
 			}
 
-			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
 			$status = $article->doEdit( '<' . TOPLIST_TAG . "{$contentText} />[[Category:" . wfMsgForContent( 'toplists-category' ) . "]]", $this->_getItemsSummaryStatusMsg(), $editMode );
 
 			if( $editMode == EDIT_NEW ) {
-				$article->doWatch();
+				WatchAction::doWatch($article->mTitle, $wgUser);
 			}
 
 			if ( !$status->isOK() ) {
@@ -559,5 +551,4 @@ class TopList extends TopListBase {
 	private function _getNeedRefreshCacheKey() {
 		return wfMemcKey( $this->getTitle()->getDBkey(), 'updated' );
 	}
-
 }

@@ -70,11 +70,11 @@ if(-e $args) {
 	vdie (_("nocontrolfile"));
 }
 
-# Initialize the browser as Firefox 1.0 with new cookie jar
+# Initialize the browser with new cookie jar
 $browser=LWP::UserAgent->new();
 $browser->cookie_jar( {} );
 @ns_headers = (
-   'User-Agent' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20041107 Firefox/1.0',
+   'User-Agent' => 'Mediawiki external editor helper. (http://www.mediawiki.org/wiki/Manual:External_editors)',
    'Accept' => 'image/gif, image/x-xbitmap, image/jpeg,
         image/pjpeg, image/png, */*',
    'Accept-Charset' => 'iso-8859-1,*,utf-8',
@@ -112,7 +112,7 @@ if($type eq "Edit file") {
 	$filename =~ s/[\[\]\{\}\(\)~!#\$\^\&\*;'"<>\?]/__/g;
 	
 	$filename=$filename.".wiki";
-	$edit_url=$script."?title=$pagetitle&action=submit";
+	$edit_url=$script."?title=$pagetitle&action=submit&assert=user";
 	$view_url=$script."?title=$pagetitle";	
 } elsif($type eq "Diff text") {
 	$secondurl=$input->val("File 2","URL");
@@ -169,13 +169,21 @@ if( $auth_username ne "" ) {
 	    $auth_username => $auth_password
 	  );
 }
+$loginPage=$browser->get($login_url,@ns_headers);
+$loginpageresponse=$loginPage->content;
+$loginpageresponse=~m|<input type="hidden" name="wpLoginToken" value="(.*?)" />|i;
+$logintoken=$1;
 $response=$browser->post($login_url,@ns_headers,
-Content=>[wpName=>$username,wpPassword=>$password,wpRemember=>"1",wpLoginAttempt=>"Log in"]);
+	Content=>[wpName=>$username,
+		wpPassword=>$password,
+		wpRemember=>"1",
+		wpLoginAttempt=>"Log in",
+		wpLoginToken=>$logintoken]);
 
-# We expect a redirect after successful login
-if($response->code!=302 && !$ignore_login_error) {
-	vdie (_("loginfailed",$login_url,$username,$password));
-}
+# This check doesn't work with central auth. Checks edit token later to see if logged in.
+#if( ($response->code!=302 || $response->code!=200) && !$ignore_login_error) {
+#	vdie (_("loginfailed",$login_url,$username,$password));
+#}
 
 $response=$browser->get($fileurl,@ns_headers);
 if($type eq "Edit file") {
@@ -199,12 +207,20 @@ if($type eq "Edit file") {
 	# we want to edit in one go.
 	$ct=$response->header('Content-Type');
 	$editpage=$response->content;
-	$editpage=~m|<input type='hidden' value="(.*?)" name="wpEditToken" />|i;
+	$editpage=~m|<input type=["']hidden["'] value="(.*?)" name="wpEditToken" />|i;
 	$token=$1;
+
+	# do a quick check to see if logged in.
+	if ( $token eq "+\\" ) {
+		vdie (_("loginfailed",$login_url,$username,$password));
+	}
+
 	$editpage=~m|<textarea.*?name="wpTextbox1".*?>(.*?)</textarea>|is;
 	$text=$1;
 	$editpage=~m|<input type='hidden' value="(.*?)" name="wpEdittime" />|i;
 	$time=$1;
+	$editpage=~m|<input type='hidden' value="(.*?)" name="wpStarttime" />|i;
+	$starttime=$1;
 	
 	# Do we need to convert ..?
 	if($ct=~m/charset=utf-8/i) {
@@ -410,6 +426,7 @@ sub save {
 			wpTextbox1=>$text,
 			wpSummary=>$summary,
 			wpEdittime=>$time,
+			wpStarttime=>$starttime,
 			wpEditToken=>$token]
 			);		
 		$watchvar && push @{$content[1]}, (wpWatchthis=>"1");

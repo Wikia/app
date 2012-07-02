@@ -1,13 +1,11 @@
 <?php
 /**
  * Aliases for special pages of Sitemap extension.
- *
  */
-
-$aliases = array();
+$specialPageAliases = array();
 
 /** English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'Sitemap' => array( 'Sitemap' ),
 );

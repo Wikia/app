@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension MicroID.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -14,9 +15,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'microid-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'microid-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -44,7 +46,15 @@ $messages['arz'] = array(
 	'tog-microid' => 'انشر <a href="http://microid.org/">هوية مصغرة</a> لتأكيد الحساب مع الخدمات الخارجية',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'microid-desc' => "Amiesta una [http://www.microid.org/ MicroID] a les páxines d'usuariu pa confirmar la cuenta con servicios esternos",
+	'tog-microid' => 'Espublizar una <a href="http://microid.org/">MicroID</a> pa confirmar la cuenta con servicios esternos',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -74,6 +84,14 @@ $messages['br'] = array(
 $messages['bs'] = array(
 	'microid-desc' => 'Dodaje [http://www.microid.org/ MicroID] na korisničke stranica za potvrdu računa putem vanjskih usluga',
 	'tog-microid' => 'Objavite <a href="http://microid.org/">MicroID</a> da bi ste potvrdili račun sa vanjskim uslugama',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'microid-desc' => "Afegeix un [http://www.microid.org/ MicroID] a les pàgines d'usuari per confirmar el compte amb serveis externs",
+	'tog-microid' => 'Publica un <a href="http://microid.org/">MicroID</a> per confirmar el compte amb serveis externs',
 );
 
 /** Czech (Česky)
@@ -129,8 +147,8 @@ $messages['es'] = array(
  * @author Huji
  */
 $messages['fa'] = array(
-	'microid-desc' => 'یک [http://www.microid.org/ MicroID] به صفحهٔ کاربری اضافه می‌کند تا حساب کاربری با خدمات خارجی را تایید کند',
-	'tog-microid' => 'یک <a href="http://microid.org/">MicroID</a> منتشر کنید تا حساب کاربری با خدمات خارجی را تایید کنید',
+	'microid-desc' => 'یک [http://www.microid.org/ MicroID] به صفحهٔ کاربری اضافه می‌کند تا حساب کاربری با خدمات خارجی را تأیید کند',
+	'tog-microid' => 'یک <a href="http://microid.org/">MicroID</a> منتشر کنید تا حساب کاربری با خدمات خارجی را تأیید کنید',
 );
 
 /** Finnish (Suomi)
@@ -247,7 +265,7 @@ $messages['km'] = array(
 	'tog-microid' => 'ផ្សព្វផ្សាយ <a href="http://microid.org/">MicroID</a> ដើម្បី បញ្ជាក់ទទួលស្គាល់ គណនី និង សេវា ខាងក្រៅ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -278,6 +296,22 @@ $messages['mr'] = array(
 	'tog-microid' => 'बाह्य सेवांचे खाते प्रमाणित करण्यासाठी एक <a href="http://microid.org/">MicroID</a> प्रकाशित करा',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'microid-desc' => 'Membubuh [http://www.microid.org/ MicroID] pada nama pengguna untuk mengesahkan akaun dengan perkhidmatan luar',
+	'tog-microid' => 'Siarkan <a href="http://microid.org/">MicroID</a> untuk mengesahkan akaun dengan perkhidmatan luar',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'microid-desc' => 'Legger til [http://www.microid.org/ MicroID] på brukersider for å bekrefte kontoer med eksterne tjenester',
+	'tog-microid' => 'Publiser en <a href="http://microid.org/">MicroID</a> for å bekrefte kontoen for eksterne tjenester',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -292,14 +326,6 @@ $messages['nl'] = array(
 $messages['nn'] = array(
 	'microid-desc' => 'Legg til [http://www.microid.org/ MicroID] på brukarsider for å stadfesta kontoar med eksterne tenester',
 	'tog-microid' => 'Publiser ein <a href="http://microid.org/">MicroID</a> for å stadfesta kontoen med eksterne tenester',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'microid-desc' => 'Legger til [http://www.microid.org/ MicroID] på brukersider for å bekrefte kontoer med eksterne tjenester',
-	'tog-microid' => 'Publiser en <a href="http://microid.org/">MicroID</a> for å bekrefte kontoen for eksterne tjenester',
 );
 
 /** Occitan (Occitan)
@@ -351,6 +377,8 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author AlexSm
+ * @author KPu3uC B Poccuu
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -374,7 +402,7 @@ $messages['sk'] = array(
 	'tog-microid' => 'Zverejniť <a href="http://microid.org/">MicroID</a> na potvrdenie účtu pre externé služby',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -382,7 +410,7 @@ $messages['sr-ec'] = array(
 	'tog-microid' => 'Објавите <a href="http://microid.org/">MicroID</a> да бисте потврдили налог за спољашње услуге',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -422,6 +450,14 @@ $messages['tr'] = array(
 	'tog-microid' => 'Hesabı dış hizmetlerle onaylamak için bir <a href="http://microid.org/">MicroID</a> yayınla',
 );
 
+/** Ukrainian (Українська)
+ * @author Riwnodennyk
+ */
+$messages['uk'] = array(
+	'microid-desc' => 'Додає [http://www.microid.org/ MicroID] до сторінок користувачів задля підтвердження акаунту з допомогою зовнішніх сервісів',
+	'tog-microid' => 'Опублікуйте <a href="http://microid.org/">MicroID</a> , щоби підтвердити акаунт із зовнішніми сервісами',
+);
+
 /** Vèneto (Vèneto)
  * @author Candalua
  */
@@ -448,10 +484,11 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'microid-desc' => '在用戶頁面新增一個[http://www.microid.org/ MicroID]以確認含外部服務的帳戶',
-	'tog-microid' => '發佈一個<a href="http://microid.org/">MicroID</a>以確認含外部服務的帳戶',
+	'microid-desc' => '在使用者頁面新增一個 [http://www.microid.org/ MicroID] 以確認含外部服務的帳戶',
+	'tog-microid' => '發布一個 <a href="http://microid.org/">MicroID</a> 以確認含外部服務的帳號',
 );
 

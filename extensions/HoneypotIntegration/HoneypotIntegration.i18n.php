@@ -40,7 +40,15 @@ $messages['ar'] = array(
 	'abusefilter-edit-builder-vars-honeypot-list-count' => 'عدد الأحداث الأخيرة التي أطلقها عنوان الأيبي، طبقا لProject Honey Pot',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'honeypot-desc' => 'Ufre integración col [http://projecthoneypot.org/ proyeutu Honey Pot] pa sitios MediaWiki',
+	'abusefilter-edit-builder-vars-honeypot-list-count' => "Númberu de socesos recientes que disparó la direición IP, d'alcuerdu col proyeutu Honey Pot",
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -129,6 +137,16 @@ $messages['eo'] = array(
 $messages['es'] = array(
 	'honeypot-desc' => 'Provee integración con [http://projecthoneypot.org/ Projecto Honey Pot] para sitios MediaWiki',
 	'abusefilter-edit-builder-vars-honeypot-list-count' => 'Número de eventos recientes que la dirección IP ha desencadenado en relación con el proyecto Honey Pot',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ * @author Sahim
+ * @author Wayiran
+ */
+$messages['fa'] = array(
+	'honeypot-desc' => 'فراهم کردن یکپارچگی بوسیله [http://projecthoneypot.org/ پروژه دیگ عسل] برای تارنمای مدیا‌ویکی',
+	'abusefilter-edit-builder-vars-honeypot-list-count' => 'تعداد آخرین رویدادهایی که نشانی آی‌پی به راه انداخته، بر پایهٔ Project Honey Pot',
 );
 
 /** Finnish (Suomi)
@@ -237,7 +255,23 @@ $messages['ja'] = array(
 	'abusefilter-edit-builder-vars-honeypot-list-count' => 'そのIPアドレスが引き起こした最近の出来事の数(Project Honey Pot 調べ)',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Georgian (ქართული)
+ * @author გიორგიმელა
+ */
+$messages['ka'] = array(
+	'honeypot-desc' => 'ახორციელებს მედიავიკი საიტების MediaWiki ინტეგრაციას [http://projecthoneypot.org/ Honey Pot პროექტზე]',
+	'abusefilter-edit-builder-vars-honeypot-list-count' => 'ბოლო მოვლენების სია, რომელმაც გამოიწვია IP-მისამართუს მოხვედრა Honey Pot პროექტთან შესაბამისობაში',
+);
+
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'honeypot-desc' => '미디어위키 사이트에 [http://projecthoneypot.org/ Project Honey Pot]을 통합',
+	'abusefilter-edit-builder-vars-honeypot-list-count' => 'Project Honey Pot에서 적발한 특정 IP 주소에서 위반한 최근 사건의 수',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -253,12 +287,20 @@ $messages['lb'] = array(
 	'abusefilter-edit-builder-vars-honeypot-list-count' => "Zuel vun den aktuellen Evenementer déi duerch d'IP-Adress ausgeléist goufen, esou wéi et aus dem Projet ''Honey Pot'' ervirgeet",
 );
 
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'honeypot-desc' => 'Bied integratie mit [http://projecthoneypot.org/ Project Honey Pot] veur MediaWiki-sites',
+	'abusefilter-edit-builder-vars-honeypot-list-count' => "Aantal recente gebeurtenisse die 't IP-adres haet veroearzaak volges Project Honey Pot",
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'honeypot-desc' => 'Овозможува интеграција со [http://projecthoneypot.org/ Project Honey Pot] за проекти и страници на МедијаВики',
-	'abusefilter-edit-builder-vars-honeypot-list-count' => 'Број на скорешни настани поттикнати од IP адресата, според Project Honey Pot',
+	'abusefilter-edit-builder-vars-honeypot-list-count' => 'Број на скорешни настани поттикнати од IP-адресата, според проектот Honey Pot',
 );
 
 /** Malayalam (മലയാളം)
@@ -267,6 +309,14 @@ $messages['mk'] = array(
 $messages['ml'] = array(
 	'honeypot-desc' => 'മീഡിയാവിക്കി സൈറ്റുകളിൽ [http://projecthoneypot.org/ തേൻകുട പദ്ധതി] ഇണക്കിച്ചേർക്കൽ അനുവദിക്കുന്നു',
 	'abusefilter-edit-builder-vars-honeypot-list-count' => 'തേൻകുട പദ്ധതിപ്രകാരം, ഐ.പി. വിലാസങ്ങൾ ഉണർത്തിവിട്ട സമീപകാല സാഹചര്യങ്ങളുടെ എണ്ണം',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'honeypot-desc' => 'Menyediakan persepaduan dengan [http://projecthoneypot.org/ Project Honey Pot] untuk laman MediaWiki',
+	'abusefilter-edit-builder-vars-honeypot-list-count' => 'Bilangan peristiwa terbaru yang dicetuskan oleh alamat IP ini, mengikut Project Honey Pot',
 );
 
 /** Dutch (Nederlands)
@@ -288,7 +338,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'honeypot-desc' => 'Gir integrering for [http://projecthoneypot.org/ Project Honey Pot] på MediaWiki-nettsteder',
 	'abusefilter-edit-builder-vars-honeypot-list-count' => 'Antall nylige hendelser IP-adressa har satt i verk ifølge Project Honey Pot',
 );
@@ -322,7 +372,7 @@ $messages['pms'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'honeypot-desc' => 'Fornece integração com o [http://projecthoneypot.org/ Projecto Honey Pot] para sítios MediaWiki',
+	'honeypot-desc' => 'Fornece integração com o [http://projecthoneypot.org/ Projecto Honey Pot] para sites MediaWiki',
 	'abusefilter-edit-builder-vars-honeypot-list-count' => 'Número de eventos recentes que o endereço IP despoletou, segundo Project Honey Pot',
 );
 
@@ -350,7 +400,7 @@ $messages['ru'] = array(
 	'abusefilter-edit-builder-vars-honeypot-list-count' => 'Количество последних событий, вызвавших попадание IP-адреса в соответствие с проектом Honey Pot',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -364,6 +414,14 @@ $messages['sah'] = array(
 $messages['sk'] = array(
 	'honeypot-desc' => 'Poskytuje integráciu lokalít MediaWiki s [http://projecthoneypot.org/ projektom Honey Pot]',
 	'abusefilter-edit-builder-vars-honeypot-list-count' => 'Počet udalostí v poslednej dobe, ktoré IP adresa spustila podľa projektu Honey Pot',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'honeypot-desc' => 'Nudi združitev s [http://projecthoneypot.org/ Projektom Honey Pot] za strani MediaWiki',
+	'abusefilter-edit-builder-vars-honeypot-list-count' => 'Število nedavnih dogodkov, ki jih je sprožil IP-naslov, glede na Projekt Honey Pot',
 );
 
 /** Swedish (Svenska)
@@ -432,9 +490,10 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Gaoxuewei
+ * @author Mark85296341
  */
 $messages['zh-hant'] = array(
-	'honeypot-desc' => '提供可与MediaWiki站点集成的[http://projecthoneypot.org/ Project Honey Pot]程式',
-	'abusefilter-edit-builder-vars-honeypot-list-count' => '根據Project Honey Pot的設定，最近事件的數量激活了IP地址規則。',
+	'honeypot-desc' => '提供可與 MediaWiki 站點整合的 [http://projecthoneypot.org/ Project Honey Pot] 程式',
+	'abusefilter-edit-builder-vars-honeypot-list-count' => '根據 Project Honey Pot 的設定，最近事件的數量啟動了 IP 位址規則。',
 );
 

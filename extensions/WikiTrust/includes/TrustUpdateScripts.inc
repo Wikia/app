@@ -122,4 +122,3 @@ $remove_scripts[$wgDBprefix.'wikitrust_text_cache'] = array("DROP TABLE ".$wgDBp
 
 $remove_index_scripts[$wgDBprefix . "revision"]['wt_revision_id_timestamp_idx'] = "DROP INDEX wt_revision_id_timestamp_idx ON ".$wgDBprefix."revision";
 
-?>

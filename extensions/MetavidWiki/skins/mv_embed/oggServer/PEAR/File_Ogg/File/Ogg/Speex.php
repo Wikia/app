@@ -21,7 +21,7 @@
 // | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA |
 // +----------------------------------------------------------------------------+
 
-require_once('File/Ogg/Media.php');
+require_once dirname( __FILE__ ) . '/Media.php';
 
 /**
  * @author      David Grant <david@grant.org.uk>, Tim Starling <tstarling@wikimedia.org>

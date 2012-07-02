@@ -109,19 +109,19 @@ function wfSajaxSearchArticleFCKeditor( $term ) {
 		$ns = NS_CATEGORY;
 		$term = substr( $term, 9 );
 		$prefix = 'Category:';
-	} else if( strpos( strtolower( $term ), ':category:' ) === 0 ) {
+	} elseif( strpos( strtolower( $term ), ':category:' ) === 0 ) {
 		$ns = NS_CATEGORY;
 		$term = substr( $term, 10 );
 		$prefix = ':Category:';
-	} else if( strpos( strtolower( $term ), 'media:' ) === 0 ) {
+	} elseif( strpos( strtolower( $term ), 'media:' ) === 0 ) {
 		$ns = NS_IMAGE;
 		$term = substr( $term, 6 );
 		$prefix = 'Media:';
-	} else if( strpos( strtolower( $term ), ':image:' ) === 0 ) {
+	} elseif( strpos( strtolower( $term ), ':image:' ) === 0 ) {
 		$ns = NS_IMAGE;
 		$term = substr( strtolower( $term ), 7 );
 		$prefix = ':Image:';
-	} else if( strpos( $term, ':' ) && is_array( $wgExtraNamespaces ) ) {
+	} elseif( strpos( $term, ':' ) && is_array( $wgExtraNamespaces ) ) {
 		$pos = strpos( $term, ':' );
 		$find_ns = array_search( substr( $term, 0, $pos ), $wgExtraNamespaces );
 		if( $find_ns ) {
@@ -201,7 +201,7 @@ function wfSajaxSearchCategoryChildrenFCKeditor( $m_root ){
 	/// @todo FIXME: should use Database class
 	$sql = "SELECT tmpSelectCatPage.page_title AS title FROM ".$dbr->tableName('categorylinks')." AS tmpSelectCat ".
 			"LEFT JOIN ".$dbr->tableName('page')." AS tmpSelectCatPage ON tmpSelectCat.cl_from = tmpSelectCatPage.page_id ".
-			"WHERE tmpSelectCat.cl_to LIKE ".$dbr->addQuotes($m_root)." AND tmpSelectCatPage.page_namespace = $ns"; 
+			"WHERE tmpSelectCat.cl_to LIKE ".$dbr->addQuotes($m_root)." AND tmpSelectCatPage.page_namespace = $ns";
 
 	$res = $dbr->query( $sql, __METHOD__ );
 	$ret = '';
@@ -253,4 +253,51 @@ function wfSajaxToggleFCKeditor( $data ) {
 		$_SESSION['showMyFCKeditor'] = 0; // invisible
 	}
 	return 'SUCCESS';
+}
+
+/**
+ * Function converts an Javascript escaped string back into a string with
+ * specified charset (default is UTF-8).
+ * Modified function from http://pure-essence.net/stuff/code/utf8RawUrlDecode.phps
+ *
+ * @param $source String escaped with Javascript's escape() function
+ * @param $iconv_to String destination character set will be used as second parameter
+ * in the iconv function. Default is UTF-8.
+ * @return string
+ */
+function js_unescape( $source, $iconv_to = 'UTF-8' ) {
+	$decodedStr = '';
+	$pos = 0;
+	$len = strlen ( $source );
+
+	while ( $pos < $len ) {
+		$charAt = substr ( $source, $pos, 1 );
+		if ( $charAt == '%' ) {
+			$pos++;
+			$charAt = substr ( $source, $pos, 1 );
+
+			if ( $charAt == 'u' ) {
+				// we got a unicode character
+				$pos++;
+				$unicodeHexVal = substr ( $source, $pos, 4 );
+				$unicode = hexdec ( $unicodeHexVal );
+				$decodedStr .= codepointToUtf8( $unicode );
+				$pos += 4;
+			} else {
+				// we have an escaped ascii character
+				$hexVal = substr ( $source, $pos, 2 );
+				$decodedStr .= chr ( hexdec ( $hexVal ) );
+				$pos += 2;
+			}
+		} else {
+			$decodedStr .= $charAt;
+			$pos++;
+		}
+	}
+
+	if ( $iconv_to != "UTF-8" ) {
+		$decodedStr = iconv( "utf-8", $iconv_to, $decodedStr );
+	}
+
+	return $decodedStr;
 }

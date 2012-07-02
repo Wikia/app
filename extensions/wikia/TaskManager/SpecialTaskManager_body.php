@@ -29,7 +29,6 @@ class TaskManagerPage extends SpecialPage {
 		parent::__construct( "TaskManager"  /*class*/, 'taskmanager' /*restriction*/ );
 		$this->mTasks = array();
 		$this->mLoadPager = true;
-		wfLoadExtensionMessages( "TaskManager" );
 	}
 
 	/**

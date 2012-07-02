@@ -6,7 +6,7 @@ import static org.testng.AssertJUnit.assertTrue;
 import org.testng.annotations.Test;
 
 public class RandomPageTest extends BaseTest {
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testHitRandom() throws Exception {
 		for (int i = 1; i <= 5; i++) {
 			session().open("index.php?title=Special:Random");

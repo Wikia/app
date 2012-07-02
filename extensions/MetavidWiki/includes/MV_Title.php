@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * MV_Title.php Created on May 3, 2007
  *
  * All Metavid Wiki code is Released under the GPL2
@@ -75,7 +75,7 @@
  		}
  		return true;
  	}
- 	/*
+ 	/**
 	 * Check the db for the given stream name
 	 */
 	function doesStreamExist() {
@@ -86,7 +86,7 @@
 		return $this->mvStream->db_load_stream();
 	}
 	function getStreamName() { return $this->stream_name; }
-	/*
+	/**
 	 * Returns the stream name with uppercase first word
 	 *  and spaces for underscores
 	 */
@@ -106,7 +106,7 @@
 		$sn = (count($sn_parts)>1)? implode(' ', $sn_parts): $sp[0];
 		return $sn .' on '. date('M jS, Y',$d);
 	}
-	/*
+	/**
 	 * makes title like db key:
 	 */
 	function normalizeTitle( $title ) {
@@ -167,7 +167,7 @@
  			}
  		}
 	}
-	/*
+	/**
 	 * returns start time in seconds
 	 */
 	function getStartTimeSeconds() {
@@ -175,7 +175,7 @@
 		$this->start_time_sec = npt2seconds( $this->start_time );
 		return $this->start_time_sec;
 	}
-	/*
+	/**
 	 * returns end time in seconds
 	 */
 	function getEndTimeSeconds() {
@@ -186,7 +186,7 @@
 		}
 		return null;
 	}
-	/*
+	/**
 	 * legacy/convenience function (should probably just update all getDuration calls
 	 * to call global MVstream directly
 	 */
@@ -200,7 +200,7 @@
 	function getSegmentDurationNTP( $short_time = false ) {
 		return seconds2npt( $this->getSegmentDuration(), $short_time );
 	}
-	/*
+	/**
 	 * returns a near by stream range:
 	 */
 	function getNearStreamName( $range = null, $length = null ) {
@@ -298,7 +298,7 @@
 		$retAry['categories'] = $parserOutput->getCategories();
 		return $retAry;
 	}
-	/*
+	/**
 	 * function: getWebStreamURL
 	 *
 	 * returns full web accessible path to stream

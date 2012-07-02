@@ -7,7 +7,6 @@ class Piggyback extends SpecialPage {
 		global $wgRequest;
 		parent::__construct( 'Piggyback', 'piggyback' );
 		$this->mAction = $wgRequest->getVal( 'action' );
-		wfLoadExtensionMessages( 'Piggyback' );
 	}
 
 	function execute( $par ){
@@ -58,7 +57,7 @@ class PBLoginForm extends LoginForm {
 		$this->exTemplate->set( 'actionlogin', $this->titleObj->getLocalUrl( 'action=submitlogin' ) );
 
 		$this->mOtherName = $request->getVal( 'wpOtherName' );
-		parent::LoginForm( $request );
+		parent::load();
 		
 		$this->exTemplate->set("link", "");
 		$this->exTemplate->set("usedomain", "");
@@ -75,7 +74,7 @@ class PBLoginForm extends LoginForm {
 	function mainLoginForm( $msg, $msgtype = 'error' ) {
 		$this->exTemplate->set( 'messagetype', $msgtype );
 		$this->exTemplate->set( 'message', $msg );
-		$this->exTemplate->set( 'name', $this->mName );
+		$this->exTemplate->set( 'name', $this->mUsername );
 		$this->exTemplate->set( 'password', $this->mPassword );
 		$this->plugin->set( 'otherName', $this->mOtherName );
 	}
@@ -86,7 +85,7 @@ class PBLoginForm extends LoginForm {
 		/* post valid */
 		$u = User::newFromName( $this->mOtherName );
 
-		$cu = User::newFromName( $this->mName );
+		$cu = User::newFromName( $this->mUsername );
 		
 		if (!$cu->checkPassword( $this->mPassword )) {
 			if( $retval = '' == $this->mPassword ) {
@@ -144,13 +143,13 @@ class PBLoginForm extends LoginForm {
 	function validPiggyback() {
 		global $wgUser;
 		/* pre valid */
-		$cUserId = User::idFromName( $this->mName );
-		if( $this->mName != "" && $wgUser->getID() != $cUserId ) {
-			$this->mainLoginForm( wfMsg( 'piggyback-wronguser', htmlspecialchars( $this->mName ) ) );
+		$cUserId = User::idFromName( $this->mUsername );
+		if( $this->mUsername != "" && $wgUser->getID() != $cUserId ) {
+			$this->mainLoginForm( wfMsg( 'piggyback-wronguser', htmlspecialchars( $this->mUsername ) ) );
 			return ;
 		}
 
-		if( $this->mName != "" && $cUserId == 0 ) {
+		if( $this->mUsername != "" && $cUserId == 0 ) {
 			$this->mainLoginForm( wfMsg( 'piggyback-nosuchuser' ) );
 		}
 

@@ -82,9 +82,9 @@ class DeleteQueueViewNominate extends DeleteQueueView {
 		$title = $this->getTitle( "nominate/$article_id/$queue" );
 
 		$form = Xml::buildForm( $fields, "deletequeue-delnom-submit" );
-		$form .= Xml::hidden( 'title', $title->getPrefixedText() );
-		$form .= Xml::hidden( 'queue', $queue );
-		$form .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
+		$form .= Html::Hidden( 'title', $title->getPrefixedText() );
+		$form .= Html::Hidden( 'queue', $queue );
+		$form .= Html::Hidden( 'wpEditToken', $wgUser->editToken() );
 		$form = Xml::tags(
 			'form',
 			array(

@@ -58,6 +58,12 @@ array(
 		'userrights-groupsmember-auto', // Optional PLURAL parameter
 		'userrights-changeable-col', // Optional PLURAL parameter
 		'userrights-unchangeable-col', // Optional PLURAL parameter
+		'group-user-member', // Optional GENDER parameter
+		'group-autoconfirmed-member', // Optional GENDER parameter
+		'group-bot-member', // Optional GENDER parameter
+		'group-sysop-member', // Optional GENDER parameter
+		'group-bureaucrat-member', // Optional GENDER parameter
+		'group-suppress-member', // Optional GENDER parameter
 	),
 ),
 array(
@@ -66,6 +72,14 @@ array(
 	'message' => array(
 		'diff-multi-manyusers', // Likely to not be needed in languages with same plural as English (many)
 	),
+),
+array(
+	'group' => 'core',
+	'check' => 'plural',
+	'code' => array( 'fr' ),
+	'message' => array(
+		'viewcount', // PLURAL not needed in French
+	)
 ),
 array(
 	'group' => 'ext-abusefilter',
@@ -128,6 +142,13 @@ array(
 	)
 ),
 array(
+	'group' => 'ext-categorysortheaders',
+	'check' => 'links',
+	'message' => array(
+		'categorysortheaders-desc', // Contains links that are translated
+	)
+),
+array(
 	'group' => 'ext-categorytree',
 	'check' => 'variable',
 	'message' => array(
@@ -150,10 +171,18 @@ array(
 	)
 ),
 array(
+	'group' => 'ext-checkuser',
+	'check' => 'variable',
+	'message' => array(
+		'group-checkuser-member', // Optional GENDER parameter
+	)
+),
+array(
 	'group' => 'ext-codereview',
 	'check' => 'variable',
 	'message' => array(
 		'code-stats-main', // Optional time parameters
+		'group-svnadmins-member', // Optional GENDER parameter
 	)
 ),
 array(
@@ -173,6 +202,15 @@ array(
 		'configure-edit-old', // Optional time parameters
 		'configure-old-summary-datetime', // Optional time parameters
 		'configure-viewconfig-line', // Optional time parameters
+	)
+),
+array(
+	'group' => 'ext-contest',
+	'check' => 'variable',
+	'message' => array(
+		'group-contestadmin-member', // Optional GENDER parameter
+		'group-contestparticipant-member', // Optional GENDER parameter
+		'group-contestjudge-member', // Optional GENDER parameter
 	)
 ),
 array(
@@ -209,6 +247,15 @@ array(
 	'check' => 'links',
 	'message' => array(
 		'flagpage-templatelist', // Contains link in HTML comment
+	)
+),
+array(
+	'group' => 'ext-flaggedrevs-flaggedrevs',
+	'check' => 'variable',
+	'message' => array(
+		'group-editor-member', // Optional GENDER parameter
+		'group-reviewer-member', // Optional GENDER parameter
+		'group-autoreview-member', // Optional GENDER parameter
 	)
 ),
 array(
@@ -275,16 +322,35 @@ array(
 	)
 ),
 array(
+	'group' => 'ext-linkfilter',
+	'check' => 'variable',
+	'message' => array(
+		'group-linkadmin-member', // Optional GENDER parameter
+	)
+),
+array(
 	'group' => 'ext-liquidthreads',
 	'check' => 'variable',
 	'message' => array(
-		'lqt-feed-new-thread-intro', // Optional GENDER parameter
-		'lqt-feed-reply-intro', // Optional GENDER parameter
 		'lqt-feed-title-all-from', // Optional PLURAL parameter ($2)
 		'lqt-feed-title-new-threads-from', // Optional PLURAL parameter ($2)
 		'lqt-feed-title-replies-from', // Optional PLURAL parameter ($2)
 		'lqt-thread-edited-others',  // Optional date and time parameters ($3/$4)
 		'lqt-thread-edited-author',  // Optional count, date and time parameters ($2/$3/$4)
+	)
+),
+array(
+	'group' => 'ext-livetranslate',
+	'check' => 'variable',
+	'message' => array(
+		'group-tmxadmin-member', // Optional GENDER parameter
+	)
+),
+array(
+	'group' => 'ext-mirrortools',
+	'check' => 'variable',
+	'message' => array(
+		'group-MirrorTools-member', // Optional GENDER parameter
 	)
 ),
 array(
@@ -303,10 +369,33 @@ array(
 	)
 ),
 array(
-	'group' => 'ext-socialprofile-usergifts',
+	'group' => 'ext-patroller',
 	'check' => 'variable',
 	'message' => array(
-		'g-created-by', // Optional GENDER parameter
+		'group-patroller-member', // Optional GENDER parameter
+	)
+),
+array(
+	'group' => 'ext-push',
+	'check' => 'variable',
+	'message' => array(
+		'group-pusher-member', // Optional GENDER parameter
+		'group-bulkpusher-member', // Optional GENDER parameter
+		'group-filepusher-member', // Optional GENDER parameter
+	)
+),
+array(
+	'group' => 'ext-semanticmediawiki',
+	'check' => 'links',
+	'message' => array(
+		'smw_qc_query_help', // Contains links that are translated
+	)
+),
+array(
+	'group' => 'ext-semanticwatchlist',
+	'check' => 'variable',
+	'message' => array(
+		'group-swladmins-member', // Optional GENDER parameter
 	)
 ),
 array(
@@ -348,6 +437,21 @@ array(
 	)
 ),
 array(
+	'group' => 'ext-survey',
+	'check' => 'variable',
+	'message' => array(
+		'group-surveyadmin-member', // Optional GENDER parameter
+		'group-surveysubmit-member', // Optional GENDER parameter
+	)
+),
+array(
+	'group' => 'ext-socialprofile-usergifts',
+	'check' => 'variable',
+	'message' => array(
+		'g-created-by', // Optional GENDER parameter
+	)
+),
+array(
 	'group' => 'ext-titleblacklist',
 	'check' => 'variable',
 	'code' => array(
@@ -375,11 +479,40 @@ array(
 	)
 ),
 array(
+	'group' => 'ext-uploadwizard',
+	'check' => 'variable',
+	'message' => array(
+		'group-upwizcampeditors-member', // Optional GENDER parameter
+	)
+),
+array(
+	'group' => 'ext-whitelistedit',
+	'check' => 'variable',
+	'message' => array(
+		'group-restricted-member', // Optional GENDER parameter
+		'group-manager-member', // Optional GENDER parameter
+	)
+),
+array(
+	'group' => 'ext-widgets',
+	'check' => 'variable',
+	'message' => array(
+		'group-widgeteditor-member', // Optional GENDER parameter
+	)
+),
+array(
 	'group' => 'ext-wikieditor',
 	'check' => 'links',
 	'message' => array(
 		'wikieditor-toolbar-help-content-ilink-syntax', // Contains links that are translated
 		'wikieditor-toolbar-help-content-file-syntax', // Contains links that are translated
+	)
+),
+array(
+	'group' => 'ext-wikiforum',
+	'check' => 'variable',
+	'message' => array(
+		'group-forumadmin-member', // Optional GENDER parameter
 	)
 ),
 array(
@@ -390,6 +523,56 @@ array(
 		'wikilog-summary-categories', // Optional PLURAL parameter ($1)
 		'wikilog-summary-footer', // Optional parameters $3, $4, $5, $6
 		'wikilog-summary-footer-single', // Optional parameters $1, $2, $3, $4, $5, $6
+	)
+),
+array(
+	'group' => 'ext-wikimediaincubator',
+	'check' => 'links',
+	'message' => array(
+		'wminc-code-macrolanguage', // Contains link that can be translated
+	)
+),
+array(
+	'group' => 'ext-wikimediaincubator',
+	'check' => 'variable',
+	'message' => array(
+		'group-test-sysop-member', // Optional GENDER parameter
+	)
+),
+array(
+	'group' => 'ext-wikimediamessages',
+	'check' => 'variable',
+	'message' => array(
+		'group-abusefilter-member', // Optional GENDER parameter
+		'group-accountcreator-member', // Optional GENDER parameter
+		'group-arbcom-member', // Optional GENDER parameter
+		'group-autopatrolled-member', // Optional GENDER parameter
+		'group-autoreviewer-member', // Optional GENDER parameter
+		'group-bigexport-member', // Optional GENDER parameter
+		'group-confirmed-member', // Optional GENDER parameter
+		'group-editprotected-member', // Optional GENDER parameter
+		'group-eliminator-member', // Optional GENDER parameter
+		'group-filemover-member', // Optional GENDER parameter
+		'group-flood-member', // Optional GENDER parameter
+		'group-founder-member', // Optional GENDER parameter
+		'group-Image-reviewer-member', // Optional GENDER parameter
+		'group-import-member', // Optional GENDER parameter
+		'group-interface_editors-member', // Optional GENDER parameter
+		'group-ipblock-exempt-member', // Optional GENDER parameter
+		'group-OTRS-member-member', // Optional GENDER parameter
+		'group-patroller-member', // Optional GENDER parameter
+		'group-researcher-member', // Optional GENDER parameter
+		'group-rollbacker-member', // Optional GENDER parameter
+		'group-transwiki-member', // Optional GENDER parameter
+		'group-trusted-member', // Optional GENDER parameter
+		'group-steward-member', // Optional GENDER parameter
+		'group-sysadmin-member', // Optional GENDER parameter
+		'group-editinterface-member', // Optional GENDER parameter
+		'group-Global_bot-member', // Optional GENDER parameter
+		'group-Global_rollback-member', // Optional GENDER parameter
+		'group-Global_sysops-member', // Optional GENDER parameter
+		'group-Ombudsmen-member', // Optional GENDER parameter
+		'group-Staff-member', // Optional GENDER parameter
 	)
 ),
 array(
@@ -419,6 +602,7 @@ array(
 	'check' => 'links',
 	'message' => array(
 		'categoryselect-tooltip', // Contains link parts that may need translation
+		'categoryselect-code-view-placeholder', // Contains link parts that may need translation
 	)
 ),
 array(
@@ -467,7 +651,7 @@ array(
 ),
 // translatewiki.net specific
 array(
-	'group' => 'page|Translating:Intro',
+	'group' => 'page-Translating:Intro',
 	'check' => 'links',
 	'message' => array(
 		'Translating:Intro/intro', // Contains links that are translated

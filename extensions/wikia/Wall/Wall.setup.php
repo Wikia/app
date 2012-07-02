@@ -12,7 +12,7 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'User Wall',
-	'author' => array( 'Tomek Odrobny', 'Christian Williams', 'Andrzej ≈Åukaszewski', 'Piotr Bablok' ),
+	'author' => array( 'Tomek Odrobny', 'Christian Williams', "Andrzej 'nAndy' Lukaszewski", 'Piotr Bablok' ),
 	'url' => 'http://www.wikia.com',
 	'descriptionmsg' => 'wall-desc',
 );
@@ -75,11 +75,10 @@ $app->registerHook('ChangesListInsertFlags', 'WallHooksHelper', 'onChangesListIn
 $app->registerHook('ChangesListInsertArticleLink', 'WallHooksHelper', 'onChangesListInsertArticleLink');
 $app->registerHook('ChangesListInsertDiffHist', 'WallHooksHelper', 'onChangesListInsertDiffHist');
 $app->registerHook('ChangesListInsertRollback', 'WallHooksHelper', 'onChangesListInsertRollback');
-$app->registerHook('ChangesListInsertAction', 'WallHooksHelper', 'onChangesListInsertAction');
+$app->registerHook('ChangesListInsertLogEntry', 'WallHooksHelper', 'onChangesListInsertLogEntry');
 $app->registerHook('ChangesListInsertComment', 'WallHooksHelper', 'onChangesListInsertComment');
 $app->registerHook('ArticleDoDeleteArticleBeforeLogEntry', 'WallHooksHelper', 'onArticleDoDeleteArticleBeforeLogEntry');
 $app->registerHook('PageArchiveUndeleteBeforeLogEntry', 'WallHooksHelper', 'onPageArchiveUndeleteBeforeLogEntry');
-$app->registerHook('XmlNamespaceSelectorAfterGetFormattedNamespaces', 'WallHooksHelper', 'onXmlNamespaceSelectorAfterGetFormattedNamespaces');
 $app->registerHook('ChangesListHeaderBlockGroup', 'WallHooksHelper', 'onChangesListHeaderBlockGroup');
 $app->registerHook('OldChangesListRecentChangesLine', 'WallHooksHelper', 'onOldChangesListRecentChangesLine');
 $app->registerHook('ChangesListMakeSecureName', 'WallHooksHelper', 'onChangesListMakeSecureName');
@@ -110,9 +109,13 @@ $app->registerHook('GetRailModuleList', 'WallRailHelper', 'onGetRailModuleList')
 
 //handmade links to message wall adjusting
 $app->registerHook('LinkBegin', 'WallHooksHelper', 'onLinkBegin');
+$app->registerHook('LinkerUserTalkLinkAfter', 'WallHooksHelper', 'onLinkerUserTalkLinkAfter');
 
 //saving user talk archive redirects to user talk archive
 $app->registerHook('ArticleSaveComplete', 'WallHooksHelper', 'onArticleSaveComplete');
+
+//add script in monobook
+$app->registerHook('SkinAfterBottomScripts', 'WallHooksHelper', 'onSkinAfterBottomScripts');
 
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
@@ -153,7 +156,7 @@ define( 'WALL_EMAIL_REMINDER', 3);
 $wgDefaultUserOptions['enotifwallthread'] = WALL_EMAIL_SINCEVISITED;
 $wgDefaultUserOptions['wallshowsource'] = false;
 $wgDefaultUserOptions['walldelete'] = false;
- 
+
 $userProfileNamespaces = array();
 $userProfileNamespaces[] = NS_USER;
 $userProfileNamespaces[] = NS_USER_TALK;

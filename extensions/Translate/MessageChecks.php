@@ -47,7 +47,7 @@ class MessageChecker {
 	private static $globalBlacklist = null;
 
 	/**
-	 * Cosntructs a suitable checker for given message group.
+	 * Constructs a suitable checker for given message group.
 	 * @param $group MessageGroup
 	 */
 	public function __construct( MessageGroup $group ) {
@@ -101,6 +101,7 @@ class MessageChecker {
 	/**
 	 * Adds one tests for this checker.
 	 * @see setChecks()
+	 * @param $check
 	 */
 	public function addCheck( $check ) {
 		if ( is_callable( $check ) ) {
@@ -261,6 +262,17 @@ class MessageChecker {
 	 */
 	protected function printfCheck( $messages, $code, &$warnings ) {
 		return $this->parameterCheck( $messages, $code, $warnings, '/%(\d+\$)?[sduf]/U' );
+	}
+
+	/**
+	 * Checks for missing and unknown Ruby variables (%{var}) in
+	 * translations.
+	 * @param $messages \mixed Iterable list of TMessage objects.
+	 * @param $code \string Language code
+	 * @param $warnings \array Array where warnings are appended to.
+	 */
+	protected function rubyVariableCheck( $messages, $code, &$warnings ) {
+		return $this->parameterCheck( $messages, $code, $warnings, '/%{[a-zA-Z_]+}/' );
 	}
 
 	/**

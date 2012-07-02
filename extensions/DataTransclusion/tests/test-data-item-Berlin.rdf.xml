@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rdf:RDF
+   xml:base="http://wikitravel.org/en/Berlin#"
+   xmlns:xml="http://www.w3.org/XML/1998/namespace"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#"
+   xmlns:kb_sys="http://purl.org/knowledgebay/ontology/sys#"
+   xmlns:kb_person="http://purl.org/knowledgebay/ontology/person#"
+   xmlns:kb_keyword="http://purl.org/knowledgebay/ontology/keyword#"
+   xmlns:kb_lecture="http://purl.org/knowledgebay/ontology/lecture#"
+   xmlns:kb_location="http://purl.org/knowledgebay/ontology/location#"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:place="urn:x-wikitravel:en:"
+   xmlns:pos="http://www.w3.org/2003/01/geo/wgs84_pos#"
+   xmlns:wts="http://wikitravel.org/schema#">
+
+<rdf:Description rdf:about="http://wikitravel.org/en/Berlin">
+   <dc:relation rdf:resource="http://wikitravel.org/en/UNESCO_Creative_Cities"/>
+   <dcterms:spatial rdf:resource="urn:x-wikitravel:en:Berlin"/>
+   <wts:stage rdf:resource="http://wikitravel.org/schema#Usable"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://wikitravel.org/en/Eastern_Germany">
+   <dcterms:spatial rdf:resource="urn:x-wikitravel:en:Eastern_Germany"/>
+</rdf:Description>
+
+<wts:City rdf:about="urn:x-wikitravel:en:Berlin">
+   <dcterms:isPartOf rdf:resource="urn:x-wikitravel:en:Eastern_Germany"/>
+   <pos:lat>52.461</pos:lat>
+   <pos:long>13.4747</pos:long>
+</wts:City>
+
+</rdf:RDF>

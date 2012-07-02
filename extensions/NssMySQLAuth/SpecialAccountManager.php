@@ -81,7 +81,7 @@ class SpecialAccountManager extends SpecialPage {
 
 		$wgOut->addHTML( "</table>\n" );
 		$wgOut->addHTML( "<div id=\"userprops-submit\">\n".
-			Xml::hidden( 'action', 'submit' ).
+			Html::Hidden( 'action', 'submit' ).
 			Xml::element( 'input', array(
 				'type' => 'submit',
 				'value' => wfMsg( 'nss-save-changes' )
@@ -124,7 +124,7 @@ class SpecialAccountManager extends SpecialPage {
 
 		$wgOut->addHTML( "</table>\n" );
 		$wgOut->addHTML( "<div id=\"newaccount-submit\">\n".
-			Xml::hidden( 'action', 'create' ).
+			Html::Hidden( 'action', 'create' ).
 			Xml::checkLabel( wfMsg( 'nss-no-mail' ), 'nss-no-mail', 'nss-no-mail' ).
 			"<br />\n".
 			Xml::element( 'input', array(
@@ -140,7 +140,7 @@ class SpecialAccountManager extends SpecialPage {
 		) );
 		$wgOut->addHTML( "<div id=\"newaccount-raw\">\n".
 			Xml::textarea( 'nss-create-account-raw', '' )."\n".
-			Xml::hidden( 'action', 'create-raw' ).
+			Html::Hidden( 'action', 'create-raw' ).
 			Xml::checkLabel( wfMsg( 'nss-no-mail' ), 'nss-no-mail', 'nss-no-mail' ).
 			"<br />\n".
 			Xml::element( 'input', array(
@@ -254,7 +254,7 @@ class SpecialAccountManager extends SpecialPage {
 		$mailFrom = new MailAddress( $wgPasswordSender );
 		$mailTo = new MailAddress( User::newFromName( $username ) );
 		
-		$mailResult = UserMailer::send( $mailTo, $mailFrom, $mailSubject, $email, null, null, 'NssMySQLAuth');
+		$mailResult = UserMailer::send( $mailTo, $mailFrom, $mailSubject, $email );
 		
 		if ( WikiError::isError( $mailResult ) ) {
 			$this->mErrors[] = $mailResult->getMessage();

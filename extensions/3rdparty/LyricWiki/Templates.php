@@ -61,8 +61,6 @@ function lw_templatePreload(&$textbox, &$title)
 {
 	$lwVars = getLyricWikiVariables();
 
-	wfLoadExtensionMessages('lwTemplates');
-
 	$titleStr = $title->getText();
 	
 	// only use templates in the main namespace

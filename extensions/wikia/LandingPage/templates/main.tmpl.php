@@ -1,48 +1,53 @@
 <section class="LandingPage">
 	<div class="LandingPageSearch">
-		<?= F::app()->getView("SearchModule", "Index", array ("placeholder" => "Search Wikia", "fulltext" => "0", "wgBlankImgUrl" => $wgBlankImgUrl, "wgTitle" => $wgTitle)); ?>
+		<?= $landingPageSearch; ?>
 	</div>
 
 	<ul class="LandingPageLanguageLinks">
-<?php
-foreach($languageLinks as $item) {
-?>
-		<li>[<a href="<?= htmlspecialchars($item['href']) ?>"><?= htmlspecialchars($item['text']) ?></a>]</li>
-<?php
-}
-?>
+		<? foreach($languageLinks as $item): ?>
+			<li>
+				[<a href="<?= htmlspecialchars($item['href']) ?>">
+					<?= htmlspecialchars($item['text']) ?>
+				</a>]
+			</li>
+		<? endforeach;?>
 	</ul>
 
 	<ul class="LandingPageSocialLinks">
-		<li class="twitter"><a alt="Follow us on Twitter" href="<?= wfMsg('landingpage-twitter-url') ?>"></a></li>
-		<li class="facebook"><a alt="Wikia on Facebook" href="<?= wfMsg('landingpage-facebook-url') ?>"></a></li>
-		<li class="blog"><a alt="Read our Blog" href="<?= wfMsg('landingpage-wikia-blog-url') ?>"></a></li>
+		<li class="twitter">
+			<a alt="Follow us on Twitter" href="<?= wfMsg('landingpage-twitter-url') ?>"></a>
+		</li>
+		<li class="facebook">
+			<a alt="Wikia on Facebook" href="<?= wfMsg('landingpage-facebook-url') ?>"></a>
+		</li>
+		<li class="blog">
+			<a alt="Read our Blog" href="<?= wfMsg('landingpage-wikia-blog-url') ?>"></a>
+		</li>
 	</ul>
 
 	<div class="LandingPageSites">
 		<h2><?= wfMsg('landingpage-start-exploring') ?></h2>
 		<p><?= wfMsg('landingpage-start-exploring-text') ?></p>
-		
 		<ul>
-		
-<?php
-		$counter = 0;
-		foreach ($landingPageLinks as $link) {
-			$counter ++; ?>
-			<li class="landingpage-site<?= $counter ?>" style="background-image: url(<?= $link["imagename"] ?>)" ><a alt="<?=  $link["title"] ?>" href="<?= $link["href"] ?>"><img src="<?= $wgBlankImgUrl ?>"></a></li>
-		<?php 
-		} ?>
-		
+			<? $counter = 0; foreach ($landingPageLinks as $link): $counter ++; ?>
+				<li class="landingpage-site<?= $counter ?>" style="background-image: url(<?= $link["imagename"] ?>)" >
+					<a alt="<?=  $link["title"] ?>" href="<?= $link["href"] ?>">
+						<img src="<?= $wgBlankImgUrl ?>">
+					</a>
+				</li>
+			<? endforeach; ?>
 		</ul>
-		<a href="<?= wfMsg('landingpage-faq-url') ?>" class="more"><?= wfMsg('landingpage-readfaq') ?></a>
+		<a href="<?= wfMsg('landingpage-faq-url') ?>" class="more">
+			<?= wfMsg('landingpage-readfaq') ?>
+		</a>
 	</div>
 
 	<section class="LandingPageWelcome">
-				<h1><?= wfMsg('landingpage') ?></h1>
+		<h1><?= wfMsg('landingpage') ?></h1>
 	</section>
 
 	<section class="LandingPageVideo">
-		<iframe class="video" swidth="605" sheight="335" frameborder="0" src="http://player.vimeo.com/video/15645799">		</iframe>
+		<iframe class="video" swidth="605" sheight="335" frameborder="0" src="http://player.vimeo.com/video/15645799"></iframe>
 	</section>
 	
 	<p class="LandingPageMain">

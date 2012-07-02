@@ -89,7 +89,7 @@ class WikiaRssExternalController extends WikiaController {
 		$app = F::app();
 		$result = array();
 
-		$charset = $options['charset'];
+		$charset = empty($options['charset'])?$options['charset']:array();
 		$date = $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
@@ -97,15 +97,17 @@ class WikiaRssExternalController extends WikiaController {
 		$maxheads = $options['maxheads'];
 
 		$headcnt = 0;
+		$outputEncoding = $app->wg->OutputEncoding;
+		
 		foreach( $items as $i => $item ) {
 			$d_text = true;
 			$d_title = true;
 
-			$href = htmlspecialchars(trim(iconv($charset, $app->wg->OutputEncoding, $item['link'])));
-			$title = htmlspecialchars(trim(iconv($charset, $app->wg->OutputEncoding, $item['title'])));
+			$href = htmlspecialchars(trim(mb_convert_encoding($item['link'],$outputEncoding,$charset)));
+			$title = htmlspecialchars(trim(mb_convert_encoding($item['title'],$outputEncoding,$charset)));
 
 			if( $date != 'false' && isset($item['dc']) && is_array($item['dc']) && isset($item['dc']['date']) ) {
-				$pubdate = trim(iconv($charset, $app->wg->OutputEncoding, $item['dc']['date']));
+				$pubdate = trim(mb_convert_encoding($item['dc']['date'],$outputEncoding,$charset));
 				$pubdate = date($date, strtotime($pubdate));
 			} else {
 				$pubdate = false;
@@ -116,7 +118,7 @@ class WikiaRssExternalController extends WikiaController {
 			$title = $this->doRssHighlight($title, $rssHighlight);
 
 			if( $item['description'] ) {
-				$text = trim(iconv($charset, $app->wg->OutputEncoding, $item['description']));
+				$text = trim(mb_convert_encoding($item['description'],$outputEncoding,$charset));
 				$text = str_replace( array("\r", "\n", "\t", '<br>'), ' ', $text );
 
 				$d_text = $this->doRssFilter($text, $rssFilter );

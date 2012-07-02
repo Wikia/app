@@ -1,14 +1,14 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
     'TagsReport' => array( 'TagsReport' ),
 );
 /**
  * Polish
  */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
     'TagsReport' => array( 'Rejestr_Znaczników', 'TagsReport' ),
 );

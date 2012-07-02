@@ -1134,6 +1134,7 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-recentchanges-deleted-thread' => 'borrado el tema "[[$1|$2]]" del muro de [[$3|$4]]',
 	'wall-recentchanges-deleted-reply' => 'borrada la respuesta "[[$1|$2]]" del muro de [[$3|$4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Una respuesta en el muro de mensajes',
+	'wall-recentchanges-edit' => '(mensaje editado)',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Muro de mensajes',
 	'wall-recentchanges-thread-group' => '$1 en el <a href="$2">Muro de $3</a>',
 	'wall-recentchanges-history-link' => 'Historial del muro',
@@ -1650,7 +1651,7 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'walldelete-toggle' => 'Permettre la suppression des versions pour les messages du Mur de discussion',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1849,7 +1850,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'mail-notification-reply-your' => '$AUTHOR_NAME respondeu á súa mensaxe en $WIKI.',
 	'mail-notification-reply-his' => '$AUTHOR_NAME respondeu a unha mensaxe en $WIKI.',
 	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu á mensaxe de $PARENT_AUTHOR_NAME en $WIKI.',
-	'mail-notification-html-greeting' => 'Boas, $1:',
+	'mail-notification-html-greeting' => 'Boas $1,',
 	'mail-notification-html-button' => 'Ollar a conversa',
 	'mail-notification-subject' => '$1 -- $2',
 	'mail-notification-html-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
@@ -1869,33 +1870,33 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 </a>',
 	'mail-notification-html-footer-line1' => 'Para botar unha ollada aos últimos acontecementos en Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Quere controlar os correos electrónicos que recibe? Vaia ás súas <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencias</a>',
-	'mail-notification-body' => 'Boas $WATCHER:
-
+	'mail-notification-body' => 'Boas $WATCHER,
+	
 $SUBJECT
-
+			
 $METATITLE
-
+		
 $MESSAGE_NO_HTML
-
+			
 -- $AUTHOR
 
 Ollar a conversa($MESSAGE_LINK)
-
+ 
 O equipo de Wikia
 
 ___________________________________________
-* Atope axuda e consellos na central da comunidade: http://community.wikia.com
+* Atope axuda e consellos central da comunidade: http://community.wikia.com
 * Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar
 as preferencias de correo electrónico aquí: http://community.wikia.com/Special:Preferences',
-	'mail-notification-body-HTML' => 'Boas $WATCHER:
-<p>$SUBJECT.</p>
-<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
-<p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p>
-<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Ollar a conversa</a></p>
-<p>O equipo de Wikia</p>
+	'mail-notification-body-HTML' => 'Boas $WATCHER,
+			<p>$SUBJECT.</p> 
+			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+			<p>$MESSAGE_HTML</p>
+			<p>-- $AUTHOR_SIGNATURE<p> 			
+			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Ollar a conversa</a></p>
+			<p>O equipo de Wikia</p>
 ___________________________________________<br />
-* Atope axuda e consellos na central da comunidade: http://community.wikia.com
+* Atope axuda e consellos central da comunidade: http://community.wikia.com
 * Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar
 as preferencias de correo electrónico aquí: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => 'Muro de mensaxes',
@@ -2230,7 +2231,7 @@ $messages['ja'] = array(
 	'wall-action-restore-confirm-ok' => '復帰',
 	'wall-action-rev-thread-title' => 'このスレッドを版指定削除しますか？',
 	'wall-action-rev-reply-title' => 'この返信を版指定削除しますか？',
-	'wall-action-rev-reply-confirm' => 'このメッセージを本当に削除しますか？',
+	'wall-action-rev-reply-confirm' => '本当にこのメッセージを削除しますか？',
 	'wall-action-rev-thread-confirm' => '本当にこのスレッドおよびその履歴を版指定削除しますか？この操作は取り消せません。',
 	'wall-action-rev-confirm-ok' => 'はい、削除します',
 	'wall-notifications' => '通知',
@@ -3307,8 +3308,23 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-message-staff-text' => 'Deze gebruiker is een medewerker van Wikia',
 	'wall-ipballowusertalk' => 'Deze gebruiker toestaan berichten op het eigen prikbord te plaatsen gedurende de blokkade',
 	'wall-ipbwatchuser' => 'Het profiel van deze gebruiker en hun prikbord volgen',
+	'wall-recentchanges-wall-group' => '$1 op de <a href="$2">muur van $3</a>',
+	'wall-recentchanges-wall-history-link' => 'muurgeschiedenis',
+	'wall-recentchanges-thread-history-link' => 'draadgeschiedenis',
+	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> op de <a href="$3">muur van $4</a>',
+	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> op de <a href="$3">muur van $4</a>',
+	'wall-message-not-found' => 'Dit bericht is niet aangetroffen. Als u deze foutmelding ziet, neem dan alstublieft [[Special:Contact|contact op met Wikia]] en lever zoveel mogelijk details aan over hoe het mogelijk is deze foutmelding tevoorschijn te laten komen. Alvast bedankt!',
+	'wall-message-staff-text' => 'Deze gebruiker is een medewerker van Wikia',
+	'wall-ipballowusertalk' => 'Deze gebruiker toestaan berichten op de eigen muur te plaatsen gedurende de blokkade',
+	'wall-ipbwatchuser' => 'Het profiel van deze gebruiker en hun berichtenmuur volgen',
 	'wall-wiki-activity-on' => 'op $1',
 	'wall-wiki-activity-wall-owner' => 'Prikbord van $1',
+	'wall-removed-thread-undo' => 'Deze draad is verwijderd. $1',
+	'wall-removed-reply-undo' => 'Dit antwoord is verwijderd. $1',
+	'wall-removed-reply' => 'Dit antwoord is verwijderd',
+	'wall-deleted-thread-undo' => 'Deze draad is verwijderd. $1',
+	'wall-deleted-reply-undo' => 'Dit antwoord is verwijderd. $1',
+	'wall-deleted-reply' => 'Dit antwoord is verwijderd',
 	'wall-removed-thread-undo' => 'Deze draad is verwijderd. $1',
 	'wall-removed-reply-undo' => 'Dit antwoord is verwijderd. $1',
 	'wall-removed-reply' => 'Dit antwoord is verwijderd',
@@ -4133,8 +4149,6 @@ ___________________________________________<br />
 	'tog-enotifmywall-sincevisited' => 'только о теме, которую я посещал последней',
 	'tog-enotifmywall-reminder' => 'с ежедневным напоминанием',
 	'tog-enotifmywall-noemail' => 'не отправлять мне эл. письма со Стены обсуждения',
-	'wallshowsource-toggle-v2' => 'Включить {{int:user-action-menu-view-source}} опцию для сообщений на Стене обсуждения',
-	'wallshowsource-toggle' => 'Включить {{int:user-action-menu-view-source}} для сообщений на Стене обсуждения',
 	'walldelete-toggle' => 'Включить просмотр постов, удалённых со Стены обсуждения',
 );
 
@@ -4418,21 +4432,6 @@ $messages['ta'] = array(
 	'wall-action-all-confirm-cancel' => 'ரத்து செய்',
 	'wall-delete-error-title' => 'பிழை',
 	'wall-action-remove-confirm-ok' => 'நீக்குக',
-);
-
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
-	'prefs-email-wall-v2' => 'Dingding ng Mensahe',
-	'tog-enotifwallthread-v2' => 'Padalhan ako ng e-liham...',
-	'tog-enotifmywall-every' => 'Para sa bawat mensahe at sagot',
-	'tog-enotifmywall-sincevisited' => 'Isa bawat sinulid magmula noong huling pagdalaw ko',
-	'tog-enotifmywall-reminder' => 'Na mayroong isang pang-araw-araw na e-liham na paalala',
-	'tog-enotifmywall-noemail' => 'Huwag kailanman. Huwag akong padalhan ng anumang mga e-liham ng Dingding ng Mensahe',
-	'wallshowsource-toggle-v2' => 'Paganahin ang maaaring piliin na {{int:user-action-menu-view-source}} sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
-	'wallshowsource-toggle' => 'Paganahin ang {{int:user-action-menu-view-source}} sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
-	'walldelete-toggle' => 'Paganahin ang pagbura ng Rebisyon sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
 );
 
 /** толышә зывон (толышә зывон)

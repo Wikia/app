@@ -97,6 +97,7 @@ class WikiaView {
 	 * @param bool $forceRebuild
 	 */
 	protected function buildTemplatePath( $controllerName, $methodName, $forceRebuild = false ) {
+		wfProfileIn(__METHOD__);
 		if( ( $this->templatePath == null ) || $forceRebuild ) {
 			$app = F::app();
 			$autoloadClasses = $app->wg->AutoloadClasses;
@@ -167,6 +168,7 @@ class WikiaView {
 
 			$this->setTemplatePath( $templatePath );
 		}
+		wfProfileOut(__METHOD__);
 	}
 
 	public function __toString() {
@@ -200,13 +202,16 @@ class WikiaView {
 	}
 
 	protected function renderRaw() {
+		wfProfileIn(__METHOD__);
 		if ($this->response->hasException()) {
 			return '<pre>' . print_r ($this->response->getException(), true) . '</pre>';
 		} 
 		return '<pre>' . var_export( $this->response->getData(), true ) . '</pre>';
+		wfProfileOut(__METHOD__);
 	}
 
 	protected function renderHtml() {
+		wfProfileIn(__METHOD__);
 		$this->buildTemplatePath( $this->response->getControllerName(), $this->response->getMethodName() );
 
 		$data = $this->response->getData();
@@ -214,12 +219,17 @@ class WikiaView {
 		switch($this->response->getTemplateEngine()) {
 			case WikiaResponse::TEMPLATE_ENGINE_MUSTACHE:
 				$m = new Mustache;
-				return $m->render(file_get_contents( $this->getTemplatePath() ), $data);
+				$result = $m->render(file_get_contents( $this->getTemplatePath() ), $data);
+				wfProfileOut(__METHOD__);
+
+				return $result;
 			break;
 			case WikiaResponse::TEMPLATE_ENGINE_PHP:
 			default:
 				// Export the app wg and wf helper objects into the template
 				// Note: never do this for Raw or Json formats due to major security issues there
+				wfProfileIn(__METHOD__ . ' - templateengine PHP');
+
 				$data['app'] = F::app();
 				$data['wg'] = F::app()->wg;
 				$data['wf'] = F::app()->wf;
@@ -228,9 +238,15 @@ class WikiaView {
 					extract( $data );
 				}		
 				
+				
 				ob_start();
-				require $this->getTemplatePath();
+				$templatePath = $this->getTemplatePath();
+				wfProfileIn(__METHOD__ . ' - template: ' . $templatePath);
+				require $templatePath;
+				wfProfileOut(__METHOD__ . ' - template: ' . $templatePath);
 				$out = ob_get_clean();
+				wfProfileOut(__METHOD__ . ' - templateengine PHP');
+				wfProfileOut(__METHOD__);
 				return $out;			
 			break;	
 		} 

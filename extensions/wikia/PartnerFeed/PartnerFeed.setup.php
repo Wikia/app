@@ -27,7 +27,7 @@ $wgAutoloadClasses['AutoHubsPagesHelper'] =
 
 
 $wgExtensionMessagesFiles['PartnerFeed'] = $dir . 'PartnerFeed.i18n.php';
-$wgExtensionAliasesFiles['PartnerFeed'] = __DIR__ . '/PartnerFeed.aliases.php';
+$wgExtensionMessagesFiles['PartnerFeedAliases'] = __DIR__ . '/PartnerFeed.aliases.php';
 
 $wgSpecialPages['PartnerFeed']		= 'PartnerFeed';
 $wgSpecialPageGroups['PartnerFeed']	= 'wikia';
@@ -38,12 +38,12 @@ $wgHooks['AchievementsInvalidateCache'][] = 'OnAchievementsInvalidateCache';
 function OnAchievementsInvalidateCache( User $user ){
 	wfProfileIn( __METHOD__ );
 	global $wgMemc;
-	
+
 	//used in ParterFeed:FeedAchivementsLeaderboard()
 	$rankingCacheKey = AchRankingService::getRankingCacheKey( 20 );
 	$wgMemc->delete( $rankingCacheKey );
-	
+
 	wfProfileOut( __METHOD__ );
-	
+
 	return true;
 }

@@ -100,8 +100,8 @@ class FBConnectUser extends User {
 			case 'fullname':
 			case 'firstname':
 				// If real names aren't allowed, then simply ignore the parameter from Facebook
-				global $wgAllowRealName;
-				if (!$wgAllowRealName) {
+				global $wgHiddenPrefs;
+				if ( in_array( 'realname', $wgHiddenPrefs ) ) {
 					$value = '';
 				}
 				break;

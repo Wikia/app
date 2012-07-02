@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class TemplateTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureImportantElementsOfExistentTemplatePageExist() throws Exception {
 		login();
 		openAndWait("index.php?title=Template:Infobox");
@@ -31,7 +31,7 @@ public class TemplateTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='WikiaRail']"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureImportantElementsOfExistentTemplateTalkPageExist() throws Exception {
 		login();
 		try {
@@ -57,7 +57,7 @@ public class TemplateTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='WikiaRail']"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureNonExistantTemplatePageContainsProperElements() throws Exception {
 
 		login();

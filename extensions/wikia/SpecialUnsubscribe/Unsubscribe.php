@@ -7,7 +7,7 @@
  * @version 0.1
  * @author C. Uberfuzzy Stafford, Wikia Inc.
  * @author Lucas Garczewski <tor@wikia-inc.com>
- * @copyright © 2010 
+ * @copyright © 2010
  * @licence GNU General Public Licence
  */
 
@@ -32,7 +32,8 @@ $wgExtensionCredits['specialpage'][] = array(
 // Set up the new special page
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Unsubscribe'] = $dir . 'Unsubscribe.i18n.php';
-$wgExtensionAliasesFiles['Unsubscribe'] = $dir . 'Unsubscribe.alias.php';
+$wgExtensionMessagesFiles['UnsubscribeAliases'] = $dir . 'Unsubscribe.alias.php';
+
 $wgAutoloadClasses['UnsubscribePage'] = $dir . 'Unsubscribe.body.php';
 $wgSpecialPages['Unsubscribe'] = 'UnsubscribePage';
 

@@ -4,7 +4,7 @@
  *
  * @file
  * @ingroup Extensions
- * @version 1.0.1
+ * @version 2.0.0
  * @author Ryan Schmidt
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @link http://www.mediawiki.org/wiki/Extension:Maintenance Documentation
@@ -20,18 +20,17 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Maintenance',
 	'author' => 'Ryan Schmidt',
-	'version' => '1.0.3',
-	'description' => '[[Special:Maintenance|Web interface]] for various maintenance scripts',
+	'version' => '2.0.0',
 	'descriptionmsg' => 'maintenance-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Maintenance',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Maintenance',
 );
 
 // Set up the new special page
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Maintenance'] = $dir . 'Maintenance.i18n.php';
-$wgExtensionAliasesFiles['Maintenance'] = $dir . 'Maintenance.alias.php';
-$wgAutoloadClasses['Maintenance'] = $dir . 'Maintenance_body.php';
-$wgSpecialPages['Maintenance'] = 'Maintenance';
+$wgExtensionMessagesFiles['MaintenanceAlias'] = $dir . 'Maintenance.alias.php';
+$wgAutoloadClasses['SpecialMaintenance'] = $dir . 'Maintenance_body.php';
+$wgSpecialPages['Maintenance'] = 'SpecialMaintenance';
 // Special page group for MW 1.13+
 $wgSpecialPageGroups['Maintenance'] = 'wiki';
 

@@ -5,7 +5,8 @@
 * extension and should not be modified. You may modify the CSS code on the
 * MediaWiki:Common.css page to adjust padding, alignment, etc.
 *
-* @addtogroup Extensions
+* @file
+* @ingroup Extensions
 */
 
 /* Pad Google AdSense box in portlet in sidebar */

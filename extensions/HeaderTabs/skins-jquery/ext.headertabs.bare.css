@@ -1,0 +1,50 @@
+/**
+ * More Vector-like tabs, with normal sized text, blue links, and shiny tabs.
+ *
+ * @file
+ * @ingroup Extensions
+ *
+ * @author 70.189.238.136
+ * @author Olivier Beaton
+ */
+
+/* JQuery UI tabs clearing styles by Olivier Finlay Beaton and 70.189.238.136 */
+#headertabs.bare.ui-widget {
+	font-family: inherit;
+	font-size: 1em; /* IE doesn't like inherit here */
+}
+
+#headertabs.bare.ui-widget-content {
+	color: inherit;
+	background: transparent;
+	border: none;
+}
+
+#headertabs.bare.ui-tabs {
+	padding: 0;
+}
+
+#headertabs.bare.ui-tabs .ui-tabs-panel {
+	padding: 0;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+#headertabs.bare .ui-widget-header {
+	border: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #cccccc;
+}
+
+/* section by 70.189.238.136 */
+#headertabs.bare .ui-widget input, #headertabs.bare .ui-widget select, #headertabs.bare .ui-widget textarea, #headertabs.bare .ui-widget button { font-family: inherit; font-size: 1em; } /* ie doesn't like inherit here */
+#headertabs.bare .ui-widget-content a { color:#0645AD; }
+#headertabs.bare .ui-widget-content a:visited { color:#0b0080; }
+#headertabs.bare .ui-widget-content a.new { color:#CC2200; }
+#headertabs.bare .ui-widget-content a.new:visited { color:#A55858; }
+#headertabs.bare .ui-widget-content a.extiw { color:#3366BB; }
+#headertabs.bare .ui-widget-content a.redirect { color:#308050; }
+#headertabs.bare .ui-widget-content a.redirect:visited { color:#3070A0; }
+
+/* end JQuery UI tabs style clearer */

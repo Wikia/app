@@ -189,5 +189,3 @@ class WikiTrust extends WikiTrustBase {
     return true;
   }
 }
-
-?>

@@ -14,17 +14,16 @@
  
 $wgExtensionCredits['specialpage'][] = array(
 	'path'                  => __FILE__,
-        'name'			=> 'Interwiki List',
+	'name'			=> 'Interwiki List',
 	'version'		=> '0.3',
-        'url'			=> 'http://mediawiki.org/wiki/Extension:InterwikiList',
-        'description'		=> 'Adds a [[Special:Interwikilist|special page]] to view available interwiki links',
-        'author'		=> '[mailto:innocentkiller@gmail.com Chad Horohoe]',
-        'descriptionmsg'	=> 'interwikilist-desc',
+	'url'			=> 'http://mediawiki.org/wiki/Extension:InterwikiList',
+	'author'		=> '[mailto:innocentkiller@gmail.com Chad Horohoe]',
+	'descriptionmsg'	=> 'interwikilist-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
 $wgSpecialPages['InterwikiList'] = 'InterwikiList';
 $wgAutoloadClasses['InterwikiList'] = $dir . 'InterwikiList_body.php';
 $wgExtensionMessagesFiles['InterwikiList'] = $dir . 'InterwikiList.i18n.php';
-$wgExtensionAliasesFiles['InterwikiList'] = $dir . 'InterwikiList.alias.php';
+$wgExtensionMessagesFiles['InterwikiListAlias'] = $dir . 'InterwikiList.alias.php';
 $wgSpecialPageGroups['InterwikiList'] = 'wiki';

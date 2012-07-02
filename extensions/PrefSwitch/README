@@ -1,0 +1,33 @@
+# PrefSwitch provides a way to make it easier for users to turn a set of options on and off, as well as fill out an
+# optional survey when they are turning them off.
+
+# This extension requires MediaWiki 1.17+ because it makes use of ResourceLoader.
+
+# Format for $wgPrefSwitchPrefs
+
+array(
+	'off' => array( [pref] => [value] ),
+	'on' => array( [pref] => [value] ),
+)
+
+# Format for $wgPrefSwitchSurveys
+
+array(
+	[survey-id] => array(
+		'submit-msg' => [message key for submit button caption]
+		'updateable' => [boolean],
+		'questions' => array(
+			field-id => array(
+				'question' => [msg-id],
+				'type' => [msg-id],
+				'answers' => array(
+					answer => [msg-id],
+					...
+				),
+				'other' => [msg-id],
+				'ifyes' => [msg-id],
+			),
+			...
+		),
+	),
+)

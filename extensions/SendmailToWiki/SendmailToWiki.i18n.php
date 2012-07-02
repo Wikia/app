@@ -60,7 +60,14 @@ $messages['ar'] = array(
 	'sendmailtowiki-err-onlyplain' => 'بسبب إساءة الفهم المحتملة فالرسائل النصية النقية فقط مقبولة.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'sendmailtowiki-inpin' => 'PIN:',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -76,6 +83,13 @@ $messages['be-tarask'] = array(
 	'sendmailtowiki-err-invalidsender' => 'Няслушны адпраўшчык. Праверце адрас электроннай пошты, з якога Вы дасылаеце.',
 	'sendmailtowiki-err-invalidpin' => 'Няслушны пэрсанальны ідэнтыфікацыйны нумар. У доступе адмоўлена.',
 	'sendmailtowiki-err-onlyplain' => 'Каб пазьбегнуць супярэчнасьцяў, прымаюцца выключна тэкставыя паведамленьні.',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'sendmailtowiki-inpin' => 'পিন:',
 );
 
 /** Breton (Brezhoneg)
@@ -99,17 +113,30 @@ $messages['br'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'sendmailtowiki-desc' => 'Slanje wiki sadržaja putem određene dinamičke e-mail adrese',
 	'prefs-sendmailtowiki' => 'Slanje sadržaja putem e-maila',
 	'sendmailtowiki-inemail' => 'Namjenska e-mail adresa:',
 	'sendmailtowiki-inpin' => 'PIN:',
+	'prefs-help-sendmailtowiki_pin' => 'Prazno polje za PIN broj ne dozvoljava slanej sadržaja na wiki sa vašeg računa.',
 	'sendmailtowiki-err-pinlength' => 'PIN mora sadržavati tačno 5 cifara.',
+	'sendmailtowiki-err-wrongprefix' => 'Pogrešan prefiks wiki računa. Kontaktirajte vašeg administratora.',
+	'sendmailtowiki-err-invalidaccount' => 'Nevaljan račun. Provjerite e-mail adresu na koju šaljete.',
+	'sendmailtowiki-err-invalidsender' => 'Nevaljan pošiljalac. Provjerite e-mail adresu sa koje se šalje.',
 	'sendmailtowiki-err-invalidpin' => 'Nevaljan PIN. Pristup onemogućen.',
+	'sendmailtowiki-err-onlyplain' => 'Zbog potencijalnih pogrešnih interpretacuha mogu se prihvatiti samo čisto tekstualne poruke.',
 );
 
 /** Catalan (Català)
  * @author Solde
  */
 $messages['ca'] = array(
+	'sendmailtowiki-inpin' => 'PIN:',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
 	'sendmailtowiki-inpin' => 'PIN:',
 );
 
@@ -130,7 +157,7 @@ $messages['de'] = array(
 	'sendmailtowiki-err-onlyplain' => 'Aufgrund potenzieller Fehlinterpretationen werden nur reine Textnachrichten akzeptiert.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  */
 $messages['de-formal'] = array(
@@ -168,21 +195,25 @@ $messages['el'] = array(
  */
 $messages['eo'] = array(
 	'sendmailtowiki-inemail' => 'Dediĉita retadreso:',
+	'sendmailtowiki-inpin' => 'Persona identignumero:',
+	'sendmailtowiki-err-pinlength' => 'Persona identignumero nepre havu precize 5 numerojn.',
+	'sendmailtowiki-err-invalidpin' => 'Malvalida persona identignumero. Atingo malpermesigita.',
 );
 
 /** Spanish (Español)
  * @author Crazymadlover
  * @author Imre
+ * @author Mor
  * @author Translationista
  */
 $messages['es'] = array(
-	'sendmailtowiki-desc' => 'Publicar contenido wiki a través de un dirección de correo electrónico dinámica dedicada',
+	'sendmailtowiki-desc' => 'Publicar contenido wiki a través de una dirección de correo electrónico dinámica dedicada',
 	'prefs-sendmailtowiki' => 'Enviando contenido con correo electrónico',
 	'sendmailtowiki-inemail' => 'Dirección de correo electrónico asignada:',
 	'sendmailtowiki-inpin' => 'PIN:',
 	'prefs-help-sendmailtowiki_pin' => 'El campo de número PIN en blanco desactiva la publicación de contenido a la wiki con tu cuenta.',
 	'sendmailtowiki-err-pinlength' => 'El PIN debe contener exactamente 5 números.',
-	'sendmailtowiki-err-wrongprefix' => 'Prefijo de cuenta wiki erróneo. Porfavor, contacta con el administrador.',
+	'sendmailtowiki-err-wrongprefix' => 'Prefijo de cuenta wiki erróneo. Por favor, contacta con el administrador.',
 	'sendmailtowiki-err-invalidaccount' => 'Cuenta inválida. Revisa la dirección de correo electrónico a la que estás realizando el envío.',
 	'sendmailtowiki-err-invalidsender' => 'Cuenta inválida. Revisa la dirección de correo electrónico desde la que estás realizando el envío.',
 	'sendmailtowiki-err-invalidpin' => 'PIN no válido. Acceso denegado.',
@@ -208,19 +239,31 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author PieRRoMaN
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'sendmailtowiki-desc' => 'Poster le contenu wiki via une adresse de courriel dédiée dynamique',
 	'prefs-sendmailtowiki' => 'Publication du contenu par courriel',
 	'sendmailtowiki-inemail' => 'Adresse de courriel dédiée :',
+	'sendmailtowiki-inpin' => 'NIP :',
+	'prefs-help-sendmailtowiki_pin' => 'Un champ vierge pour le NIP désactive la publication de contenu sur le wiki avec votre compte.',
+	'sendmailtowiki-err-pinlength' => 'Le NIP doit contenir exactement 5 chiffres.',
+	'sendmailtowiki-err-wrongprefix' => 'Préfixe de compte wiki erroné. Contactez l’administrateur.',
+	'sendmailtowiki-err-invalidaccount' => 'Compte invalide. Vérifiez l’adresse de courriel de destination.',
+	'sendmailtowiki-err-invalidsender' => 'Expéditeur invalide. Vérifiez l’adresse de courriel d’émission.',
+	'sendmailtowiki-err-invalidpin' => 'NIP invalide. Accès refusé.',
+	'sendmailtowiki-err-onlyplain' => 'En raison d’éventuelles erreurs d’interprétation, seuls les messages contenant du texte brut sont acceptés.',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'prefs-sendmailtowiki' => 'Publecacion du contegnu per mèssageria èlèctronica',
+	'sendmailtowiki-inemail' => 'Adrèce èlèctronica consacrâ :',
 	'sendmailtowiki-inpin' => 'PIN :',
-	'prefs-help-sendmailtowiki_pin' => 'Un champ vierge pour le numéro PIN désactive la publication de contenu sur le wiki avec votre compte.',
-	'sendmailtowiki-err-pinlength' => 'Le PIN doit contenir exactement 5 chiffres.',
-	'sendmailtowiki-err-wrongprefix' => "Préfixe de compte wiki erroné. Contactez l'administrateur.",
-	'sendmailtowiki-err-invalidaccount' => "Compte invalide. Vérifiez l'adresse de courriel de destination.",
-	'sendmailtowiki-err-invalidsender' => "Expéditeur invalide. Vérifiez l'adresse de courriel d'émission.",
-	'sendmailtowiki-err-invalidpin' => 'PIN invalide. Accès refusé.',
-	'sendmailtowiki-err-onlyplain' => "En raison d'éventuelles erreurs d'interprétations, seuls les messages contenant du texte brut sont acceptés.",
+	'sendmailtowiki-err-pinlength' => 'Lo PIN dêt contegnir justo 5 chifros.',
+	'sendmailtowiki-err-invalidpin' => 'PIN envalido. Accès refusâ.',
 );
 
 /** Galician (Galego)
@@ -236,7 +279,7 @@ $messages['gl'] = array(
 	'sendmailtowiki-err-wrongprefix' => 'Prefixo de conta wiki erróneo. Póñase en contacto co administrador.',
 	'sendmailtowiki-err-invalidaccount' => 'Conta non válida. Comprobe o enderezo de correo electrónico de destino.',
 	'sendmailtowiki-err-invalidsender' => 'Remitente non válido. Comprobe o enderezo de correo electrónico de procedencia.',
-	'sendmailtowiki-err-invalidpin' => 'PIN non válido. Acceso denegado.',
+	'sendmailtowiki-err-invalidpin' => 'PIN non válido. Acceso rexeitado.',
 	'sendmailtowiki-err-onlyplain' => 'Debido a posibles erros de interpretación, só se aceptan mensaxes de texto.',
 );
 
@@ -258,12 +301,21 @@ $messages['gsw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author YaronSh
  */
 $messages['he'] = array(
 	'sendmailtowiki-desc' => 'פרסום תוכן ויקי דרך כתובת דוא"ל דינמית ייעודית',
+	'prefs-sendmailtowiki' => 'פרסום תוכן באמצעות דוא״ל',
+	'sendmailtowiki-inemail' => 'כתובת דוא״ל ייעודית:',
+	'sendmailtowiki-inpin' => 'מספר סודי:',
+	'prefs-help-sendmailtowiki_pin' => 'שדה שחור למספר סודי מבטל את שליחת התוכן לוויקי עם החשבון שלך.',
+	'sendmailtowiki-err-pinlength' => 'המספר הסודי צריך להכיל בדיוק 5 ספרות.',
+	'sendmailtowiki-err-wrongprefix' => 'קידומת החשבון בוויקי שגויה. נא ליצור קשר עם המנהל שלך.',
 	'sendmailtowiki-err-invalidaccount' => 'החשבון שגוי. אנא בדקו שוב את כתובת הדוא"ל אליה אתם שולחים.',
 	'sendmailtowiki-err-invalidsender' => 'השולח שגוי. אנא בדקו את כתובת הדוא"ל ממנה אתם שולחים.',
+	'sendmailtowiki-err-invalidpin' => 'מספר סודי שגוי. הגישה נחסמה.',
+	'sendmailtowiki-err-onlyplain' => 'בגלל חוסר הבנה אפשרית, מתקבלות רק הודעות בטקסט טהור.',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -359,7 +411,7 @@ $messages['ja'] = array(
 	'sendmailtowiki-err-onlyplain' => '誤った解釈を防ぐために、純粋なテキストのメッセージのみを受け付けます。',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -385,8 +437,9 @@ $messages['lb'] = array(
 	'sendmailtowiki-inemail' => 'Zougewisen E-Mailadress:',
 	'sendmailtowiki-inpin' => 'PIN:',
 	'sendmailtowiki-err-pinlength' => 'De PIN muss genee 5 Zifferen hunn.',
+	'sendmailtowiki-err-wrongprefix' => 'Falsche Prefix vum Benotzerkont. Kontaktéiert Ären Administrateur.',
 	'sendmailtowiki-err-invalidaccount' => "Net valabele Kont. Kuckt w.e.g. d'E-Mailadress no op déi Dir Äre Mail schécke wëllt.",
-	'sendmailtowiki-err-invalidsender' => 'Net valabelen Ofsender. Kuckt déi e-Mailadress no vun däer Dir de Mail fortschéckt.',
+	'sendmailtowiki-err-invalidsender' => 'Net valabelen Absender. Kuckt déi e-Mailadress no vun där Dir de Mail fortschéckt.',
 	'sendmailtowiki-err-invalidpin' => 'PIN net valabel. Zougang refüséiert',
 );
 
@@ -424,10 +477,17 @@ $messages['nl'] = array(
 	'sendmailtowiki-err-onlyplain' => 'Vanwege mogelijke interpretatieproblemen worden alleen berichten in platte tekst (MIME-type text/plain) geaccepteerd.',
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Nghtwlkr
+ */
+$messages['nn'] = array(
+	'sendmailtowiki-inpin' => 'PIN:',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'sendmailtowiki-desc' => 'Legg inn wikiinnhold gjennom en dedikert dynamisk e-postadresse',
 	'prefs-sendmailtowiki' => 'Legger til innhold via e-post',
 	'sendmailtowiki-inemail' => 'Dedikert e-postadresse:',
@@ -456,6 +516,23 @@ $messages['oc'] = array(
 	'sendmailtowiki-err-invalidsender' => "Expeditor invalid. Verificatz l'adreça de corrièl d'emission.",
 	'sendmailtowiki-err-invalidpin' => 'PIN invalid. Accès refusat.',
 	'sendmailtowiki-err-onlyplain' => "En rason d'eventualas errors d'interpretacions, sols los messatges que contenon de tèxte brut son acceptats.",
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'sendmailtowiki-desc' => 'Wysyłanie treści wiki poprzez dedykowany dynamiczny adres e‐mail',
+	'prefs-sendmailtowiki' => 'Wysyłanie treści poprzez e‐mail',
+	'sendmailtowiki-inemail' => 'Dedykowany adres e‐mail',
+	'sendmailtowiki-inpin' => 'PIN',
+	'prefs-help-sendmailtowiki_pin' => 'Puste pole na numer PIN wyłącza przesyłanie treści do wiki z Twojego konta.',
+	'sendmailtowiki-err-pinlength' => 'PIN musi długość dokładnie 5 cyfr.',
+	'sendmailtowiki-err-wrongprefix' => 'Zły przedrostek konta wiki. Skontaktuj się z administratorem.',
+	'sendmailtowiki-err-invalidaccount' => 'Nieprawidłowe konto. Sprawdź adres pod który wysyłasz e‐mail.',
+	'sendmailtowiki-err-invalidsender' => 'Nieprawidłowy nadawca. Sprawdź adres spod którego wysyłasz e‐mail.',
+	'sendmailtowiki-err-invalidpin' => 'Nieprawidłowy PIN. Odmowa dostępu.',
+	'sendmailtowiki-err-onlyplain' => 'Ze względu na możliwość nieprawidłowej interpretacji akceptowane są wyłącznie wiadomości czysto tekstowe.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -494,12 +571,21 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'sendmailtowiki-desc' => 'Publicação de conteúdos numa wiki, através de um endereço de e-mail dinâmico e dedicado',
+	'prefs-sendmailtowiki' => 'Publicar conteúdos por e-mail',
+	'sendmailtowiki-inemail' => 'Endereço de e-mail dedicado:',
 	'sendmailtowiki-inpin' => 'PIN:',
+	'prefs-help-sendmailtowiki_pin' => 'Número PIN vazio desativa a publicação de conteúdos na wiki através da sua conta.',
 	'sendmailtowiki-err-pinlength' => 'PIN precisa conter exatamente 5 algarismos.',
+	'sendmailtowiki-err-wrongprefix' => 'Prefixo da conta wiki errado. Contate o seu administrador!',
+	'sendmailtowiki-err-invalidaccount' => 'Conta inválida. Verifique o endereço de e-mail de destino.',
+	'sendmailtowiki-err-invalidsender' => 'Remetente inválido. Verifique o endereço de e-mail do remetente.',
 	'sendmailtowiki-err-invalidpin' => 'PIN inválido. Acesso negado.',
+	'sendmailtowiki-err-onlyplain' => 'Devido a potenciais erros de interpretação, só são aceites mensagens de texto.',
 );
 
 /** Russian (Русский)
@@ -548,6 +634,23 @@ $messages['sv'] = array(
 	'sendmailtowiki-err-onlyplain' => 'Pågrund av risken för feltolkningar så är endast rena textmeddelanden tillåtna.',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'sendmailtowiki-desc' => 'Ipaskil ang nilalaman ng wiki sa pamamagitan ng nakalaang masiglang adres ng e-liham',
+	'prefs-sendmailtowiki' => 'Ipinapaskil ang nilalaman na may e-liham',
+	'sendmailtowiki-inemail' => 'Nakalaang tirahan ng e-liham:',
+	'sendmailtowiki-inpin' => 'PIN:',
+	'prefs-help-sendmailtowiki_pin' => 'Hindi pinagagana ng walang lamang lugar para sa bilang ng PIN ang pagpapaskil ng nilalaman sa wiki na may akawnt mo.',
+	'sendmailtowiki-err-pinlength' => 'Dapat na maglaman ng ganap na 5 mga bilang ang PIN.',
+	'sendmailtowiki-err-wrongprefix' => 'Maling unlapi ng akawnt na pangwiki.  Makipag-ugnayan sa iyong tagapangasiwa.',
+	'sendmailtowiki-err-invalidaccount' => 'Hindi tanggap na akawnt.  Suriin ang tirahan ng e-liham na padadalhan mo.',
+	'sendmailtowiki-err-invalidsender' => 'Hindi tanggap na tagapagpadala.  Suriin ang tirahan ng e-liham na panggagalingan mo.',
+	'sendmailtowiki-err-invalidpin' => 'Hindi tanggap na PIN. Tinanggihan ang pagpunta.',
+	'sendmailtowiki-err-onlyplain' => 'Dahil sa maaaring maging maling pag-unawa tanging dalisay na mga mensaheng teksto lang ang tinatanggap.',
+);
+
 /** Turkish (Türkçe)
  * @author Vito Genovese
  */
@@ -568,7 +671,7 @@ $messages['vi'] = array(
 	'prefs-sendmailtowiki' => 'Gửi nội dung qua thư điện tử',
 	'sendmailtowiki-inpin' => 'PIN:',
 	'sendmailtowiki-err-pinlength' => 'Số PIN phải có đúng 5 chữ số.',
-	'sendmailtowiki-err-wrongprefix' => 'Tiền tố tài khoản wiki sai; hãy liên lạc với quản lý viên.',
+	'sendmailtowiki-err-wrongprefix' => 'Tiền tố tài khoản wiki sai; hãy liên lạc với bảo quản viên.',
 	'sendmailtowiki-err-invalidaccount' => 'Tài khoản nhận không hợp lệ. Hãy kiểm tra địa chỉ nhận thư điện tử.',
 	'sendmailtowiki-err-invalidsender' => 'Tài khoản gửi không hợp lệ. Hãy kiểm tra địa chỉ gửi thư điện tử.',
 );

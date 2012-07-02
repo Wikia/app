@@ -18,14 +18,13 @@ class SecurePoll_Question extends SecurePoll_Entity {
 		foreach ( $info['options'] as $optionInfo ) {
 			$this->options[] = new SecurePoll_Option( $context, $optionInfo );
 		}
-		$this->electionId = $info['election'];
 	}
 
 	/**
 	 * Get a list of localisable message names.
 	 */
 	function getMessageNames() {
-		$ballot = $this->context->getElection( $this->electionId )->getBallot();
+		$ballot = $this->getElection()->getBallot();
 		return array_merge( $ballot->getMessageNames( $this ), array( 'text' ) );
 		
 	}

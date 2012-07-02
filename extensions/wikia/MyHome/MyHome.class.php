@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * This class contains hook handlers used to modify and store edit information
+ * used by Special:WikiActivity
+ */
+
 class MyHome {
 
 	// prefix for our custom data stored in rc_params
@@ -21,7 +26,6 @@ class MyHome {
 	 */
 	public static function storeInRecentChanges($rc, $data = array()) {
 		wfProfileIn(__METHOD__);
-
 		global $wgParser;
 
 		// If we have existing data packed into rc_params, make sure it is preserved.
@@ -122,33 +126,6 @@ class MyHome {
 	}
 
 	/*
-	 * Add link to Special:MyHome in Monaco user menu
-	 *
-	 * @author Maciej Brencz <macbre@wikia-inc.com>
-	 */
-	public static function addToUserMenu($skin, $tpl, $custom_user_data) {
-		wfProfileIn(__METHOD__);
-
-		// don't touch anon users
-		global $wgUser;
-		if ($wgUser->isAnon()) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		wfLoadExtensionMessages('MyHome');
-
-		$skin->data['userlinks']['myhome'] = array(
-			'text' => wfMsg('myhome'),
-			'href' => Skin::makeSpecialUrl('MyHome'),
-		);
-
-		wfProfileOut(__METHOD__);
-
-		return true;
-	}
-
-	/*
 	 * Check if it's section edit, then try to get section name
 	 *
 	 * @see http://www.mediawiki.org/wiki/Manual:Hooks/EditFilter
@@ -183,10 +160,10 @@ class MyHome {
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
-	public static function getInitialMainPage($title) {
+	public static function getInitialMainPage(Title $title) {
 		wfProfileIn(__METHOD__);
 
-		global $wgUser, $wgTitle, $wgRequest;
+		global $wgUser, $wgTitle, $wgRequest, $wgEnableWikiaHomePageExt;
 
 		// dirty hack to make skin chooser work ($wgTitle is not set at this point yet)
 		$wgTitle = Title::newMainPage();
@@ -197,30 +174,15 @@ class MyHome {
 			return true;
 		}
 
-		// user must be logged in and have redirect enabled
-		if ($wgUser->isLoggedIn() && ($wgUser->getOption('myhomedisableredirect') != true) ) {
+		// user must be logged in and have redirect enabled; this is not used for Corporate Sites where Wikia Visualization
+		// is enabled
+		if ($wgUser->isLoggedIn()
+			&& ($wgUser->getOption('myhomedisableredirect') != true)
+			&& !empty($wgEnableWikiaHomePageExt )) {
 			$title = Title::newFromText('WikiActivity', NS_SPECIAL);
 		}
 
 		wfProfileOut(__METHOD__);
-
-		return true;
-	}
-
-	public static function addNewAccount($user) {
-		global $wgOut, $wgUser;
-
-		// do not redirect for skins different then monaco
-		if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
-			if( session_id() != '' ) {
-				$urlaction = '';
-				$_SESSION['Signup_AccountCreated'] = 'created';
-			} else {
-				$urlaction = 'accountcreated=1';
-			}
-			$wgOut->redirect(Skin::makeSpecialUrl('MyHome', $urlaction));
-		}
-
 		return true;
 	}
 
@@ -256,7 +218,7 @@ class MyHome {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-	
+
 	/**
 	 * Given an associative array of data to store, adds this to additional data and updates
 	 * the row in recentchanges corresponding to the provided RecentChange (or, if rc is not
@@ -276,11 +238,18 @@ class MyHome {
 			$rc_id = $rc->getAttribute('rc_id');
 
 			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update('recentchanges', array('rc_params' => MyHome::packData($rc_data)), array('rc_id' => $rc_id));
+			$dbw->update('recentchanges',
+				array(
+					'rc_params' => MyHome::packData($rc_data)
+				),
+				array(
+					'rc_id' => $rc_id
+				),
+				__METHOD__
+			);
 		}
 
 		Wikia::setVar('rc_data', $rc_data);
-
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -379,7 +348,7 @@ class MyHome {
 			$wgUser->saveSettings();
 
 			$dbw = wfGetDB( DB_MASTER );
-			$dbw->commit();
+			$dbw->commit(__METHOD__);
 
 			wfProfileOut(__METHOD__);
 
@@ -409,5 +378,92 @@ class MyHome {
 		wfProfileOut(__METHOD__);
 
 		return $defaultView;
+	}
+
+	/**
+	 * When the notification to the user is called (at the bottom of the page), attach the
+	 * achievement-earning to our best guess at what the associated RecentChange is.
+	 *
+	 * To account for race-conditions between RecentChanges and Achievements: currently, this
+	 * is done by recording when an RC is saved. If it happens on this page before this
+	 * function is called, then this function will load that RC by id.  If this function gets
+	 * called before any RCs have been recorded, then a serialized copy of the badge is stored
+	 * and can be inserted later (when the RC actually does get saved).
+	 */
+	public static function attachAchievementToRc($user, $badge ){
+		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt, $wgWikiaForceAIAFdebug;
+		wfProfileIn( __METHOD__ );
+
+		// If user has 'hidepersonalachievements' set, then they probably don't want to play.
+		// Also, other users may see that someone won, then click the username and look around for a way to see what achievements a user has...
+		// then when they can't find it (since users with this option won't have theirs displayed), they might assume that there is no way to see
+		// achievements.  It would be better to do this check at display-time rather than save-time, but we don't have access to the badge's user
+		// at that point.
+		Wikia::log(__METHOD__, "", "Noticed an achievement", $wgWikiaForceAIAFdebug);
+		if( ($badge->getTypeId() != BADGE_WELCOME) && (!$user->getOption('hidepersonalachievements')) ){
+			Wikia::log(__METHOD__, "", "Attaching badge to recent change...", $wgWikiaForceAIAFdebug);
+
+			// Make sure this Achievement gets added to its corresponding RecentChange (whether that has
+			// been saved already during this pageload or is still pending).
+			global $wgARecentChangeHasBeenSaved, $wgAchievementToAddToRc;
+			Wikia::log(__METHOD__, "", "About to see if there is an existing RC. RC: ".print_r($wgARecentChangeHasBeenSaved, true), $wgWikiaForceAIAFdebug);
+			if(!empty($wgARecentChangeHasBeenSaved)){
+				// Due to slave-lag, instead of storing the rc_id and looking it up (which didn't always work, even with a retry-loop), store entire RC.
+				Wikia::log(__METHOD__, "", "Attaching badge to existing RecentChange from earlier in pageload.", $wgWikiaForceAIAFdebug);
+				$rc = $wgARecentChangeHasBeenSaved;
+				if($rc){
+					Wikia::log(__METHOD__, "", "Found recent change to attach to.", $wgWikiaForceAIAFdebug);
+					// Add the (serialized) badge into the rc_params field.
+					$rc_data = array();
+					$rc_data['Badge'] = serialize($badge);
+					MyHome::storeAdditionalRcData($rc_data, $rc);
+				}
+			} else {
+				// Spool this achievement for when its corresponding RecentChange shows up (later in this pageload).
+				$wgAchievementToAddToRc = serialize($badge);
+				Wikia::log(__METHOD__, "", "RecentChange hasn't been saved yet, storing the badge for later.", $wgWikiaForceAIAFdebug);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	} // end attachAchievementToRc()
+
+	/**
+	 * Hook that's called when a RecentChange is saved.  This prevents any problems from race-conditions between
+	 * the creation of a RecentChange and the awarding of its corresponding Achievement (they occur on the same
+	 * page-load, but one isn't guaranteed to be before the other).
+	 */
+	public static function savingAnRc(&$rc){
+		global $wgAchievementToAddToRc, $wgWikiaForceAIAFdebug;
+		wfProfileIn( __METHOD__ );
+
+		// If an achievement is spooled from earlier in the pageload, stuff it into this RecentChange.
+		Wikia::log(__METHOD__, "", "RecentChange has arrived.", $wgWikiaForceAIAFdebug);
+		if(!empty($wgAchievementToAddToRc)){
+			Wikia::log(__METHOD__, "", "RecentChange arrived. Storing achievement that we've already seen.", $wgWikiaForceAIAFdebug);
+			$additionalData = array('Badge' => $wgAchievementToAddToRc);
+			MyHome::storeInRecentChanges($rc, $additionalData);
+			unset($wgAchievementToAddToRc);
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	} // end savingAnRc()
+
+	/**
+	 * Called upon the successful save of a RecentChange.
+	 */
+	public static function savedAnRc(&$rc){
+		global $wgARecentChangeHasBeenSaved, $wgWikiaForceAIAFdebug;
+		wfProfileIn( __METHOD__ );
+
+		// Mark the global indicating that an RC has been saved on this pageload (and which RC it was).
+		// Due to slave-lag, instead of storing the rc_id and looking it up (which didn't always work, even with a retry-loop), store entire RC.
+		$wgARecentChangeHasBeenSaved = $rc;
+		wfDebugLog( "activityfeed", __METHOD__ . ": RecentChange has been saved (presumably no achievement yet). RC: ".print_r($wgARecentChangeHasBeenSaved, true), $wgWikiaForceAIAFdebug );
+
+		wfProfileOut( __METHOD__ );
+		return true;
 	}
 }

@@ -7,6 +7,7 @@
  * @ingroup Storyboard
  *
  * @author Jeroen De Dauw
+ * @author Roan Kattouw
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -14,27 +15,54 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class TagStoryboard {
-	
-	public static function render( $input, $args, $parser, $frame ) {
-		global $wgOut, $wgJsMimeType, $egStoryboardScriptPath;
+
+	/**
+	 * Renders the storyboard tag.
+	 * 
+	 * @param $input
+	 * @param array $args
+	 * @param Parser $parser
+	 * @param $frame
+	 * 
+	 * @return array
+	 */
+	public static function render( $input, array $args, Parser $parser, $frame ) {
+		global $wgScriptPath, $wgStylePath, $wgStyleVersion, $wgContLanguageCode;
+		global $egStoryboardScriptPath, $egStoryboardWidth, $egStoryboardHeight;
 		
-		$wgOut->addStyle($egStoryboardScriptPath . '/tags/Storyboard/Storyboard.css');		
-		$wgOut->includeJQuery();
-		$wgOut->addScriptFile($egStoryboardScriptPath . '/tags/Storyboard/Storyboard.js');
+		efStoryboardAddJSLocalisation( $parser );
+		
+		// TODO: Combine+minfiy JS files, add switch to use combined+minified version
+		$parser->getOutput()->addHeadItem(
+			Html::linkedStyle( "$egStoryboardScriptPath/storyboard.css?$wgStyleVersion" ) .				
+			Html::linkedScript( "$wgStylePath/common/jquery.min.js?$wgStyleVersion" ) .			
+			Html::linkedScript( "$egStoryboardScriptPath/jquery/jquery.ajaxscroll.js?$wgStyleVersion" ) .	
+			Html::linkedScript( "$egStoryboardScriptPath/tags/Storyboard/storyboard.js?$wgStyleVersion" ) .
+			Html::linkedScript( "$egStoryboardScriptPath/storyboard.js?$wgStyleVersion" )			
+		);
+		
+		$width = StoryboardUtils::getDimension( $args, 'width', $egStoryboardWidth );
+		$height = StoryboardUtils::getDimension( $args, 'height', $egStoryboardHeight );
 
-		$output = <<<END
-<script type="$wgJsMimeType">var storyboardPath = '$egStoryboardScriptPath';</script>
-<div id="storyboard"></div>
-<script type="$wgJsMimeType"> /*<![CDATA[*/
-	var storyboard = new Storyboard();
-	storyboard.loadAjax();
-/*]]>*/ </script>
-END;
+		$languages = Language::getLanguageNames();
+		
+		if ( array_key_exists( 'language', $args ) && array_key_exists( $args['language'], $languages )  ) {
+			$language = $args['language'];
+		} else {
+			$language = $wgContLanguageCode;
+		}
 
-	return array($output, 'noparse' => 'true', 'isHTML' => 'true');
+		$parser->getOutput()->addHeadItem(
+			Html::inlineScript( "var storyboardLanguage = '$language';" )
+		);
+		
+		$output = Html::element( 'div', array(
+				'class' => 'storyboard',
+				'style' => "height: $height; width: $width;"
+			)
+		);
+		
+		return array( $output, 'noparse' => true, 'isHTML' => true );
 	}
 	
 }
-
-
-

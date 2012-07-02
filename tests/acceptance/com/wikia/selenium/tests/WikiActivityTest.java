@@ -15,7 +15,7 @@ public class WikiActivityTest extends BaseTest {
 	private static String WIKIACTIVITY_ARTICLE_FIVE  = "Wiki Activity Article Five";
 	private static String WIKIACTIVITY_ARTICLE_SIX   = "Wiki Activity Article Six";
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsuresThatWikiActivityButtonLeadsToProperSpecialPage() throws Exception {
 		login();
 
@@ -29,7 +29,7 @@ public class WikiActivityTest extends BaseTest {
 		assertTrue(session().getLocation().contains("/wiki/Special:WikiActivity"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsuresThatActivityFeedModuleIsPresentOnAnArticlePage() throws Exception {
 		openAndWait("index.php?title=Special:Random");
 
@@ -70,7 +70,7 @@ public class WikiActivityTest extends BaseTest {
 		assertFalse(session().isElementPresent("//section[contains(@class,'WikiaActivityModule')]//li[5]"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEditingArticleByUser() throws Exception{
 		
 		session().open("index.php?title=Special:Random");
@@ -84,7 +84,7 @@ public class WikiActivityTest extends BaseTest {
 		assertEquals(WIKIACTIVITY_ARTICLE_ONE, session().getText("//ul[@id='myhome-activityfeed']/li[1]//a"));
 	}
 	
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEditingArticleByAnonymousUserAndLoggedUser() throws Exception{
 		
 		session().open("index.php?title=Special:Random");
@@ -105,7 +105,7 @@ public class WikiActivityTest extends BaseTest {
 		assertEquals(WIKIACTIVITY_ARTICLE_ONE, session().getText("//ul[@id='myhome-activityfeed']/li[2]//a"));
 	}
 	
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testFollowingPagesFiltres() throws Exception{
 			
 		openAndWait("index.php?title=Special:Random");

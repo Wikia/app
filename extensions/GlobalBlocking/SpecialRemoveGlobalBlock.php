@@ -4,8 +4,7 @@ class SpecialRemoveGlobalBlock extends SpecialPage {
 	public $mAddress, $mReason;
 
 	function __construct() {
-		wfLoadExtensionMessages('GlobalBlocking');
-		SpecialPage::SpecialPage( 'RemoveGlobalBlock', 'globalunblock' );
+		parent::__construct( 'RemoveGlobalBlock', 'globalunblock' );
 	}
 
 	function execute( $par ) {
@@ -103,24 +102,24 @@ class SpecialRemoveGlobalBlock extends SpecialPage {
 	}
 
 	function form( ) {
-		global $wgScript,$wgRequest,$wgUser,$wgOut;
+		global $wgScript, $wgUser, $wgOut;
 
 		$form = '';
 
 		$form .= Xml::openElement( 'fieldset' ) . Xml::element( 'legend', null, wfMsg( 'globalblocking-unblock-legend' ) );
 		$form .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgScript, 'name' => 'globalblock-unblock' ) );
 
-		$form .= Xml::hidden( 'title', $this->getTitle()->getPrefixedText() );
-		$form .= Xml::hidden( 'action', 'unblock' );
+		$form .= Html::hidden( 'title', $this->getTitle()->getPrefixedText() );
+		$form .= Html::hidden( 'action', 'unblock' );
 
 		$fields = array();
 
-		$fields['ipaddress'] = Xml::input( 'address', 45, $this->mUnblockIP );
+		$fields['globalblocking-ipaddress'] = Xml::input( 'address', 45, $this->mUnblockIP );
 		$fields['globalblocking-unblock-reason'] = Xml::input( 'wpReason', 45, $this->mReason );
 
 		$form .= Xml::buildForm( $fields, 'globalblocking-unblock-submit' );
 
-		$form .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
+		$form .= Html::hidden( 'wpEditToken', $wgUser->editToken() );
 
 		$form .= Xml::closeElement( 'form' );
 		$form .= Xml::closeElement( 'fieldset' );

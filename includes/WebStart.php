@@ -1,14 +1,38 @@
 <?php
+/**
+ * This does the initial setup for a web request.
+ * It does some security checks, starts the profiler and loads the
+ * configuration, and optionally loads Setup.php depending on whether
+ * MW_NO_SETUP is defined.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ */
 
-# This does the initial setup for a web request. It does some security checks,
-# starts the profiler and loads the configuration, and optionally loads
-# Setup.php depending on whether MW_NO_SETUP is defined.
+// Wikia change - begin - @author: wladek
+// Catch all output
+ob_start();
+// Wikia change - end
 
 # Protect against register_globals
 # This must be done before any globals are set by the code
 if ( ini_get( 'register_globals' ) ) {
 	if ( isset( $_REQUEST['GLOBALS'] ) || isset( $_FILES['GLOBALS'] ) ) {
-		die( '<a href="http://www.hardened-php.net/index.76.html">$GLOBALS overwrite vulnerability</a>');
+		die( '<a href="http://www.hardened-php.net/globals-problem">$GLOBALS overwrite vulnerability</a>');
 	}
 	$verboten = array(
 		'GLOBALS',
@@ -30,13 +54,18 @@ if ( ini_get( 'register_globals' ) ) {
 	);
 	foreach ( $_REQUEST as $name => $value ) {
 		if( in_array( $name, $verboten ) ) {
-			header( "HTTP/1.x 500 Internal Server Error" );
+			header( "HTTP/1.1 500 Internal Server Error" );
 			echo "register_globals security paranoia: trying to overwrite superglobals, aborting.";
 			die( -1 );
 		}
 		unset( $GLOBALS[$name] );
 	}
 }
+
+# bug 15461: Make IE8 turn off content sniffing. Everbody else should ignore this
+# We're adding it here so that it's *always* set, even for alternate entry
+# points and when $wgOut gets disabled or overridden.
+header( 'X-Content-Type-Options: nosniff' );
 
 $wgRequestTime = microtime(true);
 # getrusage() does not exist on the Microsoft Windows platforms, catching this
@@ -63,73 +92,87 @@ if ( $IP === false ) {
 	$IP = realpath( '.' );
 }
 
-
-# Start profiler
-if( file_exists("$IP/StartProfiler.php") ) {
-	require_once( "$IP/StartProfiler.php" );
+if ( isset( $_SERVER['MW_COMPILED'] ) ) {
+	define( 'MW_COMPILED', 1 );
 } else {
-	require_once( "$IP/includes/ProfilerStub.php" );
+	# Get MWInit class
+	require_once( "$IP/includes/Init.php" );
+
+	# Start the autoloader, so that extensions can derive classes from core files
+	require_once( "$IP/includes/AutoLoader.php" );
+
+	# Load the profiler
+	require_once( "$IP/includes/profiler/Profiler.php" );
+
+	# Load up some global defines.
+	require_once( "$IP/includes/Defines.php" );
 }
+
+# Start the profiler
+$wgProfiler = array();
+if ( file_exists( "$IP/StartProfiler.php" ) ) {
+	require( "$IP/StartProfiler.php" );
+}
+
 wfProfileIn( 'WebStart.php-conf' );
 
-# Load up some global defines.
-require_once( "$IP/includes/Defines.php" );
-
-# Check for PHP 5
-if ( !function_exists( 'version_compare' ) 
-	|| version_compare( phpversion(), '5.0.0' ) < 0
-) {
-	define( 'MW_PHP4', '1' );
-	require( "$IP/includes/DefaultSettings.php" );
-	require( "$IP/includes/templates/PHP4.php" );
-	exit;
-}
-
-# Test for PHP bug which breaks PHP 5.0.x on 64-bit...
-# As of 1.8 this breaks lots of common operations instead
-# of just some rare ones like export.
-$borked = str_replace( 'a', 'b', array( -1 => -1 ) );
-if( !isset( $borked[-1] ) ) {
-	echo "PHP 5.0.x is buggy on your 64-bit system; you must upgrade to PHP 5.1.x\n" .
-	     "or higher. ABORTING. (http://bugs.php.net/bug.php?id=34879 for details)\n";
-	exit;
-}
-
-# Start the autoloader, so that extensions can derive classes from core files
-require_once( "$IP/includes/AutoLoader.php" );
+# Load default settings
+# Wikia change - comment out the next line since we include DefaultSettings.php
+# in LocalSettings.php
+#require_once( MWInit::compiledPath( "includes/DefaultSettings.php" ) );
 
 if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 	# Use a callback function to configure MediaWiki
-	require_once( "$IP/includes/DefaultSettings.php" );
-	call_user_func( MW_CONFIG_CALLBACK );
+	MWFunction::call( MW_CONFIG_CALLBACK );
 } else {
-	# LocalSettings.php is the per site customization file. If it does not exit
-	# the wiki installer need to be launched or the generated file moved from
-	# ./config/ to ./
-	if( !file_exists( "$IP/LocalSettings.php" ) ) {
-		require_once( "$IP/includes/DefaultSettings.php" ); # used for printing the version
+	if ( !defined( 'MW_CONFIG_FILE' ) ) {
+		define('MW_CONFIG_FILE', MWInit::interpretedPath( 'LocalSettings.php' ) );
+	}
+
+	# LocalSettings.php is the per site customization file. If it does not exist
+	# the wiki installer needs to be launched or the generated file uploaded to
+	# the root wiki directory
+	if( !file_exists( MW_CONFIG_FILE ) ) {
 		require_once( "$IP/includes/templates/NoLocalSettings.php" );
 		die();
 	}
 
 	# Include site settings. $IP may be changed (hopefully before the AutoLoader is invoked)
-	require_once( "$IP/LocalSettings.php" );
+	require_once( MW_CONFIG_FILE );
 }
+
+if ( $wgEnableSelenium ) {
+	require_once( MWInit::compiledPath( "includes/SeleniumWebSettings.php" ) );
+}
+
+// Wikia change - begin - @author: wladek
+// Catch all output
+$initialOutput = ob_get_clean();
+// Wikia change - end
+
 wfProfileOut( 'WebStart.php-conf' );
 
 wfProfileIn( 'WebStart.php-ob_start' );
 # Initialise output buffering
-if ( ob_get_level() ) {
-	# Someone's been mixing configuration data with code!
-	# How annoying.
-} elseif ( !defined( 'MW_NO_OUTPUT_BUFFER' ) ) {
-	require_once( "$IP/includes/OutputHandler.php" );
+# Check that there is no previous output or previously set up buffers, because
+# that would cause us to potentially mix gzip and non-gzip output, creating a
+# big mess.
+if ( !defined( 'MW_NO_OUTPUT_BUFFER' ) && ob_get_level() == 0 ) {
+	if ( !defined( 'MW_COMPILED' ) ) {
+		require_once( "$IP/includes/OutputHandler.php" );
+	}
 	ob_start( 'wfOutputHandler' );
 }
+
+// Wikia change - begin - @author: wladek
+// Catch all output
+echo $initialOutput;
+// Wikia change - end
+
 wfProfileOut( 'WebStart.php-ob_start' );
 
 if ( !defined( 'MW_NO_SETUP' ) ) {
-	require_once( "$IP/includes/Setup.php" );
+	require_once( MWInit::compiledPath( "includes/Setup.php" ) );
 }
 
 if(is_object($wgRequest) && $wgRequest->wasPosted() && wfReadOnly()) {

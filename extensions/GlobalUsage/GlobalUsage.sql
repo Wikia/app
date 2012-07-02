@@ -16,4 +16,5 @@ CREATE UNIQUE INDEX globalimagelinks_to_wiki_page
 	ON /*_*/globalimagelinks (gil_to, gil_wiki, gil_page);
 CREATE INDEX globalimagelinks_wiki 
 	ON /*_*/globalimagelinks (gil_wiki, gil_page);
-
+CREATE INDEX globalimagelinks_wiki_nsid_title
+	ON /*_*/globalimagelinks (gil_wiki, gil_page_namespace_id, gil_page_title);

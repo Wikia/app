@@ -25,7 +25,7 @@ while ( $row = $dbr->fetchObject( $res ) ) {
 	$userArticle = new Article( $userTitle );
 	if ( $wikiArticle->getContent() !== '' && $userArticle->getContent() == '' ) {
 		// delete
-		$userArticle->doDeleteArticle( 'making way for user page move', true, $userArticle->mTitle->getArticleID( GAID_FOR_UPDATE ) );
+		$userArticle->doDeleteArticle( 'making way for user page move', true, $userArticle->mTitle->getArticleID( Title::GAID_FOR_UPDATE ) );
 		echo "Deleted " . $userTitle->getText() . "\n";
 
 		// then move the page

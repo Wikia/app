@@ -5,19 +5,10 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 global $IP;
 require_once( "$IP/extensions/OAI/OAIFunctions.php" );
-require_once( "$IP/includes/Export.php" );
-
-if( !function_exists( 'wfTimestamp2ISO8601' ) ) {
-	// Back compat; gone in 1.6
-	function wfTimestamp2ISO8601( $ts ) {
-		#2003-08-05T18:30:02Z
-		return preg_replace( '/^(....)(..)(..)(..)(..)(..)$/', '$1-$2-$3T$4:$5:$6Z', $ts );
-	}
-}
 
 class SpecialOAIRepository extends UnlistedSpecialPage {
 	function __construct() {
-		UnlistedSpecialPage::UnlistedSpecialPage( 'OAIRepository' );
+		parent::__construct( 'OAIRepository' );
 	}
 
 	function setHeaders() {
@@ -27,8 +18,6 @@ class SpecialOAIRepository extends UnlistedSpecialPage {
 	function execute( $par ) {
 		global $wgRequest, $wgOut;
 		$wgOut->disable();
-
-		wfLoadExtensionMessages( 'OAIRepository' );
 
 		# FIXME: Replace the DB error handler
 		header( 'Content-type: text/xml; charset=utf-8' );
@@ -69,7 +58,7 @@ function oaiTag( $element, $attribs, $contents = null) {
 }
 
 class OAIRepo {
-	function OAIRepo( &$request ) {
+	function __construct( &$request ) {
 		$this->_db = wfGetDB( DB_SLAVE );
 		$this->_errors = array();
 		$this->_clientId = 0;
@@ -80,6 +69,9 @@ class OAIRepo {
 		$this->_errors[] = array( $code, $message );
 	}
 
+	/**
+	 * @return bool
+	 */
 	function errorCondition() {
 		return !empty( $this->_errors );
 	}
@@ -164,6 +156,7 @@ class OAIRepo {
 	function validateDatestamp( $var ) {
 		if( isset( $this->_request[$var] ) ) {
 			$time = $this->_request[$var];
+			$matches = array();
 			if( preg_match( '/^(\d\d\d\d)-(\d\d)-(\d\d)$/', $time, $matches ) ) {
 				return wfTimestamp( TS_UNIX,
 					$matches[1] . $matches[2] . $matches[3] . '000000' );
@@ -251,8 +244,11 @@ class OAIRepo {
 		}
 	}
 
+	/**
+	 * @param $responseSize int
+	 */
 	private function logRequest( $responseSize ) {
-		global $oaiAudit, $wgDBname;
+		global $oaiAudit, $wgDBname, $wgRequest;
 		if( $oaiAudit ) {
 			$db = $this->getAuditDatabase();
 			$db->insert(
@@ -260,7 +256,7 @@ class OAIRepo {
 				array(
 					'oa_client' => $this->_clientId,
 					'oa_timestamp' => $db->timestamp(),
-					'oa_ip' => wfGetIP(),
+					'oa_ip' => $wgRequest->getIP(),
 					'oa_agent' => @$_SERVER['HTTP_USER_AGENT'],
 					'oa_dbname' => $wgDBname,
 					'oa_response_size' => $responseSize,
@@ -410,7 +406,9 @@ class OAIRepo {
 		if( !isset( $this->_request[$var] ) ) {
 			return null;
 		}
+		$matches = array();
 		if( preg_match( '/^([a-z_]+):(\d+)(?:|:(\d{14}))$/', $this->_request[$var], $matches ) ) {
+			$token = array();
 			$token['metadataPrefix'] = $matches[1];
 			$token['resume']         = IntVal( $matches[2] );
 			$token['until']          = isset( $matches[3] )
@@ -462,7 +460,8 @@ class OAIRepo {
 				$rows[] = $row;
 				$this->_lastSequence = $row->up_sequence;
 			}
-			if( $row = $resultSet->fetchObject() ) {
+			$row = $resultSet->fetchObject();
+			if( $row ) {
 				$limit = wfTimestamp( TS_MW, $until );
 				if( $until )
 					$nextToken = "$metadataPrefix:$row->up_sequence:$limit";
@@ -518,9 +517,19 @@ class OAIRepo {
 		return null;
 	}
 
+	static function identifierPrefix() {
+		static $prefix = false;
+		if ( !$prefix ) {
+			global $wgServer, $wgDBname;
+			wfSuppressWarnings();
+			$prefix = "oai:" . parse_url( $wgServer, PHP_URL_HOST ) . ":$wgDBname:";
+			wfRestoreWarnings();
+		}
+		return $prefix;
+	}
+
 	function stripIdentifier( $identifier ) {
-		global $wgServerName, $wgDBname;
-		$prefix = "oai:$wgServerName:$wgDBname:";
+		$prefix = self::identifierPrefix();
 		if( substr( $identifier, 0, strlen( $prefix ) ) == $prefix ) {
 			$pageid = substr( $identifier, strlen( $prefix ) );
 			if( preg_match( '/^\d+$/', $pageid ) ) {
@@ -535,12 +544,13 @@ class OAIRepo {
 	}
 
 	function chunkSize() {
-		return 50;
+		global $oaiChunkSize;
+		return $oaiChunkSize;
 	}
 
 	function baseUrl() {
-		$title =& Title::makeTitle( NS_SPECIAL, 'OAIRepository' );
-		return $title->getFullUrl();
+		$title =& SpecialPage::getTitleFor( 'OAIRepository' );
+		return $title->getCanonicalUrl();
 	}
 
 	function earliestDatestamp() {
@@ -565,31 +575,19 @@ class OAIRepo {
 			return new OAIDumpWriter;
 	}
 
-	function newSchema() {
-		global $wgVersion;
-		return version_compare( $wgVersion, '1.5alpha', 'ge' );
-	}
-
 	function fetchRecord( $pageid ) {
 		$db = $this->_db;
-		
-		$tables = array( 'updates', 'page', 'revision', 'text' );
-		$fields = array( 'page_namespace', 'page_title', 'old_text', 'old_flags',
-				'rev_id', 'rev_deleted', 'rev_comment', 'rev_user',
-				'rev_user_text', 'rev_timestamp', 'page_restrictions',
-				'rev_minor_edit', 'page_is_redirect', 'up_sequence',
-				'page_id', 'up_timestamp', 'up_action', 'up_page',
-				'page_len', 'page_touched', 'page_counter', 'page_latest',);
+
+		$tables = $this->getTables();
+		$fields = $this->getFields();
 		$conds = array();
 		$options = array();
-		$join_conds = array( 'page' => array( 'LEFT JOIN', 'page_id=up_page' ),
-				'revision' => array( 'LEFT JOIN', 'page_latest=rev_id' ),
-				'text' => array( 'LEFT JOIN', 'rev_text_id=old_id' ) );
-				
+		$join_conds = $this->getJoinConds();
+
 		$conds['up_page'] = $pageid;
-		
+
 		$options['LIMIT'] = 1;
-		
+
 		wfRunHooks( 'OAIFetchRecordQuery', array( &$tables, &$fields, &$conds,
 						&$options, &$join_conds ) );
 
@@ -597,23 +595,45 @@ class OAIRepo {
 					$options, $join_conds );
 	}
 
+	/**
+	 * @return array
+	 */
+	private function getFields() {
+		return array( 'page_namespace', 'page_title', 'old_text', 'old_flags',
+			'rev_id', 'rev_deleted', 'rev_comment', 'rev_user',
+			'rev_user_text', 'rev_timestamp', 'page_restrictions',
+			'rev_minor_edit', 'rev_len', 'page_is_redirect', 'up_sequence',
+			'page_id', 'up_timestamp', 'up_action', 'up_page',
+			'page_len', 'page_touched', 'page_counter', 'page_latest'
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getJoinConds() {
+		return array( 'page' => array( 'LEFT JOIN', 'page_id=up_page' ),
+			'revision' => array( 'LEFT JOIN', 'page_latest=rev_id' ),
+			'text' => array( 'LEFT JOIN', 'rev_text_id=old_id' )
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getTables() {
+		return array( 'updates', 'page', 'revision', 'text' );
+	}
+
 	function fetchRows( $from, $until, $chunk, $token = null ) {
-		
+
 		$db = $this->_db;
-		
-		$tables = array( 'updates', 'page', 'revision', 'text' );
-		$fields = array( 'page_namespace', 'page_title', 'old_text', 'old_flags',
-				'rev_id', 'rev_deleted', 'rev_comment', 'rev_user',
-				'rev_user_text', 'rev_timestamp', 'page_restrictions',
-				'rev_minor_edit', 'page_is_redirect', 'up_sequence',
-				'page_id', 'up_timestamp', 'up_action', 'up_page',
-				'page_len', 'page_touched', 'page_counter', 'page_latest',);
+		$tables = $this->getTables();
+		$fields = $this->getFields();
 		$conds = array();
 		$options = array();
-		$join_conds = array( 'page' => array( 'LEFT JOIN', 'page_id=up_page' ),
-				'revision' => array( 'LEFT JOIN', 'page_latest=rev_id' ),
-				'text' => array( 'LEFT JOIN', 'rev_text_id=old_id' ) );
-				
+		$join_conds = $this->getJoinConds();
+
 		if( $token ) {
 			$conds[] = 'up_sequence>=' . $db->addQuotes( $token );
 			$options['ORDER BY'] = 'up_sequence';
@@ -626,9 +646,9 @@ class OAIRepo {
 		if( $until ) {
 			$conds[] = 'up_timestamp<=' .$db->addQuotes( $db->timestamp( $until ) );
 		}
-		
+
 		$options['LIMIT'] = $chunk;
-		
+
 		wfRunHooks( 'OAIFetchRowsQuery', array( &$tables, &$fields, &$conds,
 						&$options, &$join_conds ) );
 
@@ -638,25 +658,28 @@ class OAIRepo {
 
 	function fetchReferenceData( $rows ) {
 		$page_ids = array();
-		foreach($rows as $row){
+		foreach( $rows as $row ){
 			$page_ids[] = $row->up_page;
 		}
 
-		if(count($page_ids) == 1)
-			$pages_where = " AND up_page = $page_ids[0] ";
-		else
-			$pages_where = " AND up_page IN (".implode(",",$page_ids).") ";
+		$res = $this->_db->select(
+			array( 'u' => 'updates', 'p' => 'page', 'r' => 'redirect', 'rp' => 'page' ),
+			array(
+				'up_page,up_sequence',
+				'rp.page_namespace AS page_namespace',
+				'rp.page_title AS page_title'
+			),
+			array(
+				'u.up_page=p.page_id',
+				'p.page_namespace=r.rd_namespace',
+				'p.page_title=r.rd_title',
+				'r.rd_from=rp.page_id',
+				'up_page' => $page_ids
+			),
+			__METHOD__
+		);
 
-		extract( $this->_db->tableNames( 'updates', 'page', 'redirect' ) );
-		$sql = "SELECT up_page,up_sequence,
-    rp.page_namespace AS page_namespace,
-    rp.page_title AS page_title
-    FROM $updates AS u, $page AS p, $redirect AS r, $page AS rp
-    WHERE u.up_page=p.page_id AND p.page_namespace=r.rd_namespace
-    AND p.page_title=r.rd_title AND r.rd_from=rp.page_id
-    $pages_where";
-
-		return $this->_db->resultObject( $this->_db->query( $sql ) );
+		return $this->_db->resultObject( $res );
 	}
 
 
@@ -690,7 +713,6 @@ class OAIRepo {
 				'namespace'	=> 'http://www.mediawiki.org/xml/lsearch-0.1/',
 				'schema'    => 'http://www.mediawiki.org/xml/lsearch-0.1.xsd' ) );
 	}
-
 }
 
 class OAIRecord {
@@ -765,7 +787,7 @@ class WikiOAIRecord extends OAIRecord {
 	/**
 	 * @param object $row database row
 	 */
-	function WikiOAIRecord( $row, $writer ) {
+	function __construct( $row, $writer ) {
 		$this->_id        = $row->up_page;
 		$this->_timestamp = $row->up_timestamp;
 		$this->_deleted   = is_null( $row->page_title );
@@ -773,13 +795,18 @@ class WikiOAIRecord extends OAIRecord {
 		$this->_writer    = $writer;
 	}
 
+	/**
+	 * @return bool
+	 */
 	function isDeleted() {
 		return $this->_deleted;
 	}
 
+	/**
+	 * @return string
+	 */
 	function getIdentifier() {
-		global $wgDBname, $wgServerName;
-		return "oai:$wgServerName:$wgDBname:{$this->_id}";
+		return OAIRepo::identifierPrefix() . $this->_id;
 	}
 
 	function getDatestamp() {
@@ -827,7 +854,7 @@ class WikiOAIRecord extends OAIRecord {
 			oaiTag( 'dc:language',    array(), $wgContLanguageCode ) . "\n" .
 			oaiTag( 'dc:type',        array(), 'Text' ) . "\n" .
 			oaiTag( 'dc:format',      array(), $wgMimeType ) . "\n" .
-			oaiTag( 'dc:identifier',  array(), $title->getFullUrl() ) . "\n" .
+			oaiTag( 'dc:identifier',  array(), $title->getCanonicalUrl() ) . "\n" .
 			oaiTag( 'dc:contributor', array(), $this->_row->rev_user_text ) . "\n" .
 			oaiTag( 'dc:date',        array(), oaiDatestamp( $this->getDatestamp() ) ) . "\n" .
 			"</oai_dc:dc>\n";
@@ -874,18 +901,20 @@ class WikiOAIRecord extends OAIRecord {
 			array( 'img_name' => $this->_row->page_title ),
 			$fname );
 		if( $imageRow ) {
-			if( OAIRepo::newSchema() ) {
-				$url = Image::imageUrl( $imageRow->img_name );
-			} else {
-				$url = Image::wfImageUrl( $imageRow->img_name );
+			$file = wfFindFile( $imageRow->img_name );
+			if ( !$file ) {
+				wfDebug( 'Invalid image row retrieved. Image name: ' . $imageRow->img_name );
+				return '';
 			}
+			$url = $file->getUrl();
+
 			if( $url{0} == '/' ) {
 				global $wgServer;
 				$url = $wgServer . $url;
 			}
 			return implode( "\n", array(
 				"<upload>",
-				oaiTag( 'timestamp', array(), wfTimestamp2ISO8601( $imageRow->img_timestamp ) ),
+				oaiTag( 'timestamp', array(), wfTimestamp( TS_ISO_8601, $imageRow->img_timestamp ) ),
 				$this->renderContributor( $imageRow->img_user, $imageRow->img_user_text ),
 				oaiTag( 'comment',   array(), $imageRow->img_description ),
 				oaiTag( 'filename',  array(), $imageRow->img_name ),
@@ -906,8 +935,6 @@ class WikiOAIRecord extends OAIRecord {
 		}
 		return '<contributor>' . $tag . '</contributor>';
 	}
-
-
 }
 
 /** For the very first page output siteinfo, else same sa XmlDumpWriter  */

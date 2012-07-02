@@ -446,6 +446,6 @@ class WikiFactoryTags {
 			}
 		}
 
-		return Wikia::json_encode( $return );
+		return json_encode( $return );
 	}
 }

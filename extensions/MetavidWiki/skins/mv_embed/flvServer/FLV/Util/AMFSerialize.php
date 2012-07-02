@@ -85,15 +85,15 @@ class FLV_Util_AMFSerialize {
 
             return $data;
 
-        } else if ( is_null( $var ) ) {
+        } elseif ( is_null( $var ) ) {
 
             return ( $skipMark ? '':"\x05" );
 
-        } else if ( is_bool( $var ) ) {
+        } elseif ( is_bool( $var ) ) {
 
             return ( $skipMark ? '':"\x01" ) . ( $var ? "\x01" : "\x00" );
 
-        } else if ( is_numeric( $var ) ) {
+        } elseif ( is_numeric( $var ) ) {
             $number .= pack( 'd', $var );
 
             // reverse bytes if we are in little-endian hardware
@@ -104,7 +104,7 @@ class FLV_Util_AMFSerialize {
 
             return ( $skipMark ? '':"\x00" ) . $number;
 
-        } else if ( is_string( $var ) ) {
+        } elseif ( is_string( $var ) ) {
 
             // check for a date
             if ( preg_match( '/^([0-9]{4})-?([0-9]{2})-?([0-9]{2})T([0-9]{2}):?([0-9]{2}):?([0-9]{2})(?:\.([0-9]{1,3}))?([Z+-])([0-9:]*)$/', trim( $var ), $m ) )

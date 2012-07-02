@@ -1,58 +1,77 @@
 <?php
 /** Novial (Novial)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
+ * @author BRG (on nov.wikipedia.org)
  * @author Chrisportelli
  * @author MF-Warburg
  * @author Malafaya
- * @author nov.wikipedia.org sysops
+ * @author Nov ialiste
+ * @author Wayne (on nov.wikipedia.org)
  */
 
 $messages = array(
 # Dates
-'sunday'       => 'sundie',
-'monday'       => 'lundie',
-'tuesday'      => 'mardie',
-'wednesday'    => 'merkurdie',
-'thursday'     => 'jodie',
-'friday'       => 'venerdie',
-'saturday'     => 'saturdie',
-'january'      => 'januare',
-'february'     => 'februare',
-'march'        => 'marte',
-'april'        => 'aprile',
-'may_long'     => 'maye',
-'june'         => 'june',
-'july'         => 'julie',
-'august'       => 'auguste',
-'september'    => 'septembre',
-'october'      => 'oktobre',
-'november'     => 'novembre',
-'december'     => 'desembre',
-'march-gen'    => 'marte',
-'april-gen'    => 'aprile',
-'may-gen'      => 'maye',
-'august-gen'   => 'auguste',
-'october-gen'  => 'oktobre',
-'december-gen' => 'desembre',
-'jan'          => 'jan',
-'feb'          => 'feb',
-'mar'          => 'mar',
-'apr'          => 'apr',
-'may'          => 'maye',
-'jun'          => 'jun',
-'jul'          => 'jul',
-'aug'          => 'aug',
-'sep'          => 'sep',
-'oct'          => 'okt',
-'nov'          => 'nov',
-'dec'          => 'des',
+'sunday'        => 'sundie',
+'monday'        => 'lundie',
+'tuesday'       => 'mardie',
+'wednesday'     => 'merkurdie',
+'thursday'      => 'jodie',
+'friday'        => 'venerdie',
+'saturday'      => 'saturdie',
+'sun'           => 'sun',
+'mon'           => 'lun',
+'tue'           => 'mar',
+'wed'           => 'mer',
+'thu'           => 'jod',
+'fri'           => 'ven',
+'sat'           => 'sat',
+'january'       => 'januare',
+'february'      => 'februare',
+'march'         => 'marte',
+'april'         => 'aprile',
+'may_long'      => 'maye',
+'june'          => 'june',
+'july'          => 'julie',
+'august'        => 'auguste',
+'september'     => 'septembre',
+'october'       => 'oktobre',
+'november'      => 'novembre',
+'december'      => 'desembre',
+'january-gen'   => 'de januare',
+'february-gen'  => 'de februare',
+'march-gen'     => 'de marte',
+'april-gen'     => 'de aprile',
+'may-gen'       => 'de maye',
+'june-gen'      => 'de june',
+'july-gen'      => 'de julie',
+'august-gen'    => 'de auguste',
+'september-gen' => 'de septembre',
+'october-gen'   => 'de oktobre',
+'november-gen'  => 'de novembre',
+'december-gen'  => 'de desembre',
+'jan'           => 'jan',
+'feb'           => 'feb',
+'mar'           => 'mar',
+'apr'           => 'apr',
+'may'           => 'maye',
+'jun'           => 'jun',
+'jul'           => 'jul',
+'aug'           => 'aug',
+'sep'           => 'sep',
+'oct'           => 'okt',
+'nov'           => 'nov',
+'dec'           => 'des',
 
 # Categories related messages
 'pagecategories'  => '{{PLURAL:$1|Kategorie|Kategories}}',
 'category_header' => 'Artikles in kategorie "$1"',
+'subcategories'   => 'Subkategories',
 
 'about'         => 'Pri',
 'article'       => 'Pagine de kontenaje',
@@ -66,20 +85,29 @@ $messages = array(
 'and'           => '&#32;e',
 
 # Cologne Blue skin
+'qbfind'         => 'Trova',
 'qbedit'         => 'Modifika',
+'qbpageoptions'  => 'Disi pagine',
+'qbmyoptions'    => 'Men pagines',
 'qbspecialpages' => 'Spesial pagines',
+
+# Vector skin
+'vector-action-delete' => 'Ekarta',
+'vector-view-edit'     => 'Modifika',
+'vector-view-view'     => 'Lekte',
 
 'returnto'         => 'Rivada a $1.',
 'tagline'          => 'Fro {{SITENAME}}',
 'help'             => 'Helpo',
 'search'           => 'Sercha',
 'searchbutton'     => 'Sercha',
+'go'               => 'Vada',
 'searcharticle'    => 'Vada',
 'history'          => 'Historie del pagine',
 'history_short'    => 'Historie',
-'info_short'       => 'Informatione',
 'printableversion' => 'Printindi versione',
 'permalink'        => 'Permananti linke',
+'print'            => 'Printa',
 'edit'             => 'Immodifika',
 'editthispage'     => 'Modifika disi pagine',
 'delete'           => 'Ekarta',
@@ -123,6 +151,7 @@ $messages = array(
 'youhavenewmessagesmulti' => 'Vu have novi mesajes pri $1',
 'editsection'             => 'modifika',
 'editold'                 => 'modifika',
+'editlink'                => 'modifika',
 'restorelink'             => '{{PLURAL:$1|unu ekartati modifiko|$1 ekartati modifikos}}',
 'red-link-title'          => '$1 (pagine non exista)',
 
@@ -147,7 +176,7 @@ $messages = array(
 Vu pove kontinua usa {{SITENAME}} anonimim, o vu pove riensignata kom li sami o altri usere.",
 'yourname'                   => 'Usere-nome:',
 'yourpassword'               => 'Pasa-vorde:',
-'remembermypassword'         => 'Memora men pasa-vorde (kun kuke)',
+'remembermypassword'         => 'Memora men pasa-vorde (kun kuke) (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'login'                      => 'Ensignata',
 'loginprompt'                => 'Vu mus lasa cookies de ensignata en {{SITENAME}}.',
 'userlogin'                  => 'Ensignata / krea usere-registre',
@@ -161,7 +190,8 @@ Vu pove kontinua usa {{SITENAME}} anonimim, o vu pove riensignata kom li sami o 
 'loginsuccesstitle'          => 'Ensignato suksesosi',
 'loginsuccess'               => "'''Vu es nun ensignatat a {{SITENAME}} nomisat \"\$1\".'''",
 'mailmypassword'             => 'E-posta men pasa-vorde',
-'acct_creation_throttle_hit' => 'Vu ha ja krea $1 registres. Regretindim vu non pove krea plusu.',
+'acct_creation_throttle_hit' => 'Visitors to this wiki using your IP address have created {{PLURAL:$1|1 account|$1 accounts}} in the last day, which is the maximum allowed in this time period.
+As a result, visitors using this IP address cannot create any more accounts at the moment.',
 'accountcreated'             => 'Registre kreat',
 'accountcreatedtext'         => 'Li usere-registre por $1 ha bli krea.',
 
@@ -170,18 +200,17 @@ Vu pove kontinua usa {{SITENAME}} anonimim, o vu pove riensignata kom li sami o 
 'image_sample' => 'Exemple.jpg',
 
 # Edit pages
-'summary'               => 'Resume:',
-'minoredit'             => 'Dise es mikri modifiko',
-'watchthis'             => 'Observa disi pagine',
-'savearticle'           => 'Spara pagine',
-'showpreview'           => 'Montra previdatu',
-'showdiff'              => 'Montra chanjos',
-'blockedoriginalsource' => "Li fonte de '''$1''' bli montra subu:",
-'loginreqtitle'         => 'Ensignato Postulat',
-'loginreqlink'          => 'ensignata',
-'accmailtitle'          => 'Pasa-vorde sendat.',
-'accmailtext'           => 'Li pasa-vorde por "$1" ha bli senda a $2.',
-'yourtext'              => 'Vun texte',
+'summary'       => 'Resume:',
+'minoredit'     => 'Dise es mikri modifiko',
+'watchthis'     => 'Observa disi pagine',
+'savearticle'   => 'Spara pagine',
+'showpreview'   => 'Montra previdatu',
+'showdiff'      => 'Montra chanjos',
+'loginreqtitle' => 'Ensignato Postulat',
+'loginreqlink'  => 'ensignata',
+'accmailtitle'  => 'Pasa-vorde sendat.',
+'accmailtext'   => 'Li pasa-vorde por "$1" ha bli senda a $2.',
+'yourtext'      => 'Vun texte',
 
 # History pages
 'currentrev'          => 'Nuni revisione',
@@ -218,7 +247,7 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 'preferences'           => 'Preferos',
 'mypreferences'         => 'Men preferos',
 'prefsnologin'          => 'Non ensignatat',
-'prefsnologintext'      => 'Vu mus es [[Special:UserLogin|ensignatat]] por determina useren preferos.',
+'prefsnologintext'      => 'Vu mus es <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} ensignatat] por determina useren preferos.',
 'prefs-rc'              => 'Resenti chanjos',
 'searchresultshead'     => 'Sercha',
 'timezoneregion-africa' => 'Afrika',
@@ -226,7 +255,7 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 # Recent changes
 'nchanges'        => '$1 {{PLURAL:$1|chanjo|chanjos}}',
 'recentchanges'   => 'Resenti chanjos',
-'rcnote'          => "Subu es {{PLURAL:$1| '''1''' chanje|li lasti '''$1''' chanjes}} in li lasti {{PLURAL:$2|die|'''$2''' dies}}, fro $3.",
+'rcnote'          => "Subu es {{PLURAL:$1| '''1''' chanje|li lasti '''$1''' chanjes}} in li lasti {{PLURAL:$2|die|'''$2''' dies}}, fro $4, $5.",
 'rcshowhideminor' => '$1 minori modifikos',
 'rcshowhideanons' => '$1 anonimi useres',
 'rcshowhidemine'  => '$1 men modifikos',
@@ -308,7 +337,7 @@ Proba [[Special:Search|sercho sur li wiki]] por relatet pagines.',
 
 # Special:Categories
 'categories'         => 'Kategories',
-'categoriespagetext' => 'Li sekuenti kategories exista in li wiki.
+'categoriespagetext' => 'Li sekuenti {{PLURAL:$1|kategorie|kategories}} exista in li wiki.
 [[Special:UnusedCategories|Unused categories]] are not shown here.
 Also see [[Special:WantedCategories|wanted categories]].',
 
@@ -320,7 +349,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'mywatchlist'     => 'Men liste de observos',
 'nowatchlist'     => 'Vu have nuli koses in vun liste de observos.',
 'watchnologin'    => 'Non ensignatat',
-'addedwatch'      => 'Adit a observa-liste',
 'addedwatchtext'  => "Li pagine \"[[:\$1]]\" ha bli adi a vun [[Special:Watchlist|observa-liste]].
 Futuri chanjos a disi pagine e lun asosiati Parla-pagine sal bli lista tilok, e li pagine sal apari '''diki''' in li [[Special:RecentChanges|liste de resenti chanjos]] por ke on trova lu plu fasilim.
 
@@ -339,7 +367,6 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'excontentauthor' => "kontenaje esed: '$1' (e li soli kontribuere esed '[[Special:Contributions/$2|$2]]')",
 'exblank'         => 'pagine esed vakui',
 'actioncomplete'  => 'Akto kompleti',
-'deletedarticle'  => 'ekartad "[[$1]]"',
 'dellogpage'      => 'Loge de ekartos',
 'dellogpagetext'  => 'Subu es liste del maxim resenti ekartos.',
 'deletionlog'     => 'registre de ekartos',
@@ -380,12 +407,10 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'movenologin'             => 'Non ensignatat',
 'move-watch'              => 'Observa disi pagine',
 'movedto'                 => 'movat a',
-'1movedto2'               => '[[$1]] movat a [[$2]]',
-'1movedto2_redir'         => '[[$1]] movat a [[$2]] via ri-adreso',
 'movereason'              => 'Resone:',
 'delete_and_move'         => 'Ekarta e mova',
 'delete_and_move_confirm' => 'Yes, ekarta li pagine',
-'delete_and_move_reason'  => 'Ekartat por fa spatie por movo',
+'delete_and_move_reason'  => 'Ekartat por fa spatie por movo "[[$1]]"',
 
 # Namespace 8 related
 'allmessages'        => 'Sisteme mesajes',
@@ -400,9 +425,6 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'tooltip-pt-logout'      => 'Eksignata',
 'tooltip-p-logo'         => 'Chefi pagine',
 
-# Info page
-'infosubtitle' => 'Informatione pri pagine',
-
 # Special:NewFiles
 'ilsubmit' => 'Sercha',
 'bydate'   => 'segun date',
@@ -412,9 +434,6 @@ Si vu voli plu tardim ekarta li pagine fro vun observa-liste, klikta \"Desobserv
 'exif-imagelength'      => 'Alteso',
 'exif-imagedescription' => 'Title de imaje',
 'exif-imageuniqueid'    => 'Unik imaje ID',
-
-# 'all' in various places, this might be different for inflected languages
-'imagelistall' => 'omnes',
 
 # Auto-summaries
 'autosumm-replace' => "Remplasant pagine kun '$1'",

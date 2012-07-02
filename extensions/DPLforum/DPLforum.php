@@ -1,7 +1,7 @@
 <?php
 /**
 
- DPLforum v3.3.1 -- DynamicPageList-based forum extension
+ DPLforum v3.3.3 -- DynamicPageList-based forum extension
 
  Author: Ross McClure
  http://www.mediawiki.org/wiki/User:Algorithm
@@ -22,11 +22,11 @@
 
  You should have received a copy of the GNU General Public License along
  with this program; if not, write to the Free Software Foundation, Inc.,
- 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  http://www.gnu.org/copyleft/gpl.html
 
  To install, add following to LocalSettings.php
-   require_once("extensions/DPLforum/DPLforum.php");
+   require_once("$IP/extensions/DPLforum/DPLforum.php");
 
 */
 
@@ -35,41 +35,54 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-$wgHooks['ParserFirstCallInit'][] = 'wfDPLforum';
-$wgHooks['LanguageGetMagic'][] = 'wfDPLmagic';
+// Extension credits that will show up on Special:Version
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'DPLforum',
 	'author' => 'Ross McClure',
-	'version' => '3.3.1',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:DPLforum',
-	'description' => 'DPL-based forum extension',
+	'version' => '3.4.0',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:DPLforum',
 	'descriptionmsg' => 'dplforum-desc',
 );
 
+// Hooked functions
+$wgHooks['ParserFirstCallInit'][] = 'wfDPLinit';
+$wgHooks['CanonicalNamespaces'][] = 'wfDPLforumCanonicalNamespaces';
+
+// Set up i18n and autoload the main class
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['DPLforum'] = $dir . 'DPLforum.i18n.php';
+$wgExtensionMessagesFiles['DPLforumMagic'] = $dir . 'DPLforum.i18n.magic.php';
+$wgExtensionMessagesFiles['DPLforumNamespaces'] = $dir . 'DPLforum.namespaces.php';
 $wgAutoloadClasses['DPLForum'] = $dir . 'DPLforum_body.php';
 
-function wfDPLforum( &$parser ) {
+function wfDPLinit( &$parser ) {
 	$parser->setHook( 'forum', 'parseForum' );
 	$parser->setFunctionHook( 'forumlink', array( new DPLForum(), 'link' ) );
-
-	return true;
-}
-
-function wfDPLmagic( &$magicWords, $langCode = 'en' ) {
-	switch( $langCode ) {
-		default:
-			$magicWords['forumlink'] = array( 0, 'forumlink' );
-	}
 	return true;
 }
 
 function parseForum( $input, $argv, $parser ) {
 	$f = new DPLForum();
-	
-	$js = '<script type="text/javascript">wgAfterContentAndJS.push(function() {if (skin == "oasis") {importStylesheetURI($.getSassCommonURL("extensions/DPLforum/css/oasis.scss"));}});</script>';
-	
+	# <Wikia>
+	$js = '<script type="text/javascript">wgAfterContentAndJS.push(function() {if (skin == "oasis") {mw.loader.load($.getSassCommonURL("extensions/DPLforum/css/oasis.scss"), "text/css");}});</script>';
+	# </Wikia>
 	return $js . $f->parse( $input, $parser );
+}
+
+/**
+ * Register the canonical names for our namespace and its talkspace.
+ *
+ * @param $list Array: array of namespace numbers with corresponding
+ *                     canonical names
+ * @return Boolean: true
+ */
+function wfDPLforumCanonicalNamespaces( &$list ) {
+	if ( !in_array( 'Forum', $list ) ) {
+		$list[NS_FORUM] = 'Forum';
+	}
+	if ( !in_array( 'Forum_talk', $list ) ) {
+		$list[NS_FORUM_TALK] = 'Forum_talk';
+	}
+	return true;
 }

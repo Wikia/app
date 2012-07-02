@@ -46,12 +46,11 @@ class SiteWideMessages extends SpecialPage {
 	static $hasMessages = false;
 
 	function  __construct() {
-		parent::__construct('SiteWideMessages' /*class*/, 'MessageTool' /*restriction*/);
+		parent::__construct('SiteWideMessages' /*class*/, 'messagetool' /*restriction*/);
 	}
 
 	function execute($subpage) {
 		global $wgUser, $wgOut, $wgRequest, $wgTitle, $wgParser;
-		wfLoadExtensionMessages('SpecialSiteWideMessages');
 
 		//add CSS (from static file)
 		global $wgExtensionsPath, $wgStyleVersion, $wgExternalSharedDB;
@@ -139,8 +138,8 @@ class SiteWideMessages extends SpecialPage {
 				$action = $wgRequest->getVal('action');
 		}
 
-		if($action != 'dismiss' && $action != 'cleanDB' && !$wgUser->isAllowed('MessageTool')) {
-			$wgOut->permissionRequired('MessageTool');
+		if($action != 'dismiss' && $action != 'cleanDB' && !$wgUser->isAllowed('messagetool')) {
+			$wgOut->permissionRequired('messagetool');
 			return;
 		}
 

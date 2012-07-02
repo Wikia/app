@@ -10,12 +10,14 @@
 /**
  * setup
  */
-if( empty( $wgVideoHandlersVideosMigrated ) ) {
-	define( 'NS_VIDEO', 400 );
-} else {
-	$wgNamespaceAliases[ 'Video' ] = 6;
-	define( 'NS_VIDEO', 6 );
-}
+$wgNamespaceAliases[ 'Video' ] = 6;
+$wgNamespaceAliases['Video_talk'] = 7;
+define( 'NS_VIDEO', 6 );
+
+
+$wgWikiaVideoGalleryId = 0;
+$wgWikiaVETLoaded = false;
+$wgWikiaVideosFoundInTemplates = 0;
 
 /**
  * @var WikiaApp
@@ -33,7 +35,7 @@ $app->registerClass( 'ApiWrapperFactory',		$dir . '/apiwrappers/ApiWrapperFactor
 $app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'PseudoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'FakeApiWrapper',		$dir . '/apiwrappers/FakeApiWrapper.class.php' );
-$app->registerClass( 'WikiaVideoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
+$app->registerClass( 'NoConnectionApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'NullApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
 // api exceptions and errors
 $app->registerClass( 'EmptyResponseException',	$dir . '/apiwrappers/ApiWrapper.class.php' );
@@ -64,7 +66,15 @@ $wgExtensionMessagesFiles['VideoHandlers'] = "$dir/VideoHandlers.i18n.php";
 
 /**
  * hooks
- */
+ *
+**/
+
+$app->registerHook( 'MWNamespace:isMovable', 'VideoHandlerHooks', 'WikiaVideo_isMovable');
+$app->registerHook( 'SpecialNewImages::beforeQuery', 'VideoHandlerHooks', 'WikiaVideoNewImagesBeforeQuery');
+$app->registerHook( 'Parser::FetchTemplateAndTitle', 'VideoHandlerHooks', 'WikiaVideoFetchTemplateAndTitle');
+$app->registerHook( 'ParserBeforeStrip', 'VideoHandlerHooks', 'WikiaVideoParserBeforeStrip'); // <videogallery>
+
+
 $app->registerHook( 'FileRevertFormBeforeUpload', 'VideoHandlerHooks', 'onFileRevertFormBeforeUpload' );
 $app->registerHook( 'ArticleFromTitle', 'VideoHandlerHooks', 'onArticleFromTitle' );
 $app->registerHook( 'SetupAfterCache', 'VideoHandlerHooks', 'onSetupAfterCache' );
@@ -76,7 +86,6 @@ $app->registerHook( 'File::checkExtensionCompatibilityResult', 'VideoHandlerHook
 if(!empty($wgVideoHandlersVideosMigrated)) {
 	$app->registerHook( 'ParserFirstCallInit', 'VideoHandlerHooks', 'initParserHook' );
 }
-
 
 // permissions
 $wgAvailableRights[] = 'specialvideohandler';
@@ -177,13 +186,13 @@ $wgVideoMigrationProviderMap = array(
 
 /*
  * After migration
- */ 
+ */
 if(!empty($wgVideoHandlersVideosMigrated)) {
-	
+
 	/**
 	 * SpecialPages
 	 */
 	//$app->registerClass( 'VideoHandlerSpecialController', $dir . '/VideoHandlerSpecialController.class.php' );
 	//$app->registerSpecialPage('VideoHandler', 'VideoHandlerSpecialController');
- 
+
 }

@@ -426,7 +426,7 @@ function pageLoaded() {
 
 if (isSVGPage()) {
   insertSVGWeb();
-  addOnloadHook(pageLoaded);
+  $(pageLoaded);
 }
 
 // hide internal implementation details inside of a closure

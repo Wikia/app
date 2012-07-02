@@ -13,7 +13,7 @@ public class UploadImageTest extends BaseTest {
 	
 	
 
-	@Test(groups={"CI", "verified", "envProduction", "fileUpload"})
+	@Test(groups={"CI", "legacy", "envProduction", "fileUpload"})
 	public void testNormalUploadImage() throws Exception {
 		// keep file extensions consistent (uploaded image can be either PNG or JPG)
 		String fileNameExtenstion = uploadFileUrl.substring(uploadFileUrl.length() - 3, uploadFileUrl.length());
@@ -52,7 +52,7 @@ public class UploadImageTest extends BaseTest {
 	}
 
 	/*Delete file is removed as is deleting source file http://images.wikia.com/wikiaglobal/images/b/bc/Wiki.png Needs investigating
-	 * @Test(groups={"CI", "verified", "envProduction", "fileUpload"},dependsOnMethods="testNormalUploadImage")
+	 * @Test(groups={"CI", "legacy", "envProduction", "fileUpload"},dependsOnMethods="testNormalUploadImage")
 	public void testDeleteUploadedImage() throws Exception {
 		// keep file extensions consistent (uploaded image can be either PNG or JPG)
 		String fileNameExtenstion = uploadFileUrl.substring(uploadFileUrl.length() - 3, uploadFileUrl.length());

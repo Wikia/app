@@ -1,4 +1,9 @@
 <?php
+/**
+ * Fake parser that output the difference of two different parsers
+ *
+ * @file
+ */
 
 /**
  * @ingroup Parser
@@ -8,14 +13,13 @@ class Parser_DiffTest
 	var $parsers, $conf;
 	var $shortOutput = false;
 
-	var $dfUniqPrefix;
+	var $dtUniqPrefix;
 
 	function __construct( $conf ) {
 		if ( !isset( $conf['parsers'] ) ) {
 			throw new MWException( __METHOD__ . ': no parsers specified' );
 		}
 		$this->conf = $conf;
-		$this->dtUniqPrefix = "\x7fUNIQ" . Parser::getRandomString();
 	}
 
 	function init() {
@@ -102,14 +106,22 @@ class Parser_DiffTest
 
 	function setFunctionHook( $id, $callback, $flags = 0 ) {
 		$this->init();
-		foreach  ( $this->parsers as $i => $parser ) {
+		foreach  ( $this->parsers as $parser ) {
 			$parser->setFunctionHook( $id, $callback, $flags );
 		}
 	}
 
+	/**
+	 * @param $parser Parser
+	 * @return bool
+	 */
 	function onClearState( &$parser ) {
 		// hack marker prefixes to get identical output
-		$parser->mUniqPrefix = $this->dtUniqPrefix;
+		if ( !isset( $this->dtUniqPrefix ) ) {
+			$this->dtUniqPrefix = $parser->uniqPrefix();
+		} else {
+			$parser->mUniqPrefix = $this->dtUniqPrefix;
+		}
 		return true;
 	}
 }

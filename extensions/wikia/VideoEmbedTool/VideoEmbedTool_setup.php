@@ -20,72 +20,37 @@ $dir = dirname(__FILE__).'/';
 
 define( 'VIDEO_PREVIEW', 350 );
 
-if ( empty( $wgVideoHandlersVideosMigrated ) ) {
-	switch( $wgLanguageCode ) {
-	/*
-		case "pl" :
-		$wgExtraNamespaces[400] = 'Wideo';
-		$wgExtraNamespaces[401] = 'Dyskusja_wideo';
+switch( $wgLanguageCode ) {
+/*
+	case "pl" :
+	$wgExtraNamespaces[400] = 'Wideo';
+	$wgExtraNamespaces[401] = 'Dyskusja_wideo';
 
-		$wgNamespaceAliases['Video'] = 400;
-		$wgNamespaceAliases['Video_talk'] = 401;
+	$wgNamespaceAliases['Video'] = 400;
+	$wgNamespaceAliases['Video_talk'] = 401;
+	break;
+*/
+	case "en" :
+	default :
+		//$wgExtraNamespaces[6] = "Video";
+		//$wgExtraNamespaces[7] = "Video_talk";
+		$wgNamespaceAliases["Video"] = 6;
+		$wgNamespaceAliases["Video_talk"] = 7;
 		break;
-	*/
-		case "en" :
-		default :
-			$wgExtraNamespaces[400] = "Video";
-			$wgExtraNamespaces[401] = "Video_talk";
-			break;
-		case "ru":
-			$wgExtraNamespaces[400] = "Видео";
-			$wgExtraNamespaces[401] = "Обсуждение_видео";
-			$wgNamespaceAliases["Video"] = 400;
-			$wgNamespaceAliases["Video_talk"] = 401;
-			break;
-		case "no":
-		case "nn":
-			$wgExtraNamespaces[400] = "Video";
-			$wgExtraNamespaces[401] = "Videodiskusjon";
-			$wgNamespaceAliases["Video"] = 400;
-			$wgNamespaceAliases["Video_talk"] = 401;
-			break;
-
-	}
-} else {
-	switch( $wgLanguageCode ) {
-	/*
-		case "pl" :
-		$wgExtraNamespaces[400] = 'Wideo';
-		$wgExtraNamespaces[401] = 'Dyskusja_wideo';
-
-		$wgNamespaceAliases['Video'] = 400;
-		$wgNamespaceAliases['Video_talk'] = 401;
+	case "ru":
+		//$wgExtraNamespaces[6] = "Видео";
+		//$wgExtraNamespaces[7] = "Обсуждение_видео";
+		$wgNamespaceAliases["Video"] = 6;
+		$wgNamespaceAliases["Video_talk"] = 7;
 		break;
-	*/
-		case "en" :
-		default :
-			//$wgExtraNamespaces[6] = "Video";
-			//$wgExtraNamespaces[7] = "Video_talk";
-			$wgNamespaceAliases["Video"] = 6;
-			$wgNamespaceAliases["Video_talk"] = 7;
-			break;
-		case "ru":
-			//$wgExtraNamespaces[6] = "Видео";
-			//$wgExtraNamespaces[7] = "Обсуждение_видео";
-			$wgNamespaceAliases["Video"] = 6;
-			$wgNamespaceAliases["Video_talk"] = 7;
-			break;
-		case "no":
-		case "nn":
-			//$wgExtraNamespaces[6] = "Video";
-			//$wgExtraNamespaces[7] = "Videodiskusjon";
-			$wgNamespaceAliases["Video"] = 6;
-			$wgNamespaceAliases["Video_talk"] = 7;
-			break;
-	}
+	case "no":
+	case "nn":
+		//$wgExtraNamespaces[6] = "Video";
+		//$wgExtraNamespaces[7] = "Videodiskusjon";
+		$wgNamespaceAliases["Video"] = 6;
+		$wgNamespaceAliases["Video_talk"] = 7;
+		break;
 }
-
-require_once( "$IP/extensions/wikia/WikiaVideo/WikiaVideo.php" );
 
 #--- register special page (MW 1.1x way)
 if ( !function_exists( 'extAddSpecialPage' ) ) {
@@ -98,63 +63,6 @@ extAddSpecialPage( dirname(__FILE__) . '/WikiaVideoAdd_body.php', 'WikiaVideoAdd
 $wgExtensionMessagesFiles['VideoEmbedTool'] = $dir.'/VideoEmbedTool.i18n.php';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'VETSetup';
 
-if ( empty( $wgVideoHandlersVideosMigrated ) ) { /* can't use WikiaFileHelper here - not declared yet */
-	$wgHooks['WikiaVideo::View:RedLink'][] = 'VETWIkiaVideoRedLink';
-	$wgHooks['WikiaVideo::View:BlueLink'][] = 'VETWIkiaVideoBlueLink';
-}
-
-// display the link for replacing the video on the video page
-function VETWikiaVideoBlueLink() {
-        global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser, $wgArticlePath, $wgContLang, $wgTitle;
-
-	$special = $wgContLang->getFormattedNsText( NS_SPECIAL );
-	$url = $wgArticlePath;
-	$name = $wgTitle->getDBKey();
-	if( false !== strpos( '?', $wgArticlePath ) ) {
-		$url = str_replace( '$1', $special . ':WikiaVideoAdd&name=' . $name, $url );
-	} else {
-		$url = str_replace( '$1', $special . ':WikiaVideoAdd?name=' . $name, $url );
-	}
-
-	$s = '<br/><a id="VideoEmbedReplace" href="' . $url . '" id="VideoEmbedReplace" >' . wfMsg( 'wikiavideo-replace' ) . '</a><br/><br/>';
-	$wgOut->addHTML( $s );
-
-        if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
-                wfLoadExtensionMessages('VideoEmbedTool');
-                $wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
-                $wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
-                $wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
-                $wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/WikiaSlider.scss'));
-        }
-	return true;
-}
-
-// display the link for adding the video on the video page
-function VETWikiaVideoRedLink() {
-        global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser, $wgContLang, $wgTitle, $wgArticlePath;
-
-	$special = $wgContLang->getFormattedNsText( NS_SPECIAL );
-	$url = $wgArticlePath;
-	$name = $wgTitle->getDBKey();
-	if( false !== strpos( '?', $wgArticlePath ) ) {
-		$url = str_replace( '$1', $special . ':WikiaVideoAdd&name=' . $name, $url );
-	} else {
-		$url = str_replace( '$1', $special . ':WikiaVideoAdd?name=' . $name, $url );
-	}
-
-	$s = '<br/><a id="VideoEmbedCreate" href="' . $url . '">' . wfMsg( 'wikiavideo-create' ) . '</a><br/><br/>';
-	$wgOut->addHTML( $s );
-
-        if( in_array(get_class($wgUser->getSkin()), array('SkinMonaco', 'SkinOasis')) ) {
-                wfLoadExtensionMessages('VideoEmbedTool');
-                $wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
-                $wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
-                $wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
-                $wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/WikiaSlider.scss'));
-        }
-	return true;
-}
-
 function VETArticleSave( $article, $user, $text, $summary) {
 	if (NS_VIDEO == $article->mTitle->getNamespace()) {
 		$text = $article->dataline . $text;
@@ -165,7 +73,6 @@ function VETArticleSave( $article, $user, $text, $summary) {
 function VETSetup($editform) {
 	global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser;
 	if( in_array(get_class($wgUser->getSkin()), array('SkinMonaco', 'SkinOasis')) ) {
-		wfLoadExtensionMessages('VideoEmbedTool');
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
@@ -183,6 +90,7 @@ function VETSetupVars($vars) {
 	$vars['vet_warn1'] = wfMsg('vet-warn1');
 	$vars['vet_warn2'] = wfMsg('vet-warn2');
 	$vars['vet_warn3'] = wfMsg('vet-warn3');
+	$vars['vet_insert_error'] = wfMsg('vet-insert-error');
 	$vars['vet_bad_extension'] = wfMsg('vet-bad-extension');
 	$vars['file_extensions'] = $wgFileExtensions;
 	$vars['file_blacklist'] = $wgFileBlacklist;
@@ -206,8 +114,6 @@ $wgAjaxExportList[] = 'VET';
 
 function VET() {
 	global $wgRequest, $wgGroupPermissions, $wgAllowCopyUploads;
-
-	wfLoadExtensionMessages('VideoEmbedTool');
 
 	$dir = dirname(__FILE__).'/';
 	require_once($dir.'VideoEmbedTool_body.php');

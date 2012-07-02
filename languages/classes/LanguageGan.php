@@ -1,35 +1,43 @@
 <?php
 
-require_once( dirname(__FILE__).'/../LanguageConverter.php' );
-require_once( dirname(__FILE__).'/LanguageZh.php' );
+require_once( dirname( __FILE__ ) . '/../LanguageConverter.php' );
+require_once( dirname( __FILE__ ) . '/LanguageZh.php' );
 
 /**
  * @ingroup Language
  */
 class GanConverter extends LanguageConverter {
 
-	function __construct($langobj, $maincode,
-								$variants=array(),
-								$variantfallbacks=array(),
+	/**
+	 * @param $langobj Language
+	 * @param $maincode string
+	 * @param $variants array
+	 * @param $variantfallbacks array
+	 * @param $flags array
+	 * @param $manualLevel array
+	 */
+	function __construct( $langobj, $maincode,
+								$variants = array(),
+								$variantfallbacks = array(),
 								$flags = array(),
 								$manualLevel = array() ) {
 		$this->mDescCodeSep = '：';
 		$this->mDescVarSep = '；';
-		parent::__construct($langobj, $maincode,
+		parent::__construct( $langobj, $maincode,
 									$variants,
 									$variantfallbacks,
 									$flags,
-									$manualLevel);
+									$manualLevel );
 		$names = array(
 			'gan'      => '原文',
 			'gan-hans' => '简体',
 			'gan-hant' => '繁體',
 		);
-		$this->mVariantNames = array_merge($this->mVariantNames,$names);
+		$this->mVariantNames = array_merge( $this->mVariantNames, $names );
 	}
 
 	function loadDefaultTables() {
-		require( dirname(__FILE__)."/../../includes/ZhConversion.php" );
+		require( dirname( __FILE__ ) . "/../../includes/ZhConversion.php" );
 		$this->mTables = array(
 			'gan-hans' => new ReplacementArray( $zh2Hans ),
 			'gan-hant' => new ReplacementArray( $zh2Hant ),
@@ -37,14 +45,24 @@ class GanConverter extends LanguageConverter {
 		);
 	}
 
-	/* there shouldn't be any latin text in Chinese conversion, so no need
-	   to mark anything.
-	   $noParse is there for compatibility with LanguageConvert::markNoConversion
+	/**
+	 * there shouldn't be any latin text in Chinese conversion, so no need
+	 * to mark anything.
+	 * $noParse is there for compatibility with LanguageConvert::markNoConversion
+	 *
+	 * @param $text string
+	 * @param $noParse bool
+	 *
+	 * @return string
 	 */
-	function markNoConversion($text, $noParse = false) {
+	function markNoConversion( $text, $noParse = false ) {
 		return $text;
 	}
 
+	/**
+	 * @param $key string
+	 * @return String
+	 */
 	function convertCategoryKey( $key ) {
 		return $this->autoConvert( $key, 'gan' );
 	}
@@ -62,48 +80,67 @@ class LanguageGan extends LanguageZh {
 		global $wgHooks;
 		parent::__construct();
 
-		$variants = array('gan','gan-hans','gan-hant');
+		$variants = array( 'gan', 'gan-hans', 'gan-hant' );
 		$variantfallbacks = array(
-			'gan'      => array('gan-hans','gan-hant'),
-			'gan-hans' => array('gan'),
-			'gan-hant' => array('gan'),
+			'gan'      => array( 'gan-hans', 'gan-hant' ),
+			'gan-hans' => array( 'gan' ),
+			'gan-hant' => array( 'gan' ),
 		);
-		$ml=array(
+		$ml = array(
 			'gan'      => 'disable',
 		);
 
 		$this->mConverter = new GanConverter( $this, 'gan',
 								$variants, $variantfallbacks,
 								array(),
-								$ml);
+								$ml );
 
 		$wgHooks['ArticleSaveComplete'][] = $this->mConverter;
 	}
 
-	# this should give much better diff info
+	/**
+	 * this should give much better diff info
+	 *
+	 * @param $text string
+	 * @return string
+	 */
 	function segmentForDiff( $text ) {
 		return preg_replace(
 			"/([\\xc0-\\xff][\\x80-\\xbf]*)/e",
-			"' ' .\"$1\"", $text);
+			"' ' .\"$1\"", $text );
 	}
 
+	/**
+	 * @param $text string
+	 * @return string
+	 */
 	function unsegmentForDiff( $text ) {
 		return preg_replace(
 			"/ ([\\xc0-\\xff][\\x80-\\xbf]*)/e",
-			"\"$1\"", $text);
+			"\"$1\"", $text );
 	}
 
-	// word segmentation
+	/**
+	 * word segmentation
+	 *
+	 * @param $string string
+	 * @param $autoVariant string
+	 * @return String
+	 */
 	function normalizeForSearch( $string, $autoVariant = 'gan-hans' ) {
 		// LanguageZh::normalizeForSearch
 		return parent::normalizeForSearch( $string, $autoVariant );
 	}
 
+	/**
+	 * @param $termsArray array
+	 * @return array
+	 */
 	function convertForSearchResult( $termsArray ) {
 		$terms = implode( '|', $termsArray );
 		$terms = self::convertDoubleWidth( $terms );
 		$terms = implode( '|', $this->mConverter->autoConvertToAllVariants( $terms ) );
-		$ret = array_unique( explode('|', $terms) );
+		$ret = array_unique( explode( '|', $terms ) );
 		return $ret;
 	}
 }

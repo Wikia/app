@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -55,7 +56,7 @@ class ContentBlock {
 			foreach( $blocksData as $blockData ) {
 				$result = Phalanx::isBlocked($textbox, $blockData);
 				if ( $result['blocked'] ) {
-					$editpage->spamPage( $result['msg'] );
+					$editpage->spamPageWithContent( $result['msg'] );
 					Wikia::log(__METHOD__, __LINE__, "Block '{$result['msg']}' blocked '$textbox'.");
 					wfProfileOut( __METHOD__ );
 					return false;
@@ -85,7 +86,6 @@ class ContentBlock {
 			foreach( $blocksData as $blockData ) {
 				$result = Phalanx::isBlocked($reason, $blockData);
 				if ( $result['blocked'] ) {
-					wfLoadExtensionMessages( 'Phalanx' );
 
 					$error .= wfMsgExt( 'phalanx-title-move-summary', 'parseinline' );
 					$error .= wfMsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$result['msg']}</nowiki>" );

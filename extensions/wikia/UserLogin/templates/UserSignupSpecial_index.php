@@ -41,7 +41,7 @@
 	<?php
 		// 3rd party providers buttons
 		if (!$isMonobook) {
-			echo $app->renderView('UserLoginSpecial', 'ProvidersTop', array('context' => 'signup') );
+			echo $app->renderView('UserLoginSpecial', 'ProvidersTop', array('requestType' => 'signup') );
 		}
 	?>
 <?php

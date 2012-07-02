@@ -123,7 +123,7 @@ class SelfServiceAdvertisingSplashModel extends WikiaObject {
 	public function validateEmailAddress() {
 		$valid = true;
 		if ($this->srcEmail instanceof MailAddress) {
-			if (!User::isValidEmailAddr($this->srcEmail->toString())) {
+			if (!Sanitizer::validateEmail($this->srcEmail->toString())) {
 				$valid = false;
 			}
 		} else {

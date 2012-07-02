@@ -1,6 +1,6 @@
 <?php
 /**
- * Initialization file for SemanticInternalObjects
+ * Initialization file for Semantic Internal Objects.
  *
  * @file
  * @ingroup SemanticInternalObjects
@@ -9,34 +9,42 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define( 'SIO_VERSION', '0.3' );
+define( 'SIO_VERSION', '0.6.8' );
 
-$wgExtensionCredits['parserhook'][] = array(
+$wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'parserhook'][] = array(
+	'path' => __FILE__,
 	'name'	=> 'Semantic Internal Objects',
-	'version'	=> SIO_VERSION,
-	'author'	=> 'Yaron Koren',
-	'url'	=> 'http://www.mediawiki.org/wiki/Extension:Semantic_Internal_Objects',
-	'description'	=>  'Setting of internal objects in Semantic MediaWiki',
+	'version' => SIO_VERSION,
+	'author' => 'Yaron Koren',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Semantic_Internal_Objects',
 	'descriptionmsg' => 'semanticinternalobjects-desc',
 );
 
 $wgHooks['ParserFirstCallInit'][] = 'siofRegisterParserFunctions';
-$wgHooks['LanguageGetMagic'][] = 'siofLanguageGetMagic';
-$wgHooks['smwDeleteSemanticData'][] = 'SIOHandler::updateData';
+$wgHooks['ParserClearState'][] = 'SIOHandler::clearState';
+$wgHooks['SMWSQLStore2::updateDataAfter'][] = 'SIOHandler::updateData';
+$wgHooks['SMWSQLStore2::deleteSubjectAfter'][] = 'SIOHandler::deleteData';
+$wgHooks['smwUpdatePropertySubjects'][] = 'SIOHandler::handleUpdatingOfInternalObjects';
+$wgHooks['TitleMoveComplete'][] = 'SIOHandler::handlePageMove';
+$wgHooks['smwRefreshDataJobs'][] = 'SIOHandler::handleRefreshingOfInternalObjects';
+$wgHooks['smwAddToRDFExport'][] = 'SIOSQLStore::createRDF';
+$wgHooks['PageSchemasRegisterHandlers'][] = 'SIOPageSchemas::registerClass';
 
-$siogIP = $IP . '/extensions/SemanticInternalObjects';
+$siogIP = dirname( __FILE__ );
 $wgExtensionMessagesFiles['SemanticInternalObjects'] = $siogIP . '/SemanticInternalObjects.i18n.php';
+$wgExtensionMessagesFiles['SemanticInternalObjectsMagic'] = $siogIP . '/SemanticInternalObjects.i18n.magic.php';
 $wgAutoloadClasses['SIOHandler'] = $siogIP . '/SemanticInternalObjects_body.php';
+$wgAutoloadClasses['SIOSQLStore'] = $siogIP . '/SemanticInternalObjects_body.php';
+if ( class_exists( 'SMWDIWikiPage' ) ) {
+	// SMW >= 1.6
+	$wgAutoloadClasses['SIOInternalObjectValue'] = $siogIP . '/SIO_RDFClasses2.php';
+} else {
+	$wgAutoloadClasses['SIOInternalObjectValue'] = $siogIP . '/SIO_RDFClasses.php';
+}
+$wgAutoloadClasses['SIOPageSchemas'] = $siogIP . '/SIO_PageSchemas.php';
 
 function siofRegisterParserFunctions( &$parser ) {
 	$parser->setFunctionHook( 'set_internal', array( 'SIOHandler', 'doSetInternal' ) );
+	$parser->setFunctionHook( 'set_internal_recurring_event', array( 'SIOHandler', 'doSetInternalRecurringEvent' ) );
 	return true; // always return true, in order not to stop MW's hook processing!
-}
-
-function siofLanguageGetMagic( &$magicWords, $langCode = "en" ) {
-	switch ( $langCode ) {
-	default:
-		$magicWords['set_internal'] = array ( 0, 'set_internal' );
-	}
-	return true;
 }

@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension ShowProcesslist.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -21,13 +22,23 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Jon Harald Søby
  */
 $messages['qqq'] = array(
 	'showprocesslist-desc' => 'The text “SHOW FULL PROCESSLIST“ is MySQL syntax, and should stay the way it is even in translations.',
 	'showprocesslist-id' => '{{Identical|ID}}',
 	'showprocesslist-user' => '{{Identical|User}}',
+	'showprocesslist-db' => '{{Identical|Database}}',
 	'showprocesslist-time' => '{{Identical|Time}}',
+	'showprocesslist-info' => '{{Identical|Info}}',
+);
+
+/** Abkhazian (Аҧсуа)
+ * @author Temuri rajavi
+ */
+$messages['ab'] = array(
+	'showprocesslist-user' => 'Алахәыла',
 );
 
 /** Afrikaans (Afrikaans)
@@ -35,9 +46,16 @@ $messages['qqq'] = array(
  * @author SPQRobin
  */
 $messages['af'] = array(
+	'showprocesslist' => 'Wys prosesse',
+	'showprocesslist-desc' => 'Wys die afvoer van [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
 	'showprocesslist-id' => 'Id',
 	'showprocesslist-user' => 'Gebruiker',
+	'showprocesslist-host' => 'Stelsel',
+	'showprocesslist-db' => 'Databasis',
+	'showprocesslist-command' => 'Opdrag',
 	'showprocesslist-time' => 'Tyd',
+	'showprocesslist-state' => 'Status',
+	'showprocesslist-info' => 'Inligting',
 );
 
 /** Arabic (العربية)
@@ -57,10 +75,15 @@ $messages['ar'] = array(
 );
 
 /** Aramaic (ܐܪܡܝܐ)
+ * @author 334a
  * @author Basharh
  */
 $messages['arc'] = array(
+	'showprocesslist-id' => 'ܗܝܝܘܬܐ',
+	'showprocesslist-user' => 'ܡܦܠܚܢܐ',
+	'showprocesslist-host' => 'ܡܐܪܚܢܐ',
 	'showprocesslist-time' => 'ܙܒܢܐ',
+	'showprocesslist-info' => 'ܝܕ̈ܥܬܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -80,7 +103,15 @@ $messages['arz'] = array(
 	'showprocesslist-info' => 'معلومات',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'showprocesslist-user' => 'İstifadəçi',
+	'showprocesslist-time' => 'Zaman',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -106,6 +137,20 @@ $messages['bg'] = array(
 	'showprocesslist-db' => 'бд',
 	'showprocesslist-command' => 'Команда',
 	'showprocesslist-info' => 'Информация',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'showprocesslist' => 'প্রক্রিয়া তালিকা দেখাও',
+	'showprocesslist-user' => 'ব্যবহারকারী',
+	'showprocesslist-host' => 'হোস্ট',
+	'showprocesslist-db' => 'ডেটাবেজ',
+	'showprocesslist-command' => 'কমান্ড',
+	'showprocesslist-time' => 'সময়',
+	'showprocesslist-state' => 'অবস্থা',
+	'showprocesslist-info' => 'তথ্যাদি',
 );
 
 /** Breton (Brezhoneg)
@@ -154,6 +199,11 @@ $messages['ca'] = array(
 	'showprocesslist-info' => 'Info',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'showprocesslist-user' => 'بەکارهێنەر',
+);
+
 /** Corsican (Corsu) */
 $messages['co'] = array(
 	'showprocesslist-user' => 'Utilizatore',
@@ -191,13 +241,14 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Melancholie
  * @author Raimond Spekking
  */
 $messages['de'] = array(
 	'showprocesslist' => 'Zeige Prozessliste',
 	'showprocesslist-desc' => 'Zeige die Ausgabe von [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
-	'showprocesslist-id' => 'ID',
+	'showprocesslist-id' => 'Kennung',
 	'showprocesslist-user' => 'Benutzer',
 	'showprocesslist-host' => 'Host',
 	'showprocesslist-db' => 'db',
@@ -282,7 +333,7 @@ $messages['es'] = array(
  */
 $messages['eu'] = array(
 	'showprocesslist-id' => 'NA',
-	'showprocesslist-user' => 'Lankidea',
+	'showprocesslist-user' => 'Erabiltzailea',
 	'showprocesslist-db' => 'Datu-basea',
 	'showprocesslist-time' => 'Ordua',
 	'showprocesslist-state' => 'Egoera',
@@ -307,6 +358,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author McDutchie
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'showprocesslist' => 'Voir la liste des processus',
@@ -317,15 +369,23 @@ $messages['fr'] = array(
 	'showprocesslist-db' => 'Base de données',
 	'showprocesslist-command' => 'Commande',
 	'showprocesslist-time' => 'Durée',
-	'showprocesslist-state' => 'État',
+	'showprocesslist-state' => 'Statut',
 	'showprocesslist-info' => 'Informations',
 );
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
-	'showprocesslist-user' => 'Utilisator',
+	'showprocesslist-id' => 'N°',
+	'showprocesslist-user' => 'Usanciér',
+	'showprocesslist-host' => 'Hôto',
+	'showprocesslist-db' => 'Bâsa de balyês',
+	'showprocesslist-command' => 'Comanda',
+	'showprocesslist-time' => 'Hora',
+	'showprocesslist-state' => 'Ètat',
+	'showprocesslist-info' => 'Enformacions',
 );
 
 /** Western Frisian (Frysk)
@@ -340,11 +400,11 @@ $messages['fy'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'showprocesslist' => 'Amosar a lista do proceso',
-	'showprocesslist-desc' => 'Amosa o texto de saída [[Special:ShowProcesslist|AMOSAR A LISTA COMPLETA DE PROCESOS]]',
+	'showprocesslist' => 'Mostrar a lista de procesos',
+	'showprocesslist-desc' => 'Presenta o texto de saída de [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
 	'showprocesslist-id' => 'Id',
 	'showprocesslist-user' => 'Usuario',
-	'showprocesslist-host' => 'Host',
+	'showprocesslist-host' => 'Servidor',
 	'showprocesslist-db' => 'base de datos',
 	'showprocesslist-command' => 'Comando',
 	'showprocesslist-time' => 'Hora',
@@ -464,7 +524,7 @@ $messages['ia'] = array(
 	'showprocesslist-desc' => 'Monstra le resultato de [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
 	'showprocesslist-id' => 'ID',
 	'showprocesslist-user' => 'Usator',
-	'showprocesslist-host' => 'Hospite',
+	'showprocesslist-host' => 'Host',
 	'showprocesslist-db' => 'BdD',
 	'showprocesslist-command' => 'Commando',
 	'showprocesslist-time' => 'Tempore',
@@ -494,10 +554,10 @@ $messages['id'] = array(
  */
 $messages['ig'] = array(
 	'showprocesslist-id' => 'Id',
-	'showprocesslist-user' => 'Onye ne ké',
+	'showprocesslist-user' => "Ọ'bànifé",
 	'showprocesslist-host' => 'Onye ji ímé a rü',
 	'showprocesslist-db' => 'Njikota Ómárí',
-	'showprocesslist-time' => 'Ogẹ',
+	'showprocesslist-time' => 'Ógẹ',
 	'showprocesslist-state' => 'Otụolé',
 	'showprocesslist-info' => 'Ómárí',
 );
@@ -507,6 +567,8 @@ $messages['ig'] = array(
  */
 $messages['it'] = array(
 	'showprocesslist-user' => 'Utente',
+	'showprocesslist-db' => 'Database',
+	'showprocesslist-info' => 'Informazioni',
 );
 
 /** Japanese (日本語)
@@ -550,18 +612,20 @@ $messages['ka'] = array(
  * @author Chhorran
  * @author Lovekhmer
  * @author Thearith
+ * @author គីមស៊្រុន
  */
 $messages['km'] = array(
 	'showprocesslist' => 'បង្ហាញ​បញ្ជី​ដំណើរការ',
 	'showprocesslist-user' => 'អ្នកប្រើប្រាស់',
 	'showprocesslist-host' => 'ម៉ាស៊ីន',
+	'showprocesslist-db' => 'មូលដ្ឋានទិន្នន័យ',
 	'showprocesslist-command' => 'ពាក្យបញ្ជា',
 	'showprocesslist-time' => 'ពេលវេលា',
 	'showprocesslist-state' => 'រដ្ឋ',
 	'showprocesslist-info' => 'ព័ត៌មាន',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -575,6 +639,14 @@ $messages['ksh'] = array(
 	'showprocesslist-time' => 'Zick',
 	'showprocesslist-state' => 'Zostand',
 	'showprocesslist-info' => 'Enfommazjohn',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'showprocesslist-user' => 'Bikarhêner',
+	'showprocesslist-time' => 'Dem',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -604,7 +676,7 @@ $messages['mhr'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'showprocesslist' => 'Прикажи листа на процеси',
+	'showprocesslist' => 'Прикажи список на процеси',
 	'showprocesslist-desc' => 'Прикажи го изводот од наредбата „[[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]“',
 	'showprocesslist-id' => 'Id',
 	'showprocesslist-user' => 'Корисник',
@@ -620,7 +692,7 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'showprocesslist' => 'പ്രക്രിയകളുടെ പട്ടിക പ്രദര്‍ശിപ്പിക്കുക',
+	'showprocesslist' => 'പ്രക്രിയകളുടെ പട്ടിക പ്രദർശിപ്പിക്കുക',
 	'showprocesslist-id' => 'ഐ.ഡി.',
 	'showprocesslist-user' => 'ഉപയോക്താവ്',
 	'showprocesslist-time' => 'സമയം',
@@ -665,6 +737,22 @@ $messages['nah'] = array(
 	'showprocesslist-user' => 'Tlatequitiltilīlli',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'showprocesslist' => 'Vis prosessliste',
+	'showprocesslist-desc' => 'Vis resultatet av [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
+	'showprocesslist-id' => 'ID',
+	'showprocesslist-user' => 'Bruker',
+	'showprocesslist-host' => 'Vert',
+	'showprocesslist-db' => 'database',
+	'showprocesslist-command' => 'Kommando',
+	'showprocesslist-time' => 'Tid',
+	'showprocesslist-state' => 'Tilstand',
+	'showprocesslist-info' => 'Info',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -698,22 +786,6 @@ $messages['nn'] = array(
 	'showprocesslist-info' => 'Informasjon',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'showprocesslist' => 'Vis prosessliste',
-	'showprocesslist-desc' => 'Vis resultatet av [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
-	'showprocesslist-id' => 'ID',
-	'showprocesslist-user' => 'Bruker',
-	'showprocesslist-host' => 'Vert',
-	'showprocesslist-db' => 'database',
-	'showprocesslist-command' => 'Kommando',
-	'showprocesslist-time' => 'Tid',
-	'showprocesslist-state' => 'Tilstand',
-	'showprocesslist-info' => 'Info',
-);
-
 /** Northern Sotho (Sesotho sa Leboa)
  * @author Mohau
  */
@@ -737,7 +809,7 @@ $messages['oc'] = array(
 	'showprocesslist-info' => 'Entresenhas',
 );
 
-/** Ossetic (Иронау)
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -796,7 +868,8 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'showprocesslist-user' => 'کارونکی',
+	'showprocesslist-user' => 'کارن',
+	'showprocesslist-host' => 'کوربه',
 	'showprocesslist-db' => 'توکبنسټ',
 	'showprocesslist-command' => 'بولۍ',
 	'showprocesslist-time' => 'وخت',
@@ -824,12 +897,13 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'showprocesslist' => 'Mostrar Lista de Processos',
 	'showprocesslist-desc' => 'Apresenta o resultado de [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
 	'showprocesslist-id' => 'Id',
-	'showprocesslist-user' => 'Utilizador',
+	'showprocesslist-user' => 'Usuário',
 	'showprocesslist-host' => 'Servidor',
 	'showprocesslist-db' => 'Base de dados',
 	'showprocesslist-command' => 'Comando',
@@ -849,7 +923,7 @@ $messages['ro'] = array(
 	'showprocesslist-db' => 'Baza de date',
 	'showprocesslist-command' => 'Comandă',
 	'showprocesslist-time' => 'Timp',
-	'showprocesslist-info' => 'Informaţii',
+	'showprocesslist-info' => 'Informații',
 );
 
 /** Tarandíne (Tarandíne)
@@ -886,6 +960,19 @@ $messages['ru'] = array(
 	'showprocesslist-info' => 'Информация',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'showprocesslist-id' => 'ID',
+	'showprocesslist-user' => 'Хоснователь',
+	'showprocesslist-db' => 'Датабаза',
+	'showprocesslist-command' => 'Приказ',
+	'showprocesslist-time' => 'Час',
+	'showprocesslist-state' => 'Штат',
+	'showprocesslist-info' => 'Інфо',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -902,28 +989,46 @@ $messages['sk'] = array(
 	'showprocesslist-info' => 'Informácie',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'showprocesslist' => 'Prikaži seznam procesov',
+	'showprocesslist-desc' => 'Prikaže izhod [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
+	'showprocesslist-id' => 'ID',
+	'showprocesslist-user' => 'Uporabnik',
+	'showprocesslist-host' => 'Gostitelj',
+	'showprocesslist-db' => 'Zbirka podatkov',
+	'showprocesslist-command' => 'Ukaz',
+	'showprocesslist-time' => 'Čas',
+	'showprocesslist-state' => 'Stanje',
+	'showprocesslist-info' => 'Informacije',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'showprocesslist' => 'Покажи списак процеса',
 	'showprocesslist-desc' => 'Прикажи излаз за [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
 	'showprocesslist-user' => 'Корисник',
-	'showprocesslist-host' => 'Хост',
+	'showprocesslist-host' => 'Домаћин',
 	'showprocesslist-db' => 'База података',
 	'showprocesslist-command' => 'Команда',
 	'showprocesslist-time' => 'Време',
 	'showprocesslist-state' => 'Стање',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
 	'showprocesslist' => 'Pokaži spisak procesa',
 	'showprocesslist-desc' => 'Prikaži izlaz za [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
 	'showprocesslist-user' => 'Korisnik',
-	'showprocesslist-host' => 'Host',
+	'showprocesslist-host' => 'Domaćin',
 	'showprocesslist-db' => 'Baza podataka',
 	'showprocesslist-command' => 'Komanda',
 	'showprocesslist-time' => 'Vreme',
@@ -982,7 +1087,7 @@ $messages['tet'] = array(
 	'showprocesslist-id' => 'ID',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -990,7 +1095,7 @@ $messages['tg-cyrl'] = array(
 	'showprocesslist-time' => 'Вақт',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -1039,10 +1144,13 @@ $messages['tr'] = array(
 /** Ukrainian (Українська)
  * @author AS
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'showprocesslist-desc' => 'Показує вивід команди MySQL [[Special:ShowProcesslist|SHOW FULL PROCESSLIST]]',
 	'showprocesslist-user' => 'Користувач',
+	'showprocesslist-db' => 'База даних',
+	'showprocesslist-time' => 'Час',
 );
 
 /** Veps (Vepsan kel')
@@ -1102,16 +1210,23 @@ $messages['yi'] = array(
  */
 $messages['zh-hans'] = array(
 	'showprocesslist-user' => '用户',
+	'showprocesslist-host' => '主机',
+	'showprocesslist-db' => '数据库',
 	'showprocesslist-time' => '时间',
 	'showprocesslist-state' => '状态',
+	'showprocesslist-info' => '信息',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'showprocesslist-user' => '使用者',
+	'showprocesslist-host' => '主機',
+	'showprocesslist-db' => '資料庫',
 	'showprocesslist-time' => '時間',
 	'showprocesslist-state' => '狀態',
+	'showprocesslist-info' => '資訊',
 );
 

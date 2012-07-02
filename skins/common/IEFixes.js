@@ -1,23 +1,23 @@
 // IE fixes javascript
 
-var isMSIE55 = ( window.showModalDialog && window.clipboardData && window.createPopup );
-var doneIETransform;
-var doneIEAlphaFix;
+window.isMSIE55 = ( window.showModalDialog && window.clipboardData && window.createPopup );
+window.doneIETransform = undefined;
+window.doneIEAlphaFix = undefined;
 
-if ( document.attachEvent ) {
-	document.attachEvent( 'onreadystatechange', hookit );
-}
-
-function hookit() {
+window.hookit = function() {
 	if ( !doneIETransform && document.getElementById && document.getElementById( 'bodyContent' ) ) {
 		doneIETransform = true;
 		relativeforfloats();
 		fixalpha();
 	}
+};
+
+if ( document.attachEvent ) {
+	document.attachEvent( 'onreadystatechange', window.hookit );
 }
 
 // png alpha transparency fixes
-function fixalpha( logoId ) {
+window.fixalpha = function( logoId ) {
 	// bg
 	if ( isMSIE55 && !doneIEAlphaFix ) {
 		var plogo = document.getElementById( logoId || 'p-logo' );
@@ -61,19 +61,25 @@ function fixalpha( logoId ) {
 			linkFix.style.width = '100%';
 		}
 	}
+};
+
+if ( isMSIE55 ) {
+	// ondomready
+	$( fixalpha );
 }
 
 // fix ie6 disappering float bug
-function relativeforfloats() {
+window.relativeforfloats = function() {
 	var bc = document.getElementById( 'bodyContent' );
 	if ( bc ) {
 		var tables = bc.getElementsByTagName( 'table' );
 		var divs = bc.getElementsByTagName( 'div' );
+		setrelative( tables );
+		setrelative( divs );
 	}
-	setrelative( tables );
-	setrelative( divs );
-}
-function setrelative( nodes ) {
+};
+
+window.setrelative = function( nodes ) {
 	var i = 0;
 	while ( i < nodes.length ) {
 		if( ( ( nodes[i].style.float && nodes[i].style.float != ( 'none' ) ||
@@ -84,7 +90,7 @@ function setrelative( nodes ) {
 		}
 		i++;
 	}
-}
+};
 
 // Expand links for printing
 String.prototype.hasClass = function( classWanted ) {
@@ -95,11 +101,11 @@ String.prototype.hasClass = function( classWanted ) {
 		}
 	}
 	return false;
-}
+};
 
-var expandedURLs;
+window.expandedURLs = undefined;
 
-onbeforeprint = function() {
+window.onbeforeprint = function() {
 	expandedURLs = [];
 
 	var contentEl = document.getElementById( 'content' );
@@ -117,12 +123,12 @@ onbeforeprint = function() {
 			}
 		}
 	}
-}
+};
 
-onafterprint = function() {
+window.onafterprint = function() {
 	for ( var i = 0; i < expandedURLs.length; i++ ) {
 		if ( expandedURLs[i] ) {
 			expandedURLs[i].removeNode( true );
 		}
 	}
-}
+};

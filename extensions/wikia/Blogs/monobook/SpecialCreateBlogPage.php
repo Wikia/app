@@ -11,8 +11,6 @@ class CreateBlogPage extends SpecialBlogPage {
 	private $mCategorySelectEnabled = false;
 
 	public function __construct() {
-		// initialise messages
-		wfLoadExtensionMessages( "Blogs" );
 		parent::__construct( 'CreateBlogPage'  /*class*/, '' /*restriction*/, true);
 
 		// force EditEnhancements initialisation if available
@@ -395,7 +393,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$blogPostTitle = $wgRequest->getVal('blogPostTitle');
 
 		if (!is_null($blogPostTitle) && $wgRequest->wasPosted()) {
-			$wgOut->addHTML(Xml::hidden('blogPostTitle', $blogPostTitle));
+			$wgOut->addHTML(Html::hidden('blogPostTitle', $blogPostTitle));
 		}
 
 		return true;

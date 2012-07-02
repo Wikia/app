@@ -8,7 +8,7 @@ class NCL extends EnhancedChangesList {
 	/**
 	 * Determines which version of changes list to provide, or none.
 	 */
-	public static function hook( &$user, &$skin, &$list ) {
+	public static function hook( $user, &$skin, &$list ) {
 		$list = null;
 
 		/* allow override */
@@ -28,8 +28,8 @@ class NCL extends EnhancedChangesList {
 		}
 
 		if ( $list instanceof NCL ) {
-			global $wgOut, $wgScriptPath;
-			$wgOut->addScriptFile( "$wgScriptPath/extensions/CleanChanges/cleanchanges.js" );
+			global $wgOut;
+			$wgOut->addModules( 'ext.cleanchanges' );
 		}
 
 		/* If some list was specified, stop processing */
@@ -37,13 +37,18 @@ class NCL extends EnhancedChangesList {
 
 	}
 
+	protected static $userinfo = array();
+
+	public static function addScriptVariables( &$vars ) {
+		$vars += self::$userinfo;
+		return true;
+	}
 
 	/**
 	 * String that comes between page details and the user details. By default
 	 * only larger space.
 	 */
 	protected $userSeparator = "\xc2\xa0 \xc2\xa0";
-	protected $userinfo = array();
 
 	/**
 	 * Text direction, true for ltr and false for rtl
@@ -51,7 +56,6 @@ class NCL extends EnhancedChangesList {
 	protected $direction = true;
 
 	public function __construct( $skin ) {
-		wfLoadExtensionMessages( 'CleanChanges' );
 		global $wgLang;
 		parent::__construct( $skin );
 		$this->direction = !$wgLang->isRTL();
@@ -69,70 +73,23 @@ class NCL extends EnhancedChangesList {
 	}
 
 	function endRecentChangesList() {
-	/*
-	 * Have to output the accumulated javascript stuff before any output is send.
-	 */
-		global $wgOut;
-		$wgOut->addScript( Skin::makeVariablesScript( $this->userinfo ) );
 		return parent::endRecentChangesList() . '</div>';
 	}
 
 	function isLog( $rc ) {
-		if ( $rc->getAttribute( 'rc_namespace ' ) == NS_SPECIAL ) {
-			return 1;
-		} elseif ( $rc->getAttribute( 'rc_type' ) == RC_LOG ) {
+		if ( $rc->getAttribute( 'rc_type' ) == RC_LOG ) {
 			return 2;
 		} else {
 			return 0;
 		}
 	}
 
-	function getLogTitle( $type, $rc ) {
-		if ( $type === 1 ) {
-			$title = $rc->getAttribute( 'rc_title' );
-			list( $specialName, $logtype ) = SpecialPage::resolveAliasWithSubpage( $title );
-
-			if ( $specialName === 'Log' ) {
-				$titleObj = $rc->getTitle();
-				$logname = LogPage::logName( $logtype );
-				return '(' . $this->skin->makeKnownLinkObj( $titleObj, $logname ) . ')';
-			} else {
-				throw new MWException( "Unknown special page name $specialName ($title). Log expected." );
-			}
-		} elseif ( $type === 2 ) {
-			$logtype = $rc->getAttribute( 'rc_log_type' );
-			$logname = LogPage::logName( $logtype );
-			$titleObj = SpecialPage::getTitleFor( 'Log', $logtype );
-			return '(' . $this->skin->makeKnownLinkObj( $titleObj, $logname ) . ')';
-		} else {
-			throw new MWException( 'Unknown type' );
-		}
-	}
-
-	protected function getLogAction( $rc ) {
-		global $wgUser;
-
-		$priviledged = $wgUser->isAllowed('deleterevision');
-		$deleted = $this->isDeleted($rc, LogPage::DELETED_ACTION);
-
-		if ( $deleted && !$priviledged ) {
-			return $this->XMLwrapper( 'history-deleted', wfMsg('rev-deleted-event') );
-		} else {
-			$action = LogPage::actionText(
-				$rc->getAttribute('rc_log_type'),
-				$rc->getAttribute('rc_log_action'),
-				$rc->getTitle(),
-				$this->skin,
-				LogPage::extractParams( $rc->getAttribute('rc_params') ),
-				true,
-				true
-			);
-			if ( $deleted ) {
-				$class = array( 'class' => 'history-deleted' );
-				$action = Xml::tags( 'span', $class, $action );
-			}
-			return $action;
-		}
+	function getLogTitle( $rc ) {
+		$logtype = $rc->getAttribute( 'rc_log_type' );
+		$logpage = new LogPage( $logtype );
+		$logname = $logpage->getName()->escaped();
+		$titleObj = SpecialPage::getTitleFor( 'Log', $logtype );
+		return '(' . $this->skin->makeKnownLinkObj( $titleObj, $logname ) . ')';
 	}
 
 	/**
@@ -157,7 +114,7 @@ class NCL extends EnhancedChangesList {
 
 		$logEntry = $this->isLog( $rc );
 		if( $logEntry ) {
-			$clink = $this->getLogTitle( $logEntry, $rc );
+			$clink = $this->getLogTitle( $rc );
 		} elseif( $rc->unpatrolled && $rc->getAttribute( 'rc_type' ) == RC_NEW ) {
 			# Unpatrolled new page, give rc_id in query
 			$clink = $this->skin->makeKnownLinkObj( $titleObj, '', "rcid={$rc_id}" );
@@ -176,13 +133,15 @@ class NCL extends EnhancedChangesList {
 
 		$stuff = $this->userToolLinks( $rc->getAttribute( 'rc_user' ),
 			$rc->getAttribute( 'rc_user_text' ) );
-		$this->userinfo += $stuff[1];
+		self::$userinfo += $stuff[1];
 
 		$rc->_user = $this->skin->userLink( $rc->getAttribute( 'rc_user' ),
 			$rc->getAttribute( 'rc_user_text' ) );
 		$rc->_userInfo = $stuff[0];
 
-		$rc->_comment = $this->getComment( $rc );
+		if ( !$this->isLog( $rc ) ) {
+			$rc->_comment = $this->getComment( $rc );
+		}
 
 		$rc->_watching = $this->numberofWatchingusers( $baseRC->numberofWatchingusers );
 
@@ -200,7 +159,7 @@ class NCL extends EnhancedChangesList {
 		# Put accumulated information into the cache, for later display
 		# Page moves go on their own line
 		if ( $logEntry ) {
-			$secureName = $this->getLogTitle( $logEntry, $rc );
+			$secureName = $this->getLogTitle( $rc );
 		} else {
 			$secureName = $titleObj->getPrefixedDBkey();
 		}
@@ -363,9 +322,14 @@ class NCL extends EnhancedChangesList {
 			}
 
 			$items[] = $this->userSeparator;
-			$items[] = $rcObj->_user;
-			$items[] = $rcObj->_userInfo;
-			$items[] = $rcObj->_comment;
+
+			if ( $this->isLog( $rcObj ) ) {
+				$items[] = $this->insertLogEntry( $rcObj );
+			} else {
+				$items[] = $rcObj->_user;
+				$items[] = $rcObj->_userInfo;
+				$items[] = $rcObj->_comment;
+			}
 
 			$lines .= '<div>' . implode( " {$this->dir}", $items ) . "</div>\n";
 		}
@@ -400,10 +364,15 @@ class NCL extends EnhancedChangesList {
 		}
 
 		$items[] = $this->userSeparator;
-		$items[] = $rcObj->_user;
-		$items[] = $rcObj->_userInfo;
-		$items[] = $rcObj->_comment;
-		$items[] = $rcObj->_watching;
+
+		if ( $this->isLog( $rcObj ) ) {
+			$items[] = $this->insertLogEntry( $rcObj );
+		} else {
+			$items[] = $rcObj->_user;
+			$items[] = $rcObj->_userInfo;
+			$items[] = $rcObj->_comment;
+			$items[] = $rcObj->_watching;
+		}
 
 		return '<div>' . implode( " {$this->dir}", $items ) . "</div>\n";
 
@@ -413,8 +382,6 @@ class NCL extends EnhancedChangesList {
 		global $wgUser;
 		$comment = $rc->getAttribute( 'rc_comment' );
 		$action = '';
-		if ( $this->isLog($rc) ) $action = $this->getLogAction( $rc );
-
 		if ( $comment === '' ) {
 			return $action;
 		} elseif ( $this->isDeleted( $rc, LogPage::DELETED_COMMENT ) ) {
@@ -433,9 +400,8 @@ class NCL extends EnhancedChangesList {
 	 * Enhanced user tool links, with javascript functionality.
 	 */
 	public function userToolLinks( $userId, $userText ) {
-		global $wgUser, $wgDisableAnonTalk, $wgSysopUserBans;
+		global $wgUser, $wgDisableAnonTalk;
 		$talkable = !( $wgDisableAnonTalk && 0 == $userId );
-		$blockable = ( $wgSysopUserBans || 0 == $userId );
 
 		/*
 		 * Assign each different user a running id. This is used to show user tool
@@ -484,7 +450,7 @@ class NCL extends EnhancedChangesList {
 			$items[] = $this->skin->makeKnownLinkObj( $targetPage,
 				wfMsgHtml( 'contribslink' ) );
 		}
-		if( $blockable && $wgUser->isAllowed( 'block' ) ) {
+		if( $wgUser->isAllowed( 'block' ) ) {
 			$items[] = $this->skin->blockLink( $userId, $userText );
 		}
 		if( $userId ) {

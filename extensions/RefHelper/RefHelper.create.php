@@ -3,7 +3,7 @@ class RefHelper extends SpecialPage {
 	const MSG = 'refhelper-';
 	function __construct() {
 		parent::__construct( 'RefHelper', 'edit', true, false, 'default', false );
-		wfLoadExtensionMessages( 'RefHelper' );
+		
 	}
 
 	/** A simple helper function to output the html of a table row with an input box.
@@ -112,8 +112,8 @@ class RefHelper extends SpecialPage {
 			$wgOut->addHTML(
 				Xml::fieldset( wfMsg( self::MSG . 'refcreate_legend' ) ) .
 				Xml::openElement( 'form', array( 'action' => $wgScript, 'id' => 'mw_create-ref-form' ) ) .
-				Xml::hidden( 'title', $this->getTitle()->getPrefixedText() ) .
-				Xml::hidden( 'action', 'submit' ) .
+				Html::Hidden( 'title', $this->getTitle()->getPrefixedText() ) .
+				Html::Hidden( 'action', 'submit' ) .
 				Xml::openElement( 'table', array( 'id' => 'mw_create-ref-table' ) ) .
 				Xml::openElement( 'tbody' ) );
 

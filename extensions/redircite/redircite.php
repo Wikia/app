@@ -23,7 +23,7 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Roan Kattouw',
 	'description' => 'Allows for abbreviated inline citations',
 	'version' => '1.0',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Redircite'
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Redircite'
 );
 
 $wgHooks['ParserFirstCallInit'][] = 'redircite_setup';

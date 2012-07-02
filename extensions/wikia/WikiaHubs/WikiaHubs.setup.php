@@ -24,6 +24,7 @@ $wgExtensionCredits['other'][] = array(
 $app->registerClass('WikiaHubsSuggestController', $dir.'WikiaHubsSuggestController.class.php');
 $app->registerClass('WikiaHubsPopularVideos', $dir . 'WikiaHubsHook.class.php');
 $app->registerClass('WikiaHubsMobile', $dir . 'WikiaHubsHook.class.php');
+$app->registerClass('WikiaHubsHelper', $dir . 'WikiaHubsHelper.class.php');
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaHubs'] = $dir . 'WikiaHubs.i18n.php';
@@ -31,10 +32,5 @@ $wgExtensionMessagesFiles['WikiaHubs'] = $dir . 'WikiaHubs.i18n.php';
 // hooks
 $app->registerHook('ParserFirstCallInit', 'WikiaHubsPopularVideos', 'onParserFirstCallInit');
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHubsMobile', 'onWikiaMobileAssetsPackages');
-
-// configuration
-$wgWikiaHubsPages = array(
-	1 => 'Lifestyle',
-	2 => 'Video_Games',
-	3 => 'Entertainment',
-);
+$app->registerHook('OutputPageMakeCategoryLinks','WikiaHubsHelper','onOutputPageMakeCategoryLinks');
+$app->registerHook('OutputPageBeforeHTML','WikiaHubsHelper','onOutputPageBeforeHTML');

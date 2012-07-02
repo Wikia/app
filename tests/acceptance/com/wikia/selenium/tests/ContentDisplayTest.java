@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class ContentDisplayTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testContentDisplay() throws Exception {
 		// find an image to use in wikitext
 		session().open("index.php?title=Special:NewFiles");

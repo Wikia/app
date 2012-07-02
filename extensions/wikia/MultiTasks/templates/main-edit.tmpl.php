@@ -6,7 +6,7 @@
 	<div id="PaneInfo">
 		<?=wfMsg('multiwikiedit_help')?>
 	</div>
-	<form name="multiwikiedit" class="highlightform" id="highlightform" enctype="multipart/form-data" method="post" action="<?=$obj->mTitle->escapeLocalURL( "action=submit" ) ?>">
+	<form name="multiwikiedit" class="highlightform" id="highlightform" enctype="multipart/form-data" method="post" action="<?=htmlspecialchars($obj->mTitle->getLocalURL( "action=submit" )) ?>">
 	<table>
 		<tr>
 			<td align="right"><?=wfMsg('multiwikiedit_as')?> :</td>
@@ -116,7 +116,7 @@ function MultiWikiEditEnhanceControls () {
 		}
 	}
 }
-addOnloadHook (MultiWikiEditEnhanceControls) ;
+$(MultiWikiEditEnhanceControls);
 -->
 </script>
 <!-- e:<?= __FILE__ ?> -->

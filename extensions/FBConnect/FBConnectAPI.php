@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,21 +26,21 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 /**
  * Class FBConnectAPI
- *
+ * 
  * This class contains the code used to interface with Facebook via the
- * Facebook Platform API.
+ * Facebook Platform API. 
  */
 class FBConnectAPI {
 	// Holds a static reference to our Facebook object
 	private static $__Facebook = null;
-
+	
 	// Caches information about users to reduce the number of Facebook hits
 	private static $userinfo = array(array());
-
+	
 	// Constructor
 	public function __construct() {
 	}
-
+	
 	/**
 	 * Get the Facebook client object for easy access.
 	 */
@@ -49,20 +49,20 @@ class FBConnectAPI {
 		// Construct a new Facebook object on first time access
 		if ( is_null(self::$__Facebook) && self::isConfigSetup() ) {
 			self::$__Facebook = F::build('Facebook3', array(array(
-				'appId'  =>  $fbAppId,
+				'appId'  =>  $fbAppId, 
 				'secret' => $fbAppSecret
 			)));
-
+			
 			self::$__Facebook->api_client = F::build('FacebookRestClient', array($fbAppId, $fbAppSecret, null));
 			//Facebook( $fbAppId, $fbAppSecret );
 			if (!self::$__Facebook) {
 				error_log('Could not create facebook client.');
 			}
 		}
-
+		
 		return self::$__Facebook;
 	}
-
+	
 	/**
 	 * Check to make sure config.sample.php was properly renamed to config.php
 	 * and the instructions to fill out the first two important variables were
@@ -72,7 +72,7 @@ class FBConnectAPI {
 		$fbAppId = F::app()->getGlobal('fbAppId');
 
 		$fbAppSecret = F::app()->getGlobal('fbAppSecret');
-
+		
 		$isSetup = isset($fbAppId) && $fbAppId != 'YOUR_APP_KEY' &&
 		           isset($fbAppSecret) && $fbAppSecret != 'YOUR_SECRET';
 		if(!$isSetup) {
@@ -83,15 +83,16 @@ class FBConnectAPI {
 			if (isset($fbApiKey) && isset($fbApiSecret)) {
 				F::app()->setGlobal('fbAppSecret', $fbApiSecret);
 				$isSetup = true;
+				
 			} else {
 				error_log('Please update the $fbAppId in config.php');
 			}
 		}
-
+		
 
 		return $isSetup;
 	}
-
+	
 	/**
 	 * Retrieves the ID of the current logged-in user. If no user is logged in,
 	 * then an ID of 0 is returned.
@@ -99,7 +100,7 @@ class FBConnectAPI {
 	public function user() {
 		return $this->Facebook()->getUser();
 	}
-
+	
 	/**
 	 * Calls users.getInfo. Requests information about the user from 	.
 	 */
@@ -107,8 +108,8 @@ class FBConnectAPI {
 		if ($user == 0) {
 			$user = $this->user();
 		}
-
-
+		
+		
 		if ($user != 0 && !isset($userinfo[$user]) )
 		{
 			try {
@@ -117,10 +118,10 @@ class FBConnectAPI {
 					$fields = array('first_name', 'name', 'sex', 'timezone', 'locale',
 				                /*'profile_url',*/
 				                'username', 'proxied_email', 'contact_email');
-				}
+				} 
 				$user_details = $this->Facebook()->api_client->users_getInfo($user, $fields);
 				// Cache the data in the $userinfo array
-
+				
 				//avoid Notice: Uninitialized string offset: 0
 				$userinfo[$user] = !empty( $user_details[ 0 ] ) ? $user_details[ 0 ] : null;
 			} catch( Exception $e ) {
@@ -130,7 +131,7 @@ class FBConnectAPI {
 		}
 		return isset($userinfo[$user]) ? $userinfo[$user] : null;
 	}
-
+	
 	/**
 	 * Returns the full name of the Facebook user.
 	 */
@@ -138,11 +139,11 @@ class FBConnectAPI {
 		$userinfo = $this->getUserInfo($user);
 		return $userinfo['name'];
 	}
-
+	
 	/**
 	 * Returns the name of the group specified by $fbUserRightsFromGroup, or
 	 * null if it is false.
-	 *
+	 * 
 	 * groups.get
 	 */
 	public function groupInfo() {
@@ -164,24 +165,24 @@ class FBConnectAPI {
 		}
 		return $info;
 	}
-
+	
 	/**
 	 * Retrieves group membership data from Facebook.
 	 */
 	public function getGroupRights( $user = null ) {
 		global $fbUserRightsFromGroup;
-
+		
 		// Groupies can be members, officers or admins (the latter two infer the former)
 		$rights = array('member'  => false,
 		                'officer' => false,
 		                'admin'   => false);
-
+		
 		// If no group ID is specified, then there's no group to belong to
 		$gid = $fbUserRightsFromGroup;
 		if( !$gid ) {
 			return $rights;
 		}
-
+		
 		// Translate $user into a Facebook ID
 		if (!$user) {
 			$user = $this->user();
@@ -194,14 +195,14 @@ class FBConnectAPI {
 				return $rights;
 			}
 		}
-
+		
 		// Cache the rights for an individual user to prevent hitting Facebook for duplicate info
 		static $rights_cache = array();
 		if ( array_key_exists( $user, $rights_cache )) {
 			// Retrieve the rights from the cache
 			return $rights_cache[$user];
 		}
-
+		
 		// This can contain up to 500 IDs, avoid requesting this info twice
 		static $members = false;
 		// Get a random 500 group members, along with officers, admins and not_replied's
@@ -215,7 +216,7 @@ class FBConnectAPI {
 				return $rights;
 			}
 		}
-
+		
 		if ( $members ) {
 			// Check to see if the user is an officer
 			if (array_key_exists('officers', $members) && in_array($user, $members['officers'])) {
@@ -245,11 +246,11 @@ class FBConnectAPI {
 		$rights_cache[$user] = $rights;
 		return $rights;
 	}
-
+	
 	/**
 	 * Returns the "public" hash of the email address (i.e., the one Facebook
 	 * gives out via their API). The hash is of the form crc32($email)_md5($email).
-	 *
+	 * 
 	 * @Unused (for now)
 	 */
 	public function hashEmail($email) {
@@ -258,10 +259,10 @@ class FBConnectAPI {
 		$email = trim(strtolower($email));
 		return crc32($email) . '_' . md5($email);
 	}
-
+	
 	/*
-	 * Publish message on facebook wall
-	 */
+	 * Publish message on facebook wall 
+	 */	
 	public function publishStream($href, $description, $short, $link, $img) {
 		$fb = $this->Facebook();
 
@@ -273,29 +274,23 @@ class FBConnectAPI {
                 'icon'=> $img,
                 'link'=> $href
         );
+        
 
 		$UserId = $this->user();
-
-		if ($UserId > 0) {
-			$fb->api("/$UserId/feed", 'POST', $attachment);
-		}
-		else {
-			global $wgUser;
-			$wikiaUserId = $wgUser->getId();
-			Wikia::log(__METHOD__, 'feed', "FB user ID is zero for Wikia user #{$wikiaUserId}");
-		}
+		$fb->api("/$UserId/feed", 'POST', $attachment);
 		return 0;
 	}
-
+	
 	/**
-	 * logout from FB
+	 * logout from FB  
 	 */
+	
 	function logout() {
 		$this->Facebook()->destroySession();
 	}
-
+	
 	/*
-	 *
+	 * 
 	 */
 	function verifyAccountReclamation() {
 		$sr = (int) $this->Facebook()->getUser();

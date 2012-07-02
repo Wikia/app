@@ -29,6 +29,13 @@ $messages['af'] = array(
 	'mootools12core-desc' => "Voeg [http://mootools.net Mootools-1,2-kern-yc.js], 'n kompakte JavaScript-raamwerk by elke bladsy by",
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'mootools12core-desc' => 'Shton [http://mootools.net Mootools-core-1,2-yc.js], një kompakt kuadër të aktivizoni Java, për çdo faqe',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -43,7 +50,14 @@ $messages['arz'] = array(
 	'mootools12core-desc' => 'يضيف [http://mootools.net mootools-1.2-core-yc.js]، إطار جافاسكريبت مضغوط، لكل صفحة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'mootools12core-desc' => 'Amiesta [http://mootools.net mootools-1.2-core-yc.js], un entornu de trabayu JavaScript compautu, a cada páxina',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -175,6 +189,13 @@ $messages['hil'] = array(
 	'mootools12core-desc' => 'Nagadugang [http://mootools.net mootools-1.2-core-yc.js], isa ka kompak JavaScript framework, sa kada pahina',
 );
 
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'mootools12core-desc' => 'Dodaje [http://mootools.net mootools-1.2-core-yc.js], kompaktnu JavaScript biblioteku na svaku stranicu',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -232,7 +253,7 @@ $messages['km'] = array(
 	'mootools12core-desc' => 'បន្ថែម [http://mootools.net mootools-1.2-core-yc.js] ដែល​ជា​ការបង្រួម​គ្រោង JavaScript ទៅ​ទំព័រ​នីមួយៗ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -253,11 +274,25 @@ $messages['mk'] = array(
 	'mootools12core-desc' => 'Додава [http://mootools.net mootools-1.2-core-yc.js], компактна JavaScript шема, на секоја страница',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'mootools12core-desc' => 'Menambahkan [http://mootools.net mootools-1.2-core-yc.js], sejenis rangka kerja JavaScript yang padat, pada setiap laman',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'mootools12core-desc' => 'Legger til [http://mootools.net mootools-1.2-core-yc.js], et kompakt rammeverk i JavaScript, på hver side',
+);
+
 /** Nedersaksisch (Nedersaksisch)
  * @author Servien
  */
 $messages['nds-nl'] = array(
-	'mootools12core-desc' => 'Voeg [http://mootools.net mootools-1.2-core-yc.js],  een compak JavaScript-framework, toe an elke pagina',
+	'mootools12core-desc' => 'Zet [http://mootools.net mootools-1.2-core-yc.js],  n kompakt JavaScript-raamwark, op elke pagina',
 );
 
 /** Dutch (Nederlands)
@@ -272,13 +307,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'mootools12core-desc' => 'Legg til [http://mootools.net mootools-1.2-core-yc.js] på kvar sida, eit kompakt JavaScript-rammeverk',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'mootools12core-desc' => 'Legger til [http://mootools.net mootools-1.2-core-yc.js], et kompakt rammeverk i JavaScript, på hver side',
 );
 
 /** Occitan (Occitan)
@@ -353,18 +381,27 @@ $messages['sk'] = array(
 	'mootools12core-desc' => 'Pridáva kompaktnú javascriptovú platformu [http://mootools.net mootools-1.2-core-yc.js] na každú stránku',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'mootools12core-desc' => 'Doda [http://mootools.net mootools-1.2-core-yc.js], strnjeno ogrodje JavaScript, na vsako stran',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'mootools12core-desc' => 'Додаје свакој страни [http://mootools.net mootools-1.2-core-yc.js], компактни јаваскрипт фрејмворк',
+	'mootools12core-desc' => 'На сваку страницу додаје [http://mootools.net mootools-1.2-core-yc.js], јаваскриптов радни оквир',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
-	'mootools12core-desc' => 'Dodaje svakoj strani [<a href="http://mootools.net">http://mootools.net</a> mootools-1.2-core-yc.js], kompaktni javaskript frejmvork',
+	'mootools12core-desc' => 'Na svaku stranicu dodaje [http://mootools.net mootools-1.2-core-yc.js], javaskriptov radni okvir',
 );
 
 /** Seeltersk (Seeltersk)
@@ -414,5 +451,19 @@ $messages['vep'] = array(
  */
 $messages['vi'] = array(
 	'mootools12core-desc' => 'Thêm [http://mootools.net mootools-1.2-core-yc.js], một nền tảng JavaScript nhỏ gọn, vào mỗi trang',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wilsonmess
+ */
+$messages['zh-hans'] = array(
+	'mootools12core-desc' => '向每一个页面增加[http://mootools.net mootools-1.2-core-yc.js]，一个简洁的JavaScript框架。',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'mootools12core-desc' => '向每一個頁面增加 [http://mootools.net mootools-1.2-core-yc.js]，一個簡潔的 JavaScript 框架。',
 );
 

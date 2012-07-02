@@ -17,7 +17,7 @@ class ThemeDesignerController extends WikiaController {
 
 	public function executeIndex() {
 		wfProfileIn( __METHOD__ );
-		global $wgLang;
+		global $wgLang, $wgOut;
 
 		$themeSettings = new ThemeSettings();
 
@@ -50,6 +50,17 @@ class ThemeDesignerController extends WikiaController {
 
 		// load Google Analytics code
 		$this->analytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+
+		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
+		
+		$ret = implode( "\n", array(
+			$wgOut->getHeadLinks( null, true ),
+			$wgOut->buildCssLinks(),
+			$wgOut->getHeadScripts(),
+			$wgOut->getHeadItems()
+		) );
+
+		$this->globalVariablesScript = $ret;
 
 		wfProfileOut( __METHOD__ );
 	}

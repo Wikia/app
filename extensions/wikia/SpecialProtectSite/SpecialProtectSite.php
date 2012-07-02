@@ -34,7 +34,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgExtensionMessagesFiles['SpecialProtectSite'] = $dir . '/SpecialProtectSite.i18n.php';
-$wgExtensionAliasesFiles['SpecialProtectSite'] = __DIR__ . '/SpecialProtectSite.aliases.php';
+$wgExtensionMessagesFiles['SpecialProtectSiteAliases'] = __DIR__ . '/SpecialProtectSite.aliases.php';
 
 /* Add this Special page to the Special page listing array */
 $wgSpecialPages['Protectsite'] = 'ProtectsiteForm';
@@ -91,7 +91,7 @@ function wfSetupProtectsite() {
 				return;
 			}
 		}
-		
+
 		/* Protection-related code */
 		/* Code for MediaWiki 1.8+ */
 		$wgGroupPermissions['*']['createaccount'] = !($prot['createaccount'] >= 1);

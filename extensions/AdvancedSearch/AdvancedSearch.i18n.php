@@ -1,26 +1,19 @@
 <?php
 /**
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * Internationalization file for the AdvancedSearch extension.
  *
- * @author Roan Kattouw <roan.kattouw@home.nl>
- * @copyright Copyright (C) 2008 Roan Kattouw
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
- *
- * An extension that allows for searching inside categories
- * Written for MixesDB <http://mixesdb.com> by Roan Kattouw <roan.kattouw@home.nl>
- * For information how to install and use this extension, see the README file.
- *
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
 
+/** English
+ * @author Roan Kattouw <roan.kattouw@home.nl>
+ */
 $messages['en'] = array(
 	'advancedsearch' => 'Advanced Search',
 	'advancedsearch-toptext' => 'This is the advanced search, see [[Help:Search]] for more information',
-	'advancedsearch-pagename' => 'AdvancedSearch',
 	'advancedsearch-title' => 'Advanced Search',
 	'advancedsearch-contentsearch' => 'Search in page content',
 	'advancedsearch-searchin' => 'Search in:',

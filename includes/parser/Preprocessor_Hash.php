@@ -1,4 +1,10 @@
 <?php
+/**
+ * Preprocessor using PHP arrays
+ *
+ * @file
+ * @ingroup Parser
+ */
 
 /**
  * Differences from DOM schema:
@@ -7,28 +13,69 @@
  * @ingroup Parser
  */
 class Preprocessor_Hash implements Preprocessor {
+	/**
+	 * @var Parser
+	 */
 	var $parser;
-	
+
 	const CACHE_VERSION = 1;
 
 	function __construct( $parser ) {
 		$this->parser = $parser;
 	}
 
+	/**
+	 * @return PPFrame_Hash
+	 */
 	function newFrame() {
 		return new PPFrame_Hash( $this );
 	}
 
+	/**
+	 * @param $args
+	 * @return PPCustomFrame_Hash
+	 */
 	function newCustomFrame( $args ) {
 		return new PPCustomFrame_Hash( $this, $args );
+	}
+
+	/**
+	 * @param $values array
+	 * @return PPNode_Hash_Array
+	 */
+	function newPartNodeArray( $values ) {
+		$list = array();
+
+		foreach ( $values as $k => $val ) {
+			$partNode = new PPNode_Hash_Tree( 'part' );
+			$nameNode = new PPNode_Hash_Tree( 'name' );
+
+			if ( is_int( $k ) ) {
+				$nameNode->addChild( new PPNode_Hash_Attr( 'index', $k ) );
+				$partNode->addChild( $nameNode );
+			} else {
+				$nameNode->addChild( new PPNode_Hash_Text( $k ) );
+				$partNode->addChild( $nameNode );
+				$partNode->addChild( new PPNode_Hash_Text( '=' ) );
+			}
+
+			$valueNode = new PPNode_Hash_Tree( 'value' );
+			$valueNode->addChild( new PPNode_Hash_Text( $val ) );
+			$partNode->addChild( $valueNode );
+
+			$list[] = $partNode;
+		}
+
+		$node = new PPNode_Hash_Array( $list );
+		return $node;
 	}
 
 	/**
 	 * Preprocess some wikitext and return the document tree.
 	 * This is the ghost of Parser::replace_variables().
 	 *
-	 * @param string $text The text to parse
-	 * @param integer flags Bitwise combination of:
+	 * @param $text String: the text to parse
+	 * @param $flags Integer: bitwise combination of:
 	 *          Parser::PTD_FOR_INCLUSION    Handle <noinclude>/<includeonly> as if the text is being
 	 *                                     included. Default is to assume a direct page view.
 	 *
@@ -43,16 +90,15 @@ class Preprocessor_Hash implements Preprocessor {
 	 * cache may be implemented at a later date which takes further advantage of these strict
 	 * dependency requirements.
 	 *
-	 * @private
+	 * @return PPNode_Hash_Tree
 	 */
 	function preprocessToObj( $text, $flags = 0 ) {
 		wfProfileIn( __METHOD__ );
-	
-	
+
 		// Check cache.
 		global $wgMemc, $wgPreprocessorCacheThreshold;
-		
-		$cacheable = strlen( $text ) > $wgPreprocessorCacheThreshold;
+
+		$cacheable = $wgPreprocessorCacheThreshold !== false && strlen( $text ) > $wgPreprocessorCacheThreshold;
 		if ( $cacheable ) {
 			wfProfileIn( __METHOD__.'-cacheable' );
 
@@ -239,7 +285,7 @@ class Preprocessor_Hash implements Preprocessor {
 						// Search backwards for leading whitespace
 						$wsStart = $i ? ( $i - strspn( $revText, ' ', strlen( $text ) - $i ) ) : 0;
 						// Search forwards for trailing whitespace
-						// $wsEnd will be the position of the last space
+						// $wsEnd will be the position of the last space (or the '>' if there's none)
 						$wsEnd = $endPos + 2 + strspn( $text, ' ', $endPos + 3 );
 						// Eat the line if possible
 						// TODO: This could theoretically be done if $wsStart == 0, i.e. for comments at
@@ -269,13 +315,11 @@ class Preprocessor_Hash implements Preprocessor {
 
 						if ( $stack->top ) {
 							$part = $stack->top->getCurrentPart();
-							if ( isset( $part->commentEnd ) && $part->commentEnd == $wsStart - 1 ) {
-								// Comments abutting, no change in visual end
-								$part->commentEnd = $wsEnd;
-							} else {
+							if ( ! (isset( $part->commentEnd ) && $part->commentEnd == $wsStart - 1 )) {
 								$part->visualEnd = $wsStart;
-								$part->commentEnd = $endPos;
 							}
+							// Else comments abutting, no change in visual end
+							$part->commentEnd = $endPos;
 						}
 						$i = $endPos + 1;
 						$inner = substr( $text, $startPos, $endPos - $startPos + 1 );
@@ -315,8 +359,8 @@ class Preprocessor_Hash implements Preprocessor {
 				} else {
 					$attrEnd = $tagEndPos;
 					// Find closing tag
-					if ( preg_match( "/<\/" . preg_quote( $name, '/' ) . "\s*>/i", 
-							$text, $matches, PREG_OFFSET_CAPTURE, $tagEndPos + 1 ) ) 
+					if ( preg_match( "/<\/" . preg_quote( $name, '/' ) . "\s*>/i",
+							$text, $matches, PREG_OFFSET_CAPTURE, $tagEndPos + 1 ) )
 					{
 						$inner = substr( $text, $tagEndPos + 1, $matches[0][1] - $tagEndPos - 1 );
 						$i = $matches[0][1] + strlen( $matches[0][0] );
@@ -381,9 +425,7 @@ class Preprocessor_Hash implements Preprocessor {
 					extract( $stack->getFlags() );
 					$i += $count;
 				}
-			}
-
-			elseif ( $found == 'line-end' ) {
+			} elseif ( $found == 'line-end' ) {
 				$piece = $stack->top;
 				// A heading must be open, otherwise \n wouldn't have been in the search list
 				assert( $piece->open == "\n" );
@@ -401,7 +443,7 @@ class Preprocessor_Hash implements Preprocessor {
 				$count = $piece->count;
 				$equalsLength = strspn( $revText, '=', strlen( $text ) - $searchStart );
 				if ( $equalsLength > 0 ) {
-					if ( $i - $equalsLength == $piece->startPos ) {
+					if ( $searchStart - $equalsLength == $piece->startPos ) {
 						// This is just a single string of equals signs on its own line
 						// Replicate the doHeadings behaviour /={count}(.+)={count}/
 						// First find out how many equals signs there really are (don't stop at 6)
@@ -445,9 +487,7 @@ class Preprocessor_Hash implements Preprocessor {
 				// another heading. Infinite loops are avoided because the next iteration MUST
 				// hit the heading open case above, which unconditionally increments the
 				// input pointer.
-			}
-
-			elseif ( $found == 'open' ) {
+			} elseif ( $found == 'open' ) {
 				# count opening brace characters
 				$count = strspn( $text, $curChar, $i );
 
@@ -469,9 +509,7 @@ class Preprocessor_Hash implements Preprocessor {
 					$accum->addLiteral( str_repeat( $curChar, $count ) );
 				}
 				$i += $count;
-			}
-
-			elseif ( $found == 'close' ) {
+			} elseif ( $found == 'close' ) {
 				$piece = $stack->top;
 				# lets check if there are enough characters for closing brace
 				$maxCount = $piece->count;
@@ -479,7 +517,6 @@ class Preprocessor_Hash implements Preprocessor {
 
 				# check for maximum matching characters (if there are 5 closing
 				# characters, we will probably need only 3 - depending on the rules)
-				$matchingCount = 0;
 				$rule = $rules[$piece->open];
 				if ( $count > $rule['max'] ) {
 					# The specified maximum exists in the callback array, unless the caller
@@ -526,7 +563,7 @@ class Preprocessor_Hash implements Preprocessor {
 					$titleNode->lastChild = $titleAccum->lastNode;
 					$element->addChild( $titleNode );
 					$argIndex = 1;
-					foreach ( $parts as $partIndex => $part ) {
+					foreach ( $parts as $part ) {
 						if ( isset( $part->eqpos ) ) {
 							// Find equals
 							$lastNode = false;
@@ -612,16 +649,12 @@ class Preprocessor_Hash implements Preprocessor {
 				} else {
 					$accum->addAccum( $element );
 				}
-			}
-
-			elseif ( $found == 'pipe' ) {
+			} elseif ( $found == 'pipe' ) {
 				$findEquals = true; // shortcut for getFlags()
 				$stack->addPart();
 				$accum =& $stack->getAccum();
 				++$i;
-			}
-
-			elseif ( $found == 'equals' ) {
+			} elseif ( $found == 'equals' ) {
 				$findEquals = false; // shortcut for getFlags()
 				$accum->addNodeWithText( 'equals', '=' );
 				$stack->getCurrentPart()->eqpos = $accum->lastNode;
@@ -644,16 +677,16 @@ class Preprocessor_Hash implements Preprocessor {
 		$rootNode = new PPNode_Hash_Tree( 'root' );
 		$rootNode->firstChild = $stack->rootAccum->firstNode;
 		$rootNode->lastChild = $stack->rootAccum->lastNode;
-		
+
 		// Cache
 		if ($cacheable) {
-			$cacheValue = sprintf( "%08d", self::CACHE_VERSION ) . serialize( $rootNode );;
+			$cacheValue = sprintf( "%08d", self::CACHE_VERSION ) . serialize( $rootNode );
 			$wgMemc->set( $cacheKey, $cacheValue, 86400 );
 			wfProfileOut( __METHOD__.'-cache-miss' );
 			wfProfileOut( __METHOD__.'-cacheable' );
 			wfDebugLog( "Preprocessor", "Saved preprocessor Hash to memcached (key $cacheKey)" );
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $rootNode;
 	}
@@ -682,6 +715,8 @@ class PPDStackElement_Hash extends PPDStackElement {
 
 	/**
 	 * Get the accumulator that would result if the close is not found.
+	 *
+	 * @return PPDAccum_Hash
 	 */
 	function breakSyntax( $openingCount = false ) {
 		if ( $this->open == "\n" ) {
@@ -786,7 +821,21 @@ class PPDAccum_Hash {
  * @ingroup Parser
  */
 class PPFrame_Hash implements PPFrame {
-	var $preprocessor, $parser, $title;
+
+	/**
+	 * @var Parser
+	 */
+	var $parser;
+
+	/**
+	 * @var Preprocessor
+	 */
+	var $preprocessor;
+
+	/**
+	 * @var Title
+	 */
+	var $title;
 	var $titleCache;
 
 	/**
@@ -804,7 +853,7 @@ class PPFrame_Hash implements PPFrame {
 
 	/**
 	 * Construct a new preprocessor frame.
-	 * @param Preprocessor $preprocessor The parent preprocessor
+	 * @param $preprocessor Preprocessor: the parent preprocessor
 	 */
 	function __construct( $preprocessor ) {
 		$this->preprocessor = $preprocessor;
@@ -818,6 +867,11 @@ class PPFrame_Hash implements PPFrame {
 	/**
 	 * Create a new child frame
 	 * $args is optionally a multi-root PPNode or array containing the template arguments
+	 *
+	 * @param $args PPNode_Hash_Array|array
+	 * @param $title Title|false
+	 *
+	 * @return PPTemplateFrame_Hash
 	 */
 	function newChild( $args = false, $title = false ) {
 		$namedArgs = array();
@@ -826,7 +880,6 @@ class PPFrame_Hash implements PPFrame {
 			$title = $this->title;
 		}
 		if ( $args !== false ) {
-			$xpath = false;
 			if ( $args instanceof PPNode_Hash_Array ) {
 				$args = $args->value;
 			} elseif ( !is_array( $args ) ) {
@@ -849,17 +902,22 @@ class PPFrame_Hash implements PPFrame {
 		return new PPTemplateFrame_Hash( $this->preprocessor, $this, $numberedArgs, $namedArgs, $title );
 	}
 
+	/**
+	 * @throws MWException
+	 * @param $root
+	 * @param $flags int
+	 * @return string
+	 */
 	function expand( $root, $flags = 0 ) {
 		static $expansionDepth = 0;
 		if ( is_string( $root ) ) {
 			return $root;
 		}
 
-		if ( ++$this->parser->mPPNodeCount > $this->parser->mOptions->mMaxPPNodeCount )
-		{
+		if ( ++$this->parser->mPPNodeCount > $this->parser->mOptions->getMaxPPNodeCount() ) {
 			return '<span class="error">Node-count limit exceeded</span>';
 		}
-		if ( $expansionDepth > $this->parser->mOptions->mMaxPPExpandDepth ) {
+		if ( $expansionDepth > $this->parser->mOptions->getMaxPPExpandDepth() ) {
 			return '<span class="error">Expansion depth limit exceeded</span>';
 		}
 		++$expansionDepth;
@@ -915,7 +973,7 @@ class PPFrame_Hash implements PPFrame {
 				if ( $contextNode->name == 'template' ) {
 					# Double-brace expansion
 					$bits = $contextNode->splitTemplate();
-					if ( $flags & self::NO_TEMPLATES ) {
+					if ( $flags & PPFrame::NO_TEMPLATES ) {
 						$newIterator = $this->virtualBracketedImplode( '{{', '|', '}}', $bits['title'], $bits['parts'] );
 					} else {
 						$ret = $this->parser->braceSubstitution( $bits, $this );
@@ -928,7 +986,7 @@ class PPFrame_Hash implements PPFrame {
 				} elseif ( $contextNode->name == 'tplarg' ) {
 					# Triple-brace expansion
 					$bits = $contextNode->splitTemplate();
-					if ( $flags & self::NO_ARGS ) {
+					if ( $flags & PPFrame::NO_ARGS ) {
 						$newIterator = $this->virtualBracketedImplode( '{{{', '|', '}}}', $bits['title'], $bits['parts'] );
 					} else {
 						$ret = $this->parser->argSubstitution( $bits, $this );
@@ -943,13 +1001,13 @@ class PPFrame_Hash implements PPFrame {
 					# Remove it in HTML, pre+remove and STRIP_COMMENTS modes
 					if ( $this->parser->ot['html']
 						|| ( $this->parser->ot['pre'] && $this->parser->mOptions->getRemoveComments() )
-						|| ( $flags & self::STRIP_COMMENTS ) )
+						|| ( $flags & PPFrame::STRIP_COMMENTS ) )
 					{
 						$out .= '';
 					}
 					# Add a strip marker in PST mode so that pstPass2() can run some old-fashioned regexes on the result
 					# Not in RECOVER_COMMENTS mode (extractSections) though
-					elseif ( $this->parser->ot['wiki'] && ! ( $flags & self::RECOVER_COMMENTS ) ) {
+					elseif ( $this->parser->ot['wiki'] && ! ( $flags & PPFrame::RECOVER_COMMENTS ) ) {
 						$out .= $this->parser->insertStripItem( $contextNode->firstChild->value );
 					}
 					# Recover the literal comment in RECOVER_COMMENTS and pre+no-remove
@@ -961,7 +1019,7 @@ class PPFrame_Hash implements PPFrame {
 					# OT_WIKI will only respect <ignore> in substed templates.
 					# The other output types respect it unless NO_IGNORE is set.
 					# extractSections() sets NO_IGNORE and so never respects it.
-					if ( ( !isset( $this->parent ) && $this->parser->ot['wiki'] ) || ( $flags & self::NO_IGNORE ) ) {
+					if ( ( !isset( $this->parent ) && $this->parser->ot['wiki'] ) || ( $flags & PPFrame::NO_IGNORE ) ) {
 						$out .= $contextNode->firstChild->value;
 					} else {
 						//$out .= '';
@@ -985,7 +1043,7 @@ class PPFrame_Hash implements PPFrame {
 						$serial = count( $this->parser->mHeadings ) - 1;
 						$marker = "{$this->parser->mUniqPrefix}-h-$serial-" . Parser::MARKER_SUFFIX;
 						$s = substr( $s, 0, $bits['level'] ) . $marker . substr( $s, $bits['level'] );
-						$this->parser->mStripState->general->setPair( $marker, '' );
+						$this->parser->mStripState->addGeneral( $marker, '' );
 						$out .= $s;
 					} else {
 						# Expand in virtual stack
@@ -1019,6 +1077,11 @@ class PPFrame_Hash implements PPFrame {
 		return $outStack[0];
 	}
 
+	/**
+	 * @param $sep
+	 * @param $flags
+	 * @return string
+	 */
 	function implodeWithFlags( $sep, $flags /*, ... */ ) {
 		$args = array_slice( func_get_args(), 2 );
 
@@ -1046,6 +1109,7 @@ class PPFrame_Hash implements PPFrame {
 	/**
 	 * Implode with no flags specified
 	 * This previously called implodeWithFlags but has now been inlined to reduce stack depth
+	 * @return string
 	 */
 	function implode( $sep /*, ... */ ) {
 		$args = array_slice( func_get_args(), 1 );
@@ -1074,6 +1138,8 @@ class PPFrame_Hash implements PPFrame {
 	/**
 	 * Makes an object that, when expand()ed, will be the same as one obtained
 	 * with implode()
+	 *
+	 * @return PPNode_Hash_Array
 	 */
 	function virtualImplode( $sep /*, ... */ ) {
 		$args = array_slice( func_get_args(), 1 );
@@ -1101,6 +1167,8 @@ class PPFrame_Hash implements PPFrame {
 
 	/**
 	 * Virtual implode with brackets
+	 *
+	 * @return PPNode_Hash_Array
 	 */
 	function virtualBracketedImplode( $start, $sep, $end /*, ... */ ) {
 		$args = array_slice( func_get_args(), 3 );
@@ -1131,6 +1199,10 @@ class PPFrame_Hash implements PPFrame {
 		return 'frame{}';
 	}
 
+	/**
+	 * @param $level bool
+	 * @return array|bool|String
+	 */
 	function getPDBK( $level = false ) {
 		if ( $level === false ) {
 			return $this->title->getPrefixedDBkey();
@@ -1139,31 +1211,50 @@ class PPFrame_Hash implements PPFrame {
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	function getArguments() {
 		return array();
 	}
 
+	/**
+	 * @return array
+	 */
 	function getNumberedArguments() {
 		return array();
 	}
 
+	/**
+	 * @return array
+	 */
 	function getNamedArguments() {
 		return array();
 	}
 
 	/**
 	 * Returns true if there are no arguments in this frame
+	 *
+	 * @return bool
 	 */
 	function isEmpty() {
 		return true;
 	}
 
+	/**
+	 * @param $name
+	 * @return bool
+	 */
 	function getArgument( $name ) {
 		return false;
 	}
 
 	/**
 	 * Returns true if the infinite loop check is OK, false if a loop is detected
+	 *
+	 * @param $title Title
+	 *
+	 * @return bool
 	 */
 	function loopCheck( $title ) {
 		return !isset( $this->loopCheckHash[$title->getPrefixedDBkey()] );
@@ -1171,9 +1262,20 @@ class PPFrame_Hash implements PPFrame {
 
 	/**
 	 * Return true if the frame is a template frame
+	 *
+	 * @return bool
 	 */
 	function isTemplate() {
 		return false;
+	}
+
+	/**
+	 * Get a title of frame
+	 *
+	 * @return Title
+	 */
+	function getTitle() {
+		return $this->title;
 	}
 }
 
@@ -1185,8 +1287,16 @@ class PPTemplateFrame_Hash extends PPFrame_Hash {
 	var $numberedArgs, $namedArgs, $parent;
 	var $numberedExpansionCache, $namedExpansionCache;
 
+	/**
+	 * @param $preprocessor
+	 * @param $parent
+	 * @param $numberedArgs array
+	 * @param $namedArgs array
+	 * @param $title Title
+	 */
 	function __construct( $preprocessor, $parent = false, $numberedArgs = array(), $namedArgs = array(), $title = false ) {
-		PPFrame_Hash::__construct( $preprocessor );
+		parent::__construct( $preprocessor );
+
 		$this->parent = $parent;
 		$this->numberedArgs = $numberedArgs;
 		$this->namedArgs = $namedArgs;
@@ -1220,11 +1330,16 @@ class PPTemplateFrame_Hash extends PPFrame_Hash {
 	}
 	/**
 	 * Returns true if there are no arguments in this frame
+	 *
+	 * @return bool
 	 */
 	function isEmpty() {
 		return !count( $this->numberedArgs ) && !count( $this->namedArgs );
 	}
 
+	/**
+	 * @return array
+	 */
 	function getArguments() {
 		$arguments = array();
 		foreach ( array_merge(
@@ -1234,7 +1349,10 @@ class PPTemplateFrame_Hash extends PPFrame_Hash {
 		}
 		return $arguments;
 	}
-	
+
+	/**
+	 * @return array
+	 */
 	function getNumberedArguments() {
 		$arguments = array();
 		foreach ( array_keys($this->numberedArgs) as $key ) {
@@ -1242,7 +1360,10 @@ class PPTemplateFrame_Hash extends PPFrame_Hash {
 		}
 		return $arguments;
 	}
-	
+
+	/**
+	 * @return array
+	 */
 	function getNamedArguments() {
 		$arguments = array();
 		foreach ( array_keys($this->namedArgs) as $key ) {
@@ -1251,17 +1372,25 @@ class PPTemplateFrame_Hash extends PPFrame_Hash {
 		return $arguments;
 	}
 
+	/**
+	 * @param $index
+	 * @return array|bool
+	 */
 	function getNumberedArgument( $index ) {
 		if ( !isset( $this->numberedArgs[$index] ) ) {
 			return false;
 		}
 		if ( !isset( $this->numberedExpansionCache[$index] ) ) {
 			# No trimming for unnamed arguments
-			$this->numberedExpansionCache[$index] = $this->parent->expand( $this->numberedArgs[$index], self::STRIP_COMMENTS );
+			$this->numberedExpansionCache[$index] = $this->parent->expand( $this->numberedArgs[$index], PPFrame::STRIP_COMMENTS );
 		}
 		return $this->numberedExpansionCache[$index];
 	}
 
+	/**
+	 * @param $name
+	 * @return bool
+	 */
 	function getNamedArgument( $name ) {
 		if ( !isset( $this->namedArgs[$name] ) ) {
 			return false;
@@ -1269,11 +1398,15 @@ class PPTemplateFrame_Hash extends PPFrame_Hash {
 		if ( !isset( $this->namedExpansionCache[$name] ) ) {
 			# Trim named arguments post-expand, for backwards compatibility
 			$this->namedExpansionCache[$name] = trim(
-				$this->parent->expand( $this->namedArgs[$name], self::STRIP_COMMENTS ) );
+				$this->parent->expand( $this->namedArgs[$name], PPFrame::STRIP_COMMENTS ) );
 		}
 		return $this->namedExpansionCache[$name];
 	}
 
+	/**
+	 * @param $name
+	 * @return array|bool
+	 */
 	function getArgument( $name ) {
 		$text = $this->getNumberedArgument( $name );
 		if ( $text === false ) {
@@ -1284,6 +1417,8 @@ class PPTemplateFrame_Hash extends PPFrame_Hash {
 
 	/**
 	 * Return true if the frame is a template frame
+	 *
+	 * @return bool
 	 */
 	function isTemplate() {
 		return true;
@@ -1298,7 +1433,7 @@ class PPCustomFrame_Hash extends PPFrame_Hash {
 	var $args;
 
 	function __construct( $preprocessor, $args ) {
-		PPFrame_Hash::__construct( $preprocessor );
+		parent::__construct( $preprocessor );
 		$this->args = $args;
 	}
 
@@ -1318,10 +1453,17 @@ class PPCustomFrame_Hash extends PPFrame_Hash {
 		return $s;
 	}
 
+	/**
+	 * @return bool
+	 */
 	function isEmpty() {
 		return !count( $this->args );
 	}
 
+	/**
+	 * @param $index
+	 * @return bool
+	 */
 	function getArgument( $index ) {
 		if ( !isset( $this->args[$index] ) ) {
 			return false;
@@ -1358,6 +1500,11 @@ class PPNode_Hash_Tree implements PPNode {
 		}
 	}
 
+	/**
+	 * @param $name
+	 * @param $text
+	 * @return PPNode_Hash_Tree
+	 */
 	static function newWithText( $name, $text ) {
 		$obj = new self( $name );
 		$obj->addChild( new PPNode_Hash_Text( $text ) );
@@ -1373,6 +1520,9 @@ class PPNode_Hash_Tree implements PPNode {
 		}
 	}
 
+	/**
+	 * @return PPNode_Hash_Array
+	 */
 	function getChildren() {
 		$children = array();
 		for ( $child = $this->firstChild; $child; $child = $child->nextSibling ) {
@@ -1399,9 +1549,24 @@ class PPNode_Hash_Tree implements PPNode {
 		return $children;
 	}
 
-	function getLength() { return false; }
-	function item( $i ) { return false; }
+	/**
+	 * @return bool
+	 */
+	function getLength() {
+		return false;
+	}
 
+	/**
+	 * @param  $i
+	 * @return bool
+	 */
+	function item( $i ) {
+		return false;
+	}
+
+	/**
+	 * @return string
+	 */
 	function getName() {
 		return $this->name;
 	}
@@ -1411,6 +1576,8 @@ class PPNode_Hash_Tree implements PPNode {
 	 *    name          PPNode name
 	 *    index         String index
 	 *    value         PPNode value
+	 *
+	 * @return array
 	 */
 	function splitArg() {
 		$bits = array();
@@ -1442,6 +1609,8 @@ class PPNode_Hash_Tree implements PPNode {
 	/**
 	 * Split an <ext> node into an associative array containing name, attr, inner and close
 	 * All values in the resulting array are PPNodes. Inner and close are optional.
+	 *
+	 * @return array
 	 */
 	function splitExt() {
 		$bits = array();
@@ -1467,6 +1636,8 @@ class PPNode_Hash_Tree implements PPNode {
 
 	/**
 	 * Split an <h> node
+	 *
+	 * @return array
 	 */
 	function splitHeading() {
 		if ( $this->name !== 'h' ) {
@@ -1491,6 +1662,8 @@ class PPNode_Hash_Tree implements PPNode {
 
 	/**
 	 * Split a <template> or <tplarg> node
+	 *
+	 * @return array
 	 */
 	function splitTemplate() {
 		$parts = array();

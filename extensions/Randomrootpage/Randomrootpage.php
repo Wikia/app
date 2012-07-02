@@ -3,7 +3,8 @@ if (!defined('MEDIAWIKI')) die();
 /**
  * A Special Page Randomly shows one of the root pages (in contrast to subpages) from ns=0
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @author Hojjat (aka Huji) <huji.huji@gmail.com>
  * @copyright Copyright © 2008, Hojjat (aka Huji)
@@ -15,7 +16,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'Random root page',
 	'version'        => '1.1',
 	'author'         => 'Hojjat (aka Huji)',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Randomrootpage',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Randomrootpage',
 	'descriptionmsg' => 'randomrootpage-desc',
 );
 

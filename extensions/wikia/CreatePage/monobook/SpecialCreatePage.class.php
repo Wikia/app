@@ -184,7 +184,7 @@ class SpecialCreatePage extends SpecialEditPage {
 	// this function is based on Bartek's solution for CreateAPage done in t:r6990 [RT#21902] - Marooned
 	public function wfCreatePageOnConfirmEdit( &$captcha, &$editPage, $newtext, $section, $merged, &$result ) {
 		global $wgTitle, $wgCreatePageCoverRedLinks, $wgOut, $wgRequest;
-		$canonspname = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
+		$canonspname = array_shift(SpecialPageFactory::resolveAlias( $wgTitle->getDBkey() ));
 		if ( $canonspname != 'CreatePage' ) {
 			return true;
 		}

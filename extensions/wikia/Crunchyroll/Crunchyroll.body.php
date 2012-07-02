@@ -20,7 +20,6 @@ class Crunchyroll extends SpecialPage {
 
 	public function __construct() {
 		parent::__construct( "Crunchyroll" , '' /*restriction*/);
-		wfLoadExtensionMessages("Crunchyroll");
 	}
 
 	/**

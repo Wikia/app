@@ -6,11 +6,11 @@ if ( ! defined( 'MEDIAWIKI' ) )
 class SpecialEmergencyDeSysop extends SpecialPage {
 
 	function __construct() {
-		wfLoadExtensionMessages( 'EmergencyDeSysop' );
+
 		parent::__construct( 'EmergencyDeSysop' );
 		parent::__construct( "EmergencyDeSysop", "emergencydesysop" );
 	}
-	
+
 	/**
 	* @brief takeGroups function
 	*
@@ -67,7 +67,7 @@ class SpecialEmergencyDeSysop extends SpecialPage {
 		global $wgOut;
 
 		//Is it a valid user?
-		if( $targetUser->getid() == 0 ) { 
+		if( $targetUser->getid() == 0 ) {
 			$wgOut->addWikiText( wfMsg( 'emergencydesysop-invalidtarget' ) );
 			$this->showForm();
 			return False;
@@ -98,7 +98,7 @@ class SpecialEmergencyDeSysop extends SpecialPage {
 	function formatGroups ( $groups ) {
 		global $wgContentLang;
 
-		if( empty( $groups ) ) { 
+		if( empty( $groups ) ) {
 			$groups = wfMsg( 'emergencydesysop-nogroups' );
 		} else {
 			$groups = $wgContentLang->commaList( $groups );
@@ -127,7 +127,7 @@ class SpecialEmergencyDeSysop extends SpecialPage {
 			Xml::submitButton( wfMsg( 'emergencydesysop-submit' ) ) .
 			Xml::closeElement( 'fieldset' ) .
 			Xml::closeElement( 'form' );
-			
+
 		$wgOut->addHTML( $f );
 	}
 
@@ -137,17 +137,17 @@ class SpecialEmergencyDeSysop extends SpecialPage {
 	function execute( $subpage ) {
 		global $wgRequest, $wgOut, $wgUser;
 		$this->setHeaders();
-		
+
 		//if the user is blocked, deny access.
 		if ( $wgUser->IsBlocked() ) {
 			//show the blocked message.
-			$wgOut->addWikiText( wfMsg( 'emergencydesysop-blocked' ) ); 
+			$wgOut->addWikiText( wfMsg( 'emergencydesysop-blocked' ) );
 			return;
-		} else if ( $wgUser->isAnon() || !$wgUser->isAllowed( 'emergencydesysop' ) ) {
+		} elseif ( $wgUser->isAnon() || !$wgUser->isAllowed( 'emergencydesysop' ) ) {
 			//You've got to have the right
-			$wgOut->addWikiText( wfMsg( 'emergencydesysop-noright' ) ); 
+			$wgOut->addWikiText( wfMsg( 'emergencydesysop-noright' ) );
 			return;
-		} else if ( wfReadOnly() ) {
+		} elseif ( wfReadOnly() ) {
 			//if the database is read-only, prevent access.
 			$wgOut->readOnlyPage();
 			return;
@@ -156,13 +156,13 @@ class SpecialEmergencyDeSysop extends SpecialPage {
 		//if page was posted, then data has been sent
 		if ( $wgRequest->wasPosted()  ) {
 			if( !$wgRequest->getText( 'otheradmin' ) or !$wgRequest->getText( 'reason' ) ) {
-				$wgOut->addWikiText( wfMsg( 'emergencydesysop-incomplete' ) ); 
+				$wgOut->addWikiText( wfMsg( 'emergencydesysop-incomplete' ) );
 				$this->showForm();
 				return;
 			}
 			//Start new user object, for the target user
 			$targetUser = User::newFromName( $wgRequest->getText( "otheradmin" ) );
-			
+
 			//Is the target user BOTH a sysop, and a valid user?
 			if( !$this->validateTarget( $targetUser ) ) { return; }
 
@@ -178,25 +178,25 @@ class SpecialEmergencyDeSysop extends SpecialPage {
 			//Log it
 			$log = new LogPage( "rights" );
 			// FIXME: Contains non-localisable text
-			$log->addEntry( 
-				"rights", 
+			$log->addEntry(
+				"rights",
 				$targetUser->getUserPage( ),
 				'Emergency Desysop: ' . $wgRequest->getText( 'reason' ),
 				array( $this->formatGroups( $targetUserGroupsOld ), $this->formatGroups( $targetUserGroupsNew ) ) );
 
 			// FIXME: Contains non-localisable text
-			$log->addEntry( 
-				"rights", 
-				$wgUser->getUserPage( ), 
-				'Emergency Desysoped [[' . $targetUser->getUserPage( ) . ']]: ' . $wgRequest->getText( 'reason' ), 
+			$log->addEntry(
+				"rights",
+				$wgUser->getUserPage( ),
+				'Emergency Desysoped [[' . $targetUser->getUserPage( ) . ']]: ' . $wgRequest->getText( 'reason' ),
 				array( $this->formatGroups( $doerUserGroupsOld ), $this->formatGroups( $doerUserGroupsNew ) ) );
 			$wgOut->addWikiText( wfMsg( 'emergencydesysop-done', $targetUser->getUserPage( ) ) );
 
-		} else {	
+		} else {
 			//show form
 			$this->showForm();
 		}
-		
+
 		return;
 	}
 }

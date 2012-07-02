@@ -1,8 +1,13 @@
 <?php
 /**
  * @author Yaron Koren
+ * @file
+ * @ingroup SF
  */
 
+/**
+ * @ingroup SFLanguage
+ */
 class SF_LanguageCa extends SF_Language {
 
 	/* private */ var $m_SpecialProperties = array(
@@ -11,10 +16,4 @@ class SF_LanguageCa extends SF_Language {
 		SF_SP_HAS_ALTERNATE_FORM  => 'Fa servir el formulari alternatiu'// Has alternate form
 	);
 
-	var $m_Namespaces = array(
-		SF_NS_FORM           => 'Formulari',// Form
-		SF_NS_FORM_TALK      => 'Discussió_formulari'// Form_talk
-	);
-
 }
-

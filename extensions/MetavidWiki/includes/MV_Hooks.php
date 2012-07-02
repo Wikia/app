@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * MV_Hooks.php Created on Apr 24, 2007
  *
  * All Metavid Wiki code is Released under the GPL2
@@ -63,14 +63,14 @@ function mvLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options
 		 			if($v=='broken')
 		 				$options[$k]='known';
 		 		}
- 			}else if( !in_array( 'known', $options ) ){
+ 			}elseif( !in_array( 'known', $options ) ){
  				$options[]='known';
  			}
  		}
  	}
  	return true;
 }
-/*
+/**
  * enables the rewriting of links to the Stream and Sequence namespace to support inline embeding.
  * see page: sample in-wiki-embed syntax
  * @@todo should probably be integrated to respective Stream and Sequence class.
@@ -106,7 +106,7 @@ function mvLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options
 		 			$timeSec = npt2seconds($start_str);
 		 			if( (int) $timeSec > 0 )
 		 				$start_ntp = seconds2npt($timeSec);
-		 		}else if(substr( $param, 0, 4 ) == 'end='){
+		 		}elseif(substr( $param, 0, 4 ) == 'end='){
 		 			$end_str =  substr( $param, 6 );
 		 			$timeSec = npt2seconds($start_str);
 		 			if( (int) $timeSec > 0 )
@@ -133,14 +133,15 @@ function mvLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options
  	return true;
  }
 function mvAddToolBoxLinks(){
-	global $wgTitle,$wgUser,$wgArticle;
+	global $wgTitle,$wgUser;
 	if( $wgTitle->getNamespace() == MV_NS_STREAM){
 		//make sure the Messages are loaded
 		//add export cmml link:
-		$sTitle = Title::makeTitle( NS_SPECIAL, 'MvExportStream' );
+		$sTitle = SpecialPage::getTitleFor( 'MvExportStream' );
+		$mvTitle = new MV_Title( $wgTitle->getDBkey() );
 		$sk = $wgUser->getSkin();
 		$link = $sk->makeKnownLinkObj( $sTitle,wfMsg('mv_stream_resource_export'),
-				'feed_format=roe&stream_name=' . htmlspecialchars( $wgArticle->mvTitle->getStreamName() ) . '&t=' . htmlspecialchars($wgArticle->mvTitle->getTimeRequest() ),
+				'feed_format=roe&stream_name=' . htmlspecialchars( $mvTitle->getStreamName() ) . '&t=' . htmlspecialchars( $mvTitle->getTimeRequest() ),
 				'', '', 'title="' . htmlspecialchars( wfMsg( 'mv_export_cmml' ) ) . '"' );
 		echo "<li>" . $link . "</li>";
 	}
@@ -197,7 +198,7 @@ function mvDeleteHook( &$article, &$user, &$reason ) {
 	if ( $article->mTitle->getNamespace() == MV_NS_MVD ) {
 		// remove article with that title:
 		MV_Index::remove_by_wiki_title( $article->mTitle->getDBkey() );
-	} else if ( $article->mTitle->getNamespace() == MV_NS_STREAM ) {
+	} elseif ( $article->mTitle->getNamespace() == MV_NS_STREAM ) {
 		$article->mvTitle->mvStream->deleteDB();
 	}
 	return true; // always return true, in order not to stop MW's hook processing!
@@ -230,11 +231,10 @@ function mvCustomEditor( &$article, &$user ) {
 	if( !$wgRequest->getVal( 'UseExternalEditor' ) || $action=='submit' || $internal ||
 	   $section || $oldid || ( !$user->getOption( 'externaleditor' ) && !$external ) ) {
 		$editor = new MvEditSequence( $article );
-		$editor->submit();
-	} elseif( $wgRequest->getVal( 'UseExternalEditor' ) && ( $external || $user->getOption( 'externaleditor' ) ) ) {
-		$mode = $wgRequest->getVal( 'mode' );
-		$extedit = new ExternalEdit( $article, $mode );
-		$extedit->edit();
+		$editor->edit();
+		return false;
+	} else {
+		return true;
 	}*/
 
 }
@@ -243,8 +243,6 @@ function mvCustomEditor( &$article, &$user ) {
   * by processing the given title request/namespace
   */
 function mvDoMvPage ( &$title, &$article, $doOutput = true ) {
-	global $wgOut, $wgTitle, $wgArticle;
-
 	//add js
 	mvAddPerNamespaceJS( $title );
 
@@ -273,7 +271,6 @@ function mvDoMvPage ( &$title, &$article, $doOutput = true ) {
 			return false;
 		}
 	}
-	$wgArticle = $article;
 	return true;
 }
 function mvCatHook( &$catArticle ) {
@@ -348,7 +345,7 @@ function mv_edit_sequence_submit() {
 	$MV_SequenceTools = new MV_SequenceTools();
 	return $MV_SequenceTools->do_edit_submit();
 }
-/*
+/**
  * mv_edit_submit
  * @@todo this could be cleaned up by using the api .. lots of weridness otherwise
  */

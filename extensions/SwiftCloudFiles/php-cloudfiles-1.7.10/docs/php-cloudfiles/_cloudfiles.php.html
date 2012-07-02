@@ -1,0 +1,235 @@
+<html>
+<head>
+<title>Docs for page cloudfiles.php</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">php-cloudfiles</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                    
+                                                                      		  [ <a href="../classtrees_php-cloudfiles.html" class="menu">class tree: php-cloudfiles</a> ]
+		  [ <a href="../elementindex_php-cloudfiles.html" class="menu">index: php-cloudfiles</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+	<div id="ric">
+					<p><a href="../ric_README.html">README</a></p>
+					<p><a href="../ric_Changelog.html">Changelog</a></p>
+					<p><a href="../ric_AUTHORS.html">AUTHORS</a></p>
+					<p><a href="../ric_COPYING.html">COPYING</a></p>
+			</div>
+      <b>Packages:</b><br />
+              <a href="../li_php-cloudfiles.html">php-cloudfiles</a><br />
+              <a href="../li_php-cloudfiles-exceptions.html">php-cloudfiles-exceptions</a><br />
+              <a href="../li_php-cloudfiles-http.html">php-cloudfiles-http</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="../php-cloudfiles/_cloudfiles.php.html">		cloudfiles.php
+		</a><br>
+	  </div><br />
+      
+      
+            <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../php-cloudfiles/CF_Authentication.html">CF_Authentication</a><br />
+	    		<a href="../php-cloudfiles/CF_Connection.html">CF_Connection</a><br />
+	    		<a href="../php-cloudfiles/CF_Container.html">CF_Container</a><br />
+	    		<a href="../php-cloudfiles/CF_Object.html">CF_Object</a><br />
+	  </div>
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Procedural File: cloudfiles.php</h1>
+Source Location: /cloudfiles.php<br /><br />
+
+<br>
+<br>
+
+<div class="contents">
+<h2>Classes:</h2>
+<dt><a href="../php-cloudfiles/CF_Authentication.html">CF_Authentication</a></dt>
+	<dd>Class for handling Cloud Files Authentication, call it's <a href="../php-cloudfiles-http/CF_Http.html#methodauthenticate">authenticate()</a>  method to obtain authorized service urls and an authentication token.</dd>
+<dt><a href="../php-cloudfiles/CF_Connection.html">CF_Connection</a></dt>
+	<dd>Class for establishing connections to the Cloud Files storage system.</dd>
+<dt><a href="../php-cloudfiles/CF_Container.html">CF_Container</a></dt>
+	<dd>Container operations</dd>
+<dt><a href="../php-cloudfiles/CF_Object.html">CF_Object</a></dt>
+	<dd>Object operations</dd>
+</div><br /><br />
+
+<h2>Page Details:</h2>
+This is the PHP Cloud Files API.<br /><br /><p><ol><li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;Authenticate&nbsp;to&nbsp;Cloud&nbsp;Files.&nbsp;&nbsp;The&nbsp;default&nbsp;is&nbsp;to&nbsp;automatically&nbsp;try</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;to&nbsp;re-authenticate&nbsp;if&nbsp;an&nbsp;authentication&nbsp;token&nbsp;expires.</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;NOTE:&nbsp;Some&nbsp;versions&nbsp;of&nbsp;cURL&nbsp;include&nbsp;an&nbsp;outdated&nbsp;certificate&nbsp;authority&nbsp;(CA)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file.&nbsp;&nbsp;This&nbsp;API&nbsp;ships&nbsp;with&nbsp;a&nbsp;newer&nbsp;version&nbsp;obtained&nbsp;directly&nbsp;from</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cURL's&nbsp;web&nbsp;site&nbsp;(http://curl.haxx.se).&nbsp;&nbsp;To&nbsp;use&nbsp;the&nbsp;newer&nbsp;CA&nbsp;bundle,</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;the&nbsp;CF_Authentication&nbsp;instance's&nbsp;'ssl_use_cabundle()'&nbsp;method.</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$auth&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../php-cloudfiles/CF_Authentication.html">CF_Authentication</a></span><span class="src-sym">(</span><span class="src-var">$username</span><span class="src-sym">,&nbsp;</span><span class="src-var">$api_key</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;$auth-&gt;ssl_use_cabundle();&nbsp;&nbsp;#&nbsp;bypass&nbsp;cURL's&nbsp;old&nbsp;CA&nbsp;bundle</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$auth</span><span class="src-sym">-&gt;</span><span class="src-id">authenticate</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;Establish&nbsp;a&nbsp;connection&nbsp;to&nbsp;the&nbsp;storage&nbsp;system</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;NOTE:&nbsp;Some&nbsp;versions&nbsp;of&nbsp;cURL&nbsp;include&nbsp;an&nbsp;outdated&nbsp;certificate&nbsp;authority&nbsp;(CA)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file.&nbsp;&nbsp;This&nbsp;API&nbsp;ships&nbsp;with&nbsp;a&nbsp;newer&nbsp;version&nbsp;obtained&nbsp;directly&nbsp;from</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cURL's&nbsp;web&nbsp;site&nbsp;(http://curl.haxx.se).&nbsp;&nbsp;To&nbsp;use&nbsp;the&nbsp;newer&nbsp;CA&nbsp;bundle,</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;the&nbsp;CF_Connection&nbsp;instance's&nbsp;'ssl_use_cabundle()'&nbsp;method.</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$conn&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../php-cloudfiles/CF_Connection.html">CF_Connection</a></span><span class="src-sym">(</span><span class="src-var">$auth</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;$conn-&gt;ssl_use_cabundle();&nbsp;&nbsp;#&nbsp;bypass&nbsp;cURL's&nbsp;old&nbsp;CA&nbsp;bundle</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;Create&nbsp;a&nbsp;remote&nbsp;Container&nbsp;and&nbsp;storage&nbsp;Object</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$images&nbsp;</span>=&nbsp;<span class="src-var">$conn</span><span class="src-sym">-&gt;</span><span class="src-id">create_container</span><span class="src-sym">(</span><span class="src-str">&quot;photos&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$bday&nbsp;</span>=&nbsp;<span class="src-var">$images</span><span class="src-sym">-&gt;</span><span class="src-id">create_object</span><span class="src-sym">(</span><span class="src-str">&quot;first_birthday.jpg&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;Upload&nbsp;content&nbsp;from&nbsp;a&nbsp;local&nbsp;file&nbsp;by&nbsp;streaming&nbsp;it.&nbsp;&nbsp;Note&nbsp;that&nbsp;we&nbsp;use</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;a&nbsp;&quot;float&quot;&nbsp;for&nbsp;the&nbsp;file&nbsp;size&nbsp;to&nbsp;overcome&nbsp;PHP's&nbsp;32-bit&nbsp;integer&nbsp;limit&nbsp;for</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;very&nbsp;large&nbsp;files.</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$fname&nbsp;</span>=&nbsp;<span class="src-str">&quot;/home/user/photos/birthdays/birthday1.jpg&quot;</span><span class="src-sym">;&nbsp;&nbsp;</span><span class="src-comm">#&nbsp;filename&nbsp;to&nbsp;upload</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$size&nbsp;</span>=&nbsp;(float)&nbsp;<a href="http://www.php.net/sprintf">sprintf</a><span class="src-sym">(</span><span class="src-str">&quot;%u&quot;</span><span class="src-sym">,&nbsp;</span><a href="http://www.php.net/filesize">filesize</a><span class="src-sym">(</span><span class="src-var">$fname</span><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$fp&nbsp;</span>=&nbsp;<span class="src-id">open</span><span class="src-sym">(</span><span class="src-var">$fname</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;r&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$bday</span><span class="src-sym">-&gt;</span><span class="src-id">write</span><span class="src-sym">(</span><span class="src-var">$fp</span><span class="src-sym">,&nbsp;</span><span class="src-var">$size</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;Or...&nbsp;use&nbsp;a&nbsp;convenience&nbsp;function&nbsp;instead</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$bday</span><span class="src-sym">-&gt;</span><span class="src-id">load_from_filename</span><span class="src-sym">(</span><span class="src-str">&quot;/home/user/photos/birthdays/birthday1.jpg&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;Now,&nbsp;publish&nbsp;the&nbsp;&quot;photos&quot;&nbsp;container&nbsp;to&nbsp;serve&nbsp;the&nbsp;images&nbsp;by&nbsp;CDN.</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;Use&nbsp;the&nbsp;&quot;$uri&quot;&nbsp;value&nbsp;to&nbsp;put&nbsp;in&nbsp;your&nbsp;web&nbsp;pages&nbsp;or&nbsp;send&nbsp;the&nbsp;link&nbsp;in&nbsp;an</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;email&nbsp;message,&nbsp;etc.</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$uri&nbsp;</span>=&nbsp;<span class="src-var">$images</span><span class="src-sym">-&gt;</span><span class="src-id">make_public</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#&nbsp;Or...&nbsp;print&nbsp;out&nbsp;the&nbsp;Object's&nbsp;public&nbsp;URI</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;print&nbsp;<span class="src-var">$bday</span><span class="src-sym">-&gt;</span><span class="src-id">public_uri</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><p>See the included tests directory for additional sample code.</p><p>Requres PHP 5.x (for Exceptions and OO syntax) and PHP's cURL module.</p><p>It uses the supporting &quot;cloudfiles_http.php&quot; module for HTTP(s) support and  allows for connection re-use and streaming of content into/out of Cloud Files  via PHP's cURL module.</p><p>See COPYING for license information.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Eric &quot;EJ&quot; Johnson &lt;<a href="mailto:ej@racklabs.com">ej@racklabs.com</a>&gt;</td>
+  </tr>
+  <tr>
+    <td><b>copyright:</b>&nbsp;&nbsp;</td><td>Copyright (c) 2008, Rackspace US, Inc.</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+<h4>Includes:</h4>
+<div class="tags">
+require(<a href="../php-cloudfiles-http/_cloudfiles_http.php.html">"cloudfiles_http.php"</a>) [line 75]<br />
+require_once(<a href="../php-cloudfiles-exceptions/_cloudfiles_exceptions.php.html">"cloudfiles_exceptions.php"</a>) [line 74]<br />
+</div>
+<br /><br />
+<br /><br />
+  <hr />
+	<a name="defineDEFAULT_CF_API_VERSION"></a>
+	<h3>DEFAULT_CF_API_VERSION <span class="smalllinenumber">[line 76]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>DEFAULT_CF_API_VERSION = 1</code>
+    </td></tr></table>
+    </td></tr></table>
+
+        <br />
+		</div>
+	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineMAX_CONTAINER_NAME_LEN"></a>
+	<h3>MAX_CONTAINER_NAME_LEN <span class="smalllinenumber">[line 77]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>MAX_CONTAINER_NAME_LEN = 256</code>
+    </td></tr></table>
+    </td></tr></table>
+
+        <br />
+		</div>
+	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineMAX_OBJECT_NAME_LEN"></a>
+	<h3>MAX_OBJECT_NAME_LEN <span class="smalllinenumber">[line 78]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>MAX_OBJECT_NAME_LEN = 1024</code>
+    </td></tr></table>
+    </td></tr></table>
+
+        <br />
+		</div>
+	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineMAX_OBJECT_SIZE"></a>
+	<h3>MAX_OBJECT_SIZE <span class="smalllinenumber">[line 79]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>MAX_OBJECT_SIZE = 5*1024*1024*1024+1</code>
+    </td></tr></table>
+    </td></tr></table>
+
+        <br />
+		</div>
+	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineUK_AUTHURL"></a>
+	<h3>UK_AUTHURL <span class="smalllinenumber">[line 81]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>UK_AUTHURL = &quot;https://lon.auth.api.rackspacecloud.com&quot;</code>
+    </td></tr></table>
+    </td></tr></table>
+
+        <br />
+		</div>
+	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+  <hr />
+	<a name="defineUS_AUTHURL"></a>
+	<h3>US_AUTHURL <span class="smalllinenumber">[line 80]</span></h3>
+	<div class="tags">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>US_AUTHURL = &quot;https://auth.api.rackspacecloud.com&quot;</code>
+    </td></tr></table>
+    </td></tr></table>
+
+        <br />
+		</div>
+	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+<br />
+
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Wed, 07 Sep 2011 15:19:54 -0500 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

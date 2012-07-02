@@ -2,6 +2,21 @@
 /**
  * Write a messages array as a PHP text.
  *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @file
  * @ingroup MaintenanceLanguage
  */
@@ -21,10 +36,11 @@ class MessageWriter {
 	/**
 	 * Write a messages array as a PHP text and write it to the messages file.
 	 *
-	 * @param $messages The messages array.
-	 * @param $code The language code.
-	 * @param $write Write to the messages file?
-	 * @param $listUnknown List the unknown messages?
+	 * @param $messages Array: the messages array.
+	 * @param $code String: the language code.
+	 * @param $write Boolean: write to the messages file?
+	 * @param $listUnknown Boolean: list the unknown messages?
+	 * @param $removeUnknown Boolean: whether to remove unkown messages
 	 */
 	public static function writeMessagesToFile( $messages, $code, $write, $listUnknown, $removeUnknown ) {
 		# Rewrite the messages array
@@ -66,8 +82,12 @@ class MessageWriter {
 	/**
 	 * Write a messages array as a PHP text.
 	 *
-	 * @param $messages The messages array.
-	 * @param $ignoredComments Show comments about ignored and optional messages? (For English.)
+	 * @param $messages Array: the messages array.
+	 * @param $ignoredComments Boolean: show comments about ignored and optional
+	 *                         messages? (For English.)
+	 * @param $prefix String: base path for messages.inc and messageTypes.inc files
+	 *                or false for default path (this directory)
+	 * @param $removeUnknown Boolean: whether to remove unkown messages
 	 *
 	 * @return Array of the PHP text and the sorted messages array.
 	 */
@@ -86,6 +106,9 @@ class MessageWriter {
 		# Sort messages to blocks
 		$sortedMessages['unknown'] = $messages;
 		foreach( self::$messageStructure as $blockName => $block ) {
+			/**
+			 * @var $block array
+			 */
 			foreach( $block as $key ) {
 				if( array_key_exists( $key, $sortedMessages['unknown'] ) ) {
 					$sortedMessages[$blockName][$key] = $sortedMessages['unknown'][$key];
@@ -130,9 +153,9 @@ class MessageWriter {
 	/**
 	 * Generates an array of comments for messages.
 	 *
-	 * @param $messages Key of messages.
-	 * @param $ignored List of ingored message keys.
-	 * @param $optional List of optional message keys.
+	 * @param $messages Array: key of messages.
+	 * @param $ignored Array: list of ingored message keys.
+	 * @param $optional Array: list of optional message keys.
 	 */
 	public static function makeComments( $messages, $ignored, $optional ) {
 		# Comment collector
@@ -153,10 +176,10 @@ class MessageWriter {
 	/**
 	 * Write a block of messages to PHP.
 	 *
-	 * @param $blockComment The comment of whole block.
-	 * @param $messages The block messages.
-	 * @param $messageComments Optional comments for messages in this block.
-	 * @param $prefix Prefix for every line, for indenting purposes.
+	 * @param $blockComment String: the comment of whole block.
+	 * @param $messages Array: the block messages.
+	 * @param $messageComments Array: optional comments for messages in this block.
+	 * @param $prefix String: prefix for every line, for indenting purposes.
 	 *
 	 * @return The block, formatted in PHP.
 	 */

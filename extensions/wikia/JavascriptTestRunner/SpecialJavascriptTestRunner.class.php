@@ -68,8 +68,8 @@ class SpecialJavascriptTestRunner extends SpecialPage {
 
 
 			$script = "\n";
-			$script .= "window.jtr_testname = ".Wikia::json_encode((string)$testSuite->getTestName()).";\n";
-			$script .= "window.jtr_framework = ".Wikia::json_encode((string)$testSuite->getFrameworkName()).";\n";
+			$script .= "window.jtr_testname = ".json_encode((string)$testSuite->getTestName()).";\n";
+			$script .= "window.jtr_framework = ".json_encode((string)$testSuite->getFrameworkName()).";\n";
 			$filters = $wgRequest->getVal('filter','');
 			$script .= "window.jtr_filters = ".self::createJavascriptList($filters).";\n";
 			$outputs = $wgRequest->getVal('output','');

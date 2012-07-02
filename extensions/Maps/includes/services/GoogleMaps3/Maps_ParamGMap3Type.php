@@ -15,21 +15,12 @@
 class MapsParamGMap3Type extends ItemParameterManipulation {
 	
 	/**
-	 * Constructor.
-	 * 
-	 * @since 0.7
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
-	
-	/**
 	 * @see ItemParameterManipulation::doManipulation
 	 * 
 	 * @since 0.7
 	 */	
 	public function doManipulation( &$value, Parameter $parameter, array &$parameters ) {
-		$value = 'google.maps.MapTypeId.' . MapsGoogleMaps3::$mapTypes[strtolower( $value )];
+		$value = MapsGoogleMaps3::$mapTypes[strtolower( $value )];
 	}
 	
 }

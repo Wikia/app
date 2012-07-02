@@ -4,13 +4,14 @@
  *
  * @file
  * @author Niklas Laxström
- * @copyright Copyright © 2009-2010 Niklas Laxström
+ * @copyright Copyright © 2009-2012 Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 /**
  * This class represents the results of parsed source page, that is, the
  * extracted sections and a template.
+ *
  * @ingroup PageTranslation
  */
 class TPParse {
@@ -76,19 +77,17 @@ class TPParse {
 		$sections = $this->sections;
 		$highest = 0;
 		foreach ( array_keys( $this->dbSections ) as $key ) {
-			if ( !is_int( $key ) ) continue;
-			$highest = max( $highest, $key );
+			$highest = max( $highest, intval( $key ) );
 		}
 
 		foreach ( $sections as $_ ) {
-			if ( !is_int( $_->id ) ) continue;
-			$highest = max( $_->id, $highest );
+			$highest = max( $highest, intval( $_->id ) );
 		}
 
 		foreach ( $sections as $s ) {
 			$s->type = 'old';
 
-			if ( $s->id === - 1 ) {
+			if ( $s->id === -1 ) {
 				$s->type = 'new';
 				$s->id = ++$highest;
 			} else {
@@ -96,7 +95,7 @@ class TPParse {
 					$storedText = $this->dbSections[$s->id]->text;
 					if ( $s->text !== $storedText ) {
 						$s->type = 'changed';
-						$s->oldtext = $storedText;
+						$s->oldText = $storedText;
 					}
 				}
 			}
@@ -177,7 +176,7 @@ class TPParse {
 		// For finding the messages
 		$prefix = $this->title->getPrefixedDBKey() . '/';
 
-		if ( $collection instanceOf MessageCollection ) {
+		if ( $collection instanceof MessageCollection ) {
 			$collection->filter( 'hastranslation', false );
 			$collection->loadTranslations();
 		}
@@ -223,6 +222,10 @@ class TPParse {
 	/**
 	 * Replaces variables from given text.
 	 * @todo Is plain str_replace not enough (even the loop is not needed)?
+	 *
+	 * @param $variables array
+	 * @param $text string
+	 * @return string
 	 */
 	protected static function replaceVariables( $variables, $text ) {
 		foreach ( $variables as $key => $value ) {

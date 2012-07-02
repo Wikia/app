@@ -13,5 +13,6 @@ $app = F::app();
 
 $app->registerClass('WikiaTrackerController', "$dir/WikiaTrackerController.class.php");
 
-$app->registerHook('MakeGlobalVariablesScript', 'WikiaTrackerController', 'onMakeGlobalVariablesScript');
-$app->registerHook('SkinGetHeadScripts', 'WikiaTrackerController', 'onSkinGetHeadScripts');
+//$app->registerHook('MakeGlobalVariablesScript', 'WikiaTrackerController', 'onMakeGlobalVariablesScript');
+//$app->registerHook('SkinGetHeadScripts', 'WikiaTrackerController', 'onSkinGetHeadScripts');
+$app->registerHook('WikiaSkinTopScripts', 'WikiaTrackerController', 'onWikiaSkinTopScripts');

@@ -1,19 +1,52 @@
 <?php
+/**
+ * Interfaces for preprocessors
+ *
+ * @file
+ */
 
 /**
  * @ingroup Parser
  */
 interface Preprocessor {
-	/** Create a new preprocessor object based on an initialised Parser object */
+	/**
+	 * Create a new preprocessor object based on an initialised Parser object
+	 *
+	 * @param $parser Parser
+	 */
 	function __construct( $parser );
 
-	/** Create a new top-level frame for expansion of a page */
+	/**
+	 * Create a new top-level frame for expansion of a page
+	 *
+	 * @return PPFrame
+	 */
 	function newFrame();
 
-	/** Create a new custom frame for programmatic use of parameter replacement as used in some extensions */
+	/**
+	 * Create a new custom frame for programmatic use of parameter replacement as used in some extensions
+	 *
+	 * @param $args array
+	 *
+	 * @return PPFrame
+	 */
 	function newCustomFrame( $args );
 
-	/** Preprocess text to a PPNode */
+	/**
+	 * Create a new custom node for programmatic use of parameter replacement as used in some extensions
+	 *
+	 * @param $values
+	 */
+	function newPartNodeArray( $values );
+
+	/**
+	 * Preprocess text to a PPNode
+	 *
+	 * @param $text
+	 * @param $flags
+	 *
+	 * @return PPNode
+	 */
 	function preprocessToObj( $text, $flags = 0 );
 }
 
@@ -31,6 +64,11 @@ interface PPFrame {
 
 	/**
 	 * Create a child frame
+	 *
+	 * @param $args array
+	 * @param $title Title
+	 *
+	 * @return PPFrame
 	 */
 	function newChild( $args = false, $title = false );
 
@@ -62,6 +100,8 @@ interface PPFrame {
 
 	/**
 	 * Returns true if there are no arguments in this frame
+	 *
+	 * @return bool
 	 */
 	function isEmpty();
 
@@ -87,6 +127,10 @@ interface PPFrame {
 
 	/**
 	 * Returns true if the infinite loop check is OK, false if a loop is detected
+	 *
+	 * @param $title
+	 *
+	 * @return bool
 	 */
 	function loopCheck( $title );
 
@@ -94,6 +138,13 @@ interface PPFrame {
 	 * Return true if the frame is a template frame
 	 */
 	function isTemplate();
+
+	/**
+	 * Get a title of frame
+	 *
+	 * @return Title
+	 */
+	function getTitle();
 }
 
 /**
@@ -118,6 +169,8 @@ interface PPNode {
 
 	/**
 	 * Get the first child of a tree node. False if there isn't one.
+	 *
+	 * @return PPNode
 	 */
 	function getFirstChild();
 

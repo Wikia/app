@@ -63,7 +63,7 @@ class AutoHubsPagesHelper{
 				$wgMemc->delete( $key );
 			}
 		}
-		$json = Wikia::json_encode($result);
+		$json = json_encode($result);
 		$response = new AjaxResponse( $json );
 		$response->setCacheDuration( 0 );
 		$response->setContentType('text/plain; charset=utf-8');

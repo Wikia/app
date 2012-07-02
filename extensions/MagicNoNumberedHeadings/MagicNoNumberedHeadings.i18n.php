@@ -27,6 +27,13 @@ $messages['ar'] = array(
 	'magicnonumberedheadings-desc' => 'يضيف الكلمة السحرية "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'magicnonumberedheadings-desc' => 'Amiesta la pallabra máxica "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
+);
+
 /** Bavarian (Boarisch)
  * @author Man77
  */
@@ -34,7 +41,7 @@ $messages['bar'] = array(
 	'magicnonumberedheadings-desc' => "Fügt s'magische Woat „<nowiki>__NONUMBEREDHEADINGS__</nowiki>“ dazua",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -60,6 +67,27 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'magicnonumberedheadings-desc' => 'Dodaje magičnu riječ "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'magicnonumberedheadings-desc' => 'Afegeix la paraula màgica "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
+);
+
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'magicnonumberedheadings-desc' => 'Přidává kouzelné slovo „<nowiki>__NONUMBEREDHEADINGS__</nowiki>“',
+);
+
+/** Danish (Dansk)
+ * @author Hylle
+ */
+$messages['da'] = array(
+	'magicnonumberedheadings-desc' => 'Tilføjer magisk ord "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
 );
 
 /** German (Deutsch)
@@ -116,6 +144,13 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'magicnonumberedheadings-desc' => 'Ajoute le mot magique « <nowiki>__NONUMBEREDHEADINGS__</nowiki> »',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'magicnonumberedheadings-desc' => 'Apond lo mot magico « <nowiki>__NONUMBEREDHEADINGS__</nowiki> ».',
 );
 
 /** Galician (Galego)
@@ -188,7 +223,7 @@ $messages['ja'] = array(
 	'magicnonumberedheadings-desc' => 'マジックワード "<nowiki>__NONUMBEREDHEADINGS__</nowiki>" を追加する',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -202,6 +237,13 @@ $messages['lb'] = array(
 	'magicnonumberedheadings-desc' => 'Setzt dat magescht Wuert "<nowiki>__NONUMBEREDHEADINGS__</nowiki>" derbäi',
 );
 
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'magicnonumberedheadings-desc' => 'Pievieno maģisko vārdu "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -209,11 +251,18 @@ $messages['mk'] = array(
 	'magicnonumberedheadings-desc' => 'Го додава волшебниот збор „<nowiki>__NONUMBEREDHEADINGS__</nowiki>“',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'magicnonumberedheadings-desc' => 'Membubuh kata sakti "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
+);
+
 /** Nedersaksisch (Nedersaksisch)
  * @author Servien
  */
 $messages['nds-nl'] = array(
-	'magicnonumberedheadings-desc' => 'Voeg \'t magische woord "<nowiki>__NONUMBEREDHEADINGS__</nowiki>" toe',
+	'magicnonumberedheadings-desc' => 'Zet t magiese woord "<nowiki>__NONUMBEREDHEADINGS__</nowiki>" derbie',
 );
 
 /** Dutch (Nederlands)
@@ -226,7 +275,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'magicnonumberedheadings-desc' => 'Legger til det magiske ordet «<nowiki>__NONUMBEREDHEADINGS__</nowiki>»',
 );
 
@@ -286,18 +335,25 @@ $messages['sk'] = array(
 	'magicnonumberedheadings-desc' => 'Pridáva magické slovo „<nowiki>__NONUMBEREDHEADINGS__</nowiki>“',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'magicnonumberedheadings-desc' => 'Додаје магичну реч "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Liangent
  */
 $messages['sr-el'] = array(
 	'magicnonumberedheadings-desc' => 'Dodaje magičnu reč "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'magicnonumberedheadings-desc' => 'Nambahkeun jajampé "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
 );
 
 /** Swedish (Svenska)
@@ -305,6 +361,20 @@ $messages['sr-el'] = array(
  */
 $messages['sv'] = array(
 	'magicnonumberedheadings-desc' => 'Lägger till det magiska ordet "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
+);
+
+/** Telugu (తెలుగు)
+ * @author Ravichandra
+ */
+$messages['te'] = array(
+	'magicnonumberedheadings-desc' => '"<nowiki>__NONUMBEREDHEADINGS__</nowiki>" అనే పదాన్ని చేరుస్తుంది',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'magicnonumberedheadings-desc' => 'Nagdaragdag ng salitang masalamangka na "<nowiki>__NONUMBEREDHEADINGS__</nowiki>"',
 );
 
 /** Turkish (Türkçe)
@@ -326,5 +396,12 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'magicnonumberedheadings-desc' => 'Thêm từ thần chú “<nowiki>__NONUMBEREDHEADINGS__</nowiki>”',
+);
+
+/** Chinese (Hong Kong) (‪中文(香港)‬)
+ * @author Oapbtommy
+ */
+$messages['zh-hk'] = array(
+	'magicnonumberedheadings-desc' => '加入魔法語句「<nowiki>__NONUMBEREDHEADINGS__</nowiki>」',
 );
 

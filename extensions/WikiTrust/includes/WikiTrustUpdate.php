@@ -29,5 +29,3 @@ class WikiTrustUpdate {
     return true;
   }
 }
-
-?>

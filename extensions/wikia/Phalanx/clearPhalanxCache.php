@@ -1,6 +1,6 @@
 <?php
 
-include( '../../../maintenance/commandLine.inc' );
+include( __DIR__ . '/../../../maintenance/commandLine.inc' );
 
 foreach( Phalanx::$typeNames as $module => $modName ) {
 	foreach( $wgPhalanxSupportedLanguages as $lang => $langName ) {

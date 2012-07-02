@@ -147,15 +147,13 @@ class FCKeditorParser extends FCKeditorParserWrapper {
 	 * @private
 	 */
 	function strip( $text, $state, $stripcomments = false, $dontstrip = array() ) {
-		global $wgContLang, $wgUseTeX, $wgScriptPath, $wgVersion, $wgHooks, $wgExtensionFunctions;
+		global $wgContLang, $wgUseTeX, $wgScriptPath, $wgHooks, $wgExtensionFunctions;
 
 		wfProfileIn( __METHOD__ );
 		$render = ( $this->mOutputType == OT_HTML );
 
 		$uniq_prefix = $this->mUniqPrefix;
 		$commentState = new ReplacementArray;
-		$nowikiItems = array();
-		$generalItems = array();
 
 		$elements = array_merge( array( 'nowiki', 'gallery', 'math' ), array_keys( $this->mTagHooks ) );
 		if ( ( isset( $wgHooks['ParserFirstCallInit']) && in_array( 'efSyntaxHighlight_GeSHiSetup', $wgHooks['ParserFirstCallInit'] ) )
@@ -180,11 +178,7 @@ class FCKeditorParser extends FCKeditorParserWrapper {
 
 		$elements = array_unique( $elements );
 		$matches = array();
-		if( version_compare( "1.12", $wgVersion, ">" ) ) {
-			$text = Parser::extractTagsAndParams( $elements, $text, $matches, $uniq_prefix );
-		} else {
-			$text = self::extractTagsAndParams( $elements, $text, $matches, $uniq_prefix );
-		}
+		$text = Parser::extractTagsAndParams( $elements, $text, $matches, $uniq_prefix );
 
 		foreach( $matches as $marker => $data ) {
 			list( $element, $content, $params, $tag ) = $data;
@@ -250,16 +244,11 @@ class FCKeditorParser extends FCKeditorParserWrapper {
 			if( !$stripcomments && $element == '!--' ) {
 				$commentState->setPair( $marker, $output );
 			} elseif ( $element == 'html' || $element == 'nowiki' ) {
-				$nowikiItems[$marker] = $output;
+				$state->addNoWiki( $output );
 			} else {
-				$generalItems[$marker] = $output;
+				$state->addGeneral( $output );
 			}
 		}
-		# Add the new items to the state
-		# We do this after the loop instead of during it to avoid slowing
-		# down the recursive unstrip
-		$state->nowiki->mergeArray( $nowikiItems );
-		$state->general->mergeArray( $generalItems );
 
 		# Unstrip comments unless explicitly told otherwise.
 		# (The comments are always stripped prior to this point, so as to
@@ -400,7 +389,7 @@ class FCKeditorParser extends FCKeditorParserWrapper {
 				if( $sum == 1 && $lastSum == 0 ) {
 					$stringToParse .= strtr( substr( $text, $startingPos, $pos - $startingPos ), $strtr );
 					$startingPos = $pos;
-				} else if( $sum == 0 ) {
+				} elseif( $sum == 0 ) {
 					$stringToParse .= 'Fckmw' . $this->fck_mw_strtr_span_counter . 'fckmw';
 					$inner = htmlspecialchars( strtr( substr( $text, $startingPos, $pos - $startingPos + 19 ), $strtr ) );
 					$this->fck_mw_strtr_span['href="Fckmw' . $this->fck_mw_strtr_span_counter . 'fckmw"'] = 'href="' . $inner . '"';
@@ -638,7 +627,7 @@ class FCKeditorParser extends FCKeditorParserWrapper {
 					} else {
 						$inBlockElem = true;
 					}
-				} else if ( !$inBlockElem && !$this->mInPre ) {
+				} elseif ( !$inBlockElem && !$this->mInPre ) {
 					if ( ' ' == $t{0} and ( $this->mLastSection == 'pre' or trim( $t ) != '' ) ) {
 						// pre
 						if( $this->mLastSection != 'pre' ) {
@@ -668,7 +657,7 @@ class FCKeditorParser extends FCKeditorParserWrapper {
 								$output .= $paragraphStack;
 								$paragraphStack = false;
 								$this->mLastSection = 'p';
-							} else if ($this->mLastSection != 'p') {
+							} elseif ($this->mLastSection != 'p') {
 								$output .= $this->closeParagraph().'<p>';
 								$this->mLastSection = 'p';
 							}

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Created on Jun 28, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -109,7 +109,7 @@
 		// add export roe icon:
 		if($mvDispROEicon){
 			$this->page_header .= '<span id="cmml_link"/>';
-				$sTitle = Title::makeTitle( NS_SPECIAL, 'MvExportStream' );
+				$sTitle = SpecialPage::getTitleFor( 'MvExportStream' );
 				$this->page_header .= $sk->makeKnownLinkObj( $sTitle,
 					'<img style="width:28px;height:28px;" src="' . htmlspecialchars( $mvgScriptPath ) . '/skins/images/Feed-icon_cmml_28x28.png">',
 					'feed_format=roe&stream_name=' . htmlspecialchars( $this->article->mvTitle->getStreamName() ) . '&t=' . htmlspecialchars( $this->article->mvTitle->getTimeRequest() ),
@@ -135,7 +135,7 @@
 			}
 		}
 	}
-	/*
+	/**
 	 * renders the full page  to the wgOut object
 	 */
 	function render_full() {

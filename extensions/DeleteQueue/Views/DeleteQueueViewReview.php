@@ -213,9 +213,9 @@ class DeleteQueueViewReview extends DeleteQueueView {
 		$output .= Xml::buildForm( $fields, 'deletequeue-review-submit' );
 
 		// Form stuff
-		$output .= Xml::hidden( 'title',
+		$output .= Html::Hidden( 'title',
 						$this->getTitle( "case/" . $dqi->getCaseID() . "/review" ) );
-		$output .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
+		$output .= Html::Hidden( 'wpEditToken', $wgUser->editToken() );
 		$output = Xml::tags( 'form',
 			array( 'action' => $article->mTitle->getLocalURL(),
 				'method' => 'POST'
@@ -302,7 +302,7 @@ class DeleteQueueViewReview extends DeleteQueueView {
 			default:
 				// Invalid action
 				$dbw->commit();
-				return wfMsg( 'deletequeue-review-badaction' ); ;
+				return wfMsg( 'deletequeue-review-badaction' );
 		}
 
 		if ( $processed ) {

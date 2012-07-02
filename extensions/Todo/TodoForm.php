@@ -10,8 +10,8 @@ class TodoTemplate extends QuickTemplate {
 	$tododetail = wfMsg( 'todo-form-details' );
 	$todoemail = wfMsg( 'todo-form-email' );
 	$todosubmit = wfMsg( 'todo-form-submit' );
-	$wgOut->addHTML( "
-<style type=\"text/css\">
+?>
+<style type="text/css">
 .mwTodoNewForm {
 	border: solid 1px #ccc;
 	background-color: #eee;
@@ -22,38 +22,36 @@ class TodoTemplate extends QuickTemplate {
 .mwTodoTitle {
 	font-weight: bold;
 }
-</style>" );
-?>
+</style>
+
 <script type="text/javascript" src="<?php $this->text( 'script' ) ?>"></script>
 
-<form action="<?php $this->text( 'action' ) ?>" method="post">
+<form action="<?php $this->text( 'action' ); ?>" method="post">
 	<input type="hidden" name="wpNewItem" value="1" />
+	<div class="mwTodoNewForm">
 		<p>
-<?php
-$wgOut->addHTML( "
-		<div class=\"mwTodoNewForm\">
-			<label for=\"wpSummary\">{$todosummary}</label>
+			<label for="wpSummary"><?php echo $todosummary; ?></label>
 			<br />
-			<input id=\"wpSummary\" name=\"wpSummary\" size=\"40\" />
+			<input id="wpSummary" name="wpSummary" size="40" />
 		</p>
 
 		<p>
-			<label for=\"wpComment\">{$tododetail}</label>
+			<label for="wpComment"><?php echo $tododetail ?></label>
 			<br />
-			<textarea id=\"wpComment\" name=\"wpComment\" cols=\"40\" rows=\"6\" wrap=\"virtual\"></textarea>
+			<textarea id="wpComment" name="wpComment" cols="40" rows="6" wrap="virtual"></textarea>
 		</p>
 
 		<p>
-			<label for=\"wpEmail\">{$todoemail}</label>
+			<label for="wpEmail"><?php echo $todoemail ?></label>
 			<br />
-			<input id=\"wpEmail\" name=\"wpEmail\" size=\"30\" />
+			<input id="wpEmail" name="wpEmail" size="30" />
 		</p>
 
 		<p>
-			<input type=\"submit\" value=\"{$todosubmit}\" />
+			<input type="submit" value="<?php echo $todosubmit; ?>" />
 		</p>
 	</div>
-</form>"
-	);
+</form>
+<?php
 	}
 }

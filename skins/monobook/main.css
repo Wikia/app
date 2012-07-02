@@ -9,22 +9,22 @@
 ** All you guys rock :)
 */
 
-#column-content {
+div#column-content {
 	width: 100%;
 	float: right;
 	margin: 0 0 .6em -12.2em;
 	padding: 0;
 }
-#content {
+div#content {
 	margin: 2.8em 0 0 12.2em;
 	padding: 0 1em 1em 1em;
 	position: relative;
 	z-index: 2;
 }
-#column-one {
+div#column-one {
 	padding-top: 160px;
 }
-#content {
+div#content {
 	background: white;
 	color: black;
 	border: 1px solid #aaa;
@@ -45,10 +45,12 @@ body {
 	color: black;
 	margin: 0;
 	padding: 0;
+	direction: ltr; /* Needed for RTL flipping */
+	unicode-bidi: embed;
 }
 
 /* scale back up to a sane default */
-#globalWrapper {
+div#globalWrapper {
 	font-size: 127%;
 	width: 100%;
 	margin: 0;
@@ -56,140 +58,20 @@ body {
 }
 
 /* general styles */
-
-table {
-	font-size: 100%;
-	color: black;
-	/* we don't want the bottom borders of <h2>s to be visible through
-	   floated tables */
-	background-color: white;
-}
-fieldset table {
-	/* but keep table layouts in forms clean... */
-	background: none;
-}
 a {
-	text-decoration: none;
 	color: #002bb8;
-	background: none;
 }
 a:visited {
 	color: #5a3696;
 }
-a:active {
-	color: #faa700;
+a.new,
+#p-personal a.new {
+	color: #cc2200;
 }
-a:hover {
-	text-decoration: underline;
-}
-a.stub {
-	color: #772233;
-}
-a.new, #p-personal a.new {
-	color: #ba0000;
-}
-a.new:visited, #p-personal a.new:visited {
-	color: #a55858;
-}
-
-img {
-	border: none;
-	vertical-align: middle;
-}
-p {
-	margin: .4em 0 .5em 0;
-	line-height: 1.5em;
-}
-p img {
-	margin: 0;
-}
-
-hr {
-	height: 1px;
-	color: #aaa;
-	background-color: #aaa;
-	border: 0;
-	margin: .2em 0 .2em 0;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	color: black;
-	background: none;
-	font-weight: normal;
-	margin: 0;
-	padding-top: .5em;
-	padding-bottom: .17em;
-	border-bottom: 1px solid #aaa;
-}
-h1 { font-size: 188%; }
-h1 .editsection { font-size: 53%; }
-h2 { font-size: 150%; }
-h2 .editsection { font-size: 67%; }
-h3, h4, h5, h6 {
-	border-bottom: none;
-	font-weight: bold;
-}
-h3 { font-size: 132%; }
-h3 .editsection { font-size: 76%; font-weight: normal; }
-h4 { font-size: 116%; }
-h4 .editsection { font-size: 86%; font-weight: normal; }
-h5 { font-size: 100%; }
-h5 .editsection { font-weight: normal; }
-h6 { font-size: 80%;  }
-h6 .editsection { font-size: 125%; font-weight: normal; }
 
 ul {
-	line-height: 1.5em;
-	list-style-type: square;
-	margin: .3em 0 0 1.5em;
-	padding: 0;
+	/* @embed */
 	list-style-image: url(bullet.gif);
-}
-ol {
-	line-height: 1.5em;
-	margin: .3em 0 0 3.2em;
-	padding: 0;
-	list-style-image: none;
-}
-li {
-	margin-bottom: .1em;
-}
-dt {
-	font-weight: bold;
-	margin-bottom: .1em;
-}
-dl {
-	margin-top: .2em;
-	margin-bottom: .5em;
-}
-dd {
-	line-height: 1.5em;
-	margin-left: 2em;
-	margin-bottom: .1em;
-}
-
-fieldset {
-	border: 1px solid #2f6fab;
-	margin: 1em 0 1em 0;
-	padding: 0 1em 1em;
-	line-height: 1.5em;
-}
-fieldset.nested {
-	margin: 0 0 0.5em 0;
-	padding: 0 0.5em 0.5em;
-}
-legend {
-	padding: .5em;
-	font-size: 95%;
-}
-form {
-	border: none;
-	margin: 0;
-}
-
-textarea {
-	width: 100%;
-	padding: .1em;
 }
 
 input.historysubmit {
@@ -199,32 +81,8 @@ input.historysubmit {
 	height: 1.7em !important;
 	margin-left: 1.6em;
 }
-select {
-	vertical-align: top;
-}
-abbr, acronym, .explain {
-	border-bottom: 1px dotted black;
-	color: black;
-	background: none;
-	cursor: help;
-}
-q {
-	font-family: Times, "Times New Roman", serif;
-	font-style: italic;
-}
-/* disabled for now
-blockquote {
-	font-family: Times, "Times New Roman", serif;
-	font-style: italic;
-}*/
-code {
-	background-color: #f9f9f9;
-}
+
 pre {
-	padding: 1em;
-	border: 1px dashed #2f6fab;
-	color: black;
-	background-color: #f9f9f9;
 	line-height: 1.1em;
 }
 
@@ -232,98 +90,16 @@ pre {
 ** the main content area
 */
 
-#siteSub {
-	display: none;
-}
-#jump-to-nav {
-	display: none;
-}
-
-#contentSub, #contentSub2 {
-	font-size: 84%;
-	line-height: 1.2em;
-	margin: 0 0 1.4em 1em;
-	color: #7d7d7d;
-	width: auto;
-}
-span.subpages {
-	display: block;
-}
-
-/* Some space under the headers in the content area */
-#bodyContent h1, #bodyContent h2 {
-	margin-bottom: .6em;
-}
-#bodyContent h3, #bodyContent h4, #bodyContent h5 {
-	margin-bottom: .3em;
-}
-#firstHeading {
-	margin-bottom: .1em;
-	/* These two rules hack around bug 2013 (fix for more limited bug 11325).
-	   When bug 2013 is fixed properly, they should be removed. */
-	line-height: 1.2em;
-	padding-bottom: 0;
-}
-
-/* user notification thing */
-.usermessage {
-	background-color: #ffce7b;
-	border: 1px solid #ffa500;
-	color: black;
-	font-weight: bold;
-	margin: 2em 0 1em;
-	padding: .5em 1em;
-	vertical-align: middle;
-}
 #siteNotice {
-	text-align: center;
 	font-size: 95%;
 	padding: 0 0.9em;
+}
+#localNotice {
+	margin: 0;
 }
 #siteNotice p {
 	margin: 0;
 	padding: 0;
-}
-
-.catlinks {
-	border: 1px solid #aaa;
-	background-color: #f9f9f9;
-	padding: 5px;
-	margin-top: 1em;
-	clear: both;
-}
-/* currently unused, intended to be used by a metadata box
-in the bottom-right corner of the content area */
-.documentDescription {
-	/* The summary text describing the document */
-	font-weight: bold;
-	display: block;
-	margin: 1em 0;
-	line-height: 1.5em;
-}
-.documentByLine {
-	text-align: right;
-	font-size: 90%;
-	clear: both;
-	font-weight: normal;
-	color: #76797c;
-}
-
-/* emulate center */
-.center {
-	width: 100%;
-	text-align: center;
-}
-*.center * {
-	margin-left: auto;
-	margin-right: auto;
-}
-/* small for tables and similar */
-.small, .small * {
-	font-size: 94%;
-}
-table.small {
-	font-size: 100%;
 }
 
 /*
@@ -484,12 +260,6 @@ table.rimage {
 	margin-bottom: 1em;
 	text-align: center;
 }
-.toccolours {
-	border: 1px solid #aaa;
-	background-color: #f9f9f9;
-	padding: 5px;
-	font-size: 95%;
-}
 
 /*
 ** edit views etc
@@ -506,36 +276,39 @@ table.rimage {
 */
 #bodyContent a.external,
 #bodyContent a.external[href ^="gopher://"] {
-	background: url(external.png) center right no-repeat;
-	padding: 0 13px;
-}
-.rtl #bodyContent a.external,
-.rtl #bodyContent a.external[href ^="gopher://"] {
-	background-image: url(external-rtl.png);
+	/* @embed */
+	background: url(external-ltr.png) center right no-repeat;
+	padding-right: 13px;
 }
 #bodyContent a.external[href ^="https://"],
 .link-https {
+	/* @embed */
 	background: url(lock_icon.gif) center right no-repeat;
-	padding: 0 16px;
+	padding-right: 16px;
 }
 #bodyContent a.external[href ^="mailto:"],
 .link-mailto {
+	/* @embed */
 	background: url(mail_icon.gif) center right no-repeat;
-	padding: 0 18px;
+	padding-right: 18px;
 }
-#bodyContent a.external[href ^="news://"] {
+#bodyContent a.external[href ^="news:"] {
+	/* @embed */
 	background: url(news_icon.png) center right no-repeat;
-	padding: 0 18px;
+	padding-right: 18px;
 }
 #bodyContent a.external[href ^="ftp://"],
 .link-ftp {
+	/* @embed */
 	background: url(file_icon.gif) center right no-repeat;
-	padding: 0 18px;
+	padding-right: 18px;
 }
 #bodyContent a.external[href ^="irc://"],
+#bodyContent a.external[href ^="ircs://"],
 .link-irc {
+	/* @embed */
 	background: url(discussionitem_icon.gif) center right no-repeat;
-	padding: 0 18px;
+	padding-right: 18px;
 }
 #bodyContent a.external[href $=".ogg"], #bodyContent a.external[href $=".OGG"],
 #bodyContent a.external[href $=".mid"], #bodyContent a.external[href $=".MID"],
@@ -544,49 +317,39 @@ table.rimage {
 #bodyContent a.external[href $=".wav"], #bodyContent a.external[href $=".WAV"],
 #bodyContent a.external[href $=".wma"], #bodyContent a.external[href $=".WMA"],
 .link-audio {
-	background: url("audio.png") center right no-repeat;
-	padding: 0 13px;
+	/* @embed */
+	background: url(audio.png) center right no-repeat;
+	padding-right: 13px;
 }
 #bodyContent a.external[href $=".ogm"], #bodyContent a.external[href $=".OGM"],
 #bodyContent a.external[href $=".avi"], #bodyContent a.external[href $=".AVI"],
 #bodyContent a.external[href $=".mpeg"], #bodyContent a.external[href $=".MPEG"],
 #bodyContent a.external[href $=".mpg"], #bodyContent a.external[href $=".MPG"],
 .link-video {
-	background: url("video.png") center right no-repeat;
-	padding: 0 13px;
+	/* @embed */
+	background: url(video.png) center right no-repeat;
+	padding-right: 13px;
 }
 #bodyContent a.external[href $=".pdf"], #bodyContent a.external[href $=".PDF"],
 #bodyContent a.external[href *=".pdf#"], #bodyContent a.external[href *=".PDF#"],
 #bodyContent a.external[href *=".pdf?"], #bodyContent a.external[href *=".PDF?"],
 .link-document {
-	background: url("document.png") center right no-repeat;
-	padding: 0 12px;
+	/* @embed */
+	background: url(document.png) center right no-repeat;
+	padding-right: 12px;
 }
 
-/* for rtl wikis */
-.rtl #bodyContent a.external {
-	background-position: left;
-	padding-right: 0;
-}
-.rtl a.feedlink {
-	background-position: right;
-	padding-right: 16px;
-	padding-left: 0;
-}
-
-/* correction for ltr wikis */
-.ltr #bodyContent a.external {
-	padding-left: 0;
-}
-
-/* disable interwiki styling */
+/* Interwiki Styling */
 #bodyContent a.extiw,
 #bodyContent a.extiw:active {
 	color: #36b;
 }
+
+/* External links */
 #bodyContent a.external {
 	color: #36b;
 }
+
 /*
 ** Structural Elements
 */
@@ -647,6 +410,7 @@ table.rimage {
 .portlet ul {
 	line-height: 1.5em;
 	list-style-type: square;
+	/* @embed */
 	list-style-image: url(bullet.gif);
 	font-size: 95%;
 }
@@ -717,7 +481,7 @@ input.searchButton {
 	position: absolute;
 	left: 0;
 	top: 0;
-	z-index: 0;
+	z-index: 2; /* Liz - Wikia change; was 0 */
 }
 #p-personal {
 	width: 100%;
@@ -783,6 +547,7 @@ in bg url to hide it from iemac */
 li#pt-userpage,
 li#pt-anonuserpage,
 li#pt-login {
+	/* @embed */
 	background: url(user.gif) top left no-repeat;
 	padding-left: 20px;
 	text-transform: none;
@@ -840,7 +605,6 @@ li#pt-login {
 }
 #p-cactions li.selected a {
 	z-index: 3;
-	padding: 0 1em .2em!important;
 	background-color: white;
 }
 #p-cactions .new a {
@@ -868,7 +632,10 @@ li#pt-login {
 li#ca-talk {
 	margin-right: 1.6em;
 }
-li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
+li#ca-watch,
+li#ca-unwatch,
+li#ca-varlang-0,
+li#ca-print {
 	margin-left: 1.6em;
 }
 #p-cactions .pBody {
@@ -878,9 +645,6 @@ li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
 	border-collapse: inherit;
 	border: 0;
 	padding: 0;
-}
-#p-cactions .hiddenStructure {
-	display: none;
 }
 #p-cactions li a {
 	text-transform: lowercase;
@@ -908,7 +672,7 @@ li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
 /*
 ** footer
 */
-#footer {
+div#footer {
 	background-color: white;
 	border-top: 1px solid #fabd23;
 	border-bottom: 1px solid #fabd23;
@@ -917,7 +681,7 @@ li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
 	text-align: center;
 	font-size: 90%;
 }
-#footer li {
+div#footer li {
 	display: inline;
 	margin: 0 1.3em;
 }
@@ -1033,24 +797,20 @@ td.htmlform-tip {
 	margin-top: 2em;
 }
 
-div#userloginForm form,
-div#userlogin form#userlogin2 {
+div#userloginForm,
+div#userlogin {
 	margin: 0 3em 1em 0;
 	clear: both;
 	float: left;
 	display: inline;
 }
-.rtl div#userloginForm form,
-.rtl div#userlogin form#userlogin2 {
-	float: right;
-}
 
 div#userloginForm table,
-div#userlogin form#userlogin2 table {
+div#userlogin table {
 }
 
 div#userloginForm h2,
-div#userlogin form#userlogin2 h2 {
+div#userlogin h2 {
 	padding-top: 0;
 }
 
@@ -1102,15 +862,21 @@ div#userlogin form#userlogin2 input {
 ** @import("IEMacFixes.css");
 */
 /* tabs: border on the a, not the div */
-* > html #p-cactions li { border: none; }
+* > html #p-cactions li {
+	border: none;
+}
 * > html #p-cactions li a {
 	border: 1px solid #aaa;
 	border-bottom: none;
 }
-* > html #p-cactions li.selected a { border-color: #fabd23; }
+* > html #p-cactions li.selected a {
+	border-color: #fabd23;
+}
 /* footer icons need a fixed width */
 * > html #f-poweredbyico,
-* > html #f-copyrightico { width: 88px; }
+* > html #f-copyrightico {
+	width: 88px;
+}
 * > html #bodyContent,
 * > html #bodyContent pre {
 	overflow-x: auto;
@@ -1120,24 +886,27 @@ div#userlogin form#userlogin2 input {
 
 /* more IE fixes */
 /* float/negative margin brokenness */
-* html #footer {margin-top: 0;}
-* html #column-content {
+* html div#footer {
+	margin-top: 0;
+}
+* html div#column-content {
 	display: inline;
 	margin-bottom: 0;
 }
-* html div.editsection { font-size: smaller; }
-#pagehistory li.selected { position: relative; }
+#pagehistory li.selected {
+	position: relative;
+}
 
 /* Mac IE 5.0 fix; floated content turns invisible */
-* > html #column-content {
+* > html div#column-content {
 	float: none;
 }
-* > html #column-one {
+* > html div#column-one {
 	position: absolute;
 	left: 0;
 	top: 0;
 }
-* > html #footer {
+* > html div#footer {
 	margin-left: 13.2em;
 }
 .redirectText {
@@ -1148,7 +917,6 @@ div#userlogin form#userlogin2 input {
 .printfooter {
 	display: none;
 }
-
 
 div.patrollink {
 	clear: both;
@@ -1250,41 +1018,14 @@ span.changedby {
 	text-indent: -2em;
 }
 
-input#wpSummary {
-	width: 80%;
-}
-
 /* @bug 1714 */
-input#wpSave, input#wpDiff {
+input#wpSave,
+input#wpDiff {
 	margin-right: 0.33em;
 }
 
 #wpSave {
 	font-weight: bold;
-}
-
-/* Classes for article validation */
-
-table.revisionform_default {
-	border: 1px solid #000000;
-}
-
-table.revisionform_focus {
-	border: 1px solid #000000;
-	background-color:#00BBFF;
-}
-
-tr.revision_tr_default {
-	background-color:#EEEEEE;
-}
-
-tr.revision_tr_first {
-	background-color:#DDDDDD;
-}
-
-p.revision_saved {
-	color: green;
-	font-weight:bold;
 }
 
 /* noarticletext */
@@ -1296,17 +1037,17 @@ div.noarticletext {
 }
 
 div#searchTargetContainer {
-	left:       10px;
-	top:        10px;
-	width:      90%;
+	left: 10px;
+	top: 10px;
+	width: 90%;
 	background: white;
 }
 
 div#searchTarget {
-	padding:    3px;
-	margin:     5px;
+	padding: 3px;
+	margin: 5px;
 	background: #F0F0F0;
-	border:     solid 1px blue;
+	border: solid 1px blue;
 }
 
 div#searchTarget ul li {
@@ -1319,10 +1060,10 @@ div#searchTarget ul li:before {
 }
 
 div#searchTargetHide {
-	float:right;
-	border:solid 1px black;
-	background:#DCDCDC;
-	padding:2px;
+	float: right;
+	border: solid 1px black;
+	background: #DCDCDC;
+	padding: 2px;
 }
 
 #powersearch p {
@@ -1330,27 +1071,29 @@ div#searchTargetHide {
 }
 
 div.multipageimagenavbox {
-   border: solid 1px silver;
-   padding: 4px;
-   margin: 1em;
-   background: #f0f0f0;
+	border: solid 1px silver;
+	padding: 4px;
+	margin: 1em;
+	background: #f0f0f0;
 }
 
 div.multipageimagenavbox div.thumb {
-   border: none;
-   margin-left: 2em;
-   margin-right: 2em;
+	border: none;
+	margin-left: 2em;
+	margin-right: 2em;
 }
 
 div.multipageimagenavbox hr {
-   margin: 6px;
+	margin: 6px;
 }
 
 table.multipageimage td {
-   text-align: center;
+	text-align: center;
 }
 
-.templatesUsed { margin-top: 1.5em; }
+.templatesUsed {
+	margin-top: 1.5em;
+}
 
 .mw-summary-preview {
 	margin: 0.1em 0;
@@ -1393,9 +1136,18 @@ div.mw-lag-warn-high {
 	text-transform: none;
 }
 
+/* Tooltips are outside of the normal body code, so this helps make the size of the text sensible */
+.tipsy {
+	font-size: 127%;
+}
+
 .WikiaTable, .article-table, .WikiaTable td, .WikiaTable th, .article-table td, .article-table th {
 	border: 1px solid #333;
 }
 .WikiaTable td, .WikiaTable th, .article-table td, .article-table th {
 	padding: 3px;
+}
+
+.MiniEditorWrapper .loading-indicator {
+	display: none;
 }

@@ -23,9 +23,9 @@ $magicWords['af'] = array(
 
 /** Arabic (العربية) */
 $magicWords['ar'] = array(
-	'ogg_noplayer' => array( 0, 'لابرنامج', 'noplayer' ),
-	'ogg_noicon' => array( 0, 'لاأيقونة', 'noicon' ),
-	'ogg_thumbtime' => array( 0, 'وقت_التصغير=$1', 'thumbtime=$1' ),
+	'ogg_noplayer' => array( 0, 'لابرنامج' ),
+	'ogg_noicon' => array( 0, 'لاأيقونة' ),
+	'ogg_thumbtime' => array( 0, 'وقت_التصغير=$1' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
@@ -44,13 +44,13 @@ $magicWords['ce'] = array(
 /** Esperanto (Esperanto) */
 $magicWords['eo'] = array(
 	'ogg_noplayer' => array( 0, 'neniuludilo' ),
-	'ogg_noicon' => array( 0, 'neniupiktogramo', 'neniuikono' ),
+	'ogg_noicon' => array( 0, 'neniubildsimbolo' ),
 );
 
 /** Spanish (Español) */
 $magicWords['es'] = array(
-	'ogg_noplayer' => array( 0, 'noreproductor', 'noplayer' ),
-	'ogg_noicon' => array( 0, 'noicono', 'noicon' ),
+	'ogg_noplayer' => array( 0, 'noreproductor', 'sinreproductor' ),
+	'ogg_noicon' => array( 0, 'noicono', 'sinicono' ),
 );
 
 /** Japanese (日本語) */
@@ -58,6 +58,13 @@ $magicWords['ja'] = array(
 	'ogg_noplayer' => array( 0, 'プレイヤー無効' ),
 	'ogg_noicon' => array( 0, 'アイコン無効' ),
 	'ogg_thumbtime' => array( 0, 'サムネイル時刻=$1' ),
+);
+
+/** Macedonian (Македонски) */
+$magicWords['mk'] = array(
+	'ogg_noplayer' => array( 0, 'безизведувач' ),
+	'ogg_noicon' => array( 0, 'безикона' ),
+	'ogg_thumbtime' => array( 0, 'минивреме=$1' ),
 );
 
 /** Malayalam (മലയാളം) */
@@ -74,9 +81,9 @@ $magicWords['mr'] = array(
 
 /** Nedersaksisch (Nedersaksisch) */
 $magicWords['nds-nl'] = array(
-	'ogg_noplayer' => array( 0, 'gienspeuler', 'geenspeler', 'noplayer' ),
-	'ogg_noicon' => array( 0, 'gienicoon', 'geenicoon', 'noicon' ),
-	'ogg_thumbtime' => array( 0, 'miniatuurtied=$1', 'miniatuurtijd=$1', 'thumbtime=$1' ),
+	'ogg_noplayer' => array( 0, 'gienspeuler', 'geenspeler' ),
+	'ogg_noicon' => array( 0, 'gienicoon', 'geenicoon' ),
+	'ogg_thumbtime' => array( 0, 'tiedaofbeeldingsoverzichte=$1', 'miniatuurtijd=$1' ),
 );
 
 /** Dutch (Nederlands) */
@@ -84,6 +91,11 @@ $magicWords['nl'] = array(
 	'ogg_noplayer' => array( 0, 'geenspeler' ),
 	'ogg_noicon' => array( 0, 'geenicoon' ),
 	'ogg_thumbtime' => array( 0, 'miniatuurtijd=$1' ),
+);
+
+/** Polish (Polski) */
+$magicWords['pl'] = array(
+	'ogg_noicon' => array( 0, 'bezikony' ),
 );
 
 /** Portuguese (Português) */
@@ -94,9 +106,21 @@ $magicWords['pt'] = array(
 
 /** Russian (Русский) */
 $magicWords['ru'] = array(
-	'ogg_noplayer' => array( 0, 'нетпроигрывателя', 'noplayer' ),
-	'ogg_noicon' => array( 0, 'нетзначка', 'noicon' ),
-	'ogg_thumbtime' => array( 0, 'время_миниатюры=$1', 'thumbtime=$1' ),
+	'ogg_noplayer' => array( 0, 'нетпроигрывателя' ),
+	'ogg_noicon' => array( 0, 'нетзначка' ),
+	'ogg_thumbtime' => array( 0, 'время_миниатюры=$1' ),
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬) */
+$magicWords['sr-ec'] = array(
+	'ogg_noicon' => array( 0, 'безиконице', 'безиконе', 'без_иконице', 'без_иконе' ),
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$magicWords['sr-el'] = array(
+	'ogg_noplayer' => array( 0, 'bez_plejera' ),
+	'ogg_noicon' => array( 0, 'bez_ikone' ),
+	'ogg_thumbtime' => array( 0, 'vreme_slike=$1' ),
 );
 
 /** Swedish (Svenska) */

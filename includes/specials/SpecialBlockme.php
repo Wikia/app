@@ -1,37 +1,62 @@
 <?php
 /**
+ * Implements Special:Blockme
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @file
  * @ingroup SpecialPage
  */
 
 /**
+ * A special page called by proxy_check.php to block open proxies
  *
+ * @ingroup SpecialPage
  */
-function wfSpecialBlockme() {
-	global $wgRequest, $wgBlockOpenProxies, $wgOut, $wgProxyKey;
+class SpecialBlockme extends UnlistedSpecialPage {
 
-	$ip = wfGetIP();
-
-	if( !$wgBlockOpenProxies || $wgRequest->getText( 'ip' ) != md5( $ip . $wgProxyKey ) ) {
-		$wgOut->addWikiMsg( 'proxyblocker-disabled' );
-		return;
+	function __construct() {
+		parent::__construct( 'Blockme' );
 	}
 
-	$blockerName = wfMsg( "proxyblocker" );
-	$reason = wfMsg( "proxyblockreason" );
+	function execute( $par ) {
+		global $wgBlockOpenProxies, $wgProxyKey;
 
-	$u = User::newFromName( $blockerName );
-	$id = $u->idForName();
-	if ( !$id ) {
-		$u = User::newFromName( $blockerName );
-		$u->addToDatabase();
-		$u->setPassword( bin2hex( mt_rand(0, 0x7fffffff ) ) );
-		$u->saveSettings();
-		$id = $u->getID();
+		$this->setHeaders();
+		$this->outputHeader();
+
+		$ip = $this->getRequest()->getIP();
+		if( !$wgBlockOpenProxies || $this->getRequest()->getText( 'ip' ) != md5( $ip . $wgProxyKey ) ) {
+			$this->getOutput()->addWikiMsg( 'proxyblocker-disabled' );
+			return;
+		}
+
+		$user = User::newFromName( $this->msg( 'proxyblocker' )->inContentLanguage()->text() );
+		# FIXME: newFromName could return false on a badly configured wiki.
+		if ( !$user->isLoggedIn() ) {
+			$user->addToDatabase();
+		}
+
+		$block = new Block();
+		$block->setTarget( $ip );
+		$block->setBlocker( $user );
+		$block->mReason = $this->msg( 'proxyblockreason' )->inContentLanguage()->text();
+
+		$block->insert();
+
+		$this->getOutput()->addWikiMsg( 'proxyblocksuccess' );
 	}
-
-	$block = new Block( $ip, 0, $id, $reason, wfTimestampNow() );
-	$block->insert();
-
-	$wgOut->addWikiMsg( "proxyblocksuccess" );
 }

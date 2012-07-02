@@ -41,16 +41,16 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 ) ;
 }
 
-$wgExtensionFunctions[] = "wfGeoExtension";
+$wgHooks['ArticleSaveComplete'][] = 'articleSaveGeo';
+$wgHooks['ArticleDelete'][] = 'articleDeleteGeo';
+$wgHooks['ParserFirstCallInit'][] = 'wfGeoSetHook';
 
 /**
  *  Installer
  */
-function wfGeoExtension () {
-	global $wgParser, $wgHooks ;
-	$wgParser->setHook ( 'geo' , 'parseGeo' ) ;
-	$wgHooks['ArticleSaveComplete'][] = 'articleSaveGeo';
-	$wgHooks['ArticleDelete'][] = 'articleDeleteGeo';
+function wfGeoSetHook( $parser ) {
+	$parser->setHook( 'geo', 'parseGeo' );
+	return true;
 }
 
 $wgExtensionCredits['specialpage'][] = array(
@@ -61,7 +61,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $dir = dirname(__FILE__) . '/';
-$wgExtensionAliasesFiles['Geo'] = $dir . 'Geo.alias.php';
+$wgExtensionMessagesFiles['GeoAlias'] = $dir . 'Geo.alias.php';
 $wgAutoloadClasses['SpecialGeo'] = $dir . 'Specialgeo_body.php';
 $wgSpecialPages['Geo'] = 'SpecialGeo';
 
@@ -156,6 +156,6 @@ function parseGeo ( $text, $params, &$parser ) {
 	$skin = $wgUser->getSkin();
 
 	// !JF1 Replace Special: by NS call.
-	return $skin->makeKnownLink( 'Special:Geo', $geo->get_markup(), $geo->get_param_string() );
+	return Linker::link( SpecialPage::getTitleFor( 'Geo' ), $geo->get_markup(), $geo->get_param_array() );
 
 }

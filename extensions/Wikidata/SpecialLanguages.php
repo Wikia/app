@@ -2,7 +2,9 @@
 if ( !defined( 'MEDIAWIKI' ) ) die();
 /**
  * A Special Page extension to add languages, runnable by users with the 'addlanguage' right.
- * @addtogroup Extensions
+ *
+ * @file
+ * @ingroup Extensions
  *
  * @author Erik Moeller <Eloquence@gmail.com>
  * @license public domain
@@ -11,63 +13,59 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 $wgAvailableRights[] = 'addlanguage';
 $wgGroupPermissions['bureaucrat']['addlanguage'] = true;
 
-$wgExtensionFunctions[] = 'wfSpecialManageLanguages';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Language manager',
 	'author' => 'Erik Moeller',
 	'descmsg' => 'langman-desc',
 );
 
-function wfSpecialManageLanguages() {
-	global $IP;
-	
-	require_once "$IP/includes/SpecialPage.php";
+$wgSpecialPages['Languages'] = 'SpecialLanguages';
 
-	class SpecialLanguages extends SpecialPage {
-		function SpecialLanguages() {
-			SpecialPage::SpecialPage( 'Languages' );
+class SpecialLanguages extends SpecialPage {
+	function SpecialLanguages() {
+		parent::__construct( 'Languages' );
+	}
+
+	function execute( $par ) {
+		global $wgOut, $wgRequest, $wgUser;
+		$wgOut->setPageTitle( wfMsg( 'langman_title' ) );
+		if ( !$wgUser->isAllowed( 'addlanguage' ) ) {
+			$wgOut->addHTML( wfMsg( 'langman_not_allowed' ) );
+			return false;
 		}
-
-		function execute( $par ) {
-			global $wgOut, $wgRequest, $wgUser;
-			$wgOut->setPageTitle( wfMsg( 'langman_title' ) );
-			if ( !$wgUser->isAllowed( 'addlanguage' ) ) {
-				$wgOut->addHTML( wfMsg( 'langman_not_allowed' ) );
-				return false;
-			}
-			$action = $wgRequest->getText( 'action' );
-			if ( !$action ) {
-				$wgOut->addWikiText( wfMsg( 'langman_header' ) );
+		$action = $wgRequest->getText( 'action' );
+		if ( !$action ) {
+			$wgOut->addWikiText( wfMsg( 'langman_header' ) );
+		} else {
+			$dbr = wfGetDB( DB_MASTER );
+			$langname = $wgRequest->getText( 'langname' );
+			$langiso6393 = $wgRequest->getText( 'langiso6393' );
+			$langiso6392 = $wgRequest->getText( 'langiso6392' );
+			$langwmf = $wgRequest->getText( 'langwmf' );
+			if ( !$langname || !$langiso6393 ) {
+				$wgOut->addHTML( "<strong>" . wfMsg( 'langman_req_fields' ) . "</strong>" );
 			} else {
-				$dbr = wfGetDB( DB_MASTER );
-				$langname = $wgRequest->getText( 'langname' );
-				$langiso6393 = $wgRequest->getText( 'langiso6393' );
-				$langiso6392 = $wgRequest->getText( 'langiso6392' );
-				$langwmf = $wgRequest->getText( 'langwmf' );
-				if ( !$langname || !$langiso6393 ) {
-					$wgOut->addHTML( "<strong>" . wfMsg( 'langman_req_fields' ) . "</strong>" );
-				} else {
-					$wgOut->addHTML( "<strong>" . wfMsg( 'langman_adding', $langname, $langiso6393 ) . "</strong>" );
-					$sql = 'INSERT INTO language(iso639_2,iso639_3,wikimedia_key) values(' . $dbr->addQuotes( $langiso6392 ) . ',' . $dbr->addQuotes( $langiso6393 ) . ',' . $dbr->addQuotes( $langwmf ) . ')';
+				$wgOut->addHTML( "<strong>" . wfMsg( 'langman_adding', $langname, $langiso6393 ) . "</strong>" );
+				$sql = 'INSERT INTO language(iso639_2,iso639_3,wikimedia_key) values(' . $dbr->addQuotes( $langiso6392 ) . ',' . $dbr->addQuotes( $langiso6393 ) . ',' . $dbr->addQuotes( $langwmf ) . ')';
 
-					$dbr->query( $sql );
-					$id = $dbr->insertId();
-					$sql = 'INSERT INTO language_names(language_id,name_language_id,language_name) values (' . $id . ',85,' . $dbr->addQuotes( $langname ) . ')';
-					$dbr->query( $sql );
-
-				}
+				$dbr->query( $sql );
+				$id = $dbr->insertId();
+				$sql = 'INSERT INTO language_names(language_id,name_language_id,language_name) values (' . $id . ',85,' . $dbr->addQuotes( $langname ) . ')';
+				$dbr->query( $sql );
 
 			}
 
-			$this->showForm();
-
-
-			# $wgRequest->getText( 'page' );
 		}
-		function showForm() {
-			global $wgOut;
-			$action = $this->getTitle()->escapeLocalURL( 'action=submit' );
-			$wgOut->addHTML(
+
+		$this->showForm();
+
+
+		# $wgRequest->getText( 'page' );
+	}
+	function showForm() {
+		global $wgOut;
+		$action = htmlspecialchars($this->getTitle()->getLocalURL( 'action=submit' ));
+		$wgOut->addHTML(
 <<<END
 <form name="addlanguage" method="post" action="$action">
 <table border="0">
@@ -128,10 +126,7 @@ END
 </form>
 END
 );
-			return true;
+		return true;
 
-		}
 	}
-
-	SpecialPage::addPage( new SpecialLanguages );
 }

@@ -2,7 +2,7 @@
 		<?= $app->renderView('FacebookButton', 'index', array(
 			'class' => 'sso-login-facebook',
 			'text' => wfMsg('fbconnect-wikia-signup-w-facebook'),
-			'tooltip' => (!empty($context) && $context === 'signup' ? 
+			'tooltip' => (!empty($requestType) && $requestType === 'signup' ? 
 				wfMsg('userlogin-provider-tooltip-facebook-signup') : 
 				wfMsg('userlogin-provider-tooltip-facebook'))
 		)) ?>

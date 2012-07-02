@@ -1,6 +1,7 @@
 <?php
 
 require_once( 'Transaction.php' );
+require_once( 'WikiDataTables.php' );
 
 class TableColumnsToAttribute {
 	protected $tableColumns;
@@ -24,28 +25,30 @@ class TableColumnsToAttributesMapping {
 	protected $tableColumnsToAttributes;
 	
 	public function __construct( $tableColumnsToAttributes ) {
-		if ( is_array( $tableColumnsToAttributes ) )
+		if ( is_array( $tableColumnsToAttributes ) ) {
 			$this->tableColumnsToAttributes = $tableColumnsToAttributes;
-		else
+		} else {
 			$this->tableColumnsToAttributes = func_get_args();
+		}
 	}
 	
 	public function getSelectColumns() {
 		$result = array();
 		
-		foreach ( $this->tableColumnsToAttributes as $tableColumnToAttribute )
-			foreach ( $tableColumnToAttribute->getTableColumns() as $tableColumn )
+		foreach ( $this->tableColumnsToAttributes as $tableColumnToAttribute ) {
+			foreach ( $tableColumnToAttribute->getTableColumns() as $tableColumn ) {
 				$result[] = $tableColumn;
-		
+			}
+		}
 		return $result;
 	}
 
 	public function getAttributes() {
 		$result = array();
 		
-		foreach ( $this->tableColumnsToAttributes as $tableColumnToAttribute )
+		foreach ( $this->tableColumnsToAttributes as $tableColumnToAttribute ) {
 			$result[] = $tableColumnToAttribute->getAttribute();
-		
+		}
 		return $result;
 	}
 	
@@ -68,25 +71,26 @@ function getTransactedSQL( QueryTransactionInformation $transactionInformation, 
 		$groupBy = $transactionInformation->versioningGroupBy( $table );
 		$selectFields = array_merge( $selectFields, $transactionInformation->versioningFields( $table->getIdentifier() ) );
 	}
-	else
+	else {
 		$groupBy = array();
+	}
 	
 	$query =
 		"SELECT " . implode( ", ", $selectFields ) .
 		" FROM " . implode( ", ", $tableNames );
 
-	if ( count( $restrictions ) > 0 )
+	if ( count( $restrictions ) > 0 ) {
 		$query .= " WHERE " . implode( ' AND ', $restrictions );
-	
-	if ( count( $groupBy ) > 0 )
+	}
+	if ( count( $groupBy ) > 0 ) {
 		$query .= " GROUP BY " . implode( ', ', $groupBy );
-
-	if ( count( $orderBy ) > 0 )
+	}
+	if ( count( $orderBy ) > 0 ) {
 		$query .= " ORDER BY " . implode( ', ', $orderBy );
-		
-	if ( $count != - 1 )
+	}
+	if ( $count != - 1 ) {
 		$query .= " LIMIT " . $offset . ", " . $count;
-		
+	}
 	return $query;
 }
 
@@ -107,18 +111,20 @@ function queryRecordSet( $recordSetStructureId, QueryTransactionInformation $tra
 	$selectFields =  $tableColumnsToAttributeMapping->getSelectColumns();
 	$attributes = $tableColumnsToAttributeMapping->getAttributes();
 
-	if ( $table->isVersioned )
+	if ( $table->isVersioned ) {
 		$allAttributes = array_merge( $attributes, $transactionInformation->versioningAttributes() );
-	else
+	} else {
 		$allAttributes = $attributes;
+	}
 	
 	$query = getTransactedSQL( $transactionInformation, $selectFields, $table, $restrictions, $orderBy, $count, $offset );
 	$queryResult = $dbr->query( $query );
 	
-	if ( !is_null( $recordSetStructureId ) )
+	if ( !is_null( $recordSetStructureId ) ) {
 		$structure = new Structure( $recordSetStructureId, $allAttributes );
-	else
+	} else {
 		$structure = new Structure( $allAttributes );
+	}
 
 	$recordSet = new ArrayRecordSet( $structure, new Structure( $keyAttribute ) );
 
@@ -131,10 +137,11 @@ function queryRecordSet( $recordSetStructureId, QueryTransactionInformation $tra
 			$attribute = $mapping->getAttribute();
 			$tableColumns = $mapping->getTableColumns();
 			
-			if ( count( $tableColumns ) == 1 )
+			if ( count( $tableColumns ) == 1 ) {
 				$value = $row[$columnIndex];
-			else
+			} else {
 				$value = getRecordFromRow( $row, $columnIndex, $attribute->type );
+			}
 			
 			$record->setAttributeValue( $attribute, $value );
 			$columnIndex += count( $tableColumns );
@@ -153,8 +160,9 @@ function getUniqueIdsInRecordSet( RecordSet $recordSet, array $idAttributes ) {
 	for ( $i = 0; $i < $recordSet->getRecordCount(); $i++ ) {
 		$record = $recordSet->getRecord( $i );
 		
-		foreach ( $idAttributes as $idAttribute )
+		foreach ( $idAttributes as $idAttribute ) {
 			$ids[] = $record->getAttributeValue( $idAttribute );
+		}
 	}
 	
 	return array_unique( $ids );

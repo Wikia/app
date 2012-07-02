@@ -9,7 +9,7 @@ class PowerTools {
 		}
 
 		if ( !$wgUser->isAllowed( 'delete' ) || !$wgUser->isAllowed( 'powerdelete' ) ) {
-			$wgOut->permissionRequired( 'powerdelete' );	
+			$wgOut->permissionRequired( 'powerdelete' );
 			return false;
 		}
 
@@ -34,7 +34,9 @@ class PowerTools {
 		} else {
 			$article->doDelete( $reason );
 		}
-		$article->mTitle->updateTitleProtection( 'sysop', $reason, 'infinity' );
+		// this is stupid, but otherwise, WikiPage::doUpdateRestrictions complains about passing by reference
+		$false = false;
+		$article->doUpdateRestrictions(array('create'=>'sysop'), array('create'=>'infinity'), $false, $reason, $wgUser);
 
 		return false;
 	}

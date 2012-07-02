@@ -1,25 +1,37 @@
 <?php
 /**
+ * Implements Special:Mostlinkedtemplates
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @file
  * @ingroup SpecialPage
+ * @author Rob Church <robchur@gmail.com>
  */
- 
+
 /**
  * Special page lists templates with a large number of
  * transclusion links, i.e. "most used" templates
  *
  * @ingroup SpecialPage
- * @author Rob Church <robchur@gmail.com>
  */
-class SpecialMostlinkedtemplates extends QueryPage {
+class MostlinkedTemplatesPage extends QueryPage {
 
-	/**
-	 * Name of the report
-	 *
-	 * @return String
-	 */
-	public function getName() {
-		return 'Mostlinkedtemplates';
+	function __construct( $name = 'Mostlinkedtemplates' ) {
+		parent::__construct( $name );
 	}
 
 	/**
@@ -49,22 +61,15 @@ class SpecialMostlinkedtemplates extends QueryPage {
 		return true;
 	}
 
-	/**
-	 * Generate SQL for the report
-	 *
-	 * @return String
-	 */
-	public function getSql() {
-		$dbr = wfGetDB( DB_SLAVE );
-		$templatelinks = $dbr->tableName( 'templatelinks' );
-		$name = $dbr->addQuotes( $this->getName() );
-		return "SELECT {$name} AS type,
-			" . NS_TEMPLATE . " AS namespace,
-			tl_title AS title,
-			COUNT(*) AS value
-			FROM {$templatelinks}
-			WHERE tl_namespace = " . NS_TEMPLATE . "
-			GROUP BY tl_title";
+	public function getQueryInfo() {
+		return array (
+			'tables' => array ( 'templatelinks' ),
+			'fields' => array ( 'tl_namespace AS namespace',
+					'tl_title AS title',
+					'COUNT(*) AS value' ),
+			'conds' => array ( 'tl_namespace' => NS_TEMPLATE ),
+			'options' => array( 'GROUP BY' => 'tl_namespace, tl_title' )
+		);
 	}
 
 	/**
@@ -75,7 +80,7 @@ class SpecialMostlinkedtemplates extends QueryPage {
 	 */
 	public function preprocessResults( $db, $res ) {
 		$batch = new LinkBatch();
-		while( $row = $db->fetchObject( $res ) ) {
+		foreach ( $res as $row ) {
 			$batch->add( $row->namespace, $row->title );
 		}
 		$batch->execute();
@@ -91,41 +96,24 @@ class SpecialMostlinkedtemplates extends QueryPage {
 	 * @return String
 	 */
 	public function formatResult( $skin, $result ) {
-		$title = Title::makeTitleSafe( $result->namespace, $result->title );
+		$title = Title::makeTitle( $result->namespace, $result->title );
 
-		if ($title instanceof Title) {
-			return wfSpecialList(
-				$skin->link( $title ),
-				$this->makeWlhLink( $title, $skin, $result )
-			);
-		}
-		else return false;
+		return ( $title instanceof Title )
+			? $this->getLanguage()->specialList( Linker::link( $title ), $this->makeWlhLink( $title, $result ) )
+			: false;
 	}
 
 	/**
 	 * Make a "what links here" link for a given title
 	 *
 	 * @param $title Title to make the link for
-	 * @param $skin Skin to use
 	 * @param $result Result row
 	 * @return String
 	 */
-	private function makeWlhLink( $title, $skin, $result ) {
-		global $wgLang;
-		$wlh = SpecialPage::getTitleFor( 'Whatlinkshere' );
-		$label = wfMsgExt( 'nlinks', array( 'parsemag', 'escape' ),
-		$wgLang->formatNum( $result->value ) );
-		return $skin->link( $wlh, $label, array(), array( 'target' => $title->getPrefixedText() ) );
+	private function makeWlhLink( $title, $result ) {
+		$wlh = SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
+		$label = $this->msg( 'ntransclusions' )->numParams( $result->value )->escaped();
+		return Linker::link( $wlh, $label );
 	}
 }
 
-/**
- * Execution function
- *
- * @param $par Mixed: parameters passed to the page
- */
-function wfSpecialMostlinkedtemplates( $par = false ) {
-	list( $limit, $offset ) = wfCheckLimits();
-	$mlt = new SpecialMostlinkedtemplates();
-	$mlt->doQuery( $offset, $limit );
-}

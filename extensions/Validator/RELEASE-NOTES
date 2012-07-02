@@ -1,8 +1,43 @@
-For a documentation of all features, see http://www.mediawiki.org/wiki/Extension:Validator
+For a documentation of all features, see https://www.mediawiki.org/wiki/Extension:Validator
 
 == Validator change log ==
 This change log contains a list of completed to-do's (new features, bug fixes, refactoring) for every version of Validator.
 
+=== Validator 0.4.14 ===
+(2012-03-10)
+
+* New built-in parameter type 'title'. Accepts existing and non-existing page titles which are valid within the wiki.
+
+=== Validator 0.4.13 ===
+(2011-11-30)
+
+* ParserHook::$parser now is a reference to the original parser object, as one would suspect.
+  Before this has only been the case for tag extension but not for parser function calls.
+
+* if SFH_OBJECT_ARGS and therefore object parser function arguments are available in the MW
+  version used with Validator, ParserHook::$frame will not be null anymore. Therefore a new
+  function ParserHook::renderFunctionObj() is introduced, handling these SFH_OBJECT_ARGS hooks.
+
+* ParserHook constructor now accepts a bitfield for flags to define further customization for
+  registered Hooks. First option can be set via ParserHook::FH_NO_HASH to define that the function
+  hook should be callable without leading hash ("{{plural:...}}"-like style).
+
+* Option for unnamed parameter handling to work without named fallback. This allows to ignore '='
+  within parameter values entirely, these parameters bust be set before any named parameter then.
+  See Validator::setFunctionParams() and ParserHook::getParameterInfo() for details.
+
+* ParserHook Validation messages will now output text in global content language instead of users interface language.
+
+=== Validator 0.4.12 ===
+(2011-10-15)
+
+* Internationalization fix in the describe parser hook.
+
+=== Validator 0.4.11 ===
+(2011-09-14)
+
+* Fixed compatibility fallback in Parameter::getDescription.
+* Fixed handling of list parameters in ParameterInput.
 
 === Validator 0.4.10 ===
 (2011-08-04)
@@ -34,6 +69,7 @@ This change log contains a list of completed to-do's (new features, bug fixes, r
   which gets passed to Parameter::setDoManipulationOfDefault.
 
 * Boolean manipulation now ignores values that are already a boolean.
+
 === Validator 0.4.6 ===
 (2011-03-21)
 

@@ -31,7 +31,7 @@ class MapsOpenLayers extends MapsMappingService {
 	 * @since 0.7
 	 */	
 	public function addParameterInfo( array &$params ) {
-		global $egMapsOLLayers, $egMapsOLControls, $egMapsUseRL;
+		global $egMapsOLLayers, $egMapsOLControls, $egMapsResizableByDefault;
 		
 		$params['zoom']->addCriteria( new CriterionInRange( 0, 19 ) );
 		$params['zoom']->setDefault( self::getDefaultZoom() );		
@@ -42,20 +42,18 @@ class MapsOpenLayers extends MapsMappingService {
 		$params['controls']->addManipulations(
 			new ParamManipulationFunctions( 'strtolower' )
 		);
-		
-		if ( !$egMapsUseRL ) {
-			$params['controls']->addManipulations(
-				new ParamManipulationImplode( ',', "'" )
-			);
-		}
+		$params['controls']->setMessage( 'maps-openlayers-par-controls' );
 		
 		$params['layers'] = new ListParameter( 'layers' );
 		$params['layers']->addManipulations( new MapsParamOLLayers() );
 		$params['layers']->setDoManipulationOfDefault( true );
 		$params['layers']->addCriteria( new CriterionOLLayer() );
 		$params['layers']->setDefault( $egMapsOLLayers );
+		$params['layers']->setMessage( 'maps-openlayers-par-layers' );
 		
-		//$params['imagelayers'] = new ListParameter();
+		$params['resizable'] = new Parameter( 'resizable', Parameter::TYPE_BOOLEAN );
+		$params['resizable']->setDefault( $egMapsResizableByDefault, false );	
+		$params['resizable']->setMessage( 'maps-par-resizable' );	
 	}
 	
 	/**
@@ -82,50 +80,6 @@ class MapsOpenLayers extends MapsMappingService {
 		
 		return 'open_layer_' . $mapsOnThisPage;
 	}		
-	
-	/**
-	 * @see MapsMappingService::createMarkersJs
-	 * 
-	 * @since 0.6.5
-	 */
-	public function createMarkersJs( array $markers ) {
-		$markerItems = array();
-		$defaultGroup = wfMsg( 'maps-markers' );
-
-		foreach ( $markers as $marker ) {
-			$markerItems[] = MapsMapper::encodeJsVar( (object)array(
-				'lat' => $marker[0],
-				'lon' => $marker[1],
-				'title' => $marker[2],
-				'label' =>$marker[3],
-				'icon' => $marker[4]
-			) );
-		}
-		
-		// Create a string containing the marker JS.
-		return '[' . implode( ',', $markerItems ) . ']';
-	}	
-	
-	/**
-	 * @see MapsMappingService::getDependencies
-	 * 
-	 * @return array
-	 */
-	protected function getDependencies() {
-		global $egMapsStyleVersion, $egMapsScriptPath, $egMapsUseRL;
-		
-		if ( $egMapsUseRL ) {
-			return array();
-		}
-		else {
-			return array(
-				Html::linkedStyle( "$egMapsScriptPath/includes/services/OpenLayers/OpenLayers/theme/default/style.css" ),
-				Html::linkedScript( "$egMapsScriptPath/includes/services/OpenLayers/OpenLayers/OpenLayers.js?$egMapsStyleVersion" ),
-				Html::linkedScript( "$egMapsScriptPath/includes/services/OpenLayers/OpenLayerFunctions.js?$egMapsStyleVersion" ),
-				Html::inlineScript( 'initOLSettings(200, 100); var msgMarkers = ' . Xml::encodeJsVar( wfMsg( 'maps-markers' ) ) . ';' )
-			);				
-		}
-	}	
 	
 	/**
 	 * Returns the names of all supported controls. 
@@ -184,57 +138,11 @@ class MapsOpenLayers extends MapsMappingService {
 	 * 
 	 * @return array of string
 	 */
-	protected function getResourceModules() {
+	public function getResourceModules() {
 		return array_merge(
 			parent::getResourceModules(),
 			array( 'ext.maps.openlayers' )
 		);
 	}
 	
-	/**
-	 * Register the resource modules for the resource loader.
-	 * 
-	 * @since 0.7.3
-	 * 
-	 * @param ResourceLoader $resourceLoader
-	 * 
-	 * @return true
-	 */
-	public static function registerResourceLoaderModules( ResourceLoader &$resourceLoader ) {
-		global $egMapsScriptPath, $egMapsOLLayerModules;
-		
-		$modules = array(
-			'ext.maps.openlayers' => array(
-				'scripts' =>   array(
-					'OpenLayers/OpenLayers.js',
-					'ext.maps.openlayers.js'
-				),
-				'styles' => array(
-					'OpenLayers/theme/default/style.css'
-				),				
-				'messages' => array(
-					'maps-markers'
-				)
-			),	
-		);
-		
-		foreach ( $egMapsOLLayerModules as $name => &$data ) {
-			$data['dependencies'] = array_key_exists( 'dependencies', $data ) ? 
-				array_merge( (array)$data['dependencies'], array( 'ext.maps.openlayers' ) ) :
-				array( 'ext.maps.openlayers' );
-		}
-		
-		$modules = array_merge( $modules, $egMapsOLLayerModules );
-
-		foreach ( $modules as $name => $resources ) { 
-			$resourceLoader->register( $name, new ResourceLoaderFileModule(
-				array_merge_recursive( $resources, array( 'group' => 'ext.maps' ) ),
-				dirname( __FILE__ ),
-				$egMapsScriptPath . '/includes/services/OpenLayers'
-			) ); 
-		}
-		
-		return true;		
-	}	
-	
-}																	
+}

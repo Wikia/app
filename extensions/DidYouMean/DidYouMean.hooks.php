@@ -3,6 +3,7 @@
  * All the hooks for DidYouMean
  */
 class DidYouMeanHooks {
+	private static $articleIsRedirect = false;
 
 	# TODO this is called even when editing a new page
 	public static function articleNoArticleText( &$article, &$text ) {
@@ -142,34 +143,34 @@ class DidYouMeanHooks {
 	
 	# called at action=edit. can detect if we're about to edit a redirect
 	public static function alternateEdit( $editpage ) {
-		global $wgParser;
-   
-		if ($editpage->mArticle->isRedirect())
-			$wgParser->mDymRedirBeforeEdit = true;
-   
-		return 1;
-	}
-	
-	# called at end of action=submit
-	public static function articleSaveComplete( $article, $user, $text, $summary, $isminor, $dunno1, $dunno2, $flags ) {
-		global $wgParser;
-   
-		if ($article->getTitle()->getNamespace() != 0)
-			return true;
-   
-		if ($article->isRedirect($text)) {
-			if (empty( $wgParser->mDymRedirBeforeEdit ) && !($flags & EDIT_NEW))
-				DidYouMean::doDelete( $article->getID() );
-		} else {
-			if (!empty( $wgParser->mDymRedirBeforeEdit ) || $flags & EDIT_NEW)
-				DidYouMean::doInsert( $article->getID(), $article->getTitle()->getText() );
+		if ( $editpage->mArticle->isRedirect() ) {
+			self::$articleIsRedirect = true;
 		}
-   
-		$wgParser->mDymRedirBeforeEdit = false;
-   
+
 		return true;
 	}
-	
+
+	# called at end of action=submit
+	public static function articleSaveComplete( $article, $user, $text, $summary, $isminor, $dunno1, $dunno2, $flags ) {
+		if ( $article->getTitle()->getNamespace() != 0 ) {
+			return true;
+		}
+
+		if ( $article->isRedirect( $text ) ) {
+			if ( !self::$articleIsRedirect && !( $flags & EDIT_NEW ) ) {
+				DidYouMean::doDelete( $article->getID() );
+			}
+		} else {
+			if ( self::$articleIsRedirect || $flags & EDIT_NEW ) {
+				DidYouMean::doInsert( $article->getID(), $article->getTitle()->getText() );
+			}
+		}
+
+		self::$articleIsRedirect = false;
+
+		return true;
+	}
+
 	public static function articleUndelete( &$title, &$create ) {
    
 		if ($create == false || $title->getNamespace() != 0)

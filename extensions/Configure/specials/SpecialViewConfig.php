@@ -22,13 +22,14 @@ class SpecialViewConfig extends ConfigurationPage {
 	}
 
 	protected function showOldVersionMessage( $version ) {
-		global $wgConf, $wgOut, $wgRequest;
+		global $wgConf;
 
 		$this->version = $version;
 
-		if ( $diff = $wgRequest->getVal( 'diff' ) ) {
+		$diff = $this->getRequest()->getVal( 'diff' );
+		if ( $diff ) {
 			if ( !$wgConf->versionExists( $diff ) ) {
-				$wgOut->wrapWikiMsg( '<div class="errorbox">$1</div>',
+				$this->getOutput()->wrapWikiMsg( '<div class="errorbox">$1</div>',
 					array( 'configure-old-not-available', $diff ) );
 				return false;
 			}
@@ -46,24 +47,21 @@ class SpecialViewConfig extends ConfigurationPage {
 	 * Show diff
 	 */
 	protected function showDiff() {
-		global $wgOut;
 		$wikis = $this->isUserAllowedAll() ? true : array( $this->mWiki );
-		$diffEngine = new HistoryConfigurationDiff( $this->diff, $this->version, $wikis );
+		$diffEngine = new HistoryConfigurationDiff( $this->getContext(), $this->diff, $this->version, $wikis );
 		$diffEngine->setViewCallback( array( $this, 'userCanRead' ) );
-		$wgOut->addHTML( $diffEngine->getHTML() );
+		$this->getOutput()->addHTML( $diffEngine->getHTML() );
 	}
 
 	/**
 	 * Show the main form
 	 */
 	protected function showForm() {
-		global $wgOut, $wgRequest;
-
 		if ( !empty( $this->conf ) || isset( $this->diff ) ) {
 			if ( isset( $this->diff ) ) {
 				$this->showDiff();
 			} else {
-				$wgOut->addHTML(
+				$this->getOutput()->addHTML(
 					$this->buildSearchForm() . "\n" .
 					Xml::openElement( 'div', array( 'id' => 'configure-form' ) ) . "\n" .
 					Xml::openElement( 'div', array( 'id' => 'configure' ) ) . "\n" .
@@ -75,7 +73,7 @@ class SpecialViewConfig extends ConfigurationPage {
 				);
 			}
 		} else {
-			$wgOut->addHTML( $this->buildOldVersionSelect() );
+			$this->getOutput()->addHTML( $this->buildOldVersionSelect() );
 		}
 		$this->injectScriptsAndStyles();
 	}
@@ -84,27 +82,27 @@ class SpecialViewConfig extends ConfigurationPage {
 	 * Build links to old version of the configuration
 	 */
 	protected function buildOldVersionSelect() {
-		global $wgConf, $wgLang, $wgUser, $wgRequest, $wgScript;
+		global $wgConf, $wgScript;
 
 		$self = $this->getTitle();
 		$pager = $wgConf->getPager();
 		$pager->setFormatCallback( array( $this, 'formatVersionRow' ) );
 
-		$wiki = $this->isUserAllowedInterwiki() && $wgRequest->getVal( 'view', 'all' ) == 'all' ? false : $this->mWiki;
+		$wiki = $this->isUserAllowedInterwiki() && $this->getRequest()->getVal( 'view', 'all' ) == 'all' ? false : $this->mWiki;
 		$pager->setWiki( $wiki );
 
 		$showDiff = $pager->getNumRows() > 1;
 
+		$user = $this->getUser();
 		$formatConf = array(
 			'showDiff' => $showDiff,
-			'allowedConfig' => $wgUser->isAllowed( 'configure' ),
-			'allowedExtensions' => $wgUser->isAllowed( 'extensions' ),
+			'allowedConfig' => $user->isAllowed( 'configure' ),
+			'allowedExtensions' => $user->isAllowed( 'extensions' ),
 			'allowedAll' => $this->isUserAllowedInterwiki(),
-			'allowedConfigAll' => $wgUser->isAllowed( 'configure-interwiki' ),
-			'allowedExtensionsAll' => $wgUser->isAllowed( 'extensions-interwiki' ),
+			'allowedConfigAll' => $user->isAllowed( 'configure-interwiki' ),
+			'allowedExtensionsAll' => $user->isAllowed( 'extensions-interwiki' ),
 			'self' => $self,
-			'skin' => $wgUser->getSkin(),
-			'editMsg' => wfMsg( 'edit' ) . wfMsg( 'colon-separator' ),
+			'editMsg' => $this->msg( 'edit' )->text() . $this->msg( 'colon-separator' )->text(),
 		);
 
 		if ( $formatConf['allowedConfig'] )
@@ -115,13 +113,13 @@ class SpecialViewConfig extends ConfigurationPage {
 
 		$this->formatConf = $formatConf;
 
-		$text = wfMsgExt( 'configure-old-versions', array( 'parse' ) );
+		$text = $this->msg( 'configure-old-versions' )->parseAsBlock();
 		if( $this->isUserAllowedInterwiki() )
 			$text .= $this->getWikiSelectForm();
 		$text .= $pager->getNavigationBar();
 		if ( $showDiff ) {
 			$text .= Xml::openElement( 'form', array( 'action' => $wgScript ) ) . "\n" .
-			Xml::hidden( 'title', $self->getPrefixedDBKey() ) . "\n" .
+			Html::Hidden( 'title', $self->getPrefixedDBKey() ) . "\n" .
 			$this->getButton() . "<br />\n";
 		}
 		$text .= $pager->getBody();
@@ -133,17 +131,17 @@ class SpecialViewConfig extends ConfigurationPage {
 	}
 
 	public function formatVersionRow( $arr ) {
-		global $wgLang;
-
 		$ts = $arr['timestamp'];
 		$wikis = $arr['wikis'];
 		$c = $arr['count'];
 		$hasSelf = in_array( $this->mWiki, $wikis );
 
 		extract( $this->formatConf );
-		$datime = $wgLang->timeAndDate( $ts );
-		$date = $wgLang->date( $ts );
-		$time = $wgLang->time( $ts );
+
+		$lang = $this->getLang();
+		$datime = $lang->timeanddate( $ts );
+		$date = $lang->date( $ts );
+		$time = $lang->time( $ts );
 
 		## Make user link...
 		$userLink = '';
@@ -151,10 +149,10 @@ class SpecialViewConfig extends ConfigurationPage {
 			$userLink = ''; # Nothing...
 			$username = '';
 		} elseif ( $arr['user_wiki'] == wfWikiId() ) {
-			$userLink = $skin->link( Title::makeTitle( NS_USER, $arr['user_name'] ), htmlspecialchars( $arr['user_name'] ) );
+			$userLink = Linker::link( Title::makeTitle( NS_USER, $arr['user_name'] ), htmlspecialchars( $arr['user_name'] ) );
 			$username = $arr['user_name'];
 		} elseif ( $wiki = WikiMap::getWiki( $arr['user_wiki'] ) ) {
-			$userLink = $skin->makeExternalLink( $wiki->getUrl( 'User:'.$arr['user_name'] ), htmlspecialchars( $arr['user_name'].'@'.$arr['user_wiki'] ) );
+			$userLink = Linker::makeExternalLink( $wiki->getUrl( 'User:'.$arr['user_name'] ), htmlspecialchars( $arr['user_name'].'@'.$arr['user_wiki'] ) );
 			$username = '';
 		} else {
 			## Last-ditch
@@ -165,16 +163,16 @@ class SpecialViewConfig extends ConfigurationPage {
 		$actions = array();
 		$view = '';
 		if ( $hasSelf )
-			$view .= $skin->makeKnownLinkObj( $self, wfMsgHtml( 'configure-view' ), "version=$ts" );
+			$view .= Linker::linkKnown( $self, $this->msg( 'configure-view' )->escaped(), array(), array( 'version' => $ts ) );
 		elseif( $allowedAll )
-			$view .= wfMsgHtml( 'configure-view' );
+			$view .= $this->msg( 'configure-view' )->escaped();
 
 		if ( $allowedAll ) {
 			$viewWikis = array();
 			foreach ( $wikis as $wiki ) {
-				$viewWikis[] = $skin->makeKnownLinkObj( $self, htmlspecialchars( $wiki ), "version={$ts}&wiki={$wiki}" );
+				$viewWikis[] = Linker::linkKnown( $self, htmlspecialchars( $wiki ), array(), array( 'version' => $ts, 'wiki' => $wiki ) );
 			}
-			$view .= ' (' . $wgLang->commaList( $viewWikis ) . ')';
+			$view .= ' (' . $lang->commaList( $viewWikis ) . ')';
 		}
 
 		if( $view )
@@ -183,18 +181,18 @@ class SpecialViewConfig extends ConfigurationPage {
 		$editDone = false;
 		if ( $allowedConfig ) {
 			if ( $hasSelf )
-				$editCore = $editMsg . $skin->makeKnownLinkObj( $configTitle, wfMsgHtml( 'configure-edit-core' ), "version=$ts" );
+				$editCore = $editMsg . Linker::linkKnown( $configTitle, $this->msg( 'configure-edit-core' )->escaped(), array(), array( 'version' => $ts ) );
 			elseif( $allowedConfigAll )
-				$editCore = $editMsg . wfMsgHtml( 'configure-edit-core' );
+				$editCore = $editMsg . $this->msg( 'configure-edit-core' )->escaped();
 			else
 				$editCore = $editMsg;
 
 			if ( $allowedConfigAll ) {
 				$viewWikis = array();
 				foreach ( $wikis as $wiki ) {
-					$viewWikis[] = $skin->makeKnownLinkObj( $configTitle, htmlspecialchars( $wiki ), "version={$ts}&wiki={$wiki}" );
+					$viewWikis[] = Linker::linkKnown( $configTitle, htmlspecialchars( $wiki ), array(), array( 'version' => $ts, 'wiki' => $wiki ) );
 				}
-				$editCore .= ' (' . $wgLang->commaList( $viewWikis ) . ')';
+				$editCore .= ' (' . $lang->commaList( $viewWikis ) . ')';
 			}
 			$actions[] = $editCore;
 		}
@@ -203,16 +201,16 @@ class SpecialViewConfig extends ConfigurationPage {
 			if ( !$allowedConfig )
 				$editExt .= $editMsg;
 			if ( $hasSelf )
-				$editExt .= $skin->makeKnownLinkObj( $extTitle, wfMsgHtml( 'configure-edit-ext' ), "version=$ts" );
+				$editExt .= Linker::linkKnown( $extTitle, $this->msg( 'configure-edit-ext' )->escaped(), array(), array( 'version' => $ts ) );
 			elseif( $allowedExtensionsAll )
-				$editExt .= wfMsgHtml( 'configure-edit-ext' );
+				$editExt .= $this->msg( 'configure-edit-ext' )->escaped();
 
 			if ( $allowedExtensionsAll ) {
 				$viewWikis = array();
 				foreach ( $wikis as $wiki ) {
-					$viewWikis[] = $skin->makeKnownLinkObj( $extTitle, htmlspecialchars( $wiki ), "version={$ts}&wiki={$wiki}" );
+					$viewWikis[] = Linker::linkKnown( $extTitle, htmlspecialchars( $wiki ), array(), array( 'version' => $ts, 'wiki' => $wiki ) );
 				}
-				$editExt .= ' (' . $wgLang->commaList( $viewWikis ) . ')';
+				$editExt .= ' (' . $lang->commaList( $viewWikis ) . ')';
 			}
 			$actions[] = $editExt;
 		}
@@ -227,35 +225,36 @@ class SpecialViewConfig extends ConfigurationPage {
 					array( 'type' => 'radio', 'name' => 'version', 'value' => $ts ),
 					$versionCheck ) );
 
-			$actions[] = $skin->link( $this->getTitle(), wfMsgHtml( 'configure-viewconfig-default-diff' ), array(), array( 'version' => $ts, 'diff' => 'default' ) );
+			$actions[] = Linker::link( $this->getTitle(), $this->msg( 'configure-viewconfig-default-diff' )->escaped(),
+				array(), array( 'version' => $ts, 'diff' => 'default' ) );
 		} else {
 			$buttons = '';
 		}
 
-		$comment = $arr['reason'] ? $skin->commentBlock( $arr['reason'] ) : '';
+		$comment = $arr['reason'] ? Linker::commentBlock( $arr['reason'] ) : '';
 
-		$action = $wgLang->commaList( $actions );
+		$action = $lang->commaList( $actions );
 
-		// That's a damn hack because some parmaters must replaced before and some after...
-		$msg = wfMsgExt( 'configure-viewconfig-line', array( 'parseinline' ), array( '$1', $datime, '$2', '$3', '$4', $date, $time, $username ) );
-		return Xml::tags( 'li', null, wfMsgReplaceArgs( $msg, array( $buttons, $userLink, $action, $comment ) ) )."\n";
+		$msg = $this->msg( 'configure-viewconfig-line' )->rawParams( $buttons )->params(
+			$datime )->rawParams( $userLink, $action, $comment )->params( $date, $time, $username )->parse();
+		return Xml::tags( 'li', null, $msg )."\n";
 	}
 
 	/**
 	 * Get a form to select the wiki to configure
 	 */
 	protected function getWikiSelectForm() {
-		global $wgConfigureWikis, $wgScript, $wgRequest;
+		global $wgConfigureWikis, $wgScript;
 		if ( $wgConfigureWikis === false || !$this->isUserAllowedInterwiki() )
 			return '';
-		$form = '<fieldset><legend>' . wfMsgHtml( 'configure-select-wiki' ) . '</legend>';
-		$form .= wfMsgExt( 'configure-select-wiki-view-desc', array( 'parse' ) );
+		$form = '<fieldset><legend>' . $this->msg( 'configure-select-wiki' )->escaped() . '</legend>';
+		$form .= $this->msg( 'configure-select-wiki-view-desc' )->parseAsBlock();
 		$form .= Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) );
-		$form .= Xml::hidden( 'title', $this->getTitle()->getPrefixedDBkey() );
-		$all = ( $wgRequest->getVal( 'view', 'all' ) == 'all' );
-		$form .= Xml::radioLabel( wfMsg( 'configure-select-wiki-view-all' ), 'view', 'all', 'wiki-all', $all );
+		$form .= Html::Hidden( 'title', $this->getTitle()->getPrefixedDBkey() );
+		$all = ( $this->getRequest()->getVal( 'view', 'all' ) == 'all' );
+		$form .= Xml::radioLabel( $this->msg( 'configure-select-wiki-view-all' )->text(), 'view', 'all', 'wiki-all', $all );
 		$form .= "<br />\n";
-		$form .= Xml::radioLabel( wfMsg( 'configure-select-wiki-view-specific' ), 'view', 'specific', 'wiki-specific', !$all ) . ' ';
+		$form .= Xml::radioLabel( $this->msg( 'configure-select-wiki-view-specific' )->text(), 'view', 'specific', 'wiki-specific', !$all ) . ' ';
 
 		if ( is_array( $wgConfigureWikis ) ) {
 			$selector = new XmlSelect( 'wiki', 'wiki', $this->mWiki );
@@ -267,7 +266,7 @@ class SpecialViewConfig extends ConfigurationPage {
 			$form .= Xml::input( 'wiki', false, $this->mWiki )."<br />";
 		}
 
-		$form .= Xml::submitButton( wfMsg( 'configure-select-wiki-submit' ) );
+		$form .= Xml::submitButton( $this->msg( 'configure-select-wiki-submit' )->text() );
 		$form .= '</form></fieldset>';
 		return $form;
 	}
@@ -276,11 +275,11 @@ class SpecialViewConfig extends ConfigurationPage {
 	 * Taken from PageHistory.php
 	 */
 	protected function getButton() {
-		return Xml::submitButton( wfMsg( 'compareselectedversions' ),
+		return Xml::submitButton( $this->msg( 'compareselectedversions' )->text(),
 				array(
 					'class'     => 'historysubmit',
-					'accesskey' => wfMsg( 'accesskey-compareselectedversions' ),
-					'title'     => wfMsg( 'tooltip-compareselectedversions' ),
+					'accesskey' => $this->msg( 'accesskey-compareselectedversions' )->text(),
+					'title'     => $this->msg( 'tooltip-compareselectedversions' )->text(),
 					)
 				);
 	}

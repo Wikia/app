@@ -9,9 +9,8 @@
 include_once 'extras.php';
 class ArtistRedirects extends SpecialPage
 {
-	function ArtistRedirects(){
-		wfLoadExtensionMessages('ArtistRedirects');
-		SpecialPage::SpecialPage("ArtistRedirects");
+	function __construct(){
+		parent::__construct("ArtistRedirects");
 	}
 
 	function execute($par){
@@ -27,9 +26,9 @@ class ArtistRedirects extends SpecialPage
 		global $wgRequest, $wgUser;
 
 		$tablePrefix = "";
-		
+
 		$wgOut->setPageTitle("Artist Redirects");
-		
+
 		$msg = "";
 
 		// Allow the cache to be manually cleared using the standard MediaWiki action=purge command.
@@ -48,7 +47,7 @@ class ArtistRedirects extends SpecialPage
 		// If there is no explicit offset and limit, then display links to the various paged results.
 		if((!isset($_GET['offset'])) || (!isset($_GET['limit']))){
 			$currCacheKey = $cacheKey."_index";
-			
+
 			GLOBAL $wgMemc;
 			$content = $wgMemc->get($currCacheKey);
 			if(!$content){

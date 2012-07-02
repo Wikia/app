@@ -13,10 +13,11 @@ class UserLoginForm extends LoginForm {
 	var $errParam = '';
 	var $mExtUser;
 
-	function UserLoginForm( &$request, $par = '' ) {
-		parent::LoginForm( $request, $par);
+	function load() {
+		parent::load();
+		$request = $this->mOverrideRequest;
 		if ( $request->getText( 'username', '' ) != '' ) {
-			$this->mName = $request->getText( 'username', '' );
+			$this->mUsername = $request->getText( 'username', '' );
 		}
 		if ( $request->getText( 'password', '' ) != '' ) {
 			$this->mPassword = $request->getText( 'password' );
@@ -40,6 +41,8 @@ class UserLoginForm extends LoginForm {
 		if ( $request->getVal( 'returnto', '' ) != '' ) {
 			$this->mReturnTo = $request->getVal( 'returnto' );
 		}
+
+		$this->wpUserBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
 	}
 
 	// add new account
@@ -50,7 +53,7 @@ class UserLoginForm extends LoginForm {
 
 		// send confirmation email
 		$userLoginHelper = F::build( 'UserLoginHelper' );
-		$result = $userLoginHelper->sendConfirmationEmail( $this->mName, $u );
+		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername, $u );
 		$this->mainLoginForm( $result['msg'], $result['result'] );
 
 		return $u;
@@ -64,7 +67,7 @@ class UserLoginForm extends LoginForm {
 		}
 
 		// reset password
-		$tempUser = TempUser::getTempUserFromName( $this->mName );
+		$tempUser = TempUser::getTempUserFromName( $this->mUsername );
 		$tempUser->setPassword('');
 		$tempUser->updateData();
 		$u = $tempUser->mapTempUserToUser( false, $u );
@@ -76,7 +79,7 @@ class UserLoginForm extends LoginForm {
 		// mail temporary password
 		$emailTextTemplate = F::app()->renderView( "UserLogin", "GeneralMail", array('language' => $u->getOption('language'), 'type' => 'account-creation-email') );
 		$result = $this->mailPasswordInternal( $u, false, 'usersignup-account-creation-email-subject', 'usersignup-account-creation-email-body', $emailTextTemplate );
-		if( WikiError::isError( $result ) ) {
+		if( !$result->isGood() ) {
 			$this->mainLoginForm( wfMsg( 'userlogin-error-mail-error', $result->getMessage() ) );
 			return false;
 		} else {
@@ -88,26 +91,26 @@ class UserLoginForm extends LoginForm {
 	// initial validation for username
 	public function initValidationUsername() {
 		// check empty username
-		if ( $this->mName == '' ) {
+		if ( $this->mUsername == '' ) {
 			$this->mainLoginForm( wfMsg( 'userlogin-error-noname' ), 'error', 'username' );
 			return false;
 		}
 
 		// check if exist in tempUser
-		if ( F::build('TempUser', array( $this->mName ), 'getTempUserFromName') ) {
+		if ( F::build('TempUser', array( $this->mUsername ), 'getTempUserFromName') ) {
 			$this->mainLoginForm( wfMsg( 'userlogin-error-userexists' ), 'error', 'username' );
 			return false;
 		}
 
 		// check username length
-		if( !User::isNotMaxNameChars($this->mName) ) {
+		if( !User::isNotMaxNameChars($this->mUsername) ) {
 			global $wgWikiaMaxNameChars;
 			$this->mainLoginForm( wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars ), 'error', 'username' );
 			return false;
 		}
 
 		// check valid username
-		if( !User::getCanonicalName( $this->mName, 'creatable' ) ) {
+		if( !User::getCanonicalName( $this->mUsername, 'creatable' ) ) {
 			$this->mainLoginForm( wfMsg( 'usersignup-error-symbols-in-username' ), 'error', 'username' );
 			return false;
 		}
@@ -159,7 +162,7 @@ class UserLoginForm extends LoginForm {
 		}
 
 		// check email format
-		if( !User::isValidEmailAddr( $this->mEmail ) ) {
+		if( !Sanitizer::validateEmail( $this->mEmail ) ) {
 			$this->mainLoginForm( wfMsg( 'userlogin-error-invalidemailaddress' ), 'error', 'email' );
 			return false;
 		}
@@ -207,7 +210,7 @@ class UserLoginForm extends LoginForm {
 		if ( $wgExternalAuthType ) {
 			$u = ExternalUser::addUser( $u, "", "", "" );
 			if ( is_object( $u ) ) {
-				$this->mExtUser = ExternalUser::newFromName( $this->mName );
+				$this->mExtUser = ExternalUser::newFromName( $this->mUsername );
 			}
 		} else {
 			$u->addToDatabase();

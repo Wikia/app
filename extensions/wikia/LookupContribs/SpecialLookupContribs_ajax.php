@@ -47,7 +47,7 @@ class LookupContribsAjax {
 		if ( !$wgUser->isLoggedIn() ) { return ""; }
 		if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
 			wfProfileOut( __METHOD__ );			
-			return Wikia::json_encode($result); 
+			return json_encode($result); 
 		}
 	
 		$oLC = new LookupContribsCore($username);
@@ -105,7 +105,7 @@ class LookupContribsAjax {
 		}
 		
 		wfProfileOut( __METHOD__ );			
-		return Wikia::json_encode($result); 
+		return json_encode($result); 
 	}
 	
 	/**

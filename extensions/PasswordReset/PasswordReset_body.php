@@ -8,17 +8,17 @@
  * Special page that allows sysops to reset local MW user's
  * passwords
  *
- * @addtogroup Extensions
+ * @ingroup Extensions
  * @author Tim Laqua <t.laqua@gmail.com>
  */
 class PasswordReset extends SpecialPage {
-	function PasswordReset() {
-		wfLoadExtensionMessages('PasswordReset');
-		SpecialPage::SpecialPage( "PasswordReset", "passwordreset" );
+	function __construct() {
+		
+		parent::__construct( "PasswordReset", "passwordreset" );
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgUser, $wgTitle;
+		global $wgRequest, $wgOut, $wgUser;
 
 		$this->setHeaders();
 
@@ -94,7 +94,7 @@ class PasswordReset extends SpecialPage {
 		return true;
 	}
 </script>" .
-			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgTitle->getLocalUrl(), 'id' => 'passwordresetform' ) ) .
+			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalUrl(), 'id' => 'passwordresetform' ) ) .
 			Xml::openElement( 'table', array( 'id' => 'mw-passwordreset-table' ) ) .
 			"<tr>
 				<td class='mw-label'>" . 
@@ -135,7 +135,7 @@ class PasswordReset extends SpecialPage {
 				"</td>
 			</tr>" .
 			Xml::closeElement( 'table' ) .
-			Xml::hidden( 'token', $wgUser->editToken() ) .
+			Html::Hidden( 'token', $wgUser->editToken() ) .
 			Xml::closeElement( 'form' )
 		);
 

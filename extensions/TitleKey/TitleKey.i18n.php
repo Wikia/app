@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension TitleKey.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -21,11 +22,18 @@ $messages['qqq'] = array(
 	'titlekey-desc' => 'Description of the [[mw:Extension:TitleKey|TitleKey extension]], providing a case-insensitive title prefix search plugin',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['af'] = array(
+	'titlekey-desc' => 'Titel voorvoegsel soek voorstel backend',
+);
+
 /** Aragonese (Aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
-	'titlekey-desc' => 'Socherenzias con prefixos en a busca por títols',
+	'titlekey-desc' => 'Socherencias con prefixos en a busca por títols',
 );
 
 /** Arabic (العربية)
@@ -49,6 +57,20 @@ $messages['ast'] = array(
 	'titlekey-desc' => 'Suxerencies de busca de prefixos de títulu',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'titlekey-desc' => 'Adın ilk hərflərinə görə ipucu axtarış sürgüsü',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'titlekey-desc' => 'Исемдең тәүге хәрефтәре буйынса эҙләү тәҡдимдәре ҡоралы',
+);
+
 /** Southern Balochi (بلوچی مکرانی)
  * @author Mostafadaneshvar
  */
@@ -56,12 +78,13 @@ $messages['bcc'] = array(
 	'titlekey-desc' => 'عنوان پیشوند گردگ پیشنهاد ترینگ',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Red Winged Duck
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
-	'titlekey-desc' => 'Праграмная забесьпячэньне для падказак па першых літарах назвы ў пошуку',
+	'titlekey-desc' => 'Праграмная забесьпячэньне для пошукавых падказак па першых літарах назвы',
 );
 
 /** Breton (Brezhoneg)
@@ -78,6 +101,13 @@ $messages['bs'] = array(
 	'titlekey-desc' => 'Pozadinski proces pri traženju po naslovima',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'titlekey-desc' => 'Лохуш цlера дуьххьара элпца дош хьагойтуш болу гlирс',
+);
+
 /** Czech (Česky)
  * @author Mormegil
  */
@@ -85,11 +115,19 @@ $messages['cs'] = array(
 	'titlekey-desc' => 'Implementace našeptávače hledajícího podle počátku názvu',
 );
 
+/** Danish (Dansk)
+ * @author Froztbyte
+ */
+$messages['da'] = array(
+	'titlekey-desc' => 'Bagstykke til søgning efter titelpræfiks',
+);
+
 /** German (Deutsch)
+ * @author Kghbln
  * @author Raimond Spekking
  */
 $messages['de'] = array(
-	'titlekey-desc' => 'Hintergrundprozess für die Titelsuche',
+	'titlekey-desc' => 'Ermöglicht einen Hintergrundprozess für die Titelsuche',
 );
 
 /** Zazaki (Zazaki)
@@ -278,7 +316,7 @@ $messages['ko'] = array(
 	'titlekey-desc' => '문서 제목의 접두어로 검색어를 제안',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -334,6 +372,13 @@ $messages['ms'] = array(
 	'titlekey-desc' => 'Atur cara untuk cadangan gelintar bagi awalan tajuk',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'titlekey-desc' => 'Bakstykke for søk etter tittelprefiks',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -352,13 +397,6 @@ $messages['nl'] = array(
  * @author Frokor
  */
 $messages['nn'] = array(
-	'titlekey-desc' => 'Bakstykke for søk etter tittelprefiks',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
 	'titlekey-desc' => 'Bakstykke for søk etter tittelprefiks',
 );
 
@@ -397,6 +435,13 @@ $messages['pt-br'] = array(
 	'titlekey-desc' => 'Motor de sugestão de pesquisa por prefixo de título',
 );
 
+/** Romanian (Română)
+ * @author AdiJapan
+ */
+$messages['ro'] = array(
+	'titlekey-desc' => 'Mecanism de sugestie de căutare prin prefixul titlului',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -411,7 +456,14 @@ $messages['ru'] = array(
 	'titlekey-desc' => 'Движок поисковых подсказок по первым буквам названия',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'titlekey-desc' => 'Імлементація нашепкавача глядаючого за початком назвы',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -425,14 +477,21 @@ $messages['sk'] = array(
 	'titlekey-desc' => 'Backend pre návrh prefixového vyhľadávania názvu stránky',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'titlekey-desc' => 'Podpora predlogom iskanja strani po korenu',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Millosh
  */
 $messages['sr-ec'] = array(
 	'titlekey-desc' => 'Позадинска машина за претрагу префикса наслова.',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -502,7 +561,7 @@ $messages['vi'] = array(
 	'titlekey-desc' => 'Bộ giúp đỡ tìm kiếm theo tiền tố của tựa đề',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(

@@ -23,7 +23,7 @@ class RedirectHooks {
 	private static function addRedirect( $hookName ) {
 		global $wgOut;
 
-		wfLoadExtensionMessages( 'Redirect' );
+		
 
 		$targetPage = wfMsgForContent( 'redirect-' . $hookName );
 

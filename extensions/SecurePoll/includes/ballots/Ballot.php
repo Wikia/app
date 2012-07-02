@@ -97,6 +97,8 @@ abstract class SecurePoll_Ballot {
 			return new SecurePoll_ChooseBallot( $context, $election );
 		case 'radio-range':
 			return new SecurePoll_RadioRangeBallot( $context, $election );
+		case 'radio-range-comment':
+			return new SecurePoll_RadioRangeCommentBallot( $context, $election );
 		default:
 			throw new MWException( "Invalid ballot type: $type" );
 		}
@@ -118,7 +120,6 @@ abstract class SecurePoll_Ballot {
 	 * @return string
 	 */
 	function getForm( $prevStatus = false ) {
-		global $wgParser, $wgTitle;
 		$questions = $this->election->getQuestions();
 		if ( $this->election->getProperty( 'shuffle-questions' ) ) {
 			shuffle( $questions );
@@ -175,6 +176,53 @@ abstract class SecurePoll_Ballot {
 	 */
 	function formatStatus( $status ) {
 		return $status->sp_getHTML( $this->usedErrorIds );
+	}
+	
+	/**
+	 * Get the way the voter cast their vote previously, if we're allowed
+	 * to show that information.
+	 * @return false on failure or if cast ballots are hidden, or the output
+	 *     of unpackRecord().
+	 */
+	function getCurrentVote(){
+		
+		if( !$this->election->getOption( 'show-change' ) ){
+			return false;
+		}
+			
+		$auth = $this->election->getAuth();
+
+		# Get voter from session
+		$voter = $auth->getVoterFromSession( $this->election );
+		# If there's no session, try creating one.
+		# This will fail if the user is not authorised to vote in the election
+		if ( !$voter ) {
+			$status = $auth->newAutoSession( $this->election );
+			if ( $status->isOK() ) {
+				$voter = $status->value;
+			} else {
+				return false;
+			}
+		}
+		
+		$store = $this->context->getStore();
+		$status = $store->callbackValidVotes(
+			$this->election->info['id'],
+			array( $this, 'getCurrentVoteCallback' ),
+			$voter->getId()
+		);
+		if( !$status->isOK() ){
+			return false;
+		}
+		
+		return isset( $this->currentVote )
+			? $this->unpackRecord( $this->currentVote )
+			: false;
+	}
+	
+	function getCurrentVoteCallback( $store, $record ){
+		$this->currentVote = $record;
+		return Status::newGood();
 	}
 }
 

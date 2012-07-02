@@ -56,13 +56,12 @@ function WikiaPhotoGalleryAjax() {
 
 	if (method_exists('WikiaPhotoGalleryAjax', $method)) {
 		wfProfileIn(__METHOD__);
-		wfLoadExtensionMessages('WikiaPhotoGallery');
 
 		$data = WikiaPhotoGalleryAjax::$method();
 
 		if (is_array($data)) {
 			// send array as JSON
-			$json = Wikia::json_encode($data);
+			$json = json_encode($data);
 			$response = new AjaxResponse($json);
 			$response->setContentType('application/json; charset=utf-8');
 		}

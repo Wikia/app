@@ -28,7 +28,7 @@
  * * Add this line at the end of your LocalSettings.php file :
  * require_once "$IP/extensions/QPoll/qp_user.php";
  *
- * @version 0.6.4
+ * @version 0.8.0a
  * @link http://www.mediawiki.org/wiki/Extension:QPoll
  * @author QuestPC <questpc@rambler.ru>
  */
@@ -37,14 +37,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( "This file is part of the QPoll extension. It is not a valid entry point.\n" );
 }
 
-define( 'QP_CSS_ERROR_COLOR1' , "LightYellow" );
-define( 'QP_CSS_ERROR_COLOR2', "#D700D7" );
-define( 'QP_CSS_ERROR_STYLE', 'background-color: ' . QP_CSS_ERROR_COLOR1 . ';' );
-
-define( 'QP_ERROR_MISSED_TITLE', 1 );
-define( 'QP_ERROR_INVALID_ADDRESS', 2 );
-
-define( 'QP_MAX_TEXT_ANSWER_LENGTH', 1024 );
+# interpretation scripts namespace
+define( 'NS_QP_INTERPRETATION', 800 );
+# talk namespace is always + 1
+define( 'NS_QP_INTERPRETATION_TALK', 801 );
 
 qp_Setup::init();
 
@@ -54,63 +50,264 @@ qp_Setup::init();
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'QPoll',
-	'version' => '0.6.4',
-	'author' => 'QuestPC',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:QPoll',
-	'description' => 'Allows creation of polls',
+	'version' => '0.8.0a',
+	'author' => 'Dmitriy Sintsov',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:QPoll',
 	'descriptionmsg' => 'qp_desc',
 );
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'QPoll results page',
-	'version' => '0.6.4',
-	'author' => 'QuestPC',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:QPoll',
-	'description' => 'QPoll extension [[Special:PollResults]] page for viewing results of the polls',
+	'version' => '0.8.0a',
+	'author' => 'Dmitriy Sintsov',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:QPoll',
 	'descriptionmsg' => 'qp_desc-sp',
 );
 
+if ( isset( $wgResourceModules ) ) {
+	$wgResourceModules['ext.qpoll'] = array(
+		'scripts' => 'clientside/qp_user.js',
+		'styles' => 'clientside/qp_user.css',
+		'localBasePath' => dirname( __FILE__ ),
+		'remoteExtPath' => 'QPoll'
+	);
+	$wgResourceModules['ext.qpoll.special.pollresults'] = array(
+		'styles' => 'clientside/qp_results.css',
+		'localBasePath' => dirname( __FILE__ ),
+		'remoteExtPath' => 'QPoll'
+	);
+}
+
+/**
+ * Interpretation script debug function
+ * @param $args  array $args[0] - string message
+ *                     $args[1] - variable to dump (optional)
+ *                     $args[2] - bool true / false enable / disable output (optional)
+ */
+function qp_debug( /* $args */ ) {
+	$args = func_get_args();
+	if ( count( $args ) < 1 ) {
+		return;
+	}
+	$message = strval( $args[0] );
+	$debug = true;
+	if ( count( $args ) > 2 ) {
+		$debug = $args[2];
+	}
+	if ( $debug !== true ) {
+		return;
+	}
+	if ( count( $args ) > 1 ) {
+		ob_start();
+		var_dump( $args[1] );
+		$var_value = ob_get_contents();
+		ob_end_clean();
+		$message = "{$message} = {$var_value}\n";
+	}
+	wfDebugLog( 'qpoll', $message );
+}
+
+/**
+ * Interpretation script text lowercase function (according to content language)
+ */
+function qp_lc( $text ) {
+	global $wgContLang;
+	return $wgContLang->lc( $text );
+}
+
+/**
+ * Returns either scalar or associative array with structured interpretation
+ * of the specified poll for the current user
+ *
+ * @return  scalar/array when success; null when there is no structured interpretation
+ */
+function qp_getStructuredInterpretation( $poll_address ) {
+	$pollStore = qp_PollStore::newFromAddr( $poll_address );
+	if ( !( $pollStore instanceof qp_PollStore ) || $pollStore->pid === null ) {
+		return null;
+	}
+	$username = qp_Setup::getCurrUserName();
+	$pollStore->loadQuestions();
+	$pollStore->setLastUser( $username );
+	if ( $pollStore->interpResult->structured === '' ) {
+		return null;
+	}
+	return unserialize( $pollStore->interpResult->structured );
+}
+
+/**
+ * Extension's global settings and initializiers
+ * should be purely static and preferrably have no constructor
+ */
 class qp_Setup {
+
+	# internal unique error codes
+	const NO_ERROR = 0;
+	const ERROR_MISSED_TITLE = 1;
+	const ERROR_INVALID_ADDRESS = 2;
+
+	# unicode entity used to display selected checkboxes and radiobuttons in
+	# result views at Special:Pollresults page
+	const RESULTS_CHECK_SIGN = '&#9734;';
+
+	# matches string which contains integer number in range 0..9999
+	const PREG_NON_NEGATIVE_INT4_MATCH = '/^(?:\d|[1-9]\d{1,3})$/';
+	# matches string which contains integer number in range 1..9999
+	const PREG_POSITIVE_INT4_MATCH = '/^[1-9]\d{0,3}$/';
+
+	## separators of lines / values for question type="text"
+	#    these should not be the same and should not appear in valid text;
+	# characters that are used to separate values of select multiple
+	const SELECT_MULTIPLE_VALUES_SEPARATOR = "\r";
+	# characters that are used to separate lines of textarea
+	const TEXTAREA_LINES_SEPARATOR = "\n";
+
+	static $pollTag = 'qpoll';
+	static $interpTag = 'qpinterpret';
+	# parser $interpTag hook output market list
+	static $markerList = array();
 
 	static $ExtDir; // filesys path with windows path fix
 	static $ScriptPath; // apache virtual path
 	static $messagesLoaded = false; // check whether the extension's localized messages are loaded
-	static $article; // Article instance we got from hook parameter
-	static $user; // User instance we got from hook parameter
 
-	static function entities( &$s ) {
-		return htmlentities( $s, ENT_COMPAT, 'UTF-8' );
+	# current context
+	static $output; // OutputPage instance recieved from hook
+	static $article; // Article instance recieved from hook
+	static $title; // Title instance recieved from hook
+	static $user; // User instance recieved from hook
+	static $request; // WebRequest instance recieved from hook
+
+	# single instance for extracting attributes from proposal lines
+	static $propAttrs = null;
+
+	/**
+	 * The map of question 'type' attribute value to the question's ctrl / view / subtype.
+	 */
+	static $questionTypes = array(
+		'[]' => array(
+			'ctrl' => 'qp_TabularQuestion',
+			'view' => 'qp_TabularQuestionView',
+			'mType' => 'multipleChoice'
+		),
+		'()' => array(
+			'ctrl' => 'qp_TabularQuestion',
+			'view' => 'qp_TabularQuestionView',
+			'mType' => 'singleChoice'
+		),
+		'unique()' => array(
+			'ctrl' => 'qp_TabularQuestion',
+			'view' => 'qp_TabularQuestionView',
+			'mType' => 'singleChoice',
+			'mSubType' => 'unique'
+		),
+		'mixed' => array(
+			'ctrl' => 'qp_MixedQuestion',
+			'view' => 'qp_TabularQuestionView',
+			'mType' => 'mixedChoice'
+		),
+		'text' => array(
+			'ctrl' => 'qp_TextQuestion',
+			'view' => 'qp_TextQuestionView',
+			'mType' => 'textQuestion'
+		)
+	);
+
+	# interpretation script namespaces with their canonical names
+	static $interpNamespaces = array(
+		NS_QP_INTERPRETATION => 'Interpretation',
+		NS_QP_INTERPRETATION_TALK => 'Interpretation_talk'
+	);
+
+	/**
+	 * Stores interpretation script line numbers separately for
+	 * every script language.
+	 * key is value of <qpinterpret> xml tag 'lang' attribute, value is source line counter
+	 */
+	static $scriptLinesCount = array();
+
+	/**
+	 * default configuration settings
+	 * (can be modified in LocalSettings.php after require_once(...) )
+	 */
+	# disable global showresults attribute
+	public static $global_showresults = 0;
+	# disable appending of 'X-Forwarded-For' client address chain to the anonymous username (in the form of 'proxy_IP/client_IP')
+	public static $anon_forwarded_for = false;
+	# enable parser and article caches control for better performance (somewhat experimental, may break compatibility; checked with MW v1.15, v1.16)
+	public static $cache_control = false;
+	# number of submit attempts allowed (0 or less for infinite number)
+	public static $max_submit_attempts = 0;
+	/**
+	 * Maximal length of table row is tuned for
+	 * MySQL ROW_FORMAT=REDUNDANT, ROW_FORMAT=COMPACT .
+	 * Feel free to increase the value for
+	 * ROW_FORMAT=DYNAMIC, ROW_FORMAT=COMPRESSED ,
+	 * however make sure that the whole row will fit into DB page.
+	 * Otherwise the DB performance may decrease.
+	 */
+	public static $field_max_len = array(
+		# 'dependance' is not longer than DB field size (65535),
+		# otherwise checking of dependance chain will fail:
+		'dependance' => 768,
+		# limited due to performance improvements (to fit into DB row),
+		# and also to properly truncate UTF-8 tails:
+		'common_question' => 768,
+		# limited to maximal length of DB field
+		'question_name' => 255,
+		# 'proposal_text' is not longer than DB field size (65535),
+		# otherwise unserialization of question type="text" proposal parts and
+		# category fields will be invalid:
+		'proposal_text' => 1536,
+		# 'text_answer' is not longer than DB field size (65535),
+		# otherwise question type="text" user-selected select multiple values
+		# may be lost:
+		'text_answer' => 768,
+		# limited due to performance improvements (to fit into DB row),
+		# and also to properly truncate UTF-8 tails:
+		'long_interpretation' => 768,
+		# 'serialized_interpretation' is not longer than DB field size (65535),
+		# otherwise unserialization of structured answer will be invalid:
+		'serialized_interpretation' => 65535
+	);
+	# whether to show short, long, structured interpretation results to end user
+	public static $show_interpretation = array(
+		'error' => true,
+		'short' => true,
+		'long' => true,
+		'structured' => false
+	);
+	/* end of default configuration settings */
+
+	# unicode character used to display selected checkboxes and radiobuttons in
+	# result views at Special:Pollresults page
+	static $resultsCheckCode = '+';
+
+	public static function entities( $s ) {
+		return htmlentities( $s, ENT_QUOTES, 'UTF-8' );
 	}
 
-	static function specialchars( &$s ) {
-		return htmlspecialchars( $s, ENT_COMPAT, 'UTF-8' );
+	public static function specialchars( $s ) {
+		return htmlentities( $s, ENT_QUOTES, 'UTF-8' );
 	}
 
-	static function coreRequirements() {
-		$required_classes_and_methods = array(
-			array( 'Article' => 'doPurge' ),
-			array( 'Linker' => 'link' ),
-			array( 'OutputPage' => 'isPrintable' ),
-			array( 'Parser' => 'getTitle' ),
-			array( 'Parser' => 'setHook' ),
-			array( 'Parser' => 'recursiveTagParse' ),
-			array( 'ParserCache' => 'getKey' ),
-			array( 'ParserCache' => 'singleton' ),
-			array( 'Title' => 'getArticleID' ),
-			array( 'Title' => 'getPrefixedText' ),
-			array( 'Title' => 'makeTitle' ),
-			array( 'Title' => 'makeTitleSafe' ),
-			array( 'Title' => 'newFromID' )
-		);
-		foreach ( $required_classes_and_methods as &$check ) {
-			list( $object, $method ) = each( $check );
-			if ( !method_exists( $object, $method ) ) {
-				die( "QPoll extension requires " . $object . "::" . $method . " method to be available.<br />\n" .
-					"Your version of MediaWiki is incompatible with this extension.\n" );
+	public static function entity_decode( $s ) {
+		return html_entity_decode( $s, ENT_QUOTES, 'UTF-8' );
+	}
+
+	/**
+	 * Autoload classes from the map provided
+	 */
+	static function autoLoad( array $map ) {
+		global $wgAutoloadClasses;
+		foreach ( $map as $path => &$classes ) {
+			if ( is_array( $classes ) ) {
+				foreach ( $classes as &$className ) {
+					$wgAutoloadClasses[$className] = self::$ExtDir . '/' . $path;
+				}
+			} else {
+				$wgAutoloadClasses[$classes] = self::$ExtDir . '/' . $path;
 			}
-		}
-		if ( !defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-			die( "QPoll extension requires ParserFirstCallInit hook.\nPlease upgrade your MediaWiki installation first.\n" );
 		}
 	}
 
@@ -119,277 +316,162 @@ class qp_Setup {
 	 */
 	static function init() {
 		global $wgScriptPath;
-		global $wgAutoloadClasses;
 		global $wgExtensionMessagesFiles;
 		global $wgSpecialPages;
 		global $wgHooks;
-		self::coreRequirements();
+		global $wgExtraNamespaces, $wgNamespaceProtection;
+		global $wgGroupPermissions;
+		global $wgDebugLogGroups;
+
+		# local / remote path
 		self::$ExtDir = str_replace( "\\", "/", dirname( __FILE__ ) );
 		$dirs = explode( '/', self::$ExtDir );
 		$top_dir = array_pop( $dirs );
 		self::$ScriptPath = $wgScriptPath . '/extensions' . ( ( $top_dir == 'extensions' ) ? '' : '/' . $top_dir );
-		$wgExtensionMessagesFiles['QPoll'] = self::$ExtDir . '/qp_i18n.php';
-		$wgAutoloadClasses['PollResults'] = self::$ExtDir . '/qp_results.php';
-		$wgAutoloadClasses['qp_Question'] = self::$ExtDir . '/qp_question.php';
-		$wgAutoloadClasses['qp_QuestionStats'] = self::$ExtDir . '/qp_question.php';
-		$wgAutoloadClasses['qp_PollStore'] = self::$ExtDir . '/qp_pollstore.php';
-		$wgAutoloadClasses['qp_QuestionData'] = self::$ExtDir . '/qp_pollstore.php';
-		$wgAutoloadClasses['qp_QueryPage'] = self::$ExtDir . '/qp_results.php';
-		// TODO: Use the new technique for i18n of special page aliases
-		$wgSpecialPages['PollResults'] = array( 'PollResults' );
-		// TODO: Use the new technique for i18n of magic words
-		$wgHooks['LanguageGetMagic'][]       = 'qp_Setup::languageGetMagic';
-		$wgHooks['MediaWikiPerformAction'][] = 'qp_Setup::mediaWikiPerformAction';
-		$wgHooks['ParserFirstCallInit'][] = 'qp_Setup::parserFirstCallInit';
-		$wgHooks['LoadAllMessages'][] = 'qp_Setup::loadMessages';
-	}
 
-	static function loadMessages() {
-		if ( !self::$messagesLoaded ) {
-			self::$messagesLoaded = true;
-			wfLoadExtensionMessages( 'QPoll' );
-		}
-		return true;
-	}
+		self::$resultsCheckCode = self::entity_decode( self::RESULTS_CHECK_SIGN );
 
-	static function ParserFunctionsWords( $lang ) {
-		$words = array();
-		$words[ 'en' ] = array( 'qpuserchoice' => array( 0, 'qpuserchoice' ) );
-		# English is used as a fallback, and the English synonyms are
-		# used if a translation has not been provided for a given word
-		return ( $lang == 'en' || !array_key_exists( $lang, $words ) )
-			? $words[ 'en' ]
-			: array_merge( $words[ 'en' ], $words[ $lang ] );
-	}
+		# language files
+		# extension messages
+		$wgExtensionMessagesFiles['QPoll'] = self::$ExtDir . '/i18n/qp.i18n.php';
+		# localized namespace names
+		$wgExtensionMessagesFiles['QPollNamespaces'] = self::$ExtDir . '/i18n/qp.namespaces.php';
+		# localized special page titles and magic words.
+		$wgExtensionMessagesFiles['QPollAlias'] = self::$ExtDir . '/i18n/qp.alias.php';
+		$wgExtensionMessagesFiles['QPollMagic'] = self::$ExtDir . '/i18n/QPoll.i18n.magic.php';
 
-	static function languageGetMagic( &$magicWords, $langCode ) {
-		foreach ( self::ParserFunctionsWords( $langCode ) as $word => $trans )
-			$magicWords [$word ] = $trans;
-		return true;
-	}
+		# extension setup, hooks handling and content transformation
+		self::autoLoad( array(
+			'qp_user.php' => __CLASS__,
+			'includes/qp_functionshook.php' => 'qp_FunctionsHook',
+			'includes/qp_renderer.php' => 'qp_Renderer',
+			'includes/qp_xlswriter.php' => 'qp_XlsWriter',
 
-	static function clearCache() {
-		$parserCache = ParserCache::singleton();
-		$key = $parserCache->getKey( self::$article, self::$user );
-		$parserCache->mMemc->delete( $key );
-		self::$article->doPurge();
-	}
+			## DB schema updater
+			'maintenance/qp_schemaupdater.php' => 'qp_SchemaUpdater',
 
-	static function mediaWikiPerformAction( $output, $article, $title, $user, $request, $wiki ) {
-		global $wgCookiePrefix;
-		global $qp_enable_showresults;
-		self::$article = $article;
-		self::$user = $user;
-		# setup proper integer global showresults level
-		if ( isset( $qp_enable_showresults ) ) {
-			if ( !is_int( $qp_enable_showresults ) ) {
-				# convert from older v0.5 boolean value
-				$qp_enable_showresults = (int) (boolean) $qp_enable_showresults;
+			## controllers (polls and questions derived from separate abstract classes)
+			# polls
+			'ctrl/poll/qp_abstractpoll.php' => 'qp_AbstractPoll',
+			'ctrl/poll/qp_poll.php' => 'qp_Poll',
+			'ctrl/poll/qp_pollstats.php' => 'qp_PollStats',
+			# questions
+			'ctrl/question/qp_abstractquestion.php' => 'qp_AbstractQuestion',
+			'ctrl/question/qp_stubquestion.php' => 'qp_StubQuestion',
+			'ctrl/question/qp_tabularquestion.php' => 'qp_TabularQuestion',
+			'ctrl/question/qp_mixedquestion.php' => 'qp_MixedQuestion',
+			'ctrl/question/qp_textquestion.php' => array( 'qp_TextQuestionOptions', 'qp_TextQuestion' ),
+			'ctrl/question/qp_questionstats.php' => 'qp_QuestionStats',
+			# proposal attributes
+			'ctrl/qp_propattrs.php' => 'qp_PropAttrs',
+			# interpretation results
+			'ctrl/qp_interpresult.php' => 'qp_InterpResult',
+
+			# generic view
+			'view/qp_abstractview.php' => 'qp_AbstractView',
+			## poll and question views are derived from single generic class
+			## isCompatibleController() method is used to check linked controllers (bugcheck)
+			# polls
+			'view/poll/qp_abstractpollview.php' => 'qp_AbstractPollView',
+			'view/poll/qp_pollview.php' => 'qp_PollView',
+			'view/poll/qp_pollstatsview.php' => 'qp_PollStatsView',
+			# questions
+			'view/question/qp_stubquestionview.php' => 'qp_StubQuestionView',
+			'view/question/qp_tabularquestionview.php' => 'qp_TabularQuestionView',
+			'view/question/qp_textquestionview.php' => 'qp_TextQuestionView',
+			'view/question/qp_questionstatsview.php' => 'qp_QuestionStatsView',
+			## proposal views are derived from their own base abstract class
+			# proposals
+			'view/proposal/qp_stubquestionproposalview.php' => 'qp_StubQuestionProposalView',
+			'view/proposal/qp_tabularquestionproposalview.php' => 'qp_TabularQuestionProposalView',
+			'view/proposal/qp_questionstatsproposalview.php' => 'qp_QuestionStatsProposalView',
+			'view/proposal/qp_textquestionproposalview.php' => 'qp_TextQuestionProposalView',
+			## question data views are used to display question results in Special:PollResults page
+			'view/results/qp_questiondataresults.php' => 'qp_QuestionDataResults',
+			'view/results/qp_textquestiondataresults.php' => 'qp_TextQuestionDataResults',
+			## exporting results into XLS format
+			'view/xls/qp_xlspoll.php' => 'qp_XlsPoll',
+			'view/xls/qp_xlstabularquestion.php' => 'qp_XlsTabularQuestion',
+			'view/xls/qp_xlstextquestion.php' => 'qp_XlsTextQuestion',
+			# interpretation results
+			'view/qp_interpresultview.php' => 'qp_InterpResultView',
+
+			## models/storage
+			# poll
+			'model/qp_pollstore.php' => 'qp_PollStore',
+			## memory cache / database storage for poll / question / category / proposal
+			## descriptions
+			'model/cache/qp_pollcache.php' => 'qp_PollCache',
+			'model/cache/qp_questioncache.php' => 'qp_QuestionCache',
+			'model/cache/qp_categorycache.php' => 'qp_CategoryCache',
+			'model/cache/qp_proposalcache.php' => 'qp_ProposalCache',
+			# question storage; qp_TextQuestionData is very small, thus kept in the same file;
+			'model/qp_questiondata.php' => array( 'qp_QuestionData', 'qp_TextQuestionData' ),
+			# collection of the questions
+			'model/qp_question_collection.php' => 'qp_QuestionCollection',
+
+			# special pages
+			'specials/qp_special.php' => array( 'qp_SpecialPage', 'qp_QueryPage' ),
+			'specials/qp_results.php' => 'PollResults',
+			'specials/qp_webinstall.php' => array( 'qp_WebInstall' ),
+
+			# interpretation of answers
+			'interpretation/qp_interpret.php' => 'qp_Interpret',
+			'interpretation/qp_eval.php' => 'qp_Eval'
+		) );
+
+		$wgSpecialPages['PollResults'] = 'PollResults';
+		$wgSpecialPages['QPollWebInstall'] = 'qp_WebInstall';
+		# instantiating fake instance for PHP < 5.2.3, which does not support 'Class::method' type of callbacks
+		$wgHooks['MediaWikiPerformAction'][] =
+		$wgHooks['ParserFirstCallInit'][] =
+		$wgHooks['ParserAfterTidy'][] =
+		$wgHooks['CanonicalNamespaces'][] = new qp_Setup;
+		$wgHooks['LoadExtensionSchemaUpdates'][] = new qp_SchemaUpdater;
+
+		if ( self::mediaWikiVersionCompare( '1.17' ) ) {
+			# define namespaces for the interpretation scripts and their talk pages
+			# used only for non-localized namespace names in MW < 1.17
+			if ( !is_array( $wgExtraNamespaces ) ) {
+				$wgExtraNamespaces = array();
 			}
-			if ( $qp_enable_showresults < 0 ) {
-				$qp_enable_showresults = 0;
+			foreach ( self::$interpNamespaces as $ns_idx => $canonical_name ) {
+				if ( isset( $wgExtraNamespaces[$ns_idx] ) ) {
+					die( "QPoll requires namespace index {$ns_idx} which is already used by another extension. Either disable another extension or change the namespace index." );
+				}
 			}
-			if ( $qp_enable_showresults > 2 ) {
-				$qp_enable_showresults = 2;
+			foreach ( self::$interpNamespaces as $ns_idx => $canonical_name ) {
+				$wgExtraNamespaces[$ns_idx] = $canonical_name;
 			}
-		} else {
-			$qp_enable_showresults = 0;
 		}
-		if ( isset( $_COOKIE[$wgCookiePrefix . 'QPoll'] ) ) {
-			$request->response()->setCookie( 'QPoll', '', time() - 86400 ); // clear cookie
-			self::clearCache();
-		} elseif ( $request->getVal( 'pollId' ) !== null ) {
-			self::clearCache();
+
+		foreach ( self::$interpNamespaces as $ns_idx => $canonical_name ) {
+			$wgNamespaceProtection[$ns_idx] = array( 'editinterpretation' );
 		}
-		return true;
+		# groups which has permission to access poll results by default
+		$wgGroupPermissions['sysop']['pollresults'] = true;
+		$wgGroupPermissions['bureaucrat']['pollresults'] = true;
+		$wgGroupPermissions['polladmin']['pollresults'] = true;
+		# groups which can edit interpretation scripts by default
+		# please minimize the number of groups as low as you can
+		# that is security measure against inserting of malicious code
+		# into the source of interpretation scripts
+		$wgGroupPermissions['sysop']['editinterpretation'] = true;
+		$wgGroupPermissions['bureaucrat']['editinterpretation'] = true;
+
+		$wgDebugLogGroups['qpoll'] = 'qpoll_debug_log.txt';
+
 	}
 
-	/**
-	 * Register the extension with the WikiText parser.
-	 */
-	static function parserFirstCallInit() {
-		global $wgParser;
-		global $wgExtensionCredits;
-		global $wgQPollFunctionsHook;
-		global $wgContLang;
-		global $wgJsMimeType, $wgOut;
-		# Ouput the style and the script to the header once for all.
-		$head  = '<style type="text/css">' . "\n";
-		$head .= '.qpoll .fatalerror { border: 1px solid gray; padding: 4px; ' . QP_CSS_ERROR_STYLE . ' }' . "\n";
-		$head .= '</style>' . "\n";
-		$head .= '<script type="' . $wgJsMimeType . '" src="' . self::$ScriptPath . '/qp_user.js"></script>' . "\n";
-		$wgOut->addScript( $head );
-		$wgOut->addExtensionStyle( self::$ScriptPath . '/qp_user.css' );
-		if ( $wgContLang->isRTL() ) {
-			$wgOut->addExtensionStyle( self::$ScriptPath . '/qp_user_rtl.css' );
-		}
-		# setup tag hook
-		$wgParser->setHook( "qpoll", "qp_Setup::renderPoll" );
-		$wgQPollFunctionsHook = new qp_FunctionsHook();
-		# setup function hook
-		$wgParser->setFunctionHook( 'qpuserchoice', array( &$wgQPollFunctionsHook, 'qpuserchoice' ), SFH_OBJECT_ARGS );
-		return true;
+	static function mediaWikiVersionCompare( $version, $operator = '<' ) {
+		global $wgVersion;
+		return version_compare( $wgVersion, $version, $operator );
 	}
 
-	/**
-	 * Call the poll parser on an input text.
-	 *
-	 * @param  $input				Text between <qpoll> and </qpoll> tags, in QPoll syntax.
-	 * @param  $argv				An array containing any arguments passed to the extension
-	 * @param  &$parser				The wikitext parser.
-	 *
-	 * @return 						An HTML poll.
-	 */
-
-	/* @param  $input				Text between <qpoll> and </qpoll> tags, in QPoll syntax. */
-	static function renderPoll( $input, $argv, $parser ) {
-		if ( array_key_exists( 'address', $argv ) ) {
-			$qpoll = new qp_PollStats( $argv, $parser );
-		} else {
-			$qpoll = new qp_Poll( $argv, $parser );
-		}
-		return $qpoll->parsePoll( $input );
-	}
-
-}
-
-/***
-	* a poll stub which cannot process and render itself
-	* to process and render itself, real Poll should extend this class to implement it's own:
-		$this->getPollStore()
-		$this->parseInput()
-		$this->generateOutput()
- ***/
-class qp_AbstractPoll {
-
-	static $skin;
-	static $sOrderId = 0; // order of polls on the page (used for sorting of the output)
-	static $sPrevPollIDs = Array(); // used to check uniqueness of PollId on the page
-	static $messagesLoaded = false; // check whether the extension localized messages are loaded
-
-	var $parser; // parser for parsing tags content
-	var $username;
-
-	# an ID of the poll on current page (used in declaration/voting mode)
-	var $mPollId = null;
-	var $mOrderId = null; // order_id in DB that will used to sort out polls on the Special:PollResults statistics page
-	# poll address of the poll to display statistics (used in statistical mode)
-	var $pollAddr = null;
-	var $mQuestionId = null; // the unique index number of the question in the current poll (used to instantiate the questions)
-
-	var $mState = ''; // current state of poll parsing (no error)
-	var $dependsOn = ''; // optional address of the poll which must be answered first
-	var $mBeingCorrected = false; // true, when the poll is posted (answered)
-
-	# the following showresults types are currently available:
-	# 0 - none; 1 - percents; 2 - bars
-	# may contain extra options (color, width) for selected display type
-	var $showResults = Array( 'type' => 0 ); // hide showResults by default
-
-	// qp_pollStore instance that will be used to transfer poll data from/to DB
-	var $pollStore = null;
-
-	/**
-	 * Constructor
-	 *
-	 * @public
-	 */
-	function __construct( $argv, &$parser ) {
-		global $wgUser, $wgRequest, $wgLanguageCode;
-		global $qp_enable_showresults;
-		$this->parser = &$parser;
-		$this->mRequest = &$wgRequest;
-		$this->mResponse = $wgRequest->response();
-		# Determine which messages will be used, according to the language.
-		self::loadMessages();
-		# load current skin
-		if ( self::$skin === null ) {
-			self::$skin = $wgUser->getSkin();
-		}
-		# reset the unique index number of the question in the current poll (used to instantiate the questions)
-		$this->mQuestionId = 0; // ( correspons to 'question_id' DB field )
-		$this->username = self::currentUserName();
-
-		# *** get visual style poll attributes ***
-		$this->perRow = intval( array_key_exists( 'perrow', $argv ) ? $argv['perrow'] : 1 );
-		if ( $this->perRow < 1 )
-			$this->perRow = 1;
-		$this->currCol = $this->perRow;
-		if ( array_key_exists( 'showresults', $argv ) && $qp_enable_showresults != 0 ) {
-			if ( $argv['showresults'] == 'showresults' ) {
-				# default showresults for the empty value of xml attribute
-				$argv['showresults'] = '1';
-			}
-			$this->showResults = self::parse_showResults( $argv['showresults'] );
-		}
-		# every poll on the page should have unique poll id, to minimize the risk of collisions
-		# it is required to be set manually via id="value" parameter
-		# ( used only in "declaration" mode )
-		$this->mPollId = array_key_exists( 'id', $argv ) ? trim( $argv['id'] ) : null;
-		if ( array_key_exists( 'dependance', $argv ) ) {
-			$this->dependsOn = trim( $argv['dependance'] );
-		}
-	}
-
-	/**
-	 * Convert the input text to an HTML output.
-	 *
-	 * @param  $input				Text between <qpoll> and </qpoll> tags, in QPoll syntax.
-	 */
-	function parsePoll( $input ) {
-		if ( ( $result = $this->getPollStore() ) !== true ) {
-			# error message box (invalid poll attributes)
-			return $result;
-		}
-		if ( ( $result = $this->parseInput( $input ) ) === true ) {
-			# no output generation - due to active redirect or access denied
-			return '';
-		} else {
-			# generateOutput() assumes that the poll is not being submitted and is correctly declared
-			return $this->generateOutput( $result );
-		}
-	}
-
-	static function fatalError() {
-		$args = func_get_args();
-		$result = 'Extension bug: ' . __METHOD__ . ' called without arguments';
-		if ( count( $args > 0 ) ) {
-			$result = call_user_func_array( 'wfMsgHTML', $args );
-		}
-		return '<div class="qpoll"><div class="fatalerror">' . $result . '</div></div>';
-	}
-
-	# title fragment part (GET/POST)
-	static function getPollTitleFragment( $pollid, $dash = '#' ) {
-		return $dash . 'qp_' . Title::escapeFragmentForURL( $pollid );
-	}
-
-	static function addPollId ( $pollId ) {
-		self::$sPrevPollIDs[] = $pollId;
-	}
-
-	function isValidPollId( $pollId ) {
-		// more non-allowed chars ?
-		return !preg_match( '`#`u', $pollId );
-	}
-
-	function isUniquePollId( $pollId ) {
-		return !in_array( $pollId, self::$sPrevPollIDs );
-	}
-
-	static function loadMessages() {
-		if ( !self::$messagesLoaded ) {
-			self::$messagesLoaded = true;
-			wfLoadExtensionMessages( 'QPoll' );
-		}
-		return true;
-	}
-
-	static function currentUserName() {
-		global $qp_AnonForwardedFor;
+	static function getCurrUserName() {
 		global $wgUser, $wgSquidServers;
 		global $wgUsePrivateIPs;
-		if ( $qp_AnonForwardedFor === true && $wgUser->isAnon() ) {
+		if ( self::$anon_forwarded_for === true && $wgUser->isAnon() ) {
 			/* collect the originating IPs
 				borrowed from ProxyTools::wfGetIP
 				bypass trusted proxies list check */
@@ -427,869 +509,211 @@ class qp_AbstractPoll {
 		return $username;
 	}
 
-	// @input   $addr - source poll address (possibly the short one) in the string or array form
-	// @return  array[0] - title where the poll is located
-	//          array[1] - pollId string
-	//          array[2] - prefixed (complete) poll address
-	//          false - invalid source poll address was given
-	static function getPrefixedPollAddress( $addr ) {
-		global $wgArticle;
-		if ( is_array( $addr ) ) {
-			if ( count( $addr ) > 1 ) {
-				list( $titlePart, $pollIdPart ) = $addr;
+	/**
+	 * Parse string with XML-like attributes (no tag, only attributes)
+	 * @param    $attr_str  attribute string
+	 * @param    $attr_list list of XML attributes, PCRE allowed
+	 * @return   array  key is attribute regexp
+	 *                  value is the value of attribute or null
+	 */
+	static function getXmlLikeAttributes( $attr_str, array $attr_list ) {
+		$attr_vals = array();
+		$match = array();
+		foreach ( $attr_list as $attr_name ) {
+			preg_match( '/' . $attr_name . '\s?=\s?(?:"(.*?)"|(\d+))/u', $attr_str, $match );
+			# array_pop() "prefers" to match (\d+), when available
+			$attr_vals[$attr_name] = ( count( $match ) > 1 ) ? array_pop( $match ) : null;
+		}
+		return $attr_vals;
+	}
+
+	static function clearCache() {
+		if ( self::$cache_control ) {
+			global $parserMemc;
+			$parserCache = ParserCache::singleton();
+			$key = $parserCache->getKey( self::$article, self::$user );
+			$parserMemc->delete( $key );
+			if ( method_exists( 'Article', 'doPurge' ) ) {
+				self::$article->doPurge();
 			} else {
-				return false;
+				WikiPage::factory( self::$title )->doPurge();
 			}
-		} else {
-			preg_match( '`^(.*?)#(.*?)$`u', $addr, $matches );
-			if ( count( $matches ) == 3 ) {
-				$titlePart = trim( $matches[1] );
-				$pollIdPart = trim( $matches[2] );
-			} else {
-				return false;
-			}
-		}
-		if ( $pollIdPart == '' ) {
-			return false;
-		}
-		if ( $titlePart == '' ) {
-			# poll is located at the current page
-			$titlePart = $wgArticle->getTitle()->getPrefixedText();
-		}
-		return array( $titlePart, $pollIdPart, $titlePart . '#' . $pollIdPart );
-	}
-
-	// parses source showresults xml parameter value and returns the corresponding showResults array
-	// input: $str contains entries separated by ';'
-	//   entry 1 is a number of showresults type (always presented)
-	//   entries 2..n are optional css-style list of attributes and their values
-	// returns showResults parsed array
-	//   'type' indicates the type, optional keys contain values of css-style attributes
-	static function parse_showResults( $str ) {
-		$showResults['type'] = 0;
-		$attrs = array_map( 'trim', explode( ';', $str ) );
-		if ( count( $attrs ) > 0 ) {
-			$showResults['type'] = intval( array_shift( $attrs ) );
-			if ( $showResults['type'] < 0 ) {
-				$showResults['type'] = 0;
-			}
-			if ( $showResults['type'] != 0 && count( $attrs ) > 0 ) {
-				foreach ( $attrs as &$attr ) {
-					preg_match( '`([A-Za-z]+):([#\w]+)`u', $attr, $matches );
-					if ( count( $matches ) == 3 ) {
-						$showResults[ $matches[1] ] = $matches[2];
-					}
-				}
-			}
-		}
-		return $showResults;
-	}
-
-}
-
-/**
- * Processes poll markup in statistical mode (only to show the results)
- */
-class qp_PollStats extends qp_AbstractPoll {
-
-	function __construct( $argv, &$parser ) {
-		global $qp_enable_showresults;
-		parent::__construct( $argv, $parser );
-		$this->pollAddr = trim( $argv['address'] );
-		# statistical mode is active, but $qp_enable_showresults still can be false
-		if ( $qp_enable_showresults == 0 ) {
-			$this->showResults = false;
 		}
 	}
 
-	# prepare qp_PollStore object
-	# @return    true on success ($this->pollStore has been created successfully), error string on failure
-	function getPollStore() {
-		if ( $this->mPollId !== null ) {
-			$this->mState = "error";
-			return self::fatalError( 'qp_error_id_in_stats_mode' );
+	static function onMediaWikiPerformAction( $output, $article, $title, $user, $request, $wiki ) {
+		global $wgCookiePrefix;
+		global $qp_enable_showresults; // deprecated since v0.6.5
+		global $qp_AnonForwardedFor; // deprecated since v0.6.5
+		global $wgUser;
+		self::$output = $output;
+		self::$article = $article;
+		self::$title = $title;
+		# in MW v1.15 / v1.16 user object was stub;
+		# in MW v1.19 it seems to be real object.
+		# Unstub for the versions where it is stubbed.
+		# Borrowed from Title::getUserPermissionsErrors() MW v1.16
+		if ( !StubObject::isRealObject( $user ) ) {
+			// Since StubObject is always used on globals, we can unstub $wgUser here and set $user = $wgUser
+			global $wgUser;
+			$wgUser->_unstub( '', 5 );
+			$user = $wgUser;
 		}
-		if ( $this->dependsOn !== '' ) {
-			$this->mState = "error";
-			return self::fatalError( 'qp_error_dependance_in_stats_mode' );
+		self::$user = $user;
+		self::$request = $request;
+		if ( isset( $qp_AnonForwardedFor ) ) {
+			self::$anon_forwarded_for = $qp_AnonForwardedFor;
 		}
-		$this->pollStore = qp_PollStore::newFromAddr( $this->pollAddr );
-		if ( !( $this->pollStore instanceof qp_PollStore ) || $this->pollStore->pid === null ) {
-			return self::fatalError( 'qp_error_no_such_poll', $this->pollAddr );
+		# setup proper integer global showresults level
+		if ( isset( $qp_enable_showresults ) ) {
+			self::$global_showresults = $qp_enable_showresults;
 		}
-		if ( !$this->pollStore->loadQuestions() ) {
-			$this->mState = "error";
-			return self::fatalError( 'qp_error_no_stats', $this->pollAddr );
+		if ( !is_int( self::$global_showresults ) ) {
+			# convert from older v0.5 boolean value
+			self::$global_showresults = (int) (boolean) self::$global_showresults;
 		}
-		$this->pollStore->setLastUser( $this->username, false );
-		# do not check the result, because we may show results even if the user hasn't voted
-		$this->pollStore->loadUserAlreadyVoted();
+		if ( self::$global_showresults < 0 ) {
+			self::$global_showresults = 0;
+		} elseif ( self::$global_showresults > 2 ) {
+			self::$global_showresults = 2;
+		}
+		if ( isset( $_COOKIE["{$wgCookiePrefix}QPoll"] ) ) {
+			$request->response()->setCookie( 'QPoll', '', time() - 86400 ); // clear cookie
+			self::clearCache();
+		} elseif ( $request->getVal( 'pollId' ) !== null ) {
+			self::clearCache();
+		}
+		self::$propAttrs = new qp_PropAttrs();
 		return true;
 	}
 
-	# Replace questions from QPoll syntax to HTML
-	# @param    $input - A question in QPoll statistical mode syntax
-	# @return   string representing rendered set of the questions / boolean true - stop further processing
-	function parseInput( $input ) {
-		$write_row = Array();
-		$write_col = Array();
-		$questions = Array();
-		# question attributes split pattern
-		$splitPattern = '`\s*{|}\s*\n*`u';
-		# preg_split counts the matches starting from zero
-		$unparsedAttributes = preg_split( $splitPattern, $input, -1, PREG_SPLIT_NO_EMPTY );
-		# we count questions starting from 1
-		array_unshift( $unparsedAttributes, null );
-		unset( $unparsedAttributes[0] );
-		# first pass: parse the headers
-		foreach ( $this->pollStore->Questions as &$qdata ) {
-			$question = new qp_QuestionStats( $this->parser, $qdata->type, $qdata->question_id, $this->showResults );
-			if ( isset( $unparsedAttributes[$qdata->question_id] ) ) {
-				$attr_str = $unparsedAttributes[$qdata->question_id];
-			} else {
-				$attr_str = '';
-			}
-			if ( ( $type = $question->parseAttributes( $attr_str ) ) != '' ) {
-				# there cannot be type attribute of question in statistical display mode
-				$question->setState( 'error', wfMsg( 'qp_error_type_in_stats_mode', $type ) );
-			}
-			$questions[] = $question;
+	/**
+	 * Register the extension with the WikiText parser.
+	 */
+	static function onParserFirstCallInit( $parser ) {
+		global $wgOut, $wgTitle;
+		if ( !is_object( $wgTitle ) || $wgTitle->getNamespace() === NS_SPECIAL ) {
+			# special page will add it's proper module itself;
+			# 'ext.qpoll' and 'ext.qpoll.special.pollresults' currently are not
+			# designed to be used together
+			return true;
 		}
-		# analyze question headers
-		# check for showresults attribute
-		$questions_set = Array();
-		foreach ( $questions as &$question ) {
-			if ( $question->showResults['type'] != 0 &&
-						method_exists( 'qp_Question', 'addShowResults' . $question->showResults['type'] ) ) {
-				$questions_set[] = $question->mQuestionId;
-			}
-		}
-		# load the statistics for all/selective/none of questions
-		if ( count( $questions_set ) > 0 ) {
-			if ( count( $questions_set ) == count( $questions ) ) {
-				$this->pollStore->loadTotals();
-			} else {
-				$this->pollStore->loadTotals( $questions_set );
-			}
-			$this->pollStore->calculateStatistics();
-		}
-		# second pass: parse the statistics
-		foreach ( $questions as &$question ) {
-			# render the question statistics only when showResuls isn't 0 (suppress stats)
-			if ( $question->showResults['type'] != 0 ) {
-				if ( $this->perRow > 1 ) {
-					$write_col[] = array( '__tag' => 'td', 'valign' => 'top', 0 => $this->parseStats( $question ), '__end' => "\n" );
-					if ( $this->currCol == 1 ) {
-						$write_row[] = array( '__tag' => 'tr', 0 => $write_col, '__end' => "\n" );
-						$write_col = Array();
-					}
-					if ( --$this->currCol < 1 ) {
-						$this->currCol = $this->perRow;
-					}
-				} else {
-					$write_row[] = $this->parseStats( $question );
-				}
-			}
-			# question object is not needed anymore
-			unset( $question );
-		}
-		if ( $this->perRow > 1 && $this->currCol != $this->perRow ) {
-			# add last incomplete row
-			$write_row[] = array( '__tag' => 'tr', '__end' => "\n", 0 => $write_col );
-		}
-		if ( $this->perRow > 1 ) {
-			$question_table = array( '__tag' => 'table', 0 => array( '__tag' => 'tbody', 0 => &$write_row, '__end' => "\n" ), '__end' => "\n" );
-			return qp_Renderer::renderHTMLobject( $question_table );
+		if ( class_exists( 'ResourceLoader' ) ) {
+			# MW 1.17+
+			// $wgOut->addModules( 'jquery' );
+			$wgOut->addModules( 'ext.qpoll' );
 		} else {
-			return qp_Renderer::renderHTMLobject( $write_row );
-		}
-	}
-
-	# encloses the output of $this->parseQuestions() into the output tag wrappers
-	# @param   $input - the output of $this->parseQuestions()
-	# @return  rendered "final" html
-	function generateOutput( $input ) {
-		global $wgOut;
-		# Generates the output.
-		$qpoll_div = array( '__tag' => 'div', 'class' => 'qpoll', 0 => $input );
-		return qp_Renderer::renderHTMLobject( $qpoll_div );
-	}
-
-	# populate the question with data and build it's HTML representation
-	# returns HTML representation of the question
-	function parseStats( qp_QuestionStats &$question ) {
-		global $qp_enable_showresults;
-		# parse the question body
-		$buffer = '';
-		if ( $question->getQuestionAnswer( $this->pollStore ) ) {
-		# check whether the current global showresults level allows to display statistics
-			if ( $qp_enable_showresults == 0 ||
-					( $qp_enable_showresults <= 1 && !$question->alreadyVoted ) ) {
-				# suppress the output
-				return '';
-			}
-			$buffer = $question->renderStats();
-		}
-		$output_table = array( '__tag' => 'table', '__end' => "\n", 'class' => 'object' );
-		# Determine the side border color the question.
-		$output_table[] = array( '__tag' => 'tbody', '__end' => "\n", 0 => $buffer );
-		$tags = array( '__tag' => 'div', '__end' => "\n", 'class' => 'question',
-			0 => array( '__tag' => 'div', '__end' => "\n", 'class' => 'header',
-				0 => array( '__tag' => 'span', 'class' => 'questionId', 0 => $question->mQuestionId )
-			),
-			1 => $this->parser->recursiveTagParse( $question->mCommonQuestion . "\n" )
-		);
-		$tags[] = &$output_table;
-		return qp_Renderer::renderHTMLobject( $tags );
-	}
-
-}
-
-/**
- * Processes poll markup in declaration/voting mode
- */
-class qp_Poll extends qp_AbstractPoll {
-
-	function __construct( $argv, &$parser ) {
-		parent::__construct( $argv, $parser );
-		# order_id is used to sort out polls on the Special:PollResults statistics page
-		$this->mOrderId = self::$sOrderId;
-		# Determine if this poll is being corrected or not, according to the pollId
-		$this->mBeingCorrected = ( $this->mRequest->getVal( 'pollId' ) == $this->mPollId );
-	}
-
-	# prepare qp_PollStore object
-	# @return    true on success ($this->pollStore has been created successfully), error string on failure
-	function getPollStore() {
-		# check the headers for errors
-		if ( $this->mPollId == null ) {
-			$this->mState = "error";
-			return self::fatalError( 'qp_error_no_poll_id' );
-		}
-		if ( !self::isValidPollId( $this->mPollId ) ) {
-			$this->mState = "error";
-			return self::fatalError( 'qp_error_invalid_poll_id', $this->mPollId );
-		}
-		if ( !self::isUniquePollId( $this->mPollId ) ) {
-			$this->mState = "error";
-			return self::fatalError( 'qp_error_already_used_poll_id', $this->mPollId );
-		}
-		self::addPollId( $this->mPollId ); // add current poll id to the static list of poll ids on this page
-		if ( $this->pollAddr !== null ) {
-			$this->mState = "error";
-			return self::fatalError( 'qp_error_address_in_decl_mode' );
-		}
-		if ( $this->dependsOn != '' ) {
-			$depsOnAddr = self::getPrefixedPollAddress( $this->dependsOn );
-			if ( is_array( $depsOnAddr ) ) {
-				$this->dependsOn = $depsOnAddr[2];
-			} else {
-				return self::fatalError( 'qp_error_invalid_dependance_value', $this->mPollId, $this->dependsOn );
+			# MW < 1.17
+			global $wgJsMimeType, $wgContLang;
+			# Ouput the style and the script to the header once for all.
+			$head = '<script type="' . $wgJsMimeType . '" src="' . self::$ScriptPath . '/clientside/qp_user.js"></script>' . "\n";
+			$wgOut->addScript( $head );
+			$wgOut->addExtensionStyle( self::$ScriptPath . '/clientside/qp_user.css' );
+			if ( $wgContLang->isRTL() ) {
+				$wgOut->addExtensionStyle( self::$ScriptPath . '/clientside/qp_user_rtl.css' );
 			}
 		}
-		if ( ( $dependanceResult = $this->checkDependance( $this->dependsOn ) ) !== true ) {
-			# return an error string
-			# here we create a pollstore only to update poll attributes (order_id,dependance), in case these were changed
-			$this->pollStore = new qp_PollStore( array(
-				'from' => 'poll_get',
-				'poll_id' => $this->mPollId,
-				'order_id' => $this->mOrderId,
-				'dependance' => $this->dependsOn ) );
-			return $dependanceResult;
+		global $wgQPollFunctionsHook;
+		# setup tag hook
+		$parser->setHook( self::$pollTag, array( __CLASS__, 'showPoll' ) );
+		$parser->setHook( self::$interpTag, array( __CLASS__, 'showScript' ) );
+		$wgQPollFunctionsHook = new qp_FunctionsHook();
+		# setup function hook
+		$parser->setFunctionHook( 'qpuserchoice', array( &$wgQPollFunctionsHook, 'qpuserchoice' ), SFH_OBJECT_ARGS );
+		return true;
+	}
+
+	/**
+	 * Call the poll parser on an input text.
+	 *
+	 * @param  $input				Text between <qpoll> and </qpoll> tags, in QPoll syntax.
+	 * @param  $argv				An array containing any arguments passed to the extension
+	 * @param  &$parser			The wikitext parser.
+	 * @param  &$frame			PPFrame object passed in MW 1.16+
+	 * @return 						An HTML poll.
+	 */
+
+	/* @param  $input				Text between <qpoll> and </qpoll> tags, in QPoll syntax. */
+	static function showPoll( $input, $argv, $parser, $frame = false ) {
+		if ( !self::$cache_control ) {
+			$parser->disableCache();
 		}
-		if ( $this->mBeingCorrected ) {
-			$this->pollStore = new qp_PollStore( array(
-			'from' => 'poll_post',
-			'poll_id' => $this->mPollId,
-			'order_id' => $this->mOrderId,
-			'dependance' => $this->dependsOn ) );
-			$this->pollStore->loadQuestions();
-			$this->pollStore->setLastUser( $this->username, false );
-			$this->pollStore->loadUserAlreadyVoted();
+		if ( array_key_exists( 'address', $argv ) ) {
+			$qpoll = new qp_PollStats(
+				$argv,
+				new qp_PollStatsView( $parser, $frame )
+			);
 		} else {
-			$this->pollStore = new qp_PollStore( array(
-				'from' => 'poll_get',
-				'poll_id' => $this->mPollId,
-				'order_id' => $this->mOrderId,
-				'dependance' => $this->dependsOn ) );
-			$this->pollStore->loadQuestions();
-			$this->pollStore->setLastUser( $this->username, false );
-			# to show previous choice of current user, if that's available
-			# do not check the result, because user can vote even if haven't voted before
-			$this->pollStore->loadUserVote();
+			$qpoll = new qp_Poll(
+				$argv,
+				new qp_PollView( $parser, $frame )
+			);
+		}
+		return $qpoll->parsePoll( $input );
+	}
+
+	/**
+	 * Show interpetation script source with line numbering (for debugging convenience)
+	 *
+	 * @param  $input				Text between <qpinterpret> and </qpinterper> tags, subset of PHP syntax.
+	 * @param  $argv				An array containing any arguments passed to the extension
+	 * @param  &$parser			The wikitext parser.
+	 * @param  &$frame			PPFrame object passed in MW 1.16+
+	 * @return 						script source with line numbering
+	 */
+	static function showScript( $input, $argv, $parser, $frame = false ) {
+		$lines_count = count( preg_split( '`(\r\n|\n|\r)`', $input, -1 ) );
+		$line_numbers = '';
+		if ( !isset( $argv['lang'] ) ) {
+			return '<strong class="error">' . wfMsg( 'qp_error_eval_missed_lang_attr' ) . '</strong>';
+		}
+		$lang = $argv['lang'];
+		if ( !array_key_exists( $lang, self::$scriptLinesCount ) ) {
+			self::$scriptLinesCount[$lang] = 1;
+		}
+		$slc = &self::$scriptLinesCount[$lang];
+		for ( $i = $slc; $i < $slc + $lines_count; $i++ ) {
+			$line_numbers .= "{$i}\n";
+		}
+		$slc = $i;
+		$out = array( '__tag' => 'div', 'class' => 'qpoll', 0 => array() );
+		if ( is_string( $lintResult = qp_Interpret::lint( $lang, $input ) ) ) {
+			$out[0][] = array( '__tag' => 'div', 'class' => 'interp_error', qp_Setup::specialchars( $lintResult ) );
+		}
+		$out[0][] = array( '__tag' => 'div', 'class' => 'line_numbers', $line_numbers );
+		$out[0][] = array( '__tag' => 'div', 'class' => 'script_view', qp_Setup::specialchars( $input ) . "\n" );
+		$markercount = count( self::$markerList );
+		$marker = "!qpoll-script-view{$markercount}-qpoll!";
+		self::$markerList[$markercount] = qp_Renderer::renderTagArray( $out );
+		return $marker;
+	}
+
+	/**
+	 * replace previousely set markers with actual rendered html of source text
+	 * which has line numbers for easier way to spot possible eval check errors
+	 * otherwise, this html code will be ruined when passed directly to parser
+	 */
+	static function onParserAfterTidy( $parser, &$text ) {
+		# find markers in $text
+		# replace markers with actual output
+		$keys = array();
+		$marker_count = count( self::$markerList );
+
+		for ( $i = 0; $i < $marker_count; $i++ ) {
+			$keys[] = "!qpoll-script-view{$i}-qpoll!";
+		}
+
+		$text = str_replace( $keys, self::$markerList, $text );
+		return true;
+	}
+
+	public static function onCanonicalNamespaces( &$list ) {
+		# do not use array_merge() as it will destroy negative indexes in $list
+		# thus completely ruining the namespaces list
+		foreach ( self::$interpNamespaces as $ns_idx => $canonical_name ) {
+			$list[$ns_idx] = $canonical_name;
 		}
 		return true;
 	}
 
-	# parse the text enclosed in poll tag
-	# @param    $input - text enclosed in poll tag
-	# @return   string representing rendered set of the questions / boolean true - stop further processing
-	function parseInput( $input ) {
-		global $wgTitle, $wgArticle;
-		# Process the input
-		$output = $this->parseQuestions( $input );
-		# check whether the poll was successfully submitted
-		if ( $this->pollStore->stateComplete() ) {
-			# store user vote to the DB (when the poll is fine)
-			$this->pollStore->setLastUser( $this->username );
-			$this->pollStore->setUserVote();
-		}
-		if ( $this->pollStore->voteDone ) {
-			$this->mResponse->setcookie( 'QPoll', 'clearCache', time() + 20 );
-			$this->mResponse->header( 'HTTP/1.0 302 Found' );
-			$this->mResponse->header( 'Location: ' . $wgTitle->getFullURL() . self::getPollTitleFragment( $this->mPollId ) );
-			return true;
-		}
-		return $output;
-	}
-
-	# encloses the output of $this->parseQuestions() into the output tag wrappers
-	# @param   $input - the output of $this->parseQuestions()
-	# @return  rendered "final" html
-	function generateOutput( $input ) {
-		global $wgOut, $wgRequest;
-		# increase the order_id counter for the future successfully declared polls
-		# (remember, we're in declaration mode, where 'order_id' is important
-		self::$sOrderId++;
-		# Generates the output.
-		$qpoll_div = array( '__tag' => 'div', 'class' => 'qpoll' );
-		$qpoll_div[] = array( '__tag' => 'a', 'name' => self::getPollTitleFragment( $this->mPollId, '' ), 0 => '' );
-		$qpoll_form = array( '__tag' => 'form', 'method' => 'post', 'action' => self::getPollTitleFragment( $this->mPollId ), '__end' => "\n" );
-		$qpoll_div[] = &$qpoll_form;
-		# Determine the content of the settings table.
-		$settings = Array();
-		if ( $this->mState != '' ) {
-			$settings[0][] = array( '__tag' => 'td', 'class' => 'margin', 'style' => 'background: ' . QP_CSS_ERROR_COLOR2 . ';' );
-			$settings[0][] = array( '__tag' => 'td', 0 => wfMsgHtml( 'qp_result_' . $this->mState ) );
-		}
-		# Build the settings table.
-		if ( count( $settings ) > 0 ) {
-			$settingsTable = array( '__tag' => 'table', 'class' => 'settings', '__end' => "\n" );
-			foreach ( $settings as $settingsTr ) {
-				$settingsTable[] = array( '__tag' => 'tr', 0 => $settingsTr, '__end' => "\n" );
-			}
-			$qpoll_form[] = &$settingsTable;
-		}
-		$qpoll_form[] = array( '__tag' => 'input', 'type' => 'hidden', 'name' => 'pollId', 'value' => $this->mPollId );
-		$qpoll_form[] = array( '__tag' => 'div', 'class' => 'pollQuestions', 0 => $input );
-		$submitBtn = array( '__tag' => 'input', 'type' => 'submit' );
-		$submitMsg = 'qp_vote_button';
-		if ( $this->pollStore->isAlreadyVoted() ) {
-			$submitMsg = 'qp_vote_again_button';
-		}
-		if ( $this->mBeingCorrected ) {
-			if ( $this->pollStore->getState() == "complete" ) {
-				$submitMsg = 'qp_vote_again_button';
-			}
-		} else {
-			if ( $this->pollStore->getState() == "error" ) {
-				$submitBtn[ 'disabled' ] = 'disabled';
-			}
-		}
-		# disable submit button in preview mode & printable version
-		if ( $wgRequest->getVal( 'action' ) == 'submit' ||
-				$wgOut->isPrintable() ) {
-			$submitBtn[ 'disabled' ] = 'disabled';
-		}
-		$submitBtn[ 'value' ] = wfMsgHtml( $submitMsg );
-		$p = array( '__tag' => 'p' );
-		$p[] = $submitBtn;
-		$qpoll_form[] = &$p;
-		return qp_Renderer::renderHTMLobject( $qpoll_div );
-	}
-
-	# check whether the poll is dependant on other polls
-	# @param     $dependsOn - poll address on which the current (recursive) poll is dependant
-	# @param     $nonVotedDepLink - maintains different logic for recursion
-	#	value: string - link to the poll in chain which has not been voted yet OR
-	#	value: boolean - false when there was no poll in the chain which has not been voted yet
-	# @return    true when dependance is fulfilled, error message otherwise
-	private function checkDependance( $dependsOn, $nonVotedDepLink = false ) {
-		# check the headers for dependance to other polls
-		if ( $dependsOn !== '' ) {
-			$depPollStore = qp_PollStore::newFromAddr( $dependsOn );
-			if ( $depPollStore instanceof qp_PollStore ) {
-				# process recursive dependance
-				$depTitle = $depPollStore->getTitle();
-				$depPollId = $depPollStore->mPollId;
-				$depLink = self::$skin->link( $depTitle, $depTitle->getPrefixedText() . ' (' . $depPollStore->mPollId . ')' );
-				if ( $depPollStore->pid === null ) {
-					return self::fatalError( 'qp_error_missed_dependance_poll', $this->mPollId, $depLink, $depPollId );
-				}
-				if ( !$depPollStore->loadQuestions() ) {
-					return self::fatalError( 'qp_error_vote_dependance_poll', $depLink );
-				}
-				$depPollStore->setLastUser( $this->username, false );
-				if ( $depPollStore->loadUserAlreadyVoted() ) {
-					# user already voted in current the poll in chain
-					if ( $depPollStore->dependsOn === '' ) {
-						if ( $nonVotedDepLink === false ) {
-							# there was no non-voted deplinks in the chain at some previous level of recursion
-							return true;
-						} else {
-							# there is an non-voted deplink in the chain at some previous level of recursion
-							return self::fatalError( 'qp_error_vote_dependance_poll', $nonVotedDepLink );
-						}
-					} else {
-						return $this->checkDependance( $depPollStore->dependsOn, $nonVotedDepLink );
-					}
-				} else {
-					# user hasn't voted in current the poll in chain
-					if ( $depPollStore->dependsOn === '' ) {
-						# current element of chain is not voted and furthermore, doesn't depend on any other polls
-						return self::fatalError( 'qp_error_vote_dependance_poll', $depLink );
-					} else {
-						# current element of chain is not voted, BUT it has it's own dependance
-						# so we will check for the most deeply nested poll which hasn't voted, yet
-						return $this->checkDependance( $depPollStore->dependsOn, $depLink );
-					}
-				}
-			} else {
-				# process poll address errors
-				switch ( $depPollStore ) {
-				case QP_ERROR_INVALID_ADDRESS :
-					return self::fatalError( 'qp_error_invalid_dependance_value', $this->mPollId, $dependsOn );
-				case QP_ERROR_MISSED_TITLE :
-					$depSplit = self::getPrefixedPollAddress( $dependsOn );
-					if ( is_array( $depSplit ) ) {
-						list( $depTitleStr, $depPollId ) = $depSplit;
-						$depTitle = Title::newFromURL( $depTitleStr );
-						$depTitleStr = $depTitle->getPrefixedText();
-						$depLink = self::$skin->link( $depTitle, $depTitleStr );
-						return self::fatalError( 'qp_error_missed_dependance_title', $this->mPollId, $depLink, $depPollId );
-					} else {
-						return self::fatalError( 'qp_error_invalid_dependance_value', $this->mPollId, $dependsOn );
-					}
-				default :
-					throw new MWException( __METHOD__ . ' invalid dependance poll store found' );
-				}
-			}
-		} else {
-			return true;
-		}
-	}
-
-	# Replace questions from QPoll syntax to HTML
-	# @param    $input - A question in QPoll syntax
-	# @return   string representing rendered set of the questions / empty string "suggests" redirect
-	function parseQuestions( $input ) {
-		$write_row = Array();
-		$write_col = Array();
-		$questions = Array();
-		$splitPattern = '`(^|\n\s*)\n\s*{`u';
-		$unparsedQuestions = preg_split( $splitPattern, $input, -1, PREG_SPLIT_NO_EMPTY );
-		$questionPattern = '`(.*?[^|\}])\}[ \t]*(\n(.*)|$)`su';
-		# first pass: parse the headers
-		foreach ( $unparsedQuestions as $unparsedQuestion ) {
-			# If this "unparsedQuestion" is not a full question,
-			# we put the text into a buffer to add it at the beginning of the next question.
-			if ( !empty( $buffer ) ) {
-				$unparsedQuestion = "$buffer\n\n{" . $unparsedQuestion;
-			}
-			if ( preg_match( $questionPattern, $unparsedQuestion, $matches ) ) {
-				$buffer = "";
-				$header = isset( $matches[1] ) ? $matches[1] : '';
-				$body = isset( $matches[3] ) ? $matches[3] : null;
-				$questions[] = $this->parseQuestionHeader( $header, $body );
-			} else {
-				$buffer = $unparsedQuestion;
-			}
-		}
-		# analyze question headers
-		# check for showresults attribute
-		$questions_set = Array();
-		foreach ( $questions as &$question ) {
-			if ( $question->showResults['type'] != 0 &&
-						method_exists( 'qp_Question', 'addShowResults' . $question->showResults['type'] ) ) {
-				$questions_set[] = $question->mQuestionId;
-			}
-		}
-		# load the statistics for all/selective/none of questions
-		if ( count( $questions_set ) > 0 ) {
-			if ( count( $questions_set ) == count( $questions ) ) {
-				$this->pollStore->loadTotals();
-			} else {
-				$this->pollStore->loadTotals( $questions_set );
-			}
-			$this->pollStore->calculateStatistics();
-		}
-		# second pass: parse the body
-		foreach ( $questions as &$question ) {
-			if ( $this->perRow > 1 ) {
-				$write_col[] = array( '__tag' => 'td', 'valign' => 'top', 0 => $this->parseQuestionBody( $question ), '__end' => "\n" );
-				if ( $this->currCol == 1 ) {
-					$write_row[] = array( '__tag' => 'tr', 0 => $write_col, '__end' => "\n" );
-					$write_col = Array();
-				}
-				if ( --$this->currCol < 1 ) {
-					$this->currCol = $this->perRow;
-				}
-			} else {
-				$write_row[] = $this->parseQuestionBody( $question );
-			}
-			# question object is not needed anymore
-			unset( $question );
-		}
-		if ( $this->perRow > 1 && $this->currCol != $this->perRow ) {
-			# add last incomplete row
-			$write_row[] = array( '__tag' => 'tr', '__end' => "\n", 0 => $write_col );
-		}
-		if ( $this->perRow > 1 ) {
-			$question_table = array( '__tag' => 'table', 0 => array( '__tag' => 'tbody', 0 => &$write_row, '__end' => "\n" ), '__end' => "\n" );
-			return qp_Renderer::renderHTMLobject( $question_table );
-		} else {
-			return qp_Renderer::renderHTMLobject( $write_row );
-		}
-	}
-
-	# Convert a question on the page from QPoll syntax to HTML
-	# @param   $header : the text of question "main" header (common question and XML-like attrs)
-	#          $body   : the text of question body (starting with body header which defines categories and spans, followed by proposal list)
-	# @return            question object with parsed headers and no data loaded
-	function parseQuestionHeader( $header, $body ) {
-		$question = new qp_Question( $this->parser, $this->mBeingCorrected, ++$this->mQuestionId, $this->showResults );
-		# parse questions common question and XML attributes
-		$question->parseMainHeader( $header );
-		if ( $question->getState() != 'error' ) {
-			# load previous user choice, when it's available and DB header is compatible with parsed header
-			if ( $body === null || !method_exists( $question, $question->mType . 'ParseBody' ) ) {
-				$question->setState( 'error', wfMsgHtml( 'qp_error_question_not_implemented', qp_Setup::entities( $question->mType ) ) );
-			} else {
-				# parse the categories and spans (metacategories)
-				$question->parseBodyHeader( $body );
-			}
-		}
-		return $question;
-	}
-
-	# populate the question with data and build it's HTML representation
-	# returns HTML representation of the question
-	function parseQuestionBody( &$question ) {
-		global $qp_enable_showresults;
-		if ( $question->getState() == 'error' ) {
-			# error occured during the previously performed header parsing, do not process further
-			$buffer = $question->getHeaderError();
-			# http get: invalid question syntax, parse errors will cause submit button disabled
-			$this->pollStore->stateError();
-		} else {
-			# populate $question with raw source values
-			$question->getQuestionAnswer( $this->pollStore );
-			# check whether the global showresults level prohibits to show statistical data
-			# to the users who hasn't voted
-			if ( $qp_enable_showresults <= 1 && !$question->alreadyVoted ) {
-				# suppress statistical results when the current user hasn't voted the question
-				$question->showResults = Array( 'type' => 0 );
-			}
-			# parse the question body
-			# store the html result into the buffer to determine some parameters before outputing it
-			# warning! parameters are passed only by value, not the reference
-			$buffer = $question-> { $question->mType . 'ParseBody' } ();
-			if ( $this->mBeingCorrected ) {
-				if ( $question->getState() == '' ) {
-					# question is OK, store it into pollStore
-					$question->store( $this->pollStore );
-				} else {
-					# http post: not every proposals were answered: do not update DB
-					$this->pollStore->stateIncomplete();
-				}
-			} else {
-				# this is the get, not the post: do not update DB
-				if ( $question->getState() == '' ) {
-					$this->pollStore->stateIncomplete();
-				} else {
-					# http get: invalid question syntax, parse errors will cause submit button disabled
-					$this->pollStore->stateError();
-				}
-			}
-		}
-		$output_table = array( '__tag' => 'table', '__end' => "\n", 'class' => 'object' );
-		# Determine the side border color the question.
-		if ( $question->getState() != "" ) {
-			global $wgContLang;
-			$style = $wgContLang->isRTL() ? 'border-right' : 'border-left';
-			$style .= ': 3px solid ' . QP_CSS_ERROR_COLOR2 . ';';
-			$output_table[ 'style' ] = $style;
-			$this->mState = $question->getState();
-		}
-		$output_table[] = array( '__tag' => 'tbody', '__end' => "\n", 0 => &$buffer );
-		$tags = array( '__tag' => 'div', '__end' => "\n", 'class' => 'question',
-			0 => array( '__tag' => 'div', '__end' => "\n", 'class' => 'header',
-				0 => array( '__tag' => 'span', 'class' => 'questionId', 0 => $question->mQuestionId )
-			),
-			1 => $this->parser->recursiveTagParse( $question->mCommonQuestion . "\n" )
-		);
-		$tags[] = &$output_table;
-		return qp_Renderer::renderHTMLobject( $tags );
-	}
-
-}
-
-/* render output data */
-class qp_Renderer {
-	// the stucture of $tag is like this:
-	// array( "__tag"=>"td", "class"=>"myclass", 0=>"text before li", 1=>array( "__tag"=>"li", 0=>"text inside li" ), 2=>"text after li" )
-	// both tagged and tagless lists are supported
-	static function renderHTMLobject( &$tag ) {
-		$tag_open = "";
-		$tag_close = "";
-		$tag_val = null;
-		if ( is_array( $tag ) ) {
-			ksort( $tag );
-			if ( array_key_exists( '__tag', $tag ) ) {
-				# list inside of tag
-				$tag_open .= "<" . $tag[ '__tag' ];
-				foreach ( $tag as $attr_key => &$attr_val ) {
-					if ( is_int( $attr_key ) ) {
-						if ( $tag_val === null )
-							$tag_val = "";
-						if ( is_array( $attr_val ) ) {
-							# recursive tags
-							$tag_val .= self::renderHTMLobject( $attr_val );
-						} else {
-							# text
-							$tag_val .= $attr_val;
-						}
-					} else {
-						# string keys are for tag attributes
-						if ( substr( $attr_key, 0, 2 ) != "__" ) {
-							# include only non-reserved attributes
-							$tag_open .= " $attr_key=\"" . $attr_val . "\"";
-						}
-					}
-				}
-				if ( $tag_val !== null ) {
-					$tag_open .= ">";
-					$tag_close .= "</" . $tag[ '__tag' ] . ">";
-				} else {
-					$tag_open .= " />";
-				}
-				if ( array_key_exists( '__end', $tag ) ) {
-					$tag_close .= $tag[ '__end' ];
-				}
-			} else {
-				# tagless list
-				$tag_val = "";
-				foreach ( $tag as $attr_key => &$attr_val ) {
-					if ( is_int( $attr_key ) ) {
-						if ( is_array( $attr_val ) ) {
-							# recursive tags
-							$tag_val .= self::renderHTMLobject( $attr_val );
-						} else {
-							# text
-							$tag_val .= $attr_val;
-						}
-					} else {
-						ob_start();
-						var_dump( $tag );
-						$tagdump = ob_get_contents();
-						ob_end_clean();
-						$tag_val = "invalid argument: tagless list cannot have tag attribute values in key=$attr_key, $tagdump";
-					}
-				}
-			}
-		} else {
-			# just a text
-			$tag_val = $tag;
-		}
-		return $tag_open . $tag_val . $tag_close;
-	}
-
-	# creates one "htmlobject" row of the table
-	# elements of $row can be either a string/number value of cell or an array( "count"=>colspannum, "attribute"=>value, 0=>html_inside_tag )
-	# attribute maps can be like this: ("name"=>0, "count"=>colspan" )
-	static function newRow( $row, $rowattrs = "", $celltag = "td", $attribute_maps = null ) {
-		$result = "";
-		if ( count( $row ) > 0 ) {
-			foreach ( $row as &$cell ) {
-				if ( !is_array( $cell ) ) {
-					$cell = array( 0 => $cell );
-				}
-				$cell[ '__tag' ] = $celltag;
-				$cell[ '__end' ] = "\n";
-				if ( is_array( $attribute_maps ) ) {
-					# converts ("count"=>3) to ("colspan"=>3) in table headers - don't use frequently
-					foreach ( $attribute_maps as $key => $val ) {
-						if ( array_key_exists( $key, $cell ) ) {
-							$cell[ $val ] = $cell[ $key ];
-							unset( $cell[ $key ] );
-						}
-					}
-				}
-			}
-			$result = array( '__tag' => 'tr', 0 => $row, '__end' => "\n" );
-			if ( is_array( $rowattrs ) ) {
-				$result = array_merge( $rowattrs, $result );
-			} elseif ( $rowattrs !== "" )  {
-				$result[0][] = __METHOD__ . ':invalid rowattrs supplied';
-			}
-		}
-		return $result;
-	}
-
-	# add row to the table
-	static function addRow( &$table, $row, $rowattrs = "", $celltag = "td", $attribute_maps = null ) {
-		$table[] = self::newRow( $row, $rowattrs, $celltag, $attribute_maps );
-	}
-
-	# add column to the table
-	static function addColumn( &$table, $column, $rowattrs = "", $celltag = "td", $attribute_maps = null ) {
-		if ( count( $column ) > 0 ) {
-			$row = 0;
-			foreach ( $column as &$cell ) {
-				if ( !is_array( $cell ) ) {
-					$cell = array( 0 => $cell );
-				}
-				$cell[ '__tag' ] = $celltag;
-				$cell[ '__end' ] = "\n";
-				if ( is_array( $attribute_maps ) ) {
-					# converts ("count"=>3) to ("rowspan"=>3) in table headers - don't use frequently
-					foreach ( $attribute_maps as $key => $val ) {
-						if ( array_key_exists( $key, $cell ) ) {
-							$cell[ $val ] = $cell[ $key ];
-							unset( $cell[ $key ] );
-						}
-					}
-				}
-				if ( is_array( $rowattrs ) ) {
-					$cell = array_merge( $rowattrs, $cell );
-				} elseif ( $rowattrs !== "" ) {
-					$cell[ 0 ] = __METHOD__ . ':invalid rowattrs supplied';
-				}
-				if ( !array_key_exists( $row, $table ) ) {
-					$table[ $row ] = array( '__tag' => 'tr', '__end' => "\n" );
-				}
-				$table[ $row ][] = $cell;
-				if ( array_key_exists( 'rowspan', $cell ) ) {
-					$row += intval( $cell[ 'rowspan' ] );
-				} else {
-					$row++;
-				}
-			}
-			$result = array( '__tag' => 'tr', 0 => $column, '__end' => "\n" );
-		}
-	}
-
-	static function displayRow( $row, $rowattrs = "", $celltag = "td", $attribute_maps = null ) {
-		return self::renderHTMLobject( self::newRow( $row, $rowattrs, $celltag, $attribute_maps ) );
-	}
-
-	// use newRow() or addColumn() to add resulting row/column to the table
-	// if you want to use the resulting row with renderHTMLobject(), don't forget to apply attrs=array('__tag'=>'td')
-	static function applyAttrsToRow( &$row, $attrs ) {
-		if ( is_array( $attrs ) && count( $attrs > 0 ) ) {
-			foreach ( $row as &$cell ) {
-				if ( !is_array( $cell ) ) {
-					$cell = array_merge( $attrs, array( $cell ) );
-				} else {
-					foreach ( $attrs as $attr_key => $attr_val ) {
-						if ( !array_key_exists( $attr_key, $cell ) ) {
-							$cell[ $attr_key ] = $attr_val;
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-class qp_FunctionsHook {
-
-	var $frame;
-	var $args;
-
-	var $pollAddr;
-	var $pollStore;
-	var $question_id = '';
-	var $proposal_id = '';
-	var $defaultProposalText;
-
-	var $error_message = 'no_such_poll';
-
-	function qpuserchoice( &$parser, $frame, $args ) {
-		qp_Setup::loadMessages();
-		$this->frame = &$frame;
-		$this->args = &$args;
-		if ( isset( $args[ 0 ] ) ) {
-			# args[0] is a poll address
-			$this->pollAddr = trim( $this->frame->expand( $this->args[ 0 ] ) );
-			$this->pollStore = qp_PollStore::newFromAddr( $this->pollAddr );
-			if ( $this->pollStore instanceof qp_PollStore && $this->pollStore->pid !== null ) {
-				$this->error_message = 'missing_question_id';
-				if ( isset( $args[ 1 ] ) ) {
-					# args[1] is question_id
-					$qdata = $this->getQuestionData( trim( $frame->expand( $args[ 1 ] ) ) );
-					if ( $qdata instanceof qp_QuestionData ) {
-						$this->error_message = 'missing_proposal_id';
-						if ( isset( $args[ 2 ] ) ) {
-							# get poll's proposal choice
-							$this->proposal_id = trim( $frame->expand( $args[ 2 ] ) );
-							$this->error_message = 'invalid_proposal_id';
-							if ( is_numeric( $this->proposal_id ) && $this->proposal_id >= 0 ) {
-								$this->defaultProposalText = isset( $args[ 3 ] ) ? trim( $frame->expand( $args[ 3 ] ) ) : '';
-								$this->proposal_id = intval( $this->proposal_id );
-								$this->error_message = 'missing_proposal_id';
-								if ( array_key_exists( $this->proposal_id, $qdata->ProposalText ) ) {
-									return $this->qpuserchoiceValidResult( $qdata );
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		return '<strong class="error">qpuserchoice: ' . wfMsgHTML( 'qp_func_' . $this->error_message, qp_Setup::specialchars( $this->pollAddr ), qp_Setup::specialchars( $this->question_id ), qp_Setup::specialchars( $this->proposal_id ) ) . '</strong>';
-	}
-
-	function getQuestionData( $qid ) {
-		$this->question_id = $qid;
-		$this->error_message = 'invalid_question_id';
-		if ( is_numeric( $this->question_id ) ) {
-			$this->question_id = intval( $this->question_id );
-			$this->pollStore->loadQuestions();
-			$this->pollStore->setLastUser( qp_AbstractPoll::currentUserName(), false );
-			$this->pollStore->loadUserVote();
-			$this->error_message = 'missing_question_id';
-			if ( array_key_exists( $this->question_id, $this->pollStore->Questions ) ) {
-				return $this->pollStore->Questions[ $this->question_id ];
-			}
-		}
-		return false;
-	}
-
-	function qpuserchoiceValidResult( $qdata ) {
-		$result = '';
-		if ( array_key_exists( $this->proposal_id, $qdata->ProposalCategoryId ) ) {
-			foreach ( $qdata->ProposalCategoryId[ $this->proposal_id ] as $id_key => $cat_id ) {
-				if ( $result != '' ) {
-					$result .= '~';
-				}
-				if ( $this->defaultProposalText == '$' ) {
-					$result .= $cat_id;
-				} else {
-					$text_answer = $qdata->ProposalCategoryText[ $this->proposal_id ][ $id_key ];
-					if ( $text_answer != '' ) {
-						$result .= $text_answer;
-					} else {
-						$cat_name = isset( $this->args[ $cat_id + 4 ] ) ? trim( $this->frame->expand( $this->args[ $cat_id + 4 ] ) ) : '';
-						if ( $cat_name != '' ) {
-							$result .= $cat_name;
-						} else {
-							if ( $this->defaultProposalText != '' ) {
-								$result .= $this->defaultProposalText;
-							} else {
-								$result .= $qdata->Categories[$cat_id]['name'];
-								if ( isset( $qdata->Categories[$cat_id]['spanId'] ) ) {
-									$spanId = $qdata->Categories[$cat_id]['spanId'];
-									$result .= '(' . $qdata->CategorySpans[$spanId]['name'] . ')';
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		# do not need to use qp_Setup::entities because the result is a wikitext (will be escaped by parser)
-		return $result;
-	}
-
-}
+} /* end of qp_Setup class */

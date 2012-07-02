@@ -17,7 +17,7 @@ class MapsDistanceParser {
 	private static $unitRegex = false;
 	
 	/**
-	 * Parses a distance optionaly containing a unit to a float value in meters.
+	 * Parses a distance optionally containing a unit to a float value in meters.
 	 * 
 	 * @since 0.6
 	 * 
@@ -44,7 +44,7 @@ class MapsDistanceParser {
 	}
 	
 	/**
-	 * Formats a given distance in meters to a distance in an optionaly specified notation.
+	 * Formats a given distance in meters to a distance in an optionally specified notation.
 	 * 
 	 * @since 0.6
 	 * 
@@ -55,7 +55,8 @@ class MapsDistanceParser {
 	 * @return string
 	 */
 	public static function formatDistance( $meters, $unit = null, $decimals = 2 ) {
-		$meters = round( $meters / self::getUnitRatio( $unit ), $decimals );
+		global $wgContLang;
+		$meters = $wgContLang->formatNum( round( $meters / self::getUnitRatio( $unit ), $decimals ) );
 		return "$meters $unit";
 	}
 	

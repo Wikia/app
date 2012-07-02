@@ -175,11 +175,14 @@ function renderLyricTag($input, $argv, $parser)
  * The parser tag may have set a parser option (which gets cached in the parser-cache) indicating that
  * this page should have a certain index policy.
  */
-function efApplyIndexPolicy($article){
+function efApplyIndexPolicy($wikiPage){
+	global $wgUser;
 	wfProfileIn( __METHOD__ );
 
-	if(is_object($article->mParserOutput)){
-		$indexPolicy = $article->mParserOutput->getIndexPolicy();
+	$parserOptions = $wikiPage->makeParserOptions( $wgUser );
+	$parserOutput = $wikiPage->getParserOutput( $parserOptions );
+	if(is_object($parserOutput)){
+		$indexPolicy = $parserOutput->getIndexPolicy();
 		if(!empty($indexPolicy)){
 			global $wgOut;
 			$wgOut->setIndexPolicy($indexPolicy);

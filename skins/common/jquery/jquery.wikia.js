@@ -102,7 +102,7 @@ jQuery.fn.getModal = function(url, id, options) {
 jQuery.showModal = function(title, content, options) {
 	options = (typeof options != 'object') ? {} : options;
 
-	var dialog, header;
+	var dialog, header, wrapper;
 
 	$().log('showModal: plugin loaded');
 
@@ -119,12 +119,14 @@ jQuery.showModal = function(title, content, options) {
 		options.callbackBefore();
 	}
 
-	dialog.makeModal(options);
+    wrapper = dialog.makeModal(options);
 
 	// fire callback if provided
 	if (typeof options.callback == 'function') {
 		options.callback();
 	}
+
+    return wrapper;
 };
 
 // show modal version of confirm()
@@ -354,10 +356,13 @@ $.extend({
 			delete o.statics;
 		}
 
-		for (var m in o)
+		for (var m in o) {
 			bc.prototype[m] = o[m];
+		}
+
 		bc.prototype.constructor = bc;
 		bc.superclass = sc.prototype;
+
 		return bc;
 	}
 });

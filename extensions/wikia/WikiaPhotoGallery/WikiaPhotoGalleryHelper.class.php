@@ -105,12 +105,7 @@ class WikiaPhotoGalleryHelper {
 	 * Add message for MW toolbar button tooltip
 	 */
 	static public function makeGlobalVariablesScript(&$vars) {
-		wfProfileIn(__METHOD__);
-		wfLoadExtensionMessages('WikiaPhotoGallery');
-
 		$vars['WikiaPhotoGalleryAddGallery'] = wfMsg('wikiaPhotoGallery-add-gallery');
-
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -261,8 +256,7 @@ class WikiaPhotoGalleryHelper {
 				$width = min($width, $image->getWidth());
 				$height = min($height, $image->getHeight());
 
-				$thumb = $image->getThumbnail($width, $height);
-				$url = $thumb->url;
+				$url = $image->createThumb( $width, $height );
 			}
 		}
 
@@ -288,7 +282,7 @@ class WikiaPhotoGalleryHelper {
 				$width = min($width, $image->getWidth());
 				$height = min($height, $image->getHeight());
 
-				$thumb = $image->getThumbnail($width, $height);
+				$thumb = $image->transform( array( 'width' => $width, 'height' => $height ) );
 				$html = $thumb->toHtml();
 			}
 		}
@@ -564,7 +558,7 @@ class WikiaPhotoGalleryHelper {
 
 				$imageTitle = Title::newFromText($image['name'], NS_FILE);
 				$img = wfFindFile($imageTitle);
-				
+
 				$image['isFileTypeVideo'] = WikiaFileHelper::isFileTypeVideo($img);
 
 				if (empty($imageTitle) || empty($img)) {
@@ -628,7 +622,7 @@ class WikiaPhotoGalleryHelper {
 			$imageTitle = Title::newFromText($image['name'], NS_FILE);
 			$image['pageTitle'] = '';
 			$img = wfFindFile($imageTitle);
-			
+
 			if ( is_object( $img ) && ( $imageTitle->getNamespace() == NS_FILE ) ) {
 				// render thumbnail
 				$is = new ImageServing(null, self::STRICT_IMG_WIDTH_PREV, array(
@@ -639,7 +633,7 @@ class WikiaPhotoGalleryHelper {
 			} elseif ( is_object( $imageTitle ) ) {
 				$image[ 'pageTitle' ] = $imageTitle->getText();
 			}
-			
+
 			$image['isFileTypeVideo'] = WikiaFileHelper::isFileTypeVideo($img);
 
 			//need to use parse() - see RT#44270
@@ -812,21 +806,21 @@ class WikiaPhotoGalleryHelper {
 		// go through the list of images and calculate width and height of slideshow
 		foreach ( $slideshow['images'] as $nr => &$image ) {
 
-			
+
 			$imageTitle = Title::newFromText($image['name'], NS_FILE);
 
 			$imageFile = wfFindFile($imageTitle);
 
 			if (WikiaFileHelper::isFileTypeVideo( $imageFile )) {
-				unset( $slideshow['images'][$nr] ); 
+				unset( $slideshow['images'][$nr] );
 				continue;
 			}
-			
-			
+
+
 			if (!$imageTitle->exists()) {
 				continue;
 			}
-			
+
 			// get image dimensions
 			$imageFile = wfFindFile($imageTitle);
 
@@ -835,7 +829,7 @@ class WikiaPhotoGalleryHelper {
 				continue;
 			}
 
-			
+
 			//if ( WikiaFileHelper::isFileTypeVideo( $imageFile ) ) { unset($image); continue; }
 
 			$imageWidth = $imageFile->getWidth();
@@ -848,10 +842,10 @@ class WikiaPhotoGalleryHelper {
 			if ($height < $imageHeight) {
 				$height = $imageHeight;
 			}
-			
+
 		}
-		
-		
+
+
 
 		// recalculate width for maxHeight
 		$width = max($width, round($height * 4/3));
@@ -907,11 +901,9 @@ class WikiaPhotoGalleryHelper {
 		// filter out skipped images
 		$slideshow['images'] = array_filter($slideshow['images']);
 
-		
-		
-		wfDebug(__METHOD__.'::after' . "\n" . print_r($slideshow, true));
 
-		wfLoadExtensionMessages('WikiaPhotoGallery');
+
+		wfDebug(__METHOD__.'::after' . "\n" . print_r($slideshow, true));
 
 		// slideshow "overall caption"
 		$title = isset($slideshow['params']->caption) ? $slideshow['params']->caption : wfMsg('wikiaPhotoGallery-slideshow-view-title');
@@ -973,8 +965,6 @@ class WikiaPhotoGalleryHelper {
 			// link to image page (details)
 			$image['imagePage'] = $image['link'];
 		}
-
-		wfLoadExtensionMessages('WikiaPhotoGallery');
 
 		// slideshow "overall caption"
 		$title = wfMsg('wikiaPhotoGallery-lightbox-caption', $slideshow['feedTitle']);
@@ -1047,7 +1037,7 @@ class WikiaPhotoGalleryHelper {
 				$ret[] = array(
 					'name' => $image->getText(),
 					'thumb' => $thumb
-                                    
+
 				);
 			}
 		}
@@ -1121,7 +1111,6 @@ class WikiaPhotoGalleryHelper {
 			}
 		}
 
-		wfLoadExtensionMessages('WikiaPhotoGallery');
 		if (empty($gallery)) {
 			$result['info'] = 'conflict';
 
@@ -1150,16 +1139,25 @@ class WikiaPhotoGalleryHelper {
 				}
 
 				$bot = $wgUser->isAllowed('bot');
-				$retval = $editPage->internalAttemptSave( $result, $bot );
+				$status = $editPage->internalAttemptSave( $result, $bot );
+				$retval = $status->value;
+
 				Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
-				if ( $retval == EditPage::AS_SUCCESS_UPDATE || $retval == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-					$wgTitle->invalidateCache();
-					Article::onArticleEdit($wgTitle);
-					$result['info'] = 'ok';
-				} elseif ( $retval == EditPage::AS_SPAM_ERROR ) {
-					$result['error'] = wfMsg('spamprotectiontext') . '<p>( Call #4 )</p>';
-				} else {
-					$result['error'] = wfMsg('wikiaPhotoGallery-edit-abort');
+
+				switch ($retval) {
+					case EditPage::AS_SUCCESS_UPDATE:
+					case EditPage::AS_SUCCESS_NEW_ARTICLE:
+						$wgTitle->invalidateCache();
+						Article::onArticleEdit($wgTitle);
+						$result['info'] = 'ok';
+						break;
+
+					case EditPage::AS_SPAM_ERROR:
+						$result['error'] = wfMsg('spamprotectiontext') . '<p>( Call #4 )</p>';
+						break;
+
+					default:
+						$result['error'] = wfMsg('wikiaPhotoGallery-edit-abort');
 				}
 			} else {
 				$result['error'] = wfMsg('wikiaPhotoGallery-error-user-rights');

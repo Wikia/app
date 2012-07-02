@@ -16,10 +16,12 @@
 	<!-- CSS injected by extensions -->
 	<?= $csslinks ?>
 	<?php
+		/* // not used anymore - provided by modules=site in ResourceLoader - @author: wladek
 		$srcs = AssetsManager::getInstance()->getGroupLocalURL($isUserLoggedIn ? 'site_user_css' : 'site_anon_css');
 		foreach($srcs as $src) {
 			echo '<link rel="stylesheet" href="'. htmlspecialchars( $src ) .'">';
 		}
+		*/
 
 		// Add the wiki and user-specific overrides last.  This is a special case in Oasis because the modules run
 		// later than normal extensions and therefore add themselves later than the wiki/user specific CSS is
@@ -42,29 +44,30 @@
 		}
 	?>
 
-	<?= $globalVariablesScript ?>
-	
+	<?= $topScripts ?>
+	<?= ''//$globalVariablesScript ?>
+
 	<?= $wikiaScriptLoader; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 	<!-- Make IE recognize HTML5 tags. -->
 	<!--[if IE]>
 		<script>/*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/</script>
 	<![endif]-->
-	
+
 	<?php if( !$jsAtBottom ):?>
 		<!--[if lt IE 8]>
-			<script src="<?= $wg->StylePath ?>/common/json2.js"></script>
+			<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/json2/json2.js"></script>
 		<![endif]-->
 
 		<!--[if lt IE 9]>
-			<script src="<?= $wg->StylePath ?>/common/wikia/html5.min.js"></script>
+			<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/html5/html5.min.js"></script>
 		<![endif]-->
 
 		<!-- Combined JS files and head scripts -->
 		<?= $jsFiles ;?>
 	<?endif;?>
 	<? if($displayAdminDashboard) { ?>
-		<!--[if IE]><script src="<?= $wg->StylePath ?>/common/excanvas.js"></script><![endif]-->
+		<!--[if IE]><script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/excanvas/excanvas.js"></script><![endif]-->
 	<? } ?>
 
 	<?= $headitems ?>
@@ -95,11 +98,11 @@
 ?>
 <?if( $jsAtBottom ):?>
 		<!--[if lt IE 8]>
-			<script src="<?= $wg->StylePath ?>/common/json2.js"></script>
+			<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/json2/json2.js"></script>
 		<![endif]-->
 
 		<!--[if lt IE 9]>
-			<script src="<?= $wg->StylePath ?>/common/wikia/html5.min.js"></script>
+			<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/html5/html5.min.js"></script>
 		<![endif]-->
 
 		<!-- Combined JS files and head scripts -->

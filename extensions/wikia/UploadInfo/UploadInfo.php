@@ -40,7 +40,7 @@ class UploadInfo {
 
 		$mTitle = $title->getText();
 		$relPath = $uploadForm->getLocalFile()->getRel();
-		$fullPath = $uploadForm->getLocalFile()->getFullPath();
+		$fullPath = $uploadForm->getLocalFile()->getPath();
 
 		$aHistory = $uploadForm->getLocalFile()->getHistory(1);
 		$oldPath = false;

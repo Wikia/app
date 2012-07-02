@@ -6,12 +6,12 @@ require_once ( 'maintenance_util.inc.php');
 
 if ( count( $args ) == 0 || isset ( $options['help'] ) ) {
 	print<<<EOT
-	Programatic updates of Templates 
+	Programatic updates of Templates
 	defaut: updates no template
-	
+
 	options: template_name #updates template by name
-			 all #updates all templates 
-			
+			 all #updates all templates
+
 
 EOT;
 die();
@@ -33,7 +33,7 @@ switch ( $args[0] ) {
 
 function upTemplates( $templateName, $force = false ) {
 	global $valid_attributes;
-	
+
 if($templateName=='Ht_en'){
 /***************************************************
  * Transcripts:
@@ -83,7 +83,7 @@ if($templateName=='Bill'){
 	{{ #if: {{{Sponsor|}}}|* Sponsor: [[Bill Sponsor:={{{Sponsor}}}]] |}}';
 	$bill_template .= '
 	{{ #if: {{{Cosponsor 1|}}}|* Cosponsor: [[Bill Cosponsor:={{{Cosponsor 1}}}]] |}}';
-	
+
 	// $bill_template.='{{ #for: {{{n}}} | {{{Cosponsor $n$}}}<br /> }}';
 	for ( $i = 2; $i < 70; $i++ ) {
 	$bill_template .= '{{ #if: {{{Cosponsor ' . $i . '|}}}|, [[Bill Cosponsor:={{{Cosponsor ' . $i . '}}}]] |}}';
@@ -105,7 +105,7 @@ if($templateName=='Bill'){
 	* Blog Coverage [http://www.opencongress.org/bill/{{{OpenCongressBillID|}}}/atom_blogs]
 	* Bill Actions [http://www.opencongress.org/bill/{{{OpenCongressBillID|}}}/atom][[Open Congress Bill ID:={{{OpenCongressBillID|}}}|]]
 	|}}';
-	
+
 	$bill_template .= '
 	==Data Sources==
 	{{ #if: {{{ThomasID|}}}|* [[Metavid Sources#Thomas|Thomas]] Official Bill Information:[[Data_Source_URL:=http://thomas.loc.gov/cgi-bin/bdquery/z?{{{ThomasID}}}:]] [[Thomas Bill ID:={{{ThomasID}}}| ]]
@@ -117,7 +117,7 @@ if($templateName=='Bill'){
 	// update bill template:
 	$wgTemplateTitle = Title :: makeTitle( NS_TEMPLATE, 'Bill' );
 		do_update_wiki_page( $wgTemplateTitle, $bill_template , null, $force );
-	
+
 	// update semnatic property types:
 	foreach ( array( 'Page' => array( 'Bill Key', 'Bill Sponsor', 'Bill Cosponsor', 'Congress Session' ),
 				  'String' => array( 'Thomas Bill ID', 'Open_Congress_Bill_ID', 'GovTrack_Bill_ID', 'MAPLight_Bill_ID' ),
@@ -148,7 +148,7 @@ if($templateName=='Interest Group'){
 	{{ #if: {{{Funded Name 1|}}}|==Recipients Funded==
 	Showing contributions 2001-2008 Senate / 2005-2008 House [[Data_Source_URL:=http://maplight.org/map/us/interest/{{{MAPLight Interest ID}}}/view/all|MAPLight source]]
 	|}}';
-	/*
+	/**
 	 * output top $mvMaxContribPerInterest contributers
 	 */
 	for ( $i = 1; $i <= $mvMaxContribPerInterest; $i++ ) {
@@ -159,8 +159,8 @@ if($templateName=='Interest Group'){
 			$interest_template .= '{{ #if: {{{Funded Name ' . $i . '|}}}|*[[Funded:={{{Funded Name ' . $i . '}}};{{{Funded Amount ' . $i . '}}}|]] |}}';
 		}
 	}
-	
-	/*
+
+	/**
 	 * output bills supported / opposed template vars:
 	 */
 	foreach ( array( 'Supported', 'Opposed' ) as $pos ) {
@@ -175,15 +175,15 @@ if($templateName=='Interest Group'){
 	}
 	$interest_template .= '[[Category:Interest Group]]
 	</includeonly>';
-	
+
 	$wgTemplateTitle = Title :: makeTitle( NS_TEMPLATE, 'Interest Group' );
 	do_update_wiki_page( $wgTemplateTitle, $interest_template , null, $force );
-	
+
 	$wgPropTitle = Title::newFromText( 'Funded', SMW_NS_PROPERTY );
 	do_update_wiki_page( $wgPropTitle, '[[has type:=Page;Number]]', null, $force );
 }
 if($templateName=='Congress_Person'){
-	$template_body = '<noinclude>Congress Person template simplifies 
+	$template_body = '<noinclude>Congress Person template simplifies
 			the structure of articles about Congress People.
 			<pre>{{Congress Person|'."\n";
 	foreach ( $valid_attributes as $dbKey => $attr ) {
@@ -234,13 +234,13 @@ $template_body .='
 <div class="block">
 <h6 class="profile">Top Funding Sources</h6>
 </div>
-{{ #if: {{{MAPLight Person ID|}}}|[[Data_Source_URL:=http://www.maplight.org/map/us/legislator/{{{MAPLight Person ID}}}|MAPLight Source]]  
+{{ #if: {{{MAPLight Person ID|}}}|[[Data_Source_URL:=http://www.maplight.org/map/us/legislator/{{{MAPLight Person ID}}}|MAPLight Source]]
  |}}{{ #if: {{{Total Received|}}}|Total Campaign Contributions for {{PAGENAME}}: {{{Total Received}}} <br />|}}
 {{ #if: {{{Contributions Date Range|}}}|Contributions Date Range: {{{Contributions Date Range}}} |}}
 <ul>
-{{ #if: {{{Funding Interest 1|}}}|<li>[[Funding Interest:={{{Funding Interest 1}}};{{{Funding Amount 1}}}]]</li> 
-|}}{{ #if: {{{Funding Interest 2|}}}|<li>[[Funding Interest:={{{Funding Interest 2}}};{{{Funding Amount 2}}}]]</li> 
-|}}{{ #if: {{{Funding Interest 3|}}}|<li>[[Funding Interest:={{{Funding Interest 3}}};{{{Funding Amount 3}}}]]</li> 
+{{ #if: {{{Funding Interest 1|}}}|<li>[[Funding Interest:={{{Funding Interest 1}}};{{{Funding Amount 1}}}]]</li>
+|}}{{ #if: {{{Funding Interest 2|}}}|<li>[[Funding Interest:={{{Funding Interest 2}}};{{{Funding Amount 2}}}]]</li>
+|}}{{ #if: {{{Funding Interest 3|}}}|<li>[[Funding Interest:={{{Funding Interest 3}}};{{{Funding Amount 3}}}]]</li>
 |}}{{ #if: {{{Funding Interest 4|}}}|<li>[[Funding Interest:={{{Funding Interest 4}}};{{{Funding Amount 4}}}]]</li>
 |}}</ul>
 {{ #if: {{{Funding Interest 5|}}}|[[Funding Interest:={{{Funding Interest 5}}};{{{Funding Amount 5}}}|]]|}}{{ #if: {{{Funding Interest 6|}}}|*[[Funding Interest:={{{Funding Interest 6}}};{{{Funding Amount 6}}}| ]]|}}{{ #if: {{{Funding Interest 7|}}}|*[[Funding Interest:={{{Funding Interest 7}}};{{{Funding Amount 7}}}| ]]|}}{{ #if: {{{Funding Interest 8|}}}|[[Funding Interest:={{{Funding Interest 8}}};{{{Funding Amount 8}}}|]]|}}{{ #if: {{{Funding Interest 9|}}}|[[Funding Interest:={{{Funding Interest 9}}};{{{Funding Amount 9}}}|]]|}}{{ #if: {{{Funding Interest 10|}}}|[[Funding Interest:={{{Funding Interest 10}}};{{{Funding Amount 10}}}|]]|}}
@@ -249,38 +249,38 @@ $template_body .='
 
 {{ #if: {{{Committee Member 1|}}}|
 ===Committee Membership===
-|}}{{ #if: {{{Committee Member 1|}}}|*[[Committee Member:={{{Member of Committee 1}}}]] 
-|}}{{ #if: {{{Committee Member 2|}}}|*[[Committee Member:={{{Member of Committee 2}}}]] 
-|}}{{ #if: {{{Committee Member 3|}}}|*[[Committee Member:={{{Member of Committee 3}}}]] 
-|}}{{ #if: {{{Committee Member 4|}}}|*[[Committee Member:={{{Member of Committee 4}}}]] 
-|}}{{ #if: {{{Committee Member 5|}}}|*[[Committee Member:={{{Member of Committee 5}}}]] 
-|}}{{ #if: {{{Committee Member 6|}}}|*[[Committee Member:={{{Member of Committee 6}}}]] 
-|}}{{ #if: {{{Committee Member 7|}}}|*[[Committee Member:={{{Member of Committee 7}}}]] 
-|}}{{ #if: {{{Committee Member 8|}}}|*[[Committee Member:={{{Member of Committee 8}}}]] 
-|}}{{ #if: {{{Committee Member 9|}}}|*[[Committee Member:={{{Member of Committee 9}}}]] 
-|}}{{ #if: {{{Committee Member 10|}}}|*[[Committee Member:={{{Member of Committee 10}}}]] 
-|}}{{ #if: {{{Committee Member 11|}}}|*[[Committee Member:={{{Member of Committee 11}}}]] 
-|}}{{ #if: {{{Committee Member 12|}}}|*[[Committee Member:={{{Member of Committee 12}}}]] 
-|}}{{ #if: {{{Committee Member 13|}}}|*[[Committee Member:={{{Member of Committee 13}}}]] 
-|}}{{ #if: {{{Committee Member 14|}}}|*[[Committee Member:={{{Member of Committee 14}}}]] 
-|}}{{ #if: {{{Committee Member 15|}}}|*[[Committee Member:={{{Member of Committee 15}}}]] 
+|}}{{ #if: {{{Committee Member 1|}}}|*[[Committee Member:={{{Member of Committee 1}}}]]
+|}}{{ #if: {{{Committee Member 2|}}}|*[[Committee Member:={{{Member of Committee 2}}}]]
+|}}{{ #if: {{{Committee Member 3|}}}|*[[Committee Member:={{{Member of Committee 3}}}]]
+|}}{{ #if: {{{Committee Member 4|}}}|*[[Committee Member:={{{Member of Committee 4}}}]]
+|}}{{ #if: {{{Committee Member 5|}}}|*[[Committee Member:={{{Member of Committee 5}}}]]
+|}}{{ #if: {{{Committee Member 6|}}}|*[[Committee Member:={{{Member of Committee 6}}}]]
+|}}{{ #if: {{{Committee Member 7|}}}|*[[Committee Member:={{{Member of Committee 7}}}]]
+|}}{{ #if: {{{Committee Member 8|}}}|*[[Committee Member:={{{Member of Committee 8}}}]]
+|}}{{ #if: {{{Committee Member 9|}}}|*[[Committee Member:={{{Member of Committee 9}}}]]
+|}}{{ #if: {{{Committee Member 10|}}}|*[[Committee Member:={{{Member of Committee 10}}}]]
+|}}{{ #if: {{{Committee Member 11|}}}|*[[Committee Member:={{{Member of Committee 11}}}]]
+|}}{{ #if: {{{Committee Member 12|}}}|*[[Committee Member:={{{Member of Committee 12}}}]]
+|}}{{ #if: {{{Committee Member 13|}}}|*[[Committee Member:={{{Member of Committee 13}}}]]
+|}}{{ #if: {{{Committee Member 14|}}}|*[[Committee Member:={{{Member of Committee 14}}}]]
+|}}{{ #if: {{{Committee Member 15|}}}|*[[Committee Member:={{{Member of Committee 15}}}]]
 
 |}}
 </div>';
-		//output all the database fileds (hidden): 
+		//output all the database fileds (hidden):
 		foreach ( $valid_attributes as $dbKey => $attr ) {
 			list ( $name, $desc ) = $attr;
 				$template_body .= "{{ #if: {{{" . $name . "|}}}| [[$name:={{{" . $name . "}}}| ]] |}}";
-		}	
-		//finish up template output: 
+		}
+		//finish up template output:
 $template_body .='
 [[Category:Congress Person]] [[Category:Person]]
 <div style="clear:both"></div>
 </includeonly>';
-		//now insert template body: 
+		//now insert template body:
 		$wgTemplateTitle = Title :: makeTitle( NS_TEMPLATE, 'Congress_Person' );
 		do_update_wiki_page( $wgTemplateTitle, $template_body , null, $force );
-		
+
 		//update attribute string types:
 		foreach ( $valid_attributes as $dbKey => $attr ) {
 			list ( $name, $desc, $type ) = $attr;

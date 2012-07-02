@@ -28,17 +28,19 @@ class Licenses extends HTMLFormField {
 
 	/**
 	 * Constructor
+	 *
+	 * @param $params array
 	 */
 	public function __construct( $params ) {
 		parent::__construct( $params );
-		
+
 		$this->msg = empty( $params['licenses'] ) ? wfMsgForContent( 'licenses' ) : $params['licenses'];
 		$this->selected = null;
 
 		$this->makeLicenses();
 	}
 
-	/**#@+
+	/**
 	 * @private
 	 */
 	protected function makeLicenses() {
@@ -46,9 +48,9 @@ class Licenses extends HTMLFormField {
 		$lines = explode( "\n", $this->msg );
 
 		foreach ( $lines as $line ) {
-			if ( strpos( $line, '*' ) !== 0 )
+			if ( strpos( $line, '*' ) !== 0 ) {
 				continue;
-			else {
+			} else {
 				list( $level, $line ) = $this->trimStars( $line );
 
 				if ( strpos( $line, '|' ) !== false ) {
@@ -60,7 +62,7 @@ class Licenses extends HTMLFormField {
 					}
 					if ( $level == count( $levels ) ) {
 						$levels[$level - 1] = $line;
-					} else if ( $level > count( $levels ) ) {
+					} elseif ( $level > count( $levels ) ) {
 						$levels[] = $line;
 					}
 				}
@@ -68,21 +70,34 @@ class Licenses extends HTMLFormField {
 		}
 	}
 
+	/**
+	 * @param $str
+	 * @return array
+	 */
 	protected function trimStars( $str ) {
-		$i = $count = 0;
-
 		$numStars = strspn( $str, '*' );
 		return array( $numStars, ltrim( substr( $str, $numStars ), ' ' ) );
 	}
 
+	/**
+	 * @param $list
+	 * @param $path
+	 * @param $item
+	 */
 	protected function stackItem( &$list, $path, $item ) {
 		$position =& $list;
-		if ( $path )
-			foreach( $path as $key )
+		if ( $path ) {
+			foreach( $path as $key ) {
 				$position =& $position[$key];
+			}
+		}
 		$position[] = $item;
 	}
 
+	/**
+	 * @param $tagset
+	 * @param $depth int
+	 */
 	protected function makeHtml( $tagset, $depth = 0 ) {
 		foreach ( $tagset as $key => $val )
 			if ( is_array( $val ) ) {
@@ -104,17 +119,28 @@ class Licenses extends HTMLFormField {
 			}
 	}
 
+	/**
+	 * @param $text
+	 * @param $value
+	 * @param $attribs null
+	 * @param $depth int
+	 * @return string
+	 */
 	protected function outputOption( $text, $value, $attribs = null, $depth = 0 ) {
 		$attribs['value'] = $value;
 		if ( $value === $this->selected )
-			$attribs['selected'] = 'selected';		
+			$attribs['selected'] = 'selected';
 		$val = str_repeat( /* &nbsp */ "\xc2\xa0", $depth * 2 ) . $text;
 		return str_repeat( "\t", $depth ) . Xml::element( 'option', $attribs, $val ) . "\n";
 	}
 
+	/**
+	 * @param $str string
+	 * @return String
+	 */
 	protected function msg( $str ) {
-		$out = wfMsg( $str );
-		return wfEmptyMsg( $str, $out ) ? $str : $out;
+		$msg = wfMessage( $str );
+		return $msg->exists() ? $msg->text() : $str;
 	}
 
 	/**#@-*/
@@ -124,27 +150,32 @@ class Licenses extends HTMLFormField {
 	 *
 	 * @return array
 	 */
-	public function getLicenses() { return $this->licenses; }
+	public function getLicenses() {
+		return $this->licenses;
+	}
 
 	/**
 	 * Accessor for $this->html
+	 *
+	 * @param $value bool
 	 *
 	 * @return string
 	 */
 	public function getInputHTML( $value ) {
 		$this->selected = $value;
-		
+
 		$this->html = $this->outputOption( wfMsg( 'nolicense' ), '',
 			(bool)$this->selected ? null : array( 'selected' => 'selected' ) );
 		$this->makeHtml( $this->getLicenses() );
-		
+
 		$attribs = array(
 			'name' => $this->mName,
 			'id' => $this->mID
 		);
-		if ( !empty( $this->mParams['disabled'] ) )
+		if ( !empty( $this->mParams['disabled'] ) ) {
 			$attibs['disabled'] = 'disabled';
-		
+		}
+
 		return Html::rawElement( 'select', $attribs, $this->html );
 	}
 }
@@ -168,7 +199,7 @@ class License {
 	 *
 	 * @param $str String: license name??
 	 */
-	function License( $str ) {
+	function __construct( $str ) {
 		list( $text, $template ) = explode( '|', strrev( $str ), 2 );
 
 		$this->template = strrev( $template );

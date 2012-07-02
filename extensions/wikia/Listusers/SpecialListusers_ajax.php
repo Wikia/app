@@ -50,7 +50,6 @@ class ListusersAjax {
 		);
 
 		if ( is_object($wgUser) ) {
-			wfLoadExtensionMessages(Listusers::TITLE);
 
 			$records = array();
 			$data = new ListusersData($wgCityId, 0);

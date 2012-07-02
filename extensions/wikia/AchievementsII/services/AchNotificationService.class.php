@@ -79,7 +79,6 @@ class AchNotificationService {
 		$badge = $this->getBadgeToNotify($userObj->getId());
 
 		if($badge !== null) {
-			wfLoadExtensionMessages('AchievementsII');
 			$template = new EasyTemplate(dirname(__FILE__).'/../templates');
 
 			$template->set_vars(array(

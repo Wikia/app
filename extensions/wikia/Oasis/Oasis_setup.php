@@ -55,17 +55,14 @@ function wfOasisSetup() {
 	$wgHooks['UploadVerification'][] = 'Oasis_UploadVerification';
 	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderController::saveFacebookConnectProfile';
 	$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
+	$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
 
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
-	// messages
-	wfLoadExtensionMessages('Oasis');
-
-	$jsMessages = F::build('JSMessages');
-
 	//Oasis-navigation-v2 messages
+	$jsMessages = F::build('JSMessages');
 	$jsMessages->registerPackage('Oasis-navigation-v2', array(
 		'oasis-navigation-v2-*'
 	));
@@ -256,7 +253,7 @@ function moduleProxy() {
 $wgExtensionMessagesFiles['Oasis'] = dirname(__FILE__) . '/Oasis.i18n.php';
 
 $wgExtensionCredits['other'][] = array(
-	'name' => 'Toolbar Customize',
+	'name' => 'Oasis Skin',
 	'version' => '1.0',
-	'author' => array('Władysław Bodzek'),
+	'author' => array('Wikia'),
 );

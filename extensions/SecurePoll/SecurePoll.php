@@ -15,9 +15,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'SecurePoll',
-	'author' => array( 'Tim Starling', 'others' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:SecurePoll',
-	'description' => 'Extension for secure elections and surveys',
+	'author' => array( 'Tim Starling', '...' ),
+	'url' => 'https://www.mediawiki.org/wiki/Extension:SecurePoll',
 	'descriptionmsg' => 'securepoll-desc',
 );
 
@@ -37,13 +36,18 @@ $wgSecurePollTempDir = '/tmp';
  */
 $wgSecurePollShowErrorDetail = false;
 
+/**
+ * Relative URL path to auth-api.php
+ */
+$wgSecurePollScript = 'extensions/SecurePoll/auth-api.php';
+
 ### END CONFIGURATON ###
 
 
 // Set up the new special page
 $dir = dirname( __FILE__ );
 $wgExtensionMessagesFiles['SecurePoll'] = "$dir/SecurePoll.i18n.php";
-$wgExtensionAliasesFiles['SecurePoll'] = "$dir/SecurePoll.alias.php";
+$wgExtensionMessagesFiles['SecurePollAlias'] = "$dir/SecurePoll.alias.php";
 
 $wgSpecialPages['SecurePoll'] = 'SecurePoll_BasePage';
 
@@ -54,6 +58,7 @@ $wgAutoloadClasses = $wgAutoloadClasses + array(
 	'SecurePoll_ChooseBallot' => "$dir/includes/ballots/ChooseBallot.php",
 	'SecurePoll_PreferentialBallot' => "$dir/includes/ballots/PreferentialBallot.php",
 	'SecurePoll_RadioRangeBallot' => "$dir/includes/ballots/RadioRangeBallot.php",
+	'SecurePoll_RadioRangeCommentBallot' => "$dir/includes/ballots/RadioRangeCommentBallot.php",
 
 	# crypt
 	'SecurePoll_Crypt' => "$dir/includes/crypt/Crypt.php",
@@ -93,7 +98,9 @@ $wgAutoloadClasses = $wgAutoloadClasses + array(
 	'SecurePoll_PairwiseTallier' => "$dir/includes/talliers/PairwiseTallier.php",
 	'SecurePoll_PluralityTallier' => "$dir/includes/talliers/PluralityTallier.php",
 	'SecurePoll_SchulzeTallier' => "$dir/includes/talliers/SchulzeTallier.php",
+	'SecurePoll_AlternativeVoteTallier' => "$dir/includes/talliers/AlternativeVoteTallier.php",
 	'SecurePoll_Tallier' => "$dir/includes/talliers/Tallier.php",
+	'SecurePoll_CommentDumper' => "$dir/includes/talliers/CommentDumper.php",
 
 	# user
 	'SecurePoll_Auth' => "$dir/includes/user/Auth.php",

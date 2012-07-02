@@ -83,7 +83,7 @@ class PageStatsService extends Service {
 		$wgMemc->delete($this->getKey('previous-edits'));
 
 		// invalidate cached data from getCommentsCount()
-		$title = Title::newFromId($this->pageId, GAID_FOR_UPDATE /* fix for slave lag */);
+		$title = Title::newFromId($this->pageId, Title::GAID_FOR_UPDATE /* fix for slave lag */);
 
 		if (!empty($title)) {
 			$pageName = $title->getPrefixedText();
@@ -206,9 +206,8 @@ class PageStatsService extends Service {
 		} else {
 			$title = Title::newFromId( $this->pageId );
 		}
-
-		// don't perform for talk pages
-		if (empty($title) || $title->isTalkPage()) {
+		// don't perform for talk pages or special pages
+		if (empty($title) || $title->isTalkPage() || $title->isSpecialPage() ) {
 			wfProfileOut(__METHOD__);
 			return 0;
 		}

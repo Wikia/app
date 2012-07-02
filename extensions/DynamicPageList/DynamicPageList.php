@@ -1,5 +1,4 @@
 <?php
-
 /*
    This is the main entry point for DPL installations
    --------------------------------------------------
@@ -14,12 +13,12 @@
 
         ExtDynamicPageList::setFunctionalRichness(  <n>  );
 
-	where <n> is a number between 0 and 4.  
+	where <n> is a number between 0 and 4.
 
-	If your wiki has been using Extension:Intersection you must UNINSTALL that 
+	If your wiki has been using Extension:Intersection you must UNINSTALL that
 	extension before you can use DynamicPageList (DPL).
 
-	DPL is downward compatible with Extension:Intersection. It registers 
+	DPL is downward compatible with Extension:Intersection. It registers
 	the tag <DynamicPageList> and behaves exactly like ExtensionIntersection
 	(without any additional functionality).
 
@@ -33,7 +32,7 @@
 	in your LocalSettings.php.
 
 	Some functions of DPL are quite useful but if abused (by error or bad intention) they may put severe load
-	on your server / database. For wikis up to 10.000 pages this is normally not a problem, 
+	on your server / database. For wikis up to 10.000 pages this is normally not a problem,
 	but with larger wikis some care is advisable.
 
 	By default the RichnessLevel is set to 4 (= activate whole set of functions).
@@ -43,7 +42,7 @@
 	-  level=1 brings a series of improvements which will not affect performance
 	-  level=2 brings some additional features which are roughly on the same level of database load
 			   as the basic functionality; also contains content transclusion (which may require
-               the dpl-cache on huge websites)
+               the DPL-cache on huge websites)
 	-  level=3 brings more new features: selection based on regular expressions, queries on
 	           revision level
 	-  level=4 adds a few additional features which are useful for private websites (like batch updates)
@@ -51,22 +50,26 @@
 
 */
 
+if( !defined( 'MEDIAWIKI' ) ) {
+	die( 'This is not a valid entry point to MediaWiki.' );
+}
+
 // we register the tag <dpl> and function #dpl
 // we also register the tag <DynamicPageList> because DPL is downward compatible with Extension:Intersection
 // This means that your LocalSettings.php MUST NO LONGER include Extension:Intersection;
 
-//$wgExtensionFunctions[] = array( 'ExtDynamicPageList', 'setupDPL' );
 $wgHooks['ParserFirstCallInit'][] = 'ExtDynamicPageList::setupDPL';
 
-$wgHooks['LanguageGetMagic'][] = 'ExtDynamicPageList__languageGetMagic';
+$wgExtensionMessagesFiles['DynamicPageList'] =  dirname( __FILE__ ) . '/DynamicPageList.i18n.php';
+$wgExtensionMessagesFiles['DynamicPageListMagic'] =  dirname( __FILE__ ) . '/DynamicPageList.i18n.magic.php';
 
-$DPLVersion = '1.8.9';
+$DPLVersion = '1.9.0';
 
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'DynamicPageList',
 	'author' => '[http://de.wikipedia.org/wiki/Benutzer:Algorithmix Gero Scholz]',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:DynamicPageList_(third-party)',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:DynamicPageList_(third-party)',
 	'descriptionmsg' => 'dpl-desc',
 	'version' => $DPLVersion
 );
@@ -77,5 +80,3 @@ ExtDynamicPageList::$DPLVersion = $DPLVersion;
 
 // use full functionality by default
 ExtDynamicPageList::setFunctionalRichness( 4 );
-
-// MyBug::trace('','','');

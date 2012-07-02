@@ -22,9 +22,8 @@ $wgExtensionCredits['parserhook'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Gnuplot',
 	'author'         => 'Christina Pöpper',
-	'description'    => 'Adds the tag <code><nowiki><gnuplot></nowiki></code> to use Gnuplot',
 	'descriptionmsg' => 'gnuplot-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Gnuplot',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Gnuplot',
 );
 
 $wgExtensionMessagesFiles['Gnuplot'] =  dirname(__FILE__) . '/Gnuplot.i18n.php';
@@ -33,11 +32,11 @@ $wgGnuplotCommand = '/usr/bin/gnuplot';
 $wgGnuplotDefaultTerminal = 'set terminal png';
 $wgGnuplotDefaultSize = 'set size 0.5,0.5';
 
-$wgExtensionFunctions[] = "wfGnuplotExtension";
+$wgHooks['ParserFirstCallInit'][] = 'wfGnuplotSetHook';
 
-function wfGnuplotExtension() {
-	global $wgParser;
-	$wgParser->setHook( "gnuplot", "renderGnuplot" );
+function wfGnuplotSetHook( $parser ) {
+	$parser->setHook( "gnuplot", "renderGnuplot" );
+	return true;
 }
 
 function renderGnuplot( $gnuplotsrc ) {

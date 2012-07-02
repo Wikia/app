@@ -52,8 +52,7 @@ $messages = array(
 'tog-editsection'             => '[सम्पादन] लिङ्कं सेक्सन सम्पादन यायेज्युगु यानादिसँ',
 'tog-editsectiononrightclick' => 'सेक्सनया छ्यँआखले राइट क्लिक याना सेक्सन सम्पादन यायेज्युगु यानादिसँ (जाभास्क्रिप्ट)',
 'tog-showtoc'                 => 'कन्टेण्टया धलः क्यनादिसँ (३गु स्वया अप्व शिर्षक दुगु पौया निंति)',
-'tog-rememberpassword'        => 'जिगु लग इन थ्व कम्प्युतरय् लुमंकादिसँ',
-'tog-editwidth'               => 'सम्पादन सन्दुकया ब्याः जायेधुंकल',
+'tog-rememberpassword'        => 'जिगु लग इन थ्व कम्प्युतरय् लुमंकादिसँ (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'tog-watchcreations'          => 'जिं देकागु / न्ह्यथनागु पौयात जिगु दृष्टिधलः(watchlist)य् तयादिसँ',
 'tog-watchdefault'            => 'जिं सम्पादन यानागु पौयात जिगु वाचलिस्टय् तयादिसँ',
 'tog-watchmoves'              => 'जिं संकागु (move) पौयात जिगु वाचलिस्टय् तयादिसँ',
@@ -179,7 +178,6 @@ $messages = array(
 'history'          => 'पौया इतिहास',
 'history_short'    => 'इतिहास',
 'updatedmarker'    => 'जिं दक्ले लिपा पौ स्वे धुंकाया अपडेट',
-'info_short'       => 'जानकारी',
 'printableversion' => 'ध्वायेज्युगु संस्करण',
 'permalink'        => 'स्थायी लिङ्क',
 'print'            => 'ध्वानादिसँ',
@@ -314,7 +312,6 @@ MySQL नं इरर "<tt>$3: $4</tt>" क्यंगु दु।',
 # Preferences page
 'mypreferences'  => 'जिगु प्राथमिकता',
 'changepassword' => 'पासवर्द हिलादिसँ',
-'prefs-math'     => 'गणित',
 'prefs-datetime' => 'दिं व ई',
 'prefs-personal' => 'छ्य्‌लामि प्रोफाइल',
 'prefs-rc'       => 'न्हुगु हिलेज्या',
@@ -362,9 +359,6 @@ MySQL नं इरर "<tt>$3: $4</tt>" क्यंगु दु।',
 
 # Special:Categories
 'categories' => 'पुचःत',
-
-# Special:Log/newusers
-'newuserlog-create-entry' => 'न्हुम्ह छ्येलेमि',
 
 # Restrictions (nouns)
 'restriction-edit' => 'सम्पादन',

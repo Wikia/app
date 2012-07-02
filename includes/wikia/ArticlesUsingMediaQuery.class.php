@@ -78,33 +78,28 @@ class ArticlesUsingMediaQuery
 
 		$this->memc->set( $this->getMemcKey(), null );
 	}
-
-	public static function onUpdateLinks( &$LinksUpdate ) {
-
-		$imageList = $LinksUpdate->getExistingImages();
-		$imageDeletes = $LinksUpdate->getImageDeletions( $imageList );
-		$imageInserts = $LinksUpdate->getImageInsertions( $imageList );
-
-		foreach ( $imageDeletes as $img ) {
-			$imageList[ $img['il_to'] ] = 1;
+	
+	public static function onArticleSaveComplete($article, $user, $revision, $status) {
+		wfProfileIn(__METHOD__);
+		
+		$insertedImages = Wikia::getVar('imageInserts');
+		$imageDeletes = Wikia::getVar('imageDeletes');
+		
+		$changedImages = $imageDeletes;
+		foreach($insertedImages as $img) {
+			$changedImages[ $img['il_to'] ] = true;
 		}
-
-		foreach ( $imageInserts as $img ) {
-			$imageList[ $img['il_to'] ] = 1;
+		
+		foreach( $changedImages as $imageDBName => $dummy) {
+			$title = Title::newFromDBkey( $imageDBName );
+			if ( !empty( $title ) ) {
+				$mq = new self( $title );
+				$mq->unsetCache();
+			}						
 		}
-
-		if ( is_array( $imageList ) ) {
-
-			foreach ( $imageList as $imageDBName => $v ) {
-
-				$title = Title::newFromDBkey( $imageDBName );
-				if ( !empty( $title ) ) {
-					$mq = new self( $title );
-					$mq->unsetCache();
-				}
-			}
-		}
+		wfProfileOut(__METHOD__);
 		return true;
+		
 	}
 
 	public static function onArticleDelete( &$article, &$wgUser=false, &$reason=false, &$error=false ) {

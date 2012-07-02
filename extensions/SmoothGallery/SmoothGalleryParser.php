@@ -1,12 +1,11 @@
 <?php
 
 class SmoothGalleryParser {
-
 	var $set;
 	var $argumentArray;
 	var $galleriesArray;
 
-	function SmoothGalleryParser( $input, $argv, &$parser, $calledAsSet = false ) {
+	function __construct( $input, $argv, &$parser, $calledAsSet = false ) {
 		$this->set = $calledAsSet;
 		$this->parseArguments( $argv );
 		$this->parseGalleries( $input, $parser );
@@ -26,7 +25,7 @@ class SmoothGalleryParser {
 						"delay" => "9000", "showarrows" => true, "showinfopane" => true,
 						"slideinfozoneslide" => true, "slideinfozoneopacity" => "0.7", "fallback" => "gallery",
 						"nolink" => false );
-						
+
 		if ( isset( $argv["height"] ) && is_numeric( $argv["height"] ) ) {
 			$this->argumentArray["height"] = $argv["height"] . "px";
 		}
@@ -89,7 +88,7 @@ class SmoothGalleryParser {
 			// collect the fallback output
 			$i = 0;
 			foreach ( $galleries as $galleryInput ) {
-				// TOFIX:
+				// FIXME:
 				// This couldn't possibly be right... If these are different
 				// galleries in a gallery set, shouldn't they have unique names?
 				$name = "MediaWikiSGallery" . $i;
@@ -110,7 +109,6 @@ class SmoothGalleryParser {
 	}
 
 	function parseGallery( $input, $parser ) {
-		global $wgTitle;
 		global $wgSmoothGalleryDelimiter;
 		global $wgSmoothGalleryAllowExternal;
 
@@ -164,7 +162,7 @@ class SmoothGalleryParser {
 
 			if ( $ns == NS_IMAGE ) {
 				$galleryArray = $this->parseImage( $title, $parser, $galleryArray, $img_desc );
-			} else if ( $ns == NS_CATEGORY ) {
+			} elseif ( $ns == NS_CATEGORY ) {
 				// list images in category
 				$cat_images = $this->smoothGalleryImagesByCat( $title );
 				if ( $cat_images ) {
@@ -205,7 +203,8 @@ class SmoothGalleryParser {
 
 		// Create a thumbnail the same size as our gallery so that
 		// full images fit correctly
-		$full_thumb_obj = $img_obj->getThumbnail( $this->argumentArray["width"], $this->argumentArray["height"] );
+
+		$full_thumb_obj = $img_obj->transform( array( 'width' => $this->argumentArray["width"], 'height' => $this->argumentArray["height"] ), 0 );
 		if ( !is_null( $full_thumb_obj ) ) {
 			$full_thumb = $full_thumb_obj->getUrl();
 		} else {
@@ -225,7 +224,7 @@ class SmoothGalleryParser {
 			// We are going to show a carousel to the user; we need
 			// to make icon thumbnails
 			// $thumb_obj = $img_obj->getThumbnail( 120, 120 ); //would be nice to reuse images already loaded...
-			$thumb_obj = $img_obj->getThumbnail( $wgSmoothGalleryThumbWidth, $wgSmoothGalleryThumbHeight );
+			$thumb_obj = $img_obj->transform( array( 'width' => $wgSmoothGalleryThumbWidth, 'height' => $wgSmoothGalleryThumbHeight ), 0 );
 			if ( $thumb_obj ) {
 				$icon_thumb = $thumb_obj->getUrl();
 			}
@@ -241,16 +240,6 @@ class SmoothGalleryParser {
 				// Get the text from the image page's description, if it exists
 				$description = $img_obj->getDescriptionText();
 			}
-
-			// convert wikitext to HTML
-			// TODO: find out why this doesn't work with special pages
-			if ( $parser ) {
-				$pout = $parser->recursiveTagParse( $description, $title, $parser->mOptions, true );
-				$description =  strip_tags( $pout );
-				# $fulldesc =  strip_tags( $pout->getText() );
-			} else { // fall back to HTML-escaping
-				$description = htmlspecialchars( $description );
-			}
 		}
 
 		$skin = $wgUser->getSkin();
@@ -258,7 +247,7 @@ class SmoothGalleryParser {
 		// Everything is checked, and converted; add to the array and return
 		$imageArray["title"] = $title;
 
-		# We need the following for the image's div
+		// We need the following for the image's div
 		$imageArray["heading"] = $skin->makeKnownLinkObj( $img_obj->getTitle(), $img_obj->getName() );
 		$imageArray["description"] = $description;
 		$imageArray["full_url"] = $title->getFullURL();
@@ -266,7 +255,7 @@ class SmoothGalleryParser {
 		$imageArray["full_thumb_url"] = $full_thumb;
 		$imageArray["icon_thumb_url"] = $icon_thumb;
 
-		# We need the image object for plain galleries
+		// We need the image object for plain galleries
 		$imageArray["image_object"] = $img_obj;
 
 		$galleryArray["images"][] = $imageArray;
@@ -297,5 +286,4 @@ class SmoothGalleryParser {
 
 		return $images;
 	}
-
 }

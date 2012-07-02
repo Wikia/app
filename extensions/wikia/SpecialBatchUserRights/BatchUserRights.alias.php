@@ -5,11 +5,11 @@
  * @file
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English
  * Sean 
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'BatchUserRights' => array( 'BatchUserRights' ),
 );

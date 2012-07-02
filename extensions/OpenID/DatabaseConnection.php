@@ -1,7 +1,6 @@
 <?php
 
 require_once( 'Auth/OpenID/DatabaseConnection.php' );
-require_once( 'PEAR.php' );
 
 class MediaWikiOpenIDDatabaseConnection extends Auth_OpenID_DatabaseConnection {
 
@@ -20,16 +19,11 @@ class MediaWikiOpenIDDatabaseConnection extends Auth_OpenID_DatabaseConnection {
 	}
 
 	function query( $sql, $params = array() ) {
-		try {
-			$res = $this->db->safeQuery( $sql, $params );
-		} catch( DBQueryError $e ) {
-			$ret = PEAR::raiseError( $e->getMessage(), 1, PEAR_ERROR_RETURN );
-		}
-		return $res;
+		return $this->db->safeQuery( $sql, $params );
 	}
 
 	function begin() {
-		$this->db->commit();
+		$this->db->begin();
 	}
 
 	function commit() {
@@ -79,7 +73,7 @@ class MediaWikiOpenIDDatabaseConnection extends Auth_OpenID_DatabaseConnection {
 			return false;
 
 		$ret = array();
-		foreach( $res as $row ) {
+		foreach ( $res as $row ) {
 			$ret[] = (array)$row;
 		}
 		return $ret;

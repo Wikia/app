@@ -409,9 +409,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 			}
 			$fileName = "/tmp/$fname.csv";
 			file_put_contents($fileName,$csv);
-			UserMailer::sendWithAttachment(array($toAddress),$subject,array($fileName),$from,'dead-wikis',$body);
+			UserMailer::send( $toAddress, $from, $subject, $body, null, null, 'dead-wikis', 0, array( $fileName ) );
 		} else {
-			UserMailer::sendWithAttachment(array($toAddress),$subject,array(),$from,'dead-wikis',$bodyNoEntries);
+			UserMailer::send( $toAddress, $from, $subject, $bodyNoEntries, null, null , 'dead-wikis' );
 		}
 	}
 	

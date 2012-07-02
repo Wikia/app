@@ -3,15 +3,20 @@
 /**
  * QuestyCaptcha class
  *
+ * @file
  * @author Benjamin Lees <emufarmers@gmail.com>
- * @addtogroup extensions
+ * @ingroup Extensions
  */
 
 class QuestyCaptcha extends SimpleCaptcha {
 
 	/** Validate a captcha response */
 	function keyMatch( $answer, $info ) {
-		return strtolower( $answer ) == strtolower( $info['answer'] );
+		if ( is_array( $info['answer'] ) ) {
+			return in_array( strtolower( $answer ), $info['answer'] );
+		} else {
+			return strtolower( $answer ) == strtolower( $info['answer'] );
+		}
 	}
 
 	function addCaptchaAPI( &$resultArr ) {
@@ -35,9 +40,10 @@ class QuestyCaptcha extends SimpleCaptcha {
 		}
 		$index = $this->storeCaptcha( $captcha );
 		return "<p><label for=\"wpCaptchaWord\">{$captcha['question']}</label> " .
-			Xml::element( 'input', array(
+			Html::element( 'input', array(
 				'name' => 'wpCaptchaWord',
 				'id'   => 'wpCaptchaWord',
+				'required',
 				'tabindex' => 1 ) ) . // tab in before the edit textarea
 			"</p>\n" .
 			Xml::element( 'input', array(
@@ -56,10 +62,10 @@ class QuestyCaptcha extends SimpleCaptcha {
 	}
 
 	function showHelp() {
-		global $wgOut, $ceAllowConfirmedEmail;
+		global $wgOut;
 		$wgOut->setPageTitle( wfMsg( 'captchahelp-title' ) );
 		$wgOut->addWikiText( wfMsg( 'questycaptchahelp-text' ) );
-		if ( $this->storage->cookiesNeeded() ) {
+		if ( CaptchaStore::get()->cookiesNeeded() ) {
 			$wgOut->addWikiText( wfMsg( 'captchahelp-cookies-needed' ) );
 		}
 	}

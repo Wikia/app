@@ -41,17 +41,17 @@ $(function() {
 	// Have to iterate through all of the experiments to see how the user would be treated with them (because the values
 	// don't get computed and stored in abTreatments unless getTreatmentGroup() is called on that particular experiment -
 	// and many experiments may not run right on the Special:Contact page before this code executes).
-	if(typeof AB_CONFIG != 'undefined'){
+	if(window.AB_CONFIG){
 		for(var expId in AB_CONFIG){
 			if(AB_CONFIG.hasOwnProperty(expId)){
 				// Cause the treatment-group to be cached in abTreatments array.
-				getTreatmentGroup(expId);
+				window.getTreatmentGroup && getTreatmentGroup(expId);
 			}
 		}
 	}
 
 	// We only have info if abTreatments is defined.
-	if(typeof abTreatments == 'object'){
+	if(window.abTreatments){
 		var abString = '';
 
 		if(Object.keys(abTreatments).length == 0){
@@ -60,7 +60,7 @@ $(function() {
 			// Make a single entry for each experiment.
 			for(var expId in abTreatments){
 				var tgId = abTreatments[expId];
-				if(typeof AB_CONFIG[expId] != 'undefined'){
+				if(window.AB_CONFIG && (typeof AB_CONFIG[expId] != 'undefined')){
 					var config = AB_CONFIG[expId];
 					
 					abString += ((abString == '') ? '' : ', ');

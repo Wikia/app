@@ -93,7 +93,7 @@ class JSSnippets extends WikiaObject{
 
 		// add callback
 		if (!is_null($callback)) {
-			$optionsJSON = is_null($options) ? '' : (',options:' . Wikia::json_encode($options));
+			$optionsJSON = is_null($options) ? '' : (',options:' . json_encode($options));
 			$entry['callback'] = ',callback:function(json){' . $callback .'(json)},id:' . Xml::encodeJsVar($callback) . $optionsJSON;
 		}
 

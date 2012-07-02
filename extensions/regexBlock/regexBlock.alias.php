@@ -6,87 +6,94 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English
- * @author IAlex
- */
-$aliases['en'] = array(
-	'RegexBlock'  => array( 'RegexBlock' ),
+/** English (English) */
+$specialPageAliases['en'] = array(
+	'RegexBlock' => array( 'RegexBlock' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'RegexBlock' => array( 'منع_ريجيكس' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'RegexBlock' => array( 'منع_ريجيكس' ),
+$specialPageAliases['arz'] = array(
+	'RegexBlock' => array( 'بلوك_Regex' ),
 );
 
 /** Bulgarian (Български) */
-$aliases['bg'] = array(
-	'RegexBlock' => array( 'Блокиране по регулярни изрази' ),
+$specialPageAliases['bg'] = array(
+	'RegexBlock' => array( 'Блокиране_по_регулярни_изрази' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
-	'RegexBlock' => array( 'Reguläre Ausdrücke-Sperrung' ),
+$specialPageAliases['de'] = array(
+	'RegexBlock' => array( 'Reguläre_Ausdrücke-Sperrung' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'RegexBlock' => array( 'Blokěrowanje regularnych wurazow' ),
 );
 
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'RegexBlock' => array( 'بخش_ریجکس' ),
+);
+
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'RegexBlock' => array( 'Blokowanje regularnych wurazow' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'RegexBlock' => array( 'Blocar con regex' ),
+$specialPageAliases['ia'] = array(
+	'RegexBlock' => array( 'Blocar_con_regex' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'RegexBlock' => array( 'Blokir regex', 'BlokirRegex' ),
+$specialPageAliases['id'] = array(
+	'RegexBlock' => array( 'Blokir_regex', 'BlokirRegex' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'RegexBlock' => array( '正規表現ブロック' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'RegexBlock' => array( 'Regex Spär' ),
+$specialPageAliases['lb'] = array(
+	'RegexBlock' => array( 'Regex_Spär' ),
+);
+
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'RegexBlock' => array( 'БлокирањеНаРегуларниИзрази' ),
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'RegexBlock' => array( 'Regex-blokkering' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'RegexBlock' => array( 'Regexblokkering' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'RegexBlock' => array( 'RegexBlokkade' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'RegexBlock' => array( 'Regex-blokkering' ),
-);
-
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'RegexBlock' => array( 'BlokovanieRegVýrazom' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'RegexBlock' => array( 'Paghadlang sa karaniwang pagsasaad' ),
 );
-

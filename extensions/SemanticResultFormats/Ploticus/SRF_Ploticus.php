@@ -14,17 +14,11 @@
  *
  * @ingroup SMWQuery
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'Not an entry point.' );
-}
-
 class SRFPloticus extends SMWResultPrinter {
 	protected $m_ploticusparams = '';
 	protected $m_imageformat = 'gif';
 	protected $m_titletext = '';
 	protected $m_showcsv = false;
-	protected $m_ploticusmode = 'prefab';
 	protected $m_debug = false;
 	protected $m_liveupdating = true;
 	protected $m_updatefrequency = 3600;  // by default, generate plot only once per hour
@@ -38,7 +32,7 @@ class SRFPloticus extends SMWResultPrinter {
 	protected $m_height = '';
 
 	protected function readParameters( $params, $outputmode ) {
-		SMWResultPrinter::readParameters( $params, $outputmode );
+		parent::readParameters( $params, $outputmode );
 		if ( array_key_exists( 'ploticusparams', $this->m_params ) ) {
 			$this->m_ploticusparams = trim( $params['ploticusparams'] );
 		}
@@ -51,9 +45,6 @@ class SRFPloticus extends SMWResultPrinter {
 		if ( array_key_exists( 'showcsv', $this->m_params ) ) {
 			$tmpcmp = strtolower( trim( $params['showcsv'] ) );
 			$this->m_showcsv =  $tmpcmp == 'false' || $tmpcmp == 'no' ? false : $tmpcmp;
-		}
-		if ( array_key_exists( 'ploticusmode', $this->m_params ) ) {
-			$this->m_ploticusmode =  strtolower( trim( $params['ploticusmode'] ) );
 		}
 		if ( array_key_exists( 'debug', $this->m_params ) ) {
 			$tmpcmp = strtolower( trim( $params['debug'] ) );
@@ -95,7 +86,7 @@ class SRFPloticus extends SMWResultPrinter {
 		}
 	}
 
-	protected function getResultText( $res, $outputmode ) {
+	protected function getResultText( SMWQueryResult $res, $outputmode ) {
 		global $smwgIQRunningNumber, $wgUploadDirectory, $wgUploadPath, $wgTitle, $wgScriptPath, $srfgPloticusPath, $srfgEnvSettings;
 
 		$this->isHTML = true;
@@ -116,22 +107,12 @@ class SRFPloticus extends SMWResultPrinter {
 		if ( !file_exists( $srfgPloticusPath ) )
 		    return ( '<p classid=""srfperror">ERROR: Could not find ploticus in <em>' . $srfgPloticusPath . '</em></p>' );
 
-		if ( $this->m_ploticusmode !== 'script' && $this->m_ploticusmode !== 'prefab' )
-		    return ( '<p classid="srfperror">ERROR: Unknown mode specified (' . $this->m_ploticusmode .
-		      '). Only "prefab" (default) and "script" mode supported.</p>' );
-
-		// remove potentially dangerous keywords (prefab mode) or ploticus directives (script mode)
+		// remove potentially dangerous keywords
 		// this is an extended check, JUST IN CASE, even though we're invoking ploticus with the noshell security parameter
-		if ( $this->m_ploticusmode === 'prefab' ) {
-		     // we also remove line endings for prefab - this is done for readability so the user can specify the prefab
-		     // params over several lines rather than one long command line
-		    $searches = array( '/`/m', '/system/im', '/shell/im', "/\s*?\n/m" );
-		    $replaces = array( '', '', '', ' ' );
-		} else {
-		    $searches = array( '/`/m', '/#include/im', '/#shell/im', '/#sql/im', '/#write/im', '/#cat/im' );
-		    $replaces = array( '', '// ERROR: INCLUDE not allowed', '// ERROR: SHELL not allowed',
-			    '// ERROR: SQL not allowed', '// ERROR: WRITE not allowed', '// ERROR: CAT not allowed' );
-		}
+		// we also remove line endings - this is done for readability so the user can specify the prefab
+		// params over several lines rather than one long command line
+		$searches = array( '/`/m', '/system/im', '/shell/im', "/\s*?\n/m" );
+		$replaces = array( '', '', '', ' ' );
 		$sanitized_ploticusparams = preg_replace( $searches, $replaces, $this->m_ploticusparams );
 
 		// Create the ploticus data directory if it doesn't exist
@@ -164,7 +145,8 @@ class SRFPloticus extends SMWResultPrinter {
 			 $row_items = array();
 			 foreach ( $row as $field ) {
 				 $growing = array();
-				 while ( ( $object = $field->getNextObject() ) !== false ) {
+				 
+				 while ( ( $object = $field->getNextDataValue() ) !== false ) {
 					 $text = Sanitizer::decodeCharReferences( $object->getXSDValue() );
 					 // decode: CSV knows nothing of possible HTML entities
 					 $growing[] = $text;
@@ -199,8 +181,6 @@ class SRFPloticus extends SMWResultPrinter {
 		$errorURL = $wgUploadPath . '/ploticus/' . $hashname . '.err';
 		$mapFile = $ploticusDir . $hashname . '.map';
 		$mapURL = $wgUploadPath . '/ploticus/' . $hashname . '.map';
-		$scriptFile = $ploticusDir . $hashname . '.plo';
-		$scriptURL = $wgUploadPath . '/ploticus/' . $hashname . '.plo';
 
 		if ( ( $this->m_updatefrequency > 0 ) && file_exists( $graphFile ) ) {
 			// get time graph was last generated. Also check to see if the
@@ -215,45 +195,27 @@ class SRFPloticus extends SMWResultPrinter {
 		// check if previous plot generated with the same params and result data is available
 		// we know this from the md5 hash.  This should eliminate
 		// unneeded, CPU-intensive invocations of ploticus and minimize
-		// the need to periodically clean-up graph, csv, script and map files
+		// the need to periodically clean-up graph, csv, and map files
 		$errorData = '';
 		if ( $this->m_debug || !file_exists( $graphFile ) ) {
 
 			// we set $srfgEnvSettings if specified
 			$commandline = empty( $srfgEnvSettings ) ? ' ' : $srfgEnvSettings . ' ';
 
-			if ( $this->m_ploticusmode === 'script' ) {
-			    // Script mode.  Search for special keywords in ploticusparam
-			    // and replace it with actual values. (case-sensitive)
-			    // The special keywords currently are:  %DATAFILE.CSV%, %WORKINGDIR%
-			    $replaces = array( '%DATAFILE.CSV%'  => wfEscapeShellArg( $dataFile ),
-					      '%WORKINGDIR%' => $ploticusDir );
-			    $literal_ploticusparams = strtr( $sanitized_ploticusparams, $replaces );
-			    $fhandle = fopen( $scriptFile, 'w' );
-			    fputs( $fhandle, $literal_ploticusparams );
-			    fclose( $fhandle );
+			
+		    // build the command line 
+		    $commandline .= wfEscapeShellArg( $srfgPloticusPath ) .
+			    ( $this->m_debug ? ' -debug':' ' ) .
+			    ' -noshell ' . $sanitized_ploticusparams .
+			    ( $this->mShowHeaders ? ' header=yes':' ' ) .
+			    ' delim=comma data=' . wfEscapeShellArg( $dataFile ) .
+			    ' -' . $this->m_imageformat;
 
-			    $commandline .= wfEscapeShellArg( $srfgPloticusPath ) .
-				    ( $this->m_debug ? ' -debug':' ' ) .
-				    ' -noshell -' . $this->m_imageformat .
-				    ' -o ' . wfEscapeShellArg( $graphFile ) .
-				    ' ' . $scriptFile;
-
-			} else {
-			    // prefab mode, build the command line accordingly
-			    $commandline .= wfEscapeShellArg( $srfgPloticusPath ) .
-				    ( $this->m_debug ? ' -debug':' ' ) .
-				    ' -noshell ' . $sanitized_ploticusparams .
-				    ( $this->mShowHeaders ? ' header=yes':' ' ) .
-				    ' delim=comma data=' . wfEscapeShellArg( $dataFile ) .
-				    ' -' . $this->m_imageformat;
-
-			    if ( $this->m_imageformat == 'drawdump' || $this->m_imageformat == 'drawdumpa' ) {
-				$commandline .= ' ' . wfEscapeShellArg( $ploticusDir .  '/' . $this->m_drawdumpoutput );
-			    } else {
-				$commandline .= ' -o ' . wfEscapeShellArg( $graphFile );
-			    }
-			}
+		    if ( $this->m_imageformat == 'drawdump' || $this->m_imageformat == 'drawdumpa' ) {
+			$commandline .= ' ' . wfEscapeShellArg( $ploticusDir .  '/' . $this->m_drawdumpoutput );
+		    } else {
+			$commandline .= ' -o ' . wfEscapeShellArg( $graphFile );
+		    }
 
 			// create the imagemap file if clickmap is specified for ploticus
 			if ( strpos( $sanitized_ploticusparams, 'clickmap' ) ) {
@@ -263,6 +225,8 @@ class SRFPloticus extends SMWResultPrinter {
 			// send errors to this file
 			$commandline .= ' 2>' . wfEscapeShellArg( $errorFile );
 
+			// Sanitize commandline
+			$commandline = escapeshellcmd( $commandline );
 			// Execute ploticus.
 			wfShellExec( $commandline );
 			$errorData = file_get_contents( $errorFile );
@@ -271,9 +235,6 @@ class SRFPloticus extends SMWResultPrinter {
 
 			$graphLastGenerated = time(); // faster than doing filemtime
 
-			if ( $this->m_ploticusmode == 'script' && !$this->m_debug ) {
-			    @unlink( $scriptFile );
-			}
 		}
 
 		// Prepare output.  Put everything inside a table
@@ -366,21 +327,38 @@ class SRFPloticus extends SMWResultPrinter {
 		$rtnstr .= '</td></tr>';
 
 		// DEBUGROW - colspan 3, only display when debug is on
-		// add link to script or display ploticus cmdline/script
+		// Display ploticus cmdline
 		if ( $this->m_debug ) {
-			$rtnstr .= '<tr><td class="srfpdebug" align="center" colspan="3">DEBUG: ';
-		    if ( $this->m_ploticusmode == 'script' ) {
-			$rtnstr .= '<a href="' . $scriptURL . '" target="_blank">SCRIPT</a> (<a href="' .
-				$errorURL . '" target="_blank">Ploticus Trace</a>)</td></tr>';
-		    } else {
-			$rtnstr .= 'PREFAB (<a href="' . $errorURL .
+			$rtnstr .= '<tr><td class="srfpdebug" align="center" colspan="3">DEBUG: PREFAB (<a href=" ' . $errorURL .
 				'" target="_blank">Ploticus Trace</a>)</td></tr><tr><td class="srfpdebug" colspan="3">' .
 				$commandline . '</td></tr>';
-		    }
 		}
 
 		$rtnstr .= '</table>';
 
 		return ( $rtnstr );
 	}
+	
+	function getParameters() {
+		return array(
+			array('name' => 'ploticusmode', 'type' => 'enumeration', 'values' => array('preftab', 'script')),
+			array('name' => 'ploticusparams', 'type' => 'string'),
+			array('name' => 'imageformat', 'type' => 'enumeration', 'values' => array('png', ' gif', 'jpeg', 'svg', 'svgz', 'swf', 'eps', 'ps', 'drawdump', 'drawdumpa'), 'defaultValue'=>'png'),
+			array('name' => 'titletext', 'type' => 'string'),
+			array('name' => 'showcsv', 'type' => 'boolean'), 
+			array('name' => 'ploticusmode', 'type' => 'string'),
+			array('name' => 'debug', 'type' => 'boolean'),
+			array('name' => 'liveupdating', 'type' => 'boolean'),
+			array('name' => 'updatefrequency', 'type' => 'int'), 
+			array('name' => 'showtimestamp', 'type' => 'boolean'),
+			array('name' => 'showimagelink', 'type' => 'boolean'),
+			array('name' => 'showrefresh', 'type' => 'boolean'),  
+			array('name' => 'drawdumpoutput', 'type' => 'string'),
+			array('name' => 'tblwidth', 'type' => 'int'),
+			array('name' => 'tblheight', 'type' => 'int'),
+			array('name' => 'width', 'type' => 'int'),
+			array('name' => 'height', 'type' => 'int')
+		);      
+	}
+	
 }

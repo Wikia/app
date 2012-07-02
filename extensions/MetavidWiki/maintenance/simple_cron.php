@@ -19,4 +19,3 @@ while(true){
 	$i++;
 	sleep(1);
 }
-?>

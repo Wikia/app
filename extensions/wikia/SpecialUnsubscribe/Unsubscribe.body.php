@@ -37,7 +37,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		$this->setHeaders();
 
 		$hash_key = $wgRequest->getText('key', null );
-		
+
 		$email = $token = $timestamp = null;
 		if ( !empty( $hash_key ) ) {
 			#$hask_key = urldecode ( $hash_key );
@@ -47,16 +47,16 @@ class UnsubscribePage extends UnlistedSpecialPage {
 				$username 	= ( isset( $data['user'] ) ) ? $data['user'] : null;
 				$token 		= ( isset( $data['token'] ) ) ? $data['token'] : null;
 				$timestamp 	= ( isset( $data['signature1'] ) ) ? $data['signature1'] : null;
-				
+
 				$oUser = User::newFromName( $username );
 				$email = $oUser->getEmail();
 			}
-		} else {	 
+		} else {
 			$email = $wgRequest->getText( 'email' , null );
 			$token = $wgRequest->getText( 'token' , null );
 			$timestamp = $wgRequest->getText( 'timestamp' , null );
 		}
-		
+
 		if($email == null || $token == null || $timestamp == null) {
 			#give up now, abandon all hope.
 			$wgOut->addWikiMsg( 'unsubscribe-badaccess' );
@@ -81,7 +81,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 		}
 
 		#does the non-blank email they gave us look like an email?
-		if( User::isValidEmailAddr( $email ) == false ) {
+		if( Sanitizer::validateEmail( $email ) == false ) {
 			#email wasnt blank, but didnt look like any email
 			$wgOut->addWikiMsg( 'unsubscribe-bademail' );
 			// $wgOut->addHTML("email={$email}\n"); #DEVL (remove before release)
@@ -111,7 +111,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-		// use backticks in db name here.  $gExternalSharedDB is always on clusterA but access to the user table 
+		// use backticks in db name here.  $gExternalSharedDB is always on clusterA but access to the user table
 		// will then try to switch back to wikicities_c2.user which does not exist on clusterA.
 		// @see Database::tableName for reference
 		$oRes = $dbr->select(

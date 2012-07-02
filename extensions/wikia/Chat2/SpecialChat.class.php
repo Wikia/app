@@ -10,8 +10,6 @@ class SpecialChat extends UnlistedSpecialPage {
 		wfProfileIn( __METHOD__ );
 		global $wgUser, $wgOut, $wgCityId;
 
-		// @FixMe Hrmm, messages work in the special page simply by adding them in the _setup.php. Maybe this isn't necessary.
-		//wfLoadExtensionMessages( 'Chat' );
 		// check if logged in
 		if($wgUser->isLoggedIn()){
 			if( Chat::canChat($wgUser) ){

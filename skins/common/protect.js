@@ -1,12 +1,12 @@
 
-var ProtectionForm = {
+window.ProtectionForm = {
 	'existingMatch': false,
 
 	/**
 	 * Set up the protection chaining interface (i.e. "unlock move permissions" checkbox)
 	 * on the protection form
 	 *
-	 * @param Object opts : parameters with members:
+	 * @param opts Object : parameters with members:
 	 *     tableId              Identifier of the table containing UI bits
 	 *     labelText            Text to use for the checkbox label
 	 *     numTypes             The number of protection types
@@ -20,7 +20,7 @@ var ProtectionForm = {
 		if( !box )
 			return false;
 		
-		var boxbody = box.getElementsByTagName('tbody')[0]
+		var boxbody = box.getElementsByTagName('tbody')[0];
 		var row = document.createElement( 'tr' );
 		boxbody.insertBefore( row, boxbody.firstChild.nextSibling );
 
@@ -34,8 +34,13 @@ var ProtectionForm = {
 			check.id = 'mwProtectUnchained';
 			check.type = 'checkbox';
 			cell.appendChild( check );
-			addClickHandler( check, function() { ProtectionForm.onChainClick(); } );
-
+			/*
+			 * Wikia change
+			 * @author Jakub Olek
+			 * removing deprecated code ...
+			 */
+			$(check).on('click', function() { ProtectionForm.onChainClick(); } );
+			// Wikia change end
 			cell.appendChild( document.createTextNode( ' ' ) );
 			var label = document.createElement( 'label' );
 			label.htmlFor = 'mwProtectUnchained';
@@ -45,6 +50,8 @@ var ProtectionForm = {
 			check.checked = !this.areAllTypesMatching();
 			this.enableUnchainedInputs( check.checked );
 		}
+		
+		$( '#mwProtect-reason' ).byteLimit( 180 );
 
 		this.updateCascadeCheckbox();
 
@@ -75,16 +82,20 @@ var ProtectionForm = {
 	},
 
 	/**
-	 * Is this protection level cascadeable?
-	 * @param String level
-	 *
-	 * @return boolean
-	 *
+	 * Checks if a cerain protection level is cascadeable.
+	 * @param level {String}
+	 * @return {Boolean}
 	 */
 	'isCascadeableLevel': function( level ) {
-		for (var k = 0; k < wgCascadeableLevels.length; k++) {
-			if ( wgCascadeableLevels[k] == level ) {
-				return true;
+		var cascadeLevels, len, i;
+
+		cascadeLevels = mw.config.get( 'wgCascadeableLevels' );
+		// cascadeLevels isn't defined on all pages
+		if ( cascadeLevels ) {
+			for ( i = 0, len = cascadeLevels.length; i < len; i += 1 ) {
+				if ( cascadeLevels[i] === level ) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -94,7 +105,7 @@ var ProtectionForm = {
 	 * When protection levels are locked together, update the rest
 	 * when one action's level changes
 	 *
-	 * @param Element source Level selector that changed
+	 * @param source Element Level selector that changed
 	 */
 	'updateLevels': function(source) {
 		if( !this.isUnchained() )
@@ -106,7 +117,7 @@ var ProtectionForm = {
 	 * When protection levels are locked together, update the
 	 * expiries when one changes
 	 *
-	 * @param Element source expiry input that changed
+	 * @param source Element expiry input that changed
 	 */
 
 	'updateExpiry': function(source) {
@@ -133,7 +144,7 @@ var ProtectionForm = {
 	 * When protection levels are locked together, update the
 	 * expiry lists when one changes and clear the custom inputs
 	 *
-	 * @param Element source expiry selector that changed
+	 * @param source Element expiry selector that changed
 	 */
 	'updateExpiryList': function(source) {
 		if( !this.isUnchained() ) {
@@ -221,7 +232,7 @@ var ProtectionForm = {
 	/**
 	 * Protect all actions at the specified level
 	 *
-	 * @param int index Protection level
+	 * @param index int Protection level
 	 */
 	'setAllSelectors': function(index) {
 		this.forEachLevelSelector(function(element) {
@@ -234,7 +245,7 @@ var ProtectionForm = {
 	/**
 	 * Apply a callback to each protection selector
 	 *
-	 * @param callable func Callback function
+	 * @param func callable Callback function
 	 */
 	'forEachLevelSelector': function(func) {
 		var selectors = this.getLevelSelectors();
@@ -250,7 +261,7 @@ var ProtectionForm = {
 	 */
 	'getLevelSelectors': function() {
 		var all = document.getElementsByTagName("select");
-		var ours = new Array();
+		var ours = [];
 		for (var i = 0; i < all.length; i++) {
 			var element = all[i];
 			if (element.id.match(/^mwProtect-level-/)) {
@@ -263,7 +274,7 @@ var ProtectionForm = {
 	/**
 	 * Apply a callback to each expiry input
 	 *
-	 * @param callable func Callback function
+	 * @param func callable Callback function
 	 */
 	'forEachExpiryInput': function(func) {
 		var inputs = this.getExpiryInputs();
@@ -279,7 +290,7 @@ var ProtectionForm = {
 	 */
 	'getExpiryInputs': function() {
 		var all = document.getElementsByTagName("input");
-		var ours = new Array();
+		var ours = [];
 		for (var i = 0; i < all.length; i++) {
 			var element = all[i];
 			if (element.name.match(/^mwProtect-expiry-/)) {
@@ -291,7 +302,7 @@ var ProtectionForm = {
 
 	/**
 	 * Apply a callback to each expiry selector list
-	 * @param callable func Callback function
+	 * @param func callable Callback function
 	 */
 	'forEachExpirySelector': function(func) {
 		var inputs = this.getExpirySelectors();
@@ -307,7 +318,7 @@ var ProtectionForm = {
 	 */
 	'getExpirySelectors': function() {
 		var all = document.getElementsByTagName("select");
-		var ours = new Array();
+		var ours = [];
 		for (var i = 0; i < all.length; i++) {
 			var element = all[i];
 			if (element.id.match(/^mwProtectExpirySelection-/)) {
@@ -320,7 +331,7 @@ var ProtectionForm = {
 	/**
 	 * Enable/disable protection selectors and expiry inputs
 	 *
-	 * @param boolean val Enable?
+	 * @param val boolean Enable?
 	 */
 	'enableUnchainedInputs': function(val) {
 		var first = true;
@@ -348,4 +359,4 @@ var ProtectionForm = {
 			}
 		});
 	}
-}
+};

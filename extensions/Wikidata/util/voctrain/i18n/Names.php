@@ -1,7 +1,8 @@
 <?php
 /**
-  * @addtogroup Language
-  */
+ * @file
+ * @ingroup Language
+ */
 $languageNames = array(
 	'aa' => 'Afar',			# Afar
 	'ab' => 'Аҧсуа',	# Abkhaz, should possibly add ' бысжѡа'

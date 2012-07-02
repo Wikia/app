@@ -1,6 +1,10 @@
 <?php
 /**
- * NewWindowLinks: the messages.
+ * @file NewWindowLinks.i18n.php
+ * @brief I18n for the NewWindowLinks MediaWiki extension.
+ * @author Michał Roszka (Mix) <michal@wikia-inc.com>
+ * @date Friday, 30 December 2012 (created)
+ * @date Friday, 25 May 2012 (MediaWiki 1.19 merge)
  */
 $messages = array();
 /**

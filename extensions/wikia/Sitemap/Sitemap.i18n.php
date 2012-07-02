@@ -33,7 +33,7 @@ $messages['ar'] = array(
 	'sitemap-desc' => 'توليد خرائط مواقع ليكي على الطاير',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -76,7 +76,7 @@ $messages['fr'] = array(
 	'sitemap-desc' => 'Générer à la volée des plans du site pour le wiki',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

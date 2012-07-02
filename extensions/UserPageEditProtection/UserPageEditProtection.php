@@ -43,8 +43,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'UserPageEditProtection',
 	'author' => array( 'Lisa Ridley', 'Eric Gingell' ),
 	'version' => '2.0',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:UserPageEditProtection',
-	'description' => 'Restricts editing on user pages to user and allowed editors',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:UserPageEditProtection',
 	'descriptionmsg' => 'userpageeditprotection-desc',
 );
 

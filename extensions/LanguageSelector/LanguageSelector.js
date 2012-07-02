@@ -1,4 +1,4 @@
-addOnloadHook(function() { 
+$( function() {
 	var i = 1;
 	while ( true ) {
 		var btn = document.getElementById("languageselector-commit-"+i);

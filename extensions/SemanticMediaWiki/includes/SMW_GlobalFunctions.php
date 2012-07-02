@@ -35,8 +35,11 @@ define( 'CONCEPT_CACHE_HARD', 1 ); // show without cache if concept is not harde
 define( 'CONCEPT_CACHE_NONE', 0 ); // show all concepts even without any cache
 
 // Constants for identifying javascripts as used in SMWOutputs.
+/// @deprecated Use module 'ext.smw.tooltips', see SMW_Ouptuts.php. Vanishes in SMW 1.7 at the latest.
 define( 'SMW_HEADER_TOOLTIP', 2 );
+/// @deprecated Module removed. Vanishes in SMW 1.7 at the latest.
 define( 'SMW_HEADER_SORTTABLE', 3 );
+/// @deprecated Use module 'ext.smw.style', see SMW_Ouptuts.php. Vanishes in SMW 1.7 at the latest.
 define( 'SMW_HEADER_STYLE', 4 );
 
 // Constants for denoting output modes in many functions: HTML or Wiki?
@@ -153,7 +156,6 @@ function smwfHTMLtoUTF8( $text ) {
 function smwfNumberFormat( $value, $decplaces = 3 ) {
 	global $smwgMaxNonExpNumber;
 
-	smwfLoadExtensionMessages( 'SemanticMediaWiki' );
 	$decseparator = wfMsgForContent( 'smw_decseparator' );
 
 	// If number is a trillion or more, then switch to scientific
@@ -224,38 +226,42 @@ function smwfNumberFormat( $value, $decplaces = 3 ) {
  * @param array $messages
  * @param string $icon Acts like an enum. Callers must ensure safety, since this value is used directly in the output.
  * @param string $seperator
+ * @param boolean $escape Should the messages be escaped or not (ie when they already are)
  *
  * @return string
  */
-function smwfEncodeMessages( array $messages, $icon = 'warning', $seperator = ' <!--br-->' ) {
+function smwfEncodeMessages( array $messages, $icon = 'warning', $seperator = ' <!--br-->', $escape = true ) {
 	if ( count( $messages ) > 0 ) {
-		SMWOutputs::requireHeadItem( SMW_HEADER_TOOLTIP );
-		foreach( $messages as &$message ) {
-			$message = htmlspecialchars( $message );
+		SMWOutputs::requireResource( 'ext.smw.tooltips' );
+
+		if ( $escape ) {
+			$messages = array_map( 'htmlspecialchars', $messages );
 		}
-		$messageString = implode( $seperator, $messages );
-		return '<span class="smwttpersist"><span class="smwtticon">' . $icon . '.png</span><span class="smwttcontent">' . $messageString . '</span> </span>';
+
+		if ( count( $messages ) == 1 )  {
+			$errorList = $messages[0];
+		}
+		else {
+			foreach ( $messages as &$message ) {
+				$message = '<li>' . $message . '</li>';
+			}
+			
+			$errorList = '<ul>' . implode( $seperator, $messages ) . '</ul>';
+		}
+
+		return '<span class="smwttpersist">' .
+				'<span class="smwtticon">' . htmlspecialchars( $icon ) . '.png</span>' .
+				'<span class="smwttcontent">' . $errorList . '</span>' . 
+			'</span>';
 	} else {
 		return '';
 	}
 }
 
 /**
- * MediaWiki 1.16 introduces major changes in message handling, and the old
- * wfLoadExtensionMessages function will no longer be needed (or supported).
- * This function is used for maintaining compatibility with MediaWiki 1.15 or
- * below.
- *
- * @param string $extensionName The extension name for finding the the message
- * file; same as in wfLoadExtensionMessages()
- *
- * @since 1.5.1
+ * @deprecated since 1.7, will be removed in 1.9.
  */
-function smwfLoadExtensionMessages( $extensionName ) {
-	if ( function_exists( 'wfLoadExtensionMessages' ) ) {
-		wfLoadExtensionMessages( $extensionName );
-	}
-}
+function smwfLoadExtensionMessages( $extensionName ) {}
 
 /**
  * Get a handle for the storage backend that is used to manage the data.
@@ -267,17 +273,55 @@ function smwfLoadExtensionMessages( $extensionName ) {
  * @return SMWStore
  */
 function &smwfGetStore() {
-	global $smwgMasterStore, $smwgDefaultStore, $smwgIP;
+	global $smwgMasterStore, $smwgDefaultStore;
 
-	// No autoloading for RAP store, since autoloaded classes are in rare cases loaded by MW even if not used in code.
-	// This is not possible for RAPstore, which depends on RAP being installed.
-	if ( $smwgDefaultStore == 'SMWRAPStore2' ) {
-		include_once( $smwgIP . 'includes/storage/SMW_RAPStore2.php' );
-	}
-
-	if ( $smwgMasterStore === null ) {
+	if ( is_null( $smwgMasterStore ) ) {
 		$smwgMasterStore = new $smwgDefaultStore();
 	}
 
 	return $smwgMasterStore;
+}
+
+/**
+ * Get the SMWSparqlDatabase object to use for connecting to a SPARQL store,
+ * or null if no SPARQL backend has been set up.
+ *
+ * Currently, it just returns one globally defined object, but the
+ * infrastructure allows to set up load balancing and task-dependent use of
+ * stores (e.g. using other stores for fast querying than for storing new
+ * facts), somewhat similar to MediaWiki's DB implementation.
+ *
+ * @since 1.6
+ *
+ * @return SMWSparqlDatabase or null
+ */
+function &smwfGetSparqlDatabase() {
+	global $smwgSparqlDatabase, $smwgSparqlDefaultGraph, $smwgSparqlQueryEndpoint,
+		$smwgSparqlUpdateEndpoint, $smwgSparqlDataEndpoint, $smwgSparqlDatabaseMaster;
+	if ( !isset( $smwgSparqlDatabaseMaster ) ) {
+		$smwgSparqlDatabaseMaster = new $smwgSparqlDatabase( $smwgSparqlDefaultGraph,
+			$smwgSparqlQueryEndpoint, $smwgSparqlUpdateEndpoint, $smwgSparqlDataEndpoint );
+	}
+	return $smwgSparqlDatabaseMaster;
+}
+
+/**
+ * Compatibility helper for using Linker methods.
+ * MW 1.16 has a Linker with non-static methods,
+ * where in MW 1.19 they are static, and a DummyLinker
+ * class is introduced, which can be instantaited for
+ * compat reasons. 
+ *
+ * @since 1.6
+ *
+ * @return Linker or DummyLinker
+ */
+function smwfGetLinker() {
+	static $linker = false;
+
+	if ( $linker === false ) {
+		$linker = class_exists( 'DummyLinker' ) ? new DummyLinker() : new Linker();
+	}
+
+	return $linker;
 }

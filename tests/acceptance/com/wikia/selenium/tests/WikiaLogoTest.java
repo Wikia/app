@@ -7,7 +7,7 @@ import static org.testng.AssertJUnit.assertFalse;
 
 public class WikiaLogoTest extends BaseTest {
 
-	@Test(groups={"envProduction", "CI", "verified"})
+	@Test(groups={"envProduction", "CI", "legacy"})
 	public void testEnsureThatWikiaLogoLeadsToSpecialLandingPage() throws Exception {
 		openAndWait("/");
 		clickAndWait("//li[@class='WikiaLogo']/a");

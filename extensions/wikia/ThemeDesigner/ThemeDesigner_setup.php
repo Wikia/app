@@ -21,7 +21,7 @@ $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
 $wgSpecialPages['ThemeDesignerPreview'] = 'SpecialThemeDesignerPreview';
 // i18n
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
-$wgExtensionAliasesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.alias.php" ;
+$wgExtensionMessagesFiles['ThemeDesignerAliases'] = "$dir/ThemeDesigner.alias.php";
 
 // Ability to access ThemeDesigner.
 $wgAvailableRights[] = 'themedesigner';

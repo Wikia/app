@@ -178,7 +178,6 @@ $wgHooks['UserProfileBeginLeft'][] = 'wfUserProfileAskedQuestions';
 function wfUserProfileAskedQuestions($user_profile) {
 	global $wgOut;
 
-	wfLoadExtensionMessages( 'Answers' );
 	$html = "<div class=\"user-section-heading\">
 		<div class=\"user-section-title\">
 					".wfMsg("recent_asked_questions")."
@@ -200,7 +199,7 @@ function wfUserProfileAskedQuestions($user_profile) {
 		if( $question[strlen($question)-1] != "?" ){
 			$question = $question . "?";
 		}
-		$html .= "<div><a href=\"" . $question_title->escapeFullURL() . "\">" . $question . "</a></div>";
+		$html .= "<div><a href=\"" . htmlspecialchars($question_title->getFullURL()) . "\">" . $question . "</a></div>";
 	}
 	$html .= "<p>";
 	$wgOut->addHTML($html);
@@ -211,7 +210,6 @@ $wgHooks['UserProfileBeginRight'][] = 'wfUserProfileAnsweredQuestions';
 function wfUserProfileAnsweredQuestions($user_profile) {
 	global $wgOut;
 
-	wfLoadExtensionMessages( 'Answers' );
 	$html = "<div class=\"user-section-heading\">
 		<div class=\"user-section-title\">
 					".wfMsg("recent_edited_questions")."
@@ -233,7 +231,7 @@ function wfUserProfileAnsweredQuestions($user_profile) {
 		if( $question[strlen($question)-1] != "?" ){
 			$question = $question . "?";
 		}
-		$html .= "<div><a href=\"" . $question_title->escapeFullURL() . "\">" . $question . "</a></div>";
+		$html .= "<div><a href=\"" . htmlspecialchars($question_title->getFullURL()) . "\">" . $question . "</a></div>";
 	}
 	$html .= "<p>";
 	$wgOut->addHTML($html);
@@ -278,7 +276,7 @@ $wgHooks['ExtendJSGlobalVars'][] = 'fnAddAnswerJSGlobalVariables';
 //1.14 version
 $wgHooks['MakeGlobalVariablesScript'][] = 'fnAddAnswerJSGlobalVariables';
 function fnAddAnswerJSGlobalVariables(&$vars){
-	wfLoadExtensionMessages( 'Answers' );
+	
 	global $wgTitle, $wgContLang;
 	$vars['wgAskFormTitle'] = wfMsgForContent("ask_a_question");
 	$vars['wgAskFormCategory'] = wfMsgForContent("in_category");
@@ -297,7 +295,7 @@ function fnAddAnswerJSGlobalVariables(&$vars){
 	$vars['wgAnsweredCategory'] = Answer::getSpecialCategory("answered");
 	$vars['wgUnAnsweredCategory'] = Answer::getSpecialCategory("unanswered");
 	$vars['wgAdsByGoogleMsg'] = wfMsg("ads_by_google");
-	$vars['wgUnansweredRecentChangesURL'] = SpecialPage::getTitleFor( 'RecentChangesLinked' )->escapeFullURL() . "/" .  Title::makeTitle(NS_CATEGORY, Answer::getSpecialCategory("unanswered") )->getPrefixedText();
+	$vars['wgUnansweredRecentChangesURL'] = htmlspecialchars(SpecialPage::getTitleFor( 'RecentChangesLinked' )->getFullURL()) . "/" .  Title::makeTitle(NS_CATEGORY, Answer::getSpecialCategory("unanswered") )->getPrefixedText();
 	$vars['wgUnansweredRecentChangesText'] = wfMsg("see_all");
 	$vars['wgCategoryName'] = $wgContLang->getNsText( NS_CATEGORY );
 
@@ -347,7 +345,6 @@ $wgAjaxExportList [] = 'wfGetQuestionsWidget';
 function wfGetQuestionsWidget( $title, $category, $limit = 5 ,$order = ""){
 	global $wgServer, $wgStylePath;
 
-	wfLoadExtensionMessages( 'Answers' );
 
 	$category = urldecode( $category );
 	$category = str_replace(" ", "%20", $category );
@@ -603,6 +600,12 @@ function wfCategoryPageWithAds(&$cat){
 
 class CategoryWithAds extends CategoryViewer{
 
+	function __construct( $title, $from = '', $until = '', $query = array() ) {
+		parent::__construct( $title, RequestContext::getMain(), array( $from ), array( $until ), $query );
+		$this->from = $from;
+		$this->until = $until;
+	}
+	
 	function doCategoryQuery() {
 		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 		if( $this->from != '' ) {
@@ -653,22 +656,6 @@ class CategoryWithAds extends CategoryViewer{
 		}
 		$dbr->freeResult( $res );
 	}
-
-
-	function getCategoryTop() {
-		global $wgUser;
-		$r = '';
-
-		if( $this->until != '' ) {
-			$r .= $this->pagingLinks( $this->title, $this->nextPage, $this->until, $this->limit );
-		} elseif( $this->nextPage != '' || $this->from != '' ) {
-			$r .= $this->pagingLinks( $this->title, $this->from, $this->nextPage, $this->limit );
-		}
-
-		return $r == ''
-			? $r
-			: "<br style=\"clear:both;\"/>\n" . $r;
-	}
 }
 
 include( dirname(__FILE__) . "/TrackCategories.php");
@@ -690,7 +677,7 @@ function wfAnswersGetEditPointsAjax() {
 
 	$data = array('points' => $points, 'timestamp' => wfTimestampNow());
 
-	$json = Wikia::json_encode($data);
+	$json = json_encode($data);
 	$response = new AjaxResponse($json);
 	$response->setContentType('application/json; charset=utf-8');
 	$response->checkLastModified(strtotime($timestamp));

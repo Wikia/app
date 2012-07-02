@@ -11,10 +11,10 @@
  */
 abstract class TitleArray implements Iterator {
 	/**
-	 * @param $res result A MySQL result including at least page_namespace and
+	 * @param $res ResultWrapper A SQL result including at least page_namespace and
 	 *   page_title -- also can have page_id, page_len, page_is_redirect,
 	 *   page_latest (if those will be used).  See Title::newFromRow.
-	 * @return TitleArray
+	 * @return TitleArrayFromResult
 	 */
 	static function newFromResult( $res ) {
 		$array = null;
@@ -27,6 +27,10 @@ abstract class TitleArray implements Iterator {
 		return $array;
 	}
 
+	/**
+	 * @param $res ResultWrapper
+	 * @return TitleArrayFromResult
+	 */
 	protected static function newFromResult_internal( $res ) {
 		$array = new TitleArrayFromResult( $res );
 		return $array;
@@ -34,6 +38,10 @@ abstract class TitleArray implements Iterator {
 }
 
 class TitleArrayFromResult extends TitleArray {
+
+	/**
+	 * @var ResultWrapper
+	 */
 	var $res;
 	var $key, $current;
 
@@ -43,6 +51,10 @@ class TitleArrayFromResult extends TitleArray {
 		$this->setCurrent( $this->res->current() );
 	}
 
+	/**
+	 * @param $row ResultWrapper
+	 * @return void
+	 */
 	protected function setCurrent( $row ) {
 		if ( $row === false ) {
 			$this->current = false;
@@ -51,6 +63,9 @@ class TitleArrayFromResult extends TitleArray {
 		}
 	}
 
+	/**
+	 * @return int
+	 */
 	public function count() {
 		return $this->res->numRows();
 	}
@@ -75,6 +90,9 @@ class TitleArrayFromResult extends TitleArray {
 		$this->setCurrent( $this->res->current() );
 	}
 
+	/**
+	 * @return bool
+	 */
 	function valid() {
 		return $this->current !== false;
 	}

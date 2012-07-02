@@ -92,7 +92,6 @@
 				$key = wfSharedMemcKey('user-command-special-page','lang',$code);
 				$data = $wgMemc->get($key);
 				if (empty($data)) {
-					global $wgCityId;
 					$data = array();
 					$external = Http::get($this->getExternalDataUrl($code));
 					$external = json_decode($external,true);
@@ -109,8 +108,6 @@
 		}
 
 		protected function buildExternalData() {
-			global $wgLang;
-
 			$data = $this->getExternalData();
 			if (isset($data[$this->id])) {
 				$this->disabledExtension = true;

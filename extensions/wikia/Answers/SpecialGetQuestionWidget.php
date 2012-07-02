@@ -12,8 +12,6 @@ class GetQuestionWidget extends UnlistedSpecialPage {
 	function execute(){
 		global $wgOut, $wgUser, $wgContLang, $wgServer, $wgSitename;
 		
-		wfLoadExtensionMessages( 'Answers' );
-
 		$wgOut->setPagetitle( wfMsg("get_widget_title") );
 
 		$wgOut->addHTML("

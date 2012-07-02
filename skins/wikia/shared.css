@@ -2,7 +2,7 @@
  * CSS in this file is used by *all* skins.
  */
 
-/* Hide picture attribution */
+/* Hide picture attribution (re-shown in oasis.scss for Oasis)*/
 .picture-attribution {
 	display: none;
 }
@@ -199,7 +199,7 @@
 	position: relative;
 }
 
-.wikia-slideshow-images li {
+ul.wikia-slideshow-images li { /* ul adds specificity to override .WikiaArticle li's top margin */
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	display: none;
@@ -209,6 +209,21 @@
 	top: 0;
 	width: 100%;
 	text-align: center;
+	margin-top: 0;
+}
+
+/* Vertical centering trick: http://css-tricks.com/centering-in-the-unknown */
+.wikia-slideshow-images li:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.wikia-slideshow-images li img {
+	display: inline-block;
+	vertical-align: middle;
+	cursor: pointer;
 }
 
 .wikia-slideshow-images li.wikia-slideshow-first-image {

@@ -9,7 +9,6 @@
 			.editarea {
 				background-color: $color-page;
 				border: solid 1px $color-page-border;
-				padding: 5px;
 
 				textarea {
 					background-color: $color-page;
@@ -41,20 +40,6 @@
 			&.focused {
 				.editarea {
 					@include box-shadow(0px, 0px, 4px, $color-MiniEditor-focus);
-				}
-			}
-
-			&.ckeditorsuite {
-				.editarea {
-					padding: 0;
-
-					.cke_contents {
-						padding: 5px 0;
-					}
-
-					textarea.cke_source {
-						padding: 0 5px;
-					}
 				}
 			}
 		}

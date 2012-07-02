@@ -174,13 +174,9 @@ else {
 			}
 
 			$emails = array();
-			$emails[] = new MailAddress( 'ops-automatic-l@wikia-inc.com' );			
-			UserMailer::sendWithAttachment( 
-				$emails , 
-				'FogBugz Operations Daily Report '.$dateToday->format( 'Y-m-d H:i:s' ), 
-				$attachment_dirs,
-				'ops-automatic-l@wikia-inc.com'
-			);
+			$emails[] = new MailAddress( 'ops-automatic-l@wikia-inc.com' );		
+			$subject = $body = 'FogBugz Operations Daily Report '.$dateToday->format( 'Y-m-d H:i:s' );	
+			UserMailer::send( $emails, 'ops-automatic-l@wikia-inc.com', $subject, $body, null, null, 'FogbugzCache', 0, $attachment_dirs );
 			foreach ( $attachment_dirs as $dir ) {
 				unlink( $dir );	
 			}

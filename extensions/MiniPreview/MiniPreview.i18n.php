@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension MiniPreview.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -25,9 +26,10 @@ For example, "* PD-" will not display all categories that start with "PD-", such
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'minipreview-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'minipreview-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -67,6 +69,23 @@ $messages['arz'] = array(
 * Self',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'minipreview-desc' => 'MiniPreview şəklin yanında onunla eyni kateqoriyada və ya səhifədə yerləşən digər media-faylların miniatürlərini göstərir',
+	'minipreview-files_in_category' => "Bu kateqoriyada '''$1''' {{PLURAL:$1|fayl}} var.",
+	'minipreview-files_in_gallery' => "Bu qalereyada '''$1''' {{PLURAL:$1|fayl}} var.",
+	'minipreview-no_more_files_here' => 'bu istiqamətdə daha fayl yoxdur.',
+	'minipreview-no_category_gallery' => 'Kateqoriya və ya qalereya yoxdur!',
+	'minipreview-ignore_categories' => 'Aşağıda kateqoriyaların adlarının bütünlükdə və ya başlanğıc hissələrinin siyahısı verilmişdir. Bu kateqoriyalar MiniPreview vasitəsilə göstərilməyəcək. Məsələn, "* PD-" onu göstərir ki, adı "PD-" ilə başlayan kateqoriyaların ("PD-köhnə" və s.) heç biri əks olunmayacaq.
+* GFDL-
+* GFDL
+* CC-
+* PD-
+* Self',
+);
+
 /** Bavarian (Boarisch)
  * @author Man77
  */
@@ -85,12 +104,13 @@ $messages['bcl'] = array(
 	'minipreview-files_in_gallery' => "$1 total na mga ''file'' sa galleriang ini.",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
-	'minipreview-desc' => 'Гэтае пашырэньне паказвае каля выявы невялікія выявы іншых мэдыя-файлаў з той жа катэгорыі альбо выкарыстаных на тых жа старонках',
+	'minipreview-desc' => 'Гэтае пашырэньне паказвае каля выявы невялікія выявы іншых мэдыяфайлаў з той жа катэгорыі альбо выкарыстаных на тых жа старонках',
 	'minipreview-files_in_category' => "Гэта катэгорыя ўтрымлівае '''$1''' {{PLURAL:$1|файл|файлы|файлаў}}.",
 	'minipreview-files_in_gallery' => "Гэтая галерэя ўтрымлівае '''$1''' {{PLURAL:$1|файл|файлы|фалаў}}.",
 	'minipreview-no_more_files_here' => 'Няма файлаў у гэтым накірунку.',
@@ -152,6 +172,16 @@ Na primjer, "* PD-" neće prikazivati nijednu kategoriju koja počinje sa "PD-",
 * CC-
 * PD-
 * Self',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'minipreview-files_in_category' => "Aquesta galeria conté '''$1''' {{PLURAL:$1|arxiu|arxius}}.",
+	'minipreview-files_in_gallery' => "Aquesta galeria conté '''$1''' {{PLURAL:$1|arxiu|arxius}}.",
+	'minipreview-no_more_files_here' => 'No hi ha més arxius en aquesta direcció.',
+	'minipreview-no_category_gallery' => "No s'han trobat categories ni galeries!",
 );
 
 /** German (Deutsch)
@@ -275,6 +305,16 @@ $messages['fr'] = array(
 * Self',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'minipreview-files_in_category' => "Ceta catègorie contint '''$1''' fichiér{{PLURAL:$1||s}}.",
+	'minipreview-files_in_gallery' => "Ceta galerie contint '''$1''' fichiér{{PLURAL:$1||s}}.",
+	'minipreview-no_more_files_here' => 'Pas més gins de fichiér dens ceta dirèccion.',
+	'minipreview-no_category_gallery' => 'Gins de catègorie ni de galerie !',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
@@ -286,7 +326,9 @@ $messages['gl'] = array(
 	'minipreview-files_in_gallery' => "Hai un total {{PLURAL:$1|dun ficheiro|de '''$1''' ficheiros}} nesta galería.",
 	'minipreview-no_more_files_here' => 'Non hai máis ficheiros nesta dirección.',
 	'minipreview-no_category_gallery' => 'Non hai categorías ou galerías!',
-	'minipreview-ignore_categories' => 'A seguinte é unha lista dos nomes das categorías ou comezos dos nomes. Estas categorías non se amosarán por MiniPreview. Por exemplo, "* PD-" non se amosarán todas as categorías que comecen por "PD-", como "PD-old".
+	'minipreview-ignore_categories' => 'A seguinte é unha lista de nomes de categorías ou comezos de nomes.
+MiniPreview non mostrará estas categorías.
+Por exemplo, "* PD-" non mostrará todas as categorías que comecen por "PD-", como "PD-old".
 * GFDL-
 * GFDL
 * CC-
@@ -312,6 +354,7 @@ $messages['gsw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
@@ -321,7 +364,7 @@ $messages['he'] = array(
 	'minipreview-files_in_gallery' => "{{PLURAL:$1|קובץ '''אחד'''|'''$1''' קבצים}} בסך הכול בגלריה זו.",
 	'minipreview-no_more_files_here' => 'אין עוד קבצים בכיוון זה.',
 	'minipreview-no_category_gallery' => 'אין קטגוריות או גלריות!',
-	'minipreview-ignore_categories' => 'הרשימה הבאה הינה רשימת שמות או תחילת שמות של קטגוריות. קטגוריות אלו לא יוצגו על ידי MiniPreview. לדוגמה, "* PD-" לא תציג את כל הקטגוריות המתחילות ב־"PD-", כגון "PD-old".
+	'minipreview-ignore_categories' => 'זוהי רשימת שמות או תחיליות של שמות של קטגוריות. קטגוריות אלו לא יוצגו על ידי MiniPreview. למשל, "* PD-" לא תציג את כל הקטגוריות המתחילות ב־"PD-", כגון "PD-old".
 * GFDL-
 * GFDL
 * CC-
@@ -468,7 +511,7 @@ $messages['km'] = array(
 	'minipreview-no_category_gallery' => 'គ្មានចំណាត់ថ្នាក់ក្រុមឬវិចិត្រសាលទេ!',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -521,12 +564,12 @@ $messages['lt'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'minipreview-desc' => 'МиниПреглед (MiniPreview) прикажува до една слика мали прегледи на други медии во истите категории или прикажани на истите страници',
+	'minipreview-desc' => 'МиниПреглед (MiniPreview) прикажува до една слика мали прегледи на други податотеки во истите категории или прикажани на истите страници',
 	'minipreview-files_in_category' => "Оваа категорија содржи '''$1''' {{PLURAL:$1|податотека|податотеки}}.",
 	'minipreview-files_in_gallery' => "Оваа галерија содржи '''$1''' {{PLURAL:$1|податотека|податотеки}}.",
 	'minipreview-no_more_files_here' => 'Нема повеќе податотеки во оваа насока.',
 	'minipreview-no_category_gallery' => 'Нема категории или галерии!',
-	'minipreview-ignore_categories' => 'Ова е листа на називи на категории или почетоци на називи.
+	'minipreview-ignore_categories' => 'Ова е список на називи на категории или почетоци на називите.
 Овие категории нема да се прикажат на MiniPreview.
 На пример, „* PD-“ нема да ги прикаже сите категории кои започнуваат со „PD-“, како да речеме „PD-old“.
 * GFDL-
@@ -541,21 +584,40 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'minipreview-files_in_category' => "ഈ വർഗ്ഗം മൊത്തം {{PLURAL:$1|'''ഒരു''' പ്രമാണം|'''$1''' പ്രമാണങ്ങള്‍}} ഉൾക്കൊള്ളുന്നു.",
-	'minipreview-files_in_gallery' => "ഈ ചിത്രശാലയിൽ മൊത്തം {{PLURAL:$1|'''ഒരു''' പ്രമാണം|'''$1''' പ്രമാണങ്ങള്‍}} ഉൾക്കൊള്ളുന്നു.",
+	'minipreview-files_in_category' => "ഈ വർഗ്ഗം മൊത്തം {{PLURAL:$1|'''ഒരു''' പ്രമാണം|'''$1''' പ്രമാണങ്ങൾ}} ഉൾക്കൊള്ളുന്നു.",
+	'minipreview-files_in_gallery' => "ഈ ചിത്രശാലയിൽ മൊത്തം {{PLURAL:$1|'''ഒരു''' പ്രമാണം|'''$1''' പ്രമാണങ്ങൾ}} ഉൾക്കൊള്ളുന്നു.",
 	'minipreview-no_category_gallery' => 'വർഗ്ഗങ്ങളോ ഗാലറികളോ ഇല്ല!',
 );
 
 /** Marathi (मराठी)
  * @author Kaustubh
+ * @author V.narsikar
  */
 $messages['mr'] = array(
 	'minipreview-desc' => 'एखाद्या चित्राच्या पुढे, त्या वर्गातील अथवा त्या पानातील इतर चित्रे अथवा संचिका, छोट्या आकारात पाहण्यासाठी, मिनीप्रिव्ह्यूचा वापर करा',
-	'minipreview-files_in_category' => 'या वर्गात एकूण $1 संचिका आहेत.',
-	'minipreview-files_in_gallery' => 'या प्रदर्शनात एकूण $1 संचिका आहेत.',
-	'minipreview-no_more_files_here' => 'यापुढे कोणत्याही संचिका नाहीत.',
+	'minipreview-files_in_category' => "या वर्गात '''$1''' {{PLURAL:$1|संचिका|संचिका}} आहेत.",
+	'minipreview-files_in_gallery' => "या दिर्घेत '''$1''' {{PLURAL:$1|संचिका|संचिका}} आहेत.",
+	'minipreview-no_more_files_here' => 'या दिशेने कोणत्याही संचिका नाहीत.',
 	'minipreview-no_category_gallery' => 'वर्ग किंवा प्रदर्शने नाहीत!',
 	'minipreview-ignore_categories' => 'खाली वर्ग नामे तसेच नामांची सुरुवात होणार्‍या शब्दांची यादी आहे. मिनीप्रिव्ह्यू या यादीतील वर्गात समाविष्ट असणार्‍या संचिका दाखविणार नाही. उदा. "* PD-" "PD-" ने सुरु होणारे वर्ग दाखविणार नाही, जसे की "PD-old".
+* GFDL-
+* GFDL
+* CC-
+* PD-
+* Self',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Boivie
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'minipreview-desc' => 'Miniforhåndsvisning viser små forhåndsvisninger av media i samme kategorier eller fra samme sider',
+	'minipreview-files_in_category' => 'Totalt $1 {{PLURAL:$1|fil|filer}} i denne kategorien.',
+	'minipreview-files_in_gallery' => 'Totalt $1 {{PLURAL:$1|fil|filer}} i dette galleriet.',
+	'minipreview-no_more_files_here' => 'Ingen flere filer i denne retningen.',
+	'minipreview-no_category_gallery' => 'Ingen kategorier eller gallerier!',
+	'minipreview-ignore_categories' => 'Følgende er en liste over kategorinavn eller begynnelser på såden. Disse kategoriene vil ikke vises av Miniforhåndsvisning. For eksempel vil «* PD-» gjøre at bilder ikke velges ut fordi de er i kategorier som begynner med «PD-», slik som «PD-old».
 * GFDL-
 * GFDL
 * CC-
@@ -592,24 +654,6 @@ $messages['nn'] = array(
 	'minipreview-no_more_files_here' => 'Ikkje fleire filer i denne retninga.',
 	'minipreview-no_category_gallery' => 'Ingen kategoriar eller galleri!',
 	'minipreview-ignore_categories' => 'Følgjande er ei lista over kategorinamn eller starten på dei. Desse kategoriane vil ikkje bli viste av MiniPreview. Til dømes vil «* PD-» gjera at bilete ikkje blir valte ut av di dei er i kategoriar som byrjar med «PD-», slik som «PD-old».
-* GFDL-
-* GFDL
-* CC-
-* PD-
-* Self',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Boivie
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'minipreview-desc' => 'Miniforhåndsvisning viser små forhåndsvisninger av media i samme kategorier eller fra samme sider',
-	'minipreview-files_in_category' => 'Totalt $1 {{PLURAL:$1|fil|filer}} i denne kategorien.',
-	'minipreview-files_in_gallery' => 'Totalt $1 {{PLURAL:$1|fil|filer}} i dette galleriet.',
-	'minipreview-no_more_files_here' => 'Ingen flere filer i denne retningen.',
-	'minipreview-no_category_gallery' => 'Ingen kategorier eller gallerier!',
-	'minipreview-ignore_categories' => 'Følgende er en liste over kategorinavn eller begynnelser på såden. Disse kategoriene vil ikke vises av Miniforhåndsvisning. For eksempel vil «* PD-» gjøre at bilder ikke velges ut fordi de er i kategorier som begynner med «PD-», slik som «PD-old».
 * GFDL-
 * GFDL
 * CC-
@@ -664,8 +708,8 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'minipreview-files_in_category' => 'په همدې وېشنيزه کې ټولټال $1 دوتنې دي.',
-	'minipreview-files_in_gallery' => 'په همدې نندارتون کې ټولټال $1 دوتنې دي.',
+	'minipreview-files_in_category' => "دا وېشنيزه '''$1''' {{PLURAL:$1|دوتنه لري|دوتنې لري}}.",
+	'minipreview-files_in_gallery' => "دا انځورتون '''$1''' {{PLURAL:$1|دوتنه لري|دوتنې لري}}.",
 	'minipreview-no_category_gallery' => 'هېڅ کومې وېشنيزې يا نندارتونونه نه!',
 );
 
@@ -675,12 +719,12 @@ $messages['ps'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
-	'minipreview-desc' => 'MiniPreview apresenta, junto a uma imagem, pequenas antevisões de outros ficheiros multimédia nas mesmas categorias ou existentes nas mesmas páginas',
+	'minipreview-desc' => 'MiniAntevisão apresenta, junto a uma imagem, pequenas antevisões de outros ficheiros multimédia nas mesmas categorias ou existentes nas mesmas páginas',
 	'minipreview-files_in_category' => "'''$1''' {{PLURAL:$1|ficheiro|ficheiros}} no total nesta categoria.",
 	'minipreview-files_in_gallery' => '$1 {{PLURAL:$1|ficheiro|ficheiros}} no total nesta galeria.',
 	'minipreview-no_more_files_here' => 'Não há mais ficheiros nesta direcção.',
 	'minipreview-no_category_gallery' => 'Não existem categorias ou galerias!',
-	'minipreview-ignore_categories' => 'A seguinte lista contém nomes de categorias ou prefixos de nomes. Estas categorias não serão mostradas pelo MiniPreview.
+	'minipreview-ignore_categories' => 'A seguinte lista contém nomes de categorias ou prefixos de nomes. Estas categorias não serão mostradas pela MiniAntevisão.
 Por exemplo, "* PD-" não mostrará todas as categorias que começam com "PD-", tal como "PD-old".
 * GFDL-
 * GFDL
@@ -711,14 +755,15 @@ Por exemplo, "* PD-" não mostrará todas as categorias que começam com "PD-", 
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'minipreview-files_in_category' => "Această categorie conţine '''$1''' {{PLURAL:$1|fişier|fişiere}}.",
-	'minipreview-files_in_gallery' => "Această galerie conţine '''$1''' {{PLURAL:$1|fişier|fişiere}}.",
-	'minipreview-no_more_files_here' => 'Nici un alt fişier în această direcţie.',
+	'minipreview-files_in_category' => "Această categorie conține '''$1''' {{PLURAL:$1|fișier|fișiere}}.",
+	'minipreview-files_in_gallery' => "Această galerie conține '''$1''' {{PLURAL:$1|fișier|fișiere}}.",
+	'minipreview-no_more_files_here' => 'Nici un alt fișier în această direcție.',
 	'minipreview-no_category_gallery' => 'Nici o categorie sau categorie!',
 );
 
 /** Russian (Русский)
  * @author Kaganer
+ * @author Sortilegus
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -754,15 +799,16 @@ $messages['sk'] = array(
 * Self',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Обрадовић Горан
  */
 $messages['sr-ec'] = array(
 	'minipreview-no_more_files_here' => 'Нема више фајлова у овом смеру',
-	'minipreview-no_category_gallery' => 'Нема категорија или галерија',
+	'minipreview-no_category_gallery' => 'Нема категорија или галерија!',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -883,17 +929,19 @@ Samo: „* PD-“ no ojenon kladis valik, kels primons me: „PD-“ , äs „PD
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Liangent
+ * @author Mark85296341
  */
 $messages['zh-hans'] = array(
 	'minipreview-files_in_category' => "本分类包含'''$1'''个档案。",
-	'minipreview-files_in_gallery' => "本图片廊包含'''$1'''个档案。",
+	'minipreview-files_in_gallery' => "本图片廊包含 '''$1''' {{PLURAL:$1|文件|文件}}。",
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'minipreview-files_in_category' => "本分類包含'''$1'''個檔案。",
-	'minipreview-files_in_gallery' => "本圖片廊包含'''$1'''個檔案。",
+	'minipreview-files_in_category' => "本分類包含 '''$1''' {{PLURAL:$1|檔案|檔案}}。",
+	'minipreview-files_in_gallery' => "本圖片廊包含 '''$1''' {{PLURAL:$1|檔案|檔案}}。",
 );
 

@@ -1,14 +1,13 @@
 <?php
+/**
+ * Author: ning
+ */
 if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
 global $wgAjaxExportList;
-global $smwgNMIP;
-
-require_once( $smwgNMIP . '/includes/SMW_NotifyProcessor.php' );
 $wgAjaxExportList[] = 'smwf_nm_NotifyAccess';
-
 
 function smwf_nm_NotifyAccess( $method, $params ) {
 	$p_array = explode( ",", $params );
@@ -19,9 +18,9 @@ function smwf_nm_NotifyAccess( $method, $params ) {
 		global $wgUser;
 		$wgUser->setOption( 'enotifyme', $params );
 		$wgUser->saveSettings();
-		return 'Update NotifyMe mail setting successfully!';
+		return wfMsg( 'smw_nm_ajax_mailupdate' );
 	}
-	else if ( $method == "addNotify" ) {
+	elseif ( $method == "addNotify" ) {
 		if ( $smwgQEnabled ) {
 			$result = SMWNotifyProcessor::addNotify( str_replace( '&amp;', '&', str_replace( '&comma;', ',', $p_array[0] ) ),
 				str_replace( '&amp;', '&', str_replace( '&comma;', ',', $p_array[3] ) ),
@@ -29,7 +28,7 @@ function smwf_nm_NotifyAccess( $method, $params ) {
 		}
 		return $result;
 	}
-	else if ( $method == "getQueryResult" ) {
+	elseif ( $method == "getQueryResult" ) {
 		if ( $smwgQEnabled ) {
 			$params .= '
 | format=table
@@ -59,7 +58,7 @@ function smwf_nm_NotifyAccess( $method, $params ) {
 			}
 			global $wgParser;
 
-			   if ( ( $wgParser->getTitle() instanceof Title ) && ( $wgParser->getOptions() instanceof ParserOptions ) ) {
+		   	if ( ( $wgParser->getTitle() instanceof Title ) && ( $wgParser->getOptions() instanceof ParserOptions ) ) {
 				$result = $wgParser->recursiveTagParse( $result );
 			} else {
 				global $wgTitle;
@@ -77,37 +76,37 @@ function smwf_nm_NotifyAccess( $method, $params ) {
 		}
 		return $result;
 	}
-	else if ( $method == "updateStates" ) {
+	elseif ( $method == "updateStates" ) {
 		if ( $smwgQEnabled ) {
 			$result = SMWNotifyProcessor::updateStates( $p_array );
 		}
 		return $result;
 	}
-	else if ( $method == "updateReportAll" ) {
+	elseif ( $method == "updateReportAll" ) {
 		if ( $smwgQEnabled ) {
 			$result = SMWNotifyProcessor::updateReportAll( $p_array );
 		}
 		return $result;
 	}
-	else if ( $method == "updateShowAll" ) {
+	elseif ( $method == "updateShowAll" ) {
 		if ( $smwgQEnabled ) {
 			$result = SMWNotifyProcessor::updateShowAll( $p_array );
 		}
 		return $result;
 	}
-	else if ( $method == "updateDelegates" ) {
+	elseif ( $method == "updateDelegates" ) {
 		if ( $smwgQEnabled ) {
 			$result = SMWNotifyProcessor::updateDelegates( explode( "|", $params ) );
 		}
 		return $result;
 	}
-	else if ( $method == "delNotify" ) {
+	elseif ( $method == "delNotify" ) {
 		if ( $smwgQEnabled ) {
 			$result = SMWNotifyProcessor::delNotify( $p_array );
 		}
 		return $result;
 	}
 	else {
-		return "Operation failed, please retry later.";
+		return wfMsg( 'smw_nm_ajax_fail' );
 	}
 }

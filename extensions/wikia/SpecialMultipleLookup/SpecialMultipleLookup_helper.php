@@ -224,7 +224,7 @@ class MultipleLookupCore {
 	private function produceLink ( $nt, $text, $query, $url, $sk, $wiki_meta, $namespace, $article_id ) {
 		global $wgContLang, $wgOut, $wgMetaNamespace ;
 
-		$str = $nt->escapeLocalURL ( $query ) ;
+		$str = htmlspecialchars($nt->getLocalURL( $query ));
 
 		/* replace empty namespaces, namely: "/:Something" of "title=:Something" stuff it's ugly, it's brutal, it doesn't lead anywhere */
 		$old_str = $str ;

@@ -5,7 +5,7 @@
 <article>
 
 	<?php if($result->getThumbnail() != null): ?>
-		<?= $result->getThumbnail()->toHtml(array('desc-link'=>true)); ?>
+		<?= $result->getThumbnail()->toHtml(array('desc-link'=>true, 'img-class'=>'thumbimage')); ?>
 	<?php endif; ?>
 	
 	<h1>

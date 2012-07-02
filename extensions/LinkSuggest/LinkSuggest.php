@@ -6,7 +6,7 @@
  *
  * @file
  * @ingroup Extensions
- * @version 1.6 (r32133)
+ * @version 1.7 (r32133)
  * @author Inez Korczyński <korczynski at gmail dot com>
  * @author Bartek Łapiński <bartek at wikia-inc dot com>
  * @author Łukasz Garczewski (TOR) <tor at wikia-inc dot com>
@@ -26,13 +26,13 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'LinkSuggest',
-	'version' => '1.6',
+	'version' => '1.7',
 	'author' => array(
 		'Inez Korczyński', 'Bartek Łapiński', 'Łukasz Garczewski', 'Maciej Brencz',
 		'Jesús Martínez Novo', 'Jack Phoenix'
 	),
 	'descriptionmsg' => 'linksuggest-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:LinkSuggest',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:LinkSuggest',
 );
 
 // Internationalization file
@@ -85,7 +85,8 @@ function addLinkSuggest( $editPage ) {
 			// 1.16 backwards compatibility code...icky
 			$wgOut->includeJQuery();
 			$wgOut->addInlineScript( '$ = jQuery;' ); // required in 1.16 :-(
-			$wgOut->addExtensionStyle( $wgScriptPath . '/extensions/LinkSuggest/jquery-ui.css' );
+			$wgOut->addScriptFile( $wgScriptPath . '/extensions/LinkSuggest/jquery.widget.position.autocomplete-1.8.2.js' );
+			$wgOut->addExtensionStyle( $wgScriptPath . '/extensions/LinkSuggest/jquery.autocomplete.css' );
 			$wgOut->addScriptFile( $wgScriptPath . '/extensions/LinkSuggest/jquery.mw.linksuggest.js' );
 		}
 	}
@@ -125,7 +126,6 @@ function getLinkSuggestImage() {
  *
  * @return $ar Array of link suggestions
  */
-
 function getLinkSuggest() {
 	global $wgRequest, $wgContLang, $wgContentNamespaces;
 
@@ -246,7 +246,7 @@ function wfLinkSuggestFormatTitle( $namespace, $title ) {
 	global $wgContLang;
 
 	if ( $namespace != NS_MAIN ) {
-		$title = $wgContLang->getNsText($namespace) . ':' . $title;
+		$title = $wgContLang->getNsText( $namespace ) . ':' . $title;
 	}
 
 	return str_replace( '_', ' ', $title );

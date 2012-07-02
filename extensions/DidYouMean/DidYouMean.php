@@ -10,7 +10,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'DidYouMean',
 	'author'         => array( 'hippietrail (Andrew Dunbar)', 'Chad Horohoe' ),
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:DidYouMean',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:DidYouMean',
 	'descriptionmsg' => 'didyoumean-desc',
 );
 $dir = dirname(__FILE__) . '/';

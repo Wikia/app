@@ -273,7 +273,7 @@ class CloseWikiMaintenance {
 					 */
 					$local = wfGetDB( DB_MASTER, array(), $centralDB );
 					$server = $local->getLBInfo( 'host' );
-					$dbw = new Database( $server, $wgDBadminuser, $wgDBadminpassword, $centralDB );
+					$dbw = new DatabaseMysql( $server, $wgDBadminuser, $wgDBadminpassword, $centralDB );
 					$dbw->begin();
 					$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
 					$dbw->commit();

@@ -59,7 +59,7 @@ class MWBlocker {
 			$translated = array_map( array( 'MWBlocker', 'outParam' ), $param );
 			return new XML_RPC_Value( $translated, $type );
 		} else {
-			return new WikiError( 'MWBlocker::sendRPC given bogus parameter' );
+			throw new MWException( 'MWBlocker::sendRPC given bogus parameter' );
 		}
 	}
 	
@@ -91,9 +91,9 @@ class MWBlocker {
 		}
 		
 		if( !is_object( $result ) ) {
-			return new WikiError( "Unknown XML-RPC error" );
+			throw new MWException( "Unknown XML-RPC error" );
 		} elseif( $result->faultCode() ) {
-			return new WikiError( $result->faultCode() . ': ' . $result->faultString() );
+			throw new MWException( $result->faultCode() . ': ' . $result->faultString() );
 		} else {
 			$value = $result->value();
 			return $value->getval();

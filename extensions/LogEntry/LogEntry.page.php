@@ -7,16 +7,13 @@
  */
 
 // LogEntry special page
-class LogEntry extends UnlistedSpecialPage {
+class SpecialLogEntry extends UnlistedSpecialPage {
 	
 	/* Functions */
 	
 	public function __construct() {
 		// Register the special page as unlisted
-		UnlistedSpecialPage::UnlistedSpecialPage( 'LogEntry' );
-		
-		// Internationalization
-		wfLoadExtensionMessages( 'LogEntry' );
+		parent::__construct( 'LogEntry' );
 	}
 	
 	public function execute( $par ) {
@@ -43,10 +40,10 @@ class LogEntry extends UnlistedSpecialPage {
 			$title = Title::newFromText( $page );
 			
 			// Check permissions
-			if( $title && $title->userCan( 'edit', $page ) )
+			if( $title && $title->userCan( 'edit' ) )
 			{
 				// Get article
-				$article = new Article( $title );
+				$article = new Article( $title, 0 );
 				
 				// Build new line
 				$newLine = '*';
@@ -133,6 +130,6 @@ class LogEntry extends UnlistedSpecialPage {
 			}
 		}
 		// Alert of invalid page
-		$wgOut->addHTML( wfMsgHtml( 'logentry-invalidpage' ) . ": {$page}" );
+		$wgOut->addWikiMsg( 'logentry-invalidpage', $page );
 	}
 }

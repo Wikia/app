@@ -12,7 +12,6 @@ class BlogListingController extends WikiaController {
 		global $wgLang;
 
 		// get message for "read more" link
-		wfLoadExtensionMessages('Blogs');
 		$cutSign = wfMsg('blug-cut-sign');
 
 		foreach($results as &$result) {

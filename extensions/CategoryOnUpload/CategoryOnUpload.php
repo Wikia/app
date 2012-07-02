@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CategoryOnUpload Extension
  *
@@ -8,7 +7,7 @@
  * Warning: Should not be enabled on wikis with lots of categories.
  *
  * @ingroup Extensions
- * 
+ *
  * @link http://www.mediawiki.org/wiki/Extension:CategoryOnUpload
  *
  * @author Robert Leverington <robert@rhl.me.uk>
@@ -17,16 +16,15 @@
  */
 
 // Ensure accessed via a valid entry point.
-if( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
+if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 
 // Register extension credits.
 $wgExtensionCredits[ 'other' ][] = array(
 	'path'          => __FILE__,
 	'name'          => 'CategoryOnUpload',
-	'url'           => 'http://www.mediawiki.org/wiki/Extension:CategoryOnUpload',
+	'url'           => 'https://www.mediawiki.org/wiki/Extension:CategoryOnUpload',
 	'author'        => 'Robert Leverington',
 	'version'       => '1.1.0',
-	'description'   => 'Prompts a user to select a category when uploading a file.',
 	'decriptionmsg' => 'categoryonupload-desc'
 );
 
@@ -46,7 +44,6 @@ $wgCategoryOnUploadList = null;
  * Adds a category selection box to the end of the default UploadForm table.
  */
 function efCategoryOnUploadForm( $uploadFormObj ) {
-
 	/* Get the database prefix, needed for 1.12 to do custom query. When 1.13
 	 * is released it can be removed and the category table used instead.
 	 */
@@ -55,7 +52,7 @@ function efCategoryOnUploadForm( $uploadFormObj ) {
 	/* Load extension messages, currently only used for the label beside the
 	 * select box.
 	 */
-	wfLoadExtensionMessages( 'CategoryOnUpload' );
+	
 
 	/* Begin generation of the form, output the table row, label, open the
 	 * select box, and add the default option for not adding a category at all.
@@ -74,11 +71,8 @@ function efCategoryOnUploadForm( $uploadFormObj ) {
 
 	/* If permitted output the "none" option.
 	 */
-	if( $wgCategoryOnUploadAllowNone ) {
-
-		$cat .=
-					Xml::option( wfMsg( 'categoryonupload-none' ), '#' );
-
+	if ( $wgCategoryOnUploadAllowNone ) {
+		$cat .= Xml::option( wfMsg( 'categoryonupload-none' ), '#' );
 	}
 
 	/* Get deault category, to compare with category option being output, so the
@@ -86,8 +80,7 @@ function efCategoryOnUploadForm( $uploadFormObj ) {
 	 */
 	global $wgCategoryOnUploadDefault, $wgCategoryOnUploadList;
 
-	if( !is_array( $wgCategoryOnUploadList ) ) {
-
+	if ( !is_array( $wgCategoryOnUploadList ) ) {
 		/* Get a database read object.
 		 */
 		$dbr = wfGetDB( DB_SLAVE );
@@ -99,7 +92,7 @@ function efCategoryOnUploadForm( $uploadFormObj ) {
 		 * interface could be created; but when it was developed only a few needed
 		 * to be displayed so this was not an issue.  Fallback to the select box is
 		 * essential no matter what improvements are made.
-		 * 
+		 *
 		 * It would be nice to use the category table to avoid having to do a
 		 * manual query and perhaps improve performance, but it appears to not
 		 * descriminate between existing and non-existing categories, this would be
@@ -115,23 +108,21 @@ function efCategoryOnUploadForm( $uploadFormObj ) {
 		 * of resources.  If this becomes an issue simply remove the # comments and
 		 * comment out the first line.
 		 */
-		while( $row = $dbr->fetchObject( $res ) ) {
-
+		while ( $row = $dbr->fetchObject( $res ) ) {
 			$text   = str_replace( '_', ' ', $row->cl_to );
-			#$title = Title::newFromText( $row->cl_to, NS_CATEGORY );
-			#$text  = $title->getText();
+			# $title = Title::newFromText( $row->cl_to, NS_CATEGORY );
+			# $text  = $title->getText();
 
 			/* Add option to output, if it is the default then make it selected too.
 			 */
 			$cat .= Xml::option( $text, $row->cl_to, ( $text == $wgCategoryOnUploadDefault ) );
 
 		}
-
 	} else {
-		foreach( $wgCategoryOnUploadList as $category ) {
+		foreach ( $wgCategoryOnUploadList as $category ) {
 			$text   = str_replace( '_', ' ', $category );
-			#$title = Title::newFromText( $row->cl_to, NS_CATEGORY );
-			#$text  = $title->getText();
+			# $title = Title::newFromText( $row->cl_to, NS_CATEGORY );
+			# $text  = $title->getText();
 
 			/* Add option to output, if it is the default then make it selected too.
 			 */
@@ -141,9 +132,8 @@ function efCategoryOnUploadForm( $uploadFormObj ) {
 
 	/* Close all the open elements, finished generation.
 	 */
-	$cat .=
-				Xml::closeElement( 'select' ) .
-			Xml::closeElement( 'td' ) .
+	$cat .= Xml::closeElement( 'select' ) .
+		Xml::closeElement( 'td' ) .
 		Xml::closeElement( 'tr' );
 
 	/* Add the category selector to the start of the form so that other
@@ -157,14 +147,12 @@ function efCategoryOnUploadForm( $uploadFormObj ) {
 	 * generated.
 	 */
 	return true;
-
 }
 
 /**
  * Append the category statement to the end of the upload summary.
  */
 function efCategoryOnUploadProcess( $uploadFormObj ) {
-
 	/* Get the request object.
 	 */
 	global $wgRequest;
@@ -176,7 +164,7 @@ function efCategoryOnUploadProcess( $uploadFormObj ) {
 	/* Append the category statement to the end of the upload summary if the
 	 * cateogry is not '#' (indicating no category to be added).
 	 */
-	if( $cat != '#' ) {
+	if ( $cat != '#' ) {
 		$uploadFormObj->mComment .= "\n" . '[[Category:' . $wgRequest->getText( 'wpUploadCategory' ) . ']]';
 	}
 
@@ -184,5 +172,4 @@ function efCategoryOnUploadProcess( $uploadFormObj ) {
 	 * generated.
 	 */
 	return true;
-
 }

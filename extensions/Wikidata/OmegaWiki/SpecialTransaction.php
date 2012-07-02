@@ -2,96 +2,89 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-$wgExtensionFunctions[] = 'wfSpecialTransaction';
 require_once( "Wikidata.php" );
 require_once( "Utilities.php" );
 
-
-function wfSpecialTransaction() {
-	class SpecialTransaction extends SpecialPage {
-		function SpecialTransaction() {
-			SpecialPage::SpecialPage( 'Transaction' );
-		}
-		
-		function execute( $parameter ) {
-			global
-				$wgOut;
-			
-			require_once( "WikiDataTables.php" );
-			require_once( "OmegaWikiAttributes.php" );
-			require_once( "OmegaWikiRecordSets.php" );
-			require_once( "OmegaWikiEditors.php" );
-			require_once( "RecordSetQueries.php" );
-			require_once( "Transaction.php" );
-			require_once( "Editor.php" );
-			require_once( "Controller.php" );
-			require_once( "type.php" );
-			require_once( "ViewInformation.php" );
-			
-			initializeOmegaWikiAttributes( new ViewInformation() );
-			initializeAttributes();
-			
-			@$fromTransactionId = (int) $_GET['from-transaction']; # FIXME - check parameter
-			@$transactionCount = (int) $_GET['transaction-count']; # FIXME - check parameter
-			@$userName = "" . $_GET['user-name']; # FIXME - check parameter
-			@$showRollBackOptions = isset( $_GET['show-roll-back-options'] ); # FIXME - check parameter
-
-			if ( isset( $_POST['roll-back'] ) ) {
-				$fromTransactionId = (int) $_POST['from-transaction'];
-				$transactionCount = (int) $_POST['transaction-count'];
-				$userName = "" . $_POST['user-name'];
-				
-				if ( $fromTransactionId != 0 ) {
-					$recordSet = getTransactionRecordSet( $fromTransactionId, $transactionCount, $userName );
-					rollBackTransactions( $recordSet );
-					$fromTransactionId = 0;
-					$userName = "";
-				}
-			}
-
-			if ( $fromTransactionId == 0 )
-				$fromTransactionId = getLatestTransactionId();
-				
-			if ( $transactionCount == 0 )
-				$transactionCount = 10;
-			else
-				$transactionCount = min( $transactionCount, 20 );
-			
-			$wgOut->setPageTitle( wfMsg( 'recentchanges' ) );
-			$wgOut->addHTML( getFilterOptionsPanel( $fromTransactionId, $transactionCount, $userName, $showRollBackOptions ) );
-
-			if ( $showRollBackOptions )
-				$wgOut->addHTML(
-					'<form method="post" action="">' .
-					'<input type="hidden" name="from-transaction" value="' . $fromTransactionId . '"/>' .
-					'<input type="hidden" name="transaction-count" value="' . $transactionCount . '"/>' .
-					'<input type="hidden" name="user-name" value="' . $userName . '"/>'
-				);
-
-			$recordSet = getTransactionRecordSet( $fromTransactionId, $transactionCount, $userName );
-			
-			$wgOut->addHTML( getTransactionOverview( $recordSet, $showRollBackOptions ) );
-			
-			if ( $showRollBackOptions )
-				$wgOut->addHTML(
-					'<div class="option-panel">' .
-						'<table cellpadding="0" cellspacing="0">' .
-							'<tr>' .
-								'<th>' . wfMsg( "summary" ) . ': </th>' .
-								'<td class="option-field">' . getTextBox( "summary" ) . '</td>' .
-							'</tr>' .
-							'<tr><th/><td>' . getSubmitButton( "roll-back", wfMsg( 'ow_transaction_rollback_button' ) ) . '</td></tr>' .
-						'</table>' .
-					'</div>' .
-					'</form>'
-				);
-			
-			$wgOut->addHTML( DefaultEditor::getExpansionCss() );
-			$wgOut->addHTML( "<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>" );
-		}
+class SpecialTransaction extends SpecialPage {
+	function SpecialTransaction() {
+		parent::__construct( 'Transaction' );
 	}
-	
-	SpecialPage::addPage( new SpecialTransaction() );
+
+	function execute( $parameter ) {
+		global $wgOut;
+
+		require_once( "WikiDataTables.php" );
+		require_once( "OmegaWikiAttributes.php" );
+		require_once( "OmegaWikiRecordSets.php" );
+		require_once( "OmegaWikiEditors.php" );
+		require_once( "RecordSetQueries.php" );
+		require_once( "Transaction.php" );
+		require_once( "Editor.php" );
+		require_once( "Controller.php" );
+		require_once( "type.php" );
+		require_once( "ViewInformation.php" );
+
+		initializeOmegaWikiAttributes( new ViewInformation() );
+		initializeAttributes();
+
+		@$fromTransactionId = (int) $_GET['from-transaction']; # FIXME - check parameter
+		@$transactionCount = (int) $_GET['transaction-count']; # FIXME - check parameter
+		@$userName = "" . $_GET['user-name']; # FIXME - check parameter
+		@$showRollBackOptions = isset( $_GET['show-roll-back-options'] ); # FIXME - check parameter
+
+		if ( isset( $_POST['roll-back'] ) ) {
+			$fromTransactionId = (int) $_POST['from-transaction'];
+			$transactionCount = (int) $_POST['transaction-count'];
+			$userName = "" . $_POST['user-name'];
+
+			if ( $fromTransactionId != 0 ) {
+				$recordSet = getTransactionRecordSet( $fromTransactionId, $transactionCount, $userName );
+				rollBackTransactions( $recordSet );
+				$fromTransactionId = 0;
+				$userName = "";
+			}
+		}
+
+		if ( $fromTransactionId == 0 )
+			$fromTransactionId = getLatestTransactionId();
+
+		if ( $transactionCount == 0 )
+			$transactionCount = 10;
+		else
+			$transactionCount = min( $transactionCount, 20 );
+
+		$wgOut->setPageTitle( wfMsg( 'recentchanges' ) );
+		$wgOut->addHTML( getFilterOptionsPanel( $fromTransactionId, $transactionCount, $userName, $showRollBackOptions ) );
+
+		if ( $showRollBackOptions )
+			$wgOut->addHTML(
+				'<form method="post" action="">' .
+				'<input type="hidden" name="from-transaction" value="' . $fromTransactionId . '"/>' .
+				'<input type="hidden" name="transaction-count" value="' . $transactionCount . '"/>' .
+				'<input type="hidden" name="user-name" value="' . $userName . '"/>'
+			);
+
+		$recordSet = getTransactionRecordSet( $fromTransactionId, $transactionCount, $userName );
+
+		$wgOut->addHTML( getTransactionOverview( $recordSet, $showRollBackOptions ) );
+
+		if ( $showRollBackOptions )
+			$wgOut->addHTML(
+				'<div class="option-panel">' .
+					'<table cellpadding="0" cellspacing="0">' .
+						'<tr>' .
+							'<th>' . wfMsg( "summary" ) . ': </th>' .
+							'<td class="option-field">' . getTextBox( "summary" ) . '</td>' .
+						'</tr>' .
+						'<tr><th/><td>' . getSubmitButton( "roll-back", wfMsg( 'ow_transaction_rollback_button' ) ) . '</td></tr>' .
+					'</table>' .
+				'</div>' .
+				'</form>'
+			);
+
+		$wgOut->addHTML( DefaultEditor::getExpansionCss() );
+		$wgOut->addHTML( "<script language='javascript'>/* <![CDATA[ */\nexpandEditors();\n/* ]]> */</script>" );
+	}
 }
 
 function getFilterOptionsPanel( $fromTransactionId, $transactionCount, $userName, $showRollBackOptions ) {
@@ -1361,14 +1354,16 @@ function rollBackTranslatedContent( $idStack, $rollBackAction, $translatedConten
 
 		$version = (int) $_POST[$idStack->getId()];
 		
-		if ( $version > 0 )
+		if ( $version > 0 ) {
 			rollBackTranslatedContentToVersion( $translatedContentId, $languageId, $version );
+		}
 		
 		$idStack->popAttribute();
 		$idStack->popAttribute();
 	}
-	else if ( $rollBackAction == 'remove' )
+	elseif ( $rollBackAction == 'remove' ) {
 		removeTranslatedText( $translatedContentId, $languageId );
+	}
 }
 
 function getTranslatedContentFromHistory( $translatedContentId, $languageId, $addTransactionId ) {
@@ -1434,10 +1429,12 @@ function shouldRestore( $rollBackAction, $operation ) {
 }
 
 function rollBackRelation( $rollBackAction, $relationId, $firstMeaningId, $relationTypeId, $secondMeaningId, $operation ) {
-	if ( shouldRemove( $rollBackAction, $operation ) )
+	if ( shouldRemove( $rollBackAction, $operation ) ) {
 		removeRelationWithId( $relationId );
-	else if ( shouldRestore( $rollBackAction, $operation ) )
+	}
+	elseif ( shouldRestore( $rollBackAction, $operation ) ) {
 		addRelation( $firstMeaningId, $relationTypeId, $secondMeaningId );
+	}
 }
 
 function rollBackClassMemberships( $idStack, $classMemberships ) {
@@ -1469,10 +1466,12 @@ function rollBackClassMemberships( $idStack, $classMemberships ) {
 }
 
 function rollBackClassMembership( $rollBackAction, $classMembershipId, $classId, $classMemberId, $operation ) {
-	if ( shouldRemove( $rollBackAction, $operation ) )
+	if ( shouldRemove( $rollBackAction, $operation ) ) {
 		removeClassMembershipWithId( $classMembershipId );
-	else if ( shouldRestore( $rollBackAction, $operation ) )
+	}
+	elseif ( shouldRestore( $rollBackAction, $operation ) ) {
 		addClassMembership( $classMemberId, $classId );
+	}
 }
 
 function rollBackClassAttributes( $idStack, $classAttributes ) {
@@ -1506,10 +1505,12 @@ function rollBackClassAttributes( $idStack, $classAttributes ) {
 }
 
 function rollBackClassAttribute( $rollBackAction, $classAttributeId, $classId, $levelId, $attributeId, $type, $operation ) {
-	if ( shouldRemove( $rollBackAction, $operation ) )
+	if ( shouldRemove( $rollBackAction, $operation ) ) {
 		removeClassAttributeWithId( $classAttributeId );
-	else if ( shouldRestore( $rollBackAction, $operation ) )
+	}
+	elseif ( shouldRestore( $rollBackAction, $operation ) ) {
 		addClassAttribute( $classId, $levelId, $attributeId, $type );
+	}
 }
 
 function rollBackTranslatedTextProperties( $idStack, $translatedTextProperties ) {
@@ -1542,10 +1543,12 @@ function rollBackTranslatedTextProperties( $idStack, $translatedTextProperties )
 }
 
 function rollBackTranslatedTextProperty( $rollBackAction, $valueId, $objectId, $attributeId, $translatedContentId, $operation ) {
-	if ( shouldRemove( $rollBackAction, $operation ) )
+	if ( shouldRemove( $rollBackAction, $operation ) ) {
 		removeTranslatedTextAttributeValue( $valueId );
-	else if ( shouldRestore( $rollBackAction, $operation ) )
+	}
+	elseif ( shouldRestore( $rollBackAction, $operation ) ) {
 		createTranslatedTextAttributeValue( $valueId, $objectId, $attributeId, $translatedContentId );
+	}
 }
 
 function rollBackLinkAttributes( $idStack, $linkAttributes ) {
@@ -1580,10 +1583,12 @@ function rollBackLinkAttributes( $idStack, $linkAttributes ) {
 }
 
 function rollBackLinkAttribute( $rollBackAction, $valueId, $objectId, $attributeId, $url, $label, $operation ) {
-	if ( shouldRemove( $rollBackAction, $operation ) )
+	if ( shouldRemove( $rollBackAction, $operation ) ) {
 		removeLinkAttributeValue( $valueId );
-	else if ( shouldRestore( $rollBackAction, $operation ) )
+	}
+	elseif ( shouldRestore( $rollBackAction, $operation ) ) {
 		createLinkAttributeValue( $valueId, $objectId, $attributeId, $url, $label );
+	}
 }
 
 function rollBackTextAttributes( $idStack, $textAttributes ) {
@@ -1616,10 +1621,12 @@ function rollBackTextAttributes( $idStack, $textAttributes ) {
 }
 
 function rollBackTextAttribute( $rollBackAction, $valueId, $objectId, $attributeId, $text, $operation ) {
-	if ( shouldRemove( $rollBackAction, $operation ) )
+	if ( shouldRemove( $rollBackAction, $operation ) ) {
 		removeTextAttributeValue( $valueId );
-	else if ( shouldRestore( $rollBackAction, $operation ) )
+	}
+	elseif ( shouldRestore( $rollBackAction, $operation ) ) {
 		createTextAttributeValue( $valueId, $objectId, $attributeId, $text );
+	}
 }
 
 function rollBackSyntranses( $idStack, $syntranses ) {
@@ -1652,10 +1659,12 @@ function rollBackSyntranses( $idStack, $syntranses ) {
 }
 
 function rollBackSyntrans( $rollBackAction, $syntransId, $definedMeaningId, $expressionId, $identicalMeaning, $operation ) {
-	if ( shouldRemove( $rollBackAction, $operation ) )
+	if ( shouldRemove( $rollBackAction, $operation ) ) {
 		removeSynonymOrTranslationWithId( $syntransId );
-	else if ( shouldRestore( $rollBackAction, $operation ) )
+	}
+	elseif ( shouldRestore( $rollBackAction, $operation ) ) {
 		createSynonymOrTranslation( $definedMeaningId, $expressionId, $identicalMeaning );
+	}
 }
 
 function rollBackAlternativeDefinitionTexts( $idStack, $alternativeDefinitionTexts ) {
@@ -1717,10 +1726,12 @@ function rollBackAlternativeDefinitions( $idStack, $alternativeDefinitions ) {
 }
 
 function rollBackAlternativeDefinition( $rollBackAction, $definedMeaningId, $translatedContentId, $sourceId, $operation ) {
-	if ( shouldRemove( $rollBackAction, $operation ) )
+	if ( shouldRemove( $rollBackAction, $operation ) ) {
 		removeDefinedMeaningAlternativeDefinition( $definedMeaningId, $translatedContentId );
-	else if ( shouldRestore( $rollBackAction, $operation ) )
+	}
+	elseif ( shouldRestore( $rollBackAction, $operation ) ) {
 		createDefinedMeaningAlternativeDefinition( $definedMeaningId, $translatedContentId, $sourceId );
+	}
 }
 
 function rollBackCollectionMemberships( $idStack, $collectionMemberships ) {
@@ -1753,10 +1764,12 @@ function rollBackCollectionMemberships( $idStack, $collectionMemberships ) {
 }
 
 function rollBackCollectionMembership( $rollBackAction, $collectionId, $collectionMemberId, $sourceIdentifier, $operation ) {
-	if ( shouldRemove( $rollBackAction, $operation ) )
+	if ( shouldRemove( $rollBackAction, $operation ) ) {
 		removeDefinedMeaningFromCollection( $collectionMemberId, $collectionId );
-	else if ( shouldRestore( $rollBackAction, $operation ) )
+	}
+	elseif ( shouldRestore( $rollBackAction, $operation ) ) {
 		addDefinedMeaningToCollection( $collectionMemberId, $collectionId, $sourceIdentifier );
+	}
 }
 
 

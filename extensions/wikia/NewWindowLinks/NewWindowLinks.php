@@ -1,7 +1,14 @@
 <?php
 /**
- * NewWindowLinks: setup.
- * 
+ * @file NewWindowLinks.php
+ * @brief The NewWindowLinks MediaWiki extension setup and code.
+ * @author Michał Roszka (Mix) <michal@wikia-inc.com>
+ * @author Daniel Grunwell (Grunny) <daniel@wikia-inc.com>
+ * @date Friday, 30 December 2012 (created)
+ * @date Friday, 25 May 2012 (MediaWiki 1.19 merge)
+ */
+ 
+/**
  * Usage:
  * 
  * general: {{ #NewWindowLink: linked resource | link text }}
@@ -64,14 +71,9 @@ function efParserCreateLink( $parser, $target, $label = null ) {
     // Also, the Parser::insertStripItem is used to render the HTML inline.
     // See: http://www.mediawiki.org/wiki/Manual:Parser_functions#Parser_interface
 
-        // As of the 1.18.0 MW release Linker::link and Linker::makeExternalLink are static methods.
-        // Prior to that release the Linker class have to be instantiated in order to use those methods.
-        // See: http://trac.wikia-code.com/browser/wikia/trunk/extensions/wikia/NewWindowLinks/NewWindowLinks.class.php?rev=46348&marks=37-51#L35
-        $oLinker = new Linker();
-
     // Process (or rule out) external targets (literal URIs)
     if ( preg_match( $parser->mExtLinkBracketedRegex, "[{$target}]" ) ) {
-        return $parser->insertStripItem( $oLinker->makeExternalLink( $target, $label, false, '', $attributes ) , $parser->mStripState );
+        return $parser->insertStripItem( Linker::makeExternalLink( $target, $label, false, '', $attributes ) , $parser->mStripState );
     }
 
     // The target is not a literal URI.  Create a Title object.
@@ -84,16 +86,16 @@ function efParserCreateLink( $parser, $target, $label = null ) {
 
     // Process (or rule out) existing local articles.
     if ( $oTitle->exists() ) {
-        return $parser->insertStripItem( $oLinker->link( $oTitle, $label, $attributes ), $parser->mStripState );
+        return $parser->insertStripItem( Linker::link( $oTitle, $label, $attributes ), $parser->mStripState );
     }
 
     // Process (or rule out) interwiki links.
     if ( true !== $oTitle->isLocal() ) {
-        return $parser->insertStripItem( $oLinker->makeExternalLink( $oTitle->getFullURL(), $label, false, '', $attributes ), $parser->mStripState );
+        return $parser->insertStripItem( Linker::makeExternalLink( $oTitle->getFullURL(), $label, false, '', $attributes ), $parser->mStripState );
     }
 
     // Only non existing local articles remain.
-    return $parser->insertStripItem( $oLinker->link( $oTitle, $label, $attributes ), $parser->mStripState );
+    return $parser->insertStripItem( Linker::link( $oTitle, $label, $attributes ), $parser->mStripState );
 }
 
 /**

@@ -26,8 +26,8 @@ class WikiaPoll {
 	/**
 	 * Return instance of WikiaPoll for given article from Poll namespace
 	 */
-	static public function newFromArticle(Article $article) {
-		$id = $article->getID();
+	static public function newFromArticle(Page $article) {
+		$id = $article->getId();
 		return self::newFromId($id);
 	}
 
@@ -116,8 +116,8 @@ class WikiaPoll {
 			*/
 
 			$this->mData = array(
-				'creator' => $firstRev->mUser,
-				'created' => $firstRev->mTimestamp,
+				'creator' => $firstRev->getUser(Revision::RAW),
+				'created' => $firstRev->getTimestamp(),
 				'touched' => $article->getTouched(),
 				'title' => $title->getText(),
 				'question' => $title->getText(),

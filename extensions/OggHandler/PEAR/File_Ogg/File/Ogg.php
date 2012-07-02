@@ -551,7 +551,7 @@ class File_Ogg
      */
     function hasStream($streamType)
     {
-        foreach ($this->_stream as $stream) {
+        foreach ($this->_streams as $stream) {
             if ($stream['stream_type'] == $streamType)
                 return (true);
         }

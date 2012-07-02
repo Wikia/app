@@ -21,6 +21,7 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'wfAjaxShowEditorsShowBox';
 */
 function wfAjaxShowEditorsCleanup( $article, $user ) {
 	global $wgCommandLineMode;
+
 	if ( $wgCommandLineMode ) {
 		return true;
 	}
@@ -40,32 +41,24 @@ function wfAjaxShowEditorsCleanup( $article, $user ) {
 
 // Only when editing a page
 function wfAjaxShowEditorsAddCSS( $out ) {
-	global $wgRequest;
-	if ( $wgRequest->getVal('action') != 'edit' ) {
-		return true;
+	global $wgRequest, $wgExtensionAssetsPath;
+
+	if ( $wgRequest->getVal( 'action' ) == 'edit' ) {
+		$out->addStyle( "$wgExtensionAssetsPath/AjaxShowEditors/AjaxShowEditors.css" );
 	}
-	global $wgScriptPath;
-	$out->addLink(
-		array(
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-			'href' => $wgScriptPath . '/extensions/AjaxShowEditors/AjaxShowEditors.css',
-		)
-	);
 	return true;
 }
 
 function wfAjaxShowEditorsAddJS( $out ) {
-	global $wgJsMimeType, $wgScriptPath ;
-	$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgScriptPath/extensions/AjaxShowEditors/AjaxShowEditors.js\"></script>\n" );
+	global $wgExtensionAssetsPath;
+
+	$out->addScriptFile( "$wgExtensionAssetsPath/AjaxShowEditors/AjaxShowEditors.js" );
 	return true;
 }
 
 // Show the box before the textarea
 function wfAjaxShowEditorsShowBox( ) {
 	global $wgOut;
-
-	wfLoadExtensionMessages( 'AjaxShowEditors' );
 
 	$wgOut->addWikiText(
 		'<div id="ajax-se"><p id="ajax-se-title">' . wfMsg( 'ajax-se-title' ) . '</p>'

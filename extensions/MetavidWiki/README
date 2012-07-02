@@ -11,49 +11,39 @@ http://metavid.ucsc.edu/wiki/index.php/MetaVidWiki_Software
 ==Install==
 
 patches to the core:
-Index: /includes/Article.php
+Index: /includes/WikiPage.php
 	//set up transaction for LinksUpdate
 	$dbw = wfGetDB( DB_MASTER );
-	$dbw->begin();		
-			
+	$dbw->begin();
+
 	# Update the links tables
 	$u = new LinksUpdate( $this->mTitle, $editInfo->output );
 	$u->doUpdate();
-	
+
 	$dbw->commit();
 
 .patch: 
-Index: /includes/Article.php
+Index: includes/WikiPage.php
 ===================================================================
---- /includes/Article.php    (revision 40341)
-+++ /includes/Article.php    (working copy)
-@@ -2723,7 +2723,7 @@
-     function editUpdates( $text, $summary, $minoredit, $timestamp_of_pagechange, $newid, $changed = true ) {
-         global $wgDeferredUpdateList, $wgMessageCache, $wgUser, $wgParser, $wgEnableParserCache;
+--- includes/WikiPage.php	(revision 102848)
++++ includes/WikiPage.php	(working copy)
+@@ -2028,10 +2028,16 @@
+ 			$parserCache->save( $editInfo->output, $this, $editInfo->popts );
+ 		}
  
--        wfProfileIn( __METHOD__ );
-+        wfProfileIn( __METHOD__ );       
++		//set up transaction for LinksUpdate
++		$dbw = wfGetDB( DB_MASTER );
++		$dbw->begin();
++
+ 		# Update the links tables
+ 		$u = new LinksUpdate( $this->mTitle, $editInfo->output );
+ 		$u->doUpdate();
  
-         # Parse the text
-         # Be careful not to double-PST: $text is usually already PST-ed once
-@@ -2740,11 +2740,15 @@
-             $parserCache = ParserCache::singleton();
-             $parserCache->save( $editInfo->output, $this, $wgUser );
-         }
--
-+        //set up transaction for LinksUpdate
-+        $dbw = wfGetDB( DB_MASTER );
-+        $dbw->begin();       
-+               
-         # Update the links tables
-         $u = new LinksUpdate( $this->mTitle, $editInfo->output );
-         $u->doUpdate();
--
-+       
-+        $dbw->commit();
-         if( wfRunHooks( 'ArticleEditUpdatesDeleteFromRecentchanges', array( &$this ) ) ) {
-             if ( 0 == mt_rand( 0, 99 ) ) {
-                 // Flush old entries from the `recentchanges` table; we do this on
++		$dbw->commit();
++
+ 		wfRunHooks( 'ArticleEditUpdates', array( &$this, &$editInfo, $options['changed'] ) );
+ 
+ 		if ( wfRunHooks( 'ArticleEditUpdatesDeleteFromRecentchanges', array( &$this ) ) ) {
 
 
 

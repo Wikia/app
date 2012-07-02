@@ -22,7 +22,7 @@ final class ResultCode {
   );
 }
 
-class LogEntry {
+class ScribeLogEntry {
   static $_TSPEC;
 
   public $category = null;
@@ -52,7 +52,7 @@ class LogEntry {
   }
 
   public function getName() {
-    return 'LogEntry';
+    return 'ScribeLogEntry';
   }
 
   public function read($input)
@@ -96,7 +96,7 @@ class LogEntry {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('LogEntry');
+    $xfer += $output->writeStructBegin('ScribeLogEntry');
     if ($this->category !== null) {
       $xfer += $output->writeFieldBegin('category', TType::STRING, 1);
       $xfer += $output->writeString($this->category);

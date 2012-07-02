@@ -4,129 +4,144 @@
  *
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'ShowProcesslist' => array( 'ShowProcesslist' ),
 );
 
 /** Afrikaans (Afrikaans) */
-$aliases['af'] = array(
+$specialPageAliases['af'] = array(
 	'ShowProcesslist' => array( 'WysProseslys' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'ShowProcesslist' => array( 'عرض_قائمة_العمل' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'ShowProcesslist' => array( 'عرض_قائمة_العمل' ),
+$specialPageAliases['arz'] = array(
+	'ShowProcesslist' => array( 'عرض_ليستة_العمليه' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'ShowProcesslist' => array( 'PrikazSpiskaProcesa' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
-	'ShowProcesslist' => array( 'Prozessliste anzeigen' ),
+$specialPageAliases['de'] = array(
+	'ShowProcesslist' => array( 'Prozessliste_anzeigen' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'ShowProcesslist' => array( 'Lisćinu procesow pokazaś' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
+$specialPageAliases['fi'] = array(
 	'ShowProcesslist' => array( 'Prosessilistaus' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'ShowProcesslist' => array( 'Prozässlischt aazeige' ),
 );
 
 /** Hebrew (עברית) */
-$aliases['he'] = array(
+$specialPageAliases['he'] = array(
 	'ShowProcesslist' => array( 'הצגת_רשימת_תהליכים' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'ShowProcesslist' => array( 'Lisćinu procesow pokazać' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'ShowProcesslist' => array( 'MontreLisProsesus' ),
+);
+
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
-	'ShowProcesslist' => array( 'Folyamatlista mutatása' ),
+$specialPageAliases['hu'] = array(
+	'ShowProcesslist' => array( 'Folyamatlista_mutatása' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'ShowProcesslist' => array( 'Lista de processos' ),
+$specialPageAliases['ia'] = array(
+	'ShowProcesslist' => array( 'Lista_de_processos' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'ShowProcesslist' => array( 'Daftar proses', 'DaftarProses' ),
+$specialPageAliases['id'] = array(
+	'ShowProcesslist' => array( 'Daftar_proses', 'DaftarProses' ),
 );
 
 /** Italian (Italiano) */
-$aliases['it'] = array(
+$specialPageAliases['it'] = array(
 	'ShowProcesslist' => array( 'MostraListaProcessi' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'ShowProcesslist' => array( 'プロセス一覧表示' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'ShowProcesslist' => array( 'Prozessless' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'ShowProcesslist' => array( "Weis d'Lëscht vun de Prozesser" ),
+$specialPageAliases['lb'] = array(
+	'ShowProcesslist' => array( 'Weis_d\'Lëscht_vun_de_Prozesser' ),
+);
+
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'ShowProcesslist' => array( 'ПрикажиСписокНаПостапки' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'ShowProcesslist' => array( 'प्रक्रीयासूचीदाखवा' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'ShowProcesslist' => array( 'Vis_prosessliste' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'ShowProcesslist' => array( 'Preceslieste_weergeven' ),
+$specialPageAliases['nds-nl'] = array(
+	'ShowProcesslist' => array( 'Proceslieste_weergeven' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'ShowProcesslist' => array( 'ProceslijstWeergeven' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'ShowProcesslist' => array( 'Vis prosessliste' ),
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'ShowProcesslist' => array( 'Lista_procesów' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'ShowProcesslist' => array( 'ZobraziťZoznamProcesov' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'ShowProcesslist' => array( 'Ipakita ang talaan ng proseso' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'ShowProcesslist' => array( 'İşlemListesiniGöster' ),
 );
-

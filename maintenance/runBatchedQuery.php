@@ -22,31 +22,29 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class BatchedQueryRunner extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Run a query repeatedly until it affects 0 rows, and wait for slaves in between.\n" .
 				"NOTE: You need to set a LIMIT clause yourself.";
-		$this->addOption( 'wait', "Wait for replication lag to go down to this value. Default: 5", false, true );
 	}
 
 	public function execute() {
 		if ( !$this->hasArg() )
 			$this->error( "No query specified. Specify the query as a command line parameter.", true );
-		
+
 		$query = $this->getArg();
-		$wait = $this->getOption( 'wait', 5 );
 		$n = 1;
-		$dbw = wfGetDb( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER );
 		do {
 			$this->output( "Batch $n: " );
 			$n++;
-			$dbw->query( $query );
+			$dbw->query( $query, __METHOD__ );
 			$affected = $dbw->affectedRows();
 			$this->output( "$affected rows\n" );
-			wfWaitForSlaves( $wait );
+			wfWaitForSlaves();
 		} while ( $affected > 0 );
 	}
 
@@ -57,4 +55,4 @@ class BatchedQueryRunner extends Maintenance {
 
 
 $maintClass = "BatchedQueryRunner";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

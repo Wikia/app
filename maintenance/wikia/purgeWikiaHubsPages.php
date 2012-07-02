@@ -9,32 +9,34 @@
  * @see https://internal.wikia-inc.com/wiki/Hubs
  */
 
-ini_set( "include_path", dirname(__FILE__)."/.." );
-require_once( 'commandLine.inc' );
+ini_set("include_path", dirname(__FILE__) . "/..");
+require_once('commandLine.inc');
 
 echo "Purging WikiaHubs pages...\n\n";
 
-foreach($wgWikiaHubsPages as $hubName) {
-	echo "* {$hubName}... ";
+foreach ($wgWikiaHubsPages as $hubGroup) {
+	foreach ($hubGroup as $hubName) {
+		echo "* {$hubName}... ";
 
-	$res = false;
-	$title = Title::newFromText($hubName);
+		$res = false;
+		$title = Title::newFromText($hubName);
 
-	if ($title instanceof Title) {
-		$article = Article::newFromID($title->getArticleID());
+		if ($title instanceof Title) {
+			$article = Article::newFromID($title->getArticleID());
 
-		if ($article instanceof Article) {
-			// purge parser cache and varnish
-			$article->doPurge();
+			if ($article instanceof Article) {
+				// purge parser cache and varnish
+				$article->doPurge();
 
-			$url = $title->getFullURL();
-			echo "ok <{$url}>\n";
+				$url = $title->getFullURL();
+				echo "ok <{$url}>\n";
 
-			$res = true;
+				$res = true;
+			}
 		}
-	}
 
-	if ($res === false) {
-		echo "failed!\n";
+		if ($res === false) {
+			echo "failed!\n";
+		}
 	}
 }

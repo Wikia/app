@@ -73,9 +73,6 @@ $messages = array(
 'nstab-project' => 'ናይ ፅሑፍ ፕሮጀክት',
 'nstab-image'   => 'ምስሊ',
 
-# General errors
-'viewsourcefor' => 'ን$1',
-
 # Login and logout pages
 'yourname'           => 'ናይ ኣባል ሽም:',
 'loginlanguagelabel' => 'ቋንቋ: $1',
@@ -147,9 +144,6 @@ $messages = array(
 'allpagesprev'   => 'ናይ ቀደም',
 'allpagesnext'   => 'ዝቕጽል',
 'allpagessubmit' => 'ኪድ',
-
-# Watchlist
-'watchlistfor' => "(ን'''$1''')",
 
 # Protect
 'pagesize' => '(ባይታት)',

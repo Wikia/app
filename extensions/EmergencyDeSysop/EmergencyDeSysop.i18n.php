@@ -34,14 +34,14 @@ $messages['en'] = array(
  * @author Bennylin
  * @author Purodha
  * @author SPQRobin
+ * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'emergencydesysop-desc' => 'Short desciption of this extension.
-Shown in [[Special:Version]].
-Do not translate or change tag names, or link anchors.',
+	'emergencydesysop-desc' => '{{desc}}',
 	'emergencydesysop-submit' => '{{Identical|Submit}}',
 	'emergencydesysop-nogroups' => '{{Identical|None}}',
-	'right-emergencydesysop' => 'This is a user right description, as shown on [[Special:ListGroupRights]], e.g.',
+	'right-emergencydesysop' => '{{doc-right|emergencydesysop}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -52,8 +52,17 @@ $messages['af'] = array(
 	'emergencydesysop-nogroups' => 'Geen',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'emergencydesysop-submit' => 'Ninviar',
+	'emergencydesysop-nogroups' => 'Garra',
+);
+
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  * @author Ouda
  */
 $messages['ar'] = array(
@@ -62,7 +71,7 @@ $messages['ar'] = array(
 	'emergencydesysop-title' => 'إزالة صلاحيات الإدارة من المستخدم الحالي ومدير نظام آخر معا',
 	'emergencydesysop-otheradmin' => 'مدير النظام الآخر لإزالته من المجموعة',
 	'emergencydesysop-reason' => 'سبب الحذف',
-	'emergencydesysop-submit' => 'تنفيذ',
+	'emergencydesysop-submit' => 'أرسل',
 	'emergencydesysop-incomplete' => 'كل حقول الاستمارة مطلوبة، من فضلك حاول مرة ثانية.',
 	'emergencydesysop-notasysop' => 'المستخدم المستهدف ليس في مجموعة الإداريين',
 	'emergencydesysop-nogroups' => 'لا يوجد',
@@ -71,6 +80,14 @@ $messages['ar'] = array(
 	'emergencydesysop-blocked' => 'لا يمكن الدخول على هذه الصفحة أثناء المنع',
 	'emergencydesysop-noright' => 'لا تملك الصلاحيات الكافية للدخول على هذه الصفحة',
 	'right-emergencydesysop' => 'القدرة على عزل مستخدم آخر، بشكل متبادل',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'emergencydesysop-submit' => 'ܫܕܪ',
+	'emergencydesysop-nogroups' => 'ܠܐ ܡܕܡ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -95,7 +112,16 @@ $messages['arz'] = array(
 	'right-emergencydesysop' => 'القدرة على عزل مستخدم آخر، بشكل متبادل',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Wertuose
+ */
+$messages['az'] = array(
+	'emergencydesysop-submit' => 'Təsdiq et',
+	'emergencydesysop-nogroups' => 'Heç biri',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -116,20 +142,49 @@ $messages['be-tarask'] = array(
 	'right-emergencydesysop' => 'магчымасьць пазбаўленьня правоў адміністратара іншых удзельнікаў, коштам уласных правоў',
 );
 
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'emergencydesysop-reason' => 'Причина за отстраняването',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'emergencydesysop' => 'জরুরী প্রশাসকত্ব বাতিল',
+	'emergencydesysop-reason' => 'বাদ দেওয়ার কারণ',
+	'emergencydesysop-submit' => 'জমা দাও',
+	'emergencydesysop-incomplete' => 'সকল অংশ পূরণ করতে হবে, অনুগ্রহ করে আবার চেষ্টা করুন।',
+	'emergencydesysop-notasysop' => 'লক্ষ্য ব্যবহারকারী প্রশাসক দলে নেই।',
+	'emergencydesysop-nogroups' => 'কিছু নয়',
+	'emergencydesysop-done' => 'অ্যাকশন সম্পূর্ণ, আপনি ও [[$1]] উভয়ের প্রশাসকত্বই বাতিল করা হয়েছে।',
+	'emergencydesysop-invalidtarget' => 'লক্ষ্য ব্যবহারকারী নেই।',
+	'emergencydesysop-blocked' => 'বাধাদানকৃত অবস্থায় আপনি এই পাতায় প্রবেশ করতে পারবেন না',
+	'emergencydesysop-noright' => 'এই পাতায় প্রবেশ করার মত যথেষ্ট অনুমতি আপনার নেই',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
+	'emergencydesysop' => 'Lemel gwirioù merour war-zifrae',
+	'emergencydesysop-desc' => "Reiñ a ra an tu d'ur merour da aberzhiñ e wirioù merañ dezhañ e-unan evit gallout lemel kuit gwirioù ur merour all",
+	'emergencydesysop-title' => 'Lemel a ra ar statud merour evit an implijer red hag un merour all war an hevelep tro',
 	'emergencydesysop-otheradmin' => 'Merourien all da zistrollañ',
 	'emergencydesysop-reason' => 'Abeg evit lemel',
 	'emergencydesysop-submit' => 'Kas',
 	'emergencydesysop-incomplete' => 'Rekis eo holl vaeziennoù ar furmskrid, esaeit en-dro mar plij.',
-	'emergencydesysop-notasysop' => "An implijer buket n'emañ ket er strollad merourien.",
+	'emergencydesysop-notasysop' => "An implijer buket n'emañ ket er strollad merañ.",
 	'emergencydesysop-nogroups' => 'Hini ebet',
-	'emergencydesysop-invalidtarget' => "N' ez eus ket eus an implijer buket.",
-	'emergencydesysop-blocked' => "Ne c'helloc'h ket mont d'ar bajenn-se keit ma 'moc'h stanket",
+	'emergencydesysop-done' => 'Obererezh echuet, tennet eo bet ho kwirioù merour ha re [[$1]].',
+	'emergencydesysop-invalidtarget' => "N'eus ket eus an implijer buket.",
+	'emergencydesysop-blocked' => "N'hallit ket gwelet ar bajenn-mañ e-keit ha ma'z oc'h stanket",
 	'emergencydesysop-noright' => "N'hoc'h eus ket aotreoù a-walc'h evit mont d'ar bajenn-mañ",
+	'right-emergencydesysop' => 'Posupl lemel gwirioù merour un implijer all en ur goll gwirioù an-unan',
 );
 
 /** Bosnian (Bosanski)
@@ -162,8 +217,33 @@ $messages['ca'] = array(
 	'emergencydesysop-nogroups' => 'Cap',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'emergencydesysop-submit' => 'ناردن',
+);
+
+/** Czech (Česky)
+ * @author Jkjk
+ */
+$messages['cs'] = array(
+	'emergencydesysop' => 'Nouzové odstranění práv správce',
+	'emergencydesysop-desc' => 'Umožňuje správci obětovat svoje vlastní práva, když je chce odebrat jinému správci',
+	'emergencydesysop-title' => 'Odebrat práva správce aktuálnímu a jinému správci',
+	'emergencydesysop-reason' => 'Důvod odebrání',
+	'emergencydesysop-submit' => 'Odeslat',
+	'emergencydesysop-incomplete' => 'Všechna pole formuláře jsou povinná, zkuste to znovu.',
+	'emergencydesysop-notasysop' => 'Cílový uživatel není správcem.',
+	'emergencydesysop-nogroups' => 'Nic',
+	'emergencydesysop-done' => 'Operace dokončena, vy i [[$1]] už nejste správci.',
+	'emergencydesysop-invalidtarget' => 'Cílový uživatel neexistuje.',
+	'emergencydesysop-blocked' => 'Nemáte přístup na tuto stránku, protože jste zablokován.',
+	'emergencydesysop-noright' => 'Nemáte dostatenčné oprávnění pro přístup k této stránce',
+	'right-emergencydesysop' => 'Může odstranit práva správce jinému zároveň se svými',
+);
+
 /** German (Deutsch)
  * @author ChrisiPK
+ * @author Kghbln
  * @author Metalhead64
  * @author Purodha
  * @author Umherirrender
@@ -174,24 +254,25 @@ $messages['de'] = array(
 	'emergencydesysop-title' => 'Entfernt den Administrator-Status des aktuellen und eines anderen Benutzers',
 	'emergencydesysop-otheradmin' => 'Anderen Administrator zum Deklassieren',
 	'emergencydesysop-reason' => 'Grund für die Entfernung',
-	'emergencydesysop-submit' => 'Übertragen',
+	'emergencydesysop-submit' => 'Speichern',
 	'emergencydesysop-incomplete' => 'Es werden Eingaben in allen Feldern benötigt. Bitte erneut versuchen.',
 	'emergencydesysop-notasysop' => "Der gewählte Benutzer ist nicht in der Gruppe ''Administrator''.",
 	'emergencydesysop-nogroups' => 'Keine',
 	'emergencydesysop-done' => 'Aktion erfolgreich. Du und [[$1]] wurden degradiert.',
 	'emergencydesysop-invalidtarget' => 'Der gewählte Benutzer existiert nicht.',
 	'emergencydesysop-blocked' => 'Du kannst nicht auf diese Seite zugreifen, während du gesperrt bist',
-	'emergencydesysop-noright' => 'Du hast keine ausreichenden Berechtigungen für diese Seite',
+	'emergencydesysop-noright' => 'Du hast nicht die erforderliche Berechtigung, um diese Seite aufrufen zu können.',
 	'right-emergencydesysop' => 'Degradierung eines anderen Administrator auf Gegenseitigkeit',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Kghbln
  * @author Umherirrender
  */
 $messages['de-formal'] = array(
 	'emergencydesysop-done' => 'Aktion erfolgreich. Sie und [[$1]] wurden degradiert.',
 	'emergencydesysop-blocked' => 'Sie können nicht auf diese Seite zugreifen, während Sie gesperrt sind',
-	'emergencydesysop-noright' => 'Sie haben keine ausreichenden Berechtigungen für diese Seite',
+	'emergencydesysop-noright' => 'Sie haben nicht die erforderliche Berechtigung, um diese Seite aufrufen zu können.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -315,6 +396,16 @@ $messages['fr'] = array(
 	'right-emergencydesysop' => 'Possible de désysoper mutuellement un autre utilisateur.',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'emergencydesysop' => 'Dèsisopâjo d’urgence',
+	'emergencydesysop-reason' => 'Rêson du retrèt',
+	'emergencydesysop-submit' => 'Sometre',
+	'emergencydesysop-nogroups' => 'Niona',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -365,17 +456,25 @@ $messages['gsw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
 $messages['he'] = array(
+	'emergencydesysop' => 'הסרת הרשאות במצב חירום',
+	'emergencydesysop-desc' => 'הוספת האפשרות למפעילים להקריב את ההרשאות של עצמו כדי להסיר את ההרשאות של מפעיל אחר',
+	'emergencydesysop-title' => 'הסרת גישה להרשאות מפעיל מהמשתמש הנוכחי וממפעיל אחר',
+	'emergencydesysop-otheradmin' => 'המפעיל האחר שהרשאותיו תוסרנה',
 	'emergencydesysop-reason' => 'סיבת ההסרה',
 	'emergencydesysop-submit' => 'שליחה',
 	'emergencydesysop-incomplete' => 'כל שדות הטופס נדרשים, אנא נסו שוב.',
 	'emergencydesysop-notasysop' => 'משתמש היעד איננו בקבוצת מפעילי המערכת.',
 	'emergencydesysop-nogroups' => 'אין',
+	'emergencydesysop-done' => 'הפעולה בוצעה, החשבון שלכם והחשבון [[$1]] כבר אינם מפעילים.',
 	'emergencydesysop-invalidtarget' => 'משתמש היעד אינו קיים.',
 	'emergencydesysop-blocked' => 'לא ניתן לגשת לדף זה בעודכם חסומים',
+	'emergencydesysop-noright' => 'אין לכם הרשאות מספיקות לגשת לדף הזה',
+	'right-emergencydesysop' => 'יכול להסיר את הרשאותיו של משתמש אחר באופן הדדי',
 );
 
 /** Croatian (Hrvatski)
@@ -460,6 +559,8 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author Farras
+ * @author IvanLanin
  */
 $messages['id'] = array(
 	'emergencydesysop' => 'Pemecatan Admin Darurat',
@@ -472,9 +573,9 @@ $messages['id'] = array(
 	'emergencydesysop-notasysop' => 'Pengguna yang dimaksud bukanlah seorang pengurus.',
 	'emergencydesysop-nogroups' => 'Tidak ada',
 	'emergencydesysop-done' => 'Proses selesai, ANda dan [[$1]] telah dikeluarkan dari daftar pengurus.',
-	'emergencydesysop-invalidtarget' => 'Pengguna yang dituju tidak ada.',
+	'emergencydesysop-invalidtarget' => 'Pengguna yang dituju tidak ditemukan.',
 	'emergencydesysop-blocked' => 'Anda tidak dapat mengakses halaman ini ketika sedang diblok',
-	'emergencydesysop-noright' => 'Anda tidak memiliki ijin yang cukup untuk mengakses halaman ini',
+	'emergencydesysop-noright' => 'Anda tidak memiliki izin yang memadai untuk mengakses halaman ini',
 	'right-emergencydesysop' => 'Mampu untuk memecat seorang pengurus lain, bersama-sama',
 );
 
@@ -540,7 +641,7 @@ $messages['ko'] = array(
 	'emergencydesysop-done' => '명령 완료, 당신과 [[$1]] 사용자는 관리자 권한이 해제되었습니다.',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -549,7 +650,7 @@ $messages['ksh'] = array(
 	'emergencydesysop-title' => 'Nemmp däm Metmaacher sellver un enem andere de Rääschte fun enem WikiKöbes fott.',
 	'emergencydesysop-otheradmin' => 'Dä andere, öm en uß dä Jrup „{{int:group-sysop}}“ eruß ze nämme',
 	'emergencydesysop-reason' => 'Dä Jrund för et Rußschmiiße',
-	'emergencydesysop-submit' => 'Loß Jonn!',
+	'emergencydesysop-submit' => 'Lohß Jonn!',
 	'emergencydesysop-incomplete' => 'Do moß en jedes Feld en dämm Fommulaa jet enjävve!',
 	'emergencydesysop-notasysop' => 'Dä Metmaacher es jaa nit en dä Jopp „{{int:group-sysop}}“.',
 	'emergencydesysop-nogroups' => 'Keine',
@@ -558,6 +659,13 @@ $messages['ksh'] = array(
 	'emergencydesysop-blocked' => 'Dat kanns De nit maache, esu lang wi De jespertt bes.',
 	'emergencydesysop-noright' => 'Do häs nit dat Rääsch, op die Sigg ze jonn.',
 	'right-emergencydesysop' => 'Kann enem andere Wiki-Köbes däm sing Rääsch affnämme.',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'emergencydesysop-submit' => 'Tomar bike',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -598,6 +706,48 @@ $messages['mk'] = array(
 	'emergencydesysop-blocked' => 'Не можете да дојдете до страницата кога сте блокирани',
 	'emergencydesysop-noright' => 'Немате доволно дозволи за пристап на оваа страница',
 	'right-emergencydesysop' => 'Одземање на администраторски права заедно со своите',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Junaidpv
+ */
+$messages['ml'] = array(
+	'emergencydesysop-submit' => 'സമർപ്പിക്കുക',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'emergencydesysop-submit' => 'Явуулах',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'emergencydesysop-submit' => 'Serahkan',
+	'emergencydesysop-nogroups' => 'Tiada',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['nb'] = array(
+	'emergencydesysop' => 'Kriseavsetting av administrator',
+	'emergencydesysop-desc' => 'Lar en administrator ofre egne privilegier for å avsette en annen administrator.',
+	'emergencydesysop-title' => 'Fjern administratorrettighetene til både gjeldende bruker og en annen administrator.',
+	'emergencydesysop-otheradmin' => 'Andre administratorer som skal avsettes',
+	'emergencydesysop-reason' => 'Grunn for avsetting',
+	'emergencydesysop-submit' => 'Utfør',
+	'emergencydesysop-incomplete' => 'Alle skjemafeltene er påkrevd, vennligst prøv igjen.',
+	'emergencydesysop-notasysop' => 'Målbrukeren er ikke en administrator.',
+	'emergencydesysop-nogroups' => 'Ingen',
+	'emergencydesysop-done' => 'Handling utført, både du og [[$1]] har blitt avsatt som administratorer.',
+	'emergencydesysop-invalidtarget' => 'Målbrukeren eksisterer ikke.',
+	'emergencydesysop-blocked' => 'Du kan ikke se denne siden når du er blokkert',
+	'emergencydesysop-noright' => 'Du har ikke de påkrevde rettighetene til å se denne siden',
+	'right-emergencydesysop' => 'Mulighet til å avsette seg selv og en annen administrator',
 );
 
 /** Dutch (Nederlands)
@@ -641,26 +791,6 @@ $messages['nn'] = array(
 	'right-emergencydesysop' => 'Kan avsetja seg sjølv og ein annan administrator',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['no'] = array(
-	'emergencydesysop' => 'Kriseavsetting av administrator',
-	'emergencydesysop-desc' => 'Lar en administrator ofre egne privilegier for å avsette en annen administrator.',
-	'emergencydesysop-title' => 'Fjern administratorrettighetene til både gjeldende bruker og en annen administrator.',
-	'emergencydesysop-otheradmin' => 'Andre administratorer som skal avsettes',
-	'emergencydesysop-reason' => 'Grunn for avsetting',
-	'emergencydesysop-submit' => 'Utfør',
-	'emergencydesysop-incomplete' => 'Alle skjemafeltene er påkrevd, vennligst prøv igjen.',
-	'emergencydesysop-notasysop' => 'Målbrukeren er ikke en administrator.',
-	'emergencydesysop-nogroups' => 'Ingen',
-	'emergencydesysop-done' => 'Handling utført, både du og [[$1]] har blitt avsatt som administratorer.',
-	'emergencydesysop-invalidtarget' => 'Målbrukeren eksisterer ikke.',
-	'emergencydesysop-blocked' => 'Du kan ikke se denne siden når du er blokkert',
-	'emergencydesysop-noright' => 'Du har ikke de påkrevde rettighetene til å se denne siden',
-	'right-emergencydesysop' => 'Mulighet til å avsette seg selv og en annen administrator',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -681,11 +811,27 @@ $messages['oc'] = array(
 	'right-emergencydesysop' => 'Possible de desysopar mutualament un autre utilizaire.',
 );
 
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Jnanaranjan Sahu
+ */
+$messages['or'] = array(
+	'emergencydesysop-reason' => 'ହଟାଇବାର କାରଣ',
+	'emergencydesysop-submit' => 'ପଇଠ କରିବେ',
+	'emergencydesysop-nogroups' => 'କିଛି ନାହିଁ',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
 	'emergencydesysop-nogroups' => 'Ken',
+);
+
+/** Pälzisch (Pälzisch)
+ * @author Xqt
+ */
+$messages['pfl'] = array(
+	'emergencydesysop-nogroups' => 'Kään',
 );
 
 /** Polish (Polski)
@@ -733,28 +879,30 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'emergencydesysop-submit' => 'سپارل',
 	'emergencydesysop-nogroups' => 'هېڅ',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
-	'emergencydesysop' => 'Remoção de Emergência do Acesso de Sysop',
-	'emergencydesysop-desc' => 'Permite que um sysop sacrifique os seus próprios privilégios para retirar privilégios de sysop a outro',
-	'emergencydesysop-title' => 'Remover acesso de sysop de ambos o utilizador atual e outro sysop',
-	'emergencydesysop-otheradmin' => 'Outro sysop a retirar do grupo',
-	'emergencydesysop-reason' => 'Razão para a remoção',
-	'emergencydesysop-submit' => 'Submeter',
-	'emergencydesysop-incomplete' => 'Todos os campos do formulário são obrigatórios. Por favor, tente novamente.',
-	'emergencydesysop-notasysop' => 'O utilizador alvo não está no grupo de sysops.',
+	'emergencydesysop' => 'Remoção de Emergência dos Privilégios de Administrador',
+	'emergencydesysop-desc' => 'Permite que um administrador sacrifique os seus próprios privilégios para retirar o privilégio de administrador a outro utilizador',
+	'emergencydesysop-title' => 'Remover o acesso de administrador tanto ao utilizador actual como a outro administrador',
+	'emergencydesysop-otheradmin' => 'Outro administrador a retirar do grupo',
+	'emergencydesysop-reason' => 'Motivo para a remoção',
+	'emergencydesysop-submit' => 'Enviar',
+	'emergencydesysop-incomplete' => 'Todos os campos do formulário são obrigatórios. Tente novamente, por favor.',
+	'emergencydesysop-notasysop' => 'O utilizador alvo não está no grupo dos administradores.',
 	'emergencydesysop-nogroups' => 'Nenhum',
-	'emergencydesysop-done' => 'Ação completa, tanto a você como a [[$1]] foi removido o acesso de sysop.',
+	'emergencydesysop-done' => 'Operação completa; foram removidos os privilégios de administardor a si e a [[$1]].',
 	'emergencydesysop-invalidtarget' => 'O utilizador alvo não existe.',
-	'emergencydesysop-blocked' => 'Você não pode aceder a esta página enquanto estiver bloqueado',
-	'emergencydesysop-noright' => 'Você não possui permissões suficientes para aceder a esta página',
-	'right-emergencydesysop' => 'Remover privilégios de sysop a outro utilizador, mutuamente',
+	'emergencydesysop-blocked' => 'Não pode aceder a esta página enquanto estiver bloqueado',
+	'emergencydesysop-noright' => 'Não tem permissões suficientes para aceder a esta página',
+	'right-emergencydesysop' => 'Remover privilégios de administrador a outro utilizador, com efeito mútuo',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -780,12 +928,14 @@ $messages['pt-br'] = array(
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
-	'emergencydesysop-reason' => 'Motiv pentru ştergere',
+	'emergencydesysop-reason' => 'Motiv pentru ștergere',
 	'emergencydesysop-submit' => 'Trimite',
 	'emergencydesysop-nogroups' => 'Niciunul',
-	'emergencydesysop-invalidtarget' => 'Utilizatorul ţintă nu există.',
+	'emergencydesysop-invalidtarget' => 'Utilizatorul țintă nu există.',
+	'emergencydesysop-noright' => 'Nu ai suficiente permisiuni pentru a accesa această pagină',
 );
 
 /** Russian (Русский)
@@ -811,6 +961,13 @@ $messages['ru'] = array(
 	'right-emergencydesysop' => 'снятие прав администратора другого участника, вместе со своими',
 );
 
+/** Sicilian (Sicilianu)
+ * @author Aushulz
+ */
+$messages['scn'] = array(
+	'emergencydesysop-nogroups' => 'Nuddu',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -831,7 +988,8 @@ $messages['sk'] = array(
 	'right-emergencydesysop' => 'Dokáže odstrániť správcovské práva iného používateľa zároveň so svojimi',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -840,18 +998,18 @@ $messages['sr-ec'] = array(
 	'emergencydesysop-title' => 'Уклањање администраторских права са сопственог налога и налога другог администратора',
 	'emergencydesysop-otheradmin' => 'Други администратор, чија права треба уклонити',
 	'emergencydesysop-reason' => 'Разлог за уклањање',
-	'emergencydesysop-submit' => 'Потврди',
+	'emergencydesysop-submit' => 'Пошаљи',
 	'emergencydesysop-incomplete' => 'Потребно је попунити сва поља форме, молим Вас да покушате поново.',
 	'emergencydesysop-notasysop' => 'Циљани корисник није у групи администратора.',
 	'emergencydesysop-nogroups' => 'Непопуњено',
 	'emergencydesysop-done' => 'Акција је завршена. Ваша и администраторска права [[$1]] су уклоњена.',
 	'emergencydesysop-invalidtarget' => 'Циљани корисник не постоји.',
 	'emergencydesysop-blocked' => 'Не можете да приступите овој страни док сте под блоком.',
-	'emergencydesysop-noright' => 'Немате права приступа, потребна да бисте приступили овој страни',
+	'emergencydesysop-noright' => 'Немате права приступа овој страници.',
 	'right-emergencydesysop' => 'Омогућава администратору да одузме администраторска права себи и другом администратору',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -892,13 +1050,25 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Kiranmayee
+ * @author Ravichandra
  * @author Veeven
  */
 $messages['te'] = array(
+	'emergencydesysop' => 'అత్యవసరంగా నిర్వాహకత్వం తొలగింపు',
+	'emergencydesysop-desc' => 'ఓ నిర్వాహకుడు, మరో నిర్వాహకుని నిర్వాహకత్వం నుండి తీసెయ్యడం కోసం, తన స్వీయ అనుమతులను త్యాగం చేసే వీలు కల్పిస్తుంది',
+	'emergencydesysop-title' => 'ప్రస్తుత వాడుకరికి, మరో నిర్వాహకునికీ ఉన్న నిర్వాహకత్వ అనుమతులను తీసివెయ్యి',
 	'emergencydesysop-reason' => 'తొలగింపునకు కారణం',
 	'emergencydesysop-submit' => 'దాఖలుచెయ్యి',
+	'emergencydesysop-incomplete' => 'ఈ ఫారం లోని ఫీల్డులన్నీ ఆశ్యకం, మళ్ళీ ప్రయత్నించండి.',
+	'emergencydesysop-notasysop' => 'లక్ష్యించిన వాడుకరి నిర్వాహక గుంపులో లేరు.',
 	'emergencydesysop-nogroups' => 'ఏదీకాదు',
+	'emergencydesysop-done' => 'చర్య పూర్తైంది. మీరు, [[$1]] గారు -ఇద్దరూ నిర్వాహకత్వాన్ని కోల్పోయారు.',
+	'emergencydesysop-invalidtarget' => 'లక్ష్యించిన వాడుకరి ఉనికిలో లెరు.',
+	'emergencydesysop-blocked' => 'నిరోధించబడి ఉండగా మీరు ఈ పేజీని చూడజాలరు.',
+	'emergencydesysop-noright' => 'ఈ పుటను చూడ్డానికి మీకు అనుమతులు లేవు',
+	'right-emergencydesysop' => 'ఒకరి నిర్వాహకత్వం మరొకరు రద్దు చేయవచ్చు',
 );
 
 /** Thai (ไทย)
@@ -989,13 +1159,13 @@ $messages['vep'] = array(
  */
 $messages['vi'] = array(
 	'emergencydesysop' => 'Rút quyền quản lý khẩn cấp',
-	'emergencydesysop-desc' => 'Cho phép người quản lý hy sinh quyền của mình để tước quyền sysop của quản lý khác',
-	'emergencydesysop-title' => 'Bỏ quyền truy cập quản lý đối với thành viên hiện tại lẫn một người quản lý khác',
-	'emergencydesysop-otheradmin' => 'Người quản lý khác cần bị tước quyền',
+	'emergencydesysop-desc' => 'Cho phép bảo quản viên hy sinh quyền của mình để tước quyền sysop của quản lý khác',
+	'emergencydesysop-title' => 'Bỏ quyền truy cập quản lý đối với thành viên hiện tại lẫn một bảo quản viên khác',
+	'emergencydesysop-otheradmin' => 'Bảo quản viên khác cần bị tước quyền',
 	'emergencydesysop-reason' => 'Lý do rút quyền',
 	'emergencydesysop-submit' => 'Thực hiện',
 	'emergencydesysop-incomplete' => 'Bạn cần điền đầy đủ mọi chỗ trống, xin hãy làm lại.',
-	'emergencydesysop-notasysop' => 'Thành viên đích không nằm trong nhóm người quản lý.',
+	'emergencydesysop-notasysop' => 'Thành viên đích không nằm trong nhóm bảo quản viên.',
 	'emergencydesysop-nogroups' => 'Không có',
 	'emergencydesysop-done' => 'Đã hoàn thành tác vụ, cả bạn và [[$1]] đều đã bị tước quyền sysop.',
 	'emergencydesysop-invalidtarget' => 'Thành viên đích không tồn tại.',
@@ -1013,23 +1183,39 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Hzy980512
  */
 $messages['zh-hans'] = array(
+	'emergencydesysop' => '紧急移除管理员权限',
 	'emergencydesysop-desc' => '允许管理员牺牲他们的特权，免除另一名管理员的权限。',
+	'emergencydesysop-title' => '从现在这个账户或其它管理员账号上移除权限',
+	'emergencydesysop-otheradmin' => '其他管理员去移除权限',
 	'emergencydesysop-reason' => '移除理由',
+	'emergencydesysop-submit' => '递交',
+	'emergencydesysop-incomplete' => '请填写所有输入框之后再试一次。',
 	'emergencydesysop-notasysop' => '目标用户不在管理员群组中。',
+	'emergencydesysop-nogroups' => '无',
+	'emergencydesysop-done' => '动作已完成，你和[[$1]]已被移除管理员权限。',
 	'emergencydesysop-invalidtarget' => '目标用户不存在。',
 	'emergencydesysop-blocked' => '您在封禁期内不能访问此页',
 	'emergencydesysop-noright' => '您没有足够权限访问本页',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ * @author Waihorace
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'emergencydesysop' => '緊急移除管理員權限',
 	'emergencydesysop-desc' => '容許管理員犧牲他們的特權，免除另一名管理員的權限。',
+	'emergencydesysop-otheradmin' => '其他管理員去移除權限',
 	'emergencydesysop-reason' => '移除理由',
+	'emergencydesysop-submit' => '遞交',
+	'emergencydesysop-incomplete' => '請填寫所有輸入框之後再試一次。',
 	'emergencydesysop-notasysop' => '目標使用者不在管理員群組中。',
+	'emergencydesysop-nogroups' => '無',
+	'emergencydesysop-done' => '動作已完成，你和[[$1]]已被移除管理員權限。',
 	'emergencydesysop-invalidtarget' => '目標使用者不存在',
 	'emergencydesysop-blocked' => '您在封禁期內不能存取本頁',
 	'emergencydesysop-noright' => '您沒有足夠權限存取本頁',

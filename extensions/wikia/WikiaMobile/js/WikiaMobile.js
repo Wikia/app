@@ -31,11 +31,9 @@ $(function(){
 			//must be done AFTER detecting size of elements on the page
 			d.body.className += ' js';
 
-			d.body.addEventListener(clickEvent, function(ev){
-				if(ev.target.className.indexOf('hidden') > -1){
-					toc.close();
-					topbar.closeDropDown();
-				}
+			d.getElementsByClassName('curtain')[0].addEventListener(clickEvent, function(ev){
+				toc.close();
+				topbar.closeDropDown();
 			});
 
 			//TODO: optimize selectors caching for this file

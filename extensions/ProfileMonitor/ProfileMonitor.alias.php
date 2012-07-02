@@ -2,76 +2,103 @@
 /**
  * Aliases for special pages
  *
+ * @file
+ * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-$aliases['en'] = array(
-	'ProfileMonitor' => array( 'ProfileMonitor' ),
+/** English (English) */
+$specialPageAliases['en'] = array(
+	'Profiling' => array( 'Profiling', 'ProfileMonitor' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
-	'ProfileMonitor' => array( 'مراقب_الملف' ),
+$specialPageAliases['ar'] = array(
+	'Profiling' => array( 'مراقب_الملف' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'ProfileMonitor' => array( 'مراقب_الملف' ),
+$specialPageAliases['arz'] = array(
+	'Profiling' => array( 'مراقب_الپروفايل' ),
+);
+
+/** German (Deutsch) */
+$specialPageAliases['de'] = array(
+	'Profiling' => array( 'Profilmonitor' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
-	'ProfileMonitor' => array( 'Profiklowy monitor' ),
+$specialPageAliases['dsb'] = array(
+	'Profiling' => array( 'Profiklowy monitor' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'Profiling' => array( 'نمایشگر_پروفایل' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
-	'ProfileMonitor' => array( 'Profilowy monitor' ),
+$specialPageAliases['hsb'] = array(
+	'Profiling' => array( 'Profilowy monitor' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'Profiling' => array( 'MonitèProfil' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'ProfileMonitor' => array( 'Analyse de rendimento' ),
+$specialPageAliases['ia'] = array(
+	'Profiling' => array( 'Analyse_de_rendimento' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'ProfileMonitor' => array( 'Monitor profil', 'MonitorProfil' ),
+$specialPageAliases['id'] = array(
+	'Profiling' => array( 'Monitor_profil', 'MonitorProfil' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
-	'ProfileMonitor' => array( 'プロファイリングデータ', 'プロファイルモニター', 'プロファイルモニタ' ),
+$specialPageAliases['ja'] = array(
+	'Profiling' => array( 'プロファイリングデータ', 'プロファイルモニター', 'プロファイルモニタ' ),
+);
+
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'Profiling' => array( 'НадзорНаПрофили' ),
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'Profiling' => array( 'Profilmonitor' ),
+);
+
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'Profiling' => array( 'Profielkiekscharm' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'ProfileMonitor' => array( 'ProfilingMonitor' ),
+$specialPageAliases['nl'] = array(
+	'Profiling' => array( 'ProfilingMonitor' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'ProfileMonitor' => array( 'Profilmonitor' ),
-);
-
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
-	'ProfileMonitor' => array( 'व्यक्तिविवरणावेक्षते' ),
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
+	'Profiling' => array( 'व्यक्तिविवरणावेक्षते' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
-	'ProfileMonitor' => array( 'MonitorProfilu' ),
+$specialPageAliases['sk'] = array(
+	'Profiling' => array( 'MonitorProfilu' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
-	'ProfileMonitor' => array( 'Tagapagmatyag ng talaan ng katangian' ),
+$specialPageAliases['tl'] = array(
+	'Profiling' => array( 'Tagapagmatyag ng talaan ng katangian' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
-	'ProfileMonitor' => array( 'ProfilMonitörü' ),
+$specialPageAliases['tr'] = array(
+	'Profiling' => array( 'ProfilMonitörü' ),
 );
-

@@ -19,7 +19,7 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/../../maintenance/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/../../maintenance/Maintenance.php' );
 
 class RebuildGeoIP extends Maintenance {
 	public function __construct() {
@@ -51,9 +51,9 @@ class RebuildGeoIP extends Maintenance {
 		$handle = fopen( $filename, 'r' );
 
 		$count = 0;
-		while( ( $data = fgetcsv( $handle, 256, ',' ) ) !== false ) {
+		while ( ( $data = fgetcsv( $handle, 256, ',' ) ) !== false ) {
 			// Output a nice progress bar.
-			if( $count % 1000 == 0 ) {
+			if ( $count % 1000 == 0 ) {
 				$progress = ceil( ( $count / $lines ) * 50 );
 				$this->output( '[' . str_repeat( '=', $progress ) .
 					str_repeat( ' ', 50 - $progress ) . '] ' .
@@ -69,10 +69,10 @@ class RebuildGeoIP extends Maintenance {
 			);
 			$dbw->insert( 'geoip', $record, __METHOD__ );
 		}
-		$this->output( "\n" ); 
+		$this->output( "\n" );
 
 		$dbw->commit();
-		$this->output( 'Successfully loaded ' . $count . ' geographic IP ranges.' . "\n" ); 
+		$this->output( 'Successfully loaded ' . $count . ' geographic IP ranges.' . "\n" );
 	}
 }
 

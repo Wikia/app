@@ -1,0 +1,189 @@
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/w/skins-1.17/vector/csshover.min.htc")}</style><![endif]-->
+<script type="text/javascript">
+mw.loader.load( 'jquery.ui.button' );
+mw.loader.load( 'jquery.ui.dialog' );
+var extensionPath = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScriptPath' ) + '/extensions/DonationInterface';
+mw.loader.load( extensionPath + '/globalcollect_gateway/forms/js/lightbox1.js', 'text/javascript' );
+mw.loader.load( extensionPath + '/globalcollect_gateway/forms/css/lightbox1.css', 'text/css' );
+var ajaxError = "%donate_interface-error-msg-general%";
+</script>
+
+    <div class="ltr">
+      <div id="appeal">
+        <div id="appeal-content">
+          <div class="call-r">
+            <div id="donate">
+              <h3 id="amount-heading">Donate</h3>
+              
+              <form method="post" name="paypalcontribution">
+                <div style="display: block;" id="amount-content">
+                  
+                  <table id="amount-table"> 
+                    <tr> 
+                      <td><label><input type="radio" name="amountRadio" value="5" /> $5</label></td> 
+                      <td><label><input type="radio" name="amountRadio" value="10" /> $10</label></td> 
+                      <td><label><input type="radio" name="amountRadio" value="20" /> $20</label></td> 
+                      <td><label><input type="radio" name="amountRadio" value="35" /> $35</label></td> 
+                    </tr> 
+                    <tr> 
+                      <td><label><input type="radio" name="amountRadio" value="50" /> $50</label></td> 
+                      <td><label><input type="radio" name="amountRadio" value="100" /> $100</label></td> 
+                      <td><label><input type="radio" name="amountRadio" value="250" /> $250</label></td> 
+                      <td><input type="radio" name="amountRadio" id="input_amount_other" value="other" /> <label>$<input type="text" name="amountGiven" size="4" id="other-amount" placeholder="Other" onfocus="this.form.input_amount_other.checked=true;"/></label></td> 
+                    </tr> 
+                  </table> 
+                  
+                  <p class="donate-options">
+                    <input class="btn" id="cc" value="Donate by Credit Card" type="button">
+                    <br><input class="btn" id="pp" value="Donate via PayPal" type="button"><span id="loading"></span>
+                  </p>
+                </div>
+                
+              </form>
+            </div>
+            
+            <div id="callout-content">
+              <hr>
+                <h3>Where your donation goes</h3>
+                <p><strong>Technology:</strong> Servers, bandwidth, 
+maintenance, development. Wikipedia is the #5 website in the world and 
+it runs on a fraction of what other top websites spend.</p>
+                <p><strong>People:</strong> The other top 10 website 
+have thousands of employees. We have fewer than 100, making your 
+donation a great investment in a highly-efficient not-for-profit 
+organization.</p>
+            </div>
+          </div>
+          
+          <h2 id="appeal-head"> <span class="mw-headline" id="From_Wikipedia_programmer_Brandon_Harris">From Wikipedia programmer Brandon Harris</span></h2>
+          <div id="appeal-body" class="plainlinks">
+            <p>I feel like I'm living the first line of my obituary.</p>
+            <p>I don't think there will be anything else that I do in my
+ life as important as what I do now for Wikipedia. We're not just 
+building an encyclopedia, we're working to make people free. When we 
+have access to free knowledge, we are better people. We understand the 
+world is bigger than us, and we become infected with tolerance and 
+understanding.</p>
+            <p>Wikipedia is the 5th largest website in the world. I work
+ at the small non-profit that keeps it on the web. We don't run ads 
+because doing so would sacrifice our independence. The site is not and 
+should never be a propaganda tool.</p>
+            <p>Our work is possible because of donations from our 
+readers. Will you help protect Wikipedia by donating $5, $10, $20 or 
+whatever you can afford?</p>
+            <p>I work at the Wikimedia Foundation because everything in 
+my soul tells me it's the right thing to do. I've worked at huge tech 
+companies, doing some job to build some crappy thing that's designed to 
+steal money from some kid who doesn't know it. I would come home from 
+work crushed.</p>
+            <p>You might not know this, but the Wikimedia Foundation 
+operates with a very small staff. Most other top-ten sites have tens of 
+thousands of people and massive budgets. But they produce a fraction of 
+what we pull off with sticks and wire.</p>
+            <p>When you give to Wikipedia, you're supporting free 
+knowledge around the world. You're not only leaving a legacy for your 
+children and for their children, you're elevating people around the 
+world who have access to this treasure. You're assuring that one day 
+everyone else will too.</p>
+            <p>Thank you,</p>
+            <p><strong>Brandon Harris</strong><br></p>
+            <p>Programmer, Wikimedia Foundation</p>
+          </div>
+        </div>
+      </div>
+      
+      <hr>
+      
+      <p>We do not store your credit card information, and your personal data is subject to our <a target="_blank" href="http://wikimediafoundation.org/wiki/Donor_policy"> donor privacy policy</a>.</p>
+      <p><a href="http://wikipedia.webitects.com/wiki/Ways_to_Give/en">More information or other ways to give</a><br><a href="http://wikipedia.webitects.com/wiki/FAQ/en">Answers to frequently asked questions</a></p>
+    </div>
+    
+<div id="dialog">
+	<div id="steps">
+		<form id="donationForm" name="donationForm" action="" method="post">
+			<fieldset class="step">
+				<legend>Personal Information</legend>
+				<input type="hidden" name="gateway" value="payflowpro" id="gateway" /> 
+				<input type="hidden" name="returnto" value="Thank_You/en" />
+				<input type="hidden" value="@action" name="action" />
+				<input type="hidden" value="@amount" name="amount" />
+				<input type="hidden" value="@country" name="country" id="country" />
+				<input type="hidden" value="@expiration" name="expiration" />						
+				<input type="hidden" value="@currency_code" name="currency_code" />
+				<input type="hidden" value="@utm_source" name="utm_source"/>
+				<input type="hidden" value="@utm_medium" name="utm_medium"/>
+				<input type="hidden" value="@utm_campaign" name="utm_campaign"/>
+				<input type="hidden" value="@language" name="language"/>
+				<input type="hidden" value="@referrer" name="referrer"/>
+				<input type="hidden" value="@comment" name="comment"/>
+				<input type="hidden" value="@comment-option" name="comment-option"/>
+				<input type="hidden" value="@email-opt" name="email-opt"/>
+				<input type="hidden" value="processed" name="payment_method"/>
+				<input type="hidden" value="@token" name="token"/>
+				<input type="hidden" value="@order_id"  name="order_id"/>
+				<input type="hidden" value="@numAttempt" name="numAttempt"/>
+				<input type="hidden" value="@contribution_tracking_id" name="contribution_tracking_id"/>
+				<input type="hidden" value="@data_hash" name="data_hash"/>
+				<input type="hidden" value="@owa_session" name="owa_session"/>
+				<input type="hidden" value="@owa_ref" name="owa_ref"/>
+				<div class="step-content">
+					<div class="stuff">
+						<table>
+						<tr>
+							<td class="label">
+								<label for="fname">Name</label>
+							</td>
+							<td>
+								<input name="fname" placeholder="First name" size="25" value="@fname" type="text" maxlength="30" class="required" id="fname" style="width: 136px;" />&#160;<input name="lname" placeholder="Last name" size="25" value="@lname" type="text" maxlength="30" class="required" id="lname" style="width: 136px;" />
+							</td>
+						</tr>
+						</table>
+					</div>
+					<div class="stuff">
+						<table>
+						<tr>
+							<td class="label">
+								<label for="street">Billing Address</label>
+							</td>
+							<td>
+								<input name="street" placeholder="Street" size="30" value="@street" type="text" maxlength="100" class="required" id="street" style="width: 258px;" />
+							</td>
+						</tr>
+						<tr>
+							<td class="label">&#160;</td>
+							<td>
+								<input name="city" placeholder="City" class="required" size="18" value="@city" type="text" maxlength="40" id="city" style="width: 136px;"/>
+								<select name="state" class="required" id="state" value="@state"><option value="" /><option value="AK">AK</option><option value="AL">AL</option><option value="AR">AR</option><option value="AZ">AZ</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DC">DC</option><option value="DE">DE</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="IA">IA</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="MA">MA</option><option value="MD">MD</option><option value="ME">ME</option><option value="MI">MI</option><option value="MN">MN</option><option value="MO">MO</option><option value="MS">MS</option><option value="MT">MT</option><option value="NC">NC</option><option value="ND">ND</option><option value="NE">NE</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NV">NV</option><option value="NY">NY</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="PR">PR</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VA">VA</option><option value="VT">VT</option><option value="WA">WA</option><option value="WI">WI</option><option value="WV">WV</option><option value="WY">WY</option><option value="AA">AA</option><option value="AE">AE</option><option value="AP">AP</option></select>
+								<input name="zip" placeholder="Zip" class="required" size="5" value="@zip" type="text" maxlength="10" id="zip" style="width: 48px;" /><input type="hidden" value="US" name="country" />
+							</td>
+						</tr>
+						</table>
+					</div>
+					<div class="stuff">
+						<table>
+						<tr>
+							<td class="label">
+								<label for="email">Email</label>
+							</td>
+							<td>
+								<input name="emailAdd" placeholder="Email address" size="30" value="@emailAdd" type="text" maxlength="100" class="required" id="email" style="width: 258px;" />
+							</td>
+						</tr>
+						</table>
+					</div>
+					<a href="#" class="continue-button">Continue</a>
+				</div>
+			</fieldset>
+			<fieldset class="step">
+				<legend>Payment</legend>
+				<div class="step-content">
+					<div class="iframe-holder">
+						iframe goes here.
+					</div>
+					<a href="#" class="back-button" id="goback">Back</a>
+					<a href="#" class="continue-button" id="submitcreditcard">Continue</a>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

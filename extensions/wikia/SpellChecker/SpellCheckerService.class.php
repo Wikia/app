@@ -1,13 +1,12 @@
 <?php
 
-class SpellCheckerService extends Service {
+class SpellCheckerService extends WikiaService {
 
-	private $app;
 	private $dict;
 	private $lang;
 
 	function __construct($lang) {
-		$this->app = WF::build('App');
+		parent::__construct();
 
 		$this->dict = new SpellCheckerDictionary($lang);
 		$this->lang = $lang;

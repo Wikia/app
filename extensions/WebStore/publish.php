@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Move a temporary file to a public directory, and archive the existing file 
+ * Move a temporary file to a public directory, and archive the existing file
  * if there was one.
  */
 
@@ -53,16 +53,16 @@ class WebStorePublish extends WebStoreCommon {
 		$archiveRel = $wgRequest->getVal( 'archive' );
 
 		// Check for directory traversal
-		if ( !$this->validateFilename( $srcRel ) || 
-			!$this->validateFilename( $dstRel ) || 
+		if ( !$this->validateFilename( $srcRel ) ||
+			!$this->validateFilename( $dstRel ) ||
 			!$this->validateFilename( $archiveRel ) )
 		{
 			$this->error( 400, 'webstore_path_invalid' );
 			return false;
 		}
 
-		// Don't publish into odd subdirectories of the public zone. 
-		// Some directories may be temporary caches with a potential for 
+		// Don't publish into odd subdirectories of the public zone.
+		// Some directories may be temporary caches with a potential for
 		// data loss.
 		if ( !preg_match( '!^archive|[a-zA-Z0-9]/!', $dstRel ) ) {
 			$this->error( 400, 'webstore_path_invalid' );
@@ -70,8 +70,8 @@ class WebStorePublish extends WebStoreCommon {
 		}
 
 		// Don't move anything to a filename that ends with the reserved suffix
-		if ( substr( $dstRel, -12 ) == '.MW_WebStore' || 
-			substr( $archiveRel, -12 ) == '.MW_WebStore' ) 
+		if ( substr( $dstRel, -12 ) == '.MW_WebStore' ||
+			substr( $archiveRel, -12 ) == '.MW_WebStore' )
 		{
 			$this->error( 400, 'webstore_path_invalid' );
 			return false;
@@ -138,7 +138,7 @@ EOT;
 		do {
 			// Create archive directory
 			$archiveDir = dirname( $archivePath );
-			if ( !wfMkdirParents( $archiveDir ) ) {
+			if ( !wfMkdirParents( $archiveDir, null, __METHOD__ ) ) {
 				$this->errors[] = new WebStoreError( 'webstore_archive_mkdir', $archiveDir );
 				$success = false;
 				break;
@@ -171,11 +171,11 @@ EOT;
 				break;
 			}
 
-			// Copy the old file to the archive. Leave a copy in place in its 
+			// Copy the old file to the archive. Leave a copy in place in its
 			// current location for now so that webserving continues to work.
 			// If we had access to the real C rename() call, then we could use
-			// link() instead and avoid the copy, but the chance that PHP might 
-			// copy and delete on the subsequent rename() call, thereby overwriting 
+			// link() instead and avoid the copy, but the chance that PHP might
+			// copy and delete on the subsequent rename() call, thereby overwriting
 			// the archive, makes this a dangerous option.
 			//
 			// NO_LOCK option because we already have the lock
@@ -199,7 +199,7 @@ EOT;
 				$success = $this->copyPath( $srcPath, $dstPath, self::NO_LOCK | self::OVERWRITE );
 			}
 		} while (false);
-		
+
 		// Close the lock files
 		if ( $archiveLockFile ) {
 			if ( !$this->closeAndDelete( $archiveLockFile, $archiveLockPath ) ) {
@@ -219,4 +219,3 @@ EOT;
 $w = new WebStorePublish;
 $w->executeCommon();
 
-?>

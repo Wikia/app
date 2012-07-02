@@ -63,7 +63,7 @@ class ArticleCommentsAjax {
 				if ( $response !== false ) {
 					$status = $response[0];
 					$article = $response[1];
-					wfLoadExtensionMessages('ArticleComments');
+					
 					return ArticleComment::doAfterPost($status, $article, $parentId );
 				}
 			}
@@ -137,7 +137,6 @@ class ArticleCommentsAjax {
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
 		$result = array('id' => $commentId);
-		wfLoadExtensionMessages('ArticleComments');
 
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
@@ -256,7 +255,6 @@ class ArticleCommentsAjax {
 		if ( !$title ) {
 			$error = 1;
 		} else {
-			wfLoadExtensionMessages('ArticleComments');
 			$listing = ArticleCommentList::newFromTitle($title);
 			$comments = $listing->getCommentPages(false, $page);
 			$text = F::app()->getView('ArticleComments', $method, array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false))->render();

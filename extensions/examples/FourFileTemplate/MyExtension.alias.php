@@ -6,28 +6,28 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'MyExtension' => array( 'MyExtension' ),
 );
 
 /** Arabic (العربية)
  * @author Meno25
  */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'MyExtension' => array( 'امتدادي' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'MyExtension' => array( 'امتدادى' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'MyExtension' => array( 'MijnExtensie' ),
 );

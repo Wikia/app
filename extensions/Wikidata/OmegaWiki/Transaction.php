@@ -222,12 +222,13 @@ function getViewTransactionRestriction( $table ) {
 	
 	$action = $wgRequest->getText( 'action' );
 	
-	if ( $action == 'edit' )
+	if ( $action == 'edit' ) {
 		return getLatestTransactionRestriction( $table );
-	else if ( $action == 'history' )
+	} elseif ( $action == 'history' ) {
 		return '1';
-	else
+	} else {
 		return getLatestTransactionRestriction( $table );
+	}
 }
 
 function getOperationSelectColumn( $table, $transactionId ) {
@@ -243,19 +244,21 @@ function getUserName( $userId ) {
 	$dbr = wfGetDB( DB_SLAVE );
 	$queryResult = $dbr->query( "SELECT user_name FROM user WHERE user_id=$userId" );
 	
-	if ( $user = $dbr->fetchObject( $queryResult ) )
+	if ( $user = $dbr->fetchObject( $queryResult ) ) {
 		return $user->user_name;
-	else
+	} else {
 		return "";
+	}
 }
 
 function getUserLabel( $userId, $userIP ) {
-	if ( $userId > 0 )
+	if ( $userId > 0 ) {
 		return getUserName( $userId );
-	else if ( $userIP != "" )
+	} elseif ( $userIP != "" ) {
 		return $userIP;
-	else
+	} else {
 		return "Unknown";
+	}
 }
 
 function expandUserIDsInRecordSet( RecordSet $recordSet, Attribute $userID, Attribute $userIP ) {
@@ -292,6 +295,7 @@ function getTransactionRecord( $transactionId ) {
 		
 		if ( $transaction = $dbr->fetchObject( $queryResult ) ) {
 			$result->user = getUserLabel( $transaction->user_id, $transaction->user_ip );
+			if ( $result->user == null ) $result->user = "userId " . $transaction->user_id . " not found" ;
 			$result->timestamp = $transaction->timestamp;
 			$result->summary = $transaction->comment;
 		}

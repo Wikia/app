@@ -12,6 +12,7 @@
  */
 class SecurePoll_Entity {
 	var $id;
+	var $electionId;
 	var $context;
 	var $messagesLoaded = array();
 	var $properties;
@@ -26,7 +27,12 @@ class SecurePoll_Entity {
 	function __construct( $context, $type, $info ) {
 		$this->context = $context;
 		$this->type = $type;
-		$this->id = isset( $info['id'] ) ? $info['id'] : false;
+		$this->id = isset( $info['id'] ) 
+			? $info['id'] 
+			: false;
+		$this->electionId = isset( $info['election'] ) 
+			? $info['election'] 
+			: null;
 	}
 
 	/**
@@ -52,6 +58,16 @@ class SecurePoll_Entity {
 	 */
 	function getId() {
 		return $this->id;
+	}
+	
+	/**
+	 * Get the parent election
+	 * @return SecurePoll_Election
+	 */
+	public function getElection() {
+		return $this->electionId !== null
+			? $this->context->getElection( $this->electionId )
+			: null;
 	}
 
 	/**
@@ -132,7 +148,6 @@ class SecurePoll_Entity {
 	 * @param $name string
 	 */
 	function getMessage( $name ) {
-		$id = $this->getId();
 		foreach ( $this->context->languages as $language ) {
 			if ( empty( $this->messagesLoaded[$language] ) ) {
 				$this->loadMessages( $language );

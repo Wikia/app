@@ -6,55 +6,84 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'Captcha' => array( 'Captcha' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Captcha' => array( 'كابتشا' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'Captcha' => array( 'كابتشا' ),
 );
 
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'Captcha' => array( 'Kontraŭspamilo' ),
+);
+
 /** Estonian (Eesti) */
-$aliases['et'] = array(
+$specialPageAliases['et'] = array(
 	'Captcha' => array( 'Robotilõks' ),
 );
 
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'Captcha' => array( 'کپچا' ),
+);
+
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
+$specialPageAliases['fi'] = array(
 	'Captcha' => array( 'Ihmiskäyttäjävarmistus' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Galician (Galego) */
+$specialPageAliases['gl'] = array(
+	'Captcha' => array( 'Captcha' ),
+);
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Captcha' => array( 'キャプチャ' ),
+);
+
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'Captcha' => array( 'Kaptscha' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'Captcha' => array( 'Капча' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
-	'Captcha' => array( 'കാപ്ച' ),
+$specialPageAliases['ml'] = array(
+	'Captcha' => array( 'ക്യാപ്ച' ),
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬) */
+$specialPageAliases['sr-ec'] = array(
+	'Captcha' => array( 'Потврдни_код' ),
+);
+
+/** Cantonese (粵語) */
+$specialPageAliases['yue'] = array(
+	'Captcha' => array( '驗證碼' ),
 );
 
 /** Simplified Chinese (‪中文(简体)‬) */
-$aliases['zh-hans'] = array(
+$specialPageAliases['zh-hans'] = array(
 	'Captcha' => array( '验证码' ),
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */
-$aliases['zh-hant'] = array(
+$specialPageAliases['zh-hant'] = array(
 	'Captcha' => array( '驗證碼' ),
 );
-

@@ -5,32 +5,32 @@
  * @author Yaron Koren
  */
 
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class DTWikiTemplate {
 	private $mName = null;
 	private $mFields = array();
 
-	public function DTWikiTemplate($name) {
+	public function DTWikiTemplate( $name ) {
 		$this->mName = $name;
 	}
 
-	function addField($name, $value) {
+	function addField( $name, $value ) {
 		$this->mFields[$name] = $value;
 	}
 
 	function createText() {
 		$multi_line_template = false;
 		$text = '{{' . $this->mName;
-		foreach ($this->mFields as $field_name => $field_val) {
-			if (is_numeric($field_name)) {
+		foreach ( $this->mFields as $field_name => $field_val ) {
+			if ( is_numeric( $field_name ) ) {
 				$text .= "|$field_val";
 			} else {
 				$text .= "\n|$field_name=$field_val";
 				$multi_line_template = true;
 			}
 		}
-		if ($multi_line_template)
+		if ( $multi_line_template )
 			$text .= "\n";
 		$text .= '}}' . "\n";
 		return $text;
@@ -41,7 +41,7 @@ class DTWikiPage {
 	private $mPageName = null;
 	private $mElements = array();
 
-	public function DTWikiPage($name) {
+	public function DTWikiPage( $name ) {
 		$this->mPageName = $name;
 	}
 
@@ -49,18 +49,18 @@ class DTWikiPage {
 		return $this->mPageName;
 	}
 
-	function addTemplate($template) {
+	function addTemplate( $template ) {
 		$this->mElements[] = $template;
 	}
 
-	function addFreeText($free_text) {
+	function addFreeText( $free_text ) {
 		$this->mElements[] = $free_text;
 	}
 
 	function createText() {
 		$text = "";
-		foreach ($this->mElements as $elem) {
-			if ($elem instanceof DTWikiTemplate) {
+		foreach ( $this->mElements as $elem ) {
+			if ( $elem instanceof DTWikiTemplate ) {
 				$text .= $elem->createText();
 			} else {
 				$text .= $elem;
@@ -74,9 +74,9 @@ class DTXMLParser {
 	var $mDebug = false;
 	var $mSource = null;
 	var $mCurFieldName = null;
-	var $mCurFieldValue = null;
+	var $mCurFieldValue = '';
 	var $mCurTemplate = null;
-	var $mCurPage = null; //new DTWikiPage();
+	var $mCurPage = null; // new DTWikiPage();
 	var $mPages = array();
 
 	function __construct( $source ) {
@@ -84,11 +84,11 @@ class DTXMLParser {
 	}
 
 	function debug( $text ) {
-		//print "$text. ";
+		// print "$text. ";
 	}
 
 	function throwXMLerror( $text ) {
-		print htmlspecialchars($text);
+		print htmlspecialchars( $text );
 	}
 
 	function doParse() {
@@ -103,24 +103,24 @@ class DTXMLParser {
 		$offset = 0; // for context extraction on error reporting
 		do {
 			$chunk = $this->mSource->readChunk();
-			if( !xml_parse( $parser, $chunk, $this->mSource->atEnd() ) ) {
+			if ( !xml_parse( $parser, $chunk, $this->mSource->atEnd() ) ) {
 				wfDebug( "WikiImporter::doImport encountered XML parsing error\n" );
-				//return new WikiXmlError( $parser, wfMsgHtml( 'import-parse-failure' ), $chunk, $offset );
+				// return new WikiXmlError( $parser, wfMsgHtml( 'import-parse-failure' ), $chunk, $offset );
 			}
 			$offset += strlen( $chunk );
-		} while( $chunk !== false && !$this->mSource->atEnd() );
+		} while ( $chunk !== false && !$this->mSource->atEnd() );
 		xml_parser_free( $parser );
 	}
 
-	function donothing( $parser, $x, $y="" ) {
-		#$this->debug( "donothing" );
+	function donothing( $parser, $x, $y = "" ) {
+		# $this->debug( "donothing" );
 	}
 
 
 	function in_start( $parser, $name, $attribs ) {
-		//$this->debug( "in_start $name" );
-		$pages_str = str_replace(' ', '_', wfMsgForContent('dt_xml_pages'));
-		if( $name != $pages_str ) {
+		// $this->debug( "in_start $name" );
+		$pages_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_pages' ) );
+		if ( $name != $pages_str ) {
 			print( "Expected '$pages_str', got '$name'" );
 		}
 		xml_set_element_handler( $parser, "in_pages", "out_pages" );
@@ -128,11 +128,11 @@ class DTXMLParser {
 
 	function in_pages( $parser, $name, $attribs ) {
 		$this->debug( "in_pages $name" );
-		$page_str = str_replace(' ', '_', wfMsgForContent('dt_xml_page'));
-		if( $name == $page_str ) {
-			$title_str = str_replace(' ', '_', wfMsgForContent('dt_xml_title'));
-			if (array_key_exists($title_str, $attribs)) {
-				$this->mCurPage = new DTWikiPage($attribs[$title_str]);
+		$page_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_page' ) );
+		if ( $name == $page_str ) {
+			$title_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_title' ) );
+			if ( array_key_exists( $title_str, $attribs ) ) {
+				$this->mCurPage = new DTWikiPage( $attribs[$title_str] );
 			xml_set_element_handler( $parser, "in_page", "out_page" );
 			} else {
 				return $this->throwXMLerror( "'$title_str' attribute missing for page" );
@@ -144,7 +144,7 @@ class DTXMLParser {
 
 	function out_pages( $parser, $name ) {
 		$this->debug( "out_pages $name" );
-		$pages_str = str_replace(' ', '_', wfMsgForContent('dt_xml_pages'));
+		$pages_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_pages' ) );
 /*
 		if( $name != $pages_str ) {
 			return $this->throwXMLerror( "Expected </pages>, got </$name>" );
@@ -155,10 +155,10 @@ class DTXMLParser {
 
 	function in_category( $parser, $name, $attribs ) {
 		$this->debug( "in_category $name" );
-		$page_str = str_replace(' ', '_', wfMsgForContent('dt_xml_page'));
-		if( $name == $page_str ) {
-			if (array_key_exists($title_str, $attribs)) {
-				$this->mCurPage = new DTWikiPage($attribs[$title_str]);
+		$page_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_page' ) );
+		if ( $name == $page_str ) {
+			if ( array_key_exists( $title_str, $attribs ) ) {
+				$this->mCurPage = new DTWikiPage( $attribs[$title_str] );
 			xml_set_element_handler( $parser, "in_page", "out_page" );
 			} else {
 				return $this->throwXMLerror( "'$title_str' attribute missing for page" );
@@ -170,7 +170,7 @@ class DTXMLParser {
 
 	function out_category( $parser, $name ) {
 		$this->debug( "out_category $name" );
-		if( $name != "category" ) {
+		if ( $name != "category" ) {
 			return $this->throwXMLerror( "Expected </category>, got </$name>" );
 		}
 		xml_set_element_handler( $parser, "donothing", "donothing" );
@@ -178,17 +178,17 @@ class DTXMLParser {
 
 	function in_page( $parser, $name, $attribs ) {
 		$this->debug( "in_page $name" );
-		$template_str = str_replace(' ', '_', wfMsgForContent('dt_xml_template'));
-		$name_str = str_replace(' ', '_', wfMsgForContent('dt_xml_name'));
-		$free_text_str = str_replace(' ', '_', wfMsgForContent('dt_xml_freetext'));
-		if( $name == $template_str ) {
-			if (array_key_exists($name_str, $attribs)) {
-				$this->mCurTemplate = new DTWikiTemplate($attribs[$name_str]);
+		$template_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_template' ) );
+		$name_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_name' ) );
+		$free_text_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_freetext' ) );
+		if ( $name == $template_str ) {
+			if ( array_key_exists( $name_str, $attribs ) ) {
+				$this->mCurTemplate = new DTWikiTemplate( $attribs[$name_str] );
 			xml_set_element_handler( $parser, "in_template", "out_template" );
 			} else {
 				return $this->throwXMLerror( "'$name_str' attribute missing for template" );
 			}
-		} elseif( $name == $free_text_str ) {
+		} elseif ( $name == $free_text_str ) {
 			xml_set_element_handler( $parser, "in_freetext", "out_freetext" );
 			xml_set_character_data_handler( $parser, "freetext_value" );
 		} else {
@@ -198,8 +198,8 @@ class DTXMLParser {
 
 	function out_page( $parser, $name ) {
 		$this->debug( "out_page $name" );
-		$page_str = str_replace(' ', '_', wfMsgForContent('dt_xml_page'));
-		if( $name != $page_str ) {
+		$page_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_page' ) );
+		if ( $name != $page_str ) {
 			return $this->throwXMLerror( "Expected </$page_str>, got </$name>" );
 		}
 		$this->mPages[] = $this->mCurPage;
@@ -208,12 +208,12 @@ class DTXMLParser {
 
 	function in_template( $parser, $name, $attribs ) {
 		$this->debug( "in_template $name" );
-		$field_str = str_replace(' ', '_', wfMsgForContent('dt_xml_field'));
-		if( $name == $field_str ) {
-			$name_str = str_replace(' ', '_', wfMsgForContent('dt_xml_name'));
-			if (array_key_exists($name_str, $attribs)) {
+		$field_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_field' ) );
+		if ( $name == $field_str ) {
+			$name_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_name' ) );
+			if ( array_key_exists( $name_str, $attribs ) ) {
 				$this->mCurFieldName = $attribs[$name_str];
-			//$this->push( $name );
+			// $this->push( $name );
 			$this->workRevisionCount = 0;
 			$this->workSuccessCount = 0;
 			$this->uploadCount = 0;
@@ -230,23 +230,24 @@ class DTXMLParser {
 
 	function out_template( $parser, $name ) {
 		$this->debug( "out_template $name" );
-		$template_str = str_replace(' ', '_', wfMsgForContent('dt_xml_template'));
-		if( $name != $template_str ) {
+		$template_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_template' ) );
+		if ( $name != $template_str ) {
 			return $this->throwXMLerror( "Expected </$template_str>, got </$name>" );
 		}
-		$this->mCurPage->addTemplate($this->mCurTemplate);
+		$this->mCurPage->addTemplate( $this->mCurTemplate );
 		xml_set_element_handler( $parser, "in_page", "out_page" );
 	}
 
 	function in_field( $parser, $name, $attribs ) {
-		//xml_set_element_handler( $parser, "donothing", "donothing" );
+		// xml_set_element_handler( $parser, "donothing", "donothing" );
 	}
 
 	function out_field( $parser, $name ) {
 		$this->debug( "out_field $name" );
-		$field_str = str_replace(' ', '_', wfMsgForContent('dt_xml_field'));
-		if( $name == $field_str ) {
-			$this->mCurTemplate->addField($this->mCurFieldName, $this->mCurFieldValue);
+		$field_str = str_replace( ' ', '_', wfMsgForContent( 'dt_xml_field' ) );
+		if ( $name == $field_str ) {
+			$this->mCurTemplate->addField( $this->mCurFieldName, $this->mCurFieldValue );
+			$this->mCurFieldValue = '';
 		} else {
 			return $this->throwXMLerror( "Expected </$field_str>, got </$name>" );
 		}
@@ -254,11 +255,11 @@ class DTXMLParser {
 	}
 
 	function field_value( $parser, $data ) {
-		$this->mCurFieldValue = $data;
+		$this->mCurFieldValue .= $data;
 	}
 
 	function in_freetext( $parser, $name, $attribs ) {
-		//xml_set_element_handler( $parser, "donothing", "donothing" );
+		// xml_set_element_handler( $parser, "donothing", "donothing" );
 	}
 
 	function out_freetext( $parser, $name ) {
@@ -266,7 +267,7 @@ class DTXMLParser {
 	}
 
 	function freetext_value( $parser, $data ) {
-		$this->mCurPage->addFreeText($data);
+		$this->mCurPage->addFreeText( $data );
 	}
 
 }

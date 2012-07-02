@@ -117,8 +117,8 @@ class WallNotificationEntity {
 		}
 		
 		$this->data->wall_username = $walluser->getName();
-		
-		$this->data->wall_userid = $walluser->getId();
+
+		$this->data->wall_userid = $walluser->getId();		
 		$this->data->wall_displayname = $this->data->wall_username;
 		
 		$this->data->title_id = $ac->getTitle()->getArticleId();

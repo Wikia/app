@@ -30,7 +30,7 @@ include_once ( "gissettings.php" ) ;
  *  Base class
  */
 class gis_version {
-	function gis_version( ) {
+	function __construct( ) {
 	}
 
 	function show() {
@@ -55,7 +55,7 @@ class gis_version {
 
  <p>You should have received <a href="../COPYING">a copy of the GNU General Public License</a>
  along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  or <a href="http://www.gnu.org/copyleft/gpl.html">read it online</a></p>
 ');
 		$out .= ":GIS extension: $wgGisVersion\n";

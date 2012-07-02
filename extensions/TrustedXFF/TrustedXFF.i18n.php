@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for TrustedXFF extension.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -13,9 +14,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'trustedxff-desc' => 'Short description of the extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'trustedxff-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -39,7 +41,14 @@ $messages['ast'] = array(
 	'trustedxff-desc' => "Xestión d'una llista de direiciones proxy d'enfotu ([http://meta.wikimedia.org/wiki/XFF_project proyeutu XFF])",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'trustedxff-desc' => 'Ышаныслы прокси адрестар исемлеген эшкәртеү ([http://meta.wikimedia.org/wiki/XFF_project XFF проекты])',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -139,10 +148,11 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author DavidL
  * @author Seb35
  */
 $messages['fr'] = array(
-	'trustedxff-desc' => 'Gestion d’une liste d’adresses de serveurs mandataires de confiance ([http://meta.wikimedia.org/wiki/XFF_project projet XFF])',
+	'trustedxff-desc' => 'Gestion d’une liste d’adresses de serveurs mandataires de confiance ([//meta.wikimedia.org/wiki/XFF_project projet XFF])',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -250,7 +260,7 @@ $messages['ko'] = array(
 	'trustedxff-desc' => '믿을 수 있는 프록시 주소 목록을 관리 ([http://meta.wikimedia.org/wiki/XFF_project XFF 프로젝트])',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -283,7 +293,7 @@ $messages['lt'] = array(
  * @author Brest
  */
 $messages['mk'] = array(
-	'trustedxff-desc' => 'Ракување со листа на прокси адреси од доверба ([http://meta.wikimedia.org/wiki/XFF_project проект XFF])',
+	'trustedxff-desc' => 'Ракување со список на застапнички (proxy) адреси од доверба ([http://meta.wikimedia.org/wiki/XFF_project проект XFF])',
 );
 
 /** Malayalam (മലയാളം)
@@ -300,6 +310,13 @@ $messages['ms'] = array(
 	'trustedxff-desc' => 'Pengendalian senarai alamat proksi yang dipercayai ([http://meta.wikimedia.org/wiki/XFF_project projek XFF])',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'trustedxff-desc' => 'Behandling av en liste over pålitelige proxyadresser ([http://meta.wikimedia.org/wiki/XFF_project XFF-prosjektet])',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -311,7 +328,7 @@ $messages['nds'] = array(
  * @author Servien
  */
 $messages['nds-nl'] = array(
-	'trustedxff-desc' => 'Beheert een lieste mit adressen van vertrouwde proxyservers ([http://meta.wikimedia.org/wiki/XFF_project XFF-project])',
+	'trustedxff-desc' => 'Beheert n lieste mit adressen van vertrouwde proxyservers ([http://meta.wikimedia.org/wiki/XFF_project XFF-project])',
 );
 
 /** Dutch (Nederlands)
@@ -326,13 +343,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'trustedxff-desc' => 'Handsaming av ei liste over pålitelege proxyadresser ([http://meta.wikimedia.org/wiki/XFF_project XFF-prosjektet])',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'trustedxff-desc' => 'Behandling av en liste over pålitelige proxyadresser ([http://meta.wikimedia.org/wiki/XFF_project XFF-prosjektet])',
 );
 
 /** Occitan (Occitan)
@@ -365,10 +375,18 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Helder.wiki
  * @author Heldergeovane
  */
 $messages['pt-br'] = array(
 	'trustedxff-desc' => 'Manuseamento de uma lista de endereços proxy confiáveis ([http://meta.wikimedia.org/wiki/XFF_project projeto XFF])',
+);
+
+/** Romanian (Română)
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'trustedxff-desc' => 'Gestiunea unei liste de adrese proxy de încredere ([http://meta.wikimedia.org/wiki/XFF_project proiectul XFF])',
 );
 
 /** Tarandíne (Tarandíne)
@@ -385,11 +403,25 @@ $messages['ru'] = array(
 	'trustedxff-desc' => 'Обработка списка доверенных прокси-адресов ([http://meta.wikimedia.org/wiki/XFF_project Проект XFF])',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'trustedxff-desc' => 'Обробка списку достовірных адрес проксі ([http://meta.wikimedia.org/wiki/XFF_project Проєкт XFF])',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
 	'trustedxff-desc' => 'Итэҕэйиллэр прокси-аадырыстар тиһиктэрин оҥоруу ([http://meta.wikimedia.org/wiki/XFF_project XFF бырайыак])',
+);
+
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'trustedxff-desc' => 'විශ්වාශ කරන ලද පෙරකලාසි ලිපිනයන් පාලනය කිරීම ([http://meta.wikimedia.org/wiki/XFF_project XFF project])',
 );
 
 /** Slovak (Slovenčina)
@@ -399,6 +431,13 @@ $messages['sk'] = array(
 	'trustedxff-desc' => 'Správa zoznamu dôveryhodných proxy adries ([http://meta.wikimedia.org/wiki/XFF_project Projekt XFF])',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'trustedxff-desc' => 'Ravnanje s seznamom zaupanja vrednih naslovov proxy ([http://meta.wikimedia.org/wiki/XFF_project projekt XFF])',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
@@ -406,14 +445,14 @@ $messages['sq'] = array(
 	'trustedxff-desc' => 'Mirëmbajtja e listës së adresave Proxy ([http://meta.wikimedia.org/wiki/XFF_project projekti XFF])',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'trustedxff-desc' => 'Управљање списком прокси адреса којима се верује ([http://meta.wikimedia.org/wiki/XFF_project XFF project])',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -469,7 +508,7 @@ $messages['vi'] = array(
 	'trustedxff-desc' => 'Xử lý danh sách các địa chỉ proxy được tin cậy ([http://meta.wikimedia.org/wiki/XFF_project dự án XFF])',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -477,16 +516,18 @@ $messages['yue'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Liangent
  * @author Shinjiman
  */
 $messages['zh-hans'] = array(
-	'trustedxff-desc' => '处理一个可信的Proxy地址一览 （[http://meta.wikimedia.org/wiki/XFF_project XFF project]）',
+	'trustedxff-desc' => '处理一个可信的Proxy地址列表（[http://meta.wikimedia.org/wiki/XFF_project XFF project]）',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
-	'trustedxff-desc' => '處理一個可信的Proxy地址一覽 （[http://meta.wikimedia.org/wiki/XFF_project XFF project]）',
+	'trustedxff-desc' => '處理一個可信的 Proxy 位址一覽（[http://meta.wikimedia.org/wiki/XFF_project XFF project]）',
 );
 

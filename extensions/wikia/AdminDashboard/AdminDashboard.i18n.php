@@ -528,7 +528,7 @@ $messages['fr'] = array(
 	'admindashboard-back-to-dashboard' => 'Retour au tableau de bord',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -1,0 +1,115 @@
+@import "../../../../extensions/wikia/AdminDashboard/css/AdminDashboard.scss";
+@import "../../../../skins/oasis/css/mixins/box-shadow.scss";
+
+.WikiaArticle {
+	.UploadTool {
+		margin: 0 15px 70px 15px;
+		.introduction {
+			margin: 25px 0 75px 0;
+		}
+		fieldset {
+			border: none;
+			legend {
+				padding: 0;
+				font-weight: 900;
+				font-size: 18px;
+				border-bottom: 1px solid $color-page-border;
+				padding-bottom: 6px;
+				margin-bottom: 35px;
+				width: 580px;
+				clear: both;
+				display: block;
+				float: left;
+			}
+			.input-group {
+				padding: 0;
+				margin-bottom: 25px;
+			}
+			label {
+			    display: inline;
+			}
+			.upload-button {
+				margin: 20px 0 10px 0;
+			}
+			p.error {
+				display: block;
+			}
+			input {
+				width: 562px;
+				float: left;
+				clear: left;
+			}
+			.description-wrapper {
+				clear: left;
+				float: left;
+				margin-bottom: 35px;
+				width: 580px;
+				p {
+					float: right;
+				}
+			}
+			textarea {
+				width: 562px;
+				height: 210px;
+			}
+			.explanatory-copy {
+				margin-left:30px;
+				line-height: 1.4em;
+				color: mix($color-page, $color-text, 30%);
+				float: left;
+				width: 310px;
+				padding: 3px;
+			}
+		}
+		.button {
+			display: inline-block;
+			margin-top: 75px;
+			padding-right: 60px;
+			padding-left: 60px;
+		}
+		.large-photo {
+			@include box-shadow(0, 0, 10px, $color-page-border, true, 1px);
+			float: left;
+			width: 560px;
+			background:  $color-page-border;
+			height: 374px;
+			padding: 10px;
+			position: relative;
+			img {
+				width: 560px;
+				height: 374px;
+			}
+		}
+		.modify-remove {
+			background-color: rgba(255, 255, 255, 0.5);
+			display: none;
+			right: 10px;
+			top: 10px;
+			position: absolute;
+			padding: 8px;
+			&.show {
+				display: block;
+			}
+		}
+		.small-photos {
+			@include box-shadow(0, 0, 10px, $color-page-border, true, 1px);
+			width: 580px;
+			min-height: 110px;
+			float: left;
+			background:  $color-page-border;
+			overflow: hidden;
+			padding-bottom: 10px;
+			.small-photos-wrapper {
+				position: relative;
+				float: left;
+				height: 100px;
+				margin: 10px 0px 0 10px;
+				width: 180px;
+			}
+			.modify-remove {
+				right: 0;
+				top: 0;
+			}
+		}
+	}
+}

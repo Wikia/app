@@ -36,7 +36,7 @@ var PlacesEditor = {
 			{
 				id: 'PlacesEditor',
 				width: 980,
-				height: 500,
+				height: 615,
 				buttons: [{
 					id: 'ok',
 					defaultButton: true,
@@ -108,13 +108,13 @@ var PlacesEditor = {
 	findPlaces: function(query, callback) {
 		$().log(query, 'Places query');
 
-		// this still uses V2 of GoogleMaps API - v3 lacks JSONP support
-		$.getJSON("http://maps.google.com/maps/geo?" +
-			"output=json&q=" + encodeURIComponent(query) + "&key=" + this.googleMapsKey + "&callback=?",
-			 function(data) {
-				$().log(data, 'Places results');
-				callback((data && data.Placemark) || []);
- 			});
+		var geocoder = new google.maps.Geocoder();
+
+		// @see https://developers.google.com/maps/documentation/javascript/geocoding
+		geocoder.geocode({address: query}, function(data, status) {
+			$().log(data, 'Places results (status: ' + status + ')');
+			callback(data || []);
+		});
 	},
 
 	// populate list of search results
@@ -133,13 +133,13 @@ var PlacesEditor = {
 		// iterate through results and create pointers
 		for(var n=0, len=results.length; n<len; n++) {
 			result = results[n];
-			coords = result.Point.coordinates;
+			coords = result.geometry.location;
 
 			// add to results
-			html += '<li><a href="#" data-marker-id="' + n + '">' + result.address + '</li>';
+			html += '<li><a href="#" data-marker-id="' + n + '">' + result['formatted_address'] + '</li>';
 
 			// add to markers
-			this.addMarker(result.address, coords[1], coords[0]);
+			this.addMarker(result.address, coords.lat(), coords.lng());
 		}
 
 		this.searchResults.html(html);

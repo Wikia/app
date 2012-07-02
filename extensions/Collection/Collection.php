@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Collection Extension for MediaWiki
  *
  * Copyright (C) PediaPress GmbH
@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -30,26 +30,30 @@ EOT;
 	exit( 1 );
 }
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 # Extension version
-$wgCollectionVersion = "1.4";
+$wgCollectionVersion = "1.5";
 
 # ==============================================================================
 
 # Configuration:
 
 /** Bump the version number every time you change any of the JavaScript files */
-$wgCollectionStyleVersion = 6;
+$wgCollectionStyleVersion = 8;
 
 /** URL of mw-serve render server */
-$wgCollectionMWServeURL = 'http://87.118.99.164:8899/';
+$wgCollectionMWServeURL = 'http://tools.pediapress.com/mw-serve/';
 
 /** Login credentials to this MediaWiki as 'USERNAME:PASSWORD' string */
 $wgCollectionMWServeCredentials = null;
 
 /** PEM-encoded SSL certificate for the mw-serve render server to pass to CURL */
 $wgCollectionMWServeCert = null;
+
+/** if not null, treat this string as hierarchy delimiter in page titles,
+ * i.e. support subpages */
+$wgCollectionHierarchyDelimiter = null;
 
 /** Array of namespaces that can be added to a collection */
 $wgCollectionArticleNamespaces = array(
@@ -91,8 +95,16 @@ $wgCollectionLicenseURL = null;
 		as mapping of mwlib writer to format name */
 $wgCollectionFormats = array(
 	'rl' => 'PDF',
+	#'zeno' => 'ZENO',
+	#'okawix_zeno' => 'Okawix (ZENO + search engine)',
 );
 
+/** For formats which rendering depends on an external server
+*/
+$wgCollectionFormatToServeURL = array(
+	'zeno'=>'http://www.okawix.com/collections/render.php',
+	'okawix_zeno'=>'http://www.okawix.com/collections/render.php',
+);
 
 $wgCollectionContentTypeToFilename = array(
 	'application/pdf' => 'collection.pdf',
@@ -116,7 +128,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Collection',
 	'version' => $wgCollectionVersion,
 	'author' => array( 'PediaPress GmbH', 'Siebrand Mazeland' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Collection',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Collection',
 	'descriptionmsg' => 'coll-desc',
 );
 
@@ -134,7 +146,7 @@ $wgAutoloadClasses['CollectionFinishedTemplate'] = $dir . 'Collection.templates.
 $wgAutoloadClasses['CollectionSuggestTemplate'] = $dir . 'Collection.templates.php';
 $wgExtensionMessagesFiles['CollectionCore'] = $dir . 'CollectionCore.i18n.php'; // Only contains essential messages outside the special page
 $wgExtensionMessagesFiles['Collection'] = $dir . 'Collection.i18n.php'; // Contains all messages used on special page
-$wgExtensionAliasesFiles['Collection'] = $dir . 'Collection.alias.php';
+$wgExtensionMessagesFiles['CollectionAlias'] = $dir . 'Collection.alias.php';
 $wgSpecialPages['Book'] = 'SpecialCollection';
 $wgSpecialPageGroups['Book'] = 'pagetools';
 
@@ -142,9 +154,40 @@ $wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'CollectionHooks:
 $wgHooks['SkinBuildSidebar'][] = 'CollectionHooks::buildSidebar';
 $wgHooks['SiteNoticeAfter'][] = 'CollectionHooks::siteNoticeAfter';
 $wgHooks['OutputPageCheckLastModified'][] = 'CollectionHooks::checkLastModified';
+$wgHooks['ResourceLoaderGetConfigVars'][] = 'CollectionHooks::resourceLoaderGetConfigVars';
 
 $wgAvailableRights[] = 'collectionsaveasuserpage';
 $wgAvailableRights[] = 'collectionsaveascommunitypage';
+
+$collResourceTemplate = array(
+	'localBasePath' => "$dir/js",
+	'remoteExtPath' => 'Collection/js'
+);
+
+$wgResourceModules += array(
+	'ext.collection.jquery.jstorage' => $collResourceTemplate + array(
+		'scripts' => 'jstorage.js',
+		'dependencies' => 'jquery.json'
+	),
+	'ext.collection.suggest' => $collResourceTemplate + array(
+		'scripts' => 'suggest.js',
+		'dependencies' => 'ext.collection.bookcreator'
+	),
+	'ext.collection' => $collResourceTemplate + array(
+		'scripts' => 'collection.js',
+		'dependencies' => array( 'ext.collection.bookcreator', 'jquery.ui.sortable' ),
+	),
+	'ext.collection.bookcreator' => $collResourceTemplate + array(
+		'scripts' => 'bookcreator.js',
+		'styles' => 'bookcreator.css',
+		'dependencies' => 'ext.collection.jquery.jstorage'
+	),
+	'ext.collection.checkLoadFromLocalStorage' => $collResourceTemplate + array(
+		'scripts' => 'check_load_from_localstorage.js',
+		'styles' => 'bookcreator.css',
+		'dependencies' => 'ext.collection.jquery.jstorage'
+	)
+);
 
 # register global Ajax functions:
 
@@ -162,26 +205,40 @@ function wfAjaxGetCollection() {
 
 $wgAjaxExportList[] = 'wfAjaxGetCollection';
 
-function wfAjaxPostCollection( $collection='' ) {
+function wfAjaxPostCollection( $collection = '', $redirect = '' ) {
 	$json = new Services_JSON( SERVICES_JSON_LOOSE_TYPE );
-	if( session_id() == '' ) {
+	if ( session_id() == '' ) {
 		wfSetupSession();
 	}
 	$collection = $json->decode( $collection );
+	$collection['enabled'] = true;
 	$_SESSION['wsCollection'] = $collection;
-	$r = new AjaxResponse( $json->encode( array( 'collection' => $collection ) ) );
-	$r->setContentType( 'application/json' );
+	$r = new AjaxResponse();
+	if ( $redirect ) {
+		$title = Title::newFromText( $redirect );
+		$redirecturl = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT );
+		$r->setResponseCode( 302 );
+		header( 'Location: ' . $redirecturl );
+	} else {
+		$title = SpecialPage::getTitleFor( 'Book' );
+		$redirecturl = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT );
+		$r->setContentType( 'application/json' );
+		$r->addText( $json->encode( array( 'redirect_url' => $redirecturl ) ) );
+	}
 	return $r;
 }
 
 $wgAjaxExportList[] = 'wfAjaxPostCollection';
 
-function wfAjaxGetMWServeStatus( $collection_id='', $writer='rl' ) {
+function wfAjaxGetMWServeStatus( $collection_id = '', $writer = 'rl' ) {
 	$json = new Services_JSON();
 	$result = SpecialCollection::mwServeCommand( 'render_status', array(
 		'collection_id' => $collection_id,
 		'writer' => $writer
 	) );
+	if ( isset( $result['status']['progress'] ) ) {
+		$result['status']['progress'] = number_format( $result['status']['progress'], 2, '.', '' );
+	}
 	$r = new AjaxResponse( $json->encode( $result ) );
 	$r->setContentType( 'application/json' );
 	return $r;
@@ -189,47 +246,70 @@ function wfAjaxGetMWServeStatus( $collection_id='', $writer='rl' ) {
 
 $wgAjaxExportList[] = 'wfAjaxGetMWServeStatus';
 
-function wfAjaxCollectionAddArticle( $namespace=0, $title='', $oldid='' ) {
+function wfAjaxCollectionAddArticle( $namespace = 0, $title = '', $oldid = '' ) {
 	SpecialCollection::addArticleFromName( $namespace, $title, $oldid );
-	return '';
+	return wfAjaxCollectionGetItemList();
 }
 
 $wgAjaxExportList[] = 'wfAjaxCollectionAddArticle';
 
-function wfAjaxCollectionRemoveArticle( $namespace=0, $title='', $oldid='' ) {
+function wfAjaxCollectionRemoveArticle( $namespace = 0, $title = '', $oldid = '' ) {
 	SpecialCollection::removeArticleFromName( $namespace, $title, $oldid );
-	return '';
+	return wfAjaxCollectionGetItemList();
 }
 
 $wgAjaxExportList[] = 'wfAjaxCollectionRemoveArticle';
 
-function wfAjaxCollectionAddCategory( $title='' ) {
+function wfAjaxCollectionAddCategory( $title = '' ) {
 	SpecialCollection::addCategoryFromName( $title );
-	return '';
+	return wfAjaxCollectionGetItemList();
 }
 
 $wgAjaxExportList[] = 'wfAjaxCollectionAddCategory';
 
-function wfAjaxCollectionGetBookCreatorBoxContent( $ajaxHint='', $oldid=null ) {
-	if( !is_null( $oldid ) ) {
+function wfAjaxCollectionGetBookCreatorBoxContent( $ajaxHint = '', $oldid = null, $pageName = null ) {
+	if ( !is_null( $oldid ) ) {
 		$oldid = intval( $oldid );
 	}
-	return CollectionHooks::getBookCreatorBoxContent( $ajaxHint, $oldid );
+
+	$title = null;
+	if ( !is_null( $pageName ) ) {
+		$title = Title::newFromText( $pageName );
+	}
+	if ( is_null( $title ) ) {
+		$title = Title::newMainPage();
+	}
+
+	$html = CollectionHooks::getBookCreatorBoxContent( $title, $ajaxHint, $oldid );
+
+	$json = new Services_JSON();
+	$result = array();
+	$result['html'] = $html;
+	$r = new AjaxResponse( $json->encode( $result ) );
+	$r->setContentType( 'application/json' );
+	return $r;
 }
 
 $wgAjaxExportList[] = 'wfAjaxCollectionGetBookCreatorBoxContent';
 
 function wfAjaxCollectionGetItemList() {
-	wfLoadExtensionMessages( 'CollectionCore' );
-	wfLoadExtensionMessages( 'Collection' );
+	$collection = $_SESSION['wsCollection'];
+
 	$template = new CollectionListTemplate();
-	$template->set( 'collection', $_SESSION['wsCollection'] );
+	$template->set( 'collection', $collection );
 	$template->set( 'is_ajax', true );
 	ob_start();
 	$template->execute();
 	$html = ob_get_contents();
 	ob_end_clean();
-	return $html;
+
+	$json = new Services_JSON();
+	$result = array();
+	$result['html'] = $html;
+	$result['collection'] = $collection;
+	$r = new AjaxResponse( $json->encode( $result ) );
+	$r->setContentType( 'application/json' );
+	return $r;
 }
 
 $wgAjaxExportList[] = 'wfAjaxCollectionGetItemList';
@@ -257,7 +337,7 @@ $wgAjaxExportList[] = 'wfAjaxCollectionRenameChapter';
 
 function wfAjaxCollectionSetTitles( $title, $subtitle ) {
 	SpecialCollection::setTitles( $title, $subtitle );
-	return '';
+	return wfAjaxCollectionGetItemList();
 }
 
 $wgAjaxExportList[] = 'wfAjaxCollectionSetTitles';
@@ -288,11 +368,18 @@ $wgAjaxExportList[] = 'wfAjaxCollectionClear';
 function wfAjaxCollectionGetPopupData( $title ) {
 	global $wgScriptPath;
 
-	wfLoadExtensionMessages( 'CollectionCore' );
 	$json = new Services_JSON();
 	$result = array();
 	$imagePath = "$wgScriptPath/extensions/Collection/images";
-	if ( CollectionSession::findArticle( $title ) == -1 ) {
+	$t = Title::newFromText( $title );
+	if ( $t && $t->isRedirect() ) {
+		$a = new Article( $t, 0 );
+		$t = $a->followRedirect();
+		if ( $t instanceof Title ) {
+			$title = $t->getPrefixedText();
+		}
+	}
+	if ( CollectionSession::findArticle( $title ) == - 1 ) {
 		$result['action'] = 'add';
 		$result['text'] = wfMsg( 'coll-add_linked_article' );
 		$result['img'] = "$imagePath/silk-add.png";
@@ -301,6 +388,7 @@ function wfAjaxCollectionGetPopupData( $title ) {
 		$result['text'] = wfMsg( 'coll-remove_linked_article' );
 		$result['img'] = "$imagePath/silk-remove.png";
 	}
+	$result['title'] = $title;
 	$r = new AjaxResponse( $json->encode( $result ) );
 	$r->setContentType( 'application/json' );
 	return $r;
@@ -315,16 +403,13 @@ $wgAjaxExportList[] = 'wfAjaxCollectionGetPopupData';
  * @return AjaxResponse with JSON-encoded array including HTML fragment.
  */
 function wfCollectionSuggestAction( $action, $article ) {
-	wfLoadExtensionMessages( 'CollectionCore' );
-	wfLoadExtensionMessages( 'Collection' );
-
 	$json = new Services_JSON();
 	$result = CollectionSuggest::refresh( $action, $article );
 	$undoLink = Xml::element( 'a',
 		array(
 			'href' => SkinTemplate::makeSpecialUrl(
 				'Book',
-				array('bookcmd' => 'suggest', 'undo' => $action, 'arttitle' => $article )
+				array( 'bookcmd' => 'suggest', 'undo' => $action, 'arttitle' => $article )
 			),
 			'onclick' => "collectionSuggestCall('UndoArticle'," .
 				Xml::encodeJsVar( array( $action, $article ) ) . "); return false;",
@@ -337,6 +422,7 @@ function wfCollectionSuggestAction( $action, $article ) {
 		htmlspecialchars( $article ),
 		$undoLink
 	);
+	$result['collection'] = CollectionSession::getCollection();
 	$r = new AjaxResponse( $json->encode( $result ) );
 	$r->setContentType( 'application/json' );
 	return $r;
@@ -361,9 +447,6 @@ function wfAjaxCollectionSuggestRemoveArticle( $article ) {
 $wgAjaxExportList[] = 'wfAjaxCollectionSuggestRemoveArticle';
 
 function wfAjaxCollectionSuggestUndoArticle( $lastAction, $article ) {
-	wfLoadExtensionMessages( 'CollectionCore' );
-	wfLoadExtensionMessages( 'Collection' );
-
 	$json = new Services_JSON();
 	$result = CollectionSuggest::undo( $lastAction, $article );
 	$r = new AjaxResponse( $json->encode( $result ) );

@@ -159,7 +159,7 @@ $messages['fr'] = array(
 	'category-exhibition-display-new' => 'Affichage de la catégorie en exposition',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

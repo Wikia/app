@@ -16,7 +16,7 @@ class DonateButton extends UnlistedSpecialPage {
 
 	function execute () {
 		global $wgOut;
-		$wgOUt->disable();
+		$wgOut->disable();
 		$this->sendHeaders();
 		$js = $this->getJsOutput();
 	}
@@ -77,8 +77,6 @@ class DonateButton extends UnlistedSpecialPage {
 	public function getButtonText( $template ) {
 		global $wgFundraiserPortalURL;
 
-		wfLoadExtensionMessages( 'FundraiserPortal' );
-
 		// Add our tracking identifiet
 		$buttonUrl = $wgFundraiserPortalURL . "&utm_source=$template";
 
@@ -97,8 +95,6 @@ class DonateButton extends UnlistedSpecialPage {
 	
 	public function getButtonStyle( $template ) {
 		global $wgFundraiserImageUrl;
-
-		wfLoadExtensionMessages( 'FundraiserPortal' );
 
 		$text = $this->fetchTemplate( "$template.css" );
 		

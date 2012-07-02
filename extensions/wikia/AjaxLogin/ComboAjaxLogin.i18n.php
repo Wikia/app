@@ -329,7 +329,7 @@ Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia ne répond pas. Veuillez vérifier votre connexion réseau.',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

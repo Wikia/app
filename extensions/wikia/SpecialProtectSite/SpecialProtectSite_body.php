@@ -8,13 +8,12 @@ class ProtectsiteForm extends SpecialPage
 
 	public function __construct() {
 		parent::__construct( "Protectsite", "protectsite", true );
-		wfLoadExtensionMessages('SpecialProtectSite');
 	}
-	
+
 	public function execute( $subpage ) {
-	
-		global $wgOut, $wgMessageCache, $wgMemc, $wgUser, $wgRequest;
-	
+
+		global $wgOut, $wgMemc, $wgUser, $wgRequest;
+
 		# Show a message if the database is in read-only mode
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
@@ -33,35 +32,13 @@ class ProtectsiteForm extends SpecialPage
 		}
 
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Protectsite' );
-		$this->action = $titleObj->escapeLocalURL();
+		$this->action = htmlspecialchars($titleObj->getLocalURL());
 		$this->mRequest =& $wgRequest;
 		$this->mName = 'protectsite';
 
 		$wgOut->setPagetitle( wfMsg( $this->mName ) );
 
-		$this->persist_data = new MediaWikiBagOStuff();
-
-		/**
-		 * These are dynamically created here because they don't need to vary
-		 * from the common messages and they save on the total count.
-		 */
-		$wgMessageCache->addMessages(
-			array(
-				'protectsite-createaccount-0' => wfMsg('protectsite-allowall'),
-				'protectsite-createaccount-1' => wfMsg('protectsite-allowusersysop'),
-				'protectsite-createaccount-2' => wfMsg('protectsite-allowsysop'),
-				'protectsite-createpage-0' => wfMsg('protectsite-allowall'),
-				'protectsite-createpage-1' => wfMsg('protectsite-allowusersysop'),
-				'protectsite-createpage-2' => wfMsg('protectsite-allowsysop'),
-				'protectsite-edit-0' => wfMsg('protectsite-allowall'),
-				'protectsite-edit-1' => wfMsg('protectsite-allowusersysop'),
-				'protectsite-edit-2' => wfMsg('protectsite-allowsysop'),
-				'protectsite-move-0' => wfMsg('protectsite-allowusersysop'),
-				'protectsite-move-1' => wfMsg('protectsite-allowsysop'),
-				'protectsite-upload-0' => wfMsg('protectsite-allowusersysop'),
-				'protectsite-upload-1' => wfMsg('protectsite-allowsysop')
-			)
-		);
+		$this->persist_data = new MediaWikiBagOStuff(array());
 
 		/* Get data into the value variable/array */
 		$prot = $wgMemc->get( self::key() );
@@ -148,7 +125,7 @@ class ProtectsiteForm extends SpecialPage
 			if( !empty($request['nolog']) && $this->isMagicUser ) {
 				$doLog = false;
 			}
-			
+
 			if( $doLog ) {
 				/* Create a log entry */
 				$log = new LogPage('protect');
@@ -201,7 +178,7 @@ class ProtectsiteForm extends SpecialPage
 
 		/* Construct page data and add to output. */
 		$wgOut->addWikiMsg( 'protectsite-text-unprotect' );
-		
+
 		$wgOut->addHTML(
 			'<form name="unProtectsite" action="' . $this->action . '" method="post">' . "\n" .
 				$this->fieldset('title',
@@ -219,9 +196,9 @@ class ProtectsiteForm extends SpecialPage
 					"<br />" : '') .
 					"<br />\n" .
 					$this->textbox('ucomment') .
-					$noLogCheck . 
+					$noLogCheck .
 					'<br />' .
-					wfElement('input', array(
+					Xml::Element('input', array(
 						'type'	=> 'submit',
 						'name'	=> 'unprotect',
 						'value' => wfMsg($this->mName . '-unprotect'))
@@ -260,7 +237,7 @@ class ProtectsiteForm extends SpecialPage
 
 		$noLogCheck = '';
 		if( $this->isMagicUser ) {
-			$noLogCheck = "<div><label>" . wfMsg('protectsite-nologs') . 
+			$noLogCheck = "<div><label>" . wfMsg('protectsite-nologs') .
 						 "<input type='checkbox' name=\"nolog\" />" .
 						 "</label></div>\n";
 		}
@@ -277,7 +254,7 @@ class ProtectsiteForm extends SpecialPage
 					$this->textbox('comment', isset($request['comment']) ? $request['comment'] : '') .
 					$noLogCheck .
 					"\n<br />" .
-					wfElement('input', array(
+					Xml::Element('input', array(
 						'type'	=> 'submit',
 						'name'	=> 'protect',
 						'value' => wfMsg($this->mName . '-protect'))

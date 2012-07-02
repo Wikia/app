@@ -25,15 +25,13 @@ class WikiaQuizPlayArticle extends Article {
 	public function view() {
 		global $wgOut, $wgUser, $wgTitle, $wgExtensionsPath, $wgSuppressRail;
 		wfProfileIn(__METHOD__);
-		
-		wfLoadExtensionMessages('WikiaQuiz');
 
 		// quiz doesn't exist
 		if (empty($this->mQuiz)) {
 			wfProfileOut(__METHOD__);
 			return;
 		}
-		
+
 		// suppress rail
 		$wgSuppressRail = true;
 
@@ -45,9 +43,9 @@ class WikiaQuizPlayArticle extends Article {
 		$wgOut->clearHtml();
 		$wgOut->addHtml(wfRenderModule('WikiaQuiz', 'PlayQuiz', array('data'=>$this->mQuiz->getData())));
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaQuiz/css/WikiaPlayQuiz.scss'));
-		$wgOut->addScript('<script src="'.AssetsManager::getInstance()->getOneCommonURL('skins/common/modernizr/modernizr-2.0.6.js').'"></script>');
+		$wgOut->addScript('<script src="'.AssetsManager::getInstance()->getOneCommonURL('resources/wikia/libraries/modernizr/modernizr-2.0.6.js').'"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/WikiaPlayQuiz.js"></script>');
-		
+
 		wfProfileOut( __METHOD__ );
 	}
 

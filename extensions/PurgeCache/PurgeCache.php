@@ -4,6 +4,7 @@
  * Special page used to wipe the OBJECTCACHE table
  * I use it on test wikis when I am fiddling about with things en masse that could be cached
  *
+ * @file
  * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * @licence Public domain
@@ -19,14 +20,13 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Purge Cache',
 	'author' => 'Rob Church',
 	'version' => '0.1',
-	'description' => 'Special page used to wipe the OBJECTCACHE table',
 	'descriptionmsg' => 'purgecache-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:PurgeCache',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:PurgeCache',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['PurgeCache'] = $dir . 'PurgeCache.i18n.php';
-$wgExtensionAliasesFiles['PurgeCache'] = $dir . 'PurgeCache.alias.php';
+$wgExtensionMessagesFiles['PurgeCacheAlias'] = $dir . 'PurgeCache.alias.php';
 $wgAutoloadClasses['SpecialPurgeCache'] = $dir . 'PurgeCache_body.php';
 
 $wgSpecialPages['PurgeCache'] = 'SpecialPurgeCache';

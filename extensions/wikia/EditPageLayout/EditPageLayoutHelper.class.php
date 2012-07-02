@@ -47,11 +47,14 @@ class EditPageLayoutHelper {
 
 		// macbre: load YUI on edit page (it's always loaded using $.loadYUI)
 		// PLB has problems with $.loadYUI not working correctly in Firefox (callback is fired to early)
+		/*
 		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('yui');
 		$wgJsMimeType = $this->app->wg->JsMimeType;
 		foreach($srcs as $src) {
 			$this->out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
 		}
+		*/
+		$this->out->addModules('wikia.yui');
 
 		// initialize custom edit page
 		$this->editPage = new EditPageLayout($editedArticle);
@@ -135,7 +138,6 @@ class EditPageLayoutHelper {
 	function addJsVariable($name, $value) {
 		if($this->jsVarsPrinted) {
 			throw new Exception('addJsVariable: too late to add js var' );
-			return ;
 		}
 		$this->jsVars[$name] = $value;
 	}
@@ -143,7 +145,6 @@ class EditPageLayoutHelper {
 	function addJsVariableRef($name, &$value) {
 		if($this->jsVarsPrinted) {
 			throw new Exception('addJsVariable: too late to add js var' );
-			return ;
 		}
 		$this->jsVars[$name] = & $value;
 	}
@@ -297,7 +298,7 @@ class EditPageLayoutHelper {
 	 * @param $hidden boolean not used
 	 * @return boolean return true
 	 */
-	function onBeforeDisplayingTextbox(&$editPage, &$hidden) {
+	function onBeforeDisplayingTextbox(EditPage $editPage, &$hidden) {
 		if ( $this->app->checkSkin( 'oasis' ) ) {
 			$this->out->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
 		}
@@ -312,7 +313,7 @@ class EditPageLayoutHelper {
 	 * @param $hidden boolean not used
 	 * @return boolean return true
 	 */
-	function onAfterDisplayingTextbox(&$editPage, &$hidden) {
+	function onAfterDisplayingTextbox(EditPage $editPage, &$hidden) {
 		if ( $this->app->checkSkin( 'oasis') ) {
 			$html = $this->app->getView('EditPageLayout', 'Loader', array(
 						'loadingText' => wfMsg('wikia-editor-loadingStates-loading', '')
@@ -327,7 +328,6 @@ class EditPageLayoutHelper {
 	static public function getAssets() {
 		return array(
 			// >> mediawiki editor core file
-			'skins/common/edit.js',
 			'skins/common/jquery/jquery.md5.js',
 			// >> editor stack loaders and configurers
 			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',

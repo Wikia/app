@@ -1,32 +1,29 @@
 <?php
-# Copyright (C) 2004 Brion Vibber <brion@pobox.com>
-# http://www.mediawiki.org/
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-# http://www.gnu.org/copyleft/gpl.html
-
 /**
  * Some of these functions are adapted from places in MediaWiki.
  * Should probably merge them for consistency.
  *
+ * Copyright © 2004 Brion Vibber <brion@pobox.com>
+ * http://www.mediawiki.org/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  * @ingroup UtfNormal
- * @public
  */
-
-/** */
-require_once dirname(__FILE__).'/UtfNormalDefines.php';
 
 /**
  * Return UTF-8 sequence for a given Unicode code point.
@@ -94,7 +91,7 @@ function utf8ToHexSequence( $str ) {
  */
 function utf8ToCodepoint( $char ) {
 	# Find the length
-	$z = ord( $char{0} );
+	$z = ord( $char[0] );
 	if ( $z & 0x80 ) {
 		$length = 0;
 		while ( $z & 0x80 ) {
@@ -119,7 +116,7 @@ function utf8ToCodepoint( $char ) {
 	# Add in the free bits from subsequent bytes
 	for ( $i=1; $i<$length; $i++ ) {
 		$z <<= 6;
-		$z |= ord( $char{$i} ) & 0x3f;
+		$z |= ord( $char[$i] ) & 0x3f;
 	}
 
 	return $z;

@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension DeleteQueue.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -210,10 +211,14 @@ You can [{{fullurl:{{FULLPAGENAME}}|action=delvote}} register your own endorseme
  * @author Jon Harald Søby
  * @author Purodha
  * @author Siebrand
+ * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'deletequeue-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'deletequeue-desc' => '{{desc}}',
 	'deletequeue-generic-reasons' => 'Delete reasons in a dropdown menu. Lines prepended with "*" are a category separator. Lines prepended with "**" can be used as a reason. Please do not add additional reasons. This should be customised on wikis where the extension is actually being used.',
+	'deletequeue-speedy-reasons' => '{{optional}}',
+	'deletequeue-prod-reasons' => '{{optional}}',
 	'deletequeue-delnom-otherreason' => '{{Identical|Other reason}}',
 	'deletequeue-delnom-extra' => '{{Identical|Extra information}}',
 	'deletequeue-log-nominate' => '* $1 is a page name
@@ -224,13 +229,13 @@ $messages['qqq'] = array(
 * $3 is a queue name to which page $1 was added',
 	'deletequeue-log-dequeue' => '* $1 is a page name
 * $2 is a queue name',
-	'right-speedy-nominate' => '{{doc-right}}',
-	'right-speedy-review' => '{{doc-right}}',
-	'right-prod-nominate' => '{{doc-right}}',
-	'right-prod-review' => '{{doc-right}}',
-	'right-deletediscuss-nominate' => '{{doc-right}}',
-	'right-deletediscuss-review' => '{{doc-right}}',
-	'right-deletequeue-vote' => '{{doc-right}}',
+	'right-speedy-nominate' => '{{doc-right|speedy-nominate}}',
+	'right-speedy-review' => '{{doc-right|speedy-review}}',
+	'right-prod-nominate' => '{{doc-right|prod-nominate}}',
+	'right-prod-review' => '{{doc-right|prod-review}}',
+	'right-deletediscuss-nominate' => '{{doc-right|deletediscuss-nominate}}',
+	'right-deletediscuss-review' => '{{doc-right|deletediscuss-review}}',
+	'right-deletequeue-vote' => '{{doc-right|deletequeue-vote}}',
 	'deletequeue-page-speedy' => '$1 is the reason that the proposer entered.',
 	'deletequeue-page-prod' => '* $1 is the reason that the proposer entered
 * $2 is a date/time,
@@ -264,11 +269,14 @@ $messages['af'] = array(
 	'deletequeue-delnom-otherreason' => 'Ander rede',
 	'deletequeue-delnom-extra' => 'Ekstra inligting:',
 	'deletequeue-review-reason' => 'Opmerkings:',
+	'deletequeue-review-newreason' => 'Nuwe rede:',
 	'deletequeue-review-newextra' => 'Ekstra inligting:',
 	'deletequeue-vote-reason' => 'Opmerkings:',
 	'deletequeue-vote-submit' => 'Dien in',
 	'deletequeue-list-status' => 'Status:',
 	'deletequeue-list-search' => 'Soek',
+	'deletequeue-list-anyqueue' => '(alle)',
+	'deletequeue-list-votes' => 'Lys van stemme',
 	'deletequeue-list-header-page' => 'Bladsy',
 	'deletequeue-list-header-expiry' => 'Vervaldatum',
 	'deletequeue-case-page' => 'Bladsy:',
@@ -284,10 +292,15 @@ $messages['am'] = array(
 );
 
 /** Aragonese (Aragonés)
+ * @author Juanpabl
  * @author Remember the dot
  */
 $messages['an'] = array(
+	'deletequeue-delnom-otherreason' => 'Atra razón',
+	'deletequeue-vote-submit' => 'Ninviar',
 	'deletequeue-list-header-page' => 'Pachina',
+	'deletequeue-case-page' => 'Pachina:',
+	'deletequeue-case-reason' => 'Razón:',
 );
 
 /** Arabic (العربية)
@@ -400,7 +413,7 @@ $messages['ar'] = array(
 	'deletequeue-vote-endorse' => 'تأييد الحذف.',
 	'deletequeue-vote-object' => 'معارضة الحذف.',
 	'deletequeue-vote-reason' => 'تعليقات:',
-	'deletequeue-vote-submit' => 'تنفيذ',
+	'deletequeue-vote-submit' => 'أرسل',
 	'deletequeue-vote-success-endorse' => 'أنت أيدت بنجاح حذف هذه الصفحة.',
 	'deletequeue-vote-success-object' => 'أنت اعترضت بنجاح على حذف هذه الصفحة.',
 	'deletequeue-vote-requeued' => 'أنت اعترضت بنجاح على حذف هذه الصفحة.
@@ -424,7 +437,7 @@ $messages['ar'] = array(
 	'deletequeue-list-queue' => 'طابور:',
 	'deletequeue-list-status' => 'حالة:',
 	'deletequeue-list-expired' => 'اعرض فقط الترشيحات المحتاجة للإغلاق.',
-	'deletequeue-list-search' => 'بحث',
+	'deletequeue-list-search' => 'ابحث',
 	'deletequeue-list-anyqueue' => '(أي)',
 	'deletequeue-list-votes' => 'قائمة الأصوات',
 	'deletequeue-list-votecount' => '$1 {{PLURAL:$1|تأييد|تأييد}}، $2 {{PLURAL:$2|اعتراض|اعتراض}}',
@@ -434,7 +447,7 @@ $messages['ar'] = array(
 	'deletequeue-list-header-expiry' => 'تاريخ الانتهاء',
 	'deletequeue-list-header-discusspage' => 'صفحة نقاش',
 	'deletequeue-case-intro' => 'هذه الصفحة تعرض المعلومات حول حالة حذف معينة.',
-	'deletequeue-list-header-reason' => 'السبب للحذف',
+	'deletequeue-list-header-reason' => 'سبب الحذف:',
 	'deletequeue-case-votes' => 'التأييد/المعارضة:',
 	'deletequeue-case-title' => 'تفاصيل حالة الحذف',
 	'deletequeue-case-details' => 'التفاصيل الأساسية',
@@ -442,6 +455,27 @@ $messages['ar'] = array(
 	'deletequeue-case-reason' => 'السبب:',
 	'deletequeue-case-expiry' => 'الانتهاء:',
 	'deletequeue-case-needs-review' => 'هذه الحالة تتطلب [[$1|المراجعة]].',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'deletequeue-delnom-otherreason' => 'ܥܠܬܐ ܐܚܪܬܐ',
+	'deletequeue-delnom-extra' => 'ܝܕ̈ܥܬܐ ܝܬܝܪ:',
+	'deletequeue-review-newreason' => 'ܥܠܬܐ ܚܕܬܐ:',
+	'deletequeue-review-newextra' => 'ܝܕ̈ܥܬܐ ܝܬܝܪ:',
+	'deletequeue-review-submit' => 'ܠܒܘܟ ܬܢܝܬܐ',
+	'deletequeue-vote-submit' => 'ܫܕܪ',
+	'deletequeue-list-search-legend' => 'ܒܨܝܐ ܥܠ ܦܐܬܬ̈ܐ',
+	'deletequeue-list-status' => 'ܐܝܟܢܝܘܬܐ:',
+	'deletequeue-list-search' => 'ܒܨܝܐ',
+	'deletequeue-list-header-page' => 'ܦܐܬܐ',
+	'deletequeue-list-header-discusspage' => 'ܦܐܬܐ ܕܕܘܪܫܐ',
+	'deletequeue-list-header-reason' => 'ܥܠܬܐ ܕܫܝܦܐ',
+	'deletequeue-case-details' => 'ܐܪ̈ܝܟܬܐ ܪ̈ܫܝܬܐ',
+	'deletequeue-case-page' => 'ܕܦܐ:',
+	'deletequeue-case-reason' => 'ܥܠܬܐ:',
 );
 
 /** Araucanian (Mapudungun)
@@ -611,7 +645,50 @@ $messages['as'] = array(
 	'deletequeue-list-search' => 'সন্ধান কৰক',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'deletequeue-delnom-otherreason' => 'Otru motivu',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vago
+ * @author Wertuose
+ */
+$messages['az'] = array(
+	'deletequeue-action-queued' => 'Silinmə',
+	'deletequeue-delnom-otherreason' => 'Digər səbəb',
+	'deletequeue-delnom-extra' => 'Ekstra məlumatlar',
+	'deletequeue-review-delete' => 'Bu səhifəni sil',
+	'deletequeue-review-reason' => 'Şərhlər:',
+	'deletequeue-review-newextra' => 'Ekstra məlumatlar',
+	'deletequeue-vote-reason' => 'Şərhlər:',
+	'deletequeue-vote-submit' => 'Təsdiq et',
+	'deletequeue-list-status' => 'Status:',
+	'deletequeue-list-search' => 'Axtar',
+	'deletequeue-list-header-page' => 'Səhifə',
+	'deletequeue-list-header-discusspage' => 'Müzakirə səhifəsi',
+	'deletequeue-case-page' => 'Səhifə:',
+	'deletequeue-case-reason' => 'Səbəb:',
+);
+
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'deletequeue-list-search' => 'Suacha',
+);
+
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'deletequeue-case-reason' => 'Прычына:',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -808,15 +885,102 @@ $messages['bg'] = array(
 	'deletequeue-case-expiry' => 'Срок на изтичане:',
 );
 
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'deletequeue-action-queued' => 'অপসারণ',
+	'deletequeue-action' => 'অপসারণের পরামর্শ',
+	'deletequeue-action-title' => '"$1" অপসারণের পরামর্শ দাও',
+	'deletequeue-delnom-otherreason' => 'অন্যান্য কারণ',
+	'deletequeue-delnom-extra' => 'অতিরিক্ত তথ্যাদি:',
+	'deletequeue-delnom-submit' => 'মনোনয়ন জমা দাও',
+	'deletequeue-log-nominate' => "'$2' লাইনে [[$1]]-কে অপসারণের জন্য মনোনয়ন দেওয়া হয়েছে",
+	'right-prod-nominate' => 'পাতার প্রস্তাবিত অপসারণ',
+	'deletequeue-queue-speedy' => 'দ্রুত অপসারণ',
+	'deletequeue-queue-prod' => 'প্রস্তাবিত অপসারণ',
+	'deletequeue-queue-deletediscuss' => 'অপসারণের আলোচনা',
+	'deletequeue-page-speedy' => "এই পাতাটি দ্রুত অপসারণের জন্য মনোনয়ন দেওয়া হয়েছে।
+অপসারণের কারণ হিসেবে উল্লেখ করা হয়েছে ''$1''।",
+	'deletequeue-notqueued' => 'আপনি যে পাতাটি নির্বাচন করেছেন তা বর্তমানে অপসারণের জন্য তালিকাভুক্ত হয়নি',
+	'deletequeue-review-action' => 'যে অ্যাকশন নেওয়া হবে:',
+	'deletequeue-review-delete' => 'এই পাতাটি অপসারণ করুন।',
+	'deletequeue-review-requeue' => 'এই পাতাটি নিচের তালিকায় স্থানান্তর করুন:',
+	'deletequeue-review-dequeue' => 'কোনো অ্যাকশন নেবেন না, এবং পাতাটি অপসারণের তালিকা থেকে বাদ দিন।',
+	'deletequeue-review-reason' => 'মন্তব্য:',
+	'deletequeue-review-newreason' => 'নতুন কারণ:',
+	'deletequeue-review-newextra' => 'অতিরিক্ত তথ্যাদি:',
+	'deletequeue-review-submit' => 'পর্যবেক্ষণ সংরক্ষণ',
+	'deletequeue-review-original' => 'মনোনয়নের কারণ',
+	'deletequeue-review-badaction' => 'আপনি একটি অগ্রহণযোগ্য অ্যাকশন নির্বাচন করেছেন',
+	'deletequeue-review-actiondenied' => 'আপনি এমন একটি অ্যাকশন নির্বাচন করেছেন যা এই পাতার জন্য প্রযোজ্য নয়',
+	'deletequeue-reviewspeedy-tab' => 'দ্রুত অপসারণ পর্যবেক্ষণ',
+	'deletequeue-reviewspeedy-title' => '"$1"-এর দ্রুত অপসারণ মনোনয়ন পর্যবেক্ষণ করুন',
+	'deletequeue-reviewprod-tab' => 'প্রস্তাবিত অপসারণ পর্যবেক্ষণ',
+	'deletequeue-reviewprod-title' => '"$1"-এর প্রস্তাবিত অপসারণ পর্যবেক্ষণ',
+	'deletequeue-review-success' => 'আপনি সফলভাবে এই পাতার পর্যবেক্ষণ সম্পন্ন করেছেন',
+	'deletequeue-review-success-title' => 'পর্যবেক্ষণ সম্পূর্ণ',
+	'deletequeue-discusscreate-summary' => '[[$1]]-এর অপসারণের আলোচনা শুরু করুন।',
+	'deletequeue-discusscreate-text' => 'নিম্নোক্ত কারণে অপসারণ প্রস্তাব করা হয়েছে: $2',
+	'deletequeue-role-nominator' => 'অপসারণের প্রকৃত প্রস্তাবক',
+	'deletequeue-role-vote-endorse' => 'অপসারণের সমর্থনকারী',
+	'deletequeue-role-vote-object' => 'অপসারণের বিরোধীতাকারী',
+	'deletequeue-vote-tab' => 'অপসারণের ভোট',
+	'deletequeue-vote-title' => '"$1"-এ অপসারণের পক্ষে সমর্থন বা বিরোধিতা ব্যক্ত করুন',
+	'deletequeue-vote-legend' => 'অপসারণের সমর্থন/বিরোধিতা',
+	'deletequeue-vote-action' => 'সুপারিশ:',
+	'deletequeue-vote-endorse' => 'অপসারণের পক্ষে মত দিন।',
+	'deletequeue-vote-object' => 'অপসারণের বিরোধিতা করুন।',
+	'deletequeue-vote-reason' => 'মন্তব্য:',
+	'deletequeue-vote-submit' => 'জমা দাও',
+	'deletequeue-vote-success-endorse' => 'আপনি সফলভাবে এই পাতার অপসারণের পক্ষে মত দিয়েছেন।',
+	'deletequeue-vote-success-object' => 'আপনি সফলভাবে এই পাতার অপসারণের বিপক্ষে মত দিয়েছেন।',
+	'deletequeue-showvotes' => '"$1"-এর অপসারণের প্রসঙ্গে সমর্থন ও বিরোধিতা',
+	'deletequeue-showvotes-restrict-endorse' => 'শুধুমাত্র সমর্থনসমূহ দেখাও',
+	'deletequeue-showvotes-restrict-object' => 'শুধুমাত্র বিরোধীতাসমূহ দেখাও',
+	'deletequeue-showvotes-restrict-none' => 'সকল সমর্থন ও বিরোধিতাসমূহ দেখাও',
+	'deletequeue-showvotes-showingonly-endorse' => 'শুধুমাত্র সমর্থনগুলো দেখানো হচ্ছে',
+	'deletequeue-showvotes-showingonly-object' => 'শুধুমাত্র বিরোধিতাগুলো দেখোনো হচ্ছে',
+	'deletequeue' => 'অপসারণ তালিকা',
+	'deletequeue-list-text' => 'এই পাতাটি অপসারণ সিস্টেমে থাকা সকল পাতাকে প্রদর্শন করছে।',
+	'deletequeue-list-search-legend' => 'পাতার জন্য অনুসন্ধান',
+	'deletequeue-list-queue' => 'তালিকা:',
+	'deletequeue-list-status' => 'অবস্থা:',
+	'deletequeue-list-search' => 'অনুসন্ধান',
+	'deletequeue-list-anyqueue' => '(যে-কোনো)',
+	'deletequeue-list-votes' => 'ভোটের তালিকা',
+	'deletequeue-list-header-page' => 'পাতা',
+	'deletequeue-list-header-queue' => 'তালিকা:',
+	'deletequeue-list-header-votes' => 'সমর্থন ও বিরোধিতা',
+	'deletequeue-list-header-expiry' => 'যখন মেয়াদোত্তীর্ণ হবে:',
+	'deletequeue-list-header-discusspage' => 'আলোচনা পাতা',
+	'deletequeue-list-header-reason' => 'অপসারণের কারণ',
+	'deletequeue-case-votes' => 'সমর্থন/বিরোধিতা:',
+	'deletequeue-case-title' => 'অপসারণ কেসের বিস্তারিত',
+	'deletequeue-case-details' => 'সাধারণ বিস্তারিত',
+	'deletequeue-case-page' => 'পাতা:',
+	'deletequeue-case-reason' => 'কারণ:',
+	'deletequeue-case-expiry' => 'যখন মেয়াদোত্তীর্ণ হবে:',
+	'deletequeue-case-needs-review' => 'এই কেসটির [[$1|পর্যবেক্ষণ]] প্রয়োজন।',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
-	'deletequeue-action-queued' => 'Dilamadur',
-	'deletequeue-action' => 'Kinnig un dilamadur',
+	'deletequeue-desc' => 'Krouiñ ur [[Special:DeleteQueue|sistem a steudad gortoz evit merañ an dilamadurioù]]',
+	'deletequeue-action-queued' => 'Dilammadenn',
+	'deletequeue-action' => 'Kinnig un dilammadenn',
 	'deletequeue-action-title' => 'Kinnig diverkañ "$1"',
+	'deletequeue-action-text' => "Meur a bazenn zo war ar wiki-mañ evit gallout diverkañ pajennoù :
+*Mar kav deoc'h emañ danvez ar bajenn-mañ diouti e c'hallit [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=speedy}} kinnig ma vo \"diverket raktal''].
+*Mar ne gav ket deoc'h emañ danvez ar bajenn diouzh dezverkoù un diverkadenn brim met emañ \"dellezek da vezañ diverket digudenn\", e c'hallit [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=prod}} kinnig ma vo diverket hep tabut].
+*Mar kav deoc'h e c'hall bezañ \"sach-blev\" a-zivout kinnig diverkañ ar bajenn e tlefec'h [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=deletediscuss}} digeriñ ur gaoz].",
+	'deletequeue-action-text-queued' => 'Gallout a rit sellet ouzh ar pajennoù da-heul evit ar pezh a sell ouzh an diverkadenn-mañ :
+* [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} Gwelet an aprouadennoù hag ar soñjoù enep].
+* [{{fullurl:{{FULLPAGENAME}}|action=delvote}} Aprouiñ diverkadenn ar bajenn-mañ pe sevel a-enep].',
 	'deletequeue-permissions-noedit' => "Ret eo deoc'h bezañ gouest da gemmañ ur bajenn a-benn reiñ d'ur bajenn he statud da zilemel.",
 	'deletequeue-generic-reasons' => "* Abegoù boutinañ
 ** Vandalerezh
@@ -824,81 +988,135 @@ $messages['br'] = array(
 ** Trezalc'h
 ** E maez ar raktres",
 	'deletequeue-nom-alreadyqueued' => 'Emañ ar bajenn-mañ en ul lostad dilemel dija.',
-	'deletequeue-speedy-title' => 'Merkañ "$1" evit un diverkadenn war-eeun',
+	'deletequeue-speedy-title' => 'Merkañ "$1" evit un diverkadenn brim',
+	'deletequeue-speedy-text' => "Gallout a rit ober gan tar furmskrid-mañ evit merkañ ar bajenn \"'''\$1'''\" evel unan da vezañ diverket raktal.
+
+Sellet e vo ouzh ar goulenn gant ur merour ha diverkañ ar raio ar bajenn ma kav dezhañ ez eus d'en ober.
+Ret eo deoc'h dibab un abeg diverkañ e-touez ar re kinniget er roll desachañ a-is; ouzhpennit titouroù ouzhpenn diouzh an ezhomm.",
 	'deletequeue-prod-title' => 'Kinnig diverkañ "$1"',
+	'deletequeue-prod-text' => "Gallout a rit ober gant ar furmskrid-mañ evit kinnig ma vefe diverket \"'''\$1'''\".
+
+Ma ne gav den ebet abeg ebet er goulenn goude pemp devezh e vo diverket gant ur merour war-lerc'h un adsell diwezhañ graet gantañ.",
 	'deletequeue-delnom-reason' => "Abeg ar c'hinnig :",
 	'deletequeue-delnom-otherreason' => 'Abeg all',
 	'deletequeue-delnom-extra' => 'Titouroù ouzhpenn :',
 	'deletequeue-delnom-submit' => 'Kas an anvadur',
-	'deletequeue-log-nominate' => '[[$1]] a zo bet lakaet war ar renk evit bezañ diverket er steudad "$2".',
+	'deletequeue-log-nominate' => 'Lakaet eo bet [[$1]] war ar renk evit bezañ diverket el lostennad "$2".',
+	'deletequeue-log-rmspeedy' => "nac'het evit an dilammadenn prim [[$1]].",
+	'deletequeue-log-requeue' => 'Dilec\'hiet eo bet [[$1]] davet ur steudad dilammadenn disheñvel : eus "$2" da "$3".',
 	'deletequeue-log-dequeue' => 'Lamet eo bet [[$1]] eus al lostad dilemel « $2 ».',
+	'right-speedy-nominate' => 'Kinnig a ra pajennoù evit un dilammadenn prim',
+	'right-speedy-review' => "Adwelet ar c'hinnigoù evit an dilammadenn prim",
 	'right-prod-nominate' => 'Kinnig diverkañ pajennoù',
-	'right-deletediscuss-nominate' => 'Kegiñ gant ar gaozeadennoù war an diverkañ',
+	'right-prod-review' => "Adwelet ar c'hinnigoù diverkañ n'eus ket tabut warno",
+	'right-deletediscuss-nominate' => "Kegiñ gant ar c'haozeadennoù war an diverkañ",
 	'right-deletediscuss-review' => 'Klozañ an divizoù dilemel',
+	'right-deletequeue-vote' => 'Aprouiñ pe enebiñ ouzh an dilamadurioù',
 	'deletequeue-queue-speedy' => 'Dilamadenn brim',
 	'deletequeue-queue-prod' => 'Diverkadenn kinniget',
 	'deletequeue-queue-deletediscuss' => 'Kaozeadenn war an diverkañ',
-	'deletequeue-page-speedy' => "Kinniget eo bet ar bajenn-mañ evit un diverkadenn war-eeun.
-An abeg roet a zo ''$1''.",
+	'deletequeue-page-speedy' => "Kinniget ez eus bet diverkañ ar bajenn-mañ raktal.
+Setu an abeg roet ''$1''.",
+	'deletequeue-page-prod' => "Kinniget ez eus bet diverkañ ar bajenn-mañ. 
+Ha setu perak ''$1''.
+Ma ne vez ket dizarbennet ar c'hinnig-mañ a-benn an ''$2'', e vo diverket ar bajenn.
+Gallout a rit dizarbenn ar c'hinnig diverkañ en ur [{{fullurl:{{FULLPAGENAME}}|action=delvote}} sevel a-enep d'an diverkañ].",
+	'deletequeue-page-deletediscuss' => "Kinniget e oa bet diverkañ ar bajenn-mañ ha tud zo zo savet a-enep.
+Abalamour da gement-mañ ''$1''.
+Boulc'het ez eus bet ur gaoz war an divoud war [[$5]]; klozet e vo d'an ''$2''.",
 	'deletequeue-notqueued' => "Ar bajenn hoc'h eus diuzet n'emañ ket en ul lostennad dilemel evit bremañ",
 	'deletequeue-review-action' => 'Ober da seveniñ :',
 	'deletequeue-review-delete' => 'Dilemel ar bajenn.',
 	'deletequeue-review-change' => 'Dilemel ar bajenn-mañ, met gant un abeg all.',
-	'deletequeue-review-requeue' => 'Treuzkas ar bajenn-mañ davet ar steudad da heul :',
+	'deletequeue-review-requeue' => 'Treuzkas ar bajenn-mañ davet ar lostennad da-heul :',
 	'deletequeue-review-dequeue' => 'Chom hep ober netra, ha lemel ar bajenn eus al lostad dilemel.',
 	'deletequeue-review-reason' => 'Addisplegoù :',
 	'deletequeue-review-newreason' => 'Abeg nevez :',
 	'deletequeue-review-newextra' => 'Titouroù ouzhpenn :',
 	'deletequeue-review-submit' => 'Enrollañ an adweladenn',
-	'deletequeue-review-original' => 'Abeg he lakaat war ar renk',
-	'deletequeue-review-badaction' => 'Un oberezh fall o peus dibabet',
+	'deletequeue-review-original' => 'Abeg da lakaat war ar renk',
+	'deletequeue-actiondisabled-involved' => "Diweredekaet eo an ober da-heul en degouezh-mañ peogwir hoc'h eus kemeret perzh en diverkadenn evel $1 :",
+	'deletequeue-actiondisabled-notexpired' => "Diweredekaet eo an ober da-heul peogwir n'eo ket aet d'he zermen an enskrivadenn d'an diverkadenn evit c'hoazh :",
+	'deletequeue-review-badaction' => "Un obererezh fall hoc'h eus dibabet",
+	'deletequeue-review-actiondenied' => "Meneget hoc'h eus un obererezh hag a zo diweredekaet evit ar bajenn-mañ.",
+	'deletequeue-review-objections' => "'''Diwallit''' : [{{fullurl:{{FULLPAGENAME}}|action=delvoteview&votetype=object}} Soñjoù a-enep] diverkañ ar bajenn-mañ zo.
+Bezit sur da vezañ priziet ar soñjoù-se a-raok kas an diverkadenn da benn.",
 	'deletequeue-reviewspeedy-tab' => 'Gwiriañ an dilamadenn brim',
+	'deletequeue-reviewspeedy-title' => 'Adwelet dilammadenn prim "$1"',
+	'deletequeue-reviewspeedy-text' => "Implijout ar furmskrid-mañ a c'hallit ober evit adwelet enskrivadur \"'''\$1'''\" en un diverkadenn brim.
+Gwiriit mat e c'hall ar bajenn-mañ bezañ diverket raktal hervez reolennoù ar raktres.",
 	'deletequeue-reviewprod-tab' => 'Adwelet an dilamadurioù kinniget',
-	'deletequeue-reviewprod-title' => 'Adwelet an dilamadur kinniget evit « $1 »',
-	'deletequeue-reviewdeletediscuss-tab' => 'Adwelet an dilamadur',
+	'deletequeue-reviewprod-title' => 'Adwelet an dilammadenn kinniget evit "$1"',
+	'deletequeue-reviewprod-text' => "Gallout a rit implijout ar furmskrid-mañ evit adwelet ar c'hinnig diverkañ \"'''\$1'''\" n'eus bet savet den a-enep dezhañ.",
+	'deletequeue-reviewdeletediscuss-tab' => 'Adwelet an dilammadenn',
 	'deletequeue-reviewdeletediscuss-title' => 'Adwelet ar gaozeadenn war an dilamadenn eus "$1"',
+	'deletequeue-reviewdeletediscuss-text' => "Gallout a rit ober gant ar furmskrid-mañ evit adwelet ar gaoz diwar-benn diverkañ \"'''\$1'''\".
+
+Ur [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} roll] eus ar soñjoù a-du hag a-enep diverkañ a c'haller da gaout hag emañ ar c'haozeadennoù war [[\$2]].
+Bezit sur emañ ho tiviz diouzh ar c'henasant deuet war wel da-heul ar gaozeadenn.",
+	'deletequeue-review-success' => "Adwelet hoc'h eus dilammadenn ar bajenn",
 	'deletequeue-review-success-title' => 'Graet eo bet an adweladenn',
+	'deletequeue-deletediscuss-discussionpage' => 'Ur bajenn gaozeal diwar-benn diverkadenn [[$1]] eo ar bajenn-mañ.
+Evit ar poent ez eus $2 {{PLURAL:$2|implijer|implijer}} o sevel a-du gant an diverkañ ha $3 {{PLURAL:$3|implijer|implijer}} o sevel a-enep.
+Gallout a rit [{{fullurl:$1|action=delvote}} harpañ pe sevel a-enep] an diverkañ pe [{{fullurl:$1|action=delviewvotes}} sellet ouzh an holl aprouadennoù ha soñjoù kontrol].',
 	'deletequeue-discusscreate-summary' => 'Ho krouiñ ar gaozeadenn diwar-benn dilamadenn [[$1]].',
-	'deletequeue-discusscreate-text' => 'Dilamadur kinniget evit an abeg-mañ : $2',
-	'deletequeue-vote-tab' => 'Votiñ diwar-benn an dilamadur',
-	'deletequeue-vote-title' => 'Aprouiñ pe enebiñ ouzh dilamadur « $1 »',
-	'deletequeue-vote-legend' => 'Sevel a a-du/a-enep an dilamidigezh',
+	'deletequeue-discusscreate-text' => 'Dilammadenn kinniget evit an abeg-mañ : $2',
+	'deletequeue-role-nominator' => 'deraouer orin an dilammadenn',
+	'deletequeue-role-vote-endorse' => 'den a-du gant an dilemel',
+	'deletequeue-role-vote-object' => "enebour d'an dilemel",
+	'deletequeue-vote-tab' => 'Votiñ diwar-benn an dilammadenn',
+	'deletequeue-vote-title' => 'Aprouiñ pe enebiñ ouzh dilammadenn "$1"',
+	'deletequeue-vote-text' => "Gallout a rit ober gant ar furmskrid-mañ da aprouiñ pe da sevel a-enep diverkañ \"'''\$1'''\".
+Flastrañ a raio an oberiadenn-mañ kement aprouadenn pe enebadenn embannet ganeoc'h a-raok war ar fed da ziverkañ ar bajenn-mañ.
+Gallout a rit [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} gwelet] an aprouadennoù hag enebadennoù bet embannet c'hoazh.
+''\$2'' a oa an abeg lakaet evit an anvadenn pe an diverkadenn.",
+	'deletequeue-vote-legend' => 'Aprouiñ pe enebiñ ouzh an diverkañ',
 	'deletequeue-vote-action' => 'Kuzulioù :',
-	'deletequeue-vote-endorse' => 'Sevel a ra a-du gant an dilamidigezh.',
-	'deletequeue-vote-object' => 'Sevel a ra a-enep an dilamidigezh.',
+	'deletequeue-vote-endorse' => 'Aprouiñ a ra an diverkañ.',
+	'deletequeue-vote-object' => 'Enebiñ a ra ouzh an diverkañ.',
 	'deletequeue-vote-reason' => 'Evezhiadennoù :',
 	'deletequeue-vote-submit' => 'Kas',
-	'deletequeue-vote-success-endorse' => "Aprouet hoc'h eus dilamadur ar bajenn-mañ.",
-	'deletequeue-vote-success-object' => "Enebet oc'h ouzh dilamadur ar bajenn-mañ.",
-	'deletequeue-showvotes-restrict-endorse' => 'Diskouez an asantoù hepken',
-	'deletequeue-showvotes-restrict-object' => 'Diskouez an enebiezhioù hepken',
-	'deletequeue-showvotes-restrict-none' => 'Diskouez an holl asantoù hag an holl enebiezhioù',
-	'deletequeue-showvotes-vote-endorse' => "'''Savet eo a-du''' gant an dilamidigezh $2 d'an $1",
-	'deletequeue-showvotes-vote-object' => "'''Savet eo a-enep''' d'an dilamidigezh $2 d'an $1",
+	'deletequeue-vote-success-endorse' => "Aprouet hoc'h eus dilammadenn ar bajenn-mañ.",
+	'deletequeue-vote-success-object' => "Enebet oc'h ouzh dilammadenn ar bajenn-mañ.",
+	'deletequeue-vote-requeued' => "Savet oc'h a-enep d'ar goulenn diverkañ ar bajenn-mañ, hag ar gwir zo bet roet deoc'h.
+Abalamour d'hoc'h abegadenn eo bet kaset ar bajenn d'al lostennad $1.",
+	'deletequeue-showvotes' => 'Asantoù hag eneboù d\'an dilamadenn eus "$1"',
+	'deletequeue-showvotes-text' => "Setu aze an aprouadennoù hag an abegadennoù renablet evit ar goulenn diverkañ ar bajenn \"'''\$1'''\".
+Gallout a rit [{{FULLURL:{{FULLPAGENAME}}|action=delvote}} merkañ amañ] ho soñj deoc'h-c'hwi diwar-benn ar goulenn-mañ.",
+	'deletequeue-showvotes-restrict-endorse' => 'Diskouez an aprouadennoù hepken',
+	'deletequeue-showvotes-restrict-object' => 'Diskouez an enebadennoù hepken',
+	'deletequeue-showvotes-restrict-none' => 'Diskouez an holl aprouadennoù hag enebadennoù',
+	'deletequeue-showvotes-vote-endorse' => "'''Aprouet''' an diverkañ $2 d'an $1",
+	'deletequeue-showvotes-vote-object' => "'''Enebet''' ouzh an diverkañ $2 d'an $1",
 	'deletequeue-showvotes-showingonly-endorse' => 'Diskouez an asantoù hepken',
 	'deletequeue-showvotes-showingonly-object' => 'Diskouez an enebadurioù hepken',
-	'deletequeue-showvotes-none' => "N'en deus den nag asantet na nac'het dilamadur ar bajenn-mañ.",
-	'deletequeue-showvotes-none-endorse' => "N'eo savet den ebet a-du gant dilamadur ar bajenn-mañ.",
-	'deletequeue-showvotes-none-object' => "N'eo savet den ebet a-enep gant dilamadur ar bajenn-mañ.",
+	'deletequeue-showvotes-none' => "N'en deus den nag asantet na nac'het dilammadenn ar bajenn-mañ.",
+	'deletequeue-showvotes-none-endorse' => "N'eo savet den ebet a-du gant dilammadenn ar bajenn-mañ.",
+	'deletequeue-showvotes-none-object' => "N'eo savet den ebet a-enep gant dilammadenn ar bajenn-mañ.",
 	'deletequeue' => 'Steudad dilemel',
+	'deletequeue-list-text' => 'Ar bajenn-mañ a ziskouez an holl bajennoù hag a zo en steudad dilemel.',
 	'deletequeue-list-search-legend' => 'Klask pajennoù',
-	'deletequeue-list-queue' => 'Steudad :',
+	'deletequeue-list-queue' => 'Lostennad :',
 	'deletequeue-list-status' => 'Statud :',
+	'deletequeue-list-expired' => 'Diskouez hepken an anvadurioù zo da vezañ serret.',
 	'deletequeue-list-search' => 'Klask',
-	'deletequeue-list-anyqueue' => '(forzh peseurt hini)',
-	'deletequeue-list-votes' => 'Roll ar votoù',
+	'deletequeue-list-anyqueue' => '(forzh pehini)',
+	'deletequeue-list-votes' => 'Roll votoù',
+	'deletequeue-list-votecount' => "$1 asant{{PLURAL:$1||}}, $2 nac'h{{PLURAL:$2||}}",
 	'deletequeue-list-header-page' => 'Pajenn',
 	'deletequeue-list-header-queue' => 'Lostad',
-	'deletequeue-list-header-votes' => 'Asantoù hag enebiezhioù',
+	'deletequeue-list-header-votes' => 'Aprouadennoù hag enebadennoù',
 	'deletequeue-list-header-expiry' => 'Termen',
-	'deletequeue-list-header-discusspage' => 'Pajenn divizout',
-	'deletequeue-list-header-reason' => 'Abeg an dilamidigezh',
-	'deletequeue-case-votes' => 'a-du/a-enep :',
+	'deletequeue-list-header-discusspage' => 'Pajenn gaozeal',
+	'deletequeue-case-intro' => 'Bodañ a ra ar bajenn-mañ an titouroù a-zivout un diverkadenn resis.',
+	'deletequeue-list-header-reason' => 'Abeg diverkañ :',
+	'deletequeue-case-votes' => 'A-du/a-enep :',
+	'deletequeue-case-title' => 'Munudoù an dilammadenn',
 	'deletequeue-case-details' => 'Titouroù diazez',
 	'deletequeue-case-page' => 'Pajenn :',
 	'deletequeue-case-reason' => 'Abeg :',
 	'deletequeue-case-expiry' => 'Termen :',
-	'deletequeue-case-needs-review' => 'An darvoud-mañ a rank bezañ [[$1|adwelet]].',
+	'deletequeue-case-needs-review' => 'Rankout a ra an darvoud-mañ bezañ [[$1|adwelet]].',
 );
 
 /** Bosnian (Bosanski)
@@ -938,11 +1156,14 @@ Ako, nakon pet dana, niko ne bude imao sugestija za brisanje ove stranice, ona �
 	'deletequeue-notqueued' => 'Stranica koju ste odabrali trenutno nije u redu za brisanje',
 	'deletequeue-review-action' => 'Akcija koja se preduzima:',
 	'deletequeue-review-delete' => 'Brisanje stranice.',
+	'deletequeue-review-requeue' => 'Prebaci ovu stranicu u slijedeći red:',
+	'deletequeue-review-dequeue' => 'Ne radi ništa i ukloni stranicu iz reda za brisanje.',
 	'deletequeue-review-reason' => 'Komentari:',
 	'deletequeue-review-newreason' => 'Novi razlog:',
 	'deletequeue-review-newextra' => 'Dodatne informacije:',
 	'deletequeue-review-submit' => 'Sačuvaj pregled',
 	'deletequeue-review-original' => 'Razlog za nominaciju',
+	'deletequeue-actiondisabled-notexpired' => 'Slijedeća akcija je onemogućena jer prijedlog za brisanje još nije istekao:',
 	'deletequeue-review-badaction' => 'Naveli ste nevaljanu akciju',
 	'deletequeue-review-actiondenied' => 'Naveli ste akciju koja je onemogućena na ovoj stranici',
 	'deletequeue-role-nominator' => 'prvobitni predlagač brisanja',
@@ -955,7 +1176,10 @@ Ako, nakon pet dana, niko ne bude imao sugestija za brisanje ove stranice, ona �
 	'deletequeue-list-status' => 'Status:',
 	'deletequeue-list-search' => 'Traži',
 	'deletequeue-list-anyqueue' => '(bilo koji)',
+	'deletequeue-list-votes' => 'Spisak glasova',
 	'deletequeue-list-header-page' => 'Stranica',
+	'deletequeue-list-header-queue' => 'Red',
+	'deletequeue-list-header-expiry' => 'Istek',
 	'deletequeue-list-header-discusspage' => 'Stranica za razgovor',
 	'deletequeue-list-header-reason' => 'Razlog za brisanje',
 	'deletequeue-case-details' => 'Osnovni detalji',
@@ -972,14 +1196,18 @@ Ako, nakon pet dana, niko ne bude imao sugestija za brisanje ove stranice, ona �
  */
 $messages['ca'] = array(
 	'deletequeue-desc' => "Crea un [[Special:DeleteQueue|sistema de coa per gestionar l'eliminació de pàgines]]",
+	'deletequeue-action-queued' => 'Supressió',
 	'deletequeue-generic-reasons' => '* Motius genèrics
 ** Vandalisme
 ** Publicitat
 ** Manteniment
 ** Fora dels objectius del projecte',
+	'deletequeue-speedy-title' => 'Marqueu "$1" per a supressió ràpida',
 	'deletequeue-delnom-otherreason' => 'Un altre motiu',
 	'deletequeue-delnom-extra' => 'Informació addicional:',
+	'deletequeue-delnom-submit' => 'Presentar candidatura',
 	'deletequeue-queue-speedy' => 'Supressió ràpida',
+	'deletequeue-queue-deletediscuss' => "Discussió d'esborrat",
 	'deletequeue-review-reason' => 'Comentaris:',
 	'deletequeue-vote-reason' => 'Comentaris:',
 	'deletequeue-vote-submit' => 'Tramet',
@@ -987,6 +1215,109 @@ $messages['ca'] = array(
 	'deletequeue-list-queue' => 'Cua:',
 	'deletequeue-list-status' => 'Estat:',
 	'deletequeue-case-reason' => 'Motiu:',
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'deletequeue-list-search-legend' => 'Лаха агIонашца',
+	'deletequeue-list-search' => 'Лаха',
+	'deletequeue-case-reason' => 'Бахьан:',
+);
+
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'deletequeue-delnom-otherreason' => 'هۆکاری دیکە',
+	'deletequeue-vote-submit' => 'ناردن',
+	'deletequeue-list-search' => 'گەڕان',
+	'deletequeue-case-reason' => 'هۆکار:',
+);
+
+/** Czech (Česky)
+ * @author Jkjk
+ */
+$messages['cs'] = array(
+	'deletequeue-desc' => 'Vytvoří [[Special:DeleteQueue|na frontách založený systém na správu mazání]]',
+	'deletequeue-action-queued' => 'Smazání',
+	'deletequeue-action' => 'Navrhnout smazání',
+	'deletequeue-action-title' => 'Navrhnou smazání "$1"',
+	'deletequeue-delnom-reason' => 'Důvod návrhu:',
+	'deletequeue-delnom-otherreason' => 'Jiný důvod',
+	'deletequeue-delnom-extra' => 'Další informace:',
+	'deletequeue-delnom-submit' => 'Odeslat návrh',
+	'deletequeue-log-nominate' => ' navrhl [[$1]]  na smazání ve frontě „$2”.',
+	'deletequeue-log-rmspeedy' => 'zamítl rychlé smazání [[$1]].',
+	'deletequeue-log-requeue' => 'přesunul [[$1]] do jiné fronty mazání: z „$2” do „$3”.',
+	'deletequeue-log-dequeue' => 'odstranil [[$1]] z fronty mazání „$2”.',
+	'right-speedy-nominate' => 'Navrhout stránky na rychlé smazání',
+	'right-speedy-review' => 'Posuzovat návrhy na rychlé smazání',
+	'right-prod-nominate' => 'Navrhnout smazání stránky',
+	'right-prod-review' => 'Posouzovat návrhy na smazání bez nesouhlasu',
+	'right-deletediscuss-nominate' => 'Vytvořit diskuzi o smazání',
+	'right-deletediscuss-review' => 'Uzavřít diskuzi o smazání',
+	'right-deletequeue-vote' => 'Doporučit nebo nesouhlasit se smazáním',
+	'deletequeue-queue-speedy' => 'Rychlé smazání',
+	'deletequeue-queue-prod' => 'Navrhované smazání',
+	'deletequeue-queue-deletediscuss' => 'Diskuze o smazání',
+	'deletequeue-page-speedy' => "Tato stránka byla navržena na rychlé smazání.
+Jako důvod návrh byu uveden  ''$1''.",
+	'deletequeue-notqueued' => 'Stránka, kterou jste vybrali nyní není ve frontě na smazání',
+	'deletequeue-review-action' => 'Vykonat:',
+	'deletequeue-review-delete' => 'Smazat stránku.',
+	'deletequeue-review-change' => 'Smazat tuto stránku, ale s jiným zdůvodněním.',
+	'deletequeue-review-requeue' => 'Přenést tuto stránku do následující fronty:',
+	'deletequeue-review-dequeue' => 'Nic nedělat a odstranit stránku z fronty na smazání.',
+	'deletequeue-review-reason' => 'Komentáře:',
+	'deletequeue-review-newreason' => 'Nový důvod:',
+	'deletequeue-review-newextra' => 'Další informace:',
+	'deletequeue-review-original' => 'Důvod návrhu',
+	'deletequeue-actiondisabled-notexpired' => 'Následující akce není možná, protože návrh na smazání ještě nevypršel:',
+	'deletequeue-review-badaction' => 'Zadali jste neplatnou akci',
+	'deletequeue-review-actiondenied' => 'Zadali jste akci, která je pro tuto stránku vypnuta',
+	'deletequeue-reviewspeedy-tab' => 'Posoudit rychlé smazání',
+	'deletequeue-reviewspeedy-title' => 'Posoudit návrh na rychlé smazání „$1”',
+	'deletequeue-reviewprod-tab' => 'Posoudit navržené smazání',
+	'deletequeue-reviewprod-title' => 'Posoudit navržené smazání „$1”',
+	'deletequeue-reviewprod-text' => "Můžete použit tento formulár na posouzení návrhu na smazání \"'''\$1'''\" bez nesouhlasu.",
+	'deletequeue-reviewdeletediscuss-tab' => 'Posoudit smazání',
+	'deletequeue-reviewdeletediscuss-title' => 'Posoudit diskuzi o smazání „$1”',
+	'deletequeue-review-success' => 'Úspěšně jste pousoudili smazání této stránky',
+	'deletequeue-review-success-title' => 'Posouzení dokončeno',
+	'deletequeue-discusscreate-summary' => 'Vytvoření diskuze o smazání [[$1]].',
+	'deletequeue-discusscreate-text' => 'Smazání bylo navrhnuto z následujícího důvodu: $2',
+	'deletequeue-role-nominator' => 'původní navrhovatel smazání',
+	'deletequeue-role-vote-endorse' => 'podporovatel smazání',
+	'deletequeue-role-vote-object' => 'odpůrce smazání',
+	'deletequeue-vote-tab' => 'Volba v tomto smazání',
+	'deletequeue-vote-title' => 'Souhlasit nebo nesouhlasit se smazáním "$1"',
+	'deletequeue-vote-legend' => 'Souhlasit/nesouhlasit se smazáním',
+	'deletequeue-vote-action' => 'Doporučení:',
+	'deletequeue-vote-endorse' => 'Souhlasit se smazáním.',
+	'deletequeue-vote-object' => 'Nesouhlasit se smazáním.',
+	'deletequeue-vote-reason' => 'Komentáře:',
+	'deletequeue-vote-submit' => 'Odeslat',
+	'deletequeue-vote-success-endorse' => 'Podpořili jste smazání této stránky.',
+	'deletequeue-vote-success-object' => 'Nesouhlasili jste se smazáním této stránky.',
+	'deletequeue-vote-requeued' => 'Nesouhlasili jste se smazáním této stránky.
+Vzhledem k vašemu nesouhlasu byla stránka přesunuta do fronty $1.',
+	'deletequeue-showvotes' => 'Souhlasy a nesouhlasy se smazáním "$1"',
+	'deletequeue-showvotes-restrict-endorse' => 'Zobrazit jen souhlasy',
+	'deletequeue-showvotes-restrict-object' => 'Zobrazit jen nesouhlasy',
+	'deletequeue-showvotes-restrict-none' => 'Zobrazit všechny souhlasy a nesouhlasy',
+	'deletequeue-showvotes-vote-endorse' => '"Schválená" smazání na $1 $2',
+	'deletequeue-showvotes-vote-object' => '"Nesouhlasil" se smazáním na $1 $2',
+	'deletequeue-showvotes-showingonly-endorse' => 'Zobrazují se jen souhlasy',
+	'deletequeue-list-queue' => 'Zvolená fronta:',
+	'deletequeue-list-status' => 'Stav:',
+	'deletequeue-list-search' => 'Hledat',
+	'deletequeue-list-header-page' => 'Stránka',
+	'deletequeue-list-header-queue' => 'Zvolená fronta',
+	'deletequeue-list-header-expiry' => 'Čas vypršení',
+	'deletequeue-list-header-reason' => 'Zdůvodnění smazání',
+	'deletequeue-case-page' => 'Stránka:',
+	'deletequeue-case-reason' => 'Důvod:',
+	'deletequeue-case-expiry' => 'Čas vypršení:',
 );
 
 /** Danish (Dansk)
@@ -1048,10 +1379,11 @@ På grund af din indvending er siden blevet flyttet til køen $1.',
  * @author Als-Holder
  * @author ChrisiPK
  * @author Imre
+ * @author Kghbln
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'deletequeue-desc' => 'Erstellt ein [[Special:DeleteQueue|auf einer Warteschlange basierendes System zur Verwaltung von Löschungen]]',
+	'deletequeue-desc' => 'Ermöglicht ein auf einer [[Special:DeleteQueue|Auftragswarteschlange]] basierendes System zu Verwaltung von Löschungen',
 	'deletequeue-action-queued' => 'Löschung',
 	'deletequeue-action' => 'Löschung vorschlagen',
 	'deletequeue-action-title' => '„$1“ zur Löschung vorschlagen',
@@ -1156,7 +1488,7 @@ Der Löschantragsgrund war ''$2''.",
 	'deletequeue-vote-endorse' => 'Löschung befürworten.',
 	'deletequeue-vote-object' => 'Löschung ablehnen.',
 	'deletequeue-vote-reason' => 'Kommentare:',
-	'deletequeue-vote-submit' => 'Abschicken',
+	'deletequeue-vote-submit' => 'Speichern',
 	'deletequeue-vote-success-endorse' => 'Du hast erfolgreich die Löschung dieser Seite befürwortet.',
 	'deletequeue-vote-success-object' => 'Du hast erfolgreich die Löschung dieser Seite abgelehnt.',
 	'deletequeue-vote-requeued' => 'Du hast erfolgreich die Löschung dieser Seite abgelehnt.
@@ -1200,7 +1532,7 @@ Du kannst deine eigene Befürwortung oder Ablehnung der Löschung [{{fullurl:{{F
 	'deletequeue-case-needs-review' => 'Dieser Fall braucht eine [[$1|Überprüfung]].',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  * @author Umherirrender
  */
@@ -1402,6 +1734,17 @@ Móžoš k toś tomu wulašowanjeju [{{fullurl:{{FULLPAGENAME}}|action=delvote}}
 	'deletequeue-case-needs-review' => 'Toś ten pad trjeba [[$1|pśeglědanje]].',
 );
 
+/** Ewe (Eʋegbe)
+ * @author Natsubee
+ */
+$messages['ee'] = array(
+	'deletequeue-list-search' => 'Dii',
+	'deletequeue-list-header-page' => 'Axa',
+	'deletequeue-list-header-expiry' => 'Nuwuwu',
+	'deletequeue-case-page' => 'Axa:',
+	'deletequeue-case-expiry' => 'Nuwuwu:',
+);
+
 /** Greek (Ελληνικά)
  * @author Crazymadlover
  * @author Omnipaedista
@@ -1543,7 +1886,9 @@ Pro via malkonsento, la paĝo estis movita al la laborlisto $1.',
 /** Spanish (Español)
  * @author Antur
  * @author Crazymadlover
+ * @author Fitoschido
  * @author Imre
+ * @author Mor
  * @author Remember the dot
  * @author Sanbec
  * @author Translationista
@@ -1583,7 +1928,7 @@ Si, después de cinco días, nadie ha contestado el borrado de esta página, ser
 	'deletequeue-log-nominate' => "nominado [[$1]] para borrado en la cola '$2'.",
 	'deletequeue-log-rmspeedy' => 'se negó a eliminar rápidamente [[$1]].',
 	'deletequeue-log-requeue' => "transferido [[$1]] a una cola de borrado diferente: de '$2' a '$3'.",
-	'deletequeue-log-dequeue' => "removido [[$1]] de la cola de borrado '$2'.",
+	'deletequeue-log-dequeue' => "quitado [[$1]] de la cola de borrado '$2'.",
 	'right-speedy-nominate' => 'Nominar páginas para borrado rápido',
 	'right-speedy-review' => 'Revisar nominaciones para borrado rápido',
 	'right-prod-nominate' => 'Proponer borrado de página',
@@ -1608,7 +1953,7 @@ Una discusión está en curso en [[$5]], la cual concluirá en ''$2''.",
 	'deletequeue-review-delete' => 'Borrar la página.',
 	'deletequeue-review-change' => 'Borrar esta página, pero con una diferente razón.',
 	'deletequeue-review-requeue' => 'Transferir esta página a la siguiente cola:',
-	'deletequeue-review-dequeue' => 'No tomar acción, y remover la página de la cola de borrado.',
+	'deletequeue-review-dequeue' => 'No realizar ninguna acción, y quitar la página de la cola de borrado.',
 	'deletequeue-review-reason' => 'Comentarios:',
 	'deletequeue-review-newreason' => 'Nueva razón:',
 	'deletequeue-review-newextra' => 'Información extra:',
@@ -1693,7 +2038,7 @@ Puedes [{{fullurl:{{FULLPAGENAME}}|action=delvote}} registrar tu propio apoyo, u
 	'deletequeue-case-title' => 'Detalles del caso de borrado',
 	'deletequeue-case-details' => 'Detalles básicos',
 	'deletequeue-case-page' => 'Página:',
-	'deletequeue-case-reason' => 'Razón:',
+	'deletequeue-case-reason' => 'Motivo:',
 	'deletequeue-case-expiry' => 'Expiración:',
 	'deletequeue-case-needs-review' => 'Este caso requiere [[$1|revisión]].',
 );
@@ -1767,6 +2112,17 @@ $messages['eu'] = array(
 	'deletequeue-list-header-queue' => 'Ilara',
 	'deletequeue-list-header-expiry' => 'Epemuga',
 	'deletequeue-list-header-discusspage' => 'Eztabaida orrialdea',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'deletequeue-list-status' => 'وضعیت:',
+	'deletequeue-list-search' => 'جستجو',
+	'deletequeue-case-details' => 'اطلاعات پایه',
+	'deletequeue-case-page' => 'صفحه:',
+	'deletequeue-case-reason' => 'دلیل:',
 );
 
 /** Finnish (Suomi)
@@ -1933,6 +2289,7 @@ Voit [{{fullurl:{{FULLPAGENAME}}|action=delvote}} merkitä oman tukesi tai vastu
  * @author IAlex
  * @author McDutchie
  * @author Meno25
+ * @author Peter17
  * @author PieRRoMaN
  * @author Urhixidur
  * @author Verdy p
@@ -2081,21 +2438,99 @@ Vous pouvez [{{FULLURL:{{FULLPAGENAME}}|action=delvote}} enregistrer ici] votre 
 	'deletequeue-case-title' => 'Détails du cas de suppression',
 	'deletequeue-case-details' => 'Informations de base',
 	'deletequeue-case-page' => 'Page :',
-	'deletequeue-case-reason' => 'Raison :',
+	'deletequeue-case-reason' => 'Motif :',
 	'deletequeue-case-expiry' => 'Expiration :',
 	'deletequeue-case-needs-review' => 'Ce cas requiert une [[$1|revue]].',
 );
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'deletequeue-action-queued' => 'Suprèssion',
+	'deletequeue-action' => 'Conselyér la suprèssion',
+	'deletequeue-action-title' => 'Conselyér la suprèssion de « $1 »',
+	'deletequeue-generic-reasons' => '* Rêsons les ples corentes
+** Vandalismo
+** Spame
+** Mantegnence
+** En defôr des critèros du projèt',
+	'deletequeue-nom-alreadyqueued' => 'Ceta pâge est ja dens una fela de suprèssion.',
+	'deletequeue-speedy-title' => 'Marcar « $1 » por una suprèssion drêta',
+	'deletequeue-prod-title' => 'Proposar la suprèssion de « $1 »',
+	'deletequeue-delnom-reason' => 'Rêson por lo chouèx :',
+	'deletequeue-delnom-otherreason' => 'Ôtra rêson',
+	'deletequeue-delnom-extra' => 'Enformacions de ples :',
+	'deletequeue-delnom-submit' => 'Sometre lo chouèx',
+	'deletequeue-log-nominate' => 'at chouèsi [[$1]] por la suprèssion dens la fela « $2 ».',
+	'deletequeue-log-rmspeedy' => 'refusâ por la suprèssion drêta de [[$1]].',
+	'deletequeue-log-dequeue' => 'at enlevâ [[$1]] de la fela de suprèssion « $2 ».',
+	'right-speedy-nominate' => 'Chouèsir des pâges por una suprèssion drêta',
+	'right-speedy-review' => 'Revêre los chouèx de suprèssions drêtes',
+	'right-prod-nominate' => 'Proposar la suprèssion de pâges',
+	'right-prod-review' => 'Revêre les proposicions de suprèssions encontèstâs',
+	'right-deletediscuss-nominate' => 'Comenciér les discussions sur la suprèssion',
+	'right-deletediscuss-review' => 'Cllôre les discussions sur la suprèssion',
+	'right-deletequeue-vote' => 'Aprovar ou ben refusar les suprèssions',
+	'deletequeue-queue-speedy' => 'Suprèssion drêta',
+	'deletequeue-queue-prod' => 'Suprèssion proposâ',
+	'deletequeue-queue-deletediscuss' => 'Discussion sur la suprèssion',
+	'deletequeue-review-action' => 'Accion a prendre :',
+	'deletequeue-review-delete' => 'Suprimar la pâge.',
+	'deletequeue-review-reason' => 'Comentèros :',
+	'deletequeue-review-newreason' => 'Novèla rêson :',
+	'deletequeue-review-newextra' => 'Enformacions de ples :',
+	'deletequeue-review-submit' => 'Sôvar la rèvision',
+	'deletequeue-review-original' => 'Rêson por lo chouèx',
+	'deletequeue-reviewspeedy-tab' => 'Revêre la suprèssion drêta',
+	'deletequeue-reviewspeedy-title' => 'Revêre lo chouèx de la suprèssion drêta de « $1 »',
+	'deletequeue-reviewprod-tab' => 'Revêre la suprèssion proposâ',
+	'deletequeue-reviewprod-title' => 'Revêre la suprèssion proposâ de « $1 »',
+	'deletequeue-reviewdeletediscuss-tab' => 'Revêre la suprèssion',
+	'deletequeue-reviewdeletediscuss-title' => 'Revêre la discussion sur la suprèssion de « $1 »',
+	'deletequeue-review-success-title' => 'Rèvision complèta',
+	'deletequeue-discusscreate-summary' => 'Crèacion de la discussion sur la suprèssion de [[$1]].',
+	'deletequeue-discusscreate-text' => 'Suprèssion proposâ por ceta rêson : $2',
+	'deletequeue-role-nominator' => 'iniciator originâl de la suprèssion',
+	'deletequeue-role-vote-endorse' => 'partisan por la suprèssion',
+	'deletequeue-role-vote-object' => 'oposent a la suprèssion',
+	'deletequeue-vote-tab' => 'Votar sur la suprèssion',
+	'deletequeue-vote-title' => 'Aprovar ou ben refusar la suprèssion de « $1 »',
+	'deletequeue-vote-legend' => 'Aprovar / refusar la suprèssion',
+	'deletequeue-vote-action' => 'Recomandacion :',
+	'deletequeue-vote-endorse' => 'Aprovar la suprèssion.',
+	'deletequeue-vote-object' => 'Refusar la suprèssion.',
+	'deletequeue-vote-reason' => 'Comentèros :',
+	'deletequeue-vote-submit' => 'Sometre',
+	'deletequeue-showvotes-restrict-endorse' => 'Fâre vêre ren que les aprobacions',
+	'deletequeue-showvotes-restrict-object' => 'Fâre vêre ren que les oposicions',
+	'deletequeue-showvotes-restrict-none' => 'Fâre vêre totes les aprobacions et les oposicions',
+	'deletequeue-showvotes-vote-endorse' => "'''At aprovâ''' la suprèssion $2 lo $1",
+	'deletequeue-showvotes-vote-object' => "'''At refusâ''' la suprèssion $2 lo $1",
+	'deletequeue-showvotes-showingonly-endorse' => 'Visualisacion solament de les aprobacions',
+	'deletequeue-showvotes-showingonly-object' => 'Visualisacion solament de les oposicions',
+	'deletequeue' => 'Fela de suprèssion',
+	'deletequeue-list-search-legend' => 'Rechèrchiér des pâges',
+	'deletequeue-list-queue' => 'Fela :',
+	'deletequeue-list-status' => 'Ètat :',
 	'deletequeue-list-search' => 'Rechèrchiér',
+	'deletequeue-list-anyqueue' => '(un mouél)',
+	'deletequeue-list-votes' => 'Lista des votos',
+	'deletequeue-list-votecount' => '$1 acôrd{{PLURAL:$1||s}}, $2 refus{{PLURAL:$2||}}',
 	'deletequeue-list-header-page' => 'Pâge',
+	'deletequeue-list-header-queue' => 'Fela',
+	'deletequeue-list-header-votes' => 'Acôrds et refus',
+	'deletequeue-list-header-expiry' => 'Èxpiracion',
 	'deletequeue-list-header-discusspage' => 'Pâge de discussion',
+	'deletequeue-list-header-reason' => 'Rêson de la suprèssion',
+	'deletequeue-case-votes' => 'Por / contre :',
+	'deletequeue-case-title' => 'Dètalys du câs de suprèssion',
+	'deletequeue-case-details' => 'Dètalys de bâsa',
 	'deletequeue-case-page' => 'Pâge :',
 	'deletequeue-case-reason' => 'Rêson :',
 	'deletequeue-case-expiry' => 'Èxpiracion :',
+	'deletequeue-case-needs-review' => 'Ceti câs at fôta d’una [[$1|rèvision]].',
 );
 
 /** Irish (Gaeilge)
@@ -2104,6 +2539,18 @@ $messages['frp'] = array(
 $messages['ga'] = array(
 	'deletequeue-review-reason' => 'Nótaí tráchta:',
 	'deletequeue-vote-reason' => 'Nótaí tráchta:',
+);
+
+/** Simplified Gan script (‪赣语(简体)‬) */
+$messages['gan-hans'] = array(
+	'deletequeue-list-search' => '寻吖',
+);
+
+/** Traditional Gan script (‪贛語(繁體)‬)
+ * @author Symane
+ */
+$messages['gan-hant'] = array(
+	'deletequeue-list-search' => '尋吖',
 );
 
 /** Galician (Galego)
@@ -2137,16 +2584,16 @@ Debe seleccionar un motivo para a eliminación da lista da caixa despregable de 
 	'deletequeue-prod-text' => "Pode usar este formulario para propor \"'''\$1'''\" para a súa eliminación.
 
 Se despois de cinco días ninguén dá contestación nesta páxina, será borrada tras unha revisión final feita por un administrador.",
-	'deletequeue-delnom-reason' => 'Razón para a nominación:',
+	'deletequeue-delnom-reason' => 'Motivo para o nomeamento:',
 	'deletequeue-delnom-otherreason' => 'Outro motivo',
 	'deletequeue-delnom-extra' => 'Información adicional:',
-	'deletequeue-delnom-submit' => 'Enviar a nominación',
-	'deletequeue-log-nominate' => 'nominou "[[$1]]" para a súa eliminación da cola "$2".',
+	'deletequeue-delnom-submit' => 'Enviar o nomeamento',
+	'deletequeue-log-nominate' => 'nomeou "[[$1]]" para a súa eliminación da cola "$2".',
 	'deletequeue-log-rmspeedy' => 'declinou a eliminación rápida de "[[$1]]".',
 	'deletequeue-log-requeue' => 'transferiu "[[$1]]" a unha cola de borrados diferente: de "$2" a "$3".',
 	'deletequeue-log-dequeue' => 'eliminou "[[$1]]" da cola de borrados "$2".',
-	'right-speedy-nominate' => 'Nominar páxinas para a súa eliminación rápida',
-	'right-speedy-review' => 'Revisar as nominacións das eliminacións rápidas',
+	'right-speedy-nominate' => 'Nomear páxinas para a súa eliminación rápida',
+	'right-speedy-review' => 'Revisar os nomeamentos das eliminacións rápidas',
 	'right-prod-nominate' => 'Propor o borrado dunha páxina',
 	'right-prod-review' => 'Revisar as propostas de borrado non respostadas',
 	'right-deletediscuss-nominate' => 'Comezar discusións de borrado',
@@ -2155,7 +2602,7 @@ Se despois de cinco días ninguén dá contestación nesta páxina, será borrad
 	'deletequeue-queue-speedy' => 'Eliminación rápida',
 	'deletequeue-queue-prod' => 'Borrado proposto',
 	'deletequeue-queue-deletediscuss' => 'Discusión do borrado',
-	'deletequeue-page-speedy' => "Esta páxina foi nominada para a súa eliminación rápida.
+	'deletequeue-page-speedy' => "Esta páxina foi nomeada para a súa eliminación rápida.
 O motivo dado para este borrado é ''$1''.",
 	'deletequeue-page-prod' => "Propoñeuse que esta páxina fose borrada.
 A razón dada foi ''$1''.
@@ -2174,16 +2621,16 @@ Unha conversa está en curso en \"[[\$5]]\", a cal concluirá o ''\$2''.",
 	'deletequeue-review-newreason' => 'Novo motivo:',
 	'deletequeue-review-newextra' => 'Información adicional:',
 	'deletequeue-review-submit' => 'Gardar a revisión',
-	'deletequeue-review-original' => 'Motivo para a nominación',
+	'deletequeue-review-original' => 'Motivo para o nomeamento',
 	'deletequeue-actiondisabled-involved' => 'A seguinte acción está deshabilitada porque formou parte neste caso de borrado no papel de $1:',
-	'deletequeue-actiondisabled-notexpired' => 'A seguinte acción está deshabilitada porque a nominación para o seu borrado aínda non caducou:',
+	'deletequeue-actiondisabled-notexpired' => 'A seguinte acción está deshabilitada porque o nomeamento para o seu borrado aínda non caducou:',
 	'deletequeue-review-badaction' => 'Especificou unha acción inválida',
 	'deletequeue-review-actiondenied' => 'Especificou unha acción que foi deshabilitada para esta páxina',
 	'deletequeue-review-objections' => "'''Aviso:''' a eliminación desta páxina ten [{{fullurl:{{FULLPAGENAME}}|action=delvoteview&votetype=object}} obxeccións].
 Por favor, asegúrese que considerou estas obxeccións antes de borrar a páxina.",
 	'deletequeue-reviewspeedy-tab' => 'Revisar a eliminación rápida',
-	'deletequeue-reviewspeedy-title' => 'Revisar a nominación da eliminación rápida de "$1"',
-	'deletequeue-reviewspeedy-text' => "Pode usar este formulario para revisar a nominación de \"'''\$1'''\" para a súa eliminación.
+	'deletequeue-reviewspeedy-title' => 'Revisar o nomeamento da eliminación rápida de "$1"',
+	'deletequeue-reviewspeedy-text' => "Pode usar este formulario para revisar o nomeamento de \"'''\$1'''\" para a súa eliminación.
 Por favor, asegúrese que esta páxina pode ser borrada rapidamente de acordo coa política.",
 	'deletequeue-reviewprod-tab' => 'Revisar a proposta de eliminación',
 	'deletequeue-reviewprod-title' => 'Revisar a proposta de eliminación de "$1"',
@@ -2201,7 +2648,7 @@ Actualmente hai $2 {{PLURAL:$2|usuario|usuarios}} que {{PLURAL:$2|apoia|apoian}}
 Pode [{{fullurl:$1|action=delvote}} apoiar ou obxectar] ou [{{fullurl:$1|action=delviewvotes}} ver todos os apoios e obxeccións].',
 	'deletequeue-discusscreate-summary' => 'Creando a conversa para a eliminación de "[[$1]]".',
 	'deletequeue-discusscreate-text' => 'Propoñeuse esta eliminación pola seguinte razón: $2',
-	'deletequeue-role-nominator' => 'nominador orixinal da eliminación',
+	'deletequeue-role-nominator' => 'nomeador orixinal da eliminación',
 	'deletequeue-role-vote-endorse' => 'partícipe da eliminación',
 	'deletequeue-role-vote-object' => 'obxector da eliminación',
 	'deletequeue-vote-tab' => 'Votar na eliminación',
@@ -2209,7 +2656,7 @@ Pode [{{fullurl:$1|action=delvote}} apoiar ou obxectar] ou [{{fullurl:$1|action=
 	'deletequeue-vote-text' => "Pode usar este formulario para apoiar ou obxectar na páxina de eliminación de \"'''\$1'''\".
 Esta acción ignorará calquera apoio/obxección anterior que teña dado na eliminación desta páxina.
 Pode [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} ver] os apoios e obxeccións existentes.
-O motivo dado na nominación para a eliminación foi ''\$2''.",
+O motivo dado no nomeamento para a eliminación foi ''\$2''.",
 	'deletequeue-vote-legend' => 'Apoiar a/Obxectar na eliminación',
 	'deletequeue-vote-action' => 'Recomentación:',
 	'deletequeue-vote-endorse' => 'Apoiar a eliminación.',
@@ -2223,13 +2670,13 @@ Debido á súa obxección, a páxina foi movida á cola "$1".',
 	'deletequeue-showvotes' => 'Apoios e obxeccións da eliminación de "$1"',
 	'deletequeue-showvotes-text' => "Embaixo están os apoios e obxección feitos na páxina de eliminación de \"'''\$1'''\".
 Pode rexistrar o seu propio apoio ou obxección na páxina da eliminación: [{{fullurl:{{FULLPAGENAME}}|action=delvote}} aquí].",
-	'deletequeue-showvotes-restrict-endorse' => 'Amosar só os apoios',
-	'deletequeue-showvotes-restrict-object' => 'Amosar só as obxeccións',
-	'deletequeue-showvotes-restrict-none' => 'Amosar todos os apoios e obxeccións',
+	'deletequeue-showvotes-restrict-endorse' => 'Mostrar só os apoios',
+	'deletequeue-showvotes-restrict-object' => 'Mostrar só as obxeccións',
+	'deletequeue-showvotes-restrict-none' => 'Mostrar todos os apoios e obxeccións',
 	'deletequeue-showvotes-vote-endorse' => "'''Apoiou''' a eliminación o $2 ás $1",
 	'deletequeue-showvotes-vote-object' => "'''Obxectou''' na eliminación o $2 ás $1",
-	'deletequeue-showvotes-showingonly-endorse' => 'Amosando só os apoios',
-	'deletequeue-showvotes-showingonly-object' => 'Amosando só as obxeccións',
+	'deletequeue-showvotes-showingonly-endorse' => 'Mostrando só os apoios',
+	'deletequeue-showvotes-showingonly-object' => 'Mostrando só as obxeccións',
 	'deletequeue-showvotes-none' => 'Non hai apoios ou obxeccións na eliminación desta páxina.',
 	'deletequeue-showvotes-none-endorse' => 'Non hai apoios na eliminación desta páxina.',
 	'deletequeue-showvotes-none-object' => 'Non hai obxeccións na eliminación desta páxina.',
@@ -2238,7 +2685,7 @@ Pode rexistrar o seu propio apoio ou obxección na páxina da eliminación: [{{f
 	'deletequeue-list-search-legend' => 'Procurar páxinas',
 	'deletequeue-list-queue' => 'Cola:',
 	'deletequeue-list-status' => 'Estado:',
-	'deletequeue-list-expired' => 'Amosar só as nominacións que requiren ser pechadas.',
+	'deletequeue-list-expired' => 'Mostrar só as nomeamentos que requiren ser pechadas.',
 	'deletequeue-list-search' => 'Procurar',
 	'deletequeue-list-anyqueue' => '(calquera)',
 	'deletequeue-list-votes' => 'Lista de votos',
@@ -2441,9 +2888,20 @@ Du chasch Dyy eige Stimm zue dr Leschig [{{fullurl:{{FULLPAGENAME}}|action=delvo
 
 /** Manx (Gaelg)
  * @author MacTire02
+ * @author Shimmin Beg
  */
 $messages['gv'] = array(
 	'deletequeue-list-header-discusspage' => 'Duillag resoonaght',
+	'deletequeue-case-reason' => 'Fa:',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'deletequeue-delnom-otherreason' => 'Wani dalili',
+	'deletequeue-list-search' => 'Nema',
+	'deletequeue-list-header-page' => 'Shafi',
+	'deletequeue-case-page' => 'Shafi:',
+	'deletequeue-case-reason' => 'Dalili:',
 );
 
 /** Hawaiian (Hawai`i)
@@ -2454,6 +2912,7 @@ $messages['haw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
@@ -2462,6 +2921,14 @@ $messages['he'] = array(
 	'deletequeue-action-queued' => 'מחיקה',
 	'deletequeue-action' => 'הצעת מחיקה',
 	'deletequeue-action-title' => 'הצעת מחיקה של "$1"',
+	'deletequeue-action-text' => "בוויקי הזה יש מספר תהליכים למחיקת דפים:
+* אם נראה לכם שצריך לעשות את זה, אתם יכולים [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=speedy}} להציע '''מחיקה מהירה''' שלו].
+* אם הדף הזה אינו אמור להימחק במחיקה מהירה, אבל '''מחיקת הדף אינה צפויה לעורר מחלוקת''', כדאי [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=prod}} להציע מחיקה ללא דיון].
+* אם אפשר לצפות להתנגדות למחיקת הדף הזה, כדאי [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=deletediscuss}} לפתוח דיון מחיקה].",
+	'deletequeue-action-text-queued' => 'ניתן לצפות בדפים הבאים הנוגעים למחיקה הזאת:
+* [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} לצפות בתמיכות ובהתנגדויות הנוכחיות].
+* [{{fullurl:{{FULLPAGENAME}}|action=delvote}} להביע את דעתכם בעד או נגד המחיקה].',
+	'deletequeue-permissions-noedit' => 'רק משתמש שיכול לערוך דף, יכול להשפיע על מצב המחיקה שלו',
 	'deletequeue-generic-reasons' => '* סיבות כלליות
   ** השחתה
   ** ספאם
@@ -2469,53 +2936,108 @@ $messages['he'] = array(
   ** מחוץ לטווח המיזם',
 	'deletequeue-nom-alreadyqueued' => 'דף זה נמצא כבר בתור המחיקה.',
 	'deletequeue-speedy-title' => 'סימון "$1" למחיקה מהירה',
+	'deletequeue-speedy-text' => "אפשר להשתמש בטופס הזה כדי לסמן את הדף \"'''\$1'''\" למחיקה מהירה.
+
+מפעיל יסקור את הבקשה הזאת ואם היא יש לה יסוד, ימחק אותו.
+יש לבחור סיבה למחיקה מהרשימה להלן ולהוסיף כל מידע מועיל נוסף.",
 	'deletequeue-prod-title' => 'הצעת מחיקה של "$1"',
+	'deletequeue-prod-text' => "אפשר להשתמש בטופס הזה כדי להציע מחיקה של \"'''\$1'''\".
+
+אם אחרי חמישה ימים איש לא יתנגד למחיקת הדף הזה, ,הוא יימחק לאחר סקירה סופית על־ידי מפעיל.",
 	'deletequeue-delnom-reason' => 'הסיבה להצעת המחיקה:',
 	'deletequeue-delnom-otherreason' => 'סיבה אחרת',
 	'deletequeue-delnom-extra' => 'מידע נוסף:',
 	'deletequeue-delnom-submit' => 'הגשת הצעה',
+	'deletequeue-log-nominate' => "הציע מחיקה של [[$1]] בתור '$2'",
+	'deletequeue-log-rmspeedy' => 'סירב למחיקה מהירה של [[$1]]',
+	'deletequeue-log-requeue' => "העביר את [[$1]] מתור '$2' לתור '$3'",
+	'deletequeue-log-dequeue' => "הסיר את [[$1]] מתור המחיקה '$2'",
 	'right-speedy-nominate' => 'הצעת דפים למחיקה מהירה',
+	'right-speedy-review' => 'לסקור מועמדויות למחיקה מהירה',
 	'right-prod-nominate' => 'הצעת מחיקה של דף',
+	'right-prod-review' => 'לסקור הצעות מחיקה שלא הובעה להן התנגדות',
 	'right-deletediscuss-nominate' => 'פתיחת דיוני מחיקה',
 	'right-deletediscuss-review' => 'סגירת דיוני מחיקה',
+	'right-deletequeue-vote' => 'לתמוך במחיקות ולהתנגד להן',
 	'deletequeue-queue-speedy' => 'מחיקה מהירה',
 	'deletequeue-queue-prod' => 'מחיקה מוצעת',
 	'deletequeue-queue-deletediscuss' => 'דיון מחיקה',
+	'deletequeue-page-speedy' => "הדף הזה מועמד למחיקה מהירה.
+הסיבה שניתנה לכך היא '''$1'''.",
+	'deletequeue-page-prod' => "הוצע למחוק את הדף הזה.
+הסיבה שניתנה לכך היא '''$1'''.
+אם לא תובע התנגדות למחיקתו עד '''$2''', הדף הזה יימחק.
+אפשר [{{fullurl:{{FULLPAGENAME}}|action=delvote}} להתנגד למחיקת הדף הזה].",
+	'deletequeue-page-deletediscuss' => "הדף הזה הוצע למחיקה וההצעה נתקלה בהתנגדויות.
+הסיבה לכך היא '''$1'''.
+מתקיים דיון בדף [[$5]], והוא צפוי להסתיים ב־'''$2'''.",
 	'deletequeue-notqueued' => 'הדף שבחרתם אינו מועמד למחיקה',
 	'deletequeue-review-action' => 'פעולה בה יש לנקוט:',
 	'deletequeue-review-delete' => 'מחיקת הדף.',
+	'deletequeue-review-change' => 'למחוק את הדף, אבל עם הסבר אחר.',
 	'deletequeue-review-requeue' => 'העברת דף זה לתור הבא:',
+	'deletequeue-review-dequeue' => 'לא לעשות דבר, ולהוציא את הדף מתור המחיקה.',
 	'deletequeue-review-reason' => 'הערות:',
 	'deletequeue-review-newreason' => 'סיבה חדשה:',
 	'deletequeue-review-newextra' => 'מידע נוסף:',
 	'deletequeue-review-submit' => 'שמירת הסקירה',
 	'deletequeue-review-original' => 'הסיבה להצעת המחיקה',
+	'deletequeue-actiondisabled-involved' => 'הפעולה הבאה אינה פעילה כי השתתפתם במחיקה הזאת בתור $1:',
+	'deletequeue-actiondisabled-notexpired' => 'הפעולה הבאה אינה פעילה כי המועמדות למחיקה טרם פגה:',
 	'deletequeue-review-badaction' => 'ציינתם פעולה בלתי חוקית',
 	'deletequeue-review-actiondenied' => 'ציינתם פעולה שאינה פעילה עבור דף זה',
+	'deletequeue-review-objections' => "'''אזהרה''': יש [{{fullurl:{{FULLPAGENAME}}|action=delvoteview&votetype=object}} התנגדויות] למחיקת הדף הזה.
+נא לוודא שההתנגדויות האלו נשקלו כראוי לפני מחיקת הדף הזה.",
 	'deletequeue-reviewspeedy-tab' => 'בדיקת המחיקה המהירה',
 	'deletequeue-reviewspeedy-title' => 'בדיקת המועמדות של "$1" למחיקה מהירה',
+	'deletequeue-reviewspeedy-text' => "אפשר להשתמש בטופס הזה כדי לסקור את העמדת הדף \"'''\$1'''\" למחיקה מהירה.
+נא לוודא שהדף הזה יכול להימחק במחיקה מהירה בהתאם למדיניות.",
 	'deletequeue-reviewprod-tab' => 'בדיקת הצעות מחיקה',
 	'deletequeue-reviewprod-title' => 'בדיקת ההצעה למחיקת "$1"',
+	'deletequeue-reviewprod-text' => "אפשר להשתמש בטופס הזה כדי לסקור את ההצעה למחוק את הדף \"'''\$1'''\".",
 	'deletequeue-reviewdeletediscuss-tab' => 'סקירת המחיקה',
 	'deletequeue-reviewdeletediscuss-title' => 'סקירת דיון המחיקה עבור "$1"',
+	'deletequeue-reviewdeletediscuss-text' => "אפשר להשתמש הטופס הזה כדי לסקור את דיון המחיקה של \"'''\$1'''\".
+
+ניתן לצפות ב[{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} רשימה] של תמיכות במחיקה והתנגדויות לה, והדיון המלא נמצא בדף [[\$2]]. יש לקבל את ההחלטה רק אם יש בדיון הסכמה רחבה.",
 	'deletequeue-review-success' => 'סקרתם בהצלחה את מחיקת דף זה',
 	'deletequeue-review-success-title' => 'הסקירה הושלמה',
+	'deletequeue-deletediscuss-discussionpage' => 'זהו דף הדיון למחיקה של [[$1]].
+כעת {{PLURAL:$2|משתמש אחד תומך|$2 משתמשים תומכים}} במחיקה ו{{PLURAL:$3|משתמש אחד מתנגד|־$3 משתמשים מתנגדים}} למחיקה.
+אפשר [{{fullurl:$1|action=delvote}} להביע דעה בעד או נגד המחיקה] או [{{fullurl:$1|action=delviewvotes}} להציע את כל התמיכות וההתנגדויות].',
 	'deletequeue-discusscreate-summary' => 'יצירת דיון למחיקת [[$1]].',
 	'deletequeue-discusscreate-text' => 'המחיקה הוצעה מהסיבה הבאה: $2',
 	'deletequeue-role-nominator' => 'המציע המקורי למחיקה',
 	'deletequeue-role-vote-endorse' => 'בעד המחיקה',
 	'deletequeue-role-vote-object' => 'נגד המחיקה',
 	'deletequeue-vote-tab' => 'הצבעה על המחיקה',
-	'deletequeue-vote-legend' => 'תמיכה/התנגדות למחיקה',
+	'deletequeue-vote-title' => 'לתמוך במחיקה או להתנגד למחיקה של "$1"',
+	'deletequeue-vote-text' => "בטופס הזה אפשר להביע דעה בעד או נגד המחיקה של \"'''\$1'''\".
+הפעולה הזאת תדרוס כל הבעה קודמת של דעתכם על מחיקת הדף הזה.
+אפשר [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} להציג] תמיכות והתנגדויות נוכחיות.
+הסיבה שניתנה להצעת המחיקה היא '''\$2'''.",
+	'deletequeue-vote-legend' => 'לתמוך במחיקה/להתנגד למחיקה',
 	'deletequeue-vote-action' => 'המלצה:',
 	'deletequeue-vote-endorse' => 'תמיכה במחיקה.',
-	'deletequeue-vote-object' => 'פריט למחיקה.',
+	'deletequeue-vote-object' => 'התנגדות למחיקה.',
 	'deletequeue-vote-reason' => 'הערות:',
 	'deletequeue-vote-submit' => 'שליחה',
+	'deletequeue-vote-success-endorse' => 'תמכתם בהצלחה במחיקת דף זה.',
 	'deletequeue-vote-success-object' => 'התנגדתם בהצלחה למחיקת דף זה.',
+	'deletequeue-vote-requeued' => 'התנגדתם בהצלחה למחיקת הדף הזה.
+בשל התנגדותכם, הדף הועבר לתור $1.',
+	'deletequeue-showvotes' => 'דעות בעד ונגד המחיקה של "$1"',
+	'deletequeue-showvotes-text' => "להלן הדעות בעד ונגד המחיקה של הדף \"'''\$1'''\".
+אפשר [{{fullurl:{{FULLPAGENAME}}|action=delvote}} להביע את דעתכם בעד או נגד] המחיקה הזאת.",
+	'deletequeue-showvotes-restrict-endorse' => 'להציג רק תמיכות',
 	'deletequeue-showvotes-restrict-object' => 'הצגת התנגדויות בלבד',
-	'deletequeue-showvotes-vote-object' => "'''מתנגדים''' למחיקה ב־$1 $2",
+	'deletequeue-showvotes-restrict-none' => 'הצגת כל התמיכות וההתנגדויות',
+	'deletequeue-showvotes-vote-endorse' => "'''בעד''' המחיקה ב־$1 $2",
+	'deletequeue-showvotes-vote-object' => "'''התנגד''' למחיקה ב־$1 $2",
+	'deletequeue-showvotes-showingonly-endorse' => 'מוצגות רק התמיכות',
 	'deletequeue-showvotes-showingonly-object' => 'מוצגות רק ההתנגדויות',
+	'deletequeue-showvotes-none' => 'אין תמיכות במחיקת דף זה או התנגדויות לה.',
+	'deletequeue-showvotes-none-endorse' => 'אין תמיכות במחיקת דף זה.',
 	'deletequeue-showvotes-none-object' => 'אין התנגדויות למחיקת דף זה.',
 	'deletequeue' => 'תור המחיקות',
 	'deletequeue-list-text' => 'דף זה מציג את כל הדפים שנמצאים במערכת המחיקה.',
@@ -2524,16 +3046,17 @@ $messages['he'] = array(
 	'deletequeue-list-status' => 'מצב:',
 	'deletequeue-list-expired' => 'הצגת מועמדויות הדורשות סגירה בלבד.',
 	'deletequeue-list-search' => 'חיפוש',
+	'deletequeue-list-anyqueue' => '(כלשהו)',
 	'deletequeue-list-votes' => 'רשימת ההצבעות',
-	'deletequeue-list-votecount' => '{{PLURAL:$1|הסכמה אחת|$1 הסכמות}}, {{PLURAL:$2|התנגדות אחת|$2 התנגדויות}}',
+	'deletequeue-list-votecount' => '{{PLURAL:$1|תמיכה אחת|$1 תמיכות}}, {{PLURAL:$2|התנגדות אחת|$2 התנגדויות}}',
 	'deletequeue-list-header-page' => 'דף',
 	'deletequeue-list-header-queue' => 'תור',
-	'deletequeue-list-header-votes' => 'הסכמות והתנגדויות',
+	'deletequeue-list-header-votes' => 'תמיכות והתנגדויות',
 	'deletequeue-list-header-expiry' => 'תפוגה',
 	'deletequeue-list-header-discusspage' => 'דף השיחה',
 	'deletequeue-case-intro' => 'דף זה מציג מידע אודות מקרה מחיקה מסוים.',
 	'deletequeue-list-header-reason' => 'סיבת המחיקה',
-	'deletequeue-case-votes' => 'הסכמות/התנגדויות:',
+	'deletequeue-case-votes' => 'תמיכות/התנגדויות:',
 	'deletequeue-case-title' => 'פרטי מקרה המחיקה',
 	'deletequeue-case-details' => 'פרטים בסיסיים',
 	'deletequeue-case-page' => 'דף:',
@@ -2923,7 +3446,7 @@ Un discussion es in curso a [[$5]], le qual se concludera le ''$2''.",
 	'deletequeue-review-reason' => 'Commentos:',
 	'deletequeue-review-newreason' => 'Nove motivo:',
 	'deletequeue-review-newextra' => 'Informationes supplementari:',
-	'deletequeue-review-submit' => 'Immagazinar revision',
+	'deletequeue-review-submit' => 'Salveguardar revision',
 	'deletequeue-review-original' => 'Motivo pro nomination',
 	'deletequeue-actiondisabled-involved' => 'Le sequente action es disactivate post que tu ha participate in iste caso de deletion in le rolos $1:',
 	'deletequeue-actiondisabled-notexpired' => 'Le sequente action es disactivate proque le nomination del deletion non ha ancora expirate:',
@@ -3018,9 +3541,14 @@ Tu pote registrar tu proprie declaration pro o contra iste deletion [{{fullurl:{
  * @author Rex
  */
 $messages['id'] = array(
+	'deletequeue-desc' => 'Membuat [[Special:DeleteQueue|sistem berbasis antrean untuk mengelola penghapusan]]',
 	'deletequeue-action-queued' => 'Penghapusan',
 	'deletequeue-action' => 'Usulkan penghapusan',
 	'deletequeue-action-title' => 'Usulkan penghapusan untuk "$1"',
+	'deletequeue-action-text' => "Wiki ini memiliki sejumlah proses untuk menghapus halaman:
+* Jika Anda yakin bahwa halaman ini layak dihapus, Anda dapat [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=speedy}} menyarankan '' penghapusan cepat''].
+* Jika halaman ini tidak memenuhi kriteria penghapusan cepat, tetapi ''penghapusan kemungkinan tidak kontroversial '', Anda harus [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=prod}} menyarankan penghapusan tanpa tentangan].
+* Jika penghapusan halaman ini ''kemungkinan diperdebatkan'', Anda harus [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=deletediscuss}} membuka diskusi penghapusan].",
 	'deletequeue-action-text-queued' => 'Anda dapat melihat halaman berikut untuk kasus penghapusan ini:
 * [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} Lihat dukungan dan penolakan terbaru].
 * [{{fullurl:{{FULLPAGENAME}}|action=delvote}} Dukung atau tolak penghapusan halaman ini].',
@@ -3032,7 +3560,14 @@ $messages['id'] = array(
 ** Di luar cakupan proyek',
 	'deletequeue-nom-alreadyqueued' => 'Halaman ini sudah masuk daftar penghapusan.',
 	'deletequeue-speedy-title' => 'Tandai "$1" untuk penghapusan cepat',
+	'deletequeue-speedy-text' => "Anda dapat menggunakan formulir ini untuk menandai halaman \"'''\$1'''\" untuk penghapusan cepat.
+
+Administrator akan meninjau permintaan ini dan menghapus halaman jika alasannya tepat.
+Anda harus memilih alasan penghapusan dari daftar tarik-turun di bawah dan menambahkan informasi terkait lainnya.",
 	'deletequeue-prod-title' => 'Ajukan penghapusan "$1"',
+	'deletequeue-prod-text' => "Anda dapat menggunakan formulir ini untuk mengusulkan penghapusan \"'''\$1'''\".
+
+Jika, setelah lima hari, tidak seorang pun menentang penghapusan halaman ini, penghapusan akan dilakukan setelah peninjauan akhir oleh pengurus.",
 	'deletequeue-delnom-reason' => 'Alasan pengusulan:',
 	'deletequeue-delnom-otherreason' => 'Alasan lain',
 	'deletequeue-delnom-extra' => 'Informasi tambahan:',
@@ -3044,6 +3579,7 @@ $messages['id'] = array(
 	'right-speedy-nominate' => 'Usulkan halaman untuk penghapusan segera',
 	'right-speedy-review' => 'Tinjau pencalonan penghapusan cepat',
 	'right-prod-nominate' => 'Usulkan penghapusan halaman',
+	'right-prod-review' => 'Tinjau proposal penghapusan tanpa tentangan',
 	'right-deletediscuss-nominate' => 'Mulai pembicaraan penghapusan',
 	'right-deletediscuss-review' => 'Tutup pembicaraan penghapusan',
 	'right-deletequeue-vote' => 'Dukungan atau tolakan terhadap penghapusan',
@@ -3052,18 +3588,28 @@ $messages['id'] = array(
 	'deletequeue-queue-deletediscuss' => 'Pembicaraan penghapusan',
 	'deletequeue-page-speedy' => "Halaman ini telah dicalonkan untuk penghapusan cepat.
 Alasan yang diberikan untuk penghapusan ini adalah ''$1''.",
+	'deletequeue-page-prod' => "Halaman ini telah disarankan untuk dihapus.
+Alasan yang diberikan adalah ''\$1''.
+Jika proposal ini tidak ditentang di ''\$ 2'', halaman akan dihapus.
+Anda dapat menentang penghapusan halaman ini dengan [{{fullurl:{{FULLPAGENAME}}|action=delvote}} memberikan alasan penolakan].",
+	'deletequeue-page-deletediscuss' => "Halaman ini telah diusulkan untuk dihapus dan usulan tersebut telah ditentang.
+Alasan yang diberikan adalah ''$1''.
+Diskusi sedang berlangsung di [[$5]] dan akan disimpulkan di ''$2''.",
 	'deletequeue-notqueued' => 'Halaman yang Anda pilih saat ini tidak masuk dalam daftar penghapusan',
 	'deletequeue-review-action' => 'Langkah yang diambil:',
 	'deletequeue-review-delete' => 'Hapus halaman.',
 	'deletequeue-review-change' => 'Hapus halaman ini, tapi dengan alasan berbeda.',
 	'deletequeue-review-requeue' => 'Pindahkan halaman ini ke daftar berikut:',
-	'deletequeue-review-dequeue' => 'Tidak mengambil langkah apapun, dan hapus halaman dari daftar penghapusan.',
+	'deletequeue-review-dequeue' => 'Tidak mengambil langkah apa pun, dan hapus halaman dari daftar penghapusan.',
 	'deletequeue-review-reason' => 'Komentar:',
 	'deletequeue-review-newreason' => 'Alasan baru:',
 	'deletequeue-review-newextra' => 'Informasi tambahan:',
 	'deletequeue-review-submit' => 'Simpan Tinjauan',
 	'deletequeue-review-original' => 'Alasan pencalonan',
-	'deletequeue-actiondisabled-notexpired' => 'Langkah berikut dilarang karena pencalonan penghapusan belum kadaluwarsa:',
+	'deletequeue-actiondisabled-involved' => 'Tindakan berikut dinonaktifkan karena Anda telah mengambil bagian dalam kasus penghapusan ini sebagai $1:',
+	'deletequeue-actiondisabled-notexpired' => 'Langkah berikut dilarang karena pencalonan penghapusan belum kedaluwarsa:',
+	'deletequeue-review-badaction' => 'Anda melakukan tindakan yang tidak sah',
+	'deletequeue-review-actiondenied' => 'Anda melakukan tindakan yang dilarang untuk halaman ini',
 	'deletequeue-review-objections' => "'''Perhatian''': Penghapusan halaman ini memiliki [{{fullurl:{{FULLPAGENAME}}|action=delvoteview&votetype=object}} penolakan].
 Pastikan bahwa Anda telah mempertimbangkan penolakan tersebut sebelum menghapus halaman ini.",
 	'deletequeue-reviewspeedy-tab' => 'Tinjau penghapusan cepat',
@@ -3072,6 +3618,7 @@ Pastikan bahwa Anda telah mempertimbangkan penolakan tersebut sebelum menghapus 
 Pastikan bahwa halaman ini dihapus cepat sesuai dengan kebijakan.",
 	'deletequeue-reviewprod-tab' => 'Tinjau penghapusan yang diajukan',
 	'deletequeue-reviewprod-title' => 'Tinjau penghapusan yang diajukan kepada "$1"',
+	'deletequeue-reviewprod-text' => "Anda dapat menggunakan formulir ini untuk meninjau proposal tanpa tentangan untuk penghapusan \"'''\$1'''\".",
 	'deletequeue-reviewdeletediscuss-tab' => 'Tinjau penghapusan',
 	'deletequeue-reviewdeletediscuss-title' => 'Tinjau pembicaraan penghapusan "$1"',
 	'deletequeue-reviewdeletediscuss-text' => "Anda dapat menggunakan formulis ini untuk meninjau pembicaraan penghapusan \"'''\$1'''\".
@@ -3080,6 +3627,9 @@ Pastikan bahwa halaman ini dihapus cepat sesuai dengan kebijakan.",
 Parstikan bahwa Anda membuat keputusan sesuai konsensus di halaman pembicaraan.",
 	'deletequeue-review-success' => 'Anda selesai memeriksa peninjauan halaman ini',
 	'deletequeue-review-success-title' => 'Peninjauan selesai',
+	'deletequeue-deletediscuss-discussionpage' => 'Ini adalah halaman diskusi untuk penghapusan [[$1]].
+Saat ini ada $2 {{PLURAL:$2|pengguna|pengguna}} yang mendukung penghapusan dan $3 {{PLURAL:$3|pengguna|pengguna}} yang menolak.
+Anda dapat [{{fullurl:$1|action=delvote}} mendukung atau menolak] penghapusan, atau [{{fullurl:$1|action=delviewvotes}} melihat semua dukungan dan penolakan].',
 	'deletequeue-discusscreate-summary' => 'Membuat pembicaraan untuk penghapusan [[$1]].',
 	'deletequeue-discusscreate-text' => 'Penghapusan diajukan karena alasan berikut: $2',
 	'deletequeue-role-nominator' => 'pencalon penghapusan',
@@ -3087,6 +3637,10 @@ Parstikan bahwa Anda membuat keputusan sesuai konsensus di halaman pembicaraan."
 	'deletequeue-role-vote-object' => 'penolak penghapusan',
 	'deletequeue-vote-tab' => 'Pilih pada penghapusan',
 	'deletequeue-vote-title' => 'Dukung atau tolak penghapusan "$1"',
+	'deletequeue-vote-text' => "Anda dapat menggunakan formulir ini untuk mendukung atau menolak penghapusan \"'''\$1'''\".
+Tindakan ini akan mengganti semua dukungan/penolakan telah Anda berikan kepada penghapusan halaman ini.
+Anda dapat [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} melihat] dukungan dan penolakan yang sudah ada.
+Alasan yang diberikan dalam saran penghapusan adalah ''\$2''.",
 	'deletequeue-vote-legend' => 'Dukungan/Keberatan terhadap penghapusan',
 	'deletequeue-vote-action' => 'Rekomendasi:',
 	'deletequeue-vote-endorse' => 'Dukung penghapusan.',
@@ -3117,21 +3671,38 @@ Anda dapat [{{fullurl:{{FULLPAGENAME}}|action=delvote}} mendaftarkan dukungan at
 	'deletequeue-list-status' => 'Status:',
 	'deletequeue-list-expired' => 'Hanya perlihatkan pencalonan yang membutuhkan penutupan.',
 	'deletequeue-list-search' => 'Cari',
-	'deletequeue-list-anyqueue' => '(apapun)',
+	'deletequeue-list-anyqueue' => '(apa pun)',
 	'deletequeue-list-votes' => 'Daftar suara',
 	'deletequeue-list-votecount' => '$1 {{PLURAL:$1|dukungan|dukungan}}, $2 {{PLURAL:$2|penolakan|penolakan}}',
 	'deletequeue-list-header-page' => 'Halaman',
 	'deletequeue-list-header-queue' => 'Antrean',
 	'deletequeue-list-header-votes' => 'Dukungan dan penolakan',
-	'deletequeue-list-header-expiry' => 'Kadaluwarsa',
+	'deletequeue-list-header-expiry' => 'Kedaluwarsa',
 	'deletequeue-list-header-discusspage' => 'Halaman pembicaraan',
 	'deletequeue-case-intro' => 'Halaman ini berisi informasi mengenai kasus penghapusan tertentu.',
 	'deletequeue-list-header-reason' => 'Alasan penghapusan',
 	'deletequeue-case-votes' => 'Dukungan/penolakan:',
+	'deletequeue-case-title' => 'Rincian kasus penghapusan',
+	'deletequeue-case-details' => 'Rincian dasar',
 	'deletequeue-case-page' => 'Halaman:',
 	'deletequeue-case-reason' => 'Alasan:',
-	'deletequeue-case-expiry' => 'Kadaluwarsa:',
+	'deletequeue-case-expiry' => 'Kedaluwarsa:',
 	'deletequeue-case-needs-review' => 'Kasus ini membutuhkan [[$1|tinjauan]].',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'deletequeue-list-search' => 'Chọwa',
+	'deletequeue-case-reason' => 'Mgbághapụtà:',
+);
+
+/** Iloko (Ilokano)
+ * @author Lam-ang
+ */
+$messages['ilo'] = array(
+	'deletequeue-list-search' => 'Biroken',
 );
 
 /** Ido (Ido)
@@ -3144,6 +3715,7 @@ $messages['io'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Darth Kule
  * @author Melos
  * @author Nemo bis
@@ -3250,6 +3822,8 @@ Se, dopo cinque giorni, non ci sono state opposizioni alla cancellazione della p
 	'deletequeue-showvotes-restrict-none' => 'Mostra tutti i supporti e le opposizioni',
 	'deletequeue-showvotes-vote-endorse' => "Cancellazione '''supportata''' il $2 alle $1",
 	'deletequeue-showvotes-vote-object' => "'''Opposizione''' alla cancellazione il $2 alle $1",
+	'deletequeue-showvotes-showingonly-endorse' => 'Mostra solo i supporti',
+	'deletequeue-showvotes-showingonly-object' => 'Mostra solo le opposizioni',
 	'deletequeue-showvotes-none' => 'Non ci sono supporti o opposizioni alla cancellazione di questa pagina.',
 	'deletequeue-showvotes-none-endorse' => 'Non ci sono supporti alla cancellazione di questa pagina.',
 	'deletequeue-showvotes-none-object' => 'Non ci sono opposizioni alla cancellazione di questa pagina.',
@@ -3283,6 +3857,7 @@ Se, dopo cinque giorni, non ci sono state opposizioni alla cancellazione della p
  * @author Aotake
  * @author Fryed-peach
  * @author Hosiryuhosi
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'deletequeue-desc' => '[[Special:DeleteQueue|キューを応用した削除管理システム]]を提供する',
@@ -3404,7 +3979,7 @@ $messages['ja'] = array(
 	'deletequeue-list-header-page' => 'ページ',
 	'deletequeue-list-header-queue' => 'キュー',
 	'deletequeue-list-header-votes' => '賛成と反対',
-	'deletequeue-list-header-expiry' => '期限',
+	'deletequeue-list-header-expiry' => '有効期限',
 	'deletequeue-list-header-discusspage' => '議論ページ',
 	'deletequeue-case-intro' => 'このページでは特定の削除事例の情報を一覧しています。',
 	'deletequeue-list-header-reason' => '削除理由',
@@ -3412,14 +3987,29 @@ $messages['ja'] = array(
 	'deletequeue-case-title' => '削除事例詳細',
 	'deletequeue-case-details' => '概要',
 	'deletequeue-case-page' => 'ページ:',
-	'deletequeue-case-reason' => '理由:',
-	'deletequeue-case-expiry' => '期限:',
+	'deletequeue-case-reason' => '理由：',
+	'deletequeue-case-expiry' => '有効期限：',
 	'deletequeue-case-needs-review' => 'この事例には[[$1|審査]]が必要です。',
+);
+
+/** Georgian (ქართული)
+ * @author David1010
+ */
+$messages['ka'] = array(
+	'right-speedy-nominate' => 'გვერდების ნომინირება სწრაფი წაშლისათვის',
+);
+
+/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬)
+ * @author GaiJin
+ */
+$messages['kk-cyrl'] = array(
+	'deletequeue-list-search' => 'Іздеу',
 );
 
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
  * @author Thearith
+ * @author គីមស៊្រុន
  * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
@@ -3431,10 +4021,12 @@ $messages['km'] = array(
 	'deletequeue-speedy-title' => 'សម្គាល់ "$1" សម្រាប់​ការលុប​ឱ្យ​បាន​លឿន',
 	'deletequeue-delnom-otherreason' => 'មូលហេតុផ្សេងទៀត',
 	'deletequeue-delnom-extra' => 'ព័ត៌មានបន្ថែម៖',
+	'right-prod-nominate' => 'ការស្នើសុំលុបចោលទំព័រ',
 	'right-deletediscuss-nominate' => 'ចាប់ផ្ដើម​កិច្ចពិភាក្សា​អំពី​ការលុប',
 	'right-deletediscuss-review' => 'បិទ​កិច្ចពិភាក្សា​អំពី​ការលុប',
 	'right-deletequeue-vote' => 'យល់ស្រប ឬ ជំទាស់​ចំពោះ​ការលុប',
 	'deletequeue-queue-speedy' => 'លុប​ឱ្យ​បាន​លឿន',
+	'deletequeue-queue-prod' => 'ការលុបចោលដែលត្រូវបានស្នើ',
 	'deletequeue-queue-deletediscuss' => 'កិច្ចពិភាក្សា​អំពី​ការលុប',
 	'deletequeue-review-action' => 'សកម្មភាពត្រូវ​អនុវត្ត​៖',
 	'deletequeue-review-delete' => 'លុបទំព័រ។',
@@ -3490,6 +4082,9 @@ $messages['km'] = array(
  * @author Nayvik
  */
 $messages['kn'] = array(
+	'deletequeue-delnom-otherreason' => 'ಇತರ ಕಾರಣ',
+	'deletequeue-list-status' => 'ಸ್ಥಾನಮಾನ:',
+	'deletequeue-list-search' => 'ಹುಡುಕು',
 	'deletequeue-case-reason' => 'ಕಾರಣ:',
 );
 
@@ -3500,7 +4095,7 @@ $messages['kri'] = array(
 	'deletequeue-list-search' => 'Luk foh am',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -3622,7 +4217,7 @@ Als der Jrond för de Sigg fottzeschmiiße wood ''$2'' aanjejovve.",
 	'deletequeue-vote-endorse' => 'Zoshtimme zom Fottschmiiße.',
 	'deletequeue-vote-object' => 'Jäje et Fottschmiiße.',
 	'deletequeue-vote-reason' => 'Kommäntaare:',
-	'deletequeue-vote-submit' => 'Loß Jonn!',
+	'deletequeue-vote-submit' => 'Lohß Jonn!',
 	'deletequeue-vote-success-endorse' => 'Dö häs doför jeshtimmp, di Sigg hee fottzeschmiiße.',
 	'deletequeue-vote-success-object' => 'Dö häs dojääje jeshtimmp, di Sigg hee fottzeschmiiße.',
 	'deletequeue-vote-requeued' => 'Dö häs dojääje jeshtimmp, di Sigg hee fottzeschmiiße.
@@ -3666,13 +4261,23 @@ Do kanns Ding [{{fullurl:{{FULLPAGENAME}}|action=delvote}} eije Zoshtemmung odde
 	'deletequeue-case-needs-review' => 'Hee dä Fall moß [[$1|nohjeloort wääde]].',
 );
 
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'deletequeue-action-queued' => 'Jêbirin',
+	'deletequeue-review-newreason' => 'Sedema nû:',
+	'deletequeue-list-header-reason' => 'Sdema jêbirinê',
+	'deletequeue-case-reason' => 'Sedem:',
+);
+
 /** Cornish (Kernowek)
  * @author Kernoweger
  * @author Kw-Moon
  */
 $messages['kw'] = array(
-	'deletequeue-list-search' => 'Hwila',
-	'deletequeue-list-anyqueue' => '(vyth)',
+	'deletequeue-list-search' => 'Whila',
+	'deletequeue-list-anyqueue' => '(veth)',
 	'deletequeue-case-page' => 'Folen:',
 );
 
@@ -3707,6 +4312,7 @@ $messages['lb'] = array(
 	'deletequeue-delnom-submit' => 'Nominatioun fortschécken',
 	'deletequeue-log-rmspeedy' => 'huet ofgelehnt fir [[$1]] séier ze läschen.',
 	'right-speedy-nominate' => 'Säite virschloe fir séier ze läschen',
+	'right-speedy-review' => 'Nominatioune fir e séiert Läschen nokucken',
 	'right-prod-nominate' => 'Säit virschloe vir ze läschen',
 	'right-deletediscuss-nominate' => 'Läschdiskussiounen ufänken',
 	'right-deletediscuss-review' => 'Läschdiskussiounen ofschléissen',
@@ -3718,9 +4324,17 @@ $messages['lb'] = array(
 	'deletequeue-review-reason' => 'Bemierkungen:',
 	'deletequeue-review-newreason' => 'Neie Grond:',
 	'deletequeue-review-newextra' => 'Zousätzlech Informatioun:',
+	'deletequeue-review-submit' => 'Nokucke späicheren',
+	'deletequeue-review-original' => "Grond fir d'Nominatioun",
+	'deletequeue-review-badaction' => 'Dir hut eng Aktioun uginn déi net valabel ass',
+	'deletequeue-review-actiondenied' => 'dir hutt eng Aktioun uginn déi fir dës Säit ausgeschalt ass',
 	'deletequeue-reviewspeedy-tab' => 'Séier läschen iwwerpréifen',
+	'deletequeue-reviewprod-tab' => 'Virgeschloe Läschung nokucken',
 	'deletequeue-reviewdeletediscuss-tab' => 'Läschen iwwerpréifen',
 	'deletequeue-reviewdeletediscuss-title' => 'Diskussioun iwwer d\'Läsche vu(n) "$1" nokucken',
+	'deletequeue-review-success' => "Dir hutt d'Läsche vun dëser Säit elo nogekuckt",
+	'deletequeue-review-success-title' => 'Komplett nogekuckt',
+	'deletequeue-discusscreate-summary' => "Diskussioun fir d'Läsche vun [[$1]] gëtt ugeluecht.",
 	'deletequeue-discusscreate-text' => "D'Läsche gouf aus dësem Grond virgeschlo: $2",
 	'deletequeue-role-vote-endorse' => "Fir d'Läschen",
 	'deletequeue-role-vote-object' => "Géint d'Läschen",
@@ -3730,18 +4344,26 @@ $messages['lb'] = array(
 	'deletequeue-vote-endorse' => 'Läschen ënnerstëtzen',
 	'deletequeue-vote-object' => "Géint d'Läschen",
 	'deletequeue-vote-reason' => 'Bemierkungen:',
+	'deletequeue-vote-success-endorse' => 'Dir hutt dem läsche vun dëser Säit zougestëmmt.',
 	'deletequeue-showvotes-restrict-endorse' => 'Nëmmem Zoustëmmunge weisen',
 	'deletequeue-showvotes-showingonly-endorse' => "Nëmmen d'Zoustëmmunge gi gewisen",
+	'deletequeue-showvotes-none-object' => 'Et gëtt keng Objectioune fir dës Säit ze läschen.',
+	'deletequeue' => 'Läsch-Queue',
 	'deletequeue-list-text' => 'Op dëser Säit stinn all déi Säiten déi am Läschsystem dra sinn.',
 	'deletequeue-list-search-legend' => 'Säite sichen:',
+	'deletequeue-list-queue' => 'Queue:',
 	'deletequeue-list-status' => 'Status:',
 	'deletequeue-list-search' => 'Sichen',
 	'deletequeue-list-anyqueue' => '(iergendeng)',
 	'deletequeue-list-votes' => 'Lëscht vun de Stëmmen',
 	'deletequeue-list-header-page' => 'Säit',
+	'deletequeue-list-header-queue' => 'Queue',
 	'deletequeue-list-header-discusspage' => 'Diskussiounssäit',
+	'deletequeue-list-header-reason' => "Grond fir d'Läschen",
+	'deletequeue-case-details' => 'Basisinformatiounen',
 	'deletequeue-case-page' => 'Säit:',
 	'deletequeue-case-reason' => 'Grond:',
+	'deletequeue-case-needs-review' => 'Dëse Fall muss [[$1|nogekuckt]] ginn.',
 );
 
 /** Lingua Franca Nova (Lingua Franca Nova)
@@ -3791,7 +4413,7 @@ $messages['mk'] = array(
 	'deletequeue-speedy-text' => "Овој образец служи за означување на страницата „'''$1'''“ за брзо бришење.
 
 Барањето ќе го разгледа администратор и, ако има добра основа, ќе ја избрише страницата.
-Мора да одберете причина за бришење од расклопната листа подолу, и да додадете други релевантни информации.",
+Мора да одберете причина за бришење од паѓачкиот список подолу, и да додадете други релевантни информации.",
 	'deletequeue-prod-title' => 'Предложи бришење на „$1“',
 	'deletequeue-prod-text' => "Овој образец служи за предлагање на „'''$1'''“ за бришење.
 
@@ -3851,7 +4473,7 @@ $messages['mk'] = array(
 	'deletequeue-reviewdeletediscuss-title' => 'Прегледување на разговорот за бришење на „$1“',
 	'deletequeue-reviewdeletediscuss-text' => "Овој образец служи за прегледување на разговорот за бришење на „'''$1'''“.
 
-На располагање ви е [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} листа] на одобренија и приговори, а самиот разговор ќе го најдете на [[$2]].
+На располагање ви е [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} список] на одобренија и приговори, а самиот разговор ќе го најдете на [[$2]].
 Имајте на ум дека одлука што ќе ја донесете треба да биде во согласност со консензусот во разговорот.",
 	'deletequeue-review-success' => 'Успешно го прегледавте бришењето на оваа страница',
 	'deletequeue-review-success-title' => 'Прегледот е завршен',
@@ -3900,7 +4522,7 @@ You may [{{fullurl:$1|action=delvote}} endorse or object] to deletion, or [{{ful
 	'deletequeue-list-expired' => 'Прикажи само предложени што треба да се затвораат.',
 	'deletequeue-list-search' => 'Пребарување',
 	'deletequeue-list-anyqueue' => '(било кој)',
-	'deletequeue-list-votes' => 'Листа на гласови',
+	'deletequeue-list-votes' => 'Список на гласови',
 	'deletequeue-list-votecount' => '$1 {{PLURAL:$1|одобрение|одобренија}}, $2 {{PLURAL:$2|приговор|приговори}}',
 	'deletequeue-list-header-page' => 'Страница',
 	'deletequeue-list-header-queue' => 'Редица',
@@ -3918,20 +4540,72 @@ You may [{{fullurl:$1|action=delvote}} endorse or object] to deletion, or [{{ful
 	'deletequeue-case-needs-review' => 'Овој случај бара [[$1|прегледување]].',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Junaidpv
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'deletequeue-action-queued' => 'മായ്ക്കൽ',
+	'deletequeue-action' => 'മായ്ക്കൽ നിർദ്ദേശിക്കുക',
+	'deletequeue-action-title' => '"$1" മായ്ക്കാൻ ശുപാർശ ചെയ്യുക',
+	'deletequeue-nom-alreadyqueued' => 'ഈ താൾ നിലവിൽ മായ്ക്കപ്പെടാനുള്ള താളുകളുടെ ക്യൂവിലുണ്ട്',
+	'deletequeue-delnom-reason' => 'നിർദ്ദേശിക്കാനുള്ള കാരണം:',
+	'deletequeue-delnom-otherreason' => 'മറ്റ് കാരണം',
+	'deletequeue-delnom-extra' => 'കൂടുതൽ വിവരങ്ങൾ:',
+	'deletequeue-delnom-submit' => 'നിർദ്ദേശം സമർപ്പിക്കുക',
+	'deletequeue-queue-speedy' => 'അതിവേഗ മായ്ക്കൽ',
+	'deletequeue-review-delete' => 'താൾ മായ്ക്കുക.',
+	'deletequeue-review-reason' => 'അഭിപ്രായം:',
+	'deletequeue-review-newreason' => 'പുതിയ കാരണം:',
+	'deletequeue-review-newextra' => 'കൂടുതൽ വിവരങ്ങൾ:',
+	'deletequeue-review-submit' => 'സംശോധനം സേവ് ചെയ്യുക',
+	'deletequeue-review-original' => 'നിർദ്ദേശിക്കാനുള്ള കാരണം',
+	'deletequeue-review-success' => 'താങ്കൾ വിജയകരമായി ഈ താളിന്റെ മായ്ക്കൽ സംശോധനം ചെയ്തിരിക്കുന്നു',
+	'deletequeue-review-success-title' => 'സംശോധനം സമ്പൂർണ്ണം',
+	'deletequeue-vote-reason' => 'അഭിപ്രായങ്ങൾ:',
+	'deletequeue-vote-submit' => 'സമർപ്പിക്കുക',
+	'deletequeue-list-header-page' => 'താൾ',
+	'deletequeue-list-header-expiry' => 'കാലാവധി',
+	'deletequeue-list-header-discusspage' => 'സംവാദം താൾ',
+	'deletequeue-list-header-reason' => 'മായ്ക്കാനുള്ള കാരണം',
+	'deletequeue-case-details' => 'അടിസ്ഥാന വിവരങ്ങൾ',
+	'deletequeue-case-page' => 'താൾ:',
+	'deletequeue-case-reason' => 'കാരണം:',
+	'deletequeue-case-expiry' => 'കാലാവധി:',
+);
+
 /** Mongolian (Монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
+	'deletequeue-delnom-otherreason' => 'Өөр шалтгаан',
 	'deletequeue-review-reason' => 'Тайлбар:',
 	'deletequeue-vote-reason' => 'Тайлбар:',
+	'deletequeue-vote-submit' => 'Явуулах',
 	'deletequeue-list-search' => 'Хайх',
+	'deletequeue-list-header-page' => 'Хуудас',
+	'deletequeue-case-page' => 'Хуудас:',
+	'deletequeue-case-reason' => 'Шалтгаан:',
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
  * @author Aurora
  */
 $messages['ms'] = array(
+	'deletequeue-delnom-otherreason' => 'Sebab lain',
+	'deletequeue-review-reason' => 'Komen:',
+	'deletequeue-vote-reason' => 'Komen:',
+	'deletequeue-vote-submit' => 'Serahkan',
+	'deletequeue-list-queue' => 'Baris gilir:',
+	'deletequeue-list-search' => 'Cari',
+	'deletequeue-list-header-page' => 'Laman',
+	'deletequeue-list-header-queue' => 'Baris gilir',
+	'deletequeue-list-header-expiry' => 'Tamat:',
+	'deletequeue-list-header-reason' => 'Sebab penghapusan',
+	'deletequeue-case-page' => 'Laman:',
 	'deletequeue-case-reason' => 'Sebab:',
+	'deletequeue-case-expiry' => 'Tamat:',
 );
 
 /** Mirandese (Mirandés)
@@ -3946,14 +4620,21 @@ $messages['mwl'] = array(
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
+	'deletequeue-delnom-otherreason' => 'Лия тувтал',
+	'deletequeue-delnom-extra' => 'Поладкс информациясь:',
+	'deletequeue-review-delete' => 'Нардамс те лопанть.',
+	'deletequeue-review-reason' => 'Арсемат-мельть:',
 	'deletequeue-review-newreason' => 'Од тувталось:',
 	'deletequeue-review-newextra' => 'Поладкс информациясь:',
+	'deletequeue-vote-reason' => 'Арсемат-мельть:',
 	'deletequeue-list-queue' => 'Чиполань пулось:',
+	'deletequeue-list-status' => 'Статусозо:',
 	'deletequeue-list-search' => 'Вешнэмс',
 	'deletequeue-list-header-page' => 'Лопа',
 	'deletequeue-list-header-queue' => 'Чиполань пуло',
 	'deletequeue-list-header-expiry' => 'Таштомома шказо',
 	'deletequeue-list-header-discusspage' => 'Кортнема лопа',
+	'deletequeue-case-reason' => 'Тувталось:',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -3962,6 +4643,163 @@ $messages['myv'] = array(
 $messages['nah'] = array(
 	'deletequeue-review-newreason' => 'Yancuīc īxtlamatiliztli:',
 	'deletequeue-list-header-expiry' => 'Motlamia',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Harald Khan
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ * @author Simny
+ */
+$messages['nb'] = array(
+	'deletequeue-desc' => 'Skaper et [[Special:DeleteQueue|købasert system for å håndtere sletting]]',
+	'deletequeue-action-queued' => 'Sletting',
+	'deletequeue-action' => 'Foreslå sletting',
+	'deletequeue-action-title' => 'Foreslå sletting av «$1»',
+	'deletequeue-action-text' => "{{SITENAME}} har flere prosesser for sletting av sider:
+* Om du mener at denne siden kvalifiserer for ''hurtigsletting'', kan du foreslå det [{{fullurl:{{FULLPAGENAMEE}}|action=delnom&queue=speedy}} her].
+* Om siden ikke kvalifserer for hurtigsletting, men ''sletting likevel vil være ukontroversielt'', kan du [{{fullurl:{{FULLPAGENAMEE}}|action=delnom&queue=prod}} foreslå sletting her].
+* Om det er sannsynlig at sletting av siden ''vil bli omdiskutert'', burde du [{{fullurl:{{FULLPAGENAMEE}}|action=delnom&queue=deletediscuss}} åpne en diskusjon].",
+	'deletequeue-action-text-queued' => 'Du kan se de følgende sidene for denne slettekandidaten:
+* [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} Se nåværande støtte og motstand].
+* [{{fullurl:{{FULLPAGENAME}}|action=delvote}} Støtt eller gå imot sletting av siden].',
+	'deletequeue-permissions-noedit' => 'Du må kunne redigere en side for å kunne påvirke dens slettingsstatus.',
+	'deletequeue-generic-reasons' => '* Vanlige årsaker
+  ** Hæverk
+  ** Søppel
+  ** Reklame
+  ** Vedlikehold
+  ** Ikke relevant for prosjektet',
+	'deletequeue-nom-alreadyqueued' => 'Denne siden er allerede i en sletningskø.',
+	'deletequeue-speedy-title' => 'Merk «$1» for hurtigsletting',
+	'deletequeue-speedy-text' => "Du kan bruke dette skjemaet for å merke siden «'''$1'''» for hurtigsletting.
+
+En administrator vil se gjennom forespørselen, og om den er rimelig, slette siden.
+Du må velge en årsak fra lista nedenfor, og legge til annen relevant informasjon.",
+	'deletequeue-prod-title' => 'Foreslå sletting av «$1»',
+	'deletequeue-prod-text' => "Du kan bruke dette skjemaet for å foreslå at «'''$1'''» slettes.
+
+Om ingen har motsetninger mot slettingen innen fem dager, vil slettingen vurderes av en administrator.",
+	'deletequeue-delnom-reason' => 'Nomneringsårsak:',
+	'deletequeue-delnom-otherreason' => 'Annen grunn',
+	'deletequeue-delnom-extra' => 'Ekstra informasjon:',
+	'deletequeue-delnom-submit' => 'Nominer',
+	'deletequeue-log-nominate' => 'nominerte [[$1]] for sletting i køen «$2».',
+	'deletequeue-log-rmspeedy' => 'avviste hurtigsletting av [[$1]].',
+	'deletequeue-log-requeue' => 'overførte [[$1]] fra slettingskøen «$2» til «$3».',
+	'deletequeue-log-dequeue' => 'fjernet [[$1]] fra slettingskøen «$2».',
+	'right-speedy-nominate' => 'Nominere sider til hurtigsletting',
+	'right-speedy-review' => 'Behandle nominasjoner til hurtigsletting',
+	'right-prod-nominate' => 'Foreslå sletting av sider',
+	'right-prod-review' => 'Behandle ukontroversielle slettingsforslag',
+	'right-deletediscuss-nominate' => 'Starte slettingsdiskusjoner',
+	'right-deletediscuss-review' => 'Avslutte slettingsdiskusjoner',
+	'right-deletequeue-vote' => 'Støtt eller gå imot sletteforslag',
+	'deletequeue-queue-speedy' => 'Hurtigsletting',
+	'deletequeue-queue-prod' => 'Slettingsforslag',
+	'deletequeue-queue-deletediscuss' => 'Slettingsdiskusjon',
+	'deletequeue-page-speedy' => "Denne siden har blitt nominert for hurtigsletting.
+Årsaken som ble oppgitt var ''$1''.",
+	'deletequeue-page-prod' => "Denne siden har blitt foreslått for sletting.
+Årsaken som ble oppgitt var ''$1''.
+Om dette forslaget ikke er motsagt innen ''$2'', vil siden bli slettet.
+Du kan bestride sletting av siden ved å [{{fullurl:{{FULLPAGENAME}}|action=delvote}} motsi sletting].",
+	'deletequeue-page-deletediscuss' => "Denne siden har blitt foreslått slettet, men forslaget har blitt bestridt.
+Den oppgitte slettingsgrunnen var ''$1''.
+En diskusjon foregår på [[$5]]; den vil slutte ''$2''.",
+	'deletequeue-notqueued' => 'Siden du har valgt er ikke foreslått slettet',
+	'deletequeue-review-action' => 'Handling:',
+	'deletequeue-review-delete' => 'Slette siden.',
+	'deletequeue-review-change' => 'Slette siden, men med annen begrunnelse.',
+	'deletequeue-review-requeue' => 'Overføre siden til følgende kø:',
+	'deletequeue-review-dequeue' => 'Ikke gjøre noe, og fjerne siden fra slettingskøen.',
+	'deletequeue-review-reason' => 'Kommentarer:',
+	'deletequeue-review-newreason' => 'Ny årsak:',
+	'deletequeue-review-newextra' => 'Ekstra informasjon:',
+	'deletequeue-review-submit' => 'Lagre gjennomgang',
+	'deletequeue-review-original' => 'Nominasjonsårsak',
+	'deletequeue-actiondisabled-involved' => 'Følgende handling kan ikke gjøres av deg, fordi du har tatt del i slettingen som $1:',
+	'deletequeue-actiondisabled-notexpired' => 'Følgende handling kan ikke gjennomføres, fordi slettingsforslaget ikke har utgått:',
+	'deletequeue-review-badaction' => 'Du oppga en ugyldig handling',
+	'deletequeue-review-actiondenied' => 'Du oppga en handling som er slått av for denne siden',
+	'deletequeue-review-objections' => "'''Advarsel''': Det er [{{fullurl:{{FULLPAGENAME}}|action=delvoteview&votetype=object}} motsigelser] til sletting av denne siden.
+Forsikre deg om at du har tatt disse til hensyn før du sletter siden.",
+	'deletequeue-reviewspeedy-tab' => 'Behandle hurtigsletting',
+	'deletequeue-reviewspeedy-title' => 'Behandle hurtigsletting av «$1»',
+	'deletequeue-reviewspeedy-text' => "Du kan bruke dette skjemaet for å vurdere hurtigsletting av «'''$1'''».
+Forsikre deg om at siden kan hurtigslettes ifm. retningslinjene.",
+	'deletequeue-reviewprod-tab' => 'Behandle slettingsforslag',
+	'deletequeue-reviewprod-title' => 'Behandle slettingsforslag av «$1»',
+	'deletequeue-reviewprod-text' => "Du kan bruke dette skjemaet for å behandle sletting av «'''$1'''».",
+	'deletequeue-reviewdeletediscuss-tab' => 'Revider sletting',
+	'deletequeue-reviewdeletediscuss-title' => 'Revider slettediskusjonen for «$1»',
+	'deletequeue-reviewdeletediscuss-text' => "Du kan bruke dette skjemaet for å revidere slettediskusjonen til «'''$1'''».
+
+En [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} liste] over bifall av og innvendinger mot denne slettingen er tilgjengelig og selve diskusjonen kan bli funnet på [[$2]].
+Forsikre deg om at du tar en avgjørelse i samsvar med konsensus i diskusjonen.",
+	'deletequeue-review-success' => 'Du har revidert slettingen av denne siden',
+	'deletequeue-review-success-title' => 'Revidering fullført',
+	'deletequeue-deletediscuss-discussionpage' => 'Dette er diskusjonssiden for sletting av [[$1]].
+Det er nå {{PLURAL:$2|én bruker|$2 brukere}} som er for sletting og {{PLURAL:$3|én bruker|$3 brukere}} som er imot.
+Du ønsker kanskje å [{{fullurl:$1|action=delvote}} støtte eller gå imot] en sletting, eller [{{fullurl:$1|action=delvoiewvotes}} vise alle bifall og innvendinger].',
+	'deletequeue-discusscreate-summary' => 'Opprett diskusjon for sletting av [[$1]].',
+	'deletequeue-discusscreate-text' => 'Sletting foreslått på grunn av følgende årsaker: $2',
+	'deletequeue-role-nominator' => 'opprinnelig nominert av',
+	'deletequeue-role-vote-endorse' => 'støtter sletting',
+	'deletequeue-role-vote-object' => 'er imot sletting',
+	'deletequeue-vote-tab' => 'Stem over slettinga',
+	'deletequeue-vote-title' => 'Støtt eller gå imot sletting av «$1»',
+	'deletequeue-vote-text' => "Du kan bruke dette skjemaet for å støtte eller gå imot slettingen av «'''$1'''».
+Denne handligen vil overskrive eventuelle tidligere bifall/innvendinger du har gitt mot slettingen av denne siden.
+Du kan [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} vise] eksisterende bifall og innvendinger.
+Oppgitt grunn for nominasjonen var ''$2''.",
+	'deletequeue-vote-legend' => 'Støtt/gå imot sletting',
+	'deletequeue-vote-action' => 'Anbefaling:',
+	'deletequeue-vote-endorse' => 'Støtt sletting.',
+	'deletequeue-vote-object' => 'Gå imot sletting.',
+	'deletequeue-vote-reason' => 'Kommentarer:',
+	'deletequeue-vote-submit' => 'Send',
+	'deletequeue-vote-success-endorse' => 'Du har støttet forslaget om sletting av denne sida.',
+	'deletequeue-vote-success-object' => 'Du har gått imot sletting av denne sida',
+	'deletequeue-vote-requeued' => 'Du har gått imot slettingen av denne siden.
+På grunn av din motstand har siden blitt flyttet til køen $1.',
+	'deletequeue-showvotes' => 'Bifall av og innvendinger mot sletting av «$1»',
+	'deletequeue-showvotes-text' => "Under er bifall og innvendinger mot sletting av siden «'''$1'''».
+Du kan [{{fullurl:{{FULLPAGENAME}}|action=delvote}} legge inn ditt eget bifall av eller innvending mot] denne slettingen.",
+	'deletequeue-showvotes-restrict-endorse' => 'Bare vis bifall',
+	'deletequeue-showvotes-restrict-object' => 'Bare vis innvendinger',
+	'deletequeue-showvotes-restrict-none' => 'Vis alle bifall og innvendinger',
+	'deletequeue-showvotes-vote-endorse' => "'''Bifalt''' sletting den $1 $2",
+	'deletequeue-showvotes-vote-object' => "'''Innvendte mot''' sletting den $1 $2",
+	'deletequeue-showvotes-showingonly-endorse' => 'Viser bare støtte',
+	'deletequeue-showvotes-showingonly-object' => 'Viser bare innvendinger',
+	'deletequeue-showvotes-none' => 'Det er ingen bifall av eller innvendinger mot slettingen av denne siden.',
+	'deletequeue-showvotes-none-endorse' => 'Det er ingen bifall av slettingen av denne siden.',
+	'deletequeue-showvotes-none-object' => 'Det er ingen innvendinger mot slettingen av denne siden.',
+	'deletequeue' => 'Slettingskø',
+	'deletequeue-list-text' => 'Denne siden viser alle sider som er i slettesystemet.',
+	'deletequeue-list-search-legend' => 'Søk etter sider',
+	'deletequeue-list-queue' => 'Kø:',
+	'deletequeue-list-status' => 'Status:',
+	'deletequeue-list-expired' => 'Bare vis nominasjoner som må avsluttes.',
+	'deletequeue-list-search' => 'Søk',
+	'deletequeue-list-anyqueue' => '(noen)',
+	'deletequeue-list-votes' => 'Liste over stemmer',
+	'deletequeue-list-votecount' => '{{PLURAL:$1|Ett bifall|$1 bifall}}, {{PLURAL:$2|en innvending|$2 innvendinger}}',
+	'deletequeue-list-header-page' => 'Side',
+	'deletequeue-list-header-queue' => 'Kø',
+	'deletequeue-list-header-votes' => 'Bifall og innvendinger',
+	'deletequeue-list-header-expiry' => 'Varighet',
+	'deletequeue-list-header-discusspage' => 'Diskusjonsside',
+	'deletequeue-case-intro' => 'Denne siden lister opp informasjon om en spesifikk slettesak.',
+	'deletequeue-list-header-reason' => 'Slettingsårsak:',
+	'deletequeue-case-votes' => 'Bifall/innvendinger:',
+	'deletequeue-case-title' => 'Slettesakdeltajer',
+	'deletequeue-case-details' => 'Grunnleggende detaljer',
+	'deletequeue-case-page' => 'Side:',
+	'deletequeue-case-reason' => 'Årsak:',
+	'deletequeue-case-expiry' => 'Utløp:',
+	'deletequeue-case-needs-review' => 'Denne saken krever [[$1|revidering]].',
 );
 
 /** Dutch (Nederlands)
@@ -4271,163 +5109,6 @@ Du kan [{{fullurl:{{FULLPAGENAME}}|action=delvote}} leggja inn di eiga støtta f
 	'deletequeue-case-needs-review' => 'Denne saka krev [[$1|vurdering]].',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Harald Khan
- * @author Jon Harald Søby
- * @author Nghtwlkr
- * @author Simny
- */
-$messages['no'] = array(
-	'deletequeue-desc' => 'Skaper et [[Special:DeleteQueue|købasert system for å håndtere sletting]]',
-	'deletequeue-action-queued' => 'Sletting',
-	'deletequeue-action' => 'Foreslå sletting',
-	'deletequeue-action-title' => 'Foreslå sletting av «$1»',
-	'deletequeue-action-text' => "{{SITENAME}} har flere prosesser for sletting av sider:
-* Om du mener at denne siden kvalifiserer for ''hurtigsletting'', kan du foreslå det [{{fullurl:{{FULLPAGENAMEE}}|action=delnom&queue=speedy}} her].
-* Om siden ikke kvalifserer for hurtigsletting, men ''sletting likevel vil være ukontroversielt'', kan du [{{fullurl:{{FULLPAGENAMEE}}|action=delnom&queue=prod}} foreslå sletting her].
-* Om det er sannsynlig at sletting av siden ''vil bli omdiskutert'', burde du [{{fullurl:{{FULLPAGENAMEE}}|action=delnom&queue=deletediscuss}} åpne en diskusjon].",
-	'deletequeue-action-text-queued' => 'Du kan se de følgende sidene for denne slettekandidaten:
-* [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} Se nåværande støtte og motstand].
-* [{{fullurl:{{FULLPAGENAME}}|action=delvote}} Støtt eller gå imot sletting av siden].',
-	'deletequeue-permissions-noedit' => 'Du må kunne redigere en side for å kunne påvirke dens slettingsstatus.',
-	'deletequeue-generic-reasons' => '* Vanlige årsaker
-  ** Hæverk
-  ** Søppel
-  ** Reklame
-  ** Vedlikehold
-  ** Ikke relevant for prosjektet',
-	'deletequeue-nom-alreadyqueued' => 'Denne siden er allerede i en sletningskø.',
-	'deletequeue-speedy-title' => 'Merk «$1» for hurtigsletting',
-	'deletequeue-speedy-text' => "Du kan bruke dette skjemaet for å merke siden «'''$1'''» for hurtigsletting.
-
-En administrator vil se gjennom forespørselen, og om den er rimelig, slette siden.
-Du må velge en årsak fra lista nedenfor, og legge til annen relevant informasjon.",
-	'deletequeue-prod-title' => 'Foreslå sletting av «$1»',
-	'deletequeue-prod-text' => "Du kan bruke dette skjemaet for å foreslå at «'''$1'''» slettes.
-
-Om ingen har motsetninger mot slettingen innen fem dager, vil slettingen vurderes av en administrator.",
-	'deletequeue-delnom-reason' => 'Nomneringsårsak:',
-	'deletequeue-delnom-otherreason' => 'Annen grunn',
-	'deletequeue-delnom-extra' => 'Ekstra informasjon:',
-	'deletequeue-delnom-submit' => 'Nominer',
-	'deletequeue-log-nominate' => 'nominerte [[$1]] for sletting i køen «$2».',
-	'deletequeue-log-rmspeedy' => 'avviste hurtigsletting av [[$1]].',
-	'deletequeue-log-requeue' => 'overførte [[$1]] fra slettingskøen «$2» til «$3».',
-	'deletequeue-log-dequeue' => 'fjernet [[$1]] fra slettingskøen «$2».',
-	'right-speedy-nominate' => 'Nominere sider til hurtigsletting',
-	'right-speedy-review' => 'Behandle nominasjoner til hurtigsletting',
-	'right-prod-nominate' => 'Foreslå sletting av sider',
-	'right-prod-review' => 'Behandle ukontroversielle slettingsforslag',
-	'right-deletediscuss-nominate' => 'Starte slettingsdiskusjoner',
-	'right-deletediscuss-review' => 'Avslutte slettingsdiskusjoner',
-	'right-deletequeue-vote' => 'Støtt eller gå imot sletteforslag',
-	'deletequeue-queue-speedy' => 'Hurtigsletting',
-	'deletequeue-queue-prod' => 'Slettingsforslag',
-	'deletequeue-queue-deletediscuss' => 'Slettingsdiskusjon',
-	'deletequeue-page-speedy' => "Denne siden har blitt nominert for hurtigsletting.
-Årsaken som ble oppgitt var ''$1''.",
-	'deletequeue-page-prod' => "Denne siden har blitt foreslått for sletting.
-Årsaken som ble oppgitt var ''$1''.
-Om dette forslaget ikke er motsagt innen ''$2'', vil siden bli slettet.
-Du kan bestride sletting av siden ved å [{{fullurl:{{FULLPAGENAME}}|action=delvote}} motsi sletting].",
-	'deletequeue-page-deletediscuss' => "Denne siden har blitt foreslått slettet, men forslaget har blitt bestridt.
-Den oppgitte slettingsgrunnen var ''$1''.
-En diskusjon foregår på [[$5]]; den vil slutte ''$2''.",
-	'deletequeue-notqueued' => 'Siden du har valgt er ikke foreslått slettet',
-	'deletequeue-review-action' => 'Handling:',
-	'deletequeue-review-delete' => 'Slette siden.',
-	'deletequeue-review-change' => 'Slette siden, men med annen begrunnelse.',
-	'deletequeue-review-requeue' => 'Overføre siden til følgende kø:',
-	'deletequeue-review-dequeue' => 'Ikke gjøre noe, og fjerne siden fra slettingskøen.',
-	'deletequeue-review-reason' => 'Kommentarer:',
-	'deletequeue-review-newreason' => 'Ny årsak:',
-	'deletequeue-review-newextra' => 'Ekstra informasjon:',
-	'deletequeue-review-submit' => 'Lagre gjennomgang',
-	'deletequeue-review-original' => 'Nominasjonsårsak',
-	'deletequeue-actiondisabled-involved' => 'Følgende handling kan ikke gjøres av deg, fordi du har tatt del i slettingen som $1:',
-	'deletequeue-actiondisabled-notexpired' => 'Følgende handling kan ikke gjennomføres, fordi slettingsforslaget ikke har utgått:',
-	'deletequeue-review-badaction' => 'Du oppga en ugyldig handling',
-	'deletequeue-review-actiondenied' => 'Du oppga en handling som er slått av for denne siden',
-	'deletequeue-review-objections' => "'''Advarsel''': Det er [{{fullurl:{{FULLPAGENAME}}|action=delvoteview&votetype=object}} motsigelser] til sletting av denne siden.
-Forsikre deg om at du har tatt disse til hensyn før du sletter siden.",
-	'deletequeue-reviewspeedy-tab' => 'Behandle hurtigsletting',
-	'deletequeue-reviewspeedy-title' => 'Behandle hurtigsletting av «$1»',
-	'deletequeue-reviewspeedy-text' => "Du kan bruke dette skjemaet for å vurdere hurtigsletting av «'''$1'''».
-Forsikre deg om at siden kan hurtigslettes ifm. retningslinjene.",
-	'deletequeue-reviewprod-tab' => 'Behandle slettingsforslag',
-	'deletequeue-reviewprod-title' => 'Behandle slettingsforslag av «$1»',
-	'deletequeue-reviewprod-text' => "Du kan bruke dette skjemaet for å behandle sletting av «'''$1'''».",
-	'deletequeue-reviewdeletediscuss-tab' => 'Revider sletting',
-	'deletequeue-reviewdeletediscuss-title' => 'Revider slettediskusjonen for «$1»',
-	'deletequeue-reviewdeletediscuss-text' => "Du kan bruke dette skjemaet for å revidere slettediskusjonen til «'''$1'''».
-
-En [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} liste] over bifall av og innvendinger mot denne slettingen er tilgjengelig og selve diskusjonen kan bli funnet på [[$2]].
-Forsikre deg om at du tar en avgjørelse i samsvar med konsensus i diskusjonen.",
-	'deletequeue-review-success' => 'Du har revidert slettingen av denne siden',
-	'deletequeue-review-success-title' => 'Revidering fullført',
-	'deletequeue-deletediscuss-discussionpage' => 'Dette er diskusjonssiden for sletting av [[$1]].
-Det er nå {{PLURAL:$2|én bruker|$2 brukere}} som er for sletting og {{PLURAL:$3|én bruker|$3 brukere}} som er imot.
-Du ønsker kanskje å [{{fullurl:$1|action=delvote}} støtte eller gå imot] en sletting, eller [{{fullurl:$1|action=delvoiewvotes}} vise alle bifall og innvendinger].',
-	'deletequeue-discusscreate-summary' => 'Opprett diskusjon for sletting av [[$1]].',
-	'deletequeue-discusscreate-text' => 'Sletting foreslått på grunn av følgende årsaker: $2',
-	'deletequeue-role-nominator' => 'opprinnelig nominert av',
-	'deletequeue-role-vote-endorse' => 'støtter sletting',
-	'deletequeue-role-vote-object' => 'er imot sletting',
-	'deletequeue-vote-tab' => 'Stem over slettinga',
-	'deletequeue-vote-title' => 'Støtt eller gå imot sletting av «$1»',
-	'deletequeue-vote-text' => "Du kan bruke dette skjemaet for å støtte eller gå imot slettingen av «'''$1'''».
-Denne handligen vil overskrive eventuelle tidligere bifall/innvendinger du har gitt mot slettingen av denne siden.
-Du kan [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} vise] eksisterende bifall og innvendinger.
-Oppgitt grunn for nominasjonen var ''$2''.",
-	'deletequeue-vote-legend' => 'Støtt/gå imot sletting',
-	'deletequeue-vote-action' => 'Anbefaling:',
-	'deletequeue-vote-endorse' => 'Støtt sletting.',
-	'deletequeue-vote-object' => 'Gå imot sletting.',
-	'deletequeue-vote-reason' => 'Kommentarer:',
-	'deletequeue-vote-submit' => 'Send',
-	'deletequeue-vote-success-endorse' => 'Du har støttet forslaget om sletting av denne sida.',
-	'deletequeue-vote-success-object' => 'Du har gått imot sletting av denne sida',
-	'deletequeue-vote-requeued' => 'Du har gått imot slettingen av denne siden.
-På grunn av din motstand har siden blitt flyttet til køen $1.',
-	'deletequeue-showvotes' => 'Bifall av og innvendinger mot sletting av «$1»',
-	'deletequeue-showvotes-text' => "Under er bifall og innvendinger mot sletting av siden «'''$1'''».
-Du kan [{{fullurl:{{FULLPAGENAME}}|action=delvote}} legge inn ditt eget bifall av eller innvending mot] denne slettingen.",
-	'deletequeue-showvotes-restrict-endorse' => 'Bare vis bifall',
-	'deletequeue-showvotes-restrict-object' => 'Bare vis innvendinger',
-	'deletequeue-showvotes-restrict-none' => 'Vis alle bifall og innvendinger',
-	'deletequeue-showvotes-vote-endorse' => "'''Bifalt''' sletting den $1 $2",
-	'deletequeue-showvotes-vote-object' => "'''Innvendte mot''' sletting den $1 $2",
-	'deletequeue-showvotes-showingonly-endorse' => 'Viser bare støtte',
-	'deletequeue-showvotes-showingonly-object' => 'Viser bare innvendinger',
-	'deletequeue-showvotes-none' => 'Det er ingen bifall av eller innvendinger mot slettingen av denne siden.',
-	'deletequeue-showvotes-none-endorse' => 'Det er ingen bifall av slettingen av denne siden.',
-	'deletequeue-showvotes-none-object' => 'Det er ingen innvendinger mot slettingen av denne siden.',
-	'deletequeue' => 'Slettingskø',
-	'deletequeue-list-text' => 'Denne siden viser alle sider som er i slettesystemet.',
-	'deletequeue-list-search-legend' => 'Søk etter sider',
-	'deletequeue-list-queue' => 'Kø:',
-	'deletequeue-list-status' => 'Status:',
-	'deletequeue-list-expired' => 'Bare vis nominasjoner som må avsluttes.',
-	'deletequeue-list-search' => 'Søk',
-	'deletequeue-list-anyqueue' => '(noen)',
-	'deletequeue-list-votes' => 'Liste over stemmer',
-	'deletequeue-list-votecount' => '{{PLURAL:$1|Ett bifall|$1 bifall}}, {{PLURAL:$2|en innvending|$2 innvendinger}}',
-	'deletequeue-list-header-page' => 'Side',
-	'deletequeue-list-header-queue' => 'Kø',
-	'deletequeue-list-header-votes' => 'Bifall og innvendinger',
-	'deletequeue-list-header-expiry' => 'Varighet',
-	'deletequeue-list-header-discusspage' => 'Diskusjonsside',
-	'deletequeue-case-intro' => 'Denne siden lister opp informasjon om en spesifikk slettesak.',
-	'deletequeue-list-header-reason' => 'Slettingsårsak:',
-	'deletequeue-case-votes' => 'Bifall/innvendinger:',
-	'deletequeue-case-title' => 'Slettesakdeltajer',
-	'deletequeue-case-details' => 'Grunnleggende detaljer',
-	'deletequeue-case-page' => 'Side:',
-	'deletequeue-case-reason' => 'Årsak:',
-	'deletequeue-case-expiry' => 'Utgår:',
-	'deletequeue-case-needs-review' => 'Denne saken krever [[$1|revidering]].',
-);
-
 /** Novial (Novial)
  * @author Malafaya
  */
@@ -4590,12 +5271,18 @@ Podètz enregistrar [{{FULLURL:{{FULLPAGENAME}}|action=delvote}} aicí] vòstra 
 
 /** Oriya (ଓଡ଼ିଆ)
  * @author Jose77
+ * @author Odisha1
+ * @author Psubhashish
  */
 $messages['or'] = array(
-	'deletequeue-list-search' => 'ସନ୍ଧାନ',
+	'deletequeue-list-search' => 'ଖୋଜିବା',
+	'deletequeue-list-header-expiry' => 'ଅଚଳ ହେବ',
+	'deletequeue-case-page' => 'ପୃଷ୍ଠା:',
+	'deletequeue-case-reason' => 'କାରଣ:',
+	'deletequeue-case-expiry' => 'ଅଚଳ ହେବ:',
 );
 
-/** Ossetic (Иронау)
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -4607,8 +5294,9 @@ $messages['os'] = array(
  */
 $messages['pdc'] = array(
 	'deletequeue-delnom-otherreason' => 'Annerer Grund',
-	'deletequeue-review-reason' => 'Anmaerrickinge:',
-	'deletequeue-vote-reason' => 'Anmaerrickinge:',
+	'deletequeue-review-reason' => 'Aamaerickinge:',
+	'deletequeue-review-newreason' => 'Neier Grund:',
+	'deletequeue-vote-reason' => 'Aamaerickinge:',
 	'deletequeue-list-search' => 'Guck uff',
 	'deletequeue-list-header-page' => 'Blatt',
 	'deletequeue-case-page' => 'Blatt:',
@@ -4622,25 +5310,153 @@ $messages['pdc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'deletequeue-desc' => 'Tworzy [[Special:DeleteQueue|oparty na kolejce system zarządzania usuwaniem]]',
+	'deletequeue-action-queued' => 'Usunięcie',
+	'deletequeue-action' => 'Zaproponuj do usunięcia',
+	'deletequeue-action-title' => 'Zaproponuj usunięcie „$1”',
+	'deletequeue-action-text' => "Wiki ma kilka procedur usuwania stron: 
+* Jeśli uważasz za uzasadnione, możesz tę stronę [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=speedy}} oznaczyć do ''ekspresowego usunięcia''].
+* Jeśli zawartość strony nie gwarantuje kwalifikacji jej do ekspresowego usunięcia, a ''usunięcie prawdopodobnie będzie niekontrowersyjne'', należy [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=prod}} zaproponować usunięcie bezspornych].
+* Jeśli usunięcie tej strony ''może wywołać czyjeś protesty'', należy [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=deletediscuss}} otworzyć dyskusję].",
+	'deletequeue-action-text-queued' => 'Następujące strony związane są z tym zgłoszeniem:
+* [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} Zobacz głosy zwolenników i przeciwników usunięcia].
+* [{{fullurl:{{FULLPAGENAME}}|action=delvote}} Zagłosuj za lub przeciw usunięciu].',
+	'deletequeue-permissions-noedit' => 'Musisz być w stanie edytować stronę, aby móc wpływać na jej status usunięcia.',
+	'deletequeue-generic-reasons' => '* Najczęstsze powody
+** Wandalizm
+** Spam
+** Porządki
+** Treść nie przystaje do projektu',
+	'deletequeue-nom-alreadyqueued' => 'Ta strona jest już w kolejce do usunięcia.',
 	'deletequeue-speedy-title' => 'Oznacz „$1” do ekspresowego skasowania',
-	'right-speedy-nominate' => 'Oznacz strony do ekspresowego skasowania',
-	'right-speedy-review' => 'Przejrzyj strony do ekspresowego skasowania',
+	'deletequeue-speedy-text' => "Możesz użyć tego formularza do oznaczenia strony „'''$1'''” do ekspresowego usunięcia.
+
+Administrator zweryfikuje to zgłoszenie i jeśli uzna zgłoszenie za zasadne usunie stronę.
+Musisz wybrać powód usunięcia z poniższej listy rozwijalnej i dodać wszelkie istotne informacje.",
+	'deletequeue-prod-title' => 'Zaproponuj usunięcie „$1”',
+	'deletequeue-prod-text' => "Możesz użyć tego formularza aby zgłosić „'''$1'''” do usunięcia.
+
+Jeśli w ciągu pięciu dni nikt nie zakwestionuje usunięcia tej strony zostanie usunięta po końcowym sprawdzeniu przez administratora.",
+	'deletequeue-delnom-reason' => 'Powód zgłoszenia',
+	'deletequeue-delnom-otherreason' => 'Inny powód',
+	'deletequeue-delnom-extra' => 'Dodatkowe informacje',
+	'deletequeue-delnom-submit' => 'Zapisz zgłoszenie',
+	'deletequeue-log-nominate' => 'zgłoszono [[$1]] do usunięcia w kolejce „$2”',
+	'deletequeue-log-rmspeedy' => 'zmieniono na ekspresowe usuwanie [[$1]]',
+	'deletequeue-log-requeue' => 'przeniesiono [[$1]] do innej kolejki usuwania – z „$2” do „$3”',
+	'deletequeue-log-dequeue' => 'usunięto [[$1]] z kolejki usuwania „$2”',
+	'right-speedy-nominate' => 'Oznaczanie stron do ekspresowego skasowania',
+	'right-speedy-review' => 'Zatwierdzanie stron oznaczonych do ekspresowego skasowania',
+	'right-prod-nominate' => 'Proponowanie usunięcia strony',
+	'right-prod-review' => 'Zatwierdzanie bezspornych propozycji usunięć',
+	'right-deletediscuss-nominate' => 'Rozpoczęcie dyskusji nad usunięciem',
+	'right-deletediscuss-review' => 'Zamknięcie dyskusji nad usunięciem',
+	'right-deletequeue-vote' => 'Wyrażenie poparcia lub sprzeciwu dla usunięcia',
+	'deletequeue-queue-speedy' => 'Ekspresowe usuwanie',
+	'deletequeue-queue-prod' => 'Propozycje usunięcia',
+	'deletequeue-queue-deletediscuss' => 'Dyskusja usuwania',
+	'deletequeue-page-speedy' => "Ta strona została zgłoszona do ekspresowego usunięcia.
+Powód podany jako uzasadnienie zgłoszenia to ''$1''.",
+	'deletequeue-page-prod' => "Strona została zgłoszona do usunięcia.
+Powód podany przy zgłoszeniu to ''$1''.
+Jeśli nikt nie będzie miał zastrzeżeń do ''$2'' strona zostanie usunięta.
+Możesz w kwestii usunięcia strony [{{fullurl:{{FULLPAGENAME}}|action=delvote}} zgłosić sprzeciw].",
+	'deletequeue-page-deletediscuss' => "Ta strona została zgłoszona do usunięcia lecz ktoś zgłosił sprzeciw.
+Podany powód to ''$1''.
+Dyskusja trwa na stronie [[$5]], a zakończy się ''$2''.",
+	'deletequeue-notqueued' => 'Strona, którą wybrałeś nie znajduje się w kolejce do usunięcia',
+	'deletequeue-review-action' => 'Cel działania',
 	'deletequeue-review-delete' => 'Usuń stronę.',
+	'deletequeue-review-change' => 'Usuń tę stronę, ale z innym uzasadnieniem.',
+	'deletequeue-review-requeue' => 'Przenieś tę stronę do kolejki',
+	'deletequeue-review-dequeue' => 'Nie podejmuj żadnej akcji i usuń tę stronę z kolejki stron do usunięcia.',
+	'deletequeue-review-reason' => 'Komentarze:',
+	'deletequeue-review-newreason' => 'Nowy powód',
 	'deletequeue-review-newextra' => 'Dodatkowe informacje:',
+	'deletequeue-review-submit' => 'Zapisz decyzję',
+	'deletequeue-review-original' => 'Powód zgłoszenia',
+	'deletequeue-actiondisabled-involved' => 'Następująca działanie nie jest możliwe ponieważ bierzesz udział w tym zgłoszeniu do usunięcia jako $1',
+	'deletequeue-actiondisabled-notexpired' => 'Następująca działanie nie jest możliwe ponieważ to czas trwania zgłoszenia do usunięcia jeszcze nie upłynął',
+	'deletequeue-review-badaction' => 'Wybrałeś nieprawidłowe działanie',
+	'deletequeue-review-actiondenied' => 'Wybrałeś działanie, które jest wyłączone dla tej strony',
+	'deletequeue-review-objections' => "'''Uwaga''' – usunięcie tej strony [{{fullurl:{{FULLPAGENAME}}|action=delvoteview&votetype=object}} wywołało czyjś sprzeciw].
+Upewnij się przed usunięciem tej strony, że zapoznałeś się z ich argumentami.",
+	'deletequeue-reviewspeedy-tab' => 'Zatwierdzanie ekspresowego usuwania',
+	'deletequeue-reviewspeedy-title' => 'Zatwierdzanie zgłoszenia do ekspresowego usunięcia „$1”',
+	'deletequeue-reviewspeedy-text' => "Możesz użyć tego formularza do zaakceptowania zgłoszenia „'''$1'''” do ekspresowego usunięcia.
+Upewnij się, że usunięcie strony w tym trybie będzie zgodne z obowiązującą polityką.",
+	'deletequeue-reviewprod-tab' => 'Zatwierdzanie zgłoszeń do usunięcia',
+	'deletequeue-reviewprod-title' => 'Zatwierdzanie zgłoszenia do usunięcia „$1”',
+	'deletequeue-reviewprod-text' => "Możesz użyć tego formularza do zatwierdzania bezspornego zgłoszenia do usunięcia „'''$1'''”.",
+	'deletequeue-reviewdeletediscuss-tab' => 'Zatwierdzam usunięcie',
+	'deletequeue-reviewdeletediscuss-title' => 'Sprawdzenie dyskusji nad usunięciem „$1”',
+	'deletequeue-reviewdeletediscuss-text' => "Możesz użyć tego formularza do podsumowania dyskusji o usunięciu „'''$1'''”.
+
+Dostępna jest [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} lista] głosów poparcia i sprzeciwu w sprawie usunięcia tej strony oraz dyskusja na [[$2]].
+Upewnij się, że podejmujesz decyzję zgodną z ustalonym w toku dyskusji konsensusem.",
+	'deletequeue-review-success' => 'Zweryfikowałeś potrzebę usunięcia tej strony.',
+	'deletequeue-review-success-title' => 'Weryfikacja zakończona',
+	'deletequeue-deletediscuss-discussionpage' => 'To jest strona dyskusji usunięcia [[$1]].
+Obecnie $2 {{PLURAL:$2|użytkownik|użytkowników}} popiera usunięcie, a $3 {{PLURAL:$3|użytkownik|użytkowników}} jest przeciwnych usunięciu.
+Możesz [{{fullurl:$1|action=delvote}} zająć stanowisko] w sprawie usunięcia lub [{{fullurl:$1|action=delviewvotes}} zobaczyć przebieg głosowania].',
+	'deletequeue-discusscreate-summary' => 'Tworzenie strony dyskusji dla usuwania [[$1]].',
+	'deletequeue-discusscreate-text' => 'Zgłoszono usunięcie podając powód – $2',
+	'deletequeue-role-nominator' => 'pierwszy zgłaszający do usunięcia',
+	'deletequeue-role-vote-endorse' => 'za usunięciem',
+	'deletequeue-role-vote-object' => 'przeciwny usunięciu',
+	'deletequeue-vote-tab' => 'Głosowanie nad usunięciem',
+	'deletequeue-vote-title' => 'Wyrażenie poparcia lub sprzeciwu dla usunięcia „$1”',
+	'deletequeue-vote-text' => "Możesz użyć tego formularza aby poprzeć lub sprzeciwić się usunięciu „'''$1'''”.
+Działanie to nadpisze wcześniejsze głosy, które oddałeś w tej sprawie.
+Możesz [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} sprawdzić] wszystkie dotychczasowe głosy.
+Powodem zgłoszenia do usunięcia było ''$2''.",
+	'deletequeue-vote-legend' => 'Wyrażenie poparcia lub sprzeciwu dla usunięcia',
+	'deletequeue-vote-action' => 'Rekomendacja',
+	'deletequeue-vote-endorse' => 'za usunięciem',
+	'deletequeue-vote-object' => 'przeciwny usunięciu',
 	'deletequeue-vote-reason' => 'Komentarze:',
 	'deletequeue-vote-submit' => 'Zapisz',
+	'deletequeue-vote-success-endorse' => 'Potwierdziłeś, że jesteś za usunięciem tej strony.',
+	'deletequeue-vote-success-object' => 'Sprzeciwiłeś się usunięciu tej strony.',
+	'deletequeue-vote-requeued' => 'Zgłosiłeś sprzeciw przeciwko usunięciu tej strony.
+Ponieważ się sprzeciwiłeś strona została przeniesiona do kolejki $1.',
+	'deletequeue-showvotes' => 'Potwierdzenia i sprzeciwy dotyczące usunięcia strony „$1”',
+	'deletequeue-showvotes-text' => "Poniżej znajdują się potwierdzenia i sprzeciwy dotyczące usunięcia strony „'''$1'''”.
+Możesz [{{fullurl:{{FULLPAGENAME}}|action=delvote}} zająć stanowisko] w tej sprawie.",
+	'deletequeue-showvotes-restrict-endorse' => 'Pokaż wyłącznie zwolenników',
+	'deletequeue-showvotes-restrict-object' => 'Pokaż wyłącznie przeciwników',
+	'deletequeue-showvotes-restrict-none' => 'Pokaż wszystkich, zarówno zwolenników i przeciwników',
+	'deletequeue-showvotes-vote-endorse' => "'''Poprzeć''' usunięcie na $1 $2",
+	'deletequeue-showvotes-vote-object' => "'''Sprzeciw''' przeciwko usunięciu na $1 $2",
+	'deletequeue-showvotes-showingonly-endorse' => 'Wyświetlanie wyłącznie zwolenników',
+	'deletequeue-showvotes-showingonly-object' => 'Wyświetlanie wyłącznie przeciwników',
+	'deletequeue-showvotes-none' => 'Brak zarówno zwolenników jak i przeciwników usunięcia tej strony.',
+	'deletequeue-showvotes-none-endorse' => 'Brak zwolenników usunięcia tej strony.',
+	'deletequeue-showvotes-none-object' => 'Brak przeciwników usunięcia tej strony.',
+	'deletequeue' => 'Kolejka usuwania',
+	'deletequeue-list-text' => 'Na tej stronie wyświetlane są wszystkie strony, które są przetwarzane przez system usuwania stron.',
 	'deletequeue-list-search-legend' => 'Szukaj stron',
 	'deletequeue-list-queue' => 'Kolejka:',
 	'deletequeue-list-status' => 'Status:',
+	'deletequeue-list-expired' => 'Pokaż wyłącznie zgłoszenia wymagające zamknięcia.',
 	'deletequeue-list-search' => 'Szukaj',
+	'deletequeue-list-anyqueue' => '(dowolna)',
+	'deletequeue-list-votes' => 'Lista głosów',
+	'deletequeue-list-votecount' => '$1 {{PLURAL:$1|zwolennik|zwolenników}}, $2 {{PLURAL:$2|przeciwnik|przeciwników}}',
 	'deletequeue-list-header-page' => 'Strona',
 	'deletequeue-list-header-queue' => 'Kolejka',
+	'deletequeue-list-header-votes' => 'Poparcia i sprzeciwy',
 	'deletequeue-list-header-expiry' => 'Upływa',
 	'deletequeue-list-header-discusspage' => 'Strona dyskusji',
+	'deletequeue-case-intro' => 'Na tej stronie znajdziesz informacje na temat konkretnego przypadku usunięcia.',
+	'deletequeue-list-header-reason' => 'Powód usunięcia',
+	'deletequeue-case-votes' => 'Głosy za i przeciw',
+	'deletequeue-case-title' => 'Szczegóły dotyczące zgłoszenia',
 	'deletequeue-case-details' => 'Podstawowe informacje',
 	'deletequeue-case-page' => 'Strona',
 	'deletequeue-case-reason' => 'Powód',
 	'deletequeue-case-expiry' => 'Wygaśnięcie',
+	'deletequeue-case-needs-review' => 'To zgłoszenie wymaga [[$1|zatwierdzenia]].',
 );
 
 /** Piedmontese (Piemontèis)
@@ -4801,8 +5617,31 @@ A peul [{{fullurl:{{FULLPAGENAME}}|action=delvote}} registré sò apogg, o obies
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'deletequeue-action-queued' => 'ړنګېدنه',
+	'deletequeue-action' => 'د ړنګولو وړانديز کول',
+	'deletequeue-action-title' => 'د "$1" د ړنګولو وړانديز کول',
+	'deletequeue-delnom-otherreason' => 'بل سبب',
+	'deletequeue-delnom-extra' => 'نور مالومات:',
+	'deletequeue-queue-speedy' => 'چټکه ړنګېدنه',
+	'deletequeue-queue-deletediscuss' => 'د ړنګولو خبرې اترې',
+	'deletequeue-review-delete' => 'دا مخ ړنګول.',
+	'deletequeue-review-reason' => 'تبصرې:',
+	'deletequeue-review-newreason' => 'نوی سبب:',
+	'deletequeue-vote-action' => 'سپارښتنه:',
+	'deletequeue-vote-reason' => 'تبصرې:',
+	'deletequeue-vote-submit' => 'سپارل',
+	'deletequeue-list-search-legend' => 'د مخونو پلټنه',
 	'deletequeue-list-status' => 'دريځ:',
+	'deletequeue-list-search' => 'پلټل',
+	'deletequeue-list-anyqueue' => '(هر يو)',
+	'deletequeue-list-votes' => 'د رايو لړليک',
+	'deletequeue-list-header-page' => 'مخ',
 	'deletequeue-list-header-expiry' => 'د پای نېټه',
+	'deletequeue-list-header-discusspage' => 'د خبرو اترو مخ',
+	'deletequeue-list-header-reason' => 'د ړنګولو سبب',
+	'deletequeue-case-page' => 'مخ:',
+	'deletequeue-case-reason' => 'سبب:',
+	'deletequeue-case-expiry' => 'د پای نېټه:',
 );
 
 /** Portuguese (Português)
@@ -4820,25 +5659,25 @@ $messages['pt'] = array(
 *Se acredita que esta página justifica uma ''eliminação rápida'', poderá sugeri-la [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=speedy}} aqui].
 *Se esta página não justifica uma eliminação rápida, mas ''a eliminação provavelmente será incontroversa'', deverá [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=prod}} propôr uma eliminação incontestada].
 *Se a eliminação desta página será ''provavelmente contestada'', deverá [{{fullurl:{{FULLPAGENAME}}|action=delnom&queue=deletediscuss}} iniciar uma discussão].",
-	'deletequeue-action-text-queued' => 'Você pode ver as seguintes páginas para este caso de eliminação:
-* [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} Ver suportes e objeções atuais].
-* [{{fullurl:{{FULLPAGENAME}}|action=delvote}} Suportar ou objetar à eliminação desta página].',
+	'deletequeue-action-text-queued' => 'Pode ver as seguintes páginas para este caso de eliminação:
+* [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} Ver apoios e objecções actuais].
+* [{{fullurl:{{FULLPAGENAME}}|action=delvote}} Apoiar ou objectar à eliminação desta página].',
 	'deletequeue-permissions-noedit' => 'Tem de poder editar uma página para poder afectar o seu estado de eliminação.',
 	'deletequeue-generic-reasons' => '* Motivos genéricos
-  ** Vandalismo
-  ** Spam
-  ** Manutenção
-  ** Fora do âmbito do projeto',
+** Vandalismo
+** Spam
+** Manutenção
+** Fora do âmbito do projeto',
 	'deletequeue-nom-alreadyqueued' => 'Esta página já se encontra numa fila de eliminação.',
 	'deletequeue-speedy-title' => 'Marcar "$1" para eliminação rápida',
-	'deletequeue-speedy-text' => "Você pode usar este formulário para marcar a página \"'''\$1'''\" para eliminação rápida.
+	'deletequeue-speedy-text' => "Pode usar este formulário para marcar a página \"'''\$1'''\" para eliminação rápida.
 
 Um administrador irá rever este pedido e, se for bem fundamentado, eliminar a página.
-Deverá selecionar um motivo de eliminação da lista de opções abaixo, e adicionar qualquer outra informação relevante.",
+Deverá seleccionar um motivo de eliminação da lista de opções abaixo, e adicionar qualquer outra informação relevante.",
 	'deletequeue-prod-title' => 'Propor eliminação de "$1"',
-	'deletequeue-prod-text' => "Você pode usar este formulário para propor que \"'''\$1'''\" seja apagada.
+	'deletequeue-prod-text' => "Pode usar este formulário para propor que a página \"'''\$1'''\" seja eliminada.
 
-Se, após cinco dias, ninguém tiver contestado a eliminação desta página, ela será eliminada após revisão final por um administrador.",
+Se, após cinco dias, ninguém tiver objectado à eliminação desta página, ela será eliminada após revisão final por um administrador.",
 	'deletequeue-delnom-reason' => 'Motivo da nomeação:',
 	'deletequeue-delnom-otherreason' => 'Outro motivo',
 	'deletequeue-delnom-extra' => 'Informação extra:',
@@ -4861,98 +5700,98 @@ Se, após cinco dias, ninguém tiver contestado a eliminação desta página, el
 O motivo dado para esta eliminação foi ''$1''.",
 	'deletequeue-page-prod' => "Foi proposta a eliminação desta página.
 O motivo dado foi ''$1''.
-Se esta proposta não for contestada em ''$2'', esta página será eliminada.
-Você pode contestar a eliminação desta página [{{fullurl:{{FULLPAGENAME}}|action=delvote}} objetando à eliminação].",
+Se esta proposta não tiver objecções em ''$2'', a página será eliminada.
+Pode opor-se à eliminação desta página [{{fullurl:{{FULLPAGENAME}}|action=delvote}} objectando à eliminação].",
 	'deletequeue-page-deletediscuss' => "Esta página foi proposta para eliminação, e essa proposta foi contestada.
 O motivo dado foi ''$1''.
 Uma discussão encontra-se em curso em [[$5]], e que será concluída em ''$2''.",
-	'deletequeue-notqueued' => 'A página que selecionou não está atualmente em nenhum fila para eliminação',
+	'deletequeue-notqueued' => 'A página que seleccionou não está neste momento na fila para eliminação',
 	'deletequeue-review-action' => 'Acção a tomar:',
 	'deletequeue-review-delete' => 'Eliminar a página.',
 	'deletequeue-review-change' => 'Eliminar esta página, mas com uma justificação diferente.',
 	'deletequeue-review-requeue' => 'Transferir esta página para a seguinte fila:',
-	'deletequeue-review-dequeue' => 'Não tomar nenhuma ação, e remover a página da fila de eliminação.',
+	'deletequeue-review-dequeue' => 'Não tomar nenhuma acção e remover a página da fila de eliminação.',
 	'deletequeue-review-reason' => 'Comentários:',
 	'deletequeue-review-newreason' => 'Novo motivo:',
 	'deletequeue-review-newextra' => 'Informação extra:',
 	'deletequeue-review-submit' => 'Gravar Revisão',
 	'deletequeue-review-original' => 'Motivo da nomeação',
-	'deletequeue-actiondisabled-involved' => 'A seguinte ação está desativada porque você tomou parte neste caso de eliminação nos papéis $1:',
-	'deletequeue-actiondisabled-notexpired' => 'A seguinte ação está desativada porque a nomeação para eliminação ainda não expirou:',
-	'deletequeue-review-badaction' => 'Você especificou uma ação inválida',
-	'deletequeue-review-actiondenied' => 'Você especificou uma ação que está desativada para esta página',
+	'deletequeue-actiondisabled-involved' => 'A seguinte acção está desactivada porque tomou parte neste caso de eliminação, nos papéis $1:',
+	'deletequeue-actiondisabled-notexpired' => 'A seguinte acção está desactivada porque a nomeação para eliminação ainda não expirou:',
+	'deletequeue-review-badaction' => 'Especificou uma acção inválida',
+	'deletequeue-review-actiondenied' => 'Especificou uma acção que está desactivada para esta página',
 	'deletequeue-review-objections' => "'''Aviso''': A eliminação desta página tem [{{fullurl:{{FULLPAGENAME}}|action=delvoteview&votetype=object}} objeções].
 Por favor, assegure-se de que considerou estas objeções antes de eliminar esta página.",
 	'deletequeue-reviewspeedy-tab' => 'Rever eliminação rápida',
 	'deletequeue-reviewspeedy-title' => 'Rever a nomeação para eliminação rápida de "$1"',
-	'deletequeue-reviewspeedy-text' => "Você pode usar este formulário para rever a nomeação de \"'''\$1'''\" para eliminação rápida.
-Por favor, assegure-se de que esta página pode ser eliminada rapidamente de acordo com a política.",
+	'deletequeue-reviewspeedy-text' => "Pode usar este formulário para rever a proposta de \"'''\$1'''\" para eliminação rápida.
+Por favor, assegure-se de que esta página pode ser eliminada rapidamente de acordo com as normas.",
 	'deletequeue-reviewprod-tab' => 'Rever eliminação proposta',
 	'deletequeue-reviewprod-title' => 'Rever eliminação proposta de "$1"',
-	'deletequeue-reviewprod-text' => "Você pode usar este formulário para rever a proposta incontestada de eliminação de \"'''\$1'''\".",
+	'deletequeue-reviewprod-text' => "Pode usar este formulário para rever a proposta incontestada de eliminação de \"'''\$1'''\".",
 	'deletequeue-reviewdeletediscuss-tab' => 'Rever eliminação',
 	'deletequeue-reviewdeletediscuss-title' => 'Rever discussão de eliminação de "$1"',
-	'deletequeue-reviewdeletediscuss-text' => "Você pode usar este formulário para rever a discussão de eliminação de \"'''\$1'''\".
+	'deletequeue-reviewdeletediscuss-text' => "Pode usar este formulário para rever a discussão da eliminação de \"'''\$1'''\".
 
-Está disponível uma [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} lista] de suportes e objeções desta eliminação, e a discussão pode ser encontrada em [[\$2]].
+Está disponível uma [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} lista] de apoios e objecções desta eliminação e a discussão pode ser encontrada em [[\$2]].
 Por favor, assegure-se de que toma uma decisão de acordo com o consenso patente na discussão.",
-	'deletequeue-review-success' => 'Você analisou com sucesso a eliminação desta página',
+	'deletequeue-review-success' => 'Reviu com sucesso a eliminação desta página',
 	'deletequeue-review-success-title' => 'Revisão completa',
 	'deletequeue-deletediscuss-discussionpage' => 'Esta é a página de discussão para a eliminação de [[$1]].
-Há atualmente $2 {{PLURAL:$2|utilizador|utilizadores}} a suportar a eliminação, e $3 {{PLURAL:$3|utilizador|utilizadores}} a objetar à eliminação.
-Você pode [{{fullurl:$1|action=delvote}} suportar ou objetar] à eliminação, ou [{{fullurl:$1|action=delviewvotes}} ver todos os suportes e objeções].',
+Há actualmente $2 {{PLURAL:$2|utilizador|utilizadores}} a apoiar a eliminação, e $3 {{PLURAL:$3|utilizador|utilizadores}} a objectar à eliminação.
+Pode [{{fullurl:$1|action=delvote}} apoiar ou objectar] à eliminação, ou [{{fullurl:$1|action=delviewvotes}} ver todos os apoios e objecções].',
 	'deletequeue-discusscreate-summary' => 'A criar discussão para a eliminação de [[$1]].',
 	'deletequeue-discusscreate-text' => 'Eliminação proposta pelo seguinte motivo: $2',
 	'deletequeue-role-nominator' => 'nomeador original da eliminação',
-	'deletequeue-role-vote-endorse' => 'suportador da eliminação',
-	'deletequeue-role-vote-object' => 'objetor à eliminação',
+	'deletequeue-role-vote-endorse' => 'apoiante da eliminação',
+	'deletequeue-role-vote-object' => 'objector à eliminação',
 	'deletequeue-vote-tab' => 'Votar na eliminação',
-	'deletequeue-vote-title' => 'Suportar ou objetar à eliminação de "$1"',
-	'deletequeue-vote-text' => "Você pode usar este formulário para suportar ou objetar à eliminação de \"'''\$1'''\".
-Esta ação sobrepor-se-á a quaisquer suportes/objeções que tenha prestado à eliminação desta página.
-Você pode [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} ver] os suportes e objeções existentes.
-O motivo dado na nomeação para eliminação foi ''\$2''.",
-	'deletequeue-vote-legend' => 'Suportar/Objetar à eliminação',
+	'deletequeue-vote-title' => 'Apoiar ou objectar à eliminação de "$1"',
+	'deletequeue-vote-text' => "Pode usar este formulário para apoiar ou objectar à eliminação de \"'''\$1'''\".
+Esta acção sobrepõe-se a quaisquer apoios/objecções que tenha dado anteriormente à eliminação da página.
+Pode [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} ver] os apoios e objecções existentes.
+O motivo apresentado para a nomeação para eliminação foi ''\$2''.",
+	'deletequeue-vote-legend' => 'Apoiar/Objectar à eliminação',
 	'deletequeue-vote-action' => 'Recomendação:',
-	'deletequeue-vote-endorse' => 'Aprovar eliminação.',
-	'deletequeue-vote-object' => 'Contestar a eliminação.',
+	'deletequeue-vote-endorse' => 'Apoiar eliminação.',
+	'deletequeue-vote-object' => 'Objectar à eliminação.',
 	'deletequeue-vote-reason' => 'Comentários:',
-	'deletequeue-vote-submit' => 'Submeter',
-	'deletequeue-vote-success-endorse' => 'Você suportou com sucesso a eliminação desta página.',
-	'deletequeue-vote-success-object' => 'Você objetou com sucesso à eliminação desta página.',
-	'deletequeue-vote-requeued' => 'Você suportou com sucesso a eliminação desta página.
-Devido à sua objeção, a página foi movida para a fila $1.',
-	'deletequeue-showvotes' => 'Suportes e objeções à eliminação de "$1"',
-	'deletequeue-showvotes-text' => "Abaixo estão os suportes e objeções feitas à eliminação da página  \"'''\$1'''\".
-Você pode [{{fullurl:{{FULLPAGENAME}}|action=delvote}} registar o seu próprio suporte ou objeção] a esta eliminação.",
-	'deletequeue-showvotes-restrict-endorse' => 'Mostrar apenas aprovações',
-	'deletequeue-showvotes-restrict-object' => 'Mostrar apenas contestações',
-	'deletequeue-showvotes-restrict-none' => 'Mostrar todos os suportes e objeções',
-	'deletequeue-showvotes-vote-endorse' => "'''Suportou''' a eliminação em $1 $2",
-	'deletequeue-showvotes-vote-object' => "'''Objetou''' à eliminação em $1 $2",
-	'deletequeue-showvotes-showingonly-endorse' => 'Mostrando apenas aprovações',
-	'deletequeue-showvotes-showingonly-object' => 'Mostrando apenas contestações',
-	'deletequeue-showvotes-none' => 'Não há suportes ou objeções à eliminação desta página.',
-	'deletequeue-showvotes-none-endorse' => 'Não há suportes à eliminação desta página.',
-	'deletequeue-showvotes-none-object' => 'Não há objeções à eliminação desta página.',
+	'deletequeue-vote-submit' => 'Enviar',
+	'deletequeue-vote-success-endorse' => 'Apoiou com sucesso a eliminação desta página.',
+	'deletequeue-vote-success-object' => 'Objectou com sucesso à eliminação desta página.',
+	'deletequeue-vote-requeued' => 'Objectou com sucesso à eliminação desta página.
+Devido à sua objecção, a página foi movida para a fila $1.',
+	'deletequeue-showvotes' => 'Apoios e objecções à eliminação de "$1"',
+	'deletequeue-showvotes-text' => "Abaixo estão os apoios e objecções à eliminação da página \"'''\$1'''\".
+Pode [{{fullurl:{{FULLPAGENAME}}|action=delvote}} registar o seu próprio apoio ou objecção] a esta eliminação.",
+	'deletequeue-showvotes-restrict-endorse' => 'Mostrar apenas os apoios',
+	'deletequeue-showvotes-restrict-object' => 'Mostrar apenas as objecções',
+	'deletequeue-showvotes-restrict-none' => 'Mostrar todos os apoios e objecções',
+	'deletequeue-showvotes-vote-endorse' => "'''Apoiou''' a eliminação em $1, às $2",
+	'deletequeue-showvotes-vote-object' => "'''Objectou''' à eliminação em $1, às $2",
+	'deletequeue-showvotes-showingonly-endorse' => 'A mostrar apenas os apoios',
+	'deletequeue-showvotes-showingonly-object' => 'A mostrar apenas as objecções',
+	'deletequeue-showvotes-none' => 'Não há apoios ou objecções à eliminação desta página.',
+	'deletequeue-showvotes-none-endorse' => 'Não há apoios à eliminação desta página.',
+	'deletequeue-showvotes-none-object' => 'Não há objecções à eliminação desta página.',
 	'deletequeue' => 'Fila de eliminações',
-	'deletequeue-list-text' => 'Esta página mostra todas as páginas que estão no sistema de exclusão.',
+	'deletequeue-list-text' => 'Esta página mostra todas as páginas que estão no sistema de eliminações.',
 	'deletequeue-list-search-legend' => 'Pesquisar páginas',
 	'deletequeue-list-queue' => 'Fila:',
 	'deletequeue-list-status' => 'Estado:',
-	'deletequeue-list-expired' => 'Mostrar apenas nomeações que necessitam de fecho.',
+	'deletequeue-list-expired' => 'Mostrar apenas nomeações que necessitam de ser fechadas.',
 	'deletequeue-list-search' => 'Pesquisar',
 	'deletequeue-list-anyqueue' => '(qualquer)',
 	'deletequeue-list-votes' => 'Lista de votos',
-	'deletequeue-list-votecount' => '$1 {{PLURAL:$1|suporte|suportes}}, $2 {{PLURAL:$2|objeção|objeções}}',
+	'deletequeue-list-votecount' => '$1 {{PLURAL:$1|apoio|apoios}}, $2 {{PLURAL:$2|objecção|objecções}}',
 	'deletequeue-list-header-page' => 'Página',
 	'deletequeue-list-header-queue' => 'Fila',
-	'deletequeue-list-header-votes' => 'Suportes e objeções',
+	'deletequeue-list-header-votes' => 'Apoios e objecções',
 	'deletequeue-list-header-expiry' => 'Validade',
 	'deletequeue-list-header-discusspage' => 'Página de discussão',
 	'deletequeue-case-intro' => 'Esta página lista informação sobre um caso de eliminação específico.',
 	'deletequeue-list-header-reason' => 'Motivo de eliminação',
-	'deletequeue-case-votes' => 'Suportes/objeções:',
+	'deletequeue-case-votes' => 'Apoios/objecções:',
 	'deletequeue-case-title' => 'Detalhes do caso de eliminação',
 	'deletequeue-case-details' => 'Detalhes básicos',
 	'deletequeue-case-page' => 'Página:',
@@ -4963,6 +5802,7 @@ Você pode [{{fullurl:{{FULLPAGENAME}}|action=delvote}} registar o seu próprio 
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Helder.wiki
  * @author Heldergeovane
  */
 $messages['pt-br'] = array(
@@ -5120,34 +5960,50 @@ Você pode registrar que também apóia, ou oferecer objeção a essa eliminaç�
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Minisarm
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'deletequeue-action-queued' => 'Ştergeri',
 	'deletequeue-generic-reasons' => '* Motive generice
 ** Vandalism
 ** Spam
-** Întreţinere
+** Întreținere
 ** În afara scopului proiectului',
-	'deletequeue-speedy-title' => 'Marchează "$1" pentru ştergere rapidă',
-	'deletequeue-prod-title' => 'Propune ştergerea lui "$1"',
+	'deletequeue-nom-alreadyqueued' => 'Această pagină se află deja într-o listă de ștergere.',
+	'deletequeue-speedy-title' => 'Marchează "$1" pentru ștergere rapidă',
+	'deletequeue-prod-title' => 'Propune ștergerea lui "$1"',
 	'deletequeue-delnom-reason' => 'Motiv pentru nominalizare:',
 	'deletequeue-delnom-otherreason' => 'Alt motiv',
-	'right-prod-nominate' => 'Propune ştergerea paginii',
+	'deletequeue-delnom-submit' => 'Trimite nominalizarea',
+	'right-prod-nominate' => 'Propune ștergerea paginii',
 	'deletequeue-queue-speedy' => 'Ştergere rapidă',
 	'deletequeue-queue-prod' => 'Ştergere propusă',
+	'deletequeue-page-speedy' => "Această pagină a fost nominalizată pentru ştergere rapidă.
+Motivul invocat pentru această ştergere este ''$1''.",
+	'deletequeue-notqueued' => 'Pagina care aţi selectat-o nu este în aşteptare pentru ştergere',
+	'deletequeue-review-action' => 'Acțiune de întreprins:',
+	'deletequeue-review-delete' => 'Șterge pagina.',
+	'deletequeue-review-requeue' => 'Transferă această pagină în coada următoare:',
 	'deletequeue-review-reason' => 'Comentarii:',
 	'deletequeue-review-newreason' => 'Motiv nou:',
-	'deletequeue-review-submit' => 'Salvaţi recenzie',
+	'deletequeue-review-newextra' => 'Informații suplimentare:',
+	'deletequeue-review-submit' => 'Salvați recenzie',
 	'deletequeue-review-original' => 'Motiv pentru nominalizare',
+	'deletequeue-review-badaction' => 'Ați specificat o acțiune invalidă',
+	'deletequeue-review-actiondenied' => 'Ați specificat o acțiune care este dezactivată pentru această pagină',
 	'deletequeue-vote-action' => 'Recomandare:',
 	'deletequeue-vote-reason' => 'Comentarii:',
 	'deletequeue-vote-submit' => 'Trimite',
+	'deletequeue-list-queue' => 'În listă:',
 	'deletequeue-list-status' => 'Stare:',
 	'deletequeue-list-search' => 'Căutare',
 	'deletequeue-list-anyqueue' => '(orice)',
+	'deletequeue-list-votes' => 'Lista de voturi',
 	'deletequeue-list-header-page' => 'Pagină',
 	'deletequeue-list-header-expiry' => 'Expirare',
-	'deletequeue-list-header-discusspage' => 'Pagină de discuţii',
+	'deletequeue-list-header-discusspage' => 'Pagină de discuții',
+	'deletequeue-case-details' => 'Detalii de bază',
 	'deletequeue-case-page' => 'Pagina:',
 	'deletequeue-case-reason' => 'Motiv:',
 	'deletequeue-case-expiry' => 'Expirare:',
@@ -5317,7 +6173,16 @@ $messages['ru'] = array(
 	'deletequeue-case-needs-review' => 'Этот запрос требует [[$1|досмотра]].',
 );
 
-/** Serbo-Croatian (Srpskohrvatski / Српскохрватски)
+/** Sicilian (Sicilianu)
+ * @author Aushulz
+ */
+$messages['scn'] = array(
+	'deletequeue-list-search' => "Va' cerca",
+	'deletequeue-case-page' => 'Pàggina:',
+	'deletequeue-case-reason' => 'Mutivu:',
+);
+
+/** Serbo-Croatian (Srpskohrvatski)
  * @author OC Ripper
  */
 $messages['sh'] = array(
@@ -5481,30 +6346,76 @@ Môžete [{{fullurl:{{FULLPAGENAME}}|action=delvote}} pridať] svoju vlastnú po
 	'deletequeue-case-needs-review' => 'Tento prípad vyžaduje [[$1|kontrolu]].',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'deletequeue-list-status' => 'Stanje:',
+	'deletequeue-list-header-page' => 'Stran',
+	'deletequeue-case-page' => 'Stran:',
+	'deletequeue-case-reason' => 'Razlog:',
+);
+
+/** Somali (Soomaaliga)
+ * @author Maax
+ */
+$messages['so'] = array(
+	'deletequeue-list-search-legend' => 'Raadi boggaga',
+	'deletequeue-list-search' => 'Raadi',
+	'deletequeue-list-anyqueue' => '(wax kasto)',
+	'deletequeue-list-header-expiry' => 'Waxuu dhacaa',
+	'deletequeue-case-reason' => 'Sababta:',
+	'deletequeue-case-expiry' => 'Wuxuu dhacaa:',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Жељко Тодоровић
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
+	'deletequeue-generic-reasons' => '* Генерички разлози
+** Вандализам
+** Спам
+** Одржавање
+** Није за пројекат',
+	'deletequeue-nom-alreadyqueued' => 'Ова страница се већ налази у реду за брисање.',
+	'deletequeue-speedy-title' => 'Означи "$1" за брзо брисање',
+	'deletequeue-speedy-reasons' => '-',
+	'deletequeue-prod-reasons' => '-',
+	'deletequeue-delnom-reason' => 'Разлог за предлог:',
+	'deletequeue-delnom-otherreason' => 'Други разлог',
+	'deletequeue-delnom-extra' => 'Додатне информације:',
+	'deletequeue-delnom-submit' => 'Пошаљи предлог',
+	'deletequeue-log-nominate' => "[[$1]] је предложен за брисање у реду '$2'.",
+	'deletequeue-log-rmspeedy' => 'брзо брисање [[$1]] је одбијено.',
+	'deletequeue-log-dequeue' => "обрисао [[$1]] из реда за брисање '$2'.",
+	'right-speedy-nominate' => 'Предлагање страна за брзо брисање',
+	'right-prod-nominate' => 'Предложите брисање стране',
+	'right-deletediscuss-nominate' => 'Започни расправе о брисању',
+	'right-deletediscuss-review' => 'Затвори расправе о брисњу',
 	'deletequeue-queue-speedy' => 'Брзо брисање',
 	'deletequeue-queue-prod' => 'Предложено брисање',
 	'deletequeue-queue-deletediscuss' => 'Дискусија о брисању',
-	'deletequeue-page-speedy' => "Ова страна је била означена за брзо брисање.
+	'deletequeue-page-speedy' => "Ова страница је била означена за брзо брисање.
 Разлог дат за ово брисање је ''$1''.",
-	'deletequeue-page-prod' => "Ова страна је предложена за брисање.
+	'deletequeue-page-prod' => "Ова страница је предложена за брисање.
 Дати разлог је ''$1''.
-Ако овај разлог не буде доведен у питање до ''$2'', ова страна ће бити обрисана.
-Можете спречити брисање ове стране [{{fullurl:{{FULLPAGENAME}}|action=delvote}} изношењем противних аргумената].",
-	'deletequeue-page-deletediscuss' => "Ова страна је предложена за брисање, и предлог је био доведен у питање.
+Ако овај разлог не буде доведен у питање до ''$2'', ова страница ће бити обрисана.
+Можете спречити брисање ове странице [{{fullurl:{{FULLPAGENAME}}|action=delvote}} изношењем противних аргумената].",
+	'deletequeue-page-deletediscuss' => "Ова страница је предложена за брисање, и предлог је био доведен у питање.
 Дати разлог је био ''$1''.
 Дискусија се води на [[$5]], и завршиће се на ''$2''.",
-	'deletequeue-notqueued' => 'Страна коју сте изабрали тренутно није у реду за брисање',
+	'deletequeue-notqueued' => 'Страница коју сте изабрали тренутно није у реду за брисање',
 	'deletequeue-review-action' => 'Акција за извршавање:',
 	'deletequeue-review-delete' => 'Брисање стране.',
 	'deletequeue-review-change' => 'Обриши ово страну, али са другим образложењем.',
 	'deletequeue-review-requeue' => 'Пренеси ову страну на следећи ред:',
 	'deletequeue-review-dequeue' => 'Не подузимај никакву акцију, и склони страну из реда за брисање.',
 	'deletequeue-review-reason' => 'Коментари:',
+	'deletequeue-review-newreason' => 'Нови разлог:',
 	'deletequeue-review-newextra' => 'Додатне информације:',
+	'deletequeue-review-submit' => 'Сними преглед',
 	'deletequeue-review-original' => 'Разлог номинације',
 	'deletequeue-review-badaction' => 'Изабрали сте акцију која не стоји на располагању',
 	'deletequeue-review-actiondenied' => 'Изабрали сте акцију која је онемогућена над овом страном',
@@ -5522,8 +6433,8 @@ $messages['sr-ec'] = array(
 	'deletequeue-vote-reason' => 'Коментари:',
 	'deletequeue-vote-submit' => 'Пошаљи',
 	'deletequeue-vote-success-endorse' => 'Успешно сте подржали брисање ове стране.',
-	'deletequeue-vote-requeued' => 'Успешно сте се успротивили брисању ове стране.
-Због Вашег противљења, страна је премештена у следећи ред: $1.',
+	'deletequeue-vote-requeued' => 'Успешно сте се успротивили брисању ове странице.
+Због Вашег противљења, страница је премештена у следећи ред: $1.',
 	'deletequeue-showvotes' => 'Подршка и противљење брисању "$1".',
 	'deletequeue-showvotes-restrict-endorse' => 'Прикажи само подршке',
 	'deletequeue-showvotes-restrict-object' => 'Прикажи само противљења',
@@ -5537,7 +6448,7 @@ $messages['sr-ec'] = array(
 	'deletequeue-showvotes-none-object' => 'Нема противљења брисању ове стране.',
 	'deletequeue' => 'Ред за брисање',
 	'deletequeue-list-text' => 'Ова страна приказује све стране, које су у систему за брисање.',
-	'deletequeue-list-search-legend' => 'Потражи стране',
+	'deletequeue-list-search-legend' => 'Претрага страница',
 	'deletequeue-list-queue' => 'Ред:',
 	'deletequeue-list-status' => 'Статус:',
 	'deletequeue-list-expired' => 'Прикажи само номиновања, која треба затворити.',
@@ -5545,13 +6456,13 @@ $messages['sr-ec'] = array(
 	'deletequeue-list-anyqueue' => '(било које)',
 	'deletequeue-list-votes' => 'Списак гласова',
 	'deletequeue-list-votecount' => '$1 {{PLURAL:$1|подршка|подршки}}, $2 {{PLURAL:$2|противљење|противљења}}',
-	'deletequeue-list-header-page' => 'Страна',
+	'deletequeue-list-header-page' => 'Страница',
 	'deletequeue-list-header-queue' => 'Ред',
 	'deletequeue-list-header-votes' => 'Подршке и противљења',
 	'deletequeue-list-header-expiry' => 'Истек',
-	'deletequeue-list-header-discusspage' => 'Страна дискусије',
+	'deletequeue-list-header-discusspage' => 'Страница за разговор',
 	'deletequeue-case-intro' => 'Ова страна приказује информацију о појединачном случају брисања.',
-	'deletequeue-list-header-reason' => 'Разлог брисања',
+	'deletequeue-list-header-reason' => 'Разлог',
 	'deletequeue-case-votes' => 'Подршке/противљења:',
 	'deletequeue-case-title' => 'Детаљи о случају брисања',
 	'deletequeue-case-details' => 'Основни детаљи',
@@ -5560,10 +6471,30 @@ $messages['sr-ec'] = array(
 	'deletequeue-case-expiry' => 'Истек:',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
+	'deletequeue-generic-reasons' => '* Generički razlozi
+** Vandalizam
+** Spam
+** Održavanje
+** Nije za projekat',
+	'deletequeue-nom-alreadyqueued' => 'Ova strana se već nalazi u redu za brisanje.',
+	'deletequeue-speedy-title' => 'Označi "$1" za brzo brisanje',
+	'deletequeue-speedy-reasons' => '-',
+	'deletequeue-prod-reasons' => '-',
+	'deletequeue-delnom-reason' => 'Razlog za predlog:',
+	'deletequeue-delnom-otherreason' => 'Drugi razlog',
+	'deletequeue-delnom-extra' => 'Dodatne informacije:',
+	'deletequeue-delnom-submit' => 'Pošalji predlog',
+	'deletequeue-log-nominate' => "[[$1]] je predložen za brisanje u redu '$2'.",
+	'deletequeue-log-rmspeedy' => 'brzo brisanje [[$1]] je odbijeno.',
+	'deletequeue-log-dequeue' => "obrisao [[$1]] iz reda za brisanje '$2'.",
+	'right-speedy-nominate' => 'Predlaganje strana za brzo brisanje',
+	'right-prod-nominate' => 'Predložite brisanje strane',
+	'right-deletediscuss-nominate' => 'Započni rasprave o brisanju',
+	'right-deletediscuss-review' => 'Zatvori rasprave o brisnju',
 	'deletequeue-queue-speedy' => 'Brzo brisanje',
 	'deletequeue-queue-prod' => 'Predloženo brisanje',
 	'deletequeue-queue-deletediscuss' => 'Diskusija o brisanju',
@@ -5583,7 +6514,9 @@ Diskusija se vodi na [[$5]], i završiće se na ''$2''.",
 	'deletequeue-review-requeue' => 'Prenesi ovu stranu na sledeći red:',
 	'deletequeue-review-dequeue' => 'Ne poduzimaj nikakvu akciju, i skloni stranu iz reda za brisanje.',
 	'deletequeue-review-reason' => 'Komentari:',
+	'deletequeue-review-newreason' => 'Novi razlog:',
 	'deletequeue-review-newextra' => 'Dodatne informacije:',
+	'deletequeue-review-submit' => 'Snimi pregled',
 	'deletequeue-review-original' => 'Razlog nominacije',
 	'deletequeue-review-badaction' => 'Izabrali ste akciju koja ne stoji na raspolaganju',
 	'deletequeue-review-actiondenied' => 'Izabrali ste akciju koja je onemogućena nad ovom stranom',
@@ -5648,7 +6581,7 @@ $messages['stq'] = array(
 	'deletequeue-reviewdeletediscuss-text' => "Ap disse Siede koast du ju Läskdiskussion fon „'''$1'''“ wröigje.
 
 Dät rakt  ne [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} Lieste] mäd Stimmen foar un juun ju Läskenge; ju eegentelke Diskussion is unner [[$2]] tou fienden.
-Oachtje deerap, dät ne Äntscheedenge mäd dän Konsens fon ju Diskussion fereenboar is.",
+Oachtje deerap, dät ne Äntskeedenge mäd dän Konsens fon ju Diskussion fereenboar is.",
 	'deletequeue-deletediscuss-discussionpage' => 'Dit is ju Diskussionssiede foar ju Läskenge fon [[$1]].
 Apstuuns {{PLURAL:$2|unnerstutset aan Benutser|unnerstutsje $2 Benutsere}} ju Läskenge, wülst $3 {{PLURAL:$3|Benutser|Benutsere}} hier ouliene.
 Du koast ju Läskenge [{{fullurl:$1|action=delvote}} unnerstutsje of ouliene] of [{{fullurl:$1|action=delviewvotes}} aal Stimme bekiekje].',
@@ -5659,7 +6592,7 @@ Du koast ju Läskenge [{{fullurl:$1|action=delvote}} unnerstutsje of ouliene] of
 	'deletequeue-role-vote-object' => 'Juun de Läskenge',
 	'deletequeue-vote-title' => 'Läskenge fon „$1“ unnerstutsje of ouliene',
 	'deletequeue-vote-text' => "Ap disse Siede koast du ju Läskenge fon „'''$1'''“ unnerstutsje of ouliene.
-Disse Aktion uurschrift aal Stimmen, do du foartied tou ju Läskenge fon disse Siede ouroat hääst.
+Disse Aktion uurskrift aal Stimmen, do du foartied tou ju Läskenge fon disse Siede ouroat hääst.
 Du koast do al ouroate Stimmen [{{fullurl:{{FULLPAGENAME}}|action=delviewvotes}} bekiekje].
 Die Läskandraachsgruund waas ''$2''.",
 	'deletequeue-vote-legend' => 'Läskenge unnerstutsje/ouliene',
@@ -5671,7 +6604,7 @@ Die Läskandraachsgruund waas ''$2''.",
 	'deletequeue-vote-success-endorse' => 'Du hääst mäd Ärfoulch ju Läskenge fon disse Siede unnerstutsed.',
 	'deletequeue-vote-success-object' => 'Du hääst mäd Ärfoulch ju Läskenge fon disse Siede ouliend.',
 	'deletequeue-vote-requeued' => 'Du hääst mäd Ärfoulch ju Läskenge fon disse Siede ouliend.
-Truch dien Wierspruch wuud ju Siede in ju Läsk-Täiweslange $1 ferschäuwen.',
+Truch dien Wierspruch wuud ju Siede in ju Läsk-Täiweslange $1 ferskäuwen.',
 	'deletequeue-showvotes' => 'Unnerstutsengen un Oulienengen fon ju Läskenge fon „$1“',
 	'deletequeue-showvotes-text' => "Unnerstoundend sunt do Unnerstutsengen un Oulienengen fon ju Läskenge fon „'''$1'''“ .
 Du koast dien oaine Unnerstutsenge of Oulienenge fon ju Läskenge [{{fullurl:{{FULLPAGENAME}}|action=delvote}} hier] iendreege.",
@@ -5866,11 +6799,36 @@ Du kan själv [{{fullurl:\$1|action=delvote}} bifalla eller invända] mot raderi
 	'deletequeue-case-needs-review' => 'Det här ärendet kräver [[$1|behandling]].',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'deletequeue-action-queued' => 'நீக்குதல்',
+	'deletequeue-delnom-otherreason' => 'வேறு காரணம்',
+	'deletequeue-delnom-extra' => 'மேலதிகத்தகவல்:',
+	'deletequeue-queue-speedy' => 'விரைந்து நீக்குதல்',
+	'deletequeue-queue-prod' => 'நீக்கப்படவேண்டியவை',
+	'deletequeue-review-delete' => 'பக்கத்தை நீக்கவும்.',
+	'deletequeue-review-reason' => 'கருத்துரைகள்:',
+	'deletequeue-review-newreason' => 'புதிய காரணம்:',
+	'deletequeue-review-newextra' => 'மேலதிகத்தகவல்:',
+	'deletequeue-vote-submit' => 'சமர்ப்பி',
+	'deletequeue-list-status' => 'நிலைமை:',
+	'deletequeue-list-search' => 'தேடுக',
+	'deletequeue-list-anyqueue' => '(ஏதாவது)',
+	'deletequeue-list-header-page' => 'பக்கம்',
+	'deletequeue-list-header-queue' => 'வரிசை',
+	'deletequeue-case-page' => 'பக்கம்:',
+	'deletequeue-case-reason' => 'காரணம்:',
+);
+
 /** Telugu (తెలుగు)
  * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
+	'deletequeue-action-queued' => 'తొలగింపు',
+	'deletequeue-nom-alreadyqueued' => 'ఈ పుట ఇప్పటికే తొలగింపు వరుసలో ఉంది.',
 	'deletequeue-delnom-otherreason' => 'ఇతర కారణం',
 	'deletequeue-delnom-extra' => 'అదనపు సమాచారం:',
 	'deletequeue-queue-prod' => 'ప్రతిపాదిత తొలగింపు',
@@ -5886,6 +6844,7 @@ $messages['te'] = array(
 	'deletequeue-review-success-title' => 'సమీక్ష పూర్తి',
 	'deletequeue-discusscreate-text' => 'ఈ కారణం వల్ల తొలగింపుని ప్రతిపాదించారు: $2',
 	'deletequeue-vote-reason' => 'వ్యాఖ్యలు:',
+	'deletequeue-vote-submit' => 'దాఖలుచెయ్యి',
 	'deletequeue-showvotes-none-object' => 'ఈ పేజీని తొలగించడానికి అభ్యంతరాలు ఏమీ లేవు.',
 	'deletequeue' => 'తొలగింపు వరుస',
 	'deletequeue-list-text' => 'తొలగింపు వ్యవస్థలో ఉన్న అన్నీ పేజీలనూ ఈ పేజీ చూపిస్తుంది.',
@@ -5907,9 +6866,12 @@ $messages['te'] = array(
  */
 $messages['tet'] = array(
 	'deletequeue-delnom-otherreason' => 'Motivu seluk',
+	'deletequeue-list-search' => 'Buka',
+	'deletequeue-list-header-page' => 'Pájina',
+	'deletequeue-case-page' => 'Pájina:',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -5919,7 +6881,7 @@ $messages['tg-cyrl'] = array(
 	'deletequeue-list-header-discusspage' => 'Саҳифаи баҳс',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -6207,7 +7169,7 @@ $messages['tr'] = array(
 	'deletequeue-case-needs-review' => 'Bu durum [[$1|inceleme]] gerektirmektedir.',
 );
 
-/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+/** Uyghur (Latin script) (Uyghurche‎)
  * @author Jose77
  */
 $messages['ug-latn'] = array(
@@ -6217,14 +7179,49 @@ $messages['ug-latn'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
+	'deletequeue-desc' => 'Створює [[Special:DeleteQueue|побудовану на черзі систему управління вилученням]]',
+	'deletequeue-action-queued' => 'Вилучення',
+	'deletequeue-action' => 'Запропонувати вилучення',
+	'deletequeue-action-title' => 'Запропонувати вилучення "$1"',
+	'deletequeue-nom-alreadyqueued' => 'Ця сторінку вже включено у чергу на вилучення.',
+	'deletequeue-speedy-title' => 'Позначити "$1" для швидкого вилучення',
+	'deletequeue-delnom-reason' => 'Причина номінації:',
 	'deletequeue-delnom-otherreason' => 'Інша причина',
+	'deletequeue-delnom-extra' => 'Додаткова інформація:',
+	'deletequeue-delnom-submit' => 'Надіслати номінацію',
+	'right-speedy-nominate' => 'Номінація сторінок для швидкого вилучення',
+	'deletequeue-queue-speedy' => 'Швидке вилучення',
+	'deletequeue-review-delete' => 'Вилучити сторінку.',
+	'deletequeue-review-reason' => 'Коментарі:',
 	'deletequeue-review-newreason' => 'Нова причина:',
+	'deletequeue-review-newextra' => 'Додаткова інформація:',
 	'deletequeue-review-original' => 'Причина номінації',
+	'deletequeue-vote-action' => 'Рекомендація:',
+	'deletequeue-vote-reason' => 'Коментарі:',
 	'deletequeue-vote-submit' => 'Відправити',
+	'deletequeue' => 'Черга вулучення',
+	'deletequeue-list-search-legend' => 'Пошук сторінок',
+	'deletequeue-list-queue' => 'Черга:',
 	'deletequeue-list-status' => 'Статус:',
+	'deletequeue-list-search' => 'Пошук',
+	'deletequeue-list-anyqueue' => '(будь-яка)',
+	'deletequeue-list-votes' => 'Список голосів',
+	'deletequeue-list-header-page' => 'Сторінка',
+	'deletequeue-list-header-queue' => 'Черга',
+	'deletequeue-list-header-discusspage' => 'Сторінка обговорення',
+	'deletequeue-list-header-reason' => 'Причина вилучення',
+	'deletequeue-case-details' => 'Основні подробиці',
+	'deletequeue-case-page' => 'Сторінка:',
 	'deletequeue-case-reason' => 'Причина:',
+	'deletequeue-case-expiry' => 'Закінчується:',
+);
+
+/** Urdu (اردو) */
+$messages['ur'] = array(
+	'deletequeue-case-reason' => 'وجہ:',
 );
 
 /** Veps (Vepsan kel')
@@ -6310,7 +7307,7 @@ $messages['vi'] = array(
 	'deletequeue-list-text' => 'Trang này liệt kê các trang đang chờ xóa.',
 	'deletequeue-list-search-legend' => 'Tìm kiếm trang',
 	'deletequeue-list-queue' => 'Hàng:',
-	'deletequeue-list-status' => 'Tình trạng:',
+	'deletequeue-list-status' => 'Trạng thái:',
 	'deletequeue-list-search' => 'Tìm kiếm',
 	'deletequeue-list-anyqueue' => '(tất cả)',
 	'deletequeue-list-votes' => 'Danh sách lá phiếu',
@@ -6329,6 +7326,7 @@ $messages['vi'] = array(
 );
 
 /** Volapük (Volapük)
+ * @author Malafaya
  * @author Smeira
  */
 $messages['vo'] = array(
@@ -6338,6 +7336,7 @@ $messages['vo'] = array(
 	'deletequeue-permissions-noedit' => 'Mutol dalön redakön padi ad fägön ad votükön moükamastadi onik.',
 	'deletequeue-prod-title' => 'Mobön moükami pada: „$1“',
 	'deletequeue-delnom-otherreason' => 'Kod votik',
+	'deletequeue-delnom-extra' => 'Nüns pluik:',
 	'right-prod-nominate' => 'Mobön padimoükami',
 	'right-deletediscuss-nominate' => 'Primön moükamibespiki',
 	'right-deletediscuss-review' => 'Finükön moükamibespikis',
@@ -6355,61 +7354,190 @@ $messages['vo'] = array(
 	'deletequeue-list-header-discusspage' => 'Bespikapad',
 );
 
+/** Wu (吴语) */
+$messages['wuu'] = array(
+	'deletequeue-case-reason' => '理由：',
+);
+
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
 $messages['yi'] = array(
+	'deletequeue-review-delete' => 'אויסמעקן דעם בלאַט',
 	'deletequeue-list-search' => 'זוכן',
+	'deletequeue-list-header-expiry' => 'אויסגיין',
 	'deletequeue-case-reason' => 'אורזאַך:',
+	'deletequeue-case-expiry' => 'אויסגיין:',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Hydra
  * @author PhiLiP
  * @author Wmr89502270
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
 	'deletequeue-action-queued' => '删除',
+	'deletequeue-action' => '建议删除',
+	'deletequeue-action-title' => '建议删除 "$1"',
+	'deletequeue-permissions-noedit' => '您必须能够编辑页面，使其能够影响其删除状态。',
+	'deletequeue-nom-alreadyqueued' => '本页面已经被删除队列。',
+	'deletequeue-speedy-title' => '商标 "$1" 为快速刪除',
+	'deletequeue-prod-title' => '建议删除 "$1"',
+	'deletequeue-delnom-reason' => '提名的理由：',
 	'deletequeue-delnom-otherreason' => '其他原因',
 	'deletequeue-delnom-extra' => '附加信息：',
+	'deletequeue-delnom-submit' => '提交提名',
+	'right-speedy-nominate' => '快速刪除提名页',
+	'right-speedy-review' => '提名快速刪除进行审查',
+	'right-prod-nominate' => '建议删除页',
+	'right-prod-review' => '检讨自动当选的删除操作建议',
+	'right-deletediscuss-nominate' => '开始删除讨论',
+	'right-deletediscuss-review' => '关闭删除讨论',
+	'right-deletequeue-vote' => '赞成或反对删除',
 	'deletequeue-queue-speedy' => '快速删除',
+	'deletequeue-queue-prod' => '建议的删除',
+	'deletequeue-queue-deletediscuss' => '删除讨论',
+	'deletequeue-page-speedy' => "此页已获提名为快速删除。
+为此删除操作的理由 ''$1''。",
+	'deletequeue-notqueued' => '您所选的页面删除当前不排队',
+	'deletequeue-review-action' => '要执行的操作：',
 	'deletequeue-review-delete' => '删除页面。',
+	'deletequeue-review-change' => '删除此页上，但具有不同的理由。',
+	'deletequeue-review-requeue' => '将此页转接到以下队列：',
+	'deletequeue-review-dequeue' => '不采取行动，并从删除队列中删除该页面。',
+	'deletequeue-review-reason' => '评论：',
+	'deletequeue-review-newreason' => '新的原因：',
+	'deletequeue-review-newextra' => '额外的信息：',
+	'deletequeue-review-submit' => '保存审查',
+	'deletequeue-review-original' => '提名的理由',
+	'deletequeue-actiondisabled-notexpired' => '下列行动被禁用是因为删除提名尚未过期：',
+	'deletequeue-review-badaction' => '您指定了一个无效的操作',
+	'deletequeue-review-actiondenied' => '指定已禁用此页的行动',
+	'deletequeue-reviewspeedy-tab' => '查看快速刪除',
+	'deletequeue-reviewspeedy-title' => '为 "$1" 查看快速刪除提名',
+	'deletequeue-reviewprod-tab' => '建议删除的审查',
+	'deletequeue-reviewdeletediscuss-tab' => '审查删除',
+	'deletequeue-review-success' => '您已成功地检讨删除此页',
+	'deletequeue-review-success-title' => '完整的审查',
+	'deletequeue-role-nominator' => '原提名人为删除的',
+	'deletequeue-role-vote-endorse' => '代言人的删除',
+	'deletequeue-role-vote-object' => '要删除的反对者',
 	'deletequeue-vote-tab' => '投票删除',
+	'deletequeue-vote-legend' => '要删除批注/对象',
+	'deletequeue-vote-action' => '建议：',
 	'deletequeue-vote-endorse' => '赞成删除。',
 	'deletequeue-vote-object' => '反对删除。',
+	'deletequeue-vote-reason' => '评论：',
 	'deletequeue-vote-submit' => '提交',
+	'deletequeue-vote-success-endorse' => '您已成功赞同此页删除。',
+	'deletequeue-vote-success-object' => '您已成功地反对此页删除。',
 	'deletequeue-showvotes-restrict-endorse' => '只显示赞成票',
 	'deletequeue-showvotes-restrict-object' => '只显示反对票。',
+	'deletequeue-showvotes-showingonly-endorse' => '显示仅背书',
+	'deletequeue-showvotes-showingonly-object' => '显示只是反对',
+	'deletequeue-showvotes-none' => '没有背书或删除此页的反对意见。',
+	'deletequeue-showvotes-none-endorse' => '没有删除此页的背书。',
+	'deletequeue-showvotes-none-object' => '没有人反对此页删除。',
+	'deletequeue' => '删除队列',
+	'deletequeue-list-text' => '此页显示删除系统中的所有页面。',
+	'deletequeue-list-search-legend' => '搜索页',
+	'deletequeue-list-queue' => '队列：',
 	'deletequeue-list-status' => '状态：',
+	'deletequeue-list-expired' => '显示仅需要关闭的提名。',
 	'deletequeue-list-search' => '搜索',
 	'deletequeue-list-anyqueue' => '（任何）',
 	'deletequeue-list-votes' => '投票列表',
 	'deletequeue-list-header-page' => '页面',
+	'deletequeue-list-header-queue' => '队列',
+	'deletequeue-list-header-expiry' => '期限',
+	'deletequeue-case-page' => '页面：',
 	'deletequeue-case-reason' => '原因：',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Gzdavidwong
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'deletequeue-action-queued' => '刪除',
+	'deletequeue-action' => '建議刪除',
+	'deletequeue-action-title' => '建議刪除 "$1"',
+	'deletequeue-permissions-noedit' => '您必須能夠編輯頁面，使其能夠影響其刪除狀態。',
+	'deletequeue-nom-alreadyqueued' => '本頁面已經被刪除隊列。',
+	'deletequeue-speedy-title' => '商標 "$1" 為快速刪除',
+	'deletequeue-prod-title' => '建議刪除 "$1"',
+	'deletequeue-delnom-reason' => '提名的理由：',
 	'deletequeue-delnom-otherreason' => '其他原因',
 	'deletequeue-delnom-extra' => '附加資料：',
+	'deletequeue-delnom-submit' => '提交提名',
+	'right-speedy-nominate' => '快速刪除提名頁',
+	'right-speedy-review' => '提名快速刪除進行審查',
+	'right-prod-nominate' => '建議刪除頁',
+	'right-prod-review' => '檢討自動當選的刪除操作建議',
+	'right-deletediscuss-nominate' => '開始刪除討論',
+	'right-deletediscuss-review' => '關閉刪除討論',
+	'right-deletequeue-vote' => '贊成或反對刪除',
 	'deletequeue-queue-speedy' => '快速刪除',
+	'deletequeue-queue-prod' => '建議的刪除',
+	'deletequeue-queue-deletediscuss' => '刪除討論',
+	'deletequeue-page-speedy' => "此頁已獲提名為快速刪除。
+為此刪除操作的理由 ''$1''。",
+	'deletequeue-notqueued' => '您所選的頁面刪除當前不排隊',
+	'deletequeue-review-action' => '要執行的操作：',
 	'deletequeue-review-delete' => '刪除頁面。',
+	'deletequeue-review-change' => '刪除此頁上，但具有不同的理由。',
+	'deletequeue-review-requeue' => '將此頁轉接到以下隊列：',
+	'deletequeue-review-dequeue' => '不採取行動，並從刪除隊列中刪除該頁面。',
+	'deletequeue-review-reason' => '評論：',
+	'deletequeue-review-newreason' => '新的原因：',
+	'deletequeue-review-newextra' => '額外的信息：',
+	'deletequeue-review-submit' => '保存審查',
+	'deletequeue-review-original' => '提名的理由',
+	'deletequeue-actiondisabled-notexpired' => '下列行動被禁用是因為刪除提名尚未過期：',
+	'deletequeue-review-badaction' => '您指定了一個無效的操作',
+	'deletequeue-review-actiondenied' => '指定已禁用此頁的行動',
+	'deletequeue-reviewspeedy-tab' => '查看快速刪除',
+	'deletequeue-reviewspeedy-title' => '為 "$1" 查看快速刪除提名',
+	'deletequeue-reviewprod-tab' => '建議刪除的審查',
+	'deletequeue-reviewdeletediscuss-tab' => '審查刪除',
+	'deletequeue-review-success' => '您已成功地檢討刪除此頁',
+	'deletequeue-review-success-title' => '完整的審查',
+	'deletequeue-role-nominator' => '原提名人為刪除的',
+	'deletequeue-role-vote-endorse' => '代言人的刪除',
+	'deletequeue-role-vote-object' => '要刪除的反對者',
 	'deletequeue-vote-tab' => '投票刪除',
+	'deletequeue-vote-legend' => '要刪除批註/對象',
+	'deletequeue-vote-action' => '建議：',
 	'deletequeue-vote-endorse' => '贊成刪除。',
 	'deletequeue-vote-object' => '反對刪除。',
+	'deletequeue-vote-reason' => '評論：',
 	'deletequeue-vote-submit' => '提交',
+	'deletequeue-vote-success-endorse' => '您已成功贊同此頁刪除。',
+	'deletequeue-vote-success-object' => '您已成功地反對此頁刪除。',
 	'deletequeue-showvotes-restrict-endorse' => '只顯示贊成票',
 	'deletequeue-showvotes-restrict-object' => '只顯示反對票',
+	'deletequeue-showvotes-showingonly-endorse' => '顯示僅背書',
+	'deletequeue-showvotes-showingonly-object' => '顯示只是反對',
+	'deletequeue-showvotes-none' => '沒有背書或刪除此頁的反對意見。',
+	'deletequeue-showvotes-none-endorse' => '沒有刪除此頁的背書。',
+	'deletequeue-showvotes-none-object' => '沒有人反對此頁刪除。',
+	'deletequeue' => '刪除隊列',
+	'deletequeue-list-text' => '此頁顯示刪除系統中的所有頁面。',
+	'deletequeue-list-search-legend' => '搜索頁',
+	'deletequeue-list-queue' => '隊列：',
 	'deletequeue-list-status' => '狀態：',
+	'deletequeue-list-expired' => '顯示僅需要關閉的提名。',
 	'deletequeue-list-search' => '搜尋',
 	'deletequeue-list-anyqueue' => '（任何）',
 	'deletequeue-list-votes' => '投票清單',
 	'deletequeue-list-header-page' => '頁面',
+	'deletequeue-list-header-queue' => '隊列',
+	'deletequeue-list-header-expiry' => '期限',
+	'deletequeue-case-page' => '頁面：',
 	'deletequeue-case-reason' => '原因：',
 );
 

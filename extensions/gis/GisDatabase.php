@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  *  Maintain a database of articles containing the <GEO> tag
  *
  *
@@ -34,7 +34,7 @@ class GisDatabase {
 
 	var $version;
 
-	function GisDatabase()
+	function __construct()
 	{
 		$this->db = wfGetDB( DB_MASTER );
 

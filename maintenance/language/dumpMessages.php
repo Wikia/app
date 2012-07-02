@@ -22,7 +22,7 @@
  * @todo Make this more useful, right now just dumps $wgContentLang
  */
 
-require_once( dirname(__FILE__) . '/../Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
 class DumpMessages extends Maintenance {
 	public function __construct() {
@@ -31,6 +31,8 @@ class DumpMessages extends Maintenance {
 	}
 	
 	public function execute() {
+		global $wgVersion;
+
 		$messages = array();
 		foreach ( array_keys( Language::getMessagesFor( 'en' ) ) as $key ) {
 			$messages[$key] = wfMsg( $key );
@@ -41,4 +43,4 @@ class DumpMessages extends Maintenance {
 }
 
 $maintClass = "DumpMessages";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

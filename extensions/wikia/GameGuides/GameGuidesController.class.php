@@ -45,7 +45,7 @@ class GameGuidesController extends WikiaController {
 		$result = $this->mModel->getWikisList( $limit, $batch );
 		
 		foreach( $result as $key => $value ){
-			$this->setVal( $key, $value );
+			$this->response->setVal( $key, $value );
 		}
 		
 		
@@ -66,7 +66,7 @@ class GameGuidesController extends WikiaController {
 		$result = $this->mModel->getWikiContents();
 		
 		foreach( $result as $key => $value ){
-			$this->setVal( $key, $value );
+			$this->response->setVal( $key, $value );
 		}
 		
 		$this->wf->profileOut( __METHOD__ );
@@ -93,7 +93,7 @@ class GameGuidesController extends WikiaController {
 		$result = $this->mModel->getCategoryContents( $category, $limit, $batch );
 		
 		foreach( $result as $key => $value ){
-			$this->setVal( $key, $value );
+			$this->response->setVal( $key, $value );
 		}
 		
 		$this->wf->profileOut( __METHOD__ );
@@ -114,12 +114,12 @@ class GameGuidesController extends WikiaController {
 		
 		$this->track( array( 'local_search', $this->wg->DBname ) );
 		
-		$term = $this->getVal( 'term' );
+		$term = $this->request->getVal( 'term' );
 		$limit = $this->request->getInt( 'limit', GameGuidesModel::SEARCH_RESULTS_LIMIT );
 		$result = $this->mModel->getSearchResults( $term, $limit );
 		
 		foreach( $result as $key => $value ){
-			$this->setVal( $key, $value );
+			$this->response->setVal( $key, $value );
 		}
 		
 		$this->wf->profileOut( __METHOD__ );

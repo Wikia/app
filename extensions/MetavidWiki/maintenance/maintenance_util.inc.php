@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * maintenance_util.inc.php Created on Jan 19, 2008
  *
  * All Metavid Wiki code is Released under the GPL2
@@ -13,7 +13,7 @@
  * Maintenance Utility Functions:
  */
 require_once ( '../../../maintenance/commandLine.inc' );
- /*
+/**
  * set up the bot user:
  */
 $botUserName = 'MvBot';
@@ -75,11 +75,10 @@ function mv_is_valid_person( $person_key ) {
 	}
 	return $mv_valid_people_cache[$person_key];
 }
-function append_to_wiki_page( $wgTitle, $append_text, $unique = true ) {
-	global $botUserName;
-	if ( $wgTitle->exists() ) {
-		$wgArticle = new Article( $wgTitle );
-		$cur_text = $wgArticle->getContent();
+function append_to_wiki_page( $title, $append_text, $unique = true ) {
+	if ( $title->exists() ) {
+		$article = new Article( $title );
+		$cur_text = $article->getContent();
 		if ( $unique ) {
 			if ( strpos( $cur_text, $append_text ) !== false ) {
 				print "no insert $append_text already present\n";
@@ -89,21 +88,21 @@ function append_to_wiki_page( $wgTitle, $append_text, $unique = true ) {
 		$cur_text .= "\n\n" . $append_text;
 		// do the edit:
 		$sum_txt = 'metavid append';
-		$wgArticle->doEdit( $cur_text, $sum_txt , EDIT_FORCE_BOT);
-		print "did append on " . $wgTitle->getDBkey() . "\n";
+		$article->doEdit( $cur_text, $sum_txt , EDIT_FORCE_BOT);
+		print "did append on " . $title->getDBkey() . "\n";
 	} else {
 		print "append request to empty page... creating\n";
-		do_update_wiki_page( $wgTitle, $append_text );
+		do_update_wiki_page( $title, $append_text );
 	}
 }
-function do_update_wiki_page( $wgTitle, $wikiText, $ns = null, $forceUpdate = false ) {
+function do_update_wiki_page( $title, $wikiText, $ns = null, $forceUpdate = false ) {
 	global $botUserName;
-	if ( !is_object( $wgTitle ) ) {
+	if ( !is_object( $title ) ) {
 		// get the title and make sure the first letter is uper case
-		$wgTitle = Title::makeTitle( $ns, ucfirst( $wgTitle ) );
+		$title = Title::makeTitle( $ns, ucfirst( $title ) );
 	}
 
-	if ( trim( $wgTitle->getDBkey() ) == '' ) {
+	if ( trim( $title->getDBkey() ) == '' ) {
 		print "empty title (no insert /update) \n";
 		return ;
 	}
@@ -111,33 +110,33 @@ function do_update_wiki_page( $wgTitle, $wikiText, $ns = null, $forceUpdate = fa
 	// make sure the text is utf8 encoded:
 	$wikiText = utf8_encode( $wikiText );
 
-	$wgArticle = new Article( $wgTitle );
-	if ( !mvDoMvPage( $wgTitle, $wgArticle, false ) ) {
-		print "bad title: " . $wgTitle->getNsText() . ':' . $wgTitle->getDBkey() . " no edit";
-		if ( $wgTitle->exists() ) {
+	$article = new Article( $title );
+	if ( !mvDoMvPage( $title, $article, false ) ) {
+		print "bad title: " . $title->getNsText() . ':' . $title->getDBkey() . " no edit";
+		if ( $title->exists() ) {
 			print "remove article";
-			$wgArticle->doDeleteArticle( 'bad title' );
+			$article->doDeleteArticle( 'bad title' );
 		}
 		// some how mvdIndex and mvd pages got out of sync do a separate check for the mvd:
-		if ( MV_Index::getMVDbyTitle( $wgArticle->mTitle->getDBkey() ) != null ) {
+		if ( MV_Index::getMVDbyTitle( $title->getDBkey() ) != null ) {
 			print ', rm mvd';
-			MV_Index::remove_by_wiki_title( $wgArticle->mTitle->getDBkey() );
+			MV_Index::remove_by_wiki_title( $title->getDBkey() );
 		}
 		print "\n";
 		return ;
 	}
-	if ( $wgTitle->getNamespace() == MV_NS_MVD && MV_Index::getMVDbyTitle( $wgTitle->getDBkey() ) == null ) {
+	if ( $title->getNamespace() == MV_NS_MVD && MV_Index::getMVDbyTitle( $title->getDBkey() ) == null ) {
 		// print "missing assoc mvd ...update \n";
 	} else {
-		if ( $wgTitle->exists() ) {
+		if ( $title->exists() ) {
 			// if last edit!=mvBot skip (don't overwite peoples improvments')
-			$rev = & Revision::newFromTitle( $wgTitle );
+			$rev = & Revision::newFromTitle( $title );
 			if ( $botUserName != $rev->getRawUserText() && !$forceUpdate ) {
-				print ' skiped page ' . $wgTitle->getNsText() . ':' . $wgTitle->getText() . ' edited by user:' . $rev->getRawUserText() . " != $botUserName \n";
+				print ' skiped page ' . $title->getNsText() . ':' . $title->getText() . ' edited by user:' . $rev->getRawUserText() . " != $botUserName \n";
 				return ;
 			}
 			// proc article:
-			$cur_text = $wgArticle->getContent();
+			$cur_text = $article->getContent();
 			// if its a redirect skip
 			if ( substr( $cur_text, 0, strlen( '#REDIRECT' ) ) == '#REDIRECT' && !$forceUpdate ) {
 				print ' skiped page moved by user:' . $rev->getRawUserText() . "\n";
@@ -145,7 +144,7 @@ function do_update_wiki_page( $wgTitle, $wikiText, $ns = null, $forceUpdate = fa
 			}
 			// check if text is identical:
 			if ( trim( $cur_text ) == trim( $wikiText ) ) {
-				print "text " . $wgTitle->getNsText() . ':' . $wgTitle->getText() . " is identical (no update)\n";
+				print "text " . $title->getNsText() . ':' . $title->getText() . " is identical (no update)\n";
 				// if force update double check the mvd for consistancy?
 				return ;
 			}
@@ -155,7 +154,7 @@ function do_update_wiki_page( $wgTitle, $wikiText, $ns = null, $forceUpdate = fa
 	// got here do the edit:
 	$sum_txt = 'metavid bot insert';
 
-	$wgArticle->doEdit( $wikiText, $sum_txt, EDIT_FORCE_BOT );
+	$article->doEdit( $wikiText, $sum_txt, EDIT_FORCE_BOT );
 	print "did edit on " . $wgTitle->getNsText() . ':' . $wgTitle->getDBkey() . "\n";
 	// die;
 }

@@ -42,9 +42,6 @@ class FacebookApiException extends Exception
       $msg = 'Unknown Error. Check getResult()';
     }
 
-	// fb#26681
-	Wikia::logBacktrace(__CLASS__ . " ({$msg})");
-
     parent::__construct($msg, $code);
   }
 
@@ -114,7 +111,7 @@ class FacebookAPI
     CURLOPT_TIMEOUT        => 60,
     CURLOPT_USERAGENT      => 'facebook-php-2.0'
 
-
+	
   );
 
 
@@ -604,7 +601,7 @@ class FacebookAPI
       $opts[CURLOPT_POSTFIELDS] = http_build_query($params, null, '&');
     }
     $opts[CURLOPT_URL] = $url;
-
+	
 	// adding Wikias proxy settings
 	if ( $GLOBALS["wgHTTPProxy"] ) {
 		$opts[CURLOPT_PROXY] = $GLOBALS["wgHTTPProxy"]; ;

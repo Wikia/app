@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension TemplateLink.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Magnus Manske
  * @copyright © 2007 Magnus Manske
  * @licence GNU General Public Licence 2.0 or later
@@ -24,11 +25,20 @@ $messages['en'] = array(
  * @author Fryed-peach
  * @author Masterches
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'templatelink' => '{{desc}}',
-	'templatelink_desc' => 'Short description of the TemplateLink extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'templatelink_desc' => '{{desc}}',
 	'templatelink_newtitle' => 'A page is transcluded when it is inserted by reference in an other one (a part of the source page will be referenced in the present document and so be included)',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'templatelink' => 'Lidhje Template',
+	'templatelink_desc' => 'Kjo shtrirje mund të tregojnë një template si një faqe të re',
 );
 
 /** Arabic (العربية)
@@ -42,14 +52,15 @@ $messages['ar'] = array(
 );
 
 /** Egyptian Spoken Arabic (مصرى)
+ * @author Dudi
  * @author Ghaly
  * @author Meno25
  */
 $messages['arz'] = array(
 	'templatelink' => 'وصلة قالب',
-	'templatelink_desc' => ' الامتداد ده ممكن يعرض قالب على إنه صفحه جديده',
-	'templatelink_empty' => 'لازم تحدد .',
-	'templatelink_newtitle' => '$1 (متضمنة)',
+	'templatelink_desc' => 'الextension ده ممكن يبيّن قالب على انه صفحه جديده',
+	'templatelink_empty' => 'لازم تحدد.',
+	'templatelink_newtitle' => '$1 (موجوده بردو فى حته تانيه)',
 );
 
 /** Kotava (Kotava)
@@ -69,7 +80,7 @@ $messages['bcl'] = array(
 	'templatelink_empty' => 'Kaipuhan mong suplayan an parametro.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -198,6 +209,16 @@ $messages['fr'] = array(
 	'templatelink_newtitle' => '$1 (tranclus)',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'templatelink' => 'Lim de vers modèlo',
+	'templatelink_desc' => 'Ceta èxtension pôt fâre vêre un modèlo coment una pâge novèla.',
+	'templatelink_empty' => 'Vos dête buchiér un paramètre.',
+	'templatelink_newtitle' => '$1 (transcllu)',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
@@ -205,7 +226,7 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'templatelink' => 'Ligazón do modelo',
-	'templatelink_desc' => 'Esta extensión pode amosar un modelo como unha páxina nova',
+	'templatelink_desc' => 'Esta extensión pode mostrar un modelo como unha páxina nova',
 	'templatelink_empty' => 'Vostede ten que proporcionar un parámetro.',
 	'templatelink_newtitle' => '$1 (transcluído)',
 );
@@ -236,17 +257,18 @@ $messages['he'] = array(
  */
 $messages['hsb'] = array(
 	'templatelink' => 'Předłohowy wotkaz',
-	'templatelink_desc' => 'Tute rozšěrjenje móž předłohu jako nowu stronu pokazać',
+	'templatelink_desc' => 'Tute rozšěrjenje móže předłohu jako nowu stronu pokazać',
 	'templatelink_empty' => 'Dyrbiš parameter podać.',
 	'templatelink_newtitle' => '$1 (narunany)',
 );
 
 /** Haitian (Kreyòl ayisyen)
+ * @author Boukman
  * @author Masterches
  */
 $messages['ht'] = array(
-	'templatelink' => 'Lyen pou modèl an',
-	'templatelink_empty' => 'Ou dwèt bay yon paramèt.',
+	'templatelink' => 'Lyen pou modèl la',
+	'templatelink_empty' => 'Ou dwe bay yon paramèt.',
 	'templatelink_newtitle' => '$1 (mete paj sa anndan yon lòt paj)',
 );
 
@@ -285,6 +307,7 @@ $messages['id'] = array(
  */
 $messages['ig'] = array(
 	'templatelink' => 'Jikodo mkpurụ ihü',
+	'templatelink_newtitle' => '$1 (jètùrù)',
 );
 
 /** Italian (Italiano)
@@ -329,7 +352,17 @@ $messages['km'] = array(
 	'templatelink_empty' => 'អ្នក​ត្រូវតែ​ផ្ដល់​ប៉ារ៉ាម៉ែត្រ​មួយ​។',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'templatelink' => 'ಟೆಂಪ್ಲೇಟು ಕೊಂಡಿ',
+	'templatelink_desc' => 'ಈ ವಿಸ್ತರಣೆ ಟೆಂಪ್ಲೇಟನ್ನು ಹೊಸ ಪುಟದಲ್ಲಿ ತೋರಿಸಬಹುದು',
+	'templatelink_empty' => 'ನೀವು ಒಂದು ವ್ಯಾಪ್ತಿಯನ್ನು ಕೊಡ ಬೇಕು.',
+	'templatelink_newtitle' => '$1 (ಸೇರಿಸಲ್ಪಟ್ಟಿದೆ)',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -379,6 +412,16 @@ $messages['myv'] = array(
 	'templatelink_newtitle' => '$1 (сюлмавома пе вельде совавтозь)',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'templatelink' => 'Mallenke',
+	'templatelink_desc' => 'Denne utvidelsen kan vise en mal som en ny side',
+	'templatelink_empty' => 'Du må angi en parameter.',
+	'templatelink_newtitle' => '$1 (inkluderes)',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -397,16 +440,6 @@ $messages['nn'] = array(
 	'templatelink_desc' => 'Denne utvidinga kan vise ein mal som ei ny side',
 	'templatelink_empty' => 'Du må gje ein parameter.',
 	'templatelink_newtitle' => '$1 (vert inkludert)',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'templatelink' => 'Mallenke',
-	'templatelink_desc' => 'Denne utvidelsen kan vise en mal som en ny side',
-	'templatelink_empty' => 'Du må angi en parameter.',
-	'templatelink_newtitle' => '$1 (inkluderes)',
 );
 
 /** Occitan (Occitan)
@@ -451,11 +484,12 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'templatelink' => 'Ligação de predefinição',
+	'templatelink' => 'Link de predefinição',
 	'templatelink_desc' => 'Esta extensão pode mostrar uma predefinição como uma nova página',
 	'templatelink_empty' => 'Deverá fornecer um parâmetro',
 	'templatelink_newtitle' => '$1 (transcluído)',
@@ -491,7 +525,7 @@ $messages['ru'] = array(
 	'templatelink_newtitle' => '$1 (включение)',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -509,6 +543,34 @@ $messages['sk'] = array(
 	'templatelink_desc' => 'Toto rozšírenie dokáže zobraziť šablónu ako novú stránku',
 	'templatelink_empty' => 'Musíte zadať parameter.',
 	'templatelink_newtitle' => '$1 (transkludovaná)',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'templatelink' => 'Povezava predloge',
+	'templatelink_desc' => 'Ta razširitev lahko prikaže predlogo kot novo stran',
+	'templatelink_empty' => 'Navesti morate parameter.',
+	'templatelink_newtitle' => '$1 (vključeno)',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'templatelink' => 'Веза шаблона',
+	'templatelink_desc' => 'Ово проширење може приказати шаблон као нову страницу',
+	'templatelink_empty' => 'Морате унети параметар.',
+	'templatelink_newtitle' => '$1 (укључено)',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'templatelink' => 'Veza šablona',
+	'templatelink_desc' => 'Ovo proširenje može prikazati šablon kao novu stranicu',
+	'templatelink_empty' => 'Morate uneti parametar.',
+	'templatelink_newtitle' => '$1 (uključeno)',
 );
 
 /** Seeltersk (Seeltersk)
@@ -533,10 +595,13 @@ $messages['sv'] = array(
 );
 
 /** Tamil (தமிழ்)
+ * @author TRYPPN
  * @author Trengarasu
  */
 $messages['ta'] = array(
 	'templatelink' => 'வார்ப்புரு இணைப்பு',
+	'templatelink_desc' => 'இந்த விரிவாக்கம் வார்ப்புருவை புதியபக்கமாக காண்பிக்கும்',
+	'templatelink_empty' => 'தாங்கள் ஒரு கொடுபொருளை(parameter) உள்ளீடு செய்ய வேண்டும்.',
 	'templatelink_newtitle' => '$1 (இணைக்கப்பட்டுள்ளது)',
 );
 
@@ -548,7 +613,7 @@ $messages['te'] = array(
 	'templatelink_desc' => 'ఈ పొడగింత మూసని ఒక కొత్త పేజీగా చూపించగలదు',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -556,7 +621,7 @@ $messages['tg-cyrl'] = array(
 	'templatelink_empty' => 'Шумо бояд параметре пешниҳод кунед.',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -584,7 +649,7 @@ $messages['tr'] = array(
 	'templatelink_newtitle' => '$1 (görüntüleme)',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Tatar (Cyrillic script) (Татарча)
  * @author Yildiz
  * @author Рашат Якупов
  */
@@ -623,16 +688,24 @@ $messages['vo'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Chenxiaoqino
  * @author Gzdavidwong
  */
 $messages['zh-hans'] = array(
 	'templatelink' => '模板链接',
+	'templatelink_desc' => '这个扩展可以将一个模版作为新页面来展示。',
+	'templatelink_empty' => '你必须提供一个参数。',
+	'templatelink_newtitle' => '$1 (已引用)',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'templatelink' => '模板連結',
+	'templatelink_desc' => '這個擴充套件可以將一個模版作為新頁面來展示。',
+	'templatelink_empty' => '您必須提供一個參數。',
+	'templatelink_newtitle' => '$1 (已引用)',
 );
 

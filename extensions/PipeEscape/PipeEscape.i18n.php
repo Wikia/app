@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension PipeEscape.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +35,13 @@ $messages['qqq'] = array(
 	'pipeescape-desc' => '{{desc|name=[[:mw:Extension:Pipe_Escape|Pipe_Escape]]}}',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'pipeescape-desc' => 'funksion parser <code>#!</code> për kur të doni një karakter tub të jetë vetëm një karakter tub',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -41,7 +49,14 @@ $messages['ar'] = array(
 	'pipeescape-desc' => 'دالة محلل <code>#!</code> لعندما تريد حرف أنبوبة ليكون فقط حرف أنبوبة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'pipeescape-desc' => "Función del analizador sintácticu <code>#!</code> pa cuando se quier que'l caráuter de barra vertical «|» nun tenga significáu especial",
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -63,10 +78,11 @@ $messages['bs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Purodha
  */
 $messages['de'] = array(
-	'pipeescape-desc' => 'Parserfunktion <code>#!</code> versteckt Parameter-Trenner',
+	'pipeescape-desc' => 'Ergänzt die Parserfunktion <code>#!</code>, die als versteckter Parametertrenner genutzt werden kann',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -107,9 +123,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author Urhixidur
  */
 $messages['fr'] = array(
-	'pipeescape-desc' => 'Fonction parseur <code>#!</code> pour inséser le caractère pipe en tant que simple caractère.',
+	'pipeescape-desc' => 'Fonction de l’analyseur syntaxique <code>#!</code> pour insérer une barre verticale non-interprétée.',
 );
 
 /** Galician (Galego)
@@ -168,6 +185,13 @@ $messages['id'] = array(
 	'pipeescape-desc' => 'Fungsi parser <code>#!</code> jika Anda menginginkan karakter pipa sebagaimana adanya',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'pipeescape-desc' => "Funzione parser <code>#!</code> per quando si desidera che il carattere ''pipe'' sia solo un carattere pipe",
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -175,7 +199,14 @@ $messages['ja'] = array(
 	'pipeescape-desc' => 'パイプ記号をパイプ記号のまま扱いたい場合のために、パーサー関数 <code>#!</code> を追加する',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'pipeescape-desc' => '파이프 문자가 파이프 문자로서의 역할만 하도록 할 때 사용하는 <code>#!</code> 파서 기능',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -204,6 +235,13 @@ $messages['mk'] = array(
 	'pipeescape-desc' => 'Парсерска функција <code>#!</code> која се користи кога сакате цртите да бидат само црти',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'pipeescape-desc' => 'Fungsi penghurai <code>#!</code> supaya aksara paip kekal sekadar aksara paip tanpa fungsi khas',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -221,7 +259,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'pipeescape-desc' => 'Tolkefunksjonen <code>#!</code> som lar «|»-tegnet bare være et «|»-tegn',
 );
 
@@ -247,10 +285,11 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'pipeescape-desc' => 'Função do analisador parser <code>#!</code> para quando se pretende que um caráter barra vertical ("pipe") seja apenas um caráter barra vertical.',
+	'pipeescape-desc' => 'Função do analisador sintáctico <code>#!</code> para quando se pretende que uma barra vertical ("pipe") seja apenas uma barra vertical.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -279,6 +318,18 @@ $messages['ru'] = array(
  */
 $messages['sk'] = array(
 	'pipeescape-desc' => 'Funkciu syntaktického analyzátora <code>#!</code> použijete vtedy, keď chcete, aby bol znak rúry iba znakom rúry',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'pipeescape-desc' => "Парсерска функција <code>#!</code> за случајеве када пајп-карактер ('|') треба да буде само то.",
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'pipeescape-desc' => "Parserska funkcija <code>#!</code> za slučajeve kada pajp-karakter ('|') treba da bude samo to.",
 );
 
 /** Swedish (Svenska)

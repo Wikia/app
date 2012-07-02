@@ -46,7 +46,7 @@ $messages['fr'] = array(
 	'centralhelpsearch-placeholder' => "Rechercher dans l'aide&hellip;",
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

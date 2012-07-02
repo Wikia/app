@@ -14,7 +14,7 @@
 # 
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
@@ -22,8 +22,9 @@
  * the edit page to make it easy to get at special characters and
  * such forth.
  *
+ * @file
  * @author Brion Vibber <brion at pobox.com>
- * @addtogroup Extensions
+ * @ingroup Extensions
  */
 
 if( !defined( 'MEDIAWIKI' ) ) {
@@ -36,8 +37,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'CharInsert',
 	'author' => 'Brion Vibber',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:CharInsert',
-	'description' => 'Allows creation of JavaScript box for inserting non-standard characters',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:CharInsert',
 	'descriptionmsg' => 'charinsert-desc',
 );
 
@@ -77,7 +77,7 @@ function charInsertNowiki( $matches ) {
 
 function charInsertItem( $data ) {
 	$chars = explode( '+', $data );
-	if( count( $chars ) > 1 ) {
+	if( count( $chars ) > 1 && $chars[0] !== '' ) {
 		return charInsertChar( $chars[0], $chars[1], 'Click the character while selecting a text' );
 	} elseif( count( $chars ) == 1 ) {
 		return charInsertChar( $chars[0] );
@@ -93,11 +93,6 @@ function charInsertChar( $start, $end = '', $title = null ) {
 		$inline = charInsertDisplay( $start );
 	} else {
 		$inline = charInsertDisplay( $start . $end );
-	}
-	if( $title ) {
-		$extra = ' title="' . htmlspecialchars( $title ) . '"';
-	} else {
-		$extra = '';
 	}
 	return Xml::element( 'a',
 		array(

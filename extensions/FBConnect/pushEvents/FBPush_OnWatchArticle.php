@@ -5,9 +5,6 @@
  * Pushes an item to Facebook News Feed when the user adds an article to their watchlist.
  */
 
-global $wgExtensionMessagesFiles;
-$pushDir = dirname(__FILE__) . '/';
-
 class FBPush_OnWatchArticle extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnWatchArticle'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
 	static $messageName = 'fbconnect-msg-OnWatchArticle';
@@ -21,13 +18,6 @@ class FBPush_OnWatchArticle extends FBConnectPushEvent {
 		wfProfileOut(__METHOD__);
 	}
 	
-	public function loadMsg() {
-		wfProfileIn(__METHOD__);
-				
-		wfLoadExtensionMessages('FBPush_OnWatchArticle');
-		
-		wfProfileOut(__METHOD__);
-	}
 	
 	public static function onWatchArticleComplete(&$user, &$article ){
 		global $wgContentNamespaces, $wgSitename, $wgRequest;

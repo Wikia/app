@@ -192,4 +192,6 @@ var CreatePage = {
 	}
 };
 
-$(CreatePage.init);
+jQuery(function($) {
+	CreatePage.init()
+});

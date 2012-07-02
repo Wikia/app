@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * MV_EditStreamPage.php Created on Nov 28, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -126,7 +126,7 @@
  			}
 
 
- 		} else if ( $this->mv_action == 'edit_stream_files' ) {
+ 		} elseif ( $this->mv_action == 'edit_stream_files' ) {
  			$dur = 0;
  			foreach ( $streamFiles as $sf ) {
  				if ( $_POST['sf_' . $sf->id] ) {
@@ -143,7 +143,7 @@
  			}
 
  			$this->status_ok = wfMsg( 'mv_updated_stream_files' );
- 		} else if ( $this->mv_action == 'rm_stream_file' ) {
+ 		} elseif ( $this->mv_action == 'rm_stream_file' ) {
  			$rmID = $wgRequest->getVal( 'rid' );
  			foreach ( $streamFiles as $inx => $sf ) {
  				if ( $sf->id == $rmID ) {

@@ -23,13 +23,11 @@ $wgExtensionCredits['specialpage'][] = array('name' => 'User Ratings',
 						 
 require_once "$IP/includes/SpecialPage.php";
 $wgSpecialPages['UserRatings'] = 'UserRatings';
+$wgExtensionMessagesFiles['UserRatings'] = dirname(__FILE__) . '/UserRatings.i18n.php';
 
 class UserRatings extends SpecialPage {
 
 	function UserRatings() {
-		global $wgMessageCache;
-		$wgMessageCache->addMessage('userratings', 'User ratings');
-
 		SpecialPage::SpecialPage('UserRatings');
 		$this->includable(true);
 	}

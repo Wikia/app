@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Retrieve metadata for a file
  */
 
@@ -48,7 +48,7 @@ class WebStoreMetadata extends WebStoreCommon {
 
 		$name = basename( $fullPath );
 		$i = strrpos( $name, '.' );
-		$ext = Image::normalizeExtension( $i ? substr( $name, $i + 1 ) : '' );
+		$ext = File::normalizeExtension( $i ? substr( $name, $i + 1 ) : '' );
 		$magic = MimeMagic::singleton();
 		$mime = $magic->guessTypesForExtension( $ext );
 		$type = $magic->getMediaType( $fullPath, $mime);
@@ -72,7 +72,7 @@ class WebStoreMetadata extends WebStoreCommon {
 			'width' => $gis[0],
 			'height' => $gis[1],
 			'bits' => isset( $gis['bits'] ) ? $gis['bits'] : '',
-			'type' => $type, 
+			'type' => $type,
 			'mime' => $mime,
 			'metadata' => $handlerMeta,
 			'size' => $stat['size'],
@@ -93,4 +93,3 @@ class WebStoreMetadata extends WebStoreCommon {
 $obj = new WebStoreMetadata;
 $obj->executeCommon();
 
-?>

@@ -44,7 +44,7 @@ $messages['ar'] = array(
 	'rte-edgecase-comment' => 'تعليقات HTML',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -249,7 +249,7 @@ $messages['fr'] = array(
 	'prefs-rte' => 'Éditeur de texte enrichi',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -20,7 +20,7 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class SharedHelpImagesTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testSharedHelpImages() throws Exception {
 
 		try {

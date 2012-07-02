@@ -3,7 +3,8 @@
 /**
  * Plotter class. Renders html and javascript for the Plotters extension.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Ryan Lane, rlane32+mwext@gmail.com
  * @copyright © 2009 Ryan Lane
  * @license GNU General Public Licence 2.0 or later
@@ -16,7 +17,7 @@ class Plotters {
 	var $argumentArray, $dataArray;
 	var $errors;
 
-	function Plotters( $pParser, &$parser ) {
+	function __construct( $pParser, &$parser ) {
 		$this->parser = $parser;
 		$this->argumentArray = $pParser->getArguments();
 		$this->dataArray = $pParser->getData();
@@ -35,8 +36,6 @@ class Plotters {
 	}
 
 	function checkForErrors() {
-		wfLoadExtensionMessages( 'Plotters' );
-
 		$errors = '';
 		$errcnt = 0;
 
@@ -50,7 +49,7 @@ class Plotters {
 		if ( $this->argumentArray["script"] == "" ) {
 			$errors .= wfMsg( "plotters-missing-script" ) . "<br />";
 			$errcnt++;
-		} else if ( strlen( $this->argumentArray["script"] ) > 255 ) {
+		} elseif ( strlen( $this->argumentArray["script"] ) > 255 ) {
 			// Check to ensure scriptname is < 255 characters
 			$errors .= wfMsg( "plotters-excessively-long-scriptname" ) . "<br />";
 			$errcnt++;
@@ -201,7 +200,7 @@ class Plotters {
 		$output .= "}";
 
 		// Add hook event
-		$output .= 'hookEvent("load", draw' . $this->argumentArray["name"] . ');';
+		$output .= '$( draw' . $this->argumentArray["name"] . ');';
 		$output .= "</script>";
 
 		return $output;

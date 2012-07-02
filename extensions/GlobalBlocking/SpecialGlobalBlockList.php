@@ -4,12 +4,11 @@ class SpecialGlobalBlockList extends SpecialPage {
 	public $mSearchIP, $mSearch;
 
 	function __construct() {
-		wfLoadExtensionMessages('GlobalBlocking');
 		parent::__construct( 'GlobalBlockList' );
 	}
 
 	function execute( $par ) {
-		global $wgUser,$wgOut,$wgRequest;
+		global $wgOut, $wgRequest;
 
 		$this->setHeaders();
 		$ip = isset( $par ) ? $par : $wgRequest->getText( 'ip' );
@@ -25,7 +24,7 @@ class SpecialGlobalBlockList extends SpecialPage {
 	}
 
 	function showList( ) {
-		global $wgOut,$wgScript,$wgUser;
+		global $wgOut, $wgScript;
 		$errors = array();
 
 		// Validate search IP
@@ -43,7 +42,7 @@ class SpecialGlobalBlockList extends SpecialPage {
 		$searchForm .= Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', null, wfMsg( 'globalblocking-search-legend' ) );
 		$searchForm .= Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript, 'name' => 'globalblocklist-search' ) );
-		$searchForm .= Xml::hidden( 'title',  SpecialPage::getTitleFor('GlobalBlockList')->getPrefixedText() );
+		$searchForm .= Html::hidden( 'title',  SpecialPage::getTitleFor('GlobalBlockList')->getPrefixedText() );
 
 		if (is_array($errors) && count($errors)>0) {
 			$errorstr = '';
@@ -106,8 +105,10 @@ class SpecialGlobalBlockList extends SpecialPage {
 	}
 
 	function loadParameters( $ip ) {
-		global $wgUser;
-		$this->mSearchIP = Block::normaliseRange( trim( $ip ) );
+		$ip = trim( $ip );
+		$this->mSearchIP = ( $ip !== '' )
+			? Block::normaliseRange( $ip )
+			: '';
 	}
 }
 
@@ -137,8 +138,18 @@ class GlobalBlockListPager extends ReverseChronologicalPager {
 		$expiry = $row->gb_expiry;
 		$options = array();
 		
-		## Options to display
-		$options[] = Block::formatExpiry( $expiry );
+		# Messy B/C until $wgLang->formatExpiry() is well embedded
+		if( Block::decodeExpiry( $expiry ) == 'infinity' ){
+			$options[] = wfMsgExt( 'infiniteblock', 'parseinline' );
+		} else {
+			$expiry = Block::decodeExpiry( $expiry );
+			$options[] = wfMsgExt(
+				'expiringblock',
+				'parseinline',
+				$wgLang->date( $expiry ),
+				$wgLang->time( $expiry )
+			);
+		}
 		
 		# Check for whitelisting.
 		$wlinfo = GlobalBlocking::getWhitelistInfo( $row->gb_id );
@@ -150,8 +161,6 @@ class GlobalBlockListPager extends ReverseChronologicalPager {
 
 		if ($row->gb_anon_only)
 			$options[] = wfMsg('globalblocking-list-anononly');
-		
-		$titleObj = SpecialPage::getTitleFor( "GlobalBlockList" );
 		
 		## Do afterthoughts (comment, links for admins)
 		$info = array();
@@ -207,7 +216,7 @@ class GlobalBlockListPager extends ReverseChronologicalPager {
 
 	function getQueryInfo() {
 		$conds = $this->mConds;
-		#$conds[] = 'gb_expiry>' . $this->mDb->addQuotes( $this->mDb->timestamp() );
+		$conds[] = 'gb_expiry>' . $this->mDb->addQuotes( $this->mDb->timestamp() );
 		return array(
 			'tables' => 'globalblocks',
 			'fields' => '*',

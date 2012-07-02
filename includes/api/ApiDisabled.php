@@ -1,10 +1,10 @@
 <?php
-
 /**
- * Created on Sep 25, 2008
- * API for MediaWiki 1.8+
  *
- * Copyright © 2008 Roan Kattouw <Firstname>.<Lastname>@home.nl
+ *
+ * Created on Sep 25, 2008
+ *
+ * Copyright © 2008 Roan Kattouw <Firstname>.<Lastname>@gmail.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,14 +18,11 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	// Eclipse helper - will be ignored in production
-	require_once( "ApiBase.php" );
-}
 
 /**
  * API module that dies with an error immediately.
@@ -44,7 +41,7 @@ class ApiDisabled extends ApiBase {
 	}
 
 	public function execute() {
-		$this->dieUsage( "The ``{$this->getModuleName()}'' module has been disabled.", 'moduledisabled' );
+		$this->dieUsage( "The \"{$this->getModuleName()}\" module has been disabled.", 'moduledisabled' );
 	}
 
 	public function isReadMode() {
@@ -60,16 +57,14 @@ class ApiDisabled extends ApiBase {
 	}
 
 	public function getDescription() {
-		return array(
-			'This module has been disabled.'
-		);
+		return 'This module has been disabled';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array();
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiDisabled.php 62783 2010-02-21 18:09:00Z ashley $';
+		return __CLASS__ . ': $Id$';
 	}
 }

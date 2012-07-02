@@ -13,23 +13,23 @@
  */
 
 class ImageReviewTask extends BatchTask {
-        var $mType, $mVisible, $mArguments, $mMode, $mAdmin;
-        var $records, $title, $namespace;
-        var $mUser, $mUsername;
+	var $mType, $mVisible, $mArguments, $mMode, $mAdmin;
+	var $records, $title, $namespace;
+	var $mUser, $mUsername;
 
-        /* constructor */
-        function __construct( $params = array() ) {
-                $this->mType = 'imagereview';
-                $this->mVisible = false; // do not show form for this task
-                $this->mParams = $params;
-                $this->mTTL = 86400; // 24 hours
-                $this->records = 1000; // TODO: needed?
-                parent::__construct();
-        }
+	/* constructor */
+	function __construct( $params = array() ) {
+		$this->mType = 'imagereview';
+		$this->mVisible = false; // do not show form for this task
+		$this->mParams = $params;
+		$this->mTTL = 86400; // 24 hours
+		$this->records = 1000; // TODO: needed?
+		parent::__construct();
+	}
 
 	function execute( $params = null ) {
 		global $IP, $wgWikiaLocalSettingsPath;
-		/*      go with each supplied wiki and delete the supplied article
+		/*  go with each supplied wiki and delete the supplied article
 			load all configs for particular wikis before doing so
 			(from wikifactory, not by _obsolete_ maintenance scripts
 			and from LocalSettings as worked on fps)
@@ -92,7 +92,7 @@ class ImageReviewTask extends BatchTask {
 		}
 	}
 
-	function flagUser( $imageId, $wikiId ) {		
+	function flagUser( $imageId, $wikiId ) {
 	}
 
 	function flagWiki( $wikiId ) {

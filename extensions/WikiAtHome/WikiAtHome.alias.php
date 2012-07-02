@@ -6,70 +6,84 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'SpecialWikiAtHome' => array( 'WikiAtHome' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'SpecialWikiAtHome' => array( 'الويكي_في_المنزل' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'SpecialWikiAtHome' => array( 'الويكي_في_المنزل' ),
+$specialPageAliases['arz'] = array(
+	'SpecialWikiAtHome' => array( 'الويكى_فى_البيت' ),
 );
 
-/** Azerbaijani (Azərbaycan) */
-$aliases['az'] = array(
+/** Azerbaijani (Azərbaycanca) */
+$specialPageAliases['az'] = array(
 	'SpecialWikiAtHome' => array( 'VikiEvdə' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'SpecialWikiAtHome' => array( 'WikiKodKuce' ),
 );
 
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'SpecialWikiAtHome' => array( 'ویکی_در_خانه' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'SpecialWikiAtHome' => array( 'WikiLakay' ),
+);
+
 /** Korean (한국어) */
-$aliases['ko'] = array(
-	'SpecialWikiAtHome' => array( '위키 홈' ),
+$specialPageAliases['ko'] = array(
+	'SpecialWikiAtHome' => array( '위키홈' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'SpecialWikiAtHome' => array( 'WikiDoheem' ),
 );
 
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'SpecialWikiAtHome' => array( 'ВикиДома' ),
+);
+
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
-	'SpecialWikiAtHome' => array( 'വീട്ടിലെ വിക്കി' ),
+$specialPageAliases['ml'] = array(
+	'SpecialWikiAtHome' => array( 'വീട്ടിലെ_വിക്കി' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'SpecialWikiAtHome' => array( 'घरचाविकि' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'SpecialWikiAtHome' => array( 'Hjemmewiki' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'SpecialWikiAtHome' => array( 'Wiki_thuus' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'SpecialWikiAtHome' => array( 'WikiThuis' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'SpecialWikiAtHome' => array( 'Hjemmewiki' ),
-);
-
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'SpecialWikiAtHome' => array( 'EvdeViki' ),
 );
-

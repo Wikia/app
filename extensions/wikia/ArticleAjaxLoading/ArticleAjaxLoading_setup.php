@@ -32,7 +32,6 @@ function ArticleAjaxLoadinig_UserLoadFromSession($user, $result) {
 }
 
 function ArticleAjaxLoadinig_addJSVariable($vars) {
-
 	// Assign logged-in users to groups
 	// G1 - 6% (for this group Article Ajax Loading is enabled)
 	// G2 - 6% (control group)
@@ -41,9 +40,12 @@ function ArticleAjaxLoadinig_addJSVariable($vars) {
 	global $wgRequest, $wgUser;
 	if($wgUser->isLoggedIn()) {
 		if($wgRequest->getVal('mode') != 'AAL') {
-			$anon = new User();
-			if($wgUser->getPageRenderingHash() == $anon->getPageRenderingHash()) {
+			$anonParserOptions = ParserOptions::newFromUser(new User());
+			$userParserOptions = ParserOptions::newFromUser($wgUser);
 
+			$forOptions = ParserOptions::legacyOptions();
+
+			if($userParserOptions->optionsHash($forOptions) == $anonParserOptions->optionsHash($forOptions)) {
 				$mod = $wgUser->getID() % 100;
 
 				if($mod >= 1 && $mod <= 20) {

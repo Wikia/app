@@ -17,7 +17,7 @@ CREATE TABLE /*$wgDBprefix*/updates (
   -- We routinely pull things based on timestamp.
   KEY up_timestamp(up_timestamp),
   KEY up_sequence(up_sequence,up_timestamp)
-) TYPE=InnoDB;
+) /*$wgDBTableOptions*/;
 
 --
 -- Initialize the table from the current state.

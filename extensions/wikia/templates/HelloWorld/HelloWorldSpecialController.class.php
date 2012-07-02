@@ -2,7 +2,7 @@
 
 /**
  * This is an example use of SpecialPage controller
- * 
+ *
  * @author ADi
  *
  */
@@ -21,7 +21,7 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 		$this->privateData[] = 'foo';
 		$this->privateData[] = 'bar';
 		$this->privateData[] = 'baz';
-		
+
 		$this->helper = F::build( 'HelloWorld', array( 'currentTitle' => $this->app->wg->Title ) );
 	}
 
@@ -49,21 +49,21 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 
 		// setting response data
 		// Note: special page controllers cannot use the shorthand syntax of $this->var to set response variables
-		// This is because the 
+		// This is because the
 		$this->setVal( 'header', $this->wf->msg('helloworld-hello-msg') );
 		$this->setVal( 'helperData', $this->helper->getWikiData( $wikiId ) );
 		$this->setVal( 'controllerData', $this->privateData );
 
 		// example of setting SpecialPage::mIncluding
-		$this->mIncluding = true;
-		
+		$this->including(true);
+
 		$this->wf->profileOut( __METHOD__ );
 	}
 
 	/**
 	 * @brief this just redirects to the index method
 	 * @details Example of redirecting to another internal controller method
-	 * 
+	 *
 	 */
 	public function HelloForwarding() {
 		$this->forward( __CLASS__, 'index' );
@@ -73,5 +73,5 @@ class HelloWorldSpecialController extends WikiaSpecialPageController {
 		$response = $this->sendSelfRequest('index' );
 		$this->setVal('helperData', $response->getVal('helperData'));
 	}
-	
+
 }

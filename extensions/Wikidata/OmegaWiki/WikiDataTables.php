@@ -133,12 +133,13 @@ class Table {
 	}
 	
 	public function getIndexes( $purpose ) {
-		if ( $purpose == "WebSite" )
+		if ( $purpose == "WebSite" ) {
 			return $this->getWebSiteIndexes();
-		else if ( $purpose == "MassUpdate" )
+		} elseif ( $purpose == "MassUpdate" ) {
 			return $this->getMassUpdateIndexes();
-		else
+		} else {
 			return null;
+		}
 	}
 }
 
@@ -180,15 +181,15 @@ class VersionedTable extends Table {
 	protected function createVersionedIndexes( $name, $versionedEnd, $versionedStart, $unversioned, array $columns ) {
 		$result = array();
 		
-		if ( $versionedEnd )
+		if ( $versionedEnd ) {
 			$result[] = new TableIndex( "versioned_end_" . $name, array_merge( array( $this->removeTransactionId ), $columns ) );
-
-		if ( $versionedStart )
+		}
+		if ( $versionedStart ) {
 			$result[] = new TableIndex( "versioned_start_" . $name, array_merge( array( $this->addTransactionId ), $columns ) );
-			
-		if ( $unversioned )
+		}
+		if ( $unversioned ) {
 			$result[] = new TableIndex( "unversioned_" . $name, $columns );
-		
+		}
 		return $result;
 	}
 }
@@ -723,10 +724,11 @@ class WikiDataSet {
 	public function getTableWithIdentifier( $identifier ) {
 		$prefixedIdentifier = $this->dataSetPrefix . "_" . $identifier;
 		
-		if ( isset( $this->tableLookupMap[$prefixedIdentifier] ) )
+		if ( isset( $this->tableLookupMap[$prefixedIdentifier] ) ) {
 			return $this->tableLookupMap[$prefixedIdentifier];
-		else
+		} else {
 			return null;
+		}
 	}
 }
 
@@ -740,23 +742,25 @@ $dataSet = new WikiDataSet( wdGetDataSetContext() );
 function genericSelect( $selectCommand, array $expressions, array $tables, array $restrictions ) {
 	$result = $selectCommand . " " . $expressions[0]->toExpression();
 	
-	for ( $i = 1; $i < count( $expressions ); $i++ )
+	for ( $i = 1; $i < count( $expressions ); $i++ ) {
 		$result .= ", " . $expressions[$i]->toExpression();
-		
+	}
 	if ( count( $tables ) > 0 ) {
 		$result .= " FROM " . $tables[0]->getIdentifier();
 		
-		for ( $i = 1; $i < count( $tables ); $i++ )
+		for ( $i = 1; $i < count( $tables ); $i++ ) {
 			$result .= ", " . $tables[$i]->getIdentifier();
+		}
 	}
 	
 	if ( count( $restrictions ) > 0 ) {
 		$result .= " WHERE (" . $restrictions[0] . ")";
 		
-		for ( $i = 1; $i < count( $restrictions ); $i++ )
+		for ( $i = 1; $i < count( $restrictions ); $i++ ) {
 			$result .= " AND (" . $restrictions[$i] . ")";
+		}
 	}
-	
+
 	return new SelectExpression( $result );
 }
 
@@ -769,9 +773,11 @@ function selectDistinct( array $expressions, array $tables, array $restrictions 
 }
 
 function genericSelectLatest( $selectCommand, array $expressions, array $tables, array $restrictions ) {
-	foreach ( $tables as $table )
-		if ( $table->isVersioned )
+	foreach ( $tables as $table ) {
+		if ( $table->isVersioned ) {
 			$restrictions[] = $table->removeTransactionId->toExpression() . " IS NULL";
+		}
+	}
 	
 	return genericSelect( $selectCommand, $expressions, $tables, $restrictions );
 }
@@ -785,16 +791,18 @@ function selectLatestDistinct( array $expressions, array $tables, array $restric
 }
 
 function expressionToSQL( $expression ) {
-	if ( is_int( $expression ) )
+	if ( is_int( $expression ) ) {
 		return $expression;
-	else if ( is_string( $expression ) ) {
+	}
+	elseif ( is_string( $expression ) ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		return $dbr->addQuotes( $expression );
 	}
-	else if ( is_object( $expression ) && $expression instanceof DatabaseExpression )
+	elseif ( is_object( $expression ) && $expression instanceof DatabaseExpression ) {
 		return $expression->toExpression();
-	else
+	} else {
 		throw new Exception( "Cannot convert expression to SQL: " . $expression );
+	}
 }
 
 function equals( $expression1, $expression2 ) {
@@ -808,13 +816,14 @@ function in( DatabaseExpression $expression1, $expression2 ) {
 function inArray( DatabaseExpression $expression, $values ) {
 	$sqlValues = array();
 	
-	foreach ( $values as $value )
+	foreach ( $values as $value ) {
 		$sqlValues[] = expressionToSQL( $value );
-	
-	if ( count( $values ) > 0 )
+	}
+	if ( count( $values ) > 0 ) {
 		return new DefaultDatabaseExpression( $expression->toExpression() . " IN (" . join( $sqlValues, ", " ) . ")" );
-	else
+	} else {
 		return new DefaultDatabaseExpression( 1 );
+	}
 }
 
 function sqlOr( $expression1, $expression2 ) {

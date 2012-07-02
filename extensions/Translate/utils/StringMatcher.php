@@ -61,13 +61,14 @@ class StringMatcher implements StringMangler {
 
 	/**
 	 * Alias for making NO-OP string mangler.
+	 * @return StringMatcher
 	 */
 	public static function EmptyMatcher() {
 		return new StringMatcher;
 	}
 
 	/**
-	 * Cosntructor, see EmptyMatcher();
+	 * Constructor, see EmptyMatcher();
 	 */
 	public function __construct( $prefix = '', $patterns = array() ) {
 		$this->sPrefix = $prefix;
@@ -100,6 +101,10 @@ class StringMatcher implements StringMangler {
 		}
 	}
 
+	/**
+	 * @param $string string
+	 * @return bool
+	 */
 	public function match( $string ) {
 		if ( in_array( $string, $this->aExact ) ) {
 			return true;

@@ -68,8 +68,11 @@ class MapsCoordinateParser {
 		// Handle i18n notations.
 		$coordinates = self::handleI18nLabels( $coordinates );
 		
+		// Normalize the coordinates string.
+		$coordinates = self::normalizeCoordinates( $coordinates );
+		
 		// Determine what notation the coordinates are in.
-		$coordsType = self::getCoordinatesType( $coordinates );
+		$coordsType = self::getCoordinatesType( $coordinates, false );
 
 		// If getCoordinatesType returned false, the provided value is invalid or in an unsuported notation.
 		if ( $coordsType === false ) {
@@ -104,18 +107,21 @@ class MapsCoordinateParser {
 	}
 	
 	/**
-	 * Returns the type of the provided coordinates, or flase if they are invalid.
+	 * Returns the type of the provided coordinates, or false if they are invalid.
 	 * You can use this as validation function, but be sure to use ===, since 0 can be returned.
 	 * 
 	 * @since 0.6
 	 * 
 	 * @param string $coordinates
+	 * @param boolean $normalize
 	 * 
 	 * @return Integer or false
 	 */
-	public static function getCoordinatesType( $coordinates ) {
-		// Normalize the coordinates string.
-		$coordinates = self::normalizeCoordinates( $coordinates );		
+	public static function getCoordinatesType( $coordinates, $normalize = true ) {
+		if ( $normalize ) {
+			// Normalize the coordinates string.
+			$coordinates = self::normalizeCoordinates( $coordinates );
+		}		
 		
 		switch ( true ) {
 			case self::areFloatCoordinates( $coordinates ):
@@ -162,7 +168,7 @@ class MapsCoordinateParser {
 	 * @since 0.6
 	 * 
 	 * @param array $coordinates The set of coordinates that needs to be formatted. Either an associative
-	 *        array with lat and lon keys, or a numbered aray with lat on index 0, and lon on index 1.
+	 *        array with lat and lon keys, or a numbered array with lat on index 0, and lon on index 1.
 	 * @param coordinate type $targetFormat The notation to which they should be formatted. Defaults to floats.
 	 * @param boolean $directional Indicates if the target notation should be directional. Defaults to false.
 	 * @param string $separator Delimiter to separate the latitude and longitude with.
@@ -183,7 +189,7 @@ class MapsCoordinateParser {
 	 * @since 0.6.2
 	 * 
 	 * @param array $coordinates The set of coordinates that needs to be formatted. Either an associative
-	 *        array with lat and lon keys, or a numbered aray with lat on index 0, and lon on index 1.
+	 *        array with lat and lon keys, or a numbered array with lat on index 0, and lon on index 1.
 	 * @param coordinate type $targetFormat The notation to which they should be formatted. Defaults to floats.
 	 * @param boolean $directional Indicates if the target notation should be directional. Defaults to false.
 	 * 
@@ -278,13 +284,15 @@ class MapsCoordinateParser {
 			case Maps_COORDS_DD:
 				return $coordinate . self::SYMBOL_DEG;
 			case Maps_COORDS_DM:
-				$isNegative = $coordinate < 0;
 				$coordinate = abs( $coordinate );
+				$degrees = floor( $coordinate );
 				
-				$result = floor( $coordinate ) . self::SYMBOL_DEG . ' ' . ( $coordinate - floor( $coordinate ) ) * 60 . self::SYMBOL_MIN;
-				if ( $isNegative ) $result = '-' . $result;
-				
-				return $result;
+				return sprintf(
+					"%s%d%s %0.3f%s",
+					$coordinate < 0 ? '-' : '',
+					$degrees, self::SYMBOL_DEG,
+					( $coordinate - $degrees ) * 60, self::SYMBOL_MIN
+				);
 			default:
 				throw new Exception( __METHOD__ . " does not support formatting of coordinates to the $targetFormat notation." );
 		}
@@ -316,7 +324,7 @@ class MapsCoordinateParser {
 	}
 	
 	/**
-	 * returns whether the coordinates are in float representataion.
+	 * returns whether the coordinates are in float representation.
 	 * 
 	 * @since 0.6
 	 * 
@@ -331,7 +339,7 @@ class MapsCoordinateParser {
 	}
 	
 	/**
-	 * returns whether the coordinates are in DMS representataion.
+	 * returns whether the coordinates are in DMS representation.
 	 * 
 	 * @since 0.6
 	 * 
@@ -348,7 +356,7 @@ class MapsCoordinateParser {
 	}
 
 	/**
-	 * returns whether the coordinates are in Decimal Degree representataion.
+	 * returns whether the coordinates are in Decimal Degree representation.
 	 * 
 	 * @since 0.6
 	 * 
@@ -363,7 +371,7 @@ class MapsCoordinateParser {
 	}
 	
 	/**
-	 * returns whether the coordinates are in Decimal Minute representataion.
+	 * returns whether the coordinates are in Decimal Minute representation.
 	 * 
 	 * @since 0.6
 	 * 
@@ -511,7 +519,7 @@ class MapsCoordinateParser {
 	}
 	
 	/**
-	 * Takes a set of coordinates in DMS representataion, and returns them in float representataion.
+	 * Takes a set of coordinates in DMS representation, and returns them in float representation.
 	 * 
 	 * @since 0.6
 	 * 
@@ -520,21 +528,36 @@ class MapsCoordinateParser {
 	 * @return string
 	 */
 	protected static function parseDMSCoordinate( $coordinate ) {
+		if ( !is_string( $coordinate ) ) {
+			throw new Exception( 'Parameter $coordinate must be a string at ' . __METHOD__ );
+		}
+		
 		$isNegative = $coordinate{0} == '-';
 		if ( $isNegative ) $coordinate = substr( $coordinate, 1 );
 		
 		$degreePosition = strpos( $coordinate, self::SYMBOL_DEG );
+		$degrees = substr ( $coordinate, 0, $degreePosition );
+		
 		$minutePosition = strpos( $coordinate, self::SYMBOL_MIN );
+		
+		if ( $minutePosition === false ) {
+			$minutes = 0;
+		}
+		else {
+			$degSignLength = strlen( self::SYMBOL_DEG );
+			$minuteLength = $minutePosition - $degreePosition - $degSignLength;
+			$minutes = substr ( $coordinate, $degreePosition + $degSignLength, $minuteLength );
+		}
+		
 		$secondPosition = strpos( $coordinate, self::SYMBOL_SEC );
 		
-		$degSignLength = strlen( self::SYMBOL_DEG );
-		
-		$minuteLength = $minutePosition - $degreePosition - $degSignLength;
-		$secondLength = $secondPosition - $minutePosition - 1;
-		
-		$degrees = substr ( $coordinate, 0, $degreePosition );
-		$minutes = substr ( $coordinate, $degreePosition + $degSignLength, $minuteLength );
-		$seconds = substr ( $coordinate, $minutePosition + 1, $secondLength );
+		if ( $minutePosition === false ) {
+			$seconds = 0;
+		}
+		else {
+			$secondLength = $secondPosition - $minutePosition - 1;
+			$seconds = substr ( $coordinate, $minutePosition + 1, $secondLength );			
+		}
 		
 		$coordinate = $degrees + ( $minutes + $seconds / 60 ) / 60;
 		if ( $isNegative ) $coordinate *= -1;
@@ -543,7 +566,7 @@ class MapsCoordinateParser {
 	}
 
 	/**
-	 * Takes a set of coordinates in Decimal Degree representataion, and returns them in float representataion.
+	 * Takes a set of coordinates in Decimal Degree representation, and returns them in float representation.
 	 * 
 	 * @since 0.6
 	 * 
@@ -556,7 +579,7 @@ class MapsCoordinateParser {
 	}
 	
 	/**
-	 * Takes a set of coordinates in Decimal Minute representataion, and returns them in float representataion.
+	 * Takes a set of coordinates in Decimal Minute representation, and returns them in float representation.
 	 * 
 	 * @since 0.6
 	 * 
@@ -579,7 +602,7 @@ class MapsCoordinateParser {
 	}
 	
 	/**
-	 * Gets a regex group that allows only the supported seperators.
+	 * Gets a regex group that allows only the supported separators.
 	 * 
 	 * @since 0.6.2
 	 * 

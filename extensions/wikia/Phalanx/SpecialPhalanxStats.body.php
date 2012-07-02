@@ -8,8 +8,6 @@ class PhalanxStats extends UnlistedSpecialPage {
 	function execute( $par ) {
 		global $wgOut, $wgLang, $wgUser, $wgRequest;
 
-		wfLoadExtensionMessages( 'Phalanx' );
-
 		#set base title
 		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') );
 
@@ -281,8 +279,6 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 	function formatRow( $row ) {
 		global $wgLang;
 
-		wfLoadExtensionMessages( 'Phalanx' );
-
 		$type = implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
 		
 		$username = $row->ps_blocked_user;
@@ -351,8 +347,6 @@ class PhalanxWikiStatsPager extends ReverseChronologicalPager {
 
 	function formatRow( $row ) {
 		global $wgLang;
-
-		wfLoadExtensionMessages( 'Phalanx' );
 
 		$type = implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
 		

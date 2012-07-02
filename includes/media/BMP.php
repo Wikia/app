@@ -1,5 +1,7 @@
 <?php
 /**
+ * Handler for Microsoft's bitmap format
+ *
  * @file
  * @ingroup Media
  */
@@ -11,22 +13,39 @@
  * @ingroup Media
  */
 class BmpHandler extends BitmapHandler {
-	// We never want to use .bmp in an <img/> tag
+
+	/**
+	 * @param $file
+	 * @return bool
+	 */
 	function mustRender( $file ) {
 		return true;
 	}
 
-	// Render files as PNG
-	function getThumbType( $text, $mime ) {
+	/**
+	 * Render files as PNG
+	 *
+	 * @param $text
+	 * @param $mime
+	 * @param $params
+	 * @return array
+	 */
+	function getThumbType( $text, $mime, $params = null ) {
 		return array( 'png', 'image/png' );
 	}
 
-	/*
+	/**
 	 * Get width and height from the bmp header.
+	 *
+	 * @param $image
+	 * @param $filename
+	 * @return array
 	 */
 	function getImageSize( $image, $filename ) {
-		$f = fopen( $filename, 'r' );
-		if(!$f) return false;
+		$f = fopen( $filename, 'rb' );
+		if( !$f ) {
+			return false;
+		}
 		$header = fread( $f, 54 );
 		fclose($f);
 
@@ -35,8 +54,12 @@ class BmpHandler extends BitmapHandler {
 		$h = substr( $header, 22, 4);
 
 		// Convert the unsigned long 32 bits (little endian):
-		$w = unpack( 'V' , $w );
-		$h = unpack( 'V' , $h );
+		try {
+			$w = wfUnpack( 'V', $w, 4 );
+			$h = wfUnpack( 'V', $h, 4 );
+		} catch ( MWException $e ) {
+			return false;
+		}
 		return array( $w[1], $h[1] );
 	}
 }

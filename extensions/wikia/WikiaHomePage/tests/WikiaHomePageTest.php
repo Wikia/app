@@ -1,7 +1,12 @@
 <?php
 
 class WikiaHomePageTest extends WikiaBaseTest {
-	const TEST_CITY_ID = 79860;
+	const TEST_CITY_ID = 80433;
+	const TEST_URL = 'http://testing';
+	const TEST_MEMBER_DATE = 'Jan 1970';
+	const MOCK_FILE_URL = 'Mock file URL';
+
+	protected $wgServerOrg = null;
 
 	public function setUp() {
 		$this->setupFile = dirname(__FILE__) . '/../WikiaHomePage.setup.php';
@@ -20,6 +25,12 @@ class WikiaHomePageTest extends WikiaBaseTest {
 		$this->setUpMockObject('stdClass', $memcParams, false, 'wgMemc');
 
 		$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
+
+		$this->mockGlobalVariable('wgWikiaHubsPages', array(
+			1 => array('Lifestyle'),
+			2 => array('Video_Games'),
+			3 => array('Entertainment')
+		));
 
 		$this->mockApp();
 	}
@@ -85,6 +96,21 @@ class WikiaHomePageTest extends WikiaBaseTest {
 			$this->mockClass($objectName, $mockObject);
 		}
 		return $mockObject;
+	}
+
+	protected function setUpGlobalVariables($params) {
+		foreach ($params as $key => $value) {
+			global ${$key}, ${$key . 'Org'};
+			${$key . 'Org'} = ${$key};
+			${$key} = $value;
+		}
+	}
+
+	protected function teardownGlobalVariables($params) {
+		foreach ($params as $key => $value) {
+			global ${$key}, ${$key . 'Org'};
+			${$key} = ${$key . 'Org'};
+		}
 	}
 
 	/**
@@ -162,13 +188,13 @@ TXT;
 
 		// 5 - not empty html + gallery tag exists with orientation="mosaic" + file exists
 		$expHubImages5 = array(
-			'Entertainment' => 'MockFileUrl',
-			'Video_Games' => 'MockFileUrl',
-			'Lifestyle' => 'MockFileUrl',
+			'Entertainment' => self::MOCK_FILE_URL,
+			'Video_Games' => self::MOCK_FILE_URL,
+			'Lifestyle' => self::MOCK_FILE_URL,
 		);
 		$mockFileParams5 = array(
 			'exists' => true,
-			'getURL' => 'MockFileUrl',
+			'getURL' => self::MOCK_FILE_URL,
 			'getTimestamp' => '',
 			'getName' => null,
 			'getZoneUrl' => null,
@@ -177,7 +203,7 @@ TXT;
 		$mockImageServingParams5 = array(
 			'getUrl' => array(
 				'mockExpTimes' => 3,
-				'mockExpValues' => 'MockFileUrl'
+				'mockExpValues' => self::MOCK_FILE_URL
 			)
 		);
 
@@ -195,99 +221,382 @@ TXT;
 		);
 	}
 
+	public function testGetList() {
+		$wikiaHomePageHelperStub = $this->getMock('WikiaHomePageHelper', array('getWikisList', 'getNumberOfHotWikiSlots', 'getNumberOfNewWikiSlots'));
+		$wikiaHomePageHelperStub->expects($this->any())->method('getWikisList')->will($this->throwException(new Exception(wfMsg('wikia-home-parse-source-invalid-slots-number'))));
+
+		$wikiaHomePageHelperStub->expects($this->any())->method('getNumberOfHotWikiSlots')->will($this->returnValue(1));
+		$wikiaHomePageHelperStub->expects($this->any())->method('getNumberOfNewWikiSlots')->will($this->returnValue(1));
+
+		$this->mockClass('WikiaHomePageHelper', $wikiaHomePageHelperStub);
+
+		//2nd failover
+		$response = $this->app->sendRequest('WikiaHomePageController', 'getList', array());
+		$status = $response->getVal('status');
+		$exception = $response->getVal('exception');
+		$failoverData = $response->getVal('failoverData');
+
+		$this->assertEquals(
+			array(
+				'status' => $status,
+				'exception' => $exception,
+			),
+			array(
+				'status' => 'false',
+				'exception' => wfMsg('wikia-home-parse-source-invalid-slots-number'),
+			)
+		);
+		$this->assertNotEmpty($failoverData);
+
+		$wikiaHomePageHelperStub->expects($this->any())->method('getWikisList')->will($this->throwException(new Exception));
+		$wikiaHomePageControllerStub = $this->getMock('WikiaHomePageController', array('getMediaWikiMessage', 'getVerticalSlotsForWiki'));
+		$wikiaHomePageControllerStub->expects($this->any())->method('getVerticalSlotsForWiki')->will($this->onConsecutiveCalls(15, 1, 1));
+		$mediaWikiMsgMock = <<<TXT
+*Video Games
+**A video games wiki|http://a-video-games-wiki.wikia.com|image|description
+*Entertainment
+**An entertainment wiki|http://an-entertainment-wiki.wikia.com|image|description
+*Lifestyle
+**A lifestyle wiki|http://a-lifestyle-wiki.wikia.com|image|description
+TXT;
+		$wikiaHomePageControllerStub->expects($this->any())->method('getMediaWikiMessage')->will($this->returnValue($mediaWikiMsgMock));
+		$this->mockClass('WikiaHomePageController', $wikiaHomePageControllerStub);
+
+		$response = $this->app->sendRequest('WikiaHomePageController', 'getList', array());
+		$status = $response->getVal('status');
+		$exception = $response->getVal('exception');
+		$failoverData = $response->getVal('failoverData');
+
+		$expectedData = array(
+			'slots' => array(
+				'hotwikis' => 1,
+				'newwikis' => 1,
+			),
+			'wikis' => array(
+				array(
+					'vertical' => 'video games',
+					'slots' => 15,
+					'wikilist' => array(
+						array(
+							'wikiid' => 0,
+							'wikiname' => 'A video games wiki',
+							'wikiurl' => 'http://a-video-games-wiki.wikia.com',
+							'wikidesc' => 'description',
+							'wikinew' => '',
+							'wikihot' => '',
+							'imagesmall' => '',
+							'imagemedium' => '',
+							'imagebig' => '',
+						),
+					),
+				),
+				array(
+					'vertical' => 'entertainment',
+					'slots' => 1,
+					'wikilist' => array(
+						array(
+							'wikiid' => 0,
+							'wikiname' => 'An entertainment wiki',
+							'wikiurl' => 'http://an-entertainment-wiki.wikia.com',
+							'wikidesc' => 'description',
+							'wikinew' => '',
+							'wikihot' => '',
+							'imagesmall' => '',
+							'imagemedium' => '',
+							'imagebig' => '',
+						),
+					),
+				),
+				array(
+					'vertical' => 'lifestyle',
+					'slots' => 1,
+					'wikilist' => array(
+						array(
+							'wikiid' => 0,
+							'wikiname' => 'A lifestyle wiki',
+							'wikiurl' => 'http://a-lifestyle-wiki.wikia.com',
+							'wikidesc' => 'description',
+							'wikinew' => '',
+							'wikihot' => '',
+							'imagesmall' => '',
+							'imagemedium' => '',
+							'imagebig' => '',
+						),
+					),
+				),
+			),
+		);
+
+		//1st failover
+		$this->assertEquals(
+			array(
+				'status' => $status,
+				'exception' => $exception,
+				'failoverData' => $failoverData,
+			),
+			array(
+				'status' => 'false',
+				'exception' => '',
+				'failoverData' => $expectedData,
+			)
+		);
+	}
+
 	/**
-	 * @dataProvider getListDataProvider
+	 * @dataProvider getWikiAdminAvatarsDataProvider
 	 */
-	public function testGetList($mediaWikiMsg, $expectedStatus, $expectedResult, $expectedExceptionMsg) {
-		$this->setUpMockObject('WikiaHomePageController', array('getMediaWikiMessage' => $mediaWikiMsg), true);
+	public function testGetWikiAdminAvatars($mockWikiId, $mockWikiServiceParam, $mockUserParam, $mockAvatarServiceParam, $expAdminAvatars) {
+		// setup
+		$globalVarParams = array('wgServer' => self::TEST_URL);
+		$this->setUpGlobalVariables($globalVarParams);
+
+		$this->setUpMockObject('WikiService', $mockWikiServiceParam, true);
+		$this->setUpMockObject('User', $mockUserParam, true);
+		$this->setUpMockObject('AvatarService', $mockAvatarServiceParam, true);
+
+		$mockUserStatsService = $this->getMock('UserStatsService', array('getStats'), array(1));
+		$mockUserStatsService->expects($this->any())->method('getStats')
+			->will($this->returnValue(
+			array(
+				'edits' => !empty($mockWikiServiceParam['getUserEdits']) ? $mockWikiServiceParam['getUserEdits'] : 0,
+				'date' => 0,
+				'likes' => 20 + rand(0, 50))
+			)
+		);
+		$this->mockClass('UserStatsService',$mockUserStatsService);
+
+
+
+		$this->setUpMockObject('GlobalTitle', array(
+			'newFromText' => null,
+			'getFullURL' => self::TEST_URL,
+		), true);
+		$this->setUpMockObject('WikiaHomePageHelper', array(
+			'formatMemberSinceDate' => self::TEST_MEMBER_DATE
+		), true);
 
 		$this->setUpMock();
 
-		$response = $this->app->sendRequest('WikiaHomePage', 'getList', array());
+		// test
+		$helper = F::build('WikiaHomePageHelper');
+		$adminAvatars = array_values($helper->getWikiAdminAvatars($mockWikiId));
 
-		$responseData = $response->getVal('data');
-		$this->assertEquals($expectedResult, $responseData);
+		$this->assertEquals($expAdminAvatars, $adminAvatars);
 
-		$responseData = $response->getVal('exception');
-		$this->assertEquals($expectedExceptionMsg, $responseData);
-
-		$responseData = $response->getVal('status');
-		$this->assertEquals($expectedStatus, $responseData);
+		// teardown
+		$this->teardownGlobalVariables($globalVarParams);
 	}
 
-	public function getListDataProvider() {
+	public function getWikiAdminAvatarsDataProvider() {
+		// 1 - wikiId = 0
+		$mockWikiId1 = 0;
+		$mockWikiServiceParam1 = null;
+		$mockUserParam1 = null;
+		$mockAvatarServiceParam1 = null;
+		$expAdminAvatars1 = array();
+
+		// 2 - no admins
+		$mockWikiId2 = self::TEST_CITY_ID;
+		$mockWikiServiceParam2 = array(
+			'getWikiAdminIds' => array(),
+		);
+
+		// 3 - user not found
+		$mockWikiServiceParam2 = array(
+			'getWikiAdminIds' => array('123'),
+		);
+		$mockUserParam3 = false;
+
+		// 4 - don't have avatar
+		$mockUserParam4 = array(
+			'newFromId' => null,
+		);
+
+		// 5 - admins have avatar < LIMIT_ADMIN_AVATARS + user edits = 0
+		$mockWikiServiceParam5 = array(
+			'getWikiAdminIds' => array('123'),
+			'getUserEdits' => 0,
+		);
+		$mockUserParam5 = array(
+			'newFromId' => null,
+			'getName' => 'TestName',
+		);
+		$mockAvatarServiceParam5 = array(
+			'getAvatarUrl' => null,
+		);
+		$expAdminAvatars5 = array(
+			array(
+				'avatarUrl' => null,
+				'edits' => 0,
+				'name' => 'TestName',
+				'userPageUrl' => self::TEST_URL,
+				'userContributionsUrl' => self::TEST_URL,
+				'since' => self::TEST_MEMBER_DATE
+			),
+		);
+
+		// 6 - admins have avatar == LIMIT_ADMIN_AVATARS + user edits != 0
+		$mockWikiServiceParam6 = array(
+			'getWikiAdminIds' => array('1', '2', '3'),
+			'getUserEdits' => 5,
+		);
+		$expAdminAvatars6 = array(
+			array(
+				'avatarUrl' => null,
+				'edits' => 15,
+				'name' => 'TestName',
+				'userPageUrl' => self::TEST_URL,
+				'userContributionsUrl' => self::TEST_URL,
+				'since' => self::TEST_MEMBER_DATE
+			)
+		);
+
+		// 7 - admins have avatar > LIMIT_ADMIN_AVATARS + user edits != 0
+		$mockWikiServiceParam7 = array(
+			'getWikiAdminIds' => array('1', '2', '3', '4', '5', '6'),
+			'getUserEdits' => 5,
+		);
+		$expAdminAvatars7 = array(
+			array(
+				'avatarUrl' => null,
+				'edits' => 30,
+				'name' => 'TestName',
+				'userPageUrl' => self::TEST_URL,
+				'userContributionsUrl' => self::TEST_URL,
+				'since' => self::TEST_MEMBER_DATE,
+			)
+		);
+
 		return array(
-			array( //mediawiki msg is empty
-				'',
-				0,
-				null,
-				wfMsg('wikia-home-parse-source-empty-exception')
+			// 1 - wikiId = 0
+			array($mockWikiId1, $mockWikiServiceParam1, $mockUserParam1, $mockAvatarServiceParam1, $expAdminAvatars1),
+			// 2 - no admins
+			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam1, $mockAvatarServiceParam1, $expAdminAvatars1),
+			// 3 - user not found
+			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam3, $mockAvatarServiceParam1, $expAdminAvatars1),
+			// 4 - don't have avatar
+			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam4, $mockAvatarServiceParam1, $expAdminAvatars1),
+			// 5 - admins have avatar < LIMIT_ADMIN_AVATARS + user edits = 0
+			array($mockWikiId2, $mockWikiServiceParam5, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars5),
+			// 6 - admins have avatar = LIMIT_ADMIN_AVATARS + user edits != 0
+			array($mockWikiId2, $mockWikiServiceParam6, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars6),
+			// 7 - admins have avatar > LIMIT_ADMIN_AVATARS + user edits != 0
+			array($mockWikiId2, $mockWikiServiceParam7, $mockUserParam5, $mockAvatarServiceParam1, $expAdminAvatars7),
+		);
+	}
+
+	/**
+	 * @dataProvider getWikiTopEditorAvatarsDataProvider
+	 */
+	public function testGetWikiTopEditorAvatars($mockWikiId, $mockWikiServiceParam, $mockUserParam, $mockAvatarServiceParam, $expTopEditorAvatars) {
+		// setup
+		$globalVarParams = array('wgServer' => self::TEST_URL);
+		$this->setUpGlobalVariables($globalVarParams);
+
+		$this->setUpMockObject('WikiService', $mockWikiServiceParam, true);
+		$this->setUpMockObject('User', $mockUserParam, true);
+		$this->setUpMockObject('AvatarService', $mockAvatarServiceParam, true);
+		$this->setUpMockObject('GlobalTitle', array(
+			'newFromText' => null,
+			'getFullURL' => self::TEST_URL,
+		), true);
+		$this->setUpMockObject('WikiaHomePageHelper', array(
+			'formatMemberSinceDate' => self::TEST_MEMBER_DATE
+		), true);
+
+		$this->setUpMock();
+
+		// test
+		$helper = F::build('WikiaHomePageHelper');
+		$topEditorAvatars = array_values($helper->getWikiTopEditorAvatars($mockWikiId));
+
+		$this->assertEquals($expTopEditorAvatars, $topEditorAvatars);
+
+		// teardown
+		$this->teardownGlobalVariables($globalVarParams);
+	}
+
+	public function getWikiTopEditorAvatarsDataProvider() {
+		// 1 - wikiId = 0
+		$mockWikiId1 = 0;
+		$mockWikiServiceParam1 = null;
+		$mockUserParam1 = null;
+		$mockAvatarServiceParam1 = null;
+		$expTopEditorAvatars1 = array();
+
+		// 2 - no editors
+		$mockWikiId2 = self::TEST_CITY_ID;
+
+		// 3 - user not found
+		$mockWikiServiceParam2 = array(
+			'getTopEditors' => array(
+				123 => 0,
 			),
-			array( //percentage in verticals' lines as a sum < 100%
-				"*Gaming|50
-	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description
-	*Entertainment|25
-	**Muppet Wiki|http://muppet.wikia.com|image|description",
-				0,
-				null,
-				wfMsg('wikia-home-parse-source-invalid-percentage')
+		);
+		$mockUserParam3 = false;
+
+		// 4 - don't have avatar
+		$mockUserParam4 = array(
+			'newFromId' => null,
+		);
+
+		// 5 - editors have avatar < LIMIT_ADMIN_AVATARS + user edits = 0
+		$mockWikiServiceParam5 = array(
+			'getTopEditors' => array(
+				123 => 0,
 			),
-			array( //percentage in verticals' lines as a sum > 100%
-				"*Gaming|60
-	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description
-	*Entertainment|60
-	**Muppet Wiki|http://muppet.wikia.com|image|description",
-				0,
-				null,
-				wfMsg('wikia-home-parse-source-invalid-percentage')
+		);
+		$mockUserParam5 = array(
+			'newFromId' => null,
+			'getName' => 'TestName',
+		);
+		$expTopEditorAvatars5 = array(
+			array(
+				'avatarUrl' => null,
+				'edits' => 0,
+				'name' => 'TestName',
+				'userPageUrl' => self::TEST_URL,
+				'userContributionsUrl' => self::TEST_URL,
+				'since' => self::TEST_MEMBER_DATE,
 			),
-			array( //two parameters have to be set (seperated with a |) for a vertical (vertical name and percentage)
-				"*Gaming
-	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description
-	*Entertainment
-	**Muppet Wiki|http://muppet.wikia.com|image|description",
-				0,
-				null,
-				wfMsg('wikia-home-parse-vertical-invalid-data')
+		);
+
+		// 6 - editors have avatar == LIMIT_ADMIN_AVATARS + user edits != 0
+		$mockWikiServiceParam6 = array(
+			'getTopEditors' => array(
+				11 => 5,
+				12 => 5,
+				13 => 5,
+				14 => 5,
+				15 => 5,
+				16 => 5,
+				17 => 5,
 			),
-			array( //at least three parameters have to be set (seperated with a |) for a wiki (wiki name, wiki url, wiki image)
-				"*Gaming|50
-	**The Call of Duty Wiki
-	*Entertainment|50
-	**Muppet Wiki|http://muppet.wikia.com",
-				0,
-				null,
-				wfMsg('wikia-home-parse-wiki-too-few-parameters')
-			),
-			array( //percentage in verticals' lines as a sum incorrect after overriding a vertical
-				"*Gaming|50
-	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description
-	*Entertainment|50
-	**Muppet Wiki|http://muppet.wikia.com|image|description
-	*Gaming|250
-	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description",
-				0,
-				null,
-				wfMsg('wikia-home-parse-source-invalid-percentage')
-			),
-			array( //everything's OK
-				"*Gaming|50
-	**The Call of Duty Wiki|http://callofduty.wikia.com/|image|description
-	*Entertainment|50
-	**Muppet Wiki|http://muppet.wikia.com|image|description",
-				1,
-				'[{"vertical":"gaming","percentage":50,"wikilist":[{"wikiname":"The Call of Duty Wiki","wikiurl":"http:\/\/callofduty.wikia.com\/","wikidesc":"description","wikinew":false,"wikihot":false,"imagesmall":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagemedium":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagebig":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"}]},{"vertical":"entertainment","percentage":50,"wikilist":[{"wikiname":"Muppet Wiki","wikiurl":"http:\/\/muppet.wikia.com","wikidesc":"description","wikinew":false,"wikihot":false,"imagesmall":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagemedium":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagebig":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"}]}]',
-				null
-			),
-			array( //everything's OK but data has spacebars here and there
-				"    *Gaming|    50
-				**The Call of Duty Wiki|   http://callofduty.wikia.com/   |    image    |     description     
-							   *          Entertainment       |    50
-						  **          Muppet Wiki       |    http://muppet.wikia.com       |    image        |      description      ",
-				1,
-				'[{"vertical":"gaming","percentage":50,"wikilist":[{"wikiname":"The Call of Duty Wiki","wikiurl":"http:\/\/callofduty.wikia.com\/","wikidesc":"description","wikinew":false,"wikihot":false,"imagesmall":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagemedium":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagebig":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"}]},{"vertical":"entertainment","percentage":50,"wikilist":[{"wikiname":"Muppet Wiki","wikiurl":"http:\/\/muppet.wikia.com","wikidesc":"description","wikinew":false,"wikihot":false,"imagesmall":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagemedium":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D","imagebig":"data:image\/gif;base64,R0lGODlhAQABAIABAAAAAP\/\/\/yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"}]}]',
-				null
-			),
+		);
+		$expTopEditorAvatars6 = array(
+			array(
+				'avatarUrl' => null,
+				'edits' => 35,
+				'name' => 'TestName',
+				'userPageUrl' => self::TEST_URL,
+				'userContributionsUrl' => self::TEST_URL,
+				'since' => self::TEST_MEMBER_DATE,
+			)
+		);
+
+		return array(
+			// 1 - wikiId = 0
+			array($mockWikiId1, $mockWikiServiceParam1, $mockUserParam1, $mockAvatarServiceParam1, $expTopEditorAvatars1),
+			// 2 - no editors
+			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam1, $mockAvatarServiceParam1, $expTopEditorAvatars1),
+			// 3 - user not found
+			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam3, $mockAvatarServiceParam1, $expTopEditorAvatars1),
+			// 4 - don't have avatar
+			array($mockWikiId2, $mockWikiServiceParam2, $mockUserParam4, $mockAvatarServiceParam1, $expTopEditorAvatars1),
+			// 5 - editors have avatar < LIMIT_ADMIN_AVATARS + user edits = 0
+			array($mockWikiId2, $mockWikiServiceParam5, $mockUserParam5, $mockAvatarServiceParam1, $expTopEditorAvatars5),
+			// 6 - editors have avatar = LIMIT_ADMIN_AVATARS + user edits != 0
+			array($mockWikiId2, $mockWikiServiceParam6, $mockUserParam5, $mockAvatarServiceParam1, $expTopEditorAvatars6),
 		);
 	}
 

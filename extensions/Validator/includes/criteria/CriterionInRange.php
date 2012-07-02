@@ -14,7 +14,7 @@
 class CriterionInRange extends ItemParameterCriterion {
 	
 	/**
-	 * Lower bound of the range. Either a number or false, for no lower limit.
+	 * Lower bound of the range (included). Either a number or false, for no lower limit.
 	 * 
 	 * @since 0.4
 	 * 
@@ -23,7 +23,7 @@ class CriterionInRange extends ItemParameterCriterion {
 	protected $lowerBound;
 	
 	/**
-	 * Upper bound of the range. Either a number or false, for no upper limit.
+	 * Upper bound of the range (included). Either a number or false, for no upper limit.
 	 * 
 	 * @since 0.4
 	 * 

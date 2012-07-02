@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * scrape_and_insert.php Created on Oct 1, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -38,7 +38,7 @@ options:
 EOT;
 exit();
 }
-/*
+/**
  * procc the request
  */
  function proc_args() {

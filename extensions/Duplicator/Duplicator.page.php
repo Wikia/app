@@ -3,7 +3,8 @@
 /**
  * Special page class for the Duplicator extension
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
 
@@ -40,7 +41,7 @@ class SpecialDuplicator extends SpecialPage {
 	 */
 	public function execute( $title ) {
 		global $wgUser, $wgOut, $wgRequest, $wgLang, $wgDuplicatorRevisionLimit;
-		wfLoadExtensionMessages( 'Duplicator' );
+		
 		$this->setHeaders();
 
 		# Check permissions
@@ -178,14 +179,14 @@ class SpecialDuplicator extends SpecialPage {
 		$form .= '<td><label for="dest">' . wfMsgHtml( 'duplicator-dest' ) . '</label></td>';
 		$form .= '<td>' . Xml::input( 'dest', 40, $dest, array( 'id' => 'dest' ) ) . '</td>';
 		$form .= '</tr><tr>';
-		$form .= '<td>&nbsp;</td>';
+		$form .= '<td>&#160;</td>';
 		$form .= '<td>' . Xml::checkLabel( wfMsg( 'duplicator-dotalk' ), 'talk', 'talk', $this->talk ) . '</td>';
 		$form .= '</tr><tr>';
-		$form .= '<td>&nbsp;</td>';
+		$form .= '<td>&#160;</td>';
 		$form .= '<td>' . Xml::submitButton( wfMsg( 'duplicator-submit' ) ) . '</td>';
 		$form .= '</tr>';
 		$form .= '</table>';
-		$form .= Xml::hidden( 'token', $wgUser->editToken( 'duplicator' ) );
+		$form .= Html::Hidden( 'token', $wgUser->editToken( 'duplicator' ) );
 		$form .= '</fieldset></form>';
 		return $form;
 	}

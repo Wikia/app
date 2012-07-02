@@ -9,13 +9,13 @@
 
 define('sections', ['events', 'track'], function(ev, track){
 	var d = document,
-		article = d.getElementById('wkMainCnt'),
-		page = d.getElementById('wkPage'),
+		article = d.getElementById('mw-content-text'),
+		page = d.getElementById('wkMainCnt'),
 		click = ev.click;
 
 	function init(){
 		//avoid running if there are no sections which are direct children of the article section
-		if(d.querySelector('#wkMainCnt > h2')){
+		if(d.querySelector('#mw-content-text > h2')){
 			var contents = article.childNodes,
 				wrapper = article.cloneNode(false),
 				root = wrapper,
@@ -60,7 +60,7 @@ define('sections', ['events', 'track'], function(ev, track){
 
 			page.removeChild(article);
 			//insertAdjacentHTML does not parse scripts that may be inside sections
-			page.insertAdjacentHTML('beforeend', wrapper.outerHTML);
+			page.insertAdjacentHTML('afterbegin', wrapper.outerHTML);
 		}
 		//this has to run even if we don't find any sections on a page for ie. Category Pages, pages without any sections but with readmore and stuff
 		$(d.body).on(click, '.collSec', function(){

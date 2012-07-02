@@ -11,8 +11,6 @@
 # (C) Copyright 2007, Patrick Delancy. All rights reserved.
 # Free for personal and commercial uses, including derived works, as long as this notice is retained unaltered.
 
-$wgExtensionFunctions[] = "wfRespawnMapExtension";
-$wgHooks['ParserFirstCallInit'][] = "wfRespawnMapExtension_InstallParser";
 $wgExtensionCredits['respawnmap'][] = array(
 	'name' => 'Tavin Respawn Map',
 	'author' =>'Patrick Delancy',
@@ -21,13 +19,8 @@ $wgExtensionCredits['respawnmap'][] = array(
 );
 
 $wgHooks['LanguageGetMagic'][] = 'wfImageURL_Magic';
-
-function wfRespawnMapExtension() {
-	global $wgParser, $wgMessageCache;
-
-	#add translatable text strings to the message cache
-	$wgMessageCache->addMessage('respawn:noexist', 'The file "$1" does not exist.');
-}
+$wgHooks['ParserFirstCallInit'][] = "wfRespawnMapExtension_InstallParser";
+$wgExtensionMessagesFiles['RespawnMap'] = dirname(__FILE__) . '/RespawnMap.i18n.php';
 
 function wfRespawnMapExtension_InstallParser( $parser ) {
 	# register the extension with the WikiText parser

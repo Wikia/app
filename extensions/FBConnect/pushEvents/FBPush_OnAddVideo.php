@@ -5,10 +5,6 @@
  * Pushes an item to Facebook News Feed when the user adds a video to the site.
  */
 
-global $wgExtensionMessagesFiles;
-$pushDir = dirname(__FILE__) . '/';
-
-
 class FBPush_OnAddVideo extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnAddVideo'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
 	static $messageName = 'fbconnect-msg-OnAddVideo';
@@ -18,14 +14,6 @@ class FBPush_OnAddVideo extends FBConnectPushEvent {
 		wfProfileIn(__METHOD__);
 
 		$wgHooks['ArticleSave'][] = 'FBPush_OnAddVideo::articleCountVideoDiff'; 	
-		
-		wfProfileOut(__METHOD__);
-	}
-	
-	public function loadMsg() {
-		wfProfileIn(__METHOD__);
-				
-		wfLoadExtensionMessages('FBPush_OnAddVideo');
 		
 		wfProfileOut(__METHOD__);
 	}

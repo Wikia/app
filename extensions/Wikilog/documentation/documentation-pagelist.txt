@@ -1,6 +1,7 @@
 Category:Wikilog manual
 Template:Wikilog user manual header
 Template:Wikilog user manual footer
+Template:Wikilog user manual index
 Help:Wikilog
 Help:Embedding wikilogs
 Help:Overview of wikilogs
@@ -13,6 +14,7 @@ File:Wikilog.png
 File:Wikilog CC-BY-SA 88x31.png
 File:Wikilog SpecialWikilog query form.png
 File:Wikilog summary auto.png
+File:Wikilog summary delim.png
 File:Wikilog summary manual.png
 File:Wikilog tab.png
 File:Wikilog template example 1.png

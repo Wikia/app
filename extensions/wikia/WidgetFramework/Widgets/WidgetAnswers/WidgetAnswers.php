@@ -43,7 +43,6 @@ function WidgetAnswers($id, $params) {
 		global $IP;
 		$wgExtensionMessagesFiles['Answers'] = "$IP/../answers/Answers.i18n.php";
 	}
-	wfLoadExtensionMessages( 'Answers' );
 
 	// This HTML for the Ask a Question is used for both logged in and logged out users
 	// but in different place - top or the bottom of the widget

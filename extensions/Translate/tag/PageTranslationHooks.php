@@ -4,14 +4,13 @@
  *
  * @file
  * @author Niklas Laxström
- * @copyright Copyright © 2008-2010, Niklas Laxström
+ * @copyright Copyright © 2008-2012, Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 /**
  * Hooks for page translation.
  *
- * @todo Methods need documentation.
  * @ingroup PageTranslation
  */
 class PageTranslationHooks {
@@ -19,10 +18,10 @@ class PageTranslationHooks {
 	static $allowTargetEdit = false;
 
 	/**
-	 * @static
-	 * @param  $parser Parser
-	 * @param  $text String
-	 * @param  $state
+	 * Hook: ParserBeforeStrip
+	 * @param $parser Parser
+	 * @param $text
+	 * @param $state
 	 * @return bool
 	 */
 	public static function renderTagPage( $parser, &$text, $state ) {
@@ -37,64 +36,61 @@ class PageTranslationHooks {
 			}
 		}
 
-		// For translation pages, parse plural, grammar etc with correct language
+		// Set display title
 		$page = TranslatablePage::isTranslationPage( $title );
-		if ( $page ) {
-			list( , $code ) = TranslateUtils::figureMessage( $title->getText() );
-			$parser->getOptions()->setTargetLanguage( Language::factory( $code ) );
-			$name = $page->getPageDisplayTitle( $code );
-			if ( $name ) {
-				$realFunction = array( 'MessageCache', 'singleton' );
-				if ( is_callable( $realFunction ) ) {
-					$cache = MessageCache::singleton();
-				} else {
-					global $wgMessageCache;
-					$cache = $wgMessageCache;
-				}
-				$name = $cache->transform( $name, false, Language::factory( $code ) );
-				$parser->getOutput()->setDisplayTitle( $name );
+		if ( !$page ) {
+			return true;
+		}
+
+		list( , $code ) = TranslateUtils::figureMessage( $title->getText() );
+		$name = $page->getPageDisplayTitle( $code );
+
+		if ( $name ) {
+			// BC for MW < 1.19
+			if ( is_callable( array( $parser, 'recursivePreprocess' ) ) ) {
+				$name = $parser->recursivePreprocess( $name );
+			} else {
+				$newParser = new Parser();
+				$name = $newParser->preprocess( $name, $parser->getTitle(), $parser->getOptions() );
 			}
+			$name = $parser->recursivePreprocess( $name );
+			$parser->getOutput()->setDisplayTitle( $name );
 		}
 
 		return true;
 	}
 
-	// Only called form hook
-	public static function injectCss( $outputpage, $text ) {
-		TranslateUtils::injectCSS();
+	/**
+	 * Set the right page content language for translated pages ("Page/xx").
+	 * Hook: PageContentLanguage
+	 */
+	public static function onPageContentLanguage( Title $title, /*string*/ &$pageLang ) {
+		// For translation pages, parse plural, grammar etc with correct language, and set the right direction
+		if ( TranslatablePage::isTranslationPage( $title ) ) {
+			list( , $code ) = TranslateUtils::figureMessage( $title->getText() );
+			$pageLang = $code;
+		}
 
 		return true;
 	}
 
-	public static function titleToGroup( Title $title ) {
-		$namespace = $title->getNamespace();
-		$text = $title->getDBkey();
-		list( $key, ) = TranslateUtils::figureMessage( $text );
+	/// Hook: OutputPageBeforeHTML
+	public static function injectCss( OutputPage $outputpage, /*string*/ $text ) {
+		$outputpage->addModules( 'ext.translate' );
 
-		return TranslateUtils::messageKeyToGroup( $namespace, $key );
+		return true;
 	}
 
-	/**
-	 * @static
-	 * @param $article Article
-	 * @param $user User
-	 * @param  $text
-	 * @param  $summary
-	 * @param  $minor
-	 * @param  $_
-	 * @param  $_
-	 * @param  $flags
-	 * @param  $revision
-	 * @return bool
-	 */
-	public static function onSectionSave( $article, $user, $text, $summary, $minor,
-		$_, $_, $flags, $revision ) {
+	/// Hook: ArticleSaveComplete
+	public static function onSectionSave( $article, User $user, $text, $summary,
+		$minor, $_, $_, $flags, $revision ) {
 		$title = $article->getTitle();
 
 		// Some checks
+		$handle = new MessageHandle( $title );
 
 		// We are only interested in the translations namespace
-		if ( $title->getNamespace() != NS_TRANSLATIONS ) {
+		if ( !$handle->isPageTranslation() || !$handle->isValid() ) {
 			return true;
 		}
 
@@ -103,12 +99,9 @@ class PageTranslationHooks {
 			return true;
 		}
 
-		// Figure out the group
-		$groupKey = self::titleToGroup( $title );
-		$group = MessageGroups::getGroup( $groupKey );
+		$group = $handle->getGroup();
 		if ( !$group instanceof WikiPageMessageGroup ) {
-			SpecialPageTranslation::superDebug( __METHOD__, 'not wp-group', $title, $user, $groupKey );
-			return;
+			return true;
 		}
 
 		// Finally we know the title and can construct a Translatable page
@@ -120,10 +113,8 @@ class PageTranslationHooks {
 		}
 
 		// Update the target translation page
-		list( , $code ) = TranslateUtils::figureMessage( $title->getDBkey() );
-		global $wgTranslateDocumentationLanguageCode;
-		if ( $code !== $wgTranslateDocumentationLanguageCode ) {
-			SpecialPageTranslation::superDebug( __METHOD__, 'ok', $title, $user );
+		if ( !$handle->isDoc() ) {
+			$code = $handle->getCode();
 			self::updateTranslationPage( $page, $code, $user, $flags, $summary );
 		}
 
@@ -137,13 +128,9 @@ class PageTranslationHooks {
 
 		$dbw = wfGetDB( DB_MASTER );
 
-		// Can this be done in one query?
-		$id = $dbw->selectField( 'revtag_type', 'rtt_id',
-			array( 'rtt_name' => 'tp:transver' ), __METHOD__ );
-
 		$conds = array(
 			'rt_page' => $title->getArticleId(),
-			'rt_type' => $id,
+			'rt_type' => RevTag::getType( 'tp:transver' ),
 			'rt_revision' => $revision
 		);
 		$dbw->delete( 'revtag', $conds, __METHOD__ );
@@ -184,6 +171,12 @@ class PageTranslationHooks {
 		$article->doPurge();
 	}
 
+	/**
+	 * @param $data
+	 * @param $params
+	 * @param $parser Parser
+	 * @return string
+	 */
 	public static function languages( $data, $params, $parser ) {
 		$title = $parser->getTitle();
 
@@ -212,12 +205,13 @@ class PageTranslationHooks {
 
 		if ( method_exists( $options, 'getUserLang' ) ) {
 			$userLangCode = $options->getUserLang();
-			$sk = false;
 		} else { // Backward compat for MediaWiki 1.17
 			global $wgLang;
 			$userLangCode = $wgLang->getCode();
-			$sk = $options->getSkin();
 		}
+
+		// BC for <1.19
+		$linker = class_exists( 'DummyLinker' ) ? new DummyLinker : new Linker;
 
 		$languages = array();
 		foreach ( $status as $code => $percent ) {
@@ -227,14 +221,14 @@ class PageTranslationHooks {
 			/* Percentages are too accurate and take more
 			 * space than simple images */
 			$percent *= 100;
-			if     ( $percent < 20 ) $image = 1;
-			elseif ( $percent < 40 ) $image = 2;
-			elseif ( $percent < 60 ) $image = 3;
-			elseif ( $percent < 80 ) $image = 4;
-			else                     $image = 5;
+			if     ( $percent < 20 ) { $image = 1; }
+			elseif ( $percent < 40 ) { $image = 2; }
+			elseif ( $percent < 60 ) { $image = 3; }
+			elseif ( $percent < 80 ) { $image = 4; }
+			else                     { $image = 5; }
 
 			$percent = Xml::element( 'img', array(
-				'src'   => TranslateUtils::assetPath( "images/prog-$image.png" ),
+				'src'   => TranslateUtils::assetPath( "resources/images/prog-$image.png" ),
 				'alt'   => "$percent%", // @todo i18n missing.
 				'title' => "$percent%", // @todo i18n missing.
 				'width' => '9',
@@ -246,21 +240,13 @@ class PageTranslationHooks {
 			$_title = Title::makeTitle( $title->getNamespace(), $title->getDBkey() . $suffix );
 
 			if ( $parser->getTitle()->getText() === $_title->getText() ) {
-				$languages[] = Html::rawElement( 'b', null, "*$name* $percent" );
-			} elseif ( $code === $userLangCode ) {
-				// Backward compat for MediaWiki 1.17
-				if( $sk ) {
-					$languages[] = $sk->linkKnown( $_title, Html::rawElement( 'b', null, "$name $percent" ) );
-				} else {
-					$languages[] = Linker::linkKnown( $_title, Html::rawElement( 'b', null, "$name $percent" ) );
-				}
+				$name = Html::rawElement( 'span', array( 'class' => 'mw-pt-languages-selected' ), $name );
+				$languages[] = "$name $percent";
 			} else {
-				// Backward compat for MediaWiki 1.17
-				if( $sk ) {
-					$languages[] = $sk->linkKnown( $_title, "$name $percent" );
-				} else {
-					$languages[] = Linker::linkKnown( $_title, "$name $percent" );
+				if ( $code === $userLangCode ) {
+					$name = Html::rawElement( 'span', array( 'class' => 'mw-pt-languages-ui' ), $name );
 				}
+				$languages[] = $linker->linkKnown( $_title, "$name $percent" );
 			}
 		}
 
@@ -280,7 +266,10 @@ class PageTranslationHooks {
 FOO;
 	}
 
-	// To display nice error for editpage
+	/**
+	 * Display nice error for editpage.
+	 * Hook: EditFilterMerged
+	 */
 	public static function tpSyntaxCheckForEditPage( $editpage, $text, &$error, $summary ) {
 		if ( strpos( $text, '<translate>' ) === false ) {
 			return true;
@@ -299,6 +288,7 @@ FOO;
 	/**
 	 * When attempting to save, last resort. Edit page would only display
 	 * edit conflict if there wasn't tpSyntaxCheckForEditPage
+	 * Hook: ArticleSave
 	 */
 	public static function tpSyntaxCheck( $article, $user, $text, $summary,
 			$minor, $_, $_, $flags, $status ) {
@@ -318,6 +308,7 @@ FOO;
 		return true;
 	}
 
+	/// Hook: ArticleSaveComplete
 	public static function addTranstag( $article, $user, $text, $summary,
 			$minor, $_, $_, $flags, $revision ) {
 		// We are not interested in null revisions
@@ -339,25 +330,27 @@ FOO;
 		return true;
 	}
 
-	/// Prevent editing of unknown pages in Translations namespace
-	public static function preventUnknownTranslations( $title, $user, $action, &$result ) {
-		if ( $title->getNamespace() == NS_TRANSLATIONS && $action === 'edit' ) {
-			$group = self::titleToGroup( $title );
-			if ( $group === null ) {
-				// No group means that the page is currently not
-				// registered to any page translation message groups
-				$result = array( 'tpt-unknown-page' );
-				return false;
-			}
+	/**
+	 * Prevent editing of unknown pages in Translations namespace.
+	 * Hook: getUserPermissionsErrorsExpensive
+	 */
+	public static function preventUnknownTranslations( Title $title, User $user, $action, &$result ) {
+		$handle = new MessageHandle( $title );
+		if ( $handle->isPageTranslation() && $action === 'edit' && !$handle->isValid() ) {
+			$result = array( 'tpt-unknown-page' );
+			return false;
 		}
 
 		return true;
 	}
 
-	/// Prevent editing of translation pages directly
-	public static function preventDirectEditing( $title, $user, $action, &$result ) {
+	/**
+	 * Prevent editing of translation pages directly.
+	 * Hook: getUserPermissionsErrorsExpensive
+	 */
+	public static function preventDirectEditing( Title $title, User $user, $action, &$result ) {
 		$page = TranslatablePage::isTranslationPage( $title );
-		if ( $page !== false ) {
+		if ( $page !== false && $action !== 'delete' && $action !== 'read' ) {
 			if ( self::$allowTargetEdit ) {
 				return true;
 			}
@@ -372,49 +365,40 @@ FOO;
 
 				return false;
 			}
-		} elseif ( $action === 'delete' ) {
-			$page = TranslatablePage::newFromTitle( $title );
-			if ( $page->getMarkedTag() ) {
-				$result = array( 'tpt-delete-impossible' );
-				return false;
-			}
 		}
 
 		return true;
 	}
 
-	public static function schemaUpdates( $updater = null ) {
-		$dir = dirname( __FILE__ ) . '/..';
-
-		if ( $updater === null ) {
-			global $wgExtNewTables, $wgExtNewFields;
-
-			$wgExtNewTables[] = array( 'translate_sections', "$dir/translate.sql" );
-			$wgExtNewFields[] = array( 'translate_sections', 'trs_order', "$dir/translate-add-trs_order.patch.sql" );
-			$wgExtNewTables[] = array( 'revtag_type', "$dir/revtags.sql" );
-		} else {
-			$updater->addExtensionUpdate( array( 'addTable', 'translate_sections', "$dir/translate.sql", true ) );
-			$updater->addExtensionUpdate( array( 'addField', 'translate_sections', 'trs_order', "$dir/translate-add-trs_order.patch.sql", true ) );
-			$updater->addExtensionUpdate( array( 'addTable', 'revtag_type', "$dir/revtags.sql", true ) );
+	/**
+	 * Redirects the delete action to our own for translatable pages.
+	 * Hook: ArticleConfirmDelete
+	 */
+	public static function disableDelete( $article, $out, &$reason ) {
+		$title = $article->getTitle();
+		if ( TranslatablePage::isSourcePage( $title ) || TranslatablePage::isTranslationPage( $title ) ) {
+			$new = SpecialPage::getTitleFor( 'PageTranslationDeletePage', $title->getPrefixedText() );
+			$out->redirect( $new->getFullUrl() );
 		}
 		return true;
 	}
 
-	/// @todo: fix method name.
-	public static function test( &$article, &$outputDone, &$pcache ) {
-		if ( !$article->getOldID() ) {
-			self::header( $article->getTitle() );
+	/// Hook: ArticleViewHeader
+	public static function translatablePageHeader( &$article, &$outputDone, &$pcache ) {
+		if ( $article->getOldID() ) {
+			return true;
 		}
 
-		return true;
-	}
+		$title = $article->getTitle();
 
-	public static function header( Title $title ) {
-		if ( TranslatablePage::isSourcePage( $title ) ) {
-			self::sourcePageHeader( $title );
-		} elseif ( TranslatablePage::isTranslationPage( $title ) )  {
+		if ( TranslatablePage::isTranslationPage( $title ) )  {
 			self::translationPageHeader( $title );
+		} else {
+			// Check for pages that are tagged or marked
+			self::sourcePageHeader( $title );
 		}
+
+		return true;
 	}
 
 	protected static function sourcePageHeader( Title $title ) {
@@ -426,7 +410,7 @@ FOO;
 		$ready = $page->getReadyTag();
 
 		$title = $page->getTitle();
-		$sk = $wgUser->getSkin();
+		$linker = class_exists( 'DummyLinker' ) ? new DummyLinker : new Linker;
 
 		$latest = $title->getLatestRevId();
 		$canmark = $ready === $latest && $marked !== $latest;
@@ -442,7 +426,7 @@ FOO;
 
 			$translate = SpecialPage::getTitleFor( 'Translate' );
 			$linkDesc  = wfMsgHtml( 'translate-tag-translate-link-desc' );
-			$actions[] = $sk->link( $translate, $linkDesc, array(), $par );
+			$actions[] = $linker->link( $translate, $linkDesc, array(), $par );
 		}
 
 		if ( $canmark ) {
@@ -454,7 +438,7 @@ FOO;
 				// This page has never been marked
 				if ( $marked === false ) {
 					$linkDesc  = wfMsgHtml( 'translate-tag-markthis' );
-					$actions[] = $sk->link( $translate, $linkDesc, array(), $par );
+					$actions[] = $linker->link( $translate, $linkDesc, array(), $par );
 				} else {
 					$markUrl = $translate->getFullUrl( $par );
 					$actions[] = wfMsgExt( 'translate-tag-markthisagain', 'parseinline', $diffUrl, $markUrl );
@@ -470,7 +454,7 @@ FOO;
 
 		$legend  = Html::rawElement(
 			'div',
-			array( 'style' => 'font-size: x-small; text-align: center;' ),
+			array( 'class' => 'mw-pt-translate-header' ),
 			$wgLang->semicolonList( $actions )
 		) . Html::element( 'hr' );
 
@@ -481,6 +465,10 @@ FOO;
 
 	protected static function translationPageHeader( Title $title ) {
 		global $wgOut;
+
+		if ( !$title->exists() ) {
+			return;
+		}
 
 		// Check if applicable
 		$page = TranslatablePage::isTranslationPage( $title );
@@ -500,7 +488,7 @@ FOO;
 		$url = $page->getTranslationUrl( $code );
 
 		// Output
-		$wrap = '<div style="font-size: x-small; text-align: center">$1</div>';
+		$wrap = '<div class="mw-translate-page-info">$1</div>';
 		$wgOut->wrapWikiMsg( $wrap, array( 'tpt-translation-intro', $url, $titleText, $per ) );
 
 		if ( floor( $per ) < 100 ) {
@@ -508,7 +496,7 @@ FOO;
 			$collection = $group->initCollection( $code );
 			$collection->filter( 'fuzzy', false );
 			if ( count( $collection ) ) {
-				$wrap = '<div style="font-size: x-small; text-align: center" class="mw-translate-fuzzy">$1</div>';
+				$wrap = '<div class="mw-translate-page-info mw-translate-fuzzy">$1</div>';
 				$wgOut->wrapWikiMsg( $wrap, array( 'tpt-translation-intro-fuzzy' ) );
 			}
 		}
@@ -516,30 +504,30 @@ FOO;
 		$wgOut->addHTML( '<hr />' );
 	}
 
-	public static function parserTestTables( &$tables ) {
-		$tables[] = 'revtag_type';
-		$tables[] = 'revtag';
-
-		return true;
-	}
-
+	/// Hook: LinksUpdate
 	public static function preventCategorization( $updater ) {
-		global $wgTranslateDocumentationLanguageCode;
-		$title = $updater->getTitle();
-		list( , $code ) = TranslateUtils::figureMessage( $title );
-		if ( $title->getNamespace() == NS_TRANSLATIONS && $code !== $wgTranslateDocumentationLanguageCode ) {
+		$handle = new MessageHandle( $updater->getTitle() );
+		if ( $handle->isPageTranslation() && !$handle->isDoc() ) {
 			$updater->mCategories = array();
 		}
 		return true;
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function formatLogEntry( $type, $action, $title, $forUI, $params ) {
 		global $wgLang, $wgContLang;
 
 		$language = $forUI === null ? $wgContLang : $wgLang;
 		$opts = array( 'parseinline', 'language' => $language );
 
-		$_ = unserialize( $params[0] );
+		// New logging system already unserializes it for us
+		if ( isset( $params['user'] ) ) {
+			$_ = $params;
+		} else {
+			$_ = unserialize( $params[0] );
+		}
 		$user =  $_['user'];
 
 		if ( $action === 'mark' ) {
@@ -547,23 +535,101 @@ FOO;
 		} elseif ( $action === 'unmark' ) {
 			return wfMsgExt( 'pt-log-unmark', $opts, $title->getPrefixedText(), $user );
 		} elseif ( $action === 'moveok' ) {
-			return wfMsgExt( 'pt-log-moveok', $opts, $title->getPrefixedText(), $user );
+			// Old entries are missing the target
+			$target = isset( $_['target'] ) ? $_['target'] : '[[]]';
+			return wfMsgExt( 'pt-log-moveok', $opts, $title->getPrefixedText(), $user, $target );
 		} elseif ( $action === 'movenok' ) {
 			return wfMsgExt( 'pt-log-movenok', $opts, $title->getPrefixedText(), $user, $_['target'] );
+		} elseif ( $action === 'deletefnok' ) {
+			return wfMsgExt( 'pt-log-delete-full-nok', $opts, $title->getPrefixedText(), $user, $_['target'] );
+		} elseif ( $action === 'deletelnok' ) {
+			return wfMsgExt( 'pt-log-delete-lang-nok', $opts, $title->getPrefixedText(), $user, $_['target'] );
+		} elseif ( $action === 'deletefok' ) {
+			return wfMsgExt( 'pt-log-delete-full-ok', $opts, $title->getPrefixedText(), $user );
+		} elseif ( $action === 'deletelok' ) {
+			return wfMsgExt( 'pt-log-delete-lang-ok', $opts, $title->getPrefixedText(), $user );
 		}
+	    return '';
 	}
 
+	/// Hook: SpecialPage_initList
 	public static function replaceMovePage( &$list ) {
 		$old = is_array( $list['Movepage'] );
 		$list['Movepage'] = array( 'SpecialPageTranslationMovePage', $old );
 		return true;
 	}
 
-	public static function lockedPagesCheck( $title, $user, $action, &$result ) {
-		global $wgMemc;
+	/// Hook: getUserPermissionsErrorsExpensive
+	public static function lockedPagesCheck( Title $title, User $user, $action, &$result ) {
+		if ( $action == 'read' ) {
+			return true;
+		}
+
+		$cache = wfGetCache( CACHE_ANYTHING );
 		$key = wfMemcKey( 'pt-lock', $title->getPrefixedText() );
-		if ( $wgMemc->get( $key ) === true ) {
+		// At least memcached mangles true to "1"
+		if ( $cache->get( $key ) == true ) {
 			$result = array( 'pt-locked-page' );
+			return false;
+		}
+
+		return true;
+	}
+
+	/// Hook: SkinSubPageSubtitle
+	public static function replaceSubtitle( &$subpages, $skin = null , $out = null ) {
+		global $wgOut;
+		// $out was only added in some MW version
+		if ( $out === null ) $out = $wgOut;
+		$linker = class_exists( 'DummyLinker' ) ? new DummyLinker : new Linker;
+
+		if ( !TranslatablePage::isTranslationPage( $out->getTitle() )
+				&& !TranslatablePage::isSourcePage( $out->getTitle() ) ) {
+			return true;
+		}
+
+		// Copied from Skin::subPageSubtitle()
+		if ( $out->isArticle() && MWNamespace::hasSubpages( $out->getTitle()->getNamespace() ) ) {
+			$ptext = $out->getTitle()->getPrefixedText();
+			if ( preg_match( '/\//', $ptext ) ) {
+				$links = explode( '/', $ptext );
+				array_pop( $links );
+				// Also pop of one extra for language code is needed
+				if ( TranslatablePage::isTranslationPage( $out->getTitle() ) ) {
+					array_pop( $links );
+				}
+				$c = 0;
+				$growinglink = '';
+				$display = '';
+
+				foreach ( $links as $link ) {
+					$growinglink .= $link;
+					$display .= $link;
+					$linkObj = Title::newFromText( $growinglink );
+
+					if ( is_object( $linkObj ) && $linkObj->exists() ) {
+						$getlink = $linker->linkKnown(
+							SpecialPage::getTitleFor( 'MyLanguage', $growinglink ),
+							htmlspecialchars( $display )
+						);
+
+						$c++;
+
+						if ( $c > 1 ) {
+							$subpages .= wfMsgExt( 'pipe-separator', 'escapenoentities' );
+						} else  {
+							// This one is stupid imho, doesn't work with chihuahua
+							// $subpages .= '&lt; ';
+						}
+
+						$subpages .= $getlink;
+						$display = '';
+					} else {
+						$display .= '/';
+					}
+					$growinglink .= '/';
+				}
+			}
 			return false;
 		}
 

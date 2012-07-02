@@ -1,15 +1,20 @@
 /* 7.0 - only fixes */
-/* content area */ 
+/* content area */
 /* workaround for various ie float bugs */
 
 /* This bit is needed to make links clickable... WTF */
-#column-content #content {
+div#column-content div#content {
 	margin-left: 12.2em;
 	margin-top: 3em;
 	height: 1%;
 }
+.rtl div#column-content div#content {
+	margin-right: 12.2em;
+	margin-left: 0;
+}
 
-.rtl #column-one {
+
+.rtl div#column-one {
 	/* For some reason it tries to inherit the padding-top into every div,
 	 * and I can't figure out how to get it back off.
 	 * Margin works correctly for this use, though.
@@ -18,9 +23,13 @@
 	margin-top: 160px;
 }
 
-.rtl #bodyContent a.external {
-	background-image: url(external-rtl.png);
-	padding: 0 13px 0 0;
+/* These elements also have padding-left: 20px; in main.css, but in RTL mode this is flipped.
+ * That's good in normal browsers, but in IE7 it needs to not be flipped for some daft reason.
+ * Also clear the right margin (originally margin-left: 1em)
+ */
+li#pt-userpage, li#pt-anonuserpage, li#pt-login {
+	padding-left: 20px;
+	margin-right: 0;
 }
 
 .rtl a.feedlink {
@@ -69,7 +78,6 @@ textarea {
 }
 
 /*
-div.editsection,
 #catlinks,
 div.tright,
 div.tleft {
@@ -78,7 +86,7 @@ div.tleft {
 */
 
 
-#footer li {
+div#footer li {
 	/* Work around bug with inline <li> tags with right margins and nowrap */
 	margin-right: 0;
 }

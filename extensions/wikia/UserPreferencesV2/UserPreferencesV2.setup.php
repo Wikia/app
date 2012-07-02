@@ -22,6 +22,9 @@ $app->registerClass('UserPreferencesV2', $dir . 'UserPreferencesV2.class.php');
 * hooks
 */
 $app->registerHook('GetPreferences', 'UserPreferencesV2', 'onGetPreferences');
+$app->registerHook('SpecialPreferencesSetUserOptions', 'UserPreferencesV2', 'onSpecialPreferencesSetUserOptions');
+$app->registerHook('PreferencesTrySetUserEmail', 'UserPreferencesV2', 'onPreferencesTrySetUserEmail');
+$app->registerHook('SavePreferences', 'UserPreferencesV2', 'onSavePreferences');
 
 /**
  * messages

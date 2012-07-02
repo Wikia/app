@@ -67,8 +67,8 @@ FCKLang.wikiLnkStopTyping			= 'przestań pisać, by rozpocząć wyszukiwanie';
 FCKLang.wikiLnkSearching			= 'wyszukiwanie...';
 FCKLang.wikiLnkSearchNothing	= 'nie znaleziono żadnego artykułu';
 FCKLang.wikiLnkSearch1Found		= 'znaleziono jednen artykuł';
-FCKLang.wikiLnkSearchSeveral	= 'znaleziono %1 artykuły'
-FCKLang.wikiLnkSearchALot			= 'znaleziono %1 artykułów'
+FCKLang.wikiLnkSearchSeveral	= 'znaleziono %1 artykuły';
+FCKLang.wikiLnkSearchALot			= 'znaleziono %1 artykułów';
 
 FCKLang.wikiTeX								= 'Formuła matematyczna (notacja TeX)';
 FCKLang.wikiTeXEmpty					= 'Nie wprowadzono formuły';

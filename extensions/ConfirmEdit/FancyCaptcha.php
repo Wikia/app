@@ -18,15 +18,19 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
+
+require_once dirname( __FILE__ ) . '/ConfirmEdit.php';
+$wgCaptchaClass = 'FancyCaptcha';
 
 global $wgCaptchaDirectory;
 $wgCaptchaDirectory = "$wgUploadDirectory/captcha"; // bad default :D
@@ -36,6 +40,14 @@ $wgCaptchaDirectoryLevels = 0; // To break into subdirectories
 
 global $wgCaptchaSecret;
 $wgCaptchaSecret = "CHANGE_THIS_SECRET!";
+
+/**
+ * By default the FancyCaptcha rotates among all available captchas.
+ * Setting $wgCaptchaDeleteOnSolve to true will delete the captcha
+ * files when they are correctly solved. Thus the user will need
+ * something like a cron creating new thumbnails to avoid drying up.
+ */
+$wgCaptchaDeleteOnSolve = false;
 
 $wgExtensionMessagesFiles['FancyCaptcha'] = dirname( __FILE__ ) . '/FancyCaptcha.i18n.php';
 $wgAutoloadClasses['FancyCaptcha'] = dirname( __FILE__ ) . '/FancyCaptcha.class.php';

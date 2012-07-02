@@ -74,7 +74,9 @@ You must give all options a rank between 1 and 999.',
 	'securepoll-api-token-mismatch' => 'Security token mismatch, cannot log in.',
 	'securepoll-not-logged-in' => 'You must log in to vote in this election',
 	'securepoll-too-few-edits' => 'Sorry, you cannot vote. You need to have made at least $1 {{PLURAL:$1|edit|edits}} to vote in this election, you have made $2.',
+	'securepoll-too-new' => 'Sorry, you cannot vote.  Your account needs to have been registered before $1 at $3 to vote in this election, you registered on $2 at $4.',
 	'securepoll-blocked' => 'Sorry, you cannot vote in this election if you are currently blocked from editing.',
+	'securepoll-blocked-centrally' => 'Sorry, you cannot vote in this election as you are blocked on at least $1 {{PLURAL:$1|wiki|wikis}}.',
 	'securepoll-bot' => 'Sorry, accounts with the bot flag are not allowed to vote in this election.',
 	'securepoll-not-in-group' => 'Only members of the "$1" group can vote in this election.',
 	'securepoll-not-in-list' => 'Sorry, you are not in the predetermined list of users authorised to vote in this election.',
@@ -163,6 +165,9 @@ To maintain voter privacy, encrypted election records are only publically availa
 	'securepoll-strength-matrix' => 'Path strength matrix',
 	'securepoll-ranks' => 'Final ranking',
 	'securepoll-average-score' => 'Average score',
+	'securepoll-round' => 'Round $1',
+	'securepoll-spoilt' => '(Spoilt)',
+	'securepoll-exhausted' => '(Exhausted)',
 );
 
 /** Message documentation (Message documentation)
@@ -193,8 +198,14 @@ GPG stands for [http://en.wikipedia.org/wiki/GNU_Privacy_Guard GNU Privacy Guard
 	'securepoll-full-gpg-error' => 'GPG stands for [http://en.wikipedia.org/wiki/GNU_Privacy_Guard GNU Privacy Guard].',
 	'securepoll-gpg-config-error' => 'GPG stands for [http://en.wikipedia.org/wiki/GNU_Privacy_Guard GNU Privacy Guard].',
 	'securepoll-gpg-parse-error' => 'GPG stands for [http://en.wikipedia.org/wiki/GNU_Privacy_Guard GNU Privacy Guard].',
+	'securepoll-too-new' => 'Parameters:
+* $1 is the required registration date
+* $2 is the actual registration date
+* $3 is the required registration time
+* $4 is the actual registration time',
 	'securepoll-header-timestamp' => '{{Identical|Time}}',
 	'securepoll-header-voter-name' => '{{Identical|Name}}',
+	'securepoll-header-voter-domain' => '{{Identical|Domain}}',
 	'securepoll-header-ip' => '{{optional}}',
 	'securepoll-header-xff' => '{{optional}}',
 	'securepoll-header-token-match' => '{{optional}}',
@@ -230,20 +241,33 @@ The /dev/urandom cryptographic random number generation device is not supported 
 	'securepoll-header-title' => '{{Identical|Name}}',
 	'securepoll-header-start-date' => '{{Identical|Start date}}',
 	'securepoll-header-end-date' => '{{Identical|End date}}',
-	'securepoll-subpage-vote' => '{{Identical|Vote}}',
-	'securepoll-subpage-translate' => '{{Identical|Translate}}',
+	'securepoll-subpage-vote' => '{{Identical|Vote}}
+Link text to a sub page in the SecurePoll extension where users can vote.',
+	'securepoll-subpage-translate' => '{{Identical|Translate}}
+Link text to a sub page in the SecurePoll extension where users can translate poll related texts.',
+	'securepoll-subpage-list' => 'Link text to a sub page in the SecurePoll extension where users can list poll information.',
+	'securepoll-subpage-dump' => 'Link text to a sub page in the SecurePoll extension where users can dump results.',
+	'securepoll-subpage-tally' => 'Link text to a sub page in the SecurePoll extension where users can tally.',
+	'securepoll-round' => 'Column header for tables on tallies which take place over multiple rounds; parameter is a roman numeral.',
+	'securepoll-spoilt' => 'Row label for counting ballots which were spoilt, that is not correctly filled in or indecipherable.',
+	'securepoll-exhausted' => 'Row label for counting ballots which have been exhausted in a multi-round counting system',
 );
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
+ * @author පසිඳු කාවින්ද
  */
 $messages['af'] = array(
 	'securepoll' => 'VeiligStem',
 	'securepoll-desc' => 'Uitbreiding vir stemmings en opnames',
 	'securepoll-invalid-page' => 'Ongeldige subbladsy "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => "Jy moet 'n verkiesing administrateur om hierdie aksie uit te voer.",
+	'securepoll-too-few-params' => 'Nie genoeg subpagina parameters (ongeldige skakel).',
 	'securepoll-invalid-election' => '"$1" is nie \'n geldig ID vir \'n stemmig nie.',
 	'securepoll-welcome' => '<strong>Welkom, $1!</strong>',
 	'securepoll-finished' => 'Hierdie stemming is afgehandel, u kan nie meer stem nie.',
+	'securepoll-change-disallowed' => 'Jy het stemme in hierdie verkiesing voor.
+Jammer, kan jy nie weer stem nie.',
 	'securepoll-submit' => 'Dien stem in',
 	'securepoll-gpg-receipt' => 'Baie dankie vir u stem.
 
@@ -258,16 +282,26 @@ As u wil, kan u kan die volgende kwitansie as bewys hou:
 Bevel: $1
 
 Fout: <pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG-sleutels word verkeerd ingestel.',
+	'securepoll-gpg-parse-error' => 'Fout met die interpretasie van GPG uitset.',
+	'securepoll-no-decryption-key' => 'Geen dekripsiesleutel is ingestel.
+Kan nie decrypt.',
 	'securepoll-jump' => 'Gaan na die stemming-bediener',
 	'securepoll-bad-ballot-submission' => 'U stem is ongeldig: $1',
 	'securepoll-unanswered-questions' => 'U moet alle vrae beantwoord.',
+	'securepoll-unranked-options' => "Sommige opsies is nie ingedeel.
+Jy moet alle opsies om 'n rang tussen 1 en 999.",
 	'securepoll-invalid-score' => "Die telling moet 'n getal tussen $1 en $2 wees.",
 	'securepoll-unanswered-options' => 'U moet al die vrae beantwoord.',
 	'securepoll-remote-auth-error' => "'n Fout het voorgekom met die opkyk van u rekening se inligting vanaf die bediener.",
 	'securepoll-api-invalid-params' => 'Ongeldige parameters.',
 	'securepoll-api-no-user' => 'Geen gebruiker met die gegewe ID gevind nie.',
+	'securepoll-api-token-mismatch' => 'Sekuriteit gebrand mismatch, kan nie inteken.',
+	'securepoll-not-logged-in' => 'Jy moet in teken om te stem in hierdie verkiesing',
+	'securepoll-blocked' => 'Jammer, kan jy nie stem in hierdie verkiesing As jy tans geblokkeer.',
 	'securepoll-bot' => "Jammer, gebruikers met 'n botvlag word nie toegelaat om aan die stemming deel te neem nie.",
 	'securepoll-not-in-group' => 'Slegs lede van die groep "$1" kan aan hierdie stemming deelneem.',
+	'securepoll-not-in-list' => 'Jammer, jy is nie in die voorafbepaalde lys van gebruikers wat gemagtig is om te stem in hierdie verkiesing.',
 	'securepoll-list-title' => 'Wys stemme: $1',
 	'securepoll-header-timestamp' => 'Tyd',
 	'securepoll-header-voter-name' => 'Naam',
@@ -292,6 +326,9 @@ Fout: <pre>$2</pre>',
 	'securepoll-header-admin' => 'Beheer',
 	'securepoll-cookie-dup-list' => 'Gebruikers met duplikaat koekies',
 	'securepoll-dump-title' => 'Dump: $1',
+	'securepoll-dump-no-crypt' => 'Geen geïnkripteer verkiesing rekord is beskikbaar vir hierdie verkiesing, want die verkiesing is nie ingestel om die enkripsie te gebruik.',
+	'securepoll-urandom-not-supported' => "Hierdie bediener ondersteun nie kriptografiese lukraakgetalgenerasie.
+Kieser privaatheid te handhaaf, is geïnkripteer verkiesing rekords is slegs publiek beskikbaar is wanneer hulle skuifel kan word met 'n veilige ewekansige getal stroom.",
 	'securepoll-translate-title' => 'Vertaal: $1',
 	'securepoll-invalid-language' => 'Ongeldige taalkode "$1"',
 	'securepoll-submit-translate' => 'Opdateer',
@@ -307,15 +344,216 @@ Fout: <pre>$2</pre>',
 	'securepoll-subpage-dump' => 'Dump',
 	'securepoll-subpage-tally' => 'Telling',
 	'securepoll-tally-title' => 'Telling: $1',
+	'securepoll-tally-not-finished' => 'Jammer, kan jy nie kerfstok die verkiesing tot na die stem is voltooi.',
+	'securepoll-can-decrypt' => "Die verkiesing rekord is geïnkripteer, maar die dekripsie sleutel is beskikbaar.
+Jy kan kies om óf kerfstok die resultate wat in die databasis teenwoordig is, of aan kerfstok geïnkripteer resultate van 'n opgelaai lêer.",
+	'securepoll-tally-no-key' => 'Jy kan nie kerfstok hierdie verkiesing, omdat die stemme word geïnkripteer, en die dekripsiesleutel nie beskikbaar is nie nie.',
+	'securepoll-tally-local-legend' => 'Telling gestoor resultate',
 	'securepoll-tally-local-submit' => 'Skep telling',
+	'securepoll-tally-upload-legend' => 'Foto geïnkripteer dump',
 	'securepoll-tally-upload-submit' => 'Skep telling',
 	'securepoll-no-upload' => 'Geen lêer is opgelaai nie.
 Die resultate kan nie getel word nie.',
+	'securepoll-pairwise-victories' => 'Twee-oorwinning matriks',
+	'securepoll-strength-matrix' => 'Pad krag Matrix',
 	'securepoll-ranks' => 'Eindstand',
 	'securepoll-average-score' => 'Gemiddelde punt',
+	'securepoll-round' => 'Ronde $1',
+	'securepoll-spoilt' => '(Bedorwe)',
+	'securepoll-exhausted' => '(Uitgeput)',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'securepoll-remote-parse-error' => 'Gabim gjatë interpretimit përgjigje autorizim nga serveri.',
+	'securepoll-api-invalid-params' => 'parametrat e pavlefshme.',
+	'securepoll-api-no-user' => 'Asnjë përdorues u gjet me ID e dhënë.',
+	'securepoll-api-token-mismatch' => 'dhëna të dëmtuara në shenjë të Sigurimit, nuk mund të hyni in',
+	'securepoll-not-logged-in' => 'Ju duhet të identifikoheni për të votuar në këto zgjedhje',
+	'securepoll-too-few-edits' => 'Na vjen keq, ju nuk mund të votojnë. Ju duhet të keni bërë së paku $1 {{PLURAL:$1||redaktim|redaktimet}} për të votuar në këto zgjedhje, ju keni bërë $2.',
+	'securepoll-blocked' => 'Na vjen keq, ju nuk mund të votojnë në këto zgjedhje, nëse ju jeni bllokuar për momentin nga redaktimi.',
+	'securepoll-bot' => 'Na vjen keq, llogaritë me flamurin bot nuk lejohen të votojnë në këto zgjedhje.',
+	'securepoll-not-in-group' => 'Vetëm anëtarët e "$1 grup" mund të votojnë në këto zgjedhje.',
+	'securepoll-not-in-list' => 'Na vjen keq, ju nuk jeni në listën e të paracaktuar të përdoruesve të autorizuar për të votuar në këto zgjedhje.',
+	'securepoll-list-title' => 'vota List: $1',
+	'securepoll-header-timestamp' => 'Kohë',
+	'securepoll-header-voter-name' => 'Emër',
+	'securepoll-header-voter-domain' => 'Sferë',
+	'securepoll-header-ua' => 'Agjent Përdoruesi',
+	'securepoll-header-cookie-dup' => 'Dup',
+	'securepoll-header-strike' => 'Grevë',
+	'securepoll-header-details' => 'Detaje',
+	'securepoll-strike-button' => 'Grevë',
+	'securepoll-unstrike-button' => 'Unstrike',
+	'securepoll-strike-reason' => 'Arsyeja:',
+	'securepoll-strike-cancel' => 'Anuloj',
+	'securepoll-strike-error' => 'Greva Gabim kryerjes / unstrike: $1',
+	'securepoll-strike-token-mismatch' => 'Të dhënat Sesioni humbur',
+	'securepoll-details-link' => 'Detaje',
+	'securepoll-details-title' => 'Voto detajet: #$1',
+	'securepoll-invalid-vote' => '"$1" nuk është një votë të vlefshme ID',
+	'securepoll-header-voter-type' => 'Lloji i votuesve',
+	'securepoll-voter-properties' => 'pronat e votuesve',
+	'securepoll-strike-log' => 'log Strike',
+	'securepoll-header-action' => 'Veprim',
+	'securepoll-header-reason' => 'Arsye',
+	'securepoll-header-admin' => 'Admin',
+	'securepoll-cookie-dup-list' => 'Cookie kopjuar përdoruesit',
+	'securepoll-dump-title' => 'Derdhin: $1',
+	'securepoll-dump-no-crypt' => 'Nuk ka rekord Encrypted zgjedhore është në dispozicion për këtë zgjedhje, sepse zgjedhjet nuk është i konfiguruar të përdorë encryption.',
+	'securepoll-dump-not-finished' => 'Encrypted zgjedhjeve të dhënat janë në dispozicion vetëm pas datës përfundojë më $1 tek $2',
+	'securepoll-dump-no-urandom' => 'Nuk mund te hap / dev / urandom. Për të ruajtur fshehtësinë e votuesve, Encrypted të dhënat e zgjedhjeve janë vetëm publikisht në dispozicion kur ato mund të jenë riorganizoi me një lumë të rastit numër të sigurt.',
+	'securepoll-urandom-not-supported' => 'Ky server nuk suporton kriptografike numër të brezit të rastit. Për të ruajtur fshehtësinë e votuesve, Encrypted të dhënat e zgjedhjeve janë vetëm publikisht në dispozicion kur ato mund të jenë riorganizoi me një lumë të rastit numër të sigurt.',
+	'securepoll-translate-title' => 'Translate: $1',
+	'securepoll-invalid-language' => 'kod i pavlefshëm gjuhën "$1"',
+	'securepoll-submit-translate' => 'Update',
+	'securepoll-language-label' => 'Zgjidh gjuhën:',
+	'securepoll-submit-select-lang' => 'Përkthej',
+	'securepoll-entry-text' => 'Më poshtë është lista e votimit.',
+	'securepoll-header-title' => 'Emër',
+	'securepoll-header-start-date' => 'Data Fillim',
+	'securepoll-header-end-date' => 'Data Fundi',
+	'securepoll-subpage-vote' => 'Votim',
+	'securepoll-subpage-translate' => 'Përkthej',
+);
+
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'securepoll' => 'SecurePoll',
+	'securepoll-desc' => 'Extensions ta esleccions y encuentas',
+	'securepoll-invalid-page' => 'Subpachina invalida «<nowiki>$1</nowiki>»',
+	'securepoll-need-admin' => "Cal que sía un administrador d'eslecions ta fer ista acción.",
+	'securepoll-too-few-params' => 'Parametros de subpágina insuficients (vinclo invalido).',
+	'securepoll-invalid-election' => "«$1» no ye un identificador d'esleción valido.",
+	'securepoll-welcome' => '<strong>Bienplegau $1!</strong>',
+	'securepoll-not-started' => 'Ista esleción encara no ha prencipiau.
+Ye programada ta prencipiar en $2 de $3.',
+	'securepoll-finished' => 'Ista esleción ha concluiu, no puet votar mas.',
+	'securepoll-not-qualified' => 'No cumple as condicions ta poder votar en ista eslección: $1',
+	'securepoll-change-disallowed' => 'Ya ha votau denantes en ista eslección.
+Lo siento, no puede tornar a votar.',
+	'securepoll-change-allowed' => "<strong>Nota: Ya ha votau en ista eslección.</strong>
+Puet cambiar o suyo voto ninviando o formulario d'abaixo.
+Note que si fa isto, o suyo voto orichinal será descartau.",
+	'securepoll-submit' => 'Ninviar voto',
+	'securepoll-gpg-receipt' => "Gracias por votar.
+
+Si lo deseya, puet alzar o siguient recibo como evidencia d'o suyo voto:
+
+<pre>$1</pre>",
+	'securepoll-thanks' => "Gracias, o suyo voto s'ha rechistrau.",
+	'securepoll-return' => 'Tornar ta $1.',
+	'securepoll-encrypt-error' => "No s'ha puesto zifrar o suyo rechistro de voto.
+O tuyo voto no s'ha rechistrau!
+
+$1",
+	'securepoll-no-gpg-home' => 'Ye imposible de creyar un directorio-casa GPG.',
+	'securepoll-secret-gpg-error' => 'Error entre que s\'executando GPG.
+Usar $wgSecurePollShowErrorDetail=true; en LocalSettings.php ta amostrar mas detalles.',
+	'securepoll-full-gpg-error' => 'Error en executar GPG:
+
+Comando: $1
+
+Error:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'As teclas GPG no son bien configuradas.',
+	'securepoll-gpg-parse-error' => 'Error en interpretar a salida GPG.',
+	'securepoll-no-decryption-key' => "No s'ha especificau garra clau de deszifrau.
+No se puede deszifrar.",
+	'securepoll-jump' => 'Ir ta o servidor de votación',
+	'securepoll-bad-ballot-submission' => 'O suyo voto yera invalido: $1',
+	'securepoll-unanswered-questions' => 'Ha de responder todas as preguntas.',
+	'securepoll-invalid-rank' => 'Rango invalido. Ha de clasificar a os candidatos con un rango entre 1 y 999.',
+	'securepoll-unranked-options' => 'No ha clasificau qualques opcions.
+Ha de clasificar a todas as opcions con un rango entre 1 y 999.',
+	'securepoll-invalid-score' => "A puntuación ha d'estar una valura entre $1 y $2.",
+	'securepoll-unanswered-options' => 'Ha de dar una respuesta ta cada pregunta.',
+	'securepoll-remote-auth-error' => "S'ha produciu una error en obtener a suya información de cuenta d'o servidor.",
+	'securepoll-remote-parse-error' => "S'ha produciu una error en interpretar a respuesta d'autorización d'o servidor.",
+	'securepoll-api-invalid-params' => 'Parametros invalidos.',
+	'securepoll-api-no-user' => "No s'ha trobau garra usuario con ixe ID.",
+	'securepoll-api-token-mismatch' => 'No coincide a clau de seguranza, no se puede encetar a sesión.',
+	'securepoll-not-logged-in' => "Ha d'encetar sesión ta votar en ista esleción",
+	'securepoll-too-few-edits' => 'Perdón, no puet votar. Amenista haber feito a lo menos $1 {{PLURAL:$1|edición|edicions}} ta votar en ista eslección, ha feito $2.',
+	'securepoll-too-new' => "Desincuse, pero no puede votar.  A suya cuenta ha d'estar rechistrada antes de $1 a las $3 ta poder votar en ista eslección, y vusté se rechistró o $2 a las $4.",
+	'securepoll-blocked' => 'Perdón, no puet votar en ista eslección si yes actualment bloqueyau ta editar.',
+	'securepoll-blocked-centrally' => 'Desincuse, pero no puede votar en ista eslección en estar bloqueyau en a lo menos $1 {{PLURAL:$1|wiki|wikis}}.',
+	'securepoll-bot' => 'Lo sentimos, as cuentas con flag de bot no son autorizadas a votar en ista eslección.',
+	'securepoll-not-in-group' => "Solament os miembros d'o grupo «$1» pueden votar en ista eslección.",
+	'securepoll-not-in-list' => "Lo sentimos, no ye en a lista predeterminada d'usuarios autorizaus a votar en ista eslección.",
+	'securepoll-list-title' => 'Lista de votos: $1',
+	'securepoll-header-timestamp' => 'Tiempo',
+	'securepoll-header-voter-name' => 'Nombre',
+	'securepoll-header-voter-domain' => 'Dominio',
+	'securepoll-header-ua' => "Achent d'usuario",
+	'securepoll-header-cookie-dup' => 'Dup',
+	'securepoll-header-strike' => 'Invalidar',
+	'securepoll-header-details' => 'Detalles',
+	'securepoll-strike-button' => 'Inalidar',
+	'securepoll-unstrike-button' => 'Revalidar',
+	'securepoll-strike-reason' => 'Razón:',
+	'securepoll-strike-cancel' => 'Cancelar',
+	'securepoll-strike-error' => "S'ha produciu una error en invalidar/revalidar: $1",
+	'securepoll-strike-token-mismatch' => "S'ha perdiu a información d'a sesión",
+	'securepoll-details-link' => 'Detalles',
+	'securepoll-details-title' => "Detalles d'o voto: #$1",
+	'securepoll-invalid-vote' => '«$1» no ye un identificador de voto valido',
+	'securepoll-header-voter-type' => 'Tipo de votant',
+	'securepoll-voter-properties' => 'Propiedatz de votant',
+	'securepoll-strike-log' => 'Rechistro de votos invalidaus',
+	'securepoll-header-action' => 'Acción',
+	'securepoll-header-reason' => 'Razón',
+	'securepoll-header-admin' => 'Administrador',
+	'securepoll-cookie-dup-list' => 'Usuarios con cookies duplicadas',
+	'securepoll-dump-title' => 'Vulcau: $1',
+	'securepoll-dump-no-crypt' => "No se disposa d'un rechistro zifrau ta ista votación dau que ista votación no s'ha configurada ta fer servir zifrau.",
+	'securepoll-dump-not-finished' => "Se disposa d'os rechistros zifraus d'a votación nomás dimpués d'a calendata de finalización en $1 de $2",
+	'securepoll-dump-no-urandom' => "No se podió ubrir /dev/urandom.
+Ta preservar a privacidat d'os votantes, nomás se publican os resultaus zifraus d'a eslección quan pueden estar mezclaus con un fluxo de numeros aleatorio.",
+	'securepoll-urandom-not-supported' => "Iste servidor no poseye capacidat de cheneración criptografica de numeros aleatorios.
+Ta preservar a privacidat d'os votantes, solament son publicaus os resultaus encriptados d'a eslección quan pueden estar mezclaus con un fluxo de numeros aleatorio.",
+	'securepoll-translate-title' => 'Traducir: $1',
+	'securepoll-invalid-language' => "Codigo d'idioma no valido «$1»",
+	'securepoll-submit-translate' => 'Esviellar',
+	'securepoll-language-label' => 'Trigar idioma:',
+	'securepoll-submit-select-lang' => 'Traducir',
+	'securepoll-entry-text' => "Contino ye a lista d'enqüestas.",
+	'securepoll-header-title' => 'Nombre',
+	'securepoll-header-start-date' => 'Calendata de prencipio',
+	'securepoll-header-end-date' => 'Calendata de fin',
+	'securepoll-subpage-vote' => 'Votar',
+	'securepoll-subpage-translate' => 'Traducir',
+	'securepoll-subpage-list' => 'Lista',
+	'securepoll-subpage-dump' => 'Vulcar',
+	'securepoll-subpage-tally' => 'Contador',
+	'securepoll-tally-title' => 'Contador: $1',
+	'securepoll-tally-not-finished' => "Lo sentimos, no puede actualizar os contadors d'a eslección dica que a votación no haiga finalizau.",
+	'securepoll-can-decrypt' => "O rechistro d'eslección s'han zifrau pero la clave de desencriptación ye disponible.
+Puede trigar entre escrutar os resultaus de la base de datos, u escrutar os resultaus zifraus dende un fichero cargau.",
+	'securepoll-tally-no-key' => "No puede actualizar o contador d'a eslección, ya que os votos son zifraus y a clau de desenzifrau no ye disponible.",
+	'securepoll-tally-local-legend' => 'Recuento de resultaus esviellau',
+	'securepoll-tally-local-submit' => 'Creyar recuento',
+	'securepoll-tally-upload-legend' => "Puyar vulcau d'o zifrau",
+	'securepoll-tally-upload-submit' => 'Creyar recuento',
+	'securepoll-tally-error' => "S'ha produciu una error interpretando o rechistro de votos, no se puede creyar un recuento.",
+	'securepoll-no-upload' => "No s'ha puyau garra fichero, no se pueden recontar os resultaus.",
+	'securepoll-dump-corrupt' => 'O fichero de vulcau ye danyau y no se puede procesar.',
+	'securepoll-tally-upload-error' => 'Error en recontar o fichero de vulcau: $1',
+	'securepoll-pairwise-victories' => "Resultaus d'as enqüestas en iste puesto",
+	'securepoll-strength-matrix' => "Organizar por cantidat d'enqüestas",
+	'securepoll-ranks' => 'Rango final',
+	'securepoll-average-score' => 'Puntuación meya',
+	'securepoll-round' => 'Tongada $1',
+	'securepoll-spoilt' => '(Nulos)',
+	'securepoll-exhausted' => '(Emplegau)',
 );
 
 /** Arabic (العربية)
+ * @author Aiman titi
  * @author Meno25
  * @author Orango
  * @author OsamaK
@@ -338,14 +576,14 @@ $messages['ar'] = array(
 	'securepoll-change-allowed' => '<strong>ملاحظة: لقد قمت بالتصويت في هذه الانتخابات من قبل</strong>
 يمكنك تغيير صوتك باستخدام النموذج بالأسفل.
 لاحظ انه اذا قمت بذلك، سيتم اهمال تصويتك السابق.',
-	'securepoll-submit' => 'قدم صوتك',
+	'securepoll-submit' => 'أرسل صوتك',
 	'securepoll-gpg-receipt' => 'شكرا لتصويتك
 
 لو اردت، يمكنك الاحتفاظ بالايصال التالي كدليل على تصويتك:
 
 <pre>$1</pre>',
 	'securepoll-thanks' => 'شكرا لك، تم تسجيل تصويتك.',
-	'securepoll-return' => 'ارجع الي $1',
+	'securepoll-return' => 'ارجع إلى $1',
 	'securepoll-encrypt-error' => 'قد فشل تشفير سجل تصويتك.
 تصويتك لم يتم تسجيله!
 
@@ -379,7 +617,9 @@ $1',
 	'securepoll-api-token-mismatch' => 'نص الأمان لا يطابق، لا يمكن تسجيل الدخول.',
 	'securepoll-not-logged-in' => 'يجب أن تدخل لتصوت في هذه الانتخابات',
 	'securepoll-too-few-edits' => 'عذرا لا يمكنك التصويت. يجب أن تقوم ب{{PLURAL:$1||تعديل واحد|تعديلين|$1 تعديلات|$1 تعديلًا|$1 تعديل}} على الأقل لتصوت في هذه الانتخابات، بينما قمت ب$2.',
+	'securepoll-too-new' => 'عذراً، لا يمكنك التصويت. يسمح فقط بالتصويت للحسابات المسجلة قبل $1 في $3 في هذه الانتخابات، أنت سجلت $2 في $4.',
 	'securepoll-blocked' => 'عذرا، لا تستطيع التصويت في هذه الانتخابات إذا كنت ممنوعا حاليا من التعديل.',
+	'securepoll-blocked-centrally' => 'عذراً، لا يمكنك التصويت في هذه الانتخابات بسبب منعك على الأقل في $1 {{PLURAL:$1|ويكي|ويكيات}}.',
 	'securepoll-bot' => 'عذرا، الحسابات ذات أعلام البوت غير مسموح لها بالتصويت في هذه الانتخابات.',
 	'securepoll-not-in-group' => 'فقط المستخدمين من المجموعة "$1" يمكنهم التصويت في هذه الانتخابات.',
 	'securepoll-not-in-list' => 'عذرا، لست في القائمة المُعدّة للمستخدمين المصرح لهم بالتصويت في هذه الانتخابات.',
@@ -422,7 +662,7 @@ $1',
 	'securepoll-translate-title' => 'ترجم: $1',
 	'securepoll-invalid-language' => 'كود لغة غير صحيح "$1"',
 	'securepoll-header-trans-id' => 'رقم',
-	'securepoll-submit-translate' => 'تحديث',
+	'securepoll-submit-translate' => 'حدّث',
 	'securepoll-language-label' => 'اختر اللغة:',
 	'securepoll-submit-select-lang' => 'ترجم',
 	'securepoll-entry-text' => 'بالأسفل قائمة بالاقتراعات.',
@@ -451,15 +691,34 @@ $1',
 	'securepoll-strength-matrix' => 'مصفوفة قوة المسار',
 	'securepoll-ranks' => 'الترتيب النهائي',
 	'securepoll-average-score' => 'نتيجة متوسطة',
+	'securepoll-round' => 'الجولة $1',
+	'securepoll-spoilt' => '(محيرة)',
+	'securepoll-exhausted' => '(منهك)',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
  * @author Basharh
+ * @author Michaelovic
  */
 $messages['arc'] = array(
+	'securepoll-submit' => 'ܫܕܪ ܩܠܐ',
+	'securepoll-header-timestamp' => 'ܙܒܢܐ',
+	'securepoll-header-voter-name' => 'ܫܡܐ',
+	'securepoll-header-ua' => 'ܩܝܝܘܡܐ ܕܡܦܠܚܢܐ',
+	'securepoll-header-details' => 'ܐܪ̈ܝܟܬܐ',
 	'securepoll-strike-reason' => 'ܥܠܬܐ:',
 	'securepoll-strike-cancel' => 'ܒܛܘܠ',
+	'securepoll-details-link' => 'ܐܪ̈ܝܟܬܐ',
+	'securepoll-header-action' => 'ܥܒܕܐ',
 	'securepoll-header-reason' => 'ܥܠܬܐ',
+	'securepoll-translate-title' => 'ܬܪܓܡ: $1',
+	'securepoll-submit-translate' => 'ܚܘܕܬܐ',
+	'securepoll-language-label' => 'ܓܒܝ ܠܫܢܐ:',
+	'securepoll-submit-select-lang' => 'ܬܪܓܡ',
+	'securepoll-header-title' => 'ܫܡܐ',
+	'securepoll-subpage-vote' => 'ܝܗܒ ܩܠܐ',
+	'securepoll-subpage-translate' => 'ܬܪܓܡ',
+	'securepoll-subpage-list' => 'ܡܟܬܒܘܬܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -591,9 +850,390 @@ $1',
 	'securepoll-average-score' => 'نتيجه متوسطة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Assamese (অসমীয়া)
+ * @author Chaipau
+ * @author Gitartha.bordoloi
+ */
+$messages['as'] = array(
+	'securepoll' => 'সুৰক্ষিত ভোটদান',
+	'securepoll-desc' => 'নিৰ্বাচন আৰু জৰীপৰ বাবে প্ৰয়োজনীয় এক্সটেনচন',
+	'securepoll-invalid-page' => 'অপ্ৰযোজ্য উপপৃষ্ঠা "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => "এই কামটো কৰিবলৈ আপুনি নিৰ্বাচন প্ৰশাসক হ'ব লাগিব ।",
+	'securepoll-too-few-params' => 'যথেষ্ট পৰিমাণৰ উপপৃষ্ঠা পাৰামিটাৰ নাই (অপ্ৰযোজ্য সংযোগ)',
+	'securepoll-welcome' => '<strong>স্বাগতম $1!</strong>',
+	'securepoll-not-started' => "এই নিৰ্বাচন এতিয়াও আৰম্ভ হোৱা নাই ।
+$2 তাৰিখে $3 টা বজাত আৰম্ভ হ'ব ।",
+	'securepoll-finished' => 'এই নিৰ্বাচন সমাপ্ত হৈছে, আপুনি এতিয়া আৰু ভোট দিব নোৱাৰে ।',
+	'securepoll-not-qualified' => 'আপুনি এই নিৰ্বাচনত ভোটদানৰ বাবে উপযুক্ত নহয়: $1',
+	'securepoll-change-disallowed' => 'আপুনি পূৰ্বে এই নিৰ্বাচনত ভোটদান কৰিছে ।
+দুঃখিত, আপুনি পুনৰ ভোট দিব নোৱাৰে ।',
+	'securepoll-change-allowed' => "<strong>টোকা: আপুনি পূৰ্বে এই নিৰ্বাচনত ভোটদান কৰিছে ।</strong>
+তলৰ প্ৰপত্ৰ জমা কৰি আপুনি আপোনাৰ ভোট সলাব পাৰে ।
+মন কৰক যে, এনে কৰিলে আপোনাৰ মূল ভোটটো আঁতৰাই পেলোৱা হ'ব ।",
+	'securepoll-submit' => 'ভোট প্ৰদান কৰক',
+	'securepoll-gpg-receipt' => "ভোট দিয়াৰ বাবে ধন্যবাদ ।
+
+আপুনি ইচ্ছা কৰিলে ভোটদানৰ প্ৰমাণ স্বৰূপে তলৰ ৰচিদখন সাঁচি থ'ব পাৰে ।
+
+<pre>$1</pre>",
+	'securepoll-thanks' => 'ধন্যবাদ, আপোনাৰ ভোট সংৰক্ষণ কৰা হৈছে ।',
+	'securepoll-return' => '$1 লৈ ঘূৰি যাওক',
+	'securepoll-encrypt-error' => 'আপোনাৰ ভোটৰ অভিলেখৰ এনক্ৰিপ্ট কৰা ব্যৰ্থ হৈছে ।
+আপোনাৰ ভোট সংৰক্ষণ কৰা হোৱা নাই !
+
+$1',
+	'securepoll-no-gpg-home' => "জি.পি.জি. হ'ম ডিৰেক্টৰি সৃষ্টি কৰিব পৰা নগ'ল ।",
+	'securepoll-secret-gpg-error' => 'জি.পি.জি সম্পন্ন কৰাত ত্ৰুটি দেখা দিছে ।
+সবিশেষ জানিবলৈ আপোনাৰ LocalSettings.phpত $wgSecurePollShowErrorDetail=true; ব্যৱহাৰ কৰক ।',
+	'securepoll-full-gpg-error' => 'জি.পি.জি. সম্পন্ন কৰাত ত্ৰুটি দেখা দিছে :
+
+কমাণ্ড: $1
+
+ত্ৰুটি:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'জি.পি.জি. কী-সমূহ ভুলকৈ কনফিগাৰ কৰা হৈছে ।',
+	'securepoll-gpg-parse-error' => 'জিপিজি আউটপুট বিশ্লেষণ কৰোঁতে ত্ৰুটি পোৱা গৈছে ।',
+	'securepoll-no-decryption-key' => 'কোনো ডিক্ৰিপছন কী কনফিগাৰ কৰা হোৱা নাই ।
+ডিক্ৰিপ্ট কৰিব পৰা নাযাব ।',
+	'securepoll-jump' => 'ভোটিং চাৰ্ভাৰলৈ যাওক',
+	'securepoll-bad-ballot-submission' => 'আপোনাৰ ভোটটো অবৈধ: $1',
+	'securepoll-unanswered-questions' => 'আপুনি সকলো প্ৰশ্নৰ উত্তৰ দিবই লাগিব ।',
+	'securepoll-invalid-rank' => 'অপ্ৰযোজ্য স্থান । আপুনি প্ৰাৰ্থীক ১-ৰ পৰা ৯৯৯-ৰ ভিতৰত স্থান দিব লাগিব ।',
+	'securepoll-api-invalid-params' => 'অপ্ৰযোজ্য পাৰামিটাৰ ।',
+	'securepoll-header-timestamp' => 'সময়',
+	'securepoll-header-voter-name' => 'নাম',
+	'securepoll-strike-reason' => 'কাৰণ:',
+	'securepoll-strike-cancel' => 'বাতিল কৰক',
+	'securepoll-header-title' => 'নাম',
+	'securepoll-subpage-translate' => 'ভাঙনি কৰক',
+	'securepoll-subpage-list' => 'তালিকা',
+);
+
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'securepoll' => 'SecurePoll',
+	'securepoll-desc' => 'Estensión pa eleiciones y encuestes',
+	'securepoll-invalid-page' => 'Subpáxina non válida "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => 'Has de ser un alministrador de la eleición pa facer esto.',
+	'securepoll-too-few-params' => 'Nun hai parámetros de subpáxina bastantes (enllaz inválidu).',
+	'securepoll-invalid-election' => '"$1" nun ye una ID d\'eleición válida.',
+	'securepoll-welcome' => '<strong>¡Bienveníu $1!</strong>',
+	'securepoll-not-started' => "Esta eleición entá nun principió.
+Ta programada p'aniciase'l $2 a les $3.",
+	'securepoll-finished' => 'Esta eleición finó, yá nun pues votar.',
+	'securepoll-not-qualified' => 'Nun tas cualificáu pa votar nesta eleición: $1',
+	'securepoll-change-disallowed' => 'Yá votasti antes nesta eleición.
+Lo siento, nun pues volver a votar.',
+	'securepoll-change-allowed' => "<strong>Nota: Yá votasti antes nesta eleición.</strong>
+Pues camudar el to votu unviando'l formulariu d'abaxo.
+Atalanta que si faes esto, se desaniciará'l to votu orixinal.",
+	'securepoll-submit' => 'Unviar el votu',
+	'securepoll-gpg-receipt' => 'Gracies por votar.
+
+Si quies, pues quedate col recibu darréu como prueba del to votu:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'Gracies, el to votu quedó rexistráu.',
+	'securepoll-return' => 'Tornar a $1.',
+	'securepoll-encrypt-error' => 'Falló cifrar el to rexistru de votu.
+¡El to votu nun se rexistró!
+
+$1',
+	'securepoll-no-gpg-home' => 'Nun se pue crear el direutoriu pa GPG.',
+	'securepoll-secret-gpg-error' => 'Fallu al executar GPG.
+Usa $wgSecurePollShowErrorDetail=true; en LocalSettings.php pa una vista más detallada.',
+	'securepoll-full-gpg-error' => 'Fallu al executar GPG:
+
+Comandu: $1
+
+Fallu:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'Les claves GPG tan configuraes de mou incorreutu.',
+	'securepoll-gpg-parse-error' => 'Fallu al interpretar la salida de GPG.',
+	'securepoll-no-decryption-key' => 'Nun ta configurada denguna clave de descifráu.
+Nun se pue descifrar.',
+	'securepoll-jump' => 'Dir al sirvidor de votaciones',
+	'securepoll-bad-ballot-submission' => 'El to votu foi inválidu: $1',
+	'securepoll-unanswered-questions' => 'Has de responder toles entrugues.',
+	'securepoll-invalid-rank' => 'Rangu inválidu. Has de dar a los candidatos un rangu ente 1 y 999.',
+	'securepoll-unranked-options' => 'Delles opciones nun se puntuaron.
+Has de dar a toles opciones un rangu ente 1 y 999.',
+	'securepoll-invalid-score' => 'La puntuación tien de ser un númberu ente $1 y $2.',
+	'securepoll-unanswered-options' => 'Tienes de dar una rempuesta a cada entruga.',
+	'securepoll-remote-auth-error' => 'Fallu al traer del sirvidor la información de la to cuenta.',
+	'securepoll-remote-parse-error' => "Fallu al interpretar la rempuesta d'autorización del sirvidor.",
+	'securepoll-api-invalid-params' => 'Parámetros inválidos.',
+	'securepoll-api-no-user' => "Nun s'alcontró un usuariu cola ID dada.",
+	'securepoll-api-token-mismatch' => 'El token de seguridá nun concuaya, nun pues entrar.',
+	'securepoll-not-logged-in' => "Tienes d'aniciar sesión pa votar nesta eleición",
+	'securepoll-too-few-edits' => 'Perdona, pero nun pues votar. Necesites tener feches polo menos $1 {{PLURAL:$1|edición|ediciones}} pa votar nesta eleición, pero tienes feches $2.',
+	'securepoll-too-new' => "Sentímoslo, pero nun pues votar. Hai que tener una cuenta rexistrada enantes del $1 a les $3 pa votar nestes eleiciones; la to data de rexistru ye'l $2 a les $4.",
+	'securepoll-blocked' => 'Perdona, nun pues votar nesta eleición mientres tengas bloquiaes les ediciones.',
+	'securepoll-blocked-centrally' => 'Sentímoslo, nun pues votar nestes eleiciones porque tas bloquiáu en polo menos $1 {{PLURAL:$1|wiki|wikis}}.',
+	'securepoll-bot' => 'Perdona, les cuentes marcaes como de bot nun tienen permisu pa votar nesta eleición.',
+	'securepoll-not-in-group' => 'Namái los miembros del grupu «$1» puen votar nesta eleición.',
+	'securepoll-not-in-list' => "Perdona, nun tas na llista predeterminada d'usuarios con permisu pa votar nesta eleición.",
+	'securepoll-list-title' => 'Llista de votos: $1',
+	'securepoll-header-timestamp' => 'Hora',
+	'securepoll-header-voter-name' => 'Nome',
+	'securepoll-header-voter-domain' => 'Dominiu',
+	'securepoll-header-ua' => "Axente d'usuariu",
+	'securepoll-header-cookie-dup' => 'Dup',
+	'securepoll-header-strike' => 'Tachar',
+	'securepoll-header-details' => 'Detalles',
+	'securepoll-strike-button' => 'Tachar',
+	'securepoll-unstrike-button' => 'Destachar',
+	'securepoll-strike-reason' => 'Motivu:',
+	'securepoll-strike-cancel' => 'Encaboxar',
+	'securepoll-strike-error' => 'Fallu al tachar/destachar: $1',
+	'securepoll-strike-token-mismatch' => 'Perdiéronse los datos de sesión',
+	'securepoll-details-link' => 'Detalles',
+	'securepoll-details-title' => 'Detalles del votu: #$1',
+	'securepoll-invalid-vote' => '"$1" nun ye una ID de votu válida.',
+	'securepoll-header-voter-type' => 'Triba de votante',
+	'securepoll-voter-properties' => 'Propiedaes del votante',
+	'securepoll-strike-log' => 'Rexistru de tachaos',
+	'securepoll-header-action' => 'Aición',
+	'securepoll-header-reason' => 'Motivu',
+	'securepoll-header-admin' => 'Almin',
+	'securepoll-cookie-dup-list' => 'Usuarios con cookies duplicaes',
+	'securepoll-dump-title' => 'Volcáu: $1',
+	'securepoll-dump-no-crypt' => 'Nun ta disponible dengún rexistru cifráu pa esta eleición, porque la eleición nun ta configurada pa usar cifráu.',
+	'securepoll-dump-not-finished' => 'Los rexistros cifraos de la eleición namái tan disponibles dempués de la data de finalización el $1 a les $2',
+	'securepoll-dump-no-urandom' => "Nun se pudo abrir /dev/urandom.
+Pa caltener la intimidá de los votantes, sólo s'asoleyen los resultaos cifraos de la eleición cuando se pueden amestar con un fluxu seguru de númberos al debalu.",
+	'securepoll-urandom-not-supported' => "Esti sirvidor nun tien capacidá de xeneración criptográfica de númberos al debalu.
+Para protexer la intimidá de los votantes, sólo s'asoleyen los resultaos cifraos de la eleición cuando se pueden amestar con un fluxu seguru de númberos al debalu.",
+	'securepoll-translate-title' => 'Traducir: $1',
+	'securepoll-invalid-language' => 'Códigu de llingua inválidu "$1"',
+	'securepoll-submit-translate' => 'Anovar',
+	'securepoll-language-label' => 'Escueyi llingua:',
+	'securepoll-submit-select-lang' => 'Traducir',
+	'securepoll-entry-text' => "Abaxo ta la llista d'encuestes.",
+	'securepoll-header-title' => 'Nome',
+	'securepoll-header-start-date' => "Data d'aniciu",
+	'securepoll-header-end-date' => 'Data final',
+	'securepoll-subpage-vote' => 'Votar',
+	'securepoll-subpage-translate' => 'Traducir',
+	'securepoll-subpage-list' => 'Llistar',
+	'securepoll-subpage-dump' => 'Volcar',
+	'securepoll-subpage-tally' => 'Recuentu',
+	'securepoll-tally-title' => 'Recuentu: $1',
+	'securepoll-tally-not-finished' => 'Perdona, nun pues facer un recuentu de la eleición fasta que termine la votación.',
+	'securepoll-can-decrypt' => 'El rexistru de la eleición ta cifráu, pero ta disponible la clave de descifralu.
+Puedes escoyer ente escrutar los resultaos de la base de datos, o escrutar los resultaos cifraos dende un ficheru xubíu.',
+	'securepoll-tally-no-key' => 'Nun puedes escrutar esta eleición, porque los votos tan cifraos y la clave pa descifrar nun ta disponible.',
+	'securepoll-tally-local-legend' => 'Facer recuentu de los resultaos guardaos',
+	'securepoll-tally-local-submit' => 'Crear recuentu',
+	'securepoll-tally-upload-legend' => 'Xubir volcáu cifráu',
+	'securepoll-tally-upload-submit' => 'Crear recuentu',
+	'securepoll-tally-error' => "Fallu d'interpretación del rexistru de votos, nun se pue producir un recuentu.",
+	'securepoll-no-upload' => 'Nun se xubió dengún ficheru, nun se puen contar los resultaos.',
+	'securepoll-dump-corrupt' => 'El ficheru de volcáu ta corrompíu y nun se pue procesar.',
+	'securepoll-tally-upload-error' => 'Fallu al facer el recuentu del ficheru de volcáu: $1',
+	'securepoll-pairwise-victories' => 'Cuadru de victories por pareyes',
+	'securepoll-strength-matrix' => 'Cuadru de fuerza del camín',
+	'securepoll-ranks' => 'Clasificación final',
+	'securepoll-average-score' => 'Puntuación media',
+	'securepoll-round' => 'Ronda $1',
+	'securepoll-spoilt' => '(Nulos)',
+	'securepoll-exhausted' => '(Agotaos)',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vago
+ * @author Vugar 1981
+ */
+$messages['az'] = array(
+	'securepoll' => 'SecurePoll',
+	'securepoll-welcome' => '<strong>Xoş gəlmisiniz $1!</strong>',
+	'securepoll-change-disallowed' => 'Siz bu seçkidə artıq səs vermisiniz. 
+Üzr istəyirik, yenidən səs verə bilməzsiniz.',
+	'securepoll-submit' => 'Səs ver',
+	'securepoll-return' => '$1 səhifəsinə qayıt.',
+	'securepoll-bad-ballot-submission' => '$1: Səsiniz keçərsizdir',
+	'securepoll-api-invalid-params' => 'Yanlış nizamlamalar.',
+	'securepoll-list-title' => '$1: Səslərin siyahısı',
+	'securepoll-header-timestamp' => 'Zaman',
+	'securepoll-header-voter-name' => 'Ad',
+	'securepoll-header-voter-domain' => 'Domen',
+	'securepoll-header-ip' => 'IP',
+	'securepoll-header-xff' => 'XFF',
+	'securepoll-header-token-match' => 'CSRF',
+	'securepoll-header-cookie-dup' => 'Surət',
+	'securepoll-header-strike' => 'İşarələ',
+	'securepoll-header-details' => 'Detallar',
+	'securepoll-strike-button' => 'İşarələ',
+	'securepoll-unstrike-button' => 'İşarələmə',
+	'securepoll-strike-reason' => 'Səbəb:',
+	'securepoll-strike-cancel' => 'Ləğv et',
+	'securepoll-details-link' => 'Detallar',
+	'securepoll-header-id' => 'ID',
+	'securepoll-header-url' => 'URL',
+	'securepoll-strike-log' => 'İşarələmə gündəliyi',
+	'securepoll-header-action' => 'Fəaliyyət',
+	'securepoll-header-reason' => 'Səbəb',
+	'securepoll-header-admin' => 'İdarəçi',
+	'securepoll-dump-title' => 'Tullantı: $1',
+	'securepoll-translate-title' => 'Tərcümə et: $1',
+	'securepoll-invalid-language' => '"$1" yanlış dil kodu',
+	'securepoll-header-trans-id' => 'ID',
+	'securepoll-submit-translate' => 'Yenilə',
+	'securepoll-language-label' => 'Dili seçin:',
+	'securepoll-submit-select-lang' => 'Tərcümə et',
+	'securepoll-header-title' => 'Ad',
+	'securepoll-header-start-date' => 'Başlanğıc tarixi',
+	'securepoll-header-end-date' => 'Son tarix',
+	'securepoll-subpage-vote' => 'Səs',
+	'securepoll-subpage-translate' => 'Tərcümə et',
+	'securepoll-subpage-list' => 'Siyahı',
+	'securepoll-subpage-dump' => 'Xam',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ * @author Haqmar
+ */
+$messages['ba'] = array(
+	'securepoll' => 'ХәүефһеҙТауышБиреү',
+	'securepoll-desc' => 'Һайлауҙар үткәреү һәм һорауҙар алыу өсөн киңәйтеү',
+	'securepoll-invalid-page' => '"<nowiki>$1</nowiki>" эске бите дөрөҫ түгел',
+	'securepoll-need-admin' => 'Был ғәмәлде башҡарыу өсөн, һеҙ һайлауҙың етәксеһе булырға тейешһегеҙ.',
+	'securepoll-too-few-params' => 'Эксе бит параметрҙары етмәй (һылтанма дөрөҫ түгел).',
+	'securepoll-invalid-election' => '"$1" — дөрөҫ һайлау идентификаторы түгел.',
+	'securepoll-welcome' => '<strong>Рәхим итегеҙ, $1!</strong>',
+	'securepoll-not-started' => 'Был һайлауҙар башланманы әле.
+Уның башланыу ваҡыты тип $2 $3 билдәләнгән.',
+	'securepoll-finished' => 'Был һайлауҙар тамамланған, һеҙ тауыш бирә алмайһығыҙ инде.',
+	'securepoll-not-qualified' => 'Һеҙҙең был һайлауҙарҙа тауыш биреү хоҡуғығыҙ юҡ: $1',
+	'securepoll-change-disallowed' => 'Һеҙ был һайлауҙарҙа тауыш биргәнһегеҙ инде.
+Ғәфү итегеҙ, һеҙ башҡа тауыш бирә алмайһығыҙ.',
+	'securepoll-change-allowed' => '<strong>Иҫкәрмә: Һеҙ был һайлауҙарҙа тауыш биргәнһегеҙ инде.</strong>
+Һеҙ, түбәндә килтерелгән форманы ебәреп, тауышығыҙҙы үҙгәртә алаһығыҙ.
+Әгәр быны эшләһәгеҙ, бығаса биргән тауышығыҙ иҫәпкә алынмаясаҡ икәнен иғтибарға алығыҙ.',
+	'securepoll-submit' => 'Тауышты ебәрергә',
+	'securepoll-gpg-receipt' => 'Тауыш биреүегеҙ өсөн рәхмәт.
+
+Әгәр теләһәгеҙ, тауышығыҙҙы раҫлау өсөн, түбәндәге юлдарҙы һаҡлай алаһығыҙ:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'Рәхмәт, һеҙҙең тауышығыҙ яҙҙырып ҡуйылды.',
+	'securepoll-return' => '$1 битенә ҡайтырға',
+	'securepoll-encrypt-error' => 'Һеҙҙең тауышығыҙ тураһындағы яҙманы уҡыу мөмкин түгел.
+Һеҙҙең тауышығыҙ яҙҙырылманы!
+
+$1',
+	'securepoll-no-gpg-home' => 'GPG баш директорияһын булдырыу мөмкин түгел.',
+	'securepoll-secret-gpg-error' => 'GPG башҡарылыу хатаһы.
+Тулыраҡ мәғлүмәт алыр өсөн, LocalSettings.php файлында $wgSecurePollShowErrorDetail=true; ҡулланығыҙ.',
+	'securepoll-full-gpg-error' => 'GPG башҡарылыу хатаһы:
+
+Фарман: $1
+
+Хата:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG асҡыстары дөрөҫ көйләнмәгән.',
+	'securepoll-gpg-parse-error' => 'GPG сығарған мәғлүмәтте уҡыу хатаһы.',
+	'securepoll-no-decryption-key' => 'Шифрҙы уҡыу асҡысы көйләнмәгән.
+Шифрҙы уҡыу мөмкин түгел.',
+	'securepoll-jump' => 'Тауыш биреү серверына күсергә',
+	'securepoll-bad-ballot-submission' => 'Һеҙҙең тауышығыҙ дөрөҫ түгел: $1',
+	'securepoll-unanswered-questions' => 'Һеҙ бөтә һорауҙарға ла яуап бирергә тейешһегеҙ.',
+	'securepoll-invalid-rank' => 'Тәртип һаны дөрөҫ түгел. Һеҙ кандидаттар өсөн 1 менән 999 араһындағы тәртип һанын бирергә тейешһегеҙ.',
+	'securepoll-unranked-options' => 'Ҡайһы бер яҙмаларға тәртип һаны бирелмәгән. Һеҙ бөтә яҙмалар өсөн 1 менән 999 араһындағы тәртип һанын бирергә тейешһегеҙ.',
+	'securepoll-invalid-score' => 'Баһа — $1 менән $2 араһындағы һан булырға тейеш.',
+	'securepoll-unanswered-options' => 'Һеҙ һәр һорауға яуап бирергә тейешһегеҙ.',
+	'securepoll-remote-auth-error' => 'Һеҙҙең иҫәп яҙмағыҙ тураһында серверҙан мәғлүмәт алыу хатаһы.',
+	'securepoll-remote-parse-error' => 'Серверҙан алынған танылыу яуабын уҡыу хатаһы.',
+	'securepoll-api-invalid-params' => 'Параметрҙар дөрөҫ түгел.',
+	'securepoll-api-no-user' => 'Бирелгән идентификаторлы ҡатнашыусы табылманы.',
+	'securepoll-api-token-mismatch' => 'Хәүефһеҙлек токены тап килмәй, танылыу мөмкин түгел.',
+	'securepoll-not-logged-in' => 'Был һайлауҙарҙа тауыш биреү өсөн, һеҙ танылырға тейешһегеҙ.',
+	'securepoll-too-few-edits' => 'Ғәфү итегеҙ, һеҙ тауыш бирә алмайһығыҙ. Һеҙгә был һайлауҙарҙа ҡатнашыу өсөн, кәмендә $1 {{PLURAL:$1|үҙгәртеү}} яһарға кәрәк, һеҙ $2 үҙгәртеү эшләгәнһегеҙ.',
+	'securepoll-blocked' => 'Ғәфү итегеҙ, һеҙ бикле булған ваҡытта был һайлауҙарҙа тауыш бирә алмайһығыҙ.',
+	'securepoll-bot' => 'Ғәфү итегеҙ, бот флагы булған иҫәп яҙмалары был һайлауҙарҙа тауыш бирә алмай.',
+	'securepoll-not-in-group' => '"$1" төркөмө ағзалары ғына был һайлауҙарҙа тауыш бирә ала.',
+	'securepoll-not-in-list' => 'Ғәфү итегеҙ, һеҙ был һайлауҙарҙа тауыш бирә алған ҡатнашыусылар исемлегенә кермәйһегеҙ.',
+	'securepoll-list-title' => 'Тауыштар исемлеге: $1',
+	'securepoll-header-timestamp' => 'Ваҡыт',
+	'securepoll-header-voter-name' => 'Исем',
+	'securepoll-header-voter-domain' => 'Домен',
+	'securepoll-header-ua' => 'Ҡулланыусы агенты',
+	'securepoll-header-cookie-dup' => 'Ҡабатлау',
+	'securepoll-header-strike' => 'Һыҙыу',
+	'securepoll-header-details' => 'Ентеклерәк',
+	'securepoll-strike-button' => 'Һыҙырға',
+	'securepoll-unstrike-button' => 'Һыҙмаҫҡа',
+	'securepoll-strike-reason' => 'Сәбәп:',
+	'securepoll-strike-cancel' => 'Кире алырға',
+	'securepoll-strike-error' => 'Һыҙыу/Һыҙмау ғәмәлен башҡарғанда хата: $1',
+	'securepoll-strike-token-mismatch' => 'Ултырыш мәғлүмәттәре юғалған',
+	'securepoll-details-link' => 'Ентеклерәк',
+	'securepoll-details-title' => 'Тауыш биреү мәғлүмәттәре: $1',
+	'securepoll-invalid-vote' => '"$1" — дөрөҫ тауыш биреү идентификаторы түгел',
+	'securepoll-header-voter-type' => 'Тауыш биреүсе төрө',
+	'securepoll-voter-properties' => 'Тауыш биреүсе үҙенсәлектәре',
+	'securepoll-strike-log' => 'Һыҙыу яҙмалары журналы',
+	'securepoll-header-action' => 'Ғәмәл',
+	'securepoll-header-reason' => 'Сәбәп',
+	'securepoll-header-admin' => 'Хәким',
+	'securepoll-cookie-dup-list' => 'Ҡатнашыусыларҙың ҡабатланыуы Cookie буйынса',
+	'securepoll-dump-title' => 'Дамп: $1',
+	'securepoll-dump-no-crypt' => 'Шифрланмаған тауыш биреү яҙмаһы был һайлауҙарҙа ғәмәлгә эйә, сөнки һайлауҙар шифр ҡулланыуға көйләнмәгән.',
+	'securepoll-dump-not-finished' => 'Шифрланған тауыш биреү яҙмалары $1 $2 тауыш биреү тамамланғандандан һуң ғына ғәмәлгә эйә',
+	'securepoll-dump-no-urandom' => '/dev/urandom асылмай.
+Тауыш биреүселәрҙең йәшеренлеген тәьмин итеү өсөн, шифрланған тауыш биреү яҙмалары тик уларҙың тәртибе хәүефһеҙ осраҡлы һандар теҙмәһе ярҙамында үҙгәртелгәндә генә дөйөм күренә.',
+	'securepoll-urandom-not-supported' => 'Серверҙа криптографик осраҡлы һандар булдырыу мөмкин түгел.
+Тауыш биреүселәрҙең йәшеренлеген тәьмин итеү өсөн, шифрланған тауыш биреү яҙмалары тик уларҙың тәртибе хәүефһеҙ осраҡлы һандар теҙмәһе ярҙамында үҙгәртелгәндә генә дөйөм күренә.',
+	'securepoll-translate-title' => 'Тәржемә: $1',
+	'securepoll-invalid-language' => 'Хаталы тел коды "$1"',
+	'securepoll-submit-translate' => 'Яңыртырға',
+	'securepoll-language-label' => 'Тел һайлау:',
+	'securepoll-submit-select-lang' => 'Тәржемә итергә:',
+	'securepoll-entry-text' => 'Түбәндә һайлауҙар исемлеге килтерелгән.',
+	'securepoll-header-title' => 'Исем',
+	'securepoll-header-start-date' => 'Башланыу ваҡыты',
+	'securepoll-header-end-date' => 'Тамамланыу ваҡыты',
+	'securepoll-subpage-vote' => 'Тауыш биреү',
+	'securepoll-subpage-translate' => 'Тәржемә итергә',
+	'securepoll-subpage-list' => 'Исемлек',
+	'securepoll-subpage-dump' => 'Ҡабатлау',
+	'securepoll-subpage-tally' => 'Иҫәпләү',
+	'securepoll-tally-title' => 'Иҫәпләү: $1',
+	'securepoll-tally-not-finished' => 'Ғәфү итегеҙ, һеҙ тауыш биреү тамамланмайынса һөҙөмтәне иҫәпләй алмайһығыҙ.',
+	'securepoll-can-decrypt' => 'Тауыш биреү яҙмаһы шифрланған, әммә шифрҙы асҡысы бар.
+Һеҙ йә мәғлүмәттәр базаһындағы хәҙерге һөҙөмтәләрҙе иҫәпләүҙе, йә тейәлгән файлдан шифрланған һөҙөмтәләрҙе иҫәпләүҙе һайлай алаһығыҙ.',
+	'securepoll-tally-no-key' => 'Һеҙ был һайлауҙарҙың һөҙөмтәләрен иҫәпләй алмайһығыҙ, сөнки тауыштар шифрланған, һәм шифр асҡысы юҡ.',
+	'securepoll-tally-local-legend' => 'Һаҡланған һөҙөмтәләрҙе иҫәпләү',
+	'securepoll-tally-local-submit' => 'Иҫәпләү булдырырға',
+	'securepoll-tally-upload-legend' => 'Шифрланған дампты тейәү',
+	'securepoll-tally-upload-submit' => 'Иҫәпләү булдырырға',
+	'securepoll-tally-error' => 'Тауыш яҙмаһын уҡыу хатаһы, иҫәпләү булдырыу мөмкин түгел.',
+	'securepoll-no-upload' => 'Бер файл да тейәлмәгән, һөҙөмтәләрҙе иҫәпләү мөмкин түгел.',
+	'securepoll-dump-corrupt' => 'Дамп файлы боҙолған һәм эшкәртелә алмай.',
+	'securepoll-tally-upload-error' => 'Дамп файлын иҫәпләү хатаһы: $1',
+	'securepoll-pairwise-victories' => 'Парлы еңеүҙәр матрицаһы',
+	'securepoll-strength-matrix' => 'Юл көсө матрицаһы',
+	'securepoll-ranks' => 'Һуңғы тәртип',
+	'securepoll-average-score' => 'Уртаса баһа',
+);
+
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'securepoll-strike-reason' => 'Прычына:',
+	'securepoll-header-reason' => 'Прычына',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Renessaince
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
 	'securepoll' => 'Бясьпечнае галасаваньне',
@@ -652,7 +1292,9 @@ $1',
 	'securepoll-api-token-mismatch' => 'Неадпаведнасьць меткі бясьпекі, немагчыма ўвайсьці ў сыстэму.',
 	'securepoll-not-logged-in' => 'Вам неабходна ўвайсьці ў сыстэму, каб галасаваць на гэтых выбарах',
 	'securepoll-too-few-edits' => 'Прабачце, Вы ня можаце галасаваць. Вам неабходна зрабіць хаця б {{PLURAL:$1|рэдагаваньне|рэдагаваньні|рэдагаваньняў}}, каб галасаваць на гэтых выбарах, Вы зрабілі толькі $2.',
+	'securepoll-too-new' => 'На жаль, Вы ня можаце галасаваць. Ваш рахунак мусіў быць створаны да $1 $3, а Вы стварылі рахунак $2 $4.',
 	'securepoll-blocked' => 'Прабачце, Вы ня можаце галасаваць на гэтых выбарах, калі Вы заблякаваны.',
+	'securepoll-blocked-centrally' => 'На жаль, Вы ня можаце галасаваць у гэтых выбарах, бо заблякаваныя прынамсі ў $1 {{PLURAL:$1|вікі|вікі|вікі}}.',
 	'securepoll-bot' => 'Прабачце, рахункі са статусам робата ня могуць галасаваць ў гэтых выбараў.',
 	'securepoll-not-in-group' => 'Толькі ўдзельнікі групы $1 могуць галасаваць на гэтых выбарах.',
 	'securepoll-not-in-list' => 'Прабачце, Вы не ўключаны ў сьпіс удзельнікаў, якія могуць галасаваць на гэтых выбарах.',
@@ -667,7 +1309,7 @@ $1',
 	'securepoll-strike-button' => 'Закрэсьліць',
 	'securepoll-unstrike-button' => 'Адкрэсьліць',
 	'securepoll-strike-reason' => 'Прычына:',
-	'securepoll-strike-cancel' => 'Адмяніць',
+	'securepoll-strike-cancel' => 'Скасаваць',
 	'securepoll-strike-error' => 'Памылка пад час закрэсьліваньня/адкрэсьліваньня: $1',
 	'securepoll-strike-token-mismatch' => 'Зьвесткі сэсіі страчаныя',
 	'securepoll-details-link' => 'Падрабязнасьці',
@@ -718,6 +1360,9 @@ $1',
 	'securepoll-strength-matrix' => 'Матрыца моцы шляхоў',
 	'securepoll-ranks' => 'Канчатковыя вынікі',
 	'securepoll-average-score' => 'Сярэдні вынік',
+	'securepoll-round' => '$1 тур',
+	'securepoll-spoilt' => '(забракаваныя)',
+	'securepoll-exhausted' => '(вычарпаныя)',
 );
 
 /** Bulgarian (Български)
@@ -726,6 +1371,7 @@ $1',
  * @author Turin
  */
 $messages['bg'] = array(
+	'securepoll' => 'Защитено гласуване',
 	'securepoll-desc' => 'Разширение за провеждане на избори и допитвания',
 	'securepoll-invalid-page' => 'Невалидна подстраница "<nowiki>$1</nowiki>"',
 	'securepoll-need-admin' => 'Това действие може да се извърши само от потребители със статут на администратор на гласуването.',
@@ -781,7 +1427,9 @@ $1',
 	'securepoll-api-token-mismatch' => 'Невалидна идентификация, неуспешен опит за влизане в системата.',
 	'securepoll-not-logged-in' => 'Трябва да сте влезли в системата с потребителското си име, за да участвате в това гласуване.',
 	'securepoll-too-few-edits' => 'За съжаление, не можете да гласувате. Трябва да сте направили най-малко $1 {{PLURAL:$1|редакция|редакции}}, за да имате право да участвате в гласуването, а вие сте направили $2.',
+	'securepoll-too-new' => 'За съжаление, не можете да гласувате.  Вашата потребителска сметка е регистрирана на $2, а е трябвало да бъде регистрирана преди $1, за да имате право на глас.',
 	'securepoll-blocked' => 'За съжаление, не можете да участвате в това гласуване, защото в момента сте блокирани.',
+	'securepoll-blocked-centrally' => 'За съжаление, не можe да гласувате в тези избори, тъй като сте блокирани в поне $1 {{PLURAL:$1|уики|уикита}}.',
 	'securepoll-bot' => 'За съжаление, потребителски сметки, отбелязани като ботове, не могат да вземат участие в това гласуване.',
 	'securepoll-not-in-group' => 'Само членове на потребителска група "$1" могат да вземат участие в това гласуване.',
 	'securepoll-not-in-list' => 'За съжаление, вашето потребителско име не фигурира в предварително определения списък на потребителите с право на участие в това гласуване.',
@@ -790,20 +1438,31 @@ $1',
 	'securepoll-header-voter-name' => 'Име',
 	'securepoll-header-voter-domain' => 'Домейн',
 	'securepoll-header-ua' => 'Браузър',
+	'securepoll-header-strike' => 'Анулиране на глас',
 	'securepoll-header-details' => 'Подробности',
+	'securepoll-strike-button' => 'Анулиране на глас',
+	'securepoll-unstrike-button' => 'Възстановяване на анулиран глас',
 	'securepoll-strike-reason' => 'Причина:',
 	'securepoll-strike-cancel' => 'Отмяна',
+	'securepoll-strike-error' => 'Грешка при анулиране на глас или възстановяване на анулиран глас: $1',
 	'securepoll-strike-token-mismatch' => 'Данните от сесията са изгубени',
 	'securepoll-details-link' => 'Подробности',
 	'securepoll-details-title' => 'Подробности за гласуването: #$1',
 	'securepoll-invalid-vote' => '"$1" не е допустим идентификатор на гласуване',
 	'securepoll-header-voter-type' => 'Тип гласоподатели',
 	'securepoll-voter-properties' => 'Характеристики на гласоподавателите',
+	'securepoll-strike-log' => 'Дневник на анулираните гласове',
 	'securepoll-header-action' => 'Действие',
 	'securepoll-header-reason' => 'Причина',
 	'securepoll-header-admin' => 'Админ',
+	'securepoll-cookie-dup-list' => 'Засечени дублирани гласове',
+	'securepoll-dump-title' => 'Дъмп: $1',
 	'securepoll-dump-no-crypt' => 'За тези избори не са достъпни криптирани записи от гласуването, тъй като изборната процедура не е била конфигурирана да използва криптиране.',
 	'securepoll-dump-not-finished' => 'Криптираните записи от изборите ще бъдат достъпни едва след края на гласуването на $1 в $2',
+	'securepoll-dump-no-urandom' => 'Грешка при отварянето на /dev/urandom. 
+За да се осигури тайната на вота, криптираните записи от гласуването могат да станат публично достъпни само ако бъдат разбъркани с поток от случайни данни.',
+	'securepoll-urandom-not-supported' => 'Този сървър не поддържа генерирането на криптографски случайни числа.
+За да се осигури тайната на вота, криптираните записи от гласуването могат да станат публично достъпни само ако бъдат разбъркани с поток от случайни данни.',
 	'securepoll-invalid-language' => 'Невалиден езиков код „$1“',
 	'securepoll-submit-translate' => 'Актуализиране',
 	'securepoll-language-label' => 'Избиране на език:',
@@ -815,44 +1474,147 @@ $1',
 	'securepoll-subpage-vote' => 'Гласуване',
 	'securepoll-subpage-translate' => 'Превеждане',
 	'securepoll-subpage-list' => 'Списък',
+	'securepoll-subpage-dump' => 'Дъмп',
+	'securepoll-subpage-tally' => 'Преброяване',
+	'securepoll-tally-title' => 'Преброяване: $1',
+	'securepoll-tally-not-finished' => 'Не можете да се извърши преброяване на изборите преди да е приключило гласуването.',
+	'securepoll-can-decrypt' => 'Записът от гласуването е бил криптиран, но е налице дешифриращ ключ. 
+	Имате избор дали да преброите резултатите, налични в базата данни, или да преброите криптираните резултати от качения файл.',
+	'securepoll-tally-no-key' => 'Не можете да извършите преброяване на това гласуване, защото гласовете са криптирани и не е наличен дешифриращ ключ.',
+	'securepoll-tally-local-legend' => 'Преброяване на съхранените резултати',
+	'securepoll-tally-local-submit' => 'Извършване на преброяването',
+	'securepoll-tally-upload-legend' => 'Качване на криптиран дъмп',
+	'securepoll-tally-upload-submit' => 'Извършване на преброяването',
+	'securepoll-tally-error' => 'Грешка при интерпретирането на записа с гласовете. Не може да се извърши преброяване.',
+	'securepoll-no-upload' => 'Няма качен файл, не може да се пристъпи към преброяване на гласовете.',
+	'securepoll-dump-corrupt' => 'Дъмп файлът е повреден и не може да бъде обработен.',
+	'securepoll-tally-upload-error' => 'Грешка при преброяването на дъмп файла: $1',
 	'securepoll-ranks' => 'Крайно класиране',
 	'securepoll-average-score' => 'Средна оценка',
 );
 
 /** Bengali (বাংলা)
  * @author Bellayet
+ * @author Wikitanvir
  */
 $messages['bn'] = array(
+	'securepoll' => 'সিকিউরপোল',
+	'securepoll-desc' => 'নির্বাচন ও জরিপের জন্য প্রয়োজনীয় এক্সটেনশন',
+	'securepoll-invalid-page' => 'অপ্রযোজ্য উপপাতা "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => 'এই অ্যাকশনটি গ্রহণ করার জন্য আপনার নির্বাচন প্রশাসক হওয়া প্রয়োজন',
+	'securepoll-too-few-params' => 'যথেষ্ট পরিমাণ উপপাতা প্যারামিটার নেই (অপ্রযোজ্য সংযোগ)',
+	'securepoll-invalid-election' => '"$1" সঠিক ভোট আইডি নয়।',
+	'securepoll-welcome' => '<strong>স্বাগতম $1!</strong>',
+	'securepoll-not-started' => 'এই নির্বাচন এখনও শুরু হয়নি।
+$2 তারিখ $3টার সময় এটি শুরু হবে।',
+	'securepoll-finished' => 'এই নির্বাচন কার্যক্রম সমাপ্ত হয়েছে, আপনি আর ভোট প্রদান করতে পারবেন না।',
+	'securepoll-not-qualified' => 'আপনি এই নির্বাচনে ভোট প্রদানের জন্য উপযুক্ত নন: $1',
+	'securepoll-change-disallowed' => 'আপনি পূর্বেই এই নির্বাচনে ভোট প্রদান করেছেন।
+দুঃখিত, আপনি পুনরায় ভোট প্রদান করতে পারবেন না।',
+	'securepoll-change-allowed' => '<strong>পুনশ্চ: আপনি এই নির্বাচনে আগেও ভোট প্রদান করেছেন।</strong>
+আপনি নিচের ফর্মটি পূরণ করে জমা দেওয়ার মাধ্যমে আপনার পরিবর্তন করতে পারেন।
+খেয়াল করুন যে, এটা করলে আপনার মূল ভোটটি পরিবর্তিত হয়ে যাবে।',
 	'securepoll-submit' => 'ভোট প্রদান করুন',
+	'securepoll-gpg-receipt' => 'ভোট দেওয়ার জন্য ধন্যবাদ।
+
+আপনি চাইলে, ভোটের প্রমাণ সরূপ এই রিসিপ্টটি সংরক্ষণ করতে পারেন:
+
+<pre>$1</pre>',
 	'securepoll-thanks' => 'ধন্যবাদ, আপনার ভোট সংরক্ষণ করা হয়েছে।',
 	'securepoll-return' => '$1 এ ফিরে যাও।',
+	'securepoll-encrypt-error' => 'আপনার ভোটের রেকর্ড এনক্রিপ্ট করে ব্যর্থ হয়েছে।
+আপনার ভোট সংরক্ষণ করা হয়নি!
+
+$1',
+	'securepoll-no-gpg-home' => 'জিপিজ হোম ডিরেক্টরি তৈরি করতে ব্যর্থ হয়েছে।',
+	'securepoll-secret-gpg-error' => 'জিপিজি এক্সিকিউটের সময় ত্রুটি দেখা দিয়েছে।
+বিস্তারিত জানতে আপনার LocalSettings.php-তে $wgSecurePollShowErrorDetail=true; ব্যবহার করুন।',
+	'securepoll-full-gpg-error' => 'জিপিজি এক্সিকিউটের সময় ত্রুটি দেখা দিয়েছে:
+
+কমান্ড: $1
+
+ত্রুটি:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'জিপিজি কিগুলো ভুলভাবে কনফিগার করা হয়েছে।',
+	'securepoll-gpg-parse-error' => 'জিপিজি আউটপুট বিশ্লেষণ করার সময় ত্রুটি দেখা দিয়েছে।',
+	'securepoll-no-decryption-key' => 'কোনো ডিক্রিপশন কি ঠিক করা হয়নি।
+ডিক্রিপ্ট করা সম্ভব নয়।',
 	'securepoll-jump' => 'ভোটিং সার্ভারে যাও',
+	'securepoll-bad-ballot-submission' => 'আপনার ভোট ঠিক নয়: $1',
+	'securepoll-unanswered-questions' => 'আপনাকে অবশ্যই সব প্রশ্নের উত্তর দিতে হবে।',
+	'securepoll-invalid-rank' => 'অপ্রযোজ্য র্যাং। আপনাকে অবশ্যই প্রার্থীদেরকে ১ থেকে ৯৯৯-এর মধ্যে র্যাংকিং করতে হবে।',
+	'securepoll-unranked-options' => 'কিছু অপশন র্যাংকিং করা হয়নি।
+আপনাকে অবশ্যই সকল অপশন ১ থেকে ৯৯৯-এর মধ্যে র্যাংকিং করতে হবে।',
+	'securepoll-invalid-score' => 'স্কোর অবশ্যই $1 এবং $2 মধ্যে একটি সংখ্যা হবে।',
+	'securepoll-unanswered-options' => 'আপনাকে প্রতিটি প্রশ্নের জন্যই একটি করে উত্তর প্রদান করতে হবে।',
+	'securepoll-remote-auth-error' => 'সার্ভার থেকে আপনার অ্যাকাউন্টের তথ্যাদি গ্রহণ করার সময় ত্রুটি দেখা দিয়েছে।',
+	'securepoll-remote-parse-error' => 'সার্ভারের কাছ থেকে নিশ্চিতকরণ বার্তা পাবার সময় ত্রুটি দেখা দিয়েছে।',
+	'securepoll-api-invalid-params' => 'অপ্রযোজ্য প্যারামিটার',
+	'securepoll-api-no-user' => 'প্রদানকৃত আইডি সাথে সংশ্লিষ্ট কোনো ব্যবহারকারী খুঁজে পাওয়া যায়নি।',
+	'securepoll-api-token-mismatch' => 'নিরাপত্তা টোকেন ঠিকভাবে মেলেনি। লগ-ইন করা সম্ভব নয়।',
+	'securepoll-not-logged-in' => 'এই নির্বাচনে ভোট প্রদান করতে আপনাকে অবশ্যই লগইন করতে হবে',
+	'securepoll-too-few-edits' => 'দুঃখিত, আপনি ভোট দিতে পারবেন না। ভোট প্রদানের জন্য আপনার অবশ্যই $1টি {{PLURAL:$1|সম্পাদনা|সম্পাদনা}} থাকা প্রয়োজন, আপনার রয়েছে $2টি।',
+	'securepoll-blocked' => 'দুঃখিত, আপনি যদি বর্তমানে সম্পাদনা থেকে বাধাদানকৃত অবস্থায় থাকেন, তবে আপনি এই নির্বাচনে ভোট প্রদান করতে পারবেন না।',
+	'securepoll-bot' => 'দুঃখিত, বট ফ্ল্যাগযুক্ত অ্যাকাউন্ট এই নির্বাচনে ভোট প্রদানের জন্য উপযুক্ত নয়।',
+	'securepoll-not-in-group' => 'শুধুমাত্র "$1" অধিকারপ্রাপ্ত ব্যবহারকারীরাই এই নির্বাচনে ভোট প্রদান করতে পারবেন।',
+	'securepoll-not-in-list' => 'দুঃখিত, এই নির্বাচনে ভোট দিতে সক্ষম এমন ব্যবহারকারীদের পূর্ব গঠিত তালিকায় আপনার নাম নেই।',
+	'securepoll-list-title' => 'ভোটের তালিকা: $1',
 	'securepoll-header-timestamp' => 'সময়',
 	'securepoll-header-voter-name' => 'নাম',
 	'securepoll-header-voter-domain' => 'ডোমেইন',
+	'securepoll-header-ua' => 'ব্যবহারকারী এজেন্ট',
+	'securepoll-header-cookie-dup' => 'ডাপ',
+	'securepoll-header-strike' => 'স্ট্রাইক',
 	'securepoll-header-details' => 'বিস্তারিত',
+	'securepoll-strike-button' => 'স্ট্রাইক',
+	'securepoll-unstrike-button' => 'আনস্ট্রাইক',
 	'securepoll-strike-reason' => 'কারণ:',
 	'securepoll-strike-cancel' => 'বাতিল',
+	'securepoll-strike-error' => 'স্ট্রাইক/আনস্ট্রাইক করার সময় ত্রুটি দেখা দিয়েছে: $1',
+	'securepoll-strike-token-mismatch' => 'সেশনের ডেটা হারিয়ে গেছে',
 	'securepoll-details-link' => 'বিস্তারিত',
 	'securepoll-details-title' => 'ভোট বিস্তারিত: #$1',
 	'securepoll-invalid-vote' => '"$1" সঠিক ভোট আইডি নয়',
 	'securepoll-header-voter-type' => 'ভোটারের ধরন',
+	'securepoll-voter-properties' => 'ভোটারের তথ্যাদি',
+	'securepoll-strike-log' => 'স্ট্রাইক লগ',
+	'securepoll-header-action' => 'অ্যাকশন',
 	'securepoll-header-reason' => 'কারণ',
 	'securepoll-header-admin' => 'প্রশাসক',
+	'securepoll-cookie-dup-list' => 'প্রতিলিপি ব্যবহারকারীর কুকি',
+	'securepoll-dump-title' => 'ডাম্প: $1',
 	'securepoll-translate-title' => 'অনুবাদ: $1',
-	'securepoll-submit-translate' => 'খালনাগাদ',
+	'securepoll-invalid-language' => 'অপ্রযোজ্য ভাষা কোড "$1"',
+	'securepoll-submit-translate' => 'হালনাগাদ',
 	'securepoll-language-label' => 'ভাষা নির্বাচন:',
 	'securepoll-submit-select-lang' => 'অনুবাদ',
+	'securepoll-entry-text' => 'নিচে ভোটের তালিকা প্রদান করা হলো।',
 	'securepoll-header-title' => 'নাম',
 	'securepoll-header-start-date' => 'শুরুর তারিখ',
 	'securepoll-header-end-date' => 'শেষের তারিখ',
 	'securepoll-subpage-vote' => 'ভোট',
 	'securepoll-subpage-translate' => 'অনুবাদ করুন',
 	'securepoll-subpage-list' => 'তালিকা',
+	'securepoll-subpage-dump' => 'ডাম্প',
+	'securepoll-subpage-tally' => 'টালি',
+	'securepoll-tally-title' => 'টালি: $1',
+	'securepoll-tally-not-finished' => 'দুঃখতি, ভোট গ্রহণ শেষ না হওয়ার পূর্ব পর্যন্ত আপনি এই নির্বাচনের ভোট গণনা করতে পারবেন না।',
+	'securepoll-tally-no-key' => 'আপনি এই নির্বাচন হিসাব করতে পারবেন না, কারণ ভোটগুলো এনক্রিপ্ট করা, এবং ডিক্রিপশন কি লভ্য নয়।',
+	'securepoll-tally-local-legend' => 'সংরক্ষণকৃত ফলাফল হিসাব করো',
+	'securepoll-tally-local-submit' => 'টালি তৈরি',
+	'securepoll-tally-upload-legend' => 'এনক্রিপ্ট ডাম্প আপলোড',
+	'securepoll-tally-upload-submit' => 'টালি তৈরি',
+	'securepoll-tally-error' => 'ভোট রেকর্ড বিশ্লেষণের সময় ত্রুটি দেখা দিয়েছে, হিসাব তৈরি করা সম্ভব নয়।',
+	'securepoll-no-upload' => 'কোনো ফাইল আপলোড করা হয়নি, ফলাফল গণনা করা সম্ভব নয়।',
+	'securepoll-dump-corrupt' => 'ডাম্প ফাইলে ত্রুটি দেখা দিয়েছে এবং আর প্রক্রিয়াকরণ চালিয়ে যাওয়া সম্ভব নয়।',
+	'securepoll-tally-upload-error' => 'ডাম্প ফাইল গণনার সময় ত্রুটি দেখা দিয়েছে: $1',
+	'securepoll-ranks' => 'চূড়ান্ত র‌্যাঙ্কিং',
+	'securepoll-average-score' => 'গড় স্কোর',
 );
 
 /** Breton (Brezhoneg)
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'securepoll' => 'Mouezhiadeg suraet',
@@ -909,9 +1671,11 @@ Ret deoc'h renkañ pep dibarzh etre 1 ha 999.",
 	'securepoll-api-invalid-params' => 'Arventennoù direizh.',
 	'securepoll-api-no-user' => "N'eus bet kavet implijer ebet dezhañ an ID merket.",
 	'securepoll-api-token-mismatch' => 'Ne glot ket ar jedouer surentez, dibosupl emlugañ',
-	'securepoll-not-logged-in' => 'Rankout a rin en em lugañ a-benn votiñ en dilennadeg-mañ',
+	'securepoll-not-logged-in' => 'Rankout a rit kevreañ a-benn votiñ en dilennadeg-mañ.',
 	'securepoll-too-few-edits' => "Ho tigarez, n'hallit ket votiñ. Ret eo bezañ graet da nebeutañ $1 {{PLURAL:$1|degasadenn|degasadenn}} a-benn gallout mouezhiañ en dilennadeg-mañ, ha graet hoc'h eus $2.",
+	'securepoll-too-new' => "Ho tigarez, votiñ, n'hallit ket. Ret eo d'ho kont bezañ bet enrollet kent an $1 da $3 da c'hallout votiñ en dilennadeg-mañ. Enrollet oc'h bet d'an $2 da $4.",
 	'securepoll-blocked' => "Ho tigarez, n'oc'h ket evit votiñ en dilennadeg-mañ pa'z eo stanket ho tegasadennoù evit ar mare.",
+	'securepoll-blocked-centrally' => "Ho tigarez, n'hallit ket votiñ en dilennadeg-mañ rak stanket oc'h war $1 da nebeutañ pe war {{PLURAL:$1|ur wiki|wikioù}} all.",
 	'securepoll-bot' => "Ho tigarez, n'hall ket ar c'hontoù dezho ar statud robod votiñ en dilennadeg-mañ",
 	'securepoll-not-in-group' => 'N\'eus nemet izili ar strollad "$1" a c\'hall kemer perzh ar votadeg-mañ.',
 	'securepoll-not-in-list' => "Ho tigarez, n'emaoc'h ket war roll raktermenet an implijerien aotreet da vouezhiañ er votadeg-mañ.",
@@ -954,7 +1718,7 @@ A-benn mirout prevezded ar voterien ne vez embannet ar roadennoù enrineget neme
 	'securepoll-entry-text' => 'A-is emañ roll ar mouezhiadegoù.',
 	'securepoll-header-title' => 'Anv',
 	'securepoll-header-start-date' => 'Deiziad kregiñ',
-	'securepoll-header-end-date' => 'Deiziad termen',
+	'securepoll-header-end-date' => 'Deiziad echuiñ',
 	'securepoll-subpage-vote' => 'Mouezhiañ',
 	'securepoll-subpage-translate' => 'Treiñ',
 	'securepoll-subpage-list' => 'Roll',
@@ -977,6 +1741,9 @@ Gallout a rit kontañ an disoc'hoù adal an diaz roadennoù pe adal ur restr enp
 	'securepoll-strength-matrix' => 'Matris nerzh an hentoù moned',
 	'securepoll-ranks' => 'Renkadur diwezhañ',
 	'securepoll-average-score' => 'Skor keitat',
+	'securepoll-round' => 'Tro $1',
+	'securepoll-spoilt' => '(Gwenn pe null)',
+	'securepoll-exhausted' => '(Diviet)',
 );
 
 /** Bosnian (Bosanski)
@@ -1040,7 +1807,9 @@ Morate dati svim opcijama rang između 1 i 999.',
 	'securepoll-api-token-mismatch' => 'Nepodudata se sigurnosni token, ne može se prijaviti.',
 	'securepoll-not-logged-in' => 'Morate se prijaviti za glasanje na ovim izborima',
 	'securepoll-too-few-edits' => 'Žao nam je, ne možete glasati. Morate imati najmanje $1 {{PLURAL:$1|izmjenu|izmjene|izmjena}} da glasate na ovim izborima, Vi ste dosad napravili $2 izmjena.',
+	'securepoll-too-new' => 'Žao nam je, ne možete glasati.  Vaš račun treba biti registrovan prije $1 da biste glasali na ovim izborima, vi ste registrovani dana $2.',
 	'securepoll-blocked' => 'Žao nam je, ne možete trenutno glasati na ovim izborima ako ste trenutno blokirani za uređivanje.',
+	'securepoll-blocked-centrally' => 'Žao nam je, vi ne možete glasati na ovim izborima ako ste blokirani na $1 ili više {{PLURAL:$1|wikija|wikija}}.',
 	'securepoll-bot' => 'Žao nam je, računima sa oznakom bota nije dopušteno da glasaju na ovim izborima.',
 	'securepoll-not-in-group' => 'Samo članovi iz grupe $1 mogu učestovavati na ovim izborima.',
 	'securepoll-not-in-list' => 'Žao nam je, niste na spisku korisnika kojima je odobreno glasanje na ovim izborima.',
@@ -1105,9 +1874,13 @@ Možete da izvršite prebrojavanje glasova koji su prisutni u bazi podataka ili 
 	'securepoll-strength-matrix' => 'Matriks snage putanje',
 	'securepoll-ranks' => 'Konačni poredak',
 	'securepoll-average-score' => 'Prosječan rezultat',
+	'securepoll-round' => 'Runda $1',
+	'securepoll-spoilt' => '(Nevaljano)',
+	'securepoll-exhausted' => '(Iskorišteno)',
 );
 
 /** Catalan (Català)
+ * @author Aleator
  * @author Cbrown1023
  * @author Góngora
  * @author Jordi Roqué
@@ -1159,13 +1932,15 @@ Error:
 	'securepoll-gpg-parse-error' => 'Error en la interpretació de la sortida de GPG',
 	'securepoll-no-decryption-key' => 'No està configurada la clau de desxifrat.
 No es pot desencriptar.',
-	'securepoll-jump' => 'Tornar al servidor de votació',
+	'securepoll-jump' => 'Anau al servidor de votació',
 	'securepoll-bad-ballot-submission' => 'El vostre vot no és vàlid: $1',
 	'securepoll-unanswered-questions' => 'Heu de respondre totes les qüestions.',
 	'securepoll-invalid-rank' => "Rang no vàlid.
 Heu d'introduir a cada candidat un valor entre 1 i 999.",
 	'securepoll-unranked-options' => 'Algunes opcions no han estat qualificades.
 Heu de donar a totes les opcions, un rang entre 1 i 999.',
+	'securepoll-invalid-score' => 'La valoració ha de ser un nombre entre $1 i $2.',
+	'securepoll-unanswered-options' => 'Heu de donar una resposta per cada qüestió.',
 	'securepoll-remote-auth-error' => "S'ha produit un eror en recuperar del servidor la informació del vostre compte .",
 	'securepoll-remote-parse-error' => "S'ha produit un error en la recepció de la resposta d'autorització des del servidor.",
 	'securepoll-api-invalid-params' => 'Paràmetres invàlids.',
@@ -1174,7 +1949,9 @@ Heu de donar a totes les opcions, un rang entre 1 i 999.',
 	'securepoll-not-logged-in' => "Heu d'estar connectats en un compte per a votar en aquesta elecció",
 	'securepoll-too-few-edits' => "Ho sentim, però no podeu votar.
 Per a votar en aquesta elecció cal haver fet un mínim {{PLURAL:$1|d'una modificació|de $1 modificacions}}, i n'heu fet $2.",
+	'securepoll-too-new' => "Sentint-ho molt no podeu votar. Per a poder participar en aquesta votació cal que el vostre compte s'hagi registrat abans del $1 a les $3. La vostra data de registre és $2 a les $4.",
 	'securepoll-blocked' => "Ho sentim però no podeu votar en aquesta elecció perquè el vostre compte està blocat a l'edició.",
+	'securepoll-blocked-centrally' => 'Ho sentim, però no podeu votar en aquestes eleccions perquè esteu blocats com a mínim en $1 {{PLURAL:$1|wikis|wikis}}.',
 	'securepoll-bot' => 'Ho sentim, però els comptes de bot no poden votar en aquestes eleccions.',
 	'securepoll-not-in-group' => 'Només els membres del grup «$1» poden votar en aquesta elecció.',
 	'securepoll-not-in-list' => 'Ho sentim, però no esteu en la llista dels usuaris autoritzats a votar en aquesta elecció.',
@@ -1206,14 +1983,15 @@ Per a votar en aquesta elecció cal haver fet un mínim {{PLURAL:$1|d'una modifi
 	'securepoll-dump-no-crypt' => 'No existeix cap registre encriptat en aquesta elecció perquè no està configurada per usar encriptació.',
 	'securepoll-dump-not-finished' => "Els registres encriptats de l'elecció només estaran disponibles després de la seva conclusió, a $1 del $2",
 	'securepoll-dump-no-urandom' => "No es pot obrir /dev/urandom.
-Per mantenir la privacitat dels votants, els registres encriptats de l'elecció es fan públics només quan poden ser barrejats amb un generador segur de nombres aleatoris.",
+Per mantenir la privadesa dels votants, els registres encriptats de l'elecció es fan públics només quan poden ser barrejats amb un generador segur de nombres aleatoris.",
 	'securepoll-urandom-not-supported' => "Aquest servidor no suporta la generació criptogràfica de nombres aleatoris.
-Per mantenir la privacitat del votant, els registres d'elecció encriptats només són públicament disponibles quan es poden emetre amb un flux segur de nombres aleatoris.",
+Per mantenir la privadesa del votant, els registres d'elecció encriptats només són públicament disponibles quan es poden emetre amb un flux segur de nombres aleatoris.",
 	'securepoll-translate-title' => 'Traducció: $1',
 	'securepoll-invalid-language' => "Codi d'idioma «$1» no vàlid",
 	'securepoll-submit-translate' => 'Actualitza',
 	'securepoll-language-label' => 'Escolliu idioma:',
 	'securepoll-submit-select-lang' => 'Tradueix',
+	'securepoll-entry-text' => 'A sota hi ha la llista de votacions.',
 	'securepoll-header-title' => 'Nom',
 	'securepoll-header-start-date' => "Data d'inici",
 	'securepoll-header-end-date' => 'Data de finalització',
@@ -1235,7 +2013,28 @@ Podeu triar entre comptar els resultats presents a la base de dades, o de compta
 	'securepoll-no-upload' => "No s'ha carregat cap arxiu, no s'en poden comptar els resultats.",
 	'securepoll-dump-corrupt' => 'El fitxer bolcat es troba danyat i no pot ser processat.',
 	'securepoll-tally-upload-error' => 'Error al contar el fitxer bolcat: $1',
+	'securepoll-pairwise-victories' => 'Matriu de victòries parell a parell',
+	'securepoll-strength-matrix' => 'Matriu de força del camí',
 	'securepoll-ranks' => 'Classificació final',
+	'securepoll-average-score' => 'Puntuació mitjana',
+	'securepoll-round' => 'Ronda $1',
+	'securepoll-spoilt' => '(Nul)',
+	'securepoll-exhausted' => '(Esgotat)',
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'securepoll-strike-reason' => 'Бахьан:',
+	'securepoll-header-reason' => 'Бахьан',
+	'securepoll-header-admin' => 'Адманкуьйгалхо',
+);
+
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'securepoll-strike-reason' => 'هۆکار:',
+	'securepoll-header-reason' => 'هۆکار',
 );
 
 /** Czech (Česky)
@@ -1298,7 +2097,9 @@ Musíte všem možnostem přidělit pořadí mezi 1 a 999.',
 	'securepoll-api-token-mismatch' => 'Nesouhlasí bezpečnostní kód, nelze se přihlásit.',
 	'securepoll-not-logged-in' => 'Abyste mohl(a) hlasovat, musíte se přihlásit.',
 	'securepoll-too-few-edits' => 'Promiňte, ale nemůžete hlasovat. V těchto volbách mohou hlasovat jen uživatelé s nejméně $1 {{PLURAL:$1|editací|editacemi}}, vy máte $2.',
+	'securepoll-too-new' => 'Je nám líto, ale nemůžete hlasovat. Pro účast v tomto hlasování by váš účet musel být založen před $3, $1, {{gender:|zaregistroval|zaregistrovala|zaregistrovali}} jste se však v $4, $2.',
 	'securepoll-blocked' => 'Promiňte, ale nemůžete se zúčastnit tohoto hlasování, pokud je vám momentálně zablokována editace.',
+	'securepoll-blocked-centrally' => 'Je nám líto, ale tohoto hlasování se nemůžete zúčastnit, neboť jste {{gender:|blokován|blokována|blokováni}} na nejméně $1 wiki.',
 	'securepoll-bot' => 'Promiňte, ale účty s příznakem bot se nemohou tohoto hlasování účastnit.',
 	'securepoll-not-in-group' => 'Tohoto hlasování se mohou účastnit pouze uživatelé ve skupině „$1“.',
 	'securepoll-not-in-list' => 'Promiňte, ale nejste v předpřipraveném seznamu uživatelů oprávněných zúčasnit se tohoto hlasování.',
@@ -1364,6 +2165,9 @@ Můžete si vybrat, zda chcete sečíst výsledky v databázi, nebo sečíst ši
 	'securepoll-strength-matrix' => 'Matice síly cest',
 	'securepoll-ranks' => 'Konečné pořadí',
 	'securepoll-average-score' => 'Průměrné hodnocení',
+	'securepoll-round' => '$1. kolo',
+	'securepoll-spoilt' => '(neplatné)',
+	'securepoll-exhausted' => '(vyčerpané)',
 );
 
 /** Welsh (Cymraeg)
@@ -1426,7 +2230,9 @@ Rhaid ichi roi gradd rhwng 1 a 999 i bob dewis.',
 	'securepoll-api-token-mismatch' => "Nid yw'r taleb gwarchod yn cydweddu; ni allwch fewngofnodi.",
 	'securepoll-not-logged-in' => 'Rhaid i chi fewngofnodi er mwyn pleidleisio yn yr etholiad hwn',
 	'securepoll-too-few-edits' => 'Ni allwch bleidleisio, ysywaeth. Rhaid eich bod wedi cyfrannu o leiaf $1 {{PLURAL:$1|golygiad|golygiad|olygiad|golygiad|o olygiadau|o olygiadau}} er mwyn pleidleisio yn yr etholiad; rydych wedi golygu $2 o weithiau.',
+	'securepoll-too-new' => "Mae'n ddrwg gennym, ni allwch bleidleisio. Roedd angen i chi gofrestri cyn $3 ar $1 i bleidleisio yn yr etholiad hwn; cafodd eich cyfrif ei gofrestri am $4 ar $2.",
 	'securepoll-blocked' => 'Ni allwch bleidleisio yn yr etholiad hwn, ysywaeth, gan eich wedi eich atal rhag golygu ar hyn o bryd.',
+	'securepoll-blocked-centrally' => "Mae'n ddrwg gennym, ni allwch bleidleisio yn yr etholiad hwn gan eich bod wedi cael eich blocio ar $1 {{PLURAL:$1|wici}} o leiaf.",
 	'securepoll-bot' => 'Ni chaiff cyfrifon bot bleidleisio yn yr etholiad hwn, ysywaeth.',
 	'securepoll-not-in-group' => 'Dim ond aelodau o\'r grŵp "$1" caiff bleidleisio yn yr etholiad hwn.',
 	'securepoll-not-in-list' => 'Nid ydych ar restr y defnyddwyr, wedi ei bennu ymlaenllaw, sydd wedi eu hawdurdodi i bleidleisio yn yr etholiad hwn, ysywaeth.',
@@ -1492,21 +2298,26 @@ Gallwch naill ai gyfrif y canlyniadau sydd yn y bas data, neu gallwch gyfrif y c
 	'securepoll-strength-matrix' => 'Matrics cryfder y llwybr',
 	'securepoll-ranks' => 'Y drefn rhestrol terfynol',
 	'securepoll-average-score' => 'Cyfartaledd y sgôr',
+	'securepoll-round' => 'Rownd $1',
+	'securepoll-spoilt' => '(A Ddifethwyd)',
+	'securepoll-exhausted' => '(Wedi dihysbyddu)',
 );
 
 /** Danish (Dansk)
  * @author Byrial
+ * @author Christian List
  * @author Kaare
  * @author Masz
+ * @author Peter Alberti
  * @author Sir48
  */
 $messages['da'] = array(
-	'securepoll' => 'SecurePoll',
+	'securepoll' => 'SikkertValg',
 	'securepoll-desc' => 'En udvidelse til valg og undersøgelser',
 	'securepoll-invalid-page' => 'Ugyldig underside "<nowiki>$1</nowiki>"',
 	'securepoll-need-admin' => 'Du skal være valgadministrator for at udføre denne handling.',
 	'securepoll-too-few-params' => 'Ikke tilstrækkeligt mange undersideparametre (ugyldigt link).',
-	'securepoll-invalid-election' => '"$1" er ikke en gyldig valg-id.',
+	'securepoll-invalid-election' => '"$1" er ikke et gyldigt valg-ID.',
 	'securepoll-welcome' => '<strong>Velkommen $1!</strong>',
 	'securepoll-not-started' => 'Dette valg er endnu ikke begyndt.
 Det er planlagt til at begynde den $2 klokken $3.',
@@ -1545,17 +2356,21 @@ Kan ikke dekryptere.',
 	'securepoll-jump' => 'Gå til stemmeserveren',
 	'securepoll-bad-ballot-submission' => 'Din stemme var ugyldig: $1',
 	'securepoll-unanswered-questions' => 'Du skal besvare alle spørgsmålene.',
-	'securepoll-invalid-rank' => 'Ugyldig rangorden. Du skal give kandidaterne en rangorden mellem 1 og 999.',
+	'securepoll-invalid-rank' => 'Ugyldig rang. Du skal give kandidaterne en rang mellem 1 og 999.',
 	'securepoll-unranked-options' => 'Nogle muligheder blev ikke rangordnet.
 Du skal give alle muligheder en rangordning mellem 1 og 999.',
+	'securepoll-invalid-score' => 'Karakteren skal være et tal mellem $1 og $2.',
+	'securepoll-unanswered-options' => 'Du skal give et svar ved hvert spørgsmål.',
 	'securepoll-remote-auth-error' => 'Der opstod en fejl under hentning af dine kontoinformationer fra serveren.',
 	'securepoll-remote-parse-error' => 'Der opstod en fejl under læsning af autorisationssvarene fra serveren.',
 	'securepoll-api-invalid-params' => 'Ugyldige parametere.',
 	'securepoll-api-no-user' => 'Ingen brugere med den angivne ID blev fundet.',
 	'securepoll-api-token-mismatch' => 'Sikkerhedskoden er forkert, du kan ikke logge ind.',
 	'securepoll-not-logged-in' => 'Du skal logge ind for at stemme i dette valg',
-	'securepoll-too-few-edits' => 'Beklager, men du kan ikke stemme. Du skal lave mindst $1 {{PLURAL:$1|redigering|redigeringer}}. Du har kun lavet $2.',
+	'securepoll-too-few-edits' => 'Beklager, men du kan ikke stemme. Du skal have gennemført mindst $1 {{PLURAL:$1|redigering|redigeringer}}. Du har kun gennemført $2.',
+	'securepoll-too-new' => 'Beklager, men du kan ikke stemme. Din konto skal være oprettet før den $1 $3 for at deltage i denne afstemning. Du oprettede din konto den $2 $4.',
 	'securepoll-blocked' => 'Du kan ikke stemme, fordi du i øjeblikket er blokeret fra at redigere.',
+	'securepoll-blocked-centrally' => 'Beklager, men du kan ikke deltage i denne afstemning, fordi du er blokeret på mindst $1 {{PLURAL:$1|wiki|wikier}}.',
 	'securepoll-bot' => 'Beklager, men konti med botflag kan ikke stemme i dette valg.',
 	'securepoll-not-in-group' => 'Kun brugere af gruppen "$1" kan stemme.',
 	'securepoll-not-in-list' => 'Du er desværre ikke på listen over brugere, som kan stemme i dette valg.',
@@ -1582,12 +2397,12 @@ Du skal give alle muligheder en rangordning mellem 1 og 999.',
 	'securepoll-header-action' => 'Handling',
 	'securepoll-header-reason' => 'Årsag',
 	'securepoll-header-admin' => 'Admin',
-	'securepoll-cookie-dup-list' => 'Cooke-dubletbrugere',
+	'securepoll-cookie-dup-list' => 'Cookie dubletbrugere',
 	'securepoll-dump-title' => 'Dump: $1',
-	'securepoll-dump-no-crypt' => 'Ingen krypterede valgregistreringer er tilgængelige til dette valg, fordi valget ikke er opsat til at anvende kryptering.',
+	'securepoll-dump-no-crypt' => 'Ingen krypterede valgregistreringer er tilgængelige ved dette valg, fordi valget ikke er opsat til at anvende kryptering.',
 	'securepoll-dump-not-finished' => 'Krypterede valgregistreringer er kun tilgængelige efter afstemningen den $1 klokken $2.',
 	'securepoll-dump-no-urandom' => 'Kan ikke åbne /dev/urandom.
-For at sikre en hemmelig afstemning er de krypterede valgregistrering kun offentligt  tilgængelige, når de kan blandes med en sikker strøm af tilfældige tal.',
+For at sikre en hemmelig afstemning er de krypterede valgregistreringer kun offentligt tilgængelige, når de kan blandes med en strøm af sikre tilfældige tal.',
 	'securepoll-urandom-not-supported' => 'Denne server understøtter ikke generering af tilfældige kryptografiske tal.
 For at vedligeholde personlige oplysninger om vælgeren, er krypterede valgregistreringer kun offentligt tilgængelige, når de kan blandes med en strøm af sikre tilfældige tal.',
 	'securepoll-translate-title' => 'Oversæt: $1',
@@ -1595,9 +2410,10 @@ For at vedligeholde personlige oplysninger om vælgeren, er krypterede valgregis
 	'securepoll-submit-translate' => 'Opdater',
 	'securepoll-language-label' => 'Vælg sprog:',
 	'securepoll-submit-select-lang' => 'Oversæt',
+	'securepoll-entry-text' => 'Nedenfor er listen over afstemninger.',
 	'securepoll-header-title' => 'Navn',
-	'securepoll-header-start-date' => 'Startsdato',
-	'securepoll-header-end-date' => 'Slutsdato',
+	'securepoll-header-start-date' => 'Startdato',
+	'securepoll-header-end-date' => 'Slutdato',
 	'securepoll-subpage-vote' => 'Stem',
 	'securepoll-subpage-translate' => 'Oversæt',
 	'securepoll-subpage-list' => 'Liste',
@@ -1606,31 +2422,40 @@ For at vedligeholde personlige oplysninger om vælgeren, er krypterede valgregis
 	'securepoll-tally-title' => 'Optælling: $1',
 	'securepoll-tally-not-finished' => 'Du kan desværre ikke optælle valgresultatet før afstemningen er slut.',
 	'securepoll-can-decrypt' => 'Valgregisteret er blevet krypteret, men en dekrypteringsnøgle er tilgængelig.
-Du kan enten optælle de nuværende stemmer i databasen, eller optælle krypterede resultater fra et oplagt fil.',
+Du kan enten optælle de nuværende stemmer i databasen, eller optælle krypterede resultater fra en oplagt fil.',
 	'securepoll-tally-no-key' => 'Du kan ikke tælle resultatet op, fordi stemmerne er krypterede, og dekrypteringsnøglen er utilgængelig.',
 	'securepoll-tally-local-legend' => 'Optællig af stemmerne',
 	'securepoll-tally-local-submit' => 'Opret en optælling',
-	'securepoll-tally-upload-legend' => 'Læg en krypteret dump op',
+	'securepoll-tally-upload-legend' => 'Læg et krypteret dump op',
 	'securepoll-tally-upload-submit' => 'Opret optælling',
 	'securepoll-tally-error' => 'Fejl under læsning af stemmeregisteret, kan ikke oprette en optælling.',
 	'securepoll-no-upload' => 'Ingen fil blev lagt op; kan ikke tælle resultatet op.',
 	'securepoll-dump-corrupt' => 'Dumpfilen er korrupt og kan ikke behandles.',
 	'securepoll-tally-upload-error' => 'Fejl ved optælling af dumpfilen: $1',
+	'securepoll-pairwise-victories' => 'Matrix over parvise vindere',
+	'securepoll-strength-matrix' => 'Matrix over stistyrke',
+	'securepoll-ranks' => 'Endeligt resultat',
+	'securepoll-average-score' => 'Gennemsnitlig karakter',
+	'securepoll-round' => 'Runde $1',
+	'securepoll-spoilt' => '(Ugyldig)',
+	'securepoll-exhausted' => '(Udtømt)',
 );
 
 /** German (Deutsch)
  * @author ChrisiPK
+ * @author Kghbln
+ * @author MF-Warburg
  * @author Metalhead64
  * @author Pill
  * @author Umherirrender
  */
 $messages['de'] = array(
 	'securepoll' => 'Sichere Abstimmung',
-	'securepoll-desc' => 'Erweiterung für Wahlen und Umfragen',
+	'securepoll-desc' => 'Ermöglicht sichere Wahlen, Abstimmungen und Umfragen',
 	'securepoll-invalid-page' => 'Ungültige Unterseite „<nowiki>$1</nowiki>“',
 	'securepoll-need-admin' => 'Du musst ein Wahl-Administrator sein, um diese Aktion durchzuführen.',
 	'securepoll-too-few-params' => 'Nicht genügend Unterseitenparameter (ungültiger Link).',
-	'securepoll-invalid-election' => '„$1“ ist keine gültige Abstimmungs-ID.',
+	'securepoll-invalid-election' => '„$1“ ist keine gültige Abstimmungskennung.',
 	'securepoll-welcome' => '<strong>Willkommen $1!</strong>',
 	'securepoll-not-started' => 'Die Wahl hat noch nicht begonnen.
 Ihr Start ist für den $2 um $3 Uhr geplant.',
@@ -1673,23 +2498,25 @@ Entschlüsselung nicht möglich.',
 	'securepoll-unranked-options' => 'Einige Optionen wurden nicht mit einer Rangnummer versehen.
 Du musst allen Optionen eine Rangnummer zwischen 1 und 999 geben.',
 	'securepoll-invalid-score' => 'Das Ergebnis muss eine Zahl zwischen $1 und $2 sein.',
-	'securepoll-unanswered-options' => 'Du musst zu jeder Frage eine Antwort geben.',
+	'securepoll-unanswered-options' => 'Du musst jede Frage beantworten.',
 	'securepoll-remote-auth-error' => 'Fehler beim Abruf deiner Benutzerkonteninformationen vom Server.',
 	'securepoll-remote-parse-error' => 'Fehler beim Interpretieren der Berechtigungsantwort des Servers.',
 	'securepoll-api-invalid-params' => 'Ungültige Parameter.',
-	'securepoll-api-no-user' => 'Es wurde kein Benutzer mit der angegebenen ID gefunden.',
+	'securepoll-api-no-user' => 'Es wurde kein Benutzer mit der angegebenen Kennung gefunden.',
 	'securepoll-api-token-mismatch' => 'Falsche Sicherheitstoken, Anmeldung fehlgeschlagen.',
 	'securepoll-not-logged-in' => 'Du musst angemeldet sein, um bei dieser Wahl abstimmen zu können',
-	'securepoll-too-few-edits' => 'Du darfst leider nicht abstimmen. Du brauchst mindestens $1 {{PLURAL:$1|Bearbeitung|Bearbeitungen}}, um bei dieser Wahl abzustimmen, du hast jedoch $2.',
-	'securepoll-blocked' => 'Du kannst bei dieser Wahl leider nicht abstimmen, wenn du gesperrt bist.',
+	'securepoll-too-few-edits' => 'Du darfst leider nicht abstimmen. Du musst mindestens $1 {{PLURAL:$1|Bearbeitung|Bearbeitungen}} gemacht haben, um bei dieser Wahl abstimmen zu dürfen. Du hast $2 Bearbeitungen gemacht.',
+	'securepoll-too-new' => 'Du darfst leider nicht abstimmen. Dein Benutzerkonto hätte vor dem $1 auf $3 registriert werden müssen, um bei dieser Wahl abstimmen zu dürfen. Du hast dich hingegen am $2 auf $4 registriert.',
+	'securepoll-blocked' => 'Du darfst leider nicht abstimmen, da dein Benutzerkonto derzeit gesperrt bist.',
+	'securepoll-blocked-centrally' => 'Du darfst leider nicht abstimmen, da dein Benutzerkonto derzeit auf mindestens $1 {{PLURAL:$1|Wiki|Wikis}} gesperrt ist.',
 	'securepoll-bot' => 'Konten mit Botstatus sind leider nicht berechtigt, bei dieser Wahl abzustimmen.',
-	'securepoll-not-in-group' => 'Nur Mitglieder der Gruppe „$1“ können bei dieser Wahl abstimmen.',
-	'securepoll-not-in-list' => 'Du bist leider nicht auf der Liste der Benutzer, die bei dieser Wahl abstimmen dürfen.',
+	'securepoll-not-in-group' => 'Nur Mitglieder der Benutzergruppe „$1“ können bei dieser Wahl abstimmen.',
+	'securepoll-not-in-list' => 'Du befindest Dich leider nicht auf der Liste der Benutzer, die bei dieser Wahl abstimmen dürfen.',
 	'securepoll-list-title' => 'Stimmen auflisten: $1',
 	'securepoll-header-timestamp' => 'Zeit',
 	'securepoll-header-voter-name' => 'Name',
 	'securepoll-header-voter-domain' => 'Domäne',
-	'securepoll-header-ua' => 'Benutzeragent',
+	'securepoll-header-ua' => 'Browser',
 	'securepoll-header-cookie-dup' => 'Duplikat',
 	'securepoll-header-strike' => 'Streichen',
 	'securepoll-header-details' => 'Details',
@@ -1701,7 +2528,7 @@ Du musst allen Optionen eine Rangnummer zwischen 1 und 999 geben.',
 	'securepoll-strike-token-mismatch' => 'Sitzungsdaten verloren',
 	'securepoll-details-link' => 'Details',
 	'securepoll-details-title' => 'Abstimmungsdetails: #$1',
-	'securepoll-invalid-vote' => '„$1“ ist keine gültige Abstimmungs-ID',
+	'securepoll-invalid-vote' => '„$1“ ist keine gültige Abstimmungskennung',
 	'securepoll-header-voter-type' => 'Wählertyp',
 	'securepoll-voter-properties' => 'Wählereigenschaften',
 	'securepoll-strike-log' => 'Streichungs-Logbuch',
@@ -1747,11 +2574,16 @@ Du kannst wählen zwischen der Zählung der aktuellen Ergebnisse in der Datenban
 	'securepoll-strength-matrix' => 'Wegstärkenmatrix',
 	'securepoll-ranks' => 'Schlussranking',
 	'securepoll-average-score' => 'Durchschnittliches Ergebnis',
+	'securepoll-round' => 'Runde $1',
+	'securepoll-spoilt' => '(Ungültig)',
+	'securepoll-exhausted' => '(Beendet)',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author ChrisiPK
  * @author Imre
+ * @author Kghbln
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['de-formal'] = array(
@@ -1778,26 +2610,29 @@ $1',
 	'securepoll-invalid-rank' => 'Ungültige Rangfolge. Sie müssen den Kandidaten eine Rangnummer zwischen 1 und 999 geben.',
 	'securepoll-unranked-options' => 'Einige Optionen wurden nicht mit einer Rangnummer versehen.
 Sie müssen allen Optionen eine Rangnummer zwischen 1 und 999 geben.',
-	'securepoll-unanswered-options' => 'Sie müssen für jede Frage eine Antwort geben.',
+	'securepoll-unanswered-options' => 'Sie müssen jede Frage beantworten.',
 	'securepoll-remote-auth-error' => 'Fehler beim Abruf Ihrer Benutzerkonteninformationen vom Server.',
-	'securepoll-not-logged-in' => 'Sie müssen angemeldet sein, um bei dieser Wahl abstimmen zu können',
-	'securepoll-too-few-edits' => 'Sie dürfen leider nicht abstimmen. Sie brauchen mindestens $1 {{PLURAL:$1|Bearbeitung|Bearbeitungen}}, um bei dieser Wahl abzustimmen, Sie haben jedoch $2.',
-	'securepoll-blocked' => 'Sie können bei dieser Wahl leider nicht abstimmen, wenn Sie gesperrt sind.',
-	'securepoll-not-in-list' => 'Sie sind leider nicht auf der Liste der Benutzer, die bei dieser Wahl abstimmen dürfen.',
+	'securepoll-not-logged-in' => 'Sie müssen angemeldet sein, um bei dieser Wahl abstimmen zu können.',
+	'securepoll-too-few-edits' => 'Sie dürfen leider nicht abstimmen. Sie müssen mindestens $1 {{PLURAL:$1|Bearbeitung|Bearbeitungen}} gemacht haben, um bei dieser Wahl abstimmen zu dürfen. Sie haben $2 Bearbeitungen gemacht.',
+	'securepoll-too-new' => 'Sie dürfen leider nicht abstimmen. Ihr Benutzerkonto hätte vor dem $1 auf $3 registriert werden müssen, um bei dieser Wahl abstimmen zu dürfen. Sie haben sich hingegen am $2 auf $4 registriert.',
+	'securepoll-blocked' => 'Sie dürfen leider nicht abstimmen, da Ihr Benutzerkonto derzeit gesperrt bist.',
+	'securepoll-blocked-centrally' => 'Sie dürfen leider nicht abstimmen, da Ihr Benutzerkonto derzeit auf mindestens $1 {{PLURAL:$1|Wiki|Wikis}} gesperrt ist.',
+	'securepoll-not-in-list' => 'Sie befinden sich leider nicht auf der Liste der Benutzer, die bei dieser Wahl abstimmen dürfen.',
 	'securepoll-tally-not-finished' => 'Sie können leider keine Stimmen auszählen, bevor die Abstimmung beendet wurde.',
 	'securepoll-can-decrypt' => 'Die Wahlaufzeichnung wurde verschlüsselt, aber der Entschlüsselungsschlüssel ist verfügbar.
-Sie können wählen zwischen der Zählung der aktuellen Ergebnisse in der Datenbank und der Zählung der verschlüsselten Ergebnisse einer hochgeladenen Datei.',
+Sie können zwischen der Zählung der aktuellen Ergebnisse in der Datenbank und der Zählung der verschlüsselten Ergebnisse einer hochgeladenen Datei wählen.',
 	'securepoll-tally-no-key' => 'Sie können die Stimmen nicht auszählen, da die Stimmen verschlüsselt sind und der Entschlüsselungsschlüssel nicht verfügbar ist.',
 );
 
 /** Zazaki (Zazaki)
  * @author Aspar
+ * @author Mirzali
  * @author Xoser
  */
 $messages['diq'] = array(
-	'securepoll' => 'anketo bawerbiyayeyi',
-	'securepoll-desc' => 'Qe weçinayîşan u anketan extensiyon',
-	'securepoll-invalid-page' => 'pelo bıni yo nemeqbul: $1',
+	'securepoll' => 'Anketo bawerbiyaye',
+	'securepoll-desc' => 'Seba weçinıtışan u anketan dergkerdış',
+	'securepoll-invalid-page' => 'Pela nêvêrdiya bınêne "<nowiki>$1</nowiki>"',
 	'securepoll-need-admin' => 'qey no kari şıma gani serkaribi',
 	'securepoll-too-few-params' => 'Yeterli altsayfa parametresi yok (geçersiz bağlantı).',
 	'securepoll-invalid-election' => '"$1" terciheko nemeqbul o ID.',
@@ -1849,7 +2684,7 @@ heme tercihan re gani şıma benateyê 1 u 999  de yew derece bıdi.',
 	'securepoll-api-invalid-params' => 'parametreyê nemeqbuli.',
 	'securepoll-api-no-user' => 'ID nişan biyo wina yew karber çino.',
 	'securepoll-api-token-mismatch' => 'simgeya pawıtışi zepê niyo, cıkewtış nêbeno',
-	'securepoll-not-logged-in' => 'na vıcinayiş de qey reydayişi gani şıma cıkewe.',
+	'securepoll-not-logged-in' => 'Nê weçinışi de seba rey gani cıkewê',
 	'securepoll-too-few-edits' => 'ma meluli, şıma nêşkeni rey bıdi. çunke qey reydayişi gani şıma tewr tay  $1 {{PLURAL:$1|vuriyayiş|vuriyayiş}} bıkeri. vuriyayişê şıma ındeko  $2.',
 	'securepoll-blocked' => 'Üma meluli, eke şıma bloke biyi şıma nêşkeni rey bıdi.',
 	'securepoll-bot' => 'ma meluli, hesabê ke pê boti işaret biyê nêşkeni rey bıdi.',
@@ -1865,7 +2700,7 @@ heme tercihan re gani şıma benateyê 1 u 999  de yew derece bıdi.',
 	'securepoll-header-details' => 'teferruati',
 	'securepoll-strike-button' => 'serê ey de xetek bıanc.',
 	'securepoll-unstrike-button' => 'serê ey de xetek meanc.',
-	'securepoll-strike-reason' => 'Sebep:',
+	'securepoll-strike-reason' => 'Sebeb:',
 	'securepoll-strike-cancel' => 'İptal',
 	'securepoll-strike-error' => 'serê ey de xeta bıanc/meanc ardene ca  xeta da: $1',
 	'securepoll-strike-token-mismatch' => 'datayê hesabi vindbiyayeyo',
@@ -1978,7 +2813,9 @@ Dejš wšyknym opcijam pódaśe pozicije mjazy 1 a 999 daś.',
 	'securepoll-api-token-mismatch' => 'Wěstotnej tokena se njemakajotej, pśizjawjenje njemóžno.',
 	'securepoll-not-logged-in' => 'Musyš se pśizjawiś, aby w toś tej wólbje wótgłosował.',
 	'securepoll-too-few-edits' => 'Wódaj, njamóžoš wótgłosowaś. Musyš nanejmjenjej $1 {{PLURAL:$1|změnu|změnje|změny|změnow}} cyniś, aby wótgłosował w toś tej wólbje, sy $2 cynił.',
+	'securepoll-too-new' => 'Bóžko njesmějoš wótgłosowaś. Twójo konto musy se do $1 $3 registrěrowaś, aby ty mógał w tos tej wólbje wótgłosował, sy se pakk $2 $4 zregistrěrował.',
 	'securepoll-blocked' => 'Wódaj, njamóžoš w toś tej wólbje wótgłosowaś, jolic wobźěłowanje jo śi tuchylu zakazane.',
+	'securepoll-blocked-centrally' => 'Bóžko njesmějoš w toś tej wólbje wótgłosowaś, dokulaž sy w nanejmjenjej $1 {{PLURAL:$1|wikiju|wikijoma|wikijach|wikijach}} zablokěrowany.',
 	'securepoll-bot' => 'Wódaj, konta z botoweju chórgojcku njesměju w toś tej wólbje wótgłosowaś.',
 	'securepoll-not-in-group' => 'Jano cłonki kupki $1 mógu w toś tej wólbje wótgłosowaś.',
 	'securepoll-not-in-list' => 'Wódaj, njejsy w lisćinje wužywarjow, kótarež su za wótgłosowanje w toś tej wólbje awtorizěrowane.',
@@ -2017,7 +2854,7 @@ Aby se priwatnosć wólarja šćitała, skoděrowane wólbne datowe zapise stoje
 	'securepoll-invalid-language' => 'Njepłaśiwy rěcny kod "$1"',
 	'securepoll-submit-translate' => 'Aktualizěrowaś',
 	'securepoll-language-label' => 'Rěc wubraś:',
-	'securepoll-submit-select-lang' => 'Přełožyś',
+	'securepoll-submit-select-lang' => 'Pśełožyś',
 	'securepoll-entry-text' => 'Dołojce jo lisćina wótgłosowanjow.',
 	'securepoll-header-title' => 'Mě',
 	'securepoll-header-start-date' => 'Zachopny datum',
@@ -2044,6 +2881,9 @@ Móžoš pak wuslědki licyś, kótarež su w datowej bance pak skoděrowane wus
 	'securepoll-strength-matrix' => 'Matriks mócy drogi',
 	'securepoll-ranks' => 'Kóńcny slědowy pórěd',
 	'securepoll-average-score' => 'Pśerězne pógódnośenje',
+	'securepoll-round' => 'Runda $1',
+	'securepoll-spoilt' => '(Njepłaśiwy)',
+	'securepoll-exhausted' => '(Pśetrjebany)',
 );
 
 /** Greek (Ελληνικά)
@@ -2051,7 +2891,9 @@ Móžoš pak wuslědki licyś, kótarež su w datowej bance pak skoděrowane wus
  * @author Badseed
  * @author Consta
  * @author Crazymadlover
+ * @author Evropi
  * @author Geraki
+ * @author Glavkos
  * @author Omnipaedista
  * @author ZaDiak
  * @author Απεργός
@@ -2060,7 +2902,7 @@ $messages['el'] = array(
 	'securepoll' => 'SecurePoll',
 	'securepoll-desc' => 'Επέκταση για εκλογές και δημοσκοπήσεις',
 	'securepoll-invalid-page' => 'Άκυρη υποσελίδα "<nowiki>$1</nowiki>"',
-	'securepoll-need-admin' => 'Πρέπει να είστε διαχειριστής εκλογών για να κάνετε αυτή την ενέργεια.',
+	'securepoll-need-admin' => 'Πρέπει να είστε διαχειριστής εκλογών για να το κάνετε αυτό.',
 	'securepoll-too-few-params' => 'Μη αρκετές παράμετροι υποσελίδας (άκυρος σύνδεσμος).',
 	'securepoll-invalid-election' => '"$1" δεν είναι ένα αποδεκτό ID ψηφοφορίας.',
 	'securepoll-welcome' => '<strong>Καλωσήρθατε $1!</strong>',
@@ -2104,6 +2946,8 @@ $1',
 	'securepoll-invalid-rank' => 'Εσφαλμένη κατάταξη. Πρέπει να δώσετε στους υποψηφίους μια κατάταξη μεταξύ 1 και 999.',
 	'securepoll-unranked-options' => 'Ορισμένες επιλογές δεν κατατάχθηκαν.
 Πρέπει να δώσετε σε όλες τις επιλογές μια κατάταξη μεταξύ 1 και 999.',
+	'securepoll-invalid-score' => 'Η βαθμολογία πρέπει να είναι ένας αριθμός μεταξύ $1 και $2.',
+	'securepoll-unanswered-options' => 'Πρέπει να δώσετε μια απάντηση για κάθε ερώτηση.',
 	'securepoll-remote-auth-error' => 'Σφάλμα κατά την ανάκτηση των πληροφοριών για τον λογαριασμό σας από τον διακομιστή.',
 	'securepoll-remote-parse-error' => 'Σφάλμα στην ερμηνεία της απάντησης για άδεια πρόβασης από τον διακομιστή.',
 	'securepoll-api-invalid-params' => 'Άκυρες παράμετροι.',
@@ -2111,7 +2955,9 @@ $1',
 	'securepoll-api-token-mismatch' => 'Μη ταυτοποίηση κουπονιού ασφαλείας, δεν μπορείτε να συνδεθείτε.',
 	'securepoll-not-logged-in' => 'Πρέπει να συνδεθείτε για να ψηφίσετε σε αυτές τις εκλογές',
 	'securepoll-too-few-edits' => 'Λυπούμαστε, δεν μπορείτε να ψηφίσετε. Χρειάζεται να έχετε κάνει τουλάχιστον $1 {{PLURAL:$1|επεξεργασία|επεξεργασίες}} για να ψηφίσετε σε αυτή την ψηφοφορία, έχετε κάνει $2.',
+	'securepoll-too-new' => 'Συγνώμη, δεν μπορείτε να ψηφίσετε.  Ο λογαριασμός σας πρέπει να έχει δημιουργηθεί πριν από την $1 για να ψηφίσει σε αυτή την εκλογή, εσείς έχετε εγγραφεί την $2.',
 	'securepoll-blocked' => 'Λυπούμαστε, δεν μπορείτε να ψηφίσετε σε αυτή την ψηφοφορία αν είστε επί του παρόντος υπό φραγή από την επεξεργασία.',
+	'securepoll-blocked-centrally' => 'Συγγνώμη, δεν έχετε δικαίωμα ψήφου στην παρούσα εκλογή, αν είστε αποκλεισμένοι από τη $1 ή περισσότερα {{PLURAL:$1|wiki|wikis}}.',
 	'securepoll-bot' => 'Λυπούμαστε, οι λογαριασμοί με ιδιότητα bot δεν επιτρέπεται να ψηφίσουν σε αυτήν την ψηφοφορία.',
 	'securepoll-not-in-group' => "Μόνο τα μέλη της ομάδας $1 μπορούν να ψηφίσουν σ' αυτές τις εκλογές.",
 	'securepoll-not-in-list' => 'Λυπούμαστε, αλλά δεν βρίσκεστε στην προκαθορισμένη λίστα χρηστών που επιτρέπεται να ψηφίσουν στις εκλογές αυτές.',
@@ -2176,19 +3022,23 @@ $1',
 	'securepoll-strength-matrix' => 'Πίνακας ισχύος διαδρομών',
 	'securepoll-ranks' => 'Τελική κατάταξη',
 	'securepoll-average-score' => 'Μέσο σκορ',
+	'securepoll-round' => 'Γύρος $1',
+	'securepoll-spoilt' => '(Άκυρα)',
+	'securepoll-exhausted' => '(Εξαντλημένα)',
 );
 
 /** Esperanto (Esperanto)
  * @author ArnoLagrange
  * @author Marcos
+ * @author ThomasPusch
  * @author Yekrats
  */
 $messages['eo'] = array(
 	'securepoll' => 'Sekura Enketo',
 	'securepoll-desc' => 'Kromprogramo por voĉdonadoj kaj enketoj',
-	'securepoll-invalid-page' => 'Nevalida subpaĝo "<nowiki>$1</nowiki>"',
+	'securepoll-invalid-page' => 'Malvalida subpaĝo "<nowiki>$1</nowiki>"',
 	'securepoll-need-admin' => 'Vi devas esti voĉdona administranto por fari ĉi tiun agon.',
-	'securepoll-too-few-params' => 'Ne sufiĉaj subpaĝaj parametroj (nevalida ligilo).',
+	'securepoll-too-few-params' => 'Ne sufiĉaj subpaĝaj parametroj (malvalida ligilo).',
 	'securepoll-invalid-election' => '"$1" ne estas valida voĉdonada identigo.',
 	'securepoll-welcome' => '<strong>Bonvenon, $1!</strong>',
 	'securepoll-not-started' => 'Ĉi tiu voĉdonado ne jam pretas.
@@ -2212,7 +3062,7 @@ Laŭvole, vi povas konservi la jenan konfirmon de via voĉdono:
 Via voĉdono ne estis rekordita!
 
 $1',
-	'securepoll-no-gpg-home' => 'Ne eblas krei GPG hejman dosierujon.',
+	'securepoll-no-gpg-home' => 'Ne povas krei GPG hejman dosierujon.',
 	'securepoll-secret-gpg-error' => 'Eraro funkciigante GPG.
 Uzu $wgSecurePollShowErrorDetail=true; en LocalSettings.php por montri pliajn detalojn.',
 	'securepoll-full-gpg-error' => 'Eraro funkciigante GPG:
@@ -2224,11 +3074,11 @@ Eraro:
 	'securepoll-gpg-config-error' => 'GPG-ŝlosiloj estas konfiguritaj malĝuste.',
 	'securepoll-gpg-parse-error' => 'Eraro interpretante GPG-eligon.',
 	'securepoll-no-decryption-key' => 'Neniu malĉifra ŝlosilo estas konfigurita.
-Ne eblas malĉifri.',
+Ne povas malĉifri.',
 	'securepoll-jump' => 'Iri al la voĉdona servilo',
 	'securepoll-bad-ballot-submission' => 'Via voĉdono estis malvalida: $1',
 	'securepoll-unanswered-questions' => 'Vi devas respondi al ĉiuj demandoj.',
-	'securepoll-invalid-rank' => 'Nevalida loko. Vi devas doni al kandidatoj lokon inter 1 kaj 999.',
+	'securepoll-invalid-rank' => 'Malvalida loko. Vi devas doni al kandidatoj lokon inter 1 kaj 999.',
 	'securepoll-unranked-options' => 'Kelkaj opcioj ne estis ordigitaj. 
 Vi devas doni al ĉiuj opcioj lokon inter 1 kaj 999.',
 	'securepoll-invalid-score' => 'La poentaro devas esti nombro inter $1 kaj $2.',
@@ -2240,7 +3090,9 @@ Vi devas doni al ĉiuj opcioj lokon inter 1 kaj 999.',
 	'securepoll-api-token-mismatch' => 'Nekongrua sekurecmarkilo. Neeblas ensaluti.',
 	'securepoll-not-logged-in' => 'Vi devas ensaluti por voĉdoni en ĉi tiu voĉdonado',
 	'securepoll-too-few-edits' => 'Bedaŭrinde, vi ne povas voĉdoni. Vi nepre havas almenaŭ $1 {{PLURAL:$1|redakto|redaktoj}} por voĉdoni en ĉi tiu voĉdonado; vi faris $2 redaktojn.',
+	'securepoll-too-new' => 'Pardonu, vi ne rajtas voĉdoni. Por rajti je voĉdono en tiu ĉi baloto, via uzantokonto devas esti registrita antaŭ $1 $3, sed vi registriĝis nur je $2, $4.',
 	'securepoll-blocked' => 'Bedaŭrinde, vi ne povas voĉdoni en ĉi tiu voĉdonado se vi nune estas forbarita de redaktado.',
+	'securepoll-blocked-centrally' => 'Pardonu, vi ne rajtas voĉdoni pro vi estas blokata en almenaŭ $1 {{PLURAL:$1|vikio|vikioj}}.',
 	'securepoll-bot' => 'Bedaŭrinde, kontoj kun la robotflago nen estas permesata voĉdoni en ĉi tiu voĉdonado.',
 	'securepoll-not-in-group' => 'Nur membroj de la grupo "$1" povas voĉdoni en ĉi tiu elekto.',
 	'securepoll-not-in-list' => 'Bedaŭrinde, vi ne estas unu el la antaŭdetermitaj uzantoj kiuj estas permesitaj voĉdoni dum ĉi tiu voĉdono.',
@@ -2271,7 +3123,7 @@ Vi devas doni al ĉiuj opcioj lokon inter 1 kaj 999.',
 	'securepoll-dump-title' => 'Elŝuto: $1',
 	'securepoll-dump-no-crypt' => 'Neniu ĉifrita registraĵo havebla por tiu ĉi baloto, ĉar la baloto ne estas aranĝita por uzi ĉifradon.',
 	'securepoll-dump-not-finished' => 'Ĉifrita registraĵo estos havebla por tiu ĉi baloto nur post la findato $1 je $2',
-	'securepoll-dump-no-urandom' => 'Ne eblas malfermi /dev/urandom
+	'securepoll-dump-no-urandom' => 'Ne povas malfermi /dev/urandom.
 Por garantii privatecon de balotinto, ĉifrita balotregistraĵo estas publike havebla nur kiam ĝi povas esti malnetigita per sekura hazarda nombrofluo.',
 	'securepoll-urandom-not-supported' => 'Ĉi tiu servilo ne eltenas generadon de ĉifrhazardnombroj. 
 Por garantii privatecon de balotinto, ĉifrita balotregistraĵo estas publike havebla nur kiam ĝi povas esti malnetigita per sekura hazarda nombrofluo.',
@@ -2298,20 +3150,25 @@ Vi povas elekti nombri ĉu la rezultojn el la datumbazo, ĉu ĉifritajn rezultoj
 	'securepoll-tally-local-submit' => 'Krei nombradon',
 	'securepoll-tally-upload-legend' => 'Elŝuti ĉifritan dosieron',
 	'securepoll-tally-upload-submit' => 'Krei nombradon',
-	'securepoll-tally-error' => 'Eraro dum interpretado de balotregistraĵo, ne eblas krei nombradon.',
-	'securepoll-no-upload' => 'Neniu dosiero estis elŝutita, ne eblas nombri rezulton.',
+	'securepoll-tally-error' => 'Eraro dum interpretado de balotregistraĵo, ne povas krei nombradon.',
+	'securepoll-no-upload' => 'Neniu dosiero estis elŝutita, ne povas nombri rezulton.',
 	'securepoll-dump-corrupt' => 'La elŝutdosiero estas difektita kaj ne povas esti traktita.',
 	'securepoll-tally-upload-error' => 'Eraro dum nombrado de elŝutdosiero: $1',
 	'securepoll-pairwise-victories' => 'Matrico de paraj venkoj',
 	'securepoll-strength-matrix' => 'Matrico de vojforteco',
 	'securepoll-ranks' => 'Fina rangigo',
 	'securepoll-average-score' => 'Averaĝa poentaro',
+	'securepoll-round' => 'Balota parto $1',
+	'securepoll-spoilt' => 'voĉdono ne valida',
+	'securepoll-exhausted' => '(Finita)',
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Crazymadlover
  * @author Dferg
  * @author DoveBirkoff
+ * @author Fitoschido
  * @author Galio
  * @author Góngora
  * @author Imre
@@ -2321,10 +3178,10 @@ Vi povas elekti nombri ĉu la rezultojn el la datumbazo, ĉu ĉifritajn rezultoj
 $messages['es'] = array(
 	'securepoll' => 'SecurePoll',
 	'securepoll-desc' => 'Extensiones para elecciones y encuentas',
-	'securepoll-invalid-page' => 'Subpágina inválida "<nowiki>$1</nowiki>"',
+	'securepoll-invalid-page' => 'Subpágina inválida «<nowiki>$1</nowiki>»',
 	'securepoll-need-admin' => 'Necesitas ser un administrador de elecciones para realizar esta acción.',
 	'securepoll-too-few-params' => 'Parámetros de subpágina insuficientes (vínculo inválido).',
-	'securepoll-invalid-election' => '"$1" no es un identificador de elección valido.',
+	'securepoll-invalid-election' => '«$1» no es un identificador de elección valido.',
 	'securepoll-welcome' => '<strong>¡Bienvenido $1!</strong>',
 	'securepoll-not-started' => 'Esta elección aún no ha comenzado.
 Está programada de comenzar en $2 de $3.',
@@ -2343,7 +3200,7 @@ Si deseas, puedes retener el siguiente comprobante como evidencia de tu voto:
 <pre>$1</pre>',
 	'securepoll-thanks' => 'Gracias, tu voto ha sido guardado.',
 	'securepoll-return' => 'Retornar a $1',
-	'securepoll-encrypt-error' => 'Fracasaste en encriptar tu registro de voto.
+	'securepoll-encrypt-error' => 'No se pudo cifrar tu registro de voto.
 ¡Tu voto no ha sido registrado!
 
 $1',
@@ -2375,10 +3232,12 @@ Debes clasificar a todas las opciones con un rango entre 1 y 999.',
 	'securepoll-api-token-mismatch' => 'Clave de seguridad no coincidente, no se puede iniciar sesión.',
 	'securepoll-not-logged-in' => 'Debes iniciar sesión para votar en esta elección',
 	'securepoll-too-few-edits' => 'Perdón, no puedes votar. Necesitas haber hecho al menos $1 {{PLURAL:$1|edición|ediciones}} para votar en esta elección, has hecho $2.',
+	'securepoll-too-new' => 'Lo sentimos, pero no puede votar. Su cuenta debió registrarse antes del $1 a las $3 para poder votar en esta elección. Usted se registró el $2 a las $4.',
 	'securepoll-blocked' => 'Perdón, no puedes votar en esta elección si estás actualmente bloqueado para ediciones.',
+	'securepoll-blocked-centrally' => 'Lo sentimos, no puede votar en esta elección pues usted está bloqueado al menos hasta el $1 {{PLURAL:$1|wiki|wikis}}.',
 	'securepoll-bot' => 'Lo sentimos, las cuentas con flag de bot no están autorizadas a votar en esta elección.',
-	'securepoll-not-in-group' => 'Solamente mimbros del grupo $1 pueden votar en esta elección.',
-	'securepoll-not-in-list' => 'Perdón, no estás en el lista predetermindad de usuarios autorizados a votar en esta elección.',
+	'securepoll-not-in-group' => 'Solo los miembros del grupo «$1» pueden votar en esta elección.',
+	'securepoll-not-in-list' => 'Lo sentimos, no estás en la lista predeterminada de usuarios autorizados a votar en esta elección.',
 	'securepoll-list-title' => 'Lista votos: $1',
 	'securepoll-header-timestamp' => 'Tiempo',
 	'securepoll-header-voter-name' => 'Nombre',
@@ -2395,7 +3254,7 @@ Debes clasificar a todas las opciones con un rango entre 1 y 999.',
 	'securepoll-strike-token-mismatch' => 'Pérdida de información de la sesión',
 	'securepoll-details-link' => 'Detalles',
 	'securepoll-details-title' => 'Detalles de voto: #$1',
-	'securepoll-invalid-vote' => '"$1" no es una identidad de voto válida',
+	'securepoll-invalid-vote' => '«$1» no es un identificador de voto válido',
 	'securepoll-header-voter-type' => 'Tipo de votante',
 	'securepoll-voter-properties' => 'Propiedades de votante',
 	'securepoll-strike-log' => 'Registro de votos invalidados',
@@ -2405,15 +3264,15 @@ Debes clasificar a todas las opciones con un rango entre 1 y 999.',
 	'securepoll-cookie-dup-list' => 'Usuarios con cookies duplicadas',
 	'securepoll-dump-title' => 'Volcado: $1',
 	'securepoll-dump-no-crypt' => 'No se dispone de un registro encriptado para esta votación dado que esta votación no ha sido configurada para usar encriptación.',
-	'securepoll-dump-not-finished' => 'Los registros encriptados de la votación están únicamente disponibles después de la fecha de finalización en $1 de $2',
-	'securepoll-dump-no-urandom' => 'Imposible abrir /dev/urandom.
-Para preservar la privacidad de los votantes, sólo son publicados los resultados encriptados de la elección cuando pueden ser mezclados con un flujo de números aleatorio.',
+	'securepoll-dump-not-finished' => 'Los registros cifrados de la votación están únicamente disponibles después de la fecha de finalización en $1 de $2',
+	'securepoll-dump-no-urandom' => 'No se pudo abrir /dev/urandom.
+Para preservar la privacidad de los votantes, sólo son publicados los resultados cifrados de la elección cuando pueden ser mezclados con un flujo de números aleatorio.',
 	'securepoll-urandom-not-supported' => 'Este servidor no posee capacidad de generación criptográfica de números aleatorios.
 Para preservar la privacidad de los votantes, sólo son publicados los resultados encriptados de la elección cuando pueden ser mezclados con un flujo de números aleatorio.',
 	'securepoll-translate-title' => 'Traducir: $1',
-	'securepoll-invalid-language' => 'Código de lenguaje inválido "$1"',
+	'securepoll-invalid-language' => 'Código de idioma no válido «$1»',
 	'securepoll-submit-translate' => 'Actualizar',
-	'securepoll-language-label' => 'Seleccionar lenguaje:',
+	'securepoll-language-label' => 'Seleccionar idioma:',
 	'securepoll-submit-select-lang' => 'Traducir',
 	'securepoll-entry-text' => 'Debajo está la lista de encuestas.',
 	'securepoll-header-title' => 'Nombre',
@@ -2431,16 +3290,19 @@ Puede escoger entre escrutar los resultados de la base de datos, o escrutar los 
 	'securepoll-tally-no-key' => 'No puede actualizar el contador de la elección, debido a que los votos están encriptados y la clave de desencriptación no está disponible.',
 	'securepoll-tally-local-legend' => 'Cuenta de resultados actualizada',
 	'securepoll-tally-local-submit' => 'Crear cuenta',
-	'securepoll-tally-upload-legend' => 'Subir dump encriptado',
+	'securepoll-tally-upload-legend' => 'Subir volcado cifrado',
 	'securepoll-tally-upload-submit' => 'Crear cuenta',
 	'securepoll-tally-error' => 'Se ha producido un error interpretando el registro de votos, no se puede crear un contador.',
-	'securepoll-no-upload' => 'No se ha subido ningún fichero, no se pueden contar los resultados.',
-	'securepoll-dump-corrupt' => 'El archivo volcado se encuentra dañado y no puede ser procesado.',
-	'securepoll-tally-upload-error' => 'Error al contar el archivo volcado: $1',
+	'securepoll-no-upload' => 'No se ha subido ningún archivo, no se pueden contar los resultados.',
+	'securepoll-dump-corrupt' => 'El archivo de volcado está dañado y no se puede procesar.',
+	'securepoll-tally-upload-error' => 'Error al contar el archivo de volcado: $1',
 	'securepoll-pairwise-victories' => 'Resultados de las encuestas en este sitio',
 	'securepoll-strength-matrix' => 'Organizar por cantidad de encuestas',
 	'securepoll-ranks' => 'Rango final',
 	'securepoll-average-score' => 'Puntuación media',
+	'securepoll-round' => 'Ronda $1',
+	'securepoll-spoilt' => '(Blancos o Nulos)',
+	'securepoll-exhausted' => '(Agotado)',
 );
 
 /** Estonian (Eesti)
@@ -2449,7 +3311,7 @@ Puede escoger entre escrutar los resultados de la base de datos, o escrutar los 
  * @author WikedKentaur
  */
 $messages['et'] = array(
-	'securepoll' => 'Turvahääletus',
+	'securepoll' => 'Turvaline hääletus',
 	'securepoll-desc' => 'Hääletuste ja küsitluste laiendus',
 	'securepoll-invalid-page' => 'Vigane alamlehekülg "<nowiki>$1</nowiki>"',
 	'securepoll-need-admin' => 'Selle tegevuse sooritamiseks pead sa olema valimise ülem.',
@@ -2537,6 +3399,7 @@ Hääletaja privaatsuse säilitamiseks on krüptitud valimiskirjed avalikult saa
 	'securepoll-submit-translate' => 'Uuenda',
 	'securepoll-language-label' => 'Vali keel:',
 	'securepoll-submit-select-lang' => 'Tõlgi',
+	'securepoll-entry-text' => 'Allpool on küsitluste loend.',
 	'securepoll-header-title' => 'Nimi',
 	'securepoll-header-start-date' => 'Alguse kuupäev',
 	'securepoll-header-end-date' => 'Lõpu kuupäev',
@@ -2564,14 +3427,20 @@ Sa võid üle lugeda kas andmebaasis olevad tulemused või üleslaaditavas faili
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Joxemai
  * @author Kobazulo
+ * @author Theklan
  * @author Unai Fdz. de Betoño
  */
 $messages['eu'] = array(
 	'securepoll' => 'BozketaSegurua',
+	'securepoll-desc' => 'Hauteskunde eta galdeketak egiteko estentsioa',
 	'securepoll-invalid-page' => '"<nowiki>$1</nowiki>" azpiorrialde okerra',
 	'securepoll-need-admin' => 'Ekintza hori burutzeko hauteskundeetako administratzailea izan behar duzu.',
+	'securepoll-too-few-params' => 'Ez dago azpiorrialde parametro nahikorik (lotura ez baliagarria).',
+	'securepoll-invalid-election' => '"$1" ez da hauteskunde ID baliagarria.',
 	'securepoll-welcome' => '<strong>Ongi etorri $1!</strong>',
+	'securepoll-not-started' => 'Bozketa ez da oraindik hasi. $2 ko $3 etan hastekoa da.',
 	'securepoll-finished' => 'Hauteskundeak bukatu dira, beraz, ezin duzu bozkatu.',
 	'securepoll-not-qualified' => 'Ez zara bozketa honetan bozkatzen gai: $1',
 	'securepoll-change-disallowed' => 'Hauteskundean jada bozkatu duzu.
@@ -2587,31 +3456,67 @@ Nahi baduzu, ondorengo agiria gorde dezakezu zure bozkaren frogabide bezala:
 <pre>$1</pre>',
 	'securepoll-thanks' => 'Eskerrik asko, zure bozka gorde egin da.',
 	'securepoll-return' => '$1-(e)ra itzuli',
+	'securepoll-encrypt-error' => 'Ezin izan da zure bozka enkriptatua gorde.
+Zure bozka ez da jaso!
+
+$1',
+	'securepoll-no-gpg-home' => 'Ezin izan da GPG oinarrizko direktorioa sortu.',
+	'securepoll-secret-gpg-error' => 'GPG exekutatzen akatsa egon da.
+Erabil ezazu $wgSecurePollShowErrorDetail=true; LocalSettings.php fitxategiak detaile gehiago erakusteko.',
 	'securepoll-full-gpg-error' => 'Errorea GPG exekutatzen:
 
 Komandoa: $1
 
 Errorea:
 <pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG giltzak ez daude ondo konfiguratuta.',
+	'securepoll-gpg-parse-error' => 'GPG irteera interpretatzen akatsa egon da.',
+	'securepoll-no-decryption-key' => 'Ez dago dekriptatze giltza konfiguratuta.
+Ezin da dekriptatu.',
 	'securepoll-jump' => 'Joan bozketa zerbitzarira',
 	'securepoll-bad-ballot-submission' => 'Zure bozka ez da zuzena: $1',
 	'securepoll-unanswered-questions' => 'Galdera guztiak erantzun behar dituzu.',
+	'securepoll-invalid-rank' => 'Tarte ez baliagarria. Hautagaiei 1etik 999rako balorea eman behar diezu.',
+	'securepoll-unranked-options' => 'Aukera batzuk ez daude sailkaturik.
+Aukera guztiei 1etik 999ra arteko balio bat eman behar diezu.',
+	'securepoll-invalid-score' => 'Emaitza $1(e)tik $2(e)ra arteko zenbakia izan behar du.',
+	'securepoll-unanswered-options' => 'Konfiantzazko lankideak.',
+	'securepoll-remote-auth-error' => 'Zure kontuari buruzko informazioa ezin izan da zerbitzaritik lortu.',
+	'securepoll-remote-parse-error' => 'Zerbitzariaren autorizazio emaitza interpretatzen akatsa egon da.',
 	'securepoll-api-invalid-params' => 'Parametro okerrak.',
+	'securepoll-api-no-user' => 'Emandako ID horrekin ez da erabiltzailerik aurkitu.',
+	'securepoll-api-token-mismatch' => 'Segurtasun kodea ez da berdina, ezin izan da sartu.',
 	'securepoll-not-logged-in' => 'Bozketa honetan parte hartzeko saioa hasi behar duzu',
+	'securepoll-too-few-edits' => 'Barka, bain ezin duzu bozkatu. Gutxienez {{PLURAL:$1|aldaketa 1|$ aldaketa}} behar dituzu hauteskunde hauetan bozkatu ahal izateko, eta zuk $2 egin dituzu.',
+	'securepoll-blocked' => 'Barkatu, ezin duzu hauteskunde hauetan bozkatu edizioak egiteko blokeo bat duzulako.',
+	'securepoll-bot' => 'Barkatu, baina blot etiketa duten kontuek ezin dute hauteskundetan parte hartu.',
+	'securepoll-not-in-group' => '"$1" taldeko kideek bakarrik bozka dezakete hauteskunde hauetan.',
+	'securepoll-not-in-list' => 'Barkatu, ez zaude hauteskunde hauetan bozka emateko baimena duten erabiltzaileen zerrendaren barruan.',
 	'securepoll-list-title' => 'Bozken zerrenda: $1',
 	'securepoll-header-timestamp' => 'Ordua',
 	'securepoll-header-voter-name' => 'Izena',
+	'securepoll-header-voter-domain' => 'Domeinua',
+	'securepoll-header-ua' => 'Lankide agentea',
+	'securepoll-header-cookie-dup' => 'Bik',
+	'securepoll-header-strike' => 'Baliogabetu',
 	'securepoll-header-details' => 'Xehetasunak',
+	'securepoll-strike-button' => 'Baliogabetu',
+	'securepoll-unstrike-button' => 'Balioztatu',
 	'securepoll-strike-reason' => 'Arrazoia:',
 	'securepoll-strike-cancel' => 'Utzi',
+	'securepoll-strike-error' => 'Akatsa egon da balioa aldatzen: $1',
 	'securepoll-strike-token-mismatch' => 'Saioko informazioa galdu da',
 	'securepoll-details-link' => 'Xehetasunak',
 	'securepoll-details-title' => 'Bozkaren xehetasunak: #$1',
+	'securepoll-invalid-vote' => '"$1" ez da bozka ID baliagarria',
 	'securepoll-header-voter-type' => 'Hautesle mota',
 	'securepoll-voter-properties' => 'Hauteslearen hobespenak',
+	'securepoll-strike-log' => 'Baliogabetze historia',
 	'securepoll-header-action' => 'Ekintza',
 	'securepoll-header-reason' => 'Arrazoia',
 	'securepoll-header-admin' => 'Admin',
+	'securepoll-cookie-dup-list' => 'Erabiltzaile bikoiztuen cookia',
+	'securepoll-dump-title' => 'Bota: $1',
 	'securepoll-translate-title' => 'Itzuli: $1',
 	'securepoll-invalid-language' => '"$1" hizkuntza kodea okerra',
 	'securepoll-submit-translate' => 'Eguneratu',
@@ -2624,42 +3529,157 @@ Errorea:
 	'securepoll-subpage-translate' => 'Itzuli',
 	'securepoll-subpage-list' => 'Zerrenda',
 	'securepoll-ranks' => 'Azken rankinga',
+	'securepoll-average-score' => 'Batez besteko puntuazioa',
 );
 
 /** Persian (فارسی)
+ * @author Americophile
+ * @author Bersam
+ * @author Ebraminio
+ * @author Huji
+ * @author Ladsgroup
  * @author Mardetanha
  * @author Meisam
+ * @author Mjbmr
+ * @author Sahim
+ * @author Wayiran
+ * @author ZxxZxxZ
  */
 $messages['fa'] = array(
 	'securepoll' => 'رای‌گیری امن',
 	'securepoll-desc' => 'افزونه برای رای‌گیری‌ها و جمع‌آوری اطلاعات',
-	'securepoll-invalid-page' => 'زیرسفحه نامعتبر "<nowiki>$1</nowiki>"',
+	'securepoll-invalid-page' => 'زیرسفحه نامعتبر «<nowiki>$1</nowiki>»',
+	'securepoll-need-admin' => 'نیاز است که شما یک مدیر انتخابات باشید که چنین کاری را بتوانید انجام دهید.',
+	'securepoll-too-few-params' => 'پارامترهای ناکافی در زیرصفحه (پیوند نامعتبر)',
+	'securepoll-invalid-election' => '«$1» یک شناسهٔ معتبر رای‌گیری نیست.',
+	'securepoll-welcome' => '<strong>$1 خوش آمدید!</strong>',
+	'securepoll-not-started' => 'این رای‌گیری هنوز آغاز نشده است.
+قرار است در تاریخ $2 در ساعت $3 آغاز شود.',
+	'securepoll-finished' => 'رای‌گیری به پایان رسیده‌است، شما دیگر نمی‌توانید رای دهید.',
 	'securepoll-not-qualified' => 'شما واجد شرایط شرکت در این رای‌گیری نیستید: $1',
+	'securepoll-change-disallowed' => 'شما پیش‌تر در این رای‌گیری رای داده‌اید.
+متاسفیم، نمی‌توانید دوباره رای دهید.',
+	'securepoll-change-allowed' => '<strong>نکته:شما قبلا در این رای‌گیری رای داده‌اید.</strong>
+شما ممکن است مایل باشید رایتان را تغییر دهید.در این صورت فرم زیر را پر کنید.
+توجه داشته باشید که اگر رای دهید.رای قبلی باطل خواهد شد.',
 	'securepoll-submit' => 'ارسال رای',
+	'securepoll-gpg-receipt' => 'سپاس از شما بابت رای‌دادن.
+
+اگر تمایل دارید، می‌توانید رسید زیر را به عنوان گواه رای‌تان حفظ کنید:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'متشکریم، رای شما ثبت شده‌است.',
 	'securepoll-return' => 'بازگشت به $1',
+	'securepoll-encrypt-error' => 'ثبت رای شما شکست خورد.
+رای شما ثبت نشده‌است!
+
+$1',
+	'securepoll-no-gpg-home' => 'قادر به ایجاد دایرکتوری مرکزی GPG نبود.',
+	'securepoll-secret-gpg-error' => 'خطا در اجرای GPG.
+از <span style="direction:ltr;">$wgSecurePollShowErrorDetail=true;</span> استفاده کنید، در LocalSettings.php اطلاعات بیشتری موجود است.',
+	'securepoll-full-gpg-error' => 'خطا در اجرای GPG:
+فرمان: $1
+خطا:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'کلیدهای GPG درست پیکربندی نشده‌اند.',
+	'securepoll-gpg-parse-error' => 'خطا در تفسیر خروجی GPG.',
+	'securepoll-no-decryption-key' => 'کلید رمزگشایی تنظیم نشده‌است.
+نمی‌توان رمزگشایی کرد.',
+	'securepoll-jump' => 'برو به سرور رای‌گیری',
+	'securepoll-bad-ballot-submission' => 'رای شما نامعتبر بود: $1',
 	'securepoll-unanswered-questions' => 'شما باید به تمامی سوالات پاسخ دهید.',
+	'securepoll-invalid-rank' => 'رتبهٔ نامعتبر. شما باید به نامزدها رتبه‌ای بین ۱ و ۹۹۹ بدهید.',
+	'securepoll-unranked-options' => 'برخی گزینه‌ها امتیاز نگرفته‌اند.
+شما باید به همهٔ گزینه‌ها امتیازی بین ۱ تا ۹۹۹ بدهید.',
+	'securepoll-invalid-score' => 'نمره باید عددی بین $1 و $2 باشد.',
+	'securepoll-unanswered-options' => 'باید به هر سوال پاسخ دهید.',
+	'securepoll-remote-auth-error' => 'خطا در واکشی اطلاعات حساب شما از سرور.',
+	'securepoll-remote-parse-error' => 'خطا در تفسیر پاسخ مجازشناسی از سرور.',
+	'securepoll-api-invalid-params' => 'پارامترهای نامعتبر.',
+	'securepoll-api-no-user' => 'هیچ کاربری با شناسهٔ داده‌شده پیدا نشد.',
+	'securepoll-api-token-mismatch' => 'توکن امنیتی تطابق ندارد، نمی‌توان وارد شد.',
+	'securepoll-not-logged-in' => 'شما باید برای رای‌دادن در این رای‌گیری وارد سیستم شوید.',
+	'securepoll-too-few-edits' => 'متاسفیم، شما نمی‌توانید رای دهید. برای رای‌دادن در این رای‌گیری لازم است تا حداقل $1 ویرایش داشته باشید، اما شما $2 ویرایش دارید.',
+	'securepoll-too-new' => 'با عرض پوزش، شما نمی‌توانید رأی دهید. برای شرکت در این رأی‌گیری، حساب کاربری شما می‌بایست پیش از تاریخ $1، ساعت $3 ثبت می‌شد، حال آن‌که در تاریخ $2، ساعت $4 ثبت شده‌است.',
+	'securepoll-blocked' => 'متاسفیم، اگر دچار محدودیت ویرایشی هستید نمی‌توانید در این رای‌گیری رای دهید.',
+	'securepoll-blocked-centrally' => 'متأسفم، به خاطر اینکه حساب کاربری شما در حداقل $1 ویکی بسته شده است، شما نمی‌تواند در این رأی‌گیری شرکت کنید.',
+	'securepoll-bot' => 'متاسفیم، حساب‌های با پرچم روبات اجازهٔ رای دادن در این رای‌گیری را ندارند.',
+	'securepoll-not-in-group' => 'فقط اعضای گروه «$1» می‌توانند در این رای‌گیری رای دهند.',
+	'securepoll-not-in-list' => 'متاسفیم، شما در فهرست ازپیش‌تعیین‌شدهٔ کاربران مجاز برای رای دادن در این رای‌گیری نیستید.',
+	'securepoll-list-title' => 'فهرست رای‌ها: $1',
 	'securepoll-header-timestamp' => 'زمان',
 	'securepoll-header-voter-name' => 'نام',
-	'securepoll-header-voter-domain' => 'دامین',
+	'securepoll-header-voter-domain' => 'دامنه',
+	'securepoll-header-ua' => 'مرورگر کاربر',
+	'securepoll-header-cookie-dup' => 'تکراری',
+	'securepoll-header-strike' => 'خط‌زدن',
 	'securepoll-header-details' => 'جزئیات',
+	'securepoll-strike-button' => 'خط‌زدن',
+	'securepoll-unstrike-button' => 'خط‌نازدن',
 	'securepoll-strike-reason' => 'دلیل:',
 	'securepoll-strike-cancel' => 'لغو',
+	'securepoll-strike-error' => 'خطا در انجام خط‌زدن/خط‌نازدن: $1',
+	'securepoll-strike-token-mismatch' => 'داده‌های جلسه از دست رفت',
 	'securepoll-details-link' => 'جزئیات',
 	'securepoll-details-title' => 'جزییات رای: #$1',
+	'securepoll-invalid-vote' => '«$1» شناسهٔ رایِ معتبری نیست.',
+	'securepoll-header-id' => 'شناسه',
 	'securepoll-header-voter-type' => 'نوع کاربر',
+	'securepoll-voter-properties' => 'خصوصیت‌های رای دهندگان',
+	'securepoll-strike-log' => 'لاگ خط‌زدن',
+	'securepoll-header-action' => 'اقدام',
 	'securepoll-header-reason' => 'دلیل',
 	'securepoll-header-admin' => 'مدیر',
-	'securepoll-submit-translate' => 'به‌روزآوری',
+	'securepoll-cookie-dup-list' => 'کاربران تکراری کوکی',
+	'securepoll-dump-title' => 'روگرفت: $1',
+	'securepoll-dump-no-crypt' => 'هیچ رکورد رای‌گیری رمزگذاری‌شده‌ای برای این رای‌گیری در دسترس نیست، چراکه رای‌گیری برای استفاده از رمزگذاری، پیکربندی نشده است.',
+	'securepoll-dump-not-finished' => 'رکوردهای رمزگذاری‌شدهٔ رای‌گیری تنها پس از پایان تاریخ $1 در $2 قابل دسترس خواهد بود.',
+	'securepoll-dump-no-urandom' => 'نمی‌توان /dev/urandom را باز کرد.
+برای حفظ حریم شخصی رای‌دهنده، رکوردهای رمزگذاری‌شدهٔ رای‌گیری تنها هنگامی به صورت عمومی در دسترس خواهند بود که با یک جریان عددی تصادفی امن به‌هم‌زده شده باشند.',
+	'securepoll-urandom-not-supported' => 'این میزبان تولید اعداد تصادفی رمزنگاری شده را پشتیبانی نمی‌کند. 
+برای حفظ حریم خصوصی رای‌دهندگان، مدارک رمزنگاری‌شدهٔ رای‌گیری فقط زمانی عمومی خواهند شد که بتوان آن‌ها را با یک سری اعداد تصادفی جاری در هم ریخته کرد.',
+	'securepoll-translate-title' => 'ترجمه: $1',
+	'securepoll-invalid-language' => 'کد زبانی نامعتبر «$1»',
+	'securepoll-submit-translate' => 'به روز رسانی',
 	'securepoll-language-label' => 'انتخاب زبان:',
 	'securepoll-submit-select-lang' => 'ترجمه',
+	'securepoll-entry-text' => 'در زیر فهرستی از رای‌گیری‌ها موجود است.',
 	'securepoll-header-title' => 'نام',
 	'securepoll-header-start-date' => 'تاریخ آغاز',
 	'securepoll-header-end-date' => 'تاریخ پایان',
+	'securepoll-subpage-vote' => 'رای',
+	'securepoll-subpage-translate' => 'ترجمه',
+	'securepoll-subpage-list' => 'فهرست',
+	'securepoll-subpage-dump' => 'روگرفت',
+	'securepoll-subpage-tally' => 'شمارش',
+	'securepoll-tally-title' => 'شمارش: $1',
+	'securepoll-tally-not-finished' => 'شرمنده، شما نمی‌توانید رای‌ها را قبل از کامل شدن رای‌گیری شمارش کنید.',
+	'securepoll-can-decrypt' => 'این انتخابات رمزنگاری شده‌است، ولی کلید رمزگشایی موجود است.
+شما می‌توانید انتخاب که یا نتایج فعلی شمارش شوند، یا نتایج رمزگذاری شدهٔ بارگذاری شده، شمارش شوند.',
+	'securepoll-tally-no-key' => 'شما نمی‌توانید این رای‌گیری را شمارش کنید، چراکه رای‌ها رمزگذاری‌شده هستند، و کلید رمزگشایی در دسترس نیست.',
+	'securepoll-tally-local-legend' => 'نتایج ذخیره‌شدهٔ شمارش',
+	'securepoll-tally-local-submit' => 'ایجاد شمارش',
+	'securepoll-tally-upload-legend' => 'بارگذاری روگرفت رمزگذاری‌شده',
+	'securepoll-tally-upload-submit' => 'ایجاد شمارش',
+	'securepoll-tally-error' => 'خطا در تفسیر رکورد رای، نمی‌توان شمارش تولید کرد.',
+	'securepoll-no-upload' => 'هیچ پرونده‌ای بارگذاری نشده، نمی‌توان نتایج را شمارش کرد.',
+	'securepoll-dump-corrupt' => 'پروندهٔ روگرفت خراب است و نمی‌تواند پردازش شود.',
+	'securepoll-tally-upload-error' => 'خطا در شمارش پروندهٔ روگرفت: $1',
+	'securepoll-pairwise-victories' => 'ماتریس پیشروی جفت‌جفت',
+	'securepoll-strength-matrix' => 'ماتریس نقاط قوت مسیر',
+	'securepoll-ranks' => 'رتبه‌بندی نهایی',
+	'securepoll-average-score' => 'میانگین نمره',
+	'securepoll-round' => 'دور $1',
+	'securepoll-spoilt' => '(معیوب)',
+	'securepoll-exhausted' => '(خسته)',
 );
 
 /** Finnish (Suomi)
  * @author Cimon Avaro
  * @author Crt
+ * @author Nike
+ * @author Olli
+ * @author Ronja Addams-Moring
  * @author Silvonen
  * @author Str4nd
  * @author ZeiP
@@ -2720,7 +3740,9 @@ Salausta ei voi purkaa.',
 	'securepoll-api-token-mismatch' => 'Turvallisuusmerkintä ei täsmää, joten sisäänkirjautuminen ei onnistu.',
 	'securepoll-not-logged-in' => 'Sinun pitää kirjautua sisään voidaksesi äänestää.',
 	'securepoll-too-few-edits' => 'Valitettavasti et voi äänestää. Sinulla täytyy olla vähintään $1 {{PLURAL:$1|muokkaus|muokkausta}} voidaksesi äänestää näissä vaaleissa. Olet tehnyt $2.',
+	'securepoll-too-new' => 'Et voi äänestää, koska olet rekisteröitynyt vasta $2 kello $4. Vain käyttäjät, jotka ovat rekisteröityneet ennen $1 kello $3 voivat äänestää.',
 	'securepoll-blocked' => 'Et voi äänestää näissä vaaleissa, jos sinulla on muokkausesto tällä hetkellä.',
+	'securepoll-blocked-centrally' => 'Et voi äänestää, koska sinut on estetty ainakin {{PLURAL:$1|$1}} wikissä.',
 	'securepoll-bot' => 'Käyttäjätilit, joilla on bottimerkintä eivät saa äänestää näissä vaaleissa.',
 	'securepoll-not-in-group' => 'Vain jäsenet jotka kuuluvat ryhmään $1, voivat äänestää näissä vaaleissa.',
 	'securepoll-not-in-list' => 'Et ole etukäteen valitussa listassa käyttäjiä, jotka ovat oikeutettuja äänestämään tässä vaalissa.',
@@ -2785,30 +3807,67 @@ Voit valita tuloslaskennan tietokantatiedoista, tai salakirjoitetuista tuloksist
 	'securepoll-strength-matrix' => 'Polun vahvuuden matriisi',
 	'securepoll-ranks' => 'Lopullinen sijoitus',
 	'securepoll-average-score' => 'Keskiarvopisteet',
+	'securepoll-round' => 'Kierros $1',
+	'securepoll-spoilt' => '(Väärin)',
+	'securepoll-exhausted' => '(Ei käytetty)',
+);
+
+/** Faroese (Føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'securepoll-finished' => 'Hetta valið er liðugt, tú kanst ikki atkvøða longur.',
+	'securepoll-submit' => 'Send atkvøðu',
+	'securepoll-return' => 'Far aftur til $1',
+	'securepoll-unanswered-questions' => 'Tú mást svara øllum spurningunum.',
+	'securepoll-header-voter-name' => 'Navn',
+	'securepoll-header-voter-domain' => 'Umdømi (domæne)',
+	'securepoll-header-details' => 'Meira kunning',
+	'securepoll-strike-reason' => 'Orsøk:',
+	'securepoll-strike-cancel' => 'Ógilda',
+	'securepoll-header-reason' => 'Orsøk',
+	'securepoll-header-admin' => 'Admin',
+	'securepoll-translate-title' => 'Umset: $1',
+	'securepoll-submit-translate' => 'Dagfør',
+	'securepoll-language-label' => 'Vel mál:',
+	'securepoll-submit-select-lang' => 'Umset',
+	'securepoll-entry-text' => 'Niðanfyri sæst listin við atkvøðum.',
+	'securepoll-header-title' => 'Navn',
+	'securepoll-header-start-date' => 'Byrjunardagur',
+	'securepoll-header-end-date' => 'Endar dag',
+	'securepoll-subpage-vote' => 'Atkvøð',
+	'securepoll-subpage-translate' => 'Umset',
+	'securepoll-subpage-list' => 'Listi',
 );
 
 /** French (Français)
  * @author Crochet.david
+ * @author Gomoko
  * @author IAlex
  * @author Jean-Frédéric
  * @author Louperivois
  * @author Omnipaedista
+ * @author Peter17
  * @author PieRRoMaN
+ * @author Sherbrooke
+ * @author TouzaxA
+ * @author Urhixidur
  * @author Verdy p
+ * @author Wyz
  * @author Yann
  */
 $messages['fr'] = array(
 	'securepoll' => 'Sondage sécurisé',
 	'securepoll-desc' => 'Extension pour des élections et sondages',
 	'securepoll-invalid-page' => 'Sous-page « <nowiki>$1</nowiki> » invalide',
-	'securepoll-need-admin' => "Vous devez être un administrateur de l'élection pour exécuter cette action.",
+	'securepoll-need-admin' => 'Vous devez être un administrateur électoral pour exécuter cette action.',
 	'securepoll-too-few-params' => 'Pas assez de paramètres de sous-page (lien invalide).',
 	'securepoll-invalid-election' => '« $1 » n’est pas un identifiant d’élection valide.',
 	'securepoll-welcome' => '<strong>Bienvenue $1 !</strong>',
 	'securepoll-not-started' => 'L’élection n’a pas encore commencé.
 Elle débutera le $2 à $3.',
 	'securepoll-finished' => 'Cette élection est terminée, vous ne pouvez plus voter.',
-	'securepoll-not-qualified' => 'Vous n’êtes pas qualifié pour voter dans cette élection : $1',
+	'securepoll-not-qualified' => 'Vous n’êtes pas qualifié pour voter pour cette élection : $1',
 	'securepoll-change-disallowed' => 'Vous avez déjà voté pour cette élection.
 Désolé, vous ne pouvez pas voter une nouvelle fois.',
 	'securepoll-change-allowed' => '<strong>Note : Vous avez déjà voté pour cette élection.</strong>
@@ -2843,8 +3902,8 @@ Impossible de décrypter.',
 	'securepoll-bad-ballot-submission' => 'Votre vote est invalide : $1',
 	'securepoll-unanswered-questions' => 'Vous devez répondre à toutes les questions.',
 	'securepoll-invalid-rank' => 'Rang invalide. Vous devez donner aux candidats un rang entre 1 et 999.',
-	'securepoll-unranked-options' => "Certaines options n'ont pas reçu de rang.
-Vous devez donner un rang entre 1 et 999 à toutes les options.",
+	'securepoll-unranked-options' => 'Certaines options n’ont pas reçu de rang.
+Vous devez donner un rang entre 1 et 999 (inclus) à toutes les options.',
 	'securepoll-invalid-score' => 'Le score doit être un nombre compris entre $1 et $2.',
 	'securepoll-unanswered-options' => 'Vous devez donner une réponse pour toutes les questions.',
 	'securepoll-remote-auth-error' => 'Erreur lors de la récupération des informations de votre compte depuis le serveur.',
@@ -2852,12 +3911,14 @@ Vous devez donner un rang entre 1 et 999 à toutes les options.",
 	'securepoll-api-invalid-params' => 'Paramètres invalides.',
 	'securepoll-api-no-user' => 'Aucun utilisateur avec l’identifiant donné n’a été trouvé.',
 	'securepoll-api-token-mismatch' => 'Jeton de sécurité différent, connexion impossible.',
-	'securepoll-not-logged-in' => 'Vous devez vous connecter pour voter dans cette élection.',
-	'securepoll-too-few-edits' => 'Désolé, vous ne pouvez pas voter. Vous devez avoir effectué au moins {{PLURAL:$1|une modification|$1 modifications}} pour voter dans cette élection, vous en totalisez $2.',
-	'securepoll-blocked' => 'Désolé, vous ne pouvez pas voter dans cette élection car vous êtes bloqué en écriture.',
-	'securepoll-bot' => 'Désolé, les comptes avec le statut de robot ne sont pas autorisés à voter à cette élection.',
-	'securepoll-not-in-group' => 'Seuls les membres du groupe « $1 » peuvent voter dans cette élection.',
-	'securepoll-not-in-list' => 'Désolé, vous n’êtes pas sur la liste prédéterminée des utilisateurs autorisés à voter dans cette élection.',
+	'securepoll-not-logged-in' => 'Vous devez vous connecter pour participer à cette élection',
+	'securepoll-too-few-edits' => 'Désolé, vous ne pouvez pas voter. Vous devez avoir effectué au moins {{PLURAL:$1|une modification|$1 modifications}} pour voter pour cette élection, vous en totalisez $2.',
+	'securepoll-too-new' => 'Désolé, vous ne pouvez pas voter. Votre compte devait avoir été enregistré avant le $1à  $3 pour voter pour cette élection, vous vous êtes enregistré ​​le $2 à $4.',
+	'securepoll-blocked' => 'Désolé, vous ne pouvez pas voter pour cette élection car vous êtes bloqué en écriture.',
+	'securepoll-blocked-centrally' => 'Désolé, vous ne pouvez pas voter pour cette élection car vous êtes bloqué sur au moins $1 {{PLURAL:$1|wiki|wikis}}.',
+	'securepoll-bot' => 'Désolé, les comptes avec le statut de robot (bot) ne sont pas autorisés à voter pour cette élection.',
+	'securepoll-not-in-group' => 'Seuls les membres du groupe « $1 » peuvent voter pour cette élection.',
+	'securepoll-not-in-list' => 'Désolé, vous n’êtes pas sur la liste prédéterminée des utilisateurs autorisés à voter pour cette élection.',
 	'securepoll-list-title' => 'Liste des votes : $1',
 	'securepoll-header-timestamp' => 'Heure',
 	'securepoll-header-voter-name' => 'Nom',
@@ -2868,7 +3929,7 @@ Vous devez donner un rang entre 1 et 999 à toutes les options.",
 	'securepoll-header-details' => 'Détails',
 	'securepoll-strike-button' => 'Biffer',
 	'securepoll-unstrike-button' => 'Débiffer',
-	'securepoll-strike-reason' => 'Raison :',
+	'securepoll-strike-reason' => 'Motif :',
 	'securepoll-strike-cancel' => 'Annuler',
 	'securepoll-strike-error' => 'Erreur lors du (dé)biffage : $1',
 	'securepoll-strike-token-mismatch' => 'Perte des données de session',
@@ -2881,12 +3942,12 @@ Vous devez donner un rang entre 1 et 999 à toutes les options.",
 	'securepoll-header-action' => 'Action',
 	'securepoll-header-reason' => 'Raison',
 	'securepoll-header-admin' => 'Administrateur',
-	'securepoll-cookie-dup-list' => 'Utilisateurs ayant un cookie déjà rencontré',
-	'securepoll-dump-title' => 'Dump : $1',
+	'securepoll-cookie-dup-list' => 'Utilisateurs ayant un témoin déjà rencontré',
+	'securepoll-dump-title' => 'Vidage : $1',
 	'securepoll-dump-no-crypt' => 'Les données chiffrées ne sont pas disponibles pour cette élection, car l’élection n’est pas configurée pour utiliser un chiffrement.',
-	'securepoll-dump-not-finished' => 'Les données cryptées ne sont disponibles qu’après la clôture de l’élection le $1 à $2',
+	'securepoll-dump-not-finished' => 'Les données chiffrées ne sont disponibles qu’après la clôture de l’élection le $1 à $2',
 	'securepoll-dump-no-urandom' => 'Impossible d’ouvrir /dev/urandom.
-Pour maintenir la confidentialité des votants, les données cryptées ne sont disponibles que si elles peuvent être brouillées avec un nombre de caractères aléatoires.',
+Pour maintenir la confidentialité des votants, les données chiffrées ne sont disponibles que si elles peuvent être brassées à l’aide d’une suite de nombres aléatoires.',
 	'securepoll-urandom-not-supported' => 'Ce serveur ne supporte pas la génération cryptographique aléatoire de nombres.
 Pour assurer la confidentialité des votants, les données cryptées ne sont publiés uniquement quand ils peuvent être brouillés avec un flux de nombres aléatoires.',
 	'securepoll-translate-title' => 'Traduire : $1',
@@ -2901,7 +3962,7 @@ Pour assurer la confidentialité des votants, les données cryptées ne sont pub
 	'securepoll-subpage-vote' => 'Vote',
 	'securepoll-subpage-translate' => 'Traduire',
 	'securepoll-subpage-list' => 'Liste',
-	'securepoll-subpage-dump' => 'Dump',
+	'securepoll-subpage-dump' => 'Vidage',
 	'securepoll-subpage-tally' => 'Comptage',
 	'securepoll-tally-title' => 'Comptage : $1',
 	'securepoll-tally-not-finished' => 'Désolé, vous ne pouvez pas compter les résultats de l’élection avant qu’elle ne soit terminée.',
@@ -2920,6 +3981,9 @@ Vous pouvez choisir de compter les résultats depuis la base de données ou depu
 	'securepoll-strength-matrix' => 'Matrice de force des chemins',
 	'securepoll-ranks' => 'Classement final',
 	'securepoll-average-score' => 'Score moyen',
+	'securepoll-round' => 'Tour $1',
+	'securepoll-spoilt' => '(Blancs ou nuls)',
+	'securepoll-exhausted' => '(Épuisé)',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -2932,7 +3996,7 @@ $messages['frp'] = array(
 	'securepoll-invalid-page' => 'Sot-pâge « <nowiki>$1</nowiki> » envalida',
 	'securepoll-need-admin' => 'Vos dête étre un administrator de l’èlèccion por ègzécutar ceta accion.',
 	'securepoll-too-few-params' => 'Pas prod de paramètres de sot-pâge (lim envalido).',
-	'securepoll-invalid-election' => '« $1 » est pas un identifiant d’èlèccion valido.',
+	'securepoll-invalid-election' => '« $1 » est pas un numerô d’èlèccion valido.',
 	'securepoll-welcome' => '<strong>Benvegnua $1 !</strong>',
 	'securepoll-not-started' => 'L’èlèccion at p’oncor comenciê.
 Comencierat lo $2 a $3.',
@@ -2979,19 +4043,21 @@ Vos dête balyér un rang entre-mié 1 et 999 a tôs los chouèx.',
 	'securepoll-remote-auth-error' => 'Èrror pendent la rècupèracion de les enformacions de voutron compto dês lo sèrvor.',
 	'securepoll-remote-parse-error' => 'Èrror pendent l’entèrprètacion de la rèponsa d’ôtorisacion du sèrvor.',
 	'securepoll-api-invalid-params' => 'Paramètres envalidos.',
-	'securepoll-api-no-user' => 'Nion utilisator avouéc l’identifiant balyê at étâ trovâ.',
+	'securepoll-api-no-user' => 'Nion usanciér avouéc lo numerô balyê at étâ trovâ.',
 	'securepoll-api-token-mismatch' => 'Jeton de sècuritât difèrent, branchement empossiblo.',
 	'securepoll-not-logged-in' => 'Vos vos dête branchiér por votar dens ceta èlèccion.',
 	'securepoll-too-few-edits' => 'Dèsolâ, vos pouede pas votar. Vos dête avêr fêt u muens {{PLURAL:$1|yon changement|$1 changements}} por votar dens ceta èlèccion, vos en totalisâd $2.',
+	'securepoll-too-new' => 'Dèsolâ, vos pouede pas votar.  Voutron compto devéve avêr étâ encartâ devant lo $1 a $3 por votar por ceta èlèccion, vos vos éte encartâ ​​lo $2 a $4.',
 	'securepoll-blocked' => 'Dèsolâ, vos pouede pas votar dens ceta èlèccion perce que vos éte blocâ en ècritura.',
+	'securepoll-blocked-centrally' => 'Dèsolâ, vos pouede pas votar por ceta èlèccion perce que vos éte blocâ sur u muens $1 {{PLURAL:$1|vouiqui|vouiquis}}.',
 	'securepoll-bot' => 'Dèsolâ, los comptos avouéc lo statut de bot sont pas ôtorisâs a votar a ceta èlèccion.',
 	'securepoll-not-in-group' => 'Solament los membros a la tropa « $1 » pôvont votar dens ceta èlèccion.',
-	'securepoll-not-in-list' => 'Dèsolâ, vos éte pas sur la lista prèdètèrmenâ ux utilisators ôtorisâs a votar dens ceta èlèccion.',
+	'securepoll-not-in-list' => 'Dèsolâ, vos éte pas sur la lista prèdètèrmenâ ux usanciérs ôtorisâs a votar dens ceta èlèccion.',
 	'securepoll-list-title' => 'Lista des votos : $1',
 	'securepoll-header-timestamp' => 'Hora',
 	'securepoll-header-voter-name' => 'Nom',
 	'securepoll-header-voter-domain' => 'Domêno',
-	'securepoll-header-ua' => 'Agent utilisator',
+	'securepoll-header-ua' => 'Agent usanciér',
 	'securepoll-header-cookie-dup' => 'Doblo',
 	'securepoll-header-strike' => 'Traciér',
 	'securepoll-header-details' => 'Dètalys',
@@ -3003,19 +4069,25 @@ Vos dête balyér un rang entre-mié 1 et 999 a tôs los chouèx.',
 	'securepoll-strike-token-mismatch' => 'Pèrta de les balyês de sèance',
 	'securepoll-details-link' => 'Dètalys',
 	'securepoll-details-title' => 'Dètalys du voto : #$1',
-	'securepoll-invalid-vote' => '« $1 » est pas un ID de voto valido',
+	'securepoll-invalid-vote' => '« $1 » est pas un numerô de voto valido',
+	'securepoll-header-id' => 'Numerô',
 	'securepoll-header-voter-type' => 'Tipo u votent',
 	'securepoll-voter-properties' => 'Propriètâts u votent',
 	'securepoll-strike-log' => 'Jornal des traçâjos',
 	'securepoll-header-action' => 'Accion',
 	'securepoll-header-reason' => 'Rêson',
 	'securepoll-header-admin' => 'Administrator',
-	'securepoll-cookie-dup-list' => "Utilisators qu’ont un tèmouen (''cookie'') ja rencontrâ",
+	'securepoll-cookie-dup-list' => "Usanciérs qu’ont un tèmouen (''cookie'') ja rencontrâ",
 	'securepoll-dump-title' => 'Èxtrèt : $1',
 	'securepoll-dump-no-crypt' => 'Les balyês criptâs sont pas disponibles por ceta èlèccion, perce que l’èlèccion est pas configurâ por utilisar un criptâjo.',
 	'securepoll-dump-not-finished' => 'Les balyês criptâs sont disponibles ren qu’aprés la cllotura de l’èlèccion lo $1 a $2',
+	'securepoll-dump-no-urandom' => 'Empossiblo d’uvrir /dev/urandom. 
+Por mantegnir la confidencialitât ux votents, les balyês criptâs sont disponibles u publico ren que se pôvont étre braciês avouéc una suita de nombros a l’hasârd.',
+	'securepoll-urandom-not-supported' => 'Ceti sèrvor recognêt pas la g·ènèracion criptografica de nombros a l’hasârd.
+Por mantegnir la confidencialitât ux votents, les balyês criptâs sont disponibles u publico ren que se pôvont étre braciês avouéc una suita de nombros a l’hasârd.',
 	'securepoll-translate-title' => 'Traduire : $1',
 	'securepoll-invalid-language' => 'Code lengoua « $1 » envalido.',
+	'securepoll-header-trans-id' => 'Numerô',
 	'securepoll-submit-translate' => 'Betar a jorn',
 	'securepoll-language-label' => 'Chouèsir la lengoua :',
 	'securepoll-submit-select-lang' => 'Traduire',
@@ -3030,6 +4102,8 @@ Vos dête balyér un rang entre-mié 1 et 999 a tôs los chouèx.',
 	'securepoll-subpage-tally' => 'Comptâjo',
 	'securepoll-tally-title' => 'Comptâjo : $1',
 	'securepoll-tally-not-finished' => 'Dèsolâ, vos pouede pas comptar los rèsultats de l’èlèccion devant que seye chavonâ.',
+	'securepoll-can-decrypt' => 'L’encartâjo de l’èlèccion at étâ criptâ, mas la cllâf de dècriptâjo est disponibla. 
+Vos pouede chouèsir de comptar los rèsultats dês la bâsa de balyês ou ben dês un fichiér tèlèchargiê.',
 	'securepoll-tally-no-key' => 'Vos pouede pas fâre lo dècompto des rèsultats de ceta èlèccion perce que los votos sont criptâs et que la cllâf de dècriptâjo est pas disponibla.',
 	'securepoll-tally-local-legend' => 'Comptar los rèsultats encartâs',
 	'securepoll-tally-local-submit' => 'Fâre un comptâjo',
@@ -3043,6 +4117,31 @@ Vos dête balyér un rang entre-mié 1 et 999 a tôs los chouèx.',
 	'securepoll-strength-matrix' => 'Matrice de fôrce des chemins',
 	'securepoll-ranks' => 'Cllassement final',
 	'securepoll-average-score' => 'Mârca moyena',
+	'securepoll-round' => 'Tôrn $1',
+	'securepoll-spoilt' => '(Blancs ou ben nuls)',
+	'securepoll-exhausted' => '(Èpouesiê)',
+);
+
+/** Friulian (Furlan)
+ * @author Akaahdudeson
+ * @author Klenje
+ */
+$messages['fur'] = array(
+	'securepoll' => '↓SecurePoll',
+	'securepoll-welcome' => '↓<strong>Benvignût! $1!</strong>',
+	'securepoll-not-started' => '↓Cheste elezion no je ancjemò començade.
+La elezion e començarà il $2 a lis $3.',
+	'securepoll-finished' => 'Chiste elezion a jè finide, i no ti pòs plui votâ.',
+	'securepoll-not-qualified' => '↓I no ti âs la cualifiche par votâ in cheste elezion: $1',
+	'securepoll-change-disallowed' => '↓ I tu as bielzà votât par cheste elezion.
+Scuse, i no ti puedis plui votâ.',
+	'securepoll-thanks' => '↓Graciis, il to vôt al è stât regjistrât',
+	'securepoll-return' => '↓Torne a $1',
+	'securepoll-encrypt-error' => '↓Impussibil codificâ lis informazions dal vôt.
+Il to vôt nol è stât regjistrât!
+
+$1',
+	'securepoll-header-timestamp' => '↓Ore',
 );
 
 /** Western Frisian (Frysk)
@@ -3068,10 +4167,10 @@ Níl cead agat vótáil arís.',
  * @author Toliño
  */
 $messages['gl'] = array(
-	'securepoll' => 'Sondaxe de seguridade',
+	'securepoll' => 'Sondaxe segura',
 	'securepoll-desc' => 'Extensión para as eleccións e sondaxes',
 	'securepoll-invalid-page' => 'Subpáxina "<nowiki>$1</nowiki>" inválida',
-	'securepoll-need-admin' => 'Ten que ser un administrador de eleccións para poder levar a cabo esta acción.',
+	'securepoll-need-admin' => 'Ten que ser administrador das eleccións para poder levar a cabo esta acción.',
 	'securepoll-too-few-params' => 'Non hai parámetros de subpáxina suficientes (ligazón inválida).',
 	'securepoll-invalid-election' => '"$1" non é un número de identificación das eleccións válido.',
 	'securepoll-welcome' => '<strong>Dámoslle a benvida, $1!</strong>',
@@ -3091,7 +4190,7 @@ Se o desexa, pode gardar o seguinte recibo como proba do seu voto:
 
 <pre>$1</pre>',
 	'securepoll-thanks' => 'Grazas, o seu voto foi rexistrado.',
-	'securepoll-return' => 'Voltar a $1',
+	'securepoll-return' => 'Volver a $1',
 	'securepoll-encrypt-error' => 'Non se puido encriptar o rexistro do seu voto.
 O seu voto non foi gardado!
 
@@ -3121,10 +4220,12 @@ Debe darlles a todas as opcións unha clasificación que estea entre 1 e 999.',
 	'securepoll-remote-parse-error' => 'Erro ao interpretar a autorización de resposta desde o servidor.',
 	'securepoll-api-invalid-params' => 'Parámetros inválidos.',
 	'securepoll-api-no-user' => 'Non se atopou ningún usuario co ID introducido.',
-	'securepoll-api-token-mismatch' => 'Desaxuste dun token de seguridade, non pode acceder ao sistema.',
+	'securepoll-api-token-mismatch' => 'Desaxuste dun pase de seguridade; non pode acceder ao sistema.',
 	'securepoll-not-logged-in' => 'Debe acceder ao sistema para votar nestas eleccións',
 	'securepoll-too-few-edits' => 'Sentímolo, non pode votar nestas eleccións. Debe ter feito, polo menos, {{PLURAL:$1|unha edición|$1 edicións}}, e só ten feito $2.',
+	'securepoll-too-new' => 'Sentímolo, non pode votar nestas eleccións. Debe ter unha conta rexistrada antes do $1 ás $3 para poder votar; a data do seu rexistro é o $2 ás $4.',
 	'securepoll-blocked' => 'Sentímolo, non pode votar nestas eleccións se está actualmente bloqueado fronte á edición.',
+	'securepoll-blocked-centrally' => 'Sentímolo, non pode votar nestas eleccións porque está bloqueado, polo menos, {{PLURAL:$1|nun wiki|en $1 wikis}}.',
 	'securepoll-bot' => 'Sentímolo, as contas con dereitos de bot non están autorizadas a votar nestas eleccións.',
 	'securepoll-not-in-group' => 'Só os membros pertencentes ao grupo dos $1 poden votar nestas eleccións.',
 	'securepoll-not-in-list' => 'Sentímolo, non está na lista predeterminada de usuarios autorizados a votar nestas eleccións.',
@@ -3132,7 +4233,7 @@ Debe darlles a todas as opcións unha clasificación que estea entre 1 e 999.',
 	'securepoll-header-timestamp' => 'Hora',
 	'securepoll-header-voter-name' => 'Nome',
 	'securepoll-header-voter-domain' => 'Dominio',
-	'securepoll-header-ua' => 'Axente usuario',
+	'securepoll-header-ua' => 'Axente de usuario',
 	'securepoll-header-cookie-dup' => 'Dupl.',
 	'securepoll-header-strike' => 'Riscar',
 	'securepoll-header-details' => 'Detalles',
@@ -3190,6 +4291,9 @@ Pode optar por escrutar os resultados presentes na base de datos ou por escrutar
 	'securepoll-strength-matrix' => 'Matriz da fortaleza de ruta',
 	'securepoll-ranks' => 'Valoración final',
 	'securepoll-average-score' => 'Puntuación media',
+	'securepoll-round' => 'Ronda $1',
+	'securepoll-spoilt' => '(Nulos)',
+	'securepoll-exhausted' => '(Esgotados)',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -3278,7 +4382,9 @@ Du muesch allene Optione e Rangnummere zwische 1 un 999 gee.',
 	'securepoll-api-token-mismatch' => 'Fähler bi dr Sicherheitsabfrog, cha Di nit aamälde.',
 	'securepoll-not-logged-in' => 'Du muesch aagmäldet syy zum abstimme bi däre Wahl',
 	'securepoll-too-few-edits' => 'Excusez, Du chasch nit abstimme. Du muesch zmindescht $1 {{PLURAL:$1|Bearbeitig|Bearbeitige}} haa zum Abstimme bi däre Wahl, Du hesch $2.',
+	'securepoll-too-new' => 'Du derfsch leider nit abstimme. Dyy Benutzerkonto hätt vor em $1 uf $3 mieße regischtriert wäre go bi däre Wahl abstimme z derfe. Du hesch Di aber am $2 uf $4 regischtriert.',
 	'securepoll-blocked' => 'Excusez, Du derfsch nit abstimme bi däre Wahl, wänn Du grad fir Bearbeitige gsperrt bisch.',
+	'securepoll-blocked-centrally' => 'Du derfsch leider nit abstimme, wel Dyy Benutzerkonto zurzyt uf zmindescht $1 {{PLURAL:$1|Wiki|Wiki}} gsperrt isch.',
 	'securepoll-bot' => 'Excusez, Benutzerkonte mit Botstatus derfe nit abstimme bi däre Wahl.',
 	'securepoll-not-in-group' => 'Numme Benutzer, wu Mitglid in dr $1 Gruppesin, chenne bi däre Wahl abstimme.',
 	'securepoll-not-in-list' => 'Excusez, Du bisch nit in dr feschtgleite Lischt vu autorisierte Benutzer, wu bi däre Wahl derfe abstimme.',
@@ -3323,7 +4429,7 @@ Ass es Wahlgheimnis sicher gstellt isch, sin verschlssleti Wahlufzeichnige nume 
 	'securepoll-header-start-date' => 'Aafangsdatum',
 	'securepoll-header-end-date' => 'Änddatum',
 	'securepoll-subpage-vote' => 'Abstimme',
-	'securepoll-subpage-translate' => 'Iberseze',
+	'securepoll-subpage-translate' => 'Ibersetze',
 	'securepoll-subpage-list' => 'Lischt',
 	'securepoll-subpage-dump' => 'Uusgab',
 	'securepoll-subpage-tally' => 'Uuszellig',
@@ -3344,9 +4450,143 @@ Du chasch wehle zwische dr Uuszellig vu dr aktuällen Ergebnis in dr Datebank un
 	'securepoll-strength-matrix' => 'Pfad Sterkimatrix',
 	'securepoll-ranks' => 'Schlussreihefolg',
 	'securepoll-average-score' => 'Durschnittlige Stand',
+	'securepoll-round' => 'Rundi $1',
+	'securepoll-spoilt' => '(Uugiltig)',
+	'securepoll-exhausted' => '(Fertig)',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Dsvyas
+ * @author KartikMistry
+ * @author Sushant savla
+ */
+$messages['gu'] = array(
+	'securepoll' => 'સુરક્ષિત ચૂંટણી',
+	'securepoll-desc' => 'ચૂંટણી અને સર્વેક્ષણ ના વિસ્તારકો (Extension)',
+	'securepoll-invalid-page' => 'અયોગ્ય ઉપપાનું "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => 'આ કાર્ય કરવા માટે તમે વ્યવસ્થાપક હોવા જોઈએ',
+	'securepoll-too-few-params' => 'અપુરતા ઉપપાનાં પરિમાણો (અક્ષમ કડી)',
+	'securepoll-invalid-election' => '"$1" એ યોગ્ય ચૂંટણી ID નથી.',
+	'securepoll-welcome' => '<strong>સ્વાગતમ્ $1!</strong>',
+	'securepoll-not-started' => 'મતદાન હજી શરૂ થયું નથી
+તે $2 ના દિવસે $3 વાગ્યે શરૂ થશે.',
+	'securepoll-finished' => 'આ ચૂંટણી સમાપ્ત થઈ ગઈ છે તમે તેમાં ભાગ નહીં લઈ શકો',
+	'securepoll-not-qualified' => 'તમે આ ચૂંટણીમાં મત આપવા માટે લાયક નથી: $1',
+	'securepoll-change-disallowed' => 'તમે આ ચૂંટણીમાં પહેલાં ભાગ લીધો છે.
+ખેદ છે, તમે આ ચૂંટણીમાં ફરી મતદાન નહીં કરી શકો.',
+	'securepoll-submit' => 'મત જમા કરો',
+	'securepoll-gpg-receipt' => 'મતદાન માટે ધન્યવાદ
+તમે ધારો તો તમારા સંદર્ભ માટે નીચેની રસીસ રાખી શકો છો.
+<pre>$1</pre>',
+	'securepoll-thanks' => 'તમારો આભાર, તમારો મત અંકિત કરી દેવામાં આવ્યો છે.',
+	'securepoll-return' => '$1 પર પાછા જાઓ',
+	'securepoll-encrypt-error' => 'તમારા મતદાનને એનક્રીપ્ટ કરવા નિષ્ફળતા.
+તમારો મત નોંધાયો નથી.
+
+$1',
+	'securepoll-no-gpg-home' => 'GPG ગૃહ ડીરેક્ટરી નિર્માણ કરી ન શકાઇ',
+	'securepoll-secret-gpg-error' => 'GPG ચલાવતા ક્ષતિ આવી.
+વધુ વિગતો માટે LocalSettings.php માં $wgSecurePollShowErrorDetail=true; વાપરો.',
+	'securepoll-full-gpg-error' => 'GPG ચલાવતી વખતે ક્ષતિ આવી:
+
+આદેશ: $1
+
+ક્ષતિ:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG ચાવીઓ ખોટી રીતે ગોઠવાયા હતાં.',
+	'securepoll-gpg-parse-error' => 'GPG પ્રત્યુત્ત્ર માહિતીને ઉકેલવામાં તૃટી',
+	'securepoll-no-decryption-key' => 'કોઈ ડિક્રિપ્શન કળ રુપરેખાંકિત કરેલ નથી.
+ડિક્રિપ્ટ કરી શકશે નહી.',
+	'securepoll-jump' => 'ચૂંટણી સર્વર પર જાવ',
+	'securepoll-bad-ballot-submission' => 'તમારો મત અવૈધ છે : $1',
+	'securepoll-unanswered-questions' => 'તમારે બધા સવાલના જવાબ આપેલા હોવા જોઇએ.',
+	'securepoll-invalid-rank' => 'અ વૈધ ક્રમાંક. તમારે ઉમેદવારને ૧ અને ૯૯૯ વચ્ચે ક્રમાંક આપવોજોઈએ.',
+	'securepoll-unranked-options' => 'અમુક વિકલ્પોને ક્રમ અપાયો નથી.
+તમારે દરેક વિકલ્પને ૧ થી ૯૯૯ સુધીનો ક્રમ આપવો જોઈએ',
+	'securepoll-invalid-score' => 'ગુણાંક $1 અને $2 ચચ્ચેની સંખ્યા હોવી જોઈએ',
+	'securepoll-unanswered-options' => 'તમારે દરેક પ્રશ્ન પર ઉત્તર આપવો જ પડશે.',
+	'securepoll-api-invalid-params' => 'અયોગ્ય પરિમાણો.',
+	'securepoll-api-no-user' => 'આપેલ ઓળખ પર કોઈ સભ્ય મળ્યો નહી.',
+	'securepoll-api-token-mismatch' => 'સુરક્ષા ટોકન અસંગતી, પ્રવેશ નહીં કરી શકાય',
+	'securepoll-not-logged-in' => 'આ ચૂટણીમાં મત આપવા લોગીન કરેલુઁ હોવું જોઇએ',
+	'securepoll-too-few-edits' => 'ખેદ છે, તમે મતદાન કરી શકશો નહીં.  તમે આ ચૂંટની માં ભાગ લેવા માટે કમસેકમ $1 {{PLURAL:$1|ફેરફાર|ફેરફારો}} કરેલા હોવાં જોઈએ તમે $2 ફેરફાર કર્યાં છે. .',
+	'securepoll-too-new' => 'અફસોસ, તમે મતદાન કરી શકશો નહી. આ ચૂંટણીમાં ભાગ લેવા માટે $1 તારીખે $3 વાગ્યા પહેલા તમારા ખાતાની નોંધણી થઈ હોવી જોઈએ. તમે  $2 તારીખે $4 વાગ્યે તમારૂં ખાતું ખોલ્યું હતું.',
+	'securepoll-blocked' => 'ખેદ છે જો તમારા પર ફેરફાર કરવાનો પ્રતિબણ્ધ હશે તો તમે આ ચૂંટણીમાં મતદાન નહીં કરી શકો .',
+	'securepoll-blocked-centrally' => 'ખેદ છે, તમે મતદાનમાં ભગ નહીં લઈ શકો કેમકે તમારા પર કમસે કમ $1 {{PLURAL:$1|વિકી|વિકીઓ}} પર પ્રતિબંધ મૂકાયો છે.',
+	'securepoll-bot' => 'ખેદ છે, બૉટ વિસ્તારક ધરાવતાં સભ્યનામ આ ચૂંટણીમાં ભાગ લઈ શકશે નહીં',
+	'securepoll-not-in-group' => 'માત્ર "$1" જૂથના સભ્યો જ આ ચૂંટણીમાં મત આપી શકે છે.',
+	'securepoll-list-title' => 'મતોની યાદી: $1',
+	'securepoll-header-timestamp' => 'સમય',
+	'securepoll-header-voter-name' => 'નામ',
+	'securepoll-header-voter-domain' => 'ડોમેઈન',
+	'securepoll-header-ua' => 'સભ્ય ઍજન્ટ',
+	'securepoll-header-cookie-dup' => 'નકલી',
+	'securepoll-header-strike' => 'છેકો',
+	'securepoll-header-details' => 'વિગતો',
+	'securepoll-strike-button' => 'છેકો',
+	'securepoll-unstrike-button' => 'છેકો હટાવો',
+	'securepoll-strike-reason' => 'કારણ:',
+	'securepoll-strike-cancel' => 'રદ કરો',
+	'securepoll-strike-token-mismatch' => 'સત્ર માહિતી ખોઇ દીધી',
+	'securepoll-details-link' => 'વિગતો',
+	'securepoll-details-title' => 'મત વિગતો: #$1',
+	'securepoll-invalid-vote' => '"$1" એ યોગ્ય ચૂંટણી ID નથી',
+	'securepoll-header-voter-type' => 'મતદાતા પ્રકાર',
+	'securepoll-voter-properties' => 'મતદાતા ના ગુણધર્મો',
+	'securepoll-strike-log' => 'લોગ છેકો',
+	'securepoll-header-action' => 'ક્રિયા',
+	'securepoll-header-reason' => 'કારણ',
+	'securepoll-header-admin' => 'સંચાલક',
+	'securepoll-cookie-dup-list' => 'કૂકી ડ્યુપ્લીકેટ સભ્ય',
+	'securepoll-dump-title' => 'કાટમાળ: $1',
+	'securepoll-translate-title' => 'ભાષાંતર કરો: $1',
+	'securepoll-invalid-language' => 'અયોગ્ય ભાષા કોડ "$1"',
+	'securepoll-submit-translate' => 'અદ્યતન કરો',
+	'securepoll-language-label' => 'ભાષા પસંદ કરો:',
+	'securepoll-submit-select-lang' => 'ભાષાંતર કરો',
+	'securepoll-entry-text' => 'નીચે ચૂંટણીઓની યાદી છે.',
+	'securepoll-header-title' => 'નામ',
+	'securepoll-header-start-date' => 'આરંભ તારીખ',
+	'securepoll-header-end-date' => 'અંતિમ તારીખ',
+	'securepoll-subpage-vote' => 'મત',
+	'securepoll-subpage-translate' => 'ભાષાંતર કરો',
+	'securepoll-subpage-list' => 'યાદી',
+	'securepoll-subpage-dump' => 'કાટમાળ',
+	'securepoll-subpage-tally' => 'તાળો',
+	'securepoll-tally-title' => 'તાળો : $1',
+	'securepoll-tally-not-finished' => 'ખેદ છે, તમે મતદાન પૂર્ણ થયાં પહેલાં તાળો ન મેળવી શકો',
+	'securepoll-tally-local-legend' => 'સંઘરેલા પરિણમો તાળો મેળવો',
+	'securepoll-tally-local-submit' => 'તાળો નિર્માણ કરો',
+	'securepoll-tally-upload-legend' => 'ઍન્ક્રીપ્ટેડ કટમાળ ચઢાવો',
+	'securepoll-tally-upload-submit' => 'તાળો નિર્માણ કરો',
+	'securepoll-no-upload' => 'કોઈ પણ ફાઈલ ચઢાવી નથી, પરિણામ નો તાળો ન મેળવી શકાયો',
+	'securepoll-dump-corrupt' => 'કાટમાળ ફાઈલ ખરાબ થઈ ગઈ છે તેન પર પ્રક્રિયા નહીં કરી શકાય',
+	'securepoll-tally-upload-error' => 'કાટમાળ ફાઈલ નો તાળો મેળવવામાં ત્રુટી: $1',
+	'securepoll-pairwise-victories' => 'જોડી અનુસાર વિજય જૂથ',
+	'securepoll-strength-matrix' => 'પાથ સ્ટ્રેંથ મેટ્રીક્સ',
+	'securepoll-ranks' => 'અંતિમ ક્રમ યાદી',
+	'securepoll-average-score' => 'સરેરાશ ગુણ',
+	'securepoll-round' => 'ચરણ $1',
+	'securepoll-spoilt' => '(બગડી ગયેલ)',
+	'securepoll-exhausted' => '(સમાપ્ત)',
+);
+
+/** Manx (Gaelg)
+ * @author Shimmin Beg
+ */
+$messages['gv'] = array(
+	'securepoll-strike-reason' => 'Fa:',
+	'securepoll-header-reason' => 'Fa:',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'securepoll-strike-cancel' => 'Soke',
+	'securepoll-header-reason' => 'Dalili',
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotem Liss
  * @author Rotemliss
  * @author YaronSh
@@ -3359,9 +4599,9 @@ $messages['he'] = array(
 	'securepoll-need-admin' => 'עליכם להיות מנהלי ההצבעה כדי לבצע פעולה זו.',
 	'securepoll-too-few-params' => 'אין מספיק פרמטרים של דפי משנה (קישור בלתי תקין).',
 	'securepoll-invalid-election' => '"$1" אינו מספר הצבעה תקין.',
-	'securepoll-welcome' => '<strong>ברוכים הבאים, $1!</strong>',
+	'securepoll-welcome' => '<strong>ברוך בואך, $1!</strong>',
 	'securepoll-not-started' => 'הצבעה זו טרם התחילה.
-היא מיועדת להתחיל ב־$3, $2.',
+תחילתה נקבעה ל־$3, $2.',
 	'securepoll-finished' => 'הצבעה זו הסתיימה, אינכם יכולים עוד להצביע.',
 	'securepoll-not-qualified' => 'אינכם רשאים להצביע בהצבעה זו: $1',
 	'securepoll-change-disallowed' => 'הצבעתם כבר בהצבעה זו.
@@ -3376,7 +4616,7 @@ $messages['he'] = array(
 
 <pre>$1</pre>',
 	'securepoll-thanks' => 'תודה לכם, הצבעתכם נרשמה.',
-	'securepoll-return' => 'בחזרה ל$1',
+	'securepoll-return' => 'בחזרה ל{{GRAMMAR:תחילית|$1}}',
 	'securepoll-encrypt-error' => 'הצפנת רשומת ההצבעה שלכם לא הצליחה.
 הצבעתכם לא נרשמה!
 
@@ -3408,15 +4648,17 @@ $1',
 	'securepoll-api-no-user' => 'לא נמצא משתמש עם מספר זה.',
 	'securepoll-api-token-mismatch' => 'אסימון האבטחה לא מתאים, לא ניתן להיכנס לחשבון.',
 	'securepoll-not-logged-in' => 'עליכם להיכנס לחשבון כדי להצביע בהצבעה זו',
-	'securepoll-too-few-edits' => 'מצטערים, אינכם יכולים להצביע. היה עליכם לערוך לפחות {{PLURAL:עריכה אחת|$1 עריכות}} כדי להצביע בהצבעה זו, וערכתם רק {{PLURAL:$2|אחת|$2}}.',
+	'securepoll-too-few-edits' => 'מצטערים, אינכם יכולים להצביע. היה עליכם לעשות לפחות {{PLURAL:עריכה אחת|$1 עריכות}} כדי להצביע בהצבעה זו, ועשיתם רק {{PLURAL:$2|אחת|$2}}.',
+	'securepoll-too-new' => 'סליחה, אין באפשרותך להצביע. חשבונך היה צריך להיווצר לפני $1 בשעה $3 כדי להצביע בבחירות האלו והוא נוצר ב־$2 בשעה $4.',
 	'securepoll-blocked' => 'מצטערים, אינכם יכולים להצביע בהצבעה זו אם אתם חסומים כרגע מעריכה.',
+	'securepoll-blocked-centrally' => 'סליחה, אין באפשרותך להצביע בבחירות האלו אם חשבונך חסום ב{{PLURAL:$1|אתר ויקי אחד או יותר|$1 אתרי ויקי או יותר}}.',
 	'securepoll-bot' => 'מצטערים, חשבונות עם דגל בוט אינם רשאים להצביע בהצבעה זו.',
 	'securepoll-not-in-group' => 'רק חברים בקבוצה "$1" יכולים להצביע בהצבעה זו.',
 	'securepoll-not-in-list' => 'מצטערים, אינכם ברשימת המשתמשים שהוגדרו מראש כרשאים להצביע בהצבעה זו.',
 	'securepoll-list-title' => 'רשימת הצבעות: $1',
 	'securepoll-header-timestamp' => 'זמן',
 	'securepoll-header-voter-name' => 'שם',
-	'securepoll-header-voter-domain' => 'דומיין',
+	'securepoll-header-voter-domain' => 'מתחם',
 	'securepoll-header-ua' => 'זיהוי דפדפן',
 	'securepoll-header-cookie-dup' => 'יצירת עותק',
 	'securepoll-header-strike' => 'מחיקה',
@@ -3441,10 +4683,10 @@ $1',
 	'securepoll-dump-title' => 'העתק מוצפן: $1',
 	'securepoll-dump-no-crypt' => 'לא נמצאה רשומת הצבעה מוצפנת עבור הצבעה זו, כיוון שההצבעה אינה מוגדרת לשימוש בהצפנה.',
 	'securepoll-dump-not-finished' => 'רשומות ההצבעה המוצפנות זמינות רק לאחר תאריך הסיום ב־$2, $1',
-	'securepoll-dump-no-urandom' => 'לא ניתן לפתוח את /dev/urandom. 
-כדי לשמור על פרטיות המצביעים, רשומות ההצבעה המוצפנות זמינותת באופן ציבורי רק כאשר ניתן לערבב אותן באמצעות זרם המשתמש במספר אקראי מאובטח.',
+	'securepoll-dump-no-urandom' => 'לא ניתן לפתוח את ‎/dev/urandom. 
+כדי לשמור על פרטיות המצביעים, רשומות ההצבעה המוצפנות זמינות לציבור רק כאשר ניתן לערבלן באמצעות זרם מספרים אקראיים מאובטח.',
 	'securepoll-urandom-not-supported' => 'שרת זה אינו תומך ביצירת מספרים אקראיים לצורך הצפנה.
-כדי לשמור על פרטיות הבוחרים, רשומות ההצבעה המוצפנות תהיינה זמינות לציבור רק כאשר ניתן יהיה לערבלן באמצעות זרם מספרים אקראיים מאובטח.',
+כדי לשמור על פרטיות המצביעים, רשומות ההצבעה המוצפנות זמינות לציבור רק כאשר ניתן לערבלן באמצעות זרם מספרים אקראיים מאובטח.',
 	'securepoll-translate-title' => 'תרגום: $1',
 	'securepoll-invalid-language' => 'קוד שפה בלתי תקין "$1"',
 	'securepoll-header-trans-id' => 'מספר',
@@ -3477,9 +4719,14 @@ $1',
 	'securepoll-strength-matrix' => 'טבלת חוזק הנתיב',
 	'securepoll-ranks' => 'דירוג סופי',
 	'securepoll-average-score' => 'ניקוד ממוצע',
+	'securepoll-round' => 'סיבוב $1',
+	'securepoll-spoilt' => '(פסולות)',
+	'securepoll-exhausted' => '(מוצו)',
 );
 
 /** Hindi (हिन्दी)
+ * @author Sau6402
+ * @author Shyam
  * @author Vsrawat
  * @author आलोक
  */
@@ -3487,7 +4734,7 @@ $messages['hi'] = array(
 	'securepoll' => 'सुरक्षितनिर्वाचन',
 	'securepoll-desc' => 'निर्वाचनों और सर्वेक्षणों के लिए विस्तार',
 	'securepoll-invalid-page' => 'अवैध उपपृष्ठ "<nowiki>$1</nowiki>"',
-	'securepoll-need-admin' => 'यह क्रिया करने के लिए आपको एक एडमिन होना चाहिए।',
+	'securepoll-need-admin' => 'यह क्रिया करने के लिए आपको एक चुनाव व्यवस्थापक होना चाहिए।',
 	'securepoll-too-few-params' => 'उपपृष्ठ के समुचित प्राचलक नहीं है (अमान्य कड़ी).',
 	'securepoll-invalid-election' => '"$1" कोई वैध निर्वाचन आई डी नहीं है।',
 	'securepoll-welcome' => '<strong>स्वागत $1!</strong>',
@@ -3536,6 +4783,8 @@ $1',
 	'securepoll-unranked-options' => 'कुछ विकल्पों को क्रम नहीं दिया गया था।
 
 आपको सभी विकल्पों को 1 से 999 के बीच में कोई क्रम देना चाहिए।',
+	'securepoll-invalid-score' => 'आपके गुण $1 और $2 संख्या के बीचमे होनी चाहिए',
+	'securepoll-unanswered-options' => 'आपको हर सवाल के लिए प्रतिसाद देना आवश्यक है।',
 	'securepoll-remote-auth-error' => 'इस सर्वर से आपके खाते की जानकारी ले के आने में त्रुटि।',
 	'securepoll-remote-parse-error' => 'इस सर्वर से इस अधिकृतिकरण के उत्तर को बाँचने में त्रुटि।',
 	'securepoll-api-invalid-params' => 'अवैध प्राचलक।',
@@ -3543,7 +4792,9 @@ $1',
 	'securepoll-api-token-mismatch' => 'सुरक्षा बिल्ले का मिलान नहीं हुआ, लॉग नहीं कर सकते।',
 	'securepoll-not-logged-in' => 'आपको इस निर्वाचन में मतदान करने के लिए लॉग इन अवश्य करना चाहिए।',
 	'securepoll-too-few-edits' => 'क्षमा कीजिए, आप मतदान नहीं कर सकते। इस निर्वाचन में मतदान करने के लिए आपको न्यूनतम $1 संपादन {{PLURAL:$1|किया होना चाहिए|संपादन किए होने चाहिएँ}}, परंतु आपने $2 {{PLURAL:$2|किया है|किए हैं}}।',
+	'securepoll-too-new' => 'क्षमा करें, आप मतदान नहीं कर सकते हैं। आपके खाते को $1 के पहले पंजीकृत होने कि आवश्यकता थी, आप $2 को पंजीकृत किये गए थे।',
 	'securepoll-blocked' => 'क्षमा कीजिए, आप इस निर्वाचन में मतदान नहीं कर सकते यदि आप वर्तमान में संपादन करने से बाधित हैं।',
+	'securepoll-blocked-centrally' => 'यदि आप पर अवरुद्ध कर रहे हैं खेद है, आप इस चुनाव में वोट नहीं कर सकते $1 या एक से अधिक {{PLURAL:$1| विकि | विकि}}',
 	'securepoll-bot' => 'क्षमा कीजिए, बोट झंडे वाले खातों को इस निर्वाचन में मतदान करने की अनुमति नहीं है।',
 	'securepoll-not-in-group' => 'केवल समूह "$1" के सदस्य ही इस निर्वाचन में मतदान कर सकते हैं।',
 	'securepoll-not-in-list' => 'क्षमा कीजिए, आपका नाम इस निर्वाचन में मतदान करने के लिए अधिकृत प्रयोक्ताओं की पूर्वनिर्धारित सूची में नहीं है।',
@@ -3591,6 +4842,7 @@ $1',
 	'securepoll-submit-translate' => 'अद्यतनित करें',
 	'securepoll-language-label' => 'भाषा का चयन करें:',
 	'securepoll-submit-select-lang' => 'अनुवाद करें',
+	'securepoll-entry-text' => 'नीचे चुनावों की सूची है ।',
 	'securepoll-header-title' => 'नाम',
 	'securepoll-header-start-date' => 'प्रारंभ समय',
 	'securepoll-header-end-date' => 'समाप्ति समय',
@@ -3615,10 +4867,17 @@ $1',
 	'securepoll-pairwise-victories' => 'जोड़ीबद्ध विजय मैट्रिक्स',
 	'securepoll-strength-matrix' => 'पथ की शक्ति का मैट्रिक्स',
 	'securepoll-ranks' => 'अंतिम क्रम',
+	'securepoll-average-score' => 'औसत गुण',
+	'securepoll-round' => 'दौर $1',
+	'securepoll-spoilt' => '(खराब)',
+	'securepoll-exhausted' => '(समाप्त)',
 );
 
 /** Croatian (Hrvatski)
+ * @author Anton008
+ * @author Bugoslav
  * @author Ex13
+ * @author Roberta F.
  * @author SpeedyGonsales
  */
 $messages['hr'] = array(
@@ -3669,6 +4928,8 @@ Dekripcija nije moguća.',
 	'securepoll-invalid-rank' => 'Pogrešan rang. Kandidatima morate dati rang između 1 i 999.',
 	'securepoll-unranked-options' => 'Neke opcije nisu rangirane.
 Morate dati svim opcijama rang između 1 i 999.',
+	'securepoll-invalid-score' => 'Rezultat mora biti broj između $1 i $2.',
+	'securepoll-unanswered-options' => 'Morate dati odgovor na svako pitanje.',
 	'securepoll-remote-auth-error' => 'Pogreška pri dobavljanje informacije o Vašem računu s poslužitelja.',
 	'securepoll-remote-parse-error' => 'Pogreška pri tumačenju autorizacijskog odgovora s poslužitelja.',
 	'securepoll-api-invalid-params' => 'Nevažeći parametri.',
@@ -3676,7 +4937,9 @@ Morate dati svim opcijama rang između 1 i 999.',
 	'securepoll-api-token-mismatch' => 'Neslaganje sigurnosnog tokena, neuspjela prijava.',
 	'securepoll-not-logged-in' => 'Morate se prijaviti da bi mogli glasovati na ovim izborima',
 	'securepoll-too-few-edits' => 'Nažalost, ne možete glasovati. Morate imati najmanje $1 {{PLURAL:$1|uređivanje|uređivanja|uređivanja}} da bi mogli glasovati na ovim izborima, vi ih imate $2.',
+	'securepoll-too-new' => 'Nažalost, ne možete glasovati. Vaš suradnički račun je morao biti registriran prije $1 za glasovanje na ovim izborima, Vi ste se registrirali $2.',
 	'securepoll-blocked' => 'Nažalost, ne možete glasovati na ovim izborima ako ste trenutačno blokirani',
+	'securepoll-blocked-centrally' => 'Nažalost, ne možete glasovati na ovim izborima ako ste blokirani na $1 ili više {{PLURAL:$1| wiki|wikija}}.',
 	'securepoll-bot' => 'Nažalost, računi s bot statusom ne mogu glasovati na ovim izborima.',
 	'securepoll-not-in-group' => 'Samo članovi "$1" grupe mogu glasovati na ovim izborima.',
 	'securepoll-not-in-list' => 'Nažalost, niste na popisu ovlaštenih suradnika koji mogu glasovati na ovim izborima.',
@@ -3716,6 +4979,7 @@ Kako bi se očuvala privatnost glasača, enkriptirani zapisi izbora javno su dos
 	'securepoll-submit-translate' => 'Ažuriraj',
 	'securepoll-language-label' => 'Odaberite jezik:',
 	'securepoll-submit-select-lang' => 'Prevedi',
+	'securepoll-entry-text' => 'Ispod je popis glasovanja.',
 	'securepoll-header-title' => 'Ime',
 	'securepoll-header-start-date' => 'Početni datum',
 	'securepoll-header-end-date' => 'Krajnji datum',
@@ -3740,6 +5004,10 @@ Možete odabrati bilo prikaz rezultata iz baze podataka, ili prikaz enkriptirani
 	'securepoll-pairwise-victories' => 'Udvoji pobjedničku matricu',
 	'securepoll-strength-matrix' => 'Putanja ojačane matrice',
 	'securepoll-ranks' => 'Završno rangiranje',
+	'securepoll-average-score' => 'Prosječni rezultat',
+	'securepoll-round' => 'Izborni krug $1',
+	'securepoll-spoilt' => '(Nevrijedeće glasovanje)',
+	'securepoll-exhausted' => '(Iscrpljen)',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -3802,7 +5070,9 @@ Dyrbiš wšěm opcijam rjad mjez 1 a 999 dać.',
 	'securepoll-api-token-mismatch' => 'Wěstotne tokeny so njerunaja, přizjewjenje njemóžno.',
 	'securepoll-not-logged-in' => 'Dyrbiš so přizjewić, zo by w tutej wólbje wothłosował.',
 	'securepoll-too-few-edits' => 'Wodaj, njemóžeš wothłosować. Dyrbiš znajmjeńša $1 {{PLURAL:$1|změnu|změnje|změny|změnow}} činić, zo by w tutej wólbje wothłosował, sy $2 činił.',
+	'securepoll-too-new' => 'Bojužel njesměš wothłosować. Twoje konto dyrbi so do $1 $3 registrować, zo by móhł w tutej wólbje wothłosował, sy so wšak $2 $4 zregistrował.',
 	'securepoll-blocked' => 'Wodaj, njemóžeš w tutej wólbhje wothłosować, dokelž sy za wobdźěłowanje zablokowany.',
+	'securepoll-blocked-centrally' => 'Bohužel njesměš w tutej wólbje wothłosować, dokelž sy w znajmjeńša $1 {{PLURAL:$1|wikiju|wikijomaj|wikijach|wikijach}} zablokowany.',
 	'securepoll-bot' => 'Wodaj, ale konta z botowej chorhojčku  njesmědźa w tutej wólbje wothłosować.',
 	'securepoll-not-in-group' => 'Jenož čłony skupiny $1 móžeja w tutej wólbje wothłosować.',
 	'securepoll-not-in-list' => 'Wodaj, njejsy w lisćinje woprawnjenych wužiwarjow, kotřiž smědźa w tutej wólbje wothłosować.',
@@ -3868,6 +5138,9 @@ Móžeš pak wuslědki w datowej bance ličić pak zaklučowane wuslědki z nahr
 	'securepoll-strength-matrix' => 'Šćežka matriksa sylnosće',
 	'securepoll-ranks' => 'Kónčny porjad',
 	'securepoll-average-score' => 'Přerězne pohódnoćenje',
+	'securepoll-round' => 'Koło $1',
+	'securepoll-spoilt' => '(Njepłaćiwy)',
+	'securepoll-exhausted' => '(Wučerpany)',
 );
 
 /** Hungarian (Magyar)
@@ -3875,7 +5148,9 @@ Móžeš pak wuslědki w datowej bance ličić pak zaklučowane wuslědki z nahr
  * @author Cassandro
  * @author Cbrown1023
  * @author Dani
+ * @author Dj
  * @author Glanthor Reviol
+ * @author Hunyadym
  * @author Tgr
  */
 $messages['hu'] = array(
@@ -3935,7 +5210,9 @@ Minden javaslathoz egy 1 és 999 közötti helyezést kell adnod.',
 	'securepoll-api-token-mismatch' => 'Sikertelen bejelentkezés, nem egyezik a biztonsági token.',
 	'securepoll-not-logged-in' => 'Be kell jelentkezned, hogy szavazhass.',
 	'securepoll-too-few-edits' => 'Sajnos nem szavazhatsz. A részvételhez legalább $1 szerkesztés kell, neked csak $2 van.',
+	'securepoll-too-new' => 'Sajnos nem szavazhatsz. A szavazáshoz $1, $3 előtt kellett volna regisztrálnod, a te regisztrációd időpontod: $2, $4.',
 	'securepoll-blocked' => 'Nem szavazhatsz ezen a választáson, amíg blokkolva vagy.',
+	'securepoll-blocked-centrally' => 'Sajnos nem szavazhatsz a választáson, mivel blokkolva vagy $1 vagy több wikin.',
 	'securepoll-bot' => 'Botnak jelölt felhasználók nem szavazhatnak ezen a választáson.',
 	'securepoll-not-in-group' => 'Csak a „$1” csoport tagjai szavazhatnak ezen a választáson.',
 	'securepoll-not-in-list' => 'Nem szerepelsz azoknak a felhasználóknak a listáján, akik szavazhatnak ezen a választáson.',
@@ -4001,6 +5278,9 @@ Választhatod az adatbázisban szereplő eredmények összesítését vagy a tit
 	'securepoll-strength-matrix' => 'Útvonalerősség-mátrix',
 	'securepoll-ranks' => 'Végső rangsor',
 	'securepoll-average-score' => 'Átlagpontszám',
+	'securepoll-round' => '$1. forduló',
+	'securepoll-spoilt' => '(Rontott)',
+	'securepoll-exhausted' => '(Kiesett)',
 );
 
 /** Interlingua (Interlingua)
@@ -4049,7 +5329,7 @@ Error:
 	'securepoll-no-decryption-key' => 'Nulle clave de decryptation es configurate.
 Impossibile decryptar.',
 	'securepoll-jump' => 'Ir al servitor de votation',
-	'securepoll-bad-ballot-submission' => 'Tu voto esseva invalide: $1',
+	'securepoll-bad-ballot-submission' => 'Tu voto es invalide: $1',
 	'securepoll-unanswered-questions' => 'Tu debe responder a tote le questiones.',
 	'securepoll-invalid-rank' => 'Rango invalide. Tu debe dar al candidatos un rango inter 1 e 999.',
 	'securepoll-unranked-options' => 'Alcun optiones non ha un rango.
@@ -4063,7 +5343,9 @@ Tu debe dar a tote le optiones un rango inter 1 e 999.',
 	'securepoll-api-token-mismatch' => 'Le indicio de securitate non corresponde; non pote aperir session.',
 	'securepoll-not-logged-in' => 'Tu debe aperir un session pro votar in iste election.',
 	'securepoll-too-few-edits' => 'Pardono, tu non pote votar. Tu debe haber facite al minus $1 {{PLURAL:$1|modification|modificationes}} pro votar in iste election, e tu ha facite $2.',
+	'securepoll-too-new' => 'Pardono, tu non pote votar. Un conto debe haber essite create ante le $1 a $3 pro poter votar in iste election, ma tu conto ha essite create le $2 a $4.',
 	'securepoll-blocked' => 'Pardono, tu non pote votar in iste election durante que tu es blocate de facer modificationes.',
+	'securepoll-blocked-centrally' => 'Pardono, tu non pote votar in iste election proque tu es blocate in al minus $1 {{PLURAL:$1|wiki|wikis}}.',
 	'securepoll-bot' => 'Pardono, le contos marcate como robot non es autorisate a votar in iste election.',
 	'securepoll-not-in-group' => 'Solmente le membros del gruppo $1 pote votar in iste election.',
 	'securepoll-not-in-list' => 'Pardono, tu non es in le lista predeterminate del usatores autorisate a votar in iste election.',
@@ -4085,7 +5367,7 @@ Tu debe dar a tote le optiones un rango inter 1 e 999.',
 	'securepoll-details-title' => 'Detalios del voto: #$1',
 	'securepoll-invalid-vote' => '"$1" non es un identificator valide de un voto',
 	'securepoll-header-voter-type' => 'Typo de usator',
-	'securepoll-voter-properties' => 'Proprietates del votator',
+	'securepoll-voter-properties' => 'Proprietates del votante',
 	'securepoll-strike-log' => 'Registro de cancellationes',
 	'securepoll-header-action' => 'Action',
 	'securepoll-header-reason' => 'Motivo',
@@ -4095,9 +5377,9 @@ Tu debe dar a tote le optiones un rango inter 1 e 999.',
 	'securepoll-dump-no-crypt' => 'Nulle registro cryptate es disponibile pro iste election, proque le election non es configurate pro usar cryptation.',
 	'securepoll-dump-not-finished' => 'Le registro cryptate del election non essera disponibile usque le data final: le $1 a $2',
 	'securepoll-dump-no-urandom' => 'Impossibile aperir /dev/urandom.
-Pro mantener le confidentialitate del votatores, le registro cryptate del election non essera disponibile al publico usque illo pote esser miscite con un fluxo secur de numeros aleatori.',
+Pro assecurar le confidentialitate del votantes, le datos cryptate del election es solmente disponibile al publico si illos pote esser miscite con un fluxo de numeros aleatori secur.',
 	'securepoll-urandom-not-supported' => 'Iste servitor non supporta le generation de numeros aleatori cryptographic.
-Pro assecurar le confidentialitate del votatores, le datos cryptate del election es solo publicamente disponibile si illos pote esser miscite con un fluxo de numeros aleatori secur.',
+Pro assecurar le confidentialitate del votantes, le datos cryptate del election es solmente disponibile al publico si illos pote esser miscite con un fluxo de numeros aleatori secur.',
 	'securepoll-translate-title' => 'Traducer: $1',
 	'securepoll-invalid-language' => 'Le codice de lingua "$1" es invalide',
 	'securepoll-submit-translate' => 'Actualisar',
@@ -4115,26 +5397,32 @@ Pro assecurar le confidentialitate del votatores, le datos cryptate del election
 	'securepoll-tally-title' => 'Conto: $1',
 	'securepoll-tally-not-finished' => 'Pardono, tu non pote contar le resultatos del election ante que le illo ha finite.',
 	'securepoll-can-decrypt' => 'Le registro del election ha essite cryptate, ma le clave de decryptation es disponibile.
-Tu pote optar pro contar le resultatos presente in le base de datos, o pro contar le resultatos cryptate ab un file que tu cargara.',
+Tu pote optar pro contar le resultatos presente in le base de datos, o pro contar le resultatos cryptate ab un file incargate.',
 	'securepoll-tally-no-key' => 'Tu non pote contar le resultatos de iste election proque le votos es cryptate e le clave de decryptation non es disponibile.',
 	'securepoll-tally-local-legend' => 'Contar le resulatos immagazinate',
 	'securepoll-tally-local-submit' => 'Contar resultatos',
 	'securepoll-tally-upload-legend' => 'Incargar un file de datos cryptate',
 	'securepoll-tally-upload-submit' => 'Contar resultatos',
 	'securepoll-tally-error' => 'Error durante le interpretation del registro de voto; non pote producer un conto.',
-	'securepoll-no-upload' => 'Nulle file ha essite cargate; non pote contar le resultatos.',
+	'securepoll-no-upload' => 'Nulle file ha essite incargate; non pote contar le resultatos.',
 	'securepoll-dump-corrupt' => 'Le file de dump es corrumpite e non pote esser processate.',
 	'securepoll-tally-upload-error' => 'Error de contar ex le file de dump: $1',
 	'securepoll-pairwise-victories' => 'Matrice de vincimento in pares',
 	'securepoll-strength-matrix' => 'Matrice de fortia de cammino',
 	'securepoll-ranks' => 'Rango final',
 	'securepoll-average-score' => 'Score medie',
+	'securepoll-round' => 'Ronda $1',
+	'securepoll-spoilt' => '(Invalide)',
+	'securepoll-exhausted' => '(Exhaurite)',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author Aldnonymous
  * @author Bennylin
  * @author Irwangatot
  * @author IvanLanin
+ * @author Iwan Novirion
+ * @author Kenrick95
  * @author Rex
  */
 $messages['id'] = array(
@@ -4178,7 +5466,7 @@ Galat:
 	'securepoll-gpg-parse-error' => 'Gagal meng-interpretasikan hasil keluaran GPG.',
 	'securepoll-no-decryption-key' => 'Kunci dekripsi belum dikonfigurasikan.
 Tidak dapat melakukan dekripsi.',
-	'securepoll-jump' => 'Pergi ke peladen pemungutan suara',
+	'securepoll-jump' => 'Pergi ke server pemungutan suara',
 	'securepoll-bad-ballot-submission' => 'Suara Anda tidak sah: $1',
 	'securepoll-unanswered-questions' => 'Anda harus menjawab semua pertanyaan.',
 	'securepoll-invalid-rank' => 'Peringkat tidak sah. Anda harus memberi peringkat kandidat antara 1 dan 99.',
@@ -4186,14 +5474,16 @@ Tidak dapat melakukan dekripsi.',
 Anda harus memberi peringkat antara 1 dan 99 untuk semua pilihan.',
 	'securepoll-invalid-score' => 'Nilai haruslah nomor antara $1 dan $2.',
 	'securepoll-unanswered-options' => 'Anda harus memberi tanggapan terhadap setiap pertanyaan.',
-	'securepoll-remote-auth-error' => 'Terjadi kesalahan ketika mengambil informasi akun Anda dari peladen.',
-	'securepoll-remote-parse-error' => 'Terjadi kesalahan interpretasi atas respon otorisasi dari peladen.',
+	'securepoll-remote-auth-error' => 'Terjadi kesalahan ketika mengambil informasi akun Anda dari server.',
+	'securepoll-remote-parse-error' => 'Terjadi kesalahan interpretasi atas respons otorisasi dari server.',
 	'securepoll-api-invalid-params' => 'Parameter tidak sah.',
 	'securepoll-api-no-user' => 'Tidak ditemukan nama pengguna dengan ID tersebut.',
 	'securepoll-api-token-mismatch' => 'Kode keamanan tidak sesuai, tidak dapat masuk log.',
 	'securepoll-not-logged-in' => 'Anda harus masuk log untuk dapat memberikan suara dalam pemilihan ini',
 	'securepoll-too-few-edits' => 'Maaf, Anda tidak dapat memberikan suara. Anda harus memiliki minimal $1 {{PLURAL:$1|suntingan|suntingan}} untuk dapat memberikan suara dalam pemilihan ini, Anda hanya memiliki $2.',
+	'securepoll-too-new' => 'Maaf, Anda tidak dapat memilih. Akun Anda harus terdaftar sebelum $1 pada $3 untuk memilih dalam pemilu ini, Anda mendaftar di $2 pada $4',
 	'securepoll-blocked' => 'Maaf, Anda tidak dapat memberikan suara karena akun Anda sedang diblokir.',
+	'securepoll-blocked-centrally' => 'Maaf, Anda tidak dapat memberikan suara dalam pemilihan ini jika Anda diblokir pada $1 atau lebih {{PLURAL:$1| wiki | wiki}}.',
 	'securepoll-bot' => 'Maaf, akun dengan status bot tidak diperbolehkan untuk memberikan suara dalam pemilihan ini.',
 	'securepoll-not-in-group' => 'Hanya anggota kelompok "$1" yang dapat memberikan suara pada pemilihan ini.',
 	'securepoll-not-in-list' => 'Maaf, Anda tidak terdaftar dalam daftar pemilih yang dapat memberikan suara.',
@@ -4226,8 +5516,8 @@ Anda harus memberi peringkat antara 1 dan 99 untuk semua pilihan.',
 	'securepoll-dump-not-finished' => 'Catatan pemilihan ter-enkripsi hanya tersedia setelah selesainya pemungutan suara pada $2, $1.',
 	'securepoll-dump-no-urandom' => 'Tidak dapat membuka /dev/urandom.
 Untuk memastikan kerahasiaan pemberi suara, catatan pemilihan ter-enkripsi hanya akan tersedia secara publik jika menggunakan sebuah rangkaian nomor keamanan acak.',
-	'securepoll-urandom-not-supported' => 'Peladen ini tidak mendukung kriptografi pembuatan angka acak.
-Untuk menjaga kerahasiaan pemilih, catatan pemilihan ter-enkripsi hanya tersedia secara publik jika catatan tersebut dapat diacak dengan angka acak yang aman.',
+	'securepoll-urandom-not-supported' => 'Server ini tidak mendukung kriptografi pembuatan angka acak.
+Untuk menjaga kerahasiaan pemilih, catatan pemilihan terenkripsi hanya tersedia secara publik jika catatan tersebut dapat diacak dengan angka acak yang aman.',
 	'securepoll-translate-title' => 'Terjemahkan: $1',
 	'securepoll-invalid-language' => 'Kode bahasa tidak sah "$1"',
 	'securepoll-submit-translate' => 'Perbarui',
@@ -4259,6 +5549,160 @@ Anda dapat memilih antara menghitung dari hasil suara yang terdapat di basis dat
 	'securepoll-strength-matrix' => 'Matriks kekuatan jalan',
 	'securepoll-ranks' => 'Peringkat akhir',
 	'securepoll-average-score' => 'Nilai rerata',
+	'securepoll-round' => 'Ronde $1',
+	'securepoll-spoilt' => '(Rusak)',
+	'securepoll-exhausted' => '(Habis)',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'securepoll-header-timestamp' => 'Ógẹ',
+	'securepoll-header-voter-name' => 'Áhà',
+	'securepoll-strike-reason' => 'Mgbághapụtà:',
+	'securepoll-strike-cancel' => 'Kàchá',
+	'securepoll-details-link' => 'Nkȯwa',
+	'securepoll-header-action' => 'Ọmé',
+	'securepoll-header-reason' => 'Mgbaghaputa',
+	'securepoll-submit-translate' => 'Dịnwanye mmā',
+	'securepoll-language-label' => 'Nwèré asụsụ:',
+	'securepoll-submit-select-lang' => 'Kuwaria na asụsụ ozor',
+	'securepoll-header-title' => 'Áhà',
+	'securepoll-subpage-vote' => 'Votu',
+	'securepoll-subpage-list' => 'Ndetu',
+	'securepoll-subpage-dump' => 'Nkwáfù',
+);
+
+/** Iloko (Ilokano)
+ * @author Lam-ang
+ */
+$messages['ilo'] = array(
+	'securepoll' => 'Natalged a panagbotos',
+	'securepoll-desc' => 'Pagpaatiddog para dagiti panagbubutos ken panagala',
+	'securepoll-invalid-page' => 'Imbalido nga apo ti panid "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => 'Masapul nga administrador ka ti panagbubutos ti agtungpal daytoy nga aramid.',
+	'securepoll-too-few-params' => 'Awan ti umanay nga apo ti panid kadagiti parametro (imbalido a panilpo) .',
+	'securepoll-invalid-election' => '"$1" ket saan nga umisu a panagbubutos nga ID.',
+	'securepoll-welcome' => '<strong>Kablaaw $1!</strong>',
+	'securepoll-not-started' => 'Daytoy a panagbubutos ket saan pay nairugi.
+Agrugin to no $2 iti $3.',
+	'securepoll-finished' => 'Nalpasen daytoy a panagbubutos, saan kan a makabutos.',
+	'securepoll-not-qualified' => 'Saan mo a mabalin ti agbutos iti daytoy a panagbubutusan: $1',
+	'securepoll-change-disallowed' => 'Nagbutos kan iti daytoy nga panagbubutosan idin.
+Pasensia, saan ka a makabutos manen.',
+	'securepoll-change-allowed' => '<strong>Paammo: Nagbutos ka iti daytoy a panagbubutos idin.</strong>
+Mabalin mo a sukatan ti butos mo babaen ti panagited ti kinabuklan dita baba.
+Paammo a no aramidem daytoy, ti sigud  a butos mo ket maibelleng ton.',
+	'securepoll-submit' => 'Ited ti butos',
+	'securepoll-gpg-receipt' => 'Agyamanak ti panagbutos mo.
+
+No kayatmo, mabalin mo a taginayonen ti resibo a kas pamaneknek ti butos mo:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'Agyamanak, ti butos mo ket nairehistron.',
+	'securepoll-return' => 'Agsubli idiay $1.',
+	'securepoll-encrypt-error' => 'Napaay ti panag-encrypt ti rehistro ti butos mo.
+Ti butos mo ket saan pay a nairehistro!
+
+$1',
+	'securepoll-no-gpg-home' => 'Napaay ti panagaramid ti GPG a balay ti direktorio.',
+	'securepoll-secret-gpg-error' => 'Biddut ti panagtungpal ti GPG.
+Usaren ti $wgSecurePollShowErrorDetail=true; idiay LocalSettings.php ti agiparang ti adu pay a detalye.',
+	'securepoll-full-gpg-error' => 'Biddut ti panagtungpal ti GPG:
+
+Bilinen: $1
+
+Biddut:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'Dagiti tulbek ti GPG ket saan nga husto a naaramid.',
+	'securepoll-gpg-parse-error' => 'Biddut ti panagibuksilan ti GPG a rimmuar.',
+	'securepoll-no-decryption-key' => 'Awan ti naaramid decryption a tulbek.
+Saan a madecrypt.',
+	'securepoll-jump' => 'Mapan ka dita  pagbutosan a server',
+	'securepoll-bad-ballot-submission' => 'Imbalido  ti butos mo: $1',
+	'securepoll-unanswered-questions' => 'Masapul a sungbatam amin dagiti saludsod.',
+	'securepoll-invalid-rank' => 'Imbalido a ranggo. Masapul nga ikkam dagiti kandidato iti ranggo a nagbaetan ti 1 ken 999.',
+	'securepoll-unranked-options' => 'Adda dagiti pagpilian a saan a nairanggo.
+Masapul nga ikkam amin dagiti pagpilian ti ranggo a nagbaetan ti 1 ken 999.',
+	'securepoll-invalid-score' => 'Ti iskor ket masapul a numero a nagbaetan ti $1 ken $2.',
+	'securepoll-unanswered-options' => 'Masapul nga agited ka ti sungbat para iti tunggal maysa a saludsod.',
+	'securepoll-remote-auth-error' => 'Bidddut ti pinagala ti pakabilangam a pakaammo manipud idiay server.',
+	'securepoll-remote-parse-error' => 'Biddut ti panagibuksilan ti pammalubos a sungbat manipud idiay server.',
+	'securepoll-api-invalid-params' => 'Imbalido dagiti parametro.',
+	'securepoll-api-no-user' => 'Awan ti agar-aramat a nabirukan nga addaan ti naited nga ID.',
+	'securepoll-api-token-mismatch' => 'Ti seguridad a tandaan ket saan nga agpadpada, saan a makastrek.',
+	'securepoll-not-logged-in' => 'Masapul a nakastrek ka tapno makabutos ka ditoy a panagbubutosan.',
+	'securepoll-too-few-edits' => 'Pasensia, saan ka a makabutos. Masapul nga addaan ka ti $1 {{PLURAL:$1|urnos|ur-urnos}} ti agbutos iti daytoy a panagbubutosan, nakaaramid ka ti $2.',
+	'securepoll-too-new' => 'Pasensia, saan ka a makabutos. Ti pakabilangam ket masapul a nakarehistro sakbayan idi $1 iti $3 ti agbutos iti daytoy a panagbubutosan, nakarehistro ka idi $2 iti $4.',
+	'securepoll-blocked' => 'Pasensia, saan ka a makabutos iti daytoy a panagbubutosan no agdama ka a naserraan manipud ti pinagurnos.',
+	'securepoll-blocked-centrally' => 'Pasensia, saan ka a makabutos iti daytoy a panagbubutosan ngamin ket naserraan ka iti $1 {{PLURAL:$1|a wiki|a dagiti wiki}}.',
+	'securepoll-bot' => 'Pasensia, dagiti pakabilangan nga addan ti bandera a bot ket saan a mabalin nga agbutos iti daytoy a panagbubutosan.',
+	'securepoll-not-in-group' => 'Dagiti kameng laeng iti "$1" a bunggoy ti makabutos iti daytoy a panagbubutosan.',
+	'securepoll-not-in-list' => 'Pasensia, awan ka ditat naipilian a listaan kadagiti agar-aramat a malubosan nga agbutos iti daytoy a panagbubutosan.',
+	'securepoll-list-title' => 'Ilista dagiti butos: $1',
+	'securepoll-header-timestamp' => 'Oras',
+	'securepoll-header-voter-name' => 'Nagan',
+	'securepoll-header-voter-domain' => 'Pagturayan',
+	'securepoll-header-ua' => 'Ahente ti agar-aramat',
+	'securepoll-header-cookie-dup' => 'Duplikado',
+	'securepoll-header-strike' => 'Ikkaten',
+	'securepoll-header-details' => 'Dagiti detalye',
+	'securepoll-strike-button' => 'Ikkaten',
+	'securepoll-unstrike-button' => 'Isubli',
+	'securepoll-strike-reason' => 'Rason:',
+	'securepoll-strike-cancel' => 'Ukasen',
+	'securepoll-strike-error' => 'Biddut ti panagaramid ti panag-ikkat/panagisubli: $1',
+	'securepoll-strike-token-mismatch' => 'Napukaw ti gimong ti linaon',
+	'securepoll-details-link' => 'Dagiti detalye',
+	'securepoll-details-title' => 'Dagiti detalye ti butos: #$1',
+	'securepoll-invalid-vote' => '"$1" ket saan nga umisu a butos nga  ID',
+	'securepoll-header-voter-type' => 'Kita ti nagbutos',
+	'securepoll-voter-properties' => 'Dagiti sanikua ti nagbutos',
+	'securepoll-strike-log' => 'Listaan ti panag-ikkat',
+	'securepoll-header-action' => 'Aramid',
+	'securepoll-header-reason' => 'Rason',
+	'securepoll-header-admin' => 'Admin',
+	'securepoll-cookie-dup-list' => 'Galietas duplikado dagiti agar-aramat',
+	'securepoll-dump-title' => 'Ipakbo: $1',
+	'securepoll-dump-no-crypt' => 'Awan ti naencrypt a nairehistro a panagbubutosan  a magun-od iti daytoy a panagbubutosan, ngamin ket ti panagbubutosan ket saan a naaramid nga agusar ti encrypsion.',
+	'securepoll-dump-not-finished' => 'Dagiti naencrypt a rehistro ti panagbubutosan ket magun-od laeng kalpasan ti gibus a petsa ti $1 iti $2',
+	'securepoll-dump-no-urandom' => 'Saan a maluktan /dev/urandom.
+Tapno mataripatuen ti kinapribado ti nagbutos, dagiti naencrypt a rehistro ti panagbubutosan ket publiko a magun-od laeng no mayakar-yakar nga addaan ti nasalakniban a pugto a numero a waig.',
+	'securepoll-urandom-not-supported' => 'Daytoy a server ket saan na a tapayaen ti panagaramid ti cryptographic a pugto a numero.
+Tapno mataripatuen ti kinapribado ti nagbutos, ti naencrypt a rehistro ti panagbubutosan ket publiko a magun-od laeng no mayakar-yakar nga addaan ti nasalakniban  a pugto a numero a waig.',
+	'securepoll-translate-title' => 'Ipatarus: $1',
+	'securepoll-invalid-language' => 'Imbalido a kodigo ti pagsasao "$1"',
+	'securepoll-submit-translate' => 'Pabaro',
+	'securepoll-language-label' => 'Agpili ti pagsasao:',
+	'securepoll-submit-select-lang' => 'Ipatarus',
+	'securepoll-entry-text' => 'Dita baba ket listaan kadagiti pinagala.',
+	'securepoll-header-title' => 'Nagan',
+	'securepoll-header-start-date' => 'Petsa a mangrugi',
+	'securepoll-header-end-date' => 'Lippasan a petsa',
+	'securepoll-subpage-vote' => 'Agbutos',
+	'securepoll-subpage-translate' => 'Ipatarus',
+	'securepoll-subpage-list' => 'Listaan',
+	'securepoll-subpage-dump' => 'Ipakbo',
+	'securepoll-subpage-tally' => 'Tarkasan',
+	'securepoll-tally-title' => 'Tarkasan: $1',
+	'securepoll-tally-not-finished' => 'Pasensia, saan mo a mabalin a tarkasan ti panagbubutosan agingga ti kalpasan ti panagbutos.',
+	'securepoll-can-decrypt' => 'Ti rehistro ti panagbubutosan ket naencrypt, ngem ti decryption a tulbek ket saan a magun-od.
+Mabalin mo ti agpili a tarkasan dagiti nagbanagan nga addaan idiay database, wenno tarkasan dagiti naencrypted a nagbanagan manipud iti naipan a papeles.',
+	'securepoll-tally-no-key' => 'Saan mo a mabalina tarkasan daytoy a panagbubutosan, ngamin ket dagiti butos ket naencrypted, ken ti decryption a tulbet ket saan a magun-od.',
+	'securepoll-tally-local-legend' => 'Taarkasan dagiti naidulin a nagbanagan',
+	'securepoll-tally-local-submit' => 'Agaramid ti tarkasan',
+	'securepoll-tally-upload-legend' => 'Agipan ti naencrypted a naipakbo',
+	'securepoll-tally-upload-submit' => 'Agaramid ti tarkasan',
+	'securepoll-tally-error' => 'Biddut ti panagipatarus ti rehistro ti butos, saan a napaadda ti tarkasan.',
+	'securepoll-no-upload' => 'Awan ti naipan a papeles, saan a matarkasan dagiti nagbanagan.',
+	'securepoll-dump-corrupt' => 'Ti naipakbo a papeles ket naibalitungeg ken saan a maipatuloy.',
+	'securepoll-tally-upload-error' => 'Biddut ti panagtarkasan ti pinakbo a papeles: $1',
+	'securepoll-ranks' => 'Pangileppas a ranngo',
+	'securepoll-average-score' => 'Pagtengngaan nga iskor',
+	'securepoll-round' => 'Nagbukel $1',
+	'securepoll-spoilt' => '(Nadadael)',
+	'securepoll-exhausted' => '(Naibusen)',
 );
 
 /** Ido (Ido)
@@ -4270,6 +5714,9 @@ $messages['io'] = array(
 	'securepoll-desc' => 'Extensilo por elekti e voti',
 	'securepoll-header-voter-name' => 'Nomo',
 	'securepoll-strike-reason' => 'Motivo:',
+	'securepoll-header-reason' => 'Motivo',
+	'securepoll-language-label' => 'Selektez linguo:',
+	'securepoll-header-title' => 'Nomo',
 	'securepoll-subpage-list' => 'Listo',
 );
 
@@ -4289,6 +5736,7 @@ $messages['is'] = array(
 
 /** Italian (Italiano)
  * @author Aushulz
+ * @author Beta16
  * @author BrokenArrow
  * @author Capmo
  * @author Darth Kule
@@ -4297,6 +5745,7 @@ $messages['is'] = array(
  * @author Nemo bis
  * @author Pietrodn
  * @author Stefano-c
+ * @author Vituzzu
  */
 $messages['it'] = array(
 	'securepoll' => 'SecurePoll',
@@ -4346,15 +5795,18 @@ Impossibile decifrare.',
 	'securepoll-invalid-rank' => 'Voto non valido. Devi dare ai candidati un voto compreso tra 1 e 999.',
 	'securepoll-unranked-options' => 'Alcune voci sono prive di voto.
 Devi assegnare a ciascuna voce un voto compreso tra 1 e 999.',
+	'securepoll-invalid-score' => 'Il voto deve essere un numero compreso tra $1 e $2.',
 	'securepoll-unanswered-options' => 'Devi rispondere a tutte le domande.',
 	'securepoll-remote-auth-error' => 'Errore durante il recupero delle informazioni sul tuo account dal server.',
 	'securepoll-remote-parse-error' => "Errore nell'interpretare la risposta di autorizzazione dal server.",
 	'securepoll-api-invalid-params' => 'Parametri non validi.',
 	'securepoll-api-no-user' => "Non è stato trovato alcun utente con l'ID fornito.",
 	'securepoll-api-token-mismatch' => 'I token di sicurezza non coincidono, non puoi entrare.',
-	'securepoll-not-logged-in' => "È necessario eseguire l'accesso per votare il questa elezione",
+	'securepoll-not-logged-in' => "È necessario eseguire l'accesso per votare in queste elezioni",
 	'securepoll-too-few-edits' => 'Spiacente, non puoi votare. Devi aver effettuato almeno $1 {{PLURAL:$1|modifica|modifiche}} per votare in questa elezione, tu ne hai fatte $2.',
+	'securepoll-too-new' => 'Spiacente ma non puoi votare. Per farlo devi essere esserti registrato prima del $1, $3 mentre invece ti sei registrato il $2 alle $4.',
 	'securepoll-blocked' => 'Spiacente, non puoi votare in questa elezione se sei stato bloccato dalla modifica.',
+	'securepoll-blocked-centrally' => "Spiacente ma non puoi votare in quest'elezione poiché sei bloccato su almeno $1 {{PLURAL:$1|wiki|wiki}}.",
 	'securepoll-bot' => 'Spiacente, gli account con lo status di bot non sono ammessi a votare in questa elezione.',
 	'securepoll-not-in-group' => 'Solo i membri del gruppo "$1" possono votare in questa elezione.',
 	'securepoll-not-in-list' => 'Spiacente, non sei nella lista predeterminata degli utenti autorizzati a votare in questa elezione.',
@@ -4420,11 +5872,17 @@ Puoi scegliere di effettuare il conteggio dei risultati presenti nel database o 
 	'securepoll-strength-matrix' => 'Matrice di fortezza del percorso',
 	'securepoll-ranks' => 'Classifica finale',
 	'securepoll-average-score' => 'Media dei punteggi',
+	'securepoll-round' => 'Turno numero $1.',
+	'securepoll-spoilt' => '(imbarazzante)',
+	'securepoll-exhausted' => '(Esaurito)',
 );
 
 /** Japanese (日本語)
+ * @author Akaniji
  * @author Aotake
  * @author Fryed-peach
+ * @author Miya
+ * @author Schu
  * @author 青子守歌
  */
 $messages['ja'] = array(
@@ -4476,7 +5934,9 @@ $1',
 	'securepoll-api-token-mismatch' => 'セキュリティ・トークンが一致しないのでログインできません。',
 	'securepoll-not-logged-in' => 'この投票に参加するためにはログインしていなければいけません',
 	'securepoll-too-few-edits' => '申し訳ありませんが、あなたは投票できません。この投票に参加するためには少なくとも$1{{PLURAL:$1|回}}の編集を行なっていなければなりません。現在の編集回数は$2です。',
+	'securepoll-too-new' => '申し訳ありませんが、あなたは投票できません。この選挙で投票するには、$1 $3 より前にアカウント登録されている必要がありますが、あなたは、$2 $4 にアカウント登録しています。',
 	'securepoll-blocked' => '申し訳ありませんが、あなたは投稿ブロックを受けているためこの投票に参加できません。',
+	'securepoll-blocked-centrally' => '申し訳ありませんが、少なくとも$1 {{PLURAL:$1|ウィキ|ウィキ}}でブロックされているとして、あなたはこの選挙で投票することはできません。',
 	'securepoll-bot' => '申し訳ありませんが、ボットフラグのあるアカウントはこの選挙で投票することが許可されていません。',
 	'securepoll-not-in-group' => '$1グループに属する利用者のみがこの投票に参加できます。',
 	'securepoll-not-in-list' => '申し訳ありませんが、あなたはあらかじめ決められた投票メンバーではないのでこの投票に参加できません。',
@@ -4490,7 +5950,7 @@ $1',
 	'securepoll-header-details' => '詳細',
 	'securepoll-strike-button' => '抹消',
 	'securepoll-unstrike-button' => '抹消撤回',
-	'securepoll-strike-reason' => '理由:',
+	'securepoll-strike-reason' => '理由：',
 	'securepoll-strike-cancel' => '中止',
 	'securepoll-strike-error' => '抹消あるいは抹消撤回の実行に失敗: $1',
 	'securepoll-strike-token-mismatch' => 'セッション情報消失',
@@ -4539,6 +5999,9 @@ $1',
 	'securepoll-strength-matrix' => 'パス強度行列',
 	'securepoll-ranks' => '最終順位',
 	'securepoll-average-score' => '平均点',
+	'securepoll-round' => '第$1回',
+	'securepoll-spoilt' => '(無効票)',
+	'securepoll-exhausted' => '(白票)',
 );
 
 /** Javanese (Basa Jawa)
@@ -4548,7 +6011,7 @@ $messages['jv'] = array(
 	'securepoll' => 'SecurePoll',
 	'securepoll-desc' => 'Èkstènsi tumrap pamilihan lan survé',
 	'securepoll-invalid-page' => 'Anak kaca ora sah "<nowiki>$1</nowiki>"',
-	'securepoll-need-admin' => 'Pratingkah iki mung bisa diayahi déning pangurus.',
+	'securepoll-need-admin' => 'Tumindak punika namung saged dipunayahi déning pangurus.',
 	'securepoll-too-few-params' => 'Parameter anak kaca ora pepak (pranala ora sah).',
 	'securepoll-invalid-election' => 'ID pamilihan ora sah: "$1"',
 	'securepoll-welcome' => '<strong>Sugeng rawuh $1!</strong>',
@@ -4569,42 +6032,87 @@ Yèn perlu panjenengan bisa nyimpen resi pangiriman ing ngisor iki minangka bukt
 <pre>$1</pre>',
 	'securepoll-thanks' => 'Matur nuwun, swara panjenengan wis dicathet.',
 	'securepoll-return' => 'Bali menyang $1',
+	'securepoll-encrypt-error' => 'Gagal nyandi cathetan swanten (vote) panjenengan.
+Swanten panjenengan dèrèng kacathet!
+
+$1',
+	'securepoll-no-gpg-home' => "Boten saged damel GPG ''home directory''",
+	'securepoll-secret-gpg-error' => 'Gagal nglampahaken GPG.
+Ginakaken $wgSecurePollShowErrorDetail=true; ing LocalSettings.php kanggé nampilaken princén langkung pepak.',
+	'securepoll-full-gpg-error' => 'Gagal nglampahaken GPG.
+
+Printah:$1
+
+Kasalahan:
+<pre>$2</pre>',
 );
 
 /** Georgian (ქართული)
  * @author BRUTE
  * @author David1010
+ * @author Dawid Deutschland
+ * @author ITshnik
  * @author გიორგიმელა
  */
 $messages['ka'] = array(
 	'securepoll' => 'უსაფრთხო კეჭისყრა',
+	'securepoll-desc' => 'არჩევნებისა და გამოკითხვის გახანგრძლივება',
+	'securepoll-invalid-page' => 'არასწორი ქვეგვერდი „<nowiki>$1</nowiki>“',
+	'securepoll-need-admin' => 'თქვენ უნდა იყოთ საარჩევნო ადმინისტრატორი, რომ შეასრულოთ ეს ქმედება.',
 	'securepoll-too-few-params' => 'არ არის საკმარისი ქვეკატეგორიების პარამეტრები (არასწორი ბმული).',
 	'securepoll-invalid-election' => '"$1" არ წარმოადგენს არჩევნებისათვის დასაშვებ იდენტიფიკატორს.',
 	'securepoll-welcome' => '<strong>კეთილი იყოს თქვენი მობრძანება $1!</strong>',
+	'securepoll-not-started' => 'ხმიც მიცემა ჯერ არ დაწყებულა.
+დაიწყება $3-ის $2-ზე.',
+	'securepoll-finished' => 'ეს არჩევნები დასრულებულია, თქვენ აღარ შეგიძლიათ ხმის მიცემა.',
 	'securepoll-not-qualified' => 'თქვენ არ შეგიძლიათ ამ არჩევნებში ხმის მიცემა: $1',
+	'securepoll-change-disallowed' => 'თქვენ უკვე გავქვთ ხმა მიცემული ამ არჩევნებში. 
+ვწუხვართ, მაგრამ თქვენ ვეღარ მისცემთ ხმას მეორედ.',
+	'securepoll-change-allowed' => '<strong>შენიშვნა: თქვენ უკვე გაქვთ მიცემული ხმა ამ არჩევნებში.</strong> თქვენ შეგიძლიათ შეცვალოთ თქვენი არჩევანი ქვემოთ მოცემული ფორმის შევსებით. გაითვალისწინეთ, რომ თუ თქვენ ასე მოიქცევით, თქვენი პირვანდელი არჩევანი გაუქმდება.',
 	'securepoll-submit' => 'ხმის მიცემა',
 	'securepoll-thanks' => 'გმადლობთ, თქვენი ხმა მიღებულია.',
 	'securepoll-return' => 'დაბრუნება $1–ზე',
+	'securepoll-encrypt-error' => 'თქვენი ხმის დაშიფრვისას მოხდა შეცდომა.
+თქვენი ხმა ვერ შეინახა!
+
+$1',
+	'securepoll-no-gpg-home' => 'შეუძლებელია GPG საშინაო კატალოგის შექმნა.',
+	'securepoll-secret-gpg-error' => 'შეცდომა GPG-ის შესრულებისას.
+$wgSecurePollShowErrorDetail=true; LocalSettings.php-ში დამატება მეტი დეტალის სანახავად.',
 	'securepoll-full-gpg-error' => 'შეცდომა GPG შესრულებისას:
 
 ბრძანება: $1
 
 შეცდომა:
 <pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG-კოდი არასწორადაა კონფიგურირებული.',
+	'securepoll-no-decryption-key' => 'დეშიფრაციის კოდი კონფიგურირებული არაა.
+დეშიფრაცია შეუძლებელია.',
 	'securepoll-jump' => 'ხმის მიცემის სერვერზე გადასვლა',
 	'securepoll-bad-ballot-submission' => 'თქვენი ხმა ძალადაკარგულია: $1',
 	'securepoll-unanswered-questions' => 'თქვენ უნდა უპასუხოთ ყველა შეკითხვას.',
+	'securepoll-invalid-rank' => 'არასწორი ადგილი. თქვენ უნდა მიუთითოთ კანდიდატის ადგილი 1-დან 999-მდე.',
+	'securepoll-invalid-score' => 'ანგარიში უნდა იყოს რიცხვ $1-სა და $2-ს შორის.',
 	'securepoll-unanswered-options' => 'თქვენ უნდა გასცეთ პასუხი ყოველ კითხვაზე.',
 	'securepoll-remote-auth-error' => 'შეცდომა ანგარიშზე ინფორმაციის მიღებისას სერვერიდან.',
+	'securepoll-remote-parse-error' => 'შეცდომა სერვერის ავტორიზაციის პასუხის ინტერპრეტირებისას.',
 	'securepoll-api-invalid-params' => 'არასწორი პარამეტრები.',
 	'securepoll-api-no-user' => 'მომხმარებელი მითითებული იდენტიფიკატორით ვერ მოიძებნა.',
 	'securepoll-not-logged-in' => 'ხმის მისაცემად თქვენ უნდა შეხვიდეთ სისტემაში',
+	'securepoll-too-few-edits' => 'უკაცრავად, თქვენ არ შეგიძლიათ ხმის მიცემა. თქვენ განხორციელებული უნდა გქონდეთ მინიმუმ $1 {{PLURAL:$1|რედაქტირება|რედაქტირება}} ამ არჩევნებში ხმის მისაცემად, თქვენ გაქვთ $2.',
+	'securepoll-blocked' => 'უკაცრავად, თქვენ არ შეგიძლიათ ხმის მიცემა ამ არჩევნებში, თუკი თქვენ ამჟამად დაბლოკილი ხართ.',
+	'securepoll-bot' => 'უკაცრავად, ანგარიშებს, ბოტის სტატუსით, არ შეუძლიათ ამ არჩევნებში ხმის მიცემა.',
+	'securepoll-not-in-group' => 'მხოლოდ ჯგუფ "$1"-ის წევრებს შეუძლიათ ამ არჩევნებში ხმის მიცემა.',
+	'securepoll-not-in-list' => 'სამწუხაროდ თქვენ არ ხართ იმ მომხმარებელთა სიაში, რომლებსაც ამ არჩევნებში მონაწილეობა შეუძლიათ.',
 	'securepoll-list-title' => 'ხმების სია: $1',
 	'securepoll-header-timestamp' => 'დრო',
 	'securepoll-header-voter-name' => 'სახელი',
 	'securepoll-header-voter-domain' => 'დომენი',
 	'securepoll-header-ua' => 'მომხმარებლის აგენტი',
+	'securepoll-header-cookie-dup' => 'დუბლიკატი',
+	'securepoll-header-strike' => 'გადახაზვა',
 	'securepoll-header-details' => 'დეტალები',
+	'securepoll-strike-button' => 'გადახაზვა',
 	'securepoll-strike-reason' => 'მიზეზი:',
 	'securepoll-strike-cancel' => 'გაუქმება',
 	'securepoll-strike-token-mismatch' => 'სესიის მონაცემების დაკარგვა',
@@ -4613,31 +6121,65 @@ $messages['ka'] = array(
 	'securepoll-invalid-vote' => '"$1" არ წარმოადგენს ხმის მიცემისთვის დასაშვებ იდენტიფიკატორს',
 	'securepoll-header-voter-type' => 'ხმის მიმცემის ტიპი',
 	'securepoll-header-url' => 'URL',
+	'securepoll-voter-properties' => 'ამომრჩეველთა თვისებები',
 	'securepoll-header-action' => 'მოქმედება',
 	'securepoll-header-reason' => 'მიზეზი',
 	'securepoll-header-admin' => 'ადმინი',
+	'securepoll-cookie-dup-list' => 'მომხმარებლები, რომლებმაც ორჯერ მისცეს ხმა',
+	'securepoll-dump-title' => 'დამპი: $1',
 	'securepoll-translate-title' => 'თარგმნა: $1',
+	'securepoll-invalid-language' => 'არასწორი ენობრივი კოდი «$1»',
 	'securepoll-submit-translate' => 'განახლება',
 	'securepoll-language-label' => 'ენის არჩევა:',
 	'securepoll-submit-select-lang' => 'თარგმნა',
+	'securepoll-entry-text' => 'ქვემოთ წარმოდგენილია კენჭისყრათა სია.',
 	'securepoll-header-title' => 'სახელი',
 	'securepoll-header-start-date' => 'დაწყების თარიღი',
 	'securepoll-header-end-date' => 'დასრულების თარიღი',
 	'securepoll-subpage-vote' => 'ხმის მიცემა',
 	'securepoll-subpage-translate' => 'თარგმნა',
 	'securepoll-subpage-list' => 'სია',
+	'securepoll-subpage-dump' => 'დამპი',
 	'securepoll-subpage-tally' => 'დათვლა',
 	'securepoll-tally-title' => 'დათვლა: $1',
+	'securepoll-tally-not-finished' => 'ბოდიში, მაგრამ შედეგი ჩაიწერება მხოლოდ კენჭისყრის დასრულებისას.',
+	'securepoll-can-decrypt' => 'ხმის ჩანაწერი ჩაიშიფრა, თუმცა არსებობს შიფრის მოხსნის გასაღები.
+თქვენ შეგიძლიათ აირჩიოთ ან ამჟამინდელი ხმებისდათვლა, ან ჩაშიფრული ხმების დათვლა ატვირთული ფაილიდან.',
+	'securepoll-tally-no-key' => 'თქვენ ვერ დათვლით ამ არჩევნების შედეგებს, რადგანაც ისინი ჩაიშიფრა, ხოლო გასაღები არ არის მითითებული.',
+	'securepoll-tally-local-legend' => 'შენახული რეზულტატების დათვლა',
 	'securepoll-tally-local-submit' => 'დათვლის წარმოება',
+	'securepoll-tally-upload-legend' => 'ატვირთეთ ჩაშიფრული დამპი',
 	'securepoll-tally-upload-submit' => 'დათვლის წარმოება',
+	'securepoll-tally-error' => 'ხმის ინტერპრიტაციის შეცდომა, კენჭისყრის დათვლა ვერ მოხერხდა.',
+	'securepoll-no-upload' => 'ფილტრი არ ჩატვირთულა, შეუძლებელია ხმების დათვლა.',
+	'securepoll-dump-corrupt' => 'დამპ ფაილი დაზიანებულია და ვერ მოხერხდება მისი გაანალიზება.',
+	'securepoll-tally-upload-error' => 'შეცდომა დამპ ფაილთან სინქრონიზაციისას: $1',
+	'securepoll-pairwise-victories' => 'მოგებათა ტაბულა',
+	'securepoll-strength-matrix' => 'გზის სიმძლავრის მატრიცა',
+	'securepoll-ranks' => 'საბოლოო ადგილები',
+	'securepoll-average-score' => 'საშუალო შედეგი',
+	'securepoll-spoilt' => '(არასწორი)',
+	'securepoll-exhausted' => '(დასრულდა)',
+);
+
+/** Khowar (کھوار)
+ * @author Rachitrali
+ */
+$messages['khw'] = array(
+	'securepoll-gpg-receipt' => 'رائےدہندگیو بچے شکریہ.
+
+تو درج ذیل رسیدو تان رائےدہندگیو ثبوتو طورا لاکھیکو بوس:
+
+<pre>$1</pre>',
 );
 
 /** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
  * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
 	'securepoll' => 'បោះ​ឆ្នោត​សុវត្ថិភាព​ (SecurePoll)',
-	'securepoll-need-admin' => 'អ្នក​ចាំបាច់ត្រូវមានមុខងារ​ជា​អ្នកអភិបាល​ដើម្បី​អនុវត្ត​សកម្មភាពនេះ​។',
+	'securepoll-need-admin' => 'អ្នក​ចាំបាច់ត្រូវមានមុខងារ​ជា​អ្នកអភិបាល​ការបោះឆ្នោតដើម្បី​អនុវត្ត​សកម្មភាពនេះ​។',
 	'securepoll-invalid-election' => '"$1" មិនមែន​ជា​លេខ ID បោះឆ្នោត​​មានសុពលភាពទេ​។',
 	'securepoll-welcome' => '<strong>សូមស្វាគមន៍ $1!</strong>',
 	'securepoll-not-started' => 'ការ​បោះ​ឆ្នោត​នេះ​មិនទាន់​បាន​ចាប់​ផ្ដើម​ទេ​។
@@ -4656,6 +6198,7 @@ $messages['km'] = array(
 	'securepoll-header-action' => 'សកម្មភាព',
 	'securepoll-header-reason' => 'មូលហេតុ',
 	'securepoll-translate-title' => 'បកប្រែ៖ $1',
+	'securepoll-invalid-language' => 'កូដភាសា "$1" មិនត្រឹមត្រូវ',
 	'securepoll-submit-translate' => 'បន្ទាន់សម័យ',
 	'securepoll-language-label' => 'ជ្រើសរើស​ភាសា​៖',
 	'securepoll-submit-select-lang' => 'បកប្រែ',
@@ -4673,11 +6216,15 @@ $messages['km'] = array(
 $messages['kn'] = array(
 	'securepoll-header-voter-name' => 'ಹೆಸರು',
 	'securepoll-strike-reason' => 'ಕಾರಣ:',
+	'securepoll-strike-cancel' => 'ರದ್ದು ಮಾಡು',
 	'securepoll-header-reason' => 'ಕಾರಣ',
 	'securepoll-header-title' => 'ಹೆಸರು',
 );
 
 /** Korean (한국어)
+ * @author Albamhandae
+ * @author Freebiekr
+ * @author Gjue
  * @author Klutzy
  * @author Kwj2772
  * @author Mhha
@@ -4707,7 +6254,7 @@ $messages['ko'] = array(
 
 <pre>$1</pre>',
 	'securepoll-thanks' => '감사합니다. 당신의 투표가 기록되었습니다.',
-	'securepoll-return' => '$1로 돌아가기',
+	'securepoll-return' => '$1(으)로 돌아가기',
 	'securepoll-encrypt-error' => '당신의 투표를 암호화하는 데 실패했습니다.
 당신의 투표가 기록되지 않았습니다.
 
@@ -4740,7 +6287,9 @@ $1',
 	'securepoll-api-token-mismatch' => '암호화 통신상의 오류가 발생하여 로그인하지 못했습니다.',
 	'securepoll-not-logged-in' => '이 선거에 투표를 하시려면 먼저 로그인하셔야 합니다.',
 	'securepoll-too-few-edits' => '죄송하지만, 투표에 참여하실 수 없습니다. 투표에 참여하시려면 최소 $1{{PLURAL:$1|회}}의 편집기여를 하셔야 하지만 귀하의 편집 수는 $2회 입니다.',
+	'securepoll-too-new' => '미안하지만, 당신은 투표할 수 없습니다. 이 선거에서 투표하려면 $1  $3 이전에 당신의 계정이 등록되어 있어야 합니다. 당신은 $2 $4에 계정을 등록하였습니다.',
 	'securepoll-blocked' => '죄송하지만, 귀하의 계정은 차단당한 상태이므로 이 선거에 투표하실 수 없습니다.',
+	'securepoll-blocked-centrally' => '죄송합니다. 귀하는 $1개 이상의 위키에서 차단되었기 때문에 이 선거에 투표할 수 없습니다.',
 	'securepoll-bot' => '죄송합니다. 봇 권한을 가진 계정으로는 투표할 수 없습니다.',
 	'securepoll-not-in-group' => '이 선거에는 "$1" 모임에 속하는 회원만 투표하실 수 있습니다.',
 	'securepoll-not-in-list' => '죄송하지만, 귀하는 이 선거에 투표하실 수 있는 선거인단명부에 등록되어 있지 않습니다.',
@@ -4805,6 +6354,9 @@ $1',
 	'securepoll-strength-matrix' => 'Path strength 행렬',
 	'securepoll-ranks' => '최종 순위',
 	'securepoll-average-score' => '평균 점수',
+	'securepoll-round' => '약 $1',
+	'securepoll-spoilt' => '(투표권 무효)',
+	'securepoll-exhausted' => '(투표권 만료)',
 );
 
 /** Karachay-Balkar (Къарачай-Малкъар)
@@ -4818,7 +6370,7 @@ $messages['krc'] = array(
 	'securepoll-header-admin' => 'Админ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -4877,8 +6429,10 @@ Do moß alle Müjjeleschkeite ene Rang zwesche 1 un 999 jevve.',
 	'securepoll-api-no-user' => 'Mer han keine Metmaacher jefonge jehatt met dä aanjejovve Kännong.',
 	'securepoll-api-token-mismatch' => 'Dä Sesherheitß_Kood deiht nit paße, do kanns De Desch nit ennlogge.',
 	'securepoll-not-logged-in' => 'Do moß Desch ald enlogge, för bei dää Afshtemmung metzemaache!',
-	'securepoll-too-few-edits' => 'Schadt: Do kanns diß Mol nit affshtemme. En dämm Fall mööts De ald {{PLURAL:$1|einmol|$1 Mol|övverhou noch nie}} en Sigg em Wiki jeändert han, Do häß ävver {{PLURAL:$2|blooß eimol|blooß $2 Mol|övverhoup noch nie}} en Sigg em Wiki jeändert.',
-	'securepoll-blocked' => 'Schahdt: Do kanns diß Mol nit affshtemme, weil jraadt för et Ändere aam Wiki jeshperrt beß.',
+	'securepoll-too-few-edits' => 'Schadt: Do kanns diß Mol nit affshtemme. En dämm Fall mööts De ald {{PLURAL:$1|einmol|$1 Mol|övverhoup noch nie}} en Sigg em Wiki jeändert han, Do häß ävver {{PLURAL:$2|blooß eimol|blooß $2 Mol|övverhoup noch nie}} en Sigg em Wiki jeändert.',
+	'securepoll-too-new' => 'Schahdt: Do kanns diß Mol nit affshtemme. Do mööts Desch ald vör dem $1öm $3 Uhr heh aanjemöldt han, et es ävver der $2 öm $4 Uhr jewääse.',
+	'securepoll-blocked' => 'Schahdt: Do kanns diß Mol nit affshtemme, weil De jraadt för et Ändere aam Wiki jeshperrt beß.',
+	'securepoll-blocked-centrally' => 'Schahdt: Do kanns diß Mol nit affshtemme, weil De jraadt för et Ändere en {{PLURAL:$1|einem Wiki udder mih|$1 udder mih Wikis|keinem Wiki}} jeshperrt beß.',
 	'securepoll-bot' => 'Hee en dä Afshtemmung kann bloß met metmaache, wä keine Bots es.',
 	'securepoll-not-in-group' => 'Schadt: Do kanns diß Mol nit affshtemme. Bloß de Metmaacher en dä {{NS:Category}} $1 künne hee en Shtemm afjevve!',
 	'securepoll-not-in-list' => 'Schadt: Do kanns diß Mol nit affshtemme. De beß nit en de su jenannte Wähler_Leß met de Metmaacher, die hee afshtemme dörve.',
@@ -4887,7 +6441,9 @@ Do moß alle Müjjeleschkeite ene Rang zwesche 1 un 999 jevve.',
 	'securepoll-header-voter-name' => 'Name',
 	'securepoll-header-voter-domain' => 'Domähn',
 	'securepoll-header-ip' => '<code lang="en">IP</code>-Addreß',
+	'securepoll-header-xff' => '<i lang="en">XFF</i>',
 	'securepoll-header-ua' => 'Däm Metmaacher singe Brauser',
+	'securepoll-header-token-match' => '<i lang="en">CSRF</i>',
 	'securepoll-header-cookie-dup' => 'Dubbelt Afjeshtemmp',
 	'securepoll-header-strike' => 'Ußshtrieshe?',
 	'securepoll-header-details' => 'Einzelheite',
@@ -4902,6 +6458,7 @@ Do moß alle Müjjeleschkeite ene Rang zwesche 1 un 999 jevve.',
 	'securepoll-invalid-vote' => '„$1“ kein reschtijje Kännong för en Afshtemmung',
 	'securepoll-header-id' => 'Kennong',
 	'securepoll-header-voter-type' => 'Zoot Affshtemmer',
+	'securepoll-header-url' => '<i lang="en">URL</i>',
 	'securepoll-voter-properties' => 'Dem Metmaacher sing Eijeschaffte för et Afshtemme',
 	'securepoll-strike-log' => 'Logboch övver de ußjeshtersche un widder jehollte Shtemme en Afshtemmunge',
 	'securepoll-header-action' => 'Akßjuhn',
@@ -4914,7 +6471,7 @@ Do moß alle Müjjeleschkeite ene Rang zwesche 1 un 999 jevve.',
 	'securepoll-dump-no-urandom' => 'Mer künne <code>/dev/random</code> nit opmaache.
 Öm dä Afshtemmer ze schötze, don mer verschlößelte Datesäz bloß dann ußjävve,
 wann mer se met enem seschere, zohfällije Dateshtrom verwörfelle künne.',
-	'securepoll-urandom-not-supported' => 'Hee dä ßööver kann kein Zohfallszahle för et Verschößele maache.
+	'securepoll-urandom-not-supported' => 'Hee dä ẞööver kann kein Zohfallszahle för et Verschößele maache.
 Öm et Wahljeheimnis ze bewaahre, sin de verschößelte Opzeichnunge vun der Stemme bloß dann öffentlich ze han, wann mer se en ene seshere zofällije Reijefollsh zeije künne.',
 	'securepoll-translate-title' => 'Övveräze: $1',
 	'securepoll-invalid-language' => '„<code>$1</code>“ es enne onjöltijje Shprooche_Kood',
@@ -4948,6 +6505,43 @@ Donn Desch entscheide doh zwesche, de neuste Zahle en de Datebangk uß_ze_zälle
 	'securepoll-strength-matrix' => 'De Krüztabäll mem Jeweesch fun jedem Pat',
 	'securepoll-ranks' => 'De Rangfollesch zom Afschloß',
 	'securepoll-average-score' => 'Dorschschnettlesche Treffer',
+	'securepoll-round' => 'Der $1-te Rötsch',
+	'securepoll-spoilt' => '(onjöltesch)',
+	'securepoll-exhausted' => '(aam Engk)',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ * @author Gomada
+ */
+$messages['ku-latn'] = array(
+	'securepoll-header-timestamp' => 'Dem',
+	'securepoll-header-voter-name' => 'Nav',
+	'securepoll-strike-reason' => 'Sedem:',
+	'securepoll-strike-cancel' => 'Betal bike',
+	'securepoll-header-reason' => 'Sedem',
+	'securepoll-language-label' => 'Ziman bijêre:',
+	'securepoll-submit-select-lang' => 'Wergerîne',
+	'securepoll-header-title' => 'Nav',
+	'securepoll-subpage-vote' => 'Dengdan',
+	'securepoll-subpage-translate' => 'Wergerîne',
+	'securepoll-subpage-list' => 'Lîste',
+);
+
+/** Latin (Latina)
+ * @author Tutleman
+ */
+$messages['la'] = array(
+	'securepoll-header-title' => 'Nomen',
+	'securepoll-header-start-date' => 'Satus diem',
+	'securepoll-header-end-date' => 'Ultima diem',
+	'securepoll-subpage-vote' => 'Suffragium Fero',
+	'securepoll-subpage-translate' => 'Traducere',
+	'securepoll-subpage-list' => 'Index',
+	'securepoll-subpage-dump' => 'Effundite',
+	'securepoll-subpage-tally' => 'Numera',
+	'securepoll-tally-title' => 'Numerat: $1',
+	'securepoll-tally-not-finished' => 'Paenitet, tu ne posse numerare electio quamdiu suffragium non est finis.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -5011,7 +6605,9 @@ Dir musst allen optiounen e Classement tëschent 1 an 999 ginn.',
 	'securepoll-api-token-mismatch' => 'Falsche Sécerheeets-Token, Aloggen ass net méiglech.',
 	'securepoll-not-logged-in' => 'Dir musst Iech alogge fir bäi dëse Walen ofstëmmen ze kënnen',
 	'securepoll-too-few-edits' => 'Pardon, Dir däerft net ofstëmmen. Dir musst mindestens $1 {{PLURAL:$1|Ännerung|Ännerunge}} gemaacht hunn, fir bäi dëse Walen ofstëmmen ze kënnen, Dir hutt der $2 gemaach.',
+	'securepoll-too-new' => 'Pardon, Dir däerft net ofstëmmen. Äre Benotzerkont hätt misse virum $1 ëm $3 registréiert si fir bäi dëse Walen ofstëmmen ze däerfen. Dir sidd zënter dem $2 ëm $4 registréiert.',
 	'securepoll-blocked' => 'Pardon, Dir kënnt net bäi dëse Walen ofstëmmen wann dir elo fir Ännerunge gespaart sidd.',
+	'securepoll-blocked-centrally' => "Pardon, Dir däerft bäi dëse Walen net ofstëmme well Dir an op d'mannst $1 {{PLURAL:$1|Wiki|Wikië}} gespaart sidd.",
 	'securepoll-bot' => 'Pardon, Benotzerkonte matt engem Bottefändel (bot flag) däerfe bäi dëse Walen net ofstëmmen.',
 	'securepoll-not-in-group' => 'Nëmme Membere vum Grupp $1 kënne bäi dëse Walen ofstëmmen.',
 	'securepoll-not-in-list' => 'Pardon, awer Dir stitt op der Lëscht vun de Benotzer déi autoriséiert si fir bäi dëse Walen ofzestëmmen.',
@@ -5019,7 +6615,7 @@ Dir musst allen optiounen e Classement tëschent 1 an 999 ginn.',
 	'securepoll-header-timestamp' => 'Zäit',
 	'securepoll-header-voter-name' => 'Numm',
 	'securepoll-header-voter-domain' => 'Domaine',
-	'securepoll-header-ua' => 'Benotzeragent',
+	'securepoll-header-ua' => 'Browser',
 	'securepoll-header-cookie-dup' => 'Duplikat',
 	'securepoll-header-strike' => 'Duerchsträichen',
 	'securepoll-header-details' => 'Detailer',
@@ -5051,7 +6647,7 @@ Fir Är privat Donnéeën ze schützen si verschlësselt Opzeechnunge vun de Wal
 	'securepoll-submit-translate' => 'Aktualiséieren',
 	'securepoll-language-label' => 'Sprooch eraussichen:',
 	'securepoll-submit-select-lang' => 'Iwwersetzen',
-	'securepoll-entry-text' => "Ënnedrèenner ass d'L!escht vun den Ëmfroen.",
+	'securepoll-entry-text' => "Ënnendrënner ass d'Lëscht vun den Ëmfroen.",
 	'securepoll-header-title' => 'Numm',
 	'securepoll-header-start-date' => 'Ufanksdatum',
 	'securepoll-header-end-date' => 'Schlussdatum',
@@ -5077,6 +6673,9 @@ Dir kënnt wielen tëschent der Auswäertung vun den aktuelle Resultater an der 
 	'securepoll-strength-matrix' => 'Matrice vun der Stäerkt vum Pad',
 	'securepoll-ranks' => 'Schlussclassement',
 	'securepoll-average-score' => 'Duerchschnëttleche Score',
+	'securepoll-round' => '$1. Tour',
+	'securepoll-spoilt' => '(Net valabel)',
+	'securepoll-exhausted' => '(Eriwwer)',
 );
 
 /** Limburgish (Limburgs)
@@ -5088,7 +6687,7 @@ $messages['li'] = array(
 	'securepoll' => 'VeiligSjtömme',
 	'securepoll-desc' => 'Oetbreiding veur verkeziginge en vraogelieste',
 	'securepoll-invalid-page' => 'Óngeldige subpagina "<nowiki>$1</nowiki>"',
-	'securepoll-need-admin' => "Doe mós 'ne beheerder zeen óm dees hanjeling te moge oetveure.",
+	'securepoll-need-admin' => "Doe mós 'ne stömmingbeheerder zeen óm dees hanjeling te moge oetveure.",
 	'securepoll-too-few-params' => 'Óngenóg subpaasjparamaeters (óngeljige verwiezing).',
 	'securepoll-invalid-election' => '"$1" is gein geljig verkezigingsnómmer.',
 	'securepoll-welcome' => '<strong>Wèlkóm $1!</strong>',
@@ -5129,14 +6728,22 @@ Decodere is neet meugelik.",
 	'securepoll-jump' => 'Gank nao de sjtömserver',
 	'securepoll-bad-ballot-submission' => 'Dien sjtöm is óngeldig: $1',
 	'securepoll-unanswered-questions' => 'Doe mós alle vraoge beantjwaorde.',
+	'securepoll-invalid-rank' => 'Ongeldige rang.
+Doe mós de kandidate n rang gaeve tusse 1 en 999.',
+	'securepoll-unranked-options' => "Sommige stummeugelikhede höbbe gein rang.
+Doe mos alle meugelikhede 'n rang gaeve tösse 1 en 999.",
+	'securepoll-invalid-score' => 'De score mot e getal tusse $1 en $2 zeen.',
+	'securepoll-unanswered-options' => 'Doe mos eder vraog beantjwaorde.',
 	'securepoll-remote-auth-error' => "d'r Is 'n fout opgetraoje bie 't ophaole van dien gebroekersinformatie van de server.",
 	'securepoll-remote-parse-error' => "d'r Is 'n fout opgetraoje bie 't interpretere van 't antjwaord van de server.",
 	'securepoll-api-invalid-params' => 'Óngeldige paramaeters.',
 	'securepoll-api-no-user' => "d'r Is geine gebroeker gevónje mit 't opgegaeve ID.",
 	'securepoll-api-token-mismatch' => 'Beveiligingstoke kömp neet euverein, inlogge is neet meugelik.',
 	'securepoll-not-logged-in' => 'Doe mós aanmelde óm aan dees sjtömming deil te nömme',
-	'securepoll-too-few-edits' => "Sorry, doe kins neet deilnömme aan de sjtömming. Doe mós temisnte $1 bewèrkinge höbbe gemaak óm te kinne sjtömme in dees verkeziging en doe höbs d'r $2.",
+	'securepoll-too-few-edits' => "Sorry, doe kins neet deilnömme aan de sjtömming. Doe mós temisnte $1 {{PLURAL:$1|bewèrking|bewèrkinger}} höbbe gemaak óm te kinne sjtömme in dees verkeziging en doe höbs d'r $2.",
+	'securepoll-too-new' => 'Doe kins neet deilnömme aan dees stömming. Doe mós veur $1 óm $3 geregistreerd zeen óm det te kinne, meh doe woors det óp $2 óm $4.',
 	'securepoll-blocked' => 'Sorry, doe kins neet deilnömme aan de sjtömming ómdet se geblokkeerd bös.',
+	'securepoll-blocked-centrally' => "Doe kins neet deilnömme aan dees stömming ómdes se geblok bös óp minstes $1 {{PLURAL:$1|wiki|wiki's}}.",
 	'securepoll-bot' => "Sorry, gebroekers mit 'ne botvlag moge neet sjtömme in dees sjtömming.",
 	'securepoll-not-in-group' => 'Allein lede van de groep "$1" kinne aan dees sjtömming deilnömme.',
 	'securepoll-not-in-list' => 'Sorry, doe sjteis neet op de veuraafvasgesjtelde lies van sjtömgerechtigde veur dees sjtömming.',
@@ -5150,9 +6757,10 @@ Decodere is neet meugelik.",
 	'securepoll-header-details' => 'Details',
 	'securepoll-strike-button' => 'Haol door',
 	'securepoll-unstrike-button' => 'Haol neet door',
-	'securepoll-strike-reason' => 'Raej:',
+	'securepoll-strike-reason' => 'Reeje:',
 	'securepoll-strike-cancel' => 'Braek aaf',
 	'securepoll-strike-error' => "Fout bie 't (neet) doorhaole: $1",
+	'securepoll-strike-token-mismatch' => 'Sessiegegaeves zeen verlaore gegange',
 	'securepoll-details-link' => 'Details',
 	'securepoll-details-title' => 'Sjtömdetails: #$1',
 	'securepoll-invalid-vote' => '"$1" is gein geljig sjtömnómmer',
@@ -5168,11 +6776,14 @@ Decodere is neet meugelik.",
 	'securepoll-dump-not-finished' => "De versjleutelde sjtömgegaeves zeen pas besjikbaar nao 't eindige van de sjtömming op $1 óm $2",
 	'securepoll-dump-no-urandom' => "Kin /dev/urandom neet äöpene.
 Óm de sjtömmersprivacy te behaje, zeen de sjtömmingsgegaeves pas besjikbaar es ze willekeurig gesorteerd kinne waere mit behölp van 'ne willekeurige nómmerreiks.",
+	'securepoll-urandom-not-supported' => "Deze server beet gein ongersteuning veur 't versleuteld aanmake van willekeurige getalle.
+Om de anonimiteit van stömmers te handjhave, zeen de versleutelde stömresultate pas besjikbaar es ze zeen herordend via 'n veilige reeks van willekeurige getalle.",
 	'securepoll-translate-title' => 'Vertaol: $1',
 	'securepoll-invalid-language' => 'Óngeljige taolcode "$1"',
 	'securepoll-submit-translate' => 'Wèrk bie',
 	'securepoll-language-label' => 'Selecteer taol:',
 	'securepoll-submit-select-lang' => 'Vertaol',
+	'securepoll-entry-text' => "Hierónger is 'n stömmingslies.",
 	'securepoll-header-title' => 'Naom',
 	'securepoll-header-start-date' => 'Begindatum',
 	'securepoll-header-end-date' => 'Einddatum',
@@ -5183,18 +6794,36 @@ Decodere is neet meugelik.",
 	'securepoll-subpage-tally' => 'Telling',
 	'securepoll-tally-title' => 'Telling: $1',
 	'securepoll-tally-not-finished' => 'Doe kins gein telling oetveure totdet de sjtömming is aafgeloupe.',
+	'securepoll-can-decrypt' => "De resultate van de stömming zeen versleuteld, mer de coderingssleutel is besjikbaar.
+Doe kins de in de database besjikbare resultate telle, of de resultate oet 'n bestandjsupload telle.",
+	'securepoll-tally-no-key' => 'De kins gein telling uutveure veur dees stumming, omdet de stumme versleuteld zeen en de sleutel neet besjikbaar is.',
+	'securepoll-tally-local-legend' => 'Ópgeslage resultare',
+	'securepoll-tally-local-submit' => 'Veur telling oet',
+	'securepoll-tally-upload-legend' => 'Laaj versleutelde dump óp',
+	'securepoll-tally-upload-submit' => 'Veur telling oet',
+	'securepoll-tally-error' => 'Fout bie stömmingsresultate-interpretaie. Kèn gein tèlling oetveure.',
 	'securepoll-no-upload' => "d'r Is gei besjtandj opgelaje, resultate kinne neet geteld waere.",
+	'securepoll-dump-corrupt' => 'Dumpbestandj is besjadig en kin neet verwerk waere.',
+	'securepoll-tally-upload-error' => 'Fout bie tellen oete dump: $1',
+	'securepoll-pairwise-victories' => 'Paarsgewies euverwinningsmatrix',
+	'securepoll-strength-matrix' => 'Padgestèrk matrix',
+	'securepoll-ranks' => 'Definitief ranksjikking',
+	'securepoll-average-score' => 'Gemiddeldje skore',
+	'securepoll-round' => 'Rönj $1',
+	'securepoll-spoilt' => '(Óngeljig)',
+	'securepoll-exhausted' => '(Verloupe)',
 );
 
 /** Lithuanian (Lietuvių)
  * @author Homo
  * @author Matasg
+ * @author Perkunas
  */
 $messages['lt'] = array(
 	'securepoll' => 'Saugus balsavimas',
 	'securepoll-desc' => 'Priemonė rinkimams ir apklausoms',
 	'securepoll-invalid-page' => 'Netinkamas subpuslapis "<nowiki>$1</nowiki>"',
-	'securepoll-need-admin' => 'Jei norite atlikti šį veiksmą, Jums reikia administratoriumi.',
+	'securepoll-need-admin' => 'Jei norite atlikti šį veiksmą, Jums reikia būti rinkimų administratoriumi.',
 	'securepoll-too-few-params' => 'Nepakanka subpuslapio parametrų (negalioja nuoroda).',
 	'securepoll-invalid-election' => '"$1" nėra tinkamas rinkimų ID.',
 	'securepoll-welcome' => '<strong>Sveiki $1!</strong>',
@@ -5235,6 +6864,11 @@ Negalima iššifruoti.',
 	'securepoll-jump' => 'Eiti į balsavimo serverį',
 	'securepoll-bad-ballot-submission' => 'Jūsų balsas netinkamas: $1',
 	'securepoll-unanswered-questions' => 'Turite atsakyti į visus klausimus.',
+	'securepoll-invalid-rank' => 'Neteisingas įvertinimas. Kandidatų įvertinimas turi būti tarp 1 ir 999.',
+	'securepoll-unranked-options' => 'Kai kurios parinktys nebuvo įvertintos.
+Visoms parinktims turite skirti įvertinimą tarp 1 ir 999.',
+	'securepoll-invalid-score' => 'Įvertinimas turi būti skaičius tarp $1 ir $2.',
+	'securepoll-unanswered-options' => 'Jūs turite įvertinti kiekvieną klausimą.',
 	'securepoll-remote-auth-error' => 'Įvyko klaida pristatant jūsų paskyros informaciją iš serverio.',
 	'securepoll-remote-parse-error' => 'Klaida interpretuojant leidimo atsakymą iš serverio.',
 	'securepoll-api-invalid-params' => 'Netinkami parametrai',
@@ -5242,7 +6876,9 @@ Negalima iššifruoti.',
 	'securepoll-api-token-mismatch' => 'Saugos žymės nesutampa, negalite prisijungti',
 	'securepoll-not-logged-in' => 'Jūs turite prisijungti, norėdami balsuoti šiuose rinkimuose',
 	'securepoll-too-few-edits' => 'Atsiprašome, Jūs negalite balsuoti. Jūs privalote atlikti bent $1 {{PLURAL:$1|redagavimą|redagavimų}}, norėdami balsuoti šiuose rinkimuose. Jūs atlikote $2.',
+	'securepoll-too-new' => 'Atsiprašome, Jūs negalite balsuoti. Jei norite balsuoti šiuose rinkimuose, Jūsų sąskaita turi būti sukurta iki $1, tačiau Jūsų sąskaita yra sukurta $2.',
 	'securepoll-blocked' => 'Atsiprašome, Jūs negalite balsuoti šiuose rinkimuose jei dabar esate užblokuotas.',
+	'securepoll-blocked-centrally' => 'Atsiprašome, Jūs negalite balsuoti šiuose rinkimuose, jei esate blokuotas $1 {{PLURAL:$1|wiki-projekte|wiki-projektuose}} ar daugiau.',
 	'securepoll-bot' => 'Atsiprašome, sąskaitos su boto statusu negali balsuoti šiuose rinkimuose.',
 	'securepoll-not-in-group' => 'Tik nariai iš grupės "$1" gali balsuoti šiuose rinkimuose.',
 	'securepoll-not-in-list' => 'Atsiprašome, Jūs nesate vartotojų sąraše, kuriems leidžiama balsuoti šiuose rinkimuose.',
@@ -5259,6 +6895,7 @@ Negalima iššifruoti.',
 	'securepoll-strike-reason' => 'Priežastis:',
 	'securepoll-strike-cancel' => 'Atšaukti',
 	'securepoll-strike-error' => 'Klaida atliekant uždraudimą/nebedraudimą: $1',
+	'securepoll-strike-token-mismatch' => 'Prarasti sesijos duomenys',
 	'securepoll-details-link' => 'Detalės',
 	'securepoll-details-title' => 'Balsavimo detalės: #$1',
 	'securepoll-invalid-vote' => '"$1" nėra teisingas balsavimo ID',
@@ -5274,11 +6911,14 @@ Negalima iššifruoti.',
 	'securepoll-dump-not-finished' => 'Šifruoti rinkimų įrašai prieinami tik po $1 $2',
 	'securepoll-dump-no-urandom' => 'Nepavyko atidaryti /dev/urandom.  
 Siekiant išlaikyti balsuotojų privatumą, šifruoti rinkimų įrašai viešai prieinami tik kai jie sumaišyti su saugiu atsitiktinių skaičių srautu.',
+	'securepoll-urandom-not-supported' => 'Šis serveris nepalaiko šifruotų atsitiktinių skaičių generavimo.
+Kad užtikrintume balsuojančiųjų slaptumą, šifruoti rinkimų rezultatai viešai pateikiami tik po to, kai jie sumaišomi su saugia atsitiktinių skaičių seka.',
 	'securepoll-translate-title' => 'Išversti: $1',
 	'securepoll-invalid-language' => 'Neleistinas kalbos kodas "$1"',
 	'securepoll-submit-translate' => 'Atnaujinti',
 	'securepoll-language-label' => 'Pasirinkite kalbą:',
 	'securepoll-submit-select-lang' => 'Išversti',
+	'securepoll-entry-text' => 'Žemiau pateikiamas balsavimų sąrašas.',
 	'securepoll-header-title' => 'Pavadinimas',
 	'securepoll-header-start-date' => 'Pradžios data',
 	'securepoll-header-end-date' => 'Pabaigos data',
@@ -5298,29 +6938,83 @@ Galite pasirinkti, ar sutampa rezultatai, esantys duomenų bazėje bei rezultatu
 	'securepoll-tally-upload-submit' => 'Sukurti rezultatus',
 	'securepoll-tally-error' => 'Klaida interpretuojant balsavimo įrašą, negalima sukurti suvestinių.',
 	'securepoll-no-upload' => 'Failas nebuvo įkeltas, negalima skaičiuoti rezultatų.',
+	'securepoll-dump-corrupt' => 'Iškelties failas nekorektiškas, todėl negali būti apdorotas.',
+	'securepoll-tally-upload-error' => 'Klaida kuriant iškelties failą: $1',
+	'securepoll-pairwise-victories' => 'Porinės pergalės matrica',
+	'securepoll-strength-matrix' => 'Kelio stiprumo matrica',
+	'securepoll-ranks' => 'Galutinis įvertinimas',
+	'securepoll-average-score' => 'Vidutinis rezultatas',
+	'securepoll-round' => 'Turas $1',
+	'securepoll-spoilt' => '(Sugadinta)',
+	'securepoll-exhausted' => '(Išnaudota)',
+);
+
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'securepoll-submit-translate' => 'Atjaunynuot',
+);
+
+/** Latvian (Latviešu)
+ * @author GreenZeb
+ * @author Papuass
+ */
+$messages['lv'] = array(
+	'securepoll-desc' => 'Paplašinājums vēlēšanām un aptaujām',
+	'securepoll-invalid-page' => 'Nederīga apakšlapa "<nowiki>$1</nowiki>"',
+	'securepoll-finished' => 'Šīs vēlēšanas ir beigušās, Jūs vars nedrīkstat balsot.',
+	'securepoll-submit' => 'Iesniegt balsojumu',
+	'securepoll-thanks' => 'Paldies, jūsu balsojums tika reģistrēts.',
+	'securepoll-return' => 'Atgriezties uz $1',
+	'securepoll-unanswered-questions' => 'Tev ir jāatbild uz visiem jautājumiem.',
+	'securepoll-api-invalid-params' => 'Nederīgi parametri.',
+	'securepoll-header-timestamp' => 'Laiks',
+	'securepoll-header-voter-name' => 'Vārds',
+	'securepoll-header-voter-domain' => 'Domēns',
+	'securepoll-header-ua' => 'Lietotāja aģents',
+	'securepoll-strike-reason' => 'Iemesls:',
+	'securepoll-strike-cancel' => 'Atcelt',
+	'securepoll-strike-token-mismatch' => 'Sesijas dati zaudēti',
+	'securepoll-header-action' => 'Darbība',
+	'securepoll-header-reason' => 'Iemesls',
+	'securepoll-translate-title' => 'Tulkot: $1',
+	'securepoll-invalid-language' => 'Nederīgs valodas kods "$1"',
+	'securepoll-submit-translate' => 'Atjaunināt',
+	'securepoll-language-label' => 'Izvēlēties valodu:',
+	'securepoll-submit-select-lang' => 'Tulkot',
+	'securepoll-entry-text' => 'Saraksts ar balsojumiem ir apakšā.',
+	'securepoll-header-title' => 'Nosaukums',
+	'securepoll-header-start-date' => 'Sākuma datums',
+	'securepoll-header-end-date' => 'Beigu datums',
+	'securepoll-subpage-vote' => 'Balsot',
+	'securepoll-subpage-translate' => 'Tulkot',
+	'securepoll-subpage-list' => 'Saraksts',
+	'securepoll-average-score' => 'Vidējais rezultāts',
 );
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  * @author Brest
+ * @author Rancher
  */
 $messages['mk'] = array(
-	'securepoll' => 'SecurePoll',
-	'securepoll-desc' => 'Проширување за избори и истражувања',
+	'securepoll' => 'БезбедноГласање',
+	'securepoll-desc' => 'Додаток за избори и анкети',
 	'securepoll-invalid-page' => 'Неважечка потстраница „<nowiki>$1</nowiki>“',
 	'securepoll-need-admin' => 'Треба да бидете изборен администратор за да можете да го сторите тоа.',
 	'securepoll-too-few-params' => 'Нема доволно параметри за потстраници (неважечка врска).',
-	'securepoll-invalid-election' => '„$1“ не претставува важечки идентификационен број.',
+	'securepoll-invalid-election' => '„$1“ не претставува важечка назнака.',
 	'securepoll-welcome' => '<strong>Добредојдовте $1!</strong>',
 	'securepoll-not-started' => 'Изборите сè уште не се започнати.
-Предвидено е да започнат на $2 во $3.',
-	'securepoll-finished' => 'Изборите завршија, повеќе не можете да гласате.',
+Предвидено е да започнат на $2 во $3 ч.',
+	'securepoll-finished' => 'Изборите завршија - повеќе не можете да гласате.',
 	'securepoll-not-qualified' => 'Не сте квалификувани да гласате на овие избори: $1',
 	'securepoll-change-disallowed' => 'Веќе имате гласано на овие избори.
 Жалиме, но не ви е дозволено да гласате повторно.',
-	'securepoll-change-allowed' => '<strong>Белешка: На овие избори сте гласале претходно.</strong>
-Можете да гопромените вашиот глас со тоа што ќе го пополните долунаведениот образец.
-Имајте в предвид дека ако го сторите тоа, вашиот првичен глас ќе биде поништен.',
+	'securepoll-change-allowed' => '<strong>Напомена: На овие избори сте гласале претходно.</strong>
+Можете да го промените вашиот глас со тоа што ќе го пополните долунаведениот образец.
+Имајте предвид дека ако го сторите тоа, вашиот првичен глас ќе биде поништен.',
 	'securepoll-submit' => 'Поднеси глас',
 	'securepoll-gpg-receipt' => 'Ви благодариме што гласавте.
 
@@ -5328,87 +7022,93 @@ $messages['mk'] = array(
 
 <pre>$1</pre>',
 	'securepoll-thanks' => 'Ви благодариме, вашиот глас е заведен.',
-	'securepoll-return' => 'Врати се на $1',
+	'securepoll-return' => 'Назад на $1',
 	'securepoll-encrypt-error' => 'Не можев да го шифрирам вашиот гласачки запис.
 Вашиот глас не беше регистриран!
 
 $1',
 	'securepoll-no-gpg-home' => 'Не можам да создадам GPG именик.',
 	'securepoll-secret-gpg-error' => 'Грешка при извршување на GPG.
-Употребете $wgSecurePollShowErrorDetail=true; во LocalSettings.php за да се прикажат повеќе детали.',
+Поставете го $wgSecurePollShowErrorDetail=true; во LocalSettings.php за да добиете повеќе подробности.',
 	'securepoll-full-gpg-error' => 'Грешка при извршување на GPG:
 
 Наредба: $1
 
 Грешка:
 <pre>$2</pre>',
-	'securepoll-gpg-config-error' => 'GPG клучевите се погрешно конфигурирани.',
+	'securepoll-gpg-config-error' => 'GPG-клучевите се погрешно наместени.',
 	'securepoll-gpg-parse-error' => 'Грешка при толкувањето на излезните информации за GPG.',
-	'securepoll-no-decryption-key' => 'Не е конфигуриран описниот клуч.
+	'securepoll-no-decryption-key' => 'Не е поставен клуч за дешифрирање.
 Не можам да дешифрирам.',
-	'securepoll-jump' => 'Оди на гласачкиот сервер',
+	'securepoll-jump' => 'Оди на опслужувачот за гласање',
 	'securepoll-bad-ballot-submission' => 'Вашиот глас е неважечки: $1',
 	'securepoll-unanswered-questions' => 'Морате да одговорите на сите прашања.',
 	'securepoll-invalid-rank' => 'Погрешен ранг. Кандидадите морате да ги рангирате со бројка помеѓу 1 и 999.',
-	'securepoll-unranked-options' => 'Некои опции не беа рангирани.
-Морате на сите опции да им доделите ранг помеѓу 1 и 999.',
+	'securepoll-unranked-options' => 'Некои избори не беа рангирани.
+На сите избори мора да им доделите ранг помеѓу 1 и 999.',
 	'securepoll-invalid-score' => 'Оцената мора да биде број од $1 до $2.',
 	'securepoll-unanswered-options' => 'Мора да дадете одговор на секое прашање.',
-	'securepoll-remote-auth-error' => 'Грешка при преземање на информациите за вашата сметка од серверот.',
-	'securepoll-remote-parse-error' => 'Грешка при толкувањето на одговорот при барањето на дозвола за пристап на серверот.',
+	'securepoll-remote-auth-error' => 'Грешка при преземање на информациите за вашата сметка од опслужувачот.',
+	'securepoll-remote-parse-error' => 'Грешка при толкувањето на одговорот при барањето на дозвола за пристап од опслужувачот.',
 	'securepoll-api-invalid-params' => 'Неважечки параметри.',
-	'securepoll-api-no-user' => 'Не бепе пронајден корисник со зададениот идентификационен број.',
+	'securepoll-api-no-user' => 'Не бепе пронајден корисник со зададената назнака.',
 	'securepoll-api-token-mismatch' => 'Не се совпаѓаат безбедносните кодови, не можам да ве најавам.',
 	'securepoll-not-logged-in' => 'Морате да сте најавени за да гласате',
 	'securepoll-too-few-edits' => 'Жалиме, но не можете да гласате. Треба да имате барем $1 {{PLURAL:$1|уредување|уредувања}} за да можете да гласате, а вие имате $2.',
+	'securepoll-too-new' => 'Нажалост, не можете да гласате. За да гласате, сметката треба да ви е регистрирана пред $1 во $3, а вие сте ја регистрирале на $2 во $4.',
 	'securepoll-blocked' => 'Жалиме, но немате право да гласате ако сте моментално блокирани од уредување.',
-	'securepoll-bot' => 'Жалиме, но сметките со бот-знаменце не се дозволени на изборите.',
+	'securepoll-blocked-centrally' => 'Нажалост, не можете да гласате на овие избори ако сте блокирани на барем $1 {{PLURAL:$1|вики|викија}}.',
+	'securepoll-bot' => 'Жалиме, но сметките со ботовско знаменце не се дозволени на изборите.',
 	'securepoll-not-in-group' => 'На овие избори можат да гласаат само припадници на групата „$1“.',
-	'securepoll-not-in-list' => 'Жалиме, но вие не сте на предодредената листа на корисници овластени да гласаат на овие избори.',
+	'securepoll-not-in-list' => 'Жалиме, но вие не сте на предодредениот список на корисници овластени да гласаат на овие избори.',
 	'securepoll-list-title' => 'Наведи гласови: $1',
 	'securepoll-header-timestamp' => 'Време',
 	'securepoll-header-voter-name' => 'Име',
 	'securepoll-header-voter-domain' => 'Домен',
+	'securepoll-header-ip' => 'IP-адреса',
 	'securepoll-header-ua' => 'Кориснички агент',
 	'securepoll-header-cookie-dup' => 'Дуп',
-	'securepoll-header-strike' => 'Црта',
-	'securepoll-header-details' => 'Детали',
-	'securepoll-strike-button' => 'Црта',
+	'securepoll-header-strike' => 'Прецртување',
+	'securepoll-header-details' => 'Подробно',
+	'securepoll-strike-button' => 'Прецртувај',
 	'securepoll-unstrike-button' => 'Врати црта',
 	'securepoll-strike-reason' => 'Причина:',
 	'securepoll-strike-cancel' => 'Откажи',
 	'securepoll-strike-error' => 'Грешка при извршување на црта/врати црта: $1',
 	'securepoll-strike-token-mismatch' => 'Сесиските податоци се изгубени',
-	'securepoll-details-link' => 'Детали',
+	'securepoll-details-link' => 'Подробно',
 	'securepoll-details-title' => 'Детали за гласот: #$1',
-	'securepoll-invalid-vote' => '„$1“ е неважечки гласачки идентификационен број',
+	'securepoll-invalid-vote' => '„$1“ е претставува важечка гласачка назнака',
+	'securepoll-header-id' => 'Назнака',
 	'securepoll-header-voter-type' => 'Тип на гласач',
+	'securepoll-header-url' => 'URL-адреса',
 	'securepoll-voter-properties' => 'Својства на гласачот',
 	'securepoll-strike-log' => 'Дневник на ставање црти',
 	'securepoll-header-action' => 'Дејство',
 	'securepoll-header-reason' => 'Причина',
 	'securepoll-header-admin' => 'Админ',
 	'securepoll-cookie-dup-list' => 'Колачиња за дуплирани гласачи',
-	'securepoll-dump-title' => 'Отпад: $1',
-	'securepoll-dump-no-crypt' => 'Нема шифрирана гласачка евиденција за овие избори, бидејќи изборите не се конфигурирани да користат шифрирање.',
+	'securepoll-dump-title' => 'Базна резерва: $1',
+	'securepoll-dump-no-crypt' => 'Нема шифрирана гласачка евиденција за овие избори, бидејќи изборите не се поставени да користат шифрирање.',
 	'securepoll-dump-not-finished' => 'Шифрираната гласачка евиденција е достапна дури откога ќе завршат изборите ($1 во $2)',
 	'securepoll-dump-no-urandom' => 'Не можам да отворам /dev/urandom.  
-За да се одржи приватноста на гласачот, шифрираната гласачка евиденција станува достапна за јавноста само кога податоците од евиденцијата ќе можат да се мешаат со помош на безбедна низа на случајни броеви.',
-	'securepoll-urandom-not-supported' => 'Овој сервер не поддржува криптографско создавање на случајни броеви.
+За да се одржи приватноста на гласачот, шифрираната гласачка евиденција станува достапна за јавноста само кога податоците од евиденцијата ќе можат да се промешаат со помош на безбедна низа на случајни броеви.',
+	'securepoll-urandom-not-supported' => 'Овој опслужувач не поддржува криптографско создавање на случајни броеви.
 За да се одржи приватноста на гласачите, шифрираните избирачки податоци стануваат достапни за јавноста само кога ќе можат да се мешаат со безбедна низа случајни броеви.',
 	'securepoll-translate-title' => 'Преведи: $1',
 	'securepoll-invalid-language' => 'Неважечки јазичен код „$1“',
-	'securepoll-submit-translate' => 'Ажурирање',
+	'securepoll-header-trans-id' => 'Назнака',
+	'securepoll-submit-translate' => 'Поднови',
 	'securepoll-language-label' => 'Избери јазик:',
 	'securepoll-submit-select-lang' => 'Преведување',
-	'securepoll-entry-text' => 'Подолу е наведена листата на гласањата.',
+	'securepoll-entry-text' => 'Подолу е наведен списокот на гласања.',
 	'securepoll-header-title' => 'Име',
 	'securepoll-header-start-date' => 'Почетен датум',
 	'securepoll-header-end-date' => 'Завршен датум',
 	'securepoll-subpage-vote' => 'Глас',
 	'securepoll-subpage-translate' => 'Преведи',
-	'securepoll-subpage-list' => 'Листа',
-	'securepoll-subpage-dump' => 'Отпаднати гласови',
+	'securepoll-subpage-list' => 'Список',
+	'securepoll-subpage-dump' => 'Базна резерва од гласовите',
 	'securepoll-subpage-tally' => 'Преброј',
 	'securepoll-tally-title' => 'Пребројување: $1',
 	'securepoll-tally-not-finished' => 'Жалиме, но не можете да ги пребројувате изборите додека прво не заврши гласањето.',
@@ -5417,16 +7117,19 @@ $1',
 	'securepoll-tally-no-key' => 'Не можете да ги пребројувате овие избори бидејќи гласовите се шифрирани, а клучот за дешифрирање не е достапен.',
 	'securepoll-tally-local-legend' => 'Преброј ги складираните резултати',
 	'securepoll-tally-local-submit' => 'Создај пребројување',
-	'securepoll-tally-upload-legend' => 'Подигни шифрирана отпадна податотека',
+	'securepoll-tally-upload-legend' => 'Подигни шифрирана резрвна складишна податотека',
 	'securepoll-tally-upload-submit' => 'Создај пребројување',
 	'securepoll-tally-error' => 'Грешка при толкување на гласовите, не можам да создадам пребројување.',
 	'securepoll-no-upload' => 'Не беше подигната податотека, па не може да се пребројуваат резултатите.',
-	'securepoll-dump-corrupt' => 'Отпадната податотека е расипана и не може да се обработи.',
+	'securepoll-dump-corrupt' => 'Податотеката со базната резерва е оштетена и не може да се обработи.',
 	'securepoll-tally-upload-error' => 'Грешка при пребројување на отпаднатите гласови: $1',
 	'securepoll-pairwise-victories' => 'Спарена матрица за пресметка на победникот',
 	'securepoll-strength-matrix' => 'Матрица за јачина на патеката',
 	'securepoll-ranks' => 'Конечно рангирање',
 	'securepoll-average-score' => 'Просечна оценка',
+	'securepoll-round' => 'Коло $1',
+	'securepoll-spoilt' => '(Расипани)',
+	'securepoll-exhausted' => '(Исцрпени)',
 );
 
 /** Malayalam (മലയാളം)
@@ -5470,6 +7173,7 @@ $1',
 പിഴവ്:
 <pre>$2</pre>',
 	'securepoll-gpg-config-error' => 'GPG താക്കോലുകൾ തെറ്റായാണ് ക്രമീകരിക്കപ്പെട്ടിരിക്കുന്നത്.',
+	'securepoll-gpg-parse-error' => 'ജി.പി.ജി. ഔട്ട്പുട്ട് മനസ്സിലാക്കുന്നതിൽ പിഴവുണ്ടായിരിക്കുന്നു.',
 	'securepoll-no-decryption-key' => 'ഗൂഢീകരണം മാറ്റാനുള്ള ചാവി ക്രമീകരിച്ചിട്ടില്ല.
 ഗൂഢീകരണം മാറ്റാൻ കഴിയില്ല.',
 	'securepoll-jump' => 'വോട്ടിങ് സെർവറിലേയ്ക്ക് പോവുക',
@@ -5487,7 +7191,9 @@ $1',
 	'securepoll-api-token-mismatch' => 'സുരക്ഷാ ചീട്ട് ഒത്തുപോകുന്നില്ല, പ്രവേശിക്കാൻ കഴിയില്ല.',
 	'securepoll-not-logged-in' => 'ഈ തിരഞ്ഞെടുപ്പിൽ വോട്ട് ചെയ്യാൻ താങ്കൾ ലോഗിൻ ചെയ്യേണ്ടതാകുന്നു',
 	'securepoll-too-few-edits' => 'ക്ഷമിക്കുക, താങ്കൾക്ക് വോട്ട് ചെയ്യാനാവില്ല. ഈ തിരഞ്ഞെടുപ്പിൽ വോട്ട് ചെയ്യാൻ താങ്കൾക്ക് $1 {{PLURAL:$1|തിരുത്തൽ|തിരുത്തലുകൾ}} ആവശ്യമാണ്, താങ്കൾക്ക് $2 എണ്ണമേയുള്ളു.',
+	'securepoll-too-new' => 'ക്ഷമിക്കണം, താങ്കൾക്ക് വോട്ട് ചെയ്യാനാവില്ല. ഈ തിരഞ്ഞെടുപ്പിൽ വോട്ട് ചെയ്യാൻ $1 $3-യ്ക്കു മുമ്പ് അംഗത്വമെടുത്തിരിക്കണം, താങ്കൾ അംഗത്വമെടുത്തത് $2 $4-നു് ആണ്.',
 	'securepoll-blocked' => 'ക്ഷമിക്കുക, താങ്കളെ ഇപ്പോൾ തിരുത്തുന്നതിൽ നിന്നും തടഞ്ഞിരിക്കുന്നതിനാൽ താങ്കൾക്ക് വോട്ട് ചെയ്യാൻ കഴിയില്ല.',
+	'securepoll-blocked-centrally' => 'ക്ഷമിക്കണം, കുറഞ്ഞത് {{PLURAL:$1|ഒരു|$1}} {{PLURAL:$1|വിക്കിയിൽ|വിക്കികളിൽ}} തടയപ്പെട്ടിരിക്കുകയാണെങ്കിൽ താങ്കൾക്ക് വോട്ട് ചെയ്യാനാവില്ല.',
 	'securepoll-bot' => 'ക്ഷമിക്കുക, ബോട്ട് പദവി ലഭിച്ച അംഗത്വങ്ങളെ ഈ തിരഞ്ഞെടുപ്പിൽ വോട്ട് ചെയ്യാൻ അനുവദിക്കുന്നില്ല.',
 	'securepoll-not-in-group' => 'ഈ തിരഞ്ഞെടുപ്പിൽ "$1" ഗണത്തിൽ പെടുന്ന അംഗങ്ങൾക്കു മാത്രമേ വോട്ട് ചെയ്യാൻ കഴിയൂ.',
 	'securepoll-not-in-list' => 'ക്ഷമിക്കുക, ഈ തിരഞ്ഞെടുപ്പിൽ വോട്ടു ചെയ്യാനായി മുൻകൂട്ടി നിശ്ചയിക്കപ്പെട്ട പട്ടികയിൽ താങ്കൾ ഇല്ല.',
@@ -5538,19 +7244,164 @@ $1',
 	'securepoll-subpage-tally' => 'തുലനം ചെയ്യുക',
 	'securepoll-tally-title' => 'തുലനം ചെയ്യുക: $1',
 	'securepoll-tally-not-finished' => 'ക്ഷമിക്കുക, വോട്ടിങ് പൂർണ്ണമാകുന്നതുവരെ തിരഞ്ഞെടുപ്പ് തുലനം ചെയ്ത് നോക്കാൻ താങ്കൾക്ക് കഴിയില്ല.',
+	'securepoll-can-decrypt' => 'തിരഞ്ഞെടുപ്പ് വിവരങ്ങൾ ഗൂഢീകരിക്കപ്പെട്ടിരിക്കുന്നു, പക്ഷേ ഗൂഢീകരണം നീക്കാനുള്ള ചാവി ലഭ്യമല്ല.
+ഇപ്പോൾ ഡേറ്റാബേസിലുള്ള ഫലങ്ങളുമായി താങ്കൾക്ക് ഒത്തുനോക്കാവുന്നതാണ്, അല്ലെങ്കിൽ അപ്‌‌ലോഡ് ചെയ്യുന്ന ഒരു പ്രമാണത്തിലെ ഗൂഢീകരിക്കപ്പെട്ട ഫലങ്ങൾ ഒത്തുനോക്കാവുന്നതാണ്.',
+	'securepoll-tally-no-key' => 'വോട്ടുകളെല്ലാം ഗൂഢീകരിച്ചിരിക്കുന്നു, ഗൂഢീകരണം മാറ്റാനുള്ള ചാവി ലഭ്യമല്ലാത്തതിനാൽ ഈ തിരഞ്ഞെടുപ്പിന്റെ വിവരങ്ങൾ ഒത്തുനോക്കാൻ താങ്കൾക്ക് കഴിയില്ല.',
 	'securepoll-tally-local-legend' => 'ശേഖരിക്കപ്പെട്ടിട്ടുള്ള ഫലങ്ങൾ തുലനം ചെയ്യുക',
 	'securepoll-tally-local-submit' => 'ഒത്തുനോക്കൽ സൃഷ്ടിക്കുക',
 	'securepoll-tally-upload-legend' => 'നിഗൂഢീകരിക്കപ്പെട്ട ഡമ്പ് അപ്‌‌ലോഡ് ചെയ്യുക',
 	'securepoll-tally-upload-submit' => 'ഒത്തുനോക്കുക',
+	'securepoll-tally-error' => 'തിരഞ്ഞെടുപ്പ് വിവരങ്ങൾ മനസ്സിലാക്കുന്നതിൽ പിഴവുണ്ടായിരിക്കുന്നു, ഫലം നൽകാൻ സാധിക്കുകയില്ല.',
 	'securepoll-no-upload' => 'യാതൊരു പ്രമാണവും അപ്‌‌ലോഡ് ചെയ്തിട്ടില്ല, ഫലങ്ങൾ തുലനം ചെയ്യാൻ കഴിയില്ല.',
 	'securepoll-dump-corrupt' => 'ഡമ്പ് പ്രമാണം കേടാണ്, അതുകൊണ്ട് മുന്നോട്ടുപോകാൻ കഴിയില്ല.',
 	'securepoll-tally-upload-error' => 'ഒത്തുനോക്കുന്നതിൽ പിഴവുണ്ടായ ഡമ്പ് പ്രമാണം: $1',
 	'securepoll-pairwise-victories' => 'ജോഡിയായുള്ള വിജയ മട്രിക്സ്',
 	'securepoll-ranks' => 'അന്തിമ റാങ്കിങ്',
 	'securepoll-average-score' => 'ശരാശരി സ്കോർ',
+	'securepoll-round' => 'ഘട്ടം  1',
+	'securepoll-spoilt' => '(അസ്പഷ്ടം)',
+	'securepoll-exhausted' => '(തീർന്നവ)',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'securepoll-strike-reason' => 'Шалтгаан:',
+	'securepoll-strike-cancel' => 'Цуцлах',
+	'securepoll-header-reason' => 'Шалтгаан',
+);
+
+/** Marathi (मराठी)
+ * @author Harishmr
+ * @author Kaajawa
+ * @author Mahitgar
+ * @author Rahuldeshmukh101
+ * @author Sau6402
+ * @author V.narsikar
+ */
+$messages['mr'] = array(
+	'securepoll' => 'सुरक्षित मतदान',
+	'securepoll-desc' => 'सर्वेक्षणे आणि निवडणूकांकरीता विस्तार',
+	'securepoll-invalid-page' => 'अवैध उपपान "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => 'हे कार्य करण्यासाठी आपण निवडणूक अधिकारी असणे आवशक आहे',
+	'securepoll-too-few-params' => 'उपपान पॅरामीटर्स पुरेशा  नाहीत (अग्राह्य दुवा).',
+	'securepoll-invalid-election' => '"$1" हे योग्य  निवडनुक ओळखपत्र नाही.',
+	'securepoll-welcome' => '<strong>$1 चे स्वागत ! </strong>',
+	'securepoll-not-started' => 'अजुन निवडणुक सुरु झालेली नाही. ती $2 ला $3 वाजता आयोजित केली गेली आहे.',
+	'securepoll-finished' => 'निवडणुका संपल्या आहेत.आपण मतदान करू चाकात नाही.',
+	'securepoll-not-qualified' => 'आपण या निवडणुकीत मत देण्यास पात्र नाही आहात :$1',
+	'securepoll-change-disallowed' => 'तुम्ही या मतदानात अगोदर  भाग घेतला आहे.
+तुम्ही परत मत देऊ शकत नाही.',
+	'securepoll-change-allowed' => '<strong>सूचना : तुम्ही या निवडणुकीत आधी मतदान केलेले आहे. </strong>
+खालील फॉर्म भरून, तुम्ही आपले आधीचे मत बदलू शकतात.
+असे केल्यास तुमचे आधीचे मत बाद करण्यात येईल.',
+	'securepoll-submit' => 'मत नोंदवा',
+	'securepoll-gpg-receipt' => 'मतदान केल्या बद्दल धन्यवाद.
+आपली इच्छा असल्यास, आपण आपल्या मताचा पुरावा म्हणून  खालील पावती आपल्या जवळ ठेऊ शकता :
+<pre>$1</pre>',
+	'securepoll-thanks' => 'धन्यावाद ,आपले मत नोंदवले गेले आहेत.',
+	'securepoll-return' => '$1 कडे परत चला.',
+	'securepoll-encrypt-error' => 'आपले मत रेकॉर्ड एनक्रीप्ट करण्यात अयश्स्वी.
+तुमचे मत रेकॉर्ड केले गेले नाही
+
+$1',
+	'securepoll-no-gpg-home' => 'GPG home directory तयार करण्यात अयशस्वी.',
+	'securepoll-secret-gpg-error' => 'GPG एक्झीक्यूटींग त्रूटी.
+अधिक माहिती दर्शविण्याकरीता LocalSettings.php मध्ये $wgSecurePollShowErrorDetail=true वापरा;',
+	'securepoll-full-gpg-error' => 'GPG चलवण्यात त्रुटी:
+
+कमांड: $1
+
+त्रुटी:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG keys चुकीच्या पद्धतीने कॉन्फीगर झालेल्या आहेत',
+	'securepoll-gpg-parse-error' => 'जी पी जी आउटपुट interpret करण्यात त्रुटी',
+	'securepoll-no-decryption-key' => 'कोणतीही  कूटमुक्तिकरण कुँजी विन्यासित नाहीं .(No decryption key is configured)
+कूटमुक्त  करू शकत नाही',
+	'securepoll-jump' => 'मतदान सर्वरला जा',
+	'securepoll-bad-ballot-submission' => 'आपले मत अयोग्य होते : $1',
+	'securepoll-unanswered-questions' => 'आपणास सर्व प्रश्नांची उत्तरे द्यायची आहेत.',
+	'securepoll-invalid-rank' => 'चुकीचा क्रमांक. उमेदवारांना १ ते ९९९ मधील क्रमांक देणे अपेक्षीत आहे.',
+	'securepoll-unranked-options' => 'काही विकल्प गुणानुक्रमित नाहीत.
+आपण सर्व विकल्पांना १ ते ९९९ मधील गुणानुक्रम द्यावयास हवा.',
+	'securepoll-invalid-score' => 'आपले गुण $1 ते $2 या आकड्यान मधेच पाहिजे.',
+	'securepoll-unanswered-options' => 'आपल्याला प्रत्येक प्रश्नाला काहीतरी प्रतिक्रिया द्यायचीच आहे.',
+	'securepoll-remote-auth-error' => 'विदागारातून आपल्या खात्याची माहिती शेंदण्यात त्रुटी.(Error fetching your account information from the server)',
+	'securepoll-remote-parse-error' => 'दातावर प्रमाणीकरण पडताळणीत त्रूटी आलेली आहे',
+	'securepoll-api-invalid-params' => 'अमान्य मापदंड',
+	'securepoll-api-no-user' => 'या नावाचा कोणीही सदस्य अस्तित्वात नाही.',
+	'securepoll-api-token-mismatch' => 'सुरक्षा निशाणी जुळलेली नाही , आपण प्रवेश करू शकत नाही',
+	'securepoll-not-logged-in' => 'या मतदानात भाग घेण्यापूर्वी तुम्ही सदस्य खात्याद्वारे प्रवेश करणे अनिवार्य आहे.',
+	'securepoll-too-few-edits' => 'क्षमस्व, तुम्ही मतदान करू शकत नाहीत. या मतदानात भाग घेण्यास कमीत कमी $1 {{PLURAL:$1|संपादन|संपादने}} केलेली असणे आवश्यक आहे. तुम्ही आजवर $2 {{PLURAL:$2|संपादन केले आहे|संपादने केली आहेत}}.',
+	'securepoll-too-new' => 'माफकरा आपणास मतदान करता येणार नाही. ह्या निवडणुकीत मतदानासाठी  आपले खाते $1  ला $3  पूर्वी नोंदीकृत असायला हवे आहे. आपले खाते $2 ला $4   नोंदविले आहे.',
+	'securepoll-blocked' => 'माफ करा, आपण या मतदानात भाग घेऊ शकत नाही जर आपण संपादण्यास प्रतिरोधित असाल.',
+	'securepoll-blocked-centrally' => 'माफ करा, आपण या निवडणुकीत मतदान करू शकत नाही कारण आपण कमीतकमी $1 {{PLURAL:$1|विकिवर|विकिंवर}} प्रतिरोधित आहात.',
+	'securepoll-bot' => 'माफ करा, सांगकाम्या नामशीर्ष असणाऱ्या खात्यांना या निवडणुकीत मतदानाची परवानगी नाही.',
+	'securepoll-not-in-group' => 'फक्त "$1" गटातील सदस्यच या निवडणुकीत मतदान करू शकतात.',
+	'securepoll-not-in-list' => 'माफ करा, आपले नाव  ह्या निवडणुकीत मतदान करू शकणाऱ्या मतदातांच्या  मतदार यादीत स्वविष्ट नाही.',
+	'securepoll-list-title' => 'मत यादी: $1',
+	'securepoll-header-timestamp' => 'वेळ',
+	'securepoll-header-voter-name' => 'नाव',
+	'securepoll-header-voter-domain' => 'डोमेन (प्रक्षेत्र)',
+	'securepoll-header-ua' => 'सदस्य प्रतिनीधी',
+	'securepoll-header-cookie-dup' => 'उघडणे',
+	'securepoll-header-strike' => 'बहिशाल',
+	'securepoll-header-details' => 'तपशील',
+	'securepoll-strike-button' => 'बहिशाल',
+	'securepoll-unstrike-button' => 'निशाणी नसलेले',
+	'securepoll-strike-reason' => 'कारण:',
+	'securepoll-strike-cancel' => 'रद्द करा',
+	'securepoll-strike-error' => 'खोडणे / खोडणे-रद्द करताना  आलेली त्रुटी : $1',
+	'securepoll-strike-token-mismatch' => 'कार्यकाळाची माहिती गाहाळ झाली आहे.',
+	'securepoll-details-link' => 'तपशील',
+	'securepoll-details-title' => 'मताचा तपशील: #$1',
+	'securepoll-invalid-vote' => '"$1" हे योग्य  निवडनुक ओळखपत्र नाही.',
+	'securepoll-header-voter-type' => 'उमेद्वाराचे प्रकार',
+	'securepoll-voter-properties' => 'उमेद्वाराचे गुणधर्म',
+	'securepoll-strike-log' => 'बहिशाल विवरण',
+	'securepoll-header-action' => 'क्रिया',
+	'securepoll-header-reason' => 'कारण',
+	'securepoll-header-admin' => 'प्रच्यालक',
+	'securepoll-cookie-dup-list' => 'स्मृतिशेषनुसार (Cookieनुसार) दुहेरी अथवा दुबार सदस्य',
+	'securepoll-dump-title' => 'राशिपात : $1',
+	'securepoll-dump-no-crypt' => 'हि  मतदान  प्रक्रिया सांकेतिक भाषेत जतन करण्यासाठी आखणी केली नसल्याने ह्या निवडणुकीचे कोणतेही सांकेतिक दस्तावेज उपलब्ध नाहीत',
+	'securepoll-dump-not-finished' => 'निवडणुकीचे सांकेतिक दस्तावेज अंतिम तारखे नंतर  $1  ला  $2     वाजता   उपलब्ध होतील',
+	'securepoll-dump-no-urandom' => ' /dev/urandom उघडू शकत नाही. 
+ मतदात्याची गोपनीयता जपण्याच्या दृष्टीने, encrypted election records,  सुरक्षीत अविशीष्ट नंबर स्ट्रीम ने शफल झाल्यानंतरच  सार्वजनिकरीत्या उपलब्ध होतील.',
+	'securepoll-urandom-not-supported' => 'हा विदादाता (सर्वर) cryptographic random number generation ला सपोर्ट करत नाही
+ मतदात्याची गोपनीयता जपण्याच्या दृष्टीने, encrypted election records,  सुरक्षीत अविशीष्ट नंबर स्ट्रीम ने शफल झाल्यानंतरच  सार्वजनिकरीत्या उपलब्ध होतील.',
+	'securepoll-translate-title' => '$1 या भाषेत भाषांतर करा',
+	'securepoll-invalid-language' => 'अयोग्य भाषा क्रमांक "$1"',
+	'securepoll-submit-translate' => 'अद्ययावत',
+	'securepoll-language-label' => 'भाषा निवडा :',
+	'securepoll-submit-select-lang' => 'भाषांतर करा',
+	'securepoll-entry-text' => ' मतांची यादी खालील प्रमाणे आहे.',
+	'securepoll-header-title' => 'नाव',
+	'securepoll-header-start-date' => 'सुरूवात दिनांक',
+	'securepoll-header-end-date' => 'अंतिम दिनांक',
+	'securepoll-subpage-vote' => 'मत',
+	'securepoll-subpage-translate' => 'भाषांतर करा',
+	'securepoll-subpage-list' => 'यादी',
+	'securepoll-subpage-dump' => 'राशिपात',
+	'securepoll-subpage-tally' => 'जुळणे',
+	'securepoll-tally-title' => 'जुळले: $1',
+	'securepoll-tally-not-finished' => 'माफकरा, आपण मतदान प्रक्रिया पूर्ण होई पर्यंत निवडणूक मते जुळवू शकत नाहीत',
+	'securepoll-tally-local-legend' => 'पूर्वी केलेले निकाल जुळवा',
+	'securepoll-tally-local-submit' => ' गिनती तयार करा',
+	'securepoll-tally-upload-submit' => ' गिनती तयार करा',
+	'securepoll-tally-error' => 'मतदान दस्तावेज समजण्यात त्रूटी आलेली आहे. मते जुळत नाहीत',
+	'securepoll-dump-corrupt' => 'राशिपात माहितीची संचिका दुषित झाल्यामुळे पुढील कार्य करता येत नाही',
+	'securepoll-tally-upload-error' => 'राशीपाताच्या संचीकेस जुळवणी करतांना त्रूटी आलेल्या आहेत : $1',
+	'securepoll-ranks' => 'अंतिम क्रमवारी',
+	'securepoll-average-score' => 'सारासरी गुण',
+	'securepoll-round' => 'फेरी $1',
+	'securepoll-spoilt' => '(खराब होणे)',
+	'securepoll-exhausted' => '(थकून जाणे)',
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
  * @author Aurora
  * @author Izzudin
  */
@@ -5611,7 +7462,9 @@ Semua pilihan perlu diberikan pangkat di antara 1 dan 999.',
 	'securepoll-api-token-mismatch' => 'Token keselamatan tidak serasi, tidak dapat log masuk.',
 	'securepoll-not-logged-in' => 'Anda mesti log masuk untuk mengundi dalam pemilihan ini',
 	'securepoll-too-few-edits' => 'Maaf, anda tak boleh undi. Anda perlu mempunyai sekurang-kurangnya $1 suntingan untuk undi dalam pemilihan ini, anda kini ada $2 sahaja.',
+	'securepoll-too-new' => 'Maaf, anda tidak boleh mengundi. Akaun mesti didaftarkan sebelum $1, $3 untuk mengundi di pemilihan ini; anda berdaftar pada $2, $4.',
 	'securepoll-blocked' => 'Maaf, anda tak boleh mengundi jika anda kini telah disekat daripada menyunting.',
+	'securepoll-blocked-centrally' => 'Maaf, anda tidak boleh mengundi dalam pemilihan ini kerana anda disekat di sekurang-kurangnya $1 {{PLURAL:$1|wiki|wiki}}.',
 	'securepoll-bot' => 'Maaf, akaun dengan bendera bot tak dibenarkan untuk mengundi dalam pemilihan ini.',
 	'securepoll-not-in-group' => 'Hanya ahli kumpulan "$1" sahaja boleh undi dalam pemilihan ini.',
 	'securepoll-not-in-list' => 'Maaf, anda tidak berada dalam senarai pengguna yang dibenarkan untuk undi dalam pemilihan ini.',
@@ -5626,7 +7479,7 @@ Semua pilihan perlu diberikan pangkat di antara 1 dan 999.',
 	'securepoll-strike-button' => 'Buang',
 	'securepoll-unstrike-button' => 'Kembalikan',
 	'securepoll-strike-reason' => 'Alasan:',
-	'securepoll-strike-cancel' => 'Batal',
+	'securepoll-strike-cancel' => 'Batalkan',
 	'securepoll-strike-error' => 'Ralat membuang/kembalikan: $1',
 	'securepoll-strike-token-mismatch' => 'Data sesi hilang',
 	'securepoll-details-link' => 'Lanjut',
@@ -5677,6 +7530,9 @@ Anda boleh memilih untuk menyemak keputusan yang ada dalam pangkalan data, atau 
 	'securepoll-strength-matrix' => 'Matriks kekuatan laluan',
 	'securepoll-ranks' => 'Kedudukan akhir',
 	'securepoll-average-score' => 'Mata purataba',
+	'securepoll-round' => 'Pusingan $1',
+	'securepoll-spoilt' => '(Rosak)',
+	'securepoll-exhausted' => '(Lupus)',
 );
 
 /** Maltese (Malti)
@@ -5771,6 +7627,7 @@ Biex tinżamm il-privatezza tal-votant, ir-reġistrazzjonijieet kriptati tal-ele
 	'securepoll-submit-translate' => 'Aġġorna',
 	'securepoll-language-label' => 'Agħżel lingwa:',
 	'securepoll-submit-select-lang' => 'Ittraduċi',
+	'securepoll-entry-text' => 'Hawn taħt hawn il-lista tas-sondaġġi.',
 	'securepoll-header-title' => 'Isem',
 	'securepoll-header-start-date' => 'Data tal-bidu',
 	'securepoll-header-end-date' => 'Data tat-tmiem',
@@ -5790,6 +7647,161 @@ Inti tista' tagħżel jew li tgħodd ir-riżultati preżenti fid-databażi, jew 
 	'securepoll-tally-upload-submit' => 'Oħloq talja',
 	'securepoll-tally-error' => 'Żball fl-interpretazzjoni tar-reġistrazzjoni tal-vot, ir-riżultati ma jistgħux jingħaddu.',
 	'securepoll-no-upload' => "L-ebda fajl ma ġie mtella', ir-riżultati ma jistgħux jingħaddu.",
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'securepoll-submit' => 'Каямс вайгель',
+	'securepoll-header-strike' => 'Черькстамс',
+	'securepoll-strike-button' => 'Черькстамс',
+	'securepoll-unstrike-button' => 'Саемс черькстамонть',
+	'securepoll-strike-reason' => 'Тувталось:',
+	'securepoll-details-link' => 'Мезде моли кортамось',
+	'securepoll-header-reason' => 'Тувтал',
+	'securepoll-language-label' => 'Кочкамс келенть:',
+	'securepoll-submit-select-lang' => 'Ютавтомс',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Event
+ * @author Finnrind
+ * @author Guaca
+ * @author Jon Harald Søby
+ * @author Laaknor
+ * @author Nghtwlkr
+ * @author Ronja Addams-Moring
+ * @author Stigmj
+ */
+$messages['nb'] = array(
+	'securepoll' => 'Sikkert valg',
+	'securepoll-desc' => 'En utvidelse for valg og undersøkelser',
+	'securepoll-invalid-page' => 'Ugyldig underside «<nowiki>$1</nowiki>»',
+	'securepoll-need-admin' => 'Du må være valgadministrator for å kunne utføre dette.',
+	'securepoll-too-few-params' => 'Ikke mange nok undersideparametre (ugyldig lenke).',
+	'securepoll-invalid-election' => '"$1" er ikke en gyldig valg-id.',
+	'securepoll-welcome' => '<strong>Velkommen $1!</strong>',
+	'securepoll-not-started' => 'Dette valget har enda ikke startet.
+Det starter etter planen $2 kl. $3.',
+	'securepoll-finished' => 'Dette valget er avsluttet, du kan ikke lenger stemme.',
+	'securepoll-not-qualified' => 'Du er ikke kvalifisert til å stemme i dette valget: $1',
+	'securepoll-change-disallowed' => 'Du har allerede stemt i dette valget.
+Du kan desverre ikke stemme på nytt.',
+	'securepoll-change-allowed' => '<strong>Bemerk: Du har allerede stemt i dette valget.</strong>
+Du kan endre stemmen din ved å sende inn skjemaet nedenfor.
+Bemerk at dersom du gjør dette vil den opprinnelige stemmen din bli forkastet.',
+	'securepoll-submit' => 'Avgi stemme',
+	'securepoll-gpg-receipt' => 'Takk for at du avga stemme.
+
+Dersom du ønsker det kan du ta vare på følgende kvittering som bevis på din stemme:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'Takk, stemmen din har blitt registrert.',
+	'securepoll-return' => 'Tilbake til $1',
+	'securepoll-encrypt-error' => 'Klarte ikke å kryptere din stemme.
+Stemmen har ikke blitt registrert!
+
+$1',
+	'securepoll-no-gpg-home' => 'Kunne ikke opprette hjemmekatalog for GPG',
+	'securepoll-secret-gpg-error' => 'Feil ved kjøring av GPG.
+bruk $wgSecurePollShowErrorDetail=true; i LocalSettings.php for å se flere detaljer.',
+	'securepoll-full-gpg-error' => 'Feil under kjøring av GPG:
+
+Kommando: $1
+
+Feil:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG-nøklene er ikke satt opp riktig.',
+	'securepoll-gpg-parse-error' => 'Feil under tolking av utdata fra GPG.',
+	'securepoll-no-decryption-key' => 'Ingen dekrypteringsnøkkel er konfigurert.
+Kan ikke dekryptere.',
+	'securepoll-jump' => 'Gå til stemmetjeneren',
+	'securepoll-bad-ballot-submission' => 'Din stemme var ugyldig: $1',
+	'securepoll-unanswered-questions' => 'Du må besvare alle spørsmålene.',
+	'securepoll-invalid-rank' => 'Ugyldig rangering. Du må gi kandidatene en rangering mellom 1 og 999.',
+	'securepoll-unranked-options' => 'Noen valg var urangerte.
+Du må gi alle alternativene en rangering mellom 1 og 999.',
+	'securepoll-invalid-score' => 'Karakteren må være et tall mellom $1 og $2.',
+	'securepoll-unanswered-options' => 'Du må gi et svar på hver spørsmål.',
+	'securepoll-remote-auth-error' => 'Feil oppsto ved henting av din kontoinformasjon fra tjeneren.',
+	'securepoll-remote-parse-error' => 'Feil oppsto ved tolkning av autorisasjonssvar fra tjeneren.',
+	'securepoll-api-invalid-params' => 'Ugyldige parametere.',
+	'securepoll-api-no-user' => 'Det ble ikke funnet noen bruker med den oppgitte IDen.',
+	'securepoll-api-token-mismatch' => 'Sikkerhetsnøkkel manglet, kan ikke logge inn.',
+	'securepoll-not-logged-in' => 'Du må logge inn for å kunne stemme i dette valget.',
+	'securepoll-too-few-edits' => 'Beklager, du kan ikke stemme. Du må ha gjort minst $1 {{PLURAL:$1|redigering|redigeringer}} for å delta i denne avstemningen. Du har gjort $2.',
+	'securepoll-too-new' => 'Du kan desssverre ikke stemme. Kontoen din må ha vært registrert før $1 på $3 for å kunne stemme i dette valget, og du registrerte deg $2 på $4.',
+	'securepoll-blocked' => 'Beklager, du kan ikke stemme i dette valget hvis du er blokkert fra å redigere.',
+	'securepoll-blocked-centrally' => 'Du kan dessverre ikke stemme i dette valget fordi du er blokkert på minst $1 {{PLURAL:$1|wiki|wikier}}.',
+	'securepoll-bot' => 'Beklager, kontoer med botflagg kan ikke stemme i dette valget.',
+	'securepoll-not-in-group' => 'Kun brukere i gruppen «$1» kan delta i denne avstemningen.',
+	'securepoll-not-in-list' => 'Du er dessverre ikke i lista over brukere som kan stemme i dette valget.',
+	'securepoll-list-title' => 'Vis stemmer: $1',
+	'securepoll-header-timestamp' => 'Tid',
+	'securepoll-header-voter-name' => 'Navn',
+	'securepoll-header-voter-domain' => 'Domene',
+	'securepoll-header-ua' => 'Brukeragent',
+	'securepoll-header-cookie-dup' => 'Dupl',
+	'securepoll-header-strike' => 'Stryk',
+	'securepoll-header-details' => 'Detaljer',
+	'securepoll-strike-button' => 'Stryk',
+	'securepoll-unstrike-button' => 'Opphev strykning',
+	'securepoll-strike-reason' => 'Årsak:',
+	'securepoll-strike-cancel' => 'Avbryt',
+	'securepoll-strike-error' => 'Feil ved fjerning eller ved opphevelse av fjerning: $1',
+	'securepoll-strike-token-mismatch' => 'Sesjonsdata tapt',
+	'securepoll-details-link' => 'Detaljer',
+	'securepoll-details-title' => 'Stemmedetaljer: #$1',
+	'securepoll-invalid-vote' => '«$1» er ikke en gyldig stemme-ID',
+	'securepoll-header-voter-type' => 'Stemmegivertype',
+	'securepoll-voter-properties' => 'Stemmegiveregenskaper',
+	'securepoll-strike-log' => 'Strykningslogg',
+	'securepoll-header-action' => 'Handling',
+	'securepoll-header-reason' => 'Årsak',
+	'securepoll-header-admin' => 'Admin',
+	'securepoll-cookie-dup-list' => 'Cookie duplikatbruker',
+	'securepoll-dump-title' => 'Dump: $1',
+	'securepoll-dump-no-crypt' => 'Ingen kryptert valgregistrering er tilgjengelig for dette valget, på grunn av at valget ikke er satt opp til å benytte kryptering.',
+	'securepoll-dump-not-finished' => 'Krypterte valgregistre er kun tilgjengelige etter avsluttningen den $1 klokken $2',
+	'securepoll-dump-no-urandom' => 'Kan ikke åpne /dev/urandom.
+For å sikre en hemmelig avstemning er de krypterte valgregistrene kun offentlig tilgjengelig når de kan blandes med en sikker strøm av tilfeldige tall.',
+	'securepoll-urandom-not-supported' => 'Denne tjeneren støtter ikke kryptografisk generering av tilfeldige tall.
+For å opprettholde velgernes anonymitet vil de enkelte stemmene kun offentliggjøres når de kan anonymiseres med en generator for tilfeldige tall.',
+	'securepoll-translate-title' => 'Oversett: $1',
+	'securepoll-invalid-language' => 'Ugyldig språkkode «$1»',
+	'securepoll-submit-translate' => 'Oppdater',
+	'securepoll-language-label' => 'Velg språk:',
+	'securepoll-submit-select-lang' => 'Oversett',
+	'securepoll-entry-text' => 'Under er listen over avstemninger',
+	'securepoll-header-title' => 'Navn',
+	'securepoll-header-start-date' => 'Startdato',
+	'securepoll-header-end-date' => 'Sluttdato',
+	'securepoll-subpage-vote' => 'Stem',
+	'securepoll-subpage-translate' => 'Oversett',
+	'securepoll-subpage-list' => 'List opp',
+	'securepoll-subpage-dump' => 'Dump',
+	'securepoll-subpage-tally' => 'Opptelling',
+	'securepoll-tally-title' => 'Opptelling: $1',
+	'securepoll-tally-not-finished' => 'Beklager, du kan ikke telle opp valgresultatet før valget er fullført.',
+	'securepoll-can-decrypt' => 'Valgregisteret har blitt kryptert, men dekrypteringsnøkkelen er tilgjengelig.
+Du kan velge å enten telle opp resultatene tilgjengelig i databasen, eller å telle opp de krypterte resultatene fra en opplastet fil.',
+	'securepoll-tally-no-key' => 'Du kan ikke telle opp dette valget fordi stemmene er kryptert og dekrypteringsnøkkelen er utilgjengelig.',
+	'securepoll-tally-local-legend' => 'Opptelling lagret resultatene',
+	'securepoll-tally-local-submit' => 'Opprett en opptelling',
+	'securepoll-tally-upload-legend' => 'Last opp en kryptert dump',
+	'securepoll-tally-upload-submit' => 'Opprett en opptelling',
+	'securepoll-tally-error' => 'Feil ved tolking av stemmeregisteret, kan ikke opprette en opptelling.',
+	'securepoll-no-upload' => 'Ingen fil ble lastet opp, kan ikke summere opp resultatene.',
+	'securepoll-dump-corrupt' => 'Dumpfila er ødelagt og kan ikke behandles.',
+	'securepoll-tally-upload-error' => 'Feil ved opptelling av dumpfila: $1',
+	'securepoll-pairwise-victories' => 'Matrise over parvis seier',
+	'securepoll-strength-matrix' => 'Matrise over stistyrke',
+	'securepoll-ranks' => 'Endelig resultat',
+	'securepoll-average-score' => 'Gjennomsnittlig karakter',
+	'securepoll-round' => 'Runde $1',
+	'securepoll-spoilt' => '(Ugyldig)',
+	'securepoll-exhausted' => '(Oppbrukt)',
 );
 
 /** Low German (Plattdüütsch)
@@ -5914,8 +7926,128 @@ $messages['nds-nl'] = array(
 	'securepoll-subpage-translate' => 'Vertalen',
 );
 
+/** Nepali (नेपाली)
+ * @author Bhawani Gautam
+ * @author RajeshPandey
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'securepoll' => 'सुरक्षित चुनाव',
+	'securepoll-desc' => 'चुनाव र सर्वेक्षणको लागि विस्तार',
+	'securepoll-invalid-page' => 'अमान्य उपपृष्ठ "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => 'यो कार्य गर्न तपाईं चुनाव प्रवन्धक हुनुपर्छ।',
+	'securepoll-too-few-params' => 'पर्याप्त  उपपृष्ठ मानक नभएको (अमान्य लिंक)।',
+	'securepoll-invalid-election' => '"$1"  मान्य चुनाव परिचय भएन।',
+	'securepoll-welcome' => '<strong>स्वागत $1!</strong>',
+	'securepoll-not-started' => 'यो चुनाव अहिले सुरु भएको छैन।
+यो  $2 को $3 बजे सुरु हुने कार्यक्रम छ।',
+	'securepoll-finished' => 'चुनाव समाप्त भएको छ, अब तपाईंले मत दिन सक्नुहुन्न।',
+	'securepoll-not-qualified' => 'तपाईं $1 चुनावको निम्ति मत दिन योग्य हुनुहुन्न।',
+	'securepoll-change-disallowed' => 'तपाईंले पहिले नैं मत दि सक्नु भएकोछ।
+माफ गर्नुहोला, तपाईं फेरि मत दिन सक्नुहुन्न।',
+	'securepoll-change-allowed' => '<strong>सूचना:तपाईंले पहिलेबाट मत दिसक्नु भएकोछ।</strong>
+तपाईंले निम्न फारम भरेर आफ्नो मत परिवर्तन गर्न सक्नुहुन्छ।
+याद राख्नुहोस् यदि तपाईंले यसो गरे तपाईंको पहिलाको मत रद्द हुनेछ।',
+	'securepoll-submit' => 'मत बुझाउने',
+	'securepoll-gpg-receipt' => 'मत दिनु भएको धन्यबाद
+
+यदि तपाईंले चाहे मत दिएको सबूतको लागि निम्न रसिद लिन सक्नुहुन्छ।:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'धन्यवाद, तपाईंको मत रिकर्ड गरियो।',
+	'securepoll-return' => '$1मा फर्कने',
+	'securepoll-encrypt-error' => 'तपाईंको मत रिकर्ड गर्न असफल।
+तपाईको मत रिकर्ड भएन!
+
+$1',
+	'securepoll-no-gpg-home' => 'GPG होम डाइरेक्ट्री बनाउन असफल।',
+	'securepoll-secret-gpg-error' => 'GPG सञ्चालनमा त्रुटि।
+LocalSettings.phpमा $wgSecurePollShowErrorDetail=true; को प्रयोग जानकारी बढाउन  गर्नुहोस्।',
+	'securepoll-full-gpg-error' => 'GPG सञ्चालनमा त्रुटि:
+
+कमाण्ड: $1
+
+त्रुटि:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG की(keys) हरु  गलत ढंगले कन्फिगर गरिएको।',
+	'securepoll-gpg-parse-error' => 'GPG उत्पादनको व्याख्यामा त्रुटि।',
+	'securepoll-no-decryption-key' => 'ड़िक्रिप्शन कुंजी विन्यास नभएको।
+डिक्रिप्ट गर्न सकिंदैन।',
+	'securepoll-jump' => 'मतदान सर्वरतर्फ जाने',
+	'securepoll-bad-ballot-submission' => 'तपाईंको मत अमान्य: $1',
+	'securepoll-unanswered-questions' => 'तपाईले सबै प्रश्नहरुको उत्तर दिनुपर्छ।',
+	'securepoll-invalid-rank' => 'अमान्य स्तर (rank)। तपाईंले उम्मेदवारको स्तर 1 देखि  999 सम्मको दिनु पर्छ।',
+	'securepoll-unranked-options' => 'केहि प्रश्नहरुलाई स्तर प्रदान गरिएन।
+तपाईंले सब विकल्पहरुलाई 1 देखि 999 सम्मको कुनै एउटा स्तर दिनुपर्छ।',
+	'securepoll-invalid-score' => 'स्कोर $1 र $2 बिचको कुनै एउटा संख्या हुनुपर्छ।',
+	'securepoll-unanswered-options' => 'प्रत्येक प्रश्नहरुको उत्तर तपाईंले दिनु पर्छ।',
+	'securepoll-remote-auth-error' => 'सर्भर बाट तपाईको खाता सम्बन्धी जानकारी निकाल्दा गल्ती भयो ।',
+	'securepoll-remote-parse-error' => 'सर्भर बाट प्राप्त अधिकार प्रदान गर्न लाई प्रतिक्रिया बुझ्दा गल्ती भयो ।',
+	'securepoll-api-invalid-params' => 'अमान्य प्यारामिटर।',
+	'securepoll-api-no-user' => 'यो परिचय भएको प्रयोगकर्ता पाइएन।',
+	'securepoll-api-token-mismatch' => 'सुरक्षा टोकन मिलेन, प्रवेश गर्न सकिंदैन।',
+	'securepoll-not-logged-in' => 'तपाईंले यस चुनावमा मत दिन प्रवेश गरेको हुनुपर्छ',
+	'securepoll-too-few-edits' => 'माफ गर्नुहोस्, तपाईंले मत दिन सक्नुहुन्न। तपाईंले मत दिन निम्नतम $1 {{PLURAL:$1|सम्पादन|सम्पादनहरु}} गरेको हुनुपर्छ, तपाईंले $2 मात्र  गर्नु भएकोछ।',
+	'securepoll-too-new' => 'माफ गर्नुहोला । तपाईले भोट दिन सक्नुहुन्न।  यस मतदान मा भोट दिनलाई  तपाईको खाता $1 भन्दा पहिले दर्ता गरिएको हुनुपर्छ भने तपाईले $2 मा दर्ता गर्नुभएको थियो।',
+	'securepoll-blocked' => 'माफ गर्नुहोस्, तपाईंले यस चुनावमा मत दिन सक्नुहुन्न। तपाईंलाई सम्पादन गर्न बन्देज गरिएकोछ।',
+	'securepoll-blocked-centrally' => 'माफ गर्नुहोला, जब तपाइलाई $1 वा बढि{{PLURAL:$1|विकीi|विकीहरु}}.मा निषेध गरिएको हुन्छ, तपाइले यस चुनावमा तपाईले भोट दिन पाउुनुहुन्न  ।',
+	'securepoll-bot' => 'माफ गर्नुहोस्, बोटको ध्वजा भएको खातालाई यस चुनावमा मत दिने अनुमति छैन।',
+	'securepoll-not-in-group' => '"$1" समूहका सदस्यहरुले मात्र यस चुनावमा मत दिन सक्नेछन्।',
+	'securepoll-not-in-list' => 'माफ गर्नुहोला, तपाईं यस चुनावको लागि मतदानको अधिकार प्राप्त सदस्यहरुको पूर्वनिर्धारित सूचीमा पर्नुहुन्न।',
+	'securepoll-list-title' => 'मतहरुको सूची: $1',
+	'securepoll-header-timestamp' => 'समय',
+	'securepoll-header-voter-name' => 'नाम',
+	'securepoll-header-voter-domain' => 'डोमेन',
+	'securepoll-header-ua' => 'प्रयोगकर्ता एजेन्ट(ब्राउजर)',
+	'securepoll-header-cookie-dup' => 'दोहोरिएको',
+	'securepoll-header-strike' => 'काट्ने',
+	'securepoll-header-details' => 'विवरणहरु',
+	'securepoll-strike-button' => 'काट्ने',
+	'securepoll-unstrike-button' => 'काटेको हटाउने',
+	'securepoll-strike-reason' => 'कारण:',
+	'securepoll-strike-cancel' => 'रद्द गर्ने',
+	'securepoll-strike-error' => 'त्रुटि काट्ने/ काटेको हटाउनेमा: $1',
+	'securepoll-strike-token-mismatch' => 'सेसन डेटा हरायो',
+	'securepoll-details-link' => 'विवरणहरु',
+	'securepoll-details-title' => 'मत विवरणहरु: #$1',
+	'securepoll-invalid-vote' => '"$1"  मान्य चुनाव परिचय भएन।',
+	'securepoll-header-id' => 'आईडी(ID)',
+	'securepoll-header-voter-type' => 'मतदाता प्रकार',
+	'securepoll-voter-properties' => 'मतदाताको विवरणहरु',
+	'securepoll-strike-log' => 'काटेको लग',
+	'securepoll-header-action' => 'कार्य',
+	'securepoll-header-reason' => 'कारण',
+	'securepoll-header-admin' => 'प्रबन्धक',
+	'securepoll-cookie-dup-list' => 'प्रतिलिपि कुकी प्रयोगकर्ताहरु',
+	'securepoll-dump-title' => 'थाक: $1',
+	'securepoll-translate-title' => 'अनुवाद गर्ने: $1',
+	'securepoll-invalid-language' => 'अमान्य भाषा कोड "$1"',
+	'securepoll-header-trans-id' => 'आईडी(ID)',
+	'securepoll-submit-translate' => 'अद्यतन गर्ने(अपडेट)',
+	'securepoll-language-label' => 'भाषा छान्ने:',
+	'securepoll-submit-select-lang' => 'अनुवाद गर्ने',
+	'securepoll-entry-text' => 'चुनावको सूची तल दिइएकोछ।',
+	'securepoll-header-title' => 'नाम',
+	'securepoll-header-start-date' => 'आरम्भ मिति',
+	'securepoll-header-end-date' => 'समाप्ति तिथि',
+	'securepoll-subpage-vote' => 'मत',
+	'securepoll-subpage-translate' => 'अनुवाद गर्ने',
+	'securepoll-subpage-list' => 'सूची',
+	'securepoll-subpage-dump' => 'थाक',
+	'securepoll-subpage-tally' => 'ट्याली',
+	'securepoll-tally-title' => 'ट्याली: $1',
+	'securepoll-tally-local-legend' => 'संग्रहित गरिएका टैली परिणामहरु',
+	'securepoll-tally-local-submit' => 'ट्याली बनाउने',
+	'securepoll-tally-upload-submit' => 'ट्याली बनाउने',
+	'securepoll-ranks' => 'अन्तिम र्‌याङ्किङ्ग',
+	'securepoll-average-score' => 'औसत स्कोर',
+	'securepoll-round' => 'चरण $1',
+);
+
 /** Dutch (Nederlands)
+ * @author Lolsimon
  * @author Mwpnl
+ * @author Ronja Addams-Moring
  * @author SPQRobin
  * @author Siebrand
  */
@@ -5979,7 +8111,9 @@ Aanmelden is niet mogelijk.',
 	'securepoll-not-logged-in' => 'U moet aanmelden om aan deze stemming deel te nemen',
 	'securepoll-too-few-edits' => 'Sorry, u kunt niet deelnemen aan de stemming.
 U moet ten minste $1 {{PLURAL:$1|bewerking|bewerkingen}} hebben gemaakt om te kunnen stemmen in deze stemming, en u hebt er $2.',
+	'securepoll-too-new' => 'U kunt niet deelnemen aan deze stemming. U moet voor $1 om $3 geregistreerd zijn om te mogen stemmen, terwijl u geregistreerd bent op $2 om $4.',
 	'securepoll-blocked' => 'Sorry, u kunt niet deelnemen aan de stemming omdat u geblokkeerd bent.',
+	'securepoll-blocked-centrally' => "U kunt niet deelnemen aan deze stemming omdat u geblokkeerd bent op minstens $1 {{PLURAL:$1|wiki|wiki's}}.",
 	'securepoll-bot' => 'Sorry, gebruikers met een botvlag mogen niet stemmen in deze stemming.',
 	'securepoll-not-in-group' => 'Alleen leden van de groep "$1" kunnen aan deze stemming deelnemen.',
 	'securepoll-not-in-list' => 'Sorry, u staat niet op de vooraf vastgestelde lijst van stemgerechtigden voor deze stemming.',
@@ -6047,18 +8181,22 @@ De resultaten kunnen niet geteld worden.',
 	'securepoll-strength-matrix' => 'Padgesterkte matrix',
 	'securepoll-ranks' => 'Definitieve rangschikking',
 	'securepoll-average-score' => 'Gemiddelde score',
+	'securepoll-round' => 'Ronde $1',
+	'securepoll-spoilt' => '(Ongeldig)',
+	'securepoll-exhausted' => '(Verlopen)',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Eirik
  * @author Gunnernett
  * @author Harald Khan
+ * @author Ranveig
  */
 $messages['nn'] = array(
 	'securepoll' => 'TrygtVal',
 	'securepoll-desc' => 'Ei utviding for val og undersøkingar',
 	'securepoll-invalid-page' => 'Ugyldig underside «<nowiki>$1</nowiki>»',
-	'securepoll-need-admin' => 'Du må vera ein administrator for å kunna utføra denne handlinga.',
+	'securepoll-need-admin' => 'Du må vera valadministrator for å kunna utføra denne handlinga.',
 	'securepoll-too-few-params' => 'Ikkje nok undersideparametrar (ugyldig lenkje)',
 	'securepoll-invalid-election' => '«$1» er ikkje ein gyldig val-ID.',
 	'securepoll-welcome' => '<strong>Velkomen, $1!</strong>',
@@ -6157,141 +8295,10 @@ Du kan velja å anten telja opp resultata tilgjengelege i databasen, eller å te
 	'securepoll-no-upload' => 'Ingen fil vart lasta opp, kan ikkje summera resultata.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Finnrind
- * @author Guaca
- * @author Jon Harald Søby
- * @author Laaknor
- * @author Nghtwlkr
- * @author Stigmj
- */
-$messages['no'] = array(
-	'securepoll' => 'SikkertValg',
-	'securepoll-desc' => 'En utvidelse for valg og undersøkelser',
-	'securepoll-invalid-page' => 'Ugyldig underside «<nowiki>$1</nowiki>»',
-	'securepoll-need-admin' => 'Du må være valgadministrator for å kunne utføre dette.',
-	'securepoll-too-few-params' => 'Ikke mange nok undersideparametre (ugyldig lenke).',
-	'securepoll-invalid-election' => '"$1" er ikke en gyldig valg-id.',
-	'securepoll-welcome' => '<strong>Velkommen $1!</strong>',
-	'securepoll-not-started' => 'Dette valget har enda ikke startet.
-Det starter etter planen $2 kl. $3.',
-	'securepoll-finished' => 'Dette valget er avsluttet, du kan ikke lenger stemme.',
-	'securepoll-not-qualified' => 'Du er ikke kvalifisert til å stemme i dette valget: $1',
-	'securepoll-change-disallowed' => 'Du har allerede stemt i dette valget.
-Du kan desverre ikke stemme på nytt.',
-	'securepoll-change-allowed' => '<strong>Bemerk: Du har allerede stemt i dette valget.</strong>
-Du kan endre stemmen din ved å sende inn skjemaet nedenfor.
-Bemerk at dersom du gjør dette vil den opprinnelige stemmen din bli forkastet.',
-	'securepoll-submit' => 'Avgi stemme',
-	'securepoll-gpg-receipt' => 'Takk for at du avga stemme.
-
-Dersom du ønsker det kan du ta vare på følgende kvittering som bevis på din stemme:
-
-<pre>$1</pre>',
-	'securepoll-thanks' => 'Takk, stemmen din har blitt registrert.',
-	'securepoll-return' => 'Tilbake til $1',
-	'securepoll-encrypt-error' => 'Klarte ikke å kryptere din stemme.
-Stemmen har ikke blitt registrert!
-
-$1',
-	'securepoll-no-gpg-home' => 'Kunne ikke opprette hjemmekatalog for GPG',
-	'securepoll-secret-gpg-error' => 'Feil ved kjøring av GPG.
-bruk $wgSecurePollShowErrorDetail=true; i LocalSettings.php for å se flere detaljer.',
-	'securepoll-full-gpg-error' => 'Feil under kjøring av GPG:
-
-Kommando: $1
-
-Feil:
-<pre>$2</pre>',
-	'securepoll-gpg-config-error' => 'GPG-nøklene er ikke satt opp riktig.',
-	'securepoll-gpg-parse-error' => 'Feil under tolking av utdata fra GPG.',
-	'securepoll-no-decryption-key' => 'Ingen dekrypteringsnøkkel er konfigurert.
-Kan ikke dekryptere.',
-	'securepoll-jump' => 'Gå til stemmetjeneren',
-	'securepoll-bad-ballot-submission' => 'Din stemme var ugyldig: $1',
-	'securepoll-unanswered-questions' => 'Du må besvare alle spørsmålene.',
-	'securepoll-invalid-rank' => 'Ugyldig rangering. Du må gi kandidatene en rangering mellom 1 og 999.',
-	'securepoll-unranked-options' => 'Noen valg var urangerte.
-Du må gi alle alternativene en rangering mellom 1 og 999.',
-	'securepoll-invalid-score' => 'Karakteren må være et tall mellom $1 og $2.',
-	'securepoll-unanswered-options' => 'Du må gi et svar på hver spørsmål.',
-	'securepoll-remote-auth-error' => 'Feil oppsto ved henting av din kontoinformasjon fra tjeneren.',
-	'securepoll-remote-parse-error' => 'Feil oppsto ved tolkning av autorisasjonssvar fra tjeneren.',
-	'securepoll-api-invalid-params' => 'Ugyldige parametere.',
-	'securepoll-api-no-user' => 'Det ble ikke funnet noen bruker med den oppgitte IDen.',
-	'securepoll-api-token-mismatch' => 'Sikkerhetsnøkkel manglet, kan ikke logge inn.',
-	'securepoll-not-logged-in' => 'Du må logge inn for å kunne stemme i dette valget.',
-	'securepoll-too-few-edits' => 'Beklager, du kan ikke stemme. Du må ha gjort minst $1 {{PLURAL:$1|redigering|redigeringer}} for å delta i denne avstemningen. Du har gjort $2.',
-	'securepoll-blocked' => 'Beklager, du kan ikke stemme i dette valget hvis du er blokkert fra å redigere.',
-	'securepoll-bot' => 'Beklager, kontoer med botflagg kan ikke stemme i dette valget.',
-	'securepoll-not-in-group' => 'Kun brukere i gruppen «$1» kan delta i denne avstemningen.',
-	'securepoll-not-in-list' => 'Du er desverre ikke i lista over brukere som kan stemme i dette valget.',
-	'securepoll-list-title' => 'Vis stemmer: $1',
-	'securepoll-header-timestamp' => 'Tid',
-	'securepoll-header-voter-name' => 'Navn',
-	'securepoll-header-voter-domain' => 'Domene',
-	'securepoll-header-ua' => 'Brukeragent',
-	'securepoll-header-cookie-dup' => 'Dupl',
-	'securepoll-header-strike' => 'Stryk',
-	'securepoll-header-details' => 'Detaljer',
-	'securepoll-strike-button' => 'Stryk',
-	'securepoll-unstrike-button' => 'Opphev strykning',
-	'securepoll-strike-reason' => 'Årsak:',
-	'securepoll-strike-cancel' => 'Avbryt',
-	'securepoll-strike-error' => 'Feil ved fjerning eller ved opphevelse av fjerning: $1',
-	'securepoll-strike-token-mismatch' => 'Sesjonsdata tapt',
-	'securepoll-details-link' => 'Detaljer',
-	'securepoll-details-title' => 'Stemmedetaljer: #$1',
-	'securepoll-invalid-vote' => '«$1» er ikke en gyldig stemme-ID',
-	'securepoll-header-voter-type' => 'Stemmegivertype',
-	'securepoll-voter-properties' => 'Stemmegiveregenskaper',
-	'securepoll-strike-log' => 'Strykningslogg',
-	'securepoll-header-action' => 'Handling',
-	'securepoll-header-reason' => 'Årsak',
-	'securepoll-header-admin' => 'Admin',
-	'securepoll-cookie-dup-list' => 'Cookie duplikatbruker',
-	'securepoll-dump-title' => 'Dump: $1',
-	'securepoll-dump-no-crypt' => 'Ingen kryptert valgregistrering er tilgjengelig for dette valget, på grunn av at valget ikke er satt opp til å benytte kryptering.',
-	'securepoll-dump-not-finished' => 'Krypterte valgregistre er kun tilgjengelige etter avsluttningen den $1 klokken $2',
-	'securepoll-dump-no-urandom' => 'Kan ikke åpne /dev/urandom.
-For å sikre en hemmelig avstemning er de krypterte valgregistrene kun offentlig tilgjengelig når de kan blandes med en sikker strøm av tilfeldige tall.',
-	'securepoll-urandom-not-supported' => 'Denne tjeneren støtter ikke kryptografisk generering av tilfeldige tall.
-For å opprettholde velgernes anonymitet vil de enkelte stemmene kun offentliggjøres når de kan anonymiseres med en generator for tilfeldige tall.',
-	'securepoll-translate-title' => 'Oversett: $1',
-	'securepoll-invalid-language' => 'Ugyldig språkkode «$1»',
-	'securepoll-submit-translate' => 'Oppdater',
-	'securepoll-language-label' => 'Velg språk:',
-	'securepoll-submit-select-lang' => 'Oversett',
-	'securepoll-entry-text' => 'Under er listen over avstemninger',
-	'securepoll-header-title' => 'Navn',
-	'securepoll-header-start-date' => 'Startdato',
-	'securepoll-header-end-date' => 'Sluttdato',
-	'securepoll-subpage-vote' => 'Stemme',
-	'securepoll-subpage-translate' => 'Oversett',
-	'securepoll-subpage-list' => 'List opp',
-	'securepoll-subpage-dump' => 'Dump',
-	'securepoll-subpage-tally' => 'Opptelling',
-	'securepoll-tally-title' => 'Opptelling: $1',
-	'securepoll-tally-not-finished' => 'Beklager, du kan ikke telle opp valgresultatet før valget er fullført.',
-	'securepoll-can-decrypt' => 'Valgregisteret har blitt kryptert, men dekrypteringsnøkkelen er tilgjengelig.
-Du kan velge å enten telle opp resultatene tilgjengelig i databasen, eller å telle opp de krypterte resultatene fra en opplastet fil.',
-	'securepoll-tally-no-key' => 'Du kan ikke telle opp dette valget fordi stemmene er kryptert og dekrypteringsnøkkelen er utilgjengelig.',
-	'securepoll-tally-local-legend' => 'Opptelling lagret resultatene',
-	'securepoll-tally-local-submit' => 'Opprett en opptelling',
-	'securepoll-tally-upload-legend' => 'Last opp en kryptert dump',
-	'securepoll-tally-upload-submit' => 'Opprett en opptelling',
-	'securepoll-tally-error' => 'Feil ved tolking av stemmeregisteret, kan ikke opprette en opptelling.',
-	'securepoll-no-upload' => 'Ingen fil ble lastet opp, kan ikke summere opp resultatene.',
-	'securepoll-dump-corrupt' => 'Dumpfila er ødelagt og kan ikke behandles.',
-	'securepoll-tally-upload-error' => 'Feil ved opptelling av dumpfila: $1',
-	'securepoll-pairwise-victories' => 'Matrise over parvis seier',
-	'securepoll-strength-matrix' => 'Matrise over stistyrke',
-	'securepoll-ranks' => 'Endelig resultat',
-	'securepoll-average-score' => 'Gjennomsnittlig karakter',
-);
-
 /** Occitan (Occitan)
+ * @author Boulaur
  * @author Cedric31
+ * @author Jfblanc
  */
 $messages['oc'] = array(
 	'securepoll' => 'Sondatge securizat',
@@ -6348,9 +8355,10 @@ Vos cal balhar un reng entre 1 e 999 a totas las opcions.",
 	'securepoll-api-invalid-params' => 'Paramètres invalids.',
 	'securepoll-api-no-user' => "Cap d'utilizaire amb l’identificant balhat es pas estat trobat.",
 	'securepoll-api-token-mismatch' => 'Geton de seguretat diferent, connexion impossibla.',
-	'securepoll-not-logged-in' => 'Vos cal vos connectar per votar dins aquesta eleccion.',
+	'securepoll-not-logged-in' => 'Vos cal connectar per votar dins aquesta eleccion.',
 	'securepoll-too-few-edits' => 'O planhèm, podètz pas votar. Vos cal aver efectuat al mens {{PLURAL:$1|una modificacion|$1 modificacions}} per votar dins aquesta eleccion, ne totalizatz $2.',
 	'securepoll-blocked' => 'O planhèm, podètz pas votar dins aquesta eleccion perque sètz blocat(ada) en escritura.',
+	'securepoll-blocked-centrally' => 'O planhèm, podètz pas votar dins aquesta eleccion perque sètz blocat(ada) sus  almens $1 {{PLURAL:$1|wiki|wikis}}.',
 	'securepoll-bot' => "O planhèm, los comptes amb l'estatut de robòt son pas autorizats a votar a aquesta eleccion.",
 	'securepoll-not-in-group' => 'Sonque los membres del grop « $1 » pòdon votar dins aquesta eleccion.',
 	'securepoll-not-in-list' => 'O planhèm, sètz pas sus la lista predeterminada dels utilizaires autorizats a votar dins aquesta eleccion.',
@@ -6384,7 +8392,7 @@ Vos cal balhar un reng entre 1 e 999 a totas las opcions.",
 	'securepoll-dump-no-urandom' => 'Impossible de dobrir /dev/urandom.
 Per manténer la confidencialitat dels votants, las donadas criptadas son disponiblas sonque se pòdon èsser reboladas amb un nombre de caractèrs aleatòris.',
 	'securepoll-urandom-not-supported' => 'Aqueste servidor supòrta pas la generacion criptografica aleatòri de nombres.
-Per assegurar la confidencialitat dels votants, las donadas criptadas son publicadas unicament quand pòdon trebolar un flus aleatòri de nombres.',
+Per assegurar la confidencialitat dels votants, las donadas criptadas son publicadas unicament quand pòdon trebolar un flux aleatòri de nombres.',
 	'securepoll-translate-title' => 'Traduire : $1',
 	'securepoll-invalid-language' => 'Còde de lenga « $1 » invalid.',
 	'securepoll-submit-translate' => 'Metre a jorn',
@@ -6416,6 +8424,140 @@ Podètz causir de comptar los resultats dempuèi la banca de donadas o dempuèi 
 	'securepoll-strength-matrix' => 'Matritz de fòrça dels camins',
 	'securepoll-ranks' => 'Classament final',
 	'securepoll-average-score' => 'Marca mejana',
+);
+
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Odisha1
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'securepoll' => 'ନିରାପଦ ମତଦାନ',
+	'securepoll-desc' => 'ନିର୍ବାଚନ ଓ ସର୍ବେକ୍ଷଣମାନଙ୍କ ନିମନ୍ତେ ଏକ୍ସଟେନସନ',
+	'securepoll-invalid-page' => 'ଅଚଳ ଉପପୃଷ୍ଠା "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => 'ଏହି କମତିକୁଇ କରିବା ନିମନ୍ତେ ଆପଣଙ୍କୁ ଜଣେ ନିର୍ବାଚନ ପରିଛା ହେବାକୁ ପଡ଼ିବ ।',
+	'securepoll-too-few-params' => 'ସେତେ ଅଧିକ ଉପପୃଷ୍ଠା ପାରାମିଟର ନାହିଁ (ଅଚଳ ଲିଙ୍କ)',
+	'securepoll-invalid-election' => '"$1" ଏକ ବୈଧ ମତଦାନ ପରିଚୟ ନୁହେଁ ।',
+	'securepoll-welcome' => '<strong>$1, ପାଛୋଟା!</strong>',
+	'securepoll-not-started' => 'ଏହି ନିର୍ବାଚନ ଏବେ ଯାଏଁ ଆରମ୍ଭ ହୋଇନାହିଁ ।
+ଏହା $2 ଦିନ $3 ବେଳେ ଆରମ୍ଭ ହେବ ବୋଲି ସ୍ଥିର କରାଯାଇଅଛି ।',
+	'securepoll-finished' => 'ଏହି ନିର୍ବାଚନ ଶେଷ ହେଲା, ଆପଣ ଆଉ ମତ ଦେଇ ପାରିବେ ନାହିଁ ।',
+	'securepoll-not-qualified' => 'ଆପଣ ଏଠାରେ ମତ ଦେବା ନିମନ୍ତେ ଯୋଗ୍ୟ ନୁହନ୍ତି: $1',
+	'securepoll-change-disallowed' => 'ଆପଣ ଏହି ଏକା ନିର୍ବାଚନରେ ଆଗରୁ ମତ ଦେଇ ସାରିଛନ୍ତି ।
+କ୍ଷମା କରିବେ, ଆପଣ ଆଉଥରେ ମତ ଦେଇପାରିବେ ନାହିଁ ।',
+	'securepoll-change-allowed' => '<strong>ଜାଣିରଖନ୍ତୁ: ଆପଣ ଆଗରୁ ଏହି ନିର୍ବାଚନରେ ମତଦାନ କରିଛନ୍ତି ।</strong>
+ତଳେ ଥିବା ଆବେଦନ ପତ୍ରରେ ଆପଣ ନିଜର ମତ ବଦଳାଇପାରିବେ ।
+ଜାଣିରଖନ୍ତୁ ଏହା କରିସାରିଲା ପରେ ଆପଣଙ୍କ ମୂଳ ମତଟି ଖାରଜ ହୋଇଯିବ ।',
+	'securepoll-submit' => 'ମତ ଦିଅନ୍ତୁ',
+	'securepoll-gpg-receipt' => 'ମତଦାନ ନିମନ୍ତେ ଧନ୍ୟବାଦ।
+
+ଆପଣ ଚାହିଁଲେ ଆପଣ ଏହି ତଳ ରସିଦଟି ଆପଣଙ୍କ ମତଦାନର ପ୍ରମାଣ ରୂପେ ରଖିପାରିବେ:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'ଧନ୍ୟବାଦ, ଆପଣଙ୍କ ମତଦାନ ନଥିଭୁକ୍ତ କରାଗଲା ।',
+	'securepoll-return' => '$1କୁ ଫେରିଯାନ୍ତୁ',
+	'securepoll-encrypt-error' => 'ଆପଣଙ୍କ ମତଦାନର ଇତିହାସକୁ ଗୋପନ ରଖିବାରେ ବିଫଳ ହେଲୁ ।
+ଆପଣଙ୍କର ମତ ସାଇତାଯାଇନାହିଁ!
+
+$1',
+	'securepoll-no-gpg-home' => 'GPG ମୂଳ ସୂଚି ତିଆରିବାରେ ବିଫଳ ହେଲୁ ।',
+	'securepoll-secret-gpg-error' => 'GPG ସଞ୍ଚାଳନରେ ବିଫଳ ହେଲୁ ।
+ଅଧିକ ଦେଖାଇବା ନିମନ୍ତେ LocalSettings.php ରେ $wgSecurePollShowErrorDetail=true;  ବ୍ୟବହାର କରନ୍ତୁ ।',
+	'securepoll-full-gpg-error' => 'GPG ସଞ୍ଚାଲନରେ ଅସୁବିଧା:
+
+ଆଦେଶ: $1
+
+ଭୁଲ:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG କି ସବୁ ଆପେଆପେ ସଜାଇଦିଆଗଲା ।',
+	'securepoll-gpg-parse-error' => 'GPG ଆଉଟପୁଟ ପଢ଼ିବାରେ ବିଫଳ ।',
+	'securepoll-no-decryption-key' => 'ବିବରଣୀ ପୃଷ୍ଠା ସଜାଯାଇନାହିଁ ।
+ଗୋପନ ତଥ୍ୟ ଖୋଲି ପାରିଲୁଁ ନାହିଁ ।',
+	'securepoll-jump' => 'ମତାମତ ସର୍ଭରକୁ ଯିବେ',
+	'securepoll-bad-ballot-submission' => 'ଆପଣଙ୍କ ମତଦାନ ଅବୈଧ ଅଟେ: $1',
+	'securepoll-unanswered-questions' => 'ଆପଣଙ୍କୁ ସବୁଯାକ ପ୍ରଶ୍ନର ଉତ୍ତର ଦେବାକୁ ପଡ଼ିବ ।',
+	'securepoll-invalid-rank' => 'ଅସଙ୍ଗତ କ୍ରମାଙ୍କ । ଆପଣ ୧ ରୁ ୯୯୯ ଭିତରେ ଏକ କ୍ରମାଙ୍କ ଦେଇପାରିବେ ।',
+	'securepoll-unranked-options' => 'କେତେଗୁଡ଼ିଏ ବିକଳ୍ପ କ୍ରମଅନୁସାରେ ସଜାଯାଇ ନାହିଁ ।
+ଆପଣ ସବୁଯାକ ବିକଳ୍ପକୁ ୧ ରୁ ୯୯୯ ଭିତରେ ଏକ କ୍ରମାଙ୍କ ଦେଇପାରିବେ ।',
+	'securepoll-invalid-score' => 'ଫଳାଫଳ $1 ରୁ $2 ଭିତରେ ଏକ ସଙ୍ଖ୍ୟା ହେବ ଦରକାର ।',
+	'securepoll-unanswered-options' => 'ଆପଣଙ୍କୁ ସବୁଜକ ପ୍ରଶ୍ନର ଉତ୍ତର ଦେବାକୁ ପଡ଼ିବ ।',
+	'securepoll-remote-auth-error' => 'ସର୍ଭରରୁ ଆପଣଙ୍କ ଖାତାର ତଥ୍ୟ ବାହାର କରିବାରେ ଅସୁବିଧା ହେଲା ।',
+	'securepoll-remote-parse-error' => 'ସର୍ଭରରୁ ଅନୁମୋଦନକୁ ବୁଝିବାରେ ଅସୁବିଧା ।',
+	'securepoll-api-invalid-params' => 'ଭୁଲ ପାରାମିଟର ।',
+	'securepoll-api-no-user' => 'ଏହି ପରିଚୟ ଦିଆଯାଇଥିବା ଜଣେ ବି ସଭ୍ୟ ମିଳିଲେ ନାହିଁ ।',
+	'securepoll-api-token-mismatch' => 'ପ୍ରତିରକ୍ଷା ଚିହ୍ନ ଅମେଳ, ଲଗ ଇନ୍ନ କରିପାରିବେ ନାହିଁ ।',
+	'securepoll-not-logged-in' => 'ଏହି ନିର୍ବାଚନନରେ ମତ ଦେବା ନିମନ୍ତେ ଆପଣଙ୍କୁ ଲଗ ଇନ କରିବାକୁ ପଡ଼ିବ',
+	'securepoll-too-few-edits' => 'କ୍ଷମା କରିବେ, ଆପଣ ମତ ଦେଇପାରିବେ ନାହିଁ । ଏହି ନିର୍ବାଚନରେ ମତଦାନ ନିମନ୍ତେ ଆପଣଙ୍କୁ ଅତି କମରେ $1 {{PLURAL:$1|ଗୋଟି ବଦଳ|ଗୋଟି ବଦଳ} } କରିବାକୁ ପଡ଼ିବ, ଆପଣ ଏବେ ଯାଏଁ $2 ଗୋଟି ବଦଳ କରିଛନ୍ତି ।',
+	'securepoll-too-new' => 'କ୍ଷମା କରିବେ, ଆପଣ ମତ ଦେଇପାରିବେ ନାହିଁ । ଆପଣଙ୍କ ଖାତାଟି $1 ଆଗରୁ $3 ବେଳେ ତିଆରି ହୋଇଥିବା ଲୋଡ଼ା, ଆପଣ $2 ଦିନ $4 ବେଳେ ଖାତାଟି ଖୋଲିଛନ୍ତି ।',
+	'securepoll-blocked' => 'କ୍ଷମା କରିବେ, ଆପଣଙ୍କୁ ସମ୍ପାଦନାରୁ ଅଟକ କରାଯାଇଥିବାରୁ ଆପଣ ମତ ଦେଇପାରିବେ ନାହିଁ ।',
+	'securepoll-blocked-centrally' => 'କ୍ଷମା କରିବେ, ଆପଣଙ୍କୁ ଅତିକମରେ $1 {{PLURAL:$1|ଗୋଟି ଉଇକି|ଗୋଟି ଉଇକି}}ରେ ଅଟକ କରାଯାଇଥିବାରୁ ଆପଣ ଏହି ନିର୍ବାଚନରେ ମତ ଦେଇ ପାରିବେ ନାହିଁ ।',
+	'securepoll-bot' => 'କ୍ଷମା କରିବେ, ସ୍ଵୟଂଚାଳିତ ଚିହ୍ନିତ ଖାତା ଥିବା ଲୋକେ ଏହି ନିର୍ବାଚନରେ ମତ ଦେଇପାରିବେ ନାହିଁ ।',
+	'securepoll-not-in-group' => 'କେବଳ "$1" ଗୋଠର ସଭ୍ୟଗଣ ଏହି ନିର୍ବାଚନରେ ମତ ଦେଇପାରିବେ ।',
+	'securepoll-not-in-list' => 'କ୍ଷମା କରିବେ, ଏହି ନିର୍ବାଚନ ପାଇଁ ମତଦାନଯୋଗ୍ୟ ତାଲିକାରେ ଆପଣ ନାହାନ୍ତି ।',
+	'securepoll-list-title' => 'ମତ ତାଲିକ: $1',
+	'securepoll-header-timestamp' => 'ସମୟ',
+	'securepoll-header-voter-name' => 'ନାମ',
+	'securepoll-header-voter-domain' => 'ଡୋମେନ',
+	'securepoll-header-ua' => 'ସଭ୍ୟ ପ୍ରତିନିଧି',
+	'securepoll-header-cookie-dup' => 'ନକଲ',
+	'securepoll-header-strike' => 'ନାମ କାଟିଦେବା',
+	'securepoll-header-details' => 'ବିସ୍ତୃତ ବିବରଣୀ',
+	'securepoll-strike-button' => 'ନାମ କାଟିଦେବା',
+	'securepoll-unstrike-button' => 'ଚିହ୍ନଟ କରିବା',
+	'securepoll-strike-reason' => 'କାରଣ:',
+	'securepoll-strike-cancel' => 'ନାକଚ',
+	'securepoll-strike-error' => 'ନାମ କାଟିବା/ଚିହ୍ନଟ କରିବାରେ ଅସୁବିଧା: $1',
+	'securepoll-strike-token-mismatch' => 'ସମୟକାଳ ଡାଟା ହଜିଗଲା',
+	'securepoll-details-link' => 'ଆହୁରି ଅଧିକ',
+	'securepoll-details-title' => 'ମତଦାନ ସବିଶେଷ: #$1',
+	'securepoll-invalid-vote' => '"$1" ଏକ ବୈଧ ମତଦାନ ପରିଚୟ ନୁହେଁ',
+	'securepoll-header-voter-type' => 'ମତଦାନକାରୀ ପ୍ରକାର',
+	'securepoll-voter-properties' => 'ମତଦାନକାରୀ ସବିଶେଷ',
+	'securepoll-strike-log' => 'ନାମକାଟିବା ଇତିହାସ',
+	'securepoll-header-action' => 'କାମ',
+	'securepoll-header-reason' => 'କାରଣ',
+	'securepoll-header-admin' => 'ପ୍ରଶାସକ',
+	'securepoll-cookie-dup-list' => 'କୁକି ନକଲ ବ୍ୟବହାରକାରୀ',
+	'securepoll-dump-title' => 'ଫୋପାଡ଼ିଦେବେ: $1',
+	'securepoll-dump-no-crypt' => 'ଏହି ମତଦାନ ନିମନ୍ତେ କୌଣସିଟି ଗୋପନ ମତଦାନ ନଥି ମିଳୁନାହିଁ, କାରଣ ଏହି ମତଦାନଟିରେ ଗୋପନରେ ପରିଚାଳିତ ହେବ ଲାଗି ସଜାଣି ହୋଇନାହିଁ ।',
+	'securepoll-dump-not-finished' => 'କେବଳ $1 ଦିନ $2 ଟା ପରେ ମତଦାନର ଗୋପନ ନଥି ଉପଲବ୍ଧ ହେବ ।',
+	'securepoll-dump-no-urandom' => '/dev/urandom ଖୋଲିପାରିଲୁଁ ନାହିଁ ।
+ମତଦାନକାରୀ ଗୋପନୀୟତା ରଖିବା ନିମନ୍ତେ, ଏକ ସୁରକ୍ଷିତ ଭାବେ ସଙ୍ଖ୍ୟାସବୁ ଇଆଡୁ ସିଆଡୁ ଅସଜଡ଼ା କରିସାରିଲା ପରେ ଗୋପନ ମତଦାନ ନଥି ସାଧାରଣରେ ମିଳିବ ।',
+	'securepoll-urandom-not-supported' => 'ଏହି ସର୍ଭର ଗୋପନ କୋଡ଼ଥିବା ଯାହିତାହି ସଙ୍ଖ୍ୟା ଗଢ଼ିବାକୁ ଅନୁମତି ଦିଏନାହିଁ ।
+ଭୋଟରଙ୍କ ଗୋପନୀୟତା ରଖିବା ନିମନ୍ତେ ଗୋପନ ମତଦାନର ନଥିସମୂହ ସୁରକ୍ଷିତ ଯାହିତାହି ସଙ୍ଖ୍ୟା ସୁଅରେ ପୁରାପୁରି ଗୋଳାଇ ଜନସାଧାରଣଙ୍କ ପାଇଁ ମିଳିଥାଏ ।',
+	'securepoll-translate-title' => 'ଅନୁବାଦ: $1',
+	'securepoll-invalid-language' => 'ଅଜଣା ଭାଷା କୋଡ଼ "$1"',
+	'securepoll-submit-translate' => 'ଅପଡେଟ',
+	'securepoll-language-label' => 'ଭାଷା ବାଛିବେ:',
+	'securepoll-submit-select-lang' => 'ଅନୁବାଦ',
+	'securepoll-entry-text' => 'ତଳେ ମତଦାନର ତାଲିକା ଦିଆଗଲା ।',
+	'securepoll-header-title' => 'ନାମ',
+	'securepoll-header-start-date' => 'ଆରମ୍ଭ ତାରିଖ',
+	'securepoll-header-end-date' => 'ଶେଷ ତାରିଖ',
+	'securepoll-subpage-vote' => 'ମତଦାନ',
+	'securepoll-subpage-translate' => 'ଅନୁବାଦ',
+	'securepoll-subpage-list' => 'ତାଲିକା',
+	'securepoll-subpage-dump' => 'ଫୋପାଡ଼ିଦେବା',
+	'securepoll-subpage-tally' => 'ଗଣନା',
+	'securepoll-tally-title' => 'ଗଣନା: $1',
+	'securepoll-tally-not-finished' => 'କ୍ଷମା କରିବେ, ମତଦାନ ଶେଷ ନହେବା ଯାଏଁ ଆପଣ ଗଣନା କରିପାରିବେ ନାହିଁ ।',
+	'securepoll-can-decrypt' => 'ମତଦାନର ଫଳାଫଳକୁ ଗୋପନ କୋଡ଼ରେ ପରିଣତ କରାଯାଇପାରିବ, କିନ୍ତୁ ତାହାକୁ ଫିଟାଇବାର ଉପାୟ ମିଳୁଅଛି ।
+ଆପଣ ଫଳାଫଳକୁ ସାଧାରଣ ଭାବରେ ଦେଖିପାରିବେ କିମ୍ବା ଏକ ଅପଲୋଡ଼ କରାୟାଇଥିବା ଫାଇଲରେ ଗୋପନ କୋଡ଼ ଭାବରେ ଗଣନା କରିପାରିବେ ।',
+	'securepoll-tally-no-key' => 'ଆପଣ ମତଦାନକୁ ଗଣିପାରିବେ ନାହିଁ, କାରଣ ଏହା ଗୋପନ କୋଡ଼ ଭାବରେ ରହିଛି ଓ ତାହାକୁ ଫିଟାଇବାର ବାଟ ନାହିଁ ।',
+	'securepoll-tally-local-legend' => 'ଗଣନା ଫଳାଫଳ',
+	'securepoll-tally-local-submit' => 'ଗଣିବେ',
+	'securepoll-tally-upload-legend' => 'ଗୋପନ କୋଡ଼ ଦିଆ ଅଳିଆ ଅପଲୋଡ଼ କରିବେ',
+	'securepoll-tally-upload-submit' => 'ଗଣିବେ',
+	'securepoll-tally-error' => 'ମତଦାନ ଅନୁମାନ କରିବାରେ ଭୁଲ ହେଲା, ଏକ ଗଣନା ତିଆରି କରାଯାଇ ପାରିବ ନାହିଁ ।',
+	'securepoll-no-upload' => 'ଗୋଟିଏ ବି ଫାଇଲ ଅପଲୋଡ଼ ହେଲାନାହିଁ, ଫଳାଫଳ ଗଣି ପାରିବୁଁ‍‍ ନାହିଁ ।',
+	'securepoll-dump-corrupt' => 'ଡମ୍ପ ଫାଇଲଟି ଖରାପ ଓ ତାହାକୁ ଆଗକୁ ବଢ଼ାଯାଇପାରିବ ନାହିଁ ।',
+	'securepoll-tally-upload-error' => 'ଫୋପଡ଼ାଯିବା ଫାଇଲର ନକଲ କରିବାରେ ବିଫଳ: $1',
+	'securepoll-pairwise-victories' => 'ଯୋଡ଼ା ଜିତିବା ମ୍ୟାଟ୍ରିକ୍ସ',
+	'securepoll-strength-matrix' => 'ପଥ ଶକ୍ତି ମ୍ୟାଟ୍ରିକ୍ସ',
+	'securepoll-ranks' => 'ଅନ୍ତିମ କ୍ରମାଙ୍କ',
+	'securepoll-average-score' => 'ହାରାହାରି ଫଳ',
+	'securepoll-round' => '$1 ରାଉଣ୍ଡ',
+	'securepoll-spoilt' => '(ବିଗିଡ଼ିଯାଇଥିବା)',
+	'securepoll-exhausted' => '(ଅବସନ୍ନ)',
 );
 
 /** Papiamento (Papiamentu)
@@ -6466,6 +8608,10 @@ No por decrypt.',
 	'securepoll-jump' => 'Bai na e server di votashon',
 	'securepoll-bad-ballot-submission' => 'Bo voto no ta balido: $1',
 	'securepoll-unanswered-questions' => 'Bo mester kontestá tur e preguntanan.',
+	'securepoll-invalid-rank' => 'E forma di klasifiká aki no ta bálido. Bo mester klasifiká kandidatonan ku un number entre 1 i 999.',
+	'securepoll-unranked-options' => 'Bo mester klasifiká tur opshon ku un number entre 1 i 999.',
+	'securepoll-invalid-score' => 'E skor mester ta un number entre $1 i $2.',
+	'securepoll-unanswered-options' => 'Bo mester respondé tur e preguntanan.',
 	'securepoll-remote-auth-error' => 'Tabatin problema na ora di buska informashonnan tokante di bo kuenta riba e server.',
 	'securepoll-remote-parse-error' => 'Tabatin problema na ora di interpretá e derechinan for di riba e server.',
 	'securepoll-api-invalid-params' => 'Parámetronan no ta balido',
@@ -6490,6 +8636,7 @@ No por decrypt.',
 	'securepoll-strike-reason' => 'Motibu:',
 	'securepoll-strike-cancel' => 'Kanselá',
 	'securepoll-strike-error' => 'Eror na momentu di pone/kita: $1',
+	'securepoll-strike-token-mismatch' => 'E informashon di e seshon aki a wordu pèrdí',
 	'securepoll-details-link' => 'Detaye',
 	'securepoll-details-title' => 'Detayenan di voto: #$1',
 	'securepoll-invalid-vote' => '"$1" no ta un ID di voto balido',
@@ -6510,6 +8657,7 @@ Pa mantené e privasidat di kada votadó, elekshonnan encrypt por wòrdu mirá d
 	'securepoll-submit-translate' => 'Aktualisá',
 	'securepoll-language-label' => 'Skohe un idioma:',
 	'securepoll-submit-select-lang' => 'Tradusí',
+	'securepoll-entry-text' => 'Aki bounan bo ta haña un lista di tur e enkuestanan.',
 	'securepoll-header-title' => 'Nòmber',
 	'securepoll-header-start-date' => 'Fecha di kuminsamentu',
 	'securepoll-header-end-date' => 'Fecha ku e ta terminá',
@@ -6529,6 +8677,10 @@ Bo por skohe pa sea konta e resultadonan di e votona ya risibí òf konta e resu
 	'securepoll-tally-upload-submit' => 'Krea konteo',
 	'securepoll-tally-error' => 'Tabatin un eror  den e interpretashon di e votonan wardá, no por krea un konteo.',
 	'securepoll-no-upload' => 'Ningun dokumento no a wòrdu di load, no por kalkulá resultadonan.',
+	'securepoll-dump-corrupt' => 'E "dump file" a wòrdu korumpí i no por wòrdu prosesá.',
+	'securepoll-tally-upload-error' => 'Fout na ora di konta "dump file": $1',
+	'securepoll-ranks' => 'Klasifikashon final',
+	'securepoll-average-score' => 'Average',
 );
 
 /** Deitsch (Deitsch)
@@ -6538,6 +8690,8 @@ $messages['pdc'] = array(
 	'securepoll-welcome' => '<strong>Willkum $1!</strong>',
 	'securepoll-return' => 'Zerick zu $1',
 	'securepoll-jump' => 'Geh zum Waddefresser fer die Leckschen',
+	'securepoll-unanswered-questions' => 'Du settsch fer alle Froge e Antwatt gewwe',
+	'securepoll-unanswered-options' => 'Du settsch zu jedere Frog een Antwatt gewwe.',
 	'securepoll-header-timestamp' => 'Zeit',
 	'securepoll-header-voter-name' => 'Naame',
 	'securepoll-strike-reason' => 'Grund:',
@@ -6554,6 +8708,7 @@ $messages['pdc'] = array(
 
 /** Polish (Polski)
  * @author Leinad
+ * @author Renessaince
  * @author Saper
  * @author Sp5uhe
  */
@@ -6614,7 +8769,9 @@ Każde pole musi mieć przypisaną rangę z przedziału od 1 do 999.',
 	'securepoll-api-token-mismatch' => 'Nieprawidłowy żeton bezpieczeństwa, nie można się zalogować.',
 	'securepoll-not-logged-in' => 'Musisz się zalogować, aby głosować w tych wyborach',
 	'securepoll-too-few-edits' => 'Niestety, nie możesz głosować. Musisz mieć przynajmniej $1 {{PLURAL:$1|edycję|edycje|edycji}} aby głosować w tych wyborach, wykonane $2.',
+	'securepoll-too-new' => 'Niestety nie możesz głosować. Aby wziąć udział w głosowaniu musisz mieć konto zarejestrowane przed $1 o $3, a zarejestrowałeś się $2 o $4.',
 	'securepoll-blocked' => 'Niestety, nie możesz głosować w tych wyborach, ponieważ masz zablokowaną możliwość edytowania.',
+	'securepoll-blocked-centrally' => 'Niestety nie możesz brać udziału w głosowaniu ponieważ jesteś zablokowany na co najmniej $1 wiki.',
 	'securepoll-bot' => 'Niestety, użytkownicy z flagą bota nie mogą głosować w tych wyborach.',
 	'securepoll-not-in-group' => 'Tylko członkowie grupy $1 mogą głosować w tych wyborach.',
 	'securepoll-not-in-list' => 'Niestety nie ma Cię na wstępnie przygotowanej liście użytkowników uprawnionych do głosowania w tych wyborach.',
@@ -6641,7 +8798,7 @@ Każde pole musi mieć przypisaną rangę z przedziału od 1 do 999.',
 	'securepoll-header-action' => 'Czynność',
 	'securepoll-header-reason' => 'Powód',
 	'securepoll-header-admin' => 'Administrator',
-	'securepoll-cookie-dup-list' => 'Użytkownicy których ciasteczko świadczy o tym, że głosowali dwukrotnie',
+	'securepoll-cookie-dup-list' => 'Użytkownicy, których ciasteczko świadczy o tym, że głosowali dwukrotnie',
 	'securepoll-dump-title' => 'Zrzut $1',
 	'securepoll-dump-no-crypt' => 'Brak zaszyfrowanego rekordu głosu w tych wyborach ponieważ wybory nie zostały skonfigurowane do wykorzystywania szyfrowania.',
 	'securepoll-dump-not-finished' => 'Zaszyfrowane rekordy głosów dostępne będą dopiero po zakończeniu wyborów $1 o $2',
@@ -6680,6 +8837,9 @@ Można podliczyć wyniki obecne w bazie danych lub podliczyć wyniki z przesłan
 	'securepoll-strength-matrix' => 'Wybór poprzez ustawienie w kolejności',
 	'securepoll-ranks' => 'Ranking końcowy',
 	'securepoll-average-score' => 'Wynik średni',
+	'securepoll-round' => '$1 tura',
+	'securepoll-spoilt' => '(nieważny)',
+	'securepoll-exhausted' => '(wyczerpany)',
 );
 
 /** Piedmontese (Piemontèis)
@@ -6741,9 +8901,11 @@ It deuve deje a minca vos un vot tra 1 e 999.',
 	'securepoll-api-invalid-params' => 'Paràmetr pa vàlid.',
 	'securepoll-api-no-user' => "Pa gnun utent trovà con l'ID fornì.",
 	'securepoll-api-token-mismatch' => 'Ij token ëd sicurëssa a corispondo pa, it peule pa intré.',
-	'securepoll-not-logged-in' => "It deuve intré për voté an st'elession-sì",
+	'securepoll-not-logged-in' => 'A dev intré ant ël sistema për voté an costa elession',
 	'securepoll-too-few-edits' => "Spiasent, it peule pa voté. It deuve avèj fàit almanch $1 {{PLURAL:$1|modìfica|modìfiche}} për voté an st'elession-sì, ti it l'has fane $2.",
+	'securepoll-too-new' => "An dëspias, ma a peul pa voté. Sò cont a l'ha da manca esse stàit duvertà prima dij $1 a $3 për voté an coste elession, chiel a l'é argistrasse ai $2 a $4.",
 	'securepoll-blocked' => "Spiasent, it peule pa voté an st'elession-sì se it ses blocà.",
+	'securepoll-blocked-centrally' => "An dëspias, a peul pa voté për costa elession përchè a l'é blocà ansima almanch $1 {{PLURAL:$1|wiki|wiki}}.",
 	'securepoll-bot' => "Spiasent, ij cont lë stat ëd bot a peulo pa voté an st'elession-sì.",
 	'securepoll-not-in-group' => 'Mach ij mèmber dël grup "$1" a peulo voté an st\'elession-sì.',
 	'securepoll-not-in-list' => "Spiasent, it ses pa ant la lista predeterminà d'utent autorisà a voté an st'elession-sì.",
@@ -6809,20 +8971,161 @@ It peule serne sia ëd conté j'arzultà present ant ël database, sia ëd cont�
 	'securepoll-strength-matrix' => 'Matris ëd fòrsa dël path',
 	'securepoll-ranks' => 'Votassion final',
 	'securepoll-average-score' => 'Pontegi medi',
+	'securepoll-round' => 'Vira nùmer $1',
+	'securepoll-spoilt' => '(Darmagi)',
+	'securepoll-exhausted' => '(Esaurì)',
+);
+
+/** Western Punjabi (پنجابی)
+ * @author Khalid Mahmood
+ */
+$messages['pnb'] = array(
+	'securepoll' => 'سیکیورپول',
+	'securepoll-desc' => 'چنوتی تے سروے لئی ایکسٹنشن',
+	'securepoll-invalid-page' => 'ناںمنیا جان والا نکا صفہ "<نوکی>$1</nowiki>"',
+	'securepoll-need-admin' => 'اے کم کرن لئی تواڈا الیکشن ایدمنسٹریٹر ہونا چائیدا اے۔',
+	'securepoll-too-few-params' => 'کافی نکے صفیاں دے پیرامیٹر نئیں (جوڑ کم نئیں کردا)',
+	'securepoll-invalid-election' => '"$1" کوئی پکی چنوتی آئی ڈی نئیں اے۔',
+	'securepoll-welcome' => '<strong>جی آیاں نوں $1!</strong>',
+	'securepoll-not-started' => 'اے چنوتی ہلے شروع نئیں ہوئی۔
+اے $2 نوں $3 بجے شروغ ہووے گی۔',
+	'securepoll-finished' => 'ایہ چنوتی ہن مک گئی اے تسیں ہن ووٹ نئیں پاسکدے۔',
+	'securepoll-not-qualified' => 'تسیں ایس چنوتی چ ووٹ نئیں پاسکدے : $1',
+	'securepoll-change-disallowed' => 'تسیں ایس چنوتی چ پہلے ووٹ پاچکے او۔
+تسیں ہن ووٹ نئیں پاسکدے۔',
+	'securepoll-change-allowed' => '<strong>نوٹ: تساں پہلے وی ایس چنوتی چ ووٹ پایا اے</strong>
+تھلے دتا گیا فارم پعر کے تسیں اپنا ووٹ بدل سکدے او.
+نوٹ: پر ایہ گل یاد رکھنا جے تواڈا پہلا ووٹ مک جائیگا۔.',
+	'securepoll-submit' => 'ووٹ پاؤ',
+	'securepoll-gpg-receipt' => 'ووٹ پان دا شکریہ۔
+اگر تواڈا دل کرے تے تسیں تھلے دتیاں گیاں رسیداں اپنے دے ثبوت لئی رکھ سکدے او۔
+<pre>$1</pre>',
+	'securepoll-thanks' => 'شکریہ تواڈا ووٹ گنتی چ آگیا اے۔',
+	'securepoll-return' => 'واپس $1 چلو',
+	'securepoll-encrypt-error' => 'تواڈے ووٹ رکارڈ نوں پڑھن چ ہار۔
+تواڈا ووٹ گنتی چ نئیں آیا۔
+$1',
+	'securepoll-no-gpg-home' => 'جی پی جی کعر ڈائرکٹری بنان چ ہار۔',
+	'securepoll-secret-gpg-error' => 'جی پی جی چلاندیاں غلطی۔
+ورتو $wgSecurePollShowErrorDetail=true ؛ LocalSettings.php ہور گلاں دسن لئی۔',
+	'securepoll-full-gpg-error' => 'جی پی جی کردیاں غلطی:
+کمانڈ: $1
+
+غلطی:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'جی پی جی چابیاں ٹھیک ںغیں ّرھیاں گیاں',
+	'securepoll-gpg-parse-error' => 'جی پی جی آوٹ پٹ نوں پڑھن چ غلطی۔',
+	'securepoll-no-decryption-key' => 'کوئی ڈیکرٹشن چابی کنفگرڈ نئیں ہوئی۔ ڈیکرپٹ نئیں کرسکدا۔',
+	'securepoll-jump' => 'چنوتی سرور کول جاؤ',
+	'securepoll-bad-ballot-submission' => 'تواڈا ووٹ نئیں نئیں منیا گیا: $1',
+	'securepoll-unanswered-questions' => 'تسیں لازمی سارے سوالاں دے جواب دیو۔',
+	'securepoll-invalid-rank' => 'ناں منیا جان والا رینک۔  توانوں لازمی 1 تے 999 دے وشکار دینا پویگا۔',
+	'securepoll-unranked-options' => 'کج چنوتیاں نئیں گنیاں گیاں۔
+تساں نوں 1 توں 999 دے وشکار ساریاں چنوتیاں دینیاں پین گیاں۔',
+	'securepoll-invalid-score' => 'گنتی $1 تے $2 دے نمبر دے وشکار ہونی چاسیدی اے۔',
+	'securepoll-unanswered-options' => 'توانوں ہرسوال تے جواب دینا پویگا۔',
+	'securepoll-remote-auth-error' => 'تواڈے کھاتہ دی جانکاری سرور توں لین چ غلطی۔',
+	'securepoll-remote-parse-error' => 'سرور توں آتھورائیزیشن رسپونس سمجنے چ غلطی۔',
+	'securepoll-api-invalid-params' => 'ناں منے جان والے پیرامیٹر',
+	'securepoll-api-no-user' => 'ایس دتی ہوئی آئی ڈی نال کوئی ورتن والا نئیں لبیا۔',
+	'securepoll-api-token-mismatch' => 'راکھی نشانی نئیں رلدی، لاگ ان نئیں ہوسکدے۔',
+	'securepoll-not-logged-in' => 'تسیں لازمی [[خاص:ورتنلاگان|لاگ ان]] چنوتی چ ووٹ پان لئی۔
+اگر تواڈا کوئی کھاتہ نئیں تسیں [[خاص:ورتنلاگان|بناؤ]]',
+	'securepoll-too-few-edits' => 'اوہو، تسیں ووٹ نئیں پاسکدے۔ تسیں $1 {{PLURAL:$1|تبدیلی|تبدیلیاں}} ایس چنوتی چ ووٹ پان لئی تے تسیں $2 بنائی نئیں۔',
+	'securepoll-too-new' => 'تسیں ووٹ نئیں پاےکدے۔ تواڈا کھاتہ پہلے سعاب کتاب چ آوے گا $1 توں پہلے تے $3 بجے چنوتی چ ووٹ پان لئی۔ تسیں $2 نوں $4 بجے رجسٹر ہووۓ سی۔',
+	'securepoll-blocked' => 'معاف کرنا تسیں ایس چنوتی چ ووٹ نئیں پاسکدے اگر تسیں تبدیلی توں روک دتے گۓ او۔',
+	'securepoll-blocked-centrally' => 'معاف کرنا تسیں ایس چوتی چ ووٹ ںغیں پاسکدے  کیوں جے توانوں $1 {{انیک:$1|وکی|وکیاں}} تے روکیا گیا جے۔',
+	'securepoll-bot' => 'معاف کرنا کھاتے جناں نال بوٹ دا نشان ہووے اوناں نوں چنوتی چ ووٹ دی اجازت نئیں۔',
+	'securepoll-not-in-group' => '"$1" ٹولی دے سنگی ایس چنوتی چ ووٹ پاسکدے نيں۔',
+	'securepoll-not-in-list' => 'معاف کرنا تسیں اوناں ورتن والیاں دی لسٹ چ نئیں او جناں نوں ایس چنوتی ج ووٹ پان دی اجازت اے۔',
+	'securepoll-list-title' => 'ووٹ لسٹ: $1',
+	'securepoll-header-timestamp' => 'ویلہ',
+	'securepoll-header-voter-name' => 'ناں',
+	'securepoll-header-voter-domain' => 'ڈومین',
+	'securepoll-header-ua' => 'ورتن آلا اجنٹ',
+	'securepoll-header-cookie-dup' => 'سٹو',
+	'securepoll-header-strike' => 'سٹرائک',
+	'securepoll-header-details' => 'معلومات',
+	'securepoll-strike-button' => 'سٹرائک',
+	'securepoll-unstrike-button' => 'انسٹرائک',
+	'securepoll-strike-reason' => 'وجہ:',
+	'securepoll-strike-cancel' => 'ختم',
+	'securepoll-strike-error' => 'غلطی سٹرائیک/ناں سٹرائیک کردیاں ہویاں: $1',
+	'securepoll-strike-token-mismatch' => 'سیشن ڈیٹا گم گیا۔',
+	'securepoll-details-link' => 'معلومات',
+	'securepoll-details-title' => 'ووٹ گل بات: #$1',
+	'securepoll-invalid-vote' => '"$1" اک پکا ووٹ آئی ڈی نغیں',
+	'securepoll-header-voter-type' => 'ووٹر ٹائپ',
+	'securepoll-voter-properties' => 'ووٹر پروپرٹیز',
+	'securepoll-strike-log' => 'سٹرائیک لاگ',
+	'securepoll-header-action' => 'کم',
+	'securepoll-header-reason' => 'وجہ',
+	'securepoll-header-admin' => 'ایڈمن',
+	'securepoll-cookie-dup-list' => 'کوکی ڈپلیکیٹ ورتن والے',
+	'securepoll-dump-title' => 'سٹو: $1',
+	'securepoll-dump-no-crypt' => 'کوئی انکرپثڈ چنوتی رکارڈ ہیگا اے ایس چنوتی لئی کیوں چ چنوتی نوں ایس دے رکارڈ رکھن لئی تیار نئیں کیتا گیا۔',
+	'securepoll-dump-not-finished' => 'اینکرپٹڈ چنوتی رکارڈ چنوتیاں ہون مگروں $1 تریخ تے $2 بجے ملیگا۔',
+	'securepoll-dump-no-urandom' => 'کھول نئیں سکدا/ڈیو/یورینڈم۔
+ووٹ پان دی لکائی رکھن لئی ، انکریپٹڈ چنوتی رکارڈ عام لوکاں نوں اودوں دسے جان گے جدوں اوناں نوں سانبے گۓ نمبر نال شفل کیتا جاۓ۔',
+	'securepoll-urandom-not-supported' => 'ایہ سرور کرپٹوگرافک رینڈم نمبر جنریشن۔
+ووٹ پان والیاں دی لکائی لئی، انکرپثڈ چنوتی رکارڈ عام لوکاں نوں اوروں دسے جان گے جدون اوناں نوں پکے نمبراں وچ رلایا جاۓ گا۔',
+	'securepoll-translate-title' => 'التھاؤ : $1',
+	'securepoll-invalid-language' => "ناں منیا جان والا بولی کوڈ '$1'",
+	'securepoll-submit-translate' => 'نواں کرو',
+	'securepoll-language-label' => 'بولی چنو',
+	'securepoll-submit-select-lang' => 'بولی التھاؤ',
+	'securepoll-entry-text' => 'تھلے چنوتیاں دی لسٹ اے۔',
+	'securepoll-header-title' => 'ناں',
+	'securepoll-header-start-date' => 'ٹرن تریخ',
+	'securepoll-header-end-date' => 'انت تریخ',
+	'securepoll-subpage-vote' => 'ووٹ دیو',
+	'securepoll-subpage-translate' => 'بولی التھاؤ',
+	'securepoll-subpage-list' => 'لسٹ',
+	'securepoll-subpage-dump' => 'سٹو',
+	'securepoll-subpage-tally' => 'گنو',
+	'securepoll-tally-title' => 'گنتی: $1',
+	'securepoll-tally-not-finished' => 'معاف کرنا، تسیں اودوں تک چنوتیاں دی گنتی نئیں کرسکدے جدوں تک سارے ووٹ ناں پے جان۔',
+	'securepoll-can-decrypt' => 'چنوتی رکارڈ نوں خفیا کرلیاگیا اے پر اینوں پڑھن دی کنجی ہیگی اے۔
+تسیں یا تے ڈیٹابیس چ نتیجے ویکھ سکدے اے یا کسے چڑھائی گئی فائل نال رلا کے ویکھ سکدے او۔',
+	'securepoll-tally-no-key' => 'تسیل چنوتی دی گنتی نئیں کرسکدے کیوں جے ووٹ لکی بولی ج نیں تے ایس بولی نوں سمجن دی چابی نئیں ہیگی۔',
+	'securepoll-tally-local-legend' => 'کٹھے کیتے گۓ نتارے',
+	'securepoll-tally-local-submit' => 'گنتی بناؤ',
+	'securepoll-tally-upload-legend' => 'لکی بولی دا ٹعیر چڑھاؤ',
+	'securepoll-tally-upload-submit' => 'گنتی بناؤ',
+	'securepoll-tally-error' => 'ووٹ رکارڈ سمجن چ غلطی، گنتی نئيں دتی جاسکدی۔',
+	'securepoll-no-upload' => 'کوئی فائل نئیں چرھائی کئی، نتارے نئیں کنے جاسکدے',
+	'securepoll-dump-corrupt' => 'ڈمپ فائل خراب اے تے چلائی نئیں جاسکدی۔',
+	'securepoll-tally-upload-error' => 'ڈمپ فائل دی کنتی کردیاں ہویاں غلطی: $1',
+	'securepoll-pairwise-victories' => 'پیروائز وکٹری میٹرکس',
+	'securepoll-strength-matrix' => 'پاتھ سٹرینگتھ میٹرکس',
+	'securepoll-ranks' => 'فائینل رینکنگ',
+	'securepoll-average-score' => 'ایورج سکور',
+	'securepoll-round' => 'راؤنڈ $1',
+	'securepoll-spoilt' => '(سپویلٹ)',
+	'securepoll-exhausted' => '(مک چکیا)',
 );
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'securepoll-submit' => 'رايه سپارل',
+	'securepoll-thanks' => 'له تاسې نه مننه، ستاسې رايه ثبته شوه.',
+	'securepoll-return' => '$1 ته ورګرځېدل',
+	'securepoll-jump' => 'د رايو پالنګر ته ورشۍ',
+	'securepoll-bad-ballot-submission' => 'ستاسې رايه سمه نه وه: $1',
+	'securepoll-unanswered-questions' => 'تاسې بايد ټولې پوښتنې ځواب کړۍ.',
 	'securepoll-header-timestamp' => 'وخت',
 	'securepoll-header-voter-name' => 'نوم',
+	'securepoll-header-voter-domain' => 'شپول',
+	'securepoll-header-ua' => 'د کارن پلاوی',
 	'securepoll-header-details' => 'تفصيلات',
 	'securepoll-strike-reason' => 'سبب:',
 	'securepoll-strike-cancel' => 'ناګارل',
+	'securepoll-details-link' => 'ځانګړنې',
 	'securepoll-header-reason' => 'سبب',
 	'securepoll-header-admin' => 'پازوال',
-	'securepoll-submit-translate' => 'اوسمهاله کول',
+	'securepoll-submit-translate' => 'اوسمهالول',
 	'securepoll-language-label' => 'ژبه ټاکل:',
 	'securepoll-submit-select-lang' => 'ژباړل',
 	'securepoll-header-title' => 'نوم',
@@ -6837,9 +9140,11 @@ $messages['ps'] = array(
  * @author Capmo
  * @author Crazymadlover
  * @author Everton137
+ * @author Giro720
  * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
+ * @author SandroHc
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -6847,7 +9152,7 @@ $messages['pt'] = array(
 	'securepoll-desc' => 'Extensão para eleições e sondagens',
 	'securepoll-invalid-page' => 'Subpágina inválida: "<nowiki>$1</nowiki>"',
 	'securepoll-need-admin' => 'Precisa de ser um administrador de eleições para realizar esta operação.',
-	'securepoll-too-few-params' => 'Parâmetros de subpágina insuficientes (ligação inválida).',
+	'securepoll-too-few-params' => 'Parâmetros de subpágina insuficientes (link inválido).',
 	'securepoll-invalid-election' => '"$1" não é um identificador de eleição válido.',
 	'securepoll-welcome' => '<strong>Bem-vindo(a) $1!</strong>',
 	'securepoll-not-started' => 'Esta eleição ainda não começou.
@@ -6899,7 +9204,9 @@ Deve atribuir a todas as opções uma classificação entre 1 e 999.',
 	'securepoll-api-token-mismatch' => 'Token de segurança não corresponde, não foi possível autenticar.',
 	'securepoll-not-logged-in' => 'Precisa de se autenticar para votar nesta eleição',
 	'securepoll-too-few-edits' => 'Desculpe, mas não pode votar. É necessário ter-se feito pelo menos {{PLURAL:$1|uma edição|$1 edições}} para votar nesta eleição e fez apenas $2.',
+	'securepoll-too-new' => 'Desculpe, mas não pode votar. A sua conta teria de ter sido registada antes de $1 de $3 para votar nesta eleição, mas registou-se em $2 de $4.',
 	'securepoll-blocked' => 'Desculpe, mas não pode votar nesta eleição se foi bloqueado de efectuar edições.',
+	'securepoll-blocked-centrally' => 'Desculpe, mas não pode votar nesta eleição quando estiver bloqueado em pelo menos $1 {{PLURAL:$1|wiki|wikis}}.',
 	'securepoll-bot' => 'Desculpe, mas contas com de robôs não estão autorizadas a votar nesta eleição.',
 	'securepoll-not-in-group' => 'Só os membros do grupo "$1" podem votar nesta eleição.',
 	'securepoll-not-in-list' => 'Desculpe, mas não consta da lista de utilizadores previamente autorizados a votar nesta eleição.',
@@ -6927,13 +9234,13 @@ Deve atribuir a todas as opções uma classificação entre 1 e 999.',
 	'securepoll-header-reason' => 'Motivo',
 	'securepoll-header-admin' => 'Admin',
 	'securepoll-cookie-dup-list' => "Utilizadores com ''cookie'' duplicado",
-	'securepoll-dump-title' => 'Depositar: $1',
+	'securepoll-dump-title' => 'Copiar para ficheiro: $1',
 	'securepoll-dump-no-crypt' => 'Nenhum registo codificado de eleição está disponível para esta eleição, porque a eleição não está configurada para usar encriptação.',
 	'securepoll-dump-not-finished' => 'Registos de eleição encriptados estarão disponíveis apenas após a eleição terminar a $1 às $2',
 	'securepoll-dump-no-urandom' => 'Não é possível abrir /dev/urandom.
-Para manter a privacidade do votante, registos de eleição codificados são tornados públicos apenas quando podem ser encriptados com uma fonte segura de números aleatórios.',
-	'securepoll-urandom-not-supported' => 'Este servidor não suporta geração criptográfica de números aleatórios.
-Para manter a privacidade dos votantes, os resultados criptografados da eleição são tornados públicos apenas quando podem ser embaralhados com uma sequência de números aleatórios.',
+Para manter a privacidade dos votantes, os registos de eleição encriptados só são tornados públicos quando podem ser reordenados usando uma fonte segura de números aleatórios.',
+	'securepoll-urandom-not-supported' => 'Este servidor não sustenta a geração de números aleatórios para uso criptográfico.
+Para manter a privacidade dos votantes, os registos de eleição encriptados só são tornados públicos quando podem ser reordenados usando uma fonte segura de números aleatórios.',
 	'securepoll-translate-title' => 'Traduzir: $1',
 	'securepoll-invalid-language' => 'Código de língua "$1" inválido',
 	'securepoll-submit-translate' => 'Actualizar',
@@ -6946,7 +9253,7 @@ Para manter a privacidade dos votantes, os resultados criptografados da eleiçã
 	'securepoll-subpage-vote' => 'Votar',
 	'securepoll-subpage-translate' => 'Traduzir',
 	'securepoll-subpage-list' => 'Lista',
-	'securepoll-subpage-dump' => 'Depositar',
+	'securepoll-subpage-dump' => 'Copiar para ficheiro',
 	'securepoll-subpage-tally' => 'Apurar',
 	'securepoll-tally-title' => 'Apurar: $1',
 	'securepoll-tally-not-finished' => 'Desculpe, mas não pode apurar os resultados da eleição até que a votação esteja terminada.',
@@ -6955,16 +9262,19 @@ Pode escolher entre apurar os resultados presentes na base de dados, ou apurar r
 	'securepoll-tally-no-key' => 'Não pode apurar esta eleição, porque os votos estão encriptados e a chave de descodificação não está disponível.',
 	'securepoll-tally-local-legend' => 'Apurar resultados armazenados',
 	'securepoll-tally-local-submit' => 'Criar apuramento',
-	'securepoll-tally-upload-legend' => 'Carregar depósito encriptado',
+	'securepoll-tally-upload-legend' => 'Upload da cópia em ficheiro encriptada',
 	'securepoll-tally-upload-submit' => 'Criar apuramento',
 	'securepoll-tally-error' => 'Erro na interpretação de registo de voto, não é possível produzir apuramento.',
 	'securepoll-no-upload' => 'Nenhum ficheiro foi carregado, não é possível apurar resultados.',
-	'securepoll-dump-corrupt' => 'O ficheiro de depósito está corrompido e não pode ser processado.',
-	'securepoll-tally-upload-error' => 'Erro ao contar o ficheiro de depósito: $1',
+	'securepoll-dump-corrupt' => 'A cópia em ficheiro está corrompida e não pode ser processada.',
+	'securepoll-tally-upload-error' => 'Erro ao contar a cópia em ficheiro: $1',
 	'securepoll-pairwise-victories' => 'Matriz de vitórias par a par',
 	'securepoll-strength-matrix' => 'Matriz de forças de caminho',
 	'securepoll-ranks' => 'Classificação final',
 	'securepoll-average-score' => 'Pontuação média',
+	'securepoll-round' => 'Ronda $1',
+	'securepoll-spoilt' => '(Danificadas)',
+	'securepoll-exhausted' => '(Esgotadas)',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -6972,7 +9282,10 @@ Pode escolher entre apurar os resultados presentes na base de dados, ou apurar r
  * @author Eduardo.mps
  * @author Everton137
  * @author GKnedo
+ * @author Giro720
+ * @author Helder.wiki
  * @author Heldergeovane
+ * @author MetalBrasil
  */
 $messages['pt-br'] = array(
 	'securepoll' => 'VotaçãoSegura',
@@ -7022,6 +9335,8 @@ Não foi possível descriptografar.',
 	'securepoll-invalid-rank' => 'Nota inválida. Você deve classificar os candidatos com notas entre 1 e 999.',
 	'securepoll-unranked-options' => 'Algumas opções não foram classificadas.
 Você deve classificar todas as opções com uma nota entre 1 e 999.',
+	'securepoll-invalid-score' => 'A pontuação deve ser um número entre $1 e $2.',
+	'securepoll-unanswered-options' => 'Você tem que responder todas as perguntas.',
 	'securepoll-remote-auth-error' => 'Erro ao tentar obter suas informações de conta do servidor.',
 	'securepoll-remote-parse-error' => 'Erro ao interpretar a resposta de autorização do servidor.',
 	'securepoll-api-invalid-params' => 'Parâmetros inválidos.',
@@ -7029,7 +9344,9 @@ Você deve classificar todas as opções com uma nota entre 1 e 999.',
 	'securepoll-api-token-mismatch' => 'Token de segurança não confere, não foi possível autenticar.',
 	'securepoll-not-logged-in' => 'Você deve se registrar para votar nesta eleição',
 	'securepoll-too-few-edits' => 'Desculpe, você não pode votar. É preciso ter feito no mínimo $1 {{PLURAL:$1|edição|edições}} para votar nesta eleição, você fez $2.',
+	'securepoll-too-new' => 'Desculpe-nos, mas você não pode votar. A sua conta precisaria ser registrada antes de $1 no $3 para votar nesta eleição, mas registrou-se em $2 no $4',
 	'securepoll-blocked' => 'Desculpe, você não pode votar nesta eleição se no momento você está bloqueado de editar.',
+	'securepoll-blocked-centrally' => 'Desculpe-nos, você não pode votar nesta eleição quando está bloqueado em pelo menos $1 {{PLURAL:$1|wiki|wikis}}.',
 	'securepoll-bot' => "Desculpe, contas de programas robôs (marcadas como ''bot'') não podem votar nesta eleição.",
 	'securepoll-not-in-group' => 'Apenas os membros do grupo "$1" podem votar nesta eleição.',
 	'securepoll-not-in-list' => 'Desculpe, você não está na lista predeterminada de usuários autorizados a votar nesta eleição.',
@@ -7069,9 +9386,10 @@ Para manter a privacidade dos votantes, os resultados criptografados da eleiçã
 	'securepoll-submit-translate' => 'Atualizar',
 	'securepoll-language-label' => 'Selecionar língua:',
 	'securepoll-submit-select-lang' => 'Traduzir',
+	'securepoll-entry-text' => 'Encontra-se abaixo a lista de eleições.',
 	'securepoll-header-title' => 'Título',
 	'securepoll-header-start-date' => 'Data do Início',
-	'securepoll-header-end-date' => 'Data do Encerramento',
+	'securepoll-header-end-date' => 'Data de fim',
 	'securepoll-subpage-vote' => 'Votar',
 	'securepoll-subpage-translate' => 'Traduzir',
 	'securepoll-subpage-list' => 'Lista',
@@ -7093,118 +9411,183 @@ Você pode escolher entre realizar a contagem de votos dos resultados presentes 
 	'securepoll-pairwise-victories' => 'Matriz de vitórias par a par',
 	'securepoll-strength-matrix' => 'Matriz de forças de caminho',
 	'securepoll-ranks' => 'Classificação final',
+	'securepoll-average-score' => 'Pontuação média',
+	'securepoll-round' => 'Ronda $1',
+	'securepoll-spoilt' => '(Danificadas)',
+	'securepoll-exhausted' => '(Esgotadas)',
+);
+
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'securepoll-list-title' => 'Akllasqakunata sutisuyunchay: $1',
+	'securepoll-header-timestamp' => 'Pacha',
+	'securepoll-header-voter-name' => 'Suti',
+	'securepoll-header-strike' => 'Sikwipuy',
+	'securepoll-header-details' => 'Imaymana',
+	'securepoll-strike-button' => 'Sikwipuy',
+	'securepoll-details-link' => 'Imaymana',
+	'securepoll-header-voter-type' => 'Akllaq laya',
+	'securepoll-voter-properties' => 'Akllaqpa kaqninkuna',
+	'securepoll-strike-log' => "Sikwipuy hallch'a",
+	'securepoll-header-action' => 'Ruray',
+	'securepoll-header-reason' => 'Kayrayku',
+	'securepoll-header-admin' => 'Kamachiq',
+	'securepoll-translate-title' => "T'ikray: $1",
+	'securepoll-invalid-language' => 'Mana kaq rimay tuyru "$1"',
+	'securepoll-submit-translate' => 'Musuqchay',
+	'securepoll-language-label' => 'Rimayta akllay:',
+	'securepoll-submit-select-lang' => "T'ikray",
+	'securepoll-header-title' => 'Suti',
+	'securepoll-header-start-date' => "Qallarisqanpa p'unchawnin",
+	'securepoll-header-end-date' => "Puchukana p'unchaw",
+	'securepoll-subpage-vote' => 'Akllay',
+	'securepoll-subpage-translate' => "T'ikray",
+	'securepoll-subpage-list' => 'Sutisuyu',
+	'securepoll-subpage-dump' => "K'uktiy",
+	'securepoll-subpage-tally' => 'Yupaq',
+	'securepoll-tally-title' => 'Yupaq: $1',
+	'securepoll-tally-local-submit' => 'Yupaqta kamariy',
+	'securepoll-tally-upload-submit' => 'Yupaqta kamariy',
+	'securepoll-average-score' => 'Kuskanchaku taripasqakuna',
 );
 
 /** Romanian (Română)
+ * @author AdiJapan
+ * @author Cin
  * @author Firilacroco
  * @author KlaudiuMihaila
  * @author Mihai
+ * @author Minisarm
  * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'securepoll' => 'SondajSecurizat',
-	'securepoll-desc' => 'Extensie pentru alegeri şi anchete',
-	'securepoll-invalid-page' => 'Subpagină invalidă „<nowiki>$1</nowiki>”',
-	'securepoll-need-admin' => 'Trebuie să fiţi un administrator de alegeri pentru a efectua această acţiune.',
+	'securepoll-desc' => 'Extensie pentru alegeri și anchete',
+	'securepoll-invalid-page' => 'Subpagina „<nowiki>$1</nowiki>” este invalidă',
+	'securepoll-need-admin' => 'Trebuie să fiți un administrator de alegeri pentru a efectua această acțiune.',
+	'securepoll-too-few-params' => 'Insuficienți parametri pentru subpagină (legătură invalidă).',
 	'securepoll-invalid-election' => '„$1” nu este un ID valid de alegeri.',
-	'securepoll-welcome' => '<strong>Bun venit $1 !</strong>',
-	'securepoll-not-started' => 'Aceste elegeri nu au început încă.
-Sunt programate pentru a începe pe $2 la $3.',
-	'securepoll-finished' => 'Alegerile s-au sfârşit, nu mai puteţi vota.',
-	'securepoll-not-qualified' => 'Nu sunteţi calificat să votaţi în aceste alegeri: $1',
-	'securepoll-change-disallowed' => 'Aţi votat în aceste alegeri înainte.
-Ne pare rău, nu puteţi vota din nou.',
+	'securepoll-welcome' => '<strong>Bun venit $1!</strong>',
+	'securepoll-not-started' => 'Aceste alegeri nu au început încă.
+Sunt programate să pornească pe $2 la $3.',
+	'securepoll-finished' => 'Alegerile s-au sfârșit, nu mai puteți vota.',
+	'securepoll-not-qualified' => 'Nu sunteți eligibil să votați în cadrul acestor alegeri: $1',
+	'securepoll-change-disallowed' => 'V-ați exprimat deja votul în cadrul acestor alegeri.
+Ne pare rău, nu puteți vota din nou.',
+	'securepoll-change-allowed' => '<strong>V-ați exprimat deja votul în cadrul acestor alegeri.</strong>
+Vă puteți schimba opțiunea completând formularul de mai jos.
+Vă rugăm să rețineți că, în urma acestei operațiuni, votul dumneavoastră inițial nu va mai conta.',
 	'securepoll-submit' => 'Trimite votul',
-	'securepoll-gpg-receipt' => 'Mulţumesc pentru vot.
+	'securepoll-gpg-receipt' => 'Vă mulțumim pentru vot.
 
-Dacă doriţi aţi putea păstra următorul bon ca dovadă a votului dvs:
+Dacă doriți, puteți păstra următorul bon ca dovadă a votului dumneavoastră:
 
 <pre>$1</pre>',
-	'securepoll-thanks' => 'Mulţumim, votul tău a fost înregistrat,',
+	'securepoll-thanks' => 'Vă mulțumim, votul dumneavoastră a fost înregistrat.',
 	'securepoll-return' => 'Înapoi la $1',
-	'securepoll-encrypt-error' => 'A eşuat să se cripteze înregistrarea votului dvs.
-Votul dvs nu a fost înregistrat ! 
+	'securepoll-encrypt-error' => 'Criptarea votului dumneavoastră a eșuat.
+Acesta nu a fost înregistrat! 
 
 $1',
+	'securepoll-no-gpg-home' => 'Nu s-a putut crea directorul personal GPG.',
+	'securepoll-secret-gpg-error' => 'Eroare la executarea GPG.
+Adăugați $wgSecurePollShowErrorDetail=true; în LocalSettings.php pentru a afișa mai multe detalii.',
 	'securepoll-full-gpg-error' => 'Eroare la executarea GPG:
 
 Comandă: $1
 
 Eroare:
 <pre>$2</pre>',
-	'securepoll-gpg-config-error' => 'Cheile GPG sunt configurate greşit.',
+	'securepoll-gpg-config-error' => 'Cheile GPG sunt greșit configurate.',
+	'securepoll-gpg-parse-error' => 'Eroare la interpretarea datelor de ieșire GPG.',
 	'securepoll-no-decryption-key' => 'Nicio cheie de decriptare nu este configurată.
 Nu se poate decripta.',
-	'securepoll-jump' => 'Mergeţi la serverul de votare',
-	'securepoll-bad-ballot-submission' => 'Votul dvs a fost invalid: $1',
-	'securepoll-unanswered-questions' => 'Trebuie să răspunzi la toate întrebările.',
-	'securepoll-invalid-rank' => 'Rang invalid. Trebuie să daţi candidaţilor un rang între 1 şi 999.',
-	'securepoll-unranked-options' => 'Unele opţiuni nu au fost clasate.
-Trebuie să oferi tuturor opţiunilor un rang între 1 şi 999.',
-	'securepoll-invalid-score' => 'Scorul trebuie să fie un număr între $1 şi $2.',
-	'securepoll-unanswered-options' => 'Trebuie să daţi un răspuns pentru fiecare întrebare.',
-	'securepoll-remote-auth-error' => 'Eroare la preluarea informaţilor contului dvs de pe server.',
-	'securepoll-api-invalid-params' => 'Parametri incorecţi.',
-	'securepoll-api-no-user' => 'Niciun  utilizator cu acest ID nu a fost găsit.',
-	'securepoll-api-token-mismatch' => 'Semnul de securitate s-a dereglat, nu te poţi loga.',
-	'securepoll-not-logged-in' => 'Trebuie să vă autentificaţi pentru a vota în aceste alegeri',
-	'securepoll-too-few-edits' => 'Ne pare rău, nu puteţi vota. Trebuie să aveţi făcute cel puţin $1 {{PLURAL:$1|modificare|modificări}} pentru a vota în aceste alegeri, dvs aveţi făcute $2.',
-	'securepoll-blocked' => 'Ne pare rău, nu puteţi vota în aceste elegeri dacă sunteţi blocat la editare.',
-	'securepoll-bot' => 'Ne pare rău, conturile cu steagul de bot nu li se permit să voteze în aceste alegeri.',
-	'securepoll-not-in-group' => 'Doar membrii grupului „$1” pot vota în aceste alegeri.',
-	'securepoll-not-in-list' => 'Ne pare rău, nu sunteţi în lista predeterminată de utilizatori autorizaţi să voteze în aceste alegeri.',
+	'securepoll-jump' => 'Mergi la serverul de votare',
+	'securepoll-bad-ballot-submission' => 'Votul dumneavoastră a fost incorect: $1',
+	'securepoll-unanswered-questions' => 'Trebuie să răspundeți la toate întrebările.',
+	'securepoll-invalid-rank' => 'Grad incorect. Trebuie să acordați candidaților un grad cuprins între 1 și 999.',
+	'securepoll-unranked-options' => 'Unele opțiuni nu au fost clasate.
+Trebuie să oferiți tuturor opțiunilor un grad cuprins între 1 și 999.',
+	'securepoll-invalid-score' => 'Scorul trebuie să fie un număr cuprins între $1 și $2.',
+	'securepoll-unanswered-options' => 'Trebuie să dați un răspuns fiecărei întrebări.',
+	'securepoll-remote-auth-error' => 'Eroare la preluarea de pe server a informaților contului dumneavoastră.',
+	'securepoll-remote-parse-error' => 'Eroare la interpretarea răspunsului de autorizație primit de la server.',
+	'securepoll-api-invalid-params' => 'Parametri incorecți.',
+	'securepoll-api-no-user' => 'Niciun utilizator cu acest ID nu a fost găsit.',
+	'securepoll-api-token-mismatch' => 'Jetonul de securitate nu se potrivește. Nu se poate efectua autentificarea.',
+	'securepoll-not-logged-in' => 'Trebuie să vă autentificați pentru a vota în cadrul acestor alegeri.',
+	'securepoll-too-few-edits' => 'Ne pare rău, dar nu puteți vota. Trebuie să fi contribuit cu cel puțin $1 {{PLURAL:$1|modificare|modificări}} pentru a vota în cadrul acestor alegeri. Dumneavoastră ați efectuat doar $2.',
+	'securepoll-too-new' => 'Ne pare rău, dar nu puteți vota. Pentru a vă exprima votul în cadrul acestor alegeri este necesar ca contul dumneavoastră să fi fost înregistrat înainte de $1 la $3. Dumneavoastră v-ați înregistrat pe $2 la $4.',
+	'securepoll-blocked' => 'Ne pare rău, dar nu puteți vota în cadrul acestor alegeri deoarece sunteți blocat (nu puteți face modificări).',
+	'securepoll-blocked-centrally' => 'Ne pare rău, dar nu puteți vota în cadrul acestor alegerilor întrucât sunteți blocat pe cel puțin $1 {{PLURAL:$1|wiki|wikiuri}}.',
+	'securepoll-bot' => 'Ne pare rău, dar conturilor cu statut de robot nu li se permite să voteze în cadrul acestor alegeri.',
+	'securepoll-not-in-group' => 'Doar membrii grupului „$1” pot vota în cadrul acestor alegeri.',
+	'securepoll-not-in-list' => 'Ne pare rău, nu sunteți în lista predeterminată de utilizatori autorizați să voteze în aceste alegeri.',
 	'securepoll-list-title' => 'Listă voturi: $1',
-	'securepoll-header-timestamp' => 'Timp',
+	'securepoll-header-timestamp' => 'Dată',
 	'securepoll-header-voter-name' => 'Nume',
 	'securepoll-header-voter-domain' => 'Domeniu',
-	'securepoll-header-ua' => 'Agent utilizator',
-	'securepoll-header-cookie-dup' => '',
-	'securepoll-header-strike' => 'Ştergeţi',
+	'securepoll-header-ua' => 'User agent',
+	'securepoll-header-cookie-dup' => 'Duplicat',
+	'securepoll-header-strike' => 'Eliminare',
 	'securepoll-header-details' => 'Detalii',
-	'securepoll-unstrike-button' => 'Anulare ştergere',
+	'securepoll-strike-button' => 'Elimină',
+	'securepoll-unstrike-button' => 'Anulare eliminare',
 	'securepoll-strike-reason' => 'Motiv:',
-	'securepoll-strike-cancel' => 'Anulare',
-	'securepoll-strike-error' => 'Eroare la efectuarea ştergerii/anulării ştergerii: $1',
-	'securepoll-strike-token-mismatch' => 'Informaţiile despre sesiune s-au pierdut',
+	'securepoll-strike-cancel' => 'Revocare',
+	'securepoll-strike-error' => 'Eroare la efectuarea operațiunii de eliminare/anulare a eliminării: $1',
+	'securepoll-strike-token-mismatch' => 'Informațiile despre sesiune s-au pierdut',
 	'securepoll-details-link' => 'Detalii',
 	'securepoll-details-title' => 'Detalii vot: #$1',
-	'securepoll-invalid-vote' => '„$1” nu este o identitate a unui vot valid',
-	'securepoll-header-voter-type' => 'Tipuri de votanţi',
-	'securepoll-voter-properties' => 'Proprietăţi votanţi',
-	'securepoll-strike-log' => 'Jurnal de ştergere',
-	'securepoll-header-action' => 'Acţiune',
+	'securepoll-invalid-vote' => '„$1” nu este un ID al unui vot valid',
+	'securepoll-header-voter-type' => 'Tipuri de votanți',
+	'securepoll-voter-properties' => 'Însușirile votanților',
+	'securepoll-strike-log' => 'Jurnal de eliminare',
+	'securepoll-header-action' => 'Acțiune',
 	'securepoll-header-reason' => 'Motiv',
 	'securepoll-header-admin' => 'Administrator',
-	'securepoll-cookie-dup-list' => 'utilizatori duplicaţi prin cookie',
+	'securepoll-cookie-dup-list' => 'Utilizatori reveniți, identificați după cookie',
 	'securepoll-dump-title' => 'Dump: $1',
-	'securepoll-dump-no-crypt' => 'Nu există o înregistrare a alegerilor criptată valabilă pentru aceste alegeri, deoarece alegerile nu sunt configurate pentru a folosi criptarea.',
-	'securepoll-dump-not-finished' => 'Înregistrările alegerilor criptate sunt valabile doar după data de încheiere în $1 la $2',
+	'securepoll-dump-no-crypt' => 'Nicio înregistrare criptată nu este disponibilă pentru aceste alegeri, deoarece acest scrutin nu a fost configurat în vederea folosirii criptării.',
+	'securepoll-dump-not-finished' => 'Înregistrările criptate ale alegerilor sunt disponibile doar după momentul închiderii votului, în data de $1, ora $2',
+	'securepoll-dump-no-urandom' => 'Nu se poate deschide /dev/urandom.
+Pentru a respecta confidențialitatea votanților, înregistrările criptate ale alegerilor sunt disponibile public doar atunci când pot fi amestecate folosind o secvență securizată de numere aleatoare.',
+	'securepoll-urandom-not-supported' => 'Acest server nu acceptă generarea criptografică de numere aleatoare.
+Pentru a respecta confidențialitatea votanților, înregistrările criptate ale alegerilor sunt disponibile public doar atunci când pot fi amestecate folosind o secvență securizată de numere aleatoare.',
 	'securepoll-translate-title' => 'Traducere: $1',
-	'securepoll-invalid-language' => 'Cod de limbă incorect "$1"',
+	'securepoll-invalid-language' => 'Codul de limbă „$1” este incorect',
 	'securepoll-submit-translate' => 'Actualizează',
-	'securepoll-language-label' => 'Marchează limba:',
+	'securepoll-language-label' => 'Selectați limba:',
 	'securepoll-submit-select-lang' => 'Traducere',
-	'securepoll-entry-text' => 'Mai jos este lista de sondaje.',
+	'securepoll-entry-text' => 'Mai jos se află lista cu sondaje.',
 	'securepoll-header-title' => 'Nume',
-	'securepoll-header-start-date' => 'Dată început',
-	'securepoll-header-end-date' => 'Dată sfârşit',
+	'securepoll-header-start-date' => 'Dată începere',
+	'securepoll-header-end-date' => 'Dată finalizare',
 	'securepoll-subpage-vote' => 'Vot',
 	'securepoll-subpage-translate' => 'Traducere',
 	'securepoll-subpage-list' => 'Listă',
 	'securepoll-subpage-dump' => 'Dump',
-	'securepoll-subpage-tally' => 'Copiere',
-	'securepoll-tally-title' => 'Copiere: $1',
-	'securepoll-tally-not-finished' => 'Ne pare rău, nu puteţi copia alegerile până după ce votarea nu e completă.',
-	'securepoll-tally-no-key' => 'Nu puteţi copia aceste alegeri, deoarece voturile sunt criptate, iar cheia de decriptare nu e valabilă.',
-	'securepoll-tally-local-legend' => 'Copia a stocat rezultatele',
-	'securepoll-tally-local-submit' => 'Creaţi o copiere',
-	'securepoll-tally-upload-legend' => 'Încărcaţi un dump criptat',
-	'securepoll-tally-upload-submit' => 'Creaţi copie',
-	'securepoll-tally-error' => 'Eroare la interpretarea înregistrării voturilor, nu se poate produce o copie.',
-	'securepoll-no-upload' => 'Niciun fişier n-a fost încărcat, nu se pot copia rezultatele.',
-	'securepoll-tally-upload-error' => 'Eroare la copierea fişierului dump: $1',
+	'securepoll-subpage-tally' => 'Numărătoare',
+	'securepoll-tally-title' => 'Numărătoare: $1',
+	'securepoll-tally-not-finished' => 'Ne pare rău, dar nu puteți efectua numărătoarea voturilor până când procesul de votare nu se va fi finalizat.',
+	'securepoll-can-decrypt' => 'Înregistrarea alegerilor a fost criptată, însă cheia de decriptare este disponibilă.
+Puteți alege fie să efectuați numărătoarea rezultatelor din baza de date, fie să efectuați numărătoarea unor rezultate criptate dintr-un fișier încărcat.',
+	'securepoll-tally-no-key' => 'Ne pare rău, dar nu puteți efectua numărătoarea voturilor acestor alegeri, deoarece acestea sunt criptate, iar cheia de decriptare nu este disponibilă.',
+	'securepoll-tally-local-legend' => 'Numărătoarea rezultatele stocate',
+	'securepoll-tally-local-submit' => 'Creează o numărătoare',
+	'securepoll-tally-upload-legend' => 'Încarcă un dump criptat',
+	'securepoll-tally-upload-submit' => 'Creează o numărătoare',
+	'securepoll-tally-error' => 'Eroare la interpretarea înregistrării voturilor. Nu se poate efectua o numărătoare.',
+	'securepoll-no-upload' => 'Niciun fișier nu a fost încărcat. Nu se poate face numărătoarea rezultatelor.',
+	'securepoll-dump-corrupt' => 'Fișierul dump este corupt și nu poate fi procesat.',
+	'securepoll-tally-upload-error' => 'Eroare în timpul efectuării numărătorii din fișierul dump: $1',
 	'securepoll-ranks' => 'Clasament final',
-	'securepoll-average-score' => 'Scorul mediu',
+	'securepoll-average-score' => 'Scor mediu',
+	'securepoll-round' => 'Runda $1',
+	'securepoll-spoilt' => '(Anulate)',
+	'securepoll-exhausted' => '(Epuizate)',
 );
 
 /** Tarandíne (Tarandíne)
@@ -7333,11 +9716,18 @@ Tu puè scacchià o de fà 'u condegge de le vote da 'u database oppure ausanne 
 	'securepoll-strength-matrix' => "Matrice de fortezze d'u percorse",
 	'securepoll-ranks' => 'Posizione finale',
 	'securepoll-average-score' => 'Pundegge medie',
+	'securepoll-round' => 'Turne $1',
+	'securepoll-spoilt' => '(Spoilt)',
+	'securepoll-exhausted' => '(Esaurite)',
 );
 
 /** Russian (Русский)
+ * @author Dim Grits
  * @author HalanTul
+ * @author Kaganer
  * @author Kv75
+ * @author Rave
+ * @author Renessaince
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -7383,7 +9773,7 @@ $1',
 	'securepoll-no-decryption-key' => 'Не настроен ключ расшифровки.
 Невозможно  расшифровать.',
 	'securepoll-jump' => 'Перейти на сервер голосований',
-	'securepoll-bad-ballot-submission' => 'Ваш голос не действителен: $1',
+	'securepoll-bad-ballot-submission' => 'Ваш голос недействителен: $1',
 	'securepoll-unanswered-questions' => 'Вы должны ответить на все вопросы.',
 	'securepoll-invalid-rank' => 'Недействительный ранг. Вы должны указать для кандидата ранг от 1 до 999.',
 	'securepoll-unranked-options' => 'Некоторые записи не проранжированы.
@@ -7397,7 +9787,9 @@ $1',
 	'securepoll-api-token-mismatch' => 'Несоответствие признака безопасности, невозможно войти в систему.',
 	'securepoll-not-logged-in' => 'Вы должны представиться системе, чтобы принять участие в голосовании',
 	'securepoll-too-few-edits' => 'Извините, вы не можете проголосовать. Вам необходимо иметь не менее $1 {{PLURAL:$1|правки|правок|правок}} для участия в этом голосовании, за вами числится $2.',
+	'securepoll-too-new' => 'К сожалению, вы не можете голосовать. Для участия в выборах ваша учётная запись должна была быть зарегистрирована до $1 $3, вы зарегистрированы $2 $4.',
 	'securepoll-blocked' => 'Извините, вы не можете голосовать на выборах, если учётная запись была заблокирована.',
+	'securepoll-blocked-centrally' => 'К сожалению, вы не можете голосовать на этих выборах, так как вы заблокированы по меньшей мере в $1 {{PLURAL:$1|вики|вики}}.',
 	'securepoll-bot' => 'Извините, учётные записи с флагом бота не допускаются для участия в голосовании.',
 	'securepoll-not-in-group' => 'Только члены группы $1 могут голосовать на этих выборах.',
 	'securepoll-not-in-list' => 'Извините, вы не входите в список участников, допущенных для голосования на этих выборах.',
@@ -7405,7 +9797,10 @@ $1',
 	'securepoll-header-timestamp' => 'Время',
 	'securepoll-header-voter-name' => 'Имя',
 	'securepoll-header-voter-domain' => 'Домен',
+	'securepoll-header-ip' => 'IP',
+	'securepoll-header-xff' => 'XFF',
 	'securepoll-header-ua' => 'Агент пользователя',
+	'securepoll-header-token-match' => 'CSRF',
 	'securepoll-header-cookie-dup' => 'Дубли',
 	'securepoll-header-strike' => 'Вычёркивание',
 	'securepoll-header-details' => 'Подробности',
@@ -7418,7 +9813,9 @@ $1',
 	'securepoll-details-link' => 'Подробности',
 	'securepoll-details-title' => 'Подробности голосования: #$1',
 	'securepoll-invalid-vote' => '«$1» не является допустимым идентификатором голосования',
+	'securepoll-header-id' => 'ID',
 	'securepoll-header-voter-type' => 'Тип голосующего',
+	'securepoll-header-url' => 'URL-адрес',
 	'securepoll-voter-properties' => 'Свойства избирателя',
 	'securepoll-strike-log' => 'Журнал вычёркиваний',
 	'securepoll-header-action' => 'Действие',
@@ -7434,6 +9831,7 @@ $1',
 Чтобы сохранить конфиденциальность голосующих, закодированные записи голосования станут общедоступными только после того, как они смогут быть перемешаны безопасным потоком случайных чисел.',
 	'securepoll-translate-title' => 'Перевод: $1',
 	'securepoll-invalid-language' => 'Ошибочный код языка «$1»',
+	'securepoll-header-trans-id' => 'ID',
 	'securepoll-submit-translate' => 'Обновить',
 	'securepoll-language-label' => 'Выбор языка:',
 	'securepoll-submit-select-lang' => 'Перевести',
@@ -7463,9 +9861,168 @@ $1',
 	'securepoll-strength-matrix' => 'Матрица сил путей',
 	'securepoll-ranks' => 'Окончательное ранжирование',
 	'securepoll-average-score' => 'Средняя оценка',
+	'securepoll-round' => '$1 тур',
+	'securepoll-spoilt' => '(Испорченные)',
+	'securepoll-exhausted' => '(Исчерпаны)',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'securepoll' => 'Безпечне голосованя',
+	'securepoll-desc' => 'Росшырїня про голосованя і вызвідованя',
+	'securepoll-invalid-page' => 'Неплатна підсторінка „<nowiki>$1</nowiki>“',
+	'securepoll-need-admin' => 'Треба, жебы сьте  {{GENDER:|быв|была|быв}} адміністратор волеб, жебы сьте могли выконати тоту дїю.',
+	'securepoll-too-few-params' => 'Недостаток параметрів про підсторінку (неплатный одказ).',
+	'securepoll-invalid-election' => '«$1» — неправилный ідентіфікатор голосованя',
+	'securepoll-welcome' => '<strong>Витайте, $1!</strong>',
+	'securepoll-not-started' => 'Тото голосованя дотеперь не зачало.
+Мало бы зачати в  $3, $2.',
+	'securepoll-finished' => 'Тото голосованя скінчіло, уж не можете голосовати.',
+	'securepoll-not-qualified' => 'Не сповнюєте условія про участь у тім голосованю: $1',
+	'securepoll-change-disallowed' => 'У того голосованя сьте уж {{GENDER:|брав|брала|брав}} участь.
+Перебачте, но знову голосовати не можете.',
+	'securepoll-change-allowed' => '<strong>Позначка: Того голосованя сьте ся уж {{GENDER:|участнив|участнила|участнив}}.</strong>
+Кідь хочете змінити свій голос, пошлите ниже уведеный формуларь.
+Усвідомте собі, же кідь то зробите, ваш попередній голос не буде врахованый.',
+	'securepoll-submit' => 'Одослати голос',
+	'securepoll-gpg-receipt' => 'Дякуєме за ваше голосованя.
+
+Кідь хочете, можете собі усховати наслїдне підтверджіня вашого голосованя:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'Дякуєме вам, ваш голос быв записаный.',
+	'securepoll-return' => 'Вернути ся на $1',
+	'securepoll-encrypt-error' => 'Не подарило зашіфровати запис про ваш голос.
+Ваш голос не быв записаный!
+
+$1',
+	'securepoll-no-gpg-home' => 'Не подарило ся створити домашнїй адресарь про GPG.',
+	'securepoll-secret-gpg-error' => 'Хыба почас выконаня GPG.
+Кідь хочете указати детайлы, наставте <code>$wgSecurePollShowErrorDetail=true;</code> в <tt>LocalSettings.php</tt>.',
+	'securepoll-full-gpg-error' => 'Хыба выконаня GPG:
+
+Команд: $1
+
+Хыба:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG ключі суть неправилно наконфіґурованы.',
+	'securepoll-gpg-parse-error' => 'Хыба інтерпретації выступу GPG.',
+	'securepoll-no-decryption-key' => 'Не быв конфіґурованый ключ росшіфрованя.
+Не годен росшіфровати.',
+	'securepoll-jump' => 'Перейти на сервер голосованя',
+	'securepoll-bad-ballot-submission' => 'Ваш голос не є платный: $1',
+	'securepoll-unanswered-questions' => 'Мусите одповісти на вшыткы вопросы.',
+	'securepoll-invalid-rank' => 'Неправилне місце. Кандідатам мусите дати місце міджі 1 і 999.',
+	'securepoll-unranked-options' => 'Дакотры можности не были оцінены.
+Мусите вшыткым можностям задати місце міджі 1 і 999.',
+	'securepoll-invalid-score' => 'Оцінка мусить быти чісло од $1 до $2.',
+	'securepoll-unanswered-options' => 'Мусите выповнити одповідь на вшыткы вопросы.',
+	'securepoll-remote-auth-error' => 'Почас чітаня інформацій о вашім хосновательскім конту із сервера настала хыба.',
+	'securepoll-remote-parse-error' => 'Почас інтерпретації одповідї од сервера настала хыба.',
+	'securepoll-api-invalid-params' => 'Хыбны параметры.',
+	'securepoll-api-no-user' => 'Не нашов ся хоснователь із заданым ID.',
+	'securepoll-api-token-mismatch' => 'Незгодує ся безпечностный код, не годен ся приголосити.',
+	'securepoll-not-logged-in' => 'Жебы сьте міг(могла) голосовати, мусите ся приголосити.',
+	'securepoll-too-few-edits' => 'Перебачте, але не можете голосовати. У тых вольбах можуть голосовати лем хоснователї з найменєй $1 {{PLURAL:$1|едітованя|едітованями}}, у вас є $2.',
+	'securepoll-too-new' => 'На жаль не можете голосовати. Про участь у тім голосованю бы ваше конто мусило быти основане перед $3, $1, {{gender:|зареґістровав|зареґістровала|зареґістровали}} сьте ся але в $4, $2.',
+	'securepoll-blocked' => 'Перебачте, але не можете голосовати, покы є вам заблоковане едітованя.',
+	'securepoll-blocked-centrally' => 'На жаль не можете голосовати, бо сьте {{gender:|блокованый|блокована|блокованы}} принайменшім на $1 {{PLURAL:$1|вікі|вікі}}..',
+	'securepoll-bot' => 'Перебачте, але конта із статусом бота ся не можуть брати участь у тім голосованю.',
+	'securepoll-not-in-group' => 'Лем члены ґрупы "$1" можуть брати участь у тім голосованює',
+	'securepoll-not-in-list' => 'Перебачте, але не сьте в пририхтованім списку хоснователїв припущеных до участи на тім голосованю.',
+	'securepoll-list-title' => 'Список голосів: $1',
+	'securepoll-header-timestamp' => 'Час',
+	'securepoll-header-voter-name' => 'Мено',
+	'securepoll-header-voter-domain' => 'Домена',
+	'securepoll-header-ua' => 'Переглядач кліента',
+	'securepoll-header-cookie-dup' => 'Дуп.',
+	'securepoll-header-strike' => 'Перечаркнути',
+	'securepoll-header-details' => 'Детайлы:',
+	'securepoll-strike-button' => 'Перечаркнути',
+	'securepoll-unstrike-button' => 'Зняти перечаркнутя',
+	'securepoll-strike-reason' => 'Причіна:',
+	'securepoll-strike-cancel' => 'Сторно',
+	'securepoll-strike-error' => 'Не подарило ся выконати перечаркнутя ці ёго зрушіня: $1',
+	'securepoll-strike-token-mismatch' => 'Дата сеансу страчены',
+	'securepoll-details-link' => 'Детайлы',
+	'securepoll-details-title' => 'Детайлы голосованя: #$1',
+	'securepoll-invalid-vote' => '«$1» — неправилный ідентіфікатор голосованя',
+	'securepoll-header-voter-type' => 'Тіп голосуючого',
+	'securepoll-voter-properties' => 'Властности голосуючого',
+	'securepoll-strike-log' => 'Список перечаркнутых голосів',
+	'securepoll-header-action' => 'Дїя',
+	'securepoll-header-reason' => 'Причіна',
+	'securepoll-header-admin' => 'Адміністратор',
+	'securepoll-cookie-dup-list' => 'Дупліцітны хоснователї подля кукіс',
+	'securepoll-dump-title' => 'Дамп: $1',
+	'securepoll-dump-no-crypt' => 'У тых волеб не є про діспозіцію шіфрованый запис голосованя, бо у їх конфіґурації не є шіфрованя запнуте.',
+	'securepoll-dump-not-finished' => 'Шіфрованый запис голосованя буде про діспозіцію аж по укончіню волеб, $1, $2',
+	'securepoll-dump-no-urandom' => 'Не годен отворити<tt>/dev/urandom</tt>.
+Про забезпечіня утаїня голосованя є шіфрованый запис голосованя доступный публічности лем тогды, же голосы можуть быти помішаны за помочі жрідла нагодных чісел.',
+	'securepoll-urandom-not-supported' => 'Тот сервер не підпорує кріптоґрафічне ґенерованя нагодных чісел.
+Про притаїня голосованя є шіфрованый запис голосованя публічный лем тогды, кідь голосы можуть быти замішаны за помочі безпечного жрідла нагодных чісел.',
+	'securepoll-translate-title' => 'Переклад: $1',
+	'securepoll-invalid-language' => 'Неправилный код языка «$1»',
+	'securepoll-submit-translate' => 'Обновити',
+	'securepoll-language-label' => 'Выбер языка:',
+	'securepoll-submit-select-lang' => 'Перекласти',
+	'securepoll-entry-text' => 'Ниже указаный список голосовань.',
+	'securepoll-header-title' => 'Назва',
+	'securepoll-header-start-date' => 'Датум початку',
+	'securepoll-header-end-date' => 'Датум закінчіня',
+	'securepoll-subpage-vote' => 'Голосовати',
+	'securepoll-subpage-translate' => 'Переклад',
+	'securepoll-subpage-list' => 'Список',
+	'securepoll-subpage-dump' => 'Дамп',
+	'securepoll-subpage-tally' => 'Зраховати',
+	'securepoll-tally-title' => 'Почет голосів: $1',
+	'securepoll-tally-not-finished' => 'Перебачте, не можете зраховати голосы, кідь голосованя іщі не скінчіло.',
+	'securepoll-can-decrypt' => 'Запис голосованя быв зашіфрованый, але ключ про дешіфрованя є к діспозіції.
+Можете собі выбрати, ці хочете зраховати резултаты в датабазї, або зраховати резултаты з начітаного файлу.',
+	'securepoll-tally-no-key' => 'Тото голосованя не можете зраховати, бо голосы суть зашіфрованы і ключ про дешіфрованя не є доступный.',
+	'securepoll-tally-local-legend' => 'Зраховати уложены резултаты',
+	'securepoll-tally-local-submit' => 'Зробити зрахованя',
+	'securepoll-tally-upload-legend' => 'Начітати шіфрованый запис (дамп)',
+	'securepoll-tally-upload-submit' => 'Зробити зрахованя',
+	'securepoll-tally-error' => 'Хыба почас спрацованя запису голосованя, голосованя ся не дасть зраховати.',
+	'securepoll-no-upload' => 'Не быв начітаный жаден файл, голосованя ся не дасть зраховати.',
+	'securepoll-dump-corrupt' => 'Файл із записом (дамп) є пошкодженый і не дасть за спрацовати.',
+	'securepoll-tally-upload-error' => 'Хыба рахованя запису: $1',
+	'securepoll-pairwise-victories' => 'Матріця взаємных выгер',
+	'securepoll-strength-matrix' => 'Матріця силы стежок',
+	'securepoll-ranks' => 'Конечный рейтінґ',
+	'securepoll-average-score' => 'Середнє оцінїня',
+	'securepoll-round' => '$1. коло',
+	'securepoll-spoilt' => '(Неплатне)',
+	'securepoll-exhausted' => '(Вычерпаны)',
+);
+
+/** Sanskrit (संस्कृतम्)
+ * @author Ansumang
+ * @author Vibhijain
+ */
+$messages['sa'] = array(
+	'securepoll-api-invalid-params' => 'अपुष्ट प्राचलक।',
+	'securepoll-header-timestamp' => 'समय',
+	'securepoll-header-voter-name' => 'नाम',
+	'securepoll-header-voter-domain' => 'डोमेन',
+	'securepoll-strike-reason' => 'कारणम् :',
+	'securepoll-strike-cancel' => 'निवर्तयते',
+	'securepoll-header-reason' => 'कारण',
+	'securepoll-header-admin' => 'प्रबंधकाः',
+	'securepoll-translate-title' => 'अनुवदति: $1',
+	'securepoll-language-label' => 'वर भाषा:',
+	'securepoll-submit-select-lang' => 'अनुवदति',
+	'securepoll-header-title' => 'नाम',
+	'securepoll-header-start-date' => 'प्रारंभ दिनाङ्क',
+	'securepoll-header-end-date' => 'समाप्ति दिनाङ्क',
+	'securepoll-subpage-vote' => 'मत',
+	'securepoll-subpage-list' => 'सूची',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -7588,23 +10145,27 @@ $wgSecurePollShowErrorDetail=true; туруоруутун LocalSettings.php би
 	'securepoll-dump-corrupt' => 'Дамп билэтэ буорту буолбут, онон кыайан ааҕыллыбат.',
 	'securepoll-tally-upload-error' => 'Дамп билэтэ сөпсөспөтө: $1',
 	'securepoll-pairwise-victories' => 'Пааранан кыайыылар матрицалара',
+	'securepoll-strength-matrix' => 'Матрица сил путей',
 	'securepoll-ranks' => 'Раанганан бүтэһиктээх наардааһын',
 	'securepoll-average-score' => 'Ортоку сыана',
 );
 
 /** Sardinian (Sardu)
+ * @author Andria
  * @author Marzedu
  */
 $messages['sc'] = array(
-	'securepoll-header-voter-name' => 'Nòmene',
-	'securepoll-header-title' => 'Nòmene',
+	'securepoll-header-voter-name' => 'Nùmene',
+	'securepoll-header-title' => 'Nùmene',
 );
 
 /** Sicilian (Sicilianu)
+ * @author Aushulz
  * @author Melos
  */
 $messages['scn'] = array(
 	'securepoll-list-title' => 'Elencu voti: $1',
+	'securepoll-header-timestamp' => 'Tempu',
 	'securepoll-header-voter-name' => 'Nomu',
 	'securepoll-header-voter-domain' => 'Dominiu',
 	'securepoll-header-ua' => 'Agente utenti',
@@ -7613,21 +10174,278 @@ $messages['scn'] = array(
 	'securepoll-strike-reason' => 'Mutivu:',
 	'securepoll-strike-cancel' => 'Annulla',
 	'securepoll-header-action' => 'Azzioni',
+	'securepoll-header-reason' => 'Mutivu',
+	'securepoll-header-title' => 'Nomu',
+);
+
+/** Serbo-Croatian (Srpskohrvatski)
+ * @author OC Ripper
+ */
+$messages['sh'] = array(
+	'securepoll' => 'Sigurno glasanje',
+	'securepoll-desc' => 'Proširenje za izbore i ankete',
+	'securepoll-invalid-page' => 'Nevaljana podstranica "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => 'Morate biti administrator izbora da bi ste izvršili ovu akciju.',
+	'securepoll-too-few-params' => 'Nema dovoljno parametara podstranice (nevaljan link).',
+	'securepoll-invalid-election' => '"$1" nije valjan izborni ID.',
+	'securepoll-welcome' => '<strong>Dobrodošli $1!</strong>',
+	'securepoll-not-started' => 'Ovo glasanje još nije počelo.
+Planirani početak glasanja je $2 u $3 sati.',
+	'securepoll-finished' => 'Ovi izbori su završeni, ne možete više glasati.',
+	'securepoll-not-qualified' => 'Niste kvalificirani da učestvujete na ovom glasanju: $1',
+	'securepoll-change-disallowed' => 'Već ste ranije glasali na ovom glasanju.
+Žao nam je, ne možete više glasati.',
+	'securepoll-change-allowed' => '<strong>Napomena: Već ste ranije glasali na ovom glasanju.</strong>
+Možete promijeniti Vaš glas slanjem obrasca ispod.
+Zapamtite da ako ovo učinite, Vaš prvobitni glas će biti nevažeći.',
+	'securepoll-submit' => 'Pošalji glas',
+	'securepoll-gpg-receipt' => 'Hvala Vam za glasanje.
+
+Ako želite, možete zadržati slijedeću potvrdu kao dokaz Vašeg glasanja:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'Hvala Vam, Vaš glas je zapisan.',
+	'securepoll-return' => 'Nazad na $1',
+	'securepoll-encrypt-error' => 'Šifriranje Vašeg zapisa glasanja nije uspjelo.
+Vaš glas nije sačuvan!
+
+$1',
+	'securepoll-no-gpg-home' => 'Nemoguće napraviti GPG početni direktorijum.',
+	'securepoll-secret-gpg-error' => 'Greška pri izvršavanju GPG.
+Koristite $wgSecurePollShowErrorDetail=true; u LocalSettings.php za više detalja.',
+	'securepoll-full-gpg-error' => 'Greška pri izvršavanju GPG:
+
+Komanda: $1
+
+Grešaka:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG ključevi nisu pravilno podešeni.',
+	'securepoll-gpg-parse-error' => 'Greška pri obradi GPG izlaza.',
+	'securepoll-no-decryption-key' => 'Nijedan dekripcijski ključ nije podešen.
+Ne može se dekriptovati.',
+	'securepoll-jump' => 'Idi na server za glasanje',
+	'securepoll-bad-ballot-submission' => 'Vaš glas nije valjan: $1',
+	'securepoll-unanswered-questions' => 'Morate odgovoriti na sva pitanja.',
+	'securepoll-invalid-rank' => 'Nevaljan rang. Morate dati kandidatima rang između 1 i 999.',
+	'securepoll-unranked-options' => 'Neke opcije nisu rangirane.
+Morate dati svim opcijama rang između 1 i 999.',
+	'securepoll-invalid-score' => 'Rezultat mora biti broj između $1 i $2.',
+	'securepoll-unanswered-options' => 'Morate odgovoriti na svako pitanje.',
+	'securepoll-remote-auth-error' => 'Greška pri preuzimanju podataka o Vašem računu sa servera.',
+	'securepoll-remote-parse-error' => 'Greška pri interpretaciji autentifikacijskog odgovora sa servera.',
+	'securepoll-api-invalid-params' => 'Nevaljani parametri.',
+	'securepoll-api-no-user' => 'Nije pronađen korisnik sa navedenim ID.',
+	'securepoll-api-token-mismatch' => 'Ne podudara se sigurnosni token, ne može se prijaviti.',
+	'securepoll-not-logged-in' => 'Morate se prijaviti za glasanje na ovim izborima',
+	'securepoll-too-few-edits' => 'Žao nam je, ne možete glasati. Morate imati najmanje $1 {{PLURAL:$1|izmjenu|izmjene|izmjena}} da glasate na ovim izborima, Vi ste dosad napravili $2 izmjena.',
+	'securepoll-too-new' => 'Žao nam je, ne možete glasati.  Vaš račun treba biti registrovan prije $1 da biste glasali na ovim izborima, vi ste registrovani dana $2.',
+	'securepoll-blocked' => 'Žao nam je, ne možete trenutno glasati na ovim izborima ako ste trenutno blokirani za uređivanje.',
+	'securepoll-blocked-centrally' => 'Žao nam je, vi ne možete glasati na ovim izborima ako ste blokirani na $1 ili više {{PLURAL:$1|wikija|wikija}}.',
+	'securepoll-bot' => 'Žao nam je, računima sa oznakom bota nije dopušteno da glasaju na ovim izborima.',
+	'securepoll-not-in-group' => 'Samo članovi iz grupe $1 mogu učestovavati na ovim izborima.',
+	'securepoll-not-in-list' => 'Žao nam je, niste na spisku korisnika kojima je odobreno glasanje na ovim izborima.',
+	'securepoll-list-title' => 'Spisak glasova: $1',
+	'securepoll-header-timestamp' => 'Vrijeme',
+	'securepoll-header-voter-name' => 'Ime',
+	'securepoll-header-voter-domain' => 'Domena',
+	'securepoll-header-ua' => 'Korisnički agent',
+	'securepoll-header-cookie-dup' => 'Otvaranje',
+	'securepoll-header-strike' => 'Precrtaj',
+	'securepoll-header-details' => 'Detalji',
+	'securepoll-strike-button' => 'Precrtaj',
+	'securepoll-unstrike-button' => 'Poništi precrtavanje',
+	'securepoll-strike-reason' => 'Razlog:',
+	'securepoll-strike-cancel' => 'Odustani',
+	'securepoll-strike-error' => 'Greška izvšavanja precrtavanja/uklanjanja: $1',
+	'securepoll-strike-token-mismatch' => 'Izgubljeni podaci sesije',
+	'securepoll-details-link' => 'Detalji',
+	'securepoll-details-title' => 'Detalji glasanja: #$1',
+	'securepoll-invalid-vote' => '"$1" nije valjan glasački ID',
+	'securepoll-header-voter-type' => 'Tip glasača',
+	'securepoll-voter-properties' => 'Svojstva glasača',
+	'securepoll-strike-log' => 'Zapisnik precrtavanja',
+	'securepoll-header-action' => 'Radnja',
+	'securepoll-header-reason' => 'Razlog',
+	'securepoll-header-admin' => 'Admin',
+	'securepoll-cookie-dup-list' => 'Kolačić dvostrukih korisnika',
+	'securepoll-dump-title' => 'Dump: $1',
+	'securepoll-dump-no-crypt' => 'Ne postoji dešifrirana varijanta ovog izbora, zato što izbor nije konfiguriran za korištenje šifriranja.',
+	'securepoll-dump-not-finished' => 'Dešifrirani rezultati izbora su vidljivi tek poslije datuma završetka izbora $1 u $2 sati',
+	'securepoll-dump-no-urandom' => 'Da bi se sačuvala privatnost glasača, dešifrirani rezultati glasanja su dostupni kada bude dostupna mogućnost prenosa slučajnim izborom brojki.',
+	'securepoll-urandom-not-supported' => 'Ovaj server ne podržava generisanje kriptografskih nasumičnih brojeva.
+Da bi se zadržala privatnost glasača, šifrirani podaci o izborima su dostupni javno kada se mogu izmiješati putem sigurnog toka nasumičnih brojeva.',
+	'securepoll-translate-title' => 'Prevedi: $1',
+	'securepoll-invalid-language' => 'Pogrešan kod jezika "$1"',
+	'securepoll-submit-translate' => 'Ažuriraj',
+	'securepoll-language-label' => 'Izaberi jezik:',
+	'securepoll-submit-select-lang' => 'Prevedi',
+	'securepoll-entry-text' => 'Ispod je spisak glasanja.',
+	'securepoll-header-title' => 'Ime',
+	'securepoll-header-start-date' => 'Datum početka',
+	'securepoll-header-end-date' => 'Datum završetka',
+	'securepoll-subpage-vote' => 'Glasanje',
+	'securepoll-subpage-translate' => 'Prijevod',
+	'securepoll-subpage-list' => 'Spisak',
+	'securepoll-subpage-dump' => 'Izvod',
+	'securepoll-subpage-tally' => 'Prebrojavanje',
+	'securepoll-tally-title' => 'Prebrojavanje: $1',
+	'securepoll-tally-not-finished' => 'Žao nam je, ne možete prebrojavati glasove dok se ne završi glasanje.',
+	'securepoll-can-decrypt' => 'Zapis izbora je šifriran, ali je dostupan ključ za otključavanje.
+Možete da izvršite prebrojavanje glasova koji su prisutni u bazi podataka ili da prebrojite šifrirane rezultate iz postavljene datoteke.',
+	'securepoll-tally-no-key' => 'Ne možete prebrojavati glasove, jer su šifrirani a nije dostupan ključ za otvaranje.',
+	'securepoll-tally-local-legend' => 'Spremljeni rezultati glasanja',
+	'securepoll-tally-local-submit' => 'Napravi prikaz rezultata',
+	'securepoll-tally-upload-legend' => 'Postavi šifriranu arhivu',
+	'securepoll-tally-upload-submit' => 'Napravi prikaz rezultata (raspodjelu glasova)',
+	'securepoll-tally-error' => 'Pogreška pri prijevodu zapisa glasa, nije moguće prikazati raspodjelu glasova.',
+	'securepoll-no-upload' => 'Nijedna datoteka nije postavljena, ne mogu se prebrojati rezultati.',
+	'securepoll-dump-corrupt' => 'Ispisana datoteka je oštećena i ne može biti obrađena.',
+	'securepoll-tally-upload-error' => 'Pogreška pri prikazu rezultata iz ispisane datoteke: $1',
+	'securepoll-pairwise-victories' => 'Parna matrica pobjednika',
+	'securepoll-strength-matrix' => 'Matriks snage putanje',
+	'securepoll-ranks' => 'Konačni poredak',
+	'securepoll-average-score' => 'Prosječan rezultat',
+	'securepoll-round' => 'Runda $1',
+	'securepoll-spoilt' => '(Nevaljano)',
+	'securepoll-exhausted' => '(Iskorišteno)',
 );
 
 /** Sinhala (සිංහල)
+ * @author Budhajeewa
  * @author Calcey
+ * @author Singhalawap
+ * @author තඹරු විජේසේකර
+ * @author පසිඳු කාවින්ද
+ * @author බිඟුවා
  */
 $messages['si'] = array(
-	'securepoll-thanks' => 'ස්තුතියි,ඔබේ ඡන්දය ‍පටිගත වී ඇත.',
+	'securepoll' => 'සුරක්ෂිත ඡන්ද විමසීම',
+	'securepoll-desc' => 'ඡන්ද හා සමීක්ෂණ සඳහා දිඟුව',
+	'securepoll-invalid-page' => '"<nowiki>$1</nowiki>" වැරදි උපපිටුව',
+	'securepoll-need-admin' => 'මෙම ක්‍රියාව සිදු කිරීම සඳහා ඔබ ඡන්ද පරිපාලකයෙකු විය යුතුය.',
+	'securepoll-too-few-params' => 'අවැසි තරම් උපපිටු පරාමිති නොමැ. (වරදි සබැඳියකි).',
+	'securepoll-invalid-election' => '"$1" යනු නිවැරදි ඡන්ද හැඳුනුමක් නොවේ',
+	'securepoll-welcome' => '<strong>ආයුබෝවන් $1!</strong>',
+	'securepoll-not-started' => 'මෙම මැතිවරණය තවම ආරම්භ කර නොමැත.
+එය $2 වනදා $3ට ආරම්භවීමට නියමිතය.',
+	'securepoll-finished' => 'මෙම ඡන්ද අවසන් වී ඇත,ඔබට තව දුරටත් ඡන්දය ලබා දිය නොහැකිය.',
+	'securepoll-not-qualified' => 'මෙම ඡන්දයේදී ඡන්දය දීමට ඔබ සුදුසුකම් ලබා නැත: $1',
+	'securepoll-change-disallowed' => 'ඔබ වරක් මෙහි මනාපය පළ කර තිබේ.
+කනගාටුයි, නැවත ඊට ඉඩදිය නොහැක.',
+	'securepoll-change-allowed' => '<strong>සටහන: ඔබ මෙම ඡන්ද විමසුමේ මීට පෙර මනාපය පළ කර ඇත.</strong>
+පහත ෆෝරමය පුරවා එවීමෙන් ඔබේ මනාපය වෙනස් කළ හැක.
+ඔබ මෙය කළහොත් ඔබේ පෙර මනාපය නොසලකා හැරෙන බව සලකන්න.',
+	'securepoll-submit' => 'ඡන්දය ලබාදෙන්න',
+	'securepoll-gpg-receipt' => 'ඡන්දය දීම ගැන ස්තුතියි.
+
+ඔබ කැමතිනම්,ඔබේ ඡන්දයේ සාක්ෂියක් ලෙස පහත රිසිට්ටුව ඔබ ළඟ තබා ගත හැක:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'ස්තුතියි,ඔබේ ඡන්දය ‍වාර්තාගවිය.',
+	'securepoll-return' => '$1 ට නැවත යන්න',
+	'securepoll-encrypt-error' => 'ඡන්ද පළකෙරුම් වාර්තාව ගුප්ත-කේතනය කෙරුමට නොහැකි විය.
+ඔබේ ඡන්ද පළ කෙරුම වාර්තාගත නොවිනි!
+
+$1',
+	'securepoll-no-gpg-home' => 'GPG නිවස්න නාමාවලිය තැනුමට නොහැකිවිය.',
+	'securepoll-secret-gpg-error' => 'GPG ය ක්‍රියාත්මක කිරීමේ දෝෂයකි.
+වැඩි විස්තර සඳහා LocalSettings.phpහි $wgSecurePollShowErrorDetail=true; භාවිතා කරන්න.',
+	'securepoll-full-gpg-error' => 'GPG ය ක්‍රියාත්මක කෙරුමේ දෝෂයකි:
+
+විධානය: $1
+
+දෝෂය:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG යතුරු වැරදි ලෙස සකසා ඇත.',
+	'securepoll-gpg-parse-error' => 'GPG ප්‍රතිදානය අර්ථ-පැහැදුමේ දෝෂයකි.',
+	'securepoll-no-decryption-key' => 'No decryption key is configured.
+Cannot decrypt.',
 	'securepoll-jump' => 'ඡන්දය දෙන සේවාදායකයට යන්න',
 	'securepoll-bad-ballot-submission' => 'ඔබගේ ඡන්දය අවලංගුයි :$1',
 	'securepoll-unanswered-questions' => 'ඔබ සියලුම ප්‍රශ්නවලට පිළිතුරු සැපයිය යුතුය.',
+	'securepoll-invalid-rank' => 'වැරදි තරාතිරමකි. ඔබ අපේක්‍ෂකයන්ට 1 හා 999 අතර තරාතිරමක් ලබාදිය යුතුය.',
+	'securepoll-unranked-options' => 'ඇතැම් විකල්ප තරාතිරම් කොට නොමැත
+ඔබ සියළු විකල්ප වලට 1 හා 999 අතර තරාතිරමක් ලබාදිය යුතුය.',
+	'securepoll-invalid-score' => 'ලකුණ $1 හා $2 අතර අංකයක් විය යුතුය.',
 	'securepoll-unanswered-options' => 'සෑම ප්‍රශ්නයක් සඳහාම ඔබ ප්‍රතිචාරයක් දිය යුතුය.',
 	'securepoll-remote-auth-error' => 'සේවාදායකයෙන් ඔබේ ගිණුම් තොරතුරු ගෙනයෑමේ දෝෂය.',
 	'securepoll-remote-parse-error' => 'සේවාදායකයෙන් අවසරදීමේ ප්‍රතිචාරය පහදාදීමේ දෝෂය.',
 	'securepoll-api-invalid-params' => 'අවලංගු පරාමිති.',
+	'securepoll-api-no-user' => 'දෙන ලද හැඳුනුම සහිත පරිශීලකයන් කිසිවෙකු හමු නොවිනි.',
+	'securepoll-api-token-mismatch' => 'ආරක්‍ෂණ සංකේතය නොගැලපෙන බැවින් ඇතුළුවිය නොහැක.',
 	'securepoll-not-logged-in' => 'මෙම ඡන්ද විමසීමේදී ඡන්දය දීම සඳහා ඔබ ප්‍රවිෂ්ට විය යුතුය.',
+	'securepoll-too-few-edits' => 'සමාවෙන්න, ඔබට ඡන්දය පළ කළ නොහැක. මෙම ඡන්දයේදී ඡන්දය පළ කෙරුමට අවම වශයෙන් සංස්කරණ $1 {{PLURAL:$1|ක්|ක්}} හෝ කර තිබිය යුතුය, ඔබ කර ඇත්තේ $2 කි.',
+	'securepoll-too-new' => 'කණගාටුයි, ඔබට මනාප දිය නොහැක. මෙම ඡන්දය සඳහා මනාප ලබා දීමට නම් ඔබේ ගිණුම $1 ට පෙර $3 හී ලියාපදිංචි කර තිබිය යුතුය, ඔබ ලියාපදිංචි වුයේ $2 දින $4 දීය.',
+	'securepoll-blocked' => 'කනගාටුයි, ඔබ සංස්කරණ වාරණයකට ලක්ව ඇති බැවින් මෙහි ඡන්‍දය පළ කළ නොහැක.',
+	'securepoll-blocked-centrally' => 'කණගාටුයි, ඔබ විසින් $1 {{PLURAL:$1|විකියක|විකිවල}} වාරණය වී නම් මෙම ඡන්දය සඳහා මනාප ලබා දිය නොහැක.',
+	'securepoll-bot' => 'කනගාටුයි, රොබෝවරුන් සහිත පරිශීලක ගිණුම් හිමියනට මෙහි ඡන්‍දය පළ කළ නොහැක.',
+	'securepoll-not-in-group' => '“$1“ කණ්ඩායමේ අයට මෙහි මනාපය පළ කළ හැක.',
+	'securepoll-not-in-list' => 'සමාවෙන්න, ඡන්දය පළ කිරීමට අවසර ලබා ඇති පරිශීලක ලයිස්තුවේ ඔබ නැත.',
+	'securepoll-list-title' => 'මනාප සංඛ්‍යාව: $1',
+	'securepoll-header-timestamp' => 'වේලාව',
+	'securepoll-header-voter-name' => 'නම',
+	'securepoll-header-voter-domain' => 'වසම:',
+	'securepoll-header-ua' => 'පරිශීලක නියෝජිත',
+	'securepoll-header-cookie-dup' => 'ඩප්',
+	'securepoll-header-strike' => 'කපා හරින්න',
+	'securepoll-header-details' => 'විස්තර',
+	'securepoll-strike-button' => 'කපා හරින්න',
+	'securepoll-unstrike-button' => 'නොකපාහරින්න',
+	'securepoll-strike-reason' => 'හේතුව:',
+	'securepoll-strike-cancel' => 'අත් හරින්න',
+	'securepoll-strike-error' => 'කපාහැරුම්/නොකපාහැරුම් දෝෂයකි: $1',
+	'securepoll-strike-token-mismatch' => 'සැසි දත්ත අහිමිවිය',
+	'securepoll-details-link' => 'විස්තර',
+	'securepoll-details-title' => 'ඡන්ද තොරතුරු: #$1',
+	'securepoll-invalid-vote' => '"$1" යනු නිවැරදි ඡන්ද හැඳුනුමක් නොවේ',
+	'securepoll-header-voter-type' => 'ඡන්ද දායක වර්ගය',
+	'securepoll-voter-properties' => 'ඡන්ද දායක වත්කම්',
+	'securepoll-strike-log' => 'කපාහැරුම් ලොගය',
+	'securepoll-header-action' => 'කාර්යය',
+	'securepoll-header-reason' => 'හේතුව',
+	'securepoll-header-admin' => 'පරිපාලක',
+	'securepoll-cookie-dup-list' => 'කුකී පිටපත් පරිශීලකයින්',
+	'securepoll-dump-title' => 'නික්ෂේපය: $1',
+	'securepoll-dump-no-crypt' => 'ගුප්ත කේතනය යොදාගැනුමට මෙම ඡන්ද විමසුම සකසා නොමැති නිසා, ගුප්ත-කේතිත ඡන්ද විමසුම් වාර්තාවක් මෙම ඡන්ද විමසුම සඳහා ලබාගත නොහැක.',
+	'securepoll-dump-not-finished' => 'ගුප්ත-කේතිත ඡන්ද විමසුම් වාර්තා ලබාගත හැක්කේ $1දා $2 ට පසුව පමණි',
+	'securepoll-dump-no-urandom' => '/dev/urandom විවෘත කළ නොහැක.
+ඡන්ද දායක පෞද්ගලිකත්වය ආරක්‍ෂා කෙරුම සඳහා ගුප්ත-කේතිත ඡන්ද විමසුම් වාර්තා ප්‍රසිද්ධයේ ලබාගත හැක්කේ ඒවා අහඹු සංඛ්‍යා සමූහයක් සමග මිශ්‍ර කළ හැකි අවස්ථාවල පමණි.',
+	'securepoll-urandom-not-supported' => 'මෙම සේවාදායකය ගුප්ත-කේතන අහඹු සංඛ්‍යා ජනනයට සහය නොදක්වයි.
+ඡන්ද දායක පෞද්ගලිකත්වය ආරක්‍ෂා කෙරුම සඳහා ගුප්ත-කේතිත ඡන්ද විමසුම් වාර්තා ප්‍රසිද්ධයේ ලබාගත හැක්කේ ඒවා අහඹු සංඛ්‍යා සමූහයක් සමග මිශ්‍ර කළ හැකි අවස්ථාවල පමණි.',
+	'securepoll-translate-title' => 'පරිවර්තනය කරන්න: $1',
+	'securepoll-invalid-language' => '"$1" වැරදි භාෂා කේතය',
+	'securepoll-submit-translate' => 'යාවත්කාලීනය',
+	'securepoll-language-label' => 'භාෂාව තෝරන්න:',
+	'securepoll-submit-select-lang' => 'පරිවර්තනය කරන්න',
+	'securepoll-entry-text' => 'පහත දැක්වෙන්නේ ඡන්ද විමසුම් ලයිස්තුවයි.',
+	'securepoll-header-title' => 'නම',
+	'securepoll-header-start-date' => 'ආරම්භක දිනය',
+	'securepoll-header-end-date' => 'අවසන් දිනය',
+	'securepoll-subpage-vote' => 'ඡන්දය දෙන්න',
+	'securepoll-subpage-translate' => 'පරිවර්තනය කරන්න',
+	'securepoll-subpage-list' => 'ලැයිස්තුව',
+	'securepoll-subpage-dump' => 'අත්හරින්න',
+	'securepoll-subpage-tally' => 'සැසඳෙයි',
+	'securepoll-tally-title' => 'සැසඳුම: $1',
+	'securepoll-tally-not-finished' => 'සමාවන්න, ඡන්දය පළ කෙරුම නිමවනතෙක් ඔබට ඡන්දය සැසඳිය නොහැක.',
+	'securepoll-can-decrypt' => 'ඡන්ද විමසුම් වාර්තා ගුප්ත-කේතිත නමුත්, විකේතන යතුර ලබාගත හැකිව පවතී.
+ඔබට එක්කෝ දත්ත මූලයේ මේ වන විට පවතින ප්‍රතිඵල සැසඳුම, හෝ පටවන ලද ගොනුවක ගුප්ත-කේතිත ප්‍රතිඵල සැසඳුම හෝ කළ හැක.',
+	'securepoll-tally-no-key' => 'ගුප්ත-කේත-විකේතන යතුර ලබාගත නොහැකි නිසා ඔබට මෙම ඡන්දය සැසඳිය නොහැක, මන්ද ඡන්ද ප්‍රකාශකිරීම් ගුප්ත-කේතිතය.',
+	'securepoll-tally-local-legend' => 'තැන්පත් කළ ප්‍රතිඵල සසඳන්න',
+	'securepoll-tally-local-submit' => 'සැසඳුම තනන්න',
+	'securepoll-tally-upload-legend' => 'සුරක්ෂිත ඩම්ප් එකක් උඩුගත කරන්න',
+	'securepoll-tally-upload-submit' => 'සැසඳුම තනන්න',
+	'securepoll-tally-error' => 'ඡන්ද වාර්තා අර්ථ-පැහැදුමේ දෝෂයකි, සැසඳුමක් තැනිය නොහැක.',
+	'securepoll-no-upload' => 'ගොනුවක් පටවා නැත, ප්‍රතිඵල සැසඳිය නොහැක.',
+	'securepoll-dump-corrupt' => 'නික්ෂේප ගොනුව දෝෂ සහගත බැවින් ක්‍රියාවට බඳුන් කළ නොහැක.',
+	'securepoll-tally-upload-error' => 'නික්ෂේප ගොනුව සැසඳුමේ දෝෂයකි: $1',
+	'securepoll-pairwise-victories' => 'යුගලානුකූල ජයග්‍රහන න්‍යාසය',
+	'securepoll-strength-matrix' => 'මාර්ග ශක්ති න්‍යාසය',
+	'securepoll-ranks' => 'අවසන් ශ්‍රේණිගතකෙරුම',
+	'securepoll-average-score' => 'සාමාන්‍ය ලකුණ',
+	'securepoll-round' => '$1 වන වටය',
+	'securepoll-spoilt' => '(නරක් වූ)',
+	'securepoll-exhausted' => '(හිස් වූ)',
 );
 
 /** Slovak (Slovenčina)
@@ -7759,74 +10577,424 @@ Môžete buď zistiť výsledok hlasovania z výsledkov dostupných v databáze 
 	'securepoll-average-score' => 'Priemerné skóre',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'securepoll' => 'VarnoGlasovanje',
+	'securepoll-desc' => 'Razširitev za volitve in ankete',
+	'securepoll-invalid-page' => 'Neveljavna podstran »<nowiki>$1</nowiki>«',
+	'securepoll-need-admin' => 'Za izvedbo tega dejanja morate biti administrator volitev.',
+	'securepoll-too-few-params' => 'Ni dovolj parametrov podstrani (neveljavna povezava).',
+	'securepoll-invalid-election' => '»$1« ni veljaven volilni ID.',
+	'securepoll-welcome' => '<strong>Dobrodošli, $1!</strong>',
+	'securepoll-not-started' => 'Volitve se še niso začele.
+Začetek je načrtovan dne $2 ob $3.',
+	'securepoll-finished' => 'Volitve so zaključene, zato ne morete več glasovati.',
+	'securepoll-not-qualified' => 'Niste primerni za glasovanje na teh volitvah: $1',
+	'securepoll-change-disallowed' => 'Na teh volitvah ste že glasovali.
+Žal ne morete ponovno glasovati.',
+	'securepoll-change-allowed' => '<strong>Opomba: V teh volitvah ste že volili.</strong>
+Svoj glas lahko spremenite s potrditvijo spodnjega obrazca.
+Pomnite, da če to storite, bo vaš prvotni glas zavržen.',
+	'securepoll-submit' => 'Pošlji glas',
+	'securepoll-gpg-receipt' => 'Hvala za glasovanje.
+
+Če želite, lahko obdržite spodnje potrdilo kot dokaz o vašem glasovanju:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'Hvala, vaš glas je bil zabeležen.',
+	'securepoll-return' => 'Vrnitev na $1',
+	'securepoll-encrypt-error' => 'Šifriranje zapisa vašega glasu je spodletelo.
+Vaš glas ni bil zabeležen!
+
+$1',
+	'securepoll-no-gpg-home' => 'Ne morem ustvariti domače mape GPG.',
+	'securepoll-secret-gpg-error' => 'Napaka pri izvajanju GPG.
+Uporabite $wgSecurePollShowErrorDetail=true; v LocalSettings.php za prikaz več informacij.',
+	'securepoll-full-gpg-error' => 'Napaka pri izvajanju GPG:
+
+Ukaz: $1
+
+Napaka:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'Ključi GPG so konfigurirani nepravilno.',
+	'securepoll-gpg-parse-error' => 'Napaka pri tolmačenju izhoda GPG.',
+	'securepoll-no-decryption-key' => 'Konfiguriran ni noben dešifrirni ključ.
+Ne morem dešifrirati.',
+	'securepoll-jump' => 'Pojdi na glasovalni strežnik',
+	'securepoll-bad-ballot-submission' => 'Vaš glas je bil neveljaven: $1',
+	'securepoll-unanswered-questions' => 'Odgovoriti morate na vsa vprašanja.',
+	'securepoll-invalid-rank' => 'Neveljavna uvrstitev. Kandidatom morate določiti uvrstitev med 1 in 999.',
+	'securepoll-unranked-options' => 'Nekatere možnosti niso bile uvrščene.
+Vsem možnostim morate določiti uvrstitev med 1 in 999.',
+	'securepoll-invalid-score' => 'Ocena mora biti število med $1 in $2.',
+	'securepoll-unanswered-options' => 'Odgovoriti morate na vsako vprašanje.',
+	'securepoll-remote-auth-error' => 'Napaka pri pridobivanju informacij o vašem računu s strežnika.',
+	'securepoll-remote-parse-error' => 'Napaka pri tolmačenju pooblastitvenega odgovora od strežnika.',
+	'securepoll-api-invalid-params' => 'Neveljavni parametri.',
+	'securepoll-api-no-user' => 'Najden ni bil noben uporabnik z danim ID.',
+	'securepoll-api-token-mismatch' => 'Neujemanje varnostnega žetona; ne morem vas prijaviti.',
+	'securepoll-not-logged-in' => 'Za glasovanje na teh volitvah se morate prijaviti.',
+	'securepoll-too-few-edits' => 'Oprostite, ne morete voliti. Morali bi storiti najmanj $1 {{PLURAL:$1|urejanje|urejanji|urejanja|urejanj}} za voljenje na teh volitvah; naredili ste jih $2.',
+	'securepoll-too-new' => 'Oprostite, ne morete glasovati. Za glasovanje mora biti vaš račun registriran pred dnem $1 ob $3; registrirali ste se dne $2 ob $4.',
+	'securepoll-blocked' => 'Oprostite, ne morete voliti na teh volitvah, če vam je urejanje trenutno preprečeno.',
+	'securepoll-blocked-centrally' => 'Oprostite, na teh volitvah ne morete glasovati, ker ste blokirani na vsaj $1 {{PLURAL:$1|wikiju|wikijih}}.',
+	'securepoll-bot' => 'Oprostite, računom z oznako robota ni dovoljeno voliti na teh volitvah.',
+	'securepoll-not-in-group' => 'Samo člani skupine »$1« lahko volijo na teh volitvah.',
+	'securepoll-not-in-list' => 'Oprostite, vendar niste na predpripravljenem seznamu uporabnikov, ki so pooblaščeni za voljenje na teh volitvah.',
+	'securepoll-list-title' => 'Seznam glasov: $1',
+	'securepoll-header-timestamp' => 'Čas',
+	'securepoll-header-voter-name' => 'Uporabnik',
+	'securepoll-header-voter-domain' => 'Domena',
+	'securepoll-header-ua' => 'Uporabniški agent',
+	'securepoll-header-cookie-dup' => 'Dvoj',
+	'securepoll-header-strike' => 'Prečrtaj',
+	'securepoll-header-details' => 'Podrobnosti',
+	'securepoll-strike-button' => 'Prečrtaj',
+	'securepoll-unstrike-button' => 'Odčrtaj',
+	'securepoll-strike-reason' => 'Razlog:',
+	'securepoll-strike-cancel' => 'Prekliči',
+	'securepoll-strike-error' => 'Napaka pri izvajanju prečrtanja/odčrtanja: $1',
+	'securepoll-strike-token-mismatch' => 'Podatki seje so izgubljeni',
+	'securepoll-details-link' => 'Podrobnosti',
+	'securepoll-details-title' => 'Podrobnosti glasovanja: #$1',
+	'securepoll-invalid-vote' => '»$1« ni veljaven volilni ID',
+	'securepoll-header-voter-type' => 'Vrsta volivca',
+	'securepoll-voter-properties' => 'Podrobnosti volivca',
+	'securepoll-strike-log' => 'Dnevnik črtanja',
+	'securepoll-header-action' => 'Dejanje',
+	'securepoll-header-reason' => 'Razlog',
+	'securepoll-header-admin' => 'Admin',
+	'securepoll-cookie-dup-list' => 'Piškotki podvojenih uporabnikov',
+	'securepoll-dump-title' => 'Odloži: $1',
+	'securepoll-dump-no-crypt' => 'Za te volitve ni na voljo šifriranega volilnega zapisa, ker volitve niso konfigurirane tako, da bi uporabljale šifriranje.',
+	'securepoll-dump-not-finished' => 'Šifrirani volilni zapisi so na voljo šele po datumu zaključka dne $1 ob $2',
+	'securepoll-dump-no-urandom' => 'Ne morem odpreti /dev/urandom. 
+Za zagotavljanje zasebnosti volivcev so šifrirani volilni zapisi javno vidni šele po tem, ko so lahko premešani z varnim tokom naključnih števil.',
+	'securepoll-urandom-not-supported' => 'Ta strežnik ne podpira kriptografskega ustvarjanja naključnih števil.
+Za zagotavljanje zasebnosti volivcev so šifrirani volilni zapisi javno vidni šele po tem, ko so lahko premešani z varnim tokom naključnih števil.',
+	'securepoll-translate-title' => 'Prevedi: $1',
+	'securepoll-invalid-language' => 'Neveljavna koda jezika »$1«',
+	'securepoll-submit-translate' => 'Posodobi',
+	'securepoll-language-label' => 'Izberite jezik:',
+	'securepoll-submit-select-lang' => 'Prevedi',
+	'securepoll-entry-text' => 'Spodaj je seznam glasovnic.',
+	'securepoll-header-title' => 'Ime',
+	'securepoll-header-start-date' => 'Datum začetka',
+	'securepoll-header-end-date' => 'Datum zaključka',
+	'securepoll-subpage-vote' => 'Glasuj',
+	'securepoll-subpage-translate' => 'Prevedi',
+	'securepoll-subpage-list' => 'Seznam',
+	'securepoll-subpage-dump' => 'Odloži',
+	'securepoll-subpage-tally' => 'Evidentiraj',
+	'securepoll-tally-title' => 'Evidenca: $1',
+	'securepoll-tally-not-finished' => 'Žal ne morete evidentirati volitev preden se glasovanje zaključi.',
+	'securepoll-can-decrypt' => 'Volitveni zapis je šifriran, vendar je na voljo ključ za dešifriranje.
+	Izberete lahko da ali združite trenutne rezultate v zbirki podatkov ali da združite šifrirane rezultate iz naložene datoteke.',
+	'securepoll-tally-no-key' => 'Ne morete evidentirati teh volitev, saj so glasovi šifrirani in dešifrirni ključ ni na voljo.',
+	'securepoll-tally-local-legend' => 'Evidentiraj shranjene rezultate',
+	'securepoll-tally-local-submit' => 'Ustvari evidenco',
+	'securepoll-tally-upload-legend' => 'Naloži šifriran odložek',
+	'securepoll-tally-upload-submit' => 'Ustvari evidenco',
+	'securepoll-tally-error' => 'Napaka pri tolmačenju zapisov glasovanja, ne morem ustvariti evidence.',
+	'securepoll-no-upload' => 'Nobena datoteka ni bila naložena, ni mogoče evidentirati rezultatov.',
+	'securepoll-dump-corrupt' => 'Odložena datoteka je poškodovana in je ni mogoče obdelati.',
+	'securepoll-tally-upload-error' => 'Napaka pri evidentiranju odložene datoteke: $1',
+	'securepoll-pairwise-victories' => 'Matrica zmage parov',
+	'securepoll-strength-matrix' => 'Matrica moči poti',
+	'securepoll-ranks' => 'Končna uvrstitev',
+	'securepoll-average-score' => 'Povprečni rezultat',
+	'securepoll-round' => 'Krog $1',
+	'securepoll-spoilt' => '(Neveljavno)',
+	'securepoll-exhausted' => '(Izkoriščeno)',
+);
+
+/** Albanian (Shqip)
+ * @author Mikullovci11
+ * @author Olsi
+ * @author Vinie007
+ */
+$messages['sq'] = array(
+	'securepoll' => 'SondazhiSigurt',
+	'securepoll-desc' => 'Shtesë për zgjedhje dhe anketa',
+	'securepoll-invalid-page' => 'Nënfaqe e pavlefshme: "<nowiki>$1</nowiki>"',
+	'securepoll-need-admin' => 'Ju duhet të jeni një administrues zgjedhor për të kryer këtë veprim.',
+	'securepoll-too-few-params' => 'Parametra të pamjaftueshëm për nënfaqen (lidhje e pavlefshme).',
+	'securepoll-invalid-election' => '"$1" nuk është një zgjedhje ID e vlefshme.',
+	'securepoll-welcome' => '<strong>Mirë se vini $1!</strong>',
+	'securepoll-not-started' => 'Kjo zgjedhje nuk ka filluar akoma.
+Është planifikuar të fillojë më $2 në orën $3.',
+	'securepoll-finished' => 'Kjo zgjedhje ka përfunduar, ju nuk mund të votoni më.',
+	'securepoll-not-qualified' => 'Ju nuk jeni i kualifikuar për të votuar në këtë zgjedhje: $1',
+	'securepoll-change-disallowed' => 'Ju keni votuar në këtë zgjedhje më parë.
+Na vjen keq, ju nuk mund të të votoni përsëri.',
+	'securepoll-change-allowed' => '<strong>Vini re: Ju keni votuar në këtë zgjedhje më parë.</strong>
+Ju mund ta ndryshoni votën tuaj duke paraqitur formularin e mëposhtëm.
+Vini re se nëse e bëni këtë, vota juaj origjinale do të humbasë.',
+	'securepoll-submit' => 'Paraqitni votën',
+	'securepoll-gpg-receipt' => 'Faleminderit për votimin.
+
+Nëse dëshironi, ju mund të mbani një faturë si provë për votën tuaj:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'Falemnderit, vota juaj është regjistruar.',
+	'securepoll-return' => 'Kthehuni tek $1',
+	'securepoll-encrypt-error' => 'Dështoi regjistrimi i votës suaj.
+vota juaj nuk është regjistruar!
+
+$1',
+	'securepoll-no-gpg-home' => 'Nuk mund të krijojë drejtorinë PGP.',
+	'securepoll-secret-gpg-error' => 'Gabim gjatë ekzekutimit të GPG.
+Përdorni $wgSecurePollShowErrorDetail=true; në LocalSettings.php për të treguar më shumë detaje.',
+	'securepoll-full-gpg-error' => 'Gabim gjatë ekzekutimit GPG:
+
+Komanda: $1
+
+Gabimi:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'Çelësat GPG janë konfiguruar gabimisht.',
+	'securepoll-gpg-parse-error' => 'Gabim gjatë interpretimit të GPG.',
+	'securepoll-no-decryption-key' => 'Asnjë çelës nuk është i konfiguruar.
+Nuk mund të decrypt.',
+	'securepoll-jump' => 'Shkoni tek serveri i votimit',
+	'securepoll-bad-ballot-submission' => 'Vota juaj ishte e pavlefshme: $1',
+	'securepoll-unanswered-questions' => 'Ju duhet tu përgjigjeni të gjitha pyetjeve.',
+	'securepoll-invalid-rank' => 'Rank i pavlefshëm. Ju duhet tu jepni kandidatëve një rank ndërmjet 1 dhe 999.',
+	'securepoll-unranked-options' => 'Disa opsione nuk u renditën.
+Ju  duhet tu jepni të gjitha opsioneve një renditej ndërmjet 1 dhe 999.',
+	'securepoll-invalid-score' => 'Rezultati duhet të jetë një numër ndërmjet $1 dhe $2.',
+	'securepoll-unanswered-options' => 'Ju duhet të jepni një përgjigje për çdo pyetje.',
+	'securepoll-remote-auth-error' => 'Gabim gjatë ngarkimit të të dhlnave tuaja të llogarisë nga serveri.',
+	'securepoll-remote-parse-error' => 'Gabim gjatë interpretimit të përgjigjes së autorizuar nga serveri.',
+	'securepoll-api-invalid-params' => 'Parametra të pavlefshëm.',
+	'securepoll-api-no-user' => 'Asnjë përdorues nuk u gjet me ID-në e dhënë.',
+	'securepoll-api-token-mismatch' => 'Shenja e sigurisë mungon, nuk mund të hyjë brenda.',
+	'securepoll-not-logged-in' => 'Ju duhet të hyni brenda për të votuar në këtë zgjedhje',
+	'securepoll-too-few-edits' => 'Na vjen keq, ju nuk mund të votoni. Ju duhe të keni bërë të paktën $1 {{PLURAL:$1|redaktim|redaktime}} për të votuar në këtë zgjedhje, ju keni bërë $2.',
+	'securepoll-too-new' => 'Na vjen keq, ju nuk mund të votoni. Llogaria juaj duhet të jetë e regjistruar përpara datës $1 ora $3 për të votuar në këto zgjedhje, ju u regjistruat më datë $2 në orën $4.',
+	'securepoll-blocked' => 'Na vjen keq, ju nuk mund të votoni në këtë zgjedhje nëse jeni aktualisht bllokuar nga redaktimi.',
+	'securepoll-blocked-centrally' => 'Na vjen keq, ju nuk mund të votoni në këto zgjedhje përderisa ju jeni bllokuar në të paktën $1 {{PLURAL:$1|wiki|wiki}}.',
+	'securepoll-bot' => 'Na vjen keq, llogaritë me flamur robori nuk lejohen që të votojnë në këtë zgjedhje.',
+	'securepoll-not-in-group' => 'Vetëm anëtarët e grupit "$1" mund të votojnë në këtë zgjedhje.',
+	'securepoll-not-in-list' => 'Na vjen keq, ju nuk listën e paracaktuar të përdoruesve të autorizuar për të votuar në këtë zgjedhje.',
+	'securepoll-list-title' => 'Lista e Votave: $1',
+	'securepoll-header-timestamp' => 'Kohë',
+	'securepoll-header-voter-name' => 'Emri',
+	'securepoll-header-voter-domain' => 'Domen',
+	'securepoll-header-ua' => 'Agjent përdorues',
+	'securepoll-header-cookie-dup' => 'Dublikatë',
+	'securepoll-header-strike' => 'Nënvizoj',
+	'securepoll-header-details' => 'Detajet',
+	'securepoll-strike-button' => 'Nënvizoj',
+	'securepoll-unstrike-button' => 'Zhbëje nënvizojën',
+	'securepoll-strike-reason' => 'Arsyeja:',
+	'securepoll-strike-cancel' => 'Anulo',
+	'securepoll-strike-error' => 'Gabim gjatë performimit strike/unstrike: $1',
+	'securepoll-strike-token-mismatch' => 'Sesioni i të dhënave humbi',
+	'securepoll-details-link' => 'Detajet',
+	'securepoll-details-title' => 'Detajet e votës: #$1',
+	'securepoll-invalid-vote' => '"$1" nuk është ID e vlefshme',
+	'securepoll-header-voter-type' => 'Lloji i votuesit',
+	'securepoll-voter-properties' => 'Vetitë e votuesit',
+	'securepoll-strike-log' => 'Regjistri strike',
+	'securepoll-header-action' => 'Veprimet',
+	'securepoll-header-reason' => 'Arsyeja',
+	'securepoll-header-admin' => 'Admin',
+	'securepoll-cookie-dup-list' => 'Cookie kopjuar përdoruesit',
+	'securepoll-dump-title' => 'Largo: $1',
+	'securepoll-dump-no-crypt' => 'Asnjë regjistrim i kriptuar nuk është i munshëm për këtë zgjedhje, sepse zgjedhja nuk është konfiguruar të përdorë kriptimin.',
+	'securepoll-dump-not-finished' => 'Regjistrimet e zgjedhjes së kriptuar janë të mundshme vetëm pas datës së përfundimit më $1 në orën $2',
+	'securepoll-dump-no-urandom' => 'Nuk mund të hapet /dev/urandom.
+Për të ruajtur fshehtësinë e votusve, regjistrimet e zgjedhjeve të kriptuara janë të mundshme publikisht vetëm ata mund të riorganizohen me një numër rastësor të sigurt.',
+	'securepoll-urandom-not-supported' => 'Ky server nuk mbështet gjenerimin e numrit të rastësishëm kriptografik.
+Për të ruajtur fshehtësinë e votuesve, regjistrimet e zgjedhjeve të kriptuara janë të mundshme publikisht vetëm kur ata mund të riorganizohen më një numër rastësor të sigurt.',
+	'securepoll-translate-title' => 'Përkthime: $1',
+	'securepoll-invalid-language' => 'Kod gjuhe i pavlefshëm "$1"',
+	'securepoll-submit-translate' => 'Përditësime të reja',
+	'securepoll-language-label' => 'Zgjidh gjuhën',
+	'securepoll-submit-select-lang' => 'Përkthime',
+	'securepoll-entry-text' => 'Më poshtë është lista e sondazheve.',
+	'securepoll-header-title' => 'Emri',
+	'securepoll-header-start-date' => 'Data e fillimit',
+	'securepoll-header-end-date' => 'Data e përfundimit',
+	'securepoll-subpage-vote' => 'Voto',
+	'securepoll-subpage-translate' => 'Përkthime',
+	'securepoll-subpage-list' => 'Lista',
+	'securepoll-subpage-dump' => 'Largo',
+	'securepoll-subpage-tally' => 'Grup',
+	'securepoll-tally-title' => 'Grupi: $1',
+	'securepoll-tally-not-finished' => 'Na vjen keq, ju nuk mund ta shënoni këtë zgjedhje pa mbaruar votimi.',
+	'securepoll-can-decrypt' => 'Regjistrimi i zgjedhjeve është kriptuar, por çelësi i dekriptimit është i mundshëm.
+Ju mund të zgjidhni ose të shënoni rezultatin e tanishëm në bazën e të dhënave, ose të shënoni rezultatet nga një skedë e ngarkuar.',
+	'securepoll-tally-no-key' => 'Ju nuk mund ta shënoni këtë zgjedhje, sepse votat janë të kriptuara dhe çelësi i dekriptimit nuk është i mundshëm.',
+	'securepoll-tally-local-legend' => 'Shënoni rezultatet e ruajtura',
+	'securepoll-tally-local-submit' => 'Krijo grup',
+	'securepoll-tally-upload-legend' => 'Upload encrypted dump',
+	'securepoll-tally-upload-submit' => 'Krijo grup',
+	'securepoll-tally-error' => 'Gabim gjatë interpretimit së regjistrimit të votës, nuk mund të prodhojë një grup.',
+	'securepoll-no-upload' => 'Asnjë skedë nuk u ngarkua, nuk mund të shënohen rezultatet.',
+	'securepoll-dump-corrupt' => 'Skeda e larguar është e prishur dhe nuk mund të procesohet.',
+	'securepoll-tally-upload-error' => 'Gabim gjatë shënimit të skedës së larguar: $1',
+	'securepoll-pairwise-victories' => 'Pairwise victory matrix',
+	'securepoll-strength-matrix' => 'Path strength matrix',
+	'securepoll-ranks' => 'Rendtija përfundimtare',
+	'securepoll-average-score' => 'Rezultati mesatar',
+	'securepoll-round' => 'Round $1',
+	'securepoll-spoilt' => '(Spoilt)',
+	'securepoll-exhausted' => '(Lodhur)',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Милан Јелисавчић
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'securepoll-desc' => 'Екстензија за изборе и анкете',
-	'securepoll-invalid-page' => 'Немогућа подстрана „<nowiki>$1</nowiki>“',
-	'securepoll-need-admin' => 'Морате бити администратор да бисте извели ову акцију.',
-	'securepoll-too-few-params' => 'Недовољно параметара подстране (неисправна веза).',
-	'securepoll-invalid-election' => '„$1“ није валидан ID за изборе.',
+	'securepoll' => 'Безбедно гласање',
+	'securepoll-desc' => 'Проширење за изборе и анкете',
+	'securepoll-invalid-page' => 'Неисправна подстраница „<nowiki>$1</nowiki>“',
+	'securepoll-need-admin' => 'Треба да будете изборни администратор да бисте извршили ову радњу.',
+	'securepoll-too-few-params' => 'Нема довољно параметара подстранице (неисправна веза).',
+	'securepoll-invalid-election' => '„$1“ не представља исправну назнаку.',
 	'securepoll-welcome' => '<strong>Добро дошли, $1!</strong>',
-	'securepoll-not-started' => 'Ово су избори, који још увек нису почели.
-Почетак је планиран за $2 у $3.',
-	'securepoll-finished' => 'Ови избори су завршени. Не можете више да гласате.',
-	'securepoll-not-qualified' => 'Не квалификујете се за гласача у овим изборима: $1',
+	'securepoll-not-started' => 'Избори још нису започети.
+Предвиђено је да почну $2 у $3.',
+	'securepoll-finished' => 'Избори су завршени. Више не можете да гласате.',
+	'securepoll-not-qualified' => 'Нисте квалификовани да гласате на овим изборима: $1',
 	'securepoll-change-disallowed' => 'Већ сте гласали на овим изборима.
-Жао нам је, не можете да гласате опет.',
+Нажалост, не можете да гласате опет.',
+	'securepoll-change-allowed' => '<strong>Напомена: већ сте гласали на овим изборима.</strong>
+Можете да промените глас тако што ћете попунити образац испод.
+Ако то урадите, ваш првобитни глас ће бити поништен.',
 	'securepoll-submit' => 'Пошаљи глас',
-	'securepoll-thanks' => 'Хвала Вам. Ваш глас је снимљен.',
-	'securepoll-return' => 'Врати се на $1',
-	'securepoll-gpg-config-error' => 'GPG кључеви су погрешно подешени.',
-	'securepoll-gpg-parse-error' => 'Грешка приликом интерпретације GPG излаза.',
+	'securepoll-gpg-receipt' => 'Хвала вам што сте гласали.
+
+Ако желите, можете да задржите ову потврду као доказ да сте гласали:
+
+<pre>$1</pre>',
+	'securepoll-thanks' => 'Хвала, ваш глас је заведен.',
+	'securepoll-return' => 'Назад на $1',
+	'securepoll-encrypt-error' => 'Не могу да шифрујем гласачки запис.
+Ваш глас није заведен!
+
+$1',
+	'securepoll-no-gpg-home' => 'Не могу да направим основну фасциклу за GPG.',
+	'securepoll-secret-gpg-error' => 'Грешка при извршавању GPG-а.
+Поставите $wgSecurePollShowErrorDetail=true; у LocalSettings.php да добијете више детаља.',
+	'securepoll-full-gpg-error' => 'Грешка при извршавању GPG-а:
+
+Наредба: $1
+
+Грешка:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'Кључеви GPG су погрешно подешени.',
+	'securepoll-gpg-parse-error' => 'Грешка при тумачењу излазних података за GPG.',
+	'securepoll-no-decryption-key' => 'Није постављен кључ за дешифровање.
+Не могу да дешифрујем.',
 	'securepoll-jump' => 'Иди на сервер за гласање',
 	'securepoll-bad-ballot-submission' => 'Ваш глас је неисправан: $1',
-	'securepoll-unanswered-questions' => 'Морате одговорити на сва питања.',
-	'securepoll-invalid-rank' => 'Погрешно рангирање. Кнадидате можете рангирати бројевима између 1 и 999.',
-	'securepoll-remote-auth-error' => 'Грешка приликом преузимања информација о Вашем налогу са сервера.',
-	'securepoll-api-invalid-params' => 'Погрешни параметри.',
-	'securepoll-api-no-user' => 'Није нађен корисник са датим ID.',
-	'securepoll-not-logged-in' => 'Морате се улоговати да бисте гласали на овим изборима',
+	'securepoll-unanswered-questions' => 'Морате да одговорите на сва питања.',
+	'securepoll-invalid-rank' => 'Неисправан ранг. Кандидате морате да рангирате с бројем између 1 и 999.',
+	'securepoll-unranked-options' => 'Неки избори нису рангирани.
+Свим изборима морате доделити ранг између 1 и 999.',
+	'securepoll-invalid-score' => 'Оцена мора бити број између $1 и $2.',
+	'securepoll-unanswered-options' => 'Морате одговорити на свако питање.',
+	'securepoll-remote-auth-error' => 'Грешка при преузимању података о вашем налогу са сервера.',
+	'securepoll-remote-parse-error' => 'Грешка при тумачењу одговора за проверу идентитета са сервера.',
+	'securepoll-api-invalid-params' => 'Неисправни параметри.',
+	'securepoll-api-no-user' => 'Нема корисника с том назнаком.',
+	'securepoll-api-token-mismatch' => 'Безбедносни кодови се не поклапају. Не могу да вас пријавим.',
+	'securepoll-not-logged-in' => 'Морате да будете пријављени да бисте гласали',
+	'securepoll-too-few-edits' => 'Нажалост, не можете да гласате. Треба да имате барем $1 {{PLURAL:$1|измену|измене|измена}} да бисте гласали на овим изборима, а ви имате $2.',
+	'securepoll-too-new' => 'Нажалост, не можете да гласате. Да бисте гласали, налог треба да вам је отворен пре $1 у $3, а ви сте га отворили $2 у $4.',
+	'securepoll-blocked' => 'Нажалост, не можете да гласате ако вам је тренутно забрањено уређивање.',
+	'securepoll-blocked-centrally' => 'Нажалост, не можете да гласате на овим изборима ако сте блокирани на барем $1 {{PLURAL:$1|викију|викија|викија}}.',
+	'securepoll-bot' => 'Нажалост, налози с ботовском ознаком нису дозвољени на овим изборима.',
+	'securepoll-not-in-group' => 'На овим изборима могу да гласају само припадници групе „$1“.',
+	'securepoll-not-in-list' => 'Нажалост, нисте на предодређеном списку корисника којима је одобрено гласање на овим изборима.',
 	'securepoll-list-title' => 'Прикажи гласове: $1',
 	'securepoll-header-timestamp' => 'Време',
 	'securepoll-header-voter-name' => 'Име',
 	'securepoll-header-voter-domain' => 'Домен',
-	'securepoll-header-ua' => 'Кориснички клијент',
-	'securepoll-header-details' => 'Појединости',
+	'securepoll-header-ip' => 'ИП адреса',
+	'securepoll-header-xff' => 'XFF',
+	'securepoll-header-ua' => 'Кориснички агент',
+	'securepoll-header-token-match' => 'CSRF',
+	'securepoll-header-cookie-dup' => 'Дуп',
+	'securepoll-header-strike' => 'Прецртавање',
+	'securepoll-header-details' => 'Детаљи',
+	'securepoll-strike-button' => 'Прецртај',
+	'securepoll-unstrike-button' => 'Поништи прецртавање',
 	'securepoll-strike-reason' => 'Разлог:',
-	'securepoll-strike-cancel' => 'Поништи',
-	'securepoll-strike-token-mismatch' => 'Изгубљени подаци о сесији',
-	'securepoll-details-link' => 'Појединости',
-	'securepoll-details-title' => 'Појединости о гласу: #$1',
-	'securepoll-invalid-vote' => '„$1“ није валидан ID за гласање',
-	'securepoll-header-voter-type' => 'Тип гласача',
-	'securepoll-header-action' => 'Акција',
+	'securepoll-strike-cancel' => 'Откажи',
+	'securepoll-strike-error' => 'Грешка при прецртавању/уклањању црте: $1',
+	'securepoll-strike-token-mismatch' => 'Подаци о сесији су изгубљени',
+	'securepoll-details-link' => 'Детаљи',
+	'securepoll-details-title' => 'Детаљи о гласу: #$1',
+	'securepoll-invalid-vote' => '„$1“ не представља исправну назнаку за гласање',
+	'securepoll-header-id' => 'Назнака',
+	'securepoll-header-voter-type' => 'Врста гласача',
+	'securepoll-header-url' => 'Адреса',
+	'securepoll-voter-properties' => 'Својства гласача',
+	'securepoll-strike-log' => 'Историја прецртавања',
+	'securepoll-header-action' => 'Радња',
 	'securepoll-header-reason' => 'Разлог',
-	'securepoll-header-admin' => 'Админ',
-	'securepoll-cookie-dup-list' => 'Корисници са дупликатима колачића',
-	'securepoll-dump-title' => 'Дамп: $1',
+	'securepoll-header-admin' => 'Администратор',
+	'securepoll-cookie-dup-list' => 'Колачић за дуплиране гласаче',
+	'securepoll-dump-title' => 'Испис: $1',
+	'securepoll-dump-no-crypt' => 'Шифрована гласачка евиденција није доступна за ове изборе, јер избори нису подешени да користе шифровање.',
+	'securepoll-dump-not-finished' => 'Шифрована гласачка евиденција је доступна након што се заврше избори ($1 у $2)',
+	'securepoll-dump-no-urandom' => 'Не могу да отворим /dev/urandom.
+Да бисте одржали приватност гласача, шифрована гласачка евиденција постаје доступна за јавност након што се подаци евиденције промешају уз помоћ безбедног низа случајних бројева.',
+	'securepoll-urandom-not-supported' => 'Овај сервер не подржава криптографско стварање случајних бројева.
+Да бисте одржали приватност гласача, шифровани подаци избора постају доступни за јавност након што се промешају уз помоћ безбедног низа случајних бројева.',
 	'securepoll-translate-title' => 'Преведи: $1',
-	'securepoll-invalid-language' => 'Непрепознатљив код језика: „$1“',
+	'securepoll-invalid-language' => 'Неисправан језички код: „$1“',
+	'securepoll-header-trans-id' => 'Назнака',
 	'securepoll-submit-translate' => 'Ажурирај',
 	'securepoll-language-label' => 'Изабери језик:',
 	'securepoll-submit-select-lang' => 'Преведи',
+	'securepoll-entry-text' => 'Испод је наведен списак гласања.',
 	'securepoll-header-title' => 'Име',
-	'securepoll-header-start-date' => 'Датум почетка',
-	'securepoll-header-end-date' => 'Датум краја',
+	'securepoll-header-start-date' => 'Почетни датум',
+	'securepoll-header-end-date' => 'Завршни датум',
 	'securepoll-subpage-vote' => 'Глас',
 	'securepoll-subpage-translate' => 'Преведи',
 	'securepoll-subpage-list' => 'Списак',
-	'securepoll-subpage-dump' => 'Дамп',
+	'securepoll-subpage-dump' => 'Испис',
+	'securepoll-subpage-tally' => 'Преброј',
+	'securepoll-tally-title' => 'Пребројавање: $1',
+	'securepoll-tally-not-finished' => 'Нажалост, не можете да пребројите изборе док се прво не заврши гласање.',
+	'securepoll-can-decrypt' => 'Евиденција избора је шифрована, али кључ за дешифровање није доступан. 
+Можете да изаберете да пребројите резултате који су у бази, или пак да пребројите шифроване резултате из отпремљене датотеке.',
+	'securepoll-tally-no-key' => 'Не можете да пребројите гласове јер су шифровани, а кључ за дешифровање није доступан.',
+	'securepoll-tally-local-legend' => 'Преброј смештене резултате',
+	'securepoll-tally-local-submit' => 'Преброј',
+	'securepoll-tally-upload-legend' => 'Отпреми шифровани испис',
+	'securepoll-tally-upload-submit' => 'Преброј',
+	'securepoll-tally-error' => 'Грешка при тумачењу гласова. Не могу да пребројим.',
+	'securepoll-no-upload' => 'Датотека није отпремљена. Не могу да пребројим резултате.',
+	'securepoll-dump-corrupt' => 'Исписана датотека је оштећена и не може да се обради.',
+	'securepoll-tally-upload-error' => 'Грешка при пребројавању гласова из исписане датотеке: $1',
+	'securepoll-pairwise-victories' => 'Упарена матрица за израчунавање победника',
+	'securepoll-strength-matrix' => 'Матрица за јачину путање',
+	'securepoll-ranks' => 'Коначно рангирање',
+	'securepoll-average-score' => 'Просечна оцена',
+	'securepoll-round' => 'Коло $1',
+	'securepoll-spoilt' => '(оштећени)',
+	'securepoll-exhausted' => '(исцрпени)',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
+	'securepoll' => 'Bezbedno glasanje',
 	'securepoll-desc' => 'Ekstenzija za izbore i ankete',
 	'securepoll-invalid-page' => 'Nemoguća podstrana „<nowiki>$1</nowiki>“',
-	'securepoll-need-admin' => 'Morate biti administrator da biste izveli ovu akciju.',
+	'securepoll-need-admin' => 'Morate biti izborni administrator da biste izveli ovu akciju.',
 	'securepoll-too-few-params' => 'Nedovoljno parametara podstrane (neispravna veza).',
 	'securepoll-invalid-election' => '„$1“ nije validan ID za izbore.',
 	'securepoll-welcome' => '<strong>Dobro došli, $1!</strong>',
@@ -7836,42 +11004,98 @@ Početak je planiran za $2 u $3.',
 	'securepoll-not-qualified' => 'Ne kvalifikujete se za glasača u ovim izborima: $1',
 	'securepoll-change-disallowed' => 'Već ste glasali na ovim izborima.
 Žao nam je, ne možete da glasate opet.',
+	'securepoll-change-allowed' => '<strong>Napomena: već ste glasali na ovim izborima.</strong>
+Možete da promenite glas tako što ćete popuniti obrazac ispod.
+Ako to uradite, vaš prvobitni glas će biti poništen.',
 	'securepoll-submit' => 'Pošalji glas',
+	'securepoll-gpg-receipt' => 'Hvala vam što ste glasali.
+
+Ako želite, možete da zadržite ovu potvrdu kao dokaz da ste glasali:
+
+<pre>$1</pre>',
 	'securepoll-thanks' => 'Hvala Vam. Vaš glas je snimljen.',
 	'securepoll-return' => 'Vrati se na $1',
+	'securepoll-encrypt-error' => 'Ne mogu da šifrujem glasački zapis.
+Vaš glas nije zaveden!
+
+$1',
+	'securepoll-no-gpg-home' => 'Ne mogu da napravim osnovnu fasciklu za GPG.',
+	'securepoll-secret-gpg-error' => 'Greška pri izvršavanju GPG-a.
+Postavite $wgSecurePollShowErrorDetail=true; u LocalSettings.php da dobijete više detalja.',
+	'securepoll-full-gpg-error' => 'Greška pri izvršavanju GPG-a:
+
+Naredba: $1
+
+Greška:
+<pre>$2</pre>',
 	'securepoll-gpg-config-error' => 'GPG ključevi su pogrešno podešeni.',
 	'securepoll-gpg-parse-error' => 'Greška prilikom interpretacije GPG izlaza.',
+	'securepoll-no-decryption-key' => 'Nije postavljen ključ za dešifrovanje.
+Ne mogu da dešifrujem.',
 	'securepoll-jump' => 'Idi na server za glasanje',
 	'securepoll-bad-ballot-submission' => 'Vaš glas je neispravan: $1',
 	'securepoll-unanswered-questions' => 'Morate odgovoriti na sva pitanja.',
 	'securepoll-invalid-rank' => 'Pogrešno rangiranje. Knadidate možete rangirati brojevima između 1 i 999.',
+	'securepoll-unranked-options' => 'Neki izbori nisu rangirani.
+Svim izborima morate dodeliti rang između 1 i 999.',
+	'securepoll-invalid-score' => 'Ocena mora biti broj između $1 i $2.',
+	'securepoll-unanswered-options' => 'Morate odgovoriti na svako pitanje.',
 	'securepoll-remote-auth-error' => 'Greška prilikom preuzimanja informacija o Vašem nalogu sa servera.',
+	'securepoll-remote-parse-error' => 'Greška pri tumačenju odgovora za proveru identiteta sa servera.',
 	'securepoll-api-invalid-params' => 'Pogrešni parametri.',
 	'securepoll-api-no-user' => 'Nije nađen korisnik sa datim ID.',
+	'securepoll-api-token-mismatch' => 'Bezbednosni kodovi se ne poklapaju. Ne mogu da vas prijavim.',
 	'securepoll-not-logged-in' => 'Morate se ulogovati da biste glasali na ovim izborima',
+	'securepoll-too-few-edits' => 'Nažalost, ne možete da glasate. Treba da imate barem $1 {{PLURAL:$1|izmenu|izmene|izmena}} da biste glasali na ovim izborima, a vi imate $2.',
+	'securepoll-too-new' => 'Nažalost, ne možete da glasate. Da biste glasali, nalog treba da vam je otvoren pre $1 u $3, a vi ste ga otvorili $2 u $4.',
+	'securepoll-blocked' => 'Nažalost, ne možete da glasate ako vam je trenutno zabranjeno uređivanje.',
+	'securepoll-blocked-centrally' => 'Nažalost, ne možete da glasate na ovim izborima ako ste blokirani na barem $1 {{PLURAL:$1|vikiju|vikija|vikija}}.',
+	'securepoll-bot' => 'Nažalost, nalozi s botovskom oznakom nisu dozvoljeni na ovim izborima.',
+	'securepoll-not-in-group' => 'Na ovim izborima mogu da glasaju samo pripadnici grupe „$1“.',
+	'securepoll-not-in-list' => 'Nažalost, niste na predodređenom spisku korisnika kojima je odobreno glasanje na ovim izborima.',
 	'securepoll-list-title' => 'Prikaži glasove: $1',
 	'securepoll-header-timestamp' => 'Vreme',
 	'securepoll-header-voter-name' => 'Ime',
 	'securepoll-header-voter-domain' => 'Domen',
+	'securepoll-header-ip' => 'IP adresa',
+	'securepoll-header-xff' => 'XFF',
 	'securepoll-header-ua' => 'Korisnički klijent',
+	'securepoll-header-token-match' => 'CSRF',
+	'securepoll-header-cookie-dup' => 'Dup',
+	'securepoll-header-strike' => 'Precrtavanje',
 	'securepoll-header-details' => 'Pojedinosti',
+	'securepoll-strike-button' => 'Precrtaj',
+	'securepoll-unstrike-button' => 'Poništi precrtavanje',
 	'securepoll-strike-reason' => 'Razlog:',
-	'securepoll-strike-cancel' => 'Poništi',
+	'securepoll-strike-cancel' => 'Otkaži',
+	'securepoll-strike-error' => 'Greška pri precrtavanju/uklanjanju crte: $1',
 	'securepoll-strike-token-mismatch' => 'Izgubljeni podaci o sesiji',
 	'securepoll-details-link' => 'Pojedinosti',
 	'securepoll-details-title' => 'Pojedinosti o glasu: #$1',
 	'securepoll-invalid-vote' => '„$1“ nije validan ID za glasanje',
+	'securepoll-header-id' => 'Naznaka',
 	'securepoll-header-voter-type' => 'Tip glasača',
-	'securepoll-header-action' => 'Akcija',
+	'securepoll-header-url' => 'Adresa',
+	'securepoll-voter-properties' => 'Svojstva glasača',
+	'securepoll-strike-log' => 'Istorija precrtavanja',
+	'securepoll-header-action' => 'Radnja',
 	'securepoll-header-reason' => 'Razlog',
 	'securepoll-header-admin' => 'Admin',
 	'securepoll-cookie-dup-list' => 'Korisnici sa duplikatima kolačića',
 	'securepoll-dump-title' => 'Damp: $1',
+	'securepoll-dump-no-crypt' => 'Šifrovana glasačka evidencija nije dostupna za ove izbore, jer izbori nisu podešeni da koriste šifrovanje.',
+	'securepoll-dump-not-finished' => 'Šifrovana glasačka evidencija je dostupna nakon što se završe izbori ($1 u $2)',
+	'securepoll-dump-no-urandom' => 'Ne mogu da otvorim /dev/urandom.
+Da biste održali privatnost glasača, šifrovana glasačka evidencija postaje dostupna za javnost nakon što se podaci evidencije promešaju uz pomoć bezbednog niza slučajnih brojeva.',
+	'securepoll-urandom-not-supported' => 'Ovaj server ne podržava kriptografsko stvaranje slučajnih brojeva.
+Da biste održali privatnost glasača, šifrovani podaci izbora postaju dostupni za javnost nakon što se promešaju uz pomoć bezbednog niza slučajnih brojeva.',
 	'securepoll-translate-title' => 'Prevedi: $1',
 	'securepoll-invalid-language' => 'Neprepoznatljiv kod jezika: „$1“',
+	'securepoll-header-trans-id' => 'Naznaka',
 	'securepoll-submit-translate' => 'Ažuriraj',
 	'securepoll-language-label' => 'Izaberi jezik:',
 	'securepoll-submit-select-lang' => 'Prevedi',
+	'securepoll-entry-text' => 'Ispod je naveden spisak glasanja.',
 	'securepoll-header-title' => 'Ime',
 	'securepoll-header-start-date' => 'Datum početka',
 	'securepoll-header-end-date' => 'Datum kraja',
@@ -7879,6 +11103,27 @@ Početak je planiran za $2 u $3.',
 	'securepoll-subpage-translate' => 'Prevedi',
 	'securepoll-subpage-list' => 'Spisak',
 	'securepoll-subpage-dump' => 'Damp',
+	'securepoll-subpage-tally' => 'Prebroj',
+	'securepoll-tally-title' => 'Prebrojavanje: $1',
+	'securepoll-tally-not-finished' => 'Nažalost, ne možete da prebrojite izbore dok se prvo ne završi glasanje.',
+	'securepoll-can-decrypt' => 'Evidencija izbora je šifrovana, ali ključ za dešifrovanje nije dostupan. 
+Možete da izaberete da prebrojite rezultate koji su u bazi, ili pak da prebrojite šifrovane rezultate iz otpremljene datoteke.',
+	'securepoll-tally-no-key' => 'Ne možete da prebrojite glasove jer su šifrovani, a ključ za dešifrovanje nije dostupan.',
+	'securepoll-tally-local-legend' => 'Prebroj smeštene rezultate',
+	'securepoll-tally-local-submit' => 'Prebroj',
+	'securepoll-tally-upload-legend' => 'Otpremi šifrovani ispis',
+	'securepoll-tally-upload-submit' => 'Prebroj',
+	'securepoll-tally-error' => 'Greška pri tumačenju glasova. Ne mogu da prebrojim.',
+	'securepoll-no-upload' => 'Datoteka nije otpremljena. Ne mogu da prebrojim rezultate.',
+	'securepoll-dump-corrupt' => 'Ispisana datoteka je oštećena i ne može da se obradi.',
+	'securepoll-tally-upload-error' => 'Greška pri prebrojavanju glasova iz ispisane datoteke: $1',
+	'securepoll-pairwise-victories' => 'Uparena matrica za izračunavanje pobednika',
+	'securepoll-strength-matrix' => 'Matrica za jačinu putanje',
+	'securepoll-ranks' => 'Konačno rangiranje',
+	'securepoll-average-score' => 'Prosečna ocena',
+	'securepoll-round' => 'Kolo $1',
+	'securepoll-spoilt' => '(oštećeni)',
+	'securepoll-exhausted' => '(iscrpeni)',
 );
 
 /** Sundanese (Basa Sunda)
@@ -7893,11 +11138,14 @@ $messages['su'] = array(
  * @author Boivie
  * @author Fluff
  * @author Gabbe.g
+ * @author Lokal Profil
  * @author Micke
  * @author Najami
  * @author Per
  * @author Poxnar
+ * @author Ronja Addams-Moring
  * @author StefanB
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'securepoll' => 'SäkerOmröstning',
@@ -7956,7 +11204,9 @@ Du måste rangordna alla valmöjligheter mellan 1 och 999.',
 	'securepoll-api-token-mismatch' => 'Säkerhetsnyckel saknas, kan inte logga in.',
 	'securepoll-not-logged-in' => 'Du måste logga in för att kunna rösta i det här valet.',
 	'securepoll-too-few-edits' => 'Ledsen, men du kan inte rösta. Du måste ha minst $1 {{PLURAL:$1|redigering|redigeringar}} för att rösta i det här valet. Du har gjort $2 {{PLURAL:$2|redigering|redigeringar}}.',
+	'securepoll-too-new' => 'Du kan tyvärr inte rösta. Ditt konto måste ha varit registrerat före den $1 kl. $3 för att rösta i detta val; du registrerade dig den $2 kl. $4.',
 	'securepoll-blocked' => 'Ledsen, men du kan inte rösta om du är blockerad från redigering.',
+	'securepoll-blocked-centrally' => 'Du kan tyvärr inte rösta i detta val eftersom du är blockerad på minst $1 {{PLURAL:$1|wiki|wikier}}.',
 	'securepoll-bot' => 'Tyvärr, konton med botflaga tillåts inte att rösta i denna omröstning.',
 	'securepoll-not-in-group' => 'Endast meddlemmar i gruppen "$1" kan rösta i denna omröstning.',
 	'securepoll-not-in-list' => 'Du ligger tyvärr inte på listan över användare som kan rösta i den här omröstningen.',
@@ -8022,6 +11272,73 @@ Du kan välja att antingen räkna upp resultaten som finns tillgängliga i datab
 	'securepoll-strength-matrix' => 'Matris över vägstyrka',
 	'securepoll-ranks' => 'Slutgilltig rankning',
 	'securepoll-average-score' => 'Genomsnittligt betyg',
+	'securepoll-round' => 'Omgång $1',
+	'securepoll-spoilt' => '(Ogiltig)',
+	'securepoll-exhausted' => '(Uttömd)',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'securepoll-header-voter-name' => 'Jina',
+	'securepoll-strike-reason' => 'Sababu:',
+	'securepoll-strike-cancel' => 'Batilisha',
+	'securepoll-header-reason' => 'Sababu',
+	'securepoll-submit-translate' => 'Sasisha',
+	'securepoll-submit-select-lang' => 'Kutafsiri',
+	'securepoll-header-title' => 'Jina',
+	'securepoll-header-start-date' => 'Tarehe ya kuanza',
+	'securepoll-header-end-date' => 'Tarehe ya kumaliza',
+	'securepoll-subpage-translate' => 'Kutafsiri',
+	'securepoll-subpage-list' => 'Orodha',
+);
+
+/** Tamil (தமிழ்)
+ * @author Shanmugamp7
+ * @author TRYPPN
+ * @author පසිඳු කාවින්ද
+ */
+$messages['ta'] = array(
+	'securepoll' => 'செகிறேபோல்',
+	'securepoll-welcome' => '<strong>வரவேற்பு  $1 !</strong>',
+	'securepoll-submit' => 'வாக்கை சமர்ப்பிக்கவும்',
+	'securepoll-thanks' => 'நன்றி,உங்கள் வாக்கு பதிவு செய்யப்பட்டது.',
+	'securepoll-return' => '$1 க்கு திரும்பு.',
+	'securepoll-encrypt-error' => 'உங்கள் வாக்கு பதிவை மறையாக்குவதில் தோல்வியடைந்தது.
+உங்கள் வாக்கு பதிவு செய்யப்படவில்லை.
+
+$1',
+	'securepoll-no-gpg-home' => 'GPG உள் கோப்புறை உருவாக்க இயலவில்லை.',
+	'securepoll-full-gpg-error' => 'GPG செயலாக்குவதில் பிழை:
+
+கட்டளை: $1
+
+பிழை:
+<pre>$2</pre>',
+	'securepoll-gpg-config-error' => 'GPG விசைகள் தவறாக உள்ளமைக்கப்பட்டுள்ளன',
+	'securepoll-api-invalid-params' => 'செல்லாத அளவுருக்கள்.',
+	'securepoll-header-timestamp' => 'நேரம்',
+	'securepoll-header-voter-name' => 'பெயர்',
+	'securepoll-header-voter-domain' => 'டொமைன்',
+	'securepoll-header-details' => 'விளக்கம்',
+	'securepoll-strike-reason' => 'காரணம்:',
+	'securepoll-strike-cancel' => 'விட்டுவிடு',
+	'securepoll-details-link' => 'விளக்கம்',
+	'securepoll-header-action' => 'செயல்',
+	'securepoll-header-reason' => 'காரணம்',
+	'securepoll-header-admin' => 'நிர்வாகி',
+	'securepoll-translate-title' => 'மொழிபெயர்ப்பு செய்யவும்: $1',
+	'securepoll-submit-translate' => 'புதுப்பி',
+	'securepoll-language-label' => 'மொழியை தேர்வு செய்:',
+	'securepoll-submit-select-lang' => 'மொழிபெயர்ப்பு செய்யவும்',
+	'securepoll-header-title' => 'பெயர்',
+	'securepoll-header-start-date' => 'ஆரம்பத்தேதி',
+	'securepoll-header-end-date' => 'முடிவுத்தேதி',
+	'securepoll-subpage-vote' => 'வோடே',
+	'securepoll-subpage-translate' => 'மொழி பெயர்ப்பு',
+	'securepoll-subpage-list' => 'பட்டியல்',
+	'securepoll-ranks' => 'இறுதி மதிப்பீடுகள்',
+	'securepoll-average-score' => 'சராசரி மதிப்பு',
+	'securepoll-round' => 'சுற்று $1',
 );
 
 /** Telugu (తెలుగు)
@@ -8059,6 +11376,7 @@ $2 న, $3 లకు మోదలు అవుతుంది',
 	'securepoll-invalid-score' => 'స్కోరు తప్పనిసరిగా $1 మరియు $2 ల మధ్యనున్న సంఖ్య అయివుండాలి.',
 	'securepoll-unanswered-options' => 'మీరు తప్పనిసరిగా ప్రతీ ప్రశ్నకీ ఒక స్పందనని ఇవ్వాలి.',
 	'securepoll-remote-auth-error' => 'మీ ఖాతా సమాచారాన్ని సేవకి నుండి తేవడంలో పొరపాటు జరిగింది.',
+	'securepoll-api-invalid-params' => 'తప్పుడు పరామితులు.',
 	'securepoll-api-no-user' => 'ఇచ్చిన IDతో వాడుకరులు ఎవరూ లేరు.',
 	'securepoll-not-logged-in' => 'ఈ ఎన్నికలో తమ వోటు హక్కును వినియోగించుకునేందుకు తమరు లోనికి ప్రవేశించి ఉండాలి',
 	'securepoll-too-few-edits' => 'క్షమించండి, తమరు వోటు వేయలేరు. ఈ ఎన్నికలో వోటు వేసేందుకు తమరు కనీసము $1 {{PLURAL:$1|మార్పు|మార్పులు}} చేసివుండాలి, కాని తమరు $2 చేసారు.',
@@ -8089,7 +11407,7 @@ $2 న, $3 లకు మోదలు అవుతుంది',
 	'securepoll-header-admin' => 'నిర్వహణాధికారి',
 	'securepoll-translate-title' => 'అనువదించు: $1',
 	'securepoll-invalid-language' => 'తప్పుడు భాషా సంకేతం "$1"',
-	'securepoll-submit-translate' => 'అప్డేట్',
+	'securepoll-submit-translate' => 'తాజాకరించు',
 	'securepoll-language-label' => 'భాషను ఎన్నుకో:',
 	'securepoll-submit-select-lang' => 'అనువదించు',
 	'securepoll-header-title' => 'పేరు',
@@ -8108,8 +11426,17 @@ $2 న, $3 లకు మోదలు అవుతుంది',
 	'securepoll-average-score' => 'సగటు స్కోరు',
 );
 
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'securepoll-header-voter-name' => 'Naran',
+	'securepoll-header-title' => 'Naran',
+);
+
 /** Thai (ไทย)
  * @author Ans
+ * @author Korrawit
  * @author Octahedron80
  * @author Passawuth
  * @author Watcharakorn
@@ -8212,7 +11539,7 @@ $1',
 	'securepoll-subpage-dump' => 'รวบรวม',
 	'securepoll-tally-not-finished' => 'ขออภัย คุณไม่สามารถนับคะแนนเลือกตั้งได้จนกว่าการลงคะแนนจะเสร็จสิ้น',
 	'securepoll-can-decrypt' => 'บันทึกการเลือกตั้งได้ถูกเข้ารหัสไว้ แต่ไม่มีรหัสสำหรับการถอดรหัส
-คุณสามารถเลือกที่จะนับผลการเลือกตั้งที่ปรากฎในฐานข้อมูล หรือนับคะแนนของบันทึกที่ถูกเข้ารหัสจากไฟล์ที่ถูกอัพโหลดไว้',
+คุณสามารถเลือกที่จะนับผลการเลือกตั้งที่ปรากฏในฐานข้อมูล หรือนับคะแนนของบันทึกที่ถูกเข้ารหัสจากไฟล์ที่ถูกอัพโหลดไว้',
 	'securepoll-tally-no-key' => 'คุณไม่สามารถนับคะแนนเลือกตั้งนี้ได้ เพราะการลงคะแนนได้ถูกเข้ารหัสไว้ และไม่มีกุญแจถอดรหัส',
 	'securepoll-tally-local-legend' => 'ผลการนับคะแนนที่ถูกเก็บไว้',
 	'securepoll-tally-local-submit' => 'สร้างผลการนับคะแนน',
@@ -8234,11 +11561,22 @@ $messages['tk'] = array(
 	'securepoll-too-few-params' => 'Kiçi sahypa parametrleri ýeterlik däl (nädogry çykgyt).',
 	'securepoll-invalid-election' => '"$1" dogry saylaw ID-si däl',
 	'securepoll-welcome' => '<strong>Hoş geldiň, $1!</strong>',
+	'securepoll-not-started' => 'Bu saýlaw heniz başlamady.
+Ol $2 senesinde $3 sagatynda başlaýar.',
 	'securepoll-finished' => 'Bu saýlaw gutardy, indi ses berip bilmeýärsiňiz.',
 	'securepoll-not-qualified' => 'Bu saýlawda ses bermäge hukugyňyz ýok: $1',
+	'securepoll-change-disallowed' => 'Bu saýlawda ozal ses beripsiňiz.
+Bagyşlaň, gaýtadan ses berip bilmeýärsiňiz.',
 	'securepoll-submit' => 'Sesi tabşyr',
+	'securepoll-thanks' => 'Sag boluň, sesiňiz hasaba alyndy.',
 	'securepoll-return' => '$1 sahypasyna gaýdyp bar',
 	'securepoll-no-gpg-home' => 'GPG öý direktoriýasyny döredip bilmeýär.',
+	'securepoll-full-gpg-error' => 'GPG işleýärkä säwlik:
+
+Buýruk: $1
+
+Säwlik:
+<pre>$2</pre>',
 	'securepoll-gpg-config-error' => 'GPG açarlary nädogry konfigurirlenipdir.',
 	'securepoll-gpg-parse-error' => 'GPG önümi interpretasiýasynda säwlik.',
 	'securepoll-no-decryption-key' => 'Rasşifrowka açary konfigurirlenmändir.
@@ -8247,6 +11585,8 @@ Rasşifrowka edip bolmaýar.',
 	'securepoll-bad-ballot-submission' => 'Sesiňiz hasap edilmeýär: $1',
 	'securepoll-unanswered-questions' => 'Ähli soraglara jogap bermelisiňiz.',
 	'securepoll-invalid-rank' => 'Nädogry rang. 1 bilen 999 arasynda bir rang bermeli',
+	'securepoll-unranked-options' => 'Käbir opsiýalar derejelendirilmändir.
+Ähli opsiýalara 1 bilen 999 aralygynda bir dereje bermeli.',
 	'securepoll-invalid-score' => 'Bahalandyrma $1 bilen $2 aralygynda bolmalydyr.',
 	'securepoll-unanswered-options' => 'Her soraga jogap bermelisiňiz.',
 	'securepoll-remote-auth-error' => 'Serwerden hasap maglumatyny almak säwligi.',
@@ -8284,6 +11624,8 @@ Rasşifrowka edip bolmaýar.',
 	'securepoll-header-admin' => 'Admin',
 	'securepoll-cookie-dup-list' => 'Kuki dublikat uanyjylary',
 	'securepoll-dump-title' => 'Damp: $1',
+	'securepoll-dump-no-urandom' => '/dev/urandom açylmaýar.
+Saýlawçynyň gizlinligini üpjün etmek üçin, şifrli saýlaw ýazgylary diňe ynamdar bir duş gelen san akymy arkaly garylan ýagdaýynda, ol köpçülige elýeterli bolup bilýär.',
 	'securepoll-translate-title' => 'Terjime et: $1',
 	'securepoll-invalid-language' => 'Nädogry dil kody "$1"',
 	'securepoll-submit-translate' => 'Täzele',
@@ -8315,12 +11657,13 @@ Rasşifrowka edip bolmaýar.',
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
+ * @author Sky Harbor
  */
 $messages['tl'] = array(
 	'securepoll' => 'Ligtas na Halalan',
 	'securepoll-desc' => 'Karugtong para sa mga halalan at mga pagtatanung-tanong',
 	'securepoll-invalid-page' => 'Hindi tanggap na kabahaging pahinang "<nowiki>$1</nowiki>"',
-	'securepoll-need-admin' => 'Kailangan mong maging isang tagapangasiwa upang maisagawa ang galaw na ito.',
+	'securepoll-need-admin' => 'Kailangan mong maging isang tagapangasiwa ng halalan upang maisagawa ang galaw na ito.',
 	'securepoll-too-few-params' => 'Hindi sapat na mga parametro ng kabahaging pahina (hindi tanggap na kawing).',
 	'securepoll-invalid-election' => 'Ang "$1" ay hindi isang tanggap na ID ng halalan.',
 	'securepoll-welcome' => '<strong>Maligayang pagdating, $1!</strong>',
@@ -8332,7 +11675,7 @@ Nakatakdang magsimula ito sa $2 sa $3.',
 Paumanhin, hindi ka na maaaring bumoto uli.',
 	'securepoll-change-allowed' => '<strong>Paunawa: Bumoto ka na dati sa halalang ito.</strong>
 Maaari mong baguhin ang iyong boto sa pamamagitan ng pagpasa ng pormularyong nasa ibaba.
-Pakitandaan na kapag ginawa mot ito, itatapon ang nauna mong boto.',
+Pakitandaan na kapag ginawa mo ito, itatapon ang nauna mong boto.',
 	'securepoll-submit' => 'Ipasa ang boto',
 	'securepoll-gpg-receipt' => 'Salamat sa pagboto mo.
 
@@ -8361,15 +11704,22 @@ Hindi matanggal ang kodigo.',
 	'securepoll-jump' => 'Pumunta sa tagapaghain ng pagboto',
 	'securepoll-bad-ballot-submission' => 'Hindi tinanggap ang boto mo: $1',
 	'securepoll-unanswered-questions' => 'Dapat mong sagutin ang lahat ng mga katanungan.',
-	'securepoll-remote-auth-error' => 'Kamalian sa pagpulot ng kabatiran ng akawnt mo mula sa tagapaghain.',
+	'securepoll-invalid-rank' => 'Hindi wastong ranggo. Kailangan mong magbigay sa mga kandidato ng isang ranggo sa pagitan ng 1 at 999.',
+	'securepoll-unranked-options' => 'Ang ilang mga opsyon ay hindi niraranggo. 
+Ikaw ay dapat magbigay ng lahat ng mga mapagpipilian ng isang ranggo sa pagitan ng 1 at 999.',
+	'securepoll-invalid-score' => 'Ang mga iskor ay kailangang isang bilang sa pagitan ng $1 at $2.',
+	'securepoll-unanswered-options' => 'Kailangan mong magbigay ng sagot para sa bawat tanong.',
+	'securepoll-remote-auth-error' => 'Kamalian sa pagpulot ng kabatiran ng iyong kuwenta mula sa serbidor.',
 	'securepoll-remote-parse-error' => 'Kamalian sa pagpapaliwanag ng tugon ng pagpapahintulot mula sa tagapaghain.',
 	'securepoll-api-invalid-params' => 'Hindi tanggap na mga parametro.',
 	'securepoll-api-no-user' => 'Walang tagagamit na natagpuang may ibinigay na ID.',
 	'securepoll-api-token-mismatch' => 'Maling pagtutugma ng tandang pangkaligtasan, hindi makalalagdang papasok.',
 	'securepoll-not-logged-in' => 'Kailangan mong lumagdang papasok upang makaboto sa halalang ito',
 	'securepoll-too-few-edits' => 'Paumanhin, hindi ka makakaboto. Kailangan mong maging nakagawa ng kahit na mga $1 {{PLURAL:$1|pamamatnugot|mga pamamatnugot}} upang makaboto sa halalang ito, nakagawa ka na ng $2.',
-	'securepoll-blocked' => 'Paumanhin, hindi ka makakaboto sa halalang ito kung pangkasalukuyan kang hinahadlangan mula sa pamamatnugot.',
-	'securepoll-bot' => 'Paumanhin, ang mga akawnt na may watawat ng robot ay hindi pinapayagang bumoto sa halalang ito.',
+	'securepoll-too-new' => 'Paumanhin, ngunit hindi ka maaaring bumoto.  Dapat itinala ang kuwenta mo bago ng $1 upang makaboto sa halalang ito; nagpatala ko noong $2.',
+	'securepoll-blocked' => 'Paumanhin, hindi ka makakaboto sa halalang ito kung kasalukuyan kang hinaharangan mula sa pamamatnugot.',
+	'securepoll-blocked-centrally' => 'Paumanhin, ngunit hindi ka maaaring bumoto sa halalang ito kung hinarangan ka sa $1 o {{PLURAL:$1|wiki|mga wiki}}.',
+	'securepoll-bot' => 'Paumanhin, ang mga kuwentang may watawat ng bot ay hindi pinapayagang bumoto sa halalang ito.',
 	'securepoll-not-in-group' => 'Mga kasapi lamang ng pangkat na "$1" ang makakaboto sa halalang ito.',
 	'securepoll-not-in-list' => 'Paumanhin, wala ka sa loob ng mga natiyak na talaan ng mga tagagamit na pinapayagang bumoto sa halalang ito.',
 	'securepoll-list-title' => 'Itala ang mga boto: $1',
@@ -8385,6 +11735,7 @@ Hindi matanggal ang kodigo.',
 	'securepoll-strike-reason' => 'Dahilan:',
 	'securepoll-strike-cancel' => 'Huwag ipagpatuloy',
 	'securepoll-strike-error' => 'Kamalian sa pagsasagawa ng kalusin/huwag kalusin: $1',
+	'securepoll-strike-token-mismatch' => 'Nawalang dato ng pulong',
 	'securepoll-details-link' => 'Mga detalye',
 	'securepoll-details-title' => 'Mga detalye ng boto: #$1',
 	'securepoll-invalid-vote' => 'Ang "$1" ay hindi isang tanggap na ID ng boto',
@@ -8394,17 +11745,20 @@ Hindi matanggal ang kodigo.',
 	'securepoll-header-action' => 'Galaw',
 	'securepoll-header-reason' => 'Dahilan',
 	'securepoll-header-admin' => 'Tagapangasiwa',
-	'securepoll-cookie-dup-list' => "Mga tagagamit ng dalawahang \"otap\" o ''cookie''",
+	'securepoll-cookie-dup-list' => 'Mga tagagamit ng dalawahang kuki',
 	'securepoll-dump-title' => 'Itapon: $1',
 	'securepoll-dump-no-crypt' => 'Walang makuhang nakakodigong tala ng halalan para sa halalang ito, dahil ang halalan ay hindi nakaayos na gumamit ng kodigo.',
 	'securepoll-dump-not-finished' => 'Makakakuha lamang ng nakakodigong mga tala ng halalan pagkalipas ng petsa ng katapusang $1 sa $2',
 	'securepoll-dump-no-urandom' => 'Hindi mabuksan /dev/urandom.
 Upang mapanitili ang paglilihim ng manghahalal, makukuha lamang ng madla ang nakakodigong mga talaan ng halalan kapag mababalasa na sila sa isang ligtas na daloy ng alin mang bilang.',
+	'securepoll-urandom-not-supported' => 'Hindi nagsusuporta ang tagapaghaing ito ng paglikha ng kriptograpikong bilang na bigay ng pagkakataon.
+Upang mapanatili ang pagkapribado ng botante, makukuha lamang ng madla ang nakakodigong mga tala ng halalan kapag mababalasa sila ng isang ligtas na sibol ng bilang na bigay ng pagkakataon.',
 	'securepoll-translate-title' => 'Isalinwika: $1',
 	'securepoll-invalid-language' => 'Hindi tanggap na kodigo ng wikang "$1"',
 	'securepoll-submit-translate' => 'Isapanahon',
 	'securepoll-language-label' => 'Piliin ang wika:',
 	'securepoll-submit-select-lang' => 'Isalinwika',
+	'securepoll-entry-text' => 'Nasa ibaba ang talaan ng mga paghalal.',
 	'securepoll-header-title' => 'Pangalan',
 	'securepoll-header-start-date' => 'Petsa ng simula',
 	'securepoll-header-end-date' => 'Petsa ng katapusan',
@@ -8424,10 +11778,29 @@ Maaari mong piliin ang itala ang bilang ng mga kinalabasang naroroon sa loob ng 
 	'securepoll-tally-upload-submit' => 'Likhain ang talaan ng mga bilang',
 	'securepoll-tally-error' => 'Kamalian sa pagpapaliwanag ng talaan ng boto, hindi malikha ang isang talaan ng bilang.',
 	'securepoll-no-upload' => 'Walang naikargang talaksan, hindi maitatala ang mga kinalabasan.',
+	'securepoll-dump-corrupt' => 'Sira ang  talaksang tambakan at hindi maaaring isagawa.',
+	'securepoll-tally-upload-error' => 'Kamalian sa paglalapat ng talaksang tambakan: $1',
+	'securepoll-pairwise-victories' => 'Pangmatagumpay na matris sa gawi ng tambalan',
+	'securepoll-strength-matrix' => 'Matris ng lakas ng landas',
+	'securepoll-ranks' => 'Pinakahuling pag-aantas',
+	'securepoll-average-score' => 'Pangkaraniwang kutab',
+	'securepoll-round' => 'Yugto $1',
+	'securepoll-spoilt' => '(Nasayang)',
+	'securepoll-exhausted' => '(Naubos)',
+);
+
+/** Tok Pisin (Tok Pisin)
+ * @author Iketsi
+ */
+$messages['tpi'] = array(
+	'securepoll-header-timestamp' => 'Taim',
+	'securepoll-subpage-translate' => 'Tantok',
 );
 
 /** Turkish (Türkçe)
+ * @author Emperyan
  * @author Joseph
+ * @author Koc61
  * @author Noumenon
  * @author Vito Genovese
  */
@@ -8488,7 +11861,9 @@ Tüm seçeneklere 1 ile 999 arasında bir derece vermelisiniz.',
 	'securepoll-api-token-mismatch' => 'Güvenlik simgesi uyuşmuyor, giriş yapılamıyor.',
 	'securepoll-not-logged-in' => 'Bu seçimde oy kullanmak için giriş yapmanız gerekiyor',
 	'securepoll-too-few-edits' => 'Üzgünüz, oy veremezsiniz. Bu seçimlerde oy kullanmak için en az $1 {{PLURAL:$1|değişiklik|değişiklik}} yapmanız gerekir, sizin $2 değişikliğiniz var.',
+	'securepoll-too-new' => 'Üzgünüz, oyunuz kabul edilmedi. Bu oylamada oy kullanabilmek için hesabınızın $1 tarihinden önce açılmış olması gerekiyor. Siz $2 tarihinde kayıt olmuşsunuz.',
 	'securepoll-blocked' => 'Üzgünüz, eğer şu anda değişiklik yapmaya engellenmiş iseniz bu seçimlerde oy kullanamazsınız.',
+	'securepoll-blocked-centrally' => 'Üzgünüz, eğer $1 ya da daha fazla vikide engelliyseniz, bu oylamada oy kullanamazsınız.',
 	'securepoll-bot' => 'Üzgünüz, bot olarak işaretli hesaplar bu seçimde oy kullanamaz.',
 	'securepoll-not-in-group' => 'Bu seçimlerde sadece $1 grubu üyeleri oy verebilir.',
 	'securepoll-not-in-list' => 'Üzgünüz, bu seçimde oy kullanmaya yetkili öntanımlı kullanıcılar listesinde değilsiniz.',
@@ -8554,21 +11929,46 @@ Veritabanında mevcut sonuçları saymayı, ya da yüklenen bir dosyadan şifrel
 	'securepoll-strength-matrix' => 'Yol gücü matrisi',
 	'securepoll-ranks' => 'Son sıralama',
 	'securepoll-average-score' => 'Ortalama skor',
+	'securepoll-round' => 'Raunt $1',
+	'securepoll-spoilt' => '(Bozuk)',
+	'securepoll-exhausted' => '(Bitkin)',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Bulatbulat
  * @author KhayR
+ * @author Ильнар
  */
 $messages['tt-cyrl'] = array(
+	'securepoll-not-started' => 'Бу тавыш бирүләр әле башланмаганнар.
+Башлану вакыты:$2 $3',
+	'securepoll-finished' => 'Бу тавыш бирү тәмамланган, хәзер сез тавыш бирә алмыйсыз.',
 	'securepoll-header-timestamp' => 'Вакыт',
 	'securepoll-header-voter-name' => 'Исем',
 	'securepoll-header-voter-domain' => 'Домен',
 	'securepoll-header-ua' => 'Кулланучы агенты',
+	'securepoll-header-cookie-dup' => 'Дублләр',
+	'securepoll-header-strike' => 'Сызу',
+	'securepoll-header-details' => 'Тулырак',
+	'securepoll-strike-button' => 'Сызу',
+	'securepoll-unstrike-button' => 'Сызуны алу',
+	'securepoll-strike-reason' => 'Сәбәп:',
+	'securepoll-strike-cancel' => 'Баш тарту',
+);
+
+/** Tuvinian (Тыва дыл)
+ * @author Sborsody
+ */
+$messages['tyv'] = array(
+	'securepoll-strike-reason' => 'Чылдагаан:',
+	'securepoll-header-reason' => 'Чылдагаан',
+	'securepoll-header-title' => 'Ат',
 );
 
 /** Ukrainian (Українська)
  * @author AS
  * @author Ahonc
+ * @author Dim Grits
  * @author Ilyaroz
  * @author NickK
  * @author Prima klasy4na
@@ -8628,9 +12028,11 @@ $1',
 	'securepoll-api-invalid-params' => 'Помилкові параметри.',
 	'securepoll-api-no-user' => 'Не знайдений користувач із заданим ідентифікатором.',
 	'securepoll-api-token-mismatch' => 'Невідповідність коду безпеки, не в змозі ввійти до системи.',
-	'securepoll-not-logged-in' => 'Ви маєте ввійти до системи, щоб взяти участь в голосуванні',
+	'securepoll-not-logged-in' => 'Ви маєте ввійти до системи, щоб взяти участь у голосуванні',
 	'securepoll-too-few-edits' => 'Вибачте, ви не можете проголосувати. Вам треба мати не менше $1 {{PLURAL:$1|редагування|редагувань|редагувань}} для участі в цьому голосуванні, у вас є $2.',
+	'securepoll-too-new' => 'На жаль, ви не можете голосувати.  Ваш обліковий запис повинен були зареєстрований до $1 $3 для голосування на цих виборах, ви зареєстровані $2 $4.',
 	'securepoll-blocked' => 'Вибачте, ви не можете голосувати на виборах, оскільки вас заблоковано.',
+	'securepoll-blocked-centrally' => 'На жаль, ви не може голосувати в цих виборах, так як ви заблоковані у $1 {{PLURAL:$1|вікіпроекті|вікіпроектах}}.',
 	'securepoll-bot' => 'Вибачте, облікові записи зі статусом бота не допускаються до участі в голосуванні.',
 	'securepoll-not-in-group' => 'Тільки члени групи "$1" можуть голосувати на цих виборах.',
 	'securepoll-not-in-list' => 'Вибачте, ви не входите в список користувачів, допущених до голосування на цих виборах.',
@@ -8638,7 +12040,10 @@ $1',
 	'securepoll-header-timestamp' => 'Час',
 	'securepoll-header-voter-name' => "Ім'я",
 	'securepoll-header-voter-domain' => 'Домен',
+	'securepoll-header-ip' => 'IP',
+	'securepoll-header-xff' => 'XFF',
 	'securepoll-header-ua' => 'Програма клієнта',
+	'securepoll-header-token-match' => 'CSRF',
 	'securepoll-header-cookie-dup' => 'Дубл.',
 	'securepoll-header-strike' => 'Закреслення',
 	'securepoll-header-details' => 'Деталі',
@@ -8651,7 +12056,9 @@ $1',
 	'securepoll-details-link' => 'Докладніше',
 	'securepoll-details-title' => 'Деталі голосування: #$1',
 	'securepoll-invalid-vote' => '«$1» — неправильний ідентифікатор голосування',
+	'securepoll-header-id' => 'ID',
 	'securepoll-header-voter-type' => 'Тип виборця',
+	'securepoll-header-url' => 'URL-адреса',
 	'securepoll-voter-properties' => 'Властивості виборця',
 	'securepoll-strike-log' => 'Журнал викреслювань',
 	'securepoll-header-action' => 'Дія',
@@ -8667,6 +12074,7 @@ $1',
 Щоб зберегти конфіденційність голосуючих, закодовані записи голосування стануть загальнодоступними тільки після того, як вони зможуть бути перемішані за допомогою безпечного потоку випадкових чисел.',
 	'securepoll-translate-title' => 'Переклад: $1',
 	'securepoll-invalid-language' => 'Неправильний код мови «$1»',
+	'securepoll-header-trans-id' => 'ID',
 	'securepoll-submit-translate' => 'Оновити',
 	'securepoll-language-label' => 'Вибір мови:',
 	'securepoll-submit-select-lang' => 'Перекласти',
@@ -8696,6 +12104,9 @@ $1',
 	'securepoll-strength-matrix' => 'Матриця сил шляхів',
 	'securepoll-ranks' => 'Остаточний рейтинг',
 	'securepoll-average-score' => 'Середня оцінка',
+	'securepoll-round' => '$1 тур',
+	'securepoll-spoilt' => '(Зіпсовані)',
+	'securepoll-exhausted' => '(Вичерпані)',
 );
 
 /** Urdu (اردو)
@@ -8726,6 +12137,9 @@ $messages['ur'] = array(
 <pre>$1</pre>',
 	'securepoll-thanks' => 'شکریہ، آپ کی رائے محفوظ کرلی گئی.',
 	'securepoll-return' => 'واپس بطرف $1',
+	'securepoll-strike-reason' => 'وجہ:',
+	'securepoll-strike-cancel' => 'منسوخ',
+	'securepoll-header-reason' => 'وجہ',
 );
 
 /** Vèneto (Vèneto)
@@ -8777,6 +12191,10 @@ No se pole decritar.',
 	'securepoll-jump' => 'Và al server de ła votasion',
 	'securepoll-bad-ballot-submission' => "El to voto no'l xe mia vàłido: $1",
 	'securepoll-unanswered-questions' => 'Ti gà da rispóndar a tute le domande.',
+	'securepoll-invalid-rank' => 'Voto mia valido. Te ghè da dare un voto tra 1 e 999.',
+	'securepoll-unranked-options' => 'Alcuni voci le xe sensa voto.
+Te devi dare a tute le voci un voto da 1 a 999.',
+	'securepoll-invalid-score' => 'El voto el ga da essare un numaro tra $1 e $2.',
 	'securepoll-unanswered-options' => 'Te ghè da rispondar a tute le domande.',
 	'securepoll-remote-auth-error' => 'Eròr durante el recupero de le informassion su la to utensa dal server.',
 	'securepoll-remote-parse-error' => 'Se gà verificà un eròr interpretando la risposta de autorixassion dal server.',
@@ -8818,6 +12236,8 @@ No se pole decritar.',
 	'securepoll-dump-not-finished' => "Le registrasion criptade de l'elesion le xe disponibiłi solo dopo ła data de conclusion: $1 a łe $2",
 	'securepoll-dump-no-urandom' => "No se riesse a vèrzar /dev/urandom.  
 Par protègiare la riservatessa dei votanti, le registrassion criptade de l'elession le xe disponibili publicamente solo quando le podarà vegner smissià con un flusso sicuro de nùmari casuali.",
+	'securepoll-urandom-not-supported' => 'Sto server no suporta la generazion de numari casuali par la critografia.
+Al fine de garantire la privacy dei votanti, la procedura de votazion cifrata xe publicamente utilizabile quando xe disponibile un generator de numari casuali par la critografia del flusso de dati.',
 	'securepoll-translate-title' => 'Tradusi: $1',
 	'securepoll-invalid-language' => 'Còdese lengua mia vàlido: "$1"',
 	'securepoll-submit-translate' => 'Ajorna',
@@ -8834,9 +12254,19 @@ Par protègiare la riservatessa dei votanti, le registrassion criptade de l'eles
 	'securepoll-subpage-tally' => 'Conta',
 	'securepoll-tally-title' => 'Conta: $1',
 	'securepoll-tally-not-finished' => 'Ne dispiase, ma no se pole contar i voti prima che la votassion la sia finìa.',
+	'securepoll-can-decrypt' => "Le informazion relative a l'elezion le xe stà cifrate, ma xe disponibile la ciave de decifratura.
+Te poli far la conta dei risultati presenti nel database o far la conta dei risultati cifrati contenuti in un file caricà.",
+	'securepoll-tally-no-key' => 'No te poli far la conta dei risultati de sta elezione parché i voti i xe cifrati e la ciave de decifrazion no la xe disponibile.',
+	'securepoll-tally-local-legend' => 'Conta dei risultati memorizà',
 	'securepoll-tally-local-submit' => 'Fà na conta',
 	'securepoll-tally-upload-legend' => 'Carga su un dump criptà',
 	'securepoll-tally-upload-submit' => 'Fà la conta',
+	'securepoll-tally-error' => 'Eror elaborando le informassion de voto, no se pol far la conta.',
+	'securepoll-no-upload' => 'Nissun file caricà, no se pol far la conta.',
+	'securepoll-dump-corrupt' => 'El file de dump el xe roto e no se pole elaborarlo.',
+	'securepoll-tally-upload-error' => 'Eror fasendo la conta del file de dump: $1',
+	'securepoll-pairwise-victories' => 'Matrice de vitoria a do a do',
+	'securepoll-strength-matrix' => 'Matrice de fortezza del percorso',
 	'securepoll-ranks' => 'Classifica final',
 	'securepoll-average-score' => 'Puntejo medio',
 );
@@ -8876,13 +12306,14 @@ $messages['vep'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Trần Nguyễn Minh Huy
  * @author Vinhtantran
  */
 $messages['vi'] = array(
-	'securepoll' => 'Bỏ phiếu An toàn',
+	'securepoll' => 'Bỏ phiếu an toàn',
 	'securepoll-desc' => 'Bộ mở rộng dành cho bầu cử và thăm dò ý kiến',
 	'securepoll-invalid-page' => 'Trang con không hợp lệ “<nowiki>$1</nowiki>”',
-	'securepoll-need-admin' => 'Chỉ các quản lý viên được bầu mới có quyền thực hiện tác vụ này.',
+	'securepoll-need-admin' => 'Chỉ các quản trị viên được bầu mới có quyền thực hiện tác vụ này.',
 	'securepoll-too-few-params' => 'Không đủ thông số trang con (liên kết không hợp lệ).',
 	'securepoll-invalid-election' => '“$1” không phải là mã số bầu cử hợp lệ.',
 	'securepoll-welcome' => '<strong>Xin chào $1!</strong>',
@@ -8894,8 +12325,8 @@ Dự kiến nó sẽ bắt đầu vào ngày $2 lúc $3.',
 Rất tiếc, bạn không thể bỏ phiếu được nữa.',
 	'securepoll-change-allowed' => '<strong>Chú ý: Bạn đã bỏ phiếu trong cuộc bầu cử này rồi.</strong>
 Bạn có thể thay đổi lá phiếu bằng cách điền vào mẫu đơn phía dưới.
-Ghi nhớ rằng nếu bạn làm điều này, lá phiếu trước đây của bạn sẽ bị hủy.',
-	'securepoll-submit' => 'Gửi lá phiếu',
+Lưu ý rằng nếu bạn làm điều này, lá phiếu trước đây của bạn sẽ bị hủy.',
+	'securepoll-submit' => 'Gửi phiếu',
 	'securepoll-gpg-receipt' => 'Cảm ơn bạn đã tham gia bỏ phiếu.
 
 Nếu muốn, bạn có thể nhận biên lai sau để làm bằng chứng cho lá phiếu của mình:
@@ -8935,7 +12366,9 @@ Bạn phải xếp hạng từ 1 đến 999 cho tất cả các ứng viên.',
 	'securepoll-api-token-mismatch' => 'Dấu hiệu bảo mật không trùng, không thể đăng nhập.',
 	'securepoll-not-logged-in' => 'Bạn phải đăng nhập để bỏ phiếu trong cuộc bầu cử này',
 	'securepoll-too-few-edits' => 'Xin lỗi, bạn không thể bỏ phiếu. Bạn cần thực hiện tối thiểu $1 {{PLURAL:$1|sửa đổi|sửa đổi}} để bỏ phiếu trong cuộc bầu cử này, bạn chỉ mới thực hiện $2 sửa đổi.',
+	'securepoll-too-new' => 'Rất tiếc, bạn không được phép bỏ phiếu. Để được phép tham gia cuộc bầu cử này, bạn cần phải mở tài khoản trước $3 $1, nhưng bạn đăng ký vào lúc $4 $2.',
 	'securepoll-blocked' => 'Xin lỗi, bạn không thể bỏ phiếu trong cuộc bầu cử này nếu bạn đang bị cấm không được sửa đổi.',
+	'securepoll-blocked-centrally' => 'Rất tiếc, bạn không được phép tham gia cuộc bầu cử này vì bị cấm tại $1 wiki trở lên.',
 	'securepoll-bot' => 'Xin lỗi, tài khoản có cờ bot không được phép bỏ phiếu trong cuộc bầu cử này.',
 	'securepoll-not-in-group' => 'Chỉ có những thành viên của nhóm “$1” mới có thể bỏ phiếu trong cuộc bầu cử này.',
 	'securepoll-not-in-list' => 'Xin lỗi, bạn không nằm trong danh sách các thành viên được phép bỏ phiếu trong cuộc bầu cử này.',
@@ -8961,7 +12394,7 @@ Bạn phải xếp hạng từ 1 đến 999 cho tất cả các ứng viên.',
 	'securepoll-strike-log' => 'Nhật trình gạch bỏ',
 	'securepoll-header-action' => 'Tác vụ',
 	'securepoll-header-reason' => 'Lý do',
-	'securepoll-header-admin' => 'Quản lý viên',
+	'securepoll-header-admin' => 'Quản trị viên',
 	'securepoll-cookie-dup-list' => 'Các thành viên trùng cookie',
 	'securepoll-dump-title' => 'Kết xuất: $1',
 	'securepoll-dump-no-crypt' => 'Không có sẵn bản ghi đã mã hóa cho cuộc bầu cử này, vì cuộc bầu cử không được thiết lập tính năng mã hóa.',
@@ -8995,12 +12428,15 @@ Bạn có thể lựa chọn hoặc kiểm kết quả hiện có trong cơ sở
 	'securepoll-tally-upload-submit' => 'Tạo cuộc kiểm phiếu',
 	'securepoll-tally-error' => 'Lỗi khi thông dịch bản ghi lá phiếu, không thể tạo cuộc kiểm phiếu.',
 	'securepoll-no-upload' => 'Không có tập tin nào được tải lên, không thể kiểm phiếu.',
-	'securepoll-dump-corrupt' => 'Tập tin kho bị hư và không thể được xử lý.',
-	'securepoll-tally-upload-error' => 'Có lỗi khi kiểm tập tin kho: $1',
+	'securepoll-dump-corrupt' => 'Tập tin kết xuất bị hỏng và không thể xử lý được.',
+	'securepoll-tally-upload-error' => 'Có lỗi khi kiểm tập tin kết xuất: $1',
 	'securepoll-pairwise-victories' => 'Ma trận chiến thắng theo cặp',
 	'securepoll-strength-matrix' => 'Ma trận độ mạnh đường đi',
 	'securepoll-ranks' => 'Xếp hạng sau cùng',
 	'securepoll-average-score' => 'Điểm số trung bình',
+	'securepoll-round' => 'Vòng $1',
+	'securepoll-spoilt' => '(Hỏng)',
+	'securepoll-exhausted' => '(Quá hạn)',
 );
 
 /** Volapük (Volapük)
@@ -9008,15 +12444,28 @@ Bạn có thể lựa chọn hoặc kiểm kết quả hiện có trong cơ sở
  */
 $messages['vo'] = array(
 	'securepoll-welcome' => '<strong>Benokömö, $1!</strong>',
+	'securepoll-header-timestamp' => 'Tim',
 	'securepoll-header-voter-name' => 'Nem',
 	'securepoll-strike-reason' => 'Kod:',
 	'securepoll-header-reason' => 'Kod',
+	'securepoll-submit-select-lang' => 'Tradutön',
+	'securepoll-header-title' => 'Nem',
+	'securepoll-subpage-translate' => 'Tradutön',
+);
+
+/** Wu (吴语) */
+$messages['wuu'] = array(
+	'securepoll-strike-reason' => '理由：',
+	'securepoll-strike-cancel' => '取消',
+	'securepoll-header-reason' => '理由：',
 );
 
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
 $messages['yi'] = array(
+	'securepoll' => 'זיכערע שטימונג',
+	'securepoll-desc' => 'פֿאַרברייטונג פֿאַר וואַלן און אַרומפֿרעגן',
 	'securepoll-invalid-page' => 'אומגילטיקער אונטערבלאט "<nowiki>$1</nowiki>"',
 	'securepoll-need-admin' => 'איר דארפט זיין א וואלן אדמיניסטראטאר אדורכצופירן די פעולה.',
 	'securepoll-too-few-params' => 'נישט גענוג אונטערבלאט פאראמעטערס (אומגילטיקער לינק).',
@@ -9025,40 +12474,130 @@ $messages['yi'] = array(
 	'securepoll-not-started' => 'די אפשטימונג האט נאך נישט אנגעהויבן.
 זי איז באשטימט אנצוהייבן אום $2 אזייגער $3.',
 	'securepoll-finished' => 'די אפשטימונג האט שוין געקאנטשעט, איר קענט מער נישט אפשטימען.',
+	'securepoll-not-qualified' => 'איר זענט נישט קוואליפֿיצירט צו שטימען אין די וואלן: $1',
+	'securepoll-change-disallowed' => 'איר האט שוין געשטימט אין די דאָזיקע וואַלן.
+אַנטשולדיקט, איר טאָר נישט שטימען נאכאַמאָל.',
+	'securepoll-change-allowed' => '<strong> באַמערקונג: איר האט שוין געשטימט אין די וואַלן.</strong>
+איר מעגט ענדערן אײַער שטים דורך דער פֿארעם אונטן.
+ווען איר טוט דאָס, וועט מען אויסמעקן אײַער פֿריערדיקן שטים.',
+	'securepoll-submit' => 'אָפגעבן שטים',
 	'securepoll-gpg-receipt' => 'א דאנק פארן שטימען.
 
 ווען איר ווילט, קענט איר היטן דעם פאלגנדן קוויט אלס ראיה פון אייער שטים.
 
 <pre>$1</pre>',
+	'securepoll-thanks' => ' ייש"כ, אײַער שטים איז געווארן פֿאַרשריבן.',
 	'securepoll-return' => 'צוריק צו $1',
-	'securepoll-bad-ballot-submission' => 'אייער שטים איז געווען אומגילטיג.',
+	'securepoll-encrypt-error' => 'האט נישט געקענט אויסבאהאלטן אייער שטים רעקארד.
+אייער שטים איז נישט געווארן איינגעשפייכלערט!
+
+$1',
+	'securepoll-no-gpg-home' => 'נישט געקענט שאפן GPG היים טעקע־האלטער',
+	'securepoll-secret-gpg-error' => 'גרײַז ביים אויספירן GPG.
+ניצט $wgSecurePollShowErrorDetail=true; אין LocalSettings.php צו ווייזן נאך פרטים.',
+	'securepoll-full-gpg-error' => 'גרײַז ביים אויספירן GPG:
+
+באפעל: $1
+
+גרײַז:
+<pre>$2</pre>',
+	'securepoll-jump' => 'גייט צום אָפּשטימונג סערווירער',
+	'securepoll-bad-ballot-submission' => 'אײַער שטים איז געווען אומגילטיג: $1',
 	'securepoll-unanswered-questions' => 'איר מוזט ענטפערן אלע שאלות.',
+	'securepoll-invalid-rank' => 'אומגילטיקער ראנג. איר מוזט געבן די קאנדידאטן א ראנג צווישן  1 און 999.',
+	'securepoll-unanswered-options' => 'איר דאַרפֿט געבן אַן ענטפער פֿאַר יעדער פֿראַגע.',
 	'securepoll-api-invalid-params' => 'אומגילטיגע פאראמעטערס',
+	'securepoll-api-no-user' => 'קיין באַניצער נישט געפֿונען מיט דעם נומער.',
 	'securepoll-not-logged-in' => 'איר מוזט אריינלאגירן צו שטימען אין דער אפשטימונג',
+	'securepoll-too-few-edits' => 'איר קענט ליידער ניט שטימען. איר דאַרפֿט האָבן מינדסטערטנס $1 {{PLURAL:$1| רעדאַקטירונג| רעדאַקטירונגען}} צו שטימען אין די וואַלן; איר האָט נאר $2 .',
+	'securepoll-too-new' => 'אנטשולדיגט, איר קענט נישט שטימען. אייער קאנטע דאַרף צו האָבן געווען אײַנגעשריבן פֿאַר $1 בי $3 צו שטימען אין די וואַלן, איר האט זיך אבער אײַנגעשריבן אום $2 בײַ $4 .',
 	'securepoll-blocked' => 'אנטשולדיגט, איר קענט נישט שטימען אין די וואלן אויב איר זענט אצינד בלאקירט פון רעדאקטירן.',
+	'securepoll-blocked-centrally' => 'אנטשולדיגט, איר קענט ניט שטימען אין די וואַלן ווײַל איר זענט בלאקירט אויף מינדערסטן $1 {{PLURAL:$1|וויקי|וויקיס}}.',
+	'securepoll-bot' => 'אנטשולדיגט, קאנטעס מיטן באָט פאָן זענען נישט ערלויבט צו שטימען אין די וואַלן.',
 	'securepoll-not-in-group' => 'נאר מיטגלידער פון דער "$1" גרופע קענען שטימען אין די וואלן. ',
+	'securepoll-list-title' => 'רשימה פֿון שטימען: $1',
 	'securepoll-header-timestamp' => 'צײַט',
 	'securepoll-header-voter-name' => 'נאָמען',
+	'securepoll-header-voter-domain' => 'פֿעלד',
+	'securepoll-header-ua' => 'באַניצער אַגענט',
+	'securepoll-header-cookie-dup' => 'דופליקאַט',
+	'securepoll-header-strike' => 'אויסשטרײַכן',
+	'securepoll-header-details' => 'פרטים',
+	'securepoll-strike-button' => 'אויסשטרײַכן',
+	'securepoll-unstrike-button' => 'אומאויסשטרײַכן',
 	'securepoll-strike-reason' => 'אורזאַך:',
+	'securepoll-strike-cancel' => 'אַנולירן',
+	'securepoll-strike-error' => 'גרײַז בײַם אויסשטרײַכן/אומאויסשטרײַכן: $1',
+	'securepoll-strike-token-mismatch' => 'סעסיע דאַטן פאַרלוירן',
+	'securepoll-details-link' => 'פרטים',
+	'securepoll-details-title' => 'שטימען פרטים: #$1',
+	'securepoll-invalid-vote' => '"$1" איז נישט קיין גילטיקע אפשטימונג  ID.',
+	'securepoll-header-voter-type' => 'וויילער טיפּ',
+	'securepoll-voter-properties' => 'וויילער אייגנשאַפֿטן',
+	'securepoll-strike-log' => 'אויסשטרײַכן לאגבוך',
+	'securepoll-header-action' => 'אַקציע',
 	'securepoll-header-reason' => 'אורזאַך',
 	'securepoll-header-admin' => 'אַדמיניסטראַטאר',
-	'securepoll-translate-title' => 'פֿארטייטשן : $1',
+	'securepoll-cookie-dup-list' => 'פֿאַרטאפלט קיכל באַניצער',
+	'securepoll-dump-title' => 'לאַגער: $1',
+	'securepoll-translate-title' => 'פֿאַרטײַטשן : $1',
 	'securepoll-invalid-language' => 'אומגילטיקער שפראך קאד  "$1"',
 	'securepoll-submit-translate' => 'דערהײַנטיקן',
-	'securepoll-language-label' => 'אויסקלייבן שפראך:',
-	'securepoll-submit-select-lang' => 'פארטייטשן',
+	'securepoll-language-label' => 'אויסקלײַבן שפראַך:',
+	'securepoll-submit-select-lang' => 'פֿאַרטײַטשן',
+	'securepoll-entry-text' => 'אונטן איז די רשימה פון די וואלן.',
 	'securepoll-header-title' => 'נאָמען',
+	'securepoll-header-start-date' => 'אָנהייב דאַטע',
+	'securepoll-header-end-date' => 'סוף דאַטע',
+	'securepoll-subpage-vote' => 'שטימען',
+	'securepoll-subpage-translate' => 'פֿאַרטײַטשן',
 	'securepoll-subpage-list' => 'ליסטע',
+	'securepoll-subpage-dump' => 'לאַגער',
+	'securepoll-subpage-tally' => 'רעכענען',
+	'securepoll-tally-title' => 'רעכענען: $1',
+	'securepoll-tally-not-finished' => 'אנטשולדיגט, איר קענען נישט רעכענען די וואַלן ביז נאָך די אָפּשטימונג האט געקאנטשעט.',
+	'securepoll-average-score' => 'דורכשניטלעכע פונקטן',
 );
 
-/** Yue (粵語)
+/** Yoruba (Yorùbá)
+ * @author Demmy
+ */
+$messages['yo'] = array(
+	'securepoll' => 'SecurePoll',
+	'securepoll-invalid-page' => 'Ojúewéabẹ́ àìtọ́ "<nowiki>$1</nowiki>"',
+	'securepoll-welcome' => '<strong>$1 Ẹkúàbọ̀!</strong>',
+	'securepoll-return' => 'Padà sí $1',
+	'securepoll-header-timestamp' => 'Àsìkò',
+	'securepoll-header-voter-name' => 'Orúkọ',
+	'securepoll-strike-reason' => 'Ìdíẹ̀:',
+	'securepoll-strike-cancel' => 'Fagilé',
+	'securepoll-details-link' => 'Ẹ̀kúnrẹ́rẹ́',
+	'securepoll-header-action' => 'Ìgbéṣe',
+	'securepoll-header-reason' => 'Ìdíẹ̀',
+	'securepoll-header-admin' => 'Olùmójútó',
+	'securepoll-translate-title' => 'Yédèpadà: $1',
+	'securepoll-language-label' => 'Àṣàyàn èdè:',
+	'securepoll-submit-select-lang' => 'Yédèpadà',
+	'securepoll-header-title' => 'Orúkọ',
+	'securepoll-header-start-date' => 'Ọjọ́ọdún ìbẹ̀rẹ̀',
+	'securepoll-header-end-date' => 'Ọjọ́ọdún ìparí',
+	'securepoll-subpage-vote' => 'Dìbò',
+	'securepoll-subpage-translate' => 'Yédèpadà',
+	'securepoll-subpage-list' => 'Àkójọ',
+);
+
+/** Cantonese (粵語)
+ * @author Deryck Chan
+ * @author Horacewai2
+ * @author Lauhenry
  * @author Shinjiman
+ * @author Waihorace
  */
 $messages['yue'] = array(
 	'securepoll' => '安全投票',
 	'securepoll-desc' => '選舉同調查嘅擴展',
 	'securepoll-invalid-page' => '無效嘅細頁 "<nowiki>$1</nowiki>"',
-	'securepoll-need-admin' => '你需要係一位管理員去做呢個動作。',
+	'securepoll-need-admin' => '你需要係投票一位管理員去做呢個動作。',
 	'securepoll-too-few-params' => '唔夠細頁參數（無效連結）。',
 	'securepoll-invalid-election' => '"$1"唔係一個有效嘅選舉ID。',
 	'securepoll-welcome' => '<strong>歡迎$1！</strong>',
@@ -9101,6 +12640,11 @@ $1',
 	你嘅投票無效: $1
 	</div>',
 	'securepoll-unanswered-questions' => '你一定要答全部嘅問題。',
+	'securepoll-invalid-rank' => '錯嘅評分。你嘅評分必須要係1-999之間。',
+	'securepoll-unranked-options' => '有啲項目未比分。
+所有項目都要比一個介於1-999之間的分。',
+	'securepoll-invalid-score' => '呢個分一定要係$1同$2之間。',
+	'securepoll-unanswered-options' => '你一定要答全部問題',
 	'securepoll-remote-auth-error' => '由伺服器度擷取你戶口時出錯。',
 	'securepoll-remote-parse-error' => '由伺服器處理認證回應時出錯。',
 	'securepoll-api-invalid-params' => '無效嘅參數。',
@@ -9108,7 +12652,9 @@ $1',
 	'securepoll-api-token-mismatch' => '安全幣唔對，唔可以登入。',
 	'securepoll-not-logged-in' => '你一定要登入咗先可以響呢次選舉度投票',
 	'securepoll-too-few-edits' => '對唔住，你唔可以投票。你需要有最少$1次編輯先可以投票，你而家有$2次。',
+	'securepoll-too-new' => '對唔住，你唔投得票。$1之前註冊嘅用戶先有資格喺今次選舉投票，而你註冊嘅時間係$2。',
 	'securepoll-blocked' => '對唔住，當你而家被封鎖嗰陣唔可以響呢次選舉度投票。',
+	'securepoll-blocked-centrally' => '對唔住啦，你係$1個{{PLURAL:$1|wiki|wikis}}度俾人封咗，所以冇得投票啦。',
 	'securepoll-bot' => '對唔住，有機械人旗嘅戶口係唔容許響呢次選舉度投票。',
 	'securepoll-not-in-group' => '只有『$1』組嘅成員先可以響呢次選舉度投票。',
 	'securepoll-not-in-list' => '對唔住，你唔係響呢個認可用戶表響呢次選舉度投票。',
@@ -9125,6 +12671,7 @@ $1',
 	'securepoll-strike-reason' => '原因:',
 	'securepoll-strike-cancel' => '取消',
 	'securepoll-strike-error' => '進行刪除／反刪除時出錯: $1',
+	'securepoll-strike-token-mismatch' => '部份資料唔見左',
 	'securepoll-details-link' => '細節',
 	'securepoll-details-title' => '投票細節: #$1',
 	'securepoll-invalid-vote' => '"$1"唔係一個有效嘅投票ID',
@@ -9140,11 +12687,14 @@ $1',
 	'securepoll-dump-not-finished' => '加密選舉紀錄只會響 $1 $2 投票結束之後先至會提供',
 	'securepoll-dump-no-urandom' => '開唔到 /dev/urandom。 
 去維持投票者嘅私隱，加密咗嘅紀錄只會響佢哋用亂數重整之後先會公開。',
+	'securepoll-urandom-not-supported' => '呢個服務器唔支持加密嘅隨機數生成。
+為左維護選民嘅隱私，只有公開提供洗牌時先會提供加密嘅選舉記錄，佢地可以用安全嘅隨機數流。',
 	'securepoll-translate-title' => '翻譯: $1',
 	'securepoll-invalid-language' => '無效嘅語言碼"$1"',
 	'securepoll-submit-translate' => '更新',
 	'securepoll-language-label' => '揀語言:',
 	'securepoll-submit-select-lang' => '翻譯',
+	'securepoll-entry-text' => '下面係投票一覽。',
 	'securepoll-header-title' => '名',
 	'securepoll-header-start-date' => '開始日',
 	'securepoll-header-end-date' => '結束日',
@@ -9164,6 +12714,15 @@ $1',
 	'securepoll-tally-upload-submit' => '整記數',
 	'securepoll-tally-error' => '處理投票紀錄時出錯，整唔到記數。',
 	'securepoll-no-upload' => '無檔案上載，整唔到記數結果。',
+	'securepoll-dump-corrupt' => 'Dump檔案唔能夠繼續',
+	'securepoll-tally-upload-error' => '錯嘅dump檔案：$1',
+	'securepoll-pairwise-victories' => '成對勝利矩陣',
+	'securepoll-strength-matrix' => '實力矩陣嘅路徑',
+	'securepoll-ranks' => '最後評分',
+	'securepoll-average-score' => '平均分',
+	'securepoll-round' => '第$1輪',
+	'securepoll-spoilt' => '(廢票)',
+	'securepoll-exhausted' => '(用盡)',
 );
 
 /** Zhuang (Vahcuengh)
@@ -9183,8 +12742,10 @@ $messages['za'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Anakmalaysia
  * @author Bencmq
  * @author Biŋhai
+ * @author Deryck Chan
  * @author FireJackey
  * @author Liangent
  * @author PhiLiP
@@ -9243,7 +12804,9 @@ $1',
 	'securepoll-api-token-mismatch' => '安全标记不符，无法登录。',
 	'securepoll-not-logged-in' => '您必须登录后方可投票。',
 	'securepoll-too-few-edits' => '对不起，您不能投票。您必须至少进行$1{{PLURAL:$1|次|次}}编辑才能参与本次投票。您目前的编辑次数为$2。',
+	'securepoll-too-new' => '对不起，您不能投票。$1，$3之前登记的帐户才能在这次选举中投票，而您登记的日期是$2，$4。',
 	'securepoll-blocked' => '对不起，您目前被封禁因此无法参与本次投票。',
+	'securepoll-blocked-centrally' => '对不起，由于你的帐户在至少一个{{PLURAL:$1|维基项目|维基项目}}被封禁，所以你并不能在这次选举中投票。',
 	'securepoll-bot' => '对不起，拥有机器人权限的账户不能参与本次投票。',
 	'securepoll-not-in-group' => '只有属于“$1”用户组的用户可以投票。',
 	'securepoll-not-in-list' => '对不起，您不在投票人名单中，无法参与本次投票。',
@@ -9307,11 +12870,16 @@ $1',
 	'securepoll-strength-matrix' => 'Path strength矩阵',
 	'securepoll-ranks' => '最终排名',
 	'securepoll-average-score' => '平均分',
+	'securepoll-round' => '第$1轮',
+	'securepoll-spoilt' => '(废票)',
+	'securepoll-exhausted' => '(用尽)',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Alexsh
+ * @author Anakmalaysia
  * @author Bencmq
+ * @author Deryck Chan
  * @author FireJackey
  * @author Gaoxuewei
  * @author Liangent
@@ -9319,24 +12887,25 @@ $1',
  * @author PhiLiP
  * @author Skjackey tse
  * @author Wong128hk
+ * @author Yuyu
  */
 $messages['zh-hant'] = array(
 	'securepoll' => '安全投票',
-	'securepoll-desc' => '投票及選舉擴展',
-	'securepoll-invalid-page' => '無效的子頁面「<nowiki>$1</nowiki>」',
-	'securepoll-need-admin' => '您必須是選舉管理員才能進行此操作。',
-	'securepoll-too-few-params' => '缺少子頁面參數（無效鏈接）。',
-	'securepoll-invalid-election' => '「$1」不是有效的選舉編號。',
+	'securepoll-desc' => '投票及選舉擴充套件',
+	'securepoll-invalid-page' => '無效子頁「<nowiki>$1</nowiki>」',
+	'securepoll-need-admin' => '閣下須為選舉管理員才可進行此操作。',
+	'securepoll-too-few-params' => '缺乏子頁參數（無效連結）。',
+	'securepoll-invalid-election' => '「$1」並非有效之選舉編號。',
 	'securepoll-welcome' => '<strong>歡迎$1！</strong>',
 	'securepoll-not-started' => '這個選舉尚未開始。
-按計劃將於$2 $3開始。',
+按計畫將於 $2 $3 開始。',
 	'securepoll-finished' => '投票已經結束，無法投票。',
 	'securepoll-not-qualified' => '您不具有於是次選舉中參與表決的資格︰$1',
-	'securepoll-change-disallowed' => '您已於是次選舉中投票。
+	'securepoll-change-disallowed' => '您已於是本次選舉中投票。
 閣下恕未可再次投票。',
-	'securepoll-change-allowed' => '<strong>請注意您已於較早前於是次選舉中投票。</strong>
-您可以透過遞交以下的表格改動您的投票。
-惟請注意，若然閣下作出此番舉動，閣下原先所投之票將變為廢票。',
+	'securepoll-change-allowed' => '<strong>注意：您曾經在本次投票中投下一票。
+您可以提交下面的表格並更改您的選票。
+請注意若您更改選票，原先的選票將作廢。',
 	'securepoll-submit' => '遞交投票',
 	'securepoll-gpg-receipt' => '多謝您參與投票。
 
@@ -9349,34 +12918,36 @@ $messages['zh-hant'] = array(
 您的投票未被紀錄。
 
 $1',
-	'securepoll-no-gpg-home' => '無法建立GPG主目錄。',
-	'securepoll-secret-gpg-error' => '執行GPG出錯。
-於LocalSettings.php中使用$wgSecurePollShowErrorDetail=true;以展示更多細節。',
-	'securepoll-full-gpg-error' => '執行GPG錯誤：
+	'securepoll-no-gpg-home' => '無法建立 GPG 主目錄。',
+	'securepoll-secret-gpg-error' => '執行 GPG 出錯。
+於 LocalSettings.php 中使用 $wgSecurePollShowErrorDetail=true; 以展示更多細節。',
+	'securepoll-full-gpg-error' => '執行 GPG 錯誤：
 
 命令：$1
 
 錯誤：
 <pre>$2</pre>',
-	'securepoll-gpg-config-error' => 'GPG密匙配置錯誤。',
-	'securepoll-gpg-parse-error' => '解釋GPG輸出時出錯。',
+	'securepoll-gpg-config-error' => 'GPG 密匙配置錯誤。',
+	'securepoll-gpg-parse-error' => '解釋 GPG 輸出時出錯。',
 	'securepoll-no-decryption-key' => '解密密匙未配置。
 無法解密。',
 	'securepoll-jump' => '進入投票伺服器',
 	'securepoll-bad-ballot-submission' => '您的投票無效︰$1',
 	'securepoll-unanswered-questions' => '您必須回答所有問題。',
-	'securepoll-invalid-rank' => '評級無效。給候選人的評級分數必須在1到999之間。',
-	'securepoll-unranked-options' => '部分選項尚未評級。所有選項均應評級，且分數應在1到999之間。',
-	'securepoll-invalid-score' => '分數必須介於$1和$2之間。',
+	'securepoll-invalid-rank' => '評級無效。給候選人的評級分數必須在 1 到 999 之間。',
+	'securepoll-unranked-options' => '部分選項尚未評級。所有選項均應評級，且分數應在 1 到 999 之間。',
+	'securepoll-invalid-score' => '分數必須介於 $1 和 $2 之間。',
 	'securepoll-unanswered-options' => '您必須回答每一個問題。',
-	'securepoll-remote-auth-error' => '在投票伺服器提取您的用户資訊時出錯',
+	'securepoll-remote-auth-error' => '在投票伺服器提取您的用戶資訊時出錯',
 	'securepoll-remote-parse-error' => '伺服器驗證錯誤',
 	'securepoll-api-invalid-params' => '參數無效',
-	'securepoll-api-no-user' => '無法找到此指定ID的用戶。',
-	'securepoll-api-token-mismatch' => '安全信物不符，無法登入。',
-	'securepoll-not-logged-in' => '您必須在投票前登錄。',
-	'securepoll-too-few-edits' => '對不起，您未能參與投票。您必須最少進行$1次編輯才能參與是次投票，而您目前的編輯次數為$2。',
-	'securepoll-blocked' => '對不起，因為您目前已被封禁所以您無法參與本之投票。',
+	'securepoll-api-no-user' => '無法找到此指定 ID 的用戶。',
+	'securepoll-api-token-mismatch' => '安全標記不符，無法登入。',
+	'securepoll-not-logged-in' => '您必須在投票前登入。',
+	'securepoll-too-few-edits' => '對不起，您未能參與投票。您必須最少進行 $1 次編輯才能參與本次投票，而您目前的編輯次數為 $2。',
+	'securepoll-too-new' => '對不起，您不能投票。 $1，$3之前登記的帳戶才能在這次選舉中投票，而您登記的日期是$2，$4。',
+	'securepoll-blocked' => '對不起，因為您目前已被封禁所以您無法參與本次投票。',
+	'securepoll-blocked-centrally' => '對不起，由於你的帳戶在至少一個{{PLURAL:$1|維基項目|維基項目}}被封禁，所以你並不能在這次選舉中投票。',
 	'securepoll-bot' => '抱歉，擁有機器人權限的用戶不能參與本投票。',
 	'securepoll-not-in-group' => '只有屬於用戶組「$1」的用戶才可以投票。',
 	'securepoll-not-in-list' => '對不起，由於您不在投票人名單，所以您無權參與是次投票。',
@@ -9393,18 +12964,18 @@ $1',
 	'securepoll-strike-reason' => '理由：',
 	'securepoll-strike-cancel' => '取消',
 	'securepoll-strike-error' => '進行刪除選票/恢復被刪除選票時出錯：$1',
-	'securepoll-strike-token-mismatch' => '丟失會話資料',
+	'securepoll-strike-token-mismatch' => '會話資料遺失',
 	'securepoll-details-link' => '細節',
 	'securepoll-details-title' => '投票詳情︰#$1',
-	'securepoll-invalid-vote' => '「$1」不是有效的投票ID',
+	'securepoll-invalid-vote' => '「$1」不是有效的投票 ID',
 	'securepoll-header-voter-type' => '投票用戶類型',
 	'securepoll-voter-properties' => '投票人資訊',
 	'securepoll-strike-log' => '刪除選票日誌',
 	'securepoll-header-action' => '動作',
 	'securepoll-header-reason' => '原因',
 	'securepoll-header-admin' => '管理員',
-	'securepoll-cookie-dup-list' => 'Cookie重複的用戶',
-	'securepoll-dump-title' => '傾卸：$1',
+	'securepoll-cookie-dup-list' => 'Cookie 重複的用戶',
+	'securepoll-dump-title' => 'Dump：$1',
 	'securepoll-dump-no-crypt' => '本次投票沒有被加密的投票記錄，因為它被設定為不須加密。',
 	'securepoll-dump-not-finished' => '被加密的投票記錄只有在截止日期$1 $2後方可取得',
 	'securepoll-dump-no-urandom' => '無法打開/dev/urandom。
@@ -9434,13 +13005,16 @@ $1',
 	'securepoll-tally-upload-legend' => '上傳已加密的數據',
 	'securepoll-tally-upload-submit' => '新增計票數據',
 	'securepoll-tally-error' => '投票記錄發生錯誤，無法新增計票數據。',
-	'securepoll-no-upload' => '沒有上傳文件。',
+	'securepoll-no-upload' => '沒有上傳檔案。',
 	'securepoll-dump-corrupt' => '無法處理損壞的轉儲檔案。',
 	'securepoll-tally-upload-error' => '轉儲檔案記錄錯誤：$1',
 	'securepoll-pairwise-victories' => '對比矩陣',
-	'securepoll-strength-matrix' => 'Path strength矩陣',
+	'securepoll-strength-matrix' => 'Path strength 矩陣',
 	'securepoll-ranks' => '最終排名',
 	'securepoll-average-score' => '平均分',
+	'securepoll-round' => '第$1輪',
+	'securepoll-spoilt' => '(廢票)',
+	'securepoll-exhausted' => '(用盡)',
 );
 
 /** Chinese (Hong Kong) (‪中文(香港)‬)

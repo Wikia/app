@@ -249,7 +249,9 @@ class WikiaFileHelper extends Service {
 
 				$width  = $config['contextWidth']  ? $config['contextWidth']  : $width;
 				$height = $config['contextHeight'] ? $config['contextHeight'] : $height;
-
+				if ( isset( $config['maxHeight'] ) ) {
+					$file->setEmbedCodeMaxHeight( $config['maxHeight'] );
+				}
 				$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true);
 				$data['playerAsset'] = $file->getPlayerAssetUrl();
 

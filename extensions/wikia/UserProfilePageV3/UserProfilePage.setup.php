@@ -115,7 +115,3 @@ $wgGroupPermissions['vstf']['editprofilev3'] = true;
 $wgGroupPermissions['helper']['editprofilev3'] = true;
 
 $wgSpecialPageGroups['RemoveUserAvatar'] = 'users';
-
-F::build('JSMessages')->registerPackage('UserProfilePage', array(
-	'user-identity-remove-*'
-));

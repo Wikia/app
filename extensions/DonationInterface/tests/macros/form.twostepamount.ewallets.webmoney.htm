@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://wikimedia-fundraising-1.17.localhost.wikimedia.org/" />
+<title>form.twostepamount.realtimebanktransfer.enets</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">form.twostepamount.realtimebanktransfer.enets</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/index.php/Special:GlobalCollectGateway?form_name=TwoStepAmount&amp;payment_method=ew&amp;payment_submethod=ew_webmoney</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@name='amountRadio' and @value='250']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fname</td>
+	<td>Testy</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=lname</td>
+	<td>Testerton</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=zip</td>
+	<td>048941</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=street</td>
+	<td>149 New Montgomery</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=state</td>
+	<td>label=California</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=city</td>
+	<td>San Francisco</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=emailAdd</td>
+	<td>no-reply@wikimedia.org</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.button-plain</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

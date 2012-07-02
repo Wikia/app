@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * TODO Test the whole thing, make it safe.
  * TODO OPTIONAL Make it NS-specific
  */
@@ -7,20 +7,20 @@
 class FlagPage extends SpecialPage {
 	function __construct() {
 		parent::__construct( 'FlagPage' );
-		wfLoadExtensionMessages( 'FlagPage' );
+
 	}
- 
-	/*
+
+	/**
 	 * First function to be called. Calls different functions depending on what information is given:
 	 * selection() if page is set
 	 * preview() if page and template are set
 	 * submit() if it was a POST-Request
 	 * returns error if no page was specified
-	 * 
+	 *
 	 * @param $par String: pagetitle in Special:FlagPage/pagetitle
 	 */
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgTitle;
+		global $wgRequest, $wgOut;
 		$this->setHeaders();
 		$page = $wgRequest->getText( 'page' );
 		# $page is set via subtitle (Special:FlagPage/pagetitle)
@@ -41,7 +41,7 @@ class FlagPage extends SpecialPage {
 			}
 			else {
 				$this->selection( $page );
-				
+
 			}
 		}
 		else # no page has been defined
@@ -50,10 +50,10 @@ class FlagPage extends SpecialPage {
 		}
 	}
 
-	/*
+	/**
 	 * Parses 'MediaWiki:Flagarticle-templatelist' with replaceLinks() and normal mediawiki parser
 	 * Shows a selection of different templates (which are defined in the above message)
-	 * 
+	 *
 	 * @param $page String: title of the page that needs to be edited
 	 */
 	function selection( $page ) {
@@ -67,10 +67,10 @@ class FlagPage extends SpecialPage {
 		$templatelistcontent = $this->replaceLinks( $page, $templatelistcontent );
 		$wgOut->addWikiText( '<div class="plainlinks">' . $templatelistcontent . '</div>' );
 	}
-	
-	/*
+
+	/**
 	 * Small parser that provides an easier way of using 'MediaWiki:Flagarticle-templatelist'
-	 * 
+	 *
 	 * @param $page String: title of the page that needs to be edited
 	 * @param $wikitext String: content of 'MediaWiki:Flagarticle-templatelist' that needs to be parsed
 	 * @return $wikitext String: parsed content
@@ -82,11 +82,11 @@ class FlagPage extends SpecialPage {
 		$wikitext = str_replace("]]", "]", $wikitext);
 		return $wikitext;
 	}
-	
-	/*
+
+	/**
 	 * Preview the template before actually saving the page. Is called when the user specified one of several predifined templates
 	 * Provides a HTML form for submitting the confirmation. An edit token is included to prevent (possibly malicious) external POST request.
-	 * 
+	 *
 	 * @param $page String: title of the page that needs to be edited
 	 * @param $template String: title of the selected template
 	 */
@@ -100,19 +100,19 @@ class FlagPage extends SpecialPage {
 		$s = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalURL(), 'id' => 'mw-flagpage-form' ) ) .
 		Xml::openElement( 'p' ) .
 		Xml::tags( 'label', null, wfMsg( 'flagpage-confirmsave' ) ) .
-		Xml::hidden( 'page', $page ) .
-		Xml::hidden( 'template', $template ) .
-		Xml::hidden( 'token', $token ) .
+		Html::Hidden( 'page', $page ) .
+		Html::Hidden( 'template', $template ) .
+		Html::Hidden( 'token', $token ) .
 		Xml::submitButton( wfMsg( 'flagpage-submitbutton' ) ) ."\n" .
 		Xml::closeElement( 'p' ) . "\n" .
 		Xml::closeElement( 'form' ) . "\n";
 		$wgOut->addHTML($s);
 	}
-	
-	/*
+
+	/**
 	 * Function that is called after the user confirms the change.
 	 * Checks for the token and insertes the template. If the token is wrong or the article doesn't exist, preview() is shown
-	 * 
+	 *
 	 * @param $page String: title of the page that needs to be edited
 	 * @param $template String: title of the selected template
 	 * @param $token String: token that is included in the html form in preview()
@@ -125,7 +125,7 @@ class FlagPage extends SpecialPage {
 		}
 		$id = Title::newFromText( $page )->getArticleId();
 		if ($id==0) { # Page does not exist. Show preview page
-			$wgOut->addWikiMsg( 'flagpage-nonexistent', $page );
+			$wgOut->wrapWikiMsg( "<div class='error plainlinks'>\n$1</div>\n", array( 'flagpage-nonexistent', $page ) );
 			$this->preview( $page, $template );
 			return;
 		}

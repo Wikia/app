@@ -1,9 +1,7 @@
 <?php
-
 /**
- * @package MediaWiki
- * @subpackage Extensions
- *
+ * @file
+ * @ingroup Extensions
  * @link http://www.mediawiki.org/wiki/Extension:Pipe_Escape Documentation
  *
  * @author David M. Sledge
@@ -31,15 +29,13 @@ $wgExtensionCredits[ 'parserhook' ][] = array(
 	'author'          => 'David M. Sledge',
 	'name'            => 'Pipe Escape',
 	'version'         => ExtPipeEsc::VERSION,
-	'description'     => 'Parser function for when you want a pipe character ' .
-			     'to be just a pipe character',
-	'url'             => 'http://www.mediawiki.org/wiki/Extension:Pipe_Escape',
+	'url'             => 'https://www.mediawiki.org/wiki/Extension:Pipe_Escape',
 	'descriptionmsg'  => 'pipeescape-desc',
 );
 
 $dir = dirname(__FILE__) . DIRECTORY_SEPARATOR;
-$wgExtensionMessagesFiles['Pipe Escape'] = $dir . 'PipeEscape.i18n.php';
-$wgHooks[ 'LanguageGetMagic' ][]  = 'ExtPipeEsc::languageGetMagic';
+$wgExtensionMessagesFiles['PipeEscape'] = $dir . 'PipeEscape.i18n.php';
+$wgExtensionMessagesFiles['PipeEscapeMagic'] = $dir . 'PipeEscape.i18n.magic.php';
 
 class ExtPipeEsc
 {
@@ -52,12 +48,6 @@ class ExtPipeEsc
 		foreach( self::$parserFunctions as $hook => $function )
 			$parser->setFunctionHook( $hook,
 				array( __CLASS__, $function ), SFH_OBJECT_ARGS );
-		return true;
-	}
-
-	public static function languageGetMagic( &$magicWords, $langCode )
-	{
-		$magicWords[ '!' ] = array( 0, '!' );
 		return true;
 	}
 
@@ -81,4 +71,3 @@ class ExtPipeEsc
 		return trim( $output );
 	}
 }
-

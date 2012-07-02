@@ -70,7 +70,6 @@ if (!empty($wgEnableWallExt) || !empty($wgEnableArticleCommentsExt) || !empty($w
 	// redirect
 	$wgHooks['ArticleFromTitle'][] = 'ArticleCommentList::ArticleFromTitle';
 	// init
-	$wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
 	$wgHooks['CustomArticleFooter'][] = 'ArticleCommentInit::ArticleCommentEnableMonaco';
 	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
 	$wgHooks['SkinTemplateTabs'][] = 'ArticleCommentInit::ArticleCommentHideTab';
@@ -90,6 +89,9 @@ if (!empty($wgEnableWallExt) || !empty($wgEnableArticleCommentsExt) || !empty($w
 	$wgHooks['ParserFirstCallInit'][] = 'ArticleComment::metadataParserInit';
 
 	$wgHooks['WikiaMobileAssetsPackages'][] = 'ArticleCommentInit::onWikiaMobileAssetsPackages';
+	
+	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentsController::onBeforePageDisplay';
+	$wgHooks['SkinAfterContent'][] = 'ArticleCommentsController::onSkinAfterContent';	
 }
 
 //JSMEssages setup
@@ -106,6 +108,28 @@ F::build('JSMessages')->registerPackage( 'WikiaMobileComments', array(
 	'wikiamobile-article-comments-login-post'
 ));
 
+// FIXME: make this a class method or something
+$wgHooks['BeforePageDisplay'][] = 'efBeforePageDisplayArticleComments';
+function efBeforePageDisplayArticleComments (&$vars) {
+	if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
+		// Load MiniEditor assets, if enabled (don't enable for Mobile)
+		$app = F::app();
+		$isMobile = $app->checkSkin( 'wikiamobile' );
+		if ($app->wg->EnableMiniEditorExtForArticleComments && !$isMobile) {
+			$app->sendRequest('MiniEditor', 'loadAssets', array(
+				'loadOnDemand' => true,
+				'loadOnDemandAssets' => array(
+					'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
+				),
+				'additionalAssets' => array(
+					'/extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss'
+				)
+			));
+		}
+	}	
+	return true;
+}
+	
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ArticleCommentsAjax';
 
@@ -120,7 +144,7 @@ function ArticleCommentsAjax() {
 
 		if (is_array($data)) {
 			// send array as JSON
-			$json = Wikia::json_encode($data);
+			$json = json_encode($data);
 			$response = new AjaxResponse($json);
 			$response->setContentType('application/json; charset=utf-8');
 		}

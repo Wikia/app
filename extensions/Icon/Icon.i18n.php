@@ -3,10 +3,9 @@
 /**
  * Internationalisation file for extension Icon.
  *
- * @addtogroup Extensions
-*/
-
-require_once( dirname(__FILE__) . '/Icon.i18n.magic.php' );
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -18,9 +17,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'icon-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'icon-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -42,6 +42,14 @@ $messages['ar'] = array(
 	'icon-desc' => 'يسمح لك باستخدام الصور كأيقونات ووصلات أيقونة',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'icon-badimage' => 'ܨܘܪܬܐ ܠܐ ܛܒܬܐ',
+	'icon-badwidth' => 'ܦܬܘܐ ܠܐ ܛܒܐ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
@@ -49,6 +57,15 @@ $messages['arz'] = array(
 	'icon-badimage' => 'صورة سيئة',
 	'icon-badwidth' => 'عرض سيىء',
 	'icon-desc' => 'يسمح لك باستخدام الصور كأيقونات ووصلات أيقونة',
+);
+
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'icon-badimage' => 'Imaxe mala',
+	'icon-badwidth' => 'Anchor incorreutu',
+	'icon-desc' => "Permite usar imaxes como iconos ya iconos d'enllaz",
 );
 
 /** Kotava (Kotava)
@@ -59,7 +76,15 @@ $messages['avk'] = array(
 	'icon-badwidth' => 'Lumaj',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Vago
+ */
+$messages['az'] = array(
+	'icon-badimage' => 'Yanlış şəkil',
+	'icon-badwidth' => 'Yanlış en',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -77,6 +102,14 @@ $messages['bg'] = array(
 	'icon-badimage' => 'Неприемливо изображение',
 	'icon-badwidth' => 'Неприемлива ширина',
 	'icon-desc' => 'Позволява да се използват картинките като икони и като иконни препратки',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'icon-badimage' => 'বাজে ছবি',
+	'icon-badwidth' => 'বাজে প্রস্থ',
 );
 
 /** Breton (Brezhoneg)
@@ -162,12 +195,13 @@ $messages['el'] = array(
 );
 
 /** Esperanto (Esperanto)
+ * @author Petrus Adamus
  * @author Yekrats
  */
 $messages['eo'] = array(
 	'icon-badimage' => 'Malbona bildo',
 	'icon-badwidth' => 'Fuŝa Larĝo',
-	'icon-desc' => 'Permesas al vi utiligi bildojn kiel ikonojn kaj ikonligilojn',
+	'icon-desc' => 'Ebligas al vi utiligi bildojn kiel bildsimbolojn kaj bildsimbolajn ligilojn',
 );
 
 /** Spanish (Español)
@@ -209,13 +243,21 @@ $messages['fr'] = array(
 	'icon-desc' => 'Vous autorise l’utilisation des images comme icônes ou de liens sous forme d’icônes',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'icon-badimage' => 'Émâge corrompua',
+	'icon-badwidth' => 'Largior fôssa',
+);
+
 /** Galician (Galego)
  * @author Toliño
  * @author Xosé
  */
 $messages['gl'] = array(
 	'icon-badimage' => 'Imaxe mala',
-	'icon-badwidth' => 'Anchura mala',
+	'icon-badwidth' => 'Largo incorrecto',
 	'icon-desc' => 'Permítelle usar as imaxes como iconas e ligazóns a iconas',
 );
 
@@ -296,11 +338,20 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author IvanLanin
  */
 $messages['id'] = array(
 	'icon-badimage' => 'Gambar salah',
 	'icon-badwidth' => 'Lebar salah',
-	'icon-desc' => 'Mengijinkan Anda untuk menggunakan gambar sebagai ikon dan pranala ikon',
+	'icon-desc' => 'Memungkinkan Anda untuk menggunakan gambar sebagai ikon dan pranala ikon',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'icon-badimage' => 'Nhuunuch ojö',
+	'icon-badwidth' => 'Abadaba ojö',
 );
 
 /** Ido (Ido)
@@ -354,7 +405,7 @@ $messages['km'] = array(
 	'icon-badwidth' => 'ទទឹង​មិន​ល្អ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -388,12 +439,21 @@ $messages['lt'] = array(
 	'icon-badwidth' => 'Blogas plotis',
 );
 
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'icon-badimage' => 'Nederīgs attēls',
+	'icon-badwidth' => 'Nederīgs platums',
+	'icon-desc' => 'Ļauj izmantot attēlus kā ikonas un ikonu saites',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'icon-badimage' => 'Лоша слика',
-	'icon-badwidth' => 'Лоша широчина',
+	'icon-badwidth' => 'Лоша ширина',
 	'icon-desc' => 'Дозволува употреба на слики како икони и врски-икони',
 );
 
@@ -459,7 +519,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'icon-badimage' => 'Dårlig bilde',
 	'icon-badwidth' => 'Dårlig bredde',
 	'icon-desc' => 'Lar deg bruke bilder som ikoner og ikonlenker',
@@ -502,12 +562,13 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'icon-badimage' => 'Imagem Inválida',
 	'icon-badwidth' => 'Largura Inválida',
-	'icon-desc' => 'Permite-lhe usar imagens como ícones e ligações de ícones',
+	'icon-desc' => 'Permite-lhe usar imagens como ícones e links de ícones',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -525,7 +586,7 @@ $messages['pt-br'] = array(
  */
 $messages['ro'] = array(
 	'icon-badimage' => 'Imagine coruptă',
-	'icon-badwidth' => 'Lăţime incorectă',
+	'icon-badwidth' => 'Lățime incorectă',
 );
 
 /** Tarandíne (Tarandíne)
@@ -546,6 +607,14 @@ $messages['ru'] = array(
 	'icon-desc' => 'Позволяет использовать изображения как значки и ссылки',
 );
 
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'icon-badimage' => 'නුසුදුසු ඡායාරූපයක්',
+	'icon-badwidth' => 'නුසුදුසු පළල',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -555,7 +624,16 @@ $messages['sk'] = array(
 	'icon-desc' => 'Umožnuje použiť obrázky ako ikony a ikony odkazov',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'icon-badimage' => 'Slaba slika',
+	'icon-badwidth' => 'Slaba širina',
+	'icon-desc' => 'Omogoča vam uporabo slik kot ikone in povezave ikon',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -564,7 +642,7 @@ $messages['sr-ec'] = array(
 	'icon-desc' => 'Омогућује коришћење слика као икона и њихових спољашњих веза',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -611,7 +689,7 @@ $messages['te'] = array(
 	'icon-desc' => 'బొమ్మలను ప్రతీకాలుగానూ మరియు ప్రతీకపు లింకులుగాను వాడుకునే వీలుకల్పిస్తుంది',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -619,7 +697,7 @@ $messages['tg-cyrl'] = array(
 	'icon-badwidth' => 'Васеъии номуносиб',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -628,10 +706,13 @@ $messages['tg-latn'] = array(
 );
 
 /** Thai (ไทย)
+ * @author Octahedron80
  * @author Passawuth
  */
 $messages['th'] = array(
-	'icon-badimage' => 'ภาพเสีย',
+	'icon-badimage' => 'รูปภาพเสีย',
+	'icon-badwidth' => 'ความกว้างไม่ถูกต้อง',
+	'icon-desc' => 'ช่วยให้คุณสามารถใช้รูปภาพเป็นไอคอนและลิงก์บนไอคอน',
 );
 
 /** Tagalog (Tagalog)
@@ -686,7 +767,7 @@ $messages['vep'] = array(
  */
 $messages['vi'] = array(
 	'icon-badimage' => 'Hình không hợp lệ',
-	'icon-badwidth' => 'Độ ngang không hợp lệ',
+	'icon-badwidth' => 'Chiều ngang không hợp lệ',
 	'icon-desc' => 'Cho phép bạn sử dụng hình ảnh làm biểu tượng và liên kết biểu tượng',
 );
 
@@ -715,6 +796,6 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'icon-badimage' => '圖片錯誤',
 	'icon-badwidth' => '寬度錯誤',
-	'icon-desc' => '增加icon參數以產生於圖片上的連結',
+	'icon-desc' => '增加 icon 參數以產生於圖片上的連結',
 );
 

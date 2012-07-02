@@ -33,7 +33,6 @@ class Answer {
 	}
 
 	protected function setSpecialCategories() {
-		wfLoadExtensionMessages( 'Answers' );
 		self::$special_categories = array(
 			'unanswered' => wfMsgForContent("unanswered_category"),
 			'answered' => wfMsgForContent("answered_category")

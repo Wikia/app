@@ -27,7 +27,7 @@ class ConfigurationPagerFiles implements ConfigurationPager {
 	function getBody() {
 		$versions = $this->mHandler->getArchiveVersions( $this->getVersionOptions() );
 		if ( empty( $versions ) ) {
-			return wfMsgExt( 'configure-no-old', array( 'parse' ) );
+			return wfMessage( 'configure-no-old' )->parseAsBlock();
 		}
 
 		$text = "<ul>\n";

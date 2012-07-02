@@ -6,7 +6,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
 /**
  * An image handler which adds support for Flash video (.flv) files.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:FlvHandler Documentation
  *
@@ -14,15 +15,14 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * @copyright Copyright © 2009 Adam Nielsen
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
-							 
-// Extension credits that will show up on Special:Version    
+
+// Extension credits that will show up on Special:Version
 $wgExtensionCredits['media'][] = array(
 	'path'         => __FILE__,
 	'name'         => 'FLV Image Handler',
-	'version'      => 'r3',
-	'author'       => 'Adam Nielsen', 
-	'url'          => 'http://www.mediawiki.org/wiki/Extension:FlvHandler',
-	'description'  => 'Allow Flash Video (.flv) files to be used in standard image tags (e.g. <nowiki>[[Image:Movie.flv]]</nowiki>)',
+	'version'      => 'r4',
+	'author'       => 'Adam Nielsen',
+	'url'          => 'https://www.mediawiki.org/wiki/Extension:FlvHandler',
 	'descriptionmsg' => 'flvhandler_desc'
 );
 
@@ -34,7 +34,7 @@ $wgMediaHandlers['video/x-flv'] = 'FlvImageHandler';
 
 // Commands to extract still frames out of the FLV files
 $wgFLVConverters = array(
-	'ffmpeg' => '$path/ffmpeg -vcodec png -i $input -ss 0 -vframes 1 -s $widthx$height -f image2 $output'
+	'ffmpeg' => '$path/ffmpeg -i $input -ss 0 -vframes 1 -vcodec png -s $widthx$height -f image2 $output'
 );
 // Probe command (to get video width and height.)  'regex' is run over the
 // command's output to get the dimensions.

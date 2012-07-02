@@ -15,7 +15,7 @@ class MapsOSMDispMap extends MapsBaseMap {
 	/**
 	 * @see MapsBaseMap::getMapHTML()
 	 */
-	public function getMapHTML( array $params, Parser $parser ) {	
+	public function getMapHTML( array $params, Parser $parser, $mapName ) {	
 		global $wgLang;
 		
 		$thumbs = $params['thumbs'] ? 'yes' : 'no';
@@ -26,7 +26,7 @@ class MapsOSMDispMap extends MapsBaseMap {
 		return Html::element(
 			'iframe',
 			array(
-				'id' => $this->service->getMapId(),
+				'id' => $mapName,
 				'style' => "width: {$params['width']}; height: {$params['height']}; clear: both;",
 				'src' => "http://toolserver.org/~kolossos/openlayers/kml-on-ol.php?zoom={$params['zoom']}&lat={$params['centre']['lat']}&lon={$params['centre']['lon']}&lang=$lang&thumbs=$thumbs&photo=$photos"
 			),

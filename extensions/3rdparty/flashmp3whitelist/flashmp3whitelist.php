@@ -45,7 +45,6 @@ function wfflashmp3whitelist( $parser ) {
 function renderflashmp3whitelist($input, $params) {
         global $wgExtensionsPath, $wgStyleVersion;
 
-        wfLoadExtensionMessages( 'flashmp3whitelist' );
         $domainwhitelist = explode("\n",trim(wfMsg ( 'flashmp3whitelist-domains' )));
 
         $id = 1;

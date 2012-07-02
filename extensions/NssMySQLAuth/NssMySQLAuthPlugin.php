@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * A plugin to authenticate against a libnss-mysql database
  *
  * Copyright 2008 - Bryan Tong Minh / Delft Aerospace Rocket Engineering
@@ -23,9 +23,9 @@ class NssMySQLAuthPlugin extends AuthPlugin {
 		foreach ( $wgAuth->getAllGroups() as $group ) {
 			if ( !isset( $wgGroupPermissions[$group] ) )
 				$wgGroupPermissions[$group] = array();
-		}		
-		
-		wfLoadExtensionMessages( 'nssmysqlauth' );
+		}
+
+
 	}
 
 	function __construct( $wikiName = false ) {
@@ -39,22 +39,22 @@ class NssMySQLAuthPlugin extends AuthPlugin {
 
 	function userExists( $username ) {
 		$this->loadUser( $username );
-		return $this->users[$username] !== false; 
+		return $this->users[$username] !== false;
 	}
 	function getUid( $username ) {
 		$this->loadUser( $username );
-		return $this->users[$username];		
+		return $this->users[$username];
 	}
-	
+
 	function loadUser( $username ) {
 		if ( isset( $this->users[$username] ) )
 			return;
 		$dbr = $this->getDB( DB_READ );
-		$row = $dbr->selectRow( 
+		$row = $dbr->selectRow(
 				'passwd', 'pwd_uid', array( 'pwd_name' => $username ),
 				__METHOD__
 			);
-		$this->users[$username] = ($row === false ? false : $row->pwd_uid); 	
+		$this->users[$username] = ($row === false ? false : $row->pwd_uid);
 	}
 
 	function authenticate( $username, $password ) {
@@ -164,33 +164,33 @@ class NssMySQLAuthPlugin extends AuthPlugin {
 
 	function onUserRights( &$user, $addgroup, $removegroup ) {
 		$uid = $this->getUid( $user->getName() );
-		if( $uid === false ) 
+		if( $uid === false )
 			return true;
-		
+
 		$dbr = $this->getDB( DB_READ );
 		$res = $dbr->select( 'groups', 'grp_name', array(), __METHOD__ );
 		$groups = array();
-		while ( $row = $res->fetchObject() ) 
+		while ( $row = $res->fetchObject() )
 			$groups[] = $row->grp_name;
 		$res->free();
-		
+
 		$addgroup = array_intersect( $groups, $addgroup );
 		$removegroup = array_intersect( $groups, $removegroup );
-		
+
 		$dbw = $this->getDB( DB_WRITE );
 		foreach ( $addgroup as $group )
-			$dbw->insert( 'group_membership', array( 
+			$dbw->insert( 'group_membership', array(
 				'gm_user' => $uid,
 				'gm_group' => $group,
 				), __METHOD__, 'IGNORE' );
 		foreach ( $removegroup as $group )
-			$dbw->delete( 'group_membership', array( 
+			$dbw->delete( 'group_membership', array(
 				'gm_user' => $uid,
 				'gm_group' => $group,
 				), __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	* Create an account, returning a random password
 	*/
@@ -225,7 +225,7 @@ class NssMySQLAuthPlugin extends AuthPlugin {
 
 		return $password;
 	}
-	
+
 	function getAllGroups() {
 		$dbr = $this->getDB( DB_SLAVE );
 		$res = $dbr->select( 'groups', 'grp_name', array(), __METHOD__ );

@@ -7,7 +7,6 @@
 class VideoEmbedTool {
 
 	function loadMainFromView( $error = false ) {
-		wfLoadExtensionMessages( 'VideoEmbedTool' );
 		$out = '';
 
 		$out .= '<script type="text/javascript">';
@@ -67,140 +66,25 @@ class VideoEmbedTool {
 		return $tmpl->execute("results_recently");
 	}
 
-	function query() {
-		global $wgRequest, $IP;
-
-		$query = $wgRequest->getText('query');
-		$page = $wgRequest->getVal('page');
-		$sourceId = $wgRequest->getVal('sourceId');
-
-		if($sourceId == 0) { // metacafe
-			$page ? $start = ($page - 1) * 8 : $start = 0;
-			/*	those two searches are because Metacafe gives two kinds of searches: tag based, and in title, desc and such
-				the problem is that one day the second didn't work on their site...
-				so I replaced it with tag based and included commented code for the second
-				just in case we needed to replace it			  
-			*/
-//			$query = str_replace(" ", "+", $query);
-			$query = str_replace(" ", "_", $query);		
-//			$file = @file_get_contents( "http://www.metacafe.com/api/videos?vq=" . $query, FALSE );
-			$file = @file_get_contents( "http://www.metacafe.com/tags/" . $query . '/rss.xml', FALSE );
-                                if ($file) {
-                                        $doc = new DOMDocument;
-                                        @$doc->loadXML( $file );
-					$items = $doc->getElementsByTagName('item');
-					$metacafeResult = array();
-					$preResult = array();
-
-					$metacafeResult['page'] = $page;
-					$count = 0;
-					foreach( $items as $item ) {
-						$links = explode( "/", $item->getElementsByTagName('link')->item(0)->textContent );
-						$link = $links[count( $links ) -2];
-						$preResult[] = array(
-							'provider' => 'metacafe',
-							'title' => $item->getElementsByTagName('title')->item(0)->textContent,
-							'id' => $item->getElementsByTagName('id')->item(0)->textContent,
-							'link' => $link,
-						);
-						$count++;
-					}
-					$metacafeResult['total'] = $count;
-					$metacafeResult['pages'] = ceil( $metacafeResult['total'] / 8 );
-                                } else {
-					return wfMsg( 'vet-bad-search' );
-				}
-
-			$metacafeResult['item'] = array_slice( $preResult, $start, 8 );
-			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-			$tmpl->set_vars(array('results' => $metacafeResult, 'query' => addslashes($query)));
-			return $tmpl->execute('results_metacafe');
-		} else if($sourceId == 1) { // this wiki, to be done later
-			$db =& wfGetDB(DB_SLAVE);
-			$res = $db->query("SELECT count(*) as count FROM `page` WHERE lower(page_title) LIKE '%".strtolower($db->escapeLike($query))."%' AND page_namespace = 400 ORDER BY page_title ASC LIMIT 8");
-			$row = $db->fetchRow($res);
-			$results = array();
-			$results['total'] = $row['count'];
-			$results['pages'] = ceil($row['count']/8);
-			$results['page'] = $page;
-			$res = $db->query("SELECT page_title FROM `page` WHERE lower(page_title) LIKE '%".strtolower($db->escapeLike($query))."%' AND page_namespace = 400 ORDER BY page_title ASC LIMIT 8 OFFSET ".($page*8-8));
-			while($row = $db->fetchObject($res)) {
-				$results['images'][] = array('title' => $row->page_title);
-			}
-			$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-			$tmpl->set_vars(array('results' => $results, 'query' => addslashes($query)));
-			return $tmpl->execute('results_thiswiki');
-		}
-	}
-
-	function chooseImage() {
-		// 2012/02/08 wlee: does not appear to be in use
-		global $wgRequest, $wgUser, $IP;
-
-		$itemId = $wgRequest->getVal('itemId');
-		$sourceId = $wgRequest->getInt('sourceId');
-		$itemLink = $wgRequest->getVal('itemLink') . '.swf';
-		$itemTitle = $wgRequest->getVal('itemTitle');
-		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
-
-		switch( $sourceId ) {
-			case 0: //metacafe
-				$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
-				$title = Title::makeTitle( NS_LEGACY_VIDEO, $tempname );
-				$video = new VideoPage( $title );
-
-				$video->loadFromPars( VideoPage::V_METACAFE, $itemId, array( $itemLink ) );
-				$video->setName( $tempname );
-				$props['oname'] = '';
-				$props['provider'] = VideoPage::V_METACAFE;
-				$props['id'] = $itemId;
-				$props['vname'] = $itemTitle;
-				$props['metadata'] = $itemLink;
-				$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, true );
-				break;
-			default:
-				break;
-		}
-
-		return $this->detailsPage($props);
-	}
-
 	function editVideo() {
 		global $wgRequest, $wgTitle, $wgVideoMigrationProviderMap;
 		$itemTitle = $wgRequest->getVal('itemTitle');
 
-		if (WikiaFileHelper::isVideoStoredAsFile()) {
-			
-			$title = Title::newFromText($itemTitle, NS_FILE);
-			$file = wfFindFile( $title );	
-			
-			if ( ! ( $file instanceof LocalFile ) ) {
-				header('X-screen-type: error');
-				return wfMsg( 'vet-non-existing' );				
-			}
-			
-			$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );			
-			$props['id'] = $file->getVideoId();
-			$props['oname'] = '';			
-			$props['vname'] = $file->getTitle()->getText();
-			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
-			$props['metadata'] = '';
-			$props['href'] = $title->getPrefixedText();
-			// provider not needed
-		} else {
-			$title = Title::newFromText( $itemTitle, NS_LEGACY_VIDEO );
-			$video = new VideoPage( $title );
+		$title = Title::newFromText($itemTitle, NS_FILE);
+		$file = wfFindFile( $title );
 
-			$video->load();
-			$props['oname'] = '';
-			$props['provider'] = $video->getProvider();
-			$props['id'] = $video->getVideoId();
-			$props['vname'] = $title->getText();
-
-			$props['metadata'] = implode( ",", $video->getData() );
-			$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY, '', '', true );
-			$props['href'] = $title->getPrefixedText();			
+		if ( ! ( $file instanceof LocalFile ) ) {
+			header('X-screen-type: error');
+			return wfMsg( 'vet-non-existing' );
 		}
+
+		$embedCode = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
+		$props['id'] = $file->getVideoId();
+		$props['oname'] = '';
+		$props['vname'] = $file->getTitle()->getText();
+		$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
+		$props['metadata'] = '';
+		$props['href'] = $title->getPrefixedText();
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 
@@ -210,55 +94,33 @@ class VideoEmbedTool {
 
 	function insertVideo() {
 		global $IP, $wgRequest, $wgUser, $wgTitle;
-		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
-
-		$ns = $wgTitle->getNamespace();
 
 		$url = $wgRequest->getVal( 'url' );
 
-		if ( !WikiaFileHelper::isVideoStoredAsFile()
-		|| ( !WikiaFileHelper::isUrlMatchThisWiki($url) && !WikiaFileHelper::isUrlMatchWikiaVideoRepo($url) ) ) {
-			$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
-			$title = Title::makeTitle( NS_LEGACY_VIDEO, $tempname );
-			$video = new VideoPage( $title );
+		$tempname = 'Temp_video_'.$wgUser->getID().'_'.rand(0, 1000);
+		$title = Title::makeTitle( NS_FILE, $tempname );
 
-			// todo some safeguard here to take care of bad urls
-			if( !$video->parseUrl( $url ) ) {
-				header('X-screen-type: error');
-				return wfMsg( 'vet-bad-url' );
-			}
+		$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
+		$apiwrapper = $awf->getApiWrapper( $url );
 
-			if( !$video->checkIfVideoExists() ) {
-				header('X-screen-type: error');
-				return wfMsg( 'vet-non-existing' );
-			}
+		if( !empty($apiwrapper) ) { // try ApiWrapper first - is it from partners?
+			$provider = $apiwrapper->getMimeType();
 
-			$props['provider'] = $video->getProvider();
-			$props['id'] = $video->getVideoId();
-			$props['vname'] = $video->getVideoName();
-			$data = $video->getData();
-			if (is_array( $data ) ) {
-				$props['metadata'] = implode( ",", $video->getData() );
-			} else {
-				$props['metadata'] = '';
-			}
+			$file = new WikiaLocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
+			$file->forceMime( $provider );
+			$file->setVideoId( $apiwrapper->getVideoId() );
+			$file->setProps(array('mime'=>$provider ));
 
-			$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY, '', '', true );
+
+			$props['id'] = $apiwrapper->getVideoId();
+			$props['vname'] = $apiwrapper->getTitle();
+			$props['metadata'] = '';
+			$props['provider'] = $provider;
+
+			$props['code'] = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
 			$props['oname'] = '';
-			
-		}
-		else {
+		} else { // if not a partner video try to parse link for File:
 			$file = null;
-			if ( WikiaFileHelper::isUrlMatchThisWiki($url) ) {
-				//@todo should we move constant VideoPage::V_LOCALVIDEO to VideoHandlers ext?
-				$props['provider'] = VideoPage::V_LOCALVIDEO;
-
-			}
-			else {	// assume url is on Wikia video repo
-				//@todo should we move constant VideoPage::V_WIKIAVIDEO to VideoHandlers ext?
-				$props['provider'] = VideoPage::V_WIKIAVIDEO;
-			}
-			
 			// get the video name
 			$pattern = '/(File:|Video:)(.+)$/';
 			if (preg_match($pattern, $url, $matches)) {
@@ -275,36 +137,25 @@ class VideoEmbedTool {
 			}
 			else {
 				header('X-screen-type: error');
-				return wfMsg( 'vet-bad-url' );					
+				return wfMsg( 'vet-bad-url' );
 			}
 
 			if ( !$file ) {
 				header('X-screen-type: error');
-				return wfMsg( 'vet-non-existing' );				
+				return wfMsg( 'vet-non-existing' );
 			}
-			
-			$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );
-			
-			$props['id'] = $file->getVideoId();
+
+			$embedCode = $file->getEmbedCode(VIDEO_PREVIEW, false, false, true);
+
+			$props['provider'] = 'FILE';
+			$props['id'] = $file->getHandler()->getVideoId();
 			$props['vname'] = $file->getTitle()->getText();
 			$props['code'] = is_string($embedCode) ? $embedCode : json_encode($embedCode);
 			$props['metadata'] = '';
-			$props['oname'] = '';			
+			$props['oname'] = '';
 		}
 
 		return $this->detailsPage($props);
-	}
-
-	function getVideoFromName() {
-		// 2011/02/08 wlee: does not appear to be in use
-                global $wgRequest, $wgUser, $wgContLang, $IP;
-                require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
-
-                $name = $wgRequest->getVal('name');
-		$title = Title::makeTitle( NS_LEGACY_VIDEO, $name );
-		$video = new VideoPage( $title );
-		$video->load();
-		return $video->getEmbedCode();
 	}
 
 	function detailsPage($props) {
@@ -315,321 +166,81 @@ class VideoEmbedTool {
 	}
 
 	function insertFinalVideo() {
-		global $wgRequest, $wgUser, $wgContLang, $IP, $wgWikiaVideoInterwikiPrefix;
-		require_once( "$IP/extensions/wikia/WikiaVideo/VideoPage.php" );
+		global $wgRequest, $wgContLang;
 
-		$type = $wgRequest->getVal('type');
 		$id = $wgRequest->getVal('id');
 		$provider = $wgRequest->getVal('provider');
-		( '' != $wgRequest->getVal( 'gallery' ) ) ? $gallery = $wgRequest->getVal( 'gallery' ) : $gallery = '' ;
-		( '' != $wgRequest->getVal( 'article' ) ) ? $title_main = urldecode( $wgRequest->getVal( 'article' ) ) : $title_main = '' ;
-		( '' != $wgRequest->getVal( 'ns' ) ) ? $ns = $wgRequest->getVal( 'ns' ) : $ns = '' ;
-		( '' != $wgRequest->getCheck( 'fck' ) ) ? $fck = $wgRequest->getCheck( 'ns' ) : $fck = false ;
-		( '' != $wgRequest->getVal( 'mwgalpos' ) ) ? $mwInGallery = $wgRequest->getVal( 'mwgalpos' ) : $mwInGallery = '' ;
-		
+
 		$name = urldecode( $wgRequest->getVal('name') );
 		$oname = urldecode( $wgRequest->getVal('oname') );
 		if ('' == $name) {
 			$name = $oname;
 		}
 
-		$name = VideoFileUploader::sanitizeTitle($name);
+		$embed_code = '';
+		$tag = '';
+		$message = '';
 
-		// sanitize name and init title objects
-		if (WikiaFileHelper::useVideoHandlersExtForEmbed()) {
+		if($provider == 'FILE') { // no need to upload, local reference
+			$title = $oTitle = Title::newFromText($name, NS_FILE);
+			if (empty($oTitle)) {
+				header('X-screen-type: error');
+				return wfMsg ( 'vet-name-incorrect' );
+			}
+		} else { // needs to upload
+			// sanitize name and init title objects
+			$name = VideoFileUploader::sanitizeTitle($name);
+
+			if($name == '') {
+				header('X-screen-type: error');
+				return wfMsg('vet-warn3');
+			}
+
 			$nameFile = VideoFileUploader::sanitizeTitle($name);
 			$titleFile = Title::newFromText($nameFile, NS_FILE);
 			if (empty($titleFile)) {
 				header('X-screen-type: error');
 				return wfMsg ( 'vet-name-incorrect' );
 			}
-		}	
-		if (WikiaFileHelper::isVideoStoredAsFile()) {
 			// by definition, WikiaFileHelper::useVideoHandlersExtForEmbed() == true
 			$nameSanitized = $nameFile;
 			$title = $titleFile;
-		}
-		else {
-			// must save video using WikiaVideo extension
-			$titleLegacyVideo = PartnerVideoHelper::getInstance()->makeTitleSafe($name);
-			if (empty($titleLegacyVideo)) {
-				header('X-screen-type: error');
-				return wfMsg ( 'vet-name-incorrect' );
+
+			$extra = 0;
+			$metadata = array();
+			while( '' != $wgRequest->getVal( 'metadata' . $extra ) ) {
+				$metadata[] = $wgRequest->getVal( 'metadata' . $extra );
+				$extra++;
 			}
-			$nameSanitized = $name;
-			$title = $titleLegacyVideo;
-		}
-		
-		$extra = 0;
-		$metadata = array();
-		while( '' != $wgRequest->getVal( 'metadata' . $extra ) ) {
-			$metadata[] = $wgRequest->getVal( 'metadata' . $extra );
-			$extra++;
-		}
 
-		$embed_code = '';
-
-		// create video
-		if ($provider != VideoPage::V_WIKIAVIDEO && $provider != VideoPage::V_LOCALVIDEO) {
-			if($name !== NULL) {
-				if($name == '') {
+			if (!empty($titleFile)) {
+				$parts = explode('/',$provider);
+				$provider = $parts[1];
+				$oTitle = null;
+				$status = $this->uploadVideoAsFile($provider, $id, $nameSanitized, $oTitle);
+				if ( !$status->ok ) {
 					header('X-screen-type: error');
-					// todo messagize
-					return 'You need to specify file name first!'; // FIXME: missing i18n
-				} else {
-					if ( ( !empty($titleLegacyVideo) && $titleLegacyVideo->exists() ) || ( !empty($titleFile) && $titleFile->exists() ) ) {
-						if($type == 'overwrite') {
-							// is the target protected?
-							$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
-							$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
-							$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
-							
-							// skipping permission checks on NS_FILE article for now
-
-							if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-								header('X-screen-type: error');
-								return wfMsg( 'vet-protected' );
-							}
-
-							if (!empty($titleLegacyVideo)) {
-								$video = new VideoPage( $titleLegacyVideo );
-								if ($video instanceof VideoPage) {
-									$video->loadFromPars( $provider, $id, $metadata );
-									$video->save();
-									if ('' != $gallery) { // for gallery, return also embed code to insert live on page
-										$embed_code = $video->getEmbedCode( 300 );
-									}						
-								}
-							}
-							
-							if (!empty($titleFile)) {
-								$status = $this->uploadVideoAsFile($provider, $id, $name);	// file uploader will sanitize as needed
-								if ( !$status->ok ) {
-									header('X-screen-type: error');
-									return wfMsg( 'wva-thumbnail-upload-failed' );
-								}
-							}
-						} else if($type == 'existing') {
-							header('X-screen-type: existing');
-							$tempTitle = PartnerVideoHelper::getInstance()->makeTitleSafe($name);
-							$video = new VideoPage( $tempTitle );
-
-							$props = array();
-							$video->load();
-							$props['provider'] = $video->getProvider();
-							$props['id'] = $video->getVideoId();
-							$data = $video->getData();
-							if (is_array( $data ) ) {
-								$props['metadata'] = implode( ",", $video->getData() );
-							} else {
-								$props['metadata'] = '';
-							}
-							$props['code'] = $video->getEmbedCode( VIDEO_PREVIEW, false, false, $props['provider'] == VideoPage::V_SCREENPLAY, '', '', true );
-							$props['oname'] = $name;
-
-							return $this->detailsPage($props);
-						} else {
-							if ('' == $oname) {
-								header('X-screen-type: conflict');
-								$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
-								$tmpl->set_vars( array(
-											'name' => $name,
-											'id' => $id,
-											'provider' => $provider,
-											'metadata' => $metadata,
-										      )
-									       );
-								return $tmpl->execute('conflict');
-							}
-						}
-					} else {
-						// is the target protected?
-						$permErrors = $title->getUserPermissionsErrors( 'edit', $wgUser );
-						$permErrorsUpload = $title->getUserPermissionsErrors( 'upload', $wgUser );
-						$permErrorsCreate = ( $title->exists() ? array() : $title->getUserPermissionsErrors( 'create', $wgUser ) );
-
-						// skipping permission checks on NS_FILE article for now
-						
-						if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-							header('X-screen-type: error');
-							return wfMsg( 'vet-protected' );
-						}
-
-						if (!empty($titleLegacyVideo)) {
-							$video = new VideoPage( $titleLegacyVideo );
-							if ($video instanceof VideoPage) {
-								$video->loadFromPars( $provider, $id, $metadata );
-								$video->save();
-								if ('' != $gallery) { // for gallery, return also embed code to insert live on page
-									$embed_code = $video->getEmbedCode( 300 );							
-								}	
-							}
-						}
-						
-						if (!empty($titleFile)) {
-							$status = $this->uploadVideoAsFile($provider, $id, $name);
-							if ( !$status->ok ) {
-								header('X-screen-type: error');
-								return wfMsg( 'wva-thumbnail-upload-failed' );
-							}
-						}
-						
-					}
+					return wfMsg( 'wva-thumbnail-upload-failed' );
 				}
-			} else {
-				$title = Title::newFromText($mwname, 6);
-			}			
+				$message = wfMsg( 'vet-single-success' );
+			}
 		}
-
 		$ns_vid = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal('caption');
-		if ('' != $gallery) {
 
-			Wikia::setVar('EditFromViewMode', true);
+		$size = $wgRequest->getVal('size');
+		$width = $wgRequest->getVal('width');
+		$layout = $wgRequest->getVal('layout');
 
-			if ( -2 == $gallery ) {
-				// this went in from the single placeholder...
-				$size = $wgRequest->getVal('size');
-				$width = $wgRequest->getVal('width');
-				$layout = $wgRequest->getVal('layout');
-				$slider = $wgRequest->getVal('slider');
+		header('X-screen-type: summary');
+		$tag = $ns_vid . ":" . $oTitle->getText();
+		if(!empty($size))		$tag .= "|$size";
+		if(!empty($layout))		$tag .= "|$layout";
+		if($width != 'px')		$tag .= "|$width";
+		if($caption != '')		$tag .= "|".$caption;
 
-				$title_obj = Title::newFromText( $title_main, $ns );
-				$article_obj = new Article( $title_obj );
-				$text = $article_obj->getContent();
+		$tag = "[[$tag]]";
 
-				( '' != $wgRequest->getVal( 'box' ) ) ? $box = $wgRequest->getVal( 'box' ) : $box = '' ;
-
-				// todo change that to take care of parameters
-				preg_match_all( '/\[\[' . $ns_vid . ':Placeholder[^\]]*\]\]/s', $text, $matches, PREG_OFFSET_CAPTURE );
-				if( is_array( $matches ) ) {
-					$our_gallery = $matches[0][$box][0];				
-					$gallery_split = explode( ':', $our_gallery );
-					$thumb = false;
-					
-					$tag = $gallery_split[0] . ":" . $nameSanitized;	
-
-					if($size != 'full') {
-						$tag .= '|thumb';
-						$thumb = true;
-					}
-
-					$tag .= '|'.$width;
-					$tag .= '|'.$layout;
-
-					if( $caption != '' ) {
-						$tag .= '|' . $caption;
-					}				
-
-					$tag .= "]]";
-					$text = substr_replace( $text, $tag, $matches[0][$box][1], strlen( $our_gallery ) );
-					// return the proper embed code with all fancies around it
-					$embed_code = $video->generateWindow( $layout, $width, $caption, $thumb, false );
-					$message = wfMsg( 'vet-single-success' );
-				}
-
-				$summary = wfMsg( 'vet-added-from-gallery' ) ;
-				$success = $article_obj->doEdit( $text, $summary);
-				if ( $success ) {
-					header('X-screen-type: summary');				
-					$tag = $our_gallery_modified . "\n</videogallery>";
-				} else {
-					// todo well, communicate failure
-				}
-			} else {	
-				if (!$fck) { // of course, don't edit article for fck...
-					$title_obj = Title::newFromText( $title_main, $ns );
-					$article_obj = new Article( $title_obj );
-					$text = $article_obj->getContent();
-
-					// todo nowiki?
-					preg_match_all( '/<videogallery[^>]*>[^<]*/s', $text, $matches, PREG_OFFSET_CAPTURE );
-					if( is_array( $matches ) ) {
-						$our_gallery = $matches[0][$gallery][0];				
-						$our_gallery_modified = $our_gallery . "\n" . $ns_vid . ":" . $nameSanitized;	
-						if( $caption != '' ) {
-							$our_gallery_modified .= '|' . $caption;
-						}				
-						$our_gallery_modified .= "\n";
-						$text = substr_replace( $text, $our_gallery_modified, $matches[0][$gallery][1], strlen( $our_gallery ) );
-					}	
-
-					$summary = wfMsg( 'vet-added-from-gallery' ) ;
-					$success = $article_obj->doEdit( $text, $summary);
-					if ( $success ) {
-						header('X-screen-type: summary');				
-						$tag = $our_gallery_modified . "\n</videogallery>";
-					} else {
-						// todo well, communicate failure
-					}
-				} else {
-					header('X-screen-type: summary');				
-					$tag = $ns_vid . ":" . $nameSanitized;
-					if($caption != '') {
-						$tag .= "|".$caption;
-					}
-				}
-				$message = wfMsg( 'vet-gallery-add-success' );
-			}
-		} else {
-			header('X-screen-type: summary');
-
-			$size = $wgRequest->getVal('size');
-			$width = $wgRequest->getVal('width');
-			$layout = $wgRequest->getVal('layout');
-			$slider = $wgRequest->getVal('slider');
-
-			if( 'gallery' != $layout ) {
-				if( '' == $mwInGallery ) { // not adding gallery, not in gallery
-					if ($provider == VideoPage::V_WIKIAVIDEO && !WikiaFileHelper::isVideoStoredAsFile()) {
-						$tag = '{{:' . $wgWikiaVideoInterwikiPrefix . ':' . $nameSanitized;
-						$params = array();
-						if($size != 'full') {
-							$params[] = 'thumb=1';
-						}
-						$params[] = 'width='.$width;
-						$params[] = 'align='.$layout;
-						if($caption != '') {
-							$params[] = 'caption='.$caption;
-						}	
-						if (sizeof($params)) {
-							$tag .= '/' . implode('&', $params);
-						}
-						$tag .= '}}';
-					}
-					else {
-						$tag = '[[' . $ns_vid . ':'.$nameSanitized;
-						if($size != 'full') {
-							$tag .= '|thumb';
-						}
-						$tag .= '|'.$width;
-						$tag .= '|'.$layout;
-
-						if($caption != '') {
-							$tag .= '|'.$caption.']]';
-						} else {
-							$tag .= ']]';
-						}						
-					}
-					$message = wfMsg( 'vet-single-success' );
-				} else { // we were in gallery
-					$tag = "\n" . $ns_vid . ":" . $nameSanitized ;
-					if($caption != '') {
-						$tag .= "|".$caption;
-					}
-					$message = wfMsg( 'vet-gallery-add-success' );
-				}	
-			} else { // gallery needs to be treated differently...
-				$tag = "<videogallery>\n";
-				$tag .= $ns_vid . ":" . $nameSanitized;			
-				if($caption != '') {
-					$tag .= "|".$caption."\n</videogallery>";
-				} else {
-					$tag .= "\n</videogallery>";
-				}
-				$message = wfMsg( 'vet-gallery-create-success' );				
-			}
-		}
 
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array(
@@ -648,39 +259,13 @@ class VideoEmbedTool {
 	 * @return mixed FileRepoStatus or FALSE on error 
 	 */
 
-	private function uploadVideoAsFile( $provider, $videoId, $videoName ) {
-
+	private function uploadVideoAsFile( $provider, $videoId, $videoName, &$oTitle ) {
 		$oUploader = new VideoFileUploader();
-		$oUploader->setProviderFromId( $provider );
+		$oUploader->setProvider( $provider );
 		$oUploader->setVideoId( $videoId );
 		$oUploader->setTargetTitle( $videoName );
-		return $oUploader->upload( $title );
+		return $oUploader->upload( $oTitle );
 
-//		global $IP;
-//		require_once( "$IP/extensions/wikia/VideoHandlers/apiwrappers/ApiWrapperFactory.class.php" );
-//		if (ctype_digit($provider)) {
-//			$provider = ApiWrapperFactory::getInstance()->getProviderNameFromId($provider);
-//			if (!$provider) {
-//				// error
-//				return false;
-//			}
-//		}
-//
-//		$title = null;
-//		//@todo call $apiWrapper to override metadata fields (e.g. name, description)
-//		$result = VideoFileUploader::uploadVideo( $provider, $videoId, $title, null, false, array('title'=>$videoName) );
-//
-//		return $result;
 	}
 	
-	static function neatTrim($str, $n, $delim='...') { 
-		$len = strlen($str); 
-		if ($len > $n) { 
-			preg_match('/(.{' . $n . '}.*?)\b/', $str, $matches); 
-			return rtrim($matches[1]) . $delim; 
-	   	} 
-	   	else { 
-			return $str;
-	   	} 
-	} 
 }

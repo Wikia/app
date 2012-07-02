@@ -10,7 +10,7 @@
  * @author Timming
  */
 
-$fallback = 'tt-cyrl';
+$fallback = 'tt-cyrl, ru';
 
 $messages = array(
 # Delete

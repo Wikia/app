@@ -5,6 +5,7 @@
  * @file
  *
  * @author NamwikiTL
+ * @author VASANTH S.N.
  * @author VinodSBangera
  */
 
@@ -24,8 +25,7 @@ $messages = array(
 'tog-editsection'             => 'ಪುಟೊತ ಭಾಗಲೊನ್ [ಸಂಪಾದನೆ] ಲಿಂಕ್’ಲೆನ್ ಒತ್ತ್’ದ್ ಬದಲ್ ಮನ್ಪುಲೆಕ ಉಪ್ಪಡ್',
 'tog-editsectiononrightclick' => 'ಪುಟೊತ ವಿಭಾಗೊಲೆನ್ ಐತ ಹೆಡ್ಡಿಂಗ್’ನ್ ರೈಟ್ ಕ್ಲಿಕ್ ಮಲ್ತ್’ದ್ ಸಂಪಾದನೆ ಮಲ್ಪುಲೆಕ ಉಪ್ಪಡ್ (JavaScript)',
 'tog-showtoc'                 => 'ಪರಿವಿಡಿನ್(ಟೇಬಲ್ ಆಫ್ ಕಂಟೆಂಟ್ಸ್) ತೊಜ್ಪಾಲೆ (ಮೂಜೆರ್ದ್ ಜಾಸ್ತಿ ಹೆಡ್ಡಿಂಗ್ ಉಪ್ಪುನಂಚಿನ ಪುಟೊಲೆಗ್)',
-'tog-rememberpassword'        => 'ಈ ಕಂಪ್ಯೂಟರ್’ಡ್ ಎನ್ನ ಲಾಗಿನ್ನ್ ನೆನಪುಡು ದೀಲ',
-'tog-editwidth'               => 'ಸಂಪಾದನೆ ಅಂಕಣ ಪೂರ್ತಿ ಅಗೆಲ ಉಪ್ಪಡ್',
+'tog-rememberpassword'        => 'ಈ ಕಂಪ್ಯೂಟರ್’ಡ್ ಎನ್ನ ಲಾಗಿನ್ನ್ ನೆನಪುಡು ದೀಲ (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'tog-watchcreations'          => 'ಯಾನ್ ಶುರು ಮಲ್ತಿನ ಪುಟೊಲೆನ್ ಯೆನ್ನ ವೀಕ್ಷಣಾಪಟ್ಟಿಗ್ ಸೇರ್ಪಾಲೆ',
 'tog-watchdefault'            => 'ಯಾನ್ ಸಂಪಾದನೆ ಮನ್ಪುನಂಚಿನ ಪುಟೊಲೆನ್ ವೀಕ್ಷಣಾಪಟ್ಟಿಗ್ ಸೇರ್ಪಾಲೆ',
 'tog-watchmoves'              => 'ಯಾನ್ ಮೂವ್ ಮಲ್ತಿನಂಚಿನ ಪುಟೊಲೆನ್ ಎನ್ನ ವೀಕ್ಷಣಾಪಟ್ಟಿಗ್ ಸೇರ್ಪಾಲೆ',
@@ -39,6 +39,7 @@ $messages = array(
 'tog-enotifminoredits'        => 'ಎಲ್ಯೆಲ್ಯ ಬದಲಾವಣೆ ಆಂಡಲ ಎಂಕ್ ಇ-ಮೇಲ್ ಮಲ್ಪುಲೆ',
 'tog-enotifrevealaddr'        => 'ಪ್ರಕಟಣೆ ಇ-ಮೇಲ್’ಡ್ ಎನ್ನ ಇ-ಮೇಲ್ ವಿಳಾಸನ್ ತೊಜ್ಪಾಲೆ',
 'tog-shownumberswatching'     => 'ಪುಟೊನು ತೂವೊಂದುಪ್ಪುನಂಚಿನ ಸದಸ್ಯೆರ್’ನ ಸಂಖ್ಯೆನ್ ತೊಜ್ಪಾಲೆ',
+'tog-oldsig'                  => 'ಇತ್ತೆದ ಸಹಿ',
 'tog-fancysig'                => 'ಸರಳ ಸಹಿಗಳು (ಲಿಂಕ್ ಇಜ್ಜಂದಿಲೆಕ)',
 'tog-externaleditor'          => 'ಯಾಪಲ ಪಿದಯಿದ ಸಂಪಾದನೆ ಉಪಕರಣದ ಉಪಯೋಗ ಮನ್ಪುಲೆ (ಅನುಭವ ಉಪ್ಪುನಂಚಿನ ಸದಸ್ಯೆರೆಗ್ ಮಾತ್ರ, ನಿಕ್ಲೆನ ಕಂಪ್ಯೂಟರ್’ಡ್ ವಿಶೇಷವಾಯಿನ ಬದಲಾವಣೆಲು ಬೋಡಾಪುಂಡು)',
 'tog-externaldiff'            => 'ಬಾಹ್ಯ ಮುನ್ನೋಟನ್ ಯಾಪಲ ಉಪಯೋಗ ಮಲ್ಪುಲೆ (ಅನುಭವ ಉಪ್ಪುನಂಚಿನ ಸದಸ್ಯೆರೆಗ್ ಮಾತ್ರ, ನಿಕ್ಲೆನ ಕಂಪ್ಯೂಟರ್’ಡ್ ವಿಶೇಷ ಬದಲಾವಣೆಲು ಬೋಡಾಪುಂಡು)',
@@ -49,6 +50,7 @@ $messages = array(
 'tog-watchlisthideminor'      => 'ಎಲ್ಯ ಬದಲಾವಣೆಲೆನ್ ವೀಕ್ಷಣಾಪಟ್ಟಿರ್ದ್ ದೆಂಗಾಲೆ',
 'tog-watchlisthideliu'        => 'ಲಾಗಿನ್ ಆತಿನಂಚಿನ ಸದಸ್ಯೆರ್’ನ ಸಂಪಾದನೆಲೆನ್ ವೀಕ್ಷಣಾಪಟ್ಟಿರ್ದ್ ದೆಂಗಾಲೆ',
 'tog-watchlisthideanons'      => 'ಪುದರಿಜ್ಜಂದಿನ ಬಳಕೆದಾರನ ಸಂಪಾದನೆಲೆನ್ ವೀಕ್ಷಣಾಪಟ್ಟಿರ್ದ್ ದೆಂಗಾಲೆ',
+'tog-watchlisthidepatrolled'  => 'ವೀಕ್ಷಣಾಪಟ್ಟಿಡ್ ಬಾಟ್ ಸಂಪಾದನೆಲೆನ್ ದೆಂಗಾಲೆ',
 'tog-ccmeonemails'            => 'ಯಾನ್ ಬೇತೆ ಸದಸ್ಯೆರೆಗ್ ಕಡಪುಡ್ಪುನಂಚಿನ ಇ-ಮೇಲ್’ಲೆದ ಪ್ರತಿಲೆನ್(copy) ಎಂಕ್ ಕಡಪುಡ್ಲೆ',
 'tog-diffonly'                => 'ವ್ಯತ್ಯಾಸದ ತಿರ್ತುಪ್ಪುನಂಚಿನ ಪುಟೊತ ವಿವರೊಲೆನ್ ತೊಜ್’ಪಾವೊಚಿ',
 'tog-showhiddencats'          => 'ದೆಂಗಾದಿನ ವರ್ಗೊಲೆನ್ ತೊಜ್ಪಾಲೆ',
@@ -56,6 +58,12 @@ $messages = array(
 'underline-always'  => 'ಯಾಪಲ',
 'underline-never'   => 'ಯಾಪಗ್ಲಾ ಇಜ್ಜಿ',
 'underline-default' => 'ಬ್ರೌಸರ್’ದ ಯಥಾಸ್ಥಿತಿ',
+
+# Font style option in Special:Preferences
+'editfont-style'     => 'ಬರೆಪುನ ಜಾಗದ ಅಕ್ಷರದ ಶೈಲಿ',
+'editfont-default'   => 'ಬ್ರೌಸರ್’ದ ಯಥಾಸ್ಥಿತಿ',
+'editfont-sansserif' => 'ಸಾನ್ಸ್-ಸೆರಿಫ್ ಲಿಪಿ',
+'editfont-serif'     => 'ಸೆರಿಫ್ ಲಿಪಿ',
 
 # Dates
 'sunday'        => 'ಐತಾರ',
@@ -124,15 +132,9 @@ $messages = array(
 'category-file-count'            => '{{PLURAL:$2|ಈ ವರ್ಗೊಡು ಈ ತಿರ್ತ್’ದ ಖಾಲಿ ಒಂಜಿ ಫೈಲ್ ಉಂಡು.|ಈ ವರ್ಗೊಡು ಈ ತಿರ್ತ್’ದ {{PLURAL:$1|ಫೈಲ್’ನ್|$1 ಫೈಲ್’ಲೆನ್}} ಸೇರ್ಪಾದ್, ಒಟ್ಟಿಗೆ $2 ಉಂಡು.}}',
 'category-file-count-limited'    => 'ಪ್ರಸಕ್ತ ವರ್ಗೊಡು ಈ ತಿರ್ತ್’ದ {{PLURAL:$1|ಫೈಲ್ ಉಂಡು|$1 ಫೈಲ್’ಲು ಉಂಡು}}.',
 'listingcontinuesabbrev'         => 'ಮುಂದು.',
-
-'mainpagetext'      => "'''ಮೀಡಿಯವಿಕಿ ಯಶಸ್ವಿಯಾದ್ ಇನ್’ಸ್ಟಾಲ್ ಆಂಡ್.'''",
-'mainpagedocfooter' => 'ವಿಕಿ ತಂತ್ರಾಂಶನ್ ಉಪಗೋಗ ಮನ್ಪುನ ಬಗ್ಗೆ ಮಾಹಿತಿಗ್ [http://meta.wikimedia.org/wiki/Help:Contents ಸದಸ್ಯೆರ್ನ ನಿರ್ದೇಶನ ಪುಟ] ತೂಲೆ.
-
-== ಎಂಚ ಶುರು ಮಲ್ಪುನಿ ==
-
-* [http://www.mediawiki.org/wiki/Manual:Configuration_settings Configuration settings list]
-* [http://www.mediawiki.org/wiki/Manual:FAQ ಮೀಡಿಯವಿಕಿ FAQ]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]',
+'index-category'                 => 'ವಿಷಯ ಸೂಚಿ ಪುಟಕ್‘ಲು',
+'noindex-category'               => 'ವಿಷಯಸೂಚಿ ಇಜ್ಜಾಂದಿನ ಪುಟಕ್‘ಲು',
+'broken-file-category'           => 'ಪುಟಡ್ ಇಜ್ಜಂದಿನ ಕಡತದ ಕೊಂಡಿಲು',
 
 'about'         => 'ಎಂಕ್ಲೆನ ಬಗ್ಗೆ',
 'article'       => 'ಲೇಖನ ಪುಟ',
@@ -156,6 +158,23 @@ $messages = array(
 'faq'            => 'ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
 'faqpage'        => 'Project:ಸಾಮಾನ್ಯವಾದ್ ಕೇನುನ ಪ್ರಶ್ನೆಲು',
 
+# Vector skin
+'vector-action-addsection'       => 'ವಿಷಯ ಸೇರಾಲೆ',
+'vector-action-delete'           => 'ದೆತ್ತ್ ಪಾಡ್ಲೆ',
+'vector-action-move'             => 'ಸ್ಥಳಾಂತರ ಮಲ್ಪುಲೆ',
+'vector-action-protect'          => 'ಸ೦ರಕ್ಷಿಸಾಲೆ',
+'vector-action-undelete'         => 'ಮಾಜಾವಡೆ',
+'vector-action-unprotect'        => 'ಬದಲಾವಣೆನ್ ರಕ್ಷಿಸಾಲೆ',
+'vector-simplesearch-preference' => 'ಬಲಗೊಳಿಸಾನ ಹುಡುಕು ಸಲಹೆಲೆನ್ ಸಕ್ರಿಯಗೊಳಿಸಾಲೆ',
+'vector-view-create'             => ' ಸುರು ಮಲ್ಪುಲೆ',
+'vector-view-edit'               => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ',
+'vector-view-history'            => 'ಇತಿಹಾಸೊನು ತೂಲೆ',
+'vector-view-view'               => 'ಓದ್ಲೇ',
+'vector-view-viewsource'         => 'ಮೂಲೊನು ತೂಲೆ',
+'actions'                        => 'ಕ್ರಿಯೆಕ್ಕುಲು',
+'namespaces'                     => 'ಪುದರ್ ದ ವರ್ಗೊಲು',
+'variants'                       => 'ರೂಪಾಂತರ ಹೊಂದ್‘ನ',
+
 'errorpagetitle'    => 'ದೋಷ',
 'returnto'          => '$1 ಗ್ ಪಿರ ಪೋಲೆ.',
 'tagline'           => '{{SITENAME}} ರ್ದ್',
@@ -167,10 +186,10 @@ $messages = array(
 'history'           => 'ಪುಟೊತ ಚರಿತ್ರೆ',
 'history_short'     => 'ಇತಿಹಾಸ',
 'updatedmarker'     => 'ಎನ್ನ ಅಕೇರಿದ ವೀಕ್ಷಣೆ ಡ್ದ್ ಬುಕ್ಕ ಆಯಿನ ಬದಲಾವಣೆಲು',
-'info_short'        => 'ಮಾಹಿತಿ',
 'printableversion'  => 'ಪ್ರಿಂಟ್ ಆವೃತ್ತಿ',
 'permalink'         => 'ಸ್ಥಿರ ಸಂಪರ್ಕ',
 'print'             => 'ಪ್ರಿ೦ಟ್ ಮನ್ಪುಲೆ',
+'view'              => 'ತೂಲೆ',
 'edit'              => 'ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ(Edit this page)',
 'create'            => 'ಸೃಷ್ಟಿಸಾಲೆ',
 'editthispage'      => 'ಈ ಪುಟೊನು ಬದಲಾಯಿಸಾಲೆ',
@@ -178,6 +197,7 @@ $messages = array(
 'delete'            => 'ದೆತ್ತ್ ಪಾಡ್ಲೆ',
 'deletethispage'    => 'ಈ ಪುಟೊನು ದೆತ್ತ್ ಪಾಡ್ಲೆ',
 'undelete_short'    => 'ಪಿರ ಪಾಡ್ಲೆ {{PLURAL:$1|ಒ೦ಜಿ ಬದಲಾವಣೆ|$1 ಬದಲಾವಣೆಲು}}',
+'viewdeleted_short' => 'ನೋಟ{{PLURAL:$1|1 ಡಿಲೀಟ್ ಆತಿನ ಸಂಪಾದನೆ|$1 ಡಿಲೀಟ್ ಆತಿನ ಸಂಪಾದನೆಲು}}',
 'protect'           => 'ಸ೦ರಕ್ಷಿಸಾಲೆ',
 'protect_change'    => 'ಬದಲಾಲೆ',
 'protectthispage'   => 'ಈ ಪುಟೊನು ಸ೦ರಕ್ಷಿಸಾಲೆ',
@@ -210,6 +230,7 @@ $messages = array(
 'jumpto'            => 'ಇಡೆ ಪೋಲೆ:',
 'jumptonavigation'  => 'ಸಂಚಾರ',
 'jumptosearch'      => 'ನಾಡ್’ಲೆ',
+'pool-errorunknown' => 'ಗೊತ್ತಿಂಜಂದಿನ  ದೋಷ',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite'            => '{{SITENAME}} ದ ಬಗ್ಗೆ',
@@ -255,6 +276,8 @@ $messages = array(
 'toc'                     => 'ಪರಿವಿಡಿ',
 'showtoc'                 => 'ತೊಜ್ಪಾವು',
 'hidetoc'                 => 'ದೆಂಗಾವು',
+'collapsible-collapse'    => 'ಕುಗ್ಗಿಸಾಲ',
+'collapsible-expand'      => 'ವಿಸ್ತಾರ ಮಲ್ಪುಲೆ',
 'thisisdeleted'           => '$1 ನ್ ತೂವೊಡೆ ಅತ್ತ್ ದುಂಬುದ ಲೆಕೆ ಮಲ್ಪೊಡೆ?',
 'viewdeleted'             => '$1 ನ್ ತೂವೊಡೆ?',
 'restorelink'             => '{{PLURAL:$1|1 ಡಿಲೀಟ್ ಆತಿನ ಸಂಪಾದನೆ|$1 ಡಿಲೀಟ್ ಆತಿನ ಸಂಪಾದನೆಲು}}',
@@ -268,6 +291,8 @@ $messages = array(
 'feed-atom'               => 'Atom',
 'feed-rss'                => 'RSS',
 'red-link-title'          => '$1 (ಈ ಪುಟ ನನಲ ಅಸ್ತಿತ್ವಡ್ ಇಜ್ಜಿ)',
+'sort-descending'         => 'ಇಳಿಕೆ ಕ್ರಮೊಟ್ಟು ಜೋಡಿಸಾಲ',
+'sort-ascending'          => 'ಏರಿಕೆ ಕ್ರಮೊಟ್ಟು ಜೋಡಿಸಾಲ',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main'      => 'ಪುಟ',
@@ -310,19 +335,106 @@ $messages = array(
 'fileexistserror'      => '"$1" ಫೈಲ್ ಗ್ ಬರೆಯೆರೆ ಆವೊ೦ದಿಜ್ಜಿ: ಈ ಫೈಲ್ ದು೦ಬೇ ಉ೦ಡು.',
 'unexpected'           => 'ಅನಿರೀಕ್ಷಿತ ಮೌಲ್ಯ: "$1"="$2".',
 'formerror'            => 'ದೋಷ: ಅರ್ಜಿನ್ ಕಡಪುಡಿಯೆರ್ ಆಯಿಜಿ',
+'badarticleerror'      => 'ಈ ಪುಟಡ್ ಈರ್ ಪ್ರಯತ್ನಿಸಾನ ಕಾರ್ಯ ಸಾದ್ಯ ಇಜ್ಜಿ',
+'cannotdelete'         => 'ಪುಟ ಅಥವಾ ಹೊತ್ತಗೆ "$1" ನ್ ಮಾಜಾವರ ಆಪುಜ್ಜಿ.(ಬೇತೆ ಎರೋ ಮಾಜಾದಿಪ್ಪೆರ್)',
+'cannotdelete-title'   => '"$1" ಮಾಜಾವರೆ ಆಪುಜ್ಜಿ',
+'badtitle'             => 'ಸರಿ ಇಜ್ಜಾಂದಿನ ಪುದರ್',
+'badtitletext'         => 'ಈರ್ ಕೋರಿನ ಪುಟದ ಶೀರ್ಷಿಕೆ ಸಿಂಧು ಅತ್ತ್ ಅಥವಾ ಖಾಲಿ ಅಥವಾ ಸರಿಯಾತ್‘ನ ಕೊಂಡಿಯತ್ತಾಂದಿನ ಅಂತರ ಭಾಷೆ/ಅಂತರ ವಿಕಿ ಸಂಪರ್ಕ.
+ಐಟ್ ಒಂಜಿ ಅಥವಾ ಹೆಚ್ಚಿ ಶೀರ್ಷಿಕೆಡ್ ಬಳಕೆ ಮಲ್ಪರ ನಿಷಿದ್ದ್ಜವಾಯಿನ ಅಕ್ಷರಳು ಇಪ್ಪು.',
+'perfcached'           => 'ಈ ಮಾಹಿತಿಲು ಕಂಪ್ಯುಟರ್‘ದ ತಾತ್ಕಾಲಿಕ ನೆನೆಪುಡ್‘ದ್ ಬತ್ತ್‘ದ್‘ನ ಬೊಕ್ಕ ಸರಿಯಾನ ಸ್ಥಿತಿ ಆದಿಪ್ಪಾಂದ್ A maximum of {{PLURAL:$1|one result is|$1 results are}} available in the cache.',
+'perfcachedts'         => 'ಈ ತಿರ್ತ ಮಾಹಿತಿ ಕಂಪ್ಯೂಟರ್‘ದ ತಾತ್ಕಾಲಿಕ ನೆನಪುಡ್ ಉಂಡು. ದೆತ್ತ ಕಡೆತ ಬದಲಾವಣೆ $1. A maximum of {{PLURAL:$4|one result is|$4 results are}} available in the cache.',
+'querypage-no-updates' => 'ಈ ಪುಟೊತ್ತ ಆಧುನಿಕ ಮಲ್ಪುನ ಕ್ರಿಯೆನ್ ಸದ್ಯಗ್ ಉಂತಾದ್ಂಡ್. ಮುಲ್ಪ ಉಪ್ಪುನ ಮಾಹಿತಿನ್ ನವೀಕರಣ ಮಲ್ಪರಾಪುಜಿ',
 'viewsource'           => 'ಮೂಲ ಬರಹೊನು ತೂಲೆ',
-'viewsourcefor'        => '$1 ಪುಟೊಗು',
+'viewsource-title'     => ' $1 ಮೂಲ ಬರಹ ತೂಲೆ',
+'actionthrottled'      => 'ಕಾರ್ಯನ್ ದೆಂಗಾದುಂಡು',
+'protectedpagetext'    => 'ಈ ಪುಟನ್ ಸಂಪಾದನೆ ಮಲ್ಪಂದಿಲೆಕ್ಕ ಸಂರಕ್ಷಣೆ ಮಲ್ತ್‘ಂಡ್',
+'viewsourcetext'       => 'ಈರ್ ಈ ಪುಟದ ಮೂಲನ್ ತೂವೊಲಿ ಬೊಕ್ಕ ನಕಲ್ ಮಲ್ಪೊಲಿ',
+'viewyourtext'         => 'ಈರ್ ಈ ಪುಟದ ಮೂಲನ್ ತೂವೊಲಿ ಬೊಕ್ಕ ನಕಲ್ ಮಲ್ಪೊಲಿ',
+'protectedinterface'   => 'ಈ ಪುಟ ತಂತ್ರಾಂಶ ಉಪಯೋಗ ಮಲ್ಪುನ ಪಠ್ಯನ್ ಒದಗಿಸಾಪುಂಡ್. ದುರುಪಯೋಗ ಅವಂದಿಲೆಕ್ಕ ಇದೆನ್ ಸಂರಕ್ಷಣೆ ಮಲ್ತ್‘ಂಡ್.',
+'ns-specialprotected'  => 'ವಿಶೇಷ ಪುಟ‘ಕ್‘ಲೆನ್ ಸಂಪಾದನೆ ಮಲ್ಪರೆ ಆಪುಜಿ',
 
 # Login and logout pages
-'yourname'                => 'ಸದಸ್ಯೆರ್ನ ಪುದರ್:',
-'yourpassword'            => 'ಪಾಸ್-ವರ್ಡ್:',
-'remembermypassword'      => 'ಈ ಕಂಪ್ಯೂಟರ್’ಡ್ ಎನ್ನ ಪ್ರವೇಶ ಪದೊನು ನೆನಪು ದೀಲ',
-'login'                   => 'ಲಾಗ್ ಇನ್',
-'nav-login-createaccount' => 'ಲಾಗ್-ಇನ್ / ಅಕೌಂಟ್ ಸೃಷ್ಟಿ ಮಲ್ಪುಲೆ',
-'userlogin'               => 'ಲಾಗ್-ಇನ್ / ಅಕೌಂಟ್ ಸೃಷ್ಟಿ ಮಲ್ಪುಲೆ',
-'logout'                  => 'ಲಾಗ್ ಔಟ್',
-'userlogout'              => 'ಲಾಗ್ ಔಟ್',
-'mailmypassword'          => 'ಪೊಸ ಪಾಸ್-ವರ್ಡ್’ನ್ ಇ-ಮೇಲ್ ಮಲ್ಪುಲೆ',
+'logouttext'               => 'ಈರ್ ಇತ್ತೆ ಲಾಗ್ ಔಟ್ ಆತರ್.
+ಈರ್ {{SITENAME}} ನ್ ಅನಾಮಧೇಯರಾತ್ ಉಪಯೋಗ ಮಲ್ಪೊಲಿ,ಅಥವಾ ಕೂಡ ಉಂದುವೇ ಪುದರ್‘ಡ್ ಯಾ ಬೇತೆ ಪುದರ್‘ಡ್ ಉಪಯೋಗ ಮಲ್ಪೊಲಿ.
+ಗಮನಿಸಾಲೆ: ಈರೆನ ಬ್ರೌಸರ್‘ಡ್ ಮಾಜುನಾಡೆ ಮುಟ್ಟ ಕೆಲವು ಪುಟಕ್‘ಲು ಈರ್ ಇತ್ತೆಲಾ ಲಾಗ್ ಇನ್ ಆಯಿಲೆಕ್ಕನೇ ತೋಜಾವು.',
+'welcomecreation'          => '== ಸುಸ್ವಾಗತೊ, $1! ==
+ಈರೆನೆ ಅಕೌಂಟ್‘ನ್  ಶುರು ಮಲ್ತ್‘ಂಡ್.
+ಈರೆನ [[Special:Preferences|{{SITENAME}} ಪ್ರಾಶಸ್ತ್ಯೊಲೆನ್]]  ಬದಲಾವಣೆ ಮಲ್ಪರೆ ಮರಪಡೆ',
+'yourname'                 => 'ಸದಸ್ಯೆರ್ನ ಪುದರ್:',
+'yourpassword'             => 'ಪಾಸ್-ವರ್ಡ್:',
+'yourpasswordagain'        => 'ಪಾಸ್ವರ್ಡ್ ಪಿರ ಟೈಪ್ ಮಲ್ಪುಲೆ',
+'remembermypassword'       => 'ಈ ಕಂಪ್ಯೂಟರ್’ಡ್ ಎನ್ನ ಪ್ರವೇಶ ಪದೊನು ನೆನಪು ದೀಲ',
+'yourdomainname'           => 'ಈರೆನ ಕಾರ್ಯಕ್ಷೇತ್ರ',
+'login'                    => 'ಲಾಗ್ ಇನ್',
+'nav-login-createaccount'  => 'ಲಾಗ್-ಇನ್ / ಅಕೌಂಟ್ ಸೃಷ್ಟಿ ಮಲ್ಪುಲೆ',
+'userlogin'                => 'ಲಾಗ್-ಇನ್ / ಅಕೌಂಟ್ ಸೃಷ್ಟಿ ಮಲ್ಪುಲೆ',
+'userloginnocreate'        => 'ಲಾಗಿನ್ ಆಲೆ',
+'logout'                   => 'ಲಾಗ್ ಔಟ್',
+'userlogout'               => 'ಲಾಗ್ ಔಟ್',
+'notloggedin'              => 'ಲಾಗಿನ್ ಆತ್‘ಜ್ಜರ್',
+'nologin'                  => "ಈರೆನ ಖಾತೆ ಇಜ್ಜೇ?'''$1'''",
+'nologinlink'              => 'ಪೊಸ ಖಾತೆ ಸುರು ಮಲ್ಪುಲೆ',
+'createaccount'            => 'ಪೊಸ ಅಕ್ಕೌಂಟ್ ಸುರು ಮಲ್ಪುಲೆ',
+'gotaccount'               => "ಈರೆನ ಖಾತೆ ಉಂಡೇ?'''$1'''",
+'gotaccountlink'           => 'ಲಾಗಿನ್ ಆಲೆ',
+'userlogin-resetlink'      => 'ಈರೆನ ಲಾಗಿನ್ ವಿವರ ಮರತ್ತ್ಂಡೇ?',
+'createaccountmail'        => 'ಇ ಮೈಲ್ ಮೂಲಕ',
+'createaccountreason'      => 'ಕಾರಣ',
+'badretype'                => 'ಈರ್ ಕೊರ್ನ ಪ್ರವೇಶ ಪದೆ ಬೇತೆ ಬೇತೆ ಅತ್ಂಡ್',
+'userexists'               => 'ಈರ್ ಕೊರ್ನ ಸದಸ್ಯರ ಪುದರ್ ಬಳಕೆಡ್ ಉಂಡು. ದಯದೀದ್ ಬೇತೆ ಪುದರ್ ಕೊರ್ಲೆ',
+'loginerror'               => 'ಲಾಗಿನ್ ದೋಷ',
+'createaccounterror'       => 'ಖಾತೆ ಸುರುಮಲ್ಪರೆ ಸಾದ್ಯ ಅವೊಂದಿಜ್ಜಿ',
+'nocookiesnew'             => 'ಈರೆನ ಬಳಕೆದಾರ ಖಾತೆ ಸೄಷ್ಟಿ ಅತ್ಂಡ್. ಆಂಡ ಈರ್ ಲಾಗ್ ಇನ್ ಆತ್‘ಜ್ಜರ್.
+{{SITENAME}} ಲಾಗ್ ಇನ್ ಮಲ್ಪರ ಕುಕೀಸ್ ಉಪಯೋಗ ಮಲ್ಪುಂಡ್.
+ಈರೆನ ಗಣಕಯಂತ್ರಡು ಕುಕೀಸ್ ನಿಷಿದ್ದ ವಾತ್ಂಡ್.
+ದಯದೀದ್ ಈ ನಿಷಿದ್ಧನ್ ದೆತ್ತ್‘ದ್, ಈರೆನ ಬಳಕೆದಾರ ಪುದರ್ ಬೊಕ್ಕ  ಪ್ರವೇಶಪದ ಉಪಯೋಗಿಸಾದ್ ಲಾಗ್ ಇನ್ ಆಲೆ.',
+'nocookieslogin'           => '{{SITENAME}} ಲಾಗ್ ಇನ್ ಮಲ್ಪರ ಕುಕೀಸ್ ಉಪಯೋಗ ಮಲ್ಪುಂಡ್.
+ಈರೆನ ಗಣಕಯಂತ್ರಡು ಕುಕೀಸ್ ನಿಷಿದ್ದ ವಾತ್ಂಡ್.
+ದಯದೀದ್ ಈ ನಿಷಿದ್ಧನ್ ದೆತ್ತ್‘ದ್, ಕುಡೊರ ಪ್ರಯತ್ನ ಮಲ್ಪುಲೆ.',
+'nocookiesfornew'          => 'ಮೂಲನ್  ನಿರ್ಧರಿಸಾವರ ಆವೊಂದಿಜ್ಜಿ  ಐಡ್‘ದಾವರ  ಈರೆನ ಖಾತೆ ಸೃಷ್ಟಿ ಆತ್‘ಜ್ಜಿ.  .
+ದಯದೀದ್ ಕುಕೀಸ್ ನಿಷಿದ್ಧನ್ ದೆತ್ತ್‘ದ್, ಈ ಪುಟನ್ ಪಿರ ದಿಂಜಾದ್ (load)ಪ್ರಯತ್ನಿಸಾಲೆ.',
+'noname'                   => 'ಈರ್ ಸರಿಯಾಯಿನ ಬಳಕೆದಾರ ಪುದರ್ ಕೊರ್ತಿಜ್ಜರ್.',
+'loginsuccesstitle'        => 'ಲಾಗ್ ಇನ್ ಯಶಸ್ವಿಯಾತ್‘ಂಡ್',
+'loginsuccess'             => 'ಲಾಗ್ ಇನ್ ಯಶಸ್ವಿಯಾತ್‘ಂಡ್". {{SITENAME}}  "$1".\'\'\'',
+'nosuchuser'               => '!!"$1"ಪುದರ್‘ದ ವಾ ಸದಸ್ಯೆರ್‘ಲಾ ಇಜ್ಜೆರ್, ಅಕ್ಷರ ಸರಿಯಾದ ತೂಲೆ ಅಥವಾ  [[Special:UserLogin/signup|ಪೊಸ ಸದಸ್ಯತ್ವ  ಖಾತೆನ್ ಸೃಷ್ಟಿ ಮಲ್ಪುಲೆ]].',
+'nosuchusershort'          => '!!"$1"ಪುದರ್‘ದ ವಾ ಸದಸ್ಯೆರ್‘ಲಾ ಇಜ್ಜೆರ್, ಅಕ್ಷರ ಸರಿಯಾದ ತೂಲೆ.',
+'nouserspecified'          => 'ಈರ್ ಒಂಜಿ ಸದಸ್ಯತ್ವದ ಪುದರ್ ಸೂಚನೆ ಮಲ್ಪೊಡು.',
+'login-userblocked'        => 'ಈ ಸದಸ್ಯರೆನ ಖಾತೆನ್ ತಡೆ ಪತ್ತ್‘ದುಂಡು. ಲಾಗ್ ಇನ್ ಮಲ್ಪರೆ ಆಪುಜ್ಜಿ.',
+'wrongpassword'            => 'ತಪ್ಪು ಪ್ರವೇಶ ಪದ ಕೊರ್ತರ್. ನನ ಒರ ಪ್ರಯತ್ನ ಮಲ್ಪುಲೆ.',
+'wrongpasswordempty'       => 'ಖಾಲಿ ಪ್ರವೇಶ ಪದ ಕೊರ್ತರ್. ನನ ಒರ ಪ್ರಯತ್ನ ಮಲ್ಪುಲೆ.',
+'passwordtooshort'         => 'ಪ್ರವೇಶ ಪದಟ್ ಕನಿಷ್ಟ {{PLURAL:$1|೧ ಅಕ್ಷರ|$1 ಅಕ್ಷರರೊಳೆನ್}} ಉಪ್ಪೊಡ್',
+'password-name-match'      => 'ಇರೆನ್ ಪ್ರವೇಶಪದ ಬಳಕೆದಾರೆನ ಪುದರ್‘ಡ್‘ದ್ ಬೇತೆ ಉಪ್ಪೊಡು',
+'password-login-forbidden' => 'ಈ ಪ್ರವೇಶಪದ ಬೊಕ್ಕ ಬಳಕೆದಾರೆರೆನ ಪುದರ್‘ನ್ ನಿಷಿದ್ಧ ಮಲ್ತ್‘ದ್ಂಡ್',
+'mailmypassword'           => 'ಪೊಸ ಪಾಸ್-ವರ್ಡ್’ನ್ ಇ-ಮೇಲ್ ಮಲ್ಪುಲೆ',
+'passwordremindertitle'    => '{{SITENAME}}ಗ್ ಪೊಸ ತಾತ್ಕಾಲಿಕ ಪ್ರವೇಶ ಪದ',
+'noemail'                  => 'ಸದಸ್ಯೆ "$1" ಪುದರ್‘ಡ್ ವಾ ಇ-ಅಂಚೆ ವಿಳಾಸೊಲ ದಾಖಲಾತ್‘ಜ್ಜಿ',
+'noemailcreate'            => 'ಈರ್ ಇತ್ತೆ ಉಪ್ಪುನ ಇ-ಅಂಚೆ ವಿಳಾಸ ಕೊರೊಡ್',
+'passwordsent'             => '"$1" ಇಂಬೆರೆನ ಪುದರ್‘ಡ್ ದಾಖಲಾತ್‘ನ ಇ-ಅಂಚೆ ವಿಳಾಸೊಗ್ ಪೊಸ ಪ್ರವೇಶಪದ ಕಡಪುಡ್‘ದುಂಡು.ಐನ್ ತೂದು ಬೊಕ್ಕ ಕುಡ ಲಾಗಿನ್ ಇನ್ ಆಲೆ.',
+'noemailprefs'             => 'ಈ ಸೌಲಭ್ಯೊಲ್ ಕೆಲಸ ಮಲ್ಪರೆ ಒಂಜಿ ಇ-ಅಂಚೆ ವಿಳಾಸೊನ್ ನಮೂದು ಮಲ್ಪುಲೆ.',
+'emailconfirmlink'         => 'ಇರೆನ ಇ-ಅಂಚೆ ವಿಳಾಸೊನ್ ದೃಡೀಕರಣ ಮಲ್ಪುಲೆ.',
+'accountcreated'           => 'ಖಾತೆ ಸೃಷ್ಟಿಯಾತ್‘ಂಡ್.',
+'login-abort-generic'      => 'ಇರೆನ ಲಾಗ್ ಇನ್ ವಿಫಲ ವಾತ್‘ಂಡ್',
+'loginlanguagelabel'       => 'ಭಾಷೆ: $1',
+
+# Change password dialog
+'resetpass'                 => 'ಪ್ರವೇಶಪದೊನ್ ಬದಲಾವಣೆ ಮಲ್ಪುಲೆ',
+'resetpass_header'          => 'ಈ ಖಾತೆದ ಪ್ರವೇಶಪದ ಬದಲಾವಣೆ ಮಲ್ಪುಲೆ',
+'oldpassword'               => 'ಪರ ಪ್ರವೇಶಪದ',
+'newpassword'               => 'ಪೊಸ ಪ್ರವೇಶಪದ',
+'retypenew'                 => 'ಪ್ರವೇಶಪದ ಪಿರ ಟೈಪ್ ಮಲ್ಪುಲೆ',
+'resetpass_submit'          => 'ಪ್ರವೇಶಪದ ನಿಶ್ಚಯ ಮಲ್ತ್‘ದ್ ಲಾಗ್ ಇನ್ ಆಲೆ',
+'resetpass-submit-loggedin' => 'ಪ್ರವೇಶಪದೊನ್ ಬದಲಾವಣೆ ಮಲ್ಪುಲೆ',
+'resetpass-submit-cancel'   => 'ವಜಾ ಮಲ್ಪುಲೆ',
+'resetpass-temp-password'   => 'ತಾತ್ಕಾಲಿಕ ಪ್ರವೇಶಪದ:',
+
+# Special:PasswordReset
+'passwordreset'          => 'ಪ್ರವೇಶ ಪದನ್ ರಿಸೆಟ್ ಮಲ್ಪುಲೆ',
+'passwordreset-username' => 'ಸದಸ್ಯೆರ್ನ ಪುದರ್:',
+'passwordreset-email'    => 'ಇ-ಅಂಚೆ ವಿಳಾಸೊ',
+
+# Special:ChangeEmail
+'changeemail-submit' => 'ಇ-ಅಂಚೆ ವಿಳಾಸ ಬದಲಾವಣೆ ಮಲ್ಪುಲೆ',
+'changeemail-cancel' => 'ವಜಾ ಮಲ್ಪುಲೆ',
 
 # Edit page toolbar
 'bold_sample'     => 'ದಪ್ಪ ಅಕ್ಷರ',
@@ -335,8 +447,6 @@ $messages = array(
 'extlink_tip'     => 'ಪಿದಯಿದ ಲಿಂಕ್ (http:// ರ್ದ್ ಶುರು ಮಲ್ಪೆರೆ ಮರಪೊಚಿ)',
 'headline_sample' => 'ಹೆಡ್-ಲೈನ್’ದ ಬರಹ',
 'headline_tip'    => '2ನೇ ಲೆವೆಲ್ದ ಹೆಡ್-ಲೈನ್',
-'math_sample'     => 'ಮುಲ್ಪ ಸೂತ್ರೊನು ಪಾಡ್’ಲೆ',
-'math_tip'        => 'ಗಣಿತ ಸೂತ್ರ (LaTeX)',
 'nowiki_sample'   => 'ಈ ಜಾಗೆಡ್ ಬರೆತಿನಂಚಿನ ಬರಹ ವಿಕೀಕರಣ ಆಪುಜಿ',
 'nowiki_tip'      => 'ವಿಕಿ ರಚನಾಕ್ರಮೊನು(ಫೋರ್ಮ್ಯಾಟ್) ಅಳವಡಿಸೊಚಿ',
 'image_tip'       => 'ಎ೦ಬೆಡ್ ಮಲ್ತಿನ ಫೈಲ್',
@@ -356,6 +466,7 @@ $messages = array(
 'showdiff'                         => 'ಬದಲಾವಣೆಲೆನ್ ತೊಜ್ಪಾವ್',
 'anoneditwarning'                  => "'''ಜಾಗ್ರತೆ:''' ಈರ್ ಇತ್ತೆ ಲಾಗ್ ಇನ್ ಆತಿಜರ್.
 ಈರ್ನ ಐ.ಪಿ ಎಡ್ರೆಸ್ ಈ ಪುಟೊತ ಬದಲಾವಣೆ ಇತಿಹಾಸೊಡು ದಾಖಲಾಪು೦ಡು.",
+'anonpreviewwarning'               => 'ಈರ್ ಇತ್ತೆ ಲಾಗ್ ಇನ್ ಆತಿಜರ್. ಈರ್ನ ಐ.ಪಿ ಎಡ್ರೆಸ್ ಈ ಪುಟೊತ ಬದಲಾವಣೆ ಇತಿಹಾಸೊಡು ದಾಖಲಾಪು೦ಡು',
 'missingsummary'                   => "'''ಗಮನಿಸಾಲೆ:''' ಈರ್ ಬದಲಾವಣೆದ ಸಾರಾ೦ಶನ್ ಕೊರ್ತಿಜರ್.
 ಈರ್ ಪಿರ 'ಒರಿಪಾಲೆ' ಬಟನ್ ನ್ ಒತ್ತ್೦ಡ ಸಾರಾ೦ಶ ಇಜ್ಜ೦ದೆನೇ ಈರ್ನ ಬದಲಾವಣೆ ದಾಖಲಾಪು೦ಡು.",
 'missingcommenttext'               => 'ದಯ ಮಲ್ತ್ ದ ಈರ್ನ ಅಭಿಪ್ರಾಯನ್ ತಿರ್ತ್ ಕೊರ್ಲೆ',
@@ -363,15 +474,20 @@ $messages = array(
 'summary-preview'                  => 'ಸಾರಾ೦ಶ ಮುನ್ನೋಟ:',
 'subject-preview'                  => 'ವಿಷಯ/ಮುಖ್ಯಾ೦ಶದ ಮುನ್ನೋಟ:',
 'blockedtitle'                     => 'ಈ ಸದಸ್ಯೆರೆನ್ ತಡೆ ಮಲ್ತ್ ದ್೦ಡ್.',
+'loginreqlink'                     => 'ಲಾಗಿನ್ ಆಲೆ',
+'accmailtitle'                     => 'ಪ್ರವೇಶಪದ ಕಡಪುಡ್‘ದುಂಡು',
 'newarticle'                       => '(ಪೊಸತ್)',
 'newarticletext'                   => "ನನಲ ಅಸ್ಥಿತ್ವಡ್ ಉಪ್ಪಂದಿನ ಪುಟೊಗು ಈರ್ ಬೈದರ್.
 ಈ ಪುಟೊನು ಸೃಷ್ಟಿ ಮಲ್ಪೆರೆ ತಿರ್ತ್’ದ ಚೌಕೊಡು ಬರೆಯೆರೆ ಸುರು ಮಲ್ಪುಲೆ.
 (ಜಾಸ್ತಿ ಮಾಹಿತಿಗ್ [[{{MediaWiki:Helppage}}|ಸಹಾಯ ಪುಟೊನು]] ತೂಲೆ).
 ಈ ಪುಟೊಕು ಈರ್ ತಪ್ಪಾದ್ ಬತ್ತಿತ್ತ್’ನ್ಡ ಇರೆನ ಬ್ರೌಸರ್’ದ '''back''' ಬಟನ್’ನ್ ಒತ್ತ್’ಲೆ.",
 'noarticletext'                    => 'ಈ ಪುಟೊಟು ಸದ್ಯಗ್ ಓ ಬರಹಲಾ ಇಜ್ಜಿ, ಈರ್ ಬೇತೆ ಪೂಟೊಲೆಡ್ [[Special:Search/{{PAGENAME}}|ಈ ಲೇಖನೊನು ನಾಡೊಲಿ]] ಅತ್ತ್’ನ್ಡ [{{fullurl:{{FULLPAGENAME}}|action=edit}} ಈ ಪುಟೊನು ಸಂಪಾದನೆ ಮಲ್ಪೊಲಿ].',
+'userpage-userdoesnotexist'        => 'ಬಳಕೆದಾರ ಖಾತೆ "<nowiki>$1</nowiki>" ದಾಖಲಾತ್‘ಜ್ಜಿ. ಈರ್ ಉಂದುವೇ ಪುಟನ್ ಸಂಪಾದನೆ ಮಲ್ಪರ ಉಂಡಾಂದ್ ಖಾತ್ರಿ ಮಲ್ತೊನಿ.',
 'previewnote'                      => "'''ಉಂದು ಕೇವಲ ಮುನ್ನೋಟ; ಪುಟೊನು ನನಲ ಒರಿಪಾದಿಜಿ ಪನ್ಪುನೇನ್ ಮರಪೊರ್ಚಿ!'''",
 'editing'                          => '$1 ಲೇಖನೊನು ಈರ್ ಸಂಪಾದನೆ ಮಲ್ತೊಂದುಲ್ಲರ್',
 'editingsection'                   => '$1 (ವಿಭಾಗೊನು) ಸಂಪಾದನೆ ಮಲ್ತೊಂದುಲ್ಲರ್',
+'yourtext'                         => 'ಇರೆನ ಸಂಪಾದನೆ',
+'yourdiff'                         => 'ವ್ಯತ್ಯಾಸೊಲು',
 'copyrightwarning'                 => "ದಯಮಲ್ತ್’ದ್ ಗಮನಿಸ್’ಲೆ: {{SITENAME}} ಸೈಟ್’ಡ್ ಇರೆನ ಪೂರಾ ಕಾಣಿಕೆಲುಲಾ $2 ಅಡಿಟ್ ಬಿಡುಗಡೆ ಆಪುಂಡು (ಮಾಹಿತಿಗ್ $1 ನ್ ತೂಲೆ). ಇರೆನ ಸಂಪಾದನೆಲೆನ್ ಬೇತೆಕುಲು ನಿರ್ಧಾಕ್ಷಿಣ್ಯವಾದ್ ಬದಲ್ ಮಲ್ತ್’ದ್ ಬೇತೆ ಕಡೆಲೆಡ್ ಪಟ್ಟೆರ್. ಇಂದೆಕ್ ಇರೆನ ಒಪ್ಪಿಗೆ ಇತ್ತ್’ನ್ಡ ಮಾತ್ರ ಮುಲ್ಪ ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ.<br />
 ಅತ್ತಂದೆ ಇರೆನ ಸಂಪಾದನೆಲೆನ್ ಈರ್ ಸ್ವತಃ ಬರೆತರ್, ಅತ್ತ್’ನ್ಡ ಕೃತಿಸ್ವಾಮ್ಯತೆ ಇಜ್ಜಂದಿನ ಕಡೆರ್ದ್ ದೆತೊನ್ದರ್ ಪಂಡ್’ದ್ ಪ್ರಮಾಣಿಸೊಂದುಲ್ಲರ್.
 '''ಕೃತಿಸ್ವಾಮ್ಯತೆದ ಅಡಿಟುಪ್ಪುನಂಚಿನ ಕೃತಿಲೆನ್ ಒಪ್ಪಿಗೆ ಇಜ್ಜಂದೆ ಮುಲ್ಪ ಪಾಡೊಚಿ!'''",
@@ -386,20 +502,49 @@ $messages = array(
 
 # History pages
 'viewpagelogs'           => 'ಈ ಪುಟೊತ ದಾಖಲೆಲೆನ್ ತೂಲೆ',
+'nohistory'              => 'ಈ ಪುಟಕ್ ಬದಲಾವಣೆದ ಇತಿಹಾಸ ಇಜ್ಜಿ',
 'currentrev'             => 'ಇತ್ತೆದ ಆವೃತ್ತಿ',
 'currentrev-asof'        => '$1 ದ ಮುಟ್ಟ ಇತ್ತೆದ ಆವೃತ್ತಿ',
 'revisionasof'           => '$1 ದಿನೊತ ಆವೃತ್ತಿ',
 'previousrevision'       => '←ದುಂಬುದ ಆವೃತ್ತಿ',
 'nextrevision'           => 'ಪೊಸ ಮರು-ಆವೃತ್ತಿ',
+'currentrevisionlink'    => 'ಇತ್ತೆದ ಆವೃತ್ತಿ',
 'cur'                    => 'ಸದ್ಯದ',
+'next'                   => 'ಬೊಕ್ಕದ',
 'last'                   => 'ಕಡೆತ',
+'page_first'             => 'ಸುರುತ',
+'page_last'              => 'ಕಡೆತ',
 'history-fieldset-title' => 'ಇತಿಹಾಸಡ್ ನಾಡ್ಲೆ',
+'history-show-deleted'   => 'ದೆತ್ತ್ ಪಾಡಿನ',
 'histfirst'              => 'ಬಾರಿ ದುಂಬುದ',
 'histlast'               => 'ಇಂಚಿಪ್ಪದ',
+'historyempty'           => '(ಖಾಲಿ)',
+
+# Revision feed
+'history-feed-title' => 'ಬದಲಾವಣೆಲೆನ ಇತಿಹಾಸೊ',
 
 # Revision deletion
-'rev-delundel'   => 'ತೊಜ್ಪಾವ್/ದೆಂಗಾವ್',
-'revdel-restore' => 'ವಿಸಿಬಿಲಿಟಿನ್ ಬದಲ್ ಮಲ್ಪುಲೆ',
+'rev-delundel'               => 'ತೊಜ್ಪಾವ್/ದೆಂಗಾವ್',
+'rev-showdeleted'            => 'ತೊಜಾವು',
+'revisiondelete'             => 'ಮಾಜಾಯಿನ/ಮಾಜಾವಂದಿನ ಬದಲಾವಣೆಲು',
+'revdelete-show-file-submit' => 'ಅಂದ್',
+'revdelete-hide-text'        => 'ಬದಲಾವಣೆದ ಪಠ್ಯನ್ ದೆಂಗಾಲೆ',
+'revdelete-hide-image'       => 'ಪೈಲ್‘ಡ್  ಇಪ್ಪುನ ಮಾಹಿತ್‘ನ್ ದೆಂಗಾಲೆ',
+'revdelete-hide-name'        => 'ಕಾರ್ಯ ಬೊಕ್ಕ ಗುರಿನ್ ದೆಂಗಾಲ',
+'revdelete-hide-comment'     => 'ಸಂಪಾದನೆದ ವಿವರಣೆ ದೆಂಗಾಲೆ',
+'revdelete-radio-set'        => 'ಅಂದ್',
+'revdelete-radio-unset'      => 'ಇಜ್ಜಿ',
+'revdelete-log'              => 'ಕಾರಣ',
+'revdel-restore'             => 'ವಿಸಿಬಿಲಿಟಿನ್ ಬದಲ್ ಮಲ್ಪುಲೆ',
+'pagehist'                   => 'ಪುಟೊತ ಚರಿತ್ರೆ',
+'deletedhist'                => 'ಮಾಜಾಯಿನ ಚರಿತ್ರೆ',
+'revdelete-reasonotherlist'  => 'ಬೇತೆ ಕಾರಣ',
+'revdelete-edit-reasonlist'  => 'ಮಾಜಾಯಿನ ಕಾರಣೊಲೆನ್ ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ',
+'revdelete-offender'         => 'ಬದಲಾವಣೆದ ಸಂಪಾದಕೆ',
+
+# History merging
+'mergehistory-from'   => 'ಮೂಲ ಪುಟ',
+'mergehistory-reason' => 'ಕಾರಣ:',
 
 # Merge log
 'revertmerge' => 'ಅನ್-ಮರ್ಜ್ ಮಲ್ಪುಲೆ',
@@ -412,57 +557,121 @@ $messages = array(
 'editundo'                => 'ದುಂಬುದಲೆಕ',
 
 # Search results
-'searchresults'             => 'ನಾಡಟದ ಫಲಿತಾಂಶೊಲು',
-'searchresults-title'       => '"$1" ಕ್ ನಾಡಟದ ಫಲಿತಾಂಶೊಲು',
-'searchresulttext'          => '{{SITENAME}} ಡ್ ನಾಡಟ ಮಲ್ಪುನ ಬಗ್ಗೆ ಜಾಸ್ತಿ ಮಾಹಿತಿಗ್ [[{{MediaWiki:Helppage}}|{{int:help}}]] ನ್ ತೂಲೆ.',
-'searchsubtitle'            => 'ಈರ್ \'\'\'[[:$1]]\'\'\' ನ್ ನಾಡಿಯರ್ ([[Special:Prefixindex/$1|"$1" ರ್ದ್ ಶುರುವಾಪುನ ಪೂರ ಪುಟೊಲು]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|"$1" ಗ್ ಲಿಂಕ್ ಕೊರ್ಪುನ ಪೂರ ಪುಟೊಲು]])',
-'searchsubtitleinvalid'     => "'''$1''' ನ್ ಈರ್ ನಾಡಿಯರ್.",
-'notitlematches'            => 'ವಾ ಪುಟೊತ ಶಿರ್ಷಿಕೆಲಾ ಹೊಂದಿಕೆ ಆವೊಂದಿಜ್ಜಿ',
-'notextmatches'             => 'ವಾ ಪುಟೊತ ಪಠ್ಯೊಡುಲಾ ಹೋಲಿಕೆ ಇಜ್ಜಿ',
-'prevn'                     => 'ದುಂಬುದ {{PLURAL:$1|$1}}',
-'nextn'                     => 'ಬೊಕ್ಕದ {{PLURAL:$1|$1}}',
-'viewprevnext'              => 'ತೂಲೆ ($1 {{int:pipe-separator}} $2) ($3)',
-'searchhelp-url'            => 'Help:ಪರಿವಿಡಿ',
-'search-result-size'        => '$1 ({{PLURAL:$2|೧ ಪದ|$2 ಪದೊಲು}})',
-'search-redirect'           => '(ಪುನರ್ನಿರ್ದೇಶನ $1)',
-'search-section'            => '(ವಿಭಾಗ $1)',
-'search-suggest'            => 'ಇಂದೆನ್ ನಾಡೊಂದುಲ್ಲರೆ: $1',
-'search-interwiki-caption'  => 'ಬಳಗದ ಇತರ ಯೋಜನೆಲು',
-'search-interwiki-default'  => '$1 ಫಲಿತಾಂಶೊಲು:',
-'search-interwiki-more'     => '(ಮಸ್ತ್)',
-'search-mwsuggest-enabled'  => 'ಸಲಹೆದೊಟ್ಟಿಗೆ',
-'search-mwsuggest-disabled' => 'ಓವು ಸಲಹೆಲಾ ಇಜ್ಜಿ',
-'powersearch'               => 'ನಾಡ್’ಲೆ',
-'powersearch-legend'        => 'ಅಡ್ವಾನ್ಸ್’ಡ್ ಸರ್ಚ್',
-'powersearch-ns'            => 'ನೇಮ್-ಸ್ಪೇಸ್’ಲೆಡ್ ನಾಡ್ಲೆ',
-'powersearch-field'         => 'ನಾಡ್ಲೆ:',
+'searchresults'                    => 'ನಾಡಟದ ಫಲಿತಾಂಶೊಲು',
+'searchresults-title'              => '"$1" ಕ್ ನಾಡಟದ ಫಲಿತಾಂಶೊಲು',
+'searchresulttext'                 => '{{SITENAME}} ಡ್ ನಾಡಟ ಮಲ್ಪುನ ಬಗ್ಗೆ ಜಾಸ್ತಿ ಮಾಹಿತಿಗ್ [[{{MediaWiki:Helppage}}|{{int:help}}]] ನ್ ತೂಲೆ.',
+'searchsubtitle'                   => 'ಈರ್ \'\'\'[[:$1]]\'\'\' ನ್ ನಾಡಿಯರ್ ([[Special:Prefixindex/$1|"$1" ರ್ದ್ ಶುರುವಾಪುನ ಪೂರ ಪುಟೊಲು]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|"$1" ಗ್ ಲಿಂಕ್ ಕೊರ್ಪುನ ಪೂರ ಪುಟೊಲು]])',
+'searchsubtitleinvalid'            => "'''$1''' ನ್ ಈರ್ ನಾಡಿಯರ್.",
+'notitlematches'                   => 'ವಾ ಪುಟೊತ ಶಿರ್ಷಿಕೆಲಾ ಹೊಂದಿಕೆ ಆವೊಂದಿಜ್ಜಿ',
+'notextmatches'                    => 'ವಾ ಪುಟೊತ ಪಠ್ಯೊಡುಲಾ ಹೋಲಿಕೆ ಇಜ್ಜಿ',
+'prevn'                            => 'ದುಂಬುದ {{PLURAL:$1|$1}}',
+'nextn'                            => 'ಬೊಕ್ಕದ {{PLURAL:$1|$1}}',
+'viewprevnext'                     => 'ತೂಲೆ ($1 {{int:pipe-separator}} $2) ($3)',
+'searchmenu-legend'                => 'ನಾಡಾಟದ ಆಯ್ಕೆಲು',
+'searchhelp-url'                   => 'Help:ಪರಿವಿಡಿ',
+'searchprofile-articles'           => 'ಲೇಖನ ಪುಟೊ',
+'searchprofile-images'             => 'ಬಹುಮಾಧ್ಯಮ',
+'searchprofile-everything'         => 'ಪ್ರತಿಯೊಂಜಿ',
+'searchprofile-advanced'           => 'ಪರಿಣತ',
+'searchprofile-articles-tooltip'   => '$1 ಟ್ ನಾಡ್ಲೆ',
+'searchprofile-images-tooltip'     => 'ಫೈಲ್ ನಾಡ್ಲೆ',
+'searchprofile-everything-tooltip' => 'ಮಾತಾ ಪುಟಕ್ಕುಲೆಡ್ ನಾಡ್ಲೆ (ಪಾತೆರದ ಪುತಲ ಸೇರ್ದ್)',
+'search-result-size'               => '$1 ({{PLURAL:$2|೧ ಪದ|$2 ಪದೊಲು}})',
+'search-redirect'                  => '(ಪುನರ್ನಿರ್ದೇಶನ $1)',
+'search-section'                   => '(ವಿಭಾಗ $1)',
+'search-suggest'                   => 'ಇಂದೆನ್ ನಾಡೊಂದುಲ್ಲರೆ: $1',
+'search-interwiki-caption'         => 'ಬಳಗದ ಇತರ ಯೋಜನೆಲು',
+'search-interwiki-default'         => '$1 ಫಲಿತಾಂಶೊಲು:',
+'search-interwiki-more'            => '(ಮಸ್ತ್)',
+'search-mwsuggest-enabled'         => 'ಸಲಹೆದೊಟ್ಟಿಗೆ',
+'search-mwsuggest-disabled'        => 'ಓವು ಸಲಹೆಲಾ ಇಜ್ಜಿ',
+'searchrelated'                    => 'ಸ೦ಬ೦ಧ ಇತ್ತಿನ',
+'searchall'                        => 'ಮಾತಾ',
+'powersearch'                      => 'ನಾಡ್’ಲೆ',
+'powersearch-legend'               => 'ಅಡ್ವಾನ್ಸ್’ಡ್ ಸರ್ಚ್',
+'powersearch-ns'                   => 'ನೇಮ್-ಸ್ಪೇಸ್’ಲೆಡ್ ನಾಡ್ಲೆ',
+'powersearch-field'                => 'ನಾಡ್ಲೆ:',
+'powersearch-toggleall'            => 'ಮಾತಾ',
 
 # Preferences page
-'preferences'   => 'ಪ್ರಾಶಸ್ತ್ಯೊಲು',
-'mypreferences' => 'ಎನ್ನ ಪ್ರಾಶಸ್ತ್ಯಲು',
+'preferences'               => 'ಪ್ರಾಶಸ್ತ್ಯೊಲು',
+'mypreferences'             => 'ಎನ್ನ ಪ್ರಾಶಸ್ತ್ಯಲು',
+'changepassword'            => 'ಪ್ರವೇಶಪದೊನ್ ಬದಲಾವಣೆ ಮಲ್ಪುಲೆ',
+'prefs-datetime'            => 'ದಿನ ಬೊಕ್ಕ ಸಮಯ',
+'prefs-rc'                  => 'ಇಂಚಿಪದ ಬದಲಾವಣೆಲು',
+'prefs-resetpass'           => 'ಪ್ರವೇಶಪದೊನ್ ಬದಲಾವಣೆ ಮಲ್ಪುಲೆ',
+'prefs-changeemail'         => 'ಇ-ಅಂಚೆ ವಿಳಾಸೊನು ಬದಲಾವಣೆ ಮಲ್ಪುಲೆ',
+'saveprefs'                 => 'ಒರಿಪಾಲೆ',
+'rows'                      => 'ಸಾಲ್‘ಲು',
+'searchresultshead'         => ' 
+ನಾಡ್’ಲೆ',
+'localtime'                 => 'ಸ್ಥಳೀಯ ಸಮಯ:',
+'timezoneregion-africa'     => 'ಆಫ್ರಿಕ',
+'timezoneregion-america'    => 'ಅಮೇರಿಕ',
+'timezoneregion-antarctica' => 'ಅಂಟಾರ್ಟಿಕ',
+'timezoneregion-arctic'     => 'ಆರ್ಕ್ಟಿಕ್',
+'timezoneregion-asia'       => 'ಏಷ್ಯಾ',
+'timezoneregion-australia'  => 'ಆಸ್ಟ್ರೇಲಿಯಾ',
+'prefs-files'               => 'ಕಡತೊಲು',
+'youremail'                 => 'ಇ-ಅಂಚೆ',
+'username'                  => 'ಸದಸ್ಯೆರ್ನ ಪುದರ್:',
+'uid'                       => 'ಸದಸ್ಯೆರನ  ID',
+'yourrealname'              => 'ನಿಜವಾಯಿನ ಪುದರ್',
+'yourlanguage'              => 'ಭಾಷೆ:',
+'yournick'                  => 'ಪೊಸ ಸಹಿ',
+'badsiglength'              => 'ಇರೆನ ಸಹಿ ಭಾರೀ ಉದ್ದ ಆಂಡ್',
+'yourgender'                => 'ಲಿಂಗೊ',
+'gender-male'               => 'ಆಣ್',
+'gender-female'             => 'ಪೊಣ್ಣು',
+'email'                     => 'ಇ-ಅಂಚೆ',
+'prefs-signature'           => 'ಸಹಿ',
 
 # Groups
+'group'       => 'ಗುಂಪುಲು:',
+'group-user'  => 'ಬಳಕೆದಾರೆರ್',
 'group-sysop' => 'ನಿರ್ವಾಹಕೆರ್',
+'group-all'   => 'ಮಾತಾ',
 
 'grouppage-sysop' => '{{ns:project}}:ನಿರ್ವಾಹಕೆರ್',
+
+# Rights
+'right-read'     => 'ಪುಟಕ್‍ಲೆನ್ ಓದುಲೆ',
+'right-edit'     => 'ಪುಟೊನ್ ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ',
+'right-delete'   => 'ಪುಟೊಕುಲೆನ್ ಮಾಜಾಲೆ',
+'right-undelete' => 'ಪುಟೊನ್ ಮಾಜಾವಡೆ',
 
 # User rights log
 'rightslog' => 'ಸದಸ್ಯೆರ್ನ ಹಕ್ಕು ದಾಖಲೆ',
 
 # Associated actions - in the sentence "You do not have permission to X"
-'action-edit' => 'ಈ ಪುಟೊನು ಎಡಿಟ್ ಮಲ್ಪುಲೆ',
+'action-read'           => 'ಈ ಪುಟೊನು ಓದುಲೆ',
+'action-edit'           => 'ಈ ಪುಟೊನು ಎಡಿಟ್ ಮಲ್ಪುಲೆ',
+'action-createpage'     => 'ಈ ಪುಟೊನು ಸೃಷ್ಟಿಸಾಲೆ',
+'action-createtalk'     => 'ಚರ್ಚಾಪುಟೊಕ್‘ಲೆನ್ ಸೃಷ್ಟಿಸಾಲೆ',
+'action-createaccount'  => 'ಈ ಸದಸ್ಯೆರನ ಖಾತೆನ್ ಸೃಷ್ಟಿ ಮಲ್ಪುಲೆ',
+'action-minoredit'      => 'ಉದೊಂಜಿ ಎಲ್ಯ  ಬದಲಾವಣೆ',
+'action-move'           => 'ಈ ಪೂಟೊನು ಮೂವ್(ಸ್ಥಳಾಂತರ) ಮಲ್ಪುಲೆ',
+'action-movefile'       => 'ಈ ಫೈಲ್‘ನ್ ಸ್ಥಳಾಂತರ ಮಲ್ಪುಲೆ',
+'action-upload'         => 'ಈ ಫೈಲ್‘ನ್ ಅಪ್‘ಲೋಡ್ ಮಲ್ಪುಲೆ',
+'action-delete'         => 'ಈ ಪುಟೊನ್ ಮಾಜಾಲೆ',
+'action-deleterevision' => 'ಈ ಆವೃತ್ತಿನ್ ಮಾಜಾಲೆ',
+'action-sendemail'      => 'ಇ-ಅಂಚೆ ಕಡಪುಡುಲೆ',
 
 # Recent changes
 'nchanges'                       => '$1 {{PLURAL:$1|ಬದಲಾವಣೆ|ಬದಲಾವಣೆಲು}}',
 'recentchanges'                  => 'ಇಂಚಿಪದ ಬದಲಾವಣೆಲು',
 'recentchanges-legend'           => 'ಇಂಚಿಪದ ಬದಲಾವಣೆಲು ಆಯ್ಕೆಲು',
+'recentchangestext'              => 'ಈ ವಿಕಿಟ್ ಇಂಚಿಪ್ಪ ಆತಿನ ಬದಲಾವಣೆನ್ ಟ್ರಾಕ್ ಮಲ್ಪುಲೆ',
 'recentchanges-feed-description' => 'ಈ ಫೀಡ್’ಡ್ ವಿಕಿಕ್ ಇಂಚಿಪ್ಪ ಆತಿನಂಚಿನ ಬದಲಾವಣೆಲೆನ್ ಟ್ರ್ಯಾಕ್ ಮಲ್ಪುಲೆ.',
+'recentchanges-label-newpage'    => 'ಇರ್ನ ಈ ಬದಲಾವಣೆ ಪೊಸ ಪುಟೊನು ಸುರು ಮಲ್ಪುಂಡು',
+'recentchanges-label-minor'      => 'ಉಂದು ಎಲ್ಯ ಬದಲಾವಣೆ',
 'rcnote'                         => "$4, $5 ಮುಟ್ಟ ದುಂಬುದ {{PLURAL:$2|ದಿನೊಟು|'''$2''' ದಿನೊಲೆಡ್}} ಮಲ್ತ್’ದಿನ {{PLURAL:$1|'''1''' ಬದಲಾವಣೆ|'''$1''' ಬದಲಾವಣೆಲು}} ತಿರ್ತುಂಡು.",
 'rclistfrom'                     => '$1 ರ್ದ್ ಶುರುವಾತಿನ ಪೊಸ ಬದಲಾವಣೆಲೆನ್ ತೊಜ್ಪಾವು',
 'rcshowhideminor'                => '$1 ಎಲ್ಯೆಲ್ಯ ಬದಲಾವಣೆಲು',
 'rcshowhidebots'                 => '$1 ಬಾಟ್',
 'rcshowhideliu'                  => 'ಲಾಗ್-ಇನ್ ಆತಿನಂಚಿನ ಸದಸ್ಯೆರ್ $1',
 'rcshowhideanons'                => 'ಅನಾಮಧೇಯ ಸದಸ್ಯೆರ್ $1',
+'rcshowhidepatr'                 => '$1 ಪರೀಕ್ಷಿಸಾದಿನ ಸಂಪಾದನೆಲು',
 'rcshowhidemine'                 => 'ಎನ್ನ ಸಂಪಾದನೆಲೆನ್ $1',
 'rclinks'                        => 'ದುಂಬುದ $2 ದಿನೊಲೆಡ್ ಮಲ್ತಿನ $1 ಕಡೆತ ಬದಲಾವಣೆಲೆನ್ ತೂಲೆ <br />$3',
 'diff'                           => 'ವ್ಯತ್ಯಾಸ',
@@ -472,6 +681,9 @@ $messages = array(
 'minoreditletter'                => 'ಚು',
 'newpageletter'                  => 'ಪೊ',
 'boteditletter'                  => 'ಬಾ',
+'rc_categories_any'              => 'ಒವ್ವೇ',
+'newsectionsummary'              => '
+/* $1 */ಪೊಸ ವಿಭಾಗ',
 'rc-enhanced-expand'             => 'ವಿವರೊಲೆನ್ ತೊಜ್ಪಾವು (ಜಾವ ಸ್ಕ್ರಿಪ್ಟ್ ಬೋಡಾಪುಂಡು)',
 'rc-enhanced-hide'               => 'ವಿವರೊಲೆನ್ ದೆಂಗಾವು',
 
@@ -488,13 +700,28 @@ $messages = array(
 
 # Upload
 'upload'        => 'ಫೈಲ್ ಅಪ್ಲೋಡ್',
+'uploadbtn'     => 'ಫೈಲ್’ನ್ ಅಪ್ಲೋಡ್ ಮಲ್ಪುಲೆ',
+'uploadnologin' => 'ಲಾಗಿನ್ ಆತ್‘ಜ್ಜರ್',
+'uploadlog'     => 'ಅಪ್ಲೋಡ್ ದಾಖಲೆ',
 'uploadlogpage' => 'ಅಪ್ಲೋಡ್ ದಾಖಲೆ',
+'filename'      => 'ಕಡತದ ಪುದರ್',
+'filedesc'      => 'ಸಾರಾಂಶ',
+'filesource'    => 'ಮೂಲ',
+'savefile'      => 'ಕಡತನ್ ಒರಿಪಾಲೆ',
 'uploadedimage' => '"[[$1]]" ಅಪ್ಲೋಡ್ ಆಂಡ್',
+'upload-source' => 'ಮೂಲ ಕಡತ',
+
+'license-header' => 'ಲೈಸೆನ್ಸಿಂಗ್',
+
+# Special:ListFiles
+'imgfile' => 'ಫೈಲ್',
 
 # File description page
 'file-anchor-link'    => 'ಫೈಲ್',
 'filehist'            => 'ಫೈಲ್’ದ ಇತಿಹಾಸ',
 'filehist-help'       => 'ಫೈಲ್ ಆ ದಿನೊಟು ಎಂಚ ಇತ್ತ್’ನ್ಡ್’ನ್ದ್ ತೂಯೆರೆ ಆ ದಿನ/ಪೊರ್ತುದ ಮಿತ್ತ್ ಕ್ಲಿಕ್ ಮಲ್ಪುಲೆ.',
+'filehist-deleteall'  => 'ಮಾತಾ ಮಾಜಾಲೆ',
+'filehist-deleteone'  => 'ಮಾಜಾಲೆ',
 'filehist-current'    => 'ಪ್ರಸಕ್ತ',
 'filehist-datetime'   => 'ದಿನ/ಪೊರ್ತು',
 'filehist-thumb'      => 'ಥಂಬ್-ನೈಲ್',
@@ -507,21 +734,31 @@ $messages = array(
 'linkstoimage'        => 'ಈ ಫೈಲ್’ಗ್ ತಿರ್ತ್’ದ ಈ {{PLURAL:$1|ಪುಟ|$1 ಪುಟೊಲು}} ಲಿಂಕ್ ಕೊರ್ಪುಂಡು.',
 'sharedupload'        => 'ಈ ಫೈಲ್’ನ್ ಮಸ್ತ್ ಜನ ಪಟ್ಟ್’ದುಲ್ಲೆರ್ ಅಂಚೆನೆ ಉಂದು ಮಸ್ತ್ ಪ್ರೊಜೆಕ್ಟ್’ಲೆಡ್ ಉಪಯೋಗಡುಪ್ಪು.',
 
+# File deletion
+'filedelete-comment' => 'ಕಾರಣ',
+'filedelete-submit'  => 'ಮಾಜಾಲೆ',
+
 # Random page
 'randompage' => 'ಯಾದೃಚ್ಛಿಕ ಪುಟ',
 
 # Statistics
-'statistics' => 'ಅಂಕಿ ಅಂಶೊಲು',
+'statistics'              => 'ಅಂಕಿ ಅಂಶೊಲು',
+'statistics-header-pages' => 'ಪುಟೊತ ಅಂಕಿ ಅಂಶಲು',
+
+'disambiguationspage' => 'ದ್ವಂದ್ವ ನಿವಾರಣೆ',
 
 # Miscellaneous special pages
-'nbytes'        => '$1 {{PLURAL:$1|ಬೈಟ್|ಬೈಟ್‍ಲು}}',
-'nmembers'      => '$1 {{PLURAL:$1|ಸದಸ್ಯೆ|ಸದಸ್ಯೆರ್}}',
-'prefixindex'   => 'ಪೂರ್ವನಾಮೊಲ್ದ ಸೂಚಿಕೆ',
-'newpages'      => 'ಪೊಸ ಪುಟೊಲು',
-'move'          => 'ಮೂವ್(ಸ್ಥಳಾಂತರ) ಮಲ್ಪುಲೆ',
-'movethispage'  => 'ಈ ಪುಟೊನು ಮೂವ್ ಮಲ್ಪುಲೆ',
-'pager-newer-n' => '{{PLURAL:$1|ಪೊಸ ೧|ಪೊಸ $1}}',
-'pager-older-n' => '{{PLURAL:$1|ಪರತ್ತ್ ೧|ಪರತ್ತ್ $1}}',
+'nbytes'            => '$1 {{PLURAL:$1|ಬೈಟ್|ಬೈಟ್‍ಲು}}',
+'nmembers'          => '$1 {{PLURAL:$1|ಸದಸ್ಯೆ|ಸದಸ್ಯೆರ್}}',
+'wantedfiles'       => 'ಬೋಡಾಯಿನ ಕಡತೊಲು',
+'prefixindex'       => 'ಪೂರ್ವನಾಮೊಲ್ದ ಸೂಚಿಕೆ',
+'listusers'         => 'ಬಳಕೆದಾರರೆನ ತಖ್ತೆ',
+'newpages'          => 'ಪೊಸ ಪುಟೊಲು',
+'newpages-username' => 'ಸದಸ್ಯೆರ್ನ ಪುದರ್:',
+'move'              => 'ಮೂವ್(ಸ್ಥಳಾಂತರ) ಮಲ್ಪುಲೆ',
+'movethispage'      => 'ಈ ಪುಟೊನು ಮೂವ್ ಮಲ್ಪುಲೆ',
+'pager-newer-n'     => '{{PLURAL:$1|ಪೊಸ ೧|ಪೊಸ $1}}',
+'pager-older-n'     => '{{PLURAL:$1|ಪರತ್ತ್ ೧|ಪರತ್ತ್ $1}}',
 
 # Book sources
 'booksources'               => 'ಪುಸ್ತಕೊಲ್ದ ಮೂಲ',
@@ -540,8 +777,7 @@ $messages = array(
 'allpagessubmit' => 'ಪೋ',
 
 # Special:Log/newusers
-'newuserlogpage'          => 'ಸದಸ್ಯ ರಚನೆ ಲಾಗ್',
-'newuserlog-create-entry' => 'ಪೊಸ ಸದಸ್ಯೆರ್ನ ಎಕೌಂಟ್',
+'newuserlogpage' => 'ಸದಸ್ಯ ರಚನೆ ಲಾಗ್',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(ಸದಸ್ಯೆರ್ನ ಪಟ್ಟಿ)',
@@ -552,7 +788,6 @@ $messages = array(
 # Watchlist
 'watchlist'         => 'ವೀಕ್ಷಣಾ ಪಟ್ಟಿ',
 'mywatchlist'       => 'ಎನ್ನ ವೀಕ್ಷಣಾಪಟ್ಟಿ',
-'watchlistfor'      => "('''$1''' ಇಂದೆತ)",
 'watch'             => 'ತೂಲೆ',
 'watchthispage'     => 'ಈ ಪುಟೊನು ತೂಲೆ',
 'unwatch'           => 'ವೀಕ್ಷಣಾಪಟ್ಟಿರ್ದ್ ದೆಪ್ಪು',
@@ -564,7 +799,6 @@ $messages = array(
 
 # Delete
 'actioncomplete' => 'ಕಾರ್ಯ ಸಂಪೂರ್ಣ',
-'deletedarticle' => '"[[$1]]" ನೆನ್ನ್ ದೆತ್ತ್ ದಾ೦ಡ್',
 'dellogpage'     => 'ಡಿಲೀಟ್ ಮಲ್ತಿನ ಫೈಲ್’ಲೆದ ದಾಖಲೆ',
 
 # Rollback
@@ -577,7 +811,7 @@ $messages = array(
 
 # Undelete
 'undeletelink'     => 'ದುಂಬುದ ಆವೃತ್ತಿಗ್ ಪೋಲೆ',
-'undeletedarticle' => '"[[$1]]" ನ್ ಪಿರಕನತ್’ನ್ಡ್',
+'undeleteviewlink' => 'ತೂಲೆ',
 
 # Namespace form on various pages
 'namespace'      => 'ನೇಮ್-ಸ್ಪೇಸ್:',
@@ -595,6 +829,7 @@ $messages = array(
 
 'sp-contributions-newbies'  => 'ಪೊಸ ಖಾತೆಲೆದ ಕಾಣಿಕೆಲೆನ್ ಮಾತ್ರ ತೊಜ್ಪಾವು',
 'sp-contributions-blocklog' => 'ತಡೆಪತ್ತುನ ದಾಖಲೆ',
+'sp-contributions-logs'     => 'ದಾಖಲೆಲು',
 'sp-contributions-talk'     => 'ಪಾತೆರ',
 'sp-contributions-search'   => 'ಕಾಣಿಕೆಲೆನ್ ನಾಡ್ಲೆ',
 'sp-contributions-username' => 'ಐ.ಪಿ ವಿಳಾಸ ಅತ್ತ್’ನ್ಡ ಬಳಕೆದ ಪುದರ್:',
@@ -637,6 +872,9 @@ $messages = array(
 # Export
 'export' => 'ಪುಟಲೆನ್ ರಫ್ತು ಮಲ್ಪುಲೆ',
 
+# Namespace 8 related
+'allmessagesname' => 'ಪುದರ್',
+
 # Thumbnails
 'thumbnail-more'  => 'ಮಲ್ಲ ಮಲ್ಪುಲೆ',
 'thumbnail_error' => 'ಮುನ್ನೋಟ ಚಿತ್ರೊನು ಸೃಷ್ಟಿ ಮನ್ಪುನಗ ದೋಷ: $1',
@@ -663,7 +901,9 @@ $messages = array(
 'tooltip-search'                  => '{{SITENAME}}ನ್ ನಾಡ್’ಲೆ',
 'tooltip-search-go'               => 'ಉಂದುವೇ ಪುದರ್ದ ಪುಟ ಇತ್ತ್’ನ್ಡ ಅಡೆ ಪೋಲ',
 'tooltip-search-fulltext'         => 'ಈ ಪಠ್ಯ ಉಪ್ಪುನಂಚಿನ ಪುಟೊಲೆನ್ ನಾಡ್’ಲ',
+'tooltip-p-logo'                  => 'ಮುಖ್ಯ ಪುಟೊನು ತೂಲೆ',
 'tooltip-n-mainpage'              => 'ಮುಖ್ಯ ಪುಟೊನು ತೂಲೆ',
+'tooltip-n-mainpage-description'  => 'ಮುಖ್ಯ ಪುಟೊನು ತೂಲೆ',
 'tooltip-n-portal'                => 'ಪ್ರೊಜೆಕ್ಟ್’ದ ಬಗ್ಗೆ, ಈರ್ ದಾದ ಮಲ್ಪೊಲಿ, ಓಲು ಇಂದೆತ ಬಗ್ಗೆ ತೆರಿಯೊನೊಲಿ',
 'tooltip-n-currentevents'         => 'ಪ್ರಸಕ್ತ ಘಟನೆಲ್ದ ಬಗ್ಗೆ ಹಿನ್ನೆಲೆ ಮಾಹಿತಿ ತೆರಿಯೊನ್ಲೆ',
 'tooltip-n-recentchanges'         => 'ವಿಕಿಡ್ ದುಂಬುದ ಒಂತೆ ಸಮಯಡ್ ಆತಿನಂಚಿನ ಬದಲಾವಣೆಲ್ದ ಪಟ್ಟಿ',
@@ -702,11 +942,10 @@ $messages = array(
 'nextdiff'     => 'ಪೊಸ ಎಡಿಟ್ →',
 
 # Media information
-'file-info-size'       => '($1 × $2 ಪಿಕ್ಸೆಲ್, ಫೈಲ್’ದ ಗಾತ್ರ: $3, MIME ಪ್ರಕಾರ: $4)',
-'file-nohires'         => '<small>ಇಂದೆರ್ದ್ ಜಾಸ್ತಿ ವಿವರವಾಯಿನ ನೋಟ ಇಜ್ಜಿ.</small>',
-'svg-long-desc'        => '(ಎಸ್.ವಿ.ಜಿ ಫೈಲ್, ಸುಮಾರಾದ್ $1 × $2 ಪಿಕ್ಸೆಲ್, ಫೈಲ್’ದ ಗಾತ್ರ: $3)',
-'show-big-image'       => 'ಪೂರ್ತಿ ರೆಸೊಲ್ಯೂಶನ್',
-'show-big-image-thumb' => '<small>ಈ ಮುನ್ನೋಟದ ಗಾತ್ರ: $1 × $2 ಪಿಕ್ಸೆಲ್</small>',
+'file-info-size' => '$1 × $2 ಪಿಕ್ಸೆಲ್, ಫೈಲ್’ದ ಗಾತ್ರ: $3, MIME ಪ್ರಕಾರ: $4',
+'file-nohires'   => 'ಇಂದೆರ್ದ್ ಜಾಸ್ತಿ ವಿವರವಾಯಿನ ನೋಟ ಇಜ್ಜಿ.',
+'svg-long-desc'  => 'ಎಸ್.ವಿ.ಜಿ ಫೈಲ್, ಸುಮಾರಾದ್ $1 × $2 ಪಿಕ್ಸೆಲ್, ಫೈಲ್’ದ ಗಾತ್ರ: $3',
+'show-big-image' => 'ಪೂರ್ತಿ ರೆಸೊಲ್ಯೂಶನ್',
 
 # Bad image list
 'bad_image_list' => 'ವ್ಯವಸ್ಥೆದ ಆಕಾರ ಈ ರೀತಿ ಉಂಡು:
@@ -729,11 +968,17 @@ $messages = array(
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength',
+* focallength
+* artist
+* copyright
+* imagedescription
+* gpslatitude
+* gpslongitude
+* gpsaltitude',
 
 # External editor support
 'edit-externally'      => 'ಬಾಹ್ಯ(ಪಿದಯಿದ) ತಂತ್ರಾಶೊನು ಉಪಯೋಗ ಮಲ್ತ್’ದ್ ಇಂದೆನ್ ಸಂಪಾದನೆ ಮಲ್ಪುಲೆ',
-'edit-externally-help' => 'ನನಲ ಮಾಹಿತಿಗ್ [http://www.mediawiki.org/wiki/Manual:External_editors ಸೆಟ್-ಅಪ್ ನಿರ್ದೇಶನೊಲೆನ್] ತೂಲೆ.',
+'edit-externally-help' => 'ನನಲ ಮಾಹಿತಿಗ್ [//www.mediawiki.org/wiki/Manual:External_editors ಸೆಟ್-ಅಪ್ ನಿರ್ದೇಶನೊಲೆನ್] ತೂಲೆ.',
 
 # 'all' in various places, this might be different for inflected languages
 'watchlistall2' => 'ಪೂರ',
@@ -741,6 +986,7 @@ $messages = array(
 'monthsall'     => 'ಪೂರಾ',
 
 # Watchlist editing tools
+'watchlisttools-view' => 'ಪ್ರಸ್ತುತ ಬದಲಾವಣೆಲ್ ತೋಜಾಲೆ',
 'watchlisttools-edit' => 'ವೀಕ್ಷಣಾಪಟ್ಟಿನ್ ತೂಲೆ ಬೊಕ್ಕ ಎಡಿಟ್ ಮಲ್ಪುಲೆ',
 
 # Special:SpecialPages

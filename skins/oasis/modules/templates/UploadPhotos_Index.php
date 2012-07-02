@@ -1,7 +1,7 @@
 <div id="UploadPhotos" class="UploadPhotos">
-	<form onsubmit="return AIM.submit(this, UploadPhotos.uploadCallback)" action="<?= $wg->ScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=UploadPhotos&actionName=Upload&outputType=html" method="POST" enctype="multipart/form-data">
+	<form onsubmit="return $.AIM.submit(this, UploadPhotos.uploadCallback)" action="<?= $wg->ScriptPath ?>/index.php?action=ajax&rs=moduleProxy&moduleName=UploadPhotos&actionName=Upload&outputType=html" method="POST" enctype="multipart/form-data">
 		<input type="hidden" name="wpSourceType" value="file">
-		
+
 		<div class="step-1">
 			<h1><?= wfMsg('oasis-upload-photos-title') ?></h1>
 			<input type="file" name="wpUploadFile" size="60">

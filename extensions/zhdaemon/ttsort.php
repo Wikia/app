@@ -1,4 +1,10 @@
 <?php
+
+if (php_sapi_name() != 'cli') {
+	echo "This is a command line utility";
+	die(1);
+}
+
 /* sort a dictionary file in an order that ensure a 
    balanced trie when inserted in that order*/
 $buf = file_get_contents('php://stdin');

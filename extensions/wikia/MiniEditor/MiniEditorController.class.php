@@ -28,13 +28,13 @@ class MiniEditorController extends WikiaController {
 		$this->response->setJSVar('wgEnableMiniEditorExt', true);
 
 		// Create a JS variable to let us know if we are loading on demand or not
-		$this->response->setJSVar('wgMiniEditorLoadOnDemand', $loadOnDemand);
+		$this->response->setJsVar('wgMiniEditorLoadOnDemand', $loadOnDemand);
 
 		// Loading assets on demand
 		if ($loadOnDemand) {
 
 			// Export a list of assets to javascript for future dynamic loading
-			$this->response->setJSVar('wgMiniEditorAssets', $this->request->getVal('loadOnDemandAssets', array()));
+			$this->response->setJsVar('wgMiniEditorAssets', $this->request->getVal('loadOnDemandAssets', array()));
 
 		} else {
 
@@ -61,7 +61,7 @@ class MiniEditorController extends WikiaController {
 
 			// Set the rest of our global JS vars
 			foreach ($jsvars as $var => $value) {
-				$this->response->setJSVar($var, $value);
+				$this->response->setJsVar($var, $value);
 			}
 		}
 

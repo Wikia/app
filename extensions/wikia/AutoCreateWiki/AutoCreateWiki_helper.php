@@ -314,7 +314,7 @@ class AutoCreateWiki {
 		wfProfileIn(__METHOD__);
 
 		$sResponse = "";
-		if ( ( $sValue == "") || ( !User::isValidEmailAddr( $sValue ) ) )  {
+		if ( ( $sValue == "") || ( !Sanitizer::validateEmail( $sValue ) ) )  {
 			$sResponse = wfMsg( 'invalidemailaddress' );
 		}
 

@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Alhen
  * @author Diego Grez
  * @author Erebedhel
  * @author Kanon6917
@@ -30,8 +31,7 @@ $messages = array(
 'tog-editsection'             => '[Turkaña] sipitampi tuqitaki turkawi luräña',
 'tog-editsectiononrightclick' => '(JavaScript munawiwa) titulxat tuqina kupi suxuqiñampi tuqitaki turkawi luräña',
 'tog-showtoc'                 => 'Waruchataw uñachayaña (kimsa tituljampi uñstawitaki)',
-'tog-rememberpassword'        => "Akax jasanchirin imt'awija amtaña",
-'tog-editwidth'               => 'Akiptawit llataxa taqi anchuniwa',
+'tog-rememberpassword'        => "Akax jasanchirin imt'awija amtaña (for a maximum of $1 {{PLURAL:$1|day|days}})",
 'tog-watchcreations'          => "Unch'ukit waruchatajana nayaxa uñstawix uñstayawajata yapxataña",
 'tog-watchdefault'            => "Unch'ukit waruchatajana nayaxa uñstawix turkajata yapxataña",
 'tog-watchmoves'              => "Unch'ukit waruchatajana nayaxa uñstawix sutiyarajata yapxataña",
@@ -140,7 +140,6 @@ $messages = array(
 'searcharticle'     => 'Saraña',
 'history'           => 'Nayra qillqata',
 'history_short'     => 'Nayra qillqata',
-'info_short'        => "Uñt'ayawi",
 'edit'              => 'Turkaña',
 'create'            => 'Uñstayaña',
 'editthispage'      => 'Aka uñstawi turkaña',
@@ -174,6 +173,7 @@ $messages = array(
 'editsection'    => 'turkaña',
 'editold'        => 'turkaña',
 'editlink'       => 'trukaña',
+'toc'            => 'Utjirinaka',
 'showtoc'        => 'uñachayaña',
 'site-rss-feed'  => '$1 RSS jalsuri',
 'site-atom-feed' => '$1 Atom jalsuri',

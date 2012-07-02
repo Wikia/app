@@ -29,17 +29,6 @@ $wgSpecialPages['CreateIngredient'] = 'SpecialCreateIngredient';
 $wgSpecialPages['CreateRecipe'] = 'SpecialCreateRecipe';
 $wgSpecialPages['CreateFromTemplate'] = 'SpecialCreateFromTemplate';
 
-// hooks
-if ( !empty( $wgEnableRecipesTemplateExt ) ) {
-	/*
-	 * this extension is used in two contexts:
-	 * 1. stand-alone, displaying at Special:CreatePage
-	 * 2. by user profile extensions
-	 * in the second case, the toggle should not be displayed
-	 */
-	// $wgHooks['EditPage::showEditForm:initial'][] = 'RecipesTemplate::showCreatePageToggle'; // macbre: disable for EditPageLayout ext
-}
-
 // i18n
 $wgExtensionMessagesFiles['RecipesTemplate'] = $dir . 'RecipesTemplate.i18n.php';
 
@@ -51,7 +40,7 @@ function RecipesTemplateAjax() {
 
 	if (method_exists('RecipesTemplateAjax', $method)) {
 		$data = RecipesTemplateAjax::$method();
-		$json = Wikia::json_encode($data);
+		$json = json_encode($data);
 
 		$response = new AjaxResponse($json);
 		$response->setContentType('application/json; charset=utf-8');

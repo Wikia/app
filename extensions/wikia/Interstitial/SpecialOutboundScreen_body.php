@@ -16,8 +16,6 @@ class Outbound extends UnlistedSpecialPage {
 		$this->adLayoutMode = strtoupper($wgOutboundScreenConfig['adLayoutMode']);
 
 		parent::__construct( 'Outbound' /*class*/ );
-		wfLoadExtensionMessages( 'Outbound' ); // Load internationalization messages
-		wfLoadExtensionMessages( INTERSTITIALS_SP ); // Load internationalization messages for the interstitial
 	}
 
 	function execute() {

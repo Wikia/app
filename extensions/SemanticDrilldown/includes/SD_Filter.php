@@ -18,10 +18,52 @@ class SDFilter {
 	var $input_type = null;
 	var $allowed_values;
 	var $possible_applied_filters = array();
-	// wikia change
-	var $dbr = false;
-	var $dbw = false;
-
+	
+	static function loadAllFromPageSchema( $psSchemaObj ){
+		$filters_ps = array();		
+		$template_all = $psSchemaObj->getTemplates();						
+		foreach ( $template_all as $template ) {
+			$field_all = $template->getFields();
+			foreach( $field_all as $fieldObj ) {
+				$f = new SDFilter();
+				$filter_array = $fieldObj->getObject( 'semanticdrilldown_Filter' );
+				if ( is_null( $filter_array ) ) {
+					continue;
+				}
+				if ( array_key_exists( 'name', $filter_array ) ) {
+					$f->name = $filter_array['name'];
+				} else {
+					$f->name = $fieldObj->getName();
+				}
+				$prop_array = $fieldObj->getObject('semanticmediawiki_Property');
+				$f->property = $prop_array['name'];
+				$f->escaped_property = str_replace( array( ' ', "'" ), array( '_', "\'" ), $f->property );
+				$f->is_relation = true;				
+				if ( array_key_exists( 'Type', $prop_array ) && $prop_array['Type'] != 'Page' ) {
+					$f->is_relation = false;
+				}
+				if ( array_key_exists( 'InputType', $filter_array ) ) {
+					$f->input_type = $filter_array['InputType'];
+				}
+				if ( array_key_exists( 'ValuesFromCategory', $filter_array ) ) {
+					$f->category = $filter_array['ValuesFromCategory'];
+					$f->allowed_values = SDUtils::getCategoryChildren( $f->category, false, 5 );
+				} elseif ( array_key_exists( 'TimePeriod', $filter_array ) ) {
+					$f->time_period = $filter_array['TimePeriod'];
+					$f->allowed_values = array();
+				} elseif ( $f->is_boolean ) {
+					$f->allowed_values = array( '0', '1' );
+				} elseif ( array_key_exists( 'Values', $filter_array ) ) {
+					$f->allowed_values = $filter_array['Values'];
+				} else {
+					$f->allowed_values = array();
+				}				
+				$filters_ps[] = $f ;
+			}
+		}				
+		return $filters_ps;
+	}
+	
 	static function load( $filter_name ) {
 		$f = new SDFilter();
 		$f->name = $filter_name;
@@ -34,7 +76,11 @@ class SDFilter {
 		$proptitle = Title::newFromText( $f->property, SMW_NS_PROPERTY );
 		if ( $proptitle != null ) {
 			$store = smwfGetStore();
-			if ( class_exists( 'SMWPropertyValue' ) ) {
+			if ( class_exists( 'SMWDIProperty' ) ) {
+				// SMW 1.6
+				$propPage = new SMWDIWikiPage( $f->escaped_property, SMW_NS_PROPERTY, null );
+				$types = $store->getPropertyValues( $propPage, new SMWDIProperty( '_TYPE' ) );
+			} elseif ( class_exists( 'SMWPropertyValue' ) ) {
 				$types = $store->getPropertyValues( $proptitle, SMWPropertyValue::makeUserProperty( 'Has type' ) );
 			} else {
 				$types = $store->getSpecialValues( $proptitle, SMW_SP_HAS_TYPE );
@@ -42,13 +88,24 @@ class SDFilter {
 			global $smwgContLang;
 			$datatypeLabels =  $smwgContLang->getDatatypeLabels();
 			if ( count( $types ) > 0 ) {
-				if ( $types[0]->getWikiValue() != $datatypeLabels['_wpg'] ) {
+				if ( $types[0] instanceof SMWDIWikiPage ) {
+					// SMW 1.6
+					$typeValue = $types[0]->getDBkey();
+				} elseif ( $types[0] instanceof SMWDIURI ) {
+					// A bit inefficient, but it's the
+					// simplest approach.
+					$typeID = $types[0]->getFragment();
+					$typeValue = $datatypeLabels[$typeID];
+				} else {
+					$typeValue = $types[0]->getWikiValue();
+				}
+				if ( $typeValue != $datatypeLabels['_wpg'] ) {
 					$f->is_relation = false;
 				}
-				if ( $types[0]->getWikiValue() == $datatypeLabels['_boo'] ) {
+				if ( $typeValue == $datatypeLabels['_boo'] ) {
 					$f->is_boolean = true;
 				}
-				if ( $types[0]->getWikiValue() == $datatypeLabels['_dat'] ) {
+				if ( $typeValue == $datatypeLabels['_dat'] ) {
 					$f->is_date = true;
 				}
 			}
@@ -87,7 +144,7 @@ class SDFilter {
 	function getTimePeriodValues() {
 		$possible_dates = array();
 		$property_value = $this->escaped_property;
-		$dbr = $this->getDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->time_period == wfMsg( 'sd_filter_month' ) ) {
 			$fields = "YEAR(value_xsd), MONTH(value_xsd)";
 		} else {
@@ -97,7 +154,7 @@ class SDFilter {
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		$sql = <<<END
 	SELECT $fields, count(*)
-	FROM semantic_drilldown_values sdv
+	FROM semantic_drilldown_values sdv 
 	JOIN $smw_attributes a ON sdv.id = a.s_id
 	JOIN $smw_ids p_ids ON a.p_id = p_ids.smw_id
 	WHERE p_ids.smw_title = '$property_value'
@@ -131,7 +188,7 @@ END;
 
 		$possible_values = array();
 		$property_value = $this->escaped_property;
-		$dbr = $this->getDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->is_relation ) {
 			$property_table_name = $dbr->tableName( 'smw_rels2' );
 			$property_table_nickname = "r";
@@ -145,7 +202,7 @@ END;
 		$prop_ns = SMW_NS_PROPERTY;
 		$sql = <<<END
 	SELECT $value_field, count(DISTINCT sdv.id)
-	FROM semantic_drilldown_values sdv
+	FROM semantic_drilldown_values sdv 
 	JOIN $property_table_name $property_table_nickname ON sdv.id = $property_table_nickname.s_id
 
 END;
@@ -178,7 +235,7 @@ END;
 	 * and for getting the set of 'None' values.
 	 */
 	function createTempTable() {
-		$dbr = $this->getDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$smw_ids = $dbr->tableName( 'smw_ids' );
 		if ( $this->is_relation ) {
 			$table_name = $dbr->tableName( 'smw_rels2' );
@@ -191,7 +248,7 @@ END;
 		}
 		$query_property = $this->escaped_property;
 		$sql = <<<END
-	CREATE TEMPORARY TABLE semantic_drilldown_filter_values Engine=Memory
+	CREATE TEMPORARY TABLE semantic_drilldown_filter_values
 	AS SELECT s_id AS id, $value_field AS value
 	FROM $table_name
 	JOIN $smw_ids p_ids ON $table_name.p_id = p_ids.smw_id
@@ -208,32 +265,10 @@ END;
 	 * Deletes the temporary table.
 	 */
 	function dropTempTable() {
-		$dbr = $this->getDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		// DROP TEMPORARY TABLE would be marginally safer, but it's
 		// not supported on all RDBMS's.
 		$sql = "DROP TABLE semantic_drilldown_filter_values";
 		$dbr->query( $sql );
-	}
-
-	/**
-	 * get database handler
-	 * @author Krzysztof Krzyżaniak (eloy)
-	 *
-	 * @param string $type -- database type DB_SLAVE or DB_MASTER
-	 */
-	function getDB( $type ) {
-
-		if( $type == DB_MASTER ) {
-			if( !$this->dbw ) {
-				$this->dbw = wfGetDB( DB_MASTER, 'smw' );
-			}
-		}
-		else {
-			if( !$this->dbr ) {
-				$this->dbr = wfGetDB( DB_SLAVE, 'smw');
-			}
-		}
-
-		return ( $type == DB_MASTER ) ? $this->dbw : $this->dbr;
 	}
 }

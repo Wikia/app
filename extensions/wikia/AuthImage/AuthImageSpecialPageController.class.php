@@ -45,7 +45,7 @@ class AuthImageSpecialPageController extends WikiaSpecialPageController {
 				
 				# call thumbnailer 
 				$options = array( 'method' => 'GET', 'timeout' => 'default', 'noProxy' => 1 );
-				$thumb_request = HttpRequest::factory( $thumb_url, $options );
+				$thumb_request = MWHttpRequest::factory( $thumb_url, $options );
 				$status = $thumb_request->execute();
 				$headers = $thumb_request->getResponseHeaders();
 

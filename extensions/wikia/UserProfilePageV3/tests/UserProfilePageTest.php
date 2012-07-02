@@ -1,7 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../UserProfilePage.setup.php';
 require_once dirname(__FILE__) . '/../InterviewQuestion.class.php';
-wfLoadAllExtensions();
 
 class UserProfilePageTest extends WikiaBaseTest {
 	const TEST_WIKI_ID = 111;

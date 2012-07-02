@@ -1,16 +1,18 @@
 <?php
 /**
  * Internationalisation file for the ForcePreview extension
- * @addtogroup Extensions
-*/
+ *
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
 /** English
- @author Ryan Schmidt
+ * @author Ryan Schmidt
  */
 $messages['en'] = array(
-	'forcepreview'      => 'Save page (use preview first)',
+	'forcepreview' => 'Save page (use preview first)',
 	'forcepreview-desc' => 'Force preview for unprivileged users',
 	'right-forcepreviewexempt' => 'May save without using Show preview',
 );
@@ -18,10 +20,12 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Meno25
  * @author Purodha
+ * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'forcepreview-desc' => 'Short description of the Forcepreview extension, shown in [[Special:Version]]. Do not translate or change links.',
-	'right-forcepreviewexempt' => '{{doc-right}}',
+	'forcepreview-desc' => '{{desc}}',
+	'right-forcepreviewexempt' => '{{doc-right|forcepreviewexempt}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -70,7 +74,7 @@ $messages['bar'] = array(
 	'right-forcepreviewexempt' => 'Speichan ohne dass a Voaschau dazwunga wiad',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -107,11 +111,12 @@ $messages['bs'] = array(
 
 /** Catalan (Català)
  * @author Aleator
+ * @author SMP
  */
 $messages['ca'] = array(
 	'forcepreview' => 'Desar la pàgina (usar abans la previsualització)',
 	'forcepreview-desc' => 'Força la previsualització als usuaris sense permisos',
-	'right-forcepreviewexempt' => 'Pot desar sense utilitzar la Vista prèvia',
+	'right-forcepreviewexempt' => 'Poder desar sense haver de previsualitzar',
 );
 
 /** Czech (Česky)
@@ -205,6 +210,15 @@ $messages['fr'] = array(
 	'right-forcepreviewexempt' => 'Peut publier sans utiliser la prévisualisation',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'forcepreview' => 'Sôvar la pâge (prèvisualisar d’abôrd)',
+	'forcepreview-desc' => 'Fôrce la prèvisualisacion por los utilisators pas privilègiyês.',
+	'right-forcepreviewexempt' => 'Pôt sôvar sen utilisar la prèvisualisacion',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
@@ -261,11 +275,12 @@ $messages['hi'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dalibor Bosits
+ * @author Ex13
  */
 $messages['hr'] = array(
-	'forcepreview' => 'Spremi stranicu (pogledajte kako će izgledati)',
+	'forcepreview' => 'Sačuvaj stranicu (Prikaži kako će izgledati)',
 	'forcepreview-desc' => "Zahtjeva upotrebu ''prikaži kako će izgledati'' za suradnike bez prava za isključenje",
-	'right-forcepreviewexempt' => "Moguće spremiti stranicu bez upotrebe ''prikaži''",
+	'right-forcepreviewexempt' => "Moguće spremiti stranicu bez uporabe ''prikaži''",
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -290,7 +305,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'forcepreview' => 'Immagazinar pagina (face primo un previsualisation)',
+	'forcepreview' => 'Publicar pagina (face primo un previsualisation)',
 	'forcepreview-desc' => 'Fortia le uso del previsualisation pro usatores non privilegiate',
 	'right-forcepreviewexempt' => 'Pote publicar sin uso de "Monstrar previsualisation"',
 );
@@ -350,7 +365,7 @@ $messages['ko'] = array(
 	'right-forcepreviewexempt' => '미리 보기 없이 편집 가능',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -381,8 +396,8 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'forcepreview' => 'താള്‍ സേവ് ചെയ്യുക (ആദ്യം പ്രിവ്യൂ ഉപയോഗിക്കുക)',
-	'forcepreview-desc' => 'സാധാരണ ഉപയോക്താക്കള്‍‍ക്കു നിര്‍ബന്ധമായും പ്രിവ്യൂ നടപ്പിലാക്കുക',
+	'forcepreview' => 'താൾ സേവ് ചെയ്യുക (ആദ്യം പ്രിവ്യൂ ഉപയോഗിക്കുക)',
+	'forcepreview-desc' => 'സാധാരണ ഉപയോക്താക്കൾ‍ക്കു നിർബന്ധമായും പ്രിവ്യൂ നടപ്പിലാക്കുക',
 	'right-forcepreviewexempt' => 'പ്രിവ്യൂ കാണുക എന്ന സം‌വിധാനം ഉപയോഗിക്കാതെ സേവ് ചെയ്യുന്നു',
 );
 
@@ -393,6 +408,24 @@ $messages['mr'] = array(
 	'forcepreview' => 'पान जतन करा (आधी झलक पहा)',
 	'forcepreview-desc' => 'कमी अधिकार असणार्‍या सदस्यांसाठी जाणूनबुजून झलक दाखवा',
 	'right-forcepreviewexempt' => 'झलक पहा चा वापर न करता पाठविता येईल',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'forcepreview' => 'Simpan laman (gunakan pralihat dahulu)',
+	'forcepreview-desc' => 'Wajibkan pralihat untuk pengguna tanpa keistimewaan',
+	'right-forcepreviewexempt' => 'Boleh menyimpan tanpa menggunakan Pralihat',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'forcepreview' => 'Lagre side (forhåndsvis først)',
+	'forcepreview-desc' => 'Tvinger brukere til å forhåndsvise siden dersom de ikke har riktige rettigheter',
+	'right-forcepreviewexempt' => 'Kan lagre uten å måtte se forhåndsvisning først',
 );
 
 /** Dutch (Nederlands)
@@ -413,15 +446,6 @@ $messages['nn'] = array(
 	'right-forcepreviewexempt' => 'Kan lagra utan å måtta førehandsvisa',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'forcepreview' => 'Lagre side (forhåndsvis først)',
-	'forcepreview-desc' => 'Tvinger brukere til å forhåndsvise siden dersom de ikke har riktige rettigheter',
-	'right-forcepreviewexempt' => 'Kan lagre uten å måtte se forhåndsvisning først',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -431,7 +455,7 @@ $messages['oc'] = array(
 	'right-forcepreviewexempt' => "Pòt èsser salvat sens l'utilizacion de la previsualizacion",
 );
 
-/** Ossetic (Иронау)
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -481,8 +505,8 @@ $messages['pt-br'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'forcepreview' => 'Salvează pagina (foloseşte previzualizare întâi)',
-	'forcepreview-desc' => 'Forţează previzualizare pentru utilizatori neprivilegiaţi',
+	'forcepreview' => 'Salvează pagina (folosește previzualizare întâi)',
+	'forcepreview-desc' => 'Forțează previzualizare pentru utilizatori neprivilegiați',
 );
 
 /** Tarandíne (Tarandíne)
@@ -512,12 +536,21 @@ $messages['sk'] = array(
 	'right-forcepreviewexempt' => 'Je možné uložiť bez použitia Zobraziť náhľad',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'forcepreview' => 'Shrani stran (najprej uporabi predogled)',
+	'forcepreview-desc' => 'Vsili predogled za neprivilegirane uporabnike',
+	'right-forcepreviewexempt' => 'Lahko shranjuje brez uporabe Prikaži predogled',
+);
+
 /** Lower Silesian (Schläsch)
  * @author Jonny84
  * @author Schläsinger
  */
 $messages['sli'] = array(
-	'forcepreview' => 'Seyte speichern (zuerst Vurschau oazeiga)',
+	'forcepreview' => 'Seite speichern (zuerst Vurschau oazeiga)',
 	'forcepreview-desc' => 'Vorschau für unprivilegierte Benutzer erzwingen',
 	'right-forcepreviewexempt' => 'Speichern ohne Erzwingung der Vorschau',
 );
@@ -539,14 +572,14 @@ $messages['te'] = array(
 	'forcepreview' => 'పేజీని భద్రపరచండి (ముందుగా సరిచూడండి)',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'forcepreview' => 'Захираи саҳифа (пешнамоишро аввал истифода баред)',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -611,16 +644,22 @@ $messages['vo'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'forcepreview' => '保存页面（需先预览）',
+	'forcepreview-desc' => '非特权用户力预览',
+	'right-forcepreviewexempt' => '可保存而不使用显示预览',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Gzdavidwong
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'forcepreview' => '保存頁面（需先預覽）',
+	'forcepreview' => '儲存頁面（需先預覽）',
+	'forcepreview-desc' => '非特權用戶力預覽',
+	'right-forcepreviewexempt' => '可保存而不使用顯示預覽',
 );
 

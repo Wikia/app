@@ -2,7 +2,7 @@ Player Stats Grabber
 
 ==Install==
 
-add to local seettings: 
+add to local settings: 
 require( "$IP/extensions/PlayerStatsGrabber/PlayerStatsGrabber.php" );
 
 upload sample_barney.ogg (the survey site should include oggHandler)

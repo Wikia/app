@@ -18,16 +18,23 @@ class MapsParamLocation extends ItemParameterManipulation {
 	 * metadata, which should be ignored here. This field holds the delimiter
 	 * used to seperata this data from the actual location. 
 	 * 
-	 * @since 0.7
+	 * @since 0.7.2
 	 * 
 	 * @var string
 	 */
-	protected $metaDataSeparator;	
+	protected $metaDataSeparator;
+	
+	/**
+	 * Should the location be turned into a JSON object.
+	 * 
+	 * @var boolean
+	 */
+	public $toJSONObj = false;
 	
 	/**
 	 * Constructor.
 	 * 
-	 * @since 0.7
+	 * @since 0.7.2
 	 */
 	public function __construct( $metaDataSeparator = false ) {
 		parent::__construct();
@@ -38,12 +45,13 @@ class MapsParamLocation extends ItemParameterManipulation {
 	/**
 	 * @see ItemParameterManipulation::doManipulation
 	 * 
-	 * @since 0.7
+	 * @since 0.7.2
 	 */	
 	public function doManipulation( &$value, Parameter $parameter, array &$parameters ) {
 		$parts = $this->metaDataSeparator === false ? array( $value ) : explode( $this->metaDataSeparator, $value ); 
-		 
-		$value = new MapsLocation( array_shift( $parts ) );
+		
+		$value = array_shift( $parts );
+		$value = new MapsLocation( $value );
 		
 		if ( $title = array_shift( $parts ) ) {
 			$value->setTitle( $title );
@@ -55,6 +63,10 @@ class MapsParamLocation extends ItemParameterManipulation {
 
 		if ( $icon = array_shift( $parts ) ) {
 			$value->setIcon( $icon );
+		}
+		
+		if ( $this->toJSONObj ) {
+			$value = $value->getJSONObject();
 		}
 	}
 	

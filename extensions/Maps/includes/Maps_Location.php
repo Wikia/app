@@ -91,6 +91,34 @@ class MapsLocation {
 	 */	
 	protected $separator;
 	
+	/**
+	 * Creates and returns a new instance of a MapsLocation from a latitude and longitude.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @param float $lat
+	 * @param float $lon
+	 * @param integer $format
+	 * 
+	 * @return MapsLocation
+	 */
+	public static function newFromLatLon( $lat, $lon, $format = Maps_COORDS_FLOAT ) {
+		return new self( $lat . ',' . $lon, $format );
+	}
+	
+	/**
+	 * Creates and returns a new instance of a MapsLocation from an address.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @param string $address
+	 * @param integer $format
+	 * 
+	 * @return MapsLocation
+	 */
+	public static function newFromAddress( $address, $format = Maps_COORDS_FLOAT ) {
+		return new self( $address, $format );
+	}
 	
 	/**
 	 * Constructor.
@@ -102,7 +130,7 @@ class MapsLocation {
 	 * 
 	 * @since 0.7.1
 	 */
-	public function construct( $coordsOrAddress = null, $format = Maps_COORDS_FLOAT, $directional = false, $separator = ',' ) {
+	public function __construct( $coordsOrAddress = null, $format = Maps_COORDS_FLOAT, $directional = false, $separator = ',' ) {
 		$this->format = $format;
 		$this->directional = $directional;
 		$this->separator = $separator;
@@ -282,6 +310,17 @@ class MapsLocation {
 	}	
 	
 	/**
+	 * Returns if there is any icon.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @return boolean
+	 */
+	public function hasIcon() {
+		return $this->icon !== '';
+	}		
+	
+	/**
 	 * Sets the icon
 	 * 
 	 * @since 0.7.2
@@ -293,6 +332,17 @@ class MapsLocation {
 	}	
 	
 	/**
+	 * Returns if there is any title.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @return boolean
+	 */
+	public function hasTitle() {
+		return $this->title !== '';
+	}	
+	
+	/**
 	 * Returns the title.
 	 * 
 	 * @since 0.7.2
@@ -301,6 +351,17 @@ class MapsLocation {
 	 */
 	public function getTitle() {
 		return $this->title;
+	}
+	
+	/**
+	 * Returns if there is any text.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @return boolean
+	 */
+	public function hasText() {
+		return $this->text !== '';
 	}
 	
 	/**
@@ -323,6 +384,25 @@ class MapsLocation {
 	 */
 	public function getIcon() {
 		return $this->icon;
+	}
+	
+	/**
+	 * Returns an object that can directly be converted to JS using json_encode or similar.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @return object
+	 */
+	public function getJSONObject( $defText = '', $defTitle = '', $defIconUrl = '' ) {
+		return array(
+			'lat' => $this->getLatitude(),
+			'lon' => $this->getLongitude(),
+			'alt' => $this->getAltitude(),
+			'text' => $this->hasText() ? $this->getText() : $defText,
+			'title' => $this->hasTitle() ? $this->getTitle() : $defTitle,
+			'address' => $this->getAddress( false ),
+			'icon' => $this->hasIcon() ? MapsMapper::getFileUrl( $this->getIcon() ) : $defIconUrl
+		);
 	}
 	
 }

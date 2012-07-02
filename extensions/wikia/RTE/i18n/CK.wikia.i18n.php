@@ -106,6 +106,8 @@ $messages['en'] = array(
 	'rte-ck-videoPlaceholder-confirmDelete' => 'Are you sure you wish to remove the video placeholder from this page?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Remove this video placeholder?',
 	'rte-ck-videoPlaceholder-tooltip' => 'This is a video placeholder.',
+	'rte-ck-mut-add' => 'Add a video (beta)',
+	'rte-ck-mut-mut' => 'Video (beta)',
 	'rte-ck-widescreen-toggle' => 'Toggle widescreen',
 	'rte-ck-poll-confirmDelete' => 'Are you sure you wish to remove the poll from this page?',
 	'rte-ck-poll-confirmDeleteTitle' => 'Remove this poll?',
@@ -213,7 +215,7 @@ $messages['be'] = array(
 	'rte-ck-templateDropDown-label' => 'Шаблон',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -1046,7 +1048,7 @@ $messages['fr'] = array(
 	'rte-ck-format-tag_h5' => 'Titre 5',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

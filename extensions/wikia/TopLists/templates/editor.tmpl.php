@@ -33,7 +33,7 @@
 	<div class="InputSet">
 		<label for="list_name"><?= wfMsg( 'toplists-editor-title-label' ) ;?></label>
 		<? if ( $mode == 'create' ) :?>
-			<input type="text" name="list_name" placeholder="<?= wfMsg( 'toplists-editor-title-placeholder' ) ;?>"
+			<input type="text" name="list_name" id="list_name" placeholder="<?= wfMsg( 'toplists-editor-title-placeholder' ) ;?>"
 				value="<?= $listName ;?>"<?= ( !empty( $errors[ 'list_name' ] ) ) ? ' class="error"' : null ;?> />
 			<? if ( !empty( $errors[ 'list_name' ] ) ) :?>
 				<? foreach( $errors[ 'list_name' ] as $errorMessage ) :?>
@@ -50,7 +50,7 @@
 			<?= wfMsg( 'toplists-editor-related-article-label' ) ;?>
 		</label>
 
-		<input type="text" name="related_article_name" placeholder="<?= wfMsg( 'toplists-editor-related-article-placeholder' ) ;?>"
+		<input type="text" id="related_article_name" name="related_article_name" placeholder="<?= wfMsg( 'toplists-editor-related-article-placeholder' ) ;?>"
 			autocomplete="off" value="<?= $relatedArticleName ;?>"
 			<?= ( !empty( $errors[ 'related_article_name' ] ) ) ? ' class="error"' : null ;?> />
 
@@ -66,7 +66,7 @@
             <?= wfMsg( 'toplists-editor-description-label' ) ;?>
         </label>
 
-        <input type="text" name="description" placeholder="<?= wfMsg( 'toplists-editor-description-placeholder' ) ;?>"
+        <input type="text" id="description" name="description" placeholder="<?= wfMsg( 'toplists-editor-description-placeholder' ) ;?>"
                autocomplete="off" value="<?= $description ;?>"
             <?= ( !empty( $errors[ 'description' ] ) ) ? ' class="error"' : null ;?> />
 

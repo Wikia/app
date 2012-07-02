@@ -23,53 +23,39 @@ $wgExtensionCredits['parserhook'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Poem',
 	'author'         => array( 'Nikola Smolenski', 'Brion Vibber', 'Steve Sanbeg' ),
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Poem',
-	'description'    => 'Adds <tt>&lt;poem&gt;</tt> tag for poem formatting',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Poem',
 	'descriptionmsg' => 'poem-desc',
 );
 $wgParserTestFiles[] = dirname( __FILE__ ) . "/poemParserTests.txt";
 $wgExtensionMessagesFiles['Poem'] =  dirname(__FILE__) . '/Poem.i18n.php';
 
 function wfPoemExtension( &$parser ) {
-	$parser->setHook("poem","PoemExtension");
+	$parser->setHook( 'poem', 'wfRenderPoemTag' );
 	return true;
 }
 
-function PoemExtension( $in, $param=array(), $parser=null, $frame=false ) {
+/**
+ * @param  $in
+ * @param array $param
+ * @param $parser Parser
+ * @param bool $frame
+ * @return string
+ */
+function wfRenderPoemTag( $in, $param=array(), $parser=null, $frame=false ) {
 
 	/* using newlines in the text will cause the parser to add <p> tags,
- 	 * which may not be desired in some cases
+	 * which may not be desired in some cases
 	 */
 	$nl = isset( $param['compact'] ) ? '' : "\n";
-  
-	if( method_exists( $parser, 'recursiveTagParse' ) ) {
-		//new methods in 1.8 allow nesting <nowiki> in <poem>.
-		$tag = $parser->insertStripItem( "<br />", $parser->mStripState );
-		$text = preg_replace(
-			array( "/^\n/", "/\n$/D", "/\n/", "/^( +)/me" ),
-			array( "", "", "$tag\n", "str_replace(' ','&nbsp;','\\1')" ),
-			$in );
-			$text = $parser->recursiveTagParse( $text, $frame );
-	} else {
-		$text = preg_replace(
-			array( "/^\n/", "/\n$/D", "/\n/", "/^( +)/me" ),
-			array( "", "", "<br />\n", "str_replace(' ','&nbsp;','\\1')" ),
-			$in );
-		$ret = $parser->parse(
-			$text,
-			$parser->getTitle(),
-			$parser->getOptions(),
-			// We begin at line start
-			true,
-			// Important, otherwise $this->clearState()
-			// would get run every time <ref> or
-			// <references> is called, fucking the whole
-			// thing up.
-			false
-		);
 
-		$text = $ret->getText();
-	}
+	$tag = $parser->insertStripItem( "<br />", $parser->mStripState );
+
+	$text = preg_replace(
+		array( "/^\n/", "/\n$/D", "/\n/" ),
+		array( "", "", "$tag\n" ),
+		$in );
+	$text = preg_replace_callback( '/^( +)/m', 'wfPoemReplaceSpaces', $text );
+	$text = $parser->recursiveTagParse( $text, $frame );
 
 	$attribs = Sanitizer::validateTagAttributes( $param, 'div' );
 
@@ -80,8 +66,12 @@ function PoemExtension( $in, $param=array(), $parser=null, $frame=false ) {
 		$attribs['class'] = 'poem';
 	}
 
-	return Xml::openElement( 'div', $attribs ) .
-		$nl .
-		trim( $text ) .
-		"$nl</div>";
+	return Html::rawElement( 'div', $attribs, $nl . trim( $text ) . $nl );
+}
+
+/**
+ * Callback for preg_replace_callback()
+ */
+function wfPoemReplaceSpaces( $m ) {
+	return str_replace( ' ', '&#160;', $m[1] );
 }

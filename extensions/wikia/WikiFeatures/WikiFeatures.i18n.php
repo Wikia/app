@@ -55,8 +55,6 @@ $messages['en'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Editing is at the heart of a wiki and having a great editor is key to having an easy and fun experience when adding content. To improve your experience, we have redesigned our edit pages.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Polls',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Allow anyone on your wiki to create a poll! With Polls enabled your users can use the [http://help.wikia.com/wiki/Help:Poll poll tag] to add this neat feature to any page. This feature is a great way to increase contribution on your wiki.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Layout Builder',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Help editors on your wiki create great looking pages in less time. Layout builder lets the admins on your wiki create pre-formatted pages for your editors to choose from while adding a page.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogs allow users on your wiki to create their own blog posts on their profile page and can also be used as a great way to communicate news and events to your wiki community.',
 
@@ -71,6 +69,8 @@ $messages['en'] = array(
 
 	'wikifeatures-log-name' => 'Wiki Features log',
 	'wikifeatures-log-header' => 'Below is a list of Wiki Features settings changes.',
+
+	'action-wikifeaturesview' => 'view Wiki Features',
 );
 
 /** Message documentation (Message documentation)
@@ -226,8 +226,6 @@ $messages['ca'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => "L'acció d'editar és la més fonamental d'un wiki i tenir un gran editor és la clau per aconseguir una experiència divertida i fàcil quan s'afegeixi contingut. Millorant la teva experiència, hem redissenyat les nostres pàgines d'edició.",
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Enquestes',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => "Permet a qualsevol persona al teu wiki crear una enquesta. Amb les enquestes activades, els teus usuaris podran utilitzar la [http://ayuda.wikia.com/wiki/Ayuda:Encuesta etiqueta enquesta] per afegir aquesta funcionalitat a qualsevol pàgina. Aquesta funcionalitat és una forma ideal d'incrementar les contribucions al teu wiki.",
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Creador de dissenys',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Ajuda als editors del teu wiki a crear pàgines en menys temps. El creador de dissenys et permet administrar pàgines predefinides al teu wiki perquè els editors les puguin agafar com a base per a nous articles.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Els blogs permeten als usuaris del teu wiki crear les seves pròpies entrades de blog als seus perfils i poden usar-se per comunicar notícies i esdeveniments a la comunitat del teu wiki.',
 	'wikifeatures-feature-heading-wgOasisNavV2' => 'Navegació de Wiki expandida',
@@ -286,8 +284,6 @@ $messages['cs'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Editace je základem wiki a skvělý editor je klíčem ke snadnému a zábavnému přidávání obsahu. Pro zlepšení vašeho zážitku jsme redesignovali naše editovací stránky.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Ankety',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Tato funkce umožňuje komukoliv vytvořit na vaší wiki anketu. Po povolení anket můžou uživatelé použít [http://help.wikia.com/wiki/Help:Poll nápovědu] při přidávání ankety na jakoukoliv stránku. Tato funkce je skvělým způsobem, jak zvýšit množství příspěvků na vaší wiki.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Tvůrce rozvržení',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Pomáhá editorům vytvořit skvěle vypadající stránky za kratší dobu. Tvůrce rozvržení umožňuje administrátorům vytvořit předformátované stránky, z nichž si poté můžou editoři vybírat při přidávání stránky.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogy',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogy umožňují uživatelém vytvořit své vlastní příspěvky do blogu na jejich profilové stránce. Lze je také použít pro oznamování novinek a událostí vaší komunitě.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Zeď zpráv',
@@ -355,8 +351,6 @@ Die beliebtesten acht Seiten sind bereits als Bilder in einer Kategorie angezeig
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Das Bearbeiten ist die wichtigste Funktion in einem Wiki und ein guter Editor ist der Schlüssel um das Hinzufügen von Inhalten möglichst einfach und angenehmen zu machen. Um das noch besser zu unterstützen, haben wir unsere Bearbeitungsseite neu designt.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Umfragen',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Ermögliche es jedem in deinem Wiki eine Umfrage zu erstellen! Wenn Umfragen angeschaltet sind, kannst du mit dem [http://hilfe.wikia.com/wiki/Hilfe:Umfragen poll-Tag] auf jeder Seite Umfragen erstellen. Das ist eine prima Möglichkeit um die Beteiligung in deinem Wiki zu erhöhen.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Layout-Ersteller',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Hilf Autoren in deinem Wiki schick aussehende Seiten in kürzerer Zeit zu erstellen. Der Layout-Ersteller ermöglicht es Admins vor-formatierte Seiten zur Verfügung zu stellen, wenn jemand eine neue Seite im Wiki erstellt.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogs ermöglichen es den Nutzern im Wiki eigene Blog-Beiträge auf ihrem Profil zu verfassen. Das ist auch ein toller Weg um Neuigkeiten und Veranstaltungen in deinem Wiki anzukündigen.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Nachrichtenseiten',
@@ -451,8 +445,6 @@ $messages['es'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'La acción de editar es la más fundamental de un wiki y tener un gran editor es la clave para conseguir una experiencia divertida y fácil cuando se añada contenido. Mejorando tu experiencia, hemos rediseñado nuestras páginas de edición.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Encuestas',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Permite a cualquier persona en tu wiki crear una encuesta. Con las encuestas activadas, tus usuarios podrán usar la [http://ayuda.wikia.com/wiki/Ayuda:Encuesta etiqueta encuesta] para añadir esta funcionalidad a cualquier página. Esta funcionalidad es una forma ideal de incrementar las contribuciones en tu wiki.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Creador de diseños',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Ayuda a los editores de tu wiki a crear páginas en menos tiempo. El creador de diseños te permite administrar páginas predefinidas en tu wiki para que los editores las puedan coger como base para nuevos artículos.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Los blogs permiten a los usuarios de tu wiki crear sus propias entradas de blog en sus perfiles y pueden usarse para comunicar noticias y eventos a la comunidad de tu wiki.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Muro de mensajes',
@@ -517,8 +509,6 @@ $messages['fr'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Modifier est au cœur du wiki et avoir un bon éditeur est la clé pour avoir une expérience simple et amusante quand on ajoute du contenu. Pour améliorer votre expérience, nous avons repensé la conception de nos pages de modification.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Sondages',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Permet à quiconque sur votre wiki de créer un sondage ! Avec les sondages activés vos utilisateurs peuvent utiliser la balise [http://aide.wikia.com/Aide:Sondages poll] pour ajouter cette fonctionnalité sympathique sur n’importe quelle page. Cette fonctionnalité est un bon moyen pour augmenter les contributions sur votre wiki.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Générateur de mise en page',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Aide les contributeurs sur votre wiki à créer des pages superbes en un rien de temps. Le générateur de mise en page permet aux administrateurs sur votre wiki de créer des pages pré-formatées que vos contributeurs peuvent sélectionner quand ils ajoutent une page.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Les blogs permettent aux utilisateurs de votre wiki de créer leurs propres billets de blog sur leur page de profil et peuvent aussi être utilisés comme un moyen pour communiquer des nouvelles et des évènements à la communauté de votre wiki.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Mur de discussion',
@@ -531,7 +521,7 @@ $messages['fr'] = array(
 	'wikifeatures-log-header' => 'Vous trouverez ci-dessous une liste des modifications de paramètres avec Composants de wiki.',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -581,8 +571,6 @@ $messages['gl'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'A edición é a base dun wiki, e posuír un bo editor é a clave para ter unha experiencia simple e divertida ao engadir contidos. Para mellorar a súa experiencia, fixemos un redeseño da páxina de edición.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Enquisas',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Permita que calquera poida crear unha enquisa no seu wiki! Se activa as enquisas, os seus usuarios poderán utilizar a [http://help.wikia.com/wiki/Help:Poll etiqueta de enquisa] para engadir esta característica ás páxinas. Esta función é un bo xeito de aumentar as contribucións no seu wiki.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Creador de deseños',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Axude aos editores do seu wiki a crear páxinas de aspecto agradable en menos tempo. O Creador de deseños permite aos administradores do wiki crear deseños de formato para as páxinas que os editores poden escoller no momento de engadir unha páxina.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogues',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Os blogues permiten aos usuarios do wiki crear as súas propias entradas de blogue nas súas páxinas de perfil e tamén se poden empregar como medio para comunicar novas e acontecementos á comunidade.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Muro de mensaxes',
@@ -645,8 +633,6 @@ $messages['ia'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Le modification es in le corde de un wiki e haber un bon editor es clave pro haber un experientia facile e divertente durante le addition de contento. Pro meliorar tu experientia, nos ha redesignate nostre paginas de modification.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Sondages',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Permitte a omnes in tu wiki de crear un sondage! Con le Sondages activate, tu usatores pote usar le [http://help.wikia.com/wiki/Help:Poll etiquetta "poll"] pro adder iste function sympathic a qualcunque pagina. Iste function es un superbe modo de augmentar le contribution a tu wiki.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Constructor de designos',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Adjuta le contributores de tu wiki a crear paginas con superbe aspectos in minus tempore. Le constructor de designos permitte al administratores de tu wiki de crear paginas preformatate que tu contributores pote seliger quando adder un pagina.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Le blogs permitte al usatores de tu wiki de crear proprie articulos de blog in lor paginas de profilo e pote tamben esser usate como optime modo de communicar novas e eventos al communitate de tu wiki.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Muro de messages',
@@ -709,8 +695,6 @@ $messages['it'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => "L'editing è alla base di una wiki e avere un buon strumento per editare è la chiave per aggiungere del contenuto in modo facile e divertente. Per migliorare l'esperienza di editing, abbiamo riprogettato le nostre pagine di modifica.",
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Sondaggi',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Consenti a chiunque di creare un sondaggio! Con la funzione Sondaggi i tuoi utenti possono usare il [http://help.wikia.com/wiki/Help:Poll tag poll] per aggiungere questa funzione in qualsiasi pagina. Si tratta di un ottimo modo per aumentare i contributi nella tua wiki.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Layout Builder',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => "Aiuta i collaboratori della tua wiki a creare delle pagine di bell'aspetto in poco tempo. Layout Builder consente agli amministratori della wiki di impostare dei modelli di pagine che gli utenti possono scegliere nel momento in cui creano una nuova pagina.",
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blog',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'La funzione Blog permette agli utenti della tua wiki di creare i loro blog personali nel loro profilo utente. Si tratta inoltre di un ottimo strumento per comunicare notizie ed eventi alla tua community.',
 	'wikifeatures-feature-heading-emptylabs' => 'Sembra che il laboratorio si sia preso una pausa',
@@ -814,8 +798,6 @@ $messages['mk'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Уредувањето е суштината на едно вики, па затоа работењето со содржини треба да биде лесно и забавно. Ние го подобривме уредувањето, преработувајќи ги страниците кајшто уредувате.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Анкети',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Со ова секој на вашето вики да прави анкети! Кога анкетите се овозможени, корисниците ќе можат да вметнат [http://help.wikia.com/wiki/Help:Poll?uselang=mk ознака за анкета] и со тоа да стават анкета на било која страница. Ова е одличен начин да го зголемите учеството на викито.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Распоредувач',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Помогнете им на уредниците на вашето вики да создаваат убави страници за кусо време. Распоредувачот им дава на администраторите да изработат претходно форматирани страници, кои уредниците потоа ќе ги имаат на избор при создавањето на нови страници.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Блогови',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Блоговите им овозможуваат на корисниците да прават свои записи на нивната профилна страница. Ова е одличен начин да се извести заедницата кога има новости и настани.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Ѕид за пораки',
@@ -878,8 +860,6 @@ $messages['ms'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Penyuntingan merupakan ciri utama sesebuah wiki, maka editor (antara muka penyuntingan) yang hebat adalah penting kepada pengalaman yang senang dan menyeronokkan ketika memperbaiki kandungan. Untuk memperbaiki pengalaman anda, kami telah mereka semula laman penyuntingan kami.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Tinjauan',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Benarkan sesiapa membuat tinjauan di wki anda! Dengan menghidupkan Tinjauan, pengguna-pengguna anda boleh menggunakan [http://help.wikia.com/wiki/Help:Poll tag tinjauan] untuk meletakkan ciri yang hebat ini pada mana-mana laman. Ciri ini merupakan cara yang bargus untuk meningkatkan sumbangan kepada wiki anda.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Pembina Tataletak',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Bantulah para penyunting wiki anda untuk membuat laman-laman yang menarik dalam masa yang lebih singkat. Pembina tataletak membolehkan para pentadbir wiki anda membuat laman-laman yang dipraformat untuk dipilih oleh para penyunting semasa membuat halaman baru.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blog',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blog membolehkan pengguna di wiki anda untuk membuat catatan blog sendiri pada laman profil, di samping juga menjadi cara yang bagus untuk menyampaikan berita dan acara kepada komunti wiki anda.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Papan Pesanan',
@@ -942,8 +922,6 @@ $messages['nb'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Redigeringen er selve hjertet i wikien, og å ha en god redaktør er nøkkelen til enkel og morsom innlegging av innhold. For å forbedre opplevelsen din, har vi gitt redaktørsidene våre et nytt utseende.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Avstemninger',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Tillater alle på wikien din å lage en avstemning! Med avstemninger aktivert kan brukerne dine bruke [http://help.wikia.com/wiki/Help:Poll poll-taggen] for å legge til denne praktiske funksjonen til en hvilken som helst side. Denne funksjonen er en god måte å øke bidragsmengden på wikien din.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Oppsettsbygger',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Hjelp redaktører på wikien din med å lage sider som ser bra ut på kort tid. Oppsettsbyggeren lar administratorene på wikien lage forhåndsformaterte sider som redaktørene kan velge mellom når de legger til en side.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogger',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogger tillater brukerne på wikien din å skrive sine egne blogginnlegg på profilene sine og kan også brukes som en god måte å formidle nyheter og hendelser til wiki-fellesskapet.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Beskjedtavle',
@@ -1009,8 +987,6 @@ $messages['nl'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => "Bewerken is de kern van een wiki en het hebben van een goede tekstverwerker is de sleutel tot een makkelijk aanvoelende en leuke ervaring bij het toevoegen van inhoud. Om uw ervaring te verbeteren, hebben wij de bewerkingspagina's opnieuw ontworpen.",
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Peilingen',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Laat alle gebruikers van uw wiki een peiling opzetten. Als peilingen zijn ingeschakeld, kunnen gebruikers het [http://help.wikia.com/wiki/Help:Poll label peiling] gebruiken om deze functie op iedere pagina in te schakelen. Deze functie is een geweldige manier om het aantal bijdragen op de wiki te verhogen.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Vormgeving bouwen',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Help de redacteuren van uw wiki goed uitziende pagina\'s aan te maken in minder tijd. Met de functie "Vormgeving bouwen" kunnen wikibeheerders vooringestelde pagina\'s voor redacteuren aanmaken waaruit gekozen kan worden tijdens het toevoegen van een pagina.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => "De functie Blogs stelt gebruikers in staat eigen blogberichten toe te voegen aan hun profielpagina's. De functie is ook goed te gebruiken om nieuws en gebeurtenissen aan uw gemeenschap aan te kondigen.",
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Berichtenmuur',
@@ -1075,8 +1051,6 @@ $messages['pl'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Sercem każdej wiki jest edytowanie, a posiadanie odpowiedniego narzędzia do edycji jest kluczem do łatwego i przyjemnego dodawania treści. Aby ulepszyć to doświadczenie, zmieniliśmy wygląd edytora.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Ankiety',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Ankiety pozwalają każdemu na Twojej wiki na utworzenie sondy. Edytorzy mogą używać [http://pomoc.wikia.com/wiki/Pomoc:Ankiety tagów poll] aby dodawać sondy do dowolnej strony. To rozszerzenie to świetny sposób aby zachęcić nowych edytorów.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Kreator Układu',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Pomóż edytorom na Twojej wiki w tworzeniu świetnie wyglądających artykułów w krótkim czasie. Kreator Układu pozwala administratorom na Twojej wiki tworzyć wcześniej sformatowane układy artykułów, z których edytorzy mogą wybierać przy tworzeniu stron.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogi',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blogi pozwalają użytkownikom Twojej wiki na tworzenie wpisów we własnym profilu. Są też doskonałym narzędziem do informowania społeczności Twojej wiki o nowościach.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Tablica Wiadomości',
@@ -1197,8 +1171,6 @@ $messages['ru'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Редактирование - это основа Вики, поэтому наличие удобного визуального редактора необходимо для облегчения этого процесса. Мы изменили текущий визуальный редактор, существенно усовершенствовав его.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Голосования',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Разрешите всем участникам вики создавать голосования! Подключите это расширение, и участники вашего вики-сообщества смогут  использовать [http://help.wikia.com/wiki/Help:Poll теги], чтобы добавить голосования на любую страницу. Это расширение - отличный способ увеличить вклад в вики.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Создание макетов',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Больше страниц - за меньшее время. Это расширение позволит администраторам создавать макеты страниц, что упростит создание и редактирование страниц на вики всем участникам.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Блоги',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Это расширение позволит участникам вики писать блоги. Это отличный способ общаться, делиться новостями или высказать своё мнение на вики.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Стена обсуждения',
@@ -1253,7 +1225,6 @@ $messages['sv'] = array(
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chatt',
 	'wikifeatures-feature-description-wgEnableChat' => 'Kommunicera direkt med andra användare som älskar din wiki och dess ämne lika mycket som du! Vem som helst med ett Wikia användarkonto kan chatta genom att klicka på knappen "Chat" till höger i menyn.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Omröstningar',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Layout-byggare',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Bloggar',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Meddelandevägg',
 	'wikifeatures-feature-description-wgEnableWallExt' => 'Att kommunicera med bidragsgivarna på din wiki är en viktig del i att bygga och underhålla din gemenskap. Meddelandeväggen använder ett trådat konversationsformat och ett meddelandesystem som låter dig kontrollera vilka konversationer du är intresserade att följa. Inga fler missade meddelanden!',
@@ -1261,45 +1232,6 @@ $messages['sv'] = array(
 	'wikifeatures-feature-heading-emptylabs' => 'Det ser ut som labbet tar en paus',
 	'wikifeatures-feature-description-emptylabs' => 'Våra tekniker jobbar hårt med att koka ihop nya funktioner till dig att prova ut. Leta efter fler labbar här snart!',
 	'wikifeatures-log-name' => 'Logg över Wiki-funktioner',
-);
-
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
-	'wikifeatures-feedback' => 'Magbigay ng Tugon',
-	'wikifeatures-error-permission' => 'Paumanhin,  wala kang pahintulot na ipakita ang pahinang ito.',
-	'wikifeatures-error-invalid-parameter' => 'Hindi katanggap-tanggap na parametro: $1. Paki subukan ulit.',
-	'wikifeatures-error-message' => 'Ang puna mo ay maaaring napakaiksi o napakahaba.',
-	'wikifeatures-error-spam-attempt' => 'Paki maghintay ng 60 mga segundo bago magpasa ng marami pang tugon.',
-	'wikifeatures-error-invalid-category' => 'Naku! Paki piliin kung patungkol sa ba sa ano ang tiket na ito.',
-	'wikifeatures-toggle-active' => 'Pinagagana',
-	'wikifeatures-toggle-inactive' => 'Hindi pinagagana',
-	'wikifeatures-active-on' => 'Masigla sa $1 na mga wiki',
-	'wikifeatures-category-choose-one' => 'Pumili ng isa...',
-	'wikifeatures-love-this-project' => 'Iniibig ko ang tampok na ito',
-	'wikifeatures-hate-this-project' => 'Kinamumuhian ko ang tampok na ito',
-	'wikifeatures-problem-with-project' => 'Mayroon akong iuulat na isang suliranin',
-	'wikifeatures-an-idea-for-project' => 'Mayroon akong isang ideya para sa tampok na ito',
-	'wikifeatures-feedback-heading' => 'Tugon',
-	'wikifeatures-feedback-description' => 'Naiibigan namin ang makarinig ng tugon na patungkol sa tampok na nasa loob ng mga Laboratoryo! Mayroon ka bang isang ideya sa kung paano namin mapapainam ang tampok na ito, isang ulat ng suliranin, o payak na ilang tugon sa kung ano ang nagustuhan mo at hindi nagustuhan? Ipaalam sa amin sa pamamagitan ng paggamit sa kahong nasa ibaba.',
-	'wikifeatures-feedback-type-label' => 'Patungkol ba sa ano ito?',
-	'wikifeatures-feedback-comment-label' => 'Iwanan kami ng isang puna',
-	'wikifeatures-feedback-success' => 'Salamat sa tugon mo!',
-	'wikifeatures-deactivate-heading' => 'Huwag paganahin ang $1?',
-	'wikifeatures-deactivate-notification' => 'Mabubuhay mong muli ang tampok sa kahit na anumang oras.',
-	'wikifeatures-deactivate-confirm-button' => 'Oo, huwag paganahin',
-	'wikifeatures-deactivate-cancel-button' => 'Huwag ituloy',
-	'wikifeatures-promotion-new' => 'Bago',
-	'wikifeatures-oasis-only' => 'Ang Mga Tampok ng Wiki ay hindi makukuha mula sa loob ng Monobook. Kung nais mong gamitin ang tampok na ito paki palitan ang kanaisan mo papunta sa pabalat na Wikia.',
-	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Mga Talaan ng Pinakamatataas na 10',
-	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Mga Pagpuna sa Artikulo',
-	'wikifeatures-feature-heading-wgEnableChat' => 'Makipagtalastasan',
-	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Mga Botohan',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Tagapagbuo ng Latag',
-	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Mga Blog',
-	'wikifeatures-feature-heading-wgEnableWallExt' => 'Dingding ng Mensahe',
-	'wikifeatures-feature-heading-wgOasisNavV2' => 'Pinalawig na Panglibot ng Wiki',
 );
 
 /** Turkish (Türkçe)

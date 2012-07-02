@@ -58,7 +58,7 @@ $messages['af'] = array(
 	'whereisextension-name-contains' => 'veranderlike-naam bevat',
 );
 
-/** Aragonese (aragonés)
+/** Aragonese (Aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -79,7 +79,7 @@ $messages['az'] = array(
 	'whereisextension-submit' => 'Axtar',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -277,7 +277,7 @@ $messages['fr'] = array(
 	'whereisextension-search-type-full' => 'Comme',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -91,7 +91,7 @@ class WScribeClient {
 				self::MESSAGE_KEY	=> $msg
 			);
 			
-			$logEntry = new LogEntry($__message);
+			$logEntry = new ScribeLogEntry($__message);
 			
 			$messages[] = $logEntry;
 		}

@@ -320,8 +320,7 @@ class ScavengerHunt {
 		$return = false;
 		if ( !empty( $memcData ) && isset( $memcData['gameId'] ) ){
 			if ( $this->getHuntId() != $memcData['gameId'] ){
-
-				$return = $this->saveDataToCache();
+				$return = $this->saveDataToCache(array());
 			}
 			$return = $memcData;
 		}
@@ -428,7 +427,7 @@ class ScavengerHunt {
 			$this->parser = WF::build('Parser');
 			$this->parser->setOutputType(OT_HTML);
 			$this->parserOptions = WF::build('ParserOptions');
-			$this->fakeTitle = WF::build('FakeTitle', array(''));
+			$this->fakeTitle = WF::build('Title', array('FakeTitle'));
 		}
 		return $this->parser->parse($text, $this->fakeTitle, $this->parserOptions, false)->getText();
 	}

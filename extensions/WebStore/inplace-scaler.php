@@ -22,7 +22,7 @@ class InplaceScaler extends WebStoreCommon {
 				break;
 			}
 		}
-		
+
 		if ( !$allowed ) {
 			$this->htmlError( 403, 'inplace_access_denied' );
 			return false;
@@ -48,7 +48,7 @@ class InplaceScaler extends WebStoreCommon {
 
 		$tempDir = $this->tmpDir . '/' . gmdate( self::$tempDirFormat );
 		if ( !is_dir( $tempDir ) ) {
-			if ( !wfMkdirParents( $tempDir ) ) {
+			if ( !wfMkdirParents( $tempDir, null, __METHOD__ ) ) {
 				$this->htmlError( 500, 'inplace_scaler_no_temp' );
 				return false;
 			}
@@ -59,12 +59,12 @@ class InplaceScaler extends WebStoreCommon {
 
 		$params = $_REQUEST;
 		unset( $params['file'] );
-		if ( get_magic_quotes_gpc() ) { 
+		if ( get_magic_quotes_gpc() ) {
 			$params = array_map( 'stripslashes', $params );
 		}
 
 		$i = strrpos( $name, '.' );
-		$ext = Image::normalizeExtension( $i ? substr( $name, $i + 1 ) : '' );
+		$ext = File::normalizeExtension( $i ? substr( $name, $i + 1 ) : '' );
 
 		$magic = MimeMagic::singleton();
 		$mime = $magic->guessTypesForExtension( $ext );
@@ -126,11 +126,10 @@ class InplaceScaler extends WebStoreCommon {
 	}
 }
 
-// Fatal errors can cause PHP to spew out some HTML and exit with a 200 response, 
+// Fatal errors can cause PHP to spew out some HTML and exit with a 200 response,
 // which would leave a corrupt image file permanently on disk. Prevent this from
 // happening.
 ini_set( 'display_errors', false );
 $s = new InplaceScaler;
 $s->execute();
 
-?>

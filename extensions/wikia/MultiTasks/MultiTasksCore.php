@@ -6,7 +6,7 @@
  * @author Piotr Molski <moli@wikia-inc.com> for Wikia.com
  * @copyright (C) 2008, Wikia Inc.
  * @licence GNU General Public Licence 2.0 or later
- *  
+ *
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @package MediaWiki
  * @subpackage SpecialPage
@@ -26,7 +26,7 @@ if (!defined('MEDIAWIKI')) {
 class MultiTask extends SpecialPage {
 	private $mRights;
 	private $mType;
-	
+
 	public $mTaskParams;
 	public $mLangOptions;
 	public $mCatOptions;
@@ -38,14 +38,13 @@ class MultiTask extends SpecialPage {
 	public $mFinishForm;
 	public $mPreviewForm;
 	public $mTaskClass;
-	
+
 	function  __construct( $type, $rights ) {
 		parent::__construct( $type  /*class*/, $rights );
-		wfLoadExtensionMessages( $type );
-		
+
 		$this->mType = $type;
 		$this->mRights = $rights;
-		
+
 		$this->mLangOptions = array(
 			'one' 			=> wfMsg('multiwikiedit_this_wiki'),
 			'all' 			=> wfMsg('multiwikiedit_all_wikis'),
@@ -67,7 +66,7 @@ class MultiTask extends SpecialPage {
 			'lang:sv'		=> wfMsg ('multidelete_swedish_wikis'),
 			'lang:de'		=> wfMsg ('multidelete_german_wikis'),
 		);
-			
+
 		$this->mCatOptions = array(
 			'cat:18' 		=> 'all auto hub wiki',
 			'cat:17' 		=> 'all creative hub wiki',
@@ -88,7 +87,7 @@ class MultiTask extends SpecialPage {
 			'cat:7'			=> 'all travel hub wiki',
 			'cat:4'			=> 'all wikia hub wiki'
 		);
-			
+
 		$this->mFlags = array(
 			wfMsg('multiwikiedit_minoredit_caption'),
 			wfMsg('multiwikiedit_botedit_caption'),
@@ -96,7 +95,7 @@ class MultiTask extends SpecialPage {
 			wfMsg('multiwikiedit_norecentchanges_caption'),
 			wfMsg('multiwikiedit_newonly_caption')
 		);
-		
+
 		$this->mTaskParams = array();
 	}
 
@@ -112,17 +111,17 @@ class MultiTask extends SpecialPage {
 	public function explodePages() {
 		if ( !empty($this->mPage) ) {
 			$lines = explode( "\n", $this->mPage );
-			
+
 			foreach ($lines as $single_line) {
 				$single_page = trim($single_line);
-				
+
 				if(!empty($single_page)) {
 					#-- lines with articles
 					$aTitles = explode ("|", $single_page);
-					
+
 					foreach ( $aTitles as $token ) {
 						$sTitle = trim($token);
-						
+
 						if(!empty($sTitle))
 							$this->mTaskParams['page'][] = $sTitle;
 					}
@@ -144,19 +143,19 @@ class MultiTask extends SpecialPage {
 		global $wgExternalSharedDB ;
 		$dbr = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 
-		$where = array();	
-		$count = 0;	
+		$where = array();
+		$count = 0;
 		if (!empty($lang)) {
 			$where['city_lang'] = $lang;
-		} 
+		}
 		else if (!empty($cat)) {
 			$where['cat_id'] = $cat;
 		}
-		
+
 		if ( !empty($city_id) ) {
 			$where['city_list.city_id'] = $city_id;
 		}
-		
+
 		if ( empty($wikis) ) {
 			$oRow = $dbr->selectRow(
 				array( "city_list join city_cat_mapping on city_cat_mapping.city_id = city_list.city_id" ),
@@ -175,7 +174,7 @@ class MultiTask extends SpecialPage {
 				$where,
 				__METHOD__
 			);
-			
+
 			$count = intval($oRow->cnt);
 		}
 		return $count;
@@ -191,8 +190,8 @@ class MultiTask extends SpecialPage {
 	 * @return allow (or not) to show special page
 	 */
 	protected function checkRestriction() {
-		global $wgUser, $wgOut; 
-		
+		global $wgUser, $wgOut;
+
 		$res = true;
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
@@ -208,7 +207,7 @@ class MultiTask extends SpecialPage {
 			$this->displayRestrictionError();
 			$res = false;
 		}
-		
+
 		return $res;
 	}
 
@@ -226,7 +225,7 @@ class MultiTask extends SpecialPage {
 		$this->mAction = $wgRequest->getVal ('action');
 
 		$this->mMode = $wgRequest->getVal( 'wpMode' );
-		$this->mPage = $wgRequest->getVal( 'wpPage' );	
+		$this->mPage = $wgRequest->getVal( 'wpPage' );
 		$this->mWikiInbox = $wgRequest->getVal('wpWikiInbox');
 		$this->mRange = $wgRequest->getVal('wpRange');
 		$this->mText = $wgRequest->getVal('wpText');
@@ -245,9 +244,9 @@ class MultiTask extends SpecialPage {
 			$this->mUser = $wgUser->getName();
 		}
 
-		$this->mToken = htmlspecialchars( $wgUser->editToken() );
+		$this->mToken = htmlspecialchars( $wgUser->getEditToken() );
 	}
-	
+
 	/**
 	 * doSubmit
 	 *
@@ -259,7 +258,7 @@ class MultiTask extends SpecialPage {
 	 */
 	protected function doSubmit( $commit = 1 ) {
 		global $wgOut, $wgUser, $wgRequest, $wgLanguageCode;
-		
+
 		switch ( $this->mRange ) {
 			case 'one' :
 				if ( $commit == 1 ) {
@@ -288,23 +287,23 @@ class MultiTask extends SpecialPage {
 				}
 				break;
 			default :
-				# language  
+				# language
 				if ( strpos($this->mRange, 'lang:') !== false ) {
-					$lang = substr( $this->mRange, 5 ); 
+					$lang = substr( $this->mRange, 5 );
 					if ( $commit == 1 ) {
 						$this->acceptSubmit(MULTIWIKITASK_ALL, $lang);
 					} else {
 						$this->previewSubmit(MULTIWIKITASK_ALL, $lang);
 					}
-				} 
+				}
 				elseif ( strpos($this->mRange, 'cat:') !== false ) {
-					$cat = substr($this->mRange, 4) ; 
+					$cat = substr($this->mRange, 4) ;
 					if ( $commit == 1 ) {
 						$this->acceptSubmit(MULTIWIKITASK_ALL, null, $cat);
 					} else {
 						$this->previewSubmit(MULTIWIKITASK_ALL, null, $cat);
 					}
-				} 
+				}
 				else {
 					wfDebug("Invalid range parameter");
 				}
@@ -321,9 +320,9 @@ class MultiTask extends SpecialPage {
 	 *
 	 * @return display form
 	 */
-	protected function showForm ($err = '') { 
+	protected function showForm ($err = '') {
 		global $wgOut, $wgUser, $wgRequest ;
-	
+
 		if ( $err != "" ) {
 			$wgOut->setSubtitle( wfMsgHtml( 'formerror' ) );
 		}
@@ -335,11 +334,11 @@ class MultiTask extends SpecialPage {
             "obj"			=> $this,
             "err"			=> $err
         ));
-        
+
         $wgOut->addHTML( $oTmpl->execute($this->mMainForm) );
-		return true; 
+		return true;
 	}
-	
+
 	/**
 	 * acceptSubmit
 	 *
@@ -349,13 +348,13 @@ class MultiTask extends SpecialPage {
 	 *
 	 * @return display form
 	 */
-	protected function acceptSubmit($mode = MULTIWIKITASK_THIS, $lang = '', $cat = 0) { 
+	protected function acceptSubmit($mode = MULTIWIKITASK_THIS, $lang = '', $cat = 0) {
 		global $wgUser, $wgOut, $wgCityId ;
 
 		$lines = explode( "\n", $this->mPage );
 		$pre_wikis = array(); $wikiaId = 0;	$modeText = "";
 		switch ( $mode ) {
-			case MULTIWIKITASK_SELECTED : 
+			case MULTIWIKITASK_SELECTED :
 				$pre_wikis = explode( ",", $this->mWikiInbox );
 				array_walk($pre_wikis ,create_function('&$str','$str=trim($str);'));
 				$lang = $cat = "";
@@ -365,7 +364,7 @@ class MultiTask extends SpecialPage {
 				$pre_wikis = array();
 				$modeText = wfMsg('multiwikiedit_all_wikis');
 				break;
-			case MULTIWIKITASK_THIS : 
+			case MULTIWIKITASK_THIS :
 				$pre_wikis = array();
 				$wikiaId = $wgCityId;
 				$modeText = wfMsg('multiwikiedit_this_wiki');
@@ -374,7 +373,7 @@ class MultiTask extends SpecialPage {
 		}
 		#---
 		$countWikis = $this->fetchCountWikis($pre_wikis, $lang, $cat, $wikiaId);
-		
+
 		#---
 		$this->makeDefaultTaskParams($lang, $cat, $wikiaId);
 
@@ -383,7 +382,7 @@ class MultiTask extends SpecialPage {
 		foreach ($lines as $single_page) {
 			#-- lines with articles
 			$aTitles = explode ("|", trim ($single_page) ) ;
-			
+
 			if ( !empty($aTitles) ) {
 				$loop = 0;
 				foreach ( $aTitles as $sTitle ) {
@@ -393,7 +392,7 @@ class MultiTask extends SpecialPage {
 
 					$thisTask = new $this->mTaskClass( $this->mTaskParams );
 					$submit_id = $thisTask->submitForm();
-					
+
 					$oTmpl->set_vars( array(
 						"modeText" 		=> $modeText,
 						"wgUser"		=> $wgUser,
@@ -403,7 +402,7 @@ class MultiTask extends SpecialPage {
 						"lang"			=> $lang,
 						"cat"			=> $cat,
 						"obj"			=> $this,
-						"submit_id"		=> $submit_id,	
+						"submit_id"		=> $submit_id,
 						"error"			=> ($submit_id === false),
 					) );
 					$wgOut->addHTML( $oTmpl->execute($this->mFinishForm) );
@@ -413,7 +412,7 @@ class MultiTask extends SpecialPage {
 		$wgOut->addHTML( Xml::closeElement( 'ol' ) );
 		$wgOut->addHtml( $this->getBackUrl() );
 	}
-	
+
 	/**
 	 * previewSubmit
 	 *
@@ -441,11 +440,11 @@ class MultiTask extends SpecialPage {
 
 		$wgOut->addHtml( $this->getBackUrl() );
 	}
-	
+
 	protected function makeDefaultTaskParams($lang = '', $cat = '', $city_id = 0) {
 		$this->mTaskParams = array();
 	}
-	
+
 	protected function getBackUrl() {
 		return "";
 	}

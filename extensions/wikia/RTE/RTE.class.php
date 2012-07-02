@@ -115,7 +115,7 @@ class RTE {
 	 * @author Inez KorczyDski, Macbre
 	 */
 	public static function init(&$form) {
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgRequest, $wgAllInOne;
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgAllInOne, $wgRequest;
 
 		wfProfileIn(__METHOD__);
 
@@ -126,9 +126,6 @@ class RTE {
 
 		// check 'useeditor' URL param, user settings...
 		self::checkEditorConditions();
-
-		// i18n
-		wfLoadExtensionMessages('RTE');
 
 		// add global JS variables
 		$wgHooks['MakeGlobalVariablesScript'][] = 'RTE::makeGlobalVariablesScript';
@@ -141,7 +138,7 @@ class RTE {
 		}
 
 		// devmode
-		self::$devMode = $wgRequest->getBool('allinone', $wgAllInOne) == false;
+		self::$devMode = $wgRequest->getBool('allinone', $wgAllInOne) === false;
 
 		// add RTE javascript files
 		// scripts loaded by edit page layout
@@ -301,7 +298,7 @@ class RTE {
 	 */
 	public static function removeDefaultToolbar(&$toolbar) {
 		$toolbar = strtr($toolbar, array(
-			"<div id='toolbar' style='clear:both'>" => '',
+			'<div id="toolbar">' => '',
 			'</div>' => '',
 		));
 		return true;
@@ -509,8 +506,6 @@ HTML
 		$options = new ParserOptions();
 		// don't show [edit] link for sections
 		$options->setEditSection(false);
-		// use modified Linker
-		$options->setSkin( new RTELinker() );
 		// disable headings numbering
 		$options->setNumberHeadings(false);
 
@@ -588,7 +583,7 @@ HTML
 		return self::$instanceId;
 	}
 
-	public static function getTemplateParams($titleObj, $parser) {
+	public static function getTemplateParams(Title $titleObj, Parser $parser) {
 		global $wgRTETemplateParams;
 		wfProfileIn(__METHOD__);
 
@@ -600,7 +595,7 @@ HTML
 
 		if($templateDom[0]) {
 			// BugId:982 - use xpath to find all <tplarg> nodes
-			$xpath = $templateDom[0]->xpath;
+			$xpath = $templateDom[0]->getXPath();
 
 			// <tplarg><title>foo</title></tplarg>
 			$nodes = $xpath->query('//tplarg/title');

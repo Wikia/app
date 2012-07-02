@@ -1,5 +1,8 @@
 <?php
 
+define( 'NS_EXPRESSION', 16 );
+define( 'NS_DEFINEDMEANING', 24 );
+
 require_once( "Wikidata.php" );
 
 // Ids
@@ -131,4 +134,41 @@ global
  * 
  */
 $wgPropertyToColumnFilters = array();
+
+// Hook: replace the proposition to "create new page" by a custom, allowing to create new expression as well
+$wgHooks[ 'SpecialSearchNogomatch' ][] = 'owNoGoMatchHook';
+
+function owNoGoMatchHook( &$title ) {
+	global $wgOut,$wgDisableTextSearch;
+	$wgOut->addWikiMsg( 'search-nonefound' );
+	$wgOut->addWikiMsg( 'ow_searchnoresult', wfEscapeWikiText( $title ) );
+//	$wgOut->addWikiMsg( 'ow_searchnoresult', $title );
+
+	$wgDisableTextSearch = true ;
+	return true;
+}
+
+
+
+// Hook: The Go button should search (first) in the Expression namespace instead of Article namespace
+$wgHooks[ 'SearchGetNearMatchBefore' ][] = 'owGoClicked';
+
+function owGoClicked( $allSearchTerms, &$title ) {
+	$term = $allSearchTerms[0] ;
+	$title = Title::newFromText( $term ) ;
+	if ( is_null( $title ) ){
+		return true;
+	}
+
+	# Replace normal namespace with expression namespace
+	if ( $title->getNamespace() == NS_MAIN ) {
+		$title = Title::newFromText( $term, NS_EXPRESSION ) ; // $expressionNamespaceId ) ;
+	}
+
+	if ( $title->exists() ) {
+		return false; // match!
+	}
+	return true; // no match
+}
+
 ?>

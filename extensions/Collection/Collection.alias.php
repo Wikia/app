@@ -6,285 +6,354 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'Book' => array( 'Book', 'Collection' ),
 );
 
 /** Afrikaans (Afrikaans) */
-$aliases['af'] = array(
+$specialPageAliases['af'] = array(
 	'Book' => array( 'Boek', 'Versameling' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Book' => array( 'كتاب', 'مجموعة' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'Book' => array( 'كتاب', 'مجموعة' ),
+$specialPageAliases['arz'] = array(
+	'Book' => array( 'كتاب', 'مجموعه' ),
 );
 
 /** Assamese (অসমীয়া) */
-$aliases['as'] = array(
+$specialPageAliases['as'] = array(
 	'Book' => array( 'সংগ্ৰহ' ),
 );
 
 /** Breton (Brezhoneg) */
-$aliases['br'] = array(
+$specialPageAliases['br'] = array(
 	'Book' => array( 'Dastumad' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'Book' => array( 'Kolekcija' ),
 );
 
 /** Czech (Česky) */
-$aliases['cs'] = array(
+$specialPageAliases['cs'] = array(
 	'Book' => array( 'Kniha', 'Kolekce' ),
 );
 
+/** Danish (Dansk) */
+$specialPageAliases['da'] = array(
+	'Book' => array( 'Bog', 'Samling' ),
+);
+
 /** German (Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Book' => array( 'Buch', 'Sammlung' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'Book' => array( 'Knigły', 'Zběrka' ),
 );
 
 /** Greek (Ελληνικά) */
-$aliases['el'] = array(
+$specialPageAliases['el'] = array(
 	'Book' => array( 'Συλλογή' ),
 );
 
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'Book' => array( 'Libro' ),
+);
+
 /** Spanish (Español) */
-$aliases['es'] = array(
+$specialPageAliases['es'] = array(
 	'Book' => array( 'Libro', 'Libros', 'Colección', 'Colecciones' ),
 );
 
 /** Estonian (Eesti) */
-$aliases['et'] = array(
+$specialPageAliases['et'] = array(
 	'Book' => array( 'Raamat' ),
 );
 
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'Book' => array( 'کتاب' ),
+);
+
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
+$specialPageAliases['fi'] = array(
 	'Book' => array( 'Kirja', 'Kokoelma' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
+$specialPageAliases['fr'] = array(
 	'Book' => array( 'Livre' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
+$specialPageAliases['frp'] = array(
 	'Book' => array( 'Lévro', 'Colèccion' ),
 );
 
+/** Gagauz (Gagauz) */
+$specialPageAliases['gag'] = array(
+	'Book' => array( 'Kiyat' ),
+);
+
 /** Galician (Galego) */
-$aliases['gl'] = array(
+$specialPageAliases['gl'] = array(
 	'Book' => array( 'Libro' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'Book' => array( 'Sammlig' ),
 );
 
 /** Gujarati (ગુજરાતી) */
-$aliases['gu'] = array(
+$specialPageAliases['gu'] = array(
 	'Book' => array( 'પુસ્તક', 'સંગ્રહ' ),
 );
 
 /** Hebrew (עברית) */
-$aliases['he'] = array(
+$specialPageAliases['he'] = array(
 	'Book' => array( 'ספר', 'אוסף' ),
 );
 
 /** Croatian (Hrvatski) */
-$aliases['hr'] = array(
+$specialPageAliases['hr'] = array(
 	'Book' => array( 'Zbirka' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'Book' => array( 'Kniha', 'Zběrka' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'Book' => array( 'Liv', 'Koleksyon' ),
+);
+
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
+$specialPageAliases['hu'] = array(
 	'Book' => array( 'Könyv', 'Könyvek', 'Gyűjtemény', 'Gyűjtemények' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
+$specialPageAliases['ia'] = array(
 	'Book' => array( 'Libro' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
+$specialPageAliases['id'] = array(
 	'Book' => array( 'Buku', 'Koleksi' ),
 );
 
+/** Igbo (Igbo) */
+$specialPageAliases['ig'] = array(
+	'Book' => array( 'Ákwúkwú', 'Njikọtá_édé' ),
+);
+
 /** Ido (Ido) */
-$aliases['io'] = array(
+$specialPageAliases['io'] = array(
 	'Book' => array( 'Libro' ),
 );
 
 /** Italian (Italiano) */
-$aliases['it'] = array(
+$specialPageAliases['it'] = array(
 	'Book' => array( 'Libro', 'Raccolta' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'Book' => array( 'ブック', 'コレクション' ),
 );
 
+/** Georgian (ქართული) */
+$specialPageAliases['ka'] = array(
+	'Book' => array( 'წიგნი' ),
+);
+
 /** Khmer (ភាសាខ្មែរ) */
-$aliases['km'] = array(
+$specialPageAliases['km'] = array(
 	'Book' => array( 'ការចងក្រង' ),
 );
 
 /** Korean (한국어) */
-$aliases['ko'] = array(
+$specialPageAliases['ko'] = array(
 	'Book' => array( '책', '모음' ),
 );
 
 /** Colognian (Ripoarisch) */
-$aliases['ksh'] = array(
-	'Book' => array( 'Booch sammelle', 'Sammlong', 'Sigge sammelle' ),
+$specialPageAliases['ksh'] = array(
+	'Book' => array( 'Booch_sammelle', 'Sammlong', 'Sigge_sammelle' ),
+);
+
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'Book' => array( 'Libro' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'Book' => array( 'Sammlung' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'Book' => array( 'Книга', 'Збирка' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'Book' => array( 'പുസ്തകം', 'ശേഖരം' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'Book' => array( 'पुस्तक', 'संचयन' ),
 );
 
+/** Malay (Bahasa Melayu) */
+$specialPageAliases['ms'] = array(
+	'Book' => array( 'Buku' ),
+);
+
 /** Maltese (Malti) */
-$aliases['mt'] = array(
+$specialPageAliases['mt'] = array(
 	'Book' => array( 'Ktieb', 'Kollezzjoni' ),
 );
 
+/** Erzya (Эрзянь) */
+$specialPageAliases['myv'] = array(
+	'Book' => array( 'Ставкс' ),
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'Book' => array( 'Bok', 'Samling' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'Book' => array( 'Verzameling' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'Book' => array( 'Boek', 'Collectie', 'Verzameling' ),
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
-$aliases['nn'] = array(
+$specialPageAliases['nn'] = array(
 	'Book' => array( 'Bok' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'Book' => array( 'Samling' ),
-);
-
 /** Occitan (Occitan) */
-$aliases['oc'] = array(
+$specialPageAliases['oc'] = array(
 	'Book' => array( 'Libre' ),
 );
 
 /** Polish (Polski) */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Book' => array( 'Książka', 'Kolekcja' ),
 );
 
 /** Portuguese (Português) */
-$aliases['pt'] = array(
+$specialPageAliases['pt'] = array(
 	'Book' => array( 'Livro', 'Colecção' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
-$aliases['pt-br'] = array(
+$specialPageAliases['pt-br'] = array(
 	'Book' => array( 'Coleção', 'Colecção' ),
 );
 
 /** Romanian (Română) */
-$aliases['ro'] = array(
-	'Book' => array( 'Carte', 'Colecţie' ),
+$specialPageAliases['ro'] = array(
+	'Book' => array( 'Carte', 'Colecție' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'Book' => array( 'समुच्यय' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'Book' => array( 'Knihy', 'Kolekcia' ),
 );
 
 /** Albanian (Shqip) */
-$aliases['sq'] = array(
+$specialPageAliases['sq'] = array(
 	'Book' => array( 'Libra', 'Koleksion' ),
 );
 
 /** Swedish (Svenska) */
-$aliases['sv'] = array(
+$specialPageAliases['sv'] = array(
 	'Book' => array( 'Bok', 'Samling' ),
 );
 
 /** Swahili (Kiswahili) */
-$aliases['sw'] = array(
+$specialPageAliases['sw'] = array(
 	'Book' => array( 'Kusanya' ),
 );
 
+/** Telugu (తెలుగు) */
+$specialPageAliases['te'] = array(
+	'Book' => array( 'సేకరణ', 'పుస్తకం' ),
+);
+
+/** Thai (ไทย) */
+$specialPageAliases['th'] = array(
+	'Book' => array( 'หนังสือ' ),
+);
+
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'Book' => array( 'Aklat', 'Kalipunan' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
-	'Book' => array( 'Kitap', 'Koleksiyon' ),
+$specialPageAliases['tr'] = array(
+	'Book' => array( 'Kitap', 'Koleksiyon', 'Toplama' ),
+);
+
+/** Tatar (Cyrillic script) (Татарча) */
+$specialPageAliases['tt-cyrl'] = array(
+	'Book' => array( 'Китап' ),
 );
 
 /** Vèneto (Vèneto) */
-$aliases['vec'] = array(
+$specialPageAliases['vec'] = array(
 	'Book' => array( 'Libro' ),
 );
 
-/** Veps (Vepsan kel') */
-$aliases['vep'] = array(
+/** Veps (Vepsän kel') */
+$specialPageAliases['vep'] = array(
 	'Book' => array( 'Kirj' ),
 );
 
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'Book' => array( 'Sách' ),
+);
+
 /** Simplified Chinese (‪中文(简体)‬) */
-$aliases['zh-hans'] = array(
+$specialPageAliases['zh-hans'] = array(
 	'Book' => array( '图书' ),
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */
-$aliases['zh-hant'] = array(
+$specialPageAliases['zh-hant'] = array(
 	'Book' => array( '圖書' ),
 );
-

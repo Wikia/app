@@ -300,7 +300,7 @@ public class PhalanxTest extends BaseTest {
 	 * Hook triggered: AbortMove, SpecialMovepageBeforeMove
 	 * Tests blocks: SpamRegex, TitleBlackList
 	 */
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void articleMoveTest() throws Exception {
 		testArticleName = "Phalanx test" + (new Date()).toString();
 		
@@ -313,7 +313,7 @@ public class PhalanxTest extends BaseTest {
 		assertFalse(this.moveArticle(testArticleName, testArticleName + this.badWord + "New"));
 	}
 
-	@Test(groups={"CI", "verified"}, dependsOnMethods={"articleMoveTest"}, alwaysRun=true)
+	@Test(groups={"CI", "legacy"}, dependsOnMethods={"articleMoveTest"}, alwaysRun=true)
 	public void articleMoveCleanupTest() throws Exception {
 		loginAsStaff();
 
@@ -326,7 +326,7 @@ public class PhalanxTest extends BaseTest {
 	 * Hook triggered: EditFilter
 	 * Tests blocks: TitleBlackList
 	 */
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void createArticleTitleTest() throws Exception {
 		testArticleName = "Phalanx test" + (new Date()).toString();
 
@@ -339,7 +339,7 @@ public class PhalanxTest extends BaseTest {
 		assertFalse(this.createArticle(this.testArticleName + this.badWord, this.goodWords));
 	}
 	
-	@Test(groups={"CI", "verified"}, dependsOnMethods={"createArticleTitleTest"}, alwaysRun=true)
+	@Test(groups={"CI", "legacy"}, dependsOnMethods={"createArticleTitleTest"}, alwaysRun=true)
 	public void createArticleTitleTestCleanup() throws Exception {
 		loginAsStaff();
 
@@ -352,7 +352,7 @@ public class PhalanxTest extends BaseTest {
 	 * Hook triggered: EditFilter
 	 * Tests blocks: SpamRegex
 	 */
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void editArticleContentTest() throws Exception {
 		testArticleName = "Phalanx test" + (new Date()).toString();
 		
@@ -368,7 +368,7 @@ public class PhalanxTest extends BaseTest {
 		assertFalse(this.createArticle(this.testArticleName, "http://www." + this.badWord + ".net"));
 	}
 
-	@Test(groups={"CI", "verified"}, dependsOnMethods={"editArticleContentTest"}, alwaysRun=true)
+	@Test(groups={"CI", "legacy"}, dependsOnMethods={"editArticleContentTest"}, alwaysRun=true)
 	public void editArticleContentTestCleanup() throws Exception {
 		loginAsStaff();
 
@@ -381,7 +381,7 @@ public class PhalanxTest extends BaseTest {
 	 * Hook triggered: EditFilter
 	 * Tests blocks: SpamRegex
 	 */
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void editArticleSummaryTest() throws Exception {
 		testArticleName = "Phalanx test" + (new Date()).toString();
 		
@@ -394,7 +394,7 @@ public class PhalanxTest extends BaseTest {
 		assertFalse(this.createArticle(this.testArticleName, this.goodWords, this.badWords));
 	}
 	
-	@Test(groups={"CI", "verified"}, dependsOnMethods={"editArticleSummaryTest"}, alwaysRun=true)
+	@Test(groups={"CI", "legacy"}, dependsOnMethods={"editArticleSummaryTest"}, alwaysRun=true)
 	public void editArticleSummaryTestCleanup() throws Exception {
 		loginAsStaff();
 
@@ -453,7 +453,7 @@ public class PhalanxTest extends BaseTest {
 	 *
 	 * Tests blocks from ContentBlock group (maintain the execution order of tests below)
 	 */
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void beforeWhitelistTest() throws Exception {
 		testArticleName = "Phalanx test" + (new Date()).toString();
 		
@@ -467,7 +467,7 @@ public class PhalanxTest extends BaseTest {
 		editArticle(this.whitelistMessage, whitelist);
 	}
 
-	@Test(groups={"CI", "verified"}, dependsOnMethods={"beforeWhitelistTest"})
+	@Test(groups={"CI", "legacy"}, dependsOnMethods={"beforeWhitelistTest"})
 	public void whitelistTest() throws Exception {
 		login();
 
@@ -477,7 +477,7 @@ public class PhalanxTest extends BaseTest {
 		assertFalse(this.createArticle(this.testArticleName, this.goodWords + " " + this.whitelistWord));
 	}
 
-	@Test(groups={"CI", "verified"}, dependsOnMethods={"whitelistTest"}, alwaysRun=true)
+	@Test(groups={"CI", "legacy"}, dependsOnMethods={"whitelistTest"}, alwaysRun=true)
 	public void afterWhitelistTest() throws Exception {
 		loginAsStaff();
 
@@ -489,7 +489,7 @@ public class PhalanxTest extends BaseTest {
 	/**
 	 * Test adding, applying and removing content block via Special:Phalanx
 	 */
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void contentBlockTest() throws Exception {
 		loginAsStaff();
 
@@ -525,7 +525,7 @@ public class PhalanxTest extends BaseTest {
 		assertTrue(session().isTextPresent(this.blockFilter));
 	}
 
-	@Test(groups={"CI", "verified"}, dependsOnMethods={"contentBlockTest"})
+	@Test(groups={"CI", "legacy"}, dependsOnMethods={"contentBlockTest"})
 	public void contentBlockApplyTest() throws Exception {
 		testArticleName = "Phalanx test" + (new Date()).toString();
 		
@@ -534,7 +534,7 @@ public class PhalanxTest extends BaseTest {
 		assertFalse(this.createArticle(this.testArticleName, this.goodWords + " " + this.blockFilter));
 	}
 
-	@Test(groups={"CI", "verified"}, dependsOnMethods={"contentBlockApplyTest"})
+	@Test(groups={"CI", "legacy"}, dependsOnMethods={"contentBlockApplyTest"})
 	public void contentBlockStatsTest() throws Exception {
 		// test stats page
 		loginAsStaff();
@@ -555,7 +555,7 @@ public class PhalanxTest extends BaseTest {
 		assertFalse(session().isTextPresent(this.blockFilter));
 	}
 
-	@Test(groups={"CI", "verified"}, dependsOnMethods={"contentBlockStatsTest"})
+	@Test(groups={"CI", "legacy"}, dependsOnMethods={"contentBlockStatsTest"})
 	public void contentBlockAfterRemovalTest() throws Exception {
 		login();
 

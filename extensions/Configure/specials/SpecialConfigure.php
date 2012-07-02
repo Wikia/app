@@ -17,9 +17,9 @@ class SpecialConfigure extends ConfigurationPage {
 	}
 
 	protected function doSubmit() {
-		global $wgConf, $wgOut, $wgConfigureUpdateCacheEpoch, $wgUser, $wgRequest;
+		global $wgConf, $wgConfigureUpdateCacheEpoch;
 
-		$reason = $wgRequest->getText( 'wpReason' );
+		$reason = $this->getRequest()->getText( 'wpReason' );
 		$settings = $this->importFromRequest();
 
 		## Add extensions settings, so we don't lose them..
@@ -35,11 +35,11 @@ class SpecialConfigure extends ConfigurationPage {
 		$settings = $this->removeDefaults( $settings );
 		if ( $wgConfigureUpdateCacheEpoch )
 			$settings['wgCacheEpoch'] = max( $settings['wgCacheEpoch'], wfTimestampNow() );
-		$ok = $wgConf->saveNewSettings( $settings, $this->mWiki, $reason );
+		$ok = $wgConf->saveNewSettings( $settings, $this->getUser(), $this->mWiki, $reason );
 		$result = $ok ? 'success' : 'failure';
 
 		$url = $this->getTitle()->getLocalURL( "result=$result" );
-		$wgOut->redirect( $url );
+		$this->getOutput()->redirect( $url );
 	}
 
 	protected function getSettingMask() {
@@ -62,13 +62,13 @@ class SpecialConfigure extends ConfigurationPage {
 	 * Show the diff between the current version and the posted version
 	 */
 	protected function showDiff() {
-		global $wgConf, $wgOut;
+		global $wgConf;
 		$wiki = $this->mWiki;
 		$old = array( $wiki => $this->removeDefaults( $wgConf->getCurrent( $wiki ) ) );
 		$new = array( $wiki => $this->removeDefaults( $this->conf ) );
-		$diff = new CorePreviewConfigurationDiff( $old, $new, array( $wiki ) );
+		$diff = new CorePreviewConfigurationDiff( $this->getContext(), $old, $new, array( $wiki ) );
 		$diff->setViewCallback( array( $this, 'isSettingEditable' ) );
-		$wgOut->addHTML( $diff->getHtml() );
+		$this->getOutput()->addHTML( $diff->getHtml() );
 	}
 
 	/**

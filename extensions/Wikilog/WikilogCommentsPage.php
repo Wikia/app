@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -71,7 +72,6 @@ class WikilogCommentsPage
 		global $wgUser, $wgRequest;
 
 		parent::__construct( $title );
-		wfLoadExtensionMessages( 'Wikilog' );
 
 		# Check if user can post.
 		$this->mUserCanPost = $wgUser->isAllowed( 'wl-postcomment' ) ||
@@ -81,7 +81,6 @@ class WikilogCommentsPage
 		# Prepare the skin and the comment formatter.
 		$this->mSkin = $wgUser->getSkin();
 		$this->mFormatter = new WikilogCommentFormatter( $this->mSkin, $this->mUserCanPost );
-		$this->mFormatter->setPermalinkTitle( new Title() );
 
 		# Get item object relative to this comments page.
 		$this->mItem = WikilogItem::newFromInfo( $wi );
@@ -161,7 +160,8 @@ class WikilogCommentsPage
 		}
 
 		# Add a backlink to the original article.
-		$link = $this->mSkin->link( $this->mItem->mTitle, $this->mItem->mName );
+		$link = $this->mSkin->link( $this->mItem->mTitle,
+			Sanitizer::escapeHtmlAllowEntities( $this->mItem->mName ) );
 		$wgOut->setSubtitle( wfMsg( 'wikilog-backlink', $link ) );
 
 		# Retrieve comments (or replies) from database and display them.
@@ -313,10 +313,10 @@ class WikilogCommentsPage
 		}
 
 		$form =
-			Xml::hidden( 'title', $this->getTitle()->getPrefixedText() ) .
-			Xml::hidden( 'action', 'wikilog' ) .
-			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
-			( $parent ? Xml::hidden( 'wlParent', $parent->mID ) : '' );
+			Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) .
+			Html::hidden( 'action', 'wikilog' ) .
+			Html::hidden( 'wpEditToken', $wgUser->editToken() ) .
+			( $parent ? Html::hidden( 'wlParent', $parent->mID ) : '' );
 
 		$fields = array();
 
@@ -327,8 +327,10 @@ class WikilogCommentsPage
 			);
 		} else {
 			$loginTitle = SpecialPage::getTitleFor( 'Userlogin' );
-			$loginLink = $this->mSkin->makeKnownLinkObj( $loginTitle,
-				wfMsgHtml( 'loginreqlink' ), 'returnto=' . $wgTitle->getPrefixedUrl() );
+			$loginLink = $this->mSkin->link( $loginTitle,
+				wfMsgHtml( 'loginreqlink' ), array(),
+				array( 'returnto' => $wgTitle->getPrefixedUrl() )
+			);
 			$message = wfMsg( 'wikilog-posting-anonymously', $loginLink );
 			$fields[] = array(
 				Xml::label( wfMsg( 'wikilog-form-name' ), 'wl-name' ),
@@ -354,14 +356,14 @@ class WikilogCommentsPage
 		}
 
 		$fields[] = array( '',
-			Xml::submitbutton( wfMsg( 'wikilog-submit' ), array( 'name' => 'wlActionCommentSubmit' ) ) . '&nbsp;' .
+			Xml::submitbutton( wfMsg( 'wikilog-submit' ), array( 'name' => 'wlActionCommentSubmit' ) ) . WL_NBSP .
 			Xml::submitbutton( wfMsg( 'wikilog-preview' ), array( 'name' => 'wlActionCommentPreview' ) )
 		);
 
 		$form .= WikilogUtils::buildForm( $fields );
 
 		foreach ( $opts->getUnconsumedValues() as $key => $value ) {
-			$form .= Xml::hidden( $key, $value );
+			$form .= Html::hidden( $key, $value );
 		}
 
 		$form = Xml::tags( 'form', array(
@@ -374,6 +376,10 @@ class WikilogCommentsPage
 			array( 'id' => 'wl-comment-form' ) ) . "\n";
 	}
 
+	/**
+	 * @todo (In Wikilog 1.3.x) Replace GAID_FOR_UPDATE with
+	 *    Title::GAID_FOR_UPDATE.
+	 */
 	protected function setCommentApproval( $comment, $approval ) {
 		global $wgOut, $wgUser;
 
@@ -396,7 +402,7 @@ class WikilogCommentsPage
 				array( 'content', 'parsemag' ),
 				$comment->mUserText
 			);
-			$id = $title->getArticleID( GAID_FOR_UPDATE );
+			$id = $title->getArticleID( Title::GAID_FOR_UPDATE );
 			if ( $this->doDeleteArticle( $reason, false, $id ) ) {
 				$comment->deleteComment();
 				$log->addEntry( 'c-reject', $title, '' );
@@ -485,7 +491,7 @@ class WikilogCommentsPage
 	/**
 	 * Checks if the given comment is valid for posting.
 	 * @param $comment Comment to validate.
-	 * @returns False if comment is valid, error message identifier otherwise.
+	 * @return False if comment is valid, error message identifier otherwise.
 	 */
 	protected static function validateComment( WikilogComment &$comment ) {
 		global $wgWikilogMaxCommentSize;

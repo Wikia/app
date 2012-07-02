@@ -36,7 +36,14 @@ $messages['ar'] = array(
 	'lockdown-desc' => 'سماحات لكل مجموعة نطاق',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'lockdown-desc' => 'Permisos de grupu por espaciu de nomes',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -58,11 +65,26 @@ $messages['bs'] = array(
 	'lockdown-desc' => 'Po dopuštenjima grupa imenskih prostora',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'lockdown-desc' => 'Permisos de grup per espai de noms',
+);
+
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'lockdown-desc' => 'Oprávnění pro skupiny uživatelů závisející na jmenném prostoru',
+);
+
 /** German (Deutsch)
  * @author Imre
+ * @author Kghbln
  */
 $messages['de'] = array(
-	'lockdown-desc' => 'Gruppenrechte nach Namensraum',
+	'lockdown-desc' => 'Ermöglicht die benutzergruppenspezifische Vergabe von Berechtigungen für Namensräume, Spezialseiten und Aktionen',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -99,6 +121,13 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'lockdown-desc' => "Permissions d'accès par espace de noms",
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'lockdown-desc' => 'Pèrmissions d’accès per èspâço de noms.',
 );
 
 /** Galician (Galego)
@@ -150,6 +179,13 @@ $messages['id'] = array(
 	'lockdown-desc' => 'Per hak akses grup ruang nama',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'lockdown-desc' => 'Autorizzazioni di gruppo per namespace',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -157,7 +193,7 @@ $messages['ja'] = array(
 	'lockdown-desc' => '名前空間ごとのグループ許可',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -178,6 +214,13 @@ $messages['mk'] = array(
 	'lockdown-desc' => 'Групни дозволи по именски простор',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'lockdown-desc' => 'Keizinan kumpulan seruang nama',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -188,7 +231,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'lockdown-desc' => 'Per navneromsgruppetillatelser',
 );
 
@@ -214,10 +257,19 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Indech
+ * @author Waldir
  */
 $messages['pt'] = array(
-	'lockdown-desc' => 'Por permissões grupais de domínio',
+	'lockdown-desc' => 'Permissões de grupo por espaço nominal',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'lockdown-desc' => 'Permissões de grupo por domínio',
 );
 
 /** Tarandíne (Tarandíne)
@@ -241,14 +293,14 @@ $messages['sk'] = array(
 	'lockdown-desc' => 'Skupinové oprávnenia špecifické podľa menného priestoru',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'lockdown-desc' => 'Групне дозволе по именским просторима',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Liangent
  */
 $messages['sr-el'] = array(
@@ -260,6 +312,20 @@ $messages['sr-el'] = array(
  */
 $messages['sv'] = array(
 	'lockdown-desc' => 'Grupprättigheter per namnrymd',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'lockdown-desc' => 'పేరుబరి వారీగా గుంపు అనుమతులు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'lockdown-desc' => 'Ayon sa mga pagpayag ng pangkat na pampuwang ng pangalan',
 );
 
 /** Turkish (Türkçe)
@@ -274,5 +340,20 @@ $messages['tr'] = array(
  */
 $messages['uk'] = array(
 	'lockdown-desc' => 'Групові права за просторами назв',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author PhiLiP
+ */
+$messages['zh-hans'] = array(
+	'lockdown-desc' => '按名字空间的用户组权限',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Frankou
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'lockdown-desc' => '每個命名空間群組的權限',
 );
 

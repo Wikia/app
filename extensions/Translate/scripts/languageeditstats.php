@@ -81,8 +81,7 @@ function figureMessage( $text ) {
 $rows = TranslateUtils::translationChanges( $hours, $bots, $namespaces );
 
 /**
- * Get counts for edits per language code after filtering out edits by
- * $wgTranslateFuzzyBotName.
+ * Get counts for edits per language code after filtering out edits by FuzzyBot
  */
 $codes = array();
 foreach ( $rows as $_ ) {

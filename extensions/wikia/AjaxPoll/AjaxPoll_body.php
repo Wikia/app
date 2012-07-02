@@ -23,7 +23,6 @@ class AjaxPollClass {
 	 */
 	public function __construct() {
 
-		wfLoadExtensionMessages("AjaxPoll");
 	}
 
 
@@ -232,22 +231,17 @@ class AjaxPollClass {
 		list( $question, $answers ) = $this->parseInput();
 		list( $votes, $total ) = $this->getVotes();
 
-		// macbre: add CSS to the first ajax poll on the page
 		$before = '<!-- AjaxPoll #'. self::$mCount .' -->';
 
-		// RT #20789
-		global $wgWysiwygTemplatesParserEnabled;
-		if (empty($wgWysiwygTemplatesParserEnabled)) {
-			// load CSS/JS only when needed
-			$before .= F::build('JSSnippets')->addToStack(
-				array(
-					'/extensions/wikia/AjaxPoll/css/AjaxPoll.scss',
-					'/extensions/wikia/AjaxPoll/js/AjaxPoll.js'
-				),
-				array(),
-				'AjaxPoll.init'
-			);
-		}
+		// load CSS/JS only when needed
+		$before .= F::build('JSSnippets')->addToStack(
+			array(
+				'/extensions/wikia/AjaxPoll/css/AjaxPoll.scss',
+				'/extensions/wikia/AjaxPoll/js/AjaxPoll.js'
+			),
+			array(),
+			'AjaxPoll.init'
+		);
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$timestamp = wfTimestamp( TS_MW, $this->mCreated );

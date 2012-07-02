@@ -10,54 +10,25 @@ if(!defined('MEDIAWIKI')) {
 
 $dir = dirname(__FILE__) . '/';
 
-#in case we're running a maintenance script and GlobalFunctions.php isn't loaded...
-require_once("$IP/includes/GlobalFunctions.php");
-
-if(!file_exists($dir . substr($wgVersion, 0, 4) . '/EditUser_body.php')) {
-	wfDebug("Your MediaWiki version \"$wgVersion\" is not supported by the EditUser extension");
-	return;
-}
-
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'EditUser',
-	'version'        => '1.5.2',
+	'version'        => '1.7.0',
 	'author'         => 'Ryan Schmidt',
-	'description'    => 'Allows privileged users to edit other users\' preferences',
 	'descriptionmsg' => 'edituser-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:EditUser',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:EditUser',
 );
 
+// Internationlization files
 $wgExtensionMessagesFiles['EditUser'] = $dir . 'EditUser.i18n.php';
-$wgExtensionAliasesFiles['EditUser'] = $dir . 'EditUser.alias.php';
-$wgAutoloadClasses['EditUser'] = $dir . substr($wgVersion, 0, 4) . '/EditUser_body.php';
+$wgExtensionMessagesFiles['EditUserAliases'] = $dir . 'EditUser.alias.php';
+// Special page classes
+$wgAutoloadClasses['EditUser'] = $dir . 'EditUser_body.php';
 $wgSpecialPages['EditUser'] = 'EditUser';
-$wgAvailableRights[] = 'edituser';
-$wgAvailableRights[] = 'edituser-exempt';
 $wgSpecialPageGroups['EditUser'] = 'users';
 
-#Default group permissions
+// Default group permissions
+$wgAvailableRights[] = 'edituser';
+$wgAvailableRights[] = 'edituser-exempt';
 $wgGroupPermissions['bureaucrat']['edituser'] = true;
 $wgGroupPermissions['sysop']['edituser-exempt'] = true;
-
-#Debug mode, enable only if you are testing this extension or if you are having an issue
-$wgEditUserDebug = false;
-$wgEditUserDebugLog = $dir . 'debug.log';
-
-$wgHooks['SavePreferences'][] = 'efEditUserDebug';
-
-function efEditUserDebug( $eu, $user, &$msg, $old = array() ) {
-	global $wgEditUserDebug, $wgEditUserDebugLog;
-	if( !$wgEditUserDebug || !$eu instanceOf EditUser )
-		return true;
-	// $old was added in 1.13, so let's have this work for earlier versions :)
-	if( $old === array() ) {
-		wfErrorLog( "\n===== BEGIN EDITUSER REQUEST =====\nTime: "
-			. wfTime() . "\nNew user state: ".var_export( $user->mOptions, true ), $wgEditUserDebugLog );
-	} else {
-		wfErrorLog( "\n===== BEGIN EDITUSER REQUEST =====\nTime: "
-			. wfTime() . "\nCurrent user state: " . var_export( $old, true )
-			. "\nNew user state: ".var_export( $user->mOptions, true ), $wgEditUserDebugLog );
-	}
-	return true;
-}

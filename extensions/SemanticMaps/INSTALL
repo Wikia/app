@@ -1,56 +1,56 @@
-[[Semantic Maps 0.7.4]]
+This is the install file for the Semantic Maps extension.
+	
+Extension page on mediawiki.org: https://www.mediawiki.org/wiki/Extension:Semantic_Maps
+Latest version of the install file: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/SemanticMaps/INSTALL?view=co
 
-You can find a wiki version of this document, which includes various helpfull links, at
-http://mapping.referata.com/wiki/Help:Installation#Semantic_Maps
 
-Make sure you have Semantic MediaWiki, Maps and Validator successfully installed
-before proceeding with the installation. Once you have downloaded the code,
-place the 'SemanticMaps' directory within your MediaWiki 'extensions' directory.
-Then add the following code to your LocalSettings.php file after the lines that install Maps:
+== Requirements ==
 
+Semantic Maps requires:
+
+* Maps with the same version as this release of Semantic Maps
+** Validator 0.4.11 or above
+** MediaWiki 1.17 or above
+* PHP 5.2 or above, 5.3 or above recommended
+* Semantic MediaWiki 1.7 or above
+
+Semantic Maps also extensions these extensions when installed:
+
+* Semantic Forms (2.2 or later)
+* Admin Links (any version)
+
+== Download ==
+
+You can find the current version of Semantic Maps on the Google Code download page [0],
+as well as a list of legacy downloads [1].
+
+[0] https://code.google.com/p/semanticmaps/downloads/list
+[1] https://code.google.com/p/semanticmaps/downloads/list?can=1
+
+You can also get the code directly from SVN. Tags can be obtained via
+
+ svn checkout http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/SemanticMaps/REL_version
+
+Where 'version' is the version number of the tag, such as 0_1
+(see the available tags at http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/SemanticMaps/).
+
+The latest code can be obtained from trunk:
+
+ svn checkout http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/SemanticMaps/
+
+== Installation ==
+
+Once you have downloaded the code, place the ''SemanticMaps'' directory within your MediaWiki
+'extensions' directory. Then add the following code to your [[Manual:LocalSettings.php|LocalSettings.php]] file:
+
+# Semantic Maps
 require_once( "$IP/extensions/SemanticMaps/SemanticMaps.php" );
 
-The placement of the inclusion of Maps and Semantic Maps needs to be at a certain position.
-Hold the following rules into account:
+You need to keep these rules in mind regarding the inclusion order of extenions:
+
+* Validator needs to be included before any extension using it (so you can just put it first to keep it simple).
 * Maps needs to be included before Semantic Maps.
 * Semantic MediaWiki needs to be included before Maps.
-* Semantic Forms (if used) needs to be included before Maps (after SMW).
+* Semantic Forms (if used) needs to be included before Maps (but after SMW).
 
-An example of a typical inclusion order: ..., SMW, ..., SF, ..., Maps, SM, ...
-
-=== Installing 0.6 and above ===
-
-This applies only to people installing version 0.6 or later.
-
-Once You installed Semantic Maps, go to Special:SMWAdmin and run "database installation and upgrade".
-If you do not do this, geographic coordinates will not work properly, and you might encounters
-database errors on pages using them anyway.
-
-=== Upgrading to 0.6 and above ===
-
-This applies to everyone upgrading from the first Semantic Google Maps to Semantic Maps 0.5.5.
-
-Make sure you have upgraded SMW to version 1.5.1 or above before installing Semantic Maps 0.6!
-
-When upgrading to 0.6 from any previous version, you need to run the "database installation and upgrade"
-script in Special:SMWAdmin. Not doing this will result into fatal PHP errors. You will also need to run
-the "data repair and upgrade" script on the same page, which is required in order to store all
-coordinates so that Semantic Maps recognizes them. Not doing this will result into queries not
-returning any coordinates.
-
-=== Upgrading from Semantic Google Maps ===
-
-If you have Semantic Google Maps installed, and want to upgrade to Semantic Maps, these are the
-steps you need to follow:
-
-* Remove the SemanticGoogleMaps directory from your extension directory.
-* Remove (when you use it) Google Geocoder in a similar fashion.
-* Upload both Maps and Semantic Maps to your extension directory.
-* Make sure your API keys are in the right place
-  (the variable $wgGoogleMapsKey will need to be renamed, or copied, to $egGoogleMapsKey).
-* Change all #semantic_google_map parser functions with #display_point.
-* Add parameter names to the value of the #display_point calls.
-
-After doing all these steps, you should be done. Maps and Semantic Maps are designed to be
-backward compatible with SGM, so all SGM code ''should'' work on Semantic Maps. If you
-encounter some problem though, please let the extension developers know.
+An example of a typical inclusion order: ..., Validator, ..., SMW, ..., SF, ..., Maps, SM, ...

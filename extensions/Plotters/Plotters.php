@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 # Based off of the Gadgets and SmoothGallery extensions
@@ -27,24 +27,20 @@ if ( !defined( 'MEDIAWIKI' ) )
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Plotter parser extension',
-	'version'        => '0.6c',
+	'version'        => '0.6d',
 	'author'         => 'Ryan Lane',
-	'description'    => 'Allows users to create client side graphs and plots',
 	'descriptionmsg' => 'plotters-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Plotters',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Plotters',
 );
 
-$wgExtensionFunctions[] = "efPlotters";
-
+$wgHooks['ParserFirstCallInit'][] = 'efPlottersSetHooks';
 $wgHooks['OutputPageParserOutput'][] = 'PlottersParserOutput';
-if( version_compare( $wgVersion, '1.16alpha', '<' ) ) {
-	$wgHooks['LanguageGetMagic'][] = 'PlottersLanguageGetMagic';
-}
 $wgHooks['ArticleSaveComplete'][] = 'wfPlottersArticleSaveComplete';
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Plotters'] = $dir . 'Plotters.i18n.php';
-$wgExtensionAliasesFiles['Plotters'] = $dir . 'Plotters.alias.php';
+$wgExtensionMessagesFiles['PlottersAlias'] = $dir . 'Plotters.alias.php';
+$wgExtensionMessagesFiles['PlottersMagic'] = $dir . 'Plotters.magic.php';
 $wgAutoloadClasses['Plotters'] = $dir . 'PlottersClass.php';
 $wgAutoloadClasses['PlottersParser'] = $dir . 'PlottersParser.php';
 $wgAutoloadClasses['SpecialPlotters'] = $dir . 'SpecialPlotters.php';
@@ -60,7 +56,7 @@ $wgPlottersRendererFiles = array( "plotkit" => array( "/mochikit/MochiKit.js", "
 							"/plotkit/Canvas.js", "/plotkit/SweetCanvas.js" )
 				);
 
-function wfPlottersArticleSaveComplete( &$article, &$wgUser, &$text ) {
+function wfPlottersArticleSaveComplete( $article, $wgUser, $text ) {
 	// update cache if MediaWiki:Plotters-definition was edited
 	$title = $article->mTitle;
 	if ( $title->getNamespace() == NS_MEDIAWIKI && $title->getText() == 'Plotters-definition' ) {
@@ -120,7 +116,7 @@ function wfLoadPlottersStructured( $forceNewText = null ) {
 		if ( preg_match( '/^==+ *([^*:\s|]+?)\s*==+\s*$/', $line, $m ) ) {
 			$section = $m[1];
 		}
-		else if ( preg_match( '/^\*+ *([a-zA-Z](?:[-_:.\w\d ]*[a-zA-Z0-9])?)\s*((\|[^|]*)+)\s*$/', $line, $m ) ) {
+		elseif ( preg_match( '/^\*+ *([a-zA-Z](?:[-_:.\w\d ]*[a-zA-Z0-9])?)\s*((\|[^|]*)+)\s*$/', $line, $m ) ) {
 			// NOTE: the plotter name is used as part of the name of a form field,
 			//      and must follow the rules defined in http://www.w3.org/TR/html4/types.html#type-cdata
 			//      Also, title-normalization applies.
@@ -142,7 +138,7 @@ function wfLoadPlottersStructured( $forceNewText = null ) {
 	return $plotters;
 }
 
-function wfApplyPlotterCode( $code, &$out, &$done ) {
+function wfApplyPlotterCode( $code, $out, &$done ) {
 	global $wgSkin, $wgJsMimeType;
 
 	// FIXME: stuff added via $out->addScript appears below usercss and userjs in the head tag.
@@ -159,24 +155,22 @@ function wfApplyPlotterCode( $code, &$out, &$done ) {
 			$u = $t->getLocalURL( 'action=raw&ctype=' . $wgJsMimeType );
 			$out->addScript( '<script type="' . $wgJsMimeType . '" src="' . htmlspecialchars( $u ) . '"></script>' . "\n" );
 		}
-		else if ( preg_match( '/\.css/', $codePage ) ) {
+		elseif ( preg_match( '/\.css/', $codePage ) ) {
 			$u = $t->getLocalURL( 'action=raw&ctype=text/css' );
 			$out->addScript( '<style type="text/css">/*<![CDATA[*/ @import "' . $u . '"; /*]]>*/</style>' . "\n" );
 		}
 	}
 }
 
-function efPlotters() {
-	global $wgParser;
-
-	$wgParser->setHook( 'plot', 'initPlotters' );
-	$wgParser->setFunctionHook( 'plot', 'initPlottersPF' );
+function efPlottersSetHooks( $parser ) {
+	$parser->setHook( 'plot', 'initPlotters' );
+	$parser->setFunctionHook( 'plot', 'initPlottersPF' );
+	return true;
 }
 
-function initPlottersPF( &$parser ) {
+function initPlottersPF( $parser ) {
 	$numargs = func_num_args();
 	if ( $numargs < 2 ) {
-		wfLoadExtensionMessages( 'Plotters' );
 		$input = wfMsg( "plotters-errors" ) . " " . wfMsg( "plotters-missing-arguments" );
 		return str_replace( '§', '<', '§pre>§nowiki>' . $input . '§/nowiki>§/pre>' );
 	}
@@ -225,14 +219,14 @@ function initPlotters( $input, $argv, &$parser ) {
  * Hook callback that injects messages and things into the <head> tag
  * Does nothing if $parserOutput->mPlotterTag is not set
  */
-function PlottersParserOutput( &$outputPage, &$parserOutput )  {
+function PlottersParserOutput( $outputPage, $parserOutput )  {
 	if ( !empty( $parserOutput->mPlottersTag ) ) {
 		// Output required javascript
 		$genericname = "generic";
 		$plotkitname = "plotkit";
 		if ( $parserOutput->mplotter["$genericname"] ) {
 			Plotters::setPlottersHeaders( $outputPage, 'generic' );
-		} else if ( $parserOutput->mplotter["$plotkitname"] ) {
+		} elseif ( $parserOutput->mplotter["$plotkitname"] ) {
 			Plotters::setPlottersHeaders( $outputPage, 'plotkit' );
 		}
 
@@ -249,15 +243,5 @@ function PlottersParserOutput( &$outputPage, &$parserOutput )  {
 			}
 		}
 	}
-	return true;
-}
-
-// FIXME: doesn't this make using this method and the hook above useless?
-/**
- * We ignore langCode - parser function names can be translated but
- * we are not using this feature
- */
-function PlottersLanguageGetMagic( &$magicWords, $langCode ) {
-	$magicWords['plot']  = array( 0, 'plot' );
 	return true;
 }

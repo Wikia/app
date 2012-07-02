@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class SkinChooserTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testCheckPresenceOfOldSkins() throws Exception {
 		login();
 

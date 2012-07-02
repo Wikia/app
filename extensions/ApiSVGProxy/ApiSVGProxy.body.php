@@ -11,8 +11,10 @@
  * @copyright Copyright © 2009 Roan Kattouw
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
  */
-# Alert the user that this is not a valid entry point to MediaWiki if they try to access the extension file directly.
-if( !defined( 'MEDIAWIKI' ) ) {
+
+# Alert the user that this is not a valid entry point to MediaWiki if they try
+# to access the extension file directly.
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo <<<EOT
 To install the ApiSVGProxy extension, put the following line in LocalSettings.php:
 require_once( "\$IP/extensions/ApiSVGProxy/ApiSVGProxy.php" );
@@ -31,20 +33,20 @@ class ApiSVGProxy extends ApiBase {
 		$file = wfFindFile( $title );
 
 		// Verify that the file exists and is an SVG file
-		if( !$file ) {
-			$this->dieUsage('The specified file does not exist',
-				'nosuchfile', 404);
+		if ( !$file ) {
+			$this->dieUsage( 'The specified file does not exist',
+				'nosuchfile', 404 );
 		}
-		if( $file->getExtension() != 'svg' || $file->getMimeType() != 'image/svg+xml' ) {
-			$this->dieUsage('The specified file is not an SVG file',
-				'notsvg', 403);
+		if ( $file->getExtension() != 'svg' || $file->getMimeType() != 'image/svg+xml' ) {
+			$this->dieUsage( 'The specified file is not an SVG file',
+				'notsvg', 403 );
 		}
 
 		// Grab the file's contents
 		$contents = Http::get( $file->getFullUrl() );
-		if( $contents === false ) {
-			$this->dieUsage('The specified file could not be fetched',
-				'fetchfailed', 500);
+		if ( $contents === false ) {
+			$this->dieUsage( 'The specified file could not be fetched',
+				'fetchfailed', 500 );
 		}
 
 		// Output the file's contents raw
@@ -82,6 +84,6 @@ class ApiSVGProxy extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiSVGProxy.body.php 60296 2009-12-22 22:03:07Z ashley $';
+		return __CLASS__ . ': $Id: ApiSVGProxy.body.php 64584 2010-04-03 23:09:39Z siebrand $';
 	}
 }

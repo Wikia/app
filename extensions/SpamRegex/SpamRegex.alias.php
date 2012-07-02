@@ -2,75 +2,93 @@
 /**
  * Alias file for SpamRegex extension.
  *
+ * @file
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English
- * @author Bartek Łapiński
- */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'SpamRegex' => array( 'SpamRegex' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'SpamRegex' => array( 'سبام_ريجيكس' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'SpamRegex' => array( 'سبام_ريجيكس' ),
+$specialPageAliases['arz'] = array(
+	'SpamRegex' => array( 'Spam_Regex' ),
 );
 
 /** Hebrew (עברית) */
-$aliases['he'] = array(
+$specialPageAliases['he'] = array(
 	'SpamRegex' => array( 'ביטויי_ספאם' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'SpamRegex' => array( 'Spamowe regularne wurazy' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'SpamRegex' => array( 'PouryèlReg' ),
+);
+
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'SpamRegex' => array( 'Regex antispam', 'Regex anti-spam' ),
+$specialPageAliases['ia'] = array(
+	'SpamRegex' => array( 'Regex_antispam', 'Regex_anti-spam' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'SpamRegex' => array( 'Regex spam', 'RegexSpam' ),
+$specialPageAliases['id'] = array(
+	'SpamRegex' => array( 'Regex_spam', 'RegexSpam' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'SpamRegex' => array( 'スパム正規表現フィルター', 'スパム正規表現フィルタ' ),
 );
 
+/** Luxembourgish (Lëtzebuergesch) */
+$specialPageAliases['lb'] = array(
+	'SpamRegex' => array( 'Regele_fir_Spam_ze_fannen' ),
+);
+
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'SpamRegex' => array( 'РегИзрЗаСпам' ),
+);
+
+/** Malayalam (മലയാളം) */
+$specialPageAliases['ml'] = array(
+	'SpamRegex' => array( 'പാഴെഴുത്ത്റെജെക്സ്' ),
+);
+
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'SpamRegex' => array( 'उत्पातरिजेक्स' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'SpamRegex' => array( 'Regulære_uttrykk_mot_spam' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'SpamRegex' => array( 'Moek_regeliere_uutdrokking' ),
+$specialPageAliases['nds-nl'] = array(
+	'SpamRegex' => array( 'Moek_reguliere_uutdrokking' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'SpamRegex' => array( 'SpamReguliereExpressie' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'SpamRegex' => array( 'Regulære uttrykk mot spam' ),
-);
-
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'SpamRegex' => array( 'Karaniwang pagsasaad ng manlulusob' ),
 );
-

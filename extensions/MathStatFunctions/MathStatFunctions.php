@@ -9,13 +9,16 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'MathStatFunctions',
 	'version' => '1.2',
 	'author' => 'Carl Fürstenberg (AzaToth)',
-	'description' => 'A collection of mathematical and statistical functions',
 	'descriptionmsg' => 'msfunc_desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:MathStatFunctions',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:MathStatFunctions',
 );
 
 $wgExtensionMessagesFiles['MathStatFunctions'] = dirname( __FILE__ ) . '/MathStatFunctions.i18n.php';
-$wgExtensionFunctions[] = 'wfSetupMathStatFunctions';
+$wgExtensionMessagesFiles['MathStatFunctionsMagic'] = dirname( __FILE__ ) . '/MathStatFunctions.i18n.magic.php';
+
+$wgHooks['ParserFirstCallInit'][] = 'wfSetupMathStatFunctions';
+
+$wgExtMathStatFunctions = null;
 
 /**
  * \brief Exception class identifying that ParserFunctions is not available
@@ -27,7 +30,6 @@ class ParserFunctionsNotFoundException extends Exception {
 }
 
 class ExtMathStatFunctions {
-
 	public function __construct() {
 		if ( !class_exists( 'ExtParserFunctions' ) )
 			throw new ParserFunctionsNotFoundException;
@@ -326,7 +328,7 @@ class ExtMathStatFunctions {
 		}
 		$tmp = tan( $res );
 		if ( $tmp == 0 ) {
-			wfLoadExtensionMessages( 'MathStatFunctions' );
+			
 			return wfMsg( 'msfunc_div_zero' );
 		}
 		$result = 1 / $tmp;
@@ -342,7 +344,7 @@ class ExtMathStatFunctions {
 		}
 		$tmp = cos( $res );
 		if ( $tmp == 0 ) {
-			wfLoadExtensionMessages( 'MathStatFunctions' );
+			
 			return wfMsg( 'msfunc_div_zero' );
 		}
 
@@ -359,7 +361,7 @@ class ExtMathStatFunctions {
 		}
 		$tmp = sin( $res );
 		if ( $tmp == 0 ) {
-			wfLoadExtensionMessages( 'MathStatFunctions' );
+			
 			return wfMsg( 'msfunc_div_zero' );
 		}
 		$result = 1 / $tmp;
@@ -405,11 +407,11 @@ class ExtMathStatFunctions {
 
 	private function check( $value ) {
 		if ( is_nan( $value ) ) {
-			wfLoadExtensionMessages( 'MathStatFunctions' );
+			
 			return wfMsg( 'msfunc_nan' );
 		}
 		elseif ( is_infinite( $value ) and false ) {
-			wfLoadExtensionMessages( 'MathStatFunctions' );
+			
 			return wfMsg( 'msfunc_inf' ) . ( $value < 0 ? '-' : '+' );
 		}
 		else {
@@ -418,40 +420,42 @@ class ExtMathStatFunctions {
 	}
 }
 
-function wfSetupMathStatFunctions() {
-	global $wgParser, $wgExtMathStatFunctions;
+function wfSetupMathStatFunctions( $parser ) {
+	global $wgExtMathStatFunctions;
 
 	try {
-		$wgExtMathStatFunctions = new ExtMathStatFunctions;
+		if ( $wgExtMathStatFunctions === null ) {
+			$wgExtMathStatFunctions = new ExtMathStatFunctions;
+		}
 	}
 	catch ( ParserFunctionsNotFoundException $e ) {
 		throw new FatalError( 'in ' . $e->getFile() . ' on line ' . $e->getLine() . ': ' . $e->getMessage() );
 	}
 
-	$wgParser->setFunctionHook( 'const',  array( &$wgExtMathStatFunctions, 'constHook' ) );
-	$wgParser->setFunctionHook( 'median', array( &$wgExtMathStatFunctions, 'medianHook' ) );
-	$wgParser->setFunctionHook( 'mean',   array( &$wgExtMathStatFunctions, 'meanHook' ) );
-	$wgParser->setFunctionHook( 'exp',    array( &$wgExtMathStatFunctions, 'expHook' ) );
-	$wgParser->setFunctionHook( 'log',    array( &$wgExtMathStatFunctions, 'logHook' ) );
-	$wgParser->setFunctionHook( 'ln',     array( &$wgExtMathStatFunctions, 'lnHook' ) );
-	$wgParser->setFunctionHook( 'tan',    array( &$wgExtMathStatFunctions, 'tanHook' ) );
-	$wgParser->setFunctionHook( 'atan',   array( &$wgExtMathStatFunctions, 'atanHook' ) );
-	$wgParser->setFunctionHook( 'tanh',   array( &$wgExtMathStatFunctions, 'tanhHook' ) );
-	$wgParser->setFunctionHook( 'atanh',  array( &$wgExtMathStatFunctions, 'atanhHook' ) );
-	$wgParser->setFunctionHook( 'cot',    array( &$wgExtMathStatFunctions, 'cotHook' ) );
-	$wgParser->setFunctionHook( 'acot',   array( &$wgExtMathStatFunctions, 'acotHook' ) );
-	$wgParser->setFunctionHook( 'cos',    array( &$wgExtMathStatFunctions, 'cosHook' ) );
-	$wgParser->setFunctionHook( 'acos',   array( &$wgExtMathStatFunctions, 'acosHook' ) );
-	$wgParser->setFunctionHook( 'cosh',   array( &$wgExtMathStatFunctions, 'coshHook' ) );
-	$wgParser->setFunctionHook( 'acosh',  array( &$wgExtMathStatFunctions, 'acoshHook' ) );
-	$wgParser->setFunctionHook( 'sec',    array( &$wgExtMathStatFunctions, 'secHook' ) );
-	$wgParser->setFunctionHook( 'asec',   array( &$wgExtMathStatFunctions, 'asecHook' ) );
-	$wgParser->setFunctionHook( 'sin',    array( &$wgExtMathStatFunctions, 'sinHook' ) );
-	$wgParser->setFunctionHook( 'asin',   array( &$wgExtMathStatFunctions, 'asinHook' ) );
-	$wgParser->setFunctionHook( 'sinh',   array( &$wgExtMathStatFunctions, 'sinhHook' ) );
-	$wgParser->setFunctionHook( 'asinh',  array( &$wgExtMathStatFunctions, 'asinhHook' ) );
-	$wgParser->setFunctionHook( 'csc',    array( &$wgExtMathStatFunctions, 'cscHook' ) );
-	$wgParser->setFunctionHook( 'acsc',   array( &$wgExtMathStatFunctions, 'acscHook' ) );
+	$parser->setFunctionHook( 'const',  array( &$wgExtMathStatFunctions, 'constHook' ) );
+	$parser->setFunctionHook( 'median', array( &$wgExtMathStatFunctions, 'medianHook' ) );
+	$parser->setFunctionHook( 'mean',   array( &$wgExtMathStatFunctions, 'meanHook' ) );
+	$parser->setFunctionHook( 'exp',    array( &$wgExtMathStatFunctions, 'expHook' ) );
+	$parser->setFunctionHook( 'log',    array( &$wgExtMathStatFunctions, 'logHook' ) );
+	$parser->setFunctionHook( 'ln',     array( &$wgExtMathStatFunctions, 'lnHook' ) );
+	$parser->setFunctionHook( 'tan',    array( &$wgExtMathStatFunctions, 'tanHook' ) );
+	$parser->setFunctionHook( 'atan',   array( &$wgExtMathStatFunctions, 'atanHook' ) );
+	$parser->setFunctionHook( 'tanh',   array( &$wgExtMathStatFunctions, 'tanhHook' ) );
+	$parser->setFunctionHook( 'atanh',  array( &$wgExtMathStatFunctions, 'atanhHook' ) );
+	$parser->setFunctionHook( 'cot',    array( &$wgExtMathStatFunctions, 'cotHook' ) );
+	$parser->setFunctionHook( 'acot',   array( &$wgExtMathStatFunctions, 'acotHook' ) );
+	$parser->setFunctionHook( 'cos',    array( &$wgExtMathStatFunctions, 'cosHook' ) );
+	$parser->setFunctionHook( 'acos',   array( &$wgExtMathStatFunctions, 'acosHook' ) );
+	$parser->setFunctionHook( 'cosh',   array( &$wgExtMathStatFunctions, 'coshHook' ) );
+	$parser->setFunctionHook( 'acosh',  array( &$wgExtMathStatFunctions, 'acoshHook' ) );
+	$parser->setFunctionHook( 'sec',    array( &$wgExtMathStatFunctions, 'secHook' ) );
+	$parser->setFunctionHook( 'asec',   array( &$wgExtMathStatFunctions, 'asecHook' ) );
+	$parser->setFunctionHook( 'sin',    array( &$wgExtMathStatFunctions, 'sinHook' ) );
+	$parser->setFunctionHook( 'asin',   array( &$wgExtMathStatFunctions, 'asinHook' ) );
+	$parser->setFunctionHook( 'sinh',   array( &$wgExtMathStatFunctions, 'sinhHook' ) );
+	$parser->setFunctionHook( 'asinh',  array( &$wgExtMathStatFunctions, 'asinhHook' ) );
+	$parser->setFunctionHook( 'csc',    array( &$wgExtMathStatFunctions, 'cscHook' ) );
+	$parser->setFunctionHook( 'acsc',   array( &$wgExtMathStatFunctions, 'acscHook' ) );
 
 	return true;
 }

@@ -229,7 +229,7 @@ LST: red link from nonexistent article
 !!input
 {{#lst:no such article|anything}}
 !!result
-<p><a href="/index.php?title=No_such_article&amp;action=edit&amp;redlink=1" class="new" title="No such article (not yet written)">No such article</a>
+<p><a href="/index.php?title=No_such_article&amp;action=edit&amp;redlink=1" class="new" title="No such article (page does not exist)">No such article</a>
 </p>
 !!end
 
@@ -253,7 +253,7 @@ LST: Transcluded section headings create edit link to template
 !!input
 {{#lst:headings|head}}
 !!result
-<a name="section"></a><h2><span class="editsection">[<a href="/index.php?title=Headings&amp;action=edit&amp;section=T-1" title="Headings">edit</a>]</span> <span class="mw-headline">section</span></h2>
+<h2><span class="editsection">[<a href="/index.php?title=Headings&amp;action=edit&amp;section=T-1" title="Headings">edit</a>]</span> <span class="mw-headline" id="section">section</span></h2>
 <p>blah
 </p>
 !!end
@@ -263,7 +263,7 @@ LST: Transcluded section headings create edit link to right section (mw 1.9r1821
 !!input
 {{#lst:headings|head2}}
 !!result
-<a name="section2"></a><h2><span class="editsection">[<a href="/index.php?title=Headings&amp;action=edit&amp;section=T-2" title="Headings">edit</a>]</span> <span class="mw-headline">section2</span></h2>
+<h2><span class="editsection">[<a href="/index.php?title=Headings&amp;action=edit&amp;section=T-2" title="Headings">edit</a>]</span> <span class="mw-headline" id="section2">section2</span></h2>
 <p>blah
 </p>
 !!end
@@ -285,10 +285,10 @@ LST: more sensitive test for heading count boundaries.
 !!input
 {{#lst:lst_head_bounds|s}}
 !!result
-<a name="3"></a><h1><span class="editsection">[<a href="/index.php?title=Lst_head_bounds&amp;action=edit&amp;section=T-3" title="Lst head bounds">edit</a>]</span> <span class="mw-headline">3</span></h1>
+<h1><span class="editsection">[<a href="/index.php?title=Lst_head_bounds&amp;action=edit&amp;section=T-3" title="Lst head bounds">edit</a>]</span> <span class="mw-headline" id="3">3</span></h1>
 <p>hi
 </p>
-<a name="4"></a><h1><span class="editsection">[<a href="/index.php?title=Lst_head_bounds&amp;action=edit&amp;section=T-4" title="Lst head bounds">edit</a>]</span> <span class="mw-headline">4</span></h1>
+<h1><span class="editsection">[<a href="/index.php?title=Lst_head_bounds&amp;action=edit&amp;section=T-4" title="Lst head bounds">edit</a>]</span> <span class="mw-headline" id="4">4</span></h1>
 
 !!end
 
@@ -389,5 +389,47 @@ LST: useless options
 {{#section:LST-alt|2}}
 !!result
 <p>junk
+</p>
+!!end
+
+!!article
+fromsection
+!!text
+Before...
+<section begin="A"/>SectionA<section end="A"/>
+<section begin="B"/>SectionB<section end="B"/>
+<section begin="C"/>SectionC<section end="C"/>
+...After
+!!endarticle
+!!test
+LST: inclusion starting at a specified section till the end of article
+!!options
+!!input
+{{#lst:fromsection|B|}}
+!!result
+<p>SectionB
+SectionC
+...After
+</p>
+!!end
+
+!!article
+tosection
+!!text
+Before...
+<section begin="A"/>SectionA<section end="A"/>
+<section begin="B"/>SectionB<section end="B"/>
+<section begin="C"/>SectionC<section end="C"/>
+...After
+!!endarticle
+!!test
+LST: inclusion from beginning of article to a specified section
+!!options
+!!input
+{{#lst:tosection||B}}
+!!result
+<p>Before...
+SectionA
+SectionB
 </p>
 !!end

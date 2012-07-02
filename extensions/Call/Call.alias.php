@@ -6,180 +6,229 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'Call' => array( 'Call' ),
 );
 
+/** Afrikaans (Afrikaans) */
+$specialPageAliases['af'] = array(
+	'Call' => array( 'Roep' ),
+);
+
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Call' => array( 'استدعاء' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'Call' => array( 'استدعاء' ),
+$specialPageAliases['arz'] = array(
+	'Call' => array( 'استدعا' ),
 );
 
 /** Breton (Brezhoneg) */
-$aliases['br'] = array(
+$specialPageAliases['br'] = array(
 	'Call' => array( 'Pellgomz' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'Call' => array( 'Poziv' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Call' => array( 'Aufruf' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'Call' => array( 'Zawołanje' ),
 );
 
 /** Greek (Ελληνικά) */
-$aliases['el'] = array(
+$specialPageAliases['el'] = array(
 	'Call' => array( 'Κλήση' ),
 );
 
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'Call' => array( 'Voki' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'Call' => array( 'خواندن' ),
+);
+
 /** French (Français) */
-$aliases['fr'] = array(
+$specialPageAliases['fr'] = array(
 	'Call' => array( 'Appeler', 'Appels', 'Appel' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
+$specialPageAliases['frp'] = array(
 	'Call' => array( 'Apelar', 'Apèl', 'Apèls' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
+$specialPageAliases['gl'] = array(
 	'Call' => array( 'Chamada' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'Call' => array( 'Lyt aa' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'Call' => array( 'Zawołanje' ),
 );
 
+/** 湘语 (湘语) */
+$specialPageAliases['hsn'] = array(
+	'Call' => array( '呼叫' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'Call' => array( 'Rele' ),
+);
+
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
+$specialPageAliases['hu'] = array(
 	'Call' => array( 'Hívás' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
+$specialPageAliases['ia'] = array(
 	'Call' => array( 'Appello' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
+$specialPageAliases['id'] = array(
 	'Call' => array( 'Panggil' ),
 );
 
+/** Igbo (Igbo) */
+$specialPageAliases['ig'] = array(
+	'Call' => array( 'Kpȯ' ),
+);
+
+/** Italian (Italiano) */
+$specialPageAliases['it'] = array(
+	'Call' => array( 'Richiamo' ),
+);
+
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'Call' => array( 'ページ呼び出し', 'ページの呼び出し' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
-$aliases['km'] = array(
+$specialPageAliases['km'] = array(
 	'Call' => array( 'ហៅ' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'Call' => array( 'Oproof' ),
 );
 
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'Call' => array( 'Llamada' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'Call' => array( 'Opruff' ),
 );
 
+/** Malagasy (Malagasy) */
+$specialPageAliases['mg'] = array(
+	'Call' => array( 'Antsoina' ),
+);
+
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'Call' => array( 'Повик' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'Call' => array( 'വിളിക്കുക' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'Call' => array( 'कॉल' ),
 );
 
-/** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'Call' => array( 'Anroepen' ),
-);
-
-/** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'Call' => array( 'Aanroepen' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
 	'Call' => array( 'Kall' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'Call' => array( 'Anreupen' ),
+);
+
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'Call' => array( 'Aanroepen' ),
+);
+
 /** Occitan (Occitan) */
-$aliases['oc'] = array(
+$specialPageAliases['oc'] = array(
 	'Call' => array( 'Ampèl', 'Ampèls', 'Apelar' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'Call' => array( 'आमन्त्र्' ),
 );
 
 /** Sinhala (සිංහල) */
-$aliases['si'] = array(
+$specialPageAliases['si'] = array(
 	'Call' => array( 'ඇමතුම' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'Call' => array( 'Volanie' ),
 );
 
 /** Albanian (Shqip) */
-$aliases['sq'] = array(
+$specialPageAliases['sq'] = array(
 	'Call' => array( 'Thirr' ),
 );
 
 /** Sundanese (Basa Sunda) */
-$aliases['su'] = array(
+$specialPageAliases['su'] = array(
 	'Call' => array( 'Gero' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'Call' => array( 'Tawagin' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
-	'Call' => array( 'Çağrı' ),
+$specialPageAliases['tr'] = array(
+	'Call' => array( 'Çağrı', 'Çağır' ),
 );
 
-/** Veps (Vepsan kel') */
-$aliases['vep'] = array(
+/** Veps (Vepsän kel') */
+$specialPageAliases['vep'] = array(
 	'Call' => array( 'SätaPagin' ),
 );
 
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'Call' => array( 'Gọi' ),
+);

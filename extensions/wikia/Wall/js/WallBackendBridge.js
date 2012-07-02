@@ -34,6 +34,7 @@ var WallBackendBridge = $.createClass(Observable, {
 			data: {
 				body: body,
 				messagetitle: title,
+
 				pagetitle: page['title'],
 				pagenamespace: page['namespace'],
 				convertToFormat: convertToFormat
@@ -57,6 +58,7 @@ var WallBackendBridge = $.createClass(Observable, {
 			data: {
 				body: body,
 				parent: parent,
+
 				pagetitle: page['title'],
 				pagenamespace: page['namespace'],
 				convertToFormat: convertToFormat

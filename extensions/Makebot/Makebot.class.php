@@ -8,7 +8,6 @@ class MakeBot extends SpecialPage {
 	 * Constructor
 	 */
 	function MakeBot() {
-		wfLoadExtensionMessages('Makebot');
 		SpecialPage::SpecialPage( 'Makebot', 'makebot' );
 	}
 

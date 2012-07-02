@@ -17,7 +17,7 @@ class SpecialFarmer extends SpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct( 'Farmer' );
-		wfLoadExtensionMessages( 'MediaWikiFarmer' );
+		
 	}
 
 	/**
@@ -130,7 +130,7 @@ class SpecialFarmer extends SpecialPage {
 				$log->addEntry( 'create', $this->getTitle(), $reason, array( $name ) );
 
 				$wgOut->wrapWikiMsg( '== $1 ==', 'farmer-wikicreated' );
-				$wgOut->addWikiMsg( 'farmer-wikicreated-text', $wikiObj->getUrl( wfUrlencode( wfMsgNoDB( 'mainpage' ) ) ) );
+				$wgOut->addWikiMsg( 'farmer-wikicreated-text', $wikiObj->getUrl( wfUrlencode( wfMessage( 'mainpage' )->inContentLanguage()->useDatabase( false )->plain() ) ) );
 				$wgOut->addWikiMsg( 'farmer-default', '[[' . $title . ':Special:Farmer|Special:Farmer]]' );
 				return;
 			}
@@ -209,7 +209,7 @@ class SpecialFarmer extends SpecialPage {
 					'farmer-createwiki-reason' => Xml::input( 'wpReason', 20, $reason ),
 				), 'farmer-button-submit'
 			) . "\n" .
-			Xml::hidden( 'token', $token ) . "\n" .
+			Html::Hidden( 'token', $token ) . "\n" .
 			Xml::closeElement( 'form' )
 		);
 	}
@@ -258,7 +258,7 @@ class SpecialFarmer extends SpecialPage {
 							'farmer-delete-reason' => Xml::input( 'wpReason', false, $wgRequest->getVal( 'wpReason' ) ),
 							'farmer-delete-confirm' => Xml::check( 'wpConfirm' )
 						), 'farmer-delete-form-submit' ) . "\n" .
-					Xml::hidden( 'wpWiki', $wiki ) . "\n" .
+					Html::Hidden( 'wpWiki', $wiki ) . "\n" .
 					Xml::closeElement( 'form' )
 				);
 			}
@@ -561,7 +561,7 @@ class SpecialFarmer extends SpecialPage {
 			<td align=\"left\"><input type=\"text\" size=\"50\" name=\"include\" value=\"\" /></td>
 		</tr>
 		<tr>
-			<td>&nbsp;</td>
+			<td>&#160;</td>
 			<td align=\"right\"><input type=\"submit\" name=\"submit\" value=\"" . wfMsgHtml( 'farmer-button-submit' ) . "\" /></td>
 		</tr>
 	</table>
@@ -582,7 +582,7 @@ class SpecialFarmer extends SpecialPage {
 			$input .= 'checked="checked" ';
 		}
 
-		$input .= ' />' . wfMsgHtml( 'farmer-yes' ) . '&nbsp;&nbsp;';
+		$input .= ' />' . wfMsgHtml( 'farmer-yes' ) . '&#160;&#160;';
 
 		$wgOut->addHTML( $input );
 

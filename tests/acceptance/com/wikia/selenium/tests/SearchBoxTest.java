@@ -12,7 +12,7 @@ public class SearchBoxTest extends BaseTest {
 		openAndWait("index.php?title=Special:Random");
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testSearchSuggest() throws Exception {
 		randomPage();
 		session().waitForCondition("typeof window.wgTitle != 'undefined'", this.getTimeout());

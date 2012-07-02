@@ -11,7 +11,8 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  * http://www.mediawiki.org/wiki/Extension:RedirectOnAccountCreation (Public Domain)
  * http://www.mediawiki.org/wiki/Extension:RedirectAfterLogout (Public Domain)
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @author Marcel Minke
  * @author Siebrand Mazeland
@@ -23,7 +24,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Redirect',
 	'version' => '1.0',
 	'author' => array( 'Marcel Minke', 'Siebrand Mazeland' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Redirect',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Redirect',
 	'descriptionmsg' => 'redirect-desc',
 );
 

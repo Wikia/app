@@ -19,17 +19,15 @@ class SpamRegexHooks {
 
 			foreach( $s_phrases as $s_phrase ) {
 				if ( preg_match( $s_phrase, $editpage->summary, $s_matches ) ) {
-					wfLoadExtensionMessages( 'SpamRegex' );
 					$wgOut->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
 					$wgOut->setRobotPolicy( 'noindex,nofollow' );
 					$wgOut->setArticleRelated( false );
-					$wgOut->addHTML( '<div id="spamprotected_summary">' );
+
 					$wgOut->addWikiMsg( 'spamprotectiontext' );
-					$wgOut->addHTML( '<p>( Call #2 )</p>' );
 					$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$s_matches[0]}</nowiki>" );
 					$wgOut->addWikiMsg( 'spamregex-summary' );
+
 					$wgOut->returnToMain( false, $editpage->mTitle );
-					$wgOut->addHTML( '</div>' );
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
@@ -42,7 +40,7 @@ class SpamRegexHooks {
 		if ( $t_phrases && is_array( $t_phrases ) ) {
 			foreach( $t_phrases as $t_phrase ) {
 				if ( preg_match( $t_phrase, $editpage->textbox1, $t_matches ) ) {
-					$editpage->spamPage( $t_matches[0] );
+					$editpage->spamPageWithContent( $t_matches[0] );
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
@@ -64,7 +62,6 @@ class SpamRegexHooks {
 		if ( $s_phrases && $reason ) {
 			foreach( $s_phrases as $s_phrase ) {
 				if ( preg_match( $s_phrase, $reason, $s_matches ) ) {
-					wfLoadExtensionMessages( 'SpamRegex' );
 					$error .= wfMsgExt( 'spamregex-move', 'parseinline' ) . wfMsg( 'word_separator' );
 					$error .= wfMsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$s_matches[0]}</nowiki>" );
 					wfProfileOut( __METHOD__ );
@@ -76,7 +73,7 @@ class SpamRegexHooks {
 		return true;
 	}
 
-	protected static function fetchRegexData( $mode, $db_master = 0 ) {
+	protected static function fetchRegexData( $mode ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -88,10 +85,11 @@ class SpamRegexHooks {
 		if ( !$cached ) {
 			/* fetch data from db, concatenate into one string, then fill cache */
 			$field = $mode == SPAMREGEX_SUMMARY ? 'spam_summary' : 'spam_textbox';
-			$dbr = wfSpamRegexGetDB( ( $db_master == 1 ) ? DB_MASTER : DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select( 'spam_regex', 'spam_text', array( $field => 1 ), __METHOD__ );
 			while ( $row = $res->fetchObject() ) {
-				$phrases[] = "/" . $row->spam_text . "/i";
+				$concat = $row->spam_text;
+				$phrases[] = "/" . $concat . "/i";
 			}
 			$wgMemc->set( $key, $phrases, 0 );
 			$res->free();

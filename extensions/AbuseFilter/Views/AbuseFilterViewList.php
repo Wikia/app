@@ -1,31 +1,27 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) )
-	die();
 
 class AbuseFilterViewList extends AbuseFilterView {
 	function show() {
-		global $wgUser, $wgOut, $wgRequest;
-
-		$sk = $wgUser->getSkin();
+		$out = $this->getOutput();
+		$request = $this->getRequest();
 
 		// Status info...
 		$this->showStatus();
 
-		$wgOut->addWikiMsg( 'abusefilter-intro' );
+		$out->addWikiMsg( 'abusefilter-intro' );
 
 		// New filter button
-		$sk = $wgUser->getSkin();
 		if ( $this->canEdit() ) {
 			$title = $this->getTitle( 'new' );
-			$link = $sk->link( $title, wfMsg( 'abusefilter-new' ) );
+			$link = Linker::link( $title, wfMsg( 'abusefilter-new' ) );
 			$links = Xml::tags( 'p', null, $link ) . "\n";
-			$wgOut->addHTML( $links );
+			$out->addHTML( $links );
 		}
 
 		// Options.
 		$conds = array();
-		$deleted = $wgRequest->getVal( 'deletedfilters' );
-		$hidedisabled = $wgRequest->getBool( 'hidedisabled' );
+		$deleted = $request->getVal( 'deletedfilters' );
+		$hidedisabled = $request->getBool( 'hidedisabled' );
 		if ( $deleted == 'show' ) {
 			# Nothing
 		} elseif ( $deleted == 'only' ) {
@@ -43,20 +39,16 @@ class AbuseFilterViewList extends AbuseFilterView {
 	}
 
 	function showList( $conds = array( 'af_deleted' => 0 ), $optarray = array() ) {
-		global $wgOut, $wgUser;
-
-		$sk = $this->mSkin = $wgUser->getSkin();
-
 		$output = '';
 		$output .= Xml::element( 'h2', null,
 			wfMsgExt( 'abusefilter-list', array( 'parseinline' ) ) );
 
 		$pager = new AbuseFilterPager( $this, $conds );
 
-		extract( $optarray );
+		$deleted = $optarray['deleted'];
+		$hidedisabled = $optarray['hidedisabled'];
 
 		# Options form
-		$options = '';
 		$fields = array();
 		$fields['abusefilter-list-options-deleted'] =
 			Xml::radioLabel(
@@ -90,7 +82,7 @@ class AbuseFilterViewList extends AbuseFilterView {
 		$fields['abusefilter-list-limit'] = $pager->getLimitSelect();
 
 		$options = Xml::buildForm( $fields, 'abusefilter-list-options-submit' );
-		$options .= Xml::hidden( 'title', $this->getTitle()->getPrefixedText() );
+		$options .= Html::hidden( 'title', $this->getTitle()->getPrefixedText() );
 		$options = Xml::tags( 'form',
 			array(
 				'method' => 'get',
@@ -107,11 +99,11 @@ class AbuseFilterViewList extends AbuseFilterView {
 			$pager->getBody() .
 			$pager->getNavigationBar();
 
-		$wgOut->addHTML( $output );
+		$this->getOutput()->addHTML( $output );
 	}
 
 	function showStatus() {
-		global $wgMemc, $wgAbuseFilterConditionLimit, $wgOut, $wgLang;
+		global $wgMemc, $wgAbuseFilterConditionLimit;
 
 		$overflow_count = (int)$wgMemc->get( AbuseFilter::filterLimitReachedKey() );
 		$match_count = (int) $wgMemc->get( AbuseFilter::filterMatchesKey() );
@@ -121,17 +113,18 @@ class AbuseFilterViewList extends AbuseFilterView {
 			$overflow_percent = sprintf( "%.2f", 100 * $overflow_count / $total_count );
 			$match_percent = sprintf( "%.2f", 100 * $match_count / $total_count );
 
+			$lang = $this->getLanguage();
 			$status = wfMsgExt( 'abusefilter-status', array( 'parseinline' ),
-				$wgLang->formatNum( $total_count ),
-				$wgLang->formatNum( $overflow_count ),
-				$wgLang->formatNum( $overflow_percent ),
-				$wgLang->formatNum( $wgAbuseFilterConditionLimit ),
-				$wgLang->formatNum( $match_count ),
-				$wgLang->formatNum( $match_percent )
+				$lang->formatNum( $total_count ),
+				$lang->formatNum( $overflow_count ),
+				$lang->formatNum( $overflow_percent ),
+				$lang->formatNum( $wgAbuseFilterConditionLimit ),
+				$lang->formatNum( $match_count ),
+				$lang->formatNum( $match_percent )
 			);
 
 			$status = Xml::tags( 'div', array( 'class' => 'mw-abusefilter-status' ), $status );
-			$wgOut->addHTML( $status );
+			$this->getOutput()->addHTML( $status );
 		}
 	}
 }
@@ -141,12 +134,10 @@ class AbuseFilterPager extends TablePager {
 	function __construct( $page, $conds ) {
 		$this->mPage = $page;
 		$this->mConds = $conds;
-		parent::__construct();
+		parent::__construct( $this->mPage->getContext() );
 	}
 
 	function getQueryInfo() {
-		$dbr = wfGetDB( DB_SLAVE );
-		$abuse_filter = $dbr->tableName( 'abuse_filter' );
 		return array(
 			'tables' => array( 'abuse_filter' ),
 			'fields' => array(
@@ -189,47 +180,41 @@ class AbuseFilterPager extends TablePager {
 	}
 
 	function formatValue( $name, $value ) {
-		global $wgOut, $wgLang;
-
-		static $sk = null;
-
-		if ( empty( $sk ) ) {
-			global $wgUser;
-			$sk = $wgUser->getSkin();
-		}
-
+		$lang = $this->getLanguage();
 		$row = $this->mCurrentRow;
 
 		switch( $name ) {
 			case 'af_id':
-				return $sk->link(
-					SpecialPage::getTitleFor( 'AbuseFilter', intval( $value ) ), intval( $value ) );
+				return Linker::link(
+					SpecialPage::getTitleFor( 'AbuseFilter', intval( $value ) ), $lang->formatNum( intval( $value ) ) );
 			case 'af_public_comments':
-				return $sk->link(
+				return Linker::link(
 					SpecialPage::getTitleFor( 'AbuseFilter', intval( $row->af_id ) ),
-					$wgOut->parseInline( $value )
+					$this->getOutput()->parseInline( $value )
 				);
 			case 'af_actions':
 				$actions = explode( ',', $value );
 				$displayActions = array();
 				foreach ( $actions as $action ) {
-					$displayActions[] = AbuseFilter::getActionDisplay( $action ); ;
+					$displayActions[] = AbuseFilter::getActionDisplay( $action );
 				}
-				return htmlspecialchars( implode( ', ', $displayActions ) );
+				return htmlspecialchars( $lang->commaList( $displayActions ) );
 			case 'af_enabled':
 				$statuses = array();
-				if ( $row->af_deleted )
+				if ( $row->af_deleted ) {
 					$statuses[] = wfMsgExt( 'abusefilter-deleted', 'parseinline' );
-				elseif ( $row->af_enabled )
+				} elseif ( $row->af_enabled ) {
 					$statuses[] = wfMsgExt( 'abusefilter-enabled', 'parseinline' );
-				else
+				} else {
 					$statuses[] = wfMsgExt( 'abusefilter-disabled', 'parseinline' );
+				}
 
 				global $wgAbuseFilterIsCentral;
-				if ( $row->af_global && $wgAbuseFilterIsCentral )
+				if ( $row->af_global && $wgAbuseFilterIsCentral ) {
 					$statuses[] = wfMsgExt( 'abusefilter-status-global', 'parseinline' );
+				}
 
-				return $wgLang->commaList( $statuses );
+				return $lang->commaList( $statuses );
 			case 'af_hidden':
 				$msg = $value ? 'abusefilter-hidden' : 'abusefilter-unhidden';
 				return wfMsgExt( $msg, 'parseinline' );
@@ -237,21 +222,26 @@ class AbuseFilterPager extends TablePager {
 				$count_display = wfMsgExt(
 					'abusefilter-hitcount',
 					array( 'parseinline' ),
-					$wgLang->formatNum( $value )
+					$lang->formatNum( $value )
 				);
-				$link = $sk->makeKnownLinkObj(
-					SpecialPage::getTitleFor( 'AbuseLog' ),
-					$count_display,
-					'wpSearchFilter=' . $row->af_id
-				);
+				// @todo FIXME: makeKnownLinkObj() is deprecated.
+				if ( SpecialAbuseLog::canSeeDetails( $row->af_id, $row->af_hidden ) ) {
+					$link = Linker::makeKnownLinkObj(
+						SpecialPage::getTitleFor( 'AbuseLog' ),
+						$count_display,
+						'wpSearchFilter=' . $row->af_id
+					);
+				} else {
+					$link = "";
+				}
 				return $link;
 			case 'af_timestamp':
 				$userLink =
-					$sk->userLink(
+					Linker::userLink(
 						$row->af_user,
 						$row->af_user_text
 					) .
-					$sk->userToolLinks(
+					Linker::userToolLinks(
 						$row->af_user,
 						$row->af_user_text
 					);
@@ -259,10 +249,10 @@ class AbuseFilterPager extends TablePager {
 				return wfMsgExt(
 					'abusefilter-edit-lastmod-text',
 					array( 'replaceafter', 'parseinline' ),
-					array( $wgLang->timeanddate( $value, true ),
+					array( $lang->timeanddate( $value, true ),
 						$userLink,
-						$wgLang->date( $value, true ),
-						$wgLang->time( $value, true ),
+						$lang->date( $value, true ),
+						$lang->time( $value, true ),
 						$user )
 				);
 			default:

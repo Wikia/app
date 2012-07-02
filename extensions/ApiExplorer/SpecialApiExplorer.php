@@ -18,14 +18,14 @@ $wgSpecialPages[ "ApiExplorer" ] = "SpecialApiExplorer";
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'API Explorer',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:ApiExplorer',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:ApiExplorer',
 	'descriptionmsg' => 'apiexplorer-desc',
 	'author' => '[http://seancolombo.com Sean Colombo]'
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['ApiExplorer'] = $dir . 'ApiExplorer.i18n.php';
-$wgExtensionAliasesFiles['ApiExplorer'] = $dir . 'ApiExplorer.alias.php';
+$wgExtensionMessagesFiles['ApiExplorerAlias'] = $dir . 'ApiExplorer.alias.php';
 
 /**
  * @ingroup SpecialPage
@@ -35,7 +35,7 @@ class SpecialApiExplorer extends SpecialPage {
 	 * Constructor
 	 */
 	public function __construct() {
-		SpecialPage::SpecialPage( 'ApiExplorer' );
+		parent::__construct( 'ApiExplorer' );
 		$this->includable( false );
 	}
 

@@ -1,8 +1,7 @@
 <?php
-$aliases = array();
- 
+$specialPageAliases = array();
+
 /** English */
-$aliases['en'] = array(
-    'StaffLog' => array( 'StaffLog' ),
+$specialPageAliases['en'] = array(
+	'StaffLog' => array( 'StaffLog' ),
 );
- 

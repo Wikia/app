@@ -1,6 +1,6 @@
 <?php
 /**
- * Aliases for Special:404
+ * Aliases for Special:ApiExplorer
  *
  * @file
  * @ingroup Extensions
@@ -13,14 +13,12 @@ $specialPageAliases['en'] = array(
 	'ApiExplorer' => array( 'ApiExplorer' ),
 );
 
-/**
- * Polish (Polski)
- */
-$specialPageAliases['pl'] = array(
-	'ApiExplorer' => array( 'Eksplorator API', 'ApiExplorer' )
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'ApiExplorer' => array( 'ApiИстражувач' ),
 );
 
-/**
- * For backwards compatibility with MediaWiki 1.15 and earlier.
- */
-$aliases =& $specialPageAliases;
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'ApiExplorer' => array( 'ApiVerkennen' ),
+);

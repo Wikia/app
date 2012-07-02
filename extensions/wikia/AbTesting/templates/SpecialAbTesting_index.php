@@ -1,6 +1,1 @@
-
-
-
-
-<?= $app->renderView("SpecialAbTesting", "createExperiment"); ?>
-
+Access granted. :)

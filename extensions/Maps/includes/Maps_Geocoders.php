@@ -35,7 +35,7 @@ final class MapsGeocoders {
 	 * 
 	 * @var array of string => string
 	 */
-	protected static $registeredGeocoders = array();
+	public static $registeredGeocoders = array();
 	
 	/**
 	 * The global geocoder cache, holding geocoded data when enabled.
@@ -47,6 +47,14 @@ final class MapsGeocoders {
 	private static $globalGeocoderCache = array();	
 	
 	/**
+	 * Can geocoding happen, ie are there any geocoders available.
+	 * 
+	 * @since 1.0.3
+	 * @var boolean
+	 */
+	protected static $canGeocode = false;
+	
+	/**
 	 * Returns if this class can do geocoding operations.
 	 * Ie. if there are any geocoders available.
 	 * 
@@ -55,17 +63,45 @@ final class MapsGeocoders {
 	 * @return boolean
 	 */
 	public static function canGeocode() {
-		static $canGeocode = null;
+		self::init();
+		return self::$canGeocode;
+	}
+	
+	/**
+	 * Gets a list of available geocoders.
+	 * 
+	 * @since 1.0.3
+	 * 
+	 * @return array
+	 */
+	public static function getAvailableGeocoders() {
+		self::init();
+		return array_keys( self::$registeredGeocoders );
+	}
+	
+	/**
+	 * Initiate the geocoding functionality.
+	 * 
+	 * @since 1.0.3
+	 * 
+	 * @return boolean Indicates if init happened
+	 */
+	public static function init() {
+		static $initiated = false;
 		
-		if ( is_null( $canGeocode ) ) {
-			// Register the geocoders.
-			wfRunHooks( 'GeocoderFirstCallInit' );
-			
-			// Determine if there are any geocoders.
-			$canGeocode = count( self::$registeredGeocoders ) > 0;
+		if ( $initiated ) {
+			return false;
 		}
 		
-		return $canGeocode;
+		$initiated = true;
+		
+		// Register the geocoders.
+		wfRunHooks( 'GeocoderFirstCallInit' );
+		
+		// Determine if there are any geocoders.
+		self::$canGeocode = count( self::$registeredGeocoders ) > 0;
+		
+		return true;
 	}
 	
 	/**
@@ -141,6 +177,10 @@ final class MapsGeocoders {
 	 * @return array with coordinates or false
 	 */
 	public static function geocode( $address, $geoService = '', $mappingService = false ) {
+		if ( !is_string( $address ) ) {
+			throw new Exception( 'Parameter $address must be a string at ' . __METHOD__ );
+		}		
+		
 		if ( !self::canGeocode() ) {
 			return false;
 		}
@@ -297,23 +337,17 @@ final class MapsGeocoders {
 	 * main identifier. If it's not recognized at all (or empty), the default will be used.
 	 * Only call this function when there are geocoders available, else an erro will be thrown.
 	 * 
-	 * TODO: implement overrides
-	 *
 	 * @since 0.7
 	 *
 	 * @param string $geocoderIdentifier
-	 * @param string $mappingService
 	 * 
 	 * @return string or false
 	 */
-	protected static function getValidGeocoderIdentifier( $geocoderIdentifier /*, $mappingService */ ) {
+	protected static function getValidGeocoderIdentifier( $geocoderIdentifier ) {
 		global $egMapsDefaultGeoService, $egMapsUserGeoOverrides;
 		static $validatedDefault = false;
 		
-		// Get rid of any aliases.
-		$geocoderIdentifier = self::getMainGeocoderIndentifier( $geocoderIdentifier );		
-		
-		if ( $geocoderIdentifier == '' || !array_key_exists( $geocoderIdentifier, self::$registeredGeocoders ) ) {
+		if ( $geocoderIdentifier === '' || !array_key_exists( $geocoderIdentifier, self::$registeredGeocoders ) ) {
 			if ( !$validatedDefault ) {
 				if ( !array_key_exists( $egMapsDefaultGeoService, self::$registeredGeocoders ) ) {
 					$egMapsDefaultGeoService = array_shift( array_keys( self::$registeredGeocoders ) );
@@ -331,20 +365,6 @@ final class MapsGeocoders {
 			}
 		}
 		
-		return $geocoderIdentifier;
-	}
-	
-	/**
-	 * Gets the main geocoder identifier by resolving aliases.
-	 * 
-	 * @since 0.7
-	 * 
-	 * @param string $geocoderIdentifier
-	 * 
-	 * @return string
-	 */
-	protected static function getMainGeocoderIndentifier( $geocoderIdentifier ) {
-		// TODO: implement actual function
 		return $geocoderIdentifier;
 	}
 	

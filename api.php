@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
  * @file
@@ -37,42 +37,44 @@
 // So extensions (and other code) can check whether they're running in API mode
 define( 'MW_API', true );
 
-// Initialise common code
-require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
+// Bail if PHP is too low
+if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.2.3' ) < 0 ) {
+	require( dirname( __FILE__ ) . '/includes/PHPVersionError.php' );
+	wfPHPVersionError( 'api.php' );
+}
+
+// Initialise common code.
+if ( isset( $_SERVER['MW_COMPILED'] ) ) {
+	require ( 'phase3/includes/WebStart.php' );
+} else {
+	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
+}
 
 wfProfileIn( 'api.php' );
 $starttime = microtime( true );
 
 // URL safety checks
-//
-// See RawPage.php for details; summary is that MSIE can override the
-// Content-Type if it sees a recognized extension on the URL, such as
-// might be appended via PATH_INFO after 'api.php'.
-//
-// Some data formats can end up containing unfiltered user-provided data
-// which will end up triggering HTML detection and execution, hence
-// XSS injection and all that entails.
-//
-if ( $wgRequest->isPathInfoBad() ) {
-	wfHttpError( 403, 'Forbidden',
-		'Invalid file extension found in PATH_INFO or QUERY_STRING.' );
+if ( !$wgRequest->checkUrlExtension() ) {
 	return;
 }
 
 // Verify that the API has not been disabled
 if ( !$wgEnableAPI ) {
-	echo 'MediaWiki API is not enabled for this site. Add the following line to your LocalSettings.php';
-	echo '<pre><b>$wgEnableAPI=true;</b></pre>';
-	die( 1 );
+	header( $_SERVER['SERVER_PROTOCOL'] . ' 500 MediaWiki configuration Error', true, 500 );
+	echo( 'MediaWiki API is not enabled for this site. Add the following line to your LocalSettings.php'
+		. '<pre><b>$wgEnableAPI=true;</b></pre>' );
+	die(1);
 }
 
 // Selectively allow cross-site AJAX
 
-/*
+/**
  * Helper function to convert wildcard string into a regex
  * '*' => '.*?'
  * '?' => '.'
- * @ return string
+ *
+ * @param $search string
+ * @return string
  */
 function convertWildcard( $search ) {
 	$search = preg_quote( $search, '/' );
@@ -102,7 +104,7 @@ if ( $wgCrossSiteAJAXdomains && isset( $_SERVER['HTTP_ORIGIN'] ) ) {
 }
 
 // Wikia change
-if (function_exists('newrelic_background_job')) {
+if( function_exists( 'newrelic_background_job' ) ) {
 	newrelic_background_job(true);
 }
 
@@ -120,7 +122,7 @@ $processor = new ApiMain( $wgRequest, $wgEnableWriteAPI );
 $processor->execute();
 
 // Execute any deferred updates
-wfDoUpdates();
+DeferredUpdates::doUpdates();
 
 // Log what the user did, for book-keeping purposes.
 $endtime = microtime( true );
@@ -132,11 +134,12 @@ if ( $wgAPIRequestLog ) {
 	$items = array(
 			wfTimestamp( TS_MW ),
 			$endtime - $starttime,
-			wfGetIP(),
+			$wgRequest->getIP(),
 			$_SERVER['HTTP_USER_AGENT']
 	);
 	$items[] = $wgRequest->wasPosted() ? 'POST' : 'GET';
-	if ( $processor->getModule()->mustBePosted() ) {
+	$module = $processor->getModule();
+	if ( $module->mustBePosted() ) {
 		$items[] = "action=" . $wgRequest->getVal( 'action' );
 	} else {
 		$items[] = wfArrayToCGI( $wgRequest->getValues() );
@@ -145,5 +148,8 @@ if ( $wgAPIRequestLog ) {
 	wfDebug( "Logged API request to $wgAPIRequestLog\n" );
 }
 
-// Shut down the database
-wfGetLBFactory()->shutdown();
+// Shut down the database.  foo()->bar() syntax is not supported in PHP4: we won't ever actually
+// get here to worry about whether this should be = or =&, but the file has to parse properly.
+$lb = wfGetLBFactory();
+$lb->shutdown();
+

@@ -13,14 +13,13 @@
  * Factory class for creating SMWDataValue objects for supplied types or
  * properties and data values.
  *
- * The class has two main entry points:
- * - newTypeObjectValue()
- * - newTypeIDValue()
+ * The class has the main entry point newTypeIdValue(), which creates a new
+ * datavalue object, possibly with preset user values, captions and
+ * property names. To create suitable datavalues for a given property, the
+ * method newPropertyObjectValue() can be used.
  *
- * These create new DV objects, possibly with preset user values, captions and
- * property names. Further methods are used to conveniently create DVs for
- * properties and special properties:
- * - newPropertyObjectValue()
+ * Other than this, the class manages registration data for datatypes, and
+ * provides various methods to access this information.
  *
  * @ingroup SMWDataValues
  */
@@ -41,88 +40,147 @@ class SMWDataValueFactory {
 	static private $mTypeAliases;
 
 	/**
-	 * Array of class names for creating new SMWDataValue, indexed by type id.
+	 * Array of class names for creating new SMWDataValue, indexed by type
+	 * id.
 	 *
-	 * @var array of SMWDataValue
+	 * @var array of string
 	 */
 	static private $mTypeClasses;
 
 	/**
-	 * Create an SMWDataValue object that can hold values for the type that the
-	 * given SMWTypesValue object specifies. If no $value is given, an empty
-	 * container is created, the value of which can be set later on.
+	 * Array of data item classes, indexed by type id.
 	 *
-	 * @param SMWTypesValue $typevalue Represents the type of the object
-	 * @param mixed $value user value string, or false if unknown
-	 * @param mixed $caption user-defined caption or false if none given
-	 * @param $property SMWPropertyValue property object for which this value was made, or NULL
+	 * @var array of integer
 	 */
-	static public function newTypeObjectValue( SMWTypesValue $typeValue, $value = false, $caption = false, $property = null ) {
-		if ( !$typeValue->isValid() ) { // just return the error, pass it through
-			$result = self::newTypeIDValue( '__err' );
-			$result->addError( $typeValue->getErrors() );
-
-			return $result;
-		}
-
-		return self::newTypeIDValue( $typeValue->getDBkey(), $value, $caption, $property );
-	}
+	static private $mTypeDataItemIds;
 
 	/**
-	 * Create a value from a type id. If no $value is given, an empty container
-	 * is created, the value of which can be set later on.
+	 * Array of default types to use for making datavalues for dataitems.
 	 *
-	 * @param $typeid id string for the given type
-	 * @param mixed $value user value string, or false if unknown
-	 * @param mixed $caption user-defined caption or false if none given
-	 * @param SMWPropertyValue $property Property object for which this value was made, or NULL
+	 * @var array of string
+	 */
+	static private $mDefaultDataItemTypeIds = array(
+		SMWDataItem::TYPE_BLOB => '_txt', // Text type
+		SMWDataItem::TYPE_STRING => '_str', // String type
+		SMWDataItem::TYPE_URI => '_uri', // URL/URI type
+		SMWDataItem::TYPE_WIKIPAGE => '_wpg', // Page type
+		SMWDataItem::TYPE_NUMBER => '_num', // Number type
+		SMWDataItem::TYPE_TIME => '_dat', // Time type
+		SMWDataItem::TYPE_BOOLEAN => '_boo', // Boolean type
+		SMWDataItem::TYPE_CONTAINER => '_rec', // Value list type (replacing former nary properties)
+		SMWDataItem::TYPE_GEO => '_geo', // Geographical coordinates
+		SMWDataItem::TYPE_CONCEPT => '__con', // Special concept page type
+		SMWDataItem::TYPE_PROPERTY => '__pro', // Property type
+		// If either of the following two occurs, we want to see a PHP error:
+		//SMWDataItem::TYPE_NOTYPE => '',
+		//SMWDataItem::TYPE_ERROR => '',
+	);
+
+	/**
+	 * Create a value from a type id. If no $value is given, an empty
+	 * container is created, the value of which can be set later on.
+	 *
+	 * @param $typeId string id string for the given type
+	 * @param $valueString mixed user value string, or false if unknown
+	 * @param $caption mixed user-defined caption, or false if none given
+	 * @param $property SMWDIProperty property object for which this value is made, or null
+	 * @param $contextPage SMWDIWikiPage that provides a context for parsing the value string, or null
 	 *
 	 * @return SMWDataValue
 	 */
-	static public function newTypeIDValue( $typeid, $value = false, $caption = false, $property = null ) {
+	static public function newTypeIdValue( $typeId, $valueString = false, $caption = false,
+			$property = null, $contextPage = null ) {
+
 		self::initDatatypes();
 
-		if ( array_key_exists( $typeid, self::$mTypeClasses ) ) { // direct response for basic types
-			$result = new self::$mTypeClasses[$typeid]( $typeid );
-		} elseif ( ( $typeid != '' ) && ( $typeid{0} != '_' ) ) { // custom type with linear conversion
-			$result = new self::$mTypeClasses['__lin']( $typeid );
-		} else { // type really unknown
-			smwfLoadExtensionMessages( 'SemanticMediaWiki' );
-			return new SMWErrorValue( wfMsgForContent( 'smw_unknowntype', $typeid ), $value, $caption );
+		if ( array_key_exists( $typeId, self::$mTypeClasses ) ) {
+			$result = new self::$mTypeClasses[$typeId]( $typeId );
+		} else {
+			return new SMWErrorValue( $typeId,
+				wfMsgForContent( 'smw_unknowntype', $typeId ),
+				$valueString, $caption );
 		}
 
-		if ( $property !== null ) {
+		if ( !is_null( $property ) ) {
 			$result->setProperty( $property );
 		}
-		if ( $value !== false ) {
-			$result->setUserValue( $value, $caption );
+
+		if ( !is_null( $contextPage ) ) {
+			$result->setContextPage( $contextPage );
+		}
+
+		if ( $valueString !== false ) {
+			$result->setUserValue( $valueString, $caption );
 		}
 
 		return $result;
 	}
 
 	/**
-	 * Create a value for the given property, provided as an SMWPropertyValue
-	 * object. If no value is given, an empty container is created, the value
-	 * of which can be set later on.
+	 * Create a value for a data item.
 	 *
-	 * @param SMWPropertyValue $property
-	 * @param mixed $value
-	 * @param mixed $caption
+	 * @param $dataItem SMWDataItem
+	 * @param $property mixed null or SMWDIProperty property object for which this value is made
+	 * @param $caption mixed user-defined caption, or false if none given
 	 *
 	 * @return SMWDataValue
 	 */
-	static public function newPropertyObjectValue( SMWPropertyValue $property, $value = false, $caption = false ) {
-		if ( $property->isInverse() ) {
-			return self::newTypeIdValue( '_wpg', $value, $caption, $property );
+	static public function newDataItemValue( SMWDataItem $dataItem, $property, $caption = false ) {
+		if ( !is_null( $property ) ) {
+			$typeId = $property->findPropertyTypeID();
 		} else {
-			return self::newTypeIDValue( $property->getPropertyTypeID(), $value, $caption, $property );
+			$typeId = self::$mDefaultDataItemTypeIds[$dataItem->getDiType()];
+		}
+
+		$result = self::newTypeIdValue( $typeId, false, $caption, $property );
+		$result->setDataItem( $dataItem );
+		if ( $caption !== false ) {
+			$result->setCaption( $caption );
+		}
+		return $result;
+	}
+
+
+	/**
+	 * Get the preferred data item ID for a given type. The ID defines the
+	 * appropriate data item class for processing data of this type. See
+	 * SMWDataItem for possible values.
+	 *
+	 * @param $typeId string id string for the given type
+	 * @return integer data item ID
+	 */
+	static public function getDataItemId( $typeId ) {
+		self::initDatatypes();
+		if ( array_key_exists( $typeId, self::$mTypeDataItemIds ) ) {
+			return self::$mTypeDataItemIds[$typeId];
+		} else {
+			return SMWDataItem::TYPE_NOTYPE;
 		}
 	}
 
 	/**
-	 * Gather all available datatypes and label<=>id<=>datatype associations.
-	 * This method is called before most methods of this factory.
+	 * Create a value for the given property, provided as an SMWDIProperty
+	 * object. If no value is given, an empty container is created, the
+	 * value of which can be set later on.
+	 *
+	 * @param $property SMWDIProperty property object for which this value is made
+	 * @param $valueString mixed user value string, or false if unknown
+	 * @param $caption mixed user-defined caption, or false if none given
+	 * @param $contextPage SMWDIWikiPage that provides a context for parsing the value string, or null
+	 *
+	 * @return SMWDataValue
+	 */
+	static public function newPropertyObjectValue( SMWDIProperty $property, $valueString = false,
+			$caption = false, $contextPage = null ) {
+
+		$typeId = $property->isInverse() ? '_wpg' : $property->findPropertyTypeID();
+		return self::newTypeIdValue( $typeId, $valueString, $caption, $property, $contextPage );
+	}
+
+	/**
+	 * Gather all available datatypes and label<=>id<=>datatype
+	 * associations. This method is called before most methods of this
+	 * factory.
 	 */
 	static protected function initDatatypes() {
 		global $smwgContLang;
@@ -155,9 +213,10 @@ class SMWDataValueFactory {
 			'_dat'  => 'SMWTimeValue', // Time type
 			'_boo'  => 'SMWBoolValue', // Boolean type
 			'_rec'  => 'SMWRecordValue', // Value list type (replacing former nary properties)
+			'_qty'  => 'SMWQuantityValue', // Type for numbers with units of measurement
 			// Special types are not avaialble directly for users (and have no local language name):
 			'__typ' => 'SMWTypesValue', // Special type page type
-			'__tls' => 'SMWTypeListValue', // Special type list for decalring _rec properties
+			'__pls' => 'SMWPropertyListValue', // Special type list for decalring _rec properties
 			'__con' => 'SMWConceptValue', // Special concept page type
 			'__sps' => 'SMWStringValue', // Special string type
 			'__spu' => 'SMWURIValue', // Special uri type
@@ -166,10 +225,46 @@ class SMWDataValueFactory {
 			'__spf' => 'SMWWikiPageValue', // Special Form page type for Semantic Forms
 			'__sin' => 'SMWWikiPageValue', // Special instance of type
 			'__red' => 'SMWWikiPageValue', // Special redirect type
-			'__lin' => 'SMWLinearValue', // Special linear unit conversion type
 			'__err' => 'SMWErrorValue', // Special error type
 			'__imp' => 'SMWImportValue', // Special import vocabulary type
 			'__pro' => 'SMWPropertyValue', // Property type (possibly predefined, no always based on a page)
+			'__key' => 'SMWStringValue', // Sort key of a page
+		);
+
+		self::$mTypeDataItemIds = array(
+			'_txt'  => SMWDataItem::TYPE_BLOB, // Text type
+			'_cod'  => SMWDataItem::TYPE_BLOB, // Code type
+			'_str'  => SMWDataItem::TYPE_STRING, // String type
+			'_ema'  => SMWDataItem::TYPE_URI, // Email type
+			'_uri'  => SMWDataItem::TYPE_URI, // URL/URI type
+			'_anu'  => SMWDataItem::TYPE_URI, // Annotation URI type
+			'_tel'  => SMWDataItem::TYPE_URI, // Phone number (URI) type
+			'_wpg'  => SMWDataItem::TYPE_WIKIPAGE, // Page type
+			'_wpp'  => SMWDataItem::TYPE_WIKIPAGE, // Property page type TODO: make available to user space
+			'_wpc'  => SMWDataItem::TYPE_WIKIPAGE, // Category page type TODO: make available to user space
+			'_wpf'  => SMWDataItem::TYPE_WIKIPAGE, // Form page type for Semantic Forms
+			'_num'  => SMWDataItem::TYPE_NUMBER, // Number type
+			'_tem'  => SMWDataItem::TYPE_NUMBER, // Temperature type
+			'_dat'  => SMWDataItem::TYPE_TIME, // Time type
+			'_boo'  => SMWDataItem::TYPE_BOOLEAN, // Boolean type
+			'_rec'  => SMWDataItem::TYPE_CONTAINER, // Value list type (replacing former nary properties)
+			'_geo'  => SMWDataItem::TYPE_GEO, // Geographical coordinates
+			'_qty'  => SMWDataItem::TYPE_NUMBER, // Type for numbers with units of measurement
+			// Special types are not avaialble directly for users (and have no local language name):
+			'__typ' => SMWDataItem::TYPE_URI, // Special type page type
+			'__pls' => SMWDataItem::TYPE_STRING, // Special type list for decalring _rec properties
+			'__con' => SMWDataItem::TYPE_CONCEPT, // Special concept page type
+			'__sps' => SMWDataItem::TYPE_STRING, // Special string type
+			'__spu' => SMWDataItem::TYPE_URI, // Special uri type
+			'__sup' => SMWDataItem::TYPE_WIKIPAGE, // Special subproperty type
+			'__suc' => SMWDataItem::TYPE_WIKIPAGE, // Special subcategory type
+			'__spf' => SMWDataItem::TYPE_WIKIPAGE, // Special Form page type for Semantic Forms
+			'__sin' => SMWDataItem::TYPE_WIKIPAGE, // Special instance of type
+			'__red' => SMWDataItem::TYPE_WIKIPAGE, // Special redirect type
+			'__err' => SMWDataItem::TYPE_STRING, // Special error type
+			'__imp' => SMWDataItem::TYPE_STRING, // Special import vocabulary type
+			'__pro' => SMWDataItem::TYPE_PROPERTY, // Property type (possibly predefined, no always based on a page)
+			'__key' => SMWDataItem::TYPE_STRING, // Sort key of a page
 		);
 
 		wfRunHooks( 'smwInitDatatypes' );
@@ -179,12 +274,14 @@ class SMWDataValueFactory {
 	 * A function for registering/overwriting datatypes for SMW. Should be
 	 * called from within the hook 'smwInitDatatypes'.
 	 *
-	 * @param string $id
-	 * @param string $className
-	 * @param mixed $label
+	 * @param $id string type ID for which this datatype is registered
+	 * @param $className string name of the according subclass of SMWDataValue
+	 * @param $dataItemId integer ID of the data item class that this data value uses, see SMWDataItem
+	 * @param $label mixed string label or false for types that cannot be accessed by users
 	 */
-	static public function registerDatatype( $id, $className, $label = false ) {
+	static public function registerDatatype( $id, $className, $dataItemId, $label = false ) {
 		self::$mTypeClasses[$id] = $className;
+		self::$mTypeDataItemIds[$id] = $dataItemId;
 
 		if ( $label != false ) {
 			self::$mTypeLabels[$id] = $label;
@@ -206,16 +303,15 @@ class SMWDataValueFactory {
 
 	/**
 	 * Look up the ID that identifies the datatype of the given label
-	 * internally. This id is used for all internal operations. Compound types
-	 * are not supported by this method (decomposition happens earlier). Custom
-	 * types get their DBkeyed label as id. All ids are prefixed by an
-	 * underscore in order to distinguish them from custom types.
+	 * internally. This id is used for all internal operations. If the
+	 * label does not bleong to a known type, the empty string is returned.
 	 *
-	 * This method may or may not take aliases into account. For unknown
-	 * labels, the normalised (DB-version) label is used as an ID.
+	 * This method may or may not take aliases into account, depeding on
+	 * the parameter $useAlias.
 	 *
 	 * @param string $label
 	 * @param boolean $useAlias
+	 * @return string
 	 */
 	static public function findTypeID( $label, $useAlias = true ) {
 		self::initDatatypes();
@@ -226,30 +322,28 @@ class SMWDataValueFactory {
 		} elseif ( ( $useAlias ) && ( array_key_exists( $label, self::$mTypeAliases ) ) ) {
 			return self::$mTypeAliases[$label];
 		} else {
-			return str_replace( ' ', '_', $label );
+			return '';
 		}
 	}
 
 	/**
 	 * Get the translated user label for a given internal ID. If the ID does
-	 * not have a label associated with it in the current language, the ID
-	 * itself is transformed into a label (appropriate for user defined types).
+	 * not have a label associated with it in the current language, the 
+	 * empty string is returned. This is the case both for internal type ids
+	 * and for invalid (unkown) type ids, so this method cannot be used to
+	 * distinguish the two.
 	 *
 	 * @param string $id
 	 */
 	static public function findTypeLabel( $id ) {
 		self::initDatatypes();
 
-		if ( $id{0} === '_' ) {
-			if ( array_key_exists( $id, self::$mTypeLabels ) ) {
-				return self::$mTypeLabels[$id];
-			} else { // internal type without translation to user space;
-			    // might also happen for historic types after an upgrade --
-			    // alas, we have no idea what the former label would have been
-				return str_replace( '_', ' ', $id );
-			}
-		} else { // non-builtin type, use id as label
-			return str_replace( '_', ' ', $id );
+		if ( array_key_exists( $id, self::$mTypeLabels ) ) {
+			return self::$mTypeLabels[$id];
+		} else { // internal type without translation to user space;
+			// might also happen for historic types after an upgrade --
+			// alas, we have no idea what the former label would have been
+			return '';
 		}
 	}
 

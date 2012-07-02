@@ -1,5 +1,5 @@
 <?php
-/* $Id: Asksql.php 49890 2009-04-26 05:22:33Z shinjiman $ */
+/* $Id: Asksql.php 107299 2011-12-25 23:09:26Z siebrand $ */
 
 /**
  * If enabled through $wgAllowSysopQueries = true, this class
@@ -8,19 +8,19 @@
  * Heavy queries could slow down the database specially for the
  * biggest wikis.
  *
- * @addtogroup SpecialPage
+ * @file
+ * @ingroup SpecialPage
  */
 
-if (!defined('MEDIAWIKI'))
+if ( !defined( 'MEDIAWIKI' ) )
 	exit;
 
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Ask SQL',
-	'description' => 'Do SQL queries through a [[Special:Asksql|special page]]',
 	'descriptionmsg' => 'asksql-desc',
 	'author' => 'Brion Vibber',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Asksql',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Asksql',
 );
 
 /** Dangerous if not configured properly. */
@@ -37,9 +37,9 @@ $wgAllowSysopQueries = true;
 $wgSqlLogFile = "{$wgUploadDirectory}/sqllog_mFhyRe6";
 $wgAvailableRights[] = 'asksql';
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Asksql'] = $dir . 'Asksql.i18n.php';
-$wgExtensionAliasesFiles['Asksql'] = $dir . 'Asksql.alias.php';
+$wgExtensionMessagesFiles['AsksqlAlias'] = $dir . 'Asksql.alias.php';
 $wgAutoloadClasses['SpecialAsksql'] = $dir . 'Asksql_body.php';
 $wgSpecialPages['Asksql'] = 'SpecialAsksql';
 $wgSpecialPageGroups['Asksql'] = 'wiki';

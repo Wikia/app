@@ -19,11 +19,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @ingroup Maintenance
  */
 
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class CheckUsernames extends Maintenance {
 
@@ -44,11 +45,11 @@ class CheckUsernames extends Maintenance {
 		foreach ( $res as $row ) {
 			if ( ! User::isValidUserName( $row->user_name ) ) {
 				$this->error( sprintf( "%s: %6d: '%s'\n", wfWikiID(), $row->user_id, $row->user_name ) );
-				wfDebugLog( 'checkUsernames', $out );
+				wfDebugLog( 'checkUsernames', $row->user_name );
 			}
 		}
 	}
 }
 
 $maintClass = "CheckUsernames";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

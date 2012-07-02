@@ -181,7 +181,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 	
 	// tests for article comments
 	
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testa1CommentSection() throws Exception {
 		openAndWait(articlePath);
 		
@@ -211,7 +211,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		assertFalse(session().isElementPresent("//div[contains(@class,'article-comments-pagination')]//a"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testc3NumberOfComments() throws Exception {
 		openAndWait(articlePath + "&showall=1");
 
@@ -226,7 +226,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		assertEquals(articleCommentHeader, stringToCompare);
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testd4AddComment() throws Exception {
 		openAndWait(articlePath);
 
@@ -234,7 +234,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		addComment(commentContent);
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testf6EditButtonPresence() throws Exception {
 		loginAsRegular();
 		
@@ -261,7 +261,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		}
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testg7EditArticleCommentTwice() throws Exception {
 		loginAsRegular();
 
@@ -281,7 +281,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		this.editComment("//ul[@id='article-comments-ul']", 1, commentContent);
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testh8StaffEditArticleCommentPart1() throws Exception {
 		loginAsRegular();
 
@@ -303,7 +303,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		this.editComment("//ul[@id='article-comments-ul']", 1, this.commentContent);
 	}
 	
-	@Test(groups={"CI", "verified"},dependsOnMethods={"testh8StaffEditArticleCommentPart1"})
+	@Test(groups={"CI", "legacy"},dependsOnMethods={"testh8StaffEditArticleCommentPart1"})
 	public void testh8StaffEditArticleCommentPart2() throws Exception {
 		loginAsStaff();
 		openAndWait(this.location);
@@ -325,7 +325,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 						"/p[contains(text(), 'edit(" + this.commentContent + ")')]");
 	}
 
-	@Test(groups={"CI","verified"})
+	@Test(groups={"CI","legacy"})
 	public void testi9HistoryButton() throws Exception {
 		loginAsRegular();
 		
@@ -351,7 +351,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]//a[@class='article-comm-history']"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testj10ReplyTwice() throws Exception {
 		loginAsRegular();
 
@@ -364,7 +364,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		addReply("reply 2");
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testk11DeleteComment() throws Exception {
 		loginAsStaff();
 
@@ -386,7 +386,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 				"//p[contains(text(), '" + commentContent + "')]"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testl12DeleteCascadeComment() throws Exception {
 		loginAsStaff();
 
@@ -414,7 +414,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 	}
 
 	// tests for blog pages comments
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testn14CommentSection() throws Exception {
 		loginAsStaff();
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
@@ -445,7 +445,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		assertFalse(session().isElementPresent("//div[contains(@class, 'article-comments-pagination')]//a"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testp16NumberOfComments() throws Exception {
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
 
@@ -465,7 +465,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		assertTrue(stringToCompare.indexOf(articleCommentHeader) == 0);
 	}
 		
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testq17AddComment() throws Exception {
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName);
 		waitForElement("article-comm");
@@ -477,14 +477,14 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 			"/li[contains(@class, 'SpeechBubble')]//p[contains(text(), '" + commentContent + "')]"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void pre19EditButtonPresence() throws Exception {
 		loginAsStaff();
 		openOrCreateBlogPage(getTestConfig().getString("ci.user.wikiastaff.username"), blogPostName_1);
 		logout();		
 	}
 
-	@Test(groups={"CI", "verified"}, dependsOnMethods={"pre19EditButtonPresence"})
+	@Test(groups={"CI", "legacy"}, dependsOnMethods={"pre19EditButtonPresence"})
 	public void tests19EditButtonPresence() throws Exception {
 		// Re-open in showall mode.
 		loginAsRegular();
@@ -518,7 +518,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		}
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testt20EditBlogComment() throws Exception {
 		loginAsRegular();
 
@@ -530,7 +530,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		editComment("//ul[@id='article-comments-ul']", 1, commentContent, "edit");
 	}
 
-	@Test(groups={"CI", "verified"},dependsOnMethods={"testt20EditBlogComment"})
+	@Test(groups={"CI", "legacy"},dependsOnMethods={"testt20EditBlogComment"})
 	public void testu21StaffEditBlogComment() throws Exception {
 		loginAsStaff();
 
@@ -540,7 +540,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		editComment("//ul[@id='article-comments-ul']", 1, "", "staff edit");
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testv22HistoryButton() throws Exception {
 		loginAsRegular();
 
@@ -565,7 +565,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		assertTrue(session().isElementPresent("//ul[@id='article-comments-ul']/li[1]//a[@class='article-comm-history']"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testw23ReplyTwice() throws Exception {
 		loginAsRegular();
 
@@ -579,7 +579,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		addReply("reply 2");
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testx24DeleteComment() throws Exception {
 		loginAsStaff();
 
@@ -600,7 +600,7 @@ public class ArticleCommentTest extends MiniEditorBaseTest {
 		assertFalse(session().isElementPresent("//ul[@id='article-comments-ul']//p[contains(text(), '" + commentContent + "')]"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testy25DeleteCascadeComment() throws Exception {
 		loginAsStaff();
 

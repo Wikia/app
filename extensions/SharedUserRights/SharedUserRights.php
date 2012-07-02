@@ -2,6 +2,7 @@
 /**
 * SharedUserRights -- adds a special page to manage rights in a shared database
 *
+* @file
 * @ingroup Extensions
 *
 * @author Łukasz 'TOR' Garczewski <tor@wikia-inc.com>
@@ -22,10 +23,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'SharedUserRights',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:SharedUserRights',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:SharedUserRights',
 	'version' => '0.12',
 	'author' => array( "Łukasz 'TOR' Garczewski", 'Charles Melbye' ),
-	'description' => 'Easy global user rights administration',
 	'descriptionmsg' => 'gblrights-desc',
 );
 
@@ -34,7 +34,7 @@ $dir = dirname( __FILE__ ) . '/';
 $wgAvailableRights[] = 'userrights-shared';
 $wgAutoloadClasses['SharedUserRights'] = $dir . 'SharedUserRights_body.php';
 $wgExtensionMessagesFiles['SharedUserRights'] = $dir . 'SharedUserRights.i18n.php';
-$wgExtensionAliasesFiles['SharedUserRights'] = $dir . 'SharedUserRights.alias.php';
+$wgExtensionMessagesFiles['SharedUserRightsAlias'] = $dir . 'SharedUserRights.alias.php';
 $wgSpecialPages['SharedUserRights'] = 'SharedUserRights';
 $wgSpecialPageGroups['SharedUserRights'] = 'users';
 

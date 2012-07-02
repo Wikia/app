@@ -57,8 +57,9 @@ class DefinedMeaningDefinitionController extends DefaultUpdateController {
 		$languageId = $record->language;
 		$text = $record->text;
 
-		if ( $languageId != 0 && $text != "" )
+		if ( $languageId != 0 && $text != "" ) {
 			addDefinedMeaningDefinition( $definedMeaningId, $languageId, $text );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -72,8 +73,9 @@ class DefinedMeaningDefinitionController extends DefaultUpdateController {
 		$languageId = $keyPath->peek( 0 )->language;
 		$text = $record->text;
 
-		if ( $text != "" )
+		if ( $text != "" ) {
 			updateDefinedMeaningDefinition( $definedMeaningId, $languageId, $text );
+		}
 	}
 }
 
@@ -87,8 +89,9 @@ class DefinedMeaningFilteredDefinitionController implements UpdateAttributeContr
 	public function update( $keyPath, $value ) {
 		$definedMeaningId = $keyPath->peek( 0 )->definedMeaningId;
 		
-		if ( $value != "" )
+		if ( $value != "" ) {
 			updateOrAddDefinedMeaningDefinition( $definedMeaningId, $this->filterLanguageId, $value );
+		}
 	}
 }
 
@@ -111,12 +114,14 @@ class DefinedMeaningAlternativeDefinitionsController extends DefaultUpdateContro
 				$languageId = $definitionRecord->language;
 				$text = $definitionRecord->text;
 	
-				if ( $languageId != 0 && $text != '' )
+				if ( $languageId != 0 && $text != '' ) {
 					addDefinedMeaningAlternativeDefinition( $definedMeaningId, $languageId, $text, $sourceId );
+				}
 			}
 		}
-		else if ( $alternativeDefinition != '' )
+		elseif ( $alternativeDefinition != '' ) {
 			addDefinedMeaningAlternativeDefinition( $definedMeaningId, $this->filterLanguageId, $alternativeDefinition, $sourceId );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -132,8 +137,9 @@ class DefinedMeaningAlternativeDefinitionController extends DefaultUpdateControl
 		$languageId = $record->language;
 		$text = $record->text;
 
-		if ( $languageId != 0 && $text != "" )
+		if ( $languageId != 0 && $text != "" ) {
 			addTranslatedTextIfNotPresent( $definitionId, $languageId, $text );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -148,8 +154,9 @@ class DefinedMeaningAlternativeDefinitionController extends DefaultUpdateControl
 		$languageId = $keyPath->peek( 0 )->language;
 		$text = $record->text;
 
-		if ( $text != "" )
+		if ( $text != "" ) {
 			updateTranslatedText( $definitionId, $languageId, $text );
+		}
 	}
 }
 
@@ -163,8 +170,9 @@ class DefinedMeaningFilteredAlternativeDefinitionController implements UpdateAtt
 	public function update( $keyPath, $value ) {
 		$definitionId = $keyPath->peek( 0 )->definitionId;
 
-		if ( $value != "" )
+		if ( $value != "" ) {
 			updateTranslatedText( $definitionId, $this->filterLanguageId, $value );
+		}
 	}
 }
 
@@ -205,8 +213,7 @@ class SynonymTranslationController extends DefaultUpdateController {
 	public function update( $keyPath, $record ) {
 		$definedMeaningId = $keyPath->peek( 1 )->definedMeaningId;
 		$syntransId = $keyPath->peek( 0 )->syntransId;
-		$identicalMeaning = $record->identicalMeaning;
-		updateSynonymOrTranslationWithId( $syntransId, $identicalMeaning );
+		updateSynonymOrTranslationWithId( $syntransId, $record->identicalMeaning );
 	}
 }
 
@@ -217,8 +224,9 @@ class ClassAttributesController extends DefaultUpdateController {
 		$attributeMeaningId = $record->classAttributeAttribute;
 		$attributeType = $record->classAttributeType;
 
-		if ( ( $attributeLevelId != 0 ) && ( $attributeMeaningId != 0 ) )
+		if ( ( $attributeLevelId != 0 ) && ( $attributeMeaningId != 0 ) ) {
 			addClassAttribute( $definedMeaningId, $attributeLevelId, $attributeMeaningId, $attributeType );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -232,8 +240,9 @@ class DefinedMeaningClassMembershipController extends DefaultUpdateController {
 		$definedMeaningId = $idPath->getKeyStack()->peek( 0 )->definedMeaningId;
 		$classId = $record->class;
 
-		if ( $classId != 0 )
+		if ( $classId != 0 ) {
 			addClassMembership( $definedMeaningId, $classId );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -247,8 +256,9 @@ class DefinedMeaningCollectionController extends DefaultUpdateController {
 		$collectionMeaningId = $record->collectionMeaning;
 		$internalId = $record->sourceIdentifier;
 		
-		if ( $collectionMeaningId != 0 )
+		if ( $collectionMeaningId != 0 ) {
 			addDefinedMeaningToCollectionIfNotPresent( $definedMeaningId, $collectionMeaningId, $internalId );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -264,7 +274,7 @@ class DefinedMeaningCollectionController extends DefaultUpdateController {
 		$sourceId = $record->sourceIdentifier;
 
 //		if ($sourceId != "")
-			updateDefinedMeaningInCollection( $definedMeaningId, $collectionId, $sourceId );
+		updateDefinedMeaningInCollection( $definedMeaningId, $collectionId, $sourceId );
 	}
 }
 
@@ -287,12 +297,14 @@ class ExpressionMeaningController extends DefaultUpdateController {
 				$text = $definitionRecord->text;
 				$languageId = $definitionRecord->language;
 	
-				if ( $languageId != 0 && $text != "" )
+				if ( $languageId != 0 && $text != "" ) {
 					createNewDefinedMeaning( $expressionId, $languageId, $text );
+				}
 			}
 		}
-		else if ( $translatedContent != "" )
+		elseif ( $translatedContent != "" ) {
 			createNewDefinedMeaning( $expressionId, $this->filterLanguageId, $translatedContent );
+		}
 	}
 }
 
@@ -306,11 +318,12 @@ class ExpressionController extends DefaultUpdateController {
 	}
 
 	public function add( IdStack $idPath, $record ) {
-		if ( $this->filterLanguageId == 0 )
+		if ( $this->filterLanguageId == 0 ) {
 			$expressionLanguageId = $record->expression->language;
-		else
+		} else {
 			$expressionLanguageId = $this->filterLanguageId;
-				
+		}
+
 		$expressionMeanings = $record->expressionMeanings->expressionExactMeanings;
 
 		if ( $expressionLanguageId != 0 && $expressionMeanings->getRecordCount() > 0 ) {
@@ -325,14 +338,14 @@ class ExpressionController extends DefaultUpdateController {
 	
 					$text = $definitionRecord->text;
 					$languageId = $definitionRecord->language;
-	
+
 					if ( $languageId != 0 && $text != "" ) {
 						$expression = findOrCreateExpression( $this->spelling, $expressionLanguageId );
 						createNewDefinedMeaning( $expression->id, $languageId, $text );
 					}
 				}
 			}
-			else if ( $translatedContent != "" ) {
+			elseif ( $translatedContent != "" ) {
 				$expression = findOrCreateExpression( $this->spelling, $expressionLanguageId );
 				createNewDefinedMeaning( $expression->id, $this->filterLanguageId, $translatedContent );
 			}
@@ -358,8 +371,9 @@ class ObjectAttributeValuesController extends DefaultUpdateController {
 			$classAttributes = $idPath->getClassAttributes()->filterClassAttributesOnLevelAndType( $this->levelName, $annotationType );
 			$classAttributes = $this->attributeIDFilter->filter( $classAttributes );
 		
-			if ( count( $classAttributes ) == 1 )
+			if ( count( $classAttributes ) == 1 ) {
 				$result = $classAttributes[0];
+			}
 		}
 		
 		return $result;
@@ -372,8 +386,9 @@ class DefinedMeaningAttributeValuesController extends ObjectAttributeValuesContr
 		$definedMeaningAttributeId = $this->determineAttributeId( $idPath, "DM", $record->relationType );
 		$definedMeaningValue = $record->otherDefinedMeaning;
 		
-		if ( $definedMeaningAttributeId != 0 && $definedMeaningValue != 0 )
+		if ( $definedMeaningAttributeId != 0 && $definedMeaningValue != 0 ) {
 			addRelation( $objectId, $definedMeaningAttributeId, $definedMeaningValue );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -388,8 +403,9 @@ class TextAttributeValuesController extends ObjectAttributeValuesController {
 		$textAttributeId = $this->determineAttributeId( $idPath, "TEXT", $record->textAttribute );
 		$text = $record->text;
 		
-		if ( $textAttributeId != 0 && $text != '' )
+		if ( $textAttributeId != 0 && $text != '' ) {
 			addTextAttributeValue( $objectId, $textAttributeId, $text );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -402,16 +418,17 @@ class TextAttributeValuesController extends ObjectAttributeValuesController {
 		
 		$text = $record->text;
 		
-		if ( $text != "" )
+		if ( $text != "" ) {
 			updateTextAttributeValue( $text, $textId );
+		}
 	}
 }
 
 class LinkAttributeValuesController extends ObjectAttributeValuesController {
 	protected function validateURL( $url ) {
-		if ( !strpos( $url, "://" ) )
+		if ( !strpos( $url, "://" ) ) {
 			$url = "http://" . $url;
-			
+		}
 		return $url;
 	}
 	
@@ -422,8 +439,9 @@ class LinkAttributeValuesController extends ObjectAttributeValuesController {
 		$label = $linkValue->linkLabel;
 		$url = $linkValue->linkURL;
 		
-		if ( $linkAttributeId != 0 && $url != "" )
+		if ( $linkAttributeId != 0 && $url != "" ) {
 			addLinkAttributeValue( $objectId, $linkAttributeId, $this->validateURL( $url ), $label );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -437,8 +455,9 @@ class LinkAttributeValuesController extends ObjectAttributeValuesController {
 		$label = $linkValue->linkLabel;
 		$url = $linkValue->linkURL;
 				
-		if ( $url != "" )
+		if ( $url != "" ) {
 			updateLinkAttributeValue( $linkId, $this->validateURL( $url ), $label );
+		}
 	}
 }
 
@@ -464,12 +483,14 @@ class TranslatedTextAttributeValuesController extends ObjectAttributeValuesContr
 					$languageId = $textValueRecord->language;
 					$text = $textValueRecord->text;
 					
-					if ( $languageId != 0 && $text != '' )
+					if ( $languageId != 0 && $text != '' ) {
 						addTranslatedTextAttributeValue( $objectId, $textAttributeId, $languageId, $text );
+					}
 				}
 			}
-			else if ( $textValue != '' )
+			elseif ( $textValue != '' ) {
 				addTranslatedTextAttributeValue( $objectId, $textAttributeId, $this->filterLanguageId, $textValue );
+			}
 		}
 	}
 
@@ -486,8 +507,9 @@ class TranslatedTextAttributeValueController extends DefaultUpdateController {
 		$text = $record->text;
 		$translatedTextAttribute = getTranslatedTextAttribute( $valueId );
 
-		if ( $languageId != 0 && $text != "" )
+		if ( $languageId != 0 && $text != "" ) {
 			addTranslatedTextIfNotPresent( $translatedTextAttribute->value_tcid, $languageId, $text );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -504,8 +526,9 @@ class TranslatedTextAttributeValueController extends DefaultUpdateController {
 		$text = $record->text;
 		$translatedTextAttribute = getTranslatedTextAttribute( $valueId );
 
-		if ( $text != "" )
+		if ( $text != "" ) {
 			updateTranslatedText( $translatedTextAttribute->value_tcid, $languageId, $text );
+		}
 	}
 }
 
@@ -520,8 +543,9 @@ class FilteredTranslatedTextAttributeValueController implements UpdateAttributeC
 		$valueId = $keyPath->peek( 0 )->translatedTextAttributeId;
 		$translatedTextAttribute = getTranslatedTextAttribute( $valueId );
 
-		if ( $value != "" )
+		if ( $value != "" ) {
 			updateTranslatedText( $translatedTextAttribute->value_tcid, $this->filterLanguageId, $value );
+		}
 	}
 }
 
@@ -530,8 +554,9 @@ class OptionAttributeValuesController extends ObjectAttributeValuesController {
 		$objectId = $this->objectIdFetcher->fetch( $idPath->getKeyStack() );
 		$optionId = $record->optionAttributeOption;
 
-		if ( $optionId )
+		if ( $optionId ) {
 			addOptionAttributeValue( $objectId, $optionId );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -545,9 +570,12 @@ class OptionAttributeOptionsController extends DefaultUpdateController {
 		$attributeId = $idPath->getKeyStack()->peek( 0 )->classAttributeId;
 		$optionMeaningId = $record->optionAttributeOption;
 		$languageId = $record->language;
-
-		if ( $optionMeaningId )
+		if ( $languageId == NULL ) {
+			$languageId = 0 ;
+		}
+		if ( $optionMeaningId ) {
 			addOptionAttributeOption( $attributeId, $optionMeaningId, $languageId );
+		}
 	}
 
 	public function remove( $keyPath ) {
@@ -575,5 +603,3 @@ class AlternativeDefinitionsPermissionController implements PermissionController
 		return $source == null || $source == 0;
 	}
 }
-
-

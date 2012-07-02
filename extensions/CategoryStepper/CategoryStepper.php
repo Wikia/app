@@ -1,12 +1,12 @@
 <?php
-
 /**
  * Displays a category stepper box allowing one to navigate forward and
  * backwards alphabetically through one or more categories a page is in,
  * as specified via a MediaWiki: namespace page or the $wgCategoryStepper
  * configuration variable.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:CategoryStepper
  *
@@ -16,16 +16,15 @@
  */
 
 // If this is run directly from the web die as this is not a valid entry point.
-if( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
+if ( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 
 // Extension credits.
 $wgExtensionCredits[ 'other' ][] = array(
 	'path'           => __FILE__,
 	'name'           => 'CategoryStepper',
-	'description'    => 'Displays a category stepper box allowing one to navigate forward and backwards alphabetically through one or more categories a page is in.',
 	'descriptionmsg' => 'categorystepper-desc',
 	'author'         => 'MinuteElectron',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:CategoryStepper',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:CategoryStepper',
 	'version'        => '1.5',
 );
 
@@ -56,49 +55,44 @@ $wgCategoryStepper = array();
  * @return true
  */
 function efCategoryStepper( $out, $text ) {
-
 	// Get various variables needed for this extension.
-	global $wgCategoryStepper, $wgTitle, $wgArticlePath, $wgRequest, $IP,
-		$wgUser, $wgOut;
+	global $wgCategoryStepper, $wgArticlePath, $wgRequest, $IP, $wgUser;
 
 	// Only render on the actual view page; not edit, delete etc.
-	if( $wgRequest->getBool( 'action' ) ) return true;
+	if ( $wgRequest->getBool( 'action' ) ) return true;
 
-	// Load messages into the message cache.
-	wfLoadExtensionMessages( 'CategoryStepper' );
+	$titleObj = $out->getTitle();
 
 	// Open a database connection.
 	$dbr = wfGetDB( DB_SLAVE );
 
 	// If $wgCategoryStepper is not an array then fallback to the MediaWiki
 	// namespace page.
-	if( !is_array( $wgCategoryStepper ) ) {
+	if ( !is_array( $wgCategoryStepper ) ) {
 		$things = wfMsg( 'categorystepper' );
 		$things = explode( "\n", str_replace( "\r", "\n", str_replace( "\r\n", "\n", $things ) ) ); // Ensure line-endings are \n
-		foreach( $things as $row ) {
+		foreach ( $things as $row ) {
 			$row = ltrim( $row, '* ' ); // Remove the asterix (and a space if found) from the start of the line.
 			$row = explode( '|', $row );
-			if( !isset( $row[ 1 ] ) ) $row[ 1 ] = $row[ 0 ];
+			if ( !isset( $row[ 1 ] ) ) $row[ 1 ] = $row[ 0 ];
 			$wgCategoryStepper[ $row[ 0 ] ] = $row[ 1 ];
 		}
 	}
 
 	// Loop through all the categories.
-	foreach( $wgCategoryStepper as $name => $title ) {
-
+	foreach ( $wgCategoryStepper as $name => $title ) {
 		// Check if the current page is in this category and if so render the box.
-		if( $dbr->fetchRow( $dbr->select( "categorylinks", "*", array( "cl_from" => $wgTitle->getArticleID(), "cl_to" => $name ) ) ) ) {
-
+		if ( $dbr->fetchRow( $dbr->select( "categorylinks", "*", array( "cl_from" => $titleObj->getArticleID(), "cl_to" => $name ) ) ) ) {
 			$prev = false;
 			$nextI = false;
 
 			// Get an array of pages in this category.
 			$res = $dbr->select( "categorylinks", "cl_from", array( "cl_to" => $name ), 'Database::select', array( 'ORDER BY' => "cl_sortkey" ) );
-			while( $row = $dbr->fetchRow( $res ) ) {
-				if( isset( $donext ) ) {
+			while ( $row = $dbr->fetchRow( $res ) ) {
+				if ( isset( $donext ) ) {
 					$nextI = $row[ 'cl_from' ];
 					break;
-				} elseif( $row[ 'cl_from' ] == $wgTitle->getArticleID() ) {
+				} elseif ( $row[ 'cl_from' ] == $titleObj->getArticleID() ) {
 					$prevI = $prev;
 					$donext = true;
 				}
@@ -106,7 +100,7 @@ function efCategoryStepper( $out, $text ) {
 			}
 
 			// Get the title of the element before this.
-			if( $prevI ) {
+			if ( $prevI ) {
 				$prevtitle = Title::newFromId( $prevI );
 				$previous = $wgUser->getSkin()->makeKnownLinkObj( $prevtitle );
 			} else {
@@ -114,7 +108,7 @@ function efCategoryStepper( $out, $text ) {
 			}
 
 			// Get the title of the element after this.
-			if( $nextI ) {
+			if ( $nextI ) {
 				$nexttitle = Title::newFromId( $nextI );
 				$next = $wgUser->getSkin()->makeKnownLinkObj( $nexttitle );
 			} else {
@@ -132,7 +126,7 @@ function efCategoryStepper( $out, $text ) {
 					Xml::closeElement( "tr" ) .
 					Xml::openElement( "tr" ) .
 						Xml::tags( "td", array(), $previous ) .
-						Xml::tags( "td", array(), $wgTitle->getText() ) .
+						Xml::tags( "td", array(), $titleObj->getText() ) .
 						Xml::tags( "td", array(), $next ) .
 					Xml::closeElement( "tr" ) .
 				Xml::closeElement( "table" );
@@ -142,9 +136,8 @@ function efCategoryStepper( $out, $text ) {
 	}
 
 	// Add style file to the output headers if it exists.
-	if( file_exists( "$IP/skins/CategoryStepper.css" ) ) $wgOut->addStyle( 'CategoryStepper.css' );
+	if ( file_exists( "$IP/skins/CategoryStepper.css" ) ) $out->addStyle( 'CategoryStepper.css' );
 
 	// Return true so things don't break.
 	return true;
-
 }

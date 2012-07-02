@@ -134,7 +134,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$redirectUrl = $response->getVal('redirectUrl');
 					$this->wg->out->redirect( $redirectUrl );
 				} else if ( $this->result == 'resetpass') {
-					$this->editToken = $this->wg->User->editToken();
+					$this->editToken = $this->wg->User->getEditToken();
 					$this->subheading = wfMsg('resetpass_announce');
 					$this->wg->Out->setPageTitle($this->wf->Msg('userlogin-password-page-title'));
 					$this->response->getView()->setTemplate( 'UserLoginSpecial', 'changePassword' );
@@ -180,17 +180,17 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function dropdown() {
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserLoginDropdown.scss');
 		$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginDropdown.js');
-		
+
 		$query = $this->app->wg->Request->getValues();
 		if (isset($query['title'])) {
 			unset($query['title']);
 		}
-	
+
 		$this->returntoquery = $this->app->wf->ArrayToCGI( $query );
 	}
 
 	public function providers() {
-		$this->context = $this->getVal( 'context', '' );
+		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
 
 		// don't render FBconnect button when the extension is disabled
 		if ( empty( $this->wg->EnableFacebookConnectExt ) ) {
@@ -203,7 +203,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function providersTop() {
-		$this->context = $this->getVal( 'context', '' );
+		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
 
 		// don't render FBconnect button when the extension is disabled
 		if ( empty( $this->wg->EnableFacebookConnectExt ) ) {
@@ -244,10 +244,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		$loginForm = F::build( 'LoginForm', array(&$this->wg->request) );
+		$loginForm->load(); // MW1.19 uses different form fields names
 
 		// set variables
 		if ( $this->wg->request->getText( 'username', '' ) != '' ) {
-			$loginForm->mName = $this->wg->request->getText( 'username' );
+			$loginForm->mUsername = $this->wg->request->getText( 'username' );
 		}
 		if ( $this->wg->request->getText( 'password', '' ) != '' ) {
 			$loginForm->mPassword = $this->wg->request->getText( 'password' );
@@ -279,7 +280,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->wg->User->setCookies();
 					LoginForm::clearLoginToken();
 					TempUser::clearTempUserSession();
-					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mName );
+					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
 
 					$this->result = 'ok';
 				break;
@@ -300,9 +301,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->errParam = 'username';
 				break;
 			case LoginForm::NOT_EXISTS:
-				$tempUser = F::build( 'TempUser', array($loginForm->mName), 'getTempUserFromName' );
+				$tempUser = F::build( 'TempUser', array($loginForm->mUsername), 'getTempUserFromName' );
 				if ( $tempUser ) {
-					if ( $this->userLoginHelper->isPasswordThrottled($loginForm->mName) ) {
+					if ( $this->userLoginHelper->isPasswordThrottled($loginForm->mUsername) ) {
 						$this->result = 'error';
 						$this->msg = $this->wf->Msg( 'userlogin-error-login-throttled' );
 					} else {
@@ -310,7 +311,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 						if ( $user->checkPassword($loginForm->mPassword) ) {
 							LoginForm::clearLoginToken();
 							$tempUser->setTempUserSession();
-							$this->userLoginHelper->clearPasswordThrottle( $loginForm->mName );
+							$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
 
 							// set lang for unconfirmed user
 							$langCode = $user->getOption('language');
@@ -343,7 +344,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->result = 'error';
 				$this->msg = $this->wf->Msg('userlogin-error-wrongpassword');
 				$this->errParam = 'password';
-				$attemptedUser = F::build( 'User', array($loginForm->mName), 'newFromName' );
+				$attemptedUser = F::build( 'User', array($loginForm->mUsername), 'newFromName' );
 				if ( !is_null( $attemptedUser ) ) {
 					$disOpt = $attemptedUser->getOption('disabled');
 					if( !empty($disOpt) ||
@@ -393,10 +394,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function mailPassword() {
 		$loginForm = F::build( 'LoginForm', array(&$this->wg->request) );
 		if ( $this->wg->request->getText( 'username', '' ) != '' ) {
-			$loginForm->mName = $this->wg->request->getText( 'username' );
+			$loginForm->mUsername = $this->wg->request->getText( 'username' );
 		}
 
-		if ( $loginForm->mName == '' ) {
+		if ( $loginForm->mUsername == '' ) {
 			$this->result = 'error';
 			$this->msg = $this->wf->Msg('userlogin-error-noname');
 		} else if ( !$this->wg->Auth->allowPasswordChange() ) {
@@ -406,11 +407,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->result = 'error';
 			$this->msg = $this->wf->Msg('userlogin-error-blocked-mailpassword');
 		} else {
-			$tempUser = F::build( 'TempUser', array($loginForm->mName), 'getTempUserFromName' );
+			$tempUser = F::build( 'TempUser', array($loginForm->mUsername), 'getTempUserFromName' );
 			if ( $tempUser ) {
 				$user = $tempUser->mapTempUserToUser( false );
 			} else {
-				$user = F::build( 'User', array($loginForm->mName), 'newFromName' );
+				$user = F::build( 'User', array($loginForm->mUsername), 'newFromName' );
 			}
 
 			if ( !$user instanceof User ) {
@@ -425,12 +426,12 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			} else {
 				$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'password-email') );
 				$result = $loginForm->mailPasswordInternal( $user, true, 'userlogin-password-email-subject', 'userlogin-password-email-body', $emailTextTemplate );
-				if( WikiError::isError( $result ) ) {
+				if( !$result->isGood() ) {
 					$this->result = 'error';
 					$this->msg = $this->wf->Msg('userlogin-error-mail-error', $result->getMessage() );
 				} else {
 					$this->result = 'ok';
-					$this->msg = $this->wf->Msg('userlogin-password-email-sent', $loginForm->mName );
+					$this->msg = $this->wf->Msg('userlogin-password-email-sent', $loginForm->mUsername );
 				}
 			}
 		}
@@ -463,7 +464,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		// since we don't support ajax GET, use of this parameter simulates a get request
 		// in reality, it is being posted
 		$fakeGet = $this->request->getVal('fakeGet', '');
-		$this->editToken = $this->wg->User->editToken();
+		$this->editToken = $this->wg->User->getEditToken();
 
 		if ( $this->wg->request->wasPosted() && empty($fakeGet) ) {
 			if( !$this->wg->Auth->allowPasswordChange() ) {

@@ -25,10 +25,10 @@ function interstitialAddJs( &$out, &$sk ){
 	global $wgAdsInterstitialsEnabled;
 
 	if (!empty($wgAdsInterstitialsEnabled)) {
-		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
-		$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Interstitial/Interstitial.js?{$wgStyleVersion}\" ></script>\n");		
+		global $wgJsMimeType, $wgExtensionsPath;
+		$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Interstitial/Interstitial.js\" ></script>\n");
 	}
-	
+
 	return true;
 } // end interstitialAddJs()
 

@@ -1,6 +1,6 @@
 <!-- s:<?= __FILE__ ?> -->
 <p><?=wfMsg('multidelete_help')?></p>
-<form name="multidelete" class="highlightform" id="highlightform" enctype="multipart/form-data" method="post" action="<?=$obj->mTitle->escapeLocalURL( "action=addTask" ) ?>">
+<form name="multidelete" class="highlightform" id="highlightform" enctype="multipart/form-data" method="post" action="<?=htmlspecialchars($obj->mTitle->getLocalURL( "action=addTask" )) ?>">
 <table>
 	<tr>
 		<td align="right"><?=wfMsg('multiwikiedit_as')?> :</td>
@@ -13,7 +13,7 @@
 		<td align="right"><?=wfMsg('multiwikiedit_on')?> :</td>
 		<td align="left" style="padding:2px 5px;">
 			<input type="hidden" name="wpRange" id="wpRange" value="<?=$mTaskParams['range']?>" />
-<? if ( isset( $obj->mLangOptions[$mTaskParams['range']] ) ) { 
+<? if ( isset( $obj->mLangOptions[$mTaskParams['range']] ) ) {
 	echo $obj->mLangOptions[$mTaskParams['range']];
 } ?>
 		</td>
@@ -38,7 +38,7 @@
 		<input type="hidden" name="wpPage" id="wpPage" value="<?= implode( "|", array_map("wfEscapeWikiText", $mTaskParams['page']) ) ?>" />
 <? if ( !empty($mTaskParams['page']) ) { foreach ($mTaskParams['page'] as $page) { ?>
 			<?=$page?><br />
-<?	} } ?>	
+<?	} } ?>
 		</td>
 	</tr>
 	<tr>

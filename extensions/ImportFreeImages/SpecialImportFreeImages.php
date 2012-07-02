@@ -52,14 +52,12 @@ class SpecialImportFreeImages extends SpecialPage {
 			$wgOut->readOnlyPage();
 			return;
 		}
-		
+
 		# Do all magic
 		$this->showForm();
 		$this->showResult();
-
-
 	}
-	
+
 	/**
 	 * Show the search form
 	 */
@@ -70,25 +68,25 @@ class SpecialImportFreeImages extends SpecialPage {
 				Html::element( 'legend', array(), wfMsg( 'importfreeimages' ) ) . "\n" .
 				wfMsgExt( 'importfreeimages_description', 'parse' ) . "\n" .
 				Html::rawElement( 'form', array( 'action' => $wgScript ),
-					Html::element( 'input', array( 
-						'type' => 'hidden', 
+					Html::element( 'input', array(
+						'type' => 'hidden',
 						'name' => 'title',
-						'value' => $this->getTitle()->getPrefixedText(), 
+						'value' => $this->getTitle()->getPrefixedText(),
 					) ) . "\n" .
-					Html::element( 'input', array( 
+					Html::element( 'input', array(
 						'type' => 'text',
 						'name' => 'q',
 						'size' => '40',
-						'value' => $wgRequest->getText( 'q' ), 
+						'value' => $wgRequest->getText( 'q' ),
 					) ) . "\n" .
 					Html::element( 'input', array(
 						'type' => 'submit',
 						'value' => wfMsg( 'search' )
-					) ) 
-				) 
+					) )
+				)
 		) );
 	}
-	
+
 	/**
 	 * Show the search result if available
 	 */
@@ -99,7 +97,7 @@ class SpecialImportFreeImages extends SpecialPage {
 		$q = $wgRequest->getVal( 'q' );
 		if ( !$q )
 			return;
-		
+
 		$ifi = new ImportFreeImages();
 		// TODO: get the right licenses
 		$photos = $ifi->searchPhotos( $q, $page );
@@ -107,10 +105,10 @@ class SpecialImportFreeImages extends SpecialPage {
 			$wgOut->addHTML( wfMsg( 'importfreeimages_nophotosfound', htmlspecialchars( $q ) ) );
 			return;
 		}
-		
+
 		$sk = $wgUser->getSkin();
 		$wgOut->addHTML( '<table cellpadding="4" id="mw-ifi-result">' );
-		
+
 		$specialUploadTitle = SpecialPage::getTitleFor( 'Upload' );
 
 		$ownermsg = wfMsg( 'importfreeimages_owner' );
@@ -124,11 +122,15 @@ class SpecialImportFreeImages extends SpecialPage {
 			$title_esc = htmlspecialchars( $photo['title'], ENT_QUOTES );
 			$username_esc = htmlspecialchars( $owner['username'], ENT_QUOTES );
 			$thumb_esc = htmlspecialchars( "http://farm{$photo['farm']}.static.flickr.com/{$photo['server']}/{$photo['id']}_{$photo['secret']}_{$ifi->thumbType}.jpg", ENT_QUOTES );
-			$link = $specialUploadTitle->escapeLocalUrl( array( 'wpSourceType' => 'IFI', 'wpFlickrId' => $photo['id'] ) );
-				
-			if ( $i % $ifi->resultsPerRow == 0 ) 
+			$link = $specialUploadTitle->escapeLocalURL( array(
+				'wpSourceType' => 'IFI',
+				'wpFlickrId' => $photo['id']
+			) );
+
+			if ( $i % $ifi->resultsPerRow == 0 ) {
 				$wgOut->addHTML( '<tr>' );
-			
+			}
+
 			# TODO: Fix nasty HTML generation
 			$wgOut->addHTML( "
 					<td align='center' style='padding-top: 15px; border-bottom: 1px solid #ccc;'>
@@ -138,19 +140,23 @@ class SpecialImportFreeImages extends SpecialPage {
 						<br />(<a href='$link'>$importmsg</a>)</font>
 					</td>
 			" );
-			
-			if ( $i % $ifi->resultsPerRow == ($ifi->resultsPerRow - 1) ) 
+
+			if ( $i % $ifi->resultsPerRow == ( $ifi->resultsPerRow - 1 ) ) {
 				$wgOut->addHTML( '</tr>' );
-				
+			}
+
 			$i++;
 		}
 
 		$wgOut->addHTML( '</table>' );
-		
+
 		if ( $ifi->resultsPerPage * $page < $photos['total'] ) {
 			$page++;
-			$wgOut->addHTML("<br />" . $sk->makeLinkObj( $this->getTitle(), 
-				wfMsg('importfreeimages_next', $ifi->resultsPerPage), "p=$page&q=" . urlencode($q) ) );
+			$wgOut->addHTML( '<br />' . $sk->makeLinkObj(
+				$this->getTitle(),
+				wfMsgHtml( 'importfreeimages_next', $ifi->resultsPerPage ),
+				"p=$page&q=" . urlencode( $q )
+			) );
 		}
 	}
 

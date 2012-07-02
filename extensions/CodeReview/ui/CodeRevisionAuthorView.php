@@ -1,11 +1,11 @@
 <?php
 
 class CodeRevisionAuthorView extends CodeRevisionListView {
-	function __construct( $repoName, $author ) {
-		parent::__construct( $repoName );
+
+	function __construct( $repo, $author ) {
+		parent::__construct( $repo );
 		$this->mAuthor = $author;
-		$this->mUser = $this->authorWikiUser( $author );
-		$this->mAppliedFilter = wfMsg( 'code-revfilter-cr_author', $author );
+		$this->mUser = $this->mRepo->authorWikiUser( $author );
 	}
 
 	function getPager() {
@@ -13,12 +13,18 @@ class CodeRevisionAuthorView extends CodeRevisionListView {
 	}
 
 	function linkStatus() {
-		if ( !$this->mUser )
-			return wfMsg( 'code-author-orphan' );
+		if ( !$this->mUser ) {
+			return wfMsg( 'code-author-orphan', $this->authorLink( $this->mAuthor ) );
+		}
 
 		return wfMsgHtml( 'code-author-haslink',
-			$this->mSkin->userLink( $this->mUser->getId(), $this->mUser->getName() ) .
-			$this->mSkin->userToolLinks( $this->mUser->getId(), $this->mUser->getName() ) );
+			$this->skin->userLink( $this->mUser->getId(), $this->mUser->getName() ) .
+			$this->skin->userToolLinks(
+				$this->mUser->getId(),
+				$this->mUser->getName(),
+				false, /* default for redContribsWhenNoEdits */
+				Linker::TOOL_LINKS_EMAIL /* Add "send e-mail" link */
+			) );
 	}
 
 	function execute() {
@@ -29,26 +35,21 @@ class CodeRevisionAuthorView extends CodeRevisionListView {
 		if ( $wgUser->isAllowed( 'codereview-link-user' ) ) {
 			$repo = $this->mRepo->getName();
 			$page = SpecialPage::getTitleFor( 'Code', "$repo/author/$this->mAuthor/link" );
-			$linkInfo .= ' (' . $this->mSkin->link( $page,
+			$linkInfo .= ' (' . $this->skin->link( $page,
 				wfMsg( 'code-author-' . ( $this->mUser ? 'un':'' ) . 'link' ) ) . ')' ;
 		}
 
-		$repoLink = $wgUser->getSkin()->link( SpecialPage::getTitleFor( 'Code', $this->mRepo->getName() ),
+		$repoLink = $this->skin->link( SpecialPage::getTitleFor( 'Code', $this->mRepo->getName() ),
 			htmlspecialchars( $this->mRepo->getName() ) );
 		$fields = array(
 			'code-rev-repo' => $repoLink,
-			'code-rev-author' => $this->authorLink( $this->mAuthor ),
+			'code-rev-author' => $this->mAuthor,
 		);
 
 		$wgOut->addHTML( $this->formatMetaData( $fields ) . $linkInfo );
 
 		parent::execute();
 	}
-	
-	function getSpecializedWhereClause( $dbr ) {
-		return array( 'cr_author' => $this->mAuthor );
-	}
-
 }
 
 class SvnRevAuthorTablePager extends SvnRevTablePager {

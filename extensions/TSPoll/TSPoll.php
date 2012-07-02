@@ -5,6 +5,7 @@
  * To activate this extension, add the following into your LocalSettings.php file:
  * require_once("$IP/extensions/TSPoll/TSPoll.php");
  *
+ * @file
  * @ingroup Extensions
  * @author Jan Luca <jan@toolserver.org>
  * @version 1.0 Dev
@@ -29,7 +30,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'version'       => '1.0 Beta',
 	'path'          => __FILE__,
 	'author'        => 'Jan Luca',
-	'url'           => 'http://www.mediawiki.org/wiki/Extension:TSPoll',
+	'url'           => 'https://www.mediawiki.org/wiki/Extension:TSPoll',
 	'descriptionmsg' => 'tspoll-desc'
 );
 
@@ -59,7 +60,7 @@ function efTSPollRender( $input, $args, $parser ) {
   if ( isset( $args['id'] ) && $args['id'] != "" ) {
 		$id = wfUrlencode( $args['id'] );
 	} else {
-		wfLoadExtensionMessages( 'TSPoll' );
+		
 		return wfMsg( 'tspoll-id-error' );
 	}
   
@@ -75,7 +76,7 @@ function efTSPollRender( $input, $args, $parser ) {
 		return $get_server;
 	}
 	else {
-		wfLoadExtensionMessages( 'TSPoll' );
+		
 		return wfMsg( 'tspoll-fetch-error' );
 	}
 }

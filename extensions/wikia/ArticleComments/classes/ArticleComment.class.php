@@ -102,7 +102,7 @@ class ArticleComment {
 			/**
 			 * maybe from Master?
 			 */
-			$title = Title::newFromID( $id, GAID_FOR_UPDATE );
+			$title = Title::newFromID( $id, Title::GAID_FOR_UPDATE );
 
 			if (empty($title)) {
 				return false;
@@ -129,7 +129,7 @@ class ArticleComment {
 			// get revision ids
 			if ($master) {
 				$this->mFirstRevId = $this->getFirstRevID( DB_MASTER );
-				$this->mLastRevId = $this->mTitle->getLatestRevID( GAID_FOR_UPDATE );
+				$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
 			} else {
 				$this->mFirstRevId = $this->getFirstRevID( DB_SLAVE );
 				$this->mLastRevId = $this->mTitle->getLatestRevID();
@@ -139,7 +139,7 @@ class ArticleComment {
 				}
 				// if last rev does not exist on slave then fall back to master anyway
 				if ( !$this->mLastRevId ) {
-					$this->mLastRevId = $this->mTitle->getLatestRevID( GAID_FOR_UPDATE );
+					$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
 				}
 				// if last rev STILL does not exist, give up and set it to first rev
 				if ( !$this->mLastRevId ) {
@@ -278,9 +278,8 @@ class ArticleComment {
 
 		wfProfileIn( __METHOD__ );
 
-		$title = empty($title) ? $wgTitle:$title;
-		$title = empty($title) ? $this->mTitle:$title;
-
+		$title = empty($title) ? $wgTitle : $title;
+		$title = empty($title) ? $this->mTitle : $title;
 
 		$comment = false;
 		if ( $this->load($master) ) {
@@ -331,7 +330,7 @@ class ArticleComment {
 				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $articleId . '" class="article-comm-edit actionButton" id="comment' . $articleId . '">' . wfMsg('article-comments-edit') . '</a></span>';
 			}
 
-			if ( !$this->mTitle->isNewPage(GAID_FOR_UPDATE) ) {
+			if ( !$this->mTitle->isNewPage(Title::GAID_FOR_UPDATE) ) {
 				$buttons[] = $wgUser->getSkin()->makeKnownLinkObj( $this->mTitle, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
 			}
 
@@ -358,7 +357,7 @@ class ArticleComment {
 				'timestamp' => $timestamp,
 				'rawtimestamp' => $rawtimestamp,
 				'rawmwtimestamp' =>	$rawmwtimestamp,
-				'title' => $this->mTitle,
+				'title' => $this->mTitle->getText(),
 				'isStaff' => $isStaff,
 			);
 
@@ -367,6 +366,10 @@ class ArticleComment {
 			}
 
 			$data = $wgMemc->set( $articleDataKey, $comment, 60*60 );
+
+			if(!($comment['title'] instanceof Title)) {
+				$comment['title'] = F::build('Title',array($comment['title'],NS_TALK),'newFromText');
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -543,7 +546,6 @@ class ArticleComment {
 		$text = '';
 		$this->load(true);
 		if ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) {
-			wfLoadExtensionMessages('ArticleComments');
 			$vars = array(
 				'canEdit'			=> $this->canEdit(),
 				'comment'			=> ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText()),
@@ -643,22 +645,14 @@ class ArticleComment {
 
 		$bot = $user->isAllowed('bot');
 			//this function calls Article::onArticleCreate which clears cache for article and it's talk page - TODO: is this comment still valid? Does it refer to the line above or to something that got deleted?
-
-		global $wgUser;
-		$userTmp = $wgUser;
-		$wgUser = $user;
-
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
-		if( $retval == EditPage::AS_SUCCESS_UPDATE ) {
+		if( $retval->value == EditPage::AS_SUCCESS_UPDATE ) {
 			$commentsIndex = F::build( 'CommentsIndex', array( $article->getID() ), 'newFromId' );
 			if ( $commentsIndex instanceof CommentsIndex ) {
-				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(GAID_FOR_UPDATE) );
+				$commentsIndex->updateLastRevId( $article->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE) );
 			}
 		}
-
-		$wgUser = $userTmp;
-
 		return $retval;
 	}
 
@@ -710,7 +704,7 @@ class ArticleComment {
 		} else {
 			$parentArticle = Article::newFromID($parentId);
 			if(empty($parentArticle)) {
-				$parentTitle = Title::newFromID($parentId, GAID_FOR_UPDATE);
+				$parentTitle = Title::newFromID($parentId, Title::GAID_FOR_UPDATE);
 				// it's possible for Title to be empty at this point
 				// if article was removed in the meantime
 				// (for eg. when replying on Wall from old browser session
@@ -752,7 +746,7 @@ class ArticleComment {
 		$retval = self::doSaveAsArticle($text, $article, $user, $metadata);
 
 		// add comment to database
-		if ( $retval == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
+		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
 			$revId = $article->getRevIdFetched();
 			$data = array(
 				'parentPageId' => $title->getArticleID(),
@@ -817,12 +811,18 @@ class ArticleComment {
 		$error = false;
 		$id = 0;
 
-		switch( $status ) {
+		switch( $status->value ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
 				$app = F::app();
-				$text = $app->getView( 'ArticleComments', ( $app->checkSkin( 'wikiamobile' ) ) ? 'WikiaMobileComment' : 'Comment', array('comment' => $comment->getData(true), 'commentId' => $commentId, 'rowClass' => '', 'level' => ( $parentId ) ? 2 : 1 ) )->render();
+				$text = $app->getView( 'ArticleComments',
+					( $app->checkSkin( 'wikiamobile' ) ) ? 'WikiaMobileComment' : 'Comment',
+					array('comment' => $comment->getData(true),
+						'commentId' => $commentId,
+						'rowClass' => '',
+						'level' => ( $parentId ) ? 2 : 1 ) )->render();
+
 				if ( !is_null($comment->mTitle) ) {
 					$id = $comment->mTitle->getArticleID();
 				}
@@ -838,7 +838,7 @@ class ArticleComment {
 				break;
 			default:
 				$userId = $wgUser->getId();
-				Wikia::log( __METHOD__, 'error', "No article created. Status: {$status}; DB: {$wgDBname}; User: {$userId}" );
+				Wikia::log( __METHOD__, 'error', "No article created. Status: {$status->value}; DB: {$wgDBname}; User: {$userId}" );
 				$text  = false;
 				$error = true;
 				$message = wfMsg('article-comments-error');

@@ -180,7 +180,7 @@ class SecurePoll_LocalAuth extends SecurePoll_Auth {
 	 * @return Status
 	 */
 	function autoLogin( $election ) {
-		global $wgUser, $wgServer, $wgLang;
+		global $wgUser;
 		if ( $wgUser->isAnon() ) {
 			return Status::newFatal( 'securepoll-not-logged-in' );
 		}
@@ -205,17 +205,20 @@ class SecurePoll_LocalAuth extends SecurePoll_Auth {
 			'name' => $user->getName(),
 			'type' => 'local',
 			'domain' => preg_replace( '!.*/(.*)$!', '$1', $wgServer ),
-			'url' => $user->getUserPage()->getFullURL(),
+			'url' => $user->getUserPage()->getCanonicalURL(),
 			'properties' => array(
 				'wiki' => wfWikiID(),
 				'blocked' => $user->isBlocked(),
+				'central-block-count' => $this->getCentralBlockCount( $user ),
 				'edit-count' => $user->getEditCount(),
-				'bot' => $user->isBot(),
+				'bot' => $user->isAllowed( 'bot' ),
 				'language' => $user->getOption( 'language' ),
 				'groups' => $user->getGroups(),
-				'lists' => $this->getLists( $user )
+				'lists' => $this->getLists( $user ),
+				'registration' => $user->getRegistration(),
 			)
 		);
+		
 		wfRunHooks( 'SecurePoll_GetUserParams', array( $this, $user, &$params ) );
 		return $params;
 	}
@@ -238,6 +241,30 @@ class SecurePoll_LocalAuth extends SecurePoll_Auth {
 			$lists[] = $row->li_name;
 		}
 		return $lists;
+	}
+	
+	/**
+	 * Checks how many central wikis the user is blocked on
+	 * @param $user User
+	 * @return Integer the number of wikis the user is blocked on.
+	 */
+	function getCentralBlockCount( $user ) {
+		if ( ! class_exists( 'CentralAuthUser' ) ) {
+			return 0;
+		}
+		
+		$centralUser = new CentralAuthUser( $user->getName() );
+		
+		$attached = $centralUser->queryAttached();
+		$blockCount = 0;
+		
+		foreach( $attached as $wiki => $data ) {
+			if ( $data['blocked'] ) {
+				$blockCount++;
+			}
+		}
+		
+		return $blockCount;
 	}
 }
 
@@ -270,7 +297,7 @@ class SecurePoll_RemoteMWAuth extends SecurePoll_Auth {
 		if ( substr( $url, -1 ) != '/' ) {
 			$url .= '/';
 		}
-		$url .= 'extensions/SecurePoll/auth-api.php?' . 
+		$url .= $wgSecurePollScript . '?' . 
 			wfArrayToCGI( array(
 				'token' => $params['token'],
 				'id' => $params['id']

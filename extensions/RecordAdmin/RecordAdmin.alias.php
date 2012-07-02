@@ -1,87 +1,103 @@
 <?php
 /**Internationalization aliases for RecordAdmin extension
-*
-* @addtogroup Extensions
-*/
+ *
+ * @file
+ * @ingroup Extensions
+ */
 
-$aliases = array();
+$specialPageAliases = array();
 
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'RecordAdmin' => array( 'RecordAdmin' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'RecordAdmin' => array( 'تسجيل_إداري' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'RecordAdmin' => array( 'تسجيل_إدارى' ),
+$specialPageAliases['arz'] = array(
+	'RecordAdmin' => array( 'تسجيل_ادارى' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
-	'RecordAdmin' => array( 'Gérer enregistrement', 'GérerEnregistrement', 'GererEnregistrement' ),
+$specialPageAliases['fr'] = array(
+	'RecordAdmin' => array( 'Gérer_enregistrement', 'GérerEnregistrement', 'GererEnregistrement' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
-	'RecordAdmin' => array( "Administrar l'encartâjo", 'AdministrarLEncartâjo' ),
+$specialPageAliases['frp'] = array(
+	'RecordAdmin' => array( 'Administrar_l\'encartâjo', 'AdministrarLEncartâjo' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'RecordAdmin' => array( 'Ammann yytrage' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'RecordAdmin' => array( 'AdminAnrejistreman' ),
+);
+
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'RecordAdmin' => array( 'Gestion de datos' ),
+$specialPageAliases['ia'] = array(
+	'RecordAdmin' => array( 'Gestion_de_datos' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'RecordAdmin' => array( 'Catat admin', 'CatatAdmin' ),
+$specialPageAliases['id'] = array(
+	'RecordAdmin' => array( 'Catat_admin', 'CatatAdmin' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'RecordAdmin' => array( '記録管理' ),
 );
 
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'RecordAdmin' => array( 'АдминНаЗаписи' ),
+);
+
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'RecordAdmin' => array( 'Gegevensbeheer' ),
+);
+
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'RecordAdmin' => array( 'Gegevensbeheer' ),
 );
 
 /** Occitan (Occitan) */
-$aliases['oc'] = array(
+$specialPageAliases['oc'] = array(
 	'RecordAdmin' => array( 'GerirEnregistrament', 'Gerir Enregistrament' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'RecordAdmin' => array( 'प्रचालकअङ्कन' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'RecordAdmin' => array( 'SprávcaZáznamu' ),
 );
 
 /** Swahili (Kiswahili) */
-$aliases['sw'] = array(
+$specialPageAliases['sw'] = array(
 	'RecordAdmin' => array( 'RekodizaMkabidhi' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'RecordAdmin' => array( 'Tagapangasiwa ng talaan' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
-	'RecordAdmin' => array( 'HizmetliKaydı' ),
+$specialPageAliases['tr'] = array(
+	'RecordAdmin' => array( 'HizmetliKaydı', 'YöneticiKaydı' ),
 );
-

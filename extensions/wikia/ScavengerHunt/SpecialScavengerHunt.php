@@ -176,7 +176,7 @@ class SpecialScavengerHunt extends SpecialPage {
 				}
 				$template->set('errors', isset($errors['errors']) ? $errors['errors'] : array() );
 				$template->set('highlight', isset($errors['highlight']) ? $errors['highlight'] : array() );
-				$template->set('editToken', $this->user->editToken());
+				$template->set('editToken', $this->user->getEditToken());
 				$template->set_vars($this->getTemplateVarsFromGame($game) );
 				$this->out->addHTML($template->render('form'));
 				break;

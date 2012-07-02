@@ -37,7 +37,7 @@ do
 	from=`date -d "$startdate $counter sec" '+%s'`
 	to=`date -d "$startdate $endtime sec" '+%s'`
 
-	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php -e $to -s $from -r $provider | tee -a $logfile || exit
+	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php -e $to -s $from $provider | tee -a $logfile || exit
 
 	counter=$(( $counter + 60 * 60 * 24 * 28 ))
 	from=`date -d "$startdate $counter sec" '+%s'`

@@ -684,8 +684,7 @@ AdDriverDelayedLoader.loadNext = function() {
 		}
 	}
 	else {
-		var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
-		if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) {
+		if (window.getTreatmentGroup && (window.wgLoadAdDriverOnLiftiumInit || getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)) {
 			if (AdDriverDelayedLoader.runFinalize) {
 				AdDriverDelayedLoader.finalize();
 			}						
@@ -855,7 +854,7 @@ if (window.wgEnableKruxTargeting) {
 
 if (!window.adslots) window.adslots = [];
 
-if (typeof getTreatmentGroup != 'undefined') {	// any page without getTreatmentGroup() defined doesn't have ads'
+if (window.getTreatmentGroup) {	// any page without getTreatmentGroup() defined doesn't have ads'
 	var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
 
 	if (!window.wgLoadAdDriverOnLiftiumInit && tgId != TG_AS_WRAPPERS_ARE_RENDERED) {

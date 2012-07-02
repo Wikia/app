@@ -8,7 +8,7 @@ __NOTOC__
 * Leidėjas: ''{{SITENAME}}''. 
 * Paskutinės versijos data: {{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}} UTC
 * Puslapis gautas: <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}} UTC</citation>
-* Nuolatinė nuoroda: {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
+* Nuolatinė nuoroda: {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
 * Puslapio versijos Nr.: {{REVISIONID}}
 
 </div>
@@ -17,23 +17,23 @@ __NOTOC__
 == Citatų stiliai puslapiui "{{FULLPAGENAME}}" ==
 
 === APA stilius ===
-{{FULLPAGENAME}}. ({{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}}). ''{{SITENAME}}''. Gautas <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}}</citation> iš {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
+{{FULLPAGENAME}}. ({{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}}). ''{{SITENAME}}''. Gautas <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}}</citation> iš {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
 
 === MLA stilius ===
-"{{FULLPAGENAME}}." ''{{SITENAME}}''. {{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}} UTC. <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}}</citation> &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;.
+"{{FULLPAGENAME}}." ''{{SITENAME}}''. {{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}} UTC. <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}}</citation> &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;.
 
 === MHRA stilius ===
-{{SITENAME}} naudotojai, '{{FULLPAGENAME}}', ''{{SITENAME}},'' {{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}} UTC, &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt; [žiūrėta <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}}</citation>]
+{{SITENAME}} naudotojai, '{{FULLPAGENAME}}', ''{{SITENAME}},'' {{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}} UTC, &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt; [žiūrėta <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}}</citation>]
 
 === Čikagos stilius ===
-{{SITENAME}} naudotojai, "{{FULLPAGENAME}}",  ''{{SITENAME}}'', {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (žiūrėta <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}}</citation>).
+{{SITENAME}} naudotojai, "{{FULLPAGENAME}}",  ''{{SITENAME}}'', {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (žiūrėta <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}}</citation>).
 
 === CBE/CSE stilius ===
 {{SITENAME}} naudotojai. {{FULLPAGENAME}} [internete].  {{SITENAME}},  {{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}} {{CURRENTTIME}} UTC [cituota <citation>{{CURRENTYEAR}}-{{CURRENTMONTH}}-{{CURRENTDAY2}}</citation>]. Galima rasti: 
-{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
+{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
 
 === Bluebook stilius ===
-{{FULLPAGENAME}}, {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (paskutinį kartą žiūrėta <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}}</citation>).
+{{FULLPAGENAME}}, {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (paskutinį kartą žiūrėta <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}}</citation>).
 
 === BibTeX įrašas ===
 
@@ -41,7 +41,7 @@ __NOTOC__
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}",
     year = "{{CURRENTYEAR}}",
-    url = "{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
+    url = "{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
     note = "[Žiniatinklyje; žiūrėta <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}}</citation>]"
   }
 
@@ -51,7 +51,7 @@ Kai naudojate LaTeX paketą ''url'' (<code>\usepackage{url}</code> kur nors prad
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}",
     year = "{{CURRENTYEAR}}",
-    url = "'''\url{'''{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
+    url = "'''\url{'''{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
     note = "[Žiniatinklyje; žiūrėta <citation>{{CURRENTYEAR}} {{CURRENTMONTHNAME}} {{CURRENTDAY}}</citation>]"
   }
 

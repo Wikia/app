@@ -153,7 +153,7 @@ class DataCenterWidgetTable extends DataCenterWidget {
 					// Glues values together
 					$value = implode( $options['glue'], $values );
 				// Alternatively checks if a field was specified
-				} else if ( $options['field'] ) {
+				} elseif ( $options['field'] ) {
 					// Uses specified field
 					$value = DataCenterUI::format(
 						$row->get( $options['field'] ), $options['format']

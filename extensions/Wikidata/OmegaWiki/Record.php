@@ -118,11 +118,9 @@ class ArrayRecord implements Record {
 		foreach ( $this->values as $key => $value ) {
 			$rv = $comma;
 			$repr = "$key:$value";
-			# Duck typing (should refactor this to a has_attr() function);
-			# ( might be replacable by    property_exists() in php 5.1+  )
-			$methods = get_class_methods( get_class( $value ) );
-			if ( !is_null( $methods ) ) {
-				if ( in_array( "tostring_indent", $methods ) ) {
+			// $value is never a class??
+			if ( is_object ( $value ) ) {
+				if ( property_exists ( $value , 'tostring_indent' ) ) {
 					$repr = $value->tostring_indent( $depth + 1, $key );
 				}
 			}

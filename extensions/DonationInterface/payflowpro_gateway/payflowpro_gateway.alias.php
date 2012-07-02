@@ -1,8 +1,8 @@
 <?php
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'PayflowProGateway' => array( 'PayflowProGateway' ),
 );

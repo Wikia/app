@@ -89,8 +89,6 @@ class WikiMetrics {
 		global $wgUser, $wgOut, $wgRequest;
 		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath;
 
-		wfLoadExtensionMessages("WikiFactory");
-
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
 			return;
@@ -367,7 +365,7 @@ class WikiMetrics {
 			$where[] = $city_id . ' in (select ccm1.city_id from wikicities.city_cat_mapping ccm1 where cat_id = '.intval($this->axHub).')';
 		}
 		if ( !empty($this->axDbname) ) {
-			$where[] = 'city_dbname LIKE "%' . $dbr->escapeLike($this->axDbname) . '%"';
+			$where[] = 'city_dbname' . $dbr->buildLike( $dbr->anyString(), $this->axDbname, $dbr->anyString() );
 		}
 		if ( !empty($this->axTitle) ) {
 			$where[] = 'city_title >= ' . $dbr->addQuotes($this->axTitle);
@@ -387,7 +385,7 @@ class WikiMetrics {
 			}
 		}
 		if ( !empty($this->axEmail) ) {
-			$where[] = 'city_founding_email LIKE "%' . $dbr->escapeLike( str_replace(' ', '_', $this->axEmail) ) . '%"';
+			$where[] = 'city_founding_email' . $dbr->buildLike( $dbr->anyString(), str_replace(' ', '_', $this->axEmail), $dbr->anyString() );
 		}
 		$city_public = array( );
 		if ( !empty($this->axActive) ) {
@@ -705,11 +703,11 @@ class WikiMetrics {
 		$aCityIds = array();
 
 		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
-		$domain = $dbr->escapeLike( strtolower( $this->axDomain ) );
+		$domain = strtolower( $this->axDomain );
 		
 		$where = ( isset($this->axExactDomain) && ($this->axExactDomain == 1) ) 
 				? array( "city_domain = 'www.{$domain}.wikia.com'" ) 
-				: array( "city_domain like '%{$domain}%'" );
+				: array( "city_domain" .  $dbr->buildLike( $dbr->anyString(), $domain, $dbr->anyString() ) );
 		
 		$oRes = $dbr->select( 
 			"city_domains", 

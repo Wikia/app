@@ -58,14 +58,13 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'ExternalPages',
 	'version' => '0.1',
 	'author' => 'Ariel Glenn',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:ExternalPages',
-	'description' => 'Retrieve and display page from a remote WMF site',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:ExternalPages',
 	'descriptionmsg' => 'externalpages-desc',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['ExternalPages'] = $dir . 'ExternalPages.i18n.php';
-$wgExtensionAliasesFiles['ExternalPages'] = $dir . 'ExternalPages.alias.php';
+$wgExtensionMessagesFiles['ExternalPagesAlias'] = $dir . 'ExternalPages.alias.php';
 
 $wgAutoloadClasses['ExternalPages'] = $dir . 'ExternalPages_body.php';
 

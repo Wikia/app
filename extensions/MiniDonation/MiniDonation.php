@@ -5,21 +5,19 @@ if (!defined('MEDIAWIKI')) die();
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'MiniDonation',
 	'url' => 'http://mediawiki.org/wiki/Extension:MiniDonation',
-	'description' => 'Adds a tag <tt>&lt;donateform&gt;</tt> to support donations via PayPal',
 	'descriptionmsg' => 'donationform-desc',
 );
 
-$wgExtensionFunctions[] = 'wfSetupMiniDonation';
+$wgHooks['ParserFirstCallInit'][] = 'wfSetupMiniDonation';
 $wgExtensionMessagesFiles['MiniDonation'] = dirname(__FILE__) . '/MiniDonation.i18n.php';
 
-function wfSetupMiniDonation() {
-	global $wgParser;
-
-	$wgParser->setHook( 'donationform', 'wfMiniDonationHook' );
+function wfSetupMiniDonation( $parser ) {
+	$parser->setHook( 'donationform', 'wfMiniDonationHook' );
+	return true;
 }
 
 function wfMiniDonationHook( $text, $params, $parser ) {
-	wfLoadExtensionMessages( 'MiniDonation' );
+	
 
 	$default = "25";
 	$fontSize = "90%";

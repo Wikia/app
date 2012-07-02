@@ -15,15 +15,24 @@
 class TranslatePreferences {
 	/**
 	 * Add 'translate-pref-nonewsletter' preference.
-	 * This is actually specific to translatewiki.net
+	 * This is most probably specific to translatewiki.net. Can be enabled
+	 * with $wgTranslateNewsletterPreference.
 	 *
-	 * @return \bool true
+	 * @param $user User
+	 * @param $preferences array
+	 * @return bool true
 	 */
 	public static function onGetPreferences( $user, &$preferences ) {
-		global $wgEnableEmail, $wgUser, $wgEnotifRevealEditorAddress;
+		global $wgTranslateNewsletterPreference;
 
-		// Only show is e-mail is enabled and user has a confirmed e-mail address.
-		if ( $wgEnableEmail && $wgUser->isEmailConfirmed() ) {
+		if ( !$wgTranslateNewsletterPreference ) {
+			return true;
+		}
+
+		global $wgEnableEmail, $wgEnotifRevealEditorAddress;
+
+		// Only show if e-mail is enabled and user has a confirmed e-mail address.
+		if ( $wgEnableEmail && $user->isEmailConfirmed() ) {
 			// 'translate-pref-nonewsletter' is used as opt-out for
 			// users with a confirmed e-mail address
 			$prefs = array(
@@ -34,7 +43,7 @@ class TranslatePreferences {
 				)
 			);
 
-			// Add setting after 'enotifrevealaddr'
+			// Add setting after 'enotifrevealaddr'.
 			$preferences = wfArrayInsertAfter( $preferences, $prefs,
 				$wgEnotifRevealEditorAddress ? 'enotifrevealaddr' : 'enotifminoredits' );
 		}
@@ -46,6 +55,8 @@ class TranslatePreferences {
 	 * Add 'translate-editlangs' preference.
 	 * These are the languages also shown when translating.
 	 *
+	 * @param $user User
+	 * @param $preferences array
 	 * @return \bool true
 	 */
 	public static function translationAssistLanguages( $user, &$preferences ) {
@@ -63,6 +74,7 @@ class TranslatePreferences {
 			'help-message' => 'translate-pref-editassistlang-help',
 			'select' => $select,
 			'valid-values' => array_keys( $languages ),
+			'name' => 'translate-editlangs',
 		);
 
 		return true;
@@ -72,6 +84,8 @@ class TranslatePreferences {
 	 * Add 'translate-jsedit' preference.
 	 * An option to disable the javascript edit interface.
 	 *
+	 * @param $user User
+	 * @param $preferences array
 	 * @return \bool true
 	 */
 	public static function translationJsedit( $user, &$preferences ) {
@@ -86,6 +100,7 @@ class TranslatePreferences {
 
 	/**
 	 * JavsScript selector for language codes.
+	 * @return \JsSelectToInput
 	 */
 	protected static function languageSelector() {
 		global $wgLang;

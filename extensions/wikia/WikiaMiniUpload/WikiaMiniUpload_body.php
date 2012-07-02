@@ -11,7 +11,6 @@ class WikiaMiniUpload {
 	// there would be a problem loading the messages
 	// messages themselves are sent in json
         function loadMainFromView( $error = false ) {
-                wfLoadExtensionMessages( 'WikiaMiniUpload' );
 		global $wgFileExtensions, $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgUser;
 		global $wgRequest;
 
@@ -82,10 +81,10 @@ class WikiaMiniUpload {
 	// recently uploaded images on that wiki
 	function recentlyUploaded() {
 		global $IP, $wmu;
-		require_once($IP . '/includes/SpecialPage.php');
-		require_once($IP . '/includes/specials/SpecialNewimages.php');
-		$isp = new IncludableSpecialPage('Newimages', '', 1, 'wfSpecialNewimages', $IP . '/includes/specials/SpecialNewimages.php');
-		wfSpecialNewimages(8, $isp);
+		require_once($IP . '/extensions/wikia/WikiaNewFiles/SpecialNewFiles.php');
+
+		$isp = new IncludableSpecialPage('Newimages', '', 1, 'wfSpecialWikiaNewFiles', $IP . '/extensions/wikia/WikiaNewFiles/SpecialNewFiles.php');
+		wfSpecialWikiaNewFiles(8, $isp);
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array('data' => $wmu));
 		return $tmpl->execute("results_recently");
@@ -114,14 +113,13 @@ class WikiaMiniUpload {
         } else if($sourceId == 0) {
 
             $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-
-            $query = mb_strtolower($dbr->escapeLike($query));
+			$query = $dbr->buildLike( $dbr->anyString(), mb_strtolower( $query ), $dbr->anyString() );
             $res = $dbr->select(
                     array( 'pages' ),
                     array( 'count(page_id) as count ' ),
                     array(
                            'page_wikia_id' => $wgCityId,
-                           "page_title_lower like '%".$query."%' " ,
+                           "page_title_lower $query" ,
                            'page_namespace' => 6,
                            'page_status' => 0 ),
                     __METHOD__ ,
@@ -141,7 +139,7 @@ class WikiaMiniUpload {
                     array( ' page_title ' ),
                     array(
                            'page_wikia_id' => $wgCityId,
-                           "page_title_lower like '%".$query."%' " ,
+                           "page_title_lower $query",
                            'page_namespace' => 6,
                            'page_status' => 0 ),
                     __METHOD__ ,
@@ -227,7 +225,6 @@ class WikiaMiniUpload {
 					$upload = new UploadFromUrl();
 					$upload->initializeFromRequest(new FauxRequest($data, true));
 					$upload->fetchFile();
-					global $wgCityId;
                     $tempname = $this->tempFileName( $wgUser );
                     $file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
                     $file->upload($upload->getTempPath(), '', '');
@@ -244,7 +241,7 @@ class WikiaMiniUpload {
 
 	// perform image check
 	function checkImage() {
-		global $IP, $wgRequest, $wgUser;
+		global $wgRequest, $wgUser;
 
 		$mSrcName = stripslashes($wgRequest->getFileName( 'wpUploadFile' ));
 
@@ -294,7 +291,7 @@ class WikiaMiniUpload {
 	}
 
 	function uploadImage() {
-		global $IP, $wgRequest, $wgUser;
+		global $wgRequest, $wgUser;
 
 		$check_result = $this->checkImage() ;
 		if (UploadBase::SUCCESS == $check_result) {

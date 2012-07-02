@@ -18,7 +18,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 	}
 
 	function options( &$serverOptions ) {
-		parent::options( &$serverOptions );
+		parent::options( $serverOptions );
 
 		if ( $serverOptions['xpath']->evaluate( 'boolean(/D:options/D:activity-collection-set)' ) ) {
 			$this->setResponseHeader( 'Content-Type: text/xml; charset="utf-8"' );
@@ -334,8 +334,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 			}
 		}
 
-		$mediaWiki = new MediaWiki();
-		$article = $mediaWiki->articleFromTitle( $title );
+		$article = Article::newFromTitle( $title, RequestContext::getMain() );
 
 		$rawPage = new RawPage( $article );
 
@@ -396,8 +395,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 			$title = Title::newMainPage();
 		}
 
-		$mediaWiki = new MediaWiki();
-		$article = $mediaWiki->articleFromTitle( $title );
+		$article = Article::newFromTitle( $title, RequestContext::getMain() );
 
 		# Must check if article exists to avoid 500 Internal Server Error
 
@@ -436,8 +434,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 			return;
 		}
 
-		$mediaWiki = new MediaWiki();
-		$article = $mediaWiki->articleFromTitle( $title );
+		$article = Article::newFromTitle( $title, RequestContext::getMain() );
 
 		if ( ( $handle = $this->openRequestBody() ) === false ) {
 			return;
@@ -605,7 +602,7 @@ class WebDavServer extends HTTP_WebDAV_Server {
 		$entryCondition = null;
 		foreach ( $entryConditions as $path => $revisionCondition ) {
 			if ( !empty( $path ) ) {
-				$pathCondition = '(page_title = ' . $dbr->addQuotes( $path ) . ' OR page_title LIKE \'' . $dbr->escapeLike( $path ) . '/%\')';
+				$pathCondition = '(page_title = ' . $dbr->addQuotes( $path ) . ' OR page_title ' . $dbr->buildLike( $path . '/', $dbr->anyString() ) . ')';
 
 				if ( !empty( $revisionCondition ) ) {
 					$revisionCondition = ' AND ' . $revisionCondition;
@@ -683,14 +680,14 @@ class WebDavServer extends HTTP_WebDAV_Server {
 			$addOrOpen = 'add';
 			$baseRev = null;
 
-			$newText = Revision::newFromId( $result[3] )->revText();
+			$newText = Revision::newFromId( $result[3] )->getText( Revision::FOR_THIS_USER );
 			$oldText = null;
 
 			if ( $result[1] > 0 ) {
 				$addOrOpen = 'open';
 				$baseRev = ' rev="' . $result[2] . '"';
 
-				$oldText = Revision::newFromId( $result[2] )->revText();
+				$oldText = Revision::newFromId( $result[2] )->getText( Revision::FOR_THIS_USER );
 			}
 
 			# TODO: Use only last path component

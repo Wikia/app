@@ -37,7 +37,6 @@ AdminLinks
 url = http://www.mediawiki.org/wiki/Extension:Admin_Links
 
 AdvancedRandom
-file = SpecialAdvancedRandom.php
 url = http://www.mediawiki.org/wiki/Extension:AdvancedRandom
 
 AjaxLogin
@@ -46,11 +45,9 @@ url = http://www.mediawiki.org/wiki/Extension:AjaxLogin
 array[] = wgEnableAjaxLogin: assoc
 
 AjaxQueryPages
-file = Load.php
 url = http://www.mediawiki.org/wiki/Extension:AjaxQueryPages
 
 AjaxShowEditors
-file = Load.php
 settings[] = wgAjaxShowEditorsTimeout: int
 schema = true
 url = http://www.mediawiki.org/wiki/Extension:AjaxShowEditors
@@ -77,7 +74,6 @@ schema = true
 url = http://www.mediawiki.org/wiki/Extension:AntiSpoof
 
 APC
-file = ViewAPC.php
 url = http://www.mediawiki.org/wiki/Extension:APC
 
 Asksql
@@ -119,16 +115,6 @@ settings[] = wgBlockTitlePatterns: array
 array[] = wgBlockTitlePatterns: simple
 url = http://www.mediawiki.org/wiki/Extension:BlockTitles
 
-BoardVote
-settings[] = wgBoardVoteDB: text, wgBoardCandidates: array, wgGPGCommand: text
-settings[] = wgGPGRecipient: text, wgGPGHomedir: text, wgGPGPubKey: text
-settings[] = wgBoardVoteEditCount: int, wgBoardVoteRecentEditCount: int, wgBoardVoteCountDate: text
-settings[] = wgBoardVoteRecentFirstCountDate: text, wgBoardVoteRecentCountDate: text,
-settings[] = wgBoardVoteStartDate: text, wgBoardVoteEndDate: text, wgBoardVoteDBServer: text
-array[] = wgBoardCandidates: simple
-schema = true
-url = http://www.mediawiki.org/wiki/Extension:BoardVote
-
 BookInformation
 settings[] = wgBookInformationCache: bool, wgBookInformationDriver: text
 settings[] = wgBookInformationService: array
@@ -164,7 +150,7 @@ CategoryTests
 url = http://www.mediawiki.org/wiki/Extension:CategoryTests
 
 CategoryTree
-settings[] = wgCategoryTreeMaxChildren: int, wgCategoryTreeMaxChildren: int,
+settings[] = wgCategoryTreeMaxChildren: int,
 settings[] = wgCategoryTreeAllowTag: bool, wgCategoryTreeDisableCache: bool
 settings[] = wgCategoryTreeDynamicTag: bool, wgCategoryTreeHTTPCache: bool
 settings[] = wgCategoryTreeForceHeaders: bool, wgCategoryTreeSidebarRoot: text
@@ -183,9 +169,10 @@ url = http://www.mediawiki.org/wiki/Extension:CategoryTree
 
 CategoryWatch
 settings[] = wgCategoryWatchNotifyEditor: bool, wgCategoryWatchUseAutoCat: bool
+settings[] = wgCategoryWatchUseAutoCatRealName: bool
 url = http://www.mediawiki.org/wiki/Extension:CategoryWatch
 
-catfeed
+CategoryFeed
 url = http://wikidev.net
 
 CentralAuth
@@ -202,21 +189,17 @@ schema = true
 url = http://www.mediawiki.org/wiki/Extension:CentralAuth
 
 CentralNotice
-settings[] = wgNoticeCentralPath: text, wgNoticeLocalPath: text
 settings[] = wgNoticeLang: text, wgNoticeProject: text, wgNoticeProjects: array
-settings[] = wgNoticeCentralDirectory: text, wgNoticeLocalDirectory: text
-settings[] = wgNoticeInfrastructure: bool, wgCentralNoticeLoader: bool
+settings[] = wgNoticeInfrastructure: bool, wgCentralDBname: text,
+settings[] = wgCentralPagePath: text, wgCentralNoticeLoader: bool
 settings[] = wgNoticeTestMode: bool, wgNoticeEnabledSites: array
 settings[] = wgNoticeTimeout: int, wgNoticeServerTimeout: int
 settings[] = wgNoticeCounterSource: text
 array[] = wgNoticeProjects: simple
-empty[] = wgNoticeCentralPath: false, wgNoticeLocalPath: false
-empty[] = wgNoticeCentralDirectory: false, wgNoticeLocalDirectory: false
 schema = true
 url = http://www.mediawiki.org/wiki/Extension:CentralNotice
 
 ChangeAuthor
-file = ChangeAuthor.setup.php
 url = http://www.mediawiki.org/wiki/Extension:ChangeAuthor
 
 CharInsert
@@ -249,16 +232,12 @@ SpecialCite
 dir = Cite
 url = http://www.mediawiki.org/wiki/Extension:Cite/Special:Cite.php
 
-CLDR
-file = LanguageNames.php
+cldr
 url = http://unicode.org/cldr/repository_access.html
 
 CleanChanges
 settings[] = wgCCUserFilter: bool, wgCCTrailerFilter: bool
 url = http://www.mediawiki.org/wiki/Extension:CleanChanges
-
-Click
-url = http://www.mediawiki.org/wiki/Extension:Click
 
 ClientSide
 url = http://www.mediawiki.org/wiki/Extension:ClientSide
@@ -273,25 +252,31 @@ settings[] = wgCodeReviewENotif: bool, wgCodeReviewImgRegex: text
 settings[] = wgSubversionProxy: text, wgSubversionProxyTimeout: int
 settings[] = wgSubversionUser: text, wgSubversionPassword: text
 settings[] = wgCodeReviewImportBatchSize: int, wgWikiSVN: text
-settings[] = wgCodeReviewSharedSecret: text, wgSubversionOptions: text
-settings[] = wgCodeReviewCommentWatcher: text, wgCodeReviewMaxDiffSize: int
+settings[] = wgSubversionOptions: text, wgCodeReviewCommentWatcher: text
+settings[] = wgCodeReviewMaxDiffSize: int, wgCodeReviewDeferredPaths: array
+settings[] = wgCodeReviewUDPAddress: text, wgCodeReviewUDPPort: int
+settings[] = wgCodeReviewUDPPrefix: text, wgCodeReviewRepoStatsCacheTime: int
+array[] = wgCodeReviewDeferredPaths: simple
 empty[] = wgCodeReviewSharedSecret: false, wgCodeReviewCommentWatcher: false
+empty[] = wgCRUDPAddress: false, wgCRUDPPort: false
 schema = true
 url = http://www.mediawiki.org/wiki/Extension:CodeReview
 
 Collection
 settings[] = wgCollectionMWServeURL: text, wgCollectionMWServeCredentials: text
 settings[] = wgCollectionMWServeCert: text, wgCollectionArticleNamespaces: array
+settings[] = wgCollectionHierarcyDelimiter: text
 settings[] = wgCommunityCollectionNamespace: int, wgCollectionMaxArticles: int
 settings[] = wgCollectionLicenseName: text, wgCollectionLicenseURL: text
 settings[] = wgCollectionPortletForLoggedInUsersOnly: bool, wgCollectionPortletFormats: array
-settings[] = wgCollectionFormats: array
-settings[] = wgCollectionMaxSuggestions: int, wgCollectionSuggestCheapWeightThreshhold: int
-settings[] = wgCollectionSuggestThreshhold: int
+settings[] = wgCollectionFormats: array, wgCollectionContentTypeToFilename: array
+settings[] = wgCollectionFormatToServeURL: array, wgCollectionMaxSuggestions: int
+settings[] = wgCollectionSuggestCheapWeightThreshhold: int, wgCollectionSuggestThreshhold: int
 array[] = wgCollectionArticleNamespaces: ns-simple, wgCollectionFormats: assoc
+array[] = wgCollectionContentTypeToFilename: assoc, wgCollectionFormatToServeURL: assoc
 array[] = wgCollectionPortletFormats: simple
 empty[] = wgCollectionMWServeCert: null, wgCollectionLicenseName: null
-empty[] = wgCollectionLicenseURL: null
+empty[] = wgCollectionLicenseURL: null, wgCollectionHierarcyDelimiter: null
 url = http://www.mediawiki.org/wiki/Extension:Collection
 
 Commentbox
@@ -301,7 +286,7 @@ array[] = wgCommentboxNamespaces: ns-simple
 url = http://www.mediawiki.org/wiki/Extension:Commentbox
 
 CommentPages
-settings[] = wgCommentPagesNS: int
+settings[] = wgCommentPagesNS: int, wgCommentPagesContentNamespace: int
 url = http://www.mediawiki.org/wiki/Extension:CommentPages
 
 CommentSpammer
@@ -315,7 +300,6 @@ schema = true
 url = http://www.mediawiki.org/wiki/Extension:CommunityVoice
 
 ConfirmAccount
-file = SpecialConfirmAccount.php
 settings[] = wgMakeUserPageFromBio: bool, wgAutoUserBioText: text
 settings[] = wgAutoWelcomeNewUsers: bool, wgUseRealNamesOnly: bool
 settings[] = wgRejectedAccountMaxAge: int, wgConfirmAccountRejectAge: int
@@ -346,7 +330,7 @@ url = http://www.mediawiki.org/wiki/Extension:ConfirmEdit
 FancyCaptcha
 dir = ConfirmEdit
 settings[] = wgCaptchaDirectory: text, wgCaptchaDirectoryLevels: int
-settings[] = wgCaptchaSecret: text
+settings[] = wgCaptchaSecret: text, wgCaptchaDeleteOnSolve: bool
 url = http://www.mediawiki.org/wiki/Extension:ConfirmEdit#FancyCaptcha_addon
 
 MathCaptcha
@@ -355,6 +339,7 @@ dir = ConfirmEdit
 ContactPage
 settings[] = wgContactUser: text, wgContactSender: text
 settings[] = wgContactSenderName: text, wgContactRequireAll: bool
+settings[] = wgContactIncludeIP: bool
 url = http://www.mediawiki.org/wiki/Extension:ContactPage
 
 ContributionScores
@@ -381,7 +366,6 @@ CreateBox
 url = http://www.mediawiki.org/wiki/Extension:CreateBox
 
 CrossNamespaceLinks
-file = SpecialCrossNamespaceLinks.php
 url = http://www.mediawiki.org/wiki/Extension:CrossNamespaceLinks
 
 Crosswiki
@@ -427,7 +411,6 @@ schema = true
 url = http://www.mediawiki.org/wiki/Extension:Duplicator
 
 EditCount
-file = SpecialEditcount.php
 url = http://www.mediawiki.org/wiki/Extension:Editcount
 
 EditOwn
@@ -471,27 +454,20 @@ url = http://www.mediawiki.org/wiki/Extension:Find_Spam
 
 FlaggedRevs
 settings[] = wgSimpleFlaggedRevsUI: bool
-settings[] = wgFlaggedRevTabs: bool
 settings[] = wgFlaggedRevsLowProfile: bool
 settings[] = wgFlaggedRevsNamespaces: array
 settings[] = wgFlaggedRevsPatrolNamespaces: array
 settings[] = wgFlaggedRevsWhitelist: array
 settings[] = wgFlaggedRevsOverride: bool
-settings[] = wgFlaggedRevsReviewForDefault: bool
-settings[] = wgFlaggedRevsPrecedence: bool
 settings[] = wgFlaggedRevsExceptions: array
 settings[] = wgFlaggedRevsComments: bool
 settings[] = wgFlaggedRevsAutoReview: bool
 settings[] = wgFlaggedRevsAutoReviewNew: bool
-settings[] = wgUseCurrentTemplates: bool
 settings[] = wgFlaggedRevsHandleIncludes: { 0: Current, 1: Freeze, 2: Stable }
-settings[] = wgUseCurrentImages: bool
 settings[] = wgFlaggedRevTags: array
 settings[] = wgFlagRestrictions: array
-settings[] = wgFlagAvailability: array
-settings[] = wgFlaggedRevsPatrolLevel: int
-settings[] = wgFlaggedRevsProtectLevels: array
-settings[] = wgReviewCodes: array
+settings[] = wgFlaggedRevsTagsAuto: array
+settings[] = wgFlaggedRevsProtection: bool
 settings[] = wgFlaggedRevsRestrictionLevels: array
 settings[] = wgFlaggedRevsStylePath: text
 settings[] = wgFlaggedRevsAutopromote: array
@@ -499,24 +475,17 @@ settings[] = wgFlaggedRevsAutoconfirm: array
 settings[] = wgFlaggedRevsLogInRC: bool
 settings[] = wgFlaggedRevsOversightAge: int
 settings[] = wgFlaggedRevsAutopromoteInRC: bool
-settings[] = wgFlaggedRevsVisible: array
-settings[] = wgFlaggedRevsTalkVisible: bool
 settings[] = wgFlaggedRevsStatsAge: int
-settings[] = wgPHPlotDir: text
-settings[] = wgSvgGraphDir: text
 array[] = wgFlaggedRevsNamespaces: ns-simple
 array[] = wgFlaggedRevsPatrolNamespaces: ns-simple
 array[] = wgFlaggedRevsWhitelist: simple
 array[] = wgFlaggedRevsExceptions: simple
 array[] = wgFlaggedRevTags: array
 array[] = wgFlagRestrictions: array
-array[] = wgFlagAvailability: array
-array[] = wgFlaggedRevsProtectLevels: array
-array[] = wgReviewCodes: simple
+array[] = wgFlaggedRevsTagsAuto: assoc
 array[] = wgFlaggedRevsRestrictionLevels: simple
 array[] = wgFlaggedRevsAutopromote: assoc
 array[] = wgFlaggedRevsAutoconfirm: assoc
-array[] = wgFlaggedRevsVisible: simple
 empty[] = wgFlaggedRevsAutoconfirm: false
 schema = true
 url = http://www.mediawiki.org/wiki/Extension:FlaggedRevs
@@ -553,15 +522,12 @@ GroupPortal
 url = http://www.mediawiki.org/wiki/Extension:GroupPortal
 
 GroupsSidebar
-settings[] = wgGroupsSidebar: array
-array[] = wgGroupsSidebar: assoc
 url = http://www.mediawiki.org/wiki/Extension:GroupsSidebar
 
 ImageMap
 url = http://www.mediawiki.org/wiki/Extension:ImageMap
 
 ImportUsers
-file = SpecialImportUsers.php
 url = http://www.mediawiki.org/wiki/Extension:ImportUsers
 
 Inputbox
@@ -577,7 +543,6 @@ settings[] = wgDLPAllowUnlimitedResults: bool, wgDLPAllowUnlimitedCategories: bo
 url = http://www.mediawiki.org/wiki/Extension:Intersection
 
 Interwiki
-file = SpecialInterwiki.php
 url = http://mediawiki.org/wiki/Extension:SpecialInterwiki
 
 InterwikiList
@@ -599,10 +564,10 @@ settings[] = wgNewUserMessageOnAutoCreate: bool
 url = http://www.mediawiki.org/wiki/Extension:NewUserMessage
 
 Nuke
-file = SpecialNuke.php
 url = http://www.mediawiki.org/wiki/Extension:Nuke
 
 OggHandler
+settings[] = wgOggThumbLocation: text
 settings[] = wgFFmpegLocation: text, wgCortadoJarFile: text
 settings[] = wgOggAudioTypes: array, wgOggVideoTypes: array
 array[] = wgOggAudioTypes: simple, wgOggVideoTypes: simple
@@ -678,7 +643,6 @@ Redirect
 url = http://www.mediawiki.org/wiki/Extension:Redirect
 
 Renameuser
-file = SpecialRenameuser.php
 url = http://www.mediawiki.org/wiki/Extension:Renameuser
 
 ReplaceSet
@@ -703,16 +667,17 @@ settings[] = sdgListSeparator: text
 settings[] = sdgNumResultsPerPage: int
 settings[] = sdgFiltersSmallestFontSize: int
 settings[] = sdgFiltersLargestFontSize: int
+settings[] = sdgShowCategoriesAsTabs: bool
 extensions-dependencies[] = SemanticMediaWiki
 url = http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown
 
 SemanticForms
 file = includes/SF_Settings.php
 settings[] = sfgMaxAutocompleteValues: int
+settings[] = sfgAutocompleteOnAllChars: bool
 settings[] = sfgRenameEditTabs: bool
 settings[] = sfgRenameMainEditTab: bool
 settings[] = sfgListSeparator: text
-settings[] = sfgYUIBase: text
 settings[] = sfgUseFormEditPage: bool
 settings[] = sfg24HourTime: bool
 settings[] = sfgCacheFormDefinitions: bool
@@ -720,7 +685,7 @@ extensions-dependencies[] = SemanticMediaWiki
 url = http://www.mediawiki.org/wiki/Extension:Semantic_Forms
 
 SemanticMediaWiki
-file = includes/SMW_Settings.php
+file = SMW_Settings.php
 settings[] = smwgQComparators: text
 settings[] = smwgShowFactbox: text
 settings[] = smwgShowFactboxEdit: text
@@ -767,18 +732,20 @@ settings[] = smwgRSSEnabled: bool
 settings[] = smwgRSSWithPages: bool
 settings[] = smwgAllowRecursiveExport: bool
 settings[] = smwgExportBacklinks: bool
-settings[] = smwgOWLFullExport: bool
 settings[] = smwgNamespace: text
 settings[] = smwgMaxNonExpNumber: int
 settings[] = smwgEnableUpdateJobs: bool
 settings[] = smwgNamespacesWithSemanticLinks: array
 settings[] = smwgDefaultStore: text
+settings[] = smwgDeclarationProperties: array
 settings[] = smwgTranslate: bool
 settings[] = smwgAdminRefreshStore: bool
+settings[] = smwgAutocompleteInSpecialAsk: bool
 array[] = smwgResultFormats: simple
 array[] = smwgQuerySources: assoc
 array[] = smwgResultAliases: assoc
 array[] = smwgNamespacesWithSemanticLinks: ns-text
+array[] = smwgDeclarationProperties: simple
 empty[] = smwgNamespace: null
 schema = true
 url = http://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki
@@ -847,26 +814,28 @@ url = http://www.mediawiki.org/wiki/Extension:TorBlock
 
 Translate
 settings[] = wgEnablePageTranslation: bool, wgPageTranslationNamespace: int
-settings[] = wgTranslateExtensionDirectory: text, wgTranslateLanguageFallbacks: array
-settings[] = wgTranslateFuzzyBotName: text, wgTranslateCssLocation: text
-settings[] = wgTranslateCssLocation: text, wgTranslateDocumentationLanguageCode: text
+settings[] = wgTranslateStaticTags: array
+settings[] = wgTranslateExtensionDirectory: text
+settings[] = wgTranslateCacheDirectory: text
+settings[] = wgTranslateLanguageFallbacks: array
+settings[] = wgTranslateFuzzyBotName: text
+settings[] = wgTranslateDocumentationLanguageCode: text
 settings[] = wgTranslateBlacklist: array, wgTranslateAuthorBlacklist: array
 settings[] = wgTranslateMessageNamespaces: array, wgTranslateAC: array
 settings[] = wgTranslateGroupStructure: array, wgTranslateAddMWExtensionGroups: bool
 settings[] = wgTranslateEC: array, wgTranslateCC: array, wgTranslateTasks: array
 settings[] = wgTranslatePHPlot: text, wgTranslatePHPlotFont: text
-settings[] = wgTranslateYamlLibrary: text
-settings[] = wgTranslateGroupRoot: text, wgTranslateGroupFiles: array
-settings[] = wgGoogleApiKey: text, wgTranslateTM: array
-settings[] = wgTranslateApertium: text
+settings[] = wgTranslateYamlLibrary: text,wgTranslateGroupRoot: text
+settings[] = wgTranslateGroupFiles: array, wgTranslateTranslationServices: array
+array[] = wgTranslateStaticTags: assoc
 array[] = wgTranslateLanguageFallbacks: assoc, wgTranslateBlacklist: array
 array[] = wgTranslateMessageNamespaces: ns-simple, wgTranslateAuthorBlacklist: array
 array[] = wgTranslateAC: assoc, wgTranslateGroupStructure: array
 array[] = wgTranslateEC: simple, wgTranslateCC: assoc
 array[] = wgTranslateTasks: assoc, wgTranslateGroupFiles: simple
-array[] = wgTranslateTM: assoc
-empty[] = wgTranslateTM: false, wgGoogleApiKey: false
-empty[] = wgTranslateApertium: false
+array[] = wgTranslateTranslationServices: array
+empty[] = wgTranslateStaticTags: false
+empty[] = wgTranslateCacheDirectory: false
 url = http://www.mediawiki.org/wiki/Extension:Translate
 
 Uniwiki - Authors
@@ -949,11 +918,10 @@ empty[] = ubUploadBlacklist: array
 url = http://www.mediawiki.org/wiki/Extension:UploadBlacklist
 
 UsageStatistics
-settings[] = wgUserStatsGoogleCharts: int
+settings[] = wgUserStatsGoogleCharts: int, wgUserStatsGlobalRight: text
 url = http://www.mediawiki.org/wiki/Extension:Usage_Statistics
 
 UserContactLinks
-file = UserSignature.php
 url = http://www.mediawiki.org/wiki/Extension:User_Contact_Links
 
 UserImages
@@ -965,12 +933,9 @@ settings[] = wgUserMergeProtectedGroups: array
 array[] = wgUserMergeProtectedGroups: simple
 url = http://www.mediawiki.org/wiki/Extension:User_Merge_and_Delete
 
-UsernameBlacklist
-url = http://www.mediawiki.org/wiki/Extension:Username_Blacklist
-
 UserOptionStats
 
-UserRightsNotification
+UserRightsNotif
 url = http://www.mediawiki.org/wiki/Extension:User_Rights_Email_Notification
 
 Validator
@@ -999,7 +964,6 @@ url = http://www.mediawiki.org/wiki/Extension:WhatIsMyIP
 WhoIsWatching
 settings[] = whoiswatching_nametype: text
 settings[] = whoiswatching_allowaddingpeople: bool, whoiswatching_showifzero: bool
-file = SpecialWhoIsWatching.php
 url = http://www.mediawiki.org/wiki/Extension:WhoIsWatching
 
 WhosOnline
@@ -1054,6 +1018,8 @@ WikiTextLoggedInOut
 url = http://www.mediawiki.org/wiki/Extension:WikiTextLoggedInOut
 
 Woopra
+settings[] = wgWoopraSitekey: text
+empty[] = wgWoopraSitekey: false
 url = http://www.mediawiki.org/wiki/Extension:Woopra
 
 YouTubeAuthSub
@@ -1062,6 +1028,7 @@ settings[] = wgYTAS_DefaultCategory: bool, wgYTAS_EnableLogging: bool, wgYTAS_Us
 url = http://www.mediawiki.org/wiki/Extension:YouTubeAuthSub
 
 Widgets
+settings[] = wgWidgetsUseFlaggedRevs: bool
 url = http://www.mediawiki.org/wiki/Extension:Widgets
 
 WikiArticleFeeds

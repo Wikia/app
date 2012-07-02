@@ -21,7 +21,7 @@
 // | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA |
 // +----------------------------------------------------------------------------+
 
-require_once('File/Ogg/Bitstream.php');
+require_once dirname( __FILE__ ) . '/Bitstream.php';
 
 /**
  * Check number for the first header in a Vorbis stream.

@@ -1,9 +1,10 @@
 <?php
-/*
+/**
  * Created on 2009/3/25
  *
- * Author: Dch
+ * Author: ning
  */
+
 
 // get Parameter
 $wgRequestTime = microtime( true );
@@ -15,26 +16,14 @@ if ( isset( $_SERVER ) && array_key_exists( 'REQUEST_METHOD', $_SERVER ) ) {
 	exit();
 }
 
+
 if ( version_compare( PHP_VERSION, '5.0.0' ) < 0 ) {
 	print "Sorry! This version of MediaWiki requires PHP 5; you are running " .
 	PHP_VERSION . ".\n\n" .
 		"If you are sure you already have PHP 5 installed, it may be " .
 		"installed\n" .
 		"in a different path from PHP 4. Check with your system administrator.\n";
-	die( - 1 );
-}
-
-// copy from user class
-function getUserNMOption( $str ) {
-	$options = array();
-	$a = explode( "\n", $str );
-	foreach ( $a as $s ) {
-		$m = array();
-		if ( preg_match( "/^(.[^=]*)=(.*)$/", $s, $m ) ) {
-			$options[$m[1]] = $m[2];
-		}
-	}
-	return $options['enotifyme'];
+	die( -1 );
 }
 
 // include commandLine script which provides some basic
@@ -42,23 +31,27 @@ function getUserNMOption( $str ) {
 $mediaWikiLocation = dirname( __FILE__ ) . '/../../../..';
 require_once "$mediaWikiLocation/maintenance/commandLine.inc";
 
-$sStore = smwfGetSemanticStore();
+global $smwgNMIP;
+require_once $smwgNMIP . '/includes/SMW_NMStorage.php';
+$sStore = NMStorage::getDatabase();
 $msgs = $sStore->getUnmailedNMMessages();
 foreach ( $msgs as $msg ) {
 	// send notifications by mail
+	if ( $msg['user_id'] == null ) {
+		continue;
+	}
 	$user_info = $sStore->getUserInfo( $msg['user_id'] );
-	if ( ( $user_info->user_email != '' ) && getUserNMOption( $user_info->user_options ) ) {
+	$user = User::newFromRow( $user_info );
+	if ( ( $user_info->user_email != '' ) &&  $user->getOption( 'enotifyme' ) ) {
 		$name = ( ( $user_info->user_real_name == '' ) ? $user_info->user_name:$user_info->user_real_name );
-		$body = "Dear Mr./Mrs. $name,<br/>" . $msg['notify'] .
-				"<br/><br/>Sincerely yours,<br/>SMW NotifyMe Bot";
 
-		UserMailer::send( // userMailer(
+		UserMailer::send(
 			new MailAddress( $user_info->user_email, $name ),
 			new MailAddress( $wgEmergencyContact, 'Admin' ),
-			'New SMW Notification comes, from ' . $wgSitename,
-			$body,
+			wfMsg( 'smw_nm_hint_mail_title', $msg['title'], $wgSitename ),
+			wfMsg( 'smw_nm_hint_mail_body_html', $name, $msg['notify'] ),
 			new MailAddress( $wgEmergencyContact, 'Admin' ),
-			true
+			'text/html; charset=UTF-8'
 		);
 	}
 }

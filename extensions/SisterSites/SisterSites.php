@@ -12,6 +12,13 @@
  * - lots of things ;)
  */
 
+$wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
+	'name'           => 'SisterSites',
+	'author'         => '',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:SisterSites',
+);
+
 // This should be in a footer. meh
 $wgHooks['BeforePageDisplay'][] = 'wfSisterDisplay';
 

@@ -471,7 +471,7 @@ Timeline._Impl.prototype._initialize = function() {
     containerDiv.className =
         containerDiv.className.split(" ").concat("timeline-container").join(" ");
 
-	/*
+	/**
 	 * Set css-class on container div that will define orientation
 	 */
 	var orientation = (this.isHorizontal()) ? 'horizontal' : 'vertical'

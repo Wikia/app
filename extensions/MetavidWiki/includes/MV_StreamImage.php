@@ -1,15 +1,15 @@
 <?php
-/*
+/**
  * MV_OggImage.php Created on Nov 29, 2007
- * 
+ *
  * All Metavid Wiki code is Released Under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
  * @url http://metavid.org
- * 
- * set up all the default settings (can be overwritten) 
+ *
+ * set up all the default settings (can be overwritten)
  */
 
 // two modes -stand alone- and -mediaWiki-
@@ -19,14 +19,14 @@ if ( !defined( 'MEDIAWIKI' ) )die( 'not an entry point' );
 // serves up images and does necessary transforms if the file does not exist
 // @@TODO in the future it would be ideal if it was integrated similar to oggHandler
 // http://www.mediawiki.org/wiki/Extension:OggHandler
-// (ie streams images use normal mediaWiki file handlers and 
-// are placed in the image directory) 
+// (ie streams images use normal mediaWiki file handlers and
+// are placed in the image directory)
 // * this is not easy to enforce while *Stream* is not tied to a given uploaded file*
-// all static functions: 
+// all static functions:
 class MV_StreamImage {
-	/*
+	/**
 	 * getStreamImageURL
-	 * 
+	 *
 	 * @parm:
 	 * 	$stream_name: the unique stream name
 	 *  $req_time: the requested time in seconds or ntp format: hh:mm:ss
@@ -36,15 +36,15 @@ class MV_StreamImage {
 	 */
 	function getStreamImageURL( $stream_id, $req_time = null, $req_size = null, $directLink = false ) {
 		global $wgScript,  $mvWebImgLoc, $mvLocalImgLoc, $mvExternalImages;
-		// check global external image prefrence: 
+		// check global external image prefrence:
 		$req_size_out = ( $req_size != null ) ? '&size=' . $req_size :'';
 		if ( $mvExternalImages ) {
 			global $mvExternalImgServerPath;
-			// try to get the stream_name for external requests: 
+			// try to get the stream_name for external requests:
 			$sn = MV_Stream::getStreamNameFromId( $stream_id );
 			return $mvExternalImgServerPath . '?action=ajax&rs=mv_frame_server&stream_name=' . $sn . '&t=' . $req_time . $req_size_out;
 		}
-		
+
 		// by default return a non-direct link so that javascript can modify the url to get time offsets
 		if ( !$directLink ) {
 			return $wgScript . '?action=ajax&rs=mv_frame_server&stream_id=' .
@@ -68,7 +68,7 @@ class MV_StreamImage {
 			return htmlspecialchars( $mvWebImgLoc ) . '/' . MV_StreamImage::getRelativeImagePath( $stream_id ) .
 				'/' . htmlspecialchars( $req_time ) . htmlspecialchars( $s ) . '.' . htmlspecialchars( $ext );
 		} else {
-			// throw 'error finding image';	
+			// throw 'error finding image';
 			return MV_StreamImage::getMissingImageURL( $req_size );
 		}
 	}
@@ -78,7 +78,7 @@ class MV_StreamImage {
 		list( $im_width, $im_height, $ext ) = MV_StreamImage::getSizeType( $req_size );
 		$s = '';
 		if ( $req_size )$s = '_' . $im_width . 'x' . $im_height;
-		
+
 		if ( MV_StreamImage::getMissingImagePath( $req_size, $s, $ext ) ) {
 			return htmlspecialchars( $mvWebImgLoc ) . '/images_not_available' . $s . '.' . $ext;
 		}
@@ -88,12 +88,12 @@ class MV_StreamImage {
 		list( $im_width, $im_height, $ext ) = MV_StreamImage::getSizeType( $req_size );
 		$s = '';
 		if ( $req_size )$s = '_' . $im_width . 'x' . $im_height;
-		
+
 		if ( is_file( $mvLocalImgLoc . '/images_not_available' . $s . '.' . $ext ) ) {
 			return htmlspecialchars( $mvLocalImgLoc ) .
 				'/images_not_available' . htmlspecialchars( $s ) . '.' . htmlspecialchars( $ext );
 		} else {
-			// try and generate it;			
+			// try and generate it;
 			if ( !MV_StreamImage::doTransformImage( $mvLocalImgLoc . '/images_not_available.jpg',
 					$mvLocalImgLoc . '/images_not_available' . $s . '.' . $ext,
 					$im_width, $im_height, $ext ) ) {
@@ -104,23 +104,23 @@ class MV_StreamImage {
 		}
 	}
 	function getStreamImageRaw( $stream_id, $req_time = null, $req_size = null ) {
-		//set out a long expire: 
-		//keep in the cache for a 90 days: 
+		//set out a long expire:
+		//keep in the cache for a 90 days:
 		header('Expires: ' . gmdate('D, d M Y H:i:s', time()+90*24*60*60) . ' GMT');
-		
+
 		// print "get raw img\n";
 		$req_time = MV_StreamImage::procRequestTime( $stream_id, $req_time );
 		list( $im_width, $im_height, $ext ) = MV_StreamImage::getSizeType( $req_size );
-		
+
 		if ( !$req_time ) {
 			$img_path = $s = '_' . $im_width . 'x' . $im_height;
 		}
 		$img_path = MV_StreamImage::getLocalImagePath( $stream_id, $req_time, $req_size );
 		list( $im_width, $im_height, $ext ) = MV_StreamImage::getSizeType( $req_size );
 		if ( $ext == 'jpg' )header( "Content-type: image/jpeg" );
-		if ( $ext == 'png' )header( "Content-type: image/png" );		
+		if ( $ext == 'png' )header( "Content-type: image/png" );
 		// print "img path: $img_path";
-		// @@todo a redirect to real image (will serv from cache that way) 
+		// @@todo a redirect to real image (will serv from cache that way)
 		if ( is_file( $img_path ) ) {
 			// print "file present: $img_path";
 			@readfile( $img_path );
@@ -146,7 +146,7 @@ class MV_StreamImage {
 		// if($req_time<$mvImageGranularityRate)$req_time = $mvImageGranularityRate;
 		$vars = " `id`, `time`, `time`-'$req_time' as distance ";
 		$conds = " `stream_id`=" . mysql_real_escape_string( $stream_id ) . "
-				AND (`time`-'$req_time')>=0 
+				AND (`time`-'$req_time')>=0
 				AND (`time`-'$req_time')<= " . mysql_real_escape_string( $mvImageGranularityRate );
 		$opt['ORDER BY'] = ' `distance` ASC ';
 		$opt['LIMIT'] = 1;
@@ -160,7 +160,7 @@ class MV_StreamImage {
 		if ( $dbr->numRows( $res ) == 0 ) {
 			// could do a request to generate image for video here:
 			if ( MV_StreamImage::genLocalStreamImage( $stream_id, $req_time, '320x240' ) ) {
-				// we just generated the current request time return it as valid: 
+				// we just generated the current request time return it as valid:
 				return $req_time;
 			} else {
 				return false;
@@ -186,7 +186,7 @@ class MV_StreamImage {
 			} else {
 				// Based on settings we may do an ffmpeg call here:
 				// @@FFMPEG call goes here:
-				// make the call to generate the image for that time: 
+				// make the call to generate the image for that time:
 				return MV_StreamImage::genLocalStreamImage( $stream_id, $req_time, $req_size );
 			}
 		} else {
@@ -198,17 +198,17 @@ class MV_StreamImage {
 			} else {
 
 				if ( !is_file( $base_img ) ) {
-					// print "missing base img $base_img \n";			
+					// print "missing base img $base_img \n";
 					$img_file = MV_StreamImage::genLocalStreamImage( $stream_id, $req_time, $req_size );
 					if ( is_file( $base_img ) ) {
-						// got file successful: 
+						// got file successful:
 						// continue:
 					} else {
 						return false;
 					}
 				}
 				// would be great to use mediaWIki's bitmap transform but not super easy to integrate...
-				// @@todo eventually we should integrate with oggHanlder... 
+				// @@todo eventually we should integrate with oggHanlder...
 				// $thumb = Bitmap::doTransform($image)
 				if ( !MV_StreamImage::doTransformImage( $base_img, $img_file, $im_width, $im_height, $ext ) ) {
 					// print 'failed image transform\n';
@@ -223,7 +223,7 @@ class MV_StreamImage {
 		$gd_img_base = imagecreatefromjpeg( $base_img );
 		$gd_img_dest = imagecreatetruecolor( $im_width, $im_height );
 		imagecopyresampled( $gd_img_dest, $gd_img_base, 0, 0, 0, 0, $im_width, $im_height, $base_width, $base_height );
-		
+
 		if ( $ext == 'jpg' ) {
 			// write out the image:
 			if ( !imagejpeg( $gd_img_dest, $img_file, 90 ) ) {
@@ -242,7 +242,7 @@ class MV_StreamImage {
 		}
 		imagedestroy( $gd_img_base );
 		imagedestroy( $gd_img_dest );
-		// success:	
+		// success:
 		return true;
 	}
 	function getLocalImageDir( $stream_id ) {
@@ -281,11 +281,11 @@ class MV_StreamImage {
 						$width = 480; $height = 360;
 					break;
 					case 'full': case '720x540':
-						// this is somewhat legacy as our capture card is now set to 512x384 but in a HQ setup could be useful. 
+						// this is somewhat legacy as our capture card is now set to 512x384 but in a HQ setup could be useful.
 						$width = 720; $height = 540;
 					break;
 					default:
-						// defaults to 320x240 if size does not match above: 
+						// defaults to 320x240 if size does not match above:
 						$width = 320; $height = 240;
 					break;
 				}
@@ -320,7 +320,7 @@ class MV_StreamImage {
 		  MV_StreamImage::getLocalStreamPath( $stream_id );
 
 		if ( is_file( $streampath ) ) {
-			// check if the ffmpeg extension is installed: 			
+			// check if the ffmpeg extension is installed:
 			$extension = "ffmpeg";
 			$extension_soname = $extension . "." . PHP_SHLIB_SUFFIX;
 			$extension_fullname = PHP_EXTENSION_DIR . "/" . $extension_soname;
@@ -354,7 +354,7 @@ class MV_StreamImage {
 	            $insAry = array ();
 			    $insAry[stream_id] = $stream_id;
 			    $insAry[time] = $req_time;
-	
+
               	$db = & wfGetDB( DB_WRITE );
                 if ( $db->insert( $mvStreamImageTable, $insAry ) ) {
                 	return $img_file;
@@ -369,7 +369,7 @@ class MV_StreamImage {
 
 	function getLocalStreamPath ( $stream_id, $quality = '' ) {
 		global $mvStreamTable, $mvLocalVideoLoc;
-		// grab streamFile		
+		// grab streamFile
 		$stream =& mvGetMVStream( array( 'id' => $stream_id ) );
 		$stream->db_load_stream();
 		$streamFile = new MV_StreamFile( $stream );

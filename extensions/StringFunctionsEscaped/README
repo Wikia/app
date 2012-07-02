@@ -1,27 +1,27 @@
 {{Extension|templatemode=
 |name          = StringFunctionsEscaped
-|status        = beta
+|status        = stable
 |type1         = parser function
 |type2         =
-|hook1         = LanguageGetMagic
+|hook1         = 
 |hook2         =
-|username      = [[user:jpond | Jack D. Pond ]]
-|author        = 
+|username      = jpond
+|author        = Jack D. Pond
 |description   = Defines a superset of string parser functions that allow character escaping in the 'search for' and 'replace with' arguments.
 |image         =
 |imagesize     =
-|version       = 1.0.0
-|update        = 2009-09-11
+|version       = 1.0.1
+|update        = 2010-06-07
 |mediawiki     = Tested with 1.14,1.15,1.16A, Should work with all
 |php           =
 |license       = GNU Version 2
-|download      = 
-|readme        =
+|download      = {{WikimediaDownload|StringFunctionsEscaped}}
+|readme        = [http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/StringFunctionsEscaped/README README]
 |changelog     =
 |parameters    = $wgPFEnableStringFunctions
 |tags          = 
 |rights        = 
-|example       =
+|example       = [[#Examples | examples]]
 |compatibility =
 }}
 
@@ -29,13 +29,13 @@
 
 ==What can this extension do?==
 
-Wikitext allows the imbedding of certain control characters (newline, tab, etc.).  These parser functions allow them to be identified and used with standard c-type escape character sequence (/n,/t, etc.).
+Wikitext allows the imbedding of certain control characters (newline, tab, etc.).  These parser functions allows the developer to find and manipulate standard c-type escape character sequence (<nowiki>\n,\t</nowiki>, etc.) within wikitext.
 
-These can be used (among other things) to make infoblox-type templates much more WYSIWIG (see Examples) for novice/non-technical users.
+These parser functions can be used to make infoblox-type templates and/or forms much more WYSIWIG (see [[#Examples | examples]]) for novice/non-technical users.
 
 ==Usage==
 
-These functions are all invoked exactly as their string parser functions would be (except with the '_e' appended to distinguish).
+All parser functions are invoked exactly as their string parser functions would be (except with the '_e' appended).  They can be used exactly as their counterparts are, even if there are no embedded special characters.
 
 ===  pos_e: (string position)===
 
@@ -48,6 +48,7 @@ See: http://php.net/manual/function.strpos.php
 
 === rpos_e: (string position, reverse) ===
 <nowiki>{{#rpos_e:value|key}}</nowiki>
+
 Returns the last position of key inside the given value, or -1 if the key is not found. When using this to search for the last delimiter, add +1 to the  result to retreive position after the last delimiter. This also works when the delimiter is not found, because "-1 + 1" is zero, which is the beginning of the given value.
 
 See: http://php.net/manual/function.strrpos.php
@@ -78,9 +79,15 @@ Note: A negative value can be used to count pieces from the end, instead of coun
 
 See: http://php.net/manual/function.explode.php
 
+=== stripnewlines: (remove multiple newlines) ===
+
+<nowiki>{{#stripnewlines:value}}</nowiki> 
+
+Any time there is more than one newline in "value", they are changed to a single newline.
+
 ==Download instructions==
 <!-- revise these instructions if code is available via a download site -->
-Please cut and paste the code found [[#Code|below]] and place it in <code>$IP/extensions/ExtensionName/ExtensionName.php</code>.  ''Note: [[Manual:$IP|$IP]] stands for the root directory of your MediaWiki installation, the same directory that holds [[Manual:LocalSettings.php|LocalSettings.php]]''.
+Download the extension from [http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/StringFunctionsEscaped/StringFunctionsEscaped.php SVN] and place it in <code>$IP/extensions/StringFunctionsEscaped/StringFunctionsEscaped.php</code>.  ''Note: [[Manual:$IP|$IP]] stands for the root directory of your MediaWiki installation, the same directory that holds [[Manual:LocalSettings.php|LocalSettings.php]]''.
 
 ==Installation==
 String functions were integrated into [[Extension:ParserFunctions]] extension as of [[Special:Code/MediaWiki/50997|r50997]]. This revision of [[Extension:ParserFunctions]] is designed for MediaWiki 1.16, but updating to the trunk version may work on previous versions.  If you are using a prior version of [[Extension:ParserFunctions]], you will also have to include [[Extension:StringFunctions]].
@@ -178,6 +185,28 @@ Returns:
 Line 2
 
 </pre>
+
+=== stripnewlines ===
+<pre>
+{{#stripnewlines:Line 1
+
+Line 2
+
+
+Line 3}}
+
+Returns:
+
+Line 1
+Line 2 
+Line 3
+
+Printed version:
+
+Line 1 Line 2 Line 3
+
+</pre>
+
 ==See also==
 
 * [[Extension:ParserFunctions]]

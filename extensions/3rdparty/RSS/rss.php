@@ -118,17 +118,14 @@ function renderRss( $input ) {
 
 	#Check for errors.
 	if ( empty($rss) ) {
-		wfLoadExtensionMessages( 'rss' );
 		return wfMsg('rss-empty', $url);
 	}
 
 	if ( $rss->ERROR ) {
-		wfLoadExtensionMessages( 'rss' );
 		return wfMsg( 'rss-error', $url, $rss->ERROR);
 	}
 
 	if ( !is_array( $rss->items ) ) {
-		wfLoadExtensionMessages( 'rss' );
 		return wfMsg('rss-empty', $url);
 	}
 

@@ -21,7 +21,8 @@ var WikiaPhotoGalleryView = {
 		if (typeof WikiaPhotoGallery == 'undefined') {
 			$.getResources([
 				wgExtensionsPath + '/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
-				$.loadJQueryUI
+				$.loadJQueryUI,
+				$.loadJQueryAIM
 			],
 			callback);
 		} else {
@@ -64,7 +65,6 @@ var WikiaPhotoGalleryView = {
 		var galleries = this.getArticle().find('.wikia-gallery').not('.template').not('.inited');
 		if (galleries.exists()) {
 			this.log('found ' + galleries.length + ' galleries');
-			$().log(galleries, "List of galleris");
 		}
 
 		var addButtonSelector = (window.skin == 'oasis') ? '.wikia-photogallery-add' : '.wikia-gallery-add';

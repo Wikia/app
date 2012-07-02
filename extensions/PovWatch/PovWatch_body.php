@@ -6,7 +6,7 @@ class SpecialPovWatch extends SpecialPage {
 	public $mComment, $mToken, $mOut;
 
 	function __construct() {
-		SpecialPage::SpecialPage( 'PovWatch', 'povwatch_user' );
+		parent::__construct( 'PovWatch', 'povwatch_user' );
 	}
 
 	# -----------------------------------------------------------------------
@@ -15,8 +15,6 @@ class SpecialPovWatch extends SpecialPage {
 
 	function execute( $subpage ) {
 		global $wgRequest, $wgUser, $wgOut;
-
-		wfLoadExtensionMessages( 'PovWatch' );
 
 		$this->setHeaders();
 

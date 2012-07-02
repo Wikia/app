@@ -12,7 +12,7 @@ if( !defined( 'MEDIAWIKI' ) ) die();
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'PHP highlight',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:PhpHighlight',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:PhpHighlight',
 	'author' => 'Alexandre Emsenhuber',
 	'description' => 'Adds a <code>&lt;php&gt;</code> tag to use the PHP syntax highlighter',
 );

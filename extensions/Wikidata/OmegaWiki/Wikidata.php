@@ -20,7 +20,7 @@ class DefaultWikidataApplication {
 	protected $viewInformation;
 
 	// Show a panel to select expressions from available data-sets
-	protected $showDataSetPanel = true;
+	protected $showDataSetPanel = false;
 
 	public function __construct() {
 		global
@@ -141,17 +141,21 @@ class DefaultWikidataApplication {
 	 * @return true if permission to edit, false if not
 	**/
 	public function edit() {
-		global
-			$wgOut, $wgRequest, $wgUser;
-			
+		global $wgOut, $wgRequest, $wgUser;
+
 		$wgOut->enableClientCache( false );
 
+		if ( $wgUser->isBlockedFrom( $this->getTitle(), false ) ) {
+			$wgOut->blockedPage() ;
+			return false;                                                 
+		}
+
 		$dc = wdGetDataSetContext();
- 		if ( !$wgUser->isAllowed( 'editwikidata-' . $dc ) ) {
- 			$wgOut->addWikiText( wfMsgSc( "noedit", $dc->fetchName() ) );
+		if ( !$wgUser->isAllowed( 'editwikidata-' . $dc ) ) {
+			$wgOut->addWikiText( wfMsgSc( "noedit", $dc->fetchName() ) );
 			$wgOut->setPageTitle( wfMsgSc( "noedit_title" ) );
- 			return false;
- 		}
+			return false;
+		}
 
 		if ( $wgRequest->getText( 'save' ) != '' )
 			$this->saveWithinTransaction();
@@ -247,7 +251,7 @@ class DefaultWikidataApplication {
 		$wgOut->addHTML(
 			'<div class="option-panel">' .
 				'<table cellpadding="0" cellspacing="0"><tr>' .
-					'<th>' . wfMsg( "summary" ) . ': </th>' .
+					'<th>' . wfMsg( "summary" ) . '</th>' .
 					'<td class="option-field">' . getTextBox( "summary" ) . '</td>' .
 				'</tr></table>' .
 				getSubmitButton( "save", wfMsgSc( "save" ) ) .
@@ -397,9 +401,9 @@ class DataSet {
 
 	// Fetch!
 	function fetchName() {
-		global $wgUser, $wdTermDBDataSet;
+		global $wgLang, $wdTermDBDataSet;
 		if ( $wdTermDBDataSet ) {
-			$userLanguage = $wgUser->getOption( 'language' );
+			$userLanguage = $wgLang->getCode() ;
 			$spelling = getSpellingForLanguage( $this->dmId, $userLanguage, 'en', $wdTermDBDataSet );
 			if ( $spelling ) return $spelling;
 		}

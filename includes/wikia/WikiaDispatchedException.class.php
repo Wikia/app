@@ -81,9 +81,12 @@ class WikiaDispatchedException extends WikiaException {
 			$url = $wgRequest->getFullRequestURL();
 		}
 
-		trigger_error("[REPORT: {$this->getMessage()}] WikiaDispatcher reports an {$info}  (URL: {$url}) [REPORT: End]", E_USER_ERROR);
-
-		parent::report();
+		// Display normal mediawiki eror page for mediawiki exceptions
+		if ( $this->_original instanceof MWException ) {
+			$this->_original->report();
+		}
+		else {
+			trigger_error("[REPORT: {$this->getMessage()}] WikiaDispatcher reports an {$info}  (URL: {$url}) [REPORT: End]", E_USER_ERROR);
+		}
 	}
-
 }

@@ -21,7 +21,7 @@
 // | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA |
 // +----------------------------------------------------------------------------+
 
-require_once('File/Ogg/Bitstream.php');
+require_once dirname(__FILE__) . '/Bitstream.php';
 
 define( 'OGG_THEORA_IDENTIFICATION_HEADER', 0x80 );
 define( 'OGG_THEORA_COMMENTS_HEADER', 0x81 );

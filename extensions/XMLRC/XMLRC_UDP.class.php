@@ -1,40 +1,76 @@
 <?php
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "XMLRC extension";
-	exit(1);
+	exit( 1 );
 }
 
+/**
+ * Implementation if XMLRC_Transport that sends messages via UDP.
+ */
 class XMLRC_UDP extends XMLRC_Transport {
-  function __construct( $config ) {
-    $this->conn = null;
 
-    $this->address = $config['address'];
-    $this->port = $config['port'];
-  }
+	/**
+	 * Creates a new instance of XMLRC_UDP. $config['address'] and $config['port'] determine
+	 * where to send the UDP packets to.
+	 *
+	 * @param $config Array: the configuration array.
+	 */
+	function __construct( $config ) {
+		$this->socket = null;
 
-  public function connect() {
-    if ( $this->conn ) return;
+		$this->address = isset( $config['address'] ) ? $config['address'] : '127.0.0.1';
+		$this->port = isset( $config['port'] ) ? $config['port'] : 4455;
+	}
 
-    $this->conn = socket_create( AF_INET, SOCK_DGRAM, SOL_UDP );
-    if ( !$this->handle ) wfDebug("XMLRC_UDP: failed to create UDP socket\n");
-    else wfDebug("XMLRC_UDP: created UDP socket\n");
-  }
+	/**
+	 * Opens a UDP socket for sending data.
+	 */
+	public function connect() {
+		if ( $this->socket ) {
+			return;
+		}
 
-  public function disconnect() {
-    if ( !$this->conn ) return;
+		$this->socket = socket_create( AF_INET, SOCK_DGRAM, SOL_UDP );
+		if ( !$this->socket ) {
+			wfDebugLog( 'XMLRC', "failed to create UDP socket\n" );
+		} else {
+			wfDebugLog( 'XMLRC', "created UDP socket\n" );
+		}
+	}
 
-    socket_close( $this->conn );
-    $this->conn = null;
-    wfDebug("XMLRC_UDP: closed UDP socket\n");
-  }
+	/**
+	 * Closes the underlying UDP socket.
+	 */
+	public function disconnect() {
+		if ( !$this->socket ) {
+			return;
+		}
 
-  public function send( $xml ) {
-    $do_disconnect = !$this->conn;
-    $this->connect();
+		socket_close( $this->socket );
+		$this->socket = null;
+		wfDebugLog( 'XMLRC', "closed UDP socket\n" );
+	}
 
-    $ok = socket_sendto( $this->conn, $xml, strlen($xml), 0, $this->address, $this->port );
-    if ( !$ok ) wfDebug("XMLRC_UDP: failed to send UDP packet to {$this->address}:{$this->port}\n");
+	/**
+	 * Sends $xml via the underlying socket, to the address specified in the
+	 * constructor by $config['address'] and $config['port'].
+	 * The socket is automatically opened if necessary.
+	 */
+	public function send( $xml ) {
+		$do_disconnect = !$this->socket;
+		$this->connect();
 
-    if ( $do_disconnect ) $this->disconnect();
-  }
+		$ok = socket_sendto(
+			$this->socket, $xml, strlen( $xml ), 0, $this->address, $this->port
+		);
+		if ( $ok ) {
+			wfDebugLog( 'XMLRC', "sent UDP packet to {$this->address}:{$this->port}\n" );
+		} else {
+			wfDebugLog( 'XMLRC', "failed to send UDP packet to {$this->address}:{$this->port}\n" );
+		}
+
+		if ( $do_disconnect ) {
+			$this->disconnect();
+		}
+	}
 }

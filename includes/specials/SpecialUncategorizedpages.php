@@ -1,18 +1,37 @@
 <?php
 /**
+ * Implements Special:Uncategorizedpages
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @file
  * @ingroup SpecialPage
  */
 
 /**
  * A special page looking for page without any category.
+ *
  * @ingroup SpecialPage
  */
+// @todo FIXME: Make $requestedNamespace selectable, unify all subclasses into one
 class UncategorizedPagesPage extends PageQueryPage {
-	var $requestedNamespace = NS_MAIN;
+	protected $requestedNamespace = false;
 
-	function getName() {
-		return "Uncategorizedpages";
+	function __construct( $name = 'Uncategorizedpages' ) {
+		parent::__construct( $name );
 	}
 
 	function sortDescending() {
@@ -24,41 +43,27 @@ class UncategorizedPagesPage extends PageQueryPage {
 	}
 	function isSyndicated() { return false; }
 
-	function getSQL() {
-		global $wgContentNamespaces;
-
-		$dbr = wfGetDB( DB_SLAVE );
-		list( $page, $categorylinks ) = $dbr->tableNamesN( 'page', 'categorylinks' );
-		$name = $dbr->addQuotes( $this->getName() );
-
-		// If looking for main, override with content namespaces.
-		// Yes, this is ugly. Should get better treatment in MW 1.15
-		if ( $this->requestedNamespace == NS_MAIN ) {
-			$this->requestedNamespace = implode( ', ', $wgContentNamespaces );
-		}
-
-		return
-			"
-			SELECT
-				$name as type,
-				page_namespace AS namespace,
-				page_title AS title,
-				page_title AS value
-			FROM $page
-			LEFT JOIN $categorylinks ON page_id=cl_from
-			WHERE cl_from IS NULL AND page_namespace IN ( " . $this->requestedNamespace . " )
-			AND page_is_redirect=0
-			";
+	function getQueryInfo() {
+		return array (
+			'tables' => array ( 'page', 'categorylinks' ),
+			'fields' => array ( 'page_namespace AS namespace',
+					'page_title AS title',
+					'page_title AS value' ),
+			// default for page_namespace is all content namespaces (if requestedNamespace is false)
+			// otherwise, page_namespace is requestedNamespace
+			'conds' => array ( 'cl_from IS NULL',
+					'page_namespace' => ( $this->requestedNamespace!==false ? $this->requestedNamespace : MWNamespace::getContentNamespaces() ),
+					'page_is_redirect' => 0 ),
+			'join_conds' => array ( 'categorylinks' => array (
+					'LEFT JOIN', 'cl_from = page_id' ) )
+		);
 	}
-}
 
-/**
- * constructor
- */
-function wfSpecialUncategorizedpages() {
-	list( $limit, $offset ) = wfCheckLimits();
-
-	$lpp = new UncategorizedPagesPage();
-
-	return $lpp->doQuery( $offset, $limit );
+	function getOrderFields() {
+		// For some crazy reason ordering by a constant
+		// causes a filesort
+		if( $this->requestedNamespace === false && count( MWNamespace::getContentNamespaces() ) > 1 )
+			return array( 'page_namespace', 'page_title' );
+		return array( 'page_title' );
+	}
 }

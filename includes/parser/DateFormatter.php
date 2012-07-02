@@ -1,4 +1,9 @@
 <?php
+/**
+ * Date formatter
+ *
+ * @file
+ */
 
 /**
  * Date formatter, recognises dates in plain text and formats them accoding to user preferences.
@@ -29,7 +34,7 @@ class DateFormatter
 	/**
 	 * @todo document
 	 */
-	function DateFormatter() {
+	function __construct() {
 		global $wgContLang;
 
 		$this->monthNames = $this->getMonthRegex();
@@ -116,6 +121,7 @@ class DateFormatter
 	/**
 	 * @param $preference String: User preference
 	 * @param $text String: Text to reformat
+	 * @param $options Array: can contain 'linked' and/or 'match-whole'
 	 */
 	function reformat( $preference, $text, $options = array('linked') ) {
 	
@@ -176,8 +182,8 @@ class DateFormatter
 		$bits = array();
 		$key = $this->keys[$this->mSource];
 		for ( $p=0; $p < strlen($key); $p++ ) {
-			if ( $key{$p} != ' ' ) {
-				$bits[$key{$p}] = $matches[$p+1];
+			if ( $key[$p] != ' ' ) {
+				$bits[$key[$p]] = $matches[$p+1];
 			}
 		}
 		
@@ -218,7 +224,7 @@ class DateFormatter
 		}
 
 		for ( $p=0; $p < strlen( $format ); $p++ ) {
-			$char = $format{$p};
+			$char = $format[$p];
 			switch ( $char ) {
 				case 'd': # ISO day of month
 					$text .= $bits['d'];
@@ -265,7 +271,7 @@ class DateFormatter
 			$isoBits[] = $bits['y'];
 		$isoBits[] = $bits['m'];
 		$isoBits[] = $bits['d'];
-		$isoDate = implode( '-', $isoBits );;
+		$isoDate = implode( '-', $isoBits );
 		
 		// Output is not strictly HTML (it's wikitext), but <span> is whitelisted.
 		$text = Html::rawElement( 'span',
@@ -321,7 +327,7 @@ class DateFormatter
 	 * @todo document
 	 */
 	function makeNormalYear( $iso ) {
-		if ( $iso{0} == '-' ) {
+		if ( $iso[0] == '-' ) {
 			$text = (intval( substr( $iso, 1 ) ) + 1) . ' BC';
 		} else {
 			$text = intval( $iso );

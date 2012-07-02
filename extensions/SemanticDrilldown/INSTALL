@@ -1,4 +1,4 @@
-[[Semantic Drilldown 0.8.1]]
+[[Semantic Drilldown 1.1]]
 
 Contents:
 * Disclaimer
@@ -12,7 +12,7 @@ For a proper legal disclaimer, see the file "COPYING".
 
 == Requirements ==
 
-The extension requires an install of Semantic MediaWiki 1.4.3 or
+The extension requires an install of Semantic MediaWiki 1.5 or
 greater. For more details, see Semantic MediaWiki's own
 installation requirements.
 
@@ -32,5 +32,4 @@ for more details.
 
 == Contact ==
 
-If you have any issues or questions, please send them to
-yaron57@gmail.com.
+If you have any issues or questions, please send them to yaron57@gmail.com.

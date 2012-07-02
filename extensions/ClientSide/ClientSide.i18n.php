@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for ClientSide extension.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -33,7 +34,21 @@ $messages['ar'] = array(
 	'clientside-desc' => 'يوفر دوال لتوليد كود في صيغ تابعة للعميل مثل HTML، CSS وجافاسكريبت',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'clientside-desc' => 'Ufre funciones pa xenerar códigu en formatos del llau del cliente como HTML, CSS y JavaScript',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'clientside-desc' => 'HTML, CSS һәм JavaScript һымаҡ клиент форматтарында код булдырыу функцияляры менән тәьмин итә.',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -116,6 +131,13 @@ $messages['eu'] = array(
 	'clientside-desc' => 'HTML, CSS eta JavaScript bezalako bezeroen neurriko formatuetan kodea sortzeko funtzioak hornitzen ditu.',
 );
 
+/** Persian (فارسی)
+ * @author Wayiran
+ */
+$messages['fa'] = array(
+	'clientside-desc' => 'برای تولید کد در فرمت‌های سمت کارخواهی (سمت کلاینتی) چون اچ‌تی‌ام‌ال، سی‌اس‌اس و جاوااسکریپت، توابعی را ارائه می‌کند',
+);
+
 /** Finnish (Suomi)
  * @author Cimon Avaro
  * @author Crt
@@ -166,6 +188,13 @@ $messages['hil'] = array(
 	'clientside-desc' => 'Nagahatag panksiyon para sa pagbuhat koda sa mga kliyente-side nga na na-format parehas sang HTML, CSS kag JavaScript',
 );
 
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'clientside-desc' => 'Omogućuje funkcije za generiranje kôda za klijentsku stranu (web preglednike) poput HTML-a, CSS-a i JavaScripta',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -195,11 +224,39 @@ $messages['id'] = array(
 	'clientside-desc' => 'Menyediakan fungsi untuk membuat kode seperti HTML, CSS dan JavaScript',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'clientside-desc' => 'Ne nyé ihe ȯmé í ké ókịkẹ ọgúgú màkà ihe nsónùsòrò nke ébé-onyé-jị nwèrè dí kà HTML, CSS na JavaScript',
+);
+
+/** Iloko (Ilokano)
+ * @author Lam-ang
+ */
+$messages['ilo'] = array(
+	'clientside-desc' => 'Agited ti opisio para iti panagaramid ti kodigo iti bangir ti kliente a porma a kas iti HTML, CSS ken JavaScript',
+);
+
+/** Italian (Italiano)
+ * @author HalphaZ
+ */
+$messages['it'] = array(
+	'clientside-desc' => 'Fornisce funzioni per la generazione di codice in formati lato client come HTML, CSS e JavaScript',
+);
+
 /** Japanese (日本語)
  * @author 青子守歌
  */
 $messages['ja'] = array(
 	'clientside-desc' => 'HTMLやCSS、JavaScriptのようなクライアント側フォーマットのコードを生成する機能を提供します',
+);
+
+/** Georgian (ქართული)
+ * @author გიორგიმელა
+ */
+$messages['ka'] = array(
+	'clientside-desc' => 'ქმნის საკლიენტო ფორმატებში (HTML, CSS და JavaScript) კოდის შექმნას',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -209,11 +266,25 @@ $messages['km'] = array(
 	'clientside-desc' => 'ផ្គត់ផ្គង​មុខងារ​ក្នុងការ​បង្កើត​កូដ​ក្នុងទម្រង់​ client-side ដូចជា HTML, CSS និង JavaScript',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'clientside-desc' => 'HTML, CSS, 자바스크립트와 같은 클라이언트측 코드 생성을 위한 기능을 제공',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
 	'clientside-desc' => 'Jitt uns Fungxjohne för Kood udder Daate en Fomaate for der Aanwender ze maache, zem Beijshpell als <i lang="en">HTML</i>, <i lang="en">CSS</i>, un JavaSkrepp.',
+);
+
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'clientside-desc' => "Bijtj functies veur 't generere van code in client-sideformate wie HTML, CSS en JavaScript",
 );
 
 /** Malagasy (Malagasy)
@@ -237,6 +308,27 @@ $messages['ml'] = array(
 	'clientside-desc' => 'എച്ച്.റ്റി.എം.എൽ., സി.എസ്.എസ്., ജാവാസ്ക്രിപ്റ്റ് തുടങ്ങിയ ക്ലയന്റ്-സൈഡ് വിദ്യകൾ സ്വയം സൃഷ്ടിക്കുന്ന സൗകര്യങ്ങൾ നൽകുന്നു',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'clientside-desc' => 'Menyediakan fungsi untuk menjana kod dalam format sebelah klien seperti HTML, CSS dan JavaScript',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Simny
+ */
+$messages['nb'] = array(
+	'clientside-desc' => 'Ordner med funkjoner for å opprette koder i klientsideformat, for eksempel HTML, CSS og JavaScript',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'clientside-desc' => 'Biejt funksies veur t anmaken van kode in kliëntziedformaoten zo as HTML, CSS en JavaScript',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -249,13 +341,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'clientside-desc' => 'Gjev funksjonar for å oppretta kodar i klientside format, til dømes HTML, CSS og JavaScript',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Simny
- */
-$messages['no'] = array(
-	'clientside-desc' => 'Ordner med funkjoner for å opprette koder i klientsideformat, for eksempel HTML, CSS og JavaScript',
 );
 
 /** Occitan (Occitan)
@@ -294,6 +379,13 @@ $messages['pt-br'] = array(
 	'clientside-desc' => 'Provê funções para gerar código em formatos "client-side", tais como HTML, CSS e JavaScript',
 );
 
+/** Romanian (Română)
+ * @author Firilacroco
+ */
+$messages['ro'] = array(
+	'clientside-desc' => 'Oferă funcții pentru generarea codului în formate ca HTML, CSS și JavaScript',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -308,7 +400,14 @@ $messages['ru'] = array(
 	'clientside-desc' => 'Предоставляет функции генерации кода в клиентских форматах, таких, как HTML, CSS и JavaScript',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'clientside-desc' => 'Додавать функції про ґенерованя коду в кліентскых форматах, як суть  HTML, CSS і JavaScript',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -322,14 +421,21 @@ $messages['sk'] = array(
 	'clientside-desc' => 'Poskytuje funkcie na tvorbu kódu v klientských formátoch ako HTML, CSS a JavaScript',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'clientside-desc' => 'Zagotavlja funkcije za ustvarjanje kode v oblikah odjemalske strani, kot so HTML, CSS in JavaScript',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Обрадовић Горан
  */
 $messages['sr-ec'] = array(
 	'clientside-desc' => 'Пружа функције за генерисање кода у форматима који раде на страни клијента као што су HTML, CSS и JavaScript',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -355,6 +461,13 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'clientside-desc' => 'క్లయింట్ వైపు వాడే హెచ్టిఎంఎల్, జావాస్క్రిప్ట్, సిఎసెస్ వంటి సాప్టువేరుకి కోడుని తయ్యరు చేసే ఫంక్షనులను చూపిస్తుంది',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'clientside-desc' => 'Nagbibigay ng mga tungkulin para sa paglikha ng kodigo sa mga pormatong nasa gawi ng kliyente katulad ng HTML, CSS at JavaScript',
 );
 
 /** Turkish (Türkçe)

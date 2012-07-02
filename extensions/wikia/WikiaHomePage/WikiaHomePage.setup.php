@@ -22,13 +22,26 @@ $wgExtensionCredits['other'][] = array(
 
 //classes
 $app->registerClass('WikiaHomePageController', $dir.'WikiaHomePageController.class.php');
+$app->registerClass('WikiaHomePageSpecialController', $dir.'WikiaHomePageSpecialController.class.php');
+$app->registerClass('WikiaHomePageHelper', $dir.'WikiaHomePageHelper.class.php');
+$app->registerClass('CityVisualization', $dir.'CityVisualization.class.php');
 
-// i18n mapping
-$wgExtensionMessagesFiles['WikiaHomePage'] = $dir . 'WikiaHomePage.i18n.php';
+//special page
+$app->registerSpecialPage('WikiaHomePage', 'WikiaHomePageSpecialController');
 
+//i18n mapping
+$app->registerExtensionMessageFile('WikiaHomePage', $dir.'WikiaHomePage.i18n.php');
+F::build('JSMessages')->registerPackage('WikiaHomePage', array('wikia-home-page-*'));
 
 $app->registerHook('GetHTMLAfterBody', 'WikiaHomePageController', 'onGetHTMLAfterBody');
 $app->registerHook('OutputPageBeforeHTML', 'WikiaHomePageController', 'onOutputPageBeforeHTML');
 $app->registerHook('WikiaMobileAssetsPackages', 'WikiaHomePageController', 'onWikiaMobileAssetsPackages');
 $app->registerHook('ArticleCommentCheck', 'WikiaHomePageController', 'onArticleCommentCheck');
+$app->registerHook('AfterGlobalHeader', 'WikiaHomePageController', 'onAfterGlobalHeader');
 
+//add wikia staff tool rights to staff users
+$wgGroupPermissions['*']['wikiahomepagestafftool'] = false;
+$wgGroupPermissions['staff']['wikiahomepagestafftool'] = true;
+$wgGroupPermissions['vstf']['wikiahomepagestafftool'] = false;
+$wgGroupPermissions['helper']['wikiahomepagestafftool'] = false;
+$wgGroupPermissions['sysop']['wikiahomepagestafftool'] = false;

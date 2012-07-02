@@ -40,7 +40,7 @@ $messages['bar'] = array(
 	'wikiawidget' => 'Wikia Widgets',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -120,7 +120,7 @@ $messages['fr'] = array(
 	'wikiawidget' => 'Widgets Wikia',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -132,7 +132,7 @@ $messages['he'] = array(
 	'wikiawidget' => 'וידג׳טים של Wikia',
 );
 
-/** Upper Sorbian (hornjoserbsce)
+/** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(

@@ -91,16 +91,9 @@ global $wgSpecialPages;
 
 $wgSpecialPages['CreateTopList'] = 'SpecialCreateTopList';
 $wgSpecialPages['EditTopList'] = 'SpecialEditTopList';
-//$wgSpecialPages['TopLists'] = 'SpecialTopLists';
 
 $wgSpecialPageGroups['CreateTopList'] = 'wikia';
 $wgSpecialPageGroups['EditTopList'] = 'wikia';
-//$wgSpecialPageGroups['TopLists'] = 'wikia';
-
-//aliases
-/*global $wgExtensionAliasesFiles;
-
-$wgExtensionAliasesFiles[ 'TopLists' ] = "{$dir}/TopLists.alias.php";*/
 
 //classes
 global $wgAutoloadClasses;
@@ -114,7 +107,6 @@ $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}/../WikiaPhotoGallery/W
 
 $wgAutoloadClasses[ 'SpecialCreateTopList' ] = "{$dir}/specials/SpecialCreateTopList.class.php";
 $wgAutoloadClasses[ 'SpecialEditTopList' ] = "{$dir}/specials/SpecialEditTopList.class.php";
-//$wgAutoloadClasses[ 'SpecialTopLists' ] = "{$dir}/specials/SpecialTopLists.class.php";
 
 //ajax exports
 global $wgAjaxExportList;
@@ -142,7 +134,6 @@ $wgHooks[ 'TitleMoveComplete' ][] = 'TopListHelper::onTitleMoveComplete';
 $wgHooks[ 'UserGetRights' ][] = 'TopListHelper::onUserGetRights';
 $wgHooks[ 'getUserPermissionsErrors' ][] = 'TopListHelper::onGetUserPermissionsErrors';
 $wgHooks[ 'FBConnect::BeforePushEvent' ][] = 'TopListHelper::onBeforePushEvent';
-$wgHooks[ 'CategoryPage::AddPage' ][] = 'TopListHelper::onAddPage';
 $wgHooks[ 'ArticleService::getTextSnippet::beforeStripping' ][] = 'TopListHelper::onArticleServiceBeforeStripping';
 
 //parser functions, tags and attributes

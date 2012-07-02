@@ -214,8 +214,8 @@ class WikiaApp {
 	 */
 	public function initSkin( $flag ) {
 		if ( $flag ) {
-			// initialize skin via stub user object created in WebStart->Setup.php
-			$flag = ( is_object( $this->wg->User ) && is_object( $this->wg->User->getSkin() ) );
+			// initialize skin via OutputPage Context
+			$flag = ( is_object( $this->wg->Out ) && is_object( $this->wg->Out->getContext()->getSkin() ) );
 		}
 		
 		$this->skinInitialized = $flag;
@@ -284,9 +284,7 @@ class WikiaApp {
 			} else {
 				//MW 1.19 upgrade fix, the global reference to the skin is not in the
 				//User object anymore, use RequestContext::getSkin instead
-				$skin = ( version_compare( $this->wg->Version, '1.19', '>=' ) ) ?
-					RequestContext::getMain()->getSkin() :
-					$this->wg->User->getSkin();
+				$skin = RequestContext::getMain()->getSkin();
 			}
 
 			$res = in_array( $skin->getSkinName(), $skinNames );

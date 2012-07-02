@@ -6,7 +6,7 @@ function import_cu_log_line( $line ) {
 	$rxTarget = '(?P<target>.*?)';
 	$rxWiki = '(?P<wiki>[^)]*?)';
 	$rxReason = '(?: \("(?P<reason>.*)"\))?';
-	
+
 	// Strip nulls due to NFS write collisions
 	$line = str_replace( "\0", "", $line );
 
@@ -16,7 +16,7 @@ function import_cu_log_line( $line ) {
 		'ipusers-xff' => "!^<li>$rxTimestamp, $rxUser got users for XFF $rxTarget on $rxWiki$rxReason</li>!",
 		'ipusers'     => "!^<li>$rxTimestamp, $rxUser got users for" ." $rxTarget on $rxWiki$rxReason</li>!",
 		'userips'     => "!^<li>$rxTimestamp, $rxUser got IPs for".   " $rxTarget on $rxWiki$rxReason</li>!" );
-	
+
 	foreach ( $regexes as $type => $regex ) {
 		$m = false;
 		if ( preg_match( $regex, $line, $m ) ) {
@@ -36,14 +36,13 @@ function import_cu_log_line( $line ) {
 
 function import_cu_log( $db, $log ) {
 	global $wgDBname;
-	
+
 	$file = fopen( $log, 'r' );
 
 	$matched = 0;
 	$unmatched = 0;
 
 	while ( false !== ( $line = fgets( $file ) ) ) {
-		$found = false;
 		$data = import_cu_log_line( $line );
 		if( $data ) {
 			if ( $data['wiki'] != wfWikiID() && $data['wiki'] != $wgDBname ) {
@@ -53,7 +52,7 @@ function import_cu_log( $db, $log ) {
 
 			// Local wiki lookups...
 			$user = User::newFromName( $data['user'] );
-			
+
 			list( $start, $end ) = IP::parseRange( $data['target'] );
 			if ( $start === false ) {
 				$targetUser = User::newFromName( $data['target'] );
@@ -66,7 +65,7 @@ function import_cu_log( $db, $log ) {
 				}
 				$targetID = 0;
 			}
-			
+
 			if( $db ) {
 				$fields = array(
 					'cul_id' => $db->nextSequenceValue( 'cu_log_cul_id_seq' ),
@@ -83,7 +82,7 @@ function import_cu_log( $db, $log ) {
 
 				$db->insert( 'cu_log', $fields, __METHOD__ );
 			}
-			
+
 			$matched++;
 		}
 		$unmatched ++;

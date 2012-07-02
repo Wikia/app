@@ -209,7 +209,7 @@ function wfDismissWikiaNewtalks() {
 		$result = true;
 	}
 
-	$json = Wikia::json_encode(array('result' => $result));
+	$json = json_encode(array('result' => $result));
 
 	$response = new AjaxResponse($json);
 	$response->setContentType('application/json; charset=utf-8');
@@ -226,5 +226,4 @@ if( !empty( $wgExternalSharedDB ) ) {
 	$wgHooks['UserClearNewTalkNotification'][] = 'wfClearWikiaNewtalk';
 
 	$wgHooks['UserRename::Global'][] = "WikiaNewtalkUserRenameGlobal";
-
 }

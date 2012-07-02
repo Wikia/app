@@ -28,7 +28,6 @@ class CreateInCategory extends SpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct( 'CreateInCategory'/*class*/ );
-//		wfLoadExtensionMessages( 'CreateInCategory' ); // Load internationalization messages
 	}
 
 	/**

@@ -401,10 +401,6 @@
  *			when making changes here you must update the version field in DynamicPageList.php and DynamicPageListMigration.php !
  */
 
-// changed back to global functions due to trouble with older MW installations, g.s.
-function ExtDynamicPageList__languageGetMagic( &$magicWords, $langCode ) {
-	return ExtDynamicPageList::languageGetMagic( $magicWords, $langCode );
-}
 function ExtDynamicPageList__endReset( &$parser, $text ) {
 	return ExtDynamicPageList::endReset( $parser, $text );
 }
@@ -420,6 +416,77 @@ class ExtDynamicPageList {
 													// to invalidate MediaWiki´s ParserCache if suitable
 
 	public static $modulesLoaded = false;			// php require_once control
+
+	/**
+	 * Debug stuff
+	 */
+
+	// FATAL
+
+	const FATAL_WRONGNS						= 1;	// $0: 'namespace' or 'notnamespace'
+													// $1: wrong parameter given by user
+													// $3: list of possible titles of namespaces (except pseudo-namespaces: Media, Special)
+
+	const FATAL_WRONGLINKSTO				= 2;	// $0: linksto' (left as $0 just in case the parameter is renamed in the future)
+													// $1: the wrong parameter given by user
+
+	const FATAL_TOOMANYCATS					= 3;	// $0: max number of categories that can be included
+
+	const FATAL_TOOFEWCATS					= 4;	// $0: min number of categories that have to be included
+
+	const FATAL_NOSELECTION					= 5;
+
+	const FATAL_CATDATEBUTNOINCLUDEDCATS	= 6;
+
+	const FATAL_CATDATEBUTMORETHAN1CAT		= 7;
+
+	const FATAL_MORETHAN1TYPEOFDATE			= 8;
+
+	const FATAL_WRONGORDERMETHOD			= 9;	// $0: param=val that is possible only with $1 as last 'ordermethod' parameter
+													// $1: last 'ordermethod' parameter required for $0
+
+	const FATAL_DOMINANTSECTIONRANGE		= 10;	// $0: the number of arguments in includepage
+
+	const FATAL_NOCLVIEW					= 11;	// $0: prefix_dpl_clview where 'prefix' is the prefix of your mediawiki table names
+													// $1: SQL query to create the prefix_dpl_clview on your mediawiki DB
+
+	const FATAL_OPENREFERENCES				= 12;
+
+	// ERROR
+
+	// WARN
+
+	const WARN_UNKNOWNPARAM					= 13;	// $0: unknown parameter given by user
+													// $1: list of DPL available parameters separated by ', '
+
+	const WARN_WRONGPARAM					= 14;	// $3: list of valid param values separated by ' | '
+
+	const WARN_WRONGPARAM_INT				= 15;	// $0: param name
+													// $1: wrong param value given by user
+													// $2: default param value used instead by program
+
+	const WARN_NORESULTS					= 16;
+
+	const WARN_CATOUTPUTBUTWRONGPARAMS		= 17;
+
+	const WARN_HEADINGBUTSIMPLEORDERMETHOD	= 18;	// $0: 'headingmode' value given by user
+													// $1: value used instead by program (which means no heading)
+
+	const WARN_DEBUGPARAMNOTFIRST			= 19;	// $0: 'log' value
+
+	const WARN_TRANSCLUSIONLOOP				= 20;	// $0: title of page that creates an infinite transclusion loop
+
+
+	// INFO
+
+	// DEBUG
+
+	const DEBUG_QUERY						= 21;	// $0: SQL query executed to generate the dynamic page list
+
+	// TRACE
+
+													// Output formatting
+													// $1: number of articles
 
 	/**
 	 * Extension options
@@ -519,7 +586,6 @@ class ExtDynamicPageList {
 
 		'dplcache'			   => array( 'default' => '' ),
 		'dplcacheperiod'	   => array( 'default' => '86400', 'pattern' => '/^\d+$/' ), // 86400 = # seconds for one day
-		'dplcachestorage'     => array( 'default' => 'files', 'memcache' ),
 
 		/**
 		 * number of columns for output, default is 1
@@ -1103,28 +1169,25 @@ class ExtDynamicPageList {
 		self::$functionalRichness = $level;
 	}
 
-	public static function setupDPL( $wgParser ) {
-//		global $wgParser;
-
+	public static function setupDPL( $parser ) {
 		// DPL offers the same functionality as Intersection; so we register the <DynamicPageList> tag
 		// in case LabeledSection Extension is not installed we need to remove section markers
-		$wgParser->setHook( 'section',			array( __CLASS__, 'removeSectionMarkers'	 ) );
-		$wgParser->setHook( 'DPL',				array( __CLASS__, 'dplTag'				   ) );
-		$wgParser->setHook( 'DynamicPageList',	array( __CLASS__, 'intersectionTag'		  ) );
+		$parser->setHook( 'section',			array( __CLASS__, 'removeSectionMarkers'	 ) );
+		$parser->setHook( 'DPL',				array( __CLASS__, 'dplTag'				   ) );
+		$parser->setHook( 'DynamicPageList',	array( __CLASS__, 'intersectionTag'		  ) );
 
-		$wgParser->setFunctionHook( 'dpl',		array( __CLASS__, 'dplParserFunction'		) );
-		$wgParser->setFunctionHook( 'dplnum',	 array( __CLASS__, 'dplNumParserFunction'	 ) );
-		$wgParser->setFunctionHook( 'dplchapter', array( __CLASS__, 'dplChapterParserFunction' ) );
-		$wgParser->setFunctionHook( 'dplmatrix',  array( __CLASS__, 'dplMatrixParserFunction'  ) );
+		$parser->setFunctionHook( 'dpl',		array( __CLASS__, 'dplParserFunction'		) );
+		$parser->setFunctionHook( 'dplnum',	 array( __CLASS__, 'dplNumParserFunction'	 ) );
+		$parser->setFunctionHook( 'dplchapter', array( __CLASS__, 'dplChapterParserFunction' ) );
+		$parser->setFunctionHook( 'dplmatrix',  array( __CLASS__, 'dplMatrixParserFunction'  ) );
 
 		self::commonSetup();
 		return true;
 	}
 
-	public static function setupMigration( $wgParser ) {
+	public static function setupMigration( $parser ) {
 		// DPL offers the same functionality as Intersection under the tag name <Intersection>
-//		global $wgParser;
-		$wgParser->setHook( 'Intersection', array( __CLASS__, 'intersectionTag' ) );
+		$parser->setHook( 'Intersection', array( __CLASS__, 'intersectionTag' ) );
 
 		self::commonSetup();
 		return true;
@@ -1154,13 +1217,6 @@ class ExtDynamicPageList {
 	}
 
 	private static function loadMessages() {
-		require_once( 'DynamicPageList.i18n.php' );
-		global $wgMessageCache;
-
-		foreach ( DPL_i18n::getMessages() as $sLang => $aMsgs ) {
-			$wgMessageCache->addMessages( $aMsgs, $sLang );
-		}
-
 		/**
 		 *  Define codes and map debug message to min debug level above which message can be displayed
 		 */
@@ -1194,19 +1250,6 @@ class ExtDynamicPageList {
 		require_once( 'DPLLogger.php' );
 
 		self::$modulesLoaded = true;
-	}
-
-	public static function languageGetMagic( &$magicWords, $langCode ) {
-		# Add the magic word
-		# The first array element is case sensitivity, in this case it is not case sensitive
-		# All remaining elements are synonyms for our parser function
-		$magicWords['dpl']			 = array( 0, 'dpl' );
-		$magicWords['dplnum']		  = array( 0, 'dplnum' );
-		$magicWords['dplchapter']	  = array( 0, 'dplchapter' );
-		$magicWords['dplmatrix']	   = array( 0, 'dplmatrix' );
-		$magicWords['DynamicPageList'] = array( 0, 'DynamicPageList' );
-		# unless we return true, other parser functions extensions won't get loaded.
-		return true;
 	}
 
 	// ------------------------------------------------------------------------------------- ENTRY parser TAG intersection
@@ -1289,10 +1332,7 @@ class ExtDynamicPageList {
 		// return $dump1.$text.$dump2;
 
 		$dplresult = DPLMain::dynamicPageList( $input, $params, $parser, $reset, 'func' );
-		global $wgVersion;
-		if ( version_compare( $wgVersion, '1.12.0' ) < 0 || $parser instanceof Parser_OldPP ) {
-			return $dplresult;
-		}
+
 		// old parser does further recursive processing by default
 		return array( // normal parser needs to be coaxed to do further recursive processing
 			$parser->getPreprocessor()->preprocessToObj( $dplresult, Parser::PTD_FOR_INCLUSION ),

@@ -1,7 +1,7 @@
 <?php
 
-if( php_sapi_name() != 'cli' ) {
-	die("noooo\n");
+if ( php_sapi_name() != 'cli' ) {
+	die( "noooo\n" );
 }
 
 $i18n = array(
@@ -59,8 +59,8 @@ class Messages {
 		$xml = htmlspecialchars( $this->messages[$msg] );
 		
 		$replacements = array();
-		foreach( $args as $index => $arg ) {
-			$replacements['$' . ($index+1)] = $arg;
+		foreach ( $args as $index => $arg ) {
+			$replacements['$' . ( $index + 1 )] = $arg;
 		}
 		
 		return strtr( $xml, $replacements );
@@ -68,7 +68,7 @@ class Messages {
 }
 
 function flipSvg( $dir, $svg ) {
-	if( $dir == 'rtl' ) {
+	if ( $dir == 'rtl' ) {
 		$svg = preg_replace_callback(
 			'/(class="flipx"\s+x=")(\d+)(")/S',
 			'flipSvgCoord',
@@ -82,7 +82,7 @@ function flipSvg( $dir, $svg ) {
 }
 
 function flipSvgCoord( $matches ) {
-	return $matches[1] . (622 - $matches[2]) . $matches[3];
+	return $matches[1] . ( 622 - $matches[2] ) . $matches[3];
 }
 
 function flipSvgScale( $matches ) {
@@ -95,13 +95,13 @@ function progressBar( $count, $max ) {
 	
 	$people = ceil( ( $count / $max ) * $maxPeople );
 	$out = '';
-	for( $i = 0; $i < $maxPeople; $i++ ) {
+	for ( $i = 0; $i < $maxPeople; $i++ ) {
 		$x = 24 + $i * $width;
-		if( $i+1 < $people ) {
+		if ( $i + 1 < $people ) {
 			$dude = 'little-dude';
-		} elseif( $i+1 == $people ) {
+		} elseif ( $i + 1 == $people ) {
 			$dude = 'big-dude';
-		} elseif( $i+1 > $people ) {
+		} elseif ( $i + 1 > $people ) {
 			$dude = 'waiting-dude';
 		}
 		$out .= <<<OUT
@@ -116,7 +116,7 @@ OUT;
 
 function expandSvg( $template, $messages ) {
 	$dir = $messages->expand( 'dir' );
-	$encNumber = $messages->expand( 'number' ); //'15,203';
+	$encNumber = $messages->expand( 'number' ); // '15,203';
 	$encYou = $messages->expand( 'you' );
 	return flipSvg( $dir,
 		strtr( $template,
@@ -136,7 +136,7 @@ function expandSvg( $template, $messages ) {
 $path = "/Applications/Inkscape.app/Contents/Resources/bin";
 
 $template = file_get_contents( 'mockup-template.svg' );
-foreach( $i18n as $lang => $messages ) {
+foreach ( $i18n as $lang => $messages ) {
 	echo "$lang\n";
 	file_put_contents( "out/notice-$lang.svg",
 	 	expandSvg( $template, new Messages( $messages ) ) );

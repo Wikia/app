@@ -1,5 +1,5 @@
-<?
-/*
+<?php
+/**
  * Created on Jun 28, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -158,7 +158,7 @@
 			$mvd = MV_Index::getMVDbyId( $this->mvd_id );
 			$stream_name = MV_Stream::getStreamNameFromId( $mvd->stream_id );
 
-			$lTitle = Title::makeTitle( NS_SPECIAL, 'Userlogin' );
+			$lTitle = SpecialPage::getTitleFor( 'Userlogin' );
 			$loginLink = $lTitle->getFullURL('returnto=' . MWNamespace::getCanonicalName( MV_NS_STREAM ) . ':' . $stream_name );
 
 			$wgOut->addHTML( wfMsg( 'mv_user_cant_edit', $loginLink, $cancel ) );
@@ -169,9 +169,9 @@
 		} else {
 			if ( $this->save ) {
 				$this->formtype = 'save';
-			} else if ( $this->preview ) {
+			} elseif ( $this->preview ) {
 				$this->formtype = 'preview';
-			} else if ( $this->diff ) {
+			} elseif ( $this->diff ) {
 				$this->formtype = 'diff';
 			} else { # First time through
 				$this->firsttime = true;
@@ -188,8 +188,8 @@
 
 		$this->isConflict = false;
 		// css / js subpages of user pages get a special treatment
-		$this->isCssJsSubpage      = $this->mTitle->isCssJsSubpage();
-		$this->isValidCssJsSubpage = $this->mTitle->isValidCssJsSubpage();
+		$this->isCssJsSubpage       = $this->mTitle->isCssJsSubpage();
+		$this->isWrongCaseCssJsPage = $this->isWrongCaseCssJsPage();
 
 		/* Notice that we can't use isDeleted, because it returns true if article is ever deleted
 		 * no matter it's current state
@@ -237,7 +237,7 @@
 			}
 		}
 
-		// $dbw->immediateCommit();
+		// $dbw->commit();
 
 		# First time through: get contents, set time for conflict
 		# checking, etc.
@@ -312,7 +312,7 @@
 			if ( $title instanceof Title && $title->exists() && $title->userCanRead() ) {
 				global $wgOut;
 				$revision = Revision::newFromTitle( $title );
-				$wgOut->addSecondaryWikiText( $revision->getText() );
+				$wgOut->addWikiText( $revision->getText() );
 				return true;
 			} else {
 				return false;
@@ -485,7 +485,7 @@
 		} else {
 			if ( $this->isCssJsSubpage && $this->formtype != 'preview' ) {
 				# Check the skin exists
-				if ( $this->isValidCssJsSubpage ) {
+				if ( !$this->isWrongCaseCssJsPage ) {
 					$wgOut->addWikiText( wfMsg( 'usercssjsyoucanpreview' ) );
 				} else {
 					$wgOut->addWikiText( wfMsg( 'userinvalidcssjstitle', $this->mTitle->getSkinFromCssJsSubpage() ) );
@@ -574,7 +574,7 @@
 
 
 		if ( $this->mvd_id == 'seq' ) {
-			$cancel = $sk->makeKnownLink( $this->mTitle->getPrefixedText(),
+			$cancel = $sk->makeKnownLinkObj( $this->mTitle,
 				wfMsgExt( 'cancel', array( 'parseinline' ) ) );
 			$edithelpurl = Skin::makeInternalOrExternalUrl( wfMsgForContent( 'mv_edithelpsequence' ) );
 		} else {
@@ -679,7 +679,7 @@
 		$buttonshtml = implode( $buttons, "\n" );
 
 		$safemodehtml = $this->checkUnicodeCompliantBrowser()
-			? '' : Xml::hidden( 'safemode', '1' );
+			? '' : Html::Hidden( 'safemode', '1' );
 
 		$wgOut->addHTML( <<<END
 {$toolbar}
@@ -773,7 +773,7 @@ END
 		# For a bit more sophisticated detection of blank summaries, hash the
 		# automatic one and pass that in a hidden field.
 		$autosumm = $this->autoSumm ? $this->autoSumm : md5( $this->summary );
-		$wgOut->addHTML( Xml::hidden( 'wpAutoSummary', $autosumm ) );
+		$wgOut->addHTML( Html::Hidden( 'wpAutoSummary', $autosumm ) );
 
 		if ( $this->isConflict ) {
 			$wgOut->addWikiText( '==' . wfMsg( "yourdiff" ) . '==' );
@@ -912,4 +912,3 @@ END
 		// $wgOut->addHTML( '</div>' );
 	}
  }
-?>

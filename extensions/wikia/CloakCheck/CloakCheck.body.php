@@ -16,7 +16,6 @@ class CloakCheck extends SpecialPage {
 	
 	function  __construct() {
 		parent::__construct( "CloakCheck"  /*class*/, '' /*restriction*/);
-		wfLoadExtensionMessages("CloakCheck");
 	}
 	
 	public function execute( $subpage ) {

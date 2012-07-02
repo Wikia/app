@@ -32,12 +32,15 @@ class CrunchyrollRSS {
 
 	public function __construct( $url ) {
 
-		$itemCount = 0;
-		$rssContent = Http::get( $url );
-		$this->feed = new SimplePie();
-		$this->feed->set_raw_data($rssContent);
-		$this->feed->set_cache_duration(0);
-		$this->feed->init();
+		$this->feed = $this->getFromCache( $url );
+		if(empty($this->feed)) {
+			$rssContent = Http::get( $url );
+			$this->feed = new SimplePie();
+			$this->feed->set_raw_data($rssContent);
+			$this->feed->set_cache_duration(0);
+			$this->feed->init();
+			$this->saveToCache( $url, $this->feed );
+		}
 		$this->blacklistedSeries = WF::build( 'App' )->getGlobal( 'wgCrunchyrollBlacklistedSeries' );
 	}
 
@@ -113,6 +116,28 @@ class CrunchyrollRSS {
 		}
 
 		return $aResult;
+	}
+
+	// cache functions
+
+	protected function getKey( $url ) {
+		return wfSharedMemcKey(
+			'CrunchyrollVideoRSSFeedParsed',
+			$url
+		);
+	}
+
+	protected function saveToCache( $url, $content ) {
+		global $wgMemc;
+
+		$wgMemc->set( $this->getKey( $url ), $content, 60*60*6 );
+		return true;
+	}
+
+	protected function getFromCache ( $url ){
+
+		global $wgMemc;
+		return $wgMemc->get( $this->getKey( $url ) );
 	}
 }
 

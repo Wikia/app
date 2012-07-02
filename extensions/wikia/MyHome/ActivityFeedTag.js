@@ -1,82 +1,5 @@
 var ActivityFeedTag = {};
 
-// setup onclick events for image/video thumbnails
-ActivityFeedTag.setupThumbnails = function(node) {
-	$(node).find('.activityfeed-image-thumbnail').click(ActivityFeedTag.loadFullSizeImage);
-	$(node).find('.activityfeed-video-thumbnail').click(ActivityFeedTag.loadVideoPlayer);
-}
-
-ActivityFeedTag.ajax = function(method, params, callback) {
-	$.getJSON(wgScript + '?action=ajax&rs=MyHomeAjax&method=' + method, params, callback);
-}
-
-
-ActivityFeedTag.loadVideoPlayer = function(ev) {
-	ev.preventDefault();
-
-	var url = $(this).attr('ref');
-	var desc = $(this).attr('title');
-
-	// catch doubleclicks on video thumbnails
-	if (ActivityFeedTag.videoPlayerLock) {
-		return;
-	}
-
-	ActivityFeedTag.videoPlayerLock = true;
-
-	ActivityFeedTag.ajax('getVideoPlayer', {'title': url}, function(res) {
-		if (res.html) {
-			$.showModal(res.title, res.html, {
-				'id': 'myhome-video-player-popup',
-				'width': res.width
-			});
-
-			// remove lock
-			delete ActivityFeedTag.videoPlayerLock;
-		}
-	});
-}
-
-
-ActivityFeedTag.loadFullSizeImage = function(ev) {
-	ev.preventDefault();
-
-	var url = $(this).attr('ref');
-	var desc = $(this).attr('title');
-	var timestamp = $(this).attr('ref');
-
-	timestamp = parseInt(timestamp) ? timestamp : 0;
-
-	// catch doubleclicks on video thumbnails
-	if (ActivityFeedTag.imagePreviewLock) {
-		return;
-	}
-
-	ActivityFeedTag.imagePreviewLock = true;
-
-	ActivityFeedTag.ajax('getImagePreview', {
-		'title': url,
-		'timestamp': timestamp,
-		'maxwidth': $(window).width(),
-		'maxheight': $(window).height()
-	}, function(res) {
-		// replace thumbnail with video preview
-		if (res.html) {
-			// open modal
-			desc = desc.replace(/_/g, ' ');
-			var html = '<div id="myhome-image-preview" title="' + desc  +'">' + res.html + '</div>';
-			$("#positioned_elements").append(html);
-			$('#myhome-image-preview').makeModal({
-				'id': 'myhome-image-preview-popup',
-				'width': res.width
-			});
-
-			// remove lock
-			delete ActivityFeedTag.imagePreviewLock;
-		}
-	});
-}
-
 ActivityFeedTag.loadFreshData = function(id, params, timestamp) {
 	params = params.replace(/&amp;/g, '&');
 	var uselang = $.getUrlVar('uselang');
@@ -86,7 +9,6 @@ ActivityFeedTag.loadFreshData = function(id, params, timestamp) {
 			var tmpDiv = document.createElement('div');
 			tmpDiv.innerHTML = json.data;
 			$('#' + id).html($(tmpDiv).find('ul').html());
-			ActivityFeedTag.setupThumbnails($('#' + id));
 		}
 	});
 }
@@ -109,7 +31,3 @@ ActivityFeedTag.initActivityTag = function(obj) {
 	ActivityFeedTag.loadFreshData(obj.tagid, obj.jsParams, obj.timestamp);
 	ActivityFeedTag.addTracking(obj.tagid);
 }
-
-wgAfterContentAndJS.push(function() {
-	ActivityFeedTag.setupThumbnails($('.activityfeed'));
-});

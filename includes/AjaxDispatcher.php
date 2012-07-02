@@ -7,12 +7,6 @@
  * Handle ajax requests and send them to the proper handler.
  */
 
-if ( !( defined( 'MEDIAWIKI' ) && $wgUseAjax ) ) {
-	die( 1 );
-}
-
-require_once( 'AjaxFunctions.php' );
-
 /**
  * Object-Oriented Ajax functions.
  * @ingroup Ajax
@@ -42,31 +36,27 @@ class AjaxDispatcher {
 		}
 
 		switch( $this->mode ) {
-
-		case 'get':
-			$this->func_name = isset( $_GET["rs"] ) ? $_GET["rs"] : '';
-			if ( ! empty( $_GET["rsargs"] ) ) {
-				$this->args = $_GET["rsargs"];
-			} else {
-				$this->args = array();
-			}
-		break;
-
-		case 'post':
-			$this->func_name = isset( $_POST["rs"] ) ? $_POST["rs"] : '';
-			if ( ! empty( $_POST["rsargs"] ) ) {
-				$this->args = $_POST["rsargs"];
-			} else {
-				$this->args = array();
-			}
-		break;
-
-		default:
-			wfProfileOut( __METHOD__ );
-			return;
-			# Or we could throw an exception:
-			# throw new MWException( __METHOD__ . ' called without any data (mode empty).' );
-
+			case 'get':
+				$this->func_name = isset( $_GET["rs"] ) ? $_GET["rs"] : '';
+				if ( ! empty( $_GET["rsargs"] ) ) {
+					$this->args = $_GET["rsargs"];
+				} else {
+					$this->args = array();
+				}
+				break;
+			case 'post':
+				$this->func_name = isset( $_POST["rs"] ) ? $_POST["rs"] : '';
+				if ( ! empty( $_POST["rsargs"] ) ) {
+					$this->args = $_POST["rsargs"];
+				} else {
+					$this->args = array();
+				}
+				break;
+			default:
+				wfProfileOut( __METHOD__ );
+				return;
+				# Or we could throw an exception:
+				# throw new MWException( __METHOD__ . ' called without any data (mode empty).' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -78,7 +68,7 @@ class AjaxDispatcher {
 	 * request.
 	 */
 	function performAction() {
-		global $wgAjaxExportList, $wgOut;
+		global $wgAjaxExportList, $wgOut, $wgUser;
 
 		if ( empty( $this->mode ) ) {
 			return;
@@ -89,8 +79,18 @@ class AjaxDispatcher {
 		if ( ! in_array( $this->func_name, $wgAjaxExportList ) ) {
 			wfDebug( __METHOD__ . ' Bad Request for unknown function ' . $this->func_name . "\n" );
 
-			wfHttpError( 400, 'Bad Request',
-				"unknown function " . (string) $this->func_name );
+			wfHttpError(
+				400,
+				'Bad Request',
+				"unknown function " . (string) $this->func_name
+			);
+		} elseif ( !in_array( 'read', User::getGroupPermissions( array( '*' ) ), true ) 
+			&& !$wgUser->isAllowed( 'read' ) )
+		{
+			wfHttpError(
+				403,
+				'Forbidden',
+				'You must log in to view pages.' );
 		} else {
 			wfDebug( __METHOD__ . ' dispatching ' . $this->func_name . "\n" );
 
@@ -99,6 +99,7 @@ class AjaxDispatcher {
 			} else {
 				$func = $this->func_name;
 			}
+
 			try {
 				$result = call_user_func_array( $func, $this->args );
 
@@ -113,8 +114,7 @@ class AjaxDispatcher {
 					wfHttpError( 501, 'Not Implemented',
 					/* Wikia changes end */
 						"{$this->func_name} returned no data" );
-				}
-				else {
+				} else {
 					if ( is_string( $result ) ) {
 						$result = new AjaxResponse( $result );
 					}
@@ -124,7 +124,6 @@ class AjaxDispatcher {
 
 					wfDebug( __METHOD__ . ' dispatch complete for ' . $this->func_name . "\n" );
 				}
-
 			} catch ( Exception $e ) {
 				wfDebug( __METHOD__ . ' ERROR while dispatching '
 						. $this->func_name . "(" . var_export( $this->args, true ) . "): "
@@ -139,7 +138,7 @@ class AjaxDispatcher {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		$wgOut = null;
+		wfProfileOut( __METHOD__ );
 	}
 }

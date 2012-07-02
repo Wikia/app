@@ -3,6 +3,7 @@
 
 #include <string>
 #include <algorithm>
+#include "wikidiff2.h"
 
 // a small class to accomodate word-level diffs; basically, a body and an
 // optional suffix (the latter consisting of a single whitespace), where
@@ -13,7 +14,8 @@
 // not be changed or destroyed.
 class Word {
 public:
-	typedef std::string::const_iterator Iterator;
+	typedef std::basic_string<char, std::char_traits<char>, WD2_ALLOCATOR<char> > String;
+	typedef String::const_iterator Iterator;
 	
 	Iterator bodyStart;
 	Iterator bodyEnd;
@@ -39,22 +41,22 @@ public:
 	}
 
 	// Get the whole word as a string
-	std::string whole() const {
-		std::string w;
+	String whole() const {
+		String w;
 		get_whole(w);
 		return w;
 	}
 
 	// Assign the whole word to a string
-	void get_whole(std::string & w) const {
+	void get_whole(String & w) const {
 		// Do it with swap() to avoid a second copy
-		std::string temp(bodyStart, suffixEnd);
+		String temp(bodyStart, suffixEnd);
 		temp.swap(w);
 	}
 
 	// Get the body as a string
-	operator std::string() const {
-		return std::string(bodyStart, bodyEnd);
+	operator String() const {
+		return String(bodyStart, bodyEnd);
 	}
 };
 

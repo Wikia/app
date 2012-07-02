@@ -1,9 +1,9 @@
 <?php
-
 /**
  * Internationalisation file for CategoryStepper extension.
- * 
- * @addtogroup Extensions
+ *
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -56,7 +56,34 @@ $messages['arz'] = array(
 	'categorystepper-start' => '(بداية التصنيف)',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'categorystepper-desc' => "Amuesa una tabla de pasos de categoría que permiten navegar p'alantre y p'atrás n'orde alfabéticu al traviés d'una o más categoríes nes que ta la páxina",
+	'categorystepper-end' => '(Fin de categoría)',
+	'categorystepper-start' => '(Principiu de categoría)',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'categorystepper-desc' => 'Səhifənin aid olduğu kateqoriyanın əlifba siyahısına görə məzmununda başlanğıca və sona keçid etmək imkanı verən naviqasiya panelini göstərir',
+	'categorystepper-end' => '(kateqoriyanın sonu)',
+	'categorystepper-start' => '(kateqoriyanın başlanğıcı)',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'categorystepper-desc' => 'Бит ҡараған бер йәки бер нисә категорияның алфавит буйынса тәртипкә килтерелгән эстәлеге буйлап алға һәм артҡа күсергән мөмкинлек биреүсе йүнәлештәр бүлеген күрһәтә.',
+	'categorystepper-end' => '(Категорияның аҙағы)',
+	'categorystepper-start' => '(Категорияның башы)',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -118,6 +145,15 @@ $messages['cs'] = array(
 	'categorystepper-desc' => 'Zobrazuje na stránce navigační pole, které umožňuje abecedně procházet jednu nebo několik kategoriích, do kterých je stránka zařazena',
 	'categorystepper-end' => '(konec kategorie)',
 	'categorystepper-start' => '(začátek kategorie)',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'categorystepper-desc' => "Yn dangos blwch categoriau cam-wrth-gam, sy'n rhoi cyfle i ddyn lywio yn ôl ac ymlaen drwy'r holl gategorïau y mae rhyw dudalen yn perthyn iddynt, yn nhrefn yr wyddor.",
+	'categorystepper-end' => '(Diwedd y categori)',
+	'categorystepper-start' => "(Dechrau'r categori)",
 );
 
 /** Danish (Dansk)
@@ -204,6 +240,14 @@ $messages['fr'] = array(
 	'categorystepper-start' => '(Début de catégorie)',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'categorystepper-end' => '(Fin de catègorie)',
+	'categorystepper-start' => '(Comencement de catègorie)',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
@@ -251,6 +295,15 @@ $messages['hi'] = array(
 	'categorystepper-start' => '(श्रेणी की शुरुवात)',
 );
 
+/** Croatian (Hrvatski)
+ * @author Ante portas
+ */
+$messages['hr'] = array(
+	'categorystepper-desc' => 'Prikazuje okvir preskoka kategorija koji omogućava prelazak naprijed ili nazad kroz jednu ili više kategorija u kojima se stranica nalazi i to po abecednom redu.',
+	'categorystepper-end' => 'Kraj kategorije',
+	'categorystepper-start' => 'Početak kategorije',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -287,6 +340,15 @@ $messages['id'] = array(
 	'categorystepper-start' => '(Awal kategori)',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'categorystepper-desc' => 'Ne zí ébéonọr nke igbé nnèfé né kwé onye ótù Í gáwá na íhú na àzú nke íshí alfabet na ímé ébé ihü nọr na ihü ébéanọr.',
+	'categorystepper-end' => '(Ogwụcha nke ébánọr)',
+	'categorystepper-start' => '(Mbídó nke ébéanọr)',
+);
+
 /** Icelandic (Íslenska)
  * @author S.Örvarr.S
  */
@@ -296,10 +358,11 @@ $messages['is'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Pietrodn
  */
 $messages['it'] = array(
-	'categorystepper-desc' => 'Visualizza una casella stepper per le categorie che permette di navigare avanti e indietro in ordine alfabetico attraverso una o più categorie di una pagina',
+	'categorystepper-desc' => "Visualizza una casella ''stepper'' per le categorie che permette di navigare avanti e indietro in ordine alfabetico attraverso una o più categorie di una pagina",
 	'categorystepper-end' => '(Fine della categoria)',
 	'categorystepper-start' => '(Inizio della categoria)',
 );
@@ -349,7 +412,7 @@ $messages['ko'] = array(
 	'categorystepper-start' => '(분류의 시작)',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -384,11 +447,36 @@ $messages['lo'] = array(
 	'categorystepper-start' => '(ເລິ່ມໝວດ)',
 );
 
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'categorystepper-end' => '(Kategorejis beigys)',
+	'categorystepper-start' => '(Kategorejis suokys)',
+);
+
+/** Latvian (Latviešu)
+ * @author Papuass
+ */
+$messages['lv'] = array(
+	'categorystepper-desc' => 'Parāda kategoriju apstaigāšanas logu, ļaujot pārvietoties pa lapai piesaistītajam kategorijām alfabētiskā secībā',
+	'categorystepper-end' => '(Kategorijas beigas)',
+	'categorystepper-start' => '(Kategorijas sākums)',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'categorystepper-start' => "(Fitombohan'ilay sokajy)",
+);
+
 /** Macedonian (Македонски)
+ * @author Bjankuloski06
  * @author Brest
  */
 $messages['mk'] = array(
-	'categorystepper-desc' => 'Прикажува навигациска кутија за навигација низ азбучна листа на категории на страница',
+	'categorystepper-desc' => 'Прикажува навигациона кутија за навигација низ азбучен список на категории на страница',
 	'categorystepper-end' => '(Крај на категорија)',
 	'categorystepper-start' => '(Почеток на категорија)',
 );
@@ -408,6 +496,33 @@ $messages['mr'] = array(
 	'categorystepper-desc' => 'एखादे पान ज्या वर्गांमध्ये आहे त्यांच्यातील सुचालन सुलभ होण्यासाठी अनुक्रमे मागील व पुढील वर्ग दाखविणारी "वर्ग सुचालन खिडकी" दर्शवितो',
 	'categorystepper-end' => '(वर्गाचा शेवट)',
 	'categorystepper-start' => '(वर्गाची शेवट)',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'categorystepper-desc' => 'Memaparkan peti pelangkah kategori yang membolehkan pengguna berpandu arah ulang-alih mengikut susunan abjad melalui satu atau lebih kategori yang menggolongkan sesebuah laman',
+	'categorystepper-end' => '(Akhir kategori)',
+	'categorystepper-start' => '(Awal kategori)',
+);
+
+/** Nahuatl (Nāhuatl)
+ * @author Teòtlalili
+ */
+$messages['nah'] = array(
+	'categorystepper-end' => '(Ìtlamilòyàn tlaìxmatkàtlàlilòtl)',
+	'categorystepper-start' => '(ìpèwalòyàn tlaìxmatkàtlàlilòtl)',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Lejonel
+ */
+$messages['nb'] = array(
+	'categorystepper-desc' => 'Viser en rute for kategoriblaing (lenker til neste og foregående side) på sider i en gruppe av kategorier',
+	'categorystepper-end' => '(Kategorislutt)',
+	'categorystepper-start' => '(Kategoristart)',
 );
 
 /** Low German (Plattdüütsch)
@@ -437,16 +552,6 @@ $messages['nn'] = array(
 	'categorystepper-start' => '(Kategoristart)',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Lejonel
- */
-$messages['no'] = array(
-	'categorystepper-desc' => 'Viser en rute for kategoriblaing (lenker til neste og foregående side) på sider i en gruppe av kategorier',
-	'categorystepper-end' => '(Kategorislutt)',
-	'categorystepper-start' => '(Kategoristart)',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -454,6 +559,13 @@ $messages['oc'] = array(
 	'categorystepper-desc' => 'Aficha una bóstia de categoria sus de paginas que son indicadas dins una categoria per òrdre alfabetic.',
 	'categorystepper-end' => '(Fin de categoria)',
 	'categorystepper-start' => '(Començament de categoria)',
+);
+
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'categorystepper-desc' => 'ଏକ ଶ୍ରେଣୀ ଷ୍ଟେପର ଘର ଦେଖାଇଥାଏ',
 );
 
 /** Deitsch (Deitsch)
@@ -513,7 +625,7 @@ $messages['pt-br'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'categorystepper-end' => '(Sfârşitul categoriei)',
+	'categorystepper-end' => '(Sfârșitul categoriei)',
 	'categorystepper-start' => '(Începutul categoriei)',
 );
 
@@ -535,7 +647,7 @@ $messages['ru'] = array(
 	'categorystepper-start' => '(начало категории)',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -552,18 +664,38 @@ $messages['sk'] = array(
 	'categorystepper-start' => '(začiatok kategórie)',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'categorystepper-desc' => 'Prikaže navigacijsko polje kategorije, ki omogoča sprehajanje naprej in nazaj po abecednem vrstnem redu skozi eno ali več kategorij, v katerih se nahaja stran',
+	'categorystepper-end' => '(Konec kategorije)',
+	'categorystepper-start' => '(Začetek kategorije)',
+);
+
+/** Somali (Soomaaliga)
+ * @author Maax
+ */
+$messages['so'] = array(
+	'categorystepper-end' => '(Qeybta dhamaadkeeda)',
+	'categorystepper-start' => '(Qeybta bilaawgeeda)',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Sasa Stefanovic
+ * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
+	'categorystepper-desc' => 'Приказује кутијицу која омогућава азбучну навигацију унапред и уназад кроз једну или више категорија у којима се страна налази',
 	'categorystepper-end' => '(Крај категорије)',
 	'categorystepper-start' => '(Почетак категорије)',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
+	'categorystepper-desc' => 'Prikazuje kutijicu koja omogućava azbučnu navigaciju unapred i unazad kroz jednu ili više kategorija u kojima se strana nalazi',
 	'categorystepper-end' => '(Kraj kategorije)',
 	'categorystepper-start' => '(Početak kategorije)',
 );
@@ -596,9 +728,11 @@ $messages['sv'] = array(
 );
 
 /** Tamil (தமிழ்)
+ * @author TRYPPN
  * @author Trengarasu
  */
 $messages['ta'] = array(
+	'categorystepper-desc' => 'பகுப்புகள் பற்றிய இந்த கட்டத்தின் மூலம் முன்னும் பின்னும் அகரவரிசையில் செல்ல அனுமதிக்கிறது',
 	'categorystepper-end' => '(பகுப்பின் முடிவு)',
 	'categorystepper-start' => '(பகுப்பின் தொடக்கம்)',
 );
@@ -613,7 +747,7 @@ $messages['te'] = array(
 	'categorystepper-start' => '(వర్గపు మొదలు)',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -621,7 +755,7 @@ $messages['tg-cyrl'] = array(
 	'categorystepper-start' => '(Оғози гурӯҳ)',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -673,10 +807,11 @@ $messages['vec'] = array(
 	'categorystepper-start' => '(Scominsio de la categoria)',
 );
 
-/** Veps (Vepsan kel')
+/** Veps (Vepsän kel')
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
+	'categorystepper-desc' => "Ozutab navigacijan panelin, kudamb laskeb kävuda edehe da tagaze sid kategorijan südäimišton kirjamištnimikirjutestme, kudambha om sidotud lehtpol'.",
 	'categorystepper-end' => '(Kategorijan lop)',
 	'categorystepper-start' => '(Kategorijan augotiž)',
 );
@@ -697,5 +832,32 @@ $messages['vi'] = array(
 $messages['vo'] = array(
 	'categorystepper-end' => '(Fin klada)',
 	'categorystepper-start' => '(Prim klada)',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Chenxiaoqino
+ * @author PhiLiP
+ */
+$messages['zh-hans'] = array(
+	'categorystepper-desc' => '显示一个分类跳转盒可以让使用者按照字母顺序在同一页面中的多个分类间跳转',
+	'categorystepper-end' => '（分类结尾）',
+	'categorystepper-start' => '（分类开头）',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'categorystepper-desc' => '顯示一個分類跳轉盒可以讓使用者按照字母順序在同一頁面中的多個分類間跳轉',
+	'categorystepper-end' => '（分類結尾）',
+	'categorystepper-start' => '（分類開頭）',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Pbdragonwang
+ */
+$messages['zh-tw'] = array(
+	'categorystepper-end' => '(分類結尾)',
+	'categorystepper-start' => '(分類開頭)',
 );
 

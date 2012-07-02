@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * OggChopRequestHanlder.php is a simple ogg video server for mediawiki
  * it uses the general oggChop class (which we should probably make part of
  * PEAR oggServer or something like that )
@@ -34,10 +34,10 @@ function npt2seconds( $str_time ) {
 		$hours 	= (int) $time_ary[0];
 		$min 	= (int) $time_ary[1];
 		$sec 	= (float) $time_ary[2];
-	} else if ( count( $time_ary ) == 2 ) {
+	} elseif ( count( $time_ary ) == 2 ) {
 		$min 	= (int) $time_ary[0];
 		$sec 	= (float) $time_ary[1];
-	} else if ( count( $time_ary ) == 1 ) {
+	} elseif ( count( $time_ary ) == 1 ) {
 		$sec 	= (float) $time_ary[0];
 	}
 	return ( $hours * 3600 ) + ( $min * 60 ) + $sec;

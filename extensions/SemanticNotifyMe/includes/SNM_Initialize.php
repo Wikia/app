@@ -1,69 +1,23 @@
 <?php
-/*
+/**
  * Created on 24.6.2009
  *
- * Author: dch
+ * Author: ning
  */
 if ( !defined( 'MEDIAWIKI' ) ) die;
 
-define( 'SMW_NM_VERSION', '0.5' );
+define( 'SMW_NM_VERSION', '0.5.3' );
 
 $smwgNMIP = $IP . '/extensions/SemanticNotifyMe';
 $smwgNMScriptPath = $wgScriptPath . '/extensions/SemanticNotifyMe';
+
+$wgExtensionMessagesFiles['SemanticNotifyMe'] = $smwgNMIP . '/languages/SMW_NMLanguage.php';
 
 global $wgExtensionFunctions;
 $wgExtensionFunctions[] = 'smwgNMSetupExtension';
 
 global $wgDefaultUserOptions;
 $wgDefaultUserOptions['enotifyme'] = 1;
-
-function smwfNMInitMessages() {
-	global $smwgNMMessagesInitialized;
-	if ( isset( $smwgNMMessagesInitialized ) ) return; // prevent double init
-
-	smwfNMInitUserMessages(); // lazy init for ajax calls
-
-	$smwgNMMessagesInitialized = true;
-}
-function smwfNMInitUserMessages() {
-	global $wgMessageCache, $smwgNMContLang, $wgLanguageCode;
-	smwfNMInitContentLanguage( $wgLanguageCode );
-
-	global $smwgNMIP, $smwgNMLang;
-	if ( !empty( $smwgNMLang ) ) { return; }
-	global $wgMessageCache, $wgLang;
-	$smwLangClass = 'SMW_NMLanguage' . str_replace( '-', '_', ucfirst( $wgLang->getCode() ) );
-
-	if ( file_exists( $smwgNMIP . '/languages/' . $smwLangClass . '.php' ) ) {
-		include_once( $smwgNMIP . '/languages/' . $smwLangClass . '.php' );
-	}
-	// fallback if language not supported
-	if ( !class_exists( $smwLangClass ) ) {
-		global $smwgNMContLang;
-		$smwgNMLang = $smwgNMContLang;
-	} else {
-		$smwgNMLang = new $smwLangClass();
-	}
-
-	$wgMessageCache->addMessages( $smwgNMLang->getUserMsgArray(), $wgLang->getCode() );
-}
-function smwfNMInitContentLanguage( $langcode ) {
-	global $smwgNMIP, $smwgNMContLang;
-	if ( !empty( $smwgNMContLang ) ) { return; }
-
-	$smwContLangClass = 'SMW_NMLanguage' . str_replace( '-', '_', ucfirst( $langcode ) );
-
-	if ( file_exists( $smwgNMIP . '/languages/' . $smwContLangClass . '.php' ) ) {
-		include_once( $smwgNMIP . '/languages/' . $smwContLangClass . '.php' );
-	}
-
-	// fallback if language not supported
-	if ( !class_exists( $smwContLangClass ) ) {
-		include_once( $smwgNMIP . '/languages/SMW_NMLanguageEn.php' );
-		$smwContLangClass = 'SMW_NMLanguageEn';
-	}
-	$smwgNMContLang = new $smwContLangClass();
-}
 
 function smwfNMInitializeTables() {
 	global $smwgNMIP;
@@ -86,9 +40,6 @@ function smwfNMGetAjaxMethodPrefix() {
 function smwgNMSetupExtension() {
 	global $smwgNMIP, $wgHooks, $wgJobClasses, $wgExtensionCredits;
 	global $wgAutoloadClasses, $wgSpecialPages, $wgSpecialPageGroups;
-
-	smwfNMInitMessages();
-
 
 	// register SMW hooks
 	$wgHooks['smwInitializeTables'][] = 'smwfNMInitializeTables';
@@ -130,7 +81,11 @@ function smwgNMSetupExtension() {
 	$wgJobClasses['SMWNMRefreshJob'] = 'SMWNMRefreshJob';
 	require_once( $smwgNMIP . '/includes/jobs/SMW_NMRefreshJob.php' );
 
-	$wgAutoloadClasses['SMWNotifyProcessor'] = $smwgNMIP . '/includes/SMW_NotifyProcessor.php';
+	if ( defined( 'SMW_VERSION' ) && strpos( SMW_VERSION, '1.5' ) == 0 ) {
+		$wgAutoloadClasses['SMWNotifyProcessor'] = $smwgNMIP . '/includes/SMW_NotifyProcessor.smw15.php';
+	} else {
+		$wgAutoloadClasses['SMWNotifyProcessor'] = $smwgNMIP . '/includes/SMW_NotifyProcessor.php';
+	}
 
 	$action = $wgRequest->getVal( 'action' );
 	// add some AJAX calls
@@ -141,17 +96,17 @@ function smwgNMSetupExtension() {
 		switch( $method_prefix ) {
 			case '_nm_' :
 				require_once( $smwgNMIP . '/specials/SMWNotifyMe/SMW_NotAjaxAccess.php' );
-			break;
+				break;
 		}
 	} else { // otherwise register special pages
 		$wgAutoloadClasses['SMWNotifyMe'] = $smwgNMIP . '/specials/SMWNotifyMe/SMWNotifyMe.php';
-		$wgSpecialPages['NotifyMe'] = array( 'SMWNotifyMe' );
-		$wgSpecialPageGroups['NotifyMe'] = 'smwplus_group';
+		$wgSpecialPages['NotifyMe'] = 'SMWNotifyMe';
+		$wgSpecialPageGroups['NotifyMe'] = 'smw_group';
 	}
 
 	// Register Credits
 	$wgExtensionCredits['parserhook'][] = array(
-	'name' => 'Semantic&nbsp;NotifyMe&nbsp;Extension', 'version' => SMW_NM_VERSION,
+	'name' => 'Semantic&#160;NotifyMe&#160;Extension', 'version' => SMW_NM_VERSION,
 			'author' => "Ning Hu, Justin Zhang, [http://smwforum.ontoprise.com/smwforum/index.php/Jesse_Wang Jesse Wang], sponsored by [http://projecthalo.com Project Halo], [http://www.vulcan.com Vulcan Inc.]",
 			'url' => 'http://wiking.vulcan.com/dev',
 			'description' => 'Notify wiki user with specified queries.' );
@@ -203,41 +158,41 @@ function smwNMAddHTMLHeader( &$out ) {
 
 		$jsm = SMWResourceManager::SINGLETON();
 
-		$jsm->addScriptIf( $smwgHaloScriptPath .  '/scripts/prototype.js', "all", - 1, NS_SPECIAL . ":NotifyMe" );
-		$jsm->addScriptIf( $smwgHaloScriptPath .  '/scripts/Logger/smw_logger.js', "all", - 1, NS_SPECIAL . ":NotifyMe" );
-		$jsm->addScriptIf( $smwgScriptPath .  '/skins/SMW_tooltip.js', "all", - 1, NS_SPECIAL . ":NotifyMe" );
+		$jsm->addScriptIf( $smwgHaloScriptPath .  '/scripts/prototype.js', "all", -1, NS_SPECIAL . ":NotifyMe" );
+		$jsm->addScriptIf( $smwgHaloScriptPath .  '/scripts/Logger/smw_logger.js', "all", -1, NS_SPECIAL . ":NotifyMe" );
+		$jsm->addScriptIf( $smwgScriptPath .  '/skins/SMW_tooltip.js', "all", -1, NS_SPECIAL . ":NotifyMe" );
 
-		$jsm->addScriptIf( $smwgNMScriptPath . '/scripts/Language/SMW_NMLanguage.js', "all", - 1, NS_SPECIAL . ":NotifyMe" );
-		$jsm->addScriptIf( $pathlng, "all", - 1, NS_SPECIAL . ":NotifyMe" );
-		$jsm->addScriptIf( $userpathlng, "all", - 1, NS_SPECIAL . ":NotifyMe" );
-		$jsm->addScriptIf( $smwgNMScriptPath .  '/scripts/NotifyMe/NotifyHelper.js', "all", - 1, NS_SPECIAL . ":NotifyMe" );
+		$jsm->addScriptIf( $smwgNMScriptPath . '/scripts/Language/SMW_NMLanguage.js', "all", -1, NS_SPECIAL . ":NotifyMe" );
+		$jsm->addScriptIf( $pathlng, "all", -1, NS_SPECIAL . ":NotifyMe" );
+		$jsm->addScriptIf( $userpathlng, "all", -1, NS_SPECIAL . ":NotifyMe" );
+		$jsm->addScriptIf( $smwgNMScriptPath .  '/scripts/NotifyMe/NotifyHelper.js', "all", -1, NS_SPECIAL . ":NotifyMe" );
 
-		$jsm->addScriptIf( $smwgNMScriptPath . '/scripts/Language/SMW_NMLanguage.js', "all", - 1, NS_SPECIAL . ":QueryInterface" );
-		$jsm->addScriptIf( $pathlng, "all", - 1, NS_SPECIAL . ":QueryInterface" );
-		$jsm->addScriptIf( $userpathlng, "all", - 1, NS_SPECIAL . ":QueryInterface" );
-		$jsm->addScriptIf( $smwgNMScriptPath .  '/scripts/NotifyMe/NotifyHelper.js', "all", - 1, NS_SPECIAL . ":QueryInterface" );
+		$jsm->addScriptIf( $smwgNMScriptPath . '/scripts/Language/SMW_NMLanguage.js', "all", -1, NS_SPECIAL . ":QueryInterface" );
+		$jsm->addScriptIf( $pathlng, "all", -1, NS_SPECIAL . ":QueryInterface" );
+		$jsm->addScriptIf( $userpathlng, "all", -1, NS_SPECIAL . ":QueryInterface" );
+		$jsm->addScriptIf( $smwgNMScriptPath .  '/scripts/NotifyMe/NotifyHelper.js', "all", -1, NS_SPECIAL . ":QueryInterface" );
 
-		$jsm->addCSSIf( $smwgScriptPath .  '/skins/SMW_custom.css', "all", - 1, NS_SPECIAL . ":NotifyMe" );
-		$jsm->addCSSIf( $smwgNMScriptPath . '/skins/nm.css', "all", - 1, NS_SPECIAL . ":NotifyMe" );
+		$jsm->addCSSIf( $smwgScriptPath .  '/skins/SMW_custom.css', "all", -1, NS_SPECIAL . ":NotifyMe" );
+		$jsm->addCSSIf( $smwgNMScriptPath . '/skins/nm.css', "all", -1, NS_SPECIAL . ":NotifyMe" );
 	} else {
 		global $wgRequest;
-		 $scripts = array();
-		 $$css = array();
+		$scripts = array();
+		$$css = array();
 
-		 // read state
-		 if ( $wgRequest != NULL && $wgTitle != NULL ) {
-			 $action = $wgRequest->getVal( "action" );
-			 // $action of NULL or '' means view mode
-			 $action = $action == NULL || $action == '' ? "view" : $action;
-			 $namespace = $wgTitle->getNamespace();
-			 $page = $wgTitle->getNamespace() . ":" . $wgTitle->getText();
+		// read state
+		if ( $wgRequest != NULL && $wgTitle != NULL ) {
+			$action = $wgRequest->getVal( "action" );
+			// $action of NULL or '' means view mode
+			$action = $action == NULL || $action == '' ? "view" : $action;
+			$namespace = $wgTitle->getNamespace();
+			$page = $wgTitle->getNamespace() . ":" . $wgTitle->getText();
 
-		 } else { // if no state could be read, set default -> load all!
-			 $action = "all";
-			 $namespace = - 1;
-			 $page = array();
-		 }
-		if ( ( $namespace == NS_SPECIAL || $namespace == - 1 ) && ( $page == NS_SPECIAL . ":NotifyMe" ) ) {
+		} else { // if no state could be read, set default -> load all!
+			$action = "all";
+			$namespace = -1;
+			$page = array();
+		}
+		if ( ( $namespace == NS_SPECIAL || $namespace == -1 ) && ( $page == NS_SPECIAL . ":NotifyMe" ) ) {
 			$out->addScript( '<script type="text/javascript" src="' . $smwgNMScriptPath . '/scripts/prototype.js"></script>' );
 			$out->addScript( '<script type="text/javascript" src="' . $smwgScriptPath . '/skins/SMW_tooltip.js"></script>' );
 			$out->addScript( '<script type="text/javascript" src="' . $smwgNMScriptPath . '/scripts/Language/SMW_NMLanguage.js"></script>' );
@@ -250,13 +205,13 @@ function smwNMAddHTMLHeader( &$out ) {
 					'type'  => 'text/css',
 					'media' => 'screen, projection',
 					'href'  => $smwgScriptPath . '/skins/SMW_custom.css'
-				) );
-			$out->addLink( array(
+					) );
+					$out->addLink( array(
 					'rel'   => 'stylesheet',
 					'type'  => 'text/css',
 					'media' => 'screen, projection',
 					'href'  => $smwgNMScriptPath . '/skins/nm.css'
-				) );
+					) );
 		}
 	}
 	return true; // do not load other scripts or CSS
@@ -273,7 +228,7 @@ function smwfNMPreDeleteHook( &$article, &$user, &$reason ) {
 
 	return true;
 }
-function smwfNMSaveHook( &$article, &$user, &$text ) {
+function smwfNMSaveHook( &$article, &$user ) {
 	SMWNotifyProcessor::articleSavedComplete( $article->getTitle() );
 
 	return true; // always return true, in order not to stop MW's hook processing!

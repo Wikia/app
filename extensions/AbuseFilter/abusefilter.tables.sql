@@ -42,15 +42,15 @@ CREATE TABLE /*$wgDBprefix*/abuse_filter_log (
 	afl_namespace tinyint NOT NULL,
 	afl_title varchar(255) binary NOT NULL,
 	afl_wiki varchar(64) binary NULL,
-	afl_deleted tinyint(1) NULL,
+	afl_deleted tinyint(1) NOT NULL DEFAULT 0,
 	afl_patrolled_by int unsigned NULL,
 	
 	PRIMARY KEY (afl_id),
-	KEY (afl_filter),
-	KEY (afl_user),
+	KEY filter_timestamp (afl_filter,afl_timestamp),
+	KEY user_timestamp (afl_user,afl_user_text,afl_timestamp),
 	KEY (afl_timestamp),
-	KEY (afl_namespace, afl_title),
-	KEY (afl_ip)
+	KEY page_timestamp (afl_namespace, afl_title, afl_timestamp),
+	KEY ip_timestamp (afl_ip, afl_timestamp)
 ) /*$wgDBTableOptions*/;
 
 CREATE TABLE /*$wgDBprefix*/abuse_filter_history (

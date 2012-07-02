@@ -8,7 +8,7 @@ class EditMessagesPage extends SpecialPage {
 
 	function execute( $subpage = '' ) {
 		global $wgOut, $wgRequest;
-		wfLoadExtensionMessages('EditMessages');
+
 		$this->setHeaders();
 
 		$messageName = $wgRequest->getVal( 'messageName' );
@@ -49,7 +49,7 @@ class EditMessagesPage extends SpecialPage {
 		$languages = Language::getLanguageNames( true );
 		$sk = $wgUser->getSkin();
 		$wgOut->addHTML( Xml::element( 'h3', null, wfMsg( 'editmsg-show-list', $messageName ) . "\n" ) );
-		$wgOut->addHTML( '<p>' . $sk->makeLinkObj( $this->getTitle(), wfMsg( 'editmsg-new-search' ) ) . '</p>' );
+		$wgOut->addHTML( '<p>' . $sk->makeLinkObj( $this->getTitle(), wfMsgHtml( 'editmsg-new-search' ) ) . '</p>' );
 		$wgOut->addHTML( "<form method=\"POST\" action=\"$encAction\"><table>" );
 		foreach ( $languages as $lang => $langName ) {
 			$messages = false;
@@ -121,7 +121,7 @@ class EditMessagesPage extends SpecialPage {
 		);
 		$dcRegex = '/[0-7]{1,3}|x[0-9A-Fa-f]{1,2}/';
 
-		wfMkdirParents( "$wgTmpDirectory/EditMessages" );
+		wfMkdirParents( "$wgTmpDirectory/EditMessages", null, __METHOD__ );
 		$out = '';
 		foreach ( $originalMsgs as $lang => $origValue ) {
 			if ( !isset( $newMsgs[$lang] ) ) {
@@ -277,6 +277,6 @@ class EditMessagesPage extends SpecialPage {
 			$wgOut->addWikiMsg( 'editmsg-patch-success' );
 		}
 		$sk = $wgUser->getSkin();
-		$wgOut->addHTML( '<p>' . $sk->makeLinkObj( $this->getTitle(), wfMsg( 'editmsg-new-search' ) ) . '</p>' );
+		$wgOut->addHTML( '<p>' . $sk->makeLinkObj( $this->getTitle(), wfMsgHtml( 'editmsg-new-search' ) ) . '</p>' );
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * mv_flvServer.php
  *
  * @date Jul 25, 2008
@@ -105,12 +105,12 @@ function npt2seconds($str_time){
 		$hours=$time_ary[0];
 		$min=$time_ary[1];
 		$sec=$time_ary[2];
-	}else if(count($time_ary)==2){
+	}elseif(count($time_ary)==2){
 		$min=$time_ary[0];
 		$sec=$time_ary[1];
-	}else if(count($time_ary)==1){
+	}elseif(count($time_ary)==1){
 		$sec=$time_ary[0];
 	}
 	return ($hours*3600) + ($min*60) + $sec;
 }
-?>
+

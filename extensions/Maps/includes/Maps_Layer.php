@@ -68,7 +68,7 @@ abstract class MapsLayer {
 	}
 	
 	/**
-	 * Returns the error messages, optionaly filtered by an error tag.
+	 * Returns the error messages, optionally filtered by an error tag.
 	 * 
 	 * @since 0.7.1
 	 * 

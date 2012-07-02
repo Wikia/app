@@ -19,6 +19,7 @@ class PaginationController extends WikiaController {
 		$this->totalItems = $this->getVal('totalItems');
 		$this->itemsPerPage = $this->getVal('itemsPerPage');
 		$this->currentPage = $this->getVal('currentPage');
+		$this->data = $this->getVal('data', array());
 		$this->url = $this->getVal('url', '#');
 		
 		if( strpos($this->url, '?') === false ) {

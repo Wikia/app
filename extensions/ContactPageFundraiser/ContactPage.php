@@ -3,8 +3,8 @@
  * Setup for ContactPage extension, a special page that implements a contact form
  * for use by anonymous visitors.
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
@@ -17,17 +17,16 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'ContactPage',
-	'svn-date' => '$LastChangedDate: 2008-10-30 03:12:52 +0100 (czw, 30 paź 2008) $',
-	'svn-revision' => '$LastChangedRevision: 42798 $',
+	'svn-date' => '$LastChangedDate: 2011-12-26 00:09:26 +0100 (Mon, 26 Dec 2011) $',
+	'svn-revision' => '$LastChangedRevision: 107299 $',
 	'author' => 'Daniel Kinzler',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:ContactPage',
-	'description' => 'Contact form for visitors',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:ContactPage',
 	'descriptionmsg' => 'contactpage-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['ContactPage'] = $dir . 'ContactPage.i18n.php';
-$wgExtensionAliasesFiles['ContactPage'] = $dir . 'ContactPage.alias.php';
+$wgExtensionMessagesFiles['ContactPageFundraiser'] = $dir . 'ContactPage.i18n.php';
+$wgExtensionMessagesFiles['ContactPageFundraiserAlias'] = $dir . 'ContactPage.alias.php';
 
 $wgAutoloadClasses['SpecialContact'] = $dir . 'SpecialContact.php';
 $wgSpecialPages['Contact'] = 'SpecialContact';

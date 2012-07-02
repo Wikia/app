@@ -20,8 +20,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		var firstBlock = path.block || path.blockLimit;
 
-		if ( !firstBlock || firstBlock.getName() == 'body' )
+		if ( !firstBlock || firstBlock.getName() == 'body' ) {
 			return CKEDITOR.TRISTATE_OFF;
+		}
 
 		// Wikia change begin
 		if (!isAlignable(editor, firstBlock)) {
@@ -39,15 +40,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		useComputedState = useComputedState === undefined || useComputedState;
 
 		var align;
-		if ( useComputedState )
+		if ( useComputedState ) {
 			align = element.getComputedStyle( 'text-align' );
+		}
 		else
 		{
 			while ( !element.hasAttribute || !( element.hasAttribute( 'align' ) || element.getStyle( 'text-align' ) ) )
 			{
 				var parent = element.getParent();
-				if ( !parent )
+				if ( !parent ) {
 					break;
+				}
 				element = parent;
 			}
 			align = element.getStyle( 'text-align' ) || element.getAttribute( 'align' ) || '';

@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension Tab0.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -13,9 +14,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'tab0-desc' => 'Short description of the Tab0 extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'tab0-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -32,7 +34,14 @@ $messages['arz'] = array(
 	'tab0-desc' => 'يضيف اللسان "0"، موصولا إلى صفحة التعديل لأول قسم من الصفحة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'tab0-desc' => "Amiesta la llingüeta «0», qu'enllaza a la páxina d'edición de la primera seición de la páxina.",
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -65,6 +74,13 @@ $messages['bs'] = array(
  */
 $messages['ca'] = array(
 	'tab0-desc' => "Afegeix una pestanya '0' que enllaça a la pàgina d'edició de la primera secció de la pàgina",
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'tab0-desc' => 'Тlетуху юкъадиллар «0», хьост йеш оцу рéдоккхучу агlон дуьххьаралера агlона дакъан',
 );
 
 /** Czech (Česky)
@@ -215,7 +231,7 @@ $messages['ko'] = array(
 	'tab0-desc' => '문서의 첫 부분만을 편집할 수 있도록 "0" 탭을 추가합니다.',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -227,6 +243,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'tab0-desc' => "Setzt den ''Onglet'' ''0'' derbäi, den et erlaabt déi éischt Sectioun vun enger Säit z'änneren",
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'tab0-desc' => 'Pievieno tabu "0" ar saiti lapas pirmās sadaļas rediģēšanai',
 );
 
 /** Malagasy (Malagasy)
@@ -241,6 +264,13 @@ $messages['mg'] = array(
  */
 $messages['mk'] = array(
 	'tab0-desc' => 'Додава јазиче „0“ во страницата за уредување, поврзувајќи го првиот дел од страницата со страницата за уредување',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'tab0-desc' => 'Membubuh tab "0" untuk dipautkan dengan laman penyuntingan bahagian pertama laman',
 );
 
 /** Low German (Plattdüütsch)
@@ -268,7 +298,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'tab0-desc' => 'Legger til en «0»-arkfane som lenker til redigeringssiden for den første seksjonen av siden',
 );
 
@@ -329,18 +359,27 @@ $messages['sk'] = array(
 	'tab0-desc' => 'Pridá záložku „0” vedúcu na úpravu prvej sekcie stránky',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'tab0-desc' => 'Doda »ničto« oznako, ki se povezuje na urejevalno stran prvega razdelka strani',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Жељко Тодоровић
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'tab0-desc' => 'Додаје језичак "0", повезујући ка форми за измену прве секције странице',
+	'tab0-desc' => 'Додаје језичак „0“, повезујући ка форми за измену првог одељка странице',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Жељко Тодоровић
  */
 $messages['sr-el'] = array(
-	'tab0-desc' => 'Dodaje jezičak "0", povezujući ka formi za izmenu prve sekcije stranice',
+	'tab0-desc' => 'Dodaje jezičak „0“, povezujući ka formi za izmenu prvog odeljka stranice',
 );
 
 /** Sundanese (Basa Sunda)
@@ -361,7 +400,7 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
-	'tab0-desc' => 'పేజీ లోని మొదటి భాగాన్ని మార్చడానికి లింకుతో "0" ట్యాబుని చేరుస్తుంది',
+	'tab0-desc' => 'పుట లోని మొదటి విభాగాన్ని మార్చడానికి లంకెతో "0" ట్యాబుని చేరుస్తుంది',
 );
 
 /** Thai (ไทย)
@@ -406,6 +445,14 @@ $messages['vi'] = array(
 	'tab0-desc' => 'Thêm tab "0", liên kết đến trang sửa đổi tại đề mục đầu tiên của trang',
 );
 
+/** Cantonese (粵語)
+ * @author Horacewai2
+ * @author Waihorace
+ */
+$messages['yue'] = array(
+	'tab0-desc' => '新增"0"標籤去編輯第一段',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Liangent
  */
@@ -415,8 +462,9 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  */
 $messages['zh-hant'] = array(
-	'tab0-desc' => '添加“0”選項卡，鏈接到頁面的第一節的編輯頁面',
+	'tab0-desc' => '加入「0」標籤，連結到頁面的第一節的編輯頁面',
 );
 

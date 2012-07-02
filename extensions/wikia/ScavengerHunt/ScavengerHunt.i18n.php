@@ -450,7 +450,6 @@ $messages['diq'] = array(
  * @author Hellatainer
  * @author Od1n
  * @author VegaDark
- * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'scavengerhunt-desc' => 'Permite crear un juego de búsqueda en un wiki',
@@ -550,7 +549,7 @@ $messages['es'] = array(
 	'scavengerhunt-quit-game-button-cancel' => 'Cancelar',
 	'scavengerhunt-quit-game-button-stay' => 'Seguir jugando',
 	'scavengerhunt-label-progressBarHintLabel' => 'Coordenadas de las pistas',
-	'scavengerhunt-label-entry-form-email' => 'Correo electrónico del usuario',
+	'scavengerhunt-label-entry-form-email' => 'E-Mail del usuario',
 	'scavengerhunt-label-entry-form-username' => 'Nombre de usuario',
 	'scavengerhunt-label-progressBarBackgroundSprite' => 'Barra de fondo del progreso del sprite',
 	'scavengerhunt-label-progressBarExitSprite' => 'Botón de salida de las coordenadas',
@@ -764,7 +763,7 @@ $messages['fr'] = array(
 	'scavengerhunt-facebook-description' => 'Texte de partage Facebook',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

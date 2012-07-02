@@ -131,7 +131,7 @@ $messages['fr'] = array(
 	'browser-loading-message' => 'Chargement...',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -268,7 +268,7 @@ $messages['nl'] = array(
  */
 $messages['pl'] = array(
 	'main-tab-discover' => 'Odkryj',
-	'main-tab-personal' => 'Moja Wikia',
+	'main-tab-personal' => 'Moje Wikia',
 	'main-tab-search' => 'Szukaj',
 	'main-tab-offline' => 'Offline',
 	'tab-discover-loading-message' => 'Trwa ładowanie...',

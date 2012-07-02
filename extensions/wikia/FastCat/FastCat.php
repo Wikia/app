@@ -46,8 +46,6 @@ function efFastCatInit($out, $categories, $links) {
 		return true;
 	}
 
-	wfLoadExtensionMessages( 'FastCat' );
-
 	if ( count( $categories ) != 1 || !array_key_exists( wfMsgForContent( 'fastcat-marker-category' ), $categories ) ) {
 		return true;
 	}

@@ -14,7 +14,6 @@ CREATE TABLE code_repo (
 
 CREATE INDEX code_repo_repo_name ON code_repo (repo_name);
 
-CREATE TYPE cr_cr_status AS ENUM ('new', 'fixme', 'reverted', 'resolved', 'ok', 'verified', 'deferred');
 CREATE TABLE code_rev (
   cr_repo_id INTEGER NOT NULL,
 
@@ -26,14 +25,14 @@ CREATE TABLE code_rev (
 
   cr_message TEXT,
 
-  cr_status CR_CR_STATUS NOT NULL DEFAULT 'new',
+  cr_status TEXT NOT NULL DEFAULT 'new',
 
   cr_path TEXT,
 
   cr_diff TEXT NULL,
 
   cr_flags TEXT NOT NULL DEFAULT '',
-  
+
   PRIMARY KEY (cr_repo_id, cr_id)
 );
 
@@ -114,8 +113,6 @@ CREATE TABLE code_comment (
 
   cc_sortkey TEXT,
 
-  cc_review INTEGER,
-
   primary key (cc_id)
 );
 CREATE INDEX cc_repo_id_rev ON code_comment (cc_repo_id,cc_rev_id,cc_sortkey);
@@ -140,63 +137,3 @@ CREATE TABLE code_prop_changes (
 
 CREATE INDEX cpc_repo_rev_time ON code_prop_changes (cpc_repo_id, cpc_rev_id, cpc_timestamp);
 CREATE INDEX cpc_repo_time ON code_prop_changes (cpc_repo_id, cpc_timestamp);
-
-DROP TABLE IF EXISTS code_test_suite;
-
-CREATE SEQUENCE ct_ctsuite_id_seq;
-CREATE TABLE code_test_suite (
-  ctsuite_id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('ct_ctsuite_id_seq'),
-  
-  ctsuite_repo_id INTEGER NOT NULL,
-  
-  ctsuite_branch_path TEXT NOT NULL,
-  
-  ctsuite_name TEXT NOT NULL,
-  
-  ctsuite_desc TEXT NOT NULL
-);
-
-DROP TABLE IF EXISTS code_test_case;
-
-CREATE SEQUENCE ct_ctcase_id_seq;
-CREATE TABLE code_test_case (
-  ctcase_id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('ct_ctcase_id_seq'),
-  ctcase_suite_id INTEGER NOT NULL,
-  ctcase_name TEXT NOT NULL
-
-);
-
-CREATE INDEX ct_ctcase_id ON code_test_case (ctcase_suite_id, ctcase_id);
-
-DROP TABLE IF EXISTS code_test_run;
-
-CREATE SEQUENCE ct_ctrun_id_seq;
-CREATE TYPE code_test_status AS ENUM('running','complete','abort');
-CREATE TABLE code_test_run (
-  ctrun_id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('ct_ctrun_id_seq'),
-  
-  ctrun_suite_id INTEGER NOT NULL,
-  ctrun_rev_id INTEGER NOT NULL,
-  
-  ctrun_status CODE_TEST_STATUS,
-  
-  ctrun_count_total INTEGER,
-  ctrun_count_success INTEGER
-);
-
-CREATE INDEX suite_rev ON code_test_run (ctrun_suite_id, ctrun_rev_id);
-
-DROP TABLE IF EXISTS code_test_result;
-CREATE SEQUENCE ct_ctresult_id_seq;
-CREATE TABLE code_test_result (
-  ctresult_id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('ct_ctresult_id_seq'),
-  
-  ctresult_run_id INTEGER NOT NULL,
-  ctresult_case_id INTEGER NOT NULL,
-  
-  ctresult_success bool NOT NULL,
-  
-  ctresult_details TEXT
-);
-
-CREATE INDEX run_id ON code_test_result (ctresult_run_id, ctresult_id);

@@ -39,7 +39,6 @@ class RelatedPagesController extends WikiaController {
 		}
 
 		if( !$this->skipRendering ) {
-			wfLoadExtensionMessages( 'RelatedPages' );
 
 			$mKey = wfMemcKey('mOasisRelatedPages', $wgTitle->getArticleId());
 			$this->pages = $wgMemc->get($mKey);

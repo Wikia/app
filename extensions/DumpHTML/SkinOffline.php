@@ -10,21 +10,16 @@ if( !defined( 'MEDIAWIKI' ) )
 /**
  * Inherit main code from SkinTemplate, set the CSS and template filter.
  * @todo document
- * @addtogroup Skins
+ * @ingroup Skins
  */
 class SkinOffline extends SkinTemplate {
 	/** Using monobook. */
-	function initPage( &$out ) {
-		global $wgStylePath;
-		SkinTemplate::initPage( $out );
-		$this->template  = 'SkinOfflineTemplate';
-		$this->skinpath = "$wgStylePath/offline";
-	}
+	var $template  = 'SkinOfflineTemplate';
 
 	function setupTemplate( $className, $repository = false, $cache_dir = false ) {
-		global $wgFavicon;
+		global $wgFavicon, $wgStylePath;
 		$tpl = parent::setupTemplate( $className, $repository, $cache_dir );
-		$tpl->set( 'skinpath', $this->skinpath );
+		$tpl->set( 'skinpath', "$wgStylePath/offline" );
 		$tpl->set( 'favicon', $wgFavicon );
 		return $tpl;
 	}
@@ -36,8 +31,13 @@ class SkinOffline extends SkinTemplate {
 		foreach ( $badMessages as $msg ) {
 			$badUrls[] = self::makeInternalOrExternalUrl( wfMsgForContent( $msg ) );
 		}
-
 		foreach ( $sections as $heading => $section ) {
+			if (!is_array($section)) {
+				// A raw HTML chunk, such as provided by Collection ext.
+				// Just ignore these so they don't explode.
+				unset( $sections[$heading] );
+				continue;
+			}
 			foreach ( $section as $index => $link ) {
 				if ( in_array( $link['href'], $badUrls ) ) {
 					unset( $sections[$heading][$index] );
@@ -47,27 +47,29 @@ class SkinOffline extends SkinTemplate {
 		return $sections;
 	}
 
-	function buildContentActionUrls() {
+	function buildContentActionUrls( $content_navigation ) {
 		global $wgHTMLDump;
 
 		$content_actions = array();
 		$nskey = $this->getNameSpaceKey();
 		$content_actions[$nskey] = $this->tabAction(
-			$this->mTitle->getSubjectPage(),
+			$this->getTitle()->getSubjectPage(),
 			$nskey,
-			!$this->mTitle->isTalkPage() );
+			!$this->getTitle()->isTalkPage() );
 
-		$content_actions['talk'] = $this->tabAction(
-			$this->mTitle->getTalkPage(),
-			'talk',
-			$this->mTitle->isTalkPage(),
-			'',
-			true);
+		if( $this->getTitle()->canTalk() ) {
+			$content_actions['talk'] = $this->tabAction(
+				$this->getTitle()->getTalkPage(),
+				'talk',
+				$this->getTitle()->isTalkPage(),
+				'',
+				true);
+		}
 
 		if ( isset( $wgHTMLDump ) ) {
 			$content_actions['current'] = array(
 				'text' => wfMsg( 'currentrev' ),
-				'href' => str_replace( '$1', wfUrlencode( $this->mTitle->getPrefixedDBkey() ),
+				'href' => str_replace( '$1', wfUrlencode( $this->getTitle()->getPrefixedDBkey() ),
 					$wgHTMLDump->oldArticlePath ),
 				'class' => false
 			);
@@ -103,7 +105,7 @@ class SkinOffline extends SkinTemplate {
 
 /**
  * @todo document
- * @addtogroup Skins
+ * @ingroup Skins
  */
 class SkinOfflineTemplate extends QuickTemplate {
 	/**
@@ -116,7 +118,6 @@ class SkinOfflineTemplate extends QuickTemplate {
 	 */
 	function execute() {
 		wfSuppressWarnings();
-		global $wgSearchDefaultFulltext;
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php $this->text('lang') ?>" lang="<?php $this->text('lang') ?>" dir="<?php $this->text('dir') ?>">
   <head>
@@ -201,7 +202,7 @@ class SkinOfflineTemplate extends QuickTemplate {
 	          ?>accesskey="<?php $this->msg('accesskey-search') ?>"<?php }
 	        if( isset( $this->data['search'] ) ) {
 	          ?> value="<?php $this->text('search') ?>"<?php } ?> />
-	      <input type='submit' name="<?= ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" class="searchButton" id="searchGoButton"
+	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
 	        value="<?php $this->msg('go') ?>" />
 	    </div></form>
 	  </div>

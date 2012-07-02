@@ -33,9 +33,9 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description' => 'This extension provides an interface for sending messages seen on all wikis.'
 );
 //Allow group STAFF to use this extension.
-$wgAvailableRights[] = 'MessageTool';
-$wgGroupPermissions['*']['MessageTool'] = false;
-$wgGroupPermissions['staff']['MessageTool'] = true;
+$wgAvailableRights[] = 'messagetool';
+$wgGroupPermissions['*']['messagetool'] = false;
+$wgGroupPermissions['staff']['messagetool'] = true;
 
 $wgExtensionFunctions[] = 'SiteWideMessagesInit';
 $wgExtensionMessagesFiles['SpecialSiteWideMessages'] = dirname(__FILE__) . '/SpecialSiteWideMessages.i18n.php';
@@ -68,6 +68,9 @@ function SiteWideMessagesInit() {
 
 		// macbre: notifications for Oasis
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SiteWideMessagesAddNotifications';
+
+		// Wall message content
+		$wgHooks['WallGreetingContent'][] = 'SiteWideMessagesWallMessage';
 	}
 }
 
@@ -100,7 +103,6 @@ function SiteWideMessagesIncludeJSCSS( $skin, & $bottomScripts) {
 function SiteWideMessagesGetUserMessagesContent($dismissLink = true, $parse = true, $useForDiff = false, $addJSandCSS = true) {
 	global $wgExtensionsPath, $wgStyleVersion, $wgOut, $wgUser, $wgRequest;
 	if ($wgRequest->getText('diff') == '' || $useForDiff) {
-		wfLoadExtensionMessages('SpecialSiteWideMessages');
 
 		if ($addJSandCSS) {
 			global $wgHooks;
@@ -252,6 +254,23 @@ function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
 	}
 
 	wfProfileOut(__METHOD__);
+	return true;
+}
+
+/**
+ * Show notification on Wall in Monobook
+ *
+ * @author grunny
+ */
+function SiteWideMessagesWallMessage( &$greetingText ) {
+	global $wgTitle, $wgUser;
+	if ( $wgTitle->getNamespace() == NS_USER_WALL &&
+		$wgUser->getTitleKey() == $wgTitle->getPartialURL() &&
+		!$wgUser->isAllowed( 'bot' ) &&
+		!( F::app()->checkSkin( 'oasis' ) )
+	) {
+		$greetingText = SiteWideMessagesGetUserMessagesContent() . $greetingText;
+	}
 	return true;
 }
 

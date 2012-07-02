@@ -133,7 +133,7 @@ $jsParams = array(
 <script id="source<?= $number ?>" language="javascript" type="text/javascript">
 var sd = new SponsorshipDashboard();
 sd.init(
-<?= Wikia::json_encode($jsParams) ?>
+<?= json_encode($jsParams) ?>
 );
 </script>
 <div class="sponsorship-dashboard-panel-cachedate"><?= isset( $date ) ? wfMsg('sponsorship-dashboard-cachedate-label', $date) : '' ?></div>

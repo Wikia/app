@@ -22,8 +22,8 @@ $messages['en'] = array(
 	'adminlinks_editmainpagename' => 'Edit name of main page',
 	'adminlinks_users' => 'Users',
 	'adminlinks_createuser' => 'Create a user',
-	'adminlinks_browsesearch' => 'Browsing and searching',
-	'adminlinks_importexport' => 'Importing and exporting',
+	'adminlinks_browsesearch' => 'Browse and search',
+	'adminlinks_importexport' => 'Import and export',
 	'right-adminlinks' => 'See the link to [[Special:AdminLinks|Admin links]]',
 );
 
@@ -32,28 +32,33 @@ $messages['en'] = array(
  * @author EugeneZelenko
  * @author Fryed-peach
  * @author Purodha
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'adminlinks-desc' => '{{desc}}',
 	'adminlinks_documentation' => 'The label for a link to documentation for a certain extension, whose name is passed in.
 {{Identical|Documentation}}',
+	'adminlinks_general' => '{{Identical|General}}',
 	'adminlinks_users' => '{{Identical|User}}',
-	'right-adminlinks' => '{{doc-right}}',
+	'right-adminlinks' => '{{doc-right|adminlinks}}',
 );
 
-/** Laz (Laz)
- * @author Bombola
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
  */
-$messages['lzz'] = array(
-	'adminlinks_users' => "K'oçepe",
-);
-
-/** Latgaļu (Latgaļu)
- * @author Dark Eagle
- */
-$messages['ltg'] = array(
-	'adminlinks_users' => 'Lītuotuoji',
-	'adminlinks_createuser' => 'Sataiseit jaunu lītuotuoju',
+$messages['tly'] = array(
+	'adminlinks' => 'Сургунон бо администраторон',
+	'adminlinks-desc' => 'Зијод кардејдә [[Special:AdminLinks|хыдмәтә сәһифә]], дыләдә һестыше фәрә сургунон бо администраторон',
+	'adminlinks_documentation' => 'Сәнәдон $1',
+	'adminlinks_general' => 'Умуми',
+	'adminlinks_editsidebar' => 'Јанә сәку сәрост кардеј',
+	'adminlinks_editcss' => 'CSS фајли сәрост кардеј',
+	'adminlinks_editmainpagename' => 'Јолә сәһифә номи сәрост кардеј',
+	'adminlinks_users' => 'Иштирок кардәкәсон',
+	'adminlinks_createuser' => 'Иштирок кардәкәси офәјеј',
+	'adminlinks_browsesearch' => 'Сәкыштә ијән нәве',
+	'adminlinks_importexport' => 'Идхол ијән ихроҹ',
+	'right-adminlinks' => 'Виндеј [[Special:AdminLinks|Сургунон бо администраторон]]',
 );
 
 /** Afrikaans (Afrikaans)
@@ -92,6 +97,24 @@ $messages['aln'] = array(
 	'right-adminlinks' => 'Shih vegzën te [[Special:AdminLinks|Vegzat e administrimit]]',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'adminlinks' => "Vinclos d'administración",
+	'adminlinks-desc' => 'Adhibir una [[Special:AdminLinks|pachina especial]] que mantien vinclos útils ta os administradors',
+	'adminlinks_documentation' => 'Documentación $1',
+	'adminlinks_general' => 'Cheneral',
+	'adminlinks_editsidebar' => 'Editar a barra lateral',
+	'adminlinks_editcss' => 'Editar o fichero CSS',
+	'adminlinks_editmainpagename' => "Editar o nombre d'a pachina prencipal",
+	'adminlinks_users' => 'Usuarios',
+	'adminlinks_createuser' => 'Creyar un usuario',
+	'adminlinks_browsesearch' => 'Navegar y mirar',
+	'adminlinks_importexport' => 'Importar y exportar',
+	'right-adminlinks' => 'Se veiga o vinclo ta [[Special:AdminLinks|Admin links]]',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  * @author OsamaK
@@ -116,6 +139,8 @@ $messages['ar'] = array(
  */
 $messages['arc'] = array(
 	'adminlinks' => 'ܐܣܘܪ̈ܐ ܕܡܕܒܪ̈ܢܐ',
+	'adminlinks_documentation' => '$1 ܐܫܛܪܘܬܐ',
+	'adminlinks_general' => 'ܓܘܢܝܐ',
 	'adminlinks_users' => 'ܡܦܠܚܢ̈ܐ',
 	'adminlinks_importexport' => 'ܡܥܠܢܘܬܐ ܘܡܦܩܢܘܬܐ',
 );
@@ -133,24 +158,84 @@ $messages['arz'] = array(
 	'adminlinks_createuser' => 'ابتدى يوزر',
 );
 
-/** Bavarian (Boarisch)
- * @author Man77
+/** Assamese (অসমীয়া)
+ * @author Chaipau
  */
-$messages['bar'] = array(
-	'adminlinks' => 'Links fia Administratoan',
-	'adminlinks-desc' => 'Eagänzt a [[Special:AdminLinks|Spezialseitn]] mid hüifreiche Links fia Administratoan',
-	'adminlinks_documentation' => 'Dokumentazion vu „$1“',
-	'adminlinks_general' => 'Åigemein',
-	'adminlinks_editsidebar' => "d'Sidebar beåawatn",
-	'adminlinks_editcss' => 'CSS-Datein beåawatn',
-	'adminlinks_editmainpagename' => 'in Nãmen vu da Hauptseitn ändan',
-	'adminlinks_users' => 'Benutza',
-	'adminlinks_createuser' => 'Benutza eastöin',
-	'adminlinks_browsesearch' => 'Duachschaun und suacha',
-	'adminlinks_importexport' => 'Impoatian und expoatian',
+$messages['as'] = array(
+	'adminlinks_users' => 'সদস্যসকল',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'adminlinks' => "Enllaces d'alministrador",
+	'adminlinks-desc' => 'Amiesta una [[Special:AdminLinks|páxina especial]] que contién enllaces útiles para los alministradores',
+	'adminlinks_documentation' => 'Documentación de $1',
+	'adminlinks_general' => 'Xeneral',
+	'adminlinks_editsidebar' => 'Editar la barra llateral',
+	'adminlinks_editcss' => 'Editar el ficheru CSS',
+	'adminlinks_editmainpagename' => 'Editar el nome de la páxina principal',
+	'adminlinks_users' => 'Usuarios',
+	'adminlinks_createuser' => 'Crear un usuariu',
+	'adminlinks_browsesearch' => 'Navegación y gueta',
+	'adminlinks_importexport' => 'Importación y esportación',
+	'right-adminlinks' => "Ver l'enllaz a [[Special:AdminLinks|enllaces d'alministrador]]",
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vago
+ */
+$messages['az'] = array(
+	'adminlinks' => 'İdarəçilər üçün istinadlar',
+	'adminlinks_documentation' => '$1 sənədləşməsi',
+	'adminlinks_general' => 'Ümumi',
+	'adminlinks_editsidebar' => 'Yan paneli redaktə et',
+	'adminlinks_editcss' => 'CSS faylını redaktə et',
+	'adminlinks_editmainpagename' => 'Baş səhifənin adını dəyişdir',
+	'adminlinks_users' => 'İstifadəçilər',
+	'adminlinks_importexport' => 'İdxal və ixrac',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Comp1089
+ */
+$messages['ba'] = array(
+	'adminlinks' => 'Хәкимдәр өсөн һылтанмалар',
+	'adminlinks-desc' => 'Хәкимдәр өсөн һылтанмалар индергән [[Special:AdminLinks|ярҙамсы бит]] булдыра',
+	'adminlinks_documentation' => '$1 өсөн документация',
+	'adminlinks_general' => 'Дөйөм',
+	'adminlinks_editsidebar' => 'Ҡабырғалағы меню (Sidebar)-ҙы үҙгәртергә',
+	'adminlinks_editcss' => 'CSS-файлды үҙгәртергә',
+	'adminlinks_editmainpagename' => 'Баш бит исемен үҙгәртергә',
+	'adminlinks_users' => 'Ҡулланыусылар',
+	'adminlinks_createuser' => 'Яңы иҫәп яҙыуын булдырырға',
+	'adminlinks_browsesearch' => 'Ҡарау һәм әҙләү',
+	'adminlinks_importexport' => 'Импорт һәм экспорт',
+	'right-adminlinks' => '[[Special:AdminLinks|Хәкимдәр өсөн һылтанмаларҙы]] ҡарарға',
+);
+
+/** Bavarian (Boarisch)
+ * @author Man77
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'adminlinks' => 'Links fyr Administraatorn',
+	'adminlinks-desc' => 'Ergänzd a [[Special:AdminLinks|Speziaalseiten]] mid hüfreiche Links fyr Administraatorn',
+	'adminlinks_documentation' => 'Dókumentazión voh „$1“',
+	'adminlinks_general' => 'Oigmoah',
+	'adminlinks_editsidebar' => 'dé Sidebar beorweiten',
+	'adminlinks_editcss' => 'CSS-Daatein beorweiten',
+	'adminlinks_editmainpagename' => 'an Nåm voh da Hauptseiten beorweiten',
+	'adminlinks_users' => 'Benutzer',
+	'adminlinks_createuser' => 'Benutzerkóntó erstön',
+	'adminlinks_browsesearch' => 'Durchschauh und suacher',
+	'adminlinks_importexport' => 'Importiern und Exportiern',
+	'right-adminlinks' => '[[Special:AdminLinks|Links für Administraatoren]] hernemmer',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -174,10 +259,10 @@ $messages['be-tarask'] = array(
  * @author Stanqo
  */
 $messages['bg'] = array(
-	'adminlinks' => 'административни връзки',
+	'adminlinks' => 'административни препратки',
 	'adminlinks-desc' => 'Добавя [[Special:AdminLinks|специална страница]], която съдържа полезни препратки за администраторите',
 	'adminlinks_documentation' => '$1 документация',
-	'adminlinks_general' => 'Общ',
+	'adminlinks_general' => 'Основни',
 	'adminlinks_editsidebar' => 'Редактиране на страничната лента',
 	'adminlinks_editcss' => 'Редактиране на CSS файл',
 	'adminlinks_editmainpagename' => 'Редактиране името на началната страница',
@@ -185,7 +270,33 @@ $messages['bg'] = array(
 	'adminlinks_createuser' => 'Създаване на потребител',
 	'adminlinks_browsesearch' => 'Разглеждане и търсене',
 	'adminlinks_importexport' => 'Внасяне и изнасяне',
-	'right-adminlinks' => 'Погледни връзката към [[Special:AdminLinks|Администраторски връзки]]',
+	'right-adminlinks' => 'Показване на препратката към [[Special:AdminLinks|Административни препратки]]',
+);
+
+/** Banjar (Bahasa Banjar)
+ * @author Ezagren
+ */
+$messages['bjn'] = array(
+	'adminlinks_users' => 'Pamuruk',
+	'adminlinks_createuser' => 'Ulah pamuruk',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'adminlinks' => 'প্রশাসকের সংযোগ',
+	'adminlinks-desc' => 'একটি [[Special:AdminLinks|বিশেষ পাতার]] লিংক যোগ করুন, যেখানে প্রশাসকদের জন্য কিছু সাহায্য পাতার লিংক রয়েছে',
+	'adminlinks_documentation' => '$1 কার্যকৌশল বিবরণী',
+	'adminlinks_general' => 'সাধারণ',
+	'adminlinks_editsidebar' => 'সাইডবার সম্পাদনা',
+	'adminlinks_editcss' => 'সিএসএস ফাইল সম্পাদনা',
+	'adminlinks_editmainpagename' => 'প্রধান পাতার নাম সম্পাদনা করুন',
+	'adminlinks_users' => 'ব্যবহারকারী',
+	'adminlinks_createuser' => 'ব্যবহারকারী সৃষ্টি',
+	'adminlinks_browsesearch' => 'ব্রাউজ ও অনুসন্ধান',
+	'adminlinks_importexport' => 'আমদানি ও রপ্তানি',
+	'right-adminlinks' => 'সংযোগটি [[Special:AdminLinks|প্রশাসক লিংকে]] দেখুন',
 );
 
 /** Breton (Brezhoneg)
@@ -194,7 +305,7 @@ $messages['bg'] = array(
 $messages['br'] = array(
 	'adminlinks' => 'Liammoù merañ',
 	'adminlinks-desc' => 'Ouzhpennañ a ra ur [[Special:AdminLinks|bajenn dibar]] enni liammoù talvoudus evit ar verourien',
-	'adminlinks_documentation' => 'dafar $1',
+	'adminlinks_documentation' => 'teuliadur $1',
 	'adminlinks_general' => 'Hollek',
 	'adminlinks_editsidebar' => 'Kemmañ ar varrenn gostez',
 	'adminlinks_editcss' => 'Kemmañ ar restr CSS',
@@ -243,12 +354,41 @@ $messages['ca'] = array(
 	'right-adminlinks' => "Veure l'enllaç a [[Special:AdminLinks|enllaços d'administrador]]",
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'adminlinks' => 'Хьажоригаш адманкуьйгалхошна',
+	'adminlinks-desc' => 'Тlе туху [[Special:AdminLinks|белхан агlо]], йолуш пайде хьажоригаш адманкуьйгалхошна',
+	'adminlinks_documentation' => 'хааманбаххаш $1',
+	'adminlinks_general' => 'Еригге',
+	'adminlinks_editsidebar' => 'Нисйе агlон тlийра чоь',
+	'adminlinks_editcss' => 'Нисйе CSS хlум',
+	'adminlinks_editmainpagename' => 'Нисйе коьрта агlон цlе',
+	'adminlinks_users' => 'Декъашхой',
+	'adminlinks_createuser' => 'Кхолла дlавазвалар',
+	'adminlinks_browsesearch' => 'Гуш а лахар',
+	'adminlinks_importexport' => 'Чуйахар а арайахар',
+	'right-adminlinks' => 'гарна [[Special:AdminLinks|хьажоригаш адманкуьйгалхошна]]',
+);
+
 /** Czech (Česky)
  * @author Kuvaly
+ * @author Reaperman
  */
 $messages['cs'] = array(
+	'adminlinks' => 'Odkazy pro správce',
 	'adminlinks-desc' => 'Přidává [[Special:AdminLinks|speciální stránku]] s užitečnými odkazy pro správce',
+	'adminlinks_documentation' => 'Dokumentace pro $1',
+	'adminlinks_general' => 'Obecné',
+	'adminlinks_editsidebar' => 'Upravit postranní panel',
+	'adminlinks_editcss' => 'Upravit globální CSS',
+	'adminlinks_editmainpagename' => 'Upravit název hlavní stránky',
 	'adminlinks_users' => 'Uživatelé',
+	'adminlinks_createuser' => 'Vytvořit uživatelský účet',
+	'adminlinks_browsesearch' => 'Prohlížení a vyhledávání',
+	'adminlinks_importexport' => 'Import a export stránek',
+	'right-adminlinks' => 'Viditelný odkaz na stránku [[Special:AdminLinks|Odkazy pro správce]]',
 );
 
 /** Welsh (Cymraeg)
@@ -288,22 +428,23 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Purodha
  * @author Umherirrender
  */
 $messages['de'] = array(
 	'adminlinks' => 'Links für Administratoren',
 	'adminlinks-desc' => 'Ergänzt eine [[Special:AdminLinks|Spezialseite]] mit hilfreichen Links für Administratoren',
-	'adminlinks_documentation' => 'Dokumentation von „$1“',
+	'adminlinks_documentation' => 'Dokumentation zu „$1“',
 	'adminlinks_general' => 'Allgemein',
-	'adminlinks_editsidebar' => 'Sidebar bearbeiten',
-	'adminlinks_editcss' => 'CSS-Dateien bearbeiten',
-	'adminlinks_editmainpagename' => 'Name der Hauptseite bearbeiten',
+	'adminlinks_editsidebar' => 'Seitenleiste bearbeiten',
+	'adminlinks_editcss' => 'CSS bearbeiten',
+	'adminlinks_editmainpagename' => 'Namen der Hauptseite bearbeiten',
 	'adminlinks_users' => 'Benutzer',
-	'adminlinks_createuser' => 'Benutzer erstellen',
+	'adminlinks_createuser' => 'Benutzerkonto anlegen',
 	'adminlinks_browsesearch' => 'Durchsehen und Suchen',
 	'adminlinks_importexport' => 'Importieren und Exportieren',
-	'right-adminlinks' => 'Link nach [[Special:AdminLinks|Links für Administratoren]] sehen',
+	'right-adminlinks' => '[[Special:AdminLinks|Links für Administratoren]] nutzen',
 );
 
 /** Zazaki (Zazaki)
@@ -329,6 +470,24 @@ $messages['dsb'] = array(
 	'adminlinks_browsesearch' => 'Pśeglědowanje a pytanje',
 	'adminlinks_importexport' => 'Importěrowanje a eksportěrowanje',
 	'right-adminlinks' => 'Glědaj wótkaz k [[Special:AdminLinks|wótkazam za administratorow]]',
+);
+
+/** Central Dusun (Dusun Bundu-liwan)
+ * @author FRANCIS5091
+ */
+$messages['dtp'] = array(
+	'adminlinks' => 'Toput mongu-ngulud',
+	'adminlinks-desc' => 'Poruhango [[Special:AdminLinks|bolikon suaikowokon]] it minongigit toput kiguno montok momumuruan',
+	'adminlinks_documentation' => '$1 gogompipail',
+	'adminlinks_general' => 'Gumuan',
+	'adminlinks_editsidebar' => 'Idito bardisan',
+	'adminlinks_editcss' => 'Idito pail CSS',
+	'adminlinks_editmainpagename' => 'Idito ngaran do bolikon tagayo',
+	'adminlinks_users' => 'Momomoguno',
+	'adminlinks_createuser' => 'Pomonsoi momoguno',
+	'adminlinks_browsesearch' => 'Ansahai om ihumo',
+	'adminlinks_importexport' => 'Pingonuon om popingatodo',
+	'right-adminlinks' => 'Intaai nopotan [[Special:AdminLinks|Tongotoput Mongu-ngulud]]',
 );
 
 /** Greek (Ελληνικά)
@@ -357,6 +516,7 @@ $messages['el'] = array(
  */
 $messages['eo'] = array(
 	'adminlinks' => 'Ligiloj por administrantoj',
+	'adminlinks-desc' => 'Aldonos [[Special:AdminLinks|specialan paĝon]] kiu enhavas helpemajn ligilojn por administrantoj',
 	'adminlinks_documentation' => '$1 dokumentaro',
 	'adminlinks_general' => 'Ĝenerala',
 	'adminlinks_editsidebar' => 'eldoni iltrabon',
@@ -366,6 +526,7 @@ $messages['eo'] = array(
 	'adminlinks_createuser' => 'krei uzanton',
 	'adminlinks_browsesearch' => 'Tralego kaj Serĉo',
 	'adminlinks_importexport' => 'Importi kaj Eksporti',
+	'right-adminlinks' => 'Vidi ligilon al [[Special:AdminLinks|Administranto-ligilojn]]',
 );
 
 /** Spanish (Español)
@@ -389,10 +550,14 @@ $messages['es'] = array(
 
 /** Estonian (Eesti)
  * @author Avjoska
+ * @author Pikne
  */
 $messages['et'] = array(
+	'adminlinks' => 'Administraatori lingid',
+	'adminlinks-desc' => 'Lisab [[Special:AdminLinks|erilehekülje]] administraatoritele kasulike linkidega.',
 	'adminlinks_users' => 'Kasutajad',
 	'adminlinks_createuser' => 'Loo uus kasutaja',
+	'right-adminlinks' => 'Näha linki leheküljele [[Special:AdminLinks|administraatori lingid]]',
 );
 
 /** Basque (Euskara)
@@ -405,13 +570,33 @@ $messages['eu'] = array(
 	'adminlinks_editsidebar' => 'Ezkerreko barra aldatu',
 	'adminlinks_editcss' => 'CSS fitxategia aldatu',
 	'adminlinks_editmainpagename' => 'Azalaren izena aldatu',
-	'adminlinks_users' => 'Lankideak',
+	'adminlinks_users' => 'Erabiltzaileak',
 	'adminlinks_createuser' => 'Lankidea sortu',
 	'adminlinks_importexport' => 'Inportatu eta esportatu',
 );
 
+/** Persian (فارسی)
+ * @author Sahim
+ * @author ZxxZxxZ
+ */
+$messages['fa'] = array(
+	'adminlinks' => 'لینک‌های مدیران',
+	'adminlinks-desc' => 'اضافه کردن یک [[Special:AdminLinks|صفحه ویژه]] که دارای لینک‌های مفید برای مدیران است',
+	'adminlinks_documentation' => '$1 مستند شده',
+	'adminlinks_general' => 'عمومی',
+	'adminlinks_editsidebar' => 'نوار ویرایش',
+	'adminlinks_editcss' => 'ویرایش فایل CSS',
+	'adminlinks_editmainpagename' => 'ویرایش نام از طریق صفحه اصلی',
+	'adminlinks_users' => 'کاربران',
+	'adminlinks_createuser' => 'ساخت یک کاربر',
+	'adminlinks_browsesearch' => 'مرور و جستجو',
+	'adminlinks_importexport' => 'ورودی و خروجی',
+	'right-adminlinks' => 'لینک به [[Special:AdminLinks|لینک‌های مدیران]] را ببینید',
+);
+
 /** Finnish (Suomi)
  * @author Crt
+ * @author Nike
  * @author Str4nd
  * @author Varusmies
  * @author ZeiP
@@ -428,6 +613,7 @@ $messages['fi'] = array(
 	'adminlinks_createuser' => 'Luo uusi käyttäjä',
 	'adminlinks_browsesearch' => 'Selaaminen ja hakeminen',
 	'adminlinks_importexport' => 'Tuonti ja vienti',
+	'right-adminlinks' => 'Nähdä linkki sivulle [[Special:AdminLinks|ylläpitäjien linkit]]',
 );
 
 /** French (Français)
@@ -459,8 +645,8 @@ $messages['frp'] = array(
 	'adminlinks_editsidebar' => 'Changiér la bârra de fllanc',
 	'adminlinks_editcss' => 'Changiér lo fichiér CSS',
 	'adminlinks_editmainpagename' => 'Changiér lo nom de la pâge de reçua',
-	'adminlinks_users' => 'Utilisators',
-	'adminlinks_createuser' => 'Fâre un utilisator',
+	'adminlinks_users' => 'Usanciérs',
+	'adminlinks_createuser' => 'Fâre un usanciér',
 	'adminlinks_browsesearch' => 'Navigacion et rechèrche',
 	'adminlinks_importexport' => 'Importar et èxportar',
 	'right-adminlinks' => 'Vêre lo lim de vers los [[Special:AdminLinks|lims d’administracion]]',
@@ -545,6 +731,17 @@ $messages['he'] = array(
 	'adminlinks_browsesearch' => 'עיון וחיפוש',
 	'adminlinks_importexport' => 'ייבוא וייצוא',
 	'right-adminlinks' => 'הצגת הקישור לדף [[Special:AdminLinks|קישורים למפעילי מערכת]]',
+);
+
+/** Hindi (हिन्दी)
+ * @author Kumar
+ */
+$messages['hi'] = array(
+	'adminlinks_general' => 'सामान्य',
+	'adminlinks_editsidebar' => 'साइडबार संपादित करें',
+	'adminlinks_editcss' => 'सीएसएस फ़ाइल संपादित करें',
+	'adminlinks_editmainpagename' => 'मुख्य पृष्ठ का नाम संपादित करें',
+	'adminlinks_users' => 'सदस्य',
 );
 
 /** Croatian (Hrvatski)
@@ -641,7 +838,18 @@ $messages['id'] = array(
  * @author Ukabia
  */
 $messages['ig'] = array(
+	'adminlinks' => 'Jikodo ndi íshí',
+	'adminlinks-desc' => 'Né tinyé [[Special:AdminLinks|ihü mkpa]] né jidé jikodo nke ne nyé nkwado maka ndi íshí',
+	'adminlinks_documentation' => 'akwukwo $1',
 	'adminlinks_general' => 'Nke níle',
+	'adminlinks_editsidebar' => 'Rüwá na ngwa di na ákùkù',
+	'adminlinks_editcss' => 'Rüwá na akwukwo orúnotu nke CSS',
+	'adminlinks_editmainpagename' => 'Rüwá na áhà ihü íshí',
+	'adminlinks_users' => "Ọ'bànifé",
+	'adminlinks_createuser' => 'Ké onye na banife',
+	'adminlinks_browsesearch' => 'Nlearia na Í tú',
+	'adminlinks_importexport' => 'I tinyé na Í kpata',
+	'right-adminlinks' => 'Zi jikodo na ga [[Special:AdminLinks|Jikodo ndi íshí]]',
 );
 
 /** Italian (Italiano)
@@ -686,6 +894,7 @@ $messages['ja'] = array(
  */
 $messages['ka'] = array(
 	'adminlinks_users' => 'მომხმარებლები',
+	'adminlinks_createuser' => 'ანგარიშის შექმნა',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -702,7 +911,26 @@ $messages['km'] = array(
 	'adminlinks_importexport' => 'កំពុង​នាំ​ចូល ​និងកំពុង​នាំ​ចេញ​',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Korean (한국어)
+ * @author Devunt
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'adminlinks' => '괸리용 링크 모음',
+	'adminlinks-desc' => '관리자들에게 유용한 링크들이 있는 [[Special:AdminLinks|특수 문서]]를 추가합니다',
+	'adminlinks_documentation' => '$1 설명문서',
+	'adminlinks_general' => '일반',
+	'adminlinks_editsidebar' => '사이드바 편집',
+	'adminlinks_editcss' => 'CSS 파일 편집',
+	'adminlinks_editmainpagename' => '대문 이름 편집',
+	'adminlinks_users' => '사용자',
+	'adminlinks_createuser' => '계정 만들기',
+	'adminlinks_browsesearch' => '둘러보기 및 찾기',
+	'adminlinks_importexport' => '가져오기 및 내보내기',
+	'right-adminlinks' => '[[Special:AdminLinks|관리자용 링크]]를 보기',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -718,6 +946,14 @@ $messages['ksh'] = array(
 	'adminlinks_browsesearch' => 'Bläddere un Söhke',
 	'adminlinks_importexport' => 'Empoteere un Äxpoteere',
 	'right-adminlinks' => 'Dä Lengk op de Sigg met [[Special:AdminLinks|Lengks för Köbeße]] jezeijsch krijje',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'adminlinks_users' => 'Bikarhêneran',
+	'adminlinks_createuser' => 'Bikarhênerekî çêke',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -739,6 +975,19 @@ $messages['lb'] = array(
 	'right-adminlinks' => 'Kuckt the Link op [[Special:AdminLinks|Like fir Administrateuren]]',
 );
 
+/** Lezghian (Лезги)
+ * @author Namik
+ */
+$messages['lez'] = array(
+	'adminlinks' => 'Кавхаяр алукьнин чарчин',
+	'adminlinks_general' => 'Чlехидин',
+	'adminlinks_editcss' => 'Дегишарун CSS шикил',
+	'adminlinks_users' => 'Иштиракчияр',
+	'adminlinks_createuser' => 'Чар туькIуьрун',
+	'adminlinks_browsesearch' => 'Килигун ва жагъурун',
+	'adminlinks_importexport' => 'Кьабулун ва Ракъурун',
+);
+
 /** Limburgish (Limburgs)
  * @author Pahles
  */
@@ -757,6 +1006,66 @@ $messages['li'] = array(
 	'right-adminlinks' => 'De verwiezing nao [[Special:AdminLinks|verwiezinge veur systeemwèrkers]] betrachte',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ * @author Ignas693
+ * @author Perkunas
+ */
+$messages['lt'] = array(
+	'adminlinks' => 'Administravimo saitai',
+	'adminlinks-desc' => 'Prideda [[Special:AdminLinks|Specialu puslapį]] kuriame yra naudingos nuorodos administretoriams',
+	'adminlinks_documentation' => '$1 dokumentacija',
+	'adminlinks_general' => 'Bendrosios',
+	'adminlinks_editsidebar' => 'Redaguoti šoninės juostos',
+	'adminlinks_editcss' => 'Redaguoti CSS failą',
+	'adminlinks_editmainpagename' => 'Redaguoti pagrindinio puslapio pavadinimą',
+	'adminlinks_users' => 'Vartotojai',
+	'adminlinks_createuser' => 'Sukurti naudotoją',
+	'adminlinks_browsesearch' => 'Naršyti ir ieškoti',
+	'adminlinks_importexport' => 'Importas ir eksportas',
+	'right-adminlinks' => 'Žr. nuorodą į [[specialus: AdminLinks|Administravimo saitai]]',
+);
+
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'adminlinks_users' => 'Lītuotuoji',
+	'adminlinks_createuser' => 'Sataiseit jaunu lītuotuoju',
+);
+
+/** Latvian (Latviešu)
+ * @author Papuass
+ */
+$messages['lv'] = array(
+	'adminlinks' => 'Administrācijas saites',
+	'adminlinks-desc' => 'Pievieno [[Special:AdminLinks|īpašo lapu]], kura satur administratoriem noderīgas saites',
+	'adminlinks_documentation' => '$1 dokumentācija',
+	'adminlinks_general' => 'Vispārīgi',
+	'adminlinks_editsidebar' => 'Labot sānjoslu',
+	'adminlinks_editcss' => 'Labot CSS failu',
+	'adminlinks_editmainpagename' => 'Labot galvenās lapas nosaukumu',
+	'adminlinks_users' => 'Lietotāji',
+	'adminlinks_createuser' => 'Izveidot lietotāju',
+	'adminlinks_browsesearch' => 'Pārlūkot un meklēt',
+	'adminlinks_importexport' => 'Imports un eksports',
+	'right-adminlinks' => 'Redzēt saiti uz [[Special:AdminLinks|Administrācijas saitēm]]',
+);
+
+/** Lazuri (Lazuri)
+ * @author Bombola
+ */
+$messages['lzz'] = array(
+	'adminlinks_users' => "K'oçepe",
+);
+
+/** Maithili (मैथिली)
+ * @author Vinitutpal
+ */
+$messages['mai'] = array(
+	'adminlinks' => 'एडमिन लिंक',
+);
+
 /** Malagasy (Malagasy)
  * @author Jagwar
  */
@@ -766,7 +1075,7 @@ $messages['mg'] = array(
 	'adminlinks_documentation' => "fanoroan'ny $1",
 	'adminlinks_general' => 'ankabiazany/jeneraly',
 	'adminlinks_editsidebar' => 'ovay ny bara sisiny',
-	'adminlinks_editcss' => 'Ovao ny rakitra CSS',
+	'adminlinks_editcss' => 'Hanova ny rakitra CSS',
 	'adminlinks_editmainpagename' => "ovay ny anaran'ny pejy fandraisana",
 	'adminlinks_users' => 'mpikambana',
 	'adminlinks_createuser' => 'hamorona mpikambana',
@@ -815,18 +1124,37 @@ $messages['mk'] = array(
  * @author Sadik Khalid
  */
 $messages['ml'] = array(
-	'adminlinks' => 'കാര്യനിര്‍വാഹക കണ്ണികള്‍',
-	'adminlinks-desc' => 'കാര്യനിര്‍വാഹകര്‍ക്ക് സഹായകരമായ കണ്ണികളോടു കൂടിയ ഒരു [[Special:AdminLinks|പ്രത്യേക താള്‍]] ചേര്‍ക്കുന്നു',
+	'adminlinks' => 'കാര്യനിർവാഹക കണ്ണികൾ',
+	'adminlinks-desc' => 'കാര്യനിർവാഹകർക്ക് സഹായകരമായ കണ്ണികളോടു കൂടിയ ഒരു [[Special:AdminLinks|പ്രത്യേക താൾ]] ചേർക്കുന്നു',
 	'adminlinks_documentation' => '$1 വിവരണം',
-	'adminlinks_general' => 'സാര്‍വത്രികം',
-	'adminlinks_editsidebar' => 'സൈഡ്ബാര്‍ തിരുത്തുക',
+	'adminlinks_general' => 'സാർവത്രികം',
+	'adminlinks_editsidebar' => 'സൈഡ്ബാർ തിരുത്തുക',
 	'adminlinks_editcss' => 'CSS പ്രമാണം തിരുത്തുക',
 	'adminlinks_editmainpagename' => 'പ്രധാനതാളിന്റെ പേര് തിരുത്തുക',
-	'adminlinks_users' => 'ഉപയോക്താക്കള്‍',
+	'adminlinks_users' => 'ഉപയോക്താക്കൾ',
 	'adminlinks_createuser' => 'ഒരു ഉപയോക്താവിനെ സൃഷ്ടിക്കുക',
 	'adminlinks_browsesearch' => 'തിരച്ചിലും മേച്ചിലും',
 	'adminlinks_importexport' => 'കയറ്റുമതിയും ഇറക്കുമതിയും',
-	'right-adminlinks' => '[[Special:AdminLinks|കാര്യനിവാഹക കണ്ണികളിലേക്കുള്ള]] കണ്ണികള്‍ കാണുക',
+	'right-adminlinks' => '[[Special:AdminLinks|കാര്യനിവാഹക കണ്ണികളിലേക്കുള്ള]] കണ്ണികൾ കാണുക',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ * @author Zamwan
+ */
+$messages['ms'] = array(
+	'adminlinks' => 'Pautan pentadbir',
+	'adminlinks-desc' => 'Menambahkan [[Special:AdminLinks|laman khas]] yang menyimpan pautan-pautan yang berguna untuk pentadbir',
+	'adminlinks_documentation' => 'Dokumentasi $1',
+	'adminlinks_general' => 'Umum',
+	'adminlinks_editsidebar' => 'Sunting bar sisi',
+	'adminlinks_editcss' => 'Sunting fail CSS',
+	'adminlinks_editmainpagename' => 'Sunting nama laman utama',
+	'adminlinks_users' => 'Pengguna',
+	'adminlinks_createuser' => 'Cipta pengguna',
+	'adminlinks_browsesearch' => 'Layari dan cari',
+	'adminlinks_importexport' => 'Import dan eksport',
+	'right-adminlinks' => 'Melihat pautan ke [[Special:AdminLinks|Pautan pentadbir]]',
 );
 
 /** Erzya (Эрзянь)
@@ -847,17 +1175,35 @@ $messages['myv'] = array(
 	'right-adminlinks' => 'Ваномс [[Special:AdminLinks|администраторонь сюлмавома пенетнень]]',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'adminlinks' => 'Adminlenker',
+	'adminlinks-desc' => 'Legger til en [[Special:AdminLinks|spesialside]] som inneholder nyttige lenker for administratorer',
+	'adminlinks_documentation' => 'dokumentasjon for $1',
+	'adminlinks_general' => 'Generelt',
+	'adminlinks_editsidebar' => 'Endre sidespalten',
+	'adminlinks_editcss' => 'Rediger CSS-filen',
+	'adminlinks_editmainpagename' => 'Endre navnet på hovedsiden',
+	'adminlinks_users' => 'Brukere',
+	'adminlinks_createuser' => 'Opprett en bruker',
+	'adminlinks_browsesearch' => 'Lesing og søking',
+	'adminlinks_importexport' => 'Importering og eksportering',
+	'right-adminlinks' => 'Se lenken til [[Special:AdminLinks|admin-lenker]]',
+);
+
 /** Nedersaksisch (Nedersaksisch)
  * @author Servien
  */
 $messages['nds-nl'] = array(
 	'adminlinks' => 'Verwiezingen veur beheerders',
-	'adminlinks-desc' => 'Voeg een [[Special:AdminLinks|speciale pagina]] toe mit hendige verwiezingen veur beheerders',
-	'adminlinks_documentation' => 'Dokementasie veur $1',
+	'adminlinks-desc' => 'Zet der n [[Special:AdminLinks|spesiale pagina]] bie mit hendige verwiezingen veur beheerders',
+	'adminlinks_documentation' => 'Dokumentasie veur $1',
 	'adminlinks_general' => 'Algemeen',
 	'adminlinks_editsidebar' => 'Ziedbalke bewarken',
 	'adminlinks_editcss' => 'CSS bewarken',
-	'adminlinks_editmainpagename' => "Naam van 't veurblad bewarken",
+	'adminlinks_editmainpagename' => 'Naam van t veurblad bewarken',
 	'adminlinks_users' => 'Gebrukers',
 	'adminlinks_createuser' => 'Gebruker anmaken',
 	'adminlinks_browsesearch' => 'Bekieken en zeuken',
@@ -866,21 +1212,23 @@ $messages['nds-nl'] = array(
 );
 
 /** Nepali (नेपाली)
+ * @author Bhawani Gautam
+ * @author Bhawani Gautam Rhk
  * @author सरोज कुमार ढकाल
  */
 $messages['ne'] = array(
 	'adminlinks' => 'प्रवन्धक लिङ्कहरु',
-	'adminlinks-desc' => '[[Special:AdminLinks|special page]] थप्छ जसले प्रवन्धककर्ताहरुको  लागि सहयोगी लिङ्कहरु समेटेको छ।',
-	'adminlinks_documentation' => '$1 मिसिलिकरण',
+	'adminlinks-desc' => 'एउटा [[Special:AdminLinks|विशेष पृष्ठ]] थप्छ जसले प्रबन्धककर्ताहरुको  लागि सहयोगी लिङ्कहरु समेटेको छ।',
+	'adminlinks_documentation' => '$1 दस्तावेज़ीकरण',
 	'adminlinks_general' => 'साधारण',
 	'adminlinks_editsidebar' => 'साइडबार सम्पादन गर्ने',
 	'adminlinks_editcss' => ' CSS फाइल सम्पादन गर्ने',
 	'adminlinks_editmainpagename' => 'मूख्य पृष्ठको नाम सम्पादन गर्ने',
 	'adminlinks_users' => 'प्रयोगकर्ताहरु',
-	'adminlinks_createuser' => 'प्रयोगकर्ता शृजना गर्ने',
+	'adminlinks_createuser' => 'प्रयोगकर्ता सृजना गर्ने',
 	'adminlinks_browsesearch' => 'ब्राउजिङ्ग र खोजी',
 	'adminlinks_importexport' => 'आयात तथा निर्यात',
-	'right-adminlinks' => 'यो लिङ्क हेर्नुहोस [[Special:AdminLinks|प्रवन्धक लिङ्क]]',
+	'right-adminlinks' => 'यो लिङ्क हेर्नुहोस [[Special:AdminLinks|प्रबन्धक लिङ्क]]',
 );
 
 /** Dutch (Nederlands)
@@ -919,24 +1267,6 @@ $messages['nn'] = array(
 	'right-adminlinks' => 'Sjå lenka til [[Special:AdminLinks|admin-lenker]]',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'adminlinks' => 'Adminlenker',
-	'adminlinks-desc' => 'Legger til en [[Special:AdminLinks|spesialside]] som inneholder nyttige lenker for administratorer',
-	'adminlinks_documentation' => 'dokumentasjon for $1',
-	'adminlinks_general' => 'Generelt',
-	'adminlinks_editsidebar' => 'Endre sidespalten',
-	'adminlinks_editcss' => 'Rediger CSS-filen',
-	'adminlinks_editmainpagename' => 'Endre navnet på hovedsiden',
-	'adminlinks_users' => 'Brukere',
-	'adminlinks_createuser' => 'Opprett en bruker',
-	'adminlinks_browsesearch' => 'Lesing og søking',
-	'adminlinks_importexport' => 'Importering og eksportering',
-	'right-adminlinks' => 'Se lenken til [[Special:AdminLinks|admin-lenker]]',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -953,6 +1283,24 @@ $messages['oc'] = array(
 	'adminlinks_browsesearch' => 'Navigacion e recèrca',
 	'adminlinks_importexport' => 'Importar e exportar',
 	'right-adminlinks' => "Vejatz lo ligam cap als [[Special:AdminLinks|ligams d'administracion]]",
+);
+
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Ansumang
+ * @author Odisha1
+ */
+$messages['or'] = array(
+	'adminlinks_general' => 'ସାଧାରଣ',
+	'adminlinks_editmainpagename' => 'ପ୍ରଧାନ ପୃଷ୍ଠାର ନାମ ବଦଳାଇବେ',
+	'adminlinks_users' => 'ବ୍ୟବହାରକାରୀଗଣ',
+);
+
+/** Ossetic (Ирон)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'adminlinks_editcss' => 'CSS файл баив',
+	'adminlinks_users' => 'Архайджытæ',
 );
 
 /** Deitsch (Deitsch)
@@ -978,7 +1326,7 @@ $messages['pl'] = array(
 	'adminlinks_createuser' => 'Utwórz użytkownika',
 	'adminlinks_browsesearch' => 'Przeglądanie i wyszukiwanie',
 	'adminlinks_importexport' => 'Importowanie i eksportowanie',
-	'right-adminlinks' => 'Zobacz link do [[Special:AdminLinks|Linki dla administratorów]]',
+	'right-adminlinks' => 'Podgląd zawartości strony [[Special:AdminLinks|Linki dla administratorów]]',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1006,11 +1354,13 @@ $messages['ps'] = array(
 	'adminlinks' => 'د پازوال تړنې',
 	'adminlinks_documentation' => '$1 لاسوند',
 	'adminlinks_general' => 'ټولګړی',
+	'adminlinks_editsidebar' => 'څنګپټه سمول',
 	'adminlinks_editcss' => 'د CSS دوتنه سمول',
 	'adminlinks_editmainpagename' => 'د اصلي مخ نوم سمول',
 	'adminlinks_users' => 'کارنان',
 	'adminlinks_createuser' => 'يو کارن جوړول',
 	'adminlinks_browsesearch' => 'سپړنه او پلټنه',
+	'adminlinks_importexport' => 'واردول او صادرول',
 	'right-adminlinks' => 'د [[Special:AdminLinks|پازوال تړنو]] ته ورسيخه شوې تړنه کتل',
 );
 
@@ -1020,8 +1370,8 @@ $messages['ps'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
-	'adminlinks' => 'Ligações para administradores',
-	'adminlinks-desc' => 'Adiciona uma [[Special:AdminLinks|página especial]] que contém ligações úteis para administradores',
+	'adminlinks' => 'Links para administradores',
+	'adminlinks-desc' => 'Adiciona uma [[Special:AdminLinks|página especial]] que contém links úteis para administradores',
 	'adminlinks_documentation' => 'Documentação sobre $1',
 	'adminlinks_general' => 'Geral',
 	'adminlinks_editsidebar' => 'Editar barra lateral',
@@ -1031,7 +1381,7 @@ $messages['pt'] = array(
 	'adminlinks_createuser' => 'Criar um utilizador',
 	'adminlinks_browsesearch' => 'Navegação e pesquisa',
 	'adminlinks_importexport' => 'Importação e exportação',
-	'right-adminlinks' => 'Ver a ligação para a página [[Special:AdminLinks|Ligações para administradores]]',
+	'right-adminlinks' => 'Ver o link para a página [[Special:AdminLinks|Links para administradores]]',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1053,19 +1403,38 @@ $messages['pt-br'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Minisarm
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
+	'adminlinks' => 'Legături administrator',
+	'adminlinks_documentation' => 'Documentație pentru $1',
+	'adminlinks_general' => 'General',
+	'adminlinks_editsidebar' => 'Editează bara laterală',
+	'adminlinks_editcss' => 'Editează fişierul CSS',
+	'adminlinks_editmainpagename' => 'Editează numele paginii principale',
 	'adminlinks_users' => 'Utilizatori',
 	'adminlinks_createuser' => 'Creează un utilizator',
-	'adminlinks_importexport' => 'Importare şi exportare',
+	'adminlinks_browsesearch' => 'Răsfoiește și caută',
+	'adminlinks_importexport' => 'Importare și exportare',
 );
 
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'adminlinks' => "Collegaminde de l'amministratore",
+	'adminlinks_documentation' => 'documendazione de $1',
+	'adminlinks_general' => 'Generale',
+	'adminlinks_editsidebar' => "Cange 'a barre laterale",
+	'adminlinks_editcss' => "Cange 'u file CSS",
+	'adminlinks_editmainpagename' => "Cange 'u nome d'a pàgene prengepàle",
 	'adminlinks_users' => 'Utinde',
+	'adminlinks_createuser' => "Ccreje 'n'utende",
+	'adminlinks_browsesearch' => 'Sfoglie e cirche',
+	'adminlinks_importexport' => "'Mborte e esporte",
 );
 
 /** Russian (Русский)
@@ -1087,7 +1456,25 @@ $messages['ru'] = array(
 	'right-adminlinks' => 'видеть [[Special:AdminLinks|ссылки для администраторов]]',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'adminlinks' => 'Одказы про адміністратора',
+	'adminlinks-desc' => 'Додасть [[Special:AdminLinks|шпеціалну сторінку]], яка обсягує хосновны одказы про адміністраторів',
+	'adminlinks_documentation' => 'документація $1',
+	'adminlinks_general' => 'Обще',
+	'adminlinks_editsidebar' => 'Едітовати бочный панел',
+	'adminlinks_editcss' => 'Едітовати CSS-файл',
+	'adminlinks_editmainpagename' => 'Змінити назву головной сторінкы',
+	'adminlinks_users' => 'Хоснователї',
+	'adminlinks_createuser' => 'Створити конто хоснователя',
+	'adminlinks_browsesearch' => 'Перегляд і гляданя',
+	'adminlinks_importexport' => 'Імпорт і експорт',
+	'right-adminlinks' => 'Відїти [[Special:AdminLinks|Одказы про адміністраторів]]',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1105,7 +1492,14 @@ $messages['sah'] = array(
 	'right-adminlinks' => '[[Special:AdminLinks|Дьаһабылларга анаммыт сигэлэри]] көрүү',
 );
 
-/** Tachelhit (Tašlḥiyt)
+/** Sicilian (Sicilianu)
+ * @author Aushulz
+ */
+$messages['scn'] = array(
+	'adminlinks_users' => 'Utenti',
+);
+
+/** Tachelhit (Tašlḥiyt/ⵜⴰⵛⵍⵃⵉⵜ)
  * @author Dalinanir
  */
 $messages['shi'] = array(
@@ -1121,6 +1515,16 @@ $messages['shi'] = array(
 	'adminlinks_browsesearch' => 'Asglb du ucnubc',
 	'adminlinks_importexport' => 'Askcm d Attḥay',
 	'right-adminlinks' => 'Ẓr izdayn s [[Special:AdminLinks|Izdayn nu umsfttu]]',
+);
+
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'adminlinks' => 'පරිපාලක සබැඳුම්',
+	'adminlinks_general' => 'සාමාන්‍ය',
+	'adminlinks_users' => 'පරිශීලකයෝ',
+	'adminlinks_createuser' => 'පරිශීලකයෙක් තනන්න',
 );
 
 /** Slovak (Slovenčina)
@@ -1141,12 +1545,69 @@ $messages['sk'] = array(
 	'right-adminlinks' => 'Pozri odkaz na [[Special:AdminLinks|Odkazy správcu]]',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'adminlinks' => 'Skrbniške povezave',
+	'adminlinks-desc' => 'Doda [[Special:AdminLinks|posebno stran]], ki vsebuje uporabne povezave za administratorje',
+	'adminlinks_documentation' => 'Dokumentacija $1',
+	'adminlinks_general' => 'Splošno',
+	'adminlinks_editsidebar' => 'Uredi stransko vrstico',
+	'adminlinks_editcss' => 'Uredi datoteko CSS',
+	'adminlinks_editmainpagename' => 'Uredi ime glavne strani',
+	'adminlinks_users' => 'Uporabniki',
+	'adminlinks_createuser' => 'Ustvari uporabnika',
+	'adminlinks_browsesearch' => 'Brskanje in iskanje',
+	'adminlinks_importexport' => 'Uvoz in izvoz',
+	'right-adminlinks' => 'Ogled povezav na [[Special:AdminLinks|Skrbniških povezavah]]',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Charmed94
+ * @author Rancher
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'adminlinks' => 'Административне везе',
+	'adminlinks-desc' => 'Додаје [[Special:AdminLinks|посебну страницу]] која садржи корисне везе за администраторе',
+	'adminlinks_documentation' => '$1 документација',
+	'adminlinks_general' => 'Опште',
+	'adminlinks_editsidebar' => 'Уреди бочну траку',
+	'adminlinks_editcss' => 'Уреди CSS датотеку',
+	'adminlinks_editmainpagename' => 'Измени назив главне странице',
+	'adminlinks_users' => 'Корисници',
+	'adminlinks_createuser' => 'Направи корисника',
+	'adminlinks_browsesearch' => 'Претраживање',
+	'adminlinks_importexport' => 'Увоз и извоз',
+	'right-adminlinks' => 'прегледање везе до [[Special:AdminLinks|администраторских веза]]',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
+ * @author Rancher
+ */
+$messages['sr-el'] = array(
+	'adminlinks' => 'Administrativne veze',
+	'adminlinks-desc' => 'Dodaje [[Special:AdminLinks|posebnu stranicu]] koja sadrži korisne veze za administratore',
+	'adminlinks_documentation' => '$1 dokumentacija',
+	'adminlinks_general' => 'Opšte',
+	'adminlinks_editsidebar' => 'Uredi bočnu traku',
+	'adminlinks_editcss' => 'Uredi CSS datoteku',
+	'adminlinks_editmainpagename' => 'Izmeni naziv glavne stranice',
+	'adminlinks_users' => 'Korisnici',
+	'adminlinks_createuser' => 'Napravi korisnika',
+	'adminlinks_browsesearch' => 'Pretraživanje',
+	'adminlinks_importexport' => 'Uvoz i izvoz',
+	'right-adminlinks' => 'pregledanje veze do [[Special:AdminLinks|administratorskih veza]]',
+);
+
 /** Swedish (Svenska)
  * @author Gabbe.g
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'adminlinks' => 'Administrationslänkar',
-	'adminlinks-desc' => 'Lägger till en [[Special:AdminLinks|special sida]] som innehåller hjälpfulla länkar för administratörer',
+	'adminlinks-desc' => 'Lägger till en [[Special:AdminLinks|specialsida]] som innehåller hjälpfulla länkar för administratörer',
 	'adminlinks_documentation' => 'dokumentation dör $1',
 	'adminlinks_general' => 'Generell',
 	'adminlinks_editsidebar' => 'Ändra sidpanelen',
@@ -1159,12 +1620,33 @@ $messages['sv'] = array(
 	'right-adminlinks' => 'Se länken till [[Special:AdminLinks|Administrationslänkarna]]',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ * @author செல்வா
+ */
+$messages['ta'] = array(
+	'adminlinks' => 'செயலாட்சியர் தொடுப்புகள்',
+	'adminlinks-desc' => 'செயலாட்சியர்களுக்கு உதவும் தொடுப்புகளைக் கொண்டிருக்கும் [[Special:AdminLinks|special page]] ஐ சேர்க்கின்றது',
+	'adminlinks_documentation' => '$1 உக்கான விளக்கவுரை',
+	'adminlinks_general' => 'பொதுவான',
+	'adminlinks_editsidebar' => 'பக்கப் பட்டியைத் தொகு',
+	'adminlinks_editcss' => 'CSS கோப்பைத் தொகு',
+	'adminlinks_editmainpagename' => 'முதற்பக்கத்தைத் தொகுக்கும் பெயர்',
+	'adminlinks_users' => 'பயனர்கள்',
+	'adminlinks_createuser' => 'பயனர் உருவாக்கு',
+	'adminlinks_browsesearch' => 'உலவு தேடு',
+	'adminlinks_importexport' => 'உள்ளிறக்கு வெளிச்செலுத்து',
+	'right-adminlinks' => '[[Special:AdminLinks|Admin links]] உக்கான தொடுப்புகளைப் பார்',
+);
+
 /** Telugu (తెలుగు)
  * @author Ravichandra
  * @author Veeven
  */
 $messages['te'] = array(
 	'adminlinks' => 'నిర్వహణా లింకులు',
+	'adminlinks-desc' => 'నిర్వాహకులకు ఉపయుక్తమైన లంకెలతో ఒక [[Special:AdminLinks|ప్రత్యేక పుట]]ని చేరుస్తుంది',
+	'adminlinks_documentation' => '$1 పత్రావళి',
 	'adminlinks_general' => 'సాధారణ',
 	'adminlinks_editsidebar' => 'సైడ్‌బార్ ను మార్చు',
 	'adminlinks_editcss' => 'స్టైల్ షీట్ ను మార్చు',
@@ -1192,6 +1674,25 @@ $messages['tk'] = array(
 	'adminlinks_users' => 'Ulanyjylar',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ * @author Sky Harbor
+ */
+$messages['tl'] = array(
+	'adminlinks' => 'Mga kawing pantagapangasiwa',
+	'adminlinks-desc' => 'Nagdaragdag ng isang [[Special:AdminLinks|natatanging pahina]]ng humahawak ng makakatulong na mga kawing para sa mga tagapangasiwa',
+	'adminlinks_documentation' => 'Dokumentasyon ng $1',
+	'adminlinks_general' => 'Pangkalahatan',
+	'adminlinks_editsidebar' => 'Baguhin ang baretang panggilid',
+	'adminlinks_editcss' => 'Baguhin ang talaksan ng CSS',
+	'adminlinks_editmainpagename' => 'Baguhin ang pangalan ng unang pahina',
+	'adminlinks_users' => 'Mga tagagamit',
+	'adminlinks_createuser' => 'Lumikha ng tagagamit',
+	'adminlinks_browsesearch' => 'Pagbabasa-basa at paghahanap',
+	'adminlinks_importexport' => 'Pag-aangkat at pagluluwas',
+	'right-adminlinks' => 'Tingnan ang kawing sa [[Special:AdminLinks|mga kawing pantagapangasiwa]]',
+);
+
 /** Turkish (Türkçe)
  * @author Vito Genovese
  */
@@ -1210,7 +1711,7 @@ $messages['tr'] = array(
 	'right-adminlinks' => '[[Special:AdminLinks|Hizmetli bağlantılarına]] giden bağlantıyı gör',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Tatar (Cyrillic script) (Татарча)
  * @author Рашат Якупов
  */
 $messages['tt-cyrl'] = array(
@@ -1219,7 +1720,7 @@ $messages['tt-cyrl'] = array(
 	'adminlinks_createuser' => 'Катнашучы хисабын төзү',
 );
 
-/** ئۇيغۇرچە (ئۇيغۇرچە)
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Sahran
  */
 $messages['ug-arab'] = array(
@@ -1273,12 +1774,23 @@ $messages['vec'] = array(
 	'right-adminlinks' => 'Vede el cołegamento al [[Special:AdminLinks|Paneło Admin]]',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'adminlinks_general' => 'Ühthine',
+	'adminlinks_editsidebar' => "Redaktiruida laptpanel'",
+	'adminlinks_editcss' => 'Redaktiruida CSS-fail',
+	'adminlinks_editmainpagename' => 'Redaktiruida pälehtpolen pälkirjutez',
+	'adminlinks_users' => 'Kävutajad',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
 $messages['vi'] = array(
 	'adminlinks' => 'Liên kết quản lý',
-	'adminlinks-desc' => 'Thêm [[Special:AdminLinks|trang đặc biệt]] liệt kê các liên kết có ích cho quản lý viên',
+	'adminlinks-desc' => 'Thêm [[Special:AdminLinks|trang đặc biệt]] liệt kê các liên kết có ích cho bảo quản viên',
 	'adminlinks_documentation' => 'Tài liệu $1',
 	'adminlinks_general' => 'Tổng quát',
 	'adminlinks_editsidebar' => 'Thanh bên sửa đổi',
@@ -1295,6 +1807,11 @@ $messages['vi'] = array(
  * @author פוילישער
  */
 $messages['yi'] = array(
+	'adminlinks' => 'סיסאפ לינקען',
+	'adminlinks_general' => 'אַלגעמיין',
+	'adminlinks_editsidebar' => 'רעדאַקטירן זײַטפאַס',
+	'adminlinks_editcss' => 'רעדאַקטירן CSS טעקע',
+	'adminlinks_editmainpagename' => 'רעדאַקטירן נאָמען פֿון הויפּט בלאַט',
 	'adminlinks_users' => 'באַניצער',
 	'adminlinks_createuser' => 'שאַפֿן אַ באַניצער',
 	'adminlinks_browsesearch' => 'בלעטערן און זוכן',
@@ -1316,5 +1833,41 @@ $messages['zh-hans'] = array(
 	'adminlinks_browsesearch' => '浏览与搜索',
 	'adminlinks_importexport' => '导入和导出',
 	'right-adminlinks' => '查看[[Special:AdminLinks|管理员链接]]',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ * @author Mark85296341
+ * @author Waihorace
+ */
+$messages['zh-hant'] = array(
+	'adminlinks' => '管理連結',
+	'adminlinks-desc' => '新增一個[[Special:AdminLinks|特殊頁面]]為管理員提供有用的連結',
+	'adminlinks_documentation' => '$1說明文件',
+	'adminlinks_general' => '一般',
+	'adminlinks_editsidebar' => '編輯導航欄',
+	'adminlinks_editcss' => '編輯 CSS 檔案',
+	'adminlinks_editmainpagename' => '編輯首頁名稱',
+	'adminlinks_users' => '用戶',
+	'adminlinks_createuser' => '建立一個新帳號',
+	'adminlinks_browsesearch' => '瀏覽和搜尋',
+	'adminlinks_importexport' => '匯入和匯出',
+	'right-adminlinks' => '檢視[[Special:AdminLinks|管理連結]]',
+);
+
+/** Chinese (Hong Kong) (‪中文(香港)‬)
+ * @author Mark85296341
+ * @author Oapbtommy
+ */
+$messages['zh-hk'] = array(
+	'adminlinks' => '管理員連結',
+	'adminlinks_general' => '一般',
+	'adminlinks_editcss' => '編輯 CSS 檔案',
+	'adminlinks_editmainpagename' => '編輯主頁名稱',
+	'adminlinks_users' => '用戶',
+	'adminlinks_createuser' => '建立一名用戶',
+	'adminlinks_browsesearch' => '瀏覽和搜尋',
+	'adminlinks_importexport' => '匯入和匯出',
+	'right-adminlinks' => '看看連結至[[Special:AdminLinks|管理員連結]]',
 );
 

@@ -20,7 +20,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['StaffLog'] = $dir . 'StaffLog_body.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['StaffLogger'] = $dir . 'StaffLog.events.php';
 $wgExtensionMessagesFiles['StaffLog'] = $dir . 'StaffLog.i18n.php';
-$wgExtensionAliasesFiles['StaffLog'] = $dir . 'StaffLog.alias.php';
+$wgExtensionMessagesFiles['StaffLogAliases'] = $dir . 'StaffLog.alias.php';
 
 if ( !empty( $wgEnableStaffLogSpecialPage ) ) {
 	$wgSpecialPages['StaffLog'] = 'StaffLog'; # Let MediaWiki know about your new special page.

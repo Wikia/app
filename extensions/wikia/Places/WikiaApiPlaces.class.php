@@ -109,7 +109,7 @@ class WikiaApiPlaces extends ApiBase {
 	/**
 	 * Examples
 	 */
-	protected function getExamples() {
+	public function getExamples() {
 		return array (
 			'api.php?action=places',
 			'api.php?action=places&title=Bamberka',

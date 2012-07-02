@@ -1,0 +1,89 @@
+.es-contentView {
+	position: relative;
+	z-index: 1;
+}
+
+.es-contentView-line,
+.es-contentView-ruler {
+	line-height: 1.5em;
+	cursor: text;
+	white-space: nowrap;
+	color: #000000;
+}
+
+.es-contentView-ruler {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	z-index: -1000;
+}
+
+.es-contentView-line.empty {
+	display: block;
+	width: 0px;
+}
+
+.es-contentView-whitespace {
+	color: #ffffff;
+}
+
+.es-contentView-range {
+	display: none;
+	position: absolute;
+	background-color: #b3d6f6;
+	cursor: text;
+	z-index: -1;
+}
+
+.es-contentView-format-object {
+	background-color: rgba(0,0,0,0.05);
+	border-radius: 0.25em;
+	margin: 1px 0 1px 1px;
+	padding: 0.25em 0;
+	cursor: default;
+}
+
+.es-contentView-format-object * {
+	cursor: default !important;
+}
+
+.es-contentView-format-object a:link,
+.es-contentView-format-object a:visited,
+.es-contentView-format-object a:active {
+	color: #0645AD;
+	text-decoration: none;
+}
+
+.es-contentView-format-textStyle-italic,
+.es-contentView-format-textStyle-emphasize {
+	font-style: italic;
+}
+
+.es-contentView-format-textStyle-bold,
+.es-contentView-format-textStyle-strong {
+	font-weight: bold;
+}
+
+.es-contentView-format-link {
+	color: #0645AD;
+	text-decoration: underline;
+}
+
+.es-contentView-format-textStyle-big {
+	font-size: 1.2em;
+}
+
+.es-contentView-format-textStyle-small,
+.es-contentView-format-textStyle-subScript,
+.es-contentView-format-textStyle-superScript {
+	font-size: .8em;
+}
+
+.es-contentView-format-textStyle-subScript {
+	vertical-align: sub;
+}
+
+.es-contentView-format-textStyle-superScript {
+	vertical-align: super;
+}

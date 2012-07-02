@@ -4,6 +4,8 @@
 		const TEST_CITY_ID = 79860;
 		const TEST_USERNAME = 'WikiaUser';
 
+		protected $skinOrg = null;
+
 		public function setUp() {
 			$this->setupFile = dirname(__FILE__) . '/../UserLogin.setup.php';
 			parent::setUp();
@@ -73,6 +75,15 @@
 			$this->mockGlobalVariable('wgRequest', $wgRequest);
 		}
 
+		protected function setUpMobileSkin( $mobileSkin ) {
+			$this->skinOrg = RequestContext::getMain()->getSkin();
+			RequestContext::getMain()->setSkin( $mobileSkin );
+		}
+
+		protected function tearDownMobileSkin() {
+			RequestContext::getMain()->setSkin( $this->skinOrg );
+		}
+
 		/**
 		 * @dataProvider loginDataProvider
 		 */
@@ -105,8 +116,11 @@
 		}
 
 		public function testWikiaMobileLoginTemplate() {
-			$this->setUpMockObject( 'User', array( 'getSkin' => Skin::newFromKey( 'wikiamobile' ) ), true, 'wgUser' );
+			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
+			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
 			$this->setUpMock();
+
+			$this->setUpMobileSkin( $mobileSkin );
 
 			$response = $this->app->sendRequest( 'UserLoginSpecial', 'index', array( 'format' => 'html' ) );
 			$response->toString();//triggers set up of template path
@@ -115,12 +129,17 @@
 				dirname( $this->app->wg->AutoloadClasses['UserLoginSpecialController'] ) . '/templates/UserLoginSpecial_WikiaMobileIndex.php',
 				$response->getView()->getTemplatePath()
 			);
+
+			$this->tearDownMobileSkin();
 		}
 
 		public function testWikiaMobileChangePasswordTemplate(){
-			$this->setUpMockObject( 'User', array( 'getSkin' => Skin::newFromKey( 'wikiamobile' ) ), true, 'wgUser' );
+			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
+			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
 			$this->setUpMockObject( 'WebRequest', array( 'wasPosted' => true ), false, 'wgRequest' );
 			$this->setUpMock();
+
+			$this->setUpMobileSkin( $mobileSkin );
 
 			$response = $this->app->sendRequest( 'UserLoginSpecial', 'index', array( 'format' => 'html', 'action' => $this->app->wf->Msg( 'resetpass_submit' ) ) );
 			$response->toString();//triggers set up of template path
@@ -129,6 +148,8 @@
 				dirname( $this->app->wg->AutoloadClasses['UserLoginSpecialController'] ) . '/templates/UserLoginSpecial_WikiaMobileChangePassword.php',
 				$response->getView()->getTemplatePath()
 			);
+
+			$this->tearDownMobileSkin();
 		}
 
 		public function loginDataProvider() {
@@ -322,6 +343,9 @@
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
+			if ( $mockTempUserParams ) {
+				$mockTempUserParams = new TempUser( $mockTempUserParams );
+			}
 			$this->setUpMockObject( 'TempUser', $mockTempUserParams, true );
 			if ( !is_null($mockLoginFormParams) ) {
 				$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
@@ -393,20 +417,20 @@
 				'getId' => $testUserId,
 				'isPasswordReminderThrottled' => false
 			);
-			$wikiError7 = new WikiError('');
-			$mockLoginFormParams7 = array( 'mailPasswordInternal' => $wikiError7 );
-			$expMsg7 = wfMsg('userlogin-error-mail-error', $wikiError7->getMessage());
+			$status7 = Status::newFatal('');
+			$mockLoginFormParams7 = array( 'mailPasswordInternal' => $status7 );
+			$expMsg7 = wfMsg('userlogin-error-mail-error', $status7->getMessage());
 
 			// User - email sent
-			$mockLoginFormParams8 = array( 'mailPasswordInternal' => true );
+			$status8 = Status::newGood();
+			$mockLoginFormParams8 = array( 'mailPasswordInternal' => $status8 );
 			$expMsg8 = wfMsg('userlogin-password-email-sent', $reqParams2['username']);
 
 			// TempUser - email sent
-			$tempUser = array(
+			$mockTempUserParams9 = array(
 				'user_id' => $testUserId,
 				'user_name' => 'WikiaUser',
 			);
-			$mockTempUserParams9 = new TempUser( $tempUser );
 
 			return array(
 				// error - empty username

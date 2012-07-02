@@ -57,12 +57,6 @@ function WidgetProblemReports($id, $params) {
     if (!isset($wgProblemReportsEnable) || !$wgProblemReportsEnable) {
 	    return '<em>Extension ProblemReports not enabled on this wiki</em>';	// fallback message
     }
-
-    wfLoadExtensionMessages('ProblemReports');
-    
-    global $wgServerName;
-    
-    //print_pre($params);
     
     $params['limit'] = intval($params['limit']);
 

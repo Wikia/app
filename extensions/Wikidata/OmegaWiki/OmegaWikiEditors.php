@@ -5,7 +5,7 @@ require_once( "OmegaWikiAttributes.php" );
 require_once( "WikiDataBootstrappedMeanings.php" );
 require_once( "ContextFetcher.php" );
 require_once( "WikiDataGlobals.php" );
-require_once( "GotoSourceTemplate.php" );
+// require_once( "GotoSourceTemplate.php" ); // not used, disabled
 require_once( "ViewInformation.php" );
 
 class DummyViewer extends Viewer {
@@ -124,14 +124,16 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 					$attribute->type->getAttributes(),
 					$this->filterStructuresOnAttribute( $structures, $attribute )
 				);
-				
-				if ( count( $filteredAttributes ) > 0 )
+
+				if ( count( $filteredAttributes ) > 0 ) {
 					$result[] = new Attribute( $attribute->id, $attribute->name, new Structure( $filteredAttributes ) );
+				}
 			}
-			else if ( $this->attributeInStructures( $attribute, $structures ) )
+			elseif ( $this->attributeInStructures( $attribute, $structures ) ) {
 				$result[] = $attribute;
+			}
 		}
-		
+
 		return $result;
 	}
 	
@@ -141,8 +143,9 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 		foreach ( $this->getEditors() as $editor ) {
 			$visibleStructure = $editor->getTableStructureForView( $idPath, $value->getAttributeValue( $editor->getAttribute() ) );
 			
-			if ( count( $visibleStructure->getAttributes() ) > 0 )
+			if ( count( $visibleStructure->getAttributes() ) > 0 ) {
 				$visibleStructures[] = $visibleStructure;
+			}
 		}
 
 		return $this->filterAttributesByStructures(
@@ -159,18 +162,20 @@ class ObjectAttributeValuesEditor extends WrappingEditor {
 		$leadingAttributes = array();
 		$childEditors = $editor->getEditors();
 		
-		for ( $i = $showPropertyColumn ? 0 : 1; $i < 2; $i++ )
+		for ( $i = $showPropertyColumn ? 0 : 1; $i < 2; $i++ ) {
 			$leadingAttributes[] = $childEditors[$i]->getAttribute();
-			
+		}
+
 		return new Structure( array_merge( $leadingAttributes, $suffixAttributes ) );
 	}
 
 	public function view( IdStack $idPath, $value ) {
 		$visibleAttributes = array();
 
-		if ( $this->showPropertyColumn )
+		if ( $this->showPropertyColumn ) {
 			$visibleAttributes[] = $this->propertyAttribute;
-			
+		}
+
 		$visibleAttributes[] = $this->valueAttribute;
 
 		$idPath->pushAnnotationAttribute( $this->getAttribute() );
@@ -497,6 +502,9 @@ function getAlternativeDefinitionsEditor( ViewInformation $viewInformation ) {
 	return $editor;
 }
 
+/**
+ * Attribute is $o->expression
+ */
 function getExpressionTableCellEditor( Attribute $attribute, ViewInformation $viewInformation ) {
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -607,8 +615,7 @@ function getDefinedMeaningClassMembershipEditor( ViewInformation $viewInformatio
 }
 
 function getDefinedMeaningCollectionMembershipEditor( ViewInformation $viewInformation ) {
-	global
-		 $wgGotoSourceTemplates;
+	global $wgGotoSourceTemplates;
 
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -616,7 +623,7 @@ function getDefinedMeaningCollectionMembershipEditor( ViewInformation $viewInfor
 	$editor->addEditor( new CollectionReferenceEditor( $o->collectionMeaning, new SimplePermissionController( false ), true ) );
 	$editor->addEditor( new ShortTextEditor( $o->sourceIdentifier, new SimplePermissionController( false ), true ) );
 	
-	if ( count( $wgGotoSourceTemplates ) > 0 )
+	if ( count( $wgGotoSourceTemplates ) > 1 )
 		$editor->addEditor( new GotoSourceEditor( $o->gotoSource, new SimplePermissionController( true ), true ) );
 
 	addTableMetadataEditors( $editor, $viewInformation );
@@ -658,11 +665,11 @@ function getLinkAttributeValuesEditor( ViewInformation $viewInformation, UpdateC
 	$editor = new RecordSetTableEditor( $o->linkAttributeValues, new SimplePermissionController( true ), $showEditFieldChecker, new AllowAddController( true ), true, false, $controller );
 	$editor->addEditor( new LinkAttributeEditor( $o->linkAttribute, new SimplePermissionController( false ), true, $attributeIDFilter, $levelDefinedMeaningName ) );
 	
-	if ( $viewInformation->viewOrEdit == "view" )
+	if ( $viewInformation->viewOrEdit == "view" ) {
 		$linkEditor = new LinkEditor( $o->link, new SimplePermissionController( true ), true );
-	else {
+	} else {
 		$linkEditor = new RecordTableCellEditor( $o->link );
-		$linkEditor->addEditor( new ShortTextEditor( $o->linkURL, new SimplePermissionController( true ), true, "urlFieldChanged(this);" ) );
+		$linkEditor->addEditor( new ShortTextEditor( $o->linkURL, new SimplePermissionController( true ), true ) );
 		$linkEditor->addEditor( new ShortTextEditor( $o->linkLabel, new SimplePermissionController( true ), true ) );
 	}
 		
@@ -730,7 +737,7 @@ function getExpressionMeaningsEditor( Attribute $attribute, $allowAdd, ViewInfor
 	
 	$definedMeaningEditor = getDefinedMeaningEditor( $viewInformation );
 
-	$definedMeaningCaptionEditor = new DefinedMeaningHeaderEditor( $o->definedMeaningId, new SimplePermissionController( false ), true, 75 );
+	$definedMeaningCaptionEditor = new DefinedMeaningHeaderEditor( $o->definedMeaningId, new SimplePermissionController( false ), false, 75 );
 	$definedMeaningCaptionEditor->setAddText( wfMsg( 'ow_NewExactMeaning' ) );
 
 	$expressionMeaningsEditor = new RecordSetListEditor( $attribute, new SimplePermissionController( true ), new ShowEditFieldChecker( true ), new AllowAddController( $allowAdd ), false, $allowAdd, new ExpressionMeaningController( $viewInformation->filterLanguageId ), 3, false );
@@ -747,13 +754,15 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 	
 	$exactMeaningsEditor = getExpressionMeaningsEditor( $o->expressionExactMeanings, true, $viewInformation );
 	$expressionMeaningsRecordEditor->addEditor( $exactMeaningsEditor );
-	$expressionMeaningsRecordEditor->addEditor( getExpressionMeaningsEditor( $o->expressionApproximateMeanings, false, $viewInformation ) );
-	
+	$approximateMeaningsEditor = getExpressionMeaningsEditor( $o->expressionApproximateMeanings, false, $viewInformation ) ;
+	$expressionMeaningsRecordEditor->addEditor( $approximateMeaningsEditor );
+
 	$expressionMeaningsRecordEditor->expandEditor( $exactMeaningsEditor );
-	
+
 	if ( $viewInformation->filterLanguageId == 0 ) {
+		// show all languages
 		$expressionEditor = new RecordSpanEditor( $o->expression, ': ', ' - ' );
-		$expressionEditor->addEditor( new LanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
+		$expressionEditor->addEditor( new DropdownLanguageEditor( $o->language, new SimplePermissionController( false ), true ) );
 
 		$expressionsEditor = new RecordSetListEditor(
 			$o->expressions,
@@ -763,13 +772,15 @@ function getExpressionsEditor( $spelling, ViewInformation $viewInformation ) {
 			false,
 			false,
 			new ExpressionController( $spelling, $viewInformation->filterLanguageId ),
-			2,
-			true
+			2, // headerLevel
+			true // childrenExpanded
 		);
+		$expressionsEditor->setCollapsible( false );
 		$expressionsEditor->setCaptionEditor( $expressionEditor );
 		$expressionsEditor->setValueEditor( $expressionMeaningsRecordEditor );
 	}
 	else {
+		// show only one language
 		$expressionEditor = new RecordSubRecordEditor( $o->expression );
 		$expressionEditor->setSubRecordEditor( $expressionMeaningsRecordEditor );
 		

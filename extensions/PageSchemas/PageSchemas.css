@@ -1,0 +1,152 @@
+/**
+ * Used to display page schema information directly on the category page.
+ */
+table.pageSchema {
+	border: 1px solid #ccc;
+}
+
+table.pageSchema td {
+	padding-right: 5px;
+}
+
+body.rtl .pageSchema td {
+	padding-right: auto;
+	padding-left: 5px;
+}
+
+table.pageSchema .pageSchemaHeader {
+	padding-left: 5px;
+}
+
+body.rtl .pageSchema .pageSchemaHeader {
+	padding-left: auto;
+	padding-right: 5px;
+}
+
+table.pageSchema .pageSchemaHeader span.rowValue {
+	font-weight: bold;
+}
+
+.pageSchema .schemaExtensionRow {
+	padding-left: 5px;
+}
+
+body.rtl .pageSchema .schemaExtensionRow {
+	padding-left: auto;
+	padding-right: 5px;
+}
+
+.pageSchema .schemaAttrRow {
+	padding-left: 25px;
+	background: white;
+	font-weight: bold;
+}
+
+body.rtl .pageSchema .schemaAttrRow {
+	padding-left: auto;
+	padding-left: 25px;
+}
+
+table.pageSchema .templateRow {
+	background: #d3c2a0;
+	padding-left: 5px;
+}
+
+body.rtl .pageSchema .templaterow {
+	padding-left: auto;
+	padding-right: 5px;
+}
+
+.pageSchema span.rowValue {
+	font-weight: bold;
+}
+
+.pageSchema .fieldRow {
+	background: #eeddbb;
+	padding-left: 25px;
+}
+
+body.rtl .pageSchema .fieldRow {
+	padding-left: auto;
+	padding-right: 25px;
+}
+
+.pageSchema .fieldExtensionRow {
+	padding-left: 26px;
+	border-top: 1px solid #ddd;
+}
+
+body.rtl .pageSchema .fieldExtensionRow {
+	padding-left: auto;
+	padding-right: 26px;
+}
+
+.pageSchema .fieldAttrRow {
+	padding-left: 45px;
+	background: white;
+	font-weight: bold;
+}
+
+body.rtl .pageSchema .fieldAttrRow {
+	padding-left: auto;
+	padding-left: 45px;
+}
+
+.pageSchema .paramData {
+	padding-left: 5px;
+	background: #77dd77;
+}
+
+body.rtl .pageSchema .paramData {
+	padding-left: auto;
+	padding-right: 5px;
+}
+
+.pageSchema .paramData span.rowValue {
+	font-weight: bold;
+}
+
+.pageSchema .paramDataField {
+	background: #99ff99;
+	padding-left: 35px;
+}
+
+body.rtl .pageSchema .paramDataField {
+	padding-left: auto;
+	padding-right: 35px;
+}
+
+.pageSchema .msg {
+	padding-left: 5px;
+	background: white;
+}
+
+body.rtl .pageSchema .msg {
+	padding-left: auto;
+	padding-right: 5px;
+}
+
+/**
+ * Used in Special:EditSchema
+ */
+div.editSchemaSection {
+	 border: 1px #999 solid;
+	 background: white;
+	 padding: 0px;
+	 margin-bottom: 10px;
+	 margin-top: 10px;
+}
+div.editSchemaTemplateSection {
+	background: #EEE;
+}
+div.editSchemaFieldSection {
+	background: #CCC;
+}
+div.editSchemaSection .sectionHeader {
+	font-weight: bold;
+	padding: 4px 7px;
+	border-bottom: 1px #bbb solid;
+}
+div.editSchemaSection .sectionBody {
+	padding: 5px 15px;
+}

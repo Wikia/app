@@ -75,7 +75,7 @@ class WidgetTagRenderer extends WidgetFramework {
 		$output = $this->wrap($widget, $output);
 
 		// wrap widget HTML
-		$output = "<div class=\"widgetTag reset\"{$style}>{$output}</div>";
+		$output = "<div class=\"widgetTag\"{$style}>{$output}</div>";
 
 		// use markers to avoid RT #20855 when widget' HTML is multiline
 		$marker = $parser->uniqPrefix() . "-WIDGET-{$this->count}-\x7f";

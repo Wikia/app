@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension RandomRootpage.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -38,7 +39,15 @@ $messages['arz'] = array(
 	'randomrootpage-desc' => '[[Special:Randomrootpage|صفحة خاصة]] تعرض صفحة جذر عشوائية',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'randomrootpage' => 'Páxina raíz al debalu',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Páxina especial]] que devuelve una páxina raíz al debalu',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -140,6 +149,13 @@ $messages['fr'] = array(
 	'randomrootpage-desc' => '[[Special:Randomrootpage|Page spéciale]] qui va chercher une page racine au hasard',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'randomrootpage' => 'Pâge racena a l’hasârd',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -203,6 +219,14 @@ $messages['id'] = array(
 	'randomrootpage-desc' => '[[Special:Randomrootpage|Halaman istimewa]] untuk mengunduh halaman dasar secara sembarang',
 );
 
+/** Italian (Italiano)
+ * @author Beta16
+ */
+$messages['it'] = array(
+	'randomrootpage' => 'Pagina principale casuale',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Pagina speciale]] per far visualizzare una pagina principale casuale',
+);
+
 /** Japanese (日本語)
  * @author Fievarsty
  */
@@ -211,7 +235,7 @@ $messages['ja'] = array(
 	'randomrootpage-desc' => 'ランダムにルートページを取得する[[Special:Randomrootpage|特別ページ]]',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -243,11 +267,27 @@ $messages['mr'] = array(
 	'randomrootpage-desc' => 'अविशिष्ट मूळ पान मिळविण्यासाठीचे [[Special:Randomrootpage|विशेष पान]]',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'randomrootpage' => 'Laman akar rawak',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Laman khas]] yang mengambil laman akar secara rawak',
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
 	'randomrootpage' => 'Кодама понгсь юрт лопа',
+);
+
+/** Nahuatl (Nāhuatl)
+ * @author Teòtlalili
+ */
+$messages['nah'] = array(
+	'randomrootpage' => 'Sâsaìntlèn nelwatlaìxtlapalli',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Nonkuâkiski tlaìxtlapalli]] tewàlkuepilia sè saìntlèn nelwatlaìxtlapalli',
 );
 
 /** Dutch (Nederlands)
@@ -269,7 +309,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'randomrootpage' => 'Tilfeldig rotside',
 	'randomrootpage-desc' => '[[Special:Randomrootpage|Spesialside]] som henter en tilfeldig rotside',
 );
@@ -354,14 +394,14 @@ $messages['sv'] = array(
 	'randomrootpage-desc' => '[[Special:Randomrootpage|Specialsida]] som hämtar en slumpmässig rotsida',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'randomrootpage' => 'Саҳифаи решавии тасодуфӣ',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(

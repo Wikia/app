@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Copyright (C) 2008 Victor Vasiliev <vasilvv@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@ if( !defined( 'MEDIAWIKI' ) )
 
 class SpecialListClosedWikis extends SpecialPage {
 	public function __construct() {
-		wfLoadExtensionMessages( 'CloseWikis' );
 		parent::__construct( 'ListClosedWikis' );
 	}
 
@@ -32,11 +31,11 @@ class SpecialListClosedWikis extends SpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgUser, $wgOut, $wgLang;
+		global $wgOut, $wgLang;
 
 		$this->setHeaders();
 		$wgOut->addWikiMsg( 'closewikis-list-intro' );
-		$wgOut->addHTML( '<table class="TablePager" style="width: 100%"><tr>' );
+		$wgOut->addHTML( '<table class="mw-datatable TablePager" style="width: 100%"><tr>' );
 		foreach( array( 'wiki', 'by', 'timestamp', 'dispreason' ) as $column )
 			$wgOut->addHTML( '<th>' . wfMsgExt( "closewikis-list-header-{$column}", 'parseinline' ) . '</th>' );
 		$wgOut->addHTML( '</tr>' );

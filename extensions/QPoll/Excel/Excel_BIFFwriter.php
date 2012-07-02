@@ -85,16 +85,23 @@ class Spreadsheet_Excel_Writer_BIFFwriter extends PEAR
     var $_limit;
 
     /**
+    * The temporary dir for storing the OLE file
+    * @var string
+    */
+    var $_tmp_dir;
+
+    /**
     * Constructor
     *
     * @access public
     */
-    function Spreadsheet_Excel_Writer_BIFFwriter()
+    function __construct()
     {
         $this->_byte_order = '';
         $this->_data       = '';
         $this->_datasize   = 0;
         $this->_limit      = 2080;
+        $this->_tmp_dir    = '';
         // Set the byte order
         $this->_setByteOrder();
     }
@@ -234,5 +241,21 @@ class Spreadsheet_Excel_Writer_BIFFwriter extends PEAR
 
         return $tmp;
     }
+
+    /**
+    * Sets the temp dir used for storing the OLE file
+    *
+    * @access public
+    * @param string $dir The dir to be used as temp dir
+    * @return true if given dir is valid, false otherwise
+    */
+    function setTempDir($dir)
+    {
+        if (is_dir($dir)) {
+            $this->_tmp_dir = $dir;
+            return true;
+        }
+        return false;
+    }
+
 }
-?>

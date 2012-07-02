@@ -6,8 +6,21 @@ class VideoHandlerHooks extends WikiaObject{
 		F::setInstance( __CLASS__, $this );
 	}
 
+
+	public function  WikiaVideoNewImagesBeforeQuery( $where ) {
+
+		$where[] = 'img_media_type != \'VIDEO\'';
+		$where[] = 'img_major_mime != \'video\'';
+		$where[] = 'img_media_type != \'swf\'';
+		return true;
+	}
+
+	public function WikiaVideo_isMovable($result, $index) {
+		return true;
+	}
+
 	/**
-	 * returns VideoPage if file is video
+	 * @return WikiaVideoPage if file is video
 	 */
 	public function onArticleFromTitle( &$oTitle, &$oArticle ){
 
@@ -20,6 +33,50 @@ class VideoHandlerHooks extends WikiaObject{
 
 		return true;
 	}
+
+	public function WikiaVideoFetchTemplateAndTitle( $text, $finalTitle ) {
+
+		global $wgContLang, $wgWikiaVideosFoundInTemplates;
+
+		$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":Placeholder";
+
+		// replace text and give Video:Template_Placeholder: text everywhere
+		if ($text !== false) {
+			$count = 0;
+			$text = str_replace( $vid_tag, 'Video:Template_Placeholder', $text, $count );
+			$wgWikiaVideosFoundInTemplates += $count;
+		}
+		return true;
+	}
+
+	public function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
+
+		global $wgExtraNamespaces, $wgWikiaVideoGalleryId, $wgWikiaVideoPlaceholderId, $wgRTEParserEnabled;
+
+		$wgWikiaVideoGalleryId = 0;
+		$wgWikiaVideoPlaceholderId = 0;
+
+		// macbre: don't touch anything when parsing for RTE
+		if (!empty($wgRTEParserEnabled)) {
+			return true;
+		}
+		// fix for RT #22010
+		$pattern1 = "/<videogallery[^>]+>/";
+		$text = preg_replace( $pattern1, '<videogallery>', $text );
+
+		$pattern2 = "/<videogallery/";
+		$text = preg_replace_callback( $pattern2, array($this, 'WikiaVideoPreRenderVideoGallery'), $text );
+		return true;
+	}
+
+	public function WikiaVideoPreRenderVideoGallery( $matches ) {
+
+		global $wgWikiaVideoGalleryId;
+		$result = $matches[0] . ' id="' . $wgWikiaVideoGalleryId . '"';
+		$wgWikiaVideoGalleryId++;
+		return $result;
+	}
+
 
 	/*
 	 * Preserves video mime types. Needed to fix MW 1.16 bug
@@ -43,25 +100,28 @@ class VideoHandlerHooks extends WikiaObject{
 		wfProfileOut(__METHOD__);
 		return true;
 	}
-	
+
 	public function onSetupAfterCache() {
 		global	$wgLocalFileRepo, $wgUploadDirectory, $wgUploadBaseUrl,
-			$wgUploadPath, $wgHashedUploadDirectory, 
+			$wgUploadPath, $wgHashedUploadDirectory,
 			$wgThumbnailScriptPath, $wgGenerateThumbnailOnParse,
-			$wgFileStore;
-		
+			$wgLocalFileRepo, $wgDeletedDirectory, $wgScriptPath, $wgScriptExtension;
+
 		$wgLocalFileRepo = array(
 			'class' => 'WikiaLocalRepo',
 			'name' => 'local',
 			'directory' => $wgUploadDirectory,
+			//'scriptDirUrl' => $wgScriptPath,
+			//'scriptExtension' => $wgScriptExtension,
 			'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
 			'hashLevels' => $wgHashedUploadDirectory ? 2 : 0,
 			'thumbScriptUrl' => $wgThumbnailScriptPath,
 			'transformVia404' => !$wgGenerateThumbnailOnParse,
-			'deletedDir' => $wgFileStore['deleted']['directory'],
-			'deletedHashLevels' => $wgFileStore['deleted']['hash']
+			'deletedDir' => $wgDeletedDirectory, // TODO: check me
+			'deletedHashLevels' => $wgLocalFileRepo['deletedHashLevels'], // TODO: check me,
+			'backend' => 'local-backend'
 		);
-		
+
 		return true;
 	}
 

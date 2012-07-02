@@ -1,25 +1,38 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) )
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die();
+}
 
 class AbuseFilterHooks {
-// So far, all of the error message out-params for these hooks accept HTML.
-// Hooray!
+	// So far, all of the error message out-params for these hooks accept HTML.
+	// Hooray!
+
+	/**
+	 * Entry points for MediaWiki hook 'EditFilterMerged'
+	 *
+	 * @param $editor EditPage instance (object)
+	 * @param $text Content of the edit box
+	 * @param &$error Error message to return
+	 * @param $summary Edit summary for page
+	 * @return bool
+	 */
 	public static function onEditFilterMerged( $editor, $text, &$error, $summary ) {
 		// Load vars
 		$vars = new AbuseFilterVariableHolder;
 
-		// Cache article object so we can share a parse operation
-		$title = $editor->mTitle;
-		$articleCacheKey = $title->getNamespace() . ':' . $title->getText();
-		AFComputedVariable::$articleCache[$articleCacheKey] = $editor->mArticle;
-
 		// Check for null edits.
 		$oldtext = '';
 
-		if ( $editor->mArticle->exists() ) {
-			$oldtext = $editor->mArticle->getContent();
+		$article = $editor->getArticle();
+		if ( $article->exists() ) {
+			// Make sure we load the latest text saved in database (bug 31656)
+			$oldtext = $article->getRevision()->getRawText();
 		}
+
+		// Cache article object so we can share a parse operation
+		$title = $editor->mTitle;
+		$articleCacheKey = $title->getNamespace() . ':' . $title->getText();
+		AFComputedVariable::$articleCache[$articleCacheKey] = $article;
 
 		if ( strcmp( $oldtext, $text ) == 0 ) {
 			// Don't trigger for null edits.
@@ -28,7 +41,7 @@ class AbuseFilterHooks {
 
 		global $wgUser;
 		$vars->addHolder( AbuseFilter::generateUserVars( $wgUser ) );
-		$vars->addHolder( AbuseFilter::generateTitleVars( $editor->mTitle , 'ARTICLE' ) );
+		$vars->addHolder( AbuseFilter::generateTitleVars( $title , 'ARTICLE' ) );
 		$vars->setVar( 'ACTION', 'edit' );
 		$vars->setVar( 'SUMMARY', $summary );
 		$vars->setVar( 'minor_edit', $editor->minoredit );
@@ -36,19 +49,13 @@ class AbuseFilterHooks {
 		$vars->setVar( 'old_wikitext', $oldtext );
 		$vars->setVar( 'new_wikitext', $text );
 
-		$vars->addHolder( AbuseFilter::getEditVars( $editor->mTitle ) );
+		$vars->addHolder( AbuseFilter::getEditVars( $title, $article ) );
 
-		$filter_result = AbuseFilter::filterAction( $vars, $editor->mTitle );
+		$filter_result = AbuseFilter::filterAction( $vars, $title );
 
 		if ( $filter_result !== true ) {
 			global $wgOut;
-
-			/* Wikia change begin - @author: macbre */
-			/* use EditPage::$hookError to return a message (BugId:7428) */
-			$error = $filter_result;
-			#$wgOut->addHTML( $filter_result ); // EditPage::$hookError will be shown to the user
-			/* Wikia change end */
-
+			$wgOut->addHTML( $filter_result );
 			$editor->showEditForm();
 			return false;
 		}
@@ -105,12 +112,17 @@ class AbuseFilterHooks {
 	}
 
 	public static function onAbortNewAccount( $user, &$message ) {
-		wfLoadExtensionMessages( 'AbuseFilter' );
 		if ( $user->getName() == wfMsgForContent( 'abusefilter-blocker' ) ) {
 			$message = wfMsg( 'abusefilter-accountreserved' );
 			return false;
 		}
 		$vars = new AbuseFilterVariableHolder;
+		// Add variables only for a registered user, so IP addresses of
+		// new users won't be exposed
+		global $wgUser;
+		if ( $wgUser->getId() ) {
+			$vars->addHolder( AbuseFilter::generateUserVars( $wgUser ) );
+		}
 
 		$vars->setVar( 'ACTION', 'createaccount' );
 		$vars->setVar( 'ACCOUNTNAME', $user->getName() );
@@ -161,7 +173,7 @@ class AbuseFilterHooks {
 			array( 'abuse_filter' => array( 'INNER JOIN', 'afa_filter=af_id' ) )
 		);
 
-		while ( $row = $res->fetchObject() ) {
+		foreach ( $res as $row ) {
 			$emptyTags = array_filter(
 				array_merge( explode( "\n", $row->afa_parameters ), $emptyTags )
 			);
@@ -170,41 +182,70 @@ class AbuseFilterHooks {
 		return true;
 	}
 
-	public static function onLoadExtensionSchemaUpdates() {
-		global $wgExtNewTables, $wgExtNewFields, $wgExtPGNewFields, $wgExtPGAlteredFields, $wgExtNewIndexes, $wgDBtype;
-
+	/**
+	 * @param $updater DatabaseUpdater
+	 * @return bool
+	 */
+	public static function onLoadExtensionSchemaUpdates( $updater = null ) {
 		$dir = dirname( __FILE__ );
 
-		// DB updates
-		if ( $wgDBtype == 'mysql' ) {
-			$wgExtNewTables[] = array( 'abuse_filter', "$dir/abusefilter.tables.sql" );
-			$wgExtNewTables[] = array( 'abuse_filter_history', "$dir/db_patches/patch-abuse_filter_history.sql" );
-			$wgExtNewFields[] = array( 'abuse_filter_history', 'afh_changed_fields', "$dir/db_patches/patch-afh_changed_fields.sql" );
-			$wgExtNewFields[] = array( 'abuse_filter', 'af_deleted', "$dir/db_patches/patch-af_deleted.sql" );
-			$wgExtNewFields[] = array( 'abuse_filter', 'af_actions', "$dir/db_patches/patch-af_actions.sql" );
-			$wgExtNewFields[] = array( 'abuse_filter', 'af_global', "$dir/db_patches/patch-global_filters.sql" );
-		} elseif ( $wgDBtype == 'postgres' ) {
-			$wgExtNewTables = array_merge( $wgExtNewTables,
-					array(
-						array( 'abuse_filter', "$dir/abusefilter.tables.pg.sql" ),
-						array( 'abuse_filter_history', "$dir/db_patches/patch-abuse_filter_history.pg.sql" ),
-					) );
-			$wgExtPGNewFields[] = array( 'abuse_filter', 'af_actions', "TEXT NOT NULL DEFAULT ''" );
-			$wgExtPGNewFields[] = array( 'abuse_filter', 'af_deleted', 'SMALLINT NOT NULL DEFAULT 0' );
-			$wgExtPGNewFields[] = array( 'abuse_filter', 'af_global',  'SMALLINT NOT NULL DEFAULT 0' );
-
-			$wgExtPGNewFields[] = array( 'abuse_filter_log', 'afl_wiki', 'TEXT' );
-			$wgExtPGNewFields[] = array( 'abuse_filter_log', 'afl_deleted', 'SMALLINT' );
-			$wgExtPGAlteredFields[] = array( 'abuse_filter_log', 'afl_filter', 'TEXT' );
-
-			$wgExtNewIndexes[] = array( 'abuse_filter_log', 'abuse_filter_log_ip', "(afl_ip)" );
+		if ( $updater->getDB()->getType() == 'mysql' || $updater->getDB()->getType() == 'sqlite' ) {
+			if ( $updater->getDB()->getType() == 'mysql' ) {
+				$updater->addExtensionUpdate( array( 'addTable', 'abuse_filter', "$dir/abusefilter.tables.sql", true ) );
+				$updater->addExtensionUpdate( array( 'addTable', 'abuse_filter_history', "$dir/db_patches/patch-abuse_filter_history.sql", true ) );
+			} else {
+				$updater->addExtensionUpdate( array( 'addTable', 'abuse_filter', "$dir/abusefilter.tables.sqlite.sql", true ) );
+				$updater->addExtensionUpdate( array( 'addTable', 'abuse_filter_history', "$dir/db_patches/patch-abuse_filter_history.sqlite.sql", true ) );
+			}
+			$updater->addExtensionUpdate( array( 'addField', 'abuse_filter_history', 'afh_changed_fields', "$dir/db_patches/patch-afh_changed_fields.sql", true ) );
+			$updater->addExtensionUpdate( array( 'addField', 'abuse_filter', 'af_deleted', "$dir/db_patches/patch-af_deleted.sql", true ) );
+			$updater->addExtensionUpdate( array( 'addField', 'abuse_filter', 'af_actions', "$dir/db_patches/patch-af_actions.sql", true ) );
+			$updater->addExtensionUpdate( array( 'addField', 'abuse_filter', 'af_global', "$dir/db_patches/patch-global_filters.sql", true ) );
+			if ( $updater->getDB()->getType() == 'mysql' ) {
+				$updater->addExtensionUpdate( array( 'addIndex', 'abuse_filter_log', 'filter_timestamp', "$dir/db_patches/patch-fix-indexes.sql", true ) );
+			} else {
+				$updater->addExtensionUpdate( array( 'addIndex', 'abuse_filter_log', 'afl_filter_timestamp', "$dir/db_patches/patch-fix-indexes.sqlite.sql", true ) );
+			}
+		} elseif ( $updater->getDB()->getType() == 'postgres' ) {
+			$updater->addExtensionUpdate( array( 'addTable', 'abuse_filter', "$dir/abusefilter.tables.pg.sql", true ) );
+			$updater->addExtensionUpdate( array( 'addTable', 'abuse_filter_history', "$dir/db_patches/patch-abuse_filter_history.pg.sql", true ) );
+			$updater->addExtensionUpdate( array( 'addPgField', 'abuse_filter', 'af_actions', "TEXT NOT NULL DEFAULT ''" ) );
+			$updater->addExtensionUpdate( array( 'addPgField', 'abuse_filter', 'af_deleted', 'SMALLINT NOT NULL DEFAULT 0' ) );
+			$updater->addExtensionUpdate( array( 'addPgField', 'abuse_filter', 'af_global', 'SMALLINT NOT NULL DEFAULT 0' ) );
+			$updater->addExtensionUpdate( array( 'addPgField', 'abuse_filter_log', 'afl_wiki', 'TEXT' ) );
+			$updater->addExtensionUpdate( array( 'addPgField', 'abuse_filter_log', 'afl_deleted', 'SMALLINT' ) );
+			$updater->addExtensionUpdate( array( 'changeField', 'abuse_filter_log', 'afl_filter', 'TEXT' ) );
+			$updater->addExtensionUpdate( array( 'addPgExtIndex', 'abuse_filter_log', 'abuse_filter_log_ip', "(afl_ip)" ) );
+		} else {
+			throw new MWException("No known Schema updates.");
 		}
+
+		// Create the Abuse Filter user.
+		$user = User::newFromName( wfMsgForContent( 'abusefilter-blocker' ) );
+
+		if ( $user && !$updater->updateRowExists( 'create abusefilter-blocker-user' ) ) {
+			if ( !$user->getId() ) {
+				$user->addToDatabase();
+				$user->saveSettings();
+				# Increment site_stats.ss_users
+				$ssu = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
+				$ssu->doUpdate();
+			} else {
+				// Sorry dude, we need this account.
+				$user->setPassword( null );
+				$user->setEmail( null );
+				$user->saveSettings();
+			}
+			$updater->insertUpdateRow( 'create abusefilter-blocker-user' );
+			# Promote user so it doesn't look too crazy.
+			$user->addGroup( 'sysop' );
+		}
+
 		return true;
 	}
 
 	public static function onContributionsToolLinks( $id, $nt, &$tools ) {
 		global $wgUser;
-		wfLoadExtensionMessages( 'AbuseFilter' );
 		if ( $wgUser->isAllowed( 'abusefilter-log' ) ) {
 			$sk = $wgUser->getSkin();
 			$tools[] = $sk->link(
@@ -240,5 +281,25 @@ class AbuseFilterHooks {
 		}
 
 		return $filter_result == '' || $filter_result === true;
+	}
+
+	/**
+	 * Adds global variables to the Javascript as needed
+	 *
+	 * @param array $vars
+	 * @return bool
+	 */
+	public static function onMakeGlobalVariablesScript( array &$vars ) {
+		if ( AbuseFilter::$editboxName !== null ) {
+			$vars['abuseFilterBoxName'] = AbuseFilter::$editboxName;
+		}
+
+		if ( AbuseFilterViewExamine::$examineType !== null ) {
+			$vars['abuseFilterExamine'] = array(
+				'type' => AbuseFilterViewExamine::$examineType,
+				'id' => AbuseFilterViewExamine::$examineId,
+			);
+		}
+		return true;
 	}
 }

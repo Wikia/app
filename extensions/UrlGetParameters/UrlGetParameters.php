@@ -1,14 +1,18 @@
 <?php
+
 $wgExtensionCredits['parserhook'][] = array(
 	'name'         => 'UrlGetParameters',
-	'version'      => '1.2.1', // Mar. 4, 2011
-	'description'  => 'Provides the <tt><nowiki>{{#urlget:...}}</nowiki></tt> parserfunction which enables access to the url get parameters.',
+	'version'      => '1.3.0', // Jan. 19, 2012
+	'descriptionmsg'  => '',
 	'author'       => 'S.O.E. Ansems',
-	'url'          => 'http://www.mediawiki.org/wiki/Extension:UrlGetParameters',
+	'url'          => 'https://www.mediawiki.org/wiki/Extension:UrlGetParameters',
 );
 
+$dir = dirname( __FILE__ ) . '/';
+$wgExtensionMessagesFiles['UrlGetParameters'] = $dir . 'UrlGetParameters.i18n.php';
+$wgExtensionMessagesFiles['UrlGetParametersMagic'] = $dir . 'UrlGetParameters.i18n.magic.php';
+
 $wgHooks['ParserFirstCallInit'][] = 'urlGetParameters_Setup';
-$wgHooks['LanguageGetMagic'][] = 'urlGetParameters_Magic';
 
 /**
  * @param $parser Parser
@@ -16,11 +20,6 @@ $wgHooks['LanguageGetMagic'][] = 'urlGetParameters_Magic';
  */
 function urlGetParameters_Setup( $parser ) {
 	$parser->setFunctionHook( 'urlget', 'urlGetParameters_Render' );
-	return true;
-}
-
-function urlGetParameters_Magic( &$magicWords, $langCode ) {
-	$magicWords['urlget'] = array( 0, 'urlget' );
 	return true;
 }
 

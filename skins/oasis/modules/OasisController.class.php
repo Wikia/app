@@ -16,6 +16,7 @@ class OasisController extends WikiaController {
 	}
 
 	public function init() {
+		wfProfileIn(__METHOD__);
 		$skinVars = $this->app->getSkinTemplateObj()->data;
 		$this->assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 		$this->pagetitle = $skinVars['pagetitle'];
@@ -33,6 +34,7 @@ class OasisController extends WikiaController {
 		$this->quantServe = null;
 
 		$this->app->registerHook('MakeGlobalVariablesScript', 'OasisController', 'onMakeGlobalVariablesScript');
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -69,6 +71,7 @@ class OasisController extends WikiaController {
 	public function executeIndex($params) {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt;
 
+		wfProfileIn(__METHOD__);
 		// TODO: move to WikiaHubs extension - this code should use a hook
 		if(!empty($wgEnableWikiaHubsExt)) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/WikiaHubs/css/WikiaHubs.scss' ) );
@@ -97,7 +100,9 @@ class OasisController extends WikiaController {
 			$this->body = wfRenderModule('BodyContentOnly');
 		} else {
 			// macbre: let extensions modify content of the page (e.g. EditPageLayout)
+			wfProfileIn(__METHOD__ . ' - renderBody');
 			$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('Body');
+			wfProfileOut(__METHOD__ . ' - renderBody');
 		}
 
 		// generate list of CSS classes for <body> tag
@@ -109,6 +114,7 @@ class OasisController extends WikiaController {
 			$bodyClasses[] = 'mainpage';
 		}
 
+		wfProfileIn(__METHOD__ . ' - skin Operations');
 		// add skin theme name
 		$skin = $wgUser->getSkin();
 		if(!empty($skin->themename)) {
@@ -142,10 +148,9 @@ class OasisController extends WikiaController {
 		$this->mimetype = htmlspecialchars( $this->mimetype );
 		$this->charset = htmlspecialchars( $this->charset );
 
-		/* allow extensions to inject JS just after global JS variables - copied here from OutputPage.php */
-		$globalVariablesScript = Skin::makeGlobalVariablesScript($this->app->getSkinTemplateObj()->data);
-		wfRunHooks('SkinGetHeadScripts', array(&$globalVariablesScript));
-		$this->globalVariablesScript = $globalVariablesScript;
+		wfProfileOut(__METHOD__ . ' - skin Operations');
+
+		$this->topScripts = $this->wg->user->getSkin()->getTopScripts();
 
 		// printable CSS (to be added at the bottom of the page)
 		// FIXME: move to renderPrintCSS() method
@@ -195,6 +200,7 @@ class OasisController extends WikiaController {
 		} else {
 			$this->displayAdminDashboard = false;
 		}
+		wfProfileOut(__METHOD__);
 	} // end executeIndex()
 
 	/**
@@ -217,7 +223,7 @@ class OasisController extends WikiaController {
 			}
 		} else {
 			// async download
-			$cssReferences = Wikia::json_encode( $this->printStyles );
+			$cssReferences = json_encode( $this->printStyles );
 			$ret = Html::inlineScript("setTimeout(function(){wsl.loadCSS({$cssReferences}, 'print')}, 100)");
 		}
 
@@ -225,7 +231,7 @@ class OasisController extends WikiaController {
 		return $ret;
 	}
 
-    private function rewriteJSlinks( $link ) {
+	private function rewriteJSlinks( $link ) {
 		global $IP;
 		wfProfileIn( __METHOD__ );
 
@@ -233,7 +239,9 @@ class OasisController extends WikiaController {
 
 		if ( count( $parts ) == 2 ) {
 			//$hash = md5(file_get_contents($IP . '/' . $parts[0]));
-			$hash = filemtime( $IP . '/' . $parts[0]);
+			$fileName = $parts[0];
+			$fileName = preg_replace("#^(https?:)?//[^/]+#","",$fileName);
+			$hash = filemtime( $IP . '/' . $fileName);
 			$link = $parts[0].'?cb='.$hash;
 		} else {
 			$ret = preg_replace_callback(
@@ -276,7 +284,7 @@ class OasisController extends WikiaController {
 			$pkg = F::build('AbTesting')->getJsPackage();
 
 			if(!empty($pkg)){
-				$packages[] = 'abtesting';
+				$packages[] = $pkg;
 			}
 		}
 
@@ -290,6 +298,10 @@ class OasisController extends WikiaController {
 			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
+		/*
+		// gen=js is no longer used in 1.19 - @author: wladek
+		// TODO: remove after confirmation
+
 		// BugId:20929 - tell (or trick) varnish to store the latest revisions of Wikia.js and Common.js.
 		$oTitleWikiaJs	= Title::newFromText( 'Wikia.js',  NS_MEDIAWIKI );
 		$oTitleCommonJs	= Title::newFromText( 'Common.js', NS_MEDIAWIKI );
@@ -299,6 +311,7 @@ class OasisController extends WikiaController {
 		// Load SiteJS / common.js separately, after all other js files (moved here from oasis_shared_js)
 		$siteJS = Title::newFromText('-')->getFullURL('action=raw&smaxage=86400&maxrev=' . $iMaxRev . '&gen=js&useskin=oasis');
 		$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $siteJS ) : $siteJS;
+		*/
 
 		// move JS files added to OutputPage to list of files to be loaded using WSL
 		$scripts = $wgUser->getSkin()->getScripts();
@@ -306,7 +319,14 @@ class OasisController extends WikiaController {
 		foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to WSL queue
 			if ( !empty( $s['url'] ) ) {
-				$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $s['url'] ) : $s['url'];
+				// FIXME: quick hack to load MW core JavaScript at the top of the page - really, please fix me!
+				// @author macbre
+				if (strpos($s['url'], 'load.php') !== false) {
+					$this->globalVariablesScript = $s['tag'] . $this->globalVariablesScript;
+				}
+				else {
+					$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $s['url'] ) : $s['url'];
+				}
 			} else {
 				$this->jsFiles .= $s['tag'];
 			}
@@ -353,15 +373,14 @@ class OasisController extends WikiaController {
 		$assets['references'] = $jsReferences;
 
 		// generate code to load JS files
-		$assets = Wikia::json_encode($assets);
+		$assets = json_encode($assets);
 		$jsLoader = <<<EOT
-			<script type="text/javascript">
-				var wsl_assets = {$assets};
-				var toload;
+<script type="text/javascript">
+	var wsl_assets = {$assets};
 EOT;
 		if ($this->jsAtBottom) {
 			$jsLoader .= <<<EOT
-				if ( typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)) { 
+				if ( typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || (window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)))) { 
 					toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.oasis_noads_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); 
 				} else { 
 					toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); 
@@ -370,7 +389,7 @@ EOT;
 		}
 		else {
 			$jsLoader .= <<<EOT
-				toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
+				var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
 EOT;
 		}
 		$jsLoader .= <<<EOT
@@ -378,8 +397,24 @@ EOT;
 		</script>
 EOT;
 
-		// use loader script instead of separate JS files
-		$this->jsFiles = $jsLoader . $this->jsFiles;
+		$tpl = $this->app->getSkinTemplateObj();
+
+		// $tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
+		// FIXME: we need to remove head items - i.e. <meta> tags
+		$headScripts = str_replace($this->wg->out->getHeadItems(), '', $tpl->data['headscripts']);
+		// ...and top scripts too (BugId: 32747)
+		$headScripts = str_replace($this->topScripts, '', $headScripts);
+
+		$this->jsFiles = $headScripts . $jsLoader . $this->jsFiles;
+
+		// experiment: squeeze calls to mw.loader.load() to make fewer HTTP requests
+		if ($this->jsAtBottom) {
+			$jsFiles = $this->jsFiles;
+			$bottomScripts = $this->bottomscripts;
+			$this->squeezeMediawikiLoad($jsFiles,$bottomScripts);
+			$this->bottomscripts = $bottomScripts;
+			$this->jsFiles = $jsFiles;
+		}
 
 		$this->adsABtesting = '';
 		if ($this->jsAtBottom) {
@@ -390,17 +425,84 @@ EOT;
 				}
 			}
 
-			$jquery_ads = Wikia::json_encode($jquery_ads);
+			$jquery_ads = json_encode($jquery_ads);
 			$this->adsABtesting = <<<EOT
 				<script type="text/javascript">/*<![CDATA[*/ 
 					(function(){ 
-						if (typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)) { 
+						if (typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED))) { 
 							wsl.loadScript({$jquery_ads}); 
 						} 
 					})(); 
 				/*]]>*/</script>
 EOT;
 		}
+
 		wfProfileOut(__METHOD__);
 	}
+
+	const MW_LOADER_LOAD_REGEX = "/if\\(window.mw\\){mw.loader.load\\((\\[[^]]+\\])([^)]*)?\\);\\}/";
+
+	protected function getModuleListFromMediawikiLoad( $script ) {
+		// remove start and end script tags
+		$script = preg_replace("/^<script[^>]*>/","",$script);
+		$script = preg_replace("/<\\/script[^>]*>\$/","",$script);
+		// remove spaces - will be easier to preg_match
+		$script = preg_replace("/\s+/","",$script);
+		$matches = array();
+//		var_dump($script);
+		if (preg_match(self::MW_LOADER_LOAD_REGEX,$script,$matches)) {
+//			var_dump($matches);
+			$moduleNames = json_decode($matches[1]);
+			return $moduleNames;
+		}
+		return false;
+	}
+	protected function squeezeMediawikiLoad( &$scripts, &$bottomScripts ) {
+		// parse both script chunks
+		$scriptMatches = array();
+		if (preg_match_all(WikiaSkin::SCRIPT_REGEX,$scripts,$scriptMatches)) {
+			$scriptMatches = reset($scriptMatches);
+		}
+		$bottomScriptMatches = array();
+		if (preg_match_all(WikiaSkin::SCRIPT_REGEX,$bottomScripts,$bottomScriptMatches)) {
+			$bottomScriptMatches = reset($bottomScriptMatches);
+		}
+
+		// find mw.loader.load()s
+		$loadTags = array();
+		$modules = array();
+		foreach (array_merge($scriptMatches,$bottomScriptMatches) as $scriptTag) {
+			$tagModules = $this->getModuleListFromMediawikiLoad($scriptTag);
+			if ( $tagModules !== false ) {
+				$loadTags[] = $scriptTag;
+				$modules = array_merge( $modules, $tagModules );
+			}
+		}
+
+		// we cannot optimize it
+		if ( count($loadTags) <= 1 ) {
+			return;
+		}
+
+		// build new modules list
+		$modules = array_unique($modules);
+//		sort($modules);
+
+		// create conditional mw.loader.load() script
+		$loadScript = Html::inlineScript(
+			ResourceLoader::makeLoaderConditionalScript(
+				Xml::encodeJsCall( 'mw.loader.load', array( $modules ) )
+			)
+		);
+
+		// finally do the replacement
+		$first = true;
+		foreach ($loadTags as $loadTag) {
+			$replacement = $first ? $loadScript : '';
+			$scripts = str_replace($loadTag,$replacement,$scripts);
+			$bottomScripts = str_replace($loadTag,$replacement,$bottomScripts);
+			$first = false;
+		}
+	}
+
 }

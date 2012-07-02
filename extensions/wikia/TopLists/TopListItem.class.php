@@ -64,8 +64,17 @@ class TopListItem extends TopListBase {
 
 	public function vote() {
 		if( $this->exists() ) {
-			$oFauxRequest = new FauxRequest(array( "action" => "insert", "list" => "wkvoteart", "wkpage" => $this->getArticle()->getId(), "wkvote" => 3 ));
-			$oApi = new ApiMain($oFauxRequest);
+
+			$oContext = RequestContext::newExtraneousContext(
+				RequestContext::getMain()->getTitle(),
+				array(
+					"action" => "insert",
+					"list" => "wkvoteart",
+					"wkpage" => $this->getArticle()->getId(),
+					"wkvote" => 3
+				)
+			);
+			$oApi = new ApiMain( $oContext, F::app()->wg->EnableWriteAPI );
 
 			$oApi->execute();
 
@@ -160,10 +169,19 @@ class TopListItem extends TopListBase {
 	 * @author Federico "Lox" Lucignano
 	 */
 	private function _queryVotesApi() {
-		$pageId = $this->getArticle()->getId();
+		$pageId = $this->getArticle()->getId();;
 
-		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wktimestamps" => 1 ));
-		$oApi = new ApiMain($oFauxRequest);
+		$oContext = RequestContext::newExtraneousContext(
+			RequestContext::getMain()->getTitle(),
+			array (
+				"action" => "query",
+				"list" => "wkvoteart",
+				"wkpage" => $pageId,
+				"wktimestamps" => 1
+			)
+		);
+		$oApi = new ApiMain( $oContext, F::app()->wg->EnableWriteAPI );
+
 		$oApi->execute();
 		$aResult = $oApi->GetResultData();
 
@@ -281,11 +299,8 @@ class TopListItem extends TopListBase {
 	 * @return string The parsed content of the article referenced by this item
 	 */
 	public function getParsedContent() {
-		global $wgParser;
-
 		if( $this->exists() ) {
-			$parserOptions = new ParserOptions();
-			return $wgParser->parse($this->getArticle()->getContent(), $this->getTitle(), $parserOptions)->getText();
+			return F::app()->wg->Parser->recursiveTagParse( $this->getArticle()->getContent() );
 		}
 
 		return null;
@@ -299,10 +314,18 @@ class TopListItem extends TopListBase {
 	 */
 	public function userCanVote() {
 		$pageId = $this->getArticle()->getId();
-		$result = true;
 
-		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $pageId, "wkuservote" => 1 ));
-		$oApi = new ApiMain($oFauxRequest);
+		$oContext = RequestContext::newExtraneousContext(
+			RequestContext::getMain()->getTitle(),
+			array(
+				"action" => "query",
+				"list" => "wkvoteart",
+				"wkpage" => $pageId,
+				"wkuservote" => 1
+			)
+		);
+		$oApi = new ApiMain( $oContext, F::app()->wg->EnableWriteAPI );
+
 		$oApi->execute();
 		$aResult = $oApi->GetResultData();
 
@@ -368,7 +391,6 @@ class TopListItem extends TopListBase {
 				$editMode = EDIT_UPDATE;
 			}
 
-			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
 			$status = $article->doEdit( $this->mNewContent , wfMsgForContent( $summaryMsg ), $editMode );
@@ -400,7 +422,6 @@ class TopListItem extends TopListBase {
 		$errors = array();
 
 		if ( $this->exists() ) {
-			wfLoadExtensionMessages( 'TopLists' );
 			$article = $this->getArticle();
 
 			$success = $article->doDeleteArticle( wfMsgForContent( 'toplists-item-remove-summary' ) );

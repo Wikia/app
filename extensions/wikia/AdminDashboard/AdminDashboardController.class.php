@@ -8,11 +8,11 @@ class AdminDashboardController extends WikiaController {
 		
 		$adminDashboardTitle = Title::newFromText('AdminDashboard', NS_SPECIAL);
 		$this->isAdminDashboard = $wgTitle->getText() == $adminDashboardTitle->getText();
-		
+
 		$this->tab = $wgRequest->getVal("tab", "");
 		if(empty($this->tab) && $this->isAdminDashboard) {
 			$this->tab = 'general';
-		} else if(AdminDashboardLogic::isGeneralApp(SpecialPage::resolveAlias($wgTitle->getDBKey()))) {
+		} else if(AdminDashboardLogic::isGeneralApp(array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBKey())))) {
 			$this->tab = 'general';
 		} else if(empty($this->tab)) {
 			$this->tab = 'advanced';

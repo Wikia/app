@@ -34,7 +34,6 @@ $wgGroupPermissions['staff']['javascripttestrunner'] = true;
 
 //internationalization files
 $wgExtensionMessagesFiles['JavascriptTestRunner'] = $dir . 'JavascriptTestRunner.i18n.php';
-//$wgExtensionAliasesFiles['JavascriptTestRunner'] = $dir . 'JavascriptTestRunner.alias.php';
 
 //classes
 $wgAutoloadClasses['SpecialJavascriptTestRunner'] = dirname( __FILE__ ) . '/SpecialJavascriptTestRunner.class.php';

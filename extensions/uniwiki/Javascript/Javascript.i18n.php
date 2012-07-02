@@ -29,6 +29,13 @@ $messages['af'] = array(
 	'javascript-desc' => 'Voeg uniwiki.js by elke bladsy wat JavaScript-kode tussen die Uniwiki-uitbreidings deel',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'javascript-desc' => 'Adds uniwiki.js në çdo faqe që përmban kodin e Java e përbashkët midis extensions Uniwiki',
+);
+
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -43,7 +50,14 @@ $messages['arz'] = array(
 	'javascript-desc' => 'بيضيف uniwiki.js لكل صفحة فيها شفرة جافاسكربت مشاركة بين امتدادات يونيويكى',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'javascript-desc' => 'Amiesta uniwiki.js a cada páxina que contién códigu JavaScript compartíu ente estensiones Uniwiki',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -104,6 +118,13 @@ $messages['dsb'] = array(
  */
 $messages['el'] = array(
 	'javascript-desc' => 'Προσθέτει το uniwiki.js σε κάθε σελίδα που περιέχει κώσικα JavaScript κοινό με τις επεκτάσεις Uniwiki',
+);
+
+/** Esperanto (Esperanto)
+ * @author Yekrats
+ */
+$messages['eo'] = array(
+	'javascript-desc' => 'Aldonas uniwiki.js al ĉiu paĝo kiu enhavas kodon JavaScript kunuzitan inter kromprogramoj de Uniwiki',
 );
 
 /** Spanish (Español)
@@ -221,7 +242,7 @@ $messages['km'] = array(
 	'javascript-desc' => 'បន្ថែម uniwiki.js ទៅ​គ្រប់​ទំព័រ​មាន​កូដ JavaScript ដែល​​បាន​ចែករំលែក​រវាង​ផ្នែកបន្ថែម Uniwiki',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -232,21 +253,35 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'javascript-desc' => 'Setzt uniwiki.js op all Säit derbäi op däer JavaScript-Code de vu verschiddenen Uniwiki Erweiderunge benotzt gëtt',
+	'javascript-desc' => 'Setzt uniwiki.js op all Säit derbäi op där JavaScript-Code de vu verschiddenen Uniwiki Erweiderunge benotzt gëtt',
 );
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'javascript-desc' => 'Го додава uniwiki.js на секоја страница што содржи JavaScript код кој е заеднички за Uniwiki проширувањата',
+	'javascript-desc' => 'Го додава uniwiki.js на секоја страница што содржи JavaScript код кој е заеднички за Uniwiki додатоците',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'javascript-desc' => 'Menambahkan uniwiki.js pada setiap laman yang mengandungi kod JavaScript yang dikongsi sesama sambungan Uniwiki',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'javascript-desc' => 'Legger til uniwiki.js på hver side med JavaScript som deles mellom Uniwiki-utvidelser',
 );
 
 /** Nedersaksisch (Nedersaksisch)
  * @author Servien
  */
 $messages['nds-nl'] = array(
-	'javascript-desc' => 'Voeg uniwiki.js mit JavaScript-code dee edeeld wonnen tussen de Uniwiki-uutbreidingen toe an elke pagina',
+	'javascript-desc' => 'Zet uniwiki.js mit JavaScript-kode die edeeld wörden tussen de Uniwiki-uutbreidingen op elke pagina',
 );
 
 /** Dutch (Nederlands)
@@ -261,13 +296,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'javascript-desc' => 'Legg til uniwiki.js på kvar sida med JavaScript som vert delt mellom Uniwiki-utvidingar',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'javascript-desc' => 'Legger til uniwiki.js på hver side med JavaScript som deles mellom Uniwiki-utvidelser',
 );
 
 /** Occitan (Occitan)
@@ -333,6 +361,13 @@ $messages['sk'] = array(
 	'javascript-desc' => 'Pridáva uniwiki.js na každú stránku obsahujúci JavaScriptový kód spoločný pre rozšírenia Uniwiki',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'javascript-desc' => 'Doda uniwiki.js na vsako stran, ki vsebuje kodo JavaScript, deljeno med razširitvami Uniwiki',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
@@ -340,18 +375,20 @@ $messages['sq'] = array(
 	'javascript-desc' => 'Vendosë uniwiki.js në çdo faqe që përmban kodin JavaScript të ndarë mes prapashtesave në Uniwiki',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'javascript-desc' => 'Додаје uniwiki.js на сваку страну која садржи јаваскрипт код који се користи између више Унивики екстензија',
+	'javascript-desc' => 'Додаје uniwiki.js на сваку страницу која садржи јаваскрипту и користи се између више Унивики проширења',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
-	'javascript-desc' => 'Dodaje uniwiki.js na svaku stranu koja sadrži javaskript kod koji se koristi između više Univiki ekstenzija',
+	'javascript-desc' => 'Dodaje uniwiki.js na svaku stranicu koja sadrži javaskriptu i koristi se između više Univiki proširenja',
 );
 
 /** Seeltersk (Seeltersk)
@@ -408,5 +445,18 @@ $messages['vep'] = array(
  */
 $messages['vi'] = array(
 	'javascript-desc' => 'Thêm uniwiki.js vào mỗi trang có chứa mã JavaScript để chia sẻ chúng với các bộ mở rộng Uniwiki',
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$messages['zh-hans'] = array(
+	'javascript-desc' => '将 uniwiki.js 加入到每页的 JavaScript 代码之间分享 Uniwiki 扩充套件',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'javascript-desc' => '將 uniwiki.js 加入到每頁的 JavaScript 代碼之間分享 Uniwiki 擴充套件',
 );
 

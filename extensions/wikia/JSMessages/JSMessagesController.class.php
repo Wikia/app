@@ -30,6 +30,8 @@ class JSMessagesController extends WikiaController {
 				WikiaResponse::CACHE_TARGET_BROWSER,
 				WikiaResponse::CACHE_TARGET_VARNISH
 			));
+
+			$this->response->setContentType('text/javascript; charset=utf-8');
 		}
 	}
 }

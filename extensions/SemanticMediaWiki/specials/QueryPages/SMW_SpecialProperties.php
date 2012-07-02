@@ -1,23 +1,9 @@
 <?php
 
 /**
- * File holding the SMWSpecialProperties class for the Special:Properties page. 
- *
- * @file SMW_SpecialProperties.php
- * 
- * @ingroup SMWSpecialPage
- * @ingroup SpecialPage
- *
- * @author Markus Krötzsch
- * @author Jeroen De Dauw
- */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'Not an entry point.' );
-}
-
-/**
  * This special page for MediaWiki shows all used properties.
+ * 
+ * @file SMW_SpecialProperties.php
  * 
  * @ingroup SMWSpecialPage
  * @ingroup SpecialPage
@@ -29,10 +15,9 @@ class SMWSpecialProperties extends SpecialPage {
 	
 	public function __construct() {
 		parent::__construct( 'Properties' );
-		smwfLoadExtensionMessages( 'SemanticMediaWiki' );
 	}
 
-	public function execute( $param ) {	
+	public function execute( $param ) {
 		wfProfileIn( 'smwfDoSpecialProperties (SMW)' );
 		
 		global $wgOut;
@@ -61,54 +46,72 @@ class SMWSpecialProperties extends SpecialPage {
  */
 class SMWPropertiesPage extends SMWQueryPage {
 
-	function getName() {
-		// TODO: should probably use SMW prefix
-		return "Properties";
-	}
-
-	function isExpensive() {
-		return false; // Disables caching for now
-	}
-
-	function isSyndicated() {
-		return false; // TODO: why not?
-	}
-
 	function getPageHeader() {
 		return '<p>' . wfMsg( 'smw_properties_docu' ) . "</p><br />\n";
 	}
 
+	function getName() {
+		return 'Properties';
+	}
+
 	function formatResult( $skin, $result ) {
 		global $wgLang;
-		$typestring = '';
+		$linker = smwfGetLinker();
+		list ( $property, $useCount ) = $result;
+		
 		$errors = array();
-		if ( $result[0]->isUserDefined() && ( $result[1] <= 5 ) ) {
-			$errors[] = wfMsg( 'smw_propertyhardlyused' );
-		}
-		if ( $result[0]->isUserDefined() && $result[0]->getWikiPageValue() && $result[0]->getWikiPageValue()->getTitle()->exists() ) { // FIXME: this bypasses SMWDataValueFactory; ungood
-			$types = smwfGetStore()->getPropertyValues( $result[0]->getWikiPageValue(), SMWPropertyValue::makeProperty( '_TYPE' ) );
-			if ( count( $types ) >= 1 ) {
-				$typestring = current( $types )->getLongHTMLText( $skin );
+
+		$diWikiPage = $property->getDiWikiPage();
+		$title = !is_null( $diWikiPage ) ? $diWikiPage->getTitle() : null;
+
+		if ( $property->isUserDefined() ) {
+
+			if ( $title === null ) {
+				return '';
 			}
-			$proplink = $skin->makeKnownLinkObj( $result[0]->getWikiPageValue()->getTitle(), $result[0]->getWikiValue() );
-		} elseif ( $result[0]->isUserDefined() && $result[0]->getWikiPageValue() ) { // wikia change
-			$errors[] = wfMsg( 'smw_propertylackspage' );
-			$proplink = $skin->makeBrokenLinkObj( $result[0]->getWikiPageValue()->getTitle(), $result[0]->getWikiValue(), 'action=view' );
+
+			if ( $useCount <= 5 ) {
+				$errors[] = wfMsgHtml( 'smw_propertyhardlyused' );
+			}
+
+			// User defined types default to Page
+			global $smwgPDefaultType;
+			$typeDataValue = SMWTypesValue::newFromTypeId( $smwgPDefaultType );
+			$typestring = $typeDataValue->getLongHTMLText( $linker );
+
+			$label = htmlspecialchars( $property->getLabel() );
+			if ( $title->exists() ) {
+				$typeProperty = new SMWDIProperty( '_TYPE' );
+				$types = smwfGetStore()->getPropertyValues( $diWikiPage, $typeProperty );
+				if ( count( $types ) >= 1 ) {
+					$typeDataValue = SMWDataValueFactory::newDataItemValue( current( $types ), $typeProperty );
+					$typestring = $typeDataValue->getLongHTMLText( $linker );
+				} else {
+					$errors[] = wfMsgHtml( 'smw_propertylackstype', $typestring );
+				}
+
+				$proplink = $linker->link( $title, $label );
+			} else {
+				$errors[] = wfMsgHtml( 'smw_propertylackspage' );
+				$proplink = $linker->link( $title, $label, array(), array( 'action' => 'view' ) );
+			}
+
 		} else { // predefined property
-			$type = $result[0]->getTypesValue();
-			$typestring = $type->getLongHTMLText( $skin );
-			if ( $typestring == '' ) $typestring = '–'; /// FIXME some types o fbuiltin props have no name, and another message should be used then
-			$proplink = $result[0]->getLongHTMLText( $skin );
+			$typeid = $property->findPropertyTypeID();
+			$typeDataValue = SMWTypesValue::newFromTypeId( $typeid );
+			$typestring = $typeDataValue->getLongHTMLText( $linker );
+			$propertyDataValue = SMWDataValueFactory::newDataItemValue( $property, null );
+			$proplink = $propertyDataValue->getShortHtmlText( $linker );
 		}
-		if ( $typestring == '' ) {
-			$type = SMWDataValueFactory::newPropertyObjectValue( SMWPropertyValue::makeProperty( '_TYPE' ) );
-			$type->setDBkeys( array( '_wpg' ) );
-			$typestring = $type->getLongHTMLText( $skin );
-			if ( $result[0]->getWikiPageValue()->getTitle()->exists() ) { // print only when we did not print a "nopage" warning yet
-				$errors[] = wfMsg( 'smw_propertylackstype', $type->getLongHTMLText() );
-			}
+
+		$warnings = smwfEncodeMessages( $errors, 'warning', '', false );
+
+		$useCount = $wgLang->formatNum( $useCount );
+		if ( $typestring === '' ) { // Builtins have no type
+			return wfMsgHtml( 'smw_property_template_notype', $proplink, $useCount ) . ' ' . $warnings;
+		} else {
+			return wfMsgHtml( 'smw_property_template', $proplink, $typestring, $useCount ) . ' ' . $warnings;
 		}
-		return wfMsg( 'smw_property_template', $proplink, $typestring, $result[1] ) . ' ' . smwfEncodeMessages( $errors );
 	}
 
 	function getResults( $requestoptions ) {
@@ -116,4 +119,3 @@ class SMWPropertiesPage extends SMWQueryPage {
 	}
 
 }
-

@@ -6,7 +6,7 @@
  * @file
  * @author Niklas Laxström
  * @author Siebrand Mazeland
- * @copyright Copyright © 2007-2010 Niklas Laxström, Siebrand Mazeland
+ * @copyright Copyright © 2007-2011 Niklas Laxström, Siebrand Mazeland
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -16,49 +16,51 @@
  * Also has code that is still relevant, like the hooks on save.
  */
 class TranslateEditAddons {
-
 	/**
 	 * Add some tabs for navigation for users who do not use Ajax interface.
-	 * @param $skin Skin
-	 * @param $tabs Array
+	 * Hooks: SkinTemplateNavigation, SkinTemplateTabs
 	 */
-	static function addNavigationTabs( $skin, &$tabs ) {
+	static function addNavigationTabs( Skin $skin, array &$tabs ) {
 		global $wgRequest;
 
 		$title = $skin->getTitle();
+		$handle = new MessageHandle( $title );
 
-		if ( !self::isMessageNamespace( $title ) ) {
+		if ( !$handle->isValid() ) {
 			return true;
 		}
 
-		list( $key, $code, $group ) = self::getKeyCodeGroup( $title );
-		if ( !$group || !$code ) {
+		$group = $handle->getGroup();
+		// Happens when translation page move is in progress
+		if ( !$group ) {
 			return true;
 		}
 
-		$collection = $group->initCollection( 'en' );
+		$key = $handle->getKey();
+		$code = $handle->getCode();
+		$collection = $group->initCollection( $group->getSourceLanguage() );
 		$collection->filter( 'optional' );
-		$keys = array_keys( $collection->keys() );
+		$keys = $collection->getMessageKeys();
 		$count = count( $keys );
 
 		$key = strtolower( strtr( $key, ' ', '_' ) );
 
 		$next = $prev = null;
 
+		$match = -100;
+
 		foreach ( $keys as $index => $tkey ) {
 			if ( $key === strtolower( strtr( $tkey, ' ', '_' ) ) ) {
+				$match = $index;
 				break;
-			}
-			if ( $index === $count -1 ) {
-				$index = -666;
 			}
 		}
 
-		if ( isset( $keys[$index -1] ) ) {
-			$prev = $keys[$index -1];
+		if ( isset( $keys[$match -1] ) ) {
+			$prev = $keys[$match -1];
 		}
-		if ( isset( $keys[$index + 1] ) ) {
-			$next = $keys[$index + 1];
+		if ( isset( $keys[$match + 1] ) ) {
+			$next = $keys[$match + 1];
 		}
 
 		$id = $group->getId();
@@ -95,7 +97,7 @@ class TranslateEditAddons {
 		);
 		self::addTab( $skin, $tabs, 'list', $data, $tabindex );
 
-		if ( $next !== null && $next !== true ) {
+		if ( $next !== null ) {
 			$linktitle = Title::makeTitleSafe( $ns, "$next/$code" );
 			$data = array(
 				'text' => wfMsg( 'translate-edit-tab-next' ),
@@ -108,8 +110,9 @@ class TranslateEditAddons {
 	}
 
 	protected static function addTab( $skin, &$tabs, $name, $data, &$index ) {
-		if ( $skin instanceof SkinVector ) {
-			$data['class'] = false; // Vector needs it for some reason
+		// SkinChihuahua is an exception for userbase.kde.org.
+		if ( $skin instanceof SkinVector || $skin instanceof SkinChihuahua ) {
+			$data['class'] = false; // These skins need it for some reason
 			$tabs['namespaces'][$name] = $data;
 		} else {
 			array_splice( $tabs, $index++, 0, array( $name => $data ) );
@@ -118,42 +121,54 @@ class TranslateEditAddons {
 
 	/**
 	 * Keep the usual diiba daaba hidden from translators.
+	 * Hook: AlternateEdit
 	 */
-	static function intro( $object ) {
-		$object->suppressIntro = true;
+	public static function intro( EditPage $editpage ) {
+		$handle = new MessageHandle( $editpage->mTitle );
+		if ( $handle->isValid() ) {
+			$editpage->suppressIntro = true;
+			return true;
+		}
+
+		$msg = wfMsgForContent( 'translate-edit-tag-warning' );
+
+		if ( $msg !== '' && $msg !== '-' && TranslatablePage::isSourcePage( $editpage->mTitle ) ) {
+			global $wgOut;
+			$editpage->editFormTextTop .= $wgOut->parse( $msg );
+		}
 
 		return true;
 	}
 
 	/**
 	 * Adds the translation aids and navigation to the normal edit page.
+	 * Hook: EditPage::showEditForm:initial
 	 */
-	static function addTools( $object ) {
-		if ( !self::isMessageNamespace( $object->mTitle ) ) {
+	static function addTools( EditPage $object ) {
+		$handle = new MessageHandle( $object->mTitle );
+		if ( !$handle->isValid() ) {
 			return true;
 		}
 
 		$object->editFormTextTop .= self::editBoxes( $object );
-
 		return true;
 	}
 
 	/**
 	 * Replace the normal save button with one that says if you are editing
 	 * message documentation to try to avoid accidents.
+	 * Hook: EditPageBeforeEditButtons
 	 */
-	static function buttonHack( $editpage, &$buttons, $tabindex ) {
-		global $wgTranslateDocumentationLanguageCode, $wgLang;
+	static function buttonHack( EditPage $editpage, &$buttons, $tabindex ) {
+		global $wgLang;
 
 		$handle = new MessageHandle( $editpage->mTitle );
 		if ( !$handle->isValid() ) {
 			return true;
 		}
 
-		$code = $handle->getCode();
-
-		if ( $code === $wgTranslateDocumentationLanguageCode ) {
-			$name = TranslateUtils::getLanguageName( $code, false, $wgLang->getCode() );
+		if ( $handle->isDoc() ) {
+			$name = TranslateUtils::getLanguageName( $handle->getCode(), false, $wgLang->getCode() );
 			$temp = array(
 				'id'        => 'wpSave',
 				'name'      => 'wpSave',
@@ -167,10 +182,14 @@ class TranslateEditAddons {
 		}
 
 		global $wgTranslateSupportUrl;
-		if ( !$wgTranslateSupportUrl ) return true;
+		if ( !$wgTranslateSupportUrl ) {
+			return true;
+		}
 
 		$supportTitle = Title::newFromText( $wgTranslateSupportUrl['page'] );
-		if ( !$supportTitle ) return true;
+		if ( !$supportTitle ) {
+			return true;
+		}
 
 		$supportParams = $wgTranslateSupportUrl['params'];
 		foreach ( $supportParams as &$value ) {
@@ -193,8 +212,9 @@ class TranslateEditAddons {
 	}
 
 	/**
-	* @return Array of the message and the language
-	*/
+	 * @param $title Title
+	 * @return Array of the message and the language
+	 */
 	public static function figureMessage( Title $title ) {
 		$text = $title->getDBkey();
 		$pos = strrpos( $text, '/' );
@@ -208,13 +228,6 @@ class TranslateEditAddons {
 		}
 
 		return array( $key, $code );
-	}
-
-	public static function getKeyCodeGroup( Title $title ) {
-		list( $key, $code ) = self::figureMessage( $title );
-		$group = self::getMessageGroup( $title->getNamespace(), $key );
-
-		return array( $key, $code, $group );
 	}
 
 	/**
@@ -242,12 +255,17 @@ class TranslateEditAddons {
 		return $mg;
 	}
 
-	private static function editBoxes( $object ) {
+	/**
+	 * @param $object
+	 * @return String
+	 */
+	private static function editBoxes( EditPage $object ) {
 		global $wgOut, $wgRequest;
 
-		$th = new TranslationHelpers( $object->mTitle );
+		$groupId = $wgRequest->getText( 'loadgroup', '' );
+		$th = new TranslationHelpers( $object->mTitle, $groupId );
 		if ( $object->firsttime && !$wgRequest->getCheck( 'oldid' ) && !$wgRequest->getCheck( 'undo' ) ) {
-			$object->textbox1 = $th->getTranslation();
+			$object->textbox1 = (string) $th->getTranslation();
 		} else {
 			$th->setTranslation( $object->textbox1 );
 		}
@@ -264,64 +282,38 @@ class TranslateEditAddons {
 	 * @return \bool If string contains fuzzy string.
 	 */
 	public static function hasFuzzyString( $text ) {
-		return strpos( $text, TRANSLATE_FUZZY ) !== false;
+		# wfDeprecated( __METHOD__, '1.19' );
+		return MessageHandle::hasFuzzyString( $text );
 	}
 
-	/** Check if a title is marked as fuzzy.
-	 *
+	/**
+	 * Check if a title is marked as fuzzy.
 	 * @param $title Title
 	 * @return \bool If title is marked fuzzy.
 	 */
 	public static function isFuzzy( Title $title ) {
-		$dbr = wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField( 'revtag_type', 'rtt_id', array( 'rtt_name' => 'fuzzy' ), __METHOD__ );
-
-		$tables = array( 'page', 'revtag' );
-		$fields = array( 'rt_type' );
-		$conds  = array(
-			'page_namespace' => $title->getNamespace(),
-			'page_title' => $title->getDBkey(),
-			'rt_type' => $id,
-			'page_id=rt_page',
-			'page_latest=rt_revision'
-		);
-
-		$res = $dbr->selectField( $tables, $fields, $conds, __METHOD__ );
-
-		return $res === $id;
-	}
-
-
-	/** Check if a title is in a message namespace.
-	 *
-	 * @param $title Title
-	 * @return \bool If title is in a message namespace.
-	 */
-	public static function isMessageNamespace( Title $title ) {
-		global $wgTranslateMessageNamespaces;
-
-		$namespace = $title->getNamespace();
-
-		return in_array( $namespace, $wgTranslateMessageNamespaces, true );
+		# wfDeprecated( __METHOD__, '1.19' );
+		$handle = new MessageHandle( $title );
+		return $handle->isFuzzy();
 	}
 
 	/**
-	 * @static
-	 * @param $skin Skin
-	 * @param $tabs
-	 * @return bool
+	 * Removes protection tab for message namespaces - not useful.
+	 * Hook: SkinTemplateTabs
 	 */
-	public static function tabs( $skin, &$tabs ) {
-		if ( !self::isMessageNamespace( $skin->getTitle() ) ) {
-			return true;
+	public static function tabs( Skin $skin, &$tabs ) {
+		$handle = new MessageHandle( $skin->getTitle() );
+		if ( $handle->isMessageNamespace() ) {
+			unset( $tabs['protect'] );
 		}
-
-		unset( $tabs['protect'] );
 
 		return true;
 	}
 
-	public static function keepFields( $edit, $out ) {
+	/**
+	 * Hook: EditPage::showEditForm:fields
+	 */
+	public static function keepFields( EditPage $edit, OutputPage $out ) {
 		global $wgRequest;
 
 		$out->addHTML( "\n" .
@@ -333,50 +325,18 @@ class TranslateEditAddons {
 		return true;
 	}
 
+	/**
+	 * Runs message checks, adds tp:transver tags and updates statistics.
+	 * Hook: ArticleSaveComplete
+	 */
 	public static function onSave( $article, $user, $text, $summary,
 			$minor, $_, $_, $flags, $revision
 	) {
 		$title = $article->getTitle();
+		$handle = new MessageHandle( $title );
 
-		if ( !self::isMessageNamespace( $title ) ) {
+		if ( !$handle->isValid() ) {
 			return true;
-		}
-
-		list( $key, $code, $group ) = self::getKeyCodeGroup( $title );
-
-		// Unknown message, do not handle.
-		if ( !$group || !$code ) {
-			return true;
-		}
-
-		$groups = TranslateUtils::messageKeyToGroups( $title->getNamespace(), $key );
-		$cache = new ArrayMemoryCache( 'groupstats' );
-
-		foreach ( $groups as $g ) {
-			$cache->clear( $g, $code );
-		}
-
-		// Check for explicit tag.
-		$fuzzy = self::hasFuzzyString( $text );
-
-		// Check for problems, but only if not fuzzy already.
-		global $wgTranslateDocumentationLanguageCode;
-		if ( $code !== $wgTranslateDocumentationLanguageCode ) {
-			$checker = $group->getChecker();
-
-			if ( $checker ) {
-				$en = $group->getMessage( $key, 'en' );
-				$message = new FatMessage( $key, $en );
-				/**
-				 * Take the contents from edit field as a translation.
-				 */
-				$message->setTranslation( $text );
-
-				$checks = $checker->checkMessage( $message, $code );
-				if ( count( $checks ) ) {
-					$fuzzy = true;
-				}
-			}
 		}
 
 		// Update it.
@@ -386,82 +346,134 @@ class TranslateEditAddons {
 			$rev = $revision->getID();
 		}
 
-		// begin fuzzy tag.
+		$fuzzy = self::checkNeedsFuzzy( $handle, $text );
+		self::updateFuzzyTag( $title, $rev, $fuzzy );
+		MessageGroupStats::clear( $handle );
+
+		if ( $fuzzy === false ) {
+			wfRunHooks( 'Translate:newTranslation', array( $handle, $rev, $text, $user ) );
+		}
+
+		return true;
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected static function checkNeedsFuzzy( MessageHandle $handle, /*string*/$text ) {
+		// Check for explicit tag.
+		$fuzzy = self::hasFuzzyString( $text );
+
+		// Docs are exempt for checks
+		if ( $handle->isDoc() ) {
+			return $fuzzy;
+		}
+
+		// Not all groups have checkers
+		$group = $handle->getGroup();
+		$checker = $group->getChecker();
+		if ( !$checker ) {
+			return $fuzzy;
+		}
+
+		$code = $handle->getCode();
+		$key = $handle->getKey();
+		$en = $group->getMessage( $key, $group->getSourceLanguage() );
+		$message = new FatMessage( $key, $en );
+		// Take the contents from edit field as a translation.
+		$message->setTranslation( $text );
+
+		$checks = $checker->checkMessage( $message, $code );
+		if ( count( $checks ) ) {
+			$fuzzy = true;
+		}
+
+		return $fuzzy;
+	}
+
+	/**
+	 * @param $title Title
+	 * @param $revision int
+	 * @param $fuzzy bool
+	 */
+	protected static function updateFuzzyTag( Title $title, $revision, $fuzzy ) {
 		$dbw = wfGetDB( DB_MASTER );
 
-		$id = $dbw->selectField( 'revtag_type', 'rtt_id', array( 'rtt_name' => 'fuzzy' ), __METHOD__ );
+		$conds = array(
+			'rt_page' => $title->getArticleId(),
+			'rt_type' => RevTag::getType( 'fuzzy' ),
+			'rt_revision' => $revision
+		);
+
+		// Replace the existing fuzzy tag, if any
+		if ( $fuzzy !== false ) {
+			$index = array_keys( $conds );
+			$dbw->replace( 'revtag', array( $index ), $conds, __METHOD__ );
+		} else {
+			$dbw->delete( 'revtag', $conds, __METHOD__ );
+		}
+	}
+
+
+	/**
+	 * Adds tag which identifies the revision of source message at that time.
+	 * This is used to show diff against current version of source message
+	 * when updating a translation.
+	 * Hook: Translate:newTranslation
+	 * @param $handle MessageHandle
+	 * @param $revision int
+	 * @param $text string
+	 * @param $user User
+	 * @return bool
+	 */
+	public static function updateTransverTag( MessageHandle $handle, $revision, $text, User $user ) {
+		if ( $user->isAllowed( 'bot' ) ) {
+			return false;
+		}
+
+		$group = $handle->getGroup();
+		if ( $group instanceof WikiPageMessageGroup ) {
+			// WikiPageMessageGroup has different method
+			return true;
+		}
+
+		$title = $handle->getTitle();
+		$name = $handle->getKey() . '/' . $group->getSourceLanguage();
+		$definitionTitle = Title::makeTitleSafe( $title->getNamespace(), $name );
+		if ( !$definitionTitle || !$definitionTitle->exists() ) {
+			return true;
+		}
+
+		$definitionRevision = $definitionTitle->getLatestRevID();
+
+		$dbw = wfGetDB( DB_MASTER );
 
 		$conds = array(
-			'rt_page' => $article->getTitle()->getArticleId(),
-			'rt_type' => $id,
-			'rt_revision' => $rev
+			'rt_page' => $title->getArticleId(),
+			'rt_type' => RevTag::getType( 'tp:transver' ),
+			'rt_revision' => $revision,
+			'rt_value' => $definitionRevision,
 		);
-		// Remove any existing fuzzy tags for this revision
-		$dbw->delete( 'revtag', $conds, __METHOD__ );
-
-		// Add the fuzzy tag if needed.
-		if ( $fuzzy !== false ) {
-			$dbw->insert( 'revtag', $conds, __METHOD__ );
-		}
-
-		// Diffs for changed messages.
-		if ( $fuzzy !== false ) {
-			return true;
-		}
-
-		if ( $group instanceof WikiPageMessageGroup ) {
-			return true;
-		}
-
-		$definitionTitle = Title::makeTitleSafe( $title->getNamespace(), "$key/en" );
-		if ( $definitionTitle && $definitionTitle->exists() ) {
-			$definitionRevision = $definitionTitle->getLatestRevID();
-
-			$id = $dbw->selectField( 'revtag_type', 'rtt_id',
-				array( 'rtt_name' => 'tp:transver' ), __METHOD__ );
-
-			$conds = array(
-				'rt_page' => $title->getArticleId(),
-				'rt_type' => $id,
-				'rt_revision' => $rev,
-				'rt_value' => $definitionRevision,
-			);
-			$index = array( 'rt_type', 'rt_page', 'rt_revision' );
-			$dbw->replace( 'revtag', array( $index ), $conds, __METHOD__ );
-		}
-
+		$index = array( 'rt_type', 'rt_page', 'rt_revision' );
+		$dbw->replace( 'revtag', array( $index ), $conds, __METHOD__ );
 		return true;
 	}
 
-	public static function preserveWhitespaces( $text ) {
-		$text = wfEscapeWikiText( $text );
-		$text = preg_replace( '/^ /m', '&#160;', $text );
-		$text = preg_replace( '/ $/m', '&#160;', $text );
-		$text = preg_replace( '/  /', '&#160; ', $text );
-		$text = str_replace( "\n", '<br />', $text );
-		return $text;
-	}
-
-	public static function translateMessageDocumentationLanguage( &$names, $code ) {
-		global $wgTranslateDocumentationLanguageCode;
-		if ( $wgTranslateDocumentationLanguageCode ) {
-			$names[$wgTranslateDocumentationLanguageCode] =
-				wfMessage( 'translate-documentation-language' )->inLanguage( $code )->plain();
-		}
-		return true;
-	}
-
-	public static function disablePreSaveTransform( $article, $popts ) {
-		global $wgTranslateDocumentationLanguageCode;
-		$keycodegroup = self::getKeyCodeGroup( $article->getTitle() );
-		if ( self::isMessageNamespace( $article->getTitle() )
-			&& $keycodegroup[1] !== $wgTranslateDocumentationLanguageCode ) {
+	/**
+	 * Hook: ArticlePrepareTextForEdit
+	 */
+	public static function disablePreSaveTransform( $article, ParserOptions $popts ) {
+		$handle = new MessageHandle( $article->getTitle() );
+		if ( $handle->isMessageNamespace() && !$handle->isDoc() ) {
 			$popts->setPreSaveTransform( false );
 		}
 		return true;
 	}
 
-	public static function displayOnDiff( $de, $out ) {
+	/**
+	 * Hook: ArticleContentOnDiff
+	 */
+	public static function displayOnDiff( DifferenceEngine $de, OutputPage $out ) {
 		$title = $de->getTitle();
 		$handle = new MessageHandle( $title );
 
@@ -472,7 +484,7 @@ class TranslateEditAddons {
 		$de->loadNewText();
 		$out->setRevisionId( $de->mNewRev->getId() );
 
-		$th = new TranslationHelpers( $title );
+		$th = new TranslationHelpers( $title, /*group*/false );
 		$th->setEditMode( false );
 		$th->setTranslation( $de->mNewtext );
 		TranslationHelpers::addModules( $out );
@@ -481,82 +493,10 @@ class TranslateEditAddons {
 		$boxes[] = $th->getDocumentationBox();
 		$boxes[] = $th->getDefinitionBox();
 		$boxes[] = $th->getTranslationDisplayBox();
+
 		$output = Html::rawElement( 'div', array( 'class' => 'mw-sp-translate-edit-fields' ), implode( "\n\n", $boxes ) );
 		$out->addHtml( $output );
+
 		return false;
 	}
-
-	public static function searchProfile( &$profiles ) {
-		global $wgTranslateMessageNamespaces;
-		$insert = array();
-		$insert['translation'] = array(
-			'message' => 'translate-searchprofile',
-			'tooltip' => 'translate-searchprofile-tooltip',
-			'namespaces' => $wgTranslateMessageNamespaces,
-		);
-		
-		$profiles = wfArrayInsertAfter( $profiles, $insert, 'help' );
-		return true;
-	}
-
-	public static function searchProfileForm( $search, &$form, $profile, $term, $opts ) {
-		if ( $profile !== 'translation' ) {
-			return true;
-		}
-
-		if( !$search->getSearchEngine()->supports( 'title-suffix-filter' ) ) {
-			return false;
-		}
-
-		$hidden = '';
-		foreach( $opts as $key => $value ) {
-			$hidden .= Html::hidden( $key, $value );
-		}
-
-		$context = $search->getContext();
-		$code = $context->getLang()->getCode();
-		$selected = $context->getRequest()->getVal( 'languagefilter' );
-
-		if ( is_callable( array( 'LanguageNames', 'getNames' ) ) ) {
-			$languages = LanguageNames::getNames( $code,
-				LanguageNames::FALLBACK_NORMAL,
-				LanguageNames::LIST_MW
-			);
-		} else {
-			$languages = Language::getLanguageNames( false );
-		}
-
-		ksort( $languages );
-
-		$selector = new HTMLSelector( 'languagefilter', 'languagefilter', $selected );
-		$selector->addOption( wfMessage( 'translate-search-nofilter' ), '-' );
-		foreach ( $languages as $code => $name ) {
-			$selector->addOption( "$code - $name", $code );
-		}
-
-		$selector = $selector->getHTML();
-
-		$label = Xml::label( wfMessage( 'translate-search-languagefilter' ), 'languagefilter' ) . '&#160;';
-		$params = array( 'id' => 'mw-searchoptions' );
-
-		$form = Xml::fieldset( false, false, $params ) .
-			$hidden . $label . $selector .
-			Html::closeElement( 'fieldset' );
-		return false;
-	}
-
-	public static function searchProfileSetupEngine( $search, $profile, $engine ) {
-		if ( $profile !== 'translation' ) {
-			return true;
-		}
-
-		$context = $search->getContext();
-		$selected = $context->getRequest()->getVal( 'languagefilter' );
-		if ( $selected !== '-' && $selected ) {
-			$engine->setFeatureData( 'title-suffix-filter', "/$selected" );
-			$search->setExtraParam( 'languagefilter', $selected );
-		}
-		return true;
-	}
-
 }

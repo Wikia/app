@@ -165,7 +165,6 @@ class AutomaticWikiAdoptionGatherData {
 		$globalTitlePreferences = GlobalTitle::newFromText('Preferences', -1, $wikiId);
 		$specialPreferencesUrl = $globalTitlePreferences->getFullURL();
 
-		wfLoadExtensionMessages('AutomaticWikiAdoption');
 		//at least one admin has not edited during xx days
 		foreach ($wikiData['admins'] as $adminId) {
 			//print info

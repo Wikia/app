@@ -1,107 +1,133 @@
 <?php
 
 /**
- * Various mathematical functions - sum, average, min and max.
+ * Various mathematical functions - sum, product, average, min and max.
  *
  * @file
  * @ingroup SemanticResultFormats
+ * 
+ * @licence GNU GPL v3+
+ * 
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * @author Yaron Koren
  * @author Nathan Yergler
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 class SRFMath extends SMWResultPrinter {
 
+	/**
+	 * (non-PHPdoc)
+	 * @see SMWResultPrinter::getName()
+	 */
 	public function getName() {
 		return wfMsg( 'srf_printername_' . $this->mFormat );
 	}
 
-	public function getResult( $results, $params, $outputmode ) {
-		$this->readParameters( $params, $outputmode );
+	/**
+	 * (non-PHPdoc)
+	 * @see SMWResultPrinter::getResult()
+	 */
+	public function getResult( SMWQueryResult $results, array $params, $outputmode ) {
+		$this->handleParameters( $params, $outputmode );
 		global $wgLang;
 		return $wgLang->formatNum( $this->getResultText( $results, SMW_OUTPUT_HTML ) );
 	}
 
-	protected function getResultText( $res, $outputmode ) {
-		global $smwgIQRunningNumber, $wgUser;
-		$skin = $wgUser->getSkin();
-
-		// initialize all necessary variables
-		$sum = 0;
-		$count = 0;
-		$min = '';
-		$max = '';
+	/**
+	 * (non-PHPdoc)
+	 * @see SMWResultPrinter::getResultText()
+	 */
+	protected function getResultText( SMWQueryResult $res, $outputmode ) {
+		$numbers = $this->getNumbers( $res );
+		
+		if ( count( $numbers ) == 0 ) {
+			return $this->params['default'];
+		}
+		
+		switch ( $this->mFormat ) {
+			case 'max':
+				return max( $numbers );
+				break;
+			case 'min':
+				return min( $numbers );
+				break;
+			case 'sum':
+				return array_sum( $numbers );
+				break;
+			case 'product':
+				return array_product( $numbers );
+				break;
+			case 'average':
+				return array_sum( $numbers ) / count( $numbers );
+				break;
+			case 'median':
+				sort( $numbers, SORT_NUMERIC );
+				$position = ( count( $numbers ) + 1 ) / 2 - 1;
+				return ( $numbers[ceil( $position )] + $numbers[floor( $position )] ) / 2; 
+				break;
+		}
+	}
+	
+	/**
+	 * Gets a list of all numbers.
+	 * 
+	 * @since 1.6
+	 * 
+	 * @param SMWQueryResult $res
+	 * 
+	 * @return array
+	 */
+	protected function getNumbers( SMWQueryResult $res ) {
+		$numbers = array();
 
 		while ( $row = $res->getNext() ) {
-			$last_col = array_pop( $row );
-			foreach ( $last_col->getContent() as $value ) {
-				// handle each value only if it's of type Number or NAry
-				if ( $value instanceof SMWNumberValue ) {
-					if ( method_exists( $value, 'getValueKey' ) ) {
-						$num = $value->getValueKey();
-					}
-					else {
-						$num = $value->getNumericValue();
-					}
-				} elseif ( $value instanceof SMWNAryValue ) {
-					$inner_values = $value->getDVs();
-					// find the first inner value that's of
-					// type Number, and use that; if none
-					// are found, ignore this row
-					$num = null;
-					foreach ( $inner_values as $inner_value ) {
-						if ( $inner_value instanceof SMWNumberValue ) {
-							if ( method_exists( $inner_value, 'getValueKey' ) ) {
-								$num = $inner_value->getValueKey();
-							}
-							else {
-								$num = $inner_value->getNumericValue();
-							}
-							break;
-						}
-					}
-					if ( is_null( $num ) )
-						continue;
-				} else {
-					continue;
-				}
-				$count++;
-				if ( $this->mFormat == 'sum' || $this->mFormat == 'average' ) {
-					$sum += $num;
-				} elseif ( $this->mFormat == 'min' ) {
-					if ( $min === '' || $num < $min ) {
-						$min = $num;
-					}
-				} elseif ( $this->mFormat == 'max' ) {
-					if ( $max === '' || $num > $max ) {
-						$max = $num;
-					}
+			foreach( $row as /* SMWResultArray */ $resultArray ) {
+				foreach ( $resultArray->getContent() as /* SMWDataItem */ $dataItem ) {
+					self::addNumbersForDataItem( $dataItem, $numbers );
 				}
 			}
 		}
-		// if there were no results, display a blank
-		if ( $count == 0 ) {
-			$result = '';
-		} elseif ( $this->mFormat == 'sum' ) {
-			$result = $sum;
-		} elseif ( $this->mFormat == 'average' ) {
-			$result = $sum / $count;
-		} elseif ( $this->mFormat == 'min' ) {
-			$result = $min;
-		} elseif ( $this->mFormat == 'max' ) {
-			$result = $max;
-		} else {
-			$result = '';
-		}
 
-		return $result;
+		return $numbers;
+	}
+	
+	/**
+	 * Gets a list of all numbers contained in a dataitem.
+	 * 
+	 * @since 1.6
+	 * 
+	 * @param SMWDataItem $dataItem
+	 * @param array $numbers
+	 */
+	public static function addNumbersForDataItem( SMWDataItem $dataItem, array &$numbers ) {
+		switch ( $dataItem->getDIType() ) {
+			case SMWDataItem::TYPE_NUMBER:
+				$numbers[] = $dataItem->getNumber();
+				break;
+			case SMWDataItem::TYPE_CONTAINER:
+				foreach ( $dataItem->getDataItems() as $di ) {
+					self::addNumbersForDataItem( $di, $numbers );
+				}
+				break;
+			default:
+		}
 	}
 
-        public function getParameters() {
-                return array(
-                        array( 'name' => 'limit', 'type' => 'int', 'description' => wfMsg( 'srf_paramdesc_limit' ) ),
-		);
+	/**
+	 * (non-PHPdoc)
+	 * @see SMWResultPrinter::getParameters()
+	 */
+	public function getParameters() {
+		$params = parent::getParameters();
+		
+		$params['limit'] = new Parameter( 'limit', Parameter::TYPE_INTEGER );
+		$params['limit']->setMessage( 'srf_paramdesc_limit' );
+		$params['limit']->setDefault( 1000 );
+
+		$params['default'] = new Parameter( 'default' );
+		$params['default']->setMessage( 'srf-paramdesc-default' );
+		$params['default']->setDefault( '' );
+		
+		return $params;
 	}
 
 }

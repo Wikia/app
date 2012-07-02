@@ -96,7 +96,6 @@ class AVS {
 class AVSSpecialPage extends SpecialPage {
  	
 	function __construct() {
-		wfLoadExtensionMessages( 'AVS' );
 		parent::__construct( 'AVS', '' );
 	}
 	

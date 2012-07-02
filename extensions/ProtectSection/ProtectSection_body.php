@@ -88,7 +88,7 @@ class ProtectSectionClass {
 		
 		// Do all checks for unallowed changes
 		if ( !$wgUser->isAllowed( 'protectsection' ) ) {
-			wfLoadExtensionMessages( 'ProtectSection' );
+			
 			if( count($list1) != count($list2)) { 
 				// number of <protect>...</protect> sections don't match
 				$msg = wfMsg( 'protectsection_add_remove'); 

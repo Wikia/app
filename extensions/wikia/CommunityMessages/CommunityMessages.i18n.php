@@ -129,7 +129,7 @@ $messages['fr'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Les messages de la communauté ont été mis à jour]].',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -143,7 +143,7 @@ $messages['he'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Messages עודכנה]].',
 );
 
-/** Upper Sorbian (hornjoserbsce)
+/** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(

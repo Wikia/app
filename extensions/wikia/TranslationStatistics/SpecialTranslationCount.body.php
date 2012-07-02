@@ -19,7 +19,6 @@ class SpecialTranslationCount extends SpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct( 'TranslationCount'/*class*/ );
-		wfLoadExtensionMessages( 'TranslationStatistics' ); // Load internationalization messages
 	}
 
 	/**

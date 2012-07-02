@@ -1,15 +1,36 @@
 <?php
+/**
+ * Implements Special:Recentchangeslinked
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup SpecialPage
+ */
 
 /**
  * This is to display changes made to all articles linked in an article.
+ *
  * @ingroup SpecialPage
  */
-class SpecialRecentchangeslinked extends SpecialRecentchanges {
+class SpecialRecentchangeslinked extends SpecialRecentChanges {
 	var $rclTargetTitle;
 
 	function __construct(){
-		SpecialPage::SpecialPage( 'Recentchangeslinked' );
-		$this->includable( true );
+		parent::__construct( 'Recentchangeslinked' );
 	}
 
 	public function getDefaultOptions() {
@@ -25,9 +46,8 @@ class SpecialRecentchangeslinked extends SpecialRecentchanges {
 	}
 
 	public function feedSetup() {
-		global $wgRequest;
 		$opts = parent::feedSetup();
-		$opts['target'] = $wgRequest->getVal( 'target' );
+		$opts['target'] = $this->getRequest()->getVal( 'target' );
 		return $opts;
 	}
 
@@ -35,14 +55,13 @@ class SpecialRecentchangeslinked extends SpecialRecentchanges {
 		$feed = new ChangesFeed( $feedFormat, false );
 		$feedObj = $feed->getFeedObject(
 			wfMsgForContent( 'recentchangeslinked-title', $this->getTargetTitle()->getPrefixedText() ),
-			wfMsgForContent( 'recentchangeslinked-feed' )
+			wfMsgForContent( 'recentchangeslinked-feed' ),
+			$this->getTitle()->getFullUrl()
 		);
 		return array( $feed, $feedObj );
 	}
 
 	public function doMainQuery( $conds, $opts ) {
-		global $wgUser, $wgOut;
-
 		$target = $opts['target'];
 		$showlinkedto = $opts['showlinkedto'];
 		$limit = $opts['limit'];
@@ -50,13 +69,14 @@ class SpecialRecentchangeslinked extends SpecialRecentchanges {
 		if ( $target === '' ) {
 			return false;
 		}
+		$outputPage = $this->getOutput();
 		$title = Title::newFromURL( $target );
 		if( !$title || $title->getInterwiki() != '' ){
-			$wgOut->wrapWikiMsg( "<div class=\"errorbox\">\n$1</div><br style=\"clear: both\" />", 'allpagesbadtitle' );
+			$outputPage->wrapWikiMsg( "<div class=\"errorbox\">\n$1\n</div><br style=\"clear: both\" />", 'allpagesbadtitle' );
 			return false;
 		}
 
-		$wgOut->setPageTitle( wfMsg( 'recentchangeslinked-title', $title->getPrefixedText() ) );
+		$outputPage->setPageTitle( $this->msg( 'recentchangeslinked-title', $title->getPrefixedText() ) );
 
 		/*
 		 * Ordinary links are in the pagelinks table, while transclusions are
@@ -78,22 +98,25 @@ class SpecialRecentchangeslinked extends SpecialRecentchanges {
 		$query_options = array();
 
 		// left join with watchlist table to highlight watched rows
-		if( $uid = $wgUser->getId() ) {
+		$uid = $this->getUser()->getId();
+		if( $uid ) {
 			$tables[] = 'watchlist';
 			$select[] = 'wl_user';
 			$join_conds['watchlist'] = array( 'LEFT JOIN', "wl_user={$uid} AND wl_title=rc_title AND wl_namespace=rc_namespace" );
 		}
-		if ( $wgUser->isAllowed( 'rollback' ) ) {
+		if ( $this->getUser()->isAllowed( 'rollback' ) ) {
 			$tables[] = 'page';
 			$join_conds['page'] = array('LEFT JOIN', 'rc_cur_id=page_id');
 			$select[] = 'page_latest';
 		}
+		if ( !$this->including() ) { // bug 23293
+			ChangeTags::modifyDisplayQuery( $tables, $select, $conds, $join_conds,
+				$query_options, $opts['tagfilter'] );
+		}
 
-		ChangeTags::modifyDisplayQuery( $tables, $select, $conds, $join_conds,
-			$query_options, $opts['tagfilter'] );
-
-		// XXX: parent class does this, should we too?
-		wfRunHooks('SpecialRecentChangesQuery', array( &$conds, &$tables, &$join_conds, $opts ) );
+		if ( !wfRunHooks( 'SpecialRecentChangesQuery', array( &$conds, &$tables, &$join_conds, $opts, &$query_options, &$select ) ) ) {
+			return false;
+		}
 
 		if( $ns == NS_CATEGORY && !$showlinkedto ) {
 			// special handling for categories
@@ -104,11 +127,14 @@ class SpecialRecentchangeslinked extends SpecialRecentchanges {
 			// for now, always join on these tables; really should be configurable as in whatlinkshere
 			$link_tables = array( 'pagelinks', 'templatelinks' );
 			// imagelinks only contains links to pages in NS_FILE
-			if( $ns == NS_FILE || !$showlinkedto ) $link_tables[] = 'imagelinks';
+			if( $ns == NS_FILE || !$showlinkedto ) {
+				$link_tables[] = 'imagelinks';
+			}
 		}
 
-		if( $id == 0 && !$showlinkedto )
+		if( $id == 0 && !$showlinkedto ) {
 			return false; // nonexistent pages can't link to any pages
+		}
 
 		// field name prefixes for all the various tables we might want to join with
 		$prefix = array( 'pagelinks' => 'pl', 'templatelinks' => 'tl', 'categorylinks' => 'cl', 'imagelinks' => 'il' );
@@ -119,14 +145,20 @@ class SpecialRecentchangeslinked extends SpecialRecentchanges {
 			$pfx = $prefix[$link_table];
 
 			// imagelinks and categorylinks tables have no xx_namespace field, and have xx_to instead of xx_title
-			if( $link_table == 'imagelinks' ) $link_ns = NS_FILE;
-			else if( $link_table == 'categorylinks' ) $link_ns = NS_CATEGORY;
-			else $link_ns = 0;
+			if( $link_table == 'imagelinks' ) {
+				$link_ns = NS_FILE;
+			} elseif( $link_table == 'categorylinks' ) {
+				$link_ns = NS_CATEGORY;
+			} else {
+				$link_ns = 0;
+			}
 
 			if( $showlinkedto ) {
 				// find changes to pages linking to this page
 				if( $link_ns ) {
-					if( $ns != $link_ns ) continue; // should never happen, but check anyway
+					if( $ns != $link_ns ) {
+						continue;
+					} // should never happen, but check anyway
 					$subconds = array( "{$pfx}_to" => $dbkey );
 				} else {
 					$subconds = array( "{$pfx}_namespace" => $ns, "{$pfx}_title" => $dbkey );
@@ -143,45 +175,51 @@ class SpecialRecentchangeslinked extends SpecialRecentchanges {
 				}
 			}
 
-			if( $dbr->unionSupportsOrderAndLimit())
+			if( $dbr->unionSupportsOrderAndLimit()) {
 				$order = array( 'ORDER BY' => 'rc_timestamp DESC' );
-			else
+			} else {
 				$order = array();
+			}
 
-			
-			$query = $dbr->selectSQLText( 
-				array_merge( $tables, array( $link_table ) ), 
-				$select, 
+			$query = $dbr->selectSQLText(
+				array_merge( $tables, array( $link_table ) ),
+				$select,
 				$conds + $subconds,
-				__METHOD__, 
+				__METHOD__,
 				$order + $query_options,
 				$join_conds + array( $link_table => array( 'INNER JOIN', $subjoin ) )
 			);
-			
+
 			if( $dbr->unionSupportsOrderAndLimit())
 				$query = $dbr->limitResult( $query, $limit );
 
 			$subsql[] = $query;
 		}
 
-		if( count($subsql) == 0 )
+		if( count($subsql) == 0 ) {
 			return false; // should never happen
-		if( count($subsql) == 1 && $dbr->unionSupportsOrderAndLimit() )
+		}
+		if( count($subsql) == 1 && $dbr->unionSupportsOrderAndLimit() ) {
 			$sql = $subsql[0];
-		else {
+		} else {
 			// need to resort and relimit after union
 			$sql = $dbr->unionQueries($subsql, false).' ORDER BY rc_timestamp DESC';
 			$sql = $dbr->limitResult($sql, $limit, false);
 		}
-		
+
 		$res = $dbr->query( $sql, __METHOD__ );
 
-		if( $res->numRows() == 0 )
+		if( $res->numRows() == 0 ) {
 			$this->mResultEmpty = true;
+		}
 
 		return $res;
 	}
-	
+
+	/**
+	 * @param $opts FormOptions
+	 * @return array
+	 */
 	function getExtraOptions( $opts ){
 		$opts->consumeValues( array( 'showlinkedto', 'target', 'tagfilter' ) );
 		$extraOpts = array();
@@ -191,11 +229,15 @@ class SpecialRecentchangeslinked extends SpecialRecentchanges {
 			Xml::check( 'showlinkedto', $opts['showlinkedto'], array('id' => 'showlinkedto') ) . ' ' .
 			Xml::label( wfMsg("recentchangeslinked-to"), 'showlinkedto' ) );
 		$tagFilter = ChangeTags::buildTagFilterSelector( $opts['tagfilter'] );
-		if ($tagFilter)
+		if ($tagFilter) {
 			$extraOpts['tagfilter'] = $tagFilter;
+		}
 		return $extraOpts;
 	}
 
+	/**
+	 * @return Title
+	 */
 	function getTargetTitle() {
 		if ( $this->rclTargetTitle === null ) {
 			$opts = $this->getOptions();
@@ -208,13 +250,11 @@ class SpecialRecentchangeslinked extends SpecialRecentchanges {
 		return $this->rclTargetTitle;
 	}
 
-	function setTopText( OutputPage $out, FormOptions $opts ) {
-		global $wgUser;
-		$skin = $wgUser->getSkin();
+	function setTopText( FormOptions $opts ) {
 		$target = $this->getTargetTitle();
-		if( $target )
-			$out->setSubtitle( wfMsg( 'recentchangeslinked-backlink', $skin->link( $target,
-				$target->getPrefixedText(), array(), array( 'redirect' => 'no'  ) ) ) );
+		if( $target ) {
+			$this->getOutput()->addBacklinkSubtitle( $target );
+		}
 	}
 
 	public function getFeedQuery() {
@@ -226,9 +266,9 @@ class SpecialRecentchangeslinked extends SpecialRecentchanges {
 		}
 	}
 
-	function setBottomText( OutputPage $out, FormOptions $opts ) {
-		if( isset( $this->mResultEmpty ) && $this->mResultEmpty ){
-			$out->addWikiMsg( 'recentchangeslinked-noresult' );	
+	function setBottomText( FormOptions $opts ) {
+		if( isset( $this->mResultEmpty ) && $this->mResultEmpty ) {
+			$this->getOutput()->addWikiMsg( 'recentchangeslinked-noresult' );
 		}
 	}
 }

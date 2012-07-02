@@ -4,40 +4,34 @@ if ( !defined( 'MEDIAWIKI' ) )
 
 class AbuseFilterViewTools extends AbuseFilterView {
 	function show() {
-		global $wgRequest, $wgOut, $wgUser;
+		$out = $this->getOutput();
+		$user = $this->getUser();
 
 		// Header
-		$wgOut->setSubTitle( wfMsg( 'abusefilter-tools-subtitle' ) );
-		$wgOut->addWikiMsg( 'abusefilter-tools-text' );
+		$out->addWikiMsg( 'abusefilter-tools-text' );
 
 		// Expression evaluator
 		$eval = '';
 		$eval .= AbuseFilter::buildEditBox( '', 'wpTestExpr' );
 
 		// Only let users with permission actually test it
-		if ( $wgUser->isAllowed( 'abusefilter-modify' ) ) {
+		if ( $user->isAllowed( 'abusefilter-modify' ) ) {
 			$eval .= Xml::tags( 'p', null,
 				Xml::element( 'input',
 				array(
 					'type' => 'button',
 					'id' => 'mw-abusefilter-submitexpr',
-					'onclick' => 'doExprSubmit();',
 					'value' => wfMsg( 'abusefilter-tools-submitexpr' ) )
 				)
 			);
 			$eval .= Xml::element( 'p', array( 'id' => 'mw-abusefilter-expr-result' ), ' ' );
 		}
 		$eval = Xml::fieldset( wfMsg( 'abusefilter-tools-expr' ), $eval );
-		$wgOut->addHTML( $eval );
+		$out->addHTML( $eval );
 
-		// Associated script
-		$exprScript = file_get_contents( dirname( __FILE__ ) . '/tools.js' );
+		$out->addModules( 'ext.abuseFilter.tools' );
 
-		$wgOut->addInlineScript( $exprScript );
-
-		global $wgUser;
-
-		if ( $wgUser->isAllowed( 'abusefilter-modify' ) ) {
+		if ( $user->isAllowed( 'abusefilter-modify' ) ) {
 			// Hacky little box to re-enable autoconfirmed if it got disabled
 			$rac = '';
 			$rac .= Xml::inputLabel(
@@ -46,18 +40,17 @@ class AbuseFilterViewTools extends AbuseFilterView {
 				'reautoconfirm-user',
 				45
 			);
-			$rac .= '&nbsp;';
+			$rac .= '&#160;';
 			$rac .= Xml::element(
 				'input',
 				array(
 					'type' => 'button',
 					'id' => 'mw-abusefilter-reautoconfirmsubmit',
-					'onclick' => 'doReautoSubmit();',
 					'value' => wfMsg( 'abusefilter-tools-reautoconfirm-submit' )
 				)
 			);
 			$rac = Xml::fieldset( wfMsg( 'abusefilter-tools-reautoconfirm' ), $rac );
-			$wgOut->addHTML( $rac );
+			$out->addHTML( $rac );
 		}
 	}
 }

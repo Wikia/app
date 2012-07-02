@@ -114,7 +114,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 		return 'Return general information about the site.';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array_merge(
 			parent::getExamples(),
 			array('api.php?action=query&meta=siteinfo&siprop=general|namespaces|statistics|variables|category|wikidesc')

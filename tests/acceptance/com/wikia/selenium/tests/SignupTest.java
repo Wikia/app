@@ -23,7 +23,7 @@ public class SignupTest extends BaseTest {
 	private static final String LINK_TERMS = "//form[@id='WikiaSignupForm']//a[contains(@href, 'Terms_of_use')]";
 	private static final String INPUT_SUBMIT = "//form[@id='WikiaSignupForm']//input[@type='submit']";
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testSignupPageElements() throws Exception {
 		openAndWait("/wiki/Special:UserSignup");
 
@@ -45,7 +45,7 @@ public class SignupTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='WikiaArticle']//a[@data-id='facebook']"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testSignupErrorMessages() throws Exception {
 		Random random = new Random();
 		String sufix = "";
@@ -142,7 +142,7 @@ public class SignupTest extends BaseTest {
 		assertEquals("", session().getValue(INPUT_PASSWORD));
 	}
 	
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testSignup() throws Exception {
 		Random random = new Random();
 		String sufix = "";

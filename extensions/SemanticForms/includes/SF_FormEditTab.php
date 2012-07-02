@@ -1,9 +1,10 @@
 <?php
-
 /**
  * Utility class for 'edit with form' tab and page
  *
  * @author Yaron Koren
+ * @file
+ * @ingroup SF
  */
 class SFFormEditTab {
 
@@ -12,25 +13,29 @@ class SFFormEditTab {
 	 * a form
 	 */
 	static function displayTab( $obj, &$content_actions ) {
+		if ( method_exists ( $obj, 'getTitle' ) ) {
+			$title = $obj->getTitle();
+		} else {
+			$title = $obj->mTitle;
+		}
 		// Make sure that this is not a special page, and
 		// that the user is allowed to edit it
 		// - this function is almost never called on special pages,
 		// but before SMW is fully initialized, it's called on
 		// Special:SMWAdmin for some reason, which is why the
 		// special-page check is there.
-		if ( !isset( $obj->mTitle ) ||
-			( $obj->mTitle->getNamespace() == NS_SPECIAL ) ) {
+		if ( !isset( $title ) ||
+			( $title->getNamespace() == NS_SPECIAL ) ) {
 			return true;
 		}
-		$title = $obj->getTitle();
+
 		$form_names = SFFormLinker::getDefaultFormsForPage( $title );
 		if ( count( $form_names ) == 0 ) {
 			return true;
 		}
+
 		global $wgRequest, $wgUser;
 		global $sfgRenameEditTabs, $sfgRenameMainEditTab;
-
-		SFUtils::loadMessages();
 
 		$user_can_edit = $wgUser->isAllowed( 'edit' ) && $title->userCan( 'edit' );
 		// Create the form edit tab, and apply whatever changes are
@@ -102,8 +107,9 @@ class SFFormEditTab {
 	}
 
 	/**
-	 * Function currently called only for the 'Vector' skin - will
-	 * possibly be called for additional skins later.
+	 * Like displayTab(), but called with a different hook - this one is
+	 * called for the 'Vector' skin in MW 1.16, as well as all skins
+	 * starting with MW 1.17 (?).
 	 */
 	static function displayTab2( $obj, &$links ) {
 		// the old '$content_actions' array is thankfully just a
@@ -119,7 +125,7 @@ class SFFormEditTab {
 	 * special pages)
 	 */
 	static function displayForm( $action, $article ) {
-		global $sfgIP, $sfgUseFormEditPage;
+		global $wgOut, $sfgUseFormEditPage;
 
 		// return "true" if the call failed (meaning, pass on handling
 		// of the hook to others), and "false" otherwise
@@ -136,9 +142,7 @@ class SFFormEditTab {
 			return true;
 		}
 		if ( count( $form_names ) > 1 ) {
-			SFUtils::loadMessages();
-			$warning_text = '    <div class="warningMessage">' . wfMsg( 'sf_formedit_morethanoneform' ) . "</div>\n";
-			global $wgOut;
+			$warning_text = "\t" . '<div class="warningMessage">' . wfMsg( 'sf_formedit_morethanoneform' ) . "</div>\n";
 			$wgOut->addHTML( $warning_text );
 		}
 		$form_name = $form_names[0];
@@ -147,12 +151,28 @@ class SFFormEditTab {
 			# Experimental new feature extending from the internal
 			# EditPage class
 			$editor = new SFFormEditPage( $article, $form_name );
-			$editor->submit();
+			$editor->edit();
 			return false;
 		}
 
 		$page_name = SFUtils::titleString( $title );
-		SFFormEdit::printForm( $form_name, $page_name );
+
+		$msg = SFFormEdit::printForm( $form_name, $page_name );
+
+		if ( $msg ) {
+			// Some error occurred - display it.
+			$msgdata = null;
+			if ( is_array( $msg ) ) {
+				if ( count( $msg ) > 1 ) {
+					$msgdata = $msg[1];
+				}
+				$msg = $msg[0];
+			}
+
+			$wgOut->addHTML( Html::element( 'p', array( 'class' => 'error' ), wfMsg( $msg, $msgdata ) ) );
+
+		}
+
 		return false;
 	}
 

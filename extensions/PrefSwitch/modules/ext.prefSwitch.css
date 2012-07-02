@@ -1,0 +1,65 @@
+/*
+ * CSS for PrefSwitch extension
+ */
+
+div.prefswitch-intro {
+	font-size: large;
+	margin-bottom: 1em;
+}
+form.prefswitch-survey {
+	width: 32em;
+	margin: 0;
+	padding: 0;
+}
+form.prefswitch-survey dl {
+	border-top: dashed 1px silver;
+	margin: 0;
+	padding: 0;
+	margin-top: 1em;
+	padding-top: 1em;
+	width: 32em;
+}
+form.prefswitch-survey dl dt,
+form.prefswitch-survey dl dd {
+	margin: 0;
+	margin-bottom: 0.5em;
+}
+form.prefswitch-survey dl dt {
+	margin-top: 1em;
+	font-size: 1.1em;
+}
+form.prefswitch-survey dl dd {
+	margin-left: 2em;
+}
+form.prefswitch-survey dl dt textarea {
+	width: 30em;
+	height: 4em;
+}
+form.prefswitch-survey dl blockquote {
+	padding: 0em;
+	margin: 0em;
+	margin-left: 2em;
+}
+form.prefswitch-survey dl blockquote dd {
+	margin-left: 2em;
+}
+form.prefswitch-survey dl blockquote dd textarea {
+	width: 28em;
+}
+form.prefswitch-survey dl dt p {
+	margin: 0;
+	padding: 0;
+}
+form.prefswitch-survey dl dd p {
+	margin: 0;
+	padding: 0;
+	line-height: 2em;
+}
+form.prefswitch-survey .prefswitch-survey-submit {
+	margin-top: 1em;
+	margin-bottom: 1em;
+	text-align: right;
+}
+form.prefswitch-survey input.prefswitch-need-other {
+	clear: both;
+}

@@ -1,0 +1,16 @@
+These is the readme file for the SubPageList extension.
+	
+Extension page on mediawiki.org: http://www.mediawiki.org/wiki/Extension:SubPageList
+Latest version of the readme file: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/SubPageList/README?view=co
+
+== About ==
+
+SubPageList is a lightweight extension to display subpages.
+
+== Feature overview ==
+
+* Adds a <code>splist</code> or <code>subpagelist</code> parser hook that
+  you can use to list subpages.
+* Backward compatible with the [[Extension:SubPageList3|SubPageList3 extension]].
+* Supports multiple parameters that enable you to customize the subpage list.
+* Full integration with the [[Extension:Validator|Validator extension]].

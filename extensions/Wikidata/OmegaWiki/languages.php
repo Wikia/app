@@ -5,10 +5,10 @@
  * @return array of language names for the user's language preference
  **/
 function getOwLanguageNames( $purge = false ) {
-	global $wgUser;
+	global $wgLang ;
 	static $owLanguageNames = null;
 	if ( is_null( $owLanguageNames ) && !$purge ) {
-		$owLanguageNames = getLangNames( $wgUser->getOption( 'language' ) );
+		$owLanguageNames = getLangNames( $wgLang->getCode() );
 	}
 	return $owLanguageNames;
 
@@ -85,52 +85,25 @@ function getLanguageIso639_3ForId( $id ) {
 	
 }
 
-/* Return SQL query string for fetching language names. */
+/**
+ * Returns a SQL query string for fetching language names in a given language.
+ * @param $lang_code the language in which to retrieve the language names 
+ **/
 function getSQLForLanguageNames( $lang_code ) {
 	/* Use a simpler query if the user's language is English. */
 	/* getLanguageIdForCode( 'en' ) = 85 */
 
-// alternative query, slower?
-// 	if ( $lang_code == 'en' || !( $lang_id = getLanguageIdForCode( $lang_code ) ) )
-// 		return 'SELECT language.language_id AS row_id,language_names.language_name' .
-// 			' FROM language' .
-// 			' JOIN language_names ON language.language_id = language_names.language_id' .
-// 			' WHERE language_names.name_language_id = 85' ;
-// 	/* Fall back on English in cases where a language name is not present in the
-// 		user's preferred language. */
-// 	else
-// 		return 'SELECT language.language_id AS row_id,COALESCE(ln1.language_name,ln2.language_name) AS language_name' .
-// 			' FROM language' .
-// 			' LEFT JOIN language_names AS ln1 ON language.language_id = ln1.language_id AND ln1.name_language_id = ' . $lang_id .
-// 			' JOIN language_names AS ln2 ON language.language_id = ln2.language_id AND ln2.name_language_id = 85' ;
-
 	if ( $lang_code == 'en' || !( $lang_id = getLanguageIdForCode( $lang_code ) ) )
-		return 'SELECT language.language_id AS row_id,language_names.language_name' .
-			' FROM language' .
-			' JOIN language_names ON language.language_id = language_names.language_id' .
-			' WHERE language_names.name_language_id = 85' ;
+		return 'SELECT language_id AS row_id, language_name' .
+			' FROM language_names' .
+			' WHERE name_language_id = 85' ;
 	/* Fall back on English in cases where a language name is not present in the
 		user's preferred language. */
 	else
-		return 'SELECT language.language_id AS row_id, language_names.language_name AS language_name' .
+		return 'SELECT language.language_id AS row_id, COALESCE(ln1.language_name,ln2.language_name) AS language_name' .
 			' FROM language' .
-			' JOIN language_names ON language.language_id = language_names.language_id' .
-			' WHERE language_names.name_language_id = ' . $lang_id .
-			' OR ( language_names.name_language_id = 85 ' .
-			' AND language.language_id NOT IN ( SELECT language_id FROM language_names WHERE language_names.name_language_id =  ' . $lang_id .
-			' ) ) ' ;
-
+			' LEFT JOIN language_names AS ln1 ON language.language_id = ln1.language_id' .
+			' AND ln1.name_language_id = ' . $lang_id .
+			' JOIN language_names AS ln2 ON language.language_id = ln2.language_id AND ln2.name_language_id = 85 ' ;
 
 }
-
-function getLanguageIdForName( $name ) {
-	$dbr = wfGetDB( DB_SLAVE );
-	$queryResult = $dbr->query( "SELECT language_id FROM language_names WHERE language_name=" . $dbr->addQuotes( $name ) );
-	
-	if ( $languageId = $dbr->fetchObject( $queryResult ) )
-		return $languageId->language_id;
-	else
-		return 0;
-}
-
-

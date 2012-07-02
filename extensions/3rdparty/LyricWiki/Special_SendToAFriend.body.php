@@ -19,12 +19,11 @@ require_once 'extras.php';
 
 class SendToAFriend extends SpecialPage
 {
-	function SendToAFriend()
+	function __construct()
 	{
-		SpecialPage::SpecialPage("SendToAFriend");
-		wfLoadExtensionMessages('SendToAFriend');
+		parent::__construct("SendToAFriend");
 	}
-	
+
 	function validateEmailAddress( $addr )
 	{
 		return ( 0 != preg_match("/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+[a-zA-Z]{2,6}$/", $addr ) );
@@ -33,7 +32,7 @@ class SendToAFriend extends SpecialPage
 	function getMessageBody( $request )
 	{
 		global $wgPlainTextEmails;
-		
+
 		// get the message template
 		$body = wfMsg( "staf-body" );
 		#$body = wfMsg( "staf-body", $this->getPageName($request), trim($request->getText("msg")) );
@@ -42,7 +41,7 @@ class SendToAFriend extends SpecialPage
 			Array("$1","$2"),
 			Array( "[{{fullurl:".$pagename."}} ".str_replace("_", " ", urldecode($pagename))."]", trim($request->getText("msg")) ),
 			$body );
-		
+
 		// expand wikitext
 		$body = sandboxParse($body);
 
@@ -62,7 +61,7 @@ class SendToAFriend extends SpecialPage
 
 			// Remove the anchor tag for the heading
 			$body = preg_replace("/<a name=['\"].*?['\"]><\/a>/", "", $body);
-			
+
 			// Remove the extra sections from the link and change to single-quotes (these might cause gmail to expand the tag instead of making it a link... unsure how their algorithm works).
 			$body = preg_replace("/<a href=\"([^\"]*)\" [^>]*>/", "<a href='$1'>", $body);
 		};
@@ -91,7 +90,7 @@ class SendToAFriend extends SpecialPage
 		$to = str_replace(Array("\n","\r","\t")," ",$to);
 		$from = str_replace(Array("\n","\r","\t")," ",$from);
 		$subject = str_replace(Array("\n","\r","\t")," ",$subject);
-		
+
 		// Normalize line-endings.
 		$body = str_replace("\r\n", "\n", $body); // set all versions to \n to avoid making double-breaks (would end up as \r\r\n if we didn't do this).
 		$body = str_replace("\n", "<br/>\r\n", $body);
@@ -141,7 +140,7 @@ class SendToAFriend extends SpecialPage
 			$this->showForm( $request, $wgOut );
 			return;
 		};
-		
+
 		$body = $this->getMessageBody( $request );
 		$wgOut->addHTML("<pre>".$body."</pre>");
 		$this->showForm($request,$wgOut);
@@ -225,7 +224,7 @@ class SendToAFriend extends SpecialPage
 		$page = trim(str_replace("%20","_",$page));
 		return $page;
 	}
-	
+
 	function showForm( $request, $wgOut )
 	{
 		$page	= $this->getPageName($request);
@@ -233,12 +232,12 @@ class SendToAFriend extends SpecialPage
 		$myAddr	= $request->getText("myAddr");
 		$subj 	= $request->getText("subj");
 		$msg	= $request->getText("msg");
-		
+
 		$wgOut->addHTML("<small>We will not spam you (or your friend), or sell/give-away your email addresses.  <strong>We do not record these email addresses.</strong></small><br/>");
 		$wgOut->addHTML("<form method='post' action='' />");
 			$wgOut->addHTML("<input type='hidden' name='formName' value='emailLyrics'/>");
 			$wgOut->addHTML("<input type='hidden' name='jsForm' value='false'/>");
-			
+
 			$wgOut->addHTML("<table>");
 				$wgOut->addHTML("<tr>");
 					$wgOut->addHTML("<td>".wfMsg("staf-friendemail").": </td>");
@@ -290,7 +289,7 @@ class SendToAFriend extends SpecialPage
 			$this->showForm( $wgRequest, $wgOut );
 		}
 	}
-	
+
 	////
 	// Returns true if the message is likely to be spam.
 	////

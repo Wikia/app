@@ -31,6 +31,9 @@ class ApiQueryMessageCollection extends ApiQueryGeneratorBase {
 		$this->run( $resultPageSet );
 	}
 
+	/**
+	 * @param $resultPageSet ApiPageSet
+	 */
 	private function run( $resultPageSet = null ) {
 		$params = $this->extractRequestParams();
 
@@ -43,18 +46,21 @@ class ApiQueryMessageCollection extends ApiQueryGeneratorBase {
 		$messages->setInFile( $group->load( $params['language'] ) );
 
 		foreach ( $params['filter'] as $filter ) {
+			$value = null;
+			if ( strpos( $filter, ':' ) !== false ) {
+				list( $filter, $value ) = explode( ':', $filter, 2 );
+			}
 			/* The filtering params here are swapped wrt MessageCollection.
 			 * There (fuzzy) means do not show fuzzy, which is the same as !fuzzy
 			 * here and fuzzy here means (fuzzy, false) there. */
 			if ( $filter[0] === '!' ) {
-				$messages->filter( substr( $filter, 1 ) );
+				$messages->filter( substr( $filter, 1 ), true, $value );
 			} else {
-				$messages->filter( $filter, false );
+				$messages->filter( $filter, false, $value );
 			}
 		}
 
 		$messages->slice( $params['offset'], $params['limit'] + 1 );
-
 
 		$messages->loadTranslations();
 
@@ -63,21 +69,21 @@ class ApiQueryMessageCollection extends ApiQueryGeneratorBase {
 		$count = 0;
 
 		$props = array_flip( $params['prop'] );
-		foreach ( $messages->keys() as $key => $dbkey ) {
+		foreach ( $messages->keys() as $mkey => $title ) {
 			if ( ++$count > $params['limit'] ) {
 					$this->setContinueEnumParameter( 'offset', $params['offset'] + $count - 1 );
 					break;
 			}
 
 			if ( is_null( $resultPageSet ) ) {
-				$data = $this->extractMessageData( $result, $props, $messages[$key] );
+				$data = $this->extractMessageData( $result, $props, $messages[$mkey] );
 				$fit = $result->addValue( array( 'query', $this->getModuleName() ), null, $data );
 				if ( !$fit ) {
 					$this->setContinueEnumParameter( 'offset', $params['offset'] + $count - 1 );
 					break;
 				}
 			} else {
-				$pages[] = Title::makeTitleSafe( $group->getNamespace(), $dbkey );
+				$pages[] = $title;
 			}
 		}
 
@@ -89,6 +95,12 @@ class ApiQueryMessageCollection extends ApiQueryGeneratorBase {
 
 	}
 
+	/**
+	 * @param $result ApiResult
+	 * @param $props array
+	 * @param $message ThinMessage
+	 * @return array
+	 */
 	public function extractMessageData( $result, $props, $message ) {
 		$data['key'] = $message->key();
 		if ( isset( $props['definition'] ) ) {
@@ -104,30 +116,11 @@ class ApiQueryMessageCollection extends ApiQueryGeneratorBase {
 		return $data;
 	}
 
-	public function getFilters() {
-		$basic = MessageCollection::getAvailableFilters();
-		$full = array();
-		foreach ( $basic as $filter ) {
-			$full[] = $filter;
-			$full[] = "!$filter";
-		}
-		return $full;
-	}
-
 	public function getAllowedParams() {
-
-		// Ugly code for BC <= 1.16
-		$class = new ReflectionClass( 'ApiBase' );
-		if ( $class->hasConstant( 'PARAM_REQUIRED' ) ) {
-			$required = ApiBase::PARAM_REQUIRED;
-		} else {
-			$required = 8;
-		}
-
 		return array(
 			'group' => array(
 				ApiBase::PARAM_TYPE => array_keys( MessageGroups::getAllGroups() ),
-				$required => true,
+				ApiBase::PARAM_REQUIRED => true,
 			),
 			'language' => array(
 				ApiBase::PARAM_TYPE => 'string',
@@ -145,7 +138,7 @@ class ApiQueryMessageCollection extends ApiQueryGeneratorBase {
 				ApiBase::PARAM_TYPE => 'integer',
 			),
 			'filter' => array(
-				ApiBase::PARAM_TYPE => $this->getFilters(),
+				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_DFLT => '!optional|!ignored',
 				ApiBase::PARAM_ISMULTI => true,
 			),
@@ -177,6 +170,7 @@ class ApiQueryMessageCollection extends ApiQueryGeneratorBase {
 				'hastranslation - messages which have a translation regardless if it is fuzzy or not',
 				'translated     - messages which have a translation which is not fuzzy',
 				'changed        - messages which has been translated or changed since last export',
+				'reviewer:#     - messages where given userid # is among reviewers',
 			),
 		);
 	}
@@ -185,7 +179,7 @@ class ApiQueryMessageCollection extends ApiQueryGeneratorBase {
 		return 'Query MessageCollection about translations';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		$groups = MessageGroups::getAllGroups();
 		$group = key( $groups );
 
@@ -198,6 +192,6 @@ class ApiQueryMessageCollection extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryMessageCollection.php 74675 2010-10-12 17:36:42Z nikerabbit $';
+		return __CLASS__ . ': $Id: ApiQueryMessageCollection.php 107486 2011-12-28 13:01:58Z nikerabbit $';
 	}
 }

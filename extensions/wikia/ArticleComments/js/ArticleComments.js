@@ -20,10 +20,10 @@ var ArticleComments = {
 		}
 
 		$('#article-comm-submit').bind('click', {source: '#article-comm'}, ArticleComments.actionProxy(ArticleComments.postComment));
-		$('#article-comments').delegate('.article-comm-delete', 'click', ArticleComments.linkDelete);
-		$('#article-comments').delegate('.article-comm-edit', 'click', ArticleComments.actionProxy(ArticleComments.edit));
-		$('#article-comments').delegate('.article-comm-history', 'click', ArticleComments.linkHistory);
-		$('#article-comments').delegate('.article-comm-reply', 'click', ArticleComments.actionProxy(ArticleComments.reply));
+		$('#article-comments').on('click','.article-comm-delete', ArticleComments.linkDelete);
+		$('#article-comments').on('click','.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
+		$('#article-comments').on('click','.article-comm-history', ArticleComments.linkHistory);
+		$('#article-comments').on('click','.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
 		$('#article-comm-order').find('a').bind('click', ArticleComments.actionProxy(ArticleComments.changeOrder));
 		
 		$('#article-comments-pagination').find('div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));
@@ -550,13 +550,17 @@ var ArticleComments = {
 
 				// Initialize the editor
 				$element.miniEditor({
-					config: { mode: hasEdgeCases ? 'source' : MiniEditor.config.mode },
+					config: {
+						animations: window.WallAnimations,
+						mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
+					},
 					events: events
 				});
 			}
 			
 			// Load assets first so we have the proper config.mode (BugId:25182)
 			if (!MiniEditor.assetsLoaded) {
+				MiniEditor.loading($element);
 				MiniEditor.loadAssets(initEditor);
 
 			} else {

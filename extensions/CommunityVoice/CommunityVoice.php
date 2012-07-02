@@ -27,8 +27,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /* Configuration */
 
 // Web-accessable resource path
-$egCommunityVoiceResourcesPath = $wgScriptPath .
-	'/extensions/CommunityVoice/Resources';
+// Defaults to $wgExtensionAssetsPath . '/CommunityVoice/Resources'
+$egCommunityVoiceResourcesPath = null;
 
 /* MediaWiki Integration */
 
@@ -37,7 +37,7 @@ $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'CommunityVoice',
 	'author' => 'Trevor Parscal',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:CommunityVoice',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:CommunityVoice',
 	'descriptionmsg' => 'communityvoice-desc',
 	'version' => '0.1.0',
 );
@@ -53,8 +53,9 @@ $wgAutoloadClasses['CommunityVoiceRatings'] = $dir . 'Modules/Ratings.php';
 $wgSpecialPages['CommunityVoice'] = 'CommunityVoicePage';
 // Setup Hooks
 $wgExtensionFunctions[] = 'CommunityVoice::registerModules';
-$wgHooks['AjaxAddScript'][] = 'CommunityVoice::addScripts';
+$wgExtensionFunctions[] = 'CommunityVoice::setupVars';
 $wgHooks['BeforePageDisplay'][] = 'CommunityVoice::addStyles';
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'CommunityVoice::LoadExtensionSchemaUpdates';
 
 /* Classes */
 
@@ -67,21 +68,19 @@ abstract class CommunityVoice {
 	);
 	private static $messagesLoaded = false;
 
-	/* Private Static Functions */
-
-	private static function autoLoadMessages() {
-		// Checks if extension messages have been loaded already
-		if ( !self::$messagesLoaded ) {
-			// Loads extension messages
-			wfLoadExtensionMessages( 'CommunityVoice' );
-			self::$messagesLoaded = true;
-		}
-	}
-
 	/* Static Functions */
 
 	public static function getModules() {
 		return array_keys( self::$modules );
+	}
+
+	public static function setupVars() {
+		// Web-accessable resource path
+		global $egCommunityVoiceResourcesPath, $wgExtensionAssetsPath;
+		if ( $egCommunityVoiceResourcesPath === null ) {
+			$egCommunityVoiceResourcesPath = $wgExtensionAssetsPath .
+				'/CommunityVoice/Resources';
+		}
 	}
 
 	public static function callModuleAction(
@@ -136,8 +135,6 @@ abstract class CommunityVoice {
 		$message,
 		$parameter = null
 	) {
-		// Makes sure messages are laoded
-		self::autoLoadMessages();
 		// Returns message
 		return wfMsg( 'communityvoice-' . $module . '-' . $message, $parameter );
 	}
@@ -146,8 +143,6 @@ abstract class CommunityVoice {
 		$module,
 		$message
 	) {
-		// Makes sure messages are laoded
-		self::autoLoadMessages();
 		// Gets variadic parameters
 		$parameters = func_get_args();
 		// Less the first two
@@ -162,31 +157,37 @@ abstract class CommunityVoice {
 	}
 	
 	/**
-	 * Adds scripts to document
+	 * Adds scripts to document.
+	 * This used to run from AjaxAddScript hook, but now runs
+	 * from parser tag.
 	 */
 	public static function addScripts(
 		$out
 	) {
 		global $wgJsMimeType;
 		global $egCommunityVoiceResourcesPath;
-		$out->addInlineScript(
-			sprintf(
-				"var egCommunityVoiceResourcesPath = '%s';\n" ,
-				Xml::escapeJsString( $egCommunityVoiceResourcesPath )
-			)
-		);
-		$out->addScript(
-			Xml::element(
-				'script',
-				array(
-					'type' => $wgJsMimeType,
-					'src' => $egCommunityVoiceResourcesPath .
-						'/CommunityVoice.js'
-				),
-				'',
-				false
-			)
-		);
+		if ( !$out->hasHeadItem( 'CommunityVoice' ) ) {
+			$out->addInlineScript(
+				sprintf(
+					"var egCommunityVoiceResourcesPath = '%s';\n" ,
+					Xml::escapeJsString( $egCommunityVoiceResourcesPath )
+				)
+			);
+			$out->addScript(
+				Xml::element(
+					'script',
+					array(
+						'type' => $wgJsMimeType,
+						'src' => $egCommunityVoiceResourcesPath .
+							'/CommunityVoice.js'
+					),
+					'',
+					false
+				)
+			);
+			// Hack to prevent double inclusion because.
+			$out->addHeadItem( 'CommunityVoice', '' );
+		}
 		return true;
 	}
 
@@ -204,6 +205,24 @@ abstract class CommunityVoice {
 				'href' => $egCommunityVoiceResourcesPath . '/CommunityVoice.css'
 			)
 		);
+		return true;
+	}
+
+	/**
+	 * As an alternative to the command line script, hook into update.php.
+	 * This might not work for non-mysql db's.
+	 */
+	public static function loadExtensionSchemaUpdates(
+		$updater = null
+	) {
+		global $wgDBtype;
+		$dir = dirname( __FILE__ );
+		if ( $updater ) {
+			$updater->addExtensionTable( 'cv_ratings_votes', "$dir/CommunityVoice.sql" );
+		} else {
+			global $wgExtNewTables;
+			$wgExtNewTables[] = array( 'cv_ratings_votes', "$dir/CommunityVoice.sql" );
+		}
 		return true;
 	}
 }

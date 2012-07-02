@@ -3,122 +3,134 @@
  * Aliases for special pages
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English
- * @author Charles Melbye
- */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'SharedUserRights' => array( 'SharedUserRights', 'GlobalUserRights' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'SharedUserRights' => array( 'صلاحيات_المستخدم_المشتركة' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'SharedUserRights' => array( 'صلاحيات_المستخدم_المشتركة' ),
+$specialPageAliases['arz'] = array(
+	'SharedUserRights' => array( 'حقوق_اليوزر_المشتركه' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'SharedUserRights' => array( 'DijeljenaKorisnickaPrava' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
-	'SharedUserRights' => array( 'Geteilte Benutzerrechte' ),
+$specialPageAliases['de'] = array(
+	'SharedUserRights' => array( 'Geteilte_Benutzerrechte' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'SharedUserRights' => array( 'Zgromadne wužywarske pšawa' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
-	'SharedUserRights' => array( 'Dereitos de usuario compartidos' ),
+$specialPageAliases['gl'] = array(
+	'SharedUserRights' => array( 'Dereitos_de_usuario_compartidos' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'SharedUserRights' => array( 'Teilti Benutzerrächt' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'SharedUserRights' => array( 'Zhromadne wužiwarske prawa' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'SharedUserRights' => array( 'DwaItilizatèPataje', 'DwaItilizatèGlobal3' ),
+);
+
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
-	'SharedUserRights' => array( 'Megosztott felhasználói jogok' ),
+$specialPageAliases['hu'] = array(
+	'SharedUserRights' => array( 'Megosztott_felhasználói_jogok' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'SharedUserRights' => array( 'Derectos commun de usatores' ),
+$specialPageAliases['ia'] = array(
+	'SharedUserRights' => array( 'Derectos_commun_de_usatores' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'SharedUserRights' => array( '共有利用者権限', '共有利用者権限管理' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'SharedUserRights' => array( 'Jemeinsam Rääschte för Metmaacher' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'SharedUserRights' => array( 'Gedeelte Benotzerrechter' ),
+$specialPageAliases['lb'] = array(
+	'SharedUserRights' => array( 'Gedeelte_Benotzerrechter' ),
+);
+
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'SharedUserRights' => array( 'ОпштиКорисничкиПрава' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'SharedUserRights' => array( 'പങ്ക്‌‌വെയ്ക്കപ്പെട്ടഉപയോക്തൃഅവകാശങ്ങൾ', 'ആഗോള‌‌ഉപയോക്തൃഅവകാശങ്ങൾ' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'SharedUserRights' => array( 'सार्वत्रिकसदस्यअधिकार' ),
 );
 
 /** Maltese (Malti) */
-$aliases['mt'] = array(
+$specialPageAliases['mt'] = array(
 	'SharedUserRights' => array( 'DrittjietUtentiMaqsuma' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'SharedUserRights' => array( 'Delte_brukerrettigheter' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'SharedUserRights' => array( 'Edeelde_gebrukersrechen' ),
+$specialPageAliases['nds-nl'] = array(
+	'SharedUserRights' => array( 'Edeelden_gebrukersrechten' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'SharedUserRights' => array( 'GedeeldeGebruikersrechten' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'SharedUserRights' => array( 'Delte brukerrettigheter' ),
-);
-
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'SharedUserRights' => array( 'ZdieľanéPoužívateľskéPráva' ),
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬) */
+$specialPageAliases['sr-ec'] = array(
+	'SharedUserRights' => array( 'Дељена_корисничка_права' ),
+);
+
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'SharedUserRights' => array( 'Pinagsasaluhang mga karapatan ng tagagamit', 'Mga karapatan ng pandaigdigang tagagamit' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'SharedUserRights' => array( 'PaylaşılanKullanıcıHakları' ),
 );
-

@@ -1,10 +1,14 @@
 <?php
 /** Pangasinan (Pangasinan)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
  * @author Arikasikis
+ * @author Spacebirdy
  */
 
 $messages = array(
@@ -90,7 +94,6 @@ $messages = array(
 'cannotdelete'    => 'Aga nabural so nibagan bolong o file. (Sarag ton abural la na arom.)',
 'badtitle'        => 'Aga sarag ya titulo',
 'viewsource'      => 'Nengnengen so pinanlapuan',
-'viewsourcefor'   => 'para $1',
 'viewsourcetext'  => 'Sarag mon nengnengen san kopyaen so pinanlapuan na ayan bolong:',
 
 # Login and logout pages
@@ -105,32 +108,33 @@ $messages = array(
 'accountcreated'             => 'Agawa so account',
 'accountcreatedtext'         => 'Agawa la so user account para $1.',
 
-# Password reset dialog
+# Change password dialog
 'newpassword' => 'Balon password:',
 
 # Edit page toolbar
 'link_tip' => 'Gawing ed loob',
 
 # Edit pages
-'minoredit'             => 'Melag yan edit.',
-'watchthis'             => 'Bantayan yan bolong',
-'preview'               => 'Nengnengen',
-'showdiff'              => 'Ipanengneng so binalo',
-'anoneditwarning'       => "'''Pasakbay:''' Agka ni limmoob. Aka-record so IP address mo ed agawgawa ed bolong.",
-'blockedtitle'          => 'Sebel ed sayan manag-usar',
-'blockednoreason'       => 'anggapon katunungan so inter',
-'blockedoriginalsource' => "Wadyad leksab so pinanlapuan na '''$1''':",
-'blockededitsource'     => "Wadyad leksab so text na '''saray binalom''' anggag '''$1''':",
-'whitelistedittitle'    => 'Nakaukulan ya onloob umpian makapanbalo',
-'whitelistedittext'     => 'Nakaukulan mo ya $1 umpian nabalo o nadagdagan ray bolobolong.',
-'loginreqtitle'         => 'Nakaukulan kan Onloob',
-'loginreqlink'          => 'onloob',
-'loginreqpagetext'      => 'Nakaukulan kan $1 umpian nanengneng so arom ran bolobolong.',
-'accmailtitle'          => 'Say Password impawet la.',
-'accmailtext'           => 'Empawet ed $2 so password para ed $1.',
-'newarticle'            => '(Balo)',
-'editing'               => 'Babaloen so $1',
-'yourdiff'              => 'Saray niduma',
+'minoredit'         => 'Melag yan edit.',
+'watchthis'         => 'Bantayan yan bolong',
+'preview'           => 'Nengnengen',
+'showdiff'          => 'Ipanengneng so binalo',
+'anoneditwarning'   => "'''Pasakbay:''' Agka ni limmoob. Aka-record so IP address mo ed agawgawa ed bolong.",
+'blockedtitle'      => 'Sebel ed sayan manag-usar',
+'blockednoreason'   => 'anggapon katunungan so inter',
+'whitelistedittext' => 'Nakaukulan mo ya $1 umpian nabalo o nadagdagan ray bolobolong.',
+'loginreqtitle'     => 'Nakaukulan kan Onloob',
+'loginreqlink'      => 'onloob',
+'loginreqpagetext'  => 'Nakaukulan kan $1 umpian nanengneng so arom ran bolobolong.',
+'accmailtitle'      => 'Say Password impawet la.',
+'accmailtext'       => 'Empawet ed $2 so password para ed $1.',
+'newarticle'        => '(Balo)',
+'editing'           => 'Babaloen so $1',
+'yourdiff'          => 'Saray niduma',
+'copyrightwarning'  => "Tandaan komon ya amin ya contribution para ed {{SITENAME}} et nonoten ya pinaolian onong ed $2 (nengnengen so $1 para ed detalye).
+No ag mo labay ya say inkorit mo ed sarag ya baloen odino ibonog ed anggan siopa, ag mo ipapalima dia.<br />
+San ipropromisam met ya insulat mo yan dili o kinopyam ya manlapo ed sakey ya public domain odino parehas ya libren resource.
+'''AG MANPALIMA NA KIMEY YA WALAY COPYRIGHT TO YA ANGGAPOY ABOLOY!'''",
 
 # Account creation failure
 'cantcreateaccounttitle' => 'Aga makagawa na account',
@@ -240,9 +244,6 @@ $messages = array(
 'linksearch-pat' => 'Anapen so pattern:',
 'linksearch-ok'  => 'Anapen',
 
-# Special:Log/newusers
-'newuserlog-create-entry' => 'Balon user',
-
 # E-mail user
 'emailuser'     => 'E-mail so ayan user',
 'emailfrom'     => 'Manlapud',
@@ -255,7 +256,6 @@ $messages = array(
 # Watchlist
 'mywatchlist'    => 'Listaan na babantayan ko',
 'watchnologin'   => 'Agka ni akaloob',
-'addedwatch'     => 'Enyarom ed listaan na bantayan',
 'addedwatchtext' => "Impila so bolong ya \"[[:\$1]]\" diad [[Special:Watchlist|listaan na babantayan]] mo. Isulat diman so saray ontombok ran idagdag o panagbalo ed sayan bolong san diad bolong na tongtongan. San akasulat ran '''mapatnag''' (bolded) ed [[Special:RecentChanges|listaan na saray sampot ran binalo]] umpian mas maganom ya nanengneng.
 
 No labay mon ekalen may bolong diad listaan na babantayan, tapik mo labat so \"ekalen ed babantayan\" (unwatch) diad gilig ya bar.",
@@ -274,9 +274,8 @@ No labay mon ekalen may bolong diad listaan na babantayan, tapik mo labat so \"e
 'confirm'        => 'Paletan',
 'exblank'        => 'Anggapoy laman na bolong',
 'actioncomplete' => 'Asumpal lan agawa',
-'deletedtext'    => 'Abural lay "<nowiki>$1</nowiki>".
+'deletedtext'    => 'Abural lay "$1".
 Pinengneng so $2 para ed listaan na saray abural ran balo.',
-'deletedarticle' => 'binural so "[[$1]]"',
 'deletecomment'  => 'Katonongan',
 
 # Protect
@@ -323,7 +322,6 @@ Pinengneng so $2 para ed listaan na saray abural ran balo.',
 'movepagebtn'             => 'Iyales so bolong',
 'pagemovedsub'            => 'Asumpal lan inyales',
 'articleexists'           => 'Wala lay bolong to may ngaran ya atan, odino aga valid so pinilim ya ngaran. Pili ka pa na arom ya ngaran.',
-'1movedto2'               => 'say [[$1]] enyales paula ed [[$2]]',
 'movereason'              => 'Katonongan',
 'delete_and_move'         => 'Buralen san iyales',
 'delete_and_move_confirm' => 'On, buralen yan page',
@@ -357,9 +355,6 @@ Pinengneng so $2 para ed listaan na saray abural ran balo.',
 # Attribution
 'lastmodifiedatby' => 'Sampot ya binalo yan bolong nen agew ya $2, $1 nen $3.',
 
-# Math errors
-'math_unknown_error' => 'aga-antan error',
-
 # Special:NewFiles
 'ilsubmit' => 'Anapen',
 
@@ -367,7 +362,6 @@ Pinengneng so $2 para ed listaan na saray abural ran balo.',
 'exif-filesource' => 'File na pinanlapuan',
 
 # 'all' in various places, this might be different for inflected languages
-'imagelistall'  => 'amin',
 'watchlistall2' => 'amin',
 'namespacesall' => 'amin',
 'monthsall'     => 'amin',

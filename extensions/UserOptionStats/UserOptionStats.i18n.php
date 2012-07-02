@@ -2,6 +2,8 @@
 /**
  * Translations of UserOptionStats extension.
  *
+ * @file
+ * @ingroup Extensions
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -9,12 +11,14 @@ $messages = array();
 
 /** English
  * @author Nike
+ * @author SPQRobin
  */
 $messages['en'] = array(
 	'useroptionstats' => 'User option statistics',
 	'useroptionstats-desc' => '[[Special:UserOptionStats|Special page]] for reporting on MediaWiki user option usage',
 	'uos-warn' => 'PHPlot is not installed!',
 	'uos-choose' => 'Choose one of the following user options: $1',
+	'uos-choose-hidden' => 'Choose one of the following hidden user options: $1',
 	'uos-unknown' => '*Default',
 	'uos-other' => '*Other',
 	'uos-title' => 'Distribution of values of user option $1',
@@ -46,6 +50,26 @@ $messages['af'] = array(
 	'uos-title' => 'Verdeling van die waardes vir van gebruikersinstelling $1',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'useroptionstats' => 'opsion Statistikat e përdoruesve',
+	'useroptionstats-desc' => '[[Special:UserOptionStats|faqe Speciale]] për raportimin opsion përdorimin përdorues MediaWiki',
+	'uos-warn' => 'PHPlot nuk është instaluar!',
+	'uos-choose' => 'Zgjidhni një nga opsionet e përdoruesit e mëposhtme: $1',
+	'uos-unknown' => '* Default',
+	'uos-other' => '* Të tjera',
+	'uos-title' => 'Shpërndarja e vlerave të opsion user $1',
+);
+
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'uos-other' => '*Atras',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  * @author OsamaK
@@ -74,18 +98,21 @@ $messages['bar'] = array(
 	'uos-choose' => 'Suach da ane vu de Eistellungen aus: $1',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Wizardist
+ * @author Zedlik
  */
 $messages['be-tarask'] = array(
-	'useroptionstats' => 'Статыстыка ўстановак ўдзельнікаў',
-	'useroptionstats-desc' => '[[Special:UserOptionStats|Спэцыяльная старонка]] для стварэньня справаздачы па выкарыстаньню ўстановак ўдзельнікаў MediaWiki',
+	'useroptionstats' => 'Статыстыка наладаў ўдзельнікаў',
+	'useroptionstats-desc' => '[[Special:UserOptionStats|Спэцыяльная старонка]] для стварэньня справаздачы па выкарыстаньню наладаў ўдзельнікаў MediaWiki',
 	'uos-warn' => 'PHPlot не ўсталяваны!',
-	'uos-choose' => 'Выберыце адну з наступных установак удзельніка: $1',
+	'uos-choose' => 'Выберыце адну з наступных наладаў удзельніка: $1',
+	'uos-choose-hidden' => 'Выберыце адну з наступных схаваных наладаў удзельніка: $1',
 	'uos-unknown' => '*Па змоўчваньні',
 	'uos-other' => '*Іншая',
-	'uos-title' => 'Разьмеркаваньне значэньняў ўстановак удзельнікаў $1',
+	'uos-title' => 'Разьмеркаваньне значэньняў наладаў удзельнікаў $1',
 );
 
 /** Bulgarian (Български)
@@ -93,6 +120,14 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'uos-warn' => 'PHPlot не е инсталиран!',
+);
+
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'uos-unknown' => '*পূর্বনির্ধারিত',
+	'uos-other' => '*অন্য',
 );
 
 /** Breton (Brezhoneg)
@@ -131,10 +166,17 @@ $messages['ca'] = array(
 	'uos-other' => '*Altres',
 );
 
-/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'useroptionstats' => 'Декъашхоша гIирс латорна хилам',
+);
+
+/** Sorani (کوردی)
  * @author Marmzok
  */
-$messages['ckb-arab'] = array(
+$messages['ckb'] = array(
 	'uos-unknown' => '*بنچینەیی',
 	'uos-other' => '*دیکە',
 );
@@ -154,32 +196,37 @@ $messages['cs'] = array(
 
 /** Danish (Dansk)
  * @author Byrial
+ * @author Peter Alberti
  */
 $messages['da'] = array(
 	'useroptionstats' => 'Statistik over brugerindstillinger',
 	'useroptionstats-desc' => '[[Special:UserOptionStats|Specialside]] til rapportering om brugen af brugerindstillinger i MediaWiki',
 	'uos-warn' => 'PHPlot er ikke installeret!',
 	'uos-choose' => 'Vælg en af følgende brugerindstillinger: $1',
+	'uos-choose-hidden' => 'Vælg en af følgende skjulte brugerindstillinger: $1',
 	'uos-unknown' => '*Standard',
 	'uos-other' => '*Andet',
 	'uos-title' => 'Fordeling af værdier for brugerindstilling $1',
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Purodha
  * @author Umherirrender
  */
 $messages['de'] = array(
 	'useroptionstats' => 'Statistiken zu Benutzereinstellungen',
-	'useroptionstats-desc' => 'Ergänzt eine [[Special:UserOptionStats|Spezialseite]], um über die Verteilung der Benutzereinstellungen des MediaWiki zu berichten',
+	'useroptionstats-desc' => 'Ergänzt eine [[Special:UserOptionStats|Spezialseite]] zur Darstellung der durch die Benutzer des Wikis gewählten Einstellungen',
 	'uos-warn' => 'PHPlot ist nicht installiert!',
 	'uos-choose' => 'Wähle eine der folgenden Einstellungen: $1',
+	'uos-choose-hidden' => 'Wähle eine der folgenden versteckten Einstellungen: $1',
 	'uos-unknown' => '*Standardeinstellung',
 	'uos-other' => '*Sonstige',
-	'uos-title' => 'Verteilung der gewählten Werte der Benutzereinstellung „$1“',
+	'uos-title' => 'Verteilung der gewählten Werte zur Benutzereinstellung
+„$1“',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Purodha
  */
 $messages['de-formal'] = array(
@@ -194,6 +241,7 @@ $messages['dsb'] = array(
 	'useroptionstats-desc' => '[[Special:UserOptionStats|Specialny bok]] za rozpšawjenje wó wužywanju wužywarskich opcijow na MediaWiki',
 	'uos-warn' => 'PHPlot njejo instalěrowany!',
 	'uos-choose' => 'Jadnu ze slědujucych wužywarskich opcijow wubraś: $1',
+	'uos-choose-hidden' => 'Jadnu ze slědujucych schowanych wužywarskich opcijow wubraś: $1',
 	'uos-unknown' => '*Standardnu',
 	'uos-other' => '*Drugu',
 	'uos-title' => 'Distribucija gódnotow wužywarskeje opcije $1',
@@ -259,12 +307,14 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'useroptionstats' => 'Statistiques des options de l’utilisateur',
-	'useroptionstats-desc' => '[[Special:UserOptionStats|Page spéciale]] pour afficher les utilisations des options utilisateur sur MediaWiki',
+	'useroptionstats-desc' => '[[Special:UserOptionStats|Page spéciale]] pour afficher les utilisations des options utilisateurs sur MediaWiki',
 	'uos-warn' => 'PHPlot n’est pas installé !',
-	'uos-choose' => 'Choisissez l’une des options utilisateur suivantes : $1',
+	'uos-choose' => 'Choisissez l’une des options utilisateurs suivantes : $1',
+	'uos-choose-hidden' => 'Choisissez l’une des options suivantes d’utilisateur invisible: $1',
 	'uos-unknown' => '* Par défaut',
 	'uos-other' => '* Autres',
 	'uos-title' => 'Distribution des valeurs de l’option utilisateur $1',
@@ -275,8 +325,13 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
-	'uos-unknown' => '* Per dèfôt',
+	'useroptionstats' => 'Statistiques des chouèx a l’usanciér',
+	'uos-warn' => 'PHPlot est pas enstalâ !',
+	'uos-choose' => 'Chouèsésséd yon de cetos chouèx a l’usanciér : $1',
+	'uos-choose-hidden' => 'Chouèsésséd yon de cetos chouèx a l’utilisator envisiblos : $1',
+	'uos-unknown' => '*Per dèfôt',
 	'uos-other' => '* Ôtres',
+	'uos-title' => 'Distribucion de les valors du chouèx a l’usanciér $1',
 );
 
 /** Galician (Galego)
@@ -287,6 +342,7 @@ $messages['gl'] = array(
 	'useroptionstats-desc' => '[[Special:UserOptionStats|Páxina especial]] para a informar sobre o uso das opcións de usuario de MediaWiki',
 	'uos-warn' => 'PHPlot non está instalado!',
 	'uos-choose' => 'Escolla unha das seguintes opcións de usuario: $1',
+	'uos-choose-hidden' => 'Escolla unha das seguintes opcións de usuario agochadas: $1',
 	'uos-unknown' => '*Por defecto',
 	'uos-other' => '*Outras',
 	'uos-title' => 'Distribución dos valores da opción de usuario "$1"',
@@ -300,6 +356,7 @@ $messages['grc'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Chlämens
  * @author Als-Holder
  */
 $messages['gsw'] = array(
@@ -307,12 +364,14 @@ $messages['gsw'] = array(
 	'useroptionstats-desc' => '[[Special:UserOptionStats|Spezialsyte]] zum Berichte wie d Benutzeroptione uf Mediawiki brucht wäre',
 	'uos-warn' => 'PHPlot isch nit installiert!',
 	'uos-choose' => 'Wehl eini vu däne Benutzeroptione: $1',
+	'uos-choose-hidden' => 'Wehl eini vu däne versteckte Yystellige: $1',
 	'uos-unknown' => '*Standard',
 	'uos-other' => '*Anderi',
 	'uos-title' => 'Wärtverteilig vu dr Benutzeroption $1',
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
@@ -321,6 +380,7 @@ $messages['he'] = array(
 	'useroptionstats-desc' => '[[Special:UserOptionStats|דף מיוחד]] לדיווח על השימוש באפשרויות המשתמש במדיה־ויקי',
 	'uos-warn' => 'PHPlot אינה מותקנת!',
 	'uos-choose' => 'בחרו באחת מאפשרויות המשתמש הבאות: $1',
+	'uos-choose-hidden' => 'נא לבחור אחת מאפשרויות המשתמש המוסתרות: $1',
 	'uos-unknown' => '*ברירת מחדל',
 	'uos-other' => '*אחר',
 	'uos-title' => 'הפצת הערכים של אפשרות המשתמש $1',
@@ -334,8 +394,9 @@ $messages['hsb'] = array(
 	'useroptionstats-desc' => '[[Special:UserOptionStats|Specialna strona]] za rozprawjenje wo wužiwanju wužiwarskich opcijow na MediaWiki',
 	'uos-warn' => 'PHPlot njeje instalowany!',
 	'uos-choose' => 'Jednu ze slědowacych wužiwarskich opcijow wubrać: $1',
-	'uos-unknown' => '*Standardnu',
-	'uos-other' => '*Druhu',
+	'uos-choose-hidden' => 'Wubjer jednu ze slědowacych schowanych wužiwarskich opcijow: $1',
+	'uos-unknown' => '* Standard',
+	'uos-other' => '*Druhe',
 	'uos-title' => 'Distribucija hódnotow wužiwarskeje opcije $1',
 );
 
@@ -360,6 +421,7 @@ $messages['ia'] = array(
 	'useroptionstats-desc' => '[[Special:UserOptionStats|Pagina special]] pro reportar le uso de optiones de usator in Mediawiki',
 	'uos-warn' => 'PHPlot non es installate!',
 	'uos-choose' => 'Selige un del sequente optiones de usator: $1',
+	'uos-choose-hidden' => 'Selige un del sequente optiones celate de usator: $1',
 	'uos-unknown' => '*Predefinition',
 	'uos-other' => '*Altere',
 	'uos-title' => 'Distribution de valores del option de usator $1',
@@ -393,12 +455,14 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Schu
  */
 $messages['ja'] = array(
 	'useroptionstats' => '利用者オプション統計',
-	'useroptionstats-desc' => 'MediaWiki の利用者オプションの設定状況をリポートする[[Special:UserOptionStats|特別ページ]]',
+	'useroptionstats-desc' => 'MediaWiki の利用者オプションの設定状況をレポートする[[Special:UserOptionStats|特別ページ]]',
 	'uos-warn' => 'PHPlot がインストールされていません。',
 	'uos-choose' => '次の利用者オプションのうち1つを選んでください: $1',
+	'uos-choose-hidden' => '次の非表示の利用者オプションのいずれかを選択します：$1',
 	'uos-unknown' => '*デフォルト',
 	'uos-other' => '*その他',
 	'uos-title' => '利用者オプション $1 の設定値の分布',
@@ -412,7 +476,7 @@ $messages['km'] = array(
 	'uos-other' => '*ដទៃទៀត​',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -420,12 +484,14 @@ $messages['ksh'] = array(
 	'useroptionstats-desc' => 'En [[Special:UserOptionStats|Söndersigg]] för Bereeschte övver der Jebruch vun MediaWiki sing Ußwahle en de Metmaacher ier Enshtellunge.',
 	'uos-warn' => '<i lang="en">PHPlot</i> es nit enshtalleet!',
 	'uos-choose' => 'Söhk ein uß fun hee dä müjjelesche Ußwahle för de Metmaacher: $1',
+	'uos-choose-hidden' => 'Söhk ein uß fun hee dä müjjelesche vershtoche Ußwahle för de Metmaacher: $1',
 	'uos-unknown' => '*Shtandadt',
 	'uos-other' => '*Ander',
 	'uos-title' => 'De Verdeijlung vun de Entshellunge vun de Metmaacher ier Ußwahl „$1“',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
@@ -433,9 +499,10 @@ $messages['lb'] = array(
 	'useroptionstats-desc' => '[[Special:UserOptionStats|Spezialsäit]], fir de Gebrauch vun de Benotzeroptiounen op MediaWiki unzeweisen',
 	'uos-warn' => 'PHPlot ass net installéiert!',
 	'uos-choose' => 'Wielt eng vun dëse Benotzerastellungen: $1',
+	'uos-choose-hidden' => 'Wielt eng vun dëse verstoppte Benotzerastellungen: $1',
 	'uos-unknown' => '*Standardastellung',
 	'uos-other' => '*Anerer',
-	'uos-title' => 'Verdeelung vun de Werter vun der Benotzerastellung $1',
+	'uos-title' => 'Verdeelung vun de Wäerter vun der Benotzerastellung $1',
 );
 
 /** Macedonian (Македонски)
@@ -446,6 +513,7 @@ $messages['mk'] = array(
 	'useroptionstats-desc' => '[[Special:UserOptionStats|Специјална страница]] за известување на прилагодувањата на МедијаВики',
 	'uos-warn' => 'PHPlot не е инсталиран!',
 	'uos-choose' => 'Одберете една од следниве кориснички можности: $1',
+	'uos-choose-hidden' => 'Одберете една од следниве скриени кориснички можности: $1',
 	'uos-unknown' => '*По основно',
 	'uos-other' => '*Друго',
 	'uos-title' => 'Распределба на вредности за користењето на кориснички прилагодувања, можност
@@ -459,14 +527,38 @@ $messages['mn'] = array(
 	'uos-other' => '*Бусад',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'uos-unknown' => '*Asali',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'useroptionstats' => 'Statistikk for brukervalg',
+	'useroptionstats-desc' => '[[Special:UserOptionStats|Spesialside]] for rapporter om bruk av MediaWiki brukervalg',
+	'uos-warn' => 'PHPlot er ikke installert!',
+	'uos-choose' => 'Velg et av de følgende brukervalgene: $1',
+	'uos-unknown' => '*Standard',
+	'uos-other' => '*Annen',
+	'uos-title' => 'Fordeling av verdier for brukervalg $1',
+);
+
 /** Dutch (Nederlands)
  * @author McDutchie
+ * @author SPQRobin
+ * @author Siebrand
  */
 $messages['nl'] = array(
 	'useroptionstats' => 'Statistieken over gebruikersinstellingen',
-	'useroptionstats-desc' => '[[Special:UserOptionStats|Speciale pagina]] voor rapportage over het gebruik van gebruikersinstellingen in Mediawiki',
+	'useroptionstats-desc' => '[[Special:UserOptionStats|Speciale pagina]] voor rapportage over het gebruik van gebruikersinstellingen',
 	'uos-warn' => 'PHPlot is niet geïnstalleerd!',
 	'uos-choose' => 'Kies een van de volgende gebruikersinstellingen: $1',
+	'uos-choose-hidden' => 'Kies een van de volgende verborgen gebruikersinstellingen: $1',
 	'uos-unknown' => '*Standaardinstelling',
 	'uos-other' => '*Andere',
 	'uos-title' => 'Verdeling van de waarden van de gebruikersinstelling $1',
@@ -483,20 +575,6 @@ $messages['nn'] = array(
 	'uos-unknown' => '*Standard',
 	'uos-other' => '*Annan',
 	'uos-title' => 'Spreiing i verdiar for brukarval $1',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'useroptionstats' => 'Statistikk for brukervalg',
-	'useroptionstats-desc' => '[[Special:UserOptionStats|Spesialside]] for rapporter om bruk av MediaWiki brukervalg',
-	'uos-warn' => 'PHPlot er ikke installert!',
-	'uos-choose' => 'Velg et av de følgende brukervalgene: $1',
-	'uos-unknown' => '*Standard',
-	'uos-other' => '*Annen',
-	'uos-title' => 'Fordeling av verdier for brukervalg $1',
 );
 
 /** Occitan (Occitan)
@@ -535,6 +613,7 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
@@ -542,9 +621,18 @@ $messages['pms'] = array(
 	'useroptionstats-desc' => "[[Special:UserOptionStats|Pàgina special]] për arporté an dzora a l'usagi dle opsoion utent MediaWiki",
 	'uos-warn' => "PHPlot a l'é pa anstalà!",
 	'uos-choose' => 'Sern un-a dle opsion utent sota: $1',
+	'uos-choose-hidden' => "Ch'a serna un-a dj'opsion d'utent ëstërmà sì-dapress: $1",
 	'uos-unknown' => '*Default',
 	'uos-other' => '*Àutr',
 	'uos-title' => "Distribussion ëd valor ëd l'opsion utent $1",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'uos-unknown' => '*تلواليز',
+	'uos-other' => '*بل',
 );
 
 /** Portuguese (Português)
@@ -553,10 +641,11 @@ $messages['pms'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'useroptionstats' => 'Estatísticas de opções de utilizador',
-	'useroptionstats-desc' => '[[Special:UserOptionStats|Página especial]] para reportar a utilização de opções de utilizador na MediaWiki',
+	'useroptionstats' => 'Estatísticas das opções dos utilizadores',
+	'useroptionstats-desc' => '[[Special:UserOptionStats|Página especial]] para reportar a utilização das opções dos utilizadores do MediaWiki',
 	'uos-warn' => 'PHPlot não está instalado!',
 	'uos-choose' => 'Escolha uma das seguintes opções de utilizador: $1',
+	'uos-choose-hidden' => 'Escolha uma das seguintes opções de utilizador ocultas: $1',
 	'uos-unknown' => '*Padrão',
 	'uos-other' => '*Outro',
 	'uos-title' => 'Distribuição de valores da opção de utilizador $1',
@@ -564,6 +653,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Helder.wiki
  * @author Heldergeovane
  */
 $messages['pt-br'] = array(
@@ -595,9 +685,17 @@ $messages['ru'] = array(
 	'useroptionstats-desc' => '[[Special:UserOptionStats|Служебная страница]] отчетности по использованию участниками настроек MediaWiki',
 	'uos-warn' => 'PHPlot не установлен!',
 	'uos-choose' => 'Выберите одну из следующих пользовательских настроек: $1',
+	'uos-choose-hidden' => 'Выберите одну из следующих скрытых пользовательских настроек: $1',
 	'uos-unknown' => '* По умолчанию',
 	'uos-other' => '* Другие',
 	'uos-title' => 'Распределение значений пользовательской настройки $1',
+);
+
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'uos-other' => '*Іншы',
 );
 
 /** Sinhala (සිංහල)
@@ -626,7 +724,7 @@ $messages['sk'] = array(
 	'uos-title' => 'Rozdelenie hodnôt používateľskej voľby $1',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -636,7 +734,7 @@ $messages['sr-ec'] = array(
 	'uos-other' => '*Друго',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -649,10 +747,11 @@ $messages['sr-el'] = array(
 /** Swedish (Svenska)
  * @author Fluff
  * @author Per
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'useroptionstats' => 'Statistik för användarinställningar',
-	'useroptionstats-desc' => '[[Special:UserOptionStats|Special page]] för rapport över användarinställnings användandet på MediaWiki',
+	'useroptionstats-desc' => '[[Special:UserOptionStats|Specialsida]] för rapportering om användandet av MediaWiki:s användarinställningar',
 	'uos-warn' => 'PHPlot är inte installerat!',
 	'uos-choose' => 'Välj en av följande inställningar: $1',
 	'uos-unknown' => '*Standard',
@@ -669,6 +768,19 @@ $messages['te'] = array(
 	'uos-other' => '*ఇతర',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'useroptionstats' => 'Estadistika ng pagpili ng tagagamit',
+	'useroptionstats-desc' => '[[Special:UserOptionStats|Natatanging pahina]] para sa pag-uulat sa paggamit ng pampili ng tagagamit ng MediaWiki',
+	'uos-warn' => 'Hindi nakalagay ang PHPlot!',
+	'uos-choose' => 'Pumili ng isa sa sumusunod na mga pagpipiliang pangtagagamit: $1',
+	'uos-unknown' => '*Likas na nakatakda',
+	'uos-other' => '*Iba pa',
+	'uos-title' => 'Pamamahagi ng mga halaga ng pampili na pangtagagamit na $1',
+);
+
 /** Turkish (Türkçe)
  * @author Vito Genovese
  */
@@ -682,19 +794,34 @@ $messages['tr'] = array(
 	'uos-title' => 'Kullanıcı seçeneği $1 için değer dağılımı',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ерней
  */
 $messages['tt-cyrl'] = array(
 	'uos-unknown' => '*Килешү буенча',
 );
 
-/** Veps (Vepsan kel')
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'useroptionstats' => 'Статистика користувацьких налаштувань',
+	'uos-unknown' => '*За умовчанням',
+	'uos-other' => '*Інші',
+);
+
+/** Veps (Vepsän kel')
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
+	'useroptionstats' => 'Kävutajiden järgendusiden statistik',
+	'useroptionstats-desc' => "[[Special:UserOptionStats|Specialine lehtpol']], kus om satesenladindad MediaWikin järgendusiden kävutamižes ühtnijoil",
+	'uos-warn' => 'PHPlot ei ole azotadud!',
+	'uos-choose' => "Valikat üks' neniš kävutajanjärgendusišpäi: $1",
+	'uos-choose-hidden' => "Valikat üks' neniš peittud kävutajanjärgendusišpäi: $1",
 	'uos-unknown' => '*Augotižjärgendusen mödhe',
 	'uos-other' => '*Toine',
+	'uos-title' => 'Muga jagadas kävutajidenjärgendused $1',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -728,10 +855,11 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'uos-warn' => '尚未安裝PHPlot！',
+	'uos-warn' => '尚未安裝 PHPlot！',
 	'uos-unknown' => '*預設',
 	'uos-other' => '*其他',
 );

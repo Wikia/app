@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Created on Jun 28, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -211,7 +211,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 			$this->mvd_pages[$mvd_id] = MV_Index::getMVDbyId( $mvd_id );
 		if ( $mode == 'inner' ) {
 			$this->outputMVD( $this->mvd_pages[$mvd_id] );
-		} else if ( $mode == 'enclosed' ) {
+		} elseif ( $mode == 'enclosed' ) {
 			$this->get_fd_mvd_page( $this->mvd_pages[$mvd_id], $content );
 		}
 		return $wgOut->getHTML();
@@ -290,13 +290,16 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 
 		/*try to pull from cache: separate out cache for internal links vs external links cache*/
 		if( $wgEnableParserCache ) {
-			$MvParserCache = & MV_ParserCache::singleton();
-			$add_opt = ( $absolute_links ) ? 'a':'';
-			// add the dbKey since I don't know how to easy purge the cache and we are getting cache missmatch
-			$add_opt .= $mvdTitle->getDBkey();
-			$MvParserCache->addToKey( $add_opt );
+			$MvParserCache = ParserCache::singleton();
+			$popts = ParserOptions::newFromUser( $wgUser );
+			if ( $absolute_links ) {
+				$popts->addExtraKey( 'Metavid-absolutelinks' );
+			}
 
-			$parserOutput = $MvParserCache->get( $mvdArticle, $wgUser );
+			// FIXME: add the dbKey since I don't know how to easy purge the cache and we are getting cache missmatch
+			$popts->addExtraKey( $mvdTitle->getDBkey() );
+
+			$parserOutput = $MvParserCache->get( $mvdArticle, $popts );
 		}else{
 			$parserOutput=false;
 		}
@@ -330,7 +333,9 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 			}
 			// output the page and save to cache
 			$wgOut->addParserOutput( $parserOutput );
-			$MvParserCache->save( $parserOutput, $mvdArticle, $wgUser );
+			if( $wgEnableParserCache ) {
+				$MvParserCache->save( $parserOutput, $mvdArticle, $popts );
+			}
 		}
 	}
 	function parse_format_text( &$text, &$mvdTile, &$mvd_page = '', $absolute_links = false ) {
@@ -518,7 +523,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		$out .= " )<br /> ";
 		return $out;
 	}
-	/*
+	/**
 	 * generate soft colors vi page ids (we use ids so that page moves don't change the color')
 	*/
 	function getMvdBgColor( & $mvd_page ) {
@@ -881,8 +886,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 			//clear cache for title:
 			//$nt->invalidateCache();
 			//Article::onArticleEdit($nt);
-			global $wgDeferredUpdateList, $mediaWiki;
-			$mediaWiki->doUpdates( $wgDeferredUpdateList );
+			wfDoUpdates( 'commit' );
 			//try again:
 			$newTitle = Title::newFromText($nt->getText(), MV_NS_MVD);
 			$na = new Article($newTitle);
@@ -979,7 +983,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		global $mvgIP, $wgOut;
 		$title = Title::newFromText( $titleKey, MV_NS_MVD );
 		$article = new Article( $title );
-		$pageHistoryAjax = new PageHistory( $article );
+		$pageHistoryAjax = new HistoryPage( $article );
 		// @@todo fix problems... ajax action url context !=history url context
 		// so forming urls for links get errors
 		$pageHistoryAjax->history();
@@ -1057,4 +1061,3 @@ function mvParsePropertiesCallback( $maches ) {
 	// replace the semantic tag with an empty string:
 	return '';
 }
-?>

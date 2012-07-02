@@ -4,7 +4,7 @@
  * @ingroup Language
  * @file
  *
- * @author http://pih.wikipedia.org sysops
+ * @author Pall Mall (on pih.wikipedia.org)
  */
 
 $messages = array(

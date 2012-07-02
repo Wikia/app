@@ -3,7 +3,7 @@ class SendmailToWiki extends UnlistedSpecialPage {
 
 	function __construct() {
 		parent::__construct( 'SendmailToWiki' );
-		wfLoadExtensionMessages('SendmailToWiki');
+		
 	}
  
 	function execute( $SPparams ) {
@@ -97,9 +97,7 @@ class SendmailToWiki extends UnlistedSpecialPage {
 	function sendError($code, $message, $sendback = false) {
 		if (!$sendback)
 			return;
-			
-		global $wgMessageCache, $wgParser;
-		
+
 		switch ($code) {
 			case 400: header('HTTP/1.1 400 Bad Request'); break;
 			case 403: header('HTTP/1.1 403 Forbidden'); break;
@@ -107,10 +105,10 @@ class SendmailToWiki extends UnlistedSpecialPage {
 		}
 		
 		$out = '';		
-		$out .= "<h1>".$wgMessageCache->get('errorpagetitle').": $code</h1>\n";
-		$out .= "<h2>".$wgMessageCache->get($message)."</h2>\n";
+		$out .= "<h1>".wfMsg( 'errorpagetitle' ).": $code</h1>\n";
+		$out .= "<h2>".wfMsg( $message )."</h2>\n";
 		
-		echo $wgParser->replaceVariables($out);
+		echo $out;
 	}
 }
 

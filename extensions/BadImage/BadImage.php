@@ -5,7 +5,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
 /**
  * Extension to extend the bad image list capabilities of MediaWiki
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * @copyright © 2006 Rob Church
  * @licence Copyright holder allows use of the code for any purpose
@@ -14,18 +15,17 @@ if ( ! defined( 'MEDIAWIKI' ) )
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'BadImages',
-	'version' => '1.2',
+	'version' => '1.3',
 	'author' => 'Rob Church',
-	'description' => 'Extend the bad image list capabilities of MediaWiki',
-	'descriptionmsg' => 'badimages-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Bad_Image_List',
+	'descriptionmsg' => 'badimage-desc',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Bad_Image_List',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['BadImageList'] = $dir . 'BadImage.class.php';
 $wgAutoloadClasses['BadImageManipulator'] = $dir . 'BadImage.page.php';
 $wgExtensionMessagesFiles['BadImages'] = $dir . 'BadImage.i18n.php';
-$wgExtensionAliasesFiles['BadImages'] = $dir . 'BadImage.alias.php';
+$wgExtensionMessagesFiles['BadImagesAlias'] = $dir . 'BadImage.alias.php';
 
 $wgSpecialPages['Badimages'] = 'BadImageManipulator';
 $wgSpecialPageGroups['Badimages'] = 'media';

@@ -1,8 +1,8 @@
-CREATE TABLE /*$wgDBprefix*/code_repo (
+CREATE TABLE /*_*/code_repo (
   -- Unique internal ID for the repository.
   -- We may cover multiple repos in one wiki,
   -- so need to tell them apart.
-  repo_id int not null auto_increment,
+  repo_id int not null primary key auto_increment,
 
   -- User-presentable name of the repository.
   -- 'MediaWiki'
@@ -18,17 +18,16 @@ CREATE TABLE /*$wgDBprefix*/code_repo (
 
   -- Bug tracker URL, used for linking bugs in commit summaries.
   -- 'https://bugzilla.wikimedia.org/show_bug.cgi?id=$1'
-  repo_bugzilla varchar(255) binary,
-
-  primary key (repo_id),
-  key (repo_name)
+  repo_bugzilla varchar(255) binary
 ) /*$wgDBTableOptions*/;
+
+CREATE INDEX /*i*/repo_name ON /*_*/code_repo (repo_name);
 
 --
 -- Representation of basic metadata for a single code revision.
 -- Most of this comes straight out of 'svn log'
 --
-CREATE TABLE /*$wgDBprefix*/code_rev (
+CREATE TABLE /*_*/code_rev (
   -- Repository ID
   cr_repo_id int not null,
   -- Native ID number of this revision within the repository.
@@ -52,9 +51,10 @@ CREATE TABLE /*$wgDBprefix*/code_rev (
   -- 'reverted': Was completely reverted by a later revision
   -- 'resolved': Issues with this rev have been since resolved
   -- 'ok': Reviewed, no issues spotted
-  -- 'verified': Reviewed and tested, no issues spotted
   -- 'deferred': Not reviewed at this time (usually non-Wikimedia extension)
-  cr_status enum('new', 'fixme', 'reverted', 'resolved', 'ok', 'verified', 'deferred') not null default 'new',
+  -- 'old': Predates the extension/doesn't require review
+  -- See CodeRevision::getPossibleStates() (in backend/CodeRevision.php) for most up to date list
+  cr_status varchar(25) not null default 'new',
 
   -- Base path of this revision :
   -- * if the revision change only one file, the file path
@@ -65,18 +65,20 @@ CREATE TABLE /*$wgDBprefix*/code_rev (
   cr_diff mediumblob NULL,
   -- Text flags: gzip,utf-8,external
   cr_flags tinyblob NOT NULL,
-  
-  primary key (cr_repo_id, cr_id),
-  key (cr_repo_id, cr_timestamp),
-  key cr_repo_author (cr_repo_id, cr_author, cr_timestamp)
+
+  primary key (cr_repo_id, cr_id)
 ) /*$wgDBTableOptions*/;
+
+CREATE INDEX /*i*/cr_repo_id ON /*_*/code_rev (cr_repo_id, cr_timestamp);
+CREATE INDEX /*i*/cr_repo_author ON /*_*/code_rev (cr_repo_id, cr_author, cr_timestamp);
+CREATE INDEX /*i*/cr_repo_status_author ON /*_*/code_rev (cr_repo_id, cr_status, cr_author);
 
 --
 -- Allow us to match up repository usernames
 -- with local MediaWiki user accounts.
 -- Not all usernames will be matched.
 --
-CREATE TABLE /*$wgDBprefix*/code_authors (
+CREATE TABLE /*_*/code_authors (
   -- Repository ID
   ca_repo_id int not null,
 
@@ -88,18 +90,18 @@ CREATE TABLE /*$wgDBprefix*/code_authors (
   -- about SUL accounts which haven't been copied over.
   ca_user_text varchar(255) binary,
 
-  primary key (ca_repo_id, ca_author),
-
-  -- Note that multiple authors on the same repo may point to
-  -- a single local user in some cases...
-  unique key (ca_user_text, ca_repo_id, ca_author)
+  primary key (ca_repo_id, ca_author)
 ) /*$wgDBTableOptions*/;
+
+ -- Note that multiple authors on the same repo may point to
+ -- a single local user in some cases...
+CREATE UNIQUE INDEX /*i*/ca_user_text ON /*_*/code_authors (ca_user_text, ca_repo_id, ca_author);
 
 --
 -- List of which files were changed in a given code revision.
 -- This lets us make nice summary views and links to details.
 --
-CREATE TABLE /*$wgDBprefix*/code_paths (
+CREATE TABLE /*_*/code_paths (
   -- -> repo_id
   cp_repo_id int not null,
   -- -> cr_id
@@ -109,52 +111,56 @@ CREATE TABLE /*$wgDBprefix*/code_paths (
   -- '/trunk/phase3/RELEASE_NOTES'
   cp_path varchar(255) not null,
 
-  -- Update type: Modify, Add, Delete, Replace
-  cp_action enum ('M','A','D','R'),
+  -- Update type: Modify (M), Add (A), Delete (D), Replace (R)
+  cp_action char(1) not null,
 
   primary key (cp_repo_id, cp_rev_id, cp_path)
 ) /*$wgDBTableOptions*/;
 
+CREATE INDEX /*i*/repo_path ON /*_*/code_paths (cp_repo_id, cp_path);
 
 -- And for our commenting system...
 -- To specify follow-up relationships...
-CREATE TABLE /*$wgDBprefix*/code_relations (
+CREATE TABLE /*_*/code_relations (
   cf_repo_id int not null,
   -- -> cr_id
   cf_from int not null,
   -- -> cr_id
   cf_to int not null,
 
-  primary key (cf_repo_id, cf_from, cf_to),
-  key repo_to_from (cf_repo_id, cf_to, cf_from)
+  primary key (cf_repo_id, cf_from, cf_to)
 ) /*$wgDBTableOptions*/;
+
+CREATE INDEX /*i*/repo_to_from ON /*_*/code_relations (cf_repo_id, cf_to, cf_from);
 
 -- And for our commenting system...
 -- To specify bug relationships...
-CREATE TABLE /*$wgDBprefix*/code_bugs (
+CREATE TABLE /*_*/code_bugs (
   cb_repo_id int not null,
   -- -> cr_id
   cb_from int not null,
   -- -> bug ID number
   cb_bug int not null,
 
-  primary key (cb_repo_id, cb_from, cb_bug),
-  key (cb_repo_id, cb_bug, cb_from)
+  primary key (cb_repo_id, cb_from, cb_bug)
 ) /*$wgDBTableOptions*/;
 
+CREATE INDEX /*i*/cb_repo_id ON /*_*/code_bugs (cb_repo_id, cb_bug, cb_from);
+
 -- Freetext tagging for revisions
-CREATE TABLE /*$wgDBprefix*/code_tags (
+CREATE TABLE /*_*/code_tags (
   ct_repo_id int not null,
   ct_rev_id int not null,
   ct_tag varbinary(255) not null,
 
-  primary key (ct_repo_id,ct_rev_id,ct_tag),
-  key (ct_repo_id,ct_tag,ct_rev_id)
+  primary key (ct_repo_id,ct_rev_id,ct_tag)
 ) /*$wgDBTableOptions*/;
 
-CREATE TABLE /*$wgDBprefix*/code_comment (
+CREATE INDEX /*i*/ct_repo_id ON /*_*/code_tags (ct_repo_id,ct_tag,ct_rev_id);
+
+CREATE TABLE /*_*/code_comment (
   -- Unique ID of the comment within the system.
-  cc_id int auto_increment not null,
+  cc_id int not null primary key auto_increment,
 
   -- Repo and code revision this comment is attached to
   cc_repo_id int not null,
@@ -181,28 +187,24 @@ CREATE TABLE /*$wgDBprefix*/code_comment (
   --
   -- Allows 17 levels of nesting before we hit the length limit.
   -- Could redo more compactly to get 31 or 63 levels.
-  cc_sortkey varbinary(255),
-
-  -- Does this comment confer a review sum?
-  -- 0, +1, -1
-  cc_review int,
-
-  primary key (cc_id),
-  key (cc_repo_id,cc_rev_id,cc_sortkey),
-  key cc_repo_time (cc_repo_id,cc_timestamp)
+  cc_sortkey varbinary(255)
 ) /*$wgDBTableOptions*/;
+
+CREATE INDEX /*i*/cc_repo_id ON /*_*/code_comment (cc_repo_id,cc_rev_id,cc_sortkey);
+CREATE INDEX /*i*/cc_repo_time ON /*_*/code_comment (cc_repo_id,cc_timestamp);
+CREATE INDEX /*i*/cc_author ON /*_*/code_comment (cc_repo_id, cc_user_text, cc_timestamp);
 
 --
 -- Changes to review metadata for a single code revision.
 --
-CREATE TABLE /*$wgDBprefix*/code_prop_changes (
+CREATE TABLE /*_*/code_prop_changes (
   -- Repository ID
   cpc_repo_id int not null,
   -- Native ID number of this revision within the repository.
   cpc_rev_id int not null,
 
   -- The item that was changed
-  cpc_attrib enum('status','tags') not null,
+  cpc_attrib varchar(10) not null,
   -- How it was changed
   cpc_removed blob,
   cpc_added blob,
@@ -212,75 +214,31 @@ CREATE TABLE /*$wgDBprefix*/code_prop_changes (
 
   -- User id/name of the commenter
   cpc_user int not null,
-  cpc_user_text varchar(255) not null,
-
-  key cpc_repo_rev_time (cpc_repo_id, cpc_rev_id, cpc_timestamp),
-  key cpc_repo_time (cpc_repo_id, cpc_timestamp)
+  cpc_user_text varchar(255) not null
 ) /*$wgDBTableOptions*/;
 
---
--- Information on available test suites
-DROP TABLE IF EXISTS /*$wgDBprefix*/code_test_suite;
-CREATE TABLE /*$wgDBprefix*/code_test_suite (
-  -- Unique ID per test suite
-  ctsuite_id int auto_increment not null,
-  
-  -- Repository ID of the code base this applies to
-  ctsuite_repo_id int not null,
-  
-  -- Which branch path this applies to, eg '/trunk/phase3'
-  ctsuite_branch_path varchar(255) not null,
-  
-  -- Pleasantly user-readable name, eg "ParserTests"
-  ctsuite_name varchar(255) not null,
-  
-  -- Description...
-  ctsuite_desc varchar(255) not null,
-  
-  primary key ctsuite_id (ctsuite_id)
-) /*$wgDBtableOptions*/;
+CREATE INDEX /*i*/cpc_repo_rev_time ON /*_*/code_prop_changes (cpc_repo_id, cpc_rev_id, cpc_timestamp);
+CREATE INDEX /*i*/cpc_repo_time ON /*_*/code_prop_changes (cpc_repo_id, cpc_timestamp);
+CREATE INDEX /*i*/cpc_author ON /*_*/code_prop_changes (cpc_repo_id, cpc_user_text, cpc_timestamp);
 
-DROP TABLE IF EXISTS /*$wgDBprefix*/code_test_case;
-CREATE TABLE /*$wgDBprefix*/code_test_case (
-  ctcase_id int auto_increment not null,
-  ctcase_suite_id int not null,
-  ctcase_name varchar(255) not null,
-  
-  primary key ctc_id (ctcase_id),
-  key (ctcase_suite_id, ctcase_id)
-) /*$wgDBtableOptions*/;
+CREATE TABLE /*_*/code_signoffs (
+  -- Repository ID and revision ID
+  cs_repo_id int not null,
+  cs_rev_id int not null,
 
-DROP TABLE IF EXISTS /*$wgDBprefix*/code_test_run;
-CREATE TABLE /*$wgDBprefix*/code_test_run (
-  ctrun_id int auto_increment not null,
-  
-  ctrun_suite_id int not null,
-  ctrun_rev_id int not null,
-  
-  ctrun_status enum ('running', 'complete', 'abort'),
-  
-  ctrun_count_total int,
-  ctrun_count_success int,
-  
-  primary key ctrun_id (ctrun_id),
-  key suite_rev (ctrun_suite_id, ctrun_rev_id)
-) /*$wgDBtableOptions*/;
+  -- User that signed off
+  cs_user int not null,
+  cs_user_text varchar(255) not null,
 
+  -- Type of signoff. Current values: 'inspected', 'tested'
+  -- See CodeRevision::getPossibleFlags() (in backend/CodeRevision.php) for most up to date list
+  cs_flag varchar(25) not null,
 
-DROP TABLE IF EXISTS /*$wgDBprefix*/code_test_result;
-CREATE TABLE /*$wgDBprefix*/code_test_result (
-  ctresult_id int auto_increment not null,
-  
-  -- Which test run and case are we on?
-  ctresult_run_id int not null,
-  ctresult_case_id int not null,
-  
-  -- Did we succeed or fail?
-  ctresult_success bool not null,
-  
-  -- Optional HTML chunk data
-  ctresult_details blob,
-  
-  primary key ctr_id (ctresult_id),
-  key run_id (ctresult_run_id, ctresult_id)
-) /*$wgDBtableOptions*/;
+  -- Timestamp of the sign-off
+  cs_timestamp binary(14) not null default '',
+
+  -- Timestamp the sign-off was struck, or Block::infinity() if not struck
+  cs_timestamp_struck varbinary(14) not null default 'infinity'
+) /*$wgDBTableOptions*/;
+CREATE UNIQUE INDEX /*i*/cs_repo_rev_user_flag_tstruck ON /*_*/code_signoffs (cs_repo_id, cs_rev_id, cs_user_text, cs_flag, cs_timestamp_struck);
+CREATE INDEX /*i*/cs_repo_repo_rev_timestamp ON /*_*/code_signoffs (cs_repo_id, cs_rev_id, cs_timestamp);

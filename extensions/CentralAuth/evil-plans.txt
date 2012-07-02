@@ -248,4 +248,3 @@ wikis however: the simplest thing would be to add a group on those wikis
 for approved users, and shift the permissions over from 'user' to 'private'
 or whatever. Then add some handy way for local sysops to privatise people,
 rather than the cumbersome 'account by email'.
-

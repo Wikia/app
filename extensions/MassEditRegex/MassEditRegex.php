@@ -5,7 +5,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * Allow users in the Bot group to edit many articles in one go by applying
  * regular expressions to a list of pages.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:MassEditRegex Documentation
  *
@@ -19,14 +20,16 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Mass Edit via Regular Expressions',
 	'version' => 'r4',
 	'author' => 'Adam Nielsen',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:MassEditRegex',
-	'description' => 'Use regular expressions to [[Special:MassEditRegex|edit many pages in one operation]]',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:MassEditRegex',
 	'descriptionmsg' => 'masseditregex-desc'
 );
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['MassEditRegex'] = $dir . 'MassEditRegex.i18n.php';
-$wgExtensionAliasesFiles['MassEditRegex'] = $dir . 'MassEditRegex.alias.php';
+$wgExtensionMessagesFiles['MassEditRegexAlias'] = $dir . 'MassEditRegex.alias.php';
 $wgAutoloadClasses['MassEditRegex'] = $dir . 'MassEditRegex.class.php';
 $wgSpecialPages['MassEditRegex'] = 'MassEditRegex';
 $wgSpecialPageGroups['MassEditRegex'] = 'pagetools';
+
+// Required permission to use Special:MassEditRegex
+$wgAvailableRights[] = 'masseditregex';

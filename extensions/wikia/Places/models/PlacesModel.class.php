@@ -51,8 +51,14 @@
 			$this->app->wf->Debug(__METHOD__ . "::nearby - {$lat},{$lon}\n");
 		}
 
+		// apply rows limit
+		$options = array();
+		if (!empty($filters['limit'])) {
+			$options['LIMIT'] = $filters['limit'] * 2;
+		}
+
 		// perform the query
-		$res = $dbr->select($tables , $fields, $where, __METHOD__);
+		$res = $dbr->select($tables , $fields, $where, __METHOD__, $options);
 
 		// get data from table rows
 		$attrs = array();
@@ -89,12 +95,15 @@
 	/**
 	 * Get geo data for all tagged articles on a wiki
 	 *
+	 * @param $limit integer limit the number of places returned
 	 * @return array set of PlaceModel objects
 	 */
-	public function getAll() {
+	public function getAll($limit = 0) {
 		wfProfileIn(__METHOD__);
 
-		$models = $this->query();
+		$models = $this->query(array(
+			'limit' => $limit
+		));
 
 		wfProfileOut(__METHOD__);
 		return $models;

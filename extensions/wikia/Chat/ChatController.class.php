@@ -10,7 +10,7 @@ class ChatController extends WikiaController {
 	}
 	
 	public function executeIndex() {
-		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon;
+		global $wgUser, $wgDevelEnvironment, $wgRequest, $wgCityId, $wgFavicon, $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		// String replacement logic taken from includes/Skin.php
@@ -63,10 +63,19 @@ class ChatController extends WikiaController {
 			$this->bodyClasses .= ' can-give-chat-mod ';
 		}
 
-		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatModule', 'onMakeGlobalVariablesScript', array(), false, $this);
+		$this->app->registerHook('MakeGlobalVariablesScript', 'ChatController', 'onMakeGlobalVariablesScript', array(), false, $this);
+			
+		$wgOut->getResourceLoader()->getModule( 'mediawiki' ); 
+		
+		$ret = implode( "\n", array(
+			$wgOut->getHeadLinks( null, true ),
+			$wgOut->buildCssLinks(),
+			$wgOut->getHeadScripts(),
+			$wgOut->getHeadItems()
+		) );
 
-		$this->globalVariablesScript = Skin::makeGlobalVariablesScript($this->app->getSkinTemplateObj()->data);
-
+		$this->globalVariablesScript = $ret;
+		
 		//Theme Designer stuff
 		$themeSettingObj = new ThemeSettings();
 		$themeSettings = $themeSettingObj->getSettings();
@@ -77,11 +86,10 @@ class ChatController extends WikiaController {
 			if ($title) {
 				$image = wfFindFile($title);
 				if ($image) {
-					$thumb = $image->getThumbnail(self::CHAT_WORDMARK_WIDTH, self::CHAT_WORDMARK_HEIGHT);
-					if ($thumb) $this->wordmarkThumbnailUrl = $thumb->url;
+					$this->wordmarkThumbnailUrl = $image->createThumb( self::CHAT_WORDMARK_WIDTH, self::CHAT_WORDMARK_HEIGHT );
 				}
 			}
-			if (!$this->wordmarkThumbnailUrl) {
+			if ( empty( $this->wordmarkThumbnailUrl ) ) {
 				$this->wordmarkThumbnailUrl = WikiFactory::getLocalEnvURL($themeSettings['wordmark-image-url']);
 			}
 		}

@@ -63,7 +63,7 @@ class SearchDigestPager extends ReverseChronologicalPager {
 	function __construct() {
 		global $wgStatsDB, $wgDevelEnvironment;
 
-		parent::__construct( 'SearchDigest' );
+		parent::__construct();
 
 		if ( $wgDevelEnvironment ) {
 			$this->mDb = wfGetDB( DB_SLAVE );

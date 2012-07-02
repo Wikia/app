@@ -2,7 +2,8 @@
 /**
  * Special:Player, a media playback page
  *
- * @addtogroup SpecialPage
+ * @file
+ * @ingroup SpecialPage
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
@@ -19,7 +20,7 @@ class SpecialPlayer extends SpecialPage {
 	 * Constructor
 	 */
 	public function __construct() {
-		SpecialPage::SpecialPage( 'Player', '', true );
+		parent::__construct( 'Player', '', true );
 	}
 
 	/**
@@ -29,7 +30,7 @@ class SpecialPlayer extends SpecialPage {
 	public function execute( $par ) {
 		global $wgOut, $wgRequest;
 
-		wfLoadExtensionMessages( 'Player' );
+		
 
 		$file = $wgRequest->getVal( 'playfile', $par );
 

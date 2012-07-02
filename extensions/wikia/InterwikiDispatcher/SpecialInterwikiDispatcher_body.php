@@ -33,8 +33,6 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	function execute($subpage) {
 		global $wgOut, $wgRequest, $wgNotAValidWikia, $IP;
 
-		wfLoadExtensionMessages('SpecialInterwikiDispatcher');
-
 		$redirect = $wgNotAValidWikia;
 		$wikia = $wgRequest->getText('wikia');
 		$art = $wgRequest->getText('article');

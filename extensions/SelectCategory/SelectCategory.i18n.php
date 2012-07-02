@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension SelectCategory.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Leon Weber <leon.weber@leonweber.de> & Manuel Schneider <manuel.schneider@wikimedia.ch>
  * @copyright © 2006 by Leon Weber & Manuel Schneider
  * @licence GNU General Public Licence 2.0 or later
@@ -68,7 +69,7 @@ $messages['bcl'] = array(
 	'selectcategory-title' => 'Magpilì nin mga kategorya',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -219,6 +220,13 @@ $messages['fr'] = array(
 	'selectcategory-subtitle' => 'Maj+clic afin de (dé)sélectionner plusieurs catégories d’affilée, Ctrl+clic afin de (dé)sélectionner des catégories individuellement.',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'selectcategory-title' => 'Chouèsir les catègories',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Xosé
@@ -330,7 +338,7 @@ $messages['km'] = array(
 	'selectcategory-desc' => 'អនុញ្ញាត អ្នកប្រើប្រាស់ ឱ្យជ្រើសយក ពីចំណាត់ក្រុមមានស្រាប់ ពេលកែប្រែ មួយទំព័រ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -361,7 +369,7 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'selectcategory-title' => 'വർഗ്ഗങ്ങള്‍ തിരഞ്ഞെടുക്കുക',
+	'selectcategory-title' => 'വർഗ്ഗങ്ങൾ തിരഞ്ഞെടുക്കുക',
 );
 
 /** Marathi (मराठी)
@@ -394,7 +402,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'selectcategory-title' => 'Velg kategorier',
 	'selectcategory-desc' => 'Lar brukeren velge fra eksisterende kategorier når han/hun redigerer en side',
 	'selectcategory-subtitle' => 'Shift+klikk for å velge flere sammenhengende alternativer, Ctrl+klikk for å velge ikke-sammenhengende alternativer.',
@@ -453,6 +461,13 @@ $messages['pt-br'] = array(
 	'selectcategory-title' => 'Selecionar categorias',
 	'selectcategory-desc' => 'Permitir ao utilizador selecionar a partir das categorias existentes quando editar uma página',
 	'selectcategory-subtitle' => 'Shift-clique para selecionar múltiplas entradas contíguas, Ctrl-clique para selecionar entradas não-contíguas.',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'selectcategory-title' => 'Selectează categoriile',
 );
 
 /** Tarandíne (Tarandíne)
@@ -569,7 +584,7 @@ $messages['vo'] = array(
 	'selectcategory-subtitle' => 'El „Shift“ + mugaparat ad välön binetis nilü oks, el „Ctrl“ + mugaparat ad välön binetis no nilü oks.',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -589,11 +604,12 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Alexsh
+ * @author Mark85296341
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
 	'selectcategory-title' => '選擇分類',
 	'selectcategory-desc' => '讓使用者可以在編輯頁面時直接選擇已存在的分類',
-	'selectcategory-subtitle' => '按著Shift鍵再以滑鼠選取連續的項目，按著Ctrl鍵再以滑鼠選取非連續的項目。',
+	'selectcategory-subtitle' => '按著 Shift 鍵再以滑鼠選取連續的項目，按著 Ctrl 鍵再以滑鼠選取非連續的項目。',
 );
 

@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * Collection Extension for MediaWiki
  *
  * Copyright (C) PediaPress GmbH
@@ -17,141 +16,128 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 class CollectionHooks {
 	/**
-	 * Callback for hook SkinBuildSidebar (MediaWiki >= 1.14)
+	 * Callback for hook SkinBuildSidebar
+	 *
+	 * @param $skin Skin
+	 * @param $bar
+	 *
+	 * @return bool
 	 */
 	static function buildSidebar( $skin, &$bar ) {
 		global $wgUser;
 		global $wgCollectionPortletForLoggedInUsersOnly;
 
-		if( !$wgCollectionPortletForLoggedInUsersOnly || $wgUser->isLoggedIn() ) {
-			$html = self::getPortlet();
-			if( $html ) {
+		if ( !$wgCollectionPortletForLoggedInUsersOnly || $wgUser->isLoggedIn() ) {
+			$html = self::getPortlet( $skin );
+			if ( $html ) {
 				$bar[ 'coll-print_export' ] = $html;
 			}
 		}
 		return true;
 	}
 
-	function buildNavUrls( $skin, &$navUrls ) {
+	/**
+	 * @param $skin Skin
+	 * @param $navUrls
+	 * @return bool
+	 */
+	static function buildNavUrls( $skin, &$navUrls ) {
 		global $wgUser;
 		global $wgCollectionPortletForLoggedInUsersOnly;
-		
-		if( !$wgCollectionPortletForLoggedInUsersOnly || $wgUser->isLoggedIn() ) {
-			if( isset( $navUrls['print'] ) ) {
-				// We move this guy out to our own box
-				unset( $navUrls['print'] );
-			}
+
+		if ( !$wgCollectionPortletForLoggedInUsersOnly || $wgUser->isLoggedIn() ) {
+			// We move this guy out to our own box
+			$navUrls['print'] = false;
 		}
 		return true;
-	}
-	
-	/**
-	 * This function is the fallback solution for MediaWiki < 1.14
-	 * (where the hook SkinBuildSidebar does not exist)
-	 */
-	static function printPortlet() {
-		wfLoadExtensionMessages( 'CollectionCore' );
-
-		$html = self::getPortlet();
-
-		if( $html ) {
-			$portletTitle = wfMsg( 'coll-print_export' );
-			print "<div id=\"p-coll-print_export\" class=\"portlet\">
-	<h5>$portletTitle</h5>
-		<div class=\"pBody\">\n$html\n</div></div>";
-		}
 	}
 
 	/**
 	 * Return HTML-code to be inserted as portlet
+	 *
+	 * @param $sk Skin
+	 *
+	 * @return string
 	 */
-	static function getPortlet() {
-		global $wgArticle;
+	static function getPortlet( $sk ) {
 		global $wgRequest;
-		global $wgTitle;
-		global $wgUser;
 		global $wgCollectionArticleNamespaces;
 		global $wgCollectionFormats;
 		global $wgCollectionPortletFormats;
-		global $wgScriptPath;
 
-		if ( is_null( $wgTitle ) || !$wgTitle->exists() ) {
+		$title = $sk->getTitle();
+
+		if ( is_null( $title ) || !$title->exists() ) {
 			return;
 		}
-		
-		$namespace = $wgTitle->getNamespace();
+
+		$namespace = $title->getNamespace();
 
 		if ( !in_array( $namespace, $wgCollectionArticleNamespaces )
 			&& $namespace != NS_CATEGORY ) {
 			return false;
 		}
 
-		$action = $wgRequest->getVal('action');
-		if( $action != '' && $action != 'view' && $action != 'purge' ) {
+		$action = $wgRequest->getVal( 'action', 'view' );
+		if ( $action != 'view' && $action != 'purge' ) {
 			return false;
 		}
-
-		wfLoadExtensionMessages( 'CollectionCore' );
-
-		$sk = $wgUser->getSkin();
 
 		$out = Xml::element( 'ul', array( 'id' => 'collectionPortletList' ), null );
 
 		if ( !CollectionSession::isEnabled() ) {
 			$out .= Xml::tags( 'li',
 				array( 'id' => 'coll-create_a_book' ),
-				$sk->link(
+				Linker::link(
 					SpecialPage::getTitleFor( 'Book' ),
 					wfMsgHtml( 'coll-create_a_book' ),
 					array(
 						'rel' => 'nofollow',
 						'title' => wfMsg( 'coll-create_a_book_tooltip' )
 					),
-					array( 'bookcmd' => 'book_creator', 'referer' => $wgTitle->getPrefixedText() ),
+					array( 'bookcmd' => 'book_creator', 'referer' => $title->getPrefixedText() ),
 					array( 'known', 'noclasses' )
 				)
 			);
 		} else {
 			$out .= Xml::tags( 'li',
 				array( 'id' => 'coll-book_creator_disable' ),
-				$sk->link(
+				Linker::link(
 					SpecialPage::getTitleFor( 'Book' ),
 					wfMsgHtml( 'coll-book_creator_disable' ),
 					array(
 						'rel' => 'nofollow',
 						'title' => wfMsg( 'coll-book_creator_disable_tooltip' )
 					),
-					array( 'bookcmd' => 'stop_book_creator', 'referer' => $wgTitle->getPrefixedText() ),
+					array( 'bookcmd' => 'stop_book_creator', 'referer' => $title->getPrefixedText() ),
 					array( 'known', 'noclasses' )
 				)
 			);
 		}
 
-		$params = array( 
+		$params = array(
 			'bookcmd' => 'render_article',
-			'arttitle' => $wgTitle->getPrefixedText(),
+			'arttitle' => $title->getPrefixedText(),
 		);
 
-		if( $wgArticle ) {
-			$oldid = $wgArticle->getOldID();
-			if ( $oldid ) {
-				$params['oldid'] = $oldid;
-			} else {
-				$params['oldid'] = $wgArticle->getLatest();
-			}
+		$oldid = $wgRequest->getVal( 'oldid' );
+		if ( $oldid ) {
+			$params['oldid'] = $oldid;
+		} else {
+			$params['oldid'] = $title->getLatestRevID();
 		}
 
 		foreach ( $wgCollectionPortletFormats as $writer ) {
 			$params['writer'] = $writer;
 			$out .= Xml::tags( 'li',
 				array( 'id' => 'coll-download-as-' . $writer ),
-				$sk->link(
+				Linker::link(
 					SpecialPage::getTitleFor( 'Book' ),
 					wfMsgHtml( 'coll-download_as', htmlspecialchars( $wgCollectionFormats[$writer] ) ),
 					array(
@@ -165,12 +151,11 @@ class CollectionHooks {
 		}
 
 		// Move the 'printable' link into our section for consistency
-		$action = $wgRequest->getVal( 'action', 'view' );
-		if( $action == 'view' || $action == 'purge' ) {
+		if ( $action == 'view' || $action == 'purge' ) {
 			global $wgOut;
 			if ( !$wgOut->isPrintable() ) {
 				$attribs = array(
-					'href' => $wgRequest->appendQuery( 'printable=yes' ),
+					'href' => $sk->getTitle()->getLocalUrl( $wgRequest->appendQueryValue( 'printable', 'yes', true ) ),
 					'title' => $sk->titleAttrib( 't-print', 'withaccess' ),
 					'accesskey' => $sk->accesskey( 't-print' ),
 				);
@@ -185,7 +170,7 @@ class CollectionHooks {
 					Xml::element( 'a', $attribs, wfMsg( 'printableversion' ) ) );
 			}
 		}
-		
+
 		$out .= Xml::closeElement( 'ul' );
 
 		return $out;
@@ -194,114 +179,77 @@ class CollectionHooks {
 	/**
 	 * Callback for hook SiteNoticeAfter
 	 */
-	static function siteNoticeAfter( &$siteNotice ) {
+	static function siteNoticeAfter( &$siteNotice, $skin = null ) {
 		global $wgCollectionArticleNamespaces;
 		global $wgRequest;
-		global $wgTitle;
 
-		$action = $wgRequest->getVal('action');
-		if( $action != '' && $action != 'view' && $action != 'purge' ) {
+		$action = $wgRequest->getVal( 'action' );
+		if ( $action != '' && $action != 'view' && $action != 'purge' ) {
 			return true;
 		}
 
 		if ( !CollectionSession::hasSession()
+			|| !isset( $_SESSION['wsCollection']['enabled'] )
 			|| !$_SESSION['wsCollection']['enabled'] ) {
 			return true;
 		}
 
-		$myTitle = SpecialPage::getTitleFor( 'Book' );
-		if ( $myTitle->equals( $wgTitle ) ) {
-			$cmd = $wgRequest->getVal('bookcmd', '');
+		if ( $skin ) {
+			$title = $skin->getTitle();
+		} else {
+			global $wgTitle;
+			$title = $wgTitle;
+		}
+
+		if ( $title->isSpecial( 'Book' ) ) {
+			$cmd = $wgRequest->getVal( 'bookcmd', '' );
 			if ( $cmd == 'suggest' ) {
-				$siteNotice .= self::renderBookCreatorBox( 'suggest' );
-			} else if ( $cmd == '' ) {
-				$siteNotice .= self::renderBookCreatorBox( 'showbook' );
+				$siteNotice .= self::renderBookCreatorBox( $title, 'suggest' );
+			} elseif ( $cmd == '' ) {
+				$siteNotice .= self::renderBookCreatorBox( $title, 'showbook' );
 			}
 			return true;
 		}
 
-		if ( is_null( $wgTitle ) || !$wgTitle->exists() ) {
+		if ( !$title->exists() ) {
 			return true;
 		}
 
-		$namespace = $wgTitle->getNamespace();
+		$namespace = $title->getNamespace();
 		if ( !in_array( $namespace, $wgCollectionArticleNamespaces )
 			&& $namespace != NS_CATEGORY ) {
 			return true;
 		}
 
-		$siteNotice .= self::renderBookCreatorBox();
+		$siteNotice .= self::renderBookCreatorBox( $title );
 		return true;
 	}
 
-	static function renderBookCreatorBox( $mode='' ) {
-		global $wgArticle;
-		global $wgCollectionArticleNamespaces;
+	/**
+	 * @param $title Title
+	 * @param $skin Skin
+	 * @param $mode string
+	 * @return string
+	 */
+	static function renderBookCreatorBox( $title, $mode = '' ) {
 		global $wgCollectionStyleVersion;
-		global $wgCollectionVersion;
-		global $wgJsMimeType;
 		global $wgOut;
 		global $wgScriptPath;
-		global $wgTitle;
-		global $wgUser;
+		global $wgRequest;
 
-		$namespace = $wgTitle->getNamespace();
-
-		wfLoadExtensionMessages( 'CollectionCore' );
-
-		$sk = $wgUser->getSkin();
-		$jsPath = "$wgScriptPath/extensions/Collection/js";
 		$imagePath = "$wgScriptPath/extensions/Collection/images";
-		$ptext = $wgTitle->getPrefixedText();
-		$oldid = 0;
-		if ( !is_null( $wgArticle ) ) {
-			$oldid = $wgArticle->getOldID();
-			if ( !$oldid  || $oldid == $wgArticle->getLatest() ) {
-				$oldid = 0;
-			} 
+		$ptext = $title->getPrefixedText();
+		$oldid = $wgRequest->getVal( 'oldid', 0 );
+		if ( $oldid == $title->getLatestRevID() ) {
+			$oldid = 0;
 		}
 
-		$html = '';
+		$wgOut->addModules( 'ext.collection.bookcreator' );
 
-		if ( method_exists( $wgOut, 'includeJQuery' ) ) {
-			$wgOut->includeJQuery();
-		} else {
-			$html .= Xml::element( 'script',
-				array(
-					'type' => $wgJsMimeType,
-					'src' => "$jsPath/jquery.js?$wgCollectionStyleVersion",
-				),
-				'', false
-			);
-		}
-
-		$html .= Xml::element( 'script', 
-			array(
-				'type' => $wgJsMimeType,
-				'src' => "$jsPath/bookcreator.js?$wgCollectionStyleVersion",
-			),
-			'', false
-		);
-		$html .= Xml::element( 'style',
-			array( 'type' => 'text/css' ),
-			<<<EOS
-#collectionpopup {
-	position: absolute;
-	padding: 4px;
-	border: 1px solid #000;
-	background-color: #fea;
-	z-index: 9999;
-	display: inline;
-	font-size: 10pt;
-}
-EOS
-			, false
-		);
-		
 		$addRemoveState = $mode;
 
-		$html .= Xml::element( 'div',
-			array( 'style' => wfMsg( 'coll-book_creator_box_style' ) ),
+		$html = Xml::element( 'div',
+			array( 'class' => 'collection-creatorbox' ),
 			null
 		);
 
@@ -311,29 +259,27 @@ EOS
 				'alt' => '',
 				'width' => '80',
 				'height' => '45',
-				'style' => 'float: left;',
+				'class' => 'collection-creatorbox-book',
 			),
 			'',
 			true
 		);
 
 		$html .= Xml::tags( 'div',
-			array( 'style' => 'margin-left: 90px;' ),
-			Xml::tags( 'div',
-				array( 'style' => 'float: right' ),
-				$sk->link(
+			array( 'class' => 'collection-creatorbox-row' ),
+			Xml::tags( 'div', null,
+				Linker::link(
 					Title::newFromText( wfMsg( 'coll-helppage' ) ),
-					Xml::element('img',
+					Xml::element( 'img',
 						array(
 							'src' => "$imagePath/silk-help.png",
 							'alt' => '',
 							'width' => '16',
 							'height' => '16',
-							'style' => 'vertical-align: text-bottom;',
 						)
 					)
-					. '&nbsp;' . wfMsgHtml( 'coll-help' ),
-					array( 
+					. '&#160;' . wfMsgHtml( 'coll-help' ),
+					array(
 						'rel' => 'nofollow',
 						'title' => wfMsg( 'coll-help_tooltip' ),
 					),
@@ -341,12 +287,12 @@ EOS
 					array( 'known', 'noclasses' )
 				)
 			)
-			. Xml::tags( 'strong',
-				array( 'style' => 'font-size: 1.2em' ),
+			. Xml::tags( 'span',
+				array( 'class' => 'collection-creatorbox-title' ),
 				wfMsgHtml( 'coll-book_creator' )
 			)
 			. ' ('
-			. $sk->link(
+			. Linker::link(
 				SpecialPage::getTitleFor( 'Book' ),
 				wfMsgHtml( 'coll-disable' ),
 				array(
@@ -362,44 +308,36 @@ EOS
 		$html .= Xml::tags( 'div',
 			array(
 				'id' => 'coll-book_creator_box',
-				'style' => 'margin-left: 90px; margin-bottom: 0;',
+				'class' => 'collection-creatorbox-row',
 			),
-			self::getBookCreatorBoxContent( $addRemoveState, $oldid )
+			self::getBookCreatorBoxContent( $title, $addRemoveState, $oldid )
 	 	);
 
 		$html .= Xml::closeElement( 'div' );
 		return $html;
 	}
 
-	static function getBookCreatorBoxContent( $ajaxHint=null, $oldid=null ) {
-		global $wgUser;
+	static function getBookCreatorBoxContent( $title, $ajaxHint = null, $oldid = null ) {
 		global $wgScriptPath;
 
-		wfLoadExtensionMessages( 'CollectionCore' );
-
-		$sk = $wgUser->getSkin();
 		$imagePath = "$wgScriptPath/extensions/Collection/images";
 
-		return self::getBookCreatorBoxAddRemoveLink( $sk, $imagePath, $ajaxHint, $oldid )
-			. self::getBookCreatorBoxShowBookLink( $sk, $imagePath, $ajaxHint )
-			. self::getBookCreatorBoxSuggestLink( $sk, $imagePath, $ajaxHint );
+		return self::getBookCreatorBoxAddRemoveLink( $imagePath, $ajaxHint, $title, $oldid )
+			. self::getBookCreatorBoxShowBookLink( $imagePath, $ajaxHint )
+			. self::getBookCreatorBoxSuggestLink( $imagePath, $ajaxHint );
 	}
 
-	static function getBookCreatorBoxAddRemoveLink( $sk, $imagePath, $ajaxHint, $oldid ) {
-		global $wgArticle;
-		global $wgJsMimeType;
-		global $wgTitle;
-		global $wgScriptPath;
-
-		$namespace = $wgTitle->getNamespace();
-		$ptext = $wgTitle->getPrefixedText();
-
-		if ( is_null( $oldid ) && !is_null( $wgArticle ) ) {
-			$oldid = $wgArticle->getOldID();
-			if ( !$oldid  || $oldid == $wgArticle->getLatest() ) {
-				$oldid = 0;
-			} 
-		}
+	/**
+	 * @param $sk Skin
+	 * @param $imagePath
+	 * @param $ajaxHint
+	 * @param $title Title
+	 * @param $oldid
+	 * @return string
+	 */
+	static function getBookCreatorBoxAddRemoveLink( $imagePath, $ajaxHint, $title, $oldid ) {
+		$namespace = $title->getNamespace();
+		$ptext = $title->getPrefixedText();
 
 		if ( $ajaxHint == 'suggest' || $ajaxHint == 'showbook' ) {
 			return Xml::tags( 'span',
@@ -409,11 +347,11 @@ EOS
 						'src' => "$imagePath/disabled.png",
 						'alt' => '',
 						'width' => '16',
-						'height'=> '16',
+						'height' => '16',
 						'style' => 'vertical-align: text-bottom',
 					)
 				)
-				. '&nbsp;' . wfMsgHtml( 'coll-not_addable' )
+				. '&#160;' . wfMsgHtml( 'coll-not_addable' )
 			);
 		}
 
@@ -422,11 +360,11 @@ EOS
 			$icon = 'silk-add.png';
 			$captionMsg = 'coll-add_category';
 			$tooltipMsg = 'coll-add_category_tooltip';
-			$query = array( 'bookcmd' => 'add_category', 'cattitle' => $wgTitle->getText() );
+			$query = array( 'bookcmd' => 'add_category', 'cattitle' => $title->getText() );
 			$onclick = "collectionCall('AddCategory', ['addcategory', wgTitle]); return false;";
 		} else {
 			if ( $ajaxHint == 'addarticle'
-				|| ($ajaxHint == '' && CollectionSession::findArticle( $ptext, $oldid ) == -1) ) {
+				|| ( $ajaxHint == '' && CollectionSession::findArticle( $ptext, $oldid ) == - 1 ) ) {
 				$id = 'coll-add_article';
 				$icon = 'silk-add.png';
 				$captionMsg = 'coll-add_this_page';
@@ -445,18 +383,17 @@ EOS
 			}
 		}
 
-		return $sk->link(
+		return Linker::link(
 			SpecialPage::getTitleFor( 'Book' ),
-			Xml::element('img',
+			Xml::element( 'img',
 				array(
 					'src' => "$imagePath/$icon",
 					'alt' => '',
 					'width' => '16',
 					'height' => '16',
-					'style' => 'vertical-align: text-bottom',
 				)
 			)
-			. '&nbsp;' . wfMsgHtml( $captionMsg ),
+			. '&#160;' . wfMsgHtml( $captionMsg ),
 			array(
 				'id' => $id,
 				'rel' => 'nofollow',
@@ -469,43 +406,42 @@ EOS
 
 	}
 
-	static function getBookCreatorBoxShowBookLink( $sk, $imagePath, $ajaxHint ) {
+	static function getBookCreatorBoxShowBookLink( $imagePath, $ajaxHint ) {
 		$numArticles = CollectionSession::countArticles();
+
 		if ( $ajaxHint == 'showbook' ) {
 			return Xml::tags( 'strong',
 				array(
-					'style' => 'margin-left: 10px;',
+					'class' => 'collection-creatorbox-iconlink',
 				),
-				Xml::element('img',
+				Xml::element( 'img',
 					array(
 						'src' => "$imagePath/silk-book_open.png",
 						'alt' => '',
 						'width' => '16',
 						'height' => '16',
-						'style' => 'vertical-align: text-bottom',
 					)
 				)
-				. '&nbsp;' . wfMsgHtml( 'coll-show_collection' )
+				. '&#160;' . wfMsgHtml( 'coll-show_collection' )
 				. ' (' . wfMsgExt( 'coll-n_pages', array( 'parsemag', 'escape' ), $numArticles ) . ')'
 			);
 		} else {
-			return $sk->link(
+			return Linker::link(
 				SpecialPage::getTitleFor( 'Book' ),
-				Xml::element('img',
+				Xml::element( 'img',
 					array(
 						'src' => "$imagePath/silk-book_open.png",
 						'alt' => '',
 						'width' => '16',
 						'height' => '16',
-						'style' => 'vertical-align: text-bottom',
 					)
 				)
-				. '&nbsp;' . wfMsgHtml( 'coll-show_collection' )
+				. '&#160;' . wfMsgHtml( 'coll-show_collection' )
 					. ' (' . wfMsgExt( 'coll-n_pages', array( 'parsemag', 'escape' ), $numArticles ) . ')',
 				array(
 					'rel' => 'nofollow',
 					'title' => wfMsg( 'coll-show_collection_tooltip' ),
-					'style' => 'margin-left: 10px',
+					'class' => 'collection-creatorbox-iconlink',
 				),
 				array(),
 				array( 'known', 'noclasses' )
@@ -513,7 +449,7 @@ EOS
 		}
 	}
 
-	static function getBookCreatorBoxSuggestLink( $sk, $imagePath, $ajaxHint ) {
+	static function getBookCreatorBoxSuggestLink( $imagePath, $ajaxHint ) {
 		if ( wfMsg( 'coll-suggest_enabled' ) != '1' ) {
 			return '';
 		}
@@ -521,9 +457,9 @@ EOS
 		if ( $ajaxHint == 'suggest' ) {
 			return Xml::tags( 'strong',
 				array(
-					'style' => 'margin-left: 10px;',
+					'class' => 'collection-creatorbox-iconlink',
 				),
-				Xml::element('img',
+				Xml::element( 'img',
 					array(
 						'src' => "$imagePath/silk-wand.png",
 						'alt' => '',
@@ -532,12 +468,12 @@ EOS
 						'style' => 'vertical-align: text-bottom',
 					)
 				)
-				. '&nbsp;' . wfMsgHtml( 'coll-make_suggestions' )
+				. '&#160;' . wfMsgHtml( 'coll-make_suggestions' )
 			);
 		} else {
-			return $sk->link(
+			return Linker::link(
 				SpecialPage::getTitleFor( 'Book' ),
-				Xml::element('img',
+				Xml::element( 'img',
 					array(
 						'src' => "$imagePath/silk-wand.png",
 						'alt' => '',
@@ -546,11 +482,11 @@ EOS
 						'style' => 'vertical-align: text-bottom',
 					)
 				)
-				. '&nbsp;' . wfMsgHtml( 'coll-make_suggestions' ),
+				. '&#160;' . wfMsgHtml( 'coll-make_suggestions' ),
 				array(
 					'rel' => 'nofollow',
 					'title' => wfMsg( 'coll-make_suggestions_tooltip' ),
-					'style' => 'margin-left: 10px',
+					'class' => 'collection-creatorbox-iconlink',
 				),
 				array( 'bookcmd' => 'suggest', ),
 				array( 'known', 'noclasses' )
@@ -567,5 +503,12 @@ EOS
 		}
 		return true;
 	}
-}
 
+	/**
+	 * ResourceLoaderGetConfigVars hook
+	 */
+	static function resourceLoaderGetConfigVars( &$vars ) {
+		$vars['wgCollectionVersion'] = $GLOBALS['wgCollectionVersion'];
+		return true;
+	}
+}

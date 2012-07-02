@@ -18,12 +18,9 @@ $wgAutoloadClasses['Signup'] = $dir.'SpecialSignup.class.php';
 
 $wgSpecialPages['Signup'] = 'Signup';
 $wgSpecialPageGroups['Signup'] = 'login';
-$wgExtensionAliasesFiles['Signup'] = $dir . 'SpecialSignup.alias.php';
 
 $wgExtensionMessagesFiles['Signup'] = $dir . 'Signup.i18n.php';
-
-// redirect all Special:Userlogin requests to the new page
-//$wgSpecialPages['Userlogin'] = array( 'SpecialRedirectToSpecial', 'Userlogin', 'Signup' );
+$wgExtensionMessagesFiles['SignupAliases'] = $dir . 'SpecialSignup.alias.php';
 
 // hooks
 $wgHooks ['OutputPageBeforeHTML'][] = 'Signup::TrackingOnSuccess';

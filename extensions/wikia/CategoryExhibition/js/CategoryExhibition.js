@@ -6,7 +6,6 @@ var CategoryExhibition = {
 
 		$('#WikiaArticle').delegate('.category-gallery-item', 'click', CategoryExhibition.trackClick);
 
-		$('#mw-images').delegate('a.video-thumbnail', 'click', CategoryExhibition.mediaThumbnailClick);
 		$('#mw-pages').delegate('.wikia-paginator a', 'click', CategoryExhibition.articlesPaginatorClick);
 		$('#mw-subcategories').delegate('.wikia-paginator a', 'click', CategoryExhibition.subcategoriesPaginatorClick);
 		$('#mw-images').delegate('.wikia-paginator a', 'click', CategoryExhibition.mediaPaginatorClick);
@@ -41,35 +40,6 @@ var CategoryExhibition = {
 
 	mediaPaginatorClick : function(e) {
 		return CategoryExhibition.paginatorClick($('#mw-images'), 'axGetMediaPage', $(this), 'media');
-	},
-
-	mediaThumbnailClick : function(e) {
-		var url = $(this).attr('data-ref');
-		var link = $(this).attr('href');
-
-		// catch doubleclicks on video thumbnails
-		if (CategoryExhibition.videoPlayerLock) {
-			return false;
-		}
-		CategoryExhibition.videoPlayerLock = true;
-		$.getJSON(
-			wgScript + '?action=ajax&rs=CategoryExhibitionAjax&method=axGetVideoPlayer',
-			{'title': url},
-			function(res) {
-				// replace thumbnail with video preview
-				if (res.html) {
-					$.showModal(res.title, res.html, {
-						'id': 'activityfeed-video-player',
-						'width': res.width
-					});
-				} else {
-					// redirect if modal seems to be broken
-					window.location.href = link;
-				}
-				CategoryExhibition.videoPlayerLock = false;
-			}
-		);
-		return false;
 	},
 
 	subcategoriesPaginatorClick : function(e) {

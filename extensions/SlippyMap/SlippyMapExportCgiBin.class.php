@@ -9,13 +9,13 @@ class SlippyMapExportCgiBin {
 
 	/** borrowed from OpenLayers.DOTS_PER_UNIT */
 	private static $INCHES_PER_UNIT = array (
-	   	'dd' => 4374754,
-	   	'm' => 39.3701
+		'dd' => 4374754,
+		'm' => 39.3701
 	);
-    
+
 	/** borrowed from OpenLayers.DOTS_PER_INCH */
 	private static $DOTS_PER_INCH = 72;
-    
+
 	/** pixel size in meters */
 	private static $PIXEL_SIZE = 0.00028;
 
@@ -74,11 +74,11 @@ class SlippyMapExportCgiBin {
 		if ( $this->options['sphericalMercator'] ) {
 			// Calculate bounds within a spherical mercator projection if that is what the scale is based on
 			$mercatorCenter = self::forwardMercator( $center );
-			$mbounds = array( 
-				$mercatorCenter[0] - $w_deg / 2, 
-				$mercatorCenter[1] - $h_deg / 2, 
-				$mercatorCenter[0] + $w_deg / 2, 
-				$mercatorCenter[1] + $h_deg / 2 
+			$mbounds = array(
+				$mercatorCenter[0] - $w_deg / 2,
+				$mercatorCenter[1] - $h_deg / 2,
+				$mercatorCenter[0] + $w_deg / 2,
+				$mercatorCenter[1] + $h_deg / 2
 			);
 			$this->bounds = self::inverseMercator( $mbounds );
 		}
@@ -94,21 +94,21 @@ class SlippyMapExportCgiBin {
 	protected function getScaleFromResolution( $resolution ) {
 		return $resolution * self::$INCHES_PER_UNIT[$this->options['unit']] * self::$DOTS_PER_INCH;
 	}
-    
+
 	/**
 	* Determines resolutions and scales based on a maximum resolution and number of zoom levels
 	* Borrowed from OpenLayers.Layer.initResolutions
 	*/
 	protected function initResolutionsAndScales() {
-       		$this->resolutions = array();
-	    	$base = 2;
-		
-    		for ( $i = 0; $i < $this->options['numZoomLevels']; $i++ ) {
-    			$this->resolutions[$i] = $this->options['maxResolution'] / pow( $base, $i );
+			$this->resolutions = array();
+		$base = 2;
+
+			for ( $i = 0; $i < $this->options['numZoomLevels']; $i++ ) {
+				$this->resolutions[$i] = $this->options['maxResolution'] / pow( $base, $i );
 			$this->scales[$i] = $this->getScaleFromResolution( $this->resolutions[$i] );
 		}
 	}
-    
+
 	/**
 	 * Convert from WGS84 to spherical mercator
 	 */
@@ -116,14 +116,14 @@ class SlippyMapExportCgiBin {
 		for ($i=0; $i<count($lonlat); $i+=2) {
 			/* lon */
 			$lonlat[$i] = $lonlat[$i] * (2 * M_PI * 6378137 / 2.0) / 180.0;
-			
+
 			/* lat */
 			$lonlat[$i+1] = log(tan((90 + $lonlat[$i+1]) * M_PI / 360.0)) / (M_PI / 180.0);
 			$lonlat[$i+1] = $lonlat[$i+1] * (2 * M_PI * 6378137 / 2.0) / 180.0;
-		}		
+		}
 		return $lonlat;
 	}
-	
+
 	/**
 	 * Convert from spherical mercator to WGS84
 	 */
@@ -131,13 +131,12 @@ class SlippyMapExportCgiBin {
 		for ($i=0; $i<count($lonlat); $i+=2) {
 			/* lon */
 			$lonlat[$i] = $lonlat[$i] / ((2 * M_PI * 6378137 / 2.0) / 180.0);
-			
+
 			/* lat */
 			$lonlat[$i+1] = $lonlat[$i+1] / ((2 * M_PI * 6378137 / 2.0) / 180.0);
 			$lonlat[$i+1] = 180.0 / M_PI * (2 * atan(exp($lonlat[$i+1] * M_PI / 180.0)) - M_PI / 2);
-		}		
-		
+		}
+
 		return $lonlat;
 	}
 }
-?>

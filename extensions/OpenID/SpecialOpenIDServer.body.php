@@ -18,8 +18,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @file
  * @author Evan Prodromou <evan@prodromou.name>
- * @addtogroup Extensions
+ * @ingroup Extensions
  */
 
 if ( !defined( 'MEDIAWIKI' ) )
@@ -46,14 +47,12 @@ require_once( "Auth/OpenID/Consumer.php" );
 
 class SpecialOpenIDServer extends SpecialOpenID {
 
-	function SpecialOpenIDServer() {
-		SpecialPage::SpecialPage( "OpenIDServer", '', false );
+	function __construct() {
+		parent::__construct( "OpenIDServer", '', false );
 	}
 
 	function execute( $par ) {
 		global $wgOut, $wgOpenIDClientOnly;
-
-		wfLoadExtensionMessages( 'OpenID' );
 
 		$this->setHeaders();
 
@@ -157,7 +156,7 @@ class SpecialOpenIDServer extends SpecialOpenID {
 	# for some requests
 
 	function Url() {
-		$nt = Title::makeTitleSafe( NS_SPECIAL, 'OpenIDServer' );
+		$nt = SpecialPage::getTitleFor( 'OpenIDServer' );
 		if ( isset( $nt ) ) {
 			return $nt->getFullURL();
 		} else {
@@ -167,13 +166,18 @@ class SpecialOpenIDServer extends SpecialOpenID {
 
 	# Returns an Auth_OpenID_Server from the libraries. Utility.
 
+	/**
+	 * @return Auth_OpenID_Server
+	 */
 	function getServer() {
 		global $wgOpenIDServerStorePath,
 		  $wgOpenIDServerStoreType;
 
-		$store = $this->getOpenIDStore( $wgOpenIDServerStoreType,
-									   'server',
-									   array( 'path' => $wgOpenIDServerStorePath ) );
+		$store = $this->getOpenIDStore(
+			$wgOpenIDServerStoreType,
+			'server',
+			array( 'path' => $wgOpenIDServerStorePath )
+		);
 
 		return new Auth_OpenID_Server( $store, $this->serverUrl() );
 	}
@@ -187,7 +191,7 @@ class SpecialOpenIDServer extends SpecialOpenID {
 
 	function Check( $server, $request, $sreg, $imm = true ) {
 
-		global $wgUser, $wgOut;
+		global $wgUser, $wgOut, $wgOpenIDAllowServingOpenIDUserAccounts;
 
 		assert( isset( $wgUser ) && isset( $wgOut ) );
 		assert( isset( $server ) );
@@ -200,6 +204,8 @@ class SpecialOpenIDServer extends SpecialOpenID {
 		$url = $request->identity;
 
 		assert( isset( $url ) && strlen( $url ) > 0 );
+
+		wfDebug( "OpenID: OpenIDServer received: '$url'.\n" );
 
 		$name = $this->UrlToUserName( $url );
 
@@ -240,7 +246,7 @@ class SpecialOpenIDServer extends SpecialOpenID {
 
 		# Is the user an OpenID user?
 
-		if ( $this->getUserUrl( $user ) ) {
+		if ( !$wgOpenIDAllowServingOpenIDUserAccounts && $this->getUserOpenIDInformation( $user ) ) {
 			wfDebug( "OpenID: Not one of our users; logs in with OpenID.\n" );
 			return $request->answer( false, $this->serverUrl() );
 		}
@@ -405,7 +411,7 @@ class SpecialOpenIDServer extends SpecialOpenID {
 		foreach ( $arr as $root => $value ) {
 			if ( $value === false ) {
 				$record = implode( "\x1F", array( $root, 'no' ) );
-			} else if ( is_array( $value ) ) {
+			} elseif ( is_array( $value ) ) {
 				if ( count( $value ) == 0 ) {
 					$record = $root;
 				} else {
@@ -540,10 +546,8 @@ class SpecialOpenIDServer extends SpecialOpenID {
 	}
 
 	function SaveValues( $request, $sreg ) {
-		global $wgSessionStarted, $wgUser;
-
-		if ( !$wgSessionStarted ) {
-			$wgUser->SetupSession();
+		if ( session_id() == '' ) {
+			wfSetupSession();
 		}
 
 		$_SESSION['openid_server_request'] = $request;
@@ -598,7 +602,7 @@ class SpecialOpenIDServer extends SpecialOpenID {
 		} else {
 			$id = $user->getId();
 			$wgUser = $user;
-			$wgUser->SetupSession();
+			wfSetupSession();
 			$wgUser->SetCookies();
 			wfRunHooks( 'UserLoginComplete', array( &$wgUser ) );
 			return false;
@@ -732,9 +736,18 @@ class SpecialOpenIDServer extends SpecialOpenID {
 		}
 
 		# Use regexps to extract user name
-
 		$pattern = str_replace( '$1', '(.*)', $wgArticlePath );
 		$pattern = str_replace( '?', '\?', $pattern );
+
+		/* remove "Special:OpenIDXRDS/" to allow construction of a valid user page name */
+		$specialPagePrefix = SpecialPage::getTitleFor( 'OpenIDXRDS' );
+
+		if ( $specialPagePrefix != "Special:OpenIDXRDS" ) {
+			$specialPagePrefix = "( {$specialPagePrefix} | Special:OpenIDXRDS )";
+		}
+
+		$relative = preg_replace( "!" . preg_quote( $specialPagePrefix, "!" ) . "/!", "", $relative );
+
 		# Can't have a pound-sign in the relative, since that's for fragments
 		if ( !preg_match( "#$pattern#", $relative, $matches ) ) {
 			return null;

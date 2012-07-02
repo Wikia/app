@@ -21,8 +21,6 @@ require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 $output_level = array_key_exists( 'quiet', $options ) ? 0 :
 				( array_key_exists( 'verbose', $options ) ? 2 : 1 );
 
-global $action; // global 'action' has been removed in MW 1.18, this is just to globalize it since this script overwrites the value and uses it below
-$action = $wgRequest->getVal('action');
 if ( array_key_exists( 'help', $options ) ) {
 	$action = 'help';
 } elseif ( array_key_exists( 'status', $options ) ) {
@@ -33,32 +31,10 @@ if ( array_key_exists( 'help', $options ) ) {
 	outputMessage( "\nCreating/updating concept caches. Use CTRL-C to abort.\n\n" );
 } elseif ( array_key_exists( 'delete', $options ) ) {
 	$action = 'delete';
-	require_once( "$IP/maintenance/counter.php" );
-	outputMessage( "\nDeleting concept caches. Use CTRL-C to abort.\n\n" );
-	$delay = 5;
-	if ( outputMessage( print "Waiting for $delay seconds ...  " ) ) {
-		// TODO
-		// Remove the following section and replace it with a simple
-		// wfCountDown as soon as we switch to MediaWiki 1.16.
-		// Currently, wfCountDown is only supported from
-		// revision 51650 (Jun 9 2009) onward.
-		if ( function_exists( 'wfCountDown' ) ) {
-			wfCountDown( $delay );
-		} else {
-			for ( $i = $delay; $i >= 0; $i-- ) {
-				if ( $i != $delay ) {
-					echo str_repeat( "\x08", strlen( $i + 1 ) );
-				}
-				echo $i;
-				flush();
-				if ( $i ) {
-					sleep( 1 );
-				}
-			}
-			echo "\n";
-		}
-		// Remove up to here and just uncomment the following line:
-		// wfCountDown( $delay );
+	outputMessage( "\nDeleting concept caches.\n\n" );
+	$delay = 9;
+	if ( outputMessage( "Abort with CTRL-C in the next $delay seconds ... " ) ) {
+		wfCountDown( $delay );
 	}
 } else {
 	$action = 'help';
@@ -130,11 +106,10 @@ $select_update = array_key_exists( 'update', $options );
 $select_old    = isset( $options['old'] ) ? intval( $options['old'] ) : false;
 
 if ( isset( $options['concept'] ) ) { // single concept mode
-	// 	$concept = SMWDataValueFactory::newTypeIDValue( '_wpg' );
-	// 	$concept->setValues( 'African_countries', SMW_NS_CONCEPT );
 	global $wgContLang;
 	$concept = Title::newFromText( $wgContLang->getNsText( SMW_NS_CONCEPT ) . ':' . $options['concept'] );
-	if ( $concept !== null ) {
+	
+	if ( !is_null( $concept ) ) {
 		doAction( $concept );
 	}
 } else { // iterate over concepts
@@ -143,17 +118,22 @@ if ( isset( $options['concept'] ) ) { // single concept mode
 	} else {
 		$start = 0;
 	}
+	
 	$end = $db->selectField( 'page', 'MAX(page_id)', false, 'SMW_refreshData' );
+	
 	if ( array_key_exists( 'e', $options ) ) {
 		$end = min( intval( $options['e'] ), $end );
 	}
+	
 	$num_lines = 0;
 
 	for ( $id = $start; $id <= $end; $id++ ) {
 		$title = Title::newFromID( $id );
-		if ( ( $title === null ) || ( $title->getNamespace() != SMW_NS_CONCEPT ) ) {
+		
+		if ( is_null( $title ) || ( $title->getNamespace() != SMW_NS_CONCEPT ) ) {
 			continue;
 		}
+		
 		$num_lines += doAction( $title, $num_lines );
 	}
 }

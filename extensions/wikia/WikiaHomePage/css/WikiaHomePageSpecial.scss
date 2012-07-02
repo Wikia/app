@@ -1,0 +1,12 @@
+.slot-forms {
+    overflow: hidden;
+    .wikis-in-slots {
+		float:left;
+		width: 450px;
+		label {
+			width: 140px;
+			float: left;
+			clear: left;
+		}
+	}
+}

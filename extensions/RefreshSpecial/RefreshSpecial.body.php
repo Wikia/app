@@ -25,7 +25,7 @@ class RefreshSpecial extends SpecialPage {
 	public function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest;
 
-		wfLoadExtensionMessages( 'RefreshSpecial' );
+
 
 		$wgOut->setPageTitle( wfMsg( 'refreshspecial-title' ) );
 
@@ -52,9 +52,9 @@ class RefreshSpecial extends SpecialPage {
 		$action = $wgRequest->getVal( 'action' );
 		if( 'success' == $action ) {
 			/* do something */
-		} else if( 'failure' == $action ) {
+		} elseif( 'failure' == $action ) {
 			$cSF->showForm( wfMsg('refreshspecial-fail') );
-		} else if( $wgRequest->wasPosted() && 'submit' == $action &&
+		} elseif( $wgRequest->wasPosted() && 'submit' == $action &&
 			$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
 			$cSF->doSubmit();
 		} else {
@@ -118,9 +118,10 @@ class RefreshSpecialForm {
 			$checked = '';
 			if ( $queryPage->isExpensive() ) {
 				$checked = 'checked="checked"';
+				$specialEsc = htmlspecialchars( $special );
 				$wgOut->addHTML("\t\t\t\t\t<li>
-						<input type=\"checkbox\" name=\"wpSpecial[]\" value=\"$special\" $checked />
-						<b>$special</b>
+						<input type=\"checkbox\" name=\"wpSpecial[]\" value=\"$specialEsc\" $checked />
+						<b>"  . htmlspecialchars( $specialObj->getDescription() ) . "</b>
 					</li>\n");
 			}
 		}
@@ -241,7 +242,7 @@ class RefreshSpecialForm {
 
 					# Wait for the slave to catch up
 					$slaveDB = wfGetDB( DB_SLAVE, array( 'QueryPage::recache', 'vslow' ) );
-					while( $slaveDB->getLag() > REFRESHSPECIAL_SLAVE_LAG_LIMIT ) {
+					while( wfGetLB()->safeGetLag( $slaveDB ) > REFRESHSPECIAL_SLAVE_LAG_LIMIT ) {
 						$wgOut->addHTML( wfMsg( 'refreshspecial-slave-lagged' ) . '<br />' );
 						sleep( REFRESHSPECIAL_SLAVE_LAG_SLEEP );
 					}

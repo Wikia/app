@@ -5,7 +5,7 @@
  *
  * @author David Pean <david.pean@wikia.com>
  *
- * @todo 
+ * @todo
  *
  */
 
@@ -59,7 +59,7 @@ class WikiaApiQueryMostCategories extends WikiaApiQuery {
 		extract($this->extractRequestParams());
 
 		$this->initCacheKey($lcache_key, __METHOD__);
-	
+
 		try {
 			#--- database instance
 			$db =& $this->getDB();
@@ -69,13 +69,13 @@ class WikiaApiQueryMostCategories extends WikiaApiQuery {
 				//throw new DBConnectionError($db, 'Connection error');
 				throw new WikiaApiQueryError(0);
 			}
-		
+
 			$this->addTables( array ("categorylinks" ) );
 			$this->addFields( array(
 				'cl_to',
 				'count(*) as cnt'
 				));
-					
+
 			#--- limit
 			if ( !empty($limit)  ) { //WikiaApiQuery::DEF_LIMIT
 				if ( !$this->isInt($limit) ) {
@@ -93,7 +93,7 @@ class WikiaApiQueryMostCategories extends WikiaApiQuery {
 				$this->addOption( "OFFSET", $offset );
 				$this->setCacheKey ($lcache_key, 'LO', $limit);
 			}
-			
+
 			#--- order by
 			$this->addOption( "ORDER BY", "cnt desc" );
 			#--- group by
@@ -107,7 +107,7 @@ class WikiaApiQueryMostCategories extends WikiaApiQuery {
 				while ($row = $db->fetchObject($res)) {
 					$data[$row->cl_to] = array(
 						"count"			=> $row->cnt,
-						"url"			=> Title::makeTitle( NS_CATEGORY, $row->cl_to)->escapeFullURL()
+						"url"			=> htmlspecialchars(Title::makeTitle( NS_CATEGORY, $row->cl_to)->getFullURL())
 					);
 					ApiResult :: setContent( $data[$row->cl_to], $row->cl_to);
 				}
@@ -116,7 +116,7 @@ class WikiaApiQueryMostCategories extends WikiaApiQuery {
 			} else {
 				// ... cached
 				$data = $cached;
-			}		
+			}
 		} catch (WikiaApiQueryError $e) {
 			// getText();
 		} catch (DBQueryError $e) {
@@ -141,20 +141,20 @@ class WikiaApiQueryMostCategories extends WikiaApiQuery {
 	}
 
 	/*
-	 * 
+	 *
 	 * Description's functions
-	 * 
-	 */ 
+	 *
+	 */
 	#---
 	protected function getQueryDescription() {
 		return 'Get Wikia pages by category';
 	}
 
 	/*
-	 * 
+	 *
 	 * Description's parameters
-	 * 
-	 */ 
+	 *
+	 */
 	#---
 	protected function getParamQueryDescription() {
 		return 	array (
@@ -163,23 +163,23 @@ class WikiaApiQueryMostCategories extends WikiaApiQuery {
 	}
 
 	/*
-	 * 
+	 *
 	 * Allowed parameters
-	 * 
-	 */ 
-	
+	 *
+	 */
+
 	#---
 	protected function getAllowedQueryParams() {
 		return array (
-			
+
 		);
-	} 
+	}
 
 	/*
-	 * 
+	 *
 	 * Examples
-	 * 
-	 */ 
+	 *
+	 */
 	#---
 	protected function getQueryExamples() {
 		return array (
@@ -189,10 +189,10 @@ class WikiaApiQueryMostCategories extends WikiaApiQuery {
 	}
 
 	/*
-	 * 
+	 *
 	 * Version
-	 * 
-	 */ 
+	 *
+	 */
 	#---
 	public function getVersion() {
 		return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $';

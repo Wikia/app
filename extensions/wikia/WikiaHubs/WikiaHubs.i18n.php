@@ -32,3 +32,25 @@ $messages['en'] = array(
 	'wikiahubs-error-invalid-article-url-length' => 'Article url requires at least 10 characters',
 	'wikiahubs-error-invalid-reason-length' => 'Comment must be between 1 and 140 characters',
 );
+
+
+$messages['de'] = array(
+	'wikiahubs-button-cancel' => 'Abbrechen',
+	'wikiahubs-button-close' => 'Schließen',
+	'wikiahubs-suggest-video-header' => 'Schlag ein Video vor',
+	'wikiahubs-suggest-video-submit-button' => 'Video vorschlagen',
+	'wikiahubs-suggest-video-what-video' => 'Welches Video möchtest du teilen?',
+	'wikiahubs-suggest-video-what-video-default-value' => 'Von YouTube, aus deinem Lieblingswiki, etc.',
+	'wikiahubs-suggest-video-which-wiki' => 'Aus welchem Wiki stammt dieses Video?',
+	'wikiahubs-suggest-video-which-wiki-default-value' => 'StarWars, Harry Potter, ...',
+	'wikiahubs-suggest-video-success' => 'Danke für deinen Vorschlag! Wir schauen ihn uns schnellstmöglich an. Schau bald wieder vorbei!',
+	'wikiahubs-error-invalid-video-url-length' => 'Die Video-URL muss mindestens 10 Zeichen lang sein.',
+	'wikiahubs-error-invalid-wikiname-length' => 'Der Wiki-Name muss mindestens 1 Zeichen lang sein.',
+	'wikiahubs-suggest-article-header' => 'Artikel vorschlagen',
+	'wikiahubs-suggest-article-submit-button' => 'Abschicken',
+	'wikiahubs-suggest-article-what-article' => 'Was möchtest du teilen?',
+	'wikiahubs-suggest-article-reason' => 'Warum ist das cool? (140 Zeichen maximal)',
+	'wikiahubs-suggest-article-success' => 'Danke für deinen Vorschlag! Wie schauen ihn uns schnellstmöglich an. Schau bald wieder vorbei!',
+	'wikiahubs-error-invalid-article-url-length' => 'Die Artikel-URL muss mindestens 10 Zeichen lang sein.',
+	'wikiahubs-error-invalid-reason-length' => 'Dein Kommentar muss zwischen 1 und 140 Zeichen lang sein.',
+);

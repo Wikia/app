@@ -6,6 +6,7 @@
  *
  * @author Behdarvandyani
  * @author GerardM
+ * @author Huji
  * @author Meno25
  */
 
@@ -25,8 +26,7 @@ $messages = array(
 'tog-editsection'             => 'امکان اصلاح یه قسمت زه راه لینکها',
 'tog-editsectiononrightclick' => 'امکان اصلاح یه قسمت زه راه راست کلیک کردن رو عنوان  اوقسمت- جاوااسکریپت',
 'tog-showtoc'                 => 'نشودادن فهرست محتوا سی صفحاتی که بیشتر زه سه سرخط دارن',
-'tog-rememberpassword'        => 'به حافظه کامپیوتر دادن نحوه ورودی خوم',
-'tog-editwidth'               => 'اصلاح جعبه یا کادری که عرضا پر وابیده',
+'tog-rememberpassword'        => 'به حافظه کامپیوتر دادن نحوه ورودی خوم (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'tog-watchcreations'          => 'اضاف کردن اوصفحاتی که خوم درست کردم به فهرست نمایشی',
 'tog-watchdefault'            => 'اضاف کردن اوصفحاتی که خوم اصلاح کردم به فهرست نمایشی',
 'tog-watchmoves'              => 'اضاف کردن صفحاتی که خوم جابجا کردم به فهرست نمایشی',
@@ -249,13 +249,12 @@ $1',
 'badtitletext'   => 'عنوان درخواستی نامعتبر، خالی، یا عنوانی بین زبانی یا بین‌ویکی‌ای با پیوند نادرسته
 و ممکنه دارای یک یا چند کاراکتر بوه که در عنوان مربوط نوا زش استفاده کنین',
 'viewsource'     => 'مشاهده منبع',
-'viewsourcefor'  => 'سی $1',
 'viewsourcetext' => 'ایسا ترین بوینین وکپی کنین منبع ای صفحه را:',
 
 # Login and logout pages
 'yourname'                => 'نام کاربر:',
 'yourpassword'            => 'رمز:',
-'remembermypassword'      => 'رمز اویدن به سیستم را دراین رایانه به خاطر بسپار',
+'remembermypassword'      => 'رمز اویدن به سیستم را دراین رایانه به خاطر بسپار (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'login'                   => 'اویدن به سیستم',
 'nav-login-createaccount' => 'اویدن به سیستم',
 'loginprompt'             => 'ایسا وا کوکی ها رافعال کنین سی اویدن به  {{SITENAME}}.',
@@ -271,7 +270,7 @@ $1',
 'loginsuccess'            => "''' ایسا اویدن به داخل سایت {{SITENAME}} بعنوان \"\$1\".'''",
 'nosuchuser'              => 'کاربری به ای نام وجود نداره "$1".
 حروف نام را چک کنین, یا [[Special:UserLogin/signup|درست کنین یه حساب کاربری تازه]].',
-'nosuchusershort'         => 'کاربری به ای نام وجود نداره"<nowiki>$1</nowiki>".
+'nosuchusershort'         => 'کاربری به ای نام وجود نداره"$1".
 حروف نام راچک کنین.',
 'nouserspecified'         => 'ایسا دارین یه نام کاربر ذکر اکنین.',
 'wrongpassword'           => 'رمز وارد وابیده درست نه.
@@ -292,7 +291,7 @@ $1',
 لطفا بعد از دریافت آن داخل سیستم بوین.',
 'eauthentsent'            => 'یه نامه الکترونیکی سی تایید نشانی پست الکترونیکی به نشانی مورنظر ارسال وابید. قبل زه یو که نامه دیگری قابل ارسال به این نشانی بوه، وا دستورهایی که در آن نامه اویده را جهت تأیید ای مساله که ای نشانی مال ایسانه اجرا کنین.',
 
-# Password reset dialog
+# Change password dialog
 'retypenew' => 'تایپ دوباره رمز:',
 
 # Edit page toolbar
@@ -307,8 +306,6 @@ $1',
 لینک خارجی',
 'headline_sample' => 'سرخط متن',
 'headline_tip'    => '2سرخط یکسان',
-'math_sample'     => 'فرمول نهادن ایچو',
-'math_tip'        => 'فرمول ریاضی (LaTeX)',
 'nowiki_sample'   => 'متن شکل نداده یافرمت نوابیده را ایچو بنین',
 'nowiki_tip'      => 'زه فرمت کردن یا شکل دادن ویکی چشم پوشی کن',
 'image_tip'       => 'فایل محاط وابید',
@@ -357,9 +354,6 @@ $1',
 
 ایر نه خوین نوشته‌هاتو بی‌رحمانه اصلاح بوه و به دلخواه ارسال بوه، ایچو نفرستن.<br />
 درضمن ایسادارین به ایما قول ادین که خودتو یونه نوشتین یا هونه زه یک منبع آزاد با مالکیت عمومی یا مثل هو ورداشتین. '''کارهای دارای کارهای دارای حق کپی رایت را بی‌اجازه نفرستین!'''',",
-'longpagewarning'            => "'''هشدار: ای صفحه $1 کیلوبایت طول داره؛
-بعضی زه مرورگرها ممکنه با اصلاح صفحات نزدیک به ۳۲ کیلوبایت یا طولانی‌تر زه آن مشکلاتی داشته بون.
-لطفاً درمورد خرد کردن ای صفحه به قسمت‌های کوچکتر فکر کنین.'''",
 'templatesused'              => 'قالبهای استفاده شده من ای صفحه:',
 'templatesusedpreview'       => 'قالبها  یا الگوهای استفاده وابیده در ای پیش نمایش:',
 'template-protected'         => '(تحت حمایت)',
@@ -557,14 +551,11 @@ $2',
 # Watchlist
 'watchlist'         => 'لیست پیگیریهای مو',
 'mywatchlist'       => 'لیست پیگیریهای مو',
-'watchlistfor'      => "(سی '''$1''')",
-'addedwatch'        => 'اضاف وابید به لیست پیگیری',
 'addedwatchtext'    => "صفحه «<nowiki>$1</nowiki>» به [[Special:Watchlist|لیست پی‌گیری‌های ]] ایسا
 اضاف وابید.
 تغییرات این صفحه و صفحه صحبت مر بوطه اش در آینده ایچو لیست ابوه. به‌علاوه، ای صفحه، سی واضح‌تر دیده وابیدن در [[Special:RecentChanges|فهرست تغییرات اخیر]] به شکل <b>سیاه</b> ایا.
 
 ایر بعدا خواستین ای  صفحه زه لیست پی‌گیریهاتو ورداشته بوه، رو «'''عدم پی‌گیری'''» در بالای صفحه کلیک کنین.",
-'removedwatch'      => 'زه لیست پیگیری حذف وابید',
 'removedwatchtext'  => 'آن صفحه"[[:$1]]" جابجا وابیده زه[[Special:لیست پیگیری|لیست پیگیری ایسا]].',
 'watch'             => 'پی‌گیری',
 'watchthispage'     => 'پیگیری ای صفحه',
@@ -582,9 +573,8 @@ $2',
 'confirmdeletetext'     => 'ایسا اخوین یه صفحه بلند با همه گزارش تاریخی هونه حذف کنین.
 لطفا کانفیرم یا تائید کنین که تمایل وقصد ای کار را دارین, وایسا دوین یا می دانید نتایج وآثار ای کار را, و ایسا انجام ادین ای کار را مطابق با [[{{MediaWiki:Policy-url}}|سیاست‌ها]].',
 'actioncomplete'        => 'عمل  مربوطه راکامل کن',
-'deletedtext'           => '"<nowiki>$1</nowiki>" حذف وابیده.
+'deletedtext'           => '"$1" حذف وابیده.
 بوین $2 سی ثبت حذف آخر.',
-'deletedarticle'        => 'حذف وابید "[[$1]]"',
 'dellogpage'            => 'نمایه _ حذف',
 'deletecomment'         => 'دلیل:',
 'deleteotherreason'     => 'دیه/دلیل اضافی:',
@@ -600,7 +590,7 @@ $2',
 'protectexpiry'               => 'سپری وابیده ها:',
 'protect_expiry_invalid'      => 'با سپری وابیدن وقت غیر معتبره.',
 'protect_expiry_old'          => 'سپری وابیدن وقت مربوط به گذشته.',
-'protect-text'                => "ایسا ممکنه بوینین وتغییر بدین سطح حمایت زه ای صفحه'''<nowiki>$1</nowiki>'''.",
+'protect-text'                => "ایسا ممکنه بوینین وتغییر بدین سطح حمایت زه ای صفحه'''$1'''.",
 'protect-locked-access'       => "حساب کاربری ایسا اجازه تغییر سطح حمایت ای صفحه را نداره.
 ای چونه تنظیمات جاری سی آن صفحه '''$1''':",
 'protect-cascadeon'           => 'ای صفحه  در حال حاضر حفاظت وحمایت وابیده چون که در {{PLURAL:$1|صفحه|صفحات}}
@@ -615,7 +605,7 @@ $2',
 'protect-expiring'            => 'سپری وابیده $1 (UTC)',
 'protect-cascade'             => 'حمایت صفحات دربرگیرنده در ای صفحه (cascading protection)',
 'protect-cantedit'            => 'ایسا نترین تغییر بدین سطوح حمایتی ای صفحه را, زیرا ایسا اجازه اصلاح آن را ندارین.',
-'protect-expiry-options'      => '۲ ساعت:2 hours,۱ روز:1 day,۳ روز:3 days,۱ هفته:1 week,۲ هفته:2 weeks,۱ ماه:1 month,۳ ماه:3 months,۶ ماه:6 months,۱ سال:1 year,بی‌پایان:infinite',
+'protect-expiry-options'      => '۱ ساعت:1 hour,۱ روز:1 day,۱ هفته:1 week,۲ هفته:2 weeks,۱ ماه:1 month,۳ ماه:3 months,۶ ماه:6 months,۱ سال:1 year,بی‌نهایت:infinite',
 'restriction-type'            => 'اجازه:',
 'restriction-level'           => 'سطح محدودیت:',
 
@@ -652,7 +642,7 @@ $2',
 
 # Block/unblock
 'blockip'       => 'بستن کاربر',
-'ipboptions'    => '۲ ساعت:2 hours,۱ روز:1 day,۳ روز:3 days,۱ هفته:1 week,۲ هفته:2 weeks,۱ ماه:1 month,۳ ماه:3 months,۶ ماه:6 months,۱ سال:1 year,بی‌پایان:infinite',
+'ipboptions'    => '۲ ساعت:2 hours,۱ روز:1 day,۳ روز:3 days,۱ هفته:1 week,۲ هفته:2 weeks,۱ ماه:1 month,۳ ماه:3 months,۶ ماه:6 months,۱ سال:1 year,بی‌نهایت:infinite',
 'ipblocklist'   => 'آدرسهای  آی پی وکاربران بسته وابیدند',
 'blocklink'     => 'بسته بوه !',
 'unblocklink'   => 'باز بوه',
@@ -696,7 +686,6 @@ $2',
 لطفا به صورت دستی آنها را ترکیب کنین.'''",
 'movedto'          => 'جابجا وابید به',
 'movetalk'         => 'جابجایی صفحه صحبت مربوطه',
-'1movedto2'        => '[[$1]] جابجا وابید به[[$2]]',
 'movelogpage'      => 'نمایه جابجایی',
 'movereason'       => 'دلیل:',
 'revertmove'       => 'واگردانی',
@@ -773,11 +762,10 @@ $2',
 'nextdiff'     => 'تفاوت بعدی→',
 
 # Media information
-'file-info-size'       => '($1 × $2 پیکسل, اندازه فایل: $3, MIME نوع: $4)',
-'file-nohires'         => '<small>قابلیت تفکیک بالاتری در دسترس نه.</small>',
-'svg-long-desc'        => '(SVG فایل, تقریبا$1 × $2 پیکسل, اندازه فایل: $3)',
-'show-big-image'       => 'تصویر با قابلیت تفکیک کامل',
-'show-big-image-thumb' => '<کوچیک>اندازه پیش نمایش: $1 × $2 پیکسلها</کوچیک>',
+'file-info-size' => '$1 × $2 پیکسل, اندازه فایل: $3, MIME نوع: $4',
+'file-nohires'   => 'قابلیت تفکیک بالاتری در دسترس نه.',
+'svg-long-desc'  => 'SVG فایل, تقریبا$1 × $2 پیکسل, اندازه فایل: $3',
+'show-big-image' => 'تصویر با قابلیت تفکیک کامل',
 
 # Special:NewFiles
 'newimages' => 'گالری فایلهای تازه',
@@ -801,11 +789,17 @@ $2',
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength',
+* focallength
+* artist
+* copyright
+* imagedescription
+* gpslatitude
+* gpslongitude
+* gpsaltitude',
 
 # External editor support
 'edit-externally'      => 'اصلاح ای صفحه با استفاده زه یه ویرایشگر خارجی',
-'edit-externally-help' => ' سی اطلاعات بیشتر [http://www.mediawiki.org/wiki/Manual:External_editors راهنمایی‌های تنظیمات] اصلاح کننده خارجی را بوینین.',
+'edit-externally-help' => ' سی اطلاعات بیشتر [//www.mediawiki.org/wiki/Manual:External_editors راهنمایی‌های تنظیمات] اصلاح کننده خارجی را بوینین.',
 
 # 'all' in various places, this might be different for inflected languages
 'watchlistall2' => 'همه',

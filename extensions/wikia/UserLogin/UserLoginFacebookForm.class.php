@@ -17,7 +17,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 	private $fbUserId;
 	private $fbFeedOptions;
 
-	function __construct(WebRequest $request, $par = '') {
+	function __construct( WebRequest $request ) {
 		$this->fbUserId = $request->getVal('fbuserid');
 		$this->fbFeedOptions = explode(',', $request->getVal('fbfeedoptions', ''));
 
@@ -28,8 +28,11 @@ class UserLoginFacebookForm extends UserLoginForm {
 
 		// add an email to the request and pass it to the underlying class
 		$request->setVal('email', $resp->getVal('email', false));
+		if ( $request->getVal( 'type', '' ) == '' ) {
+			$request->setVal( 'type', 'signup' );
+		}
 
-		parent::__construct($request, $par);
+		parent::__construct( $request );
 	}
 
 	function addNewAccount() {

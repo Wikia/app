@@ -16,6 +16,7 @@ abstract class VideoHandler extends BitmapHandler {
 	protected $videoId = '';
 	protected $title = '';
 	protected $metadata = null;
+	protected $maxHeight = false;
 	protected $thumbnailImage = null;
 	protected static $aspectRatio = 1.7777778;
 	protected static $classnameSuffix = 'VideoHandler';
@@ -61,7 +62,11 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return string Embed HTML
 	 */
 	abstract function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false );
-	
+
+	public function setMaxHeight( $height ) {
+		$this->maxHeight = $height;
+	}
+
 	public function getProviderDetailUrl() {
 		return str_replace('$1', $this->videoId, static::$providerDetailUrlTemplate);
 	}
@@ -104,12 +109,27 @@ abstract class VideoHandler extends BitmapHandler {
 		return $ratio;
 	}
 
-	function getHeight( $width ){
-		return (integer) (
+	function getHeight( &$width ){
+
+		$finalHeight =  (
 			( $width / $this->getAspectRatio() ) +
 			( 2 * $this->addExtraBorder( $width ) )
 		);
+
+		if ( (int) $this->maxHeight > 0 && (int) $finalHeight > $this->maxHeight ) {
+			$finalHeight = $this->maxHeight;
+			$width = $this->adjustWidth( $finalHeight );
+		}
+
+		return (integer) $finalHeight;
 	}
+
+	function adjustWidth( $height ) {
+
+		$width = $height * $this->getAspectRatio();
+		return (int) $width;
+	}
+
 
 	/**
 	 * Get metadata. Connects with Api if metadata is not in database.

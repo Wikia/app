@@ -9,8 +9,6 @@ $wgExtensionMessagesFiles["PreventBlanking"] = "$LW/Hook_PreventBlanking.i18n.ph
 
 function stopBlanking($editor, $text, $section, &$error )
 {
-	wfLoadExtensionMessages("PreventBlanking");
-
 	GLOBAL $wgUser;
 	if(( trim($text) == "" ) && (!$wgUser->isAllowed( 'allowedtoblank' )))
 	{

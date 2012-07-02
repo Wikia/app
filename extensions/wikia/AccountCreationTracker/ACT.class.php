@@ -214,7 +214,7 @@ class AccountCreationTracker extends WikiaObject {
 
 	private function deleteArticle( $article, $reason, $suppress = false, &$error = '' ) {
 		global $wgUser;
-		$id = $article->getTitle()->getArticleID( GAID_FOR_UPDATE );
+		$id = $article->getTitle()->getArticleID( Title::GAID_FOR_UPDATE );
 
 		if ( wfRunHooks( 'ArticleDelete', array( &$article, &$wgUser, &$reason, &$error ) ) ) {
 			if ( $article->doDeleteArticle( $reason, $suppress, $id ) ) {

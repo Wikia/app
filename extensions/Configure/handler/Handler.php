@@ -46,12 +46,13 @@ interface ConfigureHandler {
 	 * Save a new configuration
 	 *
 	 * @param $settings array of settings
+	 * @param $user User doing the modification
 	 * @param $wiki String: wiki name or true for all
 	 * @param $ts 14 chars timestamps
 	 * @param $reason String: Reason, as given by the user.
 	 * @return bool true on success
 	 */
-	public function saveNewSettings( $settings, $wiki, $ts = false, $reason = '' );
+	public function saveNewSettings( $settings, User $user, $wiki, $ts = false, $reason = '' );
 
 	/**
 	 * List all archived versions

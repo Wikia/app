@@ -9,7 +9,10 @@
  */
 class QuickArrayReader {
 	var $vars = array();
-	
+
+	/**
+	 * @param $string string
+	 */
 	function __construct( $string ) {
 		$scalarTypes = array(
 			T_LNUMBER => true,
@@ -36,30 +39,30 @@ class QuickArrayReader {
 				// '$messages' -> 'messages'
 				$varname = trim( substr( $tokens[$i][1], 1 ) );
 				$varindex = null;
-				
+
 				while( isset($skipTypes[$tokens[++$i][0]] ) );
-				
+
 				if( $tokens[$i] === '[' ) {
 					while( isset($skipTypes[$tokens[++$i][0]] ) );
-					
+
 					if( isset($scalarTypes[$tokens[$i][0]] ) ) {
 						$varindex = $this->parseScalar( $tokens[$i] );
 					} else {
 						throw $this->except( $tokens[$i], 'scalar index' );
 					}
 					while( isset($skipTypes[$tokens[++$i][0]] ) );
-					
+
 					if( $tokens[$i] !== ']' ) {
 						throw $this->except( $tokens[$i], ']' );
 					}
 					while( isset($skipTypes[$tokens[++$i][0]] ) );
 				}
-				
+
 				if( $tokens[$i] !== '=' ) {
 					throw $this->except( $tokens[$i], '=' );
 				}
 				while( isset($skipTypes[$tokens[++$i][0]] ) );
-				
+
 				if( isset($scalarTypes[$tokens[$i][0]] ) ) {
 					$buildval = $this->parseScalar( $tokens[$i] );
 				} elseif( $tokens[$i][0] === T_ARRAY ) {
@@ -70,7 +73,7 @@ class QuickArrayReader {
 					$buildval = array();
 					do {
 						while( isset($skipTypes[$tokens[++$i][0]] ) );
-						
+
 						if( $tokens[$i] === ')' ) {
 							break;
 						}
@@ -78,18 +81,18 @@ class QuickArrayReader {
 							$key = $this->parseScalar( $tokens[$i] );
 						}
 						while( isset($skipTypes[$tokens[++$i][0]] ) );
-						
+
 						if( $tokens[$i][0] !== T_DOUBLE_ARROW ) {
 							throw $this->except( $tokens[$i], '=>' );
 						}
 						while( isset($skipTypes[$tokens[++$i][0]] ) );
-						
+
 						if( isset($scalarTypes[$tokens[$i][0]] ) ) {
 							$val = $this->parseScalar( $tokens[$i] );
 						}
 						@$buildval[$key] = $val;
 						while( isset($skipTypes[$tokens[++$i][0]] ) );
-						
+
 						if( $tokens[$i] === ',' ) {
 							continue;
 						} elseif( $tokens[$i] === ')' ) {
@@ -117,7 +120,12 @@ class QuickArrayReader {
 			}
 		}
 	}
-	
+
+	/**
+	 * @param $got string
+	 * @param $expected string
+	 * @return Exception
+	 */
 	private function except( $got, $expected ) {
 		if( is_array( $got ) ) {
 			$got = token_name( $got[0] ) . " ('" . $got[1] . "')";
@@ -129,6 +137,9 @@ class QuickArrayReader {
 
 	/**
 	 * Parse a scalar value in PHP
+	 *
+	 * @param $token string
+	 *
 	 * @return mixed Parsed value
 	 */
 	function parseScalar( $token ) {
@@ -160,7 +171,11 @@ class QuickArrayReader {
 		// be useful for a change
 		return $str;
 	}
-	
+
+	/**
+	 * @param $varname string
+	 * @return null|string
+	 */
 	function getVar( $varname ) {
 		if( isset( $this->vars[$varname] ) ) {
 			return $this->vars[$varname];

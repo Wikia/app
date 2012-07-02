@@ -1,1 +1,5 @@
-Work in progress on a replacement for maintenance/dumpHTML.php, to work with MW 1.11+.
+Dumps out the HTML for the Wiki. Includes the actual URL of the image (which
+is ordinarily searched-for among the configured Repos).
+
+Was originally maintenance/dumpHTML.php, but was moved into an extension.
+

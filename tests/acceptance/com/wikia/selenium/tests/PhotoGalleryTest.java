@@ -31,7 +31,7 @@ public class PhotoGalleryTest extends BaseTest {
 		editArticle(getTestArticleTitle(), (new Date()).toString() + " Wikia automated test for PhotoGallery\n\n===Gallery===\n\n<gallery>\nchopin10-hp.gif\n</gallery>\n\n===Slideshow===\n\n<gallery type=\"slideshow\">\nchopin10-hp.gif|'''Caption'''\n</gallery>");
 	}
 
-	@Test(groups={"CI","verified","envProduction","fileUpload"})
+	@Test(groups={"CI","legacy","envProduction","fileUpload"})
 	public void testSlideshowPopOut() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -60,7 +60,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertFalse(session().isElementPresent("//div[@class='wikia-slideshow-popout-images-wrapper']"));
 	}
 
-	@Test(groups={"CI","verified","envProduction","fileUpload"})
+	@Test(groups={"CI","legacy","envProduction","fileUpload"})
 	public void testSlideshowInViewMode() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -97,7 +97,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@class='wikia-slideshow clearfix floatright']/div/div/ul/li/span[@class='wikia-slideshow-link-overlay']"));
 	}
 
-	@Test(groups={"CI","verified","envProduction","fileUpload"})
+	@Test(groups={"CI","legacy","envProduction","fileUpload"})
 	public void testGalleryInViewMode() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -131,7 +131,7 @@ public class PhotoGalleryTest extends BaseTest {
 		assertTrue(session().isElementPresent("//span[2 and @class='wikia-gallery-item']//img[contains(@title,'Test link')]"));
 	}
 
-	@Test(groups={"CI","verified","envProduction","fileUpload"})
+	@Test(groups={"CI","legacy","envProduction","fileUpload"})
 	public void testImageUpload() throws Exception {
 		loginAsStaff();
 
@@ -268,7 +268,7 @@ public class PhotoGalleryTest extends BaseTest {
 	}
 	*/
 
-	@Test(groups={"CI","verified","envProduction","fileUpload"})
+	@Test(groups={"CI","legacy","envProduction","fileUpload"})
 	public void testEditInRTE() throws Exception {
 		loginAsStaff();
 
@@ -322,7 +322,7 @@ public class PhotoGalleryTest extends BaseTest {
 	}
 
 	//@author Marooned
-	@Test(groups={"CI","verified","envProduction","fileUpload"})
+	@Test(groups={"CI","legacy","envProduction","fileUpload"})
 	public void testFeedGallery() throws Exception {
 		loginAsStaff();
 
@@ -366,7 +366,7 @@ public class PhotoGalleryTest extends BaseTest {
 	}
 
 	//@author Marooned
-	@Test(groups={"CI","verified","envProduction","fileUpload"})
+	@Test(groups={"CI","legacy","envProduction","fileUpload"})
 	public void testFeedSlideshow() throws Exception {
 		loginAsStaff();
 

@@ -15,7 +15,7 @@ public class NotificationsModuleTest extends BaseTest {
 	}
 
 	// BugId: 17557
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testTalkPageNotificationSend() throws Exception {
 		loginAsRegular();
 		openAndWait("index.php?title=User_talk:" + getTestConfig().getString("ci.user.wikiastaff.username") + "&action=edit&section=new");
@@ -28,7 +28,7 @@ public class NotificationsModuleTest extends BaseTest {
 	}
 
 	// BugId: 17557
-	@Test(groups={"CI", "verified"},dependsOnMethods={"testTalkPageNotificationSend"})
+	@Test(groups={"CI", "legacy"},dependsOnMethods={"testTalkPageNotificationSend"})
 	public void testTalkPageNotificationReceive() throws Exception {
 		// check messages for staff
 		loginAsStaff();
@@ -47,7 +47,7 @@ public class NotificationsModuleTest extends BaseTest {
 		assertFalse(session().isElementPresent(xPath));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testCommunityMessageNotificationSend() throws Exception {
 		loginAsStaff();
 
@@ -55,7 +55,7 @@ public class NotificationsModuleTest extends BaseTest {
 		editArticle("Mediawiki:community-corner", "Community message test --~~~~");
 	}
 
-	@Test(groups={"CI", "verified"},dependsOnMethods={"testCommunityMessageNotificationSend"})
+	@Test(groups={"CI", "legacy"},dependsOnMethods={"testCommunityMessageNotificationSend"})
 	public void testCommunityMessageNotificationReceive() throws Exception {
 		loginAsRegular();
 	
@@ -75,7 +75,7 @@ public class NotificationsModuleTest extends BaseTest {
 		assertFalse(session().isElementPresent(xPath));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testPreferencesAndLogoutConfirmation() throws Exception {
 		loginAsRegular();
 
@@ -100,7 +100,7 @@ public class NotificationsModuleTest extends BaseTest {
 		assertTrue(session().isElementPresent(xPath));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testPageActionsConfirmation() throws Exception {
 		String date = (new Date()).toString().replace(" ", "_");
 		String pageA = "User:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/Foo" + date;

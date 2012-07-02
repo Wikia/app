@@ -16,9 +16,10 @@ class IgnVideoHandler extends VideoHandler {
 		$height =  $this->getHeight( $width );
 		$metadata = $this->getMetadata(true);
 		$videoUrl = $metadata['videoUrl'];
+		$autoplay = $autoplay ? '?qs_autoplay=true' : '';
 
 		$code = <<<EOT
-		<object id="vid_{$this->videoId}" class="ign-videoplayer" width="$width" height="$height" data="http://media.ign.com/ev/prod/embed.swf" type="application/x-shockwave-flash"><param name="movie" value="http://media.ign.com/ev/prod/embed.swf" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="bgcolor" value="#000000" /><param name="flashvars" value="url={$videoUrl}"/></object>
+		<object id="vid_{$this->videoId}" class="ign-videoplayer" width="$width" height="$height" data="http://media.ign.com/ev/prod/embed.swf" type="application/x-shockwave-flash"><param name="movie" value="http://media.ign.com/ev/prod/embed.swf" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="bgcolor" value="#000000" /><param name="flashvars" value="url={$videoUrl}{$autoplay}"/></object>
 EOT;
 		return $code;
 	}

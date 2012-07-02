@@ -30,7 +30,14 @@ $messages['ar'] = array(
 	'svgzoom-desc' => 'يضيف إمكانيات قص وتقريب لميدياويكي عند رؤية ملفات SVG',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'svgzoom-desc' => 'Amiesta a MediaWiki les capacidaes de desplazamientu y ampliación al ver ficheros SVG',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -65,6 +72,13 @@ $messages['dsb'] = array(
 	'svgzoom-desc' => 'Pśidawa MediaWiki zawjertowańske a skalěrowańske zamóžnosći za zwobraznjowanje SVG-datajow',
 );
 
+/** Greek (Ελληνικά)
+ * @author Dada
+ */
+$messages['el'] = array(
+	'svgzoom-desc' => 'Προσθέτει pan και zoom δυνατότητες στο MediaWiki κατά την προβολή αρχείων SVG',
+);
+
 /** Spanish (Español)
  * @author Translationista
  */
@@ -74,9 +88,10 @@ $messages['es'] = array(
 
 /** Finnish (Suomi)
  * @author Centerlink
+ * @author Crt
  */
 $messages['fi'] = array(
-	'svgzoom-desc' => 'Lisää vierityksen ja loitonnus/lähennysominaisuudet MediaWikiin katsottaessa SVG-tiedostoja',
+	'svgzoom-desc' => 'Lisää vierityksen ja loitonnus/lähennysominaisuudet MediaWikiin katsottaessa SVG-tiedostoja.',
 );
 
 /** French (Français)
@@ -136,6 +151,13 @@ $messages['id'] = array(
 	'svgzoom-desc' => 'Menambahkan fitur untuk memutar dan memperbesar berkas SVG pada MediaWiki',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'svgzoom-desc' => 'Aggiunge funzionalità di zoom e panoramica a MediaWiki per la visualizzazione di file SVG',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -143,7 +165,14 @@ $messages['ja'] = array(
 	'svgzoom-desc' => 'SVG ファイルの表示にパンとズームの機能を加える',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'svgzoom-desc' => '미디어위키에 SVG 파일을 볼 때 이동 및 확대 기능을 추가',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -164,6 +193,20 @@ $messages['mk'] = array(
 	'svgzoom-desc' => 'Додава можност на МедијаВики за приближување и влечење при гледање на SVG податотеки',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'svgzoom-desc' => 'Menambahkan kebolehan menyorot dan mengezum pada MediaWiki apabila menggunakan fail SVG',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'svgzoom-desc' => 'Legger til panorerings- og zoomegenskaper i MediaWiki når SVG-filer vises',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -178,13 +221,6 @@ $messages['nn'] = array(
 	'svgzoom-desc' => 'Legg til panorerings- og zoomfunksjonar i MediaWiki for SVG-filer',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'svgzoom-desc' => 'Legger til panorerings- og zoomegenskaper i MediaWiki når SVG-filer vises',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -196,7 +232,7 @@ $messages['oc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'svgzoom-desc' => 'Dodaje do MediaWiki przy podglądzie plików w formacie SVG funkcjonalność przewijania i przybliżania',
+	'svgzoom-desc' => 'Dodaje do MediaWiki przy podglądzie plików w formacie SVG funkcję przewijania i przybliżania',
 );
 
 /** Piedmontese (Piemontèis)
@@ -241,11 +277,33 @@ $messages['sk'] = array(
 	'svgzoom-desc' => 'Pridáva možnosti posúvania a približovania do prehliadača SVG súborov MediaWiki',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'svgzoom-desc' => 'Додаје могућност панорамирања и увећавања SVG датотека',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
+ * @author Rancher
+ */
+$messages['sr-el'] = array(
+	'svgzoom-desc' => 'Dodaje mogućnost panoramiranja i uvećavanja SVG datoteka',
+);
+
 /** Swedish (Svenska)
  * @author Per
  */
 $messages['sv'] = array(
 	'svgzoom-desc' => 'Lägger till panorerings och zoom-funktioner i MediaWiki när SVG filer visas',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'svgzoom-desc' => 'Nagdaragdag ng mga kakayahang pag-ikot na pan at paglapit-tutok sa MediaWiki kapag tinatanaw ang mga talaksang SVG',
 );
 
 /** Turkish (Türkçe)
@@ -255,10 +313,31 @@ $messages['tr'] = array(
 	'svgzoom-desc' => "MediaWiki'ye SVG dosyalarını görüntülerken kaydırma ve yakınlaşma imkanı ekler",
 );
 
+/** Ukrainian (Українська)
+ * @author Alex Khimich
+ */
+$messages['uk'] = array(
+	'svgzoom-desc' => 'Додає можливості панорамування та збільшення в MediaWiki при перегляді SVG файлів',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
 $messages['vi'] = array(
 	'svgzoom-desc' => 'Bổ sung chức năng chuyển động và thu phóng tập tin SVG trong MediaWiki',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Chenxiaoqino
+ */
+$messages['zh-hans'] = array(
+	'svgzoom-desc' => '让MediaWiki查看SVG文件时具有移动和缩放功能',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'svgzoom-desc' => '讓 MediaWiki 檢視 SVG 檔案時具有移動和縮放功能',
 );
 

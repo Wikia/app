@@ -10,8 +10,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Javascript',
 	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
-	'description'    => 'Adds uniwiki.js to each page containing Javascript code shared between Uniwiki extensions',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Javascript',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Uniwiki_Javascript',
 	'descriptionmsg' => 'javascript-desc',
 );
 

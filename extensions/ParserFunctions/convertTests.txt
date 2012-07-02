@@ -1,0 +1,231 @@
+!! functionhooks
+convert
+!! endfunctionhooks
+
+!! test
+Simple conversion
+!! input
+{{#convert: 10 m | km }}
+!!result
+<p>0.01 kilometres
+</p>
+!! end
+
+!! test
+Position and formatting of numbers and units
+!! input
+*{{#convert: 10  m | km }}
+*{{#convert: 10m | km }}
+*{{#convert: 10 km | m }}
+*{{#convert: 10-km | m }}
+*{{#convert: 10E2 km | m }}
+*{{#convert: 10E-2 km | m }}
+*{{#convert: 10.0E2 km | m }}
+*{{#convert: 10.0E2.5 km | m }}
+!! result
+<ul><li>0.01  kilometres
+</li><li>0.01kilometres
+</li><li>10,000 metres
+</li><li>10,000-metres
+</li><li>1,000,000 metres
+</li><li>100 metres
+</li><li>1,000,000 metres
+</li><li>1,000,000.5,000 metres
+</li></ul>
+
+!! end
+
+!! test
+Precision 1
+!! input
+*{{#convert: 10 m | km }}
+*{{#convert: 11 m | km }}
+*{{#convert: 12 m | km }}
+*{{#convert: 13 m | km }}
+*{{#convert: 14 m | km }}
+*{{#convert: 15 m | km }}
+*{{#convert: 16 m | km }}
+*{{#convert: 17 m | km }}
+*{{#convert: 18 m | km }}
+*{{#convert: 19 m | km }}
+*{{#convert: 20 m | km }}
+!! result
+<ul><li>0.01 kilometres
+</li><li>0.011 kilometres
+</li><li>0.012 kilometres
+</li><li>0.013 kilometres
+</li><li>0.014 kilometres
+</li><li>0.015 kilometres
+</li><li>0.016 kilometres
+</li><li>0.017 kilometres
+</li><li>0.018 kilometres
+</li><li>0.019 kilometres
+</li><li>0.02 kilometres
+</li></ul>
+
+!! end
+
+!! test
+Precision 2
+!! input
+*{{#convert: 10.0 m | km }}
+*{{#convert: 10.1 m | km }}
+*{{#convert: 10.2 m | km }}
+*{{#convert: 10.3 m | km }}
+*{{#convert: 10.4 m | km }}
+*{{#convert: 10.5 m | km }}
+*{{#convert: 10.6 m | km }}
+*{{#convert: 10.7 m | km }}
+!! result
+<ul><li>0.0100 kilometres
+</li><li>0.0101 kilometres
+</li><li>0.0102 kilometres
+</li><li>0.0103 kilometres
+</li><li>0.0104 kilometres
+</li><li>0.0105 kilometres
+</li><li>0.0106 kilometres
+</li><li>0.0107 kilometres
+</li></ul>
+
+!! end
+
+!! test
+String interpolation
+!! input
+{{#convert: 25, 26, 27, 28, 29, and 30 km }}
+!! result
+<p>25,000, 26,000, 27,000, 28,000, 29,000, and 30,000 metres
+</p>
+!! end
+
+!! test
+Precision 3
+!! input
+{{#convert: 25, 26, 27, 28, 29, and 30 miles }}
+!! result
+<p>40,000, 42,000, 43,000, 45,000, 47,000, and 50,000 metres
+</p>
+!! end
+
+!! test
+Precision 4
+!! input
+{{#convert:35000, 35E3, 35.0E3, 350E2, 3.500E4, 35000E0, 350000E-1 m | km }}
+!! result
+<p>35, 35, 35.0, 35, 35.00, 35, 35 kilometres
+</p>
+!! end
+
+!! test
+#sourceunit
+!!input
+*{{#convert: 25 | #sourceunit = km }}
+*{{#convert: 25 | #sourceunit=km }}
+*{{#convert: 25 | #sourceunit = km | #sourceunit = mm }}
+*{{#convert: 25 | #sourceunit = km | cm }}
+!! result
+<ul><li>25,000 metres
+</li><li>25,000 metres
+</li><li>0.025 metres
+</li><li>2,500,000 centimetres
+</li></ul>
+
+!! end
+
+!! test
+Precision overrides
+!!input
+*{{#convert: 1 mi | #dp = 0 }}
+*{{#convert: 1 mi | #dp=1 }}
+*{{#convert: 1 mi | #dp = -2 }}
+*{{#convert: 1 mi | #dp = 5 }}
+*{{#convert: 1 mi | #dp = -8 }}
+*{{#convert: 1 mi | #sf = 0 }}
+*{{#convert: 1 mi | #sf=1 }}
+*{{#convert: 1 mi | #sf = 3 }}
+*{{#convert: 1 mi | #sf = 5 }}
+*{{#convert: 1 mi | #sf = -8 }}
+!! result
+<ul><li>1,609 metres
+</li><li>1,609.3 metres
+</li><li>1,600 metres
+</li><li>1,609.344 metres
+</li><li>0 metres
+</li><li>2,000 metres
+</li><li>2,000 metres
+</li><li>1,610 metres
+</li><li>1,609.3 metres
+</li><li>2,000 metres
+</li></ul>
+
+!! end
+
+
+!! test
+Errors
+!! input
+*{{#convert: 25 | km }}
+*{{#convert: 25 foobars | mi }}
+*{{#convert: 25 mi | #sourceunit = foobar }}
+*{{#convert: 25 km | s }}
+*{{#convert: 25 km/Pa | m/Pa }}
+*{{#convert: 25 km/s/l }}
+*{{#convert: 25 km/m3 }}
+!! result
+<ul><li><strong class="error">Error: No source unit given.</strong>
+</li><li><strong class="error">Error: Unknown unit "foobars".</strong>
+</li><li><strong class="error">Error: Unknown unit "foobar".</strong>
+</li><li><strong class="error">Error: Cannot convert between units of "length" and "time".</strong>
+</li><li><strong class="error">Error: Invalid compound unit "length/pressure".</strong>
+</li><li><strong class="error">Error: Cannot parse double compound units like "km/s/l".</strong>
+</li><li><strong class="error">Error: Invalid compound unit "length/volume".</strong>
+</li></ul>
+
+!! end
+
+
+!! test
+#sourceunit = #targetunit
+!! input
+*{{#convert: 25 km | #targetunit = #sourceunit }}
+*{{#convert: 25 km | #sourceunit = #targetunit }}
+!! result
+<ul><li>25 kilometres
+</li><li>25 kilometres
+</li></ul>
+
+!! end
+
+!! test
+#language
+!! input
+*{{#convert: 10  m | km | #language=en-gb }}
+*{{#convert: 10m | km | #language = en }}
+*{{#convert: 10 km | m |#language=en}}
+*{{#convert: 10 Pa | mmHg | #language = fr }}
+!! result
+<ul><li>0.01  kilometres
+</li><li>0.01kilometers
+</li><li>10,000 meters
+</li><li>0.1 millimètre de mercure
+</li></ul>
+
+!! end
+
+!! test
+Case sensitivity
+!! input
+*{{#convert: 10 mm | m }}
+*{{#convert: 10 Mm | m }}
+*{{#convert: 10 km | Mm }}
+*{{#convert: 10 Pa | mmHg }}
+*{{#convert: 10 pa | mmHg  }}
+!! result
+<ul><li>0.01 metres
+</li><li>10,000,000 metres
+</li><li>0.01 megametres
+</li><li>0.1 millimetres of mercury
+</li><li><strong class="error">Error: Unknown unit "pa".</strong>
+</li></ul>
+
+!! end

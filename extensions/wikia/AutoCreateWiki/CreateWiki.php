@@ -158,8 +158,6 @@ class CreateWiki {
 			"{$this->mIP}/extensions/wikia/AjaxPoll/patch-create-poll_info.sql",
 			"{$this->mIP}/extensions/wikia/AjaxPoll/patch-create-poll_vote.sql",
 			"{$this->mIP}/extensions/wikia/ImageServing/sql/table.sql",
-			"{$this->mIP}/extensions/wikia/PageLayoutBuilder/sql/plb_field.sql",
-			"{$this->mIP}/extensions/wikia/PageLayoutBuilder/sql/plb_page.sql"
 		);
 
 		/**
@@ -467,6 +465,11 @@ class CreateWiki {
 		/**
 		 * show congratulation message
 		 */
+		 
+		/**
+		 * Unset database from mNewWiki, because database objects cannot be serialized from MW1.19
+		 */
+		unset($this->mNewWiki->dbw);
 
 		/**
 		 * inform task manager

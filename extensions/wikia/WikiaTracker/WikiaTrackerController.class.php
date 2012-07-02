@@ -3,12 +3,26 @@
 class WikiaTrackerController extends WikiaController {
 
 	/**
+	 * Implementation of new WikiaSkinTopScripts hook since we want it to be 
+	 * at the top of the page
+	 *
+	 * @param array $vars global variables list
+	 * @param string $scripts inline JS scripts
+	 * @return boolean return true
+	 */
+	public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
+		$this->onMakeGlobalVariablesScript($vars);
+		$this->onSkinGetHeadScripts($scripts);
+		return true;
+	}
+
+	/**
 	 * Add global JS variables with GoogleAnalytics and WikiaTracker queues
 	 *
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
-	public function onMakeGlobalVariablesScript($vars) {
+	public function onMakeGlobalVariablesScript(&$vars) {
 		$vars['wikiaTrackingSpool'] = array();
 	
 	
@@ -31,7 +45,7 @@ class WikiaTrackerController extends WikiaController {
 	 * @param string $scripts inline JS scripts
 	 * @return boolean return true
 	 */
-	public function onSkinGetHeadScripts($scripts) {
+	public function onSkinGetHeadScripts(&$scripts) {
 		// used for page load time tracking
 		$scripts .= "\n\n<!-- Used for page load time tracking -->\n" .
 			Html::inlineScript("var wgNow = new Date();") .	"\n";
@@ -52,7 +66,7 @@ JS
 
 		global $wgJsMimeType, $wgExtensionsPath;
 
-		$scripts .= "\n<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiaTracker/js/analytics_prod.js\"></script>";
+		$scripts .= "\n<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiaTracker/js/analytics_prod.js?v=5\"></script>";
 
 		return true;
 	}

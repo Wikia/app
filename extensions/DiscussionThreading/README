@@ -1,5 +1,8 @@
 '[[Extension:DiscussionThreading|See formal extension description]]
 == Release Notes ==
+* 1.4 Can set brackets and technical upgrade
+** Uses [[MediaWiki:Editsection-brackets]] to set the brackets for links
+** Upgraded to use the [[Manual:Hooks/DoEditSectionLink | DoEditSectionLink]] hook instead of the deprecated [[Manual:Hooks/EditSectionLink | EditSectionLink]] hook, although for backward compatibility, the extension will automatically still use the [[Manual:Hooks/EditSectionLink | EditSectionLink]] hook for sites using MW < 1.14.
 * 1.3 - Added Dan Brice's code that will automatically insert indentation (so comment body is appropriately indented) and patches for compatibility with MW Versions Prior to 1.11
 * 1.2 - [[User:siebrand|siebrand]] updated to use current extension standards (THANKS!)
 * 1.1 - Updated to be forward compatible with release 1.11, bug fix

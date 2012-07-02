@@ -15,38 +15,30 @@
  */
 class SMWConceptValue extends SMWDataValue {
 
-	protected $m_concept = ''; // XML-safe, HTML-safe, Wiki-compatible concept expression (query string)
-	protected $m_docu = '';    // text description of concept, can only be set by special function "setvalues"
-
 	protected function parseUserValue( $value ) {
-		$this->clear();
-		// this function is normally not used for this class, not created from user input directly
-		$this->m_concept = smwfXMLContentEncode( $value );
-		if ( $this->m_caption === false ) {
-			$this->m_caption = $value;
-		}
-		return true;
+		throw new Exception( 'Concepts cannot be initialised from user-provided strings. This should not happen.' );
 	}
 
-	protected function parseDBkeys( $args ) {
-		$this->m_concept = $args[0];
-		$this->m_caption = $args[0]; // is this useful?
-		$this->m_docu = $args[1] ? smwfXMLContentEncode( $args[1] ):'';
-		$this->m_queryfeatures = $args[2];
-		$this->m_size = $args[3];
-		$this->m_depth = $args[4];
+	/**
+	 * @see SMWDataValue::loadDataItem()
+	 * @param $dataitem SMWDataItem
+	 * @return boolean
+	 */
+	protected function loadDataItem( SMWDataItem $dataItem ) {
+		if ( $dataItem->getDIType() == SMWDataItem::TYPE_CONCEPT ) {
+			$this->m_dataitem = $dataItem;
+			$this->m_caption = $dataItem->getConceptQuery(); // probably useless
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	protected function clear() {
-		$this->m_concept = '';
-		$this->m_docu = '';
-		$this->m_queryfeatures = 0;
-		$this->m_size = - 1;
-		$this->m_depth = - 1;
+		$this->m_dataitem = new SMWDIConcept( '', '', 0, -1, -1, $this->m_typeid );
 	}
 
 	public function getShortWikiText( $linked = null ) {
-		$this->unstub();
 		return $this->m_caption;
 	}
 
@@ -70,42 +62,26 @@ class SMWConceptValue extends SMWDataValue {
 		}
 	}
 
-	public function getDBkeys() {
-		$this->unstub();
-		return array( $this->m_concept, $this->m_docu, $this->m_queryfeatures, $this->m_size, $this->m_depth );
-	}
-
-	public function getSignature() {
-		return 'tllnnn';
-	}
-
-	public function getValueIndex() {
-		return 0;
-	}
-
-	public function getLabelIndex() {
-		return 0;
-	}
-
 	public function getWikiValue() {
-		$this->unstub();
-		return str_replace( array( '&lt;', '&gt;', '&amp;' ), array( '<', '>', '&' ), $this->m_concept );
+		/// This should not be used for anything. This class does not support wiki values.
+		return str_replace( array( '&lt;', '&gt;', '&amp;' ), array( '<', '>', '&' ), $this->m_dataitem->getConceptQuery() );
 	}
 
-	public function getExportData() {
+	/**
+	 * Function not called anywhere but code kept for reference before
+	 * migrating it to SMWExporter.
+	 */
+	private function getExportData() {
 		if ( $this->isValid() ) {
 			$qp = new SMWQueryParser();
-			$desc = $qp->getQueryDescription( $this->getWikiValue() );
+			$desc = $qp->getQueryDescription( str_replace( array( '&lt;', '&gt;', '&amp;' ), array( '<', '>', '&' ), $this->m_dataitem->getConceptQuery() ) );
 			$exact = true;
 			$owldesc = $this->descriptionToExpData( $desc, $exact );
-			if ( $owldesc === false ) {
-				$element = new SMWExpData( SMWExporter::getSpecialElement( 'owl', 'Thing' ) );
-			}
 			if ( !$exact ) {
 				$result = new SMWExpData( new SMWExpResource( '' ) );
-				$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'rdf', 'type' ),
-				                                new SMWExpData( SMWExporter::getSpecialElement( 'owl', 'Class' ) ) );
-				$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'rdfs', 'subClassOf' ), $owldesc );
+				$result->addPropertyObjectValue( SMWExporter::getSpecialNsResource( 'rdf', 'type' ),
+				                                new SMWExpData( SMWExporter::getSpecialNsResource( 'owl', 'Class' ) ) );
+				$result->addPropertyObjectValue( SMWExporter::getSpecialNsResource( 'rdfs', 'subClassOf' ), $owldesc );
 				return $result;
 			} else {
 				return $owldesc;
@@ -118,18 +94,18 @@ class SMWConceptValue extends SMWDataValue {
 	public function descriptionToExpData( $desc, &$exact ) {
 		if ( ( $desc instanceof SMWConjunction ) || ( $desc instanceof SMWDisjunction ) ) {
 			$result = new SMWExpData( new SMWExpResource( '' ) );
-			$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'rdf', 'type' ),
-			                                new SMWExpData( SMWExporter::getSpecialElement( 'owl', 'Class' ) ) );
+			$result->addPropertyObjectValue( SMWExporter::getSpecialNsResource( 'rdf', 'type' ),
+			                                new SMWExpData( SMWExporter::getSpecialNsResource( 'owl', 'Class' ) ) );
 			$elements = array();
 			foreach ( $desc->getDescriptions() as $subdesc ) {
 				$element = $this->descriptionToExpData( $subdesc, $exact );
 				if ( $element === false ) {
-					$element = new SMWExpData( SMWExporter::getSpecialElement( 'owl', 'Thing' ) );
+					$element = new SMWExpData( SMWExporter::getSpecialNsResource( 'owl', 'Thing' ) );
 				}
 				$elements[] = $element;
 			}
 			$prop = ( $desc instanceof SMWConjunction ) ? 'intersectionOf':'unionOf';
-			$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'owl', $prop ),
+			$result->addPropertyObjectValue( SMWExporter::getSpecialNsResource( 'owl', $prop ),
 			                                SMWExpData::makeCollection( $elements ) );
 		} elseif ( $desc instanceof SMWClassDescription ) {
 			if ( count( $desc->getCategories() ) == 1 ) { // single category
@@ -140,39 +116,39 @@ class SMWConceptValue extends SMWDataValue {
 				foreach ( $desc->getCategories() as $cat ) {
 					$elements[] = new SMWExpData( SMWExporter::getResourceElement( $cat ) ); ;
 				}
-				$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'owl', 'unionOf' ),
+				$result->addPropertyObjectValue( SMWExporter::getSpecialNsResource( 'owl', 'unionOf' ),
 				                                SMWExpData::makeCollection( $elements ) );
 			}
-			$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'rdf', 'type' ),
-			                                new SMWExpData( SMWExporter::getSpecialElement( 'owl', 'Class' ) ) );
+			$result->addPropertyObjectValue( SMWExporter::getSpecialNsResource( 'rdf', 'type' ),
+			                                new SMWExpData( SMWExporter::getSpecialNsResource( 'owl', 'Class' ) ) );
 		} elseif ( $desc instanceof SMWConceptDescription ) {
 			$result = new SMWExpData( SMWExporter::getResourceElement( $desc->getConcept() ) );
 		} elseif ( $desc instanceof SMWSomeProperty ) {
 			$result = new SMWExpData( new SMWExpResource( '' ) );
-			$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'rdf', 'type' ),
-			                                new SMWExpData( SMWExporter::getSpecialElement( 'owl', 'Restriction' ) ) );
-			$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'owl', 'onProperty' ),
+			$result->addPropertyObjectValue( SMWExporter::getSpecialNsResource( 'rdf', 'type' ),
+			                                new SMWExpData( SMWExporter::getSpecialNsResource( 'owl', 'Restriction' ) ) );
+			$result->addPropertyObjectValue( SMWExporter::getSpecialNsResource( 'owl', 'onProperty' ),
 			                                new SMWExpData( SMWExporter::getResourceElement( $desc->getProperty() ) ) );
 			$subdata = $this->descriptionToExpData( $desc->getDescription(), $exact );
 			if ( ( $desc->getDescription() instanceof SMWValueDescription ) &&
 			     ( $desc->getDescription()->getComparator() == SMW_CMP_EQ ) ) {
-				$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'owl', 'hasValue' ), $subdata );
+				$result->addPropertyObjectValue( SMWExporter::getSpecialNsResource( 'owl', 'hasValue' ), $subdata );
 			} else {
 				if ( $subdata === false ) {
 					$owltype = SMWExporter::getOWLPropertyType( $desc->getProperty()->getPropertyTypeID() );
 					if ( $owltype == 'ObjectProperty' ) {
-						$subdata = new SMWExpData( SMWExporter::getSpecialElement( 'owl', 'Thing' ) );
+						$subdata = new SMWExpData( SMWExporter::getSpecialNsResource( 'owl', 'Thing' ) );
 					} elseif ( $owltype == 'DatatypeProperty' ) {
-						$subdata = new SMWExpData( SMWExporter::getSpecialElement( 'rdfs', 'Literal' ) );
+						$subdata = new SMWExpData( SMWExporter::getSpecialNsResource( 'rdfs', 'Literal' ) );
 					} else { // no restrictions at all with annotation properties ...
-						return new SMWExpData( SMWExporter::getSpecialElement( 'owl', 'Thing' ) );
+						return new SMWExpData( SMWExporter::getSpecialNsResource( 'owl', 'Thing' ) );
 					}
 				}
-				$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'owl', 'someValuesFrom' ), $subdata );
+				$result->addPropertyObjectValue( SMWExporter::getSpecialNsResource( 'owl', 'someValuesFrom' ), $subdata );
 			}
 		} elseif ( $desc instanceof SMWValueDescription ) {
 			if ( $desc->getComparator() == SMW_CMP_EQ ) {
-				$result = $desc->getDataValue()->getExportData();
+				$result = SMWExporter::getDataItemExpElement( $desc->getDataItem() );
 			} else { // alas, OWL cannot represent <= and >= ...
 				$exact = false;
 				$result = false;
@@ -188,37 +164,27 @@ class SMWConceptValue extends SMWDataValue {
 
 	/// Return the concept's defining text (in SMW query syntax)
 	public function getConceptText() {
-		$this->unstub();
-		return $this->m_concept;
+		return $this->m_dataitem->getConceptQuery();
 	}
 
 	/// Return the optional concept documentation.
 	public function getDocu() {
-		$this->unstub();
-		return $this->m_docu;
+		return $this->m_dataitem->getDocumentation();
 	}
 
 	/// Return the concept's size (a metric used to estimate computation complexity).
 	public function getSize() {
-		$this->unstub();
-		return $this->m_size;
+		return $this->m_dataitem->getSize();
 	}
 
 	/// Return the concept's depth (a metric used to estimate computation complexity).
 	public function getDepth() {
-		$this->unstub();
-		return $this->m_depth;
+		return $this->m_dataitem->getDepth();
 	}
 
 	/// Return the concept's query feature bit field (a metric used to estimate computation complexity).
 	public function getQueryFeatures() {
-		$this->unstub();
-		return $this->m_queryfeatures;
-	}
-
-	/// @deprecated Use setDBkeys(). This method will vanish before SMW 1.6
-	public function setValues( $concept, $docu, $queryfeatures, $size, $depth ) {
-		$this->setDBkeys( array( $concept, $docu, $queryfeatures, $size, $depth ) );
+		return $this->m_dataitem->getQueryFeatures();
 	}
 
 }

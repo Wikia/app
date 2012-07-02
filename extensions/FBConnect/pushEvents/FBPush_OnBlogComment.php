@@ -5,9 +5,6 @@
  * Pushes an item to Facebook News Feed when the user comments on a blog post.
  */
 
-global $wgExtensionMessagesFiles;
-$pushDir = dirname(__FILE__) . '/';
-
 class FBPush_OnBlogComment extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnBlogComment'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
 	static $messageName = 'fbconnect-msg-OnBlogComment';
@@ -21,13 +18,6 @@ class FBPush_OnBlogComment extends FBConnectPushEvent {
 		wfProfileOut(__METHOD__);
 	}
 	
-	public function loadMsg() {
-		wfProfileIn(__METHOD__);
-				
-		wfLoadExtensionMessages('FBPush_OnBlogComment');
-		
-		wfProfileOut(__METHOD__);
-	}
 	
 	public static function articleEdit(&$article, &$user, $text, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
 		global $wgContentNamespaces, $wgSitename;

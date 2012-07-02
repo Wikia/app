@@ -72,7 +72,7 @@ class ScribeProducer {
 	private function send_log() {
 		wfProfileIn( __METHOD__ );
 		try {
-			$data = Wikia::json_encode( array(
+			$data = json_encode( array(
 					'cityId'		=> $this->mCityId,
 					'pageId'		=> $this->mPageId,
 					'revId'			=> $this->mRevId,
@@ -117,7 +117,7 @@ class ScribeProducer {
 			}
 			
 			if ( empty($revId) ) {
-				$revId = $oArticle->getTitle()->getLatestRevID(GAID_FOR_UPDATE);
+				$revId = $oArticle->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE);
 			}
 			
 			# article
@@ -353,10 +353,10 @@ class ScribeProducer {
 			}
 			
 			if ( empty($pageId) || $pageId < 0 ) {
-				$pageId = $oTitle->getArticleID( GAID_FOR_UPDATE );
+				$pageId = $oTitle->getArticleID( Title::GAID_FOR_UPDATE );
 			}
 			
-			$revId = $oTitle->getLatestRevID(GAID_FOR_UPDATE);
+			$revId = $oTitle->getLatestRevID(Title::GAID_FOR_UPDATE);
 			if ( $revId > 0 && $pageId > 0 ) {
 				$oScribeProducer = new ScribeProducer( 'undelete', $pageId, $revId );
 				if ( is_object( $oScribeProducer ) ) {

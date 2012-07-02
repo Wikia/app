@@ -3,7 +3,8 @@
 /**
  * Installation script for the DidYouMean extension
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Andrew Dunbar <hippytrail@gmail.com>
  * @copyright © 2007 Andrew Dunbar
  * @licence Copyright holder allows use of the code for any purpose
@@ -26,36 +27,15 @@ if( is_file( $maint . '/commandLine.inc' ) ) {
 	}
 }
 
-# Set up some other paths
-$sql = dirname( __FILE__ ) . '/didyoumean.sql';
-
-# Whine if we don't have appropriate credentials to hand
-if( !isset( $wgDBadminuser ) || !isset( $wgDBadminpassword ) ) {
-	echo( "No superuser credentials could be found. Please provide the details\n" );
-	echo( "of a user with appropriate permissions to update the database. See\n" );
-	echo( "AdminSettings.sample for more details.\n\n" );
-	die( 1 );
-}
-
-# Get a connection
-$dbclass = $wgDBtype == 'MySql'
-			? 'Database'
-			: 'Database' . ucfirst( strtolower( $wgDBtype ) );
-$dbc = new $dbclass;
-$dba = $dbc->newFromParams( $wgDBserver, $wgDBadminuser, $wgDBadminpassword, $wgDBname, 1 );
-
-# Check we're connected
-if( !$dba->isOpen() ) {
-	echo( "A connection to the database could not be established.\n\n" );
-	die( 1 );
-}
+$dba = wfGetDB( DB_MASTER );
 
 # Do nothing if the tables exist
 if( $dba->tableExists( 'dympage' ) || $dba->tableExists( 'dymnorm' ) ) {
 	echo( "The tables already exist. No action was taken.\n" );
 } else {
-	if( $wgDBtype == 'postgres' )
-		$sql = dirname( __FILE__ ) . '/didyoumean.pg.sql';
+	$sql = $dba->getType() == 'postgres' ?
+		dirname( __FILE__ ) . '/didyoumean.pg.sql' :
+		dirname( __FILE__ ) . '/didyoumean.sql';
 	echo( "Sourcing: $sql\n" );
 	$res = $dba->sourceFile( $sql );
 	echo( "Result: $res\n" );
@@ -68,12 +48,12 @@ if( $dba->tableExists( 'dympage' ) || $dba->tableExists( 'dymnorm' ) ) {
 			'page',
 			array ( 'page_title', 'page_id' ),
 			array (
-				'page_namespace=0',
-				'page_is_redirect=0'
+				'page_namespace' => 0,
+				'page_is_redirect' => 0
 			)
 		);
 
-		while( $row = $dba->fetchObject( $result ) ) {
+		foreach ( $result as $row ) {
 			#echo "$row->page_title\n";
 
 			$norm = wfDymNormalise($row->page_title);
@@ -93,8 +73,5 @@ if( $dba->tableExists( 'dympage' ) || $dba->tableExists( 'dymnorm' ) ) {
 		$dba->freeResult( $result );
 	}
 }
-# Close the connection
-$dba->close();
+
 echo( "\n" );
-
-

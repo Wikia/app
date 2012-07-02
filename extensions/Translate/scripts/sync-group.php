@@ -3,14 +3,16 @@
  * Command line script to import/update source messages and translations into the wiki database.
  *
  * @author Niklas Laxström
- * @copyright Copyright © 2007-2010, Niklas Laxström
+ * @author Siebrand Mazeland
+ * @copyright Copyright © 2007-2012, Niklas Laxström
+ * @copyright Copyright © 2009-2012, Siebrand Mazeland
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @file
  */
 
 /// @cond
 
-$optionsWithArgs = array( 'group', 'lang', 'start', 'end' );
+$optionsWithArgs = array( 'group', 'groupprefix', 'lang', 'start', 'end' );
 require( dirname( __FILE__ ) . '/cli.inc' );
 
 # Override the memory limit for wfShellExec, 100 MB seems to be too little for svn
@@ -19,14 +21,16 @@ $wgMaxShellMemory = 1024 * 200;
 function showUsage() {
 	STDERR( <<<EOT
 Options:
-	--group	comma separated list of group ids or *
-	--lang	comma separated list of language codes or *
-	--norc	do not add entries to recent changes table
-	--help	this help
-	--noask	skip all conflicts
-	--start	start of the last export (changes in wiki after this will conflict)
-	--end	end of the last export (changes in source before this wont conflict)
-	--nocolor	without colours
+  --group       Comma separated list of group IDs
+  --groupprefix Prefix of group IDs to be exported message groups (cannot use
+                group)
+  --lang        Comma separated list of language codes or *
+  --norc        Do not add entries to recent changes table
+  --help        This help message
+  --noask       Skip all conflicts
+  --start       Start of the last export (changes in wiki after will conflict)
+  --end         End of the last export (changes in source after will conflict)
+  --nocolor     Without colours
 EOT
 );
 	exit( 1 );
@@ -36,22 +40,43 @@ if ( isset( $options['help'] ) ) {
 	showUsage();
 }
 
-if ( !isset( $options['group'] ) ) {
-	STDERR( "ESG1: Message group id must be supplied with group parameter." );
+if ( !isset( $options['group'] ) && !isset( $options['groupprefix'] ) ) {
+	STDERR( "ESG1: Message group id must be supplied with group or groupprefix parameter." );
 	exit( 1 );
 }
 
-$group = MessageGroups::getGroup( $options['group'] );
-if ( $group === null ) {
-	if ( $options['group'] === '*' ) {
-		$mg = MessageGroups::singleton();
-		$groups = $mg->getGroups();
-	} else {
-		STDERR( "ESG2: Invalid message group was given." );
-		exit( 1 );
+$groups = array();
+
+// @todo FIXME: Code duplication with export.php
+if ( isset( $options['group'] ) ) {
+	// Explode parameter
+	$groupIds = explode( ',', trim( $options['group'] ) );
+
+	// Get groups and add groups to array
+	foreach ( $groupIds as $groupId ) {
+		$group = MessageGroups::getGroup( $groupId );
+
+		if ( $group !== null ) {
+			$groups[$groupId] = $group;
+		} else {
+			STDERR( "Invalid group $groupId" );
+		}
 	}
 } else {
-	$groups = array( $group );
+	// Apparently using option groupprefix. Find groups that match.
+	$allGroups = MessageGroups::singleton()->getGroups();
+
+	// Add matching groups to groups array.
+	foreach ( $allGroups as $groupId => $messageGroup ) {
+		if ( strpos( $groupId, $options['groupprefix'] ) === 0 && !$messageGroup->isMeta() ) {
+			$groups[$groupId] = $messageGroup;
+		}
+	}
+}
+
+if ( !count( $groups ) ) {
+	STDERR( "ESG2: No valid message groups identified." );
+	exit( 1 );
 }
 
 if ( !isset( $options['lang'] ) || strval( $options['lang'] ) === '' ) {
@@ -247,6 +272,7 @@ class ChangeSyncer {
 				$wikiDate = 'Unknown';
 			}
 
+			// TODO: $startDate is unused
 			if ( $startTs ) {
 				$startTs = wfTimestamp( TS_UNIX, $startTs );
 				$startDate = $wgLang->sprintfDate( $iso, wfTimestamp( TS_MW, $startTs ) );
@@ -254,6 +280,7 @@ class ChangeSyncer {
 				$startDate = 'Unknown';
 			}
 
+			// TODO: $endDate is unused
 			if ( $endTs ) {
 				$endTs = wfTimestamp( TS_UNIX, $endTs );
 				$endDate = $wgLang->sprintfDate( $iso, wfTimestamp( TS_MW, $endTs ) );
@@ -361,29 +388,8 @@ class ChangeSyncer {
 	}
 
 	/**
-	 * Initialises FuzzyBot if necessary.
-	 * @return \type{User}
-	 */
-	public function getImportUser() {
-		static $user = null;
-
-		if ( $user === null ) {
-			global $wgTranslateFuzzyBotName;
-
-			$user = User::newFromName( $wgTranslateFuzzyBotName );
-
-			if ( !$user->isLoggedIn() ) {
-				STDOUT( "Creating user $wgTranslateFuzzyBotName" );
-				$user->addToDatabase();
-			}
-		}
-
-		return $user;
-	}
-
-	/**
 	 * Does the actual edit.
-	 * @param $title \type{Title}
+	 * @param $title Title
 	 * @param $translation \string
 	 * @param $comment \string Edit summary.
 	 */
@@ -391,7 +397,7 @@ class ChangeSyncer {
 		global $wgUser;
 
 		$old = $wgUser;
-		$wgUser = $this->getImportUser();
+		$wgUser = FuzzyBot::getUser();
 
 		$flags = EDIT_FORCE_BOT;
 		if ( $this->norc ) {

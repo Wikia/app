@@ -483,7 +483,7 @@ $messages['fr'] = array(
 	'wikiaquiz-game-mute' => 'Muet',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1563,33 +1563,6 @@ $messages['te'] = array(
 	'wikiaquiz-game-cadence-1' => 'వెళ్ళు!',
 	'wikiaquiz-game-next-button' => 'తర్వాతి ప్రశ్న',
 	'wikiaquiz-game-continue-button' => 'కొనసాగించు',
-);
-
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
-	'wikiaquiz-desc' => 'Nagbibigay ng isang maginhawang paraan upang lumikha at mamahala ng mga pagsusulit',
-	'wikiaquiz-createquiz-headline' => 'Lumikha ng Pagsusulit',
-	'wikiaquiz-editquiz-headline' => 'Baguhin ang Pagsusulit',
-	'wikiaquiz-createquizarticle-headline' => 'Likhain ang Tanong at mga Sagot sa Pagsusulit',
-	'wikiaquiz-editquizarticle-headline' => 'Baguhin ang Tanong at mga Sagot sa Pagsusulit',
-	'wikiaquiz-title-label' => 'Pamagat',
-	'wikiaquiz-titlescreentext-label' => 'Teksto ng pamagat ng panooran',
-	'wikiaquiz-fbrecommendationtext-label' => 'Paglalarawan sa pagrerekomenda ng Facebook',
-	'wikiaquiz-moreinfolinks-label' => 'Mas marami pang mga kawing na pangkabatiran',
-	'wikiaquiz-moreinfoarticle-label' => 'Artikulo',
-	'wikiaquiz-moreinfolinktext-label' => 'Tekso ng Kawing',
-	'wikiaquiz-question-label' => 'Katanungan',
-	'wikiaquiz-image-label' => 'Larawan (maaaring wala)',
-	'wikiaquiz-video-label' => 'Bidyo (maaaring wala, humahalili sa Larawan)',
-	'wikiaquiz-explanation-label' => 'Paliwanag sa kasagutan (maaaring wala)',
-	'wikiaquiz-quiz-label' => 'Pagsusulit',
-	'wikiaquiz-questions-label' => 'Mga Katanungan',
-	'wikiaquiz-answers-label' => 'Mga Kasagutan',
-	'wikiaquiz-answer-label' => 'Kasagutan',
-	'wikiaquiz-correct-label' => 'Tama?',
-	'wikiaquiz-addnewitem-label' => 'Magdagdag ng bagong bagay',
 );
 
 /** Ukrainian (українська)

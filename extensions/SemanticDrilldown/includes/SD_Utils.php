@@ -5,9 +5,33 @@
  * @author Yaron Koren
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 class SDUtils {
+
+	/**
+	 * Helper function to handle getPropertyValues() in both SMW 1.6
+	 * and earlier versions.
+	 * 
+	 * @param SMWStore $store
+	 * @param string $pageName
+	 * @param integer $pageNamespace
+	 * @param string $propID
+	 * @param null|SMWRequestOptions $requestOptions
+	 * 
+	 * @return array of SMWDataItem
+	 */
+	public static function getSMWPropertyValues( SMWStore $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
+		// SMWDIProperty was added in SMW 1.6
+		if ( class_exists( 'SMWDIProperty' ) ) {
+			$pageName = str_replace( ' ', '_', $pageName );
+			$page = new SMWDIWikiPage( $pageName, $pageNamespace, null );
+			$property = new SMWDIProperty( $propID );
+			return $store->getPropertyValues( $page, $property, $requestOptions );
+		} else {
+			$title = Title::makeTitleSafe( $pageNamespace, $pageName );
+			$property = SMWPropertyValue::makeProperty( $propID );
+			return $store->getPropertyValues( $title, $property, $requestOptions );
+		}
+	}
 
 	/**
 	 * Gets a list of the names of all categories in the wiki that aren't
@@ -55,6 +79,49 @@ class SDUtils {
 	}
 
 	/**
+	 * Gets the list of names of only those categories in the wiki
+	 * that have a __SHOWINDRILLDOWN__ declaration on their page.
+	 */
+	static function getOnlyExplicitlyShownCategories() {
+		$shown_cats = array();
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+			array( 'p' => 'page', 'pp' => 'page_props' ),
+			'p.page_title',
+			array(
+				'p.page_namespace' => NS_CATEGORY,
+				'pp.pp_propname' => 'showindrilldown',
+				'pp.pp_value' => 'y'
+			),
+			'SDUtils::getOnlyExplicitlyShownCategories',
+			array( 'ORDER BY' => 'p.page_title' ),
+			array( 'pp' => array( 'JOIN', 'p.page_id = pp.pp_page' ) )
+		);
+
+		while ( $row = $dbr->fetchRow( $res ) ) {
+			$shown_cats[] = str_replace( '_', ' ', $row[0] );
+		}
+		$dbr->freeResult( $res );
+
+		return $shown_cats;
+	}
+
+	/**
+	 * Returns the list of categories that will show up in the
+	 * header/sidebar of the 'BrowseData' special page.
+	 */
+	public static function getCategoriesForBrowsing() {
+		global $sdgHideCategoriesByDefault;
+
+		if ( $sdgHideCategoriesByDefault ) {
+			return self::getOnlyExplicitlyShownCategories();
+		} else {
+			return self::getTopLevelCategories();
+		}
+	}
+
+	/**
 	 * Gets a list of the names of all properties in the wiki
 	 */
 	static function getSemanticProperties() {
@@ -66,11 +133,24 @@ class SDUtils {
 		$options->limit = 10000;
 		$used_properties = smwfGetStore()->getPropertiesSpecial( $options );
 		foreach ( $used_properties as $property ) {
-			$all_properties[] = $property[0]->getWikiValue();
+			if ( $property[0] instanceof SMWDIProperty ) {
+				// SMW 1.6+
+				$propName = $property[0]->getKey();
+				if ( $propName{0} != '_' ) {
+					$all_properties[] = str_replace( '_', ' ', $propName );
+				}
+			} else {
+				$all_properties[] = $property[0]->getWikiValue();
+			}
 		}
 		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial( $options );
 		foreach ( $unused_properties as $property ) {
-			$all_properties[] = $property->getWikiValue();
+			if ( $property instanceof SMWDIProperty ) {
+				// SMW 1.6+
+				$all_properties[] = str_replace( '_', ' ', $property->getKey() );
+			} else {
+				$all_properties[] = $property->getWikiValue();
+			}
 		}
 		// remove the special properties of Semantic Drilldown from this list...
 		global $sdgContLang;
@@ -110,18 +190,18 @@ class SDUtils {
 	/**
 	 * Generic static function - gets all the values that a specific page
 	 * points to with a specific property
-	 * ($special_prop and $prop represent the same value, depending on
-	 * whether we're using SMW 1.4 or an earlier version)
 	 */
 	static function getValuesForProperty( $subject, $subject_namespace, $special_prop ) {
 		$store = smwfGetStore();
-		$subject_title = Title::newFromText( $subject, $subject_namespace );
-		$property = SMWPropertyValue::makeProperty( $special_prop );
-		$res = $store->getPropertyValues( $subject_title, $property );
+		$res = self::getSMWPropertyValues( $store, $subject, $subject_namespace, $special_prop );
 		$values = array();
 		foreach ( $res as $prop_val ) {
 			// depends on version of SMW
-			if ( method_exists( $prop_val, 'getValueKey' ) ) {
+			if ( $prop_val instanceof SMWDIWikiPage ) {
+				$actual_val = $prop_val->getDBkey();
+			} elseif ( $prop_val instanceof SMWDIString ) {
+				$actual_val = $prop_val->getString();
+			} elseif ( method_exists( $prop_val, 'getValueKey' ) ) {
 				$actual_val = $prop_val->getValueKey();
 			} else {
 				$actual_val = $prop_val->getXSDValue();
@@ -136,9 +216,20 @@ class SDUtils {
 	 */
 	static function loadFiltersForCategory( $category ) {
 		$filters = array();
+		$filters_ps = array();
 		$filter_names = SDUtils::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_F' );
 		foreach ( $filter_names as $filter_name ) {
 			$filters[] = SDFilter::load( $filter_name );
+		}
+		// Read from the Page Schemas schema for this category, if
+		// it exists, and add any filters defined there.
+		if ( class_exists( 'PSSchema' ) ) {
+			$pageSchemaObj = new PSSchema( $category );
+			if ( $pageSchemaObj->isPSDefined() ) {
+				$filters_ps = SDFilter::loadAllFromPageSchema( $pageSchemaObj );
+				$result_filters = array_merge( $filters, $filters_ps );
+				return $result_filters;
+			}
 		}
 		return $filters;
 	}
@@ -162,7 +253,7 @@ class SDUtils {
 		}
 		$pages = array();
 		$subcategories = array();
-		$dbr = wfGetDB( DB_SLAVE  );
+		$dbr = wfGetDB( DB_SLAVE );
 		extract( $dbr->tableNames( 'page', 'categorylinks' ) );
 		$cat_ns = NS_CATEGORY;
 		$query_category = str_replace( ' ', '_', $category_name );
@@ -202,7 +293,8 @@ class SDUtils {
 		} elseif ( $month == 4 ) {
 			return wfMsg( 'april' );
 		} elseif ( $month == 5 ) {
-			return wfMsg( 'may' );
+			// Needed to avoid using 3-letter abbreviation
+			return wfMsg( 'may_long' );
 		} elseif ( $month == 6 ) {
 			return wfMsg( 'june' );
 		} elseif ( $month == 7 ) {
@@ -229,7 +321,7 @@ class SDUtils {
 			return 3;
 		} elseif ( $str == wfMsg( 'april' ) ) {
 			return 4;
-		} elseif ( $str == wfMsg( 'may' ) ) {
+		} elseif ( $str == wfMsg( 'may_long' ) ) {
 			return 5;
 		} elseif ( $str == wfMsg( 'june' ) ) {
 			return 6;
@@ -353,4 +445,18 @@ END;
 		return true;
 	}
 
+	public static function addToAdminLinks( &$admin_links_tree ) {
+		$browse_search_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_browsesearch' ) );
+		$sd_row = new ALRow( 'sd' );
+		$sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );
+		$sd_row->addItem( ALItem::newFromSpecialPage( 'Filters' ) );
+		$sd_row->addItem( ALItem::newFromSpecialPage( 'CreateFilter' ) );
+		$sd_name = wfMsg( 'specialpages-group-sd_group' );
+		$sd_docu_label = wfMsg( 'adminlinks_documentation', $sd_name );
+		$sd_row->addItem( AlItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
+
+		$browse_search_section->addRow( $sd_row );
+
+		return true;
+	}
 }

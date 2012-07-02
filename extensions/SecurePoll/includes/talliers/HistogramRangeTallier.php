@@ -57,7 +57,7 @@ class SecurePoll_HistogramRangeTallier extends SecurePoll_Tallier {
 		$labels = $ballot->getColumnLabels( $this->question );
 		$s = "<table class=\"securepoll-table\">\n" .
 			"<tr>\n" .
-			"<th>&nbsp;</th>\n";
+			"<th>&#160;</th>\n";
 		foreach ( $labels as $label ) {
 			$s .= Xml::element( 'th', array(), $label ) . "\n";
 		}
@@ -80,7 +80,7 @@ class SecurePoll_HistogramRangeTallier extends SecurePoll_Tallier {
 	}
 
 	function getTextResult() {
-		throw new MWException( __METHOD__.': not yet implemented' );
+		return $this->getHtmlResult();
 	}
 }
 

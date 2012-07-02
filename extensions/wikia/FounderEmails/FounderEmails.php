@@ -69,9 +69,6 @@ function wfFounderEmailsInit() {
 
 	$dir = dirname( __FILE__ ) . '/';
 
-	// load messages from file
-	wfLoadExtensionMessages( 'FounderEmails' );
-
 	/**
 	 * classes
 	 */

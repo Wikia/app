@@ -1,16 +1,15 @@
 <?php
 /**
  * Title Blacklist class
- * @author VasilievVV
- * @copyright © 2007 VasilievVV
+ * @author Victor Vasiliev
+ * @copyright © 2007-2010 Victor Vasiliev et al
  * @license GNU General Public License 2.0 or later
  * @file
  */
 
 //@{
 /**
- * @package MediaWiki
- * @subpackage Extensions
+ * @ingroup Extensions
  */
 
 /**
@@ -21,15 +20,28 @@ class TitleBlacklist {
 	const VERSION = 2;	//Blacklist format
 
 	/**
+	 * Get an instance of this class
+	 *
+	 * @return TitleBlacklist
+	 */
+	public static function singleton() {
+		static $instance = null;
+
+		if ( $instance === null ) {
+			$instance = new self;
+		}
+		return $instance;
+	}
+
+	/**
 	 * Load all configured blacklist sources
-         */
+	 */
 	public function load() {
 		global $wgTitleBlacklistSources, $wgMemc, $wgTitleBlacklistCaching;
 		wfProfileIn( __METHOD__ );
 		//Try to find something in the cache
 		$cachedBlacklist = $wgMemc->get( wfMemcKey( "title_blacklist_entries" ) );
 		if( is_array( $cachedBlacklist ) && count( $cachedBlacklist ) > 0 && ( $cachedBlacklist[0]->getFormatVersion() == self::VERSION ) ) {
-			
 			$this->mBlacklist = $cachedBlacklist;
 			wfProfileOut( __METHOD__ );
 			return;
@@ -47,7 +59,7 @@ class TitleBlacklist {
 
 	/**
 	 * Load all configured whitelist sources
-         */
+	 */
 	public function loadWhitelist() {
 		global $wgMemc, $wgTitleBlacklistCaching;
 		wfProfileIn( __METHOD__ );
@@ -67,7 +79,7 @@ class TitleBlacklist {
 	 *
 	 * @param $source A blacklist source from $wgTitleBlacklistSources
 	 * @return The content of the blacklist source as a string
-         */
+	 */
 	private static function getBlacklistText( $source ) {
 		if( !is_array( $source ) || count( $source ) <= 0 ) {
 			return '';	//Return empty string in error case
@@ -106,19 +118,18 @@ class TitleBlacklist {
 
 		return '';
 	}
-	
+
 	/**
 	 * Parse blacklist from a string
 	 *
 	 * @param $list Text of a blacklist source, as a string
 	 * @return An array of TitleBlacklistEntry entries
-         */
+	 */
 	public static function parseBlacklist( $list ) {
 		wfProfileIn( __METHOD__ );
 		$lines = preg_split( "/\r?\n/", $list );
 		$result = array();
-		foreach ( $lines as $line )
-		{
+		foreach ( $lines as $line ) {
 			$line = TitleBlacklistEntry :: newFromString( $line );
 			if ( $line ) {
 				$result[] = $line;
@@ -130,83 +141,100 @@ class TitleBlacklist {
 	}
 
 	/**
-	 * Check whether the blacklist restricts the current User from 
+	 * Check whether the blacklist restricts giver nuser
 	 * performing a specific action on the given Title
 	 *
 	 * @param $title Title to check
-	 * @param $action Action to check; 'edit' if unspecified
-	 * @return The corresponding TitleBlacklistEntry if blacklisted;
+	 * @param $user User to check
+	 * @param $action string Action to check; 'edit' if unspecified
+	 * @param $override bool If set to true, overrides work
+	 * @return TitleBlacklistEntry|false The corresponding TitleBlacklistEntry if blacklisted;
 	 *         otherwise FALSE
-         */
+	 */
+	public function userCannot( $title, $user, $action = 'edit', $override = true ) {
+		if( $override && self::userCanOverride( $user, $action ) ) {
+			return false;
+		} else {
+			return $this->isBlacklisted( $title, $action );
+		}
+	}
+
+	/**
+	 * Check whether the blacklist restricts
+	 * performing a specific action on the given Title
+	 *
+	 * @param $title Title to check
+	 * @param $action string Action to check; 'edit' if unspecified
+	 * @return TitleBlacklistEntry|false The corresponding TitleBlacklistEntry if blacklisted;
+	 *         otherwise FALSE
+	 */
 	public function isBlacklisted( $title, $action = 'edit' ) {
-		global $wgUser;
 		if( !($title instanceof Title) ) {
 			$title = Title::newFromText( $title );
 		}
 		$blacklist = $this->getBlacklist();
 		foreach ( $blacklist as $item ) {
-			if( !$item->userCan( $title, $wgUser, $action ) ) {
+			if( $item->matches( $title, $action ) ) {
 				if( $this->isWhitelisted( $title, $action ) ) {
 					return false;
 				}
-				return $item;
+				return $item; // "returning true"
 			}
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Check whether it has been explicitly whitelisted that the 
+	 * Check whether it has been explicitly whitelisted that the
 	 * current User may perform a specific action on the given Title
 	 *
 	 * @param $title Title to check
-	 * @param $action Action to check; 'edit' if unspecified
-	 * @return TRUE if whitelisted; otherwise FALSE
-         */
+	 * @param $action string Action to check; 'edit' if unspecified
+	 * @return bool TRUE if whitelisted; otherwise FALSE
+	 */
 	public function isWhitelisted( $title, $action = 'edit' ) {
-		global $wgUser;
 		if( !($title instanceof Title) ) {
 			$title = Title::newFromText( $title );
 		}
 		$whitelist = $this->getWhitelist();
 		foreach( $whitelist as $item ) {
-			if( !$item->userCan( $title, $wgUser, $action ) ) {
+			if( $item->matches( $title, $action ) ) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Get the current blacklist
 	 *
 	 * @return Array of TitleBlacklistEntry items
-         */
+	 */
 	public function getBlacklist() {
 		if( is_null( $this->mBlacklist ) ) {
 			$this->load();
 		}
 		return $this->mBlacklist;
 	}
-	
-	/*
+
+	/**
 	 * Get the current whitelist
 	 *
 	 * @return Array of TitleBlacklistEntry items
-         */
+	 */
 	public function getWhitelist() {
 		if( is_null( $this->mWhitelist ) ) {
 			$this->loadWhitelist();
 		}
 		return $this->mWhitelist;
 	}
-	
+
 	/**
 	 * Get the text of a blacklist source via HTTP
 	 *
-	 * @param $source URL of the blacklist source
-	 * @return The content of the blacklist source as a string
-         */
+	 * @param $url string URL of the blacklist source
+	 * @return string The content of the blacklist source as a string
+	 */
 	private static function getHttp( $url ) {
 		global $messageMemc, $wgTitleBlacklistCaching;
 		$key = "title_blacklist_source:" . md5( $url ); // Global shared
@@ -220,7 +248,7 @@ class TitleBlacklist {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Invalidate the blacklist cache
 	 */
@@ -228,11 +256,11 @@ class TitleBlacklist {
 		global $wgMemc;
 		$wgMemc->delete( wfMemcKey( "title_blacklist_entries" ) );
 	}
-	
+
 	/**
 	 * Validate a new blacklist
 	 *
-	 * @param $list Text of the new blacklist, as a string
+	 * @param $blacklist array
 	 * @return Array of bad entries; empty array means blacklist is valid
 	 */
 	public function validate( $blacklist ) {
@@ -240,11 +268,24 @@ class TitleBlacklist {
 		foreach( $blacklist as $e ) {
 			wfSuppressWarnings();
 			$regex = $e->getRegex();
-			if( preg_match( "/{$regex}/u", '' ) === false )
+			if( preg_match( "/{$regex}/u", '' ) === false ) {
 				$badEntries[] = $e->getRaw();
+			}
 			wfRestoreWarnings();
 		}
 		return $badEntries;
+	}
+
+	/**
+	 * Inidcates whether user can override blacklist on certain action.
+	 *
+	 * @param $action Action
+	 *
+	 * @return bool
+	 */
+	public static function userCanOverride( $user, $action ) {
+		return $user->isAllowed( 'tboverride' ) ||
+			( $action == 'new-account' && $user->isAllowed( 'tboverride-account' ) );
 	}
 }
 
@@ -274,41 +315,43 @@ class TitleBlacklistEntry {
 	}
 
 	/**
-	 * Check whether the specified User can perform the specified action 
+	 * Check whether a user can perform the specified action
 	 * on the specified Title
 	 *
 	 * @param $title Title to check
-	 * @param $user User to check
 	 * @param $action %Action to check
-	 * @return TRUE if the user can; otherwise FALSE
+	 * @return bool TRUE if the the regex matches the title, and is not overridden
+	 * else false if it doesn't match (or was overridden)
 	 */
-	public function userCan( $title, $user, $action ) {
-		if( $user->isAllowed( 'tboverride' ) ) {
-			return true;
+	public function matches( $title, $action ) {
+		if ( !$title ) {
+			return false;
 		}
 		wfSuppressWarnings();
 		$match = preg_match( "/^(?:{$this->mRegex})$/us" . ( isset( $this->mParams['casesensitive'] ) ? '' : 'i' ), $title->getFullText() );
 		wfRestoreWarnings();
+
+		global $wgUser;
 		if( $match ) {
-			if( isset( $this->mParams['autoconfirmed'] ) && $user->isAllowed( 'autoconfirmed' ) ) {
-				return true;
+			if( isset( $this->mParams['autoconfirmed'] ) && $wgUser->isAllowed( 'autoconfirmed' ) ) {
+				return false;
 			}
 			if( isset( $this->mParams['moveonly'] ) && $action != 'move' ) {
-				return true;
+				return false;
 			}
 			if( isset( $this->mParams['newaccountonly'] ) && $action != 'new-account' ) {
-				return true;
+				return false;
 			}
 			if( !isset( $this->mParams['noedit'] ) && $action == 'edit' ) {
-				return true;
+				return false;
 			}
 			if ( isset( $this->mParams['reupload'] ) && $action == 'upload' ) {
 				// Special:Upload also checks 'create' permissions when not reuploading
-				return true;
+				return false;
 			}
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -319,7 +362,6 @@ class TitleBlacklistEntry {
 	 */
 	public static function newFromString( $line ) {
 		$raw = $line; // Keep line for raw data
-		$regex = "";
 		$options = array();
 		// Strip comments
 		$line = preg_replace( "/^\\s*([^#]*)\\s*((.*)?)$/", "\\1", $line );
@@ -381,37 +423,37 @@ class TitleBlacklistEntry {
 			return null;
 		}
 	}
-	
+
 	/**
-	 * @returns This entry's regular expression
+	 * @return This entry's regular expression
 	 */
 	public function getRegex() {
 		return $this->mRegex;
 	}
 
 	/**
-	 * @returns This entry's raw line
+	 * @return This entry's raw line
 	 */
 	public function getRaw() {
 		return $this->mRaw;
 	}
 
 	/**
-	 * @returns This entry's options
+	 * @return This entry's options
 	 */
 	public function getOptions() {
 		return $this->mOptions;
 	}
 
 	/**
-	 * @returns Custom message for this entry
+	 * @return Custom message for this entry
 	 */
 	public function getCustomMessage() {
 		return isset( $this->mParams['errmsg'] ) ? $this->mParams['errmsg'] : null;
 	}
-	
+
 	/**
-	 * @returns The format version
+	 * @return The format version
 	 */
 	public function getFormatVersion() { return $this->mFormatVersion; }
 
@@ -421,6 +463,18 @@ class TitleBlacklistEntry {
 	 * @param $v New version to set
 	 */
 	public function setFormatVersion( $v ) { $this->mFormatVersion = $v; }
+
+	/**
+	 * Return the error message name for the blacklist entry.
+	 *
+	 * @param $operation Operation name (as in titleblacklist-forbidden message name)
+	 *
+	 * @return The error message name
+	 */
+	public function getErrorMessage( $operation ) {
+		$message = $this->getCustomMessage();
+		return $message ? $message : "titleblacklist-forbidden-{$operation}";
+	}
 }
 
 //@}

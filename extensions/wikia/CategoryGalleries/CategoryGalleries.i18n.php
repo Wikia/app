@@ -93,7 +93,7 @@ $messages['fr'] = array(
 	'categorygalleries-desc' => 'Affiche une galerie de pages sur les pages de catégorie',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -24,8 +24,8 @@ function wfSpecialFunnel() {
   //init
 }
 
-function wfFunnel(){
-  global $IP, $wgMessageCache, $wgAutoloadClasses, $wgSpecialPages, $wgOut, $wgRequest, $wgTitle, $wgLanguageCode, $wgUser;
+function wfFunnel( &$out, &$skin ){
+  global $wgTitle, $wgUser;
  
   if( $wgUser->isLoggedIn() ) return true; //don't redirect for logged in users
  
@@ -59,5 +59,5 @@ function wfFunnel(){
 }
 
 if( !empty( $wgEnableSpecialFunnel ) ){
-	$wgHooks['BeforePageDisplay'][] = array( 'wfFunnel', array() );
+	$wgHooks['BeforePageDisplay'][] = 'wfFunnel';
 }

@@ -12,7 +12,7 @@
 if (!defined('MEDIAWIKI')) die();
 
 /**
- * @addtogroup API
+ * @ingroup API
  */
 class APIQueryTemplateInfo extends ApiQueryBase {
 
@@ -76,14 +76,14 @@ class APIQueryTemplateInfo extends ApiQueryBase {
 		return 'Template information, defined by the Template Info extension (http://www.mediawiki.org/Extension:Template_Info)';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array (
 			'api.php?action=query&prop=templateinfo&titles=Template:Foo|Template:Bar',
 		);
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryTemplateInfo.php 59711 2009-12-03 22:43:55Z yaron $';
+		return __CLASS__ . ': $Id: ApiQueryTemplateInfo.php 67467 2010-06-06 15:12:22Z ialex $';
 	}
 
 }

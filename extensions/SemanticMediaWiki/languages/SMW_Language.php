@@ -22,7 +22,8 @@ abstract class SMWLanguage {
 	// the special message arrays ...
 	protected $m_DatatypeLabels;
 	protected $m_DatatypeAliases = array();
-	protected $m_SpecialProperties;
+	protected $m_SpecialProperties;    // Maps property ids to property names.
+	protected $m_SpecialPropertyIds;   // Maps property names to property ids.
 	protected $m_SpecialPropertyAliases = array();
 	protected $m_Namespaces;
 	protected $m_NamespaceAliases = array();
@@ -56,13 +57,15 @@ abstract class SMWLanguage {
 		'Code'                  => '_cod',
 		'Boolean'               => '_boo',
 		'Number'                => '_num',
-		'Geographic coordinate' => '_geo',
+		'Geographic coordinates'=> '_geo',
+		'Geographic coordinate' => '_geo', // deprecated, see Bug 30990
 		'Temperature'           => '_tem',
+		'Quantity'              => '_qty',
 		'Date'                  => '_dat',
 		'Email'                 => '_ema',
 		'Annotation URI'        => '_anu',
 		'Telephone number'      => '_tel',
-	    'Record'                => '_rec'
+		'Record'                => '_rec'
 	);
 	/// Default English aliases for special property names (typically used in all languages)
 	static protected $enPropertyAliases = array(
@@ -76,25 +79,56 @@ abstract class SMWLanguage {
 		'Provides service'  => '_SERV',
 		'Allows value'      => '_PVAL',
 		'Modification date' => '_MDAT',
+		'Creation date'     => '_CDAT',
+		'Is a new page'     => '_NEWP',
+		'Last editor is'    => '_LEDT',
 		'Has improper value for' => '_ERRP',
 		'Has fields'        => '_LIST',
+		'Has subobject'     => '_SOBJ',
 	);
+
+	public function __construct() {
+		// `$this->m_SpecialProperties' is set in descendants.
+		// Let us initialize reverse mapping.
+		foreach ( $this->m_SpecialProperties as $propId => $propName ) {
+			$this->m_SpecialPropertyIds[ $propName ] = $propId;
+		}
+	}
 
 
 	/**
 	 * Function that returns an array of namespace identifiers.
 	 */
 	function getNamespaces() {
-		return $this->m_Namespaces;
+		global $smwgHistoricTypeNamespace;
+		$namespaces = $this->m_Namespaces;
+		if ( !$smwgHistoricTypeNamespace ) {
+			unset( $namespaces[SMW_NS_TYPE] );
+			unset( $namespaces[SMW_NS_TYPE_TALK] );
+		}
+		return $namespaces;
 	}
 
 	/**
 	 * Function that returns an array of namespace aliases, if any.
 	 */
 	function getNamespaceAliases() {
-		return $this->m_useEnDefaultAliases ?
-		       $this->m_NamespaceAliases + SMWLanguage::$enNamespaceAliases:
-			   $this->m_NamespaceAliases;
+		global $smwgHistoricTypeNamespace;
+
+		$namespaceAliases = $this->m_NamespaceAliases;
+		if ( $this->m_useEnDefaultAliases ) {
+			$namespaceAliases = $namespaceAliases + SMWLanguage::$enNamespaceAliases;
+		}
+
+		if ( !$smwgHistoricTypeNamespace ) {
+			foreach ($namespaceAliases as $alias => $namespace) {
+				if ( $namespace == SMW_NS_TYPE || $namespace == SMW_NS_TYPE_TALK ) {
+					unset( $namespaceAliases[$alias] );
+				}
+			}
+		}
+
+		return $namespaceAliases;
 	}
 
 	/**
@@ -113,8 +147,8 @@ abstract class SMWLanguage {
 	 */
 	function getDatatypeAliases() {
 		return $this->m_useEnDefaultAliases ?
-		       $this->m_DatatypeAliases + SMWLanguage::$enDatatypeAliases:
-			   $this->m_DatatypeAliases;
+		       $this->m_DatatypeAliases + SMWLanguage::$enDatatypeAliases :
+		       $this->m_DatatypeAliases;
 	}
 
 	/**
@@ -129,8 +163,26 @@ abstract class SMWLanguage {
 	 */
 	function getPropertyAliases() {
 		return $this->m_useEnDefaultAliases ?
-		       $this->m_SpecialPropertyAliases + SMWLanguage::$enPropertyAliases:
-			   $this->m_SpecialPropertyAliases;
+		       $this->m_SpecialPropertyAliases + SMWLanguage::$enPropertyAliases :
+		       $this->m_SpecialPropertyAliases;
+	}
+
+	/**
+	 * Function receives property name (for example, `Modificatino date') and returns property id
+	 * (for example, `_MDAT'). Property name may be localized one. If property name is not
+	 * recognized, null value returned.
+	 */
+	function getPropertyId( $propName ) {
+		if ( isset( $this->m_SpecialPropertyIds[$propName] ) ) {
+			return $this->m_SpecialPropertyIds[$propName];
+		};
+		if ( isset( $this->m_SpecialPropertyAliases[$propName] ) ) {
+			return $this->m_SpecialPropertyAliases[$propName];
+		}
+		if ( $this->m_useEnDefaultAliases && isset( SMWLanguage::$enPropertyAliases[$propName] ) ) {
+			return SMWLanguage::$enPropertyAliases[$propName];
+		} 
+		return null;
 	}
 
 	/**
@@ -161,7 +213,7 @@ abstract class SMWLanguage {
 	 * Return the name of the month with the given number.
 	 */
 	function getMonthLabel( $number ) {
-	  return ( ( $number >= 1 ) && ( $number <= 12 ) ) ? $this->m_months[(int)( $number - 1 )]:'';
+		return ( ( $number >= 1 ) && ( $number <= 12 ) ) ? $this->m_months[(int)( $number - 1 )] : '';
 	}
 
 }

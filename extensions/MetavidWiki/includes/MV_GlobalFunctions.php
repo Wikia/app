@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Global functions and constants for Metavid MediaWiki.
  *
@@ -21,7 +21,10 @@ $wgExtensionMessagesFiles['MetavidWiki'] = $mvgIP . '/languages/MV_Messages.php'
 require_once( $mvgIP . '/languages/MV_Language.php' );
 
 // Register special page aliases file
-$wgExtensionAliasesFiles['MetavidWiki'] = $mvgIP . '/languages/MV_Aliases.php';
+$wgExtensionMessagesFiles['MetavidWikiAlias'] = $mvgIP . '/languages/MV_Aliases.php';
+
+// Register magic words
+$wgExtensionMessagesFiles['MetavidWikiMagic'] = $mvgIP . '/languages/MV_Magic.php';
 
 $markerList = array();
 $mvGlobalJSVariables = array();
@@ -53,14 +56,10 @@ function enableMetavid() {
 	return true;
 }
 function mvSetupExtension() {
-	global $mvVersion, $mvNamespace, $mvgIP, $wgHooks, $wgExtensionCredits, $mvMasterStore,
-	$wgParser, $mvArticlePath, $mvgScriptPath, $wgServer, $wgExtensionFunctions, $markerList,$wgVersion,
-	$wgAjaxExportList, $mvEnableAutoComplete, $mvEnableJSMVDrewrite,
-	$wgAutoloadClasses, $wgSpecialPages, $wgMediaHandlers, $wgJSAutoloadClasses,
-	$wgAPIModules;
+	global $mvgIP, $wgHooks, $wgExtensionCredits, $wgParser,
+	$wgAjaxExportList, $wgAutoloadClasses, $wgSpecialPages, $wgMediaHandlers;
 
 
-	mvfInitMessages();
 	//add the ALL page header
 	mvfAutoAllPageHeader();
 
@@ -130,6 +129,8 @@ function mvSetupExtension() {
 	$wgAutoloadClasses['MV_EditDataPage']		= $wgAutoloadClasses['MV_DataPage'] =  dirname( __FILE__ ) . '/articlepages/MV_DataPage.php';
 	$wgAutoloadClasses['MV_EditStreamPage']		= dirname( __FILE__ )  . '/MV_EditStreamPage.php';
 
+	$wgAutoloadClasses['LogReader']		= dirname( __FILE__ )  . '/LogEventsList.php';
+	$wgAutoloadClasses['LogViewer']		= dirname( __FILE__ )  . '/LogEventsList.php';
 
 	$wgAutoloadClasses['MV_Title'] 				= dirname( __FILE__ )  . '/MV_Title.php';
 	$wgAutoloadClasses['MV_Index'] 				= dirname( __FILE__ )  . '/MV_Index.php';
@@ -139,17 +140,16 @@ function mvSetupExtension() {
 	$wgAutoloadClasses['MV_StreamFile']			= dirname( __FILE__ )  . '/MV_StreamFile.php';
 
 	$wgAutoloadClasses['MV_StreamImage'] 		= dirname( __FILE__ )  . '/MV_StreamImage.php';
-	$wgAutoloadClasses['MV_ParserCache'] 		= dirname( __FILE__ ) . '/MV_ParserCache.php';
 	$wgAutoloadClasses['MV_MagicWords'] 		= dirname( __FILE__ ) . '/MV_MagicWords.php';
 
 	/**********************************************/
 	/***** register special pages hooks       *****/
 	/**********************************************/
 	$wgAutoloadClasses['MV_SpecialCRUDStream'] 	= dirname( __FILE__ ) . '/specials/MV_SpecialCRUDStream.php';
-	$wgSpecialPages['Mv_Add_Stream']		   	=  array( 'MV_SpecialCRUDStream' );
+	$wgSpecialPages['Mv_Add_Stream']			= 'MV_SpecialCRUDStream';
 
 	$wgAutoloadClasses['MV_SpecialListStreams']	= dirname( __FILE__ ) . '/specials/MV_SpecialListStreams.php';
-	$wgSpecialPages['Mv_List_Streams']		   	= array( 'MV_SpecialListStreams' );
+	$wgSpecialPages['Mv_List_Streams']			= 'MV_SpecialListStreams';
 
 	/* special export views */
 	$wgAutoloadClasses['MV_SpecialExport']		= dirname( __FILE__ ) . '/specials/MV_SpecialExport.php';
@@ -160,21 +160,21 @@ function mvSetupExtension() {
 	$wgAutoloadClasses['MvExportSearch']		= dirname( __FILE__ ) . '/specials/MV_SpecialExport.php';
 	$wgAutoloadClasses['MvExportAsk']			= dirname( __FILE__ ) . '/specials/MV_SpecialExport.php';
 
-	$wgSpecialPages['MvVideoFeed']				= array( 'MvVideoFeed' );
-	$wgSpecialPages['MvExportStream']			= array( 'MvExportStream' );
-	$wgSpecialPages['MvExportSequence']			= array( 'MvExportSequence' );
-	$wgSpecialPages['MvExportSearch']			= array( 'MvExportSearch' );
-	$wgSpecialPages['MvExportAsk']				= array( 'MvExportAsk' );
+	$wgSpecialPages['MvVideoFeed']				= 'MvVideoFeed';
+	$wgSpecialPages['MvExportStream']			= 'MvExportStream';
+	$wgSpecialPages['MvExportSequence']			= 'MvExportSequence';
+	$wgSpecialPages['MvExportSearch']			= 'MvExportSearch';
+	$wgSpecialPages['MvExportAsk']				= 'MvExportAsk';
 
 	$wgAutoloadClasses['MV_SpecialMediaSearch']	= dirname( __FILE__ ) . '/specials/MV_SpecialMediaSearch.php';
-	$wgSpecialPages['Mv_List_Streams']		   	= array( 'MV_SpecialListStreams' );
+	$wgSpecialPages['Mv_List_Streams']			= 'MV_SpecialListStreams';
 
 	$wgAutoloadClasses['MediaSearch'] =			 dirname( __FILE__ ) . '/specials/MV_SpecialMediaSearch.php';
-	$wgSpecialPages['MediaSearch']				= array( 'MediaSearch' );
-	$wgSpecialPages['MV_SpecialSearch']			= array( 'MV_SpecialSearch' );
+	$wgSpecialPages['MediaSearch']				= 'MediaSearch';
+	$wgSpecialPages['MV_SpecialSearch']			= 'MV_SpecialSearch';
 
 	$wgAutoloadClasses['MVAdmin']				= dirname( __FILE__ ) . '/specials/MV_SpecialMVAdmin.php';
-	$wgSpecialPages['MVAdmin']					= array( 'MVAdmin' );
+	$wgSpecialPages['MVAdmin']				= 'MVAdmin';
 	// require_once( dirname(__FILE__) . '/specials/MV_SpecialCRUDStream.php');
 	// require_once( dirname(__FILE__) . '/specials/MV_SpecialListStreams.php');
 	// require_once( dirname(__FILE__) . '/specials/MV_SpecialExport.php');
@@ -202,12 +202,7 @@ function mvSetupExtension() {
  		}
 	}
 
-	if (version_compare($wgVersion,'1.13','>=')) {
-		$wgHooks['SkinTemplateToolboxEnd'][] = 'mvAddToolBoxLinks'; // introduced only in 1.13
-	} else {
-		$wgHooks['MonoBookTemplateToolboxEnd'][] = 'mvAddToolBoxLinks';
-	}
-
+	$wgHooks['SkinTemplateToolboxEnd'][] = 'mvAddToolBoxLinks'; // introduced only in 1.13
 
 	// @@NOTE this hook is not avaliable by default in medaiwiki
 	// to use this hook you should add this function to moveTo()
@@ -238,11 +233,6 @@ function mvSetupExtension() {
 			$wgAutoloadClasses['mvOggHandler']			= dirname( __FILE__ )  . '/MV_OggHandler.php';
 			$wgMediaHandlers['application/ogg']='mvOggHandler';
 			$wgParserOutputHooks['OggHandler'] = array( 'mvOggHandler', 'outputHook' );
-			foreach($wgHooks['LanguageGetMagic'] as & $hook_function){
-				if($hook_function=='OggHandler::registerMagicWords'){
-					$hook_function='mvOggHandler::registerMagicWords';
-				}
-			}
 			foreach($wgExtensionCredits as & $ext){
 				 if(isset($ext['name'])){
 					 if($ext['name']=='OggHandler'){
@@ -271,19 +261,8 @@ function mvSetupExtension() {
 		'author' => 'Michael Dale',
 		'version' => MV_VERSION,
 		'url' => 'http://metavid.org/wiki/MetaVidWiki_Software',
-		'description' => 'Video Metadata Editor & Media Search<br />' .
-			'[http://metavid.org/wiki/MetaVidWiki_Software More about MetaVidWiki Software]',
 		'descriptionmsg' => 'mv-desc',
 	);
-}
-# Define a setup function
-# Add a hook to initialize the magic word
-$wgHooks['LanguageGetMagic'][]       = 'mvMagicParserFunction_Magic';
-
-function mvMagicParserFunction_Magic( &$magicWords, $langCode ) {
-        $magicWords['mvData'] = array( 0, 'mvData' );
-        $magicWords['mvEmbed'] = array( 0, 'mvEmbed' );
-        return true;
 }
 
 function mvMagicParserFunction_Render( &$parser ) {
@@ -301,8 +280,8 @@ function mvMagicParserFunction_Render( &$parser ) {
 	 * enables linkback and autocomplete for search
 	 */
 function mvfAutoAllPageHeader() {
-	global $mvgScriptPath, $wgJsMimeType, $wgOut, $mvExtraHeader, $wgTitle;
-	global $mvgJSDebug, $wgEnableScriptLoader, $wgRequest;
+	global $mvgScriptPath, $wgJsMimeType, $wgOut, $mvExtraHeader;
+	global $mvgJSDebug;
 
 	$mvgScriptPath = htmlspecialchars( $mvgScriptPath );
 	$wgJsMimeType = htmlspecialchars( $wgJsMimeType ) ;
@@ -313,10 +292,6 @@ function mvfAutoAllPageHeader() {
 		//@@todo should read form svn version file info
 		$unique_req_param = MV_VERSION;
 	}
-
-	$wgOut->addScriptClass( "mv_allpages" );
-	$wgOut->addScriptClass( "mv_search" );
-
 
 	$mvCssUrl = $mvgScriptPath . '/skins/mv_custom.css';
 	$wgOut->addLink( array(
@@ -329,7 +304,7 @@ function mvfAutoAllPageHeader() {
 	$wgOut->addScript( $mvExtraHeader );
 }
 function mvAddPerNamespaceJS( &$title ){
-	global $mvgScriptPath, $wgJsMimeType, $wgOut;
+	global $mvgScriptPath, $wgOut;
 	if( $title->getNamespace() == MV_NS_STREAM )
 		$wgOut->addScriptFile( "{$mvgScriptPath}/skins/mv_stream.js" );
 }
@@ -428,38 +403,8 @@ function mvfInitUserLanguage( $langcode ) {
 		$mvgLang = new $mvLangClass();
 	}
 }
-/**
- * Initialize messages - these settings must be applied later on, since
- * the MessageCache does not exist yet when the settings are loaded in
- * LocalSettings.php.
- * Function based on version in ContributionScores extension
- */
-function mvfInitMessages() {
-	global $wgVersion, $wgExtensionFunctions;
-	if ( version_compare( $wgVersion, '1.11', '>=' ) ) {
-		wfLoadExtensionMessages( 'MetavidWiki' );
-	} else {
-		$wgExtensionFunctions[] = 'sffLoadMessagesManually';
-	}
-}
 
 /**
- * Setting of message cache for versions of MediaWiki that do not support
- * wgExtensionFunctions - based on ceContributionScores() in
- * ContributionScores extension
- */
-function sffLoadMessagesManually() {
-	global $mvgIP, $wgMessageCache;
-
-	# add messages
-	require( $mvgIP . '/languages/MV_Messages.php' );
-	global $messages;
-	foreach ( $messages as $key => $value ) {
-		$wgMessageCache->addMessages( $messages[$key], $key );
-	}
-}
-
-/*
  * Utility functions:
  */
 function mvOutputJSON( & $data ) {
@@ -553,7 +498,7 @@ function mvIsNtpTime( $time ) {
 		return true;
 	return false;
 }
-/*
+/**
  * simple array increment (supports up two 2 dim deep)
  * should be a cleaner way to write this... hmm...
  */
@@ -580,7 +525,7 @@ function mvIsNtpTime( $time ) {
  	}
  }
 
-/*
+/**
  * takes ntp time of format hh:mm:ss and converts to seconds
  */
 function npt2seconds( $str_time ) {
@@ -590,15 +535,15 @@ function npt2seconds( $str_time ) {
 		$hours 	= (int) $time_ary[0];
 		$min 	= (int) $time_ary[1];
 		$sec 	= (float) $time_ary[2];
-	} else if ( count( $time_ary ) == 2 ) {
+	} elseif ( count( $time_ary ) == 2 ) {
 		$min 	= (int) $time_ary[0];
 		$sec 	= (float) $time_ary[1];
-	} else if ( count( $time_ary ) == 1 ) {
+	} elseif ( count( $time_ary ) == 1 ) {
 		$sec 	= (float) $time_ary[0];
 	}
 	return ( $hours * 3600 ) + ( $min * 60 ) + $sec;
 }
-/*
+/**
  * takes seconds duration and return hh:mm:ss time
  */
 function seconds2npt( $seconds, $short = false ) {
@@ -647,7 +592,7 @@ function seconds2Description( $seconds, $short=false, $singular=false){
 	}
 	return $o;
 }
-/*
+/**
  * converts seconds to time unit array
  */
 function time_duration_2array ( $seconds, $periods = null ) {
@@ -684,7 +629,7 @@ function time_duration_2array ( $seconds, $periods = null ) {
 	}
 	return $values;
 }
-/*
+/**
  * direct output for quick creation of non editable pages (errors, stream access etc)
  */
 function mvOutputSpecialPage( $title, & $page ) {
@@ -759,7 +704,7 @@ function mvDoMetavidStreamPage( &$title, &$article ) {
 	}
 }
 
-/*
+/**
  * global MV_Stream server
  * @@todo cache this function
  */
@@ -768,13 +713,13 @@ function mvGetMVStream( $stream_init ) {
 	// wfDebug('mv get stream: ' .$stream_name . "\n");
 	if ( is_object( $stream_init ) ) {
 		$stream_init = get_object_vars( $stream_init );
-	} else if ( is_string( $stream_init ) ) {
+	} elseif ( is_string( $stream_init ) ) {
 		// if a string is passed in assume its the stream name:
 		$stream_init = array( 'name' => $stream_init );
 	}
 	if ( isset( $stream_init['name'] ) ) {
 		$stream_name = $stream_init['name'];
-	} else if ( isset( $stream_init['id'] ) ) {
+	} elseif ( isset( $stream_init['id'] ) ) {
 		$stream_name = MV_Stream::getStreamNameFromId( $stream_init['id'] );
 	} else {
 		die('missing stream id or name'. $stream_init);

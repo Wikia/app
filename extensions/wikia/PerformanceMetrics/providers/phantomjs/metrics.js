@@ -4,6 +4,7 @@
  * Generates performance metrics using head-less WebKit-based browser
  *
  * phantomjs required - http://code.google.com/p/phantomjs/wiki/BuildInstructions
+ *
  */
 var request = require('webpage').create,
 	system = require('system'),
@@ -31,11 +32,19 @@ function parseArgs(args) {
 	});
 
 	return res;
-};
+}
 
 // calculate DOM complexity
 function getDomComplexity(page) {
 	var metrics = page.evaluate(function() {
+		var shortTags = [
+			'script',
+			'link',
+			'hr',
+			'br',
+			'img'
+		];
+
 		// run this in the "scope" of the browser
 		function processNode(node, metrics, depth) {
 			var childNodes = node.childNodes;
@@ -58,17 +67,31 @@ function getDomComplexity(page) {
 							break;
 
 						case Node.TEXT_NODE:
+							metrics.nodes++;
+							break;
+
 						case Node.COMMENT_NODE:
 							metrics.nodes++;
+
+							// count the length of all HTML comments (including <!-- --> brackets)
+							metrics.commentsSize += childNodes[i].length + 7 /* <!-- --> */;
 							break;
 					}
 				}
 			}
-		};
+			else {
+				// count HTML elements with no content
+				if (node.nodeType === Node.ELEMENT_NODE && shortTags.indexOf(node.nodeName.toLowerCase()) === -1) {
+					//metrics.emptyNodes++;
+				}
+			}
+		}
 
 		var metrics = {
 			elements: 0,
 			nodes: 0,
+			//emptyNodes: 0,
+			commentsSize: 0,
 			depthStack: [] // tmp
 		},
 		node = document.getElementsByTagName('html')[0];
@@ -78,11 +101,38 @@ function getDomComplexity(page) {
 		return metrics;
 	});
 
-	// process depth calculation
-	metrics.depthStack = metrics.depthStack.sort(function(a, b) {return a - b});
+	// inline <script> tags
+	var inlineJSmetrics = page.evaluate(function() {
+		var nodes = document.getElementsByTagName('script'),
+			count = 0,
+			length = 0;
 
-	var sum = 0, len = metrics.depthStack.length, pos = parseInt(len / 2);
-	metrics.depthStack.forEach(function(val) {sum += val});
+		for (var i=0, len = nodes.length; i<len; i++) {
+			if (!nodes[i].src) {
+				count++;
+				length += nodes[i].innerText.length;
+			}
+		}
+
+		return {
+			count: count,
+			length: length
+		};
+	});
+
+	metrics.bodyHTMLSize = page.evaluate(function() {
+		return document.body.outerHTML.length;
+	});
+
+	// add length of code in inline JS scripts
+	metrics.inlineScriptsCount = inlineJSmetrics.count;
+	metrics.inlineScriptsLength = inlineJSmetrics.length;
+
+	// process depth calculation
+	metrics.depthStack = metrics.depthStack.sort(function(a, b) {return a - b;});
+
+	var sum = 0, len = metrics.depthStack.length, pos = parseInt(len / 2, 10);
+	metrics.depthStack.forEach(function(val) {sum += val;});
 
 	metrics.maxElementsDepth = metrics.depthStack[metrics.depthStack.length - 1];
 	metrics.avgElementsDepth = (sum / len).toFixed(2);
@@ -90,7 +140,7 @@ function getDomComplexity(page) {
 
 	delete metrics.depthStack;
 	return metrics;
-};
+}
 
 // get all JS globals (BugId:29463)
 function getGlobals(page) {
@@ -153,35 +203,37 @@ function getGlobals(page) {
 
 		return found;
 	});
-};
+}
 
 // track onDOMready event
 page.onInitialized = function () {
 	console.log('open URL: ' + address);
 
 	page.startTime = Date.now();
+	pingRequestMonitor();
 
 	// emulate window.performance
 	// @see https://groups.google.com/d/topic/phantomjs/WnXZLIb_jVc/discussion
     page.evaluate(function() {
-    	window.timingLoadStarted = Date.now();
-        document.addEventListener("DOMContentLoaded", function() {
-        	window.timingDOMContentLoaded = Date.now();
-        }, false);
-        window.addEventListener("load", function(){
-        	window.timingOnLoad = Date.now();
-        }, false);
-    });
+		window.timingLoadStarted = Date.now();
+		document.addEventListener("DOMContentLoaded", function() {
+			window.timingDOMContentLoaded = Date.now();
+		}, false);
+		window.addEventListener("load", function(){
+			window.timingOnLoad = Date.now();
+		}, false);
+	});
 
 	// AB testing setup
 	// @see /extensions/wikia/AbTesting/js/AbTesting.js
 	if (abGroup) {
-    	page.evaluate(new Function("window.abTreatments = {'" + abGroup + "': 1};"));
+		page.evaluate(new Function("window.abTreatments = {1: '" + abGroup + "'};"));
 	}
 };
 
 // monitor requests made (BugId:26332)
 page.requests = [];
+page.currentRequests = 0;
 page.onResourceRequested = function(res) {
 	//console.log('req [#' + res.id + ']: ' + res.url  + ' (' +  JSON.stringify({time:res.time}) + ')');
 
@@ -189,6 +241,9 @@ page.onResourceRequested = function(res) {
 		url: res.url,
 		sendTime: res.time
 	};
+
+	page.currentRequests++;
+	pingRequestMonitor();
 };
 
 page.contentLength = 0;
@@ -231,6 +286,9 @@ page.onResourceReceived = function(res) {
 			break;
 
 		case 'end':
+			page.currentRequests--;
+			pingRequestMonitor();
+
 			entry.recvEndTime = res.time;
 			entry.lastByte = res.time - entry.sendTime;
 			entry.receive = entry.lastByte - entry.timeToFirstByte;
@@ -290,16 +348,16 @@ page.onResourceReceived = function(res) {
 
 					// detect content encoding
 					case 'Content-Encoding':
-						 if (header.value === 'gzip') {
-						 	entry.gzip = true;
-						 }
+						if (header.value === 'gzip') {
+							entry.gzip = true;
+						}
 						break;
 
 					// detect varnish hit
 					case 'X-Cache':
-						 if (header.value.indexOf('HIT') === 0) {
-						 	entry.hit = true;
-						 }
+						if (header.value.indexOf('HIT') === 0) {
+							entry.hit = true;
+						}
 						break;
 				}
 			});
@@ -316,113 +374,193 @@ page.onResourceReceived = function(res) {
 	}
 };
 
+// monitor number of open requests
+page.requestsMonitor = [];
+page.httpRequestsDone = 0;
+var pingRequestMonitorTimeout;
+
+function pingRequestMonitor() {
+	if (page.startTime) {
+		var entry = {
+			timestamp: Date.now() - page.startTime,
+			cnt: page.currentRequests
+		};
+		page.requestsMonitor.push(entry);
+
+		if (pingRequestMonitorTimeout) {
+			clearTimeout(pingRequestMonitorTimeout);
+		}
+
+		page.httpRequestsDone = entry.timestamp;
+
+		// when the last HTTP request was completed
+		if (entry.cnt === 0) {
+			// generate the report when all HTTP request are done
+			pingRequestMonitorTimeout = setTimeout(function() {
+				renderMetrics();
+			}, 5000);
+		}
+	}
+}
+
+// grab console.log messages
 page.logLines = [];
 page.onConsoleMessage = function (msg) {
 	console.log('log: ' + msg);
 	page.logLines.push(msg);
 };
 
+// page loading is cpmpleted
 page.onLoadFinished = function(status) {
-	var now = Date.now();
-
 	switch(status) {
 		case 'success':
-			var url = page.evaluate(function() {
-				return document.location.toString();
-			}),
-			metrics = {
-				requests: page.requests.length,
-				contentLength: page.contentLength,
-				redirects: page.redirects.length,
-				notFound: page.notFound.length,
-				timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte),
-				timeToLastByte: (page.requests[1] && page.requests[1].lastByte),
-				totalLoadTime: now  - page.startTime
-			},
-			// notices for --verbose mode
-			notices = [];
-
-			// count per each resource type
-			for (var type in page.resourceTypes) {
-				metrics[type + 'Count'] = page.resourceTypes[type];
-			};
-
-			// size per each resource type
-			for (var type in page.resourceSize) {
-				metrics[type + 'Size'] = page.resourceSize[type];
-			};
-
-			// onDOMready
-			metrics.onDOMreadyTime = page.evaluate(function() {
-				return window.timingDOMContentLoaded - (window.wgNow || window.timingLoadStarted);
-			});
-
-			metrics.windowOnLoadTime = page.evaluate(function() {
-				return (window.timingOnLoad || Date.now()) - (window.wgNow || window.timingLoadStarted);
-			});
-
-			// evaluate DOM complexity
-			var domMetrics = getDomComplexity(page);
-			for (var key in domMetrics) {
-				metrics[key] = domMetrics[key];
-			}
-
-			// redirects and 404s
-			if (page.redirects.length > 0) {
-				notices.push('Redirects: ' + page.redirects.join(', '));
-			}
-			if (page.notFound.length > 0) {
-				notices.push('Not found: ' + page.notFound.join(', '));
-			}
-
-			// global JS variables
-			var globals = getGlobals(page);
-
-			metrics.globalVariables = globals.length;
-			notices.push('JS globals (' + globals.length + '): ' + globals.join(', '));
-
-			// other metrics
-			metrics.cookiesRaw = page.evaluate(function() {
-				return document.cookie.length;
-			});
-
-			metrics.localStorage = page.evaluate(function() {
-				return window.localStorage.length;
-			});
-
-			notices.push('Logged in as ' + page.evaluate(function() {
-				return window.wgUserName !== null ? window.wgUserName : '<anon>';
-			}));
-
-			notices.push('A/B testing group: ' + (abGroup !== false ? abGroup : '<none>'));
-
-			// add log lines to notices
-			page.logLines.forEach(function(msg) {
-				notices.push('Console: ' + msg);
-			});
-
-			// add AB testing debug
-			notices.push('AB testing: ' + page.evaluate(function() {
-				return JSON.stringify(window.abTreatments);
-			}));
-
-			// emit the results
-			var report = {
-				url: url,
-				metrics: metrics,
-				notices: notices
-			};
-
-			console.log(JSON.stringify(report));
+			page.loadFinished = Date.now();
 			break;
 
 		default:
 			console.log(false);
+			phantom.exit();
+	}
+};
+
+// timeout
+setTimeout(function() {
+	renderMetrics();
+}, 15000);
+
+// calculate metrics and emit them to the console as JSON-encoded string
+function renderMetrics() {
+	var now = page.loadFinished,
+	url = page.evaluate(function() {
+		return document.location.toString();
+	}),
+	metrics = {
+		requests: page.requests.length,
+		contentLength: page.contentLength,
+		redirects: page.redirects.length,
+		notFound: page.notFound.length,
+		timeToFirstByte: (page.requests[1] && page.requests[1].timeToFirstByte) || 0,
+		timeToLastByte: (page.requests[1] && page.requests[1].lastByte) || 0,
+		totalLoadTime: now  - page.startTime
+	},
+	// notices for --verbose mode
+	notices = [];
+
+	// count per each resource type
+	for (var type in page.resourceTypes) {
+		metrics[type + 'Count'] = page.resourceTypes[type];
 	}
 
-	// otherwise phantomjs will never terminate
+	// size per each resource type
+	for (var type in page.resourceSize) {
+		metrics[type + 'Size'] = page.resourceSize[type];
+	}
+
+	// onDOMready
+	metrics.onDOMreadyTime = page.evaluate(function() {
+		return window.timingDOMContentLoaded - (window.wgNow || window.timingLoadStarted);
+	});
+
+	metrics.windowOnLoadTime = page.evaluate(function() {
+		return (window.timingOnLoad || Date.now()) - (window.wgNow || window.timingLoadStarted);
+	});
+
+	// evaluate DOM complexity
+	var domMetrics = getDomComplexity(page);
+	for (var key in domMetrics) {
+		metrics[key] = domMetrics[key];
+	}
+
+	// redirects and 404s
+	if (page.redirects.length > 0) {
+		notices.push('Redirects: ' + page.redirects.join(', '));
+	}
+	if (page.notFound.length > 0) {
+		notices.push('Not found: ' + page.notFound.join(', '));
+	}
+
+	// global JS variables
+	var globals = getGlobals(page);
+
+	metrics.globalVariables = globals.length;
+	notices.push('JS globals (' + globals.length + '): ' + globals.join(', '));
+
+	// other metrics
+	metrics.cookiesRaw = page.evaluate(function() {
+		return document.cookie.length;
+	});
+
+	metrics.localStorage = page.evaluate(function() {
+		return window.localStorage.length;
+	});
+
+	// AdDriver timing (BugId:33298)
+	var AdDriverRegExp = {
+		started: /AdDriver started loading after (\d+) ms/,
+		finished: /AdDriver finished at (\d+) ms/
+	};
+
+	page.logLines.forEach(function(msg) {
+		var matches;
+
+		if (matches = msg.match(AdDriverRegExp.started)) {
+			// ignore repeating message
+			metrics.adDriverStart = metrics.adDriverStart || parseInt(matches[1]);
+		}
+		else if (matches = msg.match(AdDriverRegExp.finished)) {
+			// take the last message into consideration
+			metrics.adDriverDone = parseInt(matches[1]);
+		}
+	});
+
+	// debug stuff
+	notices.push('Logged in as ' + page.evaluate(function() {
+		return window.wgUserName !== null ? window.wgUserName : '<anon>';
+	}));
+
+	notices.push('A/B testing group: ' + page.evaluate(function() {
+		return window.getTreatmentGroup && getTreatmentGroup(1);
+	}));
+
+	// add log lines to notices
+	page.logLines.forEach(function(msg) {
+		notices.push('Console: ' + msg);
+	});
+
+	// requests monitor
+	notices.push('HTTP connections monitor:');
+	var lastTimestamp = 0;
+	page.requestsMonitor.forEach(function(entry) {
+		if (entry.timestamp - lastTimestamp < 20) {
+			return;
+		}
+
+		lastTimestamp = entry.timestamp;
+
+		var msg = 'at ' + entry.timestamp + ' ms - ' + entry.cnt,
+			spacer = new Array(30 - msg.length).join(' '),
+			stars = new Array(entry.cnt+1).join('*');
+
+		notices.push(msg + spacer + stars);
+	});
+
+	metrics.httpRequestsDone = page.httpRequestsDone;
+	notices.push('at ' + page.httpRequestsDone + ' ms - DONE');
+
+	// emit the results
+	var report = {
+		url: url,
+		metrics: metrics,
+		notices: notices
+	};
+
+	console.log(JSON.stringify(report));
 	phantom.exit();
-};
+}
+
+/*
+ * Run metrics
+ */
 
 // parse script arguments
 var args = parseArgs(system.args);
@@ -444,7 +582,7 @@ if (username !== false && password !== false) {
 		apiReq2 = request();
 
 	apiReq.onResourceReceived = apiReq2.onResourceReceived = function(res) {
-		if (res.stage == 'end') {
+		if (res.stage === 'end') {
 			console.log('# Headers: ' + JSON.stringify(res.headers));
 		}
 	};

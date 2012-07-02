@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for the extension ErrorHandler.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -44,6 +45,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'errorhandler-desc' => 'Extension description displayed on [[Special:Version]].',
 	'errorhandler-errors' => '{{Identical|Error}}',
+	'errorhandler-error-warning' => '{{Identical|Warning}}',
 	'errorhandler-msg-text' => '*$1 - error name
 *$2 - error message
 *$3 - filename
@@ -63,6 +65,15 @@ $messages['qqq'] = array(
  */
 $messages['af'] = array(
 	'errorhandler-errors' => 'Foute:',
+	'errorhandler-error-warning' => 'Waarskuwing',
+	'errorhandler-error-notice' => 'Kennisgewing',
+);
+
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'errorhandler-error-warning' => 'Aviso',
 );
 
 /** Arabic (العربية)
@@ -93,6 +104,18 @@ $messages['ar'] = array(
 	'errorhandler-trace-line-internal' => '[وظيفة داخلية]: $1',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'errorhandler-errors' => 'ܦܘܕ̈ܐ:',
+	'errorhandler-error-user-error' => 'ܦܘܕܐ ܕܡܦܠܚܢܐ',
+	'errorhandler-error-user-warning' => 'ܙܘܗܪܐ ܕܡܦܠܚܢܐ',
+	'errorhandler-msg-text' => '$1 : $2 ܒ $3 (ܣܪܛܐ $4)',
+	'errorhandler-msg-html' => '<b>$1</b> : <i>$2</i> ܒ <b>$3</b> (ܣܪܛܐ <b>$4</b>)',
+	'errorhandler-trace-line' => '$1 (ܣܪܛܐ $2): $3',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
@@ -121,7 +144,17 @@ $messages['arz'] = array(
 	'errorhandler-trace-line-internal' => '[وظيفة داخلية]: $1',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'errorhandler-errors' => 'Xətalar:',
+	'errorhandler-error-warning' => 'Xəbərdarlıq',
+	'errorhandler-error-notice' => 'Qeyd',
+	'errorhandler-error-user-error' => 'İstifadəçi xətası',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -168,6 +201,27 @@ $messages['bg'] = array(
 	'errorhandler-trace-line-internal' => '[вътрешна функция]: $1',
 );
 
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'errorhandler-errors' => 'ত্রুটিসমূহ:',
+	'errorhandler-error-fatal' => 'ফ্যাটাল ত্রুটি',
+	'errorhandler-error-warning' => 'সতর্কীকরণ:',
+	'errorhandler-error-parse' => 'পার্সার ত্রুটি',
+	'errorhandler-error-notice' => 'নোটিশ',
+	'errorhandler-error-deprecated' => 'বাতিল হয়েছে',
+	'errorhandler-error-core-error' => 'কোড ত্রুটি',
+	'errorhandler-error-core-warning' => 'কোড সতর্কীকরণ',
+	'errorhandler-error-compile-error' => 'কম্পাইল ত্রুটি',
+	'errorhandler-error-compile-warning' => 'কম্পাইল সতর্কীকরণ',
+	'errorhandler-error-user-error' => 'ব্যবহারকারী ত্রুটি',
+	'errorhandler-error-user-warning' => 'ব্যবহারকারী সতর্কীকরণ',
+	'errorhandler-error-user-notice' => 'ব্যবহারকারী নোটিশ',
+	'errorhandler-error-user-deprecated' => 'ব্যবহারকারী বাতিল হয়েছে',
+	'errorhandler-error-strict' => 'কঠোর মান',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Fulup
@@ -177,25 +231,25 @@ $messages['br'] = array(
 	'errorhandler-desc' => 'Merer ar fazioù evit MediaWiki',
 	'errorhandler-errors' => 'Fazioù :',
 	'errorhandler-error-fatal' => 'Fazi diremed',
-	'errorhandler-error-warning' => 'Evezhiadenn',
+	'errorhandler-error-warning' => 'Diwallit',
 	'errorhandler-error-parse' => 'Fazi parser',
-	'errorhandler-error-notice' => 'Notennig',
-	'errorhandler-error-deprecated' => "Dic'hizet",
-	'errorhandler-error-core-error' => 'Fazi gant ar galonenn',
-	'errorhandler-error-core-warning' => 'Kemenn eus ar galonenn',
-	'errorhandler-error-compile-error' => 'Fazi kempunadur',
-	'errorhandler-error-compile-warning' => 'Kemenadenn diwall ar kempunadur',
+	'errorhandler-error-notice' => 'Kemenn',
+	'errorhandler-error-deprecated' => 'Dispredet',
+	'errorhandler-error-core-error' => 'Fazi er graoñenn',
+	'errorhandler-error-core-warning' => 'Kemenn diwall a-berzh ar graoñenn',
+	'errorhandler-error-compile-error' => 'Fazi kempunañ',
+	'errorhandler-error-compile-warning' => "Kemenn diwall evit ar c'hempunañ",
 	'errorhandler-error-user-error' => 'Fazi implijer',
 	'errorhandler-error-user-warning' => 'Kemenn implijer',
-	'errorhandler-error-user-notice' => 'Notennig implijer',
-	'errorhandler-error-user-deprecated' => "Implijer dic'hizet",
-	'errorhandler-error-strict' => 'Standart strizh',
-	'errorhandler-error-recoverable' => "Fazi diremed a c'hell bezañ tapet",
+	'errorhandler-error-user-notice' => 'Kemenn implijer',
+	'errorhandler-error-user-deprecated' => 'Implijer dispredet',
+	'errorhandler-error-strict' => 'Standardoù strizh',
+	'errorhandler-error-recoverable' => "Fazi grevus a c'hell bezañ adpaket",
 	'errorhandler-msg-text' => '$1 : $2 e $3 (linenn $4)',
 	'errorhandler-msg-html' => '<b>$1</b> : <i>$2</i> e <b>$3</b> (linenn <b>$4</b>)',
 	'errorhandler-trace' => 'roud :',
 	'errorhandler-trace-line' => '$1 (linenn $2) : $3',
-	'errorhandler-trace-line-internal' => '[foñksion diabarzh]: $1',
+	'errorhandler-trace-line-internal' => "[arc'hwel diabarzh] : $1",
 );
 
 /** Bosnian (Bosanski)
@@ -235,6 +289,31 @@ $messages['ca'] = array(
 	'errorhandler-error-fatal' => 'Error fatal',
 	'errorhandler-error-compile-error' => 'Error de compilació',
 	'errorhandler-error-user-error' => "Error d'usuari",
+);
+
+/** Czech (Česky)
+ * @author Jkjk
+ */
+$messages['cs'] = array(
+	'errorhandler-desc' => 'Obsluha chyb MediaWiki',
+	'errorhandler-errors' => 'Chyby:',
+	'errorhandler-error-fatal' => 'Kritická chyba',
+	'errorhandler-error-warning' => 'Upozornění',
+	'errorhandler-error-parse' => 'Chyba syntaktické analýzy',
+	'errorhandler-error-notice' => 'Oznámení',
+	'errorhandler-error-deprecated' => 'Zastaralé',
+	'errorhandler-error-core-error' => 'Chyba jádra',
+	'errorhandler-error-core-warning' => 'Upozornění jádra',
+	'errorhandler-error-compile-error' => 'Chyba kompilace',
+	'errorhandler-error-compile-warning' => 'Upozornění kompilace',
+	'errorhandler-error-user-error' => 'Chyba uživatele',
+	'errorhandler-error-user-warning' => 'Upozornění uživatele',
+	'errorhandler-error-user-notice' => 'Oznámení uživatele',
+	'errorhandler-error-user-deprecated' => 'Uživatel je zastaralý',
+	'errorhandler-error-strict' => 'Přísné standardy',
+	'errorhandler-error-recoverable' => 'Zachytitelná kritická chyba',
+	'errorhandler-trace' => 'trasování:',
+	'errorhandler-trace-line-internal' => '[vnitřní funkce]: $1',
 );
 
 /** German (Deutsch)
@@ -420,23 +499,24 @@ $messages['fi'] = array(
  * @author IAlex
  * @author McDutchie
  * @author PieRRoMaN
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'errorhandler-desc' => "Gestionnaire d'erreurs pour MediaWiki",
 	'errorhandler-errors' => 'Erreurs :',
 	'errorhandler-error-fatal' => 'Erreur fatale',
 	'errorhandler-error-warning' => 'Avertissement',
-	'errorhandler-error-parse' => 'Erreur de parse',
+	'errorhandler-error-parse' => 'Erreur d’analyse',
 	'errorhandler-error-notice' => 'Notice',
-	'errorhandler-error-deprecated' => 'Obsolète',
-	'errorhandler-error-core-error' => 'Erreur de noyau',
+	'errorhandler-error-deprecated' => 'Désuet',
+	'errorhandler-error-core-error' => 'Erreur du noyau',
 	'errorhandler-error-core-warning' => 'Avertissement du noyau',
 	'errorhandler-error-compile-error' => 'Erreur de compilation',
 	'errorhandler-error-compile-warning' => 'Avertissement de compilation',
 	'errorhandler-error-user-error' => 'Erreur (utilisateur)',
 	'errorhandler-error-user-warning' => 'Avertissement (utilisateur)',
 	'errorhandler-error-user-notice' => 'Notice (utilisateur)',
-	'errorhandler-error-user-deprecated' => 'Obsolète (utilisateur)',
+	'errorhandler-error-user-deprecated' => 'Désuet (utilisateur)',
 	'errorhandler-error-strict' => 'Standards stricts',
 	'errorhandler-error-recoverable' => 'Erreur fatale qui peut être attrapée',
 	'errorhandler-msg-text' => '$1 : $2 dans $3 (ligne $4)',
@@ -448,9 +528,30 @@ $messages['fr'] = array(
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'errorhandler-desc' => 'Administrator d’èrrors por MediaWiki',
 	'errorhandler-errors' => 'Èrrors :',
+	'errorhandler-error-fatal' => 'Èrror fatala',
+	'errorhandler-error-warning' => 'Avèrtissement',
+	'errorhandler-error-parse' => 'Èrror du parsor',
+	'errorhandler-error-notice' => 'Nota',
+	'errorhandler-error-deprecated' => 'Dèpassâ',
+	'errorhandler-error-core-error' => 'Èrror du gremél',
+	'errorhandler-error-core-warning' => 'Avèrtissement du gremél',
+	'errorhandler-error-compile-error' => 'Èrror de compilacion',
+	'errorhandler-error-compile-warning' => 'Avèrtissement de compilacion',
+	'errorhandler-error-user-error' => 'Èrror a l’utilisator',
+	'errorhandler-error-user-warning' => 'Avèrtissement a l’utilisator',
+	'errorhandler-error-user-notice' => 'Nota a l’utilisator',
+	'errorhandler-error-strict' => 'Estandârds rêdos',
+	'errorhandler-error-recoverable' => 'Èrror fatala que pôt étre atrapâ',
+	'errorhandler-msg-text' => '$1 : $2 dens $3 (legne $4)',
+	'errorhandler-msg-html' => '<b>$1</b> : <i>$2</i> dens <b>$3</b> (legne <b>$4</b>)',
+	'errorhandler-trace' => 'trace :',
+	'errorhandler-trace-line' => '$1 (legne $2) : $3',
+	'errorhandler-trace-line-internal' => '[fonccion de dedens] : $1',
 );
 
 /** Galician (Galego)
@@ -736,7 +837,14 @@ $messages['km'] = array(
 	'errorhandler-trace-line' => '$1 (បន្ទាត់ទី$2): $3',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'errorhandler-error-warning' => 'ಎಚ್ಚರಿಕೆ',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -811,7 +919,7 @@ $messages['mk'] = array(
 	'errorhandler-error-fatal' => 'Фатална грешка',
 	'errorhandler-error-warning' => 'Предупредување',
 	'errorhandler-error-parse' => 'Грешка во парсерот',
-	'errorhandler-error-notice' => 'Белешка',
+	'errorhandler-error-notice' => 'Напомена',
 	'errorhandler-error-deprecated' => 'Забрането',
 	'errorhandler-error-core-error' => 'Јадрена грешка',
 	'errorhandler-error-core-warning' => 'Јадрено предупредување',
@@ -819,7 +927,7 @@ $messages['mk'] = array(
 	'errorhandler-error-compile-warning' => 'Предупредување од компилацијата',
 	'errorhandler-error-user-error' => 'Корисничка грешка',
 	'errorhandler-error-user-warning' => 'Корисничко предупредување',
-	'errorhandler-error-user-notice' => 'Корисничка белешка',
+	'errorhandler-error-user-notice' => 'Известување на корисник',
 	'errorhandler-error-user-deprecated' => 'Корисникот е забранет',
 	'errorhandler-error-strict' => 'Строги стандарди',
 	'errorhandler-error-recoverable' => 'Фатална грешка во Catchable',
@@ -830,12 +938,56 @@ $messages['mk'] = array(
 	'errorhandler-trace-line-internal' => '[внатрешна функција]: $1',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'errorhandler-errors' => 'Ralat:',
+	'errorhandler-msg-text' => '$1 : $2 dalam $3 (baris $4)',
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'errorhandler-errors' => 'Манявоматне:',
+);
+
 /** Nahuatl (Nāhuatl)
  * @author Fluence
  */
 $messages['nah'] = array(
 	'errorhandler-msg-html' => '<b>$1</b> : <i>$2</i> īpan <b>$3</b> (pāntli <b>$4</b>)',
 	'errorhandler-trace-line' => '$1 (pāntli $2): $3',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'errorhandler-desc' => 'Feilhåndtering for MediaWiki',
+	'errorhandler-errors' => 'Feil:',
+	'errorhandler-error-fatal' => 'Alvorlig feil',
+	'errorhandler-error-warning' => 'Advarsel',
+	'errorhandler-error-parse' => 'Parserfeil',
+	'errorhandler-error-notice' => 'Melding',
+	'errorhandler-error-deprecated' => 'Nedgradert',
+	'errorhandler-error-core-error' => 'Feil i kjernen',
+	'errorhandler-error-core-warning' => 'Kjerne-advarsel',
+	'errorhandler-error-compile-error' => 'Kompileringsfeil',
+	'errorhandler-error-compile-warning' => 'Kompileringsadvarsel',
+	'errorhandler-error-user-error' => 'Brukerfeil',
+	'errorhandler-error-user-warning' => 'Brukeradvarsel',
+	'errorhandler-error-user-notice' => 'Brukermelding',
+	'errorhandler-error-user-deprecated' => 'Brukerdegradert',
+	'errorhandler-error-strict' => 'Strenge standarder',
+	'errorhandler-error-recoverable' => 'Håndterbar alvorlig feil',
+	'errorhandler-msg-text' => '$1: $2 i $3 (rad $4)',
+	'errorhandler-msg-html' => '<b>$1</b>: <i>$2</i> i <b>$3</b> (rad <b>$4</b>)',
+	'errorhandler-trace' => 'spor:',
+	'errorhandler-trace-line' => '$1 (rad $2): $3',
+	'errorhandler-trace-line-internal' => '[intern funksjon]: $1',
 );
 
 /** Dutch (Nederlands)
@@ -894,35 +1046,6 @@ $messages['nn'] = array(
 	'errorhandler-trace-line-internal' => '[intern funksjon]: $1',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'errorhandler-desc' => 'Feilhåndtering for MediaWiki',
-	'errorhandler-errors' => 'Feil:',
-	'errorhandler-error-fatal' => 'Alvorlig feil',
-	'errorhandler-error-warning' => 'Advarsel',
-	'errorhandler-error-parse' => 'Parserfeil',
-	'errorhandler-error-notice' => 'Melding',
-	'errorhandler-error-deprecated' => 'Nedgradert',
-	'errorhandler-error-core-error' => 'Feil i kjernen',
-	'errorhandler-error-core-warning' => 'Kjerne-advarsel',
-	'errorhandler-error-compile-error' => 'Kompileringsfeil',
-	'errorhandler-error-compile-warning' => 'Kompileringsadvarsel',
-	'errorhandler-error-user-error' => 'Brukerfeil',
-	'errorhandler-error-user-warning' => 'Brukeradvarsel',
-	'errorhandler-error-user-notice' => 'Brukermelding',
-	'errorhandler-error-user-deprecated' => 'Brukerdegradert',
-	'errorhandler-error-strict' => 'Strenge standarder',
-	'errorhandler-error-recoverable' => 'Håndterbar alvorlig feil',
-	'errorhandler-msg-text' => '$1: $2 i $3 (rad $4)',
-	'errorhandler-msg-html' => '<b>$1</b>: <i>$2</i> i <b>$3</b> (rad <b>$4</b>)',
-	'errorhandler-trace' => 'spor:',
-	'errorhandler-trace-line' => '$1 (rad $2): $3',
-	'errorhandler-trace-line-internal' => '[intern funksjon]: $1',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -949,6 +1072,24 @@ $messages['oc'] = array(
 	'errorhandler-trace' => 'traça :',
 	'errorhandler-trace-line' => '$1 (linha $2): $3',
 	'errorhandler-trace-line-internal' => '[foncion intèrna] : $1',
+);
+
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Jnanaranjan Sahu
+ */
+$messages['or'] = array(
+	'errorhandler-errors' => 'ଅସୁବିଧାଗୁଡିକ:',
+	'errorhandler-error-warning' => 'ସାବଧାନ',
+	'errorhandler-error-notice' => 'ଘୋଷଣା',
+	'errorhandler-error-user-warning' => 'ବ୍ୟବହାରକାରୀ ଚେତାବନୀ',
+	'errorhandler-error-user-notice' => 'ବ୍ୟବହାରକାରୀ ଘୋଷଣା',
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'errorhandler-error-warning' => 'Warning',
 );
 
 /** Polish (Polski)
@@ -1020,11 +1161,13 @@ $messages['pnt'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'errorhandler-errors' => 'تېروتنې:',
 	'errorhandler-error-warning' => 'ګواښنه',
-	'errorhandler-error-user-warning' => 'د کارونکي ګواښنه',
+	'errorhandler-error-user-warning' => 'د کارن ګواښنه',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -1032,7 +1175,7 @@ $messages['pt'] = array(
 	'errorhandler-errors' => 'Erros:',
 	'errorhandler-error-fatal' => 'Erro fatal',
 	'errorhandler-error-warning' => 'Aviso',
-	'errorhandler-error-parse' => 'Erro do analisador parser',
+	'errorhandler-error-parse' => 'Erro do analisador sintáctico',
 	'errorhandler-error-notice' => 'Nota',
 	'errorhandler-error-deprecated' => 'Obsoleto',
 	'errorhandler-error-core-error' => 'Erro do núcleo',
@@ -1083,6 +1226,8 @@ $messages['pt-br'] = array(
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Minisarm
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'errorhandler-errors' => 'Erori:',
@@ -1091,6 +1236,8 @@ $messages['ro'] = array(
 	'errorhandler-error-parse' => 'Eroare de parser',
 	'errorhandler-error-notice' => 'Notificare',
 	'errorhandler-error-deprecated' => 'Învechit',
+	'errorhandler-error-core-error' => 'Eroare nucleu',
+	'errorhandler-error-core-warning' => 'Avertisment nucleu',
 	'errorhandler-error-compile-error' => 'Eroare de compilare',
 	'errorhandler-error-compile-warning' => 'Avertizare de compilare',
 	'errorhandler-error-user-error' => 'Eroare de utilizator',
@@ -1143,6 +1290,13 @@ $messages['ru'] = array(
 	'errorhandler-trace-line-internal' => '[внутренняя функция]: $1',
 );
 
+/** Sicilian (Sicilianu)
+ * @author Aushulz
+ */
+$messages['scn'] = array(
+	'errorhandler-error-warning' => 'Accura',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -1171,7 +1325,7 @@ $messages['sk'] = array(
 	'errorhandler-trace-line-internal' => '[vnútorná funkcia]: $1',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -1197,7 +1351,7 @@ $messages['sr-ec'] = array(
 	'errorhandler-trace-line-internal' => '[интерна функција]: $1',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -1252,17 +1406,34 @@ $messages['sv'] = array(
 	'errorhandler-trace-line-internal' => '[intern funktion]: $1',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'errorhandler-error-notice' => 'அறிவிப்பு',
+);
+
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
 	'errorhandler-errors' => 'పొరపాట్లు:',
+	'errorhandler-error-fatal' => 'ఫాటల్ లోపం',
 	'errorhandler-error-warning' => 'హెచ్చరిక',
 	'errorhandler-error-notice' => 'గమనిక',
+	'errorhandler-error-core-error' => 'కోర్ లోపం',
+	'errorhandler-error-core-warning' => 'కోర్ హెచ్చరిక',
+	'errorhandler-error-compile-error' => 'కంపైలు లోపం',
+	'errorhandler-error-compile-warning' => 'కంపైలు హెచ్చరిక',
 	'errorhandler-error-user-error' => 'వాడుకరి పొరపాటు',
 	'errorhandler-error-user-warning' => 'వాడుకరి హెచ్చరిక',
 	'errorhandler-error-user-notice' => 'వాడుకరి గమనిక',
+	'errorhandler-error-strict' => 'ఖచ్చితమైన ప్రమాణాలు',
+	'errorhandler-msg-text' => '$1 : $2 $3 లో ($4వ పంక్తి)',
+	'errorhandler-msg-html' => '<b>$1</b> : <i>$2</i> <b>$3</b>లో (<b>$4</b>వ పంక్తి)',
 	'errorhandler-trace-line' => '$1 (లైను $2): $3',
+	'errorhandler-trace-line-internal' => '[internal function]: $1',
 );
 
 /** Tagalog (Tagalog)
@@ -1316,6 +1487,7 @@ $messages['tr'] = array(
 /** Ukrainian (Українська)
  * @author NickK
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'errorhandler-desc' => 'Оброблювач помилок для MediaWiki',
@@ -1333,8 +1505,11 @@ $messages['uk'] = array(
 	'errorhandler-error-user-warning' => 'Попередження користувача',
 	'errorhandler-error-user-notice' => 'Повідомлення користувача',
 	'errorhandler-error-user-deprecated' => 'Користувач заборонений',
+	'errorhandler-error-strict' => 'Жорсткі стандарти',
+	'errorhandler-error-recoverable' => 'Виявлено фатальну помилку',
 	'errorhandler-msg-text' => '$1 : $2 в $3 (рядок $4)',
 	'errorhandler-msg-html' => '<b>$1</b> : <i>$2</i> у <b>$3</b> (рядок <b>$4</b>)',
+	'errorhandler-trace' => 'відбиток:',
 	'errorhandler-trace-line' => '$1 (рядок $2): $3',
 	'errorhandler-trace-line-internal' => '[внутрішня функція]: $1',
 );
@@ -1366,6 +1541,14 @@ $messages['vi'] = array(
 	'errorhandler-msg-html' => '<b>$1</b> : <i>$2</i> trong <b>$3</b> (dòng <b>$4</b>)',
 	'errorhandler-trace-line' => '$1 (dòng $2): $3',
 	'errorhandler-trace-line-internal' => '[hàm nội bộ]: $1',
+);
+
+/** Volapük (Volapük)
+ * @author Malafaya
+ */
+$messages['vo'] = array(
+	'errorhandler-errors' => 'Pöls:',
+	'errorhandler-error-warning' => 'Nuned',
 );
 
 /** Yiddish (ייִדיש)
@@ -1406,11 +1589,12 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'errorhandler-desc' => 'MediaWiki的錯誤處理程序',
-	'errorhandler-errors' => '錯誤:',
+	'errorhandler-errors' => '錯誤：',
 	'errorhandler-error-fatal' => '致命錯誤',
 	'errorhandler-error-warning' => '警告',
 	'errorhandler-error-parse' => '解析器錯誤',
@@ -1426,10 +1610,10 @@ $messages['zh-hant'] = array(
 	'errorhandler-error-user-deprecated' => '用戶不推薦使用',
 	'errorhandler-error-strict' => '嚴格的標準',
 	'errorhandler-error-recoverable' => '可捕獲的致命錯誤',
-	'errorhandler-msg-text' => '$1 : $2 在 $3 中 （第$4行）',
-	'errorhandler-msg-html' => '<b>$1</b> : <i>$2</i> 在 <b>$3</b> 中（第 <b>$4</b> 行）',
-	'errorhandler-trace' => '跟蹤：',
-	'errorhandler-trace-line' => '$1 （第$2行）: $3',
-	'errorhandler-trace-line-internal' => '[內部函數]: $1',
+	'errorhandler-msg-text' => '$1：$2 在 $3 中（第 $4 行）',
+	'errorhandler-msg-html' => '<b>$1</b>：<i>$2</i> 在 <b>$3</b> 中（第 <b>$4</b> 行）',
+	'errorhandler-trace' => '追蹤：',
+	'errorhandler-trace-line' => '$1（第$2行）：$3',
+	'errorhandler-trace-line-internal' => '[內部函數]：$1',
 );
 

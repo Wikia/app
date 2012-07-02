@@ -1,0 +1,34 @@
+# There is a publically editable copy of this file at
+# http://www.mediawiki.org/wiki/AntiSpoof/Equivalence_sets
+
+# This is the input file for generateEquivset.php
+# The format is:
+#
+#    <hexadecimal codepoint> <character> => [<hexadecimal codepoint>] <character>
+#
+# If the codepoint is given, it must match the character, or else a warning
+# will be issued and the line will be ignored.
+#
+# The effect of such a line is to conflate the two identified character, i.e.
+# to put them in the same set. If two sets share a member, then they will be
+# merged into a single larger set.
+#
+# We have attempted to include the following types of equivalence:
+#    * Case folding. Although letters of different cases are often visually
+#      distinct, they can easily be confused by people who are familiar with
+#      the alphabet. Two words with a different case may be read as the same
+#      word. This is a popular technique for impersonation.
+#
+#    * Visually similar characters. Cross-script pairs are included, but these
+#      tend to produce false conflations within scripts, and so should be
+#      avoided. The software implements a blanket restriction against cross-
+#      script strings, which makes cross-script pairs mostly redundant.
+#
+#    * Chinese Simplified/Traditional pairs.
+#
+# The list is based on one by Neil Harris, which was derived by unknown methods.
+# That list also contained transliteration pairs, which we considered excessive
+# and have attempted to remove. For example, the latin E and H were considered
+# equivalent, because the latin transliteration of the cyrillic "Н" (which
+# looks like latin H) is "E".
+

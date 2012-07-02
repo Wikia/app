@@ -3,7 +3,8 @@
 /**
  * Special page class for the Contributors extension
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
  
@@ -177,10 +178,8 @@ class SpecialContributors extends IncludableSpecialPage {
 	 * @return array
 	 */
 	protected static function getConditions($title) {
-		global $wgVersion;
 		$conds['rev_page'] = $title->getArticleId();
-		if( version_compare( $wgVersion, '1.11alpha', '>=' ) )
-			$conds[] = 'rev_deleted & ' . Revision::DELETED_USER . ' = 0';
+		$conds[] = 'rev_deleted & ' . Revision::DELETED_USER . ' = 0';
 		return $conds;
 	}
 	
@@ -208,13 +207,13 @@ class SpecialContributors extends IncludableSpecialPage {
 		$self = parent::getTitleFor( 'Contributors' );
 		$target = is_object( $this->target ) ? $this->target->getPrefixedText() : '';
 		$form  = '<form method="get" action="' . htmlspecialchars( $wgScript ) . '">';
-		$form .= Xml::hidden( 'title', $self->getPrefixedText() );
+		$form .= Html::Hidden( 'title', $self->getPrefixedText() );
 		$form .= '<fieldset><legend>' . wfMsgHtml( 'contributors-legend' ) . '</legend>';
 		$form .= '<table><tr>';
 		$form .= '<td><label for="target">' . wfMsgHtml( 'contributors-target' ) . '</label></td>';
 		$form .= '<td>' . Xml::input( 'target', 40, $target, array( 'id' => 'target' ) ) . '</td>';
 		$form .= '</tr><tr>';
-		$form .= '<td>&nbsp;</td>';
+		$form .= '<td>&#160;</td>';
 		$form .= '<td>' . Xml::submitButton( wfMsg( 'contributors-submit' ) ) . '</td>';
 		$form .= '</tr></table>';
 		$form .= '</fieldset>';

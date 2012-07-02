@@ -1,17 +1,17 @@
 /**
  * JavaScript for tooltips.
- * 
+ *
  * TODO: optimize this file for use with the MW resource loader.
  * * Get rid of addOnloadHook, so wikibits is no longer needed.
  * * Use jQuery to bind behaviour to DOM events.
- * 
+ *
  * @file SMW_tooltip.js
  * @ingroup SMW
  *
  * @author unknown
  */
 
-addOnloadHook( smw_tooltipInit );
+$( smw_tooltipInit );
 
 // these two objects needed due to the "hack" in timeline-api.js
 // see the comment there
@@ -24,7 +24,7 @@ var all_tt = []; // record all active tooltips
 var imagePath = wgScriptPath + '/extensions/SemanticMediaWiki/skins/images/';
 
 // Dimensions of persistent tooltips
-var SMWTT_WIDTH_P = 200;
+var SMWTT_WIDTH_P = 400;
 var SMWTT_HEIGHT_P = 80;
 
 // Dimensions of inline tooltips
@@ -423,7 +423,7 @@ BubbleTT.Platform.browser = {
 	var an = navigator.appName.toLowerCase();
 	var ua = navigator.userAgent.toLowerCase();
 
-	/*
+	/**
 	 *  Operating system
 	 */
 	BubbleTT.Platform.os.isMac = ( ua.indexOf( 'mac' ) != -1 );
@@ -437,7 +437,7 @@ BubbleTT.Platform.browser = {
 	);
 	BubbleTT.Platform.os.isUnix = ( ua.indexOf( 'x11' ) != -1 );
 
-	/*
+	/**
 	 *  Browser
 	 */
 	BubbleTT.Platform.browser.isIE = ( an.indexOf( 'microsoft' ) != -1 );

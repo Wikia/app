@@ -190,7 +190,7 @@ class RollbackEditsMulti extends Maintenance {
 	
 	private function deleteArticle( $article, $reason, $suppress = false, &$error = '' ) {
 		global $wgOut, $wgUser;
-		$id = $article->getTitle()->getArticleID( GAID_FOR_UPDATE );
+		$id = $article->getTitle()->getArticleID( Title::GAID_FOR_UPDATE );
 
 		if ( wfRunHooks( 'ArticleDelete', array( &$article, &$wgUser, &$reason, &$error ) ) ) {
 			if ( $article->doDeleteArticle( $reason, $suppress, $id ) ) {

@@ -2,12 +2,12 @@
  * JavaScript functions for the Player extension, 
  * for support of the AJAX inline player functionality.
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Daniel Kinzler <duesentrieb@brightbyte.de>
  * @copyright © 2006 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
-*/
+ */
     
     function loadPlayer(file, opt, id) {
       var div = document.getElementById(id + '-container');

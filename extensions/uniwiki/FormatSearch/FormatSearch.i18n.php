@@ -29,6 +29,13 @@ $messages['af'] = array(
 	'formatsearch-desc' => 'Maak die soekresultate-bladsy skoon.',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'formatsearch-desc' => 'Pastron faqe rezultatet e kërkimit',
+);
+
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -43,7 +50,14 @@ $messages['arz'] = array(
 	'formatsearch-desc' => 'تنضيف صفحة نتايج التدوير',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'formatsearch-desc' => 'Llimpia la páxina de los resultaos de la gueta',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -150,6 +164,13 @@ $messages['fr'] = array(
 	'formatsearch-desc' => 'Nettoie la page de résultats des recherches',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'formatsearch-desc' => 'Neteye la pâge de rèsultats de les rechèrches.',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -235,18 +256,39 @@ $messages['km'] = array(
 	'formatsearch-desc' => 'សំអាត​ទំព័រ​លទ្ធផល​ស្វែងរក',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
 	'formatsearch-desc' => 'Deiht de Resultat-Sigg vum Söke oprühme.',
 );
 
+/** Kirghiz (Кыргызча)
+ * @author AidaBishkek
+ */
+$messages['ky'] = array(
+	'formatsearch-desc' => 'Издөө жыйынтыктары барагын иреттейт',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
-	'formatsearch-desc' => "Botzt d'Säit mat de Resultater vun der Sich",
+	'formatsearch-desc' => "Botzt d'Säit mat de Resultater vum Sichen",
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'formatsearch-desc' => 'Sakārto meklēšanas rezultātu lapu',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'formatsearch-desc' => 'Manadio ny pejim-balim-pikarohana',
 );
 
 /** Macedonian (Македонски)
@@ -256,11 +298,25 @@ $messages['mk'] = array(
 	'formatsearch-desc' => 'Ја исчистува страницата со резултати од пребарување',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'formatsearch-desc' => 'Membersihkan laman hasil carian',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'formatsearch-desc' => 'Renser søkeresultatsiden',
+);
+
 /** Nedersaksisch (Nedersaksisch)
  * @author Servien
  */
 $messages['nds-nl'] = array(
-	'formatsearch-desc' => 'Keert de zeukrisseltaotenpagina an',
+	'formatsearch-desc' => 'Keert de zeukresultaotenpagina an',
 );
 
 /** Dutch (Nederlands)
@@ -275,13 +331,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'formatsearch-desc' => 'Reinsar søkeresultatsida',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'formatsearch-desc' => 'Renser søkeresultatsiden',
 );
 
 /** Occitan (Occitan)
@@ -323,7 +372,7 @@ $messages['pt-br'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'formatsearch-desc' => 'Curăţă pagina cu rezultatele căutării',
+	'formatsearch-desc' => 'Curăță pagina cu rezultatele căutării',
 );
 
 /** Tarandíne (Tarandíne)
@@ -354,6 +403,13 @@ $messages['sk'] = array(
 	'formatsearch-desc' => 'Vyčistí stránku s výsledkami vyhľadávania',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'formatsearch-desc' => 'Počisti stran z rezultati iskanja',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
@@ -361,14 +417,14 @@ $messages['sq'] = array(
 	'formatsearch-desc' => 'Pastron faqen e rezultateve të kërkimit',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'formatsearch-desc' => 'Чисти страну са резултатима претраге',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(

@@ -4,7 +4,7 @@
 CREATE TABLE /*$wgDBprefix*/cu_log (
   -- Unique identifier
   cul_id int unsigned not null auto_increment,
-  
+
   -- Timestamp of CheckUser action
   cul_timestamp binary(14) not null,
 
@@ -37,6 +37,4 @@ CREATE TABLE /*$wgDBprefix*/cu_log (
   INDEX cul_type_target (cul_type,cul_target_id, cul_timestamp),
   INDEX cul_target_hex (cul_target_hex, cul_timestamp),
   INDEX cul_range_start (cul_range_start, cul_timestamp)
-
 ) /*$wgDBTableOptions*/;
-

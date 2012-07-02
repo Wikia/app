@@ -42,6 +42,4 @@ $app->registerExtensionFunction('wfExtensionInit');
 
 function wfExtensionInit() {
 	// place extension init stuff here
-	
-	return true; // needed so that other extension initializations continue
 }

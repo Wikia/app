@@ -10,7 +10,7 @@
          syntaxCheck="true"
          processIsolation="false">
          <testsuite name="Wikia Test Suite">
-            <directory>./</directory>
+            <directory>./unit/</directory>
          </testsuite>
          <testsuite name="Wikia Includes Test Suite">
             <directory>../includes/wikia/</directory>

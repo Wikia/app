@@ -20,6 +20,10 @@ abstract class TMessage {
 	protected $infile;
 	/// \list{String} Message tags.
 	protected $tags = array();
+	/// \array Message properties.
+	protected $props = array();
+	/// \list{String} Message reviewers.
+	protected $reviewers = array();
 
 	/**
 	 * Creates new message object.
@@ -97,6 +101,22 @@ abstract class TMessage {
 	public function getTags() {
 		return $this->tags;
 	}
+
+	public function setProperty( $key, $value ) {
+		$this->props[$key] = $value;
+	}
+
+	public function appendProperty( $key, $value ) {
+		if ( !isset( $this->props[$key] ) ) {
+			$this->props[$key] = array();
+		}
+		$this->props[$key][] = $value;
+	}
+
+	public function getProperty( $key ) {
+		return isset( $this->props[$key] ) ? $this->props[$key] : null;
+	}
+
 }
 
 /**
@@ -105,6 +125,12 @@ abstract class TMessage {
  * text.
  */
 class ThinMessage extends TMessage {
+	// This maps properties to fields in the database result row
+	protected static $propertyMap = array(
+		'last-translator-text' => 'rev_user_text',
+		'last-translator-id' => 'rev_user',
+	);
+
 	/// \type{Database Result Row}
 	protected $row;
 
@@ -123,11 +149,26 @@ class ThinMessage extends TMessage {
 		return Revision::getRevisionText( $this->row );
 	}
 
+	/// Deprecated, use getProperty( 'last-translator-text' )
 	public function author() {
 		if ( !isset( $this->row ) ) {
 			return null;
 		}
 		return $this->row->rev_user_text;
+	}
+
+	// Re-implemented
+	public function getProperty( $key ) {
+		if ( !isset( self::$propertyMap[$key] ) ) {
+			return parent::getProperty( $key );
+		}
+
+		$field = self::$propertyMap[$key];
+		if ( !isset( $this->row->$field ) ) {
+			return null;
+		}
+
+		return $this->row->$field;
 	}
 
 }

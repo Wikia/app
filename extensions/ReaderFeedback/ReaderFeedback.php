@@ -14,7 +14,7 @@
 
  You should have received a copy of the GNU General Public License along
  with this program; if not, write to the Free Software Foundation, Inc.,
- 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  http://www.gnu.org/copyleft/gpl.html
 */
 
@@ -27,7 +27,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Reader Feedback',
 	'author'         => array( 'Aaron Schulz' ),
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:ReaderFeedback',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:ReaderFeedback',
 	'descriptionmsg' => 'readerfeedback-desc',
 );
 
@@ -40,7 +40,7 @@ $wgGroupPermissions['*']['feedback'] = true;
 
 # Allow readers to rate pages in these namespaces
 $wgFeedbackNamespaces = array();
-#$wgFeedbackNamespaces = array( NS_MAIN );
+
 # Reader feedback tags, positive and negative. [a-zA-Z] tag names only.
 # Each tag has five levels, which 3 being average. The tag names are
 # mapped to their weight. This is used to determine the "worst"/"best" pages.
@@ -84,6 +84,7 @@ $wgPHPlotDir = $dir . 'phplot-5.0.5';
 
 $wgAutoloadClasses['ReaderFeedback'] = $dir.'ReaderFeedback.class.php';
 $wgAutoloadClasses['ReaderFeedbackHooks'] = $dir.'ReaderFeedback.hooks.php';
+$wgExtensionMessagesFiles['ReaderFeedbackAlias'] = $langDir . 'ReaderFeedback.alias.php';
 
 # Load reader feedback UI
 $wgExtensionMessagesFiles['ReaderFeedback'] = $langDir . 'ReaderFeedback.i18n.php';
@@ -140,13 +141,23 @@ $wgAjaxExportList[] = 'ReaderFeedbackPage::AjaxReview';
 # Schema changes
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'efReaderFeedbackSchemaUpdates';
 
-function efReaderFeedbackSchemaUpdates() {
-	global $wgDBtype, $wgExtNewFields, $wgExtPGNewFields, $wgExtNewIndexes, $wgExtNewTables;
-	$base = dirname(__FILE__);
-	if( $wgDBtype == 'mysql' ) {
-		$wgExtNewTables[] = array( 'reader_feedback', "$base/ReaderFeedback.sql" ); // Initial install tables
-	} elseif( $wgDBtype == 'postgres' ) {
-		$wgExtNewTables[] = array( 'reader_feedback', "$base/ReaderFeedback.pg.sql" ); // Initial install tables
+function efReaderFeedbackSchemaUpdates( $updater = null ) {
+	$base = dirname( __FILE__ );
+	if ( $updater === null ) {
+		global $wgDBtype, $wgExtNewTables;
+		if( $wgDBtype == 'mysql' ) {
+			$wgExtNewTables[] = array( 'reader_feedback', "$base/ReaderFeedback.sql" ); // Initial install tables
+		} elseif( $wgDBtype == 'postgres' ) {
+			$wgExtNewTables[] = array( 'reader_feedback', "$base/ReaderFeedback.pg.sql" ); // Initial install tables
+		}
+	} else {
+		if( $updater->getDB()->getType() == 'mysql' ) {
+			$updater->addExtensionUpdate( array( 'addTable', 'reader_feedback',
+				"$base/ReaderFeedback.sql", true ) ); // Initial install tables
+		} elseif( $updater->getDB()->getType() == 'postgres' ) {
+			$updater->addExtensionUpdate( array( 'addTable', 'reader_feedback',
+				"$base/ReaderFeedback.pg.sql", true ) ); // Initial install tables
+		}
 	}
 	return true;
 }

@@ -136,7 +136,7 @@ $messages['az'] = array(
 	'editaccount-submit-realname' => 'Əsl adı qeyd et',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -590,7 +590,7 @@ $messages['fr'] = array(
 	'right-editaccount' => "Modifier les préférences d'autres utilisateurs",
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1505,7 +1505,6 @@ $messages['ru'] = array(
 	'editaccount-success-realname' => 'Настоящее имя для учётной записи $1 успешно изменено.',
 	'editaccount-success-unsub' => 'Успешно удалена блокировка подписки для учётной записи $1.',
 	'editaccount-success-disable' => 'Успешно удалён отключённый бит блокировки для учётной записи  $1 .',
-	'editaccount-success-toggleadopt' => 'Успешно прошло принятие вики для учётной записи  $1.',
 	'editaccount-success-close' => 'Учётная запись $1 успешно отключена.',
 	'editaccount-error-email' => 'Адрес эл. почты не был изменён. Попробуйте ещё раз или свяжитесь с технической командой.',
 	'editaccount-error-pass' => 'Пароль не был изменён. Попробуйте ещё раз или свяжитесь с технической командой.',

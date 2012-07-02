@@ -15,7 +15,7 @@ $wgAutoloadClasses['FollowHelper']  = $dir . 'FollowHelper.class.php';
 $wgAutoloadClasses['FollowedPages']  = $dir . 'FollowedPagesSpecial.php';
 $wgAutoloadClasses['FollowModel'] = $dir . 'FollowModel.class.php';
 $wgExtensionMessagesFiles['Follow'] = $dir . 'Follow.i18n.php';
-$wgExtensionAliasesFiles['Follow'] = $dir . 'Follow.alias.php';
+$wgExtensionMessagesFiles['FollowAliases'] = $dir . 'Follow.alias.php';
 
 /* Hooks setup */
 if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {

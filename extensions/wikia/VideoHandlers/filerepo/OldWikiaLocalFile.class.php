@@ -96,7 +96,7 @@ class OldWikiaLocalFile extends OldLocalFile {
 	function getHandler(){
 		wfProfileIn( __METHOD__ );
 		parent::getHandler();
-		$this->getLocalFileLogic()->afterGetHandler();
+		$this->getLocalFileLogic()->afterGetHandler($this->handler);
 		wfProfileOut( __METHOD__ );
 		return $this->handler;
 	}

@@ -11,10 +11,9 @@ require_once 'extras.php';
 class WatchlistFeed extends SpecialPage
 {
 	var $server;
-	function WatchlistFeed()
+	function __construct()
 	{
-		SpecialPage::SpecialPage("WatchlistFeed");
-		wfLoadExtensionMessages('WatchlistFeed');
+		parent::__construct("WatchlistFeed");
 	}
 	function execute( $par )
 	{
@@ -42,7 +41,7 @@ class WatchlistFeed extends SpecialPage
 			}
 		} else { # not a feed link
 			global $wgUser;
-			
+
 			if( $wgUser->isAnon() ) {
 				global $wgOut;
 				$wgOut->loginToUse();
@@ -52,7 +51,7 @@ class WatchlistFeed extends SpecialPage
 				} else if( $wgRequest->getVal("wpdisable") ) {
 					$this->disableFeed();
 				}
-			
+
 				$this->displayConfigurationForm();
 			}
 		}
@@ -66,7 +65,7 @@ class WatchlistFeed extends SpecialPage
 			htmlspecialchars( wfMsgForContent( 'watchlistfeed-desc', $wgUser->getName() ) ),
 			$wgTitle->getFullUrl() );
 	}
-	
+
 	function disableFeed() {
 		global $wgUser;
 
@@ -75,7 +74,7 @@ class WatchlistFeed extends SpecialPage
 	}
 	function enableFeed() {
 		global $wgUser;
-		
+
 		$wgUser->setOption("enableWatchlistFeed","yes");
 
 		$key = $this->generateAccessKey();
@@ -84,7 +83,7 @@ class WatchlistFeed extends SpecialPage
 	}
 	function generateAccessKey() {
 		global $wgWatchlistAccessKeySize;
-		
+
 		$keySet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		$setSize = strlen($keySet);
 
@@ -102,7 +101,7 @@ class WatchlistFeed extends SpecialPage
 
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->addHTML("<form>");
-			
+
 			if( $enabled ) {
 				$wgOut->addHTML(wfMsg("watchlistfeed-feed-state-enabled")."<br/>");
 
@@ -116,7 +115,7 @@ class WatchlistFeed extends SpecialPage
 					."&feed=atom";
 
 				$wgOut->addHTML(wfMsg("watchlistfeed-links",$rssFeedUrl,$atomFeedUrl));
-				
+
 			} else {
 				$wgOut->addHTML(wfMsg("watchlistfeed-feed-state-disabled")."<br/>");
 			}
@@ -167,7 +166,7 @@ class WatchlistFeed extends SpecialPage
 					wfMsg( 'previousrevision' ), // hack
 					wfMsg( 'revisionasof',
 						$wgContLang->timeanddate( $timestamp ) ) );
-					
+
 
 				if ( strlen( $diffText ) > $wgFeedDiffCutoff ) {
 					// Omit large diffs
@@ -254,7 +253,7 @@ class WatchlistFeed extends SpecialPage
 				$talkpage->getFullURL()
 				);
 			$feed->outItem($item);
-			
+
 		}
 		$watchlist->cleanup();
 		$feed->outFooter();
@@ -279,7 +278,7 @@ class Watchlist{
 
 	public function Watchlist(){
 	}
-	
+
 	////
 	// Pre-fetch the results from the database.
 	////

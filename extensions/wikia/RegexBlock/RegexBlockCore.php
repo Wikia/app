@@ -532,9 +532,6 @@ function wfRegexBlockSetUserData(&$user, $user_ip, $blocker, $valid) {
         return $result;
     }
 
-    /* read messages from language's file */
-    wfLoadExtensionMessages( 'RegexBlock' );
-
     if ( empty($wgContactLink) ) {
         $wgContactLink = '[[Special:Contact|contact Wikia]]';
     }
@@ -718,7 +715,6 @@ function wfRegexBlockUnsetKeys($username) {
 function wfLoadRegexBlockLink( $id, $nt, &$links ) {
     global $wgUser;
         if( $wgUser->isAllowed( 'regexblock' ) ) {
-	        wfLoadExtensionMessages( 'RegexBlock' );
 		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
 			            SpecialPage::getTitleFor( 'RegexBlock' ),
 				                wfMsg( 'regexblock' ),

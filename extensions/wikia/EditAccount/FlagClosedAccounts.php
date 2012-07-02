@@ -30,7 +30,6 @@ function efFlagClosedAccounts( $id ) {
 	$u = User::newFromId($id);
 	$disOpt = $u->getOption('disabled');
 	if ( !empty($disOpt) ) {
-		wfLoadExtensionMessages( 'EditAccount' );
 		$wgOut->addWikiMsg( 'edit-account-closed-flag' );
 	}
 

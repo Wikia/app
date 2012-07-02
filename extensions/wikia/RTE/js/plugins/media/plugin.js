@@ -43,6 +43,7 @@ CKEDITOR.plugins.add('rte-media',
 			command: 'addimage'
 		});
 
+
 		// check for existance of VideoEmbedTool
 		if (typeof window.VET_show == 'function') {
 			// register "Add Video" command
@@ -63,7 +64,28 @@ CKEDITOR.plugins.add('rte-media',
 		}
 		else {
 			RTE.log('VET is not enabled here - disabling "Video" button');
-			return;
+		}
+
+		// check for existance of MediaUploadTool
+		if (typeof window.MediaTool == 'object') {
+			// register "Media" command
+			editor.addCommand('mediaupload', {
+				exec: function(editor) {
+					// call MediaUploadTool
+					RTE.tools.callFunction($.proxy(window.MediaTool.showModal, window.MediaTool));
+				}
+			});
+
+			// register "Media" toolbar button
+			editor.ui.addButton('MediaUpload', {
+				label: editor.lang.mut.mut,
+				title: editor.lang.mut.add,
+				className: 'RTEMUTButton',
+				command: 'mediaupload'
+			});
+		}
+		else {
+			RTE.log('MUT is not enabled here - disabling "Media" button');
 		}
 
 		// set reference to plugin object

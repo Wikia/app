@@ -32,7 +32,7 @@ function quickTokenExtractArray( $php, $varname ) {
 if( count( $args ) ) {
 	$sources = $args;
 } else {
-	$sources = 
+	$sources =
 		array_merge(
 			glob("$IP/extensions/*/*.i18n.php"),
 			glob("$IP/languages/messages/Messages*.php") );
@@ -41,9 +41,9 @@ if( count( $args ) ) {
 foreach( $sources as $sourceFile ) {
 	$rel = basename( $sourceFile );
 	$out = str_replace( '/', '-', $rel );
-	
+
 	$sourceData = file_get_contents( $sourceFile );
-	
+
 	if( preg_match( '!extensions/!', $sourceFile ) ) {
 		$sourceData = LocalisationUpdate::cleanupExtensionFile( $sourceData );
 		$items = 'langs';
@@ -51,32 +51,32 @@ foreach( $sources as $sourceFile ) {
 		$sourceData = LocalisationUpdate::cleanupFile( $sourceData );
 		$items = 'messages';
 	}
-	
+
 	file_put_contents( "$out.txt", $sourceData );
 
 	$start = microtime(true);
 	$eval = evalExtractArray( $sourceData, 'messages' );
 	$deltaEval = microtime(true) - $start;
-	
+
 	$start = microtime(true);
 	$quick = quickTokenExtractArray( $sourceData, 'messages' );
 	$deltaQuick = microtime(true) - $start;
-	
+
 	$start = microtime(true);
 	$token = confExtractArray( $sourceData, 'messages' );
 	$deltaToken = microtime(true) - $start;
-	
+
 	$hashEval = md5(serialize($eval));
 	$hashToken = md5(serialize($token));
 	$hashQuick = md5(serialize($quick));
 	$countEval = count( (array)$eval);
 	$countToken = count( (array)$token );
 	$countQuick = count( (array)$quick );
-	
+
 	printf( "%s %s %d $items - %0.1fms - eval\n", $rel, $hashEval, $countEval, $deltaEval * 1000 );
 	printf( "%s %s %d $items - %0.1fms - QuickArrayReader\n", $rel, $hashQuick, $countQuick, $deltaQuick * 1000 );
 	printf( "%s %s %d $items - %0.1fms - ConfEditor\n", $rel, $hashToken, $countToken, $deltaToken * 1000 );
-	
+
 	if( $hashEval !== $hashToken || $hashEval !== $hashQuick ) {
 		echo "FAILED on $rel\n";
 		file_put_contents( "$out-eval.txt", var_export( $eval, true ) );

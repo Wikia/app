@@ -13,13 +13,28 @@
 class MapsKMLFormatter {
 
 	/**
+	 * @since 1.0
+	 *  
+	 * @var array
+	 */
+	protected $params;
+	
+	/**
 	 * @since 0.7.3
 	 * 
 	 * @var array of MapsLocation
 	 */
 	protected $placemarks;
 	
-	public function __construct() {
+	/**
+	 * Constructor.
+	 * 
+	 * @since 0.7.3
+	 * 
+	 * @param array $params
+	 */
+	public function __construct( array $params = array() ) {
+		$this->params = $params;
 		$this->clearElements();
 	}
 	

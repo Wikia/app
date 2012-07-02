@@ -1,13 +1,28 @@
 <?php
 /**
- * @file 
+ * Script to populate category table.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  * @ingroup Maintenance
  * @author Simetrical
  */
 
-$optionsWithArgs = array( 'begin', 'max-slave-lag', 'throttle' );
-
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 
 class PopulateCategory extends Maintenance {
@@ -31,12 +46,13 @@ added after the software update and so will be populated anyway.
 When the script has finished, it will make a note of this in the database, and
 will not run again without the --force option.
 TEXT;
+# '
 		$this->addOption( 'begin', 'Only do categories whose names are alphabetically after the provided name', false, true );
 		$this->addOption( 'max-slave-lag', 'If slave lag exceeds this many seconds, wait until it drops before continuing.  Default: 10', false, true );
 		$this->addOption( 'throttle', 'Wait this many milliseconds after each category.  Default: 0', false, true );
 		$this->addOption( 'force', 'Run regardless of whether the database says it\'s been run already' );
 	}
-	
+
 	public function execute() {
 		$begin = $this->getOption( 'begin', '' );
 		$maxSlaveLag = $this->getOption( 'max-slave-lag', 10 );
@@ -47,81 +63,79 @@ TEXT;
 
 	private function doPopulateCategory( $begin, $maxlag, $throttle, $force ) {
 		$dbw = wfGetDB( DB_MASTER );
-	
-		if( !$force ) {
+
+		if ( !$force ) {
 			$row = $dbw->selectRow(
 				'updatelog',
 				'1',
 				array( 'ul_key' => 'populate category' ),
-				__FUNCTION__
+				__METHOD__
 			);
-			if( $row ) {
-				$this->output( "Category table already populated.  Use php ".
-				"maintenance/populateCategory.php\n--force from the command line ".
+			if ( $row ) {
+				$this->output( "Category table already populated.  Use php " .
+				"maintenance/populateCategory.php\n--force from the command line " .
 				"to override.\n" );
 				return true;
 			}
 		}
-	
-		$maxlag = intval( $maxlag );
+
 		$throttle = intval( $throttle );
-		$force = (bool)$force;
-		if( $begin !== '' ) {
-			$where = 'cl_to > '.$dbw->addQuotes( $begin );
+		if ( $begin !== '' ) {
+			$where = 'cl_to > ' . $dbw->addQuotes( $begin );
 		} else {
 			$where = null;
 		}
 		$i = 0;
-	
-		while( true ) {
+
+		while ( true ) {
 			# Find which category to update
 			$row = $dbw->selectRow(
 				'categorylinks',
 				'cl_to',
 				$where,
-				__FUNCTION__,
+				__METHOD__,
 				array(
 					'ORDER BY' => 'cl_to'
 				)
 			);
-			if( !$row ) {
+			if ( !$row ) {
 				# Done, hopefully.
 				break;
 			}
 			$name = $row->cl_to;
-			$where = 'cl_to > '.$dbw->addQuotes( $name );
-	
+			$where = 'cl_to > ' . $dbw->addQuotes( $name );
+
 			# Use the row to update the category count
 			$cat = Category::newFromName( $name );
-			if( !is_object( $cat ) ) {
+			if ( !is_object( $cat ) ) {
 				$this->output( "The category named $name is not valid?!\n" );
 			} else {
 				$cat->refreshCounts();
 			}
-	
+
 			++$i;
-			if( !($i % self::REPORTING_INTERVAL) ) {
+			if ( !( $i % self::REPORTING_INTERVAL ) ) {
 				$this->output( "$name\n" );
-				wfWaitForSlaves( $maxlag );
+				wfWaitForSlaves();
 			}
-			usleep( $throttle*1000 );
+			usleep( $throttle * 1000 );
 		}
-	
-		if( $dbw->insert(
+
+		if ( $dbw->insert(
 				'updatelog',
 				array( 'ul_key' => 'populate category' ),
-				__FUNCTION__,
+				__METHOD__,
 				'IGNORE'
 			)
 		) {
-			wfOut( "Category population complete.\n" );
+			$this->output( "Category population complete.\n" );
 			return true;
 		} else {
-			wfOut( "Could not insert category population row.\n" );
+			$this->output( "Could not insert category population row.\n" );
 			return false;
 		}
 	}
 }
 
 $maintClass = "PopulateCategory";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

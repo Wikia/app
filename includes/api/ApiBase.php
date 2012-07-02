@@ -1,9 +1,8 @@
 <?php
-
 /**
- * Created on Sep 5, 2006
  *
- * API for MediaWiki 1.8+
+ *
+ * Created on Sep 5, 2006
  *
  * Copyright © 2006, 2010 Yuri Astrakhan <Firstname><Lastname>@gmail.com
  *
@@ -19,8 +18,10 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
 
 /**
@@ -29,7 +30,7 @@
  * The class functions are divided into several areas of functionality:
  *
  * Module parameters: Derived classes can define getAllowedParams() to specify
- * 	which parameters to expect,h ow to parse and validate them.
+ * 	which parameters to expect, how to parse and validate them.
  *
  * Profiling: various methods to allow keeping tabs on various tasks and their
  * 	time costs
@@ -38,7 +39,7 @@
  *
  * @ingroup API
  */
-abstract class ApiBase {
+abstract class ApiBase extends ContextSource {
 
 	// These constants allow modules to specify exactly how to treat incoming parameters.
 
@@ -50,6 +51,8 @@ abstract class ApiBase {
 	const PARAM_MIN = 5; // Lowest value allowed for a parameter. Only applies if TYPE='integer'
 	const PARAM_ALLOW_DUPLICATES = 6; // Boolean, do we allow the same value to be set more than once when ISMULTI=true
 	const PARAM_DEPRECATED = 7; // Boolean, is the parameter deprecated (will show a warning)
+	const PARAM_REQUIRED = 8; // Boolean, is the parameter required?
+	const PARAM_RANGE_ENFORCE = 9; // Boolean, if MIN/MAX are set, enforce (die) these? Only applies if TYPE='integer' Use with extreme caution
 
 	const LIMIT_BIG1 = 500; // Fast query, std user limit
 	const LIMIT_BIG2 = 5000; // Fast query, bot/sysop limit
@@ -69,6 +72,10 @@ abstract class ApiBase {
 		$this->mMainModule = $mainModule;
 		$this->mModuleName = $moduleName;
 		$this->mModulePrefix = $modulePrefix;
+
+		if ( !$this->isMain() ) {
+			$this->setContext( $mainModule->getContext() );
+		}
 	}
 
 	/*****************************************************************************
@@ -119,6 +126,9 @@ abstract class ApiBase {
 
 	/**
 	 * Get the name of the module as shown in the profiler log
+	 *
+	 * @param $db DatabaseBase
+	 *
 	 * @return string
 	 */
 	public function getModuleProfileName( $db = false ) {
@@ -168,6 +178,20 @@ abstract class ApiBase {
 	}
 
 	/**
+	 * Create a new RequestContext object to use e.g. for calls to other parts
+	 * the software.
+	 * The object will have the WebRequest and the User object set to the ones
+	 * used in this instance.
+	 *
+	 * @deprecated since 1.19 use getContext to get the current context
+	 * @return DerivativeContext
+	 */
+	public function createContext() {
+		wfDeprecated( __METHOD__, '1.19' );
+		return new DerivativeContext( $this->getContext() );
+	}
+
+	/**
 	 * Set warning section for this module. Users should monitor this
 	 * section to notice any changes in API. Multiple calls to this
 	 * function will result in the warning messages being separated by
@@ -175,24 +199,24 @@ abstract class ApiBase {
 	 * @param $warning string Warning message
 	 */
 	public function setWarning( $warning ) {
-		$data = $this->getResult()->getData();
+		$result = $this->getResult();
+		$data = $result->getData();
 		if ( isset( $data['warnings'][$this->getModuleName()] ) ) {
 			// Don't add duplicate warnings
 			$warn_regex = preg_quote( $warning, '/' );
-			if ( preg_match( "/{$warn_regex}(\\n|$)/", $data['warnings'][$this->getModuleName()]['*'] ) )
-			{
+			if ( preg_match( "/{$warn_regex}(\\n|$)/", $data['warnings'][$this->getModuleName()]['*'] ) ) {
 				return;
 			}
 			$oldwarning = $data['warnings'][$this->getModuleName()]['*'];
 			// If there is a warning already, append it to the existing one
 			$warning = "$oldwarning\n$warning";
-			$this->getResult()->unsetValue( 'warnings', $this->getModuleName() );
+			$result->unsetValue( 'warnings', $this->getModuleName() );
 		}
 		$msg = array();
 		ApiResult::setContent( $msg, $warning );
-		$this->getResult()->disableSizeCheck();
-		$this->getResult()->addValue( 'warnings', $this->getModuleName(), $msg );
-		$this->getResult()->enableSizeCheck();
+		$result->disableSizeCheck();
+		$result->addValue( 'warnings', $this->getModuleName(), $msg );
+		$result->enableSizeCheck();
 	}
 
 	/**
@@ -212,7 +236,7 @@ abstract class ApiBase {
 	public function makeHelpMsg() {
 		static $lnPrfx = "\n  ";
 
-		$msg = $this->getDescription();
+		$msg = $this->getFinalDescription();
 
 		if ( $msg !== false ) {
 
@@ -224,17 +248,16 @@ abstract class ApiBase {
 			$msg = $lnPrfx . implode( $lnPrfx, $msg ) . "\n";
 
 			if ( $this->isReadMode() ) {
-				$msg .= "\nThis module requires read rights.";
+				$msg .= "\nThis module requires read rights";
 			}
 			if ( $this->isWriteMode() ) {
-				$msg .= "\nThis module requires write rights.";
+				$msg .= "\nThis module requires write rights";
 			}
 			if ( $this->mustBePosted() ) {
-				$msg .= "\nThis module only accepts POST requests.";
+				$msg .= "\nThis module only accepts POST requests";
 			}
 			if ( $this->isReadMode() || $this->isWriteMode() ||
-					$this->mustBePosted() )
-			{
+					$this->mustBePosted() ) {
 				$msg .= "\n";
 			}
 
@@ -244,17 +267,31 @@ abstract class ApiBase {
 				$msg .= "Parameters:\n$paramsMsg";
 			}
 
-			// Examples
 			$examples = $this->getExamples();
-			if ( $examples !== false ) {
+			if ( $examples !== false && $examples !== '' ) {
 				if ( !is_array( $examples ) ) {
 					$examples = array(
 						$examples
 					);
 				}
-				$msg .= 'Example' . ( count( $examples ) > 1 ? 's' : '' ) . ":\n  ";
-				$msg .= implode( $lnPrfx, $examples ) . "\n";
+				$msg .= "Example" . ( count( $examples ) > 1 ? 's' : '' ) . ":\n";
+				foreach( $examples as $k => $v ) {
+
+					if ( is_numeric( $k ) ) {
+						$msg .= "  $v\n";
+					} else {
+						$v .= ":";
+						if ( is_array( $v ) ) {
+							$msgExample = implode( "\n", array_map( array( $this, 'indentExampleText' ), $v ) );
+						} else {
+							$msgExample = "  $v";
+						}
+						$msg .= wordwrap( $msgExample, 100, "\n" ) . "\n    $k\n";
+					}
+				}
 			}
+
+			$msg .= $this->makeHelpArrayToString( $lnPrfx, "Help page", $this->getHelpUrls() );
 
 			if ( $this->getMain()->getShowVersions() ) {
 				$versions = $this->getVersion();
@@ -278,9 +315,41 @@ abstract class ApiBase {
 	}
 
 	/**
+	 * @param $item string
+	 * @return string
+	 */
+	private function indentExampleText( $item ) {
+		return "  " . $item;
+	}
+
+	/**
+	 * @param $prefix string Text to split output items
+	 * @param $title string What is being output
+	 * @param $input string|array
+	 * @return string
+	 */
+	protected function makeHelpArrayToString( $prefix, $title, $input ) {
+		if ( $input === false ) {
+			return '';
+		}
+		if ( !is_array( $input ) ) {
+			$input = array(
+				$input
+			);
+		}
+
+		if ( count( $input ) > 0 ) {
+			$msg = $title . ( count( $input ) > 1 ? 's' : '' ) . ":\n  ";
+			$msg .= implode( $prefix, $input ) . "\n";
+			return $msg;
+		}
+		return '';
+	}
+
+	/**
 	 * Generates the parameter descriptions for this module, to be displayed in the
 	 * module's help.
-	 * @return string
+	 * @return string or false
 	 */
 	public function makeHelpMsgParameters() {
 		$params = $this->getFinalParams();
@@ -288,22 +357,35 @@ abstract class ApiBase {
 
 			$paramsDescription = $this->getFinalParamDescription();
 			$msg = '';
-			$paramPrefix = "\n" . str_repeat( ' ', 19 );
+			$paramPrefix = "\n" . str_repeat( ' ', 24 );
+			$descWordwrap = "\n" . str_repeat( ' ', 28 );
 			foreach ( $params as $paramName => $paramSettings ) {
 				$desc = isset( $paramsDescription[$paramName] ) ? $paramsDescription[$paramName] : '';
 				if ( is_array( $desc ) ) {
 					$desc = implode( $paramPrefix, $desc );
 				}
 
+				if ( !is_array( $paramSettings ) ) {
+					$paramSettings = array(
+						self::PARAM_DFLT => $paramSettings,
+					);
+				}
+
 				$deprecated = isset( $paramSettings[self::PARAM_DEPRECATED] ) ?
-					$paramSettings[self::PARAM_DEPRECATED] : false;
+						$paramSettings[self::PARAM_DEPRECATED] : false;
 				if ( $deprecated ) {
 					$desc = "DEPRECATED! $desc";
 				}
 
+				$required = isset( $paramSettings[self::PARAM_REQUIRED] ) ?
+						$paramSettings[self::PARAM_REQUIRED] : false;
+				if ( $required ) {
+					$desc .= $paramPrefix . "This parameter is required";
+				}
+
 				$type = isset( $paramSettings[self::PARAM_TYPE] ) ? $paramSettings[self::PARAM_TYPE] : null;
 				if ( isset( $type ) ) {
-					if ( isset( $paramSettings[self::PARAM_ISMULTI] ) ) {
+					if ( isset( $paramSettings[self::PARAM_ISMULTI] ) && $paramSettings[self::PARAM_ISMULTI] ) {
 						$prompt = 'Values (separate with \'|\'): ';
 					} else {
 						$prompt = 'One value: ';
@@ -312,21 +394,30 @@ abstract class ApiBase {
 					if ( is_array( $type ) ) {
 						$choices = array();
 						$nothingPrompt = false;
-						foreach ( $type as $t )
+						foreach ( $type as $t ) {
 							if ( $t === '' ) {
 								$nothingPrompt = 'Can be empty, or ';
 							} else {
 								$choices[] =  $t;
 							}
-						$desc .= $paramPrefix . $nothingPrompt . $prompt . implode( ', ', $choices );
+						}
+						$desc .= $paramPrefix . $nothingPrompt . $prompt;
+						$choicesstring = implode( ', ', $choices );
+						$desc .= wordwrap( $choicesstring, 100, $descWordwrap );
 					} else {
 						switch ( $type ) {
 							case 'namespace':
 								// Special handling because namespaces are type-limited, yet they are not given
-								$desc .= $paramPrefix . $prompt . implode( ', ', ApiBase::getValidNamespaces() );
+								$desc .= $paramPrefix . $prompt;
+								$desc .= wordwrap( implode( ', ', MWNamespace::getValidNamespaces() ),
+									100, $descWordwrap );
 								break;
 							case 'limit':
-								$desc .= $paramPrefix . "No more than {$paramSettings[self :: PARAM_MAX]} ({$paramSettings[self::PARAM_MAX2]} for bots) allowed.";
+								$desc .= $paramPrefix . "No more than {$paramSettings[self :: PARAM_MAX]}";
+								if ( isset( $paramSettings[self::PARAM_MAX2] ) ) {
+									$desc .= " ({$paramSettings[self::PARAM_MAX2]} for bots)";
+								}
+								$desc .= ' allowed';
 								break;
 							case 'integer':
 								$hasMin = isset( $paramSettings[self::PARAM_MIN] );
@@ -344,15 +435,27 @@ abstract class ApiBase {
 								}
 								break;
 						}
+
+						if ( isset( $paramSettings[self::PARAM_ISMULTI] ) ) {
+							$isArray = is_array( $paramSettings[self::PARAM_TYPE] );
+
+							if ( !$isArray
+									|| $isArray && count( $paramSettings[self::PARAM_TYPE] ) > self::LIMIT_SML1 ) {
+								$desc .= $paramPrefix . "Maximum number of values " .
+										self::LIMIT_SML1 . " (" . self::LIMIT_SML2 . " for bots)";
+							}
+						}
 					}
 				}
 
-				$default = is_array( $paramSettings ) ? ( isset( $paramSettings[self::PARAM_DFLT] ) ? $paramSettings[self::PARAM_DFLT] : null ) : $paramSettings;
+				$default = is_array( $paramSettings )
+						? ( isset( $paramSettings[self::PARAM_DFLT] ) ? $paramSettings[self::PARAM_DFLT] : null )
+						: $paramSettings;
 				if ( !is_null( $default ) && $default !== false ) {
 					$desc .= $paramPrefix . "Default: $default";
 				}
 
-				$msg .= sprintf( "  %-14s - %s\n", $this->encodeParamName( $paramName ), $desc );
+				$msg .= sprintf( "  %-19s - %s\n", $this->encodeParamName( $paramName ), $desc );
 			}
 			return $msg;
 
@@ -364,9 +467,14 @@ abstract class ApiBase {
 	/**
 	 * Callback for preg_replace_callback() call in makeHelpMsg().
 	 * Replaces a source file name with a link to ViewVC
+	 *
+	 * @param $matches array
+	 * @return string
 	 */
 	public function makeHelpMsg_callback( $matches ) {
 		global $wgAutoloadClasses, $wgAutoloadLocalClasses;
+
+		$file = '';
 		if ( isset( $wgAutoloadLocalClasses[get_class( $this )] ) ) {
 			$file = $wgAutoloadLocalClasses[get_class( $this )];
 		} elseif ( isset( $wgAutoloadClasses[get_class( $this )] ) ) {
@@ -387,9 +495,9 @@ abstract class ApiBase {
 		// This is necessary to make stuff like ApiMain::getVersion()
 		// returning the version string for ApiBase work
 		if ( $path ) {
-			return "{$matches[0]}\n   http://svn.wikimedia.org/" .
-				"viewvc/mediawiki/trunk/" . dirname( $path ) .
-				"/{$matches[2]}";
+			return "{$matches[0]}\n   https://svn.wikimedia.org/" .
+					"viewvc/mediawiki/trunk/" . dirname( $path ) .
+					"/{$matches[2]}";
 		}
 		return $matches[0];
 	}
@@ -403,10 +511,10 @@ abstract class ApiBase {
 	}
 
 	/**
-	 * Returns usage examples for this module. Return null if no examples are available.
-	 * @return mixed string or array of strings
+	 * Returns usage examples for this module. Return false if no examples are available.
+	 * @return false|string|array
 	 */
-	protected function getExamples() {
+	public function getExamples() {
 		return false;
 	}
 
@@ -415,7 +523,7 @@ abstract class ApiBase {
 	 * value) or (parameter name) => (array with PARAM_* constants as keys)
 	 * Don't call this function directly: use getFinalParams() to allow
 	 * hooks to modify parameters as needed.
-	 * @return array
+	 * @return array or false
 	 */
 	protected function getAllowedParams() {
 		return false;
@@ -425,7 +533,7 @@ abstract class ApiBase {
 	 * Returns an array of parameter descriptions.
 	 * Don't call this functon directly: use getFinalParamDescription() to
 	 * allow hooks to modify descriptions as needed.
-	 * @return array
+	 * @return array or false
 	 */
 	protected function getParamDescription() {
 		return false;
@@ -434,7 +542,8 @@ abstract class ApiBase {
 	/**
 	 * Get final list of parameters, after hooks have had a chance to
 	 * tweak it as needed.
-	 * @return array
+	 *
+	 * @return array or false
 	 */
 	public function getFinalParams() {
 		$params = $this->getAllowedParams();
@@ -443,13 +552,26 @@ abstract class ApiBase {
 	}
 
 	/**
-	 * Get final description, after hooks have had a chance to tweak it as
+	 * Get final parameter descriptions, after hooks have had a chance to tweak it as
 	 * needed.
+	 *
 	 * @return array
 	 */
 	public function getFinalParamDescription() {
 		$desc = $this->getParamDescription();
 		wfRunHooks( 'APIGetParamDescription', array( &$this, &$desc ) );
+		return $desc;
+	}
+
+	/**
+	 * Get final module description, after hooks have had a chance to tweak it as
+	 * needed.
+	 *
+	 * @return array
+	 */
+	public function getFinalDescription() {
+		$desc = $this->getDescription();
+		wfRunHooks( 'APIGetDescription', array( &$this, &$desc ) );
 		return $desc;
 	}
 
@@ -480,7 +602,7 @@ abstract class ApiBase {
 
 			if ( $params ) { // getFinalParams() can return false
 				foreach ( $params as $paramName => $paramSettings ) {
-					$results[$paramName] = $this->getParameterFromSettings( 
+					$results[$paramName] = $this->getParameterFromSettings(
 						$paramName, $paramSettings, $parseLimit );
 				}
 			}
@@ -510,8 +632,8 @@ abstract class ApiBase {
 		array_shift( $required );
 
 		$intersection = array_intersect( array_keys( array_filter( $params,
-				create_function( '$x', 'return !is_null($x) && $x !== false;' )
-			) ), $required );
+			array( $this, "parameterNotEmpty" ) ) ), $required );
+
 		if ( count( $intersection ) > 1 ) {
 			$this->dieUsage( 'The parameters ' . implode( ', ', $intersection ) . ' can not be used together', 'invalidparammix' );
 		} elseif ( count( $intersection ) == 0 ) {
@@ -520,24 +642,131 @@ abstract class ApiBase {
 	}
 
 	/**
-	 * Returns an array of the namespaces (by integer id) that exist on the
-	 * wiki. Used primarily in help documentation.
+	 * Generates the possible errors requireOnlyOneParameter() can die with
+	 *
+	 * @param $params array
+	 * @return array
+	 */
+	public function getRequireOnlyOneParameterErrorMessages( $params ) {
+		$p = $this->getModulePrefix();
+		$params = implode( ", {$p}", $params );
+
+		return array(
+			array( 'code' => "{$p}missingparam", 'info' => "One of the parameters {$p}{$params} is required" ),
+			array( 'code' => "{$p}invalidparammix", 'info' => "The parameters {$p}{$params} can not be used together" )
+		);
+	}
+
+	/**
+	 * Die if more than one of a certain set of parameters is set and not false.
+	 *
+	 * @param $params array
+	 */
+	public function requireMaxOneParameter( $params ) {
+		$required = func_get_args();
+		array_shift( $required );
+
+		$intersection = array_intersect( array_keys( array_filter( $params,
+			array( $this, "parameterNotEmpty" ) ) ), $required );
+
+		if ( count( $intersection ) > 1 ) {
+			$this->dieUsage( 'The parameters ' . implode( ', ', $intersection ) . ' can not be used together', 'invalidparammix' );
+		}
+	}
+
+	/**
+	 * Generates the possible error requireMaxOneParameter() can die with
+	 *
+	 * @param $params array
+	 * @return array
+	 */
+	public function getRequireMaxOneParameterErrorMessages( $params ) {
+		$p = $this->getModulePrefix();
+		$params = implode( ", {$p}", $params );
+
+		return array(
+			array( 'code' => "{$p}invalidparammix", 'info' => "The parameters {$p}{$params} can not be used together" )
+		);
+	}
+
+	/**
+	 * Callback function used in requireOnlyOneParameter to check whether reequired parameters are set
+	 *
+	 * @param  $x object Parameter to check is not null/false
+	 * @return bool
+	 */
+	private function parameterNotEmpty( $x ) {
+		return !is_null( $x ) && $x !== false;
+	}
+
+	/**
+	 * @deprecated since 1.17 use MWNamespace::getValidNamespaces()
+	 *
 	 * @return array
 	 */
 	public static function getValidNamespaces() {
-		static $mValidNamespaces = null;
+		wfDeprecated( __METHOD__, '1.17' );
+		return MWNamespace::getValidNamespaces();
+	}
 
-		if ( is_null( $mValidNamespaces ) ) {
-			global $wgContLang;
-			$mValidNamespaces = array();
-			foreach ( array_keys( $wgContLang->getNamespaces() ) as $ns ) {
-				if ( $ns >= 0 ) {
-					$mValidNamespaces[] = $ns;
+	/**
+	 * Return true if we're to watch the page, false if not, null if no change.
+	 * @param $watchlist String Valid values: 'watch', 'unwatch', 'preferences', 'nochange'
+	 * @param $titleObj Title the page under consideration
+	 * @param $userOption String The user option to consider when $watchlist=preferences.
+	 * 	If not set will magically default to either watchdefault or watchcreations
+	 * @return bool
+	 */
+	protected function getWatchlistValue ( $watchlist, $titleObj, $userOption = null ) {
+
+		$userWatching = $titleObj->userIsWatching();
+
+		switch ( $watchlist ) {
+			case 'watch':
+				return true;
+
+			case 'unwatch':
+				return false;
+
+			case 'preferences':
+				# If the user is already watching, don't bother checking
+				if ( $userWatching ) {
+					return true;
 				}
-			}
+				# If no user option was passed, use watchdefault or watchcreation
+				if ( is_null( $userOption ) ) {
+					$userOption = $titleObj->exists()
+							? 'watchdefault' : 'watchcreations';
+				}
+				# Watch the article based on the user preference
+				return (bool)$this->getUser()->getOption( $userOption );
+
+			case 'nochange':
+				return $userWatching;
+
+			default:
+				return $userWatching;
+		}
+	}
+
+	/**
+	 * Set a watch (or unwatch) based the based on a watchlist parameter.
+	 * @param $watch String Valid values: 'watch', 'unwatch', 'preferences', 'nochange'
+	 * @param $titleObj Title the article's title to change
+	 * @param $userOption String The user option to consider when $watch=preferences
+	 */
+	protected function setWatch( $watch, $titleObj, $userOption = null ) {
+		$value = $this->getWatchlistValue( $watch, $titleObj, $userOption );
+		if ( $value === null ) {
+			return;
 		}
 
-		return $mValidNamespaces;
+		$user = $this->getUser();
+		if ( $value ) {
+			WatchAction::doWatch( $titleObj, $user );
+		} else {
+			WatchAction::doUnwatch( $titleObj, $user );
+		}
 	}
 
 	/**
@@ -559,12 +788,14 @@ abstract class ApiBase {
 			$type = gettype( $paramSettings );
 			$dupes = false;
 			$deprecated = false;
+			$required = false;
 		} else {
 			$default = isset( $paramSettings[self::PARAM_DFLT] ) ? $paramSettings[self::PARAM_DFLT] : null;
 			$multi = isset( $paramSettings[self::PARAM_ISMULTI] ) ? $paramSettings[self::PARAM_ISMULTI] : false;
 			$type = isset( $paramSettings[self::PARAM_TYPE] ) ? $paramSettings[self::PARAM_TYPE] : null;
 			$dupes = isset( $paramSettings[self::PARAM_ALLOW_DUPLICATES] ) ? $paramSettings[self::PARAM_ALLOW_DUPLICATES] : false;
 			$deprecated = isset( $paramSettings[self::PARAM_DEPRECATED] ) ? $paramSettings[self::PARAM_DEPRECATED] : false;
+			$required = isset( $paramSettings[self::PARAM_REQUIRED] ) ? $paramSettings[self::PARAM_REQUIRED] : false;
 
 			// When type is not given, and no choices, the type is the same as $default
 			if ( !isset( $type ) ) {
@@ -582,12 +813,12 @@ abstract class ApiBase {
 				ApiBase::dieDebug( __METHOD__, "Boolean param $encParamName's default is set to '$default'" );
 			}
 
-			$value = $this->getMain()->getRequest()->getCheck( $encParamName );
+			$value = $this->getRequest()->getCheck( $encParamName );
 		} else {
-			$value = $this->getMain()->getRequest()->getVal( $encParamName, $default );
+			$value = $this->getRequest()->getVal( $encParamName, $default );
 
 			if ( isset( $value ) && $type == 'namespace' ) {
-				$type = ApiBase::getValidNamespaces();
+				$type = MWNamespace::getValidNamespaces();
 			}
 		}
 
@@ -602,18 +833,29 @@ abstract class ApiBase {
 				switch ( $type ) {
 					case 'NULL': // nothing to do
 						break;
-					case 'string': // nothing to do
+					case 'string':
+						if ( $required && $value === '' ) {
+							$this->dieUsageMsg( array( 'missingparam', $paramName ) );
+						}
+
 						break;
 					case 'integer': // Force everything using intval() and optionally validate limits
-
-						$value = is_array( $value ) ? array_map( 'intval', $value ) : intval( $value );
 						$min = isset ( $paramSettings[self::PARAM_MIN] ) ? $paramSettings[self::PARAM_MIN] : null;
 						$max = isset ( $paramSettings[self::PARAM_MAX] ) ? $paramSettings[self::PARAM_MAX] : null;
+						$enforceLimits = isset ( $paramSettings[self::PARAM_RANGE_ENFORCE] )
+								? $paramSettings[self::PARAM_RANGE_ENFORCE] : false;
 
-						if ( !is_null( $min ) || !is_null( $max ) ) {
-							$values = is_array( $value ) ? $value : array( $value );
-							foreach ( $values as &$v ) {
-								$this->validateLimit( $paramName, $v, $min, $max );
+						if ( is_array( $value ) ) {
+							$value = array_map( 'intval', $value );
+							if ( !is_null( $min ) || !is_null( $max ) ) {
+								foreach ( $value as &$v ) {
+									$this->validateLimit( $paramName, $v, $min, $max, null, $enforceLimits );
+								}
+							}
+						} else {
+							$value = intval( $value );
+							if ( !is_null( $min ) || !is_null( $max ) ) {
+								$this->validateLimit( $paramName, $value, $min, $max, null, $enforceLimits );
 							}
 						}
 						break;
@@ -631,32 +873,42 @@ abstract class ApiBase {
 						$min = isset( $paramSettings[self::PARAM_MIN] ) ? $paramSettings[self::PARAM_MIN] : 0;
 						if ( $value == 'max' ) {
 							$value = $this->getMain()->canApiHighLimits() ? $paramSettings[self::PARAM_MAX2] : $paramSettings[self::PARAM_MAX];
-							$this->getResult()->addValue( 'limits', $this->getModuleName(), $value );
+							$this->getResult()->setParsedLimit( $this->getModuleName(), $value );
 						} else {
 							$value = intval( $value );
 							$this->validateLimit( $paramName, $value, $min, $paramSettings[self::PARAM_MAX], $paramSettings[self::PARAM_MAX2] );
 						}
 						break;
 					case 'boolean':
-						if ( $multi )
-							ApiBase::dieDebug( __METHOD__, "Multi-values not supported for $encParamName" );
-						break;
-					case 'timestamp':
 						if ( $multi ) {
 							ApiBase::dieDebug( __METHOD__, "Multi-values not supported for $encParamName" );
 						}
-						$value = wfTimestamp( TS_UNIX, $value );
-						if ( $value === 0 ) {
-							$this->dieUsage( "Invalid value '$value' for timestamp parameter $encParamName", "badtimestamp_{$encParamName}" );
+						break;
+					case 'timestamp':
+						if ( is_array( $value ) ) {
+							foreach ( $value as $key => $val ) {
+								$value[$key] = $this->validateTimestamp( $val, $encParamName );
+							}
+						} else {
+							$value = $this->validateTimestamp( $value, $encParamName );
 						}
-						$value = wfTimestamp( TS_MW, $value );
 						break;
 					case 'user':
-						$title = Title::makeTitleSafe( NS_USER, $value );
-						if ( is_null( $title ) ) {
-							$this->dieUsage( "Invalid value for user parameter $encParamName", "baduser_{$encParamName}" );
+						if ( !is_array( $value ) ) {
+							$value = array( $value );
 						}
-						$value = $title->getText();
+
+						foreach ( $value as $key => $val ) {
+							$title = Title::makeTitleSafe( NS_USER, $val );
+							if ( is_null( $title ) ) {
+								$this->dieUsage( "Invalid value for user parameter $encParamName", "baduser_{$encParamName}" );
+							}
+							$value[$key] = $title->getText();
+						}
+
+						if ( !$multi ) {
+							$value = $value[0];
+						}
 						break;
 					default:
 						ApiBase::dieDebug( __METHOD__, "Param $encParamName's type is unknown - $type" );
@@ -672,6 +924,8 @@ abstract class ApiBase {
 			if ( $deprecated && $value !== false ) {
 				$this->setWarning( "The $encParamName parameter has been deprecated." );
 			}
+		} elseif ( $required ) {
+			$this->dieUsageMsg( array( 'missingparam', $paramName ) );
 		}
 
 		return $value;
@@ -698,13 +952,18 @@ abstract class ApiBase {
 		// This is a bit awkward, but we want to avoid calling canApiHighLimits() because it unstubs $wgUser
 		$valuesList = explode( '|', $value, self::LIMIT_SML2 + 1 );
 		$sizeLimit = count( $valuesList ) > self::LIMIT_SML1 && $this->mMainModule->canApiHighLimits() ?
-			self::LIMIT_SML2 : self::LIMIT_SML1;
+				self::LIMIT_SML2 : self::LIMIT_SML1;
 
 		if ( self::truncateArray( $valuesList, $sizeLimit ) ) {
 			$this->setWarning( "Too many values supplied for parameter '$valueName': the limit is $sizeLimit" );
 		}
 
 		if ( !$allowMultiple && count( $valuesList ) != 1 ) {
+			// Bug 33482 - Allow entries with | in them for non-multiple values
+			if ( in_array( $value, $allowedValues ) ) {
+				return $value;
+			}
+
 			$possibleValues = is_array( $allowedValues ) ? "of '" . implode( "', '", $allowedValues ) . "'" : '';
 			$this->dieUsage( "Only one $possibleValues is allowed for parameter '$valueName'", "multival_$valueName" );
 		}
@@ -733,13 +992,16 @@ abstract class ApiBase {
 	 * Prints usage info on failure.
 	 * @param $paramName string Parameter name
 	 * @param $value int Parameter value
-	 * @param $min int Minimum value
-	 * @param $max int Maximum value for users
+	 * @param $min int|null Minimum value
+	 * @param $max int|null Maximum value for users
 	 * @param $botMax int Maximum value for sysops/bots
+	 * @param $enforceLimits Boolean Whether to enforce (die) if value is outside limits
 	 */
-	function validateLimit( $paramName, &$value, $min, $max, $botMax = null ) {
+	function validateLimit( $paramName, &$value, $min, $max, $botMax = null, $enforceLimits = false ) {
 		if ( !is_null( $min ) && $value < $min ) {
-			$this->setWarning( $this->encodeParamName( $paramName ) . " may not be less than $min (set to $value)" );
+
+			$msg = $this->encodeParamName( $paramName ) . " may not be less than $min (set to $value)";
+			$this->warnOrDie( $msg, $enforceLimits );
 			$value = $min;
 		}
 
@@ -753,13 +1015,42 @@ abstract class ApiBase {
 		if ( !is_null( $max ) && $value > $max ) {
 			if ( !is_null( $botMax ) && $this->getMain()->canApiHighLimits() ) {
 				if ( $value > $botMax ) {
-					$this->setWarning( $this->encodeParamName( $paramName ) . " may not be over $botMax (set to $value) for bots or sysops" );
+					$msg = $this->encodeParamName( $paramName ) . " may not be over $botMax (set to $value) for bots or sysops";
+					$this->warnOrDie( $msg, $enforceLimits );
 					$value = $botMax;
 				}
 			} else {
-				$this->setWarning( $this->encodeParamName( $paramName ) . " may not be over $max (set to $value) for users" );
+				$msg = $this->encodeParamName( $paramName ) . " may not be over $max (set to $value) for users";
+				$this->warnOrDie( $msg, $enforceLimits );
 				$value = $max;
 			}
+		}
+	}
+
+	/**
+	 * @param $value string
+	 * @param $paramName string
+	 * @return string
+	 */
+	function validateTimestamp( $value, $paramName ) {
+		$value = wfTimestamp( TS_UNIX, $value );
+		if ( $value === 0 ) {
+			$this->dieUsage( "Invalid value '$value' for timestamp parameter $paramName", "badtimestamp_{$paramName}" );
+		}
+		return wfTimestamp( TS_MW, $value );
+	}
+
+	/**
+	 * Adds a warning to the output, else dies
+	 *
+	 * @param  $msg String Message to show as a warning, or error message if dying
+	 * @param  $enforceLimits Boolean Whether this is an enforce (die)
+	 */
+	private function warnOrDie( $msg, $enforceLimits = false ) {
+		if ( $enforceLimits ) {
+			$this->dieUsage( $msg, 'integeroutofrange' );
+		} else {
+			$this->setWarning( $msg );
 		}
 	}
 
@@ -772,7 +1063,7 @@ abstract class ApiBase {
 	public static function truncateArray( &$arr, $limit ) {
 		$modified = false;
 		while ( count( $arr ) > $limit ) {
-			$junk = array_pop( $arr );
+			array_pop( $arr );
 			$modified = true;
 		}
 		return $modified;
@@ -790,7 +1081,7 @@ abstract class ApiBase {
 	 * @param $extradata array Data to add to the <error> element; array in ApiResult format
 	 */
 	public function dieUsage( $description, $errorCode, $httpRespCode = 0, $extradata = null ) {
-		wfProfileClose();
+		Profiler::instance()->close();
 		throw new UsageException( $description, $this->encodeParamName( $errorCode ), $httpRespCode, $extradata );
 	}
 
@@ -799,16 +1090,17 @@ abstract class ApiBase {
 	 */
 	public static $messageMap = array(
 		// This one MUST be present, or dieUsageMsg() will recurse infinitely
-		'unknownerror' => array( 'code' => 'unknownerror', 'info' => "Unknown error: ``\$1''" ),
+		'unknownerror' => array( 'code' => 'unknownerror', 'info' => "Unknown error: \"\$1\"" ),
 		'unknownerror-nocode' => array( 'code' => 'unknownerror', 'info' => 'Unknown error' ),
 
 		// Messages from Title::getUserPermissionsErrors()
 		'ns-specialprotected' => array( 'code' => 'unsupportednamespace', 'info' => "Pages in the Special namespace can't be edited" ),
 		'protectedinterface' => array( 'code' => 'protectednamespace-interface', 'info' => "You're not allowed to edit interface messages" ),
-		'namespaceprotected' => array( 'code' => 'protectednamespace', 'info' => "You're not allowed to edit pages in the ``\$1'' namespace" ),
-		'customcssjsprotected' => array( 'code' => 'customcssjsprotected', 'info' => "You're not allowed to edit custom CSS and JavaScript pages" ),
+		'namespaceprotected' => array( 'code' => 'protectednamespace', 'info' => "You're not allowed to edit pages in the \"\$1\" namespace" ),
+		'customcssprotected' => array( 'code' => 'customcssprotected', 'info' => "You're not allowed to edit custom CSS pages" ),
+		'customjsprotected' => array( 'code' => 'customjsprotected', 'info' => "You're not allowed to edit custom JavaScript pages" ),
 		'cascadeprotected' => array( 'code' => 'cascadeprotected', 'info' => "The page you're trying to edit is protected because it's included in a cascade-protected page" ),
-		'protectedpagetext' => array( 'code' => 'protectedpage', 'info' => "The ``\$1'' right is required to edit this page" ),
+		'protectedpagetext' => array( 'code' => 'protectedpage', 'info' => "The \"\$1\" right is required to edit this page" ),
 		'protect-cantedit' => array( 'code' => 'cantedit', 'info' => "You can't protect this page because you can't edit it" ),
 		'badaccess-group0' => array( 'code' => 'permissiondenied', 'info' => "Permission denied" ), // Generic permission denied message
 		'badaccess-groups' => array( 'code' => 'permissiondenied', 'info' => "Permission denied" ),
@@ -827,7 +1119,7 @@ abstract class ApiBase {
 		'cantrollback' => array( 'code' => 'onlyauthor', 'info' => "The page you tried to rollback only has one author" ),
 		'readonlytext' => array( 'code' => 'readonly', 'info' => "The wiki is currently in read-only mode" ),
 		'sessionfailure' => array( 'code' => 'badtoken', 'info' => "Invalid token" ),
-		'cannotdelete' => array( 'code' => 'cantdelete', 'info' => "Couldn't delete ``\$1''. Maybe it was deleted already by someone else" ),
+		'cannotdelete' => array( 'code' => 'cantdelete', 'info' => "Couldn't delete \"\$1\". Maybe it was deleted already by someone else" ),
 		'notanarticle' => array( 'code' => 'missingtitle', 'info' => "The page you requested doesn't exist" ),
 		'selfmove' => array( 'code' => 'selfmove', 'info' => "Can't move a page to itself" ),
 		'immobile_namespace' => array( 'code' => 'immobilenamespace', 'info' => "You tried to move pages from or to a namespace that is protected from moving" ),
@@ -845,9 +1137,11 @@ abstract class ApiBase {
 		'badipaddress' => array( 'code' => 'invalidip', 'info' => "Invalid IP address specified" ),
 		'ipb_expiry_invalid' => array( 'code' => 'invalidexpiry', 'info' => "Invalid expiry time" ),
 		'ipb_already_blocked' => array( 'code' => 'alreadyblocked', 'info' => "The user you tried to block was already blocked" ),
-		'ipb_blocked_as_range' => array( 'code' => 'blockedasrange', 'info' => "IP address ``\$1'' was blocked as part of range ``\$2''. You can't unblock the IP invidually, but you can unblock the range as a whole." ),
+		'ipb_blocked_as_range' => array( 'code' => 'blockedasrange', 'info' => "IP address \"\$1\" was blocked as part of range \"\$2\". You can't unblock the IP invidually, but you can unblock the range as a whole." ),
 		'ipb_cant_unblock' => array( 'code' => 'cantunblock', 'info' => "The block you specified was not found. It may have been unblocked already" ),
 		'mailnologin' => array( 'code' => 'cantsend', 'info' => "You are not logged in, you do not have a confirmed e-mail address, or you are not allowed to send e-mail to other users, so you cannot send e-mail" ),
+		'ipbblocked' => array( 'code' => 'ipbblocked', 'info' => 'You cannot block or unblock users while you are yourself blocked' ),
+		'ipbnounblockself' => array( 'code' => 'ipbnounblockself', 'info' => 'You are not allowed to unblock yourself' ),
 		'usermaildisabled' => array( 'code' => 'usermaildisabled', 'info' => "User email has been disabled" ),
 		'blockedemailuser' => array( 'code' => 'blockedfrommail', 'info' => "You have been blocked from sending e-mail" ),
 		'notarget' => array( 'code' => 'notarget', 'info' => "You have not specified a valid target for this action" ),
@@ -857,22 +1151,23 @@ abstract class ApiBase {
 		'delete-toobig' => array( 'code' => 'bigdelete', 'info' => "You can't delete this page because it has more than \$1 revisions" ),
 		'movenotallowedfile' => array( 'code' => 'cantmovefile', 'info' => "You don't have permission to move files" ),
 		'userrights-no-interwiki' => array( 'code' => 'nointerwikiuserrights', 'info' => "You don't have permission to change user rights on other wikis" ),
-		'userrights-nodatabase' => array( 'code' => 'nosuchdatabase', 'info' => "Database ``\$1'' does not exist or is not local" ),
-		'nouserspecified' => array( 'code' => 'invaliduser', 'info' => "Invalid username ``\$1''" ),
-		'noname' => array( 'code' => 'invaliduser', 'info' => "Invalid username ``\$1''" ),
+		'userrights-nodatabase' => array( 'code' => 'nosuchdatabase', 'info' => "Database \"\$1\" does not exist or is not local" ),
+		'nouserspecified' => array( 'code' => 'invaliduser', 'info' => "Invalid username \"\$1\"" ),
+		'noname' => array( 'code' => 'invaliduser', 'info' => "Invalid username \"\$1\"" ),
+		'summaryrequired' => array( 'code' => 'summaryrequired', 'info' => 'Summary required' ),
 
 		// API-specific messages
 		'readrequired' => array( 'code' => 'readapidenied', 'info' => "You need read permission to use this module" ),
 		'writedisabled' => array( 'code' => 'noapiwrite', 'info' => "Editing of this wiki through the API is disabled. Make sure the \$wgEnableWriteAPI=true; statement is included in the wiki's LocalSettings.php file" ),
 		'writerequired' => array( 'code' => 'writeapidenied', 'info' => "You're not allowed to edit this wiki through the API" ),
 		'missingparam' => array( 'code' => 'no$1', 'info' => "The \$1 parameter must be set" ),
-		'invalidtitle' => array( 'code' => 'invalidtitle', 'info' => "Bad title ``\$1''" ),
+		'invalidtitle' => array( 'code' => 'invalidtitle', 'info' => "Bad title \"\$1\"" ),
 		'nosuchpageid' => array( 'code' => 'nosuchpageid', 'info' => "There is no page with ID \$1" ),
 		'nosuchrevid' => array( 'code' => 'nosuchrevid', 'info' => "There is no revision with ID \$1" ),
-		'nosuchuser' => array( 'code' => 'nosuchuser', 'info' => "User ``\$1'' doesn't exist" ),
-		'invaliduser' => array( 'code' => 'invaliduser', 'info' => "Invalid username ``\$1''" ),
-		'invalidexpiry' => array( 'code' => 'invalidexpiry', 'info' => "Invalid expiry time ``\$1''" ),
-		'pastexpiry' => array( 'code' => 'pastexpiry', 'info' => "Expiry time ``\$1'' is in the past" ),
+		'nosuchuser' => array( 'code' => 'nosuchuser', 'info' => "User \"\$1\" doesn't exist" ),
+		'invaliduser' => array( 'code' => 'invaliduser', 'info' => "Invalid username \"\$1\"" ),
+		'invalidexpiry' => array( 'code' => 'invalidexpiry', 'info' => "Invalid expiry time \"\$1\"" ),
+		'pastexpiry' => array( 'code' => 'pastexpiry', 'info' => "Expiry time \"\$1\" is in the past" ),
 		'create-titleexists' => array( 'code' => 'create-titleexists', 'info' => "Existing titles can't be protected with 'create'" ),
 		'missingtitle-createonly' => array( 'code' => 'missingtitle-createonly', 'info' => "Missing titles can only be protected with 'create'" ),
 		'cantblock' => array( 'code' => 'cantblock', 'info' => "You don't have permission to block users" ),
@@ -885,10 +1180,9 @@ abstract class ApiBase {
 		'permdenied-undelete' => array( 'code' => 'permissiondenied', 'info' => "You don't have permission to restore deleted revisions" ),
 		'createonly-exists' => array( 'code' => 'articleexists', 'info' => "The article you tried to create has been created already" ),
 		'nocreate-missing' => array( 'code' => 'missingtitle', 'info' => "The article you tried to edit doesn't exist" ),
-		'nosuchrcid' => array( 'code' => 'nosuchrcid', 'info' => "There is no change with rcid ``\$1''" ),
-		'cantpurge' => array( 'code' => 'cantpurge', 'info' => "Only users with the 'purge' right can purge pages via the API" ),
-		'protect-invalidaction' => array( 'code' => 'protect-invalidaction', 'info' => "Invalid protection type ``\$1''" ),
-		'protect-invalidlevel' => array( 'code' => 'protect-invalidlevel', 'info' => "Invalid protection level ``\$1''" ),
+		'nosuchrcid' => array( 'code' => 'nosuchrcid', 'info' => "There is no change with rcid \"\$1\"" ),
+		'protect-invalidaction' => array( 'code' => 'protect-invalidaction', 'info' => "Invalid protection type \"\$1\"" ),
+		'protect-invalidlevel' => array( 'code' => 'protect-invalidlevel', 'info' => "Invalid protection level \"\$1\"" ),
 		'toofewexpiries' => array( 'code' => 'toofewexpiries', 'info' => "\$1 expiry timestamps were provided where \$2 were needed" ),
 		'cantimport' => array( 'code' => 'cantimport', 'info' => "You don't have permission to import pages" ),
 		'cantimport-upload' => array( 'code' => 'cantimport-upload', 'info' => "You don't have permission to import uploaded pages" ),
@@ -900,16 +1194,19 @@ abstract class ApiBase {
 		'importcantopen' => array( 'code' => 'cantopenfile', 'info' => "Couldn't open the uploaded file" ),
 		'import-noarticle' => array( 'code' => 'badinterwiki', 'info' => 'Invalid interwiki title specified' ),
 		'importbadinterwiki' => array( 'code' => 'badinterwiki', 'info' => 'Invalid interwiki title specified' ),
-		'import-unknownerror' => array( 'code' => 'import-unknownerror', 'info' => "Unknown error on import: ``\$1''" ),
+		'import-unknownerror' => array( 'code' => 'import-unknownerror', 'info' => "Unknown error on import: \"\$1\"" ),
 		'cantoverwrite-sharedfile' => array( 'code' => 'cantoverwrite-sharedfile', 'info' => 'The target file exists on a shared repository and you do not have permission to override it' ),
 		'sharedfile-exists' => array( 'code' => 'fileexists-sharedrepo-perm', 'info' => 'The target file exists on a shared repository. Use the ignorewarnings parameter to override it.' ),
 		'mustbeposted' => array( 'code' => 'mustbeposted', 'info' => "The \$1 module requires a POST request" ),
 		'show' => array( 'code' => 'show', 'info' => 'Incorrect parameter - mutually exclusive values may not be supplied' ),
+		'specialpage-cantexecute' => array( 'code' => 'specialpage-cantexecute', 'info' => "You don't have permission to view the results of this special page" ),
+		'invalidoldimage' => array( 'code' => 'invalidoldimage', 'info' => 'The oldimage parameter has invalid format' ),
+		'nodeleteablefile' => array( 'code' => 'nodeleteablefile', 'info' => 'No such old version of the file' ),
 
 		// ApiEditPage messages
 		'noimageredirect-anon' => array( 'code' => 'noimageredirect-anon', 'info' => "Anonymous users can't create image redirects" ),
 		'noimageredirect-logged' => array( 'code' => 'noimageredirect', 'info' => "You don't have permission to create image redirects" ),
-		'spamdetected' => array( 'code' => 'spamdetected', 'info' => "Your edit was refused because it contained a spam fragment: ``\$1''" ),
+		'spamdetected' => array( 'code' => 'spamdetected', 'info' => "Your edit was refused because it contained a spam fragment: \"\$1\"" ),
 		'filtered' => array( 'code' => 'filtered', 'info' => "The filter callback function refused your edit" ),
 		'contenttoobig' => array( 'code' => 'contenttoobig', 'info' => "The content you supplied exceeds the article size limit of \$1 kilobytes" ),
 		'noedit-anon' => array( 'code' => 'noedit-anon', 'info' => "Anonymous users can't edit pages" ),
@@ -920,13 +1217,27 @@ abstract class ApiBase {
 		'hashcheckfailed' => array( 'code' => 'badmd5', 'info' => "The supplied MD5 hash was incorrect" ),
 		'missingtext' => array( 'code' => 'notext', 'info' => "One of the text, appendtext, prependtext and undo parameters must be set" ),
 		'emptynewsection' => array( 'code' => 'emptynewsection', 'info' => 'Creating empty new sections is not possible.' ),
-		'revwrongpage' => array( 'code' => 'revwrongpage', 'info' => "r\$1 is not a revision of ``\$2''" ),
+		'revwrongpage' => array( 'code' => 'revwrongpage', 'info' => "r\$1 is not a revision of \"\$2\"" ),
 		'undo-failure' => array( 'code' => 'undofailure', 'info' => 'Undo failed due to conflicting intermediate edits' ),
+
+		// Messages from WikiPage::doEit()
+		'edit-hook-aborted' => array( 'code' => 'edit-hook-aborted', 'info' => "Your edit was aborted by an ArticleSave hook" ),
+		'edit-gone-missing' => array( 'code' => 'edit-gone-missing', 'info' => "The page you tried to edit doesn't seem to exist anymore" ),
+		'edit-conflict' => array( 'code' => 'editconflict', 'info' => "Edit conflict detected" ),
+		'edit-already-exists' => array( 'code' => 'edit-already-exists', 'info' => "It seems the page you tried to create already exist" ),
 
 		// uploadMsgs
 		'invalid-session-key' => array( 'code' => 'invalid-session-key', 'info' => 'Not a valid session key' ),
 		'nouploadmodule' => array( 'code' => 'nouploadmodule', 'info' => 'No upload module set' ),
 		'uploaddisabled' => array( 'code' => 'uploaddisabled', 'info' => 'Uploads are not enabled.  Make sure $wgEnableUploads is set to true in LocalSettings.php and the PHP ini setting file_uploads is true' ),
+		'copyuploaddisabled' => array( 'code' => 'copyuploaddisabled', 'info' => 'Uploads by URL is not enabled.  Make sure $wgAllowCopyUploads is set to true in LocalSettings.php.' ),
+
+		'filename-tooshort' => array( 'code' => 'filename-tooshort', 'info' => 'The filename is too short' ),
+		'filename-toolong' => array( 'code' => 'filename-toolong', 'info' => 'The filename is too long' ),
+		'illegal-filename' => array( 'code' => 'illegal-filename', 'info' => 'The filename is not allowed' ),
+		'filetype-missing' => array( 'code' => 'filetype-missing', 'info' => 'The file is missing an extension' ),
+
+		'mustbeloggedin' => array( 'code' => 'mustbeloggedin', 'info' => 'You must be logged in to $1.' )
 	);
 
 	/**
@@ -940,9 +1251,14 @@ abstract class ApiBase {
 
 	/**
 	 * Output the error message related to a certain array
-	 * @param $error array Element of a getUserPermissionsErrors()-style array
+	 * @param $error (array|string) Element of a getUserPermissionsErrors()-style array
 	 */
 	public function dieUsageMsg( $error ) {
+		# most of the time we send a 1 element, so we might as well send it as
+		# a string and make this an array here.
+		if( is_string( $error ) ) {
+			$error = array( $error );
+		}
 		$parsed = $this->parseMsg( $error );
 		$this->dieUsage( $parsed['info'], $parsed['code'] );
 	}
@@ -953,14 +1269,24 @@ abstract class ApiBase {
 	 * @return array('code' => code, 'info' => info)
 	 */
 	public function parseMsg( $error ) {
+		$error = (array)$error; // It seems strings sometimes make their way in here
 		$key = array_shift( $error );
+
+		// Check whether the error array was nested
+		// array( array( <code>, <params> ), array( <another_code>, <params> ) )
+		if( is_array( $key ) ){
+			$error = $key;
+			$key = array_shift( $error );
+		}
+
 		if ( isset( self::$messageMap[$key] ) ) {
 			return array( 'code' =>
-				wfMsgReplaceArgs( self::$messageMap[$key]['code'], $error ),
-					'info' =>
+			wfMsgReplaceArgs( self::$messageMap[$key]['code'], $error ),
+				'info' =>
 				wfMsgReplaceArgs( self::$messageMap[$key]['info'], $error )
 			);
 		}
+
 		// If the key isn't present, throw an "unknown error"
 		return $this->parseMsg( array( 'unknownerror', $key ) );
 	}
@@ -1007,7 +1333,7 @@ abstract class ApiBase {
 
 	/**
 	 * Returns whether this module requires a Token to execute
-	 * @returns bool
+	 * @return bool
 	 */
 	public function needsToken() {
 		return false;
@@ -1015,9 +1341,41 @@ abstract class ApiBase {
 
 	/**
 	 * Returns the token salt if there is one, '' if the module doesn't require a salt, else false if the module doesn't need a token
-	 * @returns bool
+	 * @return bool|string
 	 */
 	public function getTokenSalt() {
+		return false;
+	}
+
+	/**
+	 * Gets the user for whom to get the watchlist
+	 *
+	 * @param $params array
+	 * @return User
+	 */
+	public function getWatchlistUser( $params ) {
+		if ( !is_null( $params['owner'] ) && !is_null( $params['token'] ) ) {
+			$user = User::newFromName( $params['owner'], false );
+			if ( !($user && $user->getId()) ) {
+				$this->dieUsage( 'Specified user does not exist', 'bad_wlowner' );
+			}
+			$token = $user->getOption( 'watchlisttoken' );
+			if ( $token == '' || $token != $params['token'] ) {
+				$this->dieUsage( 'Incorrect watchlist token provided -- please set a correct token in Special:Preferences', 'bad_wltoken' );
+			}
+		} else {
+			if ( !$this->getUser()->isLoggedIn() ) {
+				$this->dieUsage( 'You must be logged-in to have a watchlist', 'notloggedin' );
+			}
+			$user = $this->getUser();
+		}
+		return $user;
+	}
+
+	/**
+	 * @return false|string|array Returns a false if the module has no help url, else returns a (array of) string
+	 */
+	public function getHelpUrls() {
 		return false;
 	}
 
@@ -1027,6 +1385,15 @@ abstract class ApiBase {
 	 */
 	public function getPossibleErrors() {
 		$ret = array();
+
+		$params = $this->getFinalParams();
+		if ( $params ) {
+			foreach ( $params as $paramName => $paramSettings ) {
+				if ( isset( $paramSettings[ApiBase::PARAM_REQUIRED] ) ) {
+					$ret[] = array( 'missingparam', $paramName );
+				}
+			}
+		}
 
 		if ( $this->mustBePosted() ) {
 			$ret[] = array( 'mustbeposted', $this->getModuleName() );
@@ -1173,6 +1540,13 @@ abstract class ApiBase {
 	}
 
 	/**
+	 * @return DatabaseBase
+	 */
+	protected function getDB() {
+		return wfGetDB( DB_SLAVE, 'api' );
+	}
+
+	/**
 	 * Debugging function that prints a value and an optional backtrace
 	 * @param $value mixed Value to print
 	 * @param $name string Description of the printed value
@@ -1192,6 +1566,6 @@ abstract class ApiBase {
 	 * @return string
 	 */
 	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id: ApiBase.php 79562 2011-01-04 06:15:54Z tstarling $';
+		return __CLASS__ . ': $Id$';
 	}
 }

@@ -264,7 +264,7 @@ class WallExternalController extends WikiaController {
 		
 		$query = array(
 			'diff' => 'prev',
-			'oldid' => $wallMessage->getTitle()->getLatestRevID(GAID_FOR_UPDATE),
+			'oldid' => $wallMessage->getTitle()->getLatestRevID(Title::GAID_FOR_UPDATE),
 		);
 			
 		$this->response->setVal( 'historyUrl', $wallMessage->getTitle()->getFullUrl($query) );
@@ -282,7 +282,7 @@ class WallExternalController extends WikiaController {
 
 		if(empty($parentTitle)) {
 			// try again from master
-			$parentTitle = F::build('Title', array( $this->request->getVal('parent'), GAID_FOR_UPDATE ), 'newFromId');
+			$parentTitle = F::build('Title', array( $this->request->getVal('parent'), Title::GAID_FOR_UPDATE ), 'newFromId');
 		}
 		
 		if(empty($parentTitle)) {

@@ -1,7 +1,7 @@
 <div class="ajax-login-slider-panel" id="AjaxLoginConnectMarketing">
 	<div class="clearfix">
 		<?php
-			if( F::app()->checkSkin( 'oasis' ) ){
+			if(Wikia::isOasis()){
 				// add FB login button (RT #68846)
 				echo wfMsg('comboajaxlogin-log-in-with-facebook-oasis');
 				echo '<div class="ajax-login-fb-login">' . $fbButtton . '</div>';

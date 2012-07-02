@@ -104,13 +104,9 @@ $messages = array(
 'faqpage'        => 'Project:отир сё юасьö',
 
 # Vector skin
-'vector-action-delete'      => 'Чышкыны',
-'vector-namespace-category' => 'Категория',
-'vector-namespace-help'     => 'Отсасян листбок',
-'vector-namespace-image'    => 'Файл',
-'vector-namespace-main'     => 'Листбок',
-'vector-view-view'          => 'Лыддьöтны',
-'variants'                  => 'Варианттэз',
+'vector-action-delete' => 'Чышкыны',
+'vector-view-view'     => 'Лыддьöтны',
+'variants'             => 'Варианттэз',
 
 'errorpagetitle'   => 'Сорасьöм',
 'returnto'         => 'Бертны $1-öдз.',
@@ -214,7 +210,7 @@ $messages = array(
 'yourname'                => 'Уджкерисьлöн пыран ним:',
 'yourpassword'            => 'Пароль:',
 'yourpasswordagain'       => 'Мöдпöвсьöтны пароль',
-'remembermypassword'      => 'Видзны менчим пыран ним этiя компьютер тöдвылын',
+'remembermypassword'      => 'Видзны менчим пыран ним этiя компьютер тöдвылын (не дыржык {{PLURAL:$1| лунся|лунся}})',
 'login'                   => 'Пырны ним увтын',
 'nav-login-createaccount' => 'Пыран / гижöтчан',
 'userlogin'               => 'Висьтасьны нето гижöтчыны',
@@ -225,12 +221,13 @@ $messages = array(
 'createaccount'           => 'Лöсьöт аслыт уджкерисьлiсь ним',
 'gotaccountlink'          => 'Пырны ним увтын',
 'createaccountmail'       => 'Электрон поштаöн',
+'createaccountreason'     => 'Мыля:',
 'loginerror'              => 'Пырöмыт эз аркмы',
 'loginsuccesstitle'       => 'Пырöмыт аркмис',
 'mailmypassword'          => 'Ыстыны виль пароль',
 'loginlanguagelabel'      => 'Кыв: $1',
 
-# Password reset dialog
+# Change password dialog
 'resetpass'                 => 'Вежны пароль',
 'oldpassword'               => 'Важ пароль',
 'newpassword'               => 'Виль пароль',
@@ -250,8 +247,6 @@ $messages = array(
 'extlink_tip'     => 'Вики сайö ыстöт (эн вунöт содтыны http:// )',
 'headline_sample' => 'Юрнимлöн текст',
 'headline_tip'    => 'Мöд тшупöта юрним',
-'math_sample'     => 'Пырт татчö формула',
-'math_tip'        => 'Математикаись формула',
 'nowiki_sample'   => 'Пырт татчö форматируйттöм текст',
 'nowiki_tip'      => 'Игнорируйтны вики-форматируйтöм',
 'image_tip'       => 'Пыртöм файл',
@@ -323,6 +318,7 @@ $messages = array(
 # Diffs
 'history-title'           => '$1 вильмöтан история',
 'difference'              => '(Неöткодьыс версияэз коласын)',
+'difference-multipage'    => 'Неöткодьыс листбоккез коласын',
 'lineno'                  => 'Визёк $1:',
 'compareselectedversions' => 'Ордчаöтны бöрйöм версияэз',
 'editundo'                => 'керны важмоз',
@@ -497,8 +493,7 @@ $messages = array(
 'linksearch' => 'Вики сайöдз ыстöттэз',
 
 # Special:Log/newusers
-'newuserlogpage'          => 'Уджкерисьö гижöтчан журнал',
-'newuserlog-create-entry' => 'Виль уджкерись',
+'newuserlogpage' => 'Уджкерисьö гижöтчан журнал',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(уджкериссезлöн нимлёдз)',
@@ -511,11 +506,8 @@ $messages = array(
 # Watchlist
 'watchlist'         => 'Синмаланнэз',
 'mywatchlist'       => 'Синмаланнэзö',
-'watchlistfor'      => "('''$1''' понда)",
-'addedwatch'        => 'Синмалан нимлёдзö содтöм',
 'addedwatchtext'    => '«[[:$1]]» листбок вöлi содтöм [[Special:Watchlist|синмалан нимлёдзат]].
 Быдöс, мый пондас вежсьыны листбок вылас да сыкöт йитчöм сёрнитанын, позяс адзыны этiя нимлёдзись; сiя лоас сiдзжо кызжыка тöдчöтöм [[Special:RecentChanges|виль вежсьöммез сьöртi нимлёдзын]], медбы позис кокнитжыка казявны.',
-'removedwatch'      => 'Синмалан нимлёдзись вештöм',
 'removedwatchtext'  => 'Листбок «[[:$1]]» вöлi вештöм [[Special:Watchlist|синмалан нимлёдзсит]].',
 'watch'             => 'Синмав',
 'watchthispage'     => 'Синмавны этiйö листбок',
@@ -535,8 +527,7 @@ $messages = array(
 'delete-legend'         => 'Чышкыны',
 'confirmdeletetext'     => 'Тэ мöдан быдсöн чышкыны листбок (нето серпас) да  сылiсь история. Былись я тэ мöдан сiйö керны,  вежöртан я бура, мыйö этö вермас вайöтны,  и керан я этiйö [[{{MediaWiki:Policy-url}}]] туйдöттэз сьöртi',
 'actioncomplete'        => 'Керсьöм',
-'deletedtext'           => '«<nowiki>$1</nowiki>» чышкöм. Видзöт $2-ись медбöрья чышкöммесö.',
-'deletedarticle'        => 'чышкис "[[$1]]"',
+'deletedtext'           => '«$1» чышкöм. Видзöт $2-ись медбöрья чышкöммесö.',
 'dellogpage'            => 'Шупкан чукöр',
 'deletecomment'         => 'Мыля:',
 'deleteotherreason'     => 'Эшö мыля чышкöм:',
@@ -553,7 +544,7 @@ $messages = array(
 'protectexpiry'               => 'Помасьö:',
 'protect_expiry_invalid'      => 'Памасян кадыс соралöм',
 'protect_expiry_old'          => 'Помасян кад — чулалöмын.',
-'protect-text'                => "Татöн тэ верман видзöтны да вежны '''<nowiki>$1</nowiki>''' листбок понда дорьян тшупöт.",
+'protect-text'                => "Татöн тэ верман видзöтны да вежны '''$1''' листбок понда дорьян тшупöт.",
 'protect-locked-access'       => "Уджкерисьлöн нимыт оз тырмы, мед вежны листбокыслiсь дорьян тшупöт.
 Öння лöсьöтаннэз '''$1''' листбок понда:",
 'protect-cascadeon'           => 'Этiя листбокыс дорйöм, мыля сiя пыртöм улынжык висьталöм {{PLURAL:$1|листбокö|листбокö}}, кытчö лöсьöтöм каскад нёж дорьян.
@@ -574,9 +565,8 @@ $messages = array(
 'maximum-size'                => 'Медгырись ыжда:',
 
 # Undelete
-'undeletelink'     => 'видзöтны/керны важмоз',
-'undeletecomment'  => 'Мыля:',
-'undeletedarticle' => "бöр керис ''[[$1]]''",
+'undeletelink'    => 'видзöтны/керны важмоз',
+'undeletecomment' => 'Мыля:',
 
 # Namespace form on various pages
 'namespace'      => 'Ниммез чукöр:',
@@ -646,8 +636,6 @@ $messages = array(
 'talkexists'       => "'''Листбоклiсь ним вежöм ни, а сы йылiсь сёрнитанлiсь абу, мыля сэтшöм жö нима листбок эм ни. Öтлаöт жö нiйö кипонiсь.'''",
 'movedto'          => 'нымыс вежöм … вылö',
 'movetalk'         => 'Вежны ним и сёрнитан листбокыслiсь',
-'1movedto2'        => 'вежис  «[[$1]]»-лiсь нимсö «[[$2]]» вылö',
-'1movedto2_redir'  => '«[[$1]]»-лö сетiсö виль ним «[[$2]]» мöдлаö иньдöтöм весьтын',
 'movelogpage'      => 'Юрниммез вежöм йылiсь',
 'movereason'       => 'Мыля:',
 'revertmove'       => 'керны важмоз',
@@ -724,11 +712,10 @@ $messages = array(
 'nextdiff'     => 'Сыбöрся вильмöтöтöм →',
 
 # Media information
-'file-info-size'       => '($1 × $2 пиксел, файллöн ыжда: $3, MIME-тип: $4)',
-'file-nohires'         => '<small>Буржыка тыдалан версия абу.</small>',
-'svg-long-desc'        => '(SVG-файл, гижöм сьöртi $1 × $2 пиксел,  файллöн ыжда: $3)',
-'show-big-image'       => 'Буржыка тыдалан серпас',
-'show-big-image-thumb' => '<small>Одзвыв нёджжалан ыжда: $1 × $2 пиксел</small>',
+'file-info-size' => '$1 × $2 пиксел, файллöн ыжда: $3, MIME-тип: $4',
+'file-nohires'   => 'Буржыка тыдалан версия абу.',
+'svg-long-desc'  => 'SVG-файл, гижöм сьöртi $1 × $2 пиксел,  файллöн ыжда: $3',
+'show-big-image' => 'Буржыка тыдалан серпас',
 
 # Bad image list
 'bad_image_list' => 'Формат лöсьöтiкö видз тöд вылын: Уджавны пондасö токö нимлёдзись визёккез (кöдналöн пондöтчанын эм *). Визёклöн медодзза ыстöт ась лоö йитöм неуджалан файлкöт.  Мöдiк ыстöттэз сiя жö визёкын огö пыртö сы лыдö,  м.ш. гижöттэз, кытчö медиа-файл позьö пыртны.',
@@ -745,7 +732,13 @@ $messages = array(
 * exposuretime
 * fnumber
 * isospeedratings
-* focallength',
+* focallength
+* artist
+* copyright
+* imagedescription
+* gpslatitude
+* gpslongitude
+* gpsaltitude',
 
 # EXIF tags
 'exif-imagewidth'  => 'Пасьта',
@@ -753,15 +746,13 @@ $messages = array(
 
 # External editor support
 'edit-externally'      => 'Редактируйтны этiйö файлсö мöд программа пыр',
-'edit-externally-help' => '(унажык видзöт: [http://www.mediawiki.org/wiki/Manual:External_editors удж кежö лöсьöтны туйдöтан])',
+'edit-externally-help' => '(унажык видзöт: [//www.mediawiki.org/wiki/Manual:External_editors удж кежö лöсьöтны туйдöтан])',
 
 # 'all' in various places, this might be different for inflected languages
-'recentchangesall' => 'быдöс',
-'imagelistall'     => 'быдöс',
-'watchlistall2'    => 'быдöс',
-'namespacesall'    => 'быдöс',
-'monthsall'        => 'быдöс',
-'limitall'         => 'быдöс',
+'watchlistall2' => 'быдöс',
+'namespacesall' => 'быдöс',
+'monthsall'     => 'быдöс',
+'limitall'      => 'быдöс',
 
 # Watchlist editing tools
 'watchlisttools-view' => 'Видзöт лöсялана вильмöтöммез',

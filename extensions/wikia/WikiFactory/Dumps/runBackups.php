@@ -176,7 +176,7 @@ function runBackups( $from, $to, $full, $options ) {
 			closedir( $dh );
 		}
 		if( count( $json ) ) {
-			file_put_contents( $jsonfile, Wikia::json_encode( $json ) );
+			file_put_contents( $jsonfile, json_encode( $json ) );
 		}
 	}
 }

@@ -33,7 +33,6 @@ class Gatherer extends SpecialPage {
 			}
 		}
 		
-		wfLoadExtensionMessages( 'Gatherer' );
 		if( !$wgUser->isAllowed( 'upload' ) ) {
 			$wgOut->permissionRequired( 'upload' );
 			return;

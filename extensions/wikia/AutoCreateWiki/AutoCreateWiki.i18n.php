@@ -315,7 +315,7 @@ $messages['az'] = array(
 	'autocreatewiki-subname-answers' => 'Cavablar',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -1428,7 +1428,7 @@ Ceci est un tout nouveau projet, veuillez nous écrire si avec une quelconque qu
 	'autocreatewiki-subname-answers' => 'Réponses',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -4456,8 +4456,6 @@ Mangyaring pumili ng angkop mula sa listahang bumabagsak pababa.',
 	'autocreatewiki-congratulation' => 'Maligayang bati!',
 	'autocreatewiki-welcometalk-log' => 'Pambati sa Pagdating',
 	'autocreatewiki-step2-error' => 'Umiiral ang kalipunan ng dato!',
-	'newwikis' => 'Bagong mga wiki',
-	'newwikisstart' => 'Ipakita ang mga wiki na nagsisimula sa:',
 );
 
 /** толышә зывон (толышә зывон)
@@ -4760,13 +4758,6 @@ $messages['vep'] = array(
  */
 $messages['vi'] = array(
 	'autocreatewiki-info-terms-agree' => 'Bằng việc tạo ra một wiki và một tài khoản thành viên, bạn đồng ý với <a href="http://www.wikia.com/wiki/Terms_of_use">Điều khoản Sử dụng của Wikia</a>',
-);
-
-/** Yiddish (ייִדיש)
- * @author פוילישער
- */
-$messages['yi'] = array(
-	'autocreatewiki-create-account' => 'שאַפֿן אַ קאנטע',
 );
 
 /** Chinese (中文) */

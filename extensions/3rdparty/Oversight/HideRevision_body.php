@@ -5,7 +5,6 @@
  */
 class HideRevisionForm extends SpecialPage {
 	function __construct() {
-		wfLoadExtensionMessages( 'HideRevision' );
 		parent::__construct( 'HideRevision', 'hiderevision' );
 	}
 
@@ -99,7 +98,7 @@ class HideRevisionForm extends SpecialPage {
 
 			// Hidden fields
 			$this->revisionFields() .
-			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
+			Html::Hidden( 'wpEditToken', $wgUser->editToken() ) .
 
 			Xml::closeElement( 'form' ) );
 	}
@@ -126,7 +125,7 @@ class HideRevisionForm extends SpecialPage {
 	function makeList( $resultSet ) {
 		global $IP, $wgUser;
 		require_once( "$IP/includes/ChangesList.php" );
-		$changes = ChangesList::newFromUser( $wgUser );
+		$changes = ChangesList::newFromContext( RequestContext::getMain() );
 
 		$skin = $wgUser->getSkin();
 
@@ -185,13 +184,13 @@ class HideRevisionForm extends SpecialPage {
 	function revisionFields() {
 		$out = '';
 		foreach( $this->mRevisions as $id ) {
-			$out .= Xml::hidden( 'revision[]', $id );
+			$out .= Html::Hidden( 'revision[]', $id );
 		}
 		if( $this->mTarget ) {
-			$out .= Xml::hidden( 'target', $this->mTarget->getPrefixedDbKey() );
+			$out .= Html::Hidden( 'target', $this->mTarget->getPrefixedDbKey() );
 		}
 		foreach( $this->mTimestamps as $timestamp ) {
-			$out .= Xml::hidden( 'timestamp[]', wfTimestamp( TS_MW, $timestamp ) );
+			$out .= Html::Hidden( 'timestamp[]', wfTimestamp( TS_MW, $timestamp ) );
 		}
 		return $out;
 	}
@@ -281,7 +280,7 @@ class HideRevisionForm extends SpecialPage {
 		$title->invalidateCache();
 
 		// Done with all database pieces; commit!
-		$dbw->immediateCommit();
+		$dbw->commit();
 
 		// Also purge remote proxies.
 		// Ideally this would be built into the above, but squid code is
@@ -339,7 +338,7 @@ class HideRevisionForm extends SpecialPage {
 				'hidden_user_text'  => $rev->getRawUserText(),
 				'hidden_timestamp'  => $dbw->timestamp( $rev->getTimestamp() ),
 				'hidden_minor_edit' => $rev->isMinor() ? 1 : 0,
-				'hidden_deleted'    => $rev->mDeleted, // FIXME: private field access
+				'hidden_deleted'    => $rev->getDeleted(),
 
 				'hidden_by_user'      => $wgUser->getId(),
 				'hidden_on_timestamp' => $dbw->timestamp(),
@@ -353,7 +352,6 @@ class HideRevisionForm extends SpecialPage {
 class SpecialOversight extends SpecialPage {
 
 	function __construct(){
-		wfLoadExtensionMessages('HideRevision');
 		parent::__construct( 'Oversight', 'oversight' );
 	}
 
@@ -508,7 +506,7 @@ class SpecialOversight extends SpecialPage {
 
 	function revisionInfo( $row ) {
 		global $wgUser;
-		$changes = ChangesList::newFromUser( $wgUser );
+		$changes = ChangesList::newFromContext( RequestContext::getMain() );
 		$out = $changes->beginRecentChangesList();
 		$rc = RecentChange::newFromCurRow( $row );
 		$rc->counter = 0; // ???

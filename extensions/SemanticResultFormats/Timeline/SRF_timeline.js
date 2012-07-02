@@ -5,7 +5,7 @@
 
 var smwtl;
 
-addOnloadHook(smw_timeline_init);
+$(smw_timeline_init);
 
 function smw_timeline_init() {
 	if (!document.getElementsByName) return;

@@ -5,8 +5,14 @@
  * @ingroup Language
  */
 class LanguageSk extends Language {
+
+	/**
+	 * @param $count int
+	 * @param $forms array
+	 * @return string
+	 */
 	function convertPlural( $count, $forms ) {
-		if ( !count($forms) ) { return ''; }
+		if ( !count( $forms ) ) { return ''; }
 		$forms = $this->preConvertPlural( $forms, 3 );
 
 		if ( $count == 1 ) {

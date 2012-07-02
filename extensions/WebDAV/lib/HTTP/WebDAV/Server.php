@@ -681,7 +681,7 @@ class HTTP_WebDAV_Server
                     $options['namespaces'][$prop['namespace']] =
                         'ns' . count($options['namespaces']);
                 }
-            } else if (!empty($file['props']) && is_array($file['props'])) {
+            } elseif (!empty($file['props']) && is_array($file['props'])) {
 
                 // loop over all returned properties
                 foreach ($file['props'] as $prop) {
@@ -1107,7 +1107,7 @@ class HTTP_WebDAV_Server
 
                 fpassthru($options['stream']);
             }
-        } else if (!empty($options['data']))  {
+        } elseif (!empty($options['data']))  {
             if (is_array($options['data'])) {
                 // reply to partial request
             } else {
@@ -1353,7 +1353,7 @@ class HTTP_WebDAV_Server
     {
         if (empty($status)) {
             $status = '403 Forbidden';
-        } else if (is_resource($status)
+        } elseif (is_resource($status)
                 && get_resource_type($status) == 'stream') {
             $stream = $status;
             $status = '201 Created';
@@ -2249,7 +2249,7 @@ if (!empty($response['score'])) {
             $timeout = 'Infinite';
             if (!empty($lock['expires'])) {
                 $timeout = 'Second-' . ($lock['expires'] - time());
-            } else if (!empty($lock['timeout'])) {
+            } elseif (!empty($lock['timeout'])) {
 
                 // more than a million is considered an absolute timestamp
                 // less is more likely a relative value

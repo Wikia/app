@@ -346,7 +346,7 @@ class SpecialApiGate extends SpecialPage {
 	 * Displays the page with key information and statistics (one tab each).
 	 */
 	public function subpage_key( $apiKey ){
-		wfProfileIn( __METHOD__ );
+	wfProfileIn( __METHOD__ );
 
 		$apiKeyObject = ApiGate_ApiKey::newFromDb( $apiKey );
 		$html = "";
@@ -366,7 +366,7 @@ class SpecialApiGate extends SpecialPage {
 				</div>
 				<div id="apiGate_keyStats" data-tab-body="apiGate_keyStats" class="tabBody">
 					<?= $this->subpage_keyStats( $apiKey ); ?>
-				</div>
+				</div><!-- end apiGate_keyStats -->
 				<?php
 			} else {
 				ApiGate::printError( i18n('apigate-error-keyaccess-denied', $apiKey) );

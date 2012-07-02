@@ -13,12 +13,10 @@ if ( ! defined( 'MEDIAWIKI' ) ) {
 }
 
 #---
-$wgExtensionFunctions[] = 'wfBlackTitlelistMessageLoader';
 $wgHooks['SpecialMovepageBeforeMove'][] = 'wfSpamBlackTitleBeforeMove';
 $wgHooks['EditFilter'][] = 'wfSpamBlackTitleListCallback';
 $wgHooks['UploadForm:BeforeProcessing'][] = 'wfSpamBlackTitleSpecialUpload';
 $wgHooks['WikiaMiniUpload:BeforeProcessing'][] = 'wfSpamBlackTitleWikiaMiniUpload';
-$wgHooks['ApiCreateMultiplePagesBeforeCreation'][] = 'wfSpamBlackTitleNewWikiBuilder';
 $wgHooks['CreateDefaultQuestionPageFilter'][] = 'wfSpamBlacklistTitleGenericTitleCheck';
 
 // other functions
@@ -40,18 +38,7 @@ function wfBlackTitleListParseSetup() {
 		$blackTitleListSetup['expiryTime'] = $wgBlackListCacheTime;
 
 	return $blackTitleListSetup;
-}
-
-function wfBlackTitlelistMessageLoader() {
-	global $wgMessageCache;
-	if (file_exists('WikiaTitleBlackList.i18n.php')) {
-		require_once( 'SpamBlacklist.i18n.php' );
-		foreach( efTitleBlackListMessages() as $lang => $messages ) {
-			$wgMessageCache->addMessages( $messages, $lang );
-		}
-	}
-	return;
-}
+}#
 
 function wfSpamBlackTitleListCallback( $editPage, $text, $section, &$hookError, $summary ) {
 	global $IP, $useSpamRegexNoHttp;
@@ -168,30 +155,27 @@ function wfBlackListTitleParse($title) {
 		# check edited page title -> if page with regexes just clear memcache.
 		$blacklist->getSpamList()->clearListMemCache();
 	}
-	
 	if (!empty($aBlackListRegexes) && is_array($aBlackListRegexes)) {
 		wfDebug( "Checking text against " . count( $aBlackListRegexes ) . " regexes: " . implode( ', ', $aBlackListRegexes ) . "\n" );
 		
 		$html_errors = ini_get( 'html_errors' );
 		ini_set( 'html_errors', '0' );
 		set_error_handler( array( 'WikiaTitleBlackList', 'errorHandler' ) );
-				
 		foreach ($aBlackListRegexes as $id => $regex) {
 			$m = array();
-			if (preg_match($regex, strtolower($title->getText()), $m)) {
+			if (preg_match($regex, ($title->getText()), $m)) {
 				wfDebug( "Match!\n" );
-				SpamRegexBatch::spamPage( $m[0], $title );
+				WikiaSpamRegexBatch::spamPage( $m[0], $title );
 				$retVal = false;
 				break;
 			}
-			if (preg_match($regex, strtolower($title->getFullText()), $m)) {
+			if (preg_match($regex, ($title->getFullText()), $m)) {
 				wfDebug( "Match!\n" );
-				SpamRegexBatch::spamPage( $m[0], $title );
+				WikiaSpamRegexBatch::spamPage( $m[0], $title );
 				$retVal = false;
 				break;
 			}
 		}
-		
 		restore_error_handler();
 		ini_set( 'html_errors', $html_errors );		
 	}
@@ -201,7 +185,7 @@ function wfBlackListTitleParse($title) {
 		if ( is_object($blacklist) ) {
 			$f = $blacklist->getSpamList()->getPreviousFilter();
 			if ( ( !empty($f) ) && (function_exists($f)) ) {
-				if ( $f( $title, $text, $section ) )
+				if ( $f( $title, null, null ) )
 				{
 					$retVal = false;
 				}
@@ -223,6 +207,8 @@ class WikiaTitleBlackList {
 
 	private function __construct( $settings ) {
 		global $wgDBname;
+		global $wgBlackTitleListFiles;
+
 		foreach ( $settings as $name => $value ) {
 			$this->$name = $value;
 		}
@@ -256,8 +242,16 @@ class WikiaTitleBlackList {
 		}
 
 		$this->settings = $settings;
-		$this->spamList = new SpamRegexBatch("BlackListTitles", $this->settings);
+		$this->spamList = new WikiaSpamRegexBatch();
+		$this->spamList->setFiles($wgBlackTitleListFiles);
 		$this->regexes = $this->spamList->getRegexes();
+		foreach($this->regexes as &$regex) {
+			// by default, blacklist returns regexes with http(s)
+			// in the beginning. Title Blacklist overrides this
+			if(strpos($regex,'/(?:https?:)\/\/+') === 0 ) {
+				$regex = '/' . mb_substr($regex, 17);
+			}
+		}
 	}
 
 	public static function Instance($settings = array()) {
@@ -270,7 +264,7 @@ class WikiaTitleBlackList {
 
 	public function getSettings() { return $this->settings; }
 	public function getSpamList() { return $this->spamList; }
-	public function getRegexes()  { return $this->regexes; }
+	public function getRegexes()  { return $this->regexes; 	}
 	
 	static function errorHandler( $errno, $errstr, $errfile, $errline ) {
 		global $wgDBname;

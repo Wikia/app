@@ -6,135 +6,154 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'ImageTagging' => array( 'ImageTagging' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'ImageTagging' => array( 'وسم_الصور' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'ImageTagging' => array( 'وسم_الصور' ),
+$specialPageAliases['arz'] = array(
+	'ImageTagging' => array( 'Tagging_للصور' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'ImageTagging' => array( 'OznacavanjeSlika' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'ImageTagging' => array( 'Bildmarkierung' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
-	'ImageTagging' => array( 'Markěrowanje wobrazow' ),
+$specialPageAliases['dsb'] = array(
+	'ImageTagging' => array( 'Markěrowanje_wobrazow' ),
 );
 
 /** Persian (فارسی) */
-$aliases['fa'] = array(
+$specialPageAliases['fa'] = array(
 	'ImageTagging' => array( 'برچسب_تصویر' ),
 );
 
+/** Galician (Galego) */
+$specialPageAliases['gl'] = array(
+	'ImageTagging' => array( 'Etiquetado_de_imaxes' ),
+);
+
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
-	'ImageTagging' => array( 'Markěrowanje wobrazow' ),
+$specialPageAliases['hsb'] = array(
+	'ImageTagging' => array( 'Markěrowanje_wobrazow' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'ImageTagging' => array( 'EtiketajImaj' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
+$specialPageAliases['hu'] = array(
 	'ImageTagging' => array( 'Képcímkézés' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'ImageTagging' => array( 'Etiquettage de imagines' ),
+$specialPageAliases['ia'] = array(
+	'ImageTagging' => array( 'Etiquettage_de_imagines' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'ImageTagging' => array( 'Tag gambar', 'TagGambar' ),
+$specialPageAliases['id'] = array(
+	'ImageTagging' => array( 'Tag_gambar', 'TagGambar' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'ImageTagging' => array( '画像のラベル付け', 'ラベル付画像' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'ImageTagging' => array( 'Belder_Makeere', 'BelderMakeere' ),
 );
 
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'ImageTagging' => array( 'TegguearFotografías' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'ImageTagging' => array( 'Bildmarkéierung' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'ImageTagging' => array( 'ОзначувањеНаСлики' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'ImageTagging' => array( 'ചിത്രംറ്റാഗ്ചെയ്യുക' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'ImageTagging' => array( 'सचित्रखूणा' ),
 );
 
-/** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'ImageTagging' => array( 'Ofbeeldingen_annoteren' ),
-);
-
-/** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'ImageTagging' => array( 'AfbeeldingAnnoteren' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
 	'ImageTagging' => array( 'Bildetagging' ),
 );
 
-/** Portuguese (Português) */
-$aliases['pt'] = array(
-	'ImageTagging' => array( 'Categorização de imagens' ),
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'ImageTagging' => array( 'Aofbeeldingen_annoteren' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'ImageTagging' => array( 'AfbeeldingAnnoteren' ),
+);
+
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'ImageTagging' => array( 'Ustawianie_słów_kluczowych_grafiki' ),
+);
+
+/** Portuguese (Português) */
+$specialPageAliases['pt'] = array(
+	'ImageTagging' => array( 'Categorização_de_imagens' ),
+);
+
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'ImageTagging' => array( 'छायाचित्रवीजक' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'ImageTagging' => array( 'OznačovanieObrázkov' ),
 );
 
 /** Swahili (Kiswahili) */
-$aliases['sw'] = array(
+$specialPageAliases['sw'] = array(
 	'ImageTagging' => array( 'MabanoyaPicha' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'ImageTagging' => array( 'Pagtatatak ng larawan' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'ImageTagging' => array( 'DosyaEtiketleme' ),
 );
-

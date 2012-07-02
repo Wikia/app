@@ -25,8 +25,10 @@ $wgGroupPermissions['staff']['textregex'] = true;
 // Set up the new special page
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['TextRegex'] = $dir . 'TextRegex.i18n.php';
-$wgExtensionAliasesFiles['TextRegex'] = $dir . 'TextRegex.alias.php';
+$wgExtensionMessagesFiles['TextRegexAliases'] = $dir . 'TextRegex.alias.php';
+
 $wgAutoloadClasses['TextRegex'] = $dir . 'SpecialTextRegex.php';
 $wgAutoloadClasses['TextRegexCore'] = $dir . 'SpecialTextRegex.php';
+
 $wgSpecialPages['TextRegex'] = 'TextRegex';
 $wgSpecialPageGroups['TextRegex'] = 'pagetools';

@@ -48,7 +48,7 @@ $wgStatsSpecialGroupUser = false;
 $wgExtensionMessagesFiles["WikiStats"] = dirname(__FILE__) . '/SpecialWikiStats.i18n.php';
 
 // aliases
-$wgExtensionAliasesFiles['WikiStats'] = __DIR__ . '/SpecialWikiStats.aliases.php';
+$wgExtensionMessagesFiles['WikiStatsAliases'] = __DIR__ . '/SpecialWikiStats.aliases.php';
 
 #--- helper file
 require_once( dirname(__FILE__) . '/SpecialWikiStats_helper.php' );
@@ -67,5 +67,3 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
 $wgStatsIgnoreWikis = array( 5, 11, 6745 );
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiStats_body.php', 'WikiStats', 'WikiStatsPage' );
-
-?>

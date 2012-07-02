@@ -8,14 +8,12 @@ class CustomMovePageForm extends MovePageForm{
 
 	/**
 	 * Show the form
-	 * @param mixed $err Error message. May either be a string message name or 
-	 *    array message name and parameters, like the second argument to 
-	 *    OutputPage::wrapWikiMsg(). 
+	 * @param mixed $err Error message. May either be a string message name or
+	 *    array message name and parameters, like the second argument to
+	 *    OutputPage::wrapWikiMsg().
 	 */
 	function showForm( $err ) {
 		global $wgOut, $wgUser, $wgFixDoubleRedirects;
-
-		wfLoadExtensionMessages( 'Answers' );
 
 		$skin = $wgUser->getSkin();
 
@@ -67,8 +65,8 @@ class CustomMovePageForm extends MovePageForm{
 
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $wgFixDoubleRedirects ) {
-			$hasRedirects = $dbr->selectField( 'redirect', '1', 
-				array( 
+			$hasRedirects = $dbr->selectField( 'redirect', '1',
+				array(
 					'rd_namespace' => $this->oldTitle->getNamespace(),
 					'rd_title' => $this->oldTitle->getDBkey(),
 				) , __METHOD__ );
@@ -81,7 +79,7 @@ class CustomMovePageForm extends MovePageForm{
 		}
 
 		$titleObj = SpecialPage::getTitleFor( 'Movepage' );
-		$token = htmlspecialchars( $wgUser->editToken() );
+		$token = htmlspecialchars( $wgUser->getEditToken() );
 
 		if ( !empty($err) ) {
 			$wgOut->setSubtitle( wfMsg( 'formerror' ) );
@@ -108,7 +106,7 @@ class CustomMovePageForm extends MovePageForm{
 				"</td>
 				<td class='mw-input'>" .
 					Xml::input( 'wpNewTitle', 75, $newTitle->getPrefixedText(), array( 'type' => 'text', 'id' => 'wpNewTitle' ) ) . ' <b>?</b>' .
-					Xml::hidden( 'wpOldTitle', $this->oldTitle->getPrefixedText() ) .
+					Html::hidden( 'wpOldTitle', $this->oldTitle->getPrefixedText() ) .
 				"</td>
 			</tr>"
 		);
@@ -129,7 +127,7 @@ class CustomMovePageForm extends MovePageForm{
 				<tr>
 					<td></td>
 					<td class='mw-input' >" .
-						Xml::checkLabel( wfMsg( 'move-leave-redirect' ), 'wpLeaveRedirect', 
+						Xml::checkLabel( wfMsg( 'move-leave-redirect' ), 'wpLeaveRedirect',
 							'wpLeaveRedirect', $this->leaveRedirect ) .
 					"</td>
 				</tr>"
@@ -141,7 +139,7 @@ class CustomMovePageForm extends MovePageForm{
 				<tr>
 					<td></td>
 					<td class='mw-input' >" .
-						Xml::checkLabel( wfMsg( 'fix-double-redirects' ), 'wpFixRedirects', 
+						Xml::checkLabel( wfMsg( 'fix-double-redirects' ), 'wpFixRedirects',
 							'wpFixRedirects', $this->fixRedirects ) .
 					"</td>
 				</tr>"
@@ -170,7 +168,7 @@ class CustomMovePageForm extends MovePageForm{
 		}
 
 		// FIXME: $this->watch shows up as undefined since it's a private variable in MovePageForm.
-		$watchChecked = $this->watch || $wgUser->getBoolOption( 'watchmoves' ) 
+		$watchChecked = $this->watch || $wgUser->getBoolOption( 'watchmoves' )
 			|| $this->oldTitle->userIsWatching();
 		$wgOut->addHTML( "
 				{$confirm}
@@ -181,7 +179,7 @@ class CustomMovePageForm extends MovePageForm{
 				"</td>
 			</tr>" .
 			Xml::closeElement( 'table' ) .
-			Xml::hidden( 'wpEditToken', $token ) .
+			Html::hidden( 'wpEditToken', $token ) .
 			//Xml::closeElement( 'fieldset' ) .
 			Xml::closeElement( 'form' ) .
 			"\n"

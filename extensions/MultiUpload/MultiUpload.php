@@ -23,15 +23,15 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Travis Derouin',
 	'version' => '2.0',
 	'descriptionmsg' => 'multiupload-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:MultiUpload',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:MultiUpload',
 );
 
 // Set up the new special page
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['MultipleUpload'] = $dir . 'MultiUpload.body.php';
-$wgAutoloadClasses['MultiUploadForm'] = $dir . 'MultiUpload.body.php';
+$wgAutoloadClasses['MultipleUploadForm'] = $dir . 'MultiUpload.body.php';
 $wgExtensionMessagesFiles['MultiUpload'] = $dir . 'MultiUpload.i18n.php';
-$wgExtensionAliasesFiles['MultiUpload'] = $dir . 'MultiUpload.alias.php';
+$wgExtensionMessagesFiles['MultiUploadAlias'] = $dir . 'MultiUpload.alias.php';
 $wgSpecialPages['MultipleUpload'] = 'MultipleUpload';
 $wgSpecialPageGroups['MultipleUpload'] = 'media';
 

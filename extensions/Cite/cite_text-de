@@ -9,16 +9,16 @@ Diese Seite dient ausschließlich als Hilfe zum '''korrekten Zitieren von Daten,
 == Bibliografische Angaben für „[[{{FULLPAGENAME}}]]“ ==
 * Seitentitel: {{FULLPAGENAME}}
 * Herausgeber: {{SITENAME}}, {{MediaWiki:Sitesubtitle}}. 
-* Autor(en): siehe [{{fullurl:{{FULLPAGENAME}}|action=history}} Versionsgeschichte]
+* Autor(en): siehe [{{canonicalurl:{{FULLPAGENAME}}|action=history}} Versionsgeschichte]
 * Datum der letzten Bearbeitung: {{LOCALDAY}}. {{LOCALMONTHNAME}} {{LOCALYEAR}}, {{LOCALTIME}}
 * Versions-ID der Seite: {{REVISIONID}}
-* Permanentlink: {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
+* Permanentlink: {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
 * Datum des Abrufs: <citation>{{LOCALDAY}}. {{LOCALMONTHNAME}} {{LOCALYEAR}}, {{LOCALTIME}}</citation>
 </div>
 
 <div class="plainlinks" style="border-style: solid;  border-width: 1px; width:95%; padding:6px 10px 6px 10px; margin:5px auto;">
 ==Zitatangabe zum Kopieren==
-Seite ''{{FULLPAGENAME}}.'' In: {{SITENAME}}, {{MediaWiki:Sitesubtitle}}. Bearbeitungsstand: {{LOCALDAY}}. {{LOCALMONTHNAME}} {{LOCALYEAR}}, {{LOCALTIME}}. URL: {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (Abgerufen: <citation>{{LOCALDAY}}. {{LOCALMONTHNAME}} {{LOCALYEAR}}, {{LOCALTIME}}</citation>)
+Seite ''{{FULLPAGENAME}}.'' In: {{SITENAME}}, {{MediaWiki:Sitesubtitle}}. Bearbeitungsstand: {{LOCALDAY}}. {{LOCALMONTHNAME}} {{LOCALYEAR}}, {{LOCALTIME}}. URL: {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (Abgerufen: <citation>{{LOCALDAY}}. {{LOCALMONTHNAME}} {{LOCALYEAR}}, {{LOCALTIME}}</citation>)
 </div>
 
 <div class="plainlinks" style="border-style: solid;  border-width: 1px; width:95%; padding:6px 10px 6px 10px; margin:5px auto;">
@@ -28,7 +28,7 @@ Seite ''{{FULLPAGENAME}}.'' In: {{SITENAME}}, {{MediaWiki:Sitesubtitle}}. Bearbe
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{MediaWiki:Sitesubtitle}}",
     year = "{{LOCALYEAR}}",
-    url = "{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
+    url = "{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
     note = "[Online; Stand <citation>{{LOCALDAY}}. {{LOCALMONTHNAME}} {{LOCALYEAR}}</citation>]"
   }
 
@@ -38,7 +38,7 @@ Bei Benutzung der LaTeX-Paketes „url“ (<tt>\usepackage{url}</tt> im Bereich 
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{MediaWiki:Sitesubtitle}}",
     year = "{{LOCALYEAR}}",
-    url = "'''\url{'''{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
+    url = "'''\url{'''{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
     note = "[Online; Stand <citation>{{LOCALDAY}}. {{LOCALMONTHNAME}} {{LOCALYEAR}}</citation>]"
   }
 </div><!--closing div for "plainlinks"-->

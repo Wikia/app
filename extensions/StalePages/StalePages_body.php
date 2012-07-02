@@ -8,39 +8,13 @@
  * Special page that generates a list of pages that have
  * not been edited in a given timeframe.
  *
- * @addtogroup Extensions
+ * @ingroup Extensions
  * @author Tim Laqua <t.laqua@gmail.com>
  */
-
-class Stalepages extends SpecialPage
+class Stalepages extends QueryPage
 {
-	///StalePages Class Constructor
-	public function __construct() {
-		SpecialPage::SpecialPage( 'StalePages' );
-	}
-
-	function getDescription() {
-		return wfMsg( 'stalepages' );
-	}
-
-	function execute( $parameters ) {
-		global $wgVersion;
-		if( version_compare( $wgVersion, '1.11', '>=' ) )
-			wfLoadExtensionMessages( 'Stalepages' );
-
-		$this->setHeaders();
-		list( $limit, $offset ) = wfCheckLimits();
-
-		$sp = new StalepagesPage();
-
-		$sp->doQuery( $offset, $limit );
-	}
-}
-
-class StalepagesPage extends QueryPage
-{
-	function getName() {
-		return "Stalepages";
+	public function __construct( $name = 'StalePages' ) {
+		parent::__construct( $name );
 	}
 
 	function isExpensive() {
@@ -54,27 +28,20 @@ class StalepagesPage extends QueryPage
 
 	function isSyndicated() { return false; }
 
-	function getSQL() {
-		global $wgDBtype, $wgStalePagesDays;
+	function getQueryInfo() {
+		global $wgStalePagesDays;
+		$date = mktime() - ( 60 * 60 * 24 * $wgStalePagesDays ); //randomish
 		$db = wfGetDB( DB_SLAVE );
-		$page = $db->tableName( 'page' );
-		$revision = $db->tableName( 'revision' );
-		$epoch = $wgDBtype == 'mysql' ? 'UNIX_TIMESTAMP(rev_timestamp)' :
-			'EXTRACT(epoch FROM rev_timestamp)';
-
-		$date = mktime() - ( 60 * 60 * 24 * $wgStalePagesDays ); //ranomish
 		$dateString = $db->timestamp($date);
-
-		return
-			"SELECT 'Stalepages' as type,
-			page_namespace as namespace,
-			page_title as title,
-			$epoch as value
-			FROM $page, $revision
-			WHERE page_latest=rev_id
-			AND page_namespace=" . NS_MAIN . "
-			AND page_is_redirect=0
-			AND rev_timestamp < '$dateString'";
+		return array(
+			'tables' => array( 'page', 'revision' ),
+			'fields' => array( 'page_namespace AS namespace', 'page_title AS title', 'rev_timestamp AS value' ),
+			'conds' => array( 'page_latest=rev_id',
+				'page_namespace' => NS_MAIN,
+				'page_is_redirect=0',
+				'rev_timestamp < ' . $db->addQuotes( $dateString ) ,
+			)
+		);
 	}
 
 	function sortDescending() {
@@ -87,6 +54,6 @@ class StalepagesPage extends QueryPage
 		$d = $wgLang->timeanddate( wfTimestamp( TS_MW, $result->value ), true );
 		$title = Title::makeTitle( $result->namespace, $result->title );
 		$link = $skin->makeKnownLinkObj( $title, htmlspecialchars( $wgContLang->convert( $title->getPrefixedText() ) ) );
-		return wfSpecialList($link, $d);
+		return $wgLang->specialList( $link, $d );
 	}
 }

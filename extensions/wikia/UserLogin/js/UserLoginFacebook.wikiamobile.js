@@ -46,7 +46,7 @@ require(['track', 'events', 'querystring', 'toast'], function(track, events, qs,
 									reload.setPath(wgArticlePath.replace('$1', returnto));
 								}
 
-								reload.setVal('returnto', '');
+								reload.setVal('returnto');
 								reload.addCb();
 								reload.goTo();
 

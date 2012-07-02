@@ -16,133 +16,13 @@ class LightboxController extends WikiaController {
 	}
 	
 	public function lightboxModalContent() {
-		// TODO: get article name from request
-		$mediaTitle = $this->request->getVal('mediaTitle');
-		$articleTitle = $this->request->getVal('articleTitle');
-		$articleId = $this->request->getVal('articleId');
-		$carouselType = $this->request->getVal('carouselType', '');
-		
-		switch($carouselType) {
-			case "articleMedia":
-				$method = "getArticleMediaThumbs";
-				break;
-			case "relatedVideo":
-				$method = "getRelatedVideosThumbs";
-				break;
-			case "latestPhotos":
-			default:
-				$method = "getLatestPhotosThumbs";
-				break;
-		}
-		
-		$initialFileDetail = array();
-		$mediaThumbs = array();
-		if(!empty($mediaTitle)) {
-			// send request to getImageDetail()
-			$initialFileDetail = $this->app->sendRequest('Lightbox', 'getMediaDetail', array('title' => $mediaTitle))->getData();
-			$mediaThumbs = $this->app->sendRequest('Lightbox', $method, array('title' => $articleTitle, 'articleId' => $articleId))->getData();
-			
-			if(empty($initialFileDetail['exists'])) {
-				// both file and carousel is empty, which means the image does not exist on this wiki
-				// set the view template to be error
-				$this->overrideTemplate( 'lightboxModalContentError' );
-			} else if(empty($mediaThumbs) || empty($mediaThumbs['thumbs'])) {
-				// generate fake thumbnail to always have a single item in the carousel
-				$fakeThumb = self::createCarouselThumb(array(
-					'title' => $initialFileDetail['fileTitle'],
-					'type' => $initialFileDetail['mediaType']
-				));
-				if(!empty($fakeThumb)) {
-					$mediaThumbs['thumbs'] = array($fakeThumb);
-				}
-			}
-			
-		}
-
-		$this->initialFileDetail = $initialFileDetail;
-		$this->mediaThumbs = $mediaThumbs;
-	}
-
-
-	/**
-	 * @brief - Returns a list of relatedVideos for the wiki
-	 * @responseParam array thumbs - thumbnail data
-	 */	
-	public function getRelatedVideosThumbs() {
-		wfProfileIn(__METHOD__);
-
-		$articleId = $this->request->getVal('articleId');
-
-		$rvs = new RelatedVideosService();
-		$data = $rvs->getRVforArticleId( $articleId );
-		$mediaTable = array();
-		foreach( $data as $video) {
-			$mediaTable[] = array(
-				'title' => $video['id'],
-				'type' => 'video'
-			);
-		}
-		$thumbs = $this->mediaTableToThumbs( $mediaTable );
-	
-		$this->response->setVal( 'thumbs', $thumbs );
-		wfProfileOut(__METHOD__);
-	}
-
-
-	/**
-	 * @brief - Returns a list of latest photos for the wiki
-	 * @requestParam string wikiName - DB name of the wiki.  (optional, default to current wiki if null)
-	 * @responseParam array thumbs - thumbnail data
-	 */	
-	public function getLatestPhotosThumbs() {
-		$mediaQuery =  F::build( 'MediaQueryService' ); /* @var $mediaQuery MediaQueryService */
-		$mediaTable = $mediaQuery->getRecentlyUploadedAsMediaTable(29);
-		$thumbs = $this->mediaTableToThumbs( $mediaTable );
-
-		$this->thumbs = $thumbs;
+		// set cache control to 1 day 
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)); 
 	}
 	
-	protected static function getArticleMediaThumbsMemcKey($title) {
-		return F::app()->wf->MemcKey( 'ArticleMediaThumbs', '1.0a', $title->getDBkey() );
-	}
-
-	public static function onArticleEditUpdates( &$article, &$editInfo, $changed ) {
-		// article links are updated, so we invalidate the cache
-		F::app()->wg->memc->delete( self::getArticleMediaThumbsMemcKey( $article->getTitle() ) );
-		return true;
-	}
-	
-	/**
-	 * @brief - Returns a list of all media for the article.
-	 * @requestParam string title - title of the Article
-	 * @responseParam array thumbs - thumbnail data
-	 */
-	public function getArticleMediaThumbs() {
-		/*
-		 * getArticleMediaThumbs() should return a list of thumbnail data in context of the current article.
-		* The response format should be the same.  There is no maximum, and it should return ALL items pertaining
-		* to that article.  The title of the article will be part of the request parameter to that method.
-		*/
-		wfProfileIn(__METHOD__);
-
-		$thumbs = null;
-		
-		$title = F::build('Title', array( $this->request->getVal('title') ), 'newFromText');
-		if ( $title ) {
-			$memcKey = self::getArticleMediaThumbsMemcKey( $title );
-			$thumbs = $this->wg->memc->get( $memcKey );
-			if ( empty( $thumbs ) ) {
-				$mediaQuery =  F::build( 'MediaQueryService' ); /* @var $mediaQuery MediaQueryService */
-				$mediaTable = $mediaQuery->getMediaFromArticle($title);
-				$thumbs = $this->mediaTableToThumbs( $mediaTable );
-				$this->wg->memc->set($memcKey, $thumbs);
-			}
-		}
-
-		$this->response->setVal( 'thumbs', empty($thumbs) ? array() : $thumbs );
-		
-		wfProfileOut(__METHOD__);
-		
+	public function lightboxModalContentError() {
+		// set cache control to 1 day
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)); 
 	}
 	
 	
@@ -162,14 +42,15 @@ class LightboxController extends WikiaController {
 	 */
 	public function getMediaDetail() {
 		$fileTitle = $this->request->getVal('title', '');
-
+		
 		$fileTitle = urldecode($fileTitle);
 		$title = F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
 		
 		$data = WikiaFileHelper::getMediaDetail($title, array('imageMaxWidth'  => 1000,
 									'contextWidth'   => $this->request->getVal('width', 660),
 									'contextHeight'  => $this->request->getVal('height', 360),
-									'userAvatarWidth'=> 16
+									'userAvatarWidth'=> 16,
+									'maxHeight'	 => 395
 							));
 
 		// create a truncated list, and mark it if necessary (this is mostly for display, because mustache is a logicless templating system)
@@ -200,6 +81,9 @@ class LightboxController extends WikiaController {
 		$this->smallerArticleList = $smallerArticleList;
 		$this->articleListIsSmaller = $articleListIsSmaller;
 		$this->exists = $data['exists'];
+		
+		// set cache control to 1 hour
+		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 	
 	/**
@@ -246,8 +130,7 @@ class LightboxController extends WikiaController {
 				NS_CATEGORY,
 			);
 			$shareUrl = !empty($articleUrl) && in_array($articleNS, $sharingNamespaces) ? $articleUrl : $fileUrl;
-			
-			$thumb = $file->getThumbnail(300, 250);
+			$thumb = $file->transform(array('width'=>300, 'height'=>250));
 			$thumbUrl = $thumb->getUrl();
 			$linkDescription = wfMsg('lightbox-share-description', empty($articleUrl) ? $fileTitleObj->getText() : $articleTitleText, $this->wg->Sitename);
 			if(WikiaFileHelper::isFileTypeVideo( $file )) {
@@ -276,6 +159,11 @@ class LightboxController extends WikiaController {
 			$embedMarkup = false;
 		}
 
+		// Don't show embed code for screenplay b/c it's using JW Player
+		if($file->getProviderName() == 'screenplay') {
+			$embedMarkup = false;
+		}
+
 		$this->shareUrl = $shareUrl;
 		$this->embedMarkup = $embedMarkup;
 		$this->articleUrl = $articleUrl;
@@ -285,59 +173,6 @@ class LightboxController extends WikiaController {
 		$this->imageUrl = $thumbUrl;
 	}
 
-	/*
-	 * function mediaTableToThumbs()
-	 * @brief transform array into different array
-	 * converts array in format of
-	 *   title (as text or object)
-	 *   type (video or image)
-	 * into array that includes thumburl and playbutton and title is always text
-	 */
-	protected function mediaTableToThumbs( $mediaTable ) {
-		$thumbs = array();
-		foreach ($mediaTable as $entry) {
-			$thumb = self::createCarouselThumb($entry);
-			if(!empty($thumb)) {
-				$thumbs[] = $thumb;
-			}
-		}
-		return $thumbs;
-	}
-	
-	/**
-	 * creates a single carousel thumb entry
-	 * @entry - must have 'title'(image title) and 'type'(image|video) defined
-	 */
-	private function createCarouselThumb($entry) {
-		$thumb = '';
-		$is = self::carouselImageServingInstance();
-		if (is_string($entry['title'])) {
-			$media = F::build('Title', array($entry['title'], NS_FILE), 'newFromText');
-		} else {
-			$media = $entry['title'];
-		}
-		$file = wfFindFile($media);
-		if ( !empty( $file ) ) {
-			$url = $is->getUrl( $file, $file->getWidth(), $file->getHeight() );
-			$thumb = array(
-				'thumbUrl' => $url,
-				'type' => $entry['type'],
-				'title' => $media->getText(),
-				'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay(self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT) : ''
-			);
-		}
-		return $thumb;
-	}
-	
-	/**
-	 * instance method to treat image serving for carousel thumb as a singleton bound to this controller instance
-	 */
-	private function carouselImageServingInstance() {
-		if(empty(self::$imageserving)) {
-			self::$imageserving = new ImageServing(null, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT);
-		}
-		return self::$imageserving;
-	}
 	
 	/**
  	 * @brief AJAX function for sending share e-mails
@@ -371,7 +206,7 @@ class LightboxController extends WikiaController {
 						null,
 						'ImageLightboxShare'
 					);
-					if (WikiError::isError($result)) {
+					if (!$result->isOK()) {
 						$notsent[] = $address;
 					}else {
 						$sent[] = $address;

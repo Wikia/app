@@ -2,11 +2,11 @@
 
 # Not a valid entry point, skip unless MEDIAWIKI is defined
 if (!defined('MEDIAWIKI')) {
-        echo <<<EOT
+	echo <<<EOT
 To install my extension, put the following line in LocalSettings.php:
 require_once( "\$IP/extensions/CommentsOnly/CommentsOnly.php" );
 EOT;
-        exit( 1 );
+	exit(1);
 }
 
 $dir = dirname(__FILE__) . '/';
@@ -18,8 +18,6 @@ $wgHooks['ArticleViewHeader'][] = 'wfCOArticleViewHeader';
 $wgHooks['BeforePageDisplay'][] = 'wfCOBeforePageDisplay';
 $wgHooks['CategorySelect:beforeDisplayingView'][] = 'wfCOCategorySelectBeforeDisplayingView';
 $wgHooks['ParserFirstCallInit'][] = 'wfCOQuestionBox';
-$wgHooks['HistoryDropdownIndexAfterExecute'][] = 'wfCOHistoryDropdownIndexAfterExecute';
-$wgHooks['HistoryDropdownPreviousEditsBeforeExecute'][] = 'wfCOHistoryDropdownPreviousEditsBeforeExecute';
 $wgHooks['PageHeaderIndexAfterExecute'][] = 'wfCOPageHeaderIndexAfterExecute';
 
 $wgSpecialPages['NewCommentsOnlyQuestion'] = 'SpecialNewCommentsOnlyQuestion';
@@ -31,39 +29,40 @@ $wgArticleCommentsNamespaces[] = NS_FORUM;
 
 // where to hide article contents and show only comments
 $wgCommentsOnlyNamespaces[] = NS_FORUM;
-function wfCOArticleCommentCheck( $title ) {
+function wfCOArticleCommentCheck($title) {
 	global $wgCommentsOnlyNamespaces;
-	if( ( in_array( $title->getNamespace(), $wgCommentsOnlyNamespaces ) )
-	 && ( ( $title->getText() == 'Index' ) || $title->equals( Title::newMainPage() ) ) ) {
+	if ((in_array($title->getNamespace(), $wgCommentsOnlyNamespaces))
+		&& (($title->getText() == 'Index') || $title->equals(Title::newMainPage()))
+	) {
 		return false;
 	}
 	return true;
 }
 
-function wfCOCheck( $title=null ) {
+function wfCOCheck($title = null) {
 	global $wgTitle, $wgCommentsOnlyNamespaces;
-	if( $title===null ) {
+	if ($title === null) {
 		$title = $wgTitle;
 	}
-	return in_array( $title->getNamespace(), $wgCommentsOnlyNamespaces )
+	return in_array($title->getNamespace(), $wgCommentsOnlyNamespaces)
 		&& $title->exists()
 		&& $title->getText() != "Index"
-		&& !$title->equals( Title::newMainPage() );
+		&& !$title->equals(Title::newMainPage());
 }
 
 // show/hide article body
-function wfCOArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
-	if( wfCOCheck( $article->mTitle ) ) {
+function wfCOArticleViewHeader(&$article, &$outputDone, $useParserCache) {
+	if (wfCOCheck($article->mTitle)) {
 		$outputDone = true;
 	}
 	return true;
 }
 
 // add css
-function wfCOBeforePageDisplay( &$out, &$sk ) {
+function wfCOBeforePageDisplay(&$out, &$sk) {
 	global $wgExtensionsPath, $wgStyleVersion;
-	if( wfCOCheck() ) {
-		$out->addExtensionStyle( "$wgExtensionsPath/wikia/CommentsOnly/CommentsOnly.css?$wgStyleVersion" );
+	if (wfCOCheck()) {
+		$out->addExtensionStyle("$wgExtensionsPath/wikia/CommentsOnly/CommentsOnly.css?$wgStyleVersion");
 	}
 	return true;
 }
@@ -73,23 +72,22 @@ function wfCOCategorySelectBeforeDisplayingView() {
 	return !wfCOCheck();
 }
 
-function wfCOQuestionBox( &$parser ) {
-	$parser->setHook( 'questionbox', 'wfCOQuestionBoxRender' );
+function wfCOQuestionBox(&$parser) {
+	$parser->setHook('questionbox', 'wfCOQuestionBoxRender');
 	return true;
 }
 
-function wfCOQuestionBoxRender( $input, $argv, &$parser ) {
+function wfCOQuestionBoxRender($input, $argv, $parser) {
 	global $wgUser;
 
-	if( wfReadOnly() || !$wgUser->isAllowed('edit') || $wgUser->isBlocked() ) {
+	if (wfReadOnly() || !$wgUser->isAllowed('edit') || $wgUser->isBlocked()) {
 		return '';
 	}
 
-	wfLoadExtensionMessages('CommentsOnly');
 	$submit = SpecialPage::getTitleFor("NewCommentsOnlyQuestion")->getLocalURL();
 	$text = '';
 	$width = 100; //TODO read params from input
-	$label =  wfMsgHtml('comments-only-new-thread');
+	$label = wfMsgHtml('comments-only-new-thread');
 	$output = <<<ENDFORM
 <div class="questionbox">
 <form name="questionbox" action="{$submit}" method="get" class="questionboxForm">
@@ -97,49 +95,34 @@ function wfCOQuestionBoxRender( $input, $argv, &$parser ) {
 <input type='submit' name="create" class="questionboxButton" value="{$label}"/>
 </form></div>
 ENDFORM;
-	return $parser->replaceVariables( $output );
+	return $parser->replaceVariables($output);
 }
 
-function wfCOHistoryDropdownIndexAfterExecute( &$moduleObject, &$params ) {
-	if( wfCOCheck() ) {
-		global $wgTitle;
-		if( $wgTitle->getNamespace() == NS_FORUM ) {
-			$moduleObject->forumHome = true;
-		}
-		$moduleObject->templatePath = dirname(__FILE__).'/templates/HistoryDropdown_Index.php';
-		wfLoadExtensionMessages('CommentsOnly');
-	}
-	return true;
-}
-
-function wfCOHistoryDropdownPreviousEditsBeforeExecute( &$moduleObject, &$params ) {
-	return !wfCOCheck();
-}
-
-function wfCOPageHeaderIndexAfterExecute( &$moduleObject, &$params ) {
-	if( wfCOCheck() ) {
-		wfLoadExtensionMessages('CommentsOnly');
-		if( isset( $moduleObject->content_actions['delete'] ) ) {
-			$moduleObject->action = $moduleObject->content_actions['delete'];
-			$moduleObject->action['text'] = wfMsgHtml('comments-only-delete-thread');
-			$moduleObject->actionName = 'delete';
+function wfCOPageHeaderIndexAfterExecute(&$controller, &$params) {
+	if (wfCOCheck()) {
+		if (isset($controller->content_actions['delete'])) {
+			$action = $controller->content_actions['delete'];
+			$action['text'] = wfMsgHtml('comments-only-delete-thread');
+			$controller->actionName = 'delete';
+			$controller->action = $action;
 		} else {
-			$moduleObject->action = null;
-			$moduleObject->actionName = '';
+			$controller->action = null;
+			$controller->actionName = '';
 		}
-		$moduleObject->dropdown = array();
-		if( $moduleObject->revisions ) {
+
+		$controller->dropdown = array();
+		if ($controller->revisions) {
 			global $wgTitle;
 			$rev = $wgTitle->getFirstRevision();
-			if($rev) {
-				$user = User::newFromId( $rev->getUser() );
-				if($user) {
-					$moduleObject->revisions = array( 'current' => array(
-								'user' => $user->getName(),
-								'link' => AvatarService::renderLink( $user->getName() ),
-								'avatarUrl' => AvatarService::getAvatarUrl( $user->getName() ),
-								'timestamp' => wfTimestamp( TS_ISO_8601, $rev->getTimestamp() ),
-								) );
+			if ($rev) {
+				$user = User::newFromId($rev->getUser());
+				if ($user) {
+					$controller->revisions = array('current' => array(
+						'user' => $user->getName(),
+						'link' => AvatarService::renderLink($user->getName()),
+						'avatarUrl' => AvatarService::getAvatarUrl($user->getName()),
+						'timestamp' => wfTimestamp(TS_ISO_8601, $rev->getTimestamp()),
+					));
 				}
 			}
 		}

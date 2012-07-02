@@ -20,7 +20,7 @@
  * http://www.gnu.org/copyleft/gpl.html
  *
  * @ingroup Maintenance
- * @author Ashar Voultoiz <hashar@altern.org>
+ * @author Antoine Musso <hashar at free dot fr>
  * Based on initStats.php by:
  * @author Brion Vibber
  * @author Rob Church <robchur@gmail.com>
@@ -28,10 +28,11 @@
  * @license GNU General Public License 2.0 or later
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class ShowStats extends Maintenance {
 	public function __construct() {
+		parent::__construct();
 		$this->mDescription = "Show the cached statistics";
 	}
 	public function execute() {
@@ -41,28 +42,27 @@ class ShowStats extends Maintenance {
 			'ss_good_articles' => 'Number of articles',
 			'ss_total_pages' => 'Total pages',
 			'ss_users' => 'Number of users',
-			'ss_admins' => 'Number of admins',
 			'ss_images' => 'Number of images',
 		);
-	
+
 		// Get cached stats from slave database
 		$dbr = wfGetDB( DB_SLAVE );
 		$stats = $dbr->selectRow( 'site_stats', '*', '', __METHOD__ );
-	
+
 		// Get maximum size for each column
 		$max_length_value = $max_length_desc = 0;
-		foreach( $fields as $field => $desc ) {
+		foreach ( $fields as $field => $desc ) {
 			$max_length_value = max( $max_length_value, strlen( $stats->$field ) );
-			$max_length_desc  = max( $max_length_desc , strlen( $desc )) ;
+			$max_length_desc  = max( $max_length_desc , strlen( $desc ) ) ;
 		}
-	
+
 		// Show them
-		foreach( $fields as $field => $desc ) {
+		foreach ( $fields as $field => $desc ) {
 			$this->output( sprintf( "%-{$max_length_desc}s: %{$max_length_value}d\n", $desc, $stats->$field ) );
 		}
 	}
 }
 
 $maintClass = "ShowStats";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );
 

@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension Contributionseditcount.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -14,12 +15,13 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'contributionseditcount' => 'Parameters:
 * $1 is a number of edits, can be used with PLURAL
 * $2 is a user name to be used with GENDER',
-	'contributionseditcount-desc' => 'Short description of the Contributionseditcount extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'contributionseditcount-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -39,6 +41,22 @@ $messages['arz'] = array(
 	'contributionseditcount-desc' => 'يعرض عدد المساهمات فى [[Special:Contributions|صفحة مساهمات المستخدم]]',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'contributionseditcount' => 'Esti usuariu fizo {{PLURAL:$1|una edición|$1 ediciones}}.',
+	'contributionseditcount-desc' => "Amuesa un contador d'ediciones na [[Special:Contributions|páxina de contribuciones del usuariu]]",
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'contributionseditcount' => 'Был ҡатнашыусы {{PLURAL:$1|үҙгәртеү}} яһаған.',
+	'contributionseditcount-desc' => '[[Special:Contributions|Ҡатнашыусы өлөшө]] битендә яһалған үҙгәртеүҙәр һанын күрһәтә',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Filipinayzd
  */
@@ -46,7 +64,7 @@ $messages['bcl'] = array(
 	'contributionseditcount' => 'An parágamit na ini igwang $1 na mga hirá.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -59,7 +77,7 @@ $messages['be-tarask'] = array(
  * @author Spiritia
  */
 $messages['bg'] = array(
-	'contributionseditcount' => 'Този потребител е направил $1 редакции.',
+	'contributionseditcount' => 'Този потребител е направил {{PLURAL:$1|една редакция|$1 редакции}}.',
 	'contributionseditcount-desc' => 'Показва броя редакции на [[Special:Contributions|специална страница]]',
 );
 
@@ -113,13 +131,22 @@ $messages['cy'] = array(
 	'contributionseditcount-desc' => "Yn dangos nifer golygiadau'r defnyddiwr ar ei [[Special:Contributions|dudalen gyfraniadau]]",
 );
 
+/** Danish (Dansk)
+ * @author Sarrus
+ */
+$messages['da'] = array(
+	'contributionseditcount' => 'Denne bruger har foretaget {{PLURAL:$1|én redigering|$1 redigeringer}}.',
+);
+
 /** German (Deutsch)
+ * @author Kghbln
  * @author Raimond Spekking
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'contributionseditcount' => 'Dieser Benutzer hat {{PLURAL:$1|eine Bearbeitung|$1 Bearbeitungen}}.',
-	'contributionseditcount-desc' => 'Zeigt einen Beitragszähler auf der [[Special:Contributions|Beitragsseite des Benutzers]] an',
+	'contributionseditcount' => '{{GENDER:$2|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} hat {{PLURAL:$1|eine Bearbeitung|$1 Bearbeitungen}} gemacht.',
+	'contributionseditcount-desc' => 'Zeigt einen Beitragszähler auf der Seite [[Special:Contributions|Benutzerbeiträge]] des Benutzers an',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -141,9 +168,10 @@ $messages['ee'] = array(
 /** Greek (Ελληνικά)
  * @author Consta
  * @author Konsnos
+ * @author Περίεργος
  */
 $messages['el'] = array(
-	'contributionseditcount' => 'Αυτός ο χρήστης έχει κάνει $1 επεξεργασίες.',
+	'contributionseditcount' => 'Αυτός ο χρήστης έχει κάνει {{PLURAL:$1|μία επεξεργασία|$1 επεξεργασίες}}.',
 	'contributionseditcount-desc' => 'Εμφανίζει τον αριθμό επεξεργασιών στην [[Special:Contributions|σελίδα συνεισφοράς χρήστη]]',
 );
 
@@ -185,6 +213,13 @@ $messages['ext'] = array(
 	'contributionseditcount' => 'Esti usuáriu á hechu $1 eicionis.',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'contributionseditcount' => 'این کاربر {{PLURAL:$1|یک ویرایش|$1 ویرایش}} انجام داده است.',
+);
+
 /** Finnish (Suomi)
  * @author Jaakonam
  */
@@ -205,13 +240,20 @@ $messages['fr'] = array(
 	'contributionseditcount-desc' => 'Affiche un compteur de modifications sur la [[Special:Contributions|page des contributions de l’utilisateur]]',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'contributionseditcount' => 'Ceti usanciér at fêt $1 changement{{PLURAL:$1||s}}.',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
  * @author Xosé
  */
 $messages['gl'] = array(
-	'contributionseditcount' => 'Este usuario ten $1 edicións.',
+	'contributionseditcount' => 'Este usuario fixo {{PLURAL:$1|unha edición|$1 edicións}}.',
 	'contributionseditcount-desc' => 'Mostra a conta de edicións na [[Special:Contributions|páxina de contribucións dun usuario]]',
 );
 
@@ -288,6 +330,14 @@ $messages['id'] = array(
 	'contributionseditcount-desc' => 'Menampilkan jumlah suntingan di [[Special:Contributions|halaman kontribusi pengguna]]',
 );
 
+/** Interlingue (Interlingue)
+ * @author Renan
+ */
+$messages['ie'] = array(
+	'contributionseditcount' => 'Ti usator ha fat {{PLURAL:$1|un redaction|$1 redactiones}}.',
+	'contributionseditcount-desc' => 'Monstra un contator de redactiones in li [[Special:Contributions|págine de contributiones del usator]]',
+);
+
 /** Ido (Ido)
  * @author Wyvernoid
  */
@@ -309,7 +359,7 @@ $messages['is'] = array(
  * @author Gianfranco
  */
 $messages['it'] = array(
-	'contributionseditcount' => 'Questo utente ha $1 edit',
+	'contributionseditcount' => 'Questo utente ha fatto {{PLURAL:$1|un solo edit|$1 edit}}.',
 	'contributionseditcount-desc' => 'Mostra un edit count nella [[Special:Contributions|pagina dei contributi utente]]',
 );
 
@@ -342,6 +392,14 @@ $messages['km'] = array(
 	'contributionseditcount-desc' => 'បង្ហាញការរាប់កំណែប្រែនៅ[[Special:Contributions|ការរួមចំណែករបស់អ្នកប្រើប្រាស់]]',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'contributionseditcount' => 'ಈ ಸದಸ್ಯರು {{PLURAL:$1|ಒಂದು ಸಂಪಾದನೆಯನ್ನು|$1 ಸಂಪಾದನೆಗಳನ್ನು}} ಮಾಡಿದ್ದಾರೆ.',
+	'contributionseditcount-desc' => '[[Special:Contributions|ಸದಸ್ಯರ ಕಾಣಿಕೆಗಳ ಪುಟ]]ದಲ್ಲಿ ಸಂಪಾದನಾ ಸಂಖ್ಯೆಯನ್ನು ತೋರಿಸುತ್ತದೆ.',
+);
+
 /** Korean (한국어)
  * @author ITurtle
  */
@@ -350,7 +408,7 @@ $messages['ko'] = array(
 	'contributionseditcount-desc' => '[[Special:Contributions|사용자 기여 목록]]에서 편집 횟수를 표시합니다.',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -362,7 +420,7 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'contributionseditcount' => 'Dëse Benotzer huet $1 Kontributiounen.',
+	'contributionseditcount' => 'Dëse Benotzer huet {{PLURAL:$1|eng Kontributioun|$1 Kontributiounen}}.',
 	'contributionseditcount-desc' => 'Weist e Compteur vun den [[Special:Contributions|Ännerungen vun de Benotzer]]',
 );
 
@@ -371,6 +429,14 @@ $messages['lb'] = array(
  */
 $messages['lo'] = array(
 	'contributionseditcount' => 'ຜູ້ໃຊ້ຮາຍນີ້ ທຳການດັດແກ້ທັງໝົດ $1 ຄັ້ງ',
+);
+
+/** Latvian (Latviešu)
+ * @author Papuass
+ */
+$messages['lv'] = array(
+	'contributionseditcount' => 'Šis lietotājs ir veicis {{PLURAL:$1|vienu labojumu|$1 labojumus}}.',
+	'contributionseditcount-desc' => 'Parāda labojumu skaitu [[Special:Contributions|lietotāja devuma lapā]]',
 );
 
 /** Macedonian (Македонски)
@@ -382,11 +448,12 @@ $messages['mk'] = array(
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'contributionseditcount' => 'ഈ ഉപയോക്താവിനു $1 തിരുത്തലുകളുണ്ട്.',
-	'contributionseditcount-desc' => '[[Special:Contributions]]ല്‍ തിരുത്തലുകളുടെ എണ്ണം പ്രദര്‍ശിപ്പിക്കുന്നു',
+	'contributionseditcount-desc' => '[[Special:Contributions|ഉപയോക്തൃ സംഭാവനാ താളിൽ]] തിരുത്തലുകളുടെ എണ്ണം പ്രദർശിപ്പിക്കുന്നു',
 );
 
 /** Marathi (मराठी)
@@ -396,6 +463,14 @@ $messages['ml'] = array(
 $messages['mr'] = array(
 	'contributionseditcount' => 'या संपादकाची $1 संपादने आहेत.',
 	'contributionseditcount-desc' => '[[Special:Contributions]] वर संपादन संख्या दर्शविते',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'contributionseditcount' => 'Pengguna ini telah membuat {{PLURAL:$1|satu suntingan|$1 suntingan}}.',
+	'contributionseditcount-desc' => 'Memaparkan kiraan suntingan di [[Special:Contributions|laman sumbangan pengguna]]',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -418,7 +493,7 @@ $messages['nds'] = array(
  */
 $messages['nds-nl'] = array(
 	'contributionseditcount' => 'Disse gebruker hef {{PLURAL:$1|één bewarking|$1 bewarkingen}} edaon.',
-	'contributionseditcount-desc' => 'Laot een bewarkingsteller zien op de pagina [[Special:Contributions|gebrukersbiedragen]]',
+	'contributionseditcount-desc' => 'Laot n bewarkingsteller zien op de pagina [[Special:Contributions|gebrukersbiedragen]]',
 );
 
 /** Dutch (Nederlands)
@@ -440,9 +515,10 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
-$messages['no'] = array(
-	'contributionseditcount' => 'Denne brukeren har $1 redigeringer.',
+$messages['nb'] = array(
+	'contributionseditcount' => 'Denne brukeren har gjort {{PLURAL:$1|én redigering|$1 redigeringer}}.',
 	'contributionseditcount-desc' => 'Viser en redigeringsteller på [[Special:Contributions|bidragsoversikten]]',
 );
 
@@ -464,19 +540,21 @@ $messages['oc'] = array(
 /** Polish (Polski)
  * @author Derbeth
  * @author Maikking
+ * @author Sp5uhe
  * @author Wpedzich
  */
 $messages['pl'] = array(
-	'contributionseditcount' => 'Ten użytkownik ma $1 edycji.',
+	'contributionseditcount' => 'Ten użytkownik wykonał {{PLURAL:$1|jedną edycję|$1 edycje|$1 edycji}}.',
 	'contributionseditcount-desc' => 'Wyświetla liczbę edycji na [[Special:Contribution|stronie wkładu użytkownika]]',
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Bèrto 'd Sèra
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'contributionseditcount' => "St'utent-sì a l'ha fait $1 modìfiche.",
+	'contributionseditcount' => "St'utent-sì a l'ha fàit {{PLURAL:$1|na modìfica|$1 modìfiche}}.",
 	'contributionseditcount-desc' => "A fa vëdde an contator ëd modìfiche an sla [[Special:Contributions|pàgina dle contribussion ëd l'utent]]",
 );
 
@@ -484,14 +562,15 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'contributionseditcount' => 'همدغه کارونکي $1 سمادونې لري.',
+	'contributionseditcount' => 'دې کارن {{PLURAL:$1|يو سمون ترسره کړی|$1 سمونونه ترسره کړي}}.',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'contributionseditcount' => 'Este utilizador tem $1 edições.',
+	'contributionseditcount' => 'Este utilizador fez {{PLURAL:$1|uma edição|$1 edições}}.',
 	'contributionseditcount-desc' => 'Mostra uma contagem de edições na [[Special:Contributions|página de contribuições do utilizador]]',
 );
 
@@ -527,7 +606,7 @@ $messages['ru'] = array(
 	'contributionseditcount-desc' => 'Показывает количество сделанных правок на [[Special:Contributions|странице вклада участника]]',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -550,7 +629,15 @@ $messages['sk'] = array(
 	'contributionseditcount-desc' => 'Zobrazuje počet úprav na stránke [[Special:Contributions|Príspevky používateľa]]',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'contributionseditcount' => 'Uporabnik je izvedel $1 {{PLURAL:$1|urejanje|urejanji|urejanja|urejanj}}.',
+	'contributionseditcount-desc' => 'Prikaže števec urejanj na [[Special:Contributions|strani uporabnikovih prispevkov]]',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -558,7 +645,7 @@ $messages['sr-ec'] = array(
 	'contributionseditcount-desc' => 'Приказује бројач измена на [[Special:Contributions|страни корисничких доприноса]]',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -592,11 +679,12 @@ $messages['sv'] = array(
 );
 
 /** Tamil (தமிழ்)
+ * @author TRYPPN
  * @author Trengarasu
  */
 $messages['ta'] = array(
 	'contributionseditcount' => 'இப்பயன்ர் $1 தொகுப்புக்களைச் செய்துள்ளார்.',
-	'contributionseditcount-desc' => '[[Special:Contributions|பயனர் பங்களிப்புகள்]] பக்கத்தில் தொகுப்பு எண்ணிக்கையைக் காட்டும்',
+	'contributionseditcount-desc' => '[[Special:Contributions|சிறப்பு:பயனர் பங்களிப்புகளின் பக்கம்]] பற்றிய தொகுப்பு எண்ணிக்கையைக் காட்டுகிறது',
 );
 
 /** Telugu (తెలుగు)
@@ -607,14 +695,14 @@ $messages['te'] = array(
 	'contributionseditcount-desc' => '[[Special:Contributions|వాడుకరి చేర్పుల పేజీ]]లో మార్పుల సంఖ్యని చూపిస్తుంది',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'contributionseditcount' => 'Ин корбар $1 вироишҳо дорад.',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -649,7 +737,7 @@ $messages['tr'] = array(
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
-	'contributionseditcount' => '{{GENDER:$2|Цей користувач зробив|Ця користувачка зробила}} {{PLURAL:$1|$1 редагування|$1 редагувань}}.',
+	'contributionseditcount' => '{{GENDER:$2|Цей користувач зробив|Ця користувачка зробила}} $1 {{PLURAL:$1|редагування|редагування|редагувань}}.',
 	'contributionseditcount-desc' => 'Відображає кількість редагувань на [[Special:Contributions|сторінці внеску користувача]]',
 );
 
@@ -699,10 +787,10 @@ $messages['yi'] = array(
  */
 $messages['yo'] = array(
 	'contributionseditcount' => 'Oníṣe yìí ti ṣe àtúnṣe $1.',
-	'contributionseditcount-desc' => 'Ìgbéhàn iye àtúnṣe ní [[Special:Contributions|ojúewé àfikún oníṣe]]',
+	'contributionseditcount-desc' => 'Ìgbéhàn iye àtúnṣe lórí [[Special:Contributions|ojúewé àwọn àfikún oníṣe]]',
 );
 
-/** Yue (粵語) */
+/** Cantonese (粵語) */
 $messages['yue'] = array(
 	'contributionseditcount' => '呢個用戶有 $1 次編輯。',
 );
@@ -710,10 +798,15 @@ $messages['yue'] = array(
 /** Simplified Chinese (‪中文(简体)‬) */
 $messages['zh-hans'] = array(
 	'contributionseditcount' => '这个用户拥有 $1 次编辑。',
+	'contributionseditcount-desc' => '在[[Special:Contributions|特殊页面]]中显示用户的编辑统计',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ * @author Waihorace
+ */
 $messages['zh-hant'] = array(
 	'contributionseditcount' => '這個用戶擁有 $1 次編輯。',
+	'contributionseditcount-desc' => '在[[Special:Contributions|特殊頁面]]中顯示用戶的編輯統計',
 );
 

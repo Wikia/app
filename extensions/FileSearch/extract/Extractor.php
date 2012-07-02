@@ -4,8 +4,8 @@
  * Abstract implementation for extractors; classes which can extract
  * meaningful search text from uploaded files
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
 abstract class Extractor {

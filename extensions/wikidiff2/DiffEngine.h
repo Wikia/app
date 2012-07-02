@@ -18,6 +18,8 @@
 #include "JudyHS.h"
 #endif
 
+#include "wikidiff2.h"
+
 /**
  * Diff operation
  * 
@@ -32,27 +34,31 @@
  *             not be the same length.
  */
 template<typename T>
-class DiffOp 
+class DiffOp
 {
 	public:
-		DiffOp(int op_, const std::vector<const T*> & from_, const std::vector<const T*> & to_)
+		typedef std::vector<const T*, WD2_ALLOCATOR<const T*> > PointerVector;
+		DiffOp(int op_, const PointerVector & from_, const PointerVector & to_)
 			: op(op_), from(from_), to(to_) {}
 
 		enum {copy, del, add, change};
 		int op;
-		std::vector<const T*> from;
-		std::vector<const T*> to;
+		PointerVector from;
+		PointerVector to;
 };
 
 /**
- * Basic diff template class. After construction, edits will contain a vector of DiffOp
+ * Basic diff template class. After construction, edits will contain a vector of DiffOpTemplate
  * objects representing the diff
  */
 template<typename T>
 class Diff
 {
 	public:
-		Diff(const std::vector<T> & from_lines, const std::vector<T> & to_lines);
+		typedef std::vector<T, WD2_ALLOCATOR<T> > ValueVector;
+		typedef std::vector<DiffOp<T>, WD2_ALLOCATOR<T> > DiffOpVector;
+
+		Diff(const ValueVector & from_lines, const ValueVector & to_lines);
 		
 		virtual void add_edit(const DiffOp<T> & edit) {
 			edits.push_back(edit); 
@@ -60,7 +66,7 @@ class Diff
 		unsigned size() { return edits.size(); }
 		DiffOp<T> & operator[](int i) {return edits[i];}
 
-		std::vector<DiffOp<T> > edits;
+		DiffOpVector edits;
 };
 /**
  * Class used internally by Diff to actually compute the diffs.
@@ -82,31 +88,51 @@ class Diff
  * Finally, it was ported to C++ by Tim Starling in February 2006
  *
  * @access private
- * @package MediaWiki
- * @subpackage DifferenceEngine
  */
 
 template<typename T>
 class _DiffEngine 
 {
 	public:
+		// Vectors
+		typedef std::vector<bool> BoolVector; // skip the allocator here to get the specialisation
+		typedef std::vector<const T*, WD2_ALLOCATOR<const T*> > PointerVector;
+		typedef std::vector<T, WD2_ALLOCATOR<T> > ValueVector;
+		typedef std::vector<int, WD2_ALLOCATOR<int> > IntVector;
+		typedef std::vector<std::pair<int, int>, WD2_ALLOCATOR<std::pair<int, int> > > IntPairVector;
+
+		// Maps
+#ifdef USE_JUDY
+		typedef JudyHS<IntVector> MatchesMap;
+#else
+		typedef std::map<T, IntVector, std::less<T>, WD2_ALLOCATOR<IntVector> > MatchesMap;
+#endif
+
+		// Sets
+		typedef std::set<int, std::less<int>, WD2_ALLOCATOR<int> > IntSet;
+#ifdef USE_JUDY
+		typedef JudySet ValueSet;
+#else
+		typedef std::set<T, std::less<T>, WD2_ALLOCATOR<T> > ValueSet;
+#endif
+
 		_DiffEngine() : done(false) {}
 		void clear();
-		void diff (const std::vector<T> & from_lines, 
-				const std::vector<T> & to_lines, Diff<T> & diff);
+		void diff (const ValueVector & from_lines, 
+				const ValueVector & to_lines, Diff<T> & diff);
 		int _lcs_pos (int ypos);
 		void _compareseq (int xoff, int xlim, int yoff, int ylim);
-		void _shift_boundaries (const std::vector<T> & lines, std::vector<bool> & changed, 
-				const std::vector<bool> & other_changed);
+		void _shift_boundaries (const ValueVector & lines, BoolVector & changed, 
+				const BoolVector & other_changed);
 	protected:
 		int _diag (int xoff, int xlim, int yoff, int ylim, int nchunks, 
-				std::vector<std::pair<int, int> > & seps);
+				IntPairVector & seps);
 		
-		std::vector<bool> xchanged, ychanged;
-		std::vector<const T*> xv, yv;
-		std::vector<int> xind, yind;
-		std::map<int, int> seq;
-		std::set<int> in_seq;
+		BoolVector xchanged, ychanged;
+		PointerVector xv, yv;
+		IntVector xind, yind;
+		IntVector seq;
+		IntSet in_seq;
 		int lcs;
 		bool done;
 		enum {MAX_CHUNKS=8};
@@ -130,8 +156,8 @@ void _DiffEngine<T>::clear()
 }
 
 template<typename T>
-void _DiffEngine<T>::diff (const std::vector<T> & from_lines, 
-		const std::vector<T> & to_lines, Diff<T> & diff) 
+void _DiffEngine<T>::diff (const ValueVector & from_lines, 
+		const ValueVector & to_lines, Diff<T> & diff) 
 {
 	int n_from = (int)from_lines.size();
 	int n_to = (int)to_lines.size();
@@ -142,6 +168,7 @@ void _DiffEngine<T>::diff (const std::vector<T> & from_lines,
 	} 
 	xchanged.resize(n_from);
 	ychanged.resize(n_to);
+	seq.resize(std::max(n_from, n_to) + 1);
 
 	// Skip leading common lines.
 	int skip, endskip;
@@ -159,11 +186,7 @@ void _DiffEngine<T>::diff (const std::vector<T> & from_lines,
 	}
 
 	// Ignore lines which do not exist in both files.
-#ifdef USE_JUDY
-	JudySet xhash, yhash;
-#else
-	std::set<T> xhash, yhash;
-#endif
+	ValueSet xhash, yhash;
 	for (xi = skip; xi < n_from - endskip; xi++) {
 		xhash.insert(from_lines[xi]);
 	}
@@ -198,9 +221,9 @@ void _DiffEngine<T>::diff (const std::vector<T> & from_lines,
 		assert(xi < n_from || ychanged[yi]);
 
 		// Skip matching "snake".
-		std::vector<const T*> del;
-		std::vector<const T*> add;
-		std::vector<const T*> empty;
+		PointerVector del;
+		PointerVector add;
+		PointerVector empty;
 		while (xi < n_from && yi < n_to && !xchanged[xi] && !ychanged[yi]) {
 			del.push_back(&from_lines[xi]);
 			add.push_back(&to_lines[yi]);
@@ -249,19 +272,13 @@ void _DiffEngine<T>::diff (const std::vector<T> & from_lines,
  */
 template <typename T>
 int _DiffEngine<T>::_diag (int xoff, int xlim, int yoff, int ylim, int nchunks, 
-		std::vector<std::pair<int, int> > & seps) 
+		IntPairVector & seps) 
 {
-	using std::vector;
 	using std::swap;
 	using std::make_pair;
-	using std::map;
 	using std::copy;
 	bool flip = false;
-#ifdef USE_JUDY
-	JudyHS<vector<int> > ymatches;
-#else
-	map<T, vector<int> > ymatches;
-#endif
+	MatchesMap ymatches;
 
 	if (xlim - xoff > ylim - yoff) {
 		// Things seems faster (I'm not sure I understand why)
@@ -284,7 +301,7 @@ int _DiffEngine<T>::_diag (int xoff, int xlim, int yoff, int ylim, int nchunks,
 	in_seq.clear();
 
 	// 2-d array, line major, chunk minor
-	vector<int> ymids(nlines * nchunks);
+	IntVector ymids(nlines * nchunks);
 
 	int numer = xlim - xoff + nchunks - 1;
 	int x = xoff, x1, y1;
@@ -297,16 +314,16 @@ int _DiffEngine<T>::_diag (int xoff, int xlim, int yoff, int ylim, int nchunks,
 		for ( ; x < x1; x++) {
 			const T & line = flip ? *yv[x] : *xv[x];
 #ifdef USE_JUDY
-			vector<int> * pMatches = ymatches.Get(line);
+			IntVector * pMatches = ymatches.Get(line);
 			if (!pMatches)
 				continue;
 #else
-			typename map<T, vector<int> >::iterator iter = ymatches.find(line);
+			typename MatchesMap::iterator iter = ymatches.find(line);
 			if (iter == ymatches.end())
 				continue;
-			vector<int> * pMatches = &(iter->second);
+			IntVector * pMatches = &(iter->second);
 #endif
-			vector<int>::iterator y;
+			IntVector::iterator y;
 			int k = 0;
 			
 			for (y = pMatches->begin(); y != pMatches->end(); ++y) {
@@ -341,7 +358,7 @@ int _DiffEngine<T>::_diag (int xoff, int xlim, int yoff, int ylim, int nchunks,
 	seps.resize(nchunks + 1);
 	
 	seps[0] = flip ? make_pair(yoff, xoff) : make_pair(xoff, yoff);
-	vector<int>::iterator ymid = ymids.begin() + lcs * nchunks;
+	IntVector::iterator ymid = ymids.begin() + lcs * nchunks;
 	for (int n = 0; n < nchunks - 1; n++) {
 		x1 = xoff + (numer + (xlim - xoff) * n) / nchunks;
 		y1 = ymid[n] + 1;
@@ -390,10 +407,9 @@ int _DiffEngine<T>::_lcs_pos (int ypos) {
  */
 template <typename T>
 void _DiffEngine<T>::_compareseq (int xoff, int xlim, int yoff, int ylim) {
-	using std::vector;
 	using std::pair;
 
-	vector<pair<int, int> > seps;
+	IntPairVector seps;
 	int lcs;
 	
 	// Slide down the bottom initial diagonal.
@@ -427,7 +443,7 @@ void _DiffEngine<T>::_compareseq (int xoff, int xlim, int yoff, int ylim) {
 			xchanged[xind[xoff++]] = true;
 	} else {
 		// Use the partitions to split this problem into subproblems.
-		vector<pair<int, int> >::iterator pt1, pt2;
+		IntPairVector::iterator pt1, pt2;
 		pt1 = pt2 = seps.begin();
 		while (++pt2 != seps.end()) {
 			_compareseq (pt1->first, pt2->first, pt1->second, pt2->second);
@@ -449,8 +465,8 @@ void _DiffEngine<T>::_compareseq (int xoff, int xlim, int yoff, int ylim) {
  * This is extracted verbatim from analyze.c (GNU diffutils-2.7).
  */
 template <typename T>
-void _DiffEngine<T>::_shift_boundaries (const std::vector<T> & lines, std::vector<bool> & changed, 
-		const std::vector<bool> & other_changed) 
+void _DiffEngine<T>::_shift_boundaries (const ValueVector & lines, BoolVector & changed, 
+		const BoolVector & other_changed) 
 {
 	int i = 0;
 	int j = 0;
@@ -555,7 +571,7 @@ void _DiffEngine<T>::_shift_boundaries (const std::vector<T> & lines, std::vecto
 //-----------------------------------------------------------------------------
 
 template<typename T>
-Diff<T>::Diff(const std::vector<T> & from_lines, const std::vector<T> & to_lines)
+Diff<T>::Diff(const ValueVector & from_lines, const ValueVector & to_lines)
 {
 	_DiffEngine<T> engine;
 	engine.diff(from_lines, to_lines, *this);

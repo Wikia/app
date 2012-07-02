@@ -15,10 +15,23 @@
  * displays them in pretty way with diffs and finally executes the actions the user choices.
  */
 class MessageWebImporter {
+
+	/**
+	 * @var Title
+	 */
 	protected $title;
+
+	/**
+	 * @var User
+	 */
 	protected $user;
+
+	/**
+	 * @var MessageGroup
+	 */
 	protected $group;
 	protected $code;
+	protected $time;
 
 	/**
 	 * @var OutputPage
@@ -28,7 +41,7 @@ class MessageWebImporter {
 	/**
 	 * Maximum processing time in seconds.
 	 */
-	protected $processingTime = 60;
+	protected $processingTime = 43;
 
 	public function __construct( Title $title = null, $group = null, $code = 'en' ) {
 		$this->setTitle( $title );
@@ -63,6 +76,7 @@ class MessageWebImporter {
 
 	/**
 	 * Group is either MessageGroup object or group id.
+	 * @param $group MessagerGroup|string
 	 */
 	public function setGroup( $group ) {
 		if ( $group instanceof MessageGroup ) {
@@ -80,13 +94,17 @@ class MessageWebImporter {
 		$this->code = $code;
 	}
 
+	/**
+	 * @return String
+	 */
 	protected function getAction() {
 		return $this->getTitle()->getFullURL();
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function doHeader() {
-		TranslateUtils::injectCSS();
-
 		$formParams = array(
 			'method' => 'post',
 			'action' => $this->getAction(),
@@ -100,10 +118,16 @@ class MessageWebImporter {
 			Html::hidden( 'process', 1 );
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function doFooter() {
 		return '</form>';
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function allowProcess() {
 		global $wgRequest;
 
@@ -116,6 +140,9 @@ class MessageWebImporter {
 		return false;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getActions() {
 		if ( $this->code === 'en' ) {
 			return array( 'import', 'fuzzy', 'ignore' );
@@ -124,6 +151,11 @@ class MessageWebImporter {
 		}
 	}
 
+	/**
+	 * @param $fuzzy bool
+	 * @param $action
+	 * @return string
+	 */
 	protected function getDefaultAction( $fuzzy, $action ) {
 		if ( $action ) {
 			return $action;
@@ -246,11 +278,12 @@ class MessageWebImporter {
 
 		if ( !$process ) {
 			$collection->filter( 'hastranslation', false );
-			$keys = array_keys( $collection->keys() );
+			$keys = $collection->getMessageKeys();
 
 			$diff = array_diff( $keys, array_keys( $messages ) );
 
 			foreach ( $diff as $s ) {
+				// @todo FIXME: Use CSS file.
 				$name = wfMsgHtml( 'translate-manage-import-deleted',
 					'<code style="font-weight:normal;">' . htmlspecialchars( $s ) . '</code>'
 				);
@@ -340,10 +373,10 @@ class MessageWebImporter {
 	 * @static
 	 * @throws MWException
 	 * @param Title $title
-	 * @param  $message
-	 * @param  $comment
-	 * @param null $user
-	 * @param int $editFlags
+	 * @param $message
+	 * @param $comment
+	 * @param $user User
+	 * @param $editFlags
 	 * @return array
 	 */
 	public static function doImport( $title, $message, $comment, $user = null, $editFlags = 0 ) {
@@ -398,7 +431,7 @@ class MessageWebImporter {
 
 		// Edit with fuzzybot if there is no user.
 		if ( !$user ) {
-			$user = self::getFuzzyBot();
+			$user = FuzzyBot::getUser();
 		}
 
 		// Process all rows.
@@ -437,18 +470,6 @@ class MessageWebImporter {
 		return array( 'translate-manage-import-fuzzy', "\n" . $text );
 	}
 
-	public static function getFuzzyBot() {
-		global $wgTranslateFuzzyBotName;
-
-		$user = User::newFromName( $wgTranslateFuzzyBotName );
-
-		if ( !$user->isLoggedIn() ) {
-			$user->addToDatabase();
-		}
-
-		return $user;
-	}
-
 	/**
 	 * Given a group, message key and language code, creates a title for the
 	 * translation page.
@@ -470,12 +491,17 @@ class MessageWebImporter {
 	 * @param $legend \string Legend as raw html.
 	 * @param $type \string Contents of type class.
 	 * @param $content \string Contents as raw html.
+	 * @param $lang Language The language in which the text is written.
 	 * @return \string Section element as html.
 	 */
-	public static function makeSectionElement( $legend, $type, $content ) {
+	public static function makeSectionElement( $legend, $type, $content, $lang = null ) {
 		$containerParams = array( 'class' => "mw-tpt-sp-section mw-tpt-sp-section-type-{$type}" );
 		$legendParams = array( 'class' => 'mw-tpt-sp-legend' );
 		$contentParams = array( 'class' => 'mw-tpt-sp-content' );
+		if ( $lang ) {
+			$contentParams['dir'] = wfGetLangObj( $lang )->getDir();
+			$contentParams['lang'] = wfGetLangObj( $lang )->getCode();
+		}
 
 		$items = new TagContainer();
 		$items[] = new HtmlTag( 'div', new RawHtml( $legend ), $legendParams );
@@ -488,7 +514,7 @@ class MessageWebImporter {
 	 * Prepends translation with fuzzy tag and ensures there is only one of them.
 	 *
 	 * @param $message String: message content
-	 * @return $message \string Message prefixed with TRANSLATE_FUZZY tag
+	 * @return string Message prefixed with TRANSLATE_FUZZY tag
 	 */
 	public static function makeTextFuzzy( $message ) {
 		$message = str_replace( TRANSLATE_FUZZY, '', $message );

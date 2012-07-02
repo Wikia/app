@@ -25,11 +25,26 @@ $messages['qqq'] = array(
 	'catboxattop-categories' => '{{Identical|Categories}}',
 );
 
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
+ */
+$messages['tly'] = array(
+	'catboxattop-categories' => 'Категоријон',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
 $messages['af'] = array(
 	'catboxattop-categories' => 'Kategorieë',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'catboxattop-desc' => 'Shton një kuti kategori të drejtë në krye të faqeve',
+	'catboxattop-categories' => 'Kategoritë',
 );
 
 /** Amharic (አማርኛ)
@@ -64,7 +79,22 @@ $messages['arz'] = array(
 	'catboxattop-categories' => 'تصانيف',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'catboxattop-desc' => 'Amiesta una caxa de categoríes nel cantu superior drechu de les páxines',
+	'catboxattop-categories' => 'Categoríes',
+);
+
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'catboxattop-categories' => 'Катэгорыі',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -105,10 +135,10 @@ $messages['ca'] = array(
 	'catboxattop-categories' => 'Categories',
 );
 
-/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+/** Sorani (کوردی)
  * @author Marmzok
  */
-$messages['ckb-arab'] = array(
+$messages['ckb'] = array(
 	'catboxattop-categories' => 'هاوپۆلەکان',
 );
 
@@ -196,8 +226,10 @@ $messages['fr'] = array(
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'catboxattop-desc' => 'Apond una bouèta de catègorie d’amont a drêta de les pâges.',
 	'catboxattop-categories' => 'Catègories',
 );
 
@@ -241,6 +273,13 @@ $messages['he'] = array(
 	'catboxattop-categories' => 'קטגוריות',
 );
 
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'catboxattop-categories' => 'Kategorije',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -273,6 +312,14 @@ $messages['id'] = array(
 	'catboxattop-categories' => 'Kategori',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'catboxattop-desc' => 'Nè tí ngwa ébéonọr na élú áká ịkengạ ihü',
+	'catboxattop-categories' => 'Ébéanọr',
+);
+
 /** Italian (Italiano)
  * @author Darth Kule
  */
@@ -291,10 +338,11 @@ $messages['ja'] = array(
 
 /** Khmer (ភាសាខ្មែរ)
  * @author Thearith
+ * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
 	'catboxattop-desc' => 'បន្ថែម​ប្រអប់​ចំណាត់ថ្នាក់ក្រុម​ទៅ​ខាងលើ​ផ្នែក​ខាងស្ដាំ​នៃ​ទំព័រ',
-	'catboxattop-categories' => 'ចំណាត់ថ្នាក់ក្រុម​ផ្សេងៗ',
+	'catboxattop-categories' => 'ចំណាត់ថ្នាក់ក្រុម',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -304,7 +352,7 @@ $messages['kn'] = array(
 	'catboxattop-categories' => 'ವರ್ಗಗಳು',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -320,7 +368,14 @@ $messages['lb'] = array(
 	'catboxattop-categories' => 'Kategorien',
 );
 
-/** Laz (Laz)
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'catboxattop-categories' => 'Kategorijas',
+);
+
+/** Lazuri (Lazuri)
  * @author Bombola
  */
 $messages['lzz'] = array(
@@ -336,6 +391,21 @@ $messages['mk'] = array(
 	'catboxattop-categories' => 'Категории',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'catboxattop-categories' => 'Ангиллууд',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'catboxattop-desc' => 'Membubuh kotak kategori di sudut atas kanan laman',
+	'catboxattop-categories' => 'Kategori',
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
@@ -343,12 +413,28 @@ $messages['myv'] = array(
 	'catboxattop-categories' => 'Категорият',
 );
 
+/** Mazanderani (مازِرونی)
+ * @author محک
+ */
+$messages['mzn'] = array(
+	'catboxattop-categories' => 'رج‌ئون',
+);
+
 /** Nahuatl (Nāhuatl)
  * @author Fluence
+ * @author Teòtlalili
  */
 $messages['nah'] = array(
 	'catboxattop-desc' => 'Ticcēntilīz in neneuhcāyōcaxitl ahco in zāzanilpan',
-	'catboxattop-categories' => 'Neneuhcāyōtl',
+	'catboxattop-categories' => 'Tlaìxmatkàtlàlilòmë',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'catboxattop-desc' => 'Legger til en kategoriboks oppe til høyre på sider',
+	'catboxattop-categories' => 'Kategorier',
 );
 
 /** Dutch (Nederlands)
@@ -367,14 +453,6 @@ $messages['nn'] = array(
 	'catboxattop-categories' => 'Kategoriar',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'catboxattop-desc' => 'Legger til en kategoriboks oppe til høyre på sider',
-	'catboxattop-categories' => 'Kategorier',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -383,7 +461,14 @@ $messages['oc'] = array(
 	'catboxattop-categories' => 'Categorias',
 );
 
-/** Ossetic (Иронау)
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'catboxattop-categories' => 'ଶ୍ରେଣୀସମୂହ',
+);
+
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -482,7 +567,15 @@ $messages['sk'] = array(
 	'catboxattop-categories' => 'Kategórie',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'catboxattop-desc' => 'Doda polje s kategorijami v zgornji desni rob strani',
+	'catboxattop-categories' => 'Kategorije',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -490,7 +583,7 @@ $messages['sr-ec'] = array(
 	'catboxattop-categories' => 'Категорија',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -512,6 +605,14 @@ $messages['stq'] = array(
 $messages['sv'] = array(
 	'catboxattop-desc' => 'Lägger till en kategoribox uppe till höger på sidor',
 	'catboxattop-categories' => 'Kategorier',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'catboxattop-desc' => 'பக்கங்களின் வலது மேற்புறத்தில் ஒரு பகுப்பு பெட்டியை உருவாக்குகிறது',
+	'catboxattop-categories' => 'பகுப்புகள்',
 );
 
 /** Telugu (తెలుగు)
@@ -588,14 +689,16 @@ $messages['vo'] = array(
  * @author פוילישער
  */
 $messages['yi'] = array(
+	'catboxattop-desc' => 'לייגט צו א קאַטעגאריע קעסטל אין דער הייך לינקס פֿון בלעטער',
 	'catboxattop-categories' => 'קאַטעגאריעס',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
-	'catboxattop-categories' => '页面分类',
+	'catboxattop-categories' => '分类',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

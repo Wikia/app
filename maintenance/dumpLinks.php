@@ -26,10 +26,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
- * @ingroup Mainatenance
+ * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class DumpLinks extends Maintenance {
 	public function __construct() {
@@ -49,11 +49,11 @@ class DumpLinks extends Maintenance {
 			array( 'page_id=pl_from' ),
 			__METHOD__,
 			array( 'ORDER BY' => 'page_id' ) );
-	
+
 		$lastPage = null;
-		foreach( $result as $row ) {
-			if( $lastPage != $row->page_id ) {
-				if( isset( $lastPage ) ) {
+		foreach ( $result as $row ) {
+			if ( $lastPage != $row->page_id ) {
+				if ( isset( $lastPage ) ) {
 					$this->output( "\n" );
 				}
 				$page = Title::makeTitle( $row->page_namespace, $row->page_title );
@@ -63,11 +63,11 @@ class DumpLinks extends Maintenance {
 			$link = Title::makeTitle( $row->pl_namespace, $row->pl_title );
 			$this->output( " " . $link->getPrefixedUrl() );
 		}
-		if( isset( $lastPage ) )
+		if ( isset( $lastPage ) )
 			$this->output( "\n" );
 	}
 }
 
 $maintClass = "DumpLinks";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );
 

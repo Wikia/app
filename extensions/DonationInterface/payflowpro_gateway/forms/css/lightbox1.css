@@ -1,0 +1,319 @@
+/* Pitch */
+#pitch {
+ height: 236px;
+ background-image: url(http://upload.wikimedia.org/wikipedia/foundation/d/dc/Jimmy_Appeal_2009.jpg);
+ background-position: right top;
+ background-repeat: no-repeat;
+ background-color: #1e1e1e;
+ border: 1px solid gray;
+ border-bottom-width: 0;
+}
+#pitch-head {
+ width: 50%;
+ font-size: 1.75em;
+ line-height: 1.5em;
+ color: white;
+ margin-top: 16px;
+ margin-left: 24px;
+}
+#pitch-body {
+ width: 50%;
+ font-size: 1em;
+ line-height: 1.5em;
+ color: white;
+ margin-top: 16px;
+ margin-left: 24px;
+}
+
+#appeal-head {
+ font-size: 1.5em;
+ line-height: 1.125em;
+ padding-bottom: 0.5em;
+ padding-top: 0.125em;
+}
+#appeal-body {
+ padding: 0.2em 0em;
+ font-size: 1.125em;
+ margin-bottom: 1em;
+}
+/* Donate */
+#donate {
+	font-size: 16px;
+}
+#amount-table td {
+	font-size: 100%;
+	padding: 4px;
+}
+
+#donate-content {
+ background-color: #CCE7CD;
+ border: 1px solid #5eac58;
+}
+#donate-head {
+ font-size: 1.5em;
+ line-height: 1.125em;
+ padding-bottom: 0.5em;
+ padding-top: 0.125em;
+ border-color: #5eac58;
+}
+#donate-body {
+ font-size: 1.25em;
+}
+
+.donate-body-small {
+  font-size: .75em;
+  margin-bottom:1em;
+}
+.donate-options {
+	text-align: center;
+}
+
+input.button, select#input_currency_code {
+ font-size: 95%;
+}
+
+table {
+ background-color: transparent;
+}
+
+#footer {
+ background-image: none !important;
+}
+
+#mw-head-base {
+ height: 1em !important;
+}
+
+#mw-panel div.portal {
+ display: none !important;
+}
+
+#p-namespaces, #p-views, #p-cactions, #p-search, #p-personal, #catlinks, #firstHeading, #contentSub, #siteSub {
+ display: none;
+}
+
+div#content {
+ background-color: transparent !important;
+ background-image: none !important;
+}
+
+div#mw-head-base {
+ background-image: none !important;
+}
+
+.l {
+    float: left;
+}
+.r {
+    float: right;
+}
+hr {
+    margin: 1.5em 0 0.5em;
+}
+h3 span {
+    font-weight: normal;
+}
+#amount-table td {
+    white-space: nowrap;
+}
+.call-l {
+    float: left;
+    margin: 0.2em 1em 1em 0;
+}
+.call-l, .call-r {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #444444;
+    font-size: 13px;
+    padding: 15px 20px;
+}
+.call-l h3, .call-r h3 {
+    font-size: 17px;
+}
+.call-l .loading, .call-r .loading {
+    background-image: url("../images/loading-white.gif");
+}
+.call-r {
+    float: right;
+    margin: 0.2em 0 1em 1em;
+    background-color: #CCE7CD;
+    border: 1px solid #5EAC58;
+}
+#loading {
+    font-size: 12px;
+    margin-left: 0.5em;
+    vertical-align: middle;
+}
+.loading {
+    background: url("../images/loading-green.gif") no-repeat scroll 50% 50% transparent;
+    padding: 10px;
+}
+.mute {
+    font-size: 12px;
+}
+
+/* Callouts */
+.call-l, .call-r { width: 310px; }
+
+/* Layout */
+.clear { clear: both; }
+
+/* Lightbox */
+div.ui-dialog {
+	width: 600px;
+	overflow: hidden;
+}
+.ui-dialog .ui-dialog-title {
+	font-size: 1em;
+	font-weight: normal;
+}
+.ui-widget {
+	font-size: 1em;
+}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+	font-size: 0.8em;
+}
+input.btn {
+	font-size: 14px;
+	margin-bottom: 4px;
+	width: 18em;
+}
+#dialog{
+	overflow: hidden;
+}
+.ui-dialog .ui-dialog-content {
+	padding: 0;
+}
+#steps{
+	width:600px;
+	overflow:hidden;
+	font-family:sans-serif;
+}
+.step{
+	float:left;
+	width:600px;
+	position: relative;
+}
+.step-content {
+	padding: 20px;
+	height: 280px;
+}
+
+#steps form fieldset{
+	border:none;
+	padding: 0;
+	margin: 0;
+}
+#steps form legend{
+	text-align:left;
+	color:#666;
+	font-size:24px;
+	/* text-shadow:1px 1px 1px #aaa; */
+	font-weight:bold;
+	float:left;
+	width:580px;
+	padding:8px 0px 5px 20px;
+	margin:10px 0px;
+}
+#steps form div.stuff{
+	clear:both;
+	margin:3px 0px;
+	width:auto;
+	padding:5px 10px;
+	/*
+	background-color:#f4f4f4;
+	border:1px solid #fff;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow:0px 0px 3px #aaa;
+	-webkit-box-shadow:0px 0px 3px #aaa;
+	box-shadow:0px 0px 3px #aaa;
+	*/
+}
+#steps form div.stuff label{
+	width:140px;
+	float:left;
+	text-align:right;
+	margin-right:12px;
+	line-height:26px;
+	color:#666;
+	/* text-shadow:1px 1px 1px #fff; */
+	font-weight:bold;
+	font-size: 15px;
+}
+#steps form input:not([type=radio]),
+#steps form textarea,
+#steps form select{
+	background: #ffffff;
+	border: 1px solid #ccc;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	outline: none;
+	padding: 5px;
+}
+#steps form input.widefield{
+	width: 200px;
+	float:left;
+}
+#steps form input.large{
+	font-size: 20px;
+	line-height: 22px;
+	width: 62px;
+}
+#steps form input:focus{
+	-moz-box-shadow:0px 0px 3px #aaa;
+	-webkit-box-shadow:0px 0px 3px #aaa;
+	box-shadow:0px 0px 3px #aaa;
+	background-color:#FFFEEF;
+}
+#steps form p.submit{
+	background:none;
+	border:none;
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+	box-shadow:none;
+}
+#steps form a.back-button {
+	position: absolute;
+	bottom: 25px;
+	left: 25px;
+	margin: 0 !important;
+}
+#steps form a.continue-button {
+	position: absolute;
+	bottom: 25px;
+	right: 25px;
+	margin: 0 !important;
+}
+#spinner {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	bottom: 37px;
+	right: 133px;
+	z-index: 2000;
+	display: none;
+}
+#steps #card-errors {
+	font-size: 13px;
+	line-height: 15px;
+	color: #cc0000;
+}
+#steps #card-errors .error-msg {
+	margin-bottom: 1em;
+}
+#informationsharing {
+	font-size: 11px;
+	line-height: 13px;
+}
+#secure-logo {
+	float: right;
+}
+#moreinfolinks {
+	font-size: 12px;
+}
+#cvv-link {
+	color: #2779AA;
+	font-size: 0.8em;
+}

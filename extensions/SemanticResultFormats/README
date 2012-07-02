@@ -7,11 +7,11 @@ overview on how to install and configure the formats, as well as an overview
 of all included formats.
 
 Semantic Result Formats requires Semantic MediaWiki to run, at least at the
-same second-level version number as Semantic Result Formats, i.e. SRF 1.5.0
-requires SMW 1.5.0.
+same second-level version number as Semantic Result Formats, i.e. SRF 1.5.x
+requires SMW 1.5.x.
 
 For more information, see the SRF homepage at:
-http://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats
+https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats
 
 == Included formats ==
 
@@ -106,6 +106,17 @@ extension.
 Creates a gallery of images (and captions) dynamically. The output is the
 same as when using MediaWiki's built-in <gallery>-tag.
 
+=== tree, ultree, oltree ===
+
+Format tree displays the query result as a tree, i.e. as an unordered (bulleted)
+nested HTML list. ultree is an alias of tree. oltree produces an ordered
+(numbered) list instead of an unordered list. 
+
+=== filtered ===
+
+Displays results in switchable views and offers client-side (JavaScript based)
+filtering. (unfinished, e.g. no switching between views yet)
+
 == Contact ==
 
 If you have remarks, questions, or suggestions, please send them to
@@ -119,14 +130,10 @@ Please select "SemanticResultFormats" as the "component".
 If you want to contribute work to the project please subscribe to the
 developers mailing list, semediawiki-devel@lists.sourceforge.net.
 
-Currently Denny Vrandecic is maintaining Semantic Result Formats. It would
-be highly appreciated if someone else would like to take over that job.
-Contact Denny at denny@semantic-mediawiki.org if you are interested.
-
 == Developers ==
 
-Development is coordinated by Denny Vrandecic, Yaron Koren and Markus Kr�tzsch.
-If you are interested in taking over coordination, please contact Denny.
+Development is coordinated by Jeroen De Dauw and Yaron Koren.
+If you are interested in taking over coordination, please contact Jeroen.
 
 Some parts of Semantic Result Formats development have been funded by
 Institut AIFB of the Karlsruhe Institute of Technology in Germany; see
@@ -163,6 +170,8 @@ of Code.
 
 * The jqPlot-based formats were contributed by Sanyam Goyal and Yaron Koren,
   using the jQuery and jqPlot Javascript libraries.
+
+* The valuerank format was added by DaSch.
 
 * Many other people have contributed to the project by providing helpful
   comments and suggestions. More comments are always welcome!

@@ -19,7 +19,7 @@
 // Check environment
 if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This is an extension to MediaWiki and cannot be run standalone.\n" );
-	die( - 1 );
+	die( -1 );
 }
 
 /* Configuration */
@@ -28,9 +28,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Drafts',
+	'version' => '0.1.0',
 	'author' => 'Trevor Parscal',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Drafts',
-	'description' => 'Save and view draft versions of pages',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Drafts',
 	'descriptionmsg' => 'drafts-desc',
 );
 
@@ -48,7 +48,7 @@ $egDraftsAutoSaveWait = 120;
 // Use the value 0 to disable autosave
 $egDraftsAutoSaveTimeout = 10;
 
-// Days to keep drafts around before automatic deletion
+// Days to keep drafts around before automatic deletion. Set to 0 to keep forever.
 $egDraftsLifeSpan = 30;
 
 // Ratio of times which a list of drafts requested and the list should be pruned
@@ -64,7 +64,7 @@ $wgAutoloadClasses['DraftHooks'] = $dir . 'Drafts.hooks.php';
 
 // Internationalization
 $wgExtensionMessagesFiles['Drafts'] = $dir . 'Drafts.i18n.php';
-$wgExtensionAliasesFiles['Drafts'] = $dir . 'Drafts.alias.php';
+$wgExtensionMessagesFiles['DraftsAlias'] = $dir . 'Drafts.alias.php';
 
 // Register the Drafts special page
 $wgSpecialPages['Drafts'] = 'DraftsPage';
@@ -97,4 +97,3 @@ $wgHooks['BeforePageDisplay'][] = 'DraftHooks::addCSS';
 
 // Register database operations
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'DraftHooks::schema';
-

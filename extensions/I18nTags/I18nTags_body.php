@@ -1,7 +1,6 @@
 <?php
 
 class I18nTags {
-
 	public static function formatNumber( $data, $params, $parser ) {
 		$lang = self::languageObject( $params );
 		return $lang->formatNum($data);
@@ -52,13 +51,17 @@ class I18nTags {
 		return "<b>$predata$inside</b>$data";
 	}
 
-	public static function languageName( &$parser, $code = '', $native = '' ) {
+	public static function languageName( &$parser, $code = '', $outputLanguage = '' ) {
 		global $wgLang;
-		if ( !$code ) return '';
-		$native = $native === 'native';
-		$cldr   = is_callable(array( 'LanguageNames', 'getNames' ));
-		if ( !$native && $cldr ) {
-			$languages = LanguageNames::getNames( $wgLang->getCode(),
+		if ( !$code ) {
+			return '';
+		}
+		if ( !$outputLanguage ) {
+			$outputLanguage = $parser->getOptions()->getUserLang();
+		}
+		$cldr   = is_callable( array( 'LanguageNames', 'getNames' ));
+		if ( $outputLanguage !== 'native' && $cldr ) {
+			$languages = LanguageNames::getNames( $outputLanguage,
 				LanguageNames::FALLBACK_NORMAL,
 				LanguageNames::LIST_MW_AND_CLDR
 			);
@@ -69,11 +72,10 @@ class I18nTags {
 		return isset($languages[$code]) ? $languages[$code] : $code;
 	}
 
-
 	/**
 	 * Static helper that returns either content or user interface language object.
 	 * @param $params Parameters passed to to the parser tag
-	 * @return Instance of class Language
+	 * @return Language Instance of class Language
 	 * Globals: $wgContLang.
 	 */
 	public static function languageObject( $params ) {
@@ -90,10 +92,15 @@ class I18nTags {
 			$from = $to = (int) $s;
 		}
 
-
-		if ( $from > $to ) {$UNDEFINED = $to; $to = $from; $from = $UNDEFINED;}
-		if ( $min !== false ) $from = max( $min, $from );
-		if ( $max !== false ) $to = min( $max, $to );
+		if ( $from > $to ) {
+			$UNDEFINED = $to; $to = $from; $from = $UNDEFINED;
+		}
+		if ( $min !== false ) {
+			$from = max( $min, $from );
+		}
+		if ( $max !== false ) {
+			$to = min( $max, $to );
+		}
 
 		return array( $from, $to );
 	}

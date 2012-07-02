@@ -11,6 +11,11 @@
 * Implementation of JsSelectToInput class which is extends HTMLTextField.
  */
 class HTMLJsSelectToInputField extends HTMLTextField {
+
+	/**
+	 * @param $value
+	 * @return string
+	 */
 	function getInputHTML( $value ) {
 		$input = parent::getInputHTML( $value );
 
@@ -21,6 +26,10 @@ class HTMLJsSelectToInputField extends HTMLTextField {
 		return $input;
 	}
 
+	/**
+	 * @param $value
+	 * @return array
+	 */
 	function tidy( $value ) {
 		$value = array_map( 'trim', explode( ',', $value ) );
 		$value = array_unique( array_filter( $value ) );
@@ -28,6 +37,11 @@ class HTMLJsSelectToInputField extends HTMLTextField {
 		return $value;
 	}
 
+	/**
+	 * @param $value
+	 * @param $alldata
+	 * @return bool|String
+	 */
 	function validate( $value, $alldata ) {
 		$p = parent::validate( $value, $alldata );
 
@@ -55,6 +69,11 @@ class HTMLJsSelectToInputField extends HTMLTextField {
 		return true;
 	}
 
+	/**
+	 * @param $value
+	 * @param $alldata
+	 * @return string
+	 */
 	function filter( $value, $alldata ) {
 		$value = parent::filter( $value, $alldata );
 		return implode( ', ', $this->tidy( $value ) );

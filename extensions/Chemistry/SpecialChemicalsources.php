@@ -1,19 +1,19 @@
 <?php
-
 /**
  * A MediaWiki extension that adds a Specialpage for Chemical sources.
  *
  * The i18n file is required for operation!
  * Installation: copy this file and ChemFunctions.i18n.php into the extensions directory
- *   and add 'require_once( "$IP/extensions/SpecialChemicalsources.php" );' to localsettings.php (using the correct path)
+ *   and add 'require_once( "$IP/extensions/SpecialChemicalsources.php" );' to LocalSettings.php (using the correct path)
  *
  * i18n is retrieved from ChemFunctions.i18n.php
  * wfSpecialChemicalSources (adds the specialpage)
  * Class SpecialChemicalsources is an extension of SpecialPage
  * Parameter checking is performed in the function "TransposeAndCheckParams"
  *
- * @addtogroup SpecialPage
- * @addtogroup Extensions
+ * @file
+ * @ingroup SpecialPage
+ * @ingroup Extensions
  *
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -31,19 +31,20 @@
  *	  You have to return a list which contains: $transParams['thestringtoreplaceinyourpage'] = 'withwhatitshouldbereplaced'
  */
 
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 # Credentials.
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Special:Chemicalsources',
-	'description' => '[[Special:Chemicalsources|Special page]] for Chemical sources',
 	'author' => 'Dirk Beetstra',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Chemistry/ChemFunctions.php'
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Chemistry/ChemFunctions.php',
+	'descriptionmsg' => 'chemicalsources-desc',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['SpecialChemicalsources'] = $dir . 'SpecialChemicalsources_body.php';
 $wgExtensionMessagesFiles['SpecialChemicalsources'] = $dir . 'ChemFunctions.i18n.php';
-$wgExtensionAliasesFiles['ChemicalSources'] = $dir . 'ChemicalSources.alias.php';
+$wgExtensionMessagesFiles['ChemicalSourcesAlias'] = $dir . 'Chemicalsources.alias.php';
 $wgSpecialPages['ChemicalSources'] = 'SpecialChemicalsources';
+$wgSpecialPageGroups['ChemicalSources'] = 'wiki';

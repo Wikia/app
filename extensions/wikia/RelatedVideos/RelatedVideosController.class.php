@@ -114,7 +114,7 @@ class RelatedVideosController extends WikiaController {
 		$inAjaxReponse = $this->getVal('inAjaxResponse');
 
 		if ( $videoArticleId ) {
-			$videoTitle = Title::newFromID( $videoArticleId, GAID_FOR_UPDATE );
+			$videoTitle = Title::newFromID( $videoArticleId, Title::GAID_FOR_UPDATE );
 			$useMaster = true;
 		} else {
 			$videoTitle = Title::newFromText( $videoName, NS_VIDEO );
@@ -139,7 +139,6 @@ class RelatedVideosController extends WikiaController {
 		if( $videoFile ) {
 			$videoThumbObj = $videoFile->transform( array('width'=>$video['thumbnailData']['width'],
 														  'height'=>$video['thumbnailData']['height']) );
-
 			$videoThumb = $videoThumbObj->toHtml(
 				array(
 					'custom-url-link' => $video['fullUrl'],
@@ -167,12 +166,16 @@ class RelatedVideosController extends WikiaController {
 
 	public function getAddVideoModal(){
 
-		$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'addVideoModalText' ) );
+		$pgTitle = $this->request->getVal('title', '');
+		$this->setVal( 'pageTitle', $pgTitle );
+		$this->setVal( 'html', $this->app->renderView( 'RelatedVideos', 'addVideoModalText', array('pageTitle'=>$pgTitle) ) );
 		$this->setVal( 'title',	wfMsg('related-videos-add-video-to-this-page') );
 	}
 
 	public function addVideoModalText(){
-		
+
+		$pgTitle = $this->request->getVal('pageTitle', '');
+		$this->setVal( 'pageTitle', $pgTitle );
 	}
 	
 	public function addVideo() {
@@ -210,5 +213,98 @@ class RelatedVideosController extends WikiaController {
 		else {
 			$this->setVal( 'error', null );
 		}
+	}
+
+	public function searchVideos() {
+
+
+		$search = F::build( 'WikiaSearch' ); /* @var $search WikiaSearch */
+		//$search->doSearch();
+	}
+
+	public function getVideoPreview() {
+
+		$sVideoTitle =  $this->request->getVal('vTitle');
+		if ( !empty( $sVideoTitle ) ) {
+
+			$oTitle = Title::newFromText( $sVideoTitle, NS_FILE );
+			$oFile = wfFindFile( $oTitle );
+
+			if ( !empty( $oFile ) ) {
+			     $embedCode = $oFile->getEmbedCode( 350, true, true);
+
+			     $this->setVal( "html", $this->app->renderView( 'RelatedVideos', 'getVideoPreviewForm', array( 'embedCode' => $embedCode, 'dbkey'=>$oTitle->getDBkey() )  ) );
+			}
+		}
+	}
+
+	public function getVideoPreviewForm() {
+
+		$this->setVal( "embedCode", $this->request->getVal( "embedCode" ) );
+		$this->setVal( "dbkey", $this->request->getVal( "dbkey" ) );
+	}
+
+	public function getSuggestedVideos() {
+
+		$relatedVideosParams = array( 'video_wiki_only'=>true, 'start'=>0, 'size'=>20 );
+
+		$sTitle = $this->request->getVal('pageTitle');
+		$articleId = 0;
+
+		if ( !empty( $sTitle ) ) {
+			$oTitle = Title::newFromText( $sTitle );
+			if ( !empty( $oTitle ) && $oTitle->exists() ) {
+				$articleId = $oTitle->getArticleId();
+			}
+		}
+
+		if ( $articleId > 0 ) {
+			$relatedVideosParams['pageId'] = $articleId;
+		}
+
+		$search = F::build( 'WikiaSearch' );  /* @var $search WikiaSearch */
+		$response = $search->getRelatedVideos( $relatedVideosParams );
+
+		if ( count( $response ) == 0 && !empty($relatedVideosParams['pageId']) && $this->request->getVal('debug')!=1 ) {
+
+			// if nothing for specify article, do general search
+			unset( $relatedVideosParams['pageId'] );
+			$response = $search->getRelatedVideos( $relatedVideosParams );
+		}
+
+		$rvService = F::build( 'RelatedVideosService' ); /* @var $rvService RelatedVideosService */
+
+		$currentVideos = $rvService->getRVforArticleId( $articleId );
+		// reorganize array to index by video title
+		$currentVideosByTitle = array();
+		foreach( $currentVideos as $vid ) {
+			$currentVideosByTitle[$vid['title']] = $vid;
+		}
+
+
+		foreach ( $response as $url => &$singleVideoData ) {
+
+			$globalTitle = GlobalTitle::newFromId( $singleVideoData['pageid'], $singleVideoData['wid'] );
+			if ( !empty( $globalTitle ) ) {
+
+				$title = $globalTitle->getText();
+				if( isset($currentVideosByTitle[$title]) ) {
+					// don't suggest videos that are already in RelatedVideos
+					unset( $response[$url] );
+					continue;
+				}
+
+				$rvService->inflateWithVideoData( $singleVideoData,
+								$globalTitle,
+								$this->getVal( 'videoWidth', 160 ),
+								$this->getVal( 'videoHeight', 90 ) );
+
+			} else {
+
+				unset( $response[$url] );
+			}
+		}
+
+		$this->setVal( 'suggested_videos', $response );
 	}
 }

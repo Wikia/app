@@ -70,8 +70,12 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 				l = li.length;
 
 			a = setInterval(function(){
-				li[cur++].className = 'show';
-				if(cur == l) clearInterval(a);
+				if(li[cur]){
+					li[cur].className = 'show';
+					cur = cur+1;
+				}else{
+					clearInterval(a);
+				}
 			}, 70)
 		}
 	};

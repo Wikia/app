@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension Commentbox.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -66,7 +67,32 @@ $messages['ar'] = array(
 	'commentbox-error-empty-comment' => 'التعليقات الفارغة غير مسموح بها!',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'commentbox-name' => 'ܫܡܐ:',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vago
+ */
+$messages['az'] = array(
+	'commentbox-savebutton' => 'Şərhi yadda saxla',
+	'commentbox-name' => 'Ad:',
+	'commentbox-log' => 'Yeni şərhlər',
+	'commentbox-first-comment-heading' => '== Şərhlər ==',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Roustammr
+ */
+$messages['ba'] = array(
+	'commentbox-name' => 'Исем:',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -101,24 +127,39 @@ $messages['bg'] = array(
 	'commentbox-error-empty-comment' => 'Не са позволени празни коментари!',
 );
 
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'commentbox-desc' => 'নির্দিষ্ট পাতায় একটি মন্তব্য বাক্স যোগ করুন',
+	'commentbox-savebutton' => 'মন্তব্য সংরক্ষণ',
+	'commentbox-name' => 'নাম:',
+	'commentbox-log' => 'নতুন মন্তব্যসমূহ',
+	'commentbox-first-comment-heading' => '== মন্তব্যসমূহ ==',
+	'commentbox-errorpage-title' => 'মন্তব্য তৈরির সময় ত্রুটি দেখা দিয়েছে',
+	'commentbox-error-page-nonexistent' => 'এই পাতাটি নেই!',
+	'commentbox-error-namespace' => 'এই নামস্থানে কোনো মন্তব্য গ্রহণযোগ্য নয়!',
+	'commentbox-error-empty-comment' => 'খালি মন্তব্য গ্রহণযোগ্য নয়!',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
-	'commentbox-desc' => "Ouzhpennañ a ran ur boest evezhiadennoù da bajennoù 'zo",
+	'commentbox-desc' => 'Ouzhpennañ a ra ur voest evezhiadennoù da bajennoù zo',
 	'commentbox-intro' => '== Ouzhpennañ un evezhiadenn... ==
 Un evezhiadenn bennak hoc\'h eus d\'ober diwar-benn ar bajenn-mañ ? Ouzhpennit anezhi amañ pe <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} kemmit ar bajenn war-eeun]</span>.',
 	'commentbox-savebutton' => 'Enrollañ an evezhiadenn',
 	'commentbox-name' => 'Anv :',
-	'commentbox-name-explanation' => "<small>(Korvigell: Ma [[Special:UserLogin|lugit amañ]], n'ho po ket da leuniañ gant an dorn ho anv amañ)</small>",
+	'commentbox-name-explanation' => "<small>(Tun : Ma [[Special:UserLogin|kevreit]], n'ho po ket da leuniañ hoc'h anv gant an dorn amañ)</small>",
 	'commentbox-log' => 'Evezhiadennoù nevez',
 	'commentbox-first-comment-heading' => '== Evezhiadennoù ==',
 	'commentbox-regex' => '/\\n==\\s*Evezhiadennoù\\s*==\\s*\\n/i',
-	'commentbox-errorpage-title' => 'Ur fazi a zo bet e-pad krouidigezh an evezhiadenn',
+	'commentbox-errorpage-title' => 'Ur fazi zo bet en ur grouiñ an evezhiadenn',
 	'commentbox-error-page-nonexistent' => "N'eus ket eus ar bajenn-se!",
-	'commentbox-error-namespace' => "N'eo ket aotreet an evezhiadennoù el lec'h-mañ !",
-	'commentbox-error-empty-comment' => "N'eo ket aotreet an evezhiadennoù goullo",
+	'commentbox-error-namespace' => "N'eo ket aotreet lakaat evezhiadennoù en esaouenn anv-mañ !",
+	'commentbox-error-empty-comment' => "N'eo ket aotreet an evezhiadennoù goullo !",
 );
 
 /** Bosnian (Bosanski)
@@ -140,6 +181,34 @@ $messages['bs'] = array(
 	'commentbox-error-empty-comment' => 'Prazni komentari nisu dozvoljeni!',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'commentbox-desc' => 'Afegeix una capsa de comentaris a certes pàgines',
+	'commentbox-intro' => '== Afegiu un comentari ... == Voleu comentar res en aquesta pàgina? Afegiu-lo aquí o <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} editeu la pàgina directament]</span>.',
+	'commentbox-savebutton' => 'Desa el comentari',
+	'commentbox-name' => 'Nom:',
+	'commentbox-name-explanation' => "<small>(Consell: Si [[Special:UserLogin|us registreu]], no haureu d'omplir manualment el nom aquí)</small>",
+	'commentbox-log' => 'Nous comentaris',
+	'commentbox-first-comment-heading' => '== Comentaris ==',
+	'commentbox-regex' => '/\\n==\\s*Comentaris\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => 'Error en crear el comentari',
+	'commentbox-error-page-nonexistent' => 'Aquesta pàgina no existeix!',
+	'commentbox-error-namespace' => 'Els comentaris no estan permesos en aquest espai de noms!',
+	'commentbox-error-empty-comment' => 'No estan permesos els comentaris buits!',
+);
+
+/** Corsican (Corsu) */
+$messages['co'] = array(
+	'commentbox-name' => 'Nome:',
+);
+
+/** Czech (Česky) */
+$messages['cs'] = array(
+	'commentbox-name' => 'Jméno:',
+);
+
 /** German (Deutsch)
  * @author Imre
  */
@@ -159,7 +228,7 @@ Du hast einen Kommentar zu dieser Seite? Trage ihn hier ein oder <span class="pl
 	'commentbox-error-empty-comment' => 'Leere Kommentare sind nicht erlaubt!',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  */
 $messages['de-formal'] = array(
@@ -189,12 +258,16 @@ Maš komentar na toś tom boku? Pśidaj jen sem abo <span class="plainlinks">[{{
 
 /** Greek (Ελληνικά)
  * @author Crazymadlover
+ * @author Dada
  * @author Omnipaedista
+ * @author Περίεργος
  */
 $messages['el'] = array(
 	'commentbox-desc' => 'Προσθέτει ένα κουτί σχολίων σε συγκεκριμένες σελίδες',
+	'commentbox-intro' => '== Προσθέστε ένα σχόλιο ... == Έχετε ένα σχόλιο για τη σελίδα? Προσθέστε το εδώ ή στο <span class="plainlinks">[((fullurl: ((FULLPAGENAME)) | action = edit)) επεξεργαστείτε τη σελίδα άμεσα].</span>',
 	'commentbox-savebutton' => 'Αποθήκευση σχολίου',
 	'commentbox-name' => 'Όνομα:',
+	'commentbox-name-explanation' => '<small>(Συμβουλή: Εάν [[Special:UserLogin|συνδεθείτε]], δε χρειάζεται να συμπληρώσετε το όνομά σας εδώ πληκτρολογώντας)</small>',
 	'commentbox-log' => 'Νέα σχόλια',
 	'commentbox-first-comment-heading' => '== Σχόλια ==',
 	'commentbox-regex' => '/\\n==\\s*Σχόλια\\s*==\\s*\\n/i',
@@ -214,26 +287,31 @@ $messages['eo'] = array(
 	'commentbox-name' => 'Nomo:',
 	'commentbox-log' => 'Novaj komentoj',
 	'commentbox-first-comment-heading' => '== Komentoj ==',
+	'commentbox-regex' => '/\\n==\\s*Komentoj\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => 'Eraro kiam kreante komenton',
 	'commentbox-error-page-nonexistent' => 'Ĉi tiu paĝo ne ekzistas!',
+	'commentbox-error-namespace' => 'Komentoj ne estas permesita en ĉi tiu nomspaco!',
+	'commentbox-error-empty-comment' => 'Nulaj komentoj ne estas permesita.',
 );
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author Fitoschido
  */
 $messages['es'] = array(
 	'commentbox-desc' => 'Agrega un cuadro de comentarios a ciertas páginas',
 	'commentbox-intro' => '== Agregar un comentario... ==
 Tienes un comentario a esta página? Agrégalo aquí o <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} edita la página directamente]</span>.',
-	'commentbox-savebutton' => 'Grabar comentario',
+	'commentbox-savebutton' => 'Guardar comentario',
 	'commentbox-name' => 'Nombre:',
 	'commentbox-name-explanation' => '<small>(Tip: Si [[Special:UserLogin|inicias sesión]], no tendrás que llenar tu nombre manualmente)</small>',
 	'commentbox-log' => 'Nuevos comentarios',
 	'commentbox-first-comment-heading' => '== Comentarios==',
 	'commentbox-regex' => '/\\n==\\s*Comentarios\\s*==\\s*\\n/i',
-	'commentbox-errorpage-title' => 'Error cuando se creaba un comentario',
-	'commentbox-error-page-nonexistent' => 'Esta página no existe!',
-	'commentbox-error-namespace' => 'Los comentarios no estan permitidos en este espacio de nombre!',
-	'commentbox-error-empty-comment' => 'Comentarios vacíos no están permitidos!',
+	'commentbox-errorpage-title' => 'Error al crear el comentario',
+	'commentbox-error-page-nonexistent' => '¡Esta página no existe!',
+	'commentbox-error-namespace' => '¡No se permiten comentarios en este espacio de nombres!',
+	'commentbox-error-empty-comment' => 'No se permiten comentarios vacíos.',
 );
 
 /** Estonian (Eesti)
@@ -245,6 +323,13 @@ $messages['et'] = array(
 	'commentbox-first-comment-heading' => '== Kommentaarid ==',
 	'commentbox-error-page-nonexistent' => 'Seda lehekülge ei ole!',
 	'commentbox-error-namespace' => 'Siin nimeruumis ei ole kommentaarid lubatud.',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'commentbox-name' => 'نام:',
 );
 
 /** Finnish (Suomi)
@@ -284,6 +369,22 @@ Vous avez un commentaire sur cette page ? Ajoutez-le ici ou <span class="plainli
 	'commentbox-error-page-nonexistent' => "Cette page n'existe pas !",
 	'commentbox-error-namespace' => 'Les commentaires ne sont pas autorisés dans cet espace de noms !',
 	'commentbox-error-empty-comment' => 'Les commentaires vides ne sont pas autorisés !',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'commentbox-desc' => 'Apond una bouèta de comentèro dens quârques pâges.',
+	'commentbox-savebutton' => 'Encartar lo comentèro',
+	'commentbox-name' => 'Nom :',
+	'commentbox-log' => 'Novéls comentèros',
+	'commentbox-first-comment-heading' => '== Comentèros ==',
+	'commentbox-regex' => '/\\n==\\s*Comentèros\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => 'Èrror pendent la crèacion du comentèro',
+	'commentbox-error-page-nonexistent' => 'Ceta pâge ègziste pas !',
+	'commentbox-error-namespace' => 'Los comentèros sont pas ôtorisâs dens ceti èspâço de noms !',
+	'commentbox-error-empty-comment' => 'Los comentèros vouedos sont pas ôtorisâs !',
 );
 
 /** Galician (Galego)
@@ -438,6 +539,16 @@ Anda memiliki komentar di halaman ini? Tambahkan di sini atau <span class="plain
  */
 $messages['ig'] = array(
 	'commentbox-name' => 'Áhà:',
+	'commentbox-log' => 'Ókwúnókwú ohüru',
+	'commentbox-first-comment-heading' => '== Ókwúnókwú ==',
+);
+
+/** Ingush (ГІалгІай Ğalğaj)
+ * @author Amire80
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'commentbox-name' => 'ЦӀи:',
 );
 
 /** Italian (Italiano)
@@ -478,7 +589,50 @@ $messages['ja'] = array(
 	'commentbox-error-empty-comment' => '空の意見は受け付けていません！',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Khmer (ភាសាខ្មែរ)
+ * @author គីមស៊្រុន
+ */
+$messages['km'] = array(
+	'commentbox-desc' => 'បន្ថែមប្រអប់យោបល់ទៅលើទំព័រមួយចំនួន',
+	'commentbox-intro' => '== បន្ថែមយោបល់... ==
+តើអ្នកមានយោបង់នៅលើទំព័រនេះទេ? សូមបញ្ចេញយោបល់នៅទីនេះ ឬក៏<span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} កែប្រែទំព័រនេះដោយផ្ទាល់]</span>។',
+	'commentbox-savebutton' => 'រក្សាទុកយោបល់',
+	'commentbox-name' => 'ឈ្មោះ៖',
+	'commentbox-name-explanation' => '<small>(ដំបូន្មាន៖ ប្រសិនបើអ្នក[[Special:UserLogin|កត់ឈ្មោះចូល]] នោះអ្នកនឹងមិនចាំបាច់បញ្ចូលឈ្មោះរបស់អ្នកដោយខ្លួនឯងនៅទីនេះទេ)</small>',
+	'commentbox-log' => 'យោបល់ថ្មី',
+	'commentbox-first-comment-heading' => '== យោបល់ ==',
+	'commentbox-errorpage-title' => 'មានបញ្ហាពេលកំពុងបង្កើតយោបល់',
+	'commentbox-error-page-nonexistent' => 'ទំព័រនេះមិនមានទេ!',
+	'commentbox-error-empty-comment' => 'មិនអនុញ្ញាតអោយមានយោបល់ទទេទេ!',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'commentbox-name' => 'ಹೆಸರು:',
+);
+
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'commentbox-desc' => '특정 문서에 의견 상자를 추가',
+	'commentbox-intro' => '== 의견 남기기... ==
+이 문서에 의견이 있으신가요? 여기 의견을 남기시거나 <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} 문서를 직접 편집]</span>하십시오.',
+	'commentbox-savebutton' => '의견 저장하기',
+	'commentbox-name' => '이름:',
+	'commentbox-name-explanation' => '<small>(팁: [[Special:UserLogin|로그인]]하면 이름을 직접 적지 않아도 됩니다.)</small>',
+	'commentbox-log' => '새 의견',
+	'commentbox-first-comment-heading' => '== 의견 ==',
+	'commentbox-regex' => '/\\n==\\s*의견\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => '의견을 남기는 도중 오류 발생',
+	'commentbox-error-page-nonexistent' => '이 문서가 존재하지 않습니다!',
+	'commentbox-error-namespace' => '이 이름공간에는 의견을 남길 수 없습니다!',
+	'commentbox-error-empty-comment' => '내용 없이 의견을 남길 수 없습니다!',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -495,6 +649,17 @@ Häß De en Aamerkung zoh heh dä Sigg? Donn se heh enjävve, udder <span class=
 	'commentbox-error-page-nonexistent' => 'Di Sigg jidd_et nit!',
 	'commentbox-error-namespace' => 'Aanmerkunge nit zohjelohße en heh dämm Appachtemang!',
 	'commentbox-error-empty-comment' => 'Aanmerkunge met nix dren nit zohjelohße!',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'commentbox-savebutton' => 'Şîroveyê tomar bike',
+	'commentbox-name' => 'Nav:',
+	'commentbox-log' => 'Şîroveyên nû',
+	'commentbox-first-comment-heading' => '== Şîrove ==',
+	'commentbox-error-page-nonexistent' => 'Ev rûpel tune ye!',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -516,6 +681,46 @@ Dir hutt eng Bemierkung zu dëser Säit? Setzt ze hei derbäi oder <span class="
 	'commentbox-error-empty-comment' => 'Eidel Bemierkunge sinn net erlaabt!',
 );
 
+/** Limburgish (Limburgs)
+ * @author Pahles
+ */
+$messages['li'] = array(
+	'commentbox-desc' => "Deit 'n opmirkingevinster bie aan bepaolde pagina's",
+	'commentbox-intro' => '== De kans \'n opmirking toeveuge... ==
+Höbs de \'n opmirking euver dees pagina?
+Veug die hie toe of <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} bewirk dees pagina direk]</span>.',
+	'commentbox-savebutton' => 'Opmirking opsjlaon',
+	'commentbox-name' => 'Naam:',
+	'commentbox-name-explanation' => '<small>Tip: Es te dich [[Special:UserLogin|aanmels]], hoofs te diene naam hie neet in te veure.</small>',
+	'commentbox-log' => 'Nuuj opmirkinge',
+	'commentbox-first-comment-heading' => '== Opmirkinge ==',
+	'commentbox-regex' => '/\\n==\\s*Opmirkinge\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => "Dao is get fout gegange bij 't opsjlaon van de opmirking",
+	'commentbox-error-page-nonexistent' => 'Dees pagina besjteit neet',
+	'commentbox-error-namespace' => 'Opmirkinge zeen neet gepermitteerd in dees naamruumde!',
+	'commentbox-error-empty-comment' => 'Laeg opmirkinge zeen neet gepermitteerd!',
+);
+
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'commentbox-savebutton' => 'Išsaugoti komentarą',
+	'commentbox-name' => 'Pavadinimas:',
+	'commentbox-log' => 'Nauji komentarai',
+	'commentbox-first-comment-heading' => '== Komentarai ==',
+	'commentbox-errorpage-title' => 'Klaida kuriant komentarą',
+	'commentbox-error-page-nonexistent' => 'Puslapis neegzistuoja',
+);
+
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'commentbox-first-comment-heading' => '== Komentari ==',
+	'commentbox-regex' => '/\\n==\\s*Komentari\\s*==\\s*\\n/i',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -535,12 +740,77 @@ $messages['mk'] = array(
 	'commentbox-error-empty-comment' => 'Не се дозволени празни коментари!',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'commentbox-desc' => 'ചില താളുകളിൽ ഒരു അഭിപ്രായപെട്ടി ചേർക്കുന്നു',
+	'commentbox-intro' => '== അഭിപ്രായം ചേർക്കുക... ==
+ഈ താളിനെക്കുറിച്ച് താങ്കൾക്ക് ഒരഭിപ്രായമുണ്ടോ? ഇവിടെ ചേർക്കുക അല്ലെങ്കിൽ <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} താൾ നേരിട്ട് തിരുത്തുക]</span>.',
+	'commentbox-savebutton' => 'അഭിപ്രായം സേവ് ചെയ്യുക',
+	'commentbox-name' => 'പേര്:',
+	'commentbox-name-explanation' => '<small>(സഹായം: താങ്കൾ [[Special:UserLogin|ലോഗിൻ]] ചെയ്തിട്ടുണ്ടെങ്കിൽ, ഫോമിൽ താങ്കളുടെ പേര് നൽകേണ്ടി വരില്ല)</small>',
+	'commentbox-log' => 'പുതിയ അഭിപ്രായങ്ങൾ',
+	'commentbox-first-comment-heading' => '== അഭിപ്രായങ്ങൾ ==',
+	'commentbox-regex' => '/\\n==\\s*അഭിപ്രായങ്ങൾ\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => 'അഭിപ്രായം സൃഷ്ടിക്കുന്നതിനിടയിൽ പിഴവുണ്ടായി',
+	'commentbox-error-page-nonexistent' => 'ഈ താൾ നിലവിലില്ല',
+	'commentbox-error-namespace' => 'ഈ നാമമേഖലയിൽ അഭിപ്രായങ്ങൾ അനുവദിച്ചിട്ടില്ല!',
+	'commentbox-error-empty-comment' => 'ശൂന്യമായ അഭിപ്രായങ്ങൾ അനുവദിച്ചിട്ടില്ല!',
+);
+
 /** Mongolian (Монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
 	'commentbox-first-comment-heading' => '== Сэтгэгдлүүд ==',
 	'commentbox-regex' => '/\\n==\\s*Сэтгэгдлүүдs*==\\s*\\n/i',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'commentbox-desc' => 'Meletakkan ruangan komen di laman-laman tertentu',
+	'commentbox-intro' => '== Komenlah... ==
+Nak komen pasal laman ini? Tuliskannya di sini atau <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} terus sunting laman ini]</span>.',
+	'commentbox-savebutton' => 'Simpan komen',
+	'commentbox-name' => 'Nama:',
+	'commentbox-name-explanation' => '<small>(Petua: Jika anda [[Special:UserLogin|log masuk]], anda tidak perlu mengisikan nama anda di sin secara manual)</small>',
+	'commentbox-log' => 'Komen baru',
+	'commentbox-first-comment-heading' => '== Komen ==',
+	'commentbox-regex' => '/\\n==\\s*Komen\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => 'Ralat ketika membuat komen',
+	'commentbox-error-page-nonexistent' => 'Laman ini tidak wujud!',
+	'commentbox-error-namespace' => 'Komen tidak dibenarkan di ruang nama ini!',
+	'commentbox-error-empty-comment' => 'Komen kosong tidak dibenarkan!',
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'commentbox-first-comment-heading' => '== Арсемат-мельть ==',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ * @author Simny
+ */
+$messages['nb'] = array(
+	'commentbox-desc' => 'Legger til en kommentarboks til enkelte sider',
+	'commentbox-intro' => '== Legg til en kommentar... ==
+Har du en kommentar til denne siden? Legg den til her eller <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} endre siden direkte]</span>.',
+	'commentbox-savebutton' => 'Lagre kommentar',
+	'commentbox-name' => 'Navn:',
+	'commentbox-name-explanation' => '<small>(Tips: Du slipper å skrive inn navnet ditt manuelt her dersom du [[Special:UserLogin|logger inn]].)</small>',
+	'commentbox-log' => 'Nye kommentarer',
+	'commentbox-first-comment-heading' => '== Kommentarer ==',
+	'commentbox-regex' => '/\\n==\\s*Kommentarer\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => 'Det oppsto en feil under oppretting av kommentaren',
+	'commentbox-error-page-nonexistent' => 'Denne siden finnes ikke!',
+	'commentbox-error-namespace' => 'Kommentarer er ikke tillatt i dette navnerommet!',
+	'commentbox-error-empty-comment' => 'Tomme kommentarer er ikke tillatt!',
 );
 
 /** Dutch (Nederlands)
@@ -583,26 +853,6 @@ Har du ein kommentar til denne sida? Legg han til her eller <span class="plainli
 	'commentbox-error-empty-comment' => 'Tomme kommentarar er ikkje tillatne.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- * @author Simny
- */
-$messages['no'] = array(
-	'commentbox-desc' => 'Legger til en kommentarboks til enkelte sider',
-	'commentbox-intro' => '== Legg til en kommentar... ==
-Har du en kommentar til denne siden? Legg den til her eller <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} endre siden direkte]</span>.',
-	'commentbox-savebutton' => 'Lagre kommentar',
-	'commentbox-name' => 'Navn:',
-	'commentbox-name-explanation' => '<small>(Tips: Du slipper å skrive inn navnet ditt manuelt her dersom du [[Special:UserLogin|logger inn]].)</small>',
-	'commentbox-log' => 'Nye kommentarer',
-	'commentbox-first-comment-heading' => '== Kommentarer ==',
-	'commentbox-regex' => '/\\n==\\s*Kommentarer\\s*==\\s*\\n/i',
-	'commentbox-errorpage-title' => 'Det oppsto en feil under oppretting av kommentaren',
-	'commentbox-error-page-nonexistent' => 'Denne siden finnes ikke!',
-	'commentbox-error-namespace' => 'Kommentarer er ikke tillatt i dette navnerommet!',
-	'commentbox-error-empty-comment' => 'Tomme kommentarer er ikke tillatt!',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -627,8 +877,8 @@ Avètz un comentari sus aquesta pagina ? Apondètz-o aicí o <span class="plainl
  * @author Xqt
  */
 $messages['pdc'] = array(
-	'commentbox-first-comment-heading' => '== Anmaerrickinge ==',
-	'commentbox-regex' => '/\\n==\\s*Anmaerrickinge\\s*==\\s*\\n/i',
+	'commentbox-first-comment-heading' => '== Aamaerickinge ==',
+	'commentbox-regex' => '/\\n==\\s*Aamaerickinge\\s*==\\s*\\n/i',
 );
 
 /** Polish (Polski)
@@ -673,6 +923,7 @@ It l\'has-to un coment an sta pàgina-sì? Giontlo sì o <span class="plainlinks
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'commentbox-savebutton' => 'تبصره خوندي کول',
 	'commentbox-name' => 'نوم:',
 	'commentbox-log' => 'نوې انګېرنې',
 	'commentbox-first-comment-heading' => '== انګېرنې ==',
@@ -719,6 +970,20 @@ Você tem um comentário sobre esta página? Adicione-o aqui ou <span class="pla
 	'commentbox-error-empty-comment' => 'Comentários vazios não são permitidos!',
 );
 
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'commentbox-savebutton' => 'Salvează comentariul',
+	'commentbox-name' => 'Nume:',
+	'commentbox-log' => 'Comentarii noi',
+	'commentbox-first-comment-heading' => '== Comentarii ==',
+	'commentbox-regex' => '/\\n==\\s*Comentarii\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => 'Eroare în timpul creării comentariului',
+	'commentbox-error-page-nonexistent' => 'Această pagină nu există',
+	'commentbox-error-empty-comment' => 'Comentariile goale nu sunt permise!',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -748,7 +1013,14 @@ $messages['ru'] = array(
 	'commentbox-error-empty-comment' => 'Пустые комментарии не допускаются!',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'commentbox-name' => 'Імя:',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -756,6 +1028,13 @@ $messages['sah'] = array(
 	'commentbox-name' => 'Аата:',
 	'commentbox-first-comment-heading' => '== Быһаарыылар ==',
 	'commentbox-regex' => '/\\n==\\s*Быһаарыылар\\s*==\\s*\\n/i',
+);
+
+/** Sicilian (Sicilianu)
+ * @author Aushulz
+ */
+$messages['scn'] = array(
+	'commentbox-name' => 'Nomu:',
 );
 
 /** Slovak (Slovenčina)
@@ -777,12 +1056,71 @@ Chcete túto stránku okomentovať? Napíšte to sem alebo <span class="plainlin
 	'commentbox-error-empty-comment' => 'Prázdne komentáre nie sú povolené!',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'commentbox-desc' => 'Doda polje za pripombe na nekatere strani',
+	'commentbox-intro' => '== Dodajte pripombo ... ==
+Imate pripombo na to stran? Dodajte jo tukaj <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} ali neposredno uredite stran]</span>.',
+	'commentbox-savebutton' => 'Shrani pripombo',
+	'commentbox-name' => 'Ime:',
+	'commentbox-name-explanation' => '<small>(Nasvet: Če se [[Special:UserLogin|prijavite]], vam tukaj ne bo potrebno ročno vnesti svojega imena)</small>',
+	'commentbox-log' => 'Nove pripombe',
+	'commentbox-first-comment-heading' => '== Pripombe ==',
+	'commentbox-regex' => '/\\n==\\s*Pripombe\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => 'Napaka med ustvarjanjem pripombe',
+	'commentbox-error-page-nonexistent' => 'Ta stran ne obstaja!',
+	'commentbox-error-namespace' => 'Pripombe niso dovoljene v tem imenskem prostoru!',
+	'commentbox-error-empty-comment' => 'Prazne pripombe niso dovoljene!',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'commentbox-desc' => 'Додаје кутијице за коментаре на извесне стране',
+	'commentbox-intro' => '== Додавање коментара... ==
+Да ли желите да коментаришете ову страну? Додајте Ваш коментар или <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} измените страну директно]</span>.',
+	'commentbox-savebutton' => 'Сними коментар',
+	'commentbox-name' => 'Име:',
+	'commentbox-log' => 'Нови коментари',
+	'commentbox-first-comment-heading' => '== Коментари ==',
+	'commentbox-errorpage-title' => 'Грешка током прављења коментара',
+	'commentbox-error-page-nonexistent' => 'Ова страница не постоји.',
+	'commentbox-error-namespace' => 'Коментари нису дозвољени у овом именском простору!',
+	'commentbox-error-empty-comment' => 'Празни коментари нису могући!',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
+ * @author Rancher
+ */
+$messages['sr-el'] = array(
+	'commentbox-desc' => 'Dodaje kutijice za komentare na izvesne strane',
+	'commentbox-intro' => '== Dodavanje komentara... ==
+Da li želite da komentarišete ovu stranu? Dodajte Vaš komentar ili <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} izmenite stranu direktno]</span>.',
+	'commentbox-savebutton' => 'Snimi komentar',
+	'commentbox-name' => 'Ime:',
+	'commentbox-log' => 'Novi komentari',
+	'commentbox-first-comment-heading' => '== Komentari ==',
+	'commentbox-errorpage-title' => 'Greška tokom pravljenja komentara',
+	'commentbox-error-page-nonexistent' => 'Ova stranica ne postoji.',
+	'commentbox-error-namespace' => 'Komentari nisu dozvoljeni u ovom imenskom prostoru!',
+	'commentbox-error-empty-comment' => 'Prazni komentari nisu mogući!',
+);
+
 /** Swedish (Svenska)
  * @author Per
+ * @author Sertion
  */
 $messages['sv'] = array(
+	'commentbox-desc' => 'Lägger till en kommentarbox till vissa sidor',
+	'commentbox-intro' => '== Lägg till en kommentar... ==
+Har du en kommentar till den här sidan? Lägg till den här eller <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} redigera sidan manuellt]</span>.',
 	'commentbox-savebutton' => 'Spara kommentar',
 	'commentbox-name' => 'Namn:',
+	'commentbox-name-explanation' => '<small>(Tips: När du [[Special:UserLogin|loggar in]] så slipper du att fylla i ditt namn manuellt.)</small>',
 	'commentbox-log' => 'Nya kommentarer',
 	'commentbox-first-comment-heading' => '== Kommentarer ==',
 	'commentbox-regex' => '/\\n==\\s*Kommentarer\\s*==\\s*\\n/i',
@@ -792,6 +1130,15 @@ $messages['sv'] = array(
 	'commentbox-error-empty-comment' => 'Tomma kommentarer är inte tillåtna!',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'commentbox-name' => 'பெயர்:',
+	'commentbox-log' => 'புதிய கருத்துக்கள்',
+	'commentbox-first-comment-heading' => '== கருத்துக்கள் ==',
+);
+
 /** Telugu (తెలుగు)
  * @author Kiranmayee
  * @author Veeven
@@ -799,8 +1146,11 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'commentbox-desc' => 'కొన్ని పేజీలకు వ్యాఖ్యల పెట్టెని చేరుస్తుంది',
+	'commentbox-intro' => '== ఒక వ్యాఖ్యని చేర్చండి... ==
+ఈ పుటపై మీరు వ్యాఖ్యానించేది ఏమైనా ఉందా? దాన్ని ఇక్కడ ఇవ్వండి లేదా <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} నేరుగా పుటని మార్చండి]</span>.',
 	'commentbox-savebutton' => 'వ్యాఖ్యని భద్రపరచు',
 	'commentbox-name' => 'పేరు:',
+	'commentbox-name-explanation' => '<small>(చిట్కా: మీరు [[Special:UserLogin|ప్రవేశిస్తే]], మీ పేరుని ఇక్కడ మానవీయంగా పూరించనవసరం ఉండదు.)</small>',
 	'commentbox-log' => 'కొత్త వ్యాఖ్యలు',
 	'commentbox-first-comment-heading' => '== వ్యాఖ్యలు ==',
 	'commentbox-regex' => '/\\n==\\s*వ్యాఖ్యలు\\s*==\\s*\\n/i',
@@ -810,11 +1160,37 @@ $messages['te'] = array(
 	'commentbox-error-empty-comment' => 'ఖాళీ వ్యాఖ్యలని అనుమతించము!',
 );
 
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'commentbox-name' => 'Naran:',
+);
+
 /** Turkmen (Türkmençe)
  * @author Hanberke
  */
 $messages['tk'] = array(
 	'commentbox-name' => 'At:',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'commentbox-desc' => 'Nagdaragdag ng isang kahon ng kumento sa partikular na mga pahina',
+	'commentbox-intro' => '== Magdagdag ng puna... ==
+Mayroon kang kumento sa pahinang ito? Idagdag iyon dito o <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} tuwirang baguhin ang pahina]</span>.',
+	'commentbox-savebutton' => 'Sagipin ang puna',
+	'commentbox-name' => 'Pangalan:',
+	'commentbox-name-explanation' => '<small>(Balato: Kapag [[Special:UserLogin|lumagda ka]], hindi mo kailangang kinakamay na ipasok ang pangalan mo rito)</small>',
+	'commentbox-log' => 'Bagong mga puna',
+	'commentbox-first-comment-heading' => '== Mga puna ==',
+	'commentbox-regex' => '\\n==\\s*Mga kumento\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => 'Kamalian habang nililikha ang puna',
+	'commentbox-error-page-nonexistent' => 'Hindi umiiral ang pahinang ito!',
+	'commentbox-error-namespace' => 'Hindi pinapahintulutan ang mga kumento sa loob ng puwang na pampangalang ito!',
+	'commentbox-error-empty-comment' => 'Hindi pinapahintulutan ang mga kumentong walang laman!',
 );
 
 /** Turkish (Türkçe)
@@ -839,9 +1215,23 @@ Bu sayfa ile ilgili bir yorumunuz mu var? Buraya ekleyin ya da <span class="plai
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Sodmy
+ * @author Тест
  */
 $messages['uk'] = array(
 	'commentbox-desc' => 'Додає поле коментаря до певних сторінок',
+	'commentbox-intro' => '== Додавання коментаря... ==
+У вас є коментар до цієї сторінки? Додайте його тут або <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} безпосередньо редагуйте сторінку]</span>.',
+	'commentbox-savebutton' => 'Зберегти коментар',
+	'commentbox-name' => 'Назва:',
+	'commentbox-name-explanation' => "<small>(Порада: Якщо ви [[Special:UserLogin|увійдете в систему]], вам не потрібно буде заповнювати своє ім'я вручну)</small>",
+	'commentbox-log' => 'Нові коментарі',
+	'commentbox-first-comment-heading' => '== Коментарі ==',
+	'commentbox-regex' => '/\\n==\\s*Коментарі\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => 'Помилка при створенні коментаря',
+	'commentbox-error-page-nonexistent' => 'Цієї сторінки не існує!',
+	'commentbox-error-namespace' => 'Коментарі не дозволені в цьому просторі назв!',
+	'commentbox-error-empty-comment' => 'Порожні коментарі не дозволені!',
 );
 
 /** Vèneto (Vèneto)
@@ -871,10 +1261,59 @@ $messages['vep'] = array(
 	'commentbox-first-comment-heading' => '== Kommentarijad ==',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
+ */
+$messages['vi'] = array(
+	'commentbox-name' => 'Tên:',
+);
+
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
 $messages['yi'] = array(
 	'commentbox-name' => 'נאָמען',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author PhiLiP
+ * @author Sweeite012f
+ * @author 阿pp
+ */
+$messages['zh-hans'] = array(
+	'commentbox-desc' => '于特定页面添加注释框',
+	'commentbox-intro' => '添加评论
+是否对此页内容有意见？请将意见添加在此或
+直接修改此页',
+	'commentbox-savebutton' => '保存注释',
+	'commentbox-name' => '名称：',
+	'commentbox-name-explanation' => '<small>(提示：[[Special:UserLogin|登入]]后不需要手动填写姓名)</small>',
+	'commentbox-log' => '新评论',
+	'commentbox-first-comment-heading' => '== 注释 ==',
+	'commentbox-regex' => '/\\n==\\s*注释\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => '创建注释时出错',
+	'commentbox-error-page-nonexistent' => '此页面不存在 ！',
+	'commentbox-error-namespace' => '此名字空间禁止使用评论！',
+	'commentbox-error-empty-comment' => '不允许使用空注释 ！',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'commentbox-desc' => '於特定頁面添加註釋框',
+	'commentbox-intro' => '添加評論
+是否對此頁內容有意見？請將意見添加在此或
+直接修改此頁',
+	'commentbox-savebutton' => '保存注釋',
+	'commentbox-name' => '名稱：',
+	'commentbox-name-explanation' => '<small>(提示：[[Special:UserLogin|登入]]後不需要手動填寫姓名)</small>',
+	'commentbox-log' => '新評論',
+	'commentbox-first-comment-heading' => '== 注釋 ==',
+	'commentbox-regex' => '/\\n==\\s*注釋\\s*==\\s*\\n/i',
+	'commentbox-errorpage-title' => '創建注釋時出錯',
+	'commentbox-error-page-nonexistent' => '該頁面不存在！',
+	'commentbox-error-namespace' => '此名字空間禁止使用評論！',
+	'commentbox-error-empty-comment' => '不允許使用空注釋 ！',
 );
 

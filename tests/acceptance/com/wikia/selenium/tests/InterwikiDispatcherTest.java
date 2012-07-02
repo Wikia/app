@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 public class InterwikiDispatcherTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testInterwikiDispatcher() throws Exception {
 		File configFile = new File(System.getenv("TESTSCONFIG"));
 		File dataFile = new File(configFile.getParentFile() + "/fixtures/DirectRedirectingArticleForTest.txt");

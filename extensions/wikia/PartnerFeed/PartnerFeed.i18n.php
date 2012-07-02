@@ -164,7 +164,7 @@ $messages['fr'] = array(
 	'feed-title-recentchanges' => 'Modifications récentes',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  * @author Xanocebreiro
  */

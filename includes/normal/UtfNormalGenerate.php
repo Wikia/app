@@ -1,36 +1,35 @@
 <?php
-# Copyright (C) 2004 Brion Vibber <brion@pobox.com>
-# http://www.mediawiki.org/
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-# http://www.gnu.org/copyleft/gpl.html
-
 /**
  * This script generates UniNormalData.inc from the Unicode Character Database
  * and supplementary files.
  *
+ * Copyright (C) 2004 Brion Vibber <brion@pobox.com>
+ * http://www.mediawiki.org/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  * @ingroup UtfNormal
- * @access private
  */
-
-/** */
 
 if( php_sapi_name() != 'cli' ) {
 	die( "Run me from the command line please.\n" );
 }
 
+require_once 'UtfNormalDefines.php';
 require_once 'UtfNormalUtil.php';
 
 $in = fopen("DerivedNormalizationProps.txt", "rt" );
@@ -175,13 +174,14 @@ if( $out ) {
 /**
  * This file was automatically generated -- do not edit!
  * Run UtfNormalGenerate.php to create this file again (make clean && make)
+ *
+ * @file
  */
-/** */
-global \$utfCombiningClass, \$utfCanonicalComp, \$utfCanonicalDecomp, \$utfCheckNFC;
-\$utfCombiningClass = unserialize( '$serCombining' );
-\$utfCanonicalComp = unserialize( '$serComp' );
-\$utfCanonicalDecomp = unserialize( '$serCanon' );
-\$utfCheckNFC = unserialize( '$serCheckNFC' );
+ 
+UtfNormal::\$utfCombiningClass = unserialize( '$serCombining' );
+UtfNormal::\$utfCanonicalComp = unserialize( '$serComp' );
+UtfNormal::\$utfCanonicalDecomp = unserialize( '$serCanon' );
+UtfNormal::\$utfCheckNFC = unserialize( '$serCheckNFC' );
 \n";
 	fputs( $out, $outdata );
 	fclose( $out );
@@ -199,10 +199,11 @@ if( $out ) {
 /**
  * This file was automatically generated -- do not edit!
  * Run UtfNormalGenerate.php to create this file again (make clean && make)
+ *
+ * @file
  */
-/** */
-global \$utfCompatibilityDecomp;
-\$utfCompatibilityDecomp = unserialize( '$serCompat' );
+
+UtfNormal::\$utfCompatibilityDecomp = unserialize( '$serCompat' );
 \n";
 	fputs( $out, $outdata );
 	fclose( $out );

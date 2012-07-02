@@ -18,7 +18,7 @@ http://www.mediawiki.org/wiki/Extension:Blahtex for more details.
 Brief installation instructions:
 
 1. compile blahtex
-2. add 
+2. add
        require_once( 'extensions/Blahtex/Blahtex.php' );
    to LocalSettings.php
 3. enable XHTML output
@@ -29,7 +29,7 @@ In more detail:
 
 1. The Blahtex directory should be in the extensions subdirectory of
    the MediaWiki tree. To compile blahtex, go in the Blahtex/source
-   directory and run either "make linux" or "make mac". 
+   directory and run either "make linux" or "make mac".
 
 2. Edit LocalSettings.php (in the root of the MediaWiki tree) and add
    the line
@@ -56,12 +56,12 @@ In more detail:
 
    The alternative is to patch MediaWiki to only emit XHTML if the
    user select MathML and the browser accepts XHTML. This is achieved
-   with the command 
+   with the command
 
        patch -p0 < extensions/Blahtex/mediawiki-patch.txt
 
 4. Now, blahtex will be run on all <math> formulae that are added to
    the wiki. To clear the cache, so that blahtex is also run on the
-   old formulae, give the SQL command 
+   old formulae, give the SQL command
 
        truncate math;

@@ -15,6 +15,7 @@ if(!defined('MEDIAWIKI')) {
 }
 
 $wgSpecialPages['MagicFooterLinksLoader'] = 'MagicFooterLinksLoader';
+$wgExtensionMessagesFiles['MagicFooterLinksLoader'] = dirname(__FILE__) . '/MagicFooterLinksLoader.i18n.php';
 
 class MagicFooterLinksLoader extends SpecialPage {
 
@@ -23,15 +24,7 @@ class MagicFooterLinksLoader extends SpecialPage {
 	private $badRows = array();
 
 	public function __construct() {
-		global $wgMessageCache;
-
 		parent::__construct('MagicFooterLinksLoader', 'wikifactory');
-
-		$messages = array(
-			'magicfooterlinksloader' => 'MagicFooterLinksLoader',
-		);
-
-		$wgMessageCache->addMessages($messages);
 	}
 
 	public function execute($par) {

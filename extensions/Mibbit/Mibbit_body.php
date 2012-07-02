@@ -15,7 +15,6 @@ class Mibbit extends SpecialPage {
 		global $wgMibbitServer, $wgMibbitChannel, $wgMibbitExtraParameters;
 
 		// Preperation.
-		wfLoadExtensionMessages( 'Mibbit' );
 		$this->setHeaders();
 
 		// Introduction message, explaining to users what this is etc.

@@ -1,11 +1,13 @@
 <?php
+if ( !defined( 'MEDIAWIKI' ) ) {
+	exit( 1 );
+}
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['antispam'][] = array(
 	'path' => __FILE__,
 	'name' => 'AntiSpoof',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:AntiSpoof',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:AntiSpoof',
 	'author' => 'Brion Vibber',
-	'description' => 'Blocks the creation of accounts with mixed-script, confusing and similar usernames',
 	'descriptionmsg' => 'antispoof-desc',
 );
 
@@ -32,96 +34,18 @@ $dir = dirname( __FILE__ );
 $wgExtensionMessagesFiles['AntiSpoof'] = "$dir/AntiSpoof.i18n.php";
 
 $wgAutoloadClasses['AntiSpoof'] = "$dir/AntiSpoof_body.php";
+$wgAutoloadClasses['AntiSpoofHooks'] = "$dir/AntiSpoofHooks.php";
 $wgAutoloadClasses['SpoofUser'] = "$dir/SpoofUser.php";
+$wgAutoloadClasses['BatchAntiSpoof'] = "$dir/maintenance/batchAntiSpoof.php";
 
-$wgHooks['LoadExtensionSchemaUpdates'][] = 'asUpdateSchema';
-$wgHooks['AbortNewAccount'][] = 'asAbortNewAccountHook';
-$wgHooks['UserCreateForm'][] = 'asUserCreateFormHook';
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'AntiSpoofHooks::asUpdateSchema';
+$wgHooks['AbortNewAccount'][] = 'AntiSpoofHooks::asAbortNewAccountHook';
+$wgHooks['UserCreateForm'][] = 'AntiSpoofHooks::asUserCreateFormHook';
 /* Wikia change - begin */
 if ( empty($wgEnableUserLoginExt) ) {
-	$wgHooks['AddNewAccount'][] = 'asAddNewAccountHook';
+	$wgHooks['AddNewAccount'][] = 'AntiSpoofHooks::asAddNewAccountHook';
 } else {
-	$wgHooks['AddNewAccountTempUser'][] = 'asAddNewAccountHook';
+	$wgHooks['AddNewAccountTempUser'][] = 'AntiSpoofHooks::asAddNewAccountHook';
 }
 /* Wikia change - end */
-
-function asUpdateSchema() {
-	global $wgExtNewTables, $wgDBtype;
-	$wgExtNewTables[] = array(
-		'spoofuser',
-		dirname( __FILE__ ) . '/sql/patch-antispoof.' . $wgDBtype . '.sql' );
-	return true;
-}
-
-/**
- * Hook for user creation form submissions.
- * @param User $u
- * @param string $message
- * @return bool true to continue, false to abort user creation
- */
-function asAbortNewAccountHook( $user, &$message ) {
-	global $wgAntiSpoofAccounts, $wgUser, $wgRequest;
-	wfLoadExtensionMessages( 'AntiSpoof' );
-
-	if( !$wgAntiSpoofAccounts ) {
-		$mode = 'LOGGING ';
-		$active = false;
-	} elseif( $wgRequest->getCheck('wpIgnoreAntiSpoof') &&
-			$wgUser->isAllowed( 'override-antispoof' ) ) {
-		$mode = 'OVERRIDE ';
-		$active = false;
-	} else {
-		$mode = '';
-		$active = true;
-	}
-
-	$name = $user->getName();
-	$spoof = new SpoofUser( $name );
-	if( $spoof->isLegal() ) {
-		$normalized = $spoof->getNormalized();
-		$conflicts = $spoof->getConflicts();
-		if( empty($conflicts) ) {
-			wfDebugLog( 'antispoof', "{$mode}PASS new account '$name' [$normalized]" );
-		} else {
-			wfDebugLog( 'antispoof', "{$mode}CONFLICT new account '$name' [$normalized] spoofs " . implode( ',', $conflicts ) );
-			if( $active ) {
-				/* Wikia change - begin */
-				$message = wfMsg( 'userexists' );
-				/* Wikia change - end */
-				return false;
-			}
-		}
-	} else {
-		$error = $spoof->getError();
-		wfDebugLog( 'antispoof', "{$mode}ILLEGAL new account '$name' $error" );
-		if( $active ) {
-			$message = wfMsg( 'antispoof-name-illegal', $name, $error );
-			return false;
-		}
-	}
-	return true;
-}
-
-/**
- * Set the ignore spoof thingie
- */
-function asUserCreateFormHook( &$template ) {
-	global $wgRequest, $wgAntiSpoofAccounts, $wgUser;
-
-	wfLoadExtensionMessages( 'AntiSpoof' );
-
-	if( $wgAntiSpoofAccounts && $wgUser->isAllowed( 'override-antispoof' ) )
-		$template->addInputItem( 'wpIgnoreAntiSpoof',
-			$wgRequest->getCheck('wpIgnoreAntiSpoof'),
-			'checkbox', 'antispoof-ignore' );
-	return true;
-}
-
-/**
- * On new account creation, record the username's thing-bob.
- */
-function asAddNewAccountHook( $user ) {
-	$spoof = new SpoofUser( $user->getName() );
-	$spoof->record();
-	return true;
-}
+$wgHooks['RenameUserComplete'][] = 'AntiSpoofHooks::asAddRenameUserHook';

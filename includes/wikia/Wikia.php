@@ -13,7 +13,7 @@ $wgAjaxExportList[] = 'WikiaAssets::combined';
 /*
  * hooks
  */
-$wgHooks['SpecialRecentChangesLinks'][] = "Wikia::addRecentChangesLinks";
+$wgHooks['SpecialRecentChangesFilters'][] = "Wikia::addRecentChangesFilters";
 $wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
 $wgHooks['SpecialPage_initList']     []	= "Wikia::disableSpecialPage";
 $wgHooks['UserRights']               [] = "Wikia::notifyUserOnRightsChange";
@@ -22,13 +22,18 @@ $wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
 $wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
 $wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
-$wgHooks['ComposeMail']            [] = "Wikia::isUnsubscribed";
-//$wgHooks['IsTrustedProxy']         [] = "Wikia::trustInternalIps";
-//$wgHooks['RawPageViewBeforeOutput'][] = 'Wikia::rawPageViewBeforeOutput';
+$wgHooks['ComposeMail']              [] = "Wikia::isUnsubscribed";
 $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
+$wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
+$wgHooks['UserMailerSend']           [] = "Wikia::onUserMailerSend";
+
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
-$wgHooks['MediaWikiPerformAction']   [] = "Wikia::memcachePurge";
+$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionMemcachePurge";
+$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction";
+$wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
+$wgHooks['ResourceLoaderRegisterModules'][] = "Wikia::onResourceLoaderRegisterModules";
+$wgHooks['ResourceLoaderUserOptionsModuleGetOptions'][] = "Wikia::onResourceLoaderUserOptionsModuleGetOptions";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -36,19 +41,6 @@ $wgHooks['MediaWikiPerformAction']   [] = "Wikia::memcachePurge";
  */
 
 class Wikia {
-/*
-	public static function trustInternalIps(&$ip, &$trusted) {
-		$min = ip2long('10.0.0.0');
-		$max = ip2long('10.255.255.255');
-
-		$longip = ip2long($ip);
-		if($longip >= $min && $longip <= $max) {
-			$trusted = true;
-		}
-
-		return true;
-	}
-*/
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -81,15 +73,6 @@ class Wikia {
 	public static function unsetVar($key) {
 		unset(Wikia::$vars[$key]);
 	}
-
-
-	public static function rawPageViewBeforeOutput(&$self, &$text) {
-		if ( $self->ctype == "text/css" ) {
-			$text = strip_tags($text);
-		}
-		return true;
-	}
-
 
 	/**
 	 * @author inez@wikia.com
@@ -340,6 +323,8 @@ class Wikia {
      * json_encode
      *
      * json encoding function
+	 *
+	 * @deprecated
      *
      * @access public
      * @static
@@ -351,6 +336,7 @@ class Wikia {
      */
     static public function json_encode( $what ) {
         wfProfileIn( __METHOD__ );
+		wfDeprecated(__METHOD__);
 
         $response = "";
 
@@ -370,6 +356,8 @@ class Wikia {
      * json_decode
      *
      * json decoding function
+	 *
+	 * @deprecated
      *
      * @access public
      * @static
@@ -380,9 +368,9 @@ class Wikia {
      *
      * @return mixed: decoded structure
      */
-    static public function json_decode( $what, $assoc = false )
-    {
+    static public function json_decode( $what, $assoc = false ) {
 		wfProfileIn( __METHOD__ );
+		wfDeprecated(__METHOD__);
 
 		$mResponse = null;
 
@@ -714,27 +702,10 @@ class Wikia {
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
 	 * @param       RC		 RC - RC object
-	 * @param       Array    links
-	 * @param       Array    options - default options
-	 * @param       Array    nondefaults - request options
+	 * @param       Array    filters
 	 */
-	static public function addRecentChangesLinks( $RC, &$links, &$defaults, &$nondefaults ) {
-		global $wgRequest;
-
-		$showhide = array( wfMsg( 'show' ), wfMsg( 'hide' ) );
-		if ( !is_array($links) ) {
-			$links = array();
-		}
-		if ( !isset($defaults['hidelogs']) ) {
-			$defaults['hidelogs'] = "";
-		}
-		$nondefaults['hidelogs'] = $wgRequest->getVal( 'hidelogs', 0 );
-
-		$options = $nondefaults + $defaults;
-
-		$hidelogslink = $RC->makeOptionsLink( $showhide[1-$options['hidelogs']],
-			array( 'hidelogs' => 1-$options['hidelogs'] ), $nondefaults);
-		$links[] = wfMsgHtml( 'rcshowhidelogs', $hidelogslink );
+	static public function addRecentChangesFilters( $RC, &$filters ) {
+		$filters['hidelogs'] = 'rcshowhidelogs';
 
 		return true;
 	}
@@ -994,6 +965,33 @@ class Wikia {
 
 		wfProfileOut(__METHOD__);
 		return $result;
+	}
+
+	/**
+	 * Returns true if the currently set skin is Oasis.  Do not call this before the skin
+	 * has been set on wgUser.
+	 */
+	public static function isOasis(){
+		wfProfileIn( __METHOD__ );
+		global $wgUser;
+
+		$isOasis = (get_class($wgUser->getSkin()) == 'SkinOasis');
+
+		wfProfileOut( __METHOD__ );
+		return $isOasis;
+	}
+
+	/**
+	 * Returns true if the currently set skin is WikiaMobile.  Do not call this before the skin
+	 * has been set on wgUser.
+	 */
+	public static function isWikiaMobile( $skin = null ){
+		wfProfileIn( __METHOD__ );
+
+		$isWikiaMobile = ( ( ( !empty( $skin ) ) ? $skin : F::app()->wg->User->getSkin() ) instanceof SkinWikiaMobile );
+
+		wfProfileOut( __METHOD__ );
+		return $isWikiaMobile;
 	}
 
 	/**
@@ -1486,11 +1484,127 @@ class Wikia {
 				'method' => 'ipActivity',
 				'params' => $params
 			);
-			$data = Wikia::json_encode( $message );
+			$data = json_encode( $message );
 			WScribeClient::singleton('trigger')->send($data);
 		}
 		catch( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Fallback actions from $wgDisabledActionsWithViewFallback to "view" (BugId:9964)
+	 *
+	 * @author macbre
+	 */
+	static public function onMediaWikiGetAction(MediaWiki $mediaWiki, RequestContext $context) {
+		global $wgDisabledActionsWithViewFallback;
+		$request = $context->getRequest();
+		$action = $request->getVal('action', 'view');
+
+		if ( in_array( $action, $wgDisabledActionsWithViewFallback ) ) {
+			$request->setVal('action', 'view');
+			wfDebug(__METHOD__ . ": '{$action}' action fallbacked to 'view'\n");
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get list of all URLs to be purged for a given Title
+	 *
+	 * @param Title $title page to be purged
+	 * @param Array $urls list of URLs to be purged
+	 * @return mixed true - it's a hook
+	 */
+	static public function onTitleGetSquidURLs(Title $title, Array $urls) {
+		// if this is a site css or js purge it as well
+		global $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs;
+		global $wgSquidMaxage, $wgJsMimeType;
+
+		wfProfileIn(__METHOD__);
+
+		if( $wgUseSiteCss && $title->getNamespace() == NS_MEDIAWIKI ) {
+			global $wgServer;
+			$urls[] = $wgServer.'/__am/';
+			$urls[] = $wgServer.'/__wikia_combined/';
+			$query = array(
+				'usemsgcache' => 'yes',
+				'ctype' => 'text/css',
+				'smaxage' => $wgSquidMaxage,
+				'action' => 'raw',
+				'maxage' => $wgSquidMaxage,
+			);
+
+			if( $title->getText() == 'Common.css' || $title->getText() == 'Wikia.css' ) {
+				// BugId:20929 - tell (or trick) varnish to store the latest revisions of Wikia.css and Common.css.
+				$oTitleCommonCss	= Title::newFromText( 'Common.css', NS_MEDIAWIKI );
+				$oTitleWikiaCss		= Title::newFromText( 'Wikia.css',  NS_MEDIAWIKI );
+				$query['maxrev'] = max( (int) $oTitleWikiaCss->getLatestRevID(), (int) $oTitleCommonCss->getLatestRevID() );
+				unset( $oTitleWikiaCss, $oTitleCommonCss );
+				$urls[] = $title->getInternalURL( $query );
+			} else {
+				foreach( Skin::getSkinNames() as $skinkey => $skinname ) {
+					if( $title->getText() == ucfirst($skinkey).'.css' ) {
+						$urls[] = str_replace('text%2Fcss', 'text/css', $title->getInternalURL( $query )); // For Artur
+						$urls[] = $title->getInternalURL( $query ); // For Artur
+						break;
+					} elseif ( $title->getText() == 'Common.js' ) {
+						$urls[] = Skin::makeUrl('-', "action=raw&smaxage=86400&gen=js&useskin=" .urlencode( $skinkey ) );
+					}
+				}
+			}
+		} elseif( $wgAllowUserJs && $title->isCssJsSubpage() ) {
+			if( $title->isJsSubpage() ) {
+				$urls[] = $title->getInternalURL( 'action=raw&ctype='.$wgJsMimeType );
+			} elseif( $title->isCssSubpage() ) {
+				$urls[] = $title->getInternalURL( 'action=raw&ctype=text/css' );
+			}
+		}
+
+		// purge Special:RecentChanges too
+		$urls[] = SpecialPage::getTitleFor('RecentChanges')->getInternalURL();
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Add variables to SkinTemplate
+	 */
+	static public function onSkinTemplateOutputPageBeforeExec(SkinTemplate $skinTemplate, QuickTemplate $tpl) {
+		wfProfileIn(__METHOD__);
+
+		$out = $skinTemplate->getOutput();
+		$title = $skinTemplate->getTitle();
+
+		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
+		if (($title instanceof Title) && NS_CATEGORY == $title->getNamespace()) { // FIXME
+			$tpl->set( 'pagetitle', preg_replace("/^{$title->getNsText()}:/", '', $out->getHTMLTitle()));
+		}
+
+		// Pass parameters to skin, see: Login friction project (Marooned)
+		$tpl->set( 'thisurl', $title->getPrefixedURL() );
+		$tpl->set( 'thisquery', $skinTemplate->thisquery );
+
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Detect debug mode for assets (allinone=0)
+	 *
+	 * @author macbre
+	 */
+	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
+		global $wgResourceLoaderDebug, $wgAllInOne;
+
+		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
+		if ($wgAllInOne === false) {
+			$wgResourceLoaderDebug = true;
+			wfDebug("Wikia: using resource loader debug mode\n");
 		}
 
 		return true;
@@ -1606,7 +1720,7 @@ class Wikia {
 				'method' => 'jobqueue',
 				'params' => $params
 			);
-			$data = Wikia::json_encode( $message );
+			$data = json_encode( $message );
 			WScribeClient::singleton('trigger')->send($data);
 		}
 		catch( TException $e ) {
@@ -1671,10 +1785,10 @@ class Wikia {
 	 * TODO: allow disabling specific keys?
 	 */
 
-	static public function memcachePurge($output, $article, $title, $user, $request, $wiki ) {
-		global $wgRequest, $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
+	static public function onPerformActionMemcachePurge($output, $article, $title, $user, $request, $wiki ) {
+		global $wgAllowMemcacheDisable, $wgAllowMemcacheReads, $wgAllowMemcacheWrites;
+		$mcachePurge = $request->getVal("mcache", null);
 
-		$mcachePurge = $wgRequest->getVal("mcache", null);
 		if ($wgAllowMemcacheDisable && $mcachePurge !== null) {
 			switch( $mcachePurge ) {
 				case 'writeonly':
@@ -1693,6 +1807,90 @@ class Wikia {
 					break;
 			}
 		}
+		return true;
+	}
+
+	// Hook to Construct a tag for newrelic
+	static public function onPerformActionNewrelicNameTransaction($output, $article, $title, $user, $request, $wiki ) {
+		global $wgVersion;
+		if( function_exists( 'newrelic_name_transaction' ) ) {
+			$loggedin = $user->isLoggedIn() ? 'user' : 'anon';
+			$action = $wiki->getAction();
+			newrelic_name_transaction( "$action/$loggedin/$wgVersion" );
+		}
+		return true;
+	}
+
+    /**
+     * Configure Wikia-specific settings in ResourceLoader
+     *
+     * @static
+     * @param ResourceLoader $resourceLoader Object to configure
+     * @return bool true because it's a hook
+     */
+    static public function onResourceLoaderRegisterModules( ResourceLoader $resourceLoader ) {
+		global $wgScriptPath, $wgScriptExtension, $wgMedusaHostPrefix, $wgCdnRootUrl, $wgDevelEnvironment;
+
+		// Determine the shared domain name
+		$host = empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix;
+		if ( empty($wgDevelEnvironment) ) {
+			$host = 'http://' . (empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix) . 'wikia.com';
+		} else {
+			$host = $wgCdnRootUrl;
+		}
+
+		// Feed RL with the "common" source
+		$scriptUri = "$host{$wgScriptPath}/load{$wgScriptExtension}";
+		$apiUri = "$host{$wgScriptPath}/api{$wgScriptExtension}";
+		$resourceLoader->addSource('common',array(
+			'loadScript' => $scriptUri,
+			'apiScript' => $apiUri,
+		));
+
+		// Rebase all modules except startup to "common" source
+//        $resourceLoader->rebaseModules(true,'common');
+//        $resourceLoader->rebaseModules('startup','local');
+
+		return true;
+    }
+
+	/**
+	 * Filter out user options which will be emitted as inline <script> tag
+	 * by ResourceLoader (BugId:33294)
+	 *
+	 * @author macbre
+	 *
+	 * @static
+	 * @param ResourceLoaderContext $context ResourceLoader context
+	 * @param array $options user options to be filtered out
+	 * @return bool true because it's a hook
+	 */
+	static public function onResourceLoaderUserOptionsModuleGetOptions( ResourceLoaderContext $context, array $options ) {
+		wfProfileIn(__METHOD__);
+		#wfDebug(__METHOD__ . 'user options count (before): ' . count($options) . "\n");
+
+		$whitelist = User::getDefaultOptions();
+
+		// returns an array containing all the entries of $options which have keys that are present in $whitelist
+		$options = array_intersect_key($options, $whitelist);
+
+		#wfDebug(__METHOD__ . 'user options count (after): ' . count($options) . "\n");
+		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Hook: reset recipient's name
+	 * @param array of MailAddress $to
+	 * @return bool true 
+	 */
+	static public function onUserMailerSend( &$to ) {
+		foreach ( $to as $u ) {
+			if ( $u instanceof MailAddress && $u->name != '' ) {
+				$u->name = '';
+			}
+		}
+
 		return true;
 	}
 }

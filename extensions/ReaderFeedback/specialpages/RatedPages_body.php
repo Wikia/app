@@ -8,8 +8,6 @@ class RatedPages extends SpecialPage
 {
     public function __construct() {
         parent::__construct( 'RatedPages' );
-		wfLoadExtensionMessages( 'RatedPages' );
-		wfLoadExtensionMessages( 'ReaderFeedback' );
     }
 
     public function execute( $par ) {
@@ -47,10 +45,10 @@ class RatedPages extends SpecialPage
 		$form = Xml::openElement( 'form',
 			array( 'name' => 'reviewedpages', 'action' => $wgScript, 'method' => 'get' ) );
 		$form .= Xml::fieldset( wfMsg( 'ratedpages-leg' ) );
-		$form .= Xml::hidden( 'title', $this->getTitle()->getPrefixedDBKey() );
-		$form .= ReaderFeedbackXML::getRatingTierMenu($this->tier) . '&nbsp;';
+		$form .= Html::hidden( 'title', $this->getTitle()->getPrefixedDBKey() );
+		$form .= ReaderFeedbackXML::getRatingTierMenu($this->tier) . '&#160;';
 		if( count($wgFeedbackNamespaces) > 1 ) {
-			$form .= ReaderFeedbackXML::getNamespaceMenu( $this->namespace ) . '&nbsp;';
+			$form .= ReaderFeedbackXML::getNamespaceMenu( $this->namespace ) . '&#160;';
 		}
 		if( count( ReaderFeedback::getFeedbackTags() ) > 0 ) {
 			$form .= ReaderFeedbackXML::getTagMenu( $this->tag );
@@ -157,7 +155,7 @@ class RatedPagesPager extends AlphabeticPager {
 		wfProfileIn( __METHOD__ );
 		# Do a link batch query...
 		$lb = new LinkBatch();
-		while( $row = $this->mResult->fetchObject() ) {
+		foreach ( $this->mResult as $row ) {
 			$lb->add( $row->page_namespace, $row->page_title );
 		}
 		$lb->execute();

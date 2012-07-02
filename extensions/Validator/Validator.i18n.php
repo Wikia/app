@@ -8,12 +8,13 @@
  *
  * @licence GNU GPL v3 or later
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
-*/
+ */
 
 $messages = array();
 
 /** English
  * @author Jeroen De Dauw
+ * @author Daniel Werner
  */
 $messages['en'] = array(
 	'validator-desc' => 'Provides generic parameter handling support for other extensions',
@@ -87,6 +88,8 @@ place listerrors at or near the bottom of the page to get all errors.',
 	'validator_error_empty_argument' => 'Parameter $1 can not have an empty value.',
 	'validator_error_must_be_number' => 'Parameter $1 can only be a number.',
 	'validator_error_must_be_integer' => 'Parameter $1 can only be an integer.',
+	'validator_error_must_be_title' => 'Parameter $1 can only be a valid wiki page name.',
+	'validator_error_must_be_existing_title' => 'Parameter $1 can only be an existing wiki page name.',
 	'validator-error-must-be-float' => 'Parameter $1 can only be a floating point number.',
 	'validator_error_invalid_range' => 'Parameter $1 must be between $2 and $3.',
 	'validator-error-invalid-regex' => 'Parameter $1 must match this regular expression: $2.',
@@ -98,6 +101,8 @@ place listerrors at or near the bottom of the page to get all errors.',
 	'validator_list_error_empty_argument' => 'Parameter $1 does not accept empty values.',
 	'validator_list_error_must_be_number' => 'Parameter $1 can only contain numbers.',
 	'validator_list_error_must_be_integer' => 'Parameter $1 can only contain integers.',
+	'validator_list_error_must_be_title' => 'Parameter $1 can only contain valid wiki page names.',
+	'validator_list_error_must_be_existing_title' => 'Parameter $1 can only contain existing wiki page names.',
 	'validator-list-error-must-be-float' => 'Parameter $1 can only contain floats.',
 	'validator_list_error_invalid_range' => 'All values of parameter $1 must be between $2 and $3.',
 	'validator-list-error-invalid-regex' => 'All values of parameter $1 must match this regular expression: $2.',
@@ -189,13 +194,29 @@ $messages['aln'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author روخو
  */
 $messages['ar'] = array(
 	'validator-desc' => 'المحقق يوفر طريقة سهلة للامتدادات الأخرى للتحقق من محددات دوال المحلل وامتدادات الوسوم، وضبط القيم الافتراضية وتوليد رسائل الخطأ',
+	'validator-warning' => 'تحذير: $1',
+	'validator-error' => 'خطأ: $1',
+	'validator-fatal-error' => 'خطأ قاتل: $1',
 	'validator_error_parameters' => '{{PLURAL:$1|الخطأ التالي|الاخطاء التالية}} تم كشفها في صياغتك:',
 	'validator_warning_parameters' => 'هناك {{PLURAL:$1|خطأ|أخطاء}} في صياغتك.',
 	'validator_error_unknown_argument' => '$1 ليس محددا صحيحا.',
 	'validator_error_required_missing' => 'المحدد المطلوب $1 ليس متوفرا.',
+	'validator-type-string' => 'نص',
+	'validator-type-float' => 'رقم',
+	'validator-type-boolean' => 'نعم/لا',
+	'validator-listerrors-errors' => 'أخطاء',
+	'validator-listerrors-minor' => 'ثانوي',
+	'validator-listerrors-low' => 'منخفض',
+	'validator-listerrors-normal' => 'طبيعي',
+	'validator-listerrors-fatal' => 'قاتل',
+	'validator-describe-descriptionmsg' => "'''وصف''': $1",
+	'validator-describe-empty' => 'فارغ',
+	'validator-describe-header-type' => 'نوع',
+	'validator-describe-syntax' => 'صياغة',
 	'validator_error_empty_argument' => 'المحدد $1 لا يمكن أن تكون قيمته فارغة.',
 	'validator_error_must_be_number' => 'المحدد $1 يمكن أن يكون فقط عددا.',
 	'validator_error_must_be_integer' => 'المحدد $1 يمكن أن يكون عددا صحيحا فقط.',
@@ -253,6 +274,7 @@ $messages['be-tarask'] = array(
 	'validator-describe-bothhooks' => 'Рэалізаваная як функцыя парсэру і як пашырэньне тэгу.',
 	'validator-describe-par-hooks' => 'Працэдура-перахопнік парсэра, для якой паказваць дакумэнтацыю.',
 	'validator-describe-par-pre' => 'Дазваляе Вам атрымліваць актуальны вікі-тэкст для дакумэнтацыі, без паказу на старонцы.',
+	'validator-describe-par-language' => 'Мова, на якой паказваць апісаньні',
 	'validator-describe-listtype' => 'Сьпіс элемэнтаў $1',
 	'validator-describe-empty' => 'пуста',
 	'validator-describe-required' => 'абавязкова',
@@ -273,6 +295,8 @@ $messages['be-tarask'] = array(
 	'validator_error_empty_argument' => 'Парамэтар $1 ня можа мець пустое значэньне.',
 	'validator_error_must_be_number' => 'Парамэтар $1 можа быць толькі лікам.',
 	'validator_error_must_be_integer' => 'Парамэтар $1 можа быць толькі цэлым лікам.',
+	'validator_error_must_be_title' => 'Парамэтар $1 можа быць роўны толькі слушнай назьве вікістаронкі.',
+	'validator_error_must_be_existing_title' => 'Парамэтар $1 можа быць роўны толькі назьве наяўнай вікістаронкі.',
 	'validator-error-must-be-float' => 'Парамэтар $1 можа быць толькі лікам з плаваючай коскай.',
 	'validator_error_invalid_range' => 'Парамэтар $1 павінен быць паміж $2 і $3.',
 	'validator-error-invalid-regex' => 'парамэтар $1 мусіць адпавядаць гэтаму рэгулярнаму выразу: $2.',
@@ -282,6 +306,8 @@ $messages['be-tarask'] = array(
 	'validator_list_error_empty_argument' => 'Парамэтар $1 ня можа прымаць пустыя значэньні.',
 	'validator_list_error_must_be_number' => 'Парамэтар $1 можа ўтрымліваць толькі лікі.',
 	'validator_list_error_must_be_integer' => 'Парамэтар $1 можа ўтрымліваць толькі цэлыя лікі.',
+	'validator_list_error_must_be_title' => 'Парамэтра $1 можа ўтрымліваць толькі слушныя назвы вікістаронак.',
+	'validator_list_error_must_be_existing_title' => 'Парамэтар $1 можа ўтрымліваць толькі назвы наяўных вікістаронак.',
 	'validator-list-error-must-be-float' => 'Парамэтар $1 можа ўтрымліваць толькі лікі з плаваючай кропкай.',
 	'validator_list_error_invalid_range' => 'Усе значэньні парамэтру $1 павінны знаходзіцца паміж $2 і $3.',
 	'validator-list-error-invalid-regex' => 'Усе значэньні парамэтру $1 мусяць адпавядаць гэтаму рэгулярнаму выразу: $2.',
@@ -445,7 +471,7 @@ $messages['cs'] = array(
  * @author LWChris
  */
 $messages['de'] = array(
-	'validator-desc' => 'Ermöglicht es anderen Softwareerweiterungen Parameter verarbeiten zu können',
+	'validator-desc' => 'Ermöglicht anderen Softwareerweiterungen die Verarbeitung von Parametern',
 	'validator-warning' => 'Warnung: $1',
 	'validator-error' => 'Fehler: $1',
 	'validator-fatal-error' => "'''Schwerwiegender Fehler:''' $1",
@@ -481,6 +507,7 @@ Zeigt sie lediglich bezüglich der Parserhooks an, die über dem Element „list
 	'validator-describe-bothhooks' => 'Sowohl als Parserfunktion wie auch Elementerweiterung implementiert.',
 	'validator-describe-par-hooks' => 'Die Parserhooks für welche die Dokumentation angezeigt werden soll.',
 	'validator-describe-par-pre' => 'Ermöglicht die Ausgabe der Dokumentation in Wikitext ohne dass dieser bei der Darstellung der Seite genutzt wird.',
+	'validator-describe-par-language' => 'Die Sprache in der die Beschreibungen angezeigt werden sollen',
 	'validator-describe-listtype' => 'Liste von $1 {{PLURAL:$1|Elemente|Elementen}}',
 	'validator-describe-empty' => 'leer',
 	'validator-describe-required' => 'erforderlich',
@@ -501,15 +528,19 @@ Zeigt sie lediglich bezüglich der Parserhooks an, die über dem Element „list
 	'validator_error_empty_argument' => 'Parameter $1 kann keinen leeren Wert haben.',
 	'validator_error_must_be_number' => 'Parameter $1 kann nur eine Nummer sein.',
 	'validator_error_must_be_integer' => 'Parameter $1 kann nur eine ganze Zahl sein.',
+	'validator_error_must_be_title' => 'Parameter $1 kann nur ein gültiger Seitenname sein.',
+	'validator_error_must_be_existing_title' => 'Parameter $1 kann nur ein vorhandener Seitenname sein.',
 	'validator-error-must-be-float' => 'Parameter $1 kann nur eine Gleitkommazahl sein.',
 	'validator_error_invalid_range' => 'Parameter $1 muss zwischen $2 und $3 liegen.',
 	'validator-error-invalid-regex' => 'Parameter $1 muss diesem regulären Ausdruck entsprechen: $2.',
 	'validator-error-invalid-length' => 'Parameter $1 muss eine Länge von $2 haben.',
 	'validator-error-invalid-length-range' => 'Parameter $1 muss eine Länge zwischen $2 und $3 haben.',
-	'validator_error_invalid_argument' => 'Der Wert „$1“ ist nicht gültig für Parameter $2.',
+	'validator_error_invalid_argument' => 'Der Wert „$1“ ist nicht gültig für den Parameter $2.',
 	'validator_list_error_empty_argument' => 'Parameter $1 akzeptiert keine leeren Werte.',
 	'validator_list_error_must_be_number' => 'Parameter $1 kann nur Ziffern enthalten.',
 	'validator_list_error_must_be_integer' => 'Parameter $1 kann nur ganze Zahlen enthalten.',
+	'validator_list_error_must_be_title' => 'Parameter $1 kann nur gültige Seitennamen enthalten.',
+	'validator_list_error_must_be_existing_title' => 'Parameter $1 kann nur vorhandene Seitennamen enthalten.',
 	'validator-list-error-must-be-float' => 'Parameter $1 kann nur Gleitkommazahlen enthalten.',
 	'validator_list_error_invalid_range' => 'Alle Werte des Parameters $1 müssen zwischen „$2“ und „$3“ liegen.',
 	'validator-list-error-invalid-regex' => 'Alle Werte des Parameters $1 müssen diesem regulären Ausdruck entsprechen: $2.',
@@ -518,10 +549,8 @@ Zeigt sie lediglich bezüglich der Parserhooks an, die über dem Element „list
 Nur {{PLURAL:$3|der folgende Wert wird|die folgenden Werte werden}} akzeptiert: $2.',
 	'validator-list-error-accepts-only-omitted' => 'Einer oder mehrere Werte für Parameter $1 sind ungültig.
 Nur {{PLURAL:$3|der folgende Wert wird|die folgenden Werte werden}} akzeptiert: $2 (sowie $4 ausgelassene {{PLURAL:$4|Wert|Werte}}).',
-	'validator_error_accepts_only' => 'Der Wert „$4“ ist nicht gültig für Parameter $1.
-Nur {{PLURAL:$3|der folgende Wert wird|die folgenden Werte werden}} akzeptiert: $2.',
-	'validator-error-accepts-only-omitted' => 'Der Wert „$2“ ist nicht gültig für Parameter $1.
-Nur {{PLURAL:$5|der folgende Wert wird|die folgenden Werte werden}} akzeptiert: $3 (sowie $4 ausgelassene {{PLURAL:$4|Wert|Werte}}).',
+	'validator_error_accepts_only' => 'Der Wert „$4“ ist nicht gültig für den Parameter $1. Nur {{PLURAL:$3|der folgende Wert wird|die folgenden Werte werden}} akzeptiert: $2.',
+	'validator-error-accepts-only-omitted' => 'Der Wert „$2“ ist nicht gültig für den Parameter $1. Nur {{PLURAL:$5|der folgende Wert wird|die folgenden Werte werden}} akzeptiert: $3 (sowie $4 nicht angezeigte {{PLURAL:$4|Wert|Werte}}).',
 	'validator_list_omitted' => '{{PLURAL:$2|Der Wert „$1“ wurde|Die Werte „$1“ wurden}} ausgelassen.',
 );
 
@@ -669,6 +698,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Cedric31
  * @author Crochet.david
+ * @author Gomoko
  * @author IAlex
  * @author Jean-Frédéric
  * @author McDutchie
@@ -679,7 +709,7 @@ $messages['fi'] = array(
  * @author Verdy p
  */
 $messages['fr'] = array(
-	'validator-desc' => 'Le validateur fournit aux autres extensions un moyen simple de valider les paramètres des fonctions parseur et des extensions de balises, de définir des valeurs par défaut et de générer des messages d’erreur',
+	'validator-desc' => 'Le validateur fournit aux autres extensions un moyen simple de valider les paramètres des fonctions de l’analyseur syntaxique et des extensions de balises, de définir des valeurs par défaut et de générer des messages d’erreur',
 	'validator-warning' => 'Attention : $1',
 	'validator-error' => 'Erreur : $1',
 	'validator-fatal-error' => 'Erreur fatale : $1',
@@ -716,13 +746,14 @@ placer <code>listerrors</code> au plus bas de la page pour obtenir toutes les er
 	'validator-describe-bothhooks' => "Mis en oeuvre comme fonction de l'analyseur syntaxique et comme balise d'extension.",
 	'validator-describe-par-hooks' => "Les ''hooks'' de l'analyseur syntaxique dont il faut afficher la documentation.",
 	'validator-describe-par-pre' => "Permet d'obtenir le wikitexte de la documentation, sans qu'il soit rendu sur la page.",
+	'validator-describe-par-language' => 'La langue dans laquelle afficher les descriptions',
 	'validator-describe-listtype' => 'Liste de $1 éléments',
 	'validator-describe-empty' => 'vide',
 	'validator-describe-required' => 'requis',
 	'validator-describe-header-parameter' => 'Paramètre',
 	'validator-describe-header-aliases' => 'Alias',
 	'validator-describe-header-type' => 'Type',
-	'validator-describe-header-default' => 'Défaut',
+	'validator-describe-header-default' => 'Par défaut',
 	'validator-describe-header-description' => 'Description',
 	'validator-describe-parameters' => 'Paramètres',
 	'validator-describe-syntax' => 'Syntaxe',
@@ -736,6 +767,8 @@ placer <code>listerrors</code> au plus bas de la page pour obtenir toutes les er
 	'validator_error_empty_argument' => 'Le paramètre $1 ne peut pas avoir une valeur vide.',
 	'validator_error_must_be_number' => 'Le paramètre $1 peut être uniquement un nombre.',
 	'validator_error_must_be_integer' => 'Le paramètre $1 peut seulement être un entier.',
+	'validator_error_must_be_title' => "Le paramètre $1 ne peut être qu'un nom de page wiki valide.",
+	'validator_error_must_be_existing_title' => "Le paramètre $1 ne peut être qu'un nom de page wiki existante.",
 	'validator-error-must-be-float' => 'Le paramètre $1 doit être un nombre à virgule flottante.',
 	'validator_error_invalid_range' => 'Le paramètre $1 doit être entre $2 et $3.',
 	'validator-error-invalid-regex' => 'Le paramètre $1 doit vérifier cette expression rationnelle : « $2 ».',
@@ -745,6 +778,8 @@ placer <code>listerrors</code> au plus bas de la page pour obtenir toutes les er
 	'validator_list_error_empty_argument' => 'Le paramètre $1 n’accepte pas les valeurs vides.',
 	'validator_list_error_must_be_number' => 'Le paramètre $1 ne peut contenir que des nombres.',
 	'validator_list_error_must_be_integer' => 'Le paramètre $1 ne peut contenir que des entiers.',
+	'validator_list_error_must_be_title' => 'Le paramètre $1 ne peut contenir que des noms de page wiki valides.',
+	'validator_list_error_must_be_existing_title' => 'Le paramètre $1 ne peut contenir que des noms de page wiki existantes.',
 	'validator-list-error-must-be-float' => 'Le paramètre $1 ne peut contenir que des nombres à virgule.',
 	'validator_list_error_invalid_range' => 'Toutes les valeurs du paramètre $1 doivent être comprises entre $2 et $3.',
 	'validator-list-error-invalid-regex' => 'Toutes les valeurs du paramètre $1 doivent vérifier cette expression rationnelle : « $2 ».',
@@ -853,6 +888,7 @@ coloque listerrors na parte inferior da páxina para obter todos os erros.',
 	'validator-describe-bothhooks' => 'Implementado como función analítica e como etiqueta de extensión.',
 	'validator-describe-par-hooks' => 'O analizador de asociadores para o que mostrar a documentación.',
 	'validator-describe-par-pre' => 'Permite obter o texto wiki para a documentación, sen que sexa renderizado na páxina.',
+	'validator-describe-par-language' => 'A lingua na que mostrar as descricións',
 	'validator-describe-listtype' => 'Lista de $1 elementos',
 	'validator-describe-empty' => 'baleiro',
 	'validator-describe-required' => 'obrigatorio',
@@ -873,6 +909,8 @@ coloque listerrors na parte inferior da páxina para obter todos os erros.',
 	'validator_error_empty_argument' => 'O parámetro $1 non pode ter un valor baleiro.',
 	'validator_error_must_be_number' => 'O parámetro $1 só pode ser un número.',
 	'validator_error_must_be_integer' => 'O parámetro $1 só pode ser un número enteiro.',
+	'validator_error_must_be_title' => 'O parámetro $1 só pode ser o nome válido para unha páxina do wiki.',
+	'validator_error_must_be_existing_title' => 'O parámetro $1 só pode ser o nome dunha páxina do wiki que exista.',
 	'validator-error-must-be-float' => 'O parámetro $1 só pode ser un número de coma flotante.',
 	'validator_error_invalid_range' => 'O parámetro $1 debe estar entre $2 e $3.',
 	'validator-error-invalid-regex' => 'O parámetro $1 debe coincidir con esta expresión regular: $2.',
@@ -882,6 +920,8 @@ coloque listerrors na parte inferior da páxina para obter todos os erros.',
 	'validator_list_error_empty_argument' => 'O parámetro $1 non acepta valores en branco.',
 	'validator_list_error_must_be_number' => 'O parámetro $1 só pode conter números.',
 	'validator_list_error_must_be_integer' => 'O parámetro $1 só pode conter números enteiros.',
+	'validator_list_error_must_be_title' => 'O parámetro $1 só pode conter nomes válidos para páxinas do wiki.',
+	'validator_list_error_must_be_existing_title' => 'O parámetro $1 só pode conter nomes de páxinas do wiki que existan.',
 	'validator-list-error-must-be-float' => 'O parámetro $1 só pode conter comas flotantes.',
 	'validator_list_error_invalid_range' => 'Todos os valores do parámetro $1 deben estar comprendidos entre $2 e $3.',
 	'validator-list-error-invalid-regex' => 'Todos os valores do parámetro $1 deben coincidir con esta expresión regular: $2.',
@@ -897,6 +937,7 @@ Só acepta {{PLURAL:$5|este valor|estes valores}}: $3 (e $4 {{PLURAL:$4|valor om
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Chlämens
  * @author Als-Holder
  */
 $messages['gsw'] = array(
@@ -937,6 +978,7 @@ Zeigt nume d Parserhook aa, wu iber em Elemänt „listerrors“ yygfiegt wore s
 	'validator-describe-bothhooks' => 'As Parserfunktion un au as Elementerwyterig implementiert.',
 	'validator-describe-par-hooks' => 'D Parserhook, wu d Dokumentation derfir soll aazeigt wäre.',
 	'validator-describe-par-pre' => 'Macht d Uusgab vu dr Dokumentation in Wikitext megli ohni ass dää bi dr Darstellig vu dr Syte gnutzt wird.',
+	'validator-describe-par-language' => 'D Sprooch, wo d Beschrybe drin aazeigt worde sölle',
 	'validator-describe-listtype' => 'Lischt vu $1 {{PLURAL:$1|Element|Element}}',
 	'validator-describe-empty' => 'läär',
 	'validator-describe-required' => 'erforderlig',
@@ -1023,6 +1065,7 @@ $messages['he'] = array(
 	'validator-describe-bothhooks' => 'מיושם הן בתור פונקציית מפענח והן בתור הרחבת תג.',
 	'validator-describe-par-hooks' => 'מילות הפעלה של מפענח שעבורן יש להציג תיעוד.',
 	'validator-describe-par-pre' => 'מאפשר לייצר את קוד הוויקי עבור התיעוד מבלי להציג אותו על הדף.',
+	'validator-describe-par-language' => 'באיזו שפה להציג את התיאורים',
 	'validator-describe-listtype' => 'רשימה של פריטים מסוג "$1"',
 	'validator-describe-empty' => 'ריק',
 	'validator-describe-required' => 'נדרש',
@@ -1104,6 +1147,7 @@ staj "listerrors" deleka na stronje abo blisko kónca strony, zo by wšě zmylki
 	'validator-describe-bothhooks' => 'Jako parserowa funkcija kaž tež jako elementowe rozšěrjenje implementowany.',
 	'validator-describe-par-hooks' => 'Parserowe hóčki, za kotrež ma so dokumentacija zwobraznić.',
 	'validator-describe-par-pre' => 'Zmóžnja woprawdźity wikitekst za dokumentaciju wobstarać, bjez toho zo so na stronje rysował.',
+	'validator-describe-par-language' => 'Rěč, w kotrejž wopisanje ma so zwobraznić',
 	'validator-describe-listtype' => 'Lisćina $1 {{PLURAL:$1|elementa|elementow|elementow|elementow}}',
 	'validator-describe-empty' => 'prózdny',
 	'validator-describe-required' => 'trěbny',
@@ -1124,6 +1168,8 @@ staj "listerrors" deleka na stronje abo blisko kónca strony, zo by wšě zmylki
 	'validator_error_empty_argument' => 'Parameter $1 njemóže prózdnu hódnotu měć.',
 	'validator_error_must_be_number' => 'Parameter $1 móže jenož ličba być.',
 	'validator_error_must_be_integer' => 'Parameter $1 móže jenož cyła ličba być.',
+	'validator_error_must_be_title' => 'Parameter $1 móže jenož płaćiwe mjeno wikistrony być.',
+	'validator_error_must_be_existing_title' => 'Parameter $1 móže jenož ekistowace mjeno wikistrony być.',
 	'validator-error-must-be-float' => 'Parameter $1 móže jenož ličba z pohibliwej komu być.',
 	'validator_error_invalid_range' => 'Parameter $1 dyrbi mjez $2 a $3 być.',
 	'validator-error-invalid-regex' => 'Parameter $1 dyrbi tutomu regularnemu wurazej wotpowědować: $2',
@@ -1133,6 +1179,8 @@ staj "listerrors" deleka na stronje abo blisko kónca strony, zo by wšě zmylki
 	'validator_list_error_empty_argument' => 'Parameter $1 njeakceptuje prózdne hódnoty.',
 	'validator_list_error_must_be_number' => 'Parameter $1 móže jenož ličby wobsahować.',
 	'validator_list_error_must_be_integer' => 'Parameter $1 móže jenož cyłe ličby wobsahować.',
+	'validator_list_error_must_be_title' => 'Parameter $1 móže jenož płaćiwe mjena wikistronow wobsahować.',
+	'validator_list_error_must_be_existing_title' => 'Parameter $1 móže jenož eksistowace mjena wikistronow wobsahować.',
 	'validator-list-error-must-be-float' => 'Parameter $1 móže jenož ličby z pohibliwej komu wobsahować.',
 	'validator_list_error_invalid_range' => 'Wšě hódnoty parametra $1 dyrbja mjez $2 a $3 być.',
 	'validator-list-error-invalid-regex' => 'Wšě hódnoty parametra $1 dyrbja tutomu regularnemu wurazej wotpowědować: $2',
@@ -1239,6 +1287,7 @@ mitte "listerrors" al fin del pagina, o proxime al fin, pro obtener tote le erro
 	'validator-describe-bothhooks' => 'Implementate como function del analysator syntactic e como extension de etiquetta.',
 	'validator-describe-par-hooks' => 'Le uncinos del analysator syntactic pro le quales presentar documentation.',
 	'validator-describe-par-pre' => 'Permitte obtener le ver wikitexto pro le documentation, sin render lo in le pagina.',
+	'validator-describe-par-language' => 'Le lingua in que presentar le descriptiones',
 	'validator-describe-listtype' => 'Lista de $1 elementos',
 	'validator-describe-empty' => 'vacue',
 	'validator-describe-required' => 'requirite',
@@ -1259,6 +1308,8 @@ mitte "listerrors" al fin del pagina, o proxime al fin, pro obtener tote le erro
 	'validator_error_empty_argument' => 'Le parametro $1 non pote haber un valor vacue.',
 	'validator_error_must_be_number' => 'Le parametro $1 pote solmente esser un numero.',
 	'validator_error_must_be_integer' => 'Le parametro $1 pote solmente esser un numero integre.',
+	'validator_error_must_be_title' => 'Le parametro $1 pote solmente esser un nomine de pagina wiki valide.',
+	'validator_error_must_be_existing_title' => 'Le parametro $1 pote solmente esser un nomine de pagina wiki existente.',
 	'validator-error-must-be-float' => 'Le parametro $1 pote solmente esser un numero con fraction decimal.',
 	'validator_error_invalid_range' => 'Le parametro $1 debe esser inter $2 e $3.',
 	'validator-error-invalid-regex' => 'Le parametro $1 debe corresponder a iste expression regular: $2.',
@@ -1268,6 +1319,8 @@ mitte "listerrors" al fin del pagina, o proxime al fin, pro obtener tote le erro
 	'validator_list_error_empty_argument' => 'Le parametro $1 non accepta valores vacue.',
 	'validator_list_error_must_be_number' => 'Le parametro $1 pote solmente continer numeros.',
 	'validator_list_error_must_be_integer' => 'Le parametro $1 pote solmente continer numeros integre.',
+	'validator_list_error_must_be_title' => 'Le parametro $1 pote solmente continer nomines de pagina wiki valide.',
+	'validator_list_error_must_be_existing_title' => 'Le parametro $1 pote solmente continer nomines de pagina wiki existente.',
 	'validator-list-error-must-be-float' => 'Le parametro $1 pote solmente continer numeros a comma flottante.',
 	'validator_list_error_invalid_range' => 'Tote le valores del parametro $1 debe esser inter $2 e $3.',
 	'validator-list-error-invalid-regex' => 'Tote le valores del parametro $1 debe corresponder a iste expression regular: $2.',
@@ -1442,6 +1495,13 @@ $messages['ja'] = array(
 	'validator_list_omitted' => '{{PLURAL:$2|値}} $1 は省かれました。',
 );
 
+/** Georgian (ქართული)
+ * @author ITshnik
+ */
+$messages['ka'] = array(
+	'validator-describe-empty' => 'ცარიელი',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -1498,10 +1558,11 @@ $messages['ksh'] = array(
 	'validator_list_omitted' => '{{PLURAL:$2|Dä Wäät|De Wääte|Keine Wäät}} $1 {{PLURAL:$2|es|sen|se}} fottjelohße woode.',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'validator-error' => 'Çewtî:$1',
 	'validator-type-boolean' => 'erê/na',
 	'validator-listerrors-high' => 'bilind',
 	'validator-describe-header-type' => 'Cure',
@@ -1518,6 +1579,7 @@ $messages['lb'] = array(
 	'validator-fatal-error' => 'Fatale Feeler: $1',
 	'validator_error_parameters' => '{{PLURAL:$1|Dëse Feeler gouf|Dës Feeler goufen}} an Ärer Syntax fonnt:',
 	'validator_warning_parameters' => 'Et {{PLURAL:$1|ass ee|si}} Feeler an Ärer Syntax.',
+	'validator-warning-adittional-errors' => '… an {{PLURAL:$1|e weidere Sujet|weider Sujeten}}.',
 	'validator-error-omitted' => '{{PLURAL:$2|De Wäert|D\'Wäerter}} "$1" {{PLURAL:$2|gouf|goufe}} vergiess.',
 	'validator-error-problem' => 'Et gouf e Problem mam Parameter $1.',
 	'validator_error_unknown_argument' => '$1 ass kee valbele Parameter.',
@@ -1535,8 +1597,10 @@ $messages['lb'] = array(
 	'validator-listerrors-normal' => 'Normal',
 	'validator-listerrors-high' => 'Héich',
 	'validator-listerrors-fatal' => 'Fatal',
+	'validator-listerrors-par-minseverity' => 'Déi mannste Schwieregkeet vun engem Feeler fir datt en hei gewise gëtt.',
 	'validator-describe-descriptionmsg' => "'''Beschreiwung''': $1",
 	'validator-describe-aliases' => "'''{{PLURAL:$2|Alias|Aliasen}}:''' $1",
+	'validator-describe-par-language' => "D'Sprooch an där d'Beschreiwunge gewise solle ginn",
 	'validator-describe-listtype' => 'Lëscht mat {{PLURAL:$1|engem Element|$1 Elementer}}',
 	'validator-describe-empty' => 'eidel',
 	'validator-describe-required' => 'obligatoresch',
@@ -1605,6 +1669,7 @@ $messages['mk'] = array(
 	'validator-type-boolean' => 'да/не',
 	'validator-type-char' => 'знак',
 	'validator-listerrors-errors' => 'Грешки',
+	'validator-listerrors-severity-message' => '($1) $2',
 	'validator-listerrors-minor' => 'Ситни',
 	'validator-listerrors-low' => 'Малку',
 	'validator-listerrors-normal' => 'Нормално',
@@ -1623,6 +1688,7 @@ $messages['mk'] = array(
 	'validator-describe-bothhooks' => 'Се применува во својство на парсерска функција и додаток за означување (обете).',
 	'validator-describe-par-hooks' => 'Парсерските куки за кои сакате да се прикаже документација.',
 	'validator-describe-par-pre' => 'Ви овозможува да го добиете самиот викитекст за документацијата, без да се испише на страницата',
+	'validator-describe-par-language' => 'На кој јазик да се прикажуваат описите',
 	'validator-describe-listtype' => 'Список на $1 ставки',
 	'validator-describe-empty' => 'празно',
 	'validator-describe-required' => 'задолжително',
@@ -1643,6 +1709,8 @@ $messages['mk'] = array(
 	'validator_error_empty_argument' => 'Параметарот $1 не може да има празна вредност.',
 	'validator_error_must_be_number' => 'Параметарот $1 може да биде само број.',
 	'validator_error_must_be_integer' => 'Параметарот $1 може да биде само цел број.',
+	'validator_error_must_be_title' => 'Параметарот $1 може да биде само важечко име на викистраница.',
+	'validator_error_must_be_existing_title' => 'Параметарот $1 може да биде само постоечко име на викистраница.',
 	'validator-error-must-be-float' => 'Параметарот $1 може да биде само број со подвижна точка.',
 	'validator_error_invalid_range' => 'Параметарот $1 мора да изнесува помеѓу $2 и $3.',
 	'validator-error-invalid-regex' => 'Параметарот $1 мора да се совпаѓа со следниов регуларен израз: $2.',
@@ -1652,6 +1720,8 @@ $messages['mk'] = array(
 	'validator_list_error_empty_argument' => 'Параметарот $1 не прифаќа празни вредности.',
 	'validator_list_error_must_be_number' => 'Параметарот $1 може да содржи само бројки.',
 	'validator_list_error_must_be_integer' => 'Параметарот $1 може да содржи само цели броеви.',
+	'validator_list_error_must_be_title' => 'Параметарот $1 може да содржи само важечки имиња на викистраници.',
+	'validator_list_error_must_be_existing_title' => 'Параметарот $1 може да содржи само постоечки имиња на викистраници.',
 	'validator-list-error-must-be-float' => 'Параметарот $1 може да содржи само подвижни бинарни точки.',
 	'validator_list_error_invalid_range' => 'Сите вредности на параметарот $1 мора да бидат помеѓу $2 и $3.',
 	'validator-list-error-invalid-regex' => 'Сите вредности на параметарот $1 мора да се совпаднат со следниов регуларен израз: $2.',
@@ -1672,11 +1742,99 @@ $messages['ms'] = array(
 	'validator-describe-descriptionmsg' => "'''Keterangan''': $1",
 	'validator-describe-empty' => 'kosong',
 	'validator-describe-required' => 'wajib',
-	'validator-describe-header-default' => 'Tersedia',
+	'validator-describe-header-default' => 'Asali',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Event
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'validator-desc' => 'Gir generisk støtte for parameterhåndtering fra andre utvidelser',
+	'validator-warning' => 'Advarsel: $1',
+	'validator-error' => 'Feil: $1',
+	'validator-fatal-error' => 'Kritisk feil: $1',
+	'validator_error_parameters' => 'Følgende {{PLURAL:$1|feil|feil}} har blitt oppdaget i syntaksen din:',
+	'validator_warning_parameters' => 'Det er {{PLURAL:$1|én feil|flere feil}} i syntaksen din.',
+	'validator-warning-adittional-errors' => '... og {{PLURAL:$1|ett problem til|flere problem}}.',
+	'validator-error-omitted' => '{{PLURAL:$2|Verdien|Verdiene}} «$1» har blitt utelatt.',
+	'validator-error-problem' => 'Det var et problem med parameter $1.',
+	'validator_error_unknown_argument' => '$1 er ikke en gyldig parameter.',
+	'validator_error_required_missing' => 'Den nødvendige parameteren «$1» er ikke angitt.',
+	'validator-error-override-argument' => 'Prøvde å overkjøre parameter $1 (verdi: $2) med verdien «$3»',
+	'validator-type-string' => 'tekst',
+	'validator-type-number' => 'tall',
+	'validator-type-integer' => 'heltall',
+	'validator-type-float' => 'tall',
+	'validator-type-boolean' => 'ja/nei',
+	'validator-type-char' => 'tegn',
+	'validator-listerrors-errors' => 'Feil',
+	'validator-listerrors-minor' => 'Mindre',
+	'validator-listerrors-low' => 'Lav',
+	'validator-listerrors-normal' => 'Normal',
+	'validator-listerrors-high' => 'Høy',
+	'validator-listerrors-fatal' => 'Kritisk',
+	'validator-listerrors-description' => 'Lister opp feil (og advarsler) som oppsto i "parser hooks" via Validator.
+Lister bare opp for "parser hooks" lagt til over der "listerrors" er satt inn;
+plasser "listerrors" på eller nær bunnen av siden for å få frem alle feilene.',
+	'validator-listerrors-par-minseverity' => 'Minimum alvorlighetsgrad for at en sak skal listes opp.',
+	'validator-describe-description' => 'Genererer dokumentasjon for en eller flere "parser hooks" definert via Validator.',
+	'validator-describe-notfound' => 'Det finnes ingen "parser hook" som håndterer "$1".',
+	'validator-describe-descriptionmsg' => "''Beskrivelse''': $1",
+	'validator-describe-aliases' => "'''{{PLURAL:$2|Alias|Aliaser}}''': $1",
+	'validator-describe-parserfunction' => 'Bare implementert som en parser-funksjon.',
+	'validator-describe-tagextension' => 'Bare implementert som en tag-utvidelse.',
+	'validator-describe-bothhooks' => 'Implementert både som en parser-funksjon og en tag-utvidelse.',
+	'validator-describe-par-hooks' => '"Parser hooks" som brukes for å angi dokumentasjon.',
+	'validator-describe-par-pre' => 'Tillater deg å få den faktiske wikiteksten for dokumentasjonen uten at den blir gjengitt på siden.',
+	'validator-describe-par-language' => 'Språket som brukes for beskrivelsene',
+	'validator-describe-listtype' => 'Liste av $1 elementer',
+	'validator-describe-empty' => 'tom',
+	'validator-describe-required' => 'påkrevet',
+	'validator-describe-header-parameter' => 'Parameter',
+	'validator-describe-header-aliases' => 'Aliaser',
+	'validator-describe-header-type' => 'Type',
+	'validator-describe-header-default' => 'Standard',
+	'validator-describe-header-description' => 'Beskrivelse',
+	'validator-describe-parameters' => 'Parametre',
+	'validator-describe-syntax' => 'Syntaks',
+	'validator-describe-tagmin' => 'Tag-utvidelse bare med de påkrevde parametrene.',
+	'validator-describe-tagmax' => 'Tag-utvidelse med alle parametrene.',
+	'validator-describe-tagdefault' => 'Tag-utvidelse med alle parametrene som bruker standard parameternotasjon.',
+	'validator-describe-pfmin' => 'Parser-funksjon bare med de påkrevde parametrene.',
+	'validator-describe-pfmax' => 'Parser-funksjon med alle parametrene.',
+	'validator-describe-pfdefault' => 'Parser-funksjon med alle parametrene som bruker standard parameternotasjon.',
+	'validator-describe-autogen' => 'Innholdet i dette avsnittet ble autogenerert av "describe parser hook" fra Validator-utvidelsen.',
+	'validator_error_empty_argument' => 'Parameter $1 kan ikke ha en tom verdi.',
+	'validator_error_must_be_number' => 'Parameter $1 må være et tall.',
+	'validator_error_must_be_integer' => 'Parameter $1 må være et heltall.',
+	'validator-error-must-be-float' => 'Parameter $1 må være et flyttall.',
+	'validator_error_invalid_range' => 'Parameter $1 må være mellom $2 og $3.',
+	'validator-error-invalid-regex' => 'Parameter $1 må samsvare med dette regulæruttrykket: $2.',
+	'validator-error-invalid-length' => 'Parameter $1 må ha en lengde på $2.',
+	'validator-error-invalid-length-range' => 'Parameter $1 må ha en lengde mellom $2 og $3.',
+	'validator_error_invalid_argument' => 'Verdien $1 er ikke gyldig for parameter $2.',
+	'validator_list_error_empty_argument' => 'Parameter $1 kan ikke ikke ha en tom verdi.',
+	'validator_list_error_must_be_number' => 'Parameter $1 kan bare inneholde tall.',
+	'validator_list_error_must_be_integer' => 'Parameter $1 kan bare inneholde heltall.',
+	'validator-list-error-must-be-float' => 'Parameter $1 kan bare innholde flyttall.',
+	'validator_list_error_invalid_range' => 'Alle verdier av parameter $1 må være mellom $2 og $3.',
+	'validator-list-error-invalid-regex' => 'Alle verdier av parameter $1 må samsvare med dette regulæruttrykket: $2.',
+	'validator_list_error_invalid_argument' => 'Parameter $1 har en eller flere ugyldige verdier.',
+	'validator-list-error-accepts-only' => 'En eller flere verdier for parameter $1 er ugyldige.
+Den godtar bare {{PLURAL:$3|denne verdien|disse verdiene}}: $2.',
+	'validator-list-error-accepts-only-omitted' => 'En eller flere verdier for parameter $1 er ugyldige.
+Den godtar bare {{PLURAL:$3|denne verdien|disse verdiene}}: $2 (og $4 {{PLURAL:$4|utelatt verdi|utelatte verdier}}).',
+	'validator_error_accepts_only' => 'Verdien «$4» er ikke gyldig for parameter $1. Den godtar kun {{PLURAL:$3|denne verdien|disse verdiene}}: $2.',
+	'validator-error-accepts-only-omitted' => 'Verdien «$2» er ikke gyldig for parameter $1.
+Den godtar bare {{PLURAL:$5|denne verdien|disse verdiene}}: $3 (og $4 {{PLURAL:$4|utelatt verdi|utelatte verdier}}).',
+	'validator_list_omitted' => '{{PLURAL:$2|Verdien|Verdiene}} $1 har blitt utelatt.',
 );
 
 /** Dutch (Nederlands)
  * @author Jeroen De Dauw
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -1717,6 +1875,7 @@ plaats fouten onderaan of bijna onderaan pagina's om alle fouten weer te geven."
 	'validator-describe-bothhooks' => 'Als parserfunctie en labeluitbreiding geïmplementeerd.',
 	'validator-describe-par-hooks' => 'Parserhooks waarvoor documentatie weergegeven moet worden.',
 	'validator-describe-par-pre' => 'Maakt het mogelijk de wikitekst voor de documentatie weer te geven zonder dat deze wordt verwerkt.',
+	'validator-describe-par-language' => 'De taal om de beschrijvingen in weer te geven',
 	'validator-describe-listtype' => 'Lijst met $1 items',
 	'validator-describe-empty' => 'leeg',
 	'validator-describe-required' => 'verplicht',
@@ -1737,6 +1896,8 @@ plaats fouten onderaan of bijna onderaan pagina's om alle fouten weer te geven."
 	'validator_error_empty_argument' => 'De parameter $1 mag niet leeg zijn.',
 	'validator_error_must_be_number' => 'De parameter $1 mag alleen een getal zijn.',
 	'validator_error_must_be_integer' => 'De parameter $1 kan alleen een heel getal zijn.',
+	'validator_error_must_be_title' => 'Parameter $1 kan alleen een geldige wikipaginanaam zijn.',
+	'validator_error_must_be_existing_title' => 'Parameter $1 kan alleen een bestaande wikipaginanaam zijn.',
 	'validator-error-must-be-float' => 'Parameter $1 kan alleen een getal met decimalen zijn.',
 	'validator_error_invalid_range' => 'De parameter $1 moet tussen $2 en $3 liggen.',
 	'validator-error-invalid-regex' => 'De parameter $1 moet voldoen aan deze reguliere expressie: $2.',
@@ -1746,6 +1907,8 @@ plaats fouten onderaan of bijna onderaan pagina's om alle fouten weer te geven."
 	'validator_list_error_empty_argument' => 'Voor de parameter $1 zijn lege waarden niet toegestaan.',
 	'validator_list_error_must_be_number' => 'Voor de parameter $1 zijn alleen getallen toegestaan.',
 	'validator_list_error_must_be_integer' => 'Voor de parameter $1 zijn alleen hele getallen toegestaan.',
+	'validator_list_error_must_be_title' => 'Parameter $1 kan alleen geldige wikipaginanamen bevatten.',
+	'validator_list_error_must_be_existing_title' => 'Parameter $1 kan alleen bestaande wikipaginanamen bevatten.',
 	'validator-list-error-must-be-float' => 'Voor de parameter $1 zijn alleen getallen met drijvende komma toegestaan.',
 	'validator_list_error_invalid_range' => 'Alle waarden voor de parameter $1 moeten tussen $2 en $3 liggen.',
 	'validator-list-error-invalid-regex' => 'Alle waarden voor de parameter $1 moeten voldoen aan deze reguliere expressie: $2.',
@@ -1760,55 +1923,6 @@ Als ook $4 weggelaten {{PLURAL:$4|waarde|waarden}}.',
 Alleen deze {{PLURAL:$5|waarde is|waarden zijn}} toegestaan: $3.
 Als ook $4 weggelaten {{PLURAL:$4|waarde|waarden}}.',
 	'validator_list_omitted' => 'De {{PLURAL:$2|waarde|waarden}} $1 {{PLURAL:$2|mist|missen}}.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'validator-desc' => 'Gir generisk støtte for parameterhåndtering for andre utvidelser',
-	'validator-warning' => 'Advarsel: $1',
-	'validator-error' => 'Feil: $1',
-	'validator-fatal-error' => 'Kritisk feil: $1',
-	'validator_error_parameters' => 'Følgende {{PLURAL:$1|feil|feil}} har blitt oppdaget i syntaksen din:',
-	'validator_warning_parameters' => 'Det er {{PLURAL:$1|én feil|flere feil}} i syntaksen din.',
-	'validator-warning-adittional-errors' => '... og {{PLURAL:$1|ett problem til|flere problem}}.',
-	'validator-error-omitted' => '{{PLURAL:$2|Verdien|Verdiene}} «$1» har blitt utelatt.',
-	'validator-error-problem' => 'Det var et problem med parameteren $1.',
-	'validator_error_unknown_argument' => '$1 er ikke en gyldig parameter.',
-	'validator_error_required_missing' => 'Den nødvendige parameteren «$1» er ikke angitt.',
-	'validator-error-override-argument' => 'Prøvde å overkjøre parameter $1 (verdi: $2) med verdien «$3»',
-	'validator-listerrors-errors' => 'Feil',
-	'validator-listerrors-minor' => 'Mindre',
-	'validator-listerrors-low' => 'Lav',
-	'validator-listerrors-normal' => 'Normal',
-	'validator-listerrors-high' => 'Høy',
-	'validator-listerrors-fatal' => 'Kritisk',
-	'validator_error_empty_argument' => 'Parameteren $1 kan ikke ha en tom verdi.',
-	'validator_error_must_be_number' => 'Parameteren $1 må være et tall.',
-	'validator_error_must_be_integer' => 'Parameteren $1 må være et heltall.',
-	'validator-error-must-be-float' => 'Parameter $1 må være et flyttall.',
-	'validator_error_invalid_range' => 'Parameter $1 må være mellom $2 og $3.',
-	'validator-error-invalid-regex' => 'Parameteren $1 må samsvare med dette regulære uttrykket: $2.',
-	'validator-error-invalid-length' => 'Parameter $1 må ha en lengde på $2.',
-	'validator-error-invalid-length-range' => 'Parameter $1 må ha en lengde mellom $2 og $3.',
-	'validator_error_invalid_argument' => 'Verdien $1 er ikke gyldig for parameter $2.',
-	'validator_list_error_empty_argument' => 'Parameteren $1 godtar ikke tomme verdier.',
-	'validator_list_error_must_be_number' => 'Parameteren $1 kan bare inneholde tall.',
-	'validator_list_error_must_be_integer' => 'Parameteren $1 kan bare inneholde heltall.',
-	'validator-list-error-must-be-float' => 'Parameteren $1 kan bare innholde flyttall.',
-	'validator_list_error_invalid_range' => 'Alle verdier av parameteren $1 må være mellom $2 og $3.',
-	'validator-list-error-invalid-regex' => 'Alle verdier av parameteren $1 må samsvare med dette regulære uttrykket: $2.',
-	'validator_list_error_invalid_argument' => 'Parameteren $1 har en eller flere ugyldige verdier.',
-	'validator-list-error-accepts-only' => 'En eller flere verdier for parameteren $1 er ugyldige.
-Den godtar bare {{PLURAL:$3|denne verdien|disse verdiene}}: $2.',
-	'validator-list-error-accepts-only-omitted' => 'En eller flere verdier for parameteren $1 er ugyldige.
-Den godtar bare {{PLURAL:$3|denne verdien|disse verdiene}}: $2 (og $4 {{PLURAL:$4|utelatt verdi|utelatte verdier}}).',
-	'validator_error_accepts_only' => 'Verdien «$4» er ikke gyldig for parameteren $1. Den aksepterer kun {{PLURAL:$3|denne verdien|disse verdiene}}: $2.',
-	'validator-error-accepts-only-omitted' => 'Verdien «$2» er ikke gyldig for parameteren $1.
-Den godtar bare {{PLURAL:$5|denne verdien|disse verdiene}}: $3 (og $4 {{PLURAL:$4|utelatt verdi|utelatte verdier}}).',
-	'validator_list_omitted' => '{{PLURAL:$2|Verdien|Verdiene}} $1 har blitt utelatt.',
 );
 
 /** Occitan (Occitan)
@@ -1828,9 +1942,18 @@ $messages['oc'] = array(
 	'validator_error_accepts_only' => 'Sonque {{PLURAL:$3|aquela valor es valedora|aquelas valors son valedoras}}pel paramètre $1 : $2.',
 );
 
+/** Ossetic (Ирон)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'validator-describe-empty' => 'афтид',
+);
+
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Fizykaa
  * @author Sp5uhe
+ * @author Woytecr
  */
 $messages['pl'] = array(
 	'validator-desc' => 'Dostarcza innym rozszerzeniom ogólną obsługę parametrów',
@@ -1857,9 +1980,42 @@ $messages['pl'] = array(
 	'validator-listerrors-normal' => 'Typowy',
 	'validator-listerrors-high' => 'Istotny',
 	'validator-listerrors-fatal' => 'Krytyczny',
+	'validator-listerrors-description' => 'Wyświetla błędy (i ostrzeżenia), które wystąpiły w przechwyceniu parsera dodawanemu przez walidator.
+Tylko wyświetlenia dla przechwyceń parsera dodanych powyżej miejsca umieszczenia listerrors;
+ umieść listerrors na lub w pobliżu końca strony, aby uzyskać wszystkie błędy.',
+	'validator-listerrors-par-minseverity' => 'Minimalna waga problemu aby został wymieniony.',
+	'validator-describe-description' => 'Generuje dokumentację dla jednego lub więcej przechwyceń parsera, zdefiniowanych przez walidator.',
+	'validator-describe-notfound' => 'Nie ma żadnych przechwyceń analizatora składni, obsługujących " $1 ".',
+	'validator-describe-descriptionmsg' => "'''Opis''': $1",
+	'validator-describe-aliases' => "'''{{PLURAL:$2|Alias|Aliasy}}''': $1",
+	'validator-describe-parserfunction' => 'Zaimplementowano wyłącznie jako funkcję parsera.',
+	'validator-describe-tagextension' => 'Zaimplementowano wyłącznie jako rozszerzenie znacznika.',
+	'validator-describe-bothhooks' => 'Zaimplementowano jako zarówno funkcję parsera i rozszerzenie znacznika.',
+	'validator-describe-par-hooks' => 'Przechwycenia parsera, dla których wyświetlić dokumentację.',
+	'validator-describe-par-pre' => 'Umożliwia uzyskanie rzeczywistego wikitekstu dokumentacji, bez renderowania na stronie.',
+	'validator-describe-par-language' => 'Język wyświetlania opisów',
+	'validator-describe-listtype' => 'Lista  $1  elementów',
+	'validator-describe-empty' => 'puste',
+	'validator-describe-required' => 'wymagane',
+	'validator-describe-header-parameter' => 'Parametr',
+	'validator-describe-header-aliases' => 'Aliasy',
+	'validator-describe-header-type' => 'Typ',
+	'validator-describe-header-default' => 'Domyślnie',
+	'validator-describe-header-description' => 'Opis',
+	'validator-describe-parameters' => 'Parametry',
+	'validator-describe-syntax' => 'Składnia',
+	'validator-describe-tagmin' => 'Rozszerzenie znacznika wyłącznie z wymaganymi parametrami.',
+	'validator-describe-tagmax' => 'Rozszerzenie znacznika ze wszystkimi parametrami.',
+	'validator-describe-tagdefault' => 'Rozszerzenie znacznika z wszystkimi parametrami przy użyciu domyślnej notacji parametrów.',
+	'validator-describe-pfmin' => 'Funkcja parsera wyłącznie z wymaganymi parametrami.',
+	'validator-describe-pfmax' => 'Funkcja parsera ze wszystkimi parametrami.',
+	'validator-describe-pfdefault' => 'Funkcja analizatora składni  ze wszystkimi parametrami przy użyciu domyślnej notacji parametrów.',
+	'validator-describe-autogen' => 'Zawartość niniejszej sekcji została automatycznie wygenerowana przez przechwycenie analizatora składni "describe" rozszerzenia walidatora.',
 	'validator_error_empty_argument' => 'Parametr $1 nie może być pusty.',
 	'validator_error_must_be_number' => 'Parametr $1 musi być liczbą.',
 	'validator_error_must_be_integer' => 'Parametr $1 musi być liczbą całkowitą.',
+	'validator_error_must_be_title' => 'Parametr $1 może być tylko poprawną nazwą strony wiki.',
+	'validator_error_must_be_existing_title' => 'Parametr $1 może być tylko nazwą istniejącej strony wiki.',
 	'validator-error-must-be-float' => 'Parametr $1 musi być liczbą rzeczywistą.',
 	'validator_error_invalid_range' => 'Parametr $1 musi zawierać się w przedziale od $2 do $3.',
 	'validator-error-invalid-regex' => 'Parametr $1 musi pasować do wyrażenia regularnego $2.',
@@ -1869,6 +2025,8 @@ $messages['pl'] = array(
 	'validator_list_error_empty_argument' => 'Parametr $1 nie może być pusty.',
 	'validator_list_error_must_be_number' => 'Parametrem $1 mogą być wyłącznie liczby.',
 	'validator_list_error_must_be_integer' => 'Parametrem $1 mogą być wyłącznie liczby całkowite.',
+	'validator_list_error_must_be_title' => 'Parametr $1 może być tylko poprawnymi nazwami stron wiki.',
+	'validator_list_error_must_be_existing_title' => 'Parametr $1 może być tylko nazwami istniejących stron wiki.',
 	'validator-list-error-must-be-float' => 'Parametrem $1 mogą być wyłącznie liczby rzeczywiste.',
 	'validator_list_error_invalid_range' => 'Wartości parametru $1 muszą zawierać się w przedziale od $2 do $3.',
 	'validator-list-error-invalid-regex' => 'Wszystkie wartości parametru $1 muszą pasować do wyrażenia regularnego $2.',
@@ -1903,9 +2061,9 @@ $messages['pms'] = array(
 	'validator-error-override-argument' => 'Provà a coaté ël paràmetr $1 (valor: $2) con ël valor "$3"',
 	'validator-type-string' => 'test',
 	'validator-type-number' => 'nùmer',
-	'validator-type-integer' => 'nùmer anter',
+	'validator-type-integer' => 'nùmer antregh',
 	'validator-type-float' => 'nùmer',
-	'validator-type-boolean' => 'é!/nò',
+	'validator-type-boolean' => 'bò/nò',
 	'validator-type-char' => 'caràter',
 	'validator-listerrors-errors' => 'Eror',
 	'validator-listerrors-minor' => 'Pi cit',
@@ -1913,19 +2071,20 @@ $messages['pms'] = array(
 	'validator-listerrors-normal' => 'Normal',
 	'validator-listerrors-high' => 'Àut',
 	'validator-listerrors-fatal' => 'Fatal',
-	'validator-listerrors-description' => "A lista eror (e avis) che a son capità ant ij gancio dël parser giontà via Validator.
-A lista mach ij gancio ëd parser giontà dzora andoa listerrors a l'é anserì;
-piassa listerrors dzora o davzin la sima dla pagina për pijé tùit j'eror.",
-	'validator-listerrors-par-minseverity' => "La minima severità d'un eror përchè a sia listà.",
-	'validator-describe-description' => 'A genera documentassion për un o pi gancio ëd parser definì via Validator.',
-	'validator-describe-notfound' => 'A-i é pa gnun gancio ëd parser ch\'a gestissa "$1".',
+	'validator-listerrors-description' => "A lista j'eror (e j'avis) che a son capità ant ij gancio ëd l'analisator sintàtich via Validator.
+Mach le liste dij gancio ëd l'analisator sintàtich giontà anté ch'a-i é listerrors a son anserìe;
+piassé listerrors dzora o davzin ël fond ëd la pàgina për ciapé tùit j'eror.",
+	'validator-listerrors-par-minseverity' => "La gravità mìnima ëd n'eror përchè a sia listà.",
+	'validator-describe-description' => "A genera la documentassion për un o pi gancio ëd l'analisator sintàtich definì via Validator.",
+	'validator-describe-notfound' => 'A-i é gnun gancio ëd l\'analisator sintàtich ch\'a gestissa "$1".',
 	'validator-describe-descriptionmsg' => "'''Descrission''': $1",
 	'validator-describe-aliases' => "'''{{PLURAL:$2|Alias|Alias}}''': $1",
-	'validator-describe-parserfunction' => 'Amplementà mach com funsion dël parser.',
-	'validator-describe-tagextension' => 'Amplementà mach com estension ëd tag.',
-	'validator-describe-bothhooks' => 'Amplementà sia com funsion dël parser che com estension ëd tag.',
-	'validator-describe-par-hooks' => 'Ël gancio dël parser për ël qual mosté la documentassion.',
-	'validator-describe-par-pre' => "At përmëtt ëd pijé ël wikitest atual për la documentassion, sensa ch'a sia presentà an sla pagina.",
+	'validator-describe-parserfunction' => "Realisà mach com funsion ëd l'analisator sintàtich.",
+	'validator-describe-tagextension' => 'Realisà mach com estension ëd tichëtta.',
+	'validator-describe-bothhooks' => "Realisà sia com funsion ëd l'analisator sintàtich che com estension ëd tichëtta.",
+	'validator-describe-par-hooks' => "Ij gancio ëd l'analisator sintàtich dont ësmon-e la documentassion.",
+	'validator-describe-par-pre' => "A-j përmët d'avèj ël wikitest atual për la documentassion, sensa ch'a sia smonù an sla pàgina.",
+	'validator-describe-par-language' => 'La lenga ant la qual smon-e le descrission',
 	'validator-describe-listtype' => 'Lista ëd $1 element',
 	'validator-describe-empty' => 'veuid',
 	'validator-describe-required' => 'ciamà',
@@ -1936,13 +2095,13 @@ piassa listerrors dzora o davzin la sima dla pagina për pijé tùit j'eror.",
 	'validator-describe-header-description' => 'Descrission',
 	'validator-describe-parameters' => 'Paràmetr',
 	'validator-describe-syntax' => 'Sintassi',
-	'validator-describe-tagmin' => 'Estension ëd tag con mach ij paràmetr ciamà.',
-	'validator-describe-tagmax' => 'Estension ëd tag con tùit ij paràmetr.',
-	'validator-describe-tagdefault' => 'Estension ëd tag con tùit ij paràmetr an dovrand la notassion ëd default dij paràmetr.',
-	'validator-describe-pfmin' => 'Funsion dël parser con mach ij paràmetr ciamà.',
-	'validator-describe-pfmax' => 'Funsion dël parser con tùit ij paràmetr.',
-	'validator-describe-pfdefault' => 'Funsion dël parser con tùit ij paràmetr an dovrand la notassion ëd default dij paràmetr.',
-	'validator-describe-autogen' => 'Ël contnù dë sta session a l\'era auto-generà dal gancio dël parser "descriv" ëd l\'estension ëd Validator.',
+	'validator-describe-tagmin' => 'Estension ëd tichëtta con mach ij paràmetr obligatòri.',
+	'validator-describe-tagmax' => 'Estension ëd tichëtta con tùit ij paràmetr.',
+	'validator-describe-tagdefault' => 'Estension ëd tichëtta con tùit ij paràmetr an dovrand la notassion dë stàndard dij paràmetr.',
+	'validator-describe-pfmin' => "Funsion ëd l'analisator sintàtich con mach ij paràmetr obligatòri.",
+	'validator-describe-pfmax' => "Funsion ëd l'analisator sintàtich con tùit ij paràmetr.",
+	'validator-describe-pfdefault' => "Funsion ëd l'analisator sintàtich con tùit ij paràmetr an dovrand la notassion dë stàndard dij paràmetr.",
+	'validator-describe-autogen' => "Ël contnù dë sta session a l'é stàit generà an automàtich dal gancio \"descrive\" ëd l'analisator sintàtich ëd l'estension ëd Validator.",
 	'validator_error_empty_argument' => 'Ël paràmetr $1 a peul pa avèj un valor veuid.',
 	'validator_error_must_be_number' => 'Ël paràmetr $1 a peul mach esse un nùmer.',
 	'validator_error_must_be_integer' => "Ël paràmetr $1 a peul mach esse n'antregh.",
@@ -2026,6 +2185,7 @@ para obter todos os erros, coloque listerrors ao fundo da página.',
 	'validator-describe-bothhooks' => 'Implementada como função do analisador sintáctico e como extensão de tag.',
 	'validator-describe-par-hooks' => 'Os hooks do analisador sintáctico para os quais será mostrada documentação.',
 	'validator-describe-par-pre' => 'Permite obter o texto wiki real da documentação, sem que este seja formatado na página.',
+	'validator-describe-par-language' => 'A língua em que as descrições serão apresentadas',
 	'validator-describe-listtype' => 'Lista de $1 elementos',
 	'validator-describe-empty' => 'vazio',
 	'validator-describe-required' => 'necessário',
@@ -2142,6 +2302,7 @@ $messages['ro'] = array(
  * @author Lockal
  * @author MaxSem
  * @author McDutchie
+ * @author Van de Bugger
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -2182,6 +2343,7 @@ $messages['ru'] = array(
 	'validator-describe-bothhooks' => 'Реализовано и функция парсера, и дополнительный тег.',
 	'validator-describe-par-hooks' => 'Обработчик парсера, для которого отображать документацию.',
 	'validator-describe-par-pre' => 'Позволяет получить фактический викитекст для документации, без показа на странице.',
+	'validator-describe-par-language' => 'Язык для отображения описания',
 	'validator-describe-listtype' => 'Перечень пунктов $1',
 	'validator-describe-empty' => 'пусто',
 	'validator-describe-required' => 'требуется',
@@ -2199,8 +2361,8 @@ $messages['ru'] = array(
 	'validator-describe-pfmax' => 'Парсерная функция со всеми параметрами.',
 	'validator-describe-pfdefault' => 'Парсерная функция со всеми параметрами, использованием параметров по умолчанию.',
 	'validator-describe-autogen' => 'Содержимое этого раздела было автоматически создано парсерным обработчиком «describe» расширения Validator.',
-	'validator_error_empty_argument' => 'Параметр $1 не может принимать пустое значение.',
-	'validator_error_must_be_number' => 'Значением параметра $1 могут быть только числа.',
+	'validator_error_empty_argument' => 'Параметр «$1» не может принимать пустое значение.',
+	'validator_error_must_be_number' => 'Значением параметра «$1» могут быть только числа.',
 	'validator_error_must_be_integer' => 'Параметр $1 может быть только целым числом.',
 	'validator-error-must-be-float' => 'Параметр $1 может быть числом с плавающей точкой.',
 	'validator_error_invalid_range' => 'Параметр $1 должен быть от $2 до $3.',
@@ -2238,6 +2400,18 @@ $messages['si'] = array(
 	'validator_error_invalid_range' => '$1 පරාමිතිය $2 හා $3 අතර විය යුතුය.',
 	'validator_error_invalid_argument' => '$2 පරාමිතිය සඳහා $1 අගය වලංගු නොවේ.',
 	'validator_error_accepts_only' => '$1 පරාමිතිය විසින් පිළිගනු ලබන්නේ {{PLURAL:$3|මෙම අගය|මෙම අගයන්}}: $2 පමණි.',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'validator-listerrors-severity-message' => '($1) $2',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'validator-listerrors-severity-message' => '($1) $2',
 );
 
 /** Swedish (Svenska)
@@ -2453,6 +2627,7 @@ $messages['zh-hans'] = array(
 	'validator-listerrors-fatal' => '致命',
 	'validator-describe-descriptionmsg' => "'''说明'''：$1",
 	'validator-describe-empty' => '空白',
+	'validator-describe-header-parameter' => '参数',
 	'validator-describe-header-type' => '类型',
 	'validator-describe-header-description' => '说明',
 	'validator_error_empty_argument' => '参数 $1 不能为空。',
@@ -2463,6 +2638,7 @@ $messages['zh-hans'] = array(
 	'validator_list_error_empty_argument' => '参数 $1 不接受空值。',
 	'validator_list_error_must_be_number' => '参数 $1 只能包含数字。',
 	'validator_list_error_must_be_integer' => '参数 $1 只能包含整数。',
+	'validator-list-error-must-be-float' => '参数 $1 只能包含浮点数。',
 	'validator_list_error_invalid_range' => '参数 $1 所有合法的值都必须介于 $2 与 $3 之间。',
 	'validator_list_error_invalid_argument' => '参数 $1 的一个或多个值不合法。',
 );
@@ -2475,10 +2651,36 @@ $messages['zh-hant'] = array(
 	'validator-warning' => '警告：$1',
 	'validator-error' => '錯誤：$1',
 	'validator-fatal-error' => '致命錯誤：$1',
+	'validator-error-problem' => '參數 $1 存在一個問題。',
+	'validator_error_unknown_argument' => '$1 不是一個有效的參數。',
+	'validator_error_required_missing' => '未能提供必要的參數 $1 。',
+	'validator-error-override-argument' => '試圖用 "$3" 覆蓋參數 $1 的值（$2）',
+	'validator-type-string' => '文本',
+	'validator-type-number' => '號碼',
+	'validator-type-float' => '浮點數',
+	'validator-type-boolean' => '布爾值',
+	'validator-type-char' => '字符',
+	'validator-listerrors-errors' => '錯誤',
+	'validator-listerrors-minor' => '很小',
+	'validator-listerrors-low' => '小',
+	'validator-listerrors-normal' => '中',
+	'validator-listerrors-high' => '大',
+	'validator-listerrors-fatal' => '致命',
+	'validator-describe-descriptionmsg' => "'''說明'''：$1",
+	'validator-describe-empty' => '空白',
 	'validator-describe-header-parameter' => '參數',
+	'validator-describe-header-type' => '類型',
+	'validator-describe-header-description' => '說明',
+	'validator_error_empty_argument' => '參數 $1 不能為空。',
+	'validator_error_must_be_number' => '參數 $1 只能為數字。',
+	'validator_error_must_be_integer' => '參數 $1 只能為整數。',
+	'validator_error_invalid_range' => '參數 $1 的範圍必須介於 $2 與 $3 之間。',
+	'validator_error_invalid_argument' => '值 $1 對於參數 $2 不合法。',
 	'validator_list_error_empty_argument' => '參數 $1 不接受空值。',
 	'validator_list_error_must_be_number' => '參數 $1 只能包含數字。',
 	'validator_list_error_must_be_integer' => '參數 $1 只能包含整數。',
 	'validator-list-error-must-be-float' => '參數 $1 只能包含浮點數。',
+	'validator_list_error_invalid_range' => '參數 $1 所有合法的值都必須介於 $2 與 $3 之間。',
+	'validator_list_error_invalid_argument' => '參數 $1 的一個或多個值不合法。',
 );
 

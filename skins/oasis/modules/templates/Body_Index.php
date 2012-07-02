@@ -139,25 +139,9 @@
 			?>
 
 			<?php if (!empty($afterContentHookText)) { ?>
-			<div id="WikiaArticleFooter" class="WikiaArticleFooter">
-				<?= $afterContentHookText ?>
-			</div>
-			<?php } ?>
-
-	<?php
-		if (!empty($displayComments)) {
-			echo wfRenderModule('ArticleComments');
-		}
-
-		if (!empty($displayWall)) {
-			echo wfRenderModule('Wall');
-		}
-	?>
-
-			<?php if (!empty($afterCommentsHookText)) { ?>
-			<div id="WikiaArticleAfterComments" class="WikiaArticleAfterComments">
-				<?= $afterCommentsHookText ?>
-			</div>
+				<div id="WikiaArticleFooter" class="WikiaArticleFooter">
+					<?= $afterContentHookText ?>
+				</div>
 			<?php } ?>
 
 			<div id="WikiaArticleBottomAd" class="noprint">

@@ -43,7 +43,7 @@ class MapsImageLayer extends MapsLayer {
 		
 		$params['source'] = new Parameter( 'source' );
 		$params['source']->addCriteria( new CriterionIsImage() );
-		$params['source']->addManipulations( new MapsParamImage() );
+		$params['source']->addManipulations( new MapsParamFile() );
 		
 		return $params;
 	}

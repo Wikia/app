@@ -27,9 +27,6 @@ class RecentRatings extends SpecialPage
 	 */
 	function RecentRatings()
 	{
-		global $wgMessageCache;
-		$wgMessageCache->addMessage('recentratings', 'Recent ratings');
-
 		SpecialPage::SpecialPage('RecentRatings');
 		$this->includable(true);
 	}

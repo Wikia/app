@@ -17,7 +17,7 @@ if(typeof ApiExplorer == "undefined"){
 		 */
 		this.run = function(){
 			$().log("Starting API Explorer...");
-			
+
 			// Show the loading indicator until the API request has returned & the new page-content is set-up.
 			$('#apEx_loading').show();
 
@@ -99,7 +99,7 @@ if(typeof ApiExplorer == "undefined"){
 				$().log(err);
 			});
 		};
-		
+
 		/**
 		 * Converts a JS object to HTML (mostly nested lists), but tweaked for the specific use-case of
 		 * the API Explorer's results from the API... so it will make the result more readable, but this function

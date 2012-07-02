@@ -50,10 +50,10 @@ class Spreadsheet_Excel_Writer extends Spreadsheet_Excel_Writer_Workbook
     * @param string $filename The optional filename for the Workbook.
     * @return Spreadsheet_Excel_Writer_Workbook The Workbook created
     */
-    function Spreadsheet_Excel_Writer($filename = '')
+    function __construct($filename = '')
     {
         $this->_filename = $filename;
-        $this->Spreadsheet_Excel_Writer_Workbook($filename);
+        parent::__construct($filename);
     }
 
     /**
@@ -101,4 +101,3 @@ class Spreadsheet_Excel_Writer extends Spreadsheet_Excel_Writer_Workbook
         return $chr1 . $chr2 . $row;
     }
 }
-?>

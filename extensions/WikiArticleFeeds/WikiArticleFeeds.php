@@ -1,16 +1,16 @@
 <?php
-/*
+/**
  * WikiArticleFeeds.php - A MediaWiki extension for converting regular pages into feeds.
  * @author Jim R. Wilson
- * @version 0.6.5
+ * @version 0.6.7
  * @copyright Copyright (C) 2007 Jim R. Wilson
- * @license The MIT License - http://www.opensource.org/licenses/mit-license.php 
+ * @license The MIT License - http://www.opensource.org/licenses/mit-license.php
  * -----------------------------------------------------------------------
  * Description:
  *     This is a MediaWiki (http://www.mediawiki.org/) extension which adds support
  *     for publishing RSS or Atom feeds generated from standard wiki articles.
  * Requirements:
- *     MediaWiki 1.6.x or higher
+ *     MediaWiki 1.12.x or higher
  *     PHP 4.x, 5.x or higher
  * Installation:
  *     1. Drop this script (WikiArticleFeeds.php) in $IP/extensions
@@ -21,20 +21,22 @@
  *     Once installed, you may utilize WikiArticleFeeds by invoking the 'feed' action of an article:
  *         $wgScript?title=Some_Article&action=feed
  *     Note: You may optionally supply a feed type.  Acceptable values inculde 'rss' and 'atom'.
- *     If no feed type is specified, the default is 'atom'.  For example: 
+ *     If no feed type is specified, the default is 'atom'.  For example:
  *         $wgScript?title=Some_Article&action=feed&feed=atom
  * Creating a Feed:
- *     To delimit a section of an article as containing feed items, use the <startFeed /> 
+ *     To delimit a section of an article as containing feed items, use the <startFeed />
  *     and <endFeed /> tags respectively.  These tags are merely flags, and any attributes
  *     specified, or content inside the tags themselves will be ignored.
  * Tagging a Feed item:
- *     To tag a feed item, insert either the <itemTags> tag, or the a call to the {{#itemTags}} parser 
- *     function somewhere between the opening header of the item (== Item Title ==) and the header of 
+ *     To tag a feed item, insert either the <itemTags> tag, or the a call to the {{#itemTags}} parser
+ *     function somewhere between the opening header of the item (== Item Title ==) and the header of
  *     the next item.  For example, to mark an item about dogs and cats, you could do any of the following:
  *         <itemTags>dogs, cats</itemTags>
  *         {{#itemTags:dogs, cats}}
  *         {{#itemTags:dogs|cats}}
  * Version Notes:
+ *     version 0.6.6:
+ *         Updated version requirement to MediaWiki 1.12 and up.
  *     version 0.6.5:
  *         Simplified many regular expression to get it working on MW 1.16
  *     version 0.6.4:
@@ -74,32 +76,32 @@
  *         Initial release.
  * -----------------------------------------------------------------------
  * Copyright (c) 2007 Jim R. Wilson
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy 
- * of this software and associated documentation files (the "Software"), to deal 
- * in the Software without restriction, including without limitation the rights to 
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of 
- * the Software, and to permit persons to whom the Software is furnished to do 
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do
  * so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all 
+ *
+ * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
- * OTHER DEALINGS IN THE SOFTWARE. 
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
  * -----------------------------------------------------------------------
  */
 
 # Confirm MW environment
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define( 'WIKIARTICLEFEEDS_VERSION', '0.6.4' );
+define( 'WIKIARTICLEFEEDS_VERSION', '0.6.7' );
 
 # Bring in supporting classes
 require_once( "$IP/includes/Feed.php" );
@@ -110,21 +112,19 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'WikiArticleFeeds',
 	'author' => 'Jim Wilson (wilson.jim.r&lt;at&gt;gmail.com)',
-	'url' => 'http://jimbojw.com/wiki/index.php?title=WikiArticleFeeds',
-	'description' => 'Produces feeds generated from MediaWiki articles.',
+	'url' => '//www.mediawiki.org/wiki/Extension:WikiArticleFeeds',
 	'descriptionmsg' => 'wikiarticlefeeds-desc',
 	'version' => WIKIARTICLEFEEDS_VERSION
 );
 
 $dir = dirname( __FILE__ ) . '/';
-
 $wgExtensionMessagesFiles['WikiArticleFeeds'] = $dir . 'WikiArticleFeeds.i18n.php';
+$wgExtensionMessagesFiles['WikiArticleFeedsMagic'] = $dir . 'WikiArticleFeeds.i18n.magic.php';
 
 /**
  * Wrapper class for consolidating all WAF related parser methods
  */
 class WikiArticleFeedsParser {
-
 	function feedStart( $text, $params = array() ) {
 		return '<!-- FEED_START -->';
 	}
@@ -147,12 +147,6 @@ class WikiArticleFeedsParser {
 		return ( !empty( $tags ) ? '<pre>@ITEMTAGS@' . base64_encode( serialize( implode( ',', $tags ) ) ) . '@ITEMTAGS@</pre>':'' );
 	}
 
-	// FIXME: remove after 1.16 branching. This extension has not been branched yet.
-	function itemTagsMagic( &$magicWords, $langCode = null ) {
-		$magicWords['itemtags'] = array( 0, 'itemtags' );
-		return true;
-	}
-
 	function itemTagsPlaceholderCorrections( $parser, &$text ) {
 		$text = preg_replace(
 							 '|<pre>@ITEMTAGS@([0-9a-zA-Z\\+\\/]+=*)@ITEMTAGS@</pre>|',
@@ -165,52 +159,28 @@ class WikiArticleFeedsParser {
 
 # Create global instance
 $wgWikiArticleFeedsParser = new WikiArticleFeedsParser();
-// FIXME: update after 1.16 branching for new style magic words. This extension has not been branched yet.
-if ( version_compare( $wgVersion, '1.7', '<' ) ) {
-	# Hack solution to resolve 1.6 array parameter nullification for hook args
-	function wfWAFParserItemTagsMagic( &$magicWords ) {
-		global $wgWikiArticleFeedsParser;
-		$wgWikiArticleFeedsParser->itemTagsMagic( $magicWords );
-		return true;
-	}
-	function wfWAFParserPlaceholderCorrections( $parser, &$text ) {
-		global $wgWikiArticleFeedsParser;
-		$wgWikiArticleFeedsParser->itemTagsPlaceholderCorrections( $parser, $text );
-		return true;
-	}
-	$wgHooks['LanguageGetMagic'][] = 'wfWAFParserItemTagsMagic';
-	$wgHooks['ParserBeforeTidy'][] = 'wfWAFParserPlaceholderCorrections';
-} else {
-	$wgHooks['LanguageGetMagic'][] = array( $wgWikiArticleFeedsParser, 'itemTagsMagic' );
-	$wgHooks['ParserBeforeTidy'][] = array( $wgWikiArticleFeedsParser, 'itemTagsPlaceholderCorrections' );
-}
+$wgHooks['ParserBeforeTidy'][] = array( $wgWikiArticleFeedsParser, 'itemTagsPlaceholderCorrections' );
 
 # Add Extension Functions
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) )
-	$wgHooks['ParserFirstCallInit'][] = 'wfWikiArticleFeedsParserSetup';
-else
-	$wgExtensionFunctions[] = 'wfWikiArticleFeedsParserSetup';
+$wgHooks['ParserFirstCallInit'][] = 'wfWikiArticleFeedsParserSetup';
 
 # Sets up the WikiArticleFeeds Parser hooks
-function wfWikiArticleFeedsParserSetup() {
-	global $wgParser, $wgWikiArticleFeedsParser;
+function wfWikiArticleFeedsParserSetup( $parser ) {
+	global $wgWikiArticleFeedsParser;
 
-	$wgParser->setHook( 'startFeed', array( $wgWikiArticleFeedsParser, 'feedStart' ) );
-	$wgParser->setHook( 'endFeed', array( $wgWikiArticleFeedsParser, 'feedEnd' ) );
-	$wgParser->setHook( 'feedBurner', array( $wgWikiArticleFeedsParser, 'burnFeed' ) );
-	$wgParser->setHook( 'itemTags', array( $wgWikiArticleFeedsParser, 'itemTagsTag' ) );
+	$parser->setHook( 'startFeed', array( $wgWikiArticleFeedsParser, 'feedStart' ) );
+	$parser->setHook( 'endFeed', array( $wgWikiArticleFeedsParser, 'feedEnd' ) );
+	$parser->setHook( 'feedBurner', array( $wgWikiArticleFeedsParser, 'burnFeed' ) );
+	$parser->setHook( 'itemTags', array( $wgWikiArticleFeedsParser, 'itemTagsTag' ) );
 
-	$wgParser->setFunctionHook( 'itemtags', array( $wgWikiArticleFeedsParser, 'itemTagsFunction' ) );
+	$parser->setFunctionHook( 'itemtags', array( $wgWikiArticleFeedsParser, 'itemTagsFunction' ) );
 	return true;
 }
 
 # Attach Hooks
 $wgHooks['OutputPageBeforeHTML'][] = 'wfAddWikiFeedHeaders';
-if ( version_compare( $wgVersion, '1.13', '>=' ) ) {
-	$wgHooks['SkinTemplateToolboxEnd'][] = 'wfWikiArticleFeedsToolboxLinks'; // introduced in 1.13
-} else {
-	$wgHooks['MonoBookTemplateToolboxEnd'][] = 'wfWikiArticleFeedsToolboxLinks';
-}
+$wgHooks['SkinTemplateToolboxEnd'][] = 'wfWikiArticleFeedsToolboxLinks'; // introduced in 1.13
+
 $wgHooks['UnknownAction'][] = 'wfWikiArticleFeedsAction';
 $wgHooks['ArticlePurge'][] = 'wfPurgeFeedsOnArticlePurge';
 
@@ -271,10 +241,21 @@ function wfAddWikiFeedHeaders( $out, $text ) {
  * @param QuickTemplate $template Instance of MonoBookTemplate or other QuickTemplate
  */
 function wfWikiArticleFeedsToolboxLinks( $template ) {
-	global $wgOut, $wgServer, $wgScript, $wgArticle, $wgWikiFeedPresent;
+	global $wgServer, $wgScript, $wgWikiFeedPresent;
 
-	# Short-circuit if wgArticle has not been set or there are no Feeds present
-	if ( !$wgArticle || !$wgWikiFeedPresent ) return true;
+	# Short-circuit if there are no Feeds present
+	if ( !$wgWikiFeedPresent ) return true;
+
+	if ( is_callable( $template, 'getSkin' ) ) {
+		$title = $template->getSkin()->getTitle();
+	} else {
+		global $wgTitle;
+		$title = $wgTitle;
+	}
+
+	if ( $title->getNamespace() < NS_MAIN ) {
+		return true;
+	}
 
 	$result = '<li id="feedlinks">';
 
@@ -292,7 +273,7 @@ function wfWikiArticleFeedsToolboxLinks( $template ) {
 				$result .=
 				'<span id="feed-' . htmlspecialchars( $feed ) . '">' .
 				'<a href="http://feeds.feedburner.com/' . urlencode( $feedBurnerName ) . '?format=xml">' .
-				htmlspecialchars( $name ) . '</a>&nbsp;</span>';
+				htmlspecialchars( $name ) . '</a>&#160;</span>';
 			}
 			$burned = true;
 		}
@@ -300,7 +281,6 @@ function wfWikiArticleFeedsToolboxLinks( $template ) {
 
 	# Generate regular RSS and Atom feeds if not fed by feedBurner
 	if ( !$burned ) {
-		$title = $wgArticle->getTitle();
 		$dbKey = $title->getPrefixedDBkey();
 		$baseUrl = $wgServer . $wgScript . '?title=' . $dbKey . '&action=feed&feed=';
 		$feeds = array( 'rss' => 'RSS', 'atom' => 'Atom' );
@@ -308,7 +288,7 @@ function wfWikiArticleFeedsToolboxLinks( $template ) {
 			$result .=
 			'<span id="feed-' . htmlspecialchars( $feed ) . '">' .
 			'<a href="' . htmlspecialchars( $baseUrl . $feed ) . '">' .
-			htmlspecialchars( $name ) . '</a>&nbsp;</span>';
+			htmlspecialchars( $name ) . '</a>&#160;</span>';
 		}
 	}
 
@@ -321,11 +301,11 @@ function wfWikiArticleFeedsToolboxLinks( $template ) {
 /**
  * Injects handling of the 'feed' action.
  * Usage: $wgHooks['UnknownAction'][] = 'wfWikiArticleFeedsAction';
- * @param $action Handle to an action string (presumably same as $wgRequest->getVal('action')).
- * @param $article Article to be converted to rss or atom feed  (presumably same as $wgArticle).
+ * @param $action Handle to an action string (presumably same as global $action).
+ * @param $article Article to be converted to rss or atom feed
  */
 function wfWikiArticleFeedsAction( $action, $article ) {
-	
+
 	# If some other action is in the works, cut and run!
 	if ( $action != 'feed' ) return true;
 
@@ -392,7 +372,7 @@ function wfWikiArticleFeedsAction( $action, $article ) {
 		wfGenerateWikiFeed( $article, $feedFormat, $filterTags );
 		$cachedFeed = ob_get_contents();
 		ob_end_flush();
-		
+
 		$expire = 3600 * 24; # One day
 		$messageMemc->set( $key, $cachedFeed );
 		$messageMemc->set( $timekey, wfTimestamp( TS_MW ), $expire );
@@ -426,7 +406,7 @@ function wfPurgeFeedsOnArticlePurge( $article ) {
  * @param Array $filterTags Tags to use in filtering out items.
  */
 function wfGenerateWikiFeed( $article, $feedFormat = 'atom', $filterTags = null ) {
-	global $wgOut, $wgScript, $wgServer, $wgFeedClasses, $wgVersion, $wgSitename;
+	global $wgOut, $wgServer, $wgFeedClasses, $wgVersion, $wgSitename;
 
 	# Setup, handle redirects
 	if ( $article->isRedirect() ) {
@@ -465,7 +445,7 @@ function wfGenerateWikiFeed( $article, $feedFormat = 'atom', $filterTags = null 
 		# Determine the item titles and default item links
 		preg_match_all(
 					   $sectionRegExp,
-					   $feedContent, 
+					   $feedContent,
 					   $matches
 					   );
 		$itemLinks = $matches[1];
@@ -478,7 +458,7 @@ function wfGenerateWikiFeed( $article, $feedFormat = 'atom', $filterTags = null 
 			if ( !$feedDescription ) {
 				$feedDescription = $segDesc;
 			} else {
-				wfLoadExtensionMessages( 'WikiArticleFeeds' );
+
 				$feedDescription = wfMsg( 'wikiarticlefeeds_combined_description' );
 			}
 		}
@@ -562,7 +542,7 @@ function wfGenerateWikiFeed( $article, $feedFormat = 'atom', $filterTags = null 
 	$feedTitle = $wgSitename . ' - ' . $title->getPrefixedText();
 	$feedId = $title->getFullUrl();
 
-	# Create feed    
+	# Create feed
 	$feed = new $wgFeedClasses[$feedFormat]( $feedTitle, $feedDescription, $feedId );
 
 	# Push feed header
@@ -582,4 +562,3 @@ function wfGenerateWikiFeed( $article, $feedFormat = 'atom', $filterTags = null 
 	# Feed footer
 	$feed->outFooter();
 }
-

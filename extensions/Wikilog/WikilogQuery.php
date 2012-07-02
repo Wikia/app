@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -43,6 +44,12 @@ abstract class WikilogQuery
 	 * Default options. This array should be overriden by derived classes.
 	 */
 	protected $mDefaultOptions = array();
+
+	/**
+	 * Whether the query should always return nothing (when invalid options
+	 * are provided, for example).
+	 */
+	protected $mEmpty = false;
 
 	/**
 	 * Constructor.
@@ -83,6 +90,12 @@ abstract class WikilogQuery
 			throw new MWException( __METHOD__ . ': Invalid $opts parameter.' );
 		}
 	}
+
+	/**
+	 * Filter is always returns empty.
+	 */
+	public function setEmpty( $empty = true ) { $this->mEmpty = $empty; }
+	public function getEmpty() { return $this->mEmpty; }
 
 	/**
 	 * Generate and return query information.
@@ -157,6 +170,7 @@ class WikilogItemQuery
 
 	# Local variables.
 	private $mWikilogTitle = null;			///< Filter by wikilog.
+	private $mNamespace = false;			///< Filter by namespace.
 	private $mPubStatus = self::PS_ALL;		///< Filter by published status.
 	private $mCategory = false;				///< Filter by category.
 	private $mAuthor = false;				///< Filter by author.
@@ -191,6 +205,14 @@ class WikilogItemQuery
 	 */
 	public function setWikilogTitle( $wikilogTitle ) {
 		$this->mWikilogTitle = $wikilogTitle;
+	}
+
+	/**
+	 * Sets the wikilog namespace to query for.
+	 * @param $ns Namespace to query for.
+	 */
+	public function setNamespace( $ns ) {
+		$this->mNamespace = $ns;
 	}
 
 	/**
@@ -231,7 +253,7 @@ class WikilogItemQuery
 		} elseif ( is_string( $author ) ) {
 			$t = Title::makeTitleSafe( NS_USER, $author );
 			if ( $t !== null ) {
-				$this->mAuthor = $t;
+				$this->mAuthor = User::getCanonicalName( $t->getText() );
 			}
 		}
 	}
@@ -272,12 +294,13 @@ class WikilogItemQuery
 	/**
 	 * Accessor functions.
 	 */
-	public function getWikilogTitle()	{ return $this->mWikilogTitle; }
-	public function getPubStatus()		{ return $this->mPubStatus; }
-	public function getCategory()		{ return $this->mCategory; }
-	public function getAuthor()		{ return $this->mAuthor; }
-	public function getTag()			{ return $this->mTag; }
-	public function getDate()			{ return $this->mDate; }
+	public function getWikilogTitle() { return $this->mWikilogTitle; }
+	public function getNamespace() { return $this->mNamespace; }
+	public function getPubStatus() { return $this->mPubStatus; }
+	public function getCategory() { return $this->mCategory; }
+	public function getAuthor() { return $this->mAuthor; }
+	public function getTag() { return $this->mTag; }
+	public function getDate() { return $this->mDate; }
 
 	/**
 	 * Organizes all the query information and constructs the table and
@@ -301,9 +324,16 @@ class WikilogItemQuery
 		$q_options = array();
 		$q_joins = $wlp_tables['join_conds'];
 
+		# Invalid filter.
+		if ( $this->mEmpty ) {
+			$q_conds[] = '0=1';
+		}
+
 		# Filter by wikilog name.
 		if ( $this->mWikilogTitle !== null ) {
 			$q_conds['wlp_parent'] = $this->mWikilogTitle->getArticleId();
+		} elseif ( $this->mNamespace !== false ) {
+			$q_conds['p.page_namespace'] = $this->mNamespace;
 		}
 
 		# Filter by published status.
@@ -324,7 +354,7 @@ class WikilogItemQuery
 		if ( $this->mAuthor ) {
 			$q_tables[] = 'wikilog_authors';
 			$q_joins['wikilog_authors'] = array( 'JOIN', 'wlp_page = wla_page' );
-			$q_conds['wla_author_text'] = $this->mAuthor->getDBkey();
+			$q_conds['wla_author_text'] = $this->mAuthor;
 		}
 
 		# Filter by tag.
@@ -367,6 +397,8 @@ class WikilogItemQuery
 
 		if ( $this->mNeedWikilogParam && $this->mWikilogTitle ) {
 			$query['wikilog'] = $this->mWikilogTitle->getPrefixedDBKey();
+		} elseif ( $this->mNamespace !== false ) {
+			$query['wikilog'] = Title::makeTitle( $this->mNamespace, "*" )->getPrefixedDBKey();
 		}
 
 		if ( $this->mPubStatus == self::PS_ALL ) {
@@ -380,7 +412,7 @@ class WikilogItemQuery
 		}
 
 		if ( $this->mAuthor ) {
-			$query['author'] = $this->mAuthor->getDBKey();
+			$query['author'] = $this->mAuthor;
 		}
 
 		if ( $this->mTag ) {
@@ -441,6 +473,7 @@ class WikilogCommentQuery
 
 	# Local variables.
 	private $mModStatus = self::MS_ALL;	///< Filter by moderation status.
+	private $mNamespace = false;		///< Filter by namespace.
 	private $mWikilog = null;			///< Filter by wikilog.
 	private $mItem = null;				///< Filter by wikilog item (article).
 	private $mThread = false;			///< Filter by thread.
@@ -504,8 +537,18 @@ class WikilogCommentQuery
 	}
 
 	/**
+	 * Set the namespace to query for. Only comments for articles published
+	 * in the given namespace are returned. The wikilog and item filters have
+	 * precedence over this filter.
+	 * @param $ns Namespace to query for.
+	 */
+	public function setNamespace( $ns ) {
+		$this->mNamespace = $ns;
+	}
+
+	/**
 	 * Set the wikilog to query for. Only comments for articles published in
-	 * the given wikilog is returned. The item filter has precedence over this
+	 * the given wikilog are returned. The item filter has precedence over this
 	 * filter.
 	 * @param $wikilogTitle Wikilog title object to query for (Title).
 	 */
@@ -551,7 +594,7 @@ class WikilogCommentQuery
 		} elseif ( is_string( $author ) ) {
 			$t = Title::makeTitleSafe( NS_USER, $author );
 			if ( $t !== null ) {
-				$this->mAuthor = $t;
+				$this->mAuthor = User::getCanonicalName( $t->getText() );
 			}
 		}
 	}
@@ -582,6 +625,7 @@ class WikilogCommentQuery
 	 * Accessor functions.
 	 */
 	public function getModStatus() { return $this->mModStatus; }
+	public function getNamespace() { return $this->mNamespace; }
 	public function getWikilog() { return $this->mWikilog; }
 	public function getItem() { return $this->mItem; }
 	public function getThread() { return $this->mThread; }
@@ -610,6 +654,11 @@ class WikilogCommentQuery
 		$q_options = array();
 		$q_joins = $wlc_tables['join_conds'];
 
+		# Invalid filter.
+		if ( $this->mEmpty ) {
+			$q_conds[] = '0=1';
+		}
+
 		# Filter by moderation status.
 		if ( $this->mModStatus == self::MS_ACCEPTED ) {
 			$q_conds['wlc_status'] = 'OK';
@@ -625,17 +674,18 @@ class WikilogCommentQuery
 		if ( $this->mItem !== null ) {
 			$q_conds['wlc_post'] = $this->mItem->getID();
 			if ( $this->mThread ) {
-				$thread = $db->escapeLike( $this->mThread );
-				$q_conds[] = "wlc_thread LIKE '{$thread}/%'";
+				$q_conds[] = "wlc_thread " . $db->buildLike( $this->mThread . '/', $db->anyString() );
 			}
 		} elseif ( $this->mWikilog !== null ) {
 			$join_wlp = true;
 			$q_conds['wlp_parent'] = $this->mWikilog->getArticleId();
+		} elseif ( $this->mNamespace !== false ) {
+			$q_conds['c.page_namespace'] = $this->mNamespace;
 		}
 
 		# Filter by author.
 		if ( $this->mAuthor ) {
-			$q_conds['wlc_user_text'] = $this->mAuthor->getDBkey();
+			$q_conds['wlc_user_text'] = $this->mAuthor;
 		}
 
 		# Filter by date.
@@ -677,6 +727,8 @@ class WikilogCommentQuery
 			$query['item'] = $this->mItem->mTitle->getPrefixedDBKey();
 		} elseif ( $this->mWikilog ) {
 			$query['wikilog'] = $this->mWikilog->getPrefixedDBKey();
+		} elseif ( $this->mNamespace !== false ) {
+			$query['wikilog'] = Title::makeTitle( $this->mNamespace, "*" )->getPrefixedDBKey();
 		}
 
 		if ( $this->mModStatus != self::MS_ALL ) {
@@ -684,7 +736,7 @@ class WikilogCommentQuery
 		}
 
 		if ( $this->mAuthor ) {
-			$query['author'] = $this->mAuthor->getDBKey();
+			$query['author'] = $this->mAuthor;
 		}
 
 		if ( $this->mDate ) {

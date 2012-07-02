@@ -214,4 +214,3 @@ function strip_speech_by() {
 		$inx++;
 	}
 }
-?>

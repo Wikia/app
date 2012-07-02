@@ -38,7 +38,6 @@ class SMWSQLStoreLight extends SMWStore {
 		'__sps' => true, // Special string type
 		'__spu' => true, // Special uri type
 		'__spf' => true, // Special form type (for Semantic Forms)
-		'__lin' => true, // Special linear unit conversion type
 		'__imp' => true, // Special import vocabulary type
 	);
 
@@ -75,7 +74,7 @@ class SMWSQLStoreLight extends SMWStore {
 			$this->m_sdstate = array( $sid => $this->m_sdstate[$sid] );
 		}
 		//*** Read the data ***//
-		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db = wfGetDB( DB_SLAVE );
 		foreach ( array( 'smwsimple_data', 'smwsimple_special' ) as $tablename ) {
 			if ( array_key_exists( $tablename, $this->m_sdstate[$sid] ) ) continue;
 			if ( $filter !== false ) {
@@ -87,7 +86,7 @@ class SMWSQLStoreLight extends SMWStore {
 			}
 			$res = $db->select( $tablename, array( 'propname', 'value' ), array( 'pageid' => $sid ),
 			                    'SMW::getSemanticData', array( 'DISTINCT' ) );
-			while ( $row = $db->fetchObject( $res ) ) {
+			foreach ( $res as $row ) {
 				$value = ( $tablename == 'smwsimple_special' ) ? array( $row->value ) : unserialize( $row->value );
 				$this->m_semdata[$sid]->addPropertyStubValue( $row->propname, $value );
 			}
@@ -100,7 +99,7 @@ class SMWSQLStoreLight extends SMWStore {
 		return $this->m_semdata[$sid];
 	}
 
-	public function getPropertyValues( $subject, SMWPropertyValue $property, $requestoptions = null, $outputformat = '' ) {
+	public function getPropertyValues( $subject, SMWDIProperty $property, $requestoptions = null, $outputformat = '' ) {
 		wfProfileIn( "SMWSQLStoreLight::getPropertyValues (SMW)" );
 		if ( $property->isInverse() ) { // inverses are working differently
 			$noninverse = clone $property;
@@ -109,7 +108,7 @@ class SMWSQLStoreLight extends SMWStore {
 		} elseif ( $subject !== null ) { // subject given, use semantic data cache:
 			$sd = $this->getSemanticData( $subject, array( $property->getPropertyTypeID() ) );
 			$result = $this->applyRequestOptions( $sd->getPropertyValues( $property ), $requestoptions );
-			if ( $outputformat != '' ) { // reformat cached values
+			if ( $outputformat !== '' ) { // reformat cached values
 				$newres = array();
 				foreach ( $result as $dv ) {
 					$ndv = clone $dv;
@@ -120,13 +119,13 @@ class SMWSQLStoreLight extends SMWStore {
 			}
 		} else { // no subject given, get all values for the given property
 			$tablename = SMWSQLStoreLight::findPropertyTableName( $property );
-			$db = wfGetDB( DB_SLAVE, 'smw' );
+			$db = wfGetDB( DB_SLAVE );
 			$res = $db->select( $tablename, array( 'value' ), array( 'propname' => $property->getDBkey() ),
 			                    'SMW::getPropertyValues', $this->getSQLOptions( $requestoptions, 'value' ) + array( 'DISTINCT' ) );
 			$result = array();
-			while ( $row = $db->fetchObject( $res ) ) {
+			foreach ( $res as $row ) {
 				$dv = SMWDataValueFactory::newPropertyObjectValue( $property );
-				if ( $outputformat != '' ) $dv->setOutputFormat( $outputformat );
+				if ( $outputformat !== '' ) $dv->setOutputFormat( $outputformat );
 				$dv->setDBkeys( ( $tablename == 'smwsimple_special' ) ? array( $row->value ) : unserialize( $row->value ) );
 				$result[] = $dv;
 			}
@@ -136,7 +135,7 @@ class SMWSQLStoreLight extends SMWStore {
 		return $result;
 	}
 
-	public function getPropertySubjects( SMWPropertyValue $property, $value, $requestoptions = null ) {
+	public function getPropertySubjects( SMWDIProperty $property, $value, $requestoptions = null ) {
 		wfProfileIn( "SMWSQLStoreLight::getPropertySubjects (SMW)" );
 		if ( $property->isInverse() ) { // inverses are working differently
 			$noninverse = clone $property;
@@ -148,7 +147,7 @@ class SMWSQLStoreLight extends SMWStore {
 
 		// ***  First build $select, $from, and $where for the DB query  ***//
 		$tablename = SMWSQLStoreLight::findPropertyTableName( $property );
-		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db = wfGetDB( DB_SLAVE );
 		$from = $db->tableName( 'page' ) . " AS p INNER JOIN " . $db->tableName( $tablename ) . " AS t ON t.pageid=p.page_id";
 		$where = 't.propname=' . $db->addQuotes( $property->getDBkey() );
 		if ( $value !== null ) {
@@ -162,7 +161,7 @@ class SMWSQLStoreLight extends SMWStore {
 		                    $where . $this->getSQLConditions( $requestoptions, 'p.page_title', 'p.page_title' ),
 							'SMW::getPropertySubjects',
 		                    $this->getSQLOptions( $requestoptions, 'p.page_title' ) + array( 'DISTINCT' ) );
-		while ( $row = $db->fetchObject( $res ) ) {
+		foreach ( $res as $row ) {
 			$result[] = SMWWikiPageValue::makePage( $row->title, $row->namespace, $row->title );
 		}
 		$db->freeResult( $res );
@@ -170,7 +169,7 @@ class SMWSQLStoreLight extends SMWStore {
 		return $result;
 	}
 
-	public function getAllPropertySubjects( SMWPropertyValue $property, $requestoptions = null ) {
+	public function getAllPropertySubjects( SMWDIProperty $property, $requestoptions = null ) {
 		wfProfileIn( "SMWSQLStoreLight::getAllPropertySubjects (SMW)" );
 		$result = $this->getPropertySubjects( $property, null, $requestoptions );
 		wfProfileOut( "SMWSQLStoreLight::getAllPropertySubjects (SMW)" );
@@ -188,7 +187,7 @@ class SMWSQLStoreLight extends SMWStore {
 			return array();
 		}
 
-		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db = wfGetDB( DB_SLAVE );
 		$result = array();
 		if ( $requestoptions !== null ) { // potentially need to get more results, since options apply to union
 			$suboptions = clone $requestoptions;
@@ -201,8 +200,8 @@ class SMWSQLStoreLight extends SMWStore {
 			$res = $db->select( $tablename, 'DISTINCT propname',
 				'pageid=' . $db->addQuotes($sid) . $this->getSQLConditions( $suboptions, 'propname', 'propname' ),
 				'SMW::getProperties', $this->getSQLOptions( $suboptions, 'propname' ) );
-			while ( $row = $db->fetchObject( $res ) ) {
-				$result[] = SMWPropertyValue::makeProperty( $row->propname );
+			foreach ( $res as $row ) {
+				$result[] = new SMWDIProperty( $row->propname );
 			}
 			$db->freeResult( $res );
 		}
@@ -223,7 +222,7 @@ class SMWSQLStoreLight extends SMWStore {
 	 */
 	public function getInProperties( SMWDataValue $value, $requestoptions = null ) {
 		wfProfileIn( "SMWSQLStoreLight::getInProperties (SMW)" );
-		$db = wfGetDB( DB_SLAVE, 'smw' );
+		$db = wfGetDB( DB_SLAVE );
 		$result = array();
 		$typeid = $value->getTypeID();
 
@@ -241,8 +240,8 @@ class SMWSQLStoreLight extends SMWStore {
 			$res = $db->select( $tablename, 'DISTINCT propname', // select sortkey since it might be used in ordering (needed by Postgres)
 								$where . $this->getSQLConditions( $suboptions, 'propname', 'propname' ),
 								'SMW::getInProperties', $this->getSQLOptions( $suboptions, 'propname' ) );
-			while ( $row = $db->fetchObject( $res ) ) {
-				$result[] = SMWPropertyValue::makeProperty( $row->propname );
+			foreach ( $res as $row ) {
+				$result[] = new SMWDIProperty( $row->propname );
 			}
 			$db->freeResult( $res );
 		}
@@ -264,7 +263,7 @@ class SMWSQLStoreLight extends SMWStore {
 		wfProfileOut( 'SMWSQLStoreLight::deleteSubject (SMW)' );
 	}
 
-	public function updateData( SMWSemanticData $data ) {
+	public function doDataUpdate( SMWSemanticData $data ) {
 		wfProfileIn( "SMWSQLStoreLight::updateData (SMW)" );
 		wfRunHooks( 'SMWSQLStoreLight::updateDataBefore', array( $this, $data ) );
 		$subject = $data->getSubject();
@@ -273,7 +272,7 @@ class SMWSQLStoreLight extends SMWStore {
 		$updates = array(); // collect data for bulk updates; format: tableid => updatearray
 		foreach ( $data->getProperties() as $property ) {
 			$tablename = SMWSQLStoreLight::findPropertyTableName( $property );
-			if ( $tablename == '' ) continue;
+			if ( $tablename === '' ) continue;
 			foreach ( $data->getPropertyValues( $property ) as $dv ) {
 				if ( !$dv->isValid() ) continue;
 				if ( $dv instanceof SMWContainerValue ) {
@@ -286,7 +285,7 @@ class SMWSQLStoreLight extends SMWStore {
 				$updates[$tablename][] = $uvals;
 			}
 		}
-		$db = wfGetDB( DB_MASTER, 'smw' );
+		$db = wfGetDB( DB_MASTER );
 		foreach ( $updates as $tablename => $uvals ) {
  			$db->insert( $tablename, $uvals, "SMW::updateData$tablename" );
 		}
@@ -341,7 +340,7 @@ class SMWSQLStoreLight extends SMWStore {
 	public function setup( $verbose = true ) {
 		$this->reportProgress( "Setting up standard database configuration for SMW ...\n\n", $verbose );
 		$this->reportProgress( "Selected storage engine is \"SMWSQLStoreLight\" (or an extension thereof)\n\n", $verbose );
-		$db = wfGetDB( DB_MASTER, 'smw' );
+		$db = wfGetDB( DB_MASTER );
 		$this->setupTables( $verbose, $db );
 		return true;
 	}
@@ -351,7 +350,6 @@ class SMWSQLStoreLight extends SMWStore {
 	 * when required.
 	 */
 	protected function setupTables( $verbose, $db ) {
-		global $wgDBtype;
 		$reportTo = $verbose ? $this : null; // Use $this to report back from static SMWSQLHelpers.
 
 		SMWSQLHelpers::setupTable( // table for most data
@@ -383,7 +381,7 @@ class SMWSQLStoreLight extends SMWStore {
 	public function drop( $verbose = true ) {
 		global $wgDBtype;
 		$this->reportProgress( "Deleting all database content and tables generated by SMW ...\n\n", $verbose );
-		$db = wfGetDB( DB_MASTER, 'smw' );
+		$db = wfGetDB( DB_MASTER );
 		$tables = array( 'smwsimple_data', 'smwsimple_special' );
 		foreach ( $tables as $table ) {
 			$name = $db->tableName( $table );
@@ -405,11 +403,9 @@ class SMWSQLStoreLight extends SMWStore {
 		}
 		$titles = Title::newFromIDs( $tids );
 		foreach ( $titles as $title ) {
-			if ( $title instanceof Title ) {
-				if ( ( $namespaces == false ) || ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-					$updatejobs[] = new SMWUpdateJob( $title );
-					$emptyrange = false;
-				}
+			if ( ( $namespaces == false ) || ( in_array( $title->getNamespace(), $namespaces ) ) ) {
+				$updatejobs[] = new SMWUpdateJob( $title );
+				$emptyrange = false;
 			}
 		}
 
@@ -422,6 +418,8 @@ class SMWSQLStoreLight extends SMWStore {
 				$job->run();
 			}
 		}
+
+		$db = wfGetDB( DB_SLAVE );
 		$nextpos = $index + $count;
 		if ( $emptyrange ) { // nothing found, check if there will be more pages later on
 			$nextpos = $db->selectField( 'page', 'page_id', "page_id >= $nextpos", __METHOD__, array( 'ORDER BY' => "page_id ASC" ) );
@@ -483,7 +481,7 @@ class SMWSQLStoreLight extends SMWStore {
 			if ( $requestoptions->offset > 0 ) {
 				$sql_options['OFFSET'] = $requestoptions->offset;
 			}
-			if ( ( $valuecol != '' ) && ( $requestoptions->sort ) ) {
+			if ( ( $valuecol !== '' ) && ( $requestoptions->sort ) ) {
 				$sql_options['ORDER BY'] = $requestoptions->ascending ? $valuecol : $valuecol . ' DESC';
 			}
 		}
@@ -502,8 +500,8 @@ class SMWSQLStoreLight extends SMWStore {
 	protected function getSQLConditions( $requestoptions, $valuecol = '', $labelcol = '', $addand = true ) {
 		$sql_conds = '';
 		if ( $requestoptions !== null ) {
-			$db = wfGetDB( DB_SLAVE, 'smw' ); /// TODO avoid doing this here again, all callers should have one
-			if ( ( $valuecol != '' ) && ( $requestoptions->boundary !== null ) ) { // apply value boundary
+			$db = wfGetDB( DB_SLAVE ); /// TODO avoid doing this here again, all callers should have one
+			if ( ( $valuecol !== '' ) && ( $requestoptions->boundary !== null ) ) { // apply value boundary
 				if ( $requestoptions->ascending ) {
 					$op = $requestoptions->include_boundary ? ' >= ':' > ';
 				} else {
@@ -511,7 +509,7 @@ class SMWSQLStoreLight extends SMWStore {
 				}
 				$sql_conds .= ( $addand ? ' AND ':'' ) . $valuecol . $op . $db->addQuotes( $requestoptions->boundary );
 			}
-			if ( $labelcol != '' ) { // apply string conditions
+			if ( $labelcol !== '' ) { // apply string conditions
 				foreach ( $requestoptions->getStringConditions() as $strcond ) {
 					$string = str_replace( '_', '\_', $strcond->string );
 					switch ( $strcond->condition ) {
@@ -519,7 +517,7 @@ class SMWSQLStoreLight extends SMWStore {
 						case SMWStringCondition::STRCOND_POST: $string = '%' . $string; break;
 						case SMWStringCondition::STRCOND_MID:  $string = '%' . $string . '%'; break;
 					}
-					$sql_conds .= ( ( $addand || ( $sql_conds != '' ) ) ? ' AND ':'' ) . $labelcol . ' LIKE ' . $db->addQuotes( $string );
+					$sql_conds .= ( ( $addand || ( $sql_conds !== '' ) ) ? ' AND ':'' ) . $labelcol . ' LIKE ' . $db->addQuotes( $string );
 				}
 			}
 		}
@@ -644,7 +642,7 @@ class SMWSQLStoreLight extends SMWStore {
 	 * purposes.
 	 */
 	protected function deleteSemanticData( SMWWikiPageValue $subject ) {
-		$db = wfGetDB( DB_MASTER, 'smw' );
+		$db = wfGetDB( DB_MASTER );
 		$id = $subject->getTitle()->getArticleID();
 		if ( $id == 0 ) return; // no data can be deleted (and hopefully no data exists)
 		foreach ( array( 'smwsimple_data', 'smwsimple_special' ) as $tablename ) {

@@ -4,12 +4,13 @@
  *
  * @file
  * @author Niklas Laxström
- * @copyright Copyright © 2009-2010 Niklas Laxström
+ * @copyright Copyright © 2009-2012 Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 /**
  * Class to parse translatable wiki pages.
+ *
  * @ingroup PageTranslation
  */
 class TranslatablePage {
@@ -25,6 +26,8 @@ class TranslatablePage {
 
 	/**
 	 * Revision of the page, if applicaple.
+	 *
+	 * @var int
 	 */
 	protected $revision = null;
 
@@ -39,7 +42,12 @@ class TranslatablePage {
 	 */
 	protected $init = false;
 
+	/**
+	 * Name of the section which contains the translated page title.
+	 */
 	protected $displayTitle = 'Page display title';
+
+	protected $cachedParse;
 
 	/**
 	 * @param title Title object for the page
@@ -54,6 +62,11 @@ class TranslatablePage {
 	 * Constructs a translatable page from given text.
 	 * Some functions will fail unless you set revision
 	 * parameter manually.
+	 *
+	 * @param $title Title
+	 * @param $text string
+	 *
+	 * @return TranslatablePage
 	 */
 	public static function newFromText( Title $title, $text ) {
 		$obj = new self( $title );
@@ -67,8 +80,11 @@ class TranslatablePage {
 	 * Constructs a translatable page from given revision.
 	 * The revision must belong to the title given or unspecified
 	 * behaviour will happen.
+	 *
+	 * @param $title Title
+	 * @param $revision integer Revision number
+	 * @return TranslatablePage
 	 */
-
 	public static function newFromRevision( Title $title, $revision ) {
 		$rev = Revision::newFromTitle( $title, $revision );
 		if ( $rev === null ) {
@@ -85,6 +101,9 @@ class TranslatablePage {
 	/**
 	 * Constructs a translatable page from title.
 	 * The text of last marked revision is loaded when neded.
+	 *
+	 * @param $title Title
+	 * @return TranslatablePage
 	 */
 	public static function newFromTitle( Title $title ) {
 		$obj = new self( $title );
@@ -97,6 +116,7 @@ class TranslatablePage {
 
 	/**
 	 * Returns the title for this translatable page.
+	 * @return Title
 	 */
 	public function getTitle() {
 		return $this->title;
@@ -104,6 +124,7 @@ class TranslatablePage {
 
 	/**
 	 * Returns the text for this translatable page.
+	 * @return \string
 	 */
 	public function getText() {
 		if ( $this->init === false ) {
@@ -161,13 +182,13 @@ class TranslatablePage {
 	 * @return \string
 	 */
 	public static function getMessageGroupIdFromTitle( Title $title ) {
-		return 'page|' . $title->getPrefixedText();
+		return 'page-' . $title->getPrefixedText();
 	}
 
 	/**
 	 * Returns MessageGroup used for translating this page. It may still be empty
 	 * if the page has not been ever marked.
-	 * @return \type{WikiPageMessageGroup}
+	 * @return WikiPageMessageGroup
 	 */
 	public function getMessageGroup() {
 		return MessageGroups::getGroup( $this->getMessageGroupId() );
@@ -186,8 +207,9 @@ class TranslatablePage {
 
 	/**
 	 * Returns a TPParse object which represents the parsed page.
-	 * Throws TPExcetion if the page is malformed as a translatable
+	 * @throws TPExcetion if the page is malformed as a translatable
 	 * page.
+	 * @return TPParse
 	 */
 	public function getParse() {
 		if ( isset( $this->cachedParse ) ) {
@@ -280,6 +302,11 @@ class TranslatablePage {
 
 	// Inner functionality //
 
+	/**
+	 * @param $holders
+	 * @param $text
+	 * @return mixed
+	 */
 	public static function armourNowiki( &$holders, $text ) {
 		$re = '~(<nowiki>)(.*?)(</nowiki>)~s';
 
@@ -292,6 +319,11 @@ class TranslatablePage {
 		return $text;
 	}
 
+	/**
+	 * @param $holders
+	 * @param $text
+	 * @return mixed
+	 */
 	public static function unArmourNowiki( $holders, $text ) {
 		foreach ( $holders as $ph => $value ) {
 			$text = str_replace( $ph, $value, $text );
@@ -302,12 +334,20 @@ class TranslatablePage {
 
 	/**
 	 * Returns a random string that can be used as placeholder.
+	 * @return string
 	 */
 	protected static function getUniq() {
 		static $i = 0;
 		return "\x7fUNIQ" . dechex( mt_rand( 0, 0x7fffffff ) ) . dechex( mt_rand( 0, 0x7fffffff ) ) . '|' . $i++;
 	}
 
+	/**
+	 * @param $string string
+	 * @param $rep
+	 * @param $start
+	 * @param $end
+	 * @return string
+	 */
 	protected static function index_replace( $string, $rep, $start, $end ) {
 		return substr( $string, 0, $start ) . $rep . substr( $string, $end );
 	}
@@ -318,7 +358,7 @@ class TranslatablePage {
 	 * in the template and not included in the sections.
 	 * @param $sections Array of placeholder => TPSection.
 	 * @param $text Contents of one pair of \<translate> tags.
-	 * @return string Templace with placeholders for sections, which itself are added to $sections.
+	 * @return \string Templace with placeholders for sections, which itself are added to $sections.
 	 */
 	protected function sectionise( &$sections, $text ) {
 		$flags = PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE;
@@ -387,27 +427,48 @@ class TranslatablePage {
 		return $section;
 	}
 
+	// Tag methods //
+
+	protected static $tagCache = array();
+
+	/**
+	 * Adds a tag which indicates that this page is
+	 * suitable for translation.
+	 * @param $revision integer|Revision
+	 * @param $value string
+	 */
 	public function addMarkedTag( $revision, $value = null ) {
 		$this->addTag( 'tp:mark', $revision, $value );
 		MessageGroups::clearCache();
 	}
 
+	/**
+	 * Adds a tag which indicates that this page source is
+	 * ready for marking for translation.
+	 * @param $revision integer|Revision
+	 */
 	public function addReadyTag( $revision ) {
 		$this->addTag( 'tp:tag', $revision );
 	}
 
+	/**
+	 * @param $tag
+	 * @param $revision Revision
+	 * @param $value string
+	 * @throws MWException
+	 */
 	protected function addTag( $tag, $revision, $value = null ) {
 		$dbw = wfGetDB( DB_MASTER );
 
-		$id = $this->getTagId( $tag );
+		$aid = $this->getTitle()->getArticleId();
 
 		if ( is_object( $revision ) ) {
 			throw new MWException( 'Got object, excepted id' );
 		}
 
 		$conds = array(
-			'rt_page' => $this->getTitle()->getArticleId(),
-			'rt_type' => $id,
+			'rt_page' => $aid,
+			'rt_type' => RevTag::getType( $tag ),
 			'rt_revision' => $revision
 		);
 		$dbw->delete( 'revtag', $conds, __METHOD__ );
@@ -417,12 +478,24 @@ class TranslatablePage {
 		}
 
 		$dbw->insert( 'revtag', $conds, __METHOD__ );
+
+		self::$tagCache[$aid][$tag] = $revision;
 	}
 
+	/**
+	 * Returns the latest revision which has marked tag, if any.
+	 * @param $db Database connection type
+	 * @return integer|false
+	 */
 	public function getMarkedTag( $db = DB_SLAVE ) {
 		return $this->getTag( 'tp:mark' );
 	}
 
+	/**
+	 * Returns the latest revision which has ready tag, if any.
+	 * @param $db Database connection type
+	 * @return integer|false
+	 */
 	public function getReadyTag( $db = DB_SLAVE ) {
 		return $this->getTag( 'tp:tag' );
 	}
@@ -433,52 +506,60 @@ class TranslatablePage {
 	 * @todo Change name to something better.
 	 */
 	public function removeTags() {
+		$aid = $this->getTitle()->getArticleId();
+
 		$dbw = wfGetDB( DB_MASTER );
 		$conds = array(
-			'rt_page' => $this->getTitle()->getArticleId(),
+			'rt_page' => $aid,
 			'rt_type' => array(
-				$this->getTagId( 'tp:mark' ),
-				$this->getTagId( 'tp:tag' ),
+				RevTag::getType( 'tp:mark' ),
+				RevTag::getType( 'tp:tag' ),
 			),
 		);
 
 		$dbw->delete( 'revtag', $conds, __METHOD__ );
-		$dbw->delete( 'translate_sections', array( 'trs_page' => $this->getTitle()->getArticleId() ), __METHOD__ );
+		$dbw->delete( 'translate_sections', array( 'trs_page' => $aid ), __METHOD__ );
+		unset( self::$tagCache[$aid] );
 	}
 
-	// Returns false if not found
+	/**
+	 * @param $tag
+	 * @param $dbt int
+	 * @return array|bool false if tag is not found
+	 */
 	protected function getTag( $tag, $dbt = DB_SLAVE ) {
-
 		if ( !$this->getTitle()->exists() ) {
 			return false;
 		}
 
-		static $cache = array();
 		$aid = $this->getTitle()->getArticleId();
 
-		if ( isset( $cache[$aid][$tag] ) ) {
-			return $cache[$aid][$tag];
+		if ( isset( self::$tagCache[$aid][$tag] ) ) {
+			return self::$tagCache[$aid][$tag];
 		}
 
 		$db = wfGetDB( $dbt );
-		$id = $this->getTagId( $tag );
 
-		$fields = 'rt_revision';
 		$conds = array(
 			'rt_page' => $aid,
-			'rt_type' => $id,
+			'rt_type' => RevTag::getType( $tag ),
 		);
 
 		$options = array( 'ORDER BY' => 'rt_revision DESC' );
 
-		$tagRevision = $db->selectField( 'revtag', $fields, $conds, __METHOD__, $options );
+		// Tag values are not stored, only the associated revision
+		$tagRevision = $db->selectField( 'revtag', 'rt_revision', $conds, __METHOD__, $options );
 		if ( $tagRevision !== false ) {
-			return $cache[$aid][$tag] = intval( $tagRevision );
+			return self::$tagCache[$aid][$tag] = intval( $tagRevision );
 		} else {
-			return $cache[$aid][$tag] = false;
+			return self::$tagCache[$aid][$tag] = false;
 		}
 	}
 
+	/**
+	 * @param $code bool|string
+	 * @return String
+	 */
 	public function getTranslationUrl( $code = false ) {
 		$translate = SpecialPage::getTitleFor( 'Translate' );
 		$params = array(
@@ -490,17 +571,13 @@ class TranslatablePage {
 		return $translate->getFullURL( $params );
 	}
 
-	public function getMarkedRevs( $tag ) {
+	public function getMarkedRevs() {
 		$db = wfGetDB( DB_SLAVE );
-
-		// Can this be done in one query?
-		$id = $db->selectField( 'revtag_type', 'rtt_id',
-			array( 'rtt_name' => $tag ), __METHOD__ );
 
 		$fields = array( 'rt_revision', 'rt_value' );
 		$conds = array(
 			'rt_page' => $this->getTitle()->getArticleId(),
-			'rt_type' => $id,
+			'rt_type' => RevTag::getType( 'tp:mark' ),
 		);
 		$options = array( 'ORDER BY' => 'rt_revision DESC' );
 
@@ -559,7 +636,7 @@ class TranslatablePage {
 			return null;
 		}
 
-		$markedRevs = $this->getMarkedRevs( 'tp:mark' );
+		$markedRevs = $this->getMarkedRevs();
 
 		$temp = array();
 		foreach ( $titles as $t ) {
@@ -581,6 +658,11 @@ class TranslatablePage {
 		return $temp;
 	}
 
+	/**
+	 * @param $collection MessageCollection
+	 * @param $markedRevs
+	 * @return float|int
+	 */
 	protected function getPercentageInternal( $collection, $markedRevs ) {
 		$count = count( $collection );
 		if ( $count === 0 ) {
@@ -627,52 +709,23 @@ class TranslatablePage {
 	}
 
 	public function getTransRev( $suffix ) {
-		$id = $this->getTagId( 'tp:transver' );
 		$title = Title::makeTitle( NS_TRANSLATIONS, $suffix );
 
 		$db = wfGetDB( DB_SLAVE );
 		$fields = 'rt_value';
 		$conds = array(
 			'rt_page' => $title->getArticleId(),
-			'rt_type' => $id,
+			'rt_type' => RevTag::getType( 'tp:transver' ),
 		);
 		$options = array( 'ORDER BY' => 'rt_revision DESC' );
 
 		return $db->selectField( 'revtag', $fields, $conds, __METHOD__, $options );
 	}
 
-	protected static function getTagId( $tag ) {
-		$validTags = array( 'tp:mark', 'tp:tag', 'tp:transver' );
-		if ( !in_array( $tag, $validTags ) ) {
-			throw new MWException( "Invalid tag $tag requested" );
-		}
-
-		global $wgTranslateStaticTags;
-
-		if ( is_array( $wgTranslateStaticTags ) ) {
-			return $wgTranslateStaticTags[$tag];
-		}
-
-		// Simple static cache
-		static $tagcache = array();
-
-		if ( !count( $tagcache ) ) {
-			$db = wfGetDB( DB_SLAVE );
-			$res = $db->select(
-				'revtag_type', // Table
-				array( 'rtt_name', 'rtt_id' ),
-				array( 'rtt_name' => $validTags ),
-				__METHOD__
-			);
-
-			foreach ( $res as $r ) {
-				$tagcache[$r->rtt_name] = $r->rtt_id;
-			}
-		}
-
-		return $tagcache[$tag];
-	}
-
+	/**
+	 * @param $title Title
+	 * @return bool|TranslatablePage
+	 */
 	public static function isTranslationPage( Title $title ) {
 		list( $key, $code ) = TranslateUtils::figureMessage( $title->getText() );
 
@@ -707,6 +760,10 @@ class TranslatablePage {
 		return Title::makeTitleSafe( $title->getNamespace(), $text );
 	}
 
+	/**
+	 * @param $title Title
+	 * @return bool
+	 */
 	public static function isSourcePage( Title $title ) {
 		static $cache = null;
 
@@ -733,7 +790,7 @@ class TranslatablePage {
 		$conds = array(
 			'rt_page = page_id',
 			'rt_revision = page_latest',
-			'rt_type' => array( self::getTagId( 'tp:mark' ), self::getTagId( 'tp:tag' ) ),
+			'rt_type' => array( RevTag::getType( 'tp:mark' ), RevTag::getType( 'tp:tag' ) ),
 		);
 		$options = array( 'GROUP BY' => 'rt_page' );
 
@@ -744,28 +801,5 @@ class TranslatablePage {
 		}
 
 		return $results;
-	}
-}
-
-/**
- * Class to signal syntax errors in translatable pages.
- * @ingroup PageTranslation
- */
-class TPException extends MWException {
-	protected $msg = null;
-
-	/**
-	 * @param $msg \string Message key.
-	 */
-	public function __construct( $msg ) {
-		$this->msg = $msg;
-		parent::__construct( call_user_func_array( 'wfMsg', $msg ) );
-	}
-
-	/**
-	 * @return \string A localised error message.
-	 */
-	public function getMsg() {
-		return $this->msg;
 	}
 }

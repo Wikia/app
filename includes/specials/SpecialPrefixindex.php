@@ -1,60 +1,95 @@
 <?php
+/**
+ * Implements Special:Prefixindex
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup SpecialPage
+ */
 
 /**
- * implements Special:Prefixindex
+ * Implements Special:Prefixindex
+ *
  * @ingroup SpecialPage
  */
 class SpecialPrefixindex extends SpecialAllpages {
 	// Inherit $maxPerPage
-	
+
 	function __construct(){
 		parent::__construct( 'Prefixindex' );
 	}
-	
+
 	/**
 	 * Entry point : initialise variables and call subfunctions.
 	 * @param $par String: becomes "FOO" when called like Special:Prefixindex/FOO (default null)
 	 */
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgContLang;
+		global $wgContLang;
 
 		$this->setHeaders();
 		$this->outputHeader();
 
-		# GET values
-		$from = $wgRequest->getVal( 'from' );
-		$prefix = $wgRequest->getVal( 'prefix', '' );
-		$namespace = $wgRequest->getInt( 'namespace' );
-		$namespaces = $wgContLang->getNamespaces();
+		$out = $this->getOutput();
+		$out->addModuleStyles( 'mediawiki.special' );
 
-		$wgOut->setPagetitle( ( $namespace > 0 && in_array( $namespace, array_keys( $namespaces ) ) )
-			? wfMsg( 'allinnamespace', str_replace( '_', ' ', $namespaces[$namespace] ) )
-			: wfMsg( 'prefixindex' )
+		# GET values
+		$request = $this->getRequest();
+		$from = $request->getVal( 'from', '' );
+		$prefix = $request->getVal( 'prefix', '' );
+		$ns = $request->getIntOrNull( 'namespace' );
+		$namespace = (int)$ns; // if no namespace given, use 0 (NS_MAIN).
+
+		$namespaces = $wgContLang->getNamespaces();
+		$out->setPageTitle(
+			( $namespace > 0 && in_array( $namespace, array_keys( $namespaces ) ) )
+				? $this->msg( 'prefixindex-namespace', str_replace( '_', ' ', $namespaces[$namespace] ) )
+				: $this->msg( 'prefixindex' )
 		);
 
-		if( isset( $par ) ){
-			$this->showPrefixChunk( $namespace, $par, $from );
-		} elseif( isset( $prefix ) ){
-			$this->showPrefixChunk( $namespace, $prefix, $from );
-		} elseif( isset( $from ) ){
-			$this->showPrefixChunk( $namespace, $from, $from );
+		$showme = '';
+		if( isset( $par ) ) {
+			$showme = $par;
+		} elseif( $prefix != '' ) {
+			$showme = $prefix;
+		} elseif( $from != '' && $ns === null ) {
+			// For back-compat with Special:Allpages
+			// Don't do this if namespace is passed, so paging works when doing NS views.
+			$showme = $from;
+		}
+
+		// Bug 27864: if transcluded, show all pages instead of the form.
+		if ( $this->including() || $showme != '' || $ns !== null ) {
+			$this->showPrefixChunk( $namespace, $showme, $from );
 		} else {
-			$wgOut->addHTML( $this->namespacePrefixForm( $namespace, null ) );
+			$out->addHTML( $this->namespacePrefixForm( $namespace, null ) );
 		}
 	}
-	
+
 	/**
 	* HTML for the top form
-	* @param integer $namespace A namespace constant (default NS_MAIN).
-	* @param string $from dbKey we are starting listing at.
+	* @param $namespace Integer: a namespace constant (default NS_MAIN).
+	* @param $from String: dbKey we are starting listing at.
 	*/
 	function namespacePrefixForm( $namespace = NS_MAIN, $from = '' ) {
 		global $wgScript;
-		$t = $this->getTitle();
 
 		$out  = Xml::openElement( 'div', array( 'class' => 'namespaceoptions' ) );
 		$out .= Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) );
-		$out .= Xml::hidden( 'title', $t->getPrefixedText() );
+		$out .= Html::hidden( 'title', $this->getTitle()->getPrefixedText() );
 		$out .= Xml::openElement( 'fieldset' );
 		$out .= Xml::element( 'legend', null, wfMsg( 'allpages' ) );
 		$out .= Xml::openElement( 'table', array( 'id' => 'nsselect', 'class' => 'allpages' ) );
@@ -83,31 +118,32 @@ class SpecialPrefixindex extends SpecialAllpages {
 	}
 
 	/**
-	 * @param integer $namespace (Default NS_MAIN)
-	 * @param string $from list all pages from this name (default FALSE)
+	 * @param $namespace Integer, default NS_MAIN
+	 * @param $prefix String
+	 * @param $from String: list all pages from this name (default FALSE)
 	 */
 	function showPrefixChunk( $namespace = NS_MAIN, $prefix, $from = null ) {
-		global $wgOut, $wgUser, $wgContLang, $wgLang;
+		global $wgContLang;
 
-		$sk = $wgUser->getSkin();
-
-		if (!isset($from)) $from = $prefix;
+		if ( $from === null ) {
+			$from = $prefix;
+		}
 
 		$fromList = $this->getNamespaceKeyAndText($namespace, $from);
 		$prefixList = $this->getNamespaceKeyAndText($namespace, $prefix);
 		$namespaces = $wgContLang->getNamespaces();
 
 		if ( !$prefixList || !$fromList ) {
-			$out = wfMsgWikiHtml( 'allpagesbadtitle' );
+			$out = wfMsgExt( 'allpagesbadtitle', 'parse' );
 		} elseif ( !in_array( $namespace, array_keys( $namespaces ) ) ) {
 			// Show errormessage and reset to NS_MAIN
 			$out = wfMsgExt( 'allpages-bad-ns', array( 'parseinline' ), $namespace );
 			$namespace = NS_MAIN;
 		} else {
 			list( $namespace, $prefixKey, $prefix ) = $prefixList;
-			list( /* $fromNs */, $fromKey, $from ) = $fromList;
+			list( /* $fromNS */, $fromKey, ) = $fromList;
 
-			### FIXME: should complain if $fromNs != $namespace
+			### @todo FIXME: Should complain if $fromNs != $namespace
 
 			$dbr = wfGetDB( DB_SLAVE );
 
@@ -126,17 +162,17 @@ class SpecialPrefixindex extends SpecialAllpages {
 				)
 			);
 
-			### FIXME: side link to previous
+			### @todo FIXME: Side link to previous
 
 			$n = 0;
 			if( $res->numRows() > 0 ) {
 				$out = Xml::openElement( 'table', array( 'border' => '0', 'id' => 'mw-prefixindex-list-table' ) );
-	
+
 				while( ( $n < $this->maxPerPage ) && ( $s = $res->fetchObject() ) ) {
 					$t = Title::makeTitle( $s->page_namespace, $s->page_title );
 					if( $t ) {
 						$link = ($s->page_is_redirect ? '<div class="allpagesredirect">' : '' ) .
-							$sk->linkKnown(
+							Linker::linkKnown(
 								$t,
 								htmlspecialchars( $t->getText() )
 							) .
@@ -162,6 +198,7 @@ class SpecialPrefixindex extends SpecialAllpages {
 			}
 		}
 
+		$footer = '';
 		if ( $this->including() ) {
 			$out2 = '';
 		} else {
@@ -172,8 +209,7 @@ class SpecialPrefixindex extends SpecialAllpages {
 					<td>' .
 						$nsForm .
 					'</td>
-					<td id="mw-prefixindex-nav-form">' .
-						$sk->linkKnown( $self, wfMsgHtml( 'allpages' ) );
+					<td id="mw-prefixindex-nav-form" class="mw-prefixindex-nav">';
 
 			if( isset( $res ) && $res && ( $n == $this->maxPerPage ) && ( $s = $res->fetchObject() ) ) {
 				$query = array(
@@ -181,24 +217,26 @@ class SpecialPrefixindex extends SpecialAllpages {
 					'prefix' => $prefix
 				);
 
-				if( $namespace ) {
+				if( $namespace || ($prefix == '')) {
+					// Keep the namespace even if it's 0 for empty prefixes.
+					// This tells us we're not just a holdover from old links.
 					$query['namespace'] = $namespace;
 				}
-
-				$out2 = $wgLang->pipeList( array(
-					$out2,
-					$sk->linkKnown(
+				$nextLink = Linker::linkKnown(
 						$self,
 						wfMsgHtml( 'nextpage', str_replace( '_',' ', htmlspecialchars( $s->page_title ) ) ),
 						array(),
 						$query
-					)
-				) );
+					);
+				$out2 .= $nextLink;
+
+				$footer = "\n" . Html::element( "hr" )
+					. Html::rawElement( "div", array( "class" => "mw-prefixindex-nav" ), $nextLink );
 			}
 			$out2 .= "</td></tr>" .
 				Xml::closeElement( 'table' );
 		}
 
-		$wgOut->addHTML( $out2 . $out );
+		$this->getOutput()->addHTML( $out2 . $out . $footer );
 	}
 }

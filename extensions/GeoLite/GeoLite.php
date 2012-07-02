@@ -22,7 +22,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'GeoLite',
 	'version' => '1.0',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:GeoLite',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:GeoLite',
 	'author' => 'Tomasz Finc',
 	'descriptionmsg' => 'geolite-desc',
 );

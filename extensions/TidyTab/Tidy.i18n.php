@@ -3,7 +3,8 @@
  * Internationalisation file for extension TidyTab.
  * Created by Bertrand GRONDIN
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -16,9 +17,19 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'tidy-desc' => 'Short description of the extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'tidy-desc' => '{{desc}}',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'tidy-desc' => 'Shton një skedë të rregullt ose i çrregullt (në varësi të $wgUseTidy) në faqe normale lejuar për mbizotërues vendosjen globale HTML pastra, për një qëllim të vetëm',
+	'tidy' => 'I rregullt',
+	'untidy' => 'I çrregullt',
 );
 
 /** Arabic (العربية)
@@ -39,6 +50,15 @@ $messages['arz'] = array(
 	'untidy' => 'لا ترتيب',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'tidy-desc' => 'Amiesta una llingüeta «ordenao» o «desordenao» (dependiendo de $wgUseTidy) nes páxines normales, que permite saltase la configuración HTML global d\'ordenación pa una sola vista',
+	'tidy' => 'Ordenao',
+	'untidy' => 'Desordenao',
+);
+
 /** Bavarian (Boarisch)
  * @author Man77
  */
@@ -47,11 +67,12 @@ $messages['bar'] = array(
 	'untidy' => 'Ned oadnen',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
+ * @author Zedlik
  */
 $messages['be-tarask'] = array(
-	'tidy-desc' => 'Дадае закладку «акуратны HTML» альбо «неакуратны HTML» (у залежнасьці ад $wgUseTidy) на старонкі, што дазваляе зьмяняць глябальную ўстаноўку «акуратнасьці HTML» для асобных старонак',
+	'tidy-desc' => 'Дадае закладку «акуратны HTML» альбо «неакуратны HTML» (у залежнасьці ад $wgUseTidy) на старонкі, што дазваляе зьмяняць глябальную наладу «акуратнасьці HTML» для асобных старонак',
 	'tidy' => 'Акуратны HTML',
 	'untidy' => 'Неакуратны HTML',
 );
@@ -156,6 +177,14 @@ $messages['fr'] = array(
 	'untidy' => 'Déclasser',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'tidy' => 'Rengiér',
+	'untidy' => 'Dèrengiér',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
@@ -246,7 +275,7 @@ $messages['km'] = array(
 	'untidy' => 'គ្មានសណ្ដាប់ធ្នាប់',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -281,6 +310,24 @@ $messages['mr'] = array(
 	'untidy' => 'अव्यवस्थीत',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'tidy-desc' => 'Menambahkan tab kemas atau selerak (bergantung pada $wgUseTidy) pada laman normal demi membolehkan pembatalan tetapan kekemasan HTML sejagat bagi paparan tunggal',
+	'tidy' => 'Kemas',
+	'untidy' => 'Selerak',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'tidy-desc' => 'Legger til en fane for systematisering eller avsystematisering (avhengig av $wgUseTidy) som tillater overstyring av den globale innstillingen for HTML-systematisering.',
+	'tidy' => 'Systematiser kode',
+	'untidy' => 'Avsystematiser kode',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -295,15 +342,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'tidy-desc' => 'Legg til ei fane for systematisering eller avsystematisering (avhengig av $wgUseTidy) som tillet overstyring av den globale innstillinga for HTML-systematisering.',
-	'tidy' => 'Systematiser kode',
-	'untidy' => 'Avsystematiser kode',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'tidy-desc' => 'Legger til en fane for systematisering eller avsystematisering (avhengig av $wgUseTidy) som tillater overstyring av den globale innstillingen for HTML-systematisering.',
 	'tidy' => 'Systematiser kode',
 	'untidy' => 'Avsystematiser kode',
 );
@@ -337,10 +375,11 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'tidy-desc' => 'Adiciona uma pestana arrumado ou desarrumado (dependendo de $wgUseTidy) em páginas normais, permitindo sobrepor a configuração de arrumação de HTML global para uma vista única',
+	'tidy-desc' => 'Adiciona um separador arrumado ou desarrumado (dependendo de $wgUseTidy) às páginas normais, permitindo sobrepor a configuração de arrumação de HTML global para uma vista única',
 	'tidy' => 'Arrumado',
 	'untidy' => 'Desarrumado',
 );
@@ -358,8 +397,8 @@ $messages['pt-br'] = array(
  * @author Firilacroco
  */
 $messages['ro'] = array(
-	'tidy' => 'Curăţă',
-	'untidy' => 'Împrăştie',
+	'tidy' => 'Curăță',
+	'untidy' => 'Împrăștie',
 );
 
 /** Tarandíne (Tarandíne)
@@ -381,6 +420,13 @@ $messages['ru'] = array(
 	'untidy' => 'Разупорядочить',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'tidy' => 'Прятати',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -390,11 +436,27 @@ $messages['sk'] = array(
 	'untidy' => 'Zrušiť upratanie',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'tidy-desc' => 'Додаје језичак „Уредно“ или „Неуредно“ (зависно од $wgUseTidy) на обичним страницама који омогућава превазилажење глобалне HTML Тајди поставке за приказ',
+	'tidy' => 'Уредно',
+	'untidy' => 'Неуредно',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'tidy-desc' => 'Dodaje jezičak „Uredno“ ili „Neuredno“ (zavisno od $wgUseTidy) na običnim stranicama koji omogućava prevazilaženje globalne HTML Tajdi postavke za prikaz',
+	'tidy' => 'Uredno',
+	'untidy' => 'Neuredno',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
 $messages['stq'] = array(
-	'tidy-desc' => 'Föiget ap normoale Sieden n Rieder „gultich“ un n Rieder „uungultich“ ien (ouhongich fon $wgUseTidy), uum ju globoale HTML-Tidy-Ienstaalenge foar ne eenpelde Betrachtenge uurschrieuwe tou konnen.',
+	'tidy-desc' => 'Föiget ap normoale Sieden n Rieder „gultich“ un n Rieder „uungultich“ ien (ouhongich fon $wgUseTidy), uum ju globoale HTML-Tidy-Ienstaalenge foar ne eenpelde Betrachtenge uurskrieuwe tou konnen.',
 	'tidy' => 'Oardenje',
 	'untidy' => 'Nit oardenje',
 );
@@ -409,7 +471,7 @@ $messages['sv'] = array(
 	'untidy' => 'Avsystematisera',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -417,7 +479,7 @@ $messages['tg-cyrl'] = array(
 	'untidy' => 'Номуратаб',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -432,6 +494,14 @@ $messages['tl'] = array(
 	'tidy-desc' => "Nagdaragdag ng panglaylay (tab) na ''ayusin'' o ''tanggalin mula sa pagiging maayos'' (na nakabatay sa ''\$wgUseTidy'') sa pangkaraniwang mga pahina na nagpapahintulot sa pagdaraig/pangingibabaw sa pagtatakdang pang-ayos (''tidy'' o ''untidy'') ng pandaigdigang HTML na para sa isang isahang pagtingin/pagtanaw",
 	'tidy' => 'Ayusin',
 	'untidy' => 'Tanggalin mula sa pagiging maayos',
+);
+
+/** Turkish (Türkçe)
+ * @author Manco Capac
+ */
+$messages['tr'] = array(
+	'tidy' => 'Düzenli',
+	'untidy' => 'Düzensiz',
 );
 
 /** Ukrainian (Українська)

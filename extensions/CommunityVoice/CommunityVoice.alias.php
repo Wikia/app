@@ -6,115 +6,164 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'CommunityVoice' => array( 'CommunityVoice' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'CommunityVoice' => array( 'صوت_المجتمع' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'CommunityVoice' => array( 'صوت_المجتمع' ),
 );
 
+/** Breton (Brezhoneg) */
+$specialPageAliases['br'] = array(
+	'CommunityVoice' => array( 'MouezhKumuniezh' ),
+);
+
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'CommunityVoice' => array( 'GlasZajednice' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
-	'CommunityVoice' => array( 'Głos zgromaźeństwa' ),
+$specialPageAliases['dsb'] = array(
+	'CommunityVoice' => array( 'Głos_zgromaźeństwa' ),
+);
+
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'CommunityVoice' => array( 'Komunuma_voĉo' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'CommunityVoice' => array( 'صدای_انجمن' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
-	'CommunityVoice' => array( 'Hłós zhromadźenstwa' ),
+$specialPageAliases['hsb'] = array(
+	'CommunityVoice' => array( 'Hłós_zhromadźenstwa' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'CommunityVoice' => array( 'VwaKominote' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'CommunityVoice' => array( 'Voce del communitate' ),
+$specialPageAliases['ia'] = array(
+	'CommunityVoice' => array( 'Voce_del_communitate' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'CommunityVoice' => array( 'Suara komunitas', 'SuaraKomunitas' ),
+$specialPageAliases['id'] = array(
+	'CommunityVoice' => array( 'Suara_komunitas', 'SuaraKomunitas' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'CommunityVoice' => array( 'コミュニティー・ボイス', 'コミュニティの声' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
-$aliases['km'] = array(
+$specialPageAliases['km'] = array(
 	'CommunityVoice' => array( 'សំលេងសហគមន៍' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'CommunityVoice' => array( 'Metmaacherstemme' ),
 );
 
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'CommunityVoice' => array( 'BozComunidad' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'CommunityVoice' => array( 'Stëmm vun der Gemeinschaft' ),
+$specialPageAliases['lb'] = array(
+	'CommunityVoice' => array( 'Stëmm_vun_der_Gemeinschaft' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'CommunityVoice' => array( 'ГласНаЗаедницата' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'CommunityVoice' => array( 'സമൂഹശബ്ദം' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'CommunityVoice' => array( 'समूहवाणी' ),
 );
 
 /** Maltese (Malti) */
-$aliases['mt'] = array(
+$specialPageAliases['mt'] = array(
 	'CommunityVoice' => array( 'VuċiKomunità', 'VuċiKomunitarja' ),
 );
 
+/** Erzya (Эрзянь) */
+$specialPageAliases['myv'] = array(
+	'CommunityVoice' => array( 'ВейтьсэньВайгель' ),
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'CommunityVoice' => array( 'Brukermedvirkning' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'CommunityVoice' => array( 'Gemeenschapsstemme' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'CommunityVoice' => array( 'Gemeenschapsstem' ),
 );
 
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'CommunityVoice' => array( 'Opinia_społeczności' ),
+);
+
 /** Romanian (Română) */
-$aliases['ro'] = array(
-	'CommunityVoice' => array( 'Vocea comunităţii' ),
+$specialPageAliases['ro'] = array(
+	'CommunityVoice' => array( 'Vocea_comunității' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'CommunityVoice' => array( 'HlasKomunity' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'CommunityVoice' => array( 'Tinig ng pamayanan' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'CommunityVoice' => array( 'ToplulukSesi' ),
 );
 
+/** Simplified Chinese (‪中文(简体)‬) */
+$specialPageAliases['zh-hans'] = array(
+	'CommunityVoice' => array( '社区声音' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'CommunityVoice' => array( '社群聲音' ),
+);

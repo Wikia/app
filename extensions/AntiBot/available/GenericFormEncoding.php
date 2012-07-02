@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This is a sample filter plugin which will hit a lot of bots, good and bad.
  *
@@ -11,7 +10,7 @@
 
 $wgHooks['EditFilterMerged'][] = 'AntiBot_GenericFormEncoding::onEditFilterMerged';
 class AntiBot_GenericFormEncoding {
-	function onEditFilterMerged( $editPage, $text, &$hookError ) {
+	public static function onEditFilterMerged( $editPage, $text, &$hookError ) {
 		if ( !function_exists( 'apache_request_headers' ) ) {
 			return true;
 		}
@@ -19,7 +18,7 @@ class AntiBot_GenericFormEncoding {
 		if ( isset( $headers['Content-Type'] )
 			&& $headers['Content-Type'] == 'application/x-www-form-urlencoded' )
 		{
-			if ( AntiBot::trigger(__CLASS__) == 'fail' ) {
+			if ( AntiBot::trigger( __CLASS__ ) == 'fail' ) {
 				return false;
 			}
 		}

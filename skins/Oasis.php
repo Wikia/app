@@ -11,9 +11,21 @@ class SkinOasis extends WikiaSkin {
 	}
 
 	function setupSkinUserCss( OutputPage $out ) {}
+
+	/**
+	 * Oasis handles OutputPage::mScripts differently using WSL
+	 * so we don't want them to be duplicated
+	 *
+	 * @return string
+	 */
+	public function bottomScripts() {
+		$bottomScripts = parent::bottomScripts();
+		$bottomScripts = str_replace( $this->wg->out->getScriptsOnly(), '', $bottomScripts );
+		return $bottomScripts;
+	}
 }
 
-class OasisTemplate extends WikiaQuickTemplate {
+class OasisTemplate extends WikiaBaseTemplate {
 	function execute() {
 		$this->app->setSkinTemplateObj($this);
 		$response = $this->app->sendRequest( Wikia::getVar( 'OasisEntryControllerName', 'Oasis' ), 'index', null, false );

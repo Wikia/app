@@ -3,74 +3,69 @@ var WikiaFooterApp = {
 
 	init: function() {
 		//Variables
-		var footer = $("#WikiaFooter"),
-			toolbar = footer.children(".toolbar");
+		this.footer = $("#WikiaFooter"),
+		this.toolbar = this.footer.children(".toolbar");
+		this.gn = $('.global-notification');
+		this.windowObj = $(window);
+		this.originalWidth = this.toolbar.width();
 
 		// avoid stack overflow in IE (RT #98938)
-		if (toolbar.exists()) {
-			var windowObj = $(window);
-			var originalWidth = toolbar.width();
-
-			var ie7 = typeof $.browser.msie != 'undefined' && typeof $.browser.version != 'undefined' && $.browser.version && $.browser.version.substring(0, $.browser.version.indexOf('.')) < 8;
-			var reflow = false;
-
-			//Scroll Detection
-			windowObj.resolvePosition = function() {
-				// Disable floating for RTE
-				if (typeof wgIsEditPage != 'undefined') {
-					return;
-				}
-
-				var scroll = windowObj.scrollTop() + windowObj.height();
-				var line = 0;
-				if(footer.offset()){
-					line = footer.offset().top + toolbar.outerHeight();
-				}
-
-				if (scroll > line && footer.hasClass("float")) {
-					footer.removeClass("float");
-					windowObj.centerBar();
-					reflow = true;
-				} else if (scroll < line && !footer.hasClass("float")) {
-					footer.addClass("float");
-					windowObj.centerBar();
-					reflow = true;
-				}
-
-				if (ie7 && reflow) {	//force reflow the page in IE7.  remove after IE7 is dead
-					reflow = false;
-					setTimeout(function() {
-						$('#WikiaPage').attr('class', $('#WikiaPage').attr('class'));
-					}, 1);
-				}
-
-			};
-
-			windowObj.centerBar = function() {
-				var w = windowObj.width();
-				if(w < originalWidth && footer.hasClass('float')) {
-					toolbar.css('width', w+10);
-					if(!toolbar.hasClass('small')){
-						toolbar.addClass('small');
-					}
-				} else if(toolbar.hasClass('small')) {
-					toolbar.css('width', originalWidth);
-					toolbar.removeClass('small');
-				}
-				windowObj.resolvePosition();
-			};
-
-			if(jQuery.support.positionFixed){
-				windowObj.resolvePosition();
-				windowObj.centerBar();
-				windowObj.scroll(windowObj.resolvePosition);
-				windowObj.resize(windowObj.centerBar);
+		if (this.toolbar.exists() || this.gn.exists()) {
+			if($.support.positionFixed){
+				this.addScrollEvent();
+				this.addResizeEvent();
 			}
+			this.tcToolbar = new ToolbarCustomize.Toolbar( this.footer.find('.tools') );
+		}
+	},
+	addScrollEvent: function() {
+		WikiaFooterApp.windowObj.off('scroll.FooterAp'); // GlobalNotifications could be re-binding this event. 
+		WikiaFooterApp.windowObj.on('scroll.FooterAp', WikiaFooterApp.resolvePosition).triggerHandler('scroll');
+	},
+	addResizeEvent: function (){
+		WikiaFooterApp.windowObj.on('resize', WikiaFooterApp.centerBar).triggerHandler('resize');
+	},
+	centerBar: function() {
+		var w = WikiaFooterApp.windowObj.width();
+		if(w < WikiaFooterApp.originalWidth && WikiaFooterApp.footer.hasClass('float')) {
+			WikiaFooterApp.toolbar.css('width', w+10);
+			if(!WikiaFooterApp.toolbar.hasClass('small')){
+				WikiaFooterApp.toolbar.addClass('small');
+			}
+		} else if(WikiaFooterApp.toolbar.hasClass('small')) {
+			WikiaFooterApp.toolbar.css('width', WikiaFooterApp.originalWidth);
+			WikiaFooterApp.toolbar.removeClass('small');
+		}
+		WikiaFooterApp.resolvePosition();
+	},
+	// this is called while scrolling
+	resolvePosition: function() {
+		// Disable floating for RTE
+		if (typeof wgIsEditPage != 'undefined') {
+			return;
+		}
 
-			WikiaFooterApp.toolbar = new ToolbarCustomize.Toolbar( footer.find('.tools') );
+		var scrollTop = WikiaFooterApp.windowObj.scrollTop(),
+			scroll = scrollTop + WikiaFooterApp.windowObj.height(),
+			line = 0;
+			
+		if(WikiaFooterApp.footer.offset()){
+			line = WikiaFooterApp.footer.offset().top + WikiaFooterApp.toolbar.outerHeight();
+		}
+
+		if (scroll > line && WikiaFooterApp.footer.hasClass("float")) {
+			WikiaFooterApp.footer.removeClass("float");
+			WikiaFooterApp.centerBar();
+		} else if (scroll < line && !WikiaFooterApp.footer.hasClass("float")) {
+			WikiaFooterApp.footer.addClass("float");
+			WikiaFooterApp.centerBar();
+		}
+		
+		// GlobalNotification uses same scroll event for performance reasons (BugId:33365)
+		if(GlobalNotification) {
+			GlobalNotification.onScroll(scrollTop);
 		}
 	}
-
 };
 
 (function(){
@@ -267,6 +262,6 @@ var WikiaFooterApp = {
 
 })();
 
-$(function() {
+$(function(){
 	WikiaFooterApp.init();
 });

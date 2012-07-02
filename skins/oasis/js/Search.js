@@ -17,69 +17,74 @@ var WikiaSearchApp = {
 	},
 
 	init : function() {
-		WikiaSearchApp.searchForm = $('#WikiaSearch');
-		WikiaSearchApp.searchFormBottom = $('#search');
-		WikiaSearchApp.searchField = WikiaSearchApp.searchForm.children('input[placeholder]');
+		this.searchForm = $('#WikiaSearch');
+		this.searchFormBottom = $('#search');
+		this.searchField = this.searchForm.children('input[placeholder]');
 
 		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
-		WikiaSearchApp.ads = $("[id$='TOP_RIGHT_BOXAD']");
+		this.ads = $("[id$='TOP_RIGHT_BOXAD']");
 
-		if(!WikiaSearchApp.searchForm.hasClass('noautocomplete')) {
-			WikiaSearchApp.searchField.bind({
-				'suggestShow': WikiaSearchApp.hideAds,
-				'suggestHide': WikiaSearchApp.showAds
+		if(!this.searchForm.hasClass('noautocomplete')) {
+			this.searchField.bind({
+				'suggestShow': $.proxy(this.hideAds, this),
+				'suggestHide': $.proxy(this.showAds, this)
 			});
-			
+
 			// load autosuggest code on first focus
-			WikiaSearchApp.searchField.one('focus', WikiaSearchApp.initSuggest);
+			this.searchField.one('focus', $.proxy(this.initSuggest, this));
 		}
 
 		// track form submittion
-		WikiaSearchApp.searchForm.submit(function(ev) {
-			WikiaSearchApp.track('submit');
-		});
-		WikiaSearchApp.searchFormBottom.submit(function(ev) {
-			WikiaSearchApp.track('submit');
-		});
+		this.searchForm.submit($.proxy(function(ev) {
+			this.track('submit');
+		}, this));
+		this.searchFormBottom.submit($.proxy(function(ev) {
+			this.track('submit');
+		}, this));
 	},
 
 	hideAds: function() {
-		WikiaSearchApp.ads.each(function() {
+		this.ads.each(function() {
 			$(this).children().css('margin-left', '-9999px');
 		});
 	},
 
 	showAds: function() {
-		WikiaSearchApp.ads.each(function() {
+		this.ads.each(function() {
 			$(this).children().css('margin-left', 'auto');
 		});
 	},
 
 	// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 	initSuggest: function() {
-		$.getMessages('LinkSuggest', function() {
-			$.loadJQueryAutocomplete(function() {
-				WikiaSearchApp.searchField.autocomplete({
-					serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
-					onSelect: function(v, d) {
-						WikiaSearchApp.track('suggest');
-						WikiaSearchApp.trackInternal('search_start_suggest', {
-							'sterm': encodeURIComponent(v.replace(/ /g, '_')),
-							'rver': 0
-						});
-						// slashes can't be urlencoded because they break routing
-						window.location.href = wgArticlePath.replace(/\$1/, encodeURIComponent(v.replace(/ /g, '_'))).replace(encodeURIComponent('/'), '/');
-					},
-					appendTo: '#WikiaSearch',
-					deferRequestBy: 400,
-					minLength: 3,
-					maxHeight: 1000,
-					selectedClass: 'selected',
-					width: '270px',
-					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
-				});
+		$.when(
+			//$.getMessages('LinkSuggest'), // FIXME: doesn't seem to be used here
+			$.loadJQueryAutocomplete()
+		).then($.proxy(function() {
+			this.searchField.autocomplete({
+				serviceUrl: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+				onSelect: $.proxy(function(value, data) {
+					var valueEncoded = encodeURIComponent(value.replace(/ /g, '_'));
+
+					this.track('suggest');
+					this.trackInternal('search_start_suggest', {
+						'sterm': valueEncoded,
+						'rver': 0
+					});
+					// slashes can't be urlencoded because they break routing
+					window.location.href = wgArticlePath.
+						replace(/\$1/, valueEncoded).
+						replace(encodeURIComponent('/'), '/');
+				}, this),
+				appendTo: '#WikiaSearch',
+				deferRequestBy: 2000,
+				minLength: 3,
+				maxHeight: 1000,
+				selectedClass: 'selected',
+				width: '270px',
+				skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 			});
-		});
+		}, this));
 	}
 };
 

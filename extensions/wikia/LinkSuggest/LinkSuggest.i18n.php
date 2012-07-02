@@ -22,7 +22,7 @@ $messages['az'] = array(
 	'tog-disablelinksuggest' => 'İlkin kod rejimində keçid təklifini göstərmə',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -85,7 +85,7 @@ $messages['fr'] = array(
 	'tog-redirected-from' => '&ndash; Redirigé depuis $1',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -107,7 +107,7 @@ $messages['he'] = array(
 	'tog-disablelinksuggest' => 'ביטול הצגת הצעות לקישורים',
 );
 
-/** Upper Sorbian (hornjoserbsce)
+/** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -167,8 +167,7 @@ $messages['km'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'tog-disablelinksuggest' => 'Donn en dä Quälle-Aat kein Vörschlääsch för Lenks aanzeije',
-	'tog-redirected-from' => '&ndash; ömjeleidt vun $1',
+	'tog-disablelinksuggest' => 'Donn kein Vörschlääsch för Lenks aanzeije',
 );
 
 /** Ladino (Ladino) */
@@ -242,8 +241,8 @@ $messages['oc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'tog-disablelinksuggest' => 'Nie pokazuj sugestii linków w trybie źródłowym.',
-	'tog-redirected-from' => '&ndash; przekierowano z $1',
+	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków w trybie źródłowym.',
+	'tog-redirected-from' => '&ndash; Przekierowano z $1',
 );
 
 /** Piedmontese (Piemontèis)
@@ -310,7 +309,6 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'tog-disablelinksuggest' => 'Visa inte länkförslag i källäge',
-	'tog-redirected-from' => '&ndash; omdirigerad från $1',
 );
 
 /** Thai (ไทย)

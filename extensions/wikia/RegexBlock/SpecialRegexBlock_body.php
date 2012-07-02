@@ -31,7 +31,7 @@ class RegexBlockForm extends SpecialPage
 
     /* constructor */
     function __construct () {
-        global $wgRegexBlockMessages, $wgMessageCache;
+        global $wgRegexBlockMessages;
 
         $this->mPosted = false;
         $this->mAction = "";
@@ -43,7 +43,6 @@ class RegexBlockForm extends SpecialPage
 
 	public function execute( $subpage ) {
         global $wgUser, $wgOut, $wgRequest, $wgExtensionsPath, $wgStyleVersion;
-        wfLoadExtensionMessages("RegexBlock");
 
         if ( $wgUser->isBlocked() ) {
             $wgOut->blockedPage();
@@ -122,9 +121,9 @@ class RegexBlockForm extends SpecialPage
         global $wgOut, $wgUser, $wgRequest ;
         wfProfileIn( __METHOD__ );
 
-        $token = htmlspecialchars( $wgUser->editToken() );
+        $token = htmlspecialchars( $wgUser->getEditToken() );
         $titleObj = Title::makeTitle( NS_SPECIAL, 'RegexBlock' );
-        $action = $titleObj->escapeLocalURL( "action=submit" )."&".$this->makeListUrlParams();
+        $action = htmlspecialchars($titleObj->getLocalURL( "action=submit" )) . "&" . $this->makeListUrlParams();
 
         $expiries = RegexBlockData::getExpireValues();
     	$regexBlockAddress = (empty($this->mRegexBlockedAddress) && ($wgRequest->getVal('ip') != null) && ($wgRequest->getVal('action') == null)) ? $wgRequest->getVal('ip') : $this->mRegexBlockedAddress;
@@ -156,13 +155,14 @@ class RegexBlockForm extends SpecialPage
         wfProfileIn( __METHOD__ );
 
         $titleObj = Title::makeTitle( NS_SPECIAL, 'RegexBlock' );
-        $action = $titleObj->escapeLocalURL("") ."?".$this->makeListUrlParams();
-        $action_unblock = $titleObj->escapeLocalURL("action=delete") ."&".$this->makeListUrlParams();
+        $action = htmlspecialchars($titleObj->getLocalURL()) ."?" . $this->makeListUrlParams();
+        $action_unblock = htmlspecialchars($titleObj->getLocalURL("action=delete")) . "&" . $this->makeListUrlParams();
 
         $regexData = new RegexBlockData();
         $this->numResults = $regexData->fetchNbrResults();
         $filter = 'filter=' . urlencode($this->mFilter) . '&rfilter=' . urlencode($this->mRegexFilter);
-        $pager = wfViewPrevNext($this->mOffset, $this->mLimit, $wgContLang->specialpage( 'RegexBlock' ), $filter, ($this->numResults - $this->mOffset) <= $this->mLimit );
+
+		$pager = $wgLang->viewPrevNext( SpecialPage::getTitleFor( 'RegexBlock' ), $this->mOffset, $this->mLimit, wfCgiToArray($filter), ($this->numResults - $this->mOffset) <= $this->mLimit );
 
         /* allow display by specific blockers only */
         $blockers =  $regexData->fetchBlockers();
@@ -322,12 +322,13 @@ class RegexBlockForm extends SpecialPage
         wfProfileIn( __METHOD__ );
 
         $titleObj = Title::makeTitle( NS_SPECIAL, 'RegexBlock' );
-        $action = $titleObj->escapeLocalURL("") ."?".$this->makeListUrlParams(true);
+        $action = htmlspecialchars($titleObj->getLocalURL()) . "?" . $this->makeListUrlParams(true);
 
         $regexData = new RegexBlockData();
         $this->numStatResults = $regexData->fetchNbrStatResults($blckid);
         $filter = 'action=stats&filter=' . urlencode($this->mFilter) . '&blckid=' . urlencode($blckid);
-        $pager = wfViewPrevNext($this->mOffset, $this->mLimit, $wgContLang->specialpage( 'RegexBlock' ), $filter, ($this->numStatResults - $this->mOffset) <= $this->mLimit );
+
+		$pager = $wgLang->viewPrevNext( SpecialPage::getTitleFor( 'RegexBlock' ), $this->mOffset, $this->mLimit, wfCgiToArray($filter), ($this->numStatResults - $this->mOffset) <= $this->mLimit );
 
         /* allow display by specific blockers only */
         $blockInfo =  $regexData->getRegexBlockById($blckid);

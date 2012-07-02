@@ -34,6 +34,15 @@ $messages['af'] = array(
 	'authors_anonymous' => 'Anoniem',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'authors-desc' => 'QUESTION një listë të faqeve që kontribuan në',
+	'authors_authors' => 'Autorët',
+	'authors_anonymous' => 'Anonim',
+);
+
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -61,7 +70,23 @@ $messages['arz'] = array(
 	'authors_anonymous' => 'مش معروف',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'authors-desc' => 'Amiesta una llista de collaboradores a les páxines',
+	'authors_authors' => 'Autores',
+	'authors_anonymous' => 'Anónimu',
+);
+
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'authors_authors' => 'Аўтары',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -78,6 +103,14 @@ $messages['bg'] = array(
 	'authors-desc' => 'Добавя списък на редакторите към страниците',
 	'authors_authors' => 'Автори',
 	'authors_anonymous' => 'Анонимни',
+);
+
+/** Banjar (Bahasa Banjar)
+ * @author J Subhi
+ */
+$messages['bjn'] = array(
+	'authors_authors' => 'Pananulis',
+	'authors_anonymous' => 'Kada bangaran',
 );
 
 /** Breton (Brezhoneg)
@@ -197,18 +230,22 @@ $messages['fi'] = array(
  * @author McDutchie
  * @author PieRRoMaN
  * @author Sherbrooke
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'authors-desc' => 'Ajoute une liste des contributeurs dans les pages',
+	'authors-desc' => 'Ajoute aux pages une liste de leurs contributeurs',
 	'authors_authors' => 'Auteurs',
 	'authors_anonymous' => 'Anonyme',
 );
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'authors-desc' => 'Apond una lista ux contributors dens les pâges.',
 	'authors_authors' => 'Ôtors',
+	'authors_anonymous' => 'Anonimo',
 );
 
 /** Irish (Gaeilge)
@@ -222,7 +259,7 @@ $messages['ga'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'authors-desc' => 'Adxunta unha lista dos contribuíntes ás páxinas',
+	'authors-desc' => 'Adxunta unha lista dos colaboradores ás páxinas',
 	'authors_authors' => 'Autores',
 	'authors_anonymous' => 'Anónimos',
 );
@@ -250,6 +287,14 @@ $messages['he'] = array(
 	'authors-desc' => 'הוספת רשימת תורמים לדפים',
 	'authors_authors' => 'מחברים',
 	'authors_anonymous' => 'אנונימי',
+);
+
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'authors_authors' => 'Autori',
+	'authors_anonymous' => 'Anonimni',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -333,13 +378,20 @@ $messages['kn'] = array(
 	'authors_authors' => 'ಕರ್ತೃಗಳು',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
 	'authors-desc' => 'Deiht en Leß met de Schriiver op jede Sigg em Wiki.',
 	'authors_authors' => 'Schriiver',
 	'authors_anonymous' => 'Namelos',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author Gomada
+ */
+$messages['ku-latn'] = array(
+	'authors_anonymous' => 'Bênav',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -359,10 +411,11 @@ $messages['lfn'] = array(
 );
 
 /** Macedonian (Македонски)
+ * @author Bjankuloski06
  * @author Brest
  */
 $messages['mk'] = array(
-	'authors-desc' => 'Додава листа на уредувачи на страници',
+	'authors-desc' => 'Додава список на уредници на страници',
 	'authors_authors' => 'Автори',
 	'authors_anonymous' => 'Анонимни',
 );
@@ -391,6 +444,15 @@ $messages['nah'] = array(
 	'authors_anonymous' => 'Ahtōcāitl',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'authors-desc' => 'Legger til en liste over forfattere til sider',
+	'authors_authors' => 'Forfattere',
+	'authors_anonymous' => 'Anonym',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -410,15 +472,6 @@ $messages['nn'] = array(
 	'authors_anonymous' => 'Anonym',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'authors-desc' => 'Legger til en liste over forfattere til sider',
-	'authors_authors' => 'Forfattere',
-	'authors_anonymous' => 'Anonym',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -428,7 +481,7 @@ $messages['oc'] = array(
 	'authors_anonymous' => 'Anomin',
 );
 
-/** Ossetic (Иронау)
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -498,7 +551,7 @@ $messages['pt-br'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'authors-desc' => 'Adaugă o listă de contribuitori la sfârşitul paginilor',
+	'authors-desc' => 'Adaugă o listă de contribuitori la sfârșitul paginilor',
 	'authors_authors' => 'Autori',
 	'authors_anonymous' => 'Anonim',
 );
@@ -522,6 +575,13 @@ $messages['ru'] = array(
 	'authors_anonymous' => 'Аноним',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'authors_authors' => 'Авторы',
+);
+
 /** Sinhala (සිංහල)
  * @author Calcey
  * @author චතුනි අලහප්පෙරුම
@@ -541,20 +601,31 @@ $messages['sk'] = array(
 	'authors_anonymous' => 'Anonym',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'authors-desc' => 'Strani pripne seznam sodelavcev',
+	'authors_authors' => 'Avtorji',
+	'authors_anonymous' => 'Brezimnež',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Жељко Тодоровић
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'authors-desc' => 'Допуњује списак доприносиоца страна',
+	'authors-desc' => 'Допуњује списак доприносиоца страница',
 	'authors_authors' => 'Аутори',
 	'authors_anonymous' => 'Анонимно',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
-	'authors-desc' => 'Dopunjuje spisak doprinosioca strana',
+	'authors-desc' => 'Dopunjuje spisak doprinosioca stranica',
 	'authors_authors' => 'Autori',
 	'authors_anonymous' => 'Anonimno',
 );
@@ -577,12 +648,28 @@ $messages['sv'] = array(
 	'authors_anonymous' => 'Anonym',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'authors-desc' => 'பக்கங்களுக்கான பங்களிப்பாளர்களின் பட்டியலைச் சேர்க்கிறது',
+	'authors_authors' => 'ஆசிரியர்கள்',
+	'authors_anonymous' => 'அடையாளமற்றவர்',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
 $messages['te'] = array(
 	'authors_authors' => 'రచయితలు',
 	'authors_anonymous' => 'అజ్ఞాత',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'authors_authors' => 'Autór sira',
 );
 
 /** Thai (ไทย)

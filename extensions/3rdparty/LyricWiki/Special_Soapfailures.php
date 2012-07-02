@@ -51,15 +51,13 @@ $wgSpecialPages['Soapfailures'] = 'Soapfailures';
 
 class Soapfailures extends SpecialPage{
 
-	public function Soapfailures(){
-		SpecialPage::SpecialPage('Soapfailures');
+	public function __construct(){
+		parent::__construct('Soapfailures');
 	}
 
 	function execute(){
 		global $wgOut;
 		global $wgRequest, $wgUser, $wgMemc;
-		
-		wfLoadExtensionMessages('SpecialSoapFailures');
 
 		$MAX_RESULTS = 100;
 		$CACHE_KEY_PREFIX = "LW_SOAP_FAILURES";
@@ -68,7 +66,7 @@ class Soapfailures extends SpecialPage{
 		$CACHE_KEY_STATS = wfMemcKey($CACHE_KEY_PREFIX, "stats");
 
 		$wgOut->setPageTitle(wfMsg('soapfailures'));
-		
+
 		// This processes any requested for removal of an item from the list.
 		if(isset($_POST['artist']) && isset($_POST['song'])){
 			$artist = $_POST['artist'];
@@ -82,7 +80,7 @@ class Soapfailures extends SpecialPage{
 			include_once 'server.php'; // the SOAP functions
 
 			$songResult = getSong($artist, $song);*/
-			
+
 			// Pull in the NuSOAP code
 			$dir = dirname(__FILE__) . '/';
 			require_once($dir . 'nusoap.php');
@@ -122,7 +120,7 @@ class Soapfailures extends SpecialPage{
 					print "Failed. ".mysql_error();
 				}
 				print "<br/>Clearing the cache... ";
-				
+
 				$wgMemc->delete($CACHE_KEY_DATA); // purge the entry from memcached
 				$wgMemc->delete($CACHE_KEY_TIME);
 				$wgMemc->delete($CACHE_KEY_STATS);
@@ -163,7 +161,7 @@ class Soapfailures extends SpecialPage{
 
 			$msg = ($msg==""?"":"<pre>$msg</pre>");
 			$wgOut->addWikiText($msg);
-			
+
 			// Form for clearing a fixed song.
 			$wgOut->addHTML(wfMsg('soapfailures-mark-as-fixed') . "
 							<form method='post'>
@@ -213,7 +211,7 @@ class Soapfailures extends SpecialPage{
 
 				$stats = lw_soapStats_getStats(LW_TERM_WEEKLY, "", LW_API_TYPE_WEB);
 				print "\t<tr><td>".wfMsg('soapfailures-stats-period-thisweek')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
-				
+
 				$stats = lw_soapStats_getStats(LW_TERM_MONTHLY, "", LW_API_TYPE_WEB);
 				print "\t<tr><td>".wfMsg('soapfailures-stats-period-thismonth')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 				print "</table>\n";
@@ -263,7 +261,7 @@ class Soapfailures extends SpecialPage{
 							</form>\n");
 						$wgOut->addHTML("</td>");
 						$wgOut->addHTML("</tr>\n");
-						
+
 						$rowIndex++;
 					}
 					$wgOut->addHTML("</table>\n");
@@ -276,7 +274,7 @@ class Soapfailures extends SpecialPage{
 					$TWO_HOURS_IN_SECONDS = (60*60*2);
 					$wgMemc->set($CACHE_KEY_TIME, $cachedOn, $TWO_HOURS_IN_SECONDS);
 					$wgMemc->set($CACHE_KEY_STATS, $statsHtml, $TWO_HOURS_IN_SECONDS);
-					
+
 					// We use CACHE_KEY_DATA to determine when all of these keys have expired, so it should expire a few microseconds after the other two (that's why it's below the other set()s).
 					$wgMemc->set($CACHE_KEY_DATA, $data, $TWO_HOURS_IN_SECONDS);
 				}

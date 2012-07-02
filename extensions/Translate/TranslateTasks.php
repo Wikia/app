@@ -102,9 +102,20 @@ abstract class TranslateTask {
 		return false;
 	}
 
-	protected $group; ///< \type{MessageGroup} Message group.
-	protected $collection; ///< \type{MessageCollection} Messages.
-	protected $options; ///< \type{TaskOptions} Options.
+	/**
+	 * @var MessageGroup
+	 */
+	protected $group;
+
+	/**
+	 * @var MessageCollection Options
+	 */
+	protected $collection;
+
+	/**
+	 * @var TaskOptions Options
+	 */
+	protected $options;
 
 	/**
 	 * Constructor.
@@ -156,6 +167,14 @@ abstract class TranslateTask {
 		$callback = $this->options->getPagingCB();
 		call_user_func( $callback, $this->options->getOffset(), $left, $total );
 	}
+
+	/**
+	 * Override this method if the task depends on user rights.
+	 * @return \string
+	 */
+	public function isAllowedFor( User $user ) {
+		return true;
+	}
 }
 
 /**
@@ -177,8 +196,7 @@ class ViewMessagesTask extends TranslateTask {
 	}
 
 	protected function output() {
-		$code = $this->options->getLanguage();
-		$table = new MessageTable( $this->collection, $this->group, $code );
+		$table = new MessageTable( $this->collection, $this->group );
 		$table->appendEditLinkParams( 'loadtask', $this->getId() );
 
 		return $table->fullTable();
@@ -186,7 +204,7 @@ class ViewMessagesTask extends TranslateTask {
 }
 
 /**
- * List messages which has been changed since last export.
+ * Basic class for review mode
  */
 class ReviewMessagesTask extends ViewMessagesTask {
 	protected $id = 'review';
@@ -194,18 +212,15 @@ class ReviewMessagesTask extends ViewMessagesTask {
 	protected function preinit() {
 		$code = $this->options->getLanguage();
 		$this->collection = $this->group->initCollection( $code );
+		$this->collection->setReviewMode( true );
 		$this->collection->setInfile( $this->group->load( $code ) );
 		$this->collection->filter( 'ignored' );
-		$this->collection->filter( 'hastranslation', false );
-		$this->collection->filter( 'changed', false );
 	}
 
 	protected function output() {
-		$code = $this->options->getLanguage();
-		$table = new MessageTable( $this->collection, $this->group, $code );
+		$table = new MessageTable( $this->collection, $this->group );
 		$table->appendEditLinkParams( 'loadtask', $this->getId() );
 		$table->setReviewMode();
-
 		return $table->fullTable();
 	}
 }
@@ -222,15 +237,7 @@ class ViewUntranslatedTask extends ViewMessagesTask {
 		$this->collection->setInfile( $this->group->load( $code ) );
 		$this->collection->filter( 'ignored' );
 		$this->collection->filter( 'optional' );
-
-		// Update the cache while we are at it.
-		$total = count( $this->collection );
 		$this->collection->filter( 'translated' );
-		$translated = $total - count( $this->collection );
-		$fuzzy = count( $this->collection->getTags( 'fuzzy' ) );
-
-		$cache = new ArrayMemoryCache( 'groupstats' );
-		$cache->set( $this->group->getID(), $code, array( $fuzzy, $translated, $total ) );
 	}
 }
 
@@ -263,6 +270,7 @@ class ViewWithSuggestionsTask extends ViewMessagesTask {
 		$server = $config['server'];
 		$port   = $config['port'];
 		$timeout = $config['timeout-sync'];
+		$sourceLanguage = $this->group->getSourceLanguage();
 
 		$this->collection = $this->group->initCollection( $code );
 		$this->collection->setInfile( $this->group->load( $code ) );
@@ -274,7 +282,7 @@ class ViewWithSuggestionsTask extends ViewMessagesTask {
 
 		$start = time();
 
-		foreach ( $this->collection->keys() as $key => $_ ) {
+		foreach ( $this->collection->getMessageKeys() as $key ) {
 			// Allow up to 10 seconds to search for suggestions.
 			if ( time() - $start > 10 || TranslationHelpers::checkTranslationServiceFailure( 'tmserver' ) ) {
 				unset( $this->collection[$key] );
@@ -282,7 +290,7 @@ class ViewWithSuggestionsTask extends ViewMessagesTask {
 			}
 
 			$def = rawurlencode( $this->collection[$key]->definition() );
-			$url = "$server:$port/tmserver/en/$code/unit/$def";
+			$url = "$server:$port/tmserver/$sourceLanguage/$code/unit/$def";
 			$suggestions = Http::get( $url, $timeout );
 
 			if ( $suggestions !== false ) {
@@ -324,11 +332,28 @@ class ReviewAllMessagesTask extends ReviewMessagesTask {
 	protected $id = 'reviewall';
 
 	protected function preinit() {
-		$code = $this->options->getLanguage();
-		$this->collection = $this->group->initCollection( $code );
-		$this->collection->setInfile( $this->group->load( $code ) );
+		parent::preinit();
 		$this->collection->filter( 'ignored' );
 		$this->collection->filter( 'hastranslation', false );
+	}
+}
+
+/// Lists all translations for accepting.
+class AcceptQueueMessagesTask extends ReviewMessagesTask {
+	protected $id = 'acceptqueue';
+
+	protected function preinit() {
+		global $wgUser;
+		parent::preinit();
+		$this->collection->filter( 'ignored' );
+		$this->collection->filter( 'hastranslation', false );
+		$this->collection->filter( 'fuzzy' );
+		$this->collection->filter( 'reviewer', true, $wgUser->getId() );
+		$this->collection->filter( 'last-translator', true, $wgUser->getId() );
+	}
+
+	public function isAllowedFor( User $user ) {
+		return $user->isAllowed( 'translate-messagereview' );
 	}
 }
 
@@ -356,9 +381,7 @@ class ExportMessagesTask extends ViewMessagesTask {
 			$data = $writer->webExport( $this->collection );
 		}
 
-		return Xml::openElement( 'textarea', array( 'id' => 'wpTextbox1', 'rows' => '50' ) ) .
-			$data .
-			"</textarea>";
+		return Html::element( 'textarea', array( 'id' => 'wpTextbox1', 'rows' => '50' ), $data );
 	}
 }
 
@@ -413,6 +436,10 @@ class ExportAsPoMessagesTask extends ExportMessagesTask {
 	}
 
 	public function output() {
+		if ( MessageGroups::isDynamic( $this->group ) ) {
+			return 'Not supported';
+		}
+
 		$ffs = null;
 		if ( $this->group instanceof FileBasedMessageGroup ) {
 			$ffs = $this->group->getFFS();
@@ -451,19 +478,13 @@ class TranslateTasks {
 		$filterTasks = array(
 			'optional',
 			'untranslatedoptional',
-			'review',
 			'export-to-file',
-			'export-to-xliff'
 		);
 
 		$allTasks = array_keys( $wgTranslateTasks );
 
 		if ( $pageTranslation ) {
-			foreach ( $allTasks as $id => $task ) {
-				if ( in_array( $task, $filterTasks ) ) {
-					unset( $allTasks[$id] );
-				}
-			}
+			$allTasks = array_diff( $allTasks, $filterTasks );
 		}
 
 		if ( !isset( $wgTranslateTranslationServices['tmserver'] ) ) {

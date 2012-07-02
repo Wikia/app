@@ -20,21 +20,11 @@
 
 if (!defined('MEDIAWIKI')) die();
 
-# We use a lot of config vars.
-global $wgWikiTrustVersion, $wgWikiTrustGadget, $wgWikiTrustShowVoteButton, $wgWikiTrustContentServerURL;
-global $wgWikiTrustLog, $wgWikiTrustDebugLog, $wgWikiTrustDebugVerbosity;
-global $wgWikiTrustCmd, $wgWikiTrustCmdExtraArgs, $wgWikiTrustShowMouseOrigin,
-  $wgWikiTrustBlobPath, $wgWikiTrustRepSpeed, $wgWikiTrustApiURL, $wgWikiTrustRobots;
-
 # There isn't a built in enum for php
-if (!$wgWikiTrustVersion)
-  $wgWikiTrustVersion = "local"; ## This needs to be one of local, remote, wmf.
-if (!$wgWikiTrustGadget)
-  $wgWikiTrustGadget = null;
-if (!$wgWikiTrustShowVoteButton)
-  $wgWikiTrustShowVoteButton = true; // If true, the vote button is shown.
-if (!$wgWikiTrustContentServerURL)
-  $wgWikiTrustContentServerURL = "http://localhost:10303/?";
+$wgWikiTrustVersion = "local"; ## This needs to be one of local, remote, wmf.
+$wgWikiTrustGadget = null;
+$wgWikiTrustShowVoteButton = true; // If true, the vote button is shown.
+$wgWikiTrustContentServerURL = "http://localhost:10303/?";
 
 // Debugging Verbosity
 define(WIKITRUST_DEBUG, 0);
@@ -48,39 +38,27 @@ define(WIKITRUST_WIKI, "W");
 #$wgWikiTrustLog = "/tmp/{$wgDBname}-trust.log";
 #$wgWikiTrustDebugLog = "/tmp/{$wgDBname}-trust-debug.log";
 
-if (!$wgWikiTrustDebugVerbosity)
-  $wgWikiTrustDebugVerbosity = WIKITRUST_WARN; // how much information to write;
-if (!$wgWikiTrustLog)
-  $wgWikiTrustLog = "/dev/null";
-if (!$wgWikiTrustDebugLog)
-  $wgWikiTrustDebugLog = "/dev/null";
-if (!$wgWikiTrustShowMouseOrigin)
-  $wgWikiTrustShowMouseOrigin = false;
-if (!$wgWikiTrustCmd)
-  $wgWikiTrustCmd = dirname(__FILE__) . "/eval_online_wiki";
-if (!$wgWikiTrustCmdExtraArgs)
-  $wgWikiTrustCmdExtraArgs = "";
-if (!$wgWikiTrustBlobPath)
-  $wgWikiTrustBlobPath = null;
-if (!$wgWikiTrustRepSpeed)
-  $wgWikiTrustRepSpeed = 1.0;
-if (!$wgWikiTrustApiURL)
-  $wgWikiTrustApiURL = "http://en.wikipedia.org/w/api.php";
-if (!$wgWikiTrustRobots)
-  $wgWikiTrustRobots = null;
+$wgWikiTrustDebugVerbosity = WIKITRUST_WARN; // how much information to write;
+$wgWikiTrustLog = "/dev/null";
+$wgWikiTrustDebugLog = "/dev/null";
+$wgWikiTrustShowMouseOrigin = false;
+$wgWikiTrustCmd = dirname(__FILE__) . "/eval_online_wiki";
+$wgWikiTrustCmdExtraArgs = "";
+$wgWikiTrustBlobPath = null;
+$wgWikiTrustRepSpeed = 1.0;
+$wgWikiTrustApiURL = "http://en.wikipedia.org/w/api.php";
+$wgWikiTrustRobots = null;
 
-global $wgExtensionFunctions, $wgExtensionCredits;
 $wgExtensionCredits['other'][] = array(
-       'name' => 'WikiTrust',
-       'author' => 'Ian Pye, Luca de Alfaro, Bo Adler',
-       'url' => 'http://wikitrust.soe.ucsc.edu',
-       'description' => 'Adds wikitrust tab to visualize article trust and provide origin rev on click.'
-   );
-$wgExtensionMessagesFiles['WikiTrust'] = dirname(__FILE__) . '/includes/WikiTrust.i18n.php';
+	'name' => 'WikiTrust',
+	'author' => array( 'Ian Pye', 'Luca de Alfaro', 'Bo Adler' ),
+	'url' => 'http://wikitrust.soe.ucsc.edu',
+	'description' => 'Adds wikitrust tab to visualize article trust and provide origin rev on click.'
+);
 wfWikiTrustSetup();
 
 
-// Quick debugging functions -- 
+// Quick debugging functions --
 // They add a debugging level and call WikiTrust::Debug.
 function wfWikiTrustDebug($msg){
   WikiTrust::debug($msg, WIKITRUST_DEBUG);
@@ -95,10 +73,15 @@ function wfWikiTrustError($msg){
 }
 
 function wfWikiTrustSetup() {
+    $dir = dirname(__FILE__) . '/includes/';
+
+    global $wgExtensionMessagesFiles;
+    $wgExtensionMessagesFiles['WikiTrust'] = $dir.'/WikiTrust.i18n.php';
+
     // Fixes the command-line options for eval_online_wiki.
     global $wgWikiTrustBlobPath, $wgWikiTrustCmdExtraArgs;
     if ($wgWikiTrustBlobPath) {
-       $wgWikiTrustCmdExtraArgs = $wgWikiTrustCmdExtraArgs . 
+       $wgWikiTrustCmdExtraArgs = $wgWikiTrustCmdExtraArgs .
 	 " -blob_base_path " . $wgWikiTrustBlobPath;
     }
 
@@ -145,5 +128,3 @@ function wfWikiTrustSetup() {
     $wgHooks['OutputPageBeforeHTML'][] = 'WikiTrust::ucscOutputBeforeHTML';
     $wgHooks['OutputPageCheckLastModified'][] = 'WikiTrust::ucscOutputModified';
 }
-
-?>

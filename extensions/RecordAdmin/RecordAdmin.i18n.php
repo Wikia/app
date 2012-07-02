@@ -15,8 +15,9 @@ $messages = array();
  */
 $messages['en'] = array(
 	'recordadmin' => 'Record administration',
-	'recordadmin-desc' => 'A [[Special:RecordAdmin|special page]] for finding and editing record pages using a form',
-	'recordadmin-categoryempty' => 'There are currently no record types. Please categorise record templates into [[:$1|$1]].',
+	'recordadmin-desc' => 'Search, queries, forms and reporting of wiki data derived from template parameters',
+	'recordadmin-specialdesc' => 'A [[Special:RecordAdmin|special page]] for finding and creating pages using associated forms',
+	'recordadmin-noforms' => 'There are currently no forms defined to use for searching and creating',
 	'recordadmin-select' => 'Select the type of record to manage',
 	'recordadmin-createtype' => 'Enter the name of a new record type to create',
 	'recordadmin-recordtype' => 'record type',
@@ -35,10 +36,7 @@ $messages['en'] = array(
 	'recordadmin-buttonreset' => 'Reset',
 	'recordadmin-searchresult' => 'Search results',
 	'recordadmin-nomatch' => 'No matching records found!',
-	'recordadmin-edit' => 'Editing $2 record "$1"',
 	'recordadmin-typeupdated' => '$1 properties updated',
-	'recordadmin-updatesuccess' => '$1 updated',
-	'recordadmin-updateerror' => 'An error occurred during update',
 	'recordadmin-buttonsave' => 'Save',
 	'recordadmin-noform' => 'There is no form associated with "$1" records!',
 	'recordadmin-createlink' => 'create one',
@@ -49,100 +47,132 @@ $messages['en'] = array(
 	'recordadmin-title' => '$1',
 	'recordadmin-created' => 'Created',
 	'recordadmin-modified' => 'Modified',
-	'recordadmin-actions' => 'Actions',
+	'recordadmin-actions' => 'Edit',
 	'recordadmin-select' => 'Select',
 	'recordadmin-needscontent' => 'Add content...',
-	'recordadmin-editwithform' => 'Edit with form',
-	'recordadmin-typeinfo' => '$1 record',
 	'right-recordadmin' => 'Find and edit record pages',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'No "$1"',
+	'recordadmin-edit-info' => 'This page contains templates which have their own forms that you can fill in from this tab-set.<br />Alternatively [$1 use the normal MediaWiki edit functionality without template forms].',
+	'recordadmin-properties' => 'Properties',
 );
 
 /** Message documentation (Message documentation)
  * @author CERminator
  * @author EugeneZelenko
+ * @author McDutchie
  * @author Purodha
  * @author Raymond
  * @author Siebrand
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'recordadmin-desc' => 'Short desciption of this extension.
-Shown in [[Special:Version]].
-Do not translate or change tag names, or link anchors.',
+	'recordadmin-desc' => '{{desc}}',
 	'recordadmin-submit' => '{{Identical|Submit}}',
 	'recordadmin-invert' => '{{Identical|Invert selection}}',
 	'recordadmin-buttonsearch' => '{{Identical|Search}}',
 	'recordadmin-buttoncreate' => '{{Identical|Create}}',
 	'recordadmin-buttonreset' => '{{Identical|Reset}}',
-	'recordadmin-edit' => 'Parameters:
-* $1 is record name
-* $2 is the name of a record type. What actual values they can have depends on the types of records that have been created, but is usually things like "Issue", "Activity", "Invoice", "Person", etc.',
+	'recordadmin-searchresult' => '{{Identical|Search results}}',
 	'recordadmin-buttonsave' => '{{Identical|Save}}',
 	'recordadmin-editlink' => '{{Identical|Edit}}',
-	'recordadmin-actions' => '{{Identical|Action}}',
-	'recordadmin-typeinfo' => '$1 is a record type. Could be read as "A record of type $1"',
+	'recordadmin-actions' => '',
 	'right-recordadmin' => '{{doc-right|recordadmin}}',
 	'recordadmin-export-csv' => '{{Optional}}',
 	'recordadmin-export-pdf' => '{{Optional}}',
 	'recordadmin-notset' => 'Parameters:
 * $1 is string of one or more comma separated field names.',
+	'recordadmin-properties' => '{{Identical|Property}}',
 );
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
 $messages['af'] = array(
+	'recordadmin' => 'Rekord-administrasie',
+	'recordadmin-desc' => 'Soek, navrae, vorms en verslae van wikidata wat uit sjabloonparameters afgelei is',
+	'recordadmin-specialdesc' => "'n [[Special:RecordAdmin|Spesiale bladsy]] vir die soek en skep van bladsye met geassosieerde vorms",
+	'recordadmin-noforms' => 'Daar is tans geen vorms gedefinieer wat vir soek en skep gebruik kan word nie',
+	'recordadmin-select' => 'Kies',
+	'recordadmin-createtype' => "Sleutel die naam van 'n nuwe rekord-tipe om te skep in",
+	'recordadmin-recordtype' => 'tipe rekord',
+	'recordadmin-newsearch' => 'Nuwe soekopdrag vir $1',
+	'recordadmin-newrecord' => "Kies 'n ander rekord-tipe",
 	'recordadmin-submit' => 'Dien in',
+	'recordadmin-create' => 'Vind of te skep rekords van tipe "$1"',
+	'recordadmin-alreadyexist' => 'Jammer, "$1" bestaan reeds!',
+	'recordadmin-createsuccess' => '$1 geskep',
+	'recordadmin-createerror' => "'n Fout het voorgekom tydens die skep van $1!",
+	'recordadmin-badtitle' => 'Ongeldige titel!',
+	'recordadmin-recordid' => 'Rekord-ID/naam:',
 	'recordadmin-invert' => 'Omgekeerde seleksie',
 	'recordadmin-buttonsearch' => 'Soek',
 	'recordadmin-buttoncreate' => 'Skep',
 	'recordadmin-buttonreset' => 'Herstel',
+	'recordadmin-searchresult' => 'Soekresultate',
+	'recordadmin-nomatch' => 'Geen oorstemmende rekords is gevind nie!',
+	'recordadmin-typeupdated' => '$1 eienskappe opgedateer',
 	'recordadmin-buttonsave' => 'Stoor',
+	'recordadmin-noform' => 'Daar is nie \'n vorm vir rekords van tipe "$1" nie!',
+	'recordadmin-createlink' => 'skep een',
+	'recordadmin-newcreated' => 'Nuwe $1 geskep vanaf openbare vorm',
+	'recordadmin-summary-typecreated' => 'Nuwe $1 geskep',
+	'recordadmin-viewlink' => 'wys',
 	'recordadmin-editlink' => 'wysig',
-	'recordadmin-actions' => 'Aksies',
+	'recordadmin-created' => 'Geskep',
+	'recordadmin-modified' => 'Gewysig',
+	'recordadmin-actions' => 'Wysig',
+	'recordadmin-needscontent' => 'Voeg inhoud by...',
+	'right-recordadmin' => 'Vind en wysig rekordbladsye',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Geen "$1"',
+	'recordadmin-edit-info' => 'Hierdie bladsy lys sjablone wat hul eie vorms wat ingevul kan word bevat.<br /> U kan ook die [$1 normale MediaWiki fasiliteite sonder sjabloonvorms gebruik].',
+	'recordadmin-properties' => 'Eienskappe',
 );
 
 /** Aragonese (Aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
+	'recordadmin-submit' => 'Ninviar',
+	'recordadmin-buttoncreate' => 'Creyar',
 	'recordadmin-buttonsave' => 'Alzar',
+	'recordadmin-actions' => 'Accions',
 );
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  * @author Ouda
+ * @author زكريا
+ * @author محمد الجداوي
  */
 $messages['ar'] = array(
 	'recordadmin' => 'إدارة السجل',
 	'recordadmin-desc' => '[[Special:RecordAdmin|صفحة خاصة]] لإيجاد وتعديل صفحات السجلات باستخدام استمارة',
-	'recordadmin-categoryempty' => 'لا توجد حاليا أنواع سجلات. من فضلك صنف قوالب التسجيل إلى [[:$1|$1]].',
-	'recordadmin-select' => 'اختر نوع السجل للتحكم به',
+	'recordadmin-select' => 'اختر',
 	'recordadmin-createtype' => 'أدخل اسم نوع سجل جديد للإنشاء',
 	'recordadmin-recordtype' => 'نوع التسجيل',
 	'recordadmin-newsearch' => 'بحث $1 جديد',
 	'recordadmin-newrecord' => 'أختار نوع سجل أخر',
-	'recordadmin-submit' => 'نفذ',
+	'recordadmin-submit' => 'أرسل',
 	'recordadmin-create' => 'ابحث عن أو أنشئ سجلات "$1"',
-	'recordadmin-alreadyexist' => '! للأسف، "$1" موجود فعلا',
+	'recordadmin-alreadyexist' => 'للأسف، "$1" موجود بالفعل!',
 	'recordadmin-createsuccess' => '$1 أنشئت',
 	'recordadmin-createerror' => 'حدث خطأ أثناء محاولة إنشاء $1!',
 	'recordadmin-badtitle' => '! عنوان سئ',
 	'recordadmin-recordid' => 'رقم السجل/الاسم:',
 	'recordadmin-invert' => 'أعكس الأختيار',
-	'recordadmin-buttonsearch' => 'بحث',
+	'recordadmin-buttonsearch' => 'ابحث',
 	'recordadmin-buttoncreate' => 'أنشئ',
 	'recordadmin-buttonreset' => 'إعادة ضبط',
 	'recordadmin-searchresult' => 'نتائج البحث',
 	'recordadmin-nomatch' => 'لا سجلات مطابقة تم العثور عليها!',
-	'recordadmin-edit' => 'تعديل $2 السجل "$1"',
 	'recordadmin-typeupdated' => '$1 تم تحديث خصائص',
-	'recordadmin-updatesuccess' => '$1 تم تحديثه',
-	'recordadmin-updateerror' => 'حدث خطأ أثناء التحديث',
-	'recordadmin-buttonsave' => 'حفظ',
+	'recordadmin-buttonsave' => 'احفظ',
 	'recordadmin-noform' => 'لا توجد استمارة ملحقة بسجلات "$1"!',
 	'recordadmin-createlink' => 'إنشاء واحدة',
 	'recordadmin-newcreated' => '$1 جديد تم إنشاؤه من الاستمارة العامة',
@@ -151,25 +181,35 @@ $messages['ar'] = array(
 	'recordadmin-editlink' => 'عدل',
 	'recordadmin-created' => 'أنشئت',
 	'recordadmin-modified' => 'معدل',
-	'recordadmin-actions' => 'أفعال',
+	'recordadmin-actions' => 'عدل',
 	'recordadmin-needscontent' => 'أضف المحتوى...',
-	'recordadmin-editwithform' => 'عدل مع الاستمارة',
-	'recordadmin-typeinfo' => '$1 تسجيل',
 	'right-recordadmin' => 'أبحث و عدل صفحات السجل',
-	'recordadmin-export-csv' => 'سي في إس',
-	'recordadmin-export-pdf' => 'بي دي إف',
+	'recordadmin-export-csv' => 'القيم المفصولة بفواصل',
+	'recordadmin-export-pdf' => 'صيغة المستندات المحمولة',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
  * @author Basharh
  */
 $messages['arc'] = array(
+	'recordadmin-recordtype' => 'ܐܕܫܐ ܕܣܘܓܠܐ',
+	'recordadmin-newsearch' => 'ܒܨܝܐ $1 ܚܕܬܐ',
+	'recordadmin-submit' => 'ܫܕܪ',
+	'recordadmin-createsuccess' => '$1 ܐܬܒܪܝܬ',
+	'recordadmin-badtitle' => 'ܟܘܢܝܐ ܠܐ ܛܒܐ!',
 	'recordadmin-invert' => 'ܐܗܦܟ ܠܓܘܒܝܐ',
 	'recordadmin-buttonsearch' => 'ܒܨܝ',
 	'recordadmin-buttoncreate' => 'ܒܪܝ',
+	'recordadmin-searchresult' => 'ܦܠܛ̈ܐ ܕܒܘܨܝܐ',
 	'recordadmin-buttonsave' => 'ܠܒܘܟ',
+	'recordadmin-createlink' => 'ܒܪܝ ܚܕܐ',
+	'recordadmin-summary-typecreated' => '$1 ܚܕܬܐ ܒܪܝܬ',
 	'recordadmin-viewlink' => 'ܚܙܝ',
 	'recordadmin-editlink' => 'ܫܚܠܦ',
+	'recordadmin-actions' => 'ܫܚܠܦ',
+	'recordadmin-needscontent' => 'ܐܘܣܦ ܚܒܝܫܬ̈ܐ',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'ܠܝܬ $1',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -198,10 +238,7 @@ $messages['arz'] = array(
 	'recordadmin-buttonreset' => 'إعادة الظبط',
 	'recordadmin-searchresult' => 'نتائج البحث',
 	'recordadmin-nomatch' => 'لا يوجد سجلات متطابقة',
-	'recordadmin-edit' => 'تعديل $2 السجل "$1"',
 	'recordadmin-typeupdated' => '$1 تم تحديث خصائص',
-	'recordadmin-updatesuccess' => 'محدث $1',
-	'recordadmin-updateerror' => 'حدث خطأ أثناء التحديث',
 	'recordadmin-buttonsave' => 'حفظ',
 	'recordadmin-noform' => 'لا توجد استمارة ملحقة بسجلات "$1"!',
 	'recordadmin-createlink' => 'إنشاء واحدة',
@@ -216,14 +253,33 @@ $messages['arz'] = array(
 	'right-recordadmin' => 'أبحث و عدل صفحات السجل',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Wertuose
+ */
+$messages['az'] = array(
+	'recordadmin-submit' => 'Təsdiq et',
+	'recordadmin-buttonsearch' => 'Axtar',
+	'recordadmin-buttoncreate' => 'Yarat',
+	'recordadmin-buttonreset' => 'Qur',
+	'recordadmin-searchresult' => 'Axtarış nəticələri',
+	'recordadmin-buttonsave' => 'Qeyd et',
+	'recordadmin-viewlink' => 'görünüş',
+	'recordadmin-editlink' => 'redaktə',
+	'recordadmin-actions' => 'Redaktə',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
 	'recordadmin' => 'Кіраваньне запісамі',
-	'recordadmin-desc' => '[[Special:RecordAdmin|Спэцыяльная старонка]] якая ўжываецца для знаходжаньня і рэдагаваньня старонкамі запісаў з дапамогай форм',
-	'recordadmin-categoryempty' => 'У гэты момант няма ніякіх запісаў. Калі ласка, катэгарызуйце шаблёны запісаў у [[:$1|$1]].',
+	'recordadmin-desc' => 'Пошук, запыты, формы і справаздачы па вікі-зьвестках, атрыманым з парамэтраў шаблёну',
+	'recordadmin-specialdesc' => '[[Special:RecordAdmin|Спэцыяльная старонка]], якая ўжываецца для пошуку і стварэньня старонак з дапамогай асацыяваных формаў',
+	'recordadmin-noforms' => 'Цяпер няма вызначаных формаў для пошуку і стварэньня',
 	'recordadmin-select' => 'Выберыце тып запісаў для кіраваньня',
 	'recordadmin-createtype' => 'Для стварэньня новага тыпу запісаў увядзіце яго назву',
 	'recordadmin-recordtype' => 'тып запісаў',
@@ -242,10 +298,7 @@ $messages['be-tarask'] = array(
 	'recordadmin-buttonreset' => 'Скінуць',
 	'recordadmin-searchresult' => 'Вынікі пошуку',
 	'recordadmin-nomatch' => 'Адпаведных запісаў ня знойдзена!',
-	'recordadmin-edit' => 'Рэдагаваньне запісу «$1» тыпу $2',
 	'recordadmin-typeupdated' => 'Уласьцівасьці $1 абноўлены',
-	'recordadmin-updatesuccess' => '$1 абноўлены',
-	'recordadmin-updateerror' => 'Адбылася памылка пад час абнаўленьня',
 	'recordadmin-buttonsave' => 'Захаваць',
 	'recordadmin-noform' => 'Не існуе формы зьвязанай з запісамі «$1»!',
 	'recordadmin-createlink' => 'стварыць',
@@ -257,12 +310,12 @@ $messages['be-tarask'] = array(
 	'recordadmin-modified' => 'Абноўлены',
 	'recordadmin-actions' => 'Дзеяньні',
 	'recordadmin-needscontent' => 'Дадаць зьмест...',
-	'recordadmin-editwithform' => 'Рэдагаваць праз форму',
-	'recordadmin-typeinfo' => '$1 запіс',
 	'right-recordadmin' => 'пошук і рэдагаваньне старонак запісаў',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'Няма $1',
+	'recordadmin-edit-info' => 'Гэтая старонка ўтрымлівае шаблёны, якія маюць уласныя формы, якія Вы можаце запоўніць з гэтага набору закладак.<br />Націсьніце, [$1 калі Вы жадаеце выкарыстоўваць звычайнае рэдагаваньне MediaWiki без шаблённых формаў].',
+	'recordadmin-properties' => 'Уласьцівасьці',
 );
 
 /** Bulgarian (Български)
@@ -274,8 +327,6 @@ $messages['bg'] = array(
 	'recordadmin-buttonsearch' => 'Търсене',
 	'recordadmin-buttoncreate' => 'Създаване',
 	'recordadmin-searchresult' => 'Резултати от търсенето',
-	'recordadmin-edit' => 'Редактиране на $1',
-	'recordadmin-updateerror' => 'Възникна грешка по време на обновяването',
 	'recordadmin-buttonsave' => 'Съхраняване',
 	'recordadmin-viewlink' => 'преглеждане',
 	'recordadmin-editlink' => 'редактиране',
@@ -284,19 +335,45 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Bellayet
+ * @author Wikitanvir
  */
 $messages['bn'] = array(
 	'recordadmin-select' => 'নির্বাচন',
-	'recordadmin-submit' => 'জমা দিন',
+	'recordadmin-recordtype' => 'রেকর্ডের ধরন',
+	'recordadmin-newsearch' => 'নতুন  $1 অনুসন্ধান',
+	'recordadmin-newrecord' => 'অন্য একটি রেকর্ডের ধরন নির্বাচন করুন',
+	'recordadmin-submit' => 'জমা দাও',
 	'recordadmin-badtitle' => 'মন্দ শিরোনাম!',
+	'recordadmin-recordid' => 'রেকর্ড আইড/নাম:',
+	'recordadmin-buttonsearch' => 'অনুসন্ধান',
+	'recordadmin-buttoncreate' => 'তৈরি করুন',
+	'recordadmin-buttonreset' => 'আদি অবস্থায় ফেরত',
+	'recordadmin-searchresult' => 'অনুসন্ধানের ফলাফল',
+	'recordadmin-nomatch' => 'রেকর্ডের সাথে কোনো সাদৃশ্য খুঁজে পাওয়া যায়নি!',
+	'recordadmin-buttonsave' => 'সংরক্ষণ',
+	'recordadmin-createlink' => 'নতুন একটি তৈরি করুন',
+	'recordadmin-viewlink' => 'দেখাও',
+	'recordadmin-editlink' => 'সম্পাদনা',
+	'recordadmin-created' => 'তৈরি হয়েছে',
+	'recordadmin-modified' => 'পরিবর্তিত হয়েছে',
+	'recordadmin-actions' => 'সম্পাদনা',
+	'recordadmin-needscontent' => 'বিষয়বস্তু যোগ...',
+	'right-recordadmin' => 'রেকর্ড পাতা খুঁজুন ও সম্পাদনা করুন',
+	'recordadmin-export-csv' => 'সিএসভি',
+	'recordadmin-export-pdf' => 'পিডিএফ',
+	'recordadmin-notset' => '"$1" নং',
 );
 
 /** Breton (Brezhoneg)
  * @author Fohanno
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'recordadmin' => 'Mererezh an enrolladennoù',
+	'recordadmin-desc' => 'Deveret eo an Enklaskoù, ar rekedoù, ar furmskridoù hag ar rentaoù-kont war roadennoù ar wiki eus arventennoù ar patrom.',
+	'recordadmin-specialdesc' => 'Ur [[Special:RecordAdmin|bajenn dibar]] da gavout ha da sevel pajennoù en ur ober gant furmskridoù stag.',
+	'recordadmin-noforms' => "Evit ar mare n'eus bet termenet furmskrid ebet da implijout evit ar c'hlask har ar c'hrouiñ",
 	'recordadmin-select' => 'Diuzañ',
 	'recordadmin-createtype' => 'Ebarzhiñ anv ur seurt enrolladennoù nevez evit e grouiñ',
 	'recordadmin-recordtype' => 'seurt enrolladenn',
@@ -304,36 +381,35 @@ $messages['br'] = array(
 	'recordadmin-newrecord' => 'Diuzañ ur seurt enrolladennoù all',
 	'recordadmin-submit' => 'Kas',
 	'recordadmin-create' => 'Klask pe krouiñ "$1" enrolladenn',
-	'recordadmin-alreadyexist' => 'Digarez, « $1 » zo anezhañ dija !',
+	'recordadmin-alreadyexist' => 'Ho tigarez, "$1" zo anezhañ dija !',
 	'recordadmin-createsuccess' => '$1 zo bet krouet',
 	'recordadmin-createerror' => "C'hoarvezet ez eus ur fazi pa oad o klask krouiñ an $1 !",
 	'recordadmin-badtitle' => 'Titl fall !',
+	'recordadmin-recordid' => 'ID/Anv an enrolladenn :',
 	'recordadmin-invert' => 'Eilpennañ an diuzadenn',
 	'recordadmin-buttonsearch' => 'Klask',
 	'recordadmin-buttoncreate' => 'Krouiñ',
 	'recordadmin-buttonreset' => 'Adderaouekaat',
-	'recordadmin-searchresult' => "Disoc'hoù ar c'hlask",
-	'recordadmin-edit' => 'Ho kemmañ $2 enrolladenn "$1"',
+	'recordadmin-searchresult' => "Disoc'hoù enklask",
+	'recordadmin-nomatch' => "N'eo bet kavet enrolladenn klotaus ebet !",
 	'recordadmin-typeupdated' => 'hizivaet eo perzhioù $1',
-	'recordadmin-updatesuccess' => 'Hizivaet eo $1',
-	'recordadmin-updateerror' => "C'hoarvezet ez eus ur fazi e-pad an hizivadenn",
 	'recordadmin-buttonsave' => 'Enrollañ',
 	'recordadmin-noform' => 'N\'eus furmskrid ebet stag ouzh an enrolladennoù "$1" !',
 	'recordadmin-createlink' => 'krouiñ unan',
-	'recordadmin-newcreated' => '$1 nevez, krouet adalek ur furmskrid publik',
+	'recordadmin-newcreated' => '$1 nevez krouet adalek ur furmskrid foran',
 	'recordadmin-summary-typecreated' => 'Krouet ez eus bet un $1 nevez',
 	'recordadmin-viewlink' => 'gwelet',
 	'recordadmin-editlink' => 'aozañ',
 	'recordadmin-created' => 'Krouet',
 	'recordadmin-modified' => 'Kemmet',
-	'recordadmin-actions' => 'Oberoù',
+	'recordadmin-actions' => 'Kemmañ',
 	'recordadmin-needscontent' => 'Ouzhpennañ an danvez...',
-	'recordadmin-editwithform' => 'Aozañ gant ur furmskrid',
-	'recordadmin-typeinfo' => 'enrolladenn $1',
 	'right-recordadmin' => 'Kavout hag aozañ ar pajennoù enrollañ',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => '"$1" ebet',
+	'recordadmin-edit-info' => "Er bajenn-mañ ez eus patromoù dezho o furmskridoù o-unan a c'hallit leuniañ adalek an strobad ivinelloù-mañ.<br />Gallout a rit ivez[$1 ober gant arc'hwelioù kemmañ boas MediaWiki hep furmskridoù ar patromoù].",
+	'recordadmin-properties' => 'Perzhioù',
 );
 
 /** Bosnian (Bosanski)
@@ -341,8 +417,9 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'recordadmin' => 'Zapis administracije',
-	'recordadmin-desc' => '[[Special:RecordAdmin|Posebna stranica]] za traženje i uređivanje zapisa stranica koristeći obrazac',
-	'recordadmin-categoryempty' => 'Trenutno nema nikakvih tipova zapisa. Molimo kategorišite šablone zapisa u [[:$1|$1]].',
+	'recordadmin-desc' => 'Pretraga, upiti, obrasci i izvještaji o wiki podacima izvedenim iz parametara šablona',
+	'recordadmin-specialdesc' => '[[Special:RecordAdmin|Posebna stranica]] za traženje i pravljenje stranica koristeći pridružene obrasce',
+	'recordadmin-noforms' => 'Trenutno nema definisanih obrazaca za korištenje za traženje i pravljenje',
 	'recordadmin-select' => 'Odaberite tip zapisa za upravljanje',
 	'recordadmin-createtype' => 'Unesite ime novog tipa zapisa da ga napravite',
 	'recordadmin-recordtype' => 'tip zapisa',
@@ -361,10 +438,7 @@ $messages['bs'] = array(
 	'recordadmin-buttonreset' => 'Poništi',
 	'recordadmin-searchresult' => 'Rezultati pretrage',
 	'recordadmin-nomatch' => 'Nije pronađen odgovarajući zapis!',
-	'recordadmin-edit' => 'Uređujete $2 zapisa "$1"',
 	'recordadmin-typeupdated' => '$1 svojstvo ažurirano',
-	'recordadmin-updatesuccess' => '$1 ažurirano',
-	'recordadmin-updateerror' => 'Desila se greška pri ažuriranju',
 	'recordadmin-buttonsave' => 'Sačuvaj',
 	'recordadmin-noform' => 'Ne postoji obrazac koji je pripojen "$1" zapisima!',
 	'recordadmin-createlink' => 'napravi jedan',
@@ -376,9 +450,12 @@ $messages['bs'] = array(
 	'recordadmin-modified' => 'Izmijenjeno',
 	'recordadmin-actions' => 'Akcije',
 	'recordadmin-needscontent' => 'Dodaj sadržaj...',
-	'recordadmin-editwithform' => 'Uređivanje sa obrascom',
-	'recordadmin-typeinfo' => '$1 zapis',
 	'right-recordadmin' => 'Traženje i uređivanje stranica zapisa',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Bez "$1"',
+	'recordadmin-edit-info' => 'Ova stranica sadrži šablone sa vlastitim obrascima koje možete popuniti iz ovog seta jezičaka.<br />Alternativno [$1 koristite normalni MediaWiki uređivač koji radi bez šablonskih obrazaca].',
+	'recordadmin-properties' => 'Svojstva',
 );
 
 /** Catalan (Català)
@@ -388,24 +465,60 @@ $messages['ca'] = array(
 	'recordadmin-editlink' => 'modifica',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'recordadmin-newsearch' => 'Керла лахар $1',
+	'recordadmin-buttonsearch' => 'Лаха',
+	'recordadmin-buttoncreate' => 'Кхолла',
+	'recordadmin-buttonsave' => 'lалашдан',
+	'recordadmin-viewlink' => 'хьажа',
+	'recordadmin-editlink' => 'нисйé',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+);
+
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'recordadmin-submit' => 'ناردن',
+	'recordadmin-buttonsearch' => 'گەڕان',
+	'recordadmin-buttonsave' => 'پاشەکەوت',
+);
+
+/** Czech (Česky) */
+$messages['cs'] = array(
+	'recordadmin-select' => 'Vybrat',
+	'recordadmin-badtitle' => 'Neplatný název!',
+	'recordadmin-buttonsave' => 'Uložit',
+	'recordadmin-viewlink' => 'prohlédnout',
+	'recordadmin-editlink' => 'editovat',
+	'recordadmin-created' => 'Vytvořeno',
+	'recordadmin-modified' => 'Upraveno',
+	'recordadmin-actions' => 'Akce',
+);
+
 /** German (Deutsch)
  * @author Imre
+ * @author Kghbln
  * @author Melancholie
  * @author Purodha
  * @author Revolus
  * @author Sebastian Wallroth
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['de'] = array(
 	'recordadmin' => 'Aufzeichnungsadministrierung',
-	'recordadmin-desc' => 'Eine [[Special:RecordAdmin|spezielle Seite]] zum Finden und Editieren der Aufzeichnungsseiten mittels eines Formulars',
-	'recordadmin-categoryempty' => 'Derzeit gibt es keine Aufzeichnungstypen. Bitte kategorisiere Aufzeichnungsvorlagen unter [[:$1|$1]].',
-	'recordadmin-select' => 'Wähle den zu verwaltenden Aufzeichnungstyp',
+	'recordadmin-desc' => 'Ermöglicht Suchen, Abfragen, Formulare und Berichte zu Daten aus in Vorlagen eingebetteten Parametern',
+	'recordadmin-specialdesc' => 'Stellt eine [[Special:RecordAdmin|Spezialseite]] bereit mit der Seiten mit Hilfe zugehöriger Formulare ermittelt und erstellt werden können',
+	'recordadmin-noforms' => 'Momentan gibt es keine Formulare mit denen Seiten ermittelt und erstellt werden können',
+	'recordadmin-select' => 'Auswählen',
 	'recordadmin-createtype' => 'Gib den Namen des zu erstellenden Aufzeichnungstyps an',
 	'recordadmin-recordtype' => 'Aufzeichnungstyp',
 	'recordadmin-newsearch' => 'Neue $1-Suche',
 	'recordadmin-newrecord' => 'Wähle einen anderen Aufzeichnungstypen',
-	'recordadmin-submit' => 'Übermitteln',
+	'recordadmin-submit' => 'Speichern',
 	'recordadmin-create' => 'Finde oder erstelle „$1“-Aufzeichnungen',
 	'recordadmin-alreadyexist' => 'Entschuldige, „$1“ existiert bereits!',
 	'recordadmin-createsuccess' => '$1 erstellt',
@@ -414,37 +527,36 @@ $messages['de'] = array(
 	'recordadmin-recordid' => 'Aufzeichnungskennung/-name:',
 	'recordadmin-invert' => 'Auswahl umkehren',
 	'recordadmin-buttonsearch' => 'Suche',
-	'recordadmin-buttoncreate' => 'Erstelle',
+	'recordadmin-buttoncreate' => 'Erstellen',
 	'recordadmin-buttonreset' => 'Zurücksetzen',
 	'recordadmin-searchresult' => 'Suchergebnisse',
 	'recordadmin-nomatch' => 'Keine passenden Aufzeichnungen gefunden!',
-	'recordadmin-edit' => '$2 vom Typ „$1“ bearbeiten',
 	'recordadmin-typeupdated' => '$1 Werte aktualisiert',
-	'recordadmin-updatesuccess' => '$1 aktualisiert',
-	'recordadmin-updateerror' => 'Während der Aktualisierung trat ein Fehler auf',
 	'recordadmin-buttonsave' => 'Speichern',
 	'recordadmin-noform' => 'Es gibt kein Formular für „$1“-Aufzeichnungen!',
 	'recordadmin-createlink' => 'erstelle eins',
 	'recordadmin-newcreated' => 'Neues $1 auf einem öffentlichen Formular erstellt',
 	'recordadmin-summary-typecreated' => 'Neues $1 erstellt',
 	'recordadmin-viewlink' => 'ansehen',
-	'recordadmin-editlink' => 'ändern',
+	'recordadmin-editlink' => 'bearbeiten',
 	'recordadmin-created' => 'Erstellt',
-	'recordadmin-modified' => 'Modifiziert',
-	'recordadmin-actions' => 'Aktionen',
+	'recordadmin-modified' => 'Geändert',
+	'recordadmin-actions' => 'Bearbeiten',
 	'recordadmin-needscontent' => 'Inhalt hinzufügen …',
-	'recordadmin-editwithform' => 'Mit Formular bearbeiten',
-	'recordadmin-typeinfo' => '$1-Aufnahme',
 	'right-recordadmin' => 'Aufzeichnungsseiten finden und bearbeiten',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Keine „$1“',
+	'recordadmin-edit-info' => 'Diese Seite enthält Vorlagen, die über eigene Bearbeitungsformulare verfügen.<br />[$1 Hier] klicken, um den regulären Bearbeitungsmodus von MediaWiki zu verwenden.',
+	'recordadmin-properties' => 'Attribute',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  * @author Revolus
  * @author Umherirrender
  */
 $messages['de-formal'] = array(
-	'recordadmin-categoryempty' => 'Derzeit gibt es keine Aufzeichnungstypen. Bitte kategorisieren Sie Aufzeichnungsvorlagen unter [[:$1|$1]].',
 	'recordadmin-select' => 'Wählen Sie den zu verwaltenden Aufzeichnungstyp',
 );
 
@@ -453,8 +565,9 @@ $messages['de-formal'] = array(
  */
 $messages['dsb'] = array(
 	'recordadmin' => 'Administracija zapisow',
-	'recordadmin-desc' => '[[Special:RecordAdmin|Specialny bok]] za pytanje a wobźěłowanje zapisowych bokow z pomocu formulara',
-	'recordadmin-categoryempty' => 'Tuchylu njejsu žedne typy registracije. Kategorizěruj pšosym pśedłogi registracije do [[:$1|$1]].',
+	'recordadmin-desc' => 'Zmóžnja pytanje, napšašowanja, formulara a rozpšawy wó wikidatach wótwóźonych z parametrow pśedłogow',
+	'recordadmin-specialdesc' => '[[Special:RecordAdmin|Specialny bok]] za pytanje a napóranje bokow z pomocu pśisłušnych formularow',
+	'recordadmin-noforms' => 'Tuchylu njejsu formulary, kótarež  su za pytanje a napóranje',
 	'recordadmin-select' => 'Wubjeŕ typ registracije, kótaryž ma se zastojaś',
 	'recordadmin-createtype' => 'Zapódaj mě nowego typa registracije, kótaryž ma se napóraś',
 	'recordadmin-recordtype' => 'typ registracije',
@@ -473,10 +586,7 @@ $messages['dsb'] = array(
 	'recordadmin-buttonreset' => 'Anulěrowaś',
 	'recordadmin-searchresult' => 'Pytańske wuslědki',
 	'recordadmin-nomatch' => 'Žedne wótpowědne zapise namakane!',
-	'recordadmin-edit' => '$2, datowa sajźba $1 se wobźěłujo',
 	'recordadmin-typeupdated' => 'Kakosći $1 zaktualizěrowane',
-	'recordadmin-updatesuccess' => '$1 zaktualizěrowany',
-	'recordadmin-updateerror' => 'Zmólka jo nastała wob aktualizaciju',
 	'recordadmin-buttonsave' => 'Składowaś',
 	'recordadmin-noform' => 'Njejo formular za zapisy "$1"!',
 	'recordadmin-createlink' => 'jaden napóraś',
@@ -488,9 +598,19 @@ $messages['dsb'] = array(
 	'recordadmin-modified' => 'Změnjony',
 	'recordadmin-actions' => 'Akcije',
 	'recordadmin-needscontent' => 'Wopśimjeśe pśidaś...',
-	'recordadmin-editwithform' => 'Z formularom wobźěłaś',
-	'recordadmin-typeinfo' => 'Datowa sajźba $1',
 	'right-recordadmin' => 'Zapisowe boki namakaś a wobźěłaś',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Žeden "$1"',
+	'recordadmin-edit-info' => 'Toś ten bok wopśimujo pśedłogi, kótarež maju swójske formulary, kótarež móžoš z toś teje sajźby rejtarkow wupołniś.<br />Klikni [$1 sem], aby normalnu wobźěłowańsku funkcionalnosć MediaWiki bźez pśedłogowych formularow wužywał.',
+	'recordadmin-properties' => 'Kakosći',
+);
+
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'recordadmin-buttonsearch' => 'Dii',
+	'recordadmin-buttoncreate' => 'Dze egɔme',
+	'recordadmin-editlink' => 'trɔ asi le eŋu',
 );
 
 /** Greek (Ελληνικά)
@@ -515,7 +635,6 @@ $messages['el'] = array(
 	'recordadmin-searchresult' => 'Αποτελέσματα αναζήτησης',
 	'recordadmin-nomatch' => 'Δεν βρέθηκαν αντίστοιχα αποτελέσματα!',
 	'recordadmin-typeupdated' => 'Οι $1 ιδιότητες ενημερώθηκαν',
-	'recordadmin-updatesuccess' => 'Το $1 ενημερώθηκε',
 	'recordadmin-buttonsave' => 'Αποθήκευση',
 	'recordadmin-createlink' => 'δημιουργία ενός',
 	'recordadmin-summary-typecreated' => 'Νέα $1 δημιουργήθηκε',
@@ -525,11 +644,10 @@ $messages['el'] = array(
 	'recordadmin-modified' => 'Μετατράπηκε',
 	'recordadmin-actions' => 'Ενέργειες',
 	'recordadmin-needscontent' => 'Προσθήκη περιεχομένου...',
-	'recordadmin-editwithform' => 'Επεξεργασία με φόρμα',
-	'recordadmin-typeinfo' => '$1 καταγραφή',
 );
 
 /** Esperanto (Esperanto)
+ * @author Airon90
  * @author Michawiki
  * @author Yekrats
  */
@@ -540,13 +658,11 @@ $messages['eo'] = array(
 	'recordadmin-create' => 'Trovi aŭ krei rikordojn "$1"',
 	'recordadmin-alreadyexist' => 'Bedaŭrinde, "$1" jam ekzistas!',
 	'recordadmin-createsuccess' => '$1 kreita',
-	'recordadmin-badtitle' => 'Fuŝa titolo!',
+	'recordadmin-badtitle' => 'Fuŝa titolo',
 	'recordadmin-invert' => 'Inversigi selekton',
 	'recordadmin-buttonsearch' => 'Serĉi',
 	'recordadmin-buttoncreate' => 'Krei',
 	'recordadmin-searchresult' => 'Rezultoj de serĉo',
-	'recordadmin-edit' => 'Redaktante $2 rekordon "$1"',
-	'recordadmin-updatesuccess' => '$1 ĝisdatigita',
 	'recordadmin-buttonsave' => 'Konservi',
 	'recordadmin-createlink' => 'krei unu',
 	'recordadmin-summary-typecreated' => 'Nova $1 kreita',
@@ -556,20 +672,20 @@ $messages['eo'] = array(
 	'recordadmin-modified' => 'Modifita',
 	'recordadmin-actions' => 'Agoj',
 	'recordadmin-needscontent' => 'Aldoni enhavon...',
-	'recordadmin-editwithform' => 'Redakti per formularo',
-	'recordadmin-typeinfo' => '$1 rekordo',
 );
 
 /** Spanish (Español)
  * @author Antur
  * @author Crazymadlover
  * @author Imre
+ * @author Peter17
  * @author Translationista
  */
 $messages['es'] = array(
 	'recordadmin' => 'Administración de registros',
-	'recordadmin-desc' => 'Una [[Special:RecordAdmin|página especial]] para encontrar y editar páginas de registros usando un formulario',
-	'recordadmin-categoryempty' => 'Actualmente no hay tipos de registro. Por favor, organice por categorías las plantillas de registros en [[:$1|$1]]',
+	'recordadmin-desc' => 'Búsqueda, consultas, formularios y reportes de datos de wiki derivados de parámetros de plantilla',
+	'recordadmin-specialdesc' => 'Una [[Special:RecordAdmin|página especial]] para encontrar y crear páginas de registros usando formularios asociados',
+	'recordadmin-noforms' => 'Actualmente no existen formularios definidos para usar en la búsqueda y creación de páginas',
 	'recordadmin-select' => 'Seleccionar el tipo de registro a gestionar',
 	'recordadmin-createtype' => 'Ingrese el nombre de un nuevo tipo de registro para crear',
 	'recordadmin-recordtype' => 'tipo de registro',
@@ -588,10 +704,7 @@ $messages['es'] = array(
 	'recordadmin-buttonreset' => 'Reestablecer',
 	'recordadmin-searchresult' => 'Resultados de la búsqueda',
 	'recordadmin-nomatch' => 'No se encontraron registros coincidentes!',
-	'recordadmin-edit' => 'Editando registro $2 "$1"',
 	'recordadmin-typeupdated' => '$1 propiedades actualizadas',
-	'recordadmin-updatesuccess' => '$1 actualizado',
-	'recordadmin-updateerror' => 'Un error ocurrió durante la actualización',
 	'recordadmin-buttonsave' => 'Guardar',
 	'recordadmin-noform' => '¡No hay ningún formulario asociado a los registros "$1"!',
 	'recordadmin-createlink' => 'crear uno',
@@ -603,12 +716,12 @@ $messages['es'] = array(
 	'recordadmin-modified' => 'Modificado',
 	'recordadmin-actions' => 'Acciones',
 	'recordadmin-needscontent' => 'Agregar contenido...',
-	'recordadmin-editwithform' => 'Editar este formulario',
-	'recordadmin-typeinfo' => 'Registro de $1',
 	'right-recordadmin' => 'Encontrar y editar páginas de registro',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'No existe ningún "$1"',
+	'recordadmin-edit-info' => 'Esta página contiene plantillas que tienen formularios propios, los cuales puedes completar a partir de este grupo de pestañas.',
+	'recordadmin-properties' => 'Propiedades',
 );
 
 /** Estonian (Eesti)
@@ -621,7 +734,6 @@ $messages['et'] = array(
 	'recordadmin-buttoncreate' => 'Loo',
 	'recordadmin-searchresult' => 'Otsingu tulemused',
 	'recordadmin-nomatch' => 'Sobivaid tulemusi ei leitud!',
-	'recordadmin-edit' => '$1 toimetamine',
 	'recordadmin-buttonsave' => 'Salvesta',
 	'recordadmin-viewlink' => 'vaata',
 	'recordadmin-editlink' => 'toimeta',
@@ -637,7 +749,7 @@ $messages['eu'] = array(
 	'recordadmin-badtitle' => 'Izenburu okerra!',
 	'recordadmin-buttonsearch' => 'Bilatu',
 	'recordadmin-buttoncreate' => 'Sortu',
-	'recordadmin-buttonreset' => 'Berrezarri',
+	'recordadmin-buttonreset' => 'Hasieratu',
 	'recordadmin-buttonsave' => 'Gorde',
 	'recordadmin-viewlink' => 'ikusi',
 	'recordadmin-editlink' => 'aldatu',
@@ -662,8 +774,6 @@ $messages['fi'] = array(
 	'recordadmin-buttoncreate' => 'Luo',
 	'recordadmin-buttonreset' => 'Tyhjennä',
 	'recordadmin-searchresult' => 'Hakutulokset',
-	'recordadmin-updatesuccess' => '$1 päivitetty',
-	'recordadmin-updateerror' => 'Päivityksessä tapahtui virhe',
 	'recordadmin-buttonsave' => 'Tallenna',
 	'recordadmin-createlink' => 'luo sellainen',
 	'recordadmin-summary-typecreated' => 'Luotiin uusi $1',
@@ -673,20 +783,25 @@ $messages['fi'] = array(
 	'recordadmin-modified' => 'Muutettu',
 	'recordadmin-actions' => 'Toiminnot',
 	'recordadmin-needscontent' => 'Lisää sisältöä...',
-	'recordadmin-editwithform' => 'Muokkaa lomakkeella',
 );
 
 /** French (Français)
  * @author Crochet.david
  * @author Grondin
  * @author IAlex
+ * @author Od1n
+ * @author Peter17
  * @author PieRRoMaN
+ * @author Sherbrooke
+ * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'recordadmin' => 'Gestion des enregistrements',
-	'recordadmin-desc' => 'Une page spéciale pour trouver et modifier l’enregistrement des pages par l’utilisation d’un formulaire',
-	'recordadmin-categoryempty' => 'Il n’y a actuellement aucun type d’enregistrement. Veuillez catégoriser les modèles d’enregistrement dans [[:$1|$1]].',
-	'recordadmin-select' => 'Sélectionner le type d’enregistrement à gérer',
+	'recordadmin-desc' => 'Recherche, requêtes, formulaires et rapport de données du wiki dérivés de paramètres de modèle',
+	'recordadmin-specialdesc' => 'Une [[Special:RecordAdmin|page spéciale]] pour trouver et créer des pages en utilisant des formulaires associés.',
+	'recordadmin-noforms' => 'Il n’y a actuellement aucun formulaire défini à utiliser pour la recherche et la création',
+	'recordadmin-select' => 'Sélectionner',
 	'recordadmin-createtype' => 'Entrez le nom d’un type d’enregistrement pour le créer',
 	'recordadmin-recordtype' => 'type d’enregistrement',
 	'recordadmin-newsearch' => 'Nouvelle recherche $1',
@@ -696,7 +811,7 @@ $messages['fr'] = array(
 	'recordadmin-alreadyexist' => 'Désolé, « $1 » existe déjà !',
 	'recordadmin-createsuccess' => '$1 creé avec succès',
 	'recordadmin-createerror' => 'Une erreur est intervenue lors de la tentative de création de $1 !',
-	'recordadmin-badtitle' => 'Mauvais titre!',
+	'recordadmin-badtitle' => 'Mauvais titre !',
 	'recordadmin-recordid' => 'ID/Nom de l’enregistrement :',
 	'recordadmin-invert' => 'Inverser la sélection',
 	'recordadmin-buttonsearch' => 'Rechercher',
@@ -704,10 +819,7 @@ $messages['fr'] = array(
 	'recordadmin-buttonreset' => 'Réinitialiser',
 	'recordadmin-searchresult' => 'Résultats de la recherche',
 	'recordadmin-nomatch' => 'Aucun enregistrement correspondant de trouvé !',
-	'recordadmin-edit' => 'Modification de l’enregistrement $2  « $1 »',
 	'recordadmin-typeupdated' => 'propriété de $1 mises à jour',
-	'recordadmin-updatesuccess' => '$1 mis à jour avec succès',
-	'recordadmin-updateerror' => 'Une erreur a été rencontrée lors de la mise à jour',
 	'recordadmin-buttonsave' => 'Sauvegarder',
 	'recordadmin-noform' => 'Il n’y a aucun formulaire avec l’enregistrement « $1 » !',
 	'recordadmin-createlink' => 'cliquez ici pour en créer un',
@@ -717,14 +829,14 @@ $messages['fr'] = array(
 	'recordadmin-editlink' => 'modifier',
 	'recordadmin-created' => 'Créé',
 	'recordadmin-modified' => 'Modifié',
-	'recordadmin-actions' => 'Actions',
+	'recordadmin-actions' => 'Modifier',
 	'recordadmin-needscontent' => 'Ajouter le contenu...',
-	'recordadmin-editwithform' => 'Modifier avec un formulaire',
-	'recordadmin-typeinfo' => 'enregistrement $1',
 	'right-recordadmin' => 'Trouver et modifier les pages d’enregistrement',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'Aucun « $1 »',
+	'recordadmin-edit-info' => 'Cette page contient des modèles qui ont leurs propres formulaires que vous pouvez remplir depuis ce jeu d’onglets.<br /> Vous pouvez aussi [$1 utiliser les fonctions de modification de MediaWiki habituelles sans les formulaires de modèles].',
+	'recordadmin-properties' => 'Propriétés',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -732,17 +844,52 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'recordadmin' => 'Administracion des encartâjos',
+	'recordadmin-select' => 'Chouèsir',
+	'recordadmin-createtype' => 'Buchiéd lo nom d’un tipo novél d’encartâjo por lo fâre',
+	'recordadmin-recordtype' => 'tipo d’encartâjo',
+	'recordadmin-newsearch' => 'Rechèrche novèla $1',
+	'recordadmin-newrecord' => 'Chouèsir un ôtro tipo d’encartâjo',
 	'recordadmin-submit' => 'Sometre',
+	'recordadmin-create' => 'Chèrchiér ou ben fâre des encartâjos « $1 »',
+	'recordadmin-alreadyexist' => 'Dèsolâ, « $1 » ègziste ja !',
+	'recordadmin-createsuccess' => '$1 fêt',
+	'recordadmin-badtitle' => 'Crouyo titro !',
+	'recordadmin-recordid' => 'Numerô / nom de l’encartâjo :',
+	'recordadmin-invert' => 'Envèrsar lo chouèx',
 	'recordadmin-buttonsearch' => 'Rechèrchiér',
 	'recordadmin-buttoncreate' => 'Fâre',
 	'recordadmin-buttonreset' => 'Tornar inicialisar',
 	'recordadmin-searchresult' => 'Rèsultats de la rechèrche',
+	'recordadmin-nomatch' => 'Nion encartâjo que corrèspond at étâ trovâ !',
+	'recordadmin-typeupdated' => 'propriètâts de $1 betâs a jorn',
 	'recordadmin-buttonsave' => 'Sôvar',
+	'recordadmin-createlink' => 'nen fâre yon',
+	'recordadmin-newcreated' => '$1 novél fêt dês un formulèro publico',
+	'recordadmin-summary-typecreated' => '$1 novél fêt',
 	'recordadmin-viewlink' => 'vêre',
 	'recordadmin-editlink' => 'changiér',
 	'recordadmin-created' => 'Fêt',
 	'recordadmin-modified' => 'Changiê',
 	'recordadmin-actions' => 'Accions',
+	'recordadmin-needscontent' => 'Apondre lo contegnu...',
+	'right-recordadmin' => 'Trovar et pués changiér les pâges d’encartâjo',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Nion « $1 »',
+	'recordadmin-properties' => 'Propriètâts',
+);
+
+/** Simplified Gan script (‪赣语(简体)‬) */
+$messages['gan-hans'] = array(
+	'recordadmin-buttonsearch' => '寻吖',
+);
+
+/** Traditional Gan script (‪贛語(繁體)‬)
+ * @author Symane
+ */
+$messages['gan-hant'] = array(
+	'recordadmin-buttonsearch' => '尋吖',
 );
 
 /** Galician (Galego)
@@ -750,8 +897,9 @@ $messages['frp'] = array(
  */
 $messages['gl'] = array(
 	'recordadmin' => 'Xestión dos rexistros',
-	'recordadmin-desc' => 'Unha [[Special:RecordAdmin|páxina especial]] para atopar e editar páxinas de rexistros usando un formulario',
-	'recordadmin-categoryempty' => 'Nestes intres non hai tipos de rexistro. Por favor, categorice os modelos de rexistro en "[[:$1|$1]]".',
+	'recordadmin-desc' => 'Procuras, pescudas, formularios e informes de datos do wiki derivados de parámetros de modelo',
+	'recordadmin-specialdesc' => 'Unha [[Special:RecordAdmin|páxina especial]] para atopar e crear páxinas usando un formulario',
+	'recordadmin-noforms' => 'Actualmente non hai formularios definidos a usar para as procurar e creacións',
 	'recordadmin-select' => 'Seleccione o tipo de rexistro a xestionar',
 	'recordadmin-createtype' => 'Introduza o nome dun novo tipo de rexistro para crealo',
 	'recordadmin-recordtype' => 'tipo de rexistro',
@@ -770,10 +918,7 @@ $messages['gl'] = array(
 	'recordadmin-buttonreset' => 'Restablecer',
 	'recordadmin-searchresult' => 'Resultados da procura',
 	'recordadmin-nomatch' => 'Non se atoparon rexistros que coincidisen!',
-	'recordadmin-edit' => 'Editando o rexistro $2 "$1"',
 	'recordadmin-typeupdated' => 'Propiedades de "$1" actualizadas',
-	'recordadmin-updatesuccess' => '"$1" actualizado',
-	'recordadmin-updateerror' => 'Ocorreu un erro durante a actualización',
 	'recordadmin-buttonsave' => 'Gardar',
 	'recordadmin-noform' => 'Non hai ningún formulario asociado cos rexistros "$1"!',
 	'recordadmin-createlink' => 'crear un',
@@ -783,14 +928,14 @@ $messages['gl'] = array(
 	'recordadmin-editlink' => 'editar',
 	'recordadmin-created' => 'Creado',
 	'recordadmin-modified' => 'Modificado',
-	'recordadmin-actions' => 'Accións',
+	'recordadmin-actions' => 'Editar',
 	'recordadmin-needscontent' => 'Engadir o contido...',
-	'recordadmin-editwithform' => 'Editar con formulario',
-	'recordadmin-typeinfo' => 'Rexistro de tipo $1',
 	'right-recordadmin' => 'Atopar e editar páxinas de rexistro',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'Non existe ningún "$1"',
+	'recordadmin-edit-info' => 'Esta páxina contén os modelos que teñen os seus propios formularios que pode encher desde este grupo de lapelas.<br />Como alternativa, [$1 empregue a funcionalidade de edición habitual de MediaWiki sen os formularios].',
+	'recordadmin-properties' => 'Propiedades',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -813,8 +958,9 @@ $messages['grc'] = array(
  */
 $messages['gsw'] = array(
 	'recordadmin' => 'Ufzeichnigsverwaltig',
-	'recordadmin-desc' => 'E [[Special:RecordAdmin|speziälli Syte]] zum Finde un Bearbeite vu dr Ufzeichnigssyte mit eme Formular',
-	'recordadmin-categoryempty' => 'Aktuällt het s kei Ufzeichnigstype. bitte katogorisier vorlage in [[:$1|$1]].',
+	'recordadmin-desc' => 'Sueche, Abfroge, Formular un Bricht zue Wikidate us Vorlage-Parameter',
+	'recordadmin-specialdesc' => 'E [[Special:RecordAdmin|Spezialsyte]] zum Finde un Aalege vu Syte mit eme zuegherige Formular',
+	'recordadmin-noforms' => 'Zur Zyt git s kei Formular zum Suehce un Aalege vu Syte',
 	'recordadmin-select' => 'Wehl dr Ufzeichnigstyp, wu soll verwaltet wäre',
 	'recordadmin-createtype' => 'Trag dr Name yy vun eme neje Ufzeichnigstyp, wu soll aagleit wäre',
 	'recordadmin-recordtype' => 'Ufzeichnigstyp',
@@ -833,10 +979,7 @@ $messages['gsw'] = array(
 	'recordadmin-buttonreset' => 'Zruggsetze',
 	'recordadmin-searchresult' => 'Suechergebnis',
 	'recordadmin-nomatch' => 'Kei Ufzeichnige gfunde, wu passe!',
-	'recordadmin-edit' => '$2 Datesatz „$1“ ändere',
 	'recordadmin-typeupdated' => '$1 Wärt aktualisiert',
-	'recordadmin-updatesuccess' => '$1 aktualisiert',
-	'recordadmin-updateerror' => 'Derwylscht aktualisiert woren isch, isch e Fähler ufträtte!',
 	'recordadmin-buttonsave' => 'Spychere',
 	'recordadmin-noform' => 'S git kei Formular fir „$1“-Ufzeichnige!',
 	'recordadmin-createlink' => 'leg eis aa',
@@ -848,12 +991,18 @@ $messages['gsw'] = array(
 	'recordadmin-modified' => 'Gänderet',
 	'recordadmin-actions' => 'Aktione',
 	'recordadmin-needscontent' => 'Inhalt zuefiege ...',
-	'recordadmin-editwithform' => 'Mit eme Formular bearbeite',
-	'recordadmin-typeinfo' => '$1 Ufzeichnig',
 	'right-recordadmin' => 'Find Ufzeichnigssyte un bearbeit si',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'Kei „$1“',
+	'recordadmin-edit-info' => 'In däre Syte het s Vorlage mit eigene Formular, wu Du iber die Regischtercharte chasch uusfille<br />[$1 Do] drucke, zum dr regulär Bearbeitigsmodus vu MediaWiki ohni Formular z verwände.',
+	'recordadmin-properties' => 'Eigeschafte',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'recordadmin-buttonsearch' => 'Nema',
+	'recordadmin-buttoncreate' => 'Ƙirƙira',
 );
 
 /** Hawaiian (Hawai`i)
@@ -864,13 +1013,15 @@ $messages['haw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
 $messages['he'] = array(
 	'recordadmin' => 'ניהול רשומות',
-	'recordadmin-desc' => '[[Special:RecordAdmin|דף מיוחד]] למציאה ועריכה של דפי רשומות באמצעות טופס',
-	'recordadmin-categoryempty' => 'נכון לעכשיו אין סוגי רשומות. אנא סווגו תבניות רשומות לתוך [[:$1|$1]].',
+	'recordadmin-desc' => 'חיפוש, שאילתות, טפסים ודיווח של מידע ויקי שנגזר מפרמטרים של תבניות',
+	'recordadmin-specialdesc' => '[[Special:RecordAdmin|דף מיוחד]] למציאה ויצירה של דפים על־ידי טפסים משויכים',
+	'recordadmin-noforms' => 'אין כעת טפסים שמוגדרים לחיפוש ויצירה',
 	'recordadmin-select' => 'בחירת סוג הרשומות לניהול',
 	'recordadmin-createtype' => 'כתבו את סוג הרשומה החדש ליצירה',
 	'recordadmin-recordtype' => 'סוג הרשומה',
@@ -883,18 +1034,15 @@ $messages['he'] = array(
 	'recordadmin-createerror' => 'אירעה שגיאה בעת הנסיון ליצור את $1!',
 	'recordadmin-badtitle' => 'כותרת בלתי תקינה!',
 	'recordadmin-recordid' => 'שם/מספר הרשומה:',
-	'recordadmin-invert' => 'הפיכת הבחירה',
+	'recordadmin-invert' => 'היפוך הבחירה',
 	'recordadmin-buttonsearch' => 'חיפוש',
 	'recordadmin-buttoncreate' => 'יצירה',
 	'recordadmin-buttonreset' => 'איפוס',
 	'recordadmin-searchresult' => 'תוצאות החיפוש',
 	'recordadmin-nomatch' => 'לא נמצאו רשומות תואמות!',
-	'recordadmin-edit' => 'עריכת רשומת ה$2 "$1"',
 	'recordadmin-typeupdated' => 'עודכנו $1 מאפיינים',
-	'recordadmin-updatesuccess' => '$1 עודכנה',
-	'recordadmin-updateerror' => 'אירעה שגיאה במהלך העדכון',
 	'recordadmin-buttonsave' => 'שמירה',
-	'recordadmin-noform' => 'אין טופס המשוייך לרשומות "$1"!',
+	'recordadmin-noform' => 'אין טופס המשויך לרשומות "$1"!',
 	'recordadmin-createlink' => 'יצירת אחת כזו',
 	'recordadmin-newcreated' => 'נוצרה $1 חדשה מטופס ציבורי',
 	'recordadmin-summary-typecreated' => 'נוצרה $1 חדשה',
@@ -904,9 +1052,12 @@ $messages['he'] = array(
 	'recordadmin-modified' => 'השתנתה',
 	'recordadmin-actions' => 'פעולות',
 	'recordadmin-needscontent' => 'הוספת תוכן...',
-	'recordadmin-editwithform' => 'עריכה באמצעות טופס',
-	'recordadmin-typeinfo' => 'רשומת $1',
 	'right-recordadmin' => 'מציאת ועריכת דפי רשומות',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'ללא "$1"',
+	'recordadmin-edit-info' => 'הדף הזה מכיל תבניות עם טפסים משלהן שאפשר למלא מערכת הלשוניות הזאת<br />לחלופין [$1 השתמשו בעריכה רגילה של מדיה־ויקי ללא טופסי תבניות].',
+	'recordadmin-properties' => 'מאפיינים',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -914,8 +1065,9 @@ $messages['he'] = array(
  */
 $messages['hsb'] = array(
 	'recordadmin' => 'Administracija zregistrowanjow',
-	'recordadmin-desc' => '[[Special:RecordAdmin|Specialna strona]] za namakanje a wobdźěłowanje stronow zregistrowanjow z pomocu formulara',
-	'recordadmin-categoryempty' => 'Tuchwilu žane typy registrowanja njejsu. Kategorizuj prošu předłohi registrowanja do [[:$1|$1]].',
+	'recordadmin-desc' => 'Pytanja, naprašowanja, formulary a rozprawy wo wikidatach z pžedłohowych parametrow',
+	'recordadmin-specialdesc' => '[[Special:RecordAdmin|Specialna strona]] za pytanje a wutworjenje stronow z pomocu zwjazanych formularow',
+	'recordadmin-noforms' => 'Tuchwilu žane formulary za pytanje a wutworjenje njejsu',
 	'recordadmin-select' => 'Wubjer typ registracijow, kotrež so maja zrjadować',
 	'recordadmin-createtype' => 'Zapodaj mjeno typa registracije, kotryž ma so wutworić',
 	'recordadmin-recordtype' => 'typ registracije',
@@ -934,10 +1086,7 @@ $messages['hsb'] = array(
 	'recordadmin-buttonreset' => 'Wróćo stajić',
 	'recordadmin-searchresult' => 'Pytanske wuslědki',
 	'recordadmin-nomatch' => 'Žane wotpowědowace zregistrowanja namakane!',
-	'recordadmin-edit' => '$2, datowa sadźba "$1" so wobdźěłuje',
 	'recordadmin-typeupdated' => '$1 {{PLURAL:$1|kajkosć zaktualizowana|kajkosći zaktualizowanej|kajkosće zaktualizowane|kajkosćow zaktualizowane}}',
-	'recordadmin-updatesuccess' => '$1 zaktualizowany',
-	'recordadmin-updateerror' => 'Při aktualizaciji je zmylk nastał',
 	'recordadmin-buttonsave' => 'Składować',
 	'recordadmin-noform' => 'Njeje formular za zregistrowanja "$1"!',
 	'recordadmin-createlink' => 'jedne wutworić',
@@ -949,18 +1098,21 @@ $messages['hsb'] = array(
 	'recordadmin-modified' => 'Změnjeny',
 	'recordadmin-actions' => 'Akcije',
 	'recordadmin-needscontent' => 'Wobsah přidać...',
-	'recordadmin-editwithform' => 'Z formularom wobdźěłać',
-	'recordadmin-typeinfo' => 'Datowa sadźba $1',
 	'right-recordadmin' => 'Strony zregistrowanjow namakać a wobdźěłać',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Žadyn "$1"',
+	'recordadmin-edit-info' => 'Tuta strona wobsahuje předłohi, kotrež maja swójske formulary, kotrež móžeš z tuteje sadźby rajtarkow wupjelnić.<br />Klikń [$1 sem], zo by normalnu wobdźěłowansku funkcionalnosć MediaWiki bjez předłohowych formularow wužiwał.',
+	'recordadmin-properties' => 'Kajkosće',
 );
 
 /** Hungarian (Magyar)
+ * @author Dani
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
 	'recordadmin' => 'Rekord adminisztráció',
 	'recordadmin-desc' => '[[Special:RecordAdmin|Speciális lap]] rekord oldalak kereséséhez és szerkesztéséhez űrlap segítségével',
-	'recordadmin-categoryempty' => 'Jelenleg nincsenek rekordtípusok. Kérlek kategorizáld be a rekord sablonokat ide: [[:$1|$1]].',
 	'recordadmin-select' => 'Kijelölés',
 	'recordadmin-createtype' => 'Add meg az új rekordtípus nevét a létrehozásához',
 	'recordadmin-recordtype' => 'rekordtípus',
@@ -979,10 +1131,7 @@ $messages['hu'] = array(
 	'recordadmin-buttonreset' => 'Alaphelyzet',
 	'recordadmin-searchresult' => 'Keresési eredmények',
 	'recordadmin-nomatch' => 'Nem található egyező rekord!',
-	'recordadmin-edit' => 'A(z) $2 típusú „$1” rekord szerkesztése',
 	'recordadmin-typeupdated' => '$1 tulajdonságai frissítve',
-	'recordadmin-updatesuccess' => '$1 frissítve',
-	'recordadmin-updateerror' => 'Hiba történt a frissítés közben',
 	'recordadmin-buttonsave' => 'Mentés',
 	'recordadmin-noform' => 'Nincs a(z) „$1” rekordokkal kapcsolatban levő űrlap!',
 	'recordadmin-createlink' => 'hozz létre egyet',
@@ -994,9 +1143,11 @@ $messages['hu'] = array(
 	'recordadmin-modified' => 'Módosítva',
 	'recordadmin-actions' => 'Műveletek',
 	'recordadmin-needscontent' => 'Tartalom hozzáadása…',
-	'recordadmin-editwithform' => 'Szerkesztés űrlappal',
-	'recordadmin-typeinfo' => '$1 rekord',
 	'right-recordadmin' => 'Rekord lapok keresése és szerkesztése',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Nincs „$1”',
+	'recordadmin-properties' => 'Tulajdonságok',
 );
 
 /** Interlingua (Interlingua)
@@ -1004,9 +1155,10 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'recordadmin' => 'Gestion de datos',
-	'recordadmin-desc' => 'Un [[Special:RecordAdmin|pagina special]] pro cercar e modificar le paginas de datos con un formulario',
-	'recordadmin-categoryempty' => 'Al momento il non ha typos de registro. Per favor categorisa le patronos de registro in [[:$1|$1]].',
-	'recordadmin-select' => 'Selige le typo de datos a gerer',
+	'recordadmin-desc' => 'Recerca, consultas, formularios e reportos de datos wiki, derivate de parametros a patronos',
+	'recordadmin-specialdesc' => 'Un [[Special:RecordAdmin|pagina special]] pro cercar e crear paginas usante formularios associate',
+	'recordadmin-noforms' => 'Il ha actualmente nulle formulario definite a usar pro cercar e crear',
+	'recordadmin-select' => 'Selige',
 	'recordadmin-createtype' => 'Entra le nomine de un nove typo de registro a crear',
 	'recordadmin-recordtype' => 'typo de registro',
 	'recordadmin-newsearch' => 'Nove recerca $1',
@@ -1024,14 +1176,11 @@ $messages['ia'] = array(
 	'recordadmin-buttonreset' => 'Reinitialisar',
 	'recordadmin-searchresult' => 'Resultatos del recerca',
 	'recordadmin-nomatch' => 'Nulle datos correspondente trovate!',
-	'recordadmin-edit' => 'Modificante le registro "$1" de $2',
 	'recordadmin-typeupdated' => '$1 proprietates actualisate',
-	'recordadmin-updatesuccess' => '$1 actualisate',
-	'recordadmin-updateerror' => 'Un error occurreva durante le actualisation',
-	'recordadmin-buttonsave' => 'Immagazinar',
+	'recordadmin-buttonsave' => 'Salveguardar',
 	'recordadmin-noform' => 'Non existe un formulario associate con datos "$1"!',
 	'recordadmin-createlink' => 'crear un',
-	'recordadmin-newcreated' => 'Nove $1 create ab formulario public',
+	'recordadmin-newcreated' => 'Nove $1 create ex formulario public',
 	'recordadmin-summary-typecreated' => 'Nove $1 create',
 	'recordadmin-viewlink' => 'vider',
 	'recordadmin-editlink' => 'modificar',
@@ -1039,23 +1188,26 @@ $messages['ia'] = array(
 	'recordadmin-modified' => 'Modificate',
 	'recordadmin-actions' => 'Actiones',
 	'recordadmin-needscontent' => 'Adder contento...',
-	'recordadmin-editwithform' => 'Modificar con formulario',
-	'recordadmin-typeinfo' => 'Registro de typo $1',
 	'right-recordadmin' => 'Cercar e modificar paginas de datos',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'Non existe "$1"',
+	'recordadmin-edit-info' => 'Iste pagina contine patronos que ha lor proprie formularios le quales tu pote completar ab iste gruppo de schedas.<br />Alternativemente tu pote [$1 usar le normal functionalitate de modification de MediaWiki sin formularios de patrono].',
+	'recordadmin-properties' => 'Proprietates',
 );
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author Farras
  * @author Irwangatot
+ * @author IvanLanin
  * @author Kandar
  */
 $messages['id'] = array(
 	'recordadmin' => 'Catatan Administrasi',
-	'recordadmin-desc' => 'Sebuah [[Special:RecordAdmin|halaman istimewa]] untuk menemukan dan menyunting catatan halaman menggunakan formulir',
-	'recordadmin-categoryempty' => 'Tidak ada catatan. Silakan catat kategori templat pada [[:$1|$1]].',
+	'recordadmin-desc' => 'Pencarian, kueri, formulir, dan pelaporan data wiki diturunkan dari parameter templat',
+	'recordadmin-specialdesc' => '[[Special:RecordAdmin|Halaman istimewa]] untuk menemukan dan membuat halaman dengan menggunakan formulir',
+	'recordadmin-noforms' => 'Saat ini tidak ada formulir yang didefinisikan untuk pencarian dan pembuatan',
 	'recordadmin-select' => 'Pilih',
 	'recordadmin-createtype' => 'Masukkan nama tipe rekaman baru yang akan dibuat',
 	'recordadmin-recordtype' => 'tipe rekaman',
@@ -1074,10 +1226,7 @@ $messages['id'] = array(
 	'recordadmin-buttonreset' => 'Reset',
 	'recordadmin-searchresult' => 'Hasil pencarian',
 	'recordadmin-nomatch' => 'Tidak ditemukan rekaman yang cocok!',
-	'recordadmin-edit' => 'Menyunting $2 rekaman "$1"',
 	'recordadmin-typeupdated' => '$1 perbaharui propertis',
-	'recordadmin-updatesuccess' => '$1 telah diperbarui',
-	'recordadmin-updateerror' => 'Ada kesalahan saat pembaruan',
 	'recordadmin-buttonsave' => 'Simpan',
 	'recordadmin-noform' => 'Tidak ada formulir yang terkait dengan rekaman "$1"!',
 	'recordadmin-createlink' => 'buat',
@@ -1089,9 +1238,32 @@ $messages['id'] = array(
 	'recordadmin-modified' => 'Dirubah',
 	'recordadmin-actions' => 'Tindakan',
 	'recordadmin-needscontent' => 'Menambah isi...',
-	'recordadmin-editwithform' => 'Sunting dengan formulir',
-	'recordadmin-typeinfo' => '$1 catatan',
 	'right-recordadmin' => 'Temukan dan sunting catatan halaman',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Tidak ada "$1"',
+	'recordadmin-edit-info' => 'Halaman ini berisi templat yang memiliki formulir sendiri yang dapat Anda isi dari set tab ini.<br />Sebagai alternatif, [$1 gunakan fungsi penyuntingan normal MediaWiki tanpa formulir templat].',
+	'recordadmin-properties' => 'Properti',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'recordadmin-createsuccess' => '$1 kèrè',
+	'recordadmin-badtitle' => 'Ishi edemede öjö!',
+	'recordadmin-buttonsearch' => 'Chọwa',
+	'recordadmin-buttoncreate' => 'Ké',
+	'recordadmin-buttonsave' => 'Domá',
+	'recordadmin-editlink' => 'mèzi',
+	'recordadmin-actions' => 'Mèzi',
+);
+
+/** Iloko (Ilokano)
+ * @author Lam-ang
+ */
+$messages['ilo'] = array(
+	'recordadmin-buttonsearch' => 'Biroken',
 );
 
 /** Ido (Ido)
@@ -1109,24 +1281,34 @@ $messages['it'] = array(
 	'recordadmin-select' => 'Seleziona',
 	'recordadmin-submit' => 'Invia',
 	'recordadmin-badtitle' => 'Titolo non corretto',
+	'recordadmin-invert' => 'Inverti selezione',
 	'recordadmin-buttonsearch' => 'Ricerca',
 	'recordadmin-buttoncreate' => 'Crea',
 	'recordadmin-buttonreset' => 'Reimposta',
 	'recordadmin-searchresult' => 'Risultati della ricerca',
 	'recordadmin-buttonsave' => 'Salva',
+	'recordadmin-viewlink' => 'visualizza',
 	'recordadmin-editlink' => 'modifica',
 	'recordadmin-created' => 'Creata',
+	'recordadmin-modified' => 'Modificati',
 	'recordadmin-actions' => 'Azioni',
+	'recordadmin-export-csv' => 'CSV',
 );
 
 /** Japanese (日本語)
+ * @author Aotake
  * @author Fryed-peach
  * @author Hosiryuhosi
+ * @author Schu
+ * @author Whym
+ * @author Yanajin66
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'recordadmin' => '記録管理',
-	'recordadmin-desc' => 'フォームを用いて記録ページを検索および編集するための[[Special:RecordAdmin|特別ページ]]',
-	'recordadmin-categoryempty' => '現時点では記録種別がありません。記録テンプレートを [[:$1|$1]] に分類してください。',
+	'recordadmin-desc' => 'テンプレート引数から派生したウィキデータの検索、クエリ、フォームと報告',
+	'recordadmin-specialdesc' => '関連したフォームを用いた、ページの検索と作成のための[[Special:RecordAdmin|特別ページ]]',
+	'recordadmin-noforms' => '現在、検索と作成のために使用されるフォームは存在しません',
 	'recordadmin-select' => '対処したい記録種別を選んでください',
 	'recordadmin-createtype' => '新規作成したい記録種別の名前を入力してください',
 	'recordadmin-recordtype' => '記録種別',
@@ -1145,10 +1327,7 @@ $messages['ja'] = array(
 	'recordadmin-buttonreset' => 'リセット',
 	'recordadmin-searchresult' => '検索結果',
 	'recordadmin-nomatch' => '一致する記録は見つかりませんでした！',
-	'recordadmin-edit' => '$2記録「$1」を編集中',
 	'recordadmin-typeupdated' => '$1 のプロパティを更新',
-	'recordadmin-updatesuccess' => '$1 を更新',
-	'recordadmin-updateerror' => '更新中にエラーが発生',
 	'recordadmin-buttonsave' => '保存',
 	'recordadmin-noform' => '「$1」記録と関連付けられたフォームはありません。',
 	'recordadmin-createlink' => '作成',
@@ -1160,9 +1339,26 @@ $messages['ja'] = array(
 	'recordadmin-modified' => '変更',
 	'recordadmin-actions' => '操作',
 	'recordadmin-needscontent' => '内容の追加...',
-	'recordadmin-editwithform' => 'フォームを用いて編集',
-	'recordadmin-typeinfo' => '$1記録',
 	'right-recordadmin' => '記録ページを検索および編集する',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => '"$1"なし',
+	'recordadmin-edit-info' => 'このページは、このタブ集合から入力できる、独自のフォームを持つテンプレートを含んでいます。<br />代替手段としては、[$1 テンプレートフォームを使用しないで、通常のMediaWiki編集機能を使ってください。]',
+	'recordadmin-properties' => 'プロパティー',
+);
+
+/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬)
+ * @author GaiJin
+ */
+$messages['kk-cyrl'] = array(
+	'recordadmin-buttonsearch' => 'Іздеу',
+);
+
+/** Kalaallisut (Kalaallisut)
+ * @author Qaqqalik
+ */
+$messages['kl'] = array(
+	'recordadmin-buttonsearch' => 'Ujarlerit',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1186,9 +1382,6 @@ $messages['km'] = array(
 	'recordadmin-buttoncreate' => 'បង្កើត',
 	'recordadmin-buttonreset' => 'កំណត់ឡើងវិញ',
 	'recordadmin-searchresult' => 'លទ្ធផល​ស្វែងរក',
-	'recordadmin-edit' => 'កំពុង​កែប្រែ​ $1',
-	'recordadmin-updatesuccess' => '$1 ត្រូវ​បាន​ធ្វើឱ្យទាន់សម័យ',
-	'recordadmin-updateerror' => 'កំហុស​មួយ​បាន​កើតឡើង កំលុងពេល​ធ្វើឱ្យទាន់សម័យ',
 	'recordadmin-buttonsave' => 'រក្សាទុក',
 	'recordadmin-summary-typecreated' => 'ថ្មី $1 ត្រូវ​បាន​បង្កើត',
 	'recordadmin-viewlink' => 'មើល',
@@ -1197,19 +1390,28 @@ $messages['km'] = array(
 	'right-recordadmin' => 'ស្វែងរក និង​កែប្រែ​ទំព័រ​កំណត់ត្រា',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'recordadmin-buttonsearch' => 'ಹುಡುಕು',
+	'recordadmin-editlink' => 'ಸಂಪಾದಿಸಿ',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
 	'recordadmin' => 'Datesätz verwallde',
-	'recordadmin-desc' => 'En [[Special:RecordAdmin|Söndersigg]] för Sigge met Datesätz ze fenge un övver e Fommulaa zo ändere.',
-	'recordadmin-categoryempty' => 'Mer han em Momang kein Datesatz-Zoote. Bes esu joot un donn de Datesatz-Schablone en de [[:$1|$1]] enzoteere.',
-	'recordadmin-select' => 'Donn de Zoot Datesatz ußsöke, för die de jet verwallde wells',
+	'recordadmin-desc' => 'Söhke, Froore un Ußkönf, Fommulaare, un Ußwertunge vun Daate em Wiki ovver de Parammeetere vun Schabloone.',
+	'recordadmin-specialdesc' => 'En [[Special:RecordAdmin|{{int:specialpage}}]] för övver zopaß Fommulaare Sigge ze söhke un Sigge aanzelääje.',
+	'recordadmin-noforms' => 'Em Momang sinn_er kein Fommulaare enjereschdt för Sigge drövver ze söhke un aanzelääje.',
+	'recordadmin-select' => 'Donn de Zoot Datesatz ußsöhke, för die de jet verwallde wells',
 	'recordadmin-createtype' => 'Donn dä Name för ene neue Zoot Datesätz enjäve',
 	'recordadmin-recordtype' => 'Datesatz-Zoote',
 	'recordadmin-newsearch' => 'Neu $1 söke',
 	'recordadmin-newrecord' => 'Sök en ander Zoot Datesatz uß',
-	'recordadmin-submit' => 'Loß Jonn!',
+	'recordadmin-submit' => 'Lohß Jonn!',
 	'recordadmin-create' => 'Donn „$1“-Datesätz fenge udder ändere',
 	'recordadmin-alreadyexist' => '„$1“ jitt et ald.',
 	'recordadmin-createsuccess' => '$1 aanjelaat',
@@ -1217,15 +1419,12 @@ $messages['ksh'] = array(
 	'recordadmin-badtitle' => 'Dä Tittel es onjöltesch!',
 	'recordadmin-recordid' => 'Däm Datesatz singe Nommer un Name:',
 	'recordadmin-invert' => 'Ußwahl ömdriehe',
-	'recordadmin-buttonsearch' => 'Söke',
+	'recordadmin-buttonsearch' => 'Söhke',
 	'recordadmin-buttoncreate' => 'Aanläje',
 	'recordadmin-buttonreset' => 'Zeröksäze',
 	'recordadmin-searchresult' => 'Wat bem Söke eruß kohm',
 	'recordadmin-nomatch' => 'Kein zopaß Datesätz jefonge.',
-	'recordadmin-edit' => 'Donn dä „$2“-Datesatz $1 ändere',
 	'recordadmin-typeupdated' => 'De Date fun däm $1 sin jeändert',
-	'recordadmin-updatesuccess' => '$1 om neue Stand',
-	'recordadmin-updateerror' => 'Beim Ändere es jet donävve jejange',
 	'recordadmin-buttonsave' => 'Dä Datesatz avspeichere!',
 	'recordadmin-noform' => 'Mer han kei Fommulaa för de „$1“-Datesätz',
 	'recordadmin-createlink' => 'ein aanlääje',
@@ -1237,9 +1436,13 @@ $messages['ksh'] = array(
 	'recordadmin-modified' => 'Jeändert',
 	'recordadmin-actions' => 'Axjohne',
 	'recordadmin-needscontent' => 'Enhalld dobei donn&nbsp;...',
-	'recordadmin-editwithform' => 'Övver et Fomulaa ändere',
-	'recordadmin-typeinfo' => '$1-Datesaz',
 	'right-recordadmin' => 'Datesätz fenge un ändere',
+	'recordadmin-export-csv' => '<i lang="en">CSV</i>',
+	'recordadmin-export-pdf' => '<i lang="en">PDF</i>',
+	'recordadmin-notset' => 'Keine „$1“',
+	'recordadmin-edit-info' => 'En heh dä Sigg sen Schabloone dren met eije Fommulaare för ußzefölle.<br />
+Söns donn de [$1 jewöhnlijje Aat vum MediaWiki för et Ändere nämme].',
+	'recordadmin-properties' => 'Eijeschaffte',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1248,6 +1451,7 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'recordadmin-select' => 'Eraussichen',
 	'recordadmin-newsearch' => 'Nei $1 sichen',
+	'recordadmin-submit' => 'Schécken',
 	'recordadmin-alreadyexist' => 'Pardon, "$1" gëtt et schonn!',
 	'recordadmin-createsuccess' => '$1 ugeluecht',
 	'recordadmin-badtitle' => 'Schlechten Titel!',
@@ -1256,11 +1460,8 @@ $messages['lb'] = array(
 	'recordadmin-buttonsearch' => 'Sichen',
 	'recordadmin-buttoncreate' => 'Uleeën',
 	'recordadmin-buttonreset' => 'Zrécksetzen',
-	'recordadmin-searchresult' => 'Resultater vun der Sich',
-	'recordadmin-edit' => 'Ännere vun $2 Opzeechnung "$1"',
+	'recordadmin-searchresult' => 'Resultater vum Sichen',
 	'recordadmin-typeupdated' => 'Eegeschafte vu(n) $1 aktualiséiert',
-	'recordadmin-updatesuccess' => '$1 ass aktualiséiert',
-	'recordadmin-updateerror' => 'Beim Aktualiséieren ass e Feeler geschitt',
 	'recordadmin-buttonsave' => 'Späicheren',
 	'recordadmin-viewlink' => 'weisen',
 	'recordadmin-editlink' => 'änneren',
@@ -1268,6 +1469,7 @@ $messages['lb'] = array(
 	'recordadmin-modified' => 'Geännert',
 	'recordadmin-actions' => 'Aktiounen',
 	'recordadmin-needscontent' => 'Inhalt derbäisetzen ...',
+	'recordadmin-notset' => 'Keng "$1"',
 );
 
 /** Limburgish (Limburgs)
@@ -1282,8 +1484,9 @@ $messages['li'] = array(
  */
 $messages['mk'] = array(
 	'recordadmin' => 'Администрација на записи',
-	'recordadmin-desc' => '[[Special:RecordAdmin|Специјална страница]] за пронаоѓање и уредување на записни страници, користејќи образец',
-	'recordadmin-categoryempty' => 'Моментално нема записни типови. Категоризирајте записните шаблони во [[:$1|$1]].',
+	'recordadmin-desc' => 'Пребарување, барања, обрасци и извештаи за вики-податоци изведени од шаблонските параметри',
+	'recordadmin-specialdesc' => '[[Special:RecordAdmin|Специјална страница]] за пронаоѓање и создавање на страници користејќи здружени обрасци',
+	'recordadmin-noforms' => 'Моментално нема обрасци определени за пребарување и создавање',
 	'recordadmin-select' => 'Избери',
 	'recordadmin-createtype' => 'Внесете назив на новиот записен тип за создавање',
 	'recordadmin-recordtype' => 'записен тип',
@@ -1302,10 +1505,7 @@ $messages['mk'] = array(
 	'recordadmin-buttonreset' => 'Одново',
 	'recordadmin-searchresult' => 'Резултати од пребарувањето',
 	'recordadmin-nomatch' => 'Нема пронајдено соодветни записи!',
-	'recordadmin-edit' => 'Уредување на запис за $2 наречен „$1“',
 	'recordadmin-typeupdated' => 'Обновени се $1 својства',
-	'recordadmin-updatesuccess' => '$1 е обновено',
-	'recordadmin-updateerror' => 'Настана грешка при обновувањето',
 	'recordadmin-buttonsave' => 'Зачувај',
 	'recordadmin-noform' => 'Нема образец поврзан со записи од типот „$1“!',
 	'recordadmin-createlink' => 'создај',
@@ -1317,26 +1517,34 @@ $messages['mk'] = array(
 	'recordadmin-modified' => 'Изменето',
 	'recordadmin-actions' => 'Дејства',
 	'recordadmin-needscontent' => 'Додај содржина...',
-	'recordadmin-editwithform' => 'Уреди со образец',
-	'recordadmin-typeinfo' => 'Запис од типот $1',
 	'right-recordadmin' => 'Пронаоѓање и уредување на записни страници',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'Нема „$1“',
+	'recordadmin-edit-info' => 'Оваа страница содржи шаблони кои имаат свои обрасци што можете да ги пополните од овој збир јазичиња.<br />Можете и да [$1 ја употребите обичната функција за уредување од МедијаВики, без шаблонски обрасци].',
+	'recordadmin-properties' => 'Својства',
 );
 
 /** Mongolian (Монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
+	'recordadmin-submit' => 'Явуулах',
 	'recordadmin-buttonsearch' => 'Хайх',
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
  * @author Aurora
  */
 $messages['ms'] = array(
-	'recordadmin-actions' => 'Tindakan',
+	'recordadmin-submit' => 'Serahkan',
+	'recordadmin-buttonsearch' => 'Cari',
+	'recordadmin-buttoncreate' => 'Cipta',
+	'recordadmin-buttonreset' => 'Set semula',
+	'recordadmin-buttonsave' => 'Simpan',
+	'recordadmin-editlink' => 'sunting',
+	'recordadmin-actions' => 'Sunting',
 );
 
 /** Erzya (Эрзянь)
@@ -1353,8 +1561,6 @@ $messages['nah'] = array(
 	'recordadmin-badtitle' => '¡Ahcualli tōcāitl!',
 	'recordadmin-buttonsearch' => 'Titlatēmōz',
 	'recordadmin-buttoncreate' => 'Ticchīhuāz',
-	'recordadmin-edit' => 'Ticpatlacah $1',
-	'recordadmin-updateerror' => 'Ahcuallōtl ihcuāc ōmoyancuīya',
 	'recordadmin-buttonsave' => 'Ticchīhuāz',
 	'recordadmin-summary-typecreated' => 'Yancuīc $1 ōmochīuh',
 	'recordadmin-viewlink' => 'tiquittāz',
@@ -1362,107 +1568,15 @@ $messages['nah'] = array(
 	'recordadmin-created' => 'Ōmochīuh',
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- * @author Tvdm
- */
-$messages['nl'] = array(
-	'recordadmin' => 'Gegevensbeheer',
-	'recordadmin-desc' => "Een [[Special:RecordAdmin|speciale pagina]] voor het zoeken en bewerken van gegevenspagina's die een formulier gebruiken",
-	'recordadmin-categoryempty' => 'Er zijn nog geen gegevenstypes.
-Categoriseer de gegevenssjablonen [[:$1|$1]].',
-	'recordadmin-select' => 'Selecteer het te beheren gegevenstype',
-	'recordadmin-createtype' => 'Voer de naam van een nieuw aan te maken gegevenstype in',
-	'recordadmin-recordtype' => 'gegevenstype',
-	'recordadmin-newsearch' => 'Nieuwe zoekopdracht voor $1',
-	'recordadmin-newrecord' => 'Een ander gegevenstype selecteren',
-	'recordadmin-submit' => 'OK',
-	'recordadmin-create' => 'Gegevens van het type "$1" zoeken of aanmaken',
-	'recordadmin-alreadyexist' => '"$1" bestaat al!',
-	'recordadmin-createsuccess' => '$1 aangemaakt',
-	'recordadmin-createerror' => 'Er is een fout opgetreden bij het aanmaken van het $1.',
-	'recordadmin-badtitle' => 'Onjuiste paginanaam!',
-	'recordadmin-recordid' => 'Gegevensnummer/naam:',
-	'recordadmin-invert' => 'Omgekeerde selectie',
-	'recordadmin-buttonsearch' => 'Zoeken',
-	'recordadmin-buttoncreate' => 'Aanmaken',
-	'recordadmin-buttonreset' => 'Fomulier wissen',
-	'recordadmin-searchresult' => 'Zoekresultaten',
-	'recordadmin-nomatch' => 'Er zijn geen gegevens gevonden die aan de voorwaarden voldoen.',
-	'recordadmin-edit' => 'Bezig met bewerken van gegeven $1 van het type $2',
-	'recordadmin-typeupdated' => 'De eigenschappen van $1 zijn bijgewerkt',
-	'recordadmin-updatesuccess' => '$1 is bijgewerkt',
-	'recordadmin-updateerror' => 'Er is een fout opgetreden tijdens het bijwerken',
-	'recordadmin-buttonsave' => 'Opslaan',
-	'recordadmin-noform' => 'Er is geen formulier gekoppeld aan gegevens van het type "$1"!',
-	'recordadmin-createlink' => 'aanmaken',
-	'recordadmin-newcreated' => 'Nieuwe $1 aangemaakt van openbaar formulier',
-	'recordadmin-summary-typecreated' => 'Nieuwe $1 aangemaakt',
-	'recordadmin-viewlink' => 'bekijken',
-	'recordadmin-editlink' => 'bewerken',
-	'recordadmin-created' => 'Aangemaakt',
-	'recordadmin-modified' => 'Gewijzigd',
-	'recordadmin-actions' => 'Acties',
-	'recordadmin-needscontent' => 'Inhoud toevoegen...',
-	'recordadmin-editwithform' => 'Via formulier bewerken',
-	'recordadmin-typeinfo' => 'Gegeven van het type $1',
-	'right-recordadmin' => "Gegevenspagina's zoeken en bewerken",
-	'recordadmin-export-csv' => 'CSV',
-	'recordadmin-export-pdf' => 'PDF',
-	'recordadmin-notset' => 'Geen "$1"',
-);
-
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
- * @author Gunnernett
- * @author Harald Khan
- */
-$messages['nn'] = array(
-	'recordadmin' => 'Oppføringshandsaming',
-	'recordadmin-desc' => 'Ei [[Special:RecordAdmin|spesialside]] for å finna og redigera oppføringar ved å bruka eit skjema',
-	'recordadmin-categoryempty' => 'Det finst for tida ingen oppføringstypar. Kategoriser oppføringsmalar i [[:$1|$1]].',
-	'recordadmin-select' => 'Vel kva oppføringstype du ynskjer å handsama',
-	'recordadmin-createtype' => 'Skriv inn namnet på ein ny oppføringstype som du ynskjer å oppretta',
-	'recordadmin-recordtype' => 'oppføringstype',
-	'recordadmin-newsearch' => 'Nytt søk etter $1',
-	'recordadmin-newrecord' => 'Vel ein annan type oppføring',
-	'recordadmin-submit' => 'Send',
-	'recordadmin-create' => 'Finn eller opprett «$1»-oppføringar',
-	'recordadmin-alreadyexist' => '«$1» finst frå før.',
-	'recordadmin-createsuccess' => '$1 er oppretta',
-	'recordadmin-createerror' => 'Ein feil oppstod under opprettinga av $1!',
-	'recordadmin-badtitle' => 'Ugyldig tittel!',
-	'recordadmin-recordid' => 'Oppførings-ID/-namn:',
-	'recordadmin-invert' => 'Vend om utval',
-	'recordadmin-buttonsearch' => 'Søk',
-	'recordadmin-buttoncreate' => 'Opprett',
-	'recordadmin-buttonreset' => 'Still attende',
-	'recordadmin-searchresult' => 'Søkjeresultat',
-	'recordadmin-nomatch' => 'Ingen høvelege resultat funne!',
-	'recordadmin-edit' => 'Endrar $1',
-	'recordadmin-typeupdated' => 'Eigenskapane til $1 blei oppdaterte',
-	'recordadmin-updatesuccess' => '$1 er oppdatert',
-	'recordadmin-updateerror' => 'Ein feil oppstod under oppdatering',
-	'recordadmin-buttonsave' => 'Lagra',
-	'recordadmin-noform' => 'Det er ikkje knytt eit skjema til oppføringa «$1»!',
-	'recordadmin-createlink' => 'opprett ein',
-	'recordadmin-newcreated' => 'Ny $1 laga frå eit offentleg skjema',
-	'recordadmin-summary-typecreated' => 'Ny $1 laga til',
-	'recordadmin-viewlink' => 'sjå',
-	'recordadmin-editlink' => 'endra',
-	'recordadmin-created' => 'Oppretta',
-	'recordadmin-modified' => 'Endra',
-	'recordadmin-actions' => 'Handlingar',
-	'recordadmin-needscontent' => 'Legg til innhald',
-	'right-recordadmin' => 'Finn og gjer endringar på oppføringssider',
-);
-
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Event
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'recordadmin' => 'Oppføringshåndtering',
-	'recordadmin-desc' => 'En [[Special:RecordAdmin|spesialside]] for å finne og redigere oppføringer ved å bruke et skjema',
-	'recordadmin-categoryempty' => 'Det er for tiden ingen oppføringstyper. Vennligst kategoriser oppføringsmalene i [[:$1|$1]].',
+	'recordadmin-desc' => 'Søk, spørringer, skjema og rapportering av wikidata hentet fra malparametre',
+	'recordadmin-specialdesc' => 'En [[Special:RecordAdmin|spesialside]] for å finne og opprette sider ved å bruke tilknyttede skjema',
+	'recordadmin-noforms' => 'Det er ingen skjema definert til å bruke for søking og oppretting',
 	'recordadmin-select' => 'Velg',
 	'recordadmin-createtype' => 'Skriv inn navnet på en ny oppføringstype som du vil opprette',
 	'recordadmin-recordtype' => 'oppføringstype',
@@ -1481,10 +1595,7 @@ $messages['no'] = array(
 	'recordadmin-buttonreset' => 'Nullstill',
 	'recordadmin-searchresult' => 'Søkeresultat',
 	'recordadmin-nomatch' => 'Ingen samsvarende oppføringer funnet!',
-	'recordadmin-edit' => 'Endre $2 oppføring «$1»',
 	'recordadmin-typeupdated' => 'Egenskapene til $1 ble oppdatert',
-	'recordadmin-updatesuccess' => '$1 ble oppdatert',
-	'recordadmin-updateerror' => 'En feil oppsto under oppdatering',
 	'recordadmin-buttonsave' => 'Lagre',
 	'recordadmin-noform' => 'Det finnes ikke et skjema tilknyttet oppføringen «$1»!',
 	'recordadmin-createlink' => 'opprett en',
@@ -1496,12 +1607,105 @@ $messages['no'] = array(
 	'recordadmin-modified' => 'Endret',
 	'recordadmin-actions' => 'Handlinger',
 	'recordadmin-needscontent' => 'Legg til innhold...',
-	'recordadmin-editwithform' => 'Endre med skjema',
-	'recordadmin-typeinfo' => 'Oppføringstype $1',
 	'right-recordadmin' => 'Finn og endre oppføringssider',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'Ingen «$1»',
+	'recordadmin-edit-info' => 'Siden inneholder maler som har sine egne skjemaer du kan fylle ut ved valg blant angitte faner.<br />Alternativt [$1 kan du bruke standard MediaWiki-redigeringsfunksjonalitet uten malskjemaer].',
+	'recordadmin-properties' => 'Egenskaper',
+);
+
+/** Dutch (Nederlands)
+ * @author McDutchie
+ * @author Siebrand
+ * @author Tvdm
+ */
+$messages['nl'] = array(
+	'recordadmin' => 'Gegevensbeheer',
+	'recordadmin-desc' => 'Zoeken, zoekopdrachten, formulieren en rapporten met betrekking tot wikigegevens die komen uit sjabloonparameters',
+	'recordadmin-specialdesc' => "Een [[Special:RecordAdmin|speciale pagina]] voor het zoeken en aanmaken van pagina's die gerelateerde formulieren gebruiken",
+	'recordadmin-noforms' => 'Er zijn geen formulieren gedefinieerd die gebruikt kunnen worden voor zoeken en aanmaken',
+	'recordadmin-select' => 'Selecteer het te beheren gegevenstype',
+	'recordadmin-createtype' => 'Voer de naam van een nieuw aan te maken gegevenstype in',
+	'recordadmin-recordtype' => 'gegevenstype',
+	'recordadmin-newsearch' => 'Nieuwe zoekopdracht voor $1',
+	'recordadmin-newrecord' => 'Een ander gegevenstype selecteren',
+	'recordadmin-submit' => 'OK',
+	'recordadmin-create' => 'Gegevens van het type "$1" zoeken of aanmaken',
+	'recordadmin-alreadyexist' => '"$1" bestaat al!',
+	'recordadmin-createsuccess' => '$1 aangemaakt',
+	'recordadmin-createerror' => 'Er is een fout opgetreden bij het aanmaken van het $1.',
+	'recordadmin-badtitle' => 'Onjuiste paginanaam!',
+	'recordadmin-recordid' => 'Gegevensnummer/naam:',
+	'recordadmin-invert' => 'Omgekeerde selectie',
+	'recordadmin-buttonsearch' => 'Zoeken',
+	'recordadmin-buttoncreate' => 'Aanmaken',
+	'recordadmin-buttonreset' => 'Fomulier wissen',
+	'recordadmin-searchresult' => 'Zoekresultaten',
+	'recordadmin-nomatch' => 'Er zijn geen gegevens gevonden die aan de voorwaarden voldoen.',
+	'recordadmin-typeupdated' => 'De eigenschappen van $1 zijn bijgewerkt',
+	'recordadmin-buttonsave' => 'Opslaan',
+	'recordadmin-noform' => 'Er is geen formulier gekoppeld aan gegevens van het type "$1"!',
+	'recordadmin-createlink' => 'aanmaken',
+	'recordadmin-newcreated' => 'Nieuwe $1 aangemaakt van openbaar formulier',
+	'recordadmin-summary-typecreated' => 'Nieuwe $1 aangemaakt',
+	'recordadmin-viewlink' => 'bekijken',
+	'recordadmin-editlink' => 'bewerken',
+	'recordadmin-created' => 'Aangemaakt',
+	'recordadmin-modified' => 'Gewijzigd',
+	'recordadmin-actions' => 'Handelingen',
+	'recordadmin-needscontent' => 'Inhoud toevoegen...',
+	'right-recordadmin' => "Gegevenspagina's zoeken en bewerken",
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Geen "$1"',
+	'recordadmin-edit-info' => 'Deze pagina bevat sjablonen die hun eigen formulieren hebben die u hier in kunt vullen.<br />U kunt ook de [$1 normale MediaWiki bewerkingsfunctionaliteit zonder sjabloonformulieren gebruiken].',
+	'recordadmin-properties' => 'Eigenschappen',
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Gunnernett
+ * @author Harald Khan
+ * @author Nghtwlkr
+ */
+$messages['nn'] = array(
+	'recordadmin' => 'Oppføringshandsaming',
+	'recordadmin-desc' => 'Ei [[Special:RecordAdmin|spesialside]] for å finna og redigera oppføringar ved å bruka eit skjema',
+	'recordadmin-select' => 'Vel kva oppføringstype du ynskjer å handsama',
+	'recordadmin-createtype' => 'Skriv inn namnet på ein ny oppføringstype som du ynskjer å oppretta',
+	'recordadmin-recordtype' => 'oppføringstype',
+	'recordadmin-newsearch' => 'Nytt søk etter $1',
+	'recordadmin-newrecord' => 'Vel ein annan type oppføring',
+	'recordadmin-submit' => 'Send',
+	'recordadmin-create' => 'Finn eller opprett «$1»-oppføringar',
+	'recordadmin-alreadyexist' => '«$1» finst frå før.',
+	'recordadmin-createsuccess' => '$1 er oppretta',
+	'recordadmin-createerror' => 'Ein feil oppstod under opprettinga av $1!',
+	'recordadmin-badtitle' => 'Ugyldig tittel!',
+	'recordadmin-recordid' => 'Oppførings-ID/-namn:',
+	'recordadmin-invert' => 'Vend om utval',
+	'recordadmin-buttonsearch' => 'Søk',
+	'recordadmin-buttoncreate' => 'Opprett',
+	'recordadmin-buttonreset' => 'Still attende',
+	'recordadmin-searchresult' => 'Søkjeresultat',
+	'recordadmin-nomatch' => 'Ingen høvelege resultat funne!',
+	'recordadmin-typeupdated' => 'Eigenskapane til $1 blei oppdaterte',
+	'recordadmin-buttonsave' => 'Lagra',
+	'recordadmin-noform' => 'Det er ikkje knytt eit skjema til oppføringa «$1»!',
+	'recordadmin-createlink' => 'opprett ein',
+	'recordadmin-newcreated' => 'Ny $1 laga frå eit offentleg skjema',
+	'recordadmin-summary-typecreated' => 'Ny $1 laga til',
+	'recordadmin-viewlink' => 'sjå',
+	'recordadmin-editlink' => 'endra',
+	'recordadmin-created' => 'Oppretta',
+	'recordadmin-modified' => 'Endra',
+	'recordadmin-actions' => 'Handlingar',
+	'recordadmin-needscontent' => 'Legg til innhald',
+	'right-recordadmin' => 'Finn og gjer endringar på oppføringssider',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Ingen «$1»',
+	'recordadmin-properties' => 'Eigenskapar',
 );
 
 /** Occitan (Occitan)
@@ -1510,7 +1714,6 @@ $messages['no'] = array(
 $messages['oc'] = array(
 	'recordadmin' => 'Gestion dels enregistraments',
 	'recordadmin-desc' => 'Una pagina especiala per trobar e modificar l’enregistrament de las paginas per l’utilizacion d’un formulari',
-	'recordadmin-categoryempty' => "Actualament, i a pas cap de tipe d'enregistrament. Categorizatz los modèls d'enregistrament dins [[:$1|$1]].",
 	'recordadmin-select' => 'Seleccionatz lo tipe d’enregistrament de gerir',
 	'recordadmin-createtype' => "Picatz lo nom d'un tipe d'enregistrament per o crear",
 	'recordadmin-recordtype' => "tipe d'enregistrament",
@@ -1529,10 +1732,7 @@ $messages['oc'] = array(
 	'recordadmin-buttonreset' => 'Tornar inicializar',
 	'recordadmin-searchresult' => 'Resultats de la recèrca',
 	'recordadmin-nomatch' => "Cap d'enregistrament correspondent pas trobat !",
-	'recordadmin-edit' => 'Modificacion de l’enregistrament $2  « $1 »',
 	'recordadmin-typeupdated' => 'proprietat de $1 mesas a jorn',
-	'recordadmin-updatesuccess' => '$1 mes a jorn amb succès',
-	'recordadmin-updateerror' => 'Una error es estat rencontrada al moment de la mesa a jorn',
 	'recordadmin-buttonsave' => 'Salvar',
 	'recordadmin-noform' => 'I a pas cap de formulari amb l’enregistrament « $1 » !',
 	'recordadmin-createlink' => 'clicatz aicí per ne crear un',
@@ -1544,15 +1744,13 @@ $messages['oc'] = array(
 	'recordadmin-modified' => 'Modificat',
 	'recordadmin-actions' => 'Accions',
 	'recordadmin-needscontent' => 'Apondre lo contengut...',
-	'recordadmin-editwithform' => 'Modificar amb un formulari',
-	'recordadmin-typeinfo' => 'enregistrament $1',
 	'right-recordadmin' => 'Trobar e modificar las paginas d’enregistrament',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'Pas cap de « $1 »',
 );
 
-/** Ossetic (Иронау)
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -1564,8 +1762,18 @@ $messages['os'] = array(
  */
 $messages['pdc'] = array(
 	'recordadmin-buttonsearch' => 'Guck uff',
+	'recordadmin-buttoncreate' => 'Schtaerte',
+	'recordadmin-buttonsave' => 'Beilege',
 	'recordadmin-editlink' => 'ennere',
 	'recordadmin-modified' => 'Gennert',
+	'recordadmin-notset' => 'Keen „$1“',
+);
+
+/** Pälzisch (Pälzisch)
+ * @author Xqt
+ */
+$messages['pfl'] = array(
+	'recordadmin-editlink' => 'bearwaide',
 );
 
 /** Polish (Polski)
@@ -1576,8 +1784,9 @@ $messages['pdc'] = array(
  */
 $messages['pl'] = array(
 	'recordadmin' => 'Administracja rekordami',
-	'recordadmin-desc' => '[[Special:RecordAdmin|Strona specjalna]] służąca do wyszukiwania i edytowania stron ze zbiorami danych (rekordami) przy użyciu formularza',
-	'recordadmin-categoryempty' => 'Brak typów rekordów. Określ kategorie dla szablonów rekordów w [[:$1|$1]].',
+	'recordadmin-desc' => 'Wyszukiwanie, zapytania, formularze i raportowanie dla danych pochodzących z parametrów szablonów',
+	'recordadmin-specialdesc' => '[[Special:RecordAdmin|Strona specjalna]] służąca do wyszukiwania i tworzenia stron z użyciem przypisanych formularzy',
+	'recordadmin-noforms' => 'Obecnie brak jest formularzy służących do wyszukiwania i tworzenia stron',
 	'recordadmin-select' => 'Wybierz typ rekordu, którym chcesz zarządzać',
 	'recordadmin-createtype' => 'Podaj nazwę nowego typu rekordy, który chcesz utworzyć',
 	'recordadmin-recordtype' => 'typ rekordu',
@@ -1596,10 +1805,7 @@ $messages['pl'] = array(
 	'recordadmin-buttonreset' => 'Resetuj',
 	'recordadmin-searchresult' => 'Wyniki wyszukiwania',
 	'recordadmin-nomatch' => 'Nie znaleziono pasujących rekordów!',
-	'recordadmin-edit' => 'Edycja rekordu „$1” typu $2',
 	'recordadmin-typeupdated' => 'Właściwości $1 zaktualizowane',
-	'recordadmin-updatesuccess' => '$1 zaktualizowane',
-	'recordadmin-updateerror' => 'Wystąpił błąd w trakcie aktualizacji',
 	'recordadmin-buttonsave' => 'Zapisz',
 	'recordadmin-noform' => 'Brak formularza współpracującego z rekordami „$1”!',
 	'recordadmin-createlink' => 'utwórz',
@@ -1611,9 +1817,12 @@ $messages['pl'] = array(
 	'recordadmin-modified' => 'Zmienione',
 	'recordadmin-actions' => 'Operacje',
 	'recordadmin-needscontent' => 'Dodaj zawartość...',
-	'recordadmin-editwithform' => 'Edytuj za pomocą formularza',
-	'recordadmin-typeinfo' => 'Rekord typu $1',
 	'right-recordadmin' => 'Znajdywanie i edycja stron z rekordami danych',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Nie „$1”',
+	'recordadmin-edit-info' => 'Ta strona zawiera szablony z formularzami, które można wypełnić korzystając z zestawu gotowych odpowiedzi.<br />Kliknij [$1 tutaj] jeśli chcesz edytować bez użycia formularzy.',
+	'recordadmin-properties' => 'Właściwości',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1622,8 +1831,9 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'recordadmin' => "Aministrassion d'anotassion",
-	'recordadmin-desc' => "Na [[Special:RecordAdmin|pàgina special]] për trové e modifiché pàgine d'anotassion an dovrand un formolari",
-	'recordadmin-categoryempty' => "Al moment a-i é pa gnun-a sòrt d'anotassion. Për piasì categorisa jë stamp dj'anotassion an [[:$1|$1]]",
+	'recordadmin-desc' => 'Arserca, arceste, formolari e rapòrt ëd dat dla wiki derivà da paràmetr dë stamp',
+	'recordadmin-specialdesc' => 'Na [[Special:RecordAdmin|pàgina special]] për trové e creé dle pàgine an dovrand ij formolari associà',
+	'recordadmin-noforms' => 'A-i é gnun formolari al moment definì për sërché e creé',
 	'recordadmin-select' => 'Selession-a',
 	'recordadmin-createtype' => "Anseriss ël nòm ëd na neuva sòrt d'anotassion da creé",
 	'recordadmin-recordtype' => "sòrt d'anotassion",
@@ -1642,10 +1852,7 @@ $messages['pms'] = array(
 	'recordadmin-buttonreset' => 'Spian-a',
 	'recordadmin-searchresult' => "Arzultà dl'arserca",
 	'recordadmin-nomatch' => 'Pa gnun-e anotassion corispondente trovà!',
-	'recordadmin-edit' => 'Modifiché $2 anotassion "$1"',
 	'recordadmin-typeupdated' => 'Modificà $1 proprietà',
-	'recordadmin-updatesuccess' => '$1 modificà',
-	'recordadmin-updateerror' => "A l'é capitaje n'eror an mente dla modìfica",
 	'recordadmin-buttonsave' => 'Salva',
 	'recordadmin-noform' => 'A-i é gnun formolari associà con l\'anotassion "$1"!',
 	'recordadmin-createlink' => 'crea un',
@@ -1657,41 +1864,53 @@ $messages['pms'] = array(
 	'recordadmin-modified' => 'Modificà',
 	'recordadmin-actions' => 'Assion',
 	'recordadmin-needscontent' => 'Gionté contnù ...',
-	'recordadmin-editwithform' => 'Modifiché con un formolari',
-	'recordadmin-typeinfo' => '$1 anotassion',
 	'right-recordadmin' => "Treuva e modifica pàgine d'anotassion",
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'Pa gnun "$1"',
+	'recordadmin-edit-info' => "Costa pàgina a conten djë stamp che a l'han ij sò pròpi formolari ch'a peul compilé da st'ansem.<br />Dësnò [$1 ch'a deuvra la funsionalità normal ëd modìfica MediaWiki sensa formolari dë stamp].",
+	'recordadmin-properties' => 'Proprietà',
 );
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'recordadmin-select' => 'ټاکل',
+	'recordadmin-newsearch' => 'د $1 نوې پلټنه',
+	'recordadmin-submit' => 'سپارل',
+	'recordadmin-createsuccess' => '$1 جوړ شو',
 	'recordadmin-buttonsearch' => 'پلټنه',
 	'recordadmin-buttoncreate' => 'جوړول',
+	'recordadmin-searchresult' => 'د پلټنې پايلې',
 	'recordadmin-buttonsave' => 'خوندي کول',
+	'recordadmin-createlink' => 'يو جوړول',
+	'recordadmin-summary-typecreated' => 'نوی $1 جوړ شو',
 	'recordadmin-viewlink' => 'کتل',
 	'recordadmin-editlink' => 'سمول',
+	'recordadmin-created' => 'جوړ شوي',
+	'recordadmin-modified' => 'بدلېدلي',
 	'recordadmin-actions' => 'کړنې',
+	'recordadmin-needscontent' => 'مېنځپانګه ورګډول ...',
 );
 
 /** Portuguese (Português)
+ * @author Giro720
  * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
 	'recordadmin' => 'Administração de registos',
-	'recordadmin-desc' => 'Uma [[Special:RecordAdmin|página especial]] para encontrar e editar páginas de registos usando um formulário',
-	'recordadmin-categoryempty' => 'Não existe nenhum tipo de registo. Por favor, categorize predefinições de registos em [[:$1|$1]].',
+	'recordadmin-desc' => 'Pesquisa, consultas, formulários e relatórios de dados da wiki derivados de parâmetros de predefinições',
+	'recordadmin-specialdesc' => 'Uma [[Special:RecordAdmin|página especial]] para pesquisar e criar páginas usando formulários associados',
+	'recordadmin-noforms' => 'Não existem formulários definidos para uso na pesquisa e criação de páginas',
 	'recordadmin-select' => 'Seleccione o tipo de registo a gerir',
 	'recordadmin-createtype' => 'Introduza o nome do novo tipo de registo a criar',
 	'recordadmin-recordtype' => 'Tipo de registo',
 	'recordadmin-newsearch' => 'Nova pesquisa $1',
 	'recordadmin-newrecord' => 'Seleccionar outro tipo de registo',
-	'recordadmin-submit' => 'Submeter',
+	'recordadmin-submit' => 'Enviar',
 	'recordadmin-create' => 'Procurar ou criar registos "$1"',
 	'recordadmin-alreadyexist' => 'Desculpe, "$1" já existe!',
 	'recordadmin-createsuccess' => '$1 criado',
@@ -1704,10 +1923,7 @@ $messages['pt'] = array(
 	'recordadmin-buttonreset' => 'Repor',
 	'recordadmin-searchresult' => 'Resultados da pesquisa',
 	'recordadmin-nomatch' => 'Não foram encontrados resultados correspondentes!',
-	'recordadmin-edit' => 'A editar registo $2 "$1"',
 	'recordadmin-typeupdated' => 'Propriedades de $1 actualizadas',
-	'recordadmin-updatesuccess' => '$1 actualizado',
-	'recordadmin-updateerror' => 'Ocorreu um erro durante a actualização',
 	'recordadmin-buttonsave' => 'Gravar',
 	'recordadmin-noform' => 'Não há um formulário associado com registos "$1"!',
 	'recordadmin-createlink' => 'criar um',
@@ -1717,23 +1933,27 @@ $messages['pt'] = array(
 	'recordadmin-editlink' => 'editar',
 	'recordadmin-created' => 'Criado',
 	'recordadmin-modified' => 'Modificado',
-	'recordadmin-actions' => 'Acções',
+	'recordadmin-actions' => 'Editar',
 	'recordadmin-needscontent' => 'Adicionar conteúdo...',
-	'recordadmin-editwithform' => 'Editar com formulário',
-	'recordadmin-typeinfo' => 'Registo de $1',
 	'right-recordadmin' => 'Encontrar e editar páginas de registos',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => '"$1" não {{PLURAL:$1|existe|existem}}',
+	'recordadmin-edit-info' => 'Esta página contém predefinições que têm formulários próprios, os quais pode preencher a partir deste grupo de separadores.<br />Em alternativa, [$1 pode usar a funcionalidade normal de edição do MediaWiki, sem formulários].',
+	'recordadmin-properties' => 'Propriedades',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
+ * @author Luckas Blade
+ * @author Raylton P. Sousa
  */
 $messages['pt-br'] = array(
 	'recordadmin' => 'Administração de registros',
-	'recordadmin-desc' => 'Uma [[Special:RecordAdmin|página especial]] para encontrar e editar páginas de registros usando um formulário',
-	'recordadmin-categoryempty' => 'No momento não há tipos de registro. Por favor, categorize predefinições de registro em [[:$1|$1]].',
+	'recordadmin-desc' => 'Pesquisa, consultas, formulários e relatórios de dados da wiki derivados de parâmetros de predefinições',
+	'recordadmin-specialdesc' => 'Uma [[Special:RecordAdmin|página especial]] para pesquisar e criar páginas usando formulários associados',
+	'recordadmin-noforms' => 'Não existem formulários definidos para uso na pesquisa e criação de páginas',
 	'recordadmin-select' => 'Selecione o tipo de registro a gerenciar',
 	'recordadmin-createtype' => 'Introduza o nome do novo tipo de registo a criar',
 	'recordadmin-recordtype' => 'Tipo de registro',
@@ -1752,10 +1972,7 @@ $messages['pt-br'] = array(
 	'recordadmin-buttonreset' => 'Reiniciar',
 	'recordadmin-searchresult' => 'Resultados da pesquisa',
 	'recordadmin-nomatch' => 'Não foram encontrados resultados correspondentes!',
-	'recordadmin-edit' => 'Editando registro $2 "$1"',
 	'recordadmin-typeupdated' => 'Propriedades de $1 atualizadas',
-	'recordadmin-updatesuccess' => '$1 atualizado',
-	'recordadmin-updateerror' => 'Ocorreu um erro durante a atualização',
 	'recordadmin-buttonsave' => 'Gravar',
 	'recordadmin-noform' => 'Não há um formulário associado com registros "$1"!',
 	'recordadmin-createlink' => 'criar um',
@@ -1767,30 +1984,34 @@ $messages['pt-br'] = array(
 	'recordadmin-modified' => 'Modificado',
 	'recordadmin-actions' => 'Ações',
 	'recordadmin-needscontent' => 'Adicione conteúdo...',
-	'recordadmin-editwithform' => 'Editar com formulário',
-	'recordadmin-typeinfo' => 'registro "$1"',
 	'right-recordadmin' => 'Encontrar e editar páginas de registros',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Não {{PLURAL:$1|existe|existem}} "$1"',
+	'recordadmin-edit-info' => 'Esta página contém predefinições que têm formulários próprios, os quais pode preencher a partir deste grupo de abas.<br />Em alternativa, [$1 pode usar a funcionalidade normal de edição do MediaWiki, sem formulários].',
+	'recordadmin-properties' => 'Propriedades',
 );
 
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
-	'recordadmin-select' => 'Selectaţi',
+	'recordadmin-select' => 'Selectați',
 	'recordadmin-submit' => 'Trimite',
-	'recordadmin-badtitle' => 'Titlu greşit!',
-	'recordadmin-invert' => 'Inversează selecţia',
+	'recordadmin-badtitle' => 'Titlu greșit!',
+	'recordadmin-invert' => 'Inversează selecția',
 	'recordadmin-buttonsearch' => 'Căutare',
 	'recordadmin-buttoncreate' => 'Creare',
 	'recordadmin-buttonreset' => 'Resetare',
 	'recordadmin-buttonsave' => 'Salvare',
-	'recordadmin-viewlink' => 'vedeţi',
+	'recordadmin-createlink' => 'crează unul',
+	'recordadmin-viewlink' => 'vedeți',
 	'recordadmin-created' => 'Creat',
 	'recordadmin-modified' => 'Modificat',
-	'recordadmin-actions' => 'Acţiuni',
-	'recordadmin-needscontent' => 'Adăugaţi conţinut...',
-	'recordadmin-editwithform' => 'Modificare cu un formular',
+	'recordadmin-actions' => 'Acțiuni',
+	'recordadmin-needscontent' => 'Adăugați conținut...',
 );
 
 /** Tarandíne (Tarandíne)
@@ -1809,8 +2030,9 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'recordadmin' => 'Администрирование записей',
-	'recordadmin-desc' => '[[Special:RecordAdmin|Служебная страница]] для поиска и правки страниц записей, используя форму',
-	'recordadmin-categoryempty' => 'Типы записей на данный момент отсутствуют. Пожалуйста, категоризуйте шаблоны записей в [[:$1|$1]].',
+	'recordadmin-desc' => 'Поиск, запросы, формы и отчёты по вики-данным, полученным из параметров шаблона',
+	'recordadmin-specialdesc' => '[[Special:RecordAdmin|Служебная страница]] для поиска и создания страниц с помощью ассоциированных форм',
+	'recordadmin-noforms' => 'Есть в настоящее время не определены формы для поиска и создания',
 	'recordadmin-select' => 'Выбрать',
 	'recordadmin-createtype' => 'Введите название нового типа записи для создания',
 	'recordadmin-recordtype' => 'тип записи',
@@ -1829,10 +2051,7 @@ $messages['ru'] = array(
 	'recordadmin-buttonreset' => 'Сбросить',
 	'recordadmin-searchresult' => 'Результаты поиска',
 	'recordadmin-nomatch' => 'Подходящие записи не найдены!',
-	'recordadmin-edit' => 'Редактировать $2 запись «$1»',
 	'recordadmin-typeupdated' => 'Обновлено $1 свойств',
-	'recordadmin-updatesuccess' => '$1 обновлено',
-	'recordadmin-updateerror' => 'Во время обновления произошла ошибка',
 	'recordadmin-buttonsave' => 'Сохранить',
 	'recordadmin-noform' => 'Нет формы, ассоциированной с записями «$1»!',
 	'recordadmin-createlink' => 'создать один',
@@ -1844,15 +2063,33 @@ $messages['ru'] = array(
 	'recordadmin-modified' => 'Изменено',
 	'recordadmin-actions' => 'Действия',
 	'recordadmin-needscontent' => 'Добавить содержимое...',
-	'recordadmin-editwithform' => 'Редактировать с формой',
-	'recordadmin-typeinfo' => '$1 запись',
 	'right-recordadmin' => 'поиск и редактирование страниц записей',
 	'recordadmin-export-csv' => 'CSV',
 	'recordadmin-export-pdf' => 'PDF',
 	'recordadmin-notset' => 'Нет «$1»',
+	'recordadmin-edit-info' => 'Эта страница содержит шаблоны, которые имеют свои собственные формы, которые можно заполнить с этого набора вкладок.<br />Нажмите [$1 здесь], чтобы использовать обычное редактирование MediaWiki без шаблонных форм.',
+	'recordadmin-properties' => 'Свойства',
 );
 
-/** Serbo-Croatian (Srpskohrvatski / Српскохрватски)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'recordadmin-select' => 'Выбрати',
+	'recordadmin-submit' => 'Одослати',
+	'recordadmin-buttonsearch' => 'Глядати',
+	'recordadmin-buttoncreate' => 'Створити',
+	'recordadmin-buttonreset' => 'Ресетовати',
+	'recordadmin-searchresult' => 'Резултаты гляданя',
+	'recordadmin-buttonsave' => 'Уложыти',
+	'recordadmin-viewlink' => 'відїти',
+	'recordadmin-editlink' => 'едітовати',
+	'recordadmin-created' => 'Створено',
+	'recordadmin-modified' => 'Змінено',
+	'recordadmin-actions' => 'Дїї',
+);
+
+/** Serbo-Croatian (Srpskohrvatski)
  * @author OC Ripper
  */
 $messages['sh'] = array(
@@ -1866,7 +2103,6 @@ $messages['sh'] = array(
 $messages['sk'] = array(
 	'recordadmin' => 'Správa záznamov',
 	'recordadmin-desc' => '[[Special:RecordAdmin|Špeciálna stránka]] na hľadanie a úpravu stránok záznamov pomocou fomulára',
-	'recordadmin-categoryempty' => 'Momentálne nie sú žiadne typy záznamov. Prosím, kategorizujte šablóny záznamov do [[:$1|$1]].',
 	'recordadmin-select' => 'Vyberte typ záznamu, ktorý chcete spravovať',
 	'recordadmin-createtype' => 'Zadajte názov nového typu záznamu, ktorý sa má vytvoriť',
 	'recordadmin-recordtype' => 'typ záznamu',
@@ -1885,10 +2121,7 @@ $messages['sk'] = array(
 	'recordadmin-buttonreset' => 'Reset',
 	'recordadmin-searchresult' => 'Výsledky hľadania',
 	'recordadmin-nomatch' => 'Neboli nájdené žiadne zodpovedajúce záznamy!',
-	'recordadmin-edit' => 'Upravuje sa $2 záznam „$1“',
 	'recordadmin-typeupdated' => 'vlastnosti $1 aktualizované',
-	'recordadmin-updatesuccess' => '$1 aktualizované',
-	'recordadmin-updateerror' => 'Počas aktualizácie sa vyskytla chyba',
 	'recordadmin-buttonsave' => 'Uložiť',
 	'recordadmin-noform' => 'So záznamami „$1“ nie je asociovaný žiadny formulár!',
 	'recordadmin-createlink' => 'vytvoriť ho',
@@ -1900,29 +2133,90 @@ $messages['sk'] = array(
 	'recordadmin-modified' => 'Zmenené',
 	'recordadmin-actions' => 'Operácie',
 	'recordadmin-needscontent' => 'Pridať obsah...',
-	'recordadmin-editwithform' => 'Upraviť formulárom',
-	'recordadmin-typeinfo' => 'Záznam $1',
 	'right-recordadmin' => 'Nájsť a upravovať stránky záznamov',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'recordadmin-select' => 'Izberi',
+	'recordadmin-submit' => 'Potrdi',
+	'recordadmin-alreadyexist' => 'Oprostite, »$1« že obstaja!',
+	'recordadmin-badtitle' => 'Nepravilen naslov!',
+	'recordadmin-invert' => 'Obrni izbor',
+	'recordadmin-buttonsearch' => 'Išči',
+	'recordadmin-buttoncreate' => 'Ustvari',
+	'recordadmin-buttonreset' => 'Ponastavi',
+	'recordadmin-buttonsave' => 'Shrani',
+	'recordadmin-createlink' => 'ustvari eno',
+	'recordadmin-viewlink' => 'poglej',
+	'recordadmin-editlink' => 'uredi',
+	'recordadmin-created' => 'Ustvarjeno',
+	'recordadmin-modified' => 'Spremenjeno',
+	'recordadmin-actions' => 'Uredi',
+	'recordadmin-needscontent' => 'Dodaj vsebino ...',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Brez »$1«',
+	'recordadmin-properties' => 'Lastnosti',
+);
+
+/** Somali (Soomaaliga)
+ * @author Maax
+ */
+$messages['so'] = array(
+	'recordadmin-buttonsearch' => 'Raadi',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'recordadmin-select' => 'Изабери',
 	'recordadmin-submit' => 'Пошаљи',
-	'recordadmin-alreadyexist' => 'Жао нам је, „$1“ већ постоји!',
-	'recordadmin-buttonsave' => 'Сними',
+	'recordadmin-alreadyexist' => 'Нажалост, „$1“ већ постоји!',
+	'recordadmin-createsuccess' => '$1 је направљено',
+	'recordadmin-badtitle' => 'Неисправан наслов!',
+	'recordadmin-buttoncreate' => 'Направи',
+	'recordadmin-buttonreset' => 'Поништи',
+	'recordadmin-buttonsave' => 'Сачувај',
+	'recordadmin-newcreated' => 'Направљен је нови $1 из јавног обрасца',
+	'recordadmin-summary-typecreated' => 'Направљен је нови $1',
+	'recordadmin-viewlink' => 'погледај',
+	'recordadmin-editlink' => 'уреди',
+	'recordadmin-created' => 'Направљено',
+	'recordadmin-modified' => 'Измењено',
+	'recordadmin-actions' => 'Уреди',
+	'recordadmin-needscontent' => 'Додај садржај…',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
 	'recordadmin-select' => 'Izaberi',
 	'recordadmin-submit' => 'Pošalji',
-	'recordadmin-alreadyexist' => 'Žao nam je, „$1“ već postoji!',
-	'recordadmin-buttonsave' => 'Snimi',
+	'recordadmin-alreadyexist' => 'Nažalost, „$1“ već postoji!',
+	'recordadmin-createsuccess' => '$1 je napravljeno',
+	'recordadmin-badtitle' => 'Neispravan naslov!',
+	'recordadmin-buttoncreate' => 'Napravi',
+	'recordadmin-buttonreset' => 'Poništi',
+	'recordadmin-buttonsave' => 'Sačuvaj',
+	'recordadmin-newcreated' => 'Napravljen je novi $1 iz javnog obrasca',
+	'recordadmin-summary-typecreated' => 'Napravljen je novi $1',
+	'recordadmin-viewlink' => 'pogledaj',
+	'recordadmin-editlink' => 'uredi',
+	'recordadmin-created' => 'Napravljeno',
+	'recordadmin-modified' => 'Izmenjeno',
+	'recordadmin-actions' => 'Uredi',
+	'recordadmin-needscontent' => 'Dodaj sadržaj…',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1947,10 +2241,7 @@ $messages['stq'] = array(
 	'recordadmin-buttonreset' => 'Touräächsätte',
 	'recordadmin-searchresult' => 'Säikresultoate',
 	'recordadmin-nomatch' => 'Neen paasjende Apteekengen fuunen!',
-	'recordadmin-edit' => '$2 fon dän Typ "$1" beoarbaidje',
 	'recordadmin-typeupdated' => '$1 Wäide aktualisierd',
-	'recordadmin-updatesuccess' => '$1 aktualisierd',
-	'recordadmin-updateerror' => 'Unner ju Aktualisierenge tried n Failer ap',
 	'recordadmin-buttonsave' => 'Spiekerje',
 	'recordadmin-noform' => 'Dät rakt neen Formular foar "$1"-Apteekengen!',
 	'recordadmin-createlink' => 'moak een',
@@ -1963,6 +2254,7 @@ $messages['stq'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Dafer45
  * @author Fluff
  * @author Gabbe.g
  * @author Per
@@ -1971,17 +2263,21 @@ $messages['sv'] = array(
 	'recordadmin' => 'Rekordadministration',
 	'recordadmin-desc' => 'En [[Special:RecordAdmin|specialsida]] för att hitta och ändra titelinformation med hjälp av ett formulär.',
 	'recordadmin-select' => 'Välj',
-	'recordadmin-newsearch' => 'Ny $1 säkning',
+	'recordadmin-newsearch' => 'Ny sökning efter $1',
+	'recordadmin-alreadyexist' => 'Tyvärr, "$1" finns redan!',
 	'recordadmin-createsuccess' => '$1 skapad',
 	'recordadmin-badtitle' => 'Ogiltig titel!',
+	'recordadmin-invert' => 'Invertera markering',
 	'recordadmin-buttonsearch' => 'Sök',
 	'recordadmin-buttoncreate' => 'Skapa',
 	'recordadmin-buttonreset' => 'Återställ',
 	'recordadmin-searchresult' => 'Sökresultat',
-	'recordadmin-updatesuccess' => '$1 blev uppdaterad',
+	'recordadmin-typeupdated' => '$1 egenskaper uppdaterade',
 	'recordadmin-buttonsave' => 'Spara',
 	'recordadmin-createlink' => 'skapa en',
 	'recordadmin-summary-typecreated' => 'Ny $1 skapad',
+	'recordadmin-viewlink' => 'visa',
+	'recordadmin-editlink' => 'redigera',
 	'recordadmin-created' => 'Skapad',
 	'recordadmin-modified' => 'Ändrad',
 	'recordadmin-actions' => 'Åtgärder',
@@ -1992,6 +2288,8 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'recordadmin-select' => 'ఎంచుకోండి',
+	'recordadmin-newsearch' => 'కొత్త $1 అన్వేషణ',
 	'recordadmin-submit' => 'దాఖలుచేయి',
 	'recordadmin-alreadyexist' => 'క్షమించండి, "$1" ఇప్పటికే ఉంది!',
 	'recordadmin-badtitle' => 'తప్పు శీర్షిక!',
@@ -2001,7 +2299,16 @@ $messages['te'] = array(
 	'recordadmin-buttonsave' => 'భద్రపరచు',
 	'recordadmin-viewlink' => 'చూడు',
 	'recordadmin-editlink' => 'మార్చు',
-	'recordadmin-actions' => 'చర్యలు',
+	'recordadmin-actions' => 'మార్చు',
+	'recordadmin-properties' => 'లక్షణాలు',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'recordadmin-buttonsearch' => 'Buka',
+	'recordadmin-editlink' => 'edita',
 );
 
 /** Thai (ไทย)
@@ -2028,14 +2335,15 @@ $messages['tk'] = array(
  */
 $messages['tl'] = array(
 	'recordadmin' => 'Pangangasiwa ng tala (rekord)',
-	'recordadmin-desc' => 'Isang [[Special:RecordAdmin|natatanging pahina]] para sa paghahanap at pagbabago ng pahina ng mga tala/rekord na gumagamit ng isang pormularyo',
-	'recordadmin-categoryempty' => 'Kasalukuyang walang mga uri ng talaan. Pakibigyan ng kaurian ang mga suleras ng talaan upang maging [[:$1|$1]].',
+	'recordadmin-desc' => 'Paghahanap, mga pagtatanong, mga pormularyo at pag-uulat ng dato ng wiki na hinango mula sa mga parametro ng suleras',
+	'recordadmin-specialdesc' => 'Isang [[Special:RecordAdmin|natatanging pahina]] para sa paghahanp at paglikha ng mga pahina na ginagamitan ng kaugnay na mga pormularyo',
+	'recordadmin-noforms' => 'Kasalukuyang walang mga pormularyong tinukoy upang gamitin para sa paghahanap at paglikha',
 	'recordadmin-select' => 'Piliin ang uri ng tala/rekord na hahanapin',
 	'recordadmin-createtype' => 'Ipasok ang pangalan ng isang bagong uri ng talaang lilikhain',
 	'recordadmin-recordtype' => 'uri ng talaan',
 	'recordadmin-newsearch' => 'Bagong paghahanap ng $1',
 	'recordadmin-newrecord' => 'Pumili ng iba pang uri ng tala/rekord',
-	'recordadmin-submit' => 'Ipasa/ipadala',
+	'recordadmin-submit' => 'Ipasa',
 	'recordadmin-create' => 'Hanapin o likhain ang "$1" mga talaan',
 	'recordadmin-alreadyexist' => 'Paumanhin, umiiral na ang "$1"!',
 	'recordadmin-createsuccess' => '$1 nalikha na',
@@ -2048,10 +2356,7 @@ $messages['tl'] = array(
 	'recordadmin-buttonreset' => 'Muling itakda',
 	'recordadmin-searchresult' => 'Kinalabasan/resulta ng paghahanap',
 	'recordadmin-nomatch' => 'Walang natagpuang mga tala/rekord na tumutugma!',
-	'recordadmin-edit' => 'Binabago ang $1',
 	'recordadmin-typeupdated' => '$1 mga pag-aari ang naisapanahon na',
-	'recordadmin-updatesuccess' => '$1 naisapanahon na',
-	'recordadmin-updateerror' => 'Naganap ang isang kamalian habang nagsasapanahon',
 	'recordadmin-buttonsave' => 'Sagipin',
 	'recordadmin-noform' => 'Walang pormularyong kaugnay ng "$1" mga tala/rekord!',
 	'recordadmin-createlink' => 'lumikha ng isa',
@@ -2064,6 +2369,12 @@ $messages['tl'] = array(
 	'recordadmin-actions' => 'Mga galaw',
 	'recordadmin-needscontent' => 'Idagdag ang nilalaman...',
 	'right-recordadmin' => 'Hanapin at baguhin ang mga pahina ng tala/rekord',
+	'recordadmin-export-csv' => 'CSV',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-notset' => 'Walang "$1"',
+	'recordadmin-edit-info' => 'Ang pahinang ito ay naglalaman ng mga suleras na may sarili nilang mga pormularyo na maaari mong punuin mula sa pangkat ng panglaylay na ito.<br />O kaya [$1 gamitin ang pangkaraniwang tungkuling pambago ng MediaWiki na walang mga pormularyo ng suleras].
+This page contains templates which have their own forms that you can fill in from this tab-set.<br />Alternatively [$1 use the normal MediaWiki edit functionality without template forms].',
+	'recordadmin-properties' => 'Mga katangiang-ari',
 );
 
 /** Turkish (Türkçe)
@@ -2087,19 +2398,24 @@ $messages['tr'] = array(
 	'recordadmin-modified' => 'Değiştirildi',
 	'recordadmin-actions' => 'İşlemler',
 	'recordadmin-needscontent' => 'İçerik ekle...',
-	'recordadmin-editwithform' => 'Formla düzenle',
 );
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
+	'recordadmin-submit' => 'Відправити',
+	'recordadmin-buttonsearch' => 'Знайти',
+	'recordadmin-buttoncreate' => 'Створити',
 	'recordadmin-buttonreset' => 'Скинути',
+	'recordadmin-buttonsave' => 'Зберегти',
 	'recordadmin-editlink' => 'ред.',
 	'recordadmin-actions' => 'Дії',
+	'recordadmin-properties' => 'Властивості',
 );
 
-/** Veps (Vepsan kel')
+/** Veps (Vepsän kel')
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
@@ -2113,7 +2429,7 @@ $messages['vep'] = array(
 	'recordadmin-created' => 'Sätud',
 	'recordadmin-modified' => 'Toižetadud',
 	'recordadmin-actions' => 'Tegendad',
-	'recordadmin-needscontent' => 'Ližata südäimišt...',
+	'recordadmin-needscontent' => 'Ližata südäiolend...',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -2122,7 +2438,7 @@ $messages['vep'] = array(
  */
 $messages['vi'] = array(
 	'recordadmin' => 'Quản lý bản ghi',
-	'recordadmin-desc' => 'Một [[Special:RecordAdmin|trang đặc biệt]] để tìm kiếm và sửa đổi các trang bản ghi bằng cách dùng một mẫu có sẵn',
+	'recordadmin-desc' => 'Tìm kiếm, truy vấn, biểu mẫu, và báo cáo dữ liệu wiki dẫn xuất từ tham số bản mẫu',
 	'recordadmin-select' => 'Chọn một loại bản ghi để quản lý',
 	'recordadmin-newsearch' => 'Tìm $1 mới',
 	'recordadmin-newrecord' => 'Chọn một loại bản ghi khác',
@@ -2133,12 +2449,14 @@ $messages['vi'] = array(
 	'recordadmin-buttoncreate' => 'Tạo',
 	'recordadmin-buttonreset' => 'Mặc định lại',
 	'recordadmin-searchresult' => 'Kết quả tìm kiếm',
-	'recordadmin-edit' => 'Sửa đổi hồ sơ $2 “$1”',
 	'recordadmin-buttonsave' => 'Lưu',
 	'recordadmin-viewlink' => 'xem',
 	'recordadmin-editlink' => 'sửa đổi',
 	'recordadmin-actions' => 'Tác động',
 	'recordadmin-needscontent' => 'Thêm nội dung…',
+	'recordadmin-export-csv' => 'Phân cách bằng dấu phẩy',
+	'recordadmin-export-pdf' => 'PDF',
+	'recordadmin-properties' => 'Thuộc tính',
 );
 
 /** Yiddish (ייִדיש)
@@ -2148,35 +2466,58 @@ $messages['yi'] = array(
 	'recordadmin-buttonsearch' => 'זוכן',
 	'recordadmin-buttonsave' => 'אויפֿהיטן',
 	'recordadmin-editlink' => 'ענדערן',
+	'recordadmin-created' => ' געשאַפֿן',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Hydra
  * @author Liangent
  * @author PhiLiP
  */
 $messages['zh-hans'] = array(
+	'recordadmin-select' => '选择',
+	'recordadmin-newsearch' => '新的 $1 搜寻',
+	'recordadmin-submit' => '提交',
+	'recordadmin-alreadyexist' => '对不起，「$1」已经存在！',
 	'recordadmin-badtitle' => '标题错误！',
 	'recordadmin-invert' => '反向选择',
 	'recordadmin-buttonsearch' => '搜寻',
+	'recordadmin-buttoncreate' => '创建',
 	'recordadmin-buttonreset' => '重置',
+	'recordadmin-searchresult' => '搜索结果',
 	'recordadmin-buttonsave' => '保存',
 	'recordadmin-viewlink' => '检视',
 	'recordadmin-editlink' => '编辑',
+	'recordadmin-created' => '已发起',
+	'recordadmin-modified' => '曾修改',
+	'recordadmin-actions' => '操作',
+	'recordadmin-needscontent' => '添加内容。。。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Gzdavidwong
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'recordadmin-select' => '選擇',
+	'recordadmin-newsearch' => '新的 $1 搜尋',
+	'recordadmin-submit' => '提交',
+	'recordadmin-alreadyexist' => '對不起，「$1」已經存在！',
 	'recordadmin-badtitle' => '標題錯誤！',
 	'recordadmin-invert' => '反向選擇',
 	'recordadmin-buttonsearch' => '搜尋',
+	'recordadmin-buttoncreate' => '建立',
 	'recordadmin-buttonreset' => '重置',
-	'recordadmin-buttonsave' => '保存',
+	'recordadmin-searchresult' => '搜尋結果',
+	'recordadmin-buttonsave' => '儲存',
 	'recordadmin-viewlink' => '檢視',
 	'recordadmin-editlink' => '編輯',
+	'recordadmin-created' => '已發起',
+	'recordadmin-modified' => '曾修改',
+	'recordadmin-actions' => '操作',
+	'recordadmin-needscontent' => '添加內容。。。',
 );
 

@@ -1,11 +1,17 @@
 <?php
 /**
- * Form Edit Page inheriting from EditPage
- * 
+ * Contains Form Edit Page inheriting from EditPage
+ *
  * @author Daniel Friesen
  * @author Yaron Koren
+ * @file
+ * @ingroup SF
  */
 
+/**
+ * Form Edit Page inheriting from EditPage
+ * @ingroup SF
+ */
 class SFFormEditPage extends EditPage {
 
 	protected $form, $form_name;
@@ -13,13 +19,12 @@ class SFFormEditPage extends EditPage {
 	function __construct( $article, $form_name = '' ) {
 		global $wgRequest;
 		parent::__construct( $article );
-		SFUtils::loadMessages();
 		$this->action = 'formedit';
 		$form_name = $wgRequest->getText( 'form', $form_name );
 		$this->form = Title::makeTitleSafe( SF_NS_FORM, $form_name );
 		$this->form_name = $form_name;
 	}
-	
+
 	protected function isSectionEditSupported() {
 		return false; // sections and forms don't mix
 	}
@@ -37,13 +42,12 @@ class SFFormEditPage extends EditPage {
 		if ( $this->textbox1 != null )
 			parent::displayPreviewArea( $previewOutput );
 	}
-	
+
 	protected function importContentFormData( &$request ) {
 		// @todo This is where $request to save&preview page text should go
 	}
-	
+
 	protected function showContentForm() {
-		global $sfgIP;
 		$target_title = $this->mArticle->getTitle();
 		$target_name = SFUtils::titleString( $target_title );
 		if ( $target_title->exists() ) {

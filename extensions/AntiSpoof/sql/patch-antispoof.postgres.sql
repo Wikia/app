@@ -1,4 +1,4 @@
-CREATE TABLE /*$wgDBprefix*/spoofuser (
+CREATE TABLE spoofuser (
   -- Equivalent to user_name, but not guaranteed to be in sync.
   -- Do a join against user_name to confirm that an account hasn't
   -- been renamed or deleted away.
@@ -14,4 +14,4 @@ CREATE TABLE /*$wgDBprefix*/spoofuser (
   su_error text
 );
 
-CREATE INDEX su_normname_idx ON /*$wgDBprefix*/spoofuser (su_normalized,su_name);
+CREATE INDEX su_normname_idx ON spoofuser (su_normalized,su_name);

@@ -17,7 +17,7 @@ $mv_path = str_replace( 'example_usage/', '', $mv_path );
 <h3> Sample Playlists</h3>
 The <b>default attributes:</b>:
 <span id="default_attr">
-<?
+<?php
 $sample_embed = array();
 
 // playlist tags:
@@ -79,9 +79,9 @@ $sample_embed[9]['desc'] = ' <br /><b>MediaWiki example:</b><br />'.
 	    }
    } ?>
   </table>
-	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />&#160;
   </body>
 </html>
 <?php
 }
-?>
+

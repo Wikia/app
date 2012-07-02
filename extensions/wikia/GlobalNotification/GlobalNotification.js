@@ -1,60 +1,49 @@
+/* 
+ * GlobalNotification.show()
+ * @param string content - message to be displayed
+ * @param string type - 'notify' (blue), 'confirm' (green), 'error' (red), 'warn' (yellow)
+*/
+
 GlobalNotification = {
-	dom: false,
-	timed: false,
-	enableShow: true,
-		// Used to avoid race condition that happens when we call show and hide in short intervals.
-		// Race condition is caused by the delay of loading css file.
-		
-	init: function(callback) {		
-		if ( !jQuery.isFunction( callback ) ){
-			callback = function(){};
+	init: function() {
+		// If there's already a global notification on page load, set up JS
+		GlobalNotification.dom = $('.global-notification');
+		if(GlobalNotification.dom.length) {
+			GlobalNotification.setUpClose();
 		}
-		callback();
 	},
 	createDom: function() {
 		// create and store dom
-		GlobalNotification.dom = $( '<div class="global-notification"><div class="msg"></div></div>' );
-		$( GlobalNotification.isModal() ? GlobalNotification.modal : 'body' ).prepend( GlobalNotification.dom );
+		if(!GlobalNotification.dom.length) {
+			GlobalNotification.dom = $( '<div class="global-notification"><button class="close wikia-chiclet-button"><img src="' + stylepath + '/oasis/images/icon_close.png"></button><div class="msg"></div></div>' ).hide();
+			GlobalNotification.setUpClose();
+		}
+		$( GlobalNotification.isModal() ? GlobalNotification.modal : '.WikiaPageContentWrapper' ).prepend( GlobalNotification.dom );
 		GlobalNotification.msg = GlobalNotification.dom.find( '.msg' );
 	},
-	notify: function( content ) {
+	show: function(content, type) {
 		GlobalNotification.content = content;
-		GlobalNotification.show();
-	},
-	warn: function( content ) {
-		GlobalNotification.content = '<span class="warning"></span>' + content;
-		GlobalNotification.show();
-	},
-	show: function() {
-		GlobalNotification.enableShow = true;
 		var callback = function() {
-			GlobalNotification.init( function() {
-				if ( GlobalNotification.enableShow == true ) {
-					GlobalNotification.createDom();
-					GlobalNotification.msg.html( GlobalNotification.content );
-					GlobalNotification.dom.fadeIn();
-				} else {
-					GlobalNotification.hide();
-				}
-			});
+			GlobalNotification.createDom();
+			GlobalNotification.msg.html( GlobalNotification.content );
+			GlobalNotification.dom.removeClass('confirm, error, notify, warn').addClass(type);
+			// Share scroll event with WikiaFooterApp's toolbar floating (BugId:33365)
+			WikiaFooterApp.addScrollEvent();
+			GlobalNotification.dom.fadeIn('slow');
 		};
-		if( GlobalNotification.dom ) {
-			GlobalNotification.hide( callback );
-		} else {
-			callback();
-		}
+		GlobalNotification.hide( callback );
 	},
 	hide: function( callback ) {
-		GlobalNotification.enableShow = false;
-		if ( GlobalNotification.dom != false ){
+		if ( GlobalNotification.dom.length ){
 			GlobalNotification.dom.fadeOut( 400, function() {
 				GlobalNotification.dom.remove();
-				GlobalNotification.dom = false;
+				GlobalNotification.dom = [];
 				if( jQuery.isFunction( callback ) ) {
-					GlobalNotification.enableShow = true;
-					callback();
+					callback();			
 				}
 			});
+		} else {
+			callback();			
 		}
 	},
 	isModal: function() {
@@ -63,12 +52,31 @@ GlobalNotification = {
 			return true;
 		}
 		return false;
+	},
+	setUpClose: function() {
+		GlobalNotification.dom.find( '.close' ).click(GlobalNotification.hide);
+	},
+	// Float notification (BugId:33365) 
+	wikiaHeaderHeight: $('#WikiaHeader').height(),
+	onScroll: function(scrollTop) {
+		if(GlobalNotification.dom && GlobalNotification.dom.length) {
+			var minTop = GlobalNotification.wikiaHeaderHeight;
+			if(scrollTop > minTop) {
+				GlobalNotification.dom.addClass('float');
+			} else {
+				GlobalNotification.dom.removeClass('float');						
+			}
+			
+		}
 	}
 };
+$(function() {
+	GlobalNotification.init();
+});
 
 // ajax failure notification event registration
 if( typeof wgAjaxFailureMsg != 'undefined' ) {
 	$( document ).ajaxError( function( evt, request, settings ) {
-		GlobalNotification.warn( wgAjaxFailureMsg );
+		GlobalNotification.show( wgAjaxFailureMsg, 'error' );
 	});
 }

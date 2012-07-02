@@ -39,7 +39,7 @@ function dTree(objName) {
 		useStatusText		: false,
 		closeSameLevel	: false,
 		inOrder					: false
-	}
+	};
 	this.icon = {
 		root				: 'img/base.gif',
 		folder			: 'img/folder.gif',
@@ -215,7 +215,7 @@ dTree.prototype.o = function(id) {
 dTree.prototype.oAll = function(status) {
 	for (var n=0; n<this.aNodes.length; n++) {
 		if (this.aNodes[n]._hc && this.aNodes[n].pid != this.root.id) {
-			this.nodeStatus(status, n, this.aNodes[n]._ls)
+			this.nodeStatus(status, n, this.aNodes[n]._ls);
 			this.aNodes[n]._io = status;
 		}
 	}
@@ -251,7 +251,7 @@ dTree.prototype.closeLevel = function(node) {
 			this.closeAllChildren(this.aNodes[n]);
 		}
 	}
-}
+};
 
 // Closes all children of a node
 dTree.prototype.closeAllChildren = function(node) {
@@ -259,10 +259,10 @@ dTree.prototype.closeAllChildren = function(node) {
 		if (this.aNodes[n].pid == node.id && this.aNodes[n]._hc) {
 			if (this.aNodes[n]._io) this.nodeStatus(false, n, this.aNodes[n]._ls);
 			this.aNodes[n]._io = false;
-			this.closeAllChildren(this.aNodes[n]);		
+			this.closeAllChildren(this.aNodes[n]);
 		}
 	}
-}
+};
 
 // Change the status of a node(open or closed)
 dTree.prototype.nodeStatus = function(status, id, bottom) {

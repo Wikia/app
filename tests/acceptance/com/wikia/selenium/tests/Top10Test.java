@@ -47,7 +47,7 @@ public class Top10Test extends BaseTest {
 		}
 	}
 	
-	@Test(groups={"envProduction", "CI","verified"})
+	@Test(groups={"envProduction", "CI","legacy"})
 	public void testCreateEmptyList() throws Exception {
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());
@@ -98,7 +98,7 @@ public class Top10Test extends BaseTest {
 	}
 	
 	
-	@Test(groups={"envProduction", "CI", "verified"})
+	@Test(groups={"envProduction", "CI", "legacy"})
 	public void testCreateDuplicatedTopList() throws Exception {
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());
@@ -123,7 +123,7 @@ public class Top10Test extends BaseTest {
 		assertTrue(session().isTextPresent("This page already exists."));
 	}
 	
-	@Test(groups={"envProduction", "CI","verified"}) 
+	@Test(groups={"envProduction", "CI","legacy"}) 
 	public void testCreateTopListAndFillIt() throws Exception {
 		openAndWait("wiki/Special:CreateTopList");
 		String name = TOP10_LIST_NAME + (new Date()).toString();
@@ -181,7 +181,7 @@ public class Top10Test extends BaseTest {
 	    openAndWait("wiki/Top_10_List:" + name.replace(" ", "_"));
 	}
 	
-	@Test(groups={"envProduction", "CI","verified"})
+	@Test(groups={"envProduction", "CI","legacy"})
 	public void testTypeSameArticleInTwoItems() throws Exception {
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());
@@ -199,7 +199,7 @@ public class Top10Test extends BaseTest {
 		assertTrue(session().isTextPresent("You can't use the same name more than once."));
 	}
 	
-	@Test(groups={"envProduction", "CI", "verified"})
+	@Test(groups={"envProduction", "CI", "legacy"})
 	public void testRenameTopList() throws Exception {
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());
@@ -217,7 +217,7 @@ public class Top10Test extends BaseTest {
 		session().click("//table[@id='mw-movepage-table']//input[@type='submit']");
 	}
 	
-	@Test(groups={"envProduction", "CI","verified"})
+	@Test(groups={"envProduction", "CI","legacy"})
 	public void testVoteAsAnonymous() throws Exception {
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());
@@ -238,7 +238,7 @@ public class Top10Test extends BaseTest {
 	    session().click("//div[@id='toplists-list-body']/ul/li[2]/div[@class='ItemNumber']/button[@class='VoteButton']");
 	}
 	
-	@Test(groups={"envProduction", "CI","verified"})
+	@Test(groups={"envProduction", "CI","legacy"})
 	public void testAddItemAsLoggedIn() throws Exception {
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());	
@@ -260,7 +260,7 @@ public class Top10Test extends BaseTest {
 		waitForTextPresent("Whoops! You didn't type anything.");
 	}
 	
-	@Test(groups={"envProduction", "CI","verified"})
+	@Test(groups={"envProduction", "CI","legacy"})
 	public void testAddItemAsAnonymous() throws Exception {
 		session().open("wiki/Special:CreateTopList");
 		session().waitForPageToLoad(this.getTimeout());	
@@ -347,7 +347,7 @@ public class Top10Test extends BaseTest {
 	}
 	
 	
-	@Test(groups={"envProduction", "CI","verified"})
+	@Test(groups={"envProduction", "CI","legacy"})
 	public void testSlashAtItemName() throws Exception {
 		String name = TOP10_LIST_NAME + (new Date()).toString();;
 		String name2 = TOP10_ARTICLE_1 + (new Date()).toString();;

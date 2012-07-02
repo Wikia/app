@@ -59,4 +59,3 @@ EOT;
 $d = new WebStoreDelete;
 $d->execute();
 
-?>

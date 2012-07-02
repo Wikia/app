@@ -1,8 +1,10 @@
 <?php
 /**
  * Internationalisation file for the RightFunctions extension
- * @addtogroup Extensions
-*/
+ *
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -23,9 +25,15 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'rightfunctions-desc' => 'Short description of this extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'rightfunctions-desc' => '{{desc}}',
+	'rightfunctions-rest1' => '{{optional}}',
+	'rightfunctions-rest2' => '{{optional}}',
+	'rightfunctions-rest3' => '{{optional}}',
+	'rightfunctions-sep' => '{{optional}}',
 );
 
 /** Arabic (العربية)
@@ -58,7 +66,7 @@ $messages['bar'] = array(
 	'rightfunctions-ns' => '(vu da Nãmensraumsperrung)',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -90,10 +98,11 @@ $messages['bs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Melancholie
  */
 $messages['de'] = array(
-	'rightfunctions-desc' => 'Erlaubnisbasierte Parser-Funktionen',
+	'rightfunctions-desc' => 'Ermöglicht von Berechtigungen abhängige Parserfunktionen',
 	'rightfunctions-casc' => '(von kaskadierenden Quellen)',
 	'rightfunctions-local' => '(von lokalen Seiten)',
 	'rightfunctions-ns' => '(von Namensraumsperrungen)',
@@ -159,6 +168,16 @@ $messages['fr'] = array(
 	'rightfunctions-casc' => '(depuis les sources en cascade)',
 	'rightfunctions-local' => '(depuis une page locale)',
 	'rightfunctions-ns' => '(depuis la protection des espaces de nom)',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'rightfunctions-desc' => 'Fonccions du parsor basâs sur des pèrmissions',
+	'rightfunctions-casc' => '(dês les sôrses en cascâda)',
+	'rightfunctions-local' => '(dês una pâge locala)',
+	'rightfunctions-ns' => '(dês la protèccion des èspâços de noms)',
 );
 
 /** Galician (Galego)
@@ -243,12 +262,13 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author IvanLanin
  */
 $messages['id'] = array(
 	'rightfunctions-desc' => 'Fungsi parser berdasarkan hak pengguna',
 	'rightfunctions-casc' => '(dari sumber beruntun)',
 	'rightfunctions-local' => '(dari halaman lokal)',
-	'rightfunctions-ns' => '(dari perlindungan ruang nama)',
+	'rightfunctions-ns' => '(dari pelindungan ruang nama)',
 );
 
 /** Italian (Italiano)
@@ -281,7 +301,7 @@ $messages['km'] = array(
 	'rightfunctions-ns' => '(ពីការការពារលំហឈ្មោះ)',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -319,6 +339,17 @@ $messages['mr'] = array(
 	'rightfunctions-desc' => 'परवानगी आधारित पार्सर कार्ये',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'rightfunctions-desc' => 'Rettighetsbaserte parserfunksjoner',
+	'rightfunctions-casc' => '(fra etterfølgende kilder)',
+	'rightfunctions-local' => '(fra lokal side)',
+	'rightfunctions-ns' => '(fra navneromsbeskyttelse)',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -338,17 +369,6 @@ $messages['nn'] = array(
 	'rightfunctions-casc' => '(frå etterfølgjande kjelder)',
 	'rightfunctions-local' => '(frå lokal sida)',
 	'rightfunctions-ns' => '(frå namneromvern)',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'rightfunctions-desc' => 'Rettighetsbaserte parserfunksjoner',
-	'rightfunctions-casc' => '(fra etterfølgende kilder)',
-	'rightfunctions-local' => '(fra lokal side)',
-	'rightfunctions-ns' => '(fra navneromsbeskyttelse)',
 );
 
 /** Occitan (Occitan)
@@ -382,11 +402,19 @@ $messages['pms'] = array(
 	'rightfunctions-ns' => '(da protession namespace)',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'rightfunctions-local' => '(له سيمه ايز مخ نه)',
+);
+
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'rightfunctions-desc' => 'Funções do "parser" baseadas em permissões',
+	'rightfunctions-desc' => 'Funções do analisador sintáctico baseadas em permissões',
 	'rightfunctions-casc' => '(de fontes em cascata)',
 	'rightfunctions-local' => '(de página local)',
 	'rightfunctions-ns' => '(de protecção de espaços nominais)',
@@ -433,6 +461,24 @@ $messages['sk'] = array(
 	'rightfunctions-ns' => '(zo zamknutia menného priestoru)',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'rightfunctions-rest1' => '$1 $2',
+	'rightfunctions-rest2' => '$1 $2$5 $3 $4',
+	'rightfunctions-rest3' => '$1 $2$7 $3 $4$7 $5 $6',
+	'rightfunctions-sep' => ',',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'rightfunctions-rest1' => '$1 $2',
+	'rightfunctions-rest2' => '$1 $2$5 $3 $4',
+	'rightfunctions-rest3' => '$1 $2$7 $3 $4$7 $5 $6',
+	'rightfunctions-sep' => ',',
+);
+
 /** Swedish (Svenska)
  * @author Lejonel
  * @author M.M.S.
@@ -469,7 +515,7 @@ $messages['tr'] = array(
 	'rightfunctions-desc' => 'İzin temelli ayrıştırıcı fonksiyonlar',
 	'rightfunctions-casc' => '(kademeli kaynaklardan)',
 	'rightfunctions-local' => '(yerel sayfadan)',
-	'rightfunctions-ns' => '(isim alanı korumasından)',
+	'rightfunctions-ns' => '(ad alanı korumasından)',
 );
 
 /** Vietnamese (Tiếng Việt)

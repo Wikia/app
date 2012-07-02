@@ -140,24 +140,33 @@ class VideoFileUploader {
 	protected function adjustThumbnailToVideoRatio( $upload ){
 
 		wfProfileIn( __METHOD__ );
-		$data = file_get_contents( $upload->getTempPath() );
-		$src = imagecreatefromstring( $data );
-
-		$orgWidth = $upload->mFileProps['width'];
-		$orgHeight = $upload->mFileProps['height'];
-		$finalWidth = $upload->mFileProps['width'];
+		
+		$sTmpPath = $upload->getTempPath();
+		
+		$props = getimagesize( $sTmpPath );
+		$orgWidth = $props[0];
+		$orgHeight = $props[1];
+		$finalWidth = $props[0];
 		$finalHeight = $finalWidth / $this->getApiWrapper()->getAspectRatio();
+		
+		if ($orgHeight == $finalHeight) {
+			// no need to resize, we're lucky :)
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		
+		$data = file_get_contents( $sTmpPath );
+		$src = imagecreatefromstring( $data );
 
 		$dest = imagecreatetruecolor ( $finalWidth, $finalHeight );
 		imagecopy( $dest, $src, 0, 0, 0, ( $orgHeight - $finalHeight ) / 2 , $finalWidth, $finalHeight );
 
-		$sTmpPath = $upload->getTempPath();
-		switch ( $upload->mFileProps['minor_mime'] ) {
-			case 'jpeg':	imagejpeg( $dest, $sTmpPath ); break;
-			case 'gif':	imagegif ( $dest, $sTmpPath ); break;
-			case 'png':	imagepng ( $dest, $sTmpPath ); break;
+		
+		switch ( $props[2] ) {
+			case 2:	imagejpeg( $dest, $sTmpPath ); break;
+			case 1:	imagegif ( $dest, $sTmpPath ); break;
+			case 3:	imagepng ( $dest, $sTmpPath ); break;
 		}
-
 		imagedestroy( $src );
 		imagedestroy( $dest );
 		wfProfileOut( __METHOD__ );

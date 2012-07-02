@@ -1,11 +1,15 @@
 <?php
 
 class SpoofUser {
+
+	/**
+	 * @param $name string
+	 */
 	public function __construct( $name ) {
 		$this->mName = strval( $name );
 		list( $ok, $normalized ) = AntiSpoof::checkUnicodeString( $this->mName );
 		$this->mLegal = ( $ok == 'OK' );
-		if( $this->mLegal ) {
+		if ( $this->mLegal ) {
 			$this->mNormalized = $normalized;
 			$this->mError = null;
 		} else {
@@ -24,6 +28,7 @@ class SpoofUser {
 
 	/**
 	 * Describe the error.
+	 * @return null|string
 	 */
 	public function getError() {
 		return $this->mError;
@@ -31,6 +36,7 @@ class SpoofUser {
 
 	/**
 	 * Get the normalized key form
+	 * @return string|nuyll
 	 */
 	public function getNormalized() {
 		return $this->mNormalized;
@@ -42,11 +48,11 @@ class SpoofUser {
 	 * @return array empty if no conflict, or array containing conflicting usernames
 	 */
 	public function getConflicts() {
-		/* WIKIA CHANGE BEGINS */
-		$dbr = wfGetDB( DB_SLAVE, array(), 'specials' );
+		$dbr = self::getDBSlave();
 
 		// Join against the user table to ensure that we skip stray
 		// entries left after an account is renamed or otherwise munged.
+		/* Wikia Change - begin */
 		$spoofedUsers = $dbr->select(
 			array( 'specials.spoofuser', 'events_local_users' ),
 			array( 'user_name' ),
@@ -58,10 +64,10 @@ class SpoofUser {
 			array(
 				'LIMIT' => 5
 			) );
-		/* WIKIA CHANGE ENDS */
+		/* Wikia Change - end */
 
 		$spoofs = array();
-		while( $row = $dbr->fetchObject( $spoofedUsers ) ) {
+		foreach ( $spoofedUsers as $row ) {
 			array_push( $spoofs, $row->user_name );
 		}
 		return $spoofs;
@@ -70,11 +76,15 @@ class SpoofUser {
 	/**
 	 * Record the username's normalized form into the database
 	 * for later comparison of future names...
+	 * @return bool
 	 */
 	public function record() {
 		return self::batchRecord( array( $this ) );
 	}
 
+	/**
+	 * @return array
+	 */
 	private function insertFields() {
 		return array(
 			'su_name'       => $this->mName,
@@ -87,24 +97,57 @@ class SpoofUser {
 	/**
 	 * Insert a batch of spoof normalization records into the database.
 	 * @param $items array of SpoofUser
+	 * @return bool
 	 */
-	public function batchRecord( $items ) {
-		if( count( $items ) ) {
-			$fields = array();
-			foreach( $items as $item ) {
-				$fields[] = $item->insertFields();
-			}
-			/* WIKIA CHANGE BEGINS */
-			$dbw = wfGetDB( DB_MASTER, array(), 'specials' );
-			/* WIKIA CHANGE ENDS */
-			return $dbw->replace(
-				'spoofuser',
-				array( 'su_name' ),
-				$fields,
-				__METHOD__ );
-		} else {
+	public static function batchRecord( $items ) {
+		if ( !count( $items ) ) {
 			return false;
 		}
+		$fields = array();
+		/**
+		 * @var $item SpoofUser
+		 */
+		foreach ( $items as $item ) {
+			$fields[] = $item->insertFields();
+		}
+		$dbw = self::getDBMaster();
+		$dbw->replace(
+			'spoofuser',
+			array( 'su_name' ),
+			$fields,
+			__METHOD__ );
+		return true;
+	}
+
+	/**
+	 * @param $oldName
+	 */
+	public function update( $oldName ) {
+		$dbw = self::getDBMaster();
+
+		if( $this->record() ) {
+			$dbw->delete(
+				'spoofuser',
+				array( 'su_name' => $oldName ),
+				__METHOD__
+			);
+		}
+	}
+
+	/**
+	 * Wikia Change - change database
+	 * @return DatabaseBase
+	 */
+	protected static function getDBSlave() {
+		return wfGetDB( DB_SLAVE, array(), 'specials' );
+	}
+
+	/**
+	 * Wikia Change - change database
+	 * @return DatabaseBase
+	 */
+	protected static function getDBMaster() {
+		return wfGetDB( DB_MASTER, array(), 'specials' );
 	}
 
 	/**
@@ -115,7 +158,7 @@ class SpoofUser {
 		wfProfileIn( __METHOD__ );
 
 		if ( !wfReadOnly() ) {
-			$db = wfGetDB( DB_MASTER, array(), 'specials' );
+			$db = $this->getDBMaster();
 			$db->delete(
 				'spoofuser',
 				array( 'su_name' => $this->mName),
@@ -126,4 +169,5 @@ class SpoofUser {
 
 		wfProfileOut( __METHOD__ );
 	}
+
 }

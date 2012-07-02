@@ -28,7 +28,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
 			$where = array(
 				'wiki_id' => intval($this->mCityId),
-				" all_groups like '%".$db->escapeLike($this->params['group'])."%' "
+				"all_groups" . $db->buildLike( $db->anyString(), $this->params['group'], $db->anyString() )
 			);
 
 			$this->profileDBIn();
@@ -160,7 +160,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 			$this->addWhere( 'u1.user_name >= ' . $db->addQuotes( $this->keyToTitle( $this->params['from'] ) ) );
 
 		if ( is_null( $this->params['prefix'] ) )
-			$this->addWhere( 'u1.user_name LIKE "' . $db->escapeLike( $this->keyToTitle( $this->params['prefix'] ) ) . '%"' );
+			$this->addWhere( 'u1.user_name' . $db->buildLike( $this->keyToTitle( $this->params['prefix'] ), $db->anyString() ) );
 
 		if ( $this->params['witheditsonly'] )
 			$this->addWhere( 'u1.user_editcount > 0' );
@@ -309,11 +309,11 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 			$this->addWhere( 'user_name >= ' . $db->addQuotes($this->keyToTitle($params['from'])) );
 
 		if ( !is_null($params['prefix']) )
-			$this->addWhere( 'user_name LIKE "' . $db->escapeLike($this->keyToTitle( $params['prefix'])) . '%"' );
+			$this->addWhere( 'user_name' . $db->buildLike( $this->keyToTitle( $params['prefix'] ), $db->anyString() ) );
 
 		if ( !is_null($params['group']) ) {
 			$this->addWhere( 'wiki_id = ' . intval($wgCityId) );			
-			$this->addWhere( 'all_groups LIKE "%' . $db->escapeLike($this->keyToTitle( $params['prefix'])) . '%"' );
+			$this->addWhere( 'all_groups' . $db->buildLike( $db->anyString(), $params['group'], $db->anyString() ) );
 		}
 
 		if ( $params['witheditsonly'] )
@@ -359,7 +359,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 				if ($this->fld_blockinfo) {
 					$blocker_name = $block_reason = '';
 					if ( $row->user_is_blocked ) {
-						$oBlock = Block::newFromDB( 0, $row->user_id );
+						$oBlock = Block::newFromTarget( User::whoIs($row->user_id), 0 ); 
 						if ( is_object($oBlock) ) {
 							$blocker_name = $oBlock->getByName();
 							$block_reason = $oBlock->mReason;

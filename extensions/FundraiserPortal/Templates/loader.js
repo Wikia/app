@@ -22,9 +22,9 @@ function getFundraiserPortalCookie() {
 	return ( document.cookie.indexOf( 'hidefrportal=1' ) !== -1 );
 }
 var fundraiserPortalToggleState = getFundraiserPortalCookie();
-addOnloadHook(function() {
+$(function() {
 	if (wgFundraiserPortalCSS != '') {
-		appendCSS(wgFundraiserPortalCSS);
+		mw.util.addCSS(wgFundraiserPortalCSS);
 	}
 	if (wgFundraiserPortal != '') {
 		var logo = document.getElementById('p-logo');

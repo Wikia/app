@@ -5,13 +5,13 @@
  *
  * @author David Pean <david.pean@wikia.com>
  *
- * @todo 
+ * @todo
  *
  */
 
 class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 	public function __construct($query, $moduleName) { parent :: __construct($query, $moduleName); }
-	public function execute() { 
+	public function execute() {
 		global $wgUser;
 		switch ($this->getActionName()) {
 			case parent::INSERT : break;
@@ -46,7 +46,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			if ( is_null($db) ) {
 				throw new WikiaApiQueryError(0);
 			}
-			
+
 			#--- check categories
 			$cats = explode('|', $category);
 			$encodedCats = array();
@@ -58,12 +58,12 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 					$memcKeyCats .= str_replace(" ", "_", $categoryTitle->getDbKey());
 				}
 			}
-			
+
 			if (empty($encodedCats)){
 				throw new WikiaApiQueryError(1, "Missing category");
 			}
 			$this->setCacheKey ($lcache_key, 'CCX', $memcKeyCats);
-			
+
 			# check order by to use proper table from DB
 			$orderCache = 0;
 			if ( !empty($order)  ) {
@@ -90,11 +90,11 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			}
 			$this->setCacheKey($lcache_key, 'ORD', $orderCache);
 
-			# if user categorylinks in query 
+			# if user categorylinks in query
 			$useCategoryLinks = 0;
 			if ( strpos($order_field, "categorylinks") !== false ) {
 				$useCategoryLinks = 1;
-			} 
+			}
 
 			if ( !empty($useCategoryLinks) ) {
 				# build main query on categorylinks table
@@ -110,7 +110,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 				$this->addFields( array(
 					'page_id',
 					'page_namespace',
-					'page_title', 
+					'page_title',
 					'page_touched',
 					'page_random'
 				));
@@ -119,9 +119,9 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			}
 
 			$this->addOption( "ORDER BY", "{$order_field}" );
-			
+
 			#--- limit
-			if ( !empty($limit) ) { 
+			if ( !empty($limit) ) {
 				if ( !$this->isInt($limit) ) {
 					throw new WikiaApiQueryError(1);
 				}
@@ -129,14 +129,14 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 				$this->setCacheKey ($lcache_key, 'L', $limit);
 			}
 
-			if ( !empty($offset)  ) { 
+			if ( !empty($offset)  ) {
 				if ( !$this->isInt($offset) ) {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->addOption( "OFFSET", $offset );
 				$this->setCacheKey ($lcache_key, 'LO', $limit);
 			}
-			
+
 			$data = array();
 			// check data from cache ...
 			$cached = ""; #$this->getDataFromCache($lcache_key);
@@ -152,7 +152,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 								"category"		=> $row->cl_to,
 								"namespace" 	=> $oTitle->getNamespace(),
 								"title" 		=> $oTitle->getText(),
-								"url" 			=> $oTitle->escapeFullURL()
+								"url" 			=> htmlspecialchars($oTitle->getFullURL())
 							);
 						}
 					} else {
@@ -161,13 +161,13 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 							"id"			=> $row->page_id,
 							"namespace"		=> $row->page_namespace,
 							"title"			=> $row->page_title,
-							"url"			=> Title::makeTitle( $row->page_namespace, $row->page_title)->escapeFullURL()
+							"url"			=> htmlspecialchars(Title::makeTitle( $row->page_namespace, $row->page_title)->getFullURL())
 						);
 					}
 				}
 				$db->freeResult($res);
 
-				#--- get rest values 
+				#--- get rest values
 				if ( !empty($data) ) {
 					$aPages = implode( ",", array_keys($data) );
 					#---
@@ -188,7 +188,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 						}
 						$db->freeResult($res);
 					}
-					
+
 					#--- set content
 					foreach ($data as $page_id => $values) {
 						ApiResult :: setContent( $values, $values['title'] );
@@ -199,7 +199,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			} else {
 				// ... cached
 				$data = $cached;
-			}		
+			}
 		} catch (WikiaApiQueryError $e) {
 			// getText();
 		} catch (DBQueryError $e) {
@@ -240,7 +240,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			if ( is_null($db) ) {
 				throw new WikiaApiQueryError(0);
 			}
-			
+
 			#--- check categories
 			$cats = explode('|', $category);
 			$encodedCats = array();
@@ -252,12 +252,12 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 					$memcKeyCats .= str_replace(" ", "_", $categoryTitle->getDbKey());
 				}
 			}
-			
+
 			if (empty($encodedCats)){
 				throw new WikiaApiQueryError(1, "Missing category");
 			}
 			$this->setCacheKey ($lcache_key, 'CCX', $memcKeyCats);
-			
+
 			# check order by to use proper table from DB
 			$orderCache = 0;
 			if ( !empty($order)  ) {
@@ -285,21 +285,21 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			$this->setCacheKey($lcache_key, 'ORD', $orderCache);
 
 			#--- limit
-			if ( !empty($limit) ) { 
+			if ( !empty($limit) ) {
 				if ( !$this->isInt($limit) ) {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->setCacheKey ($lcache_key, 'L', $limit);
 			}
 
-			if ( !empty($offset)  ) { 
+			if ( !empty($offset)  ) {
 				if ( !$this->isInt($offset) ) {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->setCacheKey ($lcache_key, 'LO', $offset);
 			}
 
-			# if user categorylinks in query 
+			# if user categorylinks in query
 			sort($encodedCats);
 			$data = array();
 			// check data from cache ...
@@ -310,14 +310,14 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 					$pages = $this->getCategoryPages($db, $category, $limit);
 					#--- no pages
 					if ( empty($pages) ) continue;
-					
+
 					$this->resetQueryParams();
 					# build main query on page table
 					$this->addTables( array( "page" ) );
 					$this->addFields( array(
 						'page_id',
 						'page_namespace',
-						'page_title', 
+						'page_title',
 						'page_touched',
 						'page_random'
 					));
@@ -335,13 +335,13 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 							"id"			=> $row->page_id,
 							"namespace"		=> $row->page_namespace,
 							"title"			=> $row->page_title,
-							"url"			=> Title::makeTitle( $row->page_namespace, $row->page_title)->escapeFullURL(),
+							"url"			=> htmlspecialchars(Title::makeTitle( $row->page_namespace, $row->page_title)->getFullURL()),
 							"category"		=> $category
 						);
 						ApiResult :: setContent( $data[$row->page_id], $row->page_title );
 					}
 					$db->freeResult($res);
-					
+
 					if ( count($data) >= $limit ) break;
 				}
 				#--- set in memc
@@ -349,7 +349,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			} else {
 				// ... cached
 				$data = $cached;
-			}		
+			}
 		} catch (WikiaApiQueryError $e) {
 			// getText();
 		} catch (DBQueryError $e) {
@@ -394,7 +394,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 
 	protected function getQueryDescription() { return 'Get Wikia pages by category'; }
 	protected function getParamQueryDescription() { return 	array ( 'category' => 'category to get pages for' ); }
-	protected function getAllowedQueryParams() { return array ( "category" => array ( ApiBase :: PARAM_TYPE => 'string' ), "order" => array ( ApiBase :: PARAM_TYPE => 'string' ) ); } 
+	protected function getAllowedQueryParams() { return array ( "category" => array ( ApiBase :: PARAM_TYPE => 'string' ), "order" => array ( ApiBase :: PARAM_TYPE => 'string' ) ); }
 	protected function getQueryExamples() { return array ( 'api.php?action=query&list=wkpagesincat', 'api.php?action=query&list=wkpagesincat&wkcategory=fun' ); }
 	public function getVersion() { return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $'; }
 };

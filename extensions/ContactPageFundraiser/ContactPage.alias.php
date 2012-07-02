@@ -2,153 +2,153 @@
 /**
  * Aliases for Special:Contact
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English
  * @author Jon Harald Søby
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'Contact' => array( 'Contact' ),
 );
 
 /** Arabic (العربية)
  * @author Meno25
  */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Contact' => array( 'اتصال' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'Contact' => array( 'اتصال' ),
 );
 
 /** Assamese (অসমীয়া) */
-$aliases['as'] = array(
+$specialPageAliases['as'] = array(
 	'Contact' => array( 'যোগাযোগ' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
+$specialPageAliases['fi'] = array(
 	'Contact' => array( 'Yhteystiedot' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
+$specialPageAliases['gl'] = array(
 	'Contact' => array( 'Contactar' ),
 );
 
 /** Hebrew (עברית)
  * @author Rotem Liss
  */
-$aliases['he'] = array(
+$specialPageAliases['he'] = array(
 	'Contact' => array( 'יצירת_קשר' ),
 );
 
 /** Croatian (Hrvatski) */
-$aliases['hr'] = array(
+$specialPageAliases['hr'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Haitian (Kreyòl ayisyen) */
-$aliases['ht'] = array(
+$specialPageAliases['ht'] = array(
 	'Contact' => array( 'Kontak' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
+$specialPageAliases['hu'] = array(
 	'Contact' => array( 'Kapcsolat' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
+$specialPageAliases['id'] = array(
 	'Contact' => array( 'Kontak' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
-$aliases['km'] = array(
+$specialPageAliases['km'] = array(
 	'Contact' => array( 'ទំនាក់ទំនង' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'Contact' => array( 'Контакт' ),
 );
 
 /** Low German (Plattdüütsch) */
-$aliases['nds'] = array(
+$specialPageAliases['nds'] = array(
 	'Contact' => array( 'Kuntakt' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'Contact' => array( 'Kontak' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'Contact' => array( 'Contactpagina' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$aliases['no'] = array(
+$specialPageAliases['nb'] = array(
 	'Contact' => array( 'Kontakt', 'Kontaktside' ),
 );
 
 /** Polish (Polski) */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Pashto (پښتو) */
-$aliases['ps'] = array(
+$specialPageAliases['ps'] = array(
 	'Contact' => array( 'اړيکه، د اړيکو مخ' ),
 );
 
 /** Portuguese (Português) */
-$aliases['pt'] = array(
+$specialPageAliases['pt'] = array(
 	'Contact' => array( 'Contactar', 'Contatar' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
-$aliases['pt-br'] = array(
+$specialPageAliases['pt-br'] = array(
 	'Contact' => array( 'Contactar', 'Contatar' ),
 );
 
 /** Swedish (Svenska) */
-$aliases['sv'] = array(
+$specialPageAliases['sv'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Tetum (Tetun) */
-$aliases['tet'] = array(
+$specialPageAliases['tet'] = array(
 	'Contact' => array( 'Kontaktu' ),
 );
 
 /** Thai (ไทย) */
-$aliases['th'] = array(
+$specialPageAliases['th'] = array(
 	'Contact' => array( 'ติดต่อ' ),
 );
-

@@ -173,7 +173,7 @@ class MapsLayerPage extends Article {
 			
 			$valueTD = Html::element(
 				'td',
-				array( 'colspan' => $errorTD == '' && !$layer->isValid() ? 2 : 1 ),
+				array( 'colspan' => $errorTD === '' && !$layer->isValid() ? 2 : 1 ),
 				$value
 			);			
 			

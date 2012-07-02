@@ -1,9 +1,9 @@
 <?php
 /**
  * File holding class SMWPropertyValue.
- * 
+ *
  * @author Markus Krötzsch
- * 
+ *
  * @file
  * @ingroup SMWDataValues
  */
@@ -34,38 +34,18 @@
  */
 class SMWPropertyValue extends SMWDataValue {
 
-	/** Array for assigning types to predefined properties. Each
-	 * property is associated with an array with the following
-	 * elements:
-	 *
-	 * * ID of datatype to be used for this property
-	 *
-	 * * Boolean, stating if this property is shown in Factbox, Browse, and similar interfaces;
-	 *   (note that this is only relevant if the property can be displayed at all, i.e. has an
-	 *   translated label in the given language; we still set invisible properties to false here)
+	/**
+	 * Cache for wiki page value object associated to this property, or
+	 * null if no such page exists. Use getWikiPageValue() to get the data.
+	 * @var SMWWikiPageValue
 	 */
-	static private $mPropertyTypes;
-	static private $mPropertyLabels;
-	static private $mPropertyAliases;
-
-	/// If the property is predefined, its internal key is stored here. Otherwise FALSE.
-	protected $m_propertyid;
-	/// If the property is associated with a wikipage, it is stored here. Otherwise NULL.
 	protected $m_wikipage = null;
-	/// Store if this property is an inverse
-	protected $m_inv = false;
 
 	/**
-	 * Remember the type value of this property once it has been calculated.
-	 * @var unknown_type
+	 * Cache for type value of this property, or null if not calculated yet.
+	 * @var SMWTypesValue
 	 */
 	private $mPropTypeValue;
-	
-	/**
-	 * Remember the type id of this property once it has been calculated.
-	 * @var unknown_type
-	 */
-	private $mPropTypeId;
 
 	/**
 	 * Static function for creating a new property object from a
@@ -73,9 +53,9 @@ class SMWPropertyValue extends SMWDataValue {
 	 * @note The resulting property object might be invalid if
 	 * the provided name is not allowed. An object is returned
 	 * in any case.
-	 * 
+	 *
 	 * @param string $propertyName
-	 * 
+	 *
 	 * @return SMWPropertyValue
 	 */
 	static public function makeUserProperty( $propertyName ) {
@@ -85,27 +65,31 @@ class SMWPropertyValue extends SMWDataValue {
 	}
 
 	/**
-	 * Static function for creating a new property object from a
-	 * property identifier (string) as it might be used internally.
-	 * This might be the DB-key version of some property title
-	 * text or the id of a predefined property (such as '_TYPE').
+	 * Static function for creating a new property object from a property
+	 * identifier (string) as it might be used internally. This might be
+	 * the DB key version of some property title text or the id of a
+	 * predefined property (such as '_TYPE').
+	 * @note This function strictly requires an internal identifier, i.e.
+	 * predefined properties must be referred to by their ID, and '-' is
+	 * not supported for indicating inverses.
 	 * @note The resulting property object might be invalid if
 	 * the provided name is not allowed. An object is returned
 	 * in any case.
 	 */
 	static public function makeProperty( $propertyid ) {
-		$property = new SMWPropertyValue( '__pro' );
-		$property->setDBkeys( array( $propertyid ) );
-		return $property;
+		$diProperty = new SMWDIProperty( $propertyid );
+		$dvProperty = new SMWPropertyValue( '__pro' );
+		$dvProperty->setDataItem( $diProperty );
+		return $dvProperty;
 	}
 
 	/**
 	 * We use the internal wikipage object to store some of this objects data.
-	 * Clone it to make sure that data can be modified independelty from the
+	 * Clone it to make sure that data can be modified independently from the
 	 * original object's content.
 	 */
 	public function __clone() {
-		if ( $this->m_wikipage !== null ) $this->m_wikipage = clone $this->m_wikipage;
+		if ( !is_null( $this->m_wikipage ) ) $this->m_wikipage = clone $this->m_wikipage;
 	}
 
 	/**
@@ -115,81 +99,80 @@ class SMWPropertyValue extends SMWDataValue {
 	 */
 	protected function parseUserValue( $value ) {
 		$this->mPropTypeValue = null;
-		$this->mPropTypeId = null;
-		$this->m_inv = false;
+		$this->m_wikipage = null;
+
 		if ( $this->m_caption === false ) { // always use this as caption
 			$this->m_caption = $value;
 		}
-		$value = smwfNormalTitleText( ltrim( rtrim( $value, ' ]' ), ' [' ) ); // slightly normalise label
-		if ( ( $value !== '' ) && ( $value { 0 } == '-' ) ) { // check if this property refers to an inverse
-			$value = substr( $value, 1 );
-			$this->m_inv = true;
+		$propertyName = smwfNormalTitleText( ltrim( rtrim( $value, ' ]' ), ' [' ) ); // slightly normalise label
+		$inverse = false;
+		if ( ( $propertyName !== '' ) && ( $propertyName { 0 } == '-' ) ) { // property refers to an inverse
+			$propertyName = (string)substr( $value, 1 );
+			/// NOTE The cast is necessary at least in PHP 5.3.3 to get string '' instead of boolean false.
+			$inverse = true;
 		}
-		$this->m_propertyid = SMWPropertyValue::findPropertyID( $value );
-		if ( $this->m_propertyid !== false ) {
-			$value = SMWPropertyValue::findPropertyLabel( $this->m_propertyid );
-		}
-		if ( $value !== false ) {
-			$this->m_wikipage = SMWDataValueFactory::newTypeIDValue( '_wpp' );
-			$this->m_wikipage->setUserValue( $value, $this->m_caption );
-			$this->addError( $this->m_wikipage->getErrors() );
-		} else { // should rarely happen ($value is only changed if the input $value really was a label for a predefined prop)
-			$this->m_wikipage = null;
+
+		try {
+			$this->m_dataitem = SMWDIProperty::newFromUserLabel( $propertyName, $inverse, $this->m_typeid );
+		} catch ( SMWDataItemException $e ) { // happens, e.g., when trying to sort queries by property "-"
+			$this->addError( wfMsgForContent( 'smw_noproperty', $value ) );
+			$this->m_dataitem = new SMWDIProperty( 'ERROR', false ); // just to have something
 		}
 	}
 
 	/**
-	 * Extended parsing function to first check whether value is the id of a
-	 * pre-defined property, to resolve property names and aliases, and to set
-	 * internal property id accordingly.
+	 * @see SMWDataValue::loadDataItem()
+	 * @param $dataitem SMWDataItem
+	 * @return boolean
 	 */
-	protected function parseDBkeys( $args ) {
-		$this->mPropTypeValue = null;
-		$this->mPropTypeId = null;
-		$this->m_inv = false;
-		if ( $args[0] { 0 } == '-' ) { // check if this property refers to an inverse
-			$args[0] = substr( $args[0], 1 );
-			$this->m_inv = true;
-		}
-		SMWPropertyValue::initProperties();
-		if ( $args[0] { 0 } == '_' ) { // internal id, use as is (and hope it is still known)
-			$this->m_propertyid = $args[0];
-		} else { // possibly name of special property
-			$this->m_propertyid = SMWPropertyValue::findPropertyID( str_replace( '_', ' ', $args[0] ) );
-		}
-		$label = ( $this->m_propertyid !== false ) ? SMWPropertyValue::findPropertyLabel( $this->m_propertyid ):$args[0];
-		if ( $label != '' ) {
-			$this->m_wikipage = SMWDataValueFactory::newTypeIDValue( '_wpp' );
-			$this->m_wikipage->setDBkeys( array( str_replace( ' ', '_', $label ), SMW_NS_PROPERTY, '', '' ) );
-			$this->m_wikipage->setOutputFormat( $this->m_outformat );
-			$this->m_caption = $label;
-			$this->addError( $this->m_wikipage->getErrors() ); // NOTE: this unstubs the wikipage, should we rather ignore errors here to prevent this?
-		} else { // predefined property without label
-			$this->m_wikipage = null;
-			$this->m_caption = $this->m_propertyid;
+	protected function loadDataItem( SMWDataItem $dataItem ) {
+		if ( $dataItem->getDIType() == SMWDataItem::TYPE_PROPERTY ) {
+			$this->m_dataitem = $dataItem;
+			$this->mPropTypeValue = null;
+			unset( $this->m_wikipage );
+			$this->m_caption = false;
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	public function setCaption( $caption ) {
 		parent::setCaption( $caption );
-		if ( $this->m_wikipage instanceof SMWDataValue ) { // pass caption to embedded datavalue (used for printout)
+		if ( $this->getWikiPageValue() instanceof SMWDataValue ) { // pass caption to embedded datavalue (used for printout)
 			$this->m_wikipage->setCaption( $caption );
 		}
 	}
 
+	public function setOutputFormat( $formatstring ) {
+		$this->m_outformat = $formatstring;
+		if ( $this->m_wikipage instanceof SMWDataValue ) {
+			$this->m_wikipage->setOutputFormat( $formatstring );
+		}
+	}
 
 	public function setInverse( $isinverse ) {
-		$this->unstub(); // make sure later unstubbing does not overwrite this
-		return $this->m_inv = ( $isinverse == true );
+		return $this->m_dataitem = new SMWDIProperty( $this->m_dataitem->getKey(), ( $isinverse == true ) );
 	}
 
 	/**
-	 * Return TRUE if this is a usual wiki property that is defined by a wiki page, as
-	 * opposed to a property that is pre-defined in the wiki.
+	 * Return a wiki page value that can be used for displaying this
+	 * property, or null if no such wiki page exists (for predefined
+	 * properties without any label).
+	 * @return SMWWikiPageValue or null
 	 */
-	public function isUserDefined() {
-		$this->unstub();
-		return ( $this->m_propertyid == '' );
+	public function getWikiPageValue() {
+		if ( !isset( $this->m_wikipage ) ) {
+			$diWikiPage = $this->m_dataitem->getDiWikiPage();
+			if ( !is_null( $diWikiPage ) ) {
+				$this->m_wikipage = SMWDataValueFactory::newDataItemValue( $diWikiPage, null, $this->m_caption );
+				$this->m_wikipage->setOutputFormat( $this->m_outformat );
+				$this->addError( $this->m_wikipage->getErrors() );
+			} else { // should rarely happen ($value is only changed if the input $value really was a label for a predefined prop)
+				$this->m_wikipage = null;
+			}
+		}
+		return $this->m_wikipage;
 	}
 
 	/**
@@ -198,89 +181,47 @@ class SMWPropertyValue extends SMWDataValue {
 	 * @note Every user defined property is necessarily visible.
 	 */
 	public function isVisible() {
-		$this->unstub();
-		return ( $this->m_wikipage !== null );
-	}
-
-	/**
-	 * Specifies whether values of this property should be shown in typical
-	 * browsing interfaces. A property may wish to prevent this if either
-	 * (1) its information is really dull, e.g. being a mere copy of
-	 * information that is obvious from other things that are shown, or (2) the
-	 * property is set in a hook after parsing, so that it is not reliably
-	 * available when Factboxes are displayed. If a property is internal so it
-	 * should never be observed by users, then it is better to just not
-	 * associate any translated label with it, so it never appears anywhere.
-	 */
-	public function isShown() {
-		$this->unstub();
-		return ( ( $this->m_propertyid == '' ) ||
-		        ( array_key_exists( $this->m_propertyid, SMWPropertyvalue::$mPropertyTypes ) &&
-		         SMWPropertyvalue::$mPropertyTypes[$this->m_propertyid][1] ) );
-	}
-
-	/**
-	 * Return TRUE if this property is an inverse.
-	 */
-	public function isInverse() {
-		$this->unstub();
-		return $this->m_inv;
-	}
-
-	public function setOutputFormat( $formatstring ) {
-		$this->m_outformat = $formatstring;
-		if ( $this->m_wikipage !== null ) { // do not unstub if not needed
-			$this->m_wikipage->setOutputFormat( $formatstring );
-		}
+		return $this->isValid() && ( $this->m_dataitem->isUserDefined() || $this->m_dataitem->getLabel() !== '' );
 	}
 
 	public function getShortWikiText( $linked = null ) {
-		return $this->isVisible() ? $this->highlightText( $this->m_wikipage->getShortWikiText( $linked ) ):'';
+		if ( $this->isVisible() ) {
+			$wikiPageValue = $this->getWikiPageValue();
+			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getShortWikiText( $linked ) );
+		} else {
+			return '';
+		}
 	}
 
-	public function getShortHTMLText( $linker = null ) {
-		return $this->isVisible() ? $this->highlightText( $this->m_wikipage->getShortHTMLText( $linker ) ):'';
+	public function getShortHTMLText( $linked = null ) {
+		if ( $this->isVisible() ) {
+			$wikiPageValue = $this->getWikiPageValue();
+			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getShortHTMLText( $linked ) );
+		} else {
+			return '';
+		}
 	}
 
 	public function getLongWikiText( $linked = null ) {
-		return $this->isVisible() ? $this->highlightText( $this->m_wikipage->getLongWikiText( $linked ) ):'';
+		if ( $this->isVisible() ) {
+			$wikiPageValue = $this->getWikiPageValue();
+			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getLongWikiText( $linked ) );
+		} else {
+			return '';
+		}
 	}
 
-	public function getLongHTMLText( $linker = null ) {
-		return $this->isVisible() ? $this->highlightText( $this->m_wikipage->getLongHTMLText( $linker ) ):'';
-	}
-
-	/**
-	 * Return internal property id or page DBkey, either of which is sufficient for storing property references.
-	 */
-	public function getDBkeys() {
- 		$this->unstub();
- 		return $this->isVisible() ? array( $this->m_wikipage->getDBkey() ):array( $this->m_propertyid );
-	}
-
-	public function getSignature() {
-		return 't';
-	}
-
-	public function getValueIndex() {
-		return 0;
-	}
-
-	public function getLabelIndex() {
-		return 0;
+	public function getLongHTMLText( $linked = null ) {
+		if ( $this->isVisible() ) {
+			$wikiPageValue = $this->getWikiPageValue();
+			return is_null( $wikiPageValue ) ? '' : $this->highlightText( $wikiPageValue->getLongHTMLText( $linked ) );
+		} else {
+			return '';
+		}
 	}
 
 	public function getWikiValue() {
-		return $this->isVisible() ? ( ( $this->isInverse() ? '-':'' ) . $this->m_wikipage->getWikiValue() ):'';
-	}
-
-	/**
-	 * If this property is associated with a wiki page, return an SMWWikiPageValue for
-	 * that page. Otherwise return NULL.
-	 */
-	public function getWikiPageValue() {
-		$this->unstub();
-		return $this->m_wikipage;
+		return $this->isVisible() ? ( ( $this->isInverse() ? '-' : '' ) . $this->m_dataitem->getLabel() ) : '';
 	}
 
 	/**
@@ -288,184 +229,119 @@ class SMWPropertyValue extends SMWDataValue {
 	 * that property. Otherwise return FALSE;
 	 */
 	public function getPropertyID() {
-		$this->unstub();
-		return $this->m_propertyid;
+		return $this->m_dataitem->isUserDefined() ? false : $this->m_dataitem->getKey();
 	}
 
 	/**
-	 * Return an SMWTypesValue object representing the datatype of this property.
+	 * Return an SMWTypesValue object representing the datatype of this
+	 * property.
+	 * @deprecated Types values are not a good way to exchange SMW type information. They are for input only. Use getPropertyTypeID() if you want the type id. This method will vanish in SMW 1.7.
 	 */
 	public function getTypesValue() {
-		global $smwgPDefaultType;
-		if ( $this->mPropTypeValue !== null ) return $this->mPropTypeValue;
-		if ( !$this->isValid() ) { // errors in property, return invalid types value with same errors
-			$result = SMWDataValueFactory::newTypeIDValue( '__typ' );
-			$result->setDBkeys( array( '__err' ) );
+		$result = SMWTypesValue::newFromTypeId( $this->getPropertyTypeID() );
+		if ( !$this->isValid() ) {
 			$result->addError( $this->getErrors() );
-		} elseif ( $this->isUserDefined() ) { // normal property
-			$typearray = smwfGetStore()->getPropertyValues( $this->getWikiPageValue(), SMWPropertyValue::makeProperty( '_TYPE' ) );
-			if ( count( $typearray ) == 1 ) { // unique type given
-				$result = current( $typearray );
-			} elseif ( count( $typearray ) == 0 ) { // no type given
-				$result = SMWDataValueFactory::newTypeIDValue( '__typ' );
-				$result->setDBkeys( array( $smwgPDefaultType ) );
-			} else { // many types given, error
-				smwfLoadExtensionMessages( 'SemanticMediaWiki' );
-				$result = SMWDataValueFactory::newTypeIDValue( '__typ' );
-				$result->setDBkeys( array( '__err' ) );
-				$result->addError( wfMsgForContent( 'smw_manytypes' ) );
-			}
-		} else { // pre-defined property
-			$result = SMWDataValueFactory::newTypeIDValue( '__typ' );
-			if ( array_key_exists( $this->m_propertyid, SMWPropertyValue::$mPropertyTypes ) ) {
-				$result->setDBkeys( array( SMWPropertyValue::$mPropertyTypes[$this->m_propertyid][0] ) );
-			} else { // unknown type; it may still be that the property is "type-polymorphic" (like _1, _2, ... for Records)
-				$result->setDBkeys( array( '__err' ) ); // use "__err" to make sure that it gets noticed if this information is really used to create values
-			}
 		}
-		$this->mPropTypeValue = $result;
 		return $result;
 	}
 
 	/**
-	 * Quickly get the type id of some property without necessarily making
-	 * another datavalue. Note that this is not the same as getTypeID(), which
-	 * returns the id of this property datavalue.
+	 * Convenience method to find the type id of this property. Most callers
+	 * should rather use SMWDIProperty::findPropertyTypeId() directly. Note
+	 * that this is not the same as getTypeID(), which returns the id of
+	 * this property datavalue.
+	 *
+	 * @return string
 	 */
 	public function getPropertyTypeID() {
-		if ( $this->mPropTypeId === null ) {
-			$type = $this->getTypesValue();
-			if ( $type instanceof SMWTypesValue ) {
-				$this->mPropTypeId = $type->getDBkey();
-			} else {
-				$this->mPropTypeId = '__err';
-			}
+		if ( $this->isValid() ) {
+			return $this->m_dataitem->findPropertyTypeId();
+		} else {
+			return '__err';
 		}
-		return $this->mPropTypeId;
-	}
-
-	/**
-	 * Return a DB-key-like string: for visible properties, it is the actual DB key,
-	 * for internal (invisible) properties, it is the property ID. The value agrees
-	 * with the first component of getDBkeys() and it can be used in its place.
-	 */
-	public function getDBkey() {
-		return $this->isVisible() ? $this->m_wikipage->getDBkey():$this->m_propertyid;
-	}
-
-	public function getText() {
-		return $this->isVisible() ? $this->m_wikipage->getWikiValue():'';
 	}
 
 	/**
 	 * Create special highlighting for hinting at special properties.
 	 */
 	protected function highlightText( $text ) {
-		if ( $this->isUserDefined() ) {
+		if ( $this->m_dataitem->isUserDefined() ) {
 			return $text;
 		} else {
-			SMWOutputs::requireHeadItem( SMW_HEADER_TOOLTIP );
-			smwfLoadExtensionMessages( 'SemanticMediaWiki' );
+			SMWOutputs::requireResource( 'ext.smw.tooltips' );
 			return '<span class="smwttinline"><span class="smwbuiltin">' . $text .
 			'</span><span class="smwttcontent">' . wfMsgForContent( 'smw_isspecprop' ) . '</span></span>';
 		}
 	}
 
 	/**
-	 * Find and return the id for the pre-defined property of the given local label.
-	 * If the label does not belong to a pre-defined property, return false.
-	 * The given label should be slightly normalised, i.e. as returned by Title
-	 * or smwfNormalTitleText().
-	 *
-	 * This function is protected. The public way of getting this data is to simply
-	 * create a new property object and to retrieve its ID (if any).
-	 */
-	static protected function findPropertyID( $label, $useAlias = true ) {
-		SMWPropertyValue::initProperties();
-		$id = array_search( $label, SMWPropertyValue::$mPropertyLabels );
-		if ( $id !== false ) {
-			return $id;
-		} elseif ( ( $useAlias ) && ( array_key_exists( $label, SMWPropertyValue::$mPropertyAliases ) ) ) {
-			return SMWPropertyValue::$mPropertyAliases[$label];
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Get the translated user label for a given internal property ID.
-	 * Returns false for properties without a translation (these are usually the
-	 * internal ones generated by SMW but not shown to the user).
-	 */
-	static protected function findPropertyLabel( $id ) {
-		SMWPropertyValue::initProperties();
-		if ( array_key_exists( $id, SMWPropertyValue::$mPropertyLabels ) ) {
-			return SMWPropertyValue::$mPropertyLabels[$id];
-		} else { // incomplete translation (language bug) or deliberately invisible property
-			return false;
-		}
-	}
-
-	/**
-	 * Set up predefined properties, including their label, aliases, and typing information.
-	 */
-	static protected function initProperties() {
-		if ( is_array( SMWPropertyValue::$mPropertyTypes ) ) {
-			return; // init happened before
-		}
-
-		global $smwgContLang, $smwgUseCategoryHierarchy;
-		SMWPropertyValue::$mPropertyLabels = $smwgContLang->getPropertyLabels();
-		SMWPropertyValue::$mPropertyAliases = $smwgContLang->getPropertyAliases();
-		// Setup built-in predefined properties.
-		// NOTE: all ids must start with underscores, where two underscores informally indicate
-		// truly internal (non user-accessible properties). All others should also get a
-		// translation in the language files, or they won't be available for users.
-		SMWPropertyValue::$mPropertyTypes = array(
-				'_TYPE'  =>  array( '__typ', true ),
-				'_URI'   =>  array( '__spu', true ),
-				'_INST'  =>  array( '__sin', false ),
-				'_UNIT'  =>  array( '__sps', true ),
-				'_IMPO'  =>  array( '__imp', true ),
-				'_CONV'  =>  array( '__sps', true ),
-				'_SERV'  =>  array( '__sps', true ),
-				'_PVAL'  =>  array( '__sps', true ),
-				'_REDI'  =>  array( '__red', true ),
-				'_SUBP'  =>  array( '__sup', true ),
-				'_SUBC'  =>  array( '__suc', !$smwgUseCategoryHierarchy ),
-				'_CONC'  =>  array( '__con', false ),
-				'_MDAT'  =>  array( '_dat', false ),
-				'_ERRP'  =>  array( '_wpp', false ),
-				'_LIST'  =>  array( '__tls', true ),
-				// "virtual" properties for encoding lists in n-ary datatypes (their type must never be used, hence use __err)
-// 				'_1'     =>  array('__err',false),
-// 				'_2'     =>  array('__err',false),
-// 				'_3'     =>  array('__err',false),
-// 				'_4'     =>  array('__err',false),
-// 				'_5'     =>  array('__err',false),
-			);
-		wfRunHooks( 'smwInitProperties' );
-	}
-
-	/**
 	 * A function for registering/overwriting predefined properties for SMW. Should be called from
 	 * within the hook 'smwInitProperties'. Ids should start with three underscores "___" to avoid
 	 * current and future confusion with SMW built-ins.
+	 *
+	 * @deprecated Use SMWDIProperty::registerProperty(). Will vanish before SMW 1.7.
 	 */
 	static public function registerProperty( $id, $typeid, $label = false, $show = false ) {
-		SMWPropertyValue::$mPropertyTypes[$id] = array( $typeid, $show );
-		if ( $label != false ) {
-			SMWPropertyValue::$mPropertyLabels[$id] = $label;
-		}
+		SMWDIProperty::registerProperty( $id, $typeid, $label, $show );
 	}
 
 	/**
 	 * Add a new alias label to an existing datatype id. Note that every ID should have a primary
 	 * label, either provided by SMW or registered with registerDatatype. This function should be
 	 * called from within the hook 'smwInitDatatypes'.
+	 *
+	 * @deprecated Use SMWDIProperty::registerPropertyAlias(). Will vanish before SMW 1.7.
 	 */
 	static public function registerPropertyAlias( $id, $label ) {
-		SMWPropertyValue::$mPropertyAliases[$label] = $id;
+		SMWDIProperty::registerPropertyAlias( $id, $label );
+	}
+
+	/**
+	 * @see SMWDIProperty::isUserDefined()
+	 *
+	 * @deprecated since 1.6
+	 */
+	public function isUserDefined() {
+		return $this->m_dataitem->isUserDefined();
+	}
+
+	/**
+	 * @see SMWDIProperty::isShown()
+	 *
+	 * @deprecated since 1.6
+	 */
+	public function isShown() {
+		return $this->m_dataitem->isShown();
+	}
+
+	/**
+	 * @see SMWDIProperty::isInverse()
+	 *
+	 * @deprecated since 1.6
+	 */
+	public function isInverse() {
+		return $this->m_dataitem->isInverse();
+	}
+
+	/**
+	 * Return a DB-key-like string: for visible properties, it is the actual DB key,
+	 * for internal (invisible) properties, it is the property ID. The value agrees
+	 * with the first component of getDBkeys() and it can be used in its place.
+	 * @see SMWDIProperty::getKey()
+	 *
+	 * @deprecated since 1.6
+	 */
+	public function getDBkey() {
+		return $this->m_dataitem->getKey();
+	}
+
+	/**
+	 * @see SMWDIProperty::getLabel()
+	 *
+	 * @deprecated since 1.6
+	 */
+	public function getText() {
+		return $this->m_dataitem->getLabel();
 	}
 
 }

@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 # SmoothGallery extension. Creates galleries of images that are in your wiki.
@@ -35,24 +35,19 @@ if ( !defined( 'MEDIAWIKI' ) )
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'SmoothGallery parser extension',
-	'version'        => '1.1g',
+	'version'        => '1.1i',
 	'author'         => 'Ryan Lane',
-	'description'    => 'Allows users to create galleries with images that have been uploaded. Allows most options of SmoothGallery',
 	'descriptionmsg' => 'smoothgallery-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:SmoothGallery',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:SmoothGallery',
 );
 
-$wgExtensionFunctions[] = "efSmoothGallery";
+$wgHooks['ParserFirstCallInit'][] = 'efSmoothGallerySetHooks';
 
 $wgHooks['OutputPageParserOutput'][] = 'smoothGalleryParserOutput';
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['SmoothGallery'] = $dir . 'SmoothGallery.i18n.php';
-if( version_compare( $wgVersion, '1.16alpha', '>=' ) ) {
-	$wgExtensionMessagesFiles['SmoothGalleryMagic'] = $dir . 'SmoothGallery.i18n.magic.php';
-} else {
-	$wgHooks['LanguageGetMagic'][] = 'smoothGalleryLanguageGetMagic';
-}
+$wgExtensionMessagesFiles['SmoothGalleryMagic'] = $dir . 'SmoothGallery.i18n.magic.php';
 $wgAutoloadClasses['SmoothGallery'] = $dir . 'SmoothGalleryClass.php';
 $wgAutoloadClasses['SmoothGalleryParser'] = $dir . 'SmoothGalleryParser.php';
 
@@ -63,17 +58,16 @@ $wgSmoothGalleryAllowExternal = false;
 $wgSmoothGalleryThumbHeight = "75px";
 $wgSmoothGalleryThumbWidth = "100px";
 
-function efSmoothGallery() {
-	global $wgParser;
+function efSmoothGallerySetHooks( $parser ) {
+	$parser->setHook( 'sgallery', 'initSmoothGalleryTag' );
+	$parser->setHook( 'sgalleryset', 'initSmoothGalleryTagSet' );
 
-	$wgParser->setHook( 'sgallery', 'initSmoothGallery' );
-	$wgParser->setHook( 'sgalleryset', 'initSmoothGallerySet' );
-
-	$wgParser->setFunctionHook( 'sgallery', 'initSmoothGalleryPF' );
+	$parser->setFunctionHook( 'sgallery', 'initSmoothGalleryPF' );
+	return true;
 }
 
 // FIXME: split off to a hook file and use $wgHooks['ParserFirstCallInit'] to init tags
-function initSmoothGalleryPF( &$parser ) {
+function initSmoothGalleryPF( $parser ) {
 	global $wgSmoothGalleryDelimiter;
 
 	$numargs = func_num_args();
@@ -110,7 +104,13 @@ function initSmoothGalleryPF( &$parser ) {
 	return array( $output, 'noparse' => true, 'isHTML' => true );
 }
 
-function initSmoothGallery( $input, $argv, &$parser, $calledAsSet = false ) {
+function initSmoothGalleryTag( $input, $argv, $parser ) {
+	$output = initSmoothGallery( $input, $args, $parser );
+
+	return $output;
+}
+
+function initSmoothGallery( $input, $argv, $parser, $calledAsSet = false ) {
 	$sgParser = new SmoothGalleryParser( $input, $argv, $parser, $calledAsSet );
 	$sgGallery = new SmoothGallery();
 
@@ -127,7 +127,7 @@ function initSmoothGallery( $input, $argv, &$parser, $calledAsSet = false ) {
 	}
 }
 
-function initSmoothGallerySet( $input, $args, &$parser ) {
+function initSmoothGalleryTagSet( $input, $args, $parser ) {
 	$output = initSmoothGallery( $input, $args, $parser, true );
 
 	return $output;
@@ -137,21 +137,12 @@ function initSmoothGallerySet( $input, $args, &$parser ) {
  * Hook callback that injects messages and things into the <head> tag
  * Does nothing if $parserOutput->mSmoothGalleryTag is not set
  */
-function smoothGalleryParserOutput( &$outputPage, &$parserOutput )  {
+function smoothGalleryParserOutput( $outputPage, $parserOutput )  {
 	if ( !empty( $parserOutput->mSmoothGalleryTag ) ) {
 		SmoothGallery::setGalleryHeaders( $outputPage );
 	}
 	if ( !empty( $parserOutput->mSmoothGallerySetTag ) ) {
 		SmoothGallery::setGallerySetHeaders( $outputPage );
 	}
-	return true;
-}
-
-/**
- * We ignore langCode - parser function names can be translated but
- * we are not using this feature
- */
-function smoothGalleryLanguageGetMagic( &$magicWords, $langCode ) {
-	$magicWords['sgallery']  = array( 0, 'sgallery' );
 	return true;
 }

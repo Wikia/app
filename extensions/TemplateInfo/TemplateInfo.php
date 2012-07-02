@@ -11,7 +11,7 @@
  * Usage: Add the following line in LocalSettings.php:
  * require_once( "$IP/extensions/TemplateInfo/TemplateInfo.php" );
  *
- * @version 0.3
+ * @version 0.3.1
  */
 
 // Check environment
@@ -27,9 +27,8 @@ $wgExtensionCredits['parserhook'][] = array(
 	'path'			=> __FILE__,
 	'name'			=> 'TemplateInfo',
 	'author'		=> array( 'Yaron Koren', 'Roan Kattouw' ),
-	'version'		=> '0.3',
+	'version'		=> '0.3.1',
 	'url'			=> 'http://www.mediawiki.org/wiki/Extension:TemplateInfo',
-	'description'		=> 'Supports templates defining their data structure via XML markup.',
 	'descriptionmsg'	=> 'templateinfo-desc',
 );
 
@@ -49,3 +48,6 @@ $wgHooks['ParserFirstCallInit'][] = 'TemplateInfoHooks::register';
 
 // Register API action
 $wgAPIPropModules['templateinfo'] = 'ApiQueryTemplateInfo';
+
+// Register page_props usage
+$wgPageProps['templateinfo'] = 'Content of &lt;templateinfo&gt; tag';

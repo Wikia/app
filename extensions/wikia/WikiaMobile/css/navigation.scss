@@ -151,10 +151,11 @@
 			list-style: none;
 			color:  $link-color;
 			background-color: white;
-			@include transition(left .6s);
+			@include transition(-webkit-transform .6s);
 			-webkit-transform: translateZ(0);
 			-moz-transform: translateZ(0);
 			transform: translateZ(0);
+			-webkit-perspective: 1000;
 			-webkit-backface-visibility: hidden;
 
 			li {
@@ -193,19 +194,19 @@
 
 		&.cur1 {
 			header {
-				left: 100%;
+				-webkit-transform: translate(100%);
 			}
 		}
 
 		&.cur2 {
 			#lvl1 {
-				left:-100%;
+				-webkit-transform: translate(-100%);
 			}
 		}
 
 		&.cur3 {
 			#lvl1 {
-				left: -200%;
+				-webkit-transform: translate(-200%);
 			}
 		}
 
@@ -244,7 +245,7 @@
 		line-height: 50px;
 		background-color: white;
 		@include box-shadow(0 5px 15px -10px black);
-		@include transition(left .6s);
+		@include transition(-webkit-transform .6s);
 		position: relative;
 		z-index: 120;
 		left: 0;

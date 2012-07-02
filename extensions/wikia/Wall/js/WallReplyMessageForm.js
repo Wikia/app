@@ -4,7 +4,7 @@
 
 var WallReplyMessageForm = $.createClass(WallMessageForm, {
 	constructor: function(page, model) {
-		WallNewMessageForm.superclass.constructor.apply(this,arguments);
+		WallNewMessageForm.superclass.constructor.apply(this, arguments);
 
 		this.wall = $('#Wall');
 

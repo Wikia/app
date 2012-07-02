@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * MV_SpecialListStreams.php Created on Apr 24, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -12,14 +12,6 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-
-/*function doSpecialListStreams($par = null) {
-	list( $limit, $offset ) = wfCheckLimits();
-	$rep = new MV_SpecialListStreams();
-	return $rep->doQuery( $offset, $limit );
-}
-SpecialPage::addPage( new SpecialPage('Mv_List_Streams','',true,'doSpecialListStreams',false) );
-*/
 class MV_SpecialListStreams extends SpecialPage {
 	public function __construct() {
 		parent::__construct( 'Mv_List_Streams' );
@@ -30,10 +22,9 @@ class MV_SpecialListStreams extends SpecialPage {
 		return $rep->doQuery( $offset, $limit );
 	}
 }
-class MV_SpecialQueryStreams extends QueryPage {
-
-	function getName() {
-		return "MV_List_Streams";
+class MV_SpecialListStreams extends QueryPage {
+	public function __construct( $name = 'Mv_List_Streams' ) {
+		parent::__construct( $name );
 	}
 
 	function isExpensive() {
@@ -45,8 +36,8 @@ class MV_SpecialQueryStreams extends QueryPage {
 	function getPageHeader() {
 		return '<p>' . wfMsg( 'mv_list_streams_docu' ) . "</p><br />\n";
 	}
-	function getSQL() {
-		$dbr = wfGetDB( DB_SLAVE );
+
+	function getQueryInfo() {
 		// $relations = $dbr->tableName( 'smw_relations' );
 		// $NSrel = SMW_NS_RELATION;
 		# QueryPage uses the value from this SQL in an ORDER clause.
@@ -63,17 +54,22 @@ class MV_SpecialQueryStreams extends QueryPage {
 		 * stream length
 		 * formats available
 		 * number of associative metadata chunks */
-		return "SELECT
-				`id` as `stream_id`,
-				`name` as title,
-				`name` as value " .
-				"FROM " . $dbr->tableName( 'mv_streams' );
 
+		return array(
+			'tables' => array( 'mv_streams' ),
+			'fields' => array( 'id AS stream_id', 'name AS title', 'name AS value' )
+		);
 	}
+
 	function getOrder() {
-		return ' ORDER BY `mv_streams`.`date_start_time` DESC ';
+		return ' ORDER BY date_start_time DESC ';
 			// ($this->sortDescending() ? 'DESC' : '');
 	}
+
+	function getOrderFields() {
+		return array( 'date_start_time' );
+	}
+
 	function sortDescending() {
 		return false;
 	}
@@ -89,7 +85,7 @@ class MV_SpecialQueryStreams extends QueryPage {
 
 
 		$title = Title::makeTitle( MV_NS_STREAM, $result->title  );
-		$rlink = $skin->makeLinkObj( $title,  $img_html . ' ' . $title->getText()  );
+		$rlink = $skin->makeLinkObj( $title,  $img_html . ' ' . htmlspecialchars( $title->getText() )  );
 		// if admin expose an edit link
 		if ( $wgUser->isAllowed( 'delete' ) ) {
 			$rlink .= ' ' . $skin->makeKnownLinkObj( Title::makeTitle( MV_NS_STREAM, $title->getText() ),
@@ -98,5 +94,3 @@ class MV_SpecialQueryStreams extends QueryPage {
 		return $rlink;
 	}
 }
-
-?>

@@ -24,13 +24,14 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class RunJobs extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Run pending jobs";
 		$this->addOption( 'maxjobs', 'Maximum number of jobs to run', false, true );
+		$this->addOption( 'maxtime', 'Maximum amount of wall-clock time', false, true );
 		$this->addOption( 'type', 'Type of job to run', false, true );
 		$this->addOption( 'procs', 'Number of processes to use', false, true );
 	}
@@ -43,37 +44,39 @@ class RunJobs extends Maintenance {
 	public function execute() {
 		global $wgTitle;
 		if ( $this->hasOption( 'procs' ) ) {
-			$procs = intval( $this->getOption('procs') );
+			$procs = intval( $this->getOption( 'procs' ) );
 			if ( $procs < 1 || $procs > 1000 ) {
 				$this->error( "Invalid argument to --procs", true );
 			}
 			$fc = new ForkController( $procs );
-			if ( $fc->start( $procs ) != 'child' ) {
+			if ( $fc->start() != 'child' ) {
 				exit( 0 );
 			}
 		}
-		$maxJobs = $this->getOption( 'maxjobs', 10000 );
+		$maxJobs = $this->getOption( 'maxjobs', false );
+		$maxTime = $this->getOption( 'maxtime', false );
+		$startTime = time();
 		$type = $this->getOption( 'type', false );
 		$wgTitle = Title::newFromText( 'RunJobs.php' );
 		$dbw = wfGetDB( DB_MASTER );
 		$n = 0;
 		$conds = '';
-		if ($type !== false)
-			$conds = "job_cmd = " . $dbw->addQuotes($type);
+		if ( $type !== false ) {
+			$conds = "job_cmd = " . $dbw->addQuotes( $type );
+		}
 
 		while ( $dbw->selectField( 'job', 'job_id', $conds, 'runJobs.php' ) ) {
-			$offset=0;
-			for (;;) {
-				$job = ($type == false) ?
-						Job::pop($offset)
-						: Job::pop_type($type);
+			$offset = 0;
+			for ( ; ; ) {
+				$job = !$type ? Job::pop( $offset ) : Job::pop_type( $type );
 
-				if ($job == false)
+				if ( !$job ) {
 					break;
+				}
 
 				wfWaitForSlaves( 5 );
 				$t = microtime( true );
-				$offset=$job->id;
+				$offset = $job->id;
 				$status = $job->run();
 				$t = microtime( true ) - $t;
 				$timeMs = intval( $t * 1000 );
@@ -82,7 +85,11 @@ class RunJobs extends Maintenance {
 				} else {
 					$this->runJobsLog( $job->toString() . " t=$timeMs good" );
 				}
+
 				if ( $maxJobs && ++$n > $maxJobs ) {
+					break 2;
+				}
+				if ( $maxTime && time() - $startTime > $maxTime ) {
 					break 2;
 				}
 			}
@@ -100,4 +107,4 @@ class RunJobs extends Maintenance {
 }
 
 $maintClass = "RunJobs";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

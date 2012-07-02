@@ -14,7 +14,7 @@
  *
  * @author Greg Sabino Mullane <greg@endpoint.com>
  * @license MIT <http://www.opensource.org/licenses/mit-license.php>
- * @version 1.9
+ * @version 1.11
  * @link http://www.mediawiki.org/wiki/Extension:RT
  */
 
@@ -55,12 +55,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['parserhook'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'RT',
-	'version'        => '1.9',
+	'version'        => '1.11',
 	'author'         => array( 'Greg Sabino Mullane' ),
-	'description'    => 'Fancy interface to RT (Request Tracker)',
 	'descriptionmsg' => 'rt-desc',
 	'url'            => $rt_uri,
-	);
+);
 
 // Pull in the Internationalization file and class
 $wgExtensionMessagesFiles['RT'] =  dirname( __FILE__ ) . '/RT.i18n.php';

@@ -7,7 +7,6 @@ class Wikify extends SpecialPage
 	function Wikify()
 	{
 		SpecialPage::SpecialPage("Wikify");
-		wfLoadExtensionMessages('Wikify');
 	}
 
 	function displayError( $error )

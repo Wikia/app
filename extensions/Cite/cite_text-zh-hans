@@ -8,7 +8,7 @@ __NOTOC__
 * 出版者：{{SITENAME}}，{{int:sitesubtitle}}．
 * 最新版本日期：{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（协调世界时）
 * 查阅日期：<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（协调世界时）</citation>
-* 永久链接：{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
+* 永久链接：{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
 * 页面版本号：{{REVISIONID}}
 
 </div>
@@ -17,26 +17,26 @@ __NOTOC__
 == {{FULLPAGENAME}}的参考文献格式 ==
 
 === GB7714格式 ===
-{{SITENAME}}编者．{{FULLPAGENAME}}[G/OL]．{{SITENAME}}，{{int:sitesubtitle}}，{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}［<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}</citation>］．{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}．
+{{SITENAME}}编者．{{FULLPAGENAME}}[G/OL]．{{SITENAME}}，{{int:sitesubtitle}}，{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}［<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}</citation>］．{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}．
 
 === APA格式 ===
-{{FULLPAGENAME}}．（{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日）．''{{SITENAME}}，{{int:sitesubtitle}}''．于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}</citation>查阅自{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}．
+{{FULLPAGENAME}}．（{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日）．''{{SITENAME}}，{{int:sitesubtitle}}''．于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}</citation>查阅自{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}．
 
 === MLA格式 ===
-“{{FULLPAGENAME}}．”''{{SITENAME}}，{{int:sitesubtitle}}''．{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（协调世界时）．<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}</citation> &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;．
+“{{FULLPAGENAME}}．”''{{SITENAME}}，{{int:sitesubtitle}}''．{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（协调世界时）．<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}</citation> &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;．
 
 === MHRA格式 ===
-{{SITENAME}}编者，‘{{FULLPAGENAME}}’，''{{SITENAME}}，{{int:sitesubtitle}}''，{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（协调世界时），&lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;［于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>查阅］
+{{SITENAME}}编者，‘{{FULLPAGENAME}}’，''{{SITENAME}}，{{int:sitesubtitle}}''，{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（协调世界时），&lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;［于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>查阅］
 
 === 芝加哥格式 ===
-{{SITENAME}}编者，“{{FULLPAGENAME}}，”''{{SITENAME}}，{{int:sitesubtitle}}''，{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}（于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>查阅）．
+{{SITENAME}}编者，“{{FULLPAGENAME}}，”''{{SITENAME}}，{{int:sitesubtitle}}''，{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}（于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>查阅）．
 
 === CBE/CSE格式 ===
 {{SITENAME}}编者．{{FULLPAGENAME}}［互联网］．{{SITENAME}}，{{int:sitesubtitle}}；{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日{{CURRENTTIME}}（协调世界时）［引用于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>］．可访问自：
-{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}．
+{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}．
 
 === Bluebook格式 ===
-{{FULLPAGENAME}}，{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}（最新访问于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>）．
+{{FULLPAGENAME}}，{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}（最新访问于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>）．
 
 === BibTeX记录 ===
 
@@ -44,7 +44,7 @@ __NOTOC__
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{int:sitesubtitle}}",
     year = "{{CURRENTYEAR}}",
-    url = "{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
+    url = "{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
     note = "[在线资源；访问于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>]"
   }
 
@@ -53,7 +53,7 @@ __NOTOC__
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{int:sitesubtitle}}",
     year = "{{CURRENTYEAR}}",
-    url = "'''\url{'''{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
+    url = "'''\url{'''{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
     note = "[在线资源；访问于<citation>{{CURRENTYEAR}}年{{CURRENTMONTH}}月{{CURRENTDAY}}日</citation>]"
   }
 

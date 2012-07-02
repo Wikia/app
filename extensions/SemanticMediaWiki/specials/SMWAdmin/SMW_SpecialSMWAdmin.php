@@ -22,16 +22,16 @@
  * @ingroup SpecialPage
  */
 class SMWAdmin extends SpecialPage {
+	
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		parent::__construct( 'SMWAdmin', 'delete' );
-		smwfLoadExtensionMessages( 'SemanticMediaWiki' );
 	}
 
 	public function execute( $par ) {
-		global $wgOut, $wgRequest, $wgServer, $wgArticlePath, $wgScript, $wgUser, $smwgAdminRefreshStore;
+		global $wgOut, $wgRequest, $wgServer, $wgArticlePath, $wgUser, $smwgAdminRefreshStore;
 
 		if ( !$this->userCanExecute( $wgUser ) ) {
 			// If the user is not authorized, show an error.
@@ -76,7 +76,7 @@ class SMWAdmin extends SpecialPage {
 		} elseif ( $smwgAdminRefreshStore && ( $action == 'refreshstore' ) ) { // managing refresh jobs for the store
 			$sure = $wgRequest->getText( 'rfsure' );
 			if ( $sure == 'yes' ) {
-				if ( $refreshjob === null ) { // careful, there might be race conditions here
+				if ( is_null( $refreshjob ) ) { // careful, there might be race conditions here
 					$title = SpecialPage::getTitleFor( 'SMWAdmin' );
 					$newjob = new SMWRefreshJob( $title, array( 'spos' => 1, 'prog' => 0, 'rc' => 2 ) );
 					$newjob->insert();
@@ -109,7 +109,7 @@ class SMWAdmin extends SpecialPage {
 
 		$html .= '<br /><h2>' . wfMsg( 'smw_smwadmin_datarefresh' ) . "</h2>\n" .
 				'<p>' . wfMsg( 'smw_smwadmin_datarefreshdocu' ) . "</p>\n";
-		if ( $refreshjob !== null ) {
+		if ( !is_null( $refreshjob ) ) {
 			$prog = $refreshjob->getProgress();
 			$html .= '<p>' . wfMsg( 'smw_smwadmin_datarefreshprogress' ) . "</p>\n" .
 			'<p><div style="float: left; background: #DDDDDD; border: 1px solid grey; width: 300px; "><div style="background: #AAF; width: ' .
@@ -118,8 +118,8 @@ class SMWAdmin extends SpecialPage {
 				$html .=
 				'<form name="refreshwiki" action="" method="POST">' .
 				'<input type="hidden" name="action" value="refreshstore" />' .
-				'<input type="submit" value="' . wfMsg( 'smw_smwadmin_datarefreshstop' ) . '"/> ' .
-				' <input type="checkbox" name="rfsure" value="stop"/> ' . wfMsg( 'smw_smwadmin_datarefreshstopconfirm' ) .
+				'<input type="submit" value="' . htmlspecialchars( wfMsg( 'smw_smwadmin_datarefreshstop' ) ) . '" /> ' .
+				' <input type="checkbox" name="rfsure" value="stop"/> ' . htmlspecialchars( wfMsg( 'smw_smwadmin_datarefreshstopconfirm' ) ) .
 				'</form>' . "\n";
 			}
 		} elseif ( $smwgAdminRefreshStore ) {
@@ -152,3 +152,4 @@ class SMWAdmin extends SpecialPage {
 	}
 
 }
+

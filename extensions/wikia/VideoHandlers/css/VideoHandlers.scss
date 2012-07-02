@@ -1,7 +1,11 @@
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 
-.Wikia-video-play-button { 
+.WikiaPage a.image.video {
+	display: inline-block;
+}
+
+.Wikia-video-play-button {
    background-image: url(/extensions/wikia/VideoHandlers/images/PlayBtn_100Alpha.png); /* wgCdnStylePath */
    background-position:center center;
    background-repeat:no-repeat;
@@ -26,7 +30,7 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
     @include opacity(95);
 }
 
-.video-thumbnail .timer {
+.video-thumbnail .timer, .video .timer {
     position: absolute;
     right: 3px;
     bottom: 3px;

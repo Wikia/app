@@ -1,6 +1,5 @@
 <?php
 //require_once dirname(__FILE__) . '/../UAD.php';
-//wfLoadAllExtensions();
 
 class UADTest extends PHPUnit_Framework_TestCase {
 

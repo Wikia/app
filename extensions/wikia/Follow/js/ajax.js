@@ -24,7 +24,7 @@ Follow.uwatch = function(e) {
     var msg = "";
     var target = $(e.target);
 
-    var url = target.closest("A").attr("href");
+    var title = target.closest("A").attr("title");
     var ul = target.closest("UL");
     var li = target.closest("LI");
     var index = li.index() + 1;
@@ -32,13 +32,14 @@ Follow.uwatch = function(e) {
     msg = ul.attr("id").split("-");
     WET.byStr( 'WikiaFollowedPages/specialpage/delete/' + msg[3] + '/' + index);
 
-    $.ajax({
-    	type: 'POST',
-    	url: url,
-    	success: function() {
-    		li.remove();
-    	}
-    });
+	api = new mw.Api();
+	api['unwatch'](
+        title,
+        // Success
+        function( watchResponse ) {
+        	li.remove();
+        }, function( ) {}
+	);
     return false;
 }
 

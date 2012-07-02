@@ -7,7 +7,7 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class CaptchaTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testIsCaptchaShows() throws Exception {
 		session().open("index.php?title=Special:Signup");
 		assertFalse(session().isTextPresent("out of captcha images; this shouldn't happen"));

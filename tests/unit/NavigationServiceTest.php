@@ -1,6 +1,5 @@
 <?php
 class NavigationServiceTest extends WikiaBaseTest {
-
 	function testParseLines() {
 		$service = new NavigationService();
 
@@ -120,14 +119,10 @@ class NavigationServiceTest extends WikiaBaseTest {
 	}
 
 	function testParseMessage() {
-
-		global $wgMessageCache;
-
 		$messageName = 'test'.rand();
-
-		$wgMessageCache->addMessage($messageName, "*whatever");
-
-		$service = new NavigationService();
+		$service = F::build('NavigationService');
+		$this->mockGlobalFunction('msg', '*whatever');
+		$this->mockApp();
 
 		$this->assertEquals(array(
 			0 => array(

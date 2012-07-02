@@ -37,7 +37,7 @@ abstract class SecurePoll_Page {
 			$userLang = $user->getOption( 'language' );
 		}
 		$wgLang = Language::factory( $userLang );
-		wfLoadExtensionMessages( 'SecurePoll', $userLang );
+
 		$languages = array( $userLang );
 		$fallback = $userLang;
 		while ( $fallback = Language::getFallbackFor( $fallback ) ) {

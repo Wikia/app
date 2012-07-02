@@ -10,7 +10,6 @@ class WhatIsMyIP extends SpecialPage
 {
 	function  __construct() {
 		parent::__construct('WhatIsMyIP' /*class*/);
-		wfLoadExtensionMessages("WhatIsMyIP");
 	} 
 
 	function execute () 

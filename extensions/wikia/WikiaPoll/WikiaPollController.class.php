@@ -7,6 +7,7 @@ class WikiaPollController extends WikiaController {
 		$this->poll = null;
 		$this->embedded = null;
 	}
+
 	/**
 	 * Render HTML Poll namespace pages
 	 */
@@ -14,7 +15,7 @@ class WikiaPollController extends WikiaController {
 		if (!empty($params['poll'])) {
 			$this->poll = $params['poll'];
 			$data = $this->poll->getData();
-			$this->formatResults($data);
+			$data = $this->formatResults($data);
 			$this->data = $data;
 		}
 
@@ -28,7 +29,7 @@ class WikiaPollController extends WikiaController {
 	public function executeSpecialPageEdit($params) {
 		$title = Title::newFromText ($params['title'], NS_WIKIA_POLL) ;
 
-		if (is_object($title) && $title->exists()) {
+		if ($title instanceof Title && $title->exists()) {
 			$this->poll = WikiaPoll::NewFromTitle($title);
 			$this->data = $this->poll->getData();
 		}
@@ -37,7 +38,7 @@ class WikiaPollController extends WikiaController {
 	/**
 	 * Calculate percantage for votes and scale bars
 	 */
-	private function formatResults($data) {		
+	private function formatResults($data) {
 		// format results
 		foreach($data['answers'] as &$answer) {
 			if ($data['votes'] > 0) {
@@ -47,6 +48,7 @@ class WikiaPollController extends WikiaController {
 				$answer['percentage'] = 0;
 			}
 		}
+
+		return $data;
 	}
-		
 }

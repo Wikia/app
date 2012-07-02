@@ -126,7 +126,7 @@ $messages['fr'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erreur : le corps de la page est nécessaire',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

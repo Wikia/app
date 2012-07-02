@@ -4,7 +4,7 @@
  *
  * @file
  * @author Niklas Laxström
- * @copyright Copyright © 2010, Niklas Laxström
+ * @copyright Copyright © 2010-2011, Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -12,9 +12,9 @@
  * Interface for message groups.
  *
  * Message groups are the heart of the Translate extension. They encapsulate
- * a set of messages. Aside from basic information like id, label and
+ * a set of messages each. Aside from basic information like id, label and
  * description, the class defines which mangler, message checker and file
- * system support (FFS), if any, the group uses. Usually this is only thin
+ * system support (FFS), if any, the group uses. Usually this is only a thin
  * wrapper over message configuration files.
  */
 interface MessageGroup {
@@ -30,16 +30,19 @@ interface MessageGroup {
 	 * @return string
 	 */
 	public function getId();
+
 	/**
 	 * Returns the human readable label (as plain text).
 	 * @return string
 	 */
 	public function getLabel();
+
 	/**
 	 * Returns a longer description about the group. Description can use wiki text.
 	 * @return string
 	 */
 	public function getDescription();
+
 	/**
 	 * Returns the namespace where messages are placed.
 	 * @return int
@@ -52,6 +55,7 @@ interface MessageGroup {
 	 * @return bool
 	 */
 	public function isMeta();
+
 	/**
 	 * If this function returns false, the message group is ignored and treated
 	 * like it would not be configured at all. Useful for graceful degradation.
@@ -66,12 +70,14 @@ interface MessageGroup {
 	 * @return FFS or null
 	 */
 	public function getFFS();
+
 	/**
 	 * Returns a message checker object or null.
 	 * @todo Make an interface for message checkers.
 	 * @return MessageChecker or null
 	 */
 	public function getChecker();
+
 	/**
 	 * Return a message mangler or null.
 	 * @todo Make an interface for message manglers
@@ -82,30 +88,48 @@ interface MessageGroup {
 	/**
 	 * Initialises a message collection with the given language code,
 	 * message definitions and message tags.
+	 * @param $code
 	 * @return MessageCollection
 	 */
 	public function initCollection( $code );
+
 	/**
 	 * Returns a list of messages in a given language code. For some groups
 	 * that list may be identical with the translation in the wiki. For other
 	 * groups the messages may be loaded from a file (and differ from the
 	 * current translations or definitions).
+	 * @param $code
 	 * @return array
 	 */
 	public function load( $code );
+
+	/**
+	 * Shortcut for load( getSourceLanguage() ).
+	 */
+	public function getDefinitions();
+
 	/**
 	 * Returns message tags. If type is given, only messages keys with that
 	 * tag is returnted. Otherwise an array[tag => keys] is returnted.
+	 * @param $type string
 	 * @return array
 	 */
 	public function getTags( $type = null );
+
 	/**
 	 * Returns the definition or translation for given message key in given
 	 * language code.
-	 * @todo Is this needed in the interface?
-	 * @return string or null
+	 * @param $key string
+	 * @param $code string
+	 * @return string|null
 	 */
 	public function getMessage( $key, $code );
+
+	/**
+	 * Returns language code depicting the language of source text.
+	 * @return string
+	 */
+	public function getSourceLanguage();
 }
 
 /**
@@ -117,9 +141,20 @@ interface MessageGroup {
 abstract class MessageGroupBase implements MessageGroup {
 	protected $conf;
 	protected $namespace;
+	protected $groups;
+
+	/**
+	 * @var StringMatcher
+	 */
+	protected $mangler;
 
 	protected function __construct() { }
 
+	/**
+	 * @param $conf
+	 *
+	 * @return MessageGroup
+	 */
 	public static function factory( $conf ) {
 		$obj = new $conf['BASIC']['class']();
 		$obj->conf =  $conf;
@@ -137,6 +172,17 @@ abstract class MessageGroupBase implements MessageGroup {
 
 	public function isMeta() { return $this->getFromConf( 'BASIC', 'meta' ); }
 
+	public function getSourceLanguage() {
+		$conf = $this->getFromConf( 'BASIC', 'sourcelanguage' );
+
+		return $conf !== null ? $conf : 'en';
+	}
+
+	public function getDefinitions() {
+		$defs = $this->load( $this->getSourceLanguage() );
+		return $defs;
+	}
+
 	protected function getFromConf( $section, $key ) {
 		return isset( $this->conf[$section][$key] ) ? $this->conf[$section][$key] : null;
 	}
@@ -149,7 +195,7 @@ abstract class MessageGroupBase implements MessageGroup {
 		}
 
 		if ( !class_exists( $class ) ) {
-			throw new MWException( "FFS class $class does not exists" );
+			throw new MWException( "FFS class $class does not exist." );
 		}
 
 		return new $class( $this );
@@ -163,14 +209,14 @@ abstract class MessageGroupBase implements MessageGroup {
 		}
 
 		if ( !class_exists( $class ) ) {
-			throw new MWException( "Checker class $class does not exists" );
+			throw new MWException( "Checker class $class does not exist." );
 		}
 
 		$checker = new $class( $this );
 		$checks = $this->getFromConf( 'CHECKER', 'checks' );
 
 		if ( !is_array( $checks ) ) {
-			throw new MWException( "Checker class $class not supplied with proper checks" );
+			throw new MWException( "Checker class $class not supplied with proper checks." );
 		}
 
 		foreach ( $checks as $check ) {
@@ -190,7 +236,7 @@ abstract class MessageGroupBase implements MessageGroup {
 			}
 
 			if ( !class_exists( $class ) ) {
-				throw new MWException( "Mangler class $class does not exists" );
+				throw new MWException( "Mangler class $class does not exist." );
 			}
 
 			/**
@@ -211,14 +257,14 @@ abstract class MessageGroupBase implements MessageGroup {
 		$cache = new MessageGroupCache( $this );
 		if ( !$cache->exists() ) {
 			wfWarn( "By-passing message group cache" );
-			$messages = $this->load( 'en' );
+			$messages = $this->getDefinitions();
 		} else {
 			foreach ( $cache->getKeys() as $key ) {
 				$messages[$key] = $cache->get( $key );
 			}
 		}
 
-		$definitions = new MessageDefinitions( $namespace, $messages );
+		$definitions = new MessageDefinitions( $messages, $namespace );
 		$collection = MessageCollection::newFromDefinitions( $definitions, $code );
 		$this->setTags( $collection );
 
@@ -252,9 +298,11 @@ abstract class MessageGroupBase implements MessageGroup {
 	public function getTags( $type = null ) {
 		if ( $type === null ) {
 			$taglist = array();
+
 			foreach ( $this->getRawTags() as $type => $patterns ) {
 				$taglist[$type] = $this->parseTags( $patterns );
 			}
+
 			return $taglist;
 		} else {
 			return $this->parseTags( $this->getRawTags( $type ) );
@@ -266,7 +314,7 @@ abstract class MessageGroupBase implements MessageGroup {
 
 		if ( !$cache->exists() ) {
 			wfWarn( "By-passing message group cache" );
-			$messageKeys = array_keys( $this->load( 'en' ) );
+			$messageKeys = array_keys( $this->load( $this->getSourceLanguage() ) );
 		} else {
 			$messageKeys = $cache->getKeys();
 		}
@@ -341,10 +389,14 @@ abstract class MessageGroupBase implements MessageGroup {
 		$index = $wgContLang->getNsIndex( $ns );
 
 		if ( !$index ) {
-			throw new MWException( "No valid namespace defined, got $ns" );
+			throw new MWException( "No valid namespace defined, got $ns." );
 		}
 
 		return $index;
+	}
+
+	protected function isSourceLanguage( $code ) {
+		return $code === $this->getSourceLanguage();
 	}
 }
 
@@ -356,6 +408,7 @@ abstract class MessageGroupBase implements MessageGroup {
  * custom type of message groups.
  */
 class FileBasedMessageGroup extends MessageGroupBase {
+	protected $reverseCodeMap;
 
 	/**
 	 * Constructs a FileBasedMessageGroup from any normal message group.
@@ -376,6 +429,7 @@ class FileBasedMessageGroup extends MessageGroupBase {
 				'targetPattern' => '',
 			),
 		);
+
 		return MessageGroupBase::factory( $conf );
 	}
 
@@ -386,20 +440,23 @@ class FileBasedMessageGroup extends MessageGroupBase {
 	public function load( $code ) {
 		$ffs = $this->getFFS();
 		$data = $ffs->read( $code );
+
 		return $data ? $data['MESSAGES'] : array();
 	}
 
 	public function getSourceFilePath( $code ) {
-		if ( $code === 'en' ) {
+		if ( $this->isSourceLanguage( $code ) ) {
 			$pattern = $this->getFromConf( 'FILES', 'definitionFile' );
+
 			if ( $pattern !== null ) {
 				return $this->replaceVariables( $pattern, $code );
 			}
 		}
 
 		$pattern = $this->getFromConf( 'FILES', 'sourcePattern' );
+
 		if ( $pattern === null ) {
-			throw new MWException( 'No source file pattern defined' );
+			throw new MWException( 'No source file pattern defined.' );
 		}
 
 		return $this->replaceVariables( $pattern, $code );
@@ -409,7 +466,7 @@ class FileBasedMessageGroup extends MessageGroupBase {
 		$pattern = $this->getFromConf( 'FILES', 'targetPattern' );
 
 		if ( $pattern === null ) {
-			throw new MWException( 'No target file pattern defined' );
+			throw new MWException( 'No target file pattern defined.' );
 		}
 
 		return $this->replaceVariables( $pattern, $code );
@@ -427,6 +484,10 @@ class FileBasedMessageGroup extends MessageGroupBase {
 		return str_replace( array_keys( $variables ), array_values( $variables ), $pattern );
 	}
 
+	/**
+	 * @param $code
+	 * @return string
+	 */
 	public function mapCode( $code ) {
 		if ( !isset( $this->conf['FILES']['codeMap'] ) ) {
 			return $code;
@@ -455,7 +516,6 @@ class FileBasedMessageGroup extends MessageGroupBase {
 	public function isValidLanguage( $code ) {
 		return $this->mapCode( $code ) !== 'x-invalidLanguageCode';
 	}
-
 }
 
 /**
@@ -471,19 +531,19 @@ class MediaWikiMessageGroup extends FileBasedMessageGroup {
 		$path = $this->getFromConf( 'BASIC', 'metadataPath' );
 
 		if ( $path === null ) {
-			throw new MWException( "metadataPath is not configured" );
+			throw new MWException( "metadataPath is not configured." );
 		}
 
 		$filename = "$path/messageTypes.inc";
 
 		if ( !is_readable( $filename ) ) {
-			throw new MWException( "$filename is not readable" );
+			throw new MWException( "$filename is not readable." );
 		}
 
 		$data = file_get_contents( $filename );
 
 		if ( $data === false ) {
-			throw new MWException( "Failed to read $filename" );
+			throw new MWException( "Failed to read $filename." );
 		}
 
 		$reader = new ConfEditor( $data );
@@ -512,7 +572,6 @@ class MediaWikiMessageGroup extends FileBasedMessageGroup {
  *  - Only groups of same type and in the same namespace.
  */
 class AggregateMessageGroup extends MessageGroupBase {
-
 	public function exists() {
 		// Group exists if there are any subgroups.
 		$exists = (bool) $this->conf['GROUPS'];
@@ -538,6 +597,7 @@ class AggregateMessageGroup extends MessageGroupBase {
 		if ( !isset( $this->mangler ) ) {
 			$this->mangler = StringMatcher::emptyMatcher();
 		}
+
 		return $this->mangler;
 	}
 
@@ -559,16 +619,16 @@ class AggregateMessageGroup extends MessageGroupBase {
 					continue;
 				}
 
-				/** @todo Figure out a better way to skip groups which are in
-				* aggregate and as individual in the list. */
-				if ( $group instanceof AggregateMessageGroup ) {
+				if ( MessageGroups::getPriority( $group ) === 'discouraged' ) {
 					continue;
 				}
 
 				$groups[$id] = $group;
 			}
+
 			$this->groups = $groups;
 		}
+
 		return $this->groups;
 	}
 
@@ -581,6 +641,7 @@ class AggregateMessageGroup extends MessageGroupBase {
 	 */
 	protected function expandWildcards( $ids ) {
 		$hasWild = false;
+
 		foreach ( $ids as $id ) {
 			if ( strpos( $id, '*' ) !== false ) {
 				$hasWild = true;
@@ -588,10 +649,13 @@ class AggregateMessageGroup extends MessageGroupBase {
 			}
 		}
 
-		if ( !$hasWild ) return $ids;
+		if ( !$hasWild ) {
+			return $ids;
+		}
 
 		$matcher = new StringMatcher( '', $ids );
 		$all = array();
+
 		foreach ( MessageGroups::singleton()->getGroups() as $id => $_ ) {
 			if ( $matcher->match( $id ) ) {
 				$all[] = $id;
@@ -600,23 +664,36 @@ class AggregateMessageGroup extends MessageGroupBase {
 		return $all;
 	}
 
-	public function initCollection( $code ) {
+	protected function loadMessagesFromCache( $groups ) {
 		$messages = array();
-		foreach ( $this->getGroups() as $group ) {
+		foreach ( $groups as $group ) {
+			if ( $group instanceof MessageGroupOld ) {
+				$messages += $group->getDefinitions();
+				continue;
+			}
+
+			if ( $group instanceof AggregateMessageGroup ) {
+				$messages += $this->loadMessagesFromCache( $group->getGroups() );
+				continue;
+			}
+
 			$cache = new MessageGroupCache( $group );
 			if ( $cache->exists() ) {
 				foreach ( $cache->getKeys() as $key ) {
 					$messages[$key] = $cache->get( $key );
 				}
-			} else {
-				// BC for MessageGroupOld
-				$messages += $group->load( 'en' );
 			}
 		}
+		return $messages;
+	}
 
+
+	public function initCollection( $code ) {
+		$messages = $this->loadMessagesFromCache( $this->getGroups() );
 		$namespace = $this->getNamespace();
-		$definitions = new MessageDefinitions( $namespace, $messages );
+		$definitions = new MessageDefinitions( $messages, $namespace );
 		$collection = MessageCollection::newFromDefinitions( $definitions, $code );
+
 		$this->setTags( $collection );
 
 		return $collection;
@@ -625,6 +702,7 @@ class AggregateMessageGroup extends MessageGroupBase {
 	public function getMessage( $key, $code ) {
 		$id = TranslateUtils::messageKeyToGroup( $this->getNamespace(), $key );
 		$groups = $this->getGroups();
+
 		if ( isset( $groups[$id] ) ) {
 			return $groups[$id]->getMessage( $key, $code );
 		} else {
@@ -634,9 +712,11 @@ class AggregateMessageGroup extends MessageGroupBase {
 
 	public function getTags( $type = null ) {
 		$tags = array();
+
 		foreach ( $this->getGroups() as $group ) {
 			$tags = array_merge_recursive( $tags, $group->getTags( $type ) );
 		}
+
 		return $tags;
 	}
 }

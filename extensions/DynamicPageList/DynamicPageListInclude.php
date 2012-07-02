@@ -377,8 +377,8 @@ class DPLInclude {
 		}
 	}
 
-	public static function includeHeading( $parser, $page, $sec,
-		$to, &$sectionHeading, $recursionCheck = true, $maxLength = - 1,
+	public static function includeHeading( $parser, $page = '', $sec = '',
+		$to = '', &$sectionHeading, $recursionCheck = true, $maxLength = - 1,
 		$link = 'default', $trim = false, $skipPattern = array() )
 	{
 	  $output = array();
@@ -396,7 +396,7 @@ class DPLInclude {
 
 	// section inclusion - include all matching sections (return array)
 	public static function extractHeadingFromText( $parser, $page, $title,
-		$text, $sec, $to, &$sectionHeading, $recursionCheck = true,
+		$text, $sec = '', $to = '', &$sectionHeading, $recursionCheck = true,
 		$maxLength = - 1, $cLink = 'default', $trim = false, $skipPattern = array()
 	) {
 		$continueSearch = true;
@@ -565,7 +565,7 @@ class DPLInclude {
 	// and do NOT match the condition "$mustNotMatch" (if specified)
 	// we use a callback function to format retrieved parameters, accessible via $dpl->formatTemplateArg()
 	public static function includeTemplate( $parser, $dpl, $dplNr, $article,
-		$template1, $template2, $defaultTemplate, $mustMatch,
+		$template1 = '', $template2 = '', $defaultTemplate, $mustMatch,
 		$mustNotMatch, $matchParsed, $iTitleMaxLen, $catlist )
 	{
 		$page = $article->mTitle->getPrefixedText();

@@ -12,16 +12,33 @@
  */
 
 class ViewInformation {
+	/**
+	* if != 0: shows only translations and definitions in this language
+	* if = 0 : display all languages
+	*/
 	public $filterLanguageId;
+
+	/**
+	* The language of the expression being displayed in the Expression: namespace
+	* i.e. the word being consulted
+	*/
+	public $expressionLanguageId;
+
 	public $queryTransactionInformation;
 	public $showRecordLifeSpan;
-	public $viewOrEdit;
+	public $viewOrEdit;                         ///< either "view" or "edit"
 	
 	protected $propertyToColumnFilters;
 	
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
+		global $wgRequest ;
+
 		$this->filterLanguageId = 0;
-		$this->queryTransactionInformation;
+		$this->expressionLanguageId = $wgRequest->getVal( 'explang', 0 );
+		$this->queryTransactionInformation = null;
 		$this->showRecordLifeSpan = false;
 		$this->propertyToColumnFilters = array();
 		$this->viewOrEdit = "view";
@@ -31,6 +48,10 @@ class ViewInformation {
 		return $this->showRecordLifeSpan;
 	}
 	
+	/**
+	 * @return true if we are filtering according to a language
+	 * @return false if all languages are displayed
+	 */
 	public function filterOnLanguage() {
 		return $this->filterLanguageId != 0;
 	}

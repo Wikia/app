@@ -101,7 +101,6 @@ class HideRevisionTabInstaller {
 	}
 
 	function insertTab( $skin, &$content_actions ) {
-		wfLoadExtensionMessages ('HideRevision');
 		$special = Title::makeTitle( NS_SPECIAL, 'HideRevision' );
 		$content_actions['hiderevision'] = array(
 			'class' => false,

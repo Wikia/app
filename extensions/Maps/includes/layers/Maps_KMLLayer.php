@@ -34,7 +34,7 @@ class MapsKMLLayer extends MapsLayer {
 		
 		$params['source'] = new Parameter( 'source' );
 		$params['source']->addCriteria( new CriterionIsImage() );
-		$params['source']->addManipulations( new MapsParamImage() );
+		$params['source']->addManipulations( new MapsParamFile() );
 		
 		$params[] = new Parameter( 'maxdepth', Parameter::TYPE_INTEGER, 2 );
 		

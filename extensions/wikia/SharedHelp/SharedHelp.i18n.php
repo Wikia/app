@@ -29,7 +29,7 @@ $messages['ar'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'إنشاء صفحة نقاش تلقائيا',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -63,7 +63,7 @@ $messages['de'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Diskussionsseite automatisch erstellt',
 );
 
-/** Lower Sorbian (dolnoserbski)
+/** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -96,7 +96,7 @@ $messages['fr'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Page de discussion créée automatiquement',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -104,7 +104,7 @@ $messages['gl'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Páxina de conversa creada automaticamente',
 );
 
-/** Upper Sorbian (hornjoserbsce)
+/** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(

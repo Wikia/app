@@ -1,12 +1,16 @@
 <?php
 
 /**
- * General map query printer class.
+ * Default class to assign as handler for map result formats.
+ * The reason SMMapPrinter is not used for this directly is that
+ * this would not allow having a deriving class of SMMapPrinter 
+ * for a particular mapping service.
  *
  * @file SM_Mapper.php
  * @ingroup SemanticMaps
  *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 final class SMMapper {
 	
@@ -14,6 +18,13 @@ final class SMMapper {
 	 * @var SMMapPrinter
 	 */
 	protected $queryPrinter;
+	
+	/**
+	 * @since 1.0
+	 * 
+	 * @var boolean
+	 */
+	protected $isMapFormat;
 	
 	/**
 	 * Constructor.
@@ -24,9 +35,11 @@ final class SMMapper {
 	public function __construct( $format, $inline ) {
 		global $egMapsDefaultServices;
 
+		$this->isMapFormat = $format == 'map';
+		
 		// TODO: allow service parameter to override the default
 		// Note: if this is allowed, then the getParameters should only return the base parameters.
-		if ( $format == 'map' ) $format = $egMapsDefaultServices['qp'];
+		if ( $this->isMapFormat ) $format = $egMapsDefaultServices['qp'];
 		
 		// Get the instance of the service class.
 		$service = MapsMappingServices::getValidServiceInstance( $format, 'qp' );
@@ -35,37 +48,51 @@ final class SMMapper {
 		$QPClass = $service->getFeature( 'qp' );	
 		$this->queryPrinter = new $QPClass( $format, $inline, $service );
 	}
-
-	public static function getAliases() {
-		return $this->queryPrinter->getAliases();
-	}
 	
-	public static function setAliases() {
-		return $this->queryPrinter->setAliases();
-	}
-	
+	/**
+	 * Intercept calls to getName, so special behaviour for the map format can be implemented.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @return string
+	 */
 	public function getName() {
-		return wfMsg( 'maps_map' );
+		return $this->isMapFormat ? wfMsg( 'maps_map' ) : $this->queryPrinter->getName();
 	}
 	
-	public function getQueryMode( $context ) {
-		return $this->queryPrinter->getQueryMode( $context );
-	}
-	
-	public function getResult( $results, $params, $outputmode ) {
-		return  $this->queryPrinter->getResult( $results, $params, $outputmode );
-	}
-	
-	protected function getResultText( $res, $outputmode ) {
-		return $this->queryPrinter->getResultText( $res, $outputmode );
-	}
-	
+	/**
+	 * Explcitly define this method, so method_exists returns true in SMW.
+	 * 
+	 * @see SMWResultPrinter::getParameters
+	 * 
+	 * @since 1.0
+	 */
 	public function getParameters() {
 		return $this->queryPrinter->getParameters();
 	}
 	
-	public function getMimeType( $res ) {
-		return $this->queryPrinter->getMimeType( $res );
+	/**
+	 * Explcitly define this method, so method_exists returns true in SMW.
+	 * 
+	 * @see SMWResultPrinter::getParameters
+	 * 
+	 * @since 1.0
+	 */
+	public function getValidatorParameters() {
+		return $this->queryPrinter->getValidatorParameters();
+	}
+	
+	/**
+	 * SMW thinks this class is a SMWResultPrinter, and calls methods that should
+	 * be forewarded to $this->queryPrinter on it.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @param string $name
+	 * @param array $arguments
+	 */
+	public function __call( $name, array $arguments ) {
+		return call_user_func_array( array( $this->queryPrinter, $name ), $arguments );
 	}
 	
 }

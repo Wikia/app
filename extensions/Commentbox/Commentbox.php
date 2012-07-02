@@ -1,7 +1,9 @@
 <?php
 /**#@+
  * Adds a comment box to the bottom of wiki pages in predefined namespaces
- * @addtogroup Extensions
+ *
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:Commentbox Documentation
  *
@@ -16,8 +18,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'author'         => '[http://spiele.j-crew.de Thomas Bleher]',
 	'version'        => '0.2',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Commentbox',
-	'description'    => 'Adds a commentbox to certain pages',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Commentbox',
 	'descriptionmsg' => 'commentbox-desc',
 );
 
@@ -34,18 +35,21 @@ $wgAutoloadClasses['SpecialAddComment'] = dirname( __FILE__ ) . '/SpecialAddComm
 $wgHooks['OutputPageBeforeHTML'][] = 'wfExtensionCommentbox_Add';
 
 function wfExtensionCommentbox_Add( &$op, &$text ) {
-	global $wgUser, $wgArticle, $wgRequest, $action, $wgTitle,
+	global $wgUser, $wgRequest,
 	       $wgCommentboxNamespaces, $wgCommentboxRows,
 	       $wgCommentboxColumns;
 
-	if ( !$wgTitle->exists() )
+	$title = $op->getTitle();
+	if ( !$title->exists() )
 		return true;
 
-	if ( !$wgTitle->userCan( 'edit', true ) )
+	if ( !$title->userCan( 'edit', true ) )
 		return true;
-	if ( !array_key_exists( $wgTitle->getNamespace(), $wgCommentboxNamespaces )
-	|| !$wgCommentboxNamespaces[ $wgTitle->getNamespace() ] )
+	if ( !array_key_exists( $title->getNamespace(), $wgCommentboxNamespaces )
+	|| !$wgCommentboxNamespaces[ $title->getNamespace() ] )
 		return true;
+
+	$action = $wgRequest->getVal( 'action', 'view' );
 	if ( !( $action == 'view' || $action == 'purge' || $action == 'submit' ) )
 		return true;
 	if (  $wgRequest->getCheck( 'wpPreview' )
@@ -68,7 +72,7 @@ function wfExtensionCommentbox_Add( &$op, &$text ) {
 	}
 	$inhalt = wfMsgNoTrans( 'commentbox-prefill' );
 	$save = wfMsgExt( 'commentbox-savebutton', 'escapenoentities' );
-	$texttitle = htmlspecialchars( Title::makeName( $wgTitle->getNamespace(), $wgTitle->getText() ) );
+	$texttitle = htmlspecialchars( Title::makeName( $title->getNamespace(), $title->getText() ) );
 
 	$intro = wfMsgExt( 'commentbox-intro', 'parse' );
 
@@ -77,7 +81,7 @@ function wfExtensionCommentbox_Add( &$op, &$text ) {
               action="$newaction" enctype="multipart/form-data">
 	$intro
 	<textarea tabindex='1' accesskey="," name="wpComment" id="wpComment"
-	          rows='$wgCommentboxRows' cols='$wpCommentboxColumns'
+	          rows='$wgCommentboxRows' cols='$wgCommentboxColumns'
 		  >$inhalt</textarea>
 	$name
 	<br />

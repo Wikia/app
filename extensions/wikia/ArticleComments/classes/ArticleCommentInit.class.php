@@ -116,7 +116,7 @@ class ArticleCommentInit {
 		//don't touch $custom_article_footer! we don't want to replace the footer - we just want to echo something just before it
 		if (self::ArticleCommentCheck()) {
 			global $wgTitle;
-			wfLoadExtensionMessages('ArticleComments');
+			
 			$page = ArticleCommentList::newFromTitle($wgTitle);
 			echo $page->render();
 		}
@@ -135,7 +135,7 @@ class ArticleCommentInit {
 			wfProfileIn( __METHOD__ );
 
 			if (self::ArticleCommentCheck()) {
-				wfLoadExtensionMessages('ArticleComments');
+				
 				$page = ArticleCommentList::newFromTitle($wgTitle);
 				$data = $page->render();
 			}
@@ -199,12 +199,11 @@ class ArticleCommentInit {
 	 *
 	 * @return true -- because it's a hook
 	 */
-	static function InjectTOCitem($parser, $sk, &$toc, &$sublevelCount) {
-		if ( self::ArticleCommentCheck() && !( F::app()->checkSkin( 'wikiamobile', $sk ) ) ) {
-			wfLoadExtensionMessages('ArticleComments');
+	static function InjectTOCitem($parser, &$toc, &$sublevelCount) {
+		if ( self::ArticleCommentCheck() && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
 			$tocnumber = ++$sublevelCount[1];
 
-			$toc .= $sk->tocLine('article-comments', wfMsg( 'article-comments-toc-item' ), $tocnumber, 1);
+			$toc .= Linker::tocLine('article-comments', wfMsg( 'article-comments-toc-item' ), $tocnumber, 1);
 		}
 		return true;
 	}

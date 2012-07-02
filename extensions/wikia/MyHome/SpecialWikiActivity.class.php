@@ -9,9 +9,6 @@ class SpecialWikiActivity extends UnlistedSpecialPage {
 	private $feedSelected;
 
 	function __construct() {
-		wfLoadExtensionMessages('MyHome');
-		wfLoadExtensionMessages('Oasis'); // RT #74757
-
 		parent::__construct('WikiActivity', '' /* no restriction */, true /* listed */);
 	}
 
@@ -20,9 +17,8 @@ class SpecialWikiActivity extends UnlistedSpecialPage {
 		global $wgOut, $wgUser, $wgTitle, $wgBlankImgUrl;
 		$this->setHeaders();
 
-		// not available for skins different then monaco / answers
-		$skinName = get_class($wgUser->getSkin());
-		if (!in_array($skinName, array('SkinMonaco', 'SkinAnswers', 'SkinOasis'))) {
+		// not available for skins different than Oasis
+		if (!F::app()->checkSkin('oasis')) {
 			$wgOut->addWikiMsg( 'myhome-switch-to-monaco' );
 			wfProfileOut(__METHOD__);
 			return;
@@ -41,9 +37,7 @@ class SpecialWikiActivity extends UnlistedSpecialPage {
 
 		// watchlist feed
 		if($par == 'watchlist') {
-			if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-				$this->classWatchlist = "selected";
-			}
+			$this->classWatchlist = "selected";
 
 			// not available for anons
 			if($wgUser->isAnon()) {
@@ -81,7 +75,6 @@ JS
 
 		$feedProvider = new DataFeedProvider($feedProxy);
 
-		// WikiActivity.js is MyHome.js modified for Oasis
 		global $wgJsMimeType, $wgExtensionsPath, $wgEnableWallExt;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/WikiActivity.js\"></script>\n");
 		$wgOut->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/MyHome/oasis.scss'));

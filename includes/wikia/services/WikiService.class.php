@@ -70,7 +70,7 @@ class WikiService extends WikiaModel {
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$memKey = $this->wf->SharedMemcKey( 'wiki_total_videos', $wikiId );
 		$totalVideos = $this->wg->Memc->get( $memKey );
-		if ( is_null($totalVideos) ) {
+		if ( $totalVideos === false ) {
 			$totalVideos = 0;
 			$dbname = WikiFactory::IDtoDB( $wikiId );
 			if ( !empty($dbname) ) {
@@ -197,7 +197,7 @@ class WikiService extends WikiaModel {
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$memKey = $this->wf->SharedMemcKey( 'wiki_user_edits', $wikiId, $userId );
 		$userEdits = $this->wg->Memc->get( $memKey );
-		if ( is_null($userEdits) ) {
+		if ( $userEdits === false ) {
 			$userEdits = 0;
 			$dbname = WikiFactory::IDtoDB( $wikiId );
 			if ( !empty($dbname) ) {

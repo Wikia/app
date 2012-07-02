@@ -1,5 +1,4 @@
 <?php
-
 if ( ! defined( 'MEDIAWIKI' ) )
 	die();
 
@@ -23,7 +22,7 @@ class SpecialChemicalsources extends SpecialPage {
 	 *			containing the string as you want it displayed.
 	 *			So, if you have a parameter 'WhAtEvEr', you should have a 'YourPrefix_WhAtEvEr' with value 'Whatever'
 	 */
-	
+
 	/**
 	 * This is a list of all the possible parameters supplied to Special:ChemicalSources
 	 *  Note: The names must be the same (also same case) as supplied in wgChemFunctions_Messages after the 'chemFunctions_'
@@ -42,7 +41,7 @@ class SpecialChemicalsources extends SpecialPage {
 	 *   DrugBank = The DrugBank code for the chemical
 	 *   ECNumber = The EC Number for the compound
 	 */
-	
+
 	protected $wgChemFunctions_Prefix = "chemFunctions";
 	protected $wgChemFunctions_Parameters = array (
 		'CAS',
@@ -61,36 +60,38 @@ class SpecialChemicalsources extends SpecialPage {
 	);
 
 	public function __construct() {
-		SpecialPage::SpecialPage( 'ChemicalSources' );
+		parent::__construct( 'ChemicalSources' );
 	}
 
 	public function execute( $params ) {
 		global $wgOut, $wgRequest, $wgChemFunctions_Parameters, $wgChemFunctions_Prefix;
 
+		$this->setHeaders();
+		$this->outputHeader();
+
 		$this->Parameters = $this->wgChemFunctions_Parameters;
 		$this->Prefix = $this->wgChemFunctions_Prefix;
 
-		wfLoadExtensionMessages( 'SpecialChemicalsources' );
+		
 
 		$Params = $wgRequest->getValues();
 
 		$ParamsCheck = "";
-		foreach ($this->Parameters as $key) {
+		foreach ( $this->Parameters as $key ) {
 			  if ( isset( $Params [$key] ) )
 				$ParamsCheck .= $Params [$key];
 		}
 
-		if ($ParamsCheck) {
-			$transParams = $this->TransposeAndCheckParams($Params);
-			$this->OutputListPage($transParams);
+		if ( $ParamsCheck ) {
+			$transParams = $this->TransposeAndCheckParams( $Params );
+			$this->OutputListPage( $transParams );
 		} else {
 			$Params = $this->getParams();
 		}
 	}
 
 	# Check the parameters supplied, make the mixed parameters, and put them into the transpose matrix.
-
-	function TransposeAndCheckParams($Params) {
+	function TransposeAndCheckParams( $Params ) {
 		if ( isset( $Params['CAS'] ) )
 			$Params['CAS'] = preg_replace( '/[^0-9\-]/', "", $Params['CAS'] );
 		else $Params['CAS'] = '';
@@ -134,35 +135,38 @@ class SpecialChemicalsources extends SpecialPage {
 		# Create some new from old ones
 
 		$TEMPCASNAMEFORMULA = $Params["CAS"];
-		if(empty ($TEMPCASNAMEFORMULA)){
+		if ( empty ( $TEMPCASNAMEFORMULA ) ) {
 			$TEMPCASNAMEFORMULA = $Params["Formula"];
 		}
-		if(empty ($TEMPCASNAMEFORMULA)){
+		if ( empty ( $TEMPCASNAMEFORMULA ) ) {
 			$TEMPCASNAMEFORMULA = $Params["Name"];
 		}
 
 		$TEMPNAMEFORMULA = $Params["Name"];
-		if(empty ($TEMPNAMEFORMULA)){
+		if ( empty ( $TEMPNAMEFORMULA ) ) {
 			$TEMPNAMEFORMULA = $Params["Formula"];
 		}
 
 		$TEMPCASFORMULA = $Params["CAS"];
-		if(empty ($TEMPCASFORMULA)){
+		if ( empty ( $TEMPCASFORMULA ) ) {
 			$TEMPCASFORMULA = $Params["Formula"];
 		}
 
 		$TEMPCASNAME = $Params["CAS"];
-		if(empty ($TEMPCASNAME)){
+		if ( empty ( $TEMPCASNAME ) ) {
 			$TEMPCASNAME = $Params["Name"];
 		}
 
 		# Put the parameters into the transpose array:
 
-		$transParams = array("\$MIXCASNameFormula" => $TEMPCASNAMEFORMULA,
-							 "\$MIXCASName" => $TEMPCASNAME,
-							 "\$MIXCASFormula" => $TEMPCASFORMULA,
-							 "\$MIXNameFormula" => $TEMPNAMEFORMULA);
-		foreach ($this->Parameters as $key) {
+		$transParams = array(
+			"\$MIXCASNameFormula" => $TEMPCASNAMEFORMULA,
+			"\$MIXCASName" => $TEMPCASNAME,
+			"\$MIXCASFormula" => $TEMPCASFORMULA,
+			"\$MIXNameFormula" => $TEMPNAMEFORMULA
+		);
+
+		foreach ( $this->Parameters as $key ) {
 			if ( isset( $Params[$key] ) ) {
 				$transParams["\$" . $key] =  $Params[$key] ;
 			} else {
@@ -172,60 +176,59 @@ class SpecialChemicalsources extends SpecialPage {
 		return $transParams;
 	}
 
-	#Create the actual page
-	function OutputListPage($transParams) {
+	# Create the actual page
+	function OutputListPage( $transParams ) {
 		global $wgOut;
 
 		# check all the parameters before we put them in the page
 
-		foreach ($transParams as $key => $value) {
-			 $transParams[$key] = wfUrlEncode( htmlentities( preg_replace( "/\<.*?\>/","", $value) ) );
+		foreach ( $transParams as $key => $value ) {
+			 $transParams[$key] = wfUrlEncode( htmlentities( preg_replace( "/\<.*?\>/", "", $value ) ) );
 		}
 
 		# First, see if we have a custom list setup
 		$bstitle = Title::makeTitleSafe( NS_PROJECT, wfMsg( $this->Prefix . '_ListPage' ) );
-		if( $bstitle ) {
+		if ( $bstitle ) {
 			$revision = Revision::newFromTitle( $bstitle );
-			if( $revision ) {
+			if ( $revision ) {
 				$bstext = $revision->getText();
-				if( $bstext ) {
-					$bstext = strtr($bstext, $transParams);
+				if ( $bstext ) {
+					$bstext = strtr( $bstext, $transParams );
 					$wgOut->addWikiText( $bstext );
 				}
 			} else {
 				$bstext = wfMsg( $this->Prefix . '_DataList' );
-				$bstext = strtr($bstext, $transParams);
+				$bstext = strtr( $bstext, $transParams );
 				$wgOut->addHTML( $bstext );
 			}
 		}
 	}
 
-	#If no parameters supplied, get them!
+	# If no parameters supplied, get them!
 	function getParams() {
-		global $wgTitle, $wgOut;
-		if( !empty($wgTitle) ) {
-			$action = $wgTitle->escapeLocalUrl();
-			$go = htmlspecialchars( wfMsg( "go" ) );
+		global $wgOut;
 
-			$wgOut->addWikitext ( wfMsg($this->Prefix . '_SearchExplanation'));
-			$wgOut->addHTML("<table><tr><td>");
-			foreach ($this->Parameters as $key) {
-				$this->GetParam_Row($this->Prefix . "_" . $key, $key, $action, $go);
-			}
-			$wgOut->addHTML("</table>");
+		$action = $this->getTitle()->escapeLocalUrl();
+		$go = htmlspecialchars( wfMsg( "go" ) );
+
+		$wgOut->addWikitext ( wfMsg( $this->Prefix . '_SearchExplanation' ) );
+		$wgOut->addHTML( "<table><tr><td>" );
+		foreach ( $this->Parameters as $key ) {
+			$this->GetParam_Row( $this->Prefix . "_" . $key, $key, $action, $go );
 		}
+		$wgOut->addHTML( "</table>" );
 	}
 
-	#Creates a table row
-	function GetParam_Row($p, $q, $action, $go) {
+	# Creates a table row
+	function GetParam_Row( $p, $q, $action, $go ) {
 		global $wgOut;
 		$wgOut->addHTML ( wfMsg( $p ) . wfMsg( 'colon-separator' ) );
-		$wgOut->addHTML("</td><td>
+		$wgOut->addHTML( "</td><td>
 			<form action=\"$action\" method='post'>
 				<input name=\"$q\" id=\"$q\" />
 				<input type='submit' value=\"$go\" />
 			</form>
-		</td></tr>");
-		$wgOut->addHTML("<tr><td>");
+		</td></tr>" );
+		$wgOut->addHTML( "<tr><td>" );
 	}
 }

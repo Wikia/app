@@ -15,14 +15,6 @@
  * Written for the Bokt Wiki <http://www.bokt.nl/wiki/> by Roan Kattouw <roan.kattouw@home.nl>
  * For information how to install and use this extension, see the README file.
  */
-# Alert the user that this is not a valid entry point to MediaWiki if they try to access the extension file directly.
-if( !defined( 'MEDIAWIKI' ) ) {
-	echo <<<EOT
-To install the ChangeAuthor extension, put the following line in LocalSettings.php:
-require_once( "\$IP/extensions/ChangeAuthor/ChangeAuthor.setup.php" );
-EOT;
-	exit( 1 );
-}
 
 $messages = array();
 
@@ -66,10 +58,12 @@ If this error keeps showing up, the database is probably broken.',
  * @author Meno25
  * @author Purodha
  * @author Siebrand
+ * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'changeauthor' => 'Name of the special page on [[Special:SpecialPages]]',
-	'changeauthor-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'changeauthor-desc' => '{{desc}}',
 	'changeauthor-title' => 'Title of the [[Special:ChangeAuthor]] special page',
 	'changeauthor-search-box' => 'Caption of the fieldset on the revision search form',
 	'changeauthor-pagename-or-revid' => 'Caption of the input box on the revision search form',
@@ -92,7 +86,8 @@ $messages['qqq'] = array(
 	'changeauthor-success' => 'Displayed after a successful change.',
 	'changeauthor-logentry' => 'The log message for author changes. $1 is the page title, $2 includes {{msg-mw|changeauthor-rev}} in the site language, $3 the old author and $4 the new one',
 	'changeauthor-logpagename' => 'Displayed on top of Special:Log/changeauth and in the list of available logs.',
-	'right-changeauthor' => '{{doc-right}}',
+	'changeauthor-rev' => '{{optional}}',
+	'right-changeauthor' => '{{doc-right|changeauthor}}',
 );
 
 /** Niuean (ko e vagahau Niuē)
@@ -119,6 +114,32 @@ $messages['af'] = array(
 	'changeauthor-nosuchtitle' => 'Daar is geen bladsy genaamd "$1" nie.',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ * @author MicroBoy
+ */
+$messages['aln'] = array(
+	'changeauthor-title' => 'Ndryshimi autor i një rishikim',
+	'changeauthor-search-box' => 'Kërko shqyrtime',
+	'changeauthor-pagename-or-revid' => 'Emri i faqes ose rishikim ID:',
+	'changeauthor-pagenameform-go' => 'Shkoj',
+	'changeauthor-comment' => 'Koment:',
+	'changeauthor-changeauthors-multi' => 'Ndryshimi {{PLURAL:$1|autor|autorëve}}',
+	'changeauthor-explanation-multi' => 'Me këtë formë mund të ndryshoni autorëve rishikim. Thjesht ndryshojnë një ose më shumë përdoruesve në listën e mëposhtme, të shtoni një koment (optional) dhe kliko "Ndryshimi autorit (s)" button.',
+	'changeauthor-changeauthors-single' => 'Autori Ndryshimi',
+	'changeauthor-explanation-single' => 'Me këtë formë ju mund të ndryshojë një autor rishikim. Thjesht ndryshuar emrin më poshtë, shtoni një koment (optional) dhe kliko "autori Ndrysho" button.',
+	'changeauthor-invalid-username' => 'Invalid username "$1".',
+	'changeauthor-nosuchuser' => 'Asnjë përdorues të tillë "$1".',
+	'changeauthor-revview' => 'Revision #$1 prej $2',
+	'changeauthor-nosuchtitle' => 'Nuk ka asnjë faqe të quajtur "$1".',
+	'changeauthor-weirderror' => 'Një gabim shumë e çuditshme ka ndodhur. Ju lutemi të rigjykuar kërkesën tuaj. Nëse ky gabim mban treguar deri, baza e të dhënave është prishur ndoshta.',
+	'changeauthor-invalidform' => 'Ju lutem përdorni formularin e dhënë nga [[Special:ChangeAuthor|faqe speciale]] në vend të një forme me porosi.',
+	'changeauthor-success' => 'Kërkesa juaj ka qenë i proceduar me sukses.',
+	'changeauthor-logentry' => 'Changed autor i $2 e $1 nga $3 deri 4$',
+	'changeauthor-logpagename' => 'ndryshim Author log',
+	'right-changeauthor' => 'Ndryshimi autor i një rishikim',
+);
+
 /** Amharic (አማርኛ)
  * @author Codex Sinaiticus
  */
@@ -130,24 +151,24 @@ $messages['am'] = array(
  * @author Juanpabl
  */
 $messages['an'] = array(
-	'changeauthor' => "Cambiar l'autor d'a edizión",
-	'changeauthor-title' => "Cambiar l'autor d'una edizión",
-	'changeauthor-search-box' => 'Mirar edizions',
-	'changeauthor-pagename-or-revid' => "Nombre d'a pachina u ID d'a bersión:",
+	'changeauthor' => "Cambiar l'autor d'a edición",
+	'changeauthor-title' => "Cambiar l'autor d'una edición",
+	'changeauthor-search-box' => 'Mirar edicions',
+	'changeauthor-pagename-or-revid' => "Nombre d'a pachina u ID d'a versión:",
 	'changeauthor-pagenameform-go' => 'Ir-ie',
 	'changeauthor-comment' => 'Comentario:',
-	'changeauthor-changeauthors-multi' => 'Cambiar autor(s)',
-	'changeauthor-explanation-multi' => "Con iste formulario puede cambiar os autors d'a edizión. Nomás ha de cambiar uno u más nombres d'usuarios en lista que s'amuestra contino, adibir-ie un comentario (opzional) y punchar en o botón de 'Cambiar autor(s)'",
+	'changeauthor-changeauthors-multi' => "Cambiar d'{{PLURAL:$1|autor|autors}}",
+	'changeauthor-explanation-multi' => "Con iste formulario puede cambiar os autors d'a edición. Nomás ha de cambiar uno u más nombres d'usuarios en lista que s'amuestra contino, adhibir-ie un comentario (opcional) y punchar en o botón de 'Cambiar autor(s)'",
 	'changeauthor-changeauthors-single' => 'Cambiar autor',
-	'changeauthor-explanation-single' => "Con iste formulario puede cambiar l'autor una edizión. Nomás ha de cambiar o nombre d'usuario que s'amuestra contino, adibir-ie un comentario (opzional) y punchar en o botón 'Cambiar autor'.",
+	'changeauthor-explanation-single' => "Con iste formulario puede cambiar l'autor una edición. Nomás ha de cambiar o nombre d'usuario que s'amuestra contino, adhibir-ie un comentario (opcional) y punchar en o botón 'Cambiar autor'.",
 	'changeauthor-invalid-username' => 'Nombre d\'usuario "$1" no conforme.',
-	'changeauthor-nosuchuser' => 'No esiste l\'usuario "$1"',
-	'changeauthor-revview' => 'Edizión #$1 de $2',
+	'changeauthor-nosuchuser' => 'No existe l\'usuario "$1"',
+	'changeauthor-revview' => 'Edición #$1 de $2',
 	'changeauthor-nosuchtitle' => 'No bi ha garra pachina tetulata "$1".',
-	'changeauthor-weirderror' => 'Ha escaizito una error á saber que estrania. Por fabor, torne á fer a demanda. Si ista error contina amaneixendo, talment a base de datos sía estricallata.',
-	'changeauthor-invalidform' => 'Por fabor, faiga serbir o formulario furnito en Special:ChangeAuthor millor que no atro presonalizato.',
-	'changeauthor-success' => "A suya demanda s'ha prozesato correutament.",
-	'changeauthor-logentry' => "S'ha cambiato l'autor d'a edizión $2 de $1 de $3 á $4",
+	'changeauthor-weirderror' => 'Ha escaicito una error a saber que estrania. Por favor, torne a fer a demanda. Si ista error contina amaneixendo, talment a base de datos sía estricallata.',
+	'changeauthor-invalidform' => 'Por favor, faiga servir o formulario furnito en a [[Special:ChangeAuthor|pachina especial]] millor que no atro presonalizato.',
+	'changeauthor-success' => "A suya demanda s'ha procesato correutament.",
+	'changeauthor-logentry' => "S'ha cambiato l'autor d'a edición $2 de $1 de $3 a $4",
 	'changeauthor-logpagename' => "Rechistro de cambeos d'autor",
 );
 
@@ -226,6 +247,45 @@ $messages['arz'] = array(
 	'right-changeauthor' => 'غير مؤلف مراجعة',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Vago
+ */
+$messages['az'] = array(
+	'changeauthor-pagenameform-go' => 'Keç',
+	'changeauthor-comment' => 'Şərh:',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'changeauthor' => 'Өлгөнөң авторын үҙгәртеү',
+	'changeauthor-desc' => 'Өлгөнөң авторын үҙгәртеү мөмкинлеген бирә',
+	'changeauthor-title' => 'Өлгөнөң авторын үҙгәртеү',
+	'changeauthor-search-box' => 'Өлгөләрҙе эҙләү',
+	'changeauthor-pagename-or-revid' => 'Мәҡәләнең исеме йәки өлгөнөң идентификаторы:',
+	'changeauthor-pagenameform-go' => 'Үтәргә',
+	'changeauthor-comment' => 'Иҫкәрмә:',
+	'changeauthor-changeauthors-multi' => '{{PLURAL:$1|Авторҙы|Авторҙарҙы}} үҙгәртергә',
+	'changeauthor-explanation-multi' => 'Был форма ярҙамында һеҙ өлгөләрҙең авторҙарын үҙәртә алаһығыҙ.
+Түбәндәге исемлектә бер йәки бер нисә ҡатнашыусы исемен үҙгәртегеҙ, иҫкәрмә өҫтәгеҙ (мотлаҡ түгел) һәм "Авторҙы(ҙарҙы) үҙгәртергә" төймәһенә баҫығыҙ.',
+	'changeauthor-changeauthors-single' => 'Авторҙы үҙгәртергә',
+	'changeauthor-explanation-single' => 'Был форма ярҙамында һеҙ өлгөнөң авторын үҙәртә алаһығыҙ.
+Түбәндә ҡатнашыусы исемен үҙгәртегеҙ, иҫкәрмә өҫтәгеҙ (мотлаҡ түгел) һәм "Авторҙы үҙгәртергә" төймәһенә баҫығыҙ.',
+	'changeauthor-invalid-username' => '"$1" ҡатнашыусы исеме дөрөҫ түгел.',
+	'changeauthor-nosuchuser' => '"$1" исемле ҡатнашыусы юҡ.',
+	'changeauthor-revview' => '$2 өлгөнән №$1 өлгөһө',
+	'changeauthor-nosuchtitle' => '"$1" исемле бит юҡ.',
+	'changeauthor-weirderror' => 'Бик сәйер хата килеп сыҡты.
+Зинһар, яңынан ҡабалтағыҙ.
+Әгәр хата тағы килеп сыҡһа, мәғлүмәттәр базаһы боҙолған булыуы мөмкин.',
+	'changeauthor-invalidform' => 'Зинһар, башҡа форманы түгел, [[Special:ChangeAuthor|махсус биттәге]] форманы ҡулланығыҙ.',
+	'changeauthor-success' => 'Һеҙҙең һорауығыҙ уңышлы башҡарылды.',
+	'changeauthor-logentry' => '$1 битенең $2 өлгөһөнөң авторын үҙгәрткән. Элекке авторы: $3,  яңы авторы: $4',
+	'changeauthor-logpagename' => 'Автор үҙгәртеү яҙмалары журналы',
+	'right-changeauthor' => 'Өлгөнөң авторын үҙгәртеү',
+);
+
 /** Bavarian (Boarisch)
  * @author Man77
  */
@@ -253,7 +313,7 @@ $messages['bar'] = array(
 	'right-changeauthor' => 'In Autoan vu ana Veasion ändan',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -294,6 +354,7 @@ $messages['bg'] = array(
 	'changeauthor-title' => 'Промяна на автора на редакция',
 	'changeauthor-search-box' => 'Търсене на редакция',
 	'changeauthor-pagename-or-revid' => 'Име на страница или номер на редакция:',
+	'changeauthor-pagenameform-go' => 'Отваряне',
 	'changeauthor-comment' => 'Коментар:',
 	'changeauthor-changeauthors-multi' => 'Промяна на {{PLURAL:$1|автора|авторите}}',
 	'changeauthor-explanation-multi' => "Формулярът по-долу служи за промяна на авторите на отделни редакции. Необходимо е да се промени едно или повече потребителско име от списъка по-долу, да се въведе коментар (незадължително) и натисне бутона 'Промяна на автор(ите)'.",
@@ -341,27 +402,27 @@ $messages['bn'] = array(
  */
 $messages['br'] = array(
 	'changeauthor' => 'Kemmañ aozer an adweladennoù',
-	'changeauthor-desc' => "Aotreañ a ra da gemm anv oberour ur c'hemm",
+	'changeauthor-desc' => "Aotren a ra cheñch anv aozer ur c'hemm pe kemmoù",
 	'changeauthor-title' => 'Kemmañ aozer un adweladenn',
 	'changeauthor-search-box' => 'Klask adweladennoù',
-	'changeauthor-pagename-or-revid' => 'Anv ar bajenn pe niver an adweladenn :',
+	'changeauthor-pagename-or-revid' => 'Anv ar bajenn pe niverenn an adweladenn :',
 	'changeauthor-pagenameform-go' => 'Mont',
 	'changeauthor-comment' => 'Notenn :',
 	'changeauthor-changeauthors-multi' => 'Kemmañ {{PLURAL:$1|an aozer|an aozerien}}',
-	'changeauthor-explanation-multi' => 'Gant ar furmskrid-mañ e c\'heloc\'h kemmañ aozer un adweladenn.
-Kemmit dindan anv un pe meur a aozerien, ouzhpennit un evezhiadenn (diret) ha klikit war ar bouton "Kemmañ an aozer(ien)".',
+	'changeauthor-explanation-multi' => 'Gant ar furmskrid-mañ e c\'hallit cheñch aozerien un adweladenn.
+Trawalc\'h eo cheñch un anv pe meur a hini er roll amañ dindan, merkañ un evezhiadenn (diret) ha klikañ war ar bouton "Cheñch an aozer(ien)".',
 	'changeauthor-changeauthors-single' => 'Cheñch aozer',
-	'changeauthor-explanation-single' => 'Gant ar furmskrid-mañ e c\'heloc\'h kemmañ aozer un adweladenn.
-Cheñchit dindan anv an aozer, ouzhpennit un evezhiadenn (diret) ha klikit war ar bouton "Kemmañ an aozer".',
+	'changeauthor-explanation-single' => 'Gant ar furmskrid-mañ e c\'hallit cheñch aozer un adweladenn.
+Trawalc\'h eo cheñch an anv amañ dindan, merkañ un evezhiadenn (diret) ha klikañ war ar bouton "Cheñch an aozer".',
 	'changeauthor-invalid-username' => 'Anv implijer "$1" fall.',
 	'changeauthor-nosuchuser' => 'Implijer "$1" ebet.',
 	'changeauthor-revview' => 'Adweladenn #$1 eus $2',
 	'changeauthor-nosuchtitle' => 'N\'eus pajenn ebet anvet "$1".',
-	'changeauthor-weirderror' => "Ur fazi souezhus-tre a zo bet.
-Mar plij adklaskit ho reked.
-Ma 'z eus bet meur a wech eus ar fazi-se e talvez ez eo sur a-walc'h torret an diaz roadennoù",
-	'changeauthor-invalidform' => 'Mar plij implijit ar furmskrid krouet gant ar [[Special:ChangeAuthor|bajenn ispisial]], ha ket ur furmskrid hiniennel',
-	'changeauthor-success' => 'Tretet eo bet ho reked.',
+	'changeauthor-weirderror' => "Ur fazi souezhus-tre zo c'hoarvezet.
+Adkasit ho reked mar plij.
+Ma talc'h ar fazi-se da c'hoarvezout e talvez eo torret an diaz roadennoù, sur a-walc'h.",
+	'changeauthor-invalidform' => "Grit gant ar furmskrid pourchaset gant ar [[Special:ChangeAuthor|bajenn dibar]], kentoc'h eget gant ur furmskrid personelaet",
+	'changeauthor-success' => 'Kaset eo bet ho reked da benn vat.',
 	'changeauthor-logentry' => 'Kemmoù an aozer $2 da $1 eus $3 davet $4',
 	'changeauthor-logpagename' => "Marilh ar c'hemmoù graet gant an aozer",
 	'right-changeauthor' => 'Kemmañ aozer un adweladenn',
@@ -422,14 +483,21 @@ Només cal que canvieu el nom de l'usuari, afegiu un comentari (opcional) i pitg
 	'changeauthor-nosuchuser' => 'L\'usuari "$1" no existeix.',
 	'changeauthor-revview' => 'Revisió número $1 de $2',
 	'changeauthor-nosuchtitle' => 'No hi ha cap pàgina anomenada "$1".',
-	'changeauthor-weirderror' => "Ha ocorregut un error poc comú. 
-Si us plau, intenteu-ho de nou. 
+	'changeauthor-weirderror' => "Ha ocorregut un error poc comú.
+Si us plau, intenteu-ho de nou.
 Si l'error persisteix, és probable que la base de dades estigui avariada.",
 	'changeauthor-invalidform' => 'Useu el formulari de la [[Special:ChangeAuthor|pàgina especial]] adient.',
 	'changeauthor-success' => 'La vostra petició ha estat processada satisfactòriament.',
 	'changeauthor-logentry' => "S'ha canviat l'autor, de $3 a $4, per a $2 de $1",
 	'changeauthor-logpagename' => "Registre de canvis d'autor",
 	'right-changeauthor' => "Canviar l'autoria d'una modificació",
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'changeauthor-search-box' => 'Нисдинарш лахар',
 );
 
 /** Chamorro (Chamoru)
@@ -439,9 +507,15 @@ $messages['ch'] = array(
 	'changeauthor-pagenameform-go' => 'Hånao',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'changeauthor-pagenameform-go' => 'بڕۆ',
+);
+
 /** Czech (Česky)
  * @author Li-sung
  * @author Matěj Grabovský
+ * @author Reaperman
  */
 $messages['cs'] = array(
 	'changeauthor' => 'Změnit autora revize',
@@ -464,6 +538,7 @@ $messages['cs'] = array(
 	'changeauthor-success' => 'Vaše požadavky byly úspěšně zpracovány.',
 	'changeauthor-logentry' => 'Autor $2 z $1 byl změněn z $3 na $4',
 	'changeauthor-logpagename' => 'Záznam změn autorů',
+	'right-changeauthor' => 'Měnit autora revize',
 );
 
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
@@ -473,9 +548,21 @@ $messages['cu'] = array(
 	'changeauthor-pagenameform-go' => 'прѣиди́',
 );
 
-/** Danish (Dansk) */
+/** Danish (Dansk)
+ * @author Sarrus
+ */
 $messages['da'] = array(
+	'changeauthor' => 'Skift versionens forfatter',
+	'changeauthor-desc' => 'Tillader ændringer af en versions forfatter',
+	'changeauthor-title' => 'Skift en versions forfatter',
+	'changeauthor-search-box' => 'Søg versioner',
+	'changeauthor-pagename-or-revid' => 'Sidenavnets eller versionens ID:',
 	'changeauthor-pagenameform-go' => 'Gå',
+	'changeauthor-comment' => 'Kommentar:',
+	'changeauthor-changeauthors-multi' => 'Skift {{PLURAL:$1| Forfatter |forfattere}}',
+	'changeauthor-explanation-multi' => 'Med denne formular kan du ændre en versions forfatter.
+Du skal blot ændre et eller flere brugernavne i oversigten herunder, evt. skrive en begrundelse og derefter klikke på "Skift forfatter(e)"-knappen.',
+	'changeauthor-changeauthors-single' => 'Skift forfatter',
 );
 
 /** German (Deutsch)
@@ -483,6 +570,7 @@ $messages['da'] = array(
  * @author DaSch
  * @author Imre
  * @author Raimond Spekking
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['de'] = array(
@@ -499,7 +587,7 @@ $messages['de'] = array(
 	'changeauthor-explanation-single' => 'Mit diesem Formular kannst du den Autoren einer Version ändern. Ändere einfach den Autorenname in der Liste, ergänze einen Kommentar (optional) und klicke auf die „Autor ändern“-Schaltfläche.',
 	'changeauthor-invalid-username' => 'Ungültiger Benutzername „$1“.',
 	'changeauthor-nosuchuser' => 'Es gibt keinen Benutzer „$1“.',
-	'changeauthor-revview' => 'Version #$1 von $2',
+	'changeauthor-revview' => 'Version $1 von $2',
 	'changeauthor-nosuchtitle' => 'Es gibt keine Seite „$1“.',
 	'changeauthor-weirderror' => 'Ein sehr seltener Fehler ist aufgetreten. Bitte wiederhole deine Änderung. Wenn dieser Fehler erneut auftritt, ist vermutlich die Datenbank fehlerhaft.',
 	'changeauthor-invalidform' => 'Bitte benutze das Formular auf der [[Special:ChangeAuthor|Spezialseite]].',
@@ -510,7 +598,7 @@ $messages['de'] = array(
 	'right-changeauthor' => 'Autor einer Version ändern',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  */
 $messages['de-formal'] = array(
@@ -597,6 +685,7 @@ Se ĉi tiu eraro daŭras okazi, tiel la datumbazo verŝajne estas rompita.',
 	'changeauthor-success' => 'Via peto estis traktita sukcese.',
 	'changeauthor-logentry' => 'Ŝanĝis aŭtoron de $2 de $1 de $3 al $4',
 	'changeauthor-logpagename' => 'Protokolo pri ŝanĝoj de aŭtoroj',
+	'right-changeauthor' => 'Ŝanĝi la aŭtoro de revizio',
 );
 
 /** Spanish (Español)
@@ -664,6 +753,13 @@ $messages['eu'] = array(
 	'changeauthor-nosuchtitle' => 'Ez dago "$1" izenburua duen orrialderik.',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'changeauthor-pagenameform-go' => 'برو',
+);
+
 /** Finnish (Suomi)
  * @author Cimon Avaro
  * @author Crt
@@ -674,7 +770,7 @@ $messages['eu'] = array(
  */
 $messages['fi'] = array(
 	'changeauthor' => 'Muuta muokkausversion tekijä',
-	'changeauthor-desc' => 'Mahdollistaa muokkausversion tekijän muuttamisen',
+	'changeauthor-desc' => 'Mahdollistaa tekijän vaihtamisen sivuhistoriassa jälkikäteen.',
 	'changeauthor-title' => 'Muuta muokkausversion tekijä',
 	'changeauthor-search-box' => 'Hae muokkausversioita',
 	'changeauthor-pagename-or-revid' => 'Sivun nimi tai version tunnus:',
@@ -704,6 +800,7 @@ Jos tämä virhe toistuu, tietokanta on luultavasti rikki.',
 /** French (Français)
  * @author Dereckson
  * @author Grondin
+ * @author Hashar
  * @author IAlex
  * @author Sherbrooke
  * @author Urhixidur
@@ -721,7 +818,7 @@ $messages['fr'] = array(
 	'changeauthor-changeauthors-single' => "Changer l'auteur",
 	'changeauthor-explanation-single' => "Avec ce formulaire, vous pouvez changer l'auteur d'une révision. Changez le nom d'auteur ci-dessous, ajoutez un commentaire (facultatif) et cliquez sur le bouton ''Changer l'auteur''.",
 	'changeauthor-invalid-username' => "Nom d'utilisateur « $1 » invalide",
-	'changeauthor-nosuchuser' => "Pas d'utilisateur « $1 »",
+	'changeauthor-nosuchuser' => 'Aucun utilisateur « $1 »',
 	'changeauthor-revview' => 'Révision #$1 de $2',
 	'changeauthor-nosuchtitle' => "Il n'existe aucune page intitulée « $1 »",
 	'changeauthor-weirderror' => "Une erreur s'est produite. Prière d'essayer à nouveau. Si cette erreur est apparue à plusieurs reprises, la base de données est probablement corrompue.",
@@ -738,20 +835,23 @@ $messages['fr'] = array(
  */
 $messages['frp'] = array(
 	'changeauthor' => 'Changiér l’ôtor de les vèrsions',
+	'changeauthor-desc' => 'Pèrmèt de changiér lo nom a l’ôtor de yon ou ben un mouél de changements.',
 	'changeauthor-title' => 'Changiér l’ôtor d’una vèrsion',
 	'changeauthor-search-box' => 'Rechèrchiér des vèrsions',
 	'changeauthor-pagename-or-revid' => 'Titro de la pâge ou numerô de la vèrsion :',
 	'changeauthor-pagenameform-go' => 'Alar',
 	'changeauthor-comment' => 'Comentèro :',
-	'changeauthor-changeauthors-multi' => 'Changiér ôtor(s)',
+	'changeauthor-changeauthors-multi' => 'Changiér {{PLURAL:$1|l’ôtor|los ôtors}}',
 	'changeauthor-changeauthors-single' => 'Changiér l’ôtor',
 	'changeauthor-invalid-username' => 'Nom d’utilisator « $1 » envalido.',
-	'changeauthor-nosuchuser' => 'Pas d’utilisator « $1 ».',
+	'changeauthor-nosuchuser' => 'Gins d’utilisator « $1 ».',
 	'changeauthor-revview' => 'Vèrsion #$1 de $2',
 	'changeauthor-nosuchtitle' => 'Ègziste gins d’articllo avouéc lo titro « $1 ».',
 	'changeauthor-success' => 'Voutra requéta at étâ trètâ avouéc reusséta.',
+	'changeauthor-logentry' => 'Changement a l’ôtor de $2 de $1 dês $3 de vers $4',
 	'changeauthor-logpagename' => 'Jornal des changements fêts per l’ôtor',
 	'changeauthor-rev' => 'v$1',
+	'right-changeauthor' => 'Changiér l’ôtor d’una vèrsion',
 );
 
 /** Western Frisian (Frysk)
@@ -844,6 +944,11 @@ $messages['gsw'] = array(
 $messages['gv'] = array(
 	'changeauthor-pagenameform-go' => 'Gow',
 	'changeauthor-comment' => 'Cohaggloo:',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'changeauthor-comment' => 'Bahasi:',
 );
 
 /** Hebrew (עברית)
@@ -974,6 +1079,7 @@ $messages['hsb'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Adam78
  * @author Dani
  * @author Dorgan
  */
@@ -997,7 +1103,7 @@ $messages['hu'] = array(
 	'changeauthor-invalidform' => 'Kérlek saját űrlap helyett használd a [[Special:ChangeAuthor|speciális lapon]] található változatot.',
 	'changeauthor-success' => 'A kérésedet sikeresen végrehajtottam.',
 	'changeauthor-logentry' => '$1 $2 azonosítójú változatának szerzőjét $3 felhasználóról $4 felhasználóra cserélte',
-	'changeauthor-logpagename' => 'Szerző-változtatási napló',
+	'changeauthor-logpagename' => 'Szerzőváltoztatási napló',
 	'right-changeauthor' => 'A változat szerzőjének megváltoztatása',
 );
 
@@ -1010,7 +1116,7 @@ $messages['ia'] = array(
 	'changeauthor-title' => 'Cambiar le autor de un version',
 	'changeauthor-search-box' => 'Cercar versiones',
 	'changeauthor-pagename-or-revid' => 'Nomine del pagina o ID del version:',
-	'changeauthor-pagenameform-go' => 'Ir',
+	'changeauthor-pagenameform-go' => 'Va',
 	'changeauthor-comment' => 'Commento:',
 	'changeauthor-changeauthors-multi' => 'Cambiar {{PLURAL:$1|autor|autores}}',
 	'changeauthor-explanation-multi' => "Con iste formulario tu pote cambiar le autores de versiones.
@@ -1024,7 +1130,7 @@ Simplemente modifica le nomine de usator infra, adde un commento (optional) e cl
 	'changeauthor-nosuchtitle' => 'Non existe un pagina con titulo "$1".',
 	'changeauthor-weirderror' => 'Un error multo estranie ha occurrite.
 Per favor reproba tu requesta.
-Si iste error persiste, le base de datos es probabilemente defecte.',
+Si iste error persiste, le base de datos es probabilemente defectuose.',
 	'changeauthor-invalidform' => 'Per favor usa le formulario providite per le [[Special:ChangeAuthor|pagina special]] e non un formulario personalisate.',
 	'changeauthor-success' => 'Tu requesta ha essite processate con successo.',
 	'changeauthor-logentry' => 'Cambiava le autor del version $2 del pagina $1 de $3 a $4',
@@ -1191,10 +1297,14 @@ $messages['km'] = array(
 	'changeauthor-changeauthors-single' => 'ផ្លាស់ប្តូរ អ្នកនិពន្ធ',
 	'changeauthor-invalid-username' => 'ឈ្មោះ​អ្នកប្រើប្រាស់ "$1" គ្មានសុពលភាព។',
 	'changeauthor-nosuchuser' => 'មិនមានអ្នកប្រើប្រាស់ឈ្មោះ "$1" ទេ។',
+	'changeauthor-revview' => 'កំណែ #$1 របស់ $2',
 	'changeauthor-nosuchtitle' => 'គ្មានទំព័រ​ដែលមាន​ឈ្មោះ "$1" ទេ។',
 	'changeauthor-weirderror' => 'បញ្ហា​ដ៏ចម្លែកមួយ​បានកើតឡើង។ សូម​ព្យាយាម​ស្នើសុំ​ម្ដងទៀត។ បើសិនជា​នៅតែមាន​បញ្ហា នោះមូលដ្ឋានទិន្នន័យ​ប្រហែលជាខូចហើយ។',
+	'changeauthor-invalidform' => 'សូមប្រើប្រាស់សំនុំបែបបទ​ដែលផ្ដល់ដោយ[[Special:ChangeAuthor|ទំព័រពិសេស]] ជាជាងសំនុំបែបបទបង្កើតដោយខ្លួនអ្នក។',
 	'changeauthor-success' => 'ការ​ស្នើសុំរបស់​អ្នក​បានឆ្លងកាត់​ដោយជោគជ័យ។',
+	'changeauthor-logentry' => 'បានប្ដូរអ្នកនិពន្ធរបស់ $2 របស់ $1 ពី $3 ទៅជា $4 ហើយ',
 	'changeauthor-logpagename' => 'កំណត់ហេតុនៃការផ្លាស់ប្តូរអ្នកនិពន្ធ',
+	'right-changeauthor' => 'ផ្លាស់ប្ដូរអ្នកនិពន្ធរបស់កំណែមួយ',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -1247,7 +1357,7 @@ $messages['krj'] = array(
 	'changeauthor-pagenameform-go' => 'Agto',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -1256,7 +1366,7 @@ $messages['ksh'] = array(
 	'changeauthor-title' => 'Donn dä Schriiver vun ene Version vun ene Sigg ußtuusche',
 	'changeauthor-search-box' => 'Versione söke',
 	'changeauthor-pagename-or-revid' => 'Name fun ene Sigg udder Nommer fun ene Version:',
-	'changeauthor-pagenameform-go' => 'Loß Jonn!',
+	'changeauthor-pagenameform-go' => 'Lohß Jonn!',
 	'changeauthor-comment' => 'Kommäntaa:',
 	'changeauthor-changeauthors-multi' => '{{PLURAL:$1|Eine|$1|Keine}} Schriiver ändere',
 	'changeauthor-explanation-multi' => 'Met dämm Fommulaa kanns De dä Schriiver fun eine Änderung aan en Sigg ußtuusche.
@@ -1282,7 +1392,17 @@ un kei eije Fommolaa.',
 	'right-changeauthor' => 'Dä Metmaacher ußwääßelle, dä en Version jemaat hät',
 );
 
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ * @author Gomada
+ */
+$messages['ku-latn'] = array(
+	'changeauthor-pagenameform-go' => 'Here',
+	'changeauthor-comment' => 'Şîrove:',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
@@ -1294,8 +1414,8 @@ $messages['lb'] = array(
 	'changeauthor-pagenameform-go' => 'Lass',
 	'changeauthor-comment' => 'Bemierkung:',
 	'changeauthor-changeauthors-multi' => '{{PLURAL:$1|Auteur|Auteuren}} änneren',
-	'changeauthor-explanation-multi' => "mat dësem Formulaire kënnt Dir d'Auteure vun de Versiounen äneren.
-Ännert einfach een oder méi Benotzernimm an der Lëscht ënnedrënner, setzt eng Bemierkung derbäi (fkultativ) a klickt op de Knäppchen 'Auteur änneren'.",
+	'changeauthor-explanation-multi' => "Mat dësem Formulaire kënnt Dir d'Auteure vun de Versiounen äneren.
+Ännert einfach een oder méi Benotzernimm an der Lëscht ënnendrënner, setzt eng Bemierkung derbäi (fakultativ) a klickt op de Knäppchen 'Auteur änneren'.",
 	'changeauthor-changeauthors-single' => 'Auteur änneren',
 	'changeauthor-explanation-single' => "Mat dësem Formulaire kënnt Dir den Auteur vun enger Versioun änneren.
 Ännert de Benotzernumm hei ënnendrënner einfach, setzt eng Bemierkung derbäi (fakultativ) a klickt op de Knäppchen 'Auteur änneren'.",
@@ -1350,6 +1470,23 @@ Es doe dees foutmeljing jedere kier weer zuus, is de database allezelaeve kepot.
 	'right-changeauthor' => "De outäör van 'n bewirking aanpasse",
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'changeauthor-pagenameform-go' => 'Pirmyn',
+	'changeauthor-comment' => 'Komentaras:',
+	'changeauthor-changeauthors-single' => 'Keisti autorių',
+	'changeauthor-nosuchtitle' => 'Nėra puslapio pavadinimu " $1 ".',
+);
+
+/** Latvian (Latviešu)
+ * @author Papuass
+ */
+$messages['lv'] = array(
+	'changeauthor-changeauthors-single' => 'Mainīt autoru',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -1363,7 +1500,7 @@ $messages['mk'] = array(
 	'changeauthor-comment' => 'Коментар:',
 	'changeauthor-changeauthors-multi' => 'Смени {{PLURAL:$1|автор|автори}}',
 	'changeauthor-explanation-multi' => 'Со овој образец можете да ги менувате авторите на ревизии.
-Едноставно сменете едно или повеќе кориснички имиња на листата подолу, додајте коментар (незадолжително) и кликнете на копчето „Смени автор(и)“.',
+Едноставно сменете едно или повеќе кориснички имиња на списокот подолу, додајте коментар (незадолжително) и кликнете на копчето „Смени автор(и)“.',
 	'changeauthor-changeauthors-single' => 'Смени автор',
 	'changeauthor-explanation-single' => 'Со овој образец можете да ги смените авторот на една ревизија.
 Едноставно сменете го корисничкото име подолу, додајте коментар (незадолжително) и кликнете на копчето „Смени автор“.',
@@ -1373,49 +1510,56 @@ $messages['mk'] = array(
 	'changeauthor-nosuchtitle' => 'Нема страница наречена „$1“',
 	'changeauthor-weirderror' => 'Се појави многу чудна грешка.
 Повторете го барањето.
-Ако оваа грешка продолжи да се јавува, тоа веројатно значи дека базата на податоци е расипана.',
+Ако оваа грешка продолжи да се јавува, тоа веројатно значи дека базата на податоци е оштетена.',
 	'changeauthor-invalidform' => 'Користете го образецот на [[Special:ChangeAuthor|специјалната страница]], а не некој друг.',
 	'changeauthor-success' => 'Вашето барање е успешно обработено.',
 	'changeauthor-logentry' => 'Променет авторот на $2 на $1 од $3 на $4',
 	'changeauthor-logpagename' => 'Дневник на менувања на автори',
-	'changeauthor-rev' => 'р$1',
+	'changeauthor-rev' => 'рев. $1',
 	'right-changeauthor' => 'Менување на авторот на ревизија',
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'changeauthor' => 'പതിപ്പിന്റെ ലേഖകനെ മാറ്റുക',
-	'changeauthor-desc' => 'ഒരു പതിപ്പിന്റെ ലേഖകനെ മാറ്റുവാന്‍ സാധിക്കുന്നു',
+	'changeauthor-desc' => 'ഒരു പതിപ്പിന്റെ ലേഖകനെ മാറ്റുവാൻ സാധിക്കുന്നു',
 	'changeauthor-title' => 'ഒരു പതിപ്പിന്റെ ലേഖകനെ മാറ്റുക',
-	'changeauthor-search-box' => 'പതിപ്പുകള്‍ തിരയുക',
-	'changeauthor-pagename-or-revid' => 'താളിന്റെ പേര്‌ അല്ലെങ്കില്‍ പതിപ്പിന്റെ ഐ.ഡി.:',
+	'changeauthor-search-box' => 'പതിപ്പുകൾ തിരയുക',
+	'changeauthor-pagename-or-revid' => 'താളിന്റെ പേര്‌ അല്ലെങ്കിൽ പതിപ്പിന്റെ ഐ.ഡി.:',
 	'changeauthor-pagenameform-go' => 'പോകൂ',
 	'changeauthor-comment' => 'അഭിപ്രായം:',
-	'changeauthor-changeauthors-multi' => 'ലേഖകരെ മാറ്റുക',
-	'changeauthor-explanation-multi' => "ഈ താള്‍ ഉപയോഗിച്ച് താങ്കള്‍ക്ക് ഒരു പതിപ്പിന്റെ ലേഖകനെ മാറ്റാവുന്നതാണ്‌. 
-താഴെയുള്ള പട്ടികയില്‍ ഒന്നോ അതിലധികമോ ഉപയോക്തൃനാമങ്ങള്‍ മാറ്റിയിട്ട്, അഭിപ്രായം രേഖപ്പെടുത്തിയതിനു ശേഷം (നിര്‍ബന്ധമില്ല), 'ലേഖകരെ മാറ്റുക' എന്ന ബട്ടണ്‍ ഞെക്കുക.",
+	'changeauthor-changeauthors-multi' => '{PLURAL:$1|രചയിതാവിനെ|രചയിതാക്കളെ}} മാറ്റുക',
+	'changeauthor-explanation-multi' => "ഈ താൾ ഉപയോഗിച്ച് താങ്കൾക്ക് ഒരു പതിപ്പിന്റെ ലേഖകനെ മാറ്റാവുന്നതാണ്‌.
+താഴെയുള്ള പട്ടികയിൽ ഒന്നോ അതിലധികമോ ഉപയോക്തൃനാമങ്ങൾ മാറ്റിയിട്ട്, അഭിപ്രായം രേഖപ്പെടുത്തിയതിനു ശേഷം (നിർബന്ധമില്ല), 'ലേഖകരെ മാറ്റുക' എന്ന ബട്ടൺ ഞെക്കുക.",
 	'changeauthor-changeauthors-single' => 'ലേഖകനെ മാറ്റുക',
-	'changeauthor-explanation-single' => "ഈ ഫോം ഉപയോഗിച്ച് ഒരു പതിപ്പിന്റെ ലേഖകനെ താങ്കള്‍ക്ക് മാറ്റാവുന്നതാണ്‌. താഴെയുള്ള ഫോമില്‍ ഉപയോക്തൃനാമം മാറ്റി, ലേഖകനെ മാറ്റാനുള്ള കാരണവും രേഖപ്പെടുത്തി (നിര്‍ബന്ധമില്ല), 'ലേഖകനെ മാറ്റുക' എന്ന ബട്ടണ്‍ ഞെക്കുക.",
+	'changeauthor-explanation-single' => "ഈ ഫോം ഉപയോഗിച്ച് ഒരു പതിപ്പിന്റെ ലേഖകനെ താങ്കൾക്ക് മാറ്റാവുന്നതാണ്‌. താഴെയുള്ള ഫോമിൽ ഉപയോക്തൃനാമം മാറ്റി, ലേഖകനെ മാറ്റാനുള്ള കാരണവും രേഖപ്പെടുത്തി (നിർബന്ധമില്ല), 'ലേഖകനെ മാറ്റുക' എന്ന ബട്ടൺ ഞെക്കുക.",
 	'changeauthor-invalid-username' => '"$1" എന്നത് അസാധുവായ ഉപയോക്തൃനാമമാണ്‌.',
 	'changeauthor-nosuchuser' => '"$1" എന്ന ഉപയോക്താവ് നിലവിലില്ല.',
 	'changeauthor-revview' => '$2ന്റെ #$1 എന്ന പതിപ്പ്',
-	'changeauthor-nosuchtitle' => '"$1" എന്ന താള്‍ നിലവിലില്ല.',
-	'changeauthor-invalidform' => 'ദയവായി ഈ ഫോമിനു പകരം Special:ChangeAuthor എന്ന താളില്‍ വരുന്ന ഫോം ഉപയോഗിക്കുക.',
-	'changeauthor-success' => 'താങ്കളുടെ അഭ്യര്‍ത്ഥനയുടെ നടപടിക്രമങ്ങള്‍ വിജയകരമായി പൂര്‍ത്തിയാക്കിയിരിക്കുന്നു.',
-	'changeauthor-logentry' => '$1എന്ന താളിന്റെ $2പതിപ്പിന്റെ ലേഖകനെ $3ല്‍ നിന്നു $4ലേക്കു മാറ്റിയിരിക്കുന്നു',
-	'changeauthor-logpagename' => 'ലേഖകരെ മാറ്റിയതിന്റെ പ്രവര്‍ത്തനരേഖ',
+	'changeauthor-nosuchtitle' => '"$1" എന്ന താൾ നിലവിലില്ല.',
+	'changeauthor-weirderror' => 'വളരെ അപരിചിതമായ പിഴവ് ഉണ്ടായിരിക്കുന്നു.
+ദയവായി താങ്കളുടെ ആവശ്യം വീണ്ടും ശ്രമിക്കുക.
+ഈ പിഴവ് വീണ്ടും വീണ്ടും വരുന്നുവെങ്കിൽ, ഡേറ്റാബേസിലെന്തോ പിഴവുണ്ട്.',
+	'changeauthor-invalidform' => 'ദയവായി ഐച്ഛിക ഫോമിനു പകരം [[Special:ChangeAuthor|പ്രത്യേക താളിൽ]] വരുന്ന ഫോം ഉപയോഗിക്കുക.',
+	'changeauthor-success' => 'താങ്കളുടെ അഭ്യർത്ഥനയുടെ നടപടിക്രമങ്ങൾ വിജയകരമായി പൂർത്തിയാക്കിയിരിക്കുന്നു.',
+	'changeauthor-logentry' => '$1എന്ന താളിന്റെ $2പതിപ്പിന്റെ ലേഖകനെ $3ൽ നിന്നു $4ലേക്കു മാറ്റിയിരിക്കുന്നു',
+	'changeauthor-logpagename' => 'ലേഖകരെ മാറ്റിയതിന്റെ പ്രവർത്തനരേഖ',
+	'right-changeauthor' => 'ഒരു നാൾപ്പതിപ്പിന്റെ ലേഖകനെ മാറ്റുക',
 );
 
 /** Mongolian (Монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
+	'changeauthor-pagenameform-go' => 'Явах',
 	'changeauthor-comment' => 'Тайлбар:',
 );
 
 /** Marathi (मराठी)
+ * @author Htt
  * @author Kaustubh
  * @author Mahitgar
  */
@@ -1427,7 +1571,7 @@ $messages['mr'] = array(
 	'changeauthor-pagename-or-revid' => 'पानाचे नाव किंवा आवृत्ती क्रमांक:',
 	'changeauthor-pagenameform-go' => 'चला',
 	'changeauthor-comment' => 'प्रतिक्रीया:',
-	'changeauthor-changeauthors-multi' => 'लेखक बदला',
+	'changeauthor-changeauthors-multi' => '{{PLURAL:$1|लेखक|लेखक}} बदला',
 	'changeauthor-explanation-multi' => "खालील अर्ज वापरुन तुम्ही आवृत्त्यांचे लेखक बदलू शकता. खालील यादीतील एक किंवा अनेक सदस्यनावे बदला, शेरा लिहा (वैकल्पिक) व 'लेखक बदला' या कळीवर टिचकी द्या.",
 	'changeauthor-changeauthors-single' => 'लेखक बदला',
 	'changeauthor-explanation-single' => "हा अर्ज वापरून तुम्ही एका आवृत्तीचा लेखक बदलू शकता. फक्त खाली सदस्यनाव बदला, शेरा लिहा (वैकल्पिक) व 'लेखक बदला' कळीवर टिचकी द्या.",
@@ -1442,10 +1586,44 @@ $messages['mr'] = array(
 	'changeauthor-logpagename' => 'लेखक बदल सूची',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'changeauthor' => 'Ubah pengarang semakan',
+	'changeauthor-desc' => 'Membolehkan pengubahan pengarang semakan',
+	'changeauthor-title' => 'Ubah pengarang semakan',
+	'changeauthor-search-box' => 'Cari semakan',
+	'changeauthor-pagename-or-revid' => 'Nama laman atau ID semakan:',
+	'changeauthor-pagenameform-go' => 'Pergi',
+	'changeauthor-comment' => 'Komen:',
+	'changeauthor-changeauthors-multi' => 'Tukar {{PLURAL:$1|pengarang|pengarang}}',
+	'changeauthor-explanation-multi' => 'Dengan borang ini, anda boleh mengubah pengarang semakan.
+Anda cuba perlu mengubah satu atau lebih nama pengguna dalam senarai di bawah, berikan komen (tidak wajib) dan klik butang "Tukar pengarang".',
+	'changeauthor-changeauthors-single' => 'Tukar pengarang',
+	'changeauthor-explanation-single' => 'Dengan borang ini, anda boleh mengubah pengarang semakan.
+Anda cuba perlu mengubah nama pengguna di bawah, berikan komen (tidak wajib) dan klik butang "Tukar pengarang".',
+	'changeauthor-invalid-username' => 'Nama pengguna "$1" tidak sah.',
+	'changeauthor-nosuchuser' => 'Pengguna "$1" tidak wujud.',
+	'changeauthor-revview' => 'Semakan #$1 daripada $2',
+	'changeauthor-nosuchtitle' => 'Laman "$1" tidak wujud.',
+	'changeauthor-weirderror' => 'Ralat yang amat pelik terjadi
+Sila cuba lagi permohonan anda.
+Jika ralat ini masih tidak reda, mungkin pangkalan data rosak.',
+	'changeauthor-invalidform' => 'Sila gunakan borang yang disediakan oleh [[Special:ChangeAuthor|laman khas ini]] daripada sebarang borang tersuai.',
+	'changeauthor-success' => 'Permohonan anda berjaya diproses.',
+	'changeauthor-logentry' => 'Pengarang $2 dalam $1 diubah daripada $3 kepada $4',
+	'changeauthor-logpagename' => 'Log perubahan pengarang',
+	'changeauthor-rev' => 'r$1',
+	'right-changeauthor' => 'Mengubah pengarang semakan',
+);
+
 /** Maltese (Malti)
+ * @author Chrisportelli
  * @author Roderick Mallia
  */
 $messages['mt'] = array(
+	'changeauthor-pagenameform-go' => 'Mur',
 	'changeauthor-comment' => 'Kumment:',
 );
 
@@ -1463,6 +1641,35 @@ $messages['nah'] = array(
 	'changeauthor-pagenameform-go' => 'Yāuh',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author EivindJ
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'changeauthor' => 'Endre revisjonens opphavsperson',
+	'changeauthor-desc' => 'Gjør det mulig å endre opphavsperson for sideversjoner',
+	'changeauthor-title' => 'Endre en revisjons opphavsmann',
+	'changeauthor-search-box' => 'Søk i revisjoner',
+	'changeauthor-pagename-or-revid' => 'Sidenavn eller revisjons-ID:',
+	'changeauthor-pagenameform-go' => 'Gå',
+	'changeauthor-comment' => 'Kommentar:',
+	'changeauthor-changeauthors-multi' => 'Endre {{PLURAL:$1|forfatter|forfattere}}',
+	'changeauthor-explanation-multi' => 'Med dette skjemaet kan du endre hvem som angis som opphavspersoner til revisjoner. Bare endre ett eller flere av brukernavnene i listen nedenfor, legg til en (valgfri) kommentar, og klikk knappen «Endre opphavsperson(er)».',
+	'changeauthor-changeauthors-single' => 'Endre opphavsperson',
+	'changeauthor-explanation-single' => 'Med dette skjemaet kan du endre på hvem som angis som opphavspersonen til en revisjon. Bare endre brukernavnet nedenfor, legg til en (valgfri) kommentar, og klikk knappen «Endre opphavsperson».',
+	'changeauthor-invalid-username' => 'Ugyldig brukernavn «$1».',
+	'changeauthor-nosuchuser' => 'Ingen bruker ved navnet «$1».',
+	'changeauthor-revview' => 'Revisjon #$1 av $2',
+	'changeauthor-nosuchtitle' => 'Det er ingen side ved navn «$1».',
+	'changeauthor-weirderror' => 'En merkelig feil oppsto. Vennligst prøv igjen. Om denne feilen vedvarer er det trolig noe galt med databasen.',
+	'changeauthor-invalidform' => 'Bruk skjemaet på [[Special:ChangeAuthor|spesialsiden]] i stedet for å bruke et egendefinert skjema.',
+	'changeauthor-success' => 'Forespørselen har blitt utført.',
+	'changeauthor-logentry' => 'Endret opphavsperson til $2 av $1 fra $3 til $4',
+	'changeauthor-logpagename' => 'Logg for opphavspersonsendringer',
+	'right-changeauthor' => 'Endre forfatteren av en versjon',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -1471,6 +1678,14 @@ $messages['nds'] = array(
 	'changeauthor-comment' => 'Kommentar:',
 	'changeauthor-nosuchuser' => 'Gifft keen Bruker „$1“.',
 	'changeauthor-revview' => 'Version #$1 vun $2',
+);
+
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'changeauthor-pagenameform-go' => 'जाउ',
+	'changeauthor-comment' => 'टिप्पणी :',
 );
 
 /** Dutch (Nederlands)
@@ -1484,8 +1699,8 @@ $messages['nl'] = array(
 	'changeauthor-title' => 'De auteur van een bewerkingsversie wijzigen',
 	'changeauthor-search-box' => 'Versies zoeken',
 	'changeauthor-pagename-or-revid' => 'Paginanaam of versienummer:',
-	'changeauthor-pagenameform-go' => 'Gaan',
-	'changeauthor-comment' => 'Toelichting:',
+	'changeauthor-pagenameform-go' => 'OK',
+	'changeauthor-comment' => 'Opmerking:',
 	'changeauthor-changeauthors-multi' => '{{PLURAL:$1|Auteur|Auteurs}} wijzigen',
 	'changeauthor-explanation-multi' => "Met dit formulier kunt u de auteur van een bewerkingsversie wijzigen. Wijzig simpelweg één of meer gebruikersnamen in de lijst hieronder, voeg een toelichting toe (niet verplicht) en klik op de knop 'Auteur(s) wijzigen'.",
 	'changeauthor-changeauthors-single' => 'Auteur wijzigen',
@@ -1517,7 +1732,7 @@ $messages['nn'] = array(
 	'changeauthor-pagenameform-go' => 'Gå',
 	'changeauthor-comment' => 'Kommentar:',
 	'changeauthor-changeauthors-multi' => 'Endra {{PLURAL:$1|forfattar|forfattarar}}',
-	'changeauthor-explanation-multi' => 'Med dette skjemaet kan du endra kven som blir oppgjeve som forfattar til versjonar. 
+	'changeauthor-explanation-multi' => 'Med dette skjemaet kan du endra kven som blir oppgjeve som forfattar til versjonar.
 Endra eitt eller fleire av brukarnamna i lista nedanfor, legg til ein (valfri) kommentar og trykk knappen «Endra forfattar(ar)».',
 	'changeauthor-changeauthors-single' => 'Endra forfattar',
 	'changeauthor-explanation-single' => 'Med dette skjemaet kan du endra på kven som blir oppgjeve som forfattaren til ein versjon. Endra brukarnamnet nedanfor, legg til ein (valfri) kommentar, og trykk på knappen «Endra forfattar».',
@@ -1533,35 +1748,6 @@ Om denne feilen held fram med å dukka opp, kan det vera noko gale med databasen
 	'changeauthor-logentry' => 'Endra forfattaren av $2 av $1 frå $3 til $4',
 	'changeauthor-logpagename' => 'Logg for endring av forfattar',
 	'right-changeauthor' => 'Endra forfattaren av ein versjon',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author EivindJ
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'changeauthor' => 'Endre revisjonens opphavsperson',
-	'changeauthor-desc' => 'Gjør det mulig å endre opphavsperson for sideversjoner',
-	'changeauthor-title' => 'Endre en revisjons opphavsmann',
-	'changeauthor-search-box' => 'Søk i revisjoner',
-	'changeauthor-pagename-or-revid' => 'Sidenavn eller revisjons-ID:',
-	'changeauthor-pagenameform-go' => 'Gå',
-	'changeauthor-comment' => 'Kommentar:',
-	'changeauthor-changeauthors-multi' => 'Endre {{PLURAL:$1|forfatter|forfattere}}',
-	'changeauthor-explanation-multi' => 'Med dette skjemaet kan du endre hvem som angis som opphavspersoner til revisjoner. Bare endre ett eller flere av brukernavnene i listen nedenfor, legg til en (valgfri) kommentar, og klikk knappen «Endre opphavsperson(er)».',
-	'changeauthor-changeauthors-single' => 'Endre opphavsperson',
-	'changeauthor-explanation-single' => 'Med dette skjemaet kan du endre på hvem som angis som opphavspersonen til en revisjon. Bare endre brukernavnet nedenfor, legg til en (valgfri) kommentar, og klikk knappen «Endre opphavsperson».',
-	'changeauthor-invalid-username' => 'Ugyldig brukernavn «$1».',
-	'changeauthor-nosuchuser' => 'Ingen bruker ved navnet «$1».',
-	'changeauthor-revview' => 'Revisjon #$1 av $2',
-	'changeauthor-nosuchtitle' => 'Det er ingen side ved navn «$1».',
-	'changeauthor-weirderror' => 'En merkelig feil oppsto. Vennligst prøv igjen. Om denne feilen vedvarer er det trolig noe galt med databasen.',
-	'changeauthor-invalidform' => 'Bruk skjemaet på [[Special:ChangeAuthor|spesialsiden]] i stedet for å bruke et egendefinert skjema.',
-	'changeauthor-success' => 'Forespørselen har blitt utført.',
-	'changeauthor-logentry' => 'Endret opphavsperson til $2 av $1 fra $3 til $4',
-	'changeauthor-logpagename' => 'Logg for opphavspersonsendringer',
-	'right-changeauthor' => 'Endre forfatteren av en versjon',
 );
 
 /** Northern Sotho (Sesotho sa Leboa)
@@ -1605,11 +1791,20 @@ $messages['oc'] = array(
 	'right-changeauthor' => "Modificar l'autor d'una revision",
 );
 
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Odisha1
+ */
+$messages['or'] = array(
+	'changeauthor-pagenameform-go' => 'ଯିବା',
+	'changeauthor-comment' => 'ମତାମତ:',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
-	'changeauthor-comment' => 'Anmaerricking:',
+	'changeauthor-pagenameform-go' => 'Guck uff',
+	'changeauthor-comment' => 'Aamaericking:',
 );
 
 /** Polish (Polski)
@@ -1686,12 +1881,15 @@ Se sto eror-sì a continua a ess-ie, a peul esse che ël database a sia rompù."
  */
 $messages['ps'] = array(
 	'changeauthor-pagenameform-go' => 'ورځه',
+	'changeauthor-comment' => 'تبصره:',
+	'changeauthor-changeauthors-single' => 'ليکوال بدلول',
 	'changeauthor-nosuchtitle' => 'داسې هېڅ کوم مخ نشته چې نوم يې "$1" وي.',
 	'changeauthor-success' => 'ستاسو غوښتنه په برياليتوب سره پلي شوه.',
 );
 
 /** Portuguese (Português)
  * @author 555
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -1707,7 +1905,7 @@ $messages['pt'] = array(
 	'changeauthor-changeauthors-single' => 'Alterar autor',
 	'changeauthor-explanation-single' => "Através deste formulário, pode alterar o autor de uma revisão. Simplesmente mude o nome de utilizador abaixo, adicione um comentário (opcional) e clique no botão 'Alterar autor'.",
 	'changeauthor-invalid-username' => 'Nome de utilizador "$1" inválido.',
-	'changeauthor-nosuchuser' => 'Utilizador "$1" não existe.',
+	'changeauthor-nosuchuser' => 'O utilizador "$1" não existe.',
 	'changeauthor-revview' => 'Revisão #$1 de $2',
 	'changeauthor-nosuchtitle' => 'Não existe nenhuma página chamada "$1".',
 	'changeauthor-weirderror' => 'Ocorreu um erro muito estranho. Por favor, tente o seu pedido de novo. Se este erro persistir, provavelmente a base de dados não está em boas condições.',
@@ -1737,8 +1935,8 @@ $messages['pt-br'] = array(
 	'changeauthor-nosuchuser' => 'Utilizador "$1" não existe.',
 	'changeauthor-revview' => 'Revisão #$1 de $2',
 	'changeauthor-nosuchtitle' => 'Não existe nenhuma página chamada "$1".',
-	'changeauthor-weirderror' => 'Ocorreu um erro muito estranho. 
-Por favor, tente o seu pedido de novo. 
+	'changeauthor-weirderror' => 'Ocorreu um erro muito estranho.
+Por favor, tente o seu pedido de novo.
 Se este erro persistir, provavelmente a base de dados não está em boas condições.',
 	'changeauthor-invalidform' => 'Por favor, utilize o formulário fornecido pela [[Special:ChangeAuthor|página especial]] em vez de um formulário personalizado.',
 	'changeauthor-success' => 'O seu pedido foi processado com sucesso.',
@@ -1758,7 +1956,7 @@ $messages['qu'] = array(
 	'changeauthor-pagename-or-revid' => "P'anqap sutin icha musuqchasqap kikin huchhan:",
 	'changeauthor-pagenameform-go' => 'Riy',
 	'changeauthor-comment' => "Llamk'apuqpa nisqan pisichayta hukchay",
-	'changeauthor-changeauthors-multi' => "Llamk'apuqpa sutinta hukchay",
+	'changeauthor-changeauthors-multi' => "{{PLURAL:$1|Llamk'apuqpa|Llamk'apuqkunap}} sutinta hukchay",
 	'changeauthor-explanation-multi' => "Kay hunt'ana p'anqawanqa llamk'apuqkunap sutinkunata hukchaytam atinki.
 Kay qatiq sutisuyupi ruraqkunap sutinkunata hukchaspa pisichay willaytachá yapaspa 'Llamk'apuqpa sutinta hukchay' nisqapi ñit'illay.",
 	'changeauthor-changeauthors-single' => "Llamk'apuqpa sutinta hukchay",
@@ -1771,10 +1969,11 @@ Kay qatiq ruraqpa sutinta hukchaspa pisichay willaytachá yapaspa 'Llamk'apuqpa 
 	'changeauthor-weirderror' => 'Ancha wamaq pantasqam tukurqan.
 Ama hina kaspa, musuqmanta mañaykachay.
 Kay pantasqa musuqmanta kanqaptinqa, willañiqintin waqllisqachá.',
-	'changeauthor-invalidform' => "Ama hina kaspa, Special:ChangeAuthor nisqap hunt'ana p'anqanta llamk'achiy, amataq sapsi p'anqatachu.",
+	'changeauthor-invalidform' => "Ama hina kaspa, [[Special:ChangeAuthor|sapaq p'anqa]] nisqap hunt'ana p'anqanta llamk'achiy, amataq sapsi p'anqatachu.",
 	'changeauthor-success' => 'Mañakusqaykiqa aypalla rurapusqañam.',
 	'changeauthor-logentry' => "$2-manta $1-pa llamk'apuqninpa sutinta $3-manta $4-man hukchasqa",
 	'changeauthor-logpagename' => "Llamk'apuq suti hukchay hallch'asqa",
+	'right-changeauthor' => "Llamk'apuqpa sutinta hukchay",
 );
 
 /** Tarifit (Tarifit)
@@ -1787,8 +1986,12 @@ $messages['rif'] = array(
 /** Romanian (Română)
  * @author KlaudiuMihaila
  * @author Mihai
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
+	'changeauthor' => 'Schimbă autorul reviziei',
+	'changeauthor-title' => 'Schimbă autorul unei revizii',
+	'changeauthor-search-box' => 'Caută revizii',
 	'changeauthor-pagename-or-revid' => 'Numele paginii sau ID-ul reviziei:',
 	'changeauthor-pagenameform-go' => 'Du-te',
 	'changeauthor-comment' => 'Comentariu:',
@@ -1799,6 +2002,7 @@ $messages['ro'] = array(
 	'changeauthor-revview' => 'Versiunea #$1 din $2',
 	'changeauthor-nosuchtitle' => 'Nu există o pagină numită "$1".',
 	'changeauthor-success' => 'Cererea ta a fost procesată cu succes.',
+	'right-changeauthor' => 'Schimbă autorul unei revizii',
 );
 
 /** Tarandíne (Tarandíne)
@@ -1806,6 +2010,8 @@ $messages['ro'] = array(
  */
 $messages['roa-tara'] = array(
 	'changeauthor-pagenameform-go' => 'Veje',
+	'changeauthor-comment' => 'Commende:',
+	'changeauthor-changeauthors-single' => 'Cange autore',
 	'changeauthor-nosuchtitle' => 'Non g\'esiste \'na pàgene chiamete "$1".',
 );
 
@@ -1830,7 +2036,7 @@ $messages['ru'] = array(
 	'changeauthor-nosuchuser' => 'Отсутствует участник $1.',
 	'changeauthor-revview' => 'Версия #$1 из $2',
 	'changeauthor-nosuchtitle' => 'Не существует статьи с названием «$1».',
-	'changeauthor-weirderror' => 'Произошла очень странная ошибка. Пожалуйста, повторите ваш запрос. Если ошибка снова возникнет, то вероятно это означает, что база данных испорчена.',
+	'changeauthor-weirderror' => 'Произошла очень странная ошибка. Пожалуйста, повторите свой запрос. Если ошибка снова возникнет, то вероятно это означает, что база данных испорчена.',
 	'changeauthor-invalidform' => 'Пожалуйста, используйте форму на [[Special:ChangeAuthor|служебной странице]], а не какую-либо другую.',
 	'changeauthor-success' => 'Запрос успешно обработан.',
 	'changeauthor-logentry' => 'изменил автора $2 $1 с $3 на $4',
@@ -1838,7 +2044,15 @@ $messages['ru'] = array(
 	'right-changeauthor' => 'изменение автора правки',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'changeauthor-pagenameform-go' => 'Выконати',
+	'changeauthor-comment' => 'Коментарь:',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1850,6 +2064,13 @@ $messages['sah'] = array(
 	'changeauthor-pagenameform-go' => 'Бардыбыт',
 	'changeauthor-comment' => 'Комментарий:',
 	'changeauthor-changeauthors-multi' => '{{PLURAL:$1|Ааптары|Ааптардары}} уларытыы',
+);
+
+/** Sicilian (Sicilianu)
+ * @author Aushulz
+ */
+$messages['scn'] = array(
+	'changeauthor-pagenameform-go' => "Va'",
 );
 
 /** Slovak (Slovenčina)
@@ -1879,15 +2100,48 @@ $messages['sk'] = array(
 	'right-changeauthor' => 'Zmeniť autora revízie',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'changeauthor' => 'Spremeni avtorja redakcije',
+	'changeauthor-desc' => 'Omogoča spreminjanje avtorja redakcije',
+	'changeauthor-title' => 'Spreminjanje avtorja redakcije',
+	'changeauthor-search-box' => 'Iskanje redakcij',
+	'changeauthor-pagename-or-revid' => 'Ime strani ali ID redakcije:',
+	'changeauthor-pagenameform-go' => 'Pojdi',
+	'changeauthor-comment' => 'Pripomba:',
+	'changeauthor-changeauthors-multi' => 'Spremeni {{PLURAL:$1|avtorja|avtorje}}',
+	'changeauthor-explanation-multi' => 'S tem obrazcem lahko spremenite avtorje redakcije.
+Na spodnjem seznamu preprosto spremenite eno ali več uporabniških imen, dodajte pripombo (po želji) in kliknite gumb »Spremeni avtorje«.',
+	'changeauthor-changeauthors-single' => 'Spremeni avtorja',
+	'changeauthor-explanation-single' => 'S tem obrazcem lahko spremenite avtorja redakcije.
+Spodaj preprosto spremenite uporabniško ime, dodajte pripombo (po želji) in kliknite gumb »Spremeni avtorja«.',
+	'changeauthor-invalid-username' => 'Neveljavno uporabniško ime »$1«.',
+	'changeauthor-nosuchuser' => 'Uporabnik »$1« ne obstaja.',
+	'changeauthor-revview' => 'Redakcija #$1 $2',
+	'changeauthor-nosuchtitle' => 'Stran z imenom »$1« ne obstaja.',
+	'changeauthor-weirderror' => 'Prišlo je do zelo nenavadne napake.
+Prosimo, ponovite svojo zahtevo.
+Če se ta napaka ne preneha pojavljati, je zbirka podatkov verjetno poškodovana.',
+	'changeauthor-invalidform' => 'Namesto obrazca po meri, prosimo, uporabite obrazec na [[Special:ChangeAuthor|posebni strani]].',
+	'changeauthor-success' => 'Vaša zahteva je bila uspešno obdelana.',
+	'changeauthor-logentry' => 'je spremenil(-a) avtorja $2 strani $1 iz $3 v $4',
+	'changeauthor-logpagename' => 'Dnevnik sprememb avtorjev',
+	'right-changeauthor' => 'Spreminjanje avtorjev redakcij',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Sasa Stefanovic
+ * @author Жељко Тодоровић
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'changeauthor' => 'Промени аутора ревизије',
 	'changeauthor-desc' => 'Омогући промене аутора ревизија',
 	'changeauthor-title' => 'Промени аутора неке ревизије',
-	'changeauthor-search-box' => 'Претражи ревизије',
+	'changeauthor-search-box' => 'Претражи измене',
 	'changeauthor-pagename-or-revid' => 'Име странице или ИД ревизије:',
 	'changeauthor-pagenameform-go' => 'Иди',
 	'changeauthor-comment' => 'Коментар:',
@@ -1895,22 +2149,24 @@ $messages['sr-ec'] = array(
 	'changeauthor-changeauthors-single' => 'Промени аутора',
 	'changeauthor-invalid-username' => 'Погрешно корисничко име "$1".',
 	'changeauthor-nosuchuser' => 'Нема корисника "$1".',
-	'changeauthor-revview' => 'Ревизија #$1 или $2',
+	'changeauthor-revview' => 'Измена $1 од $2',
 	'changeauthor-nosuchtitle' => 'Не постоји страница под називом "$1".',
 	'changeauthor-success' => 'Баш захтев је био успешно обрађен.',
 	'changeauthor-logentry' => 'Промењен аутор $2 на $1, са $3 на $4',
 	'changeauthor-logpagename' => 'Историја промене аутора',
+	'changeauthor-rev' => 'изм. $1',
 	'right-changeauthor' => 'Промени аутора ревизије',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
 	'changeauthor' => 'Promeni autora revizije',
 	'changeauthor-desc' => 'Omogući promene autora revizija',
 	'changeauthor-title' => 'Promeni autora neke revizije',
-	'changeauthor-search-box' => 'Pretraži revizije',
+	'changeauthor-search-box' => 'Pretraži izmene',
 	'changeauthor-pagename-or-revid' => 'Ime stranice ili ID revizije:',
 	'changeauthor-pagenameform-go' => 'Idi',
 	'changeauthor-comment' => 'Komentar:',
@@ -1918,11 +2174,12 @@ $messages['sr-el'] = array(
 	'changeauthor-changeauthors-single' => 'Promeni autora',
 	'changeauthor-invalid-username' => 'Pogrešno korisničko ime "$1".',
 	'changeauthor-nosuchuser' => 'Nema korisnika "$1".',
-	'changeauthor-revview' => 'Revizija #$1 ili $2',
+	'changeauthor-revview' => 'Izmena $1 od $2',
 	'changeauthor-nosuchtitle' => 'Ne postoji stranica pod nazivom "$1".',
 	'changeauthor-success' => 'Baš zahtev je bio uspešno obrađen.',
 	'changeauthor-logentry' => 'Promenjen autor $2 na $1, sa $3 na $4',
 	'changeauthor-logpagename' => 'Istorija promene autora',
+	'changeauthor-rev' => 'izm. $1',
 	'right-changeauthor' => 'Promeni autora revizije',
 );
 
@@ -2014,7 +2271,21 @@ $messages['sv'] = array(
 	'right-changeauthor' => 'Ändra författaren för en version',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'changeauthor-search-box' => 'திருத்தங்களைத் தேடு',
+	'changeauthor-pagename-or-revid' => 'பக்கத்தின் பெயர் அல்லது திருத்தத்தின் அடையாள எண்:',
+	'changeauthor-pagenameform-go' => 'செல்',
+	'changeauthor-comment' => 'கருத்து:',
+	'changeauthor-changeauthors-single' => 'ஆசிரியரை மாற்றவும்',
+	'changeauthor-nosuchuser' => '"$1" என்று ஒரு பயனர் இல்லை.',
+	'changeauthor-nosuchtitle' => '"$1" என்று ஒரு பக்கம் இல்லை.',
+);
+
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  * @author వైజాసత్య
  */
@@ -2027,13 +2298,23 @@ $messages['te'] = array(
 	'changeauthor-pagenameform-go' => 'వెళ్ళు',
 	'changeauthor-comment' => 'వ్యాఖ్య:',
 	'changeauthor-changeauthors-multi' => '{{PLURAL:$1|రచయితని|రచయితలను}} మార్చు',
+	'changeauthor-explanation-multi' => 'ఈ ఫారము ద్వారా కూర్పు కర్తలను మార్చవచ్చు.
+కింది జాబితాలోని వాడుకరిపేర్లను మార్చి, ఓ వ్యాఖ్య రాసి (ఐచ్ఛికం), "కర్త(ల)ను మార్చు" బొత్తాన్ని నొక్కండి.',
 	'changeauthor-changeauthors-single' => 'రచయితను మార్చు',
+	'changeauthor-explanation-single' => 'ఈ ఫారము ద్వారా ఏదైనా కూర్పు యొక్క కర్తను మార్చవచ్చు.
+కింది జాబితాలోని వాడుకరిపేరును మార్చి, ఓ వ్యాఖ్య రాసి (ఐచ్ఛికం), "కర్తను మార్చు" బొత్తాన్ని నొక్కండి.',
 	'changeauthor-invalid-username' => '"$1" అనేది తప్పుడు వాడుకరి పేరు.',
 	'changeauthor-nosuchuser' => '"$1" అనే పేరుతో సభ్యులెవరూ లేరు.',
 	'changeauthor-revview' => '$2 యొక్క #$1వ కూర్పు',
 	'changeauthor-nosuchtitle' => '"$1" అనే పేరుతో పేజీ లేదు.',
+	'changeauthor-weirderror' => 'చాలా చిత్రమైన లోపం దొర్లింది.
+మీ అభ్యర్ధనను మళ్ళీ ప్రయత్నించండి.
+ఈ లోపం మళ్ళీ మళ్ళీ ఎదురైతే, దానర్థం డేటాబేసు కుప్పకూలినట్లే.',
+	'changeauthor-invalidform' => 'కస్టము ఫారం కాకుండా  [[Special:ChangeAuthor|ప్రత్యేక పేజీ]] అందించే ఫారము వాడండి.',
 	'changeauthor-success' => 'మీ అభ్యర్థనని విజయవంతంగా పూర్తిచేసాం.',
+	'changeauthor-logentry' => '$1 యొక్క $2 కి కర్తను $3 నుండి $4 కు మార్చాం',
 	'changeauthor-logpagename' => 'రచయిత మార్పుల చిట్టా',
+	'right-changeauthor' => 'కూర్పు యొక్క కర్తను మార్చు',
 );
 
 /** Tetum (Tetun)
@@ -2043,7 +2324,7 @@ $messages['tet'] = array(
 	'changeauthor-pagenameform-go' => 'Bá',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -2072,7 +2353,7 @@ $messages['tg-cyrl'] = array(
 	'changeauthor-logpagename' => 'Гузориши тағйири муаллиф',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -2169,14 +2450,14 @@ Eğer bu hata görünmeye devam ederse, muhtemelen veritabanı bozulmuştur.',
 	'right-changeauthor' => 'Bir revizyonun yazarını değiştir',
 );
 
-/** ئۇيغۇرچە (ئۇيغۇرچە)
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Alfredie
  */
 $messages['ug-arab'] = array(
 	'changeauthor-pagenameform-go' => 'كۆچۈش',
 );
 
-/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+/** Uyghur (Latin script) (Uyghurche‎)
  * @author Jose77
  */
 $messages['ug-latn'] = array(
@@ -2269,7 +2550,7 @@ Nếu lỗi này tiếp tục hiện ra, có lẽ cơ sở dữ liệu đã bị
 $messages['vo'] = array(
 	'changeauthor' => 'Votükön lautani revida',
 	'changeauthor-desc' => 'Dälon votükami revidalautana',
-	'changeauthor-title' => 'Votükön revidalautana',
+	'changeauthor-title' => 'Votükön revidalautani',
 	'changeauthor-search-box' => 'Sukön revidis',
 	'changeauthor-pagename-or-revid' => 'Padanem u revidanüm:',
 	'changeauthor-pagenameform-go' => 'Ledunolöd',
@@ -2291,6 +2572,7 @@ If pöl at dönu ojenon, nünodem ba edädikon.',
 	'changeauthor-success' => 'Beg olik peledunon benosekiko.',
 	'changeauthor-logentry' => 'Lautan revida: $2 pada: $1 pevotükön de: $3 ad: $4.',
 	'changeauthor-logpagename' => 'Jenotalised lautanivotükamas',
+	'right-changeauthor' => 'Votükön revidalautani',
 );
 
 /** Yiddish (ייִדיש)
@@ -2300,7 +2582,7 @@ $messages['yi'] = array(
 	'changeauthor-pagenameform-go' => 'גיין',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -2330,16 +2612,19 @@ $messages['yue'] = array(
 	'changeauthor-logpagename' => '作者更動日誌',
 );
 
-/** Simplified Chinese (‪中文(简体)‬) */
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Chenxiaoqino
+ * @author Xiaomingyan
+ */
 $messages['zh-hans'] = array(
 	'changeauthor' => '更改修订版本作者',
 	'changeauthor-desc' => '更改指定修订版本的作者',
 	'changeauthor-title' => '更换特定修订版本作者',
 	'changeauthor-search-box' => '寻找修定版本',
 	'changeauthor-pagename-or-revid' => '页面名称或修定版本号码：',
-	'changeauthor-pagenameform-go' => '寻找',
+	'changeauthor-pagenameform-go' => '提交',
 	'changeauthor-comment' => '理由：',
-	'changeauthor-changeauthors-multi' => '{{int:changeauthor-changeauthors-single}}',
+	'changeauthor-changeauthors-multi' => '变更{{PLURAL:$1|作者|作者们}}',
 	'changeauthor-explanation-multi' => '您可以在这个表单中更改任一修订版本的作者。
 更改完成后请输入更改理由并按下“{{int:changeauthor-changeauthors-single}}”以完成更改。',
 	'changeauthor-changeauthors-single' => '更改作者',
@@ -2354,10 +2639,13 @@ $messages['zh-hans'] = array(
 	'changeauthor-success' => '处理完成',
 	'changeauthor-logentry' => '更改[[$1]]修订版本$2的作者从 $3 到 $4',
 	'changeauthor-logpagename' => '作者更改日志',
+	'right-changeauthor' => '更换特定修订版本作者',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Alex S.H. Lin
+ * @author Horacewai2
+ * @author Waihorace
  */
 $messages['zh-hant'] = array(
 	'changeauthor' => '更改修訂版本作者',
@@ -2367,7 +2655,7 @@ $messages['zh-hant'] = array(
 	'changeauthor-pagename-or-revid' => '頁面名稱或修定版本號碼：',
 	'changeauthor-pagenameform-go' => '尋找',
 	'changeauthor-comment' => '理由：',
-	'changeauthor-changeauthors-multi' => '{{int:changeauthor-changeauthors-single}}',
+	'changeauthor-changeauthors-multi' => '更改{{PLURAL:$1|作者|作者}}',
 	'changeauthor-explanation-multi' => '您可以在這個表單中更改任一修訂版本的作者。
 更改完成後請輸入更改理由並按下「{{int:changeauthor-changeauthors-single}}」以完成更改。',
 	'changeauthor-changeauthors-single' => '更改作者',
@@ -2382,5 +2670,6 @@ $messages['zh-hant'] = array(
 	'changeauthor-success' => '處理完成',
 	'changeauthor-logentry' => '更改[[$1]]修訂版本$2的作者從 $3 到 $4',
 	'changeauthor-logpagename' => '作者更改日誌',
+	'right-changeauthor' => '更換特定修訂版本作者',
 );
 

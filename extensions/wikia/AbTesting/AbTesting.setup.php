@@ -40,22 +40,8 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/AbTesting.class.php", 'AbTesting' );
  */
 $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/AbTesting.i18n.php", 'AbTesting' );
 
-/**
- * special pages
- */
-$app->registerClass('SpecialAbTestingController', $dir . '/SpecialAbTestingController.class.php' );
-$app->registerSpecialPage('AbTesting', 'SpecialAbTestingController');
-
-/**
- * rights
- */
-$wgAvailableRights[] = 'abtestpanel';
-$wgGroupPermissions['staff']['abtestpanel'] = true;
-
-/**
- * hooks
- */
-$app->registerHook( 'SkinGetHeadScripts', 'AbTesting', 'onSkinGetHeadScripts');
+// Embed the experiment/treatment config in the head scripts.
+$app->registerHook( 'WikiaSkinTopScripts', 'AbTesting', 'onWikiaSkinTopScripts' );
 
 //AbTesting is an Oasis-only experiment for now
 //$app->registerHook( 'WikiaMobileAssetsPackages', 'AbTesting', 'onWikiaMobileAssetsPackages' );

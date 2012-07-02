@@ -152,7 +152,7 @@ $messages['fr'] = array(
 	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia?uselang=fr',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  * @author Xanocebreiro
  */
@@ -317,10 +317,10 @@ $messages['nl-informal'] = array(
  */
 $messages['pl'] = array(
 	'landingpage' => 'Witamy na Wikii',
-	'landingpage-start-exploring' => 'Gotów na przeglądanie?',
+	'landingpage-start-exploring' => 'Gotowy do przeglądania?',
 	'landingpage-start-exploring-text' => 'Poszukaj wybranego tematu lub przejrzyj najczęściej wyszukiwane.',
 	'landingpage-readfaq' => 'Masz pytania? Przejrzyj nasz FAQ &gt;',
-	'landingpage-text' => 'Na Wikii można <strong>komunikować się z innymi osobami</strong> dzielącymi Twoje <strong>pasje i zainteresowania</strong>. Znajdź swoją społeczność, komentuj i edytuj, a nawet <strong>utwórz własną stronę</strong> i społeczność.',
+	'landingpage-text' => 'Na Wikii można <strong>komunikować się z innymi osobami</strong> dzielącymi Twoje <strong>pasje i zainteresowania</strong>. Znajdź swoją społeczność, komentuj i edytuj, czy nawet <strong>załóż własną stronę</strong> i społeczność.',
 	'landingpage-buttons-learn-more' => 'Dowiedz się więcej &gt;',
 	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia?uselang=pl',
 );

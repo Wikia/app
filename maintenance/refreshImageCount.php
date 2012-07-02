@@ -21,14 +21,14 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class RefreshImageCount extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Resets ss_image count, forcing slaves to pick it up.";
 	}
-	
+
 	public function execute() {
 		$dbw = wfGetDB( DB_MASTER );
 
@@ -41,7 +41,7 @@ class RefreshImageCount extends Maintenance {
 		$dbw->update( 'site_stats',
 			array( 'ss_images' => null ),
 			array( 'ss_row_id' => 1 ) );
-	
+
 		// Now this update will be forced to go out
 		$dbw->update( 'site_stats',
 			array( 'ss_images' => $count ),
@@ -50,5 +50,5 @@ class RefreshImageCount extends Maintenance {
 }
 
 $maintClass = "RefreshImageCount";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );
 

@@ -13,32 +13,26 @@ $wgPhpbbDataRootPath        = 'forum/';
 $wgPhpbbDataUpdatedDuration = 24;		# hours
 
 $wgExtensionCredits['other'][] = array(
-	'path'        => __FILE__,
-	'name'        => 'phpbbData',
-	'version'     => '1.0',
-	'author'      => 'Tim Laqua',
-	'description' => 'Allows you to include phpBB data in wiki pages',
-	'url'         => 'http://www.mediawiki.org/wiki/Extension:phpbbData',
+	'path'           => __FILE__,
+	'name'           => 'phpbbData',
+	'version'        => '1.1',
+	'author'         => 'Tim Laqua',
+	'descriptionmsg' => 'phpbbdata-desc',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:phpbbData',
 );
 
-$wgExtensionFunctions[] = 'efPhpbbData_Setup';
-$wgHooks['LanguageGetMagic' ][] = 'efPhpbbData_LanguageGetMagic';
+$wgHooks['ParserFirstCallInit'][] = 'efPhpbbData_ParserFirstCallInit';
 $wgHooks['BeforePageDisplay'][] = 'efPhpbbData_BeforePageDisplay';
 
-function efPhpbbData_Setup() {
-        global $wgParser, $wgMessageCache;
-	
-		#Add Messages
-		require( dirname( __FILE__ ) . '/phpbbData.i18n.php' );
-		foreach( $messages as $key => $value ) {
-			  $wgMessageCache->addMessages( $messages[$key], $key );
-		}
-		
-        # Set a function hook associating the "example" magic word with our function
-        $wgParser->setFunctionHook( 'phpbb', 'efPhpbbData_RenderList' );
-        $wgParser->setFunctionHook( 'phpbblink', 'efPhpbbData_RenderLink' );
-		
-		return true;
+$wgExtensionMessagesFiles['phpbbData'] = dirname( __FILE__ ) . '/phpbbData.i18n.php';
+$wgExtensionMessagesFiles['phpbbDataMagic'] = dirname( __FILE__ ) . '/phpbbData.i18n.magic.php';
+
+function efPhpbbData_ParserFirstCallInit( $parser ) {
+	# Set a function hook associating the "example" magic word with our function
+	$parser->setFunctionHook( 'phpbb', 'efPhpbbData_RenderList' );
+	$parser->setFunctionHook( 'phpbblink', 'efPhpbbData_RenderLink' );
+
+	return true;
 }
 
 function efPhpbbData_BeforePageDisplay(&$out) { 
@@ -50,7 +44,7 @@ function efPhpbbData_BeforePageDisplay(&$out) {
 		# just came from
 		$link = '<div style="float: right;"><a href="' . 
 			htmlspecialchars($wgRequest->getText('toForum')) . 
-			'">&rarr; Return to Forum</a></div>' . $text;
+			'">→ Return to Forum</a></div>' . $text;
 		
 		# Add the Return to Forum link in to the page title
 		# Since we're making it render HTML in a second,
@@ -65,16 +59,6 @@ function efPhpbbData_BeforePageDisplay(&$out) {
 	
 	# Be nice.
 	return true;
-}
-
-function efPhpbbData_LanguageGetMagic( &$magicWords, $langCode ) {
-        # Add the magic word
-        # The first array element is case sensitive, in this case it is not case sensitive
-        # All remaining elements are synonyms for our parser function
-        $magicWords['phpbb'] = array( 0, 'phpbb' );
-        $magicWords['phpbblink'] = array( 0, 'phpbblink' );
-        # unless we return true, other parser functions extensions won't get loaded.
-        return true;
 }
 
 function efPhpbbData_makeTopicWikiLink($display_text='', $forum_id=null, $topic_id=null, $post_id=null) {

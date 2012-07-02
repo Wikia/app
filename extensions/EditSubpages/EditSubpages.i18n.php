@@ -1,7 +1,9 @@
 <?php
 /**
  * Internationalisation file for the EditSubpages extension
- * @addtogroup Extensions
+ *
+ * @file
+ * @ingroup Extensions
 */
 
 $messages = array();
@@ -25,9 +27,10 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Purodha
  * @author Siebrand
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'editsubpages-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'editsubpages-desc' => '{{desc}}',
 	'unlockedpages' => "Leave all the wiki markup, including the spaces, as is. You can translate the text, including 'Leave this line exactly as it is'. The first line of this messages has one (1) leading space.",
 );
 
@@ -63,7 +66,7 @@ $messages['arz'] = array(
   #</pre><!-- اترك هذا السطر بمفرده -->',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -124,6 +127,22 @@ $messages['bs'] = array(
  */
 $messages['ca'] = array(
 	'editsubpages-desc' => 'Permet als administradors desbloquejar una pàgina i totes les seves subpàgines per a les edicions anònimes a través de [[MediaWiki:Unlockedpages]]',
+	'unlockedpages' => ' #<!-- deixau aquesta línia --><pre>
+# Posau les pàgines que voleu desbloquejar a continuació, utilitzant
+# * Nom de la pàgina
+# Les pàgines a desbloquejar han de començar amb un pic per ser computades,
+# qualsevol altra cosa serà considerada un comentari
+# Els noms de les pàgines han de ser [[enllaços]] i es distingeix entre majúscules i minúscules
+# Addicionalment, les pàgines de discussió seran automàticament desbloquejades amb la pàgina
+# Vegeu http://www.mediawiki.org/wiki/Extension:EditSubpages per a més informació
+ #</pre><!-- deixau aquesta línia -->',
+);
+
+/** Czech (Česky)
+ * @author Jkjk
+ */
+$messages['cs'] = array(
+	'editsubpages-desc' => 'Umožnit správcům odblokovat stránku a její podstránky pro anonymní editování pomocí [[MediaWiki:Unlockedpages]]',
 );
 
 /** German (Deutsch)
@@ -364,7 +383,7 @@ $messages['ja'] = array(
   #</pre><!-- leave this line alone -->',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -388,7 +407,7 @@ Metmaacher se ze Ändere.',
  * @author Robby
  */
 $messages['lb'] = array(
-	'editsubpages-desc' => "Erlaabt engem Adiministrateur fir d'Spär vu Säiten opzehiewen an all Ënnersäite vun däer Säit fir anonym Ännerungen via [[MediaWiki:Unlockedpages|Säiten denen hir Spär opgehuewen ass]]",
+	'editsubpages-desc' => "Erlaabt engem Adiministrateur fir d'Spär vu Säiten opzehiewen an all Ënnersäite vun där Säit fir anonym Ännerungen via [[MediaWiki:Unlockedpages|Säiten deenen hir Spär opgehuewen ass]]",
 	'unlockedpages' => " #<!-- Dës Zeil net änneren --><pre>
 # Säite vun deenen Dir wëllt datt se net gespaart sinn, hei ënnendrënner schreiwen mat dem
 # * Säitennumm
@@ -397,6 +416,21 @@ $messages['lb'] = array(
 # D'Spär vun Diskussionssäite gëtt automatesch matopgehuewen.
 # Kuckt: http://www.mediawiki.org/wiki/Extension:EditSubpages fir méi Informatiounen
   #</pre><!-- Dës Zeil net änneren -->",
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'editsubpages-desc' => 'Ļauj sistēmas operatoriem atbloķēt lapu, izmantojot [[MediaWiki:Unlockedpages]], lai to varētu rediģēt anonīmie lietotāji',
+	'unlockedpages' => '# <!-- šo līniju neaiztikt --><pre>
+ # Norādi lapas, kuras vēlies atbloķēt zemāk, rakstot 
+ # * Lapas nosaukums 
+ # Pirms lapas nosukuma jābūt zvaigznītei, citādi tā netiks atbloķēt
+ # Lapu nosaukumi var būt [[saites]] un ir reģistrjutīgi 
+ # Arī diskusiju lapas tiks automātiski atbloķētas līdz ar lapu 
+ # Plašākai informācijai skatīt http://www.mediawiki.org/wiki/Extension:EditSubpages
+ # </pre><!-- šo līniju neaiztikt -->',
 );
 
 /** Macedonian (Македонски)
@@ -419,7 +453,7 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'editsubpages-desc' => 'സിസോപ്പിനു അജ്ഞാതരുടെ തിരുത്തലിനു വേണ്ടി ഒരു താളും അതിന്റെ ഉപതാളുകളും സ്വതന്ത്രക്കുവാന്‍ സാധിക്കുന്നു. [[MediaWiki:Unlockedpages]]',
+	'editsubpages-desc' => 'സിസോപ്പിനു അജ്ഞാതരുടെ തിരുത്തലിനു വേണ്ടി ഒരു താളും അതിന്റെ ഉപതാളുകളും സ്വതന്ത്രക്കുവാൻ സാധിക്കുന്നു. [[MediaWiki:Unlockedpages]]',
 );
 
 /** Marathi (मराठी)
@@ -436,6 +470,22 @@ $messages['mr'] = array(
 # तसेच, लेखाबरोबर चर्चा पाने सुद्धा असुरक्षित होतील
 # अधिक माहितीसाठी http://www.mediawiki.org/wiki/Extension:EditSubpages पहा
   #</pre><!-- leave this line alone -->',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'editsubpages-desc' => 'Membolehkan penyelia untuk membuka kunci laluan dan semua sublaman dalam laman itu untuk penyuntingan secara rahsia melalui [[MediaWiki:Unlockedpages]]',
+	'unlockedpages' => ' #<!-- jangan usik baris ini --><pre>
+# Letakkan laman-laman yang ingin dibuka kunci di bawah dengan menggunakan
+# * Nama laman
+# Laman yang dibuka kunci mesti bermula dengan bulet untuk dikira,
+# yang selebihnya dianggap sebagai komen
+# Nama laman itu boleh berbentuk [[pautan]] dan peka besar kecil huruf
+# Selain itu, laman perbincangannya akan dibuka kunci secara automatik beserta laman itu
+# Lihat http://www.mediawiki.org/wiki/Extension:EditSubpages untuk maklumat lanjut
+ #</pre><!-- jangan usik baris ini -->',
 );
 
 /** Dutch (Nederlands)
@@ -476,7 +526,7 @@ $messages['nn'] = array(
  * @author Jon Harald Søby
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'editsubpages-desc' => 'Lar administratorer låse opp en side og alle dens undersider for endringer av uregistrerte via [[MediaWiki:Unlockedpages]]',
 	'unlockedpages' => ' #<!-- la denne linja være som den er --><pre>
 # Skriv inn sider du vil låse opp nedenfor på formen
@@ -538,19 +588,20 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'editsubpages-desc' => 'Permite a administradores desbloquearem uma página e todas as suas subpáginas para edição anónima através de [[MediaWiki:Unlockedpages]]',
-	'unlockedpages' => " #<!-- deixe esta linha como está --><pre>
-# Coloque páginas que pretende desbloquear abaixo, usando
+	'unlockedpages' => ' #<!-- deixe esta linha como está --><pre>
+# Coloque as páginas que pretende desbloquear abaixo, usando
 # * Nome da página
-# Páginas desbloqueadas devem começar com uma 'bala' (*) para serem consideradas,
+# Páginas desbloqueadas devem começar com um asterisco (*) para serem consideradas,
 # tudo o resto é considerado um comentário
-# Os nomes de páginas podem ser [[ligações]] e são sensíveis à capitalização
-# As páginas de discussão serão também automaticamente desbloqueadas com a página
-# Veja http://www.mediawiki.org/wiki/Extension:EditSubpages para mais informação
-  #</pre><!-- deixe esta linha como está -->",
+# Os nomes das páginas podem ser [[links]] e distingue-se maiúsculas de minúsculas
+# A respectiva página de discussão será também desbloqueada automaticamente
+# Para mais informações, consulte http://www.mediawiki.org/wiki/Extension:EditSubpages
+  #</pre><!-- deixe esta linha como está -->',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -573,7 +624,7 @@ $messages['pt-br'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'editsubpages-desc' => 'Permite administratorilor să deblocheze o pagină şi toate subpaginile ei pentru modificare anonimă via [[MediaWiki:Unlockedpages]]',
+	'editsubpages-desc' => 'Permite administratorilor să deblocheze o pagină și toate subpaginile ei pentru modificare anonimă via [[MediaWiki:Unlockedpages]]',
 );
 
 /** Tarandíne (Tarandíne)
@@ -624,18 +675,53 @@ $messages['sk'] = array(
   #</pre><!-- nechajte tento riadok ako je -->',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Charmed94
  * @author Обрадовић Горан
  */
 $messages['sr-ec'] = array(
-	'editsubpages-desc' => 'Омогућава администраторима да одблокирају страницу и све подстранице те странице за анонимно уређивање помоћу [[MediaWiki:Unlockedpages]]',
+	'editsubpages-desc' => 'Омогућава администраторима да откључају страницу и све подстранице исте за анонимно уређивање помоћу [[MediaWiki:Unlockedpages]]',
+	'unlockedpages' => ' #<!-- leave this line alone --><pre>
+# Постави странице које желите да откључате испод користећи
+# * Назив странице
+# Откључане странице морају да почињу са зрном да би се рачунало,
+# све остало се сматра као коментар
+# Називи страница могу бити [[везе]] и осетљиви су на велика и мала слова
+# Такође, странице за разговор биће аутоматски откључане са страницом
+# Видите http://www.mediawiki.org/wiki/Extension:EditSubpages за више информација
+ #</pre><!-- leave this line alone -->',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
 	'editsubpages-desc' => 'Omogućava administratorima da odblokiraju stranicu i sve podstranice te stranice za anonimno uređivanje pomoću [[MediaWiki:Unlockedpages]]',
+	'unlockedpages' => ' #<!-- leave this line alone --><pre>
+# Postavi stranice koje želite da otključate ispod koristeći
+# * Naziv stranice
+# Otključane stranice moraju da počinju sa zrnom da bi se računalo,
+# sve ostalo se smatra kao komentar
+# Nazivi stranica mogu biti [[veze]] i osetljivi su na velika i mala slova
+# Takođe, stranice za razgovor biće automatski otključane sa stranicom
+# Vidite http://www.mediawiki.org/wiki/Extension:EditSubpages za više informacija
+ #</pre><!-- leave this line alone -->',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'editsubpages-desc' => 'Ngawenangkeun opsis pikeun muka konci hiji kaca sarta sakabéh subkacana pikeun diédit sacara anonim maké [[MediaWiki:Unlockedpages]]',
+	'unlockedpages' => ' #<!-- baris ieu ulah dirobah --><pre>
+# Asupkeun kaca-kaca anu rék dibuka di handap ieu migunakeun
+# * Ngaran kaca
+# Ngarah kaitung, kaca nu dibuka kudu dimimitian ku pélor,
+# mun teu kitu bakal dianggap kamandang
+# NGaran kaca bisa jadi [[tutumbu]] sarta aksarana sénsitif
+# Kaca obrolanana ogé bakal ngilu kabuka
+# Baca http://www.mediawiki.org/wiki/Extension:EditSubpages pikeun leuwih lengkepna
+ #</pre><!-- baris ieu ulah dirobah -->',
 );
 
 /** Swedish (Svenska)
@@ -658,10 +744,20 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Kiranmayee
  */
 $messages['te'] = array(
 	'editsubpages-desc' => 'ఒక పేజీని మరియు దాని అన్ని ఉపపేజీలను గుప్తముగా మార్చడానికి [[MediaWiki:Unlockedpages]] ద్వారా సంరక్షణ తీసివేసేందుకు  సిస్ఆప్స్కు అవకాసము లభిస్తుంది',
+	'unlockedpages' => '#<!-- ఈ లైన్ను వదిలెయ్యండి --><pre>
+# తాళం తియ్యదలచిన పేజీలను కింది సమాచారం ఇస్తూ, ఉంచండి 
+# * పేజీపేరు
+# తాళం తియ్యాల్సిన పేజీలు లెక్కపెట్టేందుకు వీలుగా బులెట్లతో మొదలవ్వాలి,
+# మిగతావన్నీ కామెంటులాగా భావించబడతాయి 
+# పేజీపేర్లు [[లింకులు]] కావచ్చు, అవి కేస్ సెన్సిటివ్ గా ఉంటాయి
+# చర్చ పేజీల తాళాలు కూడా పేజీతో పాటు తీయబడతాయి
+# మరింత సమాచారం కోసం http://www.mediawiki.org/wiki/Extension:EditSubpages చూడండి 
+ #</pre><!-- ఈ లైన్ను వదిలెయ్యండి-->',
 );
 
 /** Tagalog (Tagalog)
@@ -713,10 +809,11 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
  * @author Vinhtantran
  */
 $messages['vi'] = array(
-	'editsubpages-desc' => 'Cho phép các quản lý mở khóa một trang và tất cả các trang con của nó để thành viên vô danh có thể sửa đổi thông qua [[MediaWiki:Unlockedpages]]',
+	'editsubpages-desc' => 'Cho phép các quản lý mở khóa một trang và tất cả các trang con của nó để người dùng vô danh có thể sửa đổi thông qua [[MediaWiki:Unlockedpages]]',
 	'unlockedpages' => ' #<!-- đừng sửa vào dòng này --><pre>
 # Đặt trang bạn muốn mở khóa vào dưới đây
 # dùng tên trang là *
@@ -762,6 +859,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  */
 $messages['zh-hant'] = array(
 	'editsubpages-desc' => '允許系統管理員通過[[MediaWiki:Unlockedpages]]將一個頁面及其子頁面解除封鎖，以便任何用戶都可以編輯。',
@@ -770,9 +868,9 @@ $messages['zh-hant'] = array(
 # * 頁面名稱
 # 解除封鎖的頁面必須以星號開頭
 # 否則無效
-# 頁面名稱可以是 [[鏈接]] 的形式，並且所羅列的頁面名稱對簡繁體敏感
-# 討論頁將會隨着頁面自動解除封鎖
-# 請瀏覽 http://www.mediawiki.org/wiki/Extension:EditSubpages 以獲得更多幫助
+# 頁面名稱可以是 [[連結]] 的形式，並且所羅列的頁面名稱對簡繁體敏感
+# 討論頁將會隨著頁面自動解除封鎖
+# 請瀏覽 http://www.mediawiki.org/wiki/Extension:EditSubpages 以取得更多說明
   #</pre><!-- 本行需要保留 -->',
 );
 

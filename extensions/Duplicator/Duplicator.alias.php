@@ -6,35 +6,35 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'Duplicator' => array( 'Duplicator', 'Duplicate' ),
 );
 
 /** Arabic (العربية)
  * @author Meno25
  */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Duplicator' => array( 'مستنسخ', 'استنساخ' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'Duplicator' => array( 'مستنسخ', 'استنساخ' ),
 );
 
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Duplicator' => array( 'Seiten_duplizieren', 'Duplizieren' ),
 );
 
-$aliases['fi'] = array(
+$specialPageAliases['fi'] = array(
 	'Duplicator' => array( 'Monista' ),
 );
 
-$aliases['nl'] = array(
-	'Duplicator' => array( 'Kopieren', 'kopiëren' ),
+$specialPageAliases['nl'] = array(
+	'Duplicator' => array( 'Kopieren', 'Kopiëren' ),
 );

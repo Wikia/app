@@ -14,7 +14,6 @@ class Interstitial extends UnlistedSpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct( INTERSTITIALS_SP /*class*/ );
-		wfLoadExtensionMessages( INTERSTITIALS_SP ); // Load internationalization messages
 	}
 
 	function execute(){
@@ -26,8 +25,6 @@ class Interstitial extends UnlistedSpecialPage {
 		$noAutoRedirect = ( $wgRequest->getText( 'noredirect' ) == 1 ) ? true : false;
 
 		if(($wgAdsInterstitialsEnabled) && (!$wgUser->isLoggedIn())){
-			global $wgExtensionsPath;
-			wfLoadExtensionMessages(INTERSTITIALS_SP);
 
 			$COOKIE_KEY = "IntPgCounter";
 			$pageCounter = (isset($_COOKIE[$COOKIE_KEY])?$_COOKIE[$COOKIE_KEY]:0);

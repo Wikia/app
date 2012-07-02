@@ -342,7 +342,7 @@ $messages['fr'] = array(
 	'ringtone-matcher-by-song' => 'Envoyer la sonnerie %s sur votre mobile',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -784,7 +784,6 @@ $messages['pfl'] = array(
 );
 
 /** Polish (polski)
- * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -795,7 +794,7 @@ $messages['pl'] = array(
 	'app-tab-sotd' => 'PD',
 	'app-async-error-title' => 'Ups',
 	'app-async-error-message' => 'Chwilowy problem z połączeniem. Spróbuj ponownie później.',
-	'app-nonetwork-dialog-title' => 'Brak sieci',
+	'app-nonetwork-dialog-title' => 'Brak Internetu',
 	'app-nonetwork-dialog-message' => 'Nie wykryto połączenia Internetowego.',
 	'app-nonetwork-dialog-close-button' => 'Ok',
 	'search-go' => 'Szukaj!',

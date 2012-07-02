@@ -40,16 +40,6 @@ interface iMappingService {
 	function addParameterInfo( array &$parameterInfo );
 	
 	/**
-	 * Adds a dependency that is needed for this service. It will be passed along with the next 
-	 * call to getDependencyHtml or addDependencies.
-	 * 
-	 * @since 0.6.5
-	 * 
-	 * @param string $dependencyHtml
-	 */	
-	function addDependency( $dependencyHtml );
-	
-	/**
 	 * Adds a feature to this service. This is to indicate this service has support for this feature.
 	 * 
 	 * @since 0.6.5
@@ -58,15 +48,6 @@ interface iMappingService {
 	 * @param string $handlingClass
 	 */	
 	function addFeature( $featureName, $handlingClass );
-	
-	/**
-	 * Returns the html for the needed dependencies or false.
-	 * 
-	 * @since 0.6.5
-	 * 
-	 * @return mixed String or false
-	 */	
-	function getDependencyHtml();
 	
 	/**
 	 * Returns the name of the class that handles the provided feature in this service, or false if there is none.
@@ -86,7 +67,7 @@ interface iMappingService {
 	 * 
 	 * @param string $featureName.
 	 * 
-	 * @return iMappingFeature or false
+	 * @return object or false
 	 */	
 	function getFeatureInstance( $featureName );	
 	
@@ -120,6 +101,15 @@ interface iMappingService {
 	function getDefaultZoom();
 	
 	/**
+	 * Returns the zoomlevel that shows the whole earth for the mapping service.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @return integer
+	 */
+	public function getEarthZoom();
+	
+	/**
 	 * Returns a string that can be used as an unique ID for the map html element.
 	 * Increments the number by default, providing false for $increment will get
 	 * you the same ID as on the last request.
@@ -131,17 +121,5 @@ interface iMappingService {
 	 * @return string
 	 */
 	function getMapId( $increment = true );
-
-	/**
-	 * Creates a JS array with marker meta data that can be used to construct a 
-	 * map with markers via a function in this services JS file.
-	 * 
-	 * @since 0.6.5
-	 * 
-	 * @param array $markers
-	 * 
-	 * @return string
-	 */	
-	function createMarkersJs( array $markers );	
 
 }

@@ -86,14 +86,14 @@ class AchImageUploadService {
 			}
 		}
 	}
-	
+
 	public static function uploadBadge($destinationFileName, $badgeLevel) {
 		global $wgRequest, $wgUser;
 		$upload = new UploadAchievementsFromFile();
-		$upload->initialize( $destinationFileName, $wgRequest->getFileTempName( 'wpUploadFile' ), $wgRequest->getFileSize( 'wpUploadFile' ) );
+		$upload->initialize( $destinationFileName, $wgRequest);
 
 		$details = $upload->verifyUpload();
-		
+
 		//ignore warnings about existing files, they MUST be silently overwritten
 		if ( $details[ 'status' ] != UploadBase::OK ) {
 			return false;
@@ -108,7 +108,7 @@ class AchImageUploadService {
 				return false;
 			}
 		}
-		
+
 		// badge data
 		$badgeFile = $upload->getTempPath();
 
@@ -195,7 +195,7 @@ class AchImageUploadService {
 
 		// save badge
 		$ret = imagepng($badge, $badgeFile, 9, PNG_ALL_FILTERS);
-		
+
 		wfDebug(__METHOD__ . ": generated badge saved as {$badgeFile}\n");
 
 		// collect garbage
@@ -207,21 +207,21 @@ class AchImageUploadService {
 
 		// upload generated badge
 		$status = $upload->performUpload('/* comment */', '/* page text */', false, $wgUser);
-		
+
 		if ( !$status->isGood() ) {
 			return false;
 		}
-		
+
 		return $upload->getLocalFile();
 	}
 
 	public static function uploadHover( $destinationFileName ) {
 		global $wgRequest, $wgUser;
 		$upload = new UploadAchievementsFromFile();
-		$upload->initialize( $destinationFileName, $wgRequest->getFileTempName( 'hover_content' ), $wgRequest->getFileSize( 'hover_content' ) );
+		$upload->initialize( $destinationFileName, $wgRequest);
 
 		$details = $upload->verifyUpload();
-		
+
 		//ignore warnings, existing files MUST be overwritten
 		//check only status
 		if ( $details[ 'status' ] != UploadBase::OK ) {
@@ -237,13 +237,13 @@ class AchImageUploadService {
 				return false;
 			}
 		}
-		
+
 		$status = $upload->performUpload('/* comment */', '/* page text */', false, $wgUser);
-		
+
 		if ( !$status->isGood() ) {
 			return false;
 		}
-		
+
 		return $upload->getLocalFile();
 	}
 }

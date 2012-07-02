@@ -4,7 +4,8 @@ if (!defined('MEDIAWIKI')) die();
  * Special page which creates independent copies of articles, retaining
  * separate histories
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
 
@@ -13,17 +14,18 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Duplicator',
 	'version' => '1.2',
 	'author' => 'Rob Church',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Duplicator',
-	'description' => 'Create independent copies of articles with full edit histories',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Duplicator',
 	'descriptionmsg' => 'duplicator-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Duplicator'] = $dir . 'Duplicator.i18n.php';
-$wgExtensionAliasesFiles['Duplicator'] = $dir . 'Duplicator.alias.php';
+$wgExtensionMessagesFiles['DuplicatorAlias'] = $dir . 'Duplicator.alias.php';
 $wgAutoloadClasses['SpecialDuplicator'] = $dir . 'Duplicator.page.php';
 $wgSpecialPages['Duplicator'] = 'SpecialDuplicator';
-$wgExtensionFunctions[] = 'efDuplicator';
+
+$wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'efDuplicatorNavigation';
+$wgHooks['SkinTemplateToolboxEnd'][] = 'efDuplicatorToolbox';
 
 /**
  * User permissions
@@ -37,22 +39,14 @@ $wgAvailableRights[] = 'duplicate';
 $wgDuplicatorRevisionLimit = 250;
 
 /**
- * Extension setup function
- */
-function efDuplicator() {
-	global $wgHooks;
-	$wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'efDuplicatorNavigation';
-	$wgHooks['SkinTemplateToolboxEnd'][] = 'efDuplicatorToolbox';
-}
-
-/**
  * Build the link to be shown in the toolbox if appropriate
+ * @param $skin Skin
  */
 function efDuplicatorNavigation( &$skin, &$nav_urls, &$oldid, &$revid ) {
 	global $wgUser;
-	$ns = $skin->mTitle->getNamespace();
+	$ns = $skin->getTitle()->getNamespace();
 	if( ( $ns === NS_MAIN || $ns === NS_TALK ) && $wgUser->isAllowed( 'duplicate' ) ) {
-		wfLoadExtensionMessages( 'Duplicator' );
+		
 		$nav_urls['duplicator'] = array(
 			'text' => wfMsg( 'duplicator-toolbox' ),
 			'href' => $skin->makeSpecialUrl( 'Duplicator', "source=" . wfUrlEncode( "{$skin->thispage}" ) )
@@ -66,7 +60,7 @@ function efDuplicatorNavigation( &$skin, &$nav_urls, &$oldid, &$revid ) {
  */
 function efDuplicatorToolbox( &$monobook ) {
 	if ( isset( $monobook->data['nav_urls']['duplicator'] ) ) {
-		wfLoadExtensionMessages( 'Duplicator' );
+		
 		if ( $monobook->data['nav_urls']['duplicator']['href'] == '' ) {
 			?><li id="t-isduplicator"><?php echo $monobook->msg( 'duplicator-toolbox' ); ?></li><?php
 		} else {

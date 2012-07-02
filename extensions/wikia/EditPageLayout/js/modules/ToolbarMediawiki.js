@@ -32,27 +32,37 @@
 		},
 
 		buildToolbar: function( toolbarNode ) {
-			var editor = this.editor;
-			function addButton(button) {
-				if (editor.fire('beforemediawikibutton',editor,button)) {
-					mwInsertEditButton(toolbarNode,button);
-				}
-			}
+			var editor = this.editor,
+				i,
+				len,
+				addButton = function(button) {
+					if (editor.fire('beforemediawikibutton',editor,button)) {
+						mw.toolbar.insertButton.apply(mw.toolbar, button);
+					}
+				};
+
+			// use custom place for toolbar
+			mw.toolbar.$toolbar = $(toolbarNode);
+
 			// add buttons
-			for (var i = 0; i < mwEditButtons.length; i++) {
-				addButton(mwEditButtons[i]);
+			for (i = 0, len = mw.toolbar.buttons.length; i < len; i++) {
+				addButton(mw.toolbar.buttons[i]);
 			}
-			for (var i = 0; i < mwCustomEditButtons.length; i++) {
-				addButton(mwCustomEditButtons[i]);
+
+			// legacy buttons
+			for (i = 0, len = mwCustomEditButtons.length; i < len; i++) {
+				var c = mwCustomEditButtons[i];
+				addButton([c.imageFile, c.speedTip, c.tagOpen,
+					c.tagClose, c.sampleText, c.imageId, c.selectText, c.onclick]);
 			}
+
 			GlobalTriggers.fire("beforeMWToolbarRender",toolbarNode);
 
 			this.toolbarNode = toolbarNode;
 			this.toolbarBuilt = true;
 
-			var self = this;
 			this.copyFromToolbar();
-			setTimeout(function(){ self.copyFromToolbar(); },1000);
+			setTimeout($.proxy(this.copyFromToolbar, this),1000);
 			this.editor.fire('mediawikiToolbarRendered',this.editor,$(this.toolbarNode));
 			this.editor.log('loading source mode toolbar');
 			this.setupTracking();
@@ -64,7 +74,6 @@
 				scope: this
 			});
 			this.modeChanged();
-
 		},
 
 		modeChanged: function() {

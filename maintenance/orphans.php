@@ -27,7 +27,7 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class Orphans extends Maintenance {
 	public function __construct() {
@@ -50,13 +50,14 @@ class Orphans extends Maintenance {
 
 	/**
 	 * Lock the appropriate tables for the script
-	 * @param $db Database object
+	 * @param $db DatabaseBase object
 	 * @param $extraTable String The name of any extra tables to lock (eg: text)
 	 */
-	private function lockTables( &$db, $extraTable = null ) {
+	private function lockTables( $db, $extraTable = array() ) {
 		$tbls = array( 'page', 'revision', 'redirect' );
-		if( $extraTable )
-			$tbls[] = $extraTable;
+		if ( $extraTable ) {
+			$tbls = array_merge( $tbls, $extraTable );
+		}
 		$db->lockTables( array(), $tbls, __METHOD__, false );
 	}
 
@@ -68,23 +69,23 @@ class Orphans extends Maintenance {
 		$dbw = wfGetDB( DB_MASTER );
 		$page = $dbw->tableName( 'page' );
 		$revision = $dbw->tableName( 'revision' );
-	
-		if( $fix ) {
+
+		if ( $fix ) {
 			$this->lockTables( $dbw );
 		}
-	
+
 		$this->output( "Checking for orphan revision table entries... (this may take a while on a large wiki)\n" );
 		$result = $dbw->query( "
 			SELECT *
 			FROM $revision LEFT OUTER JOIN $page ON rev_page=page_id
 			WHERE page_id IS NULL
-		");
+		" );
 		$orphans = $dbw->numRows( $result );
-		if( $orphans > 0 ) {
+		if ( $orphans > 0 ) {
 			global $wgContLang;
 			$this->output( "$orphans orphan revisions...\n" );
 			$this->output( sprintf( "%10s %10s %14s %20s %s\n", 'rev_id', 'rev_page', 'rev_timestamp', 'rev_user_text', 'rev_comment' ) );
-			foreach( $result as $row ) {
+			foreach ( $result as $row ) {
 				$comment = ( $row->rev_comment == '' )
 					? ''
 					: '(' . $wgContLang->truncate( $row->rev_comment, 40 ) . ')';
@@ -94,24 +95,24 @@ class Orphans extends Maintenance {
 					$row->rev_timestamp,
 					$wgContLang->truncate( $row->rev_user_text, 17 ),
 					$comment ) );
-				if( $fix ) {
+				if ( $fix ) {
 					$dbw->delete( 'revision', array( 'rev_id' => $row->rev_id ) );
 				}
 			}
-			if( !$fix ) {
+			if ( !$fix ) {
 				$this->output( "Run again with --fix to remove these entries automatically.\n" );
 			}
 		} else {
 			$this->output( "No orphans! Yay!\n" );
 		}
-	
-		if( $fix ) {
-			$dbw->unlockTables();
+
+		if ( $fix ) {
+			$dbw->unlockTables( __METHOD__ );
 		}
 	}
 
 	/**
-	 * @param $fix bool 
+	 * @param $fix bool
 	 * @todo DON'T USE THIS YET! It will remove entries which have children,
 	 *       but which aren't properly attached (eg if page_latest is bogus
 	 *       but valid revisions do exist)
@@ -121,7 +122,7 @@ class Orphans extends Maintenance {
 		$page = $dbw->tableName( 'page' );
 		$revision = $dbw->tableName( 'revision' );
 
-		if( $fix ) {
+		if ( $fix ) {
 			$this->lockTables( $dbw );
 		}
 
@@ -130,31 +131,30 @@ class Orphans extends Maintenance {
 			SELECT *
 			FROM $page LEFT OUTER JOIN $revision ON page_latest=rev_id
 			WHERE rev_id IS NULL
-		");
+		" );
 		$widows = $dbw->numRows( $result );
-		if( $widows > 0 ) {
-			global $wgContLang;
+		if ( $widows > 0 ) {
 			$this->output( "$widows childless pages...\n" );
 			$this->output( sprintf( "%10s %11s %2s %s\n", 'page_id', 'page_latest', 'ns', 'page_title' ) );
-			foreach( $result as $row ) {
+			foreach ( $result as $row ) {
 				printf( "%10d %11d %2d %s\n",
 					$row->page_id,
 					$row->page_latest,
 					$row->page_namespace,
 					$row->page_title );
-				if( $fix ) {
+				if ( $fix ) {
 					$dbw->delete( 'page', array( 'page_id' => $row->page_id ) );
 				}
 			}
-			if( !$fix ) {
+			if ( !$fix ) {
 				$this->output( "Run again with --fix to remove these entries automatically.\n" );
 			}
 		} else {
 			$this->output( "No childless pages! Yay!\n" );
 		}
-	
-		if( $fix ) {
-			$dbw->unlockTables();
+
+		if ( $fix ) {
+			$dbw->unlockTables( __METHOD__ );
 		}
 	}
 
@@ -166,29 +166,27 @@ class Orphans extends Maintenance {
 		$dbw = wfGetDB( DB_MASTER );
 		$page     = $dbw->tableName( 'page' );
 		$revision = $dbw->tableName( 'revision' );
-		$text     = $dbw->tableName( 'text' );
-	
-		if( $fix ) {
-			$dbw->lockTables( $dbw, 'text' );
+
+		if ( $fix ) {
+			$this->lockTables( $dbw, array( 'user', 'text' ) );
 		}
-	
+
 		$this->output( "\nChecking for pages whose page_latest links are incorrect... (this may take a while on a large wiki)\n" );
 		$result = $dbw->query( "
 			SELECT *
 			FROM $page LEFT OUTER JOIN $revision ON page_latest=rev_id
-		");
+		" );
 		$found = 0;
-		foreach( $result as $row ) {
+		foreach ( $result as $row ) {
 			$result2 = $dbw->query( "
 				SELECT MAX(rev_timestamp) as max_timestamp
 				FROM $revision
 				WHERE rev_page=$row->page_id
 			" );
 			$row2 = $dbw->fetchObject( $result2 );
-			$dbw->freeResult( $result2 );
-			if( $row2 ) {
-				if( $row->rev_timestamp != $row2->max_timestamp ) {
-					if( $found == 0 ) {
+			if ( $row2 ) {
+				if ( $row->rev_timestamp != $row2->max_timestamp ) {
+					if ( $found == 0 ) {
 						$this->output( sprintf( "%10s %10s %14s %14s\n",
 							'page_id', 'rev_id', 'timestamp', 'max timestamp' ) );
 					}
@@ -198,7 +196,7 @@ class Orphans extends Maintenance {
 						$row->page_latest,
 						$row->rev_timestamp,
 						$row2->max_timestamp ) );
-					if( $fix ) {
+					if ( $fix ) {
 						# ...
 						$maxId = $dbw->selectField(
 							'revision',
@@ -209,7 +207,7 @@ class Orphans extends Maintenance {
 						$this->output( "... updating to revision $maxId\n" );
 						$maxRev = Revision::newFromId( $maxId );
 						$title = Title::makeTitle( $row->page_namespace, $row->page_title );
-						$article = new Article( $title );
+						$article = WikiPage::factory( $title );
 						$article->updateRevisionOn( $dbw, $maxRev );
 					}
 				}
@@ -217,21 +215,21 @@ class Orphans extends Maintenance {
 				$this->output( "wtf\n" );
 			}
 		}
-	
-		if( $found ) {
+
+		if ( $found ) {
 			$this->output( "Found $found pages with incorrect latest revision.\n" );
 		} else {
 			$this->output( "No pages with incorrect latest revision. Yay!\n" );
 		}
-		if( !$fix && $found > 0 ) {
+		if ( !$fix && $found > 0 ) {
 			$this->output( "Run again with --fix to remove these entries automatically.\n" );
 		}
-	
-		if( $fix ) {
-			$dbw->unlockTables();
+
+		if ( $fix ) {
+			$dbw->unlockTables( __METHOD__ );
 		}
 	}
 }
 
 $maintClass = "Orphans";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

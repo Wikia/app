@@ -25,7 +25,7 @@ define('STATUS_UNKNOWN_ERROR', 4);
 class Premigrate {
 
 	static $previouslyProcessed	= array();
-	static $backlinks			= array();
+	static $backlinks		= array();
 
 
 	static function initialize() {

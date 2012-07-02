@@ -94,7 +94,7 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 	private $count;
 
 	function __construct( Category $category ){
-		parent::__construct( $category->getTitle() );
+		parent::__construct( $category->getTitle(), RequestContext::getMain() );
 
 		//get all the members in the category
 		$this->limit = null;
@@ -111,7 +111,7 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 		$this->addItem( $title, $sortkey );
 	}
 
-	function addSubcategory( $title, $sortkey, $pageLength ){
+	function addSubcategoryObject( $title, $sortkey, $pageLength ){
 		$this->addItem( $title, $sortkey );
 	}
 

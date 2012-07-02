@@ -24,7 +24,7 @@ class OggChop {
 	function __construct( $oggPath ){
 		$this->oggPath = $oggPath;
 	}
-	/*
+	/**
 	 * play takes in start_sec and end_sec and sends out packet
 	 *
 	 * @param float $start_sec ( start time in float seconds)
@@ -136,7 +136,7 @@ class OggChop {
 			return array($kTime, $byte);
 		}
 	}
-	/*
+	/**
 	 * outputByteRange
 	 */
 	function outputByteRange($startByte, $endByte = null){
@@ -276,7 +276,7 @@ class OggChop {
 			header( "X-Content-Video-Width: " . $this->meta['width'] );
 
 	}
-	/*
+	/**
 	 * getMeta (returns the value of a metadata key)
 	 */
 	function getMeta( $key ){

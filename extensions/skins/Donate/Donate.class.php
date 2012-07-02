@@ -35,18 +35,30 @@ class SkinDonate extends Skin {
 		<script type="text/javascript" src="<?php echo htmlspecialchars( $this->getMainJs() ); ?>"></script>
 		<link rel="stylesheet" href="<?php echo htmlspecialchars( $siteCss ); ?>" type="text/css"/>
 		<script type="text/javascript" src="<?php echo htmlspecialchars( $siteJs ); ?>"></script>
-	
+
 	</head>
 
 	<body>
 		<div align="center">
-		
+
 			<?php echo $bodyText ?>
 		</div>
 	</body>
 </html>
 
 <?php
+	}
+
+	/**
+	 * Add skin specific stylesheets
+	 * Calling this method with an $out of anything but the same OutputPage
+	 * inside ->getOutput() is deprecated. The $out arg is kept
+	 * for compatibility purposes with skins.
+	 * @param $out OutputPage
+	 * @delete
+	 */
+	function setupSkinUserCss(OutputPage $out) {
+		// TODO: Implement setupSkinUserCss() method.
 	}
 }
 

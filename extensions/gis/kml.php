@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  *  Support the "Map sources" list mechanism, see also:
  *  http://en.wikipedia.org/wiki/Wikipedia:WikiProject_Geographical_coordinates
  *

@@ -11,6 +11,7 @@ class WikiaLocalFileShared  {
 	var $oFile = null;
 	var $videoId = '';
 	var $trackingArticleId = false;
+	var $embedCodeMaxHeight = false;
 
 	function __construct( $oWikiaLocalFile ){
 		$this->oFile = $oWikiaLocalFile;
@@ -24,6 +25,13 @@ class WikiaLocalFileShared  {
 		$ret = ($this->oFile->getHandler() instanceof VideoHandler);
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+
+	/*
+	 * Embed code max height
+	 */
+	public function setEmbedCodeMaxHeight( $height ) {
+		$this->embedCodeMaxHeight = $height;
 	}
 
 	public function addExtraBorder( $width ){
@@ -43,7 +51,10 @@ class WikiaLocalFileShared  {
 		}
 		$handler = $this->oFile->getHandler();
 		if ( $this->isVideo() && !empty($handler) ){
-			$handler->setThumbnailImage( $this->oFile->getThumbnail( $width ) );
+			if ( $this->embedCodeMaxHeight !== false && $this->embedCodeMaxHeight > 0 ) {
+				$handler->setMaxHeight( $this->embedCodeMaxHeight );
+			}
+			$handler->setThumbnailImage( $this->oFile->transform( array( 'width' => $width ) ) );
 			$this->trackingArticleId = false;
 			$embed = $handler->getEmbed( $this->trackingArticleId, $width, $autoplay, $isAjax, $postOnload );
 			wfProfileOut( __METHOD__ );
@@ -144,17 +155,17 @@ class WikiaLocalFileShared  {
 
 	/* alter LocalFile getHandler logic */
 
-	function afterGetHandler(){
+	function afterGetHandler(&$handler){
 		wfProfileIn( __METHOD__ );
-		if (!empty($this->oFile->handler) && $this->oFile->handler instanceof VideoHandler) {
+		if (!empty($handler) && $handler instanceof VideoHandler) {
 			// make sure that the new handler ( if video ) will have videoId
 			if ($this->oFile->media_type == MEDIATYPE_VIDEO) {
 				$videoId = $this->getVideoId();
 				if ( !empty( $videoId ) ){
-					$this->oFile->handler->setVideoId( $videoId );
-				}			
-				$this->oFile->handler->setTitle($this->oFile->getTitle()->getText());
-				$this->oFile->handler->setMetadata($this->oFile->metadata);
+					$handler->setVideoId( $videoId );
+				}
+				$handler->setTitle($this->oFile->getTitle()->getText());
+				$handler->setMetadata($this->oFile->metadata);
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -177,8 +188,6 @@ class WikiaLocalFileShared  {
 			// reads its own cache and returns the same video handler for different videos.
 			// We must create the proper video handler ourselves.
 			$type = $this->oFile->getMimeType();
-			foreach( explode("\n", var_export($wgMediaHandlers, 1)) as $line)
-				error_log( $line );
 			$class = $wgMediaHandlers[$type];
 			$handler = new $class();
 			$handler->setVideoId( $this->oFile->videoId );

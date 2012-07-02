@@ -1,11 +1,10 @@
 <?php
-
-/*
+/**
+ *
+ *
  * Created on Feb 2, 2009
  *
- * API for MediaWiki 1.8+
- *
- * Copyright (C) 2009 Roan Kattouw <Firstname>.<Lastname>@home.nl
+ * Copyright © 2009 Roan Kattouw <Firstname>.<Lastname>@gmail.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,14 +18,11 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	// Eclipse helper - will be ignored in production
-	require_once ( 'ApiFormatBase.php' );
-}
 
 /**
  * Formatter that spits out anything you like with any desired MIME type
@@ -37,39 +33,41 @@ class ApiFormatRaw extends ApiFormatBase {
 	/**
 	 * Constructor
 	 * @param $main ApiMain object
-	 * @param $errorFallback Formatter object to fall back on for errors
+	 * @param $errorFallback ApiFormatBase object to fall back on for errors
 	 */
 	public function __construct( $main, $errorFallback ) {
-		parent :: __construct( $main, 'raw' );
+		parent::__construct( $main, 'raw' );
 		$this->mErrorFallback = $errorFallback;
 	}
 
 	public function getMimeType() {
 		$data = $this->getResultData();
 
-		if ( isset( $data['error'] ) )
+		if ( isset( $data['error'] ) ) {
 			return $this->mErrorFallback->getMimeType();
+		}
 
-		if ( !isset( $data['mime'] ) )
-			ApiBase::dieDebug( __METHOD__, "No MIME type set for raw formatter" );
-	
+		if ( !isset( $data['mime'] ) ) {
+			ApiBase::dieDebug( __METHOD__, 'No MIME type set for raw formatter' );
+		}
+
 		return $data['mime'];
 	}
 
 	public function execute() {
 		$data = $this->getResultData();
-		if ( isset( $data['error'] ) )
-		{
+		if ( isset( $data['error'] ) ) {
 			$this->mErrorFallback->execute();
 			return;
 		}
-		
-		if ( !isset( $data['text'] ) )
-			ApiBase::dieDebug( __METHOD__, "No text given for raw formatter" );
+
+		if ( !isset( $data['text'] ) ) {
+			ApiBase::dieDebug( __METHOD__, 'No text given for raw formatter' );
+		}
 		$this->printText( $data['text'] );
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiFormatRaw.php 61437 2010-01-23 22:26:40Z reedy $';
+		return __CLASS__ . ': $Id$';
 	}
 }

@@ -14,7 +14,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 	}
 
 	public function execute() {
-		$Name = $Password = $Remember = $Loginattempt = $Mailmypassword = null;
+		$Name = $Password = $Remember = $Loginattempt = $Mailmypassword = $LoginToken = null;
 		
 		extract($this->extractRequestParams());
 
@@ -110,6 +110,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 			));
 			$result = array ();
 			$loginForm = new LoginForm($params);
+			$loginForm->load();
 			global $wgUser, $wgOut, $wgAuth;
 			if( !$wgAuth->allowPasswordChange() ) {
 				$result['result'] = 'resetpass_forbidden';
@@ -117,11 +118,11 @@ class WikiaApiAjaxLogin extends ApiBase {
 			} else if( $wgUser->isBlocked() ) {
 				$result['result'] = 'blocked-mailpassword';
 				$result['text'] = wfMsg('blocked-mailpassword');
-			} else if ( '' == $loginForm->mName ) {
+			} else if ( '' == $loginForm->mUsername ) {
 				$result['result'] = 'noname';
 				$result['text'] = wfMsg('noname');
 			} else {
-				$u = User::newFromName( $loginForm->mName );
+				$u = User::newFromName( $loginForm->mUsername );
 				if( empty( $u ) ) {
 					$result['result'] = 'noname';
 					$result['text'] = wfMsg('noname');
@@ -134,7 +135,7 @@ class WikiaApiAjaxLogin extends ApiBase {
 					$result['text'] = wfMsg( 'throttled-mailpassword', round( $wgPasswordReminderResendTime, 3 ) );
 				} else {
 					$res = $loginForm->mailPasswordInternal( $u, true );
-					if( WikiError::isError( $res ) ) {
+					if( !$res->isOK()  ) {
 						$result['result'] = 'mailerror';
 						$result['text'] = wfMsg( 'mailerror', $res->getMessage() );
 					} else {

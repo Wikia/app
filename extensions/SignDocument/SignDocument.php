@@ -15,30 +15,28 @@ EOT;
  * Adds two special pages, Special:SignDocument and Special:CreateSignDocument, which
  * enable the creation of signable documents. See the README for more information.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @author Daniel Cannon (AmiDaniel)
  * @copyright Copyright © 2007, Daniel Cannon
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-$wgExtensionFunctions[] = 'wfCreateSignatureLog';
-
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'SignDocument',
 	'author'         => 'Daniel Cannon',
 	'version'        => '0.1',
-	'description'    => 'Enables document signing',
 	'descriptionmsg' => 'signature-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:SignDocument',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:SignDocument',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['SignDocument'] = $dir . 'SignDocument.i18n.php';
 $wgExtensionMessagesFiles['SpecialSignDocument'] = $dir . 'SpecialSignDocument.i18n.php';
 $wgExtensionMessagesFiles['CreateSignDocument'] = $dir . 'SpecialCreateSignDocument.i18n.php';
-$wgExtensionAliasesFiles['SignDocument'] = $dir . 'SignDocument.alias.php';
+$wgExtensionMessagesFiles['SignDocumentAlias'] = $dir . 'SignDocument.alias.php';
 $wgAutoloadClasses['SpecialSignDocument'] = $dir . 'SpecialSignDocument.php';
 $wgAutoloadClasses['SpecialCreateSignDocument'] = $dir . 'SpecialCreateSignDocument.php';
 $wgSpecialPages['SignDocument'] = 'SpecialSignDocument';
@@ -52,20 +50,11 @@ $wgGroupPermissions['sigadmin']['sigadmin'] = true;
 $wgGroupPermissions['*']['createsigndocument'] = false;
 $wgGroupPermissions['sigadmin']['createsigndocument'] = true;
 
-/**
- * Create the Signature log.
- */
-function wfCreateSignatureLog() {
-	wfLoadExtensionMessages( 'SignDocument' );
-
-	# Add a new log type
-	global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
-
-	$wgLogTypes[]                      = 'signature';
-	$wgLogNames['signature']           = 'signaturelogpage';
-	$wgLogHeaders['signature']         = 'signaturelogpagetext';
-	$wgLogActions['signature/sign']    = 'signaturelogentry';
-}
+# Add a new log type
+$wgLogTypes[]                      = 'signature';
+$wgLogNames['signature']           = 'signaturelogpage';
+$wgLogHeaders['signature']         = 'signaturelogpagetext';
+$wgLogActions['signature/sign']    = 'signaturelogentry';
 
 /**
  * Logs the addition of a signature to a document. If it's an anonymous user,

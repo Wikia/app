@@ -7,14 +7,18 @@
  * Based on code from extension LookupUser made by Tim Starling
  *
  * @file
+ * @ingroup SpecialPage
+ * @author Robin Pepermans (SPQRobin)
  */
 
-class SpecialViewUserLang extends SpecialPage
-{
+class SpecialViewUserLang extends SpecialPage {
 	public function __construct() {
 		parent::__construct( 'ViewUserLang', 'viewuserlang' );
 	}
 
+	/**
+	 * @return String
+	 */
 	function getDescription() { return wfMsg( 'wminc-viewuserlang' ); }
 
 	/**
@@ -23,7 +27,6 @@ class SpecialViewUserLang extends SpecialPage
 	 */
 	public function execute( $subpage ) {
 		global $wgRequest, $wgUser;
-		wfLoadExtensionMessages( 'WikimediaIncubator' );
 
 		$this->setHeaders();
 
@@ -32,11 +35,7 @@ class SpecialViewUserLang extends SpecialPage
 			return;
 		}
 
-		if ( $subpage ) {
-			$target = $subpage;
-		} else {
-			$target = $wgRequest->getText( 'target' );
-		}
+		$target = $wgRequest->getText( 'target', $subpage );
 
 		$this->showForm( $target );
 
@@ -51,28 +50,18 @@ class SpecialViewUserLang extends SpecialPage
 	 */
 	function showForm( $target ) {
 		global $wgScript, $wgOut;
-		$title = htmlspecialchars( $this->getTitle()->getPrefixedText() );
-		$action = htmlspecialchars( $wgScript );
-		$target = htmlspecialchars( $target );
-		$ok = wfMsgHtml( 'go' );
-		$username = wfMsgHtml( 'username' );
-		$inputformtop = wfMsgHtml( 'wminc-viewuserlang' );
 
-		$wgOut->addHTML( <<<EOT
-<fieldset>
-<legend>$inputformtop</legend>
-<form method="get" action="$action">
-<input type="hidden" name="title" value="{$title}" />
-<table border="0">
-<tr>
-<td align="right">$username</td>
-<td align="left"><input type="text" size="50" name="target" value="$target" />
-<td colspan="2" align="center"><input type="submit" name="submit" value="$ok" /></td>
-</tr>
-</table>
-</form>
-</fieldset>
-EOT
+		$wgOut->addHTML(
+			Xml::fieldset( wfMsgHtml( 'wminc-viewuserlang' ) ) .
+			Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) ) .
+			Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) .
+			"<p>" .
+				Xml::inputLabel( wfMsgHtml( 'wminc-viewuserlang-user' ), 'target', 'viewuserlang-username', 40, $target ) .
+				' ' .
+				Xml::submitButton( wfMsgHtml( 'wminc-viewuserlang-go' ) ) .
+			"</p>" .
+			Xml::closeElement( 'form' ) .
+			Xml::closeElement( 'fieldset' )
 		);
 	}
 
@@ -81,30 +70,41 @@ EOT
 	 * @param $target Mixed: user whose language and test wiki we're looking up
 	 */
 	function showInfo( $target ) {
-		global $wgOut, $wgLang, $wgLanguageNames, $wmincPref;
-		$user = User::newFromName( $target );
-		if ( $user == null || $user->getId() == 0 ) {
-			$wgOut->addWikiText( '<span class="error">' . wfMsgNoTrans( 'wminc-viewuserlang-unexisting', $target ) . '</span>' );
-		} else {
-			$name = $user->getName();
-			$wgOut->addWikiText( '*' . wfMsg( 'username' ) . ' [[User:' . $name . '|' . $name . ']] (' .
-				$wgLang->pipeList( array(
-					'[[User talk:' . $name . '|' . wfMsg( 'talkpagelinktext' ) . ']]',
-					'[[Special:Contributions/' . $name . '|' . wfMsg( 'contribslink' ) . ']])'
-				) ) );
-			$wgOut->addWikiText(
-				'*' . wfMsg( 'loginlanguagelabel',
-				$wgLanguageNames[$user->mOptions['language']] . ' (' . $user->mOptions['language'] . ')'
-				)
-			);
-			if ( IncubatorTest::isNormalPrefix() == true ) {
-				$testwiki = '[[W' . $user->mOptions[$wmincPref . '-project'] . '/' . $user->mOptions[$wmincPref . '-code'] . ']]';
-			} elseif ( IncubatorTest::displayPrefix() == 'inc' ) {
-				$testwiki = 'Incubator';
-			} else {
-				$testwiki = wfMsg( 'wminc-testwiki-none' );
-			}
-				$wgOut->addWikiText( '*' . wfMsg( 'wminc-testwiki' ) . ' ' . $testwiki );
+		global $wgOut, $wmincPref, $wmincProjectSite;
+		if( User::isIP( $target ) ) {
+			# show error if it is an IP address
+			$wgOut->addHTML( Xml::span( wfMsg( 'wminc-ip', $target ), 'error' ) );
+			return;
 		}
+		$user = User::newFromName( $target );
+		$name = $user->getName();
+		$id = $user->getId();
+		$langNames = Language::getLanguageNames();
+		$linker = class_exists( 'DummyLinker' ) ? new DummyLinker : new Linker;
+		if ( $user == null || $id == 0 ) {
+			# show error if a user with that name does not exist
+			$wgOut->addHTML( Xml::span( wfMsg( 'wminc-userdoesnotexist', $target ), 'error' ) );
+			return;
+		}
+		$userproject = $user->getOption( $wmincPref . '-project' );
+		$userproject = ( $userproject ? $userproject : 'none' );
+		$usercode = $user->getOption( $wmincPref . '-code' );
+		$prefix = IncubatorTest::displayPrefix( $userproject, $usercode ? $usercode : 'none' );
+		if ( IncubatorTest::isContentProject( $userproject ) ) {
+			$testwiki = $linker->link( Title::newFromText( $prefix ) );
+		} elseif ( $prefix == $wmincProjectSite['short'] ) {
+			$testwiki = htmlspecialchars( $wmincProjectSite['name'] );
+		} else {
+			$testwiki = wfMsgHtml( 'wminc-testwiki-none' );
+		}
+		$wgOut->addHtml(
+			Xml::openElement( 'ul' ) .
+			'<li>' . wfMsgHtml( 'username' ) . ' ' .
+				$linker->userLink( $id, $name ) . $linker->userToolLinks( $id, $name, true ) . '</li>' .
+			'<li>' . wfMsgHtml( 'loginlanguagelabel', $langNames[$user->getOption( 'language' )] .
+				' (' . $user->getOption( 'language' ) . ')' ) . '</li>' .
+			'<li>' . wfMsgHtml( 'wminc-testwiki' ) . ' ' . $testwiki . '</li>' .
+			Xml::closeElement( 'ul' )
+		);
 	}
 }

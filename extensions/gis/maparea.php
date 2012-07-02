@@ -34,7 +34,7 @@ class maparea {
 	var $p;
 	var $attr;
 
-	function maparea()
+	function __construct()
 	{
 		$this->p = new GeoParam();
 		$this->attr = $this->p->get_attr();
@@ -51,18 +51,13 @@ class maparea {
 			$wgOut->setPagetitle( "Maparea" );
 
 			if (($e = $this->p->get_error()) != "") {
-				$wgOut->addHTML(
-				"<p>" . htmlspecialchars( $e ) . "</p>");
-				$wgOut->output();
-				wfErrorExit();
-				return;
+				throw new FatalError( htmlspecialchars( $e ) );
 			}
 
 			$wgOut->addWikiText( $this->make_output() );
 		} else {
-			global $wgInputEncoding;
 			$ContentType = 'text/x-wiki';
-			header( "Content-type: ".$ContentType.'; charset='.$wgInputEncoding);
+			header( "Content-type: ".$ContentType.'; charset=UTF-8');
 
 			echo( $this->make_output() );
 

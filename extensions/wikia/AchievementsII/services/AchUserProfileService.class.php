@@ -27,8 +27,6 @@ class AchUserProfileService {
 		$this->mUserOwner->isLoggedIn() &&
 		!($wgUser->getId() == $this->mUserOwner->getId() && $wgUser->getOption('hidepersonalachievements'))) {
 
-    		wfLoadExtensionMessages('AchievementsII');
-
     		$this->mUserViewer = $wgUser;
 
     		if($this->mUserViewer->isLoggedIn() && $this->mUserViewer->getId() != $this->mUserOwner->getId()) {

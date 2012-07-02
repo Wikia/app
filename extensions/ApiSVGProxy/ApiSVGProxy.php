@@ -12,7 +12,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
  */
 # Alert the user that this is not a valid entry point to MediaWiki if they try to access the extension file directly.
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo <<<EOT
 To install the ApiSVGProxy extension, put the following line in LocalSettings.php:
 require_once( "\$IP/extensions/ApiSVGProxy/ApiSVGProxy.php" );
@@ -25,12 +25,14 @@ $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'ApiSVGProxy',
 	'author' => 'Roan Kattouw',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:ApiSVGProxy',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:ApiSVGProxy',
 	'version' => '1.0',
-	'description' => 'Proxies SVG files from a (possibly remote) file repository to the local domain',
+	'descriptionmsg' => 'apisvgproxy-desc',
 );
 
 // Set up the new special page
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['ApiSVGProxy'] = $dir . 'ApiSVGProxy.body.php';
 $wgAPIModules['svgproxy'] = 'ApiSVGProxy';
+
+$wgExtensionMessagesFiles['ApiSVGProxy'] = dirname( __FILE__ ) . '/ApiSVGProxy.i18n.php';

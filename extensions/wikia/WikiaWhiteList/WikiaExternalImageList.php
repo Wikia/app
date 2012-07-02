@@ -13,10 +13,6 @@ if ( ! defined( 'MEDIAWIKI' ) ) {
 	die();
 }
 
-if (!class_exists('SpamRegexBatch')) {
-    require_once ("$IP/extensions/wikia/SpamRegexBatch/SpamRegexBatch.php");
-}
-
 define ('REGEX_PARSE_IMAGE_WHITELIST', '#%s\s*?=\s*?([\'"]?)((?(1)[^\'>"]*|[^\'>" ]*))(\b)%s(\b)((?(1)[^\'>"]*|[^\'>" ]*))[\'"]?#i');
 define ('CLASS_PARSE_IMAGE_WHITELIST', '/class\s*?=\s*?"%s\s*?(%s)"/');
 define ('REGEX_IMG_TEXT_IMAGE_WHITELIST', '#<a.*?>(%s)</a>#i');
@@ -24,7 +20,7 @@ define ('REGEX_IMG_TEXT_IMAGE_WHITELIST', '#<a.*?>(%s)</a>#i');
 // Register hooks
 $wgHooks['outputMakeExternalImage'][] = 'wfParserExternalImagesWhiteList' ;
 function wfParserExternalImagesWhiteList( &$url ) {
-    global $wgExtImagesWhitelistFiles, $wgWhiteListCacheTime, $wgAllowExternalWhitelistImages;
+    global $wgAllowExternalWhitelistImages;
     wfProfileIn( __METHOD__ );
 
     if (empty($wgAllowExternalWhitelistImages)) {
@@ -57,15 +53,13 @@ function wfExtImagesWhiteListSetup() {
 }
 
 function wfExtImagesWhiteListParse($text) {
-    #global $wgWhiteListImages;
-	//---
 	if (preg_match('#http://(.*?).(jpg|jpeg|png|gif)#i', $text, $captures)) {
 	    $lhref = $captures[0];
 	    if (preg_match('#^\s*http://[^\/\s]#', $lhref)) {
 	        //---
 	        $lparsed = parse_url($lhref);
 	        $lschema = (!empty($lparsed['scheme'])) ? $lparsed['scheme'] : "http";
-	        //---
+			//---
 	        if ( empty($lparsed['host']) ) {
 	            return false;
             } else {
@@ -77,7 +71,7 @@ function wfExtImagesWhiteListParse($text) {
             $setup = wfExtImagesWhiteListSetup();
             $wgWhiteListImages = array();
             $whiteList = WikiaExtImagesWhitelist::Instance($setup);
-            if (is_object($whiteList)) {
+			if (is_object($whiteList)) {
                 $wgWhiteListImages = $whiteList->getRegexes();
                 # check edited page title -> if page with regexes just clear memcache.
                 $whiteList->getSpamList()->clearListMemCache();
@@ -86,7 +80,7 @@ function wfExtImagesWhiteListParse($text) {
 			if (!empty($wgWhiteListImages) && is_array($wgWhiteListImages)) {
 			    foreach ($wgWhiteListImages as $id => $regex) {
 			        $m = array();
-			        if (preg_match($regex, $lurl, $m) === false) {
+					if (preg_match($regex, $lurl, $m) === false) {
 			            return false;
                     } elseif (count($m) > 0) {
                         return $lhref;
@@ -148,7 +142,7 @@ class WikiaExtImagesWhitelist
         }
 
         $this->settings = $settings;
-		$this->spamList = new SpamRegexBatch("whitelistimages", $this->settings);
+		$this->spamList = new WikiaSpamRegexBatch("whitelistimages", $this->settings);
 		$this->regexes = $this->spamList->getRegexes();
     }
 

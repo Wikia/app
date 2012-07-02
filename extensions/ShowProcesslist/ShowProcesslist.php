@@ -8,14 +8,13 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'ShowProcesslist',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Show_Process_List',
-	'author'         => 'Brion VIBBER',
-	'description'    => 'Display the output of SHOW FULL PROCESSLIST',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:ShowProcesslist',
+	'author'         => 'Tim Starling',
 	'descriptionmsg' => 'showprocesslist-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['ShowProcesslist'] = $dir . 'ShowProcesslist.i18n.php';
-$wgExtensionAliasesFiles['ShowProcesslist'] = $dir . 'ShowProcesslist.alias.php';
+$wgExtensionMessagesFiles['ShowProcesslistAlias'] = $dir . 'ShowProcesslist.alias.php';
 $wgAutoloadClasses['SpecialShowProcesslist'] = $dir . 'ShowProcesslist_body.php';
 $wgSpecialPages['ShowProcesslist'] = 'SpecialShowProcesslist';

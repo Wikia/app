@@ -28,7 +28,7 @@ LocalSettings.php file (near the end):
   require_once( "$IP/extensions/ContactPage/ContactPage.php" );
 
   $wgContactUser = 'WikiAdmin';
-  $wgContactSender = 'apache@' . $wgServerName;
+  $wgContactSender = $wgPasswordSender;
   $wgContactSenderName = 'Contact Form on ' . $wgSitename;
 
 
@@ -50,4 +50,19 @@ If you are using the ConfirmEdit extension (captchas), you can require
 a captcha test for sending contact messages by using the following:
 
    $wgCaptchaTriggers['contactpage'] = true;
+
+== Customization ==
+
+[[Special:Contact]] calls the default formular.
+Pagetext: [[MediaWiki:contactpage-pagetext]]
+Subject: prefilled with text from [[MediaWiki:Contactpage-defsubject]] 
+E-mail body: empty.
+
+[[Special:Contact/typename]] calls the contact page with a customized pagetext and
+prefilled form fields:
+Pagetext: [[MediaWiki:contactpage-pagetext-typename]]
+Subject: prefilled with text from [[MediaWiki:Contactpage-subject-typename]] 
+E-mail body: prefilled with text from [[MediaWiki:Contactpage-text-typename]]
+
+If a customized message does not exist the default message is shown.
 

@@ -19,12 +19,12 @@ TABLE OF CONTENTS
 This extension allows for changing the author of a revision, e.g. an edit made by Alice can be changed to look like it was made by Bob instead. Of course, only privileged users can do this, and all changes are logged.
 
 2. WHERE TO GET CHANGEAUTHOR
-You can download a tarball at http://www.mediawiki.org/wiki/Special:ExtensionDistributor/ChangeAuthor . 
+You can download a tarball at http://www.mediawiki.org/wiki/Special:ExtensionDistributor/ChangeAuthor .
 
 3. INSTALLATION
 Download the tarball mentioned in section 2, and extract it in /path/to/your/wiki/extensions . Open LocalSettings.php and add the following line at the end:
 
-require_once("$IP/extensions/ChangeAuthor/ChangeAuthor.setup.php");
+require_once("$IP/extensions/ChangeAuthor/ChangeAuthor.php");
 
 You should now see the ChangeAuthor extension listed on the Special:Version special page.
 
@@ -45,7 +45,7 @@ If you have created any custom groups in LocalSettings.php, you can allow these 
 $wgGroupPermissions['groupname']['changeauthor'] = true;
 
 to LocalSettings.php (replace 'groupname' with the name of your custom group).
-NOTE: If a user is in multiple groups, they will be able to use ChangeAuthor even if that's allowed for only one of those groups. E.g.: if group A can't use ChangeAuthor but group B can, a user in both group A and B will be allowed to use ChangeAuthor. 
+NOTE: If a user is in multiple groups, they will be able to use ChangeAuthor even if that's allowed for only one of those groups. E.g.: if group A can't use ChangeAuthor but group B can, a user in both group A and B will be allowed to use ChangeAuthor.
 
 4B. CREATING A NEW GROUP
 You can also create a separate group for users who can use ChangeAuthor. To do this, add the following line to LocalSettings.php:

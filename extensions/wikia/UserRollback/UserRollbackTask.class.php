@@ -51,10 +51,18 @@ class UserRollbackTask extends BatchTask {
 	}
 	
 	protected function findWikis( $users ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgStatsDBEnabled, $wgDevelEnvironment;
 		
 		if (!$wgStatsDBEnabled) {
 			return false;
+		}
+
+		// on devbox we have to fall back to static list
+		// because we have no active read-write statsdb there
+		if ( !empty( $wgDevelEnvironment ) ) {
+			return array(
+				165, // firefly
+			);
 		}
 		
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);

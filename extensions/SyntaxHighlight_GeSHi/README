@@ -6,8 +6,8 @@ for updated informations:
 
 == Requirements ==
 
-This version of the extension has been tested with GeSHi 1.0.8.6 and MediaWiki 1.16
-as of 2010-01-01. It may or may not work with earlier versions of the aforementioned
+This version of the extension has been tested with GeSHi 1.0.8.10 and MediaWiki 1.18
+as of 2011-02-19. It may or may not work with earlier versions of the aforementioned
 software. To get releases of this extension compatible with earlier versions of
 MediaWiki, visit: 
 
@@ -34,7 +34,7 @@ can be downloaded via the Subversion repository. First of all, is to switch
 into your extensions/SyntaxHighlight_GeSHi/ directory. Then invoke the command 
 to obtain the latest build of the GeSHi code:
 
-	svn checkout http://geshi.svn.sourceforge.net/svnroot/geshi/trunk/geshi-1.0.X/src/ geshi
+	svn checkout https://geshi.svn.sourceforge.net/svnroot/geshi/trunk/geshi-1.0.X/src/ geshi
 
 If needed, change the following line on SyntaxHighlight_GeSHi.class.php to 
 suit the path of your geshi.php file
@@ -50,7 +50,7 @@ On the wiki page, you can now use "source" elements:
     v = "string";    // sample initialization
 ?>
 html text
-<?
+<?php
     echo v;         // end of php code
 ?>
 </source>

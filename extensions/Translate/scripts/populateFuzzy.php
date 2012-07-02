@@ -3,7 +3,7 @@
  * A script to populate fuzzy tags to revtag table.
  *
  * @author Niklas Laxstrom
- * @copyright Copyright © 2009-2010, Niklas Laxström
+ * @copyright Copyright © 2009-2011, Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @file
  */
@@ -13,12 +13,6 @@
 require( dirname( __FILE__ ) . '/cli.inc' );
 
 $db = wfGetDB( DB_MASTER );
-
-$id = $db->selectField( 'revtag_type', 'rtt_id', array( 'rtt_name' => 'fuzzy' ), __METHOD__ );
-if ( $id === false ) {
-	echo "Fuzzy tag is not registered\n";
-	exit();
-}
 
 $count = $db->selectField( 'page', 'count(*)', array( 'page_namespace' => $wgTranslateMessageNamespaces ), __METHOD__ );
 if ( !$count ) {
@@ -52,7 +46,7 @@ while ( true ) {
 			$inserts[] = array(
 				'rt_page' => $r->page_id,
 				'rt_revision' => $r->rev_id,
-				'rt_type' => $id
+				'rt_type' => RevTag::getType( 'fuzzy' ),
 			);
 		}
 	}

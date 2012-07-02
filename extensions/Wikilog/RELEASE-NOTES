@@ -1,6 +1,34 @@
 = Wikilog release notes =
 
-== Current development version ==
+== Wikilog 1.2.0 ==
+
+Dec 11, 2011
+
+=== General notes ===
+
+MediaWiki requirement raised to 1.17.0 and later.
+MediaWiki 1.16 and earlier are no longer supported in this release.
+
+=== New features ===
+
+* Article and comment timestamps are now displayed in the wiki timezone
+  (as defined by $wgLocaltimezone).
+* (wl:issue 11) Added support for {{DISPLAYTITLE:...}}, allows the author to
+  alter the title of the wikilog article.
+
+=== Bug fixes ===
+
+* (mw:bug 27904) Fixed method signature compatibility with Mw1.16 for
+  WikilogParserCache.
+* (wl:issue 12) Fixed calls to $wgParser->clearState() (which is now a private
+  function).
+* Fixed a crash when creating a new wikilog post as an unlogged user.
+* Several fixes for compatibility with MediaWiki 1.18.
+
+
+== Wikilog 1.1.0 ==
+
+Aug 8, 2010
 
 === General notes ===
 
@@ -43,6 +71,9 @@ your case.
 * Comment syndication feeds are now available. Currently, there is one feed
   per wikilog article, that lists comments made to that article. In the
   future, feeds per thread, per wikilog and global may be provided.
+* Added support for MediaWiki 1.16 Vector skin.
+* Special:Wikilog now allows querying by namespace, with the "Namespace:*"
+  syntax.
 
 === Bug fixes ===
 
@@ -50,12 +81,12 @@ your case.
   wikilog-summary-header/footer and others, with proper PLURAL support.
 * (wl:issue 1) Improve header/footer item messages.
 * (wl:issue 5) Usability improvement in wikilog actions tab.
-* Disabled minimum feed cache age check ($wgFeedCacheTimeout) in
-  WikilogFeed, since this causes the wrong Last-modified header to be
-  output. Waiting for a fix for the same problem found in ChangesFeed.
+* (mw:bug 21916) Fix minimum feed cache age check in WikilogFeed.
   Noted by Vitaliy Filippov.
 * Don't croak in Wikilog::getWikilogInfo() if $title is NULL. Patch by
   Vitaliy Filippov.
+* Improved consistency of edit links with the rest of MediaWiki.
+* (wl:issue 7) Handle the new Vector skin hooks (Mw 1.16).
 
 
 == Wikilog 1.0.1 ==

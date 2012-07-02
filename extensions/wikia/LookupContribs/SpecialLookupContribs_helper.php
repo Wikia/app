@@ -22,10 +22,10 @@ class LookupContribsCore {
 	var $mOffset;
 	var $mWikiID;
 	var $mWikia;
-	var $mNamespaces; 
+	var $mNamespaces;
 	var $mNumRecords;
 	var $oUser;
-		
+
 	public function __construct($username, $mode = 0, $dbname = '', $nspace = false) {
 		$this->mUsername = $username;
 		$this->oUser = User::newFromName($this->mUsername);
@@ -36,14 +36,13 @@ class LookupContribsCore {
 		$this->setDBname( $dbname );
 		$this->setNamespaces( $nspace );
 		$this->setNumRecords();
-		wfLoadExtensionMessages("SpecialLookupContribs");
 	}
 
-	public function setDBname ( $dbname = '' ) { 
+	public function setDBname ( $dbname = '' ) {
 		if ( $dbname ) {
-			$this->mDBname = $dbname; 
+			$this->mDBname = $dbname;
 			$this->mWikiID = WikiFactory::DBtoID($this->mDBname);
-			$this->mWikia = WikiFactory::getWikiByID($this->mWikiID);	
+			$this->mWikia = WikiFactory::getWikiByID($this->mWikiID);
 		}
 	}
 	public function getDBname () { global $wgDBname; return (LC_TEST) ? $wgDBname : $this->mDBname; }
@@ -54,7 +53,7 @@ class LookupContribsCore {
 	public function getNamespaces() {
 		global $wgContentNamespaces;
 		wfProfileIn( __METHOD__ );
-		
+
 		$res = array();
 		$nspace = intval($this->mNamespaces);
 		switch($nspace) {
@@ -66,20 +65,20 @@ class LookupContribsCore {
 					$res = array(NS_MAIN);
 				}
 				break;
-			default: $res = array($nspace); 
+			default: $res = array($nspace);
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 	public function setNumRecords( $num = 0 ) { $this->mNumRecords = $num; }
-	public function getNumRecords() { return $this->mNumRecords; }	
+	public function getNumRecords() { return $this->mNumRecords; }
 
 	/* return if such user exists */
 	public function checkUser() {
 		global $wgUser;
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( empty($this->mUsername) ) {
 			wfDebug( "Empty username\n" );
 			wfProfileOut( __METHOD__ );
@@ -108,32 +107,32 @@ class LookupContribsCore {
 
 	/**
 	 * @brief Gets data for AJAX request for data to user contribution table
-	 * 
+	 *
 	 * @param boolean $addEditCount added in 20.07.2011 during SSW is a flag; will add additional array element with user's edits on a wiki plus will sort whole array by this value
-	 * 
+	 *
 	 * @author Bartek Lapinski <bartek@wikia.com>
 	 * @author Piotr Molski <moli@wikia.com>
-	 * @author Andrzej 'nAndy' Łukaszewski <nandy (at) wikia-inc.com> 
+	 * @author Andrzej 'nAndy' Łukaszewski <nandy (at) wikia-inc.com>
 	 */
 	public function checkUserActivity($addEditCount = false, $order = null) {
 		global $wgMemc, $wgContLang, $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 
 		$userActivity = array(
-			'data' => array(), 
+			'data' => array(),
 			'cnt' => 0
 		);
-                
+
                 if ( $addEditCount ) {
 			$sMemKey = __METHOD__ . ":{$this->mUserId}:dataWithEdits";
 		} else {
 			$sMemKey = __METHOD__ . ":{$this->mUserId}:data";
 		}
-                
+
                 $data = $wgMemc->get( $sMemKey );
-                
+
 		if ( ( !is_array( $data ) || LOOKUPCONTRIBS_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
-                
+
                     $dbr = wfGetDB( DB_SLAVE, "stats", $wgStatsDB );
                     if ( !is_null( $dbr ) ) {
                         //bugId:6196
@@ -160,14 +159,14 @@ class LookupContribsCore {
                         $res = $dbr->select(
                             array('events'),
                             array(
-                                'wiki_id', 
+                                'wiki_id',
                                 'max(unix_timestamp(rev_timestamp)) as last_edit'
                             ),
                             $where,
                             __METHOD__,
                             $options
                         );
-                        
+
                         if ( empty( $wikisIds ) ) {
                             $wikisIds = array();
                             while ( $row = $dbr->fetchObject( $res ) ) {
@@ -182,7 +181,7 @@ class LookupContribsCore {
                             if ( !isset( $wData[$row->wiki_id] ) ) {
                                 continue;
                             }
-                            
+
                             $aItem = array(
                                 'id'         =>  $row->wiki_id,
                                 'url'        =>  $wData[$row->wiki_id]->city_url,
@@ -192,14 +191,14 @@ class LookupContribsCore {
                                 'last_edit'  =>  $row->last_edit,
                                 'edit_count' => 0
                             );
-                                
+
                             if ( isset( $wikiEdits[$row->wiki_id]->edits ) ) {
                                 $aItem['editcount'] = $wikiEdits[$row->wiki_id]->edits;
                             }
-                            
+
                             $userActivity['data'][] = $aItem;
                         }
-                        
+
                         $dbr->freeResult( $res );
                         if ( !LOOKUPCONTRIBS_NO_CACHE ) {
                             $wgMemc->set( $sMemKey, $userActivity, 60*10 );
@@ -208,31 +207,31 @@ class LookupContribsCore {
                 } else {
                     $userActivity = $data;
                 }
-                
+
                 wfProfileOut( __METHOD__ );
                 return $this->orderData( $userActivity, $order, $addEditCount );
         }
-        
+
         private function orderData( &$data, $order, $edits ) {
             wfProfileIn( __METHOD__ );
             $aTemp = array();
             $aMatches = array();
             if ( isset( $data['data'] ) && is_array( $data['data'] ) ) {
-                
+
                 // order by title
                 if ( preg_match( '/^title:(asc|desc)$/', $order, $aMatches ) ) {
                     foreach ( $data['data'] as $aItem ) {
                         $aTemp[$aItem['title']] = $aItem;
                     }
                 }
-                
+
                 // order by url
                 else if ( preg_match( '/^url:(asc|desc)$/', $order, $aMatches ) ) {
                     foreach ( $data['data'] as $aItem ) {
                         $aTemp[$aItem['url']] = $aItem;
                     }
                 }
-                
+
                 // order by last edit
                 else if ( preg_match( '/^lastedit:(asc|desc)$/', $order, $aMatches ) ) {
                     foreach ( $data['data'] as $aItem ) {
@@ -240,7 +239,7 @@ class LookupContribsCore {
                         $aTemp["{$aItem['last_edit']}-{$aItem['url']}"] = $aItem;
                     }
                 }
-                
+
                 // order by edits
                 else if ( preg_match( '/^edits:(asc|desc)$/', $order, $aMatches ) && $edits) {
                     foreach ( $data['data'] as $aItem ) {
@@ -248,10 +247,10 @@ class LookupContribsCore {
                         $aTemp[ sprintf( '%010d-%s', $aItem['editcount'], $aItem['url']) ] = $aItem;
                     }
                 }
-                
+
                 // order if necessary
                 if ( !empty( $aTemp ) ) {
-                    
+
                     // descending order
                     if ( isset( $aMatches[1] ) && 'desc' == $aMatches[1] ) {
                         krsort( $aTemp );
@@ -270,23 +269,23 @@ class LookupContribsCore {
             wfProfileOut( __METHOD__ );
             return $data;
         }
-	
+
 	/**
 	 * @brief Gets an array with wikis' ids and user's editcount on those wikis
-	 * 
+	 *
 	 * @param array $wikisIds reference to a string variable which will be overwritten with an array of wikis' ids
-	 * 
+	 *
 	 * @return array
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 * @FIXME Why does this use a pass by reference, never uses it and then !@#!$%^ sets it to array()? Confusing as hell. --love, TOR
 	 */
 	function getEditCount(&$wikisIds) {
 		global $wgStatsDB;
 		wfProfileIn( __METHOD__ );
-		
+
 		$dbr = wfGetDB(DB_SLAVE, 'stats', $wgStatsDB);
-		
+
 		$res = $dbr->select(
 			array('specials.events_local_users'),
 			array('wiki_id', 'edits'),
@@ -298,46 +297,46 @@ class LookupContribsCore {
 				'OFFSET' => $this->mOffset
 			)
 		);
-		
+
 		$wikiEdits = array();
 		$wikisIds = array();
 		while($row = $dbr->fetchObject($res)) {
 			//second condition !in_array() added because of bugId:6196
-			if( !isset($wikiEdits[$row->wiki_id]) && !in_array($row->wiki_id, $this->getExclusionList()) ) { 
+			if( !isset($wikiEdits[$row->wiki_id]) && !in_array($row->wiki_id, $this->getExclusionList()) ) {
 				$wikiEdits[$row->wiki_id] = $row;
 				$wikisIds[] = $row->wiki_id;
 			}
 		}
-		
+
 		$dbr->freeResult($res);
-		
+
 		wfProfileOut( __METHOD__ );
 		return $wikiEdits;
 	}
-	
+
 	/* array */
 	function getExclusionList() {
 		global $wgLookupContribsExcluded;
-		
+
 		wfProfileIn( __METHOD__ );
 		$result = array();
-		
+
 		/* grumble grumble _precautions_ cough */
 		if (!isset($wgLookupContribsExcluded) || (!is_array($wgLookupContribsExcluded)) || (empty($wgLookupContribsExcluded))  ) {
 			wfProfileOut( __METHOD__ );
 			return array();
 		}
-		
+
 		$result[] = 0;
 		foreach($wgLookupContribsExcluded as $excluded) {
 			$result[] = intval(WikiFactory::DBtoID($excluded));
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $result ;
 	}
 
-	private function getWikiData($city_id) { 
+	private function getWikiData($city_id) {
 		$res = array();
 		$oRow = WikiFactory::getWikiByID($city_id);
 		if ( is_object($oRow) ) {
@@ -359,7 +358,7 @@ class LookupContribsCore {
 			'cnt' => 0,
 			'res' => false
 		);
-		
+
 		$conditions = array (
 			'rev_user' => $this->mUserId,
 			' rc_timestamp = rev_timestamp '
@@ -378,8 +377,8 @@ class LookupContribsCore {
 		);
 		if ( is_object($oRow) ) {
 			$data['cnt'] = $oRow->cnt;
-		}		
-		
+		}
+
 		$res = $dbr->select(
 			array ('recentchanges', 'revision'),
 			array (
@@ -413,7 +412,7 @@ class LookupContribsCore {
 			'cnt' => 0,
 			'res' => false
 		);
-		
+
 		$conditions = array (
 			'rev_user' => $this->mUserId,
 			' rev_id = page_latest '
@@ -422,7 +421,7 @@ class LookupContribsCore {
 		if ( !empty($namespaces) ) {
 			$conditions['page_namespace'] = $namespaces;
 		}
-		
+
 		/* number of records */
 		$oRow = $dbr->selectRow(
 			array ( 'revision', 'page' ),
@@ -432,7 +431,7 @@ class LookupContribsCore {
 		);
 		if ( is_object($oRow) ) {
 			$data['cnt'] = $oRow->cnt;
-		}				
+		}
 
 		$res = $dbr->select(
 			array ( 'revision', 'page' ),
@@ -453,9 +452,9 @@ class LookupContribsCore {
 				'OFFSET'	=> $this->mOffset
 			)
 		);
-		
+
 		$data['res'] = $res;
-		
+
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
@@ -467,7 +466,7 @@ class LookupContribsCore {
 			'cnt' => 0,
 			'res' => false
 		);
-		
+
 		$conditions = array (
 			'rev_user' => $this->mUserId,
 			' page_id = rev_page '
@@ -486,8 +485,8 @@ class LookupContribsCore {
 		);
 		if ( is_object($oRow) ) {
 			$data['cnt'] = $oRow->cnt;
-		}	
-		
+		}
+
 		$res = $dbr->select(
 			array ( 'revision', 'page' ),
 			array (
@@ -513,7 +512,7 @@ class LookupContribsCore {
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
-	
+
 	private function getLogs( $dbr ) {
 		wfProfileIn( __METHOD__ );
 
@@ -521,7 +520,7 @@ class LookupContribsCore {
 			'cnt' => 0,
 			'res' => false
 		);
-		
+
 		$conditions = array (
 			'log_action'	=> "tag",
 			'log_user'		=> $this->mUserId,
@@ -540,8 +539,8 @@ class LookupContribsCore {
 		);
 		if ( is_object($oRow) ) {
 			$data['cnt'] = $oRow->cnt;
-		}		
-		
+		}
+
 		$res = $dbr->select (
 			'logging',
 			array (
@@ -559,23 +558,23 @@ class LookupContribsCore {
 			array(
 				'LIMIT' => $this->mLimit,
 				'OFFSET' => $this->mOffset
-			)			
+			)
 		);
-	
+
 		$data['res'] = $res;
-		
+
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
-	
+
 	private function getArchive( $dbr ) {
 		wfProfileIn( __METHOD__ );
-		
+
 		$data = array(
 			'cnt' => 0,
 			'res' => false
 		);
-		
+
 		$conditions = array (
 			'ar_user' => $this->mUserId,
 		);
@@ -583,7 +582,7 @@ class LookupContribsCore {
 		if ( !empty($namespaces) ) {
 			$conditions['ar_namespace'] = $namespaces;
 		}
-		
+
 		/* number of records */
 		$oRow = $dbr->selectRow(
 			array ('archive'),
@@ -593,7 +592,7 @@ class LookupContribsCore {
 		);
 		if ( is_object($oRow) ) {
 			$data['cnt'] = $oRow->cnt;
-		}			
+		}
 
 		$res = $dbr->select(
 			'archive',
@@ -614,9 +613,9 @@ class LookupContribsCore {
 				'OFFSET' => $this->mOffset
 			)
 		);
-	
+
 		$data['res'] = $res;
-		
+
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
@@ -625,7 +624,7 @@ class LookupContribsCore {
 	public function fetchContribs ( ) {
 		global $wgOut, $wgRequest, $wgLang, $wgMemc, $wgContLang;
 		wfProfileIn( __METHOD__ );
-		
+
 		$fetched_data = array(
 			'cnt' => 0,
 			'data' => array()
@@ -634,7 +633,7 @@ class LookupContribsCore {
 
 		$cnt = 0;
 		$res = false;
-		
+
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
 		$memkey = __METHOD__ . ":{$this->mMode}:{$this->mDBname}:{$this->mNamespaces}:{$this->mUserId}:{$this->mLimit}:{$this->mOffset}";
 		$data = $wgMemc->get($memkey);
@@ -647,12 +646,12 @@ class LookupContribsCore {
 				case "all"		: $data = $this->allMode( $dbr ); break;
 				default			: $data = false;
 			}
-			
+
 			if ( $data == false ) {
-				wfProfileOut( __METHOD__ );	
-				return false;			
+				wfProfileOut( __METHOD__ );
+				return false;
 			}
-			
+
 			$res = $data['res'];
 			$fetched_data['cnt'] = $data['cnt'];
 			$this->mNumRecords = 0;
@@ -732,7 +731,7 @@ class LookupContribsCore {
 	private function produceLink ($nt, $text, $query, $url, $sk, $wiki_meta, $namespace, $article_id) {
 		global $wgContLang, $wgOut, $wgMetaNamespace ;
 
-		$str = $nt->escapeLocalURL ($query) ;
+		$str = htmlspecialchars($nt->getLocalURL($query));
 
 		/* replace empty namespaces, namely: "/:Something" of "title=:Something" stuff it's ugly, it's brutal, it doesn't lead anywhere */
 		$old_str = $str ;
@@ -787,7 +786,7 @@ class LookupContribsCore {
 
 	public function produceLine($row) {
 		global $wgLang, $wgOut, $wgRequest, $wgUser;
-		
+
 		$result = array();
 		$sk = $wgUser->getSkin();
 		$page_user = Title::makeTitle (NS_USER, $this->mUsername);

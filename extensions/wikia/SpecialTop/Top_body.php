@@ -12,8 +12,8 @@ require_once("$IP/extensions/wikia/DataProvider/DataProvider.php");
 
 class Top extends SpecialPage
 {
-        function Top() {
-                SpecialPage::SpecialPage("Top", "", false);
+        function __construct() {
+			parent::__construct("Top", "", false);
         }
 
         function execute( $par ) {

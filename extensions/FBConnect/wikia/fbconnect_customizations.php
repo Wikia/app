@@ -19,8 +19,6 @@
  * Extra initialization for Facebook Connect which is Wikia-specific.
  */
 function wikia_fbconnect_init(){
-	// This is used on the login box, so initialize it all the time.
-	wfLoadExtensionMessages('FBConnect');
 } // end wikia_fbconnect_init()
 
 /**
@@ -34,7 +32,6 @@ function wikia_fbconnect_chooseNameForm(&$specialConnect, &$messageKey){
 	if (!$wgUser->isAllowed( 'createaccount' )) {
 		// TODO: Some sort of error/warning message.  Can probably re-use an existing message.
 	} else {
-		wfLoadExtensionMessages('FBConnect');
 
 		// If it is not the default message, highlight it because it probably indicates an error.
 		$style = ($messageKey=="fbconnect-chooseinstructions"?"":" style='background-color:#faa;padding:5px'");
@@ -64,7 +61,7 @@ function wikia_fbconnect_validateChooseNameForm( &$specialConnect ){
 	$allowDefault = true;
 	global $wgRequest;
 	$email = $wgRequest->getVal('wpEmail');
-	if( ($email == "") || (!User::isValidEmailAddr( $email )) ) {
+	if( ($email == "") || (!Sanitizer::validateEmail( $email )) ) {
 		$specialConnect->sendPage('chooseNameForm', 'fbconnect-invalid-email');
 		$allowDefault = false;
 	}
@@ -93,7 +90,7 @@ function wikia_fbconnect_postProcessForm( &$specialConnect ){
 	// Save the marketing checkbox preference.
 	$marketingOptIn = $wgRequest->getCheck('wpMarketingOptIn');
 	$wgUser->setOption( 'marketingallowed', $marketingOptIn ? 1 : 0 );
-	
+
 	$wgUser->sendConfirmationMail();
 	$wgUser->saveSettings();
 
@@ -120,19 +117,41 @@ function wikia_fbconnect_considerProfilePic( &$specialConnect ){
 			// If the useralready has a masthead avatar, don't overwrite it, this function shouldn't alter anything in that case.
 			$masthead = Masthead::newFromUser($wgUser);
 			if( !$masthead->hasAvatar() ) {
-				// Attempt to store the facebook profile pic as the Wikia avatar.
-				$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_BIG);
-				
+				global $wgEnableUserProfilePagesV3;
+
+				if( !empty($wgEnableUserProfilePagesV3) ) {
+				//bugId:10580
+					// Attempt to store the facebook profile pic as the Wikia avatar.
+					$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_BIG);
+				} else {
+					// Attempt to store the facebook profile pic as the Wikia avatar.
+					$picUrl = FBConnectProfilePic::getImgUrlById($fb_id, FB_PIC_SQUARE);
+				}
+
 				if( $picUrl != "" ) {
+					if( !empty($wgEnableUserProfilePagesV3) ) {
 					//bugId:10580
-					$tmpFile = '';
-					$sUrl = $masthead->uploadByUrlToTempFile($picUrl, $tmpFile);
-					
-					$app = F::app();
-					$userProfilePageV3 = new UserProfilePageController($app);
-					$data->source = 'facebook';
-					$data->file = $tmpFile;
-					$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
+						$tmpFile = '';
+						$sUrl = $masthead->uploadByUrlToTempFile($picUrl, $tmpFile);
+
+						$app = F::app();
+						$userProfilePageV3 = new UserProfilePageController($app);
+						$data->source = 'facebook';
+						$data->file = $tmpFile;
+						$userProfilePageV3->saveUsersAvatar($wgUser->getId(), $data);
+					} else {
+						$errorNo = $masthead->uploadByUrl($picUrl);
+
+						// Apply this as the user's new avatar if the image-pull went okay.
+						if($errorNo == UPLOAD_ERR_OK){
+							$sUrl = $masthead->getLocalPath();
+							if ( !empty($sUrl) ) {
+								/* set user option */
+								$wgUser->setOption( AVATAR_USER_OPTION_NAME, $sUrl );
+								$wgUser->saveSettings();
+							}
+						}
+					}
 				}
 			}
 		}
@@ -147,17 +166,17 @@ class ChooseNameForm extends LoginForm {
 	var $ajaxTemplate;
 	var $msg;
 	var $msgtype;
-	
+
 	public function getAjaxTemplate(){
 		return $this->ajaxTemplate;
 	}
-	
+
 	static public function userNameOK( $uName ){
 		return ('OK' == wfValidateUserName($uName));
 	}
 
 	function mainLoginForm( &$specialConnect, $msg, $msgtype = 'error' ){
-		global $wgUser, $wgOut, $wgAllowRealName, $wgEnableEmail;
+		global $wgUser, $wgOut, $wgHiddenPrefs, $wgEnableEmail;
 		global $wgCookiePrefix, $wgLoginLanguageSelector;
 		global $wgAuth, $wgEmailConfirmToEdit, $wgCookieExpiration,$wgRequest;
 
@@ -166,7 +185,7 @@ class ChooseNameForm extends LoginForm {
 
 		$tmpl = new ChooseNameTemplate();
 		$tmpl->addInputItem( 'wpMarketingOptIn', 1, 'checkbox', 'tog-marketingallowed');
-		
+
 		$returnto = "";
 		if ( !empty( $this->mReturnTo ) ) {
 			$returnto = '&returnto=' . wfUrlencode( $this->mReturnTo );
@@ -179,7 +198,7 @@ class ChooseNameForm extends LoginForm {
 		$tmpl->set( 'link', '' );
 
 		$tmpl->set( 'header', '' );
-		//$tmpl->set( 'name', $this->mName ); // intelligently defaulted below
+		//$tmpl->set( 'name', $this->mUsername ); // intelligently defaulted below
 		$tmpl->set( 'password', $this->mPassword );
 		$tmpl->set( 'retype', $this->mRetype );
 		$tmpl->set( 'actiontype', $this->mActionType );
@@ -189,7 +208,7 @@ class ChooseNameForm extends LoginForm {
 		$tmpl->set( 'message', $msg );
 		$tmpl->set( 'messagetype', $msgtype );
 		$tmpl->set( 'createemail', $wgEnableEmail && $wgUser->isLoggedIn() );
-		$tmpl->set( 'userealname', $wgAllowRealName );
+		$tmpl->set( 'userealname', !in_array( 'realname', $wgHiddenPrefs ) );
 		$tmpl->set( 'useemail', $wgEnableEmail );
 		$tmpl->set( 'emailrequired', $wgEmailConfirmToEdit );
 		$tmpl->set( 'canreset', $wgAuth->allowPasswordChange() );
@@ -214,7 +233,7 @@ class ChooseNameForm extends LoginForm {
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
 		$userinfo = $fb->getUserInfo($fb_user);
-		
+
 		// If no email was set yet, then use the value from facebook (which is quite likely also empty, but probably not always).
 		if(!$this->mEmail){
 			$this->mEmail = FBConnectUser::getOptionFromInfo('email', $userinfo);
@@ -230,29 +249,29 @@ class ChooseNameForm extends LoginForm {
 		}
 
 		// Make this an intelligent guess at a good username (based off of their nickname, real name, etc.).
-		if( !$this->mName ){
+		if( !$this->mUsername ){
 			if ( $wgUser->isLoggedIn() ) {
-				$this->mName = $wgUser->getName();
+				$this->mUsername = $wgUser->getName();
 			} else {
 				$nickname = FBConnectUser::getOptionFromInfo('nickname', $userinfo);
 				if(self::userNameOK($nickname)){
-					$this->mName = $nickname;
+					$this->mUsername = $nickname;
 				} else {
 					$fullname = FBConnectUser::getOptionFromInfo('fullname', $userinfo);
 					if(self::userNameOK($fullname)){
-						$this->mName = $fullname;
+						$this->mUsername = $fullname;
 					} else {
 						if( empty($nickname) ){
 							$nickname = $fullname;
 						}
 						// Their nickname and full name were taken, so generate a username based on the nickname.
 						$specialConnect->setUserNamePrefix( $nickname );
-						$this->mName = $specialConnect->generateUserName();
+						$this->mUsername = $specialConnect->generateUserName();
 					}
 				}
 			}
 		}
-		$tmpl->set( 'name', $this->mName );
+		$tmpl->set( 'name', $this->mUsername );
 
 		/*
 		// NOTE: We're not using this at the moment because it seems that there is no need to show these boxes... we'll just default to updating nothing on login (to avoid confusion & to make signup quicker).

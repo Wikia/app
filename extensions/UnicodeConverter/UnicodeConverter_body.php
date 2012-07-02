@@ -7,13 +7,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class SpecialUnicodeConverter extends SpecialPage
 {
 	function __construct() {
-		SpecialPage::SpecialPage("UnicodeConverter");
+		parent::__construct("UnicodeConverter");
 	}
 
 	function execute( $par ) {
 		global $wgRequest, $wgOut;
-
-		wfLoadExtensionMessages( 'UnicodeConverter' );
 
 		$this->setHeaders();
 

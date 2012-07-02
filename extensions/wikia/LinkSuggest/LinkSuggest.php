@@ -135,7 +135,7 @@ function getLinkSuggest() {
 	if (strlen($query) < 3) {
 		// enforce minimum character limit on server side
 		$out = $wgRequest->getText('format') == 'json' 
-			 ? Wikia::json_encode(array('suggestions'=>array(),'redirects'=>array()))
+			 ? json_encode(array('suggestions'=>array(),'redirects'=>array()))
 			 : '';
 	} else if ($cached = $wgMemc->get($key)) {
 		$out = $cached;
@@ -172,7 +172,7 @@ function getLinkSuggest() {
 
 		if ($namespace !== null && $query === '') {
 			$out = $wgRequest->getText('format') == 'json' 
-				 ? Wikia::json_encode(array('suggestions'=>array(),'redirects'=>array()))
+				 ? json_encode(array('suggestions'=>array(),'redirects'=>array()))
 				 : '';
 
 			return linkSuggestAjaxResponse($out);
@@ -308,9 +308,9 @@ function getLinkSuggest() {
 		$result_values = array_values($results);
 
 		if ( $isMobile ) {
-			$out = Wikia::json_encode( array( array_splice( $result_values, 0, 10), array_splice($redirects, -1, 1) ) );
+			$out = json_encode( array( array_splice( $result_values, 0, 10), array_splice($redirects, -1, 1) ) );
 		} else {
-			$out = Wikia::json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
+			$out = json_encode(array('query' => $wgRequest->getText('query'), 'suggestions' => $result_values, 'redirects' => $redirects));
 		}
 
 

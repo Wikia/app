@@ -146,7 +146,7 @@ public class CreateNewWikiTest extends BaseTest {
 	
 	/*
 	 * not testable - requires user account confirmation (reading mail) in order to complete process
-	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testDeleteCreateWikiAsLoggedOutUser"})
+	@Test(groups={"envProduction", "legacy"},dependsOnMethods={"testDeleteCreateWikiAsLoggedOutUser"})
 	public void testCreateWikiAsNewUser() throws Exception {
 		openAndWait("/wiki/Special:CreateNewWiki");
 		waitForElement("//input[@name='wiki-name']");
@@ -181,7 +181,7 @@ public class CreateNewWikiTest extends BaseTest {
 		waitForElementVisible("WikiWelcome", this.getTimeout());
 	}
 	
-	@Test(groups={"envProduction", "verified"},dependsOnMethods={"testCreateWikiAsNewUser"},alwaysRun=true)
+	@Test(groups={"envProduction", "legacy"},dependsOnMethods={"testCreateWikiAsNewUser"},alwaysRun=true)
 	public void testDeleteCreateWikiAsNewUser() throws Exception {
 		loginAsStaff();
 		

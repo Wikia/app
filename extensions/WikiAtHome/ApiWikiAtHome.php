@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * the api module responsible for dishing out jobs, and taking in results.
  */
 
@@ -28,12 +28,12 @@ class ApiWikiAtHome extends ApiBase {
 			//do job req:
 			return $this->proccessJobReq();
 
-		}else if ( $this->mParams['jobkey'] ){
+		}elseif ( $this->mParams['jobkey'] ){
 			//process a completed job:
 			return $this->doProccessJobKey ( $this->mParams['jobkey'] ) ;
 		}
 	}
-	/*
+	/**
 	 * Process a newJob req:
 	 */
 	function proccessJobReq(){
@@ -76,7 +76,7 @@ class ApiWikiAtHome extends ApiBase {
 			);
 		}
 	}
-	/*
+	/**
 	 * process the submitted job:
 	 */
 	function doProccessJobKey( $job_key ){
@@ -153,13 +153,13 @@ class ApiWikiAtHome extends ApiBase {
 		if( !$status->isGood() ){
 			return $this->dieUsageMsg( array('code'=>'fileerror', 'info'=>'Could Not Move The Uploaded File') );
 		}*/
-		wfMkdirParents( $thumbPath );
+		wfMkdirParents( $thumbPath, null, __METHOD__ );
 		if( !move_uploaded_file($uploadedJobFile, $destTarget) ){
 			return $this->dieUsage( 'Could Not Move The Uploaded File', 'fileerror' );
 		}
 		//issue the jobDone to the Manager:
 		WahJobManager :: updateJobDone($job, $wgUser->getId());
-		$dbw = &wfGetDb( DB_READ );
+		$dbw = wfGetDB( DB_SLAVE );
 
 		//check if its the "last" job shell out a Join command
 		$wjm = WahJobManager::newFromSet( $jobSet );
@@ -172,7 +172,7 @@ class ApiWikiAtHome extends ApiBase {
 						'setdone'		=> false
 					)
 				);
-		}else if( $percDone == 1 ){
+		}elseif( $percDone == 1 ){
 			//all the files are "done" according to the DB:
 			//make sure all the files exist in the
 			$fileList = array();
@@ -301,12 +301,16 @@ class ApiWikiAtHome extends ApiBase {
 			'Note that the HTTP POST must be done as a file upload (i.e. using multipart/form-data)'
 		);
 	}
-	
+
+	public function needsToken() {
+		return true;
+	}
+
 	public function getTokenSalt() {
 		return '';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'Get A Job:',
 			'    api.php?action=wikiathome&getnewjob=new',

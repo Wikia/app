@@ -44,7 +44,7 @@ class WikiaEditStatistics {
 		if ( empty($articleId) ) {
 			$this->mPageId = $Title->getArticleID();
 			if ( empty($this->mPageId) ) {
-				$Title->getArticleID(GAID_FOR_UPDATE);
+				$Title->getArticleID(Title::GAID_FOR_UPDATE);
 			}
 		} else {
 			$this->setPageId($articleId);
@@ -347,7 +347,7 @@ class WikiaEditStatistics {
 		if ( ( $Title instanceof Title ) && ( $User instanceof User ) ) {
 			$newId = $Title->getLatestRevID();
 			if ( empty($newId) ) {
-				$newId = $Title->getLatestRevID(GAID_FOR_UPDATE);
+				$newId = $Title->getLatestRevID(Title::GAID_FOR_UPDATE);
 			}
 			$revCount = $Title->countRevisionsBetween( 1, $newId );
 			if ( $revCount ) {

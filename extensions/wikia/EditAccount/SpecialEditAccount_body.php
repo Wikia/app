@@ -39,7 +39,7 @@ class EditAccount extends SpecialPage {
 	 */
 	public function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt;
-		
+
 		// Set page title and other stuff
 		$this->setHeaders();
 
@@ -83,7 +83,7 @@ class EditAccount extends SpecialPage {
 					if ( !empty($wgEnableUserLoginExt) ) {
 						$this->mTempUser = TempUser::getTempUserFromName( $userName );
 					}
-					
+
 					if ( $this->mTempUser ) {
 						$id = $this->mTempUser->getId();
 						$this->mUser = User::newFromId( $id );
@@ -95,10 +95,10 @@ class EditAccount extends SpecialPage {
 				}
 			}
 		}
-		
+
 		// FB:23860
 		if ( !( $this->mUser instanceof User ) ) $action = '';
-		
+
 		switch( $action ) {
 			case 'setemail':
 				$newEmail = $wgRequest->getVal( 'wpNewEmail' );
@@ -196,7 +196,7 @@ class EditAccount extends SpecialPage {
 					'changeEmailRequested' => $changeEmailRequested,
 				) );
 		}
-		
+
 		// HTML output
 		$wgOut->addHTML( $oTmpl->execute( $template ) );
 	}
@@ -208,7 +208,7 @@ class EditAccount extends SpecialPage {
 	 */
 	function setEmail( $email ) {
 		$oldEmail = $this->mUser->getEmail();
-		if ( $this->mUser->isValidEmailAddr( $email ) || $email == '' ) {
+		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			if ( $this->mTempUser ) {
 				if ( $email == '' ) {
 					$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
@@ -367,7 +367,7 @@ class EditAccount extends SpecialPage {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Clears the magic unsub bit
 	 *
@@ -404,7 +404,7 @@ class EditAccount extends SpecialPage {
 
 		return true;
 	}
-	
+
 	/**
 	 * Returns a random password which conforms to our password requirements and is
 	 * not easily guessable.

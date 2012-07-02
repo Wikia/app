@@ -5,7 +5,7 @@ class ReaderFeedbackXML {
 	 * Get a selector of rateable namespaces
 	 * @param int $selected, namespace selected
 	 * @param $all Mixed: Value of an item denoting all namespaces, or null to omit
-	 * @returns string
+	 * @return string
 	 */
 	public static function getNamespaceMenu( $selected=null, $all=null ) {
 		global $wgContLang, $wgFeedbackNamespaces;
@@ -42,11 +42,10 @@ class ReaderFeedbackXML {
 	/**
 	 * Get tag dropdown select
 	 * @param int $selected, selected level
-	 * @returns string
+	 * @return string
 	 */
 	public static function getTagMenu( $selected = '' ) {
-		wfLoadExtensionMessages( 'ReaderFeedback' );
-		$s  = "<label for='wpRatingTag'>" . wfMsgHtml('readerfeedback-tagfilter') . "</label>&nbsp;";
+		$s  = "<label for='wpRatingTag'>" . wfMsgHtml('readerfeedback-tagfilter') . "</label>&#160;";
 		$s .= Xml::openElement( 'select', array('name' => 'ratingtag', 'id' => 'wpRatingTag') );
 		foreach( ReaderFeedback::getFeedbackTags() as $tag => $weight ) {
 			$s .= Xml::option( wfMsg( "readerfeedback-$tag" ), $tag, $selected===$tag );
@@ -58,11 +57,10 @@ class ReaderFeedbackXML {
 	/**
 	 * Get rating tier dropdown select
 	 * @param int $selected, selected tier
-	 * @returns string
+	 * @return string
 	 */	
 	 public static function getRatingTierMenu( $selected = '' ) {
-		wfLoadExtensionMessages( 'ReaderFeedback' );
-		$s  = "<label for='wpRatingTier'>" . wfMsgHtml('readerfeedback-tierfilter') . "</label>&nbsp;";
+		$s  = "<label for='wpRatingTier'>" . wfMsgHtml('readerfeedback-tierfilter') . "</label>&#160;";
 		$s .= Xml::openElement( 'select', array('name' => 'ratingtier', 'id' => 'wpRatingTier') );
 		$s .= Xml::option( wfMsg( "readerfeedback-tier-high" ), 3, $selected===3);
 		$s .= Xml::option( wfMsg( "readerfeedback-tier-medium" ), 2, $selected===2 );

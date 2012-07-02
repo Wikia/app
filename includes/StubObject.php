@@ -21,10 +21,10 @@ class StubObject {
 	/**
 	 * Constructor.
 	 *
-	 * @param String $global name of the global variable.
-	 * @param String $class name of the class of the real object.
-	 * @param Array $param array of parameters to pass to contructor of the real
-	 *                     object.
+	 * @param $global String: name of the global variable.
+	 * @param $class String: name of the class of the real object.
+	 * @param $params Array: parameters to pass to contructor of the real
+	 *               object.
 	 */
 	function __construct( $global = null, $class = null, $params = array() ) {
 		$this->mGlobal = $global;
@@ -36,8 +36,8 @@ class StubObject {
 	 * Returns a bool value whetever $obj is a stub object. Can be used to break
 	 * a infinite loop when unstubbing an object.
 	 *
-	 * @param Object $obj object to check.
-	 * @return bool true if $obj is not an instance of StubObject class.
+	 * @param $obj Object to check.
+	 * @return Boolean: true if $obj is not an instance of StubObject class.
 	 */
 	static function isRealObject( $obj ) {
 		return is_object( $obj ) && !($obj instanceof StubObject);
@@ -50,8 +50,8 @@ class StubObject {
 	 * This function will also call the function with the same name in the real
 	 * object.
 	 *
-	 * @param String $name name of the function called.
-	 * @param Array $args array of arguments.
+	 * @param $name String: name of the function called
+	 * @param $args Array: arguments
 	 */
 	function _call( $name, $args ) {
 		$this->_unstub( $name, 5 );
@@ -60,17 +60,18 @@ class StubObject {
 
 	/**
 	 * Create a new object to replace this stub object.
+	 * @return object
 	 */
 	function _newObject() {
-		return wfCreateObject( $this->mClass, $this->mParams );
+		return MWFunction::newObj( $this->mClass, $this->mParams );
 	}
 
 	/**
 	 * Function called by PHP if no function with that name exists in this
 	 * object.
 	 *
-	 * @param String $name name of the function called
-	 * @param Array $args array of arguments
+	 * @param $name String: name of the function called
+	 * @param $args Array: arguments
 	 */
 	function __call( $name, $args ) {
 		return $this->_call( $name, $args );
@@ -82,16 +83,17 @@ class StubObject {
 	 * This is public, for the convenience of external callers wishing to access
 	 * properties, e.g. eval.php
 	 *
-	 * @param String $name name of the method called in this object.
-	 * @param Integer $level level to go in the stact trace to get the function
-	 *                       who called this function.
+	 * @param $name String: name of the method called in this object.
+	 * @param $level Integer: level to go in the stact trace to get the function
+	 *               who called this function.
 	 */
 	function _unstub( $name = '_unstub', $level = 2 ) {
 		static $recursionLevel = 0;
 
-		if ( !($GLOBALS[$this->mGlobal] instanceof StubObject) )
+		if ( !($GLOBALS[$this->mGlobal] instanceof StubObject) ) {
 			return $GLOBALS[$this->mGlobal]; // already unstubbed.
-		
+		}
+
 		if ( get_class( $GLOBALS[$this->mGlobal] ) != $this->mClass ) {
 			$fname = __METHOD__.'-'.$this->mGlobal;
 			wfProfileIn( $fname );
@@ -100,7 +102,7 @@ class StubObject {
 				throw new MWException( "Unstub loop detected on call of \${$this->mGlobal}->$name from $caller\n" );
 			}
 			wfDebug( "Unstubbing \${$this->mGlobal} on call of \${$this->mGlobal}::$name from $caller\n" );
-			$obj = $GLOBALS[$this->mGlobal] = $this->_newObject();
+			$GLOBALS[$this->mGlobal] = $this->_newObject();
 			--$recursionLevel;
 			wfProfileOut( $fname );
 		}
@@ -110,10 +112,13 @@ class StubObject {
 /**
  * Stub object for the content language of this wiki. This object have to be in
  * $wgContLang global.
+ *
+ * @deprecated since 1.18
  */
 class StubContLang extends StubObject {
 
 	function __construct() {
+		wfDeprecated( __CLASS__, '1.18' );
 		parent::__construct( 'wgContLang' );
 	}
 
@@ -121,9 +126,12 @@ class StubContLang extends StubObject {
 		return $this->_call( $name, $args );
 	}
 
+	/**
+	 * @return Language
+	 */
 	function _newObject() {
-		global $wgContLanguageCode;
-		$obj = Language::factory( $wgContLanguageCode );
+		global $wgLanguageCode;
+		$obj = Language::factory( $wgLanguageCode );
 		$obj->initEncoding();
 		$obj->initContLang();
 		return $obj;
@@ -145,50 +153,10 @@ class StubUserLang extends StubObject {
 		return $this->_call( $name, $args );
 	}
 
+	/**
+	 * @return Language
+	 */
 	function _newObject() {
-		global $wgContLanguageCode, $wgRequest, $wgUser, $wgContLang;
-		$code = $wgRequest->getVal( 'uselang', $wgUser->getOption( 'language' ) );
-		// BCP 47 - letter case MUST NOT carry meaning
-		$code = strtolower( $code );
-
-		# Validate $code
-		if( empty( $code ) || !Language::isValidCode( $code ) || ( $code === 'qqq' ) ) {
-			wfDebug( "Invalid user language code\n" );
-			$code = $wgContLanguageCode;
-		}
-
-		if( $code === $wgContLanguageCode ) {
-			return $wgContLang;
-		} else {
-			$obj = Language::factory( $code );
-			return $obj;
-		}
-	}
-}
-
-/**
- * Stub object for the user. The initialisation of the will depend of
- * $wgCommandLineMode. If it's true, it will be an anonymous user and if it's
- * false, the user will be loaded from credidentails provided by cookies. This
- * object have to be in $wgUser global.
- */
-class StubUser extends StubObject {
-
-	function __construct() {
-		parent::__construct( 'wgUser' );
-	}
-
-	function __call( $name, $args ) {
-		return $this->_call( $name, $args );
-	}
-
-	function _newObject() {
-		global $wgCommandLineMode;
-		if( $wgCommandLineMode ) {
-			$user = new User;
-		} else {
-			$user = User::newFromSession();
-		}
-		return $user;
+		return RequestContext::getMain()->getLanguage();
 	}
 }

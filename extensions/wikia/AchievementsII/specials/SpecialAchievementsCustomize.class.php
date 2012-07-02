@@ -3,23 +3,22 @@
 class SpecialAchievementsCustomize extends SpecialPage {
 
 	function __construct() {
-		wfLoadExtensionMessages('AchievementsII');
 		parent::__construct('AchievementsCustomize', 'editinterface', false /* listed */);
 	}
 
 	function execute($user_id) {
 		wfProfileIn(__METHOD__);
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgSupressPageTitle, $wgRequest, $wgJsMimeType, $wgCityId, $wgExternalSharedDB;
-		
+		global $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgResourceBasePath, $wgStyleVersion, $wgSupressPageTitle, $wgRequest, $wgJsMimeType, $wgCityId, $wgExternalSharedDB;
+
 		// set basic headers
 		$this->setHeaders();
-		
+
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		
+
 		if(!$this->userCanExecute($wgUser)) {
 			$this->displayRestrictionError();
 			return;
@@ -31,7 +30,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 
 		if($wgRequest->wasPosted()) {
 
-			$jsonObj = Wikia::json_decode($wgRequest->getVal('json-data'));
+			$jsonObj = json_decode($wgRequest->getVal('json-data'));
 			$dbw = null;
 
 			foreach($jsonObj->messages as $mKey => $mVal) {
@@ -58,7 +57,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 					$dbw->update('ach_custom_badges', array('enabled' => (int)$mVal), array('wiki_id' => $wgCityId, 'id' => $tokens[1]));
 				}
 			}
-			
+
 			$successMsg = wfMsg('achievements-special-saved');
 
 			if($wgRequest->getVal('add_edit_plus_category_track') == '1') {
@@ -69,7 +68,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 					$errorMsg = wfMsg('achievements-non-existing-category');
 				else {
 					$safeCatName = $category->getTitle()->getText();
-					
+
 					if(
 						strtolower($safeCatName) == 'stub' ||
 						stripos($safeCatName, 'stub ') === 0 ||
@@ -80,7 +79,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 					}
 					else {
 						$existingTrack = AchConfig::getInstance()->trackForCategoryExists($safeCatName);
-	
+
 						if($existingTrack !== false)
 							$errorMsg = wfMsg('achievements-edit-plus-category-track-exists', $existingTrack);
 						else {
@@ -88,14 +87,14 @@ class SpecialAchievementsCustomize extends SpecialPage {
 								'ach_custom_badges',
 								array('wiki_id' => $wgCityId, 'type' => BADGE_TYPE_INTRACKEDITPLUSCATEGORY, 'cat' => $safeCatName)
 							);
-	
+
 							$jsonObj->sectionId = $badge_type_id = $dbw->insertId();
 						}
 					}
 				}
 			}
 		}
-		
+
 		AchConfig::getInstance()->refreshData(true);
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(
@@ -107,11 +106,11 @@ class SpecialAchievementsCustomize extends SpecialPage {
 
 		$wgOut->addHTML($template->render('SpecialCustomize'));
 		$wgOut->addStyle("common/article_sidebar.css");
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/customize.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/AchievementsII/css/customize.css");
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/jquery.aim.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.scrollTo-1.4.2.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.scrollTo-1.4.2.js\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AchievementsII/js/achievements.js\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/aim/jquery.aim.js\"></script>\n");
 
 		wfProfileOut(__METHOD__);
 	}

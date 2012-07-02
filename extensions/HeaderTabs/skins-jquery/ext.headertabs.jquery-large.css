@@ -1,0 +1,27 @@
+/**
+ * Default jQuery styling, but with normal-sized font and blue (instead of
+ * black)links.
+ *
+ * @file
+ * @ingroup Extensions
+ *
+ * @author 70.189.238.136
+ * @author Olivier Beaton
+ */
+
+#headertabs.jquery-large.ui-widget {
+	font-family: inherit;
+	font-size: 1em; /* IE doesn't like inherit here */
+}
+
+/* section by 70.189.238.136 */
+#headertabs.jquery-large .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: inherit; font-size: 1em; } /* IE doesn't like inherit here */
+#headertabs.jquery-large .ui-widget-content a { color:#0645AD; }
+#headertabs.jquery-large .ui-widget-content a:visited { color:#0b0080; }
+#headertabs.jquery-large .ui-widget-content a.new { color:#CC2200; }
+#headertabs.jquery-large .ui-widget-content a.new:visited { color:#A55858; }
+#headertabs.jquery-large .ui-widget-content a.extiw { color:#3366BB; }
+#headertabs.jquery-large .ui-widget-content a.redirect { color:#308050; }
+#headertabs.jquery-large .ui-widget-content a.redirect:visited { color:#3070A0; }
+
+/* end JQuery UI tabs style clearer */

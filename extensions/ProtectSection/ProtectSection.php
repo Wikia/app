@@ -11,7 +11,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
@@ -20,7 +20,8 @@
  *
  * To protect a section of text, enclose it in a <protect> </protect> block.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @author ThomasV <thomasv1@gmx.de>
  * @author Jim Hu (remove Section Edit links in protected text, bug fixes)
@@ -47,9 +48,8 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'ProtectSection',
 	'author' => 'ThomasV',
 	'version' => '1.1',
-	'description' => 'Allows authorised users to protect parts of an article',
 	'descriptionmsg' => 'protectsection_desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:ProtectSection'
+	'url' => 'https://www.mediawiki.org/wiki/Extension:ProtectSection'
 );
 
 // If set to true, text cannot be inserted before a protect tag at the start of an article

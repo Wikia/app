@@ -1,21 +1,32 @@
 <?php
 
+/**
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
 class ApiCodeUpdate extends ApiBase {
 
 	public function execute() {
 		global $wgUser;
 		// Before doing anything at all, let's check permissions
-		if( !$wgUser->isAllowed('codereview-use') ) {
-			$this->dieUsage('You don\'t have permission update code','permissiondenied');
+		if ( !$wgUser->isAllowed( 'codereview-use' ) ) {
+			$this->dieUsage( 'You don\'t have permission to update code', 'permissiondenied' );
 		}
 		$params = $this->extractRequestParams();
-
-		if ( !isset( $params['repo'] ) ) {
-			$this->dieUsageMsg( array( 'missingparam', 'repo' ) );
-		}
-		if ( !isset( $params['rev'] ) ) {
-			$this->dieUsageMsg( array( 'missingparam', 'rev' ) );
-		}
 
 		$repo = CodeRepository::newFromName( $params['repo'] );
 		if ( !$repo ) {
@@ -37,7 +48,7 @@ class ApiCodeUpdate extends ApiBase {
 		if ( !$log ) {
 			// FIXME: When and how often does this happen?
 			// Should we use dieUsage() here instead?
-			ApiBase::dieDebug( __METHOD__, "Something awry..." );
+			ApiBase::dieDebug( __METHOD__, 'Something awry...' );
 		}
 
 		$result = array();
@@ -68,17 +79,21 @@ class ApiCodeUpdate extends ApiBase {
 		// Discourage casual browsing :)
 		return true;
 	}
-	
+
 	public function isWriteMode() {
 		return true;
 	}
 
 	public function getAllowedParams() {
 		return array(
-			'repo' => null,
+			'repo' => array(
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => true,
+			),
 			'rev' => array(
 				ApiBase::PARAM_TYPE => 'integer',
-				ApiBase::PARAM_MIN => 1
+				ApiBase::PARAM_MIN => 1,
+				ApiBase::PARAM_REQUIRED => true,
 			)
 		);
 	}
@@ -93,13 +108,11 @@ class ApiCodeUpdate extends ApiBase {
 		return array(
 			'Update CodeReview repository data from master revision control system.' );
 	}
-	
+
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
-			array( 'code' => 'permissiondenied', 'info' => 'You don\'t have permission update code' ),
+			array( 'code' => 'permissiondenied', 'info' => 'You don\'t have permission to update code' ),
 			array( 'code' => 'invalidrepo', 'info' => "Invalid repo ``repo''" ),
-			array( 'missingparam', 'repo' ),
-			array( 'missingparam', 'rev' ),
 		) );
 	}
 
@@ -110,6 +123,6 @@ class ApiCodeUpdate extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiCodeUpdate.php 48928 2009-03-27 18:41:20Z catrope $';
+		return __CLASS__ . ': $Id: ApiCodeUpdate.php 79344 2010-12-31 16:13:58Z reedy $';
 	}
 }

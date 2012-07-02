@@ -2,7 +2,7 @@
 /**
  * We want to make this whole thing as seamless as possible to the
  * end-user. Unfortunately, we can't do _all_ of the work in the class
- * because A) included files are not in global scope, but in the scope 
+ * because A) included files are not in global scope, but in the scope
  * of their caller, and B) MediaWiki has way too many globals. So instead
  * we'll kinda fake it, and do the requires() inline. <3 PHP
  *
@@ -24,7 +24,7 @@
  * @ingroup Maintenance
  */
 
-require_once( "Maintenance.php" );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 
 class DeleteSelfExternals extends Maintenance {
@@ -33,22 +33,22 @@ class DeleteSelfExternals extends Maintenance {
 		$this->mDescription = 'Delete self-references to $wgServer from externallinks';
 		$this->mBatchSize = 1000;
 	}
-	
+
 	public function execute() {
 		global $wgServer;
 		$this->output( "Deleting self externals from $wgServer\n" );
-		$db = wfGetDB(DB_MASTER);
-		while (1) {
-			wfWaitForSlaves( 2 );
+		$db = wfGetDB( DB_MASTER );
+		while ( 1 ) {
+			wfWaitForSlaves();
 			$db->commit();
-			$q = $db->limitResult( "DELETE /* deleteSelfExternals */ FROM externallinks WHERE el_to" 
+			$q = $db->limitResult( "DELETE /* deleteSelfExternals */ FROM externallinks WHERE el_to"
 				. $db->buildLike( $wgServer . '/', $db->anyString() ), $this->mBatchSize );
 			$this->output( "Deleting a batch\n" );
-			$db->query($q);
-			if (!$db->affectedRows()) exit(0);
+			$db->query( $q );
+			if ( !$db->affectedRows() ) return;
 		}
 	}
 }
 
 $maintClass = "DeleteSelfExternals";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

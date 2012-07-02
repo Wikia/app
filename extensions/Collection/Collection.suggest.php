@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Collection Extension for MediaWiki
  *
  * Copyright (C) 2008-2009, PediaPress GmbH
@@ -17,11 +17,11 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-/*
+/**
  * Class: CollectionSuggest
  *
  * This class contains only static methods, so theres no need for a constructer.
@@ -31,13 +31,13 @@
  */
 class CollectionSuggest {
 
-	/*
+	/**
 	 * ===============================================================================
 	 * public methods
 	 * ===============================================================================
 	 */
 
-	/*
+	/**
 	 * Main entrypoint
 	 *
 	 * @param $mode (type string) 'add', 'ban' or 'remove'
@@ -51,11 +51,8 @@ class CollectionSuggest {
 	 *        or a number of articles to add or a value (1 - 1.5) all articles with a
 	 *        higher value will be added to the collection
 	 */
-	public function run( $mode='', $param='' ) {
+	public static function run( $mode = '', $param = '' ) {
 		global $wgOut;
-
-		wfLoadExtensionMessages( 'CollectionCore' );
-		wfLoadExtensionMessages( 'Collection' );
 
 		if ( !CollectionSession::hasSession() ) {
 			CollectionSession::startSession();
@@ -69,10 +66,11 @@ class CollectionSuggest {
 
 		$template = self::getCollectionSuggestTemplate( $mode, $param );
 		$wgOut->setPageTitle( wfMsg( 'coll-suggest_title' ) );
+		$wgOut->addModules( 'ext.collection.suggest' );
 		$wgOut->addTemplate( $template );
 	}
 
-	/*
+	/**
 	 * Entrypoint for Ajax
 	 *
 	 * @param $mode (type string) 'add', 'ban' or 'remove'
@@ -118,21 +116,22 @@ class CollectionSuggest {
 
 	// remove the suggestion data from the session
 	public static function clear() {
-		if( isset( $_SESSION['wsCollectionSuggestBan'] ) ) {
+		if ( isset( $_SESSION['wsCollectionSuggestBan'] ) ) {
 		 	unset( $_SESSION['wsCollectionSuggestBan'] );
 		}
-		if( isset( $_SESSION['wsCollectionSuggestProp'] ) ) {
+		if ( isset( $_SESSION['wsCollectionSuggestProp'] ) ) {
 			unset( $_SESSION['wsCollectionSuggestProp'] );
 		}
 	}
 
-	/*
+	/**
 	 * ===============================================================================
 	 * private methods
 	 * ===============================================================================
 	 */
 
 	private static function unban( $article ) {
+		if (!isset($_SESSION['wsCollectionSuggestBan'])) return;
 		$bans = $_SESSION['wsCollectionSuggestBan'];
 		$newbans = array();
 		foreach ( $bans as $ban ) {
@@ -143,7 +142,7 @@ class CollectionSuggest {
 		$_SESSION['wsCollectionSuggestBan'] = $newbans;
 	}
 
-	/*
+	/**
 	 * Update the session and return the template
 	 *
 	 * @param $mode (type string) 'add', 'ban' or 'remove'
@@ -161,20 +160,20 @@ class CollectionSuggest {
 	private static function getCollectionSuggestTemplate( $mode, $param ) {
 		global $wgCollectionMaxSuggestions;
 
-		switch($mode) {
+		switch( $mode ) {
 			case 'add':
-				SpecialCollection::addArticleFromName(NS_MAIN, $param);
+				SpecialCollection::addArticleFromName( NS_MAIN, $param );
 				self::unban( $param );
 				break;
 			case 'ban':
 				$_SESSION['wsCollectionSuggestBan'][] = $param;
 				break;
 			case 'remove':
-				SpecialCollection::removeArticleFromName(NS_MAIN, $param);
+				SpecialCollection::removeArticleFromName( NS_MAIN, $param );
 				$_SESSION['wsCollectionSuggestBan'][] = $param;
 				break;
 			case 'removeonly': // remove w/out banning (for undo)
-				SpecialCollection::removeArticleFromName(NS_MAIN, $param);
+				SpecialCollection::removeArticleFromName( NS_MAIN, $param );
 				break;
 			case 'unban': // for undo
 				self::unban( $param );
@@ -202,23 +201,23 @@ class CollectionSuggest {
 		return $template;
 	}
 
-	/*
+	/**
 	 * Add some articles and update the book of the Proposal-Object
 	 *
 	 * @param $articleList an array with the names of the articles to be added
 	 * @param $prop the proposal-Object
 	 */
 	private static function addArticlesFromName( $articleList, $prop ) {
-		foreach( $articleList as $article ) {
+		foreach ( $articleList as $article ) {
 			SpecialCollection::addArticleFromName( NS_MAIN, $article );
 		}
 		$prop->setCollection( $_SESSION['wsCollection'] );
 	}
 }
 
-/*
+/**
  * class: Proposals
- * 
+ *
  * it needs 3 Lists:
  * - one with the bookmembers
  * - one where it can save the banned articles
@@ -230,31 +229,31 @@ class CollectionSuggest {
  * links of that article as second dimension can be accessed with the method
  * getLinkList()
  *
- * 
+ *
  *
  * the Class can only sort the proposals, if it can access the function compareProps
  */
 class Proposals {
 
-	/*
+	/**
 	 * ==================================================
 	 * class attributes
 	 * ==================================================
 	 *
-	 * only mLinkList and mPropList can be accessed from 
+	 * only mLinkList and mPropList can be accessed from
 	 * outside the class via getLinkList() and getPropsosals()
 	 */
 	private $mColl;
 	private $mPropList;
 	private $mLinkList;
 	private $mBanList;
-	
-	/*
+
+	/**
 	 * ==================================================
 	 * constructor
 	 * ==================================================
-	 * 
-	 * @param $coll the collection	
+	 *
+	 * @param $coll the collection
 	 * @param $ban the list of the banned articles
 	 * @param $props the lilst of the proposals
 	 */
@@ -266,7 +265,7 @@ class Proposals {
 	}
 
 
-	/*
+	/**
 	 * ==================================================
 	 * public methods
 	 * ==================================================
@@ -280,7 +279,7 @@ class Proposals {
 		$this->mColl = $collection;
 	}
 
-	/*
+	/**
 	 * Calculate the new proposals and return it
 	 *
 	 * @param $num (type int) number of proposals to be returned
@@ -292,21 +291,21 @@ class Proposals {
 	 *        default is true
 	 * @return a 2-dimensional array that contains the proposals
 	 *         the first dimesion is numeric, the second contains
-	 *         3 entries: 
+	 *         3 entries:
 	 *         - 'name': the name of a proposed article
 	 *         - 'num' : how often this artikel was linked in the
 	 *                   bookmembers
 	 *         - 'val' : a value between 1 and 1.5, the higher the
 	 *                   more this article is proposed
 	 */
-	public function getProposals( $num=0, $doUpdate=true ) {
+	public function getProposals( $num = 0, $doUpdate = true ) {
 		if ( $doUpdate ) {
 			$this->updateLinkList();
 		}
-			
+
 		$this->getPropList();
 
-		if ($num > 0) {
+		if ( $num > 0 ) {
 			return array_slice( $this->mPropList, 0, $num );
 		} else {
 			return $this->mPropList;
@@ -314,10 +313,10 @@ class Proposals {
 	}
 
 	public function hasBans() {
-		return count($this->mBanList) > 0;
+		return count( $this->mBanList ) > 0;
 	}
 
-	/*
+	/**
 	 * ==================================================
 	 * private methods
 	 * ==================================================
@@ -338,8 +337,8 @@ class Proposals {
 			return;
 		}
 
-		foreach( $this->mColl['items'] as $item ) {
-			if ( $this->searchEntry( $item['title'], $this->mLinkList ) === false 
+		foreach ( $this->mColl['items'] as $item ) {
+			if ( $this->searchEntry( $item['title'], $this->mLinkList ) === false
 				&& $item['type'] == 'article'
 			) {
 				$articleName = $item['title'];
@@ -362,7 +361,7 @@ class Proposals {
 	private function deleteUnusedArticles() {
 		$newList = array();
 		foreach ( $this->mLinkList as $item ) {
-			if ( CollectionSession::findArticle( $item['name'] ) != -1 ) {
+			if ( CollectionSession::findArticle( $item['name'] ) != - 1 ) {
 				$newList[] = $item;
 			}
 		}
@@ -382,7 +381,7 @@ class Proposals {
 		}
 	}
 
-	/*
+	/**
 	 * Extract & count links from wikitext
 	 *
 	 * @param wikitext: article text
@@ -406,7 +405,7 @@ class Proposals {
 			if ( preg_match( '/[:#]/', $link ) ) { // skip links with ':' and '#'
 				continue;
 			}
-				
+
 			// handle links with a displaytitle
 			$matches = array();
 			if ( preg_match( '/(.+?)\|(.+)/', $link, $matches ) ) {
@@ -423,7 +422,7 @@ class Proposals {
 			}
 			$link = $this->resolveRedirects( $title )->getText();
 
-			if ( isset ($linkmap[$link] ) ) {
+			if ( isset ( $linkmap[$link] ) ) {
 				$linkmap[$link][$link] = true;
 			} else {
 				$linkmap[$link] = array( $link => true );
@@ -457,15 +456,15 @@ class Proposals {
 					}
 				}
 			}
-			
+
 			if ( count( $linkcount ) == 0 ) {
 				return array();
 			}
 
 			// normalize:
 			$lc_max = 0;
-			foreach ( $linkcount as $link => $count ) {
-				if ( $count > $lc_max) {
+			foreach ( $linkcount as $count ) {
+				if ( $count > $lc_max ) {
 					$lc_max = $count;
 				}
 			}
@@ -473,7 +472,7 @@ class Proposals {
 			$result = array();
 			if ( $norm > 0 ) {
 				foreach ( $linkcount as $link => $count ) {
-					$result[$link] = 1 + 0.5*log($count)/$norm;
+					$result[$link] = 1 + 0.5 * log( $count ) / $norm;
 				}
 			} else {
 				foreach ( $linkcount as $link => $count ) {
@@ -484,8 +483,8 @@ class Proposals {
 			return $result;
 		} else {
 			// cheaper algorithm: just count links
-			foreach ( $linkmap as $alias => $linked ) {
-				foreach ( $linked as $link => $dummy) {
+			foreach ( $linkmap as $linked ) {
+				foreach ( $linked as $link => $dummy ) {
 					$linkcount[$link] = 1;
 				}
 			}
@@ -498,8 +497,8 @@ class Proposals {
 	private function getPropList() {
 		$prop = array();
 		foreach ( $this->mLinkList as $article ) {
-			foreach ( $article['links'] as $linkName => $val) {
-				if ( !$this->checkLink( $linkName ) ) {  
+			foreach ( $article['links'] as $linkName => $val ) {
+				if ( !$this->checkLink( $linkName ) ) {
 					continue;
 				}
 				$key = $this->searchEntry( $linkName, $prop );
@@ -527,7 +526,7 @@ class Proposals {
 		}
 	}
 
-	/*
+	/**
 	 * Search an article in an array and returns its key or false
 	 * if the array doesn't contain the article
 	 *
@@ -545,7 +544,7 @@ class Proposals {
 		return false;
 	}
 
-	/*
+	/**
 	 * Check if an article is banned or belongs to the book/collection
 	 *
 	 * @param $link (type string) an articlename
@@ -571,10 +570,10 @@ class Proposals {
 	}
 }
 
-/*
+/**
  * sort $mPropList by the entries values
  * sort alphabetically by equal values
- * 
+ *
  * @param $a, $b: arrays that contain two entries
  *                the keys: 'name' & 'val'
  *                'name': an articlename
@@ -588,6 +587,6 @@ function wgCollectionCompareProps( $a, $b ) {
 	if ( $a['val'] < $b['val'] ) {
 		return 1;
 	} else {
-		return -1;
+		return - 1;
 	}
 }

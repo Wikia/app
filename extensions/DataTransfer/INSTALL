@@ -1,4 +1,4 @@
-[[Data Transfer 0.3.4]]
+[[Data Transfer 0.3.9]]
 
 Contents:
 * Disclaimer
@@ -14,7 +14,7 @@ For a proper legal disclaimer, see the file "COPYING".
 
 The extension can make use of, but does not require, an install of
 Semantic MediaWiki. If Semantic MediaWiki is used, it must be of
-version 0.6 or greater. For more details, see Semantic MediaWiki's
+version 1.0 or greater. For more details, see Semantic MediaWiki's
 own installation requirements.
 
 == Installation ==
@@ -23,7 +23,7 @@ own installation requirements.
     that contains all relevant files. Copy this directory (or
     extract/download it) to "[wikipath]/extensions/".
 (2) Insert the following line into the file "[wikipath]/LocalSettings.php":
-      include_once('extensions/DataTransfer/includes/DT_Settings.php');
+      include_once('extensions/DataTransfer/DataTransfer.php');
 
 == Contact ==
 

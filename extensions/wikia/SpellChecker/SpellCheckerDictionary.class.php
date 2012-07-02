@@ -1,8 +1,6 @@
 <?php
 
-class SpellCheckerDictionary {
-
-	private $app;
+class SpellCheckerDictionary extends WikiaObject {
 
 	private $broker;
 	private $dict;
@@ -11,7 +9,7 @@ class SpellCheckerDictionary {
 	function __construct($langCode = null) {
 		wfProfileIn(__METHOD__);
 
-		$this->app = WF::build('App');
+		parent::__construct();
 
 		// create a new broker object
 		$this->broker = enchant_broker_init();

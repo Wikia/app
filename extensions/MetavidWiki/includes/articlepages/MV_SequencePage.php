@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * MV_SequencePage.php Created on Oct 17, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -25,22 +25,26 @@ class MV_SequencePage extends Article {
 		global $wgRequest;
 		return parent::__construct( $title );
 	}
-	/*
+	/**
 	 * returns the xml output of the sequence with all wiki-text templates/magic words swapped out
 	 * also resolves all image and media locations with absolute paths.
 	 */
 	function getSequenceSMIL(){
 		global $wgParser,$wgOut, $wgUser, $wgEnableParserCache;
 		//temporally stop cache:
-		$wgEnableParserCache = $parserOutput =false;
+		$wgEnableParserCache = false;
 
-		if($wgEnableParserCache){
-			$mvParserCache = & MV_ParserCache::singleton();
-			$mvParserCache->addToKey( 'seq-xml' ); //differentiate the articles xml from article
-			$parserOutput = $mvParserCache->get( $this, $wgUser );
+		$parserOptions = ParserOptions::newFromUser( $wgUser );
+		$parserOptions->addExtraKey( 'mv:seq-xml' ); //differentiate the articles xml from article
+
+		if( $wgEnableParserCache ) {
+			$mvParserCache = ParserCache::singleton();
+			$parserOutput = $mvParserCache->get( $this, $parserOptions );
+
+			if( $parserOutput != false )
+				return $parserOutput->getText();
 		}
-		if(isset($parserOutput) && $parserOutput != false)
-			return $parserOutput->getText();
+
 		//get the high level sequence description:
 		$this->getSequenceHLRD();
 		$this->parseHLRD_DOM();
@@ -49,13 +53,13 @@ class MV_SequencePage extends Article {
 
 	    //@@todo get parser Output Object (maybe cleaner way to do this?
 	    //maybe parser cache is not the right place to cache the sequence xml? )
-	    $parserOutput = $wgParser->parse('', $this->mTitle, ParserOptions::newFromUser( $wgUser ));
+	    $parserOutput = $wgParser->parse('', $this->mTitle, $parserOptions );
 	    //output header:
 	    $parserOutput->mText.=$this->smilDoc->saveXML();
 
 		//save to cache if parser cache enabled:
 		if($wgEnableParserCache)
-			$mvParserCache->save( $parserOutput, $this, $wgUser );
+			$mvParserCache->save( $parserOutput, $this, $parserOptions );
 
 		return $parserOutput->getText();
 	}
@@ -82,7 +86,7 @@ class MV_SequencePage extends Article {
 			'linkback'		=> $this->mTitle->getFullURL(),
 			'mTitle'		=> $this->mTitle->getPrefixedDBKey(),
 			'mTalk'			=> $talkTitle->getPrefixedDBKey(),
-			'mTouchedTime'	=> wfTimestamp(TS_ISO_8601, $this->mTitle->getTouched())
+			'mTouchedTime'	=> wfTimestamp(TS_ISO_8601, $this->getTouched())
 		);
 		foreach($metaData as $name=>$val){
 			$titleNode = $this->smilDoc->createElement('meta');
@@ -318,7 +322,7 @@ class MV_SequencePage extends Article {
 	function validateNodeAttributes( &$node ){
 		//make sure only valid node Attributes per node name get through & htmlentities the values
 	}
-	/*
+	/**
 	 * parse the inner node as wiki text
 	 */
 	function parseInnerWikiText( &$node, $innerWikiText=''){
@@ -430,7 +434,7 @@ class MV_SequencePage extends Article {
 		//print_r($this->aHLRD);
 		//die;
 	}*/
-	/*
+	/**
 	 * resolves any resource refrences and gets things ready to be parsed as wikiText
 	 */
 	/*function resolveResource(& $i){ //pass in the current index
@@ -757,4 +761,3 @@ class MV_SequencePage extends Article {
 		return '';
 	}
 }
-?>

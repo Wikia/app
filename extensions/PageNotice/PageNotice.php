@@ -9,8 +9,8 @@
  * 
  * For more info see http://mediawiki.org/wiki/Extension:PageNotice
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
@@ -33,9 +33,8 @@ $wgHooks['OutputPageBeforeHTML'][] = 'wfPageNoticeHook';
 
 
 function wfPageNoticeHook( &$out, &$text ) {
-	global $wgTitle, $wgParser;
-	$name = $wgTitle->getPrefixedDBKey();
-	$ns = $wgTitle->getNamespace();
+	$name = $out->getTitle()->getPrefixedDBKey();
+	$ns = $out->getTitle()->getNamespace();
 	
 	$opt = array(
 		'parseinline',

@@ -71,7 +71,6 @@ function wfReviewExtensionInitMessages () {
 		# Been there, done that
 		return;
 	}
-	wfLoadExtensionMessages( 'Review' );
 	$wgReviewExtensionInitMessages = true;
 
 

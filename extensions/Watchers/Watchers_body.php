@@ -24,8 +24,6 @@ class SpecialWatchers extends UnlistedSpecialPage {
 	function execute( $par ) {
 		global $wgOut, $wgRequest, $wgUser, $wgWatchersLimit;
 
-		wfLoadExtensionMessages( 'Watchers' );
-
 		$this->setHeaders();
 
 		$page = $wgRequest->getVal( 'page', $par );

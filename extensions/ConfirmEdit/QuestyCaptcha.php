@@ -17,22 +17,29 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
+require_once dirname( __FILE__ ) . '/ConfirmEdit.php';
+$wgCaptchaClass = 'QuestyCaptcha';
+
 global $wgCaptchaQuestions;
 $wgCaptchaQuestions = array();
+
+// Add your questions in LocalSettings.php using this format
 // $wgCaptchaQuestions[] = array( 'question' => "A question?", 'answer' => "An answer!" );
 // $wgCaptchaQuestions[] = array( 'question' => 'How much wood would a woodchuck chuck if a woodchuck could chuck wood?', 'answer' => 'as much wood as...' );
 // $wgCaptchaQuestions[] = array( 'question' => "What is this wiki's name?", 'answer' => "$wgSitename" );
-// add your questions in LocalSettings.php using this format
+// You can also provide several acceptable answers to a given question (the answers shall be in lowercase):
+// $wgCaptchaQuestions[] = array( 'question' => "2 + 2 ?", 'answer' => array( '4', 'four' ) );
 
 $wgExtensionMessagesFiles['QuestyCaptcha'] = dirname( __FILE__ ) . '/QuestyCaptcha.i18n.php';
 $wgAutoloadClasses['QuestyCaptcha'] = dirname( __FILE__ ) . '/QuestyCaptcha.class.php';

@@ -4,7 +4,7 @@
  * @ingroup SMWLanguage
  */
 
-/*
+/**
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
@@ -21,5 +21,4 @@ include_once( $smwgIP . 'languages/SMW_LanguageDe.php' );
  * @ingroup SMWLanguage
  * @ingroup Language
  */
-class SMWLanguageDe_formal extends SMWLanguageDe {
-}
+class SMWLanguageDe_formal extends SMWLanguageDe {}

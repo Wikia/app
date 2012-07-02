@@ -35,7 +35,7 @@ class CampfireController extends WikiaController {
 	public function executeIndex($params) {
 		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgAllInOne, $wgContLang, $wgJsMimeType;
 
-		$allInOne = $wgRequest->getBool('allinone', $wgAllInOne);
+		$allInOne = $wgAllInOne;
 
 		// macbre: let extensions modify content of the page (e.g. EditPageLayout)
 		$this->body = !empty($params['body']) ? $params['body'] : wfRenderModule('CampfireBody');
@@ -219,7 +219,7 @@ class CampfireController extends WikiaController {
 		}
 
 		// generate code to load JS files
-		$jsReferences = Wikia::json_encode($jsReferences);
+		$jsReferences = json_encode($jsReferences);
 		$jsLoader = "<script type=\"text/javascript\">/*<![CDATA[*/ (function(){ wsl.loadScript({$jsReferences}); })(); /*]]>*/</script>";
 
 		// use loader script instead of separate JS files

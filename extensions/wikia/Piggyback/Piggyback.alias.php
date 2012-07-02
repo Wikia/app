@@ -1,11 +1,11 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
  
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
     'Piggyback' => array( 'Piggyback' ),
 );
 
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Piggyback' => array( 'Huckepack', 'Piggyback' ),
 );

@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for StockCharts extension.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -15,10 +16,19 @@ Use: &lt;stockchart ticker="AAPL"/&gt;',
 
 /** Message documentation (Message documentation)
  * @author Siebrand
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'stockcharts-desc' => 'This is a short description of this exension. It is shown on [[Special:Version]]. Do not translate or alter tags, or link targets.',
+	'stockcharts-desc' => '{{desc}}',
 	'stockcharts-missingticker' => '{{doc-important|Do not translate or change "<nowiki>&amp;lt;stockchart ticker="AAPL"/&amp;gt;</nowiki>"}}',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'stockcharts-desc' => 'Adds <nowiki><stockchart ticker="AAPL"/></nowiki> tag për një tabelë interaktive aksioneve financiare',
+	'stockcharts-missingticker' => 'Për të mbjell një tabelë të aksioneve, ju duhet që të paktën të përcaktojë një sahat. Përdorimi: ticker="AAPL"/> <stockchart',
 );
 
 /** Arabic (العربية)
@@ -30,7 +40,16 @@ $messages['ar'] = array(
 استخدم: &lt;stockchart ticker="AAPL"/&gt;',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'stockcharts-desc' => 'Amiesta la etiqueta <nowiki><stockchart ticker="AAPL"/></nowiki> pa un gráficu de valores financieros interactivu',
+	'stockcharts-missingticker' => 'Pa inxertar una tabla de valores, necesites especificar polo menos un marcador.
+Usa: &lt;stockchart ticker="AAPL"/&gt;',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -68,7 +87,7 @@ $messages['de'] = array(
 Verwende: &lt;stockchart ticker="AAPL" /&gt;',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Umherirrender
  */
 $messages['de-formal'] = array(
@@ -92,6 +111,13 @@ $messages['el'] = array(
 	'stockcharts-desc' => 'Προσθέτει μία ετικέτα <nowiki><stockchart ticker="AAPL"/></nowiki> για έναν διαδραστικό οικονομολογικό πίνακα τίτλων',
 	'stockcharts-missingticker' => 'Για την προσθήκη πίνακα τίτλων, πρέπει τουλάχιστον να ορίσετε ένα ticker.
 Χρήση: &lt;stockchart ticker="AAPL"/&gt;',
+);
+
+/** Esperanto (Esperanto)
+ * @author Yekrats
+ */
+$messages['eo'] = array(
+	'stockcharts-desc' => 'Aldonas <nowiki><stockchart ticker="AAPL"/></nowiki> etikedon por interaktiva financa borsa protokolo',
 );
 
 /** Spanish (Español)
@@ -175,6 +201,15 @@ $messages['id'] = array(
 Gunakan: &lt;stockchart ticker="AAPL"/&gt;',
 );
 
+/** Italian (Italiano)
+ * @author Beta16
+ */
+$messages['it'] = array(
+	'stockcharts-desc' => 'Aggiunge il tag <nowiki><stockchart ticker="AAPL"/></nowiki> per i grafici finanziari interattivi',
+	'stockcharts-missingticker' => 'Per incorporare un grafico azionario, è necessario specificare almeno un ticker.
+Usa: &lt;stockchart ticker="AAPL"/&gt;',
+);
+
 /** Japanese (日本語)
  * @author Aotake
  */
@@ -183,7 +218,7 @@ $messages['ja'] = array(
 	'stockcharts-missingticker' => '株式チャートを埋め込むためには、最低でもチッカーを指定する必要があります。以下を使用してください: &lt;stockchart ticker="AAPL"/&gt;',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -206,8 +241,17 @@ Benotzt: &lt;stockchart ticker="AAPL"/&gt;',
  */
 $messages['mk'] = array(
 	'stockcharts-desc' => 'Додава ознака <nowiki><stockchart ticker="AAPL"/></nowiki> за интерактивен графикон за берзански акции',
-	'stockcharts-missingticker' => 'За да вметнете графикон за берзански акции, треба барем да назначите тикер.
+	'stockcharts-missingticker' => 'За да вметнете графикон за берзански акции, треба барем да наведете тикер.
 Користете: &lt;stockchart ticker="AAPL"/&gt;',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'stockcharts-desc' => 'Membubuh tag <nowiki><stockchart ticker="AAPL"/></nowiki> untuk carta saham kewangan yang interaktif',
+	'stockcharts-missingticker' => 'Untuk membenamkan carta saham, anda perlu sekurang-kurangnya menentukan satu ticker.
+Gunakan: <stockchart Ticker="AAPL"/>',
 );
 
 /** Dutch (Nederlands)
@@ -222,8 +266,10 @@ Doe dit als volgt: &lt;stockchart ticker="AAPL"/&gt;',
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'stockcharts-desc' => 'Legger til en <nowiki><stockchart ticker="AAPL"/></nowiki>-merkelapp for et interaktivt aksjekart',
+	'stockcharts-missingticker' => 'For å bygge inn et aksjekart må du angi minst én ticker.
+Bruk: &lt;stockchart ticker="AAPL"/&gt;',
 );
 
 /** Occitan (Occitan)
@@ -255,10 +301,11 @@ Dòvra: &lt;stockchart ticker="AAPL"/&gt;',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'stockcharts-desc' => 'Adiciona a marca <nowiki><stockchart ticker="AAPL"/></nowiki> para um gráfico de títulos financeiros interativo',
+	'stockcharts-desc' => 'Adiciona o elemento <nowiki><stockchart ticker="AAPL"/></nowiki> para criar um gráfico interactivo de títulos financeiros',
 	'stockcharts-missingticker' => 'Para imbutir um gráfico de títulos, precisa pelo menos de especificar a sigla ("ticker").
 Use: &lt;stockchart ticker="AAPL"/&gt;',
 );
@@ -306,6 +353,15 @@ $messages['sv'] = array(
 	'stockcharts-desc' => 'Lägger till en <nowiki><stockchart ticker="AAPL"/></nowiki>-tag för ett interaktivt aktiediagram',
 	'stockcharts-missingticker' => 'För att lägga in ett aktiediagram måste du ange minst en ticker.
 Använd: &lt;stockchart ticker="AAPL"/&gt;',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'stockcharts-desc' => 'Nagdaragdag ng tatak na <nowiki><stockchart ticker="AAPL"/></nowiki> para sa interaktibong tsart na pangnakataang pamimilak',
+	'stockcharts-missingticker' => 'Upang makapagbaon ng isang tsart na pangpamimilak, kailangan mong tumukoy ng kahit na isang pangkudlit.
+Gamitin ang: &lt;stockchart ticker="AAPL"/&gt;',
 );
 
 /** Turkish (Türkçe)

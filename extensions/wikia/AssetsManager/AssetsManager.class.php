@@ -173,7 +173,10 @@ class AssetsManager {
 					if ( $aType == self::TYPE_SCSS ) {
 						$urls[] = ( !empty( $local ) ) ? $this->getSassLocalURL( $asset ) : $this->getSassCommonURL( $asset );;
 					} else {
-						$urls[] =  ( !empty( $local ) ) ? $this->getOneLocalURL( $asset ) : $this->getOneCommonURL( $asset );
+						// We always need to use common host for static assets since it has
+						// the information about the slot which is otherwise not available
+						// in varnish (BugId: 33905)
+						$urls[] =  ( !empty( $local ) ) ? $this->mCommonHost . $this->getOneLocalURL( $asset ) : $this->getOneCommonURL( $asset );
 					}
 				}
 			}
@@ -292,22 +295,16 @@ class AssetsManager {
 
 	/**
 	 * @author Inez Korczyński <korczynski@gmail.com>
-	 * @return string Full URL to one file, uses wiki specific host
-	 */
-	public function getOneFullURL(/* string */ $filePath, /* boolean */ $minify = null) {
-		global $wgServer;
-		return $wgServer . $this->getOneLocalURL($filePath);
-	}
-
-	/**
-	 * @author Inez Korczyński <korczynski@gmail.com>
 	 * @return string Full common URL to one file, uses not wiki specific host
 	 */
 	public function getOneCommonURL(/* string */ $filePath, /* boolean */ $minify = null) {
 		if ($minify !== null ? $minify : $this->mMinify) {
 			return $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
 		} else {
-			return $this->getOneLocalURL($filePath, $minify);
+			// We always need to use common host for static assets since it has
+			// the information about the slot which is otherwise not available
+			// in varnish (BugId: 33905)
+			return $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
 		}
 	}
 
@@ -360,7 +357,10 @@ class AssetsManager {
 				} else if(Http::isValidURI($asset)) {
 					$URLs[] = $asset;
 				} else {
-					$URLs[] = $prefix . $this->getOneLocalURL($asset, $minify);
+					// We always need to use common host for static assets since it has
+					// the information about the slot which is otherwise not available
+					// in varnish (BugId: 33905)
+					$URLs[] = $this->mCommonHost . $this->getOneLocalURL($asset, $minify);
 				}
 			}
 		}

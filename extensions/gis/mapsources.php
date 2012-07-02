@@ -40,7 +40,7 @@ class map_sources {
 	var $p;
 	var $mapsources;
 
-	function map_sources() {
+	function __construct() {
 		$this->p = new GeoParam();
 
 		$this->mapsources = "Map sources";
@@ -61,11 +61,7 @@ class map_sources {
 		global $wgOut, $wgUser, $wgContLang, $wgRequest;
 
 		if (($e = $this->p->get_error()) != "") {
-			$wgOut->addHTML(
-			       "<p>" . htmlspecialchars( $e ) . "</p>");
-			$wgOut->output();
-			wfErrorExit();
-			return "";
+			throw new FatalError( htmlspecialchars( $e ) );
 		}
 
 		$attr = $this->p->get_attr();
@@ -215,11 +211,8 @@ class map_sources {
 			$bsarticle = new Article( $bstitle );
 		}
 		if ($bsarticle->getID() == 0) {
-			$wgOut->addHTML( "<p>Please add this page: " .
-				$sk->makeBrokenLinkObj( $bstitle ).".</p>");
-			$wgOut->output();
-			wfErrorExit();
-			return "";
+			throw new FatalError( "<p>Please add this page: " .
+				$sk->makeBrokenLinkObj( $bstitle ) . ".</p>" );
 		}
 		$bstext = $bsarticle->getContent( false ); # allow redir
 

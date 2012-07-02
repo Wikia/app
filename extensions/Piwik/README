@@ -1,7 +1,7 @@
 MediaWiki Piwik Integration extension
 
-version 1.5-piwik0.4.2
-9 August 2009
+version 1.5.2-piwik0.5.5
+24 April 2010
 
 This is the README file for the Piwik Integration extension for MediaWiki
 software. The extension is only useful if you've got a MediaWiki
@@ -26,24 +26,25 @@ but ALL steps are necessary:
 * Edit your LocalSettings.php and, at the end of the file, add the
   following:
 
-        require_once($IP.'/extensions/piwik/Piwik.php');
+        require_once('/extensions/piwik/Piwik.php');
 
 
 * Then, you need to define where Piwik is installed and the "idsite".
   To do it, just add after the require_once:
 
-        $wgPiwikURL = "piwik/url/"; //Don't include the protocol
+        $wgPiwikURL = "piwik-host.tld/dir/"; //Don't include the protocol
         $wgPiwikIDSite = "piwik_idsite";
 
-  Note: Change the value of $wgPiwikURL with the URL, without the protocol,
-        where you installed Piwik. Remember to add the trailing slash!
+  Note: Change the value of $wgPiwikURL with the URL, without the protocol
+	but including the domain name, where you installed Piwik.
+	Remember to add the trailing slash!
 
         Change the value of $wgPiwikIDSite with your site ID.
         For example, in:
 
 		<!-- Piwik -->
 		<script type="text/javascript">
-		var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik/url/" : "http://piwik/url/");
+		var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik-host.tld/dir/" : "http://piwik-host.tld/dir/");
 		document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 		</script><script type="text/javascript">
 		try {
@@ -51,7 +52,7 @@ but ALL steps are necessary:
 		piwikTracker.trackPageView();
 		piwikTracker.enableLinkTracking();
 		} catch( err ) {}
-		</script><noscript><p><img src="http://piwik/url/piwik.php?idsite=3" style="border:0" alt=""/></p></noscript>
+		</script><noscript><p><img src="http://piwik-host.tld/dir/piwik.php?idsite=3" style="border:0" alt=""/></p></noscript>
 		<!-- End Piwik Tag -->
 
         the $wgPiwikIDSite is 3
@@ -82,4 +83,7 @@ but ALL steps are necessary:
   see the special page. If you want to allow bureaucrats to see the page,
   add that line with 'bureaucrat' where 'usergroup' is. The same is for
   normal users ('user') and anonymous users ('*').
+
+* Since 1.5.2, you can set the date for the countries and browsers information in
+  the special page, setting $wgPiwikSpecialPageDate to either today or yesterday.
 

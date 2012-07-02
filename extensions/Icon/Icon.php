@@ -12,16 +12,16 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Icon',
-	'version'        => '1.6.1',
+	'version'        => '1.6.2',
 	'author'         => 'Tim Laqua',
-	'description'    => 'Allows you to use images as icons and icon links',
 	'descriptionmsg' => 'icon-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Icon',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Icon',
 );
 
 $wgHooks['ParserFirstCallInit'][] = 'efIcon_Setup';
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Icon'] = $dir . 'Icon.i18n.php';
+$wgExtensionMessagesFiles['IconMagic'] = $dir . 'Icon.i18n.magic.php';
 
 function efIcon_Setup( &$parser ) {
 	# Set a function hook associating the "example" magic word with our function

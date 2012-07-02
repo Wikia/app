@@ -3,7 +3,8 @@
 /**
  * Plotters parser. Parses arguments and data for the Plotters extension.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Ryan Lane, rlane32+mwext@gmail.com
  * @copyright © 2009 Ryan Lane
  * @license GNU General Public Licence 2.0 or later
@@ -20,7 +21,7 @@ class PlottersParser {
 	var $argumentArray;
 	var $dataArray;
 
-	function PlottersParser( $input = "", $argv = Array() ) {
+	function __construct( $input = "", $argv = Array() ) {
 		$this->parseArguments( $argv );
 		$this->parseData( $input );
 	}

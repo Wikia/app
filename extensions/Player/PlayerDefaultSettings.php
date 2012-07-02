@@ -6,8 +6,8 @@
  * file or http://www.mediawiki.org/wiki/Extension:Player for
  * information about the template syntax.
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @licence: do what you please
  */

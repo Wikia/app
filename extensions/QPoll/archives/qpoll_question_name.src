@@ -1,0 +1,3 @@
+-- field to generate text answers statistics
+ALTER TABLE /*$wgDBprefix*/qp_question_desc
+  ADD COLUMN name tinytext default NULL;

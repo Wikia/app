@@ -1,20 +1,31 @@
 <?php
 
 class GlobalBlocking {
+	/**
+	 * @return Boolean
+	 */
 	static function getUserPermissionsErrors( &$title, &$user, $action, &$result ) {
 		global $wgApplyGlobalBlocks;
-		if ($action == 'read' || !$wgApplyGlobalBlocks) {
+		if ( $action == 'read' || !$wgApplyGlobalBlocks ) {
+			return true;
+		}
+		if ( $user->isAllowed( 'ipblock-exempt' ) ||
+			$user->isAllowed( 'globalblock-exempt' ) ) {
+			// User is exempt from IP blocks.
 			return true;
 		}
 		$ip = wfGetIp();
 		$blockError = self::getUserBlockErrors( $user, $ip );
-		if( !empty($blockError) ) {
+		if( !empty( $blockError ) ) {
 			$result[] = $blockError;
 			return false;
 		}
 		return true;
 	}
-	
+
+	/**
+	 * @return Boolean
+	 */
 	static function isBlockedGlobally( &$user, $ip, &$blocked ) {
 		$blockError = self::getUserBlockErrors( $user, $ip );
 		if( $blockError ) {
@@ -23,35 +34,49 @@ class GlobalBlocking {
 		}
 		return true;
 	}
-		
+
+	/**
+	 * @return Array: empty or a message key with parameters
+	 */
 	static function getUserBlockErrors( $user, $ip ) {
 		static $result = null;
 		
 		// Instance cache
-		if (!is_null($result)) return $result;
+		if ( !is_null( $result ) ) { return $result; }
 
 		$block = self::getGlobalBlockingBlock( $ip, $user->isAnon() );
 		if  ( $block ) {
+			global $wgLang;
+
 			// Check for local whitelisting
-			if (GlobalBlocking::getWhitelistInfo( $block->gb_id ) ) {
+			if ( GlobalBlocking::getWhitelistInfo( $block->gb_id ) ) {
 				// Block has been whitelisted.
 				return $result = array();
 			}
 			
-			if ( $user->isAllowed( 'ipblock-exempt' ) ||
-				$user->isAllowed( 'globalblock-exempt' ) ) {
+			if ( $user->isAllowed( 'ipblock-exempt' ) || $user->isAllowed( 'globalblock-exempt' ) ) {
 				// User is exempt from IP blocks.
 				return $result = array();
 			}
 
-			$expiry = Block::formatExpiry( $block->gb_expiry );
-	
-			wfLoadExtensionMessages( 'GlobalBlocking' );
+			# Messy B/C until $wgLang->formatExpiry() is well embedded
+			if( Block::decodeExpiry( $block->gb_expiry ) == 'infinity' ){
+				$expiry = wfMsgExt( 'infiniteblock', 'parseinline' );
+			} else {
+				$expiry = Block::decodeExpiry( $block->gb_expiry );
+				$expiry = wfMsgExt(
+					'expiringblock',
+					'parseinline',
+					$wgLang->date( $expiry ),
+					$wgLang->time( $expiry )
+				);
+			}
 			
 			$display_wiki = self::getWikiName( $block->gb_by_wiki );
 			$user_display = self::maybeLinkUserpage( $block->gb_by_wiki, $block->gb_by );
 			
-			return $result = array('globalblocking-blocked', $user_display, $display_wiki, $block->gb_reason, $expiry);
+			return $result = array( 'globalblocking-blocked',
+				$user_display, $display_wiki, $block->gb_reason, $expiry, $ip );
 		}
 		return $result = array();
 	}
@@ -91,7 +116,6 @@ class GlobalBlocking {
 	
 	static function getGlobalBlockingSlave() {
 		global $wgGlobalBlockingDatabase;
-		
 		return wfGetDB( DB_SLAVE, 'globalblocking', $wgGlobalBlockingDatabase );
 	}
 	
@@ -127,7 +151,6 @@ class GlobalBlocking {
 	}
 	
 	static function getWhitelistInfo( $id = null, $address = null ) {
-		$conds = array();
 		if ($id != null) {
 			$conds = array( 'gbw_id' => $id );
 		} elseif ($address != null) {
@@ -247,7 +270,7 @@ class GlobalBlocking {
 	static function block( $address, $reason, $expiry, $options = array() ) {
 		global $wgContLang;
 		
-		$expiry = Block::parseExpiryInput( $expiry );
+		$expiry = SpecialBlock::parseExpiryInput( $expiry );
 		$errors = self::insertBlock( $address, $reason, $expiry, $options );
 		
 		if ( count($errors) > 0 )
@@ -282,11 +305,10 @@ class GlobalBlocking {
 		return array();
 	}
 	
-	static function onMailPassword( $name, &$error ) {
+	static function onSpecialPasswordResetOnSubmit( &$users, $data, &$error ) {
 		global $wgUser;
 		
 		if ( GlobalBlocking::getUserBlockErrors( $wgUser, wfGetIp() ) ) {
-			wfLoadExtensionMessages( 'GlobalBlocking' );
 			$error = wfMsg( 'globalblocking-blocked-nopassreset' );
 			return false;
 		}
@@ -311,7 +333,6 @@ class GlobalBlocking {
 			return true;
 		}
 
-		wfLoadExtensionMessages( 'GlobalBlocking' );
 		$msg[] = Html::rawElement(
 			'span',
 			array( 'class' => 'mw-globalblock-loglink plainlinks' ),

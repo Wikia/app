@@ -92,7 +92,7 @@
 			$this->categoryPage = $categoryPage;
 
 			global $wgCategoryGalleryEnabledByDefault, $wgCategoryGalleryImageWidth, $wgCategoryGalleryImagesCount;
-			if (!is_null($wgCategoryGalleryEnabledByDefault)) { // allow false values to be catched
+			if (!is_null($wgCategoryGalleryEnabledByDefault)) { // allow false values to be caught
 				$this->confEnabledByDefault = (bool)$wgCategoryGalleryEnabledByDefault;
 			}
 			if (!empty($wgCategoryGalleryImageWidth)) {

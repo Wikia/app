@@ -28,6 +28,9 @@ class SimpleFormatReader {
 	protected $authors = null;
 	protected $staticHeader = '';
 
+	/**
+	 * @return array
+	 */
 	public function parseAuthors() {
 		if ( $this->authors === null ) {
 			$this->parseHeader();
@@ -35,6 +38,9 @@ class SimpleFormatReader {
 		return $this->authors;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function parseStaticHeader() {
 		if ( $this->staticHeader === '' ) {
 			$this->parseHeader();
@@ -81,6 +87,11 @@ class SimpleFormatReader {
 	}
 
 	protected $messagePattern = '/([^\0]+)\0([^\0]+)\0\n/U';
+
+	/**
+	 * @param $mangler StringMangler
+	 * @return array
+	 */
 	public function parseMessages( StringMangler $mangler ) {
 
 		$data = file_get_contents( $this->filename );
@@ -152,7 +163,7 @@ class SimpleFormatWriter {
 			}
 			$target = $targetDirectory . '/' . $filename;
 
-			wfMkdirParents( dirname( $target ) );
+			wfMkdirParents( dirname( $target ), null, __METHOD__ );
 			$handle = fopen( $target, 'wt' );
 
 			if ( $handle === false ) {

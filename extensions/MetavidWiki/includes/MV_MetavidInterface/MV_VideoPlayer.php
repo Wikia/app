@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Created on Jun 28, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -30,30 +30,30 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 		$file_list = $mvTitle->mvStream->getFileList();
 		$o .= '<div id="videoMeta">
 				<p class="options">';
-		// get file list: 
+		// get file list:
 		global $mvDefaultVideoQualityKey, $mvDefaultFlashQualityKey;
 		if ( count( $file_list ) != 0 ) {
 			$coma = '';
 			/*$o.='<span class="download">Download Segment:';
 			$ogg_stream_url = $mvTitle->getWebStreamURL($mvDefaultVideoQualityKey);
-			if($ogg_stream_url!=''){	
+			if($ogg_stream_url!=''){
 				$o.=$coma.' <a href="'.htmlspecialchars($ogg_stream_url).'">
 					Web Ogg
 				</a>';
 				$coma=', ';
 			}
 			$ogg_hq_url = $mvTitle->getWebStreamURL('mv_ogg_high_quality');
-			if($ogg_hq_url!=''){	
+			if($ogg_hq_url!=''){
 				$o.=$coma.' <a href="'.htmlspecialchars($ogg_hq_url).'">
 					High Quality Ogg
 				</a>';
 				$coma=', ';
 			}
 			$flash_stream_url = $mvTitle->getWebStreamURL($mvDefaultFlashQualityKey);
-			if($flash_stream_url!=''){		
+			if($flash_stream_url!=''){
 				$o.=$coma.' <a href="'.htmlspecialchars($flash_stream_url).'">
 					Flash Video
-				</a>';	
+				</a>';
 				$coma=', ';
 			}
 			$o.='</span>';*/
@@ -61,7 +61,7 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 		}
 		$o .= '<span class="embed"><a href="javascript:$j(\'#' . htmlspecialchars( $this->embed_id ) . '\').get(0).showShare();">Embed Video</a></span>' .
 				'</p>';
-		// about file: 
+		// about file:
 		$talkPage = Title::newFromText( 'Anno_en:' . strtolower( $mvTitle->wiki_title ), MV_NS_MVD_TALK );
 		$o .= '<p class="about_file">
 					<span class="views">Views:' . htmlspecialchars( number_format( $mvTitle->getViewCount() ) ) . '</span>
@@ -76,12 +76,12 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 		$out = '';
 		// give the stream the request information:
 		$mvTitle = & $this->mv_interface->article->mvTitle;
-		
+
 		$mvTitle->dispVideoPlayerTime = true;
 		$vid_size = ( isset( $this->mv_interface->smwProperties['playback_resolution'] ) ) ?
 					$this->mv_interface->smwProperties['playback_resolution']:$mvDefaultVideoPlaybackRes;
 		list( $width, $height ) = explode( 'x', $vid_size );
-		// wrap the video container to prevent moving html on the page:			
+		// wrap the video container to prevent moving html on the page:
 		return '<div style="display:block;width:' . $width . 'px;height:' . $height . 'px">' .
 					$mvTitle->getEmbedVideoHtml( array( 'id'=>$this->embed_id, 'size'=>$vid_size ) ) .
 			'</div>';
@@ -94,7 +94,7 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 			@list( $width, $height ) = explode( 'x', $this->mv_interface->smwProperties['playback_resolution'] );
 			if ( isset( $width ) && isset( $height ) ) {
 				if ( is_numeric( $width ) && is_numeric( $height ) ) {
-					// offset info should stored somewhere: 
+					// offset info should stored somewhere:
 					$width += 2;
 					$height += 30;
 					return "style=\"height:{$height}px;width:{$width}\"";
@@ -105,12 +105,11 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 	}
 	function render_full() {
 		global $wgOut;
- 		// "<div >" . 		 		
+ 		// "<div >" .
  		$wgOut->addHTML( "<div id=\"videoContent\">\n" );
- 		// do the implemented html 
+ 		// do the implemented html
  		$this->getHTML();
  		$wgOut->addHTML( "</div>\n" );
 	}
-	
+
  }
-?>

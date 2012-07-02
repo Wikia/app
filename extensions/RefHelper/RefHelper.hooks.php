@@ -5,7 +5,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class RefHelperHooks {
 	static function addRefHelperJavascript( $pageObj ) {
-		wfLoadExtensionMessages( 'RefHelper' );
+		
 	    global $wgRefHelperExtensionPath;
 	    $pageObj->addScript(
 			Xml::element( 'script', array( 'src' => "$wgRefHelperExtensionPath/refhelper.js", 'type' => 'text/javascript' ) ) );
@@ -13,7 +13,7 @@ class RefHelperHooks {
 	}
 
 	static function addRefHelperLink( $tpl ) {
-		wfLoadExtensionMessages( 'RefHelper' );
+		
 		global $wgScript;
 		echo Xml::openElement( 'li', array( 'class' => 't-reflink' ) ) .
 			Xml::element( 'a', array( 'href' => "$wgScript?title=Special:RefHelper" ), wfMsg( RefHelper::MSG . 'toolbox_link_create' ) ) .

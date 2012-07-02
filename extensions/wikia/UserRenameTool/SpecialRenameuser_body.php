@@ -38,7 +38,7 @@ class SpecialRenameuser extends SpecialPage {
 			return;
 		}
 
-		
+
 
 		if( !$wgUser->isAllowed( 'renameuser' ) ) {
 			$wgOut->permissionRequired( 'renameuser' );
@@ -51,10 +51,10 @@ class SpecialRenameuser extends SpecialPage {
 		$oldusername = $wgRequest->getText( 'oldusername', $par );
 		$newusername = $wgRequest->getText( 'newusername' );
 		$reason = $wgRequest->getText( 'reason' );
-		$token = $wgUser->editToken();
+		$token = $wgUser->getEditToken();
 		$notifyRenamed = $wgRequest->getBool( 'notify_renamed', false );
 		$confirmaction = false;
-		
+
 		if ($wgRequest->wasPosted() && $wgRequest->getInt('confirmaction')){
 			$confirmaction = true;
 		}
@@ -62,7 +62,7 @@ class SpecialRenameuser extends SpecialPage {
 		$warnings = array();
 		$errors = array();
 		$infos = array();
-		
+
 		if (
 			$wgRequest->wasPosted() &&
 			$wgRequest->getText( 'token' ) !== '' &&
@@ -133,7 +133,7 @@ class SpecialRenameuser extends SpecialPage {
 
 		$text = $template->render( "rename-form" );
 		$wgOut->addHTML($text);
-		
+
 		wfProfileOut(__METHOD__);
 		return;
 	}

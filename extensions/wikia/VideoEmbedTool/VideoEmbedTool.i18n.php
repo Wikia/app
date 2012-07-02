@@ -43,6 +43,7 @@ $messages['en'] = array(
 	'vet-warn1' => 'You need to specify query first!',
 	'vet-warn2' => 'Please supply URL of the video you like to add',
 	'vet-warn3' => 'Please supply name of the video you like to add',
+	'vet-insert-error' => 'Sorry, something went wrong while inserting this video to the article',
 	'vet-imagelink' => '<b>New!</b> Insert videos',
 	'vet-imagebutton' => 'Insert videos' ,
 	'vet-license-cc' => 'Licenced under Creative Commons Attribution-Share Alike 3.0',
@@ -198,7 +199,7 @@ U sal moontlik die videobladsy moet opruim (purge) om die verandering te sien.',
 	'vet-protected' => 'Hierdie video is beveilig',
 );
 
-/** Aragonese (aragonés)
+/** Aragonese (Aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -257,7 +258,7 @@ $messages['be'] = array(
 	'vet-size' => 'Памер',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -826,7 +827,7 @@ $messages['fr'] = array(
 	'vet-protected' => 'Cette vidéo est protégée',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

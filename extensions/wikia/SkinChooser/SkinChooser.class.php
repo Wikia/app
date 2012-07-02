@@ -6,8 +6,8 @@ class SkinChooser {
 		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins, $wgEnableUserPreferencesV2Ext;
 
 		// hide default MediaWiki skin fieldset
-		unset($defaultPreferences['skin']);		
-		
+		unset($defaultPreferences['skin']);
+
 		$mSkin  = $user->getOption('skin');
 
 		// hacks for Answers
@@ -27,7 +27,7 @@ class SkinChooser {
 		} else {
 			$defaultSkinKey = $wgDefaultSkin;
 		}
-		
+
 		// load list of skin names
 		$validSkinNames = Skin::getSkinNames();
 
@@ -40,14 +40,14 @@ class SkinChooser {
 		asort($validSkinNames);
 
 		$validSkinNames2 = $validSkinNames;
-		
+
 		$previewtext = wfMsg('skin-preview');
 		if(isset($wgSkinPreviewPage) && is_string($wgSkinPreviewPage)) {
 			$previewLinkTemplate = Title::newFromText($wgSkinPreviewPage)->getLocalURL('useskin=');
 		} else {
 			$mptitle = Title::newMainPage();
 			$previewLinkTemplate = $mptitle->getLocalURL('useskin=');
-		}		
+		}
 
 		$oldSkinNames = array();
 		foreach($validSkinNames as $skinKey => $skinVal) {
@@ -59,7 +59,7 @@ class SkinChooser {
 
 		$skins = array();
 		$skins[wfMsg('new-look')] = 'oasis';
-				
+
 		// display radio buttons for rest of skin
 		if(count($oldSkinNames) > 0) {
 			foreach($oldSkinNames as $skinKey => $skinVal) {
@@ -69,7 +69,7 @@ class SkinChooser {
 		}
 
 		$defaultPreferencesTemp = array();
-		
+
 		foreach($defaultPreferences as $k => $v) {
 			$defaultPreferencesTemp[$k] = $v;
 			if($k == 'oldsig') {
@@ -89,7 +89,7 @@ class SkinChooser {
 
 			}
 		}
-		
+
 		$defaultPreferences = $defaultPreferencesTemp;
 
 		return true;
@@ -176,28 +176,32 @@ class SkinChooser {
 	/**
 	 * Select proper skin and theme based on user preferences / default settings
 	 */
-	public static function onGetSkin($user) {
-		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
-		global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
-		global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest, $wgDevelEnvironment, $wgEnableWikiaMobile;
+	public static function onGetSkin(RequestContext $context, &$skin) {
+		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme,
+			$wgSkinTheme, $wgOut, $wgForceSkin, $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgDevelEnvironment, $wgEnableWikiaMobile, $wgEnableAnswers;
+
 		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
-		
+
 		wfProfileIn(__METHOD__);
-		
+
+		$request = $context->getRequest();
+		$title = $context->getTitle();
+		$user = $context->getUser();
+
 		//allow showing wikiaphone on wikis where WikiaMobile is enabled for functionality comparison and testing
 		//will be removed on Dec 7th 2011
 		$wikiaMobileEnabled = !empty( $wgEnableWikiaMobile );
-		
-		if( $wgRequest->getVal('useskin') == 'wikiaphone' && $wikiaMobileEnabled ) {
-			$user->mSkin = &Skin::newFromKey(  $wgRequest->getVal('useskin') );
+
+		if( $request->getVal('useskin') == 'wikiaphone' && $wikiaMobileEnabled ) {
+			$skin = Skin::newFromKey(  $request->getVal('useskin') );
 			wfProfileOut(__METHOD__);
-			return false;	
+			return false;
 		}
 
 		/**
 		 * check headers sent by varnish, if X-Skin is send force skin
 		 * @author eloy, requested by artur
-		 */	
+		 */
 		if( function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
 			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiaphone", "wikiaapp" ) ) ) {
@@ -206,7 +210,7 @@ class SkinChooser {
 				if ( $headers[ "X-Skin" ] == 'wikiaphone' ) {
 					//give mobile skin users with no js support a chance to use different skins
 					//FB#19758
-					$requestedSkin = $wgRequest->getVal( 'useskin' );
+					$requestedSkin = $request->getVal( 'useskin' );
 
 					if (
 						!empty( $requestedSkin ) &&
@@ -222,78 +226,35 @@ class SkinChooser {
 					}
 				}
 
-				$user->mSkin = &Skin::newFromKey( $headers[ "X-Skin" ] );
+				$skin = Skin::newFromKey( $headers[ "X-Skin" ] );
 				wfProfileOut(__METHOD__);
 				return false;
 			}
 		}
-			
-		if(!($wgTitle instanceof Title) || in_array( self::getUserOption('skin'), $wgSkipSkins )) {
-			$user->mSkin = &Skin::newFromKey(isset($wgDefaultSkin) ? $wgDefaultSkin : 'monobook');
+
+		if(!($title instanceof Title) || in_array( self::getUserOption('skin'), $wgSkipSkins )) {
+			$skin = Skin::newFromKey(isset($wgDefaultSkin) ? $wgDefaultSkin : 'monobook');
 			wfProfileOut(__METHOD__);
 			return false;
 		}
 
-		// change to custom skin for home page
-		if( !empty( $wgHomePageSkin ) ) {
-			$overrideSkin = false;
-			$mainPrefixedText = Title::newMainPage()->getPrefixedText();
-			if ( $wgTitle->getPrefixedText() === $mainPrefixedText ) {
-				// we're on the main page
-				$overrideSkin = true;
-			} elseif ( $wgTitle->isRedirect() && $wgRequest->getVal( 'redirect' ) !== 'no' ) {
-				// not on main page, but page is redirect -- check where we're going next
-				$tempArticle = new Article( $wgTitle );
-				if ( !is_null( $tempArticle ) ) {
-					$rdTitle = $tempArticle->getRedirectTarget();
-					if ( !is_null( $rdTitle ) && $rdTitle->getPrefixedText() == $mainPrefixedText ) {
-						// current page redirects to main page
-						$overrideSkin = true;
-					}
-				}
-			}
-			if ( $overrideSkin ) {
-				$user->mSkin = &Skin::newFromKey( $wgHomePageSkin );
-				wfProfileOut(__METHOD__);
-				return false;
-			}
-		}
-
 		// only allow useskin=wikia for beta & staff.
-		global $wgUser;
-		if( $wgRequest->getVal('useskin') == 'wikia' ) {
-			$wgRequest->setVal('useskin', 'oasis');
+		if( $request->getVal('useskin') == 'wikia' ) {
+			$request->setVal('useskin', 'oasis');
 		}
 		if(!empty($wgForceSkin)) {
-			$wgForceSkin = $wgRequest->getVal('useskin', $wgForceSkin);
+			$wgForceSkin = $request->getVal('useskin', $wgForceSkin);
 			$elems = explode('-', $wgForceSkin);
 			$userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
 			$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
 
-			$user->mSkin = &Skin::newFromKey($userSkin);
-			$user->mSkin->themename = $userTheme;
+			$skin = Skin::newFromKey($userSkin);
+			$skin->themename = $userTheme;
 
 			self::log(__METHOD__, "forced skin to be {$wgForceSkin}");
 
 			wfProfileOut(__METHOD__);
 			return false;
-		}
-
-		if(!empty($wgVisitorTheme) && $wgVisitorSkin == 'quartz') {
-			$wgVisitorSkin .= $wgVisitorTheme;
-		}
-
-		# Get rid of 'wgVisitorSkin' variable, but sometimes create new one 'wgOldDefaultSkin'
-		if($wgDefaultSkin == 'monobook' && substr($wgVisitorSkin, 0, 6) == 'quartz') {
-			$wgOldDefaultSkin = $wgDefaultSkin;
-			$wgDefaultSkin = $wgVisitorSkin;
-		}
-		unset($wgVisitorSkin);
-		unset($wgVisitorTheme);
-
-		if(strlen($wgDefaultSkin) > 7 && substr($wgDefaultSkin, 0, 6) == 'quartz') {
-			$wgDefaultTheme=substr($wgDefaultSkin, 6);
-			$wgDefaultSkin='quartz';
 		}
 
 		# Get skin logic
@@ -337,15 +298,12 @@ class SkinChooser {
 		}
 		wfProfileOut(__METHOD__.'::GetSkinLogic');
 
-		 global $wgEnableAnswers;
-
-
-		$useskin = $wgRequest->getVal('useskin', $userSkin);
+		$useskin = $request->getVal('useskin', $userSkin);
 		$elems = explode('-', $useskin);
 		$userSkin = ( array_key_exists(0, $elems) ) ? ( (empty($wgEnableAnswers) && $elems[0] == 'answers') ? 'oasis' : $elems[0]) : null;
 		$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : $userTheme;
-		$userTheme = $wgRequest->getVal('usetheme', $userTheme);
-	
+		$userTheme = $request->getVal('usetheme', $userTheme);
+
 		//Fix RT#133364 and makes crazy mobile users get the correct one
 		if( $userSkin == 'smartphone' ){
 			$userSkin = 'wikiaphone';
@@ -362,9 +320,9 @@ class SkinChooser {
 			$userSkin = 'wikiamobile';
 		}
 
-		$user->mSkin = &Skin::newFromKey($userSkin);
+		$skin = &Skin::newFromKey($userSkin);
 
-		$normalizedSkinName = substr(strtolower(get_class($user->mSkin)),4);
+		$normalizedSkinName = substr(strtolower(get_class($skin)),4);
 
 		self::log(__METHOD__, "using skin {$normalizedSkinName}");
 
@@ -379,11 +337,11 @@ class SkinChooser {
 				}
 			}
 
-			$user->mSkin->themename = $userTheme;
+			$skin->themename = $userTheme;
 
 			# force default theme on monaco and oasis when there is no admin setting
 			if( $normalizedSkinName == 'oasis' && (empty($wgAdminSkin) && $isOasisPublicBeta) ) {
-				$user->mSkin->themename = $wgDefaultTheme;
+				$skin->themename = $wgDefaultTheme;
 			}
 
 			self::log(__METHOD__, "using theme {$userTheme}");
@@ -392,7 +350,7 @@ class SkinChooser {
 
 		// FIXME: add support for oasis themes
 		if ($normalizedSkinName == 'oasis') {
-			$user->mSkin->themename = $wgRequest->getVal('usetheme');
+			$skin->themename = $request->getVal('usetheme');
 		}
 
 		wfProfileOut(__METHOD__);

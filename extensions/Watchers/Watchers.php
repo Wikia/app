@@ -18,13 +18,12 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'Watchers',
 	'version'        => '0.3',
 	'author'         => 'Magnus Manske',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Watchers',
-	'description'    => 'An extension to show who is watching a page.',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Watchers',
 	'descriptionmsg' => 'watchers-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
-$wgExtensionAliasesFiles['Watchers'] = $dir . 'Watchers.alias.php';
+$wgExtensionMessagesFiles['WatchersAlias'] = $dir . 'Watchers.alias.php';
 $wgExtensionMessagesFiles['Watchers'] = $dir . 'Watchers.i18n.php';
 $wgAutoloadClasses['SpecialWatchers'] = $dir . 'Watchers_body.php';
 
@@ -33,7 +32,7 @@ $wgGroupPermissions['sysop']['watchers-list'] = true;
 
 $wgSpecialPages['Watchers'] = 'SpecialWatchers';
 
-$wgHooks['SkinTemplateToolboxEnd'][] = 'wfWatchersExtensionAfterToolbox';
+$wgHooks['BaseTemplateToolbox'][] = 'wfWatchersExtensionAfterToolbox';
 
 /**
  * Set this to a number to anonymize results ("X or more" / "Less that X" people watching this page)
@@ -44,26 +43,22 @@ $wgWatchersLimit = null;
 /**
  * Display link in toolbox
 */
-function wfWatchersExtensionAfterToolbox( &$tpl ) { # Checked for HTML and MySQL insertion attacks
-	global $wgTitle;
-	if( $wgTitle->isTalkPage() ) {
-		# No talk pages please
+function wfWatchersExtensionAfterToolbox( $tpl, $toolbox ) { # Checked for HTML and MySQL insertion attacks
+	# Only when displaying non-talk pages
+	if( !isset( $toolbox['whatlinkshere'] ) || $toolbox['whatlinkshere'] === false ) {
 		return true;
 	}
 
-	if( $wgTitle->getNamespace() < 0 ) {
-		# No special pages please
-		return true;
-	}
-
-	wfLoadExtensionMessages( 'Watchers' );
-
-	echo '<li id="t-watchers"><a href="' ;
+	$title = $tpl->getSkin()->getTitle();
 	$nt = SpecialPage::getTitleFor( 'Watchers' );
-	echo $nt->escapeLocalURL( 'page=' . $wgTitle->getPrefixedDBkey() );
-	echo '">';
-	echo wfMsgHtml( 'watchers_link_title' );
-	echo "</a></li>\n";
+	$res['watchers'] = array(
+		'href' => $nt->getLocalURL( 'page=' . $title->getPrefixedDBkey() ),
+		'msg' => 'watchers_link_title',
+		'id' => 't-watchers',
+	);
+
+	$after = isset( $toolbox['recentchangeslinked'] ) ? 'recentchangeslinked' : 'whatlinkshere';
+	$toolbox = wfArrayInsertAfter( $toolbox, $res, $after );
 
 	return true;
 }

@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -45,6 +46,7 @@ class WikilogMainPage
 	public    $mWikilogIcon       = false;
 	public    $mWikilogLogo       = false;
 	public    $mWikilogAuthors    = false;
+	public    $mWikilogUpdated    = false;
 	public    $mWikilogPubdate    = false;
 
 	/**
@@ -52,7 +54,6 @@ class WikilogMainPage
 	 */
 	public function __construct( &$title, &$wi ) {
 		parent::__construct( $title );
-		wfLoadExtensionMessages( 'Wikilog' );
 	}
 
 	/**
@@ -104,7 +105,7 @@ class WikilogMainPage
 
 		# Get query parameter array, for the following links.
 		$qarr = $query->getDefaultQuery();
-		
+
 		# Add feed links.
 		$wgOut->setSyndicated();
 		if ( isset( $qarr['show'] ) ) {
@@ -146,7 +147,7 @@ class WikilogMainPage
 			if ( $this->mTitle->quickUserCan( 'edit' ) ) {
 				$wgOut->addHTML( $this->formNewItem() );
 			}
-		} else if ( $this->mTitle->userCan( 'create' ) ) {
+		} elseif ( $this->mTitle->userCan( 'create' ) ) {
 			$text = wfMsgExt( 'wikilog-missing-wikilog', 'parse' );
 			$text = WikilogUtils::wrapDiv( 'noarticletext', $text );
 			$wgOut->addHTML( $text );
@@ -158,7 +159,7 @@ class WikilogMainPage
 	/**
 	 * Returns wikilog description as formatted HTML.
 	 */
-	protected function formatWikilogDescription( Linker $skin ) {
+	protected function formatWikilogDescription( $skin ) {
 		$this->loadWikilogData();
 
 		$s = '';
@@ -171,13 +172,13 @@ class WikilogMainPage
 			);
 		}
 		$s .= Xml::tags( 'div', array( 'class' => 'wl-title' ),
-			$skin->makeKnownLinkObj( $this->mTitle ) );
+			$skin->link( $this->mTitle, null, array(), array(), array( 'known', 'noclasses' ) ) );
 
 		$st =& $this->mWikilogSubtitle;
 		if ( is_array( $st ) ) {
 			$tc = new WlTextConstruct( $st[0], $st[1] );
 			$s .= Xml::tags( 'div', array( 'class' => 'wl-subtitle' ), $tc->getHTML() );
-		} else if ( is_string( $st ) && !empty( $st ) ) {
+		} elseif ( is_string( $st ) && !empty( $st ) ) {
 			$s .= Xml::element( 'div', array( 'class' => 'wl-subtitle' ), $st );
 		}
 
@@ -187,7 +188,7 @@ class WikilogMainPage
 	/**
 	 * Returns wikilog information as formatted HTML.
 	 */
-	protected function formatWikilogInformation( Linker $skin ) {
+	protected function formatWikilogInformation( $skin ) {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$row = $dbr->selectRow(
@@ -220,14 +221,11 @@ class WikilogMainPage
 		global $wgWikilogFeedClasses;
 
 		// Uses messages 'wikilog-post-count-published', 'wikilog-post-count-drafts', 'wikilog-post-count-all'
-		$s = $skin->makeKnownLinkObj(
-			$this->mTitle,
-			wfMsgExt(
-				"wikilog-post-count-{$type}",
-				array( 'parsemag' ),
-				$num
-			),
-			"view=archives&show={$type}"
+		$s = $skin->link( $this->mTitle,
+			wfMsgExt( "wikilog-post-count-{$type}", array( 'parsemag' ), $num ),
+			array(),
+			array( 'view' => "archives", 'show' => $type ),
+			array( 'knwon', 'noclasses' )
 		);
 		if ( !empty( $wgWikilogFeedClasses ) ) {
 			$f = array();
@@ -236,7 +234,7 @@ class WikilogMainPage
 					wfMsg( "feed-{$format}" ),
 					array( 'class' => "feedlink", 'type' => "application/{$format}+xml" ),
 					array( 'view' => "archives", 'show' => $type, 'feed' => $format ),
-					'known'
+					array( 'known', 'noclasses' )
 				);
 			}
 			$s .= ' (' . implode( ', ', $f ) . ')';
@@ -251,10 +249,10 @@ class WikilogMainPage
 		global $wgScript;
 
 		$fields = array();
-		$fields[] = Xml::hidden( 'title', $this->mTitle->getPrefixedText() );
-		$fields[] = Xml::hidden( 'action', 'wikilog' );
+		$fields[] = Html::hidden( 'title', $this->mTitle->getPrefixedText() );
+		$fields[] = Html::hidden( 'action', 'wikilog' );
 		$fields[] = Xml::inputLabel( wfMsg( 'wikilog-item-name' ),
-			'wlItemName', 'wl-item-name', 25 );
+			'wlItemName', 'wl-item-name', 50 );
 		$fields[] = Xml::submitButton( wfMsg( 'wikilog-new-item-go' ),
 			array( 'name' => 'wlActionNewItem' ) );
 
@@ -300,7 +298,7 @@ class WikilogMainPage
 	 */
 	private function loadWikilogData() {
 		if ( !$this->mWikilogDataLoaded ) {
-			$dbr = $this->getDB();
+			$dbr = wfGetDB( DB_SLAVE );
 			$data = $this->getWikilogDataFromId( $dbr, $this->getId() );
 			if ( $data ) {
 				$this->mWikilogSubtitle = unserialize( $data->wlw_subtitle );

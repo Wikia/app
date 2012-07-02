@@ -9,8 +9,6 @@ require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 
 $tester = new AbuseFilterParser;
 
-wfLoadExtensionMessages( 'AbuseFilter' );
-
 $test_path = dirname( __FILE__ ) . "/tests";
 $tests = glob( $test_path . "/*.t" );
 

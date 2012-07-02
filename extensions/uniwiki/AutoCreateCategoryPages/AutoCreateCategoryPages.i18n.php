@@ -25,6 +25,16 @@ $messages['qqq'] = array(
 	'autocreatecategorypages-desc' => '{{desc}}',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'autocreatecategorypages-desc' => 'faqe Krijo humbur kategori automatikisht në shpëtuar',
+	'autocreatecategorypages-stub' => 'Kjo është një faqe kategori. Ai rreshton të gjitha faqet në kategorinë "$1", si dhe gjith nenkategorive e kategori "$1" në qoftë se ndonjë ekzistojnë.',
+	'autocreatecategorypages-createdby' => 'Krijuar automatikisht nga extension AutoCreateCategoryPages.',
+	'autocreatecategorypages-editor' => 'krijues Automatik kategori',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  * @author Ouda
@@ -50,7 +60,18 @@ $messages['arz'] = array(
 	'autocreatecategorypages-editor' => 'منشئ تصنيف تلقائي',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'autocreatecategorypages-desc' => 'Crea automáticamente les páxines de categoría que falten al guardar',
+	'autocreatecategorypages-stub' => 'Esta ye una páxina de categoría.
+Llista toles páxines de la categoría «$1» igual que toles sub-categoríes de la categoría «$1» si esistieren.',
+	'autocreatecategorypages-createdby' => 'Creada automáticamente pola estensión AutoCreateCategoryPages.',
+	'autocreatecategorypages-editor' => 'Creador automáticu de categoríes',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -69,6 +90,13 @@ $messages['bg'] = array(
 	'autocreatecategorypages-desc' => 'Автоматично създава липсващите категории при съхраняване',
 	'autocreatecategorypages-stub' => 'Тази страница е категория.
 Тя съдържа всички страници в категория „$1“ както и всички подкатегории на категорията „$1“, ако такива са налични.',
+);
+
+/** Banjar (Bahasa Banjar)
+ * @author J Subhi
+ */
+$messages['bjn'] = array(
+	'autocreatecategorypages-desc' => 'Ulah tungkaran kataguri nang hilang utumatis wayah manyimpan',
 );
 
 /** Breton (Brezhoneg)
@@ -137,11 +165,14 @@ Nalistujo wšykne boki w kategoriji "$1" a wšykne pódkategorije kategorije "$1
 );
 
 /** Greek (Ελληνικά)
+ * @author Dada
  * @author Omnipaedista
  * @author ZaDiak
+ * @author Απεργός
  */
 $messages['el'] = array(
 	'autocreatecategorypages-desc' => 'Δημιουργία ζητούμενων σελίδων κατηγοριών αυτόματα στην αποθήκευση',
+	'autocreatecategorypages-stub' => 'Αυτή είναι μια σελίδα κατηγορίας. Παραθέτει όλες τις σελίδες στην κατηγορία "$1", καθώς και όλες τις υποκατηγορίες της κατηγορίας "$1", εάν τυχόν υπάρχουν.',
 	'autocreatecategorypages-createdby' => 'Δημιουργήθηκε αυτόματα από την επέκταση AutoCreateCategoryPages.',
 	'autocreatecategorypages-editor' => 'Αυτόματος δημιουργός κατηγοριών',
 );
@@ -204,6 +235,15 @@ $messages['fr'] = array(
 Elle liste toutes les pages comprises dans la catégorie « $1 » ainsi que toutes ses éventuelles sous-catégories.',
 	'autocreatecategorypages-createdby' => 'Créée automatiquement par l’extension AutoCreateCategoryPages.',
 	'autocreatecategorypages-editor' => 'Créateur automatique de catégorie',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'autocreatecategorypages-desc' => 'Fât ôtomaticament les pâges de catègorie manquentes pendent l’encartâjo.',
+	'autocreatecategorypages-createdby' => 'Fêta ôtomaticament per l’èxtension AutoCreateCategoryPages.',
+	'autocreatecategorypages-editor' => 'Crèator ôtomatico de catègorie',
 );
 
 /** Irish (Gaeilge)
@@ -325,14 +365,14 @@ $messages['km'] = array(
 	'autocreatecategorypages-editor' => 'អ្នកបង្កើត​ចំណាត់ថ្នាក់ក្រុម​ដោយស្វ័យប្រវត្តិ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
 	'autocreatecategorypages-desc' => 'Deiht fäälende {{int:categories}} automattesch aanlääje, wam_mer en Sigg avspeichere deiht.',
 	'autocreatecategorypages-stub' => 'Dat ess_en Sigg förr_en Saachjrupp.
 Se zeijch all de Sigge en_de Saachjrupp „$1“ un de {{int:Subcategories}} dovun, wann et se jitt.',
-	'autocreatecategorypages-createdby' => 'Automattesch aanjelaat övver der ßoffwäer-Zosaz: AutoCreateCategoryPages.',
+	'autocreatecategorypages-createdby' => 'Automattesch aanjelaat vum Zosaz_Projramm: <code lang="en">AutoCreateCategoryPages</code>.',
 	'autocreatecategorypages-editor' => 'Dä automattesche {{int:Categories}} Aanlääjer',
 );
 
@@ -349,13 +389,36 @@ Et stinn all d\'Säiten aus der Kategorie "$1" drop genee wéi all Ënnerkategor
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
+ * @author Brest
  */
 $messages['mk'] = array(
 	'autocreatecategorypages-desc' => 'Со зачувувањето, автомарски создавај ги страниците кои недостасуваат во категоријата',
-	'autocreatecategorypages-stub' => 'Ова е страница за категорија.
+	'autocreatecategorypages-stub' => 'Ова е категориска страница.
 Ги наведува сите страници во категоријата „$1“ како и сите поткатегории на категоријата „$1“, ако постојат.',
-	'autocreatecategorypages-createdby' => 'Автоматски создадено од проширувањето AutoCreateCategoryPages.',
+	'autocreatecategorypages-createdby' => 'Автоматски создадено од додатокот AutoCreateCategoryPages.',
 	'autocreatecategorypages-editor' => 'Автоматски создавач на категории',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'autocreatecategorypages-desc' => 'Wujudkan laman kategori yang tertinggal secara automatik semasa menyimpan',
+	'autocreatecategorypages-stub' => 'Ini ialah laman kategori.
+Ia menyenaraikan semua laman dalam kategori "$1" dan juga subkategori dalam kategori "$1" jika ada,',
+	'autocreatecategorypages-createdby' => 'Diwujudkan secara automatik oleh sambungan AutoCreateCategoryPages.',
+	'autocreatecategorypages-editor' => 'Pembuka kategori automatik',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'autocreatecategorypages-desc' => 'Opprett manglende kategorisider automatisk ved lagring',
+	'autocreatecategorypages-stub' => 'Dette er en kategoriside.
+Den lister opp alle sidene i kategorien «$1» i tillegg til eventuelle underkategorier av «$» om de finnes.',
+	'autocreatecategorypages-createdby' => 'Opprettet automatisk av AutoCreateCategoryPages-utvidelsen.',
+	'autocreatecategorypages-editor' => 'Automatisk kategorioppretter',
 );
 
 /** Dutch (Nederlands)
@@ -378,17 +441,6 @@ $messages['nn'] = array(
 Ho lista opp alle sidene i kategorien «$1» i tillegg til eventuelle underkategoriar av «$» om dei finst.',
 	'autocreatecategorypages-createdby' => 'Oppretta automatisk av AutoCreateCategoryPages-utvidinga.',
 	'autocreatecategorypages-editor' => 'Automatisk kategorioppretting',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'autocreatecategorypages-desc' => 'Opprett manglende kategorisider automatisk ved lagring',
-	'autocreatecategorypages-stub' => 'Dette er en kategoriside.
-Den lister opp alle sidene i kategorien «$1» i tillegg til eventuelle underkategorier av «$» om de finnes.',
-	'autocreatecategorypages-createdby' => 'Opprettet automatisk av AutoCreateCategoryPages-utvidelsen.',
-	'autocreatecategorypages-editor' => 'Automatisk kategorioppretter',
 );
 
 /** Occitan (Occitan)
@@ -453,7 +505,7 @@ Ela lista todas as páginas da categoria "$1", bem como todas as subcategorias d
 $messages['ro'] = array(
 	'autocreatecategorypages-desc' => 'Creează paginile lipsă ale categoriilor automat la salvare',
 	'autocreatecategorypages-stub' => 'Aceasta este o pagină de categorie.
-Afişează toate paginile din categoria "$1" şi toate subcategoriile categoriei "$1", dacă există.',
+Afișează toate paginile din categoria "$1" și toate subcategoriile categoriei "$1", dacă există.',
 	'autocreatecategorypages-createdby' => 'Creat automat de extensia AutoCreateCategoryPages',
 	'autocreatecategorypages-editor' => 'Creator automat de categorii',
 );
@@ -503,7 +555,18 @@ Obsahuje všetky stránky v kategórii „$1“ ako aj všeky podkategórie kate
 	'autocreatecategorypages-editor' => 'Autoamtická tvorba kategórií',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'autocreatecategorypages-desc' => 'Ustvari manjkajoče strani kategorij samodejno ob shranjevanju',
+	'autocreatecategorypages-stub' => 'To je stran kategorije.
+Tukaj so navedene vse strani v kategoriji »$1«, kakor tudi vse podkategorije kategorije »$1«, če obstajajo.',
+	'autocreatecategorypages-createdby' => 'Ustvarjeno samodejno z razširitvijo AutoCreateCategoryPages.',
+	'autocreatecategorypages-editor' => 'Samodejni ustvarjalec kategorij',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -511,7 +574,7 @@ $messages['sr-ec'] = array(
 	'autocreatecategorypages-editor' => 'Аутоматско прављење категорија',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -540,6 +603,13 @@ $messages['sv'] = array(
 Här listas alla artiklar som placerats i kategorin "$1", samt eventuella underkategorier till "$1".',
 	'autocreatecategorypages-createdby' => 'Sidan skapades automatiskt av AutoCreateCategoryPages-tillägget.',
 	'autocreatecategorypages-editor' => 'Automatisk kategoriskapning',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'autocreatecategorypages-desc' => 'விடுபட்டுப்போன பகுப்பு பக்கங்களை சேமிக்கும் போது தானாகவே உருவாக்கவும்',
 );
 
 /** Telugu (తెలుగు)
@@ -591,10 +661,14 @@ $messages['uk'] = array(
 	'autocreatecategorypages-editor' => 'Автоматичний творець категорій',
 );
 
-/** Veps (Vepsan kel')
+/** Veps (Vepsän kel')
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
+	'autocreatecategorypages-desc' => 'Sädab kategorijad, kudambid völ ei ole olnu, avtomatižikš mušthopanendan aigan',
+	'autocreatecategorypages-stub' => 'Nece om kategorijan lehtpol\'.
+Täs om kaik "$1"-kategorijan lehtpoled i kaik  "$1"-kategorijan alakategorijad, ku ned oma olmas.',
+	'autocreatecategorypages-createdby' => 'Sätud avtomatižikš AutoCreateCategoryPages-ližan abul.',
 	'autocreatecategorypages-editor' => 'Avtomatine kategorijoiden sädai',
 );
 
@@ -618,5 +692,22 @@ $messages['vo'] = array(
 Lisedon padis valik in klad: „$1“, äsi donakladis valik klada: „$1“ if dabinons.',
 	'autocreatecategorypages-createdby' => 'Pejafon itjäfidiko fa veitükumam: AutoCreateCategoryPages',
 	'autocreatecategorypages-editor' => 'Kladijafan itjäfidik',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wilsonmess
+ * @author Yfdyh000
+ */
+$messages['zh-hans'] = array(
+	'autocreatecategorypages-createdby' => '自动创建由 自动创建分类页面 扩展。',
+	'autocreatecategorypages-editor' => '自动分类生成器',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'autocreatecategorypages-createdby' => '自動建立由 自動建立分類頁面 擴充套件。',
+	'autocreatecategorypages-editor' => '自動分類生成器',
 );
 

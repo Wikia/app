@@ -24,6 +24,7 @@
 		// Default configuration settings.
 		// These will be modified after assets are loaded and per instance
 		config: {
+			animations: {},
 			isMiniEditor: true,
 			mode: 'source',
 			toolbars: {
@@ -95,13 +96,7 @@
 				method: 'makeGlobalVariables',
 				type: 'POST', //this cann't be cache
 				callback: function(data) {
-
-					// wgMiniEditorAssets might already contain assets to load, as given by the
-					// extension we are implementing into. Merge these into whatever editor assets
-					// we got from the makeGlobalVariables function here.
-					if (typeof window.wgMiniEditorAssets != 'undefined' && $.isArray(window.wgMiniEditorAssets)) {
-						data.wgMiniEditorAssets = data.wgMiniEditorAssets.concat(window.wgMiniEditorAssets);
-					}
+					var assets = window.wgMiniEditorAssets;
 
 					// Globalize
 					// FYI, these override any global variables already set. So, kinda dangerous.
@@ -109,10 +104,23 @@
 						window[v] = data[v];
 					}
 
+					// wgMiniEditorAssets might already contain assets to load, as given by the
+					// extension we are implementing into. Merge these into whatever editor assets
+					// we got from the makeGlobalVariables function here.
+					if (typeof assets != 'undefined' && $.isArray(assets)) {
+
+						// Add cdn url to path to prevent loading from wrong slot (BugId:33467)
+						$.each(assets, function(i, path) {
+							assets[i] = window.wgCdnRootUrl + path;
+						});
+
+						assets = window.wgMiniEditorAssets = data.wgMiniEditorAssets.concat(assets);
+					}
+
 					// Load scripts and css. wgMiniEditorAssets is an array set by the makeGlobalVariables
 					// FIXME: when loading scripts without allinone mode on, errors will occur because
 					// scripts are not executed in the proper order.
-					$.getResources(window.wgMiniEditorAssets, $.proxy(function() {
+					$.getResources(assets, $.proxy(function() {
 
 						// End load timer
 						this.loadTime = (new Date().getTime() - this.loadTimer.getTime());
@@ -133,8 +141,8 @@
 			});
 		},
 
-		loading: function(element, wrapper, preloading) {
-			$(wrapper).addClass(preloading ? 'preloading' : 'loading');
+		loading: function(element, preloading) {
+			$(element).closest(this.wrapperSelector).addClass(preloading ? 'preloading' : 'loading');
 
 			this.editorIsLoading = true;
 		},
@@ -153,7 +161,7 @@
 
 			// Assets haven't been loaded yet, load them now
 			if (!this.assetsLoaded) {
-				this.loading($element, $wrapper, preloading);
+				this.loading($element, preloading);
 
 				// Load all the required assets then call this method again
 				return this.loadAssets($.proxy(function() {
@@ -169,7 +177,7 @@
 
 			// Current instance is not done initializing
 			} else if ((wikiaEditor || (wikiaEditor = WikiaEditor.getInstance())) && !wikiaEditor.ready) {
-				this.loading($element, $wrapper, preloading);
+				this.loading($element, preloading);
 				wikiaEditor.fire('editorBeforeReady', (wikiaEditor.event = event));
 
 			// Current instance does not exist or is done initializing, we can initialize
@@ -186,7 +194,7 @@
 				var self = this,
 					events = $.extend({}, options.events);
 
-				this.loading($element, $wrapper, preloading);
+				this.loading($element, preloading);
 
 				// Wrap existing editorReady function with our own
 				events.editorReady = function() {

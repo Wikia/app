@@ -28,6 +28,7 @@ class WikiaMobileService extends WikiaService {
 	}
 
 	public function index() {
+		$this->wf->profileIn( __METHOD__ );
 		$skin = $this->wg->user->getSkin();
 		$jsHeadPackages = array( 'wikiamobile_js_head' );
 		$jsBodyPackages = array( 'wikiamobile_js_body' );
@@ -39,10 +40,6 @@ class WikiaMobileService extends WikiaService {
 		$scripts = $skin->getScripts();
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 		$templateObject = $this->app->getSkinTemplateObj();
-		$globalsScript = Skin::makeGlobalVariablesScript( $templateObject->get( 'skinname' ) );
-
-		//TODO: this should be removed when merging to 1.19, now we use the WikiaSkinTopScripts hook
-		$this->app->runHook( 'SkinGetHeadScripts', array( &$globalsScript ) );
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
@@ -95,12 +92,24 @@ class WikiaMobileService extends WikiaService {
 		//do not run this hook, all the functionalities hooking in this don't take into account the pecularity of the mobile skin
 		//$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
 
+
+		//global variables
+		//from Output class
+		//and from ResourceLoaderStartUpModule
+		$res = new ResourceVariablesGetter();
+		$vars = array_diff_key(
+					//I found that this array merge is the fastest
+					$this->wg->Out->getJSVars() + $res->get(),
+					array_flip( $this->wg->WikiaMobileExcludeJSGlobals )
+		);
+
 		//AppCache will be disabled for the first several releases
 		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
 		$this->mimeType = $templateObject->get( 'mimetype' );
 		$this->charSet = $templateObject->get( 'charset' );
 		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
-		$this->globalsScript = $globalsScript;
+		$this->topScripts = $skin->getTopScripts();
+		$this->globalVariablesScript = WikiaSkin::makeInlineVariablesScript( $vars );
 		$this->bodyClasses = array( 'wkMobile', $templateObject->get( 'pageclass' ) );
 		$this->pageTitle = $this->wg->Out->getHTMLTitle();
 		$this->cssLinks = $cssLinks;
@@ -115,9 +124,7 @@ class WikiaMobileService extends WikiaService {
 			'bodyText' => $templateObject->get( 'bodytext' ),
 			'categoryLinks' => $templateObject->get( 'catlinks')
 		) );
-		$this->wikiaFooter = $this->app->renderView( 'WikiaMobileFooterService', 'index', array(
-			'copyrightLink' => str_replace( 'CC-BY-SA', $this->wf->msg( 'wikiamobile-footer-link-license' ), $templateObject->get( 'copyright' ) )
-		) );
+		$this->wikiaFooter = $this->app->renderView( 'WikiaMobileFooterService', 'index' );
 		$this->jsBodyFiles = $jsBodyFiles;
 
 		//tracking
@@ -139,5 +146,6 @@ class WikiaMobileService extends WikiaService {
 		if ( $this->wg->cityId == self::LYRICSWIKI_ID ){
 			$this->gaTracking .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
 		}
+		$this->wf->profileOut( __METHOD__ );
 	}
 }

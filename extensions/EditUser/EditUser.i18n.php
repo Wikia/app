@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension EditUser.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -11,25 +12,26 @@ $messages = array();
  * @author Ryan Schmidt
  */
 $messages['en'] = array(
-	'edituser-desc' => 'Allows privileged users to edit other users\' preferences',
+	'edituser-desc' => "Allows privileged users to edit other user's preferences",
 	'edituser' => 'Edit user',
-	'edituser-logout' => 'Log user out',
-	'edituser-username' => 'Name',
+	'edituser-username' => 'Username:',
 	'edituser-dosearch' => 'Search',
-	'edituser-nouser' => 'The specified user does not exist',
-	'edituser-exempt' => 'The specified user cannot be edited',
+	'edituser-nouser' => 'The user "$1" does not exist.',
+	'edituser-exempt' => 'The user "$1" cannot be edited.',
 	'right-edituser' => 'Edit the preferences of other users',
-	'right-edituser-exempt' => 'Others cannot edit this user\'s preferences',
+	'right-edituser-exempt' => "Others cannot edit this user's preferences",
 );
 
 /** Message documentation (Message documentation)
  * @author Jon Harald Søby
  * @author Purodha
+ * @author Raymond
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'edituser-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
-	'edituser-username' => '{{Identical|Name}}',
+	'edituser-desc' => '{{desc}}',
+	'edituser-username' => '{{Identical|Username}}',
 	'edituser-dosearch' => '{{Identical|Search}}',
 	'right-edituser' => '{{doc-right|edituser}}',
 	'right-edituser-exempt' => '{{doc-right|edituser-exempt}}',
@@ -56,11 +58,10 @@ $messages['niu'] = array(
 $messages['af'] = array(
 	'edituser-desc' => 'Laat bevoegde gebruikers toe om ander gebruikers se voorkeure te wysig',
 	'edituser' => 'Wysig gebruiker',
-	'edituser-logout' => 'Teken gebruiker af',
-	'edituser-username' => 'Naam',
+	'edituser-username' => 'Gebruikersnaam:',
 	'edituser-dosearch' => 'Soek',
-	'edituser-nouser' => 'Die gebruiker bestaan nie',
-	'edituser-exempt' => 'Die gebruiker kan nie gewysig word nie',
+	'edituser-nouser' => 'Die gebruiker "$1" bestaan nie',
+	'edituser-exempt' => 'Die gebruiker "$1" kan nie gewysig word nie',
 	'right-edituser' => 'Verander ander gebruikers se voorkeure',
 	'right-edituser-exempt' => 'Ander kan nie die gebruiker se voorkeure verander nie',
 );
@@ -77,39 +78,42 @@ $messages['am'] = array(
  * @author Juanpabl
  */
 $messages['an'] = array(
-	'edituser-username' => 'Nombre',
+	'edituser-username' => "Nombre d'usuario:",
 );
 
-/** Old English (Anglo-Saxon)
+/** Old English (Ænglisc)
  * @author Wōdenhelm
  */
 $messages['ang'] = array(
 	'edituser' => 'Brūcend ādihtan',
-	'edituser-logout' => 'Brūcend ūtmeldian',
 	'edituser-username' => 'Nama',
 	'edituser-dosearch' => 'Sēċan',
 );
 
 /** Arabic (العربية)
+ * @author Loya
  * @author Meno25
+ * @author Mutarjem horr
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'edituser-desc' => 'يسمح للمستخدمين ذوي الصلاحية بتعديل تفضيلات المستخدمين الآخرين',
 	'edituser' => 'تعديل مستخدم',
-	'edituser-logout' => 'تسجيل خروج المستخدم',
-	'edituser-username' => 'اسم',
-	'edituser-dosearch' => 'بحث',
-	'edituser-nouser' => 'المستخدم المحدد غير موجود',
-	'edituser-exempt' => 'المستخدم المحدد لا يمكن تعديله',
+	'edituser-username' => 'اسم المستخدم:',
+	'edituser-dosearch' => 'ابحث',
+	'edituser-nouser' => 'المستخدم "$1" غير موجود.',
+	'edituser-exempt' => 'لا يمكن تحرير أي شيئ للمستخدم "$1" .',
 	'right-edituser' => 'تعديل تفضيلات المستخدمين الآخرين',
 	'right-edituser-exempt' => 'لا يمكن تعديل تفضيلاتهم بواسطة الآخرين',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
  * @author Basharh
+ * @author Michaelovic
  */
 $messages['arc'] = array(
-	'edituser-username' => 'ܫܡܐ',
+	'edituser' => 'ܫܚܠܦܬܐ ܕܡܦܠܚܢܐ',
+	'edituser-username' => 'ܫܡܐ ܕܡܦܠܚܢܐ:',
 	'edituser-dosearch' => 'ܒܨܝ',
 );
 
@@ -119,7 +123,6 @@ $messages['arc'] = array(
 $messages['arz'] = array(
 	'edituser-desc' => 'يسمح للمستخدمين ذوى الصلاحية بتعديل تفضيلات المستخدمين الآخرين',
 	'edituser' => 'تعديل مستخدم',
-	'edituser-logout' => 'تسجيل خروج المستخدم',
 	'edituser-username' => 'اسم',
 	'edituser-dosearch' => 'بحث',
 	'edituser-nouser' => 'المستخدم المحدد غير موجود',
@@ -132,7 +135,10 @@ $messages['arz'] = array(
  * @author Chaipau
  */
 $messages['as'] = array(
+	'edituser' => 'সদস্য সম্পাদনা কৰক',
+	'edituser-username' => 'সদস্যনাম:',
 	'edituser-dosearch' => 'সন্ধান কৰক',
+	'edituser-nouser' => '"$1" নামৰ সদস্যৰ কোনো অস্তিত্ব নাই ।',
 );
 
 /** Kotava (Kotava)
@@ -146,20 +152,34 @@ $messages['avk'] = array(
 	'edituser-exempt' => 'Bazena favesikpata me zo robetar',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'edituser-desc' => 'İmtiyazlı istifadəçilərə digər istifadəçilərin nizamlamalarını redaktə etmək imkanı verir',
+	'edituser' => 'İstifadəçini dəyiş',
+	'edituser-username' => 'İstifadəçi adı:',
+	'edituser-dosearch' => 'Axtar',
+	'edituser-nouser' => 'İstifadəçi "$1" mövcud deyil',
+	'edituser-exempt' => 'İstifadəçi "$1" redaktə edilə bilməz',
+	'right-edituser' => 'digər istifadəçilərin nizamlamalarının redaktəsi',
+	'right-edituser-exempt' => 'digər istifadəçilər bu istifadəçinin nizamlamalarını redaktə edə bilməz',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Zedlik
  */
 $messages['be-tarask'] = array(
-	'edituser-desc' => 'Дазваляе прывілеяваным удзельнікам рэдагаваць устаноўкі іншых удзельнікаў',
+	'edituser-desc' => 'Дазваляе прывілеяваным удзельнікам рэдагаваць налады іншых удзельнікаў',
 	'edituser' => 'Рэдагаваць удзельніка',
-	'edituser-logout' => 'Вывесьці ўдзельніка з сыстэмы',
-	'edituser-username' => 'Імя ўдзельніка',
+	'edituser-username' => 'Імя ўдзельніка:',
 	'edituser-dosearch' => 'Шукаць',
-	'edituser-nouser' => 'Пазначаны ўдзельнік не існуе',
-	'edituser-exempt' => 'Пазначаны ўдзельнік ня можа рэдагавацца',
-	'right-edituser' => 'рэдагаваньне ўстановак іншых удзельнікаў',
-	'right-edituser-exempt' => 'іншыя ня могуць рэдагаваць ўстаноўкі гэтага ўдзельніка',
+	'edituser-nouser' => 'Удзельнік «$1» не існуе.',
+	'edituser-exempt' => 'Удзельнік «$1» ня можа рэдагавацца.',
+	'right-edituser' => 'рэдагаваньне наладаў іншых удзельнікаў',
+	'right-edituser-exempt' => 'іншыя ня могуць рэдагаваць налады гэтага ўдзельніка',
 );
 
 /** Bulgarian (Български)
@@ -168,31 +188,35 @@ $messages['be-tarask'] = array(
 $messages['bg'] = array(
 	'edituser-desc' => 'Позволява на привилегировани потребители да редактират настройките на останалите потребители',
 	'edituser' => 'Редактиране на потребителската сметка',
-	'edituser-username' => 'Потребителско име',
+	'edituser-username' => 'Потребителско име:',
 	'edituser-dosearch' => 'Търсене',
 	'edituser-nouser' => 'Посочената потребителска сметка не съществува',
 	'edituser-exempt' => 'Посочената потребителска сметка не може да бъде редактирана',
 );
 
 /** Bengali (বাংলা)
+ * @author Bellayet
+ * @author Wikitanvir
  * @author Zaheen
  */
 $messages['bn'] = array(
+	'edituser' => 'ব্যবহারকারী সম্পাদনা',
+	'edituser-username' => 'ব্যবহারকারী নাম:',
 	'edituser-dosearch' => 'অনুসন্ধান',
 );
 
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'edituser-desc' => 'Aotren a ra an implijerien dezho gwirioù dibar da gemmañ penndibaboù an implijerien all',
 	'edituser' => 'Aozañ an implijer',
-	'edituser-logout' => "Klozañ dalc'h an implijer",
-	'edituser-username' => 'Anv',
+	'edituser-username' => 'Anv implijer :',
 	'edituser-dosearch' => 'Klask',
-	'edituser-nouser' => "N'eus ket eus an implijer-se",
-	'edituser-exempt' => "N'haller ket degas kemmoù d'an implijer-se.",
+	'edituser-nouser' => 'N\'eus ket eus an implijer "$1".',
+	'edituser-exempt' => 'N\'haller ket degas kemmoù d\'an implijer "$1".',
 	'right-edituser' => 'Kemmañ a ra penndibaboù an implijerien all',
 	'right-edituser-exempt' => "An dud diavaez n'hallont ket degas kemmoù e penndibaboù an implijer-mañ",
 );
@@ -203,11 +227,10 @@ $messages['br'] = array(
 $messages['bs'] = array(
 	'edituser-desc' => 'Omogućuje korisnicima sa privilegijama da uređuju postavke drugih korisnika',
 	'edituser' => 'Uređivanje korisnika',
-	'edituser-logout' => 'Odjava korisnika',
-	'edituser-username' => 'Ime',
+	'edituser-username' => 'Korisničko ime:',
 	'edituser-dosearch' => 'Traži',
-	'edituser-nouser' => 'Navedeni korisnik ne postoji',
-	'edituser-exempt' => 'Navedeni korisnik ne može biti uređivan',
+	'edituser-nouser' => 'Korisnik "$1" ne postoji.',
+	'edituser-exempt' => 'Korisnik "$1" ne može biti uređivan.',
 	'right-edituser' => 'Uređivanje postavki drugih korisnika',
 	'right-edituser-exempt' => 'Drugi ne mogu uređivati postavke ovog korisnika',
 );
@@ -217,7 +240,6 @@ $messages['bs'] = array(
  */
 $messages['bug'] = array(
 	'edituser' => 'Papaké padécé',
-	'edituser-logout' => 'Log papaké maessu',
 	'edituser-username' => 'Aseŋ',
 	'edituser-dosearch' => 'Sappa',
 	'edituser-nouser' => "Iyaro papaké dé' gaga",
@@ -225,19 +247,28 @@ $messages['bug'] = array(
 );
 
 /** Catalan (Català)
+ * @author Aleator
  * @author Jordi Roqué
+ * @author SMP
  * @author Solde
  */
 $messages['ca'] = array(
 	'edituser-desc' => 'Permet editar les preferències dels altres usuaris als usuaris privilegiats',
 	'edituser' => "Edita l'usuari",
-	'edituser-logout' => "Desconnecta l'usuari",
-	'edituser-username' => 'Nom',
+	'edituser-username' => "Nom d'usuari:",
 	'edituser-dosearch' => 'Cerca',
 	'edituser-nouser' => "L'usuari especificat no existeix",
 	'edituser-exempt' => "L'usuari especificat no es pot editar",
-	'right-edituser' => "Edita les preferències d'altres usuaris",
-	'right-edituser-exempt' => "Altres usuaris no poden editar les preferències d'aquest usuari",
+	'right-edituser' => "Editar les preferències d'altres usuaris",
+	'right-edituser-exempt' => "Que els altres usuaris no puguin canviar les preferències d'aquest usuari",
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'edituser-username' => 'Декъашхон цlе:',
+	'edituser-dosearch' => 'Лаха',
 );
 
 /** Chamorro (Chamoru)
@@ -247,10 +278,41 @@ $messages['ch'] = array(
 	'edituser-dosearch' => 'Aligao',
 );
 
+/** Sorani (کوردی)
+ * @author Asoxor
+ */
+$messages['ckb'] = array(
+	'edituser-dosearch' => 'بگەڕێ',
+);
+
+/** Czech (Česky)
+ * @author Jkjk
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'edituser-desc' => 'Umožňuje oprávněným uživatelům měnit nastavení jiných uživatelů',
+	'edituser' => 'Upravit uživatele',
+	'edituser-username' => 'Uživatelské jméno:',
+	'edituser-dosearch' => 'Hledat',
+	'edituser-nouser' => 'Uživatel "$1" neexistuje.',
+	'edituser-exempt' => 'Uživatel "$1" nemůže být upraven.',
+	'right-edituser' => 'Editovat nastavení jiných uživatelů',
+	'right-edituser-exempt' => 'Jiní nemohou měnit nastavení uživatele',
+);
+
+/** Kashubian (Kaszëbsczi)
+ * @author Byulent
+ */
+$messages['csb'] = array(
+	'edituser-username' => 'Miono brëkòwnika:',
+	'edituser-dosearch' => 'Szëkba',
+);
+
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
 $messages['cu'] = array(
+	'edituser-username' => 'по́льꙃєватєлꙗ и́мѧ :',
 	'edituser-dosearch' => 'ищи́',
 );
 
@@ -263,20 +325,21 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author MF-Warburg
  * @author Raimond Spekking
+ * @author The Evil IP address
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'edituser-desc' => 'Erlaubt berechtigten Benutzern, die Einstellungen anderer Benutzer zu verändern',
-	'edituser' => 'Benutzereinstellungen ändern',
-	'edituser-logout' => 'Benutzer abmelden',
-	'edituser-username' => 'Name',
+	'edituser-desc' => 'Erlaubt berechtigten Benutzern, die Einstellungen anderer Benutzer zu bearbeiten',
+	'edituser' => 'Benutzer bearbeiten',
+	'edituser-username' => 'Benutzername:',
 	'edituser-dosearch' => 'Suchen',
-	'edituser-nouser' => 'Der angegebene Benutzer ist nicht vorhanden',
-	'edituser-exempt' => 'Der angegebene Benutzer kann nicht bearbeitet werden',
+	'edituser-nouser' => 'Der Benutzer „$1“ ist nicht vorhanden.',
+	'edituser-exempt' => '{{GENDER:$1|Der Benutzer|Die Benutzerin|Der Benutzer}} „$1“ kann nicht bearbeitet werden.',
 	'right-edituser' => 'Einstellungen anderer Benutzer bearbeiten',
-	'right-edituser-exempt' => 'Einstellungen können durch Dritte nicht geändert werden',
+	'right-edituser-exempt' => 'Einstellungen können nicht durch Dritte bearbeitet werden',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -285,11 +348,10 @@ $messages['de'] = array(
 $messages['dsb'] = array(
 	'edituser-desc' => 'Dowólujo wopšawnjenym wužywarjam nastajenja drugich wužywarjow wobźěłaś',
 	'edituser' => 'Wužywarja wobźěłaś',
-	'edituser-logout' => 'Wužywarja wótzjawiś',
-	'edituser-username' => 'Mě',
+	'edituser-username' => 'Wužywarske mě:',
 	'edituser-dosearch' => 'Pytanje',
-	'edituser-nouser' => 'Pódany wužywaŕ njeeksistěrujo.',
-	'edituser-exempt' => 'Pódany wužywaŕ njedajo se wobźěłaś.',
+	'edituser-nouser' => 'Wužywaŕ "$1" njeeksistěrujo.',
+	'edituser-exempt' => 'Wužywaŕ "$1" njedajo se wobźěłaś.',
 	'right-edituser' => 'Nastajenja drugich wužywarjow wobźěłaś',
 	'right-edituser-exempt' => 'Nastajenja njedaju se wót tśeśich změniś',
 );
@@ -306,7 +368,6 @@ $messages['ee'] = array(
  */
 $messages['el'] = array(
 	'edituser' => 'Τροποποίηση χρήστη',
-	'edituser-logout' => 'Κλείσιμο συνεδρίας χρήστη',
 	'edituser-username' => 'Όνομα',
 	'edituser-dosearch' => 'Αναζήτηση',
 );
@@ -318,11 +379,12 @@ $messages['el'] = array(
 $messages['eo'] = array(
 	'edituser-desc' => 'Rajtigas privilegiitaj uzantoj redakti preferojn de aliaj uzantoj',
 	'edituser' => 'Redakti Uzanton',
-	'edituser-logout' => 'Elsaluti uzanton',
-	'edituser-username' => 'Nomo',
+	'edituser-username' => 'Salutnomo:',
 	'edituser-dosearch' => 'Serĉi',
-	'edituser-nouser' => 'La specifita uzanto ne ekzistas',
-	'edituser-exempt' => 'La specifita uzanto ne estas redaktebla',
+	'edituser-nouser' => 'La uzanto "$1" ne ekzistas.',
+	'edituser-exempt' => 'La uzanto "$1" ne estas redaktebla.',
+	'right-edituser' => 'Redakti la preferojn de aliaj uzantoj',
+	'right-edituser-exempt' => 'Aliaj ne povas redakti la preferojn de ĉi tiu uzanto',
 );
 
 /** Spanish (Español)
@@ -334,36 +396,44 @@ $messages['eo'] = array(
 $messages['es'] = array(
 	'edituser-desc' => 'Permite a usuarios privilegiados editar las preferencias de otro usuario',
 	'edituser' => 'Editar usuario',
-	'edituser-logout' => 'Cerrar sesión de usuario',
-	'edituser-username' => 'Nombre',
+	'edituser-username' => 'Nombre de usuario:',
 	'edituser-dosearch' => 'Buscar',
-	'edituser-nouser' => 'El usuario especificado no existe',
-	'edituser-exempt' => 'El usuario especificado no puede ser editado',
+	'edituser-nouser' => 'El usuario "$1" no existe.',
+	'edituser-exempt' => 'El usuario "$1" no puede ser editado.',
 	'right-edituser' => 'Editar las preferencias de otro usuario',
 	'right-edituser-exempt' => 'Otros no pueden editar estas preferencias de usuario',
 );
 
 /** Estonian (Eesti)
  * @author KalmerE.
+ * @author Pikne
  */
 $messages['et'] = array(
-	'edituser-logout' => 'Logi välja',
-	'edituser-username' => 'Nimi',
+	'edituser-username' => 'Kasutajanimi:',
 	'edituser-dosearch' => 'otsi',
+	'edituser-nouser' => 'Kasutajat "$1" pole olemas.',
 );
 
 /** Basque (Euskara)
+ * @author An13sa
  * @author Kobazulo
  */
 $messages['eu'] = array(
 	'edituser-desc' => 'Pribilegiatutako erabiltzaileak beste erabiltzaileen hobespenak editatzea baimentzen du',
 	'edituser' => 'Erabiltzailea editatu',
-	'edituser-username' => 'Izena',
+	'edituser-username' => 'Erabiltzaile izena:',
 	'edituser-dosearch' => 'Bilatu',
-	'edituser-nouser' => 'Zehaztutako erabiltzailea ez da existitzen',
-	'edituser-exempt' => 'Zehaztutako erabiltzailea ezin da editatu',
+	'edituser-nouser' => '"$1" erabiltzailea ez da existitzen.',
+	'edituser-exempt' => '"$1" erabiltzailea ezin da editatu.',
 	'right-edituser' => 'Beste erabiltzaileen hobespenak editatu',
 	'right-edituser-exempt' => 'Besteek ezin dute erabiltzaile honen hobespenak editatu',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'edituser-username' => 'نام کاربری:',
 );
 
 /** Finnish (Suomi)
@@ -371,36 +441,49 @@ $messages['eu'] = array(
  * @author Jack Phoenix
  * @author Mobe
  * @author Nike
+ * @author Olli
  * @author ZeiP
  */
 $messages['fi'] = array(
 	'edituser-desc' => 'Mahdollistaa oikeutettujen käyttäjien muokata toisten käyttäjien asetuksia.',
 	'edituser' => 'Muokkaa käyttäjää',
-	'edituser-logout' => 'Kirjaa käyttäjä ulos',
-	'edituser-username' => 'Nimi',
+	'edituser-username' => 'Käyttäjätunnus:',
 	'edituser-dosearch' => 'Hae',
-	'edituser-nouser' => 'Määriteltyä käyttäjää ei ole olemassa',
-	'edituser-exempt' => 'Määriteltyä käyttäjää ei voida muokata',
+	'edituser-nouser' => 'Käyttäjää ”$1” ei ole olemassa.',
+	'edituser-exempt' => 'Käyttäjää ”$1” ei voi muokata.',
 	'right-edituser' => 'Muokata muiden käyttäjien asetuksia',
 	'right-edituser-exempt' => 'Muut eivät voi muokata tämän käyttäjän asetuksia.',
 );
 
 /** French (Français)
+ * @author Farras
  * @author Grondin
  * @author Louperivois
  * @author Meithal
+ * @author Peter17
  * @author PieRRoMaN
  */
 $messages['fr'] = array(
 	'edituser-desc' => 'Permet aux utilisateurs disposant de certains privilèges de modifier les préférences des autres utilisateurs',
 	'edituser' => "Modifier l'utilisateur",
-	'edituser-logout' => 'Ferme la session utilisateur',
-	'edituser-username' => 'Nom',
+	'edituser-username' => 'Nom d’utilisateur :',
 	'edituser-dosearch' => 'Rechercher',
-	'edituser-nouser' => "L'utilisateur spécifié n'existe pas",
-	'edituser-exempt' => "L'utilisateur spécifié ne peut pas être modifié",
+	'edituser-nouser' => "L'utilisateur « $1 » n'existe pas.",
+	'edituser-exempt' => "L'utilisateur « $1 » ne peut pas être modifié.",
 	'right-edituser' => 'Modifie les préférences des autres utilisateurs',
 	'right-edituser-exempt' => 'Les préférences de cet utilisateur ne sont pas modifiables par les autres',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'edituser' => 'Changiér l’utilisator',
+	'edituser-username' => 'Nom d’usanciér :',
+	'edituser-dosearch' => 'Rechèrchiér',
+	'edituser-nouser' => 'L’utilisator « $1 » ègziste pas.',
+	'edituser-exempt' => 'L’utilisator « $1 » pôt pas étre changiê.',
+	'right-edituser' => 'Changiér les prèferences ux ôtros utilisators',
 );
 
 /** Western Frisian (Frysk)
@@ -410,6 +493,18 @@ $messages['fy'] = array(
 	'edituser-dosearch' => 'Sykje',
 );
 
+/** Simplified Gan script (‪赣语(简体)‬) */
+$messages['gan-hans'] = array(
+	'edituser-dosearch' => '寻吖',
+);
+
+/** Traditional Gan script (‪贛語(繁體)‬)
+ * @author Symane
+ */
+$messages['gan-hant'] = array(
+	'edituser-dosearch' => '尋吖',
+);
+
 /** Galician (Galego)
  * @author Alma
  * @author Toliño
@@ -417,11 +512,10 @@ $messages['fy'] = array(
 $messages['gl'] = array(
 	'edituser-desc' => 'Permitir que usuarios con privilexios poidan editar as preferencias doutros usuarios',
 	'edituser' => 'Editar Usuario',
-	'edituser-logout' => 'Saír do sistema',
-	'edituser-username' => 'Nome',
+	'edituser-username' => 'Nome de usuario:',
 	'edituser-dosearch' => 'Procurar',
-	'edituser-nouser' => 'O usuario especificado non existe',
-	'edituser-exempt' => 'O usuario especificado non pode ser editado',
+	'edituser-nouser' => 'O usuario "$1" non existe.',
+	'edituser-exempt' => 'O usuario "$1" non pode ser editado.',
 	'right-edituser' => 'Editar as preferencias doutros usuarios',
 	'right-edituser-exempt' => 'As súas preferencias non poden ser editadas por outros',
 );
@@ -431,7 +525,7 @@ $messages['gl'] = array(
  * @author Omnipaedista
  */
 $messages['grc'] = array(
-	'edituser-username' => 'Ὄνομα',
+	'edituser-username' => 'Ὄνομα χρωμένου:',
 	'edituser-dosearch' => 'Ζητεῖν',
 );
 
@@ -441,11 +535,10 @@ $messages['grc'] = array(
 $messages['gsw'] = array(
 	'edituser-desc' => 'Erlaubt berächtigte Benutzer, d Yystellige vu andere Benutzer z verändere',
 	'edituser' => 'Benutzeryystelligen ändere',
-	'edituser-logout' => 'Benutzer abmälde',
-	'edituser-username' => 'Name',
+	'edituser-username' => 'Benutzername:',
 	'edituser-dosearch' => 'Sueche',
-	'edituser-nouser' => 'Dr Benutzer, wu aagee woren isch, git s nit',
-	'edituser-exempt' => 'Dr Benutzer, wu aagee woren isch, cha nit bearbeitet wäre',
+	'edituser-nouser' => 'Dr Benutzer „$1“ git s nit.',
+	'edituser-exempt' => 'Dr Benutzer „$1“ cha nit bearbeitet wäre.',
 	'right-edituser' => 'D Yystellige vu andere Benutzer bearbeite',
 	'right-edituser-exempt' => 'D Yystellige vu däm Benutzer chenne nit dur anderi gänderet wäre',
 );
@@ -455,8 +548,13 @@ $messages['gsw'] = array(
  */
 $messages['gv'] = array(
 	'edituser' => 'Ymmydeyr y reaghey',
-	'edituser-username' => 'Ennym',
-	'edituser-dosearch' => 'Ronsaghey',
+	'edituser-username' => 'Ennym ymmydeyr:',
+	'edituser-dosearch' => 'Ronsee',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'edituser-dosearch' => 'Nema',
 );
 
 /** Hakka (Hak-kâ-fa)
@@ -483,25 +581,24 @@ $messages['haw'] = array(
 $messages['he'] = array(
 	'edituser-desc' => 'אפשרות למשתמשים מורשים לערוך העדפות של משתמשים אחרים',
 	'edituser' => 'עריכת משתמש',
-	'edituser-logout' => 'הוצאת משתמש מהחשבון',
-	'edituser-username' => 'שם',
+	'edituser-username' => 'שם משתמש:',
 	'edituser-dosearch' => 'חיפוש',
-	'edituser-nouser' => 'המשתמש המבוקש אינו קיים',
-	'edituser-exempt' => 'לא ניתן לערוך את המשתמש המבוקש',
+	'edituser-nouser' => 'המשתמש "$1" אינו קיים.',
+	'edituser-exempt' => 'לא ניתן לערוך את המשתמש "$1".',
 	'right-edituser' => 'עריכת ההעדפות של משתמשים אחרים',
 	'right-edituser-exempt' => 'העדפותיהם לא ניתנות לשינוי על ידי אחרים',
 );
 
 /** Hindi (हिन्दी)
+ * @author Ansumang
  * @author Kaustubh
  */
 $messages['hi'] = array(
 	'edituser-desc' => 'कुछ विशिष्ट सदस्योंको अन्य सदस्योंकी वरीयतायें बदलनेकी अनुमति देता हैं',
 	'edituser' => 'सदस्य संपादन करें',
-	'edituser-logout' => 'सदस्य को लॉग आउट करायें',
-	'edituser-username' => 'नाम',
+	'edituser-username' => 'सदस्यनाम:',
 	'edituser-dosearch' => 'खोजें',
-	'edituser-nouser' => 'दिया हुआ सदस्य अस्तित्वमें नहीं हैं',
+	'edituser-nouser' => 'सदस्य "$1" मौजूद नहीं है।',
 	'edituser-exempt' => 'दिये हुए सदस्यको संपादित नहीं कर सकतें',
 );
 
@@ -515,15 +612,15 @@ $messages['hil'] = array(
 /** Croatian (Hrvatski)
  * @author Dalibor Bosits
  * @author Ex13
+ * @author SpeedyGonsales
  */
 $messages['hr'] = array(
 	'edituser-desc' => 'Omogućava suradnicima s pripadajućim pravom uređivanje postavki drugih suradnika',
 	'edituser' => 'Uredi suradnika',
-	'edituser-logout' => 'Odjavi suradnika',
-	'edituser-username' => 'Ime',
+	'edituser-username' => 'Suradničko ime:',
 	'edituser-dosearch' => 'Traži',
-	'edituser-nouser' => 'Traži suradnik ne postoji',
-	'edituser-exempt' => 'Traženi suradnik se ne može uređivati',
+	'edituser-nouser' => 'Suradnik "$1" ne postoji.',
+	'edituser-exempt' => 'Postavke suradnika "$1" ne možete uređivati.',
 	'right-edituser' => 'Uredi postavke drugih suradnika',
 	'right-edituser-exempt' => 'Drugi ne mogu uređivati postavke ovog suradnika',
 );
@@ -534,35 +631,35 @@ $messages['hr'] = array(
 $messages['hsb'] = array(
 	'edituser-desc' => 'Dowola woprawnjenym wužiwarjam nastajenja druhich wužiwarjow wobdźěłać',
 	'edituser' => 'Wužiwarske konto wobdźěłać',
-	'edituser-logout' => 'Wužiwarja wotzjewić',
-	'edituser-username' => 'Mjeno',
+	'edituser-username' => 'Wužiwarske mjeno:',
 	'edituser-dosearch' => 'Pytanje',
-	'edituser-nouser' => 'Podaty wužiwar njeeksistuje.',
-	'edituser-exempt' => 'Podaty wužiwar njehodźi so wobdźěłać',
+	'edituser-nouser' => 'Wužiwar "$1" njeeksistuje.',
+	'edituser-exempt' => 'Wužiwar "$1" njehodźi so wobdźěłać',
 	'right-edituser' => 'Nastajenja druhich wužiwarjow wobdźěłać',
 	'right-edituser-exempt' => 'Nastajenja njedadźa so wot druhich změnić',
 );
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Misibacsi
  */
 $messages['hu'] = array(
 	'edituser-desc' => 'A megfelelő joggal rendelkező szerkesztők számára lehetővé teszi más szerkesztők beállításainak módosítását',
 	'edituser' => 'Szerkesztő módosítása',
-	'edituser-logout' => 'Szerkesztő kijelentkeztetése',
-	'edituser-username' => 'Név',
+	'edituser-username' => 'Felhasználói név:',
 	'edituser-dosearch' => 'Keresés',
-	'edituser-nouser' => 'A kiválasztott szerkesztő nem létezik',
-	'edituser-exempt' => 'A kiválasztott szerkesztő nem módosítható',
+	'edituser-nouser' => 'A kiválasztott szerkesztő ($1) nem létezik',
+	'edituser-exempt' => 'A kiválasztott szerkesztő ($1) nem módosítható',
 	'right-edituser' => 'más szerkesztők beállításainak módosítása',
 	'right-edituser-exempt' => 'más szerkesztők nem módosíthatják a beállításait',
 );
 
 /** Armenian (Հայերեն)
+ * @author Chaojoker
  * @author Togaed
  */
 $messages['hy'] = array(
-	'edituser-username' => 'Անուն',
+	'edituser-username' => 'Մասնակցի անուն՝',
 	'edituser-dosearch' => 'Որոնել',
 );
 
@@ -572,30 +669,43 @@ $messages['hy'] = array(
 $messages['ia'] = array(
 	'edituser-desc' => 'Permitte que usatores con le privilegio requisite modifica le preferentias de altere usatores',
 	'edituser' => 'Modificar usator',
-	'edituser-logout' => 'Clauder le session del usator',
-	'edituser-username' => 'Nomine',
+	'edituser-username' => 'Nomine de usator:',
 	'edituser-dosearch' => 'Cercar',
-	'edituser-nouser' => 'Le usator specificate non existe',
-	'edituser-exempt' => 'Le usator specificate non pote esser modificate',
+	'edituser-nouser' => 'Le usator "$1" non existe.',
+	'edituser-exempt' => 'Le usator "$1" non pote esser modificate',
 	'right-edituser' => 'Modificar le preferentias de altere usatores',
 	'right-edituser-exempt' => 'Altere personas non pote modificar le preferentias de iste usator',
 );
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author Farras
  * @author Irwangatot
  * @author Rex
  */
 $messages['id'] = array(
 	'edituser-desc' => 'Mengijinkan pengguna yang berhak untuk menyunting preferensi pengguna lain',
 	'edituser' => 'Sunting pengguna',
-	'edituser-logout' => 'Keluar-logkan pengguna',
-	'edituser-username' => 'Nama',
+	'edituser-username' => 'Nama pengguna:',
 	'edituser-dosearch' => 'Cari',
-	'edituser-nouser' => 'Pengguna yang dimaksud tidak ditemukan',
-	'edituser-exempt' => 'Pengguna yang dimaksud tidak dapat disunting',
+	'edituser-nouser' => 'Pengguna "$1" tidak dapat ditemukan.',
+	'edituser-exempt' => 'Pengguna "$1" tidak dapat disunting',
 	'right-edituser' => 'Sunting preferensi pengguna lain',
 	'right-edituser-exempt' => 'Orang lain tidak dapat menyunting preferensi pengguna ini',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'edituser-dosearch' => 'Chọwa',
+);
+
+/** Iloko (Ilokano)
+ * @author Lam-ang
+ */
+$messages['ilo'] = array(
+	'edituser-dosearch' => 'Biroken',
 );
 
 /** Ido (Ido)
@@ -615,16 +725,17 @@ $messages['is'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Darth Kule
+ * @author Pinodd
  */
 $messages['it'] = array(
 	'edituser-desc' => 'Permette agli utenti con i privilegi necessari di modificare le preferenze di altri utenti',
 	'edituser' => 'Modifica utente',
-	'edituser-logout' => 'Effettua logout',
-	'edituser-username' => 'Nome',
+	'edituser-username' => 'Nome utente:',
 	'edituser-dosearch' => 'Ricerca',
-	'edituser-nouser' => "L'utente indicato non esiste",
-	'edituser-exempt' => "L'utente specificato non può essere modificato",
+	'edituser-nouser' => 'L\'utente "$1" non esiste.',
+	'edituser-exempt' => 'L\'utente "$1" non può essere modificato.',
 	'right-edituser' => 'Modifica le preferenze degli altri utenti',
 	'right-edituser-exempt' => 'Le sue preferenze non possono essere modificate da altri',
 );
@@ -633,17 +744,18 @@ $messages['it'] = array(
  * @author Aotake
  * @author Hosiryuhosi
  * @author JtFuruhata
+ * @author W.CC
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'edituser-desc' => '権限を持つ利用者が、他利用者の個人設定を変更できるようにする',
 	'edituser' => '利用者情報の編集',
-	'edituser-logout' => '利用者をログアウトする',
-	'edituser-username' => '利用者名',
+	'edituser-username' => '利用者名：',
 	'edituser-dosearch' => '検索',
-	'edituser-nouser' => '指定された利用者は存在しません',
-	'edituser-exempt' => '指定された利用者は編集できません',
+	'edituser-nouser' => '利用者「$1」は存在しません。',
+	'edituser-exempt' => '利用者"$1"は編集できません',
 	'right-edituser' => '他の利用者の個人設定を編集する',
-	'right-edituser-exempt' => '他人が利用者の個人設定を編集することはできません。',
+	'right-edituser-exempt' => '他の利用者による個人設定編集を回避',
 );
 
 /** Javanese (Basa Jawa)
@@ -655,19 +767,35 @@ $messages['jv'] = array(
 	'edituser-dosearch' => 'Golèk',
 );
 
+/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬)
+ * @author GaiJin
+ */
+$messages['kk-cyrl'] = array(
+	'edituser-dosearch' => 'Іздеу',
+);
+
+/** Kalaallisut (Kalaallisut)
+ * @author Qaqqalik
+ */
+$messages['kl'] = array(
+	'edituser-dosearch' => 'Ujarlerit',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Chhorran
  * @author Lovekhmer
  * @author Thearith
+ * @author គីមស៊្រុន
  */
 $messages['km'] = array(
 	'edituser-desc' => 'អនុញ្ញាតឱ្យអ្នកប្រើប្រាស់មានសិទ្ធិកែប្រែចំណូលចិត្តរបស់អ្នកប្រើប្រាស់ដ៏ទៃ',
 	'edituser' => 'កែប្រែអ្នកប្រើប្រាស់',
-	'edituser-username' => 'ឈ្មោះ',
+	'edituser-username' => 'អត្តនាម៖',
 	'edituser-dosearch' => 'ស្វែងរក',
-	'edituser-nouser' => 'មិនមានអ្នកប្រើប្រាស់ដូចដែលបានបញ្ជាក់ទេ',
-	'edituser-exempt' => 'អ្នកប្រើប្រាស់ដែលបានបញ្ជាក់មិនអាចកែបានទេ',
+	'edituser-nouser' => 'គ្មានអ្នកប្រើប្រាស់ឈ្មោះ "$1" ទេ។',
+	'edituser-exempt' => 'មិនអាចកែប្រែអ្នកប្រើប្រាស់ឈ្មោះ "$1" ទេ។',
 	'right-edituser' => 'កែប្រែ​ចំណង់ចំណូលចិត្ត​របស់​អ្នកប្រើប្រាស់​ដទៃ',
+	'right-edituser-exempt' => 'អ្នកដទៃមិនអាចកែប្រែចំណង់ចំណូលចិត្តរបស់អ្នកប្រើប្រាស់នេះទេ',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -675,13 +803,16 @@ $messages['km'] = array(
  */
 $messages['kn'] = array(
 	'edituser-username' => 'ಹೆಸರು',
+	'edituser-dosearch' => 'ಹುಡುಕು',
 );
 
 /** Korean (한국어)
+ * @author Kwj2772
  * @author ToePeu
  */
 $messages['ko'] = array(
 	'edituser-dosearch' => '찾기',
+	'right-edituser-exempt' => '다른 사용자가 이 사용자의 환경 설정을 바꿀 수 없게 함',
 );
 
 /** Krio (Krio)
@@ -698,25 +829,26 @@ $messages['krj'] = array(
 	'edituser-dosearch' => 'Sagap',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
 	'edituser-desc' => 'Määt et müjjelesch, dat Metmaacher met däm Rääsch dozoh aan anderlüx Enstelleunge driije künne.',
 	'edituser' => 'De Enstellunge för dä Metmaacher ändere',
-	'edituser-logout' => 'Dä Metmaacher ußlogge',
-	'edituser-username' => 'Metmaacher Name',
-	'edituser-dosearch' => 'Sööke',
-	'edituser-nouser' => 'Dä Metmaacher ham_mer nit.',
-	'edituser-exempt' => 'Dä Metmaacher kam_mer nit beärbeide.',
+	'edituser-username' => 'Metmaacher_Name:',
+	'edituser-dosearch' => 'Söhke',
+	'edituser-nouser' => 'Ene Metmaacher „$1“ ham_mer nit.',
+	'edituser-exempt' => '{{GENDER:$1|Dä Metmaacher|Dat|Dä Metmaacher|De Metmaacherin|Et}} „$1“ kam_mer nit beärbeide.',
 	'right-edituser' => 'Enstellunge för ander Metmaacher Ändere',
 	'right-edituser-exempt' => 'Kann de Enstellunge nit fun andere ändere lohße',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author Bangin
+ * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'edituser-username' => 'Navê bikarhêner:',
 	'edituser-dosearch' => 'Lêbigere',
 );
 
@@ -725,7 +857,7 @@ $messages['ku-latn'] = array(
  * @author Kw-Moon
  */
 $messages['kw'] = array(
-	'edituser-dosearch' => 'Hwila',
+	'edituser-dosearch' => 'Whila',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -734,11 +866,10 @@ $messages['kw'] = array(
 $messages['lb'] = array(
 	'edituser-desc' => "Erlaabt et Benotzer déi gewësse Rechter hunn anere Benotzer hir Astellungen z'änneren",
 	'edituser' => 'Benotzer änneren',
-	'edituser-logout' => 'Sessioun vum Benotzer zoumaachen',
-	'edituser-username' => 'Numm',
+	'edituser-username' => 'Benotzernumm:',
 	'edituser-dosearch' => 'Sichen',
-	'edituser-nouser' => 'Dee Benotzer gëtt et net',
-	'edituser-exempt' => 'Dee Benotzer kann net geännert ginn',
+	'edituser-nouser' => "De Benotzer ''$1'' gëtt et net.",
+	'edituser-exempt' => 'De Benotzer "$1" kann net geännert ginn.',
 	'right-edituser' => "D'Astellunge vun anere Benotzer änneren",
 	'right-edituser-exempt' => "D'Astellunge kënnen net vun Anere geännert ginn",
 );
@@ -757,13 +888,19 @@ $messages['lfn'] = array(
 $messages['lt'] = array(
 	'edituser-desc' => 'Privilegijuotiems naudotojams leidžiama redaguoti kitų naudotojų nustatymus',
 	'edituser' => 'Redaguoti naudotoją',
-	'edituser-logout' => 'Naudotojo išregistravimas',
 	'edituser-username' => 'Vardas',
 	'edituser-dosearch' => 'Ieškoti',
 	'edituser-nouser' => 'Tokio naudotojo nėra',
 	'edituser-exempt' => 'Šio naudotojo redaguoti negalima',
 	'right-edituser' => 'Redaguoti kitų naudotojų nustatymus',
 	'right-edituser-exempt' => 'Kiti negali redaguoti šio naudotojo nustatymų',
+);
+
+/** Latvian (Latviešu)
+ * @author GreenZeb
+ */
+$messages['lv'] = array(
+	'edituser-dosearch' => 'Meklēt',
 );
 
 /** Eastern Mari (Олык Марий)
@@ -779,46 +916,63 @@ $messages['mhr'] = array(
 $messages['mk'] = array(
 	'edituser-desc' => 'Им овозможува на привилегираните корисници да ги уредуваат нагодувањата на други корисници.',
 	'edituser' => 'Уреди го корисникот',
-	'edituser-logout' => 'Одјави го корисникот',
-	'edituser-username' => 'Име',
+	'edituser-username' => 'Корисничко име:',
 	'edituser-dosearch' => 'Пребарај',
-	'edituser-nouser' => 'Назначениот корисник не постои',
-	'edituser-exempt' => 'Назначениот корисник не може да биде уреден',
+	'edituser-nouser' => 'Корисникот „$1“ не постои.',
+	'edituser-exempt' => 'Корисникот „$1“ не може да биде уреден.',
 	'right-edituser' => 'Уредување на нагодувањата на други корисници',
 	'right-edituser-exempt' => 'Други не можат да ги уредуваат нагодувањата на овој корисник',
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'edituser-desc' => 'വിശേഷാവകാശമുള്ള ഉപയോക്താക്കള്‍ക്ക് മറ്റ് ഉപയോക്താക്കളുടെ ക്രമീകരണങ്ങള്‍ തിരുത്തുവാനുള്ള സൗകര്യം കൊടുക്കുന്നു.',
+	'edituser-desc' => 'വിശേഷാവകാശമുള്ള ഉപയോക്താക്കൾക്ക് മറ്റ് ഉപയോക്താക്കളുടെ ക്രമീകരണങ്ങൾ തിരുത്തുവാനുള്ള സൗകര്യം കൊടുക്കുന്നു.',
 	'edituser' => 'ഉപയോക്താവിന്റെ ക്രമീകരണം തിരുത്തുക',
-	'edituser-logout' => 'ഉപയോക്താവില്‍ നിന്നു ലോഗൗട്ട് ചെയ്യുക',
-	'edituser-username' => 'പേര്‌',
+	'edituser-username' => 'ഉപയോക്തൃനാമം:',
 	'edituser-dosearch' => 'തിരയൂ',
-	'edituser-nouser' => 'താങ്കള്‍ തിരഞ്ഞെടുത്ത ഉപയോക്താവ് നിലവിലില്ല',
-	'edituser-exempt' => 'താങ്കള്‍ തിരഞ്ഞെടുത്ത ഉപയോക്താവിന്റെ ക്രമീകരണം തിരുത്തുവാന്‍ സാധിക്കില്ല',
+	'edituser-nouser' => '"$1" എന്ന ഉപയോക്താവ് നിലവിലില്ല.',
+	'edituser-exempt' => '"$1" എന്ന ഉപയോക്താവ് തിരുത്താനാവില്ല.',
 );
 
 /** Mongolian (Монгол)
  * @author Chinneeb
  */
 $messages['mn'] = array(
+	'edituser-username' => 'Хэрэглэгчийн нэр:',
 	'edituser-dosearch' => 'Хайх',
 );
 
 /** Marathi (मराठी)
+ * @author Htt
+ * @author Kaajawa
  * @author Kaustubh
  */
 $messages['mr'] = array(
 	'edituser-desc' => 'काही विशिष्ट सदस्यांना इतर सदस्यांच्या पसंती बदलण्याची अनुमती देते',
 	'edituser' => 'सदस्य संपादित करा',
-	'edituser-logout' => 'सदस्याला अदाखल करा',
-	'edituser-username' => 'नाव',
+	'edituser-username' => 'सदस्य नाव:',
 	'edituser-dosearch' => 'शोधा',
-	'edituser-nouser' => 'दिलेला सदस्य अस्तित्वात नाही',
+	'edituser-nouser' => 'सदस्य "$1" अस्तित्वात नाही.',
 	'edituser-exempt' => 'दिलेला सदस्य संपादित करू शकत नाही',
+	'right-edituser' => 'इतर सदस्यांच्या आवडी-निवडी बदला',
+	'right-edituser-exempt' => 'इतर लोक या सदस्याच्या आवडी-निवडी बदलवू शकत नाहीत.',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'edituser-desc' => 'Membolehkan pengguna istimewa menyunting keutamaan pengguna lain',
+	'edituser' => 'Sunting pengguna',
+	'edituser-username' => 'Nama pengguna:',
+	'edituser-dosearch' => 'Cari',
+	'edituser-nouser' => 'Pengguna "$1" tidak wujud.',
+	'edituser-exempt' => 'Pengguna "$1" tidak boleh disunting.',
+	'right-edituser' => 'Menyunting keutamaan pengguna lain',
+	'right-edituser-exempt' => 'Orang lain tidak boleh menyunting keutamaan pengguna ini',
 );
 
 /** Maltese (Malti)
@@ -826,26 +980,51 @@ $messages['mr'] = array(
  */
 $messages['mt'] = array(
 	'edituser-desc' => "Tippermetti lill-utenti bil-privileġġi neċessarji biex jimmodifikaw il-preferenzi ta' utenti oħra",
-	'edituser-username' => 'Isem',
+	'edituser-username' => 'Isem tal-utent:',
 	'edituser-dosearch' => 'Fittex',
-	'edituser-nouser' => 'L-utent speċifikat ma jeżistix',
-	'edituser-exempt' => 'L-utent speċifikat ma jistax jiġi modifikat',
+	'edituser-nouser' => 'L-utent "$1" ma jeżistix.',
+	'edituser-exempt' => 'L-utent "$1" ma jistax jiġi modifikat.',
+);
+
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'edituser-username' => 'အသုံးပြုသူအမည်:',
+	'edituser-dosearch' => 'ရှာ​ဖွေ​ရန်​',
+	'edituser-nouser' => 'အသုံးပြုသူအကောင့် "$1" မတည်ရှိပါ။',
 );
 
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
-	'edituser-username' => 'Лемезэ',
+	'edituser-username' => 'Теицянь леметь:',
 	'edituser-dosearch' => 'Вешнэмс',
 );
 
 /** Nahuatl (Nāhuatl)
  * @author Fluence
+ * @author Ricardo gs
  */
 $messages['nah'] = array(
-	'edituser-username' => 'Tōcāitl',
+	'edituser-username' => 'Tlatequitiltilīltōcāitl:',
 	'edituser-dosearch' => 'Titlatēmōz',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'edituser-desc' => 'Lar priviligerte brukere redigere andre brukeres innstillinger',
+	'edituser' => 'Rediger bruker',
+	'edituser-username' => 'Brukernavn:',
+	'edituser-dosearch' => 'Søk',
+	'edituser-nouser' => 'Brukeren «$1» finnes ikke.',
+	'edituser-exempt' => 'Brukeren «$1» kan ikke redigeres.',
+	'right-edituser' => 'Rediger innstillingene til andre brukere',
+	'right-edituser-exempt' => 'Andre kan ikke redigere denne brukerens innstillinger',
 );
 
 /** Low German (Plattdüütsch)
@@ -857,18 +1036,25 @@ $messages['nds'] = array(
 	'edituser-dosearch' => 'Söken',
 );
 
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'edituser-username' => 'प्रयोगकर्ता नाम:',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
+ * @author Tvdm
  */
 $messages['nl'] = array(
 	'edituser-desc' => 'Maakt het voor bevoegde gebruikers mogelijk om de voorkeuren van andere gebruikers te bewerken',
 	'edituser' => 'Gebruiker bewerken',
-	'edituser-logout' => 'Gebruiker afmelden',
-	'edituser-username' => 'Naam',
+	'edituser-username' => 'Gebruikersnaam:',
 	'edituser-dosearch' => 'Zoeken',
-	'edituser-nouser' => 'De opgegeven gebruiker bestaat niet',
-	'edituser-exempt' => 'De opgegeven gebruiker kan niet bewerkt worden',
+	'edituser-nouser' => 'De gebruiker "$1" bestaat niet.',
+	'edituser-exempt' => 'De gebruiker "$1" kan niet bewerkt worden.',
 	'right-edituser' => 'Voorkeuren van andere gebruikers bewerken',
 	'right-edituser-exempt' => 'Voorkeuren niet te bewerken door anderen',
 );
@@ -876,33 +1062,17 @@ $messages['nl'] = array(
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
 $messages['nn'] = array(
 	'edituser-desc' => 'Lar priviligerte brukarar endra andre brukarar sine instillingar',
 	'edituser' => 'Endra brukar',
-	'edituser-logout' => 'Logg ut brukaren',
-	'edituser-username' => 'Namn',
+	'edituser-username' => 'Brukarnamn:',
 	'edituser-dosearch' => 'Søk',
-	'edituser-nouser' => 'Den oppgjevne brukaren finst ikkje',
-	'edituser-exempt' => 'Den oppgjevne brukaren kan ikkje bli endra',
+	'edituser-nouser' => 'Brukaren «$1» finst ikkje.',
+	'edituser-exempt' => 'Brukaren «$1» kan ikkje bli endra.',
 	'right-edituser' => 'Redigera innstillingane til andre brukarar',
 	'right-edituser-exempt' => 'Innstilingane deira kan ikkje bli endra av andre',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'edituser-desc' => 'Lar priviligerte brukere redigere andre brukeres innstillinger',
-	'edituser' => 'Rediger bruker',
-	'edituser-logout' => 'Logg ut brukeren',
-	'edituser-username' => 'Navn',
-	'edituser-dosearch' => 'Søk',
-	'edituser-nouser' => 'Den angitte brukeren finnes ikke',
-	'edituser-exempt' => 'Det angitte brukeren kan ikke redigeres',
-	'right-edituser' => 'Rediger innstillingene til andre brukere',
-	'right-edituser-exempt' => 'Andre kan ikke redigere denne brukerens innstillinger',
 );
 
 /** Occitan (Occitan)
@@ -911,7 +1081,6 @@ $messages['no'] = array(
 $messages['oc'] = array(
 	'edituser-desc' => "Permet als utilizaires dispausant de cèrts privilègis d'editar las preferéncias dels autres utilizaires.",
 	'edituser' => "Editar l'utilizaire",
-	'edituser-logout' => "Tampa la sesilha d'utilizaire",
 	'edituser-username' => 'Nom',
 	'edituser-dosearch' => 'Recercar',
 	'edituser-nouser' => "L'utilizaire especificat existís pas",
@@ -922,23 +1091,25 @@ $messages['oc'] = array(
 
 /** Oriya (ଓଡ଼ିଆ)
  * @author Jose77
+ * @author Psubhashish
  */
 $messages['or'] = array(
-	'edituser-dosearch' => 'ସନ୍ଧାନ',
+	'edituser-dosearch' => 'ଖୋଜିବା',
 );
 
-/** Ossetic (Иронау)
+/** Ossetic (Ирон)
  * @author Amikeco
+ * @author Bouron
  */
 $messages['os'] = array(
-	'edituser-dosearch' => 'Агур',
+	'edituser-dosearch' => 'Агурын',
 );
 
 /** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
-	'edituser-username' => 'Naame',
+	'edituser-username' => 'Yuuser-Naame:',
 	'edituser-dosearch' => 'Uffgucke',
 );
 
@@ -951,26 +1122,25 @@ $messages['pdc'] = array(
 $messages['pl'] = array(
 	'edituser-desc' => 'Umożliwia uprzywilejowanym użytkownikom na edycję preferencji innych użytkowników',
 	'edituser' => 'Edytuj użytkownika',
-	'edituser-logout' => 'Wyloguj użytkownika',
 	'edituser-username' => 'Nazwa użytkownika',
 	'edituser-dosearch' => 'Szukaj',
-	'edituser-nouser' => 'Taki użytkownik nie istnieje',
-	'edituser-exempt' => 'Nie możesz edytować tego użytkownika',
+	'edituser-nouser' => 'Użytkownik „$1” nie istnieje.',
+	'edituser-exempt' => 'Nie możesz edytować użytkownika „$1”.',
 	'right-edituser' => 'Edytowanie preferencji innych użytkowników',
 	'right-edituser-exempt' => 'Inni nie mogą edytować preferencji tego użytkownika',
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
 	'edituser-desc' => 'A përmëtt a utent privilegià ëd modifiché ij "mè gust" ëd j\'àutr utent',
 	'edituser' => 'Modìfica utent',
-	'edituser-logout' => 'Seurt dal sistema',
-	'edituser-username' => 'Nòm',
+	'edituser-username' => 'Stranòm:',
 	'edituser-dosearch' => 'Serca',
-	'edituser-nouser' => "L'utent spessificà a esist pa",
-	'edituser-exempt' => "L'utent spessificà a peul pa esse modificà",
+	'edituser-nouser' => 'L\'utent "$1" a esist pa.',
+	'edituser-exempt' => 'L\'utent "$1" a peul pa esse modificà.',
 	'right-edituser' => 'Modìfica ij "mè gust" ëd j\'àutr utent',
 	'right-edituser-exempt' => 'J\'àutr a peulo pa modifiché sti "mè gust"-sì',
 );
@@ -979,11 +1149,12 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'edituser-username' => 'نوم',
+	'edituser-username' => 'کارن-نوم:',
 	'edituser-dosearch' => 'پلټل',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
  * @author Waldir
@@ -991,26 +1162,25 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'edituser-desc' => 'Permite que utilizadores com privilégios editem as preferências de outros utilizadores',
 	'edituser' => 'Editar Utilizador',
-	'edituser-logout' => 'Terminar sessão do utilizador',
-	'edituser-username' => 'Nome',
+	'edituser-username' => 'Utilizador:',
 	'edituser-dosearch' => 'Pesquisar',
-	'edituser-nouser' => 'O utilizador especificado não existe',
-	'edituser-exempt' => 'O utilizador especificado não pode ser editado',
+	'edituser-nouser' => 'O utilizador "$1" não existe.',
+	'edituser-exempt' => 'O utilizador "$1" não pode ser editado.',
 	'right-edituser' => 'Editar as preferências de outros utilizadores',
 	'right-edituser-exempt' => 'Não podem ter as suas preferências editadas por outros',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'edituser-desc' => 'Permite que utilizadores com privilégios editem as preferências de outros utilizadores',
 	'edituser' => 'Editar Utilizador',
-	'edituser-logout' => 'Terminar sessão do utilizador',
-	'edituser-username' => 'Nome',
+	'edituser-username' => 'Usuário:',
 	'edituser-dosearch' => 'Pesquisar',
-	'edituser-nouser' => 'O utilizador especificado não existe',
-	'edituser-exempt' => 'O utilizador especificado não pode ser editado',
+	'edituser-nouser' => 'O utilizador "$1" não existe.',
+	'edituser-exempt' => 'O usuário "$1" não pode ser editado.',
 	'right-edituser' => 'Editar as preferências de outros utilizadores',
 	'right-edituser-exempt' => 'Outros não podem editar as preferências deste usuário',
 );
@@ -1025,16 +1195,17 @@ $messages['rif'] = array(
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Minisarm
  */
 $messages['ro'] = array(
-	'edituser' => 'Editare utilizator',
-	'edituser-logout' => 'Închidere sesiune utilizator',
-	'edituser-username' => 'Nume',
+	'edituser-desc' => 'Permite utilizatorilor privilegiați să modifice preferințele altor utilizatori',
+	'edituser' => 'Modificare utilizator',
+	'edituser-username' => 'Nume de utilizator',
 	'edituser-dosearch' => 'Caută',
-	'edituser-nouser' => 'Utilizatorul specificat nu există.',
-	'edituser-exempt' => 'Utilizatorul specificat nu poate fi modificat',
-	'right-edituser' => 'Modifică preferinţele altor utilizatori',
-	'right-edituser-exempt' => 'Preferinţele lor nu pot fi modificate de alţi utilizatori',
+	'edituser-nouser' => 'Utilizatorul „$1” nu există.',
+	'edituser-exempt' => 'Utilizatorul „$1” nu poate fi modificat.',
+	'right-edituser' => 'Modifică preferințele altor utilizatori',
+	'right-edituser-exempt' => 'Preferințele acestui utilizator nu pot fi modificate de către altcineva',
 );
 
 /** Tarandíne (Tarandíne)
@@ -1043,27 +1214,26 @@ $messages['ro'] = array(
 $messages['roa-tara'] = array(
 	'edituser-desc' => "L'utinde privilegiete ponne cangià le preferenze de l'otre utinde",
 	'edituser' => "Cange l'utende",
-	'edituser-logout' => 'Utende assute',
-	'edituser-username' => 'Nome',
+	'edituser-username' => "Nome de l'utende:",
 	'edituser-dosearch' => 'Cirche',
-	'edituser-nouser' => "Stu utende non g'esiste",
-	'edituser-exempt' => 'Stu utende non ge pò essere cangete',
+	'edituser-nouser' => 'L\'utende "$1" non g\'esiste.',
+	'edituser-exempt' => 'L\'utende "$1" non ge pò essere cangiate.',
 	'right-edituser' => "Cange le preferenze de l'otre utinde",
 	'right-edituser-exempt' => 'Non ge puè avè le lore preferenze cangiete da otre',
 );
 
 /** Russian (Русский)
+ * @author Eleferen
  * @author Ferrer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'edituser-desc' => 'Позволяет привилегированным участникам править настройки других участников',
 	'edituser' => 'Изменить участника',
-	'edituser-logout' => 'Завершить сеанс участника',
-	'edituser-username' => 'Имя',
+	'edituser-username' => 'Имя участника:',
 	'edituser-dosearch' => 'Найти',
-	'edituser-nouser' => 'Указанный участник не существует',
-	'edituser-exempt' => 'Указанный участник не может быть отредактирован',
+	'edituser-nouser' => 'Участник «$1» не существует',
+	'edituser-exempt' => 'Участник «$1» не может быть отредактирован',
 	'right-edituser' => 'редактирование настроек других участников',
 	'right-edituser-exempt' => 'другие не могут редактировать настройки этого участника',
 );
@@ -1074,7 +1244,6 @@ $messages['ru'] = array(
 $messages['scn'] = array(
 	'edituser-desc' => "Pirmetti all'utenti cu li pirmessi nicissari di canciari li prifirenzi di autri utenti",
 	'edituser' => 'Cancia utenti',
-	'edituser-logout' => 'Effettua lu logout',
 	'edituser-username' => 'Nomu:',
 	'edituser-dosearch' => 'Ricerca',
 	'edituser-nouser' => "L'utenti spicificatu nun esisti",
@@ -1084,15 +1253,19 @@ $messages['scn'] = array(
 );
 
 /** Sinhala (සිංහල)
+ * @author තඹරු විජේසේකර
+ * @author දසනැබළයෝ
  * @author නන්දිමිතුරු
  */
 $messages['si'] = array(
+	'edituser-desc' => 'වරප්‍රසාදිත පරිශීලකයන්හට අනෙක් පරිශීලකයන්ගේ අභිරුචි සංස්කරණය කිරීමට ඉඩදෙනු ලැබේ',
 	'edituser' => 'පරිශීලකයා සංස්කරණය කරන්න',
-	'edituser-logout' => 'පරිශීලකයා නිෂ්ක්‍රමණය කරන්න',
-	'edituser-username' => 'නම',
+	'edituser-username' => 'පරිශීලක නාමය:',
 	'edituser-dosearch' => 'ගවේෂණය',
-	'edituser-nouser' => 'නම් කරන ලද පරිශීලකයා නොපවතියි',
-	'edituser-exempt' => 'නම් කරන ලද පරිශීලකයා සංස්කරණය කල නොහැක',
+	'edituser-nouser' => '"$1"  පරිශීලකයා නොපවතියි',
+	'edituser-exempt' => '"$1"පරිශීලකයා සංස්කරණය කල නොහැක',
+	'right-edituser' => 'අනිකුත් පරිශීලකයන්ගේ රුචිකත්‍වයන් වෙනස් කරන්න.',
+	'right-edituser-exempt' => 'අනිකුත් පරිශීලකයන්ට මෙම අභිරුචීන් වෙනස් කළ නොහැකිය.',
 );
 
 /** Slovak (Slovenčina)
@@ -1101,7 +1274,6 @@ $messages['si'] = array(
 $messages['sk'] = array(
 	'edituser-desc' => 'Umožňuje oprávneným používateľom upravovať nastavenia ostatných používateľov',
 	'edituser' => 'Upraviť používateľa',
-	'edituser-logout' => 'Odhlásiť používateľa',
 	'edituser-username' => 'Meno',
 	'edituser-dosearch' => 'Hľadať',
 	'edituser-nouser' => 'Uvedený používateľ neexistuje',
@@ -1110,13 +1282,33 @@ $messages['sk'] = array(
 	'right-edituser-exempt' => 'Jeho nastavenia nemôžu upravovať iní používatelia',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'edituser-desc' => 'Omogoča upravičenim uporabnikom urejati nastavitve drugih uporabnikov',
+	'edituser' => 'Uredi uporabnika',
+	'edituser-username' => 'Uporabniško ime:',
+	'edituser-dosearch' => 'Iskanje',
+	'edituser-nouser' => 'Uporabnik »$1« ne obstaja.',
+	'edituser-exempt' => 'Uporabnika »$1« ni mogoče urejati.',
+	'right-edituser' => 'Urejanje nastavitev drugih uporabnikov',
+	'right-edituser-exempt' => 'Drugi ne morejo urediti to uporabniško nastavitev',
+);
+
+/** Somali (Soomaaliga)
+ * @author Maax
+ */
+$messages['so'] = array(
+	'edituser-dosearch' => 'Raadi',
+);
+
 /** Albanian (Shqip)
  * @author Puntori
  */
 $messages['sq'] = array(
 	'edituser-desc' => 'Lejon që përdoruesit me privilegje të ndryshojnë parapëlqimet e përdoruesve tjerë',
 	'edituser' => 'Redakto përdoruesin',
-	'edituser-logout' => "Ç'kyç përdoruesin",
 	'edituser-username' => 'Emri',
 	'edituser-dosearch' => 'Kërko',
 	'edituser-nouser' => 'Përdoruesi i zgjedhur nuk ekziston',
@@ -1125,33 +1317,32 @@ $messages['sq'] = array(
 	'right-edituser-exempt' => 'Të tjerët nuk mund të ndryshojnë parapëlqimet e këtij përdoruesi',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Sasa Stefanovic
  * @author Обрадовић Горан
  */
 $messages['sr-ec'] = array(
 	'edituser-desc' => 'Омогућава привилегованим корисницима да мењају подешавања других корисника',
-	'edituser' => 'Измени корисника',
-	'edituser-logout' => 'Излогуј корисника',
-	'edituser-username' => 'Име',
+	'edituser' => 'Уреди корисника',
+	'edituser-username' => 'Корисничко име:',
 	'edituser-dosearch' => 'Претрага',
-	'edituser-nouser' => 'Жељени корисник не постоји',
-	'edituser-exempt' => 'Жељени корисник не може да буде измењен',
+	'edituser-nouser' => 'Корисник „$1“ не постоји.',
+	'edituser-exempt' => 'Не могу да уредим корисника „$1“.',
 	'right-edituser' => 'Измени подешавања других корисника',
 	'right-edituser-exempt' => 'Други не могу да мењају подешавања овог корисника',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
 	'edituser-desc' => 'Omogućava privilegovanim korisnicima da menjaju podešavanja drugih korisnika',
 	'edituser' => 'Izmeni korisnika',
-	'edituser-logout' => 'Izloguj korisnika',
-	'edituser-username' => 'Ime',
+	'edituser-username' => 'Korisničko ime:',
 	'edituser-dosearch' => 'Pretraga',
-	'edituser-nouser' => 'Željeni korisnik ne postoji',
-	'edituser-exempt' => 'Željeni korisnik ne može da bude izmenjen',
+	'edituser-nouser' => 'Korisnik „$1“ ne postoji.',
+	'edituser-exempt' => 'Ne mogu da uredim korisnika „$1“.',
 	'right-edituser' => 'Izmeni podešavanja drugih korisnika',
 	'right-edituser-exempt' => 'Drugi ne mogu da menjaju podešavanja ovog korisnika',
 );
@@ -1165,18 +1356,19 @@ $messages['su'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Boivie
  * @author Lejonel
  * @author M.M.S.
  * @author Najami
+ * @author Nghtwlkr
  */
 $messages['sv'] = array(
 	'edituser-desc' => 'Gör det möjligt för användare med viss behörighet att ändra andra användares inställningar',
 	'edituser' => 'Redigera användare',
-	'edituser-logout' => 'Logga ut användare',
-	'edituser-username' => 'Namn',
+	'edituser-username' => 'Användarnamn:',
 	'edituser-dosearch' => 'Sök',
-	'edituser-nouser' => 'Den angivna användaren finns inte',
-	'edituser-exempt' => 'Den angivna användaren kan inte redigeras',
+	'edituser-nouser' => 'Användaren «$1» finns inte.',
+	'edituser-exempt' => 'Användaren «$1» kan inte redigeras.',
 	'right-edituser' => 'Redigera andra användares inställningar',
 	'right-edituser-exempt' => 'Deras inställningar kan inte redigeras av andra',
 );
@@ -1190,21 +1382,32 @@ $messages['szl'] = array(
 );
 
 /** Tamil (தமிழ்)
+ * @author TRYPPN
  * @author Trengarasu
+ * @author செல்வா
  */
 $messages['ta'] = array(
+	'edituser-desc' => 'சிறப்பு உரிமையுள்ள பயனர்கள் மற்ற பயனர்களின் விருப்பத்தேர்வுகளைத் தொகுக்க அனுமதிக்கின்றது',
+	'edituser' => 'பயனர் பக்கத்தைத் தொகு/திருத்து',
+	'edituser-username' => 'பயனர் பெயர்:',
 	'edituser-dosearch' => 'தேடுக',
+	'edituser-nouser' => ' "$1"  என்னும் பயனர் யாரும் இல்லை',
+	'edituser-exempt' => '"$1" என்னும் பயனர் தொகுப்புக்கு உட்படாது',
+	'right-edituser' => 'மற்ற பயனர்களின் விருப்பத்தேர்வுகளைத் தொகு',
+	'right-edituser-exempt' => 'இந்தப் பயனரின் விருப்பத்தேர்வுகளை மற்றவர்கள் தொகுக்க/திருத்த இயலாது',
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'edituser-desc' => 'అనుమతులు ఉన్న వాడుకరులను ఇతర వాడుకరుల అభిరుచులను మార్చడానికి వీలు కలిగిస్తుంది',
 	'edituser' => 'వాడుకరిని మార్చండి',
-	'edituser-username' => 'పేరు',
+	'edituser-username' => 'వాడుకరి పేరు:',
 	'edituser-dosearch' => 'వెతుకు',
-	'edituser-nouser' => 'ఆ వాడుకరి లేనేలేరు.',
-	'edituser-exempt' => 'ఆ వాడుకరిని మార్చలేరు',
+	'edituser-nouser' => 'వాడుకరి $1 లేనేలేరు.',
+	'edituser-exempt' => 'వాడుకరి $1 లో మార్పులు చెయ్యలేరు.',
 	'right-edituser' => 'ఇతర వాడుకరుల అభిరుచులని మార్చగలగడం',
 	'right-edituser-exempt' => 'ఇతరులు ఈ వాడుకరి యొక్క అభిరుచులను మార్చలేకుండటం',
 );
@@ -1214,28 +1417,27 @@ $messages['te'] = array(
  */
 $messages['tet'] = array(
 	'edituser' => "Edita preferénsia uza-na'in nian",
-	'edituser-username' => 'Naran',
+	'edituser-username' => "Naran uza-na'in:",
 	'edituser-dosearch' => 'Buka',
+	'edituser-nouser' => 'Uza-na\'in "$1" la iha.',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'edituser' => 'Вироиш кардани Корбар',
-	'edituser-logout' => 'Берун кардани корбар',
 	'edituser-username' => 'Ном',
 	'edituser-dosearch' => 'Ҷустуҷӯ',
 	'edituser-nouser' => 'Корбари мушаххасшуда вуҷуд надорад',
 	'edituser-exempt' => 'Корбари мушаххасшударо наметавон вироиш кард',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
 	'edituser' => 'Viroiş kardani Korbar',
-	'edituser-logout' => 'Berun kardani korbar',
 	'edituser-username' => 'Nom',
 	'edituser-dosearch' => 'Çustuçū',
 	'edituser-nouser' => 'Korbari muşaxxasşuda vuçud nadorad',
@@ -1250,7 +1452,6 @@ $messages['tg-latn'] = array(
 $messages['th'] = array(
 	'edituser-desc' => 'อนุญาตให้ผู้ใช้ที่ได้รับสิทธิ์แก้ไขการตั้งค่า แก้ไขการตั้งค่าของผู้ใช้อื่น',
 	'edituser' => 'แก้ไขผู้ใช้',
-	'edituser-logout' => 'ล็อกเอาต์ผู้ใช้',
 	'edituser-username' => 'ชื่อ',
 	'edituser-dosearch' => 'สืบค้น',
 	'edituser-nouser' => 'ผู้ใช้ที่ต้องการแก้ไขการตั้งค่า ไม่มีอยู่ในระบบ',
@@ -1272,42 +1473,58 @@ $messages['tk'] = array(
 $messages['tl'] = array(
 	'edituser-desc' => 'Nagpapahintulot sa may pribilehiyong mga tagagamit na makapagbago ng mga kagustuhan ng iba pang mga tagagamit',
 	'edituser' => 'Baguhin ang tagagamit',
-	'edituser-logout' => 'Alisin sa pagkakalagda ang tagagamit',
-	'edituser-username' => 'Pangalan',
+	'edituser-username' => 'Pangalan ng tagagamit:',
 	'edituser-dosearch' => 'Maghanap',
-	'edituser-nouser' => 'Hindi umiiral ang tinukoy na tagagamit',
-	'edituser-exempt' => 'Hindi maaaring baguhin ang tinukoy na tagagamit',
+	'edituser-nouser' => 'Hindi umiiral ang "$1" na tagagamit.',
+	'edituser-exempt' => 'Hindi maaaring baguhin ang "$1" na tagagamit.',
 	'right-edituser' => 'Baguhin ang mga kagustuhan ng ibang mga tagagamit',
 	'right-edituser-exempt' => 'Hindi mababago ng iba ang mga kagustuhan ng tagagamit na ito',
 );
 
+/** Tok Pisin (Tok Pisin)
+ * @author Iketsi
+ */
+$messages['tpi'] = array(
+	'edituser-dosearch' => 'Painim',
+);
+
 /** Turkish (Türkçe)
  * @author Karduelis
+ * @author Manco Capac
  * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'edituser-desc' => 'Ayrıcalıklı kullanıcıların diğer kullanıcıların tercihlerini değiştirmesini mümkün kılar',
 	'edituser' => 'Kullanıcıyı düzenle',
-	'edituser-logout' => 'Kullanıcının oturumunu kapat',
-	'edituser-username' => 'Adı',
+	'edituser-username' => 'Kullanıcı adı:',
 	'edituser-dosearch' => 'Ara',
-	'edituser-nouser' => 'Belirtilen kullanıcı mevcut değil',
-	'edituser-exempt' => 'Belirtilen kullanıcı düzenlenemiyor',
+	'edituser-nouser' => '"$1" kullanıcısı mevcut değil.',
+	'edituser-exempt' => '"$1" kullanıcısı düzenlenemiyor.',
 	'right-edituser' => 'Diğer kullanıcıların tercihlerini düzenler',
 	'right-edituser-exempt' => 'Başkaları bu kullanıcının tercihlerini düzenleyemez',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ильнар
  * @author Рашат Якупов
  */
 $messages['tt-cyrl'] = array(
+	'edituser-desc' => 'Сайланган кулланучыларга башка кулланучылар битен үзгәртергә мөмкинчелек бирә',
 	'edituser' => 'Катнашучыны үзгәртү',
-	'edituser-logout' => 'Катнашучы эшләү вакытын ябу.',
-	'edituser-username' => 'Исем',
+	'edituser-username' => 'Кулланучы исеме:',
 	'edituser-dosearch' => 'Эзләү',
-	'edituser-nouser' => 'Әлеге катнашучы теркәлмәгән.',
-	'edituser-exempt' => 'Әлеге катнашучы төзәтелә алмый',
+	'edituser-nouser' => 'Кулланучы «$1» әлегә  теркәлмәгән.',
+	'edituser-exempt' => 'Кулланучы  «$1» бите төзәтелә алмый',
 	'right-edituser' => 'Башка катнашучылар көйләүләрен төзәтү',
+	'right-edituser-exempt' => 'башкалар бу кулланучының көйләнмәләрен төзәтә алмый',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'edituser-username' => "Ім'я користувача:",
+	'edituser-dosearch' => 'Пошук',
 );
 
 /** Urdu (اردو)
@@ -1315,7 +1532,6 @@ $messages['tt-cyrl'] = array(
  */
 $messages['ur'] = array(
 	'edituser' => 'صارف کی تدوین',
-	'edituser-logout' => 'صارف کو خارجِ نوشتہ کریں',
 	'edituser-username' => 'نام',
 	'edituser-dosearch' => 'تلاش',
 	'edituser-nouser' => 'متعین کیا گیا صارف موجود نہیں',
@@ -1324,14 +1540,19 @@ $messages['ur'] = array(
 	'right-edituser-exempt' => 'دوسرے صارفِ ہٰذا کی ترجیحات تدوین نہیں کرسکتے',
 );
 
-/** Veps (Vepsan kel')
+/** Veps (Vepsän kel')
  * @author Triple-ADHD-AS
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
+	'edituser-desc' => 'Laskeb priviligiruidud ühtnijoile koheta toižiden ühtnijoiden järgendused.',
 	'edituser' => 'Redaktiruida kävutajad',
-	'edituser-username' => 'Nimi',
+	'edituser-username' => 'Kävutajan nimi:',
+	'edituser-dosearch' => 'Ectä',
+	'edituser-nouser' => 'Ei ole mugošt kävutajad: "$1".',
+	'edituser-exempt' => 'Ei voi redaktiruida "$1"-kävutajad.',
 	'right-edituser' => 'Redaktiruida toižiden kävutajiden järgendused',
+	'right-edituser-exempt' => 'Toižile ei sa redaktiruida necen kävutajan järgendusid.',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1341,11 +1562,10 @@ $messages['vep'] = array(
 $messages['vi'] = array(
 	'edituser-desc' => 'Cho phép những thành viên đặc quyền được sửa đổi tùy chọn của thành viên khác',
 	'edituser' => 'Sửa chữa Thành viên',
-	'edituser-logout' => 'Đăng xuất thành viên',
-	'edituser-username' => 'Tên',
+	'edituser-username' => 'Tên người dùng:',
 	'edituser-dosearch' => 'Tìm kiếm',
-	'edituser-nouser' => 'Thành viên chỉ định không tồn tại',
-	'edituser-exempt' => 'Thành viên chỉ định không sửa được',
+	'edituser-nouser' => 'Thành viên “$1” không tồn tại.',
+	'edituser-exempt' => 'Thành viên “$1” không sửa được.',
 	'right-edituser' => 'Sửa đổi tùy chọn cá nhân của thành viên khác',
 	'right-edituser-exempt' => 'Những người khác không thể sửa đổi tùy chọn cá nhân của thành viên này',
 );
@@ -1357,11 +1577,10 @@ $messages['vi'] = array(
 $messages['vo'] = array(
 	'edituser-desc' => 'Dälon gebanes peprivilegöl ad votükön buükamis gebanas votik',
 	'edituser' => 'Redakön gebani',
-	'edituser-logout' => 'Senunädon gebani',
-	'edituser-username' => 'Nem',
+	'edituser-username' => 'Gebananem:',
 	'edituser-dosearch' => 'Sukön',
-	'edituser-nouser' => 'Geban at no dabinon',
-	'edituser-exempt' => 'Geban at no kanon paredakön',
+	'edituser-nouser' => 'Geban: "$1" no dabinon.',
+	'edituser-exempt' => 'Geban: "$1" no kanon paredakön.',
 	'right-edituser' => 'Votükön buükamis gebanas votik',
 	'right-edituser-exempt' => 'Votans no kanons votükön buükamis gebana at',
 );
@@ -1370,40 +1589,40 @@ $messages['vo'] = array(
  * @author פוילישער
  */
 $messages['yi'] = array(
-	'edituser-username' => 'נאָמען',
+	'edituser-username' => 'באַניצער נאָמען:',
 	'edituser-dosearch' => 'זוכן',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gaoxuewei
  * @author Gzdavidwong
+ * @author Wilsonmess
  * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
 	'edituser-desc' => '允许特许用户改变其他用户的个人偏好',
 	'edituser' => '编辑用户',
-	'edituser-logout' => '用户退出',
-	'edituser-username' => '用户名',
+	'edituser-username' => '用户名：',
 	'edituser-dosearch' => '搜索',
-	'edituser-nouser' => '指定的用户不存在',
-	'edituser-exempt' => '指定的用户无法被编辑',
+	'edituser-nouser' => '用户 $1 不存在。',
+	'edituser-exempt' => '用户 $1 不能被编辑。',
 	'right-edituser' => '编辑其他用户的参数设置',
 	'right-edituser-exempt' => '他人无法编辑这个用户的参数设置',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'edituser-desc' => '允許特許用戶改變其他用戶的個人偏好',
 	'edituser' => '編輯使用者',
-	'edituser-logout' => '把使用者登出',
-	'edituser-username' => '用戶名',
+	'edituser-username' => '用戶名：',
 	'edituser-dosearch' => '搜尋',
-	'edituser-nouser' => '指定的用戶不存在',
-	'edituser-exempt' => '指定的用戶無法被編輯',
-	'right-edituser' => '編輯其他用戶的參數設置',
-	'right-edituser-exempt' => '他人無法編輯這個用戶的參數設置',
+	'edituser-nouser' => '用戶 $1 不存在。',
+	'edituser-exempt' => '用戶 $1 不能被編輯。',
+	'right-edituser' => '編輯其他用戶的偏好設定',
+	'right-edituser-exempt' => '他人無法編輯這個使用者的偏好設定',
 );
 

@@ -20,6 +20,17 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
+$wgResourceModules['ext.maps.yahoomaps'] = array(
+	'dependencies' => array( 'ext.maps.common' ),
+	'localBasePath' => dirname( __FILE__ ),
+	'remoteBasePath' => $egMapsScriptPath .  '/includes/services/YahooMaps',	
+	'group' => 'ext.maps',
+	'scripts' =>   array(
+		'jquery.yahoomaps.js',
+		'ext.maps.yahoomaps.js'
+	),
+);
+
 $wgHooks['MappingServiceLoad'][] = 'efMapsInitYahooMaps';
 
 function efMapsInitYahooMaps() {
@@ -27,15 +38,13 @@ function efMapsInitYahooMaps() {
 	
 	$wgAutoloadClasses['MapsParamYMapType'] 		= dirname( __FILE__ ) . '/Maps_ParamYMapType.php';
 	$wgAutoloadClasses['MapsYahooMaps'] 			= dirname( __FILE__ ) . '/Maps_YahooMaps.php';
-	$wgAutoloadClasses['MapsYahooMapsDispMap'] 		= dirname( __FILE__ ) . '/Maps_YahooMapsDispMap.php';
-	$wgAutoloadClasses['MapsYahooMapsDispPoint'] 	= dirname( __FILE__ ) . '/Maps_YahooMapsDispPoint.php';	
 	
 	MapsMappingServices::registerService( 
 		'yahoomaps',
 		'MapsYahooMaps',
 		array(
-			'display_point' => 'MapsYahooMapsDispPoint',
-			'display_map' => 'MapsYahooMapsDispMap'
+			'display_point' => 'MapsBasePointMap',
+			'display_map' => 'MapsBaseMap'
 		)
 	);	
 	

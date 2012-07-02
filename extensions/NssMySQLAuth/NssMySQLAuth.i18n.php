@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Internationalization for NssMySQLAuth extension.
  */
 
@@ -11,7 +11,7 @@ $messages = array();
  */
 $messages['en'] = array(
 	'accountmanager' => 'Account manager',
-	
+
 	'am-username' 	=> 'username',
 	'am-email' => 'e-mail',
 	'am-active' 	=> 'active',
@@ -25,7 +25,7 @@ $messages['en'] = array(
 	'nss-no-mail'	=> 'Do not send email',
 	'nss-welcome-mail'	=> 'An account with username $1 and password $2 has been created for you.',
 	'nss-welcome-mail-subject' => 'Account creation',
-	
+
 	'nss-db-error' => 'Error reading from authentication database'
 );
 
@@ -33,13 +33,14 @@ $messages['en'] = array(
  * @author Bennylin
  * @author EugeneZelenko
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'am-username' => '{{Identical|Username}}',
 	'am-email' => '{{Identical|E-mail}}',
-	'nss-desc' => 'Short desciption of this extension.
-Shown in [[Special:Version]].
-Do not translate or change tag names, or link anchors.',
+	'am-active' => '{{Identical|Active}}',
+	'nss-desc' => '{{desc}}',
+	'nss-save-changes' => '{{Identical|Save changes}}',
 	'nss-create-account-header' => '{{Identical|Create account}}',
 	'nss-create-account' => '{{Identical|Create account}}',
 );
@@ -82,8 +83,14 @@ $messages['ar'] = array(
  * @author Basharh
  */
 $messages['arc'] = array(
+	'accountmanager' => 'ܕܒܘܪܐ ܕܚܘܫܒܢܐ',
+	'am-username' => 'ܫܡܐ ܕܡܦܠܚܢܐ',
+	'am-email' => 'ܒܝܠܕܪܐ ܐܠܩܛܪܘܢܝܐ',
 	'nss-rights' => 'ܙܕ̈ܩܐ',
+	'nss-save-changes' => 'ܠܒܘܟ ܫܘܚܠܦ̈ܐ',
 	'nss-create-account-header' => 'ܒܪܝ ܚܘܫܒܢܐ ܚܕܬܐ',
+	'nss-create-account' => 'ܒܪܝ ܚܘܫܒܢܐ',
+	'nss-welcome-mail-subject' => 'ܒܪܝܐ ܕܚܘܫܒܢܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -108,7 +115,16 @@ $messages['arz'] = array(
 	'nss-db-error' => 'خطأ قراءة من قاعدة بيانات التحقق.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'am-username' => 'istifadəçi adı',
+	'am-email' => 'e-məktub',
+	'am-active' => 'aktiv',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -141,6 +157,24 @@ $messages['bg'] = array(
 	'nss-create-account-header' => 'Създаване на нова сметка',
 	'nss-create-account' => 'Създаване на сметка',
 	'nss-welcome-mail' => 'Беше ви създадена сметка с потребителско име $1 и парола $2.',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'accountmanager' => 'অ্যাকাউন্ট ব্যবস্থাপক',
+	'am-username' => 'ব্যবহারকারী নাম',
+	'am-email' => 'ই-মেইল',
+	'am-active' => 'সক্রিয়',
+	'am-updated' => 'আপনার পরিবর্তনসমূহ সফলভাবে সংরক্ষিত হয়েছে',
+	'nss-rights' => 'অধিকারসমূহ',
+	'nss-save-changes' => 'পরিবর্তন সংরক্ষণ',
+	'nss-create-account-header' => 'নতুন অ্যাকাউন্ট তৈরি করুন',
+	'nss-create-account' => 'অ্যাকাউন্ট তৈরি করুন',
+	'nss-no-mail' => 'ই-মেইল পাঠিও না',
+	'nss-welcome-mail' => '$1 ব্যবহারকারী নাম ও $2 পাসওয়ার্ডসহ একটি অ্যাকাউন্ট আপনার জন্য তৈরি করা হয়েছে।',
+	'nss-welcome-mail-subject' => 'অ্যকাউন্ট তৈরিকরণ',
 );
 
 /** Breton (Brezhoneg)
@@ -230,7 +264,7 @@ $messages['de'] = array(
 	'nss-db-error' => 'Fehler beim Lesen aus der Authentifizierungs-Datenbank',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  */
 $messages['de-formal'] = array(
@@ -283,6 +317,7 @@ $messages['eo'] = array(
 	'am-email' => 'retpoŝto',
 	'am-active' => 'aktiva',
 	'am-updated' => 'Viaj ŝanĝoj estis sukcese ŝanĝitaj.',
+	'nss-desc' => 'Kromprogramo por aŭtentigi per libnss-mysql datumbazo. Enhavas [[Special:AccountManager|konto-administrilo]]',
 	'nss-rights' => 'rajtoj',
 	'nss-save-changes' => 'Konservi ŝanĝojn',
 	'nss-create-account-header' => 'Krei novan konton',
@@ -348,6 +383,7 @@ $messages['fi'] = array(
  * @author Crochet.david
  * @author Grondin
  * @author IAlex
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'accountmanager' => 'Gestionnaire de comptes',
@@ -357,7 +393,7 @@ $messages['fr'] = array(
 	'am-updated' => 'Vos modifications ont été sauvegardées avec succès',
 	'nss-desc' => 'Une extension qui permet d’authentifier au moyen d’une base de données libnss-mysql. Contient un [[Special:AccountManager|gestionnaire de comptes]]',
 	'nss-rights' => 'droits',
-	'nss-save-changes' => 'Sauvegarder les modifications',
+	'nss-save-changes' => 'Enregistrer les modifications',
 	'nss-create-account-header' => 'Créer un nouveau compte',
 	'nss-create-account' => 'Créer le compte',
 	'nss-no-mail' => 'Ne pas envoyer de courriel',
@@ -372,11 +408,15 @@ $messages['fr'] = array(
  */
 $messages['frp'] = array(
 	'accountmanager' => 'Administrator de comptos',
-	'am-username' => 'Nom d’utilisator',
+	'am-username' => 'nom d’usanciér',
 	'am-email' => 'mèssâjo',
+	'am-active' => 'actif',
+	'nss-rights' => 'drêts',
 	'nss-save-changes' => 'Sôvar los changements',
 	'nss-create-account-header' => 'Fâre un compto novél',
 	'nss-create-account' => 'Fâre lo compto',
+	'nss-no-mail' => 'Pas mandar de mèssâjo',
+	'nss-welcome-mail-subject' => 'Crèacion de compto',
 );
 
 /** Irish (Gaeilge)
@@ -523,7 +563,7 @@ $messages['ia'] = array(
 	'nss-no-mail' => 'Non inviar e-mail',
 	'nss-welcome-mail' => 'Un conto con le nomine de usator $1 e contrasigno $2 ha essite create pro te.',
 	'nss-welcome-mail-subject' => 'Creation de contos',
-	'nss-db-error' => 'Error durante le lection del base de datos de authentication',
+	'nss-db-error' => 'Error durante le lectura del base de datos de authentication',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -547,10 +587,22 @@ $messages['id'] = array(
 	'nss-db-error' => 'Terjadi kesalahan saat membaca basis data yang terotentikasi',
 );
 
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'am-username' => 'nome utente',
+	'am-email' => 'indirizzo e-mail',
+	'am-active' => 'attivo',
+	'nss-rights' => 'diritti',
+	'nss-save-changes' => 'Salva le modifiche',
+	'nss-create-account-header' => 'Crea un nuovo utente',
+	'nss-create-account' => 'Crea un nuovo utente',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  * @author Hosiryuhosi
  * @author Mizusumashi
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'accountmanager' => 'アカウントマネージャー',
@@ -571,10 +623,11 @@ $messages['ja'] = array(
 
 /** Khmer (ភាសាខ្មែរ)
  * @author Thearith
+ * @author គីមស៊្រុន
  */
 $messages['km'] = array(
 	'accountmanager' => 'អ្នកគ្រប់គ្រង​គណនី',
-	'am-username' => 'ឈ្មោះអ្នកប្រើប្រាស់',
+	'am-username' => 'អត្តនាម',
 	'am-email' => 'អ៊ីមែល',
 	'am-active' => 'សកម្ម',
 	'am-updated' => 'បំលាស់ប្ដូរ​របស់​អ្នក ត្រូវ​បាន​រក្សាទុក​ដោយ​ជោគជ័យ​ហើយ',
@@ -583,6 +636,7 @@ $messages['km'] = array(
 	'nss-create-account-header' => 'បង្កើត​គណនី​ថ្មី',
 	'nss-create-account' => 'បង្កើត​គណនី',
 	'nss-no-mail' => 'មិន​ផ្ញើ​អ៊ីមែល',
+	'nss-welcome-mail' => 'គណនីដែលមានអត្តនាម $1 និងពាក្យសំងាត់ $2 ត្រូវបានបង្កើតសំរាប់អ្នកហើយ។',
 	'nss-welcome-mail-subject' => 'ការបង្កើត​គណនី',
 );
 
@@ -604,7 +658,7 @@ $messages['krj'] = array(
 	'am-updated' => 'Ang imo mga gin-ilis nabaton run',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -658,11 +712,45 @@ $messages['mk'] = array(
 	'nss-rights' => 'права',
 	'nss-save-changes' => 'Зачувај промени',
 	'nss-create-account-header' => 'Создај нова сметка',
-	'nss-create-account' => 'Создај сметка',
+	'nss-create-account' => 'Направи сметка',
 	'nss-no-mail' => 'Не праќај е-пошта',
 	'nss-welcome-mail' => 'Создадена ви е сметка со корисничко име $1 и лозинка $2.',
 	'nss-welcome-mail-subject' => 'Создавање на сметка',
 	'nss-db-error' => 'Најдена е грешка во базата на податоци за потврдување',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'accountmanager' => 'അംഗത്വ കൈകാര്യോപകരണം',
+	'am-username' => 'ഉപയോക്തൃനാമം',
+	'am-email' => 'ഇമെയിൽ',
+	'am-active' => 'സജീവം',
+	'am-updated' => 'താങ്കൾ വരുത്തിയ മാറ്റങ്ങൾ വിജയകരമായി സേവ് ചെയ്തിരിക്കുന്നു',
+	'nss-rights' => 'അവകാശങ്ങൾ',
+	'nss-save-changes' => 'മാറ്റങ്ങൾ സേവ് ചെയ്യുക',
+	'nss-create-account-header' => 'അംഗത്വമെടുക്കുക',
+	'nss-create-account' => 'അംഗത്വമെടുക്കുക',
+	'nss-no-mail' => 'ഇമെയിൽ അയയ്ക്കരുത്',
+	'nss-welcome-mail' => 'ഉപയോക്തൃനാമം $1 എന്നും രഹസ്യവാക്ക് $2 എന്നുമുള്ള ഒരംഗത്വം താങ്കൾക്കായി സൃഷ്ടിച്ചിരിക്കുന്നു.',
+	'nss-welcome-mail-subject' => 'അംഗത്വ സൃഷ്ടി',
+);
+
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'am-username' => 'хэрэглэгчийн нэр',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'am-username' => 'nama pengguna',
+	'am-email' => 'e-mel',
+	'nss-save-changes' => 'Simpan perubahan',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -672,6 +760,34 @@ $messages['nah'] = array(
 	'am-email' => 'e-mail',
 	'nss-create-account-header' => 'Ticchīhuāz yancuīc cuentah',
 	'nss-create-account' => 'Ticchīhuāz cuentah',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ * @author Simny
+ */
+$messages['nb'] = array(
+	'accountmanager' => 'Administrer konto',
+	'am-username' => 'brukernavn',
+	'am-email' => 'e-post',
+	'am-active' => 'aktiv',
+	'am-updated' => 'Dine endringer ble lagret',
+	'nss-desc' => 'Et programtillegg for å identifisere mot en libnss-mysql-database. Inneholder en [[Special:AccountManager|kontoadministrerer]]',
+	'nss-rights' => 'rettigheter',
+	'nss-save-changes' => 'Lagre endringer',
+	'nss-create-account-header' => 'Opprett ny konto',
+	'nss-create-account' => 'Opprett konto',
+	'nss-no-mail' => 'Ikke send e-post',
+	'nss-welcome-mail' => 'En konto med brukernavnet $1 og passordet $2 har blitt opprettet for deg.',
+	'nss-welcome-mail-subject' => 'Kontoopprettelse',
+	'nss-db-error' => 'En feil oppstod under lesing av identifiseringsdatabasen',
+);
+
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'am-username' => 'प्रयोगकर्ता नाम',
 );
 
 /** Dutch (Nederlands)
@@ -714,27 +830,6 @@ $messages['nn'] = array(
 	'nss-db-error' => 'Feil oppstod under lesing av identifiseringsdatabasen',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- * @author Simny
- */
-$messages['no'] = array(
-	'accountmanager' => 'Administrer konto',
-	'am-username' => 'brukernavn',
-	'am-email' => 'e-post',
-	'am-active' => 'aktiv',
-	'am-updated' => 'Dine endringer ble lagret',
-	'nss-desc' => 'Et programtillegg for å identifisere mot en libnss-mysql-database. Inneholder en [[Special:AccountManager|kontoadministrerer]]',
-	'nss-rights' => 'rettigheter',
-	'nss-save-changes' => 'Lagre endringer',
-	'nss-create-account-header' => 'Opprett ny konto',
-	'nss-create-account' => 'Opprett konto',
-	'nss-no-mail' => 'Ikke send e-post',
-	'nss-welcome-mail' => 'En konto med brukernavnet $1 og passordet $2 har blitt opprettet for deg.',
-	'nss-welcome-mail-subject' => 'Kontoopprettelse',
-	'nss-db-error' => 'En feil oppstod under lesing av identifiseringsdatabasen',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -755,11 +850,20 @@ $messages['oc'] = array(
 	'nss-db-error' => "Error pendent la lectura de la banca de donadas d'autentificacion",
 );
 
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Odisha1
+ */
+$messages['or'] = array(
+	'am-email' => 'ଇ-ମେଲ',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
 	'am-username' => 'Yuuser-Naame',
+	'am-email' => 'E-Poschd',
+	'nss-save-changes' => 'Enneringe beilege',
 );
 
 /** Polish (Polski)
@@ -804,6 +908,19 @@ $messages['pms'] = array(
 	'nss-db-error' => "Eror an lesend dal database d'autenticassion",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'am-username' => 'کارن-نوم',
+	'am-email' => 'برېښليک',
+	'nss-rights' => 'رښتې',
+	'nss-save-changes' => 'بدلونونه خوندي کول',
+	'nss-create-account-header' => 'نوی ګڼون جوړول',
+	'nss-create-account' => 'ګڼون جوړول',
+	'nss-no-mail' => 'برېښليک مه رالېږۍ',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  * @author Malafaya
@@ -828,6 +945,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'accountmanager' => 'Gerenciador de contas',
@@ -837,7 +955,7 @@ $messages['pt-br'] = array(
 	'am-updated' => 'As suas alterações foram gravadas com sucesso',
 	'nss-desc' => 'Um "plugin" para autenticar numa base de dados libnss-mysql. Contém um [[Special:AccountManager|gerenciador de contas]]',
 	'nss-rights' => 'permissões',
-	'nss-save-changes' => 'Gravar alterações',
+	'nss-save-changes' => 'Salvar alterações',
 	'nss-create-account-header' => 'Criar nova conta',
 	'nss-create-account' => 'Criar conta',
 	'nss-no-mail' => 'Não enviar email',
@@ -906,6 +1024,14 @@ $messages['ru'] = array(
 	'nss-db-error' => 'Ошибка чтения базы данных аутентификации',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'am-username' => 'мено хоснователя',
+	'am-email' => 'електронічна пошта',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -926,24 +1052,47 @@ $messages['sk'] = array(
 	'nss-db-error' => 'Chyba pri čítaní z overovacej databázy',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'accountmanager' => 'Upravitelj računov',
+	'am-username' => 'uporabniško ime',
+	'am-email' => 'e-pošta',
+	'am-active' => 'dejavno',
+	'am-updated' => 'Vaše spremembe so bile uspešno shranjene',
+	'nss-desc' => 'Vtičnik za overitev zbirk podatkov libnss-mysql. Vsebuje [[Special:AccountManager|upravljavca računov]]',
+	'nss-rights' => 'pravice',
+	'nss-save-changes' => 'Shrani spremembe',
+	'nss-create-account-header' => 'Ustvari nov račun',
+	'nss-create-account' => 'Ustvari račun',
+	'nss-no-mail' => 'Ne pošlji e-pošte',
+	'nss-welcome-mail' => 'Račun z uporabniškim imenom $1 in geslom $2 je bil ustvarjen za vas.',
+	'nss-welcome-mail-subject' => 'Ustvarjanje računa',
+	'nss-db-error' => 'Napaka pri branju iz overitvene zbirke podatkov',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'accountmanager' => 'Менаџер за налог',
+	'accountmanager' => 'Управљање налогом',
 	'am-username' => 'корисичко име',
-	'am-email' => 'имејл',
+	'am-email' => 'е-пошта',
 	'am-active' => 'активан',
-	'am-updated' => 'Баше измене су успешно снимљене',
-	'nss-create-account-header' => 'Направи нови налог',
-	'nss-create-account' => 'Направи налог',
-	'nss-no-mail' => 'Не шаљи имејл',
-	'nss-welcome-mail' => 'За Вас је направљен налог са корисничким именом $1 и лозинком $2.',
-	'nss-welcome-mail-subject' => 'Прављење налога',
+	'am-updated' => 'Ваше измене су сачуване.',
+	'nss-save-changes' => 'Сачувај измене',
+	'nss-create-account-header' => 'Отвори нови налог',
+	'nss-create-account' => 'Отвори налог',
+	'nss-no-mail' => 'Не шаљи е-поруке',
+	'nss-welcome-mail' => 'Отворен вам је налог с корисничким именом $1 и лозинком $2.',
+	'nss-welcome-mail-subject' => 'Отварање налога',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Жељко Тодоровић
  */
 $messages['sr-el'] = array(
 	'accountmanager' => 'Menadžer za nalog',
@@ -951,8 +1100,9 @@ $messages['sr-el'] = array(
 	'am-email' => 'imejl',
 	'am-active' => 'aktivan',
 	'am-updated' => 'Baše izmene su uspešno snimljene',
+	'nss-save-changes' => 'Snimi promene',
 	'nss-create-account-header' => 'Napravi novi nalog',
-	'nss-create-account' => 'Napravi nalog',
+	'nss-create-account' => 'Otvori nalog',
 	'nss-no-mail' => 'Ne šalji imejl',
 	'nss-welcome-mail' => 'Za Vas je napravljen nalog sa korisničkim imenom $1 i lozinkom $2.',
 	'nss-welcome-mail-subject' => 'Pravljenje naloga',
@@ -995,6 +1145,14 @@ $messages['te'] = array(
 	'nss-welcome-mail-subject' => 'ఖాతా సృష్టింపు',
 );
 
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'am-username' => "naran uza-na'in",
+	'am-active' => 'ativu',
+);
+
 /** Turkmen (Türkmençe)
  * @author Hanberke
  */
@@ -1009,7 +1167,7 @@ $messages['tl'] = array(
 	'accountmanager' => 'Tagapamahala ng kuwenta',
 	'am-username' => 'pangalan ng tagagamit',
 	'am-email' => 'e-liham',
-	'am-active' => 'masigla (aktibo)',
+	'am-active' => 'masigla',
 	'am-updated' => 'Matagumpay na nasagip ang iyong mga pagbabago',
 	'nss-desc' => "Isang pampasak (''plug-in'') na makapagpapatunay laban sa isang kalipunan ng datong libnss-mysql.  Naglalaman ng isang [[Special:AccountManager|tagapamahala ng kuwenta]]",
 	'nss-rights' => 'mga karapatan',
@@ -1045,9 +1203,13 @@ $messages['tr'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
+	'am-username' => "ім'я користувача",
 	'am-email' => 'електронна пошта',
+	'am-active' => 'активний',
+	'nss-save-changes' => 'Зберегти зміни',
 	'nss-create-account-header' => 'Створити новий обліковий запис',
 	'nss-create-account' => 'Створити обліковий запис',
 );
@@ -1107,30 +1269,38 @@ $messages['vo'] = array(
  */
 $messages['yi'] = array(
 	'am-username' => 'באַניצער נאָמען',
+	'am-email' => 'ע-פאסט',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Liangent
  */
 $messages['zh-hans'] = array(
+	'accountmanager' => '帐号管理',
 	'am-username' => '用户名',
 	'am-email' => '电子邮件',
 	'am-active' => '活跃',
 	'nss-rights' => '权利',
 	'nss-save-changes' => '保存更改',
+	'nss-create-account-header' => '建立新帐号',
+	'nss-create-account' => '建立新帐号',
 	'nss-no-mail' => '不要传送电邮',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'accountmanager' => '帳號管理',
 	'am-username' => '使用者名稱',
-	'am-email' => '電郵',
+	'am-email' => '電子郵件',
 	'am-active' => '活躍',
 	'nss-rights' => '權限',
 	'nss-save-changes' => '儲存變更',
-	'nss-no-mail' => '不要傳送電郵',
+	'nss-create-account-header' => '建立新帳號',
+	'nss-create-account' => '建立新帳號',
+	'nss-no-mail' => '不要發送電子郵件',
 );
 

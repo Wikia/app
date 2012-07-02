@@ -6,155 +6,174 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
-	'Asksql'    => array( 'Asksql' ),
+/** English (English) */
+$specialPageAliases['en'] = array(
+	'Asksql' => array( 'Asksql' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Asksql' => array( 'سؤال_إس_كيو_إل' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'Asksql' => array( 'سؤال_إس_كيو_إل' ),
+$specialPageAliases['arz'] = array(
+	'Asksql' => array( 'سؤال_sql' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'Asksql' => array( 'Upitsql' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Asksql' => array( 'SQL-Abfrage' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'Asksql' => array( 'SQL-wótpšašowanje' ),
 );
 
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'Asksql' => array( 'Peti_per_SQL' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'Asksql' => array( 'درخواست_اس‌کیوال' ),
+);
+
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
+$specialPageAliases['fi'] = array(
 	'Asksql' => array( 'SQL-kysely' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
-	'Asksql' => array( 'Requête SQL', 'Requete SQL', 'RequêteSQL', 'RequeteSQL' ),
+$specialPageAliases['fr'] = array(
+	'Asksql' => array( 'Requête_SQL', 'Requete_SQL', 'RequêteSQL', 'RequeteSQL' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
-	'Asksql' => array( 'Requéta SQL', 'RequétaSQL' ),
+$specialPageAliases['frp'] = array(
+	'Asksql' => array( 'Requéta_SQL', 'RequétaSQL' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'Asksql' => array( 'SQL-Abfrog' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'Asksql' => array( 'SQL_wotprašenje' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'Asksql' => array( 'MandeSQL' ),
+);
+
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
+$specialPageAliases['hu'] = array(
 	'Asksql' => array( 'SQL-lekérdezés' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'Asksql' => array( 'Consulta SQL' ),
+$specialPageAliases['ia'] = array(
+	'Asksql' => array( 'Consulta_SQL' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'Asksql' => array( 'Tanya SQL', 'TanyaSQL', 'Tanya sql', 'Tanyasql' ),
+$specialPageAliases['id'] = array(
+	'Asksql' => array( 'Tanya_SQL', 'TanyaSQL', 'Tanya_sql', 'Tanyasql' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'Asksql' => array( 'SQLクエリの実行', 'ＳＱＬクエリの実行', 'SQL実行', 'ＳＱＬ実行' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'Asksql' => array( 'SQL-Frooch', 'SQL-Froore' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'Asksql' => array( 'SQL-Ufroen' ),
 );
 
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'Asksql' => array( 'ПрашајГоsql' ),
+);
+
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'Asksql' => array( 'एसक्यूएलविचारा' ),
 );
 
-/** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'Asksql' => array( 'SQL-zeukopdrach' ),
-);
-
-/** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'Asksql' => array( 'SQLZoekopdracht' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
 	'Asksql' => array( 'SQL-spørring' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'Asksql' => array( 'SQL-zeukopdrachte' ),
+);
+
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'Asksql' => array( 'SQLZoekopdracht' ),
+);
+
 /** Occitan (Occitan) */
-$aliases['oc'] = array(
-	'Asksql' => array( 'Requèsta SQL', 'Requesta SQL', 'RequèstaSQL', 'RequestaSQL' ),
+$specialPageAliases['oc'] = array(
+	'Asksql' => array( 'Requèsta_SQL', 'Requesta_SQL', 'RequèstaSQL', 'RequestaSQL' ),
 );
 
 /** Polish (Polski) */
-$aliases['pl'] = array(
-	'Asksql' => array( 'Zapytanie SQL' ),
+$specialPageAliases['pl'] = array(
+	'Asksql' => array( 'Zapytanie_SQL' ),
 );
 
 /** Romanian (Română) */
-$aliases['ro'] = array(
+$specialPageAliases['ro'] = array(
 	'Asksql' => array( 'Întreabăsql' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'Asksql' => array( 'एस्‌क्यूएल्‌पृच्छा' ),
 );
 
 /** Sinhala (සිංහල) */
-$aliases['si'] = array(
+$specialPageAliases['si'] = array(
 	'Asksql' => array( 'Sqlවිමසන්න' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'Asksql' => array( 'SQLPožiadavka' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'Asksql' => array( 'Tanungin ang SQL' ),
 );
 
 /** Simplified Chinese (‪中文(简体)‬) */
-$aliases['zh-hans'] = array(
+$specialPageAliases['zh-hans'] = array(
 	'Asksql' => array( 'SQL查询' ),
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */
-$aliases['zh-hant'] = array(
+$specialPageAliases['zh-hant'] = array(
 	'Asksql' => array( 'SQL查詢' ),
 );
-

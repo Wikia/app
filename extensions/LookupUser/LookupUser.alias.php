@@ -6,110 +6,139 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'LookupUser' => array( 'LookupUser' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'LookupUser' => array( 'مطالعة_مستخدم' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'LookupUser' => array( 'مطالعة_مستخدم' ),
+$specialPageAliases['arz'] = array(
+	'LookupUser' => array( 'شوف_يوزر' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'LookupUser' => array( 'PronadjiKorisnika' ),
 );
 
+/** German (Deutsch) */
+$specialPageAliases['de'] = array(
+	'LookupUser' => array( 'Benutzerdaten_einsehen' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'LookupUser' => array( 'جستجوی_کاربر' ),
+);
+
+/** Gagauz (Gagauz) */
+$specialPageAliases['gag'] = array(
+	'LookupUser' => array( 'KullanıcıAra' ),
+);
+
 /** Croatian (Hrvatski) */
-$aliases['hr'] = array(
+$specialPageAliases['hr'] = array(
 	'LookupUser' => array( 'Pogledaj_suradnika' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'LookupUser' => array( 'GadeItilizatè' ),
+);
+
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'LookupUser' => array( 'Cercar usator' ),
+$specialPageAliases['ia'] = array(
+	'LookupUser' => array( 'Cercar_usator' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'LookupUser' => array( 'Lihat pengguna', 'LihatPengguna' ),
+$specialPageAliases['id'] = array(
+	'LookupUser' => array( 'Lihat_pengguna', 'LihatPengguna' ),
 );
 
 /** Italian (Italiano) */
-$aliases['it'] = array(
+$specialPageAliases['it'] = array(
 	'LookupUser' => array( 'ControllaUtente' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'LookupUser' => array( '利用者情報調査', '利用者情報を調査' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'LookupUser' => array( 'Metmaacher_Nohloore', 'MetmaacherNohloore', 'Medmaacher_Nohloore', 'MedmaacherNohloore' ),
 );
 
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'LookupUser' => array( 'BuscaUsador' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'LookupUser' => array( 'Benotzer nokucken' ),
+$specialPageAliases['lb'] = array(
+	'LookupUser' => array( 'Benotzer_nokucken' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'LookupUser' => array( 'ПобарајГоКорисникот', 'ПобарајКорисник' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'LookupUser' => array( 'ഉപയോക്താവിനെനോക്കുക' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'LookupUser' => array( 'Finn_bruker' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'LookupUser' => array( 'Gebruker_opzeuken' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'LookupUser' => array( 'GebruikerOpzoeken' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'LookupUser' => array( 'Finn bruker' ),
-);
-
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'LookupUser' => array( 'योजकपश्यन्तु' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'LookupUser' => array( 'VyhľadaniePoužívateľa' ),
 );
 
 /** Swahili (Kiswahili) */
-$aliases['sw'] = array(
+$specialPageAliases['sw'] = array(
 	'LookupUser' => array( 'TafutaMtumiaji' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'LookupUser' => array( 'Hanapin ang tagagamit' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'LookupUser' => array( 'KullanıcıAra' ),
 );
 
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'LookupUser' => array( '找尋用戶' ),
+);

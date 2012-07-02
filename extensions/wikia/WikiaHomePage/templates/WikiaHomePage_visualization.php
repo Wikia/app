@@ -1,4 +1,12 @@
 <?php $seocounter = 0; ?>
+<div class="WikiPreviewInterstitialMask hidden">
+	<section class="WikiPreviewInterstitial" class="hidden">
+		<div class="content-area">
+			<!-- Content area hook for javascript and css -->
+		</div>
+		<img src="<?= F::app()->wg->StylePath ?>/oasis/images/icon_close.png" class="close-button wikia-chiclet-button" alt="Close">
+	</section>
+</div>
 <div id="visualization">
 	<div class="grid-6 alpha">
 		<div class="grid-1 alpha remix">
@@ -7,18 +15,24 @@
 			<a href="#" class="wikia-button secondary">
 				<img src="<?= $wg->BlankImgUrl; ?>" class="arrow" />
 				<?= wfMsg('wikiahome-visualisation-remix-button'); ?>
-			</a>		
+			</a>
 		</div>
-		<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-2 wikia-slot slot-medium">
-			<img src="<?= $wg->BlankImgUrl; ?>" />
-		</a>
+		<div class="grid-2 wikia-slot slot-medium">
+			<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+				<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+			</a>
+		</div>
 		<div class="grid-1">
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 alpha wikia-slot slot-small">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 alpha wikia-slot slot-small">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
+			<div class="grid-1 alpha wikia-slot slot-small">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+				</a>
+			</div>
+			<div class="grid-1 alpha wikia-slot slot-small">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+				</a>
+			</div>
 		</div>
 		<div class="grid-2 stats">
 			<?= F::app()->renderView( 'WikiaHomePageController', 'getStats' ); ?>
@@ -26,57 +40,85 @@
 	</div>
 	<div class="grid-6 alpha">
 		<div class="grid-1 alpha">
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 alpha wikia-slot slot-small">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 alpha wikia-slot slot-small">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 alpha wikia-slot slot-small">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 alpha wikia-slot slot-small">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
-		</div>
-		<div class="grid-1 alpha">
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 wikia-slot slot-small">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 wikia-slot slot-small">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 wikia-slot slot-small">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 wikia-slot slot-small">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
-		</div>
-		<div class="grid-2">
-			<div class="grid-2">
-				<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 alpha wikia-slot slot-small">
-					<img src="<?= $wg->BlankImgUrl; ?>" />
-				</a>
-				<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 wikia-slot slot-small">
-					<img src="<?= $wg->BlankImgUrl; ?>" />
+			<div class="grid-1 alpha wikia-slot slot-small">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
 				</a>
 			</div>
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-2 wikia-slot slot-big">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
+			<div class="grid-1 alpha wikia-slot slot-small">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+				</a>
+			</div>
+			<div class="grid-1 alpha wikia-slot slot-small">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+				</a>
+			</div>
+			<div class="grid-1 alpha wikia-slot slot-small">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+				</a>
+			</div>
+		</div>
+		<div class="grid-1 alpha">
+			<div class="grid-1 wikia-slot slot-small">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+				</a>
+			</div>
+			<div class="grid-1 wikia-slot slot-small">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+				</a>
+			</div>
+			<div class="grid-1 wikia-slot slot-small">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+				</a>
+			</div>
+			<div class="grid-1 wikia-slot slot-small">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+				</a>
+			</div>
 		</div>
 		<div class="grid-2">
-			<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-2 wikia-slot slot-big">
-				<img src="<?= $wg->BlankImgUrl; ?>" />
-			</a>
 			<div class="grid-2">
-				<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 alpha wikia-slot slot-small">
-					<img src="<?= $wg->BlankImgUrl; ?>" />
+				<div class="grid-1 alpha wikia-slot slot-small">
+					<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+						<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+					</a>
+				</div>
+				<div class="grid-1 wikia-slot slot-small">
+					<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+						<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+					</a>
+				</div>
+			</div>
+			<div class="grid-2 wikia-slot slot-big">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
 				</a>
-				<a href="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>" class="grid-1 wikia-slot slot-small">
-					<img src="<?= $wg->BlankImgUrl; ?>" />
+			</div>
+		</div>
+		<div class="grid-2">
+			<div class="grid-2 wikia-slot slot-big">
+				<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+					<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
 				</a>
+			</div>
+			<div class="grid-2">
+				<div class="grid-1 alpha wikia-slot slot-small">
+					<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+						<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+					</a>
+				</div>
+				<div class="grid-1 wikia-slot slot-small">
+					<a href="<?= $seoSample[$seocounter]['url']; ?>" data-wikiurl="<?= $seoSample[$seocounter]['url']; ?>" title="<?= $seoSample[$seocounter++]['title']; ?>">
+						<img src="<?= $wg->BlankImgUrl; ?>" class="slotWikiImage" />
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>

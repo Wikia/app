@@ -5,20 +5,20 @@
  *
  * Copyright (C) 2005-2006 Brion Vibber <brion@pobox.com>
  * http://www.mediawiki.org/
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or 
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
  *
@@ -39,7 +39,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 # Need shared code...
 require_once( 'OAIFunctions.php' );
-require_once( "$IP/maintenance/refreshLinks.inc" );
+require_once( "$IP/maintenance/refreshLinks.php" );
 
 global $oaiSourceRepository;
 global $oaiAgentExtra;
@@ -61,7 +61,7 @@ class OAIHarvester {
 	function __construct( $baseURL ) {
 		$this->_baseURL = $baseURL;
 	}
-	
+
 	/**
 	 * Query the repository for updates, and run a callback for each item.
 	 * Will continue across resumption tokens until there's nothing left.
@@ -87,24 +87,25 @@ class OAIHarvester {
 					'from'           => oaiDatestamp( $from ) );
 			}
 			$xml = $this->callRepo( $params );
-			
+
 			$doc = new DOMDocument( '1.0', 'utf-8' );
 			if( !$doc->loadXML( $xml ) )
 				throw new OAIError( "Invalid XML returned from OAI repository." );
-	
+
 			$xp = new DOMXPath( $doc );
 			$xp->registerNamespace( 'oai', 'http://www.openarchives.org/OAI/2.0/' );
-			
-			if( $errors = $this->checkResponseErrors( $xp ) )
+			$errors = $this->checkResponseErrors( $xp );
+			if( $errors ) {
 				return $errors;
-			
+			}
+
 			$resultSet = $xp->query( '/oai:OAI-PMH/oai:ListRecords/oai:record' );
 			foreach( $resultSet as $node ) {
 				$record = OAIUpdateRecord::newFromNode( $node );
 				call_user_func( $callback, $record );
 				unset( $record );
 			}
-			
+
 			$tokenSet = $xp->query( '/oai:OAI-PMH/oai:ListRecords/oai:resumptionToken' );
 			$token = ( $tokenSet->length )
 				? $tokenSet->item( 0 )->textContent
@@ -118,7 +119,7 @@ class OAIHarvester {
 		} while( $token );
 		return true;
 	}
-	
+
 	/**
 	 * Check for OAI errors, and throw a formatted exception if present.
 	 *
@@ -129,17 +130,17 @@ class OAIHarvester {
 		$errors = $xp->query( '/oai:OAI-PMH/oai:error' );
 		if( !$errors )
 			throw new OAIError( "Doesn't seem to be an OAI document...?" );
-		
+
 		if( $errors->length == 0 )
 			return;
-		
+
 		$messages = array();
 		for( $i = 0; $i < $errors->length; $i++ ) {
 			$messages[$i] = $this->oaiErrorMessage( $errors->item( $i ) );
 		}
 		throw new OAIError( implode( "\n", $messages ) );
 	}
-	
+
 	/**
 	 * Format a single OAI error response as a text message
 	 * @param  DomNode $node
@@ -150,14 +151,14 @@ class OAIHarvester {
 		$text = $node->textContent;
 		return "$code: $text";
 	}
-	
+
 	function throwOAIErrors( $errors ) {
 		$message = array();
 		foreach( $errors as $node ) {
 			$message[] = $node->x;
 		}
 	}
-	
+
 	/**
 	 * Traverse a MediaWiki-format record set, sending an associative array
 	 * of data to a callback function.
@@ -171,11 +172,11 @@ class OAIHarvester {
 			call_user_func( $callback, $data );
 		}
 	}
-	
+
 	function extractMediaWiki( $node ) {
 		return array( 'everything' => 'testing' );
 	}
-	
+
 	/**
 	 * Contact the HTTP repository with a given set of parameters,
 	 * and return the raw XML response data.
@@ -195,12 +196,12 @@ class OAIHarvester {
 			throw new OAIError( "Repository returned HTTP result code $resultCode" );
 		}
 	}
-	
+
 	function requestURL( $params ) {
 		$sep = (strpos( $this->_baseURL, '?' ) == false) ? '?' : '&';
 		return $this->_baseURL . $sep . wfArrayToCGI( $params );
 	}
-	
+
 	function userAgent() {
 		global $oaiAgentExtra;
 		$agent = 'MediaWiki OAI Harvester 0.2 (http://www.mediawiki.org/)';
@@ -209,7 +210,7 @@ class OAIHarvester {
 		}
 		return $agent;
 	}
-	
+
 	/**
 	 * Fetch a resource from the web
 	 * @param string $url
@@ -221,12 +222,12 @@ class OAIHarvester {
 		if( !ini_get( 'allow_url_fopen' ) ) {
 			throw new OAIError( "Can't open URLs; must turn on allow_url_fopen" );
 		}
-		
+
 		$uagent = ini_set( 'user_agent', $this->userAgent() );
 		echo "Fetching: $url\n";
 		$result = file_get_contents( $url );
 		ini_set( 'user_agent', $uagent );
-		
+
 		# FIXME
 		if( $result === false ) {
 			$resultCode = 500;
@@ -235,7 +236,7 @@ class OAIHarvester {
 		}
 		return $result;
 	}
-	
+
 	function fetchURLviaCURL( $url, &$resultCode ) {
 		$fetch = curl_init( $url );
 		if( defined( 'OAIDEBUG' ) ) {
@@ -244,12 +245,12 @@ class OAIHarvester {
 		# CURLOPT_TIMEOUT
 		# CURLOPT_REFERER?
 		curl_setopt( $fetch, CURLOPT_USERAGENT, $this->userAgent() );
-		
+
 		ob_start();
 		$ok = curl_exec( $fetch );
 		$result = ob_get_contents();
 		ob_end_clean();
-		
+
 		$info = curl_getinfo( $fetch );
 		if( !$ok ) {
 			echo "Something went awry...\n";
@@ -257,34 +258,42 @@ class OAIHarvester {
 			die();
 		}
 		curl_close( $fetch );
-		
+
 		$resultCode = $info['http_code']; # ????
 		return $result;
 	}
 }
 
-
-
 class OAIUpdateRecord {
 	var $_page = array();
-	
-	function OAIUpdateRecord( $pageData ) {
+
+	function __construct( $pageData ) {
 		$this->_page = $pageData;
 	}
-	
+
+	/**
+	 * @return int
+	 */
 	function getArticleId() {
 		return IntVal( $this->_page['id'] );
 	}
-	
+
+	/**
+	 * @return bool
+	 */
 	function isDeleted() {
 		return isset( $this->_page['deleted'] );
 	}
-	
+
+	/**
+	 * @return Title
+	 */
 	function getTitle() {
 		return Title::newFromText( $this->_page['title'] );
 	}
-	
+
 	function getTimestamp( $time ) {
+		$matches = array();
 		if( preg_match( '/^(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)Z$/', $time, $matches ) ) {
 			return wfTimestamp( TS_MW,
 				$matches[1] . $matches[2] . $matches[3] .
@@ -293,7 +302,7 @@ class OAIUpdateRecord {
 			return 0;
 		}
 	}
-	
+
 	function dump() {
 		if( $this->isDeleted() ) {
 			printf( "%14s %10d\n", '(deleted page)', $this->getArticleId() );
@@ -311,7 +320,7 @@ class OAIUpdateRecord {
 			}
 		}
 	}
-	
+
 	/**
 	 * Perform the action of this thingy
 	 * @throws OAIError
@@ -324,7 +333,7 @@ class OAIUpdateRecord {
 		}
 		$this->checkpoint();
 	}
-	
+
 	/**
 	 * Update our checkpoint timestamp with the date from the
 	 * OAI header; this allows us to pick up from the correct
@@ -334,7 +343,7 @@ class OAIUpdateRecord {
 	private function checkpoint() {
 		global $oaiSourceRepository;
 		$ts = $this->_page['oai_timestamp'];
-		
+
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->replace( 'oaiharvest',
 			array( 'oh_repository' ),
@@ -344,7 +353,7 @@ class OAIUpdateRecord {
 			),
 			__METHOD__ );
 	}
-	
+
 	/**
 	 * Perform an edit from the update data
 	 * @throws OAIError
@@ -357,35 +366,33 @@ class OAIUpdateRecord {
 				$this->getArticleId(),
 				$this->_page['title'] ) );
 		}
-	
+
 		$id = 0;
 		foreach( $this->_page['revisions'] as $revision ) {
 			$id = $this->applyRevision( $revision );
 		}
-	
-		fixLinksFromArticle( $id );
-	
+
+		RefreshLinks::fixLinksFromArticle( $id );
+
 		if( isset( $this->_page['uploads'] ) ) {
 			foreach( $this->_page['uploads'] as $upload ) {
 				$this->applyUpload( $upload );
 			}
 		}
 	}
-	
+
 	/**
 	 * Apply a revision update.
 	 * @param array $data
 	 */
 	function applyRevision( $data ) {
-		$fname = 'OAIUpdateRecord::applyRevision';
-		
 		$title = $this->getTitle();
 		$pageId = $this->getArticleId();
 		$timestamp = $this->getTimestamp( $data['timestamp'] );
-		
+
 		$dbw = wfGetDB( DB_WRITE );
 		$dbw->begin();
-		
+
 		if( $data['id'] ) {
 			$conflictingRevision = Revision::newFromId( $data['id'] );
 			if( $conflictingRevision ) {
@@ -394,10 +401,10 @@ class OAIUpdateRecord {
 				return;
 			}
 		}
-	
+
 		// Take a look...
 		$article = $this->prepareArticle( $dbw, $pageId, $title );
-		
+
 		// Insert a revision
 		$revision = new Revision( array(
 			'id'         => isset( $data['id'] ) ? intval( $data['id'] ) : null,
@@ -413,32 +420,33 @@ class OAIUpdateRecord {
 		) );
 		$revId = $revision->insertOn( $dbw );
 		echo "UPDATING to rev $revId\n";
-		
+
 		// Update the page record
 		$article->updateRevisionOn( $dbw, $revision );
-		
+
 		$dbw->commit();
 	}
-	
+
 	/**
-	 * @param int $pageId
-	 * @param Title $title
+	 * @param $db DatabaseBase
+	 * @param $pageId int
+	 * @param $title Title
 	 * @return Article
 	 */
 	function prepareArticle( $db, $pageId, $title ) {
 		$fname = 'OAIUpdateRecord::prepareArticle';
-		
+
 		$article = new Article( $title );
 		$foundId = $article->getId();
-		
+
 		if( $foundId == $pageId ) {
 			return $article;
 		}
-		
+
 		if( $foundId != 0 ) {
 			$this->hideConflictingPage( $db, $foundId, $title );
 		}
-		
+
 		// Check to see if the page exists under a different title
 		$foundTitle = Title::newFromId( $pageId );
 		if( $foundTitle ) {
@@ -472,7 +480,7 @@ class OAIUpdateRecord {
 		$title->resetArticleID( -1 );
 		return new Article( $title );
 	}
-	
+
 	/**
 	 * Rename a conflicting page record
 	 * @param Database $db
@@ -487,7 +495,7 @@ class OAIUpdateRecord {
 				array( 'page_id' => $existing ),
 				'OAIUpdateRecord::hideConflictingPage' );
 	}
-	
+
 	/**
 	 * Update an image record
 	 * @param array $upload
@@ -495,7 +503,7 @@ class OAIUpdateRecord {
 	 */
 	function applyUpload( $upload ) {
 		$fname = 'OAIUpdateRecord::applyUpload';
-		
+
 		# FIXME: validate these files...
 		if( strpos( $upload['filename'], '/' ) !== false
 			|| strpos( $upload['filename'], '\\' ) !== false
@@ -503,7 +511,7 @@ class OAIUpdateRecord {
 			|| $upload['filename'] !== trim( $upload['filename'] ) ) {
 			throw new OAIError( 'Invalid filename "' . $upload['filename'] . '"' );
 		}
-		
+
 		$dbw = wfGetDB( DB_MASTER );
 		$data = array(
 			'img_name'        => $upload['filename'],
@@ -515,15 +523,15 @@ class OAIUpdateRecord {
 								   : strval( $upload['contributor']['ip'] ),
 			'img_timestamp'   => $dbw->timestamp( $this->getTimestamp( $upload['timestamp'] ) ),
 			'img_metadata'    => serialize( array() ) );
-		
+
 		$dbw->begin();
 		echo "REPLACING image row\n";
 		$dbw->replace( 'image', array( 'img_name' ), $data, $fname );
 		$dbw->commit();
-		
+
 		$this->downloadUpload( $upload );
 	}
-	
+
 	/**
 	 * Fetch a file to go with an updated image record
 	 * $param array $upload update info data
@@ -536,17 +544,12 @@ class OAIUpdateRecord {
 				$upload['src'] . "'.\n";
 			return;
 		}
-		
+
 		# We assume the filename has already been validated by code above us.
-		if( function_exists( 'wfImageDir' ) ) {
-			// < 1.10
-			$filename = wfImageDir( $upload['filename'] ) . '/' . $upload['filename'];
-		} else {
-			// 1.11
-			echo "File updating temporarily broken on 1.11, sorry!\n";
-			return;
-		}
-		
+		echo "File updating temporarily broken on 1.11, sorry!\n";
+		return;
+
+		/*
 		$timestamp = wfTimestamp( TS_UNIX, $this->getTimestamp( $upload['timestamp'] ) );
 		if( file_exists( $filename )
 			&& filemtime( $filename ) == $timestamp
@@ -554,20 +557,20 @@ class OAIUpdateRecord {
 			echo "Local file $filename matches; skipping download.\n";
 			return;
 		}
-		
+
 		if( !preg_match( '!^http://!', $upload['src'] ) )
 			throw new OAIError( 'Invalid image source URL "' . $upload['src'] . "'." );
-		
+
 		$input = fopen( $upload['src'], 'rb' );
 		if( !$input ) {
 			unlink( $filename );
 			throw new OAIError( 'Could not fetch image source URL "' . $upload['src'] . "'." );
 		}
-		
+
 		if( file_exists( $filename ) ) {
 			unlink( $filename );
 		}
-		wfMkdirParents( dirname( $filename ) );
+		wfMkdirParents( dirname( $filename ), null, __METHOD__ );
 		if( !( $output = fopen( $filename, 'xb' ) ) ) {
 			throw new OAIError( 'Could not create local image file "' . $filename . '" for writing.' );
 		}
@@ -580,42 +583,43 @@ class OAIUpdateRecord {
 		}
 		fclose( $input );
 		fclose( $output );
-		
+
 		touch( $filename, $timestamp );
 		echo " done.\n";
+		*/
 	}
-	
+
 	/**
 	 * Delete the page record.
 	 */
 	function doDelete() {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
-		
+
 		$title = Title::newFromId( $this->getArticleId() );
 		if( $title ) {
 			$article = new Article( $title );
-			
+
 			echo "DELETING\n";
 			$article->doDeleteArticle( 'deleted from parent repository' );
 		} else {
 			echo "DELETING (not present)\n";
 		}
-		
+
 		$dbw->commit();
-		
+
 		return true;
 	}
-	
+
 	/**
-	 * @param DomNode $node
+	 * @param $node DomNode
+	 * @return OAIUpdateRecord
 	 */
-	function newFromNode( $node ) {
+	static function newFromNode( $node ) {
 		$pageData = OAIUpdateRecord::readRecord( $node );
-		$record = new OAIUpdateRecord( $pageData );
-		return $record;
+		return new OAIUpdateRecord( $pageData );
 	}
-	
+
 	/**
 	 * Collect page info out of an OAI record node containing export data.
 	 * @param DOMNode $node
@@ -645,7 +649,7 @@ class OAIUpdateRecord {
 		        <minor>
 		*/
 		$header = oaiNextChild( $node, 'header' );
-		
+
 		if( $header->getAttribute( 'status' ) == 'deleted' ) {
 			$pagedata = OAIUpdateRecord::grabDeletedPage( $header );
 		} else {
@@ -654,15 +658,15 @@ class OAIUpdateRecord {
 			$page = oaiNextChild( $mediawiki, 'page' );
 			$pagedata = OAIUpdateRecord::grabPage( $page );
 		}
-		
+
 		// We'll also need the OAI datestamp to ensure
 		// update stream continuity...
 		$datestamp = oaiNextChild( $header, 'datestamp' );
 		$pagedata['oai_timestamp'] = wfTimestamp( TS_MW, $datestamp->textContent );
-		
+
 		return $pagedata;
 	}
-	
+
 	/**
 	 * Extract deleted page information from the OAI record
 	 * @param DOMNode $header
@@ -676,18 +680,18 @@ class OAIUpdateRecord {
 			</header>
 		*/
 		$identifier = oaiNextChild( $header, 'identifier' );
-		
+
 		$ident = $identifier->textContent;
 		$bits = explode( ':', $ident );
 		$id = intval( $bits[count( $bits ) - 1] );
 		if( $id <= 0 )
 			throw new OAIError( "Couldn't understand deleted page identifier '$ident'" );
-		
+
 		return array(
 			'id' => $id,
 			'deleted' => true );
 	}
-	
+
 	/**
 	 * Extract non-deleted page information from the OAI record
 	 * @param DOMNode $page
@@ -717,7 +721,7 @@ class OAIUpdateRecord {
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * @param DOMNode $revision
 	 */
@@ -740,7 +744,7 @@ class OAIUpdateRecord {
 			'size',
 			'contributor' => array( 'OAIUpdateRecord', 'grabContributor' ) ) );
 	}
-	
+
 	function grabContributor( $node ) {
 		return oaiNodeMap( $node, array(
 			'id',
@@ -762,6 +766,7 @@ class OAIUpdateRecord {
  */
 function oaiNodeMap( $parent, $map ) {
 	$callMap = array();
+	$textMap = array();
 	foreach( $map as $key => $value ) {
 		if( is_int( $key ) ) {
 			$textMap[$value] = true;
@@ -769,7 +774,8 @@ function oaiNodeMap( $parent, $map ) {
 			$callMap[$key] = $value;
 		}
 	}
-	
+
+	$data = array();
 	foreach( $parent->childNodes as $node ) {
 		if( $node->nodeType == XML_ELEMENT_NODE ) {
 			$name = $node->nodeName;
@@ -783,7 +789,7 @@ function oaiNodeMap( $parent, $map ) {
 			}
 		}
 	}
-	
+
 	return $data;
 }
 
@@ -801,7 +807,7 @@ function oaiNextElement( $startNode, $element = null ) {
 		if( $node->nodeType == XML_ELEMENT_NODE
 		 && ( is_null( $element ) || $node->nodeName == $element ) )
 			return $node;
-	
+
 	return new OAIError(
 		is_null( $element )
 			? "No more elements"

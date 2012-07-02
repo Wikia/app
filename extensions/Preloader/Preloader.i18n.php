@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for Preloader extension.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -16,9 +17,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'preloader-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'preloader-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -35,7 +37,14 @@ $messages['arz'] = array(
 	'preloader-desc' => 'يوفر نص بويلربلات مخصص لكل نطاق للصفحات الجديدة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'preloader-desc' => 'Proporciona un testu patrón personalizable por espaciu de nome pa les páxines nueves',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -190,7 +199,7 @@ $messages['ja'] = array(
 	'preloader-desc' => '新しいページ用に名前空間ごとのカスタマイズ可能な雛形文章を用意する',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -218,6 +227,13 @@ $messages['mr'] = array(
 	'preloader-desc' => 'नवीन पानांसाठी बदलता येण्याजोगी नामविश्व बॉइलरप्लेट देते',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'preloader-desc' => 'Menyediakan teks plat dandang seruang nama yang boleh disuaikan untuk laman baru',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -242,7 +258,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'preloader-desc' => 'Gir egendefinerbar forhåndslastet tekst for nye sider i de enkelte navnerommene',
 );
 
@@ -336,6 +352,13 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'preloader-desc' => 'Yeni sayfalar için isim alanına özel kişiselleştirilebilir hazır metinler sunar',
+);
+
+/** Ukrainian (Українська)
+ * @author Alex Khimich
+ */
+$messages['uk'] = array(
+	'preloader-desc' => 'Забезпечення настроюваних за імен по стандартним типовим текстам для нової сторінки',
 );
 
 /** Vietnamese (Tiếng Việt)

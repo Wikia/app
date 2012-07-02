@@ -86,7 +86,7 @@
 
 		textarea {
 			margin-top: 0;
-			width: 584px;
+			width: 569px;
 		}
 	}
 
@@ -105,10 +105,6 @@
 		margin-right: 5px;
 	}
 
-	.loading {
-		@include opacity(50);
-	}
-	
 	.article-comm-history {
 		padding-left: 10px;
 	}

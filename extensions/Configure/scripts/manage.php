@@ -92,7 +92,8 @@ class ConfigurationManager extends Maintenance {
 			$this->error( "revert: The version given ($version) is invalid\n" );
 			return;
 		}
-		$wgConf->saveNewSettings( $arr, null, "Reverting to verion $version" );
+		$user = User::newFromName( 'Maintenance script' );
+		$wgConf->saveNewSettings( $arr, $user, null, "Reverting to verion $version" );
 	}
 }
 

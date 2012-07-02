@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -84,11 +85,6 @@ abstract class WikilogCommentPager
 		# This is too expensive, limit listing.
 		if ( $this->mLimit > $wgWikilogExpensiveLimit )
 			$this->mLimit = $wgWikilogExpensiveLimit;
-
-		# We will need a clean parser if not including.
-		if ( !$this->mIncluding ) {
-			$wgParser->clearState();
-		}
 	}
 
 	/**
@@ -147,11 +143,7 @@ abstract class WikilogCommentPager
 	}
 
 	function getNavigationBar() {
-		# NOTE (Mw1.15- COMPAT): IndexPager::isNavigationBarShown introduced
-		# in Mw1.16. Remove this guard in Wl1.1.
-		if ( method_exists( $this, 'isNavigationBarShown' ) ) {
-			if ( !$this->isNavigationBarShown() ) return '';
-		}
+		if ( !$this->isNavigationBarShown() ) return '';
 		if ( !isset( $this->mNavigationBar ) ) {
 			$navbar = new WikilogNavbar( $this );
 			$this->mNavigationBar = $navbar->getNavigationBar( $this->mLimit );

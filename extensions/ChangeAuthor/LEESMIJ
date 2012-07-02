@@ -18,12 +18,12 @@ INHOUDSOPGAVE
 Deze extensie maakt het mogelijk om de auteur van een bewerking naderhand te veranderen. Zo kan een verandering door Piet veranderd worden zodat het lijkt alsof Klaas hem gemaakt heeft. Natuurlijk kunnen niet alle gebruikers dit doen, en worden alle veranderingen bijgehouden in een logboek.
 
 2. VERANDERAUTEUR DOWNLOADEN
-U kunt een .tar.gz bestand downloaden op http://www.mediawiki.org/wiki/Special:ExtensionDistributor/ChangeAuthor . 
+U kunt een .tar.gz bestand downloaden op http://www.mediawiki.org/wiki/Special:ExtensionDistributor/ChangeAuthor .
 
 3. INSTALLATIE
 Download de .tar.gz genoemd onder (2.) en pak hem uit in /pad/naar/uw/wiki/extensions . Open dan LocalSettings.php, en voeg de volgende regel toe aan het einde:
 
-require_once("$IP/extensions/ChangeAuthor/ChangeAuthor.setup.php");
+require_once("$IP/extensions/ChangeAuthor/ChangeAuthor.php");
 
 Controleer nu op de speciale pagina Speciaal:Versie of "ChangeAuthor" aan de lijst van extensies toegevoegd is.
 

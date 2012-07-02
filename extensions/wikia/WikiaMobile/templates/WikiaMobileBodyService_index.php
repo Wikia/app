@@ -7,11 +7,10 @@
 			<?= $relatedPages ;?>
 			<?= $categoryLinks ;?>
 			</nav>
-			<? if ( !empty( $afterContentHookText ) || !empty( $afterBodyContent ) || !empty( $comments ) ) :?>
+			<? if ( !empty( $afterContentHookText ) || !empty( $afterBodyContent ) ) :?>
 			<aside>
 			<?= $afterContentHookText ;?>
 			<?= $afterBodyContent ;?>
-			<?= $comments ;?>
 			</aside>
 			<? endif ;?>
 			<?= $navMenu ;?>

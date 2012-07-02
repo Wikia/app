@@ -218,12 +218,12 @@ JAVASCRIPT;
 
 
 	function loadGoogleMapsJavascript() {
-		importScriptURI('http://maps.google.com/maps?file=api&v={$o['api']}&key={$this->mApiKey}&hl={$this->mLanguageCode}&async=2&callback=initEditorsMap');
+		mw.loader.load('http://maps.google.com/maps?file=api&v={$o['api']}&key={$this->mApiKey}&hl={$this->mLanguageCode}&async=2&callback=initEditorsMap');
 	}
 
 	function loadEditorsMapJavascript() {
-		importScriptURI('{$this->mUrlPath}/color_select.js?v={$extensionVersion}');
-		importScriptURI('{$this->mUrlPath}/EditorsMap.js?v={$extensionVersion}');
+		mw.loader.load('{$this->mUrlPath}/color_select.js?v={$extensionVersion}');
+		mw.loader.load('{$this->mUrlPath}/EditorsMap.js?v={$extensionVersion}');
 
 		window.setTimeout(tryLoadingEditorsMap, 100);
 	}
@@ -841,7 +841,7 @@ JAVASCRIPT;
 		function addLoadEvent(func) {
 			if (skin == 'monaco') {
 				wgAfterContentAndJS.push(function() {
-					addOnloadHook(func);
+					$(func);
 				});
 			} else {
 				wgAfterContentAndJS.push(func);

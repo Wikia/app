@@ -23,34 +23,36 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Replace Text',
-	'version' => '0.7.1',
+	'version' => '0.9.3',
 	'author' => array( 'Yaron Koren', 'Niklas Laxström' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Replace_Text',
-	'description' => 'A special page that lets administrators run a global search-and-replace',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Replace_Text',
 	'descriptionmsg'  => 'replacetext-desc',
 );
 
 $rtgIP = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['ReplaceText'] = $rtgIP . 'ReplaceText.i18n.php';
-$wgExtensionAliasesFiles['ReplaceText'] = $rtgIP . 'ReplaceText.alias.php';
+$wgExtensionMessagesFiles['ReplaceTextAlias'] = $rtgIP . 'ReplaceText.alias.php';
 $wgJobClasses['replaceText'] = 'ReplaceTextJob';
-$wgAvailableRights[] = 'replacetext';
-$wgHooks['AdminLinks'][] = 'rtAddToAdminLinks';
 
 // This extension uses its own permission type, 'replacetext'
+$wgAvailableRights[] = 'replacetext';
+$wgGroupPermissions['sysop']['replacetext'] = true;
+
+$wgHooks['AdminLinks'][] = 'rtAddToAdminLinks';
+
 $wgSpecialPages['ReplaceText'] = 'ReplaceText';
 $wgSpecialPageGroups['ReplaceText'] = 'wiki';
 $wgAutoloadClasses['ReplaceText'] = $rtgIP . 'SpecialReplaceText.php';
 $wgAutoloadClasses['ReplaceTextJob'] = $rtgIP . 'ReplaceTextJob.php';
 
-// This function should really go into a "ReplaceText_body.php" file...
-function rtAddToAdminLinks(&$admin_links_tree) {
-	$general_section = $admin_links_tree->getSection(wfMsg('adminlinks_general'));
-        $extensions_row = $general_section->getRow('extensions');
-	if (is_null($extensions_row)) {
-		$extensions_row = new ALRow('extensions');
-		$general_section->addRow($extensions_row);
+// This function should really go into a "ReplaceText_body.php" file.
+function rtAddToAdminLinks( &$admin_links_tree ) {
+	$general_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_general' ) );
+        $extensions_row = $general_section->getRow( 'extensions' );
+	if ( is_null( $extensions_row ) ) {
+		$extensions_row = new ALRow( 'extensions' );
+		$general_section->addRow( $extensions_row );
 	}
-	$extensions_row->addItem(ALItem::newFromSpecialPage('ReplaceText'));
+	$extensions_row->addItem( ALItem::newFromSpecialPage( 'ReplaceText' ) );
 	return true;
 }

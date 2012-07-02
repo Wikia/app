@@ -24,11 +24,12 @@ $wgHooks['SkinTemplateNavigation'][] = 'smwfAddStructuredRefreshTab'; // structu
 function smwfAddRefreshTab( $skin, &$content_actions ) {
 	global $wgUser;
 	if ( $wgUser->isAllowed( 'purge' ) ) {
-		smwfLoadExtensionMessages( 'SemanticMediaWiki' );
+		// Skin::getTitle() was added in MW 1.16
+		$title = is_callable( array( $skin, 'getTitle' ) ) ? $skin->getTitle() : $skin->mTitle;
 		$content_actions['purge'] = array(
 			'class' => false,
 			'text' => wfMsg( 'smw_purge' ),
-			'href' => $skin->mTitle->getLocalUrl( 'action=purge' )
+			'href' => $title->getLocalUrl( 'action=purge' )
 		);
  	}
 	return true; // always return true, in order not to stop MW's hook processing!

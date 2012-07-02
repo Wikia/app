@@ -32,13 +32,17 @@ ol.tabs {
 			top: 1px;
 			cursor: pointer;
 			&:hover {
-				background-color: $color-tab-hover-background;
-				padding-bottom: 2px;
 				text-decoration: none;
 			}
 		}
 		.chevron {
 			display: none;
+		}
+	}
+	li:not(.disabled) {
+		a:hover {
+			background-color: $color-tab-hover-background;
+			padding-bottom: 2px;
 		}
 	}
 	.selected {
@@ -61,6 +65,12 @@ ol.tabs {
 	}
 	.accent {
 		background-color: transparent;
+	}
+	.disabled {
+		a {
+			color: $color-alternate-text;
+			pointer-events: none;
+		}
 	}
 }
 

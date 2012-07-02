@@ -17,7 +17,7 @@
 class SpecialImportTranslations extends SpecialPage {
 	/**
 	 * Set up and fill some dependencies.
-	*/
+	 */
 	public function __construct() {
 		parent::__construct( 'ImportTranslations', 'translate-import' );
 		global $wgUser, $wgOut, $wgRequest;
@@ -61,7 +61,6 @@ class SpecialImportTranslations extends SpecialPage {
 				$this->outputForm();
 				return;
 			}
-
 		} else {
 			/**
 			 * Proceed to loading and parsing if possible
@@ -100,6 +99,8 @@ class SpecialImportTranslations extends SpecialPage {
 	 * Checks for error state from the return value of loadFile and parseFile
 	 * functions. Prints the error and the form and returns true if there is an
 	 * error. Returns false and does nothing if there is no error.
+	 * @param $msg array
+	 * @return bool
 	 */
 	protected function checkError( $msg ) {
 		if ( $msg[0] !== 'ok' ) {
@@ -118,9 +119,8 @@ class SpecialImportTranslations extends SpecialPage {
 	protected function outputForm() {
 		global $wgOut;
 
-		$wgOut->includeJQuery();
-		$this->out->addScriptFile( TranslateUtils::assetPath( 'js/import.js' ) );
-
+		$wgOut->addModules( 'ext.translate.special.importtranslations' );
+		TranslateUtils::addSpecialHelpLink( $wgOut, 'Help:Extension:Translate/Off-line_translation' );
 		/**
 		 * Ugly but necessary form building ahead, ohoy
 		 */
@@ -181,6 +181,8 @@ class SpecialImportTranslations extends SpecialPage {
 
 	/**
 	 * Try to get the file data from any of the supported methods.
+	 * @param $filedata
+	 * @return array
 	 */
 	protected function loadFile( &$filedata ) {
 		$source = $this->request->getText( 'upload-type' );
@@ -195,6 +197,7 @@ class SpecialImportTranslations extends SpecialPage {
 			}
 		} elseif ( $source === 'local' ) {
 			$filename = $this->request->getFileTempname( 'upload-local' );
+
 			if ( !is_uploaded_file( $filename ) ) {
 				return array( 'ul-failed' );
 			}
@@ -227,6 +230,8 @@ class SpecialImportTranslations extends SpecialPage {
 
 	/**
 	 * Try parsing file.
+	 * @param $data
+	 * @return array
 	 */
 	protected function parseFile( $data ) {
 		/** Construct a dummy group for us...

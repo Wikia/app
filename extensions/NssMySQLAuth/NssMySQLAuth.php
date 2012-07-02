@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * A plugin to authenticate against a libnss-mysql database
  *
  * Copyright 2008 - Bryan Tong Minh / Delft Aerospace Rocket Engineering
@@ -10,7 +10,7 @@
  */
 
  ### READ BEFORE USING ###
-/*
+/**
  * This plugin allows authentication against an libnss-mysql database and thus
  * allows the use of the same login for MediaWiki as for shell.
  *
@@ -21,14 +21,13 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'NssMySQLAuth',
 	'version'        => '1.0',
 	'author'         => 'Bryan Tong Minh',
-	'description'    => 'A plugin to authenticate against a libnss-mysql database. Contains an [[Special:AccountManager|account manager]]',
 	'descriptionmsg' => 'nss-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:NssMySQLAuth',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:NssMySQLAuth',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['nssmysqlauth'] = $dir . 'NssMySQLAuth.i18n.php';
-$wgExtensionAliasesFiles['nssmysqlauth'] = $dir . 'NssMySQLAuth.alias.php';
+$wgExtensionMessagesFiles['nssmysqlauthAlias'] = $dir . 'NssMySQLAuth.alias.php';
 
 $wgAutoloadClasses['NssMySQLAuthPlugin'] = $dir . 'NssMySQLAuthPlugin.php';
 $wgAutoloadClasses['Md5crypt'] = $dir . 'Md5crypt.php';

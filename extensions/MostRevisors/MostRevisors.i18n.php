@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension mostrevisors.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -52,6 +53,13 @@ $messages['af'] = array(
 	'mostrevisors-submit' => 'OK',
 );
 
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'mostrevisors-namespace' => 'Espacio de nombres:',
+);
+
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -71,7 +79,21 @@ $messages['ar'] = array(
 	'mostrevisors-viewcontributors' => 'اعرض المساهمين الرئيسيين',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'mostrevisors-submit' => 'ܙܠ',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'mostrevisors-namespace' => 'Adlar fəzası:',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -89,6 +111,22 @@ $messages['be-tarask'] = array(
 	'mostrevisors-hideredir' => 'Схаваць перанакіраваньні',
 	'mostrevisors-users' => '- $1 {{PLURAL:$1|рэдактар|рэдактары|рэдактараў}}',
 	'mostrevisors-viewcontributors' => 'Паказаць асноўных аўтараў',
+);
+
+/** Bulgarian (Български) */
+$messages['bg'] = array(
+	'mostrevisors-submit' => 'Отваряне',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'mostrevisors-submit' => 'চলো',
+	'mostrevisors-showredir' => 'পুনর্নির্দেশিত পাতাগুলো দেখাও',
+	'mostrevisors-hideredir' => 'পুনর্নির্দেশিত পাতাগুলো লুকাও',
+	'mostrevisors-users' => '- $1 জন {{PLURAL:$1|সম্পাদক|সম্পাদকসমূহ}}',
+	'mostrevisors-viewcontributors' => 'মূল অবদানকারীকে দেখাও',
 );
 
 /** Breton (Brezhoneg)
@@ -141,6 +179,11 @@ $messages['ca'] = array(
 	'mostrevisors-viewcontributors' => 'Mostra els editors principals',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'mostrevisors-submit' => 'بڕۆ',
+);
+
 /** Czech (Česky)
  * @author Kuvaly
  */
@@ -186,6 +229,11 @@ $messages['dsb'] = array(
 	'mostrevisors-hideredir' => 'Dalejpósrědnjenja schowaś',
 	'mostrevisors-users' => '- $1 {{PLURAL:$1|wobźěłaŕ|wobźěłarja|wobźěłarje|wobźěłarjow}}',
 	'mostrevisors-viewcontributors' => 'Głownych wobźěłarjow se woglědaś',
+);
+
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'mostrevisors-submit' => 'Yi',
 );
 
 /** Greek (Ελληνικά)
@@ -287,9 +335,19 @@ $messages['fr'] = array(
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'mostrevisors' => 'Pâges avouéc lo més de rèvisors',
+	'mostrevisors-limitlinks' => 'Fâre vêre tant qu’a $1 pâges',
+	'mostrevisors-namespace' => 'Èspâço de noms :',
+	'mostrevisors-none' => 'Gins d’entrâ trovâ.',
+	'mostrevisors-showing' => 'Visualisacion de l{{PLURAL:$1|a pâge|es $1 pâges}} :',
 	'mostrevisors-submit' => 'Sometre',
+	'mostrevisors-showredir' => 'Fâre vêre les pâges de redirèccion',
+	'mostrevisors-hideredir' => 'Cachiér les pâges de redirèccion',
+	'mostrevisors-users' => '- $1 changior{{PLURAL:$1||s}}',
+	'mostrevisors-viewcontributors' => 'Vêre los contributors principâls',
 );
 
 /** Galician (Galego)
@@ -308,7 +366,7 @@ $messages['gl'] = array(
 	'mostrevisors-showredir' => 'Mostrar as páxinas de redirección',
 	'mostrevisors-hideredir' => 'Agochar as páxinas de redirección',
 	'mostrevisors-users' => '- $1 {{PLURAL:$1|editor|editores}}',
-	'mostrevisors-viewcontributors' => 'Ver os principais contribuíntes',
+	'mostrevisors-viewcontributors' => 'Ver os principais colaboradores',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -339,15 +397,24 @@ $messages['gsw'] = array(
 	'mostrevisors-viewcontributors' => 'Hauptbyyträger zeige',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'mostrevisors-namespace' => 'Sararin suna:',
+);
+
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
 $messages['he'] = array(
-	'mostrevisors' => 'הדפים בעלי מספר הבודקים הגבוה ביותר',
+	'mostrevisors' => 'דפים שנערכו על־ידי מספר גבוה ביותר של עורכים ייחודיים',
+	'mostrevisors-desc' => 'רשימת [[Special:MostRevisors|דפים עם מספר העורכים הייחודיים הגבוה ביותר]]',
+	'mostrevisors-header' => "'''בדף הזה {{PLURAL:$1|רשום הדף|רשומים $1 הדפים}} עם יותר עורכים ייחודיים מכל דף אחר בוויקי הזה.'''",
 	'mostrevisors-limitlinks' => 'הצגת עד $1 דפים',
 	'mostrevisors-namespace' => 'מרחב שם:',
 	'mostrevisors-none' => 'לא נמצאו רשומות.',
+	'mostrevisors-ns-header' => "'''בדף הזה {{PLURAL:$1|מופיע הדף|מופיעים $1 הדפים}} בעלי המספר הגבוה ביותר של עורכים ייחודיים במרחב השם $2.'''",
 	'mostrevisors-showing' => 'הצגת {{PLURAL:$1|דף אחד|$1 דפים}}:',
 	'mostrevisors-submit' => 'מעבר',
 	'mostrevisors-showredir' => 'הצגת דפי הפניה',
@@ -406,7 +473,7 @@ $messages['ia'] = array(
 	'mostrevisors-none' => 'Nulle entrata ha essite trovate.',
 	'mostrevisors-ns-header' => "'''Iste pagina lista le {{PLURAL:$1|pagina|$1 paginas}} con le plus contributores in le spatio de nomines $2.'''",
 	'mostrevisors-showing' => 'Lista de {{PLURAL:$1|pagina|$1 paginas}}:',
-	'mostrevisors-submit' => 'Ir',
+	'mostrevisors-submit' => 'Va',
 	'mostrevisors-showredir' => 'Revelar paginas de redirection',
 	'mostrevisors-hideredir' => 'Celar paginas de redirection',
 	'mostrevisors-users' => '- $1 {{PLURAL:$1|contributor|contributores}}',
@@ -462,7 +529,7 @@ $messages['ja'] = array(
 	'mostrevisors-desc' => '[[Special:MostRevisors|最も編集者の多いページ]]の一覧',
 	'mostrevisors-header' => "'''このページは、ウィキ全体で最も編集者の多い$1ページの一覧です。'''",
 	'mostrevisors-limitlinks' => '最大で$1件表示する',
-	'mostrevisors-namespace' => '名前空間:',
+	'mostrevisors-namespace' => '名前空間：',
 	'mostrevisors-none' => 'ページは見つかりませんでした。',
 	'mostrevisors-ns-header' => "'''このページは、$2名前空間の中で最も編集者の多い$1ページの一覧です。'''",
 	'mostrevisors-showing' => '$1ページを列挙しています：',
@@ -475,19 +542,21 @@ $messages['ja'] = array(
 
 /** Khmer (ភាសាខ្មែរ)
  * @author គីមស៊្រុន
+ * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
-	'mostrevisors-namespace' => 'ប្រភេទ៖',
+	'mostrevisors-namespace' => 'លំហឈ្មោះ៖',
 );
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
 $messages['kn'] = array(
+	'mostrevisors-namespace' => 'ನಾಮವರ್ಗ:',
 	'mostrevisors-submit' => 'ಹೋಗು',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -525,12 +594,26 @@ $messages['lb'] = array(
 	'mostrevisors-viewcontributors' => 'Weis déi Haaptmataarbechter',
 );
 
+/** Ganda (Luganda)
+ * @author Kizito
+ */
+$messages['lg'] = array(
+	'mostrevisors-namespace' => 'Kuŋaanyizo:',
+);
+
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'mostrevisors-namespace' => 'Vuordu pluots:',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'mostrevisors' => 'Страници со највеќе уредници',
-	'mostrevisors-desc' => 'Листа на [[Special:MostRevisors|страници со највеќе уредници]]',
+	'mostrevisors-desc' => 'Список на [[Special:MostRevisors|страници со највеќе уредници]]',
 	'mostrevisors-header' => "'''На оваа страница {{PLURAL:$1|е наведена страница|се наведени $1 страници}} со највеќе уредници.'''",
 	'mostrevisors-limitlinks' => 'Прикажи $1 страници',
 	'mostrevisors-namespace' => 'Именски простор:',
@@ -539,7 +622,7 @@ $messages['mk'] = array(
 	'mostrevisors-showing' => 'Содржи {{PLURAL:$1|1 страница|$1 страници}}:',
 	'mostrevisors-submit' => 'Оди',
 	'mostrevisors-showredir' => 'Прикажи страници за пренасочување',
-	'mostrevisors-hideredir' => 'Сокриј страници за пренасочување',
+	'mostrevisors-hideredir' => 'Скриј пренасочувања',
 	'mostrevisors-users' => '- $1 {{PLURAL:$1|уредник|уредници}}',
 	'mostrevisors-viewcontributors' => 'Прикажи ги главните уредници',
 );
@@ -549,6 +632,57 @@ $messages['mk'] = array(
  */
 $messages['mn'] = array(
 	'mostrevisors-namespace' => 'Нэрний зай:',
+	'mostrevisors-submit' => 'Явах',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'mostrevisors-submit' => 'Pergi',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'mostrevisors-submit' => 'Mur',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'mostrevisors' => 'Sider med flest bidragsytere',
+	'mostrevisors-desc' => 'List opp [[Special:MostRevisors|sider med flest bidragsytere]]',
+	'mostrevisors-header' => "'''Denne siden lister opp {{PLURAL:$1|den siden|de $1 sidene}} med flest bidragsytere på denne wikien.'''",
+	'mostrevisors-limitlinks' => 'Vis inntil $1 sider',
+	'mostrevisors-namespace' => 'Navnerom:',
+	'mostrevisors-none' => 'Ingen oppføringer ble funnet.',
+	'mostrevisors-ns-header' => "'''Denne siden lister opp {{PLURAL:$1|den siden|de $1 sidene}} med flest bidragsytere i navnerommet $2.'''",
+	'mostrevisors-showing' => 'Lister opp {{PLURAL:$1|én side|$1 sider}}:',
+	'mostrevisors-submit' => 'Gå',
+	'mostrevisors-showredir' => 'Vis omdirigeringssider',
+	'mostrevisors-hideredir' => 'Gjem omdirigeringssider',
+	'mostrevisors-users' => '- {{PLURAL:$1|én bidragsyter|$1 bidragsytere}}',
+	'mostrevisors-viewcontributors' => 'Vis hovedbidragsytere',
+);
+
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'mostrevisors' => 'सबैभन्दा बढी संशोधनकर्ता भएका लेखहरू',
+	'mostrevisors-limitlinks' => '$1 वटा सम्म पृष्ठहरू देखाउ',
+	'mostrevisors-namespace' => 'नामस्थान:',
+	'mostrevisors-none' => 'कुनैपनि प्रविष्ठि पाइएन।',
+	'mostrevisors-ns-header' => "'''यस पृष्ठमा $2 नामस्थानमा सबैभन्दा बढी संशोधनकर्ता भएका {{PLURAL:$1|पृष्ठ|$1 पृष्ठहरू}} रहेका छन् ।'''",
+	'mostrevisors-showing' => '{{PLURAL:$1|पृष्ठ|$1 पृष्ठहरू}} को लिस्ट देखाउँदै:',
+	'mostrevisors-submit' => 'जाउ',
+	'mostrevisors-showredir' => 'रिडाइरेक्ट पृष्ठहरू देखाउ',
+	'mostrevisors-hideredir' => 'रिडाइरेक्ट पृष्ठहरू लुकाउ',
+	'mostrevisors-users' => '- $1 {{PLURAL:$1|सम्पादक|सम्पादकहरु}}',
+	'mostrevisors-viewcontributors' => 'मुख्य योगदानकर्ताहरूलाइ देखाउनुहोस।',
 );
 
 /** Dutch (Nederlands)
@@ -570,23 +704,13 @@ $messages['nl'] = array(
 	'mostrevisors-viewcontributors' => 'De grootste bijdragers bekijken',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
-	'mostrevisors' => 'Sider med flest bidragsytere',
-	'mostrevisors-desc' => 'List opp [[Special:MostRevisors|sider med flest bidragsytere]]',
-	'mostrevisors-header' => "'''Denne siden lister opp {{PLURAL:$1|den siden|de $1 sidene}} med flest bidragsytere på denne wikien.'''",
-	'mostrevisors-limitlinks' => 'Vis inntil $1 sider',
-	'mostrevisors-namespace' => 'Navnerom:',
-	'mostrevisors-none' => 'Ingen oppføringer ble funnet.',
-	'mostrevisors-ns-header' => "'''Denne siden lister opp {{PLURAL:$1|den siden|de $1 sidene}} med flest bidragsytere i navnerommet $2.'''",
-	'mostrevisors-showing' => 'Lister opp {{PLURAL:$1|én side|$1 sider}}:',
+$messages['nn'] = array(
+	'mostrevisors-limitlinks' => 'Vis opptil $1 sider',
+	'mostrevisors-namespace' => 'Namnerom:',
 	'mostrevisors-submit' => 'Gå',
-	'mostrevisors-showredir' => 'Vis omdirigeringssider',
-	'mostrevisors-hideredir' => 'Gjem omdirigeringssider',
-	'mostrevisors-users' => '- {{PLURAL:$1|én bidragsyter|$1 bidragsytere}}',
-	'mostrevisors-viewcontributors' => 'Vis hovedbidragsytere',
 );
 
 /** Occitan (Occitan)
@@ -608,16 +732,33 @@ $messages['oc'] = array(
 	'mostrevisors-viewcontributors' => 'Veire los contributors principals',
 );
 
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'mostrevisors-submit' => 'Geh los',
+	'mostrevisors-users' => '- $1 {{PLURAL:$1|Schreiwer|Schreiwer}}',
+);
+
 /** Polish (Polski)
  * @author Leinad
  * @author Odder
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'mostrevisors' => 'Strony z największą liczbą odwiedzających',
 	'mostrevisors-desc' => 'Lista [[Special:MostRevisors|stron z największą liczbą odwiedzających]]',
 	'mostrevisors-header' => "'''Ta strona zawiera {{PLURAL:$1|stronę|listę $1 stron}} z największa liczbą odwiedzających na tej wiki.'''",
+	'mostrevisors-limitlinks' => 'Pokaż nie więcej stron niż $1',
+	'mostrevisors-namespace' => 'Przestrzeń nazw',
+	'mostrevisors-none' => 'Nie odnaleziono wpisów.',
+	'mostrevisors-ns-header' => "'''Ta strona zawiera {{PLURAL:$1|stronę|listę $1 stron}} z największa liczbą rewizorów dla przestrzeni nazw $2.'''",
+	'mostrevisors-showing' => '{{PLURAL:$1|Jedna strona|Spis $1 stron:}}',
+	'mostrevisors-submit' => 'Dalej',
 	'mostrevisors-showredir' => 'Pokaż przekierowania',
 	'mostrevisors-hideredir' => 'Ukryj przekierowania',
+	'mostrevisors-users' => '– $1 {{PLURAL:$1|edytujący|edytujących}}',
+	'mostrevisors-viewcontributors' => 'Najważniejsi współautorzy',
 );
 
 /** Piedmontese (Piemontèis)
@@ -643,6 +784,8 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'mostrevisors-limitlinks' => 'تر $1 پورې مخونه ښکاره کړی',
+	'mostrevisors-namespace' => 'نوم-تشيال:',
 	'mostrevisors-submit' => 'ورځه',
 );
 
@@ -660,7 +803,7 @@ $messages['pt'] = array(
 	'mostrevisors-showing' => 'Listando {{PLURAL:$1|uma página|$1 páginas}}:',
 	'mostrevisors-submit' => 'Submeter',
 	'mostrevisors-showredir' => 'Mostrar páginas de redireccionamento',
-	'mostrevisors-hideredir' => 'Esconder páginas de redirecionamento',
+	'mostrevisors-hideredir' => 'Esconder páginas de redireccionamento',
 	'mostrevisors-users' => '- $1 {{PLURAL:$1|editor|editores}}',
 	'mostrevisors-viewcontributors' => 'Ver os principais editores',
 );
@@ -689,10 +832,10 @@ $messages['pt-br'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'mostrevisors-namespace' => 'Spaţiu de nume:',
-	'mostrevisors-submit' => 'Mergeţi',
-	'mostrevisors-showredir' => 'Arată paginile de redirecţionare',
-	'mostrevisors-hideredir' => 'Ascunde paginile de redirecţionare',
+	'mostrevisors-namespace' => 'Spațiu de nume:',
+	'mostrevisors-submit' => 'Mergeți',
+	'mostrevisors-showredir' => 'Arată paginile de redirecționare',
+	'mostrevisors-hideredir' => 'Ascunde paginile de redirecționare',
 );
 
 /** Russian (Русский)
@@ -717,6 +860,13 @@ $messages['ru'] = array(
 	'mostrevisors-viewcontributors' => 'Показать основных редакторов',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'mostrevisors-submit' => 'Перейти',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -734,6 +884,21 @@ $messages['sk'] = array(
 	'mostrevisors-hideredir' => 'Skryť presmerovacie stránky',
 	'mostrevisors-users' => '- $1 {{PLURAL:$1|používateľ|používatelia|používateľov}}',
 	'mostrevisors-viewcontributors' => 'Zobraziť hlavných prispievateľov',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'mostrevisors-namespace' => 'Именски простор:',
+	'mostrevisors-submit' => 'Иди',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'mostrevisors-namespace' => 'Imenski prostor:',
+	'mostrevisors-submit' => 'Idi',
 );
 
 /** Swedish (Svenska)
@@ -759,11 +924,22 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'mostrevisors-header' => "'''ఈ వికీలో ఎక్కువమంది కూర్పురులున్న {{PLURAL:$1|పుటని|$1 పుటలను}} ఈ పుట చూపిస్తుంది.'''",
+	'mostrevisors-limitlinks' => '$1 పుటల వరకు చూపించు',
 	'mostrevisors-namespace' => 'పేరుబరి:',
+	'mostrevisors-ns-header' => "'''ఈ పుట ఎక్కువమంది కూర్పురులున్న $2 పేరుబరిలోని {{PLURAL:$1|పుటని|$1 పుటలను}} చూపిస్తుంది.'''",
 	'mostrevisors-showing' => '{{PLURAL:$1|పేజీని|$1 పేజీలను}} చూపిస్తున్నాం:',
 	'mostrevisors-submit' => 'వెళ్ళు',
 	'mostrevisors-showredir' => 'దారిమార్పు పేజీలను చూపించు',
 	'mostrevisors-hideredir' => 'దారిమార్పు పేజీలను దాచు',
+	'mostrevisors-users' => '- $1 {{PLURAL:$1|కూర్పరి|కూర్పరులు}}',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'mostrevisors-submit' => 'OK',
 );
 
 /** Thai (ไทย)
@@ -780,16 +956,43 @@ $messages['tk'] = array(
 	'mostrevisors-submit' => 'Git',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'mostrevisors' => 'Mga pahinang may pinakamaraming mga tagapagbago',
+	'mostrevisors-desc' => 'Itala ang [[Special:MostRevisors|mga pahinang may pinakamaraming mga tagapagbago]]',
+	'mostrevisors-header' => "'''Nagtatala ang pahinang ito ng {{PLURAL:$1|pahina|$1 mga pahina}} na may pinakamaraming mga tagapagbago sa wiki.'''",
+	'mostrevisors-limitlinks' => 'Magpakita ng hanggang sa $1 mga pahina',
+	'mostrevisors-namespace' => 'Puwang na pampangalan:',
+	'mostrevisors-none' => 'Walang natagpuang mga ipinasok.',
+	'mostrevisors-ns-header' => "'''Nagtatala ang pahinang ito ng {{PLURAL:$1|pahina|$1 mga pahina}} na may pinakamaraming mga tagapagbago sa $2 na puwang na pampangalan.'''",
+	'mostrevisors-showing' => 'Itinatala ang {{PLURAL:$1|pahina|$1 mga pahina}}:',
+	'mostrevisors-submit' => 'Gawin',
+	'mostrevisors-showredir' => 'Ipakita ang mga pahinang naglilipat ng pupuntahan',
+	'mostrevisors-hideredir' => 'Itago ang mga pahinang nagpapalit ng pupuntahan',
+	'mostrevisors-users' => '- $1 {{PLURAL:$1|patnugot|mga patnugot}}',
+	'mostrevisors-viewcontributors' => 'Tingnan ang pangunahing mga tagapag-ambag',
+);
+
 /** Turkish (Türkçe)
+ * @author Srhat
  * @author Vito Genovese
  */
 $messages['tr'] = array(
-	'mostrevisors-namespace' => 'İsim alanı:',
+	'mostrevisors-namespace' => 'Ad alanı:',
 	'mostrevisors-none' => 'Girdi bulunamadı.',
 	'mostrevisors-submit' => 'Git',
 	'mostrevisors-showredir' => 'Yönlendirme sayfalarını göster',
 	'mostrevisors-hideredir' => 'Yönlendirme sayfalarını gizle',
 	'mostrevisors-viewcontributors' => 'Ana katkı sahiplerini göster',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'mostrevisors-namespace' => 'Простір назв:',
 );
 
 /** Veps (Vepsan kel')
@@ -814,23 +1017,40 @@ $messages['vi'] = array(
 	'mostrevisors-viewcontributors' => 'Xem các người đóng góp chính',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'mostrevisors-limitlinks' => 'ווײַזן ביז $1 בלעטער',
+	'mostrevisors-namespace' => 'נאָמענטייל:',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Liangent
+ * @author PhiLiP
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
+	'mostrevisors-limitlinks' => '显示 $1 个页面',
 	'mostrevisors-namespace' => '名字空间：',
+	'mostrevisors-submit' => '提交',
 	'mostrevisors-showredir' => '显示重定向页面',
 	'mostrevisors-hideredir' => '隐藏重定向页面',
+	'mostrevisors-users' => '$1 次{{PLURAL:$1|编辑|编辑}}',
 	'mostrevisors-viewcontributors' => '检视主要贡献者',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'mostrevisors-limitlinks' => '顯示 $1 個頁面',
 	'mostrevisors-namespace' => '名字空間：',
+	'mostrevisors-submit' => '提交',
 	'mostrevisors-showredir' => '顯示重定向頁面',
 	'mostrevisors-hideredir' => '隱藏重定向頁面',
+	'mostrevisors-users' => '$1 次{{PLURAL:$1|編輯|編輯}}',
 	'mostrevisors-viewcontributors' => '檢視主要貢獻者',
 );
 

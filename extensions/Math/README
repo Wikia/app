@@ -1,0 +1,9 @@
+This version (for MediaWiki 1.19) has some changes since previous versions:
+
+* rendering options have been reduced to just 'Always PNG' and 'Leave it as TeX'
+** all other rendering options will merge to PNG.
+* initial experimental support for integrating MathJax client-side rendering
+
+See the README in the math subdirectory for more info on setting up the
+low-level conversion tools.
+

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * MV_SepcialAddStream.php Created on Apr 25, 2007
  *
  * All Metavid Wiki code is Released under the GPL2
@@ -19,7 +19,8 @@ class MV_SpecialCRUDStream extends SpecialPage {
 		parent::__construct( 'Mv_Add_Stream' );
 		$this->mode = 'add';
 		// print_r(debug_backtrace());
-		if ( method_exists( 'SpecialPage', 'setGroup' ) ) {
+		$realFunction = array( 'SpecialPage', 'setGroup' );
+		if ( is_callable( $realFunction ) ) {
 			parent::setGroup( 'Mv_Add_Stream', 'mv_group' );
 		}
 
@@ -83,13 +84,13 @@ class MV_SpecialCRUDStream extends SpecialPage {
     	}
     	// output the stream form
     	// output the add stream form
-			$spectitle = Title::makeTitle( NS_SPECIAL, 'Mv_Add_stream' );
+			$spectitle = SpecialPage::getTitleFor( 'Mv_Add_stream' );
 			$docutitle = Title::newFromText( wfMsg( 'mv_add_stream' ), NS_HELP );
 			if ( $this->mode == 'edit' ) {
 				$mvStreamTitle = Title::makeTitle( MV_NS_STREAM,  $this->stream_name );
 				if ( $mvStreamTitle->exists() ) {
 					$sk = $wgUser->getSkin();
-					$streamLink = $sk->makeLinkObj( $mvStreamTitle,  $this->stream_name );
+					$streamLink = $sk->makeLinkObj( $mvStreamTitle, htmlspecialchars( $this->stream_name ) );
 					$html .= wfMsg( 'mv_edit_strea_docu', $streamLink );
 				}
 			} else {
@@ -187,11 +188,11 @@ class MV_SpecialCRUDStream extends SpecialPage {
 
 				// insert page
 				$streamTitle = Title::newFromText( $this->stream_name, MV_NS_STREAM  );
-				$wgArticle = new Article( $streamTitle );
-				$status = $wgArticle->doEdit( $this->stream_desc, wfMsg( 'mv_summary_add_stream' ) );
+				$article = new Article( $streamTitle );
+				$status = $article->doEdit( $this->stream_desc, wfMsg( 'mv_summary_add_stream' ) );
 				if ( $status === true || ( is_object( $status ) && $status->isOK() ) ) {
 					// stream inserted sucesfully report to output
-					$out = wfMsg('mv_stream_added', $sk->makeLinkObj( $streamTitle,  $this->stream_name ) );
+					$out = wfMsg('mv_stream_added', $sk->makeLinkObj( $streamTitle, htmlspecialchars( $this->stream_name ) ) );
 				} else {
 					$out = wfMsg( 'mv_error_stream_insert' );
 				}
@@ -203,7 +204,7 @@ class MV_SpecialCRUDStream extends SpecialPage {
 		}
 		return $out;
 	}
-	/*
+	/**
 	 * Returns an array of stream types the current user can add
 	 * @@todo we should just check the $mvStreamTypePermission directly if we can...
 	 * @@todo deprecate this: use mediaWikis user system:
@@ -231,4 +232,3 @@ class MV_SpecialCRUDStream extends SpecialPage {
 	}
 
 }
-?>

@@ -3,7 +3,7 @@
 -- Unique indexes need to be handled with INSERT SELECT since just running
 -- the CREATE INDEX statement will fail if there are duplicate values.
 --
--- Ignore duplicates, several tables will have them (e.g. bug 16966) but in 
+-- Ignore duplicates, several tables will have them (e.g. bug 16966) but in
 -- most cases it's harmless to discard them.
 
 --------------------------------------------------------------------------------
@@ -218,7 +218,7 @@ CREATE TABLE /*_*/math_tmp (
   math_outputhash varbinary(16) NOT NULL,
   math_html_conservativeness tinyint NOT NULL,
   math_html text,
-  math_mathml text  
+  math_mathml text
 );
 
 CREATE UNIQUE INDEX /*i*/math_inputhash ON /*_*/math_tmp (math_inputhash);
@@ -406,11 +406,10 @@ CREATE INDEX /*i*/type_time ON /*_*/logging (log_type, log_timestamp);
 CREATE INDEX /*i*/user_time ON /*_*/logging (log_user, log_timestamp);
 CREATE INDEX /*i*/page_time ON /*_*/logging (log_namespace, log_title, log_timestamp);
 CREATE INDEX /*i*/times ON /*_*/logging (log_timestamp);
-CREATE INDEX /*i*/tb_page ON /*_*/trackbacks (tb_page);
 CREATE INDEX /*i*/job_cmd_namespace_title ON /*_*/job (job_cmd, job_namespace, job_title);
 CREATE INDEX /*i*/rd_ns_title ON /*_*/redirect (rd_namespace,rd_title,rd_from);
 CREATE INDEX /*i*/qcc_type ON /*_*/querycachetwo (qcc_type,qcc_value);
 CREATE INDEX /*i*/qcc_title ON /*_*/querycachetwo (qcc_type,qcc_namespace,qcc_title);
 CREATE INDEX /*i*/qcc_titletwo ON /*_*/querycachetwo (qcc_type,qcc_namespacetwo,qcc_titletwo);
 
-INSERT INTO /*_*/updatelog VALUES ('initial_indexes');
+INSERT INTO /*_*/updatelog (ul_key) VALUES ('initial_indexes');

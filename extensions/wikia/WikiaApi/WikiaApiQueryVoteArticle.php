@@ -35,7 +35,6 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
      * main function
      */
 	public function execute() {
-		global $wgUser;
 		switch ($this->getActionName()) {
 			case parent::INSERT : $this->addVoteArticle(); break;
 			case parent::UPDATE : $this->changeVoteArticle(); break;
@@ -63,7 +62,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 		#---
 		$user_id = $this->getUser()->getId();
-		$ip = wfGetIP();
+		$ip = F::app()->wg->Request->getIP();
 		$browserId = $this->getBrowser();
 
 		if ( !is_null($page) ) {
@@ -147,7 +146,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			try {
 				$wgTopVoted = ( !empty($topvoted) ) ? true : false;
 
-				$this->addTables( array("`page_vote` p1", "page") );
+				$this->addTables( array("`page_vote` AS p1", "page") );
 				$add_fields = array('page_id', 'page_title', 'AVG(vote) as votesavg, max(time) as max_time');
 				$this->addFields( $add_fields );
 				$this->addWhere ( "page_id = article_id" );
@@ -297,7 +296,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
         #--- request parameters ()
 		extract($this->extractRequestParams());
 
-		$ip = wfGetIP();
+		$ip = F::app()->wg->Request->getIP();
 		$user_id = $this->getUser()->getId();
 		$browserId = $this->getBrowser();
 
@@ -390,7 +389,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		extract($this->extractRequestParams());
 
 		#---
-		$ip = wfGetIP();
+		$ip = F::app()->wg->Request->getIP();
 		$user_id = $this->getUser()->getId();
 		$browserId = $this->getBrowser();
 
@@ -503,7 +502,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		extract($this->extractRequestParams());
 
 		#---
-		$ip = wfGetIP();
+		$ip = F::app()->wg->Request->getIP();
 		$user_id = $this->getUser()->getId();
 		$browserId = $this->getBrowser();
 

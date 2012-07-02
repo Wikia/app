@@ -13,19 +13,20 @@ Notes on installing Semantic Forms can be found in the file INSTALL.
 
 Semantic Forms was created, and mostly written by, Yaron Koren.
 
+Significant parts of the code were contributed by Stephan Gambke.
+
 Much of the jQuery and related Javascript functionality was initially
 created by Sanyam Goyal as part of the 2010 Google Summer of Code
 program.
 
 Important code contributions were also made by Christoph Burgmer,
 Daniel Friesen, Daniel Hansch, Eugene Mednikov, Harold Solbrig, Jayson
-Harshbarger, Jeffrey Stuckman, Jeroen De Dauw, Louis Gerbarg,
-Matt Williamson, Nils Opperman, Patrick Nagel, Remco de Boer, Sergey
-Chernyshev, Stephan Gambke and wheresmytab.
+Harshbarger, Jeffrey Stuckman, Jeroen De Dauw, Louis Gerbarg, Matt
+Williamson, Nils Opperman, Patrick Nagel, Remco de Boer, Sergey
+Chernyshev, wheresmytab and others.
 
-Language translations were provided by many people; see the
-files /languages/SF_Messages.php and /languages/SF_Aliases.php for
-the full listings.
+Language translations were provided by many people; see each file in
+the /languages directory for the full listings.
 
 == Contact ==
 
@@ -43,12 +44,6 @@ Bug reports should be submitted at the MediaWiki Bugzilla site:
 
 == Credits to other projects ==
 
-* The Semantic Forms extension includes the jQuery and jQuery UI
-JavaScript libraries (http://jquery.org, http://jqueryui.com).
-Both libraries are distributed under both the MIT and GPL
-licenses, both of which are compatible with the GPL license under
-which Semantic Forms is distributed.
-
-* Semantic Forms also includes the FancyBox JavaScript library by
+* Semantic Forms includes the FancyBox JavaScript library by
 Janis Skarnelis (http://fancybox.net). FancyBox is distributed
 under both the MIT and GPL licenses.

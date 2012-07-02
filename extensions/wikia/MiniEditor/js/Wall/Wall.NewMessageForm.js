@@ -22,6 +22,9 @@
 			}
 
 			this.WallMessageBody.miniEditor({
+				config: {
+					animations: window.WallAnimations
+				},
 				events: {
 					editorReady: function(event, wikiaEditor) {
 						if (!MiniEditor.ckeditorEnabled) {

@@ -5,7 +5,11 @@
 	$whitecolor: #fff;
 	$color-wikiahome-hubiframe-background: #C7D1D9;
 
-	&.WikiaFrameContainer {
+	.WikiaArticleCategories {
+		display: none;
+	}
+
+	.WikiaFrameContainer {
 		width: 777px;
 		overflow: auto;
 		margin: 0;
@@ -190,19 +194,19 @@
 	}
 }
 
-.page-Video_Games {
+.WikiaHubsVideoGames {
 	$color-wikiahome-hubcolor: $color-wikiahome-videogames;
 	$color-wikiahome-hubcolor-dark: $color-wikiahome-videogames-dark;
 	@include hubs-vertical-coloring($color-wikiahome-hubcolor,$color-wikiahome-hubcolor-dark);
 }
 
-.page-Entertainment {
+.WikiaHubsEntertainment {
 	$color-wikiahome-hubcolor: $color-wikiahome-entertainment;
 	$color-wikiahome-hubcolor-dark: $color-wikiahome-entertainment-dark;
 	@include hubs-vertical-coloring($color-wikiahome-hubcolor,$color-wikiahome-hubcolor-dark);
 }
 
-.page-Lifestyle {
+.WikiaHubsLifestyle {
 	$color-wikiahome-hubcolor: $color-wikiahome-lifestyle;
 	$color-wikiahome-hubcolor-dark: $color-wikiahome-lifestyle-dark;
 	@include hubs-vertical-coloring($color-wikiahome-hubcolor,$color-wikiahome-hubcolor-dark);

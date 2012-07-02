@@ -1,8 +1,8 @@
 <?php
 /** Extension:NewUserMessage
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @author [http://www.organicdesign.co.nz/nad User:Nad]
  * @license GNU General Public Licence 2.0 or later
@@ -12,7 +12,7 @@
 if ( !defined( 'MEDIAWIKI' ) )
 	die( 'Not an entry point.' );
 
-define( 'NEWUSERMESSAGE_VERSION', '3.0, 2009-11-28' );
+define( 'NEWUSERMESSAGE_VERSION', '3.2, 2011-07-14' );
 
 $wgNewUserSuppressRC = false;           // Specify whether or not the new user message creation should show up in recent changes
 $wgNewUserMinorEdit = true;             // Should the new user message creation be a minor edit?
@@ -31,7 +31,6 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'NewUserMessage',
 	'version'        => NEWUSERMESSAGE_VERSION,
 	'author'         => array( "[http://www.organicdesign.co.nz/User:Nad Nad]", 'Siebrand Mazeland' ),
-	'description'    => "Add a [[MediaWiki:NewUserMessage|message]] to newly created user's talk pages",
 	'descriptionmsg' => 'newusermessage-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:NewUserMessage',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:NewUserMessage',
 );

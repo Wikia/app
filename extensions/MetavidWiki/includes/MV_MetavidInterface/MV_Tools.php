@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Created on Jun 28, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
- * 
+ *
+ *
  */
  if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
  // global $mvgIP;
@@ -34,20 +34,20 @@
 	}
 	function render_full() {
  		global $wgOut;
- 		// "<div >" . 		 		
+ 		// "<div >" .
  		/*$wgOut->addHTML("<fieldset ".$this->getStyleOverride()." id=\"".get_class($this)."\" >\n" .
  					"<legend id=\"mv_leg_".get_class($this)."\">".$this->render_menu()."</legend>\n");
  		*/
- 		// do the implemented html 		
+ 		// do the implemented html
  		$wgOut->addHTML( '<div id="MV_Tools">' );
  			$this->getHTML();
  		$wgOut->addHTML( '</div>' );
  		/*$wgOut->addHTML("</fieldset>\n");*/
 	}
 	/*function getStreamPage(){
-		return ;		
+		return ;
 	}*/
-	
+
 	/* @@todo cache this */
 	function get_tool_html( $tool_id, $ns = '', $title_str = '' ) {
 		global $wgUser;
@@ -56,11 +56,11 @@
 		switch( $tool_id ) {
 			case 'stream_page':
 				global $wgOut, $wgParser;
-				// render the wiki page for this stream				
+				// render the wiki page for this stream
 				$title = Title::newFromText( $title_str, $ns );
 				$curRevision = Revision::newFromTitle( $title );
-				
-				// @@todo in the future a deleted Stream means 
+
+				// @@todo in the future a deleted Stream means
 				// remove stuff from stream table,mvd etc and return "missing Stream"
 
 				if ( $curRevision == null ) {
@@ -70,7 +70,7 @@
 					$sk =& $wgUser->getSkin();
 					// empty out the categories
 					$wgOut->mCategoryLinks = array();
-					// run via parser to add in Category info: 
+					// run via parser to add in Category info:
 					$parserOptions = ParserOptions::newFromUser( $wgUser );
 					$parserOptions->setEditSection( false );
 					$parserOptions->setTidy( true );
@@ -80,7 +80,7 @@
 					$wgOut->addHTML( $sk->getCategories() );
 					// empty out the categories
 					$wgOut->mCategoryLinks = array();
-					
+
 					// $wgOut->addWikiTextWithTitle( $curRevision->getText(), $tile) ;
 
 					$this->innerHTML = $wgOut->getHTML();
@@ -136,9 +136,9 @@
 		) );
 	}
 
-	/* 
+	/**
 	 * outputs basic stream paging (this could be done client side)
-	 *  
+	 *
 	 */
 	function stream_paging_links( $return_set = 'both' ) {
 		global $wgUser, $mvDefaultStreamViewLength, $mvgScriptPath;
@@ -174,9 +174,9 @@
 		if ( $return_set == 'prev' )return $prev_link;
 		if ( $return_set == 'next' )return $next_link;
 	}
-	/*
+	/**
 	 * list all the available "tool" functions
-	 * @@todo better integration with wiki 
+	 * @@todo better integration with wiki
 	 * (ie tool listing should be a page like navigationBar or in our case MvStreamTools
 	 */
 	function getToolsListing() {
@@ -192,15 +192,15 @@
 		$out .= '</ul>';
 		return '<h3>' . $heading . '</h3>' . $out;
 	}
-	// returns layers overview text 
+	// returns layers overview text
 	function get_mang_layers_page( $stream_title ) {
 		global $mvMVDTypeAllAvailable;
 		$out = '<h3>' . wfMsg( 'mv_tool_mang_layers' ) . '</h3>';
-		// grab the current track set: 	
+		// grab the current track set:
 		$this->procMVDReqSet();
 		foreach ( $mvMVDTypeAllAvailable as $type_key ) {
 			$type_key = htmlspecialchars( $type_key );
-			// @@todo use something better than "title" for type_key description 
+			// @@todo use something better than "title" for type_key description
 			$checked = ( in_array( $type_key, $this->mvd_tracks ) ) ? ' checked':'';
 			$out .= '<input type="checkbox" name="option_' . $type_key . '"  id="option_' . $type_key . '" value="' . $type_key . '" ' . $checked . '/> ' .
 				'<a class="mv_mang_layers" id="a_' . $type_key . '" title="' . wfMsg( $type_key . '_desc' ) . '" href="#">' . wfMsg( $type_key ) . '</a><br />';
@@ -210,22 +210,22 @@
 	}
 	function get_nav_page( $stream_title ) {
 		global $mvgIP;
-		// output sliders for stream navigation: 
+		// output sliders for stream navigation:
 		$out = '<h3>' . wfMsg( 'mv_tool_navigate' ) . ' ' . htmlspecialchars( ucfirst( $stream_title ) ) . '</h3>';
-		// normalize stream title: 
+		// normalize stream title:
 		$stream_title = str_replace( ' ', '_', strtolower( $stream_title ) );
-		
-		// get the total length of the stream: 		
+
+		// get the total length of the stream:
 		$stream =  new MV_Stream( array( 'name' => $stream_title ) );
 		// $out.= "sn: ". $stream->name . '<br />';
 		$duration = $stream->getDuration();
-		// $out.=" duration: $duration";			
+		// $out.=" duration: $duration";
 		$MvOverlay = new MV_Overlay();
-		
+
 		$titleKey = 'mvd_type:' . ucfirst( $stream_title ) . '/' . $_REQUEST['time_range'];
 		$out .= $MvOverlay->get_adjust_disp( $titleKey, 'nav' );
 		$out .= '<input type="button" id="mv_go_nav" value="Go">';
-		// set range: 
+		// set range:
 		$this->js_eval = 'var end_time = \'' . htmlspecialchars( $duration ) . '\';';
 		return $out;
 	}
@@ -237,8 +237,8 @@
 		$out = '<h3>' . wfMsg( 'mv_tool_export_title' ) . '</h3>';
 		$tr = $wgRequest->getVal( 'time_range' );
 		// @@todo pull in metadata layer selector (populated by current selection set)
-		// makeKnownLinkObj( $nt, $text = '', $query = '', $trail = '', $prefix = '' , $aprops = '', $style = '' ) 
-		$sTitle = Title::makeTitle( NS_SPECIAL, 'MvExportStream' );
+		// makeKnownLinkObj( $nt, $text = '', $query = '', $trail = '', $prefix = '' , $aprops = '', $style = '' )
+		$sTitle = SpecialPage::getTitleFor( 'MvExportStream' );
 		$out .= $sk->makeKnownLinkObj( $sTitle , wfMsg( 'mv_export_cmml' ), 'feed_format=cmml&stream_name=' . $stream_title . '&t=' . $tr );
 		$out .= ' for ' . $mvTitle->getTitleDesc();
 		return $out;
@@ -248,7 +248,7 @@
 			@list( $width, $height ) = explode( 'x', $this->mv_interface->smwProperties['playback_resolution'] );
 			if ( isset( $width ) && isset( $height ) ) {
 				if ( is_numeric( $width ) && is_numeric( $height ) ) {
-					// offset in refrence to mv_custom.css 
+					// offset in refrence to mv_custom.css
 					$width += 2;
 					$height += 30;
 					$top = $height + 30 + 12;
@@ -259,4 +259,3 @@
 		return '';
 	}
  }
-?>

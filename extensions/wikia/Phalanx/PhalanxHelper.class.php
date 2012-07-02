@@ -41,7 +41,7 @@ class PhalanxHelper {
 		if ( $dbw->affectedRows() ) {
 			$result = true ;
 
-			$dbw->immediateCommit();
+			$dbw->commit();
 
 			self::updateCache($oldData, $data);
 			self::logEdit($oldData,$data);
@@ -71,7 +71,7 @@ class PhalanxHelper {
 		if ( $dbw->affectedRows() ) {
 			$data['id'] = $result = $dbw->insertId();
 
-			$dbw->immediateCommit();
+			$dbw->commit();
 
 			self::updateCache(null, $data);
 			self::logAdd($data);
@@ -236,7 +236,7 @@ class PhalanxHelper {
 			return array('error' => true);
 		}
 
-		$dbw->immediateCommit();
+		$dbw->commit();
 
 		self::updateCache($data, null);
 		self::logDelete($data);
@@ -415,7 +415,7 @@ class PhalanxHelper {
 			$data['text'], $types, $data['reason'] ) );
 		// Workaround lack of automatic COMMIT in Ajax requests
 		$db = wfGetDB( DB_MASTER );
-		$db->immediateCommit();
+		$db->commit();
 	}
 
 }

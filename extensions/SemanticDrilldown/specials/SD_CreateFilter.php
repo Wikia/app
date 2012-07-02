@@ -16,7 +16,7 @@ class SDCreateFilter extends SpecialPage {
 	public function SDCreateFilter() {
 		parent::__construct( 'CreateFilter' );
 		// Backwards compatibility for MediaWiki < 1.16
-		if ( function_exists( 'wfLoadExtensionMessages' ) ) {
+		if ( version_compare( $GLOBALS['wgVersion'], '1.16', '<' ) ) {
 			wfLoadExtensionMessages( 'SemanticDrilldown' );
 		}
 	}
@@ -162,7 +162,7 @@ END;
 	<select id="category_dropdown" name="category_name">
 
 END;
-	$categories = SDUtils::getTopLevelCategories();
+	$categories = SDUtils::getCategoriesForBrowsing();
 	foreach ( $categories as $category ) {
 		$category = str_replace( '_', ' ', $category );
 		$text .= "	<option>$category</option>\n";

@@ -266,7 +266,7 @@ class CleanupSpamForm {
                 	        $article->updateArticle( $rev->getText(), wfMsg( 'spam_reverting', $domain ), false, false );
 				$wgOut->addHTML ("Article $page_link has been reverted to latest change not containing link to <b>".$domain."</b>.<br/>" );
         	        }
-	                $dbw->immediateCommit();
+	                $dbw->commit();
         	        wfDoUpdates();
 	        }
 		$wgUser = $OldUser ;

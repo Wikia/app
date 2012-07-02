@@ -143,7 +143,8 @@ var WallNotifications = $.createClass(Object, {
 			this.updateWiki( wikiId );
 	},
 	
-	clickNotificationsMonobook: function() {
+	clickNotificationsMonobook: function(e) {
+		e.preventDefault();
 		if( $('#wall-notifications-dropdown').css('display') == 'none' ) {
 			this.dropdownShow();
 			

@@ -15,8 +15,8 @@ $wgSpecialPages['ListIncludedFiles'] = 'ListIncludedFiles';
 
 class ListIncludedFiles extends SpecialPage{
 
-	public function ListIncludedFiles(){
-		SpecialPage::SpecialPage('ListIncludedFiles');
+	public function __construct(){
+		parent::__construct('ListIncludedFiles');
 	}
 
 	function execute(){

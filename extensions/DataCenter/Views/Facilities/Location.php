@@ -217,9 +217,8 @@ class DataCenterViewFacilitiesLocation extends DataCenterView {
 		// Builds JavaScript that hooks the button into the geocoder
 		$jsForm = 'document.form_save';
 		$jsOut = DataCenterJs::callFunction(
-			'addHandler',
+			"$('#{$jsForm}.field_button_0').on",
 			array(
-				"{$jsForm}.field_button_0",
 				DataCenterJs::toScalar( 'click' ),
 				DataCenterJs::buildFunction(
 					null,

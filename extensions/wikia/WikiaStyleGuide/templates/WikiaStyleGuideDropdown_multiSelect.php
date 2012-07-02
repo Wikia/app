@@ -6,10 +6,10 @@
 	<div class="dropdown">
 		<?= $toolbar ?>
 		<ul class="dropdown-list">
-			<? foreach($options as $index => $name): ?>
-				<? $isSelected = isset($selected[$index]); ?>
+			<? foreach($options as $option): ?>
+				<? $isSelected = in_array($option['value'], $selected); ?>
 				<li class="dropdown-item<?= $isSelected ? ' selected' : '' ?>">
-					<label><input type="checkbox" name="namespace[]" value="<?= $index ?>"<?= $isSelected ? ' checked' : '' ?>><?= $name ?></label>
+					<label><input type="checkbox" name="namespace[]" value="<?= $option['value'] ?>"<?= $isSelected ? ' checked' : '' ?>><?= $option['label'] ?></label>
 				</li>
 			<? endforeach; ?>
 		</ul>

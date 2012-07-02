@@ -24,9 +24,9 @@ function do_testing_page(){
 	      </td>
 	    </tr>	    
   </table>
-	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />&#160;
   </body>
 </html>
-<?
+<?php
 }
-?>
+

@@ -1,11 +1,11 @@
 <?php
 
-/*
- * Created on Sep 2, 2008
- *
+/**
  * API for MediaWiki 1.14+
  *
- * Copyright (C) 2008 Chad Horohoe
+ * Created on Sep 2, 2008
+ *
+ * Copyright © 2008 Chad Horohoe
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +19,11 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	require_once ( 'ApiBase.php' );
-}
 
 /**
  * API interface for page purging
@@ -34,49 +32,87 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class ApiPurge extends ApiBase {
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action );
+		parent::__construct( $main, $action );
 	}
 
 	/**
 	 * Purges the cache of a page
 	 */
 	public function execute() {
-		global $wgUser;
+		$user = $this->getUser();
 		$params = $this->extractRequestParams();
-		if ( !$wgUser->isAllowed( 'purge' ) )
-			$this->dieUsageMsg( array( 'cantpurge' ) );
-		if ( !isset( $params['titles'] ) )
-			$this->dieUsageMsg( array( 'missingparam', 'titles' ) );
+		if ( !$user->isAllowed( 'purge' ) && !$this->getMain()->isInternalMode() &&
+				!$this->getRequest()->wasPosted() ) {
+			$this->dieUsageMsg( array( 'mustbeposted', $this->getModuleName() ) );
+		}
+
+		$forceLinkUpdate = $params['forcelinkupdate'];
+		$pageSet = new ApiPageSet( $this );
+		$pageSet->execute();
+
 		$result = array();
-		foreach ( $params['titles'] as $t ) {
+		foreach( $pageSet->getInvalidTitles() as $title ) {
 			$r = array();
-			$title = Title::newFromText( $t );
-			if ( !$title instanceof Title )
-			{
-				$r['title'] = $t;
-				$r['invalid'] = '';
-				$result[] = $r;
-				continue;
-			}
+			$r['title'] = $title;
+			$r['invalid'] = '';
+			$result[] = $r;
+		}
+		foreach( $pageSet->getMissingPageIDs() as $p ) {
+			$page = array();
+			$page['pageid'] = $p;
+			$page['missing'] = '';
+			$result[] = $page;
+		}
+		foreach( $pageSet->getMissingRevisionIDs() as $r ) {
+			$rev = array();
+			$rev['revid'] = $r;
+			$rev['missing'] = '';
+			$result[] = $rev;
+		}
+
+		foreach ( $pageSet->getTitles() as $title ) {
+			$r = array();
+
 			ApiQueryBase::addTitleInfo( $r, $title );
-			if ( !$title->exists() )
-			{
+			if ( !$title->exists() ) {
 				$r['missing'] = '';
 				$result[] = $r;
 				continue;
 			}
-			$article = Mediawiki::articleFromTitle( $title );
-			$article->doPurge(); // Directly purge and skip the UI part of purge().
+
+			$page = WikiPage::factory( $title );
+			$page->doPurge(); // Directly purge and skip the UI part of purge().
 			$r['purged'] = '';
+
+			if( $forceLinkUpdate ) {
+				if ( !$user->pingLimiter() ) {
+					global $wgParser, $wgEnableParserCache;
+
+					$popts = ParserOptions::newFromContext( $this->getContext() );
+					$p_result = $wgParser->parse( $page->getRawText(), $title, $popts,
+						true, true, $page->getLatest() );
+
+					# Update the links tables
+					$u = new LinksUpdate( $title, $p_result );
+					$u->doUpdate();
+
+					$r['linkupdate'] = '';
+
+					if ( $wgEnableParserCache ) {
+						$pcache = ParserCache::singleton();
+						$pcache->save( $p_result, $page, $popts );
+					}
+				} else {
+					$this->setWarning( $this->parseMsg( array( 'actionthrottledtext' ) ) );
+					$forceLinkUpdate = false;
+				}
+			}
+
 			$result[] = $r;
 		}
-		$this->getResult()->setIndexedTagName( $result, 'page' );
-		$this->getResult()->addValue( null, $this->getModuleName(), $result );
-	}
-
-	public function mustBePosted() {
-		global $wgUser;
-		return $wgUser->isAnon();
+		$apiResult = $this->getResult();
+		$apiResult->setIndexedTagName( $result, 'page' );
+		$apiResult->addValue( null, $this->getModuleName(), $result );
 	}
 
 	public function isWriteMode() {
@@ -84,39 +120,45 @@ class ApiPurge extends ApiBase {
 	}
 
 	public function getAllowedParams() {
-		return array (
-			'titles' => array(
-				ApiBase :: PARAM_ISMULTI => true
-			)
+		$psModule = new ApiPageSet( $this );
+		return $psModule->getAllowedParams() + array(
+			'forcelinkupdate' => false,
 		);
 	}
 
 	public function getParamDescription() {
-		return array (
-			'titles' => 'A list of titles',
+		$psModule = new ApiPageSet( $this );
+		return $psModule->getParamDescription() + array(
+			'forcelinkupdate' => 'Update the links tables',
 		);
 	}
 
 	public function getDescription() {
-		return array (
-			'Purge the cache for the given titles.'
+		return array( 'Purge the cache for the given titles.',
+			'Requires a POST request if the user is not logged in.'
 		);
-	}
-	
-    public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
-			array( 'cantpurge' ),
-			array( 'missingparam', 'titles' ),
-        ) );
 	}
 
-	protected function getExamples() {
-		return array(
-			'api.php?action=purge&titles=Main_Page|API'
+	public function getPossibleErrors() {
+		$psModule = new ApiPageSet( $this );
+		return array_merge(
+			parent::getPossibleErrors(),
+			array( array( 'cantpurge' ), ),
+			$psModule->getPossibleErrors()
 		);
+	}
+
+	public function getExamples() {
+		return array(
+			'api.php?action=purge&titles=Main_Page|API' => 'Purge the "Main Page" and the "API" page',
+		);
+	}
+
+	public function getHelpUrls() {
+		return 'https://www.mediawiki.org/wiki/API:Purge';
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiPurge.php 69578 2010-07-20 02:46:20Z tstarling $';
+		return __CLASS__ . ': $Id$';
 	}
 }

@@ -4,6 +4,8 @@
  * @ingroup Language
  * @file
  *
+ * @author Jose77 (on zu.wikipedia.org)
+ * @author Joziboy (on zu.wikipedia.org)
  * @author לערי ריינהארט
  */
 
@@ -122,7 +124,7 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'yourname'                => 'Isiga',
 'yourpassword'            => 'Izwi elingenangozi',
 'yourpasswordagain'       => 'Bhala izwi elingenangozi lakho kabusha',
-'remembermypassword'      => 'Ngikhumbule',
+'remembermypassword'      => 'Ngikhumbule (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'login'                   => 'Ngena',
 'nav-login-createaccount' => 'Ngena / Dala ikhawundi',
 'userlogin'               => 'Ngena / Dala ikhawundi',
@@ -135,17 +137,16 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'gotaccountlink'          => 'Ngena',
 'loginsuccesstitle'       => 'Ubengena',
 'nosuchuser'              => 'Akukho umsebenzisi unegama "$1". Hlola umbhalo wakho, noma dala ikhawundi elisha.',
-'nosuchusershort'         => 'Akukho umsebenzisi unegama "<nowiki>$1</nowiki>". Hlola umbhalo wakho.',
+'nosuchusershort'         => 'Akukho umsebenzisi unegama "$1". Hlola umbhalo wakho.',
 'emailconfirmlink'        => 'Qinisekisa ikheli likagesi lakho',
 'loginlanguagelabel'      => 'Ulimi: $1',
 
-# Password reset dialog
+# Change password dialog
 'newpassword' => 'Izwi elingenangozi elisha:',
 
 # Edit page toolbar
 'italic_sample' => 'Amazwi ama-italiki',
 'italic_tip'    => 'Amazwi ama-italiki',
-'math_sample'   => 'Faka izibalo lapha',
 'hr_tip'        => 'Umugqa uhleliwe  (use sparingly)',
 
 # Edit pages
@@ -185,7 +186,6 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'mypreferences'     => 'Amakhethelo ami',
 'prefsnologin'      => 'Awungenile',
 'changepassword'    => 'Guqula izwi elingenangozi',
-'prefs-math'        => 'Izibalo',
 'saveprefs'         => 'Saveprefs',
 'searchresultshead' => 'Sesha',
 'timezonelegend'    => 'Isifunda sasikhathi',
@@ -206,11 +206,11 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'recentchangeslinked-toolbox' => 'Izinguquko ezilandiweyo',
 
 # Upload
-'upload'           => 'Layisha ifayili',
-'uploadbtn'        => 'Layisha ifayili',
-'filesource'       => 'Umthombo:',
-'ignorewarnings'   => 'Duba imiyalo',
-'successfulupload' => 'Ukulayisha okuchumile',
+'upload'              => 'Layisha ifayili',
+'uploadbtn'           => 'Layisha ifayili',
+'filesource'          => 'Umthombo:',
+'ignorewarnings'      => 'Duba imiyalo',
+'upload-success-subj' => 'Ukulayisha okuchumile',
 
 'nolicense' => 'Ubekhetha lutho',
 
@@ -238,9 +238,6 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 # Special:AllPages
 'allinnamespace' => 'Onke amakhasi ($1 namespace)',
 'allpagessubmit' => 'Hamba',
-
-# Special:Log/newusers
-'newuserlog-create-entry' => 'Umsebenzi omusha',
 
 # E-mail user
 'emailuser'    => 'Thumela umlayezo lo msebenzisi',
@@ -360,9 +357,6 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 'exif-sharpness-0' => 'Kuphelele',
 'exif-sharpness-1' => 'Kuntofontofo',
 'exif-sharpness-2' => 'Kulukhuni',
-
-# 'all' in various places, this might be different for inflected languages
-'recentchangesall' => 'Konke',
 
 # E-mail address confirmation
 'confirmemail'          => 'Qinisekisa ikheli likagesi',

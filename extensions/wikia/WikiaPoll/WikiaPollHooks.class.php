@@ -26,7 +26,7 @@ class WikiaPollHooks {
 	 public static function onMenuButtonAfterExecute (&$moduleObject, &$params) {
 		global $wgTitle, $wgUser;
 
-		if( $wgTitle->getNamespace() == NS_WIKIA_POLL ) {
+		if( $wgTitle instanceof Title && $wgTitle->getNamespace() == NS_WIKIA_POLL ) {
 			$rev = $wgTitle->getFirstRevision();
 			$isAdmin = $wgUser->isAllowed('editinterface');
 			if ($isAdmin || !$wgTitle->exists() || (($rev instanceof Revision) && ($wgUser->getId() == $rev->getRawUser()))) {
@@ -70,7 +70,6 @@ class WikiaPollHooks {
 		wfProfileIn(__METHOD__);
 
 		if ($finalTitle instanceof Title && $finalTitle->exists() && $finalTitle->getNamespace() == NS_WIKIA_POLL) {
-			wfLoadExtensionMessages('WikiaPoll');
 			$css = $jsFile = "";
 			if (self::$alreadyAddedCSSJS == false) {
 				// make sure we don't include twice if there are multiple polls on one page

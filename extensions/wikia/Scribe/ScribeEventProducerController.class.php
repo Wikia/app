@@ -5,7 +5,7 @@ class ScribeEventProducerController extends WikiaController {
 		$this->app = $app;
 	}
 
-	public function onSaveComplete( &$oArticle, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
+	public function onSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		$key = ( isset( $status->value['new'] ) && $status->value['new'] == 1 ) ? 'create' : 'edit';
@@ -13,7 +13,7 @@ class ScribeEventProducerController extends WikiaController {
 
  		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' =>  $key, 'archive' => $is_archive ) );		
 		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision ) ) {
+			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
 				$oScribeProducer->sendLog();
 			}
 		}
@@ -22,14 +22,14 @@ class ScribeEventProducerController extends WikiaController {
 		return true;
 	}
 
-	public function onSaveRevisionComplete( $oArticle, $oRevision, $revision_id, $oUser, $allow = true ) {
+	public function onSaveRevisionComplete( $oPage, $oRevision, $revision_id, $oUser, $allow = true ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 		
 		# producer
 		if ( $allow ) {
 			$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'edit' ) );		
 			if ( is_object( $oScribeProducer ) ) {
-				if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision, $revision_id ) ) {
+				if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision, $revision_id ) ) {
 					$oScribeProducer->sendLog();
 				}
 			}
@@ -39,12 +39,12 @@ class ScribeEventProducerController extends WikiaController {
 		return true;		
 	}
 
-	public function onDeleteComplete( &$oArticle, &$oUser, $reason, $page_id ) {
+	public function onDeleteComplete( &$oPage, &$oUser, $reason, $page_id ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 
  		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'delete' ) );		
 		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildRemovePackage ( $oArticle, $oUser, $page_id ) ) {		
+			if ( $oScribeProducer->buildRemovePackage ( $oPage, $oUser, $page_id ) ) {		
 				$oScribeProducer->sendLog();
 			}
 		} 
@@ -62,11 +62,11 @@ class ScribeEventProducerController extends WikiaController {
 			return true;
 		}
 
-		$oArticle = new Article( $oTitle );		
+		$oPage = WikiPage::factory( $oTitle );		
 
  		$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => 'edit' ) );		
 		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision ) ) {
+			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
 				$oScribeProducer->sendLog();
 			}
 		}

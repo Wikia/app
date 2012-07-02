@@ -7,7 +7,7 @@ import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStor
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ReturnToTest extends BaseTest {
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testBlogListingPage() throws Exception {
 		// go to Special:CreateBlogListingPage
 		session().open("index.php?title=Special:CreateBlogListingPage");
@@ -20,7 +20,7 @@ public class ReturnToTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testBlogPage() throws Exception {
 		// go to Special:CreateBlogPage
 		session().open("index.php?title=Special:CreateBlogPage");
@@ -33,7 +33,7 @@ public class ReturnToTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testMyHome() throws Exception {
 		// Oasis uses Special:WikiActivity instead of MyHome and you don't need to be logged in to see it.
 		session().open("index.php?title=Special:MyHome");
@@ -47,7 +47,7 @@ public class ReturnToTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testUpload() throws Exception {
 		// go to Special:Upload
 		session().open("index.php?title=Special:Upload");
@@ -77,7 +77,7 @@ public class ReturnToTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testSpecialPages() throws Exception {
 		// go to Special:SpecialPages
 		session().open("index.php?title=Special:SpecialPages");

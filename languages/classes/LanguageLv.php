@@ -15,16 +15,14 @@ class LanguageLv extends Language {
 	 *
 	 * Example: {{plural:{{NUMBEROFARTICLES}}|article|articles}}
 	 *
-	 * @param integer $count
-	 * @param string $wordform1
-	 * @param string $wordform2
-	 * @param string $wordform3 (not used)
-	 * @return string
+	 * @param $count Integer
+	 * @param $forms Array
+	 * @return String
 	 */
 	function convertPlural( $count, $forms ) {
-		if ( !count($forms) ) { return ''; }
+		if ( !count( $forms ) ) { return ''; }
 
-		// FIXME: CLDR defines 3 plural forms instead of 2.  Form for 0 is missing.
+		// @todo FIXME: CLDR defines 3 plural forms instead of 2.  Form for 0 is missing.
 		//        http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html#lv
 		$forms = $this->preConvertPlural( $forms, 2 );
 

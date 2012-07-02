@@ -1,14 +1,12 @@
 <?php
-
 /**
  * Extension credits
  */
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Central Auth',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:CentralAuth',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:CentralAuth',
 	'author' => 'Brion Vibber',
-	'description'    => 'Merge accounts across a wiki farm',
 	'descriptionmsg' => 'centralauth-desc',
 );
 
@@ -17,7 +15,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'MergeAccount',
 	'author'         => 'Brion Vibber',
 	'url'            => 'http://meta.wikimedia.org/wiki/Help:Unified_login',
-	'description'    => '[[Special:MergeAccount|Merge multiple accounts]] for Single User Login',
 	'descriptionmsg' => 'centralauth-mergeaccount-desc',
 );
 
@@ -26,10 +23,10 @@ $wgExtensionCredits['specialpage'][] = array(
  *
  * If this is not on the primary database connection, don't forget
  * to also set up $wgDBservers to have an entry with a groupLoads
- * setting for the 'CentralAuth' group. Alternatively you can use 
+ * setting for the 'CentralAuth' group. Alternatively you can use
  * $wgLBFactoryConf to set up an LBFactory_Multi object.
  *
- * To use a database with a table prefix, set this variable to 
+ * To use a database with a table prefix, set this variable to
  * "{$database}-{$prefix}".
  */
 $wgCentralAuthDatabase = 'centralauth';
@@ -86,15 +83,15 @@ $wgCentralAuthCookieDomain = '';
 $wgCentralAuthCookiePrefix = 'centralauth_';
 
 /**
- * List of wiki IDs which should be called on login/logout to set third-party 
+ * List of wiki IDs which should be called on login/logout to set third-party
  * cookies for the global session state.
  *
- * The wiki ID is typically the database name, except when table prefixes are 
- * used, in which case it is the database name, a hyphen separator, and then 
+ * The wiki ID is typically the database name, except when table prefixes are
+ * used, in which case it is the database name, a hyphen separator, and then
  * the table prefix.
  *
- * This allows a farm with multiple second-level domains to set up a global 
- * session on all of them by hitting one wiki from each domain 
+ * This allows a farm with multiple second-level domains to set up a global
+ * session on all of them by hitting one wiki from each domain
  * (en.wikipedia.org, en.wikinews.org, etc).
  *
  * Done by $wgCentralAuthLoginIcon from Special:AutoLogin on each wiki.
@@ -129,11 +126,6 @@ $wgCentralAuthUDPAddress = false;
 $wgCentralAuthNew2UDPPrefix = '';
 
 /**
- * A CSS file version. Change each time centralauth.css is changed.
- */
-$wgCentralAuthStyleVersion = 1;
-
-/**
  * List of local pages global users may edit while being globally locked.
  */
 $wgCentralAuthLockedCanEdit = array();
@@ -145,28 +137,35 @@ $wgCentralAuthLockedCanEdit = array();
 $wgCentralAuthWikisPerSuppressJob = 10;
 
 /**
+ * Like $wgReadOnly, used to set extension to database read only mode
+ * @var bool
+ */
+$wgCentralAuthReadOnly = false;
+
+/**
  * Initialization of the autoloaders, and special extension pages.
  */
 $caBase = dirname( __FILE__ );
-$wgAutoloadClasses['SpecialCentralAuth'] = "$caBase/SpecialCentralAuth.php";
-$wgAutoloadClasses['SpecialMergeAccount'] = "$caBase/SpecialMergeAccount.php";
-$wgAutoloadClasses['SpecialGlobalUsers'] = "$caBase/SpecialGlobalUsers.php";
+$wgAutoloadClasses['SpecialCentralAuth'] = "$caBase/specials/SpecialCentralAuth.php";
+$wgAutoloadClasses['SpecialMergeAccount'] = "$caBase/specials/SpecialMergeAccount.php";
+$wgAutoloadClasses['SpecialGlobalUsers'] = "$caBase/specials/SpecialGlobalUsers.php";
 $wgAutoloadClasses['CentralAuthUser'] = "$caBase/CentralAuthUser.php";
 $wgAutoloadClasses['CentralAuthPlugin'] = "$caBase/CentralAuthPlugin.php";
 $wgAutoloadClasses['CentralAuthHooks'] = "$caBase/CentralAuthHooks.php";
 $wgAutoloadClasses['CentralAuthSuppressUserJob'] = "$caBase/SuppressUserJob.php";
 $wgAutoloadClasses['WikiSet'] = "$caBase/WikiSet.php";
-$wgAutoloadClasses['SpecialAutoLogin'] = "$caBase/SpecialAutoLogin.php";
+$wgAutoloadClasses['SpecialAutoLogin'] = "$caBase/specials/SpecialAutoLogin.php";
 $wgAutoloadClasses['CentralAuthUserArray'] = "$caBase/CentralAuthUserArray.php";
 $wgAutoloadClasses['CentralAuthUserArrayFromResult'] = "$caBase/CentralAuthUserArray.php";
-$wgAutoloadClasses['SpecialGlobalGroupMembership'] = "$caBase/SpecialGlobalGroupMembership.php";
+$wgAutoloadClasses['SpecialGlobalGroupMembership'] = "$caBase/specials/SpecialGlobalGroupMembership.php";
 $wgAutoloadClasses['CentralAuthGroupMembershipProxy'] = "$caBase/CentralAuthGroupMembershipProxy.php";
-$wgAutoloadClasses['SpecialGlobalGroupPermissions'] = "$caBase/SpecialGlobalGroupPermissions.php";
-$wgAutoloadClasses['SpecialEditWikiSets'] = "$caBase/SpecialEditWikiSets.php";
+$wgAutoloadClasses['SpecialGlobalGroupPermissions'] = "$caBase/specials/SpecialGlobalGroupPermissions.php";
+$wgAutoloadClasses['SpecialWikiSets'] = "$caBase/specials/SpecialWikiSets.php";
 $wgAutoloadClasses['ApiQueryGlobalUserInfo'] = "$caBase/ApiQueryGlobalUserInfo.php";
+$wgAutoloadClasses['CentralAuthReadOnlyError'] = "$caBase/CentralAuthReadOnlyError.php";
 
 $wgExtensionMessagesFiles['SpecialCentralAuth'] = "$caBase/CentralAuth.i18n.php";
-$wgExtensionAliasesFiles['SpecialCentralAuth'] = "$caBase/CentralAuth.alias.php";
+$wgExtensionMessagesFiles['SpecialCentralAuthAliases'] = "$caBase/CentralAuth.alias.php";
 
 $wgJobClasses['crosswikiSuppressUser'] = 'CentralAuthSuppressUserJob';
 
@@ -190,6 +189,7 @@ $wgHooks['UserSetCookies'][] = 'CentralAuthHooks::onUserSetCookies';
 $wgHooks['UserLoadDefaults'][] = 'CentralAuthHooks::onUserLoadDefaults';
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'CentralAuthHooks::onGetUserPermissionsErrorsExpensive';
 $wgHooks['MakeGlobalVariablesScript'][] = 'CentralAuthHooks::onMakeGlobalVariablesScript';
+$wgHooks['SpecialPasswordResetOnSubmit'][] = 'CentralAuthHooks::onSpecialPasswordResetOnSubmit';
 
 // For interaction with the Special:Renameuser extension
 $wgHooks['RenameUserWarning'][] = 'CentralAuthHooks::onRenameUserWarning';
@@ -205,6 +205,8 @@ $wgAvailableRights[] = 'centralauth-lock';
 $wgAvailableRights[] = 'centralauth-oversight';
 $wgAvailableRights[] = 'globalgrouppermissions';
 $wgAvailableRights[] = 'globalgroupmembership';
+$wgAvailableRights[] = 'centralauth-autoaccount';
+
 $wgGroupPermissions['steward']['centralauth-unmerge'] = true;
 $wgGroupPermissions['steward']['centralauth-lock'] = true;
 $wgGroupPermissions['steward']['centralauth-oversight'] = true;
@@ -215,13 +217,13 @@ $wgSpecialPages['AutoLogin'] = 'SpecialAutoLogin';
 $wgSpecialPages['MergeAccount'] = 'SpecialMergeAccount';
 $wgSpecialPages['GlobalGroupMembership'] = 'SpecialGlobalGroupMembership';
 $wgSpecialPages['GlobalGroupPermissions'] = 'SpecialGlobalGroupPermissions';
-$wgSpecialPages['EditWikiSets'] = 'SpecialEditWikiSets';
+$wgSpecialPages['WikiSets'] = 'SpecialWikiSets';
 $wgSpecialPages['GlobalUsers'] = 'SpecialGlobalUsers';
 $wgSpecialPageGroups['CentralAuth'] = 'users';
 $wgSpecialPageGroups['MergeAccount'] = 'login';
 $wgSpecialPageGroups['GlobalGroupMembership'] = 'users';
 $wgSpecialPageGroups['GlobalGroupPermissions'] = 'users';
-$wgSpecialPageGroups['EditWikiSets'] = 'wiki';
+$wgSpecialPageGroups['WikiSets'] = 'wiki';
 $wgSpecialPageGroups['GlobalUsers'] = 'users';
 
 $wgAPIMetaModules['globaluserinfo'] = 'ApiQueryGlobalUserInfo';
@@ -240,24 +242,94 @@ $wgLogActions['suppress/setstatus'] = 'centralauth-log-entry-chgstatus';
 
 $wgLogTypes[]                          = 'gblrights';
 $wgLogNames['gblrights']               = 'centralauth-rightslog-name';
-$wgLogHeaders['gblrights']	           = 'centralauth-rightslog-header';
+$wgLogHeaders['gblrights']             = 'centralauth-rightslog-header';
 $wgLogActions['gblrights/usergroups']  = 'centralauth-rightslog-entry-usergroups';
 $wgLogActions['gblrights/groupperms']  = 'centralauth-rightslog-entry-groupperms';
 $wgLogActions['gblrights/groupprms2']  = 'centralauth-rightslog-entry-groupperms2';
 $wgLogActions['gblrights/groupprms3']  = 'centralauth-rightslog-entry-groupperms3';
-foreach( array( 'newset', 'setrename', 'setnewtype', 'setchange' ) as $type )
-	$wgLogActionsHandlers["gblrights/{$type}"] = 'efHandleWikiSetLogEntry';
 
+foreach ( array( 'newset', 'setrename', 'setnewtype', 'setchange', 'deleteset' ) as $type ) {
+	$wgLogActionsHandlers["gblrights/{$type}"] = 'efHandleWikiSetLogEntry';
+}
+
+$commonModuleInfo = array(
+	'localBasePath' => dirname( __FILE__ ) . '/modules',
+	'remoteExtPath' => 'CentralAuth/modules',
+);
+
+$wgResourceModules['ext.centralauth'] = array(
+	'scripts' => 'ext.centralauth.js',
+	'styles' => 'ext.centralauth.css',
+	'messages' => array(
+		'centralauth-merge-method-primary',
+		'centralauth-merge-method-primary-desc',
+		'centralauth-merge-method-new',
+		'centralauth-merge-method-new-desc',
+		'centralauth-merge-method-empty',
+		'centralauth-merge-method-empty-desc',
+		'centralauth-merge-method-password',
+		'centralauth-merge-method-password-desc',
+		'centralauth-merge-method-mail',
+		'centralauth-merge-method-mail-desc',
+		'centralauth-merge-method-admin',
+		'centralauth-merge-method-admin-desc',
+		'centralauth-merge-method-login',
+		'centralauth-merge-method-login-desc',
+	),
+) + $commonModuleInfo;
+
+$wgResourceModules['ext.centralauth.noflash'] = array(
+	'styles' => 'ext.centralauth.noflash.css',
+) + $commonModuleInfo;
+
+// If AntiSpoof is installed, we can do some AntiSpoof stuff for CA
+// Though, doing it this way, AntiSpoof has to be loaded/included first
+// I guess this is bug 30234
+if ( MWInit::classExists( 'AntiSpoof' ) ) {
+	$wgExtensionCredits['antispam'][] = array(
+		'path' => __FILE__,
+		'name' => 'AntiSpoof for CentralAuth',
+		'url' => 'https://www.mediawiki.org/wiki/Extension:AntiSpoof',
+		'author' => 'Sam Reed',
+		'descriptionmsg' => 'centralauth-antispoof-desc',
+	);
+	$wgAutoloadClasses['CentralAuthSpoofUser'] = "$caBase/AntiSpoof/CentralAuthSpoofUser.php";
+	$wgAutoloadClasses['CentralAuthAntiSpoofHooks'] = "$caBase/AntiSpoof/CentralAuthAntiSpoofHooks.php";
+
+	$wgHooks['AbortNewAccount'][] = 'CentralAuthAntiSpoofHooks::asAbortNewAccountHook';
+	$wgHooks['AddNewAccount'][] = 'CentralAuthAntiSpoofHooks::asAddNewAccountHook';
+	$wgHooks['RenameUserComplete'][] = 'CentralAuthAntiSpoofHooks::asAddRenameUserHook';
+}
+
+/**
+ * @param $type
+ * @param $action
+ * @param $title
+ * @param $skin Skin
+ * @param $params
+ * @param $filterWikilinks bool
+ * @return String
+ */
 function efHandleWikiSetLogEntry( $type, $action, $title, $skin, $params, $filterWikilinks = false ) {
-	wfLoadExtensionMessages('SpecialCentralAuth');
-	$link = $skin ? $skin->makeLinkObj( $title, $params[0] ) : $params[0];
-	if( $action == 'newset' )
-		$args = array( WikiSet::formatType( $params[1] ), $params[2] );
-	if( $action == 'setrename' )
-		$args = array( $params[1] );
-	if( $action == 'setnewtype' )
-		$args = array( WikiSet::formatType( $params[1] ), WikiSet::formatType( $params[2] ) );
-	if( $action == 'setchange' )
-		$args = array( $params[1] ? $params[1] : wfMsg( 'rightsnone' ), $params[2] ? $params[2] : wfMsg( 'rightsnone' ) );
+	$link = Linker::makeLinkObj( $title, htmlspecialchars( $params[0] ) );
+
+	switch( $action ) {
+		case 'newset':
+			$args = array( WikiSet::formatType( $params[1] ), $params[2] );
+			break;
+		case 'setrename':
+			$args = array( $params[1] );
+			break;
+		case 'setnewtype':
+			$args = array( WikiSet::formatType( $params[1] ), WikiSet::formatType( $params[2] ) );
+			break;
+		case 'setchange':
+			$args = array( $params[1]
+				? $params[1] : wfMsg( 'rightsnone' ), $params[2] ? $params[2] : wfMsg( 'rightsnone' ) );
+			break;
+		default: //'deleteset'
+			$args = array();
+	}
+
 	return wfMsgReal( "centralauth-rightslog-entry-{$action}", array_merge( array( $link ), $args ), true, !$skin );
 }

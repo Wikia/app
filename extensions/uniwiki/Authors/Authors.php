@@ -14,8 +14,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Authors',
 	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
-	'description'    => 'Appends a list of contributors to articles',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Authors',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Uniwiki_Authors',
 	'descriptionmsg' => 'authors-desc',
 );
 
@@ -69,7 +68,7 @@ function UW_Authors_List ( &$out, &$text ) {
 	// now build a sensible authors display in HTML
 	require_once ( "includes/Credits.php" );
 
-	wfLoadExtensionMessages( 'Authors' );
+	
 
 	$authors = "\n<div class='authors'>" .
 		"<h4>" . wfMsg( 'authors_authors' ) . "</h4>" .

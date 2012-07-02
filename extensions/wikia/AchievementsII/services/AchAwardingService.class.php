@@ -14,7 +14,7 @@ class AchAwardingService {
         private $mCityId;
 
 	private static $mDone = false;
-        
+
         public function __construct( $city_id = null ) {
             if ( is_null( $city_id ) ) {
                 global $wgCityId;
@@ -68,40 +68,40 @@ class AchAwardingService {
 		wfProfileOut(__METHOD__);
 	}
 
-	
+
 	public function processSharing($articleID, $sharerID, $IP) {
 		global $wgEnableAchievementsForSharing;
-		
+
 		if(empty($wgEnableAchievementsForSharing)) {
 			return;
 		}
-		
+
 		wfProfileIn(__METHOD__);
 
 		$this->mUser = User::newFromID($sharerID);
-		
+
 		if(!$this->mUser->isLoggedIn()) {
 			wfProfileOut(__METHOD__);
 			return;
 		}
-		
+
 		$this->mUserCountersService = new AchUserCountersService($this->mUser->getID());
 		$this->mCounters = $this->mUserCountersService->getCounters();
 		$this->loadUserBadges();
 
 		/*
 		 * BADGE_SHARING
-		 * 
+		 *
 		 * Here is the structure of counter array for sharing badge
-		 * 
+		 *
 		 * This method is called from two different places:
 		 * - from sharing feature
 		 * -- creates empty array assigned to article_id which will be used then to store IPs of visitors to specific article
 		 * -- add user IP to IPs array
-		 * 
+		 *
 		 * - from special page to which shared link lead to
 		 * -- add user IP to IPs array of specific article_id, if this IP is not there yet and if it's not in IPs array as well
-		 * 
+		 *
 		 * [
 		 * 	ips: [<ip>, <ip>]
 		 * 	article_ids: [
@@ -133,14 +133,14 @@ class AchAwardingService {
 		$this->mUserCountersService->save();
 		$this->processCountersForInTrack();
 		$this->saveBadges();
-		
+
 		if(count($this->mNewBadges) > 0) {
 			$this->calculateAndSaveScore();
 		}
 
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	public function processSaveComplete($article, $user, $revision, $status) {
 		wfProfileIn(__METHOD__);
 
@@ -254,13 +254,13 @@ class AchAwardingService {
 				$this->mNewBadges[$key]['wiki_id'] = $this->mCityId;
 				$dbw->replace('ach_user_badges', null, $this->mNewBadges[$key], __METHOD__);
 			}
-			
+
 			$dbw->commit();
-			
+
 			//notify the user only if he wants to be notified
 			if(!($this->mUser->getOption('hidepersonalachievements'))) {
 				$_SESSION['achievementsNewBadges'] = true;
-				
+
 				// Hook to give backend stuff something to latch onto at award-time rather than notifcation-time.
 				// NOTE: This has the limitation that it is only called for a max of one badge per page.
 				// If the user earned multiple badges on the same page, the hook will only be run on the badge which getBadgeToNotify() determines is more important.
@@ -272,13 +272,13 @@ class AchAwardingService {
 					wfRunHooks('AchievementEarned', array($this->mUser, $badge));
 				}
 			}
-			
+
 			//touch user when badges are given
 			$this->mUser->invalidateCache();
-			
+
 			//purge the user page to update counters/ranking/badges/score, FB#2872
 			$this->mUser->getUserPage()->purgeSquid();
-			
+
 			//run a hook to let other extensions know when Achievements-related cache should be purged
 			wfRunHooks( 'AchievementsInvalidateCache', array( $this->mUser ) );
 		}
@@ -307,7 +307,7 @@ class AchAwardingService {
 						$eventsCounter = 0;
 						foreach($badge_counter['article_ids'] as $article_id => $ips) {
 							$eventsCounter += count($ips);
-						}						
+						}
 					}
 				} else {
 					$eventsCounter = $badge_counter;
@@ -395,22 +395,22 @@ class AchAwardingService {
 							        'iutitle' => "File:{$inserted_image['il_to']}",
 							        'iulimit' => $imageUsageLimit,
 							);
-							
+
 							try {
 							        wfProfileIn(__METHOD__ . '::apiCall');
-								
+
 							        $api = new ApiMain(new FauxRequest($params));
 							        $api->execute();
 							        $res = $api->getResultData();
-								
+
 							        wfProfileOut(__METHOD__ . '::apiCall');
-								
+
 							        if (is_array($res['query']['imageusage'])) {
 							              $imageUsageCount = count($res['query']['imageusage']);
 							        }
 							}
 							catch(Exception $e) {};
-							
+
 							if($imageUsageCount < $imageUsageLimit)
 								$this->mCounters[BADGE_PICTURE]++;
 						}
@@ -522,7 +522,7 @@ class AchAwardingService {
 			if($this->mTitle->isContentPage() && $this->mStatus->value['new'] != true) {
 				if(empty($this->mCounters[BADGE_POUNCE]) || !in_array($this->mArticle->getID(), $this->mCounters[BADGE_POUNCE])) {
 					$firstRevision = $this->mTitle->getFirstRevision();
-					
+
 					if( $firstRevision instanceof Revision && ( strtotime( wfTimestampNow() ) - strtotime($firstRevision->getTimestamp()) < ( 3600 /* 1h */ ) ) ) {
 						if(empty($this->mCounters[BADGE_POUNCE])) {
 							$this->mCounters[BADGE_POUNCE] = array();
@@ -598,7 +598,7 @@ class AchAwardingService {
 						$wgIP = '127.0.0.1';
 
 						$userPageArticle->doEdit( wfMsgForContent('welcome-user-page', $userPageTitle->getText() ), '', $userWikia->isAllowed('bot') ? EDIT_FORCE_BOT : 0, false, $userWikia );
-						
+
 						//restore original IP from user session
 						$wgIP = $origIP;
 					}
@@ -681,15 +681,15 @@ class AchAwardingService {
 	 */
 	public static function canEarnBadges( User $user = null ) {
 		global $wgWikiaBotLikeUsers, $wgUser;
-		
+
 		if ( empty ( $user ) ) {
 			$user = $wgUser;
 		}
-		
+
 		if (
 			$user->isAnon() ||
 			$user->isBlocked() ||
-			( $user->isBot() || in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) ||
+			( $user->isAllowed( 'bot' ) || in_array( $user->getName(), $wgWikiaBotLikeUsers ) ) ||
 			/*
 			 * certain users (like staff and helpers) should not earn badges
 			 * unless they also belong to a group that explicitly states they should
@@ -699,7 +699,7 @@ class AchAwardingService {
 		) {
 			return false;
 		}
-		
+
 		return true;
 	}
 }

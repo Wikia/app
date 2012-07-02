@@ -3,6 +3,7 @@ var WallMessageForm = $.createClass(Observable, {
 		WallMessageForm.superclass.constructor.apply(this,arguments);
 		this.model = model;
 		this.page = page;
+		this.wall = $('#Wall');
 	},
 
 	loginBeforeAction: function(action) {

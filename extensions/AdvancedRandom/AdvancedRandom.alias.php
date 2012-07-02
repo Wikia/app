@@ -2,160 +2,178 @@
 /**
  * Aliases for Special:AdvancedRandom
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English
- * @author Jon Harald Søby
- */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'AdvancedRandom' => array( 'AdvancedRandom' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'AdvancedRandom' => array( 'عشوائي_متقدم' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'AdvancedRandom' => array( 'عشوائى_متقدم' ),
 );
 
 /** Bulgarian (Български) */
-$aliases['bg'] = array(
-	'AdvancedRandom' => array( 'Случайна страница плюс' ),
+$specialPageAliases['bg'] = array(
+	'AdvancedRandom' => array( 'Случайна_страница_плюс' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'AdvancedRandom' => array( 'NaprednoSlucajno' ),
 );
 
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'AdvancedRandom' => array( 'Spertula_hazardo' ),
+);
+
 /** Spanish (Español) */
-$aliases['es'] = array(
-	'AdvancedRandom' => array( 'AleatorioAvanzado', 'Aleatorio avanzado' ),
+$specialPageAliases['es'] = array(
+	'AdvancedRandom' => array( 'AleatorioAvanzado', 'Aleatorio_avanzado' ),
 );
 
 /** Persian (فارسی) */
-$aliases['fa'] = array(
+$specialPageAliases['fa'] = array(
 	'AdvancedRandom' => array( 'تصادفی_پیشرفته' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
-	'AdvancedRandom' => array( 'Ehdollinen satunnaissivu' ),
+$specialPageAliases['fi'] = array(
+	'AdvancedRandom' => array( 'Ehdollinen_satunnaissivu' ),
 );
 
 /** Hebrew (עברית) */
-$aliases['he'] = array(
+$specialPageAliases['he'] = array(
 	'AdvancedRandom' => array( 'אקראי_מתקדם' ),
 );
 
+/** 湘语 (湘语) */
+$specialPageAliases['hsn'] = array(
+	'AdvancedRandom' => array( '高级随机' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
-$aliases['ht'] = array(
-	'AdvancedRandom' => array( 'RandonmAvanse' ),
+$specialPageAliases['ht'] = array(
+	'AdvancedRandom' => array( 'OazaAvanse' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
-	'AdvancedRandom' => array( 'Fejletlebb véletlen' ),
+$specialPageAliases['hu'] = array(
+	'AdvancedRandom' => array( 'Fejletlebb_véletlen' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'AdvancedRandom' => array( 'Aleatori avantiate' ),
+$specialPageAliases['ia'] = array(
+	'AdvancedRandom' => array( 'Aleatori_avantiate' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'AdvancedRandom' => array( 'Sembarang lanjut', 'SembarangLanjut' ),
+$specialPageAliases['id'] = array(
+	'AdvancedRandom' => array( 'Sembarang_lanjut', 'SembarangLanjut' ),
 );
 
 /** Italian (Italiano) */
-$aliases['it'] = array(
+$specialPageAliases['it'] = array(
 	'AdvancedRandom' => array( 'CasualeAvanzata' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'AdvancedRandom' => array( '高度なおまかせ表示' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
-	'AdvancedRandom' => array( 'Besser zohfällejje Sigg' ),
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
+	'AdvancedRandom' => array( 'Besser_zohfällejje_Sigg' ),
+);
+
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'AdvancedRandom' => array( 'KualunkeAdelantado' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'AdvancedRandom' => array( 'Zoufall' ),
 );
 
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'AdvancedRandom' => array( 'СлучајнаНапредна' ),
+);
+
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'AdvancedRandom' => array( 'നൂതനക്രമരഹിതം' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'AdvancedRandom' => array( 'प्रगताविशीष्ट' ),
 );
 
-/** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'AdvancedRandom' => array( 'Uut-ebreid_willekeurig' ),
-);
-
-/** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'AdvancedRandom' => array( 'UitgebreidWillekeurig' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
 	'AdvancedRandom' => array( 'Avansert_tilfeldig_side' ),
 );
 
-/** Romanian (Română) */
-$aliases['ro'] = array(
-	'AdvancedRandom' => array( 'Aleatoriu avansat' ),
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'AdvancedRandom' => array( 'Uutebreid_willekeurig' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'AdvancedRandom' => array( 'UitgebreidWillekeurig' ),
+);
+
+/** Romanian (Română) */
+$specialPageAliases['ro'] = array(
+	'AdvancedRandom' => array( 'Aleatoriu_avansat' ),
+);
+
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'AdvancedRandom' => array( 'प्रगताअविशीष्ट' ),
 );
 
 /** Sinhala (සිංහල) */
-$aliases['si'] = array(
+$specialPageAliases['si'] = array(
 	'AdvancedRandom' => array( 'ප්‍රගතඅහඹු' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'AdvancedRandom' => array( 'RozšírenéNáhodné' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'AdvancedRandom' => array( 'Mas masulong na paghanap ng alin mang pahina' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'AdvancedRandom' => array( 'GelişmişRastgele' ),
 );
 
 /** Simplified Chinese (‪中文(简体)‬) */
-$aliases['zh-hans'] = array(
+$specialPageAliases['zh-hans'] = array(
 	'AdvancedRandom' => array( '高级随机页面' ),
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */
-$aliases['zh-hant'] = array(
+$specialPageAliases['zh-hant'] = array(
 	'AdvancedRandom' => array( '高級隨機頁面' ),
 );
-

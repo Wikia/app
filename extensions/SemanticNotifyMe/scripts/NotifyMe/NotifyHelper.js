@@ -4,7 +4,7 @@
 *
 *  NotifyHelper.js
 *  Manages major functionalities and GUI of the User Notification Interface
-*  @author Dch [hehehu@gmail.com]
+*  @author ning [hehehu@gmail.com]
 */
 
 var notifyhelper = null;
@@ -117,7 +117,7 @@ addNotifyToTable:function(nid, enabled){
 	ntr.appendChild(td);
 	item = document.createElement("a");
 	td.appendChild(item);
-	item.href = "index.php?title=Special:NotifyMe&feed=rss&nid=" + nid;
+	item.href = wgScript + "?title=Special:NotifyMe&feed=rss&nid=" + nid;
 	item.target = "_blank";
 	item.innerHTML = $('nmqname').value;
 
@@ -165,12 +165,12 @@ addNotifyToTable:function(nid, enabled){
 
 		item = document.createElement("div");
 		td.appendChild(item);
-		item.class = "page_name_auto_complete";
+		item.className = "page_name_auto_complete";
 		item.id = "nmdiv_" + nid;
 	}
 
 	$('nmtoolbar').parentNode.insertBefore(ntr, $('nmtoolbar'));
-	attachAutocompleteToField("nmd_" + nid);
+	nmAttachAutocompleteToField("nmd_" + nid);
 },
 
 doUpdateMail:function() {
@@ -438,13 +438,13 @@ copyToClipboard:function(id){
 	}
 	/*ENDLOG*/
 	var text = $(id).value;
-	var succ = 'The RSS feed url was successfully copied to your clipboard';
-	var fail = 'Your browser does not allow clipboard access.\nThe RSS feed url could not be copied to your clipboard.\nPlease copy the RSS feed url manually.';
-	 if (window.clipboardData){ //IE
+	var succ = nmLanguage.getMessage('NM_FEED_COPY_SUCC');
+	var fail = nmLanguage.getMessage('NM_FEED_COPY_FAIL');
+ 	if (window.clipboardData){ //IE
 		window.clipboardData.setData("Text", text);
 		alert(succ);
 	}
-	  else if (window.netscape) {
+  	else if (window.netscape) {
 		try {
 			netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
 			var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
@@ -489,11 +489,11 @@ saveQueryToNotify:function() {
 		nmdlg.id = "addnotifydialogue";
 		nmdlg.className = "topDialogue";
 		nmdlg.style.display = "none";
-		var html = "Do you really want to receive any notification of article-updates followed after your query?<br/>";
-		html += "Name of the notification: <input type=\"text\" id=\"nmqname\"/><br />";
-		html += "<input type=\"checkbox\" id=\"nmqrall\" checked>&nbsp;Notify me all semantic attributes\' change of monitored pages (Report All)<br />";
-		html += "<input type=\"checkbox\" id=\"nmqsall\">&nbsp;Show all query results with notification (Show All)<br />";
-		html += "<span class=\"qibutton\" onclick=\"notifyhelper.doSaveToNotifyQI()\">OK</span>&nbsp;<span class=\"qibutton\" onclick=\"notifyhelper.doCancelNotifyQI()\">Cancel</span>";
+		var html = nmLanguage.getMessage('NM_SAVE_CONFIRM') + "<br/>";
+		html += nmLanguage.getMessage('NM_SAVE_NAME') + " <input type=\"text\" id=\"nmqname\"/><br />";
+		html += "<input type=\"checkbox\" id=\"nmqrall\" checked>&nbsp;" + nmLanguage.getMessage('NM_SAVE_REPORT_ALL') + "<br />";
+		html += "<input type=\"checkbox\" id=\"nmqsall\">&nbsp;" + nmLanguage.getMessage('NM_SAVE_SHOW_ALL') + "<br />";
+		html += "<span class=\"qibutton\" onclick=\"notifyhelper.doSaveToNotifyQI()\">" + nmLanguage.getMessage('NM_SAVE_OK') + "</span>&nbsp;<span class=\"qibutton\" onclick=\"notifyhelper.doCancelNotifyQI()\">" + nmLanguage.getMessage('NM_SAVE_CANCEL') + "</span>";
 		nmdlg.innerHTML = html;
 	}
 	$('shade').toggle();
@@ -514,13 +514,6 @@ doSaveToNotifyQI:function(){
 	else if (!qihelper.queries[0].isEmpty()){ //only do this if the query is not empty
 		var ask = qihelper.recurseQuery(0, "parser"); // Get full ask syntax
 		qihelper.queries[0].getDisplayStatements().each(function(s) { ask += "\n| ?" + s});
-		if($('layout_intro').value!="") ask += "\n| intro=" + $('layout_intro').value;
-		if($('layout_sort').value!=gLanguage.getMessage('QI_ARTICLE_TITLE')) ask += "\n| sort=" + $('layout_sort').value;
-		if($('layout_limit').value!="") ask += "\n| limit=" + $('layout_limit').value;
-		if($('layout_label').value!="") ask += "\n| mainlabel=" + $('layout_label').value;
-		if($('layout_order').value!="ascending") ask += "\n| order=descending";
-		if($('layout_default').value!="") ask += "\n| default=" + $('layout_default').value;
-		if(!$('layout_headers').checked) ask += "\n| headers=hide";
 
 		var params = ask.replace(/&/gm, "&amp;").replace(/,/gm, "&comma;") + ",";
 		params += ($('nmqrall').checked ? 1 : 0) + ",";
@@ -541,7 +534,7 @@ saveNotifyQI:function(request){
 		s = s.substring(2);
 		var i = s.indexOf(",");
 		var nid = s.substring(0,i);
-		alert("Notify create successfully!" + s.substring(i+1));
+		alert(nmLanguage.getMessage('NM_SAVE_SUCC') + s.substring(i+1));
 	} else alert(s);
 	$('addnotifydialogue').toggle();
 	$('shade').toggle();
@@ -561,4 +554,91 @@ function initialize_notify(){
 	// SMW / Halo extension contains wibbit which hooks all checkboxes,
 	// have to load the event handler afterwards
 	if($('nmemail')) $('nmemail').onclick = function() {notifyhelper.doUpdateMail();};
+}
+
+// copy from SMWHalo extension scripts/OntologyBrowser/generalTools.js
+var OBPendingIndicator = Class.create();
+OBPendingIndicator.prototype = {
+	initialize: function(container) {
+		this.container = container;
+		this.pendingIndicator = document.createElement("img");
+		Element.addClassName(this.pendingIndicator, "obpendingElement");
+		this.pendingIndicator.setAttribute("src", wgServer + wgScriptPath + "/extensions/SemanticNotifyMe/skins/ajax-loader.gif");
+		//this.pendingIndicator.setAttribute("id", "pendingAjaxIndicator_OB");
+		//this.pendingIndicator.style.left = (Position.cumulativeOffset(this.container)[0]-Position.realOffset(this.container)[0])+"px";
+		//this.pendingIndicator.style.top = (Position.cumulativeOffset(this.container)[1]-Position.realOffset(this.container)[1])+"px";
+		//this.hide();
+		//Indicator will not be added to the page on creation anymore but on fist time calling show
+		//this is preventing errors during add if contentelement is not yet available  
+		this.contentElement = null;
+	},
+	
+	/**
+	 * Shows pending indicator relative to given container or relative to initial container
+	 * if container is not specified.
+	 */
+	show: function(container, alignment) {
+		
+		//check if the content element is there
+		if($("content") == null){
+			return;
+		}
+		
+		var alignOffset = 0;
+		if (alignment != undefined) {
+			switch(alignment) {
+				case "right": { 
+					if (!container) { 
+						alignOffset = $(this.container).offsetWidth - 16;
+					} else {
+						alignOffset = $(container).offsetWidth - 16;
+					}
+					
+					break;
+				}
+				case "left": break;
+			}
+		}
+			
+		//if not already done, append the indicator to the content element so it can become visible
+		if(this.contentElement == null) {
+				this.contentElement = $("content");
+				this.contentElement.appendChild(this.pendingIndicator);
+		}
+		if (!container) {
+			this.pendingIndicator.style.left = (alignOffset + Position.cumulativeOffset(this.container)[0]-Position.realOffset(this.container)[0])+"px";
+			this.pendingIndicator.style.top = (Position.cumulativeOffset(this.container)[1]-Position.realOffset(this.container)[1]+this.container.scrollTop)+"px";
+		} else {
+			this.pendingIndicator.style.left = (alignOffset + Position.cumulativeOffset($(container))[0]-Position.realOffset($(container))[0])+"px";
+			this.pendingIndicator.style.top = (Position.cumulativeOffset($(container))[1]-Position.realOffset($(container))[1]+$(container).scrollTop)+"px";
+		}
+		// hmm, why does Element.show(...) not work here?
+		this.pendingIndicator.style.display="block";
+		this.pendingIndicator.style.visibility="visible";
+
+	},
+	
+	/**
+	 * Shows the pending indicator on the specified <element>. This works also
+	 * in popup panels with a defined z-index.
+	 */
+	showOn: function(element) {
+		container = element.offsetParent;
+		$(container).insert({top: this.pendingIndicator});
+		var pOff = $(element).positionedOffset();
+		this.pendingIndicator.style.left = pOff[0]+"px";
+		this.pendingIndicator.style.top  = pOff[1]+"px";
+		this.pendingIndicator.style.display="block";
+		this.pendingIndicator.style.visibility="visible";
+		this.pendingIndicator.style.position = "absolute";
+		
+	},
+	
+	hide: function() {
+		Element.hide(this.pendingIndicator);
+	},
+
+	remove: function() {
+		Element.remove(this.pendingIndicator);
+	}
 }

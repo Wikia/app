@@ -20,7 +20,6 @@ class MultipleLookupPage extends SpecialPage {
 	 */
 	function  __construct() {
 		parent::__construct( "MultiLookup"  /*class*/, 'multilookup' /*restriction*/ );
-		wfLoadExtensionMessages( "MultiLookup" );
 	}
 
 	public function execute( $subpage ) {
@@ -52,7 +51,7 @@ class MultipleLookupPage extends SpecialPage {
 
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialMultipleLookup/css/table.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
-				 
+
 		if ( !empty($this->mWiki) ) {
 			$this->showWikiForm();
 		} else {
@@ -64,12 +63,12 @@ class MultipleLookupPage extends SpecialPage {
 	function showMainForm ( $error = "" ) {
 		global $wgOut;
 		wfProfileIn( __METHOD__ );
-		$action = $this->mTitle->escapeLocalURL( "" );
+		$action = htmlspecialchars($this->mTitle->getLocalURL());
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"error"		=> $error,
-			"title" 	=> $this->mTitle,			
+			"title" 	=> $this->mTitle,
 			"action"	=> $action,
 			"username"  => $this->mUsername,
 		) );
@@ -87,10 +86,10 @@ class MultipleLookupPage extends SpecialPage {
 			wfProfileOut( __METHOD__ );
 			return false ;
 		}
-		
-		$action = $this->mTitle->escapeLocalURL("");
+
+		$action = htmlspecialchars($this->mTitle->getLocalURL());
 		$oWiki = WikiFactory::getWikiByDB($this->mWiki);
-				
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"title" 	=> $this->mTitle,
@@ -102,7 +101,7 @@ class MultipleLookupPage extends SpecialPage {
 		$wgOut->addHTML( $oTmpl->execute("wiki-form") );
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	function getResults() {
 		global $wgOut, $wgRequest ;
 		wfProfileIn( __METHOD__ );

@@ -7,23 +7,23 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['parserhook']['geoserver'] = array(
 	'path' => __FILE__,
-        'name' => 'geoserver',
-        'author' => 'Jens Frank',
-        'url' => 'http://www.mediawiki.org/wiki/Extension:geoserver',
-        'description' => 'Allows geotagging using the <nowiki><geo></nowiki> tag. Saves geodata in a WFS-T server, e.g. geoserver.',
+	'name' => 'geoserver',
+	'author' => 'Jens Frank',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:geoserver',
+	'description' => 'Allows geotagging using the <nowiki><geo></nowiki> tag. Saves geodata in a WFS-T server, e.g. geoserver.',
 );
 
-$wgExtensionFunctions[] = "wfGeoserverExtension";
+$wgHooks['ParserFirstCallInit'][] = 'wfGeoserverSetHook';
+#$wgHooks['ArticleSaveComplete'][] = 'articleDeleteGeo';
+$wgHooks['ArticleDelete'][] = 'articleDeleteGeo';
+$wgHooks['ArticleEditUpdatesDeleteFromRecentchanges'][] = 'articleSaveGeo';
 
 /**
  *  Installer
  */
-function wfGeoServerExtension () {
-        global $wgParser, $wgHooks ;
-        $wgParser->setTransparentTagHook ( 'geo' , 'parseGeo' ) ;
-#        $wgHooks['ArticleSaveComplete'][] = 'articleDeleteGeo';
-        $wgHooks['ArticleDelete'][] = 'articleDeleteGeo';
-        $wgHooks['ArticleEditUpdatesDeleteFromRecentchanges'][] = 'articleSaveGeo';
+function wfGeoserverSetHook( $parser ) {
+	$parser->setTransparentTagHook( 'geo', 'parseGeo' );
+	return true;
 }
 
 global $wgAutoloadClasses;
@@ -37,7 +37,7 @@ require_once( dirname(__FILE__) . '/SpecialWikimaps.php' );
  *  Return markup, but also a pointer to Map sources
  */
 function parseGeo ( $text, $params, &$parser ) {
-	global $GeoserverParameters, $wgWikiMapsJS;
+	global $action, $GeoserverParameters, $wgWikiMapsJS;
 	$latpat= '(-?[0-9.]*) *(([0-9.]+) *([0-9.]+)?)? *([NS])';
 	$lonpat= '(-?[0-9.]*) *(([0-9.]+) *([0-9.]+)?)? *([EW])';
 	$featcodepat = '(([AHLPRSTUV])\.([A-Z.]*))?';
@@ -65,7 +65,7 @@ function parseGeo ( $text, $params, &$parser ) {
 		$r = '<script src="' . $wgOpenLayersScript . '"></script>
 		       <script src="'. $wgWikiMapsJS .'"></script>
 		       <script type="text/javascript">
-			  addOnloadHook(WikiMapsInit);
+			  $(WikiMapsInit);
 	  		  var WikiMapsLon = '.$GeoserverParameters["lon"].'; var WikiMapsLat = '.$GeoserverParameters["lat"].';
 	  		  var WikiMapsMajor = "'.$GeoserverParameters["type_major"] .'";
 	  		  var WikiMapsMinor = "'.$GeoserverParameters["type_minor"].'";

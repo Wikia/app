@@ -7,7 +7,8 @@
  * Also adds a new tag <nopreload> which is used to mark sections which
  * shouldn't be preloaded, ever; has no effect on the rendering of pages
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
  
@@ -16,14 +17,12 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-$wgExtensionFunctions[] = 'efPreloader';
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Preloader',
 	'author'         => 'Rob Church',
 	'version'        => '1.1.1',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Preloader',
-	'description'    => 'Provides customisable per-namespace boilerplate text for new pages',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Preloader',
 	'descriptionmsg' => 'preloader-desc',
 );
 $wgExtensionMessagesFiles['Preloader'] =  dirname(__FILE__) . '/Preloader.i18n.php';
@@ -33,21 +32,21 @@ $wgExtensionMessagesFiles['Preloader'] =  dirname(__FILE__) . '/Preloader.i18n.p
  */
 $wgPreloaderSource[ NS_MAIN ] = 'Template:Preload';
 
-function efPreloader() {
-	new Preloader();
-}
+$wgHooks['EditFormPreloadText'][] = 'Preloader::mainHook';
+$wgHooks['ParserFirstCallInit'][] = 'Preloader::setParserHook';
 
 class Preloader {
 
-	function Preloader() {
-		$this->setHooks();
+	public static function setParserHook( $parser ) {
+		$parser->setHook( 'nopreload', array( __CLASS__, 'parserHook' ) );
+		return true;
 	}
 
 	/** Hook function for the preloading */
-	function mainHook( &$text, &$title ) {
-		$src = $this->preloadSource( $title->getNamespace() );
+	public static function mainHook( &$text, &$title ) {
+		$src = self::preloadSource( $title->getNamespace() );
 		if( $src ) {
-			$stx = $this->sourceText( $src );
+			$stx = self::sourceText( $src );
 			if( $stx )
 				$text = $stx;
 		}
@@ -55,7 +54,7 @@ class Preloader {
 	}
 
 	/** Hook function for the parser */
-	function parserHook( $input, $args, &$parser ) {
+	public static function parserHook( $input, $args, &$parser ) {
 		$output = $parser->parse( $input, $parser->getTitle(), $parser->getOptions(), false, false );
 		return $output->getText();
 	}
@@ -67,7 +66,7 @@ class Preloader {
 	 * @param $namespace Namespace to check for
 	 * @return mixed
 	 */ 
-	function preloadSource( $namespace ) {
+	static function preloadSource( $namespace ) {
 		global $wgPreloaderSource;
 		if( isset( $wgPreloaderSource[ $namespace ] ) ) {
 			return $wgPreloaderSource[ $namespace ];
@@ -82,11 +81,11 @@ class Preloader {
 	 * @param $page Text form of the page title
 	 * @return mixed
 	 */
-	function sourceText( $page ) {
+	static function sourceText( $page ) {
 		$title = Title::newFromText( $page );
 		if( $title && $title->exists() ) {
 			$revision = Revision::newFromTitle( $title );
-			return $this->transform( $revision->getText() );
+			return self::transform( $revision->getText() );
 		} else {
 			return false;
 		}
@@ -98,14 +97,7 @@ class Preloader {
 	 * @param $text
 	 * @return string
 	 */
-	function transform( $text ) {
+	static function transform( $text ) {
 		return trim( preg_replace( '/<nopreload>.*<\/nopreload>/s', '', $text ) );
-	}
-
-	/** Register the hook functions with MediaWiki */
-	function setHooks() {
-		global $wgHooks, $wgParser;
-		$wgHooks['EditFormPreloadText'][] = array( &$this, 'mainHook' );
-		$wgParser->setHook( 'nopreload', array( &$this, 'parserHook' ) );
 	}
 }

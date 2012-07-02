@@ -116,6 +116,9 @@ class JSMessages {
 		$lang = $this->app->wf->GetLangObj(false /* $langCode */);
 		$langCode = $lang->getCode();
 
+		if($lang instanceof StubUserLang) {
+			$lang = $lang->_newObject();
+		}
 		$messages = $this->getAllMessages($lang);
 
 		// apply pattern

@@ -254,7 +254,7 @@ class FLV_Util_AMFUnserialize {
         $date = date( 'Y-m-d\TH:i:s', floor( $ms / 1000 ) ) . '.' . str_pad( $ms % 1000, 3, '0', STR_PAD_RIGHT );
         if ( $ofs > 0 )
             return $date . '+' . str_pad( floor( $ofs / 60 ), 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $ofs % 60, 2, '0', STR_PAD_LEFT );
-        else if ( $ofs < 0 )
+        elseif ( $ofs < 0 )
             return $date . '-' . str_pad( floor( $ofs / 60 ), 2, '0', STR_PAD_LEFT ) . ':' . str_pad( $ofs % 60, 2, '0', STR_PAD_LEFT );
         else
             return $date . 'Z';

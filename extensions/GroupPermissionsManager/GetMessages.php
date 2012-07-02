@@ -16,6 +16,5 @@ $files = scandir(dirname(__FILE__) . '/plugins/messages');
 foreach($files as $file) {
 	if(preg_match('/\.i18n\.php5?$/i', $file)) {
 		$wgExtensionMessagesFiles[$file] = dirname(__FILE__) . '/plugins/messages/' . $file;
-		wfLoadExtensionMessages($file);
 	}
 }

@@ -10,7 +10,7 @@ class UploadPhotosController extends WikiaController {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
-		$licenses = new Licenses(array('id' => 'wpLicense', 'name' => 'License'));
+		$licenses = new Licenses(array('id' => 'wpLicense', 'name' => 'License', 'fieldname' => 'wpLicense'));
 		$this->licensesHtml = $licenses->getInputHTML(null);
 
 		wfProfileOut(__METHOD__);
@@ -97,7 +97,7 @@ class UploadPhotosController extends WikiaController {
 		global $wgRequest;
 
 		$existsWarning = SpecialUpload::ajaxGetExistsWarning($wgRequest->getVal('wpDestFile'));
-		if(!empty($existsWarning) && $existsWarning != '&nbsp;') {
+		if(!empty($existsWarning) && $existsWarning != '&#160;') {
 			$existsWarning = '<h3>'.wfMsg('uploadwarning').'</h3>'.$existsWarning;
 		} else {
 			$existsWarning = '';

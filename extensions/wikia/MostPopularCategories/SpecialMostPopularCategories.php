@@ -30,7 +30,7 @@ $wgExtensionFunctions[] = 'wfSetupMostPopularCategories';
 $wgExtensionMessagesFiles["Mostpopularcategories"] = dirname(__FILE__) . '/SpecialMostPopularCategories.i18n.php';
 
 // aliases
-$wgExtensionAliasesFiles['Mostpopularcategories'] = __DIR__ . '/SpecialMostPopularCategories.aliases.php';
+$wgExtensionMessagesFiles['MostpopularcategoriesAliases'] = __DIR__ . '/SpecialMostPopularCategories.aliases.php';
 
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once( "$IP/extensions/ExtensionFunctions.php" );
@@ -42,14 +42,4 @@ $wgSpecialPageGroups['Mostpopularcategories'] = 'highuse';
 function wfSetupMostPopularCategories( $queryPages = array() ) {
     $queryPages[] = array( 'MostpopularcategoriesPage', 'Mostpopularcategories');
     return true;
-}
-
-if (!function_exists('wfGetMostPopularCategoriesFromCache')) {
-    function wfGetMostPopularCategoriesFromCache($limit, $offset) {
-        $class = new MostpopularcategoriesSpecialPage();
-        $class->execute($limit, $offset, false);
-        $data = $class->getResult();
-        
-        return $data;
-    }
 }

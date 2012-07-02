@@ -5,11 +5,11 @@
  * @addtogroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English
  * @author Jon Harald Søby
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
     'UserRenameTool' => array( 'UserRenameTool', 'RenameUserTool' ),
 );

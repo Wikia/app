@@ -18,6 +18,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 		}
 		$this->setUpMockObject('stdClass', $memcParams, false, 'wgMemc');
 		$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
+		$this->mockGlobalVariable('wgParser', F::build('Parser'));
 		$this->mockApp();
 	}
 
@@ -91,21 +92,19 @@ class ArticleServiceTest extends WikiaBaseTest {
 	 * @param $expSnippetText expected output text snippet
 	 */
 	public function testGetTextSnippetTest($snippetLength, $articleText, $expSnippetText) {
-
+		$title = F::build('Title');
 		$this->setUpMockObject('Article', array(
 			'getContent' => $articleText,
-			'getTitle' => F::build('Title'),
-			'getID' => 0 
-		), true, null, false);
+			'getTitle' => $title,
+			'getID' => sha1($articleText),
+			'params' => $title
+		), true, null, true);
 		$this->setUpMock();
 
 		// test
 		$articleService = F::build('ArticleService');
-		$articleMock = F::build('Article');
 		$snippetText = $articleService->getTextSnippet($snippetLength);
-
 		$this->assertEquals($expSnippetText, $snippetText);
-
 	}
 
 	public function getTextSnippetDataProvider() {
@@ -133,7 +132,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 				'{{Quick guide}}
 {{Safe quest}}
 <div style="float:right; width:310px; display:table; margin-top:5px">
-{| class="wikitable infobox" 
+{| class="wikitable infobox"
 |+ \'\'\'{{#if:|{{{name}}}|{{PAGENAME}} }}\'\'\' {{#if:180|<span style="font-size: 80%;">(#180)</span>}}
 			{{#if:[[File:The Firemaker\'s Curse.jpg]]|
 				{{!}}-

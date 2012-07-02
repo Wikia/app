@@ -1,7 +1,6 @@
 <?php
 class SpecialEditTopList extends SpecialPage {
 	function __construct() {
-		wfLoadExtensionMessages( 'TopLists' );
 		parent::__construct( 'EditTopList', 'toplists-create-edit-list', false /* not listed */ );
 	}
 
@@ -34,7 +33,7 @@ class SpecialEditTopList extends SpecialPage {
 		
 		//Check blocks
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
+			throw new UserBlockedError( $wgUser->getBlock() );
 			return;
 		}
 		

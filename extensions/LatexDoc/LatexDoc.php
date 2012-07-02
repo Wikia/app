@@ -9,12 +9,10 @@ $wgExtensionCredits['other'][] = array(
 	'version'     => '0.2',
 	'name'        => 'LatexDoc',
 	'author'      => 'Tim Starling',
-	'url'         => 'http://www.mediawiki.org/wiki/Extension:LatexDoc',
-	'description' => 'LatexDoc',
+	'url'         => 'https://www.mediawiki.org/wiki/Extension:LatexDoc',
 	'descriptionmsg' => 'latexdoc-desc',
 );
 
-$wgExtensionFunctions[] = 'wfLatexDocInit';
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['LatexDoc'] = $dir . 'LatexDoc.i18n.php';
 
@@ -25,7 +23,7 @@ class LatexDoc {
 	var $workingDir;
 	var $workingPath;
 
-	function LatexDoc() {
+	function __construct() {
 		global $wgUploadDirectory, $wgUploadPath;
 
 		$this->workingDir = "$wgUploadDirectory/latexdoc";
@@ -154,9 +152,5 @@ ENDTEXT;
 
 $wgLatexDoc = new LatexDoc;
 
-function wfLatexDocInit() {
-	global $wgHooks, $wgLatexDoc;
-	wfLoadExtensionMessages( 'LatexDoc' );
-	$wgHooks['UnknownAction'][] = &$wgLatexDoc;
-	$wgHooks['ParserBeforeStrip'][] = &$wgLatexDoc;
-}
+$wgHooks['UnknownAction'][] = &$wgLatexDoc;
+$wgHooks['ParserBeforeStrip'][] = &$wgLatexDoc;

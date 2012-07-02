@@ -1,145 +1,139 @@
 <?php
 /**
+ * Implements Special:Lockdb
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @file
  * @ingroup SpecialPage
  */
 
 /**
- * Constructor
- */
-function wfSpecialLockdb() {
-	global $wgUser, $wgOut, $wgRequest;
-
-	if( !$wgUser->isAllowed( 'siteadmin' ) ) {
-		$wgOut->permissionRequired( 'siteadmin' );
-		return;
-	}
-
-	# If the lock file isn't writable, we can do sweet bugger all
-	global $wgReadOnlyFile;
-	if( !is_writable( dirname( $wgReadOnlyFile ) ) ) {
-		DBLockForm::notWritable();
-		return;
-	}
-
-	$action = $wgRequest->getVal( 'action' );
-	$f = new DBLockForm();
-
-	if ( 'success' == $action ) {
-		$f->showSuccess();
-	} else if ( 'submit' == $action && $wgRequest->wasPosted() &&
-		$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
-		$f->doSubmit();
-	} else {
-		$f->showForm( '' );
-	}
-}
-
-/**
  * A form to make the database readonly (eg for maintenance purposes).
+ *
  * @ingroup SpecialPage
  */
-class DBLockForm {
+class SpecialLockdb extends FormSpecialPage {
 	var $reason = '';
 
-	function DBLockForm() {
-		global $wgRequest;
-		$this->reason = $wgRequest->getText( 'wpLockReason' );
+	public function __construct() {
+		parent::__construct( 'Lockdb', 'siteadmin' );
 	}
 
-	function showForm( $err ) {
-		global $wgOut, $wgUser;
-
-		$wgOut->setPagetitle( wfMsg( 'lockdb' ) );
-		$wgOut->addWikiMsg( 'lockdbtext' );
-
-		if ( $err != "" ) {
-			$wgOut->setSubtitle( wfMsg( 'formerror' ) );
-			$wgOut->addHTML( '<p class="error">' . htmlspecialchars( $err ) . "</p>\n" );
-		}
-		$lc = htmlspecialchars( wfMsg( 'lockconfirm' ) );
-		$lb = htmlspecialchars( wfMsg( 'lockbtn' ) );
-		$elr = htmlspecialchars( wfMsg( 'enterlockreason' ) );
-		$titleObj = SpecialPage::getTitleFor( 'Lockdb' );
-		$action = $titleObj->escapeLocalURL( 'action=submit' );
-		$reason = htmlspecialchars( $this->reason );
-		$token = htmlspecialchars( $wgUser->editToken() );
-
-		$wgOut->addHTML( <<<HTML
-<form id="lockdb" method="post" action="{$action}">
-{$elr}:
-<textarea name="wpLockReason" rows="10" cols="60" wrap="virtual">{$reason}</textarea>
-<table border="0">
-	<tr>
-		<td align="right">
-			<input type="checkbox" name="wpLockConfirm" />
-		</td>
-		<td align="left">{$lc}</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td align="left">
-			<input type="submit" name="wpLock" value="{$lb}" />
-		</td>
-	</tr>
-</table>
-<input type="hidden" name="wpEditToken" value="{$token}" />
-</form>
-HTML
-);
-
+	public function requiresWrite() {
+		return false;
 	}
 
-	function doSubmit() {
-		/*
-		 * WIKIA-SPECIFIC CHANGES
-		 * use $wgReadOnly instead, to prevent unnecessary stat()s (rt#20875)
-		 */
-		global $wgOut, $wgUser, $wgLang, $wgRequest, $wgCityId;
+	public function checkExecutePermissions( User $user ) {
 		global $wgReadOnlyFile;
 
-		if ( ! $wgRequest->getCheck( 'wpLockConfirm' ) ) {
-			$this->showForm( wfMsg( 'locknoconfirm' ) );
-			return;
+		parent::checkExecutePermissions( $user );
+		# If the lock file isn't writable, we can do sweet bugger all
+		if ( !is_writable( dirname( $wgReadOnlyFile ) ) ) {
+			throw new ErrorPageError( 'lockdb', 'lockfilenotwritable' );
 		}
-		/*
-		 * WIKIA-SPECIFIC CHANGES
-		 * use $wgReadOnly instead, to prevent unnecessary stat()s (rt#20875)
-		 */
-#		$fp = @fopen( $wgReadOnlyFile, 'w' );
+	}
 
-		$reason = $this->reason . "\nby " . $wgUser->getName() . ' at ' . $wgLang->timeanddate( wfTimestampNow() );
-		if ( !WikiFactory::setVarByName( 'wgReadOnly', $wgCityId, $reason ) || !WikiFactory::clearCache( $wgCityId ) ) {
-			$wgOut->showErrorPage( 'lockdb', 'lockdb-wikifactory-error');
-			return;
+	protected function getFormFields() {
+		return array(
+			'Reason' => array(
+				'type' => 'textarea',
+				'rows' => 4,
+				'vertical-label' => true,
+				'label-message' => 'enterlockreason',
+			),
+			'Confirm' => array(
+				'type' => 'toggle',
+				'label-message' => 'lockconfirm',
+			),
+		);
+	}
+
+	protected function alterForm( HTMLForm $form ) {
+		$form->setWrapperLegend( false );
+		$form->setHeaderText( $this->msg( 'lockdbtext' )->parseAsBlock() );
+		$form->setSubmitTextMsg( 'lockbtn' );
+	}
+
+	private function useMWlock() {
+		global $wgReadOnlyFile, $wgContLang;
+		
+		wfSuppressWarnings();
+		$fp = fopen( $wgReadOnlyFile, 'w' );
+		wfRestoreWarnings();
+
+		// wikia change start
+		global $wgUser, $wgCityId;
+		$reason = $this->reason . "\nby " . $wgUser->getName() . ' at ' . $wgContLang->timeanddate( wfTimestampNow() );
+		if( !WikiFactory::setVarByName( 'wgReadOnly', $wgCityId, $reason ) || !WikiFactory::clearCache( $wgCityId ) ) {
+			return Status::newFatal( 'lockdb-wikifactory-error' );
 		}
+		// wikia change end
 
-#		if ( false === $fp ) {
+		if ( false === $fp ) {
 			# This used to show a file not found error, but the likeliest reason for fopen()
 			# to fail at this point is insufficient permission to write to the file...good old
 			# is_writable() is plain wrong in some cases, it seems...
-#			self::notWritable();
-#			return;
-#		}
-#		fwrite( $fp, $this->reason );
-#		fwrite( $fp, "\n<p>(by " . $wgUser->getName() . " at " .
-#		  $wgLang->timeanddate( wfTimestampNow() ) . ")</p>\n" );
-#		fclose( $fp );
-
-		$titleObj = SpecialPage::getTitleFor( 'Lockdb' );
-		$wgOut->redirect( $titleObj->getFullURL( 'action=success' ) );
+			return false;
+		}
+		fwrite( $fp, $data['Reason'] );
+		$timestamp = wfTimestampNow();
+		fwrite( $fp, "\n<p>" . wfMsgExt(
+			'lockedbyandtime',
+			array( 'content', 'parsemag' ),
+			$this->getUser()->getName(),
+			$wgContLang->date( $timestamp ),
+			$wgContLang->time( $timestamp )
+		) . "</p>\n" );
+		fclose( $fp );
+		
+		return true;
+	}
+	
+	private function useWikialock() {
+		global $wgLang, $wgCityId;
+		
+		$reason = $this->reason . "\nby " . $this->getUser()->getName() . ' at ' . $wgLang->timeanddate( wfTimestampNow() );
+		if ( !WikiFactory::setVarByName( 'wgReadOnly', $wgCityId, $reason ) || !WikiFactory::clearCache( $wgCityId ) ) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
-	function showSuccess() {
-		global $wgOut;
+	public function onSubmit( array $data ) {
 
-		$wgOut->setPagetitle( wfMsg( 'lockdb' ) );
-		$wgOut->setSubtitle( wfMsg( 'lockdbsuccesssub' ) );
-		$wgOut->addWikiMsg( 'lockdbsuccesstext' );
+		if ( !$data['Confirm'] ) {
+			return Status::newFatal( 'locknoconfirm' );
+		}
+
+		/* use Wikia lock 
+		if ( $this->useMWlock() === false ) {
+			return Status::newFatal( 'lockfilenotwritable' );
+		} */
+		if ( $this->useWikialock() === false ) {
+			return Status::newFatal( 'lockdb', 'lockdb-wikifactory-error' );
+		}
+
+		return Status::newGood();
 	}
 
-	public static function notWritable() {
-		global $wgOut;
-		$wgOut->showErrorPage( 'lockdb', 'lockfilenotwritable' );
+	public function onSuccess() {
+		$out = $this->getOutput();
+		$out->addSubtitle( $this->msg( 'lockdbsuccesssub' ) );
+		$out->addWikiMsg( 'lockdbsuccesstext' );
 	}
 }

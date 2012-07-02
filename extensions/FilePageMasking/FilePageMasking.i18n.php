@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for FilePageMasking extension.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -32,7 +33,14 @@ $messages['ar'] = array(
 	'filepagemasking-desc' => 'يعيد كتابة ".xxx" إلى "_xxx" في وصلات صفحات وصف الملفات',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'filepagemasking-desc' => 'Tresforma ".xxx" en "_xxx" nos enllaces de la páxina a la descripción del ficheru',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -51,6 +59,13 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'filepagemasking-desc' => 'Mijenja ".xxx" u "_xxx" u linkovima stranica opisa datoteke',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'filepagemasking-desc' => 'Substitueix ".xxx" per "_xxx" als enllaços de les pàgines de descripció d\'arxius',
 );
 
 /** German (Deutsch)
@@ -81,6 +96,13 @@ $messages['es'] = array(
 	'filepagemasking-desc' => 'Reescribe ".xxx" en "_xxx" en enlaces de página de descripción de archivo',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'filepagemasking-desc' => ' ".xxx" kendu eta "_xxx" jartzen du fitxategiaren deskribapen orrialde loturetan',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  */
@@ -91,9 +113,10 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Jean-Frédéric
  * @author Quentinv57
+ * @author Urhixidur
  */
 $messages['fr'] = array(
-	'filepagemasking-desc' => 'Remplace ".xxx" par "_xxx" dans les liens de la page de description du fichier',
+	'filepagemasking-desc' => 'Remplace « .xxx » par « _xxx » dans les liens de la page de description du fichier',
 );
 
 /** Galician (Galego)
@@ -122,6 +145,14 @@ $messages['he'] = array(
  */
 $messages['hsb'] = array(
 	'filepagemasking-desc' => 'Přepisuje ".xxx" do "_xxx" we wotkazach stronow datajoweho wopisanja',
+);
+
+/** Haitian (Kreyòl ayisyen)
+ * @author Boukman
+ * @author Jagwar
+ */
+$messages['ht'] = array(
+	'filepagemasking-desc' => 'Ranplase ".xxx" pou "_xxx" nan paj lyen pou deskripsyon fichye a',
 );
 
 /** Hungarian (Magyar)
@@ -159,7 +190,7 @@ $messages['ja'] = array(
 	'filepagemasking-desc' => 'ファイル解説ページへのリンク中の「.xxx」を「_xxx」に書き換える',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -174,11 +205,25 @@ $messages['lb'] = array(
 	'filepagemasking-desc' => 'Ersetzt ".xxx" duerch "_xxx" an de Linke vun der Säit vun der Beschreiwung vum Fichier',
 );
 
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'filepagemasking-desc' => 'Pārveido ".xxx" par "_xxx" saitēs uz failu aprakstiem',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'filepagemasking-desc' => 'Го менува „.xxx“ во „_xxx“ во врските на страницата за опис на податотека',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'filepagemasking-desc' => 'Menulis semula ".xxx" menjadi "_xxx" dalam pautan laman penerangan fail',
 );
 
 /** Nepali (नेपाली)
@@ -205,7 +250,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'filepagemasking-desc' => 'Skriver om «.xxx» til «_xxx» i lenker til filbeskrivelsessider',
 );
 
@@ -235,7 +280,7 @@ $messages['pms'] = array(
  * @author Indech
  */
 $messages['pt'] = array(
-	'filepagemasking-desc' => 'Reescreve ".xxx" como "_xxx" nas ligações para páginas de descrição de ficheiros',
+	'filepagemasking-desc' => 'Reescreve ".xxx" como "_xxx" nos links para páginas de descrição de ficheiros',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -249,7 +294,7 @@ $messages['pt-br'] = array(
  * @author Firilacroco
  */
 $messages['ro'] = array(
-	'filepagemasking-desc' => 'Rescrie ".xxx" în "_xxx" în legăturile către pagina de descriere a fişierului',
+	'filepagemasking-desc' => 'Rescrie ".xxx" în "_xxx" în legăturile către pagina de descriere a fișierului',
 );
 
 /** Tarandíne (Tarandíne)
@@ -273,6 +318,18 @@ $messages['sk'] = array(
 	'filepagemasking-desc' => 'Prepisuje „.xxx“ na „_xxx“ v odkazoch na popisných stránkach súborov',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Charmed94
+ */
+$messages['sr-ec'] = array(
+	'filepagemasking-desc' => 'Записује „.xxx“ у „_xxx“ у опису веза',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'filepagemasking-desc' => 'Zapisuje „.xxx“ u „_xxx“ u opisu veza',
+);
+
 /** Swedish (Svenska)
  * @author Boivie
  */
@@ -285,6 +342,13 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'filepagemasking-desc' => 'ఫైలు వర్ణన పేజీ లంకెలలో ".xxx" నుంచి "_xxx" అని మార్చబడుతుంది',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'filepagemasking-desc' => 'Muling isinusulat ang ".xxx" upang maging "_xxx" sa loob ng mga kawing na pangpaglalarawan ng talaksan',
 );
 
 /** Turkish (Türkçe)
@@ -301,10 +365,37 @@ $messages['uk'] = array(
 	'filepagemasking-desc' => 'Перезаписує ".xxx" на "_xxx" в посиланнях на сторінки описів файлів',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'filepagemasking-desc' => 'Toižetab ".xxx"-n  "_xxx"-ks kosketusiš failoiden ümbrikirjutamižen lehtpolile',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
 $messages['vi'] = array(
 	'filepagemasking-desc' => 'Đổi các liên kết “.xxx” thành “_xxx” trong các trang miêu tả tập tin',
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$messages['zh-hans'] = array(
+	'filepagemasking-desc' => '在档案描述页连结中将 ".xxx" 重写为 "_xxx" 。',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Frankou
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'filepagemasking-desc' => '在檔案描述頁連結中將「.xxx」重寫為「_xxx」。',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Pbdragonwang
+ */
+$messages['zh-tw'] = array(
+	'filepagemasking-desc' => '在檔案描述頁連結中將 ".xxx" 重寫為 "_xxx" 。',
 );
 

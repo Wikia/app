@@ -21,11 +21,6 @@
  * code. Each framework has its own method to verify that the proper code won't be
  * called before it's ready. (Below, lambda represents a named or anonymous function.)
  *
- * MediaWiki:             addOnloadHook(lambda);
- *     This function manages an array of window.onLoad event handlers to be called
- *     be called by a MediaWiki script when the window is fully loaded. Because the
- *     DOM may be ready before the window (due to large images to be downloaded) a
- *     faster alternative is JQuery's document-ready function.
  *
  * FaceBook Connect SDK:  window.fbAsyncInit = lambda;
  *     This global variable is called when the Facebook Connect SDK is fully
@@ -79,7 +74,7 @@ window.onFBloaded = function() {
 /**
  * jQuery code to be run when the DOM is ready to be manhandled.
  */
-$(document).ready(function() {
+$(function() {
 	// Add a pretty logo to Facebook links
 	$('#pt-fbconnect,#pt-fblink,#pt-fbconvert').addClass('mw-fblink');
 
@@ -96,7 +91,7 @@ $(document).ready(function() {
 	});
 
 	//window.fbAsyncInit ();
-	$("#fbconnect a").click( function(ev){
+	$("#fbconnect a").on('click', function(ev){
 		WET.byStr( 'FBconnect/userlinks/connect' );
 		loginByFBConnect();
 		ev.preventDefault();
@@ -189,7 +184,7 @@ function openFbLogin() {
 		return true;
 	}
 */
-	FB.login( sendToConnectOnLogin, { scope : "publish_stream" });
+	FB.login(FB.bind(sendToConnectOnLogin, null), { scope : "publish_stream" });
 }
 
 /**

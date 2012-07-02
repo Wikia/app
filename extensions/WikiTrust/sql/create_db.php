@@ -73,7 +73,7 @@ if (array_key_exists(4, $argv) && is_file($argv[4])){
 // Load all of the MW files.
 include($mw_root."/maintenance/commandLine.inc");
 
-global $wgDBserver, $wgDBname, $wgDBuser, $wgDBprefix, $wgCreateRevisionIndex;
+global $wgDBserver, $wgDBname, $wgDBtype, $wgDBuser, $wgDBprefix, $wgCreateRevisionIndex;
 
 // Source the update scripts
 require($mw_root."/extensions/WikiTrust/includes/TrustUpdateScripts.inc");
@@ -103,7 +103,14 @@ foreach ($db_indexes as $table => $idx){
 }
 
 // We need root priveledges to do this.
-$db_root = Database::newFromParams($wgDBserver, $dba, $dba_pass, $wgDBname);
+$db_root = DatabaseBase::newFromType( $wgDBtype,
+	array(
+		 'host' => $wgDBserver,
+		 'user' => $dba,
+		 'password' => $dba_pass,
+		 'dbname' => $wgDBname
+	)
+);
 
 if (!$do_remove){
   // Now do the actual creating of tables.
@@ -145,5 +152,3 @@ if (!$do_remove){
 $db_root->query("COMMIT");
 
 print ($do_remove)? "Removed tables\n": "Created tables\n";
-
-?>

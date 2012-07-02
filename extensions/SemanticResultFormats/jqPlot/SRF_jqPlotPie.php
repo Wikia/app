@@ -1,66 +1,38 @@
 <?php
+
 /**
  * A query printer for pie charts using the jqPlot JavaScript library.
  *
+ * @since 1.5.1
+ *
+ * @licence GNU GPL v3
+ *
  * @author Sanyam Goyal
  * @author Yaron Koren
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
+class SRFjqPlotPie extends SMWAggregatablePrinter {
+	
+	protected static $m_piechartnum = 1;
+	
+	protected $m_width;
+	protected $m_height;
+	protected $m_charttitle;
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-    die( 'Not an entry point.' );
-}
-
-class SRFjqPlotPie extends SMWResultPrinter {
-	protected $m_width = 400;
-	protected $m_height = 400;
-	protected $m_charttitle = " ";
-	static protected $m_piechartnum = 1;
-
-	protected function readParameters( $params, $outputmode ) {
-		SMWResultPrinter::readParameters( $params, $outputmode );
-		if ( array_key_exists( 'width', $this->m_params ) ) {
-			$this->m_width = $this->m_params['width'];
-		}
-		if ( array_key_exists( 'height', $this->m_params ) ) {
-			$this->m_height = $this->m_params['height'];
-		}
-		if ( array_key_exists( 'charttitle', $this->m_params ) ) {
-			$this->m_charttitle = $this->m_params['charttitle'];
-		} 
+	/**
+	 * (non-PHPdoc)
+	 * @see SMWResultPrinter::handleParameters()
+	 */
+	protected function handleParameters( array $params, $outputmode ) {
+		parent::handleParameters( $params, $outputmode );
+		
+		$this->m_width = $this->m_params['width'];
+		$this->m_height = $this->m_params['height'];
+		$this->m_charttitle = $this->m_params['charttitle'];
 	}
 
 	public function getName() {
 		return wfMsg( 'srf_printername_jqplotpie' );
-	}
-
-	public static function registerResourceModules() {
-		global $wgResourceModules, $srfgIP;
-
-		$resourceTemplate = array(
-			'localBasePath' => $srfgIP . '/jqPlot',
-			'remoteExtPath' => 'SemanticResultFormats/jqPlot'
-		);
-		$wgResourceModules['ext.srf.jqplot'] = $resourceTemplate + array(
-			'scripts' => array(
-				'jquery.jqplot.js',
-			),
-			'styles' => array(
-				'jquery.jqplot.css',
-			),
-			'dependencies' => array(
-			),
-		);
-		$wgResourceModules['ext.srf.jqplotpie'] = $resourceTemplate + array(
-			'scripts' => array(
-				'jqplot.pieRenderer.js',
-				'excanvas.js',
-			),
-			'styles' => array(
-			),
-			'dependencies' => array(
-				'ext.srf.jqplot',
-			),
-		);
 	}
 
 	protected function loadJavascriptAndCSS() {
@@ -69,27 +41,26 @@ class SRFjqPlotPie extends SMWResultPrinter {
 		$wgOut->addModules( 'ext.srf.jqplotpie' );
 	}
 
-	protected function addJavascriptAndCSS() {
+	/**
+	 * Add the JS and CSS resources needed by this chart.
+	 * 
+	 * @since 1.7
+	 */
+	protected function addResources() {
 		if ( self::$m_piechartnum > 1 ) {
 			return;
 		}
 
 		// MW 1.17 +
 		if ( class_exists( 'ResourceLoader' ) ) {
-			self::loadJavascriptAndCSS();
+			$this->loadJavascriptAndCSS();
 			return;
 		}
+		
 		global $wgOut, $srfgScriptPath;
-		global $smwgJQueryIncluded, $srfgJQPlotIncluded;
+		global $srfgJQPlotIncluded;
 
-                if ( !$smwgJQueryIncluded ) {
-			if ( method_exists( 'OutputPage', 'includeJQuery' ) ) {
-				$wgOut->includeJQuery();
-			} else {
-				$scripts[] = "$srfgScriptPath/jqPlot/jquery-1.4.2.min.js";
-			}
-			$smwgJQueryIncluded = true;
-		}
+		$wgOut->includeJQuery();
 
 		if ( !$srfgJQPlotIncluded ) {
 			$srfgJQPlotIncluded = true;
@@ -102,42 +73,33 @@ class SRFjqPlotPie extends SMWResultPrinter {
 		// CSS file
 		$wgOut->addExtensionStyle( "$srfgScriptPath/jqPlot/jquery.jqplot.css" );
 	}
-
-	protected function getResultText( $res, $outputmode ) {
-		global $wgOut, $wgParser;
 	
-		$wgParser->disableCache();
-
-		self::addJavascriptAndCSS();
-
-		$this->isHTML = true;
-
-		$t = "";
-		$pie_data = array();
-		// print all result rows
-		while ( $row = $res->getNext() ) {
-			$name = $row[0]->getNextObject()->getShortWikiText();
-			$name = str_replace( "'", "\'", $name );
-			foreach ( $row as $field ) {
-				while ( ( $object = $field->getNextObject() ) !== false ) {
-					if ( $object->isNumeric() ) { // use numeric sortkey
-						if ( method_exists( $object, 'getValueKey' ) ) {
-							$nr = $object->getValueKey();
-						} else {
-							$nr = $object->getNumericValue();
-						}
-						$pie_data[] .= "['$name', $nr]";
-					}
-				}
-			}
+	/**
+	 * Get the JS and HTML that needs to be added to the output to create the chart.
+	 * 
+	 * @since 1.7
+	 * 
+	 * @param array $data label => value
+	 */
+	protected function getFormatOutput( array $data ) {
+		$json = array();
+		
+		foreach ( $data as $name => $value ) {
+			$json[] = array( $name, $value );
 		}
-		$pie_data_str = "[[" . implode( ', ', $pie_data ) . "]]";
+		
+		$pie_data_str = '[' . FormatJson::encode( $json ) . ']';
 		$pieID = 'pie' . self::$m_piechartnum;
+		
 		self::$m_piechartnum++;
+
+    $chartlegend    = FormatJson::encode( $this->params['chartlegend'] );
+    $legendlocation = FormatJson::encode( $this->params['legendlocation'] );
+		$datalabels     = FormatJson::encode( $this->params['datalabels'] );
+		$datalabeltype  = FormatJson::encode( $this->params['datalabeltype'] );
 
 		$js_pie =<<<END
 <script type="text/javascript">
-jQuery.noConflict();
 jQuery(document).ready(function(){
 	jQuery.jqplot.config.enablePlugins = true;
 	plot1 = jQuery.jqplot('$pieID', $pie_data_str, {
@@ -145,30 +107,64 @@ jQuery(document).ready(function(){
 		seriesDefaults: {
 			renderer: jQuery.jqplot.PieRenderer,
 			rendererOptions: {
+			  showDataLabels: $datalabels,
+			  dataLabels: $datalabeltype,
 				sliceMargin:2
 			}
 		},
-			legend: { show:true }
+			legend: { show:$chartlegend, location: $legendlocation }
 	});
 });
 </script>
 END;
+		global $wgOut;
 		$wgOut->addScript( $js_pie );
 
-		$text =<<<END
-<div id="$pieID" style="margin-top: 20px; margin-left: 20px; width: {$this->m_width}px; height: {$this->m_height}px;"></div>
-
-END;
-		return $text;
+		$this->isHTML = true;
+		
+		return Html::element(
+			'div',
+			array(
+				'id' => $pieID,
+				'style' => Sanitizer::checkCss( "margin-top: 20px; margin-left: 20px; width: {$this->m_width}px; height: {$this->m_height}px;" )
+			)
+		);
 	}
 
+	/**
+	 * @see SMWResultPrinter::getParameters
+	 */
 	public function getParameters() {
-		return array(
-			array( 'name' => 'limit', 'type' => 'int', 'description' => wfMsg( 'smw_paramdesc_limit' ) ),
-			array( 'name' => 'height', 'type' => 'int', 'description' => wfMsg( 'srf_paramdesc_chartheight' ) ),
-			array( 'name' => 'charttitle', 'type' => 'string', 'description' => wfMsg( 'srf_paramdesc_charttitle' ) ),
-			array( 'name' => 'width', 'type' => 'int', 'description' => wfMsg( 'srf_paramdesc_chartwidth' ) ),
-		);
+		$params = parent::getParameters();
+		
+		$params['height'] = new Parameter( 'height', Parameter::TYPE_INTEGER, 400 );
+		$params['height']->setMessage( 'srf_paramdesc_chartheight' );
+
+		// TODO: this is a string to allow for %, but better handling would be nice
+		$params['width'] = new Parameter( 'width', Parameter::TYPE_STRING, '400' );
+		$params['width']->setMessage( 'srf_paramdesc_chartwidth' );
+
+		$params['charttitle'] = new Parameter( 'charttitle', Parameter::TYPE_STRING, ' ' );
+		$params['charttitle']->setMessage( 'srf_paramdesc_charttitle' );
+		
+		$params['distributionlimit']->setDefault( 13 );
+
+ 		$params['chartlegend'] = new Parameter( 'chartlegend', Parameter::TYPE_BOOLEAN, true );
+		$params['chartlegend']->setMessage( 'srf-paramdesc-chartlegend' );
+
+		$params['legendlocation'] = new Parameter( 'legendlocation', Parameter::TYPE_STRING, 'ne' );
+		$params['legendlocation']->setMessage( 'srf-paramdesc-legendlocation' );
+		$params['legendlocation']->addCriteria( new CriterionInArray( 'nw','n', 'ne', 'e', 'se', 's', 'sw', 'w' ) );
+
+		$params['datalabels'] = new Parameter( 'datalabels', Parameter::TYPE_BOOLEAN, false );
+		$params['datalabels']->setMessage( 'srf-paramdesc-datalabels' );
+
+		$params['datalabeltype'] = new Parameter( 'datalabeltype', Parameter::TYPE_STRING, ' ' );
+		$params['datalabeltype']->setMessage( 'srf-paramdesc-datalabeltype' );
+		$params['datalabeltype']->addCriteria( new CriterionInArray( 'percent','value', 'label' ) );
+		
+		
+		return $params;
 	}
 
 }

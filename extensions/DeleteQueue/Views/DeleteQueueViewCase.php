@@ -126,7 +126,7 @@ class DeleteQueueViewCase extends DeleteQueueView {
 		// Display
 		foreach ( $votesByUser as $user => $votes ) {
 			$id = User::idFromName( $user );
-			$user = $sk->userLink( $id, $user ) . '&nbsp;' .
+			$user = $sk->userLink( $id, $user ) . '&#160;' .
 				$sk->userToolLinks( $id, $user );
 
 			$userVotes = array();
@@ -143,7 +143,7 @@ class DeleteQueueViewCase extends DeleteQueueView {
 				);
 
 				if ( $vote['current'] == 0 )
-					$thisvote = Xml::tags( 's', null, $thisvote );
+					$thisvote = Xml::tags( 'del', null, $thisvote );
 
 				$userVotes[] = Xml::tags( 'li', array( 'class' => "mw-deletequeue-vote-$type" ), $thisvote );
 			}

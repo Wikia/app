@@ -54,6 +54,8 @@ class WikiaApiQueryWrite extends ApiQuery {
 			),
 			'redirects' => false,
 			'indexpageids' => false,
+			'converttitles' => false,
+			'iwurl' => false,
 			'export' => false,
 			'exportnowrap' => false
 		);
@@ -115,7 +117,7 @@ class WikiaApiQueryWrite extends ApiQuery {
 			$msg .= implode($lnPrfx, $examples) . "\n";
 		}
 
-		$this->mPageSet = null;
+		//$this->mPageSet = null;
 
 		$msg .= "\n$astriks ".ucfirst($this->mAction).": List  $astriks\n\n";
 		$msg .= $this->makeHelpMsgHelper($wgAPIListModules, 'list');

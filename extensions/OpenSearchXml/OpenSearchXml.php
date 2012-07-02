@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (C) 2008 Brion Vibber <brion@wikimedia.org>
  * http://www.mediawiki.org/
  *
@@ -23,22 +23,26 @@
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'OpenSearchXml',
-	'description'    => 'OpenSearch XML interface provides for text extracts',
 	'descriptionmsg' => 'opensearchxml-desc',
 	'author'         => 'Brion Vibber',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:OpenSearchXml'
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:OpenSearchXml'
 );
 
-$wgExtensionMessagesFiles['OpenSearchXml'] = dirname(__FILE__) . '/OpenSearchXml.i18n.php';
+$dir = dirname(__FILE__);
+
+$wgExtensionMessagesFiles['OpenSearchXml'] = $dir . '/OpenSearchXml.i18n.php';
 
 $wgAPIModules['opensearch'] = 'ApiOpenSearchXml';
-$wgAutoloadClasses['ApiOpenSearchXml'] =
-	dirname(__FILE__) . '/ApiOpenSearchXml.php';
+$wgAutoloadClasses['ApiOpenSearchXml'] = $dir . '/ApiOpenSearchXml.php';
 
 $wgHooks['OpenSearchUrls'][] = 'efOpenSearchXmlUrls';
 
 $wgOpenSearchAdvertiseXml = true;
 
+/**
+ * @param $urls array
+ * @return bool
+ */
 function efOpenSearchXmlUrls( &$urls ) {
 	global $wgEnableAPI, $wgOpenSearchAdvertiseXml;
 	if( $wgEnableAPI && $wgOpenSearchAdvertiseXml ) {
@@ -51,9 +55,14 @@ function efOpenSearchXmlUrls( &$urls ) {
 	return true;
 }
 
+/**
+ * @return string
+ */
 function efOpenSearchXmlTemplate() {
-	global $wgServer, $wgScriptPath;
+	global $wgCanonicalServer, $wgScriptPath;
 	$ns = implode( '|', SearchEngine::defaultNamespaces() );
-	if( !$ns ) $ns = '0';
-	return $wgServer . $wgScriptPath . '/api.php?action=opensearch&format=xml&search={searchTerms}&namespace='.$ns;
+	if( !$ns ) {
+		$ns = '0';
+	}
+	return $wgCanonicalServer . $wgScriptPath . '/api.php?action=opensearch&format=xml&search={searchTerms}&namespace=' . $ns;
 }

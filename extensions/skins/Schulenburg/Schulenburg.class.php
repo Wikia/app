@@ -41,7 +41,7 @@ class SkinSchulenburg extends Skin {
 				padding: 0px;
 				background-image:url(<?php echo htmlspecialchars( "{$this->path}/images/background.gif" ) ; ?> ); background-repeat:repeat-y;
 				background-position:center;
-				background-color:#006699; 
+				background-color:#006699;
 				font-family: Verdana, Arial, Sans-Serif;
 				font-size: 10pt;
 			}
@@ -56,6 +56,18 @@ class SkinSchulenburg extends Skin {
 </html>
 
 <?php
+	}
+
+	/**
+	 * Add skin specific stylesheets
+	 * Calling this method with an $out of anything but the same OutputPage
+	 * inside ->getOutput() is deprecated. The $out arg is kept
+	 * for compatibility purposes with skins.
+	 * @param $out OutputPage
+	 * @delete
+	 */
+	function setupSkinUserCss(OutputPage $out) {
+		// TODO: Implement setupSkinUserCss() method.
 	}
 }
 

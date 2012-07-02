@@ -250,8 +250,6 @@ class FBConnect {
 	public static function coreDisconnectFromFB($user = null){
 		global $wgRequest, $wgUser, $wgAuth;
 
-		wfLoadExtensionMessages('FBConnect');
-
 		if($user == null) {
 			$user = $wgUser;
 		}

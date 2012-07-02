@@ -30,8 +30,6 @@ class CreateQuestionPage extends UnlistedSpecialPage {
 			return true;
 		}
 
-		wfLoadExtensionMessages( 'Answers' );
-
 		$q = new DefaultQuestion( $question );
 
 		if ( !is_object( $q ) ) {

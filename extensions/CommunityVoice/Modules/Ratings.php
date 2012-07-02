@@ -10,7 +10,7 @@ abstract class CommunityVoiceRatings {
 	) {
 		if ( floor( $rating ) > $star ) {
 			return 6;
-		} else if ( floor( $rating ) < $star ) {
+		} elseif ( floor( $rating ) < $star ) {
 			return 0;
 		} else {
 			return round( ( 6 / 10 ) * ( ( $rating - floor( $rating ) ) * 10 ) );
@@ -24,8 +24,8 @@ abstract class CommunityVoiceRatings {
 			'DISTINCT vot_category'
 		);
 		$categories = array();
-		while ( $row = $result->fetchRow() ) {
-			$categories[] = (string)$row['vot_category'];
+		foreach( $result as $row ) {
+			$categories[] = $row->vot_category;
 		}
 		return $categories;
 	}
@@ -40,8 +40,8 @@ abstract class CommunityVoiceRatings {
 			array( 'vot_category' => $category )
 		);
 		$titles = array();
-		while ( $row = $result->fetchRow() ) {
-			$titles[] = (string)$row['vot_title'];
+		foreach ( $result as $row ) {
+			$titles[] = $row->vot_title;
 		}
 		return $titles;
 	}
@@ -127,7 +127,7 @@ abstract class CommunityVoiceRatings {
 	/* Static Functions */
 
 	public static function register() {
-		global $wgParser, $wgAjaxExportList, $wgHooks;
+		global $wgParser, $wgAjaxExportList;
 		// Register the hook with the parser
 		$wgParser->setHook( 'ratings:scale', array( __CLASS__, 'renderScale' ) );
 		// Register ajax response hook
@@ -140,10 +140,21 @@ abstract class CommunityVoiceRatings {
 		$args,
 		$parser
 	) {
-		global $wgUser, $wgTitle, $wgLang;
+
+		if ( !class_exists( 'CsHtml' ) ) {
+			// Better than a fatal.
+			throw new MWException( "CommunityVoice extension requires the extension 'ClientSide' to run" );
+		}
+		global $wgUser, $wgLang, $wgOut;
 		global $egCommunityVoiceResourcesPath;
 		// Disable caching
 		$parser->disableCache();
+
+		// Since we're adding rating stuff to a page
+		// add relavent scripts.
+		// (Not proper way, but works because caching is disabled)
+		CommunityVoice::addScripts( $wgOut );
+
 		// Validate and sanitize incoming arguments
 		$errors = array();
 		$error = false;
@@ -194,6 +205,9 @@ abstract class CommunityVoiceRatings {
 			// Adds content of tag as parsed wiki-text
 			$htmlOut .= $parser->recursiveTagParse( $input );
 		}
+
+		$title = $parser->getTitle();
+
 		// Checks if...
 		if (
 			// User has not voted yet
@@ -205,7 +219,10 @@ abstract class CommunityVoiceRatings {
 			/* Ajax Interaction */
 
 			// Adds scale script
-			$htmlOut .= CsHtml::script(
+			// Note: $wgOut->addInlineScript isn't really
+			// the proper way of doing this, and only
+			// works because caching is disabled, and is evil...
+			$wgOut->addScript( CsHtml::script(
 				CsJs::callFunction(
 					'communityVoice.ratings.scales.add',
 					CsJs::buildInstance(
@@ -219,7 +236,7 @@ abstract class CommunityVoiceRatings {
 								array(
 									'stats' => $stats,
 									'status' => array(
-										'ready' => '&nbsp;',
+										'ready' => '&#160;',
 										'sending' => CommunityVoice::getMessage(
 											'ratings', 'scale-status-sending'
 										),
@@ -232,11 +249,11 @@ abstract class CommunityVoiceRatings {
 									)
 								)
 							),
-							CsJs::toScalar( $wgTitle->getPrefixedText() )
+							CsJs::toScalar( $title->getPrefixedText() )
 						)
 					)
 				)
-			);
+			));
 
 			/* HTML Form Interaction */
 
@@ -256,7 +273,7 @@ abstract class CommunityVoiceRatings {
 				'token' => $wgUser->editToken(),
 				'module' => 'Ratings',
 				'action' => 'ScaleVoteSubmission',
-				'scale[article]' => $wgTitle->getPrefixedText(),
+				'scale[article]' => $title->getPrefixedText(),
 				'scale[category]' => $args['category'],
 				'scale[title]' => $args['title'],
 			);
@@ -336,7 +353,6 @@ abstract class CommunityVoiceRatings {
 		$rating,
 		$article
 	) {
-		global $wgUser;
 		// Adds vote and checks for success
 		if ( self::addVote( $category, $title, $rating ) ) {
 			// Gets new rating data

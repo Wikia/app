@@ -43,7 +43,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'MagicNoNumberedHeadings',
 	'version' => '1.12',
 	'author' => 'Purodha Blissenbach',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:MagicNoNumberedHeadings',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:MagicNoNumberedHeadings',
 	'descriptionmsg' => 'magicnonumberedheadings-desc',
 );
 

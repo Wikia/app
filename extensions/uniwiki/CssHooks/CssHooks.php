@@ -12,8 +12,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'        => __FILE__,
 	'name'        => 'CssHooks',
 	'author'      => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
-	'description' => 'Add some CSS hooks to the HTML output of articles, for better styling',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_CSS_Hooks',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Uniwiki_CSS_Hooks',
 	'descriptionmsg' => 'csshooks-desc',
 );
 

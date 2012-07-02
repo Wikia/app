@@ -30,7 +30,6 @@ class SpecialTranslations extends SpecialAllpages {
 
 		$this->setHeaders();
 		$this->outputHeader();
-
 		self::includeAssets();
 
 		if ( $this->including() ) {
@@ -54,7 +53,7 @@ class SpecialTranslations extends SpecialAllpages {
 		} else {
 			$title = Title::newFromText( $par, $namespace );
 		}
-
+		TranslateUtils::addSpecialHelpLink( $wgOut, 'Help:Extension:Translate/Statistics_and_reporting#Translations_in_all_languages' );
 		if ( !$title ) {
 			$title = Title::makeTitle( NS_MEDIAWIKI, '' );
 			$wgOut->addHTML( $this->namespaceMessageForm( $title ) );
@@ -200,7 +199,7 @@ class SpecialTranslations extends SpecialAllpages {
 		foreach ( $res as $s ) {
 			$key = $s->page_title;
 			$tTitle = Title::makeTitle( $s->page_namespace, $key );
-			$ajaxPageList[] = $tTitle->getDBkey();
+			$ajaxPageList[] = $tTitle->getPrefixedDBkey();
 
 			$code = $this->getCode( $s->page_title );
 
@@ -221,7 +220,7 @@ class SpecialTranslations extends SpecialAllpages {
 				$historyText,
 				array(
 					'action',
-					'title' => wfMsg( 'history-title', $tTitle->getPrefixedDbKey() )
+					'title' => wfMsg( 'history-title', $tTitle->getPrefixedDBkey() )
 				),
 				array( 'action' => 'history' )
 			);
@@ -235,19 +234,15 @@ class SpecialTranslations extends SpecialAllpages {
 			$leftColumn = $tools['history'] . $tools['edit'];
 			$out .= Xml::tags( 'tr', array( 'class' => $class ),
 				Xml::tags( 'td', null, $leftColumn ) .
-				Xml::tags( 'td', null, TranslateUtils::convertWhiteSpaceToHTML( $pageInfo[$key][0] ) )
+				Xml::tags( 'td', array( 'lang' => $code, 'dir' => Language::factory( $code )->getDir() ),
+					TranslateUtils::convertWhiteSpaceToHTML( $pageInfo[$key][0] ) )
 			);
 		}
 
 		$out .= Xml::closeElement( 'table' );
 		$wgOut->addHTML( $out );
 
-		$vars = array(
-			'trlKeys' => $ajaxPageList,
-			'trlMsgNoNext' => wfMsg( 'translate-js-nonext' ),
-			'trlMsgSaveFailed' => wfMsg( 'translate-js-save-failed' ),
-		);
-
+		$vars = array( 'trlKeys' => $ajaxPageList );
 		$wgOut->addScript( Skin::makeVariablesScript( $vars ) );
 	}
 
@@ -270,6 +265,6 @@ class SpecialTranslations extends SpecialAllpages {
 	private static function includeAssets() {
 		global $wgOut;
 		TranslationHelpers::addModules( $wgOut );
-		TranslateUtils::addModules( $wgOut, 'ext.translate.messagetable' );
+		$wgOut->addModules( 'ext.translate.messagetable' );
 	}
 }

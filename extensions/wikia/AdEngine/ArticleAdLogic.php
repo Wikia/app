@@ -647,7 +647,7 @@ class ArticleAdLogic {
 		wfProfileOut(__METHOD__);
 
 		return !empty($wgTitle) && -1 == $wgTitle->getNamespace()
-			&& in_array(SpecialPage::resolveAlias($wgTitle->getDBkey()), $searchPageNames);
+			&& in_array(array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBkey())), $searchPageNames);
 	}
 
 	public static function isExtra() {
@@ -677,8 +677,17 @@ class ArticleAdLogic {
 		global $wgEnableWikiaHubsExt, $wgWikiaHubsPages, $wgTitle;
 		
 		$titleParts = explode('/', $wgTitle->getDBkey());
+		$hub = false;
+		if(!empty($wgEnableWikiaHubsExt)) {
+			foreach($wgWikiaHubsPages as $hubGroup) {
+				if(in_array($titleParts[0], $hubGroup)) {
+					$hub = true;
+				}
+			}
+		}
+
 		wfProfileOut(__METHOD__);
-		return !empty($wgEnableWikiaHubsExt) && in_array($titleParts[0], $wgWikiaHubsPages);
+		return $hub;
 	}
 
 	public static function isAdsEnabledOnWikiaHub() {

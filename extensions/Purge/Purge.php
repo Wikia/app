@@ -11,43 +11,31 @@ $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Purge',
 	'author' => 'Ævar Arnfjörð Bjarmason',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Purge',
-	'description' => 'Adds a purge tab on all normal pages and bypasses the purge check for anonymous users allowing for quick purging of the cache',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Purge',
 	'descriptionmsg' => 'purge-desc',
 );
 
 $dir = dirname( __FILE__ ) . '/';
+$wgHooks['SkinTemplateNavigation::Universal'][] = 'PurgeActionExtension::contentHook';
 $wgExtensionMessagesFiles['Purge'] = $dir . 'Purge.i18n.php';
 
-class PurgeAction {
-	public static function init() {
-		global $wgHooks;
+class PurgeActionExtension{
+	public static function contentHook( $skin, array &$content_actions ) {
+		global $wgRequest, $wgUser;
 
-		$wgHooks['SkinTemplateContentActions'][] = 'PurgeAction::contentHook';
-		#$wgHooks['ArticlePurge'][] = 'PurgeAction::purgeHook';
-	}
-		
-	public static function contentHook( array &$content_actions ) {
-		global $wgRequest, $wgTitle;
-
-		if ( $wgTitle->getNamespace() !== NS_SPECIAL ) {
+		// Use getRelevantTitle if present so that this will work on some special pages
+		$title = method_exists( $skin, 'getRelevantTitle' ) ?
+			$skin->getRelevantTitle() : $skin->getTitle();
+		if ( $title->getNamespace() !== NS_SPECIAL && $wgUser->isAllowed( 'purge' ) ) {
 			$action = $wgRequest->getText( 'action' );
 
-			wfLoadExtensionMessages( 'Purge' );
-
-			$content_actions['purge'] = array(
+			$content_actions['actions']['purge'] = array(
 				'class' => $action === 'purge' ? 'selected' : false,
 				'text' => wfMsg( 'purge' ),
-				'href' => $wgTitle->getLocalUrl( 'action=purge' )
+				'href' => $title->getLocalUrl( 'action=purge' )
 			);
 		}
 
 		return true;
 	}
-
-	public static function purgeHook( Article &$article ) {
-		return false;
-	}
 }
-
-PurgeAction::init();

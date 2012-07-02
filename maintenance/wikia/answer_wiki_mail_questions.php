@@ -15,13 +15,13 @@
  */
 
 function wfMailQuestions( $user, $subject, $body ){
-	
+
 	$headers = "From: $wgEmailFrom\n";
 	$headers .= "Reply-To: $wgEmailFrom\n";
 	$headers .= "Return-Path:$wgEmailFrom\n";
 	$headers .= "MIME-Version: 1.0\n";
 	$headers .= "Content-Type: text/html; charset=UTF-8\n";
-	
+
 	mail( $user->getEmail(), $subject, $body, $headers );
 	return 1;
 }
@@ -63,41 +63,41 @@ $cutoff_end = $dbr->timestamp( $cutoff_unixtime_end );
 //GET PAGES FOR EMAIL BODY
 //NEW QUESTIONS
 list ($page,$recentchanges) = $dbr->tableNamesN('page','recentchanges');
-$res = $dbr->select( "$page, $recentchanges ", 
+$res = $dbr->select( "$page, $recentchanges ",
 		array( 'page_title','rc_timestamp' ),
-		array("page_id = rc_cur_id","rc_new" => 1, 'rc_timestamp >= ' . $dbr->addQuotes( $cutoff_start ), 
+		array("page_id = rc_cur_id","rc_new" => 1, 'rc_timestamp >= ' . $dbr->addQuotes( $cutoff_start ),
 			'rc_timestamp <= ' . $dbr->addQuotes( $cutoff_end ),
-			"page_namespace" => NS_MAIN, "page_is_redirect" => 0 ), __METHOD__, 
+			"page_namespace" => NS_MAIN, "page_is_redirect" => 0 ), __METHOD__,
 	array("ORDER BY" => "rc_timestamp desc"  )
 );
 
 $body = "<table cellpadding='5'><tr><td><b>New Questions on answer.wikia.com</b><br><br></td></tr>
-	<tr><td><a href=\"" . SpecialPage::getTitleFor( 'Recentchanges' )->escapeFullURL() . "\">" . wfMsg("see_all_changes") . "</a><br><br></td></tr>";
-	
+	<tr><td><a href=\"" . htmlspecialchars(SpecialPage::getTitleFor( 'Recentchanges' )->getFullURL()) . "\">" . wfMsg("see_all_changes") . "</a><br><br></td></tr>";
+
 while ($row = $dbr->fetchObject( $res ) ) {
 	$title = Title::newFromDBKey( $row->page_title );
-	
-	$body .= "<tr><td height='30' style='border-bottom:1px solid #eeeeee'>* <b><a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a></b> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . SpecialPage::getTitleFor( 'Movepage', $title->getText() )->escapeFullURL() . "\">" . wfMsg("movepagebtn") . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></td></tr>\n";
+
+	$body .= "<tr><td height='30' style='border-bottom:1px solid #eeeeee'>* <b><a href=\"" . htmlspecialchars($title->getFullURL()) . "\">" . $title->getText() . "</a></b> | <a href=\"" . htmlspecialchars($title->getFullURL("action=edit")) . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . htmlspecialchars(SpecialPage::getTitleFor( 'Movepage', $title->getText() )->getFullURL()) . "\">" . wfMsg("movepagebtn") . "</a> | <a href=\"" . htmlspecialchars($title->getFullURL("action=delete")) . "\">" . wfMsg("delete") . "</a></td></tr>\n";
 }
 $body .= "</table>";
 
 //ALL EDITS
-$res = $dbr->select( "$page, $recentchanges ", 
+$res = $dbr->select( "$page, $recentchanges ",
 		array( 'page_title','rc_timestamp' ),
-		array("page_id = rc_cur_id","rc_new" => 0, 'rc_timestamp >= ' . $dbr->addQuotes( $cutoff_start ), 
+		array("page_id = rc_cur_id","rc_new" => 0, 'rc_timestamp >= ' . $dbr->addQuotes( $cutoff_start ),
 			'rc_timestamp <= ' . $dbr->addQuotes( $cutoff_end ),
-			"page_namespace" => NS_MAIN, "page_is_redirect" => 0 ), __METHOD__, 
+			"page_namespace" => NS_MAIN, "page_is_redirect" => 0 ), __METHOD__,
 	array("ORDER BY" => "rc_timestamp desc"  )
 );
 
 $edits_body = "<table cellpadding='5'><tr><td><b>Edited Questions on answer.wikia.com</b><br><br></td></tr>
-	<tr><td><a href=\"" . SpecialPage::getTitleFor( 'Recentchanges' )->escapeFullURL() . "\">" . wfMsg("see_all_changes") . "</a><br><br></td></tr>";
-	
+	<tr><td><a href=\"" . htmlspecialchars(SpecialPage::getTitleFor( 'Recentchanges' )->getFullURL()) . "\">" . wfMsg("see_all_changes") . "</a><br><br></td></tr>";
+
 $edits = array();
 while ($row = $dbr->fetchObject( $res ) ) {
 	$title = Title::newFromDBKey( $row->page_title );
 	if( in_array( $row->page_title, $edits ) ) continue;
-	$edits_body .= "<tr><td height='30' style='border-bottom:1px solid #eeeeee'>* <b><a href=\"" . $title->escapeFullURL() . "\">" . $title->getText() . "</a></b> | <a href=\"" . $title->escapeFullURL("action=edit") . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . SpecialPage::getTitleFor( 'Movepage', $title->getText() )->escapeFullURL() . "\">" . wfMsg("movepagebtn") . "</a> | <a href=\"" . $title->escapeFullURL("action=delete") . "\">" . wfMsg("delete") . "</a></td></tr>\n";
+	$edits_body .= "<tr><td height='30' style='border-bottom:1px solid #eeeeee'>* <b><a href=\"" . htmlspecialchars($title->getFullURL()) . "\">" . $title->getText() . "</a></b> | <a href=\"" . htmlspecialchars($title->getFullURL("action=edit")) . "\">" . wfMsg("answer_this_question") . "</a> | <a href=\"" . htmlspecialchars(SpecialPage::getTitleFor( 'Movepage', $title->getText() )->getFullURL()) . "\">" . wfMsg("movepagebtn") . "</a> | <a href=\"" . htmlspecialchars($title->getFullURL("action=delete")) . "\">" . wfMsg("delete") . "</a></td></tr>\n";
 	$edits[] = $row->page_title;
 }
 $edits_body .= "</table>";
@@ -109,15 +109,15 @@ if( !in_array( $group, $groups ) ){
 }
 
 list ($user,$user_groups) = $dbr->tableNamesN('user','user_groups');
-$res = $dbr->select( "$user_groups  LEFT JOIN $user ON user_id=ug_user", 
+$res = $dbr->select( "$user_groups  LEFT JOIN $user ON user_id=ug_user",
 		array( 'user_name','user_id' ),
-	array("ug_group"=>$group ), __METHOD__, 
+	array("ug_group"=>$group ), __METHOD__,
 	""
 );
 
 $emails_sent = 0;
 while ($row = $dbr->fetchObject( $res ) ) {
-	
+
 	$user = User::newFromName( $row->user_name );
 	$user->load();
 	if( $user->getEmail() ){

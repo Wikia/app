@@ -60,7 +60,7 @@ class GeoParam {
 	 *   Constructor:
 	 *   Read coordinates, and if there is a range, read the range
 	 */
-	function GeoParam( $param = false )
+	function __construct( $param = false )
 	{
 		$this->pieces=array();
 		if ( is_string( $param ) ) {
@@ -235,15 +235,15 @@ class GeoParam {
 	function make_position( $lat, $lon ) {
 		$latdms = GeoParam::make_minsec( $lat );
 		$londms = GeoParam::make_minsec( $lon );
-		$outlat = intval(abs($latdms['deg'])) . "&deg;&nbsp;";
-		$outlon = intval(abs($londms['deg'])) . "&deg;&nbsp;";
+		$outlat = intval(abs($latdms['deg'])) . "°&#160;";
+		$outlon = intval(abs($londms['deg'])) . "°&#160;";
 		if ($latdms['min'] != 0 or $londms['min'] != 0
 		 or $latdms['sec'] != 0 or $londms['sec'] != 0) {
-			$outlat .= intval($latdms['min']) . "&prime;&nbsp;";
-			$outlon .= intval($londms['min']) . "&prime;&nbsp;";
+			$outlat .= intval($latdms['min']) . "′&#160;";
+			$outlon .= intval($londms['min']) . "′&#160;";
 			if ($latdms['sec'] != 0 or $londms['sec'] != 0) {
-				$outlat .= $latdms['sec']. "&Prime;&nbsp;";
-				$outlon .= $londms['sec']. "&Prime;&nbsp;";
+				$outlat .= $latdms['sec']. "″&#160;";
+				$outlon .= $londms['sec']. "″&#160;";
 			}
 		}
 		return $outlat . $latdms['NS'] . " " . $outlon . $londms['EW'];
@@ -312,6 +312,15 @@ class GeoParam {
 		}
 		return $res."&pagetitle={$this->title}";
 	}
+	/**
+	 * Produce array for Linker functions
+	 */
+	function get_param_array() {
+		$res = $this->coor;
+		$res['pagetitle'] = $this->title;
+
+		return $res;
+	}
 
 	/**
 	 *  Produce markup suitable for use in page
@@ -332,21 +341,21 @@ class GeoParam {
 			return $this->getMicroformat( $this->coor['latdeg'].';', $this->coor['londeg'] );
 		} elseif ($n == 4) {
 			return $this->getMicroformat(
-				$this->coor['latdeg'].'&deg;&nbsp;'. $this->coor['latns'],
-			       $this->coor['londeg'].'&deg;&nbsp;'. $this->coor['lonew'] );
+				$this->coor['latdeg'].'°&#160;'. $this->coor['latns'],
+			       $this->coor['londeg'].'°&#160;'. $this->coor['lonew'] );
 		} elseif ($n == 6) {
 			return $this->getMicroformat(
-				$this->coor['latdeg'].'&deg;'. $this->coor['latmin'].'&prime;&nbsp;'.
+				$this->coor['latdeg'].'°'. $this->coor['latmin'].'′&#160;'.
 			       $this->coor['latns'],
-			       $this->coor['londeg'].'&deg;'. $this->coor['lonmin'].'&prime;&nbsp;'.
+			       $this->coor['londeg'].'°'. $this->coor['lonmin'].'′&#160;'.
 			       $this->coor['lonew'] );
 		} elseif ($n == 8) {
 			return $this->getMicroformat(
-				$this->coor['latdeg'].'&deg;'.  $this->coor['latmin'].'&prime;'.
-			       $this->coor['latsec'].'&Prime;&nbsp;'.  $this->coor['latns'],
+				$this->coor['latdeg'].'°'.  $this->coor['latmin'].'′'.
+			       $this->coor['latsec'].'″&#160;'.  $this->coor['latns'],
 
-			       $this->coor['londeg'].'&deg;'.  $this->coor['lonmin'].'&prime;'.
-			       $this->coor['lonsec'].'&Prime;&nbsp;'.  $this->coor['lonew'] );
+			       $this->coor['londeg'].'°'.  $this->coor['lonmin'].'′'.
+			       $this->coor['lonsec'].'″&#160;'.  $this->coor['lonew'] );
 		} else {
 			return $this->get_error();
 		}

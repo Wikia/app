@@ -34,7 +34,7 @@ define('toc', ['track', 'events'], function toc(track, events){
 		if(table){
 			d.getElementById('toctitle').insertAdjacentHTML('afterbegin', '<span class=chev></span>');
 			d.body.className += ' hasToc';
-			conStyle = d.getElementById('wkMainCnt').style;
+			conStyle = d.getElementById('mw-content-text').style;
 
 			table.addEventListener(click, function(ev){
 				ev.preventDefault();

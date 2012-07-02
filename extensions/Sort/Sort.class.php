@@ -3,7 +3,8 @@
 /**
  * Parser hook extension adds a <sort> tag to wiki markup
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * @copyright © 2006-2007 Rob Church
  * @licence GNU General Public Licence 2.0
@@ -11,7 +12,7 @@
 class Sorter {
 
 	private $parser = null;
-	
+
 	private $order = 'asc';
 	private $class = 'ul';
 
@@ -36,8 +37,9 @@ class Sorter {
 			$value = strtolower( $value );
 			switch( $name ) {
 				case 'class':
-					if( $value == 'ul' || $value == 'ol' )
+					if( $value == 'ul' || $value == 'ol' ) {
 						$this->class = $value;
+					}
 					break;
 				case 'order':
 					$this->order = $value == 'desc'
@@ -76,8 +78,9 @@ class Sorter {
 			$lines[ $line ] = $this->stripWikiTokens( $line );
 		}
 		natsort( $lines );
-		if( $this->order == 'desc' )
+		if( $this->order == 'desc' ) {
 			$lines = array_reverse( $lines, true );
+		}
 		wfProfileOut( __METHOD__ );
 		return array_keys( $lines );
 	}
@@ -102,9 +105,11 @@ class Sorter {
 	protected function makeList( $lines ) {
 		$list = array();
 		$token = $this->class == 'ul' ? '*' : '#';
-		foreach( $lines as $line )
-			if( strlen( $line ) > 0 )
+		foreach( $lines as $line ) {
+			if( strlen( $line ) > 0 ) {
 				$list[] = "{$token} {$line}";
+			}
+		}
 		return trim( implode( "\n", $list ) );
 	}
 
