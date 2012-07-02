@@ -1,3 +1,4 @@
+<? if ($checkAccess): ?>
 <form action="<?= $wg->ScriptPath ?>/wikia.php?controller=SpecialPromoteController&method=uploadImage&format=html" id="ImageUploadForm" method="POST" enctype="multipart/form-data">
 	<p class="error"></p>
 	<input type="file" name="wpUploadFile" />
@@ -7,3 +8,6 @@
 	<? endif; ?>
 	<input type="submit" id="submit-button" value="Submit" />
 </form>
+<? else: ?>
+	<?= wfMsg('promote-wrong-rights'); ?>
+<? endif; ?>
