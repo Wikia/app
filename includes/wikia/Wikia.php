@@ -1829,11 +1829,10 @@ class Wikia {
      * @return bool true because it's a hook
      */
     static public function onResourceLoaderRegisterModules( ResourceLoader $resourceLoader ) {
-		global $wgScriptPath, $wgScriptExtension, $wgMedusaHostPrefix, $wgCdnRootUrl, $wgDevelEnvironment;
+		global $wgScriptPath, $wgScriptExtension, $wgMedusaHostPrefix, $wgCdnRootUrl, $wgDevelEnvironment, $wgStagingEnvironment;
 
 		// Determine the shared domain name
-		$host = empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix;
-		if ( empty($wgDevelEnvironment) ) {
+		if ( empty($wgDevelEnvironment) && empty($wgStagingEnvironment) ) {
 			$host = 'http://' . (empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix) . 'wikia.com';
 		} else {
 			$host = $wgCdnRootUrl;
