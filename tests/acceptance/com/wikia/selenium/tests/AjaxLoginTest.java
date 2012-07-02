@@ -5,7 +5,7 @@ import static com.thoughtworks.selenium.grid.tools.ThreadSafeSeleniumSessionStor
 import static org.testng.AssertJUnit.assertTrue;
 
 public class AjaxLoginTest extends BaseTest {
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testAjaxLogin() throws Exception {
 		openAndWait("index.php");
 		waitForElement("//a[@class='ajaxLogin']");
@@ -23,7 +23,7 @@ public class AjaxLoginTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testAjaxLoginMailNewPassword() throws Exception {
 		openAndWait("index.php");
 		waitForElement("//a[@class='ajaxLogin']");
@@ -39,7 +39,7 @@ public class AjaxLoginTest extends BaseTest {
 		waitForElement("wpGoLogin");
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testAjaxLoginNewAccount() throws Exception {
 		openAndWait("index.php");
 		waitForElement("//a[@class='ajaxLogin']");

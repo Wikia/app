@@ -85,6 +85,7 @@ var UserLoginModal = {
 		}
 
 		editpromptable.click(function(ev) {
+			ev.stopPropagation(); // (BugId:34026) stop bubbling up when parent and child both have event listener. 
 			if(UserLogin.isForceLogIn()) {
 				ev.preventDefault();
 			}

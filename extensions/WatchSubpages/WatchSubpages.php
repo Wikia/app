@@ -23,14 +23,13 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'author' => '[http://www.strategywiki.org/wiki/User:Prod User:Prod]',
 	'name' => 'Watch Guide Subpages',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:WatchSubpages',
-	'description' => 'Quickly add all subpages of a guide to the users watchlist',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:WatchSubpages',
 	'descriptionmsg' => 'watchsubpages-desc',
 );
 
 // Set up the new special page
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['WatchSubpages'] = $dir . 'WatchSubpages.i18n.php';
-$wgExtensionAliasesFiles['WatchSubpages'] = $dir . 'WatchSubpages.alias.php';
+$wgExtensionMessagesFiles['WatchSubpagesAlias'] = $dir . 'WatchSubpages.alias.php';
 $wgAutoloadClasses['WatchSubpages'] = $dir . 'WatchSubpages_body.php';
 $wgSpecialPages['WatchSubpages'] = 'WatchSubpages';

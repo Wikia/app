@@ -30,7 +30,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'version' => '1.0.1',
 	'author' => "[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]",
 	'description' => 'A Category Tag Cloud derived, improved, and fixed from the YetAnotherTagCloud Extension',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:WikiCategoryTagCloud',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:WikiCategoryTagCloud',
 );
 
 // Avoid unstubbing $wgParser too early on modern (1.12+) MW versions, as per r35980
@@ -95,7 +95,7 @@ function renderTagCloud( $input, $params, $parser ) {
 		}
 	}
 
-	$sql = "SELECT cl_to as title, COUNT(*) as count FROM {$dbr->tableName( 'categorylinks' )} " . $exclude_condition . " GROUP BY cl_to HAVING count >= $min_count_input ORDER BY cl_to ASC";
+	$sql = "SELECT cl_to as title, COUNT(*) as count FROM {$dbr->tableName( 'categorylinks' )} " . $exclude_condition . " GROUP BY cl_to HAVING COUNT(*) >= $min_count_input ORDER BY cl_to ASC";
 
 	$res = $dbr->query( $sql );
 	$count = $dbr->numRows( $res );
@@ -124,7 +124,7 @@ function renderTagCloud( $input, $params, $parser ) {
 		$style = $link_style;
 		if ( $style != '' && substr($style, -1) != ';' ) $style .= ';';
 		$style .= "font-size: {$textSize}%;";
-		$currentRow = "<a class=\"" . implode( ' ', $link_classes ) . "\" style=\"{$style}\" href=\"" . $title->getLocalURL() . "\">" . $title->getText() . "</a>&nbsp; ";
+		$currentRow = "<a class=\"" . implode( ' ', $link_classes ) . "\" style=\"{$style}\" href=\"" . $title->getLocalURL() . "\">" . $title->getText() . "</a>&#160; ";
 		$htmlOut = $htmlOut . $currentRow;
 	}
 	$htmlOut = $htmlOut . '</div>';

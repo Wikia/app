@@ -18,7 +18,7 @@
 		<fieldset>
 			<label><input type="checkbox" name="crossWikia" value="1" <?= ( $isInterWiki ? 'checked' : '' ); ?>/> <?= wfMsg( 'wikiasearch2-search-all-wikia' ); ?></label>
 			<label><input type="checkbox" name="debug" value="1" <?= ( $debug ? 'checked' : '' ); ?>/> Debug mode</label>
-			
+
 			<?php if($isInterWiki) : ?>
 				<?php echo $app->renderView('WikiaSearchController', 'boostSettings'); ?>
 		    <?php endif; ?>
@@ -53,14 +53,14 @@
 				<?php endif ?>
 
 			</p>
-	
+
 			<? if ($results->getQuery() && $query != $results->getQuery()) : ?>
 				<p><?= wfMsg( 'wikiasearch2-spellcheck', $query, $results->getQuery() ) ?></p>
 				<? endif; ?>
 			<? if ( !$hasArticleMatch && $isMonobook ): ?>
 				<?=wfMsgExt('searchmenu-new', array('parse'), $query);?>
 			<? endif; ?>
-	
+
 			<ul class="Results">
 			<?php $pos = 0; ?>
 			<?php foreach( $results as $result ): ?>
@@ -97,7 +97,7 @@
 					<ul class="list loading"></ul>
 				</div>
 			<?php endif; ?>
-			
+
 			<?= $paginationLinks; ?>
 		<?php else:  ?>
 			<? if ( !$hasArticleMatch && $isMonobook ): ?>
@@ -107,4 +107,4 @@
 		<?php endif; ?>
 	<?php endif; ?>
 
-</section> 
+</section>

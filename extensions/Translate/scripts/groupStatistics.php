@@ -372,11 +372,8 @@ foreach ( $languages as $code => $name ) {
 	$rows[$code] = array();
 }
 
-$cache = new ArrayMemoryCache( 'groupstats' );
-
 foreach ( $groups as $groupName => $g ) {
-	// Initialise messages
-	$collection = $g->initCollection( 'en' );
+	$stats = MessageGroupStats::forGroup( $groupName );
 
 	// Perform the statistic calculations on every language
 	foreach ( $languages as $code => $name ) {
@@ -395,26 +392,7 @@ foreach ( $groups as $groupName => $g ) {
 			continue;
 		}
 
-		$incache = $cache->get( $groupName, $code );
-		if ( $incache !== false ) {
-			list( $fuzzy, $translated, $total ) = $incache;
-		} else {
-			$collection->resetForNewLanguage( $code );
-			$collection->filter( 'ignored' );
-			$collection->filter( 'optional' );
-			// Store the count of real messages for later calculation.
-			$total = count( $collection );
-
-			// Count fuzzy first
-			$collection->filter( 'fuzzy' );
-			$fuzzy = $total - count( $collection );
-
-			// Count the completion percent
-			$collection->filter( 'hastranslation', false );
-			$translated = count( $collection );
-
-			$cache->set( $groupName, $code, array( $fuzzy, $translated, $total ) );
-		}
+		list( $total, $translated, $fuzzy ) = $stats[$code];
 
 		$rows[$code][] = array( false, $translated, $total );
 
@@ -422,8 +400,6 @@ foreach ( $groups as $groupName => $g ) {
 			$rows[$code][] = array( true, $fuzzy, $total );
 		}
 	}
-
-	$cache->commit(); // Do not keep open too long to avoid concurrent access
 
 	unset( $collection );
 }

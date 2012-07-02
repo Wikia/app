@@ -193,7 +193,7 @@
 	<!--- Ensure the folder path has no double-slashes, or mkdir may fail on certain platforms --->
 	<cfset sCurrentFolder = rereplace( sCurrentFolder, "//+", "/", "all" )>
 
-	<cfif find( "..", sCurrentFolder) or find( "\", sCurrentFolder) or REFind('(/\.)|(//)|[[:cntrl:]]|([\\:\*\?\"<>])', sCurrentFolder)>
+	<cfif find( "..", sCurrentFolder) or find( "\", sCurrentFolder) or REFind('(/\.)|(//)|[[:cntrl:]]|([\\:\;\.\*\?\"<>])', sCurrentFolder)>
 		<cfif URL.Command eq "FileUpload" or URL.Command eq "QuickUpload">
 			<cfset SendUploadResults( 102, "", "", "") >
 		<cfelse>
@@ -209,7 +209,7 @@
 
 	<!--- Do a cleanup of the folder name to avoid possible problems --->
 	<!--- Remove . \ / | : ? * " < > and control characters --->
-	<cfset sNewFolderName = rereplace( sNewFolderName, '\.+|\\+|\/+|\|+|\:+|\?+|\*+|"+|<+|>+|[[:cntrl:]]+', "_", "all" )>
+	<cfset sNewFolderName = rereplace( sNewFolderName, '\.+|\\+|\/+|\|+|\:+|\;+|[\.]+|\?+|\*+|"+|<+|>+|[[:cntrl:]]+', "_", "all" )>
 
 	<cfreturn sNewFolderName>
 </cffunction>
@@ -293,7 +293,7 @@ window.parent.OnUploadCompleted( #errorNumber#, "#JSStringFormat(fileUrl)#", "#J
 
 	<!--- Do a cleanup of the file name to avoid possible problems --->
 	<!--- Remove \ / | : ? * " < > and control characters --->
-	<cfset sNewFileName = rereplace( sNewFileName, '\\[.]+|\\+|\/+|\|+|\:+|\?+|\*+|"+|<+|>+|[[:cntrl:]]+', "_", "all" )>
+	<cfset sNewFileName = rereplace( sNewFileName, '\\[.]+|\\+|\/+|\|+|\:+|\;+|\?+|\*+|"+|<+|>+|[[:cntrl:]]+', "_", "all" )>
 
 	<cfreturn sNewFileName>
 </cffunction>

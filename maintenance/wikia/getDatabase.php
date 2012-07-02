@@ -148,7 +148,11 @@ if (array_key_exists( 'i', $opts )) {
 		if (trim($response) != "" && substr($response, 0, 5) != 'ERROR') {
 			$cluster_name = trim($response);
 		} else {
-			die ("Database error: " . $response);
+			if ($response == "") {
+				die ("Database error: $dbname not found in city_list.");
+			} else {
+				die ("Database error: " . $response);
+			}
 		}
 		if ($cluster_name == "NULL") $cluster_name = null;  // whee!
 		if ($cluster_name == null) {

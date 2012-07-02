@@ -31,26 +31,33 @@ class AdvancedSearchCategoryIntersector {
 
 	/**
 	 * Update the categorysearch table
-	 * @param $pageid int Page ID
-	 * @param $categories array Array of categories (DB keys)
+	 * @param $pageId Integer: Page ID
+	 * @param $categories Array: array of categories (DB keys)
 	 */
-	static function update( $pageid, $categories ) {
+	static function update( $pageId, $categories ) {
 		global $wgContLang;
 		$ctext = $wgContLang->normalizeForSearch( implode( ' ', $categories ) );
 		$ctext = self::getSearchEngine()->normalizeText( $ctext );
-		$dbw = wfGetDb( DB_MASTER );
-		$dbw->replace( 'categorysearch', 'cs_page',
-			array( 'cs_page' => $pageid, 'cs_categories' => $ctext ),
-			__METHOD__ );
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->replace(
+			'categorysearch',
+			'cs_page',
+			array( 'cs_page' => $pageId, 'cs_categories' => $ctext ),
+			__METHOD__
+		);
 	}
 
 	/**
 	 * Remove the entry for a page
-	 * @param $pageid int Page ID
+	 * @param $pageId Integer: page ID
 	 */
-	static function remove( $pageid ) {
-		$dbw = wfGetDb( DB_MASTER );
-		$dbw->delete( 'categorysearch', array( 'cs_page' => $pageid ), __METHOD__ );
+	static function remove( $pageId ) {
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->delete(
+			'categorysearch',
+			array( 'cs_page' => $pageId ),
+			__METHOD__
+		);
 	}
 
 	/**

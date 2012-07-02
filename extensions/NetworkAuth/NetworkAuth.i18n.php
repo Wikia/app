@@ -3,8 +3,9 @@
 /**
  * Internationalisation file for extension NetworkAuth
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -16,9 +17,12 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'networkauth-desc' => 'Used in [[Special:Version]].',
+	'networkauth-name' => '{{optional}}',
+	'networkauth-purltext' => '{{optional}}',
 );
 
 /** Arabic (العربية)
@@ -40,7 +44,14 @@ $messages['arz'] = array(
 	'networkauth-purltext' => 'أوث الشبكة [$1@$2]',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'networkauth-desc' => 'Permite autenticar usuarios basándose na información de la rede',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -172,9 +183,10 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author IvanLanin
  */
 $messages['id'] = array(
-	'networkauth-desc' => 'Mengijinkan Anda untuk melakukan otentifikasi pengguna berdasarkan informasi jaringan',
+	'networkauth-desc' => 'Memungkinkan Anda untuk melakukan otentifikasi pengguna berdasarkan informasi jaringan',
 );
 
 /** Italian (Italiano)
@@ -192,7 +204,7 @@ $messages['ja'] = array(
 	'networkauth-desc' => 'ネットワーク情報に基づくユーザー認証を可能にする',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -210,7 +222,23 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'networkauth-desc' => 'Овозможува да потврдувате корисници врз основа на мрежните информации',
+	'networkauth-desc' => 'Овозможува да заверка на корисници врз основа на мрежните информации',
+	'networkauth-name' => 'МрежнаЗаверка',
+	'networkauth-purltext' => 'МрежнаЗаверка [$1@$2]',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'networkauth-desc' => 'Membolehkan pengesahan pengguna berasaskan maklumat rangkaian',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'networkauth-desc' => 'Tillater godkjenning av brukere basert på nettverksinformasjon',
 );
 
 /** Low German (Plattdüütsch)
@@ -234,13 +262,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'networkauth-desc' => 'Lèt deg stadfesta brukarar gjennom nettverksinformasjon',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'networkauth-desc' => 'Tillater godkjenning av brukere basert på nettverksinformasjon',
 );
 
 /** Occitan (Occitan)
@@ -306,18 +327,30 @@ $messages['sq'] = array(
 	'networkauth-desc' => 'Lejon gjetjen e vendit të përdoruesit bazuar në të dhënat e rrjetit',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'networkauth-desc' => 'Омогућава ауторизацију корисника према информацијама у мрежи',
+	'networkauth-name' => 'NetworkAuth',
+	'networkauth-purltext' => 'NetworkAuth [$1@$2]',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
 	'networkauth-desc' => 'Omogućava autorizaciju korisnika prema informacijama u mreži',
+	'networkauth-name' => 'NetworkAuth',
+	'networkauth-purltext' => 'NetworkAuth [$1@$2]',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'networkauth-desc' => 'Ngawenangkeun anjeun pikeun ngoténtikasi pamaké dumasar kana émbaran jaringan',
 );
 
 /** Swedish (Svenska)
@@ -339,6 +372,13 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'networkauth-desc' => 'Ağ bilgilerini temel alarak kullanıcıların kimliklerini doğrulamanızı sağlar',
+);
+
+/** Ukrainian (Українська)
+ * @author Ytsukeng Fyvaprol
+ */
+$messages['uk'] = array(
+	'networkauth-desc' => 'Дозволяє автентифікувати учасників на основі інформації мережі',
 );
 
 /** Vèneto (Vèneto)

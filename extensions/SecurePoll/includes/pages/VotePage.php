@@ -131,7 +131,6 @@ class SecurePoll_VotePage extends SecurePoll_Page {
 	 * Shows an error message on failure.
 	 */
 	function doSubmit() {
-		global $wgOut;
 		$ballot = $this->election->getBallot();
 		$status = $ballot->submitForm();
 		if ( !$status->isOK() ) {
@@ -242,8 +241,8 @@ class SecurePoll_VotePage extends SecurePoll_Page {
 		$wgOut->addWikiText( $this->election->getMessage( 'jump-text' ) );
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'action' => $url, 'method' => 'post' ) ) .
-			Xml::hidden( 'token', SecurePoll_RemoteMWAuth::encodeToken( $wgUser->getToken() ) ) .
-			Xml::hidden( 'id', $wgUser->getId() ) .
+			Html::hidden( 'token', SecurePoll_RemoteMWAuth::encodeToken( $wgUser->getToken() ) ) .
+			Html::hidden( 'id', $wgUser->getId() ) .
 			Xml::submitButton( wfMsg( 'securepoll-jump' ) ) .
 			'</form>'
 		);

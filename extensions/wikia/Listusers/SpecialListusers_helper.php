@@ -30,7 +30,6 @@ class ListusersData {
 
 	function __construct( $city_id, $load = 1 ) {
 		global $wgStatsDB, $wgStatsDBEnabled;
-		wfLoadExtensionMessages("Listusers");
 		$this->mCityId = $city_id;
 		$this->mDBh = $wgStatsDB;
 		$this->mDBEnable = $wgStatsDBEnabled;
@@ -141,7 +140,7 @@ class ListusersData {
 						$whereGroup[] = 
 							( $group == Listusers::DEF_GROUP_NAME ) 
 							? " all_groups = '' " 
-							: " all_groups like '%" . $dbs->escapeLike( $group ) . "%' ";
+							: " all_groups " . $dbs->buildLike( $dbs->anyString(), $group, $dbs->anyString() );
 					}
 				} 
 
@@ -381,7 +380,7 @@ class ListusersData {
 						'user_is_closed' => 0
 					);
 					if ( $key != Listusers::DEF_GROUP_NAME ) {
-						$where[] = " all_groups like '%" . $dbs->escapeLike( $key ) . "%' ";
+						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key, $dbs->anyString() );
 					} else {
 						$where['cnt_groups'] = 0;
 					}

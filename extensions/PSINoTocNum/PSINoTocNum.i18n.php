@@ -9,9 +9,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'psinotocnum-desc' => 'Short description of the PsiNoTocNum extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'psinotocnum-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -28,7 +29,21 @@ $messages['arz'] = array(
 	'psinotocnum-desc' => 'كلمة سحرية جديدة "<nowiki>__NOTOCNUM__</nowiki>"',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'psinotocnum-desc' => 'Nueva pallabra máxica «<nowiki>__NOTOCNUM__</nowiki>»',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'psinotocnum-desc' => 'Yeni sehrli söz "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -99,6 +114,13 @@ $messages['es'] = array(
 	'psinotocnum-desc' => 'Nueva palabra mágica «<nowiki>__NOTOCNUM__</nowiki>»',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'psinotocnum-desc' => 'Hitz magiko berria "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
 /** Persian (فارسی)
  * @author Vahid
  */
@@ -117,6 +139,13 @@ $messages['fi'] = array(
 /** French (Français) */
 $messages['fr'] = array(
 	'psinotocnum-desc' => 'Nouveau mot magique « <nowiki>__NOTOCNUM__</nowiki> »',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'psinotocnum-desc' => 'Mot magico novél « <nowiki>__NOTOCNUM__</nowiki> »',
 );
 
 /** Galician (Galego)
@@ -196,7 +225,7 @@ $messages['km'] = array(
 	'psinotocnum-desc' => 'ពាក្យទិព្វថ្មី "<nowiki>__NOTOCNUM__</nowiki>"',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -208,6 +237,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'psinotocnum-desc' => "Neit ''magescht Wuert'' \"<nowiki>__NOTOCNUM__</nowiki>\"",
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'psinotocnum-desc' => 'Jauns maģiskais vārds "<nowiki>__NOTOCNUM__</nowiki>"',
 );
 
 /** Macedonian (Македонски)
@@ -222,6 +258,20 @@ $messages['mk'] = array(
  */
 $messages['mr'] = array(
 	'psinotocnum-desc' => 'नवीन जादूईशब्द "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'psinotocnum-desc' => 'Kata sakti baru "<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'psinotocnum-desc' => 'Legger til det magiske ordet «<nowiki>__NOTOCNUM__</nowiki>»',
 );
 
 /** Low German (Plattdüütsch)
@@ -243,13 +293,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'psinotocnum-desc' => 'Legg til det nye magiste ordet «<nowiki>__NOTOCNUM__</nowiki>»',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'psinotocnum-desc' => 'Legger til det magiske ordet «<nowiki>__NOTOCNUM__</nowiki>»',
 );
 
 /** Occitan (Occitan)
@@ -322,18 +365,20 @@ $messages['sq'] = array(
 	'psinotocnum-desc' => 'Fjalë e re magjike "<nowiki>__NOTOCNUM__</nowiki>"',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'psinotocnum-desc' => 'Нова магична реч "<nowiki>__NOTOCNUM__</nowiki>"',
+	'psinotocnum-desc' => 'Нова магична реч „<nowiki>__NOTOCNUM__</nowiki>“',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
-	'psinotocnum-desc' => 'Nova magična reč "<nowiki>__NOTOCNUM__</nowiki>"',
+	'psinotocnum-desc' => 'Nova magična reč „<nowiki>__NOTOCNUM__</nowiki>“',
 );
 
 /** Seeltersk (Seeltersk)
@@ -390,5 +435,18 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'psinotocnum-desc' => 'Vöd magivik nulik: „<nowiki>_NOTOCNUM_</nowiki>“',
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$messages['zh-hans'] = array(
+	'psinotocnum-desc' => '新的魔术字"<nowiki>__NOTOCNUM__</nowiki>"',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'psinotocnum-desc' => '新的魔術字「<nowiki>__NOTOCNUM__</nowiki>」',
 );
 

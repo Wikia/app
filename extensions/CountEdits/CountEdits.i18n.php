@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension CountEdits.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
 
@@ -109,6 +110,7 @@ $messages['arc'] = array(
 );
 
 /** Egyptian Spoken Arabic (مصرى)
+ * @author Dudi
  * @author Ghaly
  * @author Meno25
  * @author Ramsis II
@@ -116,15 +118,32 @@ $messages['arc'] = array(
 $messages['arz'] = array(
 	'countedits' => 'عد التعديلات',
 	'countedits-desc' => '[[Special:CountEdits|صفحة خاصة]] تعد تعديلات المستخدم وتوفر قائمة لأعلى عشر مساهمين',
-	'countedits-warning' => "'''تحذير:''' ملتحكمش على كتاب من غلافه.
- ملتحكمش  على اليوزرات من عدد تعديلاتهم.",
+	'countedits-warning' => "'''تحذير:''' ما تحكمش على كتاب من غلافه.
+ ما تحكمش على اليوزرات من عدد تعديلاتهم.",
 	'countedits-username' => 'اسم اليوزر:',
 	'countedits-ok' => 'موافق',
 	'countedits-nosuchuser' => 'مافيش يوزر اسمه $1.',
 	'countedits-resultheader' => 'النتائج ل $1',
 	'countedits-resulttext' => '$1 عنده$2 {{PLURAL:$2|تعديل|تعديل}}',
-	'countedits-mostactive' => 'أكتر اليوزرات  نشاط',
-	'countedits-nocontribs' => 'مافيش مساهمين فى  الويكى دى.',
+	'countedits-mostactive' => 'اكتر اليوزرات نشاط',
+	'countedits-nocontribs' => 'مافيش مساهمين فى الويكى دى.',
+);
+
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'countedits' => 'Contar ediciones',
+	'countedits-desc' => '[[Special:CountEdits|Páxina especial]] que cuenta les ediciones de los usuarios y da la llista de los diez que más collaboraron',
+	'countedits-warning' => "'''Alvertencia:''' Nun xulgues un llibru pola tapa.
+Nun xulgues a los collaboradores pol númberu d'ediciones.",
+	'countedits-username' => "Nome d'usuariu:",
+	'countedits-ok' => 'Aceutar',
+	'countedits-nosuchuser' => 'Nun hai dengún usuariu nomáu "$1".',
+	'countedits-resultheader' => 'Resultaos de $1',
+	'countedits-resulttext' => '$1 tien {{PLURAL:$2|fecha una edición|feches $2 ediciones}}',
+	'countedits-mostactive' => 'Collaboradores más activos',
+	'countedits-nocontribs' => 'Nun hebo denguna collaboración nesta wiki.',
 );
 
 /** Kotava (Kotava)
@@ -138,6 +157,14 @@ $messages['avk'] = array(
 	'countedits-resultheader' => 'Trasikseem va $1',
 	'countedits-resulttext' => '$1 $2 -on al betar',
 	'countedits-mostactive' => 'Tel lowebesikeem',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'countedits-username' => 'İstifadəçi adı:',
+	'countedits-ok' => 'OK',
 );
 
 /** Bavarian (Boarisch)
@@ -164,7 +191,7 @@ $messages['bcl'] = array(
 	'countedits-mostactive' => 'Pinaka mahigos na mga kontributor',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -195,6 +222,21 @@ $messages['bg'] = array(
 	'countedits-resulttext' => '$1 е направил(а) $2 {{PLURAL:$2|редакция|редакции}}',
 	'countedits-mostactive' => 'Най-активни редактори',
 	'countedits-nocontribs' => 'Няма приноси към това уики.',
+);
+
+/** Bengali (বাংলা)
+ * @author Bellayet
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'countedits' => 'সম্পাদনা গণনা করো',
+	'countedits-username' => 'ব্যবহারকারী নাম:',
+	'countedits-ok' => 'ঠিক আছে',
+	'countedits-nosuchuser' => '$1 নামে কোনো ব্যবহারকারী নেই।',
+	'countedits-resultheader' => '$1-এর জন্য ফলাফল',
+	'countedits-resulttext' => '$1 $2টি {{PLURAL:$2|সম্পাদনা|সম্পাদনা}} করেছেন',
+	'countedits-mostactive' => 'সবচেয়ে বেশি সক্রিয় অবদানকারীসমূহ',
+	'countedits-nocontribs' => 'এই উইকিতে কোনো সম্পাদনা করা হয়নি।',
 );
 
 /** Breton (Brezhoneg)
@@ -231,6 +273,7 @@ Ne sudite o korisnicima po njihovom broju izmjena.",
 );
 
 /** Catalan (Català)
+ * @author BroOk
  * @author SMP
  * @author Solde
  * @author Ssola
@@ -239,26 +282,39 @@ Ne sudite o korisnicima po njihovom broju izmjena.",
 $messages['ca'] = array(
 	'countedits' => "Nombre d'edicions",
 	'countedits-desc' => "[[Special:CountEdits|Pàgina especial]] que compta les edicions de l'usuari i indica els deu que més en tenen.",
-	'countedits-warning' => "'''Avís:''' No jutgeu un llibre per la seua coberta, ni tampoc un coŀlaborador pel seu nombre d'edicions.",
+	'countedits-warning' => "'''Avís:''' No jutgeu un llibre per la seva coberta, ni tampoc un coŀlaborador pel seu nombre d'edicions.",
 	'countedits-username' => "Nom d'usuari:",
 	'countedits-ok' => 'OK',
 	'countedits-nosuchuser' => 'No hi ha cap usuari amb el nom $1.',
 	'countedits-resultheader' => 'Resultats de $1',
 	'countedits-resulttext' => '$1 ha fet {{PLURAL:$2|1 modificació|$2 modificacions}}',
-	'countedits-mostactive' => 'Els coŀlaboradors més actius',
-	'countedits-nocontribs' => 'No hi ha hagut cap coŀlaboració en aquest wiki.',
+	'countedits-mostactive' => 'Els col·laboradors més actius',
+	'countedits-nocontribs' => 'No hi ha hagut cap col·laboració en aquest wiki.',
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'countedits-username' => 'Декъашхо:',
 );
 
 /** Czech (Česky)
  * @author Matěj Grabovský
+ * @author Reaperman
  */
 $messages['cs'] = array(
 	'countedits' => 'Počítadlo editací',
+	'countedits-desc' => '[[Special:CountEdits|Speciální stránka]], která zobrazuje počet editací jednotlivých uživatelů seznam deseti nejaktivnějších editorů',
+	'countedits-warning' => "'''Varování:''' Nesuďte knihu podle obálky.
+Nesuďte uživatele podle počtu editací.",
 	'countedits-username' => 'Uživatelské jméno:',
 	'countedits-ok' => 'OK',
+	'countedits-nosuchuser' => 'Uživatelský účet se jménem $1 neexistuje.',
 	'countedits-resultheader' => 'Výsledky pro $1',
-	'countedits-resulttext' => '$1 má $2 editac{{PLURAL:$2|i|e|í}}',
+	'countedits-resulttext' => '$1 {{gender:$1|provedl|provedla|provedl}} $2 {{PLURAL:$2|editaci|editace|editací}}',
 	'countedits-mostactive' => 'Nejaktivnější přispěvatelé',
+	'countedits-nocontribs' => 'Na této wiki zatím nebyly provedeny žádné editace.',
 );
 
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
@@ -293,7 +349,7 @@ $messages['de'] = array(
 	'countedits-nocontribs' => 'In {{ns:project}} sind keine Bearbeitungen vorhanden.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form)) */
+/** German (formal address) (‪Deutsch (Sie-Form)‬) */
 $messages['de-formal'] = array(
 	'countedits-warning' => 'Hinweis: Sie beurteilen ein Buch nicht nur nach seinem Umschlag, beurteilen Sie einen Autor daher auch nicht nur nach seinem Beitragszähler.',
 );
@@ -379,14 +435,20 @@ $messages['et'] = array(
 
 /** Basque (Euskara)
  * @author Kobazulo
+ * @author Theklan
  */
 $messages['eu'] = array(
 	'countedits' => 'Edizioak zenbatu',
 	'countedits-desc' => '[[Special:CountEdits|Edizio-kontadoreak]] erabiltzailearen edizioak zenbatzeaz gain, ekarpen gehien egin dituzten hamar lankideen zerrenda erakusten du.',
+	'countedits-warning' => "'''Adi:''' Ez ezazu liburua bere azalaren arabera epaitu.
+Ez itzazu lankideak euren aldaketa kopuruagatik epaitu.",
 	'countedits-username' => 'Lankide izena:',
 	'countedits-ok' => 'Ados',
+	'countedits-nosuchuser' => 'Ez dago erabiltzailerik $1 izenarekin.',
+	'countedits-resultheader' => '$1(e)rako emaitzak',
 	'countedits-resulttext' => '$1 lankideak {{PLURAL:$2|aldaketa bat egin du|$2 aldaketa egin ditu}}',
 	'countedits-mostactive' => 'Lankiderik langileenak',
+	'countedits-nocontribs' => 'Ez da egon ekarpenik wiki honetan.',
 );
 
 /** Extremaduran (Estremeñu)
@@ -397,6 +459,14 @@ $messages['ext'] = array(
 	'countedits-resulttext' => '$1 á hechu $2 eicionis',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'countedits-username' => 'نام کاربری:',
+	'countedits-ok' => 'تأیید',
+);
+
 /** Finnish (Suomi)
  * @author Jaakonam
  * @author Nike
@@ -404,10 +474,10 @@ $messages['ext'] = array(
  * @author Vililikku
  */
 $messages['fi'] = array(
-	'countedits' => 'Muokkausmäärälaskuri',
+	'countedits' => 'Muokkauslaskuri',
 	'countedits-desc' => '[[Special:CountEdits|Toimintosivu]], joka laskee käyttäjien muokkauksia ja luo luettelon kymmenestä eniten muokanneesta käyttäjästä.',
 	'countedits-warning' => 'Älä arvioi kirjaa kannen perusteella. Älä arvioi käyttäjää muokkausten lukumäärän perusteella.',
-	'countedits-username' => 'Käyttäjä',
+	'countedits-username' => 'Käyttäjätunnus:',
 	'countedits-ok' => 'Hae',
 	'countedits-nosuchuser' => 'Käyttäjää $1 ei ole.',
 	'countedits-resultheader' => 'Tulos käyttäjälle $1',
@@ -419,6 +489,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author IAlex
+ * @author Peter17
  * @author PieRRoMaN
  * @author Sherbrooke
  * @author Urhixidur
@@ -427,13 +498,27 @@ $messages['fr'] = array(
 	'countedits' => 'Compteur de modifications',
 	'countedits-desc' => '[[Special:CountEdits|Page spéciale]] qui comptabilise le nombre de modifications des utilisateurs et qui fournit la liste des dix contributeurs les plus prolifiques.',
 	'countedits-warning' => 'Avertissement : ne jugez pas un livre par sa couverture. Ne jugez pas non plus un utilisateur en fonction du nombre de ses contributions.',
-	'countedits-username' => 'Utilisateur',
+	'countedits-username' => 'Nom d’utilisateur :',
 	'countedits-ok' => 'Accepter',
 	'countedits-nosuchuser' => 'Aucun utilisateur ne correspond à $1',
 	'countedits-resultheader' => 'Résultats pour $1',
 	'countedits-resulttext' => '$1 a fait $2 modification{{PLURAL:$2||s}}',
 	'countedits-mostactive' => 'Contributeurs les plus actifs',
 	'countedits-nocontribs' => 'Aucune contribution sur ce wiki.',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'countedits' => 'Comptor de changements',
+	'countedits-username' => 'Nom d’usanciér :',
+	'countedits-ok' => 'Accèptar',
+	'countedits-nosuchuser' => 'Nion usanciér corrèspond a $1.',
+	'countedits-resultheader' => 'Rèsultats por $1',
+	'countedits-resulttext' => '$1 at fêt $2 changement{{PLURAL:$2||s}}',
+	'countedits-mostactive' => 'Contributors los ples actifs',
+	'countedits-nocontribs' => 'Gins de contribucion sur ceti vouiqui.',
 );
 
 /** Western Frisian (Frysk)
@@ -454,8 +539,8 @@ $messages['gl'] = array(
 	'countedits-warning' => "'''Advertencia:''' as aparencias enganan.
 Non xulgue a un colaborador polo seu número de edicións.",
 	'countedits-username' => 'Nome de usuario:',
-	'countedits-ok' => 'De acordo',
-	'countedits-nosuchuser' => 'Non existe ningún usuario chamado $1.',
+	'countedits-ok' => 'Aceptar',
+	'countedits-nosuchuser' => 'Non existe ningún usuario chamado "$1".',
 	'countedits-resultheader' => 'Resultados de $1',
 	'countedits-resulttext' => '$1 ten {{PLURAL:$2|feita unha edición|feitas $2 edicións}}',
 	'countedits-mostactive' => 'Colaboradores máis activos',
@@ -655,6 +740,32 @@ Jangan menilai seorang kontributor berdasarkan jumlah suntingannya.",
 	'countedits-nocontribs' => 'Belum ada kontribusi untuk wiki ini.',
 );
 
+/** Interlingue (Interlingue)
+ * @author Renan
+ */
+$messages['ie'] = array(
+	'countedits' => 'Contar redactiones',
+	'countedits-desc' => '[[Special:CountEdits|Págine special]] que conta redactiones de usatores e provide un liste de deci principal contributores',
+	'countedits-warning' => "'''Advertimen:''' Ne juda un libre per tui covritura. 
+Ne juda contributores per lor redactiones contat.",
+	'countedits-username' => 'Nómine de usator:',
+	'countedits-ok' => 'OK',
+	'countedits-nosuchuser' => 'Vi nequant usator quam li nómine $1.',
+	'countedits-resultheader' => 'Resultates por $1',
+	'countedits-resulttext' => '$1 ha fat $2 {{PLURAL:$2|redaction|redactiones}}',
+	'countedits-mostactive' => 'Contributores max activ',
+	'countedits-nocontribs' => 'Ta hat esset nequant contribution por ti wiki.',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'countedits' => 'Güó orü',
+	'countedits-username' => "Áhà ọ'bànifé:",
+	'countedits-ok' => 'Ngwanu',
+);
+
 /** Icelandic (Íslenska)
  * @author S.Örvarr.S
  */
@@ -690,12 +801,13 @@ $messages['it'] = array(
  * @author Aotake
  * @author Fryed-peach
  * @author JtFuruhata
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'countedits' => '編集回数の集計',
 	'countedits-desc' => '利用者の編集回数を集計し、トップ10投稿者を表示する[[Special:CountEdits|{{int:specialpages}}]]',
 	'countedits-warning' => "'''注意:''' 表紙でその本の優劣を判断してはならないように、編集回数でその投稿者の優劣を判断してはなりません。",
-	'countedits-username' => '利用者名:',
+	'countedits-username' => '利用者名：',
 	'countedits-ok' => 'OK',
 	'countedits-nosuchuser' => '$1 という名前の利用者は存在しません。',
 	'countedits-resultheader' => '$1 の集計結果',
@@ -735,7 +847,7 @@ $messages['kk-arab'] = array(
 	'countedits-nocontribs' => 'بۇل ۋيكيدە ەش ٷلەس بولعان جوق.',
 );
 
-/** Kazakh (Cyrillic) (Қазақша (Cyrillic))
+/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬)
  * @author AlefZet
  */
 $messages['kk-cyrl'] = array(
@@ -750,7 +862,7 @@ $messages['kk-cyrl'] = array(
 	'countedits-nocontribs' => 'Бұл уикиде еш үлес болған жоқ.',
 );
 
-/** Kazakh (Latin) (Қазақша (Latin))
+/** Kazakh (Latin script) (‪Qazaqşa (latın)‬)
  * @author AlefZet
  */
 $messages['kk-latn'] = array(
@@ -775,13 +887,30 @@ $messages['km'] = array(
 	'countedits' => 'រាប់ចំនួនកំណែប្រែ',
 	'countedits-desc' => '[[Special:CountEdits|ទំព័រពិសេស]]ដែលរាប់កំណែប្រែអ្នកប្រើប្រាស់និងផ្តល់បញ្ជីអ្នករួមចំណែកសកម្មជាងគេចំនួន១០នាក់',
 	'countedits-warning' => "'''សូមប្រយ័ត្ន៖''' មិនត្រូវវិនិច្ឆ័យគុណភាពសៀវភៅដោយសារគម្របរបស់វាទេ។ ហើយក៏មិនត្រូវវាយតម្លៃអ្នកចូលរួមរួមចំណែក ដោយគ្រាន់តែមើលទៅលើ ចំនួនកំណែប្រែរបស់ពួកគេដែរ។",
-	'countedits-username' => 'ឈ្មោះអ្នកប្រើប្រាស់៖',
+	'countedits-username' => 'អត្តនាម៖',
 	'countedits-ok' => 'យល់ព្រម',
 	'countedits-nosuchuser' => "មិនមានអ្នកប្រើប្រាស់ណាឈ្មោះ'''$1'''ទេ។",
 	'countedits-resultheader' => 'លទ្ធផលចំពោះ $1',
 	'countedits-resulttext' => "'''$1'''បានចូលរួមចំណែកកែប្រែ'''$2''' {{PLURAL:$2|កំណែប្រែ|កំណែប្រែ}}",
 	'countedits-mostactive' => 'អ្នករួមចំណែកដែលសកម្មបំផុត',
 	'countedits-nocontribs' => 'មិនមានការរួមចំណែកនៅក្នុងវិគីនេះទេ។',
+);
+
+/** Korean (한국어)
+ * @author Gapo
+ */
+$messages['ko'] = array(
+	'countedits' => '편집 횟수',
+	'countedits-desc' => '사용자의 편집 횟수를 측정하고 가장 활동적인 상위 10명의 목록을 보여주는 [[Special:CountEdits|특수 문서]]',
+	'countedits-warning' => "'''주의''' 숫자는 절대적 판단 기준이 아닙니다.
+편집 횟수만으로 사용자를 평가하지 마세요.",
+	'countedits-username' => '계정 이름:',
+	'countedits-ok' => '확인',
+	'countedits-nosuchuser' => '$1이라는 이름을 가진 사용자는 없습니다.',
+	'countedits-resultheader' => '$1에 대한 결과',
+	'countedits-resulttext' => '$1는 현재까지 2 번의 {{PLURAL:$2|편집|편집}}을 했습니다',
+	'countedits-mostactive' => '가장 활동적인 기여자',
+	'countedits-nocontribs' => '이 위키에 대한 기여가 없습니다.',
 );
 
 /** Kinaray-a (Kinaray-a)
@@ -791,7 +920,7 @@ $messages['krj'] = array(
 	'countedits-ok' => 'OK dun',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -800,7 +929,7 @@ $messages['ksh'] = array(
 	'countedits-warning' => "'''Opjepaß:''' Donn Böscher nit noh ierem Ömschlaach enstufe!
 Donn ene Metmaache nit doh de Aanzahl fun singe Änderunge aam Wiki enstufe!",
 	'countedits-username' => 'Metmaacher Name:',
-	'countedits-ok' => 'Loß Jonn!',
+	'countedits-ok' => 'Lohß Jonn!',
 	'countedits-nosuchuser' => 'Mer han keine Metmaacher met dämm Name „$1“.',
 	'countedits-resultheader' => 'Zähler för dä Metmaacher „$1“',
 	'countedits-resulttext' => 'Unse Metmaacher „$1“ hät {{PLURAL:$1|ein Änderung|$2 Änderunge|noch kei Änderung}} hee aam Wiki jemaat.',
@@ -808,15 +937,18 @@ Donn ene Metmaache nit doh de Aanzahl fun singe Änderunge aam Wiki enstufe!",
 	'countedits-nocontribs' => 'En däm Wiki hee sin kein Beidrääsch vun Metmaachere.',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author Bangin
+ * @author Erdal Ronahi
+ * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'countedits' => 'Guherandinan bihesbîne',
-	'countedits-username' => 'Navî bikarhêner:',
+	'countedits-username' => 'Navê bikarhêner:',
 	'countedits-ok' => 'OK',
 	'countedits-nosuchuser' => 'Li vê derê ne bikarhênerek bi navê $1 heye.',
-	'countedits-resulttext' => '$1 $2 guherandinan çêkirîye',
+	'countedits-resultheader' => 'Encamên ji bo $1',
+	'countedits-resulttext' => '$1 {{PLURAL:$2|guherandin|guherandin}} çêkirîye',
 	'countedits-mostactive' => 'Bikarhênerên tewrî çalak',
 	'countedits-nocontribs' => 'Di vê wîkîyê da guherandin tune ne.',
 );
@@ -874,6 +1006,39 @@ $messages['lt'] = array(
 	'countedits-nocontribs' => 'Šioje wiki nebuvo naudotojų.',
 );
 
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'countedits' => 'Jumlah suntingan',
+	'countedits-desc' => '[[Special:CountEdits|Kaca astamiwa]] sing ngitung jumlah suntingan panganggo lan nampilna daftar sepuluh kontributor paling akeh',
+	'countedits-warning' => "'''Pènget:''' Aja mbiji sawijining buku sekang samaké.
+Aja mbiji para kontributor sekang akehe suntingané.",
+	'countedits-username' => 'Jeneng panganggo:',
+	'countedits-ok' => 'OK',
+	'countedits-nosuchuser' => 'Ora ana panganggo sing jenenge $1.',
+	'countedits-resultheader' => 'Hasil nggo $1',
+	'countedits-resulttext' => '$1 wis gawé $2 {{PLURAL:$2|suntingan|suntingan}}',
+	'countedits-mostactive' => 'Kontributor paling aktif',
+	'countedits-nocontribs' => 'Durung ana kontribusi kanggo wiki kiye.',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'countedits' => 'Mpanisa fanovana',
+	'countedits-warning' => "'''Tandremo''' : Aza mitsara boky amin'ny foniny. 
+Ary aza mitsara ny mpandray anjara amin'ny isan'ny fanovana nataony.",
+	'countedits-username' => 'Solonanarana :',
+	'countedits-ok' => 'Eka',
+	'countedits-nosuchuser' => 'Tsy misy mpikambana mitondra ny anarana $1',
+	'countedits-resultheader' => "Valiny ho an'i $1",
+	'countedits-resulttext' => 'Nanao fanovana $2 i $1{{PLURAL:}}',
+	'countedits-mostactive' => 'Mpandray anjara mavitrika indrindra',
+	'countedits-nocontribs' => "Tsy nisy fandraisan'anjara teo amin'io wiki io.",
+);
+
 /** Eastern Mari (Олык Марий)
  * @author Сай
  */
@@ -887,15 +1052,15 @@ $messages['mhr'] = array(
  */
 $messages['mk'] = array(
 	'countedits' => 'Броење на уредувања',
-	'countedits-desc' => '[[Special:CountEdits|Специјална страница]] која брои кориснички уредувања и дава листа на 10-те најголеми присонесувачи',
+	'countedits-desc' => '[[Special:CountEdits|Специјална страница]] која брои кориснички уредувања и дава список на 10-те учесници со највеќе придонеси',
 	'countedits-warning' => "'''Предупредување:''' Не судете ја книгата по корицата.
-Не судете ги уредувачите по нивниот број на уредувања.",
+Не судете ги уредниците по бројот на нивните на уредувања.",
 	'countedits-username' => 'Корисник:',
 	'countedits-ok' => 'ОК',
 	'countedits-nosuchuser' => 'Не постои корисник по име $1.',
 	'countedits-resultheader' => 'Резултати за $1',
 	'countedits-resulttext' => '$1 има направено $2 {{PLURAL:$2|уредување|уредувања}}',
-	'countedits-mostactive' => 'Најактивни уредувачи',
+	'countedits-mostactive' => 'Најактивни уредници',
 	'countedits-nocontribs' => 'Нема придонеси за ова вики.',
 );
 
@@ -904,28 +1069,31 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'countedits' => 'തിരത്തലുകള്‍ എണ്ണുക',
-	'countedits-desc' => 'ഉപയോക്താക്കളുടെ തിരുത്തലുകള്‍ എണ്ണി ഏറ്റവും കൂടുതല്‍ തിരുത്തലുകളുള്ള പത്തു പേരുടെ പട്ടിക കാണുവാന്‍ സഹായിക്കുന്ന [[Special:CountEdits|പ്രത്യേക താള്‍]]',
+	'countedits' => 'തിരത്തലുകൾ എണ്ണുക',
+	'countedits-desc' => 'ഉപയോക്താക്കളുടെ തിരുത്തലുകൾ എണ്ണി ഏറ്റവും കൂടുതൽ തിരുത്തലുകളുള്ള പത്തു പേരുടെ പട്ടിക കാണുവാൻ സഹായിക്കുന്ന [[Special:CountEdits|പ്രത്യേക താൾ]]',
 	'countedits-warning' => "'''മുന്നറിയിപ്പ്:''' പുസ്തകത്തിന്റെ പുറംചട്ട കൊണ്ട് ഒരു പുസ്തകത്തെ വിലയിരുത്തരുത്. 
 ഉപയോക്താക്കളുടെ തിരുത്തലുകളുടെ എണ്ണം വച്ച് അവരെ വിലയിരുത്തരുത്.",
 	'countedits-username' => 'ഉപയോക്തൃനാമം:',
 	'countedits-ok' => 'ശരി',
 	'countedits-nosuchuser' => '$1 എന്ന പേരുള്ള ഉപയോക്താവ് നിലവിലില്ല.',
-	'countedits-resultheader' => '$1ന്റെ ഫലങ്ങള്‍',
-	'countedits-resulttext' => '$1 ഈ വിക്കിയില്‍ $2 തിരുത്തലുകള്‍ നടത്തിയിരിക്കുന്നു',
-	'countedits-mostactive' => 'ഏറ്റവും സജീവരായ ഉപയോക്താക്കള്‍',
-	'countedits-nocontribs' => 'ഈ വിക്കിയില്‍ സജീവമായി സംഭാവന ചെയ്യുന്നവരില്ല',
+	'countedits-resultheader' => '$1ന്റെ ഫലങ്ങൾ',
+	'countedits-resulttext' => '$1 ഈ വിക്കിയിൽ {{PLURAL:$2|ഒരു തിരുത്തൽ|$2 തിരുത്തലുകൾ}} നടത്തിയിരിക്കുന്നു',
+	'countedits-mostactive' => 'ഏറ്റവും സജീവരായ ഉപയോക്താക്കൾ',
+	'countedits-nocontribs' => 'ഈ വിക്കിയിൽ സജീവമായി സംഭാവന ചെയ്യുന്നവരില്ല',
 );
 
 /** Mongolian (Монгол)
+ * @author Chinneeb
  * @author E.shijir
  */
 $messages['mn'] = array(
 	'countedits' => 'Засваруудыг тоолох',
 	'countedits-desc' => '[[Special:CountEdits|Тусгай хуудас]] нь хэрэглэгчийн засваруудыг тоолж топ арван хувь оруулагчдын жагсаалт гаргадаг',
+	'countedits-username' => 'Хэрэглэгчийн нэр:',
 );
 
 /** Marathi (मराठी)
+ * @author Htt
  * @author Kaustubh
  * @author Mahitgar
  */
@@ -937,23 +1105,26 @@ $messages['mr'] = array(
 	'countedits-ok' => 'सर्व ठीक',
 	'countedits-nosuchuser' => '$1 नावाचा सदस्य अस्तित्वात नाही.',
 	'countedits-resultheader' => '$1 साठीचे निकाल',
-	'countedits-resulttext' => '$1 ने $2 संपादने केलेली आहेत',
+	'countedits-resulttext' => '$1 ने $2 {{PLURAL:$2|संपादन केले आहे|संपादने केलेली आहेत}}',
 	'countedits-mostactive' => 'सर्वात जास्त कार्यशील सदस्य',
 	'countedits-nocontribs' => 'या विकिवर योगदान केलेले नाही.',
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
  * @author Aurora
  */
 $messages['ms'] = array(
+	'countedits-username' => 'Nama pengguna:',
 	'countedits-ok' => 'OK',
 );
 
 /** Maltese (Malti)
+ * @author Chrisportelli
  * @author Roderick Mallia
  */
 $messages['mt'] = array(
-	'countedits-username' => 'Isem l-utent:',
+	'countedits-username' => 'Isem tal-utent:',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -964,6 +1135,23 @@ $messages['nah'] = array(
 	'countedits-username' => 'Tlatequitiltilīltōcāitl:',
 	'countedits-ok' => 'Cualli',
 	'countedits-resulttext' => '$1 {{PLURAL:$2|ōquichīuh|ōquinchīuh}} $2 tlapatlaliztli',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'countedits' => 'Tell redigeringer',
+	'countedits-desc' => '[[Special:CountEdits|Spesialside]] om teller antall redigeringer av brukere, og gir en liste over de ti mest aktive brukerne',
+	'countedits-warning' => "'''Advarsel:''' Ikke sku hunden på hårene. Ikke døm en bidragsyter på antall redigeringer.",
+	'countedits-username' => 'Brukernavn:',
+	'countedits-ok' => 'OK',
+	'countedits-nosuchuser' => 'Det er ingen bruker ved navnet $1.',
+	'countedits-resultheader' => 'Resultater for $1',
+	'countedits-resulttext' => '$1 har gjort {{PLURAL:$2|én redigering|$2 redigeringer}}',
+	'countedits-mostactive' => 'Mest aktive bidragsytere',
+	'countedits-nocontribs' => 'Det har ikke vært noen redigeringer på denne wikien.',
 );
 
 /** Low German (Plattdüütsch)
@@ -980,6 +1168,21 @@ $messages['nds'] = array(
 	'countedits-resulttext' => '$1 hett {{PLURAL:$2|een Maal|$2 Maal}} wat ännert.',
 	'countedits-mostactive' => 'Brukers, de opmehrst Maal wat ännert hebbt',
 	'countedits-nocontribs' => 'Kene Bidrääg op dit Wiki.',
+);
+
+/** Nepali (नेपाली)
+ * @author Bhawani Gautam
+ * @author Bhawani Gautam Rhk
+ */
+$messages['ne'] = array(
+	'countedits' => 'सम्पादन गन्ने',
+	'countedits-username' => 'प्रयोगकर्ता-नाम',
+	'countedits-ok' => 'हुन्छ',
+	'countedits-nosuchuser' => '$1 नामको प्रयोगकर्ता छैन।',
+	'countedits-resultheader' => '$1का नतिजाहरु',
+	'countedits-resulttext' => '$1 ले $2 {{PLURAL:$2|सम्पादन|सम्पादन}} गरे',
+	'countedits-mostactive' => 'अति सक्रिय योगदाताहरु',
+	'countedits-nocontribs' => 'यस विकिमा कोई योगदाता छैन।',
 );
 
 /** Dutch (Nederlands)
@@ -1017,23 +1220,6 @@ Ikkje vurder ein bidragsytar etter talet på endringar av han/ho.",
 	'countedits-nocontribs' => 'Det har ikkje blitt gjort endringar på denne wikien.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'countedits' => 'Tell redigeringer',
-	'countedits-desc' => '[[Special:CountEdits|Spesialside]] om teller antall redigeringer av brukere, og gir en liste over de ti mest aktive brukerne',
-	'countedits-warning' => "'''Advarsel:''' Ikke sku hunden på hårene. Ikke døm en bidragsyter på antall redigeringer.",
-	'countedits-username' => 'Brukernavn:',
-	'countedits-ok' => 'OK',
-	'countedits-nosuchuser' => 'Det er ingen bruker ved navnet $1.',
-	'countedits-resultheader' => 'Resultater for $1',
-	'countedits-resulttext' => '$1 har gjort {{PLURAL:$2|én redigering|$2 redigeringer}}',
-	'countedits-mostactive' => 'Mest aktive bidragsytere',
-	'countedits-nocontribs' => 'Det har ikke vært noen redigeringer på denne wikien.',
-);
-
 /** Northern Sotho (Sesotho sa Leboa)
  * @author Mohau
  */
@@ -1042,7 +1228,7 @@ $messages['nso'] = array(
 	'countedits-username' => 'Leina la mošomiši:',
 	'countedits-nosuchuser' => 'Gago mošomiši wa goba le leina $1.',
 	'countedits-resultheader' => 'Diphetho tša $1',
-	'countedits-resulttext' => '$1 o dirile diphetogo tše $2',
+	'countedits-resulttext' => '$1 o phetile $2 {{PLURAL:$2|ya phetogo|tša diphetogo}}',
 	'countedits-mostactive' => 'Baabedi ba mahlahla kudu',
 	'countedits-nocontribs' => 'Gago baabedi go Wiki ye.',
 );
@@ -1063,7 +1249,15 @@ $messages['oc'] = array(
 	'countedits-nocontribs' => 'Cap de contribucion sus aqueste wiki.',
 );
 
-/** Ossetic (Иронау)
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Odisha1
+ */
+$messages['or'] = array(
+	'countedits-username' => 'ବ୍ୟବାହରକାରୀଙ୍କର ନାଆଁ:',
+	'countedits-ok' => 'ଠିକ ଅଛି',
+);
+
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -1125,8 +1319,11 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'countedits' => 'د سمونونو شمېر',
 	'countedits-username' => 'کارن-نوم:',
+	'countedits-ok' => 'ښه',
 	'countedits-resultheader' => 'د $1 پايلې',
+	'countedits-mostactive' => 'تر ټولو فعاله ونډوالان',
 	'countedits-nocontribs' => 'په همدې ويکي کې هېڅ ونډې نه دي ترسره شوي.',
 );
 
@@ -1140,7 +1337,7 @@ $messages['pt'] = array(
 	'countedits-warning' => "'''Atenção:''' Não julgue um livro pela capa.
 Não julgue um contribuidor pela contagem das suas edições.",
 	'countedits-username' => 'Utilizador:',
-	'countedits-ok' => 'Ok',
+	'countedits-ok' => 'OK',
 	'countedits-nosuchuser' => 'Não foi encontrado um utilizador com o nome $1.',
 	'countedits-resultheader' => 'Resultados para $1',
 	'countedits-resulttext' => '$1 fez $2 {{PLURAL:$2|edição|edições}}',
@@ -1150,12 +1347,13 @@ Não julgue um contribuidor pela contagem das suas edições.",
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'countedits' => 'Contador de edições',
 	'countedits-desc' => '[[Special:CountEdits|Página especial]] que conta as edições de utilizadores e fornece uma lista dos dez maiores contribuidores',
 	'countedits-warning' => "'''Atenção:''' Não julgue um livro pela sua capa. Não julgue um contribuidor pela contagem de suas edições.",
-	'countedits-username' => 'Utilizador:',
+	'countedits-username' => 'Usuário:',
 	'countedits-ok' => 'OK',
 	'countedits-nosuchuser' => 'Não foi encontrado um utilizador com o nome $1.',
 	'countedits-resultheader' => 'Resultados para $1',
@@ -1165,17 +1363,18 @@ $messages['pt-br'] = array(
 );
 
 /** Romanian (Română)
+ * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'countedits' => 'Număr de modificări',
-	'countedits-desc' => '[[Special:CountEdits|Pagină specială]] care numără modificările utilizatorilor şi oferă o listă a primilor zece contribuitori.',
-	'countedits-warning' => "'''Atenţie:''' Nu judeca o carte după copertă. Nu judeca un contribuitor după numărul de modificări.",
+	'countedits-desc' => '[[Special:CountEdits|Pagină specială]] care numără modificările utilizatorilor și oferă o listă a primilor zece contribuitori.',
+	'countedits-warning' => "'''Atenție:''' Nu judeca o carte după copertă. Nu judeca un contribuitor după numărul de modificări.",
 	'countedits-username' => 'Nume de utilizator:',
 	'countedits-ok' => 'OK',
 	'countedits-nosuchuser' => 'Nu există nici un utilizator cu numele $1.',
 	'countedits-resultheader' => 'Rezultate pentru $1',
-	'countedits-resulttext' => '$1 a efectuat $2 {{PLURAL:$2|modificare|modificări}}',
+	'countedits-resulttext' => '$1 a efectuat $2 {{PLURAL:$2|modificare|modificări|de modificări}}',
 	'countedits-mostactive' => 'Contribuitorii cei mai activi',
 	'countedits-nocontribs' => 'Nu există contribuitori la acest wiki.',
 );
@@ -1184,10 +1383,14 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'countedits' => 'Cunde le cangiaminde',
 	'countedits-username' => "Nome de l'utende:",
 	'countedits-ok' => 'OK',
 	'countedits-nosuchuser' => "Non ge stè nisciune utende cu 'u nome $1.",
 	'countedits-resultheader' => 'Resultate pe $1',
+	'countedits-resulttext' => '$1 ave fatte $2 {{PLURAL:$2|cangiamende|cangiaminde}}',
+	'countedits-mostactive' => 'Le condrebbuture cchiù attive',
+	'countedits-nocontribs' => 'Non ge stonne condrebbute sus a sta Uicchi.',
 );
 
 /** Russian (Русский)
@@ -1206,7 +1409,15 @@ $messages['ru'] = array(
 	'countedits-nocontribs' => 'Нет правок в этой вики.',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'countedits-username' => 'Мено хоснователя:',
+	'countedits-ok' => 'ОК',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1254,30 +1465,34 @@ $messages['sk'] = array(
 	'countedits-nocontribs' => 'Táto wiki neobsahuje zatiaľ žiadne príspevky.',
 );
 
-/** Serbian (Српски / Srpski)
- * @author Sasa Stefanovic
+/** Slovenian (Slovenščina)
+ * @author Dbc334
  */
-$messages['sr'] = array(
-	'countedits' => 'Бројач измена',
-	'countedits-warning' => "'''Упозорење:''' Не судите о књизи по њеном омоту. Не судите о кориснику по његовом броју измена.",
-	'countedits-username' => 'Корисник:',
-	'countedits-ok' => 'У реду',
-	'countedits-nosuchuser' => 'Не постоји корисник са именом $1.',
-	'countedits-resultheader' => 'Резултати за $1',
-	'countedits-resulttext' => '$1 има $2 измена',
-	'countedits-mostactive' => 'Најактивнији корисници',
-	'countedits-nocontribs' => 'Не постоје прилози на овој вики.',
+$messages['sl'] = array(
+	'countedits' => 'Števec urejanj',
+	'countedits-desc' => '[[Special:CountEdits|Posebna stran]], ki prešteje uporabnikova urejanja in nudi seznam desetih najsodelavcev',
+	'countedits-warning' => "'''Opozorilo:''' Ne sodite knjige po platnici.
+Ne sodite sodelavcev po njihovem številu urejanj.",
+	'countedits-username' => 'Uporabniško ime:',
+	'countedits-ok' => 'V redu',
+	'countedits-nosuchuser' => 'Ni uporabnika z imenom $1.',
+	'countedits-resultheader' => 'Rezultati za $1',
+	'countedits-resulttext' => '$1 je naredil $2 {{PLURAL:$2|urejanje|urejanji|urejanja|urejanj}}',
+	'countedits-mostactive' => 'Najdejavnejši sodelavci',
+	'countedits-nocontribs' => 'Na tem wikiju ni bilo nobenih prispevkov.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Sasa Stefanovic
+ * @author Жељко Тодоровић
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'countedits' => 'Бројач измена',
-	'countedits-desc' => '[[Special:CountEdits|Посебна страна]] која израчунава измене корисника и пружа списак десет најактивнијих аутора',
+	'countedits-desc' => '[[Special:CountEdits|Посебна страница]] која израчунава измене корисника и пружа списак десет најактивнијих аутора',
 	'countedits-warning' => "'''Упозорење:''' Не судите о књизи по њеном омоту. Не судите о кориснику по његовом броју измена.",
-	'countedits-username' => 'Корисник:',
+	'countedits-username' => 'Корисничко име:',
 	'countedits-ok' => 'У реду',
 	'countedits-nosuchuser' => 'Не постоји корисник са именом $1.',
 	'countedits-resultheader' => 'Резултати за $1',
@@ -1286,7 +1501,7 @@ $messages['sr-ec'] = array(
 	'countedits-nocontribs' => 'Не постоје прилози на овој вики.',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Liangent
  * @author Michaello
  * @author Sasa Stefanovic
@@ -1309,7 +1524,7 @@ $messages['sr-el'] = array(
  */
 $messages['stq'] = array(
 	'countedits' => 'Biedraachställer',
-	'countedits-warning' => 'Woarschauenge: Du beuurdeelst n Bouk nit bloot ätter sin Uumesleek, beuurdeel deeruum n Autor uk nit bloot ätter sin Biedraachtäller.',
+	'countedits-warning' => 'Woarskauenge: Du beuurdeelst n Bouk nit bloot ätter sin Uumesleek, beuurdeel deeruum n Autor uk nit bloot ätter sin Biedraachtäller.',
 	'countedits-username' => 'Benutsernoome:',
 	'countedits-ok' => 'OK',
 	'countedits-nosuchuser' => 'Dät rakt naan Benutser mäd dän Noome $1.',
@@ -1324,12 +1539,13 @@ $messages['stq'] = array(
  */
 $messages['su'] = array(
 	'countedits' => 'Itung éditan',
+	'countedits-desc' => '[[Special:CountEdits|Kaca husus]] anu ngitung robahan pamaké sarta ngabéréndélkeun sapuluh panulis anu pangonjoyna',
 	'countedits-warning' => "'''Ati-ati''': ulah nganiléy kontributor dumasar kana jumlah éditanana.",
 	'countedits-username' => 'Landihan pamaké:',
 	'countedits-ok' => 'Heug',
 	'countedits-nosuchuser' => 'Euweuh pamaké nu landihanana $1.',
 	'countedits-resultheader' => 'Hasil pikeun $1',
-	'countedits-resulttext' => '$1 geus nyieun $2 éditan',
+	'countedits-resulttext' => '$1 geus nyieun {{PLURAL:$2|éditan|éditan}}',
 	'countedits-mostactive' => 'Kontributor panggetolna',
 	'countedits-nocontribs' => 'Can aya kontribusi ka ieu wiki.',
 );
@@ -1360,10 +1576,21 @@ $messages['szl'] = array(
 );
 
 /** Tamil (தமிழ்)
+ * @author TRYPPN
  * @author Trengarasu
  */
 $messages['ta'] = array(
+	'countedits' => 'தொகுப்புக்களைக் கணக்கிடவும்',
+	'countedits-desc' => '[[Special:CountEdits|சிறப்பு பக்கம்-தொகுப்புக்களின் எண்ணிக்கை]] -இது அதிகமாக தொகுத்த முதல் பத்து பயனர்களை பட்டியலிட்டுக்காட்டுகிறது',
+	'countedits-warning' => "'''எச்சரிக்கை:''' புத்தகத்தின் மேலட்டையை பார்த்து புத்தகத்தை மதிப்பிடவேண்டாம்.
+அதுபோல், பயனர்களின் தொகுப்பின் எண்ணிக்கையை பார்த்து, பயனர்களின் தரத்தை முடிவு செய்யவேண்டாம்.",
 	'countedits-username' => 'பயனர் பெயர்:',
+	'countedits-ok' => 'சரி',
+	'countedits-nosuchuser' => '$1 -இப்பெயரில் எந்த ஒரு பயனரும் இல்லை.',
+	'countedits-resultheader' => '$1-க்கான முடிவுகள்',
+	'countedits-resulttext' => '$2 {{PLURAL:$2|edit|தொகுப்புக்களை}} $1 செய்திருக்கிறார்',
+	'countedits-mostactive' => 'மிக அதிகமாகத் தொடர்ந்து பங்களிப்பவர்கள்',
+	'countedits-nocontribs' => 'இந்த விக்கியில் எந்தவொரு பங்களிப்புமில்லை',
 );
 
 /** Telugu (తెలుగు)
@@ -1394,7 +1621,7 @@ $messages['tet'] = array(
 	'countedits-nocontribs' => "Ema lá'os kintribui iha wiki ne'e.",
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -1405,7 +1632,7 @@ $messages['tg-cyrl'] = array(
 	'countedits-resultheader' => 'Натоиҷ барои $1',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -1466,7 +1693,7 @@ Kullanıcıları değişiklik sayılarına göre değerlendirmeyin.",
 	'countedits-nocontribs' => 'Bu vikiye herhangi bir katkıda bulunulmadı.',
 );
 
-/** ئۇيغۇرچە (ئۇيغۇرچە)
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Alfredie
  */
 $messages['ug-arab'] = array(
@@ -1474,7 +1701,7 @@ $messages['ug-arab'] = array(
 	'countedits-ok' => 'ماقۇل',
 );
 
-/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+/** Uyghur (Latin script) (Uyghurche‎)
  * @author Jose77
  */
 $messages['ug-latn'] = array(
@@ -1484,9 +1711,21 @@ $messages['ug-latn'] = array(
 /** Ukrainian (Українська)
  * @author AS
  * @author Ahonc
+ * @author Alex Khimich
+ * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'countedits' => 'Число редагувань',
+	'countedits-desc' => '[[Special:CountEdits|Службова сторінка]] по підрахунку кількості правок, з списком 10 учасників, зробивших найбільший вклад',
+	'countedits-warning' => "'''Увага:''' Не суди книгу по її обкладинці.
+Не суди користувачів по їх кількості редагувань.",
+	'countedits-username' => 'Ім’я користувача:',
 	'countedits-ok' => 'Гаразд',
+	'countedits-nosuchuser' => 'Користувача з іменем $1 не існує.',
+	'countedits-resultheader' => 'Результати для $1',
+	'countedits-resulttext' => '$1 зробив(ла) $2 {{PLURAL:$2|редагування|редагування|редагувань}}',
+	'countedits-mostactive' => 'Найактивніші учасники',
+	'countedits-nocontribs' => 'В цій вікі правки відсутні',
 );
 
 /** Vèneto (Vèneto)
@@ -1544,10 +1783,13 @@ No cödolös keblünanis bai redakaminum onsik.",
  * @author פוילישער
  */
 $messages['yi'] = array(
+	'countedits' => 'ציילן רעדאַקטירונגען',
 	'countedits-username' => 'באַניצער נאָמען:',
+	'countedits-ok' => 'יאָ',
+	'countedits-nosuchuser' => 'נישטאָ קיין באַניצער מיטן נאָמען $1',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -1573,12 +1815,14 @@ $messages['zh-hans'] = array(
 	'countedits-ok' => '确定',
 	'countedits-nosuchuser' => '没有一位名叫$1的用户。',
 	'countedits-resultheader' => '$1的结果',
-	'countedits-resulttext' => '$1有$2次编辑',
+	'countedits-resulttext' => '$1做了$2次{{PLURAL:$2|edit|编辑}}',
 	'countedits-mostactive' => '最活跃的贡献者',
 	'countedits-nocontribs' => '在这个wiki中没有贡献。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Frankou
+ * @author Mark85296341
  * @author Shinjiman
  * @author Wrightbus
  */
@@ -1586,11 +1830,11 @@ $messages['zh-hant'] = array(
 	'countedits' => '編輯計量',
 	'countedits-desc' => '計算及提供頭十名編輯次數最多的貢獻者之[[Special:CountEdits|特殊頁面]]',
 	'countedits-warning' => "'''警告:''' 不要只憑封面判斷書本。不要以幾他們的編輯計量判斷一位貢獻者。",
-	'countedits-username' => '用戶名稱:',
+	'countedits-username' => '使用者名稱：',
 	'countedits-ok' => '確定',
-	'countedits-nosuchuser' => '沒有一位名叫$1的用戶。',
+	'countedits-nosuchuser' => '沒有一位名叫$1的使用者。',
 	'countedits-resultheader' => '$1的結果',
-	'countedits-resulttext' => '$1有$2次編輯',
+	'countedits-resulttext' => '$1做了$2次{{PLURAL:$2|edit|編輯}}',
 	'countedits-mostactive' => '最活躍的貢獻者',
 	'countedits-nocontribs' => '在這個wiki中沒有貢獻。',
 );

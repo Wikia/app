@@ -39,13 +39,13 @@ $wgOutboundScreenConfig = array(
 /**
  * This function makes all of the outbound links in the page re-written to go through Special:Outbound.
  */
-function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
+function efOutboundScreen ( $url, $text, $link, $attribs, $linktype ) {
 	global $wgCityId, $wgUser, $wgOutboundScreenConfig, $wgOut, $wgTitle;
 	static $whiteList;
 
 	// skip logic when in FCK
-	global $wgWysiwygParserEnabled;
-	if(!empty($wgWysiwygParserEnabled)) {
+	global $wgRTEParserEnabled;
+	if(!empty($wgRTEParserEnabled)) {
 		return true;
 	}
 

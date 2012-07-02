@@ -68,7 +68,7 @@ class SecurePoll_TranslatePage extends SecurePoll_Page {
 		$action = $this->getTitle( $secondary )->getLocalUrl( 'action=submit' );
 		$s = 
 			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $action ) ) .
-			'<table class="TablePager securepoll-trans-table">' .
+			'<table class="mw-datatable TablePager securepoll-trans-table">' .
 			'<col class="securepoll-col-trans-id" width="1*"/>' .
 			'<col class="securepoll-col-primary" width="30%"/>' .
 			'<col class="securepoll-col-secondary"/>' .

@@ -1,0 +1,79 @@
+[[Distributed Semantic MediaWiki 1.1]]
+
+Contents:
+* Disclaimer
+* Requirements
+* Installation
+* Example: LocalSettings.php
+* Contact
+
+== Disclaimer ==
+
+In general, the extension can be installed into a working wiki without making
+any irreversible changes to the source code or database, so you can try out
+the software without much risk (though no dedicated uninstall mechanism is
+provided).
+
+== Requirements ==
+
+DSMW has been developped on MW 1.14.0. DSMW-0.3.1 and DSMW-0.3.2 has been tested
+with version MW-1.13.2, MW-1.14.0, MW-1.15.0 and MW-1.15.1.
+The DSMW extension requires an install of Semantic MediaWiki 1.4.2 or 1.4.3
+(cf: http://semantic-mediawiki.org/wiki/Semantic_MediaWiki).
+For more details, see those extensions'own
+installation requirements.
+
+Important: If you want to run the DSMW tests, you must make a dump of your 
+database immediatly after having installed DSMW but before using DSMW.
+For more details, see the readme file in the tests directory
+[wikipath]/extensions/DSMW/tests.
+
+== Installation ==
+
+'''Remark:'''  Follow these different points carefully for a successful
+               installation and do not copy-paste from the example.
+
+(1) Download the zip file and extract it
+    Paste the folder named DSMW into the Mediawiki extension folder
+    "[wikipath]/extensions/".
+
+(2) Edit LocalSettings.php in the root of your MediaWiki installation,
+    and add the following lines near the bottom but BEFORE THE LINES THAT
+    ACTIVATE SEMANTIC MEDIAWIKI(cf. requirements):
+
+  require_once "$IP/extensions/DSMW/DSMW.php";
+  $wgLogo = "{$wgScriptPath}/extensions/DSMW/files/LogoDSMW.png";
+
+
+== Since SMW 1.5.0 ==
+
+DSMW is now configured to be used with SMW 1.5, so if you are using DSMW 0.7
+with SMW versions < SMW 1.5, you must modify the article "Property:HasOperation".
+This article has this content:
+
+[[has type::Record]]
+[[has fields::String;String;String;Text]]
+
+replace it with this:
+
+[[has type::String;String;String;Text]]
+
+'''Remark:'''  This must be done before using the 'Articles update' feature.
+See www.dsmw.org 
+
+== Example: LocalSettings.php ==
+
+The end of this file should look like this:
+
+//DSMW
+require_once "$IP/extensions/DSMW/DSMW.php";
+$wgLogo = "{$wgScriptPath}/extensions/DSMW/files/LogoDSMW.png";
+
+//SMW
+include_once("$IP/extensions/SemanticMediaWiki/includes/SMW_Settings.php");
+enableSemantics($_SERVER['SERVER_NAME']);
+
+== Contact ==
+
+If you have any issues or questions, please consult:
+https://gforge.inria.fr/projects/m3p/

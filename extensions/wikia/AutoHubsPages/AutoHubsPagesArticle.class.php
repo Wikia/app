@@ -72,8 +72,6 @@ class AutoHubsPagesArticle extends Article {
 	public function view() {
 		global $wgOut, $wgTitle;
 
-		wfLoadExtensionMessages('AutoHubsPages');
-
 		$data = $this->prepareData();
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(array(

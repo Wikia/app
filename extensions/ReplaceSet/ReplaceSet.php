@@ -1,7 +1,9 @@
 <?php
 /**
  * ReplaceSet
- * @package ReplaceSet
+ *
+ * @file
+ * @ingroup Extensions
  * @author Daniel Friesen (http://mediawiki.org/wiki/User:Dantman) <mediawiki@danielfriesen.name>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
@@ -25,9 +27,8 @@ if ( !defined( 'MEDIAWIKI' ) ) die( "This is an extension to the MediaWiki packa
 $wgExtensionCredits['parserhook'][] = array (
 	'name' => 'ReplaceSet',
 	'url' => 'http://mediawiki.org/wiki/Extension:ReplaceSet',
-	'version' => '1.1a',
+	'version' => '1.2',
 	'author' => "[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]",
-	'description' => "Adds a <nowiki>{{#replaceset}}</nowiki> parser function used for replacing sections of text with formatted data",
 	'descriptionmsg' => 'replaceset-desc',
 );
 
@@ -36,7 +37,9 @@ $wgHooks['ParserFirstCallInit'][] = 'efReplaceSetRegisterParser';
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['ReplaceSet'] = $dir . 'ReplaceSet.class.php';
 $wgExtensionMessagesFiles['ReplaceSet'] = $dir . 'ReplaceSet.i18n.php';
+$wgExtensionMessagesFiles['ReplaceSetMagic'] = $dir . 'ReplaceSet.i18n.magic.php';
 
 function efReplaceSetRegisterParser( &$parser ) {
 	$parser->setFunctionHook( 'replaceset', array( 'ReplaceSet', 'parserFunction' ) );
+	return true;
 }

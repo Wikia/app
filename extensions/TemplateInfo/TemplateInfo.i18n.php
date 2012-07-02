@@ -3,7 +3,8 @@
 /**
  * Messages file for the TemplateInfo extension
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 /**
@@ -19,10 +20,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author The Evil IP address
  * @author Yaron Koren 
  */
 $messages['qqq'] = array(
-	'templateinfo-desc' => 'Short description of the Template Info extension, shown on [[Special:Version]].',
+	'templateinfo-desc' => '{{desc}}',
 	'templateinfo-header' => 'Header to display XML definition in template page',
 );
 
@@ -43,14 +45,23 @@ $messages['ar'] = array(
 );
 
 /** Egyptian Spoken Arabic (مصرى)
+ * @author Dudi
  * @author Ghaly
  */
 $messages['arz'] = array(
-	'templateinfo-desc' => 'بيدعم القوالب اللى بتعرف هيكل بياناتها من خلال علامات XML',
+	'templateinfo-desc' => 'بيدعم القوالب اللى بتعرّف هيكل الداتا بتاعتها عن طريق علامات XML',
 	'templateinfo-header' => 'تعريف XML للقالب ده هو:',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'templateinfo-desc' => 'Da encontu pa que les plantíes definan la so estructura de datos per aciu de marques XML',
+	'templateinfo-header' => 'La definición XML pa esta plantía ye:',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -123,6 +134,14 @@ $messages['fr'] = array(
 	'templateinfo-header' => 'La définition XML pour ce modèle est :',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'templateinfo-desc' => 'Recognêt los modèlos en dèfenéssent lor structura de balyês avouéc des balises XML.',
+	'templateinfo-header' => 'La dèfinicion XML por ceti modèlo est :',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -187,6 +206,13 @@ $messages['ig'] = array(
 	'templateinfo-header' => 'Úchè XML maka mkpurụ ihü nka bu:',
 );
 
+/** Italian (Italiano)
+ * @author Beta16
+ */
+$messages['it'] = array(
+	'templateinfo-header' => 'La definizione XML per questo template è:',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -195,7 +221,7 @@ $messages['ja'] = array(
 	'templateinfo-header' => 'このテンプレートの XML 定義は以下のようになっています:',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -219,6 +245,14 @@ $messages['mk'] = array(
 	'templateinfo-header' => 'XML-определбата за овој шаблон е:',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'templateinfo-desc' => 'Støtter maler som definerer datastrukturen sin gjennom XML-markering',
+	'templateinfo-header' => 'XML-definisjonen for denne malen er:',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -235,20 +269,20 @@ $messages['nn'] = array(
 	'templateinfo-header' => 'XML-definisjonen til denne malen er:',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'templateinfo-desc' => 'Støtter maler som definerer datastrukturen sin gjennom XML-markering',
-	'templateinfo-header' => 'XML-definisjonen for denne malen er:',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'templateinfo-desc' => 'Supòrta los modèls en definissent lor estructura de donadas via de balisas XML',
 	'templateinfo-header' => 'La definicion XML per aqueste modèl es :',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'templateinfo-desc' => 'Obsługa definiowania struktury szablonów z wykorzystaniem znaczników XML',
+	'templateinfo-header' => 'Definicja XML dla tego szablonu:',
 );
 
 /** Piedmontese (Piemontèis)
@@ -292,12 +326,42 @@ $messages['ru'] = array(
 	'templateinfo-header' => 'XML-определение этого шаблона:',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'templateinfo-desc' => 'Podpira predloge, ki opredelujejo svojo zgradbo podatkov preko označevanja XML',
+	'templateinfo-header' => 'Opredelitev XML predloge je:',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'templateinfo-desc' => 'Подржава шаблоне који одређују њихову структуру података преко XML означавања',
+	'templateinfo-header' => 'XML дефиниција овог шаблона:',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'templateinfo-desc' => 'Podržava šablone koji određuju njihovu strukturu podataka preko XML označavanja',
+	'templateinfo-header' => 'XML definicija ovog šablona:',
+);
+
 /** Swedish (Svenska)
  * @author Per
  */
 $messages['sv'] = array(
 	'templateinfo-desc' => 'Stödjer mallar som definierar datastrukturen med XML-markering',
 	'templateinfo-header' => 'XML-definitionen för denna mall är:',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'templateinfo-desc' => 'Tumatangkilik sa mga suleras na nagbibigay kahulugan sa kanilang kayarian ng dato sa pamamagitan ng pagmarkang XML',
+	'templateinfo-header' => 'Ang kahulugang XML para sa suleras na ito ay:',
 );
 
 /** Turkish (Türkçe)
@@ -309,7 +373,9 @@ $messages['tr'] = array(
 );
 
 /** Ukrainian (Українська)
+ * @author NickK
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'templateinfo-desc' => 'Підтримує визначення структури даних шаблонів за допомогою розмітки XML',
@@ -322,5 +388,21 @@ $messages['uk'] = array(
 $messages['vi'] = array(
 	'templateinfo-desc' => 'Cho phép định nghĩa cấu trúc dữ liệu của bản mẫu dùng mã XML',
 	'templateinfo-header' => 'Định nghĩa XML của bản mẫu này là:',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Chenxiaoqino
+ */
+$messages['zh-hans'] = array(
+	'templateinfo-desc' => '支持的模版已将其数据结构用XML代码声明。',
+	'templateinfo-header' => '此模版的XML定义是：',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'templateinfo-desc' => '支援的模版已將其資料結構用 XML 代碼聲明。',
+	'templateinfo-header' => '此模版的 XML 定義是：',
 );
 

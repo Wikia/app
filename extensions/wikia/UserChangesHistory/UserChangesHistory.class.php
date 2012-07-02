@@ -66,7 +66,7 @@ class UserChangesHistory {
 								'method' => 'login',
 								'params' => $params
 							);
-							$data = Wikia::json_encode( $message );
+							$data = json_encode( $message );
 							WScribeClient::singleton('trigger')->send($data);
 						}
 						catch( TException $e ) {
@@ -161,7 +161,7 @@ class UserChangesHistory {
 						'method' => 'savepreferences',
 						'params' => $params
 					);
-					$data = Wikia::json_encode( $message );
+					$data = json_encode( $message );
 					WScribeClient::singleton('trigger')->send($data);					
 				}
 				catch( TException $e ) {

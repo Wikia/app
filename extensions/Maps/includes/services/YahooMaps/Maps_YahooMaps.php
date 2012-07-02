@@ -43,7 +43,8 @@ class MapsYahooMaps extends MapsMappingService {
 	 * @since 0.7
 	 */		
 	public function addParameterInfo( array &$params ) {
-		global $egMapsYahooAutozoom, $egMapsYahooMapsType, $egMapsYahooMapsTypes, $egMapsYahooMapsZoom, $egMapsYMapControls;
+		global $egMapsYahooAutozoom, $egMapsYahooMapsType, $egMapsYahooMapsTypes;
+		global $egMapsYahooMapsZoom, $egMapsYMapControls, $egMapsResizableByDefault;
 		
 		$params['zoom']->addCriteria( new CriterionInRange( 1, 13 ) );
 		$params['zoom']->setDefault( self::getDefaultZoom() );		
@@ -51,10 +52,8 @@ class MapsYahooMaps extends MapsMappingService {
 		$params['controls'] = new ListParameter( 'controls' );
 		$params['controls']->setDefault( $egMapsYMapControls );
 		$params['controls']->addCriteria( new CriterionInArray( self::getControlNames() ) );
-		$params['controls']->addManipulations(
-			new ParamManipulationFunctions( 'strtolower' ),
-			new ParamManipulationImplode( ',', "'" )
-		);		
+		$params['controls']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );	
+		$params['controls']->setMessage( 'maps-yahoomaps-par-controls' );
 		
 		$params['type'] = new Parameter(
 			'type',
@@ -67,6 +66,7 @@ class MapsYahooMaps extends MapsMappingService {
 			array( 'types' )
 		);
 		$params['type']->addManipulations( new MapsParamYMapType() );
+		$params['type']->setMessage( 'maps-yahoomaps-par-type' );
 
 		$params['types'] = new ListParameter(
 			'types',
@@ -78,14 +78,19 @@ class MapsYahooMaps extends MapsMappingService {
 				new CriterionInArray( self::getTypeNames() ),
 			)
 		);
-		$params['types']->addManipulations( new MapsParamYMapType(), new ParamManipulationImplode( ',', "'" ) );
+		$params['types']->addManipulations( new MapsParamYMapType() );
+		$params['types']->setMessage( 'maps-yahoomaps-par-types' );
 		
 		$params['autozoom'] = new Parameter(
 			'autozoom',
 			Parameter::TYPE_BOOLEAN,
 			$egMapsYahooAutozoom
 		);
-		$params['autozoom']->addManipulations( new ParamManipulationBoolstr() );
+		$params['autozoom']->setMessage( 'maps-yahoomaps-par-autozoom' );
+		
+		$params['resizable'] = new Parameter( 'resizable', Parameter::TYPE_BOOLEAN );
+		$params['resizable']->setDefault( $egMapsResizableByDefault, false );
+		$params['resizable']->setMessage( 'maps-par-resizable' );
 	}
 	
 	/**
@@ -97,6 +102,15 @@ class MapsYahooMaps extends MapsMappingService {
 		global $egMapsYahooMapsZoom;
 		return $egMapsYahooMapsZoom;
 	}
+	
+	/**
+	 * @see iMappingService::getEarthZoom
+	 * 
+	 * @since 1.0
+	 */
+	public function getEarthZoom() {
+		return 17;
+	}	
 
 	/**
 	 * @see MapsMappingService::getMapId
@@ -114,38 +128,15 @@ class MapsYahooMaps extends MapsMappingService {
 	}		
 	
 	/**
-	 * @see MapsMappingService::createMarkersJs
-	 * 
-	 * @since 0.6.5
-	 */
-	public function createMarkersJs( array $markers ) {
-		$markerItems = array();
-		
-		foreach ( $markers as $marker ) {
-			$markerItems[] = MapsMapper::encodeJsVar( (object)array(
-				'lat' => $marker[0],
-				'lon' => $marker[1],
-				'title' => $marker[2],
-				'label' =>$marker[3],
-				'icon' => $marker[4]
-			) );
-		}
-		
-		// Create a string containing the marker JS.
-		return '[' . implode( ',', $markerItems ) . ']';
-	}	
-	
-	/**
 	 * @see MapsMappingService::getDependencies
 	 * 
 	 * @return array
 	 */
 	protected function getDependencies() {
-		global $egYahooMapsKey, $egMapsScriptPath, $egMapsStyleVersion;
+		global $egYahooMapsKey;
 		
 		return array(
-			Html::linkedScript( "http://api.maps.yahoo.com/ajaxymap?v=3.8&appid=$egYahooMapsKey" ),
-			Html::linkedScript( "$egMapsScriptPath/includes/services/YahooMaps/YahooMapFunctions.js?$egMapsStyleVersion" ),
+			Html::linkedScript( "http://api.maps.yahoo.com/ajaxymap?v=3.8&appid=$egYahooMapsKey" )
 		);		
 	}	
 	
@@ -169,4 +160,18 @@ class MapsYahooMaps extends MapsMappingService {
 		return array( 'scale', 'type', 'pan', 'zoom', 'zoom-short', 'auto-zoom' );
 	}
 
-}									
+	/**
+	 * @see MapsMappingService::getResourceModules
+	 * 
+	 * @since 1.0
+	 * 
+	 * @return array of string
+	 */
+	public function getResourceModules() {
+		return array_merge(
+			parent::getResourceModules(),
+			array( 'ext.maps.yahoomaps' )
+		);
+	}
+	
+}

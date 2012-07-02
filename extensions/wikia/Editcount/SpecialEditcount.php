@@ -21,7 +21,9 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir =  dirname( __FILE__ );
 $wgAutoloadClasses['Editcount'] = $dir . '/SpecialEditcount_body.php';
-$wgSpecialPages['Editcount'] = array( /*class*/ 'Editcount', /*name*/ 'Editcount', /* permission */'', /*listed*/ true, /*function*/ false, /*file*/ false );
+
+$wgSpecialPages['Editcount'] = 'Editcount';
 $wgSpecialPageGroups['Editcount'] = 'users';
+
 $wgExtensionMessagesFiles['Editcount'] = $dir . '/SpecialEditcount.i18n.php';
-$wgExtensionAliasesFiles['Editcount'] = __DIR__ . '/SpecialEditcount.aliases.php';
+$wgExtensionMessagesFiles['EditcountAliases'] = __DIR__ . '/SpecialEditcount.aliases.php';

@@ -53,7 +53,6 @@ class CloseWikiPage extends SpecialPage {
 		global $wgUser, $wgOut, $wgRequest;
 
 		wfProfileIn( __METHOD__ );
-		wfLoadExtensionMessages("WikiFactory");
 		$this->setHeaders();
 
 		$fail = false;
@@ -325,12 +324,12 @@ class CloseWikiPage extends SpecialPage {
 					}
 					WikiFactory::setFlags($wiki->city_id, $city_flags);
 				}
-                                
+
                                 // Let's request the XML dump if needed
                                 if ( isset( $this->mFlags[WikiFactory::FLAG_CREATE_DB_DUMP] ) ) {
                                     DumpsOnDemand::sendMail( $wiki->city_dbname, $wiki->city_id, isset( $this->mFlags[WikiFactory::FLAG_HIDE_DB_IMAGES] ), true );
                                 }
-                                
+
 				if ( empty($this->mReason) ) {
 					$this->mReason = "-";
 				}
@@ -401,7 +400,7 @@ class CloseWikiPage extends SpecialPage {
 			$this->closedWiki->city_dbname
 		);
 
-		$res = ( strlen($content = wfGetHTTP($dbDumpUrl)) == 0 ) ? false : true;
+		$res = ( strlen($content = Http::get( $dbDumpUrl ) ) == 0 ) ? false : true;
 		if ( ($this->closedWiki->city_flags > 0) && !($this->closedWiki->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP) ) {
 			$res = -1;
 		}

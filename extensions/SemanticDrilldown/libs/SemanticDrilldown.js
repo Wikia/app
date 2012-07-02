@@ -6,13 +6,27 @@
  * @author Sanyam Goyal
  */
 (function(jQuery) {
+	jQuery.ui.autocomplete.prototype._renderItem = function( ul, item) {
+		var re = new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + this.term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi");
+		var loc = item.label.search(re);
+		if (loc >= 0) {
+			var t = item.label.substr(0, loc) + '<strong>' + item.label.substr(loc, this.term.length) + '</strong>' + item.label.substr(loc + this.term.length);
+		} else {
+			var t = item.label;
+		}
+		return jQuery( "<li></li>" )
+			.data( "item.autocomplete", item )
+			.append( " <a>" + t + "</a>" )
+			.appendTo( ul );
+	};
+
 	jQuery.widget("ui.combobox", {
 		_create: function() {
 			var self = this;
 			var select = this.element.hide();
 			var inp_id = select[0].options[0].value;
 			var curval = select[0].name;
-			var input = jQuery("<input id = \""+inp_id+"\" type=\"text\" name=\""+inp_id+"\"  value=\""+curval+"\">")
+			var input = jQuery("<input id = \""+inp_id+"\" type=\"text\" name=\""+inp_id+"\" value=\""+curval+"\">")
 				.insertAfter(select)
 				.autocomplete({
 					source: function(request, response) {
@@ -22,7 +36,7 @@
 							if (this.value && (!request.term || matcher.test(text)))
 								return {
 									id: this.value,
-									label: text.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + jQuery.ui.autocomplete.escapeRegex(request.term) + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>"),
+									label: text,
 									value: text
 								};
 						}));

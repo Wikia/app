@@ -5,9 +5,11 @@
  */
 
 
-$IP = dirname( realpath( __FILE__ ) ) . '/../..';
-chdir( $IP );
-require( './includes/WebStart.php' );
+$IP = getenv( 'MW_INSTALL_PATH' );
+if ( $IP === false ) {
+	$IP = dirname( __FILE__ ) . '/../..';
+}
+require( "$IP/includes/WebStart.php" );
 
 if ( !defined( 'MW_WEBSTORE_ENABLED' ) ) {
 	echo <<<EOT

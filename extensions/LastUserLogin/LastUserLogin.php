@@ -22,7 +22,7 @@
  * 
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
  
@@ -36,8 +36,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'LastUserLogin',
 	'version' => '1.2.1',
 	'author' => array( 'Justin G. Cramer', 'Danila Ulyanov', 'Thomas Klein' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:SpecialLastUserLoginEx',
-	'description' => 'Displays the last time a user logged in',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:SpecialLastUserLoginEx',
 	'descriptionmsg' => 'lastuserlogin-desc',
 );
  
@@ -49,7 +48,7 @@ $wgGroupPermissions['sysop']['lastlogin'] = true;
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['LastUserLogin'] = $dir . 'LastUserLogin_body.php';
 $wgExtensionMessagesFiles['LastUserLogin'] = $dir . 'LastUserLogin.i18n.php';
-$wgExtensionAliasesFiles['LastUserLogin'] = $dir . 'LastUserLogin.alias.php';
+$wgExtensionMessagesFiles['LastUserLoginAlias'] = $dir . 'LastUserLogin.alias.php';
 $wgSpecialPages['LastUserLogin'] = 'LastUserLogin';
 $wgSpecialPageGroups['LastUserLogin'] = 'users';
 
@@ -62,7 +61,7 @@ function wfUpdateUserTouched() {
 	if ( isset( $_COOKIE ) && isset( $_COOKIE["{$wgCookiePrefix}UserID"] ) ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$query = "UPDATE " . $dbw->tableName( 'user' ) . " SET user_touched = '" . $dbw->timestamp() . "' WHERE user_id = " . intval( $_COOKIE["{$wgCookiePrefix}UserID"] );
-		$dbw->doQuery( $query );
+		$dbw->query( $query );
 	}
 }
 

@@ -3,11 +3,10 @@
  * Implements special page for group management, where file based message
  * groups are be managed.
  *
- * @ingroup SpecialPage
  * @file
  * @author Niklas Laxström
  * @author Siebrand Mazeland
- * @copyright Copyright © 2009-2010, Niklas Laxström, Siebrand Mazeland
+ * @copyright Copyright © 2009-2012, Niklas Laxström, Siebrand Mazeland
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -16,9 +15,27 @@
  * file based message groups can be managed (FileBasedMessageGroup). This page
  * allows updating of the file cache, import and fuzzy for source language
  * messages, as well as import/update of messages in other languages.
+ *
+ * @ingroup SpecialPage TranslateSpecialPage
  */
 class SpecialManageGroups extends SpecialPage {
-	protected $skin, $user, $out;
+	/**
+	 * @var Skin
+	 */
+	protected $skin;
+
+	/**
+	 * @var User
+	 */
+	protected $user;
+
+	/**
+	 * @var OutputPage
+	 */
+	protected $out;
+
+	protected $time;
+
 	/// Maximum allowed processing time in seconds.
 	protected $processingTime = 30;
 
@@ -64,72 +81,112 @@ class SpecialManageGroups extends SpecialPage {
 				$code = 'en';
 			}
 
-			$this->importForm( $group, $code );
-		} else {
-			global $wgLang, $wgOut;
+			if ( $wgRequest->getVal( 'from' ) !== 'main' ) {
+				$this->importForm( $group, $code );
+				return;
+			}
 
-			$groups = MessageGroups::singleton()->getGroups();
+		}
 
-			$wgOut->wrapWikiMsg( '<h2>$1</h2>', 'translate-manage-listgroups' );
-			$separator = wfMsg( 'word-separator' );
+		// Main list
+		global $wgLang, $wgOut;
 
-			$languages = array_keys( Language::getLanguageNames( false ) );
+		$groups = MessageGroups::singleton()->getGroups();
 
-			foreach ( $groups as $group ) {
-				if ( !$group instanceof FileBasedMessageGroup ) {
-					continue;
+		TranslateUtils::addSpecialHelpLink( $wgOut, 'Help:Extension:Translate/Group_management' );
+		$wgOut->wrapWikiMsg( '<h2>$1</h2>', 'translate-manage-listgroups' );
+		$separator = wfMsg( 'word-separator' );
+
+		$languages = array_keys( Language::getLanguageNames( false ) );
+
+		foreach ( $groups as $group ) {
+			if ( !$group instanceof FileBasedMessageGroup ) {
+				continue;
+			}
+
+			wfDebug( __METHOD__ . ": {$group->getId()}\n" );
+
+			$id = $group->getId();
+			$link = $this->skin->link( $this->getTitle(), $group->getLabel(),
+				array( 'id' => "mw-group-$id" ), array( 'group' => $id ) );
+			$out = $link . $separator;
+
+			$cache = new MessageGroupCache( $group );
+			if ( $cache->exists() ) {
+				$timestamp = wfTimestamp( TS_MW, $cache->getTimestamp() );
+				$out .= wfMsg( 'translate-manage-cacheat',
+					$wgLang->date( $timestamp ),
+					$wgLang->time( $timestamp )
+				);
+
+				$modified = array();
+
+				foreach ( $languages as $code ) {
+					$cache = new MessageGroupCache( $group, $code );
+					if ( !$cache->isValid() ) $modified[] = $code;
 				}
 
-				wfDebug( __METHOD__ . ": {$group->getId()}\n" );
-
-				$link = $this->skin->link( $this->getTitle(), $group->getLabel(), array(), array( 'group' => $group->getId() ) );
-				$out = $link . $separator;
-
-				$cache = new MessageGroupCache( $group );
-				if ( $cache->exists() ) {
-					$timestamp = wfTimestamp( TS_MW, $cache->getTimestamp() );
-					$out .= wfMsg( 'translate-manage-cacheat',
-						$wgLang->date( $timestamp ),
-						$wgLang->time( $timestamp )
-					);
-
-					$modified = array();
-
-					foreach ( $languages as $code ) {
-						$cache = new MessageGroupCache( $group, $code );
-						if ( !$cache->isValid() ) $modified[] = $code;
-					}
-
-					if ( count( $modified ) ) {
-						$out = '[' . implode( ",", $modified ) . '] ' . $out;
-					} else {
-						$out = Html::rawElement( 'span', array( 'style' => 'color:grey' ), $out );
+				if ( count( $modified ) ) {
+					$out = '[' . implode( ",", $modified ) . '] ' . $out;
+					if ( !in_array( 'en', $modified ) && $this->user->isAllowed( 'translate-manage' ) ) {
+						$out .= $this->rebuildButton( $group, $modified, 'main' );
 					}
 				} else {
-					$out .= wfMsg( 'translate-manage-newgroup' );
+					// @todo FIXME: should be in CSS file.
+					$out = Html::rawElement( 'span', array( 'style' => 'color:grey' ), $out );
 				}
-
-				$wgOut->addHtml( $out );
-				$wgOut->addHtml( '<hr>' );
+			} else {
+				$out .= wfMsg( 'translate-manage-newgroup' );
 			}
 
-			$wgOut->wrapWikiMsg( '<h2>$1</h2>', 'translate-manage-listgroups-old' );
-			$wgOut->addHTML( '<ul>' );
-
-			foreach ( $groups as $group ) {
-				if ( $group instanceof FileBasedMessageGroup ) {
-					continue;
-				}
-
-				$wgOut->addHtml( Xml::element( 'li', null, $group->getLabel() ) );
-			}
-
-			$wgOut->addHTML( '</ul>' );
+			$wgOut->addHtml( $out );
+			$wgOut->addHtml( '<hr>' );
 		}
+
+		$wgOut->wrapWikiMsg( '<h2>$1</h2>', 'translate-manage-listgroups-old' );
+		$wgOut->addHTML( '<ul>' );
+
+		foreach ( $groups as $group ) {
+			if ( $group instanceof FileBasedMessageGroup ) {
+				continue;
+			}
+
+			$wgOut->addHtml( Xml::element( 'li', null, $group->getLabel() ) );
+		}
+
+		$wgOut->addHTML( '</ul>' );
+	}
+
+	/**
+	 * @param $group MessageGroup
+	 * @param $codes
+	 * @param $from
+	 * @return string
+	 */
+	protected function rebuildButton( $group, $codes, $from ) {
+		$formParams = array(
+			'method' => 'post',
+			'action' => $this->getTitle()->getLocalURL() . '#mw-group-' . $group->getId(),
+		);
+
+		$html =
+			Xml::openElement( 'form', $formParams ) .
+			Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) .
+			Html::hidden( 'token', $this->user->editToken() ) .
+			Html::hidden( 'group', $group->getId() ) .
+			Html::hidden( 'codes', implode( ',', $codes ) ) .
+			Html::hidden( 'rebuildall', 1 ) .
+			Html::hidden( 'from', $from ) .
+			Xml::submitButton( wfMsg( 'translate-manage-import-rebuild-all' ) ) .
+			Xml::closeElement( 'form' );
+		return $html;
 	}
 
 	/**
 	 * @todo Very long code block; split up.
+	 *
+	 * @param $group MessageGroup
+	 * @param $code
 	 */
 	public function importForm( $group, $code ) {
 		$this->setSubtitle( $group, $code );
@@ -236,7 +293,7 @@ class SpecialManageGroups extends SpecialPage {
 							$this->time = wfTimestamp();
 						}
 
-						$fuzzybot = MessageWebImporter::getFuzzyBot();
+						$fuzzybot = FuzzyBot::getUser();
 						$message = MessageWebImporter::doAction(
 							$action,
 							$group,
@@ -277,8 +334,9 @@ class SpecialManageGroups extends SpecialPage {
 					foreach ( $actions as $action ) {
 						$label = wfMsg( "translate-manage-action-$action" );
 						$name = MessageWebImporter::escapeNameForPHP( "action-$type-$key" );
+						$selected = $wgRequest->getVal( $name, $defaction );
 						$id = Sanitizer::escapeId( "action-$key-$action" );
-						$act[] = Xml::radioLabel( $label, $name, $action, $id, $action === $defaction );
+						$act[] = Xml::radioLabel( $label, $name, $action, $id, $action === $selected );
 					}
 				}
 
@@ -293,7 +351,7 @@ class SpecialManageGroups extends SpecialPage {
 
 		if ( !$process ) {
 			$collection->filter( 'hastranslation', false );
-			$keys = array_keys( $collection->keys() );
+			$keys = $collection->getMessageKeys();
 
 			$diff = array_diff( $keys, array_keys( $messages ) );
 
@@ -357,6 +415,9 @@ class SpecialManageGroups extends SpecialPage {
 		}
 	}
 
+	/**
+	 * @param $group MessageGroup
+	 */
 	public function doModLangs( $group ) {
 		global $wgLang;
 
@@ -395,24 +456,8 @@ class SpecialManageGroups extends SpecialPage {
 				$wgLang->formatNum( count( $modified ) )
 			);
 
-			$formParams = array(
-				'method' => 'post',
-				'action' => $this->getTitle()->getFullURL( array( 'group' => $group->getId() ) ),
-			);
-
 			if ( $this->user->isAllowed( 'translate-manage' ) ) {
-
-				$this->out->addHTML(
-					Xml::openElement( 'form', $formParams ) .
-					Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) .
-					Html::hidden( 'token', $this->user->editToken() ) .
-					Html::hidden( 'group', $group->getId() ) .
-					Html::hidden( 'codes', implode( ',', $codes ) ) .
-					Html::hidden( 'rebuildall', 1 ) .
-					Xml::submitButton( wfMsg( 'translate-manage-import-rebuild-all' ) ) .
-					Xml::closeElement( 'form' )
-				);
-
+				$this->out->addHTML( $this->rebuildButton( $group, $codes, 'import' ) );
 			}
 
 			$this->out->addHTML(

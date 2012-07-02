@@ -23,8 +23,8 @@ class SpecialExtensions extends ConfigurationPage {
 	 * Submit a posted form
 	 */
 	public function doSubmit() {
-		global $wgConf, $wgOut, $wgRequest;
-		$reason = $wgRequest->getText( 'wpReason' );
+		global $wgConf;
+		$reason = $this->getRequest()->getText( 'wpReason' );
 		$current = $wgConf->getCurrent( $this->mWiki );
 		$settings = $this->importFromRequest();
 		$new = $settings + $current;
@@ -36,25 +36,24 @@ class SpecialExtensions extends ConfigurationPage {
 		}
 		$new = $this->removeDefaults( $new );
 		$new['__includes'] = $this->getRequiredFiles();
-		$ok = $wgConf->saveNewSettings( $new, $this->mWiki, $reason );
+		$ok = $wgConf->saveNewSettings( $new, $this->getUser(), $this->mWiki, $reason );
 
 		$result = $ok ? 'success' : 'failure';
 
-		$url = $this->getTitle()->getLocalURL( "result=$result" );
-		$wgOut->redirect( $url );
+		$this->getOutput()->redirect( $this->getTitle()->getFullURL( "result=$result" ) );
 	}
 
 	/**
 	 * Show the diff between the current version and the posted version
 	 */
 	protected function showDiff() {
-		global $wgConf, $wgOut;
+		global $wgConf;
 		$wiki = $this->mWiki;
 		$old = array( $wiki => $wgConf->getCurrent( $wiki ) );
 		$new = array( $wiki => $this->conf );
-		$diff = new ExtPreviewConfigurationDiff( $old, $new, array( $wiki ) );
+		$diff = new ExtPreviewConfigurationDiff( $this->getContext(), $old, $new, array( $wiki ) );
 		$diff->setViewCallback( array( $this, 'userCanRead' ) );
-		$wgOut->addHTML( $diff->getHtml() );
+		$this->getOut()->addHTML( $diff->getHtml() );
 	}
 
 	/**
@@ -63,18 +62,18 @@ class SpecialExtensions extends ConfigurationPage {
 	 * @return Boolean: success
 	 */
 	protected function checkExtensionsDependencies() {
-		global $wgRequest, $wgOut;
-
+		$request = $this->getRequest();
 		foreach ( $this->mConfSettings->getAllExtensionsObjects() as $ext ) {
-			if ( !count( $ext->getExtensionsDependencies() ) || !$wgRequest->getCheck( $ext->getCheckName() ) )
+			if ( !count( $ext->getExtensionsDependencies() ) || !$request->getCheck( $ext->getCheckName() ) )
 				continue;
 
 			foreach ( $ext->getExtensionsDependencies() as $depName ) {
 				$dep = $this->mConfSettings->getExtension( $depName );
 				if ( !is_object( $dep ) )
 					throw new MWException( "Unable to find \"{$depName}\" dependency for \"{$ext->getName()}\" extension" );
-				if ( !$wgRequest->getCheck( $dep->getCheckName() ) ) {
-					$wgOut->wrapWikiMsg( '<span class="errorbox">$1</span>', array( 'configure-ext-ext-dependency-err', $ext->getName(), $depName ) );
+				if ( !$request->getCheck( $dep->getCheckName() ) ) {
+					$this->getOutput()->wrapWikiMsg( '<span class="errorbox">$1</span>',
+						array( 'configure-ext-ext-dependency-err', $ext->getName(), $depName ) );
 					return false;
 				}
 			}
@@ -87,7 +86,7 @@ class SpecialExtensions extends ConfigurationPage {
 	 * @return array
 	 */
 	protected function getRequiredFiles() {
- 		global $wgRequest, $wgConfigureOnlyUseVarForExt;
+ 		global $wgConfigureOnlyUseVarForExt;
  		if ( $wgConfigureOnlyUseVarForExt )
  			return array();
 		$arr = array();
@@ -96,7 +95,7 @@ class SpecialExtensions extends ConfigurationPage {
 				continue; // must exist
 			if ( $ext->useVariable() )
  				continue;
-			if ( $wgRequest->getCheck( $ext->getCheckName() ) )
+			if ( $this->getRequest()->getCheck( $ext->getCheckName() ) )
 				$arr[] = $ext->getFile();
 		}
 		return $arr;
@@ -122,8 +121,6 @@ class SpecialExtensions extends ConfigurationPage {
 	 * @return xhtml
 	 */
 	protected function buildAllSettings() {
-		global $wgRequest;
-
 		$ret = '';
 		$globalDone = false;
 		foreach ( $this->mConfSettings->getAllExtensionsObjects() as $wikiExt ) {
@@ -133,7 +130,7 @@ class SpecialExtensions extends ConfigurationPage {
 			$wikiExt->setPageObj( $this );
 
 			if ( $this->mIsPreview )
-				$wikiExt->setTempActivated( $wgRequest->getCheck( $ext->getCheckName() ) );
+				$wikiExt->setTempActivated( $this->getRequest()->getCheck( $ext->getCheckName() ) );
 
 			$settings = $wikiExt->getSettings();
 			foreach ( $settings as $setting => $type ) {
@@ -152,7 +149,7 @@ class SpecialExtensions extends ConfigurationPage {
 			if ( $globalDone )
 				$GLOBALS['wgHooks'] = $oldHooks;
 
-			$ret .= $wikiExt->getHtml();
+			$ret .= $wikiExt->getHtml( $this->getContext() );
 		}
 
 		return $ret;

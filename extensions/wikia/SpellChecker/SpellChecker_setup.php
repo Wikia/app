@@ -36,18 +36,10 @@ $wgAutoloadClasses['SpellCheckerService'] = $dir . '/SpellCheckerService.class.p
 // special page
 $wgSpecialPages['SpellCheckerInfo'] = 'SpellCheckerInfoSpecial';
 
-$wgExtensionFunctions[] = 'SpellCheckerSetup';
-
-function SpellCheckerSetup() {
-	// WikiaApp
-	$app = WF::build('App');
-
-	WF::addClassConstructor('SpellChecker', array('app' => $app));
-
-	// hooks
-	$app->registerHook('RTEAddGlobalVariablesScript', 'SpellChecker', 'onRTEAddGlobalVariablesScript');
-	$app->registerHook('GetPreferences', 'SpellChecker', 'onGetPreferences');
-}
+// hooks
+$app = F::app();
+$app->registerHook('RTEAddGlobalVariablesScript', 'SpellChecker', 'onRTEAddGlobalVariablesScript');
+$app->registerHook('GetPreferences', 'SpellChecker', 'onGetPreferences');
 
 $wgAjaxExportList[] = 'SpellCheckerAjax';
 
@@ -61,7 +53,7 @@ function SpellCheckerAjax() {
 		$data = SpellCheckerAjax::$method();
 
 		// send array as JSON
-		$json = Wikia::json_encode($data);
+		$json = json_encode($data);
 		$response = new AjaxResponse($json);
 		$response->setContentType('application/json; charset=utf-8');
 

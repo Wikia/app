@@ -1,9 +1,9 @@
 <?php
 /**
- * This script fixes timestamp corruption caused by one or more webservers 
+ * This script fixes timestamp corruption caused by one or more webservers
  * temporarily being set to the wrong time. The time offset must be known and
- * consistent. Start and end times (in 14-character format) restrict the search, 
- * and must bracket the damage. There must be a majority of good timestamps in the 
+ * consistent. Start and end times (in 14-character format) restrict the search,
+ * and must bracket the damage. There must be a majority of good timestamps in the
  * search period.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,8 +23,8 @@
  *
  * @ingroup Maintenance
  */
- 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class FixTimestamps extends Maintenance {
 	public function __construct() {
@@ -36,25 +36,25 @@ class FixTimestamps extends Maintenance {
 	}
 
 	public function execute() {
-		$offset = $this->getArg(0) * 3600;
-		$start = $this->getArg(1);
-		$end = $this->getArg(2);
+		$offset = $this->getArg( 0 ) * 3600;
+		$start = $this->getArg( 1 );
+		$end = $this->getArg( 2 );
 		$grace = 60; // maximum normal clock offset
-	
+
 		# Find bounding revision IDs
 		$dbw = wfGetDB( DB_MASTER );
 		$revisionTable = $dbw->tableName( 'revision' );
 		$res = $dbw->query( "SELECT MIN(rev_id) as minrev, MAX(rev_id) as maxrev FROM $revisionTable " .
 			"WHERE rev_timestamp BETWEEN '{$start}' AND '{$end}'", __METHOD__ );
 		$row = $dbw->fetchObject( $res );
-	
+
 		if ( is_null( $row->minrev ) ) {
 			$this->error( "No revisions in search period.", true );
 		}
-	
+
 		$minRev = $row->minrev;
 		$maxRev = $row->maxrev;
-	
+
 		# Select all timestamps and IDs
 		$sql = "SELECT rev_id, rev_timestamp FROM $revisionTable " .
 			"WHERE rev_id BETWEEN $minRev AND $maxRev";
@@ -64,13 +64,13 @@ class FixTimestamps extends Maintenance {
 		} else {
 			$expectedSign = 1;
 		}
-	
+
 		$res = $dbw->query( $sql, __METHOD__ );
-	
+
 		$lastNormal = 0;
 		$badRevs = array();
 		$numGoodRevs = 0;
-	
+
 		foreach ( $res as $row ) {
 			$timestamp = wfTimestamp( TS_UNIX, $row->rev_timestamp );
 			$delta = $timestamp - $lastNormal;
@@ -89,26 +89,25 @@ class FixTimestamps extends Maintenance {
 				$badRevs[] = $row->rev_id;
 			}
 		}
-		$dbw->freeResult( $res );
-	
+
 		$numBadRevs = count( $badRevs );
 		if ( $numBadRevs > $numGoodRevs ) {
-			$this->error( 
+			$this->error(
 		"The majority of revisions in the search interval are marked as bad.
 
-		Are you sure the offset ($offset) has the right sign? Positive means the clock 
+		Are you sure the offset ($offset) has the right sign? Positive means the clock
 		was incorrectly set forward, negative means the clock was incorrectly set back.
 
-		If the offset is right, then increase the search interval until there are enough 
+		If the offset is right, then increase the search interval until there are enough
 		good revisions to provide a majority reference.", true );
 		} elseif ( $numBadRevs == 0 ) {
 			$this->output( "No bad revisions found.\n" );
-			exit(0);
+			exit( 0 );
 		}
-	
-		$this->output( sprintf( "Fixing %d revisions (%.2f%% of revisions in search interval)\n", 
-			$numBadRevs, $numBadRevs / ($numGoodRevs + $numBadRevs) * 100 ) );
-	
+
+		$this->output( sprintf( "Fixing %d revisions (%.2f%% of revisions in search interval)\n",
+			$numBadRevs, $numBadRevs / ( $numGoodRevs + $numBadRevs ) * 100 ) );
+
 		$fixup = -$offset;
 		$sql = "UPDATE $revisionTable " .
 			"SET rev_timestamp=DATE_FORMAT(DATE_ADD(rev_timestamp, INTERVAL $fixup SECOND), '%Y%m%d%H%i%s') " .
@@ -119,4 +118,4 @@ class FixTimestamps extends Maintenance {
 }
 
 $maintClass = "FixTimestamps";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

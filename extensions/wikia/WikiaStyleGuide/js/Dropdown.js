@@ -1,6 +1,6 @@
-(function($) {
+(function(window, $) {
 
-Wikia = Wikia || {};
+var Wikia = window.Wikia || {};
 
 /**
  * An unordered list dropdown menu.
@@ -115,6 +115,12 @@ Wikia.Dropdown = $.createClass(Observable, {
 	}
 });
 
+$.fn.wikiaDropdown = function(options) {
+	return this.each(function() {
+		$.data(this, 'WikiaDropdown', new Wikia.Dropdown(this, options));
+	});
+};
+
 /**
  * A dropdown list with checkboxes.
  * See: https://internal.wikia-inc.com/wiki/File:Recent_changes_filter_redlines-01.png
@@ -140,9 +146,11 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 		this.$selectedItemsList = this.$selectedItems.find('.selected-items-list');
 
 		this.$checkboxes.on('change.' + this.settings.eventNamespace, this.proxy(this.onChange));
-		this.$window.on(
-			'resize.' + this.settings.eventNamespace + ' ' +
-			'scroll.' + this.settings.eventNamespace, this.proxy(this.updateDropdownHeight));
+
+		// Do we need this?
+		//this.$window.on(
+		//	'resize.' + this.settings.eventNamespace + ' ' +
+		//	'scroll.' + this.settings.eventNamespace, this.proxy(this.updateDropdownHeight));
 
 		this.updateDropdownHeight();
 		this.updateSelectedItemsList();
@@ -238,7 +246,13 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 	}
 });
 
+$.fn.wikiaMultiSelectDropdown = function(options) {
+	return this.each(function() {
+		$.data(this, 'WikiaMultiSelectDropdown', new Wikia.MultiSelectDropdown(this, options));
+	});
+};
+
 // Exports
 window.Wikia = Wikia;
 
-})(jQuery, Wikia);
+})(this, jQuery);

@@ -19,6 +19,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 			'author' => 'Rob Church / gcardinal',
 			'description' => 'Lottery added my gcardinal. Modified for pvxwiki.',
 	);
+	$wgExtensionMessagesFiles['SpecialVote'] = dirname(__FILE__) . '/Vote.i18n.php';
 	
 	/**
 	 * Users who can vote
@@ -33,10 +34,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 	 * Extension setup function
 	 */
 	function efVote() {
-		global $wgMessageCache, $wgHooks;
-		require_once( dirname( __FILE__ ) . '/Vote.i18n.php' );
-		foreach( efVoteMessages() as $lang => $messages )
-			$wgMessageCache->addMessages( $messages, $lang );
+		global $wgHooks;
 		$wgHooks['SkinTemplateSetupPageCss'][] = 'efVoteCss';
 	}
 	

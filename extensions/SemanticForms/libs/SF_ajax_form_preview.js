@@ -9,241 +9,250 @@ var wkPreview;
 var interval;
 
 function ajaxFormPreviewInit(){
- 
-    if ((wgNamespaceNumber % 2 == 0) && /\.(js|css)$/.test(wgTitle)) return;
- 
-    if(!document.getElementById('wikiPreview')) return;
- 
-    var btnOld = document.getElementById('wpPreview');
-    if (!btnOld || !document.getElementById('wikiPreview')) return;  // need preview-button and preview-placeholder
- 
-    var btn = document.createElement('input');
-    btn.type = 'button';
-    btn.onclick = ajaxFormPreviewClick;
-    btn.id = btnOld.id;
-    btn.name = btnOld.name;
-    btn.value = btnOld.value;
-    btn.title = btnOld.title;
- 
-    btn.value2 = btn.value;
- 
-    btn.accessKey = btnOld.accessKey;
-    btn.disabled = btnOld.disabled;
-    btn.tabIndex = btnOld.tabIndex;
- 
-    btnOld.parentNode.replaceChild(btn, btnOld);
+
+	if ((mw.config.get( 'wgNamespaceNumber' ) % 2 == 0) && /\.(js|css)$/.test(mw.config.get( 'wgTitle' ))) return;
+
+	if(!document.getElementById('wikiPreview')) return;
+
+	var btnOld = document.getElementById('wpPreview');
+	if (!btnOld || !document.getElementById('wikiPreview')) return;  // need preview-button and preview-placeholder
+
+	var btn = document.createElement('input');
+	btn.type = 'button';
+	btn.onclick = ajaxFormPreviewClick;
+	btn.id = btnOld.id;
+	btn.name = btnOld.name;
+	btn.value = btnOld.value;
+	btn.title = btnOld.title;
+
+	btn.value2 = btn.value;
+
+	btn.accessKey = btnOld.accessKey;
+	btn.disabled = btnOld.disabled;
+	btn.tabIndex = btnOld.tabIndex;
+
+	btnOld.parentNode.replaceChild(btn, btnOld);
 }
- 
-function ajaxFormPreviewClick(){ajaxFormPreviewRun(this)}
+
+function ajaxFormPreviewClick(){
+	ajaxFormPreviewRun(this)
+	}
 
 function ajaxFormPreviewRun(btn){
- 
-    wkPreview = document.getElementById('wikiPreview');
-    var form = document.createbox;
-    var aj = sajax_init_object();
-    var aj2 = sajax_init_object();
- 
-    // remove old error messages
-    var el = document.getElementById("form_error_header");
-    if (el) el.parentNode.removeChild(el);
- 
-    if (!wkPreview || !form || !aj || !aj2 || !validateAll() ) return;
- 
-    var frag=document.createElement("div");
- 
-    var htm;
- 
-    // gray out old preview
-    wkPreview.style.opacity = '0.3';
-    wkPreview.style.color = 'gray';
- 
-    document.body.style.cursor = 'wait';
-  
-    //prepare
-    var action = document.URL;
-    if (wgAction=='formedit') action += '&live';
- 
-    var boundary = '--------123xyz';
-    var data = '';
- 
-    //FCKeditor visible? update free text first
-    // if (!oFCKeditor.ready) return false;    //sajax_do_call in action - what do we do?
-    if ( typeof FCKeditorAPI != "undefined" )
-	if ( showFCKEditor & RTE_VISIBLE ) {
-	    
-	    var SRCtextarea = document.getElementById( 'free_text' );
-	    
-	    if ( SRCtextarea ) {
-		
-		var oEditorIns = FCKeditorAPI.GetInstance( 'free_text' );
-		SRCtextarea.value = oEditorIns.GetData( oEditorIns.Config.FormatSource );
-		
-	    }
-	    
+
+	wkPreview = document.getElementById('wikiPreview');
+	var form = document.createbox;
+	var aj = sajax_init_object();
+	var aj2 = sajax_init_object();
+
+	// remove old error messages
+	var el = document.getElementById("form_error_header");
+	if (el) el.parentNode.removeChild(el);
+
+	if (!wkPreview || !form || !aj || !aj2 || !validateAll() ) return;
+
+	var frag=document.createElement("div");
+
+	var htm;
+
+	// gray out old preview
+	wkPreview.style.opacity = '0.3';
+	wkPreview.style.color = 'gray';
+
+	document.body.style.cursor = 'wait';
+
+	//prepare
+	var action = document.URL;
+	if (mw.config.get( 'wgAction' )=='formedit') action += '&live';
+
+	var boundary = '--------123xyz';
+	var data = '';
+
+	//FCKeditor visible? update free text first
+	// if (!oFCKeditor.ready) return false;    //sajax_do_call in action - what do we do?
+	if ( typeof FCKeditorAPI != "undefined" )
+		if ( showFCKEditor & RTE_VISIBLE ) {
+
+			var SRCtextarea = document.getElementById( 'sf_free_text' );
+
+			if ( SRCtextarea ) {
+
+				var oEditorIns = FCKeditorAPI.GetInstance( 'sf_free_text' );
+				SRCtextarea.value = oEditorIns.GetData( oEditorIns.Config.FormatSource );
+
+			}
+
+		}
+
+	elts = form.elements;
+
+	for (i=0; i < elts.length; ++i) {
+		if (elts[i].name && elts[i].name !== '' && !elts[i].disabled &&
+			((elts[i].type!='submit' && elts[i].type!='button' && elts[i].type!='radio' && elts[i].type!='checkbox') || elts[i].checked)) {
+			addData (elts[i].name, elts[i].value);
+		}
 	}
- 
-    elts = form.elements;
- 
-    for (i=0; i < elts.length; ++i) {
-	if (elts[i].name && elts[i].name != '' && !elts[i].disabled &&
-	    ((elts[i].type!='submit' && elts[i].type!='radio' && elts[i].type!='checkbox') || elts[i].checked)) {
-	    addData (elts[i].name, elts[i].value);
-	}
-    }
 
-    btn.style.width = Math.max(btn.scrollWidth, btn.offsetWidth) + 'px';
-    btn.value = '...';
-    btn.disabled='1';
- 
-    //send
- 
-    aj.open('POST', action, true);
-    aj.setRequestHeader('Content-Type', 'multipart/form-data; boundary='+boundary);
-    aj.send(data + '--' + boundary);
-    aj.onreadystatechange = function(){
- 
-	if (aj.readyState != 4) return;
- 
-	// Got Wikitext. Now fetch HTML...
-	
-	frag.innerHTML = aj.responseText;
- 
-        if (!frag.getElementsByTagName("form")["editform"]) {
-	    wkPreview.innerHTML = aj.responseText;
-        }
+	addData ('wpPreview', 'Show Preview');
 
-	//alert(aj.responseText);
-	action = frag.getElementsByTagName("form")["editform"].action;
+	btn.style.width = Math.max(btn.scrollWidth, btn.offsetWidth) + 'px';
+	btn.value = '...';
+	btn.disabled='1';
 
-	data = '';
+	//send
 
-	elts = frag.getElementsByTagName("form")["editform"].elements;
+	aj.open('POST', action, true);
+	aj.setRequestHeader('Content-Type', 'multipart/form-data; boundary='+boundary);
+	aj.send(data + '--' + boundary);
+	aj.onreadystatechange = function(){
 
-	for (i=0; i < elts.length; ++i)
-	    if (elts[i].name && elts[i].name != '') addData (elts[i].name, elts[i].value);
+		if (aj.readyState != 4) return;
 
-	aj2.open('POST', action, true);
-	aj2.setRequestHeader('Content-Type', 'multipart/form-data; boundary='+boundary);
-	aj2.send(data + '--' + boundary);
-	aj2.onreadystatechange = function(){
+		// Got Wikitext. Now fetch HTML...
 
-	    if (aj2.readyState != 4) return;
+		frag.innerHTML = aj.responseText;
 
-	    htm = aj2.responseText.replace(/&gt;/g,'>')
+		if (!frag.getElementsByTagName("form")["editform"]) {
+			wkPreview.innerHTML = aj.responseText;
+		}
+
+		//alert(aj.responseText);
+		action = frag.getElementsByTagName("form")["editform"].action;
+
+		data = '';
+
+		elts = frag.getElementsByTagName("form")["editform"].elements;
+
+		for (i=0; i < elts.length; ++i)
+			if (elts[i].name && elts[i].name !== '') addData (elts[i].name, elts[i].value);
+
+		aj2.open('POST', action, true);
+		aj2.setRequestHeader('Content-Type', 'multipart/form-data; boundary='+boundary);
+		aj2.send(data + '--' + boundary);
+		aj2.onreadystatechange = function(){
+
+			if (aj2.readyState != 4) return;
+
+			htm = aj2.responseText.replace(/&gt;/g,'>')
 			.replace(/&lt;/g,'<')
 			.replace(/&quot;/g,'"')
 			.replace(/&amp;/g,'&')
 			.replace(/&apos;/g,"'")
 			.replace("</body>", "<span id='SF_PREVIEW_EOD'/></body>");
 
-	    ifr = document.createElement('iframe');
-	    ifr.onload="alert('load')";
-	    wkPreview.innerHTML = '';
+			ifr = document.createElement('iframe');
+			ifr.onload="alert('load')";
+			wkPreview.innerHTML = '';
 
-	    ifr.id="ifrPreview";
-	    ifr.style.width="100%";
-	    ifr.style.height="0";
+			ifr.id="ifrPreview";
+			ifr.style.width="100%";
+			ifr.style.height="0";
 
-	    ifr.style.margin="0px";
-	    ifr.style.padding="0px";
-	    ifr.style.border="0px";
-	    ifr.border="0";
-	    ifr.frameBorder="0";
+			ifr.style.margin="0px";
+			ifr.style.padding="0px";
+			ifr.style.border="0px";
+			ifr.border="0";
+			ifr.frameBorder="0";
 
-	    wkPreview.appendChild(ifr);
+			wkPreview.appendChild(ifr);
 
-	    var doc = null;
+			var doc = null;
 
-	    if (ifr.contentDocument)
-		doc = ifr.contentDocument;
+			if (ifr.contentDocument)
+				doc = ifr.contentDocument;
 
-	    else if (ifr.contentWindow)
-		doc = ifr.contentWindow.document;
+			else if (ifr.contentWindow)
+				doc = ifr.contentWindow.document;
 
-	    else doc = ifr.Document;
+			else doc = ifr.Document;
 
-	    doc.open();
-	    doc.write(htm);
-	    doc.close();
- 
-	    interval=setInterval(function(){
+			doc.open();
+			doc.write(htm);
+			doc.close();
 
-		    if ( ! doc.getElementById("SF_PREVIEW_EOD") ) return;
+			interval=setInterval(function(){
 
-		    var visible = null;
+				if ( ! doc.getElementById("SF_PREVIEW_EOD") ) return;
 
-		    visible = doc.getElementById("wikiPreview");
+				var visible = null;
 
-		    clearInterval(interval);
+				visible = doc.getElementById("wikiPreview");
 
-		    var currentfr=document.getElementById('ifrPreview');
+				clearInterval(interval);
 
-		    if (currentfr && !window.opera){
+				var currentfr=document.getElementById('ifrPreview');
 
-			if (currentfr.contentDocument) { //ns6 syntax
-			    doc = currentfr.contentDocument;
-			} else if (currentfr.Document && currentfr.Document.body.scrollHeight) { //ie5+ syntax
-			    doc = currentfr.Document;
-			}
+				if (currentfr && !window.opera){
 
-			ifr.style.display="block";
-			vish = visible.clientHeight;
-			if (vish == 0) vish = visible.scrollHeight; //IE
+					if (currentfr.contentDocument) { //ns6 syntax
+						doc = currentfr.contentDocument;
+					} else if (currentfr.Document && currentfr.Document.body.scrollHeight) { //ie5+ syntax
+						doc = currentfr.Document;
+					}
 
-			while (visible.tagName.toLowerCase() != "body") {
+					ifr.style.display="block";
+					vish = visible.clientHeight;
+					if (vish == 0) vish = visible.scrollHeight; //IE
 
-			    visible.style.width="100%";
-			    visible.style.height= " " + vish + "px";
-			    visible.style.margin="0px";
-			    visible.style.padding="0px";
-			    visible.style.border="0px";
+					while (visible.tagName.toLowerCase() != "body") {
 
-			    pv = visible;
+						visible.style.width="100%";
+						visible.style.height= " " + vish + "px";
+						visible.style.margin="0px";
+						visible.style.padding="0px";
+						visible.style.border="0px";
 
-			    while (pv.previousSibling) {
-				pv = pv.previousSibling;
-				if (pv.style) pv.style.display="none";
-			    }
+						pv = visible;
 
-			    pv = visible;
+						while (pv.previousSibling) {
+							pv = pv.previousSibling;
+							if (pv.style) pv.style.display="none";
+						}
 
-			    while (pv.nextSibling) {
-				pv = pv.nextSibling;
-				if (pv.style) pv.style.display="none";
-			    }
+						pv = visible;
 
-			    visible = visible.parentNode;
-			}
+						while (pv.nextSibling) {
+							pv = pv.nextSibling;
+							if (pv.style) pv.style.display="none";
+						}
 
-			doc.getElementById('content').style.background = "none white";
+						visible = visible.parentNode;
+					}
 
-			currentfr.style.height = " " + vish + "px";
+					doc.getElementById('content').style.background = "none white";
 
-			window.scrollTo(currentfr.offsetLeft, currentfr.offsetTop);
-			document.body.style.cursor = '';
+					currentfr.style.height = " " + vish + "px";
 
-			btn = document.getElementById('wpPreview');
-			btn.value = btn.value2;
-			btn.disabled='';
-			btn.blur();
+					window.scrollTo(currentfr.offsetLeft, currentfr.offsetTop);
+					document.body.style.cursor = '';
 
-		    }
-		},100);
-	    
-	    wkPreview.style.opacity = '';
-	    wkPreview.style.color = '';
-	    wkPreview.style.display='block';
+					btn = document.getElementById('wpPreview');
+					btn.value = btn.value2;
+					btn.disabled='';
+					btn.blur();
 
-	} // aj2.onreadystatechange = function(){
+					if ( typeof( window.parent.ext ) != 'undefined' &&
+						typeof( window.parent.ext.popupform ) != 'undefined' ) {
+						window.parent.ext.popupform.adjustFrameSize( true );
+					}
 
-    } // aj.onreadystatechange = function(){
+				}
+			},100);
 
-    function addData(name, value){
-	if (!value) value = form[name] ? form[name].value : ''
-			data += '--' + boundary + '\nContent-Disposition: form-data; name="'+name+'"\n\n' + value + '\n';
-    }
+			wkPreview.style.opacity = '';
+			wkPreview.style.color = '';
+			wkPreview.style.display='block';
+
+		} // aj2.onreadystatechange = function(){
+
+	} // aj.onreadystatechange = function(){
+
+	function addData(name, value){
+		if (!value) value = form[name] ? form[name].value : ''
+		data += '--' + boundary + '\nContent-Disposition: form-data; name="'+name+'"\n\n' + value + '\n';
+	}
 }
 
-if (wgAction=='formedit' || wgCanonicalSpecialPageName == 'FormEdit')
-//    addOnloadHook(ajaxFormPreviewInit);
-	jQuery(function(){ajaxFormPreviewInit()});
+if ( mw.config.get( 'wgAction' ) ==='formedit' || mw.config.get( 'wgCanonicalSpecialPageName' ) === 'FormEdit' ) {
+	jQuery( ajaxFormPreviewInit );
+}

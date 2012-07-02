@@ -92,7 +92,7 @@ class ApiQueryActivityFeed extends ApiQueryBase {
 		return "Activity feed repackaged as MW api";
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 				"api.php?action=query&list=activityfeed&affoo=Bar",
 			);

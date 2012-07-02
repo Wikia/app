@@ -190,9 +190,3 @@ function versionCheck( $ver = '1.12' ) {
 	if($cvp[2] >= $nvp[2]) return true;
 	return false;
 }
-
-//shortcut to save some time in typing
-function loadGPMessages() {
-	wfLoadExtensionMessages('GroupPermissions');
-	return true;
-}

@@ -22,7 +22,7 @@ blah blah
 !! endarticle
 
 !! test
-Input times should probably be UTC, not local time
+Input times are UTC, not local time
 !! input
 {{#time:c|15 January 2001}}
 !!result
@@ -54,6 +54,42 @@ Time test after the 2038 32-bit Apocalype
 {{#time:Y|28 July 2061}}
 !! result
 <p>2061
+</p>
+!! end
+
+!! test
+Explicitly specified timezone: UTC
+!! input
+{{#time:Y-m-d H:i| 2011-11-12 23:00 UTC }}
+!! result
+<p>2011-11-12 23:00
+</p>
+!! end
+
+!! test
+Explicitly specified timezone: Europe/Paris (UTC+1)
+!! input
+{{#time:Y-m-d H:i| 2011-11-12 23:00 Europe/Paris }}
+!! result
+<p>2011-11-12 22:00
+</p>
+!! end
+
+!! test
+Explicitly specified timezone: America/New_York (UTC-5)
+!! input
+{{#time:Y-m-d H:i| 2011-11-12 23:00 America/New_York }}
+!! result
+<p>2011-11-13 04:00
+</p>
+!! end
+
+!! test
+Explicitely specified output language (Dutch)
+!! input
+{{#time:d F Y|1988-02-28|nl}}
+!! result
+<p>28 februari 1988
 </p>
 !! end
 
@@ -164,5 +200,14 @@ empty
 empty
 no
 empty
+</p>
+!! end
+
+!! test
+Bug 22866: #ifexpr should evaluate "-0" as false
+!! input
+{{#ifexpr: (-1)*0 | true | false }}
+!! result
+<p>false
 </p>
 !! end

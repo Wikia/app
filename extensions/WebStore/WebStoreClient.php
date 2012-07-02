@@ -5,7 +5,7 @@ class WebStoreClient extends FileStore {
 	var $lastError;
 
 	function __construct() {
-		wfLoadExtensionMessages( 'WebStore' );
+		
 	}
 
 	function getURL( $script ) {

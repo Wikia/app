@@ -3,7 +3,8 @@ if (!defined('MEDIAWIKI')) die();
 /**
  * An extension that adds Wikimedia specific functionality
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @copyright Copyright © 2008-2009, Tim Starling
  * @copyright Copyright © 2009, Siebrand Mazeland, Multichill
@@ -13,9 +14,8 @@ if (!defined('MEDIAWIKI')) die();
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'WikimediaMessages',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:WikimediaMessages',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:WikimediaMessages',
 	'author'         => array( 'Tim Starling', 'Siebrand Mazeland' ),
-	'description'    => 'Wikimedia specific messages',
 	'descriptionmsg' => 'wikimediamessages-desc',
 );
 
@@ -27,7 +27,7 @@ include_once ( $dir .'WikimediaGrammarForms.php' );
 
 function wfSetupWikimediaMessages() {
 	global $wgRightsUrl, $wgHooks;
-	if( $wgRightsUrl == 'http://creativecommons.org/licenses/by-sa/3.0/' ) {
+	if( strpos( $wgRightsUrl, 'creativecommons.org/licenses/by-sa/3.0' ) !== false ) {
 		// Override with Wikimedia's site-specific copyright message defaults
 		// with the CC/GFDL semi-dual license fun!
 		$wgHooks['SkinCopyrightFooter'][] = 'efWikimediaSkinCopyrightFooter';
@@ -37,13 +37,14 @@ function wfSetupWikimediaMessages() {
 }
 
 function efWikimediaEditPageCopyrightWarning( $title, &$msg ) {
-	$msg = 'wikimedia-copyrightwarning';
+	$msg = array( 'wikimedia-copyrightwarning' );
 	return true;
 }
 
-function efWikimediaSkinCopyrightFooter( $title, $type, &$msg, &$link ) {
+function efWikimediaSkinCopyrightFooter( $title, $type, &$msg, &$link, &$forContent ) {
 	if( $type != 'history' ) {
 		$msg = 'wikimedia-copyright';
+		$forContent = false;
 	}
 	return true;
 }

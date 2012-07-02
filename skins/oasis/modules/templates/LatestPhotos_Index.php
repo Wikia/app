@@ -1,5 +1,5 @@
-<section class="LatestPhotosModule module">
-	<h1>Latest Photos</h1>
+<section class="LatestPhotosModule module" id="LatestPhotosModule">
+	<h1 class="tight"><?= wfMsg('oasis-latest-photos-title') ?></h1>
 	<?= (!empty($wg->EnableUploads)) ? Wikia::specialPageLink('Upload', 'oasis-add-photo', (!$isUserLoggedIn ? 'wikia-button upphotoslogin' :'wikia-button upphotos'), 'blank.gif', 'oasis-add-photo', 'sprite photo') : '' ?>
 	<div class="tally counter">
 		<?= wfMsgExt('oasis-latest-photos-header', array( 'parsemag' ), $total, ($total < 100000 ? 'fixedwidth' : '') ) ?>
@@ -30,7 +30,7 @@ else {
 	// macbre: how many images to show at the page load, next images will be lazy loaded
 	$load = 3;
 	foreach ($thumbUrls as $i => $url) {?>
-		<li class="thumbs"><a class="image" data-ref="<?= $url["image_filename"] ?> " href="<?= $url["file_url"] ?>">
+		<li class="thumbs"><a class="image" data-ref="<?= $url["image_filename"] ?>" href="<?= $url["file_url"] ?>">
 			<? if ( isset( $url['isVideoThumb'] ) && $url['isVideoThumb'] ) echo WikiaFileHelper::videoPlayButtonOverlay( LatestPhotosController::THUMB_SIZE, LatestPhotosController::THUMB_SIZE ); ?>
 			<img class="thumbimage" height="<?= LatestPhotosController::THUMB_SIZE; ?>" width="<?= LatestPhotosController::THUMB_SIZE; ?>" <?= $i < $load ? 'src' : "src='$wg->BlankImgUrl' data-src" ?>="<?= $url["thumb_url"] ?>" />
 		</a>

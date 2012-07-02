@@ -42,7 +42,6 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'IPAuth',
 	'author' => 'Daniel Kinzler for Wikimedia Deutschland',
 	'url' => 'http://mediawiki.org/wiki/Extension:IPAuth',
-	'description' => 'Automatic login from fixed IPs',
 	'descriptionmsg' => 'ipauth-desc',
 );
 
@@ -51,7 +50,36 @@ $wgExtensionMessagesFiles['IPAuth'] = $root . '/IPAuth.i18n.php';
 $wgIPAuthUsers = array(  );
 # $wgIPAuthUsers = array( "127.0.0.1" => "LocalUser" );
 
+$wgIPAuthIdSecret = null;
+
+$wgHooks['UserLoadFromSession'][] = 'ipAuthUserLoadFromSession';
 $wgHooks['UserLoadAfterLoadFromSession'][] = 'ipAuthUserLoadAfterLoadFromSession';
+
+function ipAuthUserLoadFromSession( $user, &$result ) {
+	global $wgIPAuthUsers, $wgRequest, $wgIPAuthIdSecret;
+	
+	if ( !$wgIPAuthIdSecret ) {
+		return true;
+	}
+
+	$ip = wfGetIP();
+	if ( isset( $wgIPAuthUsers[ $ip ] ) ) { 
+		$name = $wgIPAuthUsers[ $ip ];
+
+		if ( !$wgRequest->checkSessionCookie() ) { // if the client didn't provide a session cookie
+			// pick a new session id to avoid setting up a fresh session over and over.
+			// NOTE: <http://www.php.net/manual/en/function.session-id.php> sais:
+			// Depending on the session handler, not all characters are allowed within the session id.
+			// For example, the file session handler only allows characters in the range a-z A-Z 0-9 , (comma) and - (minus)! 
+			$sid = "ipauth" . '-' . preg_replace('![_.:]!', '-', $ip) . '-' . md5("$name:$ip:$wgIPAuthIdSecret"); 
+
+			wfDebug( "Forcing session id for $name at $ip to $sid\n" );
+			session_id($sid); //note: hope session isn't already open.
+		}
+	}
+	
+	return true;
+}
 
 function ipAuthUserLoadAfterLoadFromSession( $user ) {
 	global $wgIPAuthUsers;
@@ -88,4 +116,3 @@ function ipAuthUserLoadAfterLoadFromSession( $user ) {
 	
 	return true;
 }
-

@@ -6,277 +6,324 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English
- * @author Jon Harald Søby
- */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'Contact' => array( 'Contact' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Contact' => array( 'اتصال' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'Contact' => array( 'اتصال' ),
 );
 
 /** Assamese (অসমীয়া) */
-$aliases['as'] = array(
+$specialPageAliases['as'] = array(
 	'Contact' => array( 'যোগাযোগ' ),
 );
 
 /** Breton (Brezhoneg) */
-$aliases['br'] = array(
+$specialPageAliases['br'] = array(
 	'Contact' => array( 'Darempred' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Greek (Ελληνικά) */
-$aliases['el'] = array(
+$specialPageAliases['el'] = array(
 	'Contact' => array( 'Επαφή' ),
 );
 
 /** Esperanto (Esperanto) */
-$aliases['eo'] = array(
+$specialPageAliases['eo'] = array(
 	'Contact' => array( 'Kontakti' ),
 );
 
 /** Spanish (Español) */
-$aliases['es'] = array(
-	'Contact' => array( 'Contactar' ),
+$specialPageAliases['es'] = array(
+	'Contact' => array( 'Contactar', 'Contacto' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'Contact' => array( 'تماس' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
-	'Contact' => array( 'Ota yhteyttä' ),
+$specialPageAliases['fi'] = array(
+	'Contact' => array( 'Ota_yhteyttä' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
+$specialPageAliases['frp'] = array(
 	'Contact' => array( 'Contacte' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
+$specialPageAliases['gl'] = array(
 	'Contact' => array( 'Contactar' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Hebrew (עברית) */
-$aliases['he'] = array(
+$specialPageAliases['he'] = array(
 	'Contact' => array( 'יצירת_קשר' ),
 );
 
 /** Croatian (Hrvatski) */
-$aliases['hr'] = array(
+$specialPageAliases['hr'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Haitian (Kreyòl ayisyen) */
-$aliases['ht'] = array(
+$specialPageAliases['ht'] = array(
 	'Contact' => array( 'Kontak' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
+$specialPageAliases['hu'] = array(
 	'Contact' => array( 'Kapcsolat' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
+$specialPageAliases['ia'] = array(
 	'Contact' => array( 'Contacto' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
+$specialPageAliases['id'] = array(
 	'Contact' => array( 'Hubungi', 'Kontak' ),
 );
 
 /** Italian (Italiano) */
-$aliases['it'] = array(
+$specialPageAliases['it'] = array(
 	'Contact' => array( 'Contatti' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'Contact' => array( '連絡先' ),
 );
 
 /** Georgian (ქართული) */
-$aliases['ka'] = array(
+$specialPageAliases['ka'] = array(
 	'Contact' => array( 'კონტაქტი' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
-$aliases['km'] = array(
+$specialPageAliases['km'] = array(
 	'Contact' => array( 'ទំនាក់ទំនង' ),
 );
 
 /** Korean (한국어) */
-$aliases['ko'] = array(
+$specialPageAliases['ko'] = array(
 	'Contact' => array( '문의' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'Contact' => array( 'Kuntak', 'Kumtak', 'Kontak' ),
 );
 
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'Contact' => array( 'Tener_dar_i_aver' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'Contact' => array( 'Контакт' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'Contact' => array( 'ബന്ധപ്പെടുക' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'Contact' => array( 'संपर्क' ),
 );
 
 /** Maltese (Malti) */
-$aliases['mt'] = array(
+$specialPageAliases['mt'] = array(
 	'Contact' => array( 'Kuntatt' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'Contact' => array( 'Kontakt' ),
+);
+
 /** Low German (Plattdüütsch) */
-$aliases['nds'] = array(
+$specialPageAliases['nds'] = array(
 	'Contact' => array( 'Kuntakt' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'Contact' => array( 'Kontak' ),
+$specialPageAliases['nds-nl'] = array(
+	'Contact' => array( 'Kontakt' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'Contact' => array( 'Contactpagina' ),
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
-$aliases['nn'] = array(
+$specialPageAliases['nn'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'Contact' => array( 'Kontakt', 'Kontaktside' ),
-);
-
 /** Occitan (Occitan) */
-$aliases['oc'] = array(
+$specialPageAliases['oc'] = array(
 	'Contact' => array( 'Contacte' ),
 );
 
+/** Oriya (ଓଡ଼ିଆ) */
+$specialPageAliases['or'] = array(
+	'Contact' => array( 'ଯୋଗାଯୋଗ' ),
+);
+
 /** Polish (Polski) */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Pashto (پښتو) */
-$aliases['ps'] = array(
-	'Contact' => array( 'اړيکه، د اړيکو مخ' ),
+$specialPageAliases['ps'] = array(
+	'Contact' => array( 'اړيکه،_د_اړيکو_مخ' ),
 );
 
 /** Portuguese (Português) */
-$aliases['pt'] = array(
+$specialPageAliases['pt'] = array(
 	'Contact' => array( 'Contactar' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
-$aliases['pt-br'] = array(
+$specialPageAliases['pt-br'] = array(
 	'Contact' => array( 'Contactar', 'Contatar' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Romanian (Română) */
+$specialPageAliases['ro'] = array(
+	'Contact' => array( 'Contact' ),
+);
+
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'Contact' => array( 'सम्पर्क' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Albanian (Shqip) */
-$aliases['sq'] = array(
+$specialPageAliases['sq'] = array(
 	'Contact' => array( 'Kontakto' ),
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬) */
+$specialPageAliases['sr-ec'] = array(
+	'Contact' => array( 'Контакт' ),
+);
+
 /** Swedish (Svenska) */
-$aliases['sv'] = array(
+$specialPageAliases['sv'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
 /** Swahili (Kiswahili) */
-$aliases['sw'] = array(
+$specialPageAliases['sw'] = array(
 	'Contact' => array( 'Mawasiliano' ),
 );
 
 /** Telugu (తెలుగు) */
-$aliases['te'] = array(
+$specialPageAliases['te'] = array(
 	'Contact' => array( 'సంప్రదించు' ),
 );
 
 /** Tetum (Tetun) */
-$aliases['tet'] = array(
+$specialPageAliases['tet'] = array(
 	'Contact' => array( 'Kontaktu' ),
 );
 
 /** Thai (ไทย) */
-$aliases['th'] = array(
+$specialPageAliases['th'] = array(
 	'Contact' => array( 'ติดต่อ' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'Contact' => array( 'Makipag-ugnayan' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
-	'Contact' => array( 'İrtibat' ),
+$specialPageAliases['tr'] = array(
+	'Contact' => array( 'İrtibat', 'İletişim' ),
+);
+
+/** Tatar (Cyrillic script) (Татарча) */
+$specialPageAliases['tt-cyrl'] = array(
+	'Contact' => array( 'Элемтә' ),
+);
+
+/** Vèneto (Vèneto) */
+$specialPageAliases['vec'] = array(
+	'Contact' => array( 'Contati' ),
 );
 
 /** Vietnamese (Tiếng Việt) */
-$aliases['vi'] = array(
-	'Contact' => array( 'Liên hệ' ),
+$specialPageAliases['vi'] = array(
+	'Contact' => array( 'Liên_hệ', 'Liên_lạc' ),
 );
 
+/** Cantonese (粵語) */
+$specialPageAliases['yue'] = array(
+	'Contact' => array( '聯絡' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$specialPageAliases['zh-hans'] = array(
+	'Contact' => array( '联系' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'Contact' => array( '聯絡' ),
+);

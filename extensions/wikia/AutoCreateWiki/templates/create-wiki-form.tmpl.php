@@ -19,8 +19,8 @@ var formViewAction = "<?=$mTitle->getLocalURL(( $mLanguage != 'en' ) ? 'action=v
 formViewAction += ( createType ) ? '&type=' + createType : '';
 var msgError = "<?php echo addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 var defaultDomain = "<?php echo $defaultDomain ?>";
-var definedDomains = JSON.parse('<?php echo Wikia::json_encode($mDomains); ?>');
-var definedSitename = JSON.parse('<?php echo Wikia::json_encode($mSitenames); ?>');
+var definedDomains = JSON.parse('<?php echo json_encode($mDomains); ?>');
+var definedSitename = JSON.parse('<?php echo json_encode($mSitenames); ?>');
 /*]]>*/
 </script>
 <?php
@@ -37,16 +37,16 @@ if( !empty( $mType ) ) {
 <div id="type-selector" class="wikia-tabs">
 	<ul>
 		<li class="<?= ( $type == 'default' ) ? 'selected' : 'accent' ?>">
-			<a href="<?= $mTitle->escapeLocalURL() ?>"><?= wfMsg( 'autocreatewiki-page-title-default' ) ?></a>
+			<a href="<?= htmlspecialchars($mTitle->getLocalURL()) ?>"><?= wfMsg( 'autocreatewiki-page-title-default' ) ?></a>
 		</li>
 		<li class="<?= ( $type == 'answers' ) ? 'selected' : 'accent' ?>">
-			<a href="<?= $mTitle->escapeLocalURL( array( 'type' => 'answers' ) ) ?>"><?=wfMsg('autocreatewiki-page-title-answers')?></a>
+			<a href="<?= htmlspecialchars($mTitle->getLocalURL( array( 'type' => 'answers' ) )) ?>"><?=wfMsg('autocreatewiki-page-title-answers')?></a>
 		</li>
 	</ul>
 </div>
 <div id="options">
 	<?php if ( $wgUser->isAnon() ) { ?>
-	<form id="options-form" method="post" action="<?= $mTitle->escapeLocalURL( $cgiArgs ) ?>">
+	<form id="options-form" method="post" action="<?= htmlspecialchars($mTitle->getLocalURL( $cgiArgs )) ?>">
 		<label for="uselang"><?= wfMsg( 'yourlanguage' ) ?></label>
 		<select id="uselang" name="uselang" onchange="$('#options-form').submit()">
 		<?php
@@ -60,7 +60,7 @@ if( !empty( $mType ) ) {
 	</form>
 	<?php } ?>
 </div>
-<form class="highlightform" id="highlightform" method="post" action="<?= $mTitle->escapeLocalURL( $cgiArgs ) ?>">
+<form class="highlightform" id="highlightform" method="post" action="<?= htmlspecialchars($mTitle->getLocalURL( $cgiArgs )) ?>">
 <div id="monobook_font">
 	<div id="tagline"><? echo wfMsgExt('autocreatewiki-tagline', array('parse') ); ?></div>
 	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgStylePath}/common/required.png?{$wgStyleVersion}' />")?></div>
@@ -85,7 +85,7 @@ if( !empty( $mType ) ) {
 			<li class="label"><label class="required" id="wiki-domain-label"><?=wfMsg('autocreatewiki-web-address')?></label></li>
 			<li class="data1">
 				<span id="prefixedAddress">http://</span><input type="text" maxlength="245" autocomplete="off" name="wiki-domain" id="wiki-domain" value="<?=@$params['wiki-domain']?>" style="width:145px" />.<span id="domainAddress"><?php echo $subDomain ?></span> <span class="error-status" id="wiki-domain-error-status">&nbsp;</span>
-				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-domain'])) ? 'block' : 'none'?>;" id="wiki-domain-error"><?=@$mPostedErrors['wiki-domain']?></div>				
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-domain'])) ? 'block' : 'none'?>;" id="wiki-domain-error"><?=@$mPostedErrors['wiki-domain']?></div>
 			</li>
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-domain')?></span></li>
 		</ul>
@@ -115,7 +115,7 @@ if (!empty($aCategories) && is_array($aCategories) && ( $mType != "answers" ) ):
 ?>
 				<option value="3"><?=wfMsg('autocreatewiki-category-other')?></option>
 				</select>
-				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-category'])) ? 'block' : 'none'?>;" id="wiki-category-error"><?=@$mPostedErrors['wiki-category']?></div>				
+				<div class="error" style="display: <?= (!empty($mPostedErrors['wiki-category'])) ? 'block' : 'none'?>;" id="wiki-category-error"><?=@$mPostedErrors['wiki-category']?></div>
 			</li>
 			<li class="data2"><span class="note"><?php echo wfMsg('autocreatewiki-info-category-' . $type )?></span></li>
 		</ul>
@@ -294,7 +294,7 @@ endif
 <iframe id="awc-process-login" height="1" width="1" style="visibility: hidden;"></iframe>
 <script type="text/javascript">
 /*<![CDATA[*/
-$(function () { 
+$(function () {
 	<?php if ( !empty($mPostedErrors) && is_array($mPostedErrors) ) : ?>
 	<?php 	foreach ( $mPostedErrors as $field => $value ) : ?>
 	<?php 		if ( !empty($value) ) : ?>

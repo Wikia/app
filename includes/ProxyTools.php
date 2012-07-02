@@ -1,16 +1,19 @@
 <?php
 /**
  * Functions for dealing with proxies
+ *
  * @file
  */
 
 /**
  * Extracts the XFF string from the request header
- * Checks first for "X-Forwarded-For", then "Client-ip"
  * Note: headers are spoofable
+ *
+ * @deprecated in 1.19; use $wgRequest->getHeader( 'X-Forwarded-For' ) instead.
  * @return string
  */
 function wfGetForwardedFor() {
+	wfDeprecated( __METHOD__, '1.19' );
 	// Wikia - start - @author: wladek
 	// FB#4215 User:Wikia edits being attributed to user's IP and useragent (again)
 	global $wgIP;
@@ -19,142 +22,49 @@ function wfGetForwardedFor() {
 	}
 	// Wikia - end
 
-	if( function_exists( 'apache_request_headers' ) ) {
-		// More reliable than $_SERVER due to case and -/_ folding
-		$set = array ();
-		foreach ( apache_request_headers() as $tempName => $tempValue ) {
-			$set[ strtoupper( $tempName ) ] = $tempValue;
-		}
-		$index = strtoupper ( 'X-Forwarded-For' );
-		$index2 = strtoupper ( 'Client-ip' );
-	} else {
-		// Subject to spoofing with headers like X_Forwarded_For
-		$set = $_SERVER;
-		$index = 'HTTP_X_FORWARDED_FOR';
-		$index2 = 'CLIENT-IP';
-	}
-
-	#Try a couple of headers
-	if( isset( $set[$index] ) ) {
-		return $set[$index];
-	} else if( isset( $set[$index2] ) ) {
-		return $set[$index2];
-	} else {
-		return null;
-	}
+	global $wgRequest;
+	return $wgRequest->getHeader( 'X-Forwarded-For' );
 }
 
 /**
  * Returns the browser/OS data from the request header
  * Note: headers are spoofable
+ *
+ * @deprecated in 1.18; use $wgRequest->getHeader( 'User-Agent' ) instead.
  * @return string
  */
 function wfGetAgent() {
-	if( function_exists( 'apache_request_headers' ) ) {
-		// More reliable than $_SERVER due to case and -/_ folding
-		$set = array ();
-		foreach ( apache_request_headers() as $tempName => $tempValue ) {
-			$set[ strtoupper( $tempName ) ] = $tempValue;
-		}
-		$index = strtoupper ( 'User-Agent' );
-	} else {
-		// Subject to spoofing with headers like X_Forwarded_For
-		$set = $_SERVER;
-		$index = 'HTTP_USER_AGENT';
-	}
-	if( isset( $set[$index] ) ) {
-		return $set[$index];
-	} else {
-		return '';
-	}
+	wfDeprecated( __METHOD__, '1.18' );
+	global $wgRequest;
+	return $wgRequest->getHeader( 'User-Agent' );
 }
 
 /**
  * Work out the IP address based on various globals
  * For trusted proxies, use the XFF client IP (first of the chain)
+ *
+ * @deprecated in 1.19; call $wgRequest->getIP() directly.
  * @return string
  */
 function wfGetIP() {
-	global $wgIP, $wgUsePrivateIPs, $wgCommandLineMode;
-
-	# Return cached result
-	if ( !empty( $wgIP ) ) {
-		return $wgIP;
-	}
-
-	$ipchain = array();
-	$ip = false;
-
-	/* collect the originating ips */
-	# Client connecting to this webserver
-	if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
-		$ip = IP::canonicalize( $_SERVER['REMOTE_ADDR'] );
-	} elseif( $wgCommandLineMode ) {
-		$ip = '127.0.0.1';
-	}
-	if( $ip ) {
-		$ipchain[] = $ip;
-	}
-
-	# Append XFF on to $ipchain
-	$forwardedFor = wfGetForwardedFor();
-	if ( isset( $forwardedFor ) ) {
-		$xff = array_map( 'trim', explode( ',', $forwardedFor ) );
-		$xff = array_reverse( $xff );
-		$ipchain = array_merge( $ipchain, $xff );
-	}
-
-	# Step through XFF list and find the last address in the list which is a trusted server
-	# Set $ip to the IP address given by that trusted server, unless the address is not sensible (e.g. private)
-	foreach ( $ipchain as $i => $curIP ) {
-		$curIP = IP::canonicalize( $curIP );
-		if ( wfIsTrustedProxy( $curIP ) ) {
-			if ( isset( $ipchain[$i + 1] ) ) {
-				if( $wgUsePrivateIPs || IP::isPublic( $ipchain[$i + 1 ] ) ) {
-					$ip = $ipchain[$i + 1];
-				}
-			}
-		} else {
-			break;
-		}
-	}
-
-	if( preg_match( "/^10\.(?!10\.)(?!4\.)/", $ip ) && $ip != "10.8.2.159" &&
-	    preg_match( "/Mozilla/", $_SERVER['HTTP_USER_AGENT'] ) ) {
-		if( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			$xff = "XFF=$_SERVER[HTTP_X_FORWARDED_FOR]";
-		} else {
-			$xff = "no XFF";
-		}
-		Wikia::log( __METHOD__, false, "Private IP $ip from $_SERVER[REMOTE_ADDR] with $xff ($_SERVER[HTTP_USER_AGENT])", true, true );
-	}
-
-	if( !$ip ) {
-		throw new MWException( "Unable to determine IP" );
-	}
-
-	wfDebug( "IP: $ip\n" );
-	$wgIP = $ip;
-	return $ip;
+	wfDeprecated( __METHOD__, '1.19' );
+	global $wgRequest;
+	return $wgRequest->getIP();
 }
 
 /**
- * Checks if an IP is a trusted proxy providor
- * Useful to tell if X-Fowarded-For data is possibly bogus
- * Squid cache servers for the site and AOL are whitelisted
+ * Checks if an IP is a trusted proxy providor.
+ * Useful to tell if X-Fowarded-For data is possibly bogus.
+ * Squid cache servers for the site are whitelisted.
+ *
  * @param $ip String
  * @return bool
  */
 function wfIsTrustedProxy( $ip ) {
 	global $wgSquidServers, $wgSquidServersNoPurge;
 
-	if ( in_array( $ip, $wgSquidServers ) ||
-		in_array( $ip, $wgSquidServersNoPurge )
-	) {
-		$trusted = true;
-	} else {
-		$trusted = false;
-	}
+	$trusted = in_array( $ip, $wgSquidServers ) ||
+		in_array( $ip, $wgSquidServersNoPurge );
 	wfRunHooks( 'IsTrustedProxy', array( &$ip, &$trusted ) );
 	return $trusted;
 }
@@ -165,14 +75,14 @@ function wfIsTrustedProxy( $ip ) {
  */
 function wfProxyCheck() {
 	global $wgBlockOpenProxies, $wgProxyPorts, $wgProxyScriptPath;
-	global $wgMemc, $wgProxyMemcExpiry;
+	global $wgMemc, $wgProxyMemcExpiry, $wgRequest;
 	global $wgProxyKey;
 
 	if ( !$wgBlockOpenProxies ) {
 		return;
 	}
 
-	$ip = wfGetIP();
+	$ip = $wgRequest->getIP();
 
 	# Get MemCached key
 	$mcKey = wfMemcKey( 'proxy', 'ip', $ip );
@@ -183,7 +93,7 @@ function wfProxyCheck() {
 	if ( !$skip ) {
 		$title = SpecialPage::getTitleFor( 'Blockme' );
 		$iphash = md5( $ip . $wgProxyKey );
-		$url = $title->getFullURL( 'ip='.$iphash );
+		$url = wfExpandUrl( $title->getFullURL( 'ip='.$iphash ), PROTO_HTTP );
 
 		foreach ( $wgProxyPorts as $port ) {
 			$params = implode( ' ', array(
@@ -198,43 +108,3 @@ function wfProxyCheck() {
 		$wgMemc->set( $mcKey, 1, $wgProxyMemcExpiry );
 	}
 }
-
-/**
- * Convert a network specification in CIDR notation to an integer network and a number of bits
- * @return array(string, int)
- */
-function wfParseCIDR( $range ) {
-	return IP::parseCIDR( $range );
-}
-
-/**
- * Check if an IP address is in the local proxy list
- * @return bool
- */
-function wfIsLocallyBlockedProxy( $ip ) {
-	global $wgProxyList;
-
-	if ( !$wgProxyList ) {
-		return false;
-	}
-	wfProfileIn( __METHOD__ );
-
-	if ( !is_array( $wgProxyList ) ) {
-		# Load from the specified file
-		$wgProxyList = array_map( 'trim', file( $wgProxyList ) );
-	}
-
-	if ( !is_array( $wgProxyList ) ) {
-		$ret = false;
-	} elseif ( array_search( $ip, $wgProxyList ) !== false ) {
-		$ret = true;
-	} elseif ( array_key_exists( $ip, $wgProxyList ) ) {
-		# Old-style flipped proxy list
-		$ret = true;
-	} else {
-		$ret = false;
-	}
-	wfProfileOut( __METHOD__ );
-	return $ret;
-}
-

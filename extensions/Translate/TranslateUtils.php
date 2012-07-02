@@ -4,7 +4,7 @@
  *
  * @file
  * @author Niklas Laxström
- * @copyright Copyright © 2007, 2009 Niklas Laxström
+ * @copyright Copyright © 2007, 2012 Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -12,8 +12,6 @@
  * Essentially random collection of helper functions, similar to GlobalFunctions.php.
  */
 class TranslateUtils {
-	/// @todo Get rid of this constant.
-	const MSG = 'translate-';
 
 	/**
 	 * Does quick normalisation of message name so that in can be looked from the
@@ -82,7 +80,6 @@ class TranslateUtils {
 		$rows = $dbr->select( array( 'page', 'revision', 'text' ),
 			array( 'page_title', 'old_text', 'old_flags', 'rev_user_text' ),
 			array(
-				'page_is_redirect'  => 0,
 				'page_namespace'    => $namespace,
 				'page_latest=rev_id',
 				'rev_text_id=old_id',
@@ -121,6 +118,9 @@ class TranslateUtils {
 		$cutoff = $dbr->timestamp( $cutoff_unixtime );
 
 		$namespaces = $dbr->makeList( $wgTranslateMessageNamespaces );
+		if ( $ns ) {
+			$namespaces = $dbr->makeList( $ns );
+		}
 
 		$fields = 'rc_title, rc_timestamp, rc_user_text, rc_namespace';
 
@@ -128,50 +128,15 @@ class TranslateUtils {
 		$sql = "SELECT $fields, substring_index(rc_title, '/', -1) as lang FROM $recentchanges " .
 		"WHERE rc_timestamp >= '{$cutoff}' " .
 		( $bots ? '' : 'AND rc_bot = 0 ' ) .
-		( $ns ? 'AND rc_namespace IN (' . implode( ',', $ns ) . ') ' : "AND rc_namespace in ($namespaces) " ) .
+		"AND rc_namespace in ($namespaces) " .
 		"ORDER BY lang ASC, rc_timestamp DESC";
 
 		$res = $dbr->query( $sql, __METHOD__ );
-
-		// Fetch results, prepare a batch link existence check query.
-		$rows = array();
-		foreach( $res as $row ) {
-			$rows[] = $row;
-		}
-		$dbr->freeResult( $res );
-
+		$rows = iterator_to_array( $res );
 		return $rows;
 	}
 
-	/* Some other helpers for ouput*/
-
-	/**
-	 * Makes a selector from name and options.
-	 * @param $name \string
-	 * @param $options \list{String} Html \<option> elements.
-	 * @return \string Html.
-	 */
-	public static function selector( $name, $options ) {
-		return Xml::tags( 'select', array( 'name' => $name, 'id' => $name ), $options );
-	}
-
-	/**
-	 * Makes a selector from name and options.
-	 * @param $name \string
-	 * @param $items \list{String} The name and value of options.
-	 * @param $selected \string The default selected value.
-	 * @return \string Html.
-	 */
-	public static function simpleSelector( $name, $items, $selected ) {
-		$options = array();
-
-		foreach ( $items as $item ) {
-			$item = strval( $item );
-			$options[] = Xml::option( $item, $item, $item == $selected );
-		}
-
-		return self::selector( $name, implode( "\n", $options ) );
-	}
+	/* Some other helpers for output */
 
 	/**
 	 * Returns a localised language name.
@@ -190,27 +155,11 @@ class TranslateUtils {
 			$languages = Language::getLanguageNames( false );
 		}
 
-		$parts = explode( '-', $code );
-		$suffix = '';
-
-		$parts1 = isset( $parts[1] ) ? $parts[1] : '';
-
-		/// @todo Add missing scripts that are in use (deva, arab).
-		switch ( $parts1 ) {
-			case 'latn':
-				/// @todo i18n.
-				$suffix = ' (Latin)';
-				unset( $parts[1] );
-				break;
-			case 'cyrl':
-				/// @todo i18n.
-				$suffix = ' (Cyrillic)';
-				unset( $parts[1] );
-				break;
+		if ( isset( $languages[$code] ) ) {
+			return $languages[$code];
+		} else {
+			return $code;
 		}
-		$code = implode( '-', $parts );
-
-		return isset( $languages[$code] ) ? $languages[$code] . $suffix : false;
 	}
 
 	/**
@@ -218,20 +167,14 @@ class TranslateUtils {
 	 * @param $language \string Language code of the language the names should
 	 * be localised to.
 	 * @param $selectedId \string The language code that is selected by default.
+	 * @return string
 	 */
 	public static function languageSelector( $language, $selectedId ) {
-		if ( is_callable( array( 'LanguageNames', 'getNames' ) ) ) {
-			$languages = LanguageNames::getNames( $language,
-				LanguageNames::FALLBACK_NORMAL,
-				LanguageNames::LIST_MW
-			);
-		} else {
-			$languages = Language::getLanguageNames( false );
-		}
-
+		$languages = self::getLanguageNames( $language );
 		ksort( $languages );
 
-		$selector = new HTMLSelector( 'language', 'language', $selectedId );
+		$selector = new XmlSelect( 'language', 'language' );
+		$selector->setDefault( $selectedId );
 		foreach ( $languages as $code => $name ) {
 			$selector->addOption( "$code - $name", $code );
 		}
@@ -239,31 +182,32 @@ class TranslateUtils {
 		return $selector->getHTML();
 	}
 
-	/// \array Cached message index.
-	static $mi = null;
+	/**
+	 * Get translated language names.
+	 * @return array
+	 */
+	public static function getLanguageNames( /*string */ $code ) {
+		if ( is_callable( array( 'Language', 'getTranslatedLanguageNames' ) ) ) {
+			return Language::getTranslatedLanguageNames( $code );
+		} elseif ( is_callable( array( 'LanguageNames', 'getNames' ) ) ) {
+			return LanguageNames::getNames( $code,
+				LanguageNames::FALLBACK_NORMAL,
+				LanguageNames::LIST_MW
+			);
+		} else {
+			return Language::getLanguageNames( false );
+		}
+	}
 
 	/**
 	 * Returns the primary group message belongs to.
 	 * @param $namespace \int
 	 * @param $key \string
-	 * @return \types{\string,\null} Group id or null.
+	 * @return string|null Group id or null.
 	 */
 	public static function messageKeyToGroup( $namespace, $key ) {
-		if ( self::$mi === null ) {
-			self::messageIndex();
-		}
-
-		// Performance hotspot.
-		# $normkey = self::normaliseKey( $namespace, $key );
-		$normkey = str_replace( " ", "_", strtolower( "$namespace:$key" ) );
-
-		$group = isset( self::$mi[$normkey] ) ? self::$mi[$normkey] : null;
-
-		if ( is_array( $group ) ) {
-			$group = $group[0];
-		}
-
-		return $group;
+		$groups = self::messageKeyToGroups( $namespace, $key );
+		return count( $groups ) ? $groups[0] : null;
 	}
 
 	/**
@@ -273,16 +217,11 @@ class TranslateUtils {
 	 * @return \list{String} Possibly empty list of group ids.
 	 */
 	public static function messageKeyToGroups( $namespace, $key ) {
-		if ( self::$mi === null ) {
-			self::messageIndex();
-		}
+		$mi = MessageIndex::singleton()->retrieve();
+		$normkey = self::normaliseKey( $namespace, $key );
 
-		// Performance hotspot.
-		# $normkey = self::normaliseKey( $namespace, $key );
-		$normkey = str_replace( " ", "_", strtolower( "$namespace:$key" ) );
-
-		if ( isset( self::$mi[$normkey] ) ) {
-			return (array) self::$mi[$normkey];
+		if ( isset( $mi[$normkey] ) ) {
+			return (array) $mi[$normkey];
 		} else {
 			return array();
 		}
@@ -295,31 +234,7 @@ class TranslateUtils {
 	 * @return \string
 	 */
 	public static function normaliseKey( $namespace, $key ) {
-		return str_replace( " ", "_", strtolower( "$namespace:$key" ) );
-	}
-
-
-	/**
-	 * Opens and returns the message index.
-	 * @return \array or \type{false}
-	 */
-	public static function messageIndex() {
-		wfDebug( __METHOD__ . ": loading from file...\n" );
-		$filename = self::cacheFile( 'translate_messageindex.ser' );
-
-		if ( !file_exists( $filename ) ) {
-			MessageIndexRebuilder::execute();
-		}
-
-		if ( file_exists( $filename ) ) {
-			$keyToGroup = unserialize( file_get_contents( $filename ) );
-		} else {
-			throw new MWException( 'Unable to get message index' );
-		}
-
-		self::$mi = $keyToGroup;
-
-		return $keyToGroup;
+		return strtr( strtolower( "$namespace:$key" ), " ", "_"  );
 	}
 
 	/**
@@ -355,26 +270,6 @@ class TranslateUtils {
 	}
 
 	/**
-	 * Injects extension css (only once).
-	 */
-	public static function injectCSS() {
-		global $wgOut;
-
-		if ( method_exists( $wgOut, 'addModules' ) ) {
-			$wgOut->addModuleStyles( 'translate-css' );
-			return true;
-		}
-
-		static $done = false;
-
-		if ( !$done ) {
-			$wgOut->addExtensionStyle( self::assetPath( 'Translate.css' ) );
-		}
-
-		return $done = true;
-	}
-
-	/**
 	 * Construct the web address to given asset.
 	 * @param $path \string Path to the resource relative to extensions root directory.
 	 * @return \string Full or partial web path.
@@ -382,24 +277,6 @@ class TranslateUtils {
 	public static function assetPath( $path ) {
 		global $wgExtensionAssetsPath;
 		return "$wgExtensionAssetsPath/Translate/$path";
-	}
-
-	public static function addModules( $out, $modules ) {
-		if ( method_exists( $out, 'addModules' ) ) {
-			$out->addModules( $modules );
-		} else {
-			global $wgResourceModules;
-			foreach ( (array) $modules as $module ) {
-				if ( isset( $wgResourceModules[$module]['styles'] ) ) {
-					$file = $wgResourceModules[$module]['styles'];
-					$out->addExtensionStyle( TranslateUtils::assetPath( $file ) );
-				}
-				if ( isset( $wgResourceModules[$module]['scripts'] ) ) {
-					$file = $wgResourceModules[$module]['scripts'];
-					$out->addScriptFile( TranslateUtils::assetPath( $file ) );
-				}
-			}
-		}
 	}
 
 	/**
@@ -422,71 +299,40 @@ class TranslateUtils {
 		return "$dir/$filename";
 	}
 
-}
+	public static function groupSelector( $default = false ) {
+		$groups = MessageGroups::getAllGroups();
+		$selector = new XmlSelect( 'group', 'group', $default );
 
-/**
- * Yet another class for building html selectors.
- */
-class HTMLSelector {
-	/// \list{String} \<option> elements.
-	private $options = array();
-	/// \string The selected value.
-	private $selected = false;
-	/// \array Extra html attributes.
-	private $attributes = array();
-
-	/**
-	 * @param $name \string
-	 * @param $id \string Default false.
-	 * @param $selected \string Default false.
-	 */
-	public function __construct( $name = false, $id = false, $selected = false ) {
-		if ( $name ) {
-			$this->setAttribute( 'name', $name );
+		foreach ( $groups as $id => $class ) {
+			if ( MessageGroups::getGroup( $id )->exists() ) {
+				$selector->addOption( $class->getLabel(), $id );
+			}
 		}
 
-		if ( $id ) {
-			$this->setAttribute( 'id', $id );
+		return $selector;
+	}
+
+	/**
+	 * @since 2012-01-12
+	 */
+	public static function addSpecialHelpLink( OutputPage $out, /*string*/$to, $overrideBaseUrl = false ) {
+		$out->addModules( 'ext.translate.helplink' );
+		$text = wfMessage( 'translate-gethelp' )->escaped();
+
+		if ( $overrideBaseUrl ) {
+			$helpUrl = $to;
+		} else {
+			$helpUrl = "//www.mediawiki.org/wiki/Special:MyLanguage/$to";
 		}
 
-		if ( $selected ) {
-			$this->selected = $selected;
-		}
-	}
-
-	/**
-	 * Set selected value.
-	 * @param $selected \string Default false.
-	 */
-	public function setSelected( $selected ) {
-		$this->selected = $selected;
-	}
-
-	/**
-	 * Set html attribute.
-	 * @param $name \string Attribute name.
-	 * @param $value \string Attribute value.
-	 */
-	public function setAttribute( $name, $value ) {
-		$this->attributes[$name] = $value;
-	}
-
-	/**
-	 * Add an option.
-	 * @param $name \string Display name.
-	 * @param $value \string Option value. Uses $name if not given.
-	 * @param $selected \string Default selected value. Uses object value if not given.
-	 */
-	public function addOption( $name, $value = false, $selected = false ) {
-		$selected = $selected ? $selected : $this->selected;
-		$value = $value ? $value : $name;
-		$this->options[] = Xml::option( $name, $value, $value === $selected );
-	}
-
-	/**
-	 * @return \string Html for the selector.
-	 */
-	public function getHTML() {
-		return Xml::tags( 'select', $this->attributes, implode( "\n", $this->options ) );
+		$link = Html::rawElement(
+			'a',
+			array(
+				'href' => $helpUrl,
+				'target' => '_blank'
+			),
+			"$text" );
+		$wrapper = Html::rawElement( 'div', array( 'class' => 'mw-translate-helplink' ), $link );
+		$out->addHtml( $wrapper );
 	}
 }

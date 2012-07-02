@@ -1,6 +1,24 @@
 <?php
 /**
  * Minify a file or set of files
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup Maintenance
  */
 
 require_once( dirname( __FILE__ ) . '/Maintenance.php' );
@@ -10,15 +28,21 @@ class MinifyScript extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->addOption( 'outfile', 
-			'File for output. Only a single file may be specified for input.', 
+		$this->addOption( 'outfile',
+			'File for output. Only a single file may be specified for input.',
 			false, true );
 		$this->addOption( 'outdir',
-			"Directory for output. If this is not specified, and neither is --outfile, then the\n" . 
+			"Directory for output. If this is not specified, and neither is --outfile, then the\n" .
 			"output files will be sent to the same directories as the input files.",
 			false, true );
+		$this->addOption( 'js-statements-on-own-line',
+			"Boolean value for putting statements on their own line when minifying JavaScript.",
+			false, true );
+		$this->addOption( 'js-max-line-length',
+			"Maximum line length for JavaScript minification.",
+			false, true );
 		$this->mDescription = "Minify a file or set of files.\n\n" .
-			"If --outfile is not specified, then the output file names will have a .min extension\n" . 
+			"If --outfile is not specified, then the output file names will have a .min extension\n" .
 			"added, e.g. jquery.js -> jquery.min.js.";
 
 	}
@@ -48,13 +72,12 @@ class MinifyScript extends Maintenance {
 			$inDir = dirname( $inPath );
 
 			if ( strpos( $inName, '.min.' ) !== false ) {
-				echo "Skipping $inName\n";
+				$this->error( "Skipping $inName\n" );
 				continue;
 			}
 
 			if ( !file_exists( $inPath ) ) {
-				$this->error( "File does not exist: $arg" );
-				exit( 1 );
+				$this->error( "File does not exist: $arg", true );
 			}
 
 			$extension = $this->getExtension( $inName );
@@ -72,15 +95,17 @@ class MinifyScript extends Maintenance {
 	public function getExtension( $fileName ) {
 		$dotPos = strrpos( $fileName, '.' );
 		if ( $dotPos === false ) {
-			$this->error( "No file extension, cannot determine type: $arg" );
+			$this->error( "No file extension, cannot determine type: $fileName" );
 			exit( 1 );
 		}
 		return substr( $fileName, $dotPos + 1 );
 	}
 
 	public function minify( $inPath, $outPath ) {
+		global $wgResourceLoaderMinifierStatementsOnOwnLine, $wgResourceLoaderMinifierMaxLineLength;
+
 		$extension = $this->getExtension( $inPath );
-		echo basename( $inPath ) . ' -> ' . basename( $outPath ) . '...';
+		$this->output( basename( $inPath ) . ' -> ' . basename( $outPath ) . '...' );
 
 		$inText = file_get_contents( $inPath );
 		if ( $inText === false ) {
@@ -95,7 +120,13 @@ class MinifyScript extends Maintenance {
 
 		switch ( $extension ) {
 			case 'js':
-				$outText = JSMin::minify( $inText );
+				$outText = JavaScriptMinifier::minify( $inText,
+					$this->getOption( 'js-statements-on-own-line', $wgResourceLoaderMinifierStatementsOnOwnLine ),
+					$this->getOption( 'js-max-line-length', $wgResourceLoaderMinifierMaxLineLength )
+				);
+				break;
+			case 'css':
+				$outText = CSSMin::minify( $inText );
 				break;
 			default:
 				$this->error( "No minifier defined for extension \"$extension\"" );
@@ -103,9 +134,9 @@ class MinifyScript extends Maintenance {
 
 		fwrite( $outFile, $outText );
 		fclose( $outFile );
-		echo " ok\n";
+		$this->output( " ok\n" );
 	}
 }
 
 $maintClass = 'MinifyScript';
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

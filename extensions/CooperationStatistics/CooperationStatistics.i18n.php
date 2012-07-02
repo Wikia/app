@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension cooperationstatistics.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -28,6 +29,7 @@ See also the [[Special:MostRevisors|\'\'\'pages with the most revisors\'\'\']] a
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
@@ -35,7 +37,8 @@ See also the [[Special:MostRevisors|\'\'\'pages with the most revisors\'\'\']] a
 $messages['qqq'] = array(
 	'cooperationstatistics-desc' => '{{desc}}',
 	'cooperationstatistics-text' => 'Consider translating the + sign to " or more" if "number+" is not a commonplace notation in your language.',
-	'cooperationstatistics-articles' => 'This message supports PLURAL.',
+	'cooperationstatistics-articles' => 'This message supports PLURAL.
+{{Identical|Page}}',
 	'cooperationstatistics-nbusers' => 'This message supports PLURAL.
 * $1 is the number of editors
 * $2 is the number of pages in the previous column',
@@ -45,6 +48,20 @@ $messages['qqq'] = array(
 	'cooperationstatistics-nbmoreusers' => 'This message supports PLURAL.
 * $1 is the number of editors
 * $2 is the number of pages in the previous column',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|bladsy|bladsye}}',
+);
+
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|pachina|pachinas}}',
 );
 
 /** Arabic (العربية)
@@ -66,6 +83,14 @@ $messages['ar'] = array(
 	'cooperationstatistics-legendmore' => 'أو أكثر من المحررين.',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'cooperationstatistics-tablearticle' => 'ܡܢܝܢܐ ܕܕܦ̈ܐ',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|ܕܦܐ|ܕܦ̈ܐ}}',
+);
+
 /** Bavarian (Boarisch)
  * @author Man77
  */
@@ -74,7 +99,7 @@ $messages['bar'] = array(
 	'cooperationstatistics-articles' => '$1 Seitn',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -98,6 +123,16 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|страница|страници}}',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'cooperationstatistics-tablearticle' => 'পাতার সংখ্যা',
+	'cooperationstatistics-tablevalue' => 'সম্পাদকের সংখ্যা',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|পাতা|পাতাগুলো}}',
+	'cooperationstatistics-legendmore' => 'অথবা আরও সম্পাদক।',
 );
 
 /** Breton (Brezhoneg)
@@ -144,6 +179,24 @@ $messages['ca'] = array(
 	'cooperationstatistics-tablevalue' => "Nombre d'editors",
 	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|pàgina|pàgines}}',
 	'cooperationstatistics-legendmore' => 'o més editors.',
+);
+
+/** Czech (Česky)
+ * @author Jkjk
+ */
+$messages['cs'] = array(
+	'cooperationstatistics' => 'Statistika spolupráce',
+	'cooperationstatistics-desc' => 'Zobrazit [[Special:CooperationStatistics|statistiku spolupráce v hlavním jmenném prostoru]].',
+	'cooperationstatistics-text' => "Zobrazí statistky spolupráce v hlavním jmenném prostoru.
+Od [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperationstatistics-limit-few-revisors}}]] do [[MediaWiki:Cooperationstatistics-limit-many-revisors|{{MediaWiki:cooperationstatistics-limit-many-revisors}}+]] spoluautorů.<br />
+Zobrazí také [[Special:MostRevisors|'''stránky s nejvíce spoluautory''']] a [[Special:MostRevisions|stránky s největším počtem revizí]].",
+	'cooperationstatistics-tablearticle' => 'Počet stránek',
+	'cooperationstatistics-tablevalue' => 'Počet editorů',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|stránka|stránky|stránek}}',
+	'cooperationstatistics-nbusers' => '{{PLURAL:$2|má|mají}} $1 {{PLURAL:$1|spoluautora|spoluautorů}}',
+	'cooperationstatistics-nblessusers' => '{{PLURAL:$2|má|mají}} $1 {{PLURAL:$1|spoluautora|nebo méně spoluautorů}}',
+	'cooperationstatistics-nbmoreusers' => '{{PLURAL:$2|má|mají}} $1 nebo více spoluautorů',
+	'cooperationstatistics-legendmore' => 'nebo více editorů.',
 );
 
 /** German (Deutsch)
@@ -244,6 +297,13 @@ $messages['eu'] = array(
 	'cooperationstatistics-nbusers' => '{{PLURAL:$1|Editore bat|$1 editore}} {{PLURAL:$2|du|ditu}}',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'cooperationstatistics-tablevalue' => 'شمار ویرایشگر‌ها',
+);
+
 /** Finnish (Suomi)
  * @author Silvonen
  * @author Str4nd
@@ -257,6 +317,7 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author McDutchie
  */
 $messages['fr'] = array(
 	'cooperationstatistics' => 'Statistiques de coopération',
@@ -266,14 +327,29 @@ De [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperations
 Voyez aussi les [[Special:MostRevisors|'''pages avec le plus de relecteurs''']] et les [[Special:MostRevisions|pages avec le plus de révisions]].",
 	'cooperationstatistics-tablearticle' => 'Nombre de pages',
 	'cooperationstatistics-tablevalue' => "Nombre d'éditeurs",
-	'cooperationstatistics-articles' => '$1 pages',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|page|pages}}',
 	'cooperationstatistics-nbusers' => 'ont $1 éditeurs',
 	'cooperationstatistics-nblessusers' => 'ont $1 éditeurs ou moins',
 	'cooperationstatistics-nbmoreusers' => 'ont $1 éditeurs ou moins',
 	'cooperationstatistics-legendmore' => "ou plus d'éditeurs.",
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'cooperationstatistics' => 'Statistiques de coopèracion',
+	'cooperationstatistics-tablearticle' => 'Nombro de pâges',
+	'cooperationstatistics-tablevalue' => 'Nombro de contributors',
+	'cooperationstatistics-articles' => '$1 pâge{{PLURAL:$1||s}}',
+	'cooperationstatistics-nbusers' => '{{PLURAL:$2|a|on}}t $1 contributor{{PLURAL:$1||s}}',
+	'cooperationstatistics-nblessusers' => '{{PLURAL:$2|a|on}}t $1 contributor{{PLURAL:$1||s ou ben muens}}',
+	'cooperationstatistics-nbmoreusers' => '{{PLURAL:$2|a|on}}t $1 ou ben més de contributors',
+	'cooperationstatistics-legendmore' => 'ou ben més de contributors.',
+);
+
 /** Galician (Galego)
+ * @author McDutchie
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -285,7 +361,7 @@ De [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperations
 Olle tamén as [[Special:MostRevisors|'''páxinas con máis revisores''']] e as [[Special:MostRevisions|páxinas con máis revisións]].",
 	'cooperationstatistics-tablearticle' => 'Número de páxinas',
 	'cooperationstatistics-tablevalue' => 'Número de editores',
-	'cooperationstatistics-articles' => '$1 páxinas',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|páxina|páxinas}}',
 	'cooperationstatistics-nbusers' => 'ten $1 editores',
 	'cooperationstatistics-nblessusers' => 'ten $1 ou menos editores',
 	'cooperationstatistics-nbmoreusers' => 'ten $1 ou máis editores',
@@ -294,6 +370,7 @@ Olle tamén as [[Special:MostRevisors|'''páxinas con máis revisores''']] e as 
 
 /** Swiss German (Alemannisch)
  * @author Als-Holder
+ * @author McDutchie
  */
 $messages['gsw'] = array(
 	'cooperationstatistics' => 'Zämmearbetsstatischtik',
@@ -303,7 +380,7 @@ Vu dr [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperati
 Luege au d [[Special:MostRevisors|'''Syte mit dr meischte Bearbeiter''']] un d [[Special:MostRevisions|Syte mit dr meischte Bearbeitige]].",
 	'cooperationstatistics-tablearticle' => 'Sytezeller',
 	'cooperationstatistics-tablevalue' => 'Zahl vu Bearbeiter',
-	'cooperationstatistics-articles' => '$1 Syte',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|Syte|Syte}}',
 	'cooperationstatistics-nbusers' => 'hän $1 Bearbeiter',
 	'cooperationstatistics-nblessusers' => 'hän $1 oder weniger Bearbeiter',
 	'cooperationstatistics-nbmoreusers' => 'hän $1 oder meh Bearbeiter',
@@ -392,7 +469,7 @@ De [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperations
 Vide etiam le [[Special:MostRevisors|'''paginas con le plus contributores''']] e le [[Special:MostRevisions|paginas con le plus versiones]].",
 	'cooperationstatistics-tablearticle' => 'Numero de paginas',
 	'cooperationstatistics-tablevalue' => 'Numero de contributores',
-	'cooperationstatistics-articles' => '$1 paginas',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|pagina|paginas}}',
 	'cooperationstatistics-nbusers' => 'ha $1 contributores',
 	'cooperationstatistics-nblessusers' => 'ha $1 contributores o minus',
 	'cooperationstatistics-nbmoreusers' => 'ha $1 contributores o plus',
@@ -419,17 +496,19 @@ Lihat juga  [[Special:MostRevisors|'''halaman dengan paling banyak pengubah''']]
 );
 
 /** Italian (Italiano)
+ * @author Civvì
  * @author Darth Kule
+ * @author McDutchie
  */
 $messages['it'] = array(
 	'cooperationstatistics' => 'Statistiche di cooperazione',
 	'cooperationstatistics-desc' => 'Mostra [[Special:CooperationStatistics|statistiche di cooperazione nel namespace principale]].',
-	'cooperationstatistics-text' => "Mostra statistiche di cooperazione nel namespace principale.
-Da [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperationstatistics-limit-few-revisors}}]] a [[MediaWiki:Cooperationstatistics-limit-many-revisors|{{MediaWiki:cooperationstatistics-limit-many-revisors}}+]] revisori)<br />
-Consultare anche le [[Special:MostRevisors|'''pagine con più revisori''']] e le [[Special:MostRevisions|pagine con più revisioni]].",
+	'cooperationstatistics-text' => "Mostra le statistiche di cooperazione nel namespace principale.
+Da [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperationstatistics-limit-few-revisors}}]] a [[MediaWiki:Cooperationstatistics-limit-many-revisors|{{MediaWiki:cooperationstatistics-limit-many-revisors}}+]] revisori<br />
+Consulta anche le [[Special:MostRevisors|'''pagine con più revisori''']] e le [[Special:MostRevisions|pagine con più revisioni]].",
 	'cooperationstatistics-tablearticle' => 'Numero di pagine',
 	'cooperationstatistics-tablevalue' => 'Numero di autori',
-	'cooperationstatistics-articles' => '$1 pagine',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|pagina|pagine}}',
 	'cooperationstatistics-nbusers' => 'hanno $1 autori',
 	'cooperationstatistics-nblessusers' => 'hanno $1 autori o meno',
 	'cooperationstatistics-nbmoreusers' => 'hanno $1 autori o più',
@@ -470,7 +549,14 @@ $messages['km'] = array(
 	'cooperationstatistics-tablearticle' => 'ចំនួន​ទំព័រ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|ಪುಟ|ಪುಟಗಳು}',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -489,6 +575,7 @@ Loor och  noh de [[Special:MostRevisors|'''Sigge met de miehßte Schriiver''']] 
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author McDutchie
  * @author Robby
  */
 $messages['lb'] = array(
@@ -499,7 +586,7 @@ Vu(n) [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperati
 Kuckt och d'[[Special:MostRevisors|'''Säite mat de meeschte Reviseuren''']] an d'[[Special:MostRevisions|Säite mat de meeschte Versiounen]].",
 	'cooperationstatistics-tablearticle' => 'Säitenzuel',
 	'cooperationstatistics-tablevalue' => 'Zuel vun Editeuren',
-	'cooperationstatistics-articles' => '$1 Säiten',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|Säit|Säiten}}',
 	'cooperationstatistics-nbusers' => 'hunn $1 Editeuren',
 	'cooperationstatistics-nblessusers' => 'hunn $1 oder manner Editeuren',
 	'cooperationstatistics-nbmoreusers' => 'hunn $1 oder méi Editeuren',
@@ -524,6 +611,38 @@ $messages['mk'] = array(
 	'cooperationstatistics-legendmore' => 'или повеќе уредници.',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|хуудас}}',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'cooperationstatistics-articles' => '$1 laman',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'cooperationstatistics' => 'Samarbeidsstatistikk',
+	'cooperationstatistics-desc' => 'Vis [[Special:CooperationStatistics|samarbeidsstatistikk i hovednavnerommet]].',
+	'cooperationstatistics-text' => "Vis samarbeidsstatistikk i hovednavnerommet.
+Fra [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperationstatistics-limit-few-revisors}}]] til [[MediaWiki:Cooperationstatistics-limit-many-revisors|{{MediaWiki:cooperationstatistics-limit-many-revisors}}+]] revisorer.<br />
+Se også [[Special:MostRevisors|'''sidene med flest revisorer''']] og [[Special:MostRevisions|sidene med flest revisjoner]].",
+	'cooperationstatistics-tablearticle' => 'Sideantall',
+	'cooperationstatistics-tablevalue' => 'Antall bidragsytere',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|side|sider}}',
+	'cooperationstatistics-nbusers' => '{{PLURAL:$2|har|har}} {{PLURAL:$1|én bidragsyter|$1 bidragsytere}}',
+	'cooperationstatistics-nblessusers' => '{{PLURAL:$2|har|har}} {{PLURAL:$1|én bidragsyter|$1 eller færre bidragsytere}}',
+	'cooperationstatistics-nbmoreusers' => '{{PLURAL:$2|har|har}} $1 eller fler bidragsytere',
+	'cooperationstatistics-legendmore' => 'eller fler bidragsytere.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -542,26 +661,16 @@ Zie ook de [[Special:MostRevisors|'''pagina's met de meeste bewerkers''']] en [[
 	'cooperationstatistics-legendmore' => 'of meer bewerkers.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
-	'cooperationstatistics' => 'Samarbeidsstatistikk',
-	'cooperationstatistics-desc' => 'Vis [[Special:CooperationStatistics|samarbeidsstatistikk i hovednavnerommet]].',
-	'cooperationstatistics-text' => "Vis samarbeidsstatistikk i hovednavnerommet.
-Fra [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperationstatistics-limit-few-revisors}}]] til [[MediaWiki:Cooperationstatistics-limit-many-revisors|{{MediaWiki:cooperationstatistics-limit-many-revisors}}+]] revisorer.<br />
-Se også [[Special:MostRevisors|'''sidene med flest revisorer''']] og [[Special:MostRevisions|sidene med flest revisjoner]].",
-	'cooperationstatistics-tablearticle' => 'Sideantall',
-	'cooperationstatistics-tablevalue' => 'Antall bidragsytere',
-	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|side|sider}}',
-	'cooperationstatistics-nbusers' => '{{PLURAL:$2|har|har}} {{PLURAL:$1|én bidragsyter|$1 bidragsytere}}',
-	'cooperationstatistics-nblessusers' => '{{PLURAL:$2|har|har}} {{PLURAL:$1|én bidragsyter|$1 eller færre bidragsytere}}',
-	'cooperationstatistics-nbmoreusers' => '{{PLURAL:$2|har|har}} $1 eller fler bidragsytere',
-	'cooperationstatistics-legendmore' => 'eller fler bidragsytere.',
+$messages['nn'] = array(
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|sida|sider}}',
 );
 
 /** Occitan (Occitan)
  * @author Cedric31
+ * @author McDutchie
  */
 $messages['oc'] = array(
 	'cooperationstatistics' => 'Estatisticas de cooperacion',
@@ -571,7 +680,7 @@ De [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperations
 Vejatz tanben las [[Special:MostRevisors|'''paginas amb lo mai de relectors''']] e las [[Special:MostRevisions|paginas amb lo mai de revisions]].",
 	'cooperationstatistics-tablearticle' => 'Nombre de paginas',
 	'cooperationstatistics-tablevalue' => "Nombre d'editors",
-	'cooperationstatistics-articles' => '$1 paginas',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|pagina|paginas}}',
 	'cooperationstatistics-nbusers' => 'an $1 editors',
 	'cooperationstatistics-nblessusers' => 'an $1 editors o mens',
 	'cooperationstatistics-nbmoreusers' => 'an $1 editors o mens',
@@ -614,6 +723,15 @@ Varda ëdcò le [[Special:MostRevisors|'''pàgine con pì revisor''']] e le [[Sp
 	'cooperationstatistics-legendmore' => 'o pì autor.',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'cooperationstatistics-tablearticle' => 'د پاڼو شمېر',
+	'cooperationstatistics-tablevalue' => 'د سمونګرانو شمېر',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|مخ|مخونه}}',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  * @author Malafaya
@@ -653,8 +771,10 @@ Veja também as [[Special:MostRevisors|'''páginas com mais editores''']] e [[Sp
 
 /** Romanian (Română)
  * @author KlaudiuMihaila
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
+	'cooperationstatistics-tablevalue' => 'Numărul de editori',
 	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|pagină|pagini}}',
 );
 
@@ -714,11 +834,39 @@ Pozri aj [[Special:MostRevisors|'''stránky s najväčším počtom kontrolórov
 	'cooperationstatistics-legendmore' => 'alebo viac redaktorov.',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Жељко Тодоровић
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'cooperationstatistics-tablearticle' => 'Број страница',
+	'cooperationstatistics-tablevalue' => 'Број уређивача',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|страна|стране|страна}}',
+	'cooperationstatistics-nbusers' => '{{PLURAL:$2|има}} $1 {{PLURAL:$1|уредника}}',
+	'cooperationstatistics-nblessusers' => '{{PLURAL:$2|има}} $1 {{PLURAL:$1|уредника|или мање уредника}}',
+	'cooperationstatistics-nbmoreusers' => '{{PLURAL:$2|има}} $1 или више уредника',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'cooperationstatistics-tablearticle' => 'Broj strana',
+	'cooperationstatistics-tablevalue' => 'Broj urednika',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|strana|strane|strane|strane|strana}}',
+	'cooperationstatistics-nbusers' => '{{PLURAL:$2|ima}} $1 {{PLURAL:$1|urednika}}',
+	'cooperationstatistics-nblessusers' => '{{PLURAL:$2|ima}} $1 {{PLURAL:$1|urednika|ili manje urednika}}',
+	'cooperationstatistics-nbmoreusers' => '{{PLURAL:$2|ima}} $1 ili više urednika',
+);
+
 /** Swedish (Svenska)
  * @author Per
+ * @author Sertion
  */
 $messages['sv'] = array(
 	'cooperationstatistics' => 'Samarbetsstatistik',
+	'cooperationstatistics-desc' => 'Visa [[Special:CooperationStatistics|samarbetsstatisitk för huvudnamnrymden]].',
+	'cooperationstatistics-text' => "Visa samarbetsstatistik från huvudnamnrymden.
+Från [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperationstatistics-limit-few-revisors}}]] till [[MediaWiki:Cooperationstatistics-limit-many-revisors|{{MediaWiki:cooperationstatistics-limit-many-revisors}}+]] bidragsgivare.<br /> Se också [[Special:MostRevisors|'''sidorna med flest bidragsgivare''']] och [[Special:MostRevisions|sidorna med längst historik]].",
 	'cooperationstatistics-tablearticle' => 'Sidantal',
 	'cooperationstatistics-tablevalue' => 'Antal bidragsgivare',
 	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|sida|sidor}}',
@@ -728,16 +876,50 @@ $messages['sv'] = array(
 	'cooperationstatistics-legendmore' => 'eller fler bidragsgivare.',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'cooperationstatistics-tablearticle' => 'பக்க எண்ணிக்கை',
+	'cooperationstatistics-tablevalue' => 'பதிப்பாசிரியர்களின் எண்ணிக்கை',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
 $messages['te'] = array(
 	'cooperationstatistics' => 'సహకార గణాంకాలు',
 	'cooperationstatistics-tablearticle' => 'పేజీల సంఖ్య',
-	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|పేజీ|పేజీలు}}',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|పుట|పుటలు}}',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'cooperationstatistics-articles' => '{{PLURAL:$1|pájina ida|pájina $1}}',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'cooperationstatistics' => 'Estadistika ng pakikiisa',
+	'cooperationstatistics-desc' => 'Ipakita ang [[Special:CooperationStatistics|estadistika ng pakikiisa sa pangunahing puwang na pampangalan]].',
+	'cooperationstatistics-text' => "Ipakita ang estadistika ng pakikiisa sa pangunahing puwang na pampangalan.
+Mula mga tagapagpabagong [[MediaWiki:Cooperationstatistics-limit-few-revisors|{{MediaWiki:Cooperationstatistics-limit-few-revisors}}]] hanggang  [[MediaWiki:Cooperationstatistics-limit-many-revisors|{{MediaWiki:cooperationstatistics-limit-many-revisors}}+]].<br />
+Tingnan din ang [[Special:MostRevisors|'''mga pahinang may pinakamaraming mga tagapagbago''']] at [[Special:MostRevisions|mga pahinang may pinakamaraming mga pagbabago]].",
+	'cooperationstatistics-tablearticle' => 'Bilang ng pahina',
+	'cooperationstatistics-tablevalue' => 'Bilang ng mga patnugot',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|pahina|mga pahina}}',
+	'cooperationstatistics-nbusers' => '{{PLURAL:$2|may|may mga}} $1 na {{PLURAL:$1|patnugot|mga patnugot}}',
+	'cooperationstatistics-nblessusers' => '{{PLURAL:$2|may|may mga}} $1 na {{PLURAL:$1|patnugot|o mas kaunting mga patnugot}}',
+	'cooperationstatistics-nbmoreusers' => '{{PLURAL:$2|may|may mga}} $1 o mas mahigit pang mga patnugot',
+	'cooperationstatistics-legendmore' => 'o mahigit pang mga patnugot.',
 );
 
 /** Turkish (Türkçe)
+ * @author Stultiwikia
  * @author Vito Genovese
  */
 $messages['tr'] = array(
@@ -748,11 +930,20 @@ $messages['tr'] = array(
 Ayrıca [[Special:MostRevisors|'''en fazla inceleyene sahip sayfalar''']] ve [[Special:MostRevisions|en fazla sürüme sahip sayfaları]] da inceleyin.",
 	'cooperationstatistics-tablearticle' => 'Sayfa sayısı',
 	'cooperationstatistics-tablevalue' => 'Editör sayısı',
-	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|sayfa|sayfa}}',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|madde|madde}}',
 	'cooperationstatistics-nbusers' => '$2, $1 {{PLURAL:$1|editöre|editöre}} sahip',
 	'cooperationstatistics-nblessusers' => '$2, $1 {{PLURAL:$1|editöre|veya daha az editöre}} sahip',
 	'cooperationstatistics-nbmoreusers' => '$2, $1 veya daha fazla editöre sahip',
 	'cooperationstatistics-legendmore' => 'veya daha fazla editör.',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'cooperationstatistics-tablevalue' => 'Кількість редакторів',
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|сторінка|сторінки|сторінок}}',
+	'cooperationstatistics-legendmore' => 'або більше редакторів.',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -771,5 +962,35 @@ Xem thêm [[Special:MostRevisors|'''trang có số người chỉnh sửa nhiề
 	'cooperationstatistics-nblessusers' => '{{PLURAL:$2|có|có}} $1 {{PLURAL:$1|biên tập viên|biên tập viên trở xuống}}',
 	'cooperationstatistics-nbmoreusers' => '{{PLURAL:$2|có|có}} $1 biên tập viên trở lên',
 	'cooperationstatistics-legendmore' => 'biên tập viên trở lên.',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'cooperationstatistics-articles' => '$1 {{PLURAL:$1|בלאַט|בלעטער}}',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ * @author PhiLiP
+ * @author Wilsonmess
+ * @author Xiaomingyan
+ */
+$messages['zh-hans'] = array(
+	'cooperationstatistics' => '合作统计',
+	'cooperationstatistics-desc' => '显示[[Special:CooperationStatistics|主名字空间的合作统计信息]]。',
+	'cooperationstatistics-tablearticle' => '页面数',
+	'cooperationstatistics-tablevalue' => '编辑者数',
+	'cooperationstatistics-articles' => '$1个页面',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$messages['zh-hant'] = array(
+	'cooperationstatistics' => '合作統計',
+	'cooperationstatistics-desc' => '顯示[[Special:CooperationStatistics|主名字空間的合作統計信息]]。',
+	'cooperationstatistics-tablearticle' => '頁面數',
+	'cooperationstatistics-tablevalue' => '編輯者數',
+	'cooperationstatistics-articles' => '$1個頁面',
 );
 

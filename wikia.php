@@ -5,39 +5,34 @@ if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	return;
 }
 
-// Initialize common MW code
+// Initialise common MW code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
-// Initialize MediaWiki base class
-require ( dirname( __FILE__ ) . '/includes/Wiki.php' );
-$mediaWiki = new MediaWiki();
+
+// Construct a tag for newrelic -- wgRequest is global in this scope
+if( function_exists( 'newrelic_name_transaction' ) ) {
+	if (is_object($wgRequest)) {
+		$controller = $wgRequest->getVal( 'controller' );
+		$method = $wgRequest->getVal( 'method' );
+		newrelic_name_transaction( "$controller/$method" );
+	}
+}
 
 if ( !empty( $wgEnableNirvanaAPI ) ){
 	$app = F::app();
-
+	
 	// Ensure that we have a title stub, otherwise parser does not work BugId: 12901
 	$app->wg->title = new Title();
-
+	
 	// initialize skin if requested
 	$app->initSkin( (bool) $app->wg->Request->getVal( "skin", false ) );
-
+	
 	$response = $app->sendRequest( null, null, null, false );
-
+	
 	// commit any open transactions just in case the controller forgot to
 	$app->commit();
-
-	//if cache policy wasn't explicitly set (e.g. WikiaResponse::setCacheValidity)
-	//then force no cache to reflect api.php default behavior
-	$cacheControl = $response->getHeader( 'Cache-Control' );
-
-	if ( empty( $cacheControl ) ) {
-		$response->setHeader( 'Cache-Control', 'private', true );
-	}
-
+	
 	$response->sendHeaders();
 	$response->render();
 } else {
 	header( "HTTP/1.1 503 Service Unavailable", true, 503 );
 }
-
-// macbre: make forceprofile=1 work
-$mediaWiki->restInPeace();

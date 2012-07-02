@@ -3,7 +3,6 @@
 class SpecialCreateNewWiki extends UnlistedSpecialPage {
 
 	public function __construct() {
-		wfLoadExtensionMessages('CreateNewWiki');
 		parent::__construct('CreateNewWiki', 'createnewwiki');
 	}
 	
@@ -21,9 +20,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		
-		wfLoadExtensionMessages('CreateNewWiki');
-		
+				
 		$wgOut->setPageTitle(wfMsg('cnw-title'));
 		$wgOut->addHtml(wfRenderModule('CreateNewWiki'));
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss'));

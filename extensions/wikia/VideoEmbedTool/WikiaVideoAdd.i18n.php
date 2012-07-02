@@ -62,7 +62,7 @@ $messages['az'] = array(
 	'wva-add' => 'Əlavə et',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -278,7 +278,7 @@ $messages['fr'] = array(
 	'wva-thumbnail-upload-failed' => 'La vidéo incluse a échouée, impossible de trouver la bonne miniature',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

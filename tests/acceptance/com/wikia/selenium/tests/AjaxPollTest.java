@@ -9,7 +9,7 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class AjaxPollTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testAjaxPoll() throws Exception {
 		String uniqId = "Wikia test poll #" + UUID.randomUUID();
 		String pollContent = "\n" + uniqId + "\nAnswer 1\nAnswer 2\nAnswer n\n";

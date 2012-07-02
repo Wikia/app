@@ -16,7 +16,7 @@
 //			echo '<link rel="stylesheet" href="'.$src.'">';
 //		}
 
-		// RT #68514: load global user CSS (and other page specific CSS added via "SkinTemplateSetupPageCss" hook)
+		// RT #68514: load global user CSS
 		if ($pagecss != '') {
 	?>
 

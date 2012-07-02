@@ -18,8 +18,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @file
  * @author Evan Prodromou <evan@prodromou.name>
- * @addtogroup Extensions
+ * @ingroup Extensions
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -28,21 +29,19 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class SpecialOpenIDConvert extends SpecialOpenID {
 
-	function SpecialOpenIDConvert() {
-		SpecialPage::SpecialPage( 'OpenIDConvert' );
+	function __construct() {
+		parent::__construct( 'OpenIDConvert', 'openid-converter-access' );
 	}
 
 	function execute( $par ) {
 		global $wgRequest, $wgUser, $wgOut;
 
-		wfLoadExtensionMessages( 'OpenID' );
+		if ( !$this->userCanExecute( $wgUser ) ) {
+                	$this->displayRestrictionError();
+        	        return;
+	        }
 
 		$this->setHeaders();
-
-		if ( $wgUser->getID() == 0 ) {
-			$wgOut->showErrorPage( 'openiderror', 'notloggedin' );
-			return;
-		}
 
 		$this->outputHeader();
 
@@ -76,7 +75,7 @@ class SpecialOpenIDConvert extends SpecialOpenID {
 		}
 
 		# Is this ID already taken?
-		$other = $this->getUser( $openid_url );
+		$other = self::getUserFromUrl( $openid_url );
 
 		if ( isset( $other ) ) {
 			if ( $other->getId() == $wgUser->getID() ) {
@@ -92,18 +91,9 @@ class SpecialOpenIDConvert extends SpecialOpenID {
 	}
 
 	function form() {
-		global $wgOut, $wgUser, $wgScriptPath, $wgOpenIDShowProviderIcons;
+		global $wgOut, $wgUser, $wgOpenIDShowProviderIcons;
 
-		$oidScriptPath = $wgScriptPath . '/extensions/OpenID';
-
-		$wgOut->addLink( array(
-			'rel' => 'stylesheet',
-			'type' => 'text/css',
-			'media' => 'screen',
-			'href' => $oidScriptPath . ( $wgOpenIDShowProviderIcons ? '/skin/openid.css' : '/skin/openid-plain.css' )
-		) );
-
-		$wgOut->addScript( '<script type="text/javascript" src="' . $oidScriptPath . '/skin/openid-combined-min.js"></script>' . "\n" );
+		$wgOut->addModules( $wgOpenIDShowProviderIcons ? 'ext.openid.icons' : 'ext.openid.plain' );
 
 		$formsHTML = '';
 
@@ -147,7 +137,7 @@ class SpecialOpenIDConvert extends SpecialOpenID {
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'id' => 'openid_form', 'action' => $this->getTitle()->getLocalUrl(), 'method' => 'post', 'onsubmit' => 'openid.update()' ) ) .
 			Xml::fieldset( wfMsg( 'openidconvertoraddmoreids' ) ) .
-			Xml::openElement('p') . wfMsg( 'openidconvertinstructions' ) . Xml::closeElement( 'p' ) .
+			Xml::openElement( 'p' ) . wfMsg( 'openidconvertinstructions' ) . Xml::closeElement( 'p' ) .
 			$largeButtonsHTML .
 			'<div id="openid_input_area">' .
 			$formsHTML .
@@ -161,7 +151,7 @@ class SpecialOpenIDConvert extends SpecialOpenID {
 		global $wgUser, $wgOut, $wgRequest, $wgOpenIDOnly;
 
 		$openid = $wgRequest->getVal( 'url' );
-		$user = self::getUser( $openid );
+		$user = self::getUserFromUrl( $openid );
 
 		if ( $user->getId() == 0 || $user->getId() != $wgUser->getId() ) {
 			$wgOut->showErrorPage( 'openiderror', 'openidconvertothertext' );
@@ -171,12 +161,12 @@ class SpecialOpenIDConvert extends SpecialOpenID {
 		$wgOut->setPageTitle( wfMsg( 'openiddelete' ) );
 
 		# Check if the user is removing it's last OpenID url
-		$urls = self::getUserUrl( $wgUser );
+		$urls = self::getUserOpenIDInformation( $wgUser );
 		if ( count( $urls ) == 1 ) {
 			if ( $wgUser->mPassword == '' ) {
 				$wgOut->showErrorPage( 'openiderror', 'openiddeleteerrornopassword' );
 				return;
-			} elseif( $wgOpenIDOnly ) {
+			} elseif ( $wgOpenIDOnly ) {
 				$wgOut->showErrorPage( 'openiderror', 'openiddeleteerroropenidonly' );
 				return;
 			}
@@ -193,8 +183,8 @@ class SpecialOpenIDConvert extends SpecialOpenID {
 		$wgOut->addHtml(
 			Xml::openElement( 'form', array( 'action' => $this->getTitle( 'Delete' )->getLocalUrl(), 'method' => 'post' ) ) .
 			Xml::submitButton( wfMsg( 'openiddelete-button' ) ) . "\n" .
-			Xml::hidden( 'url', $openid ) . "\n" .
-			Xml::hidden( 'wpEditToken', $wgUser->editToken( $openid ) ) . "\n" .
+			Html::Hidden( 'url', $openid ) . "\n" .
+			Html::Hidden( 'wpEditToken', $wgUser->editToken( $openid ) ) . "\n" .
 			Xml::closeElement( 'form' )
 		);
 	}
@@ -226,8 +216,8 @@ class SpecialOpenIDConvert extends SpecialOpenID {
 			// This means the authentication succeeded.
 			$openid_url = $response->identity_url;
 
-			if (!$this->canLogin($openid_url)) {
-				$wgOut->showErrorPage('openidpermission', 'openidpermissiontext');
+			if ( !$this->canLogin( $openid_url ) ) {
+				$wgOut->showErrorPage( 'openidpermission', 'openidpermissiontext' );
 				return;
 			}
 
@@ -240,7 +230,7 @@ class SpecialOpenIDConvert extends SpecialOpenID {
 			# We check again for dupes; this may be normalized or
 			# reformatted by the server.
 
-			$other = $this->getUser( $openid_url );
+			$other = self::getUserFromUrl( $openid_url );
 
 			if ( isset( $other ) ) {
 				if ( $other->getId() == $wgUser->getID() ) {

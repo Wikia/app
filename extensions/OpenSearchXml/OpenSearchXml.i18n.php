@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension OpenSearchXml.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -13,9 +14,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'opensearchxml-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'opensearchxml-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -46,7 +48,14 @@ $messages['ast'] = array(
 	'opensearchxml-desc' => "La interface qu'[http://www.opensearch.org OpenSearch] XML apurre pa estrayer testu",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'opensearchxml-desc' => 'Текст өлөштәре өсөн [http://www.opensearch.org OpenSearch] XML интерфейсы менән тәьмин итә',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -248,6 +257,13 @@ $messages['jv'] = array(
 	'opensearchxml-desc' => 'Antarmuka [http://www.opensearch.org OpenSearch] XML sing nyadiakaké èkstraksi tèks.',
 );
 
+/** Georgian (ქართული)
+ * @author BRUTE
+ */
+$messages['ka'] = array(
+	'opensearchxml-desc' => '[Http://www.opensearch.org OpenSearch] XML ინტერფეისი უზრუნველყოფს ტექსტის ამონაწერებს',
+);
+
 /** Korean (한국어)
  * @author Kwj2772
  */
@@ -255,7 +271,7 @@ $messages['ko'] = array(
 	'opensearchxml-desc' => '텍스트 인용을 위한 [http://www.opensearch.org OpenSearch] XML 인터페이스를 제공',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -280,14 +296,14 @@ $messages['li'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'opensearchxml-desc' => '[http://www.opensearch.org OpenSearch] XML интерфејсот овозможува извадоци од текст',
+	'opensearchxml-desc' => '[http://www.opensearch.org OpenSearch] XML-посредникот овозможува извадоци од текст',
 );
 
 /** Malayalam (മലയാളം)
  * @author Praveenp
  */
 $messages['ml'] = array(
-	'opensearchxml-desc' => 'എഴുത്തുകൾ മാത്രമായി എടുക്കാനുള്ള [http://www.opensearch.org ഓപ്പൺസേർച്ച്] എക്സ്.എം.എൽ. ദൃശ്യമണ്ഡലം നൽകുന്നു',
+	'opensearchxml-desc' => 'എഴുത്തുകൾ മാത്രമായി എടുക്കാനുള്ള [http://www.opensearch.org ഓപ്പൺസേർച്ച്] എക്സ്.എം.എൽ. സമ്പർക്കമുഖം നൽകുന്നു',
 );
 
 /** Malay (Bahasa Melayu)
@@ -295,6 +311,13 @@ $messages['ml'] = array(
  */
 $messages['ms'] = array(
 	'opensearchxml-desc' => 'Antara muka XML [http://www.opensearch.org OpenSearch] untuk pengekstrakan teks',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'opensearchxml-desc' => 'Grensesnitt for [http://opensearch.org/ OpenSearch]',
 );
 
 /** Low German (Plattdüütsch)
@@ -318,18 +341,18 @@ $messages['nn'] = array(
 	'opensearchxml-desc' => 'XML-grensesnitt for [http://opensearch.org/ OpenSearch]',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'opensearchxml-desc' => 'Grensesnitt for [http://opensearch.org/ OpenSearch]',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'opensearchxml-desc' => "Interfàcia XML per [http://www.opensearch.org OpenSearch] amb d'extraches del tèxte",
+);
+
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'opensearchxml-desc' => '[http://www.opensearch.org OpenSearch] ଟେକ୍ସଟ ଏକ୍ସଟ୍ରାକ୍ଟ ପାଇଁ XML ଇଣ୍ଟରଫେସ ଯୋଗାଇଥାଏ',
 );
 
 /** Polish (Polski)
@@ -375,7 +398,14 @@ $messages['ru'] = array(
 	'opensearchxml-desc' => 'Интерфейс предоставления текстовых выдержек [http://www.opensearch.org OpenSearch] XML',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'opensearchxml-desc' => 'Інтерфейс [http://www.opensearch.org OpenSearch] XML додаваючій приклады тексту',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -389,6 +419,13 @@ $messages['sk'] = array(
 	'opensearchxml-desc' => '[http://www.opensearch.org OpenSearch] XML rozhranie umožňuje úryvky textu',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'opensearchxml-desc' => '[http://www.opensearch.org OpenSearch] vmesnik XML priskrbi povzetke besedil',
+);
+
 /** Lower Silesian (Schläsch)
  * @author Piotron
  */
@@ -396,14 +433,15 @@ $messages['sli'] = array(
 	'opensearchxml-desc' => '[http://www.opensearch.org OpenSearch]-XML-Schnittstelle fier Textoausziege',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'opensearchxml-desc' => '[http://www.opensearch.org OpenSearch] XML интерфејс, који пружа извлачење делова текста',
+	'opensearchxml-desc' => '[http://www.opensearch.org OpenSearch] XML сучеље омогућава извлачење делова текста',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -473,7 +511,7 @@ $messages['vi'] = array(
 	'opensearchxml-desc' => 'Giao diện [http://www.opensearch.org/ OpenSearch] cung cấp đoạn trích văn bản dạng XML',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -489,9 +527,10 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
-	'opensearchxml-desc' => '提供文字擷取的[http://www.opensearch.org OpenSearch] XML界面',
+	'opensearchxml-desc' => '提供文字擷取的 [http://www.opensearch.org OpenSearch] XML 介面',
 );
 

@@ -4,14 +4,13 @@
  * with semantic fields.
  *
  * @author Yaron Koren
+ * @file
+ * @ingroup SF
  */
 
 /**
- * Protect against register_globals vulnerabilities.
- * This line must be present before any global variable is referenced.
+ * @ingroup SFSpecialPages
  */
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 class SFCreateTemplate extends SpecialPage {
 
 	/**
@@ -19,66 +18,75 @@ class SFCreateTemplate extends SpecialPage {
 	 */
 	public function SFCreateTemplate() {
 		parent::__construct( 'CreateTemplate' );
-		SFUtils::loadMessages();
 	}
 
 	public function execute( $query ) {
 		$this->setHeaders();
-		doSpecialCreateTemplate();
+		$this->printCreateTemplateForm();
 	}
 
 	public static function getAllPropertyNames() {
 		$all_properties = array();
 
-		// set limit on results - a temporary fix until SMW's
+		// Set limit on results - we don't want a massive dropdown
+		// of properties, if there are a lot of properties in this wiki.
 		// getProperties() functions stop requiring a limit
 		$options = new SMWRequestOptions();
-		$options->limit = 10000;
+		$options->limit = 500;
 		$used_properties = smwfGetStore()->getPropertiesSpecial( $options );
-		
 		foreach ( $used_properties as $property ) {
-			$all_properties[] = $property[0]->getWikiValue();
-		}
-		
-		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial( $options );
-		
-		foreach ( $unused_properties as $property ) {
-			$all_properties[] = $property->getWikiValue();
+			if ( $property[0] instanceof SMWDIProperty ) {
+				// SMW 1.6+
+				$propName = $property[0]->getKey();
+				if ( $propName{0} != '_' ) {
+					$all_properties[] = str_replace( '_', ' ', $propName );
+				}
+			} else {
+				$all_properties[] = $property[0]->getWikiValue();
+			}
 		}
 
-		// sort properties list alphabetically
+		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial( $options );
+		foreach ( $unused_properties as $property ) {
+			if ( $property instanceof SMWDIProperty ) {
+				// SMW 1.6+
+				$all_properties[] = str_replace( '_' , ' ', $property->getKey() );
+			} else {
+				$all_properties[] = $property->getWikiValue();
+			}
+		}
+
+		// Sort properties list alphabetically.
 		sort( $all_properties );
 		return $all_properties;
 	}
 
-	public static function printPropertiesDropdown( $all_properties, $id, $selected_property ) {
-		$dropdown_str = "<select name=\"semantic_property_$id\">\n";
-		$dropdown_str .= "<option value=\"\"></option>\n";
-		
+	public static function printPropertiesDropdown( $all_properties, $id, $selected_property = null ) {
+		$selectBody = "<option value=\"\"></option>\n";
 		foreach ( $all_properties as $prop_name ) {
-			$selected = ( $selected_property == $prop_name ) ? "selected" : "";
-			$dropdown_str .= "<option value=\"$prop_name\" $selected>$prop_name</option>\n";
+			$optionAttrs = array( 'value' => $prop_name );
+			if ( $selected_property == $prop_name ) { $optionAttrs['selected'] = 'selected'; }
+			$selectBody .= Html::element( 'option', $optionAttrs, $prop_name ) . "\n";
 		}
-		
-		$dropdown_str .= "</select>\n";
-		
-		return $dropdown_str;
+		return Html::rawElement( 'select', array( 'name' => "semantic_property_$id" ), $selectBody ) . "\n";
 	}
 
-	public static function printFieldEntryBox( $id, $f, $all_properties ) {
-		SFUtils::loadMessages();
-		$dropdown_html = SFCreateTemplate::printPropertiesDropdown( $all_properties, $id, $f->semantic_property );
-		
-		$text = '	<div class="fieldBox">' . "\n";
-		$text .= '	<p>' . wfMsg( 'sf_createtemplate_fieldname' ) . ' <input size="15" name="name_' . $id . '" value="' . $f->field_name . '">' . "\n";
-		$text .= '	' . wfMsg( 'sf_createtemplate_displaylabel' ) . ' <input size="15" name="label_' . $id . '" value="' . $f->label . '">' . "\n";
-		$text .= '	' . wfMsg( 'sf_createtemplate_semanticproperty' ) . ' ' . $dropdown_html . "</p>\n";
-		$checked_str = ( $f->is_list ) ? " checked" : "";
-		$text .= '	<p><input type="checkbox" name="is_list_' . $id . '"' .  $checked_str . '> ' . wfMsg( 'sf_createtemplate_fieldislist' ) . "\n";
-	
-		if ( $id != "new" ) {
-			$text .= '	&#160;&#160;<input name="del_' . $id . '" type="submit" value="' . wfMsg( 'sf_createtemplate_deletefield' ) . '">' . "\n";
-		}
+	public static function printFieldEntryBox( $id, $all_properties, $display = true ) {
+		$fieldString = $display ? '' : 'id="starterField" style="display: none"';
+		$text = "\t<div class=\"fieldBox\" $fieldString>\n";
+		$text .= "\t<p>" . wfMsg( 'sf_createtemplate_fieldname' ) . ' ' .
+			Html::input( 'name_' . $id, null, 'text',
+				array( 'size' => '15' )
+			) . "\n";
+		$text .= "\t" . wfMsg( 'sf_createtemplate_displaylabel' ) . ' ' .
+			Html::input( 'label_' . $id, null, 'text',
+				array( 'size' => '15' )
+			) . "\n";
+
+		$dropdown_html = self::printPropertiesDropdown( $all_properties, $id );
+		$text .= "\t" . wfMsg( 'sf_createtemplate_semanticproperty' ) . ' ' . $dropdown_html . "</p>\n";
+		$text .= "\t<p>" . '<input type="checkbox" name="is_list_' . $id . '" /> ' . wfMsg( 'sf_createtemplate_fieldislist' ) . "\n";
+		$text .= '	&#160;&#160;<input type="button" value="' . wfMsg( 'sf_createtemplate_deletefield' ) . '" class="deleteField" />' . "\n";
 		
 		$text .= <<<END
 </p>
@@ -87,94 +95,136 @@ class SFCreateTemplate extends SpecialPage {
 END;
 		return $text;
 	}
-	
+
+	static function addJavascript() {
+		global $wgOut;
+
+		SFUtils::addJavascriptAndCSS();
+
+		// TODO - this should be in a JS file
+		$template_name_error_str = wfMsg( 'sf_blank_error' );
+		$jsText =<<<END
+<script type="text/javascript">
+var fieldNum = 1;
+function createTemplateAddField() {
+	fieldNum++;
+	newField = jQuery('#starterField').clone().css('display', '').removeAttr('id');
+	newHTML = newField.html().replace(/starter/g, fieldNum);
+	newField.html(newHTML);
+	newField.find(".deleteField").click( function() {
+		// Remove the encompassing div for this instance.
+		jQuery(this).closest(".fieldBox")
+			.fadeOut('fast', function() { jQuery(this).remove(); });
+	});
+	jQuery('#fieldsList').append(newField);
 }
 
-function doSpecialCreateTemplate() {
-	global $wgOut, $wgRequest, $wgUser, $sfgScriptPath, $wgContLang;
+function validateCreateTemplateForm() {
+	templateName = jQuery('#template_name').val();
+	if (templateName === '') {
+		scroll(0, 0);
+		jQuery('#template_name_p').append(' <font color="red">$template_name_error_str</font>');
+		return false;
+	} else {
+		return true;
+	}
+}
 
-	SFUtils::loadMessages();
+jQuery(document).ready(function() {
+	jQuery(".deleteField").click( function() {
+		// Remove the encompassing div for this instance.
+		jQuery(this).closest(".fieldBox")
+			.fadeOut('fast', function() { jQuery(this).remove(); });
+	});
+	jQuery('#createTemplateForm').submit( function() { return validateCreateTemplateForm(); } );
+});
+</script>
 
-	$all_properties = SFCreateTemplate::getAllPropertyNames();
-	
-	$template_name = $wgRequest->getVal( 'template_name' );
-	$template_name_error_str = "";
-	$category = $wgRequest->getVal( 'category' );
-	$cur_id = 1;
-	$fields = array();
-	# cycle through the query values, setting the appropriate local variables
-	foreach ( $wgRequest->getValues() as $var => $val ) {
-		$var_elements = explode( "_", $var );
-		// we only care about query variables of the form "a_b"
-		if ( count( $var_elements ) != 2 )
-			continue;
-		list ( $field_field, $old_id ) = $var_elements;
-		if ( $field_field == "name" ) {
-			if ( $old_id != "new" || ( $old_id == "new" && $val != "" ) ) {
-				if ( $wgRequest->getVal( 'del_' . $old_id ) != '' ) {
-					# do nothing - this field won't get added to the new list
-				} else {
-					$field = SFTemplateField::create( $val, $wgRequest->getVal( 'label_' . $old_id ) );
-					$field->semantic_property = $wgRequest->getVal( 'semantic_property_' . $old_id );
-					$field->is_list = $wgRequest->getCheck( 'is_list_' . $old_id );
+END;
+		$wgOut->addScript( $jsText );
+	}
+
+	function printCreateTemplateForm() {
+		global $wgOut, $wgRequest, $wgUser, $sfgScriptPath;
+
+		self::addJavascript();
+
+		$text = '';
+		$save_page = $wgRequest->getCheck( 'wpSave' );
+		$preview_page = $wgRequest->getCheck( 'wpPreview' );
+		if ( $save_page || $preview_page ) {
+			$fields = array();
+			// Cycle through the query values, setting the
+			// appropriate local variables.
+			foreach ( $wgRequest->getValues() as $var => $val ) {
+				$var_elements = explode( "_", $var );
+				// we only care about query variables of the form "a_b"
+				if ( count( $var_elements ) != 2 )
+					continue;
+				list ( $field_field, $id ) = $var_elements;
+				if ( $field_field == 'name' && $id != 'starter' ) {
+					$field = SFTemplateField::create( $val, $wgRequest->getVal( 'label_' . $id ), $wgRequest->getVal( 'semantic_property_' . $id ), $wgRequest->getCheck( 'is_list_' . $id ) );
 					$fields[] = $field;
 				}
 			}
-		}
-	}
-	$aggregating_property = $wgRequest->getVal( 'semantic_property_aggregation' );
-	$aggregation_label = $wgRequest->getVal( 'aggregation_label' );
-	$template_format = $wgRequest->getVal( 'template_format' );
 
-	$text = "";
-	$save_button_text = wfMsg( 'savearticle' );
-	$preview_button_text = wfMsg( 'preview' );
-	$save_page = $wgRequest->getCheck( 'wpSave' );
-	$preview_page = $wgRequest->getCheck( 'wpPreview' );
-	if ( $save_page || $preview_page ) {
-		# validate template name
-		if ( $template_name == '' ) {
-			$template_name_error_str = wfMsg( 'sf_blank_error' );
-		} else {
-			// redirect to wiki interface
+			// Assemble the template text, and submit it as a wiki
+			// page.
 			$wgOut->setArticleBodyOnly( true );
+			$template_name = $wgRequest->getVal( 'template_name' );
 			$title = Title::makeTitleSafe( NS_TEMPLATE, $template_name );
-			$full_text = SFTemplateField::createTemplateText( $template_name, $fields, $category, $aggregating_property, $aggregation_label, $template_format );
+			$category = $wgRequest->getVal( 'category' );
+			$aggregating_property = $wgRequest->getVal( 'semantic_property_aggregation' );
+			$aggregation_label = $wgRequest->getVal( 'aggregation_label' );
+			$template_format = $wgRequest->getVal( 'template_format' );
+			$full_text = SFTemplateField::createTemplateText( $template_name, $fields, null, $category, $aggregating_property, $aggregation_label, $template_format );
 			$text = SFUtils::printRedirectForm( $title, $full_text, "", $save_page, $preview_page, false, false, false, null, null );
 			$wgOut->addHTML( $text );
 			return;
 		}
-	}
 
-	$text .= '	<form action="" method="post">' . "\n";
-	// set 'title' field, in case there's no URL niceness
-	$mw_namespace_labels = $wgContLang->getNamespaces();
-	$special_namespace = $mw_namespace_labels[NS_SPECIAL];
-	$text .= '    <input type="hidden" name="title" value="' . $special_namespace . ':CreateTemplate">' . "\n";
-	$text .= '	<p>' . wfMsg( 'sf_createtemplate_namelabel' ) . ' <input size="25" name="template_name" value="' . $template_name . '"> <font color="red">' . $template_name_error_str . '</font></p>' . "\n";
-	$text .= '	<p>' . wfMsg( 'sf_createtemplate_categorylabel' ) . ' <input size="25" name="category" value="' . $category . '"></p>' . "\n";
-	$text .= "	<fieldset>\n";
-	$text .= '	' . Xml::element( 'legend', null, wfMsg( 'sf_createtemplate_templatefields' ) ) . "\n";
-	$text .= '	' . Xml::element( 'p', null, wfMsg( 'sf_createtemplate_fieldsdesc' ) ) . "\n";
+		$text .= '	<form id="createTemplateForm" action="" method="post">' . "\n";
+		// Set 'title' field, in case there's no URL niceness
+		$text .= Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) . "\n";
+		$text .= "\t<p id=\"template_name_p\">" . wfMsg( 'sf_createtemplate_namelabel' ) . ' <input size="25" id="template_name" name="template_name" /></p>' . "\n";
+		$text .= "\t<p>" . wfMsg( 'sf_createtemplate_categorylabel' ) . ' <input size="25" name="category" /></p>' . "\n";
+		$text .= "\t<fieldset>\n";
+		$text .= "\t" . Html::element( 'legend', null, wfMsg( 'sf_createtemplate_templatefields' ) ) . "\n";
+		$text .= "\t" . Html::element( 'p', null, wfMsg( 'sf_createtemplate_fieldsdesc' ) ) . "\n";
 
-	foreach ( $fields as $i => $field ) {
-		$text .= SFCreateTemplate::printFieldEntryBox( $i + 1, $field, $all_properties );
-	}
-	$new_field = new SFTemplateField();
-	$text .= SFCreateTemplate::printFieldEntryBox( "new", $new_field, $all_properties );
+		$all_properties = self::getAllPropertyNames();
+		$text .= '<div id="fieldsList">' . "\n";
+		$text .= self::printFieldEntryBox( "1", $all_properties );
+		$text .= self::printFieldEntryBox( "starter", $all_properties, false );
+		$text .= "</div>\n";
 
-	$text .= '	<p><input type="submit" value="' . wfMsg( 'sf_createtemplate_addfield' ) . '"></p>' . "\n";
-	$text .= "	</fieldset>\n";
-	$text .= "	<fieldset>\n";
-	$text .= '	' . Xml::element( 'legend', null, wfMsg( 'sf_createtemplate_aggregation' ) ) . "\n";
-	$text .= '	' . Xml::element( 'p', null, wfMsg( 'sf_createtemplate_aggregationdesc' ) ) . "\n";
-	$text .= '	<p>' . wfMsg( 'sf_createtemplate_semanticproperty' ) . " " . SFCreateTemplate::printPropertiesDropdown( $all_properties, "aggregation", $aggregating_property ) . "</p>\n";
-	$text .= '	<p>' . wfMsg( 'sf_createtemplate_aggregationlabel' ) . ' <input size="25" name="aggregation_label" value="' . $aggregation_label . '"></p>' . "\n";
-	$text .= "	</fieldset>\n";
-	$text .= '	<p>' . wfMsg( 'sf_createtemplate_outputformat' ) . "\n";
-	$text .= '	<input type="radio" name="template_format" checked value="standard" />' . wfMsg( 'sf_createtemplate_standardformat' ) . "\n";
-	$text .= '	<input type="radio" name="template_format" value="infobox" />' . wfMsg( 'sf_createtemplate_infoboxformat' ) . "</p>\n";
-	$text .= <<<END
+		$add_field_button = Html::input(
+			null,
+			wfMsg( 'sf_createtemplate_addfield' ),
+			'button',
+			array( 'onclick' => "createTemplateAddField()" )
+		);
+		$text .= Html::rawElement( 'p', null, $add_field_button ) . "\n";
+		$text .= "\t</fieldset>\n";
+		$text .= "\t<fieldset>\n";
+		$text .= "\t" . Html::element( 'legend', null, wfMsg( 'sf_createtemplate_aggregation' ) ) . "\n";
+		$text .= "\t" . Html::element( 'p', null, wfMsg( 'sf_createtemplate_aggregationdesc' ) ) . "\n";
+		$text .= "\t<p>" . wfMsg( 'sf_createtemplate_semanticproperty' ) . ' ' .
+			self::printPropertiesDropdown( $all_properties, "aggregation" ) . "</p>\n";
+		$text .= "\t<p>" . wfMsg( 'sf_createtemplate_aggregationlabel' ) . ' ' .
+			Html::input( 'aggregation_label', null, 'text',
+				array( 'size' => '25' ) ) .
+			"</p>\n";
+		$text .= "\t</fieldset>\n";
+		$text .= "\t<p>" . wfMsg( 'sf_createtemplate_outputformat' ) . "\n";
+		$text .= "\t" . Html::input( 'template_format', 'standard', 'radio', array(
+			'checked' => true,
+		), null ) . ' ' . wfMsg( 'sf_createtemplate_standardformat' ) . "\n";
+		$text .= "\t" . Html::input( 'template_format', 'infobox', 'radio', null ) .
+			' ' . wfMsg( 'sf_createtemplate_infoboxformat' ) . "</p>\n";
+		$save_button_text = wfMsg( 'savearticle' );
+		$preview_button_text = wfMsg( 'preview' );
+		$text .= <<<END
 	<div class="editButtons">
 	<input type="submit" id="wpSave" name="wpSave" value="$save_button_text" />
 	<input type="submit" id="wpPreview" name="wpPreview" value="$preview_button_text" />
@@ -182,12 +232,13 @@ function doSpecialCreateTemplate() {
 	</form>
 
 END;
-	$sk = $wgUser->getSkin();
-	$cp = SpecialPage::getPage( 'CreateProperty' );
-	$create_property_link = $sk->makeKnownLinkObj( $cp->getTitle(), $cp->getDescription() );
-	$text .= "	<br /><hr /><br />\n";
-	$text .= "	" . Xml::tags( 'p', null, $create_property_link . '.' ) . "\n";
+		$sk = $wgUser->getSkin();
+		$create_property_link = SFUtils::linkForSpecialPage( $sk, 'CreateProperty' );
+		$text .= "\t<br /><hr /><br />\n";
+		$text .= "\t" . Html::rawElement( 'p', null, $create_property_link . '.' ) . "\n";
 
-	$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );
-	$wgOut->addHTML( $text );
+		$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );
+		$wgOut->addHTML( $text );
+	}
+
 }

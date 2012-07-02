@@ -74,9 +74,6 @@
 
     killerFn: null,
 
-	// wikia change - Only search suggest uses this property (BugId:31186)
-	redirects: {},
-
     initialize: function() {
 
       var me, zindex;
@@ -268,7 +265,7 @@
         return;
       }
 
-      var me, len, div, f, redirect, suggestion;
+      var me, len, div, f, suggestion;
       me = this;
       len = this.suggestions.length;
       f = this.options.fnFormatResult;
@@ -277,12 +274,8 @@
       for (var i = 0; i < len; i++) {
       	// wikia change - start
       	suggestion = this.suggestions[i];
-      	redirect = this.redirects[suggestion];
-      	if (i > 0 && redirect) suggestion = redirect;
         div = $((me.selectedIndex === i ? '<div class="' + this.options.selectedClass + '"' : '<div')
         	+ ' title="' + suggestion + '">' + f(suggestion, this.data[i], v)
-        	// only the top result gets "redirected from", the rest of the redirects are displayed in place of the suggestion
-        	+ (i === 0 && redirect ? '<span class="redirect subtle">' + $.msg('tog-redirected-from', redirect) + '</span>' : '')
         	+ '</div>');
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
@@ -309,9 +302,6 @@
 
       if (!$.isArray(response.data)) { response.data = []; }
       this.suggestions = response.suggestions;
-      // wikia change - start
-      this.redirects = response.redirects;
-      // wikia change - end
       this.data = response.data;
       this.cachedResponse[response.query] = response;
       if (response.suggestions.length === 0 && !this.options.skipBadQueries /* Wikia change */) { this.badQueries.push(response.query); }
@@ -339,15 +329,12 @@
     },
 
     select: function(i) {
-      var selectedValue = this.suggestions[i];
-      // wikia change - start
-      var redirectedValue = this.redirects[selectedValue];
-      if (i > 0 && redirectedValue) selectedValue = redirectedValue;
-      // wikia change - end
+      var selectedValue, f;
+      selectedValue = this.suggestions[i];
       if (selectedValue) {
         this.el.val(selectedValue);
         if (this.options.autoSubmit) {
-          var f = this.el.parents('form');
+          f = this.el.parents('form');
           if (f.length > 0) { f.get(0).submit(); }
         }
         this.ignoreValueChange = true;
@@ -400,10 +387,6 @@
       };
       s = me.suggestions[i];
       d = me.data[i];
-      // wikia change - start
-      var r = me.redirects[s];
-      if (i > 0 && r) s = r;
-      // wikia change - end
       me.el.val(getValue(s));
       if ($.isFunction(onSelect)) { onSelect(s, d); }
     }

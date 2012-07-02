@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class LatestActivityTest extends BaseTest {
 	// Make an edit on a random page and verify that it shows up in the recent activity box
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testLatestActivity() throws Exception {
 		loginAsStaff(); 
 		session().click("link=Random Page");

@@ -65,7 +65,7 @@ class WikiaApiQueryBlob extends ApiQueryBase {
 		return 'Fetch revision text';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array (
 			'api.php?action=blob&blobid=1',
 		);

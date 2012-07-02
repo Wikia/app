@@ -1,7 +1,8 @@
 <?php
 /**
  * MediaWiki error classes
- * Copyright (C) 2005 Brion Vibber <brion@pobox.com>
+ *
+ * Copyright © 2005 Brion Vibber <brion@pobox.com>
  * http://www.mediawiki.org/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,6 +20,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  */
 
 /**
@@ -29,8 +31,11 @@
 class WikiError {
 	/**
 	 * @param $message string
+	 *
+	 * @deprecated since 1.17
 	 */
 	function __construct( $message ) {
+		wfDeprecated( __METHOD__, '1.17' );
 		$this->mMessage = $message;
 	}
 
@@ -56,9 +61,18 @@ class WikiError {
 	 *
 	 * @param $object mixed
 	 * @return bool
+	 *
+	 * @deprecated since 1.17
 	 */
 	public static function isError( $object ) {
-		return $object instanceof WikiError;
+		wfDeprecated( __METHOD__, '1.17' );
+		if ( $object instanceof WikiError ) {
+			return true;
+		} elseif ( $object instanceof Status ) {
+			return !$object->isOK();
+		} else {
+			return false;
+		}
 	}
 }
 
@@ -70,8 +84,11 @@ class WikiErrorMsg extends WikiError {
 	/**
 	 * @param $message String: wiki message name
 	 * @param ... parameters to pass to wfMsg()
+	 *
+	 * @deprecated since 1.17
 	 */
-	function WikiErrorMsg( $message/*, ... */ ) {
+	function __construct( $message/*, ... */ ) {
+		wfDeprecated( __METHOD__, '1.17' );
 		$args = func_get_args();
 		array_shift( $args );
 		$this->mMessage = wfMsgReal( $message, $args, true );
@@ -99,8 +116,11 @@ class WikiXmlError extends WikiError {
 	 * @param $message string
 	 * @param $context
 	 * @param $offset Int
+	 *
+	 * @deprecated since 1.17
 	 */
-	function WikiXmlError( $parser, $message = 'XML parsing error', $context = null, $offset = 0 ) {
+	function __construct( $parser, $message = 'XML parsing error', $context = null, $offset = 0 ) {
+		wfDeprecated( __METHOD__, '1.17' );
 		$this->mXmlError = xml_get_error_code( $parser );
 		$this->mColumn = xml_get_current_column_number( $parser );
 		$this->mLine = xml_get_current_line_number( $parser );

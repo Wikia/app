@@ -3,10 +3,13 @@
  * Shows list of all forms on the site.
  *
  * @author Yaron Koren
+ * @file
+ * @ingroup SF
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
+/**
+ * @ingroup SFSpecialPages
+ */
 class SFForms extends SpecialPage {
 
 	/**
@@ -14,7 +17,6 @@ class SFForms extends SpecialPage {
 	 */
 	function __construct() {
 		parent::__construct( 'Forms' );
-		SFUtils::loadMessages();
 	}
 
 	function execute( $query ) {
@@ -30,9 +32,12 @@ class SFForms extends SpecialPage {
 	}
 }
 
+/**
+ * @ingroup SFSpecialPages
+ */
 class FormsPage extends QueryPage {
 	public function __construct( $name = 'Forms' ) {
-		// For MW <= 1.17
+		// For MW 1.17
 		if ( $this instanceof SpecialPage ) {
 			parent::__construct( $name );
 		}
@@ -49,11 +54,8 @@ class FormsPage extends QueryPage {
 	function getPageHeader() {
 		global $wgUser;
 		
-		SFUtils::loadMessages();
-		
 		$sk = $wgUser->getSkin();
-		$cf = SpecialPage::getPage( 'CreateForm' );
-		$create_form_link = $sk->makeKnownLinkObj( $cf->getTitle(), $cf->getDescription() );
+		$create_form_link = SFUtils::linkForSpecialPage( $sk, 'CreateForm' );
 		$header = "<p>" . $create_form_link . ".</p>\n";
 		$header .= '<p>' . wfMsg( 'sf_forms_docu' ) . "</p><br />\n";
 		return $header;
@@ -91,6 +93,6 @@ class FormsPage extends QueryPage {
 
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( SF_NS_FORM, $result->value );
-		return $skin->makeLinkObj( $title, $title->getText() );
+		return $skin->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
 	}
 }

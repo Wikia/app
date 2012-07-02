@@ -53,8 +53,8 @@ class FeedRenderer {
 			$template = 'feed.simple';
 		}
 		if (isset($parameters['flags']) && in_array('hidedetails', $parameters['flags'])) {
-                        $template = 'feed.nodtl';
-                }
+			$template = 'feed.nodtl';
+		}
 		if (isset($parameters['type']) && $parameters['type'] == 'widget') {
 			$template = 'feed.widget';
 		}
@@ -238,7 +238,7 @@ class FeedRenderer {
 		} else {
 			$msg = wfMsg("myhome-feed-{$type}-details");
 		}
-		
+
 		$html = Xml::openElement('tr', array('data-type' => $type));
 		$html .= Xml::openElement('td', array('class' => 'activityfeed-details-label'));
 		$html .= Xml::element('em', array('class' => 'dark_text_2'), $msg);
@@ -263,7 +263,6 @@ class FeedRenderer {
 	 * @author Jakub Kurcek <jakub@wikia-inc.com>
 	 */
 	public static function formatRelatedVideosRow( $text ){
-
 		$html = Xml::openElement('tr');
 		$html .= Xml::openElement('td');
 		$html .= $text;
@@ -284,8 +283,9 @@ class FeedRenderer {
 
 		foreach( $comments as $comment ) {
 			$authorLine = '';
+
 			if( !empty($comment['user-profile-url']) ) {
-				if( !empty($comment['real-name']) ) {
+				if( !empty($comment['author']) ) {
 					$authorLine .= Xml::element('a', array(
 						'href' => $comment['user-profile-url'],
 						'class' => 'real-name',
@@ -299,7 +299,7 @@ class FeedRenderer {
 					$authorLine .= Xml::element('a', array(
 						'href' => $comment['user-profile-url'],
 						'class' => 'real-name',
-					), $comment['author']);
+					), $comment['real-name']);
 				}
 			} else {
 				$authorLine .= $comment['author'];
@@ -665,13 +665,13 @@ class FeedRenderer {
 
 			//$thumb .= substr($item['html'], 0, -2) . '/>';
 			$thumb .= $item['html'];
-			
+
 			// localised title for popup
 			$popupTitle = $wgLang->getNsText($namespace) . ':' . $item['name'];
 
 			// wrapper for thumbnail
 			$attribs = array(
-				'class' => ($type == 'videos') ? 'activityfeed-video-thumbnail' :  'lightbox',
+				'class' => 'lightbox',
 				'rel' => 'nofollow',
 				'ref' => ($type == 'videos' ? 'Video:' : 'File:') . $item['name'], /* TODO: check that name doesn't have NS prefix */
 				'title' => $popupTitle,

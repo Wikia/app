@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Group-level based edit page access for MediaWiki. Monitors current edit sessions.
  * Version 0.4.2
  *

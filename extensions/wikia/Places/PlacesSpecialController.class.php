@@ -55,6 +55,6 @@ class PlacesSpecialController extends WikiaSpecialPageController {
 
 	protected function allPlaces(){
 		$placesModel = F::build('PlacesModel');
-		return $placesModel->getAll();
+		return $placesModel->getAll(500); // limit number of places for special pages
 	}
 }

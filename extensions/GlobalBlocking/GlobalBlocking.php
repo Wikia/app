@@ -5,7 +5,9 @@ if ( ! defined( 'MEDIAWIKI' ) )
 /**#@+
  * Provides a way to block an IP Address over multiple wikis sharing a database.
  * Requires
- * @addtogroup Extensions
+ *
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:GlobalBlocking Documentation
  *
@@ -18,17 +20,16 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'GlobalBlocking',
 	'author'         => 'Andrew Garrett',
-	'description'    => 'Allows IP addresses to be blocked across multiple wikis',
 	'descriptionmsg' => 'globalblocking-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:GlobalBlocking',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:GlobalBlocking',
 );
 
 $wgExtensionMessagesFiles['GlobalBlocking'] =  "$dir/GlobalBlocking.i18n.php";
-$wgExtensionAliasesFiles['GlobalBlocking'] = "$dir/GlobalBlocking.alias.php";
+$wgExtensionMessagesFiles['GlobalBlockingAlias'] = "$dir/GlobalBlocking.alias.php";
 
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'GlobalBlocking::getUserPermissionsErrors';
 $wgHooks['UserIsBlockedGlobally'][] = 'GlobalBlocking::isBlockedGlobally';
-$wgHooks['UserLoginMailPassword'][] = 'GlobalBlocking::onMailPassword';
+$wgHooks['SpecialPasswordResetOnSubmit'][] = 'GlobalBlocking::onSpecialPasswordResetOnSubmit';
 $wgHooks['OtherBlockLogLink'][] = 'GlobalBlocking::getBlockLogLink';
 
 $wgAutoloadClasses['SpecialGlobalBlock'] = "$dir/SpecialGlobalBlock.php";

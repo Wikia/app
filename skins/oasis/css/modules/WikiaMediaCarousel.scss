@@ -1,0 +1,156 @@
+@import "../mixins/border-radius";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+@import "../core/color";
+
+@mixin arrow-style {
+	border-style: solid;
+	border-width: 9px;
+	width: 0;
+}
+
+.WikiaMediaCarousel {
+	margin-top: 25px;
+	position: relative;
+	width: 480px;
+	.previous, .next {
+		@include border-radius(4px);
+		@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+		border: 1px solid #ccc;
+		height: 64px;
+		position: absolute;
+		width: 32px;
+		.latest-images-left {
+			@include arrow-style;
+			border-color: transparent #2d88e2 transparent #2d88e2;
+			margin: 24px 0 0 11px;
+			border-left-width: 0px;
+		}
+		.latest-images-right {
+			@include arrow-style;
+			border-color: transparent transparent transparent #2d88e2;
+			margin: 24px 0 0 13px;
+			border-right-width: 0px;
+		}
+		&.disabled {
+			.latest-images-left {
+				border-color: transparent #ccc transparent #ccc;
+			}
+			.latest-images-right {
+				border-color: transparent transparent transparent #ccc;
+			}
+		}
+	}
+	.previous:hover, .next:hover {
+		@include linear-gradient($color-secondary-button, top, $color-secondary-button, 5%, $color-secondary-button, 50%);
+		&.disabled {
+			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+		}
+	}
+	.next {
+		left: 447px;
+	}
+	.carousel-container {
+		height: 67px;
+		left: 49px;
+		overflow: hidden;
+		position: relative;
+		width: 383px;
+		div {
+			position: relative;
+		}
+		.image, .image img {
+			width: 115px;
+			height: 65px;
+		}
+		.image {
+			border: 1px solid #CCC;
+		}
+		.thumbs {
+			width: 133px;
+			border: none;
+		}
+	}
+	ul {
+		display: block;
+		left: 4px;
+		list-style: none;
+		width: 500px;
+		li {
+			border: 1px solid $color-page-border;
+			float: left;
+			margin-right: 2px;
+			position: relative;
+			&.blind {
+				border-color: transparent;
+			}
+			a {
+				display: block;
+			}
+		}
+		.see-all {
+			text-align: center;
+			a {
+				border: 3px solid #FFF;
+				font-size: 14px;
+				font-weight: bold;
+				height: 55px;
+				*left: 0;
+				padding-top: 21px;
+				position: absolute;
+				width: 76px;
+				z-index: 1;
+			}
+			img {
+				left: 0;
+				opacity: 1;
+				position: absolute;
+				top: 0;
+			}
+		}
+		.add-more {
+			@extend .see-all;
+			a {
+				font-size: 11px;
+				height: 61px;
+				padding-top: 15px;
+			}
+		}
+		.single-photo {
+			a {
+				font-size: 45px !important;
+				height: 67px;
+				padding-top: 9px;
+			}
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.carouselContainer {
+	height: 65px;
+	left: 49px;
+	overflow: hidden;
+	position: relative;
+	width: 402px;
+	& > div {
+		position: relative;
+	}
+	.carousel {
+		position: absolute;
+		li {
+			border: 0;
+			margin-right: 19px;
+			width: 115px;
+		}
+		img {
+			width: 115px;
+			height: 65px;
+		}
+		img:hover {
+			cursor: pointer;
+		}
+	}
+}

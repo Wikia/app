@@ -55,37 +55,4 @@ class CategoryExhibitionAjax {
 		return $result;
 	}
 
-	/*
-	 * Get HTML of video player for given video file
-	 * Used for on-click video play
-	 */
-
-	public static function axGetVideoPlayer() {
-		wfProfileIn( __METHOD__ );
-		global $wgTitle;
-
-		if ( ( $wgTitle instanceof Title ) && ( $wgTitle->exists() ) && ( $wgTitle->getNamespace() == NS_LEGACY_VIDEO ) ){
-
-			$video = new VideoPage( $wgTitle );
-			$video->load();
-
-			// get default video dimensions
-			$dimensions = explode( 'x', $video->getTextRatio() );
-			$width = intval( $dimensions[0] );
-			$height = intval( $dimensions[1] );
-
-			$return = array(
-				'width' => $width,
-				'height' => $height,
-				'html' => $video->getEmbedCode( $width, true ),
-				'title' => $wgTitle->getText(),
-			);
-
-		} else {
-			$return = array();
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $return;
-	}
 }

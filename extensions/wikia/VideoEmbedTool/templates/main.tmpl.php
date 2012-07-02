@@ -8,7 +8,8 @@
 	global $wgStylePath, $wgUser, $wgScript, $wgExtensionsPath;
 ?>
 
-<h1 id="VideoEmbedTitle"><?= wfMsg( 'vet-title' ) ?></h1><section class="modalContent"><div>
+<h1 id="VideoEmbedTitle"><?= wfMsg( 'vet-title' ) ?></h1>
+<section class="modalContent">
 <p>
 	<img src="<?= $wgStylePath; ?>/common/images/ajax.gif" id="VideoEmbedProgress2" style="visibility: hidden;"/>
 	<form action="<?= $wgScript ?>?action=ajax&rs=VET&method=insertVideo" id="VideoEmbedForm" method="POST">
@@ -35,7 +36,7 @@
 		<a id="VideoEmbedUrlSubmit" class="wikia-button" style="display: block; " onclick="return VET_preQuery(event);" ><?= wfMsg('vet-upload-btn') ?></a>
 	</form>
 </p>
-
+</section>
 
 <div id="VET_results_0">
 	<?= $result ?>

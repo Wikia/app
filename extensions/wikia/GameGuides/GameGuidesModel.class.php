@@ -116,7 +116,7 @@ class GameGuidesModel{
 
 				$ret[ 'entries' ][] = array(
 					'title' => $info[ 0 ],
-					'categoryName' => $info[ 1 ],
+					'categoryName' => ( !empty( $info[ 1 ] ) ) ? $info[ 1 ] : null,
 					'icon' => ( !empty( $info[ 2 ] ) ) ? $info[ 2 ] : null
 				);
 			}
@@ -153,7 +153,7 @@ class GameGuidesModel{
 				":{$category->getID()}" .
 				":{$totalLimit}"
 			);
-			$contents = $this->loadFromCache( $cacheKey );
+			//$contents = $this->loadFromCache( $cacheKey );
 
 			if ( empty( $contents ) ) {
 				$contents = Array();

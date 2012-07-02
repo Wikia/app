@@ -19,7 +19,6 @@ class SpecialGroupStats extends SpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct( 'GroupStats'/*class*/ );
-		wfLoadExtensionMessages( 'TranslationStatistics' ); // Load internationalization messages
 	}
 
 	/**
@@ -119,7 +118,7 @@ class SpecialGroupStats extends SpecialPage {
 		$out = Xml::openElement( 'form' );
 
 		$out .= Xml::buildForm( $fields );
-		$out .= Xml::hidden( 'title', 'Special:' . $this->getName() ); // FIXME: this is silly...
+		$out .= Html::hidden( 'title', 'Special:' . $this->getName() ); // FIXME: this is silly...
 		$out .= Xml::submitButton( wfMsg( 'transstats-submit' ) );
 
 		$out .= Xml::closeElement( 'form' );

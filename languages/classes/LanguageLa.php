@@ -12,10 +12,15 @@ class LanguageLa extends Language {
 	 * Rules are far from complete.
 	 *
 	 * Cases: genitive, accusative, ablative
+	 *
+	 * @param $word string
+	 * @param $case string
+	 *
+	 * @return string
 	 */
 	function convertGrammar( $word, $case ) {
 		global $wgGrammarForms;
-		if ( isset($wgGrammarForms['la'][$case][$word]) ) {
+		if ( isset( $wgGrammarForms['la'][$case][$word] ) ) {
 			return $wgGrammarForms['la'][$case][$word];
 		}
 

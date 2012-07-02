@@ -60,7 +60,7 @@ $messages['arz'] = array(
 	'gblrights-rights-entry' => 'غير عضوية المجموعة العامة ل$1 من $2 إلى $3',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Red Winged Duck
@@ -117,7 +117,7 @@ $messages['ca'] = array(
 	'gblrights-desc' => "Administració senzilla dels [[Special:SharedUserRights|drets globals d'usuari]]",
 	'gblrights-logpage' => 'Registre de drets globals',
 	'gblrights-pagetext' => 'Aquest és un registre dels canvis que es fan a la taula de drets globals de la família de wikis',
-	'gblrights-rights-entry' => "s'han canviat els grups globals de $1 des de $2 a $3",
+	'gblrights-rights-entry' => 'ha canviat els drets globals de $1 del grup $2 a $3',
 	'right-userrights-shared' => "Administrar els permisos d'usuari compartits",
 );
 
@@ -204,15 +204,26 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
+ * @author Urhixidur
  * @author Verdy p
  */
 $messages['fr'] = array(
 	'shareduserrights' => 'Gestion des droits d’utilisateur partagés',
 	'gblrights-desc' => '[[Special:SharedUserRights|Gestion simple des droits d’utilisateur partagés]]',
 	'gblrights-logpage' => 'Journal des droits partagés',
-	'gblrights-pagetext' => 'Voici l’historique de toutes les modifications apportées à la table des droits partagés d’utilisateur pour la famille wiki',
+	'gblrights-pagetext' => 'Voici l’historique de toutes les modifications apportées à la table des droits d’utilisateur partagés pour la famille wiki',
 	'gblrights-rights-entry' => 'a modifié l’appartenance aux groupes globaux pour $1 de $2 à $3',
-	'right-userrights-shared' => 'Gérer les droits d’utilisateurs partagés',
+	'right-userrights-shared' => 'Gérer les droits d’utilisateur partagés',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'shareduserrights' => 'Administracion des drêts d’utilisator partagiês',
+	'gblrights-desc' => '[[Special:SharedUserRights|Administracion simpla des drêts d’utilisator partagiês]].',
+	'gblrights-logpage' => 'Jornal des drêts globâls',
+	'right-userrights-shared' => 'Administrar los drêts d’utilisator partagiês',
 );
 
 /** Irish (Gaeilge)
@@ -350,7 +361,7 @@ $messages['ko'] = array(
 	'gblrights-rights-entry' => '$1 사용자의 공통 권한을 $2에서 $3으로 변경',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -360,6 +371,13 @@ $messages['ksh'] = array(
 	'gblrights-pagetext' => 'Hee dat Logbooch zeich de Änderunge aan dä Famillisch vun Wikis iere jemeinsam Rääschte för de Metmaacher.',
 	'gblrights-rights-entry' => 'hät de jemeinsam Rääschte-Jroppe för dä Metmaacher „$1“ fun „$2“ op „$3“ jeändert.',
 	'right-userrights-shared' => 'Jemeinsam Rääschte för Metmaacher verwallde',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'gblrights-logpage' => 'Reşahîya mafên global',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -385,6 +403,14 @@ $messages['mk'] = array(
 	'gblrights-pagetext' => 'Ова е дневник на сите промени направени во табелата на глобални кориснички права на вики семејство',
 	'gblrights-rights-entry' => 'променета припадност на глобална група за $1 од $2 до $3',
 	'right-userrights-shared' => 'Раководете ги заедничките кориснички права',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'gblrights-pagetext' => 'Dan huwa reġistru tat-tibdil kollu li sar fit-tabella tad-drittijiet globali tal-familja tas-siti wiki',
+	'gblrights-rights-entry' => "biddel is-sħubija għall-gruppi globali ta' $1 minn $2 għal $3",
 );
 
 /** Dutch (Nederlands)
@@ -413,7 +439,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Simny
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'shareduserrights' => 'Administrering av delte brukerrettigheter',
 	'gblrights-desc' => 'Enkel [[Special:SharedUserRights|administrering av globale brukerrettigheter]]',
 	'gblrights-logpage' => 'Logg over globale rettigheter',
@@ -532,6 +558,7 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'gblrights-desc' => 'సులువైన [[Special:GlobalUserRights|సార్వత్రిక వాడుకరి పరిపాలన]]',
 	'gblrights-logpage' => 'సార్వత్రిక హక్కుల చిట్టా',
 );
 
@@ -544,6 +571,7 @@ $messages['tl'] = array(
 	'gblrights-logpage' => 'Talaan ng mga Karapatang Pandaigdigan',
 	'gblrights-pagetext' => 'Isa itong talaan ng lahat ng mga pagbabagong ginawa sa tabla ng mga karapatang pandaigdigan ng mag-anak ng wiki',
 	'gblrights-rights-entry' => 'binago ang kasapian sa pandaigidigang pangkat para kay $1 mula $2 patungo sa $3',
+	'right-userrights-shared' => 'Pamahalaan ang mga karapatang pinagsasaluhan ng tagagamit',
 );
 
 /** Turkish (Türkçe)

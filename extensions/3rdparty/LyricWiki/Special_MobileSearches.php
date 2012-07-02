@@ -3,7 +3,7 @@
  * Author: Sean Colombo
  * Date: 20110305 - copied from Special:Soapfailures
  *
- * TODO: Make this and Special:Soapfailures use the same code (the only difference needed is the table-name and possibly the i18n strings). 
+ * TODO: Make this and Special:Soapfailures use the same code (the only difference needed is the table-name and possibly the i18n strings).
  */
 
 if(!defined('MEDIAWIKI')) die();
@@ -28,15 +28,13 @@ $wgSpecialPages['MobileSearches'] = 'MobileSearches';
 
 class MobileSearches extends SpecialPage{
 
-	public function MobileSearches(){
-		SpecialPage::SpecialPage('MobileSearches');
+	public function __construct(){
+		parent::__construct('MobileSearches');
 	}
-	
+
 	function execute(){
 		global $wgOut;
 		global $wgRequest, $wgUser, $wgMemc;
-
-		wfLoadExtensionMessages('SpecialMobileSearches');
 
 		$MAX_RESULTS = 100;
 		$CACHE_KEY_PREFIX = "LW_SOAP_FAILURES_MOBILE";
@@ -44,9 +42,8 @@ class MobileSearches extends SpecialPage{
 		$CACHE_KEY_TIME = wfMemcKey($CACHE_KEY_PREFIX, "cachedOn");
 		$CACHE_KEY_STATS = wfMemcKey($CACHE_KEY_PREFIX, "stats");
 		$TABLE_NAME = "lw_soap_failures_mobile";
-
 		$wgOut->setPageTitle(wfMsg('mobilesearches'));
-		
+
 		// This processes any requested for removal of an item from the list.
 		if(isset($_POST['artist']) && isset($_POST['song'])){
 			$artist = $_POST['artist'];
@@ -60,7 +57,7 @@ class MobileSearches extends SpecialPage{
 			include_once 'server.php'; // the SOAP functions
 
 			$songResult = getSong($artist, $song);*/
-			
+
 			// Pull in the NuSOAP code
 			$dir = dirname(__FILE__) . '/';
 			require_once($dir . 'nusoap.php');
@@ -102,7 +99,7 @@ class MobileSearches extends SpecialPage{
 				);
 
 				print "<br/>Clearing the cache... ";
-				
+
 				$wgMemc->delete($CACHE_KEY_DATA); // purge the entry from memcached
 				$wgMemc->delete($CACHE_KEY_TIME);
 				$wgMemc->delete($CACHE_KEY_STATS);
@@ -143,7 +140,7 @@ class MobileSearches extends SpecialPage{
 
 			$msg = ($msg==""?"":"<pre>$msg</pre>");
 			$wgOut->addWikiText($msg);
-			
+
 			// Form for clearing a fixed song.
 			$wgOut->addHTML(wfMsg('mobilesearches-mark-as-fixed') . "
 							<form method='post'>
@@ -193,7 +190,7 @@ class MobileSearches extends SpecialPage{
 
 				$stats = lw_soapStats_getStats(LW_TERM_WEEKLY, "", LW_API_TYPE_MOBILE);
 				print "\t<tr><td>".wfMsg('mobilesearches-stats-period-thisweek')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
-				
+
 				$stats = lw_soapStats_getStats(LW_TERM_MONTHLY, "", LW_API_TYPE_MOBILE);
 				print "\t<tr><td>".wfMsg('mobilesearches-stats-period-thismonth')."</td><td>{$stats[LW_API_FOUND]}</td><td>{$stats[LW_API_NOT_FOUND]}</td><td>{$stats[LW_API_PERCENT_FOUND]}%</td></tr>\n";
 				print "</table>\n";
@@ -243,7 +240,7 @@ class MobileSearches extends SpecialPage{
 							</form>\n");
 						$wgOut->addHTML("</td>");
 						$wgOut->addHTML("</tr>\n");
-						
+
 						$rowIndex++;
 					}
 					$wgOut->addHTML("</table>\n");
@@ -256,7 +253,7 @@ class MobileSearches extends SpecialPage{
 					$TWO_HOURS_IN_SECONDS = (60*60*2);
 					$wgMemc->set($CACHE_KEY_TIME, $cachedOn, $TWO_HOURS_IN_SECONDS);
 					$wgMemc->set($CACHE_KEY_STATS, $statsHtml, $TWO_HOURS_IN_SECONDS);
-					
+
 					// We use CACHE_KEY_DATA to determine when all of these keys have expired, so it should expire a few microseconds after the other two (that's why it's below the other set()s).
 					$wgMemc->set($CACHE_KEY_DATA, $data, $TWO_HOURS_IN_SECONDS);
 				}

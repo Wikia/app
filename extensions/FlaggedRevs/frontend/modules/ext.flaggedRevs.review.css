@@ -1,0 +1,48 @@
+/**
+ * FlaggedRevs Stylesheet
+ * @author Aaron Schulz
+ */
+
+/* Review form */
+.flaggedrevs_reviewform {
+	background-color: #f9f9f9;
+	font-size: 90%;
+	clear: both;
+}
+
+.fr-rating-controls,
+.fr-rating-controls-disabled {
+	vertical-align: middle;
+}
+
+.fr-rating-controls-disabled {
+	color: GrayText;
+}
+
+#mw-fr-confirmreview {
+	white-space: nowrap;
+}
+.fr-rating-options {
+	margin-right: 1.5em;
+	white-space: nowrap;
+}
+
+.fr-rating-option-0 {
+	background-color: #f5ecec;
+}
+.fr-rating-option-1 {
+	background-color: #f0f8ff;
+}
+.fr-rating-option-2 {
+	background-color: #e1ffe1;
+}
+.fr-rating-option-3 {
+	background-color: #fef0db;
+}
+.fr-rating-option-4 {
+	background-color: #ffffe3;
+}
+
+#mw-fr-commentbox {
+	margin-right: 1.5em;
+}

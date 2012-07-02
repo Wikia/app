@@ -4,7 +4,7 @@
  * feature and fix problems.
  *
  * @author Niklas Laxstrom
- * @copyright Copyright © 2010, Niklas Laxström
+ * @copyright Copyright © 2010-2011, Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @file
  */
@@ -104,14 +104,7 @@ class PTCheckDB extends Maintenance {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$result = $dbr->select( 'revtag_type', '*', null, __METHOD__ );
-		$idToTag = array();
-
-		foreach ( $result as $_ ) {
-			$idToTag[$_->rtt_id] = $_->rtt_name;
-		}
-
-		$tagToId = array_flip( $idToTag );
+		$tags = array( 'tp:mark', 'tp:tag', 'tp:transver', 'fuzzy' );
 
 		$pages = $dbr->select( 'revtag', 'rt_page', null, __METHOD__, array( 'GROUP BY' => 'rt_page' ) );
 		$this->output( "Checking that tags match a valid page...\n\n" );
@@ -137,17 +130,15 @@ class PTCheckDB extends Maintenance {
 		$this->output( "\n\nValidating tags...\n" );
 
 		$result = $dbr->select( 'revtag', '*', null, __METHOD__ );
-		$transver = $tagToId['tp:transver'];
-
 		foreach ( $result as $_ ) {
-			if ( !isset( $idToTag[$_->rt_type] ) ) {
+			if ( !isset( $tags[$_->rt_type] ) ) {
 				$name = $this->idToName( $_->rt_page );
 				$this->output( "Page $name has unknown tag {$_->rt_type}\n" );
 				$fixes["$name <revtag:unknown:{$_->rt_type}>"] =
 					array( 'delete tag', 'revtag', array( 'rt_page' => $id, 'rt_type' => $_->rt_type ) );
 				continue;
-			} elseif ( $_->rt_type === $transver ) {
-				$check = $this->checkTransrevRevision( $rev );
+			} elseif ( $_->rt_type === RevTag::getType( 'tp:transver' ) ) {
+				$check = $this->checkTransrevRevision( $rev ); // FIXME: $rev is undefined
 				if ( $check !== true ) {
 					$name = $this->idToName( $_->rt_page );
 					$this->output( "Page $name has invalid tp:transver: $check\n" );

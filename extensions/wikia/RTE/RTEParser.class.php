@@ -19,6 +19,18 @@ class RTEParser extends Parser {
 	// last wikitext parsed by makeImage()
 	private static $lastWikitext = null;
 
+	/**
+	 * Clear Parser state
+	 *
+	 * @private
+	 */
+	function clearState() {
+		parent::clearState();
+
+		// don't show TOC in edit mode
+		$this->mShowToc = false;
+	}
+
 	/*
 	 * Find empty lines in wikitext and mark following element
 	 */
@@ -160,9 +172,7 @@ class RTEParser extends Parser {
 		// render broken image placeholder
 		if ($isBrokenImage) {
 			// handle not existing images
-			$sk = $this->mOptions->getSkin();
-
-			$ret = $sk->makeBrokenImageLinkObj($title, '', '', '', '', false, $wikitextIdx);
+			$ret = RTELinkerHooks::makeBrokenImageLinkObj($title, '', '', '', '', false, $wikitextIdx);
 
 			wfProfileOut(__METHOD__);
 			return $ret;

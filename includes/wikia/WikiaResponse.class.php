@@ -294,7 +294,8 @@ class WikiaResponse {
 
 		if( !is_null( $maxAge ) ) {
 			$maxAge = (int) $maxAge;
-
+			$cacheControl = ( $maxAge > 0 ) ? "public, max-age={$maxAge}" : 'no-cache, no-store, max-age=0, must-revalidate';
+			
 			$cacheControl = ( $maxAge > 0 ) ? "public, max-age={$maxAge}" : 'no-cache, no-store, max-age=0, must-revalidate';
 
 			if ( $targetBrowser ) {
@@ -385,12 +386,14 @@ class WikiaResponse {
 			$this->setHeader( self::ERROR_HEADER_NAME, $this->getException()->getMessage() );
 		}
 
-		if( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) && !$this->hasContentType() ) {
-			$this->setContentType( 'application/json; charset=utf-8' );
-		} else if ( $this->getFormat() == WikiaResponse::FORMAT_JSONP ) {
-			$this->setContentType( 'text/javascript; charset=utf-8' );
-		} else if ( $this->getFormat() == WikiaResponse::FORMAT_HTML ) {
-			$this->setContentType( 'text/html; charset=utf-8' );
+		if( !$this->hasContentType() ) {
+			if( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) ) {
+				$this->setContentType( 'application/json; charset=utf-8' );
+			} else if ( $this->getFormat() == WikiaResponse::FORMAT_JSONP ) {
+				$this->setContentType( 'text/javascript; charset=utf-8' );
+			} else if ( $this->getFormat() == WikiaResponse::FORMAT_HTML ) {
+				$this->setContentType( 'text/html; charset=utf-8' );
+			}
 		}
 
 		foreach ( $this->getHeaders() as $header ) {
@@ -430,31 +433,15 @@ class WikiaResponse {
 	
 	/**
 	 * @brief Add js var to script tag on top of the page 
+	 * THIS MUST BE CALLED BEFORE SKIN RENDERING 
 	 * 
 	 * @param string $name, mix $val
-	 */
-	
+	 */	
 	public function setJsVar($name, $val) {
-		if(empty($this->jsVars)) {
-			F::app()->registerHook('MakeGlobalVariablesScript',  'WikiaResponse', 'onMakeGlobalVariablesScript', array(), false, $this);
-		}
-		
-		$this->jsVars[$name] = $val;
+		//FIXME: is this global request context always valid? What about special pages?
+		RequestContext::getMain()->getOutput()->addJsConfigVars($name, $val);
 	}
 	
-	/**
-	 * @brief this hook is making js global vars base on WikiaResponse jsVars
-	 * 
-	 * @param $vars list from skin object
-	 */
-	
-	public function onMakeGlobalVariablesScript(&$vars) {
-		foreach($this->jsVars as $name => $val) {
-			$vars[$name] = $val;
-		}
-		return true;
-	}
-
 	/**
 	 * Add an asset to the current response
 	 * 

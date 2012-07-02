@@ -2,20 +2,23 @@
 class AbuseFilterViewImport extends AbuseFilterView {
 
 	function show() {
-		global $wgOut, $wgUser;
-		if ( !$wgUser->isAllowed( 'abusefilter-modify' ) ) {
-			$wgOut->addWikiMsg( 'abusefilter-edit-notallowed' );
+		$out = $this->getOutput();
+		if ( !$this->getUser()->isAllowed( 'abusefilter-modify' ) ) {
+			$out->addWikiMsg( 'abusefilter-edit-notallowed' );
 			return;
 		}
 
-		$wgOut->addWikiMsg( 'abusefilter-import-intro' );
+		$out->addWikiMsg( 'abusefilter-import-intro' );
 
 		$html = Xml::textarea( 'wpImportText', '', 40, 20 );
-		$html .= Xml::submitButton( wfMsg( 'abusefilter-import-submit' ) );
+		$html .= Xml::submitButton(
+			wfMsg( 'abusefilter-import-submit' ),
+			array( 'accesskey' => 's' )
+		);
 		$url = SpecialPage::getTitleFor( 'AbuseFilter', 'new' )->getFullURL();
 
 		$html = Xml::tags( 'form', array( 'method' => 'post', 'action' => $url ), $html );
 
-		$wgOut->addHTML( $html );
+		$out->addHTML( $html );
 	}
 }

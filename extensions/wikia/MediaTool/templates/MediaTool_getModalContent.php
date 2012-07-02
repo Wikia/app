@@ -1,10 +1,10 @@
 <section id="mediaToolDialog">
 <ul class="tabs">
 	<li data-tab="find-media" class="selected">
-		<a>Find Media</a>
+		<a><?= wfMsg('mediatool-tab-findmedia'); ?></a>
 	</li>
-	<li data-tab="edit-media">
-		<a>Edit Media</a>
+	<li data-tab="edit-media" class="disabled">
+		<a><?= wfMsg('mediatool-tab-editmedia'); ?></a>
 	</li>
 </ul>
 
@@ -16,18 +16,18 @@
 
 			<ul class="tabs minor-tabs">
 				<li data-tab="find-media-wiki" class="selected">
-					<a>Wiki</a>
+					<a><?= wfMsg('mediatool-tab-wiki'); ?></a>
 				</li>
 				<li data-tab="find-media-online">
-					<a>Online</a>
+					<a><?= wfMsg('mediatool-tab-online'); ?></a>
 				</li>
 				<li data-tab="find-media-computer">
-					<a>Computer</a>
+					<a><?= wfMsg('mediatool-tab-computer'); ?></a>
 				</li>
 			</ul>
 
 			<div data-tab-body="find-media-wiki" class="tabBody selected">
-				<input type="radio" id="source-recently-added" checked="checked"> <label for="source-recently-added"> Recently added media </label>
+				<input type="radio" id="source-recently-added" checked="checked"> <label for="source-recently-added"><?= wfMsg('mediatool-collection-recentlyadded'); ?></label>
 			</div>
 			<div data-tab-body="find-media-online" class="tabBody">
 			</div>
@@ -37,12 +37,10 @@
 		</div>
 		<div class="mediatool-content">
 			<div class="mediatool-basket">
-			<?= $app->getView( 'MediaTool', 'basket', array()); ?>
+				{{{cart}}}
 			</div>
-			<div class="mediatool-thumbnail-browser">
-				<div class="float-title">Recently added to the wiki</div>
-
-				thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />thumbnails <br />
+			<div id="mediatool-thumbnail-browser" class="mediatool-thumbnail-browser">
+				{{{itemsCollection}}}
 			</div>
 		</div>
 
@@ -53,7 +51,7 @@
 
 			<ul class="tabs minor-tabs">
 				<li data-tab="edit-media-options" class="selected">
-					<a>Photo options</a>
+					<a><?= wfMsg('mediatool-photooptions'); ?></a>
 				</li>
 			</ul>
 
@@ -77,7 +75,8 @@
 
 
 <div class="MediaTool-buttons">
-	<button class="secondary" name="cancel">Cancel</button>
-	<button  name="continue">Continue</button>
+	<button class="secondary" name="cancel"><?= wfMsg('mediatool-button-cancel'); ?></button>
+	<button  name="continue" disabled="disabled"><?= wfMsg('mediatool-button-continue'); ?></button>
+	<button  name="done"><?= wfMsg('mediatool-button-done'); ?></button>
 </div>
 </section>

@@ -1,13 +1,16 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) )
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die();
+}
 
 class AbuseFilterViewExamine extends AbuseFilterView {
-	function show() {
-		global $wgOut, $wgUser;
+	public static $examineType = null;
+	public static $examineId = null;
 
-		$wgOut->setPageTitle( wfMsg( 'abusefilter-examine' ) );
-		$wgOut->addWikiMsg( 'abusefilter-examine-intro' );
+	function show() {
+		$out = $this->getOutput();
+		$out->setPageTitle( $this->msg( 'abusefilter-examine' ) );
+		$out->addWikiMsg( 'abusefilter-examine-intro' );
 
 		$this->loadParameters();
 
@@ -25,12 +28,10 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 	}
 
 	function showSearch() {
-		global $wgUser, $wgOut;
-
 		// Add selector
 		$selector = '';
 
-		$selectFields = array(); # # Same fields as in Test
+		$selectFields = array(); # Same fields as in Test
 		$selectFields['abusefilter-test-user'] = Xml::input( 'wpSearchUser', 45, $this->mSearchUser );
 		$selectFields['abusefilter-test-period-start'] =
 			Xml::input( 'wpSearchPeriodStart', 45, $this->mSearchPeriodStart );
@@ -38,12 +39,12 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 			Xml::input( 'wpSearchPeriodEnd', 45, $this->mSearchPeriodEnd );
 
 		$selector .= Xml::buildForm( $selectFields, 'abusefilter-examine-submit' );
-		$selector .= Xml::hidden( 'submit', 1 );
-		$selector .= Xml::hidden( 'title', $this->getTitle( 'examine' )->getPrefixedText() );
+		$selector .= Html::hidden( 'submit', 1 );
+		$selector .= Html::hidden( 'title', $this->getTitle( 'examine' )->getPrefixedText() );
 		$selector = Xml::tags( 'form',
 			array(
 				'action' => $this->getTitle( 'examine' )->getLocalURL(),
-				'method' => 'GET'
+				'method' => 'get'
 			),
 			$selector
 		);
@@ -51,7 +52,7 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 			wfMsg( 'abusefilter-examine-legend' ),
 			$selector
 		);
-		$wgOut->addHTML( $selector );
+		$this->getOutput()->addHTML( $selector );
 
 		if ( $this->mSubmit ) {
 			$this->showResults();
@@ -59,9 +60,7 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 	}
 
 	function showResults() {
-		global $wgUser, $wgOut;
-
-		$changesList = new AbuseFilterChangesList( $wgUser->getSkin() );
+		$changesList = new AbuseFilterChangesList( $this->getSkin() );
 		$output = $changesList->beginRecentChangesList();
 		$this->mCounter = 1;
 
@@ -73,20 +72,21 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 
 		$output .= $changesList->endRecentChangesList();
 
-		$wgOut->addHTML( $output );
+		$this->getOutput()->addHTML( $output );
 	}
 
 	function showExaminerForRC( $rcid ) {
-		global $wgOut;
-
 		// Get data
 		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'recentchanges', '*', array( 'rc_id' => $rcid ), __METHOD__ );
 
 		if ( !$row ) {
-			$wgOut->addWikiMsg( 'abusefilter-examine-notfound' );
+			$this->getOutput()->addWikiMsg( 'abusefilter-examine-notfound' );
 			return;
 		}
+
+		self::$examineType = 'rc';
+		self::$examineId = $rcid;
 
 		$vars = AbuseFilter::getVarsFromRCRow( $row );
 
@@ -94,14 +94,25 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 	}
 
 	function showExaminerForLogEntry( $logid ) {
-		global $wgOut;
-
 		// Get data
 		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'abuse_filter_log', '*', array( 'afl_id' => $logid ), __METHOD__ );
 
 		if ( !$row ) {
-			$wgOut->addWikiMsg( 'abusefilter-examine-notfound' );
+			$this->getOutput()->addWikiMsg( 'abusefilter-examine-notfound' );
+			return;
+		}
+
+		self::$examineType = 'log';
+		self::$examineId = $logid;
+
+		if ( !SpecialAbuseLog::canSeeDetails( $row->afl_filter ) ) {
+			$this->getOutput()->addWikiMsg( 'abusefilter-log-cannot-see-details' );
+			return;
+		}
+
+		if ( $row->afl_deleted && !SpecialAbuseLog::canSeeHidden() ) {
+			$this->getOutput()->addWikiMsg( 'abusefilter-log-details-hidden' );
 			return;
 		}
 
@@ -111,36 +122,23 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 	}
 
 	function showExaminer( $vars ) {
-		global $wgOut, $wgUser;
+		$output = $this->getOutput();
 
 		if ( !$vars ) {
-			$wgOut->addWikiMsg( 'abusefilter-examine-incompatible' );
+			$output->addWikiMsg( 'abusefilter-examine-incompatible' );
 			return;
 		}
 
-		if ( $vars instanceof AbuseFilterVariableHolder )
+		if ( $vars instanceof AbuseFilterVariableHolder ) {
 			$vars = $vars->exportAllVars();
+		}
 
-		$output = '';
+		$html = '';
 
-		// Send armoured as JSON -- I totally give up on trying to send it as a proper object.
-		$wgOut->addInlineScript( "var wgExamineVars = " .
-			Xml::encodeJsVar( json_encode( $vars ) ) . ";" );
-		$wgOut->addInlineScript( file_get_contents( dirname( __FILE__ ) . '/examine.js' ) );
-
-		// Add messages
-		$msg = array();
-		$msg['match'] = wfMsg( 'abusefilter-examine-match' );
-		$msg['nomatch'] = wfMsg( 'abusefilter-examine-nomatch' );
-		$msg['syntaxerror'] = wfMsg( 'abusefilter-examine-syntaxerror' );
-		$wgOut->addInlineScript(
-			"var wgMessageMatch = " . Xml::encodeJsVar( $msg['match'] ) . ";\n" .
-			"var wgMessageNomatch = " . Xml::encodeJsVar( $msg['nomatch'] ) . ";\n" .
-			"var wgMessageError = " . Xml::encodeJsVar( $msg['syntaxerror'] ) . ";\n"
-		);
+		$output->addModules( 'ext.abuseFilter.examine' );
 
 		// Add test bit
-		if ( $wgUser->isAllowed( 'abusefilter-modify' ) ) {
+		if ( $this->getUser()->isAllowed( 'abusefilter-modify' ) ) {
 			$tester = Xml::tags( 'h2', null, wfMsgExt( 'abusefilter-examine-test', 'parseinline' ) );
 			$tester .= AbuseFilter::buildEditBox( $this->mTestFilter, 'wpTestFilter', false );
 			$tester .=
@@ -152,7 +150,7 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 					10,
 					''
 				) .
-				'&nbsp;' .
+				'&#160;' .
 				Xml::element(
 					'input',
 					array(
@@ -161,8 +159,8 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 						'id' => 'mw-abusefilter-load'
 					)
 				);
-			$output .= Xml::tags( 'div', array( 'id' => 'mw-abusefilter-examine-editor' ), $tester );
-			$output .= Xml::tags( 'p',
+			$html .= Xml::tags( 'div', array( 'id' => 'mw-abusefilter-examine-editor' ), $tester );
+			$html .= Xml::tags( 'p',
 				null,
 				Xml::element( 'input',
 					array(
@@ -175,36 +173,37 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 					array(
 						'id' => 'mw-abusefilter-syntaxresult',
 						'style' => 'display: none;'
-					), '&nbsp;'
+					), '&#160;'
 				)
 			);
 		}
 
 		// Variable dump
-		$output .= Xml::tags( 'h2', null, wfMsgExt( 'abusefilter-examine-vars', 'parseinline' ) );
-		$output .= AbuseFilter::buildVarDumpTable( $vars );
+		$html .= Xml::tags( 'h2', null, wfMsgExt( 'abusefilter-examine-vars', 'parseinline' ) );
+		$html .= AbuseFilter::buildVarDumpTable( $vars );
 
-		$wgOut->addHTML( $output );
+		$output->addHTML( $html );
 	}
 
 	function loadParameters() {
-		global $wgRequest;
-		$searchUsername = $wgRequest->getText( 'wpSearchUser' );
-		$this->mSearchPeriodStart = $wgRequest->getText( 'wpSearchPeriodStart' );
-		$this->mSearchPeriodEnd = $wgRequest->getText( 'wpSearchPeriodEnd' );
-		$this->mSubmit = $wgRequest->getCheck( 'submit' );
-		$this->mTestFilter = $wgRequest->getText( 'testfilter' );
+		$request = $this->getRequest();
+		$searchUsername = $request->getText( 'wpSearchUser' );
+		$this->mSearchPeriodStart = $request->getText( 'wpSearchPeriodStart' );
+		$this->mSearchPeriodEnd = $request->getText( 'wpSearchPeriodEnd' );
+		$this->mSubmit = $request->getCheck( 'submit' );
+		$this->mTestFilter = $request->getText( 'testfilter' );
 
 		// Normalise username
 		$userTitle = Title::newFromText( $searchUsername );
 
-		if ( $userTitle && $userTitle->getNamespace() == NS_USER )
+		if ( $userTitle && $userTitle->getNamespace() == NS_USER ) {
 			$this->mSearchUser = $userTitle->getText(); // Allow User:Blah syntax.
-		elseif ( $userTitle )
+		} elseif ( $userTitle ) {
 			// Not sure of the value of prefixedText over text, but no need to munge unnecessarily.
 			$this->mSearchUser = $userTitle->getPrefixedText();
-		else
+		} else {
 			$this->mSearchUser = '';
+		}
 	}
 }
 
@@ -218,10 +217,12 @@ class AbuseFilterExaminePager extends ReverseChronologicalPager {
 	function getQueryInfo() {
 		$dbr = wfGetDB( DB_SLAVE );
 		$conds = array( 'rc_user_text' => $this->mPage->mSearchUser );
-		if ( $startTS = strtotime( $this->mPage->mSearchPeriodStart ) ) {
+		$startTS = strtotime( $this->mPage->mSearchPeriodStart );
+		if ( $startTS ) {
 			$conds[] = 'rc_timestamp>=' . $dbr->addQuotes( $dbr->timestamp( $startTS ) );
 		}
-		if ( $endTS = strtotime( $this->mPage->mSearchPeriodEnd ) ) {
+		$endTS = strtotime( $this->mPage->mSearchPeriodEnd );
+		if ( $endTS ) {
 			$conds[] = 'rc_timestamp<=' . $dbr->addQuotes( $dbr->timestamp( $endTS ) );
 		}
 

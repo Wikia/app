@@ -13,12 +13,13 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'SiteMatrix',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:SiteMatrix',
-	'description'    => 'Displays a list of Wikimedia wikis',
+	'author'         => array( 'Tim Starling', 'Brion Vibber', 'Victor Vasiliev', 'Alexandre Emsenhuber' ),
+	'version'        => '1.1',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:SiteMatrix',
 	'descriptionmsg' => 'sitematrix-desc',
 );
 
-$wgSiteMatrixFile = '/apache/common/langlist';
+$wgSiteMatrixFile = null;
 $wgSiteMatrixSites = array(
 	'wiki' => array(
 		'name' => 'Wikipedia',
@@ -56,16 +57,21 @@ $wgSiteMatrixSites = array(
 		'prefix' => 'v',
 	)
 );
+$wgSiteMatrixPrivateSites = null;
+$wgSiteMatrixFishbowlSites = null;
+$wgSiteMatrixClosedSites = null;
 
 $dir = dirname(__FILE__) . '/';
 
 $wgExtensionMessagesFiles['SiteMatrix'] = $dir . 'SiteMatrix.i18n.php';
-$wgExtensionAliasesFiles['SiteMatrix'] = $dir . 'SiteMatrix.alias.php';
+$wgExtensionMessagesFiles['SiteMatrixAlias'] = $dir . 'SiteMatrix.alias.php';
 
+$wgAutoloadClasses['SiteMatrix'] = $dir . 'SiteMatrix_body.php';
 $wgAutoloadClasses['SiteMatrixPage'] = $dir . 'SiteMatrix_body.php';
 $wgSpecialPages['SiteMatrix'] = 'SiteMatrixPage';
 $wgSpecialPageGroups['SiteMatrix'] = 'wiki';
 
-$wgAutoloadClasses['ApiQuerySiteMatrix'] = $dir . 'SiteMatrix_body.php';
+$wgAutoloadClasses['ApiQuerySiteMatrix'] = $dir . 'SiteMatrixApi.php';
 $wgAPIModules['sitematrix'] = 'ApiQuerySiteMatrix';
 
+$wgHooks['APIQuerySiteInfoGeneralInfo'][] = 'SiteMatrix::APIQuerySiteInfoGeneralInfo';

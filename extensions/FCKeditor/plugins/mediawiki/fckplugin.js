@@ -177,7 +177,7 @@ FCKToolbarButton.prototype.Click = function(){
 				oDoc.FCKeditorInsertTags( '\'\'', '\'\'', 'Italic text', document );
 				CMode = true;
 				break;
-			case 'Underline': 
+			case 'Underline':
 				oDoc.FCKeditorInsertTags( '<u>', '</u>', 'Underlined text', document );
 				CMode = true;
 				break;
@@ -201,7 +201,7 @@ FCK.DataProcessor = {
 	_inPre : false,
 	_inLSpace : false,
 
-	/*
+	/**
 	 * Returns a string representing the HTML format of "data". The returned
 	 * value will be loaded in the editor.
 	 * The HTML must be from <html> to </html>, eventually including
@@ -214,7 +214,7 @@ FCK.DataProcessor = {
 		return FCKDataProcessor.prototype.ConvertToHtml.call( this, data );
 	},
 
-	/*
+	/**
 	 * Converts a DOM (sub-)tree to a string in the data format.
 	 *     @param {Object} rootNode The node that contains the DOM tree to be
 	 *            converted to the data format.
@@ -235,7 +235,7 @@ FCK.DataProcessor = {
 		return stringBuilder.join( '' ).RTrim().replace(/^\n*/, "");
 	},
 
-	/*
+	/**
 	 * Makes any necessary changes to a piece of HTML for insertion in the
 	 * editor selection position.
 	 *     @param {String} html The HTML to be fixed.

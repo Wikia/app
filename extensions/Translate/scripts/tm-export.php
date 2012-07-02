@@ -4,7 +4,7 @@
  *
  * @author Niklas Laxstrom
  *
- * @copyright Copyright © 2010, Niklas Laxström
+ * @copyright Copyright © 2010-2011, Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @file
  */
@@ -48,7 +48,8 @@ class TMExport extends Maintenance {
 			$capitalized = MWNamespace::isCapitalized( $group->getNamespace() );
 			$ns_text = $wgContLang->getNsText( $group->getNamespace() );
 
-			foreach ( $group->load( 'en' ) as $key => $definition ) {
+			$definitions = $group->load( $group->getSourceLanguage() );
+			foreach ( $definitions as $key => $definition ) {
 				// TODO: would be nice to do key normalisation closer to the message groups, to avoid transforming back and forth.
 				// But how to preserve the original keys...
 				$key = strtr( $key, ' ', '_' );
@@ -75,7 +76,7 @@ class TMExport extends Maintenance {
 					'text' => $definition,
 					'context' => "$ns_text:$key",
 					'length' => strlen( $definition ),
-					'lang' => 'en'
+					'lang' => $group->getSourceLanguage(),
 				);
 
 				$source_id = $dbw->selectField( '`sources`', 'sid', $insert, __METHOD__ );

@@ -50,7 +50,7 @@ class SecurePoll_DetailsPage extends SecurePoll_Page {
 			'securepoll-details-title', $this->voteId ) );
 
 		$wgOut->addHTML(
-			'<table class="TablePager">' .
+			'<table class="mw-datatable TablePager">' .
 			$this->detailEntry( 'securepoll-header-id', $row->vote_id ) .
 			$this->detailEntry( 'securepoll-header-timestamp', $row->vote_timestamp ) .
 			$this->detailEntry( 'securepoll-header-voter-name', $row->voter_name ) .
@@ -66,7 +66,7 @@ class SecurePoll_DetailsPage extends SecurePoll_Page {
 
 		# Show voter properties
 		$wgOut->addHTML( '<h2>' . wfMsgHTML( 'securepoll-voter-properties' ) . "</h2>\n" );
-		$wgOut->addHTML( '<table class="TablePager">' );
+		$wgOut->addHTML( '<table class="mw-datatable TablePager">' );
 		$props = SecurePoll_Voter::decodeProperties( $row->voter_properties );
 		foreach ( $props as $name => $value ) {
 			if ( is_array( $value ) ) {
@@ -89,7 +89,7 @@ class SecurePoll_DetailsPage extends SecurePoll_Page {
 		$res = $db->query( $sql, __METHOD__ );
 		if ( $res->numRows() ) {
 			$wgOut->addHTML( '<h2>' . wfMsgHTML( 'securepoll-cookie-dup-list' ) . '</h2>' );
-			$wgOut->addHTML( '<table class="TablePager">' );
+			$wgOut->addHTML( '<table class="mw-datatable TablePager">' );
 			foreach ( $res as $row ) {
 				$voter = $this->context->getVoter( $row->voter );
 				$wgOut->addHTML(

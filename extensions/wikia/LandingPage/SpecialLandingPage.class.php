@@ -7,7 +7,6 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 	
 	
 	function __construct() {
-		wfLoadExtensionMessages('LandingPage');
 		parent::__construct('LandingPage');
 	}
 
@@ -59,7 +58,17 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 			'languageLinks' => $languageLinks,
 			'wgBlankImgUrl' => $wgBlankImgUrl,
 			'wgTitle' => $wgTitle,
-			'landingPageLinks' => $landingPageLinks
+			'landingPageLinks' => $landingPageLinks,
+			'landingPageSearch' => F::app()->getView(
+				"SearchController",
+				"Index",
+				array (
+					"placeholder" => "Search Wikia",
+					"fulltext" => "0",
+					"wgBlankImgUrl" => $wgBlankImgUrl,
+					"wgTitle" => $wgTitle
+				)
+			)
 		));
 
 		$wgOut->addHTML($template->render('main'));

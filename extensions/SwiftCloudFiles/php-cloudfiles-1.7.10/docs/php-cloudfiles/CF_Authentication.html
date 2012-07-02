@@ -1,0 +1,619 @@
+<html>
+<head>
+<title>Docs For Class CF_Authentication</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">php-cloudfiles</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                    
+                                                                      		  [ <a href="../classtrees_php-cloudfiles.html" class="menu">class tree: php-cloudfiles</a> ]
+		  [ <a href="../elementindex_php-cloudfiles.html" class="menu">index: php-cloudfiles</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+	<div id="ric">
+					<p><a href="../ric_README.html">README</a></p>
+					<p><a href="../ric_Changelog.html">Changelog</a></p>
+					<p><a href="../ric_AUTHORS.html">AUTHORS</a></p>
+					<p><a href="../ric_COPYING.html">COPYING</a></p>
+			</div>
+      <b>Packages:</b><br />
+              <a href="../li_php-cloudfiles.html">php-cloudfiles</a><br />
+              <a href="../li_php-cloudfiles-exceptions.html">php-cloudfiles-exceptions</a><br />
+              <a href="../li_php-cloudfiles-http.html">php-cloudfiles-http</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="../php-cloudfiles/_cloudfiles.php.html">		cloudfiles.php
+		</a><br>
+	  </div><br />
+      
+      
+            <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../php-cloudfiles/CF_Authentication.html">CF_Authentication</a><br />
+	    		<a href="../php-cloudfiles/CF_Connection.html">CF_Connection</a><br />
+	    		<a href="../php-cloudfiles/CF_Container.html">CF_Container</a><br />
+	    		<a href="../php-cloudfiles/CF_Object.html">CF_Object</a><br />
+	  </div>
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Class: CF_Authentication</h1>
+Source Location: /cloudfiles.php<br /><br />
+
+
+<table width="100%" border="0">
+<tr><td valign="top">
+
+<h3><a href="#class_details">Class Overview</a></h3>
+<pre></pre><br />
+<div class="description">Class for handling Cloud Files Authentication, call it's <a href="../php-cloudfiles-http/CF_Http.html#methodauthenticate">authenticate()</a>  method to obtain authorized service urls and an authentication token.</div><br /><br />
+
+
+
+
+
+
+        
+</td>
+
+<td valign="top">
+<h3><a href="#class_vars">Variables</a></h3>
+<ul>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#var$account">$account</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#var$api_key">$api_key</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#var$auth_host">$auth_host</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#var$auth_token">$auth_token</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#var$cdnm_url">$cdnm_url</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#var$dbug">$dbug</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#var$storage_url">$storage_url</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#var$username">$username</a></li>
+  </ul>
+</td>
+
+
+<td valign="top">
+<h3><a href="#class_methods">Methods</a></h3>
+<ul>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#method__construct">__construct</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#methodauthenticate">authenticate</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#methodauthenticated">authenticated</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#methodexport_credentials">export_credentials</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#methodload_cached_credentials">load_cached_credentials</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#methodsetDebug">setDebug</a></li>
+    <li><a href="../php-cloudfiles/CF_Authentication.html#methodssl_use_cabundle">ssl_use_cabundle</a></li>
+  </ul>
+</td>
+
+</tr></table>
+<hr />
+
+<table width="100%" border="0"><tr>
+
+
+
+
+
+
+</tr></table>
+<hr />
+
+<a name="class_details"></a>
+<h3>Class Details</h3>
+<div class="tags">
+[line 114]<br />
+Class for handling Cloud Files Authentication, call it's <a href="../php-cloudfiles-http/CF_Http.html#methodauthenticate">authenticate()</a>  method to obtain authorized service urls and an authentication token.<br /><br /><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Create&nbsp;the&nbsp;authentication&nbsp;instance</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$auth&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../php-cloudfiles/CF_Authentication.html">CF_Authentication</a></span><span class="src-sym">(</span><span class="src-str">&quot;username&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;api_key&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;NOTE:&nbsp;For&nbsp;UK&nbsp;Customers&nbsp;please&nbsp;specify&nbsp;your&nbsp;AuthURL&nbsp;Manually</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;There&nbsp;is&nbsp;a&nbsp;Predfined&nbsp;constant&nbsp;to&nbsp;use&nbsp;EX:</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;$auth&nbsp;=&nbsp;new&nbsp;CF_Authentication(&quot;username,&nbsp;&quot;api_key&quot;,&nbsp;NULL,&nbsp;UK_AUTHURL);</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Using&nbsp;the&nbsp;UK_AUTHURL&nbsp;keyword&nbsp;will&nbsp;force&nbsp;the&nbsp;api&nbsp;to&nbsp;use&nbsp;the&nbsp;UK&nbsp;AuthUrl.</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;rather&nbsp;then&nbsp;the&nbsp;US&nbsp;one.&nbsp;The&nbsp;NULL&nbsp;Is&nbsp;passed&nbsp;for&nbsp;legacy&nbsp;purposes&nbsp;and&nbsp;must</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;be&nbsp;passed&nbsp;to&nbsp;function&nbsp;correctly.</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;NOTE:&nbsp;Some&nbsp;versions&nbsp;of&nbsp;cURL&nbsp;include&nbsp;an&nbsp;outdated&nbsp;certificate&nbsp;authority&nbsp;(CA)</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file.&nbsp;&nbsp;This&nbsp;API&nbsp;ships&nbsp;with&nbsp;a&nbsp;newer&nbsp;version&nbsp;obtained&nbsp;directly&nbsp;from</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cURL's&nbsp;web&nbsp;site&nbsp;(http://curl.haxx.se).&nbsp;&nbsp;To&nbsp;use&nbsp;the&nbsp;newer&nbsp;CA&nbsp;bundle,</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;the&nbsp;CF_Authentication&nbsp;instance's&nbsp;'ssl_use_cabundle()'&nbsp;method.</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;$auth-&gt;ssl_use_cabundle();&nbsp;#&nbsp;bypass&nbsp;cURL's&nbsp;old&nbsp;CA&nbsp;bundle</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Perform&nbsp;authentication&nbsp;request</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$auth</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Authentication.html#methodauthenticate">authenticate</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><br /></div><br /><br />
+<div class="top">[ <a href="#top">Top</a> ]</div><br />
+
+<hr />
+<a name="class_vars"></a>
+<h3>Class Variables</h3>
+<div class="tags">
+	<a name="var$account"></a>
+	<p></p>
+	<h4>$account = <span class="value"></span></h4>
+	<p>[line 120]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$api_key"></a>
+	<p></p>
+	<h4>$api_key = <span class="value"></span></h4>
+	<p>[line 118]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$auth_host"></a>
+	<p></p>
+	<h4>$auth_host = <span class="value"></span></h4>
+	<p>[line 119]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$auth_token"></a>
+	<p></p>
+	<h4>$auth_token = <span class="value"></span></h4>
+	<p>[line 127]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$cdnm_url"></a>
+	<p></p>
+	<h4>$cdnm_url = <span class="value"></span></h4>
+	<p>[line 126]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$dbug"></a>
+	<p></p>
+	<h4>$dbug = <span class="value"></span></h4>
+	<p>[line 116]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$storage_url"></a>
+	<p></p>
+	<h4>$storage_url = <span class="value"></span></h4>
+	<p>[line 125]</p>
+  Instance variables that are set after successful authentication<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$username"></a>
+	<p></p>
+	<h4>$username = <span class="value"></span></h4>
+	<p>[line 117]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+</div><br />
+
+<hr />
+<a name="class_methods"></a>
+<h3>Class Methods</h3>
+<div class="tags">
+
+  <hr />
+	<a name="method__construct"></a>
+	<h3>constructor __construct <span class="smalllinenumber">[line 137]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>CF_Authentication __construct(
+[string
+$username = NULL], [string
+$api_key = NULL], [string
+$account = NULL], [string
+$auth_host = US_AUTHURL])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Class constructor (PHP 5 syntax)<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$username</b>&nbsp;&nbsp;</td>
+        <td>Mosso username</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$api_key</b>&nbsp;&nbsp;</td>
+        <td>Mosso API Access Key</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$account</b>&nbsp;&nbsp;</td>
+        <td><em>Account name</em></td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$auth_host</b>&nbsp;&nbsp;</td>
+        <td><em>Authentication service URI</em></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodauthenticate"></a>
+	<h3>method authenticate <span class="smalllinenumber">[line 202]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean authenticate(
+[string
+$version = DEFAULT_CF_API_VERSION])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Attempt to validate Username/API Access Key<br /><br /><p>Attempts to validate credentials with the authentication service.  It  either returns <kbd>True</kbd> or throws an Exception.  Accepts a single  (optional) argument for the storage system API version.</p><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Create&nbsp;the&nbsp;authentication&nbsp;instance</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$auth&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../php-cloudfiles/CF_Authentication.html">CF_Authentication</a></span><span class="src-sym">(</span><span class="src-str">&quot;username&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;api_key&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Perform&nbsp;authentication&nbsp;request</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$auth</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Authentication.html#methodauthenticate">authenticate</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td><kbd>True</kbd> if successfully authenticated</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>AuthenticationException invalid credentials</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>InvalidResponseException invalid response</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$version</b>&nbsp;&nbsp;</td>
+        <td>API version for Auth service (optional)</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodauthenticated"></a>
+	<h3>method authenticated <span class="smalllinenumber">[line 292]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean authenticated(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Make sure the CF_Authentication instance has authenticated.<br /><br /><p>Ensures that the instance variables necessary to communicate with  Cloud Files have been set from a previous authenticate() call.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td><kbd>True</kbd> if successfully authenticated</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodexport_credentials"></a>
+	<h3>method export_credentials <span class="smalllinenumber">[line 273]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array export_credentials(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Grab Cloud Files info to be Cached for later use with the load_cached_credentials method.<br /><br /><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#Create&nbsp;an&nbsp;Auth&nbsp;instance</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$auth&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../php-cloudfiles/CF_Authentication.html">CF_Authentication</a></span><span class="src-sym">(</span><span class="src-str">&quot;UserName&quot;</span><span class="src-sym">,</span><span class="src-str">&quot;API_Key&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$auth</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Authentication.html#methodauthenticate">authenticate</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$array&nbsp;</span>=&nbsp;<span class="src-var">$auth</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Authentication.html#methodexport_credentials">export_credentials</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>of url's and an auth token.</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodload_cached_credentials"></a>
+	<h3>method load_cached_credentials <span class="smalllinenumber">[line 242]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean load_cached_credentials(
+string
+$auth_token, string
+$storage_url, string
+$cdnm_url)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Use Cached Token and Storage URL's rather then grabbing from the Auth System<br /><br /><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#Create&nbsp;an&nbsp;Auth&nbsp;instance</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$auth&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../php-cloudfiles/CF_Authentication.html">CF_Authentication</a></span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#Pass&nbsp;Cached&nbsp;URL's&nbsp;and&nbsp;Token&nbsp;as&nbsp;Args</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$auth</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Authentication.html#methodload_cached_credentials">load_cached_credentials</a><span class="src-sym">(</span><span class="src-str">&quot;auth_token&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;storage_url&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;cdn_management_url&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td><kbd>True</kbd> if successful</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>SyntaxException If any of the Required Arguments are missing</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$auth_token</b>&nbsp;&nbsp;</td>
+        <td>A Cloud Files Auth Token (Required)</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$storage_url</b>&nbsp;&nbsp;</td>
+        <td>The Cloud Files Storage URL (Required)</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$cdnm_url</b>&nbsp;&nbsp;</td>
+        <td>CDN Management URL (Required)</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsetDebug"></a>
+	<h3>method setDebug <span class="smalllinenumber">[line 303]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void setDebug(
+
+$bool)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Toggle debugging - set cURL verbose flag<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$bool</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodssl_use_cabundle"></a>
+	<h3>method ssl_use_cabundle <span class="smalllinenumber">[line 174]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void ssl_use_cabundle(
+[string
+$path = NULL])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Use the Certificate Authority bundle included with this API<br /><br /><p>Most versions of PHP with cURL support include an outdated Certificate  Authority (CA) bundle (the file that lists all valid certificate  signing authorities).  The SSL certificates used by the Cloud Files  storage system are perfectly valid but have been created/signed by  a CA not listed in these outdated cURL distributions.</p><p>As a work-around, we've included an updated CA bundle obtained  directly from cURL's web site (http://curl.haxx.se).  You can direct  the API to use this CA bundle by calling this method prior to making  any remote calls.  The best place to use this method is right after  the CF_Authentication instance has been instantiated.</p><p>You can specify your own CA bundle by passing in the full pathname  to the bundle.  You can use the included CA bundle by leaving the  argument blank.</p><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$path</b>&nbsp;&nbsp;</td>
+        <td>Specify path to CA bundle (default to included)</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+</div><br />
+
+
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Wed, 07 Sep 2011 15:19:54 -0500 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

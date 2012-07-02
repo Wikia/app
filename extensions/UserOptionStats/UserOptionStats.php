@@ -16,7 +16,8 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  * - height 'Height of the image' 200..1000
  * - shading 'Shading of the pie' 0..1000
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @author Niklas Laxström
  * @copyright Copyright © 2009, Niklas Laxström
@@ -26,16 +27,15 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'User Option Statistics',
-	'version'        => '1.0',
+	'version'        => '1.1',
 	'author'         => 'Niklas Laxström',
-	'description'    => '[[Special:UserOptionStats|Special page]] for reporting on Mediawiki user option usage',
 	'descriptionmsg' => 'useroptionstats-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:UserOptionStats',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:UserOptionStats',
 );
 
 $dir = dirname( __FILE__ );
 $wgAutoloadClasses['SpecialUserOptionStats'] = "$dir/SpecialUserOptionStats.php";
 $wgExtensionMessagesFiles['UserOptionStats'] = "$dir/UserOptionStats.i18n.php";
-$wgExtensionAliasesFiles['UserOptionStats'] = "$dir/UserOptionStats.alias.php";
+$wgExtensionMessagesFiles['UserOptionStatsAlias'] = "$dir/UserOptionStats.alias.php";
 $wgSpecialPages['UserOptionStats'] = 'SpecialUserOptionStats';
 $wgSpecialPageGroups['UserOptionStats'] = 'wiki';

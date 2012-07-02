@@ -373,7 +373,7 @@ class svgGraph {
   * Define static variables used in the class.
   * @returns void
   */
-  function svgGraph() {
+  function __construct() {
 	if( !defined("DECIMAL_POINT") )
 		define("DECIMAL_POINT", ".");
 	if( !defined("THOUSANDS_SEPARATOR") )
@@ -403,7 +403,7 @@ class svgGraph {
 
      // find range of all y values
     $allDataY = array();
-    foreach ($this->dataY as $i => $dataY) $allDataY = array_merge($allDataY, $dataY);
+    foreach ($this->dataY as $dataY) $allDataY = array_merge($allDataY, $dataY);
     $this->allDataY = $allDataY;
     $data = $this->_findRange($allDataY, $this->minY, $this->maxY, $this->resolutionY);
     $this->dataMinY = $data['min'];
@@ -594,8 +594,6 @@ class svgGraph {
 
     $this->svgPlot .= "<g style='{$this->stylePolylineDefault}{$this->format[$whichDataSet]['style']}'>\n";
     $this->svgPlot .= "<polyline $attributes ";
-    $u = 0;
-    $v = 0;
     foreach ($this->dataX as $i => $x) {
       $y = $this->dataY[$whichDataSet][$i];
       $u = $this->deltaTicksX * ($i +  $this->offsetGridlinesX);
@@ -604,8 +602,6 @@ class svgGraph {
       $v = ($this->plotHeight - $v) - 1;
       if ($i==0) $this->svgPlot .= "points='$u,$v";
       else  $this->svgPlot .= " $u,$v ";
-      $oldU = $u;
-      $oldV = $v;
     }
     $this->svgPlot .= "'/>\n</g>\n";
     return TRUE;
@@ -630,8 +626,7 @@ class svgGraph {
     $attributes = empty($this->format[$whichDataSet]['attributes']) ?
                   '' : $this->format[$whichDataSet]['attributes'];
     $this->svgPlot .= "<g style='{$this->styleLineDefault}{$this->format[$whichDataSet]['style']}'>\n";
-    $u = 0;
-    $v = 0;
+
     foreach ($this->dataX as $i => $x) {
       $y = $this->dataY[$whichDataSet][$i];
       $u = $this->deltaTicksX * ($i +  $this->offsetGridlinesX);
@@ -672,8 +667,7 @@ class svgGraph {
     $this->svgPlot .= "<g style='{$this->styleBarDefault}{$this->format[$whichDataSet]['style']}'>\n";
     $barWidth = $this->format[$whichDataSet]['barWidth'] * $this->deltaTicksX;
     $barOffset = $this->format[$whichDataSet]['barOffset'] * $barWidth;
-    $u = 0;
-    $v = 0;
+
     foreach ($this->dataX as $i => $x) {
       $y = $this->dataY[$whichDataSet][$i];
       $u = $this->deltaTicksX * ($i + $this->offsetGridlinesX) - ($barWidth / 2) + $barOffset;
@@ -704,7 +698,7 @@ class svgGraph {
   */
   function _findRange($data, $min, $max, $resolution) {
     if (sizeof($data) == 0 ) return array('min' => 0, 'max' => 0);
-    foreach ($data as $key => $value) {
+    foreach ($data as $value) {
       if ($value=='none') continue;
       if ($value > $max) $max = $value;
       if ($value < $min) $min = $value;

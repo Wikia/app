@@ -6,9 +6,9 @@
 if ( !defined('MEDIAWIKI') ) {
         die( '' );
 }
- 
+
 class InterwikiList extends SpecialPage {
-	
+
 	// Privates
 	private $mTitle; // The title for this specialpage
 
@@ -16,10 +16,10 @@ class InterwikiList extends SpecialPage {
 	* Constructor
 	*/
 	public function InterwikiList() {
-		SpecialPage::SpecialPage("InterwikiList");
-		wfLoadExtensionMessages('InterwikiList');
+		parent::__construct("InterwikiList");
+
 	}
-	
+
 	/**
 	 * Execute
 	 */
@@ -30,8 +30,8 @@ class InterwikiList extends SpecialPage {
 		$prefix = $wgRequest->getText( 'iwsearch', $par );
 		$wgOut->addHTML( $this->getInterwikis( $prefix ) );
 	}
-	
-	/** 
+
+	/**
 	* Get all Interwiki Links - the heart of the function
 	* @param $prefix string Prefix to search for in list
 	* @return string HTML
@@ -42,27 +42,27 @@ class InterwikiList extends SpecialPage {
 
 		$conds = array();
 		if ( !is_null( $prefix ) ) {
-			$conds[] = "iw_prefix LIKE " . $dbr->addQuotes( $dbr->escapeLike( $prefix ) . "%" );
+			$conds[] = "iw_prefix " . $dbr->buildLike( $prefix, $dbr->anyString() );
 		}
 
 		$results = $dbr->select( 'interwiki', array( 'iw_prefix', 'iw_url' ), $conds );
 
 		$form = Xml::openElement( 'form', array( 'action' => $wgScript, 'method' => 'get', 'id' => 'interwikilist-search' ) ) .
-				Xml::hidden( 'title', $this->mTitle->getPrefixedText() ) .
+				Html::Hidden( 'title', $this->mTitle->getPrefixedText() ) .
 				Xml::inputLabel( wfMsg('interwikilist-prefix'), 'iwsearch', 'interwikilist-prefix', false, $prefix  ) .
 				Xml::submitButton( wfMsg('search') ) .
 				Xml::closeElement( 'form' );
 		$text = Xml::fieldSet( wfMsg('interwikilist-filter'), $form );
 
 		$interwikiList = array();
-		while( $row = $dbr->fetchObject( $results ) ) {
+		foreach( $results as $row ) {
 			$interwikiList[ "mw-iwlist-" . $row->iw_prefix ] = array( $row->iw_prefix, $row->iw_url );
 		}
 		$dbr->freeResult( $results );
 
-		$text .= Xml::buildTable( $interwikiList, 
+		$text .= Xml::buildTable( $interwikiList,
 								 array( 'id' => 'sv-software' ),
-								 array( wfMsg( 'interwikilist-linkname'), 
+								 array( wfMsg( 'interwikilist-linkname'),
 										wfMsg( 'interwikilist-target' ) ) );
 		return $text;
 	}

@@ -10,8 +10,6 @@ class WikiTrust extends WikiTrustBase {
           ($wgRequest->getVal('action') != 'purge'))))
 	return true;
 
-    wfLoadExtensionMessages('WikiTrust');
-
     self::color_addFileRefs($out);
 
     $ctext_html = "<div id='text-button'><input type='button' name='ctext' value='getColoredText' onclick='startGetColoredText()'></div>";
@@ -267,5 +265,3 @@ class WikiTrust extends WikiTrustBase {
   }
 
 }    
-
-?>

@@ -68,10 +68,9 @@ $wgAjaxExportList[] = 'wfSajaxToggleFCKeditor';
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'FCKeditor',
-	'author' => array( 'Frederico Caldeira Knabben', 'Wiktor Walc', 'others', 'Jack Phoenix' ),
+	'author' => array( 'Frederico Caldeira Knabben', 'Wiktor Walc', 'Jack Phoenix', '...' ),
 	'version' => '1.0.1',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:FCKeditor_(Official)',
-	'description' => 'FCKeditor extension for editing wiki pages (WYSIWYG editor)',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:FCKeditor_(Official)',
 	'descriptionmsg' => 'fckeditor-desc',
 );
 
@@ -87,10 +86,18 @@ $wgAutoloadClasses['FCKeditor_MediaWiki'] = $dir . 'FCKeditor.body.php';
 
 // Path to internationalization file
 $wgExtensionMessagesFiles['FCKeditor'] = $dir . 'FCKeditor.i18n.php';
+$wgExtensionMessagesFiles['FCKeditorMagic'] = $dir . 'FCKeditor.i18n.magic.php';
 
 // Initialize FCKeditor and the MediaWiki extension
-$fckeditor = new FCKeditor('fake');
-$wgFCKEditorIsCompatible = $fckeditor->IsCompatible();
+// @fixme something like this should be delayed until it's actually time
+// to work with the editor or something.
+if (php_sapi_name() == 'cli') {
+	// Command line
+	$wgFCKEditorIsCompatible = false;
+} else {
+	$fckeditor = new FCKeditor('fake');
+	$wgFCKEditorIsCompatible = $fckeditor->IsCompatible();
+}
 
 $oFCKeditorExtension = new FCKeditor_MediaWiki();
 
@@ -101,7 +108,6 @@ $wgHooks['EditPage::showEditForm:fields'][]		= array( $oFCKeditorExtension, 'onE
 $wgHooks['EditPageBeforePreviewText'][]         = array( $oFCKeditorExtension, 'onEditPageBeforePreviewText' );
 $wgHooks['EditPagePreviewTextEnd'][]            = array( $oFCKeditorExtension, 'onEditPagePreviewTextEnd' );
 $wgHooks['CustomEditor'][]                      = array( $oFCKeditorExtension, 'onCustomEditor' );
-$wgHooks['LanguageGetMagic'][]					= 'FCKeditor_MediaWiki::onLanguageGetMagic';
 $wgHooks['ParserBeforeStrip'][]					= 'FCKeditor_MediaWiki::onParserBeforeStrip';
 $wgHooks['ParserBeforeInternalParse'][]			= 'FCKeditor_MediaWiki::onParserBeforeInternalParse';
 $wgHooks['EditPageBeforeConflictDiff'][]		= 'FCKeditor_MediaWiki::onEditPageBeforeConflictDiff';

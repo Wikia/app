@@ -5,8 +5,9 @@ if ( ! defined( 'MEDIAWIKI' ) )
 /**
  * Extension to provide customisable email notification of new user creation
  *
+ * @file
  * @author Rob Church <robchur@gmail.com>
- * @addtogroup Extensions
+ * @ingroup Extensions
  * @copyright © 2006 Rob Church
  * @license GNU General Public Licence 2.0 or later
  */
@@ -14,10 +15,9 @@ if ( ! defined( 'MEDIAWIKI' ) )
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name'           => 'New User Email Notification',
-	'version'        => '1.5.1',
+	'version'        => '1.5.2',
 	'author'         => 'Rob Church',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:New_User_Email_Notification',
-	'description'    => 'Sends email notification when user accounts are created',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:New_User_Email_Notification',
 	'descriptionmsg' => 'newusernotif-desc',
 );
 

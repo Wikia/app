@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for the Player extension
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
@@ -33,10 +34,11 @@ $messages['en'] = array(
  * @author Bennylin
  * @author Jon Harald Søby
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'player' => '{{Identical|Player}}',
-	'player-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'player-desc' => '{{desc}}',
 	'player-title' => '{{Identical|Player}}',
 	'player-playertitle' => '{{Identical|Player}}',
 	'player-file' => '{{Identical|Filename}}',
@@ -47,6 +49,14 @@ $messages['qqq'] = array(
 	'player-goto-player' => '{{Identical|Player}}',
 	'player-goto-page' => '{{Identical|Page}}',
 	'player-goto-file' => '{{Identical|File}}',
+);
+
+/** ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ (ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ)
+ * @author MooRePrabu
+ */
+$messages['saz'] = array(
+	'player-play' => 'ꢮꢮ꣄ꢙꢶ',
+	'player-clicktoplay' => '$1 ꢮꢮ꣄ꢙꢶ',
 );
 
 /** Afrikaans (Afrikaans)
@@ -80,10 +90,12 @@ $messages['am'] = array(
 );
 
 /** Aragonese (Aragonés)
+ * @author Juanpabl
  * @author Remember the dot
  */
 $messages['an'] = array(
 	'player-goto-page' => 'Pachina',
+	'player-goto-file' => 'fichero',
 );
 
 /** Arabic (العربية)
@@ -109,6 +121,9 @@ $messages['ar'] = array(
  * @author Basharh
  */
 $messages['arc'] = array(
+	'player-file' => 'ܫܡܐ ܕܠܦܦܐ',
+	'player-not-found' => 'ܠܦܦܐ ܠܐ ܐܫܟܚܬ',
+	'player-invalid-title' => 'ܟܘܢܝܐ ܠܐ ܬܪܝܨܐ',
 	'player-goto-page' => 'ܦܐܬܐ',
 	'player-goto-file' => 'ܠܦܦܐ',
 );
@@ -141,12 +156,22 @@ $messages['arz'] = array(
 
 /** Asturian (Asturianu)
  * @author Remember the dot
+ * @author Xuacu
  */
 $messages['ast'] = array(
-	'player-goto-file' => 'archivu',
+	'player-goto-file' => 'ficheru',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'player-file' => 'Fayl adı',
+	'player-goto-page' => 'Səhifə',
+	'player-goto-file' => 'fayl',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -175,6 +200,23 @@ $messages['bg'] = array(
 	'player-invalid-title' => 'невалидно заглавие',
 	'player-goto-page' => 'Страница',
 	'player-goto-file' => 'файл',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'player' => 'প্লেয়ার',
+	'player-title' => 'প্লেয়ার',
+	'player-playertitle' => 'প্লেয়ার: $1',
+	'player-file' => 'ফাইলের নাম',
+	'player-play' => 'চালানো হোক',
+	'player-not-allowed' => 'অগ্রহণযোগ্য ফরম্যাট',
+	'player-not-found' => 'ফাইল পাওয়া যায়নি',
+	'player-invalid-title' => 'ত্রুটিপূর্ণ শিরোনাম',
+	'player-goto-player' => 'প্লেয়ার',
+	'player-goto-page' => 'পাতা',
+	'player-goto-file' => 'ফাইল',
 );
 
 /** Breton (Brezhoneg)
@@ -227,9 +269,17 @@ $messages['ca'] = array(
 	'player-goto-file' => 'fitxer',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'player-file' => 'Хlуман цlе',
+);
+
 /** Czech (Česky)
  * @author Li-sung
  * @author Matěj Grabovský
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'player' => 'Přehrávač',
@@ -239,6 +289,12 @@ $messages['cs'] = array(
 	'player-file' => 'Název souboru',
 	'player-play' => 'Přehrát',
 	'player-not-allowed' => 'Nepovolený formát',
+	'player-not-found' => 'soubor nenalezen',
+	'player-invalid-title' => 'neplatný název',
+	'player-clicktoplay' => 'Přehrát $1',
+	'player-goto-player' => 'přehrávač',
+	'player-goto-page' => 'Stránka',
+	'player-goto-file' => 'soubor',
 );
 
 /** Danish (Dansk)
@@ -288,6 +344,11 @@ $messages['dsb'] = array(
 	'player-goto-player' => 'grajadło',
 	'player-goto-page' => 'Bok',
 	'player-goto-file' => 'dataja',
+);
+
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'player-goto-page' => 'Axa',
 );
 
 /** Greek (Ελληνικά)
@@ -353,13 +414,14 @@ $messages['es'] = array(
 );
 
 /** Estonian (Eesti)
+ * @author Pikne
  * @author Silvar
  */
 $messages['et'] = array(
 	'player-file' => 'Faili nimi',
 	'player-play' => 'Mängi',
 	'player-not-allowed' => 'mittelubatud vorming',
-	'player-not-found' => 'faili ei leidnud',
+	'player-not-found' => 'faili ei leidu',
 	'player-clicktoplay' => 'Mängi $1',
 	'player-goto-file' => 'fail',
 );
@@ -372,6 +434,15 @@ $messages['eu'] = array(
 	'player-file' => 'Fitxategiaren izena',
 	'player-goto-page' => 'Orria',
 	'player-goto-file' => 'fitxategia',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'player-file' => 'نام پرونده',
+	'player-goto-page' => 'صفحه',
+	'player-goto-file' => 'پرونده',
 );
 
 /** Finnish (Suomi)
@@ -397,18 +468,19 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'player' => 'Lecteur',
-	'player-desc' => 'Lecteur multimedia incorporé utilisant les plugiciels courants du navigateur ainsi qu’une [[Special:Player|page spéciale]]',
+	'player-desc' => 'Lecteur multimédia incorporé utilisant les plugiciels courants du navigateur ainsi qu’une [[Special:Player|page spéciale]]',
 	'player-title' => 'Lecteur',
 	'player-playertitle' => 'Lecteur : $1',
-	'player-file' => 'Nom de fichier',
-	'player-play' => 'Jouer',
+	'player-file' => 'Nom du fichier',
+	'player-play' => 'Lecture',
 	'player-not-allowed' => 'format non autorisé',
 	'player-not-found' => 'fichier introuvable',
 	'player-invalid-title' => 'titre non valide',
-	'player-clicktoplay' => 'Jouer $1',
+	'player-clicktoplay' => 'Lire $1',
 	'player-goto-player' => 'Lecteur',
 	'player-goto-page' => 'Page',
 	'player-goto-file' => 'fichier',
@@ -419,7 +491,16 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'player' => 'Liésor',
+	'player-title' => 'Liésor',
+	'player-playertitle' => 'Liésor : $1',
+	'player-file' => 'Nom du fichiér',
 	'player-play' => 'Jouyér',
+	'player-not-allowed' => 'format pas ôtorisâ',
+	'player-not-found' => 'fichiér entrovâblo',
+	'player-invalid-title' => 'titro envalido',
+	'player-clicktoplay' => 'Liére $1',
+	'player-goto-player' => 'liésor',
 	'player-goto-page' => 'Pâge',
 	'player-goto-file' => 'fichiér',
 );
@@ -502,6 +583,11 @@ $messages['gv'] = array(
 	'player-goto-file' => 'coadan',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'player-goto-page' => 'Shafi',
+);
+
 /** Hawaiian (Hawai`i)
  * @author Singularity
  */
@@ -550,9 +636,13 @@ $messages['hi'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dalibor Bosits
+ * @author Herr Mlinka
  */
 $messages['hr'] = array(
+	'player-not-found' => 'datoteka nije pronađena',
+	'player-invalid-title' => 'neispravan naslov',
 	'player-goto-page' => 'Stranica',
+	'player-goto-file' => 'datoteka',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -726,6 +816,7 @@ $messages['ka'] = array(
  * @author Chhorran
  * @author Lovekhmer
  * @author Thearith
+ * @author គីមស៊្រុន
  */
 $messages['km'] = array(
 	'player' => 'ឧបករណ៍លេង',
@@ -733,12 +824,20 @@ $messages['km'] = array(
 	'player-playertitle' => 'អ្នកលេង: $1',
 	'player-file' => 'ឈ្មោះឯកសារ',
 	'player-play' => 'លេង',
+	'player-not-allowed' => 'ទំរង់មិនអនុញ្ញាត',
 	'player-not-found' => 'ឯកសារមិនត្រូវបានរកឃើញទេ',
 	'player-invalid-title' => 'ចំណងជើងមិនត្រឹមត្រូវ',
 	'player-clicktoplay' => 'លេង $1',
 	'player-goto-player' => 'អ្នកលេង',
 	'player-goto-page' => 'ទំព័រ',
 	'player-goto-file' => 'ឯកសារ',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'player-goto-page' => 'ಪುಟ',
 );
 
 /** Korean (한국어)
@@ -757,7 +856,7 @@ $messages['krj'] = array(
 	'player-goto-file' => 'inayap',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -776,6 +875,13 @@ $messages['ksh'] = array(
 	'player-goto-file' => 'Datei',
 );
 
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'player-goto-page' => 'Rûpel',
+);
+
 /** Latin (Latina)
  * @author SPQRobin
  */
@@ -786,9 +892,22 @@ $messages['la'] = array(
 
 /** Ladino (Ladino)
  * @author Remember the dot
+ * @author Universal Life
  */
 $messages['lad'] = array(
-	'player-goto-file' => 'archivo',
+	'player' => 'Jugador',
+	'player-desc' => 'Reproduksión multimedia empotrada usando plugins de navigadores comunes, y una [[Special:Player|hoja especial]]',
+	'player-title' => 'Jugador',
+	'player-playertitle' => 'Jugador: $1',
+	'player-file' => 'Nombre de dosya',
+	'player-play' => 'Juga',
+	'player-not-allowed' => 'formato no permitido',
+	'player-not-found' => 'dosya que no se topó',
+	'player-invalid-title' => 'títůlo inválido',
+	'player-clicktoplay' => 'Juga $1',
+	'player-goto-player' => 'jugador',
+	'player-goto-page' => 'Hoja',
+	'player-goto-file' => 'dosya',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -827,17 +946,17 @@ $messages['mhr'] = array(
  * @author Brest
  */
 $messages['mk'] = array(
-	'player' => 'Преслушувач',
-	'player-desc' => 'Вметнат мултимедијален преслушувач кој користи обични додатоци од прелистувачот, и [[Special:Player|специјална страница]]',
-	'player-title' => 'Преслушувач',
-	'player-playertitle' => 'Преслушувач: $1',
-	'player-file' => 'Име на податотека',
+	'player' => 'Изведувач',
+	'player-desc' => 'Вметнат мултимедијален изведувач кој користи обични додатоци од прелистувачот, и [[Special:Player|специјална страница]]',
+	'player-title' => 'Изведувач',
+	'player-playertitle' => 'Изведувач: $1',
+	'player-file' => 'Име на податотеката',
 	'player-play' => 'Пушти',
 	'player-not-allowed' => 'недозволен формат',
 	'player-not-found' => 'податотеката не беше најдена',
 	'player-invalid-title' => 'лош наслов',
 	'player-clicktoplay' => 'Пушти ја $1',
-	'player-goto-player' => 'преслушувач',
+	'player-goto-player' => 'изведувач',
 	'player-goto-page' => 'Страница',
 	'player-goto-file' => 'податотека',
 );
@@ -846,38 +965,66 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'player' => 'പ്ലെയര്‍',
-	'player-title' => 'പ്ലെയര്‍',
-	'player-playertitle' => 'പ്ലെയര്‍: $1',
+	'player' => 'പ്ലെയർ',
+	'player-title' => 'പ്ലെയർ',
+	'player-playertitle' => 'പ്ലെയർ: $1',
 	'player-file' => 'പ്രമാണത്തിന്റെ പേര്',
-	'player-play' => 'പ്രവര്‍ത്തിപ്പിക്കുക',
-	'player-not-allowed' => 'അനുവദനീയമല്ലാത്ത ഫോര്‍മാറ്റ്',
+	'player-play' => 'പ്രവർത്തിപ്പിക്കുക',
+	'player-not-allowed' => 'അനുവദനീയമല്ലാത്ത ഫോർമാറ്റ്',
 	'player-not-found' => 'പ്രമാണം കണ്ടില്ല.',
-	'player-invalid-title' => 'അസാധുവായ ശീര്‍ഷകം',
-	'player-clicktoplay' => '$1 പ്രവര്‍ത്തിപ്പിക്കുക',
-	'player-goto-player' => 'പ്ലെയര്‍',
-	'player-goto-page' => 'താള്‍',
+	'player-invalid-title' => 'അസാധുവായ ശീർഷകം',
+	'player-clicktoplay' => '$1 പ്രവർത്തിപ്പിക്കുക',
+	'player-goto-player' => 'പ്ലെയർ',
+	'player-goto-page' => 'താൾ',
 	'player-goto-file' => 'പ്രമാണം',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'player-goto-page' => 'Хуудас',
+);
+
 /** Marathi (मराठी)
+ * @author Htt
+ * @author Kaajawa
  * @author Kaustubh
  * @author Mahitgar
  */
 $messages['mr'] = array(
-	'player' => 'प्लेयर',
+	'player' => 'चालक',
 	'player-desc' => 'सर्वसाधारण ब्राउझर प्लगीन वापरून संलग्न विविधमाध्यमे (मल्टीमीडिया), तसेच एक [[Special:Player|विशेष पान]]',
-	'player-title' => 'प्लेयर',
-	'player-playertitle' => 'प्लेयर: $1',
+	'player-title' => 'चालक',
+	'player-playertitle' => 'चालक: $1',
 	'player-file' => 'संचिका नाव',
 	'player-play' => 'चालू करा',
 	'player-not-allowed' => 'चुकीची रुपरेषा',
 	'player-not-found' => 'संचिका सापडली नाही',
 	'player-invalid-title' => 'चुकीचे शीर्षक',
 	'player-clicktoplay' => '$1 चालू करा',
-	'player-goto-player' => 'प्लेयर',
+	'player-goto-player' => 'चालक',
 	'player-goto-page' => 'पान',
 	'player-goto-file' => 'संचिका',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'player' => 'Pemain',
+	'player-desc' => 'Ciri pemainan media multimedia terbenam yang menggunakan pemalam pelayar yang umum, dan satu [[Special:Player|laman khas]]',
+	'player-title' => 'Pemain',
+	'player-playertitle' => 'Pemain: $1',
+	'player-file' => 'Nama fail',
+	'player-play' => 'Mainkan',
+	'player-not-allowed' => 'format tidak dibenarkan',
+	'player-not-found' => 'fail tidak dijumpai',
+	'player-invalid-title' => 'tajuk tidak sah',
+	'player-clicktoplay' => 'Mainkan $1',
+	'player-goto-player' => 'pemain',
+	'player-goto-page' => 'Laman',
+	'player-goto-file' => 'fail',
 );
 
 /** Maltese (Malti)
@@ -913,6 +1060,25 @@ $messages['nah'] = array(
 	'player-file' => 'Tlahcuilōlli ītōcā',
 	'player-goto-page' => 'Zāzanilli',
 	'player-goto-file' => 'tlahcuilōlli',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'player' => 'Avspiller',
+	'player-desc' => 'Inkludert multimediespiller med vanlige programtillegg for nettlesere og en [[Special:Player|spesialside]]',
+	'player-title' => 'Avspiller',
+	'player-playertitle' => 'Avspiller: $1',
+	'player-file' => 'Filnavn',
+	'player-play' => 'Spill av',
+	'player-not-allowed' => 'ikke tillatt format',
+	'player-not-found' => 'fil ikke funnet',
+	'player-invalid-title' => 'ugyldig tittel',
+	'player-clicktoplay' => 'Spill av $1',
+	'player-goto-player' => 'avspiller',
+	'player-goto-page' => 'Side',
+	'player-goto-file' => 'fil',
 );
 
 /** Dutch (Nederlands)
@@ -954,25 +1120,6 @@ $messages['nn'] = array(
 	'player-goto-file' => 'fil',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'player' => 'Avspiller',
-	'player-desc' => 'Inkludert multimediespiller med vanlige programtillegg for nettlesere og en [[Special:Player|spesialside]]',
-	'player-title' => 'Avspiller',
-	'player-playertitle' => 'Avspiller: $1',
-	'player-file' => 'Filnavn',
-	'player-play' => 'Spill av',
-	'player-not-allowed' => 'ikke tillatt format',
-	'player-not-found' => 'fil ikke funnet',
-	'player-invalid-title' => 'ugyldig tittel',
-	'player-clicktoplay' => 'Spill av $1',
-	'player-goto-player' => 'avspiller',
-	'player-goto-page' => 'Side',
-	'player-goto-file' => 'fil',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -992,7 +1139,7 @@ $messages['oc'] = array(
 	'player-goto-file' => 'fichièr',
 );
 
-/** Ossetic (Иронау)
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -1004,6 +1151,7 @@ $messages['os'] = array(
  */
 $messages['pdc'] = array(
 	'player-goto-page' => 'Blatt',
+	'player-goto-file' => 'Feil',
 );
 
 /** Polish (Polski)
@@ -1070,7 +1218,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'player' => 'Reprodutor',
-	'player-desc' => "Reprodução multimédia incorporada usando ''plugins'' comuns do navegador, e uma [[Special:Player|página especial]]",
+	'player-desc' => "Reprodução multimédia incorporada usando ''plugins'' comuns do browser, e uma [[Special:Player|página especial]]",
 	'player-title' => 'Reprodutor',
 	'player-playertitle' => 'Reprodutor: $1',
 	'player-file' => 'Nome do ficheiro',
@@ -1106,20 +1254,22 @@ $messages['pt-br'] = array(
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Minisarm
  */
 $messages['ro'] = array(
 	'player' => 'Jucător',
+	'player-desc' => 'Redare multimedia încorporată utilizând pluginurile comune ale navigatoarelor și o [[Special:Player|pagină specială]]',
 	'player-title' => 'Jucător',
 	'player-playertitle' => 'Jucător: $1',
-	'player-file' => 'Nume fişier',
+	'player-file' => 'Nume fișier',
 	'player-play' => 'Redare',
 	'player-not-allowed' => 'format nepermis',
-	'player-not-found' => 'fişier negăsit',
+	'player-not-found' => 'fișier negăsit',
 	'player-invalid-title' => 'titlu incorect',
 	'player-clicktoplay' => 'Joacă $1',
 	'player-goto-player' => 'jucător',
 	'player-goto-page' => 'Pagină',
-	'player-goto-file' => 'fişier',
+	'player-goto-file' => 'fișier',
 );
 
 /** Tarandíne (Tarandíne)
@@ -1160,6 +1310,14 @@ $messages['ru'] = array(
 	'player-goto-file' => 'файл',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'player-goto-page' => 'Сторінка',
+	'player-goto-file' => 'файл',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -1179,43 +1337,66 @@ $messages['sk'] = array(
 	'player-goto-file' => 'súbor',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'player' => 'Predvajalnik',
+	'player-desc' => 'Vdelano predvajanje večpredstavnosti z uporabo pogostih vtičnikov brskalnikov in [[Special:Player|posebna stran]]',
+	'player-title' => 'Predvajalnik',
+	'player-playertitle' => 'Predvajalnik: $1',
+	'player-file' => 'Ime datoteke',
+	'player-play' => 'Predvajaj',
+	'player-not-allowed' => 'nedovoljena oblika',
+	'player-not-found' => 'datoteke ni mogoče najti',
+	'player-invalid-title' => 'neveljaven naslov',
+	'player-clicktoplay' => 'Predvajaj $1',
+	'player-goto-player' => 'predvajalnik',
+	'player-goto-page' => 'Stran',
+	'player-goto-file' => 'datoteka',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Sasa Stefanovic
+ * @author Жељко Тодоровић
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'player' => 'Плејер',
+	'player' => 'Извођач',
 	'player-desc' => 'Уграђени плејер за мултимедијалне фајлове, који користи устаљене плагинове за браузере, и [[Special:Player|специјалну страну]]',
-	'player-title' => 'Плејер',
-	'player-playertitle' => 'Плејер: $1',
-	'player-file' => 'Назив фајла',
+	'player-title' => 'Извођач',
+	'player-playertitle' => 'Извођач: $1',
+	'player-file' => 'Назив датотеке',
 	'player-play' => 'Пусти',
 	'player-not-allowed' => 'недозвољен формат',
-	'player-not-found' => 'фајл није пронађен',
-	'player-invalid-title' => 'погрешан наслов',
+	'player-not-found' => 'датотека није пронађена',
+	'player-invalid-title' => 'неисправан наслов',
 	'player-clicktoplay' => 'Пусти $1',
-	'player-goto-player' => 'плејер',
-	'player-goto-page' => 'Страна',
-	'player-goto-file' => 'фајл',
+	'player-goto-player' => 'извођач',
+	'player-goto-page' => 'Страница',
+	'player-goto-file' => 'датотека',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
+ * @author Жељко Тодоровић
  */
 $messages['sr-el'] = array(
-	'player' => 'Plejer',
+	'player' => 'Izvođač',
 	'player-desc' => 'Ugrađeni plejer za multimedijalne fajlove, koji koristi ustaljene plaginove za brauzere, i [[Special:Player|specijalnu stranu]]',
-	'player-title' => 'Plejer',
-	'player-playertitle' => 'Plejer: $1',
-	'player-file' => 'Naziv fajla',
+	'player-title' => 'Izvođač',
+	'player-playertitle' => 'Izvođač: $1',
+	'player-file' => 'Naziv datoteke',
 	'player-play' => 'Pusti',
 	'player-not-allowed' => 'nedozvoljen format',
-	'player-not-found' => 'fajl nije pronađen',
-	'player-invalid-title' => 'pogrešan naslov',
+	'player-not-found' => 'datoteka nije pronađena',
+	'player-invalid-title' => 'neispravan naslov',
 	'player-clicktoplay' => 'Pusti $1',
-	'player-goto-player' => 'plejer',
-	'player-goto-page' => 'Strana',
-	'player-goto-file' => 'fajl',
+	'player-goto-player' => 'izvođač',
+	'player-goto-page' => 'Stranica',
+	'player-goto-file' => 'datoteka',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1285,7 +1466,7 @@ $messages['tet'] = array(
 	'player-goto-page' => 'Pájina',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -1296,7 +1477,7 @@ $messages['tg-cyrl'] = array(
 	'player-goto-file' => 'парванда',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -1354,11 +1535,31 @@ $messages['tr'] = array(
 	'player-goto-file' => 'Dosya',
 );
 
-/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+/** Uyghur (Latin script) (Uyghurche‎)
  * @author Jose77
  */
 $messages['ug-latn'] = array(
 	'player-goto-page' => 'Bet',
+);
+
+/** Ukrainian (Українська)
+ * @author Alex Khimich
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'player' => 'Програвач',
+	'player-desc' => 'Вбудоване відтворення мультимедіа за допомогою звичайних плагінів браузера і [[Special:Player|спеціальної сторінки]]',
+	'player-title' => 'Програвач',
+	'player-playertitle' => 'Програвач: $1',
+	'player-file' => 'Назва файлу',
+	'player-play' => 'Відтворити',
+	'player-not-allowed' => 'заборонений формат',
+	'player-not-found' => 'файл не знайдено',
+	'player-invalid-title' => 'помилкова назва',
+	'player-clicktoplay' => 'Відтворити $1',
+	'player-goto-player' => 'програвач',
+	'player-goto-page' => 'Сторінка',
+	'player-goto-file' => 'файл',
 );
 
 /** Vèneto (Vèneto)
@@ -1427,6 +1628,13 @@ $messages['vo'] = array(
 	'player-goto-file' => 'ragiv',
 );
 
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'player-goto-file' => 'טעקע',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
  * @author Liangent
@@ -1438,7 +1646,9 @@ $messages['zh-hans'] = array(
 	'player-playertitle' => '播放器：$1',
 	'player-file' => '文件名',
 	'player-play' => '播放',
+	'player-not-allowed' => '不允许的格式',
 	'player-not-found' => '找不到文件',
+	'player-invalid-title' => '无效标题',
 	'player-clicktoplay' => '播放$1',
 	'player-goto-player' => '播放器',
 	'player-goto-page' => '页面',
@@ -1447,6 +1657,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
@@ -1455,8 +1666,10 @@ $messages['zh-hant'] = array(
 	'player-playertitle' => '播放器：$1',
 	'player-file' => '檔案名稱',
 	'player-play' => '播放',
+	'player-not-allowed' => '不允許的格式',
 	'player-not-found' => '找不到檔案',
-	'player-clicktoplay' => '播放$1',
+	'player-invalid-title' => '標題無效',
+	'player-clicktoplay' => '播放 $1',
 	'player-goto-player' => '播放器',
 	'player-goto-page' => '頁面',
 	'player-goto-file' => '檔案',

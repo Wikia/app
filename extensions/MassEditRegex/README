@@ -12,8 +12,8 @@ Briefly:
 
   1. Add to LocalSettings.php:
 
-    include_once("$IP/extensions/MassEditRegex/MassEditRegex.php");
+    require_once ( "$IP/extensions/MassEditRegex/MassEditRegex.php" );
+    // Allow administrators to use Special:MassEditRegex
+    $wgGroupPermissions['sysop']['masseditregex'] = true;
 
   2. Go to [[Special:MassEditRegex]]
-
-  3. If you don't have access, go to [[Special:User rights management]] and add yourself to the Bot group.

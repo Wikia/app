@@ -40,9 +40,8 @@ class SMWSetRecurringEvent {
 			SMWParseData::addProperty( $property_name, $date_str, false, $parser, true );
 		}
 
-		// Starting from MW 1.16, there is a more suited method available: Title::isSpecialPage
 		global $wgTitle;
-		if ( $wgTitle->getNamespace() == NS_SPECIAL ) {
+		if ( !is_null( $wgTitle ) && $wgTitle->isSpecialPage() ) {
 			global $wgOut;
 			SMWOutputs::commitToOutputPage( $wgOut );
 		}
@@ -50,9 +49,36 @@ class SMWSetRecurringEvent {
 			SMWOutputs::commitToParser( $parser );
 		}	
 	}
+
+	/**
+	 * Helper function - creates an object of type SMWTimeValue based
+	 * on a "Julian day" integer
+	 */
+	static protected function jdToTimeValue( $jd ) {
+		$timeDataItem = SMWDITime::newFromJD( $jd, SMWDITime::CM_GREGORIAN, SMWDITime::PREC_YMDT );
+		$timeValue = new SMWTimeValue( '_dat' );
+		$timeValue->setDataItem( $timeDataItem );
+		return $timeValue;
+	}
+
+	/**
+	 * Returns the "Julian day" value from an object of type
+	 * SMWTimeValue.
+	 */
+	static public function getJD( $dateDataValue ) {
+		if ( is_null( $dateDataValue ) ) {
+			return null;
+		}
+		$dateDataItem = $dateDataValue->getDataItem();
+		// This might have returned an 'SMWDIError' object.
+		if ( $dateDataItem instanceof SMWDITime ) {
+			return $dateDataItem->getJD();
+		}
+		return null;
+	}
 	
 	/**
-	 * Helper function used by doSetRecurringEvent(), as well as the
+	 * Helper function used in this class, as well as by the
 	 * Semantic Internal Objects extension
 	 *
 	 * @param Parser &$parser The current parser
@@ -104,7 +130,7 @@ class SMWSetRecurringEvent {
 
 					foreach ( $excluded_dates as $date_str ) {
 						$date = SMWDataValueFactory::newTypeIDValue( '_dat', $date_str );
-						$excluded_dates_jd[] = $date->getValueKey();
+						$excluded_dates_jd[] = self::getJD( $date );
 					}
 					break;
 				default:
@@ -136,16 +162,11 @@ class SMWSetRecurringEvent {
 		}
 
 		// Get the Julian day value for both the start and end date.
-		$start_date_jd = $start_date->getValueKey();
-
-		if ( !is_null( $end_date ) ) {
-			$end_date_jd = $end_date->getValueKey();
-		}
+		$end_date_jd = self::getJD( $end_date );
 
 		$cur_date = $start_date;
-		$cur_date_jd = $start_date->getValueKey();
+		$cur_date_jd = self::getJD( $cur_date );
 		$i = 0;
-		$reached_end_date = false;
 
 		do {
 			$i++;
@@ -177,7 +198,8 @@ class SMWSetRecurringEvent {
 
 				$date_str = "$cur_year-$display_month-$cur_day $cur_time";
 				$cur_date = SMWDataValueFactory::newTypeIDValue( '_dat', $date_str );
-				$cur_date_jd = $cur_date->getValueKey();
+				$all_date_strings = array_merge( $all_date_strings, $included_dates);
+				$cur_date_jd = $cur_date->getDataItem()->getJD();
 			} elseif ( $unit == 'dayofweekinmonth' ) {
 				// e.g., "3rd Monday of every month"
 				$prev_month = $cur_date->getMonth();
@@ -193,7 +215,7 @@ class SMWSetRecurringEvent {
 				// keep incrementing by a week, until we get there.
 				do {
 					$cur_date_jd += 7;
-					$cur_date = SMWDataValueFactory::newTypeIDValue( '_dat', $cur_date_jd );
+					$cur_date = self::jdToTimeValue( $cur_date_jd );
 					$right_month = ( $cur_date->getMonth() == $new_month );
 
 					if ( $week_num < 0 ) {
@@ -201,19 +223,19 @@ class SMWSetRecurringEvent {
 
 						do {
 							$next_week_jd += 7;
-							$next_week_date = SMWDataValueFactory::newTypeIDValue( '_dat', $next_week_jd );
+							$next_week_date = self::jdToTimeValue( $next_week_jd );
 							$right_week = ( $next_week_date->getMonth() != $new_month ) || ( $next_week_date->getYear() != $new_year );
 						} while ( !$right_week );
 
 						$cur_date_jd = $next_week_jd + ( 7 * $week_num );
-						$cur_date = SMWDataValueFactory::newTypeIDValue( '_dat', $cur_date_jd );
+						$cur_date = self::jdToTimeValue( $cur_date_jd );
 					} else {
 						$cur_week_num = ceil( $cur_date->getDay() / 7 );
 						$right_week = ( $cur_week_num == $week_num );
 
 						if ( $week_num == 5 && ( $cur_date->getMonth() % 12 == ( $new_month + 1 ) % 12 ) ) {
 							$cur_date_jd -= 7;
-							$cur_date = SMWDataValueFactory::newTypeIDValue( '_dat', $cur_date_jd );
+							$cur_date = self::jdToTimeValue( $cur_date_jd );
 							$right_month = $right_week = true;
 						}
 					}
@@ -221,7 +243,7 @@ class SMWSetRecurringEvent {
 			} else { // $unit == 'day' or 'week'
 				// Assume 'day' if it's none of the above.
 				$cur_date_jd += ( $unit === 'week' ) ? 7 * $period : $period;
-				$cur_date = SMWDataValueFactory::newTypeIDValue( '_dat', $cur_date_jd );
+				$cur_date = self::jdToTimeValue( $cur_date_jd );
 			}
 
 			// should we stop?
@@ -235,7 +257,8 @@ class SMWSetRecurringEvent {
 		} while ( !$reached_end_date );
 
 		// Handle the 'include' dates as well.
-		$all_date_strings = array_merge( $all_date_strings, $included_dates);
+		$all_date_strings = array_filter( array_merge( $all_date_strings, $included_dates ) );
+
 		return array( $property_name, $all_date_strings, $unused_params );
 	}	
 	

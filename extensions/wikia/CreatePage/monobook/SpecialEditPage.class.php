@@ -41,7 +41,7 @@ abstract class SpecialEditPage extends SpecialPage {
 			return '';
 		} else {
 			$preloadTitle = Title::newFromText( $preload );
-			if ( isset( $preloadTitle ) && $preloadTitle->userCanRead() ) {
+			if ( isset( $preloadTitle ) && $preloadTitle->userCan( 'read' ) ) {
 				$rev = Revision::newFromTitle( $preloadTitle );
 				if ( is_object( $rev ) ) {
 					$text = $rev->getText();

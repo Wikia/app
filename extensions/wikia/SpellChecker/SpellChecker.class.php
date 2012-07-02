@@ -1,25 +1,23 @@
 <?php
 
-class SpellChecker {
-
-	private $app;
+class SpellChecker extends WikiaObject {
 
 	private $contentLanguage;
 	private $script;
 	private $user;
 
 	function __construct() {
-		$this->app = WF::build('App');
+		parent::__construct();
 
 		$this->contentLanguage = $this->app->getGlobal('wgContLang')->getCode();
-		$this->script = $this->app->getGlobal('wgScript');
-		$this->user = $this->app->getGlobal('wgUser');
+		$this->script = $this->wg->Script;
+		$this->user = $this->wg->User;
 	}
 
 	/**
 	 * Add JavaScript variable with path to be used by AJAX requests sent by RTE plugin
 	 */
-	public function onRTEAddGlobalVariablesScript($vars) {
+	public function onRTEAddGlobalVariablesScript(Array $vars) {
 		wfProfileIn(__METHOD__);
 
 		// check user preferences (enabled by default)
@@ -30,11 +28,9 @@ class SpellChecker {
 
 		// check whether current content lang is supported by spellchecker
 		$dict = new SpellCheckerDictionary();
-		$isSupported = $dict->isLanguageSupported($this->contentLanguage);
 
-		$vars['wgSpellCheckerLangIsSupported'] = $isSupported;
-
-		if ($isSupported) {
+		if ($dict->isLanguageSupported($this->contentLanguage)) {
+			$vars['wgSpellCheckerLangIsSupported'] = true;
 			$vars['wgSpellCheckerUrl'] = "{$this->script}?action=ajax&rs=SpellCheckerAjax";
 		}
 

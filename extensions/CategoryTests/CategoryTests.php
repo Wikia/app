@@ -11,30 +11,31 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 // credits and hooks
-$wgExtensionFunctions[] = 'wfCategoryTests';
+$wgHooks['ParserFirstCallInit'][] = 'wfCategoryTests';
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'Category Tests',
-	'version' => '1.4',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:CategoryTests',
+	'version' => '1.5',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:CategoryTests',
 	'author' => 'Ryan Schmidt',
-	'description' => 'Functions for category testing',
 	'descriptionmsg' => 'categorytests-desc',
 );
 
 $wgExtensionMessagesFiles['CategoryTests'] = dirname( __FILE__ ) . '/CategoryTests.i18n.php';
+$wgExtensionMessagesFiles['CategoryTestsMagic'] = dirname( __FILE__ ) . '/CategoryTests.i18n.magic.php';
 
-function wfCategoryTests() {
-	global $wgParser, $wgExtCategoryTests;
+function wfCategoryTests( $parser ) {
+	global $wgExtCategoryTests;
 
 	$wgExtCategoryTests = new ExtCategoryTests();
-	$wgParser->setFunctionHook( 'ifcategory', array( &$wgExtCategoryTests, 'ifcategory' ) );
-	$wgParser->setFunctionHook( 'ifnocategories', array( &$wgExtCategoryTests, 'ifnocategories' ) );
-	$wgParser->setFunctionHook( 'switchcategory', array( &$wgExtCategoryTests, 'switchcategory' ) );
+	$parser->setFunctionHook( 'ifcategory', array( &$wgExtCategoryTests, 'ifcategory' ) );
+	$parser->setFunctionHook( 'ifnocategories', array( &$wgExtCategoryTests, 'ifnocategories' ) );
+	$parser->setFunctionHook( 'switchcategory', array( &$wgExtCategoryTests, 'switchcategory' ) );
+	
+	return true;
 }
 
-Class ExtCategoryTests {
-
+class ExtCategoryTests {
 	function ifcategory( &$parser, $category = '', $then = '', $else = '', $pagename = '' ) {
 		if ( $category === '' ) {
 			return $then;
@@ -45,13 +46,13 @@ Class ExtCategoryTests {
 			$ns = $title->getNamespace();
 		} else {
 			$title = Title::newFromText( $pagename );
-			if ( !($title instanceOf Title) || !$title->exists() )
+			if ( !( $title instanceOf Title ) || !$title->exists() )
 				return $else;
 			$page = $title->getDBkey();
 			$ns = $title->getNamespace();
 		}
 		$cattitle = Title::makeTitleSafe( NS_CATEGORY, $category );
-		if(!($cattitle instanceOf Title)) {
+		if ( !( $cattitle instanceOf Title ) ) {
 			return $else;
 		}
 		$catkey = $cattitle->getDBkey();
@@ -74,7 +75,7 @@ Class ExtCategoryTests {
 			$ns = $title->getNamespace();
 		} else {
 			$title = Title::newFromText( $pagename );
-			if ( !($title instanceOf Title) || !$title->exists() )
+			if ( !( $title instanceOf Title ) || !$title->exists() )
 				return $then;
 			$page = $title->getDBkey();
 			$ns = $title->getNamespace();

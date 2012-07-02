@@ -32,6 +32,14 @@ interface SecurePoll_Store {
 	 * mapping IDs and property keys to values.
 	 */
 	function getProperties( $ids );
+	
+	/**
+	 * Get the type of one or more SecurePoll entities.
+	 * @param $ids Int
+	 * @return String
+	 */
+	function getEntityType( $id );
+	
 
 	/**
 	 * Get information about a set of elections, specifically the data that 
@@ -204,7 +212,10 @@ class SecurePoll_DBStore implements SecurePoll_Store {
 				);
 				$options = array();
 			}
-			$options[] = array( 'id' => $row->op_entity );
+			$options[] = array( 
+				'id' => $row->op_entity,
+				'election' => $row->op_election,
+			);
 			$questionId = $row->qu_entity;
 			$electionId = $row->qu_election;
 		}
@@ -218,24 +229,42 @@ class SecurePoll_DBStore implements SecurePoll_Store {
 		return $questions;
 	}
 
-	function callbackValidVotes( $electionId, $callback ) {
+	function callbackValidVotes( $electionId, $callback, $voterId = null ) {
 		$dbr = $this->getDB();
+		$where = array( 
+			'vote_election' => $electionId,
+			'vote_current' => 1,
+			'vote_struck' => 0
+		);
+		if( $voterId !== null ){
+			$where['vote_voter'] = $voterId;
+		}
 		$res = $dbr->select( 
 			'securepoll_votes',
-			array( 'vote_record' ),
-			array( 
-				'vote_election' => $electionId,
-				'vote_current' => 1,
-				'vote_struck' => 0
-			), __METHOD__
+			'*',
+			$where,
+			__METHOD__
 		);
+		
 		foreach ( $res as $row ) {
 			$status = call_user_func( $callback, $this, $row->vote_record );
-			if ( $status && !$status->isOK() ) {
+			if( $status instanceof Status && !$status->isOK() ){
 				return $status;
 			}
 		}
 		return Status::newGood();
+	}
+	
+	function getEntityType( $id ){
+		$db = $this->getDB();
+		$res = $db->selectRow(
+			'securepoll_entity',
+			'*',
+			array( 'en_id' => $id ),
+			__METHOD__ );
+		return $res
+			? $res->en_type
+			: false;
 	}
 }
 
@@ -325,6 +354,12 @@ class SecurePoll_MemoryStore implements SecurePoll_Store {
 		}
 		return Status::newGood();
 	}
+	
+	function getEntityType( $id ){
+		return isset( $this->entityInfo[$id] )
+			? $this->entityInfo[$id]['type']
+			: false;
+	}
 }
 
 /**
@@ -348,7 +383,7 @@ class SecurePoll_XMLStore extends SecurePoll_MemoryStore {
 			'auth'
 		),
 		'question' => array( 'id', 'election' ),
-		'option' => array( 'id' ),
+		'option' => array( 'id', 'election' ),
 	);
 
 	/** The type of each entity child and its corresponding (plural) info element */
@@ -480,7 +515,6 @@ class SecurePoll_XMLStore extends SecurePoll_MemoryStore {
 		$info = array( 'type' => $entityType );
 		$messages = array();
 		$properties = array();
-		$children = array();
 		if ( $xr->isEmptyElement ) {
 			wfDebug( __METHOD__.": unexpected empty element\n" );
 			$xr->read();
@@ -548,6 +582,11 @@ class SecurePoll_XMLStore extends SecurePoll_MemoryStore {
 			wfDebug( __METHOD__.": missing id element in <$entityType>\n" );
 			return false;
 		}
+		
+		# This has to be done after the element is fully parsed, or you 
+		# have to require 'id' to be above any children in the XML doc.
+		$this->addParentIds( $info, $info['type'], $info['id'] );
+		
 		$id = $info['id'];
 		if ( isset( $info['title'] ) ) {
 			$this->idsByName[$info['title']] = $id;
@@ -558,6 +597,21 @@ class SecurePoll_XMLStore extends SecurePoll_MemoryStore {
 		}
 		$this->properties[$id] = $properties;
 		return $info;
+	}
+	
+	/**
+	 * Propagate parent ids to child elements
+	 */
+	public function addParentIds( &$info, $key, $id ) {
+		foreach ( self::$childTypes[$info['type']] as $childType ) {
+			if( isset( $info[$childType] ) ) {
+				foreach ( $info[$childType] as &$child ) {
+					$child[$key] = $id;
+					# Recurse
+					$this->addParentIds( $child, $key, $id );
+				}
+			}
+		}
 	}
 
 	/**

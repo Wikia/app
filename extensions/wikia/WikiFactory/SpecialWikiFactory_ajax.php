@@ -52,7 +52,7 @@ function axWFactoryTagCheck() {
 		);
 	}
 
-	return Wikia::json_encode( $result );
+	return json_encode( $result );
 }
 
 
@@ -81,7 +81,7 @@ function axWFactoryGetVariable() {
         
         // BugId:3054
         if ( empty( $variable ) ) {
-            return Wikia::json_encode( array( 'error' => true, 'message' => 'No such variable.' ) );
+            return json_encode( array( 'error' => true, 'message' => 'No such variable.' ) );
         }
         
 	$related = array();
@@ -112,7 +112,7 @@ function axWFactoryGetVariable() {
 		'wikiFactoryUrl' => Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl()
 	));
 
-	return Wikia::json_encode( array(
+	return json_encode( array(
 		"div-body" => $oTmpl->execute( "variable" ),
 		"div-name" => "wk-variable-form"
 	));
@@ -158,7 +158,7 @@ function axWFactoryChangeVariable() {
 		);
 	$oTmpl->set_vars($vars);
 
-	return Wikia::json_encode( array(
+	return json_encode( array(
 		"div-body" => $oTmpl->execute( "change-variable" ),
 		"div-name" => "wk-variable-form"
 	));
@@ -239,7 +239,7 @@ function axWFactorySubmitChangeVariable() {
 			);
 		$oTmpl->set_vars($vars);
 
-		return Wikia::json_encode( array(
+		return json_encode( array(
 			"div-body" => $oTmpl->execute( "change-variable" ),
 			"div-name" => "wk-variable-form"
 		));
@@ -258,7 +258,7 @@ function axWFactorySubmitChangeVariable() {
 		$html .= "<strong>{$variable->cv_name}</strong> successfully updated.";
 		$html .= "</div>";
 
-		return Wikia::json_encode( array(
+		return json_encode( array(
 			"div-body" => $html . $oTmpl->execute( "variable" ),
 			"div-name" => "wk-variable-form"
 		));
@@ -386,7 +386,7 @@ function axWFactoryDomainCRUD($type="add") {
     $aResponse["domains"] = $aDomains;
     $aResponse["info"] = $sInfo;
 
-    return Wikia::json_encode($aResponse);
+    return json_encode($aResponse);
 }
 
 /**
@@ -395,8 +395,6 @@ function axWFactoryDomainCRUD($type="add") {
 function axWFactoryClearCache()
 {
     global $wgRequest, $wgUser, $wgOut, $wgWikiFactoryMessages;
-
-    wfLoadExtensionMessages("WikiFactory");
 
     $city_id = $wgRequest->getVal("cityid");
     $iError = 0;
@@ -430,7 +428,7 @@ function axWFactoryClearCache()
         );
     }
 
-    return Wikia::json_encode($aResponse);
+    return json_encode($aResponse);
 }
 
 /**
@@ -565,7 +563,7 @@ function axWFactorySaveVariable() {
 
 	if (empty($form_id)) $div_name = "wf-variable-parse"; else $div_name = "wf-variable-parse-{$form_id}";
 
-	return Wikia::json_encode(
+	return json_encode(
 		array(
 			"div-body" => $return,
 			"is-error" => $error,
@@ -635,7 +633,7 @@ function axWFactoryDomainQuery() {
 		$return[ "data" ] = array_merge( $exact[ "data" ], $match[ "suggestions" ] );
 	}
 
-	return Wikia::json_encode( $return );
+	return json_encode( $return );
 }
 
 /**
@@ -668,7 +666,7 @@ function axWFactoryFilterVariables( )
         );
     }
 
-    return Wikia::json_encode(array(
+    return json_encode(array(
         "selector" => $selector,
     ));
 }
@@ -722,7 +720,7 @@ function axWFactoryRemoveVariable( ) {
 
 	if (empty($form_id)) $div_name = "wf-variable-parse"; else $div_name = "wf-variable-parse-{$form_id}";
 
-	return Wikia::json_encode(
+	return json_encode(
 		array(
 			"div-body" => $return,
 			"is-error" => $error,
@@ -802,7 +800,7 @@ function axAWCMetrics() {
 	}
 	$result['aaData'] = $rows;	
 
-	return Wikia::json_encode($result);
+	return json_encode($result);
 }
 
 /**
@@ -861,7 +859,7 @@ function axAWCMetricsCategory() {
 	}
 	$result['aaData'] = $rows;	
 
-	return Wikia::json_encode($result);
+	return json_encode($result);
 }
 
 /**

@@ -25,9 +25,6 @@ class WhatIsMyIP extends SpecialPage {
 	 */
 	public function execute( $par ) {
 		global $wgOut;
-
-		wfLoadExtensionMessages( 'WhatIsMyIP' );
-
 		$wgOut->setPageTitle( wfMsg( 'whatismyip' ) );
 		$ip = wfGetIP();
 		$wgOut->addWikiText( wfMsg( 'whatismyip-out' ) . " $ip" );

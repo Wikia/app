@@ -5,10 +5,11 @@ require_once( "Record.php" );
 require_once( "RecordSet.php" );
 
 function parityClass( $value ) {
-	if ( $value % 2 == 0 )
+	if ( $value % 2 == 0 ) {
 		return "even";
-	else
+	} else {
 		return "odd";
+	}
 }
 
 /* Functions to create a hierarchical table header
@@ -64,14 +65,14 @@ function addChildNodesToRows( TableHeaderNode $headerNode, &$rows, $currentDepth
 			$onclick = ' onclick= "' . $sort . '"';
 			if ( $leftmost ) {		# Are we the leftmost column?
 				$leftsort = EOL .
-					'<script type="text/javascript"> toSort("' .
+					'<script type="text/javascript"> jQuery( function() { toSort("' .
 					$idPath->getId() . '-h" , ' . $skipRows . ',' .
-					$columnIndex . '); </script>'
+					$columnIndex . ') } ); </script>'
 					. EOL;
 				$leftmost = False; 	# There can be only one.
-			}
-			else
+			} else {
 				$leftsort = "";
+			}
 
 			$class = ' class="' . $type . ' sortable"' . $onclick;
 		}
@@ -80,7 +81,7 @@ function addChildNodesToRows( TableHeaderNode $headerNode, &$rows, $currentDepth
 			$sort = '';
 			$leftsort = '';
 		}
-		
+
 		$rowSpan = $height - $childNode->height;
 		$rows[$currentDepth] .= '<th id="' . $idPath->getId() . '-h" ' . $class .
 			' colspan="' . $childNode->width .  '" rowspan="' . $rowSpan .
@@ -95,19 +96,20 @@ function getStructureAsTableHeaderRows( Structure $structure, $columnOffset, IdS
 	$rootNode = getTableHeaderNode( $structure );
 	$result = array();
 	
-	for ( $i = 0; $i < $rootNode->height - 1; $i++ )
+	for ( $i = 0; $i < $rootNode->height - 1; $i++ ) {
 		$result[$i] = "";
-		
+	}
 	addChildNodesToRows( $rootNode, $result, 0, $columnOffset, $idPath );
 
 	return $result;
 }
 
 function getHTMLClassForType( $type, Attribute $attribute ) {
-	if ( $type instanceof Structure )
+	if ( $type instanceof Structure ) {
 		return $attribute->id;
-	else
+	} else {
 		return $type;
+	}
 }
 
 function getRecordAsTableCells( IdStack $idPath, Editor $editor, Structure $visibleStructure, Record $record, &$startColumn = 0 ) {
@@ -124,9 +126,9 @@ function getRecordAsTableCells( IdStack $idPath, Editor $editor, Structure $visi
 			$idPath->pushAttribute( $attribute );
 			$attributeId = $idPath->getId();
 			
-			if ( $childEditor instanceof RecordTableCellEditor )
+			if ( $childEditor instanceof RecordTableCellEditor ) {
 				$result .= getRecordAsTableCells( $idPath, $childEditor, $visibleAttribute->type, $value, $startColumn );
-			else {
+			} else {
 				$displayValue = $childEditor->showsData( $value ) ? $childEditor->view( $idPath, $value ) : "";
 				$result .= '<td class="' . getHTMLClassForType( $type, $attribute ) . ' column-' . parityClass( $startColumn ) . '">' . $displayValue . '</td>';
 				$startColumn++;
@@ -134,10 +136,10 @@ function getRecordAsTableCells( IdStack $idPath, Editor $editor, Structure $visi
 			
 			$idPath->popAttribute();
 		}
-		else
+		else {
 			$result .= '<td/>';
+		}
 	}
-	
 	return $result;
 }
 
@@ -154,14 +156,14 @@ function getRecordAsEditTableCells( IdStack $idPath, Editor $editor, Structure $
 			$value = $record->getAttributeValue( $attribute );
 			$idPath->pushAttribute( $attribute );
 				
-			if ( $childEditor instanceof RecordTableCellEditor )
+			if ( $childEditor instanceof RecordTableCellEditor ) {
 				$result .= getRecordAsEditTableCells( $idPath, $childEditor, $visibleAttribute->type, $value, $startColumn );
-			else {
-				if ( $childEditor->showEditField( $idPath ) )
+			} else {
+				if ( $childEditor->showEditField( $idPath ) ) {
 					$displayValue = $childEditor->edit( $idPath, $value );
-				else
+				} else {
 					$displayValue = "";
-				
+				}
 				$result .= '<td class="' . getHTMLClassForType( $type, $attribute ) . ' column-' . parityClass( $startColumn ) . '">' . $displayValue . '</td>';
 					
 				$startColumn++;
@@ -169,10 +171,10 @@ function getRecordAsEditTableCells( IdStack $idPath, Editor $editor, Structure $
 			
 			$idPath->popAttribute();
 		}
-		else
+		else {
 			$result .= "<td/>";
+		}
 	}
-	
 	return $result;
 }
 

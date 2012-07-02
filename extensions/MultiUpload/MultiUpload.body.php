@@ -41,8 +41,10 @@ class MultipleUpload extends SpecialUpload {
 	 *
 	 * @param WebRequest $request The request to extract variables from
 	 */
-	protected function loadRequest( $request ) {
+	protected function loadRequest( ) {
 		global $wgUser, $wgMaxUploadFiles;
+
+		$request = $this->getRequest();
 
 		// let's make the parent happy
 		wfSuppressWarnings();
@@ -88,7 +90,9 @@ class MultipleUpload extends SpecialUpload {
 				$_FILES['wpUploadFile'] = $_FILES['wpUploadFile' . $i];
 				wfRestoreWarnings();
 				$up = UploadBase::createFromRequest( $request );
-				$this->mUploads[$i] = $up;
+				if ($up) {
+					$this->mUploads[] = $up;
+				}
 			}
 		}
 		$this->mDesiredDestName = $this->mDesiredDestNames[0];
@@ -257,10 +261,12 @@ class MultipleUpload extends SpecialUpload {
 	protected function showUploadError( $message ) {
 		$err ='<ul><li>';
 		$file = $this->mLocalFile;
-		if ($file)
+		if ( $file ) {
 			$t = $this->mLocalFile->getTitle();
-		if ($t)
-			$err .= $t->getFullText() . ":";
+			if ( $t ) {
+				$err .= $t->getFullText() . ":";
+			}
+		}
 		$err .= $message . "</li></ul>\n";
 		$this->mErrors[] = $err;
 	}
@@ -273,14 +279,17 @@ class MultipleUpload extends SpecialUpload {
 		global $wgMaxUploadFiles, $wgOut;
 
 		for ( $i = 0; $i < $wgMaxUploadFiles; $i++ ) {
-			if ( isset( $this->mUploads[$i] ) ) {
+			if ( isset( $this->mUploads[$i] ) )  {
 				$this->mUpload = $this->mUploads[$i];
-				$this->mUploadSuccessful = false; // reset
-				parent::processUpload();
-				if ( $this->mUploadSuccessful ) {
-					$this->mSuccesses[] = "<ul><li><a href='" . $this->mLocalFile->getTitle()->getFullURL() .
-						"' target='new'>{$this->mLocalFile->getTitle()->getFullText()}: " .
-						wfMsg( 'multiupload-fileuploaded' ) . '</a></li></ul>';
+				$title = $this->mUpload->getTitle();
+				if ( !empty($title) ) {
+					$this->mUploadSuccessful = false; // reset
+					parent::processUpload();
+					if ( $this->mUploadSuccessful ) {
+						$this->mSuccesses[] = "<ul><li><a href='" . $this->mLocalFile->getTitle()->getFullURL() .
+							"' target='new'>{$this->mLocalFile->getTitle()->getFullText()}: " .
+							wfMsg( 'multiupload-fileuploaded' ) . '</a></li></ul>';
+					}
 				}
 			}
 		}
@@ -295,7 +304,7 @@ class MultipleUpload extends SpecialUpload {
 
 		// the bad news
 		if ( sizeof( $this->mErrors ) > 0 ) {
-			$wgOut->addHTML( '<h2>' . wfMsgHtml( 'uploadwarning' ) . "</h2>\n" );
+			$wgOut->addHTML( '<h2>' . wfMsgHtml( 'uploaderror' ) . "</h2>\n" );
 			$wgOut->addHTML( implode( $this->mErrors ) );
 		}
 
@@ -512,4 +521,3 @@ class MultiUploadForm extends UploadForm {
 	}
 
 }
-

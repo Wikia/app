@@ -49,7 +49,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		assertTrue(session().isTextPresent(title));
 	}
 
-	@Test(groups={"CI", "verified", "reskin"})
+	@Test(groups={"CI", "legacy", "reskin"})
 	public void testTitleErrorChecking() throws Exception {
 		openDialogOnRandomPage();
 
@@ -80,7 +80,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		assertTrue(session().isElementPresent("createPageErrorMsg"));
 	}
 
-	@Test(groups={"CI", "verified", "reskin"})
+	@Test(groups={"CI", "legacy", "reskin"})
 	public void testCreateBlankArticle() throws Exception {
 		login();
 		openDialogOnRandomPage();
@@ -95,7 +95,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		checkEditPage(nonExistentTitle);
 	}
 
-	@Test(groups={"CI", "verified", "reskin"})
+	@Test(groups={"CI", "legacy", "reskin"})
 	public void testRedlinksAndCreateboxSupport() throws Exception {
 		loginAsStaff();
 
@@ -132,7 +132,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		deleteArticle("Project:CreatePageTestArticle", "label=regexp:^.*Author request", "WikiaBot CreatePage test");
 	}
 
-	@Test(groups={"CI", "verified", "reskin"})
+	@Test(groups={"CI", "legacy", "reskin"})
 	public void testUserSetting() throws Exception {
 		login();
 		session().open("index.php?title=Special:Preferences");
@@ -155,7 +155,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		assertTrue(session().isElementPresent("//li[@id='CreatePageDialogBlankContainer' and contains(@class, 'chooser accent')]"));
 	}
 
-	@Test(groups={"CI", "verified", "reskin"})
+	@Test(groups={"CI", "legacy", "reskin"})
 	public void testSpecialCreatePage() throws Exception {
 		String pageTitle = "CreatePageTest " + ((new Date()).toString());
 		String shortenedPageTitle = pageTitle.substring(0, 25);
@@ -229,7 +229,7 @@ public class CreatePageReskinTest extends EditPageBaseTest {
 		assertTrue(session().isTextPresent("CreatePage test --"));
 	}
 
-	@Test(groups={"CI", "verified", "reskin"})
+	@Test(groups={"CI", "legacy", "reskin"})
 	public void testSpecialCreatePageAnonWithCaptcha() throws Exception {
 		String pageTitle = "CreatePageTest " + ((new Date()).toString());
 

@@ -29,9 +29,14 @@ $messages['qqq'] = array(
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
+ * @author පසිඳු කාවින්ද
  */
 $messages['af'] = array(
+	'ratedpages' => 'Reader gegradeerde bladsye',
+	'ratedpages-leg' => "Vind bladsye beoordeeld met 'n groot aantal van graderings",
+	'ratedpages-list' => "Hier is 'n lys van bladsye gesorteer volgens hul leser terugvoer telling.",
 	'ratedpages-none' => 'Daar is geen bladsye in hierdie lys nie',
+	'ratedpages-graphs' => 'rating data',
 );
 
 /** Arabic (العربية)
@@ -46,6 +51,13 @@ $messages['ar'] = array(
 	'ratedpages-count' => '$1 {{PLURAL:$1|مراجعة|مراجعات}}',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'ratedpages-count' => '$1 {{PLURAL:$1|ܬܢܝܬܐ|ܬܢܝܬ̈ܐ}}',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
@@ -53,6 +65,31 @@ $messages['arz'] = array(
 	'ratedpages-list' => 'بالأسفل قائمة بالصفحات مرتبة بواسطة تقييم قرائها.',
 	'ratedpages-none' => 'لا توجد صفحات فى هذه القائمة',
 	'ratedpages-graphs' => 'بيانات التقييم',
+);
+
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'ratedpages' => 'Páxines calificaes polos llectores',
+	'ratedpages-leg' => 'Alcontrar páxines calificaes con un númberu bultable de votos',
+	'ratedpages-list' => 'Abaxo ta una llista de páxines ordenaes pola valoración devuelta polos llectores.',
+	'ratedpages-none' => 'Nun hai páxines nesta llista',
+	'ratedpages-graphs' => 'datos de calificación',
+	'ratedpages-count' => '$1 {{PLURAL:$1|revisión|revisiones}}',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ * @author Haqmar
+ */
+$messages['ba'] = array(
+	'ratedpages' => 'Уҡыусылар баһалаған биттәр',
+	'ratedpages-leg' => 'Байтаҡ баһалау һаны булған  биттәрҙе табырға',
+	'ratedpages-list' => 'Түбәндә — уҡыусылар тарафынан баһалауҙар һаны буйынса тәртипкә килтерелгән биттәр исемлеге.',
+	'ratedpages-none' => 'Исемлектә бер бит тә юҡ.',
+	'ratedpages-graphs' => 'баһа тураһында мәғлүмәт',
+	'ratedpages-count' => '$1 {{PLURAL:$1|баһа|баһа}}',
 );
 
 /** Southern Balochi (بلوچی مکرانی)
@@ -64,7 +101,7 @@ $messages['bcc'] = array(
 	'ratedpages-graphs' => 'دیتای درجه بندی',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -87,6 +124,13 @@ $messages['bg'] = array(
 	'ratedpages-none' => 'Няма страници в този списък',
 	'ratedpages-graphs' => 'данни за оценката',
 	'ratedpages-count' => '$1 {{PLURAL:$1|рецензия|рецензии}}',
+);
+
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'ratedpages-graphs' => 'রেটিং ডাটা',
 );
 
 /** Breton (Brezhoneg)
@@ -179,6 +223,7 @@ $messages['dsb'] = array(
  */
 $messages['el'] = array(
 	'ratedpages' => 'Σελίδες αξιολογημένες από τους αναγνώστες',
+	'ratedpages-none' => 'Δεν υπάρχουν σελίδες σε αυτήν τη λίστα',
 	'ratedpages-graphs' => 'δεδομένα βαθμολόγησης',
 	'ratedpages-count' => '$1 {{PLURAL:$1|επιθεώρηση|επιθεωρήσεις}}',
 );
@@ -214,18 +259,24 @@ $messages['es'] = array(
  */
 $messages['et'] = array(
 	'ratedpages' => 'Lugejahinnanguga leheküljed',
+	'ratedpages-leg' => 'Küllalt palju kordi hinnatud lehekülgede otsimine',
 	'ratedpages-list' => 'Allpool on lugejate tagasisidehinnangu alusel järjestatud lehekülgede loend.',
 	'ratedpages-none' => 'Loendis puuduvad leheküljed',
-	'ratedpages-count' => '$1 {{PLURAL:$1|arvustus|arvustust}}',
+	'ratedpages-graphs' => 'hindamisandmed',
+	'ratedpages-count' => '$1 {{PLURAL:$1|hindamine|hindamist}}',
 );
 
 /** Persian (فارسی)
  * @author Huji
+ * @author Wayiran
  */
 $messages['fa'] = array(
+	'ratedpages' => 'صفحه‌های درجه‌بندی‌شدهٔ خوانندگان',
+	'ratedpages-leg' => 'صفحه‌های درجه‌بندی‌شده با تعداد قابل‌ملاحظه‌ای از درجه‌بندی‌ها را پیدا کن',
 	'ratedpages-list' => 'در زیر فهرستی از صفحه‌ها که طبق نمره خوانندگان آن‌ها مرتب شده‌است قرار دارد.',
 	'ratedpages-none' => 'صفحه‌ای در این فهرست وجود ندارد',
 	'ratedpages-graphs' => 'داده‌های ارزیابی',
+	'ratedpages-count' => '$1 بازبینی',
 );
 
 /** Finnish (Suomi)
@@ -248,13 +299,14 @@ $messages['fi'] = array(
  * @author Grondin
  * @author Peter17
  * @author PieRRoMaN
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'ratedpages' => 'Pages évaluées par les lecteurs',
-	'ratedpages-leg' => "Trouver les pages évaluées avec un nombre d'évaluations assez grand",
+	'ratedpages-leg' => 'Trouver les pages évaluées suffisamment souvent',
 	'ratedpages-list' => 'Voici une liste des pages triées suivant leur évaluation par les lecteurs.',
 	'ratedpages-none' => 'Il n’y a aucune page dans cette liste',
-	'ratedpages-graphs' => "données d'évaluation",
+	'ratedpages-graphs' => 'données d’évaluation',
 	'ratedpages-count' => '$1 {{PLURAL:$1|révision|révisions}}',
 );
 
@@ -314,6 +366,32 @@ $messages['he'] = array(
 	'ratedpages-count' => '{{PLURAL:$1|דירוג אחד|$1 דירוגים}}',
 );
 
+/** Hindi (हिन्दी)
+ * @author Mayur
+ * @author Vibhijain
+ */
+$messages['hi'] = array(
+	'ratedpages' => 'पाठक मूल्याँकन',
+	'ratedpages-leg' => 'मूल्यांकन पृष्ठों के साथ एक बड़ा संख्या रेटेड खोजें',
+	'ratedpages-list' => 'नीचे उनके पाठक प्रतिक्रिया दर्ज़ा के आधार पर छाँटे पृष्ठों की एक सूची है.',
+	'ratedpages-none' => 'इस सूची में कोई पृष्ठ नहीं हैं',
+	'ratedpages-graphs' => 'रेटिंग डेटा',
+	'ratedpages-count' => '$1 {{PLURAL:$1| समीक्षा | समीक्षा}}',
+);
+
+/** Croatian (Hrvatski)
+ * @author Roberta F.
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'ratedpages' => 'Ocijenjene stranice',
+	'ratedpages-leg' => 'Nađi stranice ocijenjene s većim brojem ocjena',
+	'ratedpages-list' => 'Ispod je popis stranica razvrstanih po njihovim ocjenama.',
+	'ratedpages-none' => 'Nema stranica u ovom popisu',
+	'ratedpages-graphs' => 'podatci o ocjenama',
+	'ratedpages-count' => '$1 {{PLURAL:$1|ocjena|ocjene|ocjena}}',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -366,13 +444,18 @@ $messages['id'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Darth Kule
  * @author Pietrodn
+ * @author Una giornata uggiosa '94
  */
 $messages['it'] = array(
+	'ratedpages' => 'Leggi le pagine valutate',
+	'ratedpages-leg' => 'Trova le pagine valutate con un numero considerevole di voti',
 	'ratedpages-list' => 'Di seguito è riportato un elenco di pagine ordinate per il loro feedback da parte dei lettori.',
 	'ratedpages-none' => 'Non ci sono pagine in questo elenco',
 	'ratedpages-graphs' => 'dati delle valutazioni',
+	'ratedpages-count' => '$1 {{PLURAL:$1|recensione|recensioni}}',
 );
 
 /** Japanese (日本語)
@@ -393,6 +476,7 @@ $messages['ja'] = array(
 $messages['ka'] = array(
 	'ratedpages' => 'მკითხველების შეფასებული გვერდები',
 	'ratedpages-none' => 'ამ სიაში გვერდები არ არის',
+	'ratedpages-graphs' => 'მონაცემების შეფასება',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -407,12 +491,15 @@ $messages['km'] = array(
  * @author Kwj2772
  */
 $messages['ko'] = array(
+	'ratedpages' => '독자가 평가한 문서',
+	'ratedpages-leg' => '충분한 평가를 받은 문서 찾기',
 	'ratedpages-list' => '다음은 독자의 평가에 따라 정렬된 문서의 목록입니다.',
 	'ratedpages-none' => '이 목록에 문서가 없습니다.',
 	'ratedpages-graphs' => '평가 데이터',
+	'ratedpages-count' => '$1회의 평가',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -437,14 +524,41 @@ $messages['lb'] = array(
 	'ratedpages-count' => '$1 {{PLURAL:$1|Bewäertung|Bewäertungen}}',
 );
 
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'ratedpages' => 'Door laezers bekeke paazjes',
+	'ratedpages-leg' => 'Tuun paazjes die väöl beoeardeildj zeen',
+	'ratedpages-list' => 'Hie staon pazjeas op waardeerscore',
+	'ratedpages-none' => 'Gein paazjes in dees lies',
+	'ratedpages-graphs' => 'waarderingsgegaeves',
+	'ratedpages-count' => '$1 {{PLURAL:$1|waardering|waarderinge}}',
+);
+
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'ratedpages-none' => 'Šiame sąraše nėra puslapių.',
+	'ratedpages-count' => '$1 {{PLURAL:$1|apžvalga|apžvalgos}}',
+);
+
+/** Latvian (Latviešu)
+ * @author GreenZeb
+ */
+$messages['lv'] = array(
+	'ratedpages-none' => 'Šajā sarakstā nav lapu',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'ratedpages' => 'Страници оценети од читатели',
 	'ratedpages-leg' => 'Пронајди страници со значителен број на оценки',
-	'ratedpages-list' => 'Еве листа од страници сортирани по дадена оцена од корисниците',
-	'ratedpages-none' => 'Нема страници на оваа листа',
+	'ratedpages-list' => 'Еве список од страници подредени по дадена оцена од корисниците',
+	'ratedpages-none' => 'Нема страници на овој список',
 	'ratedpages-graphs' => 'податоци за оценувањето',
 	'ratedpages-count' => '$1 {{PLURAL:$1|оцена|оцени}}',
 );
@@ -462,12 +576,16 @@ $messages['ml'] = array(
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
  * @author Aviator
  */
 $messages['ms'] = array(
+	'ratedpages' => 'Laman yang dinilai oleh pembaca',
+	'ratedpages-leg' => 'Cari laman yang cukup bilangan penilaiannya',
 	'ratedpages-list' => 'Yang berikut ialah senarai laman mengikut tertib penilaian pembaca.',
 	'ratedpages-none' => 'Tiada laman dalam senarai ini',
 	'ratedpages-graphs' => 'data penilaian',
+	'ratedpages-count' => '$1 ulasan',
 );
 
 /** Erzya (Эрзянь)
@@ -475,6 +593,21 @@ $messages['ms'] = array(
  */
 $messages['myv'] = array(
 	'ratedpages-graphs' => 'питнень путомадо дата',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Harald Khan
+ * @author Jon Harald Søby
+ * @author Laaknor
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'ratedpages' => 'Leservurderte sider',
+	'ratedpages-leg' => 'Finn sider med et stort antall vurderinger',
+	'ratedpages-list' => 'Nedenfor er en liste over sider sortert etter lesernes vurdering av dem',
+	'ratedpages-none' => 'Det er ingen sider i denne listen',
+	'ratedpages-graphs' => 'vurderingsdata',
+	'ratedpages-count' => '$1 {{PLURAL:$1|anmeldelse|anmeldelser}}',
 );
 
 /** Dutch (Nederlands)
@@ -496,21 +629,6 @@ $messages['nn'] = array(
 	'ratedpages-list' => 'Nedanfor er ei lista over sider sorterte etter lesarane sine vurderingar av dei.',
 	'ratedpages-none' => 'Det finst ingen sider i denne lista',
 	'ratedpages-graphs' => 'vuderingsdata',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Harald Khan
- * @author Jon Harald Søby
- * @author Laaknor
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'ratedpages' => 'Leservurderte sider',
-	'ratedpages-leg' => 'Finn sider med et stort antall vurderinger',
-	'ratedpages-list' => 'Nedenfor er en liste over sider sortert etter lesernes vurdering av dem',
-	'ratedpages-none' => 'Det er ingen sider i denne listen',
-	'ratedpages-graphs' => 'vurderingsdata',
-	'ratedpages-count' => '$1 {{PLURAL:$1|anmeldelse|anmeldelser}}',
 );
 
 /** Occitan (Occitan)
@@ -550,6 +668,14 @@ $messages['pms'] = array(
 	'ratedpages-count' => '$1 {{PLURAL:$1|revision|revision}}',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'ratedpages-none' => 'په همدې لړليک کې هېڅ کوم مخ نشته',
+	'ratedpages-count' => '$1 {{PLURAL:$1|مخليدنه|مخليدنې}}',
+);
+
 /** Portuguese (Português)
  * @author 555
  * @author Hamilton Abreu
@@ -562,22 +688,27 @@ $messages['pt'] = array(
 	'ratedpages-list' => 'Segue-se uma lista de páginas ordenada de acordo com a avaliação dos leitores.',
 	'ratedpages-none' => 'Não há páginas nesta listagem',
 	'ratedpages-graphs' => 'dados das avaliações',
-	'ratedpages-count' => '$1 {{PLURAL:$1|avaliação|avaliações}}',
+	'ratedpages-count' => '$1 {{PLURAL:$1|revisão|revisões}}',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
  */
 $messages['pt-br'] = array(
+	'ratedpages' => 'Páginas avaliadas por leitores',
+	'ratedpages-leg' => 'Procurar páginas com um número significativo de avaliações',
 	'ratedpages-list' => 'Segue-se uma lista de páginas ordenada de acordo com a avaliação dos leitores.',
 	'ratedpages-none' => 'Não há páginas nesta listagem',
 	'ratedpages-graphs' => 'dados de avaliações',
+	'ratedpages-count' => '$1 {{PLURAL:$1|revisão|revisões}}',
 );
 
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
  * @author Mihai
+ * @author Minisarm
  * @author Stelistcristi
  */
 $messages['ro'] = array(
@@ -585,6 +716,7 @@ $messages['ro'] = array(
 	'ratedpages-list' => 'Mai jos este o listă de pagini sortate după evaluarea venită de la cititori.',
 	'ratedpages-none' => 'Nu există pagini în această listă',
 	'ratedpages-graphs' => 'evaluarea datelor',
+	'ratedpages-count' => '$1 {{PLURAL:$1|evaluare|evaluări}}',
 );
 
 /** Tarandíne (Tarandíne)
@@ -611,7 +743,19 @@ $messages['ru'] = array(
 	'ratedpages-count' => '$1 {{PLURAL:$1|оценка|оценки|оценок}}',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'ratedpages' => 'Сторінкы, оцінены хоснователями',
+	'ratedpages-leg' => 'Найти сторінкы зо значным чіслом оцїнок',
+	'ratedpages-list' => 'Тото є список сторінок ушореный подля чітательского оцїнїня.',
+	'ratedpages-none' => 'У тім списку не суть жадны сторінкы.',
+	'ratedpages-graphs' => 'дата рейтінґу',
+	'ratedpages-count' => '$1 {{PLURAL:$1|оцінка|оцінкы|оцінок}}',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -621,6 +765,16 @@ $messages['sah'] = array(
 	'ratedpages-none' => 'Тиһик кураанах.',
 	'ratedpages-graphs' => 'Сыанабыл дааннайдара',
 	'ratedpages-count' => '$1 сыанабыл',
+);
+
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'ratedpages' => 'පාඨකයා තරාතිරම්කල පිටු',
+	'ratedpages-none' => 'මෙම ලයිස්තුවේ පිටු කිසිවක් නොමැත.',
+	'ratedpages-graphs' => 'තරාතිරම් දත්ත',
+	'ratedpages-count' => ' {{PLURAL:$1|නිරීක්ෂණ|නිරීක්ෂණ}} $1 ක්',
 );
 
 /** Slovak (Slovenčina)
@@ -635,16 +789,31 @@ $messages['sk'] = array(
 	'ratedpages-count' => '$1 {{PLURAL:$1|hodnotenie|hodnotenia|hodnotení}}',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'ratedpages' => 'Strani, ki so jih ocenili bralci',
+	'ratedpages-leg' => 'Najdi strani, ocenjene z velikim številom ocen',
+	'ratedpages-list' => 'Spodaj je seznam strani, razvrščenih po njihovih povratnih informacijah o ocenah bralcev.',
+	'ratedpages-none' => 'Na tem seznamu ni strani.',
+	'ratedpages-graphs' => 'podatki ocenjevanja',
+	'ratedpages-count' => '$1 {{PLURAL:$1|pregled|pregleda|pregledi|pregledov}}',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Millosh
+ * @author Rancher
+ * @author Жељко Тодоровић
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'ratedpages-list' => 'Испод се налази списак сортиран по оценама читалаца.',
-	'ratedpages-none' => 'Нема страна у овом списку.',
+	'ratedpages-none' => 'Нема страница у овом списку',
+	'ratedpages-graphs' => 'подаци за оцењивање',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -665,10 +834,24 @@ $messages['sv'] = array(
 	'ratedpages-count' => '$1 {{PLURAL:$1|granskning|granskningar}}',
 );
 
+/** Tamil (தமிழ்)
+ * @author Mahir78
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'ratedpages' => 'வாசகர் மதிப்பீடு செய்த பக்கங்கள்',
+	'ratedpages-leg' => 'எண்ணிக்கையில் அதிகமான மதிப்பீடுகள் உள்ள மதிப்பீடு செய்யப்பட்ட பக்கங்களைக் கண்டுபிடிக்கவும்',
+	'ratedpages-list' => 'வாசகர்களின் கருத்து மதிப்பீட்டின்படி வரிசைபடுத்தப்பட்ட பட்டியல் கீழே கொடுக்கப்பட்டுள்ளது.',
+	'ratedpages-none' => 'இந்த பட்டியலில் ஒரு பக்கமும் இல்லை',
+	'ratedpages-graphs' => 'அளவீடு தரவு',
+	'ratedpages-count' => '$1 {{PLURAL:$1|review|மீளாய்வு}}',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
 $messages['te'] = array(
+	'ratedpages' => 'చదువరులు మూల్యాంకనంచేసిన పుటలు',
 	'ratedpages-none' => 'ఈ జాబితాలో పేజీలు ఏమీ లేవు',
 	'ratedpages-count' => '$1 {{PLURAL:$1|సమీక్ష|సమీక్షలు}}',
 );
@@ -689,9 +872,12 @@ $messages['tk'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'ratedpages' => 'Mga pahinang sinuri ng mambabasa',
+	'ratedpages-leg' => 'Humanap ng mga pahinang niranggo na may masusukat na bilang ng pagranggo',
 	'ratedpages-list' => 'Nasa ibaba ang isang talaan ng mga pahinang inayos ayon sa kanilang kaantasang ibinigay ng mambabasa.',
 	'ratedpages-none' => 'Walang mga pahina sa loob ng talaang ito',
 	'ratedpages-graphs' => 'datong pangpagaantas',
+	'ratedpages-count' => '$1 {{PLURAL:$1|pagsusuri|mga pagsusuri}}',
 );
 
 /** Turkish (Türkçe)
@@ -723,7 +909,11 @@ $messages['uk'] = array(
  * @author Candalua
  */
 $messages['vec'] = array(
+	'ratedpages' => 'Pagina valutà dai letori',
+	'ratedpages-leg' => 'Cata le pagine valutà co un bon numaro de voti',
+	'ratedpages-list' => 'Qua ghe xe na lista de pagine ordinà secondo la valutassion dei letori.',
 	'ratedpages-none' => 'No ghe xe nissuna pagina su sta lista',
+	'ratedpages-graphs' => 'dati de le valutassion',
 	'ratedpages-count' => '$1 {{PLURAL:$1|revision|revision}}',
 );
 
@@ -736,6 +926,7 @@ $messages['vep'] = array(
 	'ratedpages-list' => 'Lugijoil järgetud heiden arvsanoiden mödhe lehtpoled (nimikirjutez).',
 	'ratedpages-none' => 'Neciš nimikirjuteses ei ole lehtpolid',
 	'ratedpages-graphs' => 'andmused arvostelendas',
+	'ratedpages-count' => '$1 {{PLURAL:$1|arvoind|arvoindad}}',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -1,0 +1,21 @@
+# Vector provides enhancements to the Vector skin
+
+# This extension requires MediaWiki 1.17+ because it makes use of ResourceLoader.
+
+# Example LocalSettings.php additions
+
+require_once( "$IP/extensions/Vector/Vector.php" );
+
+# Before configuring this extension, see Vector.php and become familiar with the initial state and structure of the
+# $wgVectorFeatures configuration variable. Essentially it's an array of arrays, keyed by feature name, each containing
+# global and user keys with boolean values. "global" indicates that it should be turned on for everyone always, while
+# user indicates that users should be allowed to turn it on or off in their user preferences.
+
+# To enable a preference by default but still allow users to disable it in preferences, use something like...
+
+$wgDefaultUserOptions['vector-collapsiblenav'] = 1;
+
+# By default, the Vector skin does not use the simplified search box. To take advantage of the simplesearch feature you
+# must add this to your LocalSettings.php file.
+
+$wgVectorUseSimpleSearch = true;

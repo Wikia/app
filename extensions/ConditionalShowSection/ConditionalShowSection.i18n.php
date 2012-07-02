@@ -36,14 +36,28 @@ $messages['ar'] = array(
 	'conditionalshowsection-desc' => 'إضافة وسم cshow لعرض/إخفاء شرطيا قسم من نص الويكي',
 );
 
-/** Bashkir (Башҡорт)
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'conditionalshowsection-desc' => "Amestar la etiqueta cshow p'amosar/anubrir condicionalmente una seición de testu wiki",
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Sortilegus
+ */
+$messages['az'] = array(
+	'conditionalshowsection-desc' => 'Vikimətnin bölməsinin şərti göstərilməsi və ya gizlədilməsi üçün cshow teqini əlavə edir.',
+);
+
+/** Bashkir (Башҡортса)
  * @author Haqmar
  */
 $messages['ba'] = array(
 	'conditionalshowsection-desc' => 'Викитекст бүлеген шартлы күрһәтеү йәки йәшереү өсөн cshow тегы өҫтәй',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -92,6 +106,13 @@ $messages['el'] = array(
 	'conditionalshowsection-desc' => 'Προσθέτει την ετικέτα cshow για να προβάλλει/αποκρύψει υπό όρους τμήμα του βικικειμένου',
 );
 
+/** Esperanto (Esperanto)
+ * @author Eliovir
+ */
+$messages['eo'] = array(
+	'conditionalshowsection-desc' => 'Aldonante la etikedon cshow por kondiĉe montri aŭ kaŝi sekcion de vikiteksto',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  */
@@ -128,10 +149,11 @@ $messages['gsw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  */
 $messages['he'] = array(
-	'conditionalshowsection-desc' => 'הוספת התגית cshow כדי להציג/להסתיר, לפי תנאים, פרק בטקסט ויקי',
+	'conditionalshowsection-desc' => 'הוספת התג cshow כדי להציג או להסתיר לפי תנאים פרק בטקסט ויקי',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -162,6 +184,13 @@ $messages['id'] = array(
 	'conditionalshowsection-desc' => 'Menambahkan penanda cshow untuk kondisi tampil/sembunyi seksi dari tekswiki',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'conditionalshowsection-desc' => 'Aggiunge il tag cshow per mostrare o nascondere una sezione di wikitesto in maniera condizionata',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -169,7 +198,14 @@ $messages['ja'] = array(
 	'conditionalshowsection-desc' => 'ある部分のウィキテキストの表示・非表示を条件によって切り替えられる cshow タグを追加する',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Адыгэбзэ (Адыгэбзэ)
+ * @author Тамэ Балъкъэрхэ
+ */
+$messages['kbd-cyrl'] = array(
+	'conditionalshowsection-desc' => 'Тег cshow хетхэ, викитхыгъэм и къудамэр гъэпщкIу/къэгъэлъагъуэ нэпцIым щхьа',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -183,11 +219,46 @@ $messages['lb'] = array(
 	'conditionalshowsection-desc' => 'Den Tag cshow derbäisetzen fir en Abschnitt vum Wikitext ënner gewësse Konditionen ze weisen oder ze verstoppen',
 );
 
+/** Limburgish (Limburgs)
+ * @author Pahles
+ */
+$messages['li'] = array(
+	'conditionalshowsection-desc' => "Doog  de tag <code><nowiki>cshow</nowiki></code> bie um konditioneel 'ne paragraaf wikitekst weer te gaeve of te verberge",
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'conditionalshowsection-desc' => 'Manampy ny balizy cshow mba haneho na hanitrika fizarana wikisoratra raha ilaina',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'conditionalshowsection-desc' => 'Додавање наознаката cshow за условен приказ/сокривање на дел од вики-текст',
+	'conditionalshowsection-desc' => 'Додавање на ознаката cshow за условен приказ/сокривање на дел од вики-текст',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'conditionalshowsection-desc' => 'Membubuh tag cshow untuk menunjukkan/menyorokkan sebahagian teks wiki secara bersyarat',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'conditionalshowsection-desc' => 'Bruk cshow-merkelappen for å velge vis/skjul en seksjon av wikitekst',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'conditionalshowsection-desc' => 'Zet de kode <code><nowiki>cshow</nowiki></code> derbie um veurweerdelik n paragraaf wikitekste te laoten zien of te verbargen',
 );
 
 /** Dutch (Nederlands)
@@ -195,13 +266,6 @@ $messages['mk'] = array(
  */
 $messages['nl'] = array(
 	'conditionalshowsection-desc' => 'Voegt de tag <code><nowiki>cshow</nowiki></code> toe om conditioneel een paragraaf wikitekst weer te geven of te verbergen',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'conditionalshowsection-desc' => 'Bruk cshow-merkelappen for å velge vis/skjul en seksjon av wikitekst',
 );
 
 /** Occitan (Occitan)
@@ -226,10 +290,11 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Indech
  */
 $messages['pt'] = array(
-	'conditionalshowsection-desc' => 'Adicionando a marcação cshow para mostrar/ocultar condicionalmente uma seção de wikitexto',
+	'conditionalshowsection-desc' => 'Adiciona o elemento cshow para mostrar ou ocultar condicionalmente uma secção de texto wiki',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -253,7 +318,7 @@ $messages['ru'] = array(
 	'conditionalshowsection-desc' => 'Добавляет тег cshow для условного показа или сокрытия раздела викитекста.',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -267,18 +332,27 @@ $messages['sk'] = array(
 	'conditionalshowsection-desc' => 'Pridáva značku cshow na podmienečné zobrazenie/skrytie sekcie wikitextu',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'conditionalshowsection-desc' => 'Dodajanje etikete cshow za pogojno prikazovanje/skrivanje razdelka wikibesedila',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'conditionalshowsection-desc' => 'Додаје cshow таг за условно приказивање и скривање одељака вики-текста.',
+	'conditionalshowsection-desc' => 'Додавање ознаке cshow за условно приказивање/сакривање делова викитекста.',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Liangent
+ * @author Rancher
  */
 $messages['sr-el'] = array(
-	'conditionalshowsection-desc' => 'Dodaje cshow tag za uslovno prikazivanje i skrivanje odeljaka viki-teksta.',
+	'conditionalshowsection-desc' => 'Dodavanje oznake cshow za uslovno prikazivanje/sakrivanje delova vikiteksta.',
 );
 
 /** Swedish (Svenska)
@@ -293,6 +367,13 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'conditionalshowsection-desc' => 'వికీపాఠ్యంలోని ఒక భాగం షరతుల ప్రకారం చూపడానికి/దాచడానికి cshow పట్టీను తగిలిస్తున్నాం.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'conditionalshowsection-desc' => 'Idinaragdag ang tatak na cshow upang may kundisyong ipakita/itago ang isang seksyon ng teksto ng wiki',
 );
 
 /** Turkish (Türkçe)
@@ -321,5 +402,25 @@ $messages['vep'] = array(
  */
 $messages['vi'] = array(
 	'conditionalshowsection-desc' => 'Thêm thẻ cshow để hiện/ẩn đoạn mã wiki tùy theo điều kiện',
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$messages['zh-hans'] = array(
+	'conditionalshowsection-desc' => '添加cshow标签有条件地 显示 /隐藏一段维基文本',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Frankou
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'conditionalshowsection-desc' => '加入 cshow 標籤有條件地顯示／隱藏一段維基文字',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Pbdragonwang
+ */
+$messages['zh-tw'] = array(
+	'conditionalshowsection-desc' => '添加cshow標籤來有條件地顯示或隱藏一段維基文本',
 );
 

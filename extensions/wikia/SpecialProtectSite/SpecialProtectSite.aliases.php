@@ -1,14 +1,14 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'Protectsite' => array( 'Protectsite' )
 );
 /**
  * Polish (Polish)
  */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Protectsite' => array( 'Zabezpiecz', 'Protectsite' )
 );

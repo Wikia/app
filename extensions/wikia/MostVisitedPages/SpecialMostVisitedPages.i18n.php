@@ -57,7 +57,7 @@ $messages['az'] = array(
 	'mostvisitedpagesalllink' => 'Ən çox nəzərdən keçirilən səhifələrə bax',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
@@ -129,7 +129,7 @@ $messages['diq'] = array(
 	'mostvisitedpagessearchbtn' => 'cı geyre',
 );
 
-/** Lower Sorbian (dolnoserbski)
+/** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -181,7 +181,7 @@ $messages['fr'] = array(
 	'mostvisitedpagesalllink' => 'Voir pages les plus consultées',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -206,7 +206,7 @@ $messages['he'] = array(
 	'mostvisitedpagesalllink' => 'הצגת הדפים הנצפים ביותר',
 );
 
-/** Upper Sorbian (hornjoserbsce)
+/** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -401,14 +401,13 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
- * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'mostvisitedpages' => 'Najczęściej odwiedzane strony',
 	'mostvisitedpagessearchtext' => 'Nazwa artykułu',
 	'mostvisitedpagessearchbtn' => 'szukaj',
-	'mostvisitedpageslatest' => 'w ciągu ostatnich $1 minut',
+	'mostvisitedpageslatest' => 'w ostatnich $1 minut',
 	'mostvisitedpageslatestlink' => 'Zobacz ostatnio odwiedzane strony',
 	'mostvisitedpagesalllink' => 'Zobacz najczęściej odwiedzane strony',
 );

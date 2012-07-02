@@ -9,9 +9,9 @@ CREATE TABLE bookinfo (
 
   -- ISBN, 10 or 13 characters
   bi_isbn varchar(13) NOT NULL,
-  
+
   -- Result; a serialised BookInformationDriver
   bi_result bytea NOT NULL,
-  
+
   PRIMARY KEY (bi_isbn)
 );

@@ -23,11 +23,12 @@ class WikiaSpecialPageController extends WikiaController {
 			throw new WikiaException('First parameter of WikiaSpecialPage constructor must not be null');
 		}
 		$this->specialPage = F::build( 'SpecialPage', array( $name, $restriction, $listed, $function, $file, $includable ) );
+		F::setInstance( get_class($this), $this);
 		parent::__construct();
 	}
 
 	public function execute( $par ) {
-	
+
 		$response = $this->sendRequest( get_class( $this ), null, array( self::PAR => $par /* to be compatibile with MW core */ ) );
 		$this->response = $response;
 
@@ -48,29 +49,13 @@ class WikiaSpecialPageController extends WikiaController {
 		}
 	}
 
+	/**
+	 * Any functions that we do not implement, call directly on our specialPage object
+	 * @param type $method
+	 * @param type $args
+	 * @return type 
+	 */
 	public function __call( $method, $args ) {
 		return call_user_func_array( array( $this->specialPage, $method ), $args );
-	}
-
-	// Override WikiaController magic getter and setter because this is a wrapper for a SpecialPage object
-	// Checks special page properties first, then Controller properties, then request properties
-	public function __get( $propertyName ) {
-		if (property_exists($this->specialPage, $propertyName))
-			return $this->specialPage->$propertyName;
-		else if (property_exists($this, $propertyName))
-			return $this->$propertyName;
-		else
-			return $this->response->getVal($propertyName);
-	}
-
-	// Allow magic setting of template variables so we don't have to do $this->response->setVal
-	// Check special page properties first, then Controller properties, then request properties
-	public function __set($propertyName, $value) {
-		if (property_exists($this->specialPage, $propertyName))
-			$this->specialPage->$propertyName = $value;
-		else if (property_exists($this, $propertyName))
-			$this->$propertyName = $value;
-		else
-			$this->response->setVal( $propertyName, $value );
 	}
 }

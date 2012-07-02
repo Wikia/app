@@ -1,0 +1,36 @@
+These are the release notes for the SemanticSignup extension.
+	
+Extension page on mediawiki.org: http://www.mediawiki.org/wiki/Extension:SemanticSignup
+Latest version of the release notes: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/SemanticSignup/RELEASE-NOTES?view=co
+
+
+=== Version 0.4 ===
+2011-xx-xx
+
+* 
+
+=== Version 0.3 ===
+2011-08-15
+
+* Added compatibility with MediaWiki 1.16 and above, removed compatibility with MediaWiki below 1.16.
+* Added compatibility with Semantic MediaWiki 1.6 and above.
+* Added INSTALL file.
+* Added checks for dependencies (MW, SMW, & SF)
+* Rewrote setting handling, breaking compatibility with older versions.
+* Moved entry point to SemanticSignup.php.
+* Moved code to standard i18n, hooks and settings files.
+* Split DataChecker classes code to separate files.
+* Make use of semantic extension type.
+* Changed the signupfields tag extension into a parser function.
+* Stylized code.
+
+=== Version 0.2 ===
+2009-02-07
+
+* Added configuration setting $sesSignupBotName.
+* README sections 3 and 4 updated.
+
+=== Version 0.1 ===
+2009-01-30
+
+Initial release

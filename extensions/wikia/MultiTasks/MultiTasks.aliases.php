@@ -1,9 +1,9 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'Multidelete'		=> array( 'Multidelete' ),
 	'Multiwikiedit'		=> array( 'Multiwikiedit' ),
 	'Multiwikifinder'	=> array( 'Multiwikifinder' )
@@ -11,7 +11,7 @@ $aliases['en'] = array(
 /**
  * Polish (Polski)
  */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Multidelete'		=> array( 'Usuwanie w wielu wiki', 'Multidelete' ),
 	'Multiwikiedit'		=> array( 'Edytowanie w wielu wiki', 'Multiwikiedit' ),
 	'Multiwikifinder'	=> array( 'Wyszukiwanie strony w wielu wiki', 'Multiwikifinder' )

@@ -79,16 +79,14 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'News Channel',
 	'version'        => '2.1',
 	'author'         => '[mailto:codedriller@gmail.com Iaroslav Vassiliev]',
-	'description'    => 'This MediaWiki extension represents a news channel for wiki project. ' .
-		'The channel is implemented as a dynamic [[Special:NewsChannel|special page]].',
 	'descriptionmsg' => 'newschannel-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:News_Channel',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:News_Channel',
 );
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['NewsChannel'] = $dir . 'NewsChannel_body.php';
 $wgAutoloadClasses['LinkNewsChannel'] = $dir . 'NewsChannel.class.php';
 $wgExtensionMessagesFiles['NewsChannel'] = $dir . 'NewsChannel.i18n.php';
-$wgExtensionAliasesFiles['NewsChannel'] = $dir . 'NewsChannel.alias.php';
+$wgExtensionMessagesFiles['NewsChannelAlias'] = $dir . 'NewsChannel.alias.php';
 $wgSpecialPages['NewsChannel'] = 'NewsChannel';
 $wgHooks['BeforePageDisplay'][] = 'LinkNewsChannel::ExtensionFeeds';

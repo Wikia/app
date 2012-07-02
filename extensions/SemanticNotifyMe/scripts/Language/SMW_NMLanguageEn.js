@@ -1,3 +1,3 @@
 var wgNMContLanguageStrings = {
-	'NOTIFYME_NS'		   : 'NotifyMe:' //namespace identifier with colon
+	'NOTIFYME_NS' : 'NotifyMe:' //namespace identifier with colon
 }

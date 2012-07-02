@@ -22,6 +22,7 @@ require_once(GWBBCODE_ROOT.'/gwbbcode.inc.php');
 
 require_once "$IP/includes/SpecialPage.php";
 $wgSpecialPages['PvXDecode'] = 'SpecialPvXDecode';
+$wgExtensionMessagesFiles['PvXDecode'] = dirname(__FILE__) . '/PvXdecode.i18n.php';
 
 class SpecialPvXDecode extends SpecialPage
 {
@@ -30,9 +31,6 @@ class SpecialPvXDecode extends SpecialPage
 	 */
 	function SpecialPvXDecode()
 	{
-		global $wgMessageCache;
-		$wgMessageCache->addMessage('pvxdecode', 'PvXDecode');
-
 		SpecialPage::SpecialPage('PvXDecode');
 		$this->includable(true);
 	}

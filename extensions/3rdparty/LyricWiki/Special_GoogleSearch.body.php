@@ -3,17 +3,16 @@
 // Author: Sean Colombo
 // Date: 20080720
 //
-// 
+//
 ////
 
 require_once 'extras.php';
 
 class GoogleSearchResults extends SpecialPage
 {
-	function GoogleSearchResults()
+	function __construct()
 	{
-		SpecialPage::SpecialPage("GoogleSearchResults");
-		wfLoadExtensionMessages('GoogleSearchResults');
+		parent::__construct("GoogleSearchResults");
 	}
 
 	function execute( $par )
@@ -21,7 +20,7 @@ class GoogleSearchResults extends SpecialPage
 		$this->setHeaders();	// this is required for 1.7.1 to work
 
 		global $wgOut,$wgRequest;
-		
+
 		// The search-form itself is actually located in 3 places (these should be combined somehow).  Here, Monobook.php (for the sidebar) and /htmlets/googlesearch2.html
 		$wgOut->addHTML("
 <form action=\"http://lyricwiki.org/Special:GoogleSearchResults\" id=\"cse-search-box\">
@@ -34,8 +33,8 @@ class GoogleSearchResults extends SpecialPage
   </div>
 </form>
 <script type=\"text/javascript\" src=\"http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=en\"></script>
-		
-		
+
+
 <div id=\"cse-search-results\"></div>
 <script type=\"text/javascript\">
   var googleSearchIframeName = \"cse-search-results\";

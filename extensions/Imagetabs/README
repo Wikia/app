@@ -22,7 +22,7 @@ Download the tarball (see section 2) and extract it in /path/to/your/wiki/extens
 
 Open LocalSettings.php and add the following three lines just before the end:
 
-require_once("$IP/extensions/Imagetabs/imagetabs.php");
+require_once("$IP/extensions/Imagetabs/Imagetabs.php");
 $wgEnableInterwikiImageTabs = true;
 $wgInterwikiImageTabs = array();
 

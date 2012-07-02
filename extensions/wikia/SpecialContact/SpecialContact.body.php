@@ -12,11 +12,10 @@ class ContactForm extends SpecialPage {
 
 	function  __construct() {
 		parent::__construct( "Contact" , '' /*restriction*/);
-		wfLoadExtensionMessages("ContactForm");
 	}
 
 	function execute() {
-		global $wgLang, $wgAllowRealName, $wgRequest;
+		global $wgLang, $wgRequest;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		global $wgUser, $wgCaptchaClass, $wgJsMimeType;
 
@@ -50,7 +49,7 @@ class ContactForm extends SpecialPage {
 			$this->mProblemDesc = $wgRequest->getText( 'wpContactDesc' ); //body
 
 			#malformed email?
-			if (!User::isValidEmailAddr($this->mEmail)) {
+			if (!Sanitizer::validateEmail($this->mEmail)) {
 				$this->err[].= wfMsg('invalidemailaddress');
 				$this->errInputs['wpEmail'] = true;
 			}
@@ -139,16 +138,16 @@ class ContactForm extends SpecialPage {
 
 		#to us, from user
 		$subject = wfMsg('specialcontact-mailsub') . (( !empty($this->mProblem) )? ' - ' . $this->mProblem : '');
-		$error = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
-		if (WikiError::isError($error)) {
-			$errors .= "\n" . $error->getMessage();
+		$status = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
+		if (!$status->isOK()) {
+			$errors .= "\n" . $status->getMessage();
 		}
 
 		#to user, from us (but only if the first one didnt error, dont want to echo the user on an email we didnt get)
 		if( empty($errors) && $this->mCCme && $wgUser->isEmailConfirmed() ) {
-			$error = UserMailer::send( $mail_user, $mail_community, wfMsg('specialcontact-mailsubcc'), $mcc, $mail_user, null, 'SpecialContactCC' );
-			if (WikiError::isError($error)) {
-				$errors .= "\n" . $error->getMessage();
+			$status = UserMailer::send( $mail_user, $mail_community, wfMsg('specialcontact-mailsubcc'), $mcc, $mail_user, null, 'SpecialContactCC' );
+			if (!$status->isOK()) {
+				$errors .= "\n" . $status->getMessage();
 			}
 		}
 
@@ -173,8 +172,9 @@ class ContactForm extends SpecialPage {
 	 */
 	function mainContactForm( ) {
 		global $wgUser, $wgOut, $wgLang;
-		global $wgDBname, $wgAllowRealName;
+		global $wgDBname;
 		global $wgServer, $wgSitename, $wgCaptchaClass;
+		global $wgJsMimeType;
 
 		$wgOut->setPageTitle( wfMsg( 'specialcontact-pagetitle' ) );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
@@ -311,7 +311,7 @@ class ContactForm extends SpecialPage {
 				$wgOut->addHtml("<p><s><i>" . wfMsg('specialcontact-ccme') . "</i></s><br/> ". wfMsg('specialcontact-ccdisabled') ."</p>");
 			}
 		}
-		
+
 		# add a spot into the form where the a/b testing info can be injected. many tests will probably be relevant to user reports & their testing group isn't very visible to them.
 		$wgOut->addHtml("
 			<input type=\"hidden\" id=\"wpAbTesting\" name=\"wpAbTesting\" value=\"[unknown]\" />

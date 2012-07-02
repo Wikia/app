@@ -67,7 +67,7 @@ class SecurePoll_RadioRangeBallot extends SecurePoll_Ballot {
 		if ( $useMessageLabels ) {
 			foreach ( $scores as $score ) {
 				$signedScore = $this->addSign( $question, $score );
-				$labels[$score] = $question->getMessage( "column$signedScore" );
+				$labels[$score] = $question->parseMessage( "column$signedScore" );
 			}
 		} else {
 			global $wgLang;
@@ -111,9 +111,9 @@ class SecurePoll_RadioRangeBallot extends SecurePoll_Ballot {
 		
 		$s = "<table class=\"securepoll-ballot-table\">\n" . 
 			"<tr>\n" .
-			"<th>&nbsp;</th>\n";
+			"<th>&#160;</th>\n";
 		foreach ( $labels as $label ) {
-			$s .= Xml::element( 'th', array(), $label ) . "\n";
+			$s .= Html::rawElement( 'th', array(), $label ) . "\n";
 		}
 		$s .= "</tr>\n";
 		$defaultScore = $question->getProperty( 'default-score' );

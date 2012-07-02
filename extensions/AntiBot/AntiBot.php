@@ -15,6 +15,9 @@
  * And then copy the plugins you want into the active directory.
  */
 
+if ( !defined( 'MEDIAWIKI' ) ) {
+	exit( 1 );
+}
 
 /** Configuration */
 
@@ -22,8 +25,7 @@
  * Persistent secret token used for setting form field names and what not
  * Change it periodically if they try to filter by any affected form field
  */
-if ( empty( $wgAntiBotSecret ) ) # now set in CommonSettings.php
-	$wgAntiBotSecret = '';
+$wgAntiBotSecret = '';
 
 /** Configure the payload sequence when each plugin is triggered */
 $wgAntiBotPayloads = array(
@@ -32,15 +34,14 @@ $wgAntiBotPayloads = array(
 
 /** END CONFIGURATION */
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits[version_compare($wgVersion, '1.17alpha', '>=') ? 'antispam' : 'other'][] = array(
 	'path' => __FILE__,
 	'name' => 'AntiBot',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:AntiBot',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:AntiBot',
 	'author' => 'Tim Starling',
-	'description' => 'Simple framework for spambot checks and trigger payloads',
 	'descriptionmsg' => 'antibot-desc',
 );
-$wgExtensionMessagesFiles['AntiBot'] =  dirname(__FILE__) . '/AntiBot.i18n.php';
+$wgExtensionMessagesFiles['AntiBot'] =  dirname( __FILE__ ) . '/AntiBot.i18n.php';
 
 /**
  * A map of payload types to callbacks
@@ -88,7 +89,7 @@ class AntiBot {
 
 	static function log( $pluginName ) {
 		global $wgRequest;
-		$ip = wfGetIP();
+		$ip = $wgRequest->getIP();
 		$action = $wgRequest->getVal( 'action', '<no action>' );
 		$title = $wgRequest->getVal( 'title', '<no title>' );
 		$text = $wgRequest->getVal( 'wpTextbox1' );

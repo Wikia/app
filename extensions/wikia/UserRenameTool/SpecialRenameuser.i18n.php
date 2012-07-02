@@ -123,7 +123,7 @@ $messages['af'] = array(
 	'right-renameuser' => 'Hernoem gebruikers',
 );
 
-/** Aragonese (aragonés)
+/** Aragonese (Aragonés)
  * @author Juanpabl
  * @author SMP
  */
@@ -407,7 +407,7 @@ $messages['bcl'] = array(
 	'userrenametool-log' => '$1 mga hirá. Rasón: $2',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author KorneySan
@@ -775,7 +775,7 @@ O dokončení budete informován(a) e-mailem.',
 	'right-renameuser' => 'Přejmenovávání uživatelů',
 );
 
-/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+/** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author Svetko
  * @author ОйЛ
  */
@@ -930,7 +930,7 @@ $messages['diq'] = array(
 	'right-renameuser' => 'nameyê karberan bıvurn',
 );
 
-/** Lower Sorbian (dolnoserbski)
+/** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -1396,7 +1396,7 @@ $messages['ga'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|Athrú amháin|$1 athruithe}}. Fáth: $2',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Alma
  * @author Prevert
  * @author Toliño
@@ -1639,7 +1639,7 @@ $messages['hr'] = array(
 	'right-renameuser' => 'Preimenovati suradnike',
 );
 
-/** Upper Sorbian (hornjoserbsce)
+/** Upper Sorbian (Hornjoserbsce)
  * @author Dundak
  * @author Michawiki
  */
@@ -2180,7 +2180,7 @@ $messages['ko'] = array(
 	'userrenametool-errordoesnotexist' => '‘<nowiki>$1</nowiki>’ 사용자가 존재하지 않습니다.',
 	'userrenametool-errorexists' => '‘<nowiki>$1</nowiki>’ 사용자가 이미 존재합니다.',
 	'userrenametool-errorinvalid' => '‘<nowiki>$1</nowiki>’ 사용자 이름이 잘못되었습니다.',
-	'userrenametool-errortoomany' => '"<nowiki>$1</nowiki>" 사용자는 기여를 $2번 했습니다. $3번을 넘는 기여를 한 사용자의 이름을 변경하는 것은 성능 저하를 일으킬 수 있습니다.',
+	'userrenametool-errortoomany' => '"<nowiki>$1</nowiki>" 사용자는 $2번의 기여를 했습니다. $3번을 넘는 기여를 한 사용자의 이름을 변경하는 것은 성능 저하를 일으킬 수 있습니다.',
 	'userrenametool-error-request' => '요청을 정상적으로 전송하지 못했습니다.
 뒤로 가서 다시 시도해주세요.',
 	'userrenametool-error-same-user' => '이전의 이름과 같은 이름으로는 바꿀 수 없습니다.',
@@ -2191,7 +2191,7 @@ $messages['ko'] = array(
 	'userrenametool-logpage' => '이름 변경 기록',
 	'userrenametool-logpagetext' => '계정 이름 변경 기록입니다.',
 	'userrenametool-logentry' => '$1에서 "$2"(으)로 이름을 바꾸었습니다.',
-	'userrenametool-log' => '기여 $1개. 이유: $2',
+	'userrenametool-log' => '$1개의 기여. 이유: $2',
 	'userrenametool-move-log' => '‘[[User:$1|$1]]’ 사용자를 ‘[[User:$2|$2]]’(으)로 바꾸면서 문서를 자동으로 이동함',
 	'right-renameuser' => '계정 이름 변경',
 );
@@ -3401,7 +3401,7 @@ $messages['ru'] = array(
 	'right-renameuser' => 'переименование участников',
 );
 
-/** Rusyn (русиньскый) */
+/** Rusyn (Русиньскый) */
 $messages['rue'] = array(
 	'renameuser' => 'Переменоватихоснователя',
 	'right-renameuser' => 'Переменованя хоснователїв',

@@ -5,7 +5,7 @@ if (!defined('MEDIAWIKI')) {
 /**
  * Class provides a special page
  *
- * @addtogroup Extensions
+ * @ingroup Extensions
  */
 
 class SpecialYouTubeAuthSub extends SpecialPage {
@@ -15,13 +15,14 @@ class SpecialYouTubeAuthSub extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgTitle, $wgOut, $wgMemc, $wgUser;
+		global $wgRequest, $wgOut, $wgMemc, $wgUser;
 		global $wgYTAS_User, $wgYTAS_Password, $wgYTAS_DeveloperId;
 		global $wgYTAS_DefaultCategory, $wgYTAS_UseClientLogin, $wgYTAS_EnableLogging, $wgYTAS_UseNamespace, $wgYTAS_ClientId;
 
-		wfLoadExtensionMessages( 'YouTubeAuthSub' );
+		
 
 		$this->setHeaders();
+		$spTitle = $this->getTitle();
 
 		# Check permissions
 		if( !$wgUser->isAllowed( 'upload' ) ) {
@@ -56,11 +57,8 @@ class SpecialYouTubeAuthSub extends SpecialPage {
 						}
 					}
 					$content = "{{YoutubeVideo|{$wgRequest->getVal('id')}|{$title}|{$keywords}|{$description}|{$category}}}";
-					$a->insertNewArticle($content,
-					wfMsg('youtubeauthsub_summary'),
-					false,
-					false);
-					$wgOut->redirect('');
+					$a->doEdit( $content, wfMsg( 'youtubeauthsub_summary' ),
+						EDIT_NEW | EDIT_DEFER_UPDATES | EDIT_AUTOSUMMARY );
 				}
 				$wgOut->addWikiText(wfMsg('youtubeauthsub_viewpage', $descTitle->getFullText()) );
 			}
@@ -111,7 +109,7 @@ class SpecialYouTubeAuthSub extends SpecialPage {
 				<script type='text/javascript' src='/extensions/YouTubeAuthSub/youtubeauthsub.js'>
 				</script>
 				<form action='https://www.google.com/accounts/AuthSubRequest' method='POST' onsubmit='return checkYTASForm();' name='ytas_form'/>
-				<input type='hidden' name='next' value='{$wgTitle->getFullURL()}'/>
+				<input type='hidden' name='next' value='{$spTitle()->getFullURL()}'/>
 				<input type='hidden' name='scope' value='http://gdata.youtube.com/feeds'/>
 				<input type='hidden' name='session' value='0'/>
 				<input type='hidden' name='secure' value='0'/>
@@ -174,7 +172,7 @@ class SpecialYouTubeAuthSub extends SpecialPage {
 				$meta_id =$dbw->insertId();
 		}
 
-			$next_url = urlencode($wgTitle->getFullURL() . "?metaid={$meta_id}");
+			$next_url = urlencode($spTitle()->getFullURL() . "?metaid={$meta_id}");
 
 			$wgOut->addHTML(wfMsg('youtubeauthsub_uploadhere') . "<br /><br />
 					 <form action='{$url}?nexturl={$next_url}' METHOD='post' enctype='multipart/form-data' name='videoupload'>
@@ -200,7 +198,7 @@ class SpecialYouTubeAuthSub extends SpecialPage {
 	                </script>
 	                <script type='text/javascript' src='/extensions/YouTubeAuthSub/youtubeauthsub.js'>
 	                </script>
-					<form action='{$wgTitle->getFullURL()}' method='POST' name='ytas_form' onsubmit='return checkYTASForm();'>
+					<form action='{$spTitle->getFullURL()}' method='POST' name='ytas_form' onsubmit='return checkYTASForm();'>
 					<table cellpadding='10'>
 				");
 			if (!$wgYTAS_UseClientLogin) {

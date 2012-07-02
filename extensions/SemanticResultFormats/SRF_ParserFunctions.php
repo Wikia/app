@@ -15,24 +15,11 @@
  * @ingroup SemanticResultFormats
  * @author David Loomer
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 class SRFParserFunctions {
 
 	static function registerFunctions( &$parser ) {
 		$parser->setFunctionHook( 'calendarstartdate', array( 'SRFParserFunctions', 'runCalendarStartDate' ) );
 		$parser->setFunctionHook( 'calendarenddate', array( 'SRFParserFunctions', 'runCalendarEndDate' ) );
-		return true;
-	}
-
-	// FIXME: Can be removed when new style magic words are used (introduced in r52503)
-	static function languageGetMagic( &$magicWords, $langCode = "en" ) {
-		switch ( $langCode ) {
-			default:
-			$magicWords['calendarstartdate']  = array ( 0, 'calendarstartdate' );
-			$magicWords['calendarenddate']	  = array ( 0, 'calendarenddate' );
-		}
 		return true;
 	}
 
@@ -86,38 +73,53 @@ class SRFParserFunctions {
 		// otherwise fall back to defaults.
 		if ( $wgRequest->getCheck( 'year' ) && $wgRequest->getCheck( 'month' ) ) {
 			$query_year = $wgRequest->getVal( 'year' );
-			if ( is_numeric( $query_year ) && ( intval( $query_year ) == $query_year ) )
+			
+			if ( is_numeric( $query_year ) && ( intval( $query_year ) == $query_year ) ) {
 				$lower_year = $query_year;
-			else
+			}
+			else {
 				$lower_year = $default_year;
+			}
 
 			$query_month = $wgRequest->getVal( 'month' );
-			if ( is_numeric( $query_month ) && ( intval( $query_month ) == $query_month ) && $query_month >= 1 && $query_month <= 12 )
+			if ( is_numeric( $query_month ) && ( intval( $query_month ) == $query_month ) && $query_month >= 1 && $query_month <= 12 ) {
 				$lower_month = $query_month;
-			else
+			}
+			else {
 				$lower_month = $default_month;
+			}
 
 			if ( $wgRequest->getCheck( 'day' ) ) {
 				$query_day = $wgRequest->getVal( 'day' );
-				if ( is_numeric( $query_day ) && ( intval( $query_day ) == $query_day ) && $query_day >= 1 && $query_day <= 31 )
+				
+				if ( is_numeric( $query_day ) && ( intval( $query_day ) == $query_day ) && $query_day >= 1 && $query_day <= 31 ) {
 					$lower_day = $query_day;
-				else
+				}
+				else {
 					$lower_day = '1';
+				}
+				
 				$lower_day = $wgRequest->getVal( 'day' );
 			} elseif ( $calendar_type != 'month'
 				&& (int)$lower_year == (int)$default_year
-				&& (int)$lower_month == (int)$default_month )
-				$lower_day = $default_day;
-			else
+				&& (int)$lower_month == (int)$default_month ) {
+					$lower_day = $default_day;
+				}
+			else {
 				$lower_day = '1';
+			}
 		} else {
 			$lower_year = $default_year;
 			$lower_month = $default_month;
-			if ( $calendar_type == 'month' )
+			
+			if ( $calendar_type == 'month' ) {
 				$lower_day = 1;
-			else
+			}
+			else {
 				$lower_month = $default_day;
+			}
 		}
+		
 		$lower_date = mktime( 0, 0, 0, $lower_month, $lower_day, $lower_year );
 
 		// Date to be queried
@@ -141,13 +143,21 @@ class SRFParserFunctions {
 		// If necessary, adjust bounds to comply with required days of week for each.
 		if ( $calendar_type == 'month' || $calendar_start_day >= 0 ) {
 			$lower_offset = date( "w", $lower_date ) - $calendar_start_day;
-			if ( $lower_offset < 0 ) $lower_offset += 7;
+			
+			if ( $lower_offset < 0 ) {
+				$lower_offset += 7;
+			}
+			
 			if ( $calendar_type == 'month' ) {
 				$upper_offset = $calendar_start_day + 6 - date( "w", $upper_date );
-				if ( $upper_offset > 6 ) $upper_offset -= 7;
+				
+				if ( $upper_offset > 6 ) {
+					$upper_offset -= 7;
+				}
 			} else {
 				$upper_offset = 0 - $lower_offset;
 			}
+			
 			$lower_date = $lower_date - 86400 * $lower_offset;
 			$upper_date = $upper_date + 86400 * $upper_offset;
 		}
@@ -157,4 +167,5 @@ class SRFParserFunctions {
 
 		return array( $lower_date, $upper_date, $return_date );
 	}
+	
 }

@@ -260,7 +260,7 @@
 				var image = $(this);
 				image.
 					attr('src', image.data('src')).
-					removeAttr('data-src');
+					removeData('src');
 			});		
 		}
 

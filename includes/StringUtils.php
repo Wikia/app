@@ -13,6 +13,13 @@ class StringUtils {
 	 * Compared to delimiterReplace(), this implementation is fast but memory-
 	 * hungry and inflexible. The memory requirements are such that I don't
 	 * recommend using it on anything but guaranteed small chunks of text.
+	 *
+	 * @param $startDelim
+	 * @param $endDelim
+	 * @param $replace
+	 * @param $subject
+	 *
+	 * @return string
 	 */
 	static function hungryDelimiterReplace( $startDelim, $endDelim, $replace, $subject ) {
 		$segments = explode( $startDelim, $subject );
@@ -36,13 +43,19 @@ class StringUtils {
 	 * This implementation is slower than hungryDelimiterReplace but uses far less
 	 * memory. The delimiters are literal strings, not regular expressions.
 	 *
-	 * @param string $flags Regular expression flags
+	 * If the start delimiter ends with an initial substring of the end delimiter,
+	 * e.g. in the case of C-style comments, the behaviour differs from the model
+	 * regex. In this implementation, the end must share no characters with the
+	 * start, so e.g. /*\/ is not considered to be both the start and end of a
+	 * comment. /*\/xy/*\/ is considered to be a single comment with contents /xy/.
+	 *
+	 * @param $startDelim String: start delimiter
+	 * @param $endDelim String: end delimiter
+	 * @param $callback Callback: function to call on each match
+	 * @param $subject String
+	 * @param $flags String: regular expression flags
+	 * @return string
 	 */
-	# If the start delimiter ends with an initial substring of the end delimiter,
-	# e.g. in the case of C-style comments, the behaviour differs from the model
-	# regex. In this implementation, the end must share no characters with the
-	# start, so e.g. /*/ is not considered to be both the start and end of a
-	# comment. /*/xy/*/ is considered to be a single comment with contents /xy/.
 	static function delimiterReplaceCallback( $startDelim, $endDelim, $callback, $subject, $flags = '' ) {
 		$inputPos = 0;
 		$outputPos = 0;
@@ -115,17 +128,18 @@ class StringUtils {
 		return $output;
 	}
 
-	/*
+	/**
 	 * Perform an operation equivalent to
 	 *
 	 *   preg_replace( "!$startDelim(.*)$endDelim!$flags", $replace, $subject )
 	 *
-	 * @param string $startDelim Start delimiter regular expression
-	 * @param string $endDelim End delimiter regular expression
-	 * @param string $replace Replacement string. May contain $1, which will be
-	 *               replaced by the text between the delimiters
-	 * @param string $subject String to search
-	 * @return string The string with the matches replaced
+	 * @param $startDelim String: start delimiter regular expression
+	 * @param $endDelim String: end delimiter regular expression
+	 * @param $replace String: replacement string. May contain $1, which will be
+	 *                 replaced by the text between the delimiters
+	 * @param $subject String to search
+	 * @param $flags String: regular expression flags
+	 * @return String: The string with the matches replaced
 	 */
 	static function delimiterReplace( $startDelim, $endDelim, $replace, $subject, $flags = '' ) {
 		$replacer = new RegexlikeReplacer( $replace );
@@ -136,8 +150,8 @@ class StringUtils {
 	/**
 	 * More or less "markup-safe" explode()
 	 * Ignores any instances of the separator inside <...>
-	 * @param string $separator
-	 * @param string $text
+	 * @param $separator String
+	 * @param $text String
 	 * @return array
 	 */
 	static function explodeMarkup( $separator, $text ) {
@@ -163,8 +177,8 @@ class StringUtils {
 	 * Escape a string to make it suitable for inclusion in a preg_replace()
 	 * replacement parameter.
 	 *
-	 * @param string $string
-	 * @return string
+	 * @param $string String
+	 * @return String
 	 */
 	static function escapeRegexReplacement( $string ) {
 		$string = str_replace( '\\', '\\\\', $string );
@@ -175,6 +189,9 @@ class StringUtils {
 	/**
 	 * Workalike for explode() with limited memory usage.
 	 * Returns an Iterator
+	 * @param $separator
+	 * @param $subject
+	 * @return \ArrayIterator|\ExplodeIterator
 	 */
 	static function explode( $separator, $subject ) {
 		if ( substr_count( $subject, $separator ) > 1000 ) {

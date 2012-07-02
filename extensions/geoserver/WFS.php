@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  *  Copyright 2007, Jens Frank <jeluf@wikimedia.org>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class WFS {
 
-	function WFS( $url ) {
+	function __construct( $url ) {
 		$this->url = $url;
 	}
 

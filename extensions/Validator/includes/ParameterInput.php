@@ -92,7 +92,6 @@ class ParameterInput {
 	 * @return string
 	 */
 	public function getHtml() {
-		$html = '';
 		$valueList = array();
 		
         foreach ( $this->param->getCriteria() as $criterion ) {
@@ -131,10 +130,16 @@ class ParameterInput {
 	 * 
 	 * @since 0.4.6
 	 * 
-	 * @return mixed
+	 * @return string
 	 */
 	protected function getValueToUse() {
-		return $this->currentValue === false ? $this->param->getDefault() : $this->currentValue; 
+		$value = $this->currentValue === false ? $this->param->getDefault() : $this->currentValue;
+		
+		if ( $this->param->isList() && is_array( $value ) ) {
+			$value = implode( $this->param->getDelimiter(), $value );
+		}
+		
+		return $value;
 	}
 	
 	/**

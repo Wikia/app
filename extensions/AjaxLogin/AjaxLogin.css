@@ -1,6 +1,4 @@
 /* CSS for AjaxLogin extension */
-
-/* styles copied from monaco/css/header.css */
 #userloginRound .r_boxContent {
 	background-color: #fff;
 	color: #000000;
@@ -10,21 +8,13 @@
 #userloginRound .boxHeader {
 	padding: 3px 5px;
 	font-size: 12px;
+	background-color: #36C;
+	color: white;
 }
 
 #userloginRound form {
 	padding: 3px;
 	font-size: 12px;
-}
-
-/* copied from monaco/css/root.css */
-.color1, .color1 a, .hd {
-	background-color: #36C;
-	color: white;
-}
-
-.color2 {
-	background-color: #F5F5F5;
 }
 
 #userajaxloginform {

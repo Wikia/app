@@ -15,10 +15,19 @@ if (window.mwCustomEditButtons && window.skin === 'oasis') {
 				],
 				function() {
 					PlacesEditor.createNew(function(location) {
-						$().log(location, 'Places');
+						$().log(location, 'Inserting <place> tag');
 
 						if (location !== false) {
 							var wikitext = '<place lat="' + location.lat + '" lon="' + location.lon + '" />';
+
+							// focus on current editor textarea
+							if (typeof RTE !== 'undefined') {
+								RTE.getInstanceEditor().getEditbox().focus();
+							}
+							else {
+								$('#wpTextbox1').focus();
+							}
+
 							insertTags(wikitext, '' /* tagClose */, '' /* sampleText */);
 						}
 					});

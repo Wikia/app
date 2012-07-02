@@ -11,7 +11,6 @@ class CooperationStatistics extends IncludableSpecialPage {
 	public function execute( $par ) {
 		global $wgCooperationStatsGoogleCharts, $wgOut;
 
-		wfLoadExtensionMessages( 'CooperationStatistics' );
 		$nb_of_revuser = wfMsg( 'cooperationstatistics-limit-few-revisors' );
 		$nbpages = $this->getNbOfPages( $nb_of_revuser, '<=' );
 		if( !$this->mIncluding )

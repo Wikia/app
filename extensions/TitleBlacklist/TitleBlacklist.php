@@ -5,17 +5,16 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 //@{
 /**
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  */
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits[version_compare($wgVersion, '1.17alpha', '>=') ? 'antispam' : 'other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Title Blacklist',
-	'author'         => array( 'VasilievVV', 'Fran Rogers' ),
+	'author'         => array( 'Victor Vasiliev', 'Fran Rogers' ),
 	'version'        => '1.4.2',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Title_Blacklist',
-	'description'    => 'Allows administrators to forbid creation of certain pages and user accounts',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Title_Blacklist',
 	'descriptionmsg' => 'titleblacklist-desc',
 );
 
@@ -41,22 +40,23 @@ $wgTitleBlacklistCaching = array(
 	'warningexpiry' => 600,
 );
 
-$wgAvailableRights[] = 'tboverride';
+$dir = dirname( __FILE__ );
+
+// Register the API method
+$wgAutoloadClasses['ApiQueryTitleBlacklist'] = "$dir/api/ApiQueryTitleBlacklist.php";
+$wgAPIModules['titleblacklist'] = 'ApiQueryTitleBlacklist';
+
+$wgAvailableRights[] = 'tboverride';	// Implies tboverride-account
+$wgAvailableRights[] = 'tboverride-account';	// For account creation
 $wgGroupPermissions['sysop']['tboverride'] = true;
 
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'TitleBlacklistHooks::userCan';
 $wgHooks['AbortMove'][] = 'TitleBlacklistHooks::abortMove';
 $wgHooks['AbortNewAccount'][] = 'TitleBlacklistHooks::abortNewAccount';
+$wgHooks['AbortAutoAccount'][] = 'TitleBlacklistHooks::abortNewAccount';
+$wgHooks['CentralAuthAutoCreate'][] = 'TitleBlacklistHooks::centralAuthAutoCreate';
 $wgHooks['EditFilter'][] = 'TitleBlacklistHooks::validateBlacklist';
 $wgHooks['ArticleSaveComplete'][] = 'TitleBlacklistHooks::clearBlacklist';
-
-/**
- * Initialize the title blacklist
- */
-function efInitTitleBlacklist() {
-	global $wgTitleBlacklist;
-	if( isset( $wgTitleBlacklist ) && $wgTitleBlacklist ) return;
-	$wgTitleBlacklist = new TitleBlacklist();
-}
+$wgHooks['UserCreateForm'][] = 'TitleBlacklistHooks::addOverrideCheckbox';
 
 //@}

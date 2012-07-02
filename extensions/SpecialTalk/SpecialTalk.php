@@ -3,7 +3,8 @@ if ( ! defined( 'MEDIAWIKI' ) ) die();
 /**
  * A hook that adds a talk tab to Special Pages
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @bug 4078
  *
@@ -11,44 +12,38 @@ if ( ! defined( 'MEDIAWIKI' ) ) die();
  * @copyright Copyright © 2005, Ævar Arnfjörð Bjarmason
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
-$wgExtensionFunctions[] = 'wfSpecialTalk';
+
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
-	'name' => 'Special talk',
+	'name' => 'SpecialTalk',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:SpecialTalk',
+	'version' => '1.0',
+	'descriptionmsg' => 'specialtalk-desc',
 	'description' => 'Adds a talk tab to Special Pages',
 	'author' => 'Ævar Arnfjörð Bjarmason'
 );
 
-function wfSpecialTalk() {
-	wfUsePHP( 5.1 );
-	wfUseMW( '1.6alpha' );
-	
-	class SpecialTalk {
-		public function __construct() {
-			global $wgHooks;
+$dir = dirname( __FILE__ ) . '/';
 
-			$wgHooks['SkinTemplateBuildContentActionUrlsAfterSpecialPage'][] = array( &$this, 'SpecialTalkHook' );
-		}
+// Extension messages.
+$wgExtensionMessagesFiles['SpecialTalk'] =  $dir . 'SpecialTalk.i18n.php';
 
-		public function SpecialTalkHook( SkinTemplate &$skin_template, array &$content_actions ) {
-			$title = Title::makeTitle( NS_PROJECT_TALK, $skin_template->mTitle->getText() );
+$wgHooks['SkinTemplateBuildContentActionUrlsAfterSpecialPage'][] = 'wfSpecialTalkHook';
 
-			$content_actions['talk'] = $skin_template->tabAction(
-				$title,
-				// msg
-				'talk',
-				// selected
-				false,
-				// &query=
-				'',
-				// check existance
-				true
-			);
-			
-			return true;
-		}
-	}
+function wfSpecialTalkHook( SkinTemplate &$skin_template, array &$content_actions ) {
+	$title = Title::makeTitle( NS_PROJECT_TALK, $skin_template->getTitle()->getText() );
 
-	// Establish a singleton.
-	new SpecialTalk;
+	$content_actions['talk'] = $skin_template->tabAction(
+		$title,
+		// msg
+		'talk',
+		// selected
+		false,
+		// &query=
+		'',
+		// check existance
+		true
+	);
+
+	return true;
 }

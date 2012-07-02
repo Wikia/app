@@ -13,7 +13,10 @@ class Category {
 	/** Name of the category, normalized to DB-key form */
 	private $mName = null;
 	private $mID = null;
-	/** Category page title */
+	/**
+	 * Category page title
+	 * @var Title
+	 */
 	private $mTitle = null;
 	/** Counts of membership (cat_pages, cat_subcats, cat_files) */
 	private $mPages = null, $mSubcats = null, $mFiles = null;
@@ -25,9 +28,6 @@ class Category {
 	 * @return bool True on success, false on failure.
 	 */
 	protected function initialize() {
-		if ( $this->mName === null && $this->mTitle )
-			$this->mName = $title->getDBkey();
-
 		if ( $this->mName === null && $this->mID === null ) {
 			throw new MWException( __METHOD__ . ' has both names and IDs null' );
 		} elseif ( $this->mID === null ) {
@@ -103,7 +103,7 @@ class Category {
 	 * Factory function.
 	 *
 	 * @param $title Title for the category page
-	 * @return Mixed: category, or false on a totally invalid name
+	 * @return category|false on a totally invalid name
 	 */
 	public static function newFromTitle( $title ) {
 		$cat = new self();
@@ -132,7 +132,7 @@ class Category {
 	 * @param $row result set row, must contain the cat_xxx fields. If the fields are null,
 	 *        the resulting Category object will represent an empty category if a title object
 	 *        was given. If the fields are null and no title was given, this method fails and returns false.
-	 * @param $title optional title object for the category represented by the given row.
+	 * @param Title $title optional title object for the category represented by the given row.
 	 *        May be provided if it is already known, to avoid having to re-create a title object later.
 	 * @return Category
 	 */
@@ -185,7 +185,7 @@ class Category {
 	public function getFileCount() { return $this->getX( 'mFiles' ); }
 
 	/**
-	 * @return mixed The Title for this category, or false on failure.
+	 * @return Title|false Title for this category, or false on failure.
 	 */
 	public function getTitle() {
 		if ( $this->mTitle ) return $this->mTitle;
@@ -248,27 +248,32 @@ class Category {
 		if ( wfReadOnly() ) {
 			return false;
 		}
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->begin();
+
 		# Note, we must use names for this, since categorylinks does.
 		if ( $this->mName === null ) {
 			if ( !$this->initialize() ) {
 				return false;
 			}
-		} else {
-			# Let's be sure that the row exists in the table.  We don't need to
-			# do this if we got the row from the table in initialization!
-			$seqVal = $dbw->nextSequenceValue( 'category_cat_id_seq' );
-			$dbw->insert(
-				'category',
-				array(
-					'cat_id' => $seqVal,
-					'cat_title' => $this->mName
-				),
-				__METHOD__,
-				'IGNORE'
-			);
 		}
+
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->begin();
+
+		# Insert the row if it doesn't exist yet (e.g., this is being run via
+		# update.php from a pre-1.16 schema).  TODO: This will cause lots and
+		# lots of gaps on some non-MySQL DBMSes if you run populateCategory.php
+		# repeatedly.  Plus it's an extra query that's unneeded almost all the
+		# time.  This should be rewritten somehow, probably.
+		$seqVal = $dbw->nextSequenceValue( 'category_cat_id_seq' );
+		$dbw->insert(
+			'category',
+			array(
+				'cat_id' => $seqVal,
+				'cat_title' => $this->mName
+			),
+			__METHOD__,
+			'IGNORE'
+		);
 
 		$cond1 = $dbw->conditional( 'page_namespace=' . NS_CATEGORY, 1, 'NULL' );
 		$cond2 = $dbw->conditional( 'page_namespace=' . NS_FILE, 1, 'NULL' );

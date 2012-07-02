@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -195,6 +196,8 @@ class WikilogItem
 			}
 		}
 
+		list( $date, $time, $tz ) = WikilogUtils::getLocalDateTime( $this->mPubDate );
+
 		/*
 		 * This is probably the largest amount of parameters to a
 		 * system message in MediaWiki. This is the price of allowing
@@ -208,41 +211,15 @@ class WikilogItem
 			/* $5  */ count( $authors ),
 			/* $6  */ ( count( $authors ) > 0 ? $authors[0] : '' ),
 			/* $7  */ $authorsFmt,
-			/* $8  */ $wgContLang->date( $this->mPubDate ),
-			/* $9  */ $wgContLang->time( $this->mPubDate ),
+			/* $8  */ $date,
+			/* $9  */ $time,
 			/* $10 */ $commentsFmt,
 			/* $11 */ count( $categories ),
 			/* $12 */ $categoriesFmt,
 			/* $13 */ count( $tags ),
-			/* $14 */ $tagsFmt
+			/* $14 */ $tagsFmt,
+			/* $15 */ $tz
 		);
-	}
-
-	/**
-	 * Returns an array with all published comments.
-	 * @deprecated Doesn't scale well, use query and pager objects instead.
-	 */
-	public function getComments( $thread = null ) {
-		wfDeprecated( __METHOD__ );
-		$dbr = wfGetDB( DB_SLAVE );
-
-		if ( $thread ) {
-			$result = WikilogComment::fetchAllFromItemThread( $dbr, $this->mID, $thread );
-		} else {
-			$result = WikilogComment::fetchAllFromItem( $dbr, $this->mID );
-		}
-
-		$comments = array();
-		foreach ( $result as $row ) {
-			$comment = WikilogComment::newFromRow( $this, $row );
-			if ( $comment->mCommentRev ) {
-				$rev = Revision::newFromId( $row->mCommentRev );
-				$comment->setText( $rev->getText() );
-			}
-			$comments[] = $comment;
-		}
-		$result->free();
-		return $comments;
 	}
 
 	/**

@@ -10,26 +10,40 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		parent::__construct('ImageReview', 'imagereview', false /* $listed */);
 	}
 
-	public function index() {
-
+	protected function setGlobalDisplayVars() {
+		// get more space for images
 		$this->wg->OasisFluid = true;
-		$this->wg->Out->setPageTitle('Image Review tool');
+		$this->wg->SuppressSpotlights = true;
+		$this->wg->SuppressWikiHeader = true;
+		$this->wg->SuppressPageHeader = true;
+		$this->wg->SuppressFooter = true;
+
+		$this->wg->Out->setPageTitle($this->getPageTitle());
+
+		$this->wg->Out->enableClientCache( false );
+	}
+
+	public function index() {
+		$this->setGlobalDisplayVars();
 
 		$action = $this->getPar();
+		$actions = explode('/',$action);
+		$action = array_pop($actions);
+
 		$this->action = $action;
 		$this->response->setJsVar('wgImageReviewAction', $action);
 
-		$accessQuestionable = $this->wg->User->isAllowed( 'questionableimagereview' );
-		$accessRejected = $this->wg->User->isAllowed( 'rejectedimagereview' );
+		$this->accessQuestionable = $this->wg->User->isAllowed( 'questionableimagereview' );
+		$this->accessRejected = $this->wg->User->isAllowed( 'rejectedimagereview' );
 
 		// check permissions
 		if (!$this->specialPage->userCanExecute($this->wg->User)) {
 			$this->specialPage->displayRestrictionError();
 			return false;
-		} elseif ( $action == self::ACTION_QUESTIONABLE && !$accessQuestionable ) {
+		} elseif ( $action == self::ACTION_QUESTIONABLE && !$this->accessQuestionable ) {
 			$this->specialPage->displayRestrictionError( 'questionableimagereview' );
 			return false;
-		} elseif ( $action == self::ACTION_REJECTED && !$accessRejected ) {
+		} elseif ( $action == self::ACTION_REJECTED && !$this->accessRejected ) {
 			$this->specialPage->displayRestrictionError( 'rejectedimagereview' );
 			return false;
 		} elseif ( $action == 'stats' ) {
@@ -39,7 +53,6 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->forward( get_class( $this ), 'csvStats' );
 		}
 
-		$this->wg->Out->enableClientCache( false );
 		$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 		$this->response->sendHeaders();
 
@@ -47,39 +60,24 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset('extensions/wikia/ImageReview/js/ImageReview.js');
 		$this->response->addAsset('extensions/wikia/ImageReview/css/ImageReview.scss');
 
-		$this->response->setVal( 'accessQuestionable', $accessQuestionable );
+		$this->response->setVal( 'accessQuestionable', $this->accessQuestionable );
 		$this->response->setVal( 'accessStats', $this->wg->User->isAllowed( 'imagereviewstats' ) );
 		$this->response->setVal( 'accessControls', $this->wg->user->isAllowed( 'imagereviewcontrols' ) );
 		$this->response->setVal( 'modeMsgSuffix', empty( $action ) ? '' : '-' . $action );
 
-		if($this->wg->user->isAllowed( 'imagereviewcontrols' )) {
-			$order = (int) $this->getVal( 'sort', -1 );
-			if ( $order >= 0 ) {
-				$this->app->wg->User->setOption( 'imageReviewSort', $order );
-				$this->app->wg->User->saveSettings();
-			}
-
-			$order = $this->app->wg->User->getOption( 'imageReviewSort' );
-		} else {
-			$order = -1;
-		}
+		$order = $this->getOrderingMethod();
 
 		$this->response->setVal( 'order', $order );
 
-		// get more space for images
-		$this->wg->SuppressSpotlights = true;
-		$this->wg->SuppressWikiHeader = true;
-		$this->wg->SuppressPageHeader = true;
-		$this->wg->SuppressFooter = true;
 
-		$helper = F::build( 'ImageReviewHelper' );
+		$helper = $this->getHelper();
+
 		$ts = $this->wg->request->getVal( 'ts' );
-
 		$query = ( empty($action) ) ? '' : '/'.$action ;
 		$this->fullUrl = $this->wg->Title->getFullUrl( );
-		$this->submitUrl = $this->wg->Title->getFullUrl( ) . $query;
-		$this->baseUrl = Title::newFromText('ImageReview', NS_SPECIAL)->getFullURL();
-
+		$this->baseUrl = $this->getBaseUrl();
+		$this->toolName = $this->getToolName();
+		$this->submitUrl = $this->baseUrl . $query;
 
 		if( $this->wg->request->wasPosted() ) {
 			$data = $this->wg->request->getValues();
@@ -109,7 +107,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$newestTs = $this->wg->memc->get( $helper->getUserTsKey() );
+		$newestTs = $this->wg->Memc->get( $helper->getUserTsKey() );
 
 		if ( $ts > $newestTs ) {
 			error_log("ImageReview: I've got the newest ts ($ts), I won't refetch the images");
@@ -121,16 +119,32 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		if ( count($this->imageList) == 0 ) {
 			if ( $action == self::ACTION_QUESTIONABLE ) {
-				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_QUESTIONABLE, $order );
+				$this->imageList = $helper->getImageList( $ts, $helper::STATE_QUESTIONABLE, $order );
 			} elseif ( $action == self::ACTION_REJECTED ) {
-				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_REJECTED, $order );
+				$this->imageList = $helper->getImageList( $ts, $helper::STATE_REJECTED, $order );
 			} else { 
-				$this->imageList = $helper->getImageList( $ts, ImageReviewHelper::STATE_UNREVIEWED, $order );
+				$this->imageList = $helper->getImageList( $ts, $helper::STATE_UNREVIEWED, $order );
 			}
 		}
 
-		if($accessQuestionable) {
+		if($this->accessQuestionable) {
 			$this->imageCount = $helper->getImageCount();
+		}
+	}
+
+	protected function getOrderingMethod() {
+		if ($this->wg->user->isAllowed('imagereviewcontrols')) {
+			$order = (int)$this->getVal('sort', -1);
+			if ($order >= 0) {
+				$this->app->wg->User->setOption('imageReviewSort', $order);
+				$this->app->wg->User->saveSettings();
+			}
+
+			$order = $this->app->wg->User->getOption('imageReviewSort');
+			return $order;
+		} else {
+			$order = -1;
+			return $order;
 		}
 	}
 
@@ -149,7 +163,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$endMonth = $this->request->getVal( 'endMonth', date( 'm' ) );
 		$endYear = $this->request->getVal( 'endYear', date( 'Y' ) );
 
-		$stats = $this->getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay );
+		$helper = $this->getHelper();
+
+		$stats = $helper->getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay );
 
 		// setup response data for table rendering
 		$this->response->setVal( 'summary', $stats['summary'] );
@@ -181,6 +197,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$endMonth = $this->request->getVal( 'endMonth', date( 'm' ) );
 		$endYear = $this->request->getVal( 'endYear', date( 'Y' ) );
 
+		$this->wg->Out->setPageTitle($this->getStatsPageTitle());
 		$stats = $this->getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay );
 
 		$name = "ImageReviewStats-$startYear-$startMonth-$startDay-to-$endYear-$endMonth-$endDay";
@@ -201,67 +218,23 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		exit;
 	}
 
+	protected function getPageTitle() {
+		return 'Image Review tool';
+	}
 
-	private function getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay ) {
+	protected function getHelper() {
+		return F::build( 'ImageReviewHelper' );
+	}
 
-		$startDate = $startYear . '-' . $startMonth . '-' . $startDay . ' 00:00:00';
-		$endDate = $endYear . '-' . $endMonth . '-' . $endDay . ' 23:59:59';
+	protected function getBaseUrl() {
+		return Title::newFromText('ImageReview', NS_SPECIAL)->getFullURL();
+	}
 
-		$summary = array(
-			'all' => 0,
-			ImageReviewHelper::STATE_APPROVED => 0,
-			ImageReviewHelper::STATE_REJECTED => 0,
-			ImageReviewHelper::STATE_QUESTIONABLE => 0,
-			'avg' => 0,
-		);
-		$data = array();
-		$userCount = 0;
+	protected function getToolName() {
+		return 'Image Review';
+	}
 
-		$this->wg->Out->setPageTitle('Image Review tool statistics');
-
-		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalDatawareDB );
-
-		$res = $dbr->query( "select review_state, reviewer_id, count( page_id ) as count from 
-		image_review_stats WHERE review_end BETWEEN '{$startDate}' AND '{$endDate}' group by review_state, reviewer_id with rollup" );
-
-		while ( $row = $dbr->fetchRow( $res ) ) {
-			if ( is_null( $row['review_state'] ) ) {
-				// total
-				$summary['all'] = $row['count'];
-			} elseif ( is_null( $row['reviewer_id'] ) ) {
-				$summary[$row['review_state']] = $row['count'];
-			} else {
-				if ( empty( $data[$row['reviewer_id']] ) ) {
-					$user = User::newFromId( $row['reviewer_id'] );
-					$userLink = Xml::element( 
-						'a',
-						array( 'href' => $user->getUserPage()->getFullUrl() ),
-						$user->getName()
-					);
-
-					$data[$row['reviewer_id']] = array(
-						'name' => $user->getName(),
-						'total' => 0,
-						ImageReviewHelper::STATE_APPROVED => 0,
-						ImageReviewHelper::STATE_REJECTED => 0,
-						ImageReviewHelper::STATE_QUESTIONABLE => 0,
-					);
-				}
-				$data[$row['reviewer_id']][$row['review_state']] = $row['count'];
-				$data[$row['reviewer_id']]['total'] += $row['count'];
-				$userCount++;
-			}
-		}
-
-		$summary['avg'] = $userCount > 0 ? $summary['all'] / $userCount : 0;
-
-		foreach ( $data as $reviewer => &$stats ) {
-			$stats['toavg'] = $stats['total'] - $summary['avg'];
-		}
-
-		return array(
-			'summary' => $summary,
-			'data' => $data,
-		);
+	protected function getStatsPageTitle() {
+		return 'Image Review tool statistics';
 	}
 }

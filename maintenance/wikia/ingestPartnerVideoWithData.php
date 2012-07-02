@@ -72,7 +72,7 @@ else {
 foreach ($providersVideoFeed as $provider) {
 	print("Starting import for provider $provider...\n");
 
-	$feedIngester = VideoFeedIngester::getInstance($provider);
+	$feedIngester = VideoFeedIngester::getInstance($provider); /* @var $feedIngester VideoFeedIngester */
 	$feedIngester->reupload = $reupload;
 
 	// get WikiFactory data

@@ -126,7 +126,7 @@ $messages['az'] = array(
 	'lookupcontribsfinal' => 'son',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -428,7 +428,7 @@ $messages['fr'] = array(
 	'lookupcontribsall' => 'tout',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -648,7 +648,7 @@ $messages['ku-latn'] = array(
 	'lookupcontribsgo' => 'Biçe',
 	'lookupcontribswikititle' => 'Sernav',
 	'lookupcontribswikioptions' => 'Vebijêrk',
-	'lookupcontribscontent' => 'naverok',
+	'lookupcontribscontent' => 'naverrok',
 	'lookupcontribsnormal' => 'niha',
 	'lookupcontribsall' => 'hemû',
 );
@@ -1010,13 +1010,13 @@ Aby wyświetlić listę, podaj nazwę użytokwnika.',
 	'lookupcontribsselectfor' => 'Wybierz dla:',
 	'lookupcontribsdisplaymode' => 'Wyświetl jako:',
 	'lookupcontribsselectmodenormal' => 'najnowsze edycje tego użytkownika',
-	'lookupcontribsselectmodefinal' => 'ostateczne edycje tego użytkownika',
+	'lookupcontribsselectmodefinal' => 'ostatnie edycje tego użytkownika',
 	'lookupcontribsselectmodeall' => 'wszystkie edycje tego użytkownika',
-	'lookupcontribsfullurls' => 'pełne adresy URL',
-	'lookupcontribslinks' => 'edycje - linki',
+	'lookupcontribsfullurls' => 'Pełne adresy URL',
+	'lookupcontribslinks' => 'linki wkładu',
 	'lookupcontribsgo' => 'Idź',
 	'lookupcontribsinvaliduser' => '<p class="error">Użytkownik "<b>$1</b>" nie istnieje.
-Sprawdź nazwę użytkownika.</p>',
+Sprawdź nazwę użytkonika.</p>',
 	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" nie jest poprawnym trybem wyświetlania.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" nie jest poprawnym trybem.</p>',
 	'lookupcontribsselectwikis' => 'Wybierz wiki:',
@@ -1028,23 +1028,23 @@ Sprawdź nazwę użytkownika.</p>',
 	'lookupcontribswikiurl' => 'Adres URL',
 	'lookupcontribswikititle' => 'Tytuł',
 	'lookupcontribswikioptions' => 'Opcje',
-	'lookupcontribscontribslink' => 'Edycje - link',
+	'lookupcontribscontribslink' => 'Link wkładu',
 	'lookupcontribsdetails' => 'Zobacz szczegóły dotyczące:',
 	'lookupcontribslastedited' => 'Ostatnio edytowano',
 	'lookupcontribsrecordspager' => "Wyniki od '''$1''' do '''$2''' z '''$3'''.",
 	'lookupcontribscontribs' => 'edycje',
 	'lookupcontribsnbrresult' => 'Liczba wyników:',
-	'lookupcontribsnext' => 'następna',
-	'lookupcontribsprevious' => 'poprzednia',
+	'lookupcontribsnext' => 'następny',
+	'lookupcontribsprevious' => 'poprzedni',
 	'lookupcontribspageremoved' => 'Usunięto:',
-	'lookupcontribsrestore' => 'przywróć',
+	'lookupcontribsrestore' => 'Przywróć',
 	'lookupcontribslog' => 'log',
 	'lookupcontribshist' => 'hist',
 	'lookupcontribsdiff' => 'różn.',
 	'right-lookupcontribs' => 'Wyświetlić globalne edycje użytkownika',
 	'lookupcontribsshowpages' => 'Wszystkie strony (w przestrzeni nazw $1)',
 	'lookupcontribscontent' => 'zawartość',
-	'lookupcontribscontribtitleforuser' => 'Edycje użytkownika:',
+	'lookupcontribscontribtitleforuser' => 'Wkład użytkownika:',
 	'lookupcontribsnormal' => 'ostatnie',
 	'lookupcontribsfinal' => 'ostateczne',
 	'lookupcontribsall' => 'wszystko',

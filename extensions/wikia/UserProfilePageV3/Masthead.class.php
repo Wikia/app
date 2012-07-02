@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Masthead {
 
@@ -40,7 +40,7 @@ class Masthead {
 	public function __construct( $user = null ) {
 		wfProfileIn( __METHOD__ );
 		if(!empty($user) && ($user instanceof User)) {
-			$this->mUser = $user;			
+			$this->mUser = $user;
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -508,18 +508,18 @@ class Masthead {
 	 */
 	public function uploadByUrl($url){
 		$sTmpFile = '';
-		
+
 		$errorNo = $this->uploadByUrlToTempFile($url, $sTmpFile);
-		
+
 		if( $errorNo == UPLOAD_ERR_OK ) {
-			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);			
+			$errorNo = $this->postProcessImageInternal($sTmpFile, $errorNo);
 		}
 
 		wfProfileOut(__METHOD__);
 		return $errorNo;
 	} // end uploadByUrl()
-	
-	
+
+
 	public function uploadByUrlToTempFile($url, &$sTmpFile){
 		global $wgTmpDirectory;
 		wfProfileIn(__METHOD__);
@@ -538,7 +538,7 @@ class Masthead {
 			return UPLOAD_ERR_CANT_WRITE;
 		}
 	}
-	
+
 	/**
 	 * uploadFile -- save file when is in proper format, do resize and
 	 * other stuffs
@@ -566,7 +566,8 @@ class Masthead {
 			return $errorNo;
 		}
 
-		$iFileSize = $request->getFileSize( $input );
+		$file = new WebRequestUpload($request, $input);
+		$iFileSize = $file->getSize();
 
 		if( empty( $iFileSize ) ) {
 			/**
@@ -576,7 +577,7 @@ class Masthead {
 			wfProfileOut(__METHOD__);
 			return UPLOAD_ERR_NO_FILE;
 		}
-	
+
 		$sTmpFile = $wgTmpDirectory.'/'.substr(sha1(uniqid($this->mUser->getID())), 0, 16);
 //		Wikia::log( __METHOD__, 'tmp', "Temp file set to {$sTmpFile}" );
 		$sTmp = $request->getFileTempname($input);
@@ -648,7 +649,7 @@ class Masthead {
 
 		$ioh = new ImageOperationsHelper();
 		$oImg = $ioh->postProcess(  $oImgOrig, $aOrigSize );
-		
+
 		/**
 		 * save to new file ... but create folder for it first
 		 */
@@ -689,7 +690,7 @@ class Masthead {
 		return $errorNo;
 	} // end postProcessImageInternal()
 
-	
+
 	function purgeUrl() {
 		// Purge the avatar URL and the proportions commonly used in Oasis.
 		global $wgUseSquid;
@@ -704,7 +705,7 @@ class Masthead {
 			);
 
 			SquidUpdate::purge($urls);
-		}		
+		}
 	}
 
 	static public function getUserStatsData( $userName, $useMasterDb = false ) {

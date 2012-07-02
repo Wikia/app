@@ -7,7 +7,7 @@ class SpecialAdvancedRandom extends SpecialPage {
 	 * Constructor
 	 */
 	public function __construct() {
-		SpecialPage::SpecialPage( 'AdvancedRandom' );
+		parent::__construct( 'AdvancedRandom' );
 	}
 
 	/**
@@ -22,7 +22,7 @@ class SpecialAdvancedRandom extends SpecialPage {
 	 */
 	public function execute( $par ) {
 		global $wgOut;
-		wfLoadExtensionMessages( 'AdvancedRandom' );
+		
 
 		$fname = 'SpecialAdvancedRandom::execute';
 

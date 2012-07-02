@@ -6,16 +6,16 @@ aliases for special pages
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'ThemeDesigner' => array( 'ThemeDesigner' ),
 	'ThemeDesignerPreview' => array( 'ThemeDesignerPreview' ),
 );
 
 /** Polish (Polski) */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'ThemeDesigner' => array( 'Kreator motywu' ),
 );
 

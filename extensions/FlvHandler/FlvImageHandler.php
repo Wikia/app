@@ -40,7 +40,7 @@ class FlvImageHandler extends ImageHandler {
 			wfDebug( __METHOD__.": $cmd\n" );
 			$out = wfShellExec( $cmd, $retval );
 			wfProfileOut( 'rsvg' );
-			
+
 			if (preg_match($wgFLVProbes[$wgFLVConverter]['regex'], $out, $matches)) {
 				return array($matches[1], $matches[2]); // width/height
 			} else {
@@ -81,7 +81,7 @@ class FlvImageHandler extends ImageHandler {
 			return new ThumbnailImage( $image, $dstUrl, $clientWidth, $clientHeight, $dstPath );
 		}
 
-		if ( !wfMkdirParents( dirname( $dstPath ) ) ) {
+		if ( !wfMkdirParents( dirname( $dstPath ), null, __METHOD__ ) ) {
 			return new MediaTransformError( 'thumbnail_error', $clientWidth, $clientHeight,
 				wfMsg( 'thumbnail_dest_directory' ) );
 		}
@@ -117,13 +117,13 @@ class FlvImageHandler extends ImageHandler {
 		return wfGetFLVsize( $path );
 	}*/
 
-	function getThumbType( $ext, $mime ) {
+	function getThumbType( $ext, $mime, $params = null ) {
 		return array( 'png', 'image/png' );
 	}
 
 	function getLongDesc( $file ) {
 		global $wgLang;
-		wfLoadExtensionMessages('FlvHandler');
+
 		return wfMsgExt( 'flv-long-desc', 'parseinline',
 			$wgLang->formatNum( $file->getWidth() ),
 			$wgLang->formatNum( $file->getHeight() ),

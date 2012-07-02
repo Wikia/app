@@ -18,11 +18,13 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Fryed-peach
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'geolite-desc' => "'''GeoIP''' is a registered trademarks of MaxMind, Inc. http://www.maxmind.com/<br />Do not translate it.
 
 {{desc}}",
+	'geolite' => '{{optional}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -40,7 +42,14 @@ $messages['ar'] = array(
 	'geolite' => 'جيو لايت',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'geolite-desc' => 'Redireición GeoIp llixera',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -61,11 +70,26 @@ $messages['bs'] = array(
 	'geolite-desc' => 'Pojednostavljeno GeoIp preusmjerenje',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'geolite-desc' => 'Redirecció lleugera a GeoIP',
+);
+
 /** Czech (Česky)
  * @author Mormegil
  */
 $messages['cs'] = array(
 	'geolite-desc' => 'Jednoduché přesměrování GeoIp',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ * @author Xxglennxx
+ */
+$messages['cy'] = array(
+	'geolite-desc' => 'Ailgyfeirio GeoIP Ysgafn',
 );
 
 /** German (Deutsch)
@@ -101,6 +125,13 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'geolite-desc' => 'Redirección ligera de GeoIp',
+);
+
+/** Persian (فارسی)
+ * @author Sahim
+ */
+$messages['fa'] = array(
+	'geolite-desc' => 'راهنمایی سبک و خفیف به روش  GeoIp',
 );
 
 /** Finnish (Suomi)
@@ -146,6 +177,13 @@ $messages['he'] = array(
 	'geolite-desc' => 'הפניה ל־GeoIp קלת משקל',
 );
 
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'geolite-desc' => 'GeoIp preusmjeravanje',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -174,6 +212,27 @@ $messages['id'] = array(
 	'geolite-desc' => 'Pengalihan GeoIP Ringan',
 );
 
+/** Interlingue (Interlingue)
+ * @author Renan
+ */
+$messages['ie'] = array(
+	'geolite-desc' => 'Redirectionment Lightweight GeoIp',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'geolite-desc' => 'Ọ-díghị-árü Núfù GeoIp',
+);
+
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'geolite-desc' => 'Reindirizzamento Lightweight GeoIp',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -181,7 +240,14 @@ $messages['ja'] = array(
 	'geolite-desc' => '軽量 GeoIp リダイレクト',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'geolite-desc' => '소형 GeoIP 송신 기능',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -193,6 +259,20 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'geolite-desc' => 'Liicht Viruleedung op GeoIP',
+);
+
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'geolite-desc' => 'Einvajige GeoIP-gebaseerde doorverwiezing',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'geolite-desc' => 'Fihodinana maivana Geolp',
 );
 
 /** Macedonian (Македонски)
@@ -209,6 +289,20 @@ $messages['ml'] = array(
 	'geolite-desc' => 'ലഘുവായ ജിയോഐപി തിരിച്ചുവിടൽ',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'geolite-desc' => 'Lightweight GeoIp Redirection',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'geolite-desc' => 'Lettvekts GeoIp-omdirigering',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -221,13 +315,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'geolite-desc' => 'Lettvekts-GeoIp-omdirigering',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'geolite-desc' => 'Lettvekts GeoIp-omdirigering',
 );
 
 /** Occitan (Occitan)
@@ -280,7 +367,14 @@ $messages['ru'] = array(
 	'geolite-desc' => 'Облегчённое перенаправление GeoIp',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'geolite-desc' => 'Полегшене напрямлїня GeoIP',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -294,18 +388,28 @@ $messages['sk'] = array(
 	'geolite-desc' => 'Odľahčené presmerovanie GeoIP',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'geolite-desc' => 'Lahkotna preusmeritev GeoIp',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'geolite-desc' => 'Редирекције за Lightweight GeoIp',
+	'geolite' => 'GeoLite',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Liangent
  */
 $messages['sr-el'] = array(
 	'geolite-desc' => 'Redirekcije za Lightweight GeoIp',
+	'geolite' => 'GeoLite',
 );
 
 /** Swedish (Svenska)
@@ -320,6 +424,13 @@ $messages['sv'] = array(
  */
 $messages['tk'] = array(
 	'geolite-desc' => 'Ýeňil GeoIP gönükdirmesi',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'geolite-desc' => 'Magaang na Paglilipat ng Pupuntahan ng GeoIp',
 );
 
 /** Turkish (Türkçe)

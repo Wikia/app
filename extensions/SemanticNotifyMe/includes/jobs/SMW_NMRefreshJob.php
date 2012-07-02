@@ -1,13 +1,11 @@
 <?php
 /**
- * @author dch
+ * @author ning
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
   die( "This file is part of the Semantic NotifyMe Extension. It is not a valid entry point.\n" );
 }
-global $IP;
-require_once( "$IP/includes/JobQueue.php" );
 
 class SMWNMRefreshJob extends Job {
 

@@ -11,10 +11,14 @@ class UserPreferencesV2 {
 	 */
 
 	public function onGetPreferences($user, $defaultPreferences) {
-		global $wgEnableWallExt, $wgOut, $wgScriptPath, $wgUser;
+		global $wgEnableWallExt, $wgOut, $wgScriptPath, $wgUser, $wgAuth;
 
 		//add javascript
 		$wgOut->addScriptFile($wgScriptPath . '/extensions/wikia/UserPreferencesV2/js/UserPreferencesV2.js');
+
+		// remove Appearance tab (custom css/js)
+		unset( $defaultPreferences['commoncssjs'] );
+
 		//Tab 1: User Profile
 		unset($defaultPreferences['userid']);
 		unset($defaultPreferences['editcount']);
@@ -22,16 +26,26 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['realname']);
 		unset($defaultPreferences['rememberpassword']);
 		unset($defaultPreferences['ccmeonemails']);
-		if (isset($defaultPreferences['username'])) $defaultPreferences['username']['label-message'] = 'preferences-v2-username';
-		if (isset($defaultPreferences['usergroups'])) $defaultPreferences['usergroups']['label-message'] = 'preferences-v2-usergroups';
+		if (isset($defaultPreferences['username'])) {
+			$defaultPreferences['username']['label-message'] = 'preferences-v2-username';
+		}
+		if (isset($defaultPreferences['usergroups'])) {
+			$defaultPreferences['usergroups']['label-message'] = 'preferences-v2-usergroups';
+		}
 		if (isset($defaultPreferences['gender'])) {
 			$defaultPreferences['gender']['label-message'] = 'preferences-v2-gender';
 			$defaultPreferences['gender']['help-message'] = '';
 		}
 
-		if (isset($defaultPreferences['password'])) $defaultPreferences['password']['label-message'] = 'preferences-v2-password';
-		if (isset($defaultPreferences['oldsig'])) $defaultPreferences['oldsig']['label-message'] = 'preferences-v2-oldsig';
-		if (isset($defaultPreferences['nickname'])) $defaultPreferences['nickname']['label-message'] = 'preferences-v2-nickname';
+		if (isset($defaultPreferences['password'])) {
+			$defaultPreferences['password']['label-message'] = 'preferences-v2-password';
+		}
+		if (isset($defaultPreferences['oldsig'])) {
+			$defaultPreferences['oldsig']['label-message'] = 'preferences-v2-oldsig';
+		}
+		if (isset($defaultPreferences['nickname'])) {
+			$defaultPreferences['nickname']['label-message'] = 'preferences-v2-nickname';
+		}
 		if (isset($defaultPreferences['fancysig'])) {
 			$defaultPreferences['fancysig']['label-message'] = 'preferences-v2-fancysig';
 			$defaultPreferences['fancysig']['help-message'] = '';
@@ -71,22 +85,28 @@ class UserPreferencesV2 {
 			$defaultPreferences['showAds']['section'] = 'personal/appearance';
 			$defaultPreferences['showAds']['label-message'] = 'tog-showAdsv2';
 			$defaultPreferences['showAds']['type'] = 'select';
-			$adOptions[wfMsg('preferences-v2-showads-disable')] = false;
-			$adOptions[wfMsg('preferences-v2-showads-enable')] = true;
+			$adOptions[wfMsg('preferences-v2-showads-disable')] = 0;
+			$adOptions[wfMsg('preferences-v2-showads-enable')] = 1;
 			$defaultPreferences['showAds']['options'] = $adOptions;
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showAds');
 		}
-		if (isset($defaultPreferences['myhomedisableredirect'])) $defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
+		if (isset($defaultPreferences['myhomedisableredirect'])) {
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'myhomedisableredirect');
+		}
 
 		//Tab 2: Email
 		unset($defaultPreferences['imagesize']);
 		unset($defaultPreferences['thumbsize']);
 		unset($defaultPreferences['math']);
 		if (isset($defaultPreferences['emailaddress'])) {
+			$defaultPreferences['emailaddress']['type'] = $wgAuth->allowPropChange( 'emailaddress' ) ? 'email' : 'info' ;
+			$defaultPreferences['emailaddress']['default'] = $user->getEmail() ? htmlspecialchars( $user->getEmail() ) : '' ;
 			$defaultPreferences['emailaddress']['section'] = 'emailv2/addressv2';
 			$defaultPreferences['emailaddress']['label-message'] = 'preferences-v2-my-email-address';
 		}
-		if (isset($defaultPreferences['emailauthentication'])) $defaultPreferences['emailauthentication']['section'] = 'emailv2/addressv2';
+		if (isset($defaultPreferences['emailauthentication'])) {
+			$defaultPreferences['emailauthentication']['section'] = 'emailv2/addressv2';
+		}
 
 		if (isset($defaultPreferences['watchdefault'])) {
 			$defaultPreferences['watchdefault']['section'] = 'emailv2/followed-pages-iv2';
@@ -137,9 +157,13 @@ class UserPreferencesV2 {
 			$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'marketingallowed');
 		}
-		if($wgEnableWallExt) {
-			if (isset($defaultPreferences['enotifwallthread'])) $defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifwallthread');
-			if (isset($defaultPreferences['enotifmywall'])) $defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifmywall');
+		if ($wgEnableWallExt) {
+			if (isset($defaultPreferences['enotifwallthread'])) {
+				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifwallthread');
+			}
+			if (isset($defaultPreferences['enotifmywall'])) {
+				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifmywall');
+			}
 		}
 
 		if (isset($defaultPreferences['htmlemails'])) {
@@ -155,7 +179,7 @@ class UserPreferencesV2 {
 			$defaultPreferences['enotifrevealaddr']['section'] = 'emailv2/email-advanced-v2';
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'enotifrevealaddr');
 		}
-		if ( array_key_exists('watchlistdigestclear', $defaultPreferences) ) {
+		if (array_key_exists('watchlistdigestclear', $defaultPreferences)) {
 			$defaultPreferences['watchlistdigestclear']['section'] = 'emailv2/email-advanced-v2';
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'watchlistdigestclear');
 		}
@@ -167,8 +191,12 @@ class UserPreferencesV2 {
 		}
 
 		//Tab 3: Editing
-		if (isset($defaultPreferences['watchlistdays'])) $defaultPreferences['watchlistdays']['help'] = '';
-		if (isset($defaultPreferences['wllimit'])) $defaultPreferences['wllimit']['help'] = '';
+		if (isset($defaultPreferences['watchlistdays'])) {
+			$defaultPreferences['watchlistdays']['help'] = '';
+		}
+		if (isset($defaultPreferences['wllimit'])) {
+			$defaultPreferences['wllimit']['help'] = '';
+		}
 		unset($defaultPreferences['nowserver']);
 		unset($defaultPreferences['nowlocal']);
 		unset($defaultPreferences['underline']);
@@ -179,7 +207,9 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['nocache']);
 		unset($defaultPreferences['showjumplinks']);
 		unset($defaultPreferences['numberheadings']);
-		if (isset($defaultPreferences['enablerichtext'])) $defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
+		if (isset($defaultPreferences['enablerichtext'])) {
+			$defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
+		}
 		if (isset($defaultPreferences['disablelinksuggest'])) {
 			$defaultPreferences['disablelinksuggest']['section'] = 'editing/editing-experience';
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'disablelinksuggest');
@@ -206,8 +236,12 @@ class UserPreferencesV2 {
 				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'rows');
 			}
 		}
-		if (isset($defaultPreferences['editsectiononrightclick'])) $defaultPreferences['editsectiononrightclick']['label-message'] = 'tog-editsectiononrightclick-v2';
-		if (isset($defaultPreferences['editondblclick'])) $defaultPreferences['editondblclick']['label-message'] = 'tog-editondblclick-v2';
+		if (isset($defaultPreferences['editsectiononrightclick'])) {
+			$defaultPreferences['editsectiononrightclick']['label-message'] = 'tog-editsectiononrightclick-v2';
+		}
+		if (isset($defaultPreferences['editondblclick'])) {
+			$defaultPreferences['editondblclick']['label-message'] = 'tog-editondblclick-v2';
+		}
 		if (isset($defaultPreferences['disablecategoryselect'])) {
 			$defaultPreferences['disablecategoryselect']['section'] = 'editing/starting-an-edit';
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'disablecategoryselect');
@@ -223,8 +257,12 @@ class UserPreferencesV2 {
 			$defaultPreferences['rclimit']['help'] = '';
 			$defaultPreferences['rclimit']['help-message'] = '';
 		}
-		if (isset($defaultPreferences['usenewrc'])) $defaultPreferences['usenewrc']['section'] = 'under-the-hood/recent-changesv2';
-		if (isset($defaultPreferences['hideminor'])) $defaultPreferences['hideminor']['section'] = 'under-the-hood/recent-changesv2';
+		if (isset($defaultPreferences['usenewrc'])) {
+			$defaultPreferences['usenewrc']['section'] = 'under-the-hood/recent-changesv2';
+		}
+		if (isset($defaultPreferences['hideminor'])) {
+			$defaultPreferences['hideminor']['section'] = 'under-the-hood/recent-changesv2';
+		}
 		if (isset($defaultPreferences['watchlistdays'])) {
 			$defaultPreferences['watchlistdays']['section'] = 'under-the-hood/followed-pagesv2';
 			$defaultPreferences['watchlistdays']['help'] = '';
@@ -233,13 +271,27 @@ class UserPreferencesV2 {
 			$defaultPreferences['wllimit']['section'] = 'under-the-hood/followed-pagesv2';
 			$defaultPreferences['wllimit']['help'] = '';
 		}
-		if (isset($defaultPreferences['extendwatchlist'])) $defaultPreferences['extendwatchlist']['section'] = 'under-the-hood/followed-pagesv2';
-		if (isset($defaultPreferences['watchlisthideminor'])) $defaultPreferences['watchlisthideminor']['section'] = 'under-the-hood/followed-pagesv2';
-		if (isset($defaultPreferences['watchlisthidebots'])) $defaultPreferences['watchlisthidebots']['section'] = 'under-the-hood/followed-pagesv2';
-		if (isset($defaultPreferences['watchlisthideown'])) $defaultPreferences['watchlisthideown']['section'] = 'under-the-hood/followed-pagesv2';
-		if (isset($defaultPreferences['watchlisthideanons'])) $defaultPreferences['watchlisthideanons']['section'] = 'under-the-hood/followed-pagesv2';
-		if (isset($defaultPreferences['watchlisthideliu'])) $defaultPreferences['watchlisthideliu']['section'] = 'under-the-hood/followed-pagesv2';
-		if (isset($defaultPreferences['watchlisttoken'])) $defaultPreferences['watchlisttoken']['section'] = 'under-the-hood/followed-pagesv2';
+		if (isset($defaultPreferences['extendwatchlist'])) {
+			$defaultPreferences['extendwatchlist']['section'] = 'under-the-hood/followed-pagesv2';
+		}
+		if (isset($defaultPreferences['watchlisthideminor'])) {
+			$defaultPreferences['watchlisthideminor']['section'] = 'under-the-hood/followed-pagesv2';
+		}
+		if (isset($defaultPreferences['watchlisthidebots'])) {
+			$defaultPreferences['watchlisthidebots']['section'] = 'under-the-hood/followed-pagesv2';
+		}
+		if (isset($defaultPreferences['watchlisthideown'])) {
+			$defaultPreferences['watchlisthideown']['section'] = 'under-the-hood/followed-pagesv2';
+		}
+		if (isset($defaultPreferences['watchlisthideanons'])) {
+			$defaultPreferences['watchlisthideanons']['section'] = 'under-the-hood/followed-pagesv2';
+		}
+		if (isset($defaultPreferences['watchlisthideliu'])) {
+			$defaultPreferences['watchlisthideliu']['section'] = 'under-the-hood/followed-pagesv2';
+		}
+		if (isset($defaultPreferences['watchlisttoken'])) {
+			$defaultPreferences['watchlisttoken']['section'] = 'under-the-hood/followed-pagesv2';
+		}
 
 		if (isset($defaultPreferences['highlightbroken'])) {
 			$defaultPreferences['highlightbroken']['section'] = 'under-the-hood/advanced-displayv2';
@@ -260,7 +312,7 @@ class UserPreferencesV2 {
 			$defaultPreferences['showhiddencats']['section'] = 'under-the-hood/advanced-displayv2';
 			$defaultPreferences['showhiddencats']['type'] = 'toggle';
 			$defaultPreferences['showhiddencats']['label-message'] = 'tog-showhiddencats';
-			$defaultPreferences = $this->moveToEndOfArray( $defaultPreferences, 'showhiddencats' );
+			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'showhiddencats');
 		}
 		if (isset($defaultPreferences['showjumplinks'])) {
 			$defaultPreferences['showjumplinks']['section'] = 'under-the-hood/advanced-displayv2';
@@ -277,8 +329,12 @@ class UserPreferencesV2 {
 			$defaultPreferences['numberheadings']['type'] = 'toggle';
 			$defaultPreferences['numberheadings']['label-message'] = 'tog-numberheadings';
 		}
-		if (isset($defaultPreferences['diffonly'])) $defaultPreferences['diffonly']['section'] = 'under-the-hood/advanced-displayv2';
-		if (isset($defaultPreferences['norollbackdiff'])) $defaultPreferences['norollbackdiff']['section'] = 'under-the-hood/advanced-displayv2';
+		if (isset($defaultPreferences['diffonly'])) {
+			$defaultPreferences['diffonly']['section'] = 'under-the-hood/advanced-displayv2';
+		}
+		if (isset($defaultPreferences['norollbackdiff'])) {
+			$defaultPreferences['norollbackdiff']['section'] = 'under-the-hood/advanced-displayv2';
+		}
 		if (isset($defaultPreferences['hidefollowedpages'])) {
 			$defaultPreferences['hidefollowedpages']['section'] = 'under-the-hood/advanced-displayv2';
 			$defaultPreferences['hidefollowedpages']['label-message'] = 'tog-hidefollowedpages-v2';
@@ -290,18 +346,20 @@ class UserPreferencesV2 {
 				$defaultPreferences['justify']['label-message'] = 'tog-justify-v2';
 				$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'justify');
 			}
-			else unset($defaultPreferences['justify']);
+			else {
+				unset($defaultPreferences['justify']);
+			}
 		}
-		if ( ($wgEnableWallExt) && (isset($defaultPreferences['wallshowsource'])) ) {
+		if (($wgEnableWallExt) && (isset($defaultPreferences['wallshowsource']))) {
 			$defaultPreferences = $this->moveToEndOfArray($defaultPreferences, 'wallshowsource');
 		}
-		if ( isset( $defaultPreferences['hidepatrolled'] ) ) {
+		if (isset($defaultPreferences['hidepatrolled'])) {
 			$defaultPreferences['hidepatrolled']['section'] = 'under-the-hood/patrolled-editsv2';
 		}
-		if ( isset( $defaultPreferences['newpageshidepatrolled'] ) ) {
+		if (isset($defaultPreferences['newpageshidepatrolled'])) {
 			$defaultPreferences['newpageshidepatrolled']['section'] = 'under-the-hood/patrolled-editsv2';
 		}
-		if ( isset( $defaultPreferences['watchlisthidepatrolled'] ) ) {
+		if (isset($defaultPreferences['watchlisthidepatrolled'])) {
 			$defaultPreferences['watchlisthidepatrolled']['section'] = 'under-the-hood/patrolled-editsv2';
 		}
 		unset($defaultPreferences['enotiffollowedpages']);
@@ -309,6 +367,51 @@ class UserPreferencesV2 {
 		unset($defaultPreferences['nocache']);
 		unset($defaultPreferences['numberheadings']);
 		unset($defaultPreferences['showjumplinks']);
+
+		return true;
+	}
+
+	public function onSpecialPreferencesSetUserOptions($preferences, &$user) {
+		global $wgOut, $wgCityId;
+		$userIdentityObject = new UserIdentityBox(F::app(), $user, 0);
+
+		$mastheadOptions = $userIdentityObject->getFullData();
+		$masthead = F::build('Masthead', array($user));
+		if(!empty($masthead->mUser->mOptionOverrides['avatar'])) {
+			$mastheadOptions['avatar'] = $masthead->mUser->mOptionOverrides['avatar'];
+		}
+
+		$user->resetOptions();
+
+		foreach ($mastheadOptions as $optionName => $optionValue) {
+			if(!is_array($optionValue)) {
+				$user->setOption($optionName, $optionValue);
+			}
+		}
+
+		$user->saveSettings();
+		$url = SpecialPage::getTitleFor('Preferences')->getFullURL('success');
+		$wgOut->redirect($url);
+		return true;
+	}
+
+	// check if email is valid
+	public static function onSavePreferences( &$formData, &$error ) {
+		if ( array_key_exists('emailaddress', $formData) && !Sanitizer::validateEmail($formData['emailaddress']) ) {
+			$error = F::app()->wf->Msg( 'invalidemailaddress' );
+			return false;
+		}
+
+		return true;
+	}
+
+
+	public function onPreferencesTrySetUserEmail( $user, $newEmail, &$result ) {
+		list( $status, $info ) = Preferences::trySetUserEmail( $user, $newEmail );
+		if ( $status instanceof Status && !$status->isGood() ) {
+			$result = $status->getWikiText( $info );
+			return false;
+		}
 
 		return true;
 	}

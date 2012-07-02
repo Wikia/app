@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension UserStatus.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -30,11 +31,18 @@ $messages['en'] = array(
  * @author Bennylin
  * @author EugeneZelenko
  * @author Purodha
+ * @author Siebrand
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'onlinestatus-desc' => 'Short description of the Onlinestatus extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'onlinestatus-desc' => '{{desc}}',
+	'onlinestatus-subtitle-offline' => 'Parameters:
+* $1 can be used for GENDER support.',
+	'onlinestatus-subtitle-online' => 'Parameters:
+* $1 can be used for GENDER support.',
 	'onlinestatus-tab' => '{{Identical|Status}}',
 	'onlinestatus-toggles-desc' => '{{Identical|Status}}',
+	'onlinestatus-toggles-show' => 'Toggle in [[Special:Preferences|preferences]]. {{Gender}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -47,6 +55,26 @@ $messages['af'] = array(
 	'onlinestatus-toggles-desc' => 'U status:',
 	'onlinestatus-toggle-offline' => 'Aflyn',
 	'onlinestatus-toggle-online' => 'Aanlyn',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'onlinestatus-desc' => 'Shto një preferencë për të treguar nëse përdoruesi është aktualisht i pranishëm ose jo në wiki',
+	'onlinestatus-js-anon' => 'Gabim: ju duhet të keni hyrë brenda për të përdorur këtë veçori',
+	'onlinestatus-js-changed' => 'Gjendja juaj është ndryshuar për "$1"',
+	'onlinestatus-js-error' => 'Pamundur për të ndryshuar statusin, vlerë "$1" është i pavlefshëm',
+	'onlinestatus-subtitle-offline' => 'Ky përdorues është offline',
+	'onlinestatus-subtitle-online' => 'Ky përdorues është aktualisht online',
+	'onlinestatus-tab' => 'Statusi',
+	'onlinestatus-toggles-desc' => 'Statusi i juaj:',
+	'onlinestatus-toggles-explain' => 'Kjo ju lejon të treguar përdoruesve të tjerë nëse jeni të vërtetë online apo jo duke shfletuar faqen tuaj të përdoruesit.',
+	'onlinestatus-toggles-show' => 'Gjendja Trego online në faqen time përdorues',
+	'onlinestatus-toggle-offline' => 'Offline',
+	'onlinestatus-toggle-online' => 'Online',
+	'onlinestatus-pref-onlineonlogin' => 'Ndryshimi statusin tim në internet kur të hyni në',
+	'onlinestatus-pref-offlineonlogout' => 'Ndryshimi statusin tim të fundit kur hyni-out',
 );
 
 /** Arabic (العربية)
@@ -70,6 +98,19 @@ $messages['ar'] = array(
 	'onlinestatus-pref-offlineonlogout' => 'غير حالتي إلى غير موجود عند تسجيل الخروج',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author 334a
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'onlinestatus-subtitle-offline' => 'ܡܦܠܚܢܐ ܗܢܐ ܠܐ ܨܡܝܕܐ ܗܘ ܗܫܐ',
+	'onlinestatus-subtitle-online' => 'ܡܦܠܚܢܐ ܗܢܐ ܨܡܝܕܐ ܗܘ ܗܫܐ',
+	'onlinestatus-tab' => 'ܐܝܟܢܝܘܬܐ',
+	'onlinestatus-toggles-desc' => 'ܐܝܟܢܝܘܬܐ ܕܝܠܟ:',
+	'onlinestatus-toggle-offline' => 'ܠܐ ܨܡܝܕܐ',
+	'onlinestatus-toggle-online' => 'ܨܡܝܕܐ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Ghaly
  * @author Meno25
@@ -91,12 +132,20 @@ $messages['arz'] = array(
 	'onlinestatus-pref-offlineonlogout' => 'غير حالتى إلى غير موجود عند تسجيل الخروج',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'onlinestatus-tab' => 'Status',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Zedlik
  */
 $messages['be-tarask'] = array(
-	'onlinestatus-desc' => 'Дадае устаноўкі для паказу, ці прысутнічае ўдзельнік у {{GRAMMAR:месны|{{SITENAME}}}}, ці не',
+	'onlinestatus-desc' => 'Дадае налады для паказу, ці прысутнічае ўдзельнік у {{GRAMMAR:месны|{{SITENAME}}}}, ці не',
 	'onlinestatus-js-anon' => 'Памылка: Вам неабходна увайсьці ў сыстэму, каб выкарыстоўваць гэтую магчымасьць',
 	'onlinestatus-js-changed' => 'Ваш статус быў зьменены на «$1»',
 	'onlinestatus-js-error' => 'Немагчыма зьмяніць статус, няслушнае значэньне «$1»',
@@ -128,25 +177,39 @@ $messages['bg'] = array(
 	'onlinestatus-toggle-online' => 'На линия',
 );
 
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'onlinestatus-subtitle-online' => 'এই ব্যবহারকারী বর্তমানে অনলাইনে আছেন',
+	'onlinestatus-tab' => 'অবস্থা',
+	'onlinestatus-toggles-desc' => 'আপনার অবস্থান:',
+	'onlinestatus-toggle-offline' => 'অফলাইন',
+	'onlinestatus-toggle-online' => 'অনলাইন',
+	'onlinestatus-pref-onlineonlogin' => 'প্রবেশের পর আমার অবস্থা অনলাইনে পরিবর্তন করো',
+	'onlinestatus-pref-offlineonlogout' => 'প্রস্থানের পর আমার অবস্থা অফলাইনে পরিবর্তন করো',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
-	'onlinestatus-desc' => "Ouzhpennañ a ran un arvenntenn evit diskouez ma 'z eo amañ an implijer pe get",
-	'onlinestatus-js-anon' => "Fazi : rankout a reoc'h bezañ luget evit implijout an arc'hweladur-mañ",
+	'onlinestatus-desc' => 'Ouzhpennañ a ra un arventenn da ziskouez hag-eñ emañ kevreet an implijer pe get',
+	'onlinestatus-js-anon' => "Fazi : ret eo deoc'h bezañ kevreet evit gellout implijout an arc'hweladur-mañ",
 	'onlinestatus-js-changed' => 'Cheñchet eo bet ho statud da « $1 »',
-	'onlinestatus-js-error' => 'Diposubl eo cheñch ar statud, n\'eo ket mat an dalvoudenn "$1"',
+	'onlinestatus-js-error' => 'Diposupl eo cheñch ar statud, n\'eo ket mat an dalvoudenn "$1"',
 	'onlinestatus-subtitle-offline' => 'Ezlinenn eo an implijer-mañ evit bremañ',
 	'onlinestatus-subtitle-online' => 'Enlinenn eo an implijer-mañ evit bremañ',
 	'onlinestatus-tab' => 'Statud',
 	'onlinestatus-toggles-desc' => 'Ho statud :',
-	'onlinestatus-toggles-explain' => "Aotreañ a ra an implijerien all da c'houzout ma 'z oc'h enlinenn pe get en ur sellet ouzh ho pajenn implijer.",
+	'onlinestatus-toggles-explain' => "Talvezout a ra deoc'h da ziskouez d'an implijerien all hag-eñ emaoc'h enlinenn pe get en ur sellet ouzh ho pajenn implijer.",
 	'onlinestatus-toggles-show' => 'Diskouez ma statud war ma fajenn implijer',
-	'onlinestatus-toggle-offline' => 'Ezlinenn',
-	'onlinestatus-toggle-online' => 'Enlinenn',
-	'onlinestatus-pref-onlineonlogin' => "Kemmañ va statud da en linenn p'en em lugan",
-	'onlinestatus-pref-offlineonlogout' => "Kemmañ va statud da ezlinenn p'en em zilugañ",
+	'onlinestatus-toggle-offline' => 'Ezvezant',
+	'onlinestatus-toggle-online' => 'Kevreet',
+	'onlinestatus-pref-onlineonlogin' => 'Kemmañ ma statud da enlinenn pa gevrean',
+	'onlinestatus-pref-offlineonlogout' => 'Kemmañ ma statud da ezlinenn pa zigevrean',
 );
 
 /** Bosnian (Bosanski)
@@ -173,6 +236,8 @@ $messages['bs'] = array(
  * @author SMP
  */
 $messages['ca'] = array(
+	'onlinestatus-desc' => "Afegeix una preferència per a mostrar si l'usuari actualment està present al wiki o no ho està",
+	'onlinestatus-js-anon' => "Error: cal que tingueu un compte d'usuari per a utilitzar aquesta funció",
 	'onlinestatus-js-changed' => "El vostre estat s'ha canviat a «$1»",
 	'onlinestatus-js-error' => "Impossible canviar d'estat, el valor «$1» no és vàlid",
 	'onlinestatus-subtitle-offline' => 'Actualment aquest usuari no està connectat',
@@ -229,6 +294,26 @@ $messages['cy'] = array(
 	'onlinestatus-pref-offlineonlogout' => 'Newid nodyn fy nghyflwr i all-lein wrth allgofnodi',
 );
 
+/** Danish (Dansk)
+ * @author Amjaabc
+ */
+$messages['da'] = array(
+	'onlinestatus-desc' => "Angiver ønsker til visning, hvis brugeren for øjeblikket er til stede eller ikke på wiki'en",
+	'onlinestatus-js-anon' => 'Fejl: Du skal være logget ind for at bruge denne facilitet',
+	'onlinestatus-js-changed' => 'Din status er skiftet til "$1"',
+	'onlinestatus-js-error' => 'Ikke muligt at skifte tilstand, værdien "$1" er ikke gyldig',
+	'onlinestatus-subtitle-offline' => 'Brugeren er ikke logget ind i øjeblikket',
+	'onlinestatus-subtitle-online' => 'Brugeren er logget ind',
+	'onlinestatus-tab' => 'Status',
+	'onlinestatus-toggles-desc' => 'Din status:',
+	'onlinestatus-toggles-explain' => 'Dette gør det muligt for dig at tillade andre brugere at se, om du er logget ind eller ikke, ved at se på din brugerside.',
+	'onlinestatus-toggles-show' => 'Vis på min brugerside, om jeg er logget ind eller ikke',
+	'onlinestatus-toggle-offline' => 'Ikke logget ind',
+	'onlinestatus-toggle-online' => 'Logget ind',
+	'onlinestatus-pref-onlineonlogin' => 'Skift min status til logget ind, når jeg logger ind',
+	'onlinestatus-pref-offlineonlogout' => 'Skift min status til ikke logget ind, når jeg logger ud',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  */
@@ -249,7 +334,7 @@ $messages['de'] = array(
 	'onlinestatus-pref-offlineonlogout' => 'Status auf offline ändern, wenn ich mich abmelde',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  */
 $messages['de-formal'] = array(
@@ -280,9 +365,11 @@ $messages['dsb'] = array(
 );
 
 /** Greek (Ελληνικά)
+ * @author Dada
  * @author ZaDiak
  */
 $messages['el'] = array(
+	'onlinestatus-js-anon' => 'Σφάλμα: πρέπει να είστε συνδεδεμένοι για να χρησιμοποιήσετε αυτή τη δυνατότητα',
 	'onlinestatus-js-changed' => 'Η κατάστασή σας έχει αλλάξει σε "$1"',
 	'onlinestatus-subtitle-offline' => 'Αυτός ο χρήστης είναι τώρα εκτός σύνδεσης',
 	'onlinestatus-subtitle-online' => 'Αυτός ο χρηστής είναι εντός σύνδεσης',
@@ -318,6 +405,7 @@ $messages['eo'] = array(
  * @author Cojoilustrado
  * @author Crazymadlover
  * @author Imre
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'onlinestatus-desc' => 'Crea una preferencia para mostrar si el usuario está conectado al wiki',
@@ -326,7 +414,7 @@ $messages['es'] = array(
 	'onlinestatus-js-error' => 'Imposible cambiar status, valor "$1" es inválido',
 	'onlinestatus-subtitle-offline' => 'Este usuario se encuentra desconectado',
 	'onlinestatus-subtitle-online' => 'Este usuario se encuentra conectado',
-	'onlinestatus-tab' => 'Estatus',
+	'onlinestatus-tab' => 'Estado',
 	'onlinestatus-toggles-desc' => 'Tu estatus:',
 	'onlinestatus-toggles-explain' => 'Esto te permite mostrar a otros usuarios si estás conectado en tu página de usuario.',
 	'onlinestatus-toggles-show' => 'Muestra mi status en mi página de usuario',
@@ -399,16 +487,22 @@ $messages['fr'] = array(
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'onlinestatus-subtitle-offline' => 'Ceti usanciér est ora en defôr de legne',
+	'onlinestatus-subtitle-online' => 'Ceti usanciér est ora en legne',
 	'onlinestatus-tab' => 'Statut',
+	'onlinestatus-toggles-desc' => 'Voutron statut :',
+	'onlinestatus-toggle-offline' => 'Absent',
+	'onlinestatus-toggle-online' => 'Present',
 );
 
 /** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
-	'onlinestatus-desc' => 'Engade unha preferencia para amosar se o usuario está actualmente conectado ou non no wiki',
+	'onlinestatus-desc' => 'Engade unha preferencia para mostrar se o usuario está actualmente conectado ou non no wiki',
 	'onlinestatus-js-anon' => 'Erro: debe acceder ao sistema para usar esta característica',
 	'onlinestatus-js-changed' => 'O seu status foi cambiado a "$1"',
 	'onlinestatus-js-error' => 'É imposible cambiar o status; o valor "$1" é inválido',
@@ -417,7 +511,7 @@ $messages['gl'] = array(
 	'onlinestatus-tab' => 'Estado',
 	'onlinestatus-toggles-desc' => 'O seu estado:',
 	'onlinestatus-toggles-explain' => 'Isto permítelle ensinar aos demais usuarios se está actualmente conectado ou non vendo a súa páxina de usuario.',
-	'onlinestatus-toggles-show' => 'Amosar o meu estado na miña páxina de usuario',
+	'onlinestatus-toggles-show' => 'Mostrar o meu estado na miña páxina de usuario',
 	'onlinestatus-toggle-offline' => 'Desconectado',
 	'onlinestatus-toggle-online' => 'Conectado',
 	'onlinestatus-pref-onlineonlogin' => 'Cambiar o meu status a "conectado" cando acceda ao sistema',
@@ -581,12 +675,13 @@ $messages['id'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Darth Kule
  */
 $messages['it'] = array(
 	'onlinestatus-desc' => "Aggiungi una preferenza per mostrare se l'utente è al momento presente o meno sul sito",
 	'onlinestatus-js-anon' => "Errore: è necessario effettuare l'accesso per utilizzare questa funzione",
-	'onlinestatus-js-changed' => 'Lo stato è stato cambiato in "$"',
+	'onlinestatus-js-changed' => 'Il tuo stato è stato cambiato in "$1"',
 	'onlinestatus-js-error' => 'Impossibile modificare lo stato, il valore "$1" non è valido',
 	'onlinestatus-subtitle-offline' => 'Questo utente non è attualmente connesso',
 	'onlinestatus-subtitle-online' => 'Questo utente è attualmente connesso',
@@ -636,9 +731,10 @@ $messages['jv'] = array(
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
  * @author Thearith
+ * @author គីមស៊្រុន
  */
 $messages['km'] = array(
-	'onlinestatus-js-anon' => 'កំហុស​៖ អ្នក​ត្រូវតែ​ឡុកអ៊ីនចូល ដើម្បី​ប្រើប្រាស់​លក្ខណៈពិសេស​នេះ',
+	'onlinestatus-js-anon' => 'កំហុស​៖ អ្នក​ត្រូវតែ​កត់ឈ្មោះចូល ដើម្បី​ប្រើប្រាស់​មុខងារពិសេស​នេះ',
 	'onlinestatus-js-changed' => 'ស្ថានភាព​របស់​អ្នក ត្រូវ​បាន​ប្ដូរទៅ "$1"',
 	'onlinestatus-js-error' => 'មិន​អាច​ផ្លាស់ប្ដូរ​ស្ថានភាព​បាន​ទេ, តម្លៃ "$1" មិនត្រឹមត្រូវ',
 	'onlinestatus-subtitle-offline' => 'អ្នកប្រើប្រាស់​នេះ​កំពុង​ស្ថិតនៅ​ក្រៅបណ្ដាញ',
@@ -648,11 +744,19 @@ $messages['km'] = array(
 	'onlinestatus-toggles-show' => 'បង្ហាញ​ស្ថានភាព​លើបណ្ដាញ​នៅ​លើ​ទំព័រ​អ្នកប្រើប្រាស់​របស់​ខ្ញុំ',
 	'onlinestatus-toggle-offline' => 'ក្រៅបណ្ដាញ',
 	'onlinestatus-toggle-online' => 'លើបណ្ដាញ',
-	'onlinestatus-pref-onlineonlogin' => 'ផ្លាស់ប្ដូរ​ស្ថានភាព​របស់​ខ្ញុំ​ទៅជា​លើបណ្ដាញ នៅពេល​ឡុកអ៊ីន​(ចូល)',
-	'onlinestatus-pref-offlineonlogout' => 'ផ្លាស់ប្ដូរ​ស្ថានភាព​របស់​ខ្ញុំ​ទៅជា​ក្រៅបណ្ដាញ នៅពេល​ចាកចេញ',
+	'onlinestatus-pref-onlineonlogin' => 'ផ្លាស់ប្ដូរ​ស្ថានភាព​របស់​ខ្ញុំ​ទៅជា​លើបណ្ដាញ នៅពេល​កត់ឈ្មោះចូល',
+	'onlinestatus-pref-offlineonlogout' => 'ផ្លាស់ប្ដូរ​ស្ថានភាព​របស់​ខ្ញុំ​ទៅជា​ក្រៅបណ្ដាញ នៅពេល​កត់ឈ្មោះចេញ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'onlinestatus-tab' => 'ಸ್ಥಾನಮಾನ',
+	'onlinestatus-toggles-desc' => 'ನಿಮ್ಮ ಸ್ಥಾನಮಾನ:',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -680,7 +784,7 @@ $messages['lb'] = array(
 	'onlinestatus-desc' => 'Setzt eng Astellung derbäi fir ze weisen ob de Benotzer op dëser Wiki zur Zäit online ass',
 	'onlinestatus-js-anon' => 'Feeler: Dir musst ageloggt si fir dës Fonctioun ze benotzen',
 	'onlinestatus-js-changed' => 'Äre Statut gouf op "$1" geännert',
-	'onlinestatus-js-error' => 'Et ass nët méiglech de Statut z\'änneren, de Wert "$1" ass net valabel',
+	'onlinestatus-js-error' => 'Et ass net méiglech de Statut z\'änneren, de Wäert "$1" ass net valabel',
 	'onlinestatus-subtitle-offline' => 'Dëse Benotzer ass zur Zäit offline',
 	'onlinestatus-subtitle-online' => 'Dëse Benotzer ass zur Zäit online',
 	'onlinestatus-tab' => 'Status',
@@ -702,6 +806,14 @@ $messages['lt'] = array(
 	'onlinestatus-toggle-online' => 'Prisijungęs',
 );
 
+/** Latvian (Latviešu)
+ * @author GreenZeb
+ */
+$messages['lv'] = array(
+	'onlinestatus-toggle-offline' => 'Bezsaiste',
+	'onlinestatus-toggle-online' => 'Tiešsaiste',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -716,23 +828,25 @@ $messages['mk'] = array(
 	'onlinestatus-toggles-desc' => 'Вашиот статус:',
 	'onlinestatus-toggles-explain' => 'Со ова другите корисници на вашата страница можат да видат дали сте всушност на линија.',
 	'onlinestatus-toggles-show' => 'Прикажувај дали сум на линија на мојата корисничка страница',
-	'onlinestatus-toggle-offline' => 'Исклучен',
+	'onlinestatus-toggle-offline' => 'Вонмрежно',
 	'onlinestatus-toggle-online' => 'Вклучен',
 	'onlinestatus-pref-onlineonlogin' => 'Промени ми го статусот во „вклучен“ кога се најавувам',
 	'onlinestatus-pref-offlineonlogout' => 'Промени ми го статусот во „исклучен“ кога се одјавувам',
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'onlinestatus-subtitle-offline' => 'ഈ ഉപയോക്താവ് നിലവില്‍ ഓഫ്‌ലൈന്‍ ആണ്‌',
-	'onlinestatus-subtitle-online' => 'ഈ ഉപയോക്താവ് നിലവില്‍ ഓഫ്‌ലൈന്‍ ആണ്‌',
+	'onlinestatus-subtitle-offline' => 'ഈ ഉപയോക്താവ് നിലവിൽ ഓഫ്‌ലൈൻ ആണ്‌',
+	'onlinestatus-subtitle-online' => 'ഈ ഉപയോക്താവ് നിലവിൽ ഓഫ്‌ലൈൻ ആണ്‌',
+	'onlinestatus-tab' => 'സ്ഥിതി',
 	'onlinestatus-toggles-desc' => 'താങ്കളുടെ സ്ഥിതി:',
-	'onlinestatus-toggles-explain' => 'താങ്കളുടെ ഉപയോക്തൃതാള്‍ കാണുമ്പോള്‍ താങ്കള്‍ ഓണ്‍ലൈന്‍ ആണോ അല്ലയോ എന്നു മറ്റുള്ളവര്‍ക്ക് മനസ്സിലാക്കാന്‍ ഈ സം‌വിധാനം സഹായിക്കുന്നു.',
-	'onlinestatus-toggles-show' => 'ഓണ്‍‌ലൈന്‍ സ്ഥിതി എന്റെ ഉപയോക്തൃതാളില്‍ പ്രദര്‍ശിപ്പിക്കുക',
-	'onlinestatus-toggle-offline' => 'ഓഫ്‌ലൈന്‍',
-	'onlinestatus-toggle-online' => 'ഓണ്‍ലൈന്‍',
+	'onlinestatus-toggles-explain' => 'താങ്കളുടെ ഉപയോക്തൃതാൾ കാണുമ്പോൾ താങ്കൾ ഓൺലൈൻ ആണോ അല്ലയോ എന്നു മറ്റുള്ളവർക്ക് മനസ്സിലാക്കാൻ ഈ സം‌വിധാനം സഹായിക്കുന്നു.',
+	'onlinestatus-toggles-show' => 'ഓൺ‌ലൈൻ സ്ഥിതി എന്റെ ഉപയോക്തൃതാളിൽ പ്രദർശിപ്പിക്കുക',
+	'onlinestatus-toggle-offline' => 'ഓഫ്‌ലൈൻ',
+	'onlinestatus-toggle-online' => 'ഓൺലൈൻ',
 );
 
 /** Marathi (मराठी)
@@ -793,7 +907,7 @@ $messages['nn'] = array(
  * @author Jon Harald Søby
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'onlinestatus-desc' => 'Legger til en innstilling for å vise om brukeren er logget på wikien eller ikke',
 	'onlinestatus-js-anon' => 'Feil: du må være logget inn for å bruke denne funksjonen',
 	'onlinestatus-js-changed' => 'Statusen din er endret til «$1»',
@@ -830,7 +944,7 @@ $messages['oc'] = array(
 	'onlinestatus-pref-offlineonlogout' => 'Cambiar mon estatut a fòra linha quand me desconnècti',
 );
 
-/** Ossetic (Иронау)
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -841,14 +955,20 @@ $messages['os'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'onlinestatus-desc' => 'Umożliwia prezentację czy użytkownik jest w tej chwili dostępny na wiki.',
-	'onlinestatus-subtitle-offline' => 'Użytkownik jest w tej chwili nieobecny',
-	'onlinestatus-subtitle-online' => 'Użytkownik jest w tej chwili obecny',
+	'onlinestatus-desc' => 'Umożliwia prezentację aktualnej dostępności użytkownika na wiki',
+	'onlinestatus-js-anon' => 'Błąd – musisz być zalogowany, aby korzystać z tej funkcji',
+	'onlinestatus-js-changed' => 'Twój status został zmieniony na „$1”',
+	'onlinestatus-js-error' => 'Nie można zmienić statusu, wartość „$1” jest nieprawidłowa',
+	'onlinestatus-subtitle-offline' => 'Użytkownik jest w tej chwili niedostępny',
+	'onlinestatus-subtitle-online' => 'Użytkownik jest w tej chwili dostępny',
+	'onlinestatus-tab' => 'Status',
 	'onlinestatus-toggles-desc' => 'Twój status:',
 	'onlinestatus-toggles-explain' => 'Umożliwia Ci prezentowanie innym użytkownikom na Twojej stronie użytkownika czy jesteś aktualnie dostępny.',
-	'onlinestatus-toggles-show' => 'Pokaż moją obecność na mojej stronie użytkownika',
-	'onlinestatus-toggle-offline' => 'nieobecny',
-	'onlinestatus-toggle-online' => 'obecny',
+	'onlinestatus-toggles-show' => 'Pokaż moją dostępność na mojej stronie użytkownika',
+	'onlinestatus-toggle-offline' => 'Niedostępny',
+	'onlinestatus-toggle-online' => 'Dostępny',
+	'onlinestatus-pref-onlineonlogin' => 'Zmień mój status na dostępny gdy jestem zalogowany',
+	'onlinestatus-pref-offlineonlogout' => 'Zmień mój status na niedostępny gdy nie jestem zalogowany',
 );
 
 /** Piedmontese (Piemontèis)
@@ -875,10 +995,10 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'onlinestatus-subtitle-offline' => 'دم مهال همدا کارونکی بې ليکه دی',
-	'onlinestatus-subtitle-online' => 'دم مهال همدا کارونکی پر ليکه دی',
+	'onlinestatus-subtitle-offline' => 'دم مهال دا کارن بې ليکه دی',
+	'onlinestatus-subtitle-online' => 'دم مهال دا کارن پر ليکه دی',
 	'onlinestatus-tab' => 'دريځ',
-	'onlinestatus-toggles-desc' => 'ستاسو دريځ:',
+	'onlinestatus-toggles-desc' => 'ستاسې دريځ:',
 	'onlinestatus-toggles-show' => 'زما په کارن-مخ زما دريځ پرليکه ښکاره کول',
 	'onlinestatus-toggle-offline' => 'بې ليکه',
 	'onlinestatus-toggle-online' => 'پر ليکه',
@@ -940,14 +1060,19 @@ $messages['qu'] = array(
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
+	'onlinestatus-js-changed' => 'Starea dvs. a fost schimbată în „$1”',
 	'onlinestatus-subtitle-offline' => 'Acest utilizator este momentan offline',
 	'onlinestatus-subtitle-online' => 'Acest utilizator este momentan online',
 	'onlinestatus-tab' => 'Statut',
 	'onlinestatus-toggles-desc' => 'Starea dvs.:',
+	'onlinestatus-toggles-show' => 'Arată starea online pe pagina mea de utilizator',
 	'onlinestatus-toggle-offline' => 'Offline',
 	'onlinestatus-toggle-online' => 'Online',
+	'onlinestatus-pref-onlineonlogin' => 'Schimbă-mi starea la online când mă autentific',
+	'onlinestatus-pref-offlineonlogout' => 'Schimbă-mi starea la offline când mă dezautentific',
 );
 
 /** Tarandíne (Tarandíne)
@@ -999,27 +1124,36 @@ $messages['sk'] = array(
 	'onlinestatus-pref-offlineonlogout' => 'Zmeniť môj stav na offline počas odhlasovania',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'onlinestatus-tab' => 'Stanje',
+	'onlinestatus-toggles-desc' => 'Vaše stanje:',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'onlinestatus-desc' => 'Додаје подешавања да би се показивало да ли је корисник трентно присутан на викију или не.',
 	'onlinestatus-js-anon' => 'Грешка: морате бити улоговани да бисте користили ову погодност.',
-	'onlinestatus-js-changed' => 'Ваш статус је промењен на "$1"',
-	'onlinestatus-js-error' => 'Немогуће променити статус, вредност "$1" је неисправна',
-	'onlinestatus-subtitle-offline' => 'Овај корисник је тренутно одсутан',
-	'onlinestatus-subtitle-online' => 'Овај корисник је тренутно присутан',
+	'onlinestatus-js-changed' => 'Ваш статус је промењен на „$1“',
+	'onlinestatus-js-error' => 'Не могу да променим статус. Вредност „$1“ је неисправна',
+	'onlinestatus-subtitle-offline' => 'Овај корисник је тренутно ван мреже',
+	'onlinestatus-subtitle-online' => 'Овај корисник је тренутно на мрежи',
 	'onlinestatus-tab' => 'Статус',
 	'onlinestatus-toggles-desc' => 'Ваш статус:',
-	'onlinestatus-toggles-explain' => 'Ово Вам омогућава да покажете другим корисницима да на вашој страни виде да ли сте тренутно присутни или не.',
-	'onlinestatus-toggles-show' => 'Показуј присутност на мојој корисничкој страни',
-	'onlinestatus-toggle-offline' => 'Одсутан',
-	'onlinestatus-toggle-online' => 'Присутан',
-	'onlinestatus-pref-onlineonlogin' => 'Промени мој статус на онлајн када се улогујем',
-	'onlinestatus-pref-offlineonlogout' => 'Промени мој статус на офлајн када се излогујем',
+	'onlinestatus-toggles-explain' => 'Уз помоћ овога, други корисници на вашој страници могу да виде да ли сте тренутно на мрежи.',
+	'onlinestatus-toggles-show' => 'Приказуј присутност на мојој корисничкој страници',
+	'onlinestatus-toggle-offline' => 'Ван мреже',
+	'onlinestatus-toggle-online' => 'На мрежи',
+	'onlinestatus-pref-onlineonlogin' => 'Промени ми статус на „на мрежи“ када се пријавим',
+	'onlinestatus-pref-offlineonlogout' => 'Промени ми статус на „ван мреже“ када се одјавим',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -1061,17 +1195,24 @@ $messages['sv'] = array(
 );
 
 /** Tamil (தமிழ்)
+ * @author TRYPPN
  * @author Trengarasu
  */
 $messages['ta'] = array(
 	'onlinestatus-desc' => 'பயனர் இணைப்பில் உள்ளாரா இல்லையா என்பதைக் காட்ட விருப்பத்தேர்வு இணைக்கப்படுகிறது',
+	'onlinestatus-js-anon' => 'தவறு(பிழை): இந்த அம்சத்தை பயன்படுத்த, தாங்கள் புகுபதிகை செய்திருக்க வேண்டும்',
+	'onlinestatus-js-changed' => 'தங்களது தொடர்நிலை, இதற்கு மாற்றப்பட்டுள்ளது: "$1"',
+	'onlinestatus-js-error' => '("$1") - இதன் உட்பொருள் ஒத்தவரவில்லை. ஆகவே நிலைமையை மாற்றம் செய்யமுடியாது.',
 	'onlinestatus-subtitle-offline' => 'இந்தப் பயனர் தற்போது இணைப்பிலில்லை',
 	'onlinestatus-subtitle-online' => 'இந்தப் பயனர் தற்போது இணைப்பிலுள்ளார்',
+	'onlinestatus-tab' => 'நிலைமை',
 	'onlinestatus-toggles-desc' => 'உங்களது நிலை:',
 	'onlinestatus-toggles-explain' => 'இது நீங்கள் இணைப்பில் உள்ளீர்களா இல்லையா என்பதை உங்கள் பயனர் பக்கத்தைப் பார்பதன் மூல்ம் ஏனைய பயனர்களுக்கு காட்ட உதவும்.',
 	'onlinestatus-toggles-show' => 'நான் இணைப்பில் உள்ளேனா இல்லையா என்பதை பயனர் பக்கத்தில் காட்டுக',
 	'onlinestatus-toggle-offline' => 'இணைப்பிலில்லை',
 	'onlinestatus-toggle-online' => 'இணைப்பில்',
+	'onlinestatus-pref-onlineonlogin' => 'புகுபதிகை செய்தபின் எனது நிலைமையை இணைப்பில் உள்ளது என்று மாற்றவும்',
+	'onlinestatus-pref-offlineonlogout' => 'விடுபதிகை செய்யும்போது எனது நிலைமையை இணைப்பில்லாநிலை என்று மாற்றவும்',
 );
 
 /** Telugu (తెలుగు)
@@ -1081,6 +1222,8 @@ $messages['te'] = array(
 	'onlinestatus-js-changed' => 'మీ స్థితిని "$1"కి మార్చాం',
 	'onlinestatus-tab' => 'స్థితి',
 	'onlinestatus-toggles-desc' => 'మీ స్థితి:',
+	'onlinestatus-toggles-explain' => 'మీరు ఆన్‌లైనులో ఉన్నారో లేదో ఇతర వాడుకరులకు మీ వాడుకరి పుటలో చూపించే అవకాశాన్ని కల్పిస్తుంది.',
+	'onlinestatus-toggles-show' => 'నా వాడుకరి పుటలో ఆన్‌లైన్ స్థితిని చూపించు',
 );
 
 /** Tagalog (Tagalog)
@@ -1153,6 +1296,7 @@ $messages['vep'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
  * @author Vinhtantran
  */
 $messages['vi'] = array(
@@ -1164,8 +1308,8 @@ $messages['vi'] = array(
 	'onlinestatus-subtitle-online' => 'Thành viên này hiện đang trực tuyến',
 	'onlinestatus-tab' => 'Trạng thái',
 	'onlinestatus-toggles-desc' => 'Trạng thái của bạn:',
-	'onlinestatus-toggles-explain' => 'Lựa chọn này cho phép bạn tùy chọn để người khác thấy bạn trực tuyến hay không khi xem trang thành viên của bạn.',
-	'onlinestatus-toggles-show' => 'Hiển thị trạng thái trực tuyến trên trang thành viên của tôi',
+	'onlinestatus-toggles-explain' => 'Lựa chọn này cho phép bạn tùy chọn để người khác thấy bạn trực tuyến hay không khi xem trang cá nhân của bạn.',
+	'onlinestatus-toggles-show' => 'Hiển thị trạng thái trực tuyến trên trang cá nhân của tôi',
 	'onlinestatus-toggle-offline' => 'Ngoại tuyến',
 	'onlinestatus-toggle-online' => 'Trực tuyến',
 	'onlinestatus-pref-onlineonlogin' => 'Thay đổi trạng thái của tôi sang đang trực tuyến khi tôi đăng nhập',
@@ -1202,17 +1346,18 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'onlinestatus-subtitle-offline' => '這用戶現正離線',
-	'onlinestatus-subtitle-online' => '這用戶現正在線',
+	'onlinestatus-subtitle-online' => '這用戶目前在線上',
 	'onlinestatus-tab' => '狀態',
 	'onlinestatus-toggles-desc' => '您的狀態：',
-	'onlinestatus-toggles-show' => '在我的用戶頁面顯示在線狀態',
+	'onlinestatus-toggles-show' => '在我的用戶頁面顯示線上狀態',
 	'onlinestatus-toggle-offline' => '離線',
-	'onlinestatus-toggle-online' => '在線',
-	'onlinestatus-pref-onlineonlogin' => '當登入時把我的狀態設為在線',
+	'onlinestatus-toggle-online' => '線上',
+	'onlinestatus-pref-onlineonlogin' => '當登入時把我的狀態設為線上',
 	'onlinestatus-pref-offlineonlogout' => '當登出時把我的狀態設為離線',
 );
 

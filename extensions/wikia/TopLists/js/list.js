@@ -62,7 +62,7 @@ var TopList = {
 				TopList.unblockInput();
 				var errorDisplay = TopList._mWrapper.find('.NewItemForm .error');
 				errorDisplay.html('');
-				
+
 				if(response.result === true) {
 					TopList._mWrapper.replaceWith(response.listBody);
 					TopList._mWrapper = $('#toplists-list-body');

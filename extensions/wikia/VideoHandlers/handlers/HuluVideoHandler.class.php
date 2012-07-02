@@ -14,7 +14,7 @@ class HuluVideoHandler extends VideoHandler {
 <object width="$width" height="$height">
 	<param name="movie" value="$url"></param>
 	<param name="allowFullScreen" value="true"></param>
-	<embed src="$url" type="application/x-shockwave-flash" width="$width" height="$height" allowFullScreen="true"></embed>
+	<embed src="$url" type="application/x-shockwave-flash" width="$width" height="$height" allowFullScreen="true" wmode="transparent" allowscriptaccess="always"></embed>
 </object>
 EOT;
 		return $html;

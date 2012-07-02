@@ -6,8 +6,6 @@
  * @ingroup Extensions
  */
 
-require_once( dirname(__FILE__) . '/Negref.i18n.magic.php' );
-
 $messages = array();
 
 /** English
@@ -31,7 +29,14 @@ $messages['ar'] = array(
 	'negref-desc' => 'يوفر وسما للتفاوض على موقع أي وسوم <nowiki><ref/></nowiki> داخل النص المدخل لإصلاح بعض حالات استخدام القوالب',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'negref-desc' => "Ufre una etiqueta pa negociar la llocalización de cualesquier etiqueta <nowiki><ref/></nowiki> dientro d'un testu d'entrada pa iguar dellos casos nel usu de plantíes",
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -179,6 +184,13 @@ $messages['mk'] = array(
 	'negref-desc' => 'Дава ознака за нагодување на местоположбата на било која <nowiki><ref/></nowiki> ознака во влезен текст за поправка на извесни случаи на употреба на шаблони',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'negref-desc' => 'Menyediakan tag untuk merundingkan lokasi sebarang tag <nowiki><ref/></nowiki> di dalam teks input untuk membetulkan beberapa kes penggunaan templat',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -189,7 +201,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'negref-desc' => 'Gir en merkelapp for å fikse plasseringen av alle <nowiki><ref /></nowiki>-merkelapper inni inn-teksten for å fikse enkelte problemer ved bruk av malene.',
 );
 
@@ -250,14 +262,15 @@ $messages['sk'] = array(
 	'negref-desc' => 'Poskytuje značku na vyjednanie umiestnenia akýchkoľvek značiek <nowiki><ref/></nowiki> v zadávanom texte na opravu niektorých prípadov použitia šablón.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'negref-desc' => 'Омогућава таг за подешавање места сваког појединачног <nowiki><ref/></nowiki> тага унутар унешеног текста, да би се поправили неки случајеви употребе шаблона',
+	'negref-desc' => 'Пружа ознаку за подешавање места сваке ознаке <nowiki><ref/></nowiki> унутар унетог текста за исправку одређених случајева употребе шаблона',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica)) */
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
 $messages['sr-el'] = array(
 	'negref-desc' => 'Omogućava tag za podešavanje mesta svakog pojedinačnog <nowiki><ref/></nowiki> taga unutar unešenog teksta, da bi se popravili neki slučajevi upotrebe šablona',
 );

@@ -5,6 +5,8 @@
  * @file
  *
  * @author Sab
+ * @author Sainte-Rose (on ty.wikipedia.org)
+ * @author Tahitoa (on ty.wikipedia.org)
  */
 
 $fallback = 'fr';
@@ -142,9 +144,6 @@ $messages = array(
 # Special:Categories
 'categories' => 'Te mau huru o te ’api',
 
-# Special:Log/newusers
-'newuserlog-create-entry' => 'Ta’ata fa’a’ohipa ’āpī',
-
 # Watchlist
 'watch' => 'Ha’apa’o',
 
@@ -157,9 +156,6 @@ $messages = array(
 
 # What links here
 'whatlinkshere' => 'Te mau ’api i tū’atihia mai',
-
-# Move page
-'1movedto2' => '’Ua tāhitihia te ’api [[$1]] e ana i te ’api ’āpī [[$2]]',
 
 # Tooltip help for the actions
 'tooltip-search' => 'Roromā’imi {{SITENAME}}',

@@ -17,9 +17,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @ingroup Maintenance
  */
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class CheckImages extends Maintenance {
 
@@ -28,16 +29,16 @@ class CheckImages extends Maintenance {
 		$this->mDescription = "Check images to see if they exist, are readable, etc";
 		$this->setBatchSize( 1000 );
 	}
-	
+
 	public function execute() {
 		$start = '';
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$numImages = 0;
 		$numGood = 0;
-	
+
 		do {
-			$res = $dbr->select( 'image', '*', array( 'img_name > ' . $dbr->addQuotes( $start ) ), 
+			$res = $dbr->select( 'image', '*', array( 'img_name > ' . $dbr->addQuotes( $start ) ),
 				__METHOD__, array( 'LIMIT' => $this->mBatchSize ) );
 			foreach ( $res as $row ) {
 				$numImages++;
@@ -48,35 +49,37 @@ class CheckImages extends Maintenance {
 					$this->output( "{$row->img_name}: not locally accessible\n" );
 					continue;
 				}
-				$stat = @stat( $file->getPath() );
+				wfSuppressWarnings();
+				$stat = stat( $file->getPath() );
+				wfRestoreWarnings();
 				if ( !$stat ) {
 					$this->output( "{$row->img_name}: missing\n" );
 					continue;
 				}
-	
+
 				if ( $stat['mode'] & 040000 ) {
 					$this->output( "{$row->img_name}: is a directory\n" );
 					continue;
 				}
-	
+
 				if ( $stat['size'] == 0 && $row->img_size != 0 ) {
 					$this->output( "{$row->img_name}: truncated, was {$row->img_size}\n" );
 					continue;
 				}
-	
+
 				if ( $stat['size'] != $row->img_size ) {
 					$this->output( "{$row->img_name}: size mismatch DB={$row->img_size}, actual={$stat['size']}\n" );
 					continue;
 				}
-	
+
 				$numGood++;
 			}
-	
+
 		} while ( $res->numRows() );
-	
+
 		$this->output( "Good images: $numGood/$numImages\n" );
 	}
 }
 
 $maintClass = "CheckImages";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

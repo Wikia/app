@@ -161,7 +161,7 @@ $messages['az'] = array(
 	'themedesigner-history-item' => '$1 tərəfindən $2',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -694,7 +694,7 @@ $messages['fr'] = array(
 	'themedesigner-wodmark-preview' => 'Aperçu',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -1,18 +1,19 @@
 <?php
-/*
+/**
  * MV_Special Page
  */
 class SpecialWikiAtHome extends SpecialPage {
 	public function __construct() {
 		parent::__construct( 'SpecialWikiAtHome' );
 
-		if ( method_exists( 'SpecialPage', 'setGroup' ) ) {
+		$realFunction = array( 'SpecialPage', 'setGroup' );
+		if ( is_callable( $realFunction ) ) {
 			parent::setGroup( 'SpecialWikiAtHome', 'media' );
 		}
 	}
 	function execute( $par ) {
 		global $wgOut;
-		$wgOut->addScriptClass('WikiAtHome');		
+		$wgOut->addScriptClass('WikiAtHome');
 		//for now just render out wiki@home header
 		$html = '<h1 class="firstHeading" id="firstHeading">'.wfMsg('specialwikiathome').'</h1>';
 		$html.='<div id="bodyContent">';
@@ -28,5 +29,3 @@ class SpecialWikiAtHome extends SpecialPage {
 		$wgOut->addHTML( $html );
 	}
 }
-
-?>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"	
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<title> Sample Themed Player </title>
+	   Pre-loading demo ( stuff ) likely needed for video display
+	<!--
+	<script type="text/javascript" src="../../../ResourceLoader.php?debug=true&class=mwEmbed"></script>
+	-->
+
+	<script type="text/javascript" src="../../../mwEmbedLoader.php"></script>
+</head>
+<script type="text/javascript">
+	mediaWiki.loader.go();
+	//setTimeout(function(){
+		// Show the controls ( this is a theme demo )
+	//	mw.setConfig( 'EmbedPlayer.OverlayControls', false );
+	//}, 1000 );
+</script>
+<body>
+
+<h3> Sample Themable Player:</h3>
+To play with dynamic Themes install <a href="http://jqueryui.com/themeroller/developertool/">Themeroller</a><p><p>
+
+<div style="width:450px;float:left">
+<video
+	style="width:400px;height:300px"
+	src="http://upload.wikimedia.org/wikipedia/commons/2/29/Charles_Lindbergh_flight_to_Brussels.ogg"
+	poster="http://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Charles_Lindbergh_flight_to_Brussels.ogg/mid-Charles_Lindbergh_flight_to_Brussels.ogg.jpg"
+	data-mwtitle="Charles_Lindbergh_flight_to_Brussels.ogg"
+	data-mwprovider="commons"
+	data-durationhint="60" >
+</video>
+
+<video
+	style="width:208px;height:160px;float:left"
+	src="http://upload.wikimedia.org/wikipedia/commons/2/29/Charles_Lindbergh_flight_to_Brussels.ogg"
+	data-mwtitle="Charles_Lindbergh_flight_to_Brussels.ogg"
+	data-mwprovider="commons"
+	poster="http://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Charles_Lindbergh_flight_to_Brussels.ogg/mid-Charles_Lindbergh_flight_to_Brussels.ogg.jpg"
+	data-durationhint="60">
+	</video>
+
+<b>Source Code used:</b><br>
+<textarea cols="50" rows="7"><video style="width:400px;height:288px" poster="http://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Charles_Lindbergh_flight_to_Brussels.ogg/mid-Charles_Lindbergh_flight_to_Brussels.ogg.jpg"
+src="http://upload.wikimedia.org/wikipedia/commons/2/29/Charles_Lindbergh_flight_to_Brussels.ogg"></video></textarea>
+</div>
+
+<div style="width:450px;float:left">
+<video
+	class="kskin"
+	style="width:400px;height:300px"
+	src="http://upload.wikimedia.org/wikipedia/commons/2/29/Charles_Lindbergh_flight_to_Brussels.ogg"
+	data-mwtitle="Charles_Lindbergh_flight_to_Brussels.ogg"
+	data-mwprovider="commons"
+	poster="http://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Charles_Lindbergh_flight_to_Brussels.ogg/mid-Charles_Lindbergh_flight_to_Brussels.ogg.jpg"
+	data-durationhint="60">
+</video>
+<video
+	class="kskin"
+	data-mwtitle="Charles_Lindbergh_flight_to_Brussels.ogg"
+	data-mwprovider="commons"
+	style="width:208px;height:160px;float:left;" src="http://upload.wikimedia.org/wikipedia/commons/2/29/Charles_Lindbergh_flight_to_Brussels.ogg"
+	poster="http://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Charles_Lindbergh_flight_to_Brussels.ogg/mid-Charles_Lindbergh_flight_to_Brussels.ogg.jpg"
+	data-durationhint="60">
+</video>
+
+<b>(kskin) Source Code used:</b><br>
+<textarea cols="50" rows="7"><video class="kskin" style="width:400px;height:288px" poster="http://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Charles_Lindbergh_flight_to_Brussels.ogg/mid-Charles_Lindbergh_flight_to_Brussels.ogg.jpg"
+src="http://upload.wikimedia.org/wikipedia/commons/2/29/Charles_Lindbergh_flight_to_Brussels.ogg"></video></textarea>
+</div>
+
+
+</body>
+</html>
+

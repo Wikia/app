@@ -16,7 +16,6 @@ function wfAutoPageCreateInit() {
 
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfAutoPageCreateEditPage';
 	$wgHooks['ArticleNonExistentPage'][] = 'wfAutoPageCreateViewPage';
-	$wgHooks['Article::view:not-existing'][] = 'wfAutoPageCreateViewPageContent'; 
 	$wgHooks['MakeGlobalVariablesScript'][] = 'wfAutoPageCreateSetupVars';
 	$wgHooks['WikiaMiniUpload::fetchTextForImagePlaceholder'][] = 'wfAutoPageCreateTextForImagePlaceholder';
 
@@ -77,20 +76,20 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 	$title = $article->mTitle;
 	$ns = $title->getNamespace();
 
-	$retval = false;
+	$retval = true;
 
 	switch( $ns ) {
 		case NS_MEDIAWIKI:
-                // BugId:15387 - Let's skip user pages too.
-                case NS_USER:
-			$retval = true;
+		// BugId:15387 - Let's skip user pages too.
+		case NS_USER:
+			$retval = false;
 		case NS_CATEGORY:
 		case NS_HELP:
 			$text = "<div class=\"noarticletext\">\n$text\n</div>";
+			$retval = false;
 			break;
 
 		default:
-			wfLoadExtensionMessages( "AutoPageCreate" );
 
 			$text = $title->isContentPage() ? wfMsgForContent( "newpagelayout" ) : '';
 			$overlayMsgKey = "autopagecreate-newpage-notice-other";
@@ -161,12 +160,4 @@ END;
 
 	wfProfileOut(__METHOD__);
 	return $retval;
-}
-
-function wfAutoPageCreateViewPageContent( $article, &$text ) {
-	if ( !empty($article->autoPageCreate__content) ) {
-		$text = $article->autoPageCreate__content;
-	}
-	
-	return true;
 }

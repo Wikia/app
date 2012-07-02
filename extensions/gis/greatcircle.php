@@ -62,7 +62,7 @@ class greatcircle
 	/**
 	 *  Calculate Great Circle distance
 	 */
-	function greatcircle( $latitude, $longitude,
+	function __construct( $latitude, $longitude,
 			      $latitude_origin, $longitude_origin )
 	{
 		$lat1 = $this->deg2rad( $latitude_origin );

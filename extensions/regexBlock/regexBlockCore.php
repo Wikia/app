@@ -549,8 +549,6 @@ class RegexBlock {
 			return $result;
 		}
 
-		wfLoadExtensionMessages( 'RegexBlock' );
-
 		if ( is_array( $valid ) ) {
 			$user->mBlockedby = User::idFromName( $blocker );
 			if ( $valid['reason'] != '' ) {
@@ -565,7 +563,7 @@ class RegexBlock {
 				if ( $valid['ip'] == 1 ) {
 					/* we blocked by IP */
 					$user->mBlockreason = wfMsg( 'regexblock-reason-ip', $wgContactLink );
-				} else if( $valid['exact'] == 1 ) {
+				} elseif( $valid['exact'] == 1 ) {
 					/* we blocked by username exact match */
 					$user->mBlockreason = wfMsg( 'regexblock-reason-name', $wgContactLink );
 				}
@@ -573,15 +571,15 @@ class RegexBlock {
 			/* account creation check goes through the same hook... */
 			if ( $valid['create'] == 1 ) {
 				if ( $user->mBlock ) {
-					$user->mBlock->mCreateAccount = 1;
+					$user->mBlock->prevents( 'createaccount', true );
 				}
 			}
 			/* set expiry information */
 			if ( $user->mBlock ) {
-				$user->mBlock->mId = $valid['blckid'];
+				# $user->mBlock->mId = $valid['blckid']; FIXME: why does this want to do this?
 				$user->mBlock->mExpiry = $valid['expire'];
 				$user->mBlock->mTimestamp = $valid['timestamp'];
-				$user->mBlock->mAddress = ($valid['ip'] == 1) ? wfGetIP() : $user->getName();
+				$user->mBlock->setTarget( ($valid['ip'] == 1) ? wfGetIP() : $user->getName() );
 			}
 
 			$result = self::updateStats( $user, $user_ip, $blocker, $valid['match'], $valid['blckid'] );
@@ -626,7 +624,6 @@ class RegexBlock {
 	public static function loadContribsLink( $id, $nt, &$links ){
 		global $wgUser;
 		if( $wgUser->isAllowed( 'regexblock' ) ) {
-			wfLoadExtensionMessages( 'RegexBlock' );
 			$links[] = $wgUser->getSkin()->makeKnownLinkObj(
 				SpecialPage::getTitleFor( 'RegexBlock' ),
 				wfMsgHtml( 'regexblock-link' ),

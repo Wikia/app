@@ -14,7 +14,6 @@ class SpamRegex extends SpecialPage {
 	 */
 	public function __construct() {
 		parent::__construct( 'SpamRegex', 'spamregex' );
-		wfLoadExtensionMessages( 'SpamRegex' );
 	}
 
 	/**
@@ -51,16 +50,16 @@ class SpamRegex extends SpecialPage {
 		if ( 'success_block' == $action ) {
 			$sRF->showSuccess();
 			$sRF->showForm('');
-		} else if ( 'success_unblock' == $action ) {
+		} elseif ( 'success_unblock' == $action ) {
 			$sRL->showSuccess();
 			$sRF->showForm('');
-		} else if ( 'failure_unblock' == $action ) {
+		} elseif ( 'failure_unblock' == $action ) {
 			$text = htmlspecialchars( $wgRequest->getVal( 'text' ) );
 			$sRF->showForm( wfMsg( 'spamregex-error-unblocking', $text ) );
-		} else if ( $wgRequest->wasPosted() && 'submit' == $action &&
+		} elseif ( $wgRequest->wasPosted() && 'submit' == $action &&
 			$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
 			$sRF->doSubmit();
-		} else if ( 'delete' == $action ) {
+		} elseif ( 'delete' == $action ) {
 			$sRL->deleteFromList();
 		} else {
 			$sRF->showForm( '' );
@@ -90,32 +89,11 @@ class spamRegexList {
 	}
 
 	/* useful for cleaning the memcached keys */
-	public static function updateMemcKeys($action, $text, $mode = false) {
+	public static function unsetKeys() {
 		global $wgMemc;
-
-		if ( $mode === false ) {
-			self::updateMemcKeys( $action, $text, SPAMREGEX_SUMMARY );
-			self::updateMemcKeys( $action, $text, SPAMREGEX_TEXTBOX );
-		}
-
-		$key_clause = $mode == SPAMREGEX_SUMMARY ?  'Summary' : 'Textbox';
-		$key = wfSpamRegexCacheKey( 'spamRegexCore', 'spamRegex', $key_clause );
-		$phrases = $wgMemc->get( $key );
-		
-		if ( $phrases ) {
-			$spam_text = "/" . $text . "/i";
-			switch ( $action ) {
-				case 'add' : 
-					if ( !in_array($spam_text, $phrases) ) {
-						$phrases[] = $spam_text;
-					}
-					break;
-				case 'delete' : 
-					$phrases = array_diff($phrases, array($spam_text));
-					break;
-			}
-			$wgMemc->set( $key, $phrases, 0 );
-		}
+		$wgMemc->delete( wfSpamRegexCacheKey( 'spamRegexCore', 'spamRegex', 'Textbox' ) );
+		$wgMemc->delete( wfSpamRegexCacheKey( 'spamRegexCore', 'spamRegex', 'Summary' ) );
+		$wgMemc->delete( wfSpamRegexCacheKey( 'spamRegexCore', 'numResults' ) );
 	}
 
 	/**
@@ -137,7 +115,7 @@ class spamRegexList {
 		if ( !$this->fetchNumResults() ) {
 			$wgOut->addWikiMsg( 'spamregex-no-currently-blocked' );
 		} else {
-			$dbr = wfSpamRegexGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE );
 			$titleObj = SpecialPage::getTitleFor( 'SpamRegex' );
 			$action = $titleObj->escapeLocalURL( self::getListBits() );
 			$action_unblock = $titleObj->escapeLocalURL( 'action=delete&'.self::getListBits() );
@@ -146,7 +124,7 @@ class spamRegexList {
 			$this->showPrevNext( $wgOut );
 			$wgOut->addHTML( "<form name=\"spamregexlist\" method=\"get\" action=\"{$action}\">" );
 
-			$res = $dbr->select( 'spam_regex', '*', array(), __METHOD__, array( 'LIMIT' => $limit, 'OFFSET' => $offset, 'ORDER BY' => 'spam_timestamp DESC' ) );
+			$res = $dbr->select( 'spam_regex', '*', array(), __METHOD__, array( 'LIMIT' => $limit, 'OFFSET' => $offset ) );
 			while ( $row = $res->fetchObject() ) {
 				$date = $wgLang->date( wfTimestamp( TS_MW, $row->spam_timestamp ), true );
 				$time = $wgLang->time( wfTimestamp( TS_MW, $row->spam_timestamp ), true );
@@ -177,18 +155,16 @@ class spamRegexList {
 		wfProfileIn( __METHOD__ );
 		global $wgOut, $wgRequest;
 		$text = urldecode( $wgRequest->getVal( 'text' ) );
-		/* delete in memc */
-		self::updateMemcKeys('delete', $text);
-		/* delete in DB */
-		$dbw = wfSpamRegexGetDB( DB_MASTER );
+		/* delete */
+		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'spam_regex', array( 'spam_text' => $text ), __METHOD__ );
 		$titleObj = SpecialPage::getTitleFor( 'SpamRegex' );
 		if ( $dbw->affectedRows() ) {
 			/* success  */
+			self::unsetKeys();
 			wfProfileOut( __METHOD__ );
 			$wgOut->redirect( $titleObj->getFullURL( 'action=success_unblock&text='.urlencode($text).'&'.self::getListBits() ) );
 		} else {
-			/* text doesn't exist */
 			wfProfileOut( __METHOD__ );
 			$wgOut->redirect( $titleObj->getFullURL( 'action=failure_unblock&text='.urlencode($text).'&'.self::getListBits() ) );
 		}
@@ -207,7 +183,7 @@ class spamRegexList {
 		$cached = $wgMemc->get( $key );
 		$results = 0;
 		if ( is_null( $cached ) || $cached === false ) {
-			$dbr = wfSpamRegexGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE );
 			$results = $dbr->selectField( 'spam_regex', 'COUNT(*)', '', __METHOD__ );
 			$wgMemc->set( $key, $results, SPAMREGEX_EXPIRE );
 		} else {
@@ -278,7 +254,7 @@ class spamRegexForm {
 	var $mBlockedSummary;
 
 	/* constructor */
-	function spamRegexForm( $par ) {
+	function __construct( $par ) {
 		global $wgRequest;
 		$this->mBlockedPhrase = $wgRequest->getVal( 'wpBlockedPhrase',  $wgRequest->getVal( 'text', $par ) );
 		$this->mBlockedTextbox = $wgRequest->getCheck( 'wpBlockedTextbox' ) ? 1 : 0;
@@ -328,7 +304,7 @@ class spamRegexForm {
 					}
 				}
 
-				addOnloadHook (SpamRegexEnhanceControls);
+				$(SpamRegexEnhanceControls);
 			</script>"
 		);
 		$phraseblock = wfMsgExt( 'spamregex-phrase-block', 'parseinline' );
@@ -341,7 +317,7 @@ class spamRegexForm {
 		<tr>
 			<td align=\"right\">{$phraseblock}</td>
 			<td align=\"left\">
-				<input tabindex=\"1\" name=\"wpBlockedPhrase\" id=\"wpBlockedPhrase\" value=\"{$scBlockedPhrase}\" size=\"75\"/>
+				<input tabindex=\"1\" name=\"wpBlockedPhrase\" value=\"{$scBlockedPhrase}\" />
 			</td>
 		</tr>
 		<tr>
@@ -361,7 +337,7 @@ class spamRegexForm {
 		<tr>
 			<td align=\"right\">&#160;</td>
 			<td align=\"left\">
-				<input tabindex=\"4\" name=\"wpSpamRegexBlockedSubmit\" id=\"wpSpamRegexBlockedSubmit\" type=\"submit\" value=\"{$blockphrase}\" />
+				<input tabindex=\"4\" name=\"wpSpamRegexBlockedSubmit\" type=\"submit\" value=\"{$blockphrase}\" />
 			</td>
 		</tr>
 	</table>
@@ -396,6 +372,11 @@ class spamRegexForm {
 			return;
 		}
 
+		/* make insert */
+		$dbw = wfGetDB( DB_MASTER );
+		$name = $wgUser->getName();
+		$timestamp = wfTimestampNow();
+
 		/* we need at least one block mode specified... we can have them both, of course */
 		if ( !$this->mBlockedTextbox && !$this->mBlockedSummary ) {
 			$this->showForm( wfMsgHtml( 'spamregex-warning-2' ) );
@@ -403,22 +384,12 @@ class spamRegexForm {
 			return;
 		}
 
-		/* insert to memc */
-		if ( !empty($this->mBlockedTextbox) ) { 
-			spamRegexList::updateMemcKeys( 'add', $this->mBlockedPhrase, SPAMREGEX_TEXTBOX );
-		}
-		if ( !empty($this->mBlockedSummary) ) {
-			spamRegexList::updateMemcKeys( 'add', $this->mBlockedPhrase, SPAMREGEX_SUMMARY );
-		}
-
-		/* make insert to db */
-		$dbw = wfSpamRegexGetDB( DB_MASTER );
 		$dbw->insert(
 			'spam_regex',
 				array(
 				'spam_text' => $this->mBlockedPhrase,
-				'spam_timestamp' => wfTimestampNow(),
-				'spam_user' => $wgUser->getName(),
+				'spam_timestamp' => $timestamp,
+				'spam_user' => $name,
 				'spam_textbox' => $this->mBlockedTextbox,
 				'spam_summary' => $this->mBlockedSummary
 			),
@@ -432,6 +403,7 @@ class spamRegexForm {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
+		spamRegexList::unsetKeys();
 		/* redirect */
 		$titleObj = SpecialPage::getTitleFor( 'SpamRegex' );
 		wfProfileOut( __METHOD__ );

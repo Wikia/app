@@ -39,7 +39,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'description' => 'Translate from tags to parser functions'
 );
  
-$wgExtensionFunctions[] = 'efTagContentSetup';
+$wgHooks['ParserFirstCallInit'][] = 'efTagContentSetHooks';
 $wgExtensionMessagesFiles['TagContent'] = dirname(__FILE__) . '/TagContent.i18n.php';
 
 $egTagContentDefine = array(
@@ -195,14 +195,14 @@ class TagContent {
 * Setup function for the extension
 @return True is returned unconditionally
 */
-function efTagContentSetup () {
-	global $wgParser, $egTagContentBlacklist, $egTagContentDefine;
-	wfLoadExtensionMessages('TagContent');
+function efTagContentSetHooks( $parser ) {
+	global $egTagContentBlacklist, $egTagContentDefine;
+	
 	foreach ($egTagContentDefine as $k => $a) {
 		$template = $a[0];
 		$tag = strtolower($k);
 		$c = new TagContent($tag, $template, $a[1], false);
-		$wgParser->setHook( $tag, array( $c, 'onRender' ));
+		$parser->setHook( $tag, array( $c, 'onRender' ));
 	}
 	$defs = explode("\n", wfMsgNoTrans( 'tags-definition' ));
 	foreach ($defs as $line) {
@@ -213,7 +213,7 @@ function efTagContentSetup () {
 			$tag = strtolower(trim($a[0]));
 			if ( !$egTagContentBlacklist[$tag] && !isset($egTagContentDefine[$tag])) {
 				$c = new TagContent($tag, $template, $a[2], true);
-				$wgParser->setHook( $tag, array( $c, 'onRender' ));
+				$parser->setHook( $tag, array( $c, 'onRender' ));
 			}
 		}
 	}

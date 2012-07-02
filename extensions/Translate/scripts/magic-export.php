@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Script to export special page aliases and magic words of extensions.
  *
@@ -60,6 +59,7 @@ class MagicExport extends Maintenance {
 		$this->output( "Opening file handles and loading current data...\n" );
 
 		$groups = MessageGroups::singleton()->getGroups();
+		$filename = null;
 		foreach ( $groups as $group ) {
 			if ( !$group instanceof ExtensionMessageGroup ) {
 				continue;
@@ -80,7 +80,7 @@ class MagicExport extends Maintenance {
 
 			global $wgTranslateExtensionDirectory;
 			$inFile = "$wgTranslateExtensionDirectory/$filename";
-			$dir = dirname( $inFile );
+
 			if ( !file_exists( $inFile ) )  {
 				continue;
 			}
@@ -108,7 +108,7 @@ class MagicExport extends Maintenance {
 			}
 
 			$outFile = $this->target . '/' . $filename;
-			wfMkdirParents( dirname( $outFile ) );
+			wfMkdirParents( dirname( $outFile ), null, __METHOD__ );
 			$this->handles[$group->getId()] = fopen( $outFile, 'w' );
 			fwrite( $this->handles[$group->getId()], $this->readHeader( $inFile ) );
 
@@ -123,7 +123,7 @@ class MagicExport extends Maintenance {
 		$end = strpos( $data, '*/' ) + 2;
 
 		if ( $end === false ) {
-			die( "No header found in '$file'.\n" );
+			return "<?php\n";
 		}
 
 		// Grab header.
@@ -257,24 +257,10 @@ PHP
 	}
 
 	/**
-	 * For special page aliases we set $aliases as a reference to
-	 * the more modern $specialPageAliases for backwards compatibility.
+	 * Do whatever needs doing after writing the primary content.
 	 */
 	protected function writeFooters() {
 		$this->output( "Writing file footers...\n" );
-		if ( $this->type === 'special' ) {
-			foreach ( $this->handles as $handle ) {
-				fwrite( $handle, <<<PHP
-
-
-/**
- * For backwards compatibility with MediaWiki 1.15 and earlier.
- */
-\$aliases =& \$specialPageAliases;
-PHP
-				);
-			}
-		}
 	}
 
 	/**
@@ -289,6 +275,8 @@ PHP
 
 	/**
 	 * Copied from cli.inc.
+	 * @param $codes
+	 * @return array
 	 */
 	private static function parseLanguageCodes( /* string */ $codes ) {
 		$langs = array_map( 'trim', explode( ',', $codes ) );

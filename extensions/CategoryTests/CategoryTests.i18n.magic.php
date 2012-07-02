@@ -1,7 +1,7 @@
 <?php
 /**
  * Magic word localization for the CategoryTests extension
-*/
+ */
 
 $magicWords = array();
 

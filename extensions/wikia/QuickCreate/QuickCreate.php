@@ -22,8 +22,7 @@ function wfQuickCreate( &$parser ) {
 	return true;
 }
 
-function wfQuickCreateButton( $input, $argv, &$parser ) {
-	wfLoadExtensionMessages( 'QuickCreate' );
+function wfQuickCreateButton( $input, $argv, $parser ) {
 	global $wgRequest, $wgScript;
 
 	$title = Title::makeTitle( NS_SPECIAL, "CreatePage");

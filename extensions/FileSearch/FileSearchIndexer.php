@@ -3,8 +3,8 @@
 /**
  * Extracts and indexes search terms from recognised upload formats
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
 class FileSearchIndexer {
@@ -19,20 +19,21 @@ class FileSearchIndexer {
 	 *
 	 * @param Image $file
 	 */
-	public static function upload( $file ) {
-		$title = $file->getTitle();
-		$article = new Article( $title );
-		# If the description page doesn't exist at this time, then we're
-		# dealing with a fresh upload; in this case, the index update will
-		# be done when the page is deleted. On the other hand, if it *does*
-		# exist, then there won't be a search index update, so we have to
-		# trigger one ourselves. Not the cleanest of methods...
-		if( $title->exists() ) {
+	public static function upload( $file, $reupload, $hasDescription ) {
+		# If we create the description page with the upload, there will be
+		# a SearchUpdate when the page is created.
+		# Otherwise, if the page exists there won't be a search index update, 
+		# so we have to trigger one ourselves
+		if( $hasDescription ) {
 			global $wgDeferredUpdateList;
+			$title = $file->getTitle();
+			$article = new Article( $title );
+
 			$update = new SearchUpdate( $title->getArticleId(),
 				$title->getPrefixedText(), $article->getContent() );
 			array_push( $wgDeferredUpdateList, $update );
 		}
+		return true;
 	}
 	
 	/**
@@ -48,9 +49,9 @@ class FileSearchIndexer {
 			wfDebugLog( 'filesearch', "Update called for `{$title}`" );
 			$titleObj = Title::makeTitle( NS_IMAGE, $title );
 			$image = wfFindFile( $titleObj );
-			if ( !$image->exists() ) {
+			if ( !$image || !$image->exists() ) {
 				wfDebugLog( 'filesearch', "Image does not exist: $title" );
-				return;
+				return true;
 			}
 			$extractor = self::getExtractor( ( $mime = $image->getMimeType() ) );
 			if( $extractor instanceof Extractor ) {
@@ -62,6 +63,7 @@ class FileSearchIndexer {
 				wfDebugLog( 'filesearch', "No suitable extractor found for `{$mime}`" );
 			}
 		}
+		return true;
 	}
 
 	/**

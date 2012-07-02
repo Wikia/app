@@ -36,9 +36,6 @@ function wfGetPerformanceStats(){
 	$statsString = "";
 	$precision = 3;
 
-	// It seems reasonable to assume that this function will be called one or less times (so I'll call this here instead of an init function).
-	wfLoadExtensionMessages('ShowPerformanceStats');
-
 	$COOKIE_NAME = "loadtime";
 	if(isset($_COOKIE[$COOKIE_NAME])){
 		$data = explode(",", $_COOKIE[$COOKIE_NAME]);

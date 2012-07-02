@@ -31,6 +31,7 @@ $messages['en'] = array(
 	'security-type-category'   => 'category',
 	'security-type-namespace'  => 'namespace',
 	'security-restricttogroup' => 'Access content restricted to members of "$1"',
+	'restriction-read'         => 'Read',
 );
 
 /** Message documentation (Message documentation)
@@ -59,9 +60,39 @@ $messages['af'] = array(
 	'security-type-namespace' => 'naamruimte',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'security' => 'Regjistri i Sigurimit',
+	'security-desc' => 'Zgjat mbrojtja faqe MediaWiki të lejojë shikimin e kufizuar e faqes përmbajtjes',
+	'security-logpage' => 'Regjistri i Sigurimit',
+	'security-logpagetext' => 'Ky është një regjistër për veprimet e bllokuar nga ana e] SimpleSecurity [http://www.mediawiki.org/wiki/Extension:SimpleSecurity extension.',
+	'badaccess-read' => "'''Kujdes:''' \"\$1\" është përmendur këtu, por ju nuk keni leje të mjaftueshme për të hyrë në të.",
+	'security-info' => 'Ka $1  në këtë faqe',
+	'security-info-toggle' => 'kufizimet e sigurisë',
+	'security-inforestrict' => '$1 është i kufizuar në $2',
+	'security-desc-LS' => '(Vlen për shkak se kjo faqe është në "$2 $1")',
+	'security-desc-PR' => '(Përcaktuar nga "të mbrojtur" tab)',
+	'security-infosysops' => 'Nuk ka kufizime janë në fuqi, sepse ju jeni një anëtar i "grupit sysop"',
+	'security-manygroups' => 'grupeve $1 dhe $2',
+	'security-unchain' => 'veprimet Modifiko individualisht',
+	'security-type-category' => 'kategori',
+	'security-type-namespace' => 'namespace',
+	'security-restricttogroup' => 'Përmbajtja Hyrje kufizuar për anëtarët e "$1"',
+);
+
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'security-type-namespace' => 'espacio de nombres',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  * @author OsamaK
+ * @author روخو
  */
 $messages['ar'] = array(
 	'security' => 'سجل الأمن',
@@ -80,17 +111,56 @@ $messages['ar'] = array(
 	'security-type-category' => 'تصنيف',
 	'security-type-namespace' => 'نطاق',
 	'security-restricttogroup' => 'الوصول إلى المحتوى مُقيّد لأعضاء "$1"',
+	'restriction-read' => 'اقرأ',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
  * @author Basharh
  */
 $messages['arc'] = array(
+	'security' => 'ܣܓܠܐ ܕܫܝܢܐ',
 	'security-type-category' => 'ܣܕܪܐ',
 	'security-type-namespace' => 'ܚܩܠܐ',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'security-type-category' => 'kateqoriya',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'security' => 'Хәүефһеҙлек яҙмалары журналы',
+	'security-desc' => 'MediaWiki биттәрен һаҡлауҙы, биттең эстәлеген ҡарауҙы сикләргә мөмкинлек биреп, киңәйтә',
+	'security-logpage' => 'Хәүефһеҙлек яҙмалары журналы',
+	'security-logpagetext' => 'Был — [http://www.mediawiki.org/wiki/Extension:SimpleSecurity SimpleSecurity] тарафынан бикләнгән ғәмәлдәр яҙмалары журналы.',
+	'badaccess-read' => "'''Киҫәтеү:''' \"\$1\" бында һылтана, әммә һеҙҙең етәрлек хоҡуҡтарығыҙ юҡ.",
+	'security-info' => 'Был бит өсөн $1 бар',
+	'security-info-toggle' => 'хәүефһеҙлек сикләүҙәре',
+	'security-inforestrict' => '$1 $2 өсөн сикләнгән',
+	'security-desc-LS' => '(ҡулланылған, сөнки был бит "$2 $1" эсендә)',
+	'security-desc-PR' => '("һаҡларға" бүлеге аша ҡуйылған)',
+	'security-infosysops' => 'Сикләүҙәр ҡулланылмай, сөнки һеҙ — "sysop" төркөмө ағзаһы',
+	'security-manygroups' => '$1 һәм $2 төркөмө',
+	'security-unchain' => 'Ғәмәлдәрҙе шәхси рәүештә үҙгәртергә',
+	'security-type-category' => 'категориялар',
+	'security-type-namespace' => 'исемдәр арауығы',
+	'security-restricttogroup' => 'Эстәлекте ҡарау "$1" ағазалары менән сикләнгән',
+	'restriction-read' => 'Уҡыу',
+);
+
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'security-type-category' => 'катэгорыя',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -111,6 +181,7 @@ $messages['be-tarask'] = array(
 	'security-type-category' => 'катэгорыя',
 	'security-type-namespace' => 'прастора назваў',
 	'security-restricttogroup' => 'Доступ да зьместу абмежаваны для групы «$1»',
+	'restriction-read' => 'Чытаць',
 );
 
 /** Bulgarian (Български)
@@ -121,6 +192,18 @@ $messages['bg'] = array(
 	'security-type-namespace' => 'именно пространство',
 );
 
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'security' => 'নিরাপত্তা লগ',
+	'security-logpage' => 'নিরাপত্তা লগ',
+	'security-info-toggle' => 'নিরাপত্তা সীমাবদ্ধতা',
+	'security-type-category' => 'বিষয়শ্রেণী',
+	'security-type-namespace' => 'নামস্থান',
+	'restriction-read' => 'পড়ুন',
+);
+
 /** Breton (Brezhoneg)
  * @author Fohanno
  * @author Fulup
@@ -128,8 +211,10 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'security' => 'Marilh surentez',
+	'security-desc' => 'Astenn a ra etrefas gwarez MediaWiki evit ma vo gallet strishaat ar gwel ouzh danvez pennadoù zo.',
 	'security-logpage' => 'Marilh surentez',
 	'security-logpagetext' => 'Ur marilh eus an oberezhioù stanket gant an [http://www.mediawiki.org/wiki/Extension:SimpleSecurity astenn SimpleSecurity] eo.',
+	'badaccess-read' => "'''Diwallit :''' \"menegeret eo \$1\" amañ met n'oc'h ket c'hwi aotreet da vont e-barzh.",
 	'security-info' => " Bez' ez eus $1 war ar bajenn-mañ",
 	'security-info-toggle' => 'strishadurioù surentez',
 	'security-inforestrict' => '$1 zo strishaet da $2',
@@ -141,6 +226,7 @@ $messages['br'] = array(
 	'security-type-category' => 'rummad',
 	'security-type-namespace' => 'esaouenn anv',
 	'security-restricttogroup' => 'Mont d\'an endalc\'had evit izili "$1" hepken',
+	'restriction-read' => 'Lenn',
 );
 
 /** Bosnian (Bosanski)
@@ -163,6 +249,7 @@ $messages['bs'] = array(
 	'security-type-category' => 'kategorija',
 	'security-type-namespace' => 'imenski prostor',
 	'security-restricttogroup' => 'Pristup sadržaju onemogućen članovima "$1"',
+	'restriction-read' => 'Čitanje',
 );
 
 /** Catalan (Català)
@@ -175,36 +262,50 @@ $messages['ca'] = array(
 	'security-type-namespace' => 'espai de noms',
 );
 
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'security-type-category' => 'پۆل',
+);
+
+/** Czech (Česky) */
+$messages['cs'] = array(
+	'security-type-category' => 'kategorie',
+	'security-type-namespace' => 'jmenný prostor',
+);
+
 /** German (Deutsch)
  * @author ChrisiPK
+ * @author Kghbln
  * @author Purodha
  * @author Umherirrender
  */
 $messages['de'] = array(
 	'security' => 'Sicherheits-Logbuch',
-	'security-desc' => 'Erweitert den MediaWiki-Seitenschutz, um das Ansehen von Seiteninhalt zu begrenzen',
+	'security-desc' => 'Erweitert den Seitenschutz um die Möglichkeit, das Betrachten von Seiten einzuschränken.',
 	'security-logpage' => 'Sicherheits-Logbuch',
-	'security-logpagetext' => 'Dies ist ein Logbuch von geblockten Aktionen der [http://www.mediawiki.org/wiki/Extension:SimpleSecurity Extension „SimpleSecurity“].',
-	'badaccess-read' => 'Warnung: „$1“ verweist hierher, aber du hast keine ausreichende Berechtigung um die Seite zu sehen.',
-	'security-info' => 'Auf dieser Seite sind $1',
-	'security-info-toggle' => 'Sicherheitsbegrenzungen',
-	'security-inforestrict' => '$1 ist begrenzt auf $2',
+	'security-logpagetext' => 'Dies ist das Logbuch der von [http://www.mediawiki.org/wiki/Extension:SimpleSecurity Extension „SimpleSecurity“] blockierten Aktionen.',
+	'badaccess-read' => "'''Warnung:''' „$1“ verweist hierher. Du hast aber keine ausreichende Berechtigung um die Seite zu sehen.",
+	'security-info' => 'Für diese Seite gibt es $1.',
+	'security-info-toggle' => 'Sicherheitseinschränkungen',
+	'security-inforestrict' => '$1 ist beschränkt auf $2',
 	'security-desc-LS' => '(gilt, weil diese Seite $2 „$1“ ist)',
-	'security-desc-PR' => '(gesetzt über den Tab „Seitenschutz“-Tab)',
-	'security-infosysops' => 'Für dich sind keine Begrenzungen aktiv, weil du der Gruppe „Administratoren“ angehörst',
+	'security-desc-PR' => '(gesetzt über den Reiter „Seitenschutz“)',
+	'security-infosysops' => 'Für dich sind keine Einschränkungen aktiv, weil du der Gruppe „Administratoren“ angehörst.',
 	'security-manygroups' => 'Gruppen $1 und $2',
 	'security-unchain' => 'Ändere Aktionen einzeln',
 	'security-type-category' => 'in der Kategorie',
 	'security-type-namespace' => 'im Namensraum',
 	'security-restricttogroup' => 'Zugriff auf Inhalte, die auf Benutzer der Gruppe „$1“ beschränkt sind',
+	'restriction-read' => 'Lesen',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
+ * @author Kghbln
  * @author Umherirrender
  */
 $messages['de-formal'] = array(
-	'badaccess-read' => 'Warnung: „$1“ verweist hierher, aber Sie haben keine ausreichende Berechtigung um die Seite zu sehen.',
-	'security-infosysops' => 'Für Sie sind keine Begrenzungen aktiv, weil Sie der Gruppe „Administratoren“ angehören',
+	'badaccess-read' => "'''Warnung:''' „$1“ verweist hierher. Sie haben aber keine ausreichende Berechtigung um die Seite zu sehen.",
+	'security-infosysops' => 'Für Sie sind keine Einschränkungen aktiv, weil Sie der Gruppe „Administratoren“ angehören.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -227,6 +328,7 @@ $messages['dsb'] = array(
 	'security-type-category' => 'kategorija',
 	'security-type-namespace' => 'mjenjowy rum',
 	'security-restricttogroup' => 'Pśistup na wopśimjeśe na cłonkow kupki "$1" wobgranicowany',
+	'restriction-read' => 'Cytaś',
 );
 
 /** Greek (Ελληνικά)
@@ -293,16 +395,20 @@ $messages['eu'] = array(
 	'security-info-toggle' => 'segurtasun murrizketak',
 	'security-manygroups' => '$1 eta $2 taldeak',
 	'security-type-category' => 'kategoria',
+	'security-type-namespace' => 'izen-tartea',
+	'restriction-read' => 'Irakurri',
 );
 
 /** Finnish (Suomi)
  * @author Cimon Avaro
  * @author Crt
+ * @author Nike
  * @author Silvonen
  * @author Str4nd
  */
 $messages['fi'] = array(
 	'security' => 'Tietoturvaloki',
+	'security-desc' => 'Laajentaa MediaWikin sivujen suojausta myös sivujen sisällön katsomisen rajoittamiseen',
 	'security-logpage' => 'Tietoturvaloki',
 	'security-info' => 'Tällä sivulla on $1',
 	'security-info-toggle' => 'turvallisuusrajoitukset',
@@ -316,6 +422,7 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
+ * @author Sherbrooke
  */
 $messages['fr'] = array(
 	'security' => 'Journal de sécurité',
@@ -334,6 +441,7 @@ $messages['fr'] = array(
 	'security-type-category' => 'catégorie',
 	'security-type-namespace' => 'espace de noms',
 	'security-restricttogroup' => 'Accès au contenu réservé aux membres de « $1 »',
+	'restriction-read' => 'Lire',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -341,8 +449,19 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'security' => 'Jornal de sècuritât',
+	'security-logpage' => 'Jornal de sècuritât',
+	'security-info' => 'Y at $1 sur ceta pâge',
+	'security-info-toggle' => 'rèstriccions de sècuritât',
+	'security-inforestrict' => '$1 est limitâ a $2',
+	'security-desc-LS' => '(s’aplique perce que ceta pâge est dens lo « $1 $2 »)',
+	'security-desc-PR' => '(dèfeni dês l’ongllèta de « protèccion »)',
+	'security-manygroups' => 'tropes $1 et $2',
+	'security-unchain' => 'Changiér les accions en particuliér',
 	'security-type-category' => 'catègorie',
 	'security-type-namespace' => 'èspâço de noms',
+	'security-restricttogroup' => 'Accès u contegnu resèrvâ ux membros de « $1 »',
+	'restriction-read' => 'Liére',
 );
 
 /** Galician (Galego)
@@ -365,6 +484,7 @@ $messages['gl'] = array(
 	'security-type-category' => 'categoría',
 	'security-type-namespace' => 'espazo de nomes',
 	'security-restricttogroup' => 'Acceso ao contido restrinxido aos membros de "$1"',
+	'restriction-read' => 'Ler',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -395,9 +515,17 @@ $messages['gsw'] = array(
 	'security-type-category' => 'Kategorii',
 	'security-type-namespace' => 'Namensruum',
 	'security-restricttogroup' => 'Zuegriff uf Inhalt bschränkt uf Mitgliider vu „$1“',
+	'restriction-read' => 'Läse',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'security-type-category' => 'rukuni',
+	'security-type-namespace' => 'sararin suna',
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
@@ -418,6 +546,7 @@ $messages['he'] = array(
 	'security-type-category' => 'קטגוריה',
 	'security-type-namespace' => 'מרחב השם',
 	'security-restricttogroup' => 'הגישה לתוכן מוגבלת לחברים בקבוצה "$1"',
+	'restriction-read' => 'קריאה',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -440,9 +569,11 @@ $messages['hsb'] = array(
 	'security-type-category' => 'kategorija',
 	'security-type-namespace' => 'mjenowy rum',
 	'security-restricttogroup' => 'Přistup na wobsah je za čłonow wot "$1" wobmjezowany',
+	'restriction-read' => 'Čitać',
 );
 
 /** Hungarian (Magyar)
+ * @author Dj
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -462,6 +593,7 @@ $messages['hu'] = array(
 	'security-type-category' => 'kategória',
 	'security-type-namespace' => 'névtér',
 	'security-restricttogroup' => 'A tartalom megjelenítése a(z) „$1” csoport tagjaira van korlátozva',
+	'restriction-read' => 'Olvasás',
 );
 
 /** Interlingua (Interlingua)
@@ -484,17 +616,20 @@ $messages['ia'] = array(
 	'security-type-category' => 'categoria',
 	'security-type-namespace' => 'spatio de nomines',
 	'security-restricttogroup' => 'Accesso al contento restringite al membros de "$1"',
+	'restriction-read' => 'Leger',
 );
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author IvanLanin
+ * @author Kenrick95
  */
 $messages['id'] = array(
 	'security' => 'Log pengamanan',
 	'security-desc' => 'Memperkaya proteksi halaman MediaWiki untuk membatasi tampilan isi halaman',
 	'security-logpage' => 'Log pengamanan',
 	'security-logpagetext' => 'Ini merupakan aksi yang diblok oleh [http://www.mediawiki.org/wiki/Extension:SimpleSecurity pengaya SimpleSecurity].',
-	'badaccess-read' => "'''Perhatian:''' \"\$1\" dirujuk ke sini, tapi Anda tidak memiliki ijin untuk mengaksesnya.",
+	'badaccess-read' => "'''Peringatan''': \"\$1\" merujuk ke sini, tapi Anda tidak memiliki izin yang memadai untuk mengaksesnya.",
 	'security-info' => 'Ada $1 pada halaman ini',
 	'security-info-toggle' => 'batasan pengamanan',
 	'security-inforestrict' => '$1 terbatas pada $2',
@@ -506,9 +641,18 @@ $messages['id'] = array(
 	'security-type-category' => 'kategori',
 	'security-type-namespace' => 'ruang nama',
 	'security-restricttogroup' => 'Akses dibatasi untuk anggota "$1"',
+	'restriction-read' => 'Baca',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'security-type-category' => 'ébéonọr',
 );
 
 /** Italian (Italiano)
+ * @author Beta16
  * @author Darth Kule
  * @author Marco 27
  * @author Nemo bis
@@ -530,6 +674,7 @@ $messages['it'] = array(
 	'security-type-category' => 'categoria',
 	'security-type-namespace' => 'namespace',
 	'security-restricttogroup' => 'Accesso al contenuto riservato ai membri di "$1"',
+	'restriction-read' => 'Leggi',
 );
 
 /** Japanese (日本語)
@@ -537,6 +682,7 @@ $messages['it'] = array(
  * @author Fievarsty
  * @author Fryed-peach
  * @author Hosiryuhosi
+ * @author Whym
  */
 $messages['ja'] = array(
 	'security' => 'セキュリティ記録',
@@ -555,13 +701,15 @@ $messages['ja'] = array(
 	'security-type-category' => 'カテゴリ',
 	'security-type-namespace' => '名前空間',
 	'security-restricttogroup' => '「$1」の構成員に限定されているコンテンツにアクセスする',
+	'restriction-read' => '閲覧',
 );
 
 /** Khmer (ភាសាខ្មែរ)
  * @author គីមស៊្រុន
+ * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
-	'security-type-namespace' => 'ប្រភេទ',
+	'security-type-namespace' => 'លំហឈ្មោះ',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -571,7 +719,7 @@ $messages['kn'] = array(
 	'security-type-category' => 'ವರ್ಗ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -592,6 +740,7 @@ dat mer och et Sigge-Aanloore ennschrängke kann.',
 	'security-type-category' => 'dä Saachjropp',
 	'security-type-namespace' => 'dämm Appachtemang',
 	'security-restricttogroup' => 'Aan de Saache draan dörve, di op de Metmaacher en dä Jropp „$1“ beschrängk sin',
+	'restriction-read' => 'Lässe',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -614,6 +763,21 @@ $messages['lb'] = array(
 	'security-type-category' => 'Kategorie',
 	'security-type-namespace' => 'Nummraum',
 	'security-restricttogroup' => 'Zougang zum Inhalt limitéiert fir Membere vu(n) "$1"',
+	'restriction-read' => 'Liesen',
+);
+
+/** Ganda (Luganda)
+ * @author Kizito
+ */
+$messages['lg'] = array(
+	'security-type-namespace' => 'kuŋaanyizo',
+);
+
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'security-type-namespace' => 'vuordu pluots',
 );
 
 /** Macedonian (Македонски)
@@ -621,9 +785,9 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'security' => 'Дневник на сигурност',
-	'security-desc' => 'Ја проширува заштитата на MediaWiki страницата, овозможувајќи ограничување на прегледувањето на содржините на страницата',
+	'security-desc' => 'Ја дополнува заштитата на страниците „МедијаВики“, овозможувајќи ограничување на прегледувањето на содржините на страницата',
 	'security-logpage' => 'Дневник на сигурност',
-	'security-logpagetext' => 'Ова е дневник на дејства блокирани од [http://www.mediawiki.org/wiki/Extension:SimpleSecurity проширувањето SimpleSecurity].',
+	'security-logpagetext' => 'Ова е дневник на дејства блокирани од [http://www.mediawiki.org/wiki/Extension:SimpleSecurity додатокот SimpleSecurity].',
 	'badaccess-read' => "'''Предупредување:''' „$1“ е наведена тука, но немате доволно дозволи за да ја отворите.",
 	'security-info' => 'На оваа страница има $1',
 	'security-info-toggle' => 'сигурносни ограничувања',
@@ -636,6 +800,7 @@ $messages['mk'] = array(
 	'security-type-category' => 'категорија',
 	'security-type-namespace' => 'именски простор',
 	'security-restricttogroup' => 'Отвори содржина ограничена на членови на „$1“',
+	'restriction-read' => 'Прочитај',
 );
 
 /** Mongolian (Монгол)
@@ -659,6 +824,30 @@ $messages['myv'] = array(
 	'security-type-namespace' => 'лемпотмо',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ * @author Simny
+ */
+$messages['nb'] = array(
+	'security' => 'Sikkerhetslogg',
+	'security-desc' => 'Utvider MediaWiki sin funksjon for sidevern til å tillate restriksjoner mot innsyn i sideinnhold',
+	'security-logpage' => 'Sikkerhetslogg',
+	'security-logpagetext' => 'Dette er en handlingslogg blokkert av [http://www.mediawiki.org/wiki/Extension:SimpleSecurity SimpleSecurity-utvidelsen].',
+	'badaccess-read' => "'''Advarsel:''' «$1» blir henvist hit, men du har ikke tilstrekkelige rettigheter til å nå den.",
+	'security-info' => 'Det finnes $1 på denne siden',
+	'security-info-toggle' => 'sikkerhetsrelaterte begrensninger',
+	'security-inforestrict' => '$1 er avgrenset til $2',
+	'security-desc-LS' => '(gjelder fordi denne siden er i «$2 $1»)',
+	'security-desc-PR' => '(kan settes fra «beskytt»-fanen)',
+	'security-infosysops' => 'Ingen restriksjoner er virksomme fordi du er medlem av administratorgruppen',
+	'security-manygroups' => 'gruppene $1 og $2',
+	'security-unchain' => 'Endre handligene individuelt',
+	'security-type-category' => 'kategori',
+	'security-type-namespace' => 'navnerom',
+	'security-restricttogroup' => 'Tilgang til innholdet er begrenset til medlemmer av «$1»',
+	'restriction-read' => 'Les',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -679,11 +868,13 @@ $messages['nl'] = array(
 	'security-type-category' => 'categorie',
 	'security-type-namespace' => 'naamruimte',
 	'security-restricttogroup' => 'Toegang tot de inhoud is beperkt tot de leden van de groep "$1"',
+	'restriction-read' => 'Lezen',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Gunnernett
  * @author Harald Khan
+ * @author Nghtwlkr
  */
 $messages['nn'] = array(
 	'security' => 'Tryggingslogg',
@@ -699,32 +890,11 @@ $messages['nn'] = array(
 	'security-unchain' => 'Endra handlingar individuelt',
 	'security-type-category' => 'kategori',
 	'security-type-namespace' => 'namnerom',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- * @author Simny
- */
-$messages['no'] = array(
-	'security' => 'Sikkerhetslogg',
-	'security-desc' => 'Utvider MediaWiki sin funksjon for sidevern til å tillate restriksjoner mot innsyn i sideinnhold',
-	'security-logpage' => 'Sikkerhetslogg',
-	'security-logpagetext' => 'Dette er en handlingslogg blokkert av [http://www.mediawiki.org/wiki/Extension:SimpleSecurity SimpleSecurity-utvidelsen].',
-	'badaccess-read' => "'''Advarsel:''' «$1» blir henvist hit, men du har ikke tilstrekkelige rettigheter til å nå den.",
-	'security-info' => 'Det finnes $1 på denne siden',
-	'security-info-toggle' => 'sikkerhetsrelaterte begrensninger',
-	'security-inforestrict' => '$1 er avgrenset til $2',
-	'security-desc-LS' => '(gjelder fordi denne siden er i «$2 $1»)',
-	'security-desc-PR' => '(kan settes fra «beskytt»-fanen)',
-	'security-infosysops' => 'Ingen restriksjoner er virksomme fordi du er medlem av administratorgruppen',
-	'security-manygroups' => 'gruppene $1 og $2',
-	'security-unchain' => 'Endre handligene individuelt',
-	'security-type-category' => 'kategori',
-	'security-type-namespace' => 'navnerom',
-	'security-restricttogroup' => 'Tilgang til innholdet er begrenset til medlemmer av «$1»',
+	'restriction-read' => 'Les',
 );
 
 /** Occitan (Occitan)
+ * @author Boulaur
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -744,6 +914,7 @@ $messages['oc'] = array(
 	'security-type-category' => 'categoria',
 	'security-type-namespace' => 'espaci de nom',
 	'security-restricttogroup' => 'Accès al contengut reservat als membres de « $1 »',
+	'restriction-read' => 'Legir',
 );
 
 /** Deitsch (Deitsch)
@@ -775,6 +946,7 @@ $messages['pl'] = array(
 	'security-type-category' => 'kategoria',
 	'security-type-namespace' => 'przestrzeń nazw',
 	'security-restricttogroup' => 'Dostęp do zawartości ograniczony do członków „$1”',
+	'restriction-read' => 'Czytaj',
 );
 
 /** Piedmontese (Piemontèis)
@@ -797,6 +969,15 @@ $messages['pms'] = array(
 	'security-type-category' => 'categorìa',
 	'security-type-namespace' => 'spassi nominal',
 	'security-restricttogroup' => 'Vëdde contnù riservà ai mèmber ëd "$1"',
+	'restriction-read' => 'Les',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'security-type-category' => 'وېشنيزه',
+	'security-type-namespace' => 'نوم-تشيال',
 );
 
 /** Portuguese (Português)
@@ -808,7 +989,7 @@ $messages['pms'] = array(
  */
 $messages['pt'] = array(
 	'security' => 'Registo de segurança',
-	'security-desc' => 'Incrementa a protecção de páginas do MediaWiki para permitir restrições à visualização do conteúdo de páginas',
+	'security-desc' => 'Expande a protecção de páginas do MediaWiki para permitir restrições ao visionamento do conteúdo de páginas',
 	'security-logpage' => 'Registo de segurança',
 	'security-logpagetext' => 'Este é um registo de acções bloqueadas pela [http://www.mediawiki.org/wiki/Extension:SimpleSecurity extensão SimpleSecurity].',
 	'badaccess-read' => "'''Aviso:''' \"\$1\" é referido aqui, mas não tem permissões suficientes para aceder ao registo.",
@@ -817,16 +998,18 @@ $messages['pt'] = array(
 	'security-inforestrict' => '$1 está limitado a $2',
 	'security-desc-LS' => '(aplica-se porque esta página está no "$2 $1")',
 	'security-desc-PR' => '(definido a partir da "aba proteger")',
-	'security-infosysops' => 'Nenhuma restrição está em vigor, porque você é um membro do grupo "sysop"',
+	'security-infosysops' => 'Não está em vigor nenhuma restrição porque é membro do grupo "sysop"',
 	'security-manygroups' => 'grupos $1 e $2',
 	'security-unchain' => 'Modificar ações individualmente',
 	'security-type-category' => 'categoria',
-	'security-type-namespace' => 'domínio',
+	'security-type-namespace' => 'espaço nominal',
 	'security-restricttogroup' => 'Aceder a conteúdo restrito aos membros de "$1"',
+	'restriction-read' => 'Ler',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Raylton P. Sousa
  */
 $messages['pt-br'] = array(
 	'security' => 'Registro de segurança',
@@ -845,16 +1028,19 @@ $messages['pt-br'] = array(
 	'security-type-category' => 'categoria',
 	'security-type-namespace' => 'domínio',
 	'security-restricttogroup' => 'Acessar conteúdo restrito a membros de "$1"',
+	'restriction-read' => 'Ler',
 );
 
 /** Romanian (Română)
+ * @author Danutz
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'security' => 'Jurnal securitate',
 	'security-logpage' => 'Jurnal securitate',
 	'security-type-category' => 'categorie',
-	'security-type-namespace' => 'spaţiu de nume',
+	'security-type-namespace' => 'spațiu de nume',
+	'restriction-read' => 'Lectură',
 );
 
 /** Russian (Русский)
@@ -878,6 +1064,15 @@ $messages['ru'] = array(
 	'security-type-category' => 'категории',
 	'security-type-namespace' => 'пространстве имён',
 	'security-restricttogroup' => 'Доступ к содержимому ограничен членами «$1»',
+	'restriction-read' => 'Чтение',
+);
+
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'security-type-category' => 'катеґорія',
+	'security-type-namespace' => 'простор назв',
 );
 
 /** Slovak (Slovenčina)
@@ -900,6 +1095,31 @@ $messages['sk'] = array(
 	'security-type-category' => 'kategória',
 	'security-type-namespace' => 'menný priestor',
 	'security-restricttogroup' => 'Prístup k obsahu obmedzenému len pre členov skupiny „$1“',
+);
+
+/** Somali (Soomaaliga)
+ * @author Maax
+ */
+$messages['so'] = array(
+	'security-type-category' => 'qeybta',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'security-info-toggle' => 'сигурносна ограничења',
+	'security-manygroups' => 'групе $1 и $2',
+	'security-type-category' => 'категорија',
+	'security-type-namespace' => 'именски простор',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'security-info-toggle' => 'sigurnosna ograničenja',
+	'security-manygroups' => 'grupe $1 i $2',
+	'security-type-category' => 'kategorija',
+	'security-type-namespace' => 'imenski prostor',
 );
 
 /** Swedish (Svenska)
@@ -927,8 +1147,16 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'security-info-toggle' => 'భద్రతా నియంత్రణలు',
+	'security-desc-LS' => '(ఈ పుట "$2 $1"లో ఉన్నందున వర్తిస్తుంది)',
 	'security-type-category' => 'వర్గం',
 	'security-type-namespace' => 'పేరుబరి',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'security-type-category' => 'kategoria',
 );
 
 /** Thai (ไทย)
@@ -957,13 +1185,15 @@ $messages['tl'] = array(
 	'security-info' => 'Mayroon mga $1 sa ibabaw ng pahinang ito',
 	'security-info-toggle' => 'mga hangganang pangkaligtasan',
 	'security-inforestrict' => 'Nakahangga ang $1 sa $2',
-	'security-desc-LS' => "''(naaangkop dahil nasa loob ng '''$2 $1''' ang pahinang ito)''",
-	'security-desc-PR' => "''(itinakda mula sa '''panglaylay na pangpananggalang''')''",
-	'security-infosysops' => 'Walang umiiral na mga paghahanga dahil isa kang kasapi ng pangkat na tagapagpaandar ng sistema',
+	'security-desc-LS' => "(naaangkop dahil nasa loob ng '''$2 $1''' ang pahinang ito)''",
+	'security-desc-PR' => '(itinakda mula sa panglaylay na "pangpananggalang")',
+	'security-infosysops' => 'Walang umiiral na mga paghahangga dahil isa kang kasapi ng pangkat na "tagapagpaandar ng sistema"',
 	'security-manygroups' => 'mga pangkat na $1 at $2',
 	'security-unchain' => 'Baguhin na paisa-isa ang mga galaw',
 	'security-type-category' => 'kaurian',
 	'security-type-namespace' => 'espasyo ng pangalan',
+	'security-restricttogroup' => 'Puntahan ang nilalaman na nakalaan lamang para sa mga kasapi ng "$1"',
+	'restriction-read' => 'Basahin',
 );
 
 /** Turkish (Türkçe)
@@ -977,16 +1207,23 @@ $messages['tr'] = array(
 	'security-info-toggle' => 'güvenlik kısıtlamaları',
 	'security-desc-PR' => '("koruma" sekmesinden ayarla)',
 	'security-unchain' => 'İşlemleri ayrı ayrı değiştir',
-	'security-type-namespace' => 'isim alanı',
+	'security-type-namespace' => 'ad alanı',
 );
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
+	'security' => 'Журнал безпеки',
 	'security-desc' => 'Розширює захист сторінок MediaWiki, дозволяючи обмежувати перегляд вмісту сторінки',
+	'security-logpage' => 'Журнал безпеки',
+	'security-logpagetext' => 'Це журнал дій, заблокованих [http://www.mediawiki.org/wiki/Extension:SimpleSecurity розширенням SimpleSecurity].',
+	'security-info' => 'На цій сторінці діють $1',
+	'security-info-toggle' => 'обмеження для забезпечення безпеки',
 	'security-inforestrict' => '$1 обмежений для $2',
 	'security-type-category' => 'категорія',
+	'security-type-namespace' => 'простір назв',
 );
 
 /** Veps (Vepsan kel')
@@ -999,10 +1236,11 @@ $messages['vep'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Trần Nguyễn Minh Huy
  */
 $messages['vi'] = array(
-	'security' => 'Nhật trình an toàn',
-	'security-logpage' => 'Nhật trình an toàn',
+	'security' => 'Nhật trình bảo mật',
+	'security-logpage' => 'Nhật trình bảo mật',
 	'security-info' => 'Có $1 tại trang này',
 	'security-info-toggle' => 'hạn chế an toàn',
 	'security-manygroups' => 'các nhóm $1 và $2',
@@ -1020,16 +1258,24 @@ $messages['yi'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
  * @author Liangent
+ * @author PhiLiP
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
+	'security-type-category' => '分类',
 	'security-type-namespace' => '名字空间',
+	'restriction-read' => '读',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
+	'security-type-category' => '分類',
 	'security-type-namespace' => '名字空間',
+	'restriction-read' => '讀',
 );
 

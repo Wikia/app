@@ -38,8 +38,7 @@ class OmegaWiki extends DefaultWikidataApplication {
 	}
 
 	public function history() {
-		global
-			$wgOut, $wgTitle;
+		global $wgOut, $wgTitle;
 
 		parent::history();
 
@@ -57,8 +56,7 @@ class OmegaWiki extends DefaultWikidataApplication {
 	}
 
 	protected function save( $referenceQueryTransactionInformation ) {
-		global
-			$wgTitle;
+		global $wgTitle;
 
 		parent::save( $referenceQueryTransactionInformation );
 
@@ -71,10 +69,11 @@ class OmegaWiki extends DefaultWikidataApplication {
 	}
 
 	public function edit() {
-		global
-			$wgOut, $wgTitle, $wgUser;
+		global $wgOut, $wgTitle, $wgUser;
 
-		if ( !parent::edit() ) return false;
+		if ( !parent::edit() ) {
+			return false;
+		}
 		$this->outputEditHeader();
 
 		$spelling = $wgTitle->getText();
@@ -90,14 +89,13 @@ class OmegaWiki extends DefaultWikidataApplication {
 	}
 	
 	public function getTitle() {
-		global
-			$wgTitle, $wgUseExpressionPageTitlePrefix;
+		global $wgTitle, $wgUseExpressionPageTitlePrefix;
 	
-		if ( $wgUseExpressionPageTitlePrefix )
+		if ( $wgUseExpressionPageTitlePrefix ) {
 			$title = wfMsg( 'ow_Multiple_meanings', $wgTitle->getText() );
-		else
+		} else {
 			$title	= $wgTitle->getText();
-					
+		}
 		return $title;
 	}
 

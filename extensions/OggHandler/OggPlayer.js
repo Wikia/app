@@ -51,6 +51,11 @@ var wgOggPlayer = {
 	 * Parameters are: id, videoUrl, width, height, length, linkUrl, isVideo
 	 */
 	'init': function ( player, params ) {
+		// Expand params.videoUrl if protocol-relative
+		if ( params.videoUrl.substr( 0, 2 ) == '//' ) {
+			// window.location.protocol is something like 'http:'
+			params.videoUrl = window.location.protocol + params.videoUrl;
+		}
 		elt = document.getElementById( params.id );
 
 		// Save still image HTML
@@ -554,12 +559,13 @@ var wgOggPlayer = {
 	},
 
 	'embedVideoElement': function ( elt, params ) {
-		var id = elt.id + "_obj",
-		tagName = params.isVideo ? 'video' : 'audio',
-		html =
+		var id = elt.id + "_obj";
+		var tagName = params.isVideo ? 'video' : 'audio';
+		var html =
 			'<div><' + tagName +
-				' id=' + this.hq( id ) +
-				' style="width:' + params.width + 'px;height:' + ((params.height>0)?params.height:this.controlsHeightGuess ) + 'px;"' +
+				' id=' + this.hq( id ) + 
+				' width=' + this.hq( params.width ) + 
+				' height=' + this.hq( (params.height>0)?params.height:this.controlsHeightGuess ) + 
 				' src=' + this.hq( params.videoUrl ) +
 				' autoplay';
 		if ( !this.safariControlsBug ) {
@@ -719,7 +725,7 @@ var wgOggPlayer = {
 					if ( !xiphQtVersion || xiphQtVersion == '0.0' ) {
 						var div = document.createElement( 'div' );
 						div.className = 'ogg-player-options';
-						div.style.cssText = 'width:' + ( params.width - 10 ) + 'px;'
+						div.style.cssText = 'width:' + ( params.width - 10 ) + 'px;';
 						div.innerHTML = this_.getMsg( 'ogg-no-xiphqt' );
 						var optionsDiv = document.getElementById( params.id + '_options_box' );
 						if ( optionsDiv ) {

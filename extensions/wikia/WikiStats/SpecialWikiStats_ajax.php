@@ -152,7 +152,7 @@ class WikiStatsAjax {
 		}
 		
 		wfProfileOut( __METHOD__ );			
-		return Wikia::json_encode($result); 		
+		return json_encode($result); 		
 	}
 }
 

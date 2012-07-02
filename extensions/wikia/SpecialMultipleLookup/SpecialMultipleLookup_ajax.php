@@ -44,7 +44,7 @@ class MultiLookupAjax {
 		if ( !$wgUser->isLoggedIn() ) { return ""; }
 		if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
 			wfProfileOut( __METHOD__ );
-			return Wikia::json_encode($result);
+			return json_encode($result);
 		}
 
 		$oML = new MultipleLookupCore($username);
@@ -117,7 +117,7 @@ class MultiLookupAjax {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return Wikia::json_encode($result);
+		return json_encode($result);
 	}
 }
 

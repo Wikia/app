@@ -16,14 +16,13 @@
 			$index++;
 	?>
 		<li class="wikia-mosaic-slide<?= $index === 5 ? ' last' : ''?>">
-			<?php
-				if ( !empty( $val['imageLink'] ) ){
-					echo "<a href='{$val['imageLink']}' class='wikia-mosaic-link'>";
-				}
-			?>
+			<?php if ( !empty( $val['imageLink'] ) ): ?>
+					<a href='<?= htmlspecialchars($val['imageLink'],ENT_QUOTES); ?>' class='wikia-mosaic-link'>
+			<?php endif; ?>
+
 			<img width='<?= $imagesDimensions['w']; ?>' height='<?= $imagesDimensions['h'] ?>' src='<?=$val['imageUrl']?>' class="wikia-mosaic-hero-image">
-			
 			<img width='<?= $thumbDimensions['w'] ?>' height='<?= $thumbDimensions['h'] ?>' src='<?= $val['imageThumbnail'] ?>' class="wikia-mosaic-thumb-image">
+
 			<div class="wikia-mosaic-description-mask">
 			</div>
 			<div class="wikia-mosaic-description">
@@ -31,11 +30,9 @@
 				<div class="wikia-mosaic-short-title"><?= $val['imageShortTitle'] ?></div>
 				<p><?= $val['imageDescription'] ?></p>
 			</div>
-			<?php
-				if (!empty( $val['imageLink'] )){
-					echo '</a>';
-				}
-			?>
+			<?php if ( !empty( $val['imageLink'] ) ): ?>
+					</a>
+			<?php endif; ?>
 		</li>
 	<?php } ?>
 	</ul>

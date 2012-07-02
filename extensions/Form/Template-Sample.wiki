@@ -1,0 +1,15 @@
+The topic is {{{topic}}}.
+
+The purpose is {{{purpose}}}.
+
+== Introduction ==
+
+{{{intro}}}
+
+== Color ==
+
+{{{color}}}
+
+== Conclusion ==
+
+{{{conclusion}}}

@@ -42,7 +42,7 @@ $dir = dirname(__FILE__).'/';
 
 // Michał Roszka (Mix) <michal@wikia-inc.com>
 // BugId:13865
-// 
+//
 // Due to the fix of BugId:10474 (find below) I had to do the same thing
 // to disable special pages and remove them from Special:SpecialPages.
 if( !empty( $wgEnableAchievementsExt ) ) {
@@ -52,8 +52,6 @@ if( !empty( $wgEnableAchievementsExt ) ) {
     $wgSpecialPages['AchievementsCustomize'] = 'SpecialAchievementsCustomize';
     $wgSpecialPages['AchievementsSharing'] = 'SpecialAchievementsSharing';
 }
-
-$wgExtensionAliasesFiles ['AchievementsII'] = $dir.'AchievementsII.alias.php' ;
 
 // RIGHTS
 $wgAvailableRights[] = 'platinum';
@@ -108,6 +106,7 @@ $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/Wi
 
 // I18N
 $wgExtensionMessagesFiles['AchievementsII'] = $dir.'i18n/AchievementsII.i18n.php';
+$wgExtensionMessagesFiles['AchievementsIIAliases'] = $dir.'AchievementsII.alias.php' ;
 
 // Michał Roszka (Mix) <michal@wikia-inc.com>
 // BugId:10474
@@ -134,10 +133,10 @@ function Ach_Setup() {
 	//hooks for user preferences
 	$wgHooks['GetPreferences'][] = 'Ach_UserPreferences';
 	$wgHooks['MonacoSidebarGetMenu'][] = 'Ach_GetMenu';
-	
+
 	//hook for purging Achievemets-related cache
 	$wgHooks['AchievementsInvalidateCache'][] = 'Ach_InvalidateCache';
-	
+
 	wfProfileOut(__METHOD__);
 }
 
@@ -174,7 +173,7 @@ function Ach_MastheadEditCounter(&$editCounter, $user) {
 
 function Ach_UploadVerification($destName, $tempPath, &$error) {
 	if (Ach_isBadgeImage($destName, true /* check user right to upload sponsored badge */ )) {
-		wfLoadExtensionMessages( 'AchievementsII' );
+
 		$error = wfMsgExt('achievements-upload-not-allowed', array('parse'));
 		return false;
 	}
@@ -204,7 +203,7 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 	global $wgOut, $wgTitle, $wgUser;
 
 	if($wgUser->isLoggedIn() && !($wgUser->getOption('hidepersonalachievements'))) {
-		if ($wgTitle->getNamespace() == NS_SPECIAL && SpecialPage::resolveAlias($wgTitle->getDBkey()) == 'MyHome') {
+		if ($wgTitle->getNamespace() == NS_SPECIAL && array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBkey())) == 'MyHome') {
 			$awardingService = new AchAwardingService();
 			$awardingService->awardCustomNotInTrackBadge($wgUser, BADGE_WELCOME);
 		}
@@ -266,16 +265,15 @@ function AchAjax() {
 function Ach_UserPreferences( $user, &$preferences ) {
 	global $wgEnableUserPreferencesV2Ext;
 	$section = (!empty($wgEnableUserPreferencesV2Ext)) ? 'under-the-hood/advanced-displayv2' : 'misc';
-	
+
 	if( $user->isLoggedIn() ) {
-		wfLoadExtensionMessages( 'AchievementsII' );
 		$preferences['hidepersonalachievements'] = array(
 			'type' => 'toggle',
 			'label-message' => 'achievements-toggle-hide', // a system message
 			'section' => $section
 		);
 	}
-	
+
 	return true;
 }
 
@@ -406,19 +404,19 @@ function Ach_isBadgeImage($destName, $checkUserRights = false) {
 function Ach_InvalidateCache( User $user ) {
 	wfProfileIn( __METHOD__ );
 	global $wgMemc;
-	
+
 	$rankingCacheKeys = array(
 		//used in AchRankingService::getUserRankingPosition()
 		AchRankingService::getRankingCacheKey( 1000, false ),
 		//used in SpecialLeaderboard
 		AchRankingService::getRankingCacheKey(20, true)
 	);
-	
+
 	foreach( $rankingCacheKeys as $key ) {
 		$wgMemc->delete( $key );
 	}
-	
+
 	wfProfileOut( __METHOD__ );
-	
+
 	return true;
 }

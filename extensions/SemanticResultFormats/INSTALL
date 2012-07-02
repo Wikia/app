@@ -1,9 +1,21 @@
+== Requirements ==
+
+Semantic Result Formats requires:
+* MediaWiki 1.16 or above
+* Semantic MediaWiki 1.7 or above
+* PHP 5.2 or above
+
+For older setups, SRF 1.6.x can be used, which has these requirements:
+* MediaWiki 1.15 or above
+* Semantic MediaWiki 1.5.1 to 1.6.1
+* PHP 5.2 or above
+
 == Installation ==
 
 Installation instructions are available online in a more convenient form for
 reading at:
 
- http://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats
+ https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats
 
 Copy all files into MediaWiki's extensions folder, either by using SVN or by
 extracting an installation package. You need to enter one line to your local
@@ -22,7 +34,12 @@ the formats that satisfy the following criteria:
 
 Currently, these default formats thus are:
 'vcard', 'icalendar', 'calendar', 'timeline', 'eventline', 'bibtex', 'outline',
-'jqplotbar', 'jqplotpie', 'sum', 'average', 'min', 'max'.
+'gallery', 'jqplotbar', 'jqplotpie', 'sum', 'average', 'min', 'max', 'tagcloud',
+'median', 'product', 'valuerank', 'array', 'tree', 'ultree', 'oltree',
+'D3Line'¹, 'D3Bar'¹, 'D3Treemap'¹, 'filtered'¹, 'hash'².
+
+¹ from MediaWiki 1.17 onwards
+² with HashTables extension installed
 
 To add more formats to this list, you can add lines like:
 
@@ -30,7 +47,7 @@ To add more formats to this list, you can add lines like:
 
 ... or you can override the set of formats entirely, with a call like:
 
- $srfgFormats = array('calendar', 'timeline');
+ $srfgFormats = array( 'calendar', 'timeline' );
 
 There are some formats that you may not want to include because they may
 not follow certain policies within your wiki; the formats 'googlebar' and

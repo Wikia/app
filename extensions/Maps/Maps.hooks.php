@@ -8,7 +8,8 @@
  * @file Maps.hooks.php
  * @ingroup Maps
  * 
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 final class MapsHooks {
 	
@@ -26,7 +27,7 @@ final class MapsHooks {
 	    if ( is_null( $displaying_data_section ) ) return true;
 	    $smw_docu_row = $displaying_data_section->getRow( 'smw' );
 	
-	    $maps_docu_label = wfMsg( 'adminlinks_documentation', wfMsg( 'maps_name' ) );
+	    $maps_docu_label = wfMsg( 'adminlinks_documentation', 'Maps' );
 	    $smw_docu_row->addItem( AlItem::newFromExternalLink( 'http://mapping.referata.com/wiki/Maps', $maps_docu_label ) );
 	
 	    return true;
@@ -41,50 +42,10 @@ final class MapsHooks {
 	 */
 	public static function registerUnitTests( array &$files ) {
 		$testDir = dirname( __FILE__ ) . '/test/';
-		//$files[] = $testDir . 'MapsCoordinateParserTest.php';
-		return true;
-	}
-	
-	/**
-	 * Adds the map JS to the bottom of the page. This is a hack to get
-	 * around the lack of inline script support in the MW 1.17 resource loader.
-	 * 
-	 * @since 0.7
-	 */
-	public static function addOnloadFunction( $skin, &$text ) {
-		if ( method_exists( 'ParserOutput', 'addModules' ) ) {
-			$text .= Html::inlineScript( 'if (window.runMapsOnloadHook) runMapsOnloadHook();' );
-		}
 		
-		return true;
-	}
-
-	/**
-	 * Register the resource modules for the resource loader.
-	 * 
-	 * @since 0.7
-	 * 
-	 * @param ResourceLoader $resourceLoader
-	 * 
-	 * @return true
-	 */
-	public static function registerResourceLoaderModules( ResourceLoader &$resourceLoader ) {
-		global $egMapsScriptPath;
-		/*
-		$modules = array(
-			'ext.maps.common' => array(
-			
-			),
-		);
+		$files[] = $testDir . 'MapsCoordinateParserTest.php';
+		$files[] = $testDir . 'MapsDistanceParserTest.php';
 		
-		foreach ( $modules as $name => $resources ) { 
-			$resourceLoader->register( $name, new ResourceLoaderFileModule(
-				$resources,
-				dirname( __FILE__ ),
-				$egMapsScriptPath'
-			) ); 
-		}
-		*/
 		return true;
 	}
 	
@@ -104,4 +65,29 @@ final class MapsHooks {
 		return true;
 	}
 	
+	/**
+	 * Adds global JavaScript variables.
+	 *
+	 * @since 1.0
+	 *
+	 * @param array &$vars
+	 *
+	 * @return true
+	 */
+	public static function onMakeGlobalVariablesScript( array &$vars ) {
+		global $egMapsGlobalJSVars;
+		
+		$vars['egMapsDebugJS'] = $GLOBALS['egMapsDebugJS'];
+		
+		$vars += $egMapsGlobalJSVars;
+		
+		return true;
+	}
+	
+
+	public static function onCanonicalNamespaces( &$list ) {
+		$list[Maps_NS_LAYER] = 'Layer';
+		$list[Maps_NS_LAYER_TALK] = 'Layer_talk';
+		return true;
+	}
 } 

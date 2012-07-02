@@ -1,23 +1,27 @@
 <?php
 /**
+ * Authentication plugin interface
+ *
+ * Copyright © 2004 Brion Vibber <brion@pobox.com>
+ * http://www.mediawiki.org/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
-# Copyright (C) 2004 Brion Vibber <brion@pobox.com>
-# http://www.mediawiki.org/
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-# http://www.gnu.org/copyleft/gpl.html
 
 /**
  * Authentication plugin interface. Instantiate a subclass of AuthPlugin
@@ -63,7 +67,7 @@ class AuthPlugin {
 	 * Modify options in the login template.
 	 *
 	 * @param $template UserLoginTemplate object.
-	 * @param $type String 'signup' or 'login'.
+	 * @param $type String 'signup' or 'login'. Added in 1.16.
 	 */
 	public function modifyUITemplate( &$template, &$type ) {
 		# Override this!
@@ -105,7 +109,6 @@ class AuthPlugin {
 		return true;
 	}
 
-
 	/**
 	 * Return true if the wiki should create a new local account automatically
 	 * when asked to login a user who doesn't exist locally but does in the
@@ -128,14 +131,16 @@ class AuthPlugin {
 	 * and use the same keys. 'Realname' 'Emailaddress' and 'Nickname'
 	 * all reference this.
 	 *
+	 * @param $prop string
+	 *
 	 * @return Boolean
 	 */
 	public function allowPropChange( $prop = '' ) {
-		if( $prop == 'realname' && is_callable( array( $this, 'allowRealNameChange' ) ) ) {
+		if ( $prop == 'realname' && is_callable( array( $this, 'allowRealNameChange' ) ) ) {
 			return $this->allowRealNameChange();
-		} elseif( $prop == 'emailaddress' && is_callable( array( $this, 'allowEmailChange' ) ) ) {
+		} elseif ( $prop == 'emailaddress' && is_callable( array( $this, 'allowEmailChange' ) ) ) {
 			return $this->allowEmailChange();
-		} elseif( $prop == 'nickname' && is_callable( array( $this, 'allowNickChange' ) ) ) {
+		} elseif ( $prop == 'nickname' && is_callable( array( $this, 'allowNickChange' ) ) ) {
 			return $this->allowNickChange();
 		} else {
 			return true;
@@ -197,10 +202,9 @@ class AuthPlugin {
 	 * @param $realname String
 	 * @return Boolean
 	 */
-	public function addUser( $user, $password, $email='', $realname='' ) {
+	public function addUser( $user, $password, $email = '', $realname = '' ) {
 		return true;
 	}
-
 
 	/**
 	 * Return true to prevent logins that don't authenticate here from being
@@ -236,7 +240,7 @@ class AuthPlugin {
 	 * @param $user User object.
 	 * @param $autocreate Boolean: True if user is being autocreated on login
 	 */
-	public function initUser( &$user, $autocreate=false ) {
+	public function initUser( &$user, $autocreate = false ) {
 		# Override this to do something.
 	}
 
@@ -247,14 +251,25 @@ class AuthPlugin {
 	public function getCanonicalName( $username ) {
 		return $username;
 	}
-	
+
 	/**
 	 * Get an instance of a User object
 	 *
 	 * @param $user User
+	 *
+	 * @return AuthPluginUser
 	 */
 	public function getUserInstance( User &$user ) {
 		return new AuthPluginUser( $user );
+	}
+
+	/**
+	 * Get a list of domains (in HTMLForm options format) used.
+	 *
+	 * @return array
+	 */
+	public function domainList() {
+		return array();
 	}
 }
 
@@ -262,22 +277,22 @@ class AuthPluginUser {
 	function __construct( $user ) {
 		# Override this!
 	}
-	
+
 	public function getId() {
 		# Override this!
 		return -1;
 	}
-	
+
 	public function isLocked() {
 		# Override this!
 		return false;
 	}
-	
+
 	public function isHidden() {
 		# Override this!
 		return false;
 	}
-	
+
 	public function resetAuthToken() {
 		# Override this!
 		return true;

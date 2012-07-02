@@ -1,11 +1,10 @@
 <?php
-
-/*
- * Created on Sep 2, 2008
- *
+/**
  * API for MediaWiki 1.14+
  *
- * Copyright (C) 2008 Soxred93 soxred93@gmail.com,
+ * Created on Sep 2, 2008
+ *
+ * Copyright © 2008 Soxred93 soxred93@gmail.com,
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +18,11 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	require_once ( 'ApiBase.php' );
-}
 
 /**
  * Allows user to patrol pages
@@ -34,7 +31,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class ApiPatrol extends ApiBase {
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action );
+		parent::__construct( $main, $action );
 	}
 
 	/**
@@ -42,21 +39,24 @@ class ApiPatrol extends ApiBase {
 	 */
 	public function execute() {
 		$params = $this->extractRequestParams();
-		
-		if ( !isset( $params['rcid'] ) )
-			$this->dieUsageMsg( array( 'missingparam', 'rcid' ) );
 
 		$rc = RecentChange::newFromID( $params['rcid'] );
-		if ( !$rc instanceof RecentChange )
+		if ( !$rc instanceof RecentChange ) {
 			$this->dieUsageMsg( array( 'nosuchrcid', $params['rcid'] ) );
-		$retval = RecentChange::markPatrolled( $params['rcid'] );
-			
-		if ( $retval )
+		}
+		$retval = $rc->doMarkPatrolled( $this->getUser() );
+
+		if ( $retval ) {
 			$this->dieUsageMsg( reset( $retval ) );
-		
+		}
+
 		$result = array( 'rcid' => intval( $rc->getAttribute( 'rc_id' ) ) );
 		ApiQueryBase::addTitleInfo( $result, $rc->getTitle() );
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );
+	}
+
+	public function mustBePosted() {
+		return true;
 	}
 
 	public function isWriteMode() {
@@ -64,49 +64,51 @@ class ApiPatrol extends ApiBase {
 	}
 
 	public function getAllowedParams() {
-		return array (
+		return array(
 			'token' => null,
 			'rcid' => array(
-				ApiBase :: PARAM_TYPE => 'integer'
+				ApiBase::PARAM_TYPE => 'integer',
+				ApiBase::PARAM_REQUIRED => true
 			),
 		);
 	}
 
 	public function getParamDescription() {
-		return array (
+		return array(
 			'token' => 'Patrol token obtained from list=recentchanges',
 			'rcid' => 'Recentchanges ID to patrol',
 		);
 	}
 
 	public function getDescription() {
-		return array (
-			'Patrol a page or revision. '
-		);
+		return 'Patrol a page or revision';
 	}
-	
-    public function getPossibleErrors() {
+
+	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
-			array( 'missingparam', 'rcid' ),
 			array( 'nosuchrcid', 'rcid' ),
-        ) );
+		) );
 	}
-	
+
 	public function needsToken() {
 		return true;
 	}
 
 	public function getTokenSalt() {
-		return '';
+		return 'patrol';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=patrol&token=123abc&rcid=230672766'
 		);
 	}
 
+	public function getHelpUrls() {
+		return 'https://www.mediawiki.org/wiki/API:Patrol';
+	}
+
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiPatrol.php 74217 2010-10-03 15:53:07Z reedy $';
+		return __CLASS__ . ': $Id$';
 	}
 }

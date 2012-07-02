@@ -174,21 +174,26 @@
 	
 	/* Global Header vertical-specific colors */
 	&.vertical-colors {
-		.Video_Games .subnav a {
+		.video-games-vertical-color .subnav a {
 			color: $color-wikiahome-videogames;
 		}
-		
-		.Entertainment .subnav a {
+
+		.entertainment-vertical-color .subnav a {
 			color: $color-wikiahome-entertainment;
 		}
-		
-		.Lifestyle .subnav a {
+
+		.lifestyle-vertical-color .subnav a {
 			color: $color-wikiahome-lifestyle;
 		}
-		
-		.Video_Games:hover,
-		.Entertainment:hover,
-		.Lifestyle:hover {
+
+		.community-vertical-color .subnav a {
+			color: $color-wikiahome-community-dark;
+		}
+
+		.video-games-vertical-color:hover,
+		.entertainment-vertical-color:hover,
+		.lifestyle-vertical-color:hover,
+		.community-vertical-color:hover {
 			background: none;
 			& .chevron {
 				border-top-color: $color-header-text;
@@ -202,23 +207,29 @@
 				}
 			}
 		}
-		
-		.Video_Games:hover {
+
+		.video-games-vertical-color:hover {
 			background-color: $color-wikiahome-videogames;
-			.catnav li a:hover{
+			.catnav li a:hover {
 				background-color: mix($color-page, $color-wikiahome-videogames, 90%);
 			}
 		}
-		.Entertainment:hover {
+		.entertainment-vertical-color:hover {
 			background-color: $color-wikiahome-entertainment;
-			.catnav li a:hover{
+			.catnav li a:hover {
 				background-color: mix($color-page, $color-wikiahome-entertainment, 90%);
 			}
 		}
-		.Lifestyle:hover {
+		.lifestyle-vertical-color:hover {
 			background-color: $color-wikiahome-lifestyle;
-			.catnav li a:hover{
+			.catnav li a:hover {
 				background-color: mix($color-page, $color-wikiahome-lifestyle, 90%);
+			}
+		}
+		.community-vertical-color:hover {
+			background-color: $color-wikiahome-community-dark;
+			.catnav li a:hover {
+				background-color: mix($color-page, $color-wikiahome-community-dark, 90%);
 			}
 		}
 	}

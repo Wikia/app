@@ -68,7 +68,6 @@ class HAWelcomeJob extends Job {
 	 * @param integer $id job_id
 	 */
 	public function __construct( $title, $params, $id = 0 ) {
-		wfLoadExtensionMessages( "HAWelcome" );
 		parent::__construct( "HAWelcome", $title, $params, $id );
 
 		$this->mUserId   = $params[ "user_id" ];
@@ -450,14 +449,13 @@ class HAWelcomeJob extends Job {
 		$oldValue = $wgErrorLog;
 		$wgErrorLog = true;
 		if( !wfReadOnly() && ! $wgCommandLineMode ) {
-			wfLoadExtensionMessages( "HAWelcome" );
 
 			/**
 			 * Revision has valid Title field but sometimes not filled
 			 */
 			$Title = $revision->getTitle();
 			if( !$Title ) {
-				$Title = Title::newFromId( $revision->getPage(), GAID_FOR_UPDATE );
+				$Title = Title::newFromId( $revision->getPage(), Title::GAID_FOR_UPDATE );
 				$revision->setTitle( $Title );
 			}
 

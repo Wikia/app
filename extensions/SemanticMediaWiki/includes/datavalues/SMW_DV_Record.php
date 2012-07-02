@@ -14,85 +14,107 @@
  * @author Markus Krötzsch
  * @ingroup SMWDataValues
  */
-class SMWRecordValue extends SMWContainerValue {
+class SMWRecordValue extends SMWDataValue {
 
-	/// cache for datavalues of types belonging to this object
-	private $m_typevalues = null;
+	/// cache for properties for the fields of this data value
+	protected $m_diProperties = null;
 
 	protected function parseUserValue( $value ) {
-		$this->m_data->clear();
 		$this->parseUserValueOrQuery( $value, false );
 	}
 
-	protected function parseUserValueOrQuery( $value, $querymode ) {
-		if ( $value == '' ) {
+	protected function parseUserValueOrQuery( $value, $queryMode ) {
+		if ( $value === '' ) {
 			$this->addError( wfMsg( 'smw_novalues' ) );
-			return $querymode ? new SMWThingDescription():$this->m_data;
+
+			if ( $queryMode ) {
+				return new SMWThingDescription();
+			} else {
+				return;
+			}
 		}
 
-		$subdescriptions = array(); // only used for query mode
-		$types = $this->getTypeValues();
+		if ( $queryMode ) {
+			$subdescriptions = array();
+		} elseif ( is_null( $this->m_contextPage ) ) {
+			$semanticData = SMWContainerSemanticData::makeAnonymousContainer();
+		} else {
+			$subobjectName = '_' . hash( 'md4', $value, false ); // md4 is probably fastest of PHP's hashes
+			$subject = new SMWDIWikiPage( $this->m_contextPage->getDBkey(),
+				$this->m_contextPage->getNamespace(), $this->m_contextPage->getInterwiki(),
+				$subobjectName );
+			$semanticData = new SMWContainerSemanticData( $subject );
+		}
+
 		$values = preg_split( '/[\s]*;[\s]*/u', trim( $value ) );
-		$vi = 0; // index in value array
+		$valueIndex = 0; // index in value array
+		$propertyIndex = 0; // index in property list
 		$empty = true;
-		for ( $i = 0; $i < max( 5, count( $types ) ); $i++ ) { // iterate over slots
-			// special handling for supporting query parsing
-			if ( $querymode ) {
-				$comparator = SMW_CMP_EQ;
-				SMWDataValue::prepareValue( $values[$vi], $comparator );
+
+		foreach ( $this->getPropertyDataItems() as $diProperty ) {
+			if ( !array_key_exists( $valueIndex, $values ) ) {
+				break; // stop if there are no values left
 			}
+
+			if ( $queryMode ) { // special handling for supporting query parsing
+				$comparator = SMW_CMP_EQ;
+				SMWDataValue::prepareValue( $values[$valueIndex], $comparator );
+			}
+
 			// generating the DVs:
-			if ( ( count( $values ) > $vi ) &&
-			     ( ( $values[$vi] == '' ) || ( $values[$vi] == '?' ) ) ) { // explicit omission
-				$vi++;
-			} elseif ( array_key_exists( $vi, $values ) && array_key_exists( $i, $types ) ) { // some values left, try next slot
-				$dv = SMWDataValueFactory::newTypeObjectValue( $types[$i], $values[$vi] );
-				if ( $dv->isValid() ) { // valid DV: keep
-					if ( $querymode ) {
-						$subdescriptions[] = new SMWRecordFieldDescription( $i, new SMWValueDescription( $dv, $comparator ) );
+			if ( ( $values[$valueIndex] === '' ) || ( $values[$valueIndex] == '?' ) ) { // explicit omission
+				$valueIndex++;
+			} else {
+				$dataValue = SMWDataValueFactory::newPropertyObjectValue( $diProperty, $values[$valueIndex] );
+
+				if ( $dataValue->isValid() ) { // valid DV: keep
+					if ( $queryMode ) {
+						$subdescriptions[] = new SMWSomeProperty( $diProperty, new SMWValueDescription( $dataValue->getDataItem(), $comparator ) );
 					} else {
-						$property = SMWPropertyValue::makeProperty( '_' . ( $i + 1 ) );
-						$this->m_data->addPropertyObjectValue( $property, $dv );
+						$semanticData->addPropertyObjectValue( $diProperty, $dataValue->getDataItem() );
 					}
-					$vi++;
+
+					$valueIndex++;
 					$empty = false;
-				} elseif ( ( count( $values ) - $vi ) == ( count( $types ) - $i ) ) {
+				} elseif ( ( count( $values ) - $valueIndex ) == ( count( $this->m_diProperties ) - $propertyIndex ) ) {
 					// too many errors: keep this one to have enough slots left
-					$this->m_data->addPropertyObjectValue( SMWPropertyValue::makeProperty( '_' . ( $i + 1 ) ), $dv );
-					$this->addError( $dv->getErrors() );
-					$vi++;
+					if ( !$queryMode ) {
+						$semanticData->addPropertyObjectValue( $diProperty, $dataValue->getDataItem() );
+					}
+
+					$this->addError( $dataValue->getErrors() );
+					++$valueIndex;
 				}
 			}
+			++$propertyIndex;
 		}
+
 		if ( $empty ) {
 			$this->addError( wfMsg( 'smw_novalues' ) );
 		}
-		if ( $querymode ) {
-			return $empty ? new SMWThingDescription():new SMWRecordDescription( $subdescriptions );
+
+		if ( $queryMode ) {
+			switch ( count( $subdescriptions ) ) {
+				case 0: return new SMWThingDescription();
+				case 1: return reset( $subdescriptions );
+				default: return new SMWConjunction( $subdescriptions );
+			}
+		} else {
+			$this->m_dataitem = new SMWDIContainer( $semanticData );
 		}
 	}
 
 	/**
-	 * This function resembles SMWContainerValue::parseDBkeys() but it already unstubs
-	 * the values instead of passing on initialisation strings. This is required since
-	 * the datatype of each entry is not determined by the property here (since we are
-	 * using generic _1, _2, ... properties that can have any type).
+	 * @see SMWDataValue::loadDataItem()
+	 * @param $dataitem SMWDataItem
+	 * @return boolean
 	 */
-	protected function parseDBkeys( $args ) {
-		$this->m_data->clear();
-		$types = $this->getTypeValues();
-		if ( count( $args ) > 0 ) {
-			foreach ( reset( $args ) as $value ) {
-				if ( is_array( $value ) && ( count( $value ) == 2 ) ) {
-					$property = SMWPropertyValue::makeProperty( reset( $value ) );
-					$pnum = intval( substr( reset( $value ), 1 ) ); // try to find the number of this property
-					if ( array_key_exists( $pnum - 1, $types ) ) {
-						$dv = SMWDataValueFactory::newTypeObjectValue( $types[$pnum - 1] );
-						$dv->setDBkeys( end( $value ) );
-						$this->m_data->addPropertyObjectValue( $property, $dv );
-					}
-				}
-			}
+	protected function loadDataItem( SMWDataItem $dataItem ) {
+		if ( $dataItem->getDIType() == SMWDataItem::TYPE_CONTAINER ) {
+			$this->m_dataitem = $dataItem;
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -138,112 +160,142 @@ class SMWRecordValue extends SMWContainerValue {
 	 * @todo This is not a full reset yet (the case that property is changed after a value
 	 * was set does not occur in the normal flow of things, hence this has low priority).
 	 */
-	public function setProperty( SMWPropertyValue $property ) {
+	public function setProperty( SMWDIProperty $property ) {
 		parent::setProperty( $property );
-		$this->m_typevalues = null;
-	}
-
-	/**
-	 * @todo Since containers are always exported in a similar fashion, it
-	 * would be preferrable to have their export controlled where it happens,
-	 * and minimize the below special code.
-	 */
-	public function getExportData() {
-		if ( !$this->isValid() ) return null;
-
-		$result = new SMWExpData( new SMWExpResource( '', $this ) ); // bnode
-		$ed = new SMWExpData( SMWExporter::getSpecialElement( 'swivt', 'Container' ) );
-		$result->addPropertyObjectValue( SMWExporter::getSpecialElement( 'rdf', 'type' ), $ed );
-		$count = 0;
-		foreach ( $this->getDVs() as $value ) {
-			$count++;
-			if ( ( $value === null ) || ( !$value->isValid() ) ) {
-				continue;
-			}
-			if ( ( $value->getTypeID() == '_wpg' ) || ( $value->getTypeID() == '_uri' ) || ( $value->getTypeID() == '_ema' ) ) {
-				$result->addPropertyObjectValue(
-				      SMWExporter::getSpecialElement( 'swivt', 'object' . $count ),
-				      $value->getExportData() );
-			} else {
-				$result->addPropertyObjectValue(
-				      SMWExporter::getSpecialElement( 'swivt', 'value' . $count ),
-				      $value->getExportData() );
-			}
-		}
-		return $result;
+		$this->m_diProperties = null;
 	}
 
 ////// Additional API for value lists
 
 	/**
-	 * Create a list (array with numeric keys) containing the datavalue objects
-	 * that this SMWRecordValue object holds. Values that are not present are
-	 * set to null. Note that the first index in the array is 0, not 1.
+	 * @deprecated as of 1.6, use getDataItems instead
+	 *
+	 * @return array of SMWDataItem
 	 */
 	public function getDVs() {
-		if ( !$this->isValid() ) return array();
-		$result = array();
-		foreach ( $this->m_data->getProperties() as $prop ) {
-			$propname = $prop->getPropertyID();
-			$propnum = substr( $propname, 1 );
-			if ( ( $propname != false ) && ( is_numeric( $propnum ) ) ) {
-				$propertyvalues = $this->m_data->getPropertyValues( $prop ); // combining this with next line violates PHP strict standards 
-				$result[( $propnum - 1 )] = reset( $propertyvalues );
-			}
-		}
-		return $result;
+		return $this->getDataItems();
 	}
 
 	/**
-	 * Return the array (list) of datatypes that the individual entries of this datatype consist of.
-	 * @todo Add some check to account for maximal number of list entries (maybe this should go to a
-	 * variant of the SMWTypesValue).
+	 * Create a list (array with numeric keys) containing the datavalue
+	 * objects that this SMWRecordValue object holds. Values that are not
+	 * present are set to null. Note that the first index in the array is
+	 * 0, not 1.
+	 *
+	 * @since 1.6
+	 *
+	 * @return array of SMWDataItem
 	 */
-	public function getTypeValues() {
-		if ( $this->m_typevalues !== null ) return $this->m_typevalues; // local cache
-		if ( ( $this->m_property === null ) || ( $this->m_property->getWikiPageValue() === null ) ) {
-			$this->m_typevalues = array(); // no property known -> no types
-		} else { // query for type values
-			$typelist = smwfGetStore()->getPropertyValues( $this->m_property->getWikiPageValue(), SMWPropertyValue::makeProperty( '_LIST' ) );
-			if ( count( $typelist ) == 1 ) {
-				$this->m_typevalues = reset( $typelist )->getTypeValues();
-			} else { ///TODO internalionalize
-				$this->addError( 'List type not properly specified for this property.' );
-				$this->m_typevalues = array();
+	public function getDataItems() {
+		if ( $this->isValid() ) {
+			$result = array();
+			$index = 0;
+			foreach ( $this->getPropertyDataItems() as $diProperty ) {
+				$values = $this->getDataItem()->getSemanticData()->getPropertyValues( $diProperty );
+				if ( count( $values ) > 0 ) {
+					$result[$index] = reset( $values );
+				} else {
+					$result[$index] = null;
+				}
+				$index += 1;
+			}
+			return $result;
+		} else {
+			return array();
+		}
+	}
+
+	/**
+	 * Return the array (list) of properties that the individual entries of
+	 * this datatype consist of.
+	 *
+	 * @since 1.6
+	 *
+	 * @todo I18N for error message.
+	 *
+	 * @return array of SMWDIProperty
+	 */
+	public function getPropertyDataItems() {
+		if ( is_null( $this->m_diProperties ) ) {
+			$this->m_diProperties = self::findPropertyDataItems( $this->m_property );
+
+			if ( count( $this->m_diProperties ) == 0 ) { // TODO internalionalize
+				$this->addError( 'The list of properties to be used for the data fields has not been specified properly.' );
 			}
 		}
-		return $this->m_typevalues;
+
+		return $this->m_diProperties;
+	}
+
+	/**
+	 * Return the array (list) of properties that the individual entries of
+	 * this datatype consist of.
+	 *
+	 * @since 1.6
+	 *
+	 * @param $diProperty mixed null or SMWDIProperty object for which to retrieve the types
+	 *
+	 * @return array of SMWDIProperty
+	 */
+	public static function findPropertyDataItems( $diProperty ) {
+		if ( !is_null( $diProperty ) ) {
+			$propertyDiWikiPage = $diProperty->getDiWikiPage();
+
+			if ( !is_null( $propertyDiWikiPage ) ) {
+				$listDiProperty = new SMWDIProperty( '_LIST' );
+				$dataItems = smwfGetStore()->getPropertyValues( $propertyDiWikiPage, $listDiProperty );
+
+				if ( count( $dataItems ) == 1 ) {
+					$propertyListValue = new SMWPropertyListValue( '__pls' );
+					$propertyListValue->setDataItem( reset( $dataItems ) );
+
+					if ( $propertyListValue->isValid() ) {
+						return $propertyListValue->getPropertyDataItems();
+					}
+				}
+			}
+		}
+
+		return array();
 	}
 
 ////// Internal helper functions
 
-	private function makeOutputText( $type = 0, $linker = null ) {
+	protected function makeOutputText( $type = 0, $linker = null ) {
 		if ( !$this->isValid() ) {
 			return ( ( $type == 0 ) || ( $type == 1 ) ) ? '' : $this->getErrorText();
 		}
+
 		$result = '';
-		for ( $i = 0; $i < count( $this->getTypeValues() ); $i++ ) {
+		$i = 0;
+		foreach ( $this->getPropertyDataItems() as $propertyDataItem ) {
 			if ( $i == 1 ) {
-				$result .= ( $type == 4 ) ? '; ':' (';
+				$result .= ( $type == 4 ) ? '; ' : ' (';
 			} elseif ( $i > 1 ) {
-				$result .= ( $type == 4 ) ? '; ':", ";
+				$result .= ( $type == 4 ) ? '; ' : ', ';
 			}
-			$property = SMWPropertyValue::makeProperty( '_' . ( $i + 1 ) );
-			$propertyvalues = $this->m_data->getPropertyValues( $property ); // combining this with next line violates PHP strict standards 
-			$dv = reset( $propertyvalues );
-			$result .= ( $dv !== false ) ? $this->makeValueOutputText( $type, $dv, $linker ): '?';
+			++$i;
+			$propertyValues = $this->m_dataitem->getSemanticData()->getPropertyValues( $propertyDataItem ); // combining this with next line violates PHP strict standards
+			$dataItem = reset( $propertyValues );
+			if ( $dataItem !== false ) {
+				$dataValue = SMWDataValueFactory::newDataItemValue( $dataItem, $propertyDataItem );
+				$result .= $this->makeValueOutputText( $type, $dataValue, $linker );
+			} else {
+				$result .= '?';
+			}
 		}
 		if ( ( $i > 1 ) && ( $type != 4 ) ) $result .= ')';
+
 		return $result;
 	}
 
-	private function makeValueOutputText( $type, $datavalue, $linker ) {
+	protected function makeValueOutputText( $type, $dataValue, $linker ) {
 		switch ( $type ) {
-			case 0: return $datavalue->getShortWikiText( $linker );
-			case 1: return $datavalue->getShortHTMLText( $linker );
-			case 2: return $datavalue->getShortWikiText( $linker );
-			case 3: return $datavalue->getShortHTMLText( $linker );
-			case 4: return $datavalue->getWikiValue();
+			case 0: return $dataValue->getShortWikiText( $linker );
+			case 1: return $dataValue->getShortHTMLText( $linker );
+			case 2: return $dataValue->getShortWikiText( $linker );
+			case 3: return $dataValue->getShortHTMLText( $linker );
+			case 4: return $dataValue->getWikiValue();
 		}
 	}
 

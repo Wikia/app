@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for IndexFunction extension.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -31,9 +32,9 @@ Please remove "$1" from the <nowiki>{{#index:}}</nowiki> on the above {{PLURAL:$
 	'index-emptylist' => 'There are no pages associated with "$1"',
 	'index-expand-detail' => 'Show pages indexed under this title',
 	'index-hide-detail' => 'Hide the list of pages',
-	'index-no-results' => 'The search returned no results',	
-	'index-search-explain' => 'This page uses a prefix search. 
-	
+	'index-no-results' => 'The search returned no results',
+	'index-search-explain' => 'This page uses a prefix search.
+
 Type the first few characters and press the submit button to search for page titles and index entries that start with the search string',
 	'index-details-explain' => 'Entries with arrows are index entries.
 Click the arrow to show all pages indexed under that title.',
@@ -41,6 +42,7 @@ Click the arrow to show all pages indexed under that title.',
 
 /** Message documentation (Message documentation)
  * @author Bennylin
+ * @author EugeneZelenko
  * @author Fryed-peach
  * @author Purodha
  * @author Raymond
@@ -48,12 +50,18 @@ Click the arrow to show all pages indexed under that title.',
 $messages['qqq'] = array(
 	'indexfunc-desc' => '{{desc}}',
 	'indexfunc-badtitle' => '{{Identical|Invalid title}}',
-	'index' => 'This is either the name of the parser function, to be used inside the wiki code, or not used, if I got it right. --[[User:Purodha|Purodha Blissenbach]] 00:13, 15 July 2009 (UTC)
-{{Identical|Index}}',
+	'index' => 'This is either the name of the parser function, to be used inside the wiki code, or not used, if I got it right. --[[User:Purodha|Purodha Blissenbach]] 00:13, 15 July 2009 (UTC)',
 	'index-legend' => 'Used in [[Special:Index]].',
 	'index-search' => '{{Identical|Search}}',
 	'index-submit' => '{{Identical|Submit}}',
 	'index-search-explain' => 'If your language permits, you can replace <code>submit</code> with <code>{<nowiki />{int:index-submit}}</code> for the button label.',
+);
+
+/** Abkhazian (Аҧсуа)
+ * @author Temuri rajavi
+ */
+$messages['ab'] = array(
+	'index-search' => 'Аҧшаара:',
 );
 
 /** Afrikaans (Afrikaans)
@@ -61,10 +69,18 @@ $messages['qqq'] = array(
  */
 $messages['af'] = array(
 	'indexfunc-badtitle' => 'Ongeldige bladsynaam: "$1"',
+	'indexfunc-index-exists' => 'Die bladsy "$1" bestaan al reeds!',
 	'index' => 'Indeks',
 	'index-legend' => 'Die indeks deursoek',
 	'index-search' => 'Soek:',
 	'index-submit' => 'OK',
+);
+
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'index-submit' => 'Ninviar',
 );
 
 /** Arabic (العربية)
@@ -99,7 +115,28 @@ $2
 انقر على السهم لعرض كل الصفحات المفهرسة تحت ذلك العنوان.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'indexfunc-badtitle' => 'ܟܘܢܝܐ ܠܐ ܬܪܝܨܐ: "$1"',
+	'index-search' => 'ܒܨܝ:',
+	'index-submit' => 'ܫܕܪ',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vago
+ * @author Wertuose
+ */
+$messages['az'] = array(
+	'indexfunc-badtitle' => 'Yanlış başlıq: "$1"',
+	'index-search' => 'Axtar:',
+	'index-submit' => 'Təsdiq et',
+	'index-hide-detail' => 'Səhifələrin siyahısını gizlə',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -134,6 +171,20 @@ $messages['bg'] = array(
 	'index-search' => 'Търсене:',
 );
 
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'indexfunc-badtitle' => 'অপ্রযোজ্য শিরোনাম: "$1"',
+	'index' => 'নির্ঘণ্ট অনুসন্ধান',
+	'index-legend' => 'নির্ঘণ্টে অনুসন্ধান করুন',
+	'index-search' => 'অনুসন্ধান:',
+	'index-submit' => 'জমা দাও',
+	'index-disambig-start' => "'''$1''' অনেক পাতায় নির্দেশিত হতে পারে:",
+	'index-hide-detail' => 'পাতার তালিকা লুকাও',
+	'index-no-results' => 'অনুসন্ধানটি কোনো ফলাফল ছাড়াই শেষ হয়েছে',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
@@ -145,7 +196,7 @@ Un titl meneger evit ar {{PLURAL:$2|bajenn|pajenn}}-mañ eo an titl-mañ :
 $1
 Gwiriit mat n'eo ket bet savet c'hoazh, gant un titl all, ar bajenn emaoc'h en sell da grouiñ.
 Mar savit ar bajenn-mañ, tennit an titl eus ar <nowiki>{{#index:}}</nowiki> {{PLURAL:$2|bajenn|pajenn}} a-us.",
-	'indexfunc-index-exists' => 'Bez\' ez eus eus ar bajenn "$1" c\'hoazh',
+	'indexfunc-index-exists' => 'Ar bajenn "$1" zo anezhi c\'hoazh',
 	'indexfunc-movewarn' => 'Diwallit :
 Un titl meneger evit ar {{PLURAL:$3|bajenn |pajenn}} eo $1 :
 $2
@@ -205,9 +256,31 @@ $messages['ca'] = array(
 	'index-hide-detail' => 'Oculta la llista de pàgines',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'index-search' => 'Лаха:',
+	'index-no-results' => 'Лахаро хилам ца белла',
+);
+
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'index-search' => 'گەڕان:',
+	'index-submit' => 'ناردن',
+);
+
+/** Czech (Česky) */
+$messages['cs'] = array(
+	'index-search' => 'Hledat:',
+	'index-submit' => 'Odeslat',
+);
+
 /** German (Deutsch)
  * @author Imre
+ * @author Kghbln
  * @author MF-Warburg
+ * @author The Evil IP address
  */
 $messages['de'] = array(
 	'indexfunc-desc' => 'Parserfunktion, um automatische Weiterleitungen und Begriffsklärungsseiten zu erstellen',
@@ -219,13 +292,13 @@ Stelle sicher, dass die Seite, die du erstellst, nicht bereits unter einem ander
 Wenn du diese Seite erstellst, entferne diesen Titel vom <nowiki>{{#index:}}</nowiki> auf {{PLURAL:$2|der obigen Seite|den obigen Seiten}}.',
 	'indexfunc-index-exists' => 'Die Seite „$1“ ist bereits vorhanden',
 	'indexfunc-movewarn' => 'Achtung:
-"$1" ist ein Indextitel für die {{PLURAL:$3|folgende Seite|folgenden Seiten}}:
+„$1” ist ein Indextitel für die {{PLURAL:$3|folgende Seite|folgenden Seiten}}:
 $2
-Bitte entferne "$1" von <nowiki>{{#index:}}</nowiki> auf {{PLURAL:$3|obiger Seite|obigen Seiten}}.',
+Bitte entferne „$1” von <nowiki>{{#index:}}</nowiki> auf {{PLURAL:$3|der obiger Seite|den obigen Seiten}}.',
 	'index' => 'Indexsuche',
 	'index-legend' => 'Den Index durchsuchen',
 	'index-search' => 'Suche:',
-	'index-submit' => 'Senden',
+	'index-submit' => 'Speichern',
 	'index-disambig-start' => "'''$1''' steht für:",
 	'index-emptylist' => 'Es gibt keine Seiten, die mit „$1“ verbunden sind',
 	'index-expand-detail' => 'Zeige Seiten, die unter diesem Titel indiziert sind',
@@ -238,8 +311,9 @@ Gib die ersten Zeichen ein und drücke die {{int:index-submit}}-Schaltfläche, u
 Klicke auf den Pfeil, um alle unter diesem Titel indizierten Seiten anzuzeigen.',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
+ * @author The Evil IP address
  */
 $messages['de-formal'] = array(
 	'indexfunc-editwarning' => 'Achtung:
@@ -248,12 +322,12 @@ $1
 Stellen Sie sicher, dass die Seite, die Sie erstellen, nicht bereits unter anderem Titel existiert.
 Wenn Sie diese Seite erstellen, entfernen Sie diesen Titel vom <nowiki>{{#index:}}</nowiki> auf {{PLURAL:$2|der obigen Seite|den obigen Seiten}}.',
 	'indexfunc-movewarn' => 'Achtung:
-"$1" ist ein Indextitel für die {{PLURAL:$3|folgende Seite|folgenden Seiten}}:
+„$1” ist ein Indextitel für die {{PLURAL:$3|folgende Seite|folgenden Seiten}}:
 $2
-Bitte entfernen Sie "$1" von <nowiki>{{#index:}}</nowiki> auf {{PLURAL:$3|obiger Seite|obigen Seiten}}.',
+Bitte entfernen Sie „$1” von <nowiki>{{#index:}}</nowiki> auf {{PLURAL:$3|der obiger Seite|den obigen Seiten}}.',
 	'index-search-explain' => 'Diese Seite benutzt eine Präfix-Suche.
 
-Geben Sie die ersten Zeichen ein und drücken Sie die {{int:index-submit ("Enviar")}}-Schaltfläche, um nach Seitentiteln und Indexeinträgen zu suchen, die mit dem Suchstring beginnen',
+Geben Sie die ersten Zeichen ein und drücken Sie die {{int:index-submit}}-Schaltfläche, um nach Seitentiteln und Indexeinträgen zu suchen, die mit dem Suchstring beginnen',
 	'index-details-explain' => 'Einträge mit Pfeilen sind Indexeinträge.
 Klicken Sie auf den Pfeil, um alle unter diesem Titel indizierten Seiten anzuzeigen.',
 );
@@ -394,6 +468,7 @@ Napsauta nuolta näyttääksesi kaikki sivut, jotka on indeksoitu otsikon alle.'
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'indexfunc-desc' => "Fonction du parseur pour créer des pages de redirection et d'homonymie automatiquement",
@@ -409,7 +484,7 @@ Enlevez « $1 » de <nowiki>{{#index:}}</nowiki> {{PLURAL:$3|de la page|des page
 	'index' => 'Index',
 	'index-legend' => 'Rechercher dans l’index',
 	'index-search' => 'Chercher:',
-	'index-submit' => 'Envoyer',
+	'index-submit' => 'Soumettre',
 	'index-disambig-start' => "'''$1''' peut se référer à plusieurs pages :",
 	'index-emptylist' => 'Il n’y a pas de pages liées à « $1 »',
 	'index-expand-detail' => 'Afficher les pages indexées sous ce titre',
@@ -423,9 +498,20 @@ Tapez les premiers caractères et pressez sur le bouton de soumission pour cherc
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'indexfunc-badtitle' => 'Titro envalido : « $1 »',
+	'indexfunc-index-exists' => 'La pâge « $1 » ègziste ja',
+	'index' => 'Rechèrche per endèxe',
+	'index-legend' => 'Rechèrchiér dens l’endèxe',
 	'index-search' => 'Chèrchiér :',
+	'index-submit' => 'Sometre',
+	'index-disambig-start' => "'''$1''' sè pôt refèrar a un mouél de pâges :",
+	'index-emptylist' => 'Y at gins de pâge liyê a « $1 »',
+	'index-expand-detail' => 'Fâre vêre les pâges endèxâs desot ceti titro',
+	'index-hide-detail' => 'Cachiér la lista de les pâges',
+	'index-no-results' => 'La rechèrche at retornâ gins de rèsultat',
 );
 
 /** Galician (Galego)
@@ -434,7 +520,8 @@ $messages['frp'] = array(
 $messages['gl'] = array(
 	'indexfunc-desc' => 'Funcións analíticas para crear redireccións automáticas e páxinas de homónimos',
 	'indexfunc-badtitle' => 'Título inválido: "$1"',
-	'indexfunc-editwarning' => 'Aviso: este título é un título de índice para {{PLURAL:$2|a seguinte páxina|as seguintes páxinas}}:
+	'indexfunc-editwarning' => 'Aviso:
+Este título é un título de índice para {{PLURAL:$2|a seguinte páxina|as seguintes páxinas}}:
 $1
 Asegúrese de que a páxina que está a piques de crear aínda non foi creada cun título diferente.
 Se crea esta páxina, elimine este título de <nowiki>{{#index:}}</nowiki> {{PLURAL:$2|na páxina de enriba|nas páxinas de enriba}}.',
@@ -496,24 +583,43 @@ Tipp di erschte paar Buehcstabe yy un druck dr „Abschicke“-Chnopf go Sytetit
 Druck uf dr Boge go alli Syte aazeige, wu unter däm Titel ufglischtet sin.',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'index-search' => 'Nema',
+);
+
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
 $messages['he'] = array(
+	'indexfunc-desc' => 'פונקציית מפענח ליציר אוטומטית של הפניות ודפי פירושונים.',
 	'indexfunc-badtitle' => 'כותרת בלתי תקינה: "$1"',
+	'indexfunc-editwarning' => 'אזהרה:
+הכותרת הזאת היא כותרת אינדקס עבור {{PLURAL:$2|הדף הבא|הדפים הבאים}}:
+$1
+יש לוודא שהדף שאתם יוצרים לא קיים כבר בכותרת אחרת.
+אם אתם יוצרים את הדף הזה, הוציאו את שמו מה־<nowiki>{{#index:}}</nowiki> ב־{{PLURAL:$2|דף|דפים}} שלעיל.',
 	'indexfunc-index-exists' => 'הדף "$1" כבר קיים',
+	'indexfunc-movewarn' => 'אזהרה:
+"$1" הוא כותרת אינדקס עבור {{PLURAL:$3|הדף הבא|הדפים הבאים}}:
+$2
+אנא הוציאו את "$1" מה־<nowiki>{{#index:}}</nowiki> ב־{{PLURAL:$3|דף|דפים}} שלעיל.',
 	'index' => 'חיפוש באינדקס',
 	'index-legend' => 'חיפוש באינדקס',
 	'index-search' => 'חיפוש:',
 	'index-submit' => 'שליחה',
 	'index-disambig-start' => "המונח '''$1''' עשוי להתייחס למספר דפים:",
-	'index-emptylist' => '"$1"אין דפים המשוייכים ל־',
+	'index-emptylist' => '"$1"אין דפים המשויכים ל־',
+	'index-expand-detail' => 'להציג את הדפים באינדקס תחת הכותרת הזאת',
 	'index-hide-detail' => 'הסתרת רשימת הדפים',
 	'index-no-results' => 'החיפוש לא החזיר תוצאות',
 	'index-search-explain' => 'דף זה משתמש בחיפוש קידומות.
 
 יש להקליד את האותיות הראשונות וללחוץ על לחצן השליחה כדי לחפש אחר שמות דפים ורשומות באינדקס המתחילים במחרוזת החיפוש',
+	'index-details-explain' => 'רשומות עם חצים הן רשומות אינדקס.
+לחצו על החץ כדי להציג את כל הדפים תחת הכותרת.',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -589,7 +695,7 @@ Si tu crea iste pagina, remove iste titulo del <nowiki>{{#index:}}</nowiki> in l
 	'indexfunc-movewarn' => 'Attention: Iste titulo es un titulo de indice pro le sequente {{PLURAL:$3|pagina|paginas}}:
 $2
 Per favor remove "$1" del <nowiki>{{#index:}}</nowiki> in le {{PLURAL:$3|pagina|paginas}} ci supra.',
-	'index' => 'Indice',
+	'index' => 'Recerca con indice',
 	'index-legend' => 'Cercar in le indice',
 	'index-search' => 'Cerca:',
 	'index-submit' => 'Submitter',
@@ -628,17 +734,32 @@ Hapus "$1" dari <nowiki>{{#index:}}</nowiki> di atas {{PLURAL:$3|halaman|halaman
 	'index-submit' => 'Kirim',
 	'index-disambig-start' => "'''$1''' dapat mengacu kepada:",
 	'index-emptylist' => 'Tidah ada halaman yang berhubungan dengan "$1"',
-	'index-expand-detail' => 'Lihat indek halaman dibawah judul ini',
+	'index-expand-detail' => 'Lihat indek halaman di dalam judul ini',
 	'index-hide-detail' => 'Sembunyikan daftar halaman',
 	'index-no-results' => 'Pencarian, tidak ada hasil',
 	'index-search-explain' => 'Halaman ini menggunakan pencarian prefix.
 
 ketikan beberapa karakter pertama dan tekan tombol kirim untuk mencari judul halaman dan masukan indek yang dimulai dengan kata pencarian',
-	'index-details-explain' => 'Masukan dengan panah adalah masukan indek.
-Clik panah untuk melihat semua halaman indek dibawah judul itu.',
+	'index-details-explain' => 'Entri dengan panah adalah entri indeks.
+Klik tanda panah untuk melihat semua halaman indeks di dalam judul itu.',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'index-search' => 'Chọwa:',
+);
+
+/** Iloko (Ilokano)
+ * @author Lam-ang
+ */
+$messages['ilo'] = array(
+	'index-search' => 'Biroken:',
 );
 
 /** Italian (Italiano)
+ * @author Civvì
  * @author Darth Kule
  */
 $messages['it'] = array(
@@ -648,6 +769,7 @@ $messages['it'] = array(
 Se si crea questa pagina, rimuovere questo titolo dal <nowiki>{{#index:}}</nowiki> {{PLURAL:$2|nella pagina precedente|nelle pagine precedenti}}.',
 	'indexfunc-index-exists' => 'La pagina "$1" esiste già',
 	'indexfunc-movewarn' => 'Attenzione: "$1" è un titolo di un indice per {{PLURAL:$3|la seguente pagina|le seguenti pagine}}: $2. Rimuovere "$1" dal <nowiki>{{#index:}}</nowiki> {{PLURAL:$2|nella pagina precedente|nelle pagine precedenti}}.',
+	'index' => 'Ricerca indici',
 	'index-legend' => "Cerca l'indice",
 	'index-search' => 'Ricerca:',
 	'index-submit' => 'Invia',
@@ -694,7 +816,28 @@ $2
 	'index-details-explain' => '矢印の付いた項目は索引項目で、矢印をクリックするとその名前で索引に載っているすべてのページを表示します。',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬)
+ * @author GaiJin
+ */
+$messages['kk-cyrl'] = array(
+	'index-search' => 'Іздеу:',
+);
+
+/** Kalaallisut (Kalaallisut)
+ * @author Qaqqalik
+ */
+$messages['kl'] = array(
+	'index-search' => 'Ujaruk:',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'index-search' => 'ಹುಡುಕು;',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -747,7 +890,7 @@ Huelt w.e.g. "$1" vum <nowiki>{{#index:}}</nowiki> erof op {{PLURAL:$3|der Säit
 	'index-emptylist' => 'Et gëtt keng Säiten déi mat "$1" assoziéiert sinn',
 	'index-expand-detail' => 'Déi Säite weisen déi ënner dësem Titel indexéiert sinn',
 	'index-hide-detail' => "D'Lëscht vu Säite verstoppen",
-	'index-no-results' => "D'Sich hat keng Resultater",
+	'index-no-results' => 'Beim Siche gouf näischt fonnt',
 	'index-search-explain' => 'Dës Säit benotzt Prefix-Sich.
 
 Tippt déi éischt Buchstawen an dréckt op de {{int:index-submit ("Schécken")}} Knäppchen fir no Säitentitelen ze sichen déi mat dem ufänken wat Dir aginn hutt.',
@@ -778,7 +921,7 @@ $2
 	'index-disambig-start' => "'''$1''' може да се однесува на неколку страници:",
 	'index-emptylist' => 'Нема страници поврзани со „$1“',
 	'index-expand-detail' => 'Прикажи ги страниците индексирани под овој наслов',
-	'index-hide-detail' => 'Сокриј ја листата на страници',
+	'index-hide-detail' => 'Скриј го списокот на страници',
 	'index-no-results' => 'Пребарувањето не даде резултати.',
 	'index-search-explain' => 'Оваа страница користи префиксно пребарување.
 
@@ -792,6 +935,49 @@ $2
  */
 $messages['mn'] = array(
 	'index-search' => 'Хайх:',
+	'index-submit' => 'Явуулах',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'indexfunc-badtitle' => 'Tajuk tidak sah: "$1"',
+	'index-search' => 'Cari:',
+	'index-submit' => 'Serahkan',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ * @author Simny
+ */
+$messages['nb'] = array(
+	'indexfunc-desc' => 'Parserfunksjone for å opprette automatiske omdirigeringer og pekersider',
+	'indexfunc-badtitle' => 'Ugyldig tittel: «$1»',
+	'indexfunc-editwarning' => 'Advarsel:
+Denne tittelen brukes i innholdsfortegnelsen for følgende {{PLURAL:$2|side|sider}}:
+$1
+Forsikre deg om at siden du forsøker å opprette ikke allerede eksisterer under en annen tittel.
+Dersom du oppretter denne siden, fjern denne tittelen fra <nowiki>{{#index:}}</nowiki> {{PLURAL:$2|siden|sidene}} over.',
+	'indexfunc-index-exists' => 'Siden «$1» finnes allerede',
+	'indexfunc-movewarn' => 'Advarsel:
+«$1» brukes i innholdsfortegnelsen for følgende {{PLURAL:$3|side|sider}}:
+$2
+Fjern «$1» fra <nowiki>{{#index:}}</nowiki> {{PLURAL:$3|siden|sidene}} over.',
+	'index' => 'Registersøk',
+	'index-legend' => 'Søk i registeret',
+	'index-search' => 'Søk:',
+	'index-submit' => 'Send',
+	'index-disambig-start' => "'''$1''' kan referere til flere sider:",
+	'index-emptylist' => 'Det er ingen sider koblet til «$1»',
+	'index-expand-detail' => 'Vis sider registrert under denne tittelen',
+	'index-hide-detail' => 'Gjem listen over sider',
+	'index-no-results' => 'Søket ga ingen treff',
+	'index-search-explain' => 'Denne siden bruker registersøk.
+
+Skriv inn de første tegnene og trykk på send-knappen for å søke etter sidetitler og registerinnlegg som starter med søkestrengen',
+	'index-details-explain' => 'Innlegg med piler er registerinnlegg.
+Klikk på pilen for å vise alle sider registrert under den tittelen.',
 );
 
 /** Dutch (Nederlands)
@@ -824,37 +1010,12 @@ Voer de eerste paar letters in en druk op de verzendknop om te zoeken naar pagin
 Klik op de pijl om alle onder die paginaam geïndexeerde pagina's weer te geven.",
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Nghtwlkr
- * @author Simny
  */
-$messages['no'] = array(
-	'indexfunc-desc' => 'Parserfunksjone for å opprette automatiske omdirigeringer og pekersider',
-	'indexfunc-badtitle' => 'Ugyldig tittel: «$1»',
-	'indexfunc-editwarning' => 'Advarsel:
-Denne tittelen brukes i innholdsfortegnelsen for følgende {{PLURAL:$2|side|sider}}:
-$1
-Forsikre deg om at siden du forsøker å opprette ikke allerede eksisterer under en annen tittel.
-Dersom du oppretter denne siden, fjern denne tittelen fra <nowiki>{{#index:}}</nowiki> {{PLURAL:$2|siden|sidene}} over.',
-	'indexfunc-index-exists' => 'Siden «$1» finnes allerede',
-	'indexfunc-movewarn' => 'Advarsel:
-«$1» brukes i innholdsfortegnelsen for følgende {{PLURAL:$3|side|sider}}:
-$2
-Fjern «$1» fra <nowiki>{{#index:}}</nowiki> {{PLURAL:$3|siden|sidene}} over.',
-	'index' => 'Registersøk',
-	'index-legend' => 'Søk i registeret',
+$messages['nn'] = array(
 	'index-search' => 'Søk:',
 	'index-submit' => 'Send',
-	'index-disambig-start' => "'''$1''' kan referere til flere sider:",
-	'index-emptylist' => 'Det er ingen sider koblet til «$1»',
-	'index-expand-detail' => 'Vis sider registrert under denne tittelen',
-	'index-hide-detail' => 'Gjem listen over sider',
-	'index-no-results' => 'Søket ga ingen treff',
-	'index-search-explain' => 'Denne siden bruker registersøk.
-
-Skriv inn de første tegnene og trykk på send-knappen for å søke etter sidetitler og registerinnlegg som starter med søkestrengen',
-	'index-details-explain' => 'Innlegg med piler er registerinnlegg.
-Klikk på pilen for å vise alle sider registrert under den tittelen.',
 );
 
 /** Occitan (Occitan)
@@ -893,6 +1054,39 @@ $messages['pdc'] = array(
 	'index-search' => 'Guck uff:',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'indexfunc-desc' => 'Funkcja parsera automatycznie tworząca przekierowania i strony ujednoznaczniające',
+	'indexfunc-badtitle' => 'Niepoprawny tytuł „$1”',
+	'indexfunc-editwarning' => 'Uwaga.
+Ten tytuł jest tytułem indeksu {{PLURAL:$2|strony|następujących stron:}}
+$1
+Upewnij się, że strona, którą chcesz utworzyć nie istnieje pod inną nazwą. 
+Jeśli utworzysz tę stronę, usuń tytułu z <nowiki>{{#index:}}</nowiki> dla {{PLURAL:$2|powyższej strony|powyższych stron}}.',
+	'indexfunc-index-exists' => 'Strona „$1” już istnieje',
+	'indexfunc-movewarn' => 'Uwaga.
+
+„$1” jest tytułem indeksu dla następujących stron:
+$2
+Usuń „$1” z <nowiki>{{#index:}}</nowiki> z {{PLURAL:$3|powyższej strony|powyższych stron}}.',
+	'index' => 'Indeks',
+	'index-legend' => 'Szukaj w indeksie',
+	'index-search' => 'Szukaj',
+	'index-submit' => 'Zapisz',
+	'index-disambig-start' => "'''$1''' może odnosić się do wielu stron:",
+	'index-emptylist' => 'Nie ma strony związanej z „$1”',
+	'index-expand-detail' => 'Pokaż strony indeksowane tym tytułem',
+	'index-hide-detail' => 'Ukryj listę stron',
+	'index-no-results' => 'Brak wyników wyszukiwania',
+	'index-search-explain' => 'Ta strona korzysta z wyszukiwania przedrostka.
+
+Wpisz kilka początkowych znaków i wciśnij przycisk „{{int:index-submit}}”, aby wyszukać tytuły stron i wpisy w indeksie rozpoczynające się od poszukiwanego ciągu znaków',
+	'index-details-explain' => 'Wpisy ze strzałkami to hasła indeksowe.
+Kliknij strzałkę, aby zobaczyć wszystkie strony zaindeksowane tym tytułem.',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Dragonòt
  */
@@ -925,6 +1119,18 @@ Scriv pòchi caràter inissiaj e sgnaca ël boton \"spediss\" për serché ij t�
 Sgnaca la frecia për mosté tute le pàgine indicisà sota col tìtol-lì.",
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'indexfunc-badtitle' => 'ناسم سرليک: "$1"',
+	'index' => 'د ليکلړ پلټنه',
+	'index-legend' => 'ليکلړ پلټل',
+	'index-search' => 'پلټنه:',
+	'index-submit' => 'سپارل',
+	'index-hide-detail' => 'د مخونو لړليک پټول',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -944,7 +1150,7 @@ Por favor, elimine "$1" da função <nowiki>{{#index:}}</nowiki> {{PLURAL:$1|nes
 	'index' => 'Pesquisa do índice',
 	'index-legend' => 'Pesquisar o índice de títulos',
 	'index-search' => 'Pesquisar:',
-	'index-submit' => 'Submeter',
+	'index-submit' => 'Enviar',
 	'index-disambig-start' => "'''$1''' pode referir-se a várias páginas:",
 	'index-emptylist' => 'Não há páginas relacionadas com "$1"',
 	'index-expand-detail' => 'Mostrar páginas indexadas sob este título',
@@ -958,24 +1164,48 @@ Clique uma seta para ver todas as páginas indexadas sob o respectivo título.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'indexfunc-desc' => 'Função do analisador sintáctico para criação automática de páginas de redirecionamento e de desambiguação',
 	'indexfunc-badtitle' => 'Título inválido: "$1"',
+	'indexfunc-editwarning' => 'Aviso:
+Este título já consta do índice de títulos {{PLURAL:$2|na seguinte página|nas seguintes páginas}}:
+$1
+Certifique-se de que a página que está prestes a criar não existe já com um título diferente.
+Se você criar esta página, remova este título da função <nowiki>{{#index:}}</nowiki> {{PLURAL:$1|na página acima|nas páginas listadas acima}}.',
 	'indexfunc-index-exists' => 'A página "$1" já existe',
+	'indexfunc-movewarn' => 'Aviso:
+"$1" consta do índice de títulos {{PLURAL:$3|na seguinte página|nas seguintes páginas}}:
+$2
+Por favor, remova "$1" da função <nowiki>{{#index:}}</nowiki> {{PLURAL:$1|nesta página|nestas páginas}}.',
+	'index' => 'Índice',
+	'index-legend' => 'Pesquisar o índice de títulos',
+	'index-search' => 'Pesquisar',
 	'index-submit' => 'Enviar',
 	'index-disambig-start' => "'''$1''' pode referir-se a várias páginas:",
 	'index-emptylist' => 'Não há páginas relacionadas com "$1"',
+	'index-expand-detail' => 'Mostrar páginas indexadas sob este título',
 	'index-hide-detail' => 'Esconder a lista de páginas',
+	'index-no-results' => 'A pesquisa não produziu resultados',
+	'index-search-explain' => 'Esta página permite uma pesquisa pelos caracteres iniciais.
+
+Introduza alguns caracteres e clique o botão "Submeter" para procurar páginas e entradas do índice de títulos começadas por esses caracteres.',
+	'index-details-explain' => 'As entradas com setas pertencem ao índice de títulos.
+Clique uma seta para ver todas as páginas indexadas sob o respectivo título.',
 );
 
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'indexfunc-badtitle' => 'Titlu invalid: "$1"',
 	'indexfunc-index-exists' => 'Pagina "$1" există deja',
+	'index' => 'Indexul de căutare',
+	'index-legend' => 'Caută index',
 	'index-search' => 'Căutare:',
 	'index-submit' => 'Trimitere',
 	'index-disambig-start' => "'''$1''' se poate referi la mai multe pagini:",
@@ -1045,6 +1275,38 @@ Napíšte niekoľko prvých znakov a stlačte tlačidlo odoslať. Vyhľadajú sa
 Po kliknutí na šípku sa zobrazia všetky stránky indexované pod daným názvom.',
 );
 
+/** Somali (Soomaaliga)
+ * @author Maax
+ */
+$messages['so'] = array(
+	'index-search' => 'Raadi:',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Жељко Тодоровић
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'indexfunc-badtitle' => 'Неисправан наслов: "$1"',
+	'index-search' => 'Претрага:',
+	'index-submit' => 'Пошаљи',
+	'index-emptylist' => 'Нема страница повезаних са „$1“',
+	'index-expand-detail' => 'Покажи стране индексиране под овим насловом',
+	'index-hide-detail' => 'Сакриј списак страница',
+	'index-no-results' => 'Претрага није дала никакве резултате',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'indexfunc-badtitle' => 'Neispravan naslov: "$1"',
+	'index-search' => 'Pretraga:',
+	'index-submit' => 'Pošalji',
+	'index-emptylist' => 'Nema strana povezanih sa "$1"',
+	'index-expand-detail' => 'Pokaži strane indeksirane pod ovim naslovom',
+	'index-hide-detail' => 'Sakrij spisak strana',
+	'index-no-results' => 'Pretraga nije dala nikakve rezultate',
+);
+
 /** Swedish (Svenska)
  * @author Rotsee
  */
@@ -1083,8 +1345,19 @@ Klicka på pilen för att se hela innehållsförteckningen.',
  */
 $messages['te'] = array(
 	'indexfunc-badtitle' => 'చెల్లని శీర్షిక: "$1"',
+	'indexfunc-index-exists' => '"$1" అనే పుట ఇప్పటికే ఉంది',
 	'index-search' => 'వెతుకు:',
 	'index-submit' => 'దాఖలుచెయ్యి',
+	'index-hide-detail' => 'పుటల యొక్క జాబితాని దాచు',
+	'index-no-results' => 'ఈ అన్వేషణకి ఫలితాలేమీ లేవు',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'index-search' => 'Buka',
+	'index-hide-detail' => 'Subar lista pájina sira-nian',
 );
 
 /** Turkmen (Türkmençe)
@@ -1092,6 +1365,38 @@ $messages['te'] = array(
  */
 $messages['tk'] = array(
 	'index-submit' => 'Tabşyr',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'indexfunc-desc' => 'Tungkulin ng parser upang lumikha ng mga pahina ng kusang mga kapalit na pupuntahan at mga paglilinaw',
+	'indexfunc-badtitle' => 'Hindi tanggap na pamagat: "$1"',
+	'indexfunc-editwarning' => 'Babala:
+Ang pamagat na ito ay isang pamagat ng talatuntunan para sa sumusunod na {{PLURAL:$2|pahina|mga pahina}}:
+$1
+Tiyakin na ang pahinang lilikhain mo ay hindi pa umiiral sa ilalim ng isang ibang pamagat.
+Kapag nilikha mo ang pahinang ito, alisin ang pamagat nito mula sa <nowiki>{{#index:}}</nowiki> na nasa ibabaw ng {{PLURAL:$2|pahina|mga pahina}}.',
+	'indexfunc-index-exists' => 'Umiiral na ang pahinang "$1"',
+	'indexfunc-movewarn' => 'Babala:
+Ang "$1" ay isang pamagat ng talatuntunan para sa sumusunod na {{PLURAL:$3|pahina|mga pahina}}:
+$2
+Pakitanggal ang "$1" magmula sa <nowiki>{{#index:}}</nowiki> na nasa ibabaw na {{PLURAL:$3|pahina|mga pahina}}.',
+	'index' => 'Paghahanap ng talatuntunan',
+	'index-legend' => 'Maghanap sa talatuntunan',
+	'index-search' => 'Maghanap:',
+	'index-submit' => 'Ipasa',
+	'index-disambig-start' => "Maaaring tumukoy ang '''$1''' sa ilang mga pahina:",
+	'index-emptylist' => 'Walang mga pahinang kaugnay ng "$1"',
+	'index-expand-detail' => 'Ipakita ang mga pahina nakatalunton sa ilalim ng pahinang ito',
+	'index-hide-detail' => 'Itago ang talaan ng mga pahina',
+	'index-no-results' => 'Nagbalik ang paghahanap ng walang mga resulta',
+	'index-search-explain' => 'Gumagamit ang pahinang ito ng paghahanap ng unlapi.
+
+Imakinilya ang unang mangilan-ngilang mga panitik at pindutin ang pindutang pangpasa upang makapaghanap ng mga pamagat ng pahina at mga paglalagay sa talatuntunan na nagsisimula sa bagting ng paghahanap',
+	'index-details-explain' => 'Ang mga paglalagay na may palaso ay mga paglalagay na pangtaluntunan.
+Pindutin ang palaso upang maipakita ang lahat ng mga pahinang nakatalunton sa ilalim ng ganyang pamagat.',
 );
 
 /** Turkish (Türkçe)
@@ -1107,13 +1412,23 @@ $messages['tr'] = array(
 	'index-no-results' => 'Aramada sonuç bulunamadı',
 );
 
+/** Uyghur (Latin script) (Uyghurche‎) */
+$messages['ug-latn'] = array(
+	'index-search' => 'Izdash:',
+);
+
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'indexfunc-desc' => 'Функція парсера для створення автоматичних перенаправлень і сторінок неоднозначностей',
 	'indexfunc-badtitle' => 'Неприпустима назва: "$1"',
 	'indexfunc-index-exists' => 'Сторінка "$1" вже існує',
+	'index-search' => 'Пошук:',
+	'index-submit' => 'Відправити',
+	'index-hide-detail' => 'Сховати список сторінок',
+	'index-no-results' => 'Пошук не дав результатів',
 );
 
 /** Veps (Vepsan kel')
@@ -1148,10 +1463,13 @@ $messages['yi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Bencmq
+ * @author Hydra
  */
 $messages['zh-hans'] = array(
 	'indexfunc-badtitle' => '无效标题：“$1”',
 	'indexfunc-index-exists' => '“$1”页面已存在',
+	'index' => '索引搜索',
+	'index-legend' => '搜索索引',
 	'index-search' => '搜索：',
 	'index-submit' => '提交',
 	'index-hide-detail' => '隐藏页面列表',
@@ -1160,14 +1478,17 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'indexfunc-badtitle' => '無效標題：“$1”',
-	'indexfunc-index-exists' => '“$1”頁面已存在',
+	'indexfunc-badtitle' => '無效標題：「$1」',
+	'indexfunc-index-exists' => '「$1」頁面已存在',
+	'index' => '索引搜索',
+	'index-legend' => '搜索索引',
 	'index-search' => '搜尋：',
 	'index-submit' => '遞交',
 	'index-hide-detail' => '隱藏頁面清單',
-	'index-no-results' => '無任何搜索結果',
+	'index-no-results' => '無任何搜尋結果',
 );
 

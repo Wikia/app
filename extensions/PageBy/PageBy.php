@@ -2,8 +2,8 @@
 /**
  * PageBy extension - shows recent changes on a wiki page.
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
@@ -19,24 +19,21 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'PageBy',
 	'author' => 'Daniel Kinzler, brightbyte.de',
 	'url' => 'http://mediawiki.org/wiki/Extension:PageBy',
-	'description' => 'Shows contributors inline on a wiki page using the tag <nowiki><pageby></nowiki>',
 	'descriptionmsg' => 'pageby-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['PageBy'] = $dir . 'PageBy.i18n.php';
-//$wgExtensionFunctions[] = "wfPageByExtension";
-$wgHooks['ParserFirstCallInit'][] = "wfPageByExtension";
+$wgHooks['ParserFirstCallInit'][] = "wfPageBySetHooks";
 
 $wgAutoloadClasses['PageByRenderer'] = $dir. 'PageByRenderer.php';
 
-function wfPageByExtension( $wgParser ) {
-//    global $wgParser;
-    $wgParser->setHook( "pageby", "newsxRenderPageBy" );
-    return true;
+function wfPageBySetHooks( $parser ) {
+	$parser->setHook( 'pageby', 'newsxRenderPageBy' );
+	return true;
 }
 
-function newsxRenderPageBy( $page, $argv, &$parser ) {
+function newsxRenderPageBy( $page, $argv, $parser ) {
     $renderer = new PageByRenderer($page, $argv, $parser);
     return $renderer->renderPageBy();
 }

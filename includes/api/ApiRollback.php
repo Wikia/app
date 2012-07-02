@@ -1,10 +1,10 @@
 <?php
-
-/*
- * Created on Jun 20, 2007
- * API for MediaWiki 1.8+
+/**
  *
- * Copyright (C) 2007 Roan Kattouw <Firstname>.<Lastname>@home.nl
+ *
+ * Created on Jun 20, 2007
+ *
+ * Copyright © 2007 Roan Kattouw <Firstname>.<Lastname>@gmail.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,14 +18,11 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	// Eclipse helper - will be ignored in production
-	require_once ( "ApiBase.php" );
-}
 
 /**
  * @ingroup API
@@ -33,39 +30,35 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class ApiRollback extends ApiBase {
 
 	public function __construct( $main, $action ) {
-		parent :: __construct( $main, $action );
+		parent::__construct( $main, $action );
 	}
+
+	/**
+	 * @var Title
+	 */
+	private $mTitleObj = null;
+
+	/**
+	 * @var User
+	 */
+	private $mUser = null;
 
 	public function execute() {
 		$params = $this->extractRequestParams();
 
-		$titleObj = null;
-		if ( !isset( $params['title'] ) )
-			$this->dieUsageMsg( array( 'missingparam', 'title' ) );
-		if ( !isset( $params['user'] ) )
-			$this->dieUsageMsg( array( 'missingparam', 'user' ) );
+		// User and title already validated in call to getTokenSalt from Main
+		$titleObj = $this->getRbTitle();
+		$pageObj = WikiPage::factory( $titleObj );
+		$summary = ( isset( $params['summary'] ) ? $params['summary'] : '' );
+		$details = array();
+		$retval = $pageObj->doRollback( $this->getRbUser(), $summary, $params['token'], $params['markbot'], $details, $this->getUser() );
 
-		$titleObj = Title::newFromText( $params['title'] );
-		if ( !$titleObj )
-			$this->dieUsageMsg( array( 'invalidtitle', $params['title'] ) );
-		if ( !$titleObj->exists() )
-			$this->dieUsageMsg( array( 'notanarticle' ) );
-
-		// We need to be able to revert IPs, but getCanonicalName rejects them
-		$username = User::isIP( $params['user'] )
-			? $params['user']
-			: User::getCanonicalName( $params['user'] );
-		if ( !$username )
-			$this->dieUsageMsg( array( 'invaliduser', $params['user'] ) );
-
-		$articleObj = new Article( $titleObj );
-		$summary = ( isset( $params['summary'] ) ? $params['summary'] : "" );
-		$details = null;
-		$retval = $articleObj->doRollback( $username, $summary, $params['token'], $params['markbot'], $details );
-
-		if ( $retval )
+		if ( $retval ) {
 			// We don't care about multiple errors, just report one of them
 			$this->dieUsageMsg( reset( $retval ) );
+		}
+
+		$this->setWatch( $params['watchlist'], $titleObj );
 
 		$info = array(
 			'title' => $titleObj->getPrefixedText(),
@@ -79,57 +72,125 @@ class ApiRollback extends ApiBase {
 		$this->getResult()->addValue( null, $this->getModuleName(), $info );
 	}
 
-	public function mustBePosted() { return true; }
+	public function mustBePosted() {
+		return true;
+	}
 
 	public function isWriteMode() {
 		return true;
 	}
 
 	public function getAllowedParams() {
-		return array (
-			'title' => null,
-			'user' => null,
+		return array(
+			'title' => array(
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => true
+			),
+			'user' => array(
+				ApiBase::PARAM_TYPE => 'string',
+				ApiBase::PARAM_REQUIRED => true
+			),
 			'token' => null,
 			'summary' => null,
-			'markbot' => false
+			'markbot' => false,
+			'watchlist' => array(
+				ApiBase::PARAM_DFLT => 'preferences',
+				ApiBase::PARAM_TYPE => array(
+					'watch',
+					'unwatch',
+					'preferences',
+					'nochange'
+				),
+			),
 		);
 	}
 
 	public function getParamDescription() {
-		return array (
+		return array(
 			'title' => 'Title of the page you want to rollback.',
 			'user' => 'Name of the user whose edits are to be rolled back. If set incorrectly, you\'ll get a badtoken error.',
-			'token' => 'A rollback token previously retrieved through prop=revisions',
-			'summary' => 'Custom edit summary. If not set, default summary will be used.',
-			'markbot' => 'Mark the reverted edits and the revert as bot edits'
+			'token' => "A rollback token previously retrieved through {$this->getModulePrefix()}prop=revisions",
+			'summary' => 'Custom edit summary. If not set, default summary will be used',
+			'markbot' => 'Mark the reverted edits and the revert as bot edits',
+			'watchlist' => 'Unconditionally add or remove the page from your watchlist, use preferences or do not change watch',
 		);
 	}
 
 	public function getDescription() {
 		return array(
-				'Undo the last edit to the page. If the last user who edited the page made multiple edits in a row,',
-				'they will all be rolled back.'
-			);
+			'Undo the last edit to the page. If the last user who edited the page made multiple edits in a row,',
+			'they will all be rolled back'
+		);
 	}
-	
+
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
-			array( 'missingparam', 'title' ),
-			array( 'missingparam', 'user' ),
 			array( 'invalidtitle', 'title' ),
 			array( 'notanarticle' ),
 			array( 'invaliduser', 'user' ),
 		) );
 	}
 
-	protected function getExamples() {
-		return array (
+	public function needsToken() {
+		return true;
+	}
+
+	public function getTokenSalt() {
+		return array( $this->getRbTitle()->getPrefixedText(), $this->getRbUser() );
+	}
+
+	private function getRbUser() {
+		if ( $this->mUser !== null ) {
+			return $this->mUser;
+		}
+
+		$params = $this->extractRequestParams();
+
+		// We need to be able to revert IPs, but getCanonicalName rejects them
+		$this->mUser = User::isIP( $params['user'] )
+			? $params['user']
+			: User::getCanonicalName( $params['user'] );
+		if ( !$this->mUser ) {
+			$this->dieUsageMsg( array( 'invaliduser', $params['user'] ) );
+		}
+
+		return $this->mUser;
+	}
+
+	/**
+	 * @return Title
+	 */
+	private function getRbTitle() {
+		if ( $this->mTitleObj !== null ) {
+			return $this->mTitleObj;
+		}
+
+		$params = $this->extractRequestParams();
+
+		$this->mTitleObj = Title::newFromText( $params['title'] );
+
+		if ( !$this->mTitleObj ) {
+			$this->dieUsageMsg( array( 'invalidtitle', $params['title'] ) );
+		}
+		if ( !$this->mTitleObj->exists() ) {
+			$this->dieUsageMsg( 'notanarticle' );
+		}
+
+		return $this->mTitleObj;
+	}
+
+	public function getExamples() {
+		return array(
 			'api.php?action=rollback&title=Main%20Page&user=Catrope&token=123ABC',
 			'api.php?action=rollback&title=Main%20Page&user=217.121.114.116&token=123ABC&summary=Reverting%20vandalism&markbot=1'
 		);
 	}
 
+	public function getHelpUrls() {
+		return 'https://www.mediawiki.org/wiki/API:Rollback';
+	}
+
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiRollback.php 65371 2010-04-21 10:41:25Z tstarling $';
+		return __CLASS__ . ': $Id$';
 	}
 }

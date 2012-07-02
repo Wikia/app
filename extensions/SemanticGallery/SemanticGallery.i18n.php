@@ -2,8 +2,9 @@
 /**
  * Internationalization file for the Semantic Gallery extension
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -21,6 +22,13 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'semanticgallery-desc' => '{{desc}}',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'semanticgallery-desc' => 'Shton një format të prodhimit galeri të SMW pyetje Inline',
 );
 
 /** Arabic (العربية)
@@ -56,6 +64,13 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'semanticgallery-desc' => 'Dodaje format izlaza galerije u SMW pravolinijske upite',
+);
+
+/** Catalan (Català)
+ * @author Toniher
+ */
+$messages['ca'] = array(
+	'semanticgallery-desc' => 'Afegeix un format de sortida galeria a les consultes en línia del SMW.',
 );
 
 /** German (Deutsch)
@@ -95,9 +110,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author Peter17
  */
 $messages['fr'] = array(
-	'semanticgallery-desc' => 'Ajoute un format de sortie de la gallerie dans les requêtes en ligne de SMW',
+	'semanticgallery-desc' => 'Ajoute un format de sortie de la galerie dans les requêtes en ligne de SMW',
 );
 
 /** Galician (Galego)
@@ -171,7 +187,7 @@ $messages['ja'] = array(
 	'semanticgallery-desc' => 'SMWインラインクエリーにギャラリー出力フォーマットを追加する',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -223,7 +239,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'semanticgallery-desc' => 'Legger til en galleriutdataformatering på SMW-spørringer',
 );
 

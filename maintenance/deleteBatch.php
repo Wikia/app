@@ -26,42 +26,50 @@
  *
  * @ingroup Maintenance
  */
- 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class DeleteBatch extends Maintenance {
-	
+
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Deletes a batch of pages";
 		$this->addOption( 'u', "User to perform deletion", false, true );
 		$this->addOption( 'r', "Reason to delete page", false, true );
 		$this->addOption( 'i', "Interval to sleep between deletions" );
-		$this->addArg( 'listfile', 'File with titles to delete, separated by newlines', false );
+		$this->addArg( 'listfile', 'File with titles to delete, separated by newlines. ' .
+			'If not given, stdin will be used.', false );
 	}
-	
+
 	public function execute() {
 		global $wgUser;
 
 		# Change to current working directory
 		$oldCwd = getcwd();
 		chdir( $oldCwd );
-	
+
 		# Options processing
-		$user = $this->getOption( 'u', 'Delete page script' );
+		$username = $this->getOption( 'u', 'Delete page script' );
 		$reason = $this->getOption( 'r', '' );
 		$interval = $this->getOption( 'i', 0 );
-		if( $this->hasArg() ) {
+
+		$user = User::newFromName( $username );
+		if ( !$user ) {
+			$this->error( "Invalid username", true );
+		}
+		$wgUser = $user;
+
+		if ( $this->hasArg() ) {
 			$file = fopen( $this->getArg(), 'r' );
 		} else {
 			$file = $this->getStdin();
 		}
 
 		# Setup
-		if( !$file ) {
+		if ( !$file ) {
 			$this->error( "Unable to read file, exiting", true );
 		}
-		$wgUser = User::newFromName( $user );
+
 		$dbw = wfGetDB( DB_MASTER );
 
 		# Handle each entry
@@ -70,44 +78,42 @@ class DeleteBatch extends Maintenance {
 			if ( $line == '' ) {
 				continue;
 			}
-			$page = Title::newFromText( $line );
-			if ( is_null( $page ) ) {
+			$title = Title::newFromText( $line );
+			if ( is_null( $title ) ) {
 				$this->output( "Invalid title '$line' on line $linenum\n" );
 				continue;
 			}
-			if( !$page->exists() ) {
+			if ( !$title->exists() ) {
 				$this->output( "Skipping nonexistent page '$line'\n" );
 				continue;
 			}
-	
-	
-			$this->output( $page->getPrefixedText() );
+
+			$this->output( $title->getPrefixedText() );
 			$dbw->begin();
-			if( $page->getNamespace() == NS_FILE ) {
-				$art = new ImagePage( $page );
-				$img = wfFindFile( $art->mTitle );
-				if( !$img || !$img->delete( $reason ) ) {
-					$this->output( "FAILED to delete image file... " );
+			if ( $title->getNamespace() == NS_FILE ) {
+				$img = wfFindFile( $title );
+				if ( $img && $img->isLocal() && !$img->delete( $reason ) ) {
+					$this->output( " FAILED to delete associated file... " );
 				}
-			} else {
-				$art = new Article( $page );
 			}
-			$success = $art->doDeleteArticle( $reason );
+			$page = WikiPage::factory( $title );
+			$error = '';
+			$success = $page->doDeleteArticle( $reason, false, 0, false, $error, $user );
 			$dbw->commit();
 			if ( $success ) {
 				wfRunHooks('ArticleDeleteComplete', array(&$art, &$wgUser, $reason, $page_id));
-				$this->output( "\n" );
+				$this->output( " Deleted!\n" );
 			} else {
 				$this->output( " FAILED to delete article\n" );
 			}
-	
+
 			if ( $interval ) {
 				sleep( $interval );
 			}
-			wfWaitForSlaves( 5 );
-}
+			wfWaitForSlaves();
+		}
 	}
 }
 
 $maintClass = "DeleteBatch";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

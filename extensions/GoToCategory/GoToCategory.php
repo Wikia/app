@@ -14,18 +14,11 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'GoToCategory',
 	'version'        => '1.0',
 	'author'         => 'Tim Laqua',
-	'description'    => "Checks search terms against the Category: namespace for Go 'jump to page' functionality",
 	'descriptionmsg' => 'gotocategory-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:GoToCategory',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:GoToCategory',
 );
 
-$wgExtensionFunctions[] = 'efGoToCategory_Setup';
-
-function efGoToCategory_Setup() {
-	global $wgHooks;
-	$wgHooks['SpecialSearchNogomatch'][] = 'efGoToCategory_SpecialSearchNogomatch';
-	return true;
-}
+$wgHooks['SpecialSearchNogomatch'][] = 'efGoToCategory_SpecialSearchNogomatch';
 
 function efGoToCategory_SpecialSearchNogomatch($t) {
 	global $wgOut, $wgRequest;

@@ -1,0 +1,181 @@
+<script type="text/javascript">
+	mw.loader.load('pfp.form.rapidhtml.TwoStepTwoColumnLetter3');
+	// these must go through RapidHTML and thus are inline
+	var amountErrors = ['#general|escape','#retryMsg|escape','#amount|escape'];
+	var billingErrors = ['#fname|escape','#lname|escape','#city|escape','#country|escape','#street|escape','#state|escape','#zip|escape','#emailAdd|escape'];
+	var paymentErrors = ['#card_num|escape','#card_type|escape','#cvv|escape'];
+	var actionURL = "@action";
+	var scriptPath = "@script_path";
+</script>
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+	<tbody>
+	<tr>
+		<td id="appeal" valign="top">
+			{{LanguageSwitch|2011FR/@appeal/text|@language}}
+		</td>
+		<td id="donate" valign="top">
+			<div id="greenBackground" class="">
+			<noscript>
+				<div id="noscript">
+					<p id="noscript-msg">It appears that you do not have JavaScript enabled, or your browser does not support it. In order to provide a safe, secure and pleasant experience, our donation form requires JavaScript.</p><p id="noscript-redirect-msg">If you cannot or do not wish to enable JavaScript, you may still contribute by visiting:</p><p id="noscript-redirect-link"><a href="http://wikimediafoundation.org/wiki/DonateNonJS/en">http://wikimediafoundation.org/wiki/DonateNonJS/en</a></p>
+				</div>
+			</noscript>
+
+			<!--<h2 id="donate-head">Please complete your donation below ...</h2>-->
+
+			<p id="topError" class="creditcard-error-msg"></p>
+
+			<form name="payment" method="post" action="@action" autocomplete="off">
+				<div id="payflowpro_gateway-personal-info">
+					<table id="payflow-table-donor">
+						<tbody>
+						<tr>
+							<td colspan="2"><span class="creditcard-error-msg"></span></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<table cellspacing="0" cellpadding="4" border="1" id="donation_amount">
+									<tbody>
+									<tr>
+										<td class="amount_header">Description</td>
+										<td class="amount_header" style="text-align:right;width:75px;">Amount</td>
+										<td class="amount_header" style="text-align:right;width:75px;">Currency</td>
+									</tr>
+									<tr>
+										<td class="amount_data">Donation</td>
+										<td class="amount_data" style="text-align:right;width:75px;">@amount</td>
+										<td class="amount_data" style="text-align:right;width:75px;">@currency_code</td>
+									</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><h3 class="cc_header">Billing information<img src="@script_path/extensions/DonationInterface/gateway_forms/includes/padlock.gif" style="vertical-align:baseline;margin-left:8px;"></h3></td>
+						</tr>
+						<tr>
+							<td class="label"></td>
+							<td><img src="@script_path/extensions/DonationInterface/gateway_forms/includes/credit_card_logos.gif"></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="card_num">Card number</label></td>
+							<td><input name="card_num" size="30" value="@card_num" type="text" maxlength="100" id="card_num" class="fullwidth" autocomplete="off"></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="mos">Expiration date</label></td>
+							<td><select name="mos" id="mos"><option value="01">1 (January)</option><option value="02">2 (February)</option><option value="03">3 (March)</option><option value="04">4 (April)</option><option value="05">5 (May)</option><option value="06">6 (June)</option><option value="07">7 (July)</option><option value="08">8 (August)</option><option value="09">9 (September)</option><option value="10">10 (October)</option><option value="11">11 (November)</option><option value="12">12 (December)</option></select> / <select name="year" id="year">
+								<!--<option value="">Year</option>-->
+								<option value="2011">2011</option>
+								<option value="2012">2012</option>
+								<option value="2013">2013</option>
+								<option value="2014">2014</option>
+								<option value="2015">2015</option>
+								<option value="2016">2016</option>
+								<option value="2017">2017</option>
+								<option value="2018">2018</option>
+								<option value="2019">2019</option>
+								<option value="2020">2020</option>
+								<option value="2021">2021</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td colspan="2"><span class="creditcard-error-msg"></span></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="cvv">Security code</label></td>
+							<td><input name="cvv" size="5" value="@cvv" type="text" maxlength="10" id="cvv" autocomplete="off"> <a href="javascript:PopupCVV();">Where is this?</a></td>
+						</tr>
+						<tr>
+							<td colspan="2"><span class="creditcard-error-msg"></span></td>
+						</tr>
+						<tr>
+							<td colspan="2"><span class="creditcard-error-msg"></span></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="fname">Name on card</label></td>
+							<td><input name="fname" size="30" value="@fname" type="text" placeholder="First name" maxlength="25" class="required" id="fname"><input name="lname" size="30" value="@lname" type="text" placeholder="Last name" maxlength="25" id="lname">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><span class="creditcard-error-msg"></span></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="street">Billing address</label></td>
+							<td><input name="street" size="30" value="@street" type="text" placeholder="Street" maxlength="100" id="street" class="fullwidth"></td>
+						</tr>
+						<tr>
+							<td colspan="2"><span class="creditcard-error-msg"></span></td>
+						</tr>
+						<tr>
+							<td class="label"></td>
+							<td><input name="city" size="18" value="@city" type="text" placeholder="City" maxlength="40" id="city">
+								<select id="state" name="state" value="@state" >
+									<option value=""></option>
+									<option value="AK">AK</option><option value="AL">AL</option><option value="AR">AR</option><option value="AZ">AZ</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DC">DC</option><option value="DE">DE</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="IA">IA</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="MA">MA</option><option value="MD">MD</option><option value="ME">ME</option><option value="MI">MI</option><option value="MN">MN</option><option value="MO">MO</option><option value="MS">MS</option><option value="MT">MT</option><option value="NC">NC</option><option value="ND">ND</option><option value="NE">NE</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NV">NV</option><option value="NY">NY</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="PR">PR</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VA">VA</option><option value="VT">VT</option><option value="WA">WA</option><option value="WI">WI</option><option value="WV">WV</option><option value="WY">WY</option><option value="AA">AA</option><option value="AE">AE</option><option value="AP">AP</option>
+								</select>
+								<input name="zip" size="5" value="@zip" type="text" placeholder="Zip code" maxlength="10" id="zip">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><span class="creditcard-error-msg"></span></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="emailAdd">E-mail receipt to</label></td>
+							<td><input name="emailAdd" size="30" value="@emailAdd" type="text" placeholder="Email address" maxlength="64" id="emailAdd" class="fullwidth"></td>
+						</tr>
+						<tr>
+							<td class="label"></td>
+							<td>
+								<div id="mw-donate-submit-button">&nbsp;<br>
+									<input id="ccSubmitButton" name="ccSubmitButton" src="@script_path/extensions/DonationInterface/gateway_forms/includes/submit-donation-button.png" alt="Submit donation" type="image">
+								</div>
+								<div class="mw-donate-submessage" id="payflowpro_gateway-donate-submessage">
+									<img src="@script_path/extensions/DonationInterface/gateway_forms/includes/padlock.gif" style="vertical-align:baseline;margin-right:4px;">Your credit / debit card will be securely processed.
+								</div>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<input type="hidden" name="gateway" value="payflowpro" id="gateway" />
+				<input type="hidden" name="returnto" value="Thank_You/en" />
+				<input type="hidden" value="0" name="PaypalRedirect" id="PaypalRedirect">
+				<input type="hidden" value="@amount" name="amount">
+				<input type="hidden" value="US" name="country" id="country" />
+				<input type="hidden" value="@expiration" name="expiration" id="expiration"/>
+				<input type="hidden" value="USD" name="currency_code" />
+				<input type="hidden" value="@utm_source" name="utm_source"/>
+				<input type="hidden" value="@utm_medium" name="utm_medium"/>
+				<input type="hidden" value="@utm_campaign" name="utm_campaign"/>
+				<input type="hidden" value="@language" name="language"/>
+				<input type="hidden" value="@referrer" name="referrer"/>
+				<input type="hidden" value="@comment" name="comment"/>
+				<input type="hidden" value="@comment-option" name="comment-option"/>
+				<input type="hidden" value="1" name="email-opt"/>
+				<input type="hidden" value="@token" name="token"/>
+				<input type="hidden" value="@order_id"  name="order_id"/>
+				<input type="hidden" value="@numAttempt" name="numAttempt"/>
+				<input type="hidden" value="@contribution_tracking_id" name="contribution_tracking_id"/>
+				<input type="hidden" value="@data_hash" name="data_hash"/>
+				<input type="hidden" value="@owa_session" name="owa_session"/>
+				<input type="hidden" value="@owa_ref" name="owa_ref"/>
+				<!-- new required fields -->
+				<input type="hidden" value="@gateway" name="gateway"/>
+				<input type="hidden" value="cc" name="payment_method"/>
+			</form>
+				<div class="payflow-cc-form-section" id="payflowpro_gateway-donate-addl-info">
+					<div id="payflowpro_gateway-donate-addl-info-text">
+						<div style="text-align:center;">* * *</div>
+						<div class="">We do not store your credit card information, and your personal data is subject to our <a href="http://wikimediafoundation.org/wiki/Donor_policy">donor privacy policy</a>.</div><div class="">There are <a href="http://wikimediafoundation.org/wiki/Ways_to_Give/en">other ways to give</a>, including by check.</div>
+						<div class="">Questions or comments? Contact: <a href="mailto:donate@wikimedia.org">donate@wikimedia.org</a>
+						</div>
+					</div>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		</td>
+	</tr>
+	</tbody>
+</table>

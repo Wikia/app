@@ -6,9 +6,9 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'WikiaNewFiles' => array( 'NewFiles' )
 );

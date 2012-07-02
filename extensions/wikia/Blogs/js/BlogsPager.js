@@ -22,7 +22,7 @@ if(!window.blogInitialized) {
 		// modified legacy code
 		changePage: function(offset) {
 			var wkBlogLoader = $(".wk_blogs_pager .wikia-paginator ul");
-			wkBlogLoader.append("<li><img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\"></li>");
+			wkBlogLoader.append("<li><img src=\"" + stylepath + "/common/skins/common/images/ajax.gif\"></li>");
 			var params = "&rsargs[0]=" + wgArticleId + "&rsargs[1]=" + wgNamespaceNumber + "&rsargs[2]=" + offset + "&rsargs[3]=oasis";
 			var baseurl = wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params;
 			$().log(wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params);

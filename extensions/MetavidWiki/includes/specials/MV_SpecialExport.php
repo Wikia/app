@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * MV_SpecialExport.php Created on Oct 23, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -20,12 +20,12 @@
  */
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-global $IP, $smwgIP;
 // all the special pages handled by this master Special Export (could reactor into individual classes if we want to)
 class MvVideoFeed extends SpecialPage {
 	function __construct() {
 		parent::__construct( 'MvVideoFeed' );
-		if ( method_exists( 'SpecialPage', 'setGroup' ) ) {
+		$realFunction = array( 'SpecialPage', 'setGroup' );
+		if ( is_callable( $realFunction ) ) {
 			parent::setGroup( 'MvVideoFeed', 'mv_group' );
 		}
 	}
@@ -45,7 +45,8 @@ class MvExportStream extends SpecialPage {
 class MvExportSequence extends SpecialPage {
 	function __construct() {
 		parent::__construct( 'MvExportSequence' );
-		if ( method_exists( 'SpecialPage', 'setGroup' ) ) {
+		$realFunction = array( 'SpecialPage', 'setGroup' );
+		if ( is_callable( $realFunction ) ) {
 			parent::setGroup( 'MvExportSequence', 'mv_group' );
 		}
 	}
@@ -286,7 +287,7 @@ class MV_SpecialExport {
 	<?	while ( $row = $dbr->fetchObject( $this->mvd_type_res ) ) {
 		// output cmml header:
 		// @@todo lookup language for layer key patterns
-		$sTitle = Title::makeTitle( NS_SPECIAL, 'MvExportStream' );
+		$sTitle = SpecialPage::getTitleFor( 'MvExportStream' );
 		$query = 'stream_name=' . $this->stream_name . '&t=' . $this->req_time . '&feed_format=cmml&tracks=' . strtolower( $row->mvd_type );
 		$clink = $sTitle->getFullURL( $query );
 
@@ -450,7 +451,7 @@ echo $ns?>meta> </<?php echo $ns?>head>
 		global $wgSitename, $wgTitle, $wgRequest;
 		// check for semantic wiki:
 		if ( !defined( 'SMW_VERSION' ) ) {
-			return new WikiError( "Export Ask is dependent on semantic media wiki" );
+			return false;
 		}
 		// bootstrap off of SMWAskPage:
 		$SMWAskPage = new SMWAskPage();
@@ -610,7 +611,7 @@ class mvRSSFeed extends ChannelFeed {
 <description>
 		<?php echo $this->getDescription()?>
 </description>
-		<?
+		<?php
 	}
 	function outPutItem( $wikiTitle, $desc_html = '' ) {
 		global $wgOut, $wgUser;
@@ -674,9 +675,9 @@ global $mvDefaultVideoQualityKey, $mvVidQualityMsgKeyType, $mvDefaultVideoHighQu
 //check a few different types in order of prefrence:
 if( $stream_url = $mvTitle->getWebStreamURL($mvDefaultVideoHighQualityKey) ){
 	$mk = $mvDefaultVideoHighQualityKey;
-}else if( $stream_url = $mvTitle->getWebStreamURL($mvDefaultVideoQualityKey) ) {
+}elseif( $stream_url = $mvTitle->getWebStreamURL($mvDefaultVideoQualityKey) ) {
 	$mk = $mvDefaultVideoQualityKey;
-}else if( $stream_url = $mvTitle->getWebStreamURL($mvDefaultFlashQualityKey) ) {
+}elseif( $stream_url = $mvTitle->getWebStreamURL($mvDefaultFlashQualityKey) ) {
 	$mk = $mvDefaultFlashQualityKey;
 }
 if($stream_url) {
@@ -746,7 +747,6 @@ foreach($vid_types as $vid_key){
 		?>
 </channel>
 </rss>
-		<?
+		<?php
 	}
 }
-?>

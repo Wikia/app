@@ -58,7 +58,7 @@ $messages['fr'] = array(
 	'confirmemailprompt-error' => 'Est-ce votre adresse de courriel : <strong>$1</strong> ? [[$2|Confirmer]] ou [[$3|la changer]].',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -1,33 +1,27 @@
 <?php
-/*
+/**
  * MV_CategoryPage.php Created on Oct 17, 2007
- * 
+ *
  * All Metavid Wiki code is Released Under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
  * @url http://metavid.org
  */
  // $wgHooks['CategoryPageView'][] = 'fnMyHook';
- // display all MVD category members as thumbnails... 
+ // display all MVD category members as thumbnails...
  // display link to rss/playlist
 
 if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 
 class MV_CategoryPage extends CategoryPage {
- 	function closeShowCategory() {
-		global $wgOut, $wgRequest;
-		$from = $wgRequest->getVal( 'from' );
-		$until = $wgRequest->getVal( 'until' );
-		$viewer = new MvCategoryViewer( $this->mTitle, $from, $until );
-		$wgOut->addHTML( $viewer->getHTML() );
-	}
+	protected $mCategoryViewerClass = 'MvCategoryViewer';
 }
 class MvCategoryViewer extends CategoryViewer {
 	var $show_mv_links = false;
 	private $already_named_resource = array();
-			
+
 	function getHTML() {
 		$s = '';
 		return $s . parent::getHTML();
@@ -77,7 +71,7 @@ class MvCategoryViewer extends CategoryViewer {
 				 $title->getNamespace() ==  MV_NS_STREAM ||
 				 $title->getNamespace() ==  MV_NS_SEQUENCE ) {
 				$this->show_mv_links = true;
-				
+
 				// make sure we don't do duplicate stream links:
 				$mvTitle = new MV_Title( $title );
 				if ( !isset( $this->already_named_resource[$mvTitle->getStreamName() . '/' . $mvTitle->getTimeRequest()] ) ) {
@@ -102,7 +96,7 @@ class MvCategoryViewer extends CategoryViewer {
 	}
 	function addMVThumb( Title $title, $sortkey, $pageLength, $isRedirect = false ) {
 		if ( $this->showGallery ) {
-			$image = new MV_Image( $title );
+			$image = wfFindFile( $title );
 			if ( $this->flip ) {
 				$this->gallery->insert( $image );
 			} else {
@@ -117,10 +111,10 @@ class MvCategoryViewer extends CategoryViewer {
 		$sk = $wgUser->getSkin();
 		$s = ( $this->show_mv_links ) ? $this->getRssLinks():'';
 		if ( $this->showGallery && ! $this->gallery->isEmpty() ) {
-			$title = Title::MakeTitle( NS_SPECIAL, 'MediaSearch' );
+			$title = SpecialPage::getTitleFor( 'MediaSearch' );
 			$query = 'f[0][t]=' . urlencode( 'category' ) . '&f[0][v]=' . $wgTitle->getDBkey();
-			// don't output the cat link for now: 
-			// $search_link = $sk->makeKnownLinkObj($title,wfMsg('mv_search_category').":".$wgTitle->getText(), $query);			
+			// don't output the cat link for now:
+			// $search_link = $sk->makeKnownLinkObj($title,wfMsg('mv_search_category').":".$wgTitle->getText(), $query);
 			// wfMsg('mv_cat_search_note', $search_link) .
 			return "<div id=\"mw-category-media\">\n" .
 			$s .
@@ -143,4 +137,3 @@ class MvCategoryViewer extends CategoryViewer {
 	}
 }
 
-?>

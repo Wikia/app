@@ -1,14 +1,14 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'TaskManager'	=> array( 'TaskManager' )
 );
 /**
  * Polish (Polski)
  */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'TaskManager'	=> array( 'Menedżer zadań', 'TaskManager' )
 );

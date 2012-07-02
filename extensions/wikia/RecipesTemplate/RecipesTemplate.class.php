@@ -28,11 +28,8 @@ abstract class RecipesTemplate extends SpecialPage {
 	private $returnToUrl = null;
 
 	public function __construct( $name = '', $restriction = '', $listed = true, $function = false, $file = 'default', $includable = false ) {
-		wfLoadExtensionMessages('RecipesTemplate');
-
-		$this->mToggles = self::getToggles();
-
 		parent::__construct( $name, $restriction, $listed, $function, $file, $includable );
+		$this->mToggles = self::getToggles();
 	}
 
 	/**
@@ -155,7 +152,8 @@ abstract class RecipesTemplate extends SpecialPage {
 			$bot = $wgUser->isAllowed('bot');
 
 			// do edit
-			$ret = $editPage->internalAttemptSave($result, $bot);
+			$status = $editPage->internalAttemptSave($result, $bot);
+			$ret = $status->value;
 
 			// creating new article
 			if ($ret == EditPage::AS_SUCCESS_NEW_ARTICLE) {
@@ -433,13 +431,13 @@ abstract class RecipesTemplate extends SpecialPage {
 	 * Return HTML of current recipes form
 	 */
 	protected function renderForm() {
-		global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgTitle, $wgUser, $wgRequest;
+		global $wgOut, $wgStylePath, $wgExtensionsPath, $wgJsMimeType, $wgTitle, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		// load dependencies (CSS and JS)
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.css?{$wgStyleVersion}");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.autocomplete.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.css");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.js\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.autocomplete.js\"></script>\n");
 
 		// create form type: recipe / ingredient
 		$formType = strtolower(substr($wgTitle->getText(), 6));
@@ -482,11 +480,11 @@ abstract class RecipesTemplate extends SpecialPage {
 	 * Return HTML of create forms toggle
 	 */
 	protected static function renderToggle() {
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+		global $wgOut, $wgExtensionsPath;
 		wfProfileIn(__METHOD__);
 
 		// load dependencies (CSS)
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.css");
 
 		// render toggle
 		$tpl = new EasyTemplate(dirname(__FILE__).'/templates');
@@ -609,22 +607,6 @@ abstract class RecipesTemplate extends SpecialPage {
 	}
 
 	/**
-	 * Show create forms toggle when on Special:CreatePage
-	 */
-	public static function showCreatePageToggle(&$editPage) {
-		global $wgTitle, $wgOut;
-		wfProfileIn(__METHOD__);
-
-		if (!empty($wgTitle) && ($wgTitle->getText() == 'CreatePage') && ($wgTitle->getNamespace() == NS_SPECIAL)) {
-			wfLoadExtensionMessages('RecipesTemplate');
-			RecipesTemplate::renderToggle();
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	/**
 	 * Return URL to thumbnail (to fit 250x200 box) of given image
 	 */
 	public static function makeThumb($imageName) {
@@ -652,8 +634,7 @@ abstract class RecipesTemplate extends SpecialPage {
 		}
 
 		// generate thumbnail
-		$thumb = $image->getThumbnail($width, $height);
-		$ret = $thumb->url;
+		$ret = $image->createThumb( $width, $height );
 
 		self::log(__METHOD__, "{$imageName} -> {$ret}");
 

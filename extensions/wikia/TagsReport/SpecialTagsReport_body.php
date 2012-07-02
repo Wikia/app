@@ -18,7 +18,6 @@ class TagsReportPage extends SpecialPage {
 	 */
 	function  __construct() {
 		parent::__construct( "TagsReport"  /*class*/, 'tagsreport' /*restriction*/);
-		wfLoadExtensionMessages("TagsReport");
 	}
 
 	public function execute( $subpage ) {
@@ -57,7 +56,7 @@ class TagsReportPage extends SpecialPage {
 	function showForm ($error = "") {
 		global $wgOut;
         wfProfileIn( __METHOD__ );
-		$action = $this->mTitle->escapeLocalURL("");
+		$action = htmlspecialchars($this->mTitle->getLocalURL());
 		$tagList = $this->getTagsList();
 
 		$timestamp = $this->getGenDate();
@@ -162,19 +161,19 @@ class TagsReportPage extends SpecialPage {
 	private function getGenDate() {
 		global $wgLang, $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
 		$tagsArticles = array();
-		
+
 		if ( !empty( $wgStatsDBEnabled ) ) {
 			return array();
 		}
-		
+
 		$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-		$s = $dbs->selectRow( 
+		$s = $dbs->selectRow(
 			'city_used_tags',
 			array( 'max(ct_timestamp) as ts' ),
-			array( 'ct_wikia_id' =>  $wgCityId ), 
+			array( 'ct_wikia_id' =>  $wgCityId ),
 			__METHOD__
 		);
-		
+
 		return array(
 			$wgLang->date( wfTimestamp( TS_MW, $s->ts ), true ),
 			$wgLang->time( wfTimestamp( TS_MW, $s->ts ), true ),

@@ -4,7 +4,7 @@
  *
  * @file
  * @ingroup Extensions
- * @version 1.1
+ * @version 1.2
  * @author Tim Starling
  * @copyright © 2006 Tim Starling
  * @licence GNU General Public Licence
@@ -19,17 +19,16 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Lookup User',
-	'version' => '1.1',
+	'version' => '1.2',
 	'author' => 'Tim Starling',
-	'description' => 'Retrieve information about a user such as email address and ID',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:LookupUser',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:LookupUser',
 	'descriptionmsg' => 'lookupuser-desc',
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['LookupUser'] = $dir . 'LookupUser.i18n.php';
-$wgExtensionAliasesFiles['LookupUser'] = $dir . 'LookupUser.alias.php';
+$wgExtensionMessagesFiles['LookupUserAlias'] = $dir . 'LookupUser.alias.php';
 $wgAutoloadClasses['LookupUserPage'] = $dir . 'LookupUser.body.php';
 $wgSpecialPages['LookupUser'] = 'LookupUserPage';
 // Special page group for MW 1.13+
@@ -37,12 +36,6 @@ $wgSpecialPageGroups['LookupUser'] = 'users';
 
 // New user right, required to use the special page
 $wgAvailableRights[] = 'lookupuser';
-$wgGroupPermissions['util']['lookupuser'] = true;
-
-//small stuff week --nAndy
-global $wgAjaxExportList;
-$wgAjaxExportList[] = "LookupUserPage::loadAjaxContribData";
-$wgAjaxExportList[] = "LookupUserPage::requestApiAboutUser";
 
 // Hooked function
 $wgHooks['ContributionsToolLinks'][] = 'efLoadLookupUserLink';
@@ -52,14 +45,15 @@ $wgHooks['ContributionsToolLinks'][] = 'efLoadLookupUserLink';
  * if the user has 'lookupuser' permission
  * @return true
  */
-function efLoadLookupUserLink( $id, $nt, &$links ){
+function efLoadLookupUserLink( $id, $nt, &$links ) {
 	global $wgUser;
 	if( $wgUser->isAllowed( 'lookupuser' ) ) {
-		wfLoadExtensionMessages( 'LookupUser' );
-		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
-					SpecialPage::getTitleFor( 'LookupUser' ),
-					wfMsgHtml( 'lookupuser' ),
-					'&target=' . urlencode( $nt->getText() ) );
+		$links[] = Linker::linkKnown(
+			SpecialPage::getTitleFor( 'LookupUser' ),
+			wfMsgHtml( 'lookupuser' ),
+			array(),
+			array( 'target' => $nt->getText() )
+		);
 	}
 	return true;
 }

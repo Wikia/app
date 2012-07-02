@@ -6,150 +6,194 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'ChemicalSources' => array( 'ChemicalSources' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'ChemicalSources' => array( 'مصادر_كيميائية' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'ChemicalSources' => array( 'مصادر_كيميائية' ),
+$specialPageAliases['arz'] = array(
+	'ChemicalSources' => array( 'مصادر_كيماويه' ),
 );
 
 /** Assamese (অসমীয়া) */
-$aliases['as'] = array(
-	'ChemicalSources' => array( 'ৰাসায়নিক উৎসসমূহ' ),
+$specialPageAliases['as'] = array(
+	'ChemicalSources' => array( 'ৰাসায়নিক_উৎসসমূহ' ),
+);
+
+/** Breton (Brezhoneg) */
+$specialPageAliases['br'] = array(
+	'ChemicalSources' => array( 'MammennoùKimiek' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'ChemicalSources' => array( 'HemijskiIzvori' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
-	'ChemicalSources' => array( 'Chemiske žrědła' ),
+$specialPageAliases['dsb'] = array(
+	'ChemicalSources' => array( 'Chemiske_žrědła' ),
+);
+
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'ChemicalSources' => array( 'Kemiaj_fontoj' ),
+);
+
+/** Spanish (Español) */
+$specialPageAliases['es'] = array(
+	'ChemicalSources' => array( 'Fuentes_para_Química' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'ChemicalSources' => array( 'منابع_شیمیایی' ),
 );
 
 /** Gujarati (ગુજરાતી) */
-$aliases['gu'] = array(
+$specialPageAliases['gu'] = array(
 	'ChemicalSources' => array( 'રસાયણસ્રોત' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
-	'ChemicalSources' => array( 'Chemiske žórła' ),
+$specialPageAliases['hsb'] = array(
+	'ChemicalSources' => array( 'Chemiske_žórła' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'ChemicalSources' => array( 'SousChimik' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
-	'ChemicalSources' => array( 'Vegyszer források' ),
+$specialPageAliases['hu'] = array(
+	'ChemicalSources' => array( 'Vegyszer_források' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'ChemicalSources' => array( 'Fontes chimic' ),
+$specialPageAliases['ia'] = array(
+	'ChemicalSources' => array( 'Fontes_chimic' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'ChemicalSources' => array( 'Rujukan kimia', 'RujukanKimia' ),
+$specialPageAliases['id'] = array(
+	'ChemicalSources' => array( 'Rujukan_kimia', 'RujukanKimia' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'ChemicalSources' => array( '化学関連の検索' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
-$aliases['km'] = array(
+$specialPageAliases['km'] = array(
 	'ChemicalSources' => array( 'ប្រភពគីមី' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
-	'ChemicalSources' => array( 'Schimisch Quelle' ),
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
+	'ChemicalSources' => array( 'Schimisch_Quelle' ),
+);
+
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'ChemicalSources' => array( 'ManaderosQuímicos' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'ChemicalSources' => array( 'Chemisch Quellen' ),
+$specialPageAliases['lb'] = array(
+	'ChemicalSources' => array( 'Chemesch_Quellen' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'ChemicalSources' => array( 'ХемискиИзвори' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'ChemicalSources' => array( 'രസതന്ത്രസ്രോതസ്സുകൾ' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'ChemicalSources' => array( 'रासायनीकस्रोत' ),
 );
 
 /** Maltese (Malti) */
-$aliases['mt'] = array(
+$specialPageAliases['mt'] = array(
 	'ChemicalSources' => array( 'SorsiKimiċi' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'ChemicalSources' => array( 'Kjemiske_kilder' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'ChemicalSources' => array( 'Scheikundige_bronnen' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'ChemicalSources' => array( 'ScheikundigeBronnen' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'ChemicalSources' => array( 'Kjemiske kilder' ),
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'ChemicalSources' => array( 'Źródła_chemiczne' ),
 );
 
 /** Pashto (پښتو) */
-$aliases['ps'] = array(
-	'ChemicalSources' => array( 'کيميايي سرچينې' ),
+$specialPageAliases['ps'] = array(
+	'ChemicalSources' => array( 'کيميايي_سرچينې' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'ChemicalSources' => array( 'रसायनस्रोत' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'ChemicalSources' => array( 'ChemickéZdroje' ),
 );
 
 /** Albanian (Shqip) */
-$aliases['sq'] = array(
+$specialPageAliases['sq'] = array(
 	'ChemicalSources' => array( 'BurimeKimike' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'ChemicalSources' => array( 'Mga pinagmulang makakimika' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'ChemicalSources' => array( 'KimyasalKaynaklar' ),
 );
 
-/** Veps (Vepsan kel') */
-$aliases['vep'] = array(
+/** Veps (Vepsän kel') */
+$specialPageAliases['vep'] = array(
 	'ChemicalSources' => array( 'HimižedPurtked' ),
 );
 
+/** Simplified Chinese (‪中文(简体)‬) */
+$specialPageAliases['zh-hans'] = array(
+	'ChemicalSources' => array( '化学源' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'ChemicalSources' => array( '化學源' ),
+);

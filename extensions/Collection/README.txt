@@ -10,10 +10,8 @@ generate downloadable version in different formats (PDF, OpenDocument Text etc.)
 for article collections and single articles.
 
 The extension has been developed for and tested with MediaWiki_ version 1.14
-and later. Some features may not be avaialable with older MediaWikis or with
-MediaWikis that don't have the `MediaWiki API`_ enabled. One example is that
-MediaWikis < 1.13 don't have the capability to edit articles via API, thus
-saving of collections is disabled.
+and later. Some features may not be avaialable with older MediaWikis that
+don't have the `MediaWiki API`_ enabled.
 
 The extension is being developed under the GNU General Public License by
 `PediaPress GmbH`_ in close collaboration with `Wikimedia Foundation`_
@@ -117,34 +115,65 @@ Installation and Configuration of the Collection Extension
 
      $ mw-render --list-writers
 
+	*$wgCollectionContentTypeToFilename (array)*
+	 An array matching content types to filenames for downloaded documents. The
+	 default is:
+
+		$wgCollectionContentTypeToFilename = array(
+			'application/pdf' => 'collection.pdf',
+			'application/vnd.oasis.opendocument.text' => 'collection.odt',
+		);
+
 	*$wgCollectionPortletFormats (array)*
 	 An array containing formats (keys in $wgCollectionFormats) that shall be
 	 displayed as "Download as XYZ" links in the "Print/export" portlet.
 	 The default value is::
 
-	     array( 'pdf' );
+	     array( 'rl' );
 
 	 i.e. there's one link "Download as PDF".
+
+	*$wgCollectionHierarchyDelimiter (string or null)*
+	 If not null, treat wiki pages whose title contains the configured delimiter
+	 as subpages.
+
+         For example, to treat article [[Foo/Bar]] as subpage of article [[Foo]]
+	 set this variable to "/". This makes sense e.g. on wikibooks.org, but it's
+	 questionable on wikipedia.org (cf. [[AC/DC]]).
+
+	 The (only) effect is that the display title for subpages in collections
+         is set to the title of the (deepest) subpage. For example, the title of
+         article [[Foo/Bar]] will be displayed/rendered as "Bar".
+
+	 The defaul value is null, which means that no hierarchy is assumed.
 
   *$wgCollectionArticleNamespaces (array)*
    List of namespace numbers for pages which can be added to a collection.
    Category pages (NS_CATEGORY) are always an exception (all articles in a
    category are added, not the category page itself). Default is::
 
-     array(
-     	NS_MAIN,
-     	NS_TALK,
-     	NS_USER,
-     	NS_USER_TALK,
-     	NS_PROJECT,
-     	NS_PROJECT_TALK,
-     	NS_MEDIAWIKI,
-     	NS_MEDIAWIKI_TALK,
-     	100,
-     	101,
-     	102,
-     	103,
-     )
+    array(
+      NS_MAIN,
+      NS_TALK,
+      NS_USER,
+      NS_USER_TALK,
+      NS_PROJECT,
+      NS_PROJECT_TALK,
+      NS_MEDIAWIKI,
+      NS_MEDIAWIKI_TALK,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+    );
 
   *$wgCommunityCollectionNamespace (integer)*
    Namespace for "community collections", i.e. the namespace where non-personal
@@ -180,26 +209,12 @@ Installation and Configuration of the Collection Extension
    that each article contains the name of the license and set $wgCollectionLicenseURL
    to an article that contains all needed licenses.
 
-* This step is only needed for MediaWiki version < 1.14:
-  Just before the line::
-
-    <div class="portlet" id="p-tb">
-
-  in your skin file (e.g. ``skins/MonoBook.php`` or ``skins/Modern.php``) insert
-  the following code::
-
-    <?php
-      if(isset($GLOBALS['wgSpecialPages']['Book'])) {
-         CollectionHooks::printPortlet();
-      }
-    ?>
-
 * If you want to let users save their collections as wiki pages, make sure
   $wgEnableWriteAPI is set to true, i.e. put this line in your LocalSettings.php::
 
     $wgEnableWriteAPI = true;
 
-  (This is the default for MediaWiki >= 1.14.).
+  (This is the default.)
 
   There are two MediaWiki rights that are checked, before users are allowed
   to save collections: To be able to save collection pages under the User
@@ -233,6 +248,10 @@ Installation and Configuration of the Collection Extension
 	The name of the template can be adjusted via the system message
 	Coll-savedbook_template, i.e. by editing [[MediaWiki:Coll-savedbook_template]].
 
+* To enable ZENO and Okawix export, uncomment the corresponding lines in $wgCollectionFormats
+  (file Collection.php). These exports are devoted to the Wikimedia projects and their mirrors.
+  They cannot be used on other wikis since they get data and search engine indexes from the cache
+  of wikiwix.com.
 
 Customization via System Messages
 =================================

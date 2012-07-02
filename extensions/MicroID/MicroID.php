@@ -23,8 +23,9 @@ if ( ! defined( 'MEDIAWIKI' ) )
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @file
  * @author Evan Prodromou <evan@wikitravel.org>
- * @addtogroup Extensions
+ * @ingroup Extensions
  */
 
 define('MEDIAWIKI_MICROID_VERSION', '0.2');
@@ -34,8 +35,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'MicroID',
 	'version' => MEDIAWIKI_MICROID_VERSION,
 	'author' => 'Evan Prodromou',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:MicroID',
-	'description' => 'Adds a [http://www.microid.org/ MicroID] to user pages to confirm account with external services',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:MicroID',
 	'descriptionmsg' => 'microid-desc'
 );
 
@@ -44,7 +44,7 @@ $wgExtensionMessagesFiles['MicroID'] = dirname(__FILE__) . '/MicroID.i18n.php';
 function setupMicroID() {
 
 	global $wgOut, $wgRequest, $wgHooks;
-	wfLoadExtensionMessages( 'MicroID' );
+	
 
 	$wgHooks['UserToggles'][] = 'MicroIDUserToggle';
 

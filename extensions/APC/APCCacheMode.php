@@ -1,9 +1,7 @@
 <?php
 
 class APCCacheMode {
-
 	protected $opts, $title;
-
 	protected $userMode = false;
 	protected $fieldKey;
 
@@ -11,7 +9,7 @@ class APCCacheMode {
 		$this->opts = $opts;
 		$this->title = $title;
 		$this->userMode = $opts->getValue( 'mode' ) === SpecialAPC::MODE_USER_CACHE;
-		$this->fieldKey = $this->userMode ? 'info' : (ini_get('apc.stat') ? 'inode' : 'filename');
+		$this->fieldKey = $this->userMode ? 'info' : ( ini_get( 'apc.stat' ) ? 'inode' : 'filename' );
 	}
 
 	protected $scopes = array(
@@ -27,22 +25,22 @@ class APCCacheMode {
 		$s =
 			Xml::openElement( 'div', array( 'class' => 'mw-apc-listing' ) ) .
 			Xml::openElement( 'table' ) . Xml::openElement( 'tbody' ) .
-			Xml::openElement( 'tr' ).
+			Xml::openElement( 'tr' ) .
 				Xml::element( 'th', null, wfMsg( 'viewapc-display-attribute' ) ) .
 				Xml::element( 'th', null, wfMsg( 'viewapc-display-value' ) ) .
 			Xml::closeElement( 'tr' );
 
 		$r = 1;
-		foreach( $this->scopes as $list ) {
-			foreach( $cache[$list] as $entry ) {
-				if (md5($entry[$this->fieldKey]) !== $object) continue;
+		foreach ( $this->scopes as $list ) {
+			foreach ( $cache[$list] as $entry ) {
+				if ( md5( $entry[$this->fieldKey] ) !== $object ) continue;
 
 				$size = 0;
-				foreach($entry as $key => $value) {
-					switch ($key) {
+				foreach ( $entry as $key => $value ) {
+					switch ( $key ) {
 						case 'num_hits':
 							$value = $wgLang->formatNum( $value ) .
-								$wgLang->formatNum( sprintf(" (%.2f%%)", $value*100/$cache['num_hits'] ) );
+								$wgLang->formatNum( sprintf( " (%.2f%%)", $value * 100 / $cache['num_hits'] ) );
 							break;
 						case 'deletion_time':
 							$value = $this->formatValue( $key, $value );
@@ -56,20 +54,20 @@ class APCCacheMode {
 							$value = $this->formatValue( $key, $value );
 					}
 
-					$s .= APCUtils::tableRow( $r=1-$r,
+					$s .= APCUtils::tableRow( $r = 1 - $r,
 						wfMsgHtml( 'viewapc-display-' . $key ),
 						htmlspecialchars( $value ) );
 
 				}
 
 				if ( $this->userMode ) {
-					if ( $size > 1024*1024 ) {
-						$s .= APCUtils::tableRow( $r=1-$r,
+					if ( $size > 1024 * 1024 ) {
+						$s .= APCUtils::tableRow( $r = 1 - $r,
 						wfMsgHtml( 'viewapc-display-stored-value' ),
 						wfMsgExt( 'viewapc-display-too-big', 'parseinline' ) );
 					} else {
-						$value = var_export(apc_fetch($entry[$this->fieldKey]),true);
-						$s .= APCUtils::tableRow( $r=1-$r,
+						$value = var_export( apc_fetch( $entry[$this->fieldKey] ), true );
+						$s .= APCUtils::tableRow( $r = 1 - $r,
 							wfMsgHtml( 'viewapc-display-stored-value' ),
 							Xml::element( 'pre', null, $value ) );
 					}
@@ -115,7 +113,7 @@ class APCCacheMode {
 				break;
 		}
 		return $value;
-}
+	}
 
 	public function cacheView() {
 		global $wgOut, $wgLang;
@@ -154,7 +152,7 @@ class APCCacheMode {
 		foreach ( $fields as $field ) {
 			$extra = array();
 			if ( $sort === $field ) {
-				$extra = array( 'sortdir' => 1-$sortdir );
+				$extra = array( 'sortdir' => 1 - $sortdir );
 			}
 
 			$wgOut->addHTML(
@@ -171,7 +169,7 @@ class APCCacheMode {
 		if ( $scope === 'active' || $scope === 'both' ) {
 			foreach ( $cache['cache_list'] as $entry ) {
 				if ( $search && stripos( $entry[$fieldKeys['name']], $search ) === false ) continue;
-				$sortValue = sprintf('%015d-', $entry[$fieldKeys[$sort]]);
+				$sortValue = sprintf( '%015d-', $entry[$fieldKeys[$sort]] );
 				$list[$sortValue . $entry[$fieldKeys['name']]] = $entry;
 			}
 		}
@@ -179,7 +177,7 @@ class APCCacheMode {
 		if ( $scope === 'deleted' || $scope === 'both' ) {
 			foreach ( $cache['deleted_list'] as $entry ) {
 				if ( $search && stripos( $entry[$fieldKeys['name']], $search ) === false ) continue;
-				$sortValue = sprintf('%015d-', $entry[$fieldKeys[$sort]]);
+				$sortValue = sprintf( '%015d-', $entry[$fieldKeys[$sort]] );
 				$list[$sortValue . $entry[$fieldKeys['name']]] = $entry;
 			}
 		}
@@ -187,13 +185,13 @@ class APCCacheMode {
 		$sortdir ? krsort( $list ) : ksort( $list );
 
 		$i = 0;
-		if ( count($list) ) {
+		if ( count( $list ) ) {
 			$r = 1;
 
 			foreach ( $list as $name => $entry ) {
 				if ( $limit === $i++ ) break;
 				$wgOut->addHTML(
-					Xml::openElement( 'tr', array( 'class' => 'mw-apc-tr-' . ($r=1-$r) ) )
+					Xml::openElement( 'tr', array( 'class' => 'mw-apc-tr-' . ( $r = 1 - $r ) ) )
 				);
 
 				foreach ( $fields as $field ) {
@@ -201,12 +199,12 @@ class APCCacheMode {
 					if ( $field === 'name' ) {
 						if ( !$this->userMode ) {
 							$pos = strrpos( $entry[$index], '/' );
-							if ( $pos !== false ) $value = substr( $entry[$index], $pos+1 );
+							if ( $pos !== false ) $value = substr( $entry[$index], $pos + 1 );
 						} else {
 							$value = $entry[$index];
 						}
-						$value = $this->sortHeader( htmlspecialchars($value), array( 'display' => md5($entry[$this->fieldKey]) ) );
-					} elseif( $field === 'deleted' && $this->userMode && !$entry[$index] ) {
+						$value = $this->sortHeader( htmlspecialchars( $value ), array( 'display' => md5( $entry[$this->fieldKey] ) ) );
+					} elseif ( $field === 'deleted' && $this->userMode && !$entry[$index] ) {
 						$value = $this->sortHeader(
 							wfMsgHtml( 'viewapc-ls-delete' ),
 							array( 'delete' => $entry[$this->fieldKey] )
@@ -222,15 +220,15 @@ class APCCacheMode {
 			}
 		}
 
-		if ( $i < count($list) ) {
-			$left = $wgLang->formatNum( count($list) - ($i+$offset) );
+		if ( $i < count( $list ) ) {
+			$left = $wgLang->formatNum( count( $list ) - ( $i + $offset ) );
 			$wgOut->addHTML(
 				Xml::tags( 'tr', array( 'colspan' => count( $fields ) ),
 					Xml::tags( 'td', null, $this->sortHeader(
 						wfMsgExt( 'viewapc-ls-more', 'parseinline', $left ),
-						array( 'offset' => $offset+$limit ) ) ) )
+						array( 'offset' => $offset + $limit ) ) ) )
 				);
-		} elseif ( !count($list) ) {
+		} elseif ( !count( $list ) ) {
 			$wgOut->addHTML(
 				Xml::tags( 'tr', array( 'colspan' => count( $fields ) ),
 					Xml::tags( 'td', null, wfMsgExt( 'viewapc-ls-nodata', 'parseinline' ) ) )
@@ -248,7 +246,7 @@ class APCCacheMode {
 			Xml::element( 'legend', null, wfMsg( 'viewapc-ls-options-legend' ) ) .
 			Xml::openElement( 'form', array( 'action' => $wgScript ) );
 
-		$s .= Xml::hidden( 'title', $this->title->getPrefixedText() );
+		$s .= Html::Hidden( 'title', $this->title->getPrefixedText() );
 
 		$options = array();
 		$scope = $this->opts->consumeValue( 'scope' );
@@ -289,7 +287,7 @@ class APCCacheMode {
 		$submit = Xml::submitButton( wfMsg( 'viewapc-ls-submit' ) );
 
 		foreach ( $this->opts->getUnconsumedValues() as $key => $value ) {
-			$s .= Xml::hidden( $key, $value );
+			$s .= Html::Hidden( $key, $value );
 		}
 
 		$s .= wfMsgHtml( 'viewapc-ls-options', $scopeSelector, $sortSelector,

@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension ContributionScores.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -17,7 +18,7 @@ Scores calculated in this manner weight edit diversity over edit volume.
 Basically, this score measures primarily unique pages edited, with consideration for high edit volume - assumed to be a higher quality page.",
 	'contributionscores-top'             => '(Top $1)',
 	'contributionscores-days'            => 'Last {{PLURAL:$1|day|$1 days}}',
-	'contributionscores-allrevisions'    => 'All revisions',
+	'contributionscores-allrevisions'    => 'All time',
 	'contributionscores-score'           => 'Score',
 	'contributionscores-pages'           => 'Pages',
 	'contributionscores-changes'         => 'Changes',
@@ -98,7 +99,7 @@ $messages['ar'] = array(
 تقيس هذه النتيجة أساسًا الصفحات الفريدة المحررة، مع الأخذ في الاعتبار أحجام التعديلات الكبيرة - لأن الصفحة تكون عادة ذات جودة أعلى.',
 	'contributionscores-top' => '(أعلى $1)',
 	'contributionscores-days' => '{{PLURAL:$1||اليوم الماضي|اليومان الماضيان|ال$1 أيام الماضية|ال$1 يومًا الماضية|ال$1 يوم الماضية}}',
-	'contributionscores-allrevisions' => 'كل المراجعات',
+	'contributionscores-allrevisions' => 'كل الوقت',
 	'contributionscores-score' => 'النتيجة',
 	'contributionscores-pages' => 'الصفحات',
 	'contributionscores-changes' => 'التغييرات',
@@ -108,12 +109,15 @@ $messages['ar'] = array(
 );
 
 /** Aramaic (ܐܪܡܝܐ)
+ * @author 334a
  * @author Basharh
  */
 $messages['arc'] = array(
-	'contributionscores-days' => '{{PLURAL:$1|ܝܘܡܐ ܐܚܪܝܐ|$1 ܝܘܡܬ̈ܐ ܐܚܪ̈ܝܬܐ}}',
+	'contributionscores-days' => '{{PLURAL:$1|ܝܘܡܐ ܐܚܪܝܐ|$1 ܝܘܡܬ̈ܐ ܐܚܪ̈ܝܐ}}',
+	'contributionscores-allrevisions' => 'ܟܠ ܙܒܢ̈ܐ',
 	'contributionscores-pages' => 'ܦܐܬܬ̈ܐ',
 	'contributionscores-changes' => 'ܫܘܚܠܦ̈ܐ',
+	'contributionscores-username' => 'ܫܡܐ ܕܡܦܠܚܢܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -151,9 +155,39 @@ $messages['avk'] = array(
 	'contributionscores-username' => 'Favesikyolt',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'contributionscores-pages' => 'Səhifələr',
+	'contributionscores-username' => 'İstifadəçi adı',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'contributionscores' => 'Индергән өлөштәрҙе баһалау',
+	'contributionscores-desc' => 'Мәғлүмәттәр базаһынан [[Special:ContributionScores|иң ҙур өлөш индергән ҡатнашыусыларҙы]] билдәләй',
+	'contributionscores-info' => 'Баһа түбәндәге өлөштәрҙе ҡушыу аша иҫәпләнә:
+* 1 мәрәй — һәр айырым битте мөхәррирләү өсөн;
+* 2 * ( (дөйөм үҙгәртеүҙәр һаны) - (барыһы төрлө биттәр) ) айырмаһының тамыры.
+Баһаны иҫәпләгән ваҡытта, шулай итеп, дөйөм үҙгәртеүҙәр һанына ҡарағында үҙгәртеүҙәрҙең төрлөлөгө ҙурыраҡ йоғонто яһай.',
+	'contributionscores-top' => '(Тәүге $1)',
+	'contributionscores-days' => 'Һуңғы {{PLURAL:$1|көн|$1 көн}}',
+	'contributionscores-allrevisions' => 'Бөтә үҙгәртеүҙәр',
+	'contributionscores-score' => 'Баһа',
+	'contributionscores-pages' => 'Биттәр',
+	'contributionscores-changes' => 'Үҙгәртеүҙәр',
+	'contributionscores-username' => 'Ҡатнашыусы исеме',
+	'contributionscores-invalidusername' => 'Ҡатнашыусы исеме дөрөҫ түгел',
+	'contributionscores-invalidmetric' => 'Метрика дөрөҫ түгел',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
 	'contributionscores' => 'Адзнака ўнёску',
@@ -164,7 +198,7 @@ $messages['be-tarask'] = array(
 Такі спосаб падліку дазваляе высьветліць разнароднасьць рэдагаваньняў адносна колькасьці рэдагаваньняў. Канчатковы вынік залежыць ад колькасьці рэдагаваньняў унікальных старонак з улікам колькасьці рэдагаваньняў улічваючы якасьць ствараемых старонак.',
 	'contributionscores-top' => '($1 {{PLURAL:$1|найлепшы|найлепшых|найлепшых}})',
 	'contributionscores-days' => '{{PLURAL:$1|Апошні $1 дзень|Апошнія $1 дні|Апошнія $1 дзён}}',
-	'contributionscores-allrevisions' => 'Усе вэрсіі',
+	'contributionscores-allrevisions' => 'За ўвесь час',
 	'contributionscores-score' => 'Адзнака',
 	'contributionscores-pages' => 'Старонак',
 	'contributionscores-changes' => 'Зьменаў',
@@ -179,7 +213,7 @@ $messages['be-tarask'] = array(
 $messages['bg'] = array(
 	'contributionscores' => 'Потребителска класация',
 	'contributionscores-top' => '(Най-добрите $1)',
-	'contributionscores-days' => 'Последните $1 дни',
+	'contributionscores-days' => '{{PLURAL:$1|Последния ден|Последните $1 дни}}',
 	'contributionscores-allrevisions' => 'Всички редакции',
 	'contributionscores-score' => 'Точки',
 	'contributionscores-pages' => 'Страници',
@@ -190,27 +224,42 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Bellayet
+ * @author Wikitanvir
  */
 $messages['bn'] = array(
+	'contributionscores' => 'অনুদানের স্কোর',
+	'contributionscores-top' => '(সর্বোচ্চ $1)',
+	'contributionscores-days' => 'গত {{PLURAL:$1|দিন|$1 দিন}}',
+	'contributionscores-allrevisions' => 'সকল সংস্করণ',
+	'contributionscores-score' => 'স্কোর',
 	'contributionscores-pages' => 'পাতা',
 	'contributionscores-changes' => 'পরিবর্তন',
+	'contributionscores-username' => 'ব্যবহারকারী নাম',
+	'contributionscores-invalidusername' => 'অগ্রহণযোগ্য ব্যবহারকারী নাম',
 );
 
 /** Breton (Brezhoneg)
  * @author Fohanno
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
-	'contributionscores' => 'Merkadur an degasadennoù',
+	'contributionscores' => 'Skor an degasadennoù',
+	'contributionscores-desc' => 'Furchal a ra er bank roadennoù evit kavout [[Special:ContributionScores|kementadoù brasañ a zegasadennoù an implijerien]]',
+	'contributionscores-info' => "Setu penaos e vez jedet ar poenterezh :
+*Ur (1) poent evit pep pajenn kemmet
+*Gwrizienn garrez (an niver hollek a gemmoù graet) - (niver a bajennoù disheñvel) * 2
+Lakaat a ra ar formulenn-se al liesseurted war wel kentoc'h eget ar c'hementad.
+E berr gomzoù e talvez da jediñ an niver a bajennoù disheñvel kemmet en ur sellet a-dostoc'h ouzh ar c'hementadoù bras a gemmoù a seller outo evel pajennoù zo gwelloc'h an danvez anezho.",
 	'contributionscores-top' => '(An $1 uhelañ)',
-	'contributionscores-days' => 'E kerzh {{PLURAL:$1|an devez|an $1 devez}} ziwezhañ',
-	'contributionscores-allrevisions' => 'An holl adweladennoù',
-	'contributionscores-score' => 'Merkañ',
+	'contributionscores-days' => 'E-kerzh an {{PLURAL:$1|devezh|$1 devezh}} diwezhañ',
+	'contributionscores-allrevisions' => "Dalc'hmat",
+	'contributionscores-score' => 'Skor',
 	'contributionscores-pages' => 'Pajennoù',
 	'contributionscores-changes' => 'Kemmoù',
 	'contributionscores-username' => 'Anv implijer',
-	'contributionscores-invalidusername' => "N'eo ket mat an anv implijer",
-	'contributionscores-invalidmetric' => 'Direizh eo ar metrek',
+	'contributionscores-invalidusername' => 'Anv implijer direizh',
+	'contributionscores-invalidmetric' => 'Muzul direizh',
 );
 
 /** Bosnian (Bosanski)
@@ -226,7 +275,7 @@ Rezultati koji se dobiju na ovaj način naglašavaju raznolikost uređivanja vi�
 U osnovi, ovaj rezultat mjeri naročito broj uređivanja pojedinačnih stranica, sa utjecajem velike količine uređivanja - smatra se da utječe na bolji kvalitet stranice.',
 	'contributionscores-top' => '(Najboljih $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Zadnji $1 dan|Zadnja $1 dana|Zadnjih $1 dana}}',
-	'contributionscores-allrevisions' => 'Sve revizije',
+	'contributionscores-allrevisions' => 'Svo vrijeme',
 	'contributionscores-score' => 'Rezultat',
 	'contributionscores-pages' => 'Stranice',
 	'contributionscores-changes' => 'Izmjene',
@@ -250,13 +299,22 @@ Aquesta fórmula premia la diversitat d'edicions més que no el seu volum.
 Bàsicament, mesura el nombre de pàgines diferents editades, amb consideració per els alts volums d'edició considerats de pàgines de més qualitat.",
 	'contributionscores-top' => '($1 millors)',
 	'contributionscores-days' => '{{PLURAL:$1|Últim dia|Últims $1 dies}}',
-	'contributionscores-allrevisions' => 'Totes les revisions',
+	'contributionscores-allrevisions' => 'Des de sempre',
 	'contributionscores-score' => 'Puntuació',
 	'contributionscores-pages' => 'Pàgines',
 	'contributionscores-changes' => 'Canvis',
 	'contributionscores-username' => "Nom d'usuari",
 	'contributionscores-invalidusername' => "Nom d'usuari no vàlid",
 	'contributionscores-invalidmetric' => 'Mètrica invàlida',
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'contributionscores-top' => '(диканаш $1)',
+	'contributionscores-allrevisions' => 'Массо нисдарш',
+	'contributionscores-username' => 'Декъашхон цlе',
 );
 
 /** Czech (Česky)
@@ -274,7 +332,7 @@ Skóre vypočítané tímto způsobem upřednostňuje rozmanitost úprav více n
 V podstatě toto skóre měří hlavně počet upravovaných jedinečných stránek s přihlédnutím na velký počet úprav, což se pokládá za stránku vyšší kvality.',
 	'contributionscores-top' => '($1 nejvyšších)',
 	'contributionscores-days' => '{{PLURAL:$1|Poslední den|Poslední $1 dny|Posledních $1 dnů}}',
-	'contributionscores-allrevisions' => 'Všechny revize',
+	'contributionscores-allrevisions' => 'Celá historie',
 	'contributionscores-score' => 'Skóre',
 	'contributionscores-pages' => 'Stránky',
 	'contributionscores-changes' => 'Změny',
@@ -293,6 +351,7 @@ $messages['cu'] = array(
 
 /** Danish (Dansk)
  * @author Byrial
+ * @author Peter Alberti
  */
 $messages['da'] = array(
 	'contributionscores' => 'Bidragspoint',
@@ -304,7 +363,7 @@ Point beregnet på denne måde vægter redigeringsmangfoldighed højere end redi
 Basalt set måler pointene først og fremmest hvor mange forskellige sider der er redigeret, med et hensyn til højt redigeringsvolume - som antages at føre til højere sidekvalitet.',
 	'contributionscores-top' => '(Top $1)',
 	'contributionscores-days' => 'Sidste {{PLURAL:$1|dag|$1 dage}}',
-	'contributionscores-allrevisions' => 'Alle versioner',
+	'contributionscores-allrevisions' => 'Gennem tiden',
 	'contributionscores-score' => 'Point',
 	'contributionscores-pages' => 'Sider',
 	'contributionscores-changes' => 'Ændringer',
@@ -314,19 +373,20 @@ Basalt set måler pointene først og fremmest hvor mange forskellige sider der e
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Merlissimo
  * @author Raimond Spekking
  */
 $messages['de'] = array(
-	'contributionscores' => 'Benutzerbeiträge bewerten',
-	'contributionscores-desc' => 'Abfrage der Wiki-Datenbank nach der Anzahl der [[Special:ContributionScores|Benutzerbeiträge]]',
+	'contributionscores' => 'Statistik zu Benutzern',
+	'contributionscores-desc' => 'Ergänzt eine [[Special:ContributionScores|Spezialseite]] zum Abfragen der Datenbank des Wikis bezüglich der Benutzer mit den meisten Beiträgen',
 	'contributionscores-info' => 'Bewertungsschema:
 *1 Punkt für jede bearbeitete Seite
 *Quadratwurzel aller (Bearbeitungen) - (Summe der bearbeiteten Seiten) * 2
 Bewertungen auf dieser Grundlage wichten die Vielfalt der Beiträge höher als das Beitragsvolumen.',
 	'contributionscores-top' => '(Top $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Letzter Tag|Letzte $1 Tage}}',
-	'contributionscores-allrevisions' => 'Alle Versionen',
+	'contributionscores-allrevisions' => 'Gesamter Zeitraum',
 	'contributionscores-score' => 'Bewertung',
 	'contributionscores-pages' => 'Seiten',
 	'contributionscores-changes' => 'Änderungen',
@@ -345,11 +405,11 @@ $messages['dsb'] = array(
 *Jaden (1) dypk za kuždy wobźěłany bok
 *Kwadratny kórjeń (wšych cynjonych změnow) - (cełkowna licba bokow) * 2
 Licba dypkow, kótaraž wulicyjo se za tym nałogom, gódnośi wšakosć změnow wušej ako licbu změnow.
-Zasadnje toś ta licba dypkow měri pśedewšym wobźěłane změny pód źiwanim na wusoku licbu změnow - 
+Zasadnje toś ta licba dypkow měri pśedewšym wobźěłane změny pód źiwanim na wusoku licbu změnow -
 pód wuměnjenim až to by było bok z wušeju kwalitu.',
 	'contributionscores-top' => '({{PLURAL:$1|Nejlěpšy $1|Nejlěpšej $1|Nejlěpše $1|Nejlěpšych $1}})',
 	'contributionscores-days' => '{{PLURAL:$1|Slědny $1 źeń|Slědnej $1 dnja|Slědne $1 dny|Slědnych $1 dnjow}}',
-	'contributionscores-allrevisions' => 'Wše wersije',
+	'contributionscores-allrevisions' => 'Ceły cas',
 	'contributionscores-score' => 'Pógódnośenje',
 	'contributionscores-pages' => 'Boki',
 	'contributionscores-changes' => 'Změny',
@@ -362,13 +422,14 @@ pód wuměnjenim až to by było bok z wušeju kwalitu.',
  * @author Consta
  * @author Crazymadlover
  * @author Omnipaedista
+ * @author ZaDiak
  */
 $messages['el'] = array(
 	'contributionscores' => 'Αποτελέσματα Συνεισφοράς',
 	'contributionscores-desc' => 'Εξετάζει την βάση δεδομένων βίκι για τον σημαντικότερο [[Special:ContributionScores|όγκο συνεισφορών χρήστη]]',
 	'contributionscores-top' => '(Πρώτοι $1)',
 	'contributionscores-days' => 'Τελευταίες {{PLURAL:$1|ημέρα|$1 ημέρες}}',
-	'contributionscores-allrevisions' => 'Όλες οι αναθεωρήσεις',
+	'contributionscores-allrevisions' => 'Όλων των εποχών',
 	'contributionscores-score' => 'Βαθμολογία',
 	'contributionscores-pages' => 'Σελίδες',
 	'contributionscores-changes' => 'Αλλαγές',
@@ -414,7 +475,7 @@ $messages['es'] = array(
 Las puntuaciones son calculadas de esta manera considerando la diversidad sobre el volumen de edición. Básicamente, esta puntuación mide fundamentalmente las páginas únicas editadas, considerando que un alto volumen de edición supone que es un artículo de mayor calidad.',
 	'contributionscores-top' => '(Top $1)',
 	'contributionscores-days' => 'Últimos {{PLURAL:$1|día|$1 días}}',
-	'contributionscores-allrevisions' => 'Estadísticas globales',
+	'contributionscores-allrevisions' => 'Todo el tiempo',
 	'contributionscores-score' => 'Valoración',
 	'contributionscores-pages' => 'Páginas',
 	'contributionscores-changes' => 'Cambios',
@@ -437,7 +498,7 @@ Nii arvutatud punktid väärtustavad enam muudatuste omapära kui nende hulka.
 Teisisõnu, need punktid lähtuvad eeskätt muudetud lehekülgede arvust ja võtavad arvesse ka suure muudatuste hulga – nii püütakse hinnata lehekülgede kvaliteeti.',
 	'contributionscores-top' => '($1 paremat)',
 	'contributionscores-days' => '{{PLURAL:$1|Viimane päev|Viimased $1 päeva}}',
-	'contributionscores-allrevisions' => 'Kõik muudatused',
+	'contributionscores-allrevisions' => 'Kõik aeg',
 	'contributionscores-score' => 'Punkte',
 	'contributionscores-pages' => 'Lehekülgi',
 	'contributionscores-changes' => 'Muudatusi',
@@ -464,6 +525,7 @@ $messages['ext'] = array(
 
 /** Persian (فارسی)
  * @author Huji
+ * @author Mjbmr
  * @author Tofighi
  */
 $messages['fa'] = array(
@@ -476,7 +538,7 @@ $messages['fa'] = array(
 محاسبه امتیازات در این حالت وزن گوناگونی ویرایشها بر حجم ویرایشها را می سنجد.
 براین اساس، این امتیاز میزان صفحه‌ها ویرایش شده را با توجه به حجم ویرایش با فرض صفحه با کیفیت تر می سنجد.',
 	'contributionscores-top' => '($1 برتر)',
-	'contributionscores-days' => '$1 روز گذشته',
+	'contributionscores-days' => 'آخرین {{PLURAL:$1|روز|$1 روز}}',
 	'contributionscores-allrevisions' => 'همه نسخه‌ها',
 	'contributionscores-score' => 'امتیاز',
 	'contributionscores-pages' => 'صفحه‌ها',
@@ -504,13 +566,14 @@ Näin laskettuna pisteet painottavat monipuolisuutta määrän sijaan. Käytänn
 	'contributionscores-score' => 'Pisteet',
 	'contributionscores-pages' => 'Sivuja',
 	'contributionscores-changes' => 'Muutoksia',
-	'contributionscores-username' => 'Käyttäjä',
+	'contributionscores-username' => 'Käyttäjätunnus',
 	'contributionscores-invalidusername' => 'Virheellinen käyttäjätunnus',
 );
 
 /** French (Français)
  * @author Grondin
  * @author IAlex
+ * @author Peter17
  * @author Sherbrooke
  * @author Urhixidur
  * @author Verdy p
@@ -525,13 +588,29 @@ $messages['fr'] = array(
 De cette façon, les pointages ainsi calculés privilégient la diversité par rapport à la quantité. Écrits d’une autre façon, ils s’intéressent principalement à indiquer le nombre de modifications des pages différentes, puis leur nombre total.',
 	'contributionscores-top' => '(Les $1 plus élevés)',
 	'contributionscores-days' => 'Dans {{PLURAL:$1|le dernier jour|les derniers $1 jours}}',
-	'contributionscores-allrevisions' => 'Toutes les révisions',
+	'contributionscores-allrevisions' => 'Tout le temps',
 	'contributionscores-score' => 'Pointage',
 	'contributionscores-pages' => 'Pages',
-	'contributionscores-changes' => 'Modifications',
-	'contributionscores-username' => 'Pseudonyme',
+	'contributionscores-changes' => 'Changements',
+	'contributionscores-username' => 'Nom d’utilisateur',
 	'contributionscores-invalidusername' => 'Nom d’utilisateur invalide',
 	'contributionscores-invalidmetric' => 'Métrique incorrecte',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'contributionscores' => 'Mârques de les contribucions',
+	'contributionscores-top' => '(Les $1 ples hôtes)',
+	'contributionscores-days' => 'Dens {{PLURAL:$1|lo jorn passâ|los $1 jorns passâs}}',
+	'contributionscores-allrevisions' => 'Tot lo temps',
+	'contributionscores-score' => 'Mârca',
+	'contributionscores-pages' => 'Pâges',
+	'contributionscores-changes' => 'Changements',
+	'contributionscores-username' => 'Nom d’usanciér',
+	'contributionscores-invalidusername' => 'Nom d’utilisator envalido',
+	'contributionscores-invalidmetric' => 'Mètrica fôssa',
 );
 
 /** Western Frisian (Frysk)
@@ -556,11 +635,11 @@ As puntuacións calculadas deste xeito favorecen a diversidade de edicións sobr
 Basicamente, esta puntuación mide, en principio, as páxinas únicas editadas, tendo en conta un volume alto de edicións (co que se asume que é unha páxina de calidade superior).',
 	'contributionscores-top' => '(os $1 que máis)',
 	'contributionscores-days' => '{{PLURAL:$1|O último día|Os últimos $1 días}}',
-	'contributionscores-allrevisions' => 'Todas as revisións',
+	'contributionscores-allrevisions' => 'Desde sempre',
 	'contributionscores-score' => 'Puntuación',
 	'contributionscores-pages' => 'Páxinas',
 	'contributionscores-changes' => 'Cambios',
-	'contributionscores-username' => 'Nome do usuario',
+	'contributionscores-username' => 'Nome de usuario',
 	'contributionscores-invalidusername' => 'Nome de usuario inválido',
 	'contributionscores-invalidmetric' => 'Métrica inválida',
 );
@@ -583,6 +662,7 @@ $messages['grc'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Chlämens
  * @author Als-Holder
  */
 $messages['gsw'] = array(
@@ -594,7 +674,7 @@ $messages['gsw'] = array(
 Bewärtigen uf däre Grundlag gän dr Viifalt vu dr Byyträg e hecher Gwicht wie dr Aazahl vu dr Änderige.',
 	'contributionscores-top' => '(Top $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Letschte Tag|Letschti $1 Täg}}',
-	'contributionscores-allrevisions' => 'Alli Versione',
+	'contributionscores-allrevisions' => 'Ganzer Zitruum',
 	'contributionscores-score' => 'Wärt',
 	'contributionscores-pages' => 'Syte',
 	'contributionscores-changes' => 'Änderige',
@@ -629,6 +709,7 @@ $messages['hak'] = array(
 
 /** Hebrew (עברית)
  * @author Agbad
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
@@ -642,7 +723,7 @@ $messages['he'] = array(
 ברמת העיקרון, ניקוד זה מודד בעיקר את מספר הדפים הייחודיים שנערכו, עם התחשבות בכמות עריכות גדולה - מה שנחשב לדף יותר איכותי.',
 	'contributionscores-top' => '($1 הגבוהים ביותר)',
 	'contributionscores-days' => 'ב{{PLURAL:$1|יום האחרון|־$1 הימים האחרונים|יומיים האחרונים}}',
-	'contributionscores-allrevisions' => 'כל הגרסאות',
+	'contributionscores-allrevisions' => 'מאז ומתמיד',
 	'contributionscores-score' => 'ניקוד',
 	'contributionscores-pages' => 'דפים',
 	'contributionscores-changes' => 'שינויים',
@@ -709,7 +790,7 @@ $messages['hsb'] = array(
 Ličba dypkow wuličena na tute wašnje pohódnoća wšelakorosć změnow wysě hač mnóstwo změnow. Zasadnje tute pohódnoćenje měri w prěnim rjedźe jednotliwe wobdźěłane strony dźiwajo na wysoke mnóstwo změnow - předpokładujo, zo to by nastawk z wyšej kwalitu było.',
 	'contributionscores-top' => '(Najlěpšich $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Posledni dźeń|Poslednjej $1 dnjej|Poslednje $1 dny|Poslednich $1 dnjow}}',
-	'contributionscores-allrevisions' => 'Wšě změny',
+	'contributionscores-allrevisions' => 'Cyły čas',
 	'contributionscores-score' => 'Hódnoćenje',
 	'contributionscores-pages' => 'Strony',
 	'contributionscores-changes' => 'Změny',
@@ -719,29 +800,31 @@ Ličba dypkow wuličena na tute wašnje pohódnoća wšelakorosć změnow wysě 
 );
 
 /** Haitian (Kreyòl ayisyen)
+ * @author Boukman
  * @author Jvm
  */
 $messages['ht'] = array(
-	'contributionscores' => 'Kontribisyon analiz',
-	'contributionscores-desc' => 'Sonde baz done wiki-a pou wo [[Special:ContributionScores|itilizatè kontribisyon volim]]',
-	'contributionscores-info' => 'Rezilta yo kalkile konsa:
-*Yon (1) pwen pou chak paj inik edite 
-*Rasin Kare de (Total Edit Fè) - (Total Paj Inik) * 2
-Rezilta trouve nan fason sa peze edit divèsite sou edit kantite.
-Basikalman, rezilta sa mezire primèman paj inik ki te edite, avèk konsiderasyon pou wo edit volim – sa konsidere kòm yon paj de mèyè kalite.',
+	'contributionscores' => 'Nòt pou kontribisyon yo',
+	'contributionscores-desc' => 'Sonde bazdone wiki a pou pi gwo [[Special:ContributionScores|kantite kontribisyon pa itilizatè]]',
+	'contributionscores-info' => 'Nòt yo kalkile konsa:
+*Yon (1) pwen pou chak paj inik ki te modifye
+*Rasin Kare de (kantite modifikasyon total ki te fè) - (Total Paj Inik) * 2
+Se konsa, nòt la bay plis pwa pou divèsite modifikasyon pase kantite modifikasyon yo.
+Sa vle di nòt sa la pou mezire paj inik ki te modifye an premye, avèk yon konsiderasyon pou gwo volim modifikasyon – ki konsidere kòm ap bay yon paj ki gen pi bon kalite.',
 	'contributionscores-top' => '(Meyè $1 yo)',
-	'contributionscores-days' => 'Denyè $1 jou yo',
+	'contributionscores-days' => 'Denyè {{PLURAL:$1|jou|$1 jou yo}}',
 	'contributionscores-allrevisions' => 'Tout revizion yo',
-	'contributionscores-score' => 'Rezilta',
+	'contributionscores-score' => 'Nòt',
 	'contributionscores-pages' => 'Paj',
 	'contributionscores-changes' => 'Chanjman',
-	'contributionscores-username' => 'Non-itilizatè',
-	'contributionscores-invalidusername' => 'Non-itilizatè envalid',
+	'contributionscores-username' => 'Non itilizatè',
+	'contributionscores-invalidusername' => 'Non itilizatè a pa bon',
 	'contributionscores-invalidmetric' => 'Metrik envalid',
 );
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Dj
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -777,7 +860,7 @@ Le punctages calculate de iste modo privilegia le diversitate super le volumine 
 Dicite de altere modo, iste punctage mesura primarimente le paginas unic modificate, con consideration pro un alte volumine de modificationes – le qual es presumite a indicar un pagina de alte qualitate.',
 	'contributionscores-top' => '(Le prime $1)',
 	'contributionscores-days' => 'Ultime $1 {{PLURAL:$1|die|dies}}',
-	'contributionscores-allrevisions' => 'Tote le versiones',
+	'contributionscores-allrevisions' => 'Omne tempore',
 	'contributionscores-score' => 'Punctage',
 	'contributionscores-pages' => 'Paginas',
 	'contributionscores-changes' => 'Modificationes',
@@ -787,6 +870,7 @@ Dicite de altere modo, iste punctage mesura primarimente le paginas unic modific
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author IvanLanin
  * @author Rex
  */
 $messages['id'] = array(
@@ -799,13 +883,35 @@ Skor dihitung dengan cara ini untuk menghasilkan jumlah tertimbang penyuntingan 
 Pada dasarnya, skor ini menghitung jumlah halaman tunggal yang disunting, dengan pertimbangan di mana volume suntingan yang tinggi - diasumsikan sebagai halaman dengan kualitas lebih tinggi.',
 	'contributionscores-top' => '($1 tertinggi)',
 	'contributionscores-days' => '{{PLURAL:$1|Hari|$1 hari}} terakhir',
-	'contributionscores-allrevisions' => 'Semua revisi',
+	'contributionscores-allrevisions' => 'Sepanjang masa',
 	'contributionscores-score' => 'Skor',
 	'contributionscores-pages' => 'Halaman',
 	'contributionscores-changes' => 'Perubahan',
 	'contributionscores-username' => 'Nama pengguna',
 	'contributionscores-invalidusername' => 'Nama pengguna tidak sah',
 	'contributionscores-invalidmetric' => 'Metrik tidak sah',
+);
+
+/** Interlingue (Interlingue)
+ * @author Renan
+ */
+$messages['ie'] = array(
+	'contributionscores' => 'Contes de contribution',
+	'contributionscores-desc' => 'Calcula li funde de data del wiki por max alt [[Special:ContributionScores|volúmine de contribution de usator]]',
+	'contributionscores-info' => 'Contes es calculat quam seque:
+*Un (1) punctu por chascun págine unic redactet
+*Fonte de quadrat de (total de redactiones fat) - (total unique pages) * 2
+Contes calculat in ti diversitá de redaction in pesa maniere súper de volúmine de redaction.
+Basicmen, ti conte mesura primarimen págines unic redactet, che consideration por alt volúmine de redaction - suposit esser un págine de alt qualitá.',
+	'contributionscores-top' => '(Prim $1)',
+	'contributionscores-days' => 'Ultim {{PLURAL:$1|die|$1 dies}}',
+	'contributionscores-allrevisions' => 'Omni témpor',
+	'contributionscores-score' => 'Conte',
+	'contributionscores-pages' => 'Págines',
+	'contributionscores-changes' => 'Changes',
+	'contributionscores-username' => 'Nómine de usator',
+	'contributionscores-invalidusername' => 'Nómine de usator ínvalid',
+	'contributionscores-invalidmetric' => 'Metric ínvalid',
 );
 
 /** Iloko (Ilokano)
@@ -840,13 +946,14 @@ Stig reiknuð á þennan hátt íþyngja fjölbreyttni breytinga fremur en magn 
  * @author Darth Kule
  * @author Gianfranco
  * @author Pietrodn
+ * @author Rippitippi
  */
 $messages['it'] = array(
 	'contributionscores' => 'Punteggi contributi',
 	'contributionscores-desc' => 'Interroga il database wiki per il più alto [[Special:ContributionScores|volume di contributi utente]]',
-	'contributionscores-info' => 'I punteggi vengono calcolati in questo modo: 
-*1 punto per ciascuna pagina distinta modificata 
-*Radice quadrata di (Tutte le modifiche effettuate) - (Totale pagine distinte) * 2 
+	'contributionscores-info' => 'I punteggi vengono calcolati in questo modo:
+*1 punto per ciascuna pagina distinta modificata
+*Radice quadrata di (Tutte le modifiche effettuate) - (Totale pagine distinte) * 2
 Questo metodo di calcolo dei punteggi tiene in maggior conto la diversità delle modifiche rispetto al numero dei contributi. Di fondo, questo punteggio misura in primo luogo il numero di pagine distinte modificate, valutando anche un eventuale alto volume di contributi - ciò fa presumere una più elevata qualità della pagina modificata.',
 	'contributionscores-top' => '(Migliori $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Ultimo giorno|Ultimi $1 giorni}}',
@@ -863,6 +970,7 @@ Questo metodo di calcolo dei punteggi tiene in maggior conto la diversità delle
  * @author Aotake
  * @author Fryed-peach
  * @author JtFuruhata
+ * @author Schu
  */
 $messages['ja'] = array(
 	'contributionscores' => '貢献得点',
@@ -873,7 +981,7 @@ $messages['ja'] = array(
 この計算式では、編集量よりも編集の多様性が重要視されます。得点は、編集したページ数を基礎に、高い品質のページを維持するため多くの編集を行うことにも配慮した評価となっています。',
 	'contributionscores-top' => '(上位$1名)',
 	'contributionscores-days' => '{{PLURAL:$1|最近1日|最近$1日間}}',
-	'contributionscores-allrevisions' => '全履歴',
+	'contributionscores-allrevisions' => '全時間',
 	'contributionscores-score' => '得点',
 	'contributionscores-pages' => 'ページ数',
 	'contributionscores-changes' => '変更回数',
@@ -923,7 +1031,7 @@ $messages['kk-arab'] = array(
 	'contributionscores-username' => 'قاتىسۋشى اتى',
 );
 
-/** Kazakh (Cyrillic) (Қазақша (Cyrillic)) */
+/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬) */
 $messages['kk-cyrl'] = array(
 	'contributionscores' => 'Үлес беру есептері',
 	'contributionscores-info' => 'Есептер келесі дей саналады:
@@ -939,7 +1047,7 @@ $messages['kk-cyrl'] = array(
 	'contributionscores-username' => 'Қатысушы аты',
 );
 
-/** Kazakh (Latin) (Қазақша (Latin)) */
+/** Kazakh (Latin script) (‪Qazaqşa (latın)‬) */
 $messages['kk-latn'] = array(
 	'contributionscores' => 'Üles berw esepteri',
 	'contributionscores-info' => 'Esepter kelesi deý sanaladı:
@@ -969,11 +1077,18 @@ $messages['km'] = array(
 	'contributionscores-score' => 'ពិន្ទុ',
 	'contributionscores-pages' => 'ទំព័រ​នានា',
 	'contributionscores-changes' => 'បំលាស់ប្តូរ​នានា',
-	'contributionscores-username' => 'ឈ្មោះអ្នកប្រើប្រាស់',
-	'contributionscores-invalidusername' => 'ឈ្មោះអ្នកប្រើប្រាស់មិនត្រឹមត្រូវ',
+	'contributionscores-username' => 'អត្តនាម',
+	'contributionscores-invalidusername' => 'អត្តនាមមិនត្រឹមត្រូវ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'contributionscores-pages' => 'ಪುಟಗಳು',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -987,7 +1102,7 @@ Dat es en de Houpsaach de övverhoup aanjepackte Zahl Sigge, ävver dobei och no
 dat öff jet Schrieve am Eng besser Sigge jitt, als wie sellde jet Schrieve.',
 	'contributionscores-top' => '(Top $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Der lezte Daach|De lezte $1 Daare|Keine lezte Daach}}',
-	'contributionscores-allrevisions' => 'All Versione',
+	'contributionscores-allrevisions' => 'De janze Zigg',
 	'contributionscores-score' => 'Punkte',
 	'contributionscores-pages' => 'Sigge',
 	'contributionscores-changes' => 'Änderunge',
@@ -1017,7 +1132,7 @@ $messages['lb'] = array(
 Op déi Manéier gëtt der Zuel vun de geännerte Säiten méi eng Grouss Bedeitung zougedeelt, wéi der Zuel vun den Ännerungen.",
 	'contributionscores-top' => '(Top $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Leschten Dag|Lescht $1 Deeg}}',
-	'contributionscores-allrevisions' => 'All Versiounen',
+	'contributionscores-allrevisions' => 'Vun Ufank un',
 	'contributionscores-score' => 'Bewäertung',
 	'contributionscores-pages' => 'Säiten',
 	'contributionscores-changes' => 'Ännerungen',
@@ -1036,15 +1151,17 @@ $messages['li'] = array(
 	'contributionscores-desc' => "Guuef 'n euverzich van [[Special:ContributionScores|gebroekers mit de meiste biedraag]] inne wiki.",
 	'contributionscores-info' => "Huuegdjes waere es vólg beraekendj:
 * Ein (1) pöntj veur edere apaart bewèrkdje pazjena
-* Wórtel van (totaal aantal gemaakdje bewèrkinger) - (totaal aantal apaarte pazjena's × 2
+* Wórtel van (totaal aantal gemaakdje bewèrkinger) - (totaal aantal apaarte pazjena's) × 2
 I huuegdjes die op dees wies beraekendj waere wäög divers bewèrkingsgedraag zwaorder es bewèrkingsvolume. In feite mèt dees huuegdje veurnamelik 't aantal apaarte pazjena's die zeen bewèrk, wiele 'n grót aantal bewèrkinger waal in ach wuuertj genaome, mit de aannaam det 't 'ne pazjena van 'n huuegere kwaliteit is.",
 	'contributionscores-top' => '(Top $1)',
-	'contributionscores-days' => 'Lètste $1 daag',
+	'contributionscores-days' => '{{PLURAL:$1|Lesten daag|Leste $1 daag}}',
 	'contributionscores-allrevisions' => 'Alle verzies',
 	'contributionscores-score' => 'Puntje',
 	'contributionscores-pages' => "Pagina's",
 	'contributionscores-changes' => 'Bewèrkinger',
 	'contributionscores-username' => 'Gebroeker',
+	'contributionscores-invalidusername' => 'Verkierde gebroeker',
+	'contributionscores-invalidmetric' => 'Ogeljige einheid',
 );
 
 /** Lithuanian (Lietuvių)
@@ -1056,6 +1173,13 @@ $messages['lt'] = array(
 	'contributionscores-pages' => 'Puslapiai',
 	'contributionscores-changes' => 'Pakeitimai',
 	'contributionscores-username' => 'Naudotojo vardas',
+);
+
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'contributionscores-pages' => 'Puslopys',
 );
 
 /** Eastern Mari (Олык Марий)
@@ -1078,7 +1202,7 @@ $messages['mk'] = array(
 Начелно, ова оценување главно ги мери засебните уредени страници, земајќи го в превид и големиот број на уредувања - претпоставувајќи дека е страница со повисок квалитет.',
 	'contributionscores-top' => '(Најдобри $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Последниот ден|Последните $1 дена}}',
-	'contributionscores-allrevisions' => 'Сите ревизии',
+	'contributionscores-allrevisions' => 'На сите времиња',
 	'contributionscores-score' => 'Оценка',
 	'contributionscores-pages' => 'Страници',
 	'contributionscores-changes' => 'Измени',
@@ -1088,20 +1212,29 @@ $messages['mk'] = array(
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'contributionscores-top' => '(ആദ്യത്തെ $1)',
-	'contributionscores-days' => 'അവസാനത്തെ $1 ദിവസങ്ങള്‍',
+	'contributionscores-days' => 'അവസാന {{PLURAL:$1|ദിവസം|$1 ദിവസങ്ങൾ}}',
 	'contributionscores-allrevisions' => 'എല്ലാ പതിപ്പുകളും',
-	'contributionscores-score' => 'സ്കോര്‍',
-	'contributionscores-pages' => 'താളുകള്‍',
-	'contributionscores-changes' => 'മാറ്റങ്ങള്‍',
+	'contributionscores-score' => 'സ്കോർ',
+	'contributionscores-pages' => 'താളുകൾ',
+	'contributionscores-changes' => 'മാറ്റങ്ങൾ',
 	'contributionscores-username' => 'ഉപയോക്തൃനാമം',
 	'contributionscores-invalidusername' => 'അസാധുവായ ഉപയോക്തൃനാമം',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'contributionscores-username' => 'Хэрэглэгчийн нэр',
+);
+
 /** Marathi (मराठी)
+ * @author Htt
  * @author Kaustubh
  * @author Mahitgar
  */
@@ -1113,7 +1246,7 @@ $messages['mr'] = array(
 *(एकूण संपादने) - (एकूण स्वतंत्र पाने) * 2 चे वर्गमूळ
 अशा प्रकारे मोजलेले गुण हे संपादन विविधतेला संपादन संख्येपेक्षा जास्त महत्व देतात. मुख्यत्वे, हे गुण जास्त संपादन संख्या मोजून स्वतंत्र पानांची संपादने काढतात.',
 	'contributionscores-top' => '(पहिले $1)',
-	'contributionscores-days' => 'शेवटचे $1 दिवस',
+	'contributionscores-days' => '{{PLURAL:$1|शेवटचा दिवस|शेवटचे $1 दिवस}}',
 	'contributionscores-allrevisions' => 'सर्व आवर्तने',
 	'contributionscores-score' => 'गुण',
 	'contributionscores-pages' => 'पाने',
@@ -1131,19 +1264,28 @@ $messages['ms'] = array(
 );
 
 /** Maltese (Malti)
+ * @author Chrisportelli
  * @author Giangian15
  * @author Roderick Mallia
  */
 $messages['mt'] = array(
+	'contributionscores' => 'Punteġġi tal-kontribuzzjonijiet',
+	'contributionscores-top' => '(L-Aqwa $1)',
+	'contributionscores-days' => 'L-aħħar {{PLURAL:$1|ġurnata|$1 ġranet}}',
+	'contributionscores-allrevisions' => "Ta' kull żmien",
+	'contributionscores-score' => 'Punteġġ',
 	'contributionscores-pages' => 'Paġni',
-	'contributionscores-username' => 'Isem l-utent',
+	'contributionscores-changes' => 'Tibdil',
+	'contributionscores-username' => 'Isem tal-utent',
+	'contributionscores-invalidusername' => 'Isem tal-utent invalidu',
+	'contributionscores-invalidmetric' => 'Metrika invalida',
 );
 
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
-	'contributionscores-days' => 'Меельсе $1 чить',
+	'contributionscores-days' => 'Меельсе {{PLURAL:$1|чи|$1 чить}}',
 	'contributionscores-pages' => 'Лопат',
 	'contributionscores-changes' => 'Полавтнемат',
 	'contributionscores-username' => 'Теицянь лем',
@@ -1157,6 +1299,29 @@ $messages['nah'] = array(
 	'contributionscores-username' => 'Tlatequitiltilīltōcāitl',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'contributionscores' => 'Bidragspoeng',
+	'contributionscores-desc' => 'Spør wikidatabasen etter det høyeste [[Special:ContributionScores|bidragsvolumet]]',
+	'contributionscores-info' => 'Bidragspoeng regnes ut på følgende måte:
+* 1 poeng for hver unike side som er redigert
+* Kvadratrota av (totalt antall redigeringer) &minus; (unike sider redigert) × 2
+Poeng som regnes ut på denne måte vekter redigeringsmangfold høyere enn redigeringsvolum.
+Dette betyr i bunn og grunn at dette primært måler hvor mange unike sider som er redigert, med hensyn til høyt redigeringsvolum &ndash; antatt å føre til sider av høyere kvalitet.',
+	'contributionscores-top' => '(Topp $1)',
+	'contributionscores-days' => 'Siste {{PLURAL:$1|dagen|$1 dager}}',
+	'contributionscores-allrevisions' => 'Gjennom tidene',
+	'contributionscores-score' => 'Poeng',
+	'contributionscores-pages' => 'Sider',
+	'contributionscores-changes' => 'Endringer',
+	'contributionscores-username' => 'Brukernavn',
+	'contributionscores-invalidusername' => 'Ugyldig brukernavn',
+	'contributionscores-invalidmetric' => 'Ugyldig målemetode',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -1165,6 +1330,13 @@ $messages['nds'] = array(
 	'contributionscores-pages' => 'Sieden',
 	'contributionscores-changes' => 'Ännern',
 	'contributionscores-username' => 'Brukernaam',
+);
+
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'contributionscores-username' => 'प्रयोगकर्ता नाम',
 );
 
 /** Dutch (Nederlands)
@@ -1211,28 +1383,6 @@ Poeng som blir rekna ut på denne måten set endringsmangfald høgare enn endrin
 	'contributionscores-invalidmetric' => 'Ugyldig målemetode',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'contributionscores' => 'Bidragspoeng',
-	'contributionscores-desc' => 'Spør wikidatabasen etter det høyeste [[Special:ContributionScores|bidragsvolumet]]',
-	'contributionscores-info' => 'Bidragspoeng regnes ut på følgende måte:
-* 1 poeng for hver unike side som er redigert
-* Kvadratrota av (totalt antall redigeringer) &minus; (unike sider redigert) × 2
-Poeng som regnes ut på denne måte veier redigeringsmangfold høyere enn redigeringsvolum. Dette betyr i bunn og grunn at dette primært måler hvor mange forskjellige sider som er redigert, med hensyn til høyt redigeringsvolum &ndash; antatt å føre til sider av høyere kvalitet.',
-	'contributionscores-top' => '(Topp $1)',
-	'contributionscores-days' => 'Siste {{PLURAL:$1|dag|$1 dager}}',
-	'contributionscores-allrevisions' => 'Alle revisjoner',
-	'contributionscores-score' => 'Poeng',
-	'contributionscores-pages' => 'Sider',
-	'contributionscores-changes' => 'Endringer',
-	'contributionscores-username' => 'Brukernavn',
-	'contributionscores-invalidusername' => 'Ugyldig brukernavn',
-	'contributionscores-invalidmetric' => 'Ugyldig målemetode',
-);
-
 /** Northern Sotho (Sesotho sa Leboa)
  * @author Mohau
  */
@@ -1248,7 +1398,7 @@ $messages['nso'] = array(
 $messages['oc'] = array(
 	'contributionscores' => 'Puntatge de las contribucions',
 	'contributionscores-desc' => 'Espia la banca de donadas wiki pels [[Special:ContributionScores|utilizaires contribuissent mai]]',
-	'contributionscores-info' => "Lo puntatge se calcula coma seguís : 
+	'contributionscores-info' => "Lo puntatge se calcula coma seguís :
 * 1 punt per cada pagina modificada
 * raiç quadrada de (nombre de modificacions) - (nombre de paginas diferentas)
 * 2. D'aqueste biais, lo puntatge calculat preferís la diversitat a la quantitat. Escrich d'un autre biais, aqueste puntatge s'interèssa principalament a far veire lo nombre de modificacions de paginas diferentas, puèi la quantitat totala de modificacions.",
@@ -1263,7 +1413,15 @@ $messages['oc'] = array(
 	'contributionscores-invalidmetric' => 'Metria incorrècta',
 );
 
-/** Ossetic (Иронау)
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Odisha1
+ */
+$messages['or'] = array(
+	'contributionscores-pages' => 'ପୃଷ୍ଠା',
+	'contributionscores-username' => 'ବ୍ୟବାହରକାରୀଙ୍କର ନାଆଁ',
+);
+
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -1286,6 +1444,7 @@ $messages['pam'] = array(
  * @author Xqt
  */
 $messages['pdc'] = array(
+	'contributionscores-pages' => 'Bledder',
 	'contributionscores-username' => 'Yuuser-Naame',
 );
 
@@ -1312,7 +1471,7 @@ $messages['pl'] = array(
 Taki sposób naliczania pozwala wyważyć różnorodność edycji względem liczby edycji. Zasadniczo wynik uzależniony jest od liczby edytowanych unikalnych stron z uwzględnieniem dużej liczby edycji – zakładając wyższą wartość tworzenia nowych artykułów.',
 	'contributionscores-top' => '($1 najlepszych)',
 	'contributionscores-days' => '{{PLURAL:$1|Ostatni 1 dzień|Ostatnie $1 dni|Ostatnich $1 dni}}',
-	'contributionscores-allrevisions' => 'Wszystkie edycje',
+	'contributionscores-allrevisions' => 'Cała aktywność',
 	'contributionscores-score' => 'Punktów',
 	'contributionscores-pages' => 'Stron',
 	'contributionscores-changes' => 'Zmian',
@@ -1328,14 +1487,14 @@ Taki sposób naliczania pozwala wyważyć różnorodność edycji względem licz
 $messages['pms'] = array(
 	'contributionscores' => 'Classìfica dla contribussion',
 	'contributionscores-desc' => 'Antéroga ël database wiki an sël pì àut [[Special:ContributionScores|volum dij contribù utent]]',
-	'contributionscores-info' => "La classìfica as càlcola parej: 
-*1 pont për minca pàgina modificà 
-*Rèis quadra ëd (Total dle Modìfiche Fàite) - (Total dle Pàgine Ùniche) moltiplicà për 2 
-Le classìfiche donca as peulo ten-se ën pèisand an manera diferenta ël nùmer dle modìfiche anvers al volum dle modìfiche mideme. 
+	'contributionscores-info' => "La classìfica as càlcola parej:
+*1 pont për minca pàgina modificà
+*Rèis quadra ëd (Total dle Modìfiche Fàite) - (Total dle Pàgine Ùniche) moltiplicà për 2
+Le classìfiche donca as peulo ten-se ën pèisand an manera diferenta ël nùmer dle modìfiche anvers al volum dle modìfiche mideme.
 Sta classìfica a l'amzura dzortut le pàgine ùniche ch'a ven-o modificà, e ën vorend a-j da n'euj ëd rësgoard a cole ch'a l'han n'àot volum ëd modìfica - ch'as pensa ch'a peula esse na marca ëd qualità dl'artìcol.",
 	'contributionscores-top' => '(Ij $1 mej)',
 	'contributionscores-days' => 'Ùltim Last {{PLURAL:$1|di|$1 di}}',
-	'contributionscores-allrevisions' => 'Tute le revision',
+	'contributionscores-allrevisions' => 'Tute le vire',
 	'contributionscores-score' => 'Puntegi',
 	'contributionscores-pages' => 'Pàgine',
 	'contributionscores-changes' => 'Cambi',
@@ -1348,7 +1507,7 @@ Sta classìfica a l'amzura dzortut le pàgine ùniche ch'a ven-o modificà, e ë
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'contributionscores-days' => 'وروستۍ $1 ورځې',
+	'contributionscores-days' => 'وروستۍ {{PLURAL:$1|ورځ|$1 ورځې}}',
 	'contributionscores-pages' => 'مخونه',
 	'contributionscores-changes' => 'بدلونونه',
 	'contributionscores-username' => 'کارن-نوم',
@@ -1361,14 +1520,14 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'contributionscores' => 'Pontuação de contribuições',
-	'contributionscores-desc' => 'Inquire a base de dados wiki sobre os [[Special:ContributionScores|volumes de contribuições de utilizadores]] mais altos',
+	'contributionscores-desc' => 'Inquire a base de dados wiki sobre os mais elevados [[Special:ContributionScores|volumes de contribuição dos utilizadores]]',
 	'contributionscores-info' => 'As pontuações são calculadas da seguinte forma:
 *1 ponto por cada página única editada
 *Raiz quadrada de (Total de Edições Feitas) - (Total de Páginas Únicas) * 2
 Pontuações calculadas desta forma pesam a diversidade de edições relativamente ao volume de edições. Basicamente, esta pontuação mede primariamente páginas únicas editadas, com consideração por alto volume de edições - assumindo serem páginas de qualidade mais alta.',
 	'contributionscores-top' => '(Primeiros $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Último dia|Últimos $1 dias}}',
-	'contributionscores-allrevisions' => 'Todas As Revisões',
+	'contributionscores-allrevisions' => 'Desde sempre',
 	'contributionscores-score' => 'Pontuação',
 	'contributionscores-pages' => 'Páginas',
 	'contributionscores-changes' => 'Alterações',
@@ -1381,6 +1540,7 @@ Pontuações calculadas desta forma pesam a diversidade de edições relativamen
  * @author Brunoy Anastasiya Seryozhenko
  * @author Crazymadlover
  * @author Eduardo.mps
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'contributionscores' => 'Pontuações de Contribuições',
@@ -1391,7 +1551,7 @@ $messages['pt-br'] = array(
 Pontuações calculadas desta forma pesam a diversidade de edições relativamente ao volume de edições. Basicamente, esta pontuação mede primariamente páginas únicas editadas, com consideração pelo alto volume de edições - assumindo serem páginas de qualidade mais alta.',
 	'contributionscores-top' => '(Iniciais $1)',
 	'contributionscores-days' => 'Últimos {{PLURAL:$1|día|$1 días}}',
-	'contributionscores-allrevisions' => 'Todas as revisões',
+	'contributionscores-allrevisions' => 'Desde sempre',
 	'contributionscores-score' => 'Pontuação',
 	'contributionscores-pages' => 'Páginas',
 	'contributionscores-changes' => 'Mudanças',
@@ -1401,14 +1561,26 @@ Pontuações calculadas desta forma pesam a diversidade de edições relativamen
 );
 
 /** Romanian (Română)
+ * @author AlexZaim
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Minisarm
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
-	'contributionscores-top' => '(Top $1)',
+	'contributionscores' => 'Punctaje contribuții',
+	'contributionscores-desc' => 'Interoghează baza de date a wikiului pentru a găsi cel mai mare [[Special:ContributionScores|volum de contribuții ale unui utilizator]]',
+	'contributionscores-info' => 'Punctajul este calculat în felul următor:
+*Un (1) punct pentru fiecare pagină unic modificată
+*Rădăcină pătrată din (totalul modificărilor efectuate) - (totalul paginilor unice) * 2
+Punctajul astfel calculate oferă diversitate volumului de modificări.
+Practic, acest scor măsoară în primul rând paginile unic modificate, cu considerație pentru volumul ridicat de modificări - presupunând că pagina este de o calitate superioară.',
+	'contributionscores-top' => '(primii $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Ultima zi|Ultimele $1 zile}}',
-	'contributionscores-allrevisions' => 'Toate versiunile',
+	'contributionscores-allrevisions' => 'Clasamentul tuturor timpurilor',
+	'contributionscores-score' => 'Scor',
 	'contributionscores-pages' => 'Pagini',
+	'contributionscores-changes' => 'Modificări',
 	'contributionscores-username' => 'Nume de utilizator',
 	'contributionscores-invalidusername' => 'Nume de utilizator incorect',
 	'contributionscores-invalidmetric' => 'Metrică incorectă',
@@ -1427,7 +1599,7 @@ Le pundegge calculete jndr'à stu mode tènene 'nu pese de cangiaminde diverse s
 De base, stu pundegge mesure apprime de tutte, le pàggene uniche cangete, cu 'a conziderazzione pe le volume de cangiaminde ierte - se penze ca le pàggene tènene 'na qualitate cchiù ierte.",
 	'contributionscores-top' => '(Le Prime $1)',
 	'contributionscores-days' => 'Urteme {{PLURAL:$1|sciurne|$1 sciurne}}',
-	'contributionscores-allrevisions' => 'Tutte le revisiune',
+	'contributionscores-allrevisions' => "Tutte 'u tiembe",
 	'contributionscores-score' => 'Pundegge',
 	'contributionscores-pages' => 'Pàggene',
 	'contributionscores-changes' => 'Cangiaminde',
@@ -1450,13 +1622,40 @@ $messages['ru'] = array(
 При подсчёте оценки таким образом разнообразию правок придаётся больший вес, чем общему количеству правок.',
 	'contributionscores-top' => '(лучшие $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Последний $1 день|Последние $1 дня|Последние $1 дней}}',
-	'contributionscores-allrevisions' => 'Все правки',
+	'contributionscores-allrevisions' => 'За всё время',
 	'contributionscores-score' => 'Оценка',
 	'contributionscores-pages' => 'Страниц',
 	'contributionscores-changes' => 'Правок',
 	'contributionscores-username' => 'Имя участника',
 	'contributionscores-invalidusername' => 'Неправильное имя участника',
 	'contributionscores-invalidmetric' => 'Ошибочная метрика',
+);
+
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'contributionscores-score' => 'Оцінка',
+	'contributionscores-pages' => 'Сторінкы',
+	'contributionscores-changes' => 'Зміны',
+	'contributionscores-username' => 'Мено хоснователя',
+);
+
+/** Sicilian (Sicilianu)
+ * @author Aushulz
+ */
+$messages['scn'] = array(
+	'contributionscores-pages' => 'Pàggini',
+	'contributionscores-changes' => 'Canciamenti',
+);
+
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'contributionscores-score' => 'ලකුණු',
+	'contributionscores-pages' => 'පිටු',
+	'contributionscores-changes' => 'වෙනස් කිරීම්',
 );
 
 /** Slovak (Slovenčina)
@@ -1480,26 +1679,49 @@ Skóre vypočítané týmto spôsobom vážia diverzitu úprav viac ako objem ú
 	'contributionscores-invalidmetric' => 'Neplatná metrika',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'contributionscores' => 'Rezultati prispevkov',
+	'contributionscores-desc' => 'V zbirki podatkov wiki poišče največjo [[Special:ContributionScores|količino prispevkov uporabnikov]]',
+	'contributionscores-info' => 'Rezultati se izračunajo na naslednji način:
+*Ena točka za vsako urejeno edinstveno stran
+*Kvadratni koren (skupno število urejanj) - (število edinstvenih strani) * 2
+Rezultati, izračunani na tak način, dajo težo raznolikosti urejanj pred količino urejanj.
+V bistvu ta rezultat meri predvsem urejene edinstvene strani ob upoštevanju velike količine urejanj – z domnevo, da gre za kakovostnejše strani.',
+	'contributionscores-top' => '({{PLURAL:$1|Najvišji|Najvišja|Najvišji|Najvišjih}} $1)',
+	'contributionscores-days' => '{{PLURAL:$1|Zadnji $1 dan|Zadnja $1 dneva|Zadnji $1 dnevi|Zadnjih $1 dni}}',
+	'contributionscores-allrevisions' => 'Vseh časov',
+	'contributionscores-score' => 'Rezultat',
+	'contributionscores-pages' => 'Strani',
+	'contributionscores-changes' => 'Spremembe',
+	'contributionscores-username' => 'Uporabniško ime',
+	'contributionscores-invalidusername' => 'Neveljavno uporabniško ime',
+	'contributionscores-invalidmetric' => 'Neveljavna metrika',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'contributionscores-top' => '(првих $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Последњег дана|Последњих $1 дана}}',
-	'contributionscores-allrevisions' => 'Све ревизије',
+	'contributionscores-allrevisions' => 'Свих времена',
 	'contributionscores-pages' => 'Странице',
 	'contributionscores-changes' => 'Измене',
 	'contributionscores-username' => 'Корисничко име',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
 	'contributionscores-top' => '(prvih $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Poslednjeg dana|Poslednjih $1 dana}}',
-	'contributionscores-allrevisions' => 'Sve revizije',
+	'contributionscores-allrevisions' => 'Svih vremena',
 	'contributionscores-pages' => 'Stranice',
 	'contributionscores-changes' => 'Izmene',
 	'contributionscores-username' => 'Korisničko ime',
@@ -1509,15 +1731,15 @@ $messages['sr-el'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
-	'contributionscores' => 'Benutserbiedraage ouschätsje',
-	'contributionscores-info' => 'Ouschätsschema:
+	'contributionscores' => 'Benutserbiedraage ouskätsje',
+	'contributionscores-info' => 'Ouskätsskema:
 *1 Punkt foar älke beoarbaidede Siede
-*Quadroatwuttel fon aal do (Beoarbaidengen) - (Summe fon do beoarbaidede Sieden) * 2 
-Ouschätsengen ap disse Gruundloage weege ju Fuulfoold fon do Biedraage swarrer as dät Biedraachsvolumen. Disse Ouschätsenge mät do apaate Sieden, man lukt uk wäls ganse Oarbaid in Reekenge.',
+*Quadroatwuttel fon aal do (Beoarbaidengen) - (Summe fon do beoarbaidede Sieden) * 2
+Ouskätsengen ap disse Gruundloage weege ju Fuulfoold fon do Biedraage swarrer as dät Biedraachsvolumen. Disse Ouschätsenge mät do apaate Sieden, man lukt uk wäls ganse Oarbaid in Reekenge.',
 	'contributionscores-top' => '(Buppeste $1)',
 	'contributionscores-days' => 'Lääste $1 Deege',
 	'contributionscores-allrevisions' => 'Aal Versione',
-	'contributionscores-score' => 'Schätsenge',
+	'contributionscores-score' => 'Skätsenge',
 	'contributionscores-pages' => 'Sieden',
 	'contributionscores-changes' => 'Annerengen',
 	'contributionscores-username' => 'Benutsernoome',
@@ -1549,6 +1771,7 @@ Peunteun nu diitung dumasar aturan di luhur ngukur karagaman éditan tina jumlah
  * @author Lejonel
  * @author M.M.S.
  * @author Najami
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'contributionscores' => 'Bidragspoäng',
@@ -1559,7 +1782,7 @@ $messages['sv'] = array(
 När poängen beräknas på detta sätt, så väger bidrag spridda över många olika sidor tyngre än många redigeringar på färre sidor. Det betyder att poängen huvudsakligen mäter hur många unika sidor som har redigerats, med hänsyn tagen till det totala antalet redigeringar som gjorts – eftersom många redigeringar antas ge sidor av högre kvalitet.',
 	'contributionscores-top' => '(Topp $1)',
 	'contributionscores-days' => 'Senaste {{PLURAL:$1|dagen|$1 dagarna}}',
-	'contributionscores-allrevisions' => 'Alla redigeringar',
+	'contributionscores-allrevisions' => 'Hela tiden',
 	'contributionscores-score' => 'Poäng',
 	'contributionscores-pages' => 'Sidor',
 	'contributionscores-changes' => 'Ändringar',
@@ -1569,11 +1792,14 @@ När poängen beräknas på detta sätt, så väger bidrag spridda över många 
 );
 
 /** Tamil (தமிழ்)
+ * @author TRYPPN
  * @author Trengarasu
  * @author Ulmo
  */
 $messages['ta'] = array(
+	'contributionscores-allrevisions' => 'எல்லா திருத்தங்களும்',
 	'contributionscores-pages' => 'பக்கங்கள்',
+	'contributionscores-changes' => 'மாற்றங்கள்',
 	'contributionscores-username' => 'பயனர் பெயர்',
 );
 
@@ -1583,15 +1809,23 @@ $messages['ta'] = array(
 $messages['te'] = array(
 	'contributionscores-top' => '(పై $1)',
 	'contributionscores-days' => 'చివరి {{PLURAL:$1|రోజు|$1 రోజులు}}',
-	'contributionscores-allrevisions' => 'అన్ని కూర్పులు',
+	'contributionscores-allrevisions' => 'ఇప్పటివరకూ',
 	'contributionscores-score' => 'స్కోరు',
 	'contributionscores-pages' => 'పేజీలు',
 	'contributionscores-changes' => 'మార్పులు',
-	'contributionscores-username' => 'వాడుకరిపేరు',
+	'contributionscores-username' => 'వాడుకరి పేరు',
 	'contributionscores-invalidusername' => 'తప్పుడు వాడుకరిపేరు',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'contributionscores-pages' => 'Pájina sira',
+	'contributionscores-username' => "Naran uza-na'in",
+);
+
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -1603,7 +1837,7 @@ $messages['tg-cyrl'] = array(
 	'contributionscores-username' => 'Номи корбарӣ',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -1652,7 +1886,7 @@ $messages['tl'] = array(
 Tinutuos ang mga puntos sa ganitong paraan: timbang ng pagkakaiba-iba ng pagbabago sa ibabaw ng dami ng pagbabago.
 Sa kapayakan, pangunahing sinusukat ng puntos na ito ang binagong natatanging mga pahina, na may pagsasaalang-alang sa mataas na dami ng pagbago - na ipinapalagay bilang isang pahinang may mataas na uri.',
 	'contributionscores-top' => '(Pinakatampok na $1)',
-	'contributionscores-days' => 'Huling $1 mga araw',
+	'contributionscores-days' => 'Huling {{Plural: $1|araw|$1 mga araw}}',
 	'contributionscores-allrevisions' => 'Lahat ng mga pagbabago',
 	'contributionscores-score' => 'Puntos',
 	'contributionscores-pages' => 'Mga pahina',
@@ -1688,14 +1922,35 @@ Temel olarak bu skor, yüksek değişiklik sayısının yüksek kaliteli bir say
 	'contributionscores-invalidmetric' => 'Geçersiz metrik',
 );
 
-/** ئۇيغۇرچە (ئۇيغۇرچە)
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'contributionscores' => 'Кертем билгеләү',
+	'contributionscores-desc' => 'Хәтердән [[Special:ContributionScores|иң зур тәрҗемә ясаучы кулланучыларны]] билгели.',
+	'contributionscores-info' => 'Билгеләр кую астагы критерийларга туры килү нәтиҗәсендә билгеләнә:
+* 1 Һәрбер аерым бер тәрҗемә өчен билге
+* 2 Гомуми тәрҗемәләр һәм һәрбер аерым бит аермасының тамыр асты
+Шуның нәтиҗәсендә сезнең тәрҗемәләрегезгә тагын да зуррак билге куела.',
+	'contributionscores-top' => '(Иң әйбәт $1)',
+	'contributionscores-days' => '{{PLURAL:$1|Соңгы $1 көн өчен}}',
+	'contributionscores-allrevisions' => 'Барлык үзгәртүләр',
+	'contributionscores-score' => 'Билге',
+	'contributionscores-pages' => 'Битләр саны',
+	'contributionscores-changes' => 'Үзгәртүләр',
+	'contributionscores-username' => 'Кулланучы исеме',
+	'contributionscores-invalidusername' => 'Кулланучының исеме дөрес түгел',
+	'contributionscores-invalidmetric' => 'Ялгыш билгеләү',
+);
+
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Alfredie
  */
 $messages['ug-arab'] = array(
 	'contributionscores-username' => 'ئىشلەتكۇچى ئىسمى',
 );
 
-/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+/** Uyghur (Latin script) (Uyghurche‎)
  * @author Jose77
  */
 $messages['ug-latn'] = array(
@@ -1706,6 +1961,7 @@ $messages['ug-latn'] = array(
  * @author AS
  * @author Ahonc
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
 	'contributionscores' => 'Оцінка внеску',
@@ -1716,7 +1972,7 @@ $messages['uk'] = array(
 При підрахунку оцінки таким чином розмаїттю редагувань надається більша вага, ніж загальній кількості редагувань.',
 	'contributionscores-top' => '({{PLURAL:$1|найкращий|найкращих}})',
 	'contributionscores-days' => '{{PLURAL:$1|Останній день|Останні $1 дні|Останні $1 днів}}',
-	'contributionscores-allrevisions' => 'Усі редагування',
+	'contributionscores-allrevisions' => 'Весь час',
 	'contributionscores-score' => 'Оцінка',
 	'contributionscores-pages' => 'Сторінок',
 	'contributionscores-changes' => 'Редагувань',
@@ -1734,7 +1990,7 @@ $messages['vec'] = array(
 	'contributionscores-info' => 'I punti i vien calcolà come segue:
 *Un (1) punto par ogni diversa pagina modificà
 *Raìsa quadrata de (Tute le modifiche fate) - (Total de le pagine modificà) * 2
-Fasendo i conti in sta maniera pesa piassè la diversità de le modifiche rispeto al nùmaro dei contributi. 
+Fasendo i conti in sta maniera pesa piassè la diversità de le modifiche rispeto al nùmaro dei contributi.
 In sostansa, sto puntegio el tien conto sopratuto de le diverse pagine modificà, tegnendo in considerazion anca un alto volume de modifiche - che fa pensar a na pi alta qualità de la pagina modificà.',
 	'contributionscores-top' => '(Ultimi $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Ultimo zòrno|Ultimi $1 zòrni}}',
@@ -1745,6 +2001,27 @@ In sostansa, sto puntegio el tien conto sopratuto de le diverse pagine modificà
 	'contributionscores-username' => 'Nome utente',
 	'contributionscores-invalidusername' => 'Nome utente mia valido',
 	'contributionscores-invalidmetric' => 'Metrica mia valida',
+);
+
+/** Veps (Vepsän kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'contributionscores' => 'Tondan arvoind',
+	'contributionscores-desc' => 'Märičeb [[Special:ContributionScores|kävutajid, kel om enamba redaktiruindad,]] andmuzbazan turbiš',
+	'contributionscores-info' => "Arvsanad lugedas nenid luguid ližaten:
+*Üks' (1) punkt kaikuččen unikaližen lehtpolen redaktiruindas
+*Nellikjur' (Redaktiruindoiden ühthine lugu) - (Unikaližiden lehtpoliden ühthine lugu) * 2
+Muga lugeden anttas enamba vedadust redakcijoiden erazvuičendale, mi niiden ühthižele lugule.",
+	'contributionscores-top' => '($1 parembad)',
+	'contributionscores-days' => "{{PLURAL:$1|jäl'gmäine päiv|$1 jäl'gmäšt päiväd}}",
+	'contributionscores-allrevisions' => 'Kaikes aigas',
+	'contributionscores-score' => 'Punktad',
+	'contributionscores-pages' => "Lehtpol't",
+	'contributionscores-changes' => 'Toižetusid',
+	'contributionscores-username' => 'Kävutajannimi',
+	'contributionscores-invalidusername' => 'Vär kävutajannimi',
+	'contributionscores-invalidmetric' => 'Petuzline metrik',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1761,7 +2038,7 @@ $messages['vi'] = array(
 Cơ bản, điểm số này đo lường số trang riêng lẻ được sửa đổi, có xét thêm mức độ sửa đổi cao - với giả thiết sẽ làm cho trang có chất lượng hơn.',
 	'contributionscores-top' => '(Tốp $1)',
 	'contributionscores-days' => '{{PLURAL:$1|Một|$1}} ngày qua',
-	'contributionscores-allrevisions' => 'Mọi phiên bản',
+	'contributionscores-allrevisions' => 'Từ trước đến nay',
 	'contributionscores-score' => 'Điểm số',
 	'contributionscores-pages' => 'Trang',
 	'contributionscores-changes' => 'Các thay đổi',
@@ -1786,11 +2063,12 @@ $messages['vo'] = array(
  * @author פוילישער
  */
 $messages['yi'] = array(
+	'contributionscores-days' => '{{PLURAL:$1|לעצטן טאָג|לעצטע $1 טעג}}',
 	'contributionscores-pages' => 'בלעטער',
 	'contributionscores-username' => 'באַניצער נאָמען',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author PhiLiP
  * @author Shinjiman
  */
@@ -1813,6 +2091,7 @@ $messages['yue'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
  * @author PhiLiP
  * @author Shinjiman
  */
@@ -1825,7 +2104,7 @@ $messages['zh-hans'] = array(
 在这方面计算的分数会参看编辑多的样性跟编辑量相比。 基本说，这个分数是会依主要的唯一编辑过?页面，以及考虑高编辑量 - 假设是一篇高质量的文章。',
 	'contributionscores-top' => '（最高$1名）',
 	'contributionscores-days' => '最近$1天',
-	'contributionscores-allrevisions' => '全部修订',
+	'contributionscores-allrevisions' => '所有的时间',
 	'contributionscores-score' => '分数',
 	'contributionscores-pages' => '页面',
 	'contributionscores-changes' => '更改',
@@ -1835,24 +2114,25 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author PhiLiP
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
 	'contributionscores' => '貢獻分數',
-	'contributionscores-desc' => '根據在wiki數據庫中給出最高的[[Special:ContributionScores|用戶貢獻容量]]',
-	'contributionscores-info' => '分數會用以下的的計分法去計算:
-*每一個唯一頁面編輯過的有1分
+	'contributionscores-desc' => '根據在wiki資料庫中給出最高的[[Special:ContributionScores|用戶貢獻容量]]',
+	'contributionscores-info' => '分數會用以下的的計分法去計算：
+*每一個唯一頁面編輯過的有 1 分
 *（總編輯數）的平方根 - （總唯一頁面數） * 2
 在這方面計算的分數會參看編輯多的樣性跟編輯量相比。 基本說，這個分數是會依主要的唯一編輯過嘅頁面，以及考慮高編輯量 - 假設是一篇高質量的文章。',
-	'contributionscores-top' => '（最高$1名）',
-	'contributionscores-days' => '最近$1天',
-	'contributionscores-allrevisions' => '全部修訂',
+	'contributionscores-top' => '（最多 $1 位）',
+	'contributionscores-days' => '最近 {{PLURAL:$1|天|$1 天}}',
+	'contributionscores-allrevisions' => '所有的時間',
 	'contributionscores-score' => '分數',
-	'contributionscores-pages' => '頁面',
-	'contributionscores-changes' => '更改',
-	'contributionscores-username' => '用戶名',
-	'contributionscores-invalidusername' => '無效的用戶名',
+	'contributionscores-pages' => '頁面數量',
+	'contributionscores-changes' => '更改次數',
+	'contributionscores-username' => '使用者名稱',
+	'contributionscores-invalidusername' => '無效的使用者名稱',
 	'contributionscores-invalidmetric' => '無效的公制',
 );
 

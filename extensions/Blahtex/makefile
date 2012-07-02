@@ -38,7 +38,7 @@ SOURCES = \
 	source/BlahtexCore/ParseTree3.cpp \
 	source/BlahtexCore/MathmlNode.cpp \
 	source/BlahtexCore/XmlEncode.cpp
-	
+
 HEADERS = \
 	source/mainPng.h \
 	source/md5.h \

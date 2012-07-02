@@ -4,7 +4,7 @@ wgAjaxQueryPages.inprogress = false;
 
 wgAjaxQueryPages.onLoad = function() {
 	wgAjaxQueryPages.replacelinks( document );
-}
+};
 
 wgAjaxQueryPages.replacelinks = function( target ) {
 	var elsPrev = getElementsByClassName(target, "a", "mw-prevlink");
@@ -33,7 +33,7 @@ wgAjaxQueryPages.replacelinks = function( target ) {
 
 		els[i].setAttribute("href", "javascript:wgAjaxQueryPages.call(" + jsparams + ")");
 	}
-}
+};
 
 wgAjaxQueryPages.call = function( offset, limit, dir ) {
 	if( wgAjaxQueryPages.inprogress )
@@ -48,7 +48,7 @@ wgAjaxQueryPages.call = function( offset, limit, dir ) {
 	// Reallow request if it is not done in 2 seconds
 	wgAjaxQueryPages.timeoutID = window.setTimeout( function() { wgAjaxQueryPages.inprogress = false; }, 2000);
 
-}
+};
 
 html2dom = function( html ) {
 	var ret = document.createDocumentFragment();
@@ -59,7 +59,7 @@ html2dom = function( html ) {
 		ret.appendChild( tmp.firstChild );
 	}
 	return ret;
-}
+};
 
 wgAjaxQueryPages.processResult = function(request) {
 	// convert html to dom, need to merge branches/hashar@21917 to use the responseXML
@@ -70,6 +70,6 @@ wgAjaxQueryPages.processResult = function(request) {
 	spcontent[0].innerHTML = response.firstChild.innerHTML ;
 
 	wgAjaxQueryPages.inprogress = false;
-}
+};
 
-hookEvent( "load", wgAjaxQueryPages.onLoad );
+$( wgAjaxQueryPages.onLoad );

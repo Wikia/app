@@ -25,6 +25,20 @@ $messages['en'] = array(
 	'protectsite-protect' => 'Protect',
 	'protectsite-unprotect' => 'Unprotect',
 	'protectsite-nologs' => 'do not show in logs',
+	'protectsite-createaccount-0' => 'All users',
+	'protectsite-createaccount-1' => 'Registered users and sysops',
+	'protectsite-createaccount-2' => 'Sysops only',
+	'protectsite-createpage-0' => 'All users',
+	'protectsite-createpage-1' => 'Registered users and sysops',
+	'protectsite-createpage-2' => 'Sysops only',
+	'protectsite-edit-0' => 'All users',
+	'protectsite-edit-1' => 'Registered users and sysops',
+	'protectsite-edit-2' => 'Sysops only',
+	'protectsite-move-0' => 'Registered users and sysops',
+	'protectsite-move-1' => 'Sysops only',
+	'protectsite-upload-0' => 'Registered users and sysops',
+	'protectsite-upload-1' => 'Sysops only',
+	'action-protectsite' => 'temporarily block various site modifications',
 );
 
 /** Message documentation (Message documentation)
@@ -73,7 +87,7 @@ $messages['az'] = array(
 	'protectsite-comment' => 'Şərh:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -282,7 +296,7 @@ $messages['fr'] = array(
 	'protectsite-nologs' => 'ne pas afficher dans les journaux',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -6,7 +6,7 @@ global $wgExtensionsPath, $wgBlankImgUrl;
 
 
 <div class="ImageUploadLeft">
-	<div id="ImageUploadThumb"><?= $props['file']->getThumbnail(min($props['file']->getWidth(), 400))->toHTML() ?></div>
+	<div id="ImageUploadThumb"><?= $props['file']->transform( array( 'width' => min( $props['file']->getWidth(), 400 ) ) )->toHTML() ?></div>
 
 
 	<div class="details">

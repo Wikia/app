@@ -2,7 +2,7 @@
 
 class SecurePoll_MessageDumpPage extends SecurePoll_Page {
 	function execute( $params ) {
-		global $wgOut, $wgUser;
+		global $wgOut;
 
 		if ( !count( $params ) ) {
 			$wgOut->addWikiMsg( 'securepoll-too-few-params' );

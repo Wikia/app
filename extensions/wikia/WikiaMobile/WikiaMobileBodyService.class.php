@@ -10,7 +10,7 @@ class WikiaMobileBodyService extends WikiaService {
 		$bodyContent = $this->getVal( 'bodyText', '' );
 		$categoryLinks = $this->getVal( 'categoryLinks', '' );
 		$afterBodyHtml = '';
-		$afterContentHookText;
+		$afterContentHookText = null;
 		
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
@@ -26,9 +26,10 @@ class WikiaMobileBodyService extends WikiaService {
 		$this->bodyContent = $bodyContent;
 		$this->response->setVal(
 			'relatedPages',
-			( !empty( $this->wg->EnableRelatedPagesExt ) &&
+			(	!empty( $this->wg->EnableRelatedPagesExt ) &&
 				empty( $this->wg->MakeWikiWebsite ) &&
 				empty( $this->wg->EnableAnswers ) ) ? $this->app->renderView( 'RelatedPagesController', 'index' ) : null);
+
 		$this->response->setVal(
 			'categoryLinks',
 			$this->app->renderView(
@@ -37,6 +38,7 @@ class WikiaMobileBodyService extends WikiaService {
 				array( 'categoryLinks' => $categoryLinks )
 			)
 		);
+
 		$this->response->setVal(
 			'navMenu',
 			$this->app->renderView(
@@ -44,16 +46,8 @@ class WikiaMobileBodyService extends WikiaService {
 				'navMenu'
 			)
 		);
+
 		$this->afterBodyContent = $afterBodyHtml;
 		$this->afterContentHookText = $afterContentHookText;
-		$this->response->setVal(
-			'comments',
-			( class_exists( 'ArticleCommentInit' ) && ArticleCommentInit::ArticleCommentCheck() ) ?
-				$this->app->renderView(
-					'ArticleComments',
-					'index'
-				) :
-				''
-		);
 	}
 }

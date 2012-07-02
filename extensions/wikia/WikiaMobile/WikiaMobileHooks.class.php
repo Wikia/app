@@ -75,7 +75,7 @@ class WikiaMobileHooks extends WikiaObject{
 			//converting categoryArticle to Article to avoid circular reference in CategoryPage::view
 			F::build( 'Article', array( $categoryPage->getTitle() ) )->view();
 
-			$scripts = F::build( 'AssetsManager' ,array(), 'getInstance')->getURL( array( 'categorypage_js_wikiamobile' ) );
+			$scripts = F::build( 'AssetsManager' ,array(), 'getInstance')->getURL( array( 'categorypage_wikiamobile_js' ) );
 
 			$this->wg->Out->setPageTitle( $categoryPage->getTitle()->getText() . ' <span id=catTtl>Category Page</span>');
 
@@ -97,10 +97,10 @@ class WikiaMobileHooks extends WikiaObject{
 		return true;
 	}
 
-	public function onArticlePurge( Article &$article ) {
+	public function onArticlePurge( WikiPage &$page ) {
 		$this->wf->profileIn( __METHOD__ );
 
-		$title = $article->getTitle();
+		$title = $page->getTitle();
 
 		if ( $title->getNamespace() == NS_CATEGORY ) {
 			$category = F::build( 'Category', array( $title ), 'newFromTitle' );

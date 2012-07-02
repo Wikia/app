@@ -1,17 +1,17 @@
 <?php
 
 class SpecialContributorsAddon extends SpecialContributors {
-	public function getContributorsText() {
-		global $wgUser, $wgLang, $wgTitle;
-		$this->target = $wgTitle;
+	public function getContributorsText( $title ) {
+		global $wgUser, $wgLang;
+		$this->target = $title;
 		$contribText = '';
 		
 		if( $this->target->exists() ) {
 			$total = 0;
-			$skin =& $wgUser->getSkin();
+			$skin = $wgUser->getSkin();
 			$link = $skin->makeKnownLinkObj( $this->target );
 			$contribText .= '<h2>' . wfMsgHtml( 'contributors-subtitle', $link ) . '</h2>';
-			list( $contributors, $others ) = $this->getMainContributors($wgTitle);
+			list( $contributors, $others ) = $this->getMainContributors( $title );
 			$contribText .=  '<ul>';
 			foreach( $contributors as $username => $info ) {
 				list( $id, $count ) = $info;

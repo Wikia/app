@@ -63,6 +63,7 @@ foreach( $tables as $tableName => $tableData ) {
 	
 		
 	foreach( $rows_preloaded as $row ) {
+		wfWaitForSlaves( 2 );
 		$idField = $tableData['id'];
 		$id = $row->$idField;
 		echo "  row $idField => $id\n";

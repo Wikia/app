@@ -49,6 +49,9 @@ $messages = array(
 # Cologne Blue skin
 'qbspecialpages' => 'Amaphepha Abalulekileyo',
 
+# Vector skin
+'vector-view-edit' => 'Tshintsha',
+
 'help'             => 'Uncedo',
 'search'           => 'Khangela',
 'searchbutton'     => 'Khangela',
@@ -71,6 +74,7 @@ $messages = array(
 'youhavenewmessagesmulti' => 'Unemiyalezo emitsha ku $1',
 'editsection'             => 'tshintsha',
 'editold'                 => 'tshintsha',
+'editlink'                => 'tshintsha',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main' => 'Inqaba',
@@ -85,7 +89,7 @@ I Account yakhgo ivuliwe, ungalibali ukutshitsha izinto ozithandayo ngo {{SITENA
 'yourname'           => 'Igama lelungu:',
 'yourpassword'       => 'Igama elifihlakeleyo lelungu:',
 'yourpasswordagain'  => 'Faka kwakhona igama elifihlakeleyo:',
-'remembermypassword' => 'Khumbula igama lam elifihlakeleyo kule Khompyutha',
+'remembermypassword' => 'Khumbula igama lam elifihlakeleyo kule Khompyutha (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'createaccount'      => 'Vula I Account',
 'loginlanguagelabel' => 'Ulwimi: $1',
 
@@ -150,7 +154,6 @@ I Account yakhgo ivuliwe, ungalibali ukutshitsha izinto ozithandayo ngo {{SITENA
 'move-page-legend' => 'Dlulisa eliphepha',
 'movepagebtn'      => 'DLulisa eliphepha',
 'movedto'          => 'Lidluliselwe',
-'1movedto2'        => '[[$1]] lidluliselwe [[$2]]',
 'movereason'       => 'Isizathu',
 
 # Special:NewFiles

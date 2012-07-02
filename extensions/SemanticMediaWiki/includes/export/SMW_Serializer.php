@@ -40,10 +40,12 @@ abstract class SMWSerializer {
 	 * that one can append additional namespace declarations to $pre_ns_buffer
 	 * so that they affect all current elements. The buffers are flushed during
 	 * output in order to achieve "streaming" RDF export for larger files.
+	 * @var string
 	 */
 	protected $pre_ns_buffer;
 	/**
 	 * See documentation for $pre_ns_buffer.
+	 * @var string
 	 */
 	protected $post_ns_buffer;
 	/**
@@ -51,6 +53,7 @@ abstract class SMWSerializer {
 	 * resourcename => decl-flag, where decl-flag is a sum of flags
 	 * SMW_SERIALIZER_DECL_CLASS, SMW_SERIALIZER_DECL_OPROP, 
 	 * SMW_SERIALIZER_DECL_APROP.
+	 * @var array of integer
 	 */
 	protected $decl_todo;
 	/**
@@ -58,6 +61,7 @@ abstract class SMWSerializer {
 	 * resourcename => decl-flag, where decl-flag is a sum of flags
 	 * SMW_SERIALIZER_DECL_CLASS, SMW_SERIALIZER_DECL_OPROP, 
 	 * SMW_SERIALIZER_DECL_APROP.
+	 * @var array of integer
 	 */
 	protected $decl_done;
 	/**
@@ -68,12 +72,14 @@ abstract class SMWSerializer {
 	 * the client already. But we wait with printing the current block so that
 	 * extra namespaces from this array can still be printed (note that one
 	 * never know which extra namespaces you encounter during export).
+	 * @var array of string
 	 */
 	protected $extra_namespaces;
 	/**
 	 * Array of namespaces that have been declared globally already. Contains
 	 * entries of format 'namespace abbreviation' => true, assuming that the
 	 * same abbreviation always refers to the same URI.
+	 * @var array of string
 	 */
 	protected $global_namespaces;
 	
@@ -150,8 +156,8 @@ abstract class SMWSerializer {
 	/**
 	 * Serialize a single declaration for the given $uri (expanded) and type
 	 * (given as a QName).
-	 * @param string $uri of the thing to declare
-	 * @param string $typename one of owl:Class, owl:ObjectProperty, and
+	 * @param $uri string URI of the thing to declare
+	 * @param $typename string one of owl:Class, owl:ObjectProperty, and
 	 * owl:datatypeProperty
 	 */
 	abstract public function serializeDeclaration( $uri, $typename );
@@ -172,7 +178,7 @@ abstract class SMWSerializer {
 	 * (what is flushed is gone).
 	 */
 	public function flushContent() {
-		if ( ( $this->pre_ns_buffer == '' ) && ( $this->post_ns_buffer == '' ) ) return '';
+		if ( ( $this->pre_ns_buffer === '' ) && ( $this->post_ns_buffer === '' ) ) return '';
 		$this->serializeNamespaces();
 		$result = $this->pre_ns_buffer . $this->post_ns_buffer;
 		$this->pre_ns_buffer = '';
@@ -195,8 +201,8 @@ abstract class SMWSerializer {
 	 * Namespaces that were serialized in such a way that they remain
 	 * available for all following output should be added to
 	 * $global_namespaces. 
-	 * @param string $shortname the abbreviation/prefix to declare 
-	 * @param string $uri the URI prefix that the namespace encodes
+	 * @param $shortname string abbreviation/prefix to declare 
+	 * @param $uri string URI prefix that the namespace encodes
 	 */ 
 	abstract protected function serializeNamespace( $shortname, $uri );
 
@@ -216,13 +222,17 @@ abstract class SMWSerializer {
 	 * declaration is already available, and records a todo otherwise.
 	 */
 	protected function requireDeclaration( SMWExpResource $resource, $decltype ) {
-		$namespaceid = $resource->getNamespaceID();
 		// Do not declare predefined OWL language constructs:
-		if ( ( $namespaceid == 'owl' ) || ( $namespaceid == 'rdf' ) || ( $namespaceid == 'rdfs' ) ) return;
+		if ( $resource instanceof SMWExpNsResource ) {
+			$nsId = $resource->getNamespaceId();
+			if ( ( $nsId == 'owl' ) || ( $nsId == 'rdf' ) || ( $nsId == 'rdfs' ) ) {
+				return;
+			}
+		}
 		// Do not declare blank nodes:
 		if ( $resource->isBlankNode() ) return;
 
-		$name = $resource->getName();
+		$name = $resource->getUri();
 		if ( array_key_exists( $name, $this->decl_done ) && ( $this->decl_done[$name] & $decltype ) ) {
 			return;
 		}
@@ -237,12 +247,11 @@ abstract class SMWSerializer {
 	 * Update the declaration "todo" and "done" lists for the case that the
 	 * given data has been serialized with the type information it provides.
 	 *  
-	 * @param $data specifying the type data upon which declarations are based
+	 * @param $expData specifying the type data upon which declarations are based
 	 */
-	protected function recordDeclarationTypes( SMWExpData $data ) {
-		foreach ( $data->getSpecialValues( 'rdf', 'type') as $typedata ) {
-			$typeresource = $typedata->getSubject();
-			if ( $typeresource instanceof SMWExpResource ) {
+	protected function recordDeclarationTypes( SMWExpData $expData ) {
+		foreach ( $expData->getSpecialValues( 'rdf', 'type') as $typeresource ) {
+			if ( $typeresource instanceof SMWExpNsResource ) {
 				switch ( $typeresource->getQName() ) {
 					case 'owl:Class': $typeflag = SMW_SERIALIZER_DECL_CLASS; break; 
 					case 'owl:ObjectProperty': $typeflag = SMW_SERIALIZER_DECL_OPROP; break; 
@@ -250,7 +259,7 @@ abstract class SMWSerializer {
 					default: $typeflag = 0;
 				}
 				if ( $typeflag != 0 ) {
-					$this->declarationDone( $data->getSubject(), $typeflag );
+					$this->declarationDone( $expData->getSubject(), $typeflag );
 				}
 			}  
 		}
@@ -264,7 +273,7 @@ abstract class SMWSerializer {
 	 * @param $typeflag integer specifying the type (e.g. SMW_SERIALIZER_DECL_CLASS)
 	 */
 	protected function declarationDone( SMWExpResource $element, $typeflag ) {
-		$name = $element->getName();
+		$name = $element->getUri();
 		$curdone = array_key_exists( $name, $this->decl_done ) ? $this->decl_done[$name] : 0;
 		$this->decl_done[$name] = $curdone | $typeflag;
 		if ( array_key_exists( $name, $this->decl_todo ) ) {
@@ -288,9 +297,9 @@ abstract class SMWSerializer {
 	 * used as such, hence it is enough to check the property. Moreover, we do
 	 * not use OWL Datatypes in SMW, so rdf:type, rdfs:domain, etc. always
 	 * refer to classes.
-	 * @param SMWExpResource $property
+	 * @param SMWExpNsResource $property
 	 */
-	protected function isOWLClassTypeProperty( SMWExpResource $property ) {
+	protected function isOWLClassTypeProperty( SMWExpNsResource $property ) {
 		$locname = $property->getLocalName();
 		if ( $property->getNamespaceID() == 'rdf' ) {
 			return ( $locname == 'type' ); 

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Updates the cache of Project Honeypot IPs
  */
 

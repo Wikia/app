@@ -1,0 +1,133 @@
+/* Hide various interface elements */
+#left-navigation {
+	display: none !important;
+}
+#right-navigation {
+	display: none !important;
+}
+#p-search {
+	display: none !important;
+}
+#mw-panel div.portal {
+	display: none !important;
+}
+body.ltr #footer #footer-places {
+	display: none !important;
+}
+
+/* Form styling */
+.creditcard-error-msg {
+   color: #cc1100;
+}
+
+.mw-creditcard-donor {
+   width: 25px;
+}
+
+.mw-donate-submessage {
+/*   padding-top: 10px; */
+}
+
+#mw-donate-submit-button {
+/*   padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 100px;*/
+}
+
+#mw-creditcard {
+	margin-bottom: 1em;
+}
+
+.payflow-cc-form-section {
+	float: left;
+}
+
+#payflowpro_gateway-personal-info {
+	margin-right: 4em;
+	margin-bottom: 1em;
+}
+
+#payflowpro_gateway-form-submit, #payflowpro_gateway-form-submit-paypal {
+	margin-top: 1.2em;
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+#payflowpro_gateway-donate-addl-info {
+	margin-top: 4em;
+	margin-bottom: 4em;
+	clear: both;
+}
+
+#payflow-table-cc td {
+	text-align: left;
+}
+
+#payflow-table-donor, #payflow-table-cc, #payflow-table-paypal {
+	background-color: transparent;
+}
+
+#payflow-table-donor td.label, #payflow-table-comment td.label, #payflow-table-cc td.label {
+	text-align: right;
+	display: block;
+	padding-right: 1em;
+	width: 94px;
+}
+
+#payflow-table-comment td.check-option {
+	padding-left: 3em;
+}
+
+#payflow-table-donor td {
+	text-align: left;
+}
+
+#payflowpro_gateway-donate-addl-info-secure-logos {
+        float: left;
+        margin-right: 2em;
+}
+
+.button-plain {
+	font-size: 1em;
+	margin-bottom: 0.3em;
+}
+
+.button-navyblue {
+	background-image:url("https://payments.wikimedia.org/images/0/06/Button-wavy-blue.png");
+	color:#FFFFFF;
+	cursor:pointer;
+}
+
+.input-button {
+	background-color:transparent;
+	background-repeat:no-repeat;
+	border:medium none;
+	font-family:helvetica,impact,sans-serif;
+	font-size:1.4em;
+	font-weight:bold;
+	height:44px;
+	margin:0;
+	text-align:center;
+	vertical-align:middle;
+	width:204px;
+}
+
+#ca-special {
+	display: none;
+}
+
+#bodyContent input[type="text"], textarea {
+	border: 1px solid #C0C0C0;
+	padding: 3px;
+}
+
+/*
+	The following should be in form css and not the gateway common css.
+	Commenting out due to conflicts, but leaving so that if it does break something,
+	it can easily be re-enabled. -pgehres 2011-12-19
+*/
+/*
+input#fname { width: 110px; margin-right: 4px; }
+input#lname { width: 132px; }
+input.fullwidth { width: 254px; }
+*/

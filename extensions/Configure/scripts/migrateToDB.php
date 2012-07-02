@@ -76,11 +76,12 @@ class FilesToDB extends Maintenance {
 
 	protected function migrateVersion( $version ){
 		$now = $this->mFilesHandler->getOldSettings( $version );
+		$user = User::newFromName( 'Maintenance script' );
 		$this->output( "doing $version...\n" );
 		foreach( $now as $wiki => $settings ){
 			if( !isset( $this->mPreviousVersion[$wiki] ) || $this->mPreviousVersion[$wiki] != $settings ){
 				$this->output( "	$wiki..." );
-				$this->mDBHandler->saveNewSettings( $now, $wiki, $version );
+				$this->mDBHandler->saveNewSettings( $now, $user, $wiki, $version );
 				$this->output( "ok\n" );
 			}
 		}

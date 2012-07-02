@@ -5,4 +5,4 @@ CREATE TABLE /*$wgDBprefix*/patrollers (
   ptr_timestamp varchar(14) NOT NULL,
   UNIQUE KEY ptr_change (ptr_change),
   KEY ptr_timestamp (ptr_timestamp)
-) TYPE=MEMORY;
+) ENGINE=MEMORY;

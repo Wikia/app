@@ -116,30 +116,7 @@ if (  array_key_exists( 'f', $options ) ) {
 	}
 
 	print 'Abort with control-c in the next five seconds ...  ';
-
-	// TODO
-	// Remove the following section and replace it with a simple
-	// wfCountDown as soon as we switch to MediaWiki 1.16.
-	// Currently, wfCountDown is only supported from
-	// revision 51650 (Jun 9 2009) onward.
-	$n = 6;
-	if ( function_exists( 'wfCountDown' ) ) {
-		wfCountDown( $n );
-	} else {
-		for ( $i = $n; $i >= 0; $i-- ) {
-			if ( $i != $n ) {
-				echo str_repeat( "\x08", strlen( $i + 1 ) );
-			}
-			echo $i;
-			flush();
-			if ( $i ) {
-				sleep( 1 );
-			}
-		}
-		echo "\n";
-	}
-	// Remove up to here and just uncomment the following line:
-	// wfCountDown( 6 );
+	wfCountDown( 6 );
 
 	smwfGetStore()->drop( $verbose );
 	wfRunHooks( 'smwDropTables' );
@@ -152,7 +129,7 @@ if (  array_key_exists( 'f', $options ) ) {
 	echo "\nAll storage structures have been deleted and recreated.\n\n";
 }
 
-$linkCache =& LinkCache::singleton();
+$linkCache = LinkCache::singleton();
 $num_files = 0;
 if ( $pages == false ) {
 	print "Refreshing all semantic data in the database!\n---\n" .
@@ -181,16 +158,21 @@ if ( $pages == false ) {
 	print "$num_files IDs refreshed.\n";
 } else {
 	print "Refreshing specified pages!\n\n";
+	
 	foreach ( $pages as $page ) {
 		if ( $verbose ) {
 			print "($num_files) Processing page " . $page . " ...\n";
 		}
+		
 		$title = Title::newFromText( $page );
-		if ( $title !== null ) {
+		
+		if ( !is_null( $title ) ) {
 			$updatejob = new SMWUpdateJob( $title );
 			$updatejob->run();
 		}
+		
 		$num_files++;
 	}
+	
 	print "$num_files pages refreshed.\n";
 }

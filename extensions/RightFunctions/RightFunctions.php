@@ -11,64 +11,44 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-//credits and hooks
-$wgExtensionFunctions[] = 'wfRightFunctions';
+//credits
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'RightFunctions',
 	'version' => '1.10',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:RightFunctions',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:RightFunctions',
 	'author' => 'Ryan Schmidt',
-	'description' => 'Permission-based parser functions',
 	'descriptionmsg' => 'rightfunctions-desc',
 );
 
 $wgExtensionMessagesFiles['RightFunctions'] = dirname(__FILE__) . '/RightFunctions.i18n.php';
-$wgHooks['LanguageGetMagic'][] = 'wfRightFunctionsLanguageGetMagic';
+$wgExtensionMessagesFiles['RightFunctionsMagic'] = dirname(__FILE__) . '/RightFunctions.i18n.magic.php';
+$wgHooks['ParserFirstCallInit'][] = 'ExtRightFunctions::onParserFirstCallInit';
 
-//Default globals. Wrapping in isset() so that it doesn't override any previously-defined stuff
-$wgRightFunctionsUserGroups = isset($wgRightFunctionsUserGroups) ? $wgRightFunctionsUserGroups : array('*', 'user', 'autoconfirmed', 'sysop', 'bureaucrat');
-$wgRightFunctionsAllowExpensiveQueries = isset($wgRightFunctionsAllowExpensiveQueries) ? $wgRightFunctionsAllowExpensiveQueries : true;
-$wgRightFunctionsAllowCaching = isset($wgRightFunctionsAllowCaching) ? $wgRightFunctionsAllowCaching : false;
-$wgRightFunctionsDisableFunctions = isset($wgRightFunctionsDisableFunctions) ? $wgRightFunctionsDisableFunctions : array();
-
-function wfRightFunctions() {
-	global $wgParser, $wgExtRightFunctions;
-
-	$wgExtRightFunctions = new ExtRightFunctions();
-	$wgParser->setFunctionHook( 'ifright', array(&$wgExtRightFunctions, 'ifright') );
-	$wgParser->setFunctionHook( 'ifallowed', array(&$wgExtRightFunctions, 'ifallowed') );
-	$wgParser->setFunctionHook( 'switchright', array( &$wgExtRightFunctions, 'switchright') );
-	$wgParser->setFunctionHook( 'userrights', array(&$wgExtRightFunctions, 'userrights') );
-	$wgParser->setFunctionHook( 'usergroup', array(&$wgExtRightFunctions, 'usergroup') );
-	$wgParser->setFunctionHook( 'ifgroup', array(&$wgExtRightFunctions, 'ifgroup') );
-	$wgParser->setFunctionHook( 'switchgroup', array(&$wgExtRightFunctions, 'switchgroup') );
-	$wgParser->setFunctionHook( 'ifpageright', array(&$wgExtRightFunctions, 'ifpageright') );
-	$wgParser->setFunctionHook( 'ifpageallowed', array(&$wgExtRightFunctions, 'ifpageallowed') );
-	$wgParser->setFunctionHook( 'ifprotected', array(&$wgExtRightFunctions, 'ifprotected') );
-	$wgParser->setFunctionHook( 'getrestrictions', array(&$wgExtRightFunctions, 'getrestrictions') );
-}
-
-function wfRightFunctionsLanguageGetMagic( &$magicWords, $langCode ) {
-	switch ( $langCode ) {
-	default:
-		$magicWords['ifright'] = array( 0, 'ifright' );
-		$magicWords['ifallowed'] = array( 0, 'ifallowed' );
-		$magicWords['switchright'] = array( 0, 'switchright' );
-		$magicWords['userrights'] = array( 0, 'userrights' );
-		$magicWords['usergroup'] = array( 0, 'usergroup' );
-		$magicWords['ifgroup'] = array( 0, 'ifgroup' );
-		$magicWords['switchgroup'] = array( 0, 'switchgroup' );
-		$magicWords['ifpageright'] = array( 0, 'ifpageright' );
-		$magicWords['ifpageallowed'] = array( 0, 'ifpageallowed' );
-		$magicWords['ifprotected'] = array( 0, 'ifprotected' );
-		$magicWords['getrestrictions'] = array( 0, 'getrestrictions' );
-	}
-	return true;
-}
+//Default globals.
+$wgRightFunctionsUserGroups = array( '*', 'user', 'autoconfirmed', 'sysop', 'bureaucrat' );
+$wgRightFunctionsAllowExpensiveQueries = true;
+$wgRightFunctionsAllowCaching = false;
+$wgRightFunctionsDisableFunctions = array();
 
 Class ExtRightFunctions {
-	function ifright( &$parser, $right = '', $then = '', $else = '' ) {
+	public static function onParserFirstCallInit( $parser ) {
+		$parser->setFunctionHook( 'ifright', array( __CLASS__, 'ifright' ) );
+		$parser->setFunctionHook( 'ifallowed', array( __CLASS__, 'ifallowed' ) );
+		$parser->setFunctionHook( 'switchright', array( __CLASS__, 'switchright' ) );
+		$parser->setFunctionHook( 'userrights', array( __CLASS__, 'userrights' ) );
+		$parser->setFunctionHook( 'usergroup', array( __CLASS__, 'usergroup' ) );
+		$parser->setFunctionHook( 'ifgroup', array( __CLASS__, 'ifgroup' ) );
+		$parser->setFunctionHook( 'switchgroup', array( __CLASS__, 'switchgroup' ) );
+		$parser->setFunctionHook( 'ifpageright', array( __CLASS__, 'ifpageright' ) );
+		$parser->setFunctionHook( 'ifpageallowed', array( __CLASS__, 'ifpageallowed' ) );
+		$parser->setFunctionHook( 'ifprotected', array( __CLASS__, 'ifprotected' ) );
+		$parser->setFunctionHook( 'getrestrictions', array( __CLASS__, 'getrestrictions' ) );
+
+		return true;
+	}
+
+	public static function ifright( &$parser, $right = '', $then = '', $else = '' ) {
 		global $wgUser, $wgRightFunctionsAllowCaching, $wgRightFunctionsDisableFunctions;
 		if(in_array('ifright', $wgRightFunctionsDisableFunctions)) {
 			return;
@@ -82,7 +62,7 @@ Class ExtRightFunctions {
 		return $else;
 	}
 
-	function ifallowed( &$parser, $name = '', $right = '', $then = '', $else = '') {
+	public static function ifallowed( &$parser, $name = '', $right = '', $then = '', $else = '') {
 		global $wgRightFunctionsDisableFunctions, $wgRightFunctionsAllowCaching;
 		if(in_array('ifallowed', $wgRightFunctionsDisableFunctions) || $name == '') {
 			return;
@@ -98,7 +78,7 @@ Class ExtRightFunctions {
 		return $else;
 	}
 
-	function switchright( &$parser ) {
+	public static function switchright( &$parser ) {
 		$args = func_get_args();
 		array_shift( $args );
 		$found = false;
@@ -107,7 +87,7 @@ Class ExtRightFunctions {
 		foreach( $args as $arg ) {
 			$parts = array_map( 'trim', explode( '=', $arg, 2 ) );
 			if ( count( $parts ) == 2 ) {
-				if ( $found || $this->ifright($parser, $parts[0], true, false) ) {
+				if ( $found || self::ifright($parser, $parts[0], true, false) ) {
 					return $parts[1];
 				} else {
 					$mwDefault =& MagicWord::get( 'default' );
@@ -116,7 +96,7 @@ Class ExtRightFunctions {
 					}
 				}
 			} elseif ( count( $parts ) == 1 ) {
-				if ( $this->ifright($parser, $parts[0], true, false) ) {
+				if ( self::ifright($parser, $parts[0], true, false) ) {
 					$found = true;
 				}
 			}
@@ -131,7 +111,7 @@ Class ExtRightFunctions {
 		}
 	}
 
-	function userrights( &$parser, $name = '' ) {
+	public static function userrights( &$parser, $name = '' ) {
 		global $wgUser, $wgRightFunctionsDisableFunctions, $wgRightFunctionsAllowCaching;
 		if(in_array('userrights', $wgRightFunctionsDisableFunctions)) {
 			return;
@@ -153,7 +133,7 @@ Class ExtRightFunctions {
 		return trim($userrights);
 	}
 
-	function usergroup( &$parser, $name = '' ) {
+	public static function usergroup( &$parser, $name = '' ) {
 		global $wgUser, $wgRightFunctionsUserGroups, $wgRightFunctionsDisableFunctions, $wgRightFunctionsAllowCaching;
 		if(in_array('usergroup', $wgRightFunctionsDisableFunctions)) {
 			return;
@@ -178,7 +158,7 @@ Class ExtRightFunctions {
 		return $right;
 	}
 
-	function ifgroup(&$parser, $group = '', $then = '', $else = '', $name = '') {
+	public static function ifgroup(&$parser, $group = '', $then = '', $else = '', $name = '') {
 		global $wgUser, $wgRightFunctionsDisableFunctions, $wgRightFunctionsAllowCaching;
 		if(in_array('ifgroup', $wgRightFunctionsDisableFunctions)) {
 			return;
@@ -200,7 +180,7 @@ Class ExtRightFunctions {
 		return $else;
 	}
 
-	function switchgroup( &$parser ) {
+	public static function switchgroup( &$parser ) {
 		$args = func_get_args();
 		array_shift( $args );
 		$found = false;
@@ -209,7 +189,7 @@ Class ExtRightFunctions {
 		foreach( $args as $arg ) {
 			$parts = array_map( 'trim', explode( '=', $arg, 2 ) );
 			if ( count( $parts ) == 2 ) {
-				if ( $found || $this->ifgroup($parser, $parts[0], true, false) ) {
+				if ( $found || self::ifgroup($parser, $parts[0], true, false) ) {
 					return $parts[1];
 				} else {
 					$mwDefault =& MagicWord::get( 'default' );
@@ -218,7 +198,7 @@ Class ExtRightFunctions {
 					}
 				}
 			} elseif ( count( $parts ) == 1 ) {
-				if ( $this->ifgroup($parser, $parts[0], true, false) ) {
+				if ( self::ifgroup($parser, $parts[0], true, false) ) {
 					$found = true;
 				}
 			}
@@ -233,7 +213,7 @@ Class ExtRightFunctions {
 		}
 	}
 
-	function ifpageright(&$parser, $right = '', $then = '', $else = '', $page = '') {
+	public static function ifpageright(&$parser, $right = '', $then = '', $else = '', $page = '') {
 		global $wgUser, $wgRightFunctionsDisableFunctions, $wgRightFunctionsAllowExpensiveQueries, $wgRightFunctionsAllowCaching;
 		if(in_array('ifpageright', $wgRightFunctionsDisableFunctions)) {
 			return;
@@ -254,7 +234,7 @@ Class ExtRightFunctions {
 		return $else;
 	}
 
-	function ifpageallowed(&$parser, $name = '', $right = '', $then = '', $else = '', $page = '') {
+	public static function ifpageallowed(&$parser, $name = '', $right = '', $then = '', $else = '', $page = '') {
 		global $wgRightFunctionsAllowExpensiveQueries, $wgRightFunctionsDisableFunctions, $wgRightFunctionsAllowCaching;
 		if(in_array('ifpageallowed', $wgRightFunctionsDisableFunctions) || $name == '') {
 			return;
@@ -277,7 +257,7 @@ Class ExtRightFunctions {
 		return $else;
 	}
 
-	function ifprotected(&$parser, $then = '', $else = '', $page = '', $type = 'fscn') {
+	public static function ifprotected(&$parser, $then = '', $else = '', $page = '', $type = 'fscn') {
 		global $wgRightFunctionsAllowCaching, $wgRightFunctionsDisableFunctions;
 		if(in_array('ifprotected', $wgRightFunctionsDisableFunctions)) {
 			return;
@@ -312,9 +292,9 @@ Class ExtRightFunctions {
 		return $else;
 	}
 
-	function getrestrictions(&$parser, $right = 'edit', $page = '', $returnall = false) {
+	public static function getrestrictions(&$parser, $right = 'edit', $page = '', $returnall = false) {
 		global $wgRightFunctionsAllowCaching, $wgRightFunctionsDisableFunctions, $wgRestrictionLevels, $wgNamespaceProtection;
-		wfLoadExtensionMessages( 'RightFunctions' );
+		
 		if(in_array('getrestrictions', $wgRightFunctionsDisableFunctions)) {
 			return;
 		}

@@ -20,6 +20,29 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
+$wgResourceModules['ext.maps.googlemaps2'] = array(
+	'dependencies' => array( 'ext.maps.common' ),
+	'localBasePath' => dirname( __FILE__ ),
+	'remoteBasePath' => $egMapsScriptPath .  '/includes/services/GoogleMaps',	
+	'group' => 'ext.maps',
+	'scripts' => array(
+		'jquery.googlemap2.js',
+		'ext.maps.googlemaps2.js',
+	),
+	'styles' => array(
+		//'ext.maps.googlemaps2.css',
+	),
+	'messages' => array(
+		'maps-markers',
+		'maps_overlays',
+		'maps_photos',
+		'maps_videos',
+		'maps_wikipedia',
+		'maps_webcams',
+		'maps-googlemaps2-incompatbrowser'
+	)
+);
+
 $wgHooks['MappingServiceLoad'][] = 'efMapsInitGoogleMaps';
 
 /**
@@ -35,14 +58,12 @@ function efMapsInitGoogleMaps() {
 	
 	$wgAutoloadClasses['MapsGoogleMaps'] 			= dirname( __FILE__ ) . '/Maps_GoogleMaps.php';
 	$wgAutoloadClasses['CriterionGoogleOverlay'] 	= dirname( __FILE__ ) . '/CriterionGoogleOverlay.php';
-	$wgAutoloadClasses['MapsGoogleMapsDispMap'] 	= dirname( __FILE__ ) . '/Maps_GoogleMapsDispMap.php';
-	$wgAutoloadClasses['MapsGoogleMapsDispPoint'] 	= dirname( __FILE__ ) . '/Maps_GoogleMapsDispPoint.php';
 	$wgAutoloadClasses['MapsParamGMapType']		 	= dirname( __FILE__ ) . '/Maps_ParamGMapType.php';
 	
 	MapsMappingServices::registerService( 'googlemaps2', 'MapsGoogleMaps' );
 	$googleMaps = MapsMappingServices::getServiceInstance( 'googlemaps2' );
-	$googleMaps->addFeature( 'display_point', 'MapsGoogleMapsDispPoint' );
-	$googleMaps->addFeature( 'display_map', 'MapsGoogleMapsDispMap' );
+	$googleMaps->addFeature( 'display_point', 'MapsBasePointMap' );
+	$googleMaps->addFeature( 'display_map', 'MapsBaseMap' );
 	
 	return true;
 }

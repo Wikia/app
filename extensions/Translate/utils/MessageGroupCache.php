@@ -3,7 +3,7 @@
  * Code for caching the messages of file based message groups.
  * @file
  * @author Niklas Laxström
- * @copyright Copyright © 2009-2010 Niklas Laxström
+ * @copyright Copyright © 2009-2012 Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -12,12 +12,21 @@
  * that the cache is up to date. Parsing the source files can be slow, so
  * constructing CDB cache makes accessing that data constant speed regardless
  * of the actual format.
+ *
+ * @ingroup MessageGroups
  */
 class MessageGroupCache {
-	/// \string 
+
+	/**
+	 * @var MessageGroup
+	 */
 	protected $group;
-	/// CdbReader
+
+	/**
+	 * @var CdbReader
+	 */
 	protected $cache;
+
 	/// \string
 	protected $code;
 
@@ -61,7 +70,8 @@ class MessageGroupCache {
 
 	/**
 	 * Get an item from the cache.
-	 * @return \string
+	 * @param $key
+	 * @return string
 	 */
 	public function get( $key ) {
 		return $this->open()->get( $key );
@@ -210,6 +220,7 @@ class MessageGroupCache {
 
 	/**
 	 * Returns full path the the cache file.
+	 * @return string
 	 */
 	protected function getCacheFileName() {
 		return TranslateUtils::cacheFile( "translate_groupcache-{$this->group->getId()}-{$this->code}.cdb" );
@@ -217,6 +228,7 @@ class MessageGroupCache {
 
 	/**
 	 * Updates cache to cache format 2.
+	 * @param $oldcache CdbReader
 	 */
 	protected function updateCacheFormat( $oldcache ) {
 		// Read the data from the old format

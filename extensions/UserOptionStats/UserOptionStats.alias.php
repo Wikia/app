@@ -2,100 +2,119 @@
 /**
  * Aliases for special pages of UserOptionStats extension.
  *
+ * @file
+ * @ingroup Extensions
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English
- * @author Nike
- */
-$aliases['en'] = array(
-	'UserOptionStats'          => array( 'UserOptionStats' ),
+/** English (English) */
+$specialPageAliases['en'] = array(
+	'UserOptionStats' => array( 'UserOptionStats' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'UserOptionStats' => array( 'إحصاءات_خيارات_المستخدم' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'UserOptionStats' => array( 'إحصاءات_خيارات_المستخدم' ),
+$specialPageAliases['arz'] = array(
+	'UserOptionStats' => array( 'احصائيات_أوپشنز_اليوزر' ),
 );
 
 /** Czech (Česky) */
-$aliases['cs'] = array(
-	'UserOptionStats' => array( 'Statistika uživatelského nastavení' ),
+$specialPageAliases['cs'] = array(
+	'UserOptionStats' => array( 'Statistika_uživatelského_nastavení' ),
+);
+
+/** German (Deutsch) */
+$specialPageAliases['de'] = array(
+	'UserOptionStats' => array( 'Statistik_zu_Benutzereinstellungen' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'UserOptionStats' => array( 'Statistika wužywarskich opcijow' ),
 );
 
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'UserOptionStats' => array( 'آمار_تنظیمات_کاربر' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'UserOptionStats' => array( 'EstatistikOpsyonItilizatè' ),
+);
+
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'UserOptionStats' => array( 'Statsticas de optiones de usator' ),
+$specialPageAliases['ia'] = array(
+	'UserOptionStats' => array( 'Statisticas_de_optiones_de_usator' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'UserOptionStats' => array( 'Statistik opsi pengguna', 'StatistikOpsiPengguna' ),
+$specialPageAliases['id'] = array(
+	'UserOptionStats' => array( 'Statistik_opsi_pengguna', 'StatistikOpsiPengguna' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'UserOptionStats' => array( '利用者オプション統計' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'UserOptionStats' => array( 'MetmaacherEnstellungsStatistik' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'UserOptionStats' => array( 'Statistike vun de Benotzerastellungen' ),
+$specialPageAliases['lb'] = array(
+	'UserOptionStats' => array( 'Statistike_vun_de_Benotzerastellungen' ),
+);
+
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'UserOptionStats' => array( 'СтатистикиЗаКорисничкиНагодувања' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'UserOptionStats' => array( 'ഉപയോക്തൃഐച്ഛികങ്ങളുടെസ്ഥിതിവിവരം' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'UserOptionStats' => array( 'सदस्यपर्यायसांख्यिकी' ),
 );
 
-/** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'UserOptionStats' => array( 'Gebrukersinstellingenstaotestieken' ),
-);
-
-/** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'UserOptionStats' => array( 'Gebruikersinstellingenstatistieken' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
 	'UserOptionStats' => array( 'Brukervalgstatistikk' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'UserOptionStats' => array( 'Gebrukersinstellingenstaotistieken' ),
+);
+
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'UserOptionStats' => array( 'Gebruikersinstellingenstatistieken' ),
+);
+
 /** Portuguese (Português) */
-$aliases['pt'] = array(
-	'UserOptionStats' => array( 'Estatísticas da opções de utilizador' ),
+$specialPageAliases['pt'] = array(
+	'UserOptionStats' => array( 'Estatísticas_da_opções_de_utilizador' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'UserOptionStats' => array( 'ŠtatistikyPoužívateľskýchVolieb' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'UserOptionStats' => array( 'KullanıcıSeçenekİstatistikleri' ),
 );
-

@@ -1,41 +1,73 @@
 <?php
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "XMLRC extension";
-	exit(1);
+	exit( 1 );
 }
 
+/**
+ * Implementation if XMLRC_Transport that "sends" messages to a file.
+ */
 class XMLRC_File extends XMLRC_Transport {
-  function __construct( $config ) {
-    $this->handle = null;
 
-    $this->file = $config['file'];
-  }
+	/**
+	 * Creates a new instance of XMLRC_File. $config['file'] determines which file to write to.
+	 *
+	 * @param $config Array: the configuration array.
+	 */
+	function __construct( $config ) {
+		$this->handle = null;
 
-  public function open() {
-    if ( $this->handle ) return;
+		$this->file = $config['file'];
+	}
 
-    $this->handle = fopen( $this->file, 'a' );
-    if ( !$this->handle ) wfDebug("XMLRC_File: failed to open {$this->file}\n");
-    else wfDebug("XMLRC_File: opened {$this->file}\n");
-  }
+	/**
+	 * Opens the file specified as $config['file'] in the constructur, in 'append' mode.
+	 */
+	public function open() {
+		if ( $this->handle ) {
+			return;
+		}
 
-  public function close() {
-    if ( !$this->handle ) return;
+		$this->handle = fopen( $this->file, 'a' );
+		if ( !$this->handle ) {
+			wfDebugLog( 'XMLRC', "failed to open {$this->file}\n" );
+		} else {
+			wfDebugLog( 'XMLRC', "opened {$this->file}\n" );
+		}
+	}
 
-    fclose( $this->handle );
-    $this->handle = null;
+	/**
+	 * Closes the underlying file.
+	 */
+	public function close() {
+		if ( !$this->handle ) {
+			return;
+		}
 
-    wfDebug("XMLRC_File: closed {$this->file}\n");
-  }
+		fclose( $this->handle );
+		$this->handle = null;
 
-  public function send( $xml ) {
-    $do_close = !$this->handle;
-    $this->open();
-    
-    $ok = fwrite( $this->handle, $xml . "\n" );
-    if ( $ok ) $ok = fflush( $this->handle );
-    if ( !$ok ) wfDebug("XMLRC_File: failed to write to {$this->file}\n");
+		wfDebugLog( 'XMLRC', "closed {$this->file}\n" );
+	}
 
-    if ( $do_close ) $this->close();
-  }
+	/**
+	 * Writes $xml to the underlying file. The file is automatically opened if
+	 * it is not yet open.
+	 */
+	public function send( $xml ) {
+		$do_close = !$this->handle;
+		$this->open();
+
+		$ok = fwrite( $this->handle, $xml . "\n" );
+		if ( $ok ) {
+			$ok = fflush( $this->handle );
+		}
+		if ( !$ok ) {
+			wfDebugLog( 'XMLRC', "failed to write to {$this->file}\n" );
+		}
+
+		if ( $do_close ) {
+			$this->close();
+		}
+	}
 }

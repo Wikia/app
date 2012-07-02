@@ -52,7 +52,7 @@ class MapsLayers {
 	}
 	
 	/**
-	 * Returns the available layer types, optionaly filtered by them requiring the 
+	 * Returns the available layer types, optionally filtered by them requiring the
 	 * support of the $service parameter.
 	 * 
 	 * @since 0.7.2

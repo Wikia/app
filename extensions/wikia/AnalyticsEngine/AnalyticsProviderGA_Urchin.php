@@ -52,7 +52,7 @@ SCRIPT2;
   function getCustomVarAB() {
     var ab = 'error';
     
-    if (typeof getTreatmentGroup == 'function') {
+    if (window.getTreatmentGroup) {
       ab = getTreatmentGroup(1);
       if (ab == 1 || ab == 2 || ab == 3) {
         ab = 'e1 g' + ab;

@@ -5,9 +5,6 @@
  * Pushes an item to Facebook News Feed when the user adds a blog post to the site.
  */
 
-global $wgExtensionMessagesFiles;
-$pushDir = dirname(__FILE__) . '/';
-
 
 class FBPush_OnAddBlogPost extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnAddBlogPost'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
@@ -17,19 +14,10 @@ class FBPush_OnAddBlogPost extends FBConnectPushEvent {
 		global $wgHooks;
 		wfProfileIn(__METHOD__);
 
-		wfLoadExtensionMessages('FBPush_OnAddBlogPost');
 		$wgHooks['ArticleSaveComplete'][] = 'FBPush_OnAddBlogPost::articleEdit';
 		wfProfileOut(__METHOD__);
 	}
-	
-	public function loadMsg() {
-		wfProfileIn(__METHOD__);
-				
-		wfLoadExtensionMessages('FBPush_OnAddBlogPost');
 		
-		wfProfileOut(__METHOD__);
-	}
-	
 	public static function articleEdit(&$article, &$user, $text, $summary,$flag, $fake1, $fake2, &$flags, $revision, &$status, $baseRevId){
 		global $wgContentNamespaces, $wgSitename;
 

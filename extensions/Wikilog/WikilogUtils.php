@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -72,22 +73,20 @@ class WikilogUtils
 		$useParserCache = $wgEnableParserCache &&
 			intval( $wgUser->getOption( 'stubthreshold' ) ) == 0 &&
 			$article->exists();
+		$parserCache = ParserCache::singleton();
 
 		# Parser options.
 		$parserOpt = ParserOptions::newFromUser( $wgUser );
 		$parserOpt->setTidy( true );
 		if ( $feed ) {
 			$parserOpt->setEditSection( false );
+
+			$parserOpt->addExtraKey( "WikilogFeed" );
 		} else {
 			$parserOpt->enableLimitReport();
 		}
 
 		if ( $useParserCache ) {
-			# Select parser cache according to the $feed flag.
-			$parserCache = $feed
-				? WikilogParserCache::singleton()
-				: ParserCache::singleton();
-
 			# Look for the parsed article output in the parser cache.
 			$parserOutput = $parserCache->get( $article, $parserOpt );
 
@@ -179,10 +178,6 @@ class WikilogUtils
 	 * with links to their user and user-talk pages, according to the
 	 * 'wikilog-author-signature' system message.
 	 *
-	 * @pre wfLoadExtensionMessages( 'Wikilog' ) must have been called. It
-	 *   is not called here since this function can potentially be called
-	 *   lots of times in a single page load.
-	 *
 	 * @param $list Array of authors.
 	 * @return Wikitext-formatted textual list of authors.
 	 */
@@ -192,7 +187,7 @@ class WikilogUtils
 		if ( is_string( $list ) ) {
 			return self::authorSig( $list );
 		}
-		else if ( is_array( $list ) ) {
+		elseif ( is_array( $list ) ) {
 			$authors = array_map( array( __CLASS__, 'authorSig' ), $list );
 			return $wgContLang->listToText( $authors );
 		}
@@ -205,10 +200,6 @@ class WikilogUtils
 	 * Formats a single author signature.
 	 * Uses the 'wikilog-author-signature' system message, in order to provide
 	 * user and user-talk links.
-	 *
-	 * @pre wfLoadExtensionMessages( 'Wikilog' ) must have been called. It
-	 *   is not called here since this function can potentially be called
-	 *   lots of times in a single page load.
 	 *
 	 * @param $author String, author name.
 	 * @return Wikitext-formatted author signature.
@@ -396,6 +387,44 @@ class WikilogUtils
 
 		return array( 'date' => $date, 'user' => $user );
 	}
+
+	/**
+	 * Return the given timestamp as a tuple with date, time and timezone
+	 * in the local timezone (if defined). This is meant to be compatible
+	 * with signatures produced by Parser::pstPass2(). It was based on this
+	 * same function.
+	 *
+	 * @param $timestamp Timestamp.
+	 * @return Array(3) containing date, time and timezone.
+	 */
+	public static function getLocalDateTime( $timestamp ) {
+		global $wgContLang, $wgLocaltimezone;
+
+		$ts = wfTimestamp( TS_UNIX, $timestamp );
+
+		if ( isset( $wgLocaltimezone ) ) {
+			$oldtz = date_default_timezone_get();
+			date_default_timezone_set( $wgLocaltimezone );
+		}
+
+		$ts = date( 'YmdHis', $ts );
+		$tz = date( 'T', $ts );
+
+		if ( isset( $oldtz ) ) {
+			date_default_timezone_set( $oldtz );
+		}
+
+		$date = $wgContLang->date( $ts, false, false );
+		$time = $wgContLang->time( $ts, false, false );
+
+		# Check for translation of timezones.
+		$key = 'timezone-' . strtolower( trim( $tz ) );
+		$value = wfMsgForContent( $key );
+		if ( !wfEmptyMsg( $key, $value ) ) $tz = $value;
+
+		return array( $date, $time, $tz );
+	}
+
 }
 
 /**
@@ -405,10 +434,10 @@ class WikilogUtils
 class WikilogNavbar
 {
 	static $pagingLabels = array(
-		'prev'  => "‹ $1",
-		'next'  => "$1 ›",
-		'first' => "« $1",
-		'last'  => "$1 »"
+		'prev'  => '‹ $1',
+		'next'  => '$1 ›',
+		'first' => '« $1',
+		'last'  => '$1 »'
 	);
 	static $linkTextMsgs = array(
 		# pages style:  « first  ‹ previous 20  ...  next 20 ›  last »
@@ -481,10 +510,7 @@ class WikilogNavbar
 		$html = "{$pagingLinks['first']} {$pagingLinks['prev']} {$ellipsis} {$pagingLinks['next']} {$pagingLinks['last']}";
 		$html = WikilogUtils::wrapDiv( 'wl-pagination', $html );
 
-		# NOTE (Mw1.15- COMPAT): Language::getDir() introduced in Mw1.16.
-		# Use Language::isRTL() as a fallback.
-		$dir = method_exists( $wgLang, 'getDir' ) ? $wgLang->getDir() :
-			( $wgLang->isRTL() ? 'rtl' : 'ltr' );
+		$dir = $wgLang->getDir();
 
 		return Xml::tags( 'div',
 			array(

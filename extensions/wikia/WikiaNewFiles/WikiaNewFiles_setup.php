@@ -20,11 +20,11 @@ $dir = dirname( __FILE__ );
 $wgExtensionMessagesFiles["WikiaNewFiles"] =  "{$dir}/SpecialNewFiles.i18n.php";
 
 //Fix BugzId: 4310
-$wgExtensionAliasesFiles ['WikiaNewFiles'] = "{$dir}/SpecialNewFiles.alias.php";
+$wgExtensionMessagesFiles['WikiaNewFilesAliases'] = "{$dir}/SpecialNewFiles.alias.php";
 
 // Autoloaded classes
 $wgAutoloadClasses['WikiaNewFiles'] = "{$dir}/WikiaNewFiles.class.php";
 
 require_once( "{$dir}/SpecialNewFiles.php" );
 
-$wgSpecialPages['Newimages'] = array( 'WikiaNewFiles', 'Newimages' );
+$wgSpecialPages['Newimages'] = 'WikiaNewFiles';

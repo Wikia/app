@@ -260,8 +260,6 @@ class UserPagesHeaderController extends WikiaController {
 		else if (defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) {
 				// "Create a blog post" button
 				if (self::isItMe($this->userName)) {
-					wfLoadExtensionMessages('Blogs');
-
 					$this->actionButton = array(
 							'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),
 							'text' => wfMsg('blog-create-post-label'),
@@ -484,7 +482,6 @@ class UserPagesHeaderController extends WikiaController {
 
 		global $wgTitle, $wgOut;
 		
-		wfLoadExtensionMessages('Blogs');
 		// "Create blog post" button
 		$this->actionButton = array(
 				'href' => SpecialPage::getTitleFor('CreateBlogPage')->getLocalUrl(),

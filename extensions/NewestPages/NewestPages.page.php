@@ -4,7 +4,8 @@
  * Class definition file for the Newest Pages extension
  * This doesn't use recent changes so the items don't expire
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * @copyright © 2006 Rob Church
  * @licence GNU General Public Licence 2.0
@@ -17,13 +18,11 @@ class NewestPages extends IncludableSpecialPage {
 	var $redirects = null;
 
 	public function __construct() {
-		IncludableSpecialPage::SpecialPage( 'Newestpages', '', true, false, 'default', true );
+		parent::__construct( 'NewestPages', '', true, false, 'default', true );
 	}
 
 	public function execute( $par ) {
 		global $wgRequest, $wgOut, $wgContLang, $wgLang;
-
-		wfLoadExtensionMessages( 'NewestPages' );
 
 		# Decipher input passed to the page
 		$this->decipherParams( $par );
@@ -160,7 +159,7 @@ class NewestPages extends IncludableSpecialPage {
 
 	function makeSelfLink( $label, $oname = false, $oval = false ) {
 		global $wgUser;
-		$skin =& $wgUser->getSkin();
+		$skin = $wgUser->getSkin();
 		$self = $this->getTitle();
 		$attr['limit'] = $this->limit;
 		$attr['namespace'] = $this->namespace;
@@ -176,10 +175,10 @@ class NewestPages extends IncludableSpecialPage {
 	function makeNamespaceForm() {
 		$self = $this->getTitle();
 		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
-		$form .= Xml::label( wfMsg( 'newestpages-namespace' ), 'namespace' ) . '&nbsp;';
+		$form .= Xml::label( wfMsg( 'newestpages-namespace' ), 'namespace' ) . '&#160;';
 		$form .= Xml::namespaceSelector( $this->namespace, 'all' );
-		$form .= Xml::hidden( 'limit', $this->limit );
-		$form .= Xml::hidden( 'redirects', $this->redirects );
+		$form .= Html::Hidden( 'limit', $this->limit );
+		$form .= Html::Hidden( 'redirects', $this->redirects );
 		$form .= Xml::submitButton( wfMsg( 'newestpages-submit' ) ) . '</form>';
 		return $form;
 	}

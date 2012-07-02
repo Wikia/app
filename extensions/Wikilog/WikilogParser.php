@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -146,7 +147,7 @@ class WikilogParser
 				self::trySetSummary( $parser, trim( $p[0] ) );
 				$anchor = $parser->insertStripItem( self::MORE_ANCHOR );
 				$text = $p[0] . $anchor . $p[1];
-			} else if ( !$parser->mExtWikilog->mSummary ) {
+			} elseif ( !$parser->mExtWikilog->mSummary ) {
 				# Otherwise, make a summary from the intro section.
 				# Why we don't use $parser->getSection()? Because it has the
 				# side-effect of clearing the parser state, which is bad here
@@ -216,7 +217,6 @@ class WikilogParser
 	 */
 	public static function settings( &$parser /* ... */ ) {
 		global $wgOut;
-		wfLoadExtensionMessages( 'Wikilog' );
 		self::checkNamespace( $parser );
 
 		$mwIcon     =& MagicWord::get( 'wlk-icon' );
@@ -235,11 +235,11 @@ class WikilogParser
 				if ( ( $icon = self::parseImageLink( $parser, $value ) ) ) {
 					$parser->mExtWikilog->mIcon = $icon->getTitle();
 				}
-			} else if ( $mwLogo->matchStart( $key ) ) {
+			} elseif ( $mwLogo->matchStart( $key ) ) {
 				if ( ( $logo = self::parseImageLink( $parser, $value ) ) ) {
 					$parser->mExtWikilog->mLogo = $logo->getTitle();
 				}
-			} else if ( $mwSubtitle->matchStart( $key ) ) {
+			} elseif ( $mwSubtitle->matchStart( $key ) ) {
 				$popt = $parser->getOptions();
 				$popt->enableLimitReport( false );
 				$output = $parser->parse( $value, $parser->getTitle(), $popt, true, false );
@@ -257,7 +257,6 @@ class WikilogParser
 	 * {{wl-publish:...}} parser function handler.
 	 */
 	public static function publish( &$parser, $pubdate /*, $author... */ ) {
-		wfLoadExtensionMessages( 'Wikilog' );
 		self::checkNamespace( $parser );
 
 		$parser->mExtWikilog->mPublish = true;
@@ -290,7 +289,6 @@ class WikilogParser
 	 * {{wl-author:...}} parser function handler.
 	 */
 	public static function author( &$parser /*, $author... */ ) {
-		wfLoadExtensionMessages( 'Wikilog' );
 		self::checkNamespace( $parser );
 
 		$args = array_slice( func_get_args(), 1 );
@@ -305,7 +303,6 @@ class WikilogParser
 	 * {{wl-tags:...}} parser function handler.
 	 */
 	public static function tags( &$parser /*, $tag... */ ) {
-		wfLoadExtensionMessages( 'Wikilog' );
 		self::checkNamespace( $parser );
 
 		$args = array_slice( func_get_args(), 1 );
@@ -475,7 +472,7 @@ class WikilogParser
 		}
 
 		$user = User::newFromName( $name );
-		if ( !is_null( $user ) ) {
+		if ( $user ) {
 			$parser->mExtWikilog->mAuthors[$user->getName()] = $user->getID();
 		}
 		else {
@@ -613,35 +610,4 @@ class WikilogParserOutput
 	/* Acessor functions, lacking... */
 	public function getAuthors() { return $this->mAuthors; }
 	public function getTags() { return $this->mTags; }
-}
-
-/**
- * Since wikilog parses articles with specific options in order to be
- * rendered in feeds, it is necessary to store these parsed outputs in
- * the cache separately. This derived class from ParserCache overloads the
- * getKey() function in order to provide a specific namespace for this
- * purpose.
- */
-class WikilogParserCache
-	extends ParserCache
-{
-	public static function &singleton() {
-		static $instance;
-		if ( !isset( $instance ) ) {
-			global $parserMemc;
-			$instance = new WikilogParserCache( $parserMemc );
-		}
-		return $instance;
-	}
-
-	public function getKey( &$article, $popts ) {
-		if ( $popts instanceof User )	// API change in MediaWiki 1.15.
-			$popts = ParserOptions::newFromUser( $popts );
-
-		$user = $popts->mUser;
-		$pageid = intval( $article->getID() );
-		$hash = $user->getPageRenderingHash();
-		$key = wfMemcKey( 'wlcache', 'idhash', "$pageid-$hash" );
-		return $key;
-	}
 }

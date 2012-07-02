@@ -3,19 +3,20 @@
 /**
  * Class file for the RandomImage extension
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
 class RandomImage {
 
 	private $parser = null;
-
+	
 	private $width = false;
 	private $float = false;
 	private $caption = '';
-
+	
 	private $choices = array();
-
+	
 	/**
 	 * Constructor
 	 *
@@ -28,7 +29,7 @@ class RandomImage {
 		$this->caption = $caption;
 		$this->setOptions( $options );
 	}
-
+	
 	/**
 	 * Extract applicable options from tag attributes
 	 *
@@ -38,7 +39,7 @@ class RandomImage {
 		if( isset( $options['size'] ) ) {
 			$size = intval( $options['size'] );
 			if( $size > 0 )
-				$this->width = $size;
+				$this->width = $size;			
 		}
 		if( isset( $options['float'] ) ) {
 			$float = strtolower( $options['float'] );
@@ -52,7 +53,7 @@ class RandomImage {
 				$this->choices = $choices;
 		}
 	}
-
+	
 	/**
 	 * Render a random image
 	 *
@@ -61,7 +62,7 @@ class RandomImage {
 	public function render() {
 		$title = $this->pickImage();
 		if( $title instanceof Title && $this->imageExists( $title ) ) {
-			return $this->removeMagnifier(
+			return $this->removeMagnifier( 
 				$this->parser->recursiveTagParse(
 					$this->buildMarkup( $title )
 				)
@@ -69,7 +70,7 @@ class RandomImage {
 		}
 		return '';
 	}
-
+	
 	/**
 	 * Does the specified image exist?
 	 *
@@ -81,12 +82,10 @@ class RandomImage {
 	 * @return bool
 	 */
 	protected function imageExists( $title ) {
-		$file = function_exists( 'wfFindFile' )
-			? wfFindFile( $title )
-			: new Image( $title );
+		$file = wfFindFile( $title );
 		return is_object( $file ) && $file->exists();
 	}
-
+	
 	/**
 	 * Prepare image markup for the given image
 	 *
@@ -111,10 +110,6 @@ class RandomImage {
 	 * @return string
 	 */
 	protected function removeMagnifier( $html ) {
-		/* Wikia change begin - @author: Marooned */
-		/* 1) loadHTML breaks with HTML5; 2) markup has changed so x-path is not valid anymore; 3) replace is much faster */
-		return preg_replace('%<a href="[^"]+" class="[\w -]*magnify[\w -]*" [^>]+></a>%i', '', $html);
-		/* Wikia change end */
 		$doc = DOMDocument::loadHTML( $html );
 		$xpath = new DOMXPath( $doc );
 		foreach( $xpath->query( '//div[@class="magnify"]' ) as $mag )
@@ -165,7 +160,7 @@ class RandomImage {
 			return $pick;
 		}
 	}
-
+	
 	/**
 	 * Select a random image from the choices given
 	 *
@@ -177,7 +172,7 @@ class RandomImage {
 			: $this->choices[0];
 		return Title::makeTitleSafe( NS_IMAGE, $name );
 	}
-
+	
 	/**
 	 * Select a random image from the database
 	 *
@@ -212,7 +207,7 @@ class RandomImage {
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Get various options for database selection
 	 *
@@ -241,7 +236,7 @@ class RandomImage {
 			);
 		}
 	}
-
+	
 	/**
 	 * Parser hook callback
 	 *
@@ -257,7 +252,7 @@ class RandomImage {
 		$random = new RandomImage( $parser, $args, $input );
 		return $random->render();
 	}
-
+	
 	/**
 	 * Strip <randomcaption> tags out of page text
 	 *
@@ -269,5 +264,5 @@ class RandomImage {
 		$text = preg_replace( '!</?randomcaption>!i', '', $text );
 		return true;
 	}
-
+	
 }

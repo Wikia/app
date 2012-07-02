@@ -43,7 +43,7 @@ php_$(PRODUCT).so : $(PRODUCT).cpp $(PRODUCT)_wrap.cpp
 	$(SHARED) -o php_$(PRODUCT).so $(PRODUCT).cpp $(PRODUCT)_wrap.cpp
 
 $(PRODUCT)_wrap.cpp : $(PRODUCT).i
-	swig -Wall -php4 -c++ $(PRODUCT).i
+	swig -Wall -php5 -c++ $(PRODUCT).i
 
 install : php_$(PRODUCT).so
 	install -d "$(DESTDIR)$(INSTALL_TARGET)"

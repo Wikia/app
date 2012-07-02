@@ -1,9 +1,7 @@
 <?php
 
-$aliases = array();
+$specialPageAliases = array();
 
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'Withoutimages' => array('Withoutimages')
 );
-
-

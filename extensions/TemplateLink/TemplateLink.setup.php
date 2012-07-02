@@ -2,8 +2,8 @@
 /**
  * TemplateLink extension - shows a template as a new page
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Magnus Manske
  * @copyright © 2007 Magnus Manske
  * @licence GNU General Public Licence 2.0 or later
@@ -23,8 +23,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'TemplateLink',
 	'version' => '1.1',
 	'author' =>'Magnus Manske',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:TemplateLink',
-	'description' => 'This extension can show a template as a new page',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:TemplateLink',
 	'descriptionmsg' => 'templatelink_desc',
 );
 
@@ -33,22 +32,22 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'TemplateLink',
 	'version' => '1.2',
 	'author' =>'Magnus Manske',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:TemplateLink',
-	'description' => 'This extension can show a template as a new page'
+	'url' => 'https://www.mediawiki.org/wiki/Extension:TemplateLink',
+	'descriptionmsg' => 'templatelink_desc',
 );
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['TemplateLink'] = $dir . 'TemplateLink.i18n.php';
-$wgExtensionAliasesFiles['TemplateLink'] = $dir . 'TemplateLink.alias.php';
+$wgExtensionMessagesFiles['TemplateLinkAlias'] = $dir . 'TemplateLink.alias.php';
 $wgAutoloadClasses['TemplateLink'] = $dir . 'TemplateLink.body.php'; # Tell MediaWiki to load the extension body.
 $wgSpecialPages['TemplateLink'] = 'TemplateLink'; # Let MediaWiki know about your new special page.
 
 # The tag
-$wgExtensionFunctions[] = 'efTemplateLinkSetup';
+$wgHooks['ParserFirstCallInit'][] = 'efTemplateLinkSetHook';
 
-function efTemplateLinkSetup(){
-	global $wgParser;
-	$wgParser->setHook( 'templatelink', 'efTemplateLink' );
+function efTemplateLinkSetHook( $parser ){
+	$parser->setHook( 'templatelink', 'efTemplateLink' );
+	return true;
 }
 
 function efTemplateLink( $input, $args, $parser ){

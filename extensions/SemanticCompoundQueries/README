@@ -1,6 +1,6 @@
 Semantic Compound Queries Extension
 
-        Version 0.2.2
+        Version 0.3.2
         Yaron Koren
 
 This is free software licensed under the GNU General Public License. Please
@@ -24,14 +24,13 @@ with their subject; and fiction books, along with their author; is:
 	|[[Category:Books]][[Has genre::Fiction]];?Has author=Author
 	|format=list}}
 
-
 For more information, see the extension homepage at:
 http://www.mediawiki.org/wiki/Extension:Semantic_Compound_Queries
 
 == Requirements ==
 
-This version of the Semantic Compound Queries extension requires MediaWiki 1.8
-or higher and Semantic MediaWiki 1.2 or higher.
+This version of the Semantic Compound Queries extension requires MediaWiki 1.16
+or higher and Semantic MediaWiki 1.6 or higher.
 
 == Installation ==
 
@@ -39,10 +38,15 @@ To install the extension, place the entire 'SemanticCompoundQueries' directory
 within your MediaWiki 'extensions' directory, then add the following
 line to your 'LocalSettings.php' file:
 
-     require_once( "$IP/extensions/SemanticCompoundQueries/SCQ_Settings.php" );
+ require_once( "$IP/extensions/SemanticCompoundQueries/SemanticCompoundQueries.php" );
 
 == Contact ==
 
-Comments, questions, suggestions and bug reports are welcome, and can
-be placed on the Talk page for the extension, or sent to Yaron at
-yaron57@gmail.com.
+Comments, questions, suggestions and bug reports should be sent to
+the Semantic MediaWiki mailing list:
+
+ https://lists.sourceforge.net/lists/listinfo/semediawiki-user
+
+If possible, please add "[SCQ]" at the beginning of the subject line, to
+clarify the subject matter.
+

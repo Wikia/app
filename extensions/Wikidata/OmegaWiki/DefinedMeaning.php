@@ -74,7 +74,8 @@ class DefinedMeaning extends DefaultWikidataApplication {
 		}
 
 		$this->outputViewHeader();
-		$wgOut->addHTML( $this->getConceptPanel() );
+// concept panel is annoying and useless
+//		$wgOut->addHTML( $this->getConceptPanel() );
 		$editor = getDefinedMeaningEditor( $this->viewInformation );
 		$idStack = $this->getIdStack( $definedMeaningModel->getId() );
 		$html = $editor->view( $idStack, $definedMeaningModel->getRecord() );

@@ -6,125 +6,169 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'ContributionTracking' => array( 'ContributionTracking' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'ContributionTracking' => array( 'تتبع_المساهمة' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'ContributionTracking' => array( 'تتبع_المساهمة' ),
+$specialPageAliases['arz'] = array(
+	'ContributionTracking' => array( 'متابعة_المساهمه' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'ContributionTracking' => array( 'DoprinosiPracenje' ),
 );
 
+/** German (Deutsch) */
+$specialPageAliases['de'] = array(
+	'ContributionTracking' => array( 'Beitragstracking' ),
+);
+
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
-	'ContributionTracking' => array( 'Slědowanje pśinoskow' ),
+$specialPageAliases['dsb'] = array(
+	'ContributionTracking' => array( 'Slědowanje_pśinoskow' ),
+);
+
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'ContributionTracking' => array( 'Kontribukontado' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'ContributionTracking' => array( 'ردگیری_مشارکت' ),
+);
+
+/** Finnish (Suomi) */
+$specialPageAliases['fi'] = array(
+	'ContributionTracking' => array( 'Muokkausten_seuranta' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
-	'ContributionTracking' => array( 'Seguimento das contribucións' ),
+$specialPageAliases['gl'] = array(
+	'ContributionTracking' => array( 'Seguimento_das_contribucións' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'ContributionTracking' => array( 'SwiviKontribisyon' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
-	'ContributionTracking' => array( 'Adományok követése' ),
+$specialPageAliases['hu'] = array(
+	'ContributionTracking' => array( 'Adományok_követése' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'ContributionTracking' => array( 'Traciamento de contributiones' ),
+$specialPageAliases['ia'] = array(
+	'ContributionTracking' => array( 'Traciamento_de_contributiones' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'ContributionTracking' => array( 'Pelacakan kontribusi', 'PelacakanKontribusi' ),
+$specialPageAliases['id'] = array(
+	'ContributionTracking' => array( 'Pelacakan_kontribusi', 'PelacakanKontribusi' ),
+);
+
+/** Italian (Italiano) */
+$specialPageAliases['it'] = array(
+	'ContributionTracking' => array( 'TracciaEdit' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'ContributionTracking' => array( '寄付追跡' ),
 );
 
 /** Korean (한국어) */
-$aliases['ko'] = array(
+$specialPageAliases['ko'] = array(
 	'ContributionTracking' => array( '기여추적' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'ContributionTracking' => array( 'MetmaacherVerfoljung' ),
 );
 
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'ContributionTracking' => array( 'PerseguirAjustamientos' ),
+);
+
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'ContributionTracking' => array( 'СледењеНаПридонесите' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'ContributionTracking' => array( 'സേവനംശ്രദ്ധിക്കൽ' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'ContributionTracking' => array( 'योगदानमागमूस' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'ContributionTracking' => array( 'Bidragssporing' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'ContributionTracking' => array( 'Donasies_volgen' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'ContributionTracking' => array( 'DonatiesVolgen' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'ContributionTracking' => array( 'Bidragssporing' ),
-);
-
 /** Polish (Polski) */
-$aliases['pl'] = array(
-	'ContributionTracking' => array( 'Przekierowanie do systemu płatnościowego' ),
+$specialPageAliases['pl'] = array(
+	'ContributionTracking' => array( 'Przekierowanie_do_systemu_płatnościowego' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'ContributionTracking' => array( 'योगदानउन्नयति' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'ContributionTracking' => array( 'SledovaniePríspevkov' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'ContributionTracking' => array( 'Pagbakas ng ambag' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'ContributionTracking' => array( 'KatkıTakibi' ),
 );
 
 /** Vèneto (Vèneto) */
-$aliases['vec'] = array(
+$specialPageAliases['vec'] = array(
 	'ContributionTracking' => array( 'TraciamentoContributi' ),
 );
 
+/** Simplified Chinese (‪中文(简体)‬) */
+$specialPageAliases['zh-hans'] = array(
+	'ContributionTracking' => array( '贡献追踪' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'ContributionTracking' => array( '跟蹤貢獻' ),
+);

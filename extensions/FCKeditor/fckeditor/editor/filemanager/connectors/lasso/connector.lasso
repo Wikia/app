@@ -109,7 +109,7 @@
 			$errorNumber = 1;
 			$commandData += '<Error number="' + $errorNumber + '" text="Invalid type specified" />\n';
 		/if;
-	else if($CurrentFolder->(Find: '..') || (String_FindRegExp: $CurrentFolder, -Find='(/\\.)|(//)|[\\\\:\\*\\?\\""\\<\\>\\|]|\\000|[\u007F]|[\u0001-\u001F]'));
+	else if($CurrentFolder->(Find: '..') || (String_FindRegExp: $CurrentFolder, -Find='(/\\.)|(//)|[\\\\:\\*\\;\\.\\?\\""\\<\\>\\|]|\\000|[\u007F]|[\u0001-\u001F]'));
 		if($Command == 'FileUpload');
 			$responseType = 'html';
 			$uploadResult = '102';
@@ -172,7 +172,7 @@
             Create a directory 'NewFolderName' within the 'Current Folder.'
             */
 			case('CreateFolder');
-				$NewFolderName = (String_ReplaceRegExp: $NewFolderName, -find='\\.|\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|\\000|[\u007F]|[\u0001-\u001F]', -replace='_');
+				$NewFolderName = (String_ReplaceRegExp: $NewFolderName, -find='\\.|\\\\|\\/|\\||\\:|\\;|\\.|\\?|\\*|"|<|>|\\000|[\u007F]|[\u0001-\u001F]', -replace='_');
 				var('newFolder' = $currentFolderURL + $NewFolderName + '/');
 				file_create($newFolder);
 
@@ -224,12 +224,12 @@
                     files. (Test.txt, Test(1).txt, Test(2).txt, etc.)
                     */
 					$NewFileName = $NewFile->find('OrigName');
-					$NewFileName = (String_ReplaceRegExp: $NewFileName, -find='\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|\\000|[\u007F]|[\u0001-\u001F]', -replace='_');
+					$NewFileName = (String_ReplaceRegExp: $NewFileName, -find='\\\\|\\/|\\||\\:|\\;|\\?|\\*|"|<|>|\\000|[\u007F]|[\u0001-\u001F]', -replace='_');
 					$NewFileName = (String_ReplaceRegExp: $NewFileName, -find='\\.(?![^.]*$)', -replace='_');
 					$OrigFilePath = $currentFolderURL + $NewFileName;
 					$NewFilePath = $OrigFilePath;
 					local('fileExtension') = '.' + $NewFile->find('OrigExtension');
-					#fileExtension = (String_ReplaceRegExp: #fileExtension, -find='\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|\\000|[\u007F]|[\u0001-\u001F]', -replace='_');
+					#fileExtension = (String_ReplaceRegExp: #fileExtension, -find='\\\\|\\/|\\||\\:|\\;|\\.|\\?|\\*|"|<|>|\\000|[\u007F]|[\u0001-\u001F]', -replace='_');
 					local('shortFileName') = $NewFileName->removetrailing(#fileExtension)&;
 
 

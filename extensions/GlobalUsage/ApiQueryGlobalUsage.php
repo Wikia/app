@@ -18,14 +18,9 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
-
-if (!defined('MEDIAWIKI')) {
-	// Eclipse helper - will be ignored in production
-	require_once ( "ApiQueryBase.php" );
-}
 
 class ApiQueryGlobalUsage extends ApiQueryBase {
 	public function __construct( $query, $moduleName ) {
@@ -34,6 +29,7 @@ class ApiQueryGlobalUsage extends ApiQueryBase {
 
 	public function execute() {
 		$params = $this->extractRequestParams();
+		$prop = array_flip( $params['prop'] );
 
 		$pageIds = $this->getPageSet()->getAllTitlesByNamespace();
 		if ( !empty( $pageIds[NS_FILE] ) ) {
@@ -56,18 +52,28 @@ class ApiQueryGlobalUsage extends ApiQueryBase {
 				$pageId = intval( $pageIds[$image] );
 				foreach ( $wikis as $wiki => $result ) {
 					foreach ( $result as $item ) {
-						if ( $item['namespace'] )
+						if ( $item['namespace'] ) {
 							$title = "{$item['namespace']}:{$item['title']}";
-						else
+						} else {
 							$title = $item['title'];
-						$url = WikiMap::getForeignUrl( $item['wiki'], $title );
+						}
+						$result = array(
+							'title' => $title,
+							'wiki' => WikiMap::getWikiName( $wiki )
+						);
+						if ( isset( $prop['url'] ) ) {
+							$result['url'] = WikiMap::getForeignUrl( $item['wiki'], $title );
+						}
+						if ( isset( $prop['pageid'] ) ) {
+							$result['pageid'] = $item['id'];
+						}
+						if ( isset( $prop['namespace'] ) ) {
+							$result['ns'] = $item['namespace_id'];
+						}
+
 						$fit = $apiResult->addValue( array(
 								'query', 'pages', $pageId, 'globalusage'
-							), null, array(
-								'title' => $title,
-								'url' => $url,
-								'wiki' => WikiMap::getWikiName( $wiki )
-						) );
+							), null, $result );
 
 						if ( !$fit ) {
 							$continue = "{$item['image']}|{$item['wiki']}|{$item['id']}";
@@ -90,7 +96,7 @@ class ApiQueryGlobalUsage extends ApiQueryBase {
 		$result = $this->getResult();
 		$pageIds = $this->getPageSet()->getAllTitlesByNamespace();
 		foreach ( $pageIds[NS_FILE] as $id ) {
-			$result->setIndexedTagName_internal( 
+			$result->setIndexedTagName_internal(
 					array( 'query', 'pages', $id, 'globalusage' ),
 					'gu'
 			);
@@ -99,6 +105,15 @@ class ApiQueryGlobalUsage extends ApiQueryBase {
 
 	public function getAllowedParams() {
 		return array(
+				'prop' => array(
+					ApiBase::PARAM_DFLT => 'url',
+					ApiBase::PARAM_TYPE => array(
+						'url',
+						'pageid',
+						'namespace',
+					),
+					ApiBase::PARAM_ISMULTI => true,
+				),
 				'limit' => array(
 					ApiBase :: PARAM_DFLT => 10,
 					ApiBase :: PARAM_TYPE => 'limit',
@@ -111,8 +126,14 @@ class ApiQueryGlobalUsage extends ApiQueryBase {
 		);
 	}
 
-	public function getParamDescription () {
+	public function getParamDescription() {
 		return array(
+			'prop' => array(
+				'What properties to return',
+				' url        - Adds url ',
+				' pageid     - Adds page id',
+				' namespace  - Adds namespace id',
+			),
 			'limit' => 'How many links to return',
 			'continue' => 'When more results are available, use this to continue',
 			'filterlocal' => 'Filter local usage of the file',
@@ -122,14 +143,14 @@ class ApiQueryGlobalUsage extends ApiQueryBase {
 	public function getDescription() {
 		return 'Returns global image usage for a certain image';
 	}
-	
+
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
 			array ( 'code' => 'badcontinue', 'info' => 'Invalid continue parameter' ),
 		) );
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array (
 				"Get usage of File:Example.jpg:",
 				"  api.php?action=query&prop=globalusage&titles=File:Example.jpg",
@@ -137,6 +158,6 @@ class ApiQueryGlobalUsage extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryGlobalUsage.php 62618 2010-02-16 23:26:40Z reedy $';
+		return __CLASS__ . ': $Id: ApiQueryGlobalUsage.php 96092 2011-09-02 11:37:52Z reedy $';
 	}
 }

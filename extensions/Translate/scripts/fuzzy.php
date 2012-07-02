@@ -35,7 +35,7 @@ if ( isset( $options['help'] ) ) {
 	showUsage();
 }
 
-$bot = new FuzzyBot( $args );
+$bot = new FuzzyScript( $args );
 
 if ( isset( $options['skiplanguages'] ) ) {
 	$_skipLanguages = array();
@@ -62,7 +62,7 @@ $bot->execute();
 /**
  * Class for marking translation fuzzy.
  */
-class FuzzyBot {
+class FuzzyScript {
 	/// \list{String} List of patterns to mark.
 	private $titles = array();
 	/// \bool Check for configuration problems.
@@ -79,14 +79,6 @@ class FuzzyBot {
 	 */
 	public function __construct( $titles ) {
 		$this->titles = $titles;
-
-		global $wgTranslateFuzzyBotName;
-
-		if ( !isset( $wgTranslateFuzzyBotName ) ) {
-			STDERR( "\$wgTranslateFuzzyBotName is not set" );
-			return;
-		}
-
 		$this->allclear = true;
 	}
 
@@ -111,26 +103,30 @@ class FuzzyBot {
 		global $wgTranslateMessageNamespaces;
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$search_titles = array();
+		$search = array();
 		foreach ( $this->titles as $title ) {
-			$title = TranslateUtils::title( $title, '' );
-			$title = str_replace( ' ', '_', $title );
-			$search_titles[] = 'page_title ' . $dbr->buildLike( $title, $dbr->anyString() );
+			$title = Title::newFromText( $title );
+			$ns = $title->getNamespace();
+			if ( !isset( $search[$ns] ) ) $search[$ns] = array();
+			$search[$ns][] = 'page_title' . $dbr->buildLike( $title->getDBKey(), $dbr->anyString() );
 		}
 
-		$condArray = array(
-			'page_is_redirect'  => 0,
-			'page_namespace'    => $wgTranslateMessageNamespaces,
+		$title_conds = array();
+		foreach ( $search as $ns => $names ) {
+			if ( $ns == NS_MAIN ) $ns = $wgTranslateMessageNamespaces;
+			$titles = $dbr->makeList( $names, LIST_OR );
+			$title_conds[] = $dbr->makeList( array( 'page_namespace' => $ns, $titles ), LIST_AND );
+		}
+
+		$conds = array(
 			'page_latest=rev_id',
 			'rev_text_id=old_id',
-			$dbr->makeList( $search_titles, LIST_OR ),
+			$dbr->makeList( $title_conds, LIST_OR ),
 		);
 
 		if ( count( $this->skipLanguages ) ) {
-			$condArray[] = 'substring_index(page_title, \'/\', -1) NOT IN (' . $dbr->makeList( $this->skipLanguages ) . ')';
+			$conds[] = 'substring_index(page_title, \'/\', -1) NOT IN (' . $dbr->makeList( $this->skipLanguages ) . ')';
 		}
-
-		$conds = $dbr->makeList( $condArray, LIST_AND );
 
 		$rows = $dbr->select(
 			array( 'page', 'revision', 'text' ),
@@ -151,26 +147,6 @@ class FuzzyBot {
 	}
 
 	/**
-	 * Create FuzzyBot user if necessary.
-	 * @return \type{User}
-	 */
-	public function getImportUser() {
-		static $user = null;
-
-		if ( $user === null ) {
-			global $wgTranslateFuzzyBotName;
-			$user = User::newFromName( $wgTranslateFuzzyBotName );
-
-			if ( !$user->isLoggedIn() ) {
-				STDOUT( "Creating user $wgTranslateFuzzyBotName" );
-				$user->addToDatabase();
-			}
-		}
-
-		return $user;
-	}
-
-	/**
 	 * Does the actual edit if possible.
 	 * @param $title \type{Title}
 	 * @param $text \string
@@ -181,7 +157,7 @@ class FuzzyBot {
 		global $wgTranslateDocumentationLanguageCode, $wgUser;
 
 		$oldUser = $wgUser;
-		$wgUser = $this->getImportUser();
+		$wgUser = FuzzyBot::getUser();
 
 		STDOUT( "Updating {$title->getPrefixedText()}... ", $title );
 		if ( !$title instanceof Title ) {

@@ -1,28 +1,46 @@
 <?php
-/*
-* If URL parameters "testwikiproject" and "testwikicode" are set on page creation form, set them as user preference
-* This can be used to work with my toolserver project (http://toolserver.org/~robin/?tool=proposewiki), so users don't *have* to change their preferences (automatically is always better :p)
-*/
+/**
+ * If URL parameters "testwikiproject" and "testwikicode" are set
+ * on account creation form, set them as user preference.
+ * This can be used to work with links on other sites
+ * referring to the account creation form so users don't *have* to
+ * change their preferences (automatically is always better :p)
+ *
+ * @file
+ * @ingroup Extensions
+ * @author Robin Pepermans (SPQRobin)
+ */
+
 class AutoTestWiki {
-	function onUserCreateForm( $template ) {
-		global $wgRequest;
+
+	/**
+	 * @param $template UsercreateTemplate|UserloginTemplate
+	 * @return bool
+	 */
+	public static function onUserCreateForm( $template ) {
+		global $wgRequest, $wmincProjects;
 		$projectvalue = strtolower( $wgRequest->getVal( 'testwikiproject', '' ) );
 		$codevalue = strtolower( $wgRequest->getVal( 'testwikicode', '' ) );
-		if ( preg_match( '/[a-z][a-z][a-z]?/', $codevalue ) && in_array( $projectvalue, array( 'p', 'b', 't', 'q', 'n' ) ) ) {
-			$template->set( 'header', '<input type="hidden" name="testwiki-project" value="' . $projectvalue . '" />
-	<input type="hidden" name="testwiki-code" value="' . $codevalue . '" />
-	' );
+		if ( IncubatorTest::validateLanguageCode( $codevalue ) && isset( $wmincProjects[$projectvalue] ) ) {
+			$template->set( 'header',
+				Html::hidden('testwiki-project', $projectvalue).
+				Html::hidden('testwiki-code', $codevalue)
+			);
 		}
 		return true;
 	}
 
-	function onAddNewAccount( $user ) {
-		global $wgRequest, $wmincPref;
-		$getprojectvalue = $wgRequest->getVal( 'testwiki-project' );
-		$getcodevalue = $wgRequest->getVal( 'testwiki-code' );
-		if ( $getprojectvalue && $getcodevalue ) {
-			$user->setOption( $wmincPref . '-project', $getprojectvalue );
-			$user->setOption( $wmincPref . '-code', $getcodevalue );
+	/**
+	 * @param $user User
+	 * @return bool
+	 */
+	public static function onAddNewAccount( $user ) {
+		global $wgRequest, $wmincProjects, $wmincPref;
+		$projectvalue = $wgRequest->getVal( 'testwiki-project' );
+		$codevalue = $wgRequest->getVal( 'testwiki-code' );
+		if ( IncubatorTest::validateLanguageCode( $codevalue ) && isset( $wmincProjects[$projectvalue] ) ) {
+			$user->setOption( $wmincPref . '-project', $projectvalue );
+			$user->setOption( $wmincPref . '-code', $codevalue );
 			$user->saveSettings();
 		}
 		return true;

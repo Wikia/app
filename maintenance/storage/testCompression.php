@@ -1,7 +1,27 @@
 <?php
+/**
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup Maintenance
+ * @see wfWaitForSlaves()
+ */
 
 $optionsWithArgs = array( 'start', 'limit', 'type' );
-require( dirname(__FILE__).'/../commandLine.inc' );
+require( dirname( __FILE__ ) . '/../commandLine.inc' );
 
 if ( !isset( $args[0] )  ) {
 	echo "Usage: php testCompression.php [--type=<type>] [--start=<start-date>] [--limit=<num-revs>] <page-title>\n";
@@ -26,10 +46,10 @@ $type = isset( $options['type'] ) ? $options['type'] : 'ConcatenatedGzipHistoryB
 
 
 $dbr = wfGetDB( DB_SLAVE );
-$res = $dbr->select( 
+$res = $dbr->select(
 	array( 'page', 'revision', 'text' ),
 	'*',
-	array( 
+	array(
 		'page_namespace' => $title->getNamespace(),
 		'page_title' => $title->getDBkey(),
 		'page_id=rev_page',
@@ -56,9 +76,9 @@ foreach ( $res as $row ) {
 
 $serialized = serialize( $blob );
 $t += microtime( true );
-#print_r( $blob->mDiffMap );
+# print_r( $blob->mDiffMap );
 
-printf( "%s\nCompression ratio for %d revisions: %5.2f, %s -> %d\n", 
+printf( "%s\nCompression ratio for %d revisions: %5.2f, %s -> %d\n",
 	$type,
 	count( $hashes ),
 	$uncompressedSize / strlen( $serialized ),
@@ -73,7 +93,7 @@ foreach ( $keys as $id => $key ) {
 	$text = $blob->getItem( $key );
 	if ( md5( $text ) != $hashes[$id] ) {
 		echo "Content hash mismatch for rev_id $id\n";
-		#var_dump( $text );
+		# var_dump( $text );
 	}
 }
 $t += microtime( true );

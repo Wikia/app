@@ -3,7 +3,7 @@
 /**
  * Class representing a date which can be formatted
  *
- * @addtogroup Extensions
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * Please see the LICENCE file for terms of use and redistribution
  */

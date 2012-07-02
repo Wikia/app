@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Collection Extension for MediaWiki
  *
  * Copyright (C) PediaPress GmbH
@@ -17,17 +17,18 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 class CollectionSession {
 	static function hasSession() {
+		if ( !session_id() ) return false;
 		return isset( $_SESSION['wsCollection'] );
 	}
 
 	static function startSession() {
-		if( session_id() == '' ) {
+		if ( session_id() == '' ) {
 			wfSetupSession();
 		}
 		self::clearCollection();
@@ -41,7 +42,7 @@ class CollectionSession {
 
 	static function clearCollection() {
 		$_SESSION['wsCollection'] = array(
-			'enabled' => 'true',
+			'enabled' => true,
 			'title' => '',
 			'subtitle' => '',
 			'items' => array(),
@@ -78,20 +79,20 @@ class CollectionSession {
 		}
 		$count = 0;
 		foreach ( $_SESSION['wsCollection']['items'] as $item ) {
-			if ( $item['type'] == 'article') {
+			if ( $item['type'] == 'article' ) {
 				$count++;
 			}
 		}
 		return $count;
 	}
 
-	static function findArticle( $title, $oldid=0 ) {
+	static function findArticle( $title, $oldid = 0 ) {
 		if ( !self::hasSession() ) {
-			return -1;
+			return - 1;
 		}
 
 		foreach ( $_SESSION['wsCollection']['items'] as $index => $item ) {
-			if ( $item['type'] == 'article' && $item['title'] == $title) {
+			if ( $item['type'] == 'article' && $item['title'] == $title ) {
 				if ( $oldid ) {
 					if ( $item['revision'] == strval( $oldid ) ) {
 						return $index;
@@ -103,32 +104,46 @@ class CollectionSession {
 				}
 			}
 		}
-		return -1;
+		return - 1;
 	}
 
 	static function purge() {
+		if ( !self::hasSession() ) {
+			return false;
+		}
 		$coll = $_SESSION['wsCollection'];
 		$newitems = array();
-		foreach ( $coll['items'] as $index => $item ) {
-			if ( $item['type'] == 'article' ) {
-				$t = Title::newFromText( $item['title'] );
-				if ( $t->exists() ) {
+		if ( isset( $coll['items'] ) ) {
+			$batch = new LinkBatch;
+			$lc = LinkCache::singleton();
+			foreach ( $coll['items'] as $item ) {
+				if ( $item['type'] == 'article' ) {
+					$t = Title::newFromText( $item['title'] );
+					$batch->addObj( $t );
+				}
+			}
+			$batch->execute();
+			foreach ( $coll['items'] as $item ) {
+				if ( $item['type'] == 'article' ) {
+					$t = Title::newFromText( $item['title'] );
+					if ( $t && !$lc->isBadLink( $t->getPrefixedDbKey() ) ) {
+						$newitems[] = $item;
+					}
+				} else {
 					$newitems[] = $item;
 				}
-			} else {
-				$newitems[] = $item;
 			}
 		}
 		$coll['items'] = $newitems;
 		$_SESSION['wsCollection'] = $coll;
+		return true;
 	}
 
 	static function getCollection() {
-		self::purge();
-		return $_SESSION['wsCollection'];
+		return self::purge() ? $_SESSION['wsCollection'] : array();
 	}
 
-	static function setCollection($collection) {
+	static function setCollection( $collection ) {
 		$_SESSION['wsCollection'] = $collection;
 		self::touchSession();
 	}

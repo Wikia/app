@@ -80,7 +80,7 @@ class BlogArticle extends Article {
 	 * @access private
 	 */
 	private function showBlogListing() {
-		global $wgOut, $wgRequest, $wgMemc;
+		global $wgOut, $wgRequest, $wgMemc, $wgParser;
 
 		/**
 		 * use cache or skip cache when action=purge
@@ -109,7 +109,7 @@ class BlogArticle extends Article {
 					offset=$offset>
 					<author>$user</author>
 				</bloglist>";
-			$parserOutput = $this->getOutputFromWikitext( $text, false,  new ParserOptions() );
+			$parserOutput = $wgParser->parse($text, $this->mTitle,  new ParserOptions());
 			$listing = $parserOutput->getText();
 			$wgMemc->set( wfMemcKey( "blog", "listing", $userMem, $page ), $listing, 3600 );
 		}
@@ -220,8 +220,6 @@ class BlogArticle extends Article {
 		if ( !in_array($Title->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)) ) {
 			return true;
 		}
-
-		wfLoadExtensionMessages( 'Blogs' );
 
 		if( $Title->getNamespace() == NS_BLOG_ARTICLE ) {
 			$Article = new BlogArticle( $Title );
@@ -682,13 +680,14 @@ class BlogArticle extends Article {
 
 		$list = array();
 		$dbr = wfGetDB( DB_SLAVE );
+		$like = $dbr->buildLike( sprintf( "%s/", $oTitle->getDBkey() ), $dbr->anyString() );
 		$res = $dbr->select(
 			'watchlist',
 			'*',
 			array(
 				'wl_user' => $oUser->getId(),
 				'wl_namespace' => NS_BLOG_ARTICLE_TALK,
-				"wl_title LIKE '" . $dbr->escapeLike( $oTitle->getDBkey() ) . "/%'",
+				"wl_title $like",
 			),
 			__METHOD__
 		);

@@ -186,7 +186,7 @@ class ApiRunJob extends ApiBase {
 		);
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=runjob',
 			'api.php?action=runjob&max=5',

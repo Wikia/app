@@ -1,4 +1,14 @@
 <?php
+/**
+ * Some constant definitions for the unicode normalization module.
+ *
+ * Note: these constants must all be resolvable at compile time by HipHop, 
+ * since this file will not be executed during request startup for a compiled
+ * MediaWiki.
+ *
+ * @file
+ * @ingroup UtfNormal
+ */
 
 define( 'UNICODE_HANGUL_FIRST', 0xac00 );
 define( 'UNICODE_HANGUL_LAST',  0xd7a3 );

@@ -14,7 +14,6 @@ class WatchSubPagesHelper {
 
 	public static function AddToUserMenu( &$extraToggles ) {
 		$extraToggles[] = 'watchlistsubpages';
-		wfLoadExtensionMessages( 'WatchSubPages' );
 		return true;
 	}
 

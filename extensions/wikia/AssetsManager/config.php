@@ -49,7 +49,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
-		'//skins/common/jquery/jquery.md5.js',
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
@@ -57,7 +56,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/Meebo/meebo.js',
-		'//extensions/wikia/PageLayoutBuilder/js/view.js', // TODO: load it on demand
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//skins/oasis/js/GlobalModal.js',  // This needs to load last after all common extensions, please keep this last.
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
@@ -102,7 +100,8 @@ $config['oasis_blocking'] = array(
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#function_AssetsConfig::getJQueryUrl',
+//		jQuery is now loaded via ResourceLoader
+//		'#function_AssetsConfig::getJQueryUrl',
 		'//skins/common/jquery/jquery.json-2.2.js',
 		'//skins/common/jquery/jquery.getcss.js',
 		'//skins/common/jquery/jquery.cookies.2.1.0.js',
@@ -126,30 +125,10 @@ $config['oasis_jquery'] = array(
 $config['oasis_wikia_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/wikia/my.class.js',
-		'//skins/common/wikia/querystring.js',
-		'//skins/common/wikia/cookies.js',
-		'//skins/common/wikia/log.js',
-	)
-);
-
-/** YUI **/
-//(deprecated - see BugId:3116)
-
-$config['yui'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//skins/common/yui_2.5.2/utilities/utilities.js',
-		'//skins/common/yui_2.5.2/cookie/cookie-beta.js',
-		'//skins/common/yui_2.5.2/container/container.js',
-		'//skins/common/yui_2.5.2/autocomplete/autocomplete.js',
-		'//skins/common/yui_2.5.2/animation/animation-min.js',
-		'//skins/common/yui_2.5.2/logger/logger.js',
-		'//skins/common/yui_2.5.2/menu/menu.js',
-		'//skins/common/yui_2.5.2/tabview/tabview.js',
-		'//skins/common/yui_2.5.2/slider/slider.js',
-		'//skins/common/yui_extra/tools-min.js',
-		'//skins/common/yui_extra/carousel-min.js',
+		'//resources/wikia/libraries/my.class/my.class.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/log.js',
 	)
 );
 
@@ -172,14 +151,14 @@ $config['oasis_nojquery_shared_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// shared libraries
-		'//skins/common/wikibits.js',
-		'//skins/common/mwsuggest.js',
-		'//skins/common/ajax.js',
+        # the two following are loaded using ResourceLoader
+//		'//skins/common/wikibits.js'
+//		'//skins/common/ajax.js',
 		'//skins/oasis/js/tracker.js',
-		'//skins/common/wikia/my.class.js',
-		'//skins/common/wikia/querystring.js',
-		'//skins/common/wikia/cookies.js',
-		'//skins/common/wikia/log.js',
+		'//resources/wikia/libraries/my.class/my.class.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/log.js',
 		'//skins/common/jquery/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
@@ -212,6 +191,7 @@ $config['oasis_anon_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//skins/oasis/js/LatestActivity.js',
+		'//skins/oasis/js/AnonTOC.js',
 		'//extensions/wikia/Interstitial/Exitstitial.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
@@ -222,8 +202,6 @@ $config['oasis_anon_js'] = array(
 $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/ajaxwatch.js',
-		'//extensions/wikia/ArticleAjaxLoading/ArticleAjaxLoading.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 	)
@@ -236,9 +214,9 @@ $config['wikiaphone_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		//core functionality required early in the process before jQuery
-		'//skins/common/wikia/cookies.js',
-		'//skins/common/wikia/querystring.js',
-		'//skins/common/wikia/log.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/log.js',
 
 		'#group_oasis_jquery',
 
@@ -264,9 +242,9 @@ $config['wikiamobile_js_head'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//skins/common/zepto/zepto-0.8.js',
-		'//skins/common/wikia/module.js',
-		'//skins/common/wikia/cookies.js',
+		'//resources/wikia/libraries/zepto/zepto-0.8.js',
+		'//resources/wikia/module.js',
+		'//resources/wikia/modules/cookies.js',
 		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
 );
@@ -277,15 +255,19 @@ $config['wikiamobile_js_body'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		//platform core components go first
-		'//skins/common/wikia/cache.js',
-		'//skins/common/wikia/querystring.js',
-		'//skins/common/wikia/log.js',
+		'//resources/wikia/modules/cache.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/log.js',
 
-		//feature detection and polifills go second
-		'//skins/common/modernizr/modernizr.wikiamobile.js',
-		'//skins/common/wikia/outerhtml.js',
-		'//skins/common/modernizr/feature-detects/positionfixed.wikiamobile.js',
-		'//skins/common/modernizr/feature-detects/overflow.wikiamobile.js',
+		// deferred.js - jQuery-free implementation (BugId:34943)
+		'//resources/wikia/libraries/deferred/deferred.js',
+		'//resources/wikia/libraries/deferred/deferred.api.js',
+
+		//feature detection and polyfills go second
+		'//resources/wikia/libraries/modernizr/modernizr.wikiamobile.js',
+		'//resources/wikia/polyfills/outerhtml.js',
+		'//resources/wikia/libraries/modernizr/feature-detects/positionfixed.wikiamobile.js',
+		'//resources/wikia/libraries/modernizr/feature-detects/overflow.wikiamobile.js',
 
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
@@ -293,8 +275,8 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
 		//framework
-		'//skins/common/zepto/zepto.getcss.js',
-		'//skins/common/zepto/zepto.wikiamobile.js',
+		'//resources/wikia/libraries/zepto/zepto.getcss.js',
+		'//resources/wikia/libraries/zepto/zepto.wikiamobile.js',
 
 		//tracker
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
@@ -306,6 +288,7 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaMobile/js/toc.js',
 		'//extensions/wikia/WikiaMobile/js/loader.js',
 		'//extensions/wikia/WikiaMobile/js/toast.js',
+		'//extensions/wikia/WikiaMobile/js/pager.js',
 		'//extensions/wikia/WikiaMobile/js/modal.js',
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/topbar.js',
@@ -324,11 +307,19 @@ $config['wikiamobile_js_body'] = array(
 	)
 );
 
+$config['mediagallery_wikiamobile_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/js/mediagallery.js'
+	)
+);
+
 $config['wikiamobile_autocomplete_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/WikiaMobile/js/autocomplete.js',
+		'//extensions/wikia/WikiaMobile/js/autocomplete.js'
 	)
 );
 
@@ -340,7 +331,7 @@ $config['wikiamobile_scroll_js'] = array(
 	)
 );
 
-$config['categorypage_js_wikiamobile'] = array(
+$config['categorypage_wikiamobile_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
@@ -361,7 +352,7 @@ $config['wikiaapp_css'] = array(
 $config['wikiaapp_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins//common/zepto/zepto-0.8.js',
+		'//resources/wikia/libraries/zepto/zepto-0.8.js',
 		'//skins/wikiaapp/main.js'
 	)
 );
@@ -372,30 +363,28 @@ $config['monobook_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		//core functionality required early in the process before jQuery
-		'//skins/common/wikia/cookies.js',
-        '//skins/common/wikia/querystring.js',
-        '//skins/common/wikia/log.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/log.js',
 
 		'#group_oasis_jquery',
 
-		'//skins/common/yui_2.5.2/utilities/utilities.js',
-		'//skins/common/yui_2.5.2/cookie/cookie-beta.js',
-		'//skins/common/yui_2.5.2/container/container.js',
-		'//skins/common/yui_2.5.2/autocomplete/autocomplete.js',
-		'//skins/common/yui_2.5.2/logger/logger.js',
-		'//skins/common/yui_2.5.2/menu/menu.js',
-		'//skins/common/yui_2.5.2/tabview/tabview.js',
-		'//skins/common/yui_extra/tools-min.js',
+		// TODO: remove dependency on YUI (see BugId:3116)
+		'//resources/wikia/libraries/yui/utilities/utilities.js',
+		'//resources/wikia/libraries/yui/cookie/cookie-beta.js',
+		'//resources/wikia/libraries/yui/container/container.js',
+		'//resources/wikia/libraries/yui/autocomplete/autocomplete.js',
+		'//resources/wikia/libraries/yui/logger/logger.js',
+		'//resources/wikia/libraries/yui/menu/menu.js',
+		'//resources/wikia/libraries/yui/tabview/tabview.js',
+		'//resources/wikia/libraries/yui/extra/tools-min.js',
 
-		'//skins/common/wikibits.js',
-		'//skins/common/ajax.js',
-		'//skins/common/ajaxwatch.js',
+//		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
+//		'//skins/common/ajax.js',
 		'//skins/monobook/main.js',
 		'//skins/monobook/tracker.js',
 		'//skins/common/tracker.js',
-		'//skins/common/contributed.js',
-		'//skins/common/mwsuggest.js',
-		'//skins/common/wikia/my.class.js',
+		'//resources/wikia/libraries/my.class/my.class.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/FBConnect/fbconnect.js',
@@ -467,7 +456,6 @@ $config['eplrte'] = array(
 $config['mini_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/edit.js',
 		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
 		'//extensions/wikia/EditPageLayout/js/editor/Buttons.js',
 		'//extensions/wikia/EditPageLayout/js/editor/Modules.js',
@@ -552,9 +540,9 @@ $config['theme_designer_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		//core functionality required early in the process before jQuery
-		'//skins/common/wikia/cookies.js',
-		'//skins/common/wikia/querystring.js',
-		'//skins/common/wikia/log.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/log.js',
 
 		'#group_oasis_jquery',
 
@@ -563,21 +551,20 @@ $config['theme_designer_js'] = array(
 		'//skins/common/jquery/jquery.wikia.tracker.js',
 		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
 		'//skins/common/jquery/jquery.wikia.tooltip.js',
+		'//resources/wikia/libraries/aim/jquery.aim.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
-		'//extensions/wikia/ThemeDesigner/js/aim.js',
 	)
 );
 
 /** PhotoPop **/
-
 $config['photopop'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/wikia/cookies.js',
-        '//skins/common/wikia/querystring.js',
-        '//skins/common/wikia/log.js',
-		'//extensions/wikia/PhotoPop/shared/lib/mustache.js',
-		'//extensions/wikia/PhotoPop/shared/lib/my.class.js',
+		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/log.js',
+		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/libraries/my.class/my.class.js',
 		'//extensions/wikia/PhotoPop/shared/lib/store.js',
 		'//extensions/wikia/PhotoPop/shared/lib/observable.js',
 		'//extensions/wikia/PhotoPop/shared/lib/reqwest.js',
@@ -707,16 +694,6 @@ $config['wikiahubs_scss_wikiamobile'] = array(
 		'skin' => 'wikiamobile',
 		'assets' => array(
 				'//extensions/wikia/WikiaHubs/css/WikiaHubs.wikiamobile.scss'
-		)
-);
-
-/** Weinre web inspector **/
-
-$config['weinre_js'] = array(
-		'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'wikiaphone' ),
-		'type' => AssetsManager::TYPE_JS,
-		'assets' => array(
-				'#function_AssetsConfig::getWeinreJS'
 		)
 );
 

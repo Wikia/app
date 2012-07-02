@@ -22,14 +22,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /**
  * sometimes class Job is uknown in this point
  */
-include_once( $GLOBALS[ "IP" ] . "/includes/JobQueue.php" );
+include_once( "$IP/includes/job/JobQueue.php" );
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 
 
 /**
  * maintenance script from CheckUser
  */
-include_once( $GLOBALS['IP'] . "/extensions/CheckUser/install.inc" );
+include_once( "$IP/extensions/CheckUser/install.inc" );
 
 
 class CreateWikiLocalJob extends Job {
@@ -127,7 +127,6 @@ class CreateWikiLocalJob extends Job {
 			? $this->mParams->language
 			: WikiFactory::getVarValueByName( "wgLanguageCode", $this->mParams->city_id );
 
-
 		$this->moveMainPage();
 		$this->changeStarterContributions();
 		$this->changeImagesTimestamps();
@@ -153,6 +152,7 @@ class CreateWikiLocalJob extends Job {
 			'url'	=> $this->mParams->url,
 			'city_id' => $this->mParams->city_id
 		);
+		
 		wfRunHooks( 'CreateWikiLocalJob-complete', array( $params ) );
 
 		wfProfileOut( __METHOD__ );
@@ -390,7 +390,16 @@ class CreateWikiLocalJob extends Job {
 				$ok = $article->updateRestrictions( $restrictions, $reason, $cascade, $expiry_array );
 			}
 			else {
-				$ok = $title->updateTitleProtection( $titleRestrictions, $reason, $expiry_string );
+				$wikiPage = WikiPage::factory($title);
+				$ignored_reference = false;	// doing this because MW1.19 doUpdateRestrictions() is weird, and has this passed by reference
+				$status = $wikiPage->doUpdateRestrictions(
+					array('create' => $titleRestrictions),
+					array('create' => $expiry_string),
+					$ignored_reference,
+					$reason,
+					$wgUser
+				);
+				$ok = $status->isOK();
 			}
 
 			if ( $ok ) {
@@ -483,10 +492,10 @@ class CreateWikiLocalJob extends Job {
 	 *
 	 */
 	private function changeStarterContributions( ) {
-                
+
 		wfProfileIn( __METHOD__ );
                 $dbw = wfGetDB( DB_MASTER );
-                
+
                 /**
                  * BugId:15644 - We want to change contributions only for
                  * revisions created during the starter import - (timestamp not
@@ -500,7 +509,7 @@ class CreateWikiLocalJob extends Job {
                  */
                 if ( !empty( $this->mParams->sDbStarter ) ) {
                     $oStarterDb = F::app()->wf->getDb( DB_SLAVE, array(), $this->mParams->sDbStarter );
-                    
+
                     if ( is_object( $oStarterDb ) ) {
                         $oLatestRevision = $oStarterDb->selectRow(
                             array( 'revision' ),
@@ -529,7 +538,7 @@ class CreateWikiLocalJob extends Job {
                         $oStarterDb->close();
                     }
                 }
-                
+
                 Wikia::log( __METHOD__, 'info', "about to change rev_user, rev_user_text and rev_timestamp in revisions older than {$sCondsRev}" );
 		Wikia::log( __METHOD__, 'info', "about to change img_user, img_user_text and img_timestamp in images older than {$sCondsImg}" );
 
@@ -542,7 +551,7 @@ class CreateWikiLocalJob extends Job {
 			'id'   => $contributor->getId(),
 			'name' => $contributor->getName()
 		);
-		
+
 		$dbw->update(
 			"revision",
 			array(
@@ -670,7 +679,7 @@ class CreateWikiLocalJob extends Job {
 	 */
 	private function sendRevisionToScribe( ) {
 		global $wgEnableScribeNewReport;
-		
+
 		wfProfileIn( __METHOD__ );
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -690,26 +699,26 @@ class CreateWikiLocalJob extends Job {
 			$oUser = User::newFromId($oRow->rev_user);
 			# revision
 			$oRevision = Revision::newFromId($oRow->rev_id);
-			if ( $wgEnableScribeNewReport ) {	
-				$key = ( isset($pages[$oRow->page_id]) ) ? 'edit' : 'create';			
-				$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => $key, 'archive' => 0 ) );		
+			if ( $wgEnableScribeNewReport ) {
+				$key = ( isset($pages[$oRow->page_id]) ) ? 'edit' : 'create';
+				$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => $key, 'archive' => 0 ) );
 				if ( is_object( $oScribeProducer ) ) {
 					if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision ) ) {
 						$oScribeProducer->sendLog();
 					}
 				}
 			} else {
-				$flags = "";				
+				$flags = "";
 				# status - new or edit
 				$status = Status::newGood( array() );
 				# check is new
 				$status->value['new'] = ( isset($pages[$oRow->page_id]) ? false : true );
 				# call function
 				$archive = 0;
-		
-				$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );		
-			}			
-			
+
+				$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
+			}
+
 			$pages[$oRow->page_id] = $oRow->rev_id;
 			$loop++;
 		}
@@ -756,7 +765,7 @@ class CreateWikiLocalJob extends Job {
 			$file = wfLocalFile( $oTitle );
 			if ( is_object($file) ) {
 				# add to upload_log
-				UploadInfo::log( $oTitle, $file->getFullPath(), $file->getRel(), "", "u" );
+				UploadInfo::log( $oTitle, $file->getPath(), $file->getRel(), "", "u" );
 				$loop++;
 			}
 		}

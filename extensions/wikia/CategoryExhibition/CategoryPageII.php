@@ -24,7 +24,6 @@ class CategoryPageII extends CategoryPage {
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss'));
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.IE.scss'), '', 'lte IE 8' );
 		$this->addScripts();
-		wfLoadExtensionMessages( 'CategoryPageII' );
 		$viewer = new $this->viewerClass( $this->mTitle );
 		$wgOut->addHTML( $viewer->getFormHTML() );
 	}

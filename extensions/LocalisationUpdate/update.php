@@ -4,6 +4,7 @@ $IP = strval( getenv( 'MW_INSTALL_PATH' ) ) !== ''
 	? getenv( 'MW_INSTALL_PATH' )
 	: realpath( dirname( __FILE__ ) . "/../../" );
 
+// TODO: migrate to maintenance class
 require_once( "$IP/maintenance/commandLine.inc" );
 
 if( isset( $options['help'] ) ) {
@@ -17,6 +18,7 @@ if( isset( $options['help'] ) ) {
 	print "  --skip-extensions Don't fetch any extension files\n";
 	print "  --all             Fetch all present extensions, not just those enabled\n";
 	print "  --outdir=<dir>    Override output directory for serialized update files\n";
+	print "  --svnurl=<url>    URL to SVN repository, or path to local SVN checkout. Default: $wgLocalisationUpdateSVNURL\n";
 	print "\n";
 	exit( 0 );
 }

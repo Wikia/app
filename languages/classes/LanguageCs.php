@@ -6,13 +6,18 @@
  */
 class LanguageCs extends Language {
 
-	# Plural transformations
-	# Invoked by putting
-	#   {{plural:count|form1|form2-4|form0,5+}} for two forms plurals
-	#   {{plural:count|form1|form0,2+}} for single form plurals
-	# in a message
+	/**
+	 * Plural transformations
+	 * Invoked by putting
+	 * {{plural:count|form1|form2-4|form0,5+}} for two forms plurals
+	 * {{plural:count|form1|form0,2+}} for single form plurals
+	 * in a message
+	 * @param $count int
+	 * @param $forms array
+	 * @return string
+	 */
 	function convertPlural( $count, $forms ) {
-		if ( !count($forms) ) { return ''; }
+		if ( !count( $forms ) ) { return ''; }
 		$forms = $this->preConvertPlural( $forms, 3 );
 
 		switch ( $count ) {

@@ -57,7 +57,7 @@ EOT;
 		}
 		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem("$slotname", "{$slot['size']}", "DART"));
 EOT;
-			if (strpos($slotname, 'EXIT_STITIAL') !== FALSE || $slotname == 'MODAL_RECTANGLE') {
+			if (strpos($slotname, 'EXIT_STITIAL') !== FALSE || $slotname == 'MODAL_RECTANGLE' || $slotname == 'MODAL_INTERSTITIAL') {
 				$out .= <<<EOT
 		if (window.loadAd) {
 			AdDriverDelayedLoader.load();
@@ -77,8 +77,7 @@ EOT;
 EOT;
 			if ($slot['load_priority'] >= self::HIGH_LOADPRIORITY_FLOOR) {
 				$out .= <<<EOT
-	var tgId = getTreatmentGroup(EXP_AD_LOAD_TIMING);
-	if (window.wgLoadAdDriverOnLiftiumInit || tgId == TG_AS_WRAPPERS_ARE_RENDERED) {
+	if (window.wgLoadAdDriverOnLiftiumInit || (window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED))) {
 		if (window.adDriverCanInit) {
 			AdDriverDelayedLoader.prepareSlots(AdDriverDelayedLoader.highLoadPriorityFloor);
 		}

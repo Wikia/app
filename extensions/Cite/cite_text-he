@@ -8,7 +8,7 @@ __NOTOC__
 * מוציא לאור: ''{{SITENAME}}, {{int:sitesubtitle}}''.
 * תאריך השינוי האחרון: {{CURRENTDAY}} {{CURRENTMONTHNAMEGEN}} {{CURRENTYEAR}} {{CURRENTTIME}} UTC
 * תאריך האחזור: <citation>{{CURRENTDAY}} {{CURRENTMONTHNAMEGEN}} {{CURRENTYEAR}} {{CURRENTTIME}} UTC</citation>
-* קישור קבוע: {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
+* קישור קבוע: {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
 * קוד זיהוי גרסה: {{REVISIONID}}
 
 </div>
@@ -17,23 +17,23 @@ __NOTOC__
 == סגנונות ציטוט עבור {{FULLPAGENAME}} ==
 
 === [[APA style]] ===
-{{FULLPAGENAME}}. ({{CURRENTYEAR}}, {{CURRENTMONTHNAME}} {{CURRENTDAY}}). ''{{SITENAME}}, {{int:sitesubtitle}}''. אוחזר <citation>{{CURRENTTIME}}, {{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation> מתוך {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
+{{FULLPAGENAME}}. ({{CURRENTYEAR}}, {{CURRENTMONTHNAME}} {{CURRENTDAY}}). ''{{SITENAME}}, {{int:sitesubtitle}}''. אוחזר <citation>{{CURRENTTIME}}, {{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation> מתוך {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
 
 === [[The MLA style manual|MLA style]] ===
-"{{FULLPAGENAME}}." ''{{SITENAME}}, {{int:sitesubtitle}}''. {{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC. <citation>{{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}}</citation> &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;.
+"{{FULLPAGENAME}}." ''{{SITENAME}}, {{int:sitesubtitle}}''. {{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC. <citation>{{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}}</citation> &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;.
 
 === [[MHRA Style Guide|MHRA style]] ===
-תורמי {{SITENAME}}, '{{FULLPAGENAME}}', ''{{SITENAME}}, {{int:sitesubtitle}},'' {{CURRENTDAY}} {{CURRENTMONTHNAMEGEN}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC, &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt; [אוחזר <citation>{{CURRENTDAY}} {{CURRENTMONTHNAMEGEN}} {{CURRENTYEAR}}</citation>]
+תורמי {{SITENAME}}, '{{FULLPAGENAME}}', ''{{SITENAME}}, {{int:sitesubtitle}},'' {{CURRENTDAY}} {{CURRENTMONTHNAMEGEN}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC, &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt; [אוחזר <citation>{{CURRENTDAY}} {{CURRENTMONTHNAMEGEN}} {{CURRENTYEAR}}</citation>]
 
 === [[The Chicago Manual of Style|Chicago style]] ===
-תורמי {{SITENAME}}, "{{FULLPAGENAME}}," ''{{SITENAME}}, {{int:sitesubtitle}},'' {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (אוחזר <citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation>).
+תורמי {{SITENAME}}, "{{FULLPAGENAME}}," ''{{SITENAME}}, {{int:sitesubtitle}},'' {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (אוחזר <citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation>).
 
 === [[Council of Science Editors|CBE/CSE style]] ===
 תורמי {{SITENAME}}. {{FULLPAGENAME}} [אינטרנט]. {{SITENAME}}, {{int:sitesubtitle}}; {{CURRENTYEAR}} {{CURRENTMONTHABBREV}} {{CURRENTDAY}}, {{CURRENTTIME}} UTC [צוטט <citation>{{CURRENTYEAR}} {{CURRENTMONTHABBREV}} {{CURRENTDAY}}</citation>]. זמין ב:
-{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
+{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
 
 === [[Bluebook|Bluebook style]] ===
-{{FULLPAGENAME}}, {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (ביקור אחרון <citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation>).
+{{FULLPAGENAME}}, {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (ביקור אחרון <citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation>).
 
 === ערך [[BibTeX]] ===
 
@@ -41,7 +41,7 @@ __NOTOC__
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{int:sitesubtitle}}",
     year = "{{CURRENTYEAR}}",
-    url = "{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
+    url = "{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
     note = "[מקוון; אוחזר <citation>{{CURRENTDAY}}-{{CURRENTMONTHNAME}}-{{CURRENTYEAR}}</citation>]"
   }
 
@@ -51,7 +51,7 @@ __NOTOC__
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{int:sitesubtitle}}",
     year = "{{CURRENTYEAR}}",
-    url = "'''\url{'''{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
+    url = "'''\url{'''{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
     note = "[מקוון; אוחזר <citation>{{CURRENTDAY}}-{{CURRENTMONTHNAME}}-{{CURRENTYEAR}}</citation>]"
   }
 

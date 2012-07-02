@@ -5,37 +5,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 CKEDITOR.dialog.add( 'link', function( editor )
 {
-	var plugin = CKEDITOR.plugins.link;
-	var linkTextDirty = false;
-	var existsTimeout;
-	var setMode = function( mode )
-	{
-		var linkDialog = CKEDITOR.dialog.getCurrent();
+	var plugin = CKEDITOR.plugins.link,
+		linkTextDirty = false,
+		existsTimeout;
 
-		// two things must be set to switch between int/ext mode,
-		// the upper-right mode label and the radio button
-		if( mode == 'external' ){
-			var radios = linkDialog.getContentElement('internal','linktype');
-			if( radios.getValue() != 'ext' ){
-				radios.setValue('ext');
-			}
-			$(".link-type-note span").html(editor.lang.link.status.external);
-			$(".link-type-note img")[0].className = 'sprite external';
-
-			// disable suggestions on the name box if external url
-		}else if( mode == 'internal' ){
-			var radios = linkDialog.getContentElement('internal','linktype');
-			if( radios.getValue() != 'wiki' ){
-				radios.setValue('wiki');
-			}
-			checkStatus();
-
-			// setup MW suggest
-			linkDialog.enableSuggesionsOn(linkDialog.getContentElement('internal', 'name'));
-		}
-	};
-	var checkStatus = function()
-	{
+	var checkStatus = function() {
 		var pageName = CKEDITOR.dialog.getCurrent().getContentElement('internal','name').getValue();
 		if( pageName ){
 			$(".link-type-note span").html(editor.lang.link.status.checking);
@@ -54,8 +28,35 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		}
 		existsTimeout = null;
 	};
-	var setupDialog = function( editor, element )
-	{
+
+	var setMode = function( mode ) {
+		var linkDialog = CKEDITOR.dialog.getCurrent(),
+			radios;
+
+		// two things must be set to switch between int/ext mode,
+		// the upper-right mode label and the radio button
+		if( mode == 'external' ){
+			radios = linkDialog.getContentElement('internal','linktype');
+			if( radios.getValue() != 'ext' ){
+				radios.setValue('ext');
+			}
+			$(".link-type-note span").html(editor.lang.link.status.external);
+			$(".link-type-note img")[0].className = 'sprite external';
+
+			// disable suggestions on the name box if external url
+		}else if( mode == 'internal' ){
+			radios = linkDialog.getContentElement('internal','linktype');
+			if( radios.getValue() != 'wiki' ){
+				radios.setValue('wiki');
+			}
+			checkStatus();
+
+			// setup MW suggest
+			linkDialog.enableSuggesionsOn(linkDialog.getContentElement('internal', 'name'));
+		}
+	};
+
+	var setupDialog = function( editor, element ) {
 		// set value of link dialog fields
 		function setValues(tab, link, label) {
 			var dialog = CKEDITOR.dialog.getCurrent();
@@ -71,7 +72,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		linkTextDirty = false;
 
 		// get link' meta data
-		var data = element ? $(element.$).getData() : null;
+		var data = element ? $(element.$).getData() : null,
+			linkTextField;
 
 		if (data) {
 			// handle existing links
@@ -108,7 +110,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			RTE.log(data);
 
-			var linkTextField = this.getContentElement('internal', 'label');
+			linkTextField = this.getContentElement('internal', 'label');
 			switch (data.type) {
 				case 'external':
 					setValues('internal', data.link);
@@ -132,13 +134,14 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			}
 		}
 		else {
-			var linkTextField = this.getContentElement('internal', 'label');
+			linkTextField = this.getContentElement('internal', 'label');
 			//linkTextField.enable();
 
 			// creating new link from selection
-			var selectionContent = RTE.tools.getSelectionContent();
+			var selectionContent = RTE.tools.getSelectionContent(),
+				tab = 'internal';
+
 			setMode('internal');
-			var tab = 'internal';
 
 			if( selectionContent ){
 				// check for external link (RT #47454)
@@ -255,34 +258,35 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							}
 						},
 						validate: function() {
-							var linktype = this.getDialog().getContentElement('internal', 'linktype').getValue();
+							var linktype = this.getDialog().getContentElement('internal', 'linktype').getValue(),
+								re,
+								isValid;
+
 							if( linktype == 'wiki' ){
 								// validate page name and anchors (RT #34047)
-								var re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
+								re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
 								var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
 
-								var isValid = validPageNameFunc.apply(this);
+								isValid = validPageNameFunc.apply(this);
 								if (!isValid) {
 									RTE.track('link', 'dialog', 'error');
 								}
-
-								return isValid;
 							}
-							else{
+							else {
 								// validate URL
-								var re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
+								re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
 								if (!this.getValue().match(re)) {
 									this.setValue('http://' + this.getValue());
 								}
 								var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
 
-								var isValid = validUrlFunc.apply(this);
+								isValid = validUrlFunc.apply(this);
 								if (!isValid) {
 									RTE.track('link', 'dialog', 'error');
 								}
-
-								return isValid;
 							}
+
+							return isValid;
 						}
 					},
 					{
@@ -335,10 +339,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				me = this;
 
 			element = plugin.getSelectedLink( editor );
-			if ( element && element.getAttribute( 'href' ) )
+			if ( element && element.getAttribute( 'href' ) ) {
 				selection.selectElement( element );
-			else
+			}
+			else {
 				element = null;
+			}
 
 			// remove old page status info
 			$(".link-type-note span").html('...');
@@ -357,18 +363,18 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			}
 
 			// for tracking
-			var type = '';
-
-			// get selected type
-			var currentType = this.getContentElement('internal', 'linktype').getValue();
+			var type = '',
+				// get selected type
+				currentType = this.getContentElement('internal', 'linktype').getValue(),
+				element;
 
 			// create new link
 			if (!this._.selectedElement) {
 				RTE.log('creating new link...');
-				var element = createNewLink.apply(this, [editor]);
+				element = createNewLink.apply(this, [editor]);
 			}
 			else {
-				var element = this._.selectedElement;
+				element = this._.selectedElement;
 			}
 
 			// extra check

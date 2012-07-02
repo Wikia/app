@@ -14,6 +14,11 @@
  * and generate YAML files with syck or spyc backend.
  */
 class TranslateYaml {
+
+	/**
+	 * @param $filename string
+	 * @return array
+	 */
 	public static function parseGroupFile( $filename ) {
 		$data = file_get_contents( $filename );
 		$documents = preg_split( "/^---$/m", $data, -1, PREG_SPLIT_NO_EMPTY );
@@ -41,6 +46,9 @@ class TranslateYaml {
 
 	/**
 	 * Merges a document template (base) to actual definition (specific)
+	 * @param $base
+	 * @param $specific
+	 * @return array
 	 */
 	public static function mergeTemplate( $base, $specific ) {
 		foreach ( $specific as $key => $value ) {
@@ -53,7 +61,11 @@ class TranslateYaml {
 		return $base;
 	}
 
-
+	/**
+	 * @param $text string
+	 * @return array
+	 * @throws MWException
+	 */
 	public static function loadString( $text ) {
 		global $wgTranslateYamlLibrary;
 
@@ -73,8 +85,12 @@ class TranslateYaml {
 		}
 	}
 
+	/**
+	 * @param $yaml array
+	 * @return array
+	 */
 	public static function fixSyckBooleans( &$yaml ) {
-		foreach ( $yaml as $key => &$value ) {
+		foreach ( $yaml as &$value ) {
 			if ( is_array( $value ) ) {
 				self::fixSyckBooleans( $value );
 			} elseif ( $value === 'yes' ) {
@@ -84,6 +100,10 @@ class TranslateYaml {
 		return $yaml;
 	}
 
+	/**
+	 * @param $yaml array
+	 * @return array
+	 */
 	public static function fixSpycSpaces( &$yaml ) {
 		foreach ( $yaml as $key => &$value ) {
 			if ( is_array( $value ) ) {
@@ -110,7 +130,7 @@ class TranslateYaml {
 				return Spyc::YAMLDump( $text );
 			case 'syck-pecl':
 				// Just horrible output
-				//return syck_dump( $text );
+				// return syck_dump( $text );
 			case 'syck':
 				return self::syckDump( $text );
 			default:
@@ -169,8 +189,8 @@ class TranslateYaml {
 			   'sub deutf8 {' .
 			       'if(ref($_[0]) eq "HASH") {' .
 			           'return { map { deutf8($_) } %{$_[0]} };' .
-                   '} elsif(ref($_[0]) eq "ARRAY") {' .
-                       'return [ map { deutf8($_) } @{$_[0]} ];' .
+			       '} elsif(ref($_[0]) eq "ARRAY") {' .
+			           'return [ map { deutf8($_) } @{$_[0]} ];' .
 			       '} else {' .
 			           'my $s = $_[0];' .
 			           'utf8::decode($s);' .

@@ -19,6 +19,7 @@
 			'InsertSlideshow',
 			'InsertSlider',
 			'InsertVideo',
+			'InsertMedia',
 			'Poll',
 			'Table'
 		],

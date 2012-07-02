@@ -74,12 +74,10 @@ class UserStatsService extends Service {
 	function getStats() {
 		wfProfileIn(__METHOD__);
 
-		global $wgMemc;
-
 		// try to get cached data
 		$key = $this->getKey('stats4');
 
-		$stats = $wgMemc->get($key);
+		$stats = F::app()->wg->memc->get($key);
 		if (empty($stats)) {
 			wfProfileIn(__METHOD__ . '::miss');
 			wfDebug(__METHOD__ . ": cache miss\n");
@@ -106,7 +104,7 @@ class UserStatsService extends Service {
 			$stats['likes'] = 20 + ($this->userId % 50);
 
 			if (!empty($stats)) {
-				$wgMemc->set($key, $stats, self::CACHE_TTL);
+				F::app()->wg->memc->set($key, $stats, self::CACHE_TTL);
 			}
 
 			wfProfileOut(__METHOD__ . '::miss');

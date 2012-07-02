@@ -13,12 +13,30 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
+$wgResourceModules['ext.sm.forminputs'] = array(
+	'dependencies' => array( 'ext.maps.coord' ),
+	'localBasePath' => dirname( __FILE__ ),
+	'remoteBasePath' => $smgScriptPath .  '/includes/forminputs',	
+	'group' => 'ext.semanticmaps',
+	'scripts' => array(
+		'jquery.mapforminput.js'
+	),
+	'messages' => array(
+		'semanticmaps_enteraddresshere',
+		'semanticmaps-updatemap',
+		'semanticmaps_lookupcoordinates',
+		'semanticmaps-forminput-remove',
+		'semanticmaps-forminput-add',
+		'semanticmaps-forminput-locations'
+	)
+);
+
 $wgHooks['MappingFeatureLoad'][] = 'SMFormInputs::initialize';
 
 final class SMFormInputs {
 	
 	public static function initialize() {
-		global $smgDir, $wgAutoloadClasses, $sfgFormPrinter;
+		global $wgAutoloadClasses;
 
 		// This code should not get called when SF is not loaded, but let's have this
 		// check to not run into problems when people mess up the settings.
@@ -55,8 +73,6 @@ final class SMFormInputs {
 		return true;
 	}
 	
-
-	
 	/**
 	 * Adds a mapping service's form hook.
 	 *
@@ -64,14 +80,16 @@ final class SMFormInputs {
 	 * @param strig $mainName
 	 */
 	private static function initFormHook( $inputName, $mainName = '' ) {
-		global $wgAutoloadClasses, $sfgFormPrinter, $smgDir;
+		global $sfgFormPrinter;
 
 		// Add the form input hook for the service.
 		$field_args = array();
 		
-		if ( $mainName != '' ) {
+		if ( $mainName !== '' ) {
 			$field_args['service_name'] = $mainName;
 		}
+		
+		//$sfgFormPrinter->registerInputType( 'SMMapInput' );
 		
 		$sfgFormPrinter->setInputTypeHook( $inputName, 'smfSelectFormInputHTML', $field_args );
 	}
@@ -91,12 +109,7 @@ final class SMFormInputs {
  */
 function smfSelectFormInputHTML( $coordinates, $input_name, $is_mandatory, $is_disabled, array $field_args ) {
 	// Get the service name from the field_args, and set it to null if it doesn't exist.
-    if ( array_key_exists( 'service_name', $field_args ) ) {
-        $serviceName = $field_args['service_name'];
-    }
-    else {
-        $serviceName = null;
-    }
+	$serviceName = array_key_exists( 'service_name', $field_args ) ? $field_args['service_name'] : null;
     
 	// Get the instance of the service class.
 	$service = MapsMappingServices::getValidServiceInstance( $serviceName, 'fi' );
@@ -105,5 +118,5 @@ function smfSelectFormInputHTML( $coordinates, $input_name, $is_mandatory, $is_d
 	$formInput = $service->getFeatureInstance( 'fi' );    
     
     // Get and return the form input HTML from the hook corresponding with the provided service.
-    return $formInput->formInputHTML( $coordinates, $input_name, $is_mandatory, $is_disabled, $field_args );
+    return $formInput->getInputOutput( $coordinates, $input_name, $is_mandatory, $is_disabled, $field_args );
 }

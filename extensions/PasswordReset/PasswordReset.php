@@ -12,12 +12,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Password Reset',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Password_Reset',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Password_Reset',
 	'author'         => 'Tim Laqua',
-	'description'    => "Resets Wiki user's passwords - requires 'passwordreset' privileges",
 	'descriptionmsg' => 'passwordreset-desc',
 	'version'        => '1.7'
 );
+
+// Add permission required to access Special:PasswordReset and Special:Disabledusers
+$wgAvailableRights[] = 'passwordreset';
 
 $dir = dirname(__FILE__) . '/';
 // Autoload Classes
@@ -32,7 +34,7 @@ $wgSpecialPageGroups['Disabledusers'] = 'users';
 
 // Messages
 $wgExtensionMessagesFiles['PasswordReset'] = $dir . 'PasswordReset.i18n.php';
-$wgExtensionAliasesFiles['PasswordReset'] = $dir . 'PasswordReset.alias.php';
+$wgExtensionMessagesFiles['PasswordResetAlias'] = $dir . 'PasswordReset.alias.php';
 
 // Hooks
 $wgHooks['GetBlockedStatus'][] = 'PasswordReset::GetBlockedStatus';

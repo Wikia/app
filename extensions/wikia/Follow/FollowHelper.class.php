@@ -24,8 +24,6 @@ class FollowHelper {
 			return true;
 		}
 
-		wfLoadExtensionMessages( 'Follow' );
-
 		$dbw = wfGetDB( DB_SLAVE );
 		$action = "categoryadd";
 		$catList = array_keys($categoryInserts);
@@ -193,7 +191,6 @@ class FollowHelper {
 			return true;
 		}
 		wfProfileIn( __METHOD__ );
-		wfLoadExtensionMessages( 'Follow' );
 
 		$dbw = wfGetDB( DB_SLAVE );
 		if (defined('NS_BLOG_ARTICLE') && $article->getTitle()->getNamespace() == NS_BLOG_ARTICLE ) {
@@ -252,7 +249,6 @@ class FollowHelper {
 			return true;
 		}
 
-		wfLoadExtensionMessages('Follow');
 		$skin->data['userlinks']['watchlist'] = array(
 			'text' =>  wfMsg('wikiafollowedpages-special-title-userbar'),
 			'href' => Skin::makeSpecialUrl('following'),
@@ -280,7 +276,6 @@ class FollowHelper {
 		// only for Oasis users
 		// replace 'watchlist' with 'followed pages'
 		if (get_class($wgUser->getSkin()) == 'SkinOasis') {
-			wfLoadExtensionMessages('Follow');
 			$personal_urls['watchlist'] = array(
 				'text' =>  wfMsg('wikiafollowedpages-special-title-userbar'),
 				'href' => Skin::makeSpecialUrl('following'),
@@ -304,8 +299,6 @@ class FollowHelper {
 	static public function showAll(){
 		global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt;
 		wfProfileIn(__METHOD__);
-
-		wfLoadExtensionMessages( 'Follow' );
 
 		$user_id = $wgRequest->getVal( 'user_id' );
 		$head = $wgRequest->getVal( 'head' );
@@ -564,7 +557,6 @@ class FollowHelper {
 
 	static public function getMasthead($userspace) {
 		global $wgUser;
-		wfLoadExtensionMessages( 'Follow' );
 		if(($wgUser->getId() > 0) && ($wgUser->getName() == $userspace)) {
 			return array('text' => wfMsg('wikiafollowedpages-masthead'), 'href' => Title::newFromText("Following", NS_SPECIAL )->getLocalUrl(), 'dbkey' => 'Following', 'tracker' => 'following');
 		}
@@ -618,8 +610,6 @@ class FollowHelper {
 		}
 
 		$data = FollowModel::getUserPageWatchList( $user->getId() );
-
-		wfLoadExtensionMessages( 'Follow' );
 
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/Follow/css/userpage.css?{$wgStyleVersion}");
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );

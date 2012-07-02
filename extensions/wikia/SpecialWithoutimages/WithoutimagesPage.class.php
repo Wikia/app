@@ -9,25 +9,32 @@ class WithoutimagesPage extends QueryPage {
 	/**
 	 * Note: Getting page_namespace only works if $this->isCached() is false
 	 */
-	function getSQL() {
-		global $wgContentNamespaces;
-		return "SELECT 'Withoutimages' AS type,
-		       		page_namespace AS namespace,
-				page_title AS title,
-				COUNT(*) as value
-			FROM page
-			JOIN pagelinks ON page_title = pl_title AND page_namespace = pl_namespace
-			WHERE pl_from > 0 AND page_namespace IN (".implode(",", $wgContentNamespaces).") AND page_is_redirect = 0
-			AND (
-				( 
-					SELECT i1.il_to FROM imagelinks i1 
-					WHERE 20 > ANY ( 
-						SELECT count(*) FROM imagelinks i2 
-						WHERE i1.il_to = i2.il_to 
-					) AND i1.il_from = page_id LIMIT 1 
-				) IS NULL
+	function getQueryInfo() {
+		return array(
+			'tables' => array( 'page', 'pagelinks' ),
+			'fields' => array( "'Withoutimages' as type", 'page_namespace as namespace', 'page_title as title', 'count(*) as value' ),
+			'options' => array( 'GROUP BY' => 'page_title, page_namespace' ),
+			'join_conds' => array(
+				'pagelinks' => array( 'JOIN', 'page_title = pl_title AND page_namespace = pl_namespace' )
+			),
+			'conds' => array( 
+				'pl_from > 0',
+				'page_namespace' => MWNamespace::getContentNamespaces(),
+				'page_is_redirect' => 0,
+				'( 
+					( 
+						SELECT i1.il_to 
+						FROM imagelinks i1 
+						WHERE 20 > ANY ( 
+							SELECT count(*) 
+							FROM imagelinks i2 
+							WHERE i1.il_to = i2.il_to 
+						) AND i1.il_from = page_id 
+						LIMIT 1 
+					) IS NULL 
+				)'
 			)
-			GROUP BY page_title, page_namespace";
+		);
 	}
 
 	/**
@@ -56,4 +63,5 @@ class WithoutimagesPage extends QueryPage {
 		$link = $skin->makeLinkObj( $title );
 		return wfSpecialList( $link, '' );
 	}
+
 }

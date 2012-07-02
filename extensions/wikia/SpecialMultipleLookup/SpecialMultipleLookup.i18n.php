@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'multilookuplastedithdr' => 'Last edit',
 	'multilookuprecordspager' => 'Showing \'\'\'$1\'\'\' to \'\'\'$2\'\'\' of \'\'\'$3\'\'\' records.',
 	'right-multilookup' => 'Look up information on users in multiple wikis',
+	'action-multilookup' => 'look up information on users in multiple wikis',
 );
 
 /** Message documentation (Message documentation)
@@ -91,7 +92,7 @@ $messages['az'] = array(
 	'multilookupwikiurl' => 'URL',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -321,7 +322,7 @@ $messages['fr'] = array(
 	'right-multilookup' => 'Rechercher des informations sur les utilisateurs dans plusieurs wikis',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

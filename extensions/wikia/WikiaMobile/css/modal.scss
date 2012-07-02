@@ -87,12 +87,9 @@ html.modal{
 #wkMdlClo {
 	height: 50px;
 	width: 50px;
-	float: right;
+	position: absolute;
+	right: 0;
+	top: 0;
 	z-index: $highest-z-index + 1005;
 	background-position: 27px 7px;
-}
-
-#wkMdlTlBar{
-	margin-right: 51px;
-	float: left;
 }

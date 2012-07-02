@@ -18,7 +18,7 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
  * @todo Check update hooks for all actions
@@ -55,12 +55,18 @@ $oaiAudit = false;
  */
 $oaiAuditDatabase = false;
 
+/**
+ * Number of records to return in each ListRecords or ListIdentifiers request.
+ * Additional records will be available by making another request using the
+ * ResumptionToken returned.
+ */
+$oaiChunkSize = 50;
+
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'OAIRepository',
 	'author'         => 'Brion Vibber',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:OAIRepository',
-	'description'    => 'Provides [http://www.openarchives.org/OAI/openarchivesprotocol.html OAI-PMH] repository interface',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:OAIRepository',
 	'descriptionmsg' => 'oai-desc',
 );
 
@@ -81,7 +87,7 @@ $oaiDeleteIds = array();
 
 function oaiUpdatePage( $id, $action ) {
 	$dbw = wfGetDB( DB_MASTER );
-	#$dbw->immediateBegin();
+	#$dbw->begin();
 	$dbw->replace( 'updates',
 		array( 'up_page' ),
 		array( 'up_page'      => $id,
@@ -129,7 +135,6 @@ function oaiTestTables( &$tables ) {
 }
 
 function oaiUpdateUndelete( $title, $isnewid ) {
-	global $wgDBname;
 	$article = new Article($title);
 	$id = $article->getID();
 	oaiUpdatePage( $id, 'modify' );

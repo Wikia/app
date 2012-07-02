@@ -7,16 +7,13 @@ if( count( $argv ) == 0 ) {
 	exit( 0 );
 }
 
-function errorOrValue( $val ) {
-	if( WikiError::isError( $val ) ) {
-		die( $val->toString() . "\n" );
-	}
-	return $val;
-}
-
 function showStatus() {
-	$ret = errorOrValue( MWBlocker::getStatus() );
-	echo $ret . "\n";
+	try {
+		$ret = MWBlocker::getStatus();
+		echo $ret . "\n";
+	} catch( MWEexception $e ) {
+		die( $e->getMessage() . "\n" );
+	}
 }
 
 switch( $argv[count($argv)-1] ) {
@@ -24,7 +21,11 @@ case "status":
 	showStatus();
 	break;
 case "check":
-	errorOrValue( MWBlocker::queueCheck( $argv[1], "command-line check" ) );
+	try {
+		MWBlocker::queueCheck( $argv[1], "command-line check" );
+	} catch( MWEexception $e ) {
+		die( $e->getMessage() . "\n" );
+	}
 	showStatus();
 	break;
 default:

@@ -108,12 +108,11 @@ class WikiaAppMock {
 		$globalRegistryMock = null;
 		$functionWrapperMock = null;
 
-		if( in_array( 'getGlobal', $this->methods )) {
-			$globalRegistryMock = $this->testCase->getMock( 'WikiaGlobalRegistry', array( 'get', 'set' ) );
-			$globalRegistryMock->expects( $this->testCase->any() )
-				->method( 'get' )
-				->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
-		}
+		$globalRegistryMock = $this->testCase->getMock( 'WikiaGlobalRegistry', array( 'get', 'set' ) );
+		$globalRegistryMock->expects( $this->testCase->any() )
+			->method( 'get' )
+			->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
+		
 		if( in_array( 'runFunction', $this->methods ) ) {
 			$functionWrapperMock = $this->testCase->getMock( 'WikiaFunctionWrapper', array_keys($this->mockedFunctions) );
 			foreach( $this->mockedFunctions as $functionName => $functionData ) {
@@ -134,13 +133,8 @@ class WikiaAppMock {
 	public function mockGlobalVariable($globalName, $returnValue) {
 		if(!in_array( 'getGlobal', $this->methods )) {
 			$this->methods[] = 'getGlobal';
-		}
-		if(!in_array($globalName, $this->mockedGlobals)) {
-			$this->mockedGlobals[$globalName] = array( 'value' => $returnValue );
-		}
-		else {
-			$this->markTestSkipped( "Global variable $globalName already mocked, multiple mocks of the same variable not supported." );
-		}
+		}		
+		$this->mockedGlobals[$globalName] = array( 'value' => $returnValue );
 	}
 
 	/**
@@ -156,7 +150,7 @@ class WikiaAppMock {
 		if(!in_array( 'runFunction', $this->methods )) {
 			$this->methods[] = 'runFunction';
 		}
-		if(!in_array($functionName, $this->mockedFunctions)) {
+		if(!array_key_exists($functionName, $this->mockedFunctions)) {
 			$this->mockedFunctions[$functionName] = array( 'value' => $returnValue, 'calls' => $callsNum, 'params' => $inputParams );
 		}
 		else {

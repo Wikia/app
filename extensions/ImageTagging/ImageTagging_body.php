@@ -1,12 +1,12 @@
 <?php
 /**
- * TaggedImages class 
+ * TaggedImages class
  *
  * @file
  * @ingroup Extensions
  */
 
-define('TAGGEDIMGS_PER_PAGE', 12);
+define( 'TAGGEDIMGS_PER_PAGE', 12 );
 
 /**
  * Photos tagged gallery
@@ -14,68 +14,89 @@ define('TAGGEDIMGS_PER_PAGE', 12);
  * Add images to the gallery using add(), then render that list to HTML using toHTML().
  */
 class TaggedImages extends SpecialPage {
-
 	var $mQuery, $mImages, $mShowFilename;
 
 	/**
 	 * Create a new tagged images object.
 	 */
-	function TaggedImages() {
-		global $wgLang, $wgAllowRealName, $wgRequest, $wgOut;
+	public function __construct() {
+		global $wgRequest, $wgOut;
 
-		$wgOut->addScript("<style type=\"text/css\">/*<![CDATA[*/ @import \"$GLOBALS[wgScriptPath]/extensions/ImageTagging/img_tagging.css?$GLOBALS[wgStyleVersion]\"; /*]]>*/</style>\n");
+		$wgOut->addExtensionStyle( $wgScriptPath . '/extensions/ImageTagging/img_tagging.css' );
 
-		$this->mQuery = preg_replace( "/[\"'<>]/", "", $wgRequest->getText('q') );
-		$this->mStartPage = preg_replace( "/[\"'<>]/", "", $wgRequest->getVal('page') );
+		$this->mQuery = preg_replace( "/[\"'<>]/", '', $wgRequest->getText( 'q' ) );
+		$this->mStartPage = preg_replace( "/[\"'<>]/", '', $wgRequest->getVal( 'page' ) );
 		$this->mCount = 0;
-			if ( ! $this->mStartPage )
-				$this->mStartPage = 0;
-			$this->mImages = array();
+		if ( !$this->mStartPage ) {
+			$this->mStartPage = 0;
+		}
+		$this->mImages = array();
 
-		SpecialPage::SpecialPage('TaggedImages');
+		parent::__construct( 'TaggedImages' );
 	}
 
 	/**
 	 * Start doing stuff
-	 * @access public
-	*/
-	function execute( $par ) {
-		global $wgDBname, $wgOut;
+	 *
+	 * @param $par Mixed: parameter passed to the special page or null
+	 */
+	public function execute( $par ) {
+		global $wgOut;
 
 		wfProfileIn( __METHOD__ );
 
-		$db = wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB( DB_SLAVE );
 
-			$WHERECLAUSE = '';
-			if ($this->mQuery) {
-				$WHERECLAUSE = " WHERE article_tag='$this->mQuery'";
-			}
-
-			$imagetable = $db->tableName( 'image' );
-			$imagetagstable = $db->tableName( 'imagetags' );
-
-			$SQL = "SELECT img_name, img_timestamp FROM $imagetable WHERE img_name IN (SELECT img_name FROM $imagetagstable $WHERECLAUSE) ORDER BY img_timestamp DESC";
-
-			$SQL = $db->LimitResult($SQL, TAGGEDIMGS_PER_PAGE, $this->mStartPage * TAGGEDIMGS_PER_PAGE);
-
-			$res = $db->query($SQL);
-		while ($o = $db->fetchObject($res)) {
-			$img = wfFindFile($o->img_name);
-			$this->add($img, '');
+		$where = array();
+		if ( $this->mQuery ) {
+			$where = array(
+				'article_tag' => $this->mQuery
+			);
 		}
-		$db->freeResult($res);
+		$foo = $dbr->select(
+			'imagetags',
+			'img_name',
+			$where,
+			__METHOD__
+		);
+		$imageNames = array();
+		foreach ( $foo as $omg ) {
+			$imageNames[] = $omg;
+		}
 
-		$res = $db->query("SELECT COUNT(img_name) as img_count FROM $imagetagstable".
-			( $this->mQuery ? " WHERE article_tag='" . $this->mQuery . "'" : "" ) .
-			" GROUP BY article_tag");
-		if ( $o = $db->fetchObject($res) ) {
+		$imageNamesString = implode( ',', $imageNames ); // @todo CHECKME
+		$res = $dbr->select(
+			'image',
+			array( 'img_name', 'img_timestamp' ),
+			array( "img_name IN $imageNamesString" ),
+			__METHOD__,
+			array(
+				'ORDER BY' => 'img_timestamp DESC',
+				'LIMIT' => TAGGEDIMGS_PER_PAGE,
+				'OFFSET' => $this->mStartPage * TAGGEDIMGS_PER_PAGE
+			)
+		);
+
+		foreach( $res as $o ) {
+			$img = wfFindFile( $o->img_name );
+			$this->add( $img, '' );
+		}
+
+		$res = $dbr->select(
+			'imagetags',
+			'COUNT(img_name) AS img_count',
+			$where,
+			__METHOD__,
+			array( 'GROUP BY' => 'article_tag' )
+		);
+		$o = $dbr->fetchObject( $res );
+		if ( $o ) {
 			$this->mCount = $o->img_count;
 		}
-		$db->freeResult($res);
 
-		$wgOut->setPageTitle( wfMsg('imagetagging-taggedimages-title', $this->mQuery ? $this->mQuery : "all" ) );
-		$wgOut->setRobotPolicy('noindex,nofollow');
-		$wgOut->addHTML($this->toHTML());
+		$wgOut->setPageTitle( wfMsg( 'imagetagging-taggedimages-title', $this->mQuery ? $this->mQuery : 'all' ) );
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
+		$wgOut->addHTML( $this->toHTML() );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -83,25 +104,27 @@ class TaggedImages extends SpecialPage {
 	/**
 	 * Add an image to the gallery.
 	 *
-	 * @param Image  $image  Image object that is added to the gallery
-	 * @param string $html   Additional HTML text to be shown. The name and size of the image are always shown.
+	 * @param $image Object: Image object that is added to the gallery
+	 * @param $html String: additional HTML text to be shown. The name and size
+	 *                      of the image are always shown.
 	 */
-	function add( $image, $html='' ) {
+	function add( $image, $html = '' ) {
 		$this->mImages[] = array( &$image, $html );
 	}
 
 	/**
 	 * Add an image at the beginning of the gallery.
 	 *
-	 * @param Image  $image  Image object that is added to the gallery
-	 * @param string $html   Additional HTML text to be shown. The name and size of the image are always shown.
+	 * @param $image Object: Image object that is added to the gallery
+	 * @param $html String: additional HTML text to be shown. The name and size
+	 *                      of the image are always shown.
 	 */
-	function insert( $image, $html='' ) {
+	function insert( $image, $html = '' ) {
 		array_unshift( $this->mImages, array( &$image, $html ) );
 	}
 
 	/**
-	 * isEmpty() returns true if the gallery contains no images
+	 * @return Boolean: true if the gallery contains no images
 	 */
 	function isEmpty() {
 		return empty( $this->mImages );
@@ -112,56 +135,89 @@ class TaggedImages extends SpecialPage {
 
 		$numPages = $this->mCount / TAGGEDIMGS_PER_PAGE;
 
-		if (!$this->mQuery) $this->mQuery = "all";
+		if ( !$this->mQuery ) {
+			$this->mQuery = 'all';
+		}
 
-		$queryTitle = Title::newFromText($this->mQuery, NS_MAIN);
+		$queryTitle = Title::newFromText( $this->mQuery, NS_MAIN );
 
-		$html = wfMsg('imagetagging-taggedimages-displaying', $this->mStartPage*TAGGEDIMGS_PER_PAGE + 1, min(($this->mStartPage+1)*TAGGEDIMGS_PER_PAGE,$this->mCount), $this->mCount, '<a href="' . $queryTitle->getLocalURL() . '">' . $this->mQuery . '</a>');
+		$html = wfMsg(
+			'imagetagging-taggedimages-displaying',
+			$this->mStartPage * TAGGEDIMGS_PER_PAGE + 1,
+			min( ( $this->mStartPage + 1 ) * TAGGEDIMGS_PER_PAGE, $this->mCount ),
+			$this->mCount,
+			'<a href="' . $queryTitle->getLocalURL() . '">' . $this->mQuery . '</a>'
+		);
 
 		wfProfileOut( __METHOD__ );
 		return $html;
 	}
 
-	function pageNoLink($pageNum, $pageText, $hrefPrefix, $cur) {
-		if ( $cur == false )
-			$html = '<a href="'. $hrefPrefix . $pageNum . '">' . $pageText . '</a>';
-		else
+	function pageNoLink( $pageNum, $pageText, $hrefPrefix, $cur ) {
+		if ( $cur == false ) {
+			$html = '<a href="'. $hrefPrefix . $pageNum . '">' . $pageText .
+				'</a>';
+		} else {
 			$html = '<b>' . $pageText . '</b>';
+		}
 
-		$html .= '&nbsp;';
+		$html .= '&#160;';
 		return $html;
 	}
 
-	function pagerHTML($topBottom) {
+	function pagerHTML( $topBottom ) {
 		global $wgOut;
 
-		$titleObj = Title::makeTitle( NS_SPECIAL, 'TaggedImages' );
+		$titleObj = SpecialPage::getTitleFor( 'TaggedImages' );
 
 		$maxPages = 5; // 5 real pagers
-		$numPages = ceil($this->mCount / TAGGEDIMGS_PER_PAGE);
+		$numPages = ceil( $this->mCount / TAGGEDIMGS_PER_PAGE );
 
-		if ( $numPages <= 1 ) return '';
+		if ( $numPages <= 1 ) {
+			return '';
+		}
 
-		$html = '<span id="{$topBottom}pager" class="pager" style="float: right; text-align: right; right: 30px;">';
+		$html = "<span id=\"{$topBottom}pager\" class=\"pager\" style=\"float: right; text-align: right; right: 30px;\">";
 
-		$hrefPrefix = $titleObj->escapeLocalURL("q=" . $this->mQuery . "&page=");
+		$hrefPrefix = $titleObj->escapeLocalURL(
+			'q=' . $this->mQuery . '&page='
+		);
 
 		// build prev button
 		if ( $this->mStartPage - 1 >= 0 ) {
-			$html .= $this->pageNoLink($this->mStartPage-1, wfMsg('allpagesprev'), $hrefPrefix, false);
+			$html .= $this->pageNoLink(
+				$this->mStartPage - 1,
+				wfMsg( 'allpagesprev' ),
+				$hrefPrefix,
+				false
+			);
 		}
 
 		// build page # buttons
-		for ( $i=$this->mStartPage-2; $i < $this->mStartPage + $maxPages; $i++ ) {
-			if ( $i >= $numPages ) break;
-			if ( $i < 0 ) continue;
+		for ( $i = $this->mStartPage - 2; $i < $this->mStartPage + $maxPages; $i++ ) {
+			if ( $i >= $numPages ) {
+				break;
+			}
+			if ( $i < 0 ) {
+				continue;
+			}
 
-			$html .= $this->pageNoLink($i, $i+1, $hrefPrefix, ($this->mStartPage == $i));
+			$html .= $this->pageNoLink(
+				$i,
+				$i + 1,
+				$hrefPrefix,
+				( $this->mStartPage == $i )
+			);
 		}
 
 		// build next button
-		if ( $this->mStartPage < $numPages-1 ) {
-			$html .= $this->pageNoLink($this->mStartPage+1, wfMsg('allpagesnext'), $hrefPrefix, false);
+		if ( $this->mStartPage < $numPages - 1 ) {
+			$html .= $this->pageNoLink(
+				$this->mStartPage + 1,
+				wfMsg( 'allpagesnext' ),
+				$hrefPrefix,
+				false
+			);
 		}
 
 		$html .= '</span>';
@@ -177,16 +233,15 @@ class TaggedImages extends SpecialPage {
 	 * - the image name
 	 * - the additional text provided when adding the image
 	 * - the size of the image
-	 *
 	 */
 	function toHTML() {
-		global $wgLang, $wgUser, $wgOut;
+		global $wgLang, $wgUser;
 
 		$sk = $wgUser->getSkin();
 
 		$s = '<div>';
 		$s .= $this->pagerStatusHTML();
-		$s .= $this->pagerHTML('top');
+		$s .= $this->pagerHTML( 'top' );
 		$s .= '</div>';
 
 		$s .= '<table class="gallery" cellspacing="0" cellpadding="0">';
@@ -201,21 +256,18 @@ class TaggedImages extends SpecialPage {
 			// Not an image. Just print the name and skip.
 			if ( $nt->getNamespace() != NS_IMAGE ) {
 				$s .= '<td><div class="gallerybox" style="height: 152px;">' .
-				htmlspecialchars( $nt->getText() ) . '</div></td>' .  (($i%4==3) ? "</tr>\n" : '');
+				htmlspecialchars( $nt->getText() ) . '</div></td>' .  ( ( $i%4 == 3 ) ? "</tr>\n" : '');
 				$i++;
 				continue;
 			}
-
-			// TODO
-			// $ul = $sk->makeLink( $wgContLang->getNsText( Namespace::getUser() ) . ":{$ut}", $ut );
 
 			$nb = '';
 			$textlink = $this->mShowFilename ?
 			$sk->makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 20 ) ) ) . "<br />\n" :
 			'';
 
-			$s .= ($i%4==0) ? '<tr>' : '';
-			$thumb = $img->getThumbnail( 120, 120 );
+			$s .= ( $i%4 == 0 ) ? '<tr>' : '';
+			$thumb = $img->transform(array( 'width' => 120, 'height' => 120 ) , 0 );
 			$vpad = floor( ( 150 - $thumb->height ) /2 ) - 2;
 			$s .= '<td><div class="gallerybox">' . '<div class="thumb" style="padding: ' . $vpad . 'px 0;">';
 
@@ -226,14 +278,14 @@ class TaggedImages extends SpecialPage {
 			$textlink . $text . $nb .
 			'</div>';
 			$s .= "</div></td>\n";
-			$s .= ($i%4==3) ? '</tr>' : '';
+			$s .= ( $i%4 == 3 ) ? '</tr>' : '';
 			$i++;
 		}
 		if ( $i %4 != 0 ) {
 			$s .= "</tr>\n";
 		}
 		$s .= '</table>';
-		$s .= $this->pagerHTML('bottom');
+		$s .= $this->pagerHTML( 'bottom' );
 		return $s;
 	}
 } //class

@@ -3,7 +3,7 @@
 class SpecialWikimaps extends SpecialPage {
 
 	function __construct() {
-		SpecialPage::SpecialPage( 'Wikimaps', 'wikimaps' );
+		parent::__construct( 'Wikimaps', 'wikimaps' );
 	}
 
 	function execute() {

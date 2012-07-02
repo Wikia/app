@@ -31,6 +31,9 @@ class WikiFormatReader extends SimpleFormatReader {
 		return $m[1];
 	}
 
+	/**
+	 * @return string
+	 */
 	public function parseStaticHeader() {
 		if ( $this->filename === false ) {
 			return '';

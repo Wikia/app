@@ -1,5 +1,5 @@
 <?PHP
-/*
+/**
  * Created on 20 July, 2007
  *
  * PrivateNamespaces extension for MediaWiki 1.9.0+
@@ -18,7 +18,7 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -26,7 +26,7 @@
 /**
  * A really simple extension to allow for making certain namespaces
  * "private"--that is, to prevent users lacking necessary rights from
- * reading, editing, moving, etc., any page in that namespace. It 
+ * reading, editing, moving, etc., any page in that namespace. It
  * should cover transclusion, searching (though the titles will still
  * be visible), diffs, Special:Export, history paging, etc.
  *
@@ -38,7 +38,7 @@
  * careful when installing new extensions as they may open up a variety
  * of new ways to get around what this code aims to do.
  *
- * USAGE: 
+ * USAGE:
  * Add require_once("$IP/extensions/PrivateNamespaces/PrivateNamespaces.php");
  * to your LocalSetings.php.
  *
@@ -47,6 +47,13 @@
  * 	$wgPrivateNamespaces[100] = 'foobar';
  *
  */
+
+$wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
+	'name'           => 'PrivateNamespaces',
+	'author'         => '',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:PrivateNamespaces',
+);
 
 /**
  * An array mapping namespace ids to the right needed to view or edit
@@ -57,7 +64,7 @@ $wgPrivateNamespaces = array();
 /**
  * Hook userCan to perform additional validation checks.
  */
-$wgHooks['userCan'][] = 'wfCheckIfPrivate'; 
+$wgHooks['userCan'][] = 'wfCheckIfPrivate';
 
 /**
  * Hook BeforeParserFetchTemplateAndtitle to perform validation checks
@@ -70,10 +77,10 @@ $wgHooks['BeforeParserFetchTemplateAndtitle'][] = 'wfCheckPrivateTransclude';
  * then the user must have the specified right in order to perform
  * any action on the page.
  */
-function wfCheckIfPrivate( $title, $user, $action, &$result) { 
+function wfCheckIfPrivate( $title, $user, $action, &$result) {
 	global $wgPrivateNamespaces;
 	if ( in_array( $title->getNamespace(), $wgPrivateNamespaces ) ) {
-		if ( !$user->isAllowed( $wgPrivateNamespaces[ 
+		if ( !$user->isAllowed( $wgPrivateNamespaces[
 				$title->getNamespace() ] ) ) {
 			$result = false;
 			return false;
@@ -84,9 +91,9 @@ function wfCheckIfPrivate( $title, $user, $action, &$result) {
 }
 
 /**
- * Prevent the transcluding of a page whose read access is prevented by 
+ * Prevent the transcluding of a page whose read access is prevented by
  * $wgPrivateNamespaces. NOTE: It may still be possible for a user who
- * has read access to a page to transclude in a public page and for that 
+ * has read access to a page to transclude in a public page and for that
  * to then be cached and made visible to other users who shouldn't have
  * access to the content. We should, however, be able to hope that those
  * with restricted access would know better than to do so, however.

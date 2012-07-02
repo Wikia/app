@@ -37,16 +37,16 @@ EOT;
 		$this->cleanupTemp( $now );
 
 		$timestamp = gmdate( self::$tempDirFormat, $now );
-		if ( !wfMkdirParents( "{$this->tmpDir}/$timestamp" ) ) {
+		if ( !wfMkdirParents( "{$this->tmpDir}/$timestamp", null, __METHOD__ ) ) {
 			$this->error( 500, 'webstore_dest_mkdir' );
 			return false;
 		}
-		
+
 		// Get the extension of the upload, needs to be preserved for type detection
 		$name = $wgRequest->getFileName( 'file' );
 		$n = strrpos( $name, '.' );
 		if ( $n ) {
-			$extension = '.' . Image::normalizeExtension( substr( $name, $n + 1 ) );
+			$extension = '.' . File::normalizeExtension( substr( $name, $n + 1 ) );
 		} else {
 			$extension = '';
 		}

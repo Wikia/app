@@ -29,7 +29,7 @@ function updateFeedbackForm() {
 	submit.disabled = allzero ? 'disabled' : '';
 }
 
-addOnloadHook(updateFeedbackForm);
+$(updateFeedbackForm);
 
 // dependencies:
 // * ajax.js:
@@ -117,7 +117,7 @@ wgAjaxFeedback.processResult = function(request) {
 	}
 	var response = request.responseText;
 	if( msg = response.substr(6) ) {
-		jsMsg( msg, 'feedback' );
+		mw.util.jsMessage( msg, 'feedback' );
 		window.scroll(0,0);
 	}
 	wgAjaxFeedback.inprogress = false;
@@ -137,4 +137,4 @@ wgAjaxFeedback.onLoad = function() {
 	}
 };
 
-hookEvent("load", wgAjaxFeedback.onLoad);
+$( wgAjaxFeedback.onLoad);

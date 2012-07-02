@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension FormatEmail.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
 */
 
 $messages = array();
@@ -18,9 +19,10 @@ $2',
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'email-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'email-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -56,7 +58,28 @@ $messages['arz'] = array(
 $2',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'email-desc' => 'Permite amestar testeres/pies de páxina personalizaos a los correos electrónicos de los usuarios',
+	'email_footer' => '----------------------------------------------------------------------------
+Esti corréu te lu unvía $1 per aciu del sistema de corréu de {{SITENAME}}.
+
+$2',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Wertuose
+ */
+$messages['az'] = array(
+	'email_footer' => '----------------------------------------------------------------------------
+Bu elektron məktub sizə $1 tərəfindən {{SITENAME}} elektron poçt sistemi vasitəsilə göndərilmişdir.
+
+$2',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -101,10 +124,26 @@ $2',
 );
 
 /** Catalan (Català)
+ * @author Davidpar
  * @author Paucabot
  */
 $messages['ca'] = array(
 	'email-desc' => 'Permet afegir encapçalaments/peus de pàgina personalitzats als correus electrònics dels usuaris',
+	'email_footer' => "----------------------------------------------------------------------------
+Aquest correu electrònic t'ha estat enviat a través del sistema de correu electrònic de {{SITENAME}} per $1.
+
+$2",
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'email-desc' => 'Атто бо лелош болу декъашхойн куй тlетоха йа декъашхонгара декъашхона хааман чаккхе йа',
+	'email_footer' => '----------------------------------------------------------------------------
+Хlара хаам тесна, оцу дуьнена машан чура {{SITENAME}} декъашхочо $1.
+
+$2',
 );
 
 /** Czech (Česky)
@@ -140,7 +179,7 @@ Diese E-Mail wurde dir von $1 über das {{SITENAME}}-E-Mail-System zugesandt.
 $2',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  */
 $messages['de-formal'] = array(
@@ -207,9 +246,11 @@ $2',
 );
 
 /** Basque (Euskara)
+ * @author An13sa
  * @author Kobazulo
  */
 $messages['eu'] = array(
+	'email-desc' => 'Aukera ematen du, lankide e-postei goiburu/oin pertsonalizatuak erabiltzaileko',
 	'email_footer' => '----------------------------------------------------------------------------
 E-posta hau $1 erabiltzaileak bidali dizu {{SITENAME}} e-posta sistemaren bidez.
 
@@ -405,13 +446,13 @@ $messages['ko'] = array(
 $2',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'email-desc' => 'Deit extra, sellfs-enstellba Reije am Aanfang un am Engk en de <span lang="en">e-mails</span> zwesche de Metmaacher eren.',
+	'email-desc' => 'Määt et müjjelech, extra, sellfs-enstellba Reije am Aanfang un am Engk en de Metmaacher ier <i lang="en">e-mails</i> eren ze donn.',
 	'email_footer' => '----------------------------------------------------------------------------
-Di e-mail hee es fum $1 övver de {{SITENAME}} aan Desch jescheck woode.
+Di e-mail hee es fum $1 övver {{GRAMMAR:Akkusativ|{{SITENAME}}}} aan Desch jescheck woode.
 
 $2',
 );
@@ -426,6 +467,16 @@ $messages['lb'] = array(
 Dës E-Mail gouf iech vun $1 iwwer den E-Mail-System vun {{SITENAME}} geschéckt.
 
 $2',
+);
+
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'email_footer' => '-------------------------------------------------- -------------------------- 
+ Šo e-pastu nosūtīja $1 izmantojot {{SITENAME}} e-pasta sistēmu. 
+
+ $2',
 );
 
 /** Macedonian (Македонски)
@@ -444,7 +495,7 @@ $2',
  */
 $messages['ml'] = array(
 	'email_footer' => '----------------------------------------------------------------------------
-{{SITENAME}} സം‌രംഭത്തിലൂടെ $1 എന്ന ഉപയോക്താവ് അയച്ചതാണ്‌ ഈ ഇമെയില്‍.
+{{SITENAME}} സം‌രംഭത്തിലൂടെ $1 എന്ന ഉപയോക്താവ് അയച്ചതാണ്‌ ഈ ഇമെയിൽ.
 
 $2',
 );
@@ -461,9 +512,11 @@ $2',
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Aviator
  * @author Diagramma Della Verita
  */
 $messages['ms'] = array(
+	'email-desc' => 'Membenarkan pengatas/pembawah tempahan ditambahkan ke dalam e-mel pengguna',
 	'email_footer' => 'E-mel ini dihantar kepada anda melalui sistem mel {{SITENAME}} oleh $1.
 
 $2',
@@ -493,7 +546,7 @@ $2',
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'email-desc' => 'Gjør at egendefinerte beskjeder kan legges til toppen eller bunnen av brukereres e-poster.',
 	'email_footer' => '----------------------------------------------------------------------------
 Denne e-posten har blitt sendt deg fra $1 via {{SITENAME}}s e-postsystem.
@@ -539,7 +592,7 @@ $2",
  */
 $messages['ps'] = array(
 	'email_footer' => '----------------------------------------------------------------------------
-همدا برېښناليک تاسو ته د {{SITENAME}} د برېښناليکي غونډال له لخوا د $1 له لوري درلېږل شوی.
+همدا برېښليک تاسې ته د $1 لخوا د {{SITENAME}} د برېښليکي غونډال په مټ درلېږل شوی.
 
 $2',
 );
@@ -620,6 +673,17 @@ Tento email vám poslal $1 pomocou emailového systému {{GRAMMAR:genitív|{{SIT
 $2',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'email-desc' => 'Omogoča dodajanje po meri narejene glave/noge v uporabnikovo e-pošto',
+	'email_footer' => '----------------------------------------------------------------------------
+E-pošta vam je bila poslana preko e-poštnega sistema {{GRAMMAR:rodilnik|{{SITENAME}}}} od $1.
+
+$2',
+);
+
 /** Lower Silesian (Schläsch)
  * @author Jonny84
  */
@@ -627,19 +691,19 @@ $messages['sli'] = array(
 	'email-desc' => 'Erlaubt Benutzern persönliche Kopf- und Fusszeilen ei der E-Mail Funktion zu verwenden',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'email-desc' => 'Омогућује подесиве хедере/футере за имејлове које размењују корисници',
 	'email_footer' => '----------------------------------------------------------------------------
-Овај мејл вам је послат преко система за слање порука, на сајту {{SITENAME}}
-од стране $1
+Ова порука је послата преко е-система {{SITENAME}} од $1
 
 $2',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -685,7 +749,7 @@ $messages['te'] = array(
 $2',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -694,7 +758,7 @@ $messages['tg-cyrl'] = array(
 $2',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -781,11 +845,12 @@ $2',
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  */
 $messages['zh-hant'] = array(
 	'email-desc' => '給用戶的電子郵件中，您可以自行設計頁眉和頁腳',
 	'email_footer' => '----------------------------------------------------------------------------
-這封電子郵件由 $1 通過 {{SITENAME}} 的電子郵件系統寄出。
+這封電子郵件由 $1 透過 {{SITENAME}} 的電子郵件系統寄出。
 
 $2',
 );

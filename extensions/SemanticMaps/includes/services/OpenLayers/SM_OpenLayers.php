@@ -20,6 +20,19 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
+$wgResourceModules['ext.sm.fi.openlayers'] = array(
+	'dependencies' => array( 'ext.maps.openlayers', 'ext.sm.forminputs' ),
+	'localBasePath' => dirname( __FILE__ ),
+	'remoteBasePath' => $smgScriptPath .  '/includes/services/OpenLayers',
+	'group' => 'ext.semanticmaps',
+	'scripts' => array(
+		'jquery.openlayersinput.js',
+		'ext.sm.openlayersinput.js'
+	),
+	'messages' => array(
+	)
+);
+
 $wgHooks['MappingServiceLoad'][] = 'smfInitOpenLayers';
 
 function smfInitOpenLayers() {
@@ -30,7 +43,7 @@ function smfInitOpenLayers() {
 	// TODO: the if should not be needed, but when omitted, a fatal error occurs cause the class that's extended by this one is not found.
 	if ( defined( 'SF_VERSION' ) ) $wgAutoloadClasses['SMOpenLayersFormInput'] = dirname( __FILE__ ) . '/SM_OpenLayersFormInput.php';	
 	
-	MapsMappingServices::registerServiceFeature( 'openlayers', 'qp', 'SMOpenLayersQP' );
+	MapsMappingServices::registerServiceFeature( 'openlayers', 'qp', 'SMMapPrinter' );
 	MapsMappingServices::registerServiceFeature( 'openlayers', 'fi', 'SMOpenLayersFormInput' );	
 	
 	return true;

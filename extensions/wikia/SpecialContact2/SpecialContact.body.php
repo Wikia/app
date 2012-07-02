@@ -47,11 +47,10 @@ class ContactForm extends SpecialPage {
 
 	function  __construct() {
 		parent::__construct( "Contact" , '' /*restriction*/);
-		wfLoadExtensionMessages("ContactForm2");
 	}
 
 	function execute( $par ) {
-		global $wgLang, $wgAllowRealName, $wgRequest;
+		global $wgLang, $wgRequest;
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		global $wgUser, $wgCaptchaClass, $wgServer;
 		global $wgAbTesting;
@@ -116,7 +115,7 @@ class ContactForm extends SpecialPage {
 			}
 
 			#malformed email?
-			if (!User::isValidEmailAddr($this->mEmail)) {
+			if (!Sanitizer::validateEmail($this->mEmail)) {
 				$this->err[].= wfMsg('invalidemailaddress');
 				$this->errInputs['wpEmail'] = true;
 			}
@@ -219,9 +218,8 @@ class ContactForm extends SpecialPage {
 
 		$screenshot = $wgRequest->getFileTempname( 'wpScreenshot' );
 
+		$screenshots = array();
 		if ( !empty( $screenshot ) ) {
-
-			$screenshots = array();
 			foreach ( $screenshot as $image ) {
 				if ( !empty( $image ) ) {
 					$screenshots[] = $image;
@@ -230,24 +228,20 @@ class ContactForm extends SpecialPage {
 
 			if ( !empty( $screenshots ) ) {
 				$body .= "\n\nScreenshot attached.";
-
-				$error = UserMailer::sendWithAttachment( $mail_community, $subject, $screenshots, $mail_user, $mail_user, $body );
-			} else {
-				$error = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
 			}
-		} else {
-			$error = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact' );
 		}
 
-		if (WikiError::isError($error)) {
-			$errors .= "\n" . $error->getMessage();
+		$result = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact', 0, $screenshots );
+
+		if (!$result->isOK()) {
+			$errors .= "\n" . $result->getMessage();
 		}
 
 		#to user, from us (but only if the first one didnt error, dont want to echo the user on an email we didnt get)
 		if( empty($errors) && $this->mCCme && $wgUser->isEmailConfirmed() ) {
-			$error = UserMailer::send( $mail_user, $mail_community, wfMsg('specialcontact-mailsubcc'), $mcc, $mail_user, null, 'SpecialContactCC' );
-			if (WikiError::isError($error)) {
-				$errors .= "\n" . $error->getMessage();
+			$result = UserMailer::send( $mail_user, $mail_community, wfMsg('specialcontact-mailsubcc'), $mcc, $mail_user, null, 'SpecialContactCC' );
+			if (!$result->isOK()) {
+				$errors .= "\n" . $result->getMessage();
 			}
 		}
 
@@ -356,7 +350,7 @@ class ContactForm extends SpecialPage {
 	 */
 	function ShowContactForm( $sub = null ) {
 		global $wgUser, $wgOut, $wgLang;
-		global $wgDBname, $wgAllowRealName;
+		global $wgDBname;
 		global $wgServer, $wgSitename, $wgCaptchaClass;
 
 		$wgOut->setPageTitle(

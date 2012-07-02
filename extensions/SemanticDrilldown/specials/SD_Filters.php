@@ -5,8 +5,6 @@
  * @author Yaron Koren
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 class SDFilters extends SpecialPage {
 
 	/**
@@ -15,7 +13,7 @@ class SDFilters extends SpecialPage {
 	function __construct() {
 		parent::__construct( 'Filters' );
 		// Backwards compatibility for MediaWiki < 1.16
-		if ( function_exists( 'wfLoadExtensionMessages' ) ) {
+		if ( version_compare( $GLOBALS['wgVersion'], '1.16', '<' ) ) {
 			wfLoadExtensionMessages( 'SemanticDrilldown' );
 		}
 	}
@@ -40,7 +38,7 @@ class FiltersPage extends QueryPage {
 			parent::__construct( $name );
 		}
 	}
-
+	
 	function getName() {
 		return "Filters";
 	}
@@ -57,7 +55,7 @@ class FiltersPage extends QueryPage {
 
 	function getSQL() {
 		$filter_ns = SD_NS_FILTER;
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr = wfGetDB( DB_SLAVE );
 		$page = $dbr->tableName( 'page' );
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
@@ -82,7 +80,7 @@ class FiltersPage extends QueryPage {
 
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( SD_NS_FILTER, $result->value );
-		$text = $skin->makeLinkObj( $title, $title->getText() );
+		$text = $skin->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
 		return $text;
 	}
 }

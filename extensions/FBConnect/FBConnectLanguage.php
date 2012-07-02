@@ -48,7 +48,6 @@ class FBConnectLanguage{
 		$langMapping = $wgMemc->get($memkey);
 		if(!$langMapping){
 			$langMapping = array();
-			wfLoadExtensionMessages('FBConnectLanguage');
 			$rawMappingText = wfMsg( self::$messageKey );
 
 			// Split the message by line.
@@ -111,7 +110,6 @@ class FBConnectLanguage{
 		
 		// Split the message by line.
 		$langMapping = array();
-		wfLoadExtensionMessages('FBConnectLanguage');
 		$rawMappingText = wfMsg( self::$messageKey );
 		$lines = explode("\n", $rawMappingText);
 		foreach($lines as $line){

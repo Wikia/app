@@ -19,8 +19,6 @@ require_once( "$IP/includes/GlobalFunctions.php" );
 require_once( "$IP/includes/wikia/GlobalFunctions.php" );
 require_once( "$IP/includes/Exception.php" );
 require_once( "$IP/includes/db/Database.php" );
-require_once( "$IP/includes/BagOStuff.php" );
-require_once( "$IP/includes/ObjectCache.php" );
 require_once( "$IP/extensions/wikia/WikiFactory/WikiFactory.php" );
 
 if( !function_exists("wfProfileIn") ) {
@@ -210,7 +208,7 @@ class WikiFactoryLoader {
 		 */
 		if( !$this->mDBhandler || !$this->mDBhandler->isOpen() ) {
 			error_log( "WikiFactoryLoader[{$this->mCityID}]: fallback to {$wgDBserver}" );
-			$this->mDBhandler = new Database( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
+			$this->mDBhandler = new DatabaseMysql( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
 			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
 		}
 
@@ -247,7 +245,7 @@ class WikiFactoryLoader {
 		 * load balancer uses one method which demand wgContLang defined
 		 * See BugId: 12474
 		 */
-		$wgContLang = new StubContLang;
+		$wgContLang = new StubObject('wgContLang');
 
 
 		/**

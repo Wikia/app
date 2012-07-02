@@ -34,7 +34,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				$showSearchAds = true;
 			}
 		}
-		
+
 		if ( $this->wg->User->getSkin() instanceof SkinMonoBook ) {
 			$this->response->addAsset('extensions/wikia/Search/monobook/monobook.scss');
 		}
@@ -52,7 +52,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$searchableNamespaces = SearchEngine::searchableNamespaces();
 		$wikiName = $this->wg->Sitename;
 		$hub = ($this->getVal('nohub') != '1') ? $this->getVal('hub') : false;
-		
+
 		if(!empty($advanced)) {
 			$redirs = $this->request->getBool('redirs');
 		}
@@ -109,9 +109,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			// @todo turn it back on, when backend will be fixed
 			//$this->wikiaSearch->setIncludeRedirects( $redirs );
 
-			$params = array('page'=>$page, 
-					'length'=>self::RESULTS_PER_PAGE, 
-					'cityId'=>( $isInterWiki ? 0 : $this->wg->CityId ), 
+			$params = array('page'=>$page,
+					'length'=>self::RESULTS_PER_PAGE,
+					'cityId'=>( $isInterWiki ? 0 : $this->wg->CityId ),
 					'groupResults'=>$isInterWiki,
 					'rank'=>$rank,
 					'hub'=>$hub);
@@ -381,7 +381,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->response->setData( $metaData );
 		}
 	}
-	
+
 	public function getRelatedVideos() {
 
 	       $pageId = $this->getVal('id');

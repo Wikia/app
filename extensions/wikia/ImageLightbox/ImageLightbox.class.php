@@ -50,7 +50,7 @@ class ImageLightbox {
 		}
 
 		// generate thumbnail
-		$thumb = $image->getThumbnail($width, $height);
+		$thumb = $image->transform( array( 'width' => $width, 'height' => $height ) );
 
 		$thumbHeight = $thumb->getHeight();
 		$thumbWidth = $thumb->getWidth();
@@ -65,8 +65,6 @@ class ImageLightbox {
 			//should not happen, ever
 			throw new MWException("Could not create Title from $pageName\n");
 		}
-
-		wfLoadExtensionMessages('ImageLightbox');
 
 		$thumbUrl = $thumb->getUrl();
 		$imageTitle = $wgTitle->getText();
@@ -273,7 +271,7 @@ class ImageLightbox {
 					null,
 					'ImageLightboxShare'
 				);
-				if (WikiError::isError($result)) {
+				if (!$result->isOK()) {
 					$res = array(
 						'result' => 0,
 						'info-caption' => wfMsg('lightbox-share-email-error-caption'),

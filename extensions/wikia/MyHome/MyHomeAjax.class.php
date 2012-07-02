@@ -13,14 +13,12 @@ class MyHomeAjax {
 		$since = $wgRequest->getVal('since', wfTimestamp(TS_MW, time()));
 		$limit = $wgRequest->getInt('limit', 60);
 
-
 		$feedProxy = new ActivityFeedAPIProxy();
 		$feedRenderer = new ActivityFeedRenderer();
 
 		$feedProvider = new DataFeedProvider($feedProxy);
 		$feedData = $feedProvider->get($limit, $since);
 		$feedHTML = $feedRenderer->render($feedData, false);
-
 
 		wfProfileOut(__METHOD__);
 		// get feed
@@ -30,33 +28,6 @@ class MyHomeAjax {
 		);
 	}
 
-	/*
-	 * Get HTML of video player for given video file
-	 *
-	 * Used for on-click video play
-	 */
-	public static function getVideoPlayer() {
-		wfProfileIn(__METHOD__);
-		global $wgTitle;
-
-		$video = new VideoPage($wgTitle);
-		$video->load();
-
-		// get default video dimensions
-		$dimensions = explode('x', $video->getTextRatio());
-		$width = intval($dimensions[0]);
-		$height = intval($dimensions[1]);
-
-		$ret = array(
-			'width' => $width,
-			'height' => $height,
-			'html' => $video->getEmbedCode($width, true),
-			'title' => $wgTitle->getText(),
-		);
-
-		wfProfileOut(__METHOD__);
-		return $ret;
-	}
 
 	/*
 	 * Get HTML for full-size image
@@ -90,7 +61,7 @@ class MyHomeAjax {
 		}
 
 		// generate thumbnail
-		$thumb = $image->getThumbnail($width, $height);
+		$thumb = $image->transform( array( 'width' => $width, 'height' => $height ) );
 
 		wfProfileOut(__METHOD__);
 		return array(
@@ -104,7 +75,7 @@ class MyHomeAjax {
 	 * Save default view in user preferences
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
-         */
+	 */
 	public static function setDefaultView() {
 		global $wgRequest;
 		$defaultView = $wgRequest->getVal('defaultView');

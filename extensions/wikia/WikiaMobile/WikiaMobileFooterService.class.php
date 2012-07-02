@@ -6,7 +6,7 @@
  */
 class WikiaMobileFooterService extends WikiaService {
 	public function index(){
-		$this->response->setVal( 'copyrightLink', $this->request->getVal( 'copyrightLink' ) );
+		$this->response->setVal( 'copyrightLink', $this->getLinkFromMessage( 'wikiamobile-footer-link-licencing' ) );
 		$this->response->setVal( 'links', array(
 			$this->getLinkFromMessage( 'wikiamobile-footer-link-videogames' ),
 			$this->getLinkFromMessage( 'wikiamobile-footer-link-entertainment' ),

@@ -13,6 +13,10 @@ class PoolCounter_ConnectionManager {
 		}
 	}
 
+	/**
+	 * @param $key
+	 * @return Status
+	 */
 	function get( $key ) {
 		$hashes = array();
 		foreach ( $this->hostNames as $hostName ) {
@@ -29,7 +33,11 @@ class PoolCounter_ConnectionManager {
 			if ( count( $parts ) < 2 ) {
 				$parts[] = 7531;
 			}
+			wfProfileIn( __METHOD__.'-connect' );
+			wfSuppressWarnings();
 			$conn = fsockopen( $parts[0], $parts[1], $errno, $errstr, $this->timeout );
+			wfRestoreWarnings();
+			wfProfileOut( __METHOD__.'-connect' );
 			if ( $conn ) {
 				break;
 			}
@@ -43,6 +51,9 @@ class PoolCounter_ConnectionManager {
 		return Status::newGood( $conn );
 	}
 
+	/**
+	 * @param $conn
+	 */
 	function close( $conn ) {
 		foreach ( $this->conns as $hostName => $otherConn ) {
 			if ( $conn === $otherConn ) {
@@ -59,22 +70,24 @@ class PoolCounter_ConnectionManager {
 }
 
 class PoolCounter_Client extends PoolCounter {
-	var $maxThreads, $waitTimeout, $type, $key, $conn;
-	var $isAcquired = false;
+	private $conn;
 
-	static $manager;
+	/**
+	 * @var PoolCounter_ConnectionManager
+	 */
+	static private $manager;
 
 	function __construct( $conf, $type, $key ) {
-		$this->waitTimeout = isset( $conf['waitTimeout'] ) ? $conf['waitTimeout'] : 15;
-		$this->maxThreads = isset( $conf['maxThreads'] ) ? $conf['maxThreads'] : 5;
-		$this->type = $type;
-		$this->key = $key;
+		parent::__construct( $conf, $type, $key );
 		if ( !self::$manager ) {
 			global $wgPoolCountClientConf;
 			self::$manager = new PoolCounter_ConnectionManager( $wgPoolCountClientConf );
 		}
 	}
 
+	/**
+	 * @return Status
+	 */
 	function getConn() {
 		if ( !isset( $this->conn ) ) {
 			$status = self::$manager->get( $this->key );
@@ -82,10 +95,17 @@ class PoolCounter_Client extends PoolCounter {
 				return $status;
 			}
 			$this->conn = $status->value;
+
+			// Set the read timeout to be 1.5 times the pool timeout.
+			// This allows the server to time out gracefully before we give up on it.
+			stream_set_timeout( $this->conn, 0, $this->timeout * 1e6 * 1.5 );
 		}
 		return Status::newGood( $this->conn );
 	}
 
+	/**
+	 * @return Status
+	 */
 	function sendCommand( /*, ...*/ ) {
 		$args = func_get_args();
 		$args = str_replace( ' ', '%20', $args );
@@ -96,7 +116,7 @@ class PoolCounter_Client extends PoolCounter {
 		}
 		$conn = $status->value;
 		wfDebug( "Sending pool counter command: $cmd\n" );
-		if ( fwrite( $conn, "$cmd\r\n" ) === false ) {
+		if ( fwrite( $conn, "$cmd\n" ) === false ) {
 			return Status::newFatal( 'poolcounter-write-error' );
 		}
 		$response = fgets( $conn );
@@ -108,68 +128,55 @@ class PoolCounter_Client extends PoolCounter {
 		$parts = explode( ' ', $response, 2 );
 		$responseType = $parts[0];
 		switch ( $responseType ) {
+			case 'LOCKED':
+			case 'RELEASED':
+			case 'DONE':
+			case 'NOT_LOCKED':
+			case 'QUEUE_FULL':
+			case 'TIMEOUT':
+			case 'LOCK_HELD':
+				return Status::newGood( constant( "PoolCounter::$responseType" ) );
+
 			case 'ERROR':
+			default:
 				$parts = explode( ' ', $parts[1], 2 );
 				$errorMsg = isset( $parts[1] ) ? $parts[1] : '(no message given)';
 				return Status::newFatal( 'poolcounter-remote-error', $errorMsg );
-			case 'ACK':
-			case 'RELEASED':
-			case 'COUNT':
-				$parts = explode( ' ', $parts[1] );
-				$key = array_shift( $parts );
-				$attribs = $this->colonsToAssoc( $parts );
-				$attribs['responseType'] = $responseType;
-				return Status::newGood( $attribs );
 		}
 	}
 
-	function colonsToAssoc( $items ) {
-		$assoc = array();
-		foreach ( $items as $item ) {
-			$parts = explode( ':', $item, 2 );
-			if ( count( $parts ) !== 2 ) {
-				continue;
-			}
-			$assoc[$parts[0]] = $parts[1];
-		}
-		return $assoc;
+	/**
+	 * @return Status
+	 */
+	function acquireForMe() {
+		wfProfileIn( __METHOD__ );
+		$status = $this->sendCommand( 'ACQ4ME', $this->key, $this->workers, $this->maxqueue, $this->timeout );
+		wfProfileOut( __METHOD__ );
+		return $status;
 	}
 
-	function acquire() {
-		$status = $this->sendCommand( 'acquire', $this->key, "max:{$this->maxThreads}" );
-		if ( !$status->isOK() ) {
-			return $status;
-		}
-		$response = $status->value;
-		$count = isset( $response['count'] ) ? $response['count'] : 0;
-		$this->isAcquired = true;
-		if ( $count > $this->maxThreads ) {
-			$response['overload'] = true;
-			$this->release();
-		}
-		return Status::newGood( $response );
+	/**
+	 * @return Status
+	 */
+	function acquireForAnyone() {
+		wfProfileIn( __METHOD__ );
+		$status = $this->sendCommand( 'ACQ4ANY', $this->key, $this->workers, $this->maxqueue, $this->timeout );
+		wfProfileOut( __METHOD__ );
+		return $status;
 	}
 
+	/**
+	 * @return Status
+	 */
 	function release() {
-		if ( $this->isAcquired ) {
-			$status = $this->sendCommand( 'release', $this->key );
-			$this->isAcquired = false;
-		} else {
-			$status = Status::newGood();
-		}
+		wfProfileIn( __METHOD__ );
+		$status = $this->sendCommand( 'RELEASE', $this->key );
+
 		if ( $this->conn ) {
 			self::$manager->close( $this->conn );
 			$this->conn = null;
 		}
-		return $status;
-	}
-
-	function wait() {
-		$status = $this->sendCommand( 'wait', $this->key, "timeout:{$this->waitTimeout}" );
-		if ( !$status->isOK() ) {
-			return $status;
-		}
-		$this->isAcquired = true;
+		wfProfileOut( __METHOD__ );
 		return $status;
 	}
 }

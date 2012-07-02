@@ -50,7 +50,5 @@ class FLV_Tag {
             default:
                 return new FLV_Tag_Generic( $hdr );
         }
-        return null;
     }
-
 }

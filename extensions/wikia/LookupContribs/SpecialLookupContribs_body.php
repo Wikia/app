@@ -6,8 +6,8 @@
  * @version: 1.0
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) { 
-	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ; 
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ;
 }
 
 class LookupContribsPage extends SpecialPage {
@@ -20,10 +20,9 @@ class LookupContribsPage extends SpecialPage {
 	function  __construct() {
 		parent::__construct( "LookupContribs"  /*class*/, 'lookupcontribs' /*restriction*/);
 	}
-	
+
 	public function execute( $subpage ) {
 		global $wgOut, $wgRequest, $wgContLang, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgStylePath, $wgUser;
-		wfLoadExtensionMessages("SpecialLookupContribs");
 
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
@@ -52,13 +51,13 @@ class LookupContribsPage extends SpecialPage {
 			'final'  => wfMsg('lookupcontribsselectmodefinal'),
 			'all'	 => wfMsg('lookupcontribsselectmodeall')
 		) ;
-		
+
 		$this->mShortModes = array(
 			'normal' => wfMsg('lookupcontribsnormal'),
 			'final' => wfMsg('lookupcontribsfinal'),
 			'all' => wfMsg('lookupcontribsall')
 		);
-		
+
 		$this->mViewModes = array ('full', 'links');
 		$wgOut->setPageTitle( wfMsg('lookupcontribstitle') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
@@ -74,13 +73,13 @@ class LookupContribsPage extends SpecialPage {
 			$this->mModeText = ($this->mMode == 'normal') ? wfMsg('lookupcontribsrecentcontributions', $this->mUserLink) : wfMsg('lookupcontribsfinalcontributions', $this->mUserLink);
 			$wgOut->setSubtitle ($this->mModeText);
 		}
-		
+
 		/**
 		 * show form
 		 */
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
-				 
+
 		if ( !empty($this->mMode) && !empty($this->mWiki) ) {
 			if ( !in_array( $this->mMode, array_keys($this->mModes) ) ) {
 				return;
@@ -95,10 +94,10 @@ class LookupContribsPage extends SpecialPage {
 	/* draws the form itself  */
 	function showMainForm ($error = "") {
 		global $wgOut;
-		
+
 		wfProfileIn( __METHOD__ );
 
-		$action = $this->mTitle->escapeLocalURL("");
+		$action = htmlspecialchars($this->mTitle->getLocalURL());
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
@@ -113,7 +112,7 @@ class LookupContribsPage extends SpecialPage {
 		$wgOut->addHTML( $oTmpl->execute("main-form") );
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/* draws the results table  */
 	function showWikiForm($error = "") {
 		global $wgOut, $wgLang ;
@@ -124,10 +123,10 @@ class LookupContribsPage extends SpecialPage {
 			wfProfileOut( __METHOD__ );
 			return false ;
 		}
-		
-		$action = $this->mTitle->escapeLocalURL("");
+
+		$action = htmlspecialchars($this->mTitle->getLocalURL());
 		$oWiki = WikiFactory::getWikiByDB($this->mWiki);
-				
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"title" 	=> $this->mTitle,
@@ -144,7 +143,7 @@ class LookupContribsPage extends SpecialPage {
 		$wgOut->addHTML( $oTmpl->execute("mode-form") );
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	function getResults() {
 		global $wgOut, $wgRequest ;
 		wfProfileIn( __METHOD__ );

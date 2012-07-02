@@ -74,7 +74,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 								list: searchSug,
 								clear: d.getElementById('wkClear')
 							});
-						})
+						});
 					}
 				});
 				searchInit = true;
@@ -216,14 +216,14 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 
 	function openProfile(){
 		reset();
-		closeNav();
-		navBar.className = 'prf';
 
 		if(wgUserName){
 			track('profile/open');
 		}else{
 			openLogin();
 		}
+
+		navBar.className = 'prf';
 	}
 
 	function openLogin(){
@@ -247,10 +247,10 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 					wkPrf.insertAdjacentHTML('beforeend', res.templates['UserLoginSpecialController_index']);
 					Wikia.processScript(res.scripts);
 
-					wkLgn = document.getElementById('wkLgn');
-					wkPrf.className += 'loaded';
+					wkPrf.className += ' loaded';
 
-					var form = wkLgn.getElementsByTagName('form')[0],
+					var wkLgn = document.getElementById('wkLgn'),
+						form = wkLgn.getElementsByTagName('form')[0],
 						query = new qs(form.getAttribute('action'));
 
 					query.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName));

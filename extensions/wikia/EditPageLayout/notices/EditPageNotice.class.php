@@ -30,7 +30,7 @@ class EditPageNotice {
 	}
 
 	public function getHash() {
-		return ( !empty($this->messageId) ? md5($this->messageId) : md5($this->getSummary()) );
+		return ( is_string($this->messageId) ? md5($this->messageId) : md5($this->getSummary()) );
 	}
 
 	public function getHtml() {
@@ -41,6 +41,11 @@ class EditPageNotice {
 		if ($this->summary === false) {
 			if ($this->messageId) {
 				$id = $this->messageId;
+
+				if (is_array($id)) {
+					$id = array_shift($id);
+				}
+
 				if (substr($id,0,3) == 'mw-')
 					$id = substr($id,3);
 				if (isset(self::$messagesMap[$id]))

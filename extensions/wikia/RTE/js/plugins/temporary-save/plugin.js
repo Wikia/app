@@ -13,7 +13,7 @@ CKEDITOR.plugins.add('rte-temporary-save',
 
 				// force to set mode with given content
 				editor.setMode(mode);
-				editor.setData(content)
+				editor.setData(content);
 
 				RTE.track('temporarySave', 'restore');
 			}

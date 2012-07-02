@@ -17,6 +17,10 @@ class TranslateToolbox {
 	 * Adds link in toolbox to Special:Prefixindex to show all other
 	 * available translations for a message. Only shown when it
 	 * actually is a translatable/translated message.
+	 *
+	 * @param $skin Skin
+	 *
+	 * @return bool
 	 */
 	static function toolboxAllTranslations( &$skin ) {
 		global $wgTranslateMessageNamespaces;

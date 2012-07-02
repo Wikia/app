@@ -3,4 +3,3 @@
 class WikiTrust extends WikiTrustBase {
 }
 
-?>

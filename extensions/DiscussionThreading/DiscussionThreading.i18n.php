@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for DiscussionThreading extension.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -21,9 +22,10 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Fryed-peach
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'discussionthreading-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'discussionthreading-desc' => '{{desc}}',
 	'discussionthreading-replysection' => '{{Identical|Reply}}',
 	'discussionthreading-threadnewsection' => '{{Identical|New}}',
 );
@@ -39,7 +41,18 @@ $messages['af'] = array(
 	'discussionthreading-threadnewsectionhint' => "Begin 'n nuwe onderwerp",
 );
 
-/** Old English (Anglo-Saxon)
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'discussionthreading-desc' => 'Shto fillesë për të folur faqe',
+	'discussionthreading-replysection' => 'përgjigje',
+	'discussionthreading-replysectionhint' => 'Përgjigju me këtë postimin',
+	'discussionthreading-threadnewsection' => 'i ri',
+	'discussionthreading-threadnewsectionhint' => 'Fillo një fije të re',
+);
+
+/** Old English (Ænglisc)
  * @author Wōdenhelm
  */
 $messages['ang'] = array(
@@ -58,6 +71,13 @@ $messages['ar'] = array(
 	'discussionthreading-threadnewsectionhint' => 'بدء مجموعة رسائل جديدة',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'discussionthreading-threadnewsection' => 'ܚܕܬܐ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
@@ -69,7 +89,27 @@ $messages['arz'] = array(
 	'discussionthreading-threadnewsectionhint' => 'بدء مجموعة رسائل جديدة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'discussionthreading-desc' => "Amestar filos a les páxines d'alderique",
+	'discussionthreading-replysection' => 'responder',
+	'discussionthreading-replysectionhint' => 'Responder a esti mensaxe',
+	'discussionthreading-threadnewsection' => 'nuevu',
+	'discussionthreading-threadnewsectionhint' => 'Principiar un filu nuevu',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'discussionthreading-replysection' => 'yenidən',
+	'discussionthreading-threadnewsection' => 'yeni',
+	'discussionthreading-threadnewsectionhint' => 'Yeni bir başlıq başla',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -86,6 +126,18 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'discussionthreading-replysection' => 'отговаряне',
+	'discussionthreading-threadnewsectionhint' => 'Започване на нова нишка',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'discussionthreading-desc' => 'আলাপ পাতায় আলোচনা শিরোনাম যোগ',
+	'discussionthreading-replysection' => 'উত্তর',
+	'discussionthreading-replysectionhint' => 'এই সংযোজনের প্রেক্ষিতে উত্তর',
+	'discussionthreading-threadnewsection' => 'নতুন',
+	'discussionthreading-threadnewsectionhint' => 'নতুন একটি আলোচনা শুরু করুন',
 );
 
 /** Breton (Brezhoneg)
@@ -131,6 +183,17 @@ $messages['cs'] = array(
 	'discussionthreading-replysectionhint' => 'Odpovědět na tento příspěvek',
 	'discussionthreading-threadnewsection' => 'nové',
 	'discussionthreading-threadnewsectionhint' => 'Začít nové vlákno',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'discussionthreading-desc' => 'Ychwanegu trafod ar drywydd i dudalennau sgwrs',
+	'discussionthreading-replysection' => 'ateb',
+	'discussionthreading-replysectionhint' => 'Ateb y cyfraniad hwn',
+	'discussionthreading-threadnewsection' => 'newydd',
+	'discussionthreading-threadnewsectionhint' => 'Dechrau trywydd newydd',
 );
 
 /** German (Deutsch)
@@ -209,6 +272,18 @@ $messages['eu'] = array(
 	'discussionthreading-threadnewsectionhint' => 'Kategoria berria hasi',
 );
 
+/** Persian (فارسی)
+ * @author Ebraminio
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'discussionthreading-desc' => 'افزودن موضوع جدید به صفحات بحث',
+	'discussionthreading-replysection' => 'پاسخ',
+	'discussionthreading-replysectionhint' => 'به این پیام پاسخ دهید',
+	'discussionthreading-threadnewsection' => 'تازه',
+	'discussionthreading-threadnewsectionhint' => 'شروع کردن یک موضوع جدید',
+);
+
 /** Finnish (Suomi)
  * @author Vililikku
  */
@@ -234,9 +309,13 @@ $messages['fr'] = array(
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'discussionthreading-replysection' => 'rèpondre',
+	'discussionthreading-replysectionhint' => 'Rèpondre a ceti mèssâjo',
 	'discussionthreading-threadnewsection' => 'novél',
+	'discussionthreading-threadnewsectionhint' => 'Comenciér un fil de discussion novél',
 );
 
 /** Irish (Gaeilge)
@@ -255,7 +334,7 @@ $messages['ga'] = array(
  */
 $messages['gl'] = array(
 	'discussionthreading-desc' => 'Engadir o encadeamento ás páxinas de conversa',
-	'discussionthreading-replysection' => 'respostar',
+	'discussionthreading-replysection' => 'responder',
 	'discussionthreading-replysectionhint' => 'Respostar esta publicación',
 	'discussionthreading-threadnewsection' => 'novo',
 	'discussionthreading-threadnewsectionhint' => 'Comezar un novo fío de conversa',
@@ -381,7 +460,14 @@ $messages['km'] = array(
 	'discussionthreading-threadnewsectionhint' => 'ចាប់ផ្ដើម​ខ្សែស្រឡាយ​ថ្មី​មួយ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'discussionthreading-threadnewsection' => 'ಹೊಸ',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -396,7 +482,7 @@ $messages['ksh'] = array(
  * @author Kw-Moon
  */
 $messages['kw'] = array(
-	'discussionthreading-threadnewsection' => 'nowyth',
+	'discussionthreading-threadnewsection' => 'noweth',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -421,11 +507,42 @@ $messages['mk'] = array(
 	'discussionthreading-threadnewsectionhint' => 'Започни нова нишка',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'discussionthreading-desc' => 'സംവാദം താളുകളിൽ ചരട് ചേർക്കുക',
+	'discussionthreading-replysection' => 'മറുപടി',
+	'discussionthreading-replysectionhint' => 'ഈ പ്രസിദ്ധപ്പെടുത്തലിന് മറുപടിയിടുക',
+	'discussionthreading-threadnewsection' => 'നൂതനം',
+	'discussionthreading-threadnewsectionhint' => 'പുതിയൊരു ചരട് തുടങ്ങുക',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'discussionthreading-threadnewsection' => 'baru',
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
+	'discussionthreading-replysection' => 'пандомс',
 	'discussionthreading-threadnewsection' => 'од',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'discussionthreading-desc' => 'Legg til tråding på diskusjonssider',
+	'discussionthreading-replysection' => 'svar',
+	'discussionthreading-replysectionhint' => 'Svar på denne posten',
+	'discussionthreading-threadnewsection' => 'ny',
+	'discussionthreading-threadnewsectionhint' => 'Start en ny tråd',
 );
 
 /** Dutch (Nederlands)
@@ -448,18 +565,6 @@ $messages['nn'] = array(
 	'discussionthreading-replysectionhint' => 'Svar på dette innlegget',
 	'discussionthreading-threadnewsection' => 'ny',
 	'discussionthreading-threadnewsectionhint' => 'Start ein ny tråd',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'discussionthreading-desc' => 'Legg til tråding på diskusjonssider',
-	'discussionthreading-replysection' => 'svar',
-	'discussionthreading-replysectionhint' => 'Svar på denne posten',
-	'discussionthreading-threadnewsection' => 'ny',
-	'discussionthreading-threadnewsectionhint' => 'Start en ny tråd',
 );
 
 /** Occitan (Occitan)
@@ -505,6 +610,14 @@ $messages['pms'] = array(
 	'discussionthreading-threadnewsectionhint' => 'Fa parte un neuv thread',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'discussionthreading-replysection' => 'ځوابول',
+	'discussionthreading-threadnewsection' => 'نوی',
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  * @author Waldir
@@ -530,10 +643,13 @@ $messages['pt-br'] = array(
 
 /** Romanian (Română)
  * @author Firilacroco
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'discussionthreading-replysection' => 'răspuns',
+	'discussionthreading-replysectionhint' => 'Răspunde la această postare',
 	'discussionthreading-threadnewsection' => 'nou',
+	'discussionthreading-threadnewsectionhint' => 'Începe un nou fir',
 );
 
 /** Tarandíne (Tarandíne)
@@ -570,6 +686,25 @@ $messages['sk'] = array(
 	'discussionthreading-threadnewsectionhint' => 'Začať nové vlákno',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'discussionthreading-replysection' => 'одговори',
+	'discussionthreading-replysectionhint' => 'Одговори на ову поруку',
+	'discussionthreading-threadnewsection' => 'ново',
+	'discussionthreading-threadnewsectionhint' => 'Започни нову тему',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'discussionthreading-replysection' => 'odgovori',
+	'discussionthreading-replysectionhint' => 'Odgovori na ovu poruku',
+	'discussionthreading-threadnewsection' => 'novo',
+	'discussionthreading-threadnewsectionhint' => 'Započni novu temu',
+);
+
 /** Swedish (Svenska)
  * @author Najami
  */
@@ -586,6 +721,7 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'discussionthreading-replysection' => 'స్పందించండి',
+	'discussionthreading-threadnewsection' => 'కొత్తది',
 );
 
 /** Thai (ไทย)
@@ -664,5 +800,34 @@ $messages['vo'] = array(
 	'discussionthreading-replysectionhint' => 'Gepenön keblünote at',
 	'discussionthreading-threadnewsection' => 'nulik',
 	'discussionthreading-threadnewsectionhint' => 'Primön fadi nulik',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'discussionthreading-replysection' => 'אָנרופֿן',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'discussionthreading-desc' => '添加线程交谈页',
+	'discussionthreading-replysection' => '回复',
+	'discussionthreading-replysectionhint' => '回复本贴',
+	'discussionthreading-threadnewsection' => '新',
+	'discussionthreading-threadnewsectionhint' => '启动一个新的线程',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'discussionthreading-desc' => '添加線程交談頁',
+	'discussionthreading-replysection' => '回覆',
+	'discussionthreading-replysectionhint' => '回覆這個帖子',
+	'discussionthreading-threadnewsection' => '新',
+	'discussionthreading-threadnewsectionhint' => '啟動一個新的線程',
 );
 

@@ -3,8 +3,8 @@
 /**
  * Extractor which processes plain text files
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
 class TextExtractor extends Extractor {

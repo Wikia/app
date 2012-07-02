@@ -65,11 +65,10 @@ function WikiaQuizAjax() {
 	if (method_exists('WikiaQuizAjax', $method)) {
 		wfProfileIn(__METHOD__);
 
-		wfLoadExtensionMessages('WikiaQuiz');
 		$data = WikiaQuizAjax::$method();
 
 		// send array as JSON
-		$json = Wikia::json_encode($data);
+		$json = json_encode($data);
 		$response = new AjaxResponse($json);
 		$response->setContentType('application/json; charset=utf-8');
 

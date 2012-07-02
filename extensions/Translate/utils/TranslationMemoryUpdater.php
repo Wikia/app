@@ -13,19 +13,17 @@
  */
 class TranslationMemoryUpdater {
 	/**
-	 * @static
-	 * @param $article Article
+	 * Shovels the new translation into translation memory.
+	 * Hook: Translate:newTranslation
+	 *
+	 * @param $handle MessageHandle
+	 * @param $revision
+	 * @param $text string
 	 * @param $user User
-	 * @param  $text
-	 * @param  $summary
-	 * @param  $minor
-	 * @param  $_
-	 * @param  $_
-	 * @param  $flags
-	 * @param  $revision
+	 *
 	 * @return bool
 	 */
-	public static function update( $article, $user, $text, $summary, $minor, $_, $_, $flags, $revision ) {
+	public static function update( MessageHandle $handle, $revision, $text, User $user ) {
 		global $wgContLang;
 
 		$dbw = self::getDatabaseHandle();
@@ -34,29 +32,15 @@ class TranslationMemoryUpdater {
 			return true;
 		}
 
-		$title = $article->getTitle();
-		// Something we are not interested in at all
-		if ( !TranslateEditAddons::isMessageNamespace( $title ) ) {
-			return true;
-		}
-
-		list( $key, $code, $group ) = TranslateEditAddons::getKeyCodeGroup( $title );
-		// Unknown message, we cannot handle. We need definition.
-		if ( !$group || !$code ) {
-			return true;
-		}
-
 		// Skip definitions to not slow down mass imports etc.
 		// These will be added when first translation is made
-		if ( $code === 'en' ) {
+		if ( $handle->getCode() === 'en' ) {
 			return true;
 		}
 
-		// Skip fuzzy messages
-		if ( TranslateEditAddons::hasFuzzyString( $text ) ) {
-			return true;
-		}
-
+		$group = $handle->getGroup();
+		$key = $handle->getKey();
+		$code = $handle->getCode();
 		$ns_text = $wgContLang->getNsText( $group->getNamespace() );
 		$definition = $group->getMessage( $key, 'en' );
 		if ( !is_string( $definition ) || !strlen( $definition ) ) {

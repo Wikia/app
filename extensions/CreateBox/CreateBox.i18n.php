@@ -85,6 +85,19 @@ $messages['arz'] = array(
 <createbox>break=no</createbox>",
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'createbox-desc' => "Caxa d'entrada especializada pa la creación de páxines",
+	'createbox-create' => 'Crear',
+	'createbox-exists' => "Sentímoslo, \"'''{{FULLPAGENAME}}'''\" yá esiste.
+
+Nun puedes crear esta páxina, pero puedes [{{fullurl:{{FULLPAGENAME}}|action=edit}} editala], [{{fullurl:{{FULLPAGENAME}}}} lleela], o elixir crear una páxina diferente usando la caxa d'abaxo.
+
+<createbox>break=no</createbox>",
+);
+
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
@@ -116,6 +129,14 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'createbox-create' => 'Създаване',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'createbox-desc' => 'পাতা তৈরির জন্য বিশেষ ইনপুট বক্স',
+	'createbox-create' => 'তৈরি করুন',
 );
 
 /** Breton (Brezhoneg)
@@ -162,7 +183,7 @@ $messages['co'] = array(
 $messages['cs'] = array(
 	'createbox-desc' => 'Speciální vkládací pole pro vytváření stránek',
 	'createbox-create' => 'Vytvořit',
-	'createbox-exists' => "Omlouváme se, \"'''{{FULLPAGENAME}}'''\" již existuje.
+	'createbox-exists' => "Omlouváme se, ale \"'''{{FULLPAGENAME}}'''\" již existuje.
 
 Nemůžete vytvořit tuto stránku, ale můžete jí [{{fullurl:{{FULLPAGENAME}}|action=edit}} editovat], [{{fullurl:{{FULLPAGENAME}}}} zobrazit], nebo vytvořit jinou stránku pomocí následujícího pole.
 
@@ -204,6 +225,17 @@ $messages['de-formal'] = array(
 	'createbox-exists' => "„'''{{FULLPAGENAME}}'''“ existiert bereits.
 
 Sie können diese Seite nicht anlegen, aber Sie können sie [{{fullurl:{{FULLPAGENAME}}|action=edit}} bearbeiten], [{{fullurl:{{FULLPAGENAME}}}} lesen] oder eine andere Seite mithilfe des untenstehenden Eingabefeldes anlegen.
+
+<createbox>break=no</createbox>",
+);
+
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'createbox-exists' => "Xeta, \"'''{{FULLPAGENAME}}'''\" xora esta.
+
+Feqet şıma şenê [{{fullurl:{{FULLPAGENAME}}|action=edit}} bıvurnê],  ya zi [{{fullurl:{{FULLPAGENAME}}}} buwanê], ya na  dora cêrêna peşti gerênra şıma şenê  zewmi pela vırazê.
 
 <createbox>break=no</createbox>",
 );
@@ -304,6 +336,13 @@ $messages['fr'] = array(
 Vous ne pouvez pas créer cette page, mais vous pouvez [{{fullurl:{{FULLPAGENAME}}|action=edit}} la modifier], [{{fullurl:{{FULLPAGENAME}}}} la lire] ou choisir de créer une page différente à l’aide de la boîte ci-dessous.
 
 <createbox>break=no</createbox>",
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'createbox-create' => 'Fâre',
 );
 
 /** Galician (Galego)
@@ -530,6 +569,19 @@ $messages['lb'] = array(
 Dir kënnt dës Säit net uleeën, awer Dir kënnt [{{fullurl:{{FULLPAGENAME}}|action=edit}} s'änneren], [{{fullurl:{{FULLPAGENAME}}}} liest] oder wielt fir eng aner Säit unzeleeë mat Hëllef vun der Këscht ënnendrënner.",
 );
 
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'createbox-desc' => '"Inputbox" khusus kanggo nggawe kaca',
+	'createbox-create' => 'Gawe',
+	'createbox-exists' => "Pangapura, \"'''{{FULLPAGENAME}}'''\" uwis ana.
+
+Rika ora teyeng gawe kaca kiye, ningen Rika teyeng [{{fullurl:{{FULLPAGENAME}}|action=edit}} nyunting], [{{fullurl:{{FULLPAGENAME}}}} maca], utawa nggawe kaca sejene nganggo kotak nang ngisor kiye.
+
+<createbox>break=no</createbox>",
+);
+
 /** Malagasy (Malagasy)
  * @author Jagwar
  */
@@ -565,6 +617,19 @@ $messages['mr'] = array(
 	'createbox-create' => 'तयार करा',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'createbox-desc' => 'Ruang input khusus untuk penciptaan laman',
+	'createbox-create' => 'Cipta',
+	'createbox-exists' => "Maaf, \"'''{{FULLPAGENAME}}'''\" sudah wujud.
+
+Anda tidak boleh mencipta laman ini, tetapi anda boleh [{{fullurl:{{FULLPAGENAME}}|action=edit}} menyuntingnya], [{{fullurl:{{FULLPAGENAME}}}} membacanya], atau memilih untuk mencipta laman yang baru dengan menggunakan ruangan di bawah.
+
+<createbox>break=no</createbox>",
+);
+
 /** Maltese (Malti)
  * @author Chrisportelli
  */
@@ -583,6 +648,28 @@ Ma tistax toħloq din il-paġna, imma tista' [{{fullurl:{{FULLPAGENAME}}|action=
  */
 $messages['nah'] = array(
 	'createbox-create' => 'Ticchīhuāz',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'createbox-desc' => 'Spesialisert tekstboks for sideoppretting',
+	'createbox-create' => 'Opprett',
+	'createbox-exists' => "Beklager, «'''{{FULLPAGENAME}}'''» finnes fra før.
+
+Du kan ikke opprette denne siden, men du kan [{{fullurl:{{FULLPAGENAME}}|action=edit}} redigere den], [{{fullurl:{{FULLPAGENAME}}}} lese den] eller opprette en annen siden med hjelp av boksen nedenfor.
+
+<createbox>break=no</createbox>",
+);
+
+/** Nepali (नेपाली)
+ * @author Bhawani Gautam
+ * @author Bhawani Gautam Rhk
+ */
+$messages['ne'] = array(
+	'createbox-desc' => 'पृष्ठ सृजनाको निम्ति विशेष इनपुट बाकस',
+	'createbox-create' => 'सृजना गर्ने',
 );
 
 /** Dutch (Nederlands)
@@ -611,19 +698,6 @@ Du kan ikkje oppretta denne sida, men du kan [{{fullurl:{{FULLPAGENAME}}|action=
 <createbox>break=no</createbox>",
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'createbox-desc' => 'Spesialisert tekstboks for sideoppretting',
-	'createbox-create' => 'Opprett',
-	'createbox-exists' => "Beklager, «'''{{FULLPAGENAME}}'''» finnes fra før.
-
-Du kan ikke opprette denne siden, men du kan [{{fullurl:{{FULLPAGENAME}}|action=edit}} redigere den], [{{fullurl:{{FULLPAGENAME}}}} lese den] eller opprette en annen siden med hjelp av boksen nedenfor.
-
-<createbox>break=no</createbox>",
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -635,6 +709,13 @@ $messages['oc'] = array(
 Podètz pas crear aquesta pagina, mas la podètz [{{fullurl:{{FULLPAGENAME}}|action=edit}} modificar], [{{fullurl:{{FULLPAGENAME}}}} legir] o causir de crear una pagina diferenta amb l’ajuda de la bóstia çaijós.
 
 <createbox>break=no</createbox>",
+);
+
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Odisha1
+ */
+$messages['or'] = array(
+	'createbox-create' => 'ତିଆରି',
 );
 
 /** Deitsch (Deitsch)
@@ -755,7 +836,7 @@ $messages['rue'] = array(
 	'createbox-create' => 'Створити',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -776,9 +857,14 @@ Túto stránku nemôžete vytvoriť, ale môžete ju [{{fullurl:{{FULLPAGENAME}}
 <createbox>break=no</createbox>",
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬) */
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬) */
 $messages['sr-ec'] = array(
 	'createbox-create' => 'Направи',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'createbox-create' => 'Napravi',
 );
 
 /** Sundanese (Basa Sunda)
@@ -835,14 +921,21 @@ $messages['te'] = array(
 <createbox>break=no</createbox>",
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'createbox-create' => 'Kria',
+);
+
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'createbox-create' => 'Эҷод',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(

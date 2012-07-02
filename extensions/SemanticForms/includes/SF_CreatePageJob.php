@@ -1,9 +1,16 @@
 <?php
+/**
+ *
+ * @file
+ * @ingroup SF
+ */
 
 /**
- * Background job to create a new page, for use by the 'CreateClass' special page
+ * Background job to create a new page, for use by the 'CreateClass' special
+ * page.
  *
  * @author Yaron Koren
+ * @ingroup SF
  */
 class SFCreatePageJob extends Job {
 
@@ -23,12 +30,12 @@ class SFCreatePageJob extends Job {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-                $article = new Article( $this->title );
-                if ( !$article ) {
-                        $this->error = 'createPage: Article not found "' . $this->title->getPrefixedDBkey() . '"';
-                        wfProfileOut( __METHOD__ );
-                        return false;
-                }
+		$article = new Article( $this->title, 0 );
+		if ( !$article ) {
+			$this->error = 'createPage: Article not found "' . $this->title->getPrefixedDBkey() . '"';
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
 
 		$page_text = $this->params['page_text'];
 		// change global $wgUser variable to the one

@@ -68,7 +68,7 @@ class PHPlot {
     var $y_precision = 1;
     var $x_precision = 1;
 
-    var $data_units_text = '';              // Units text for 'data' labels (i.e: '¤', '$', etc.)
+    var $data_units_text = '';              // Units text for 'data' labels (i.e: 'ï¿½', '$', etc.)
 
 // Titles
     var $title_txt = '';
@@ -209,7 +209,7 @@ class PHPlot {
      * \param which_output_file string Filename for output.
      * \param which_input_fule  string Path to a file to be used as background.
      */
-    function PHPlot($which_width=600, $which_height=400, $which_output_file=null, $which_input_file=null)
+    function __construct($which_width=600, $which_height=400, $which_output_file=null, $which_input_file=null)
     {
         $this->SetRGBArray($this->color_array);
 
@@ -581,7 +581,7 @@ class PHPlot {
     {
         if (is_null($which_data) && is_array($this->data_colors)) {
             // use already set data_colors
-        } else if (! is_array($which_data)) {
+        } elseif (! is_array($which_data)) {
             $this->data_colors = ($which_data) ? array($which_data) : array('blue', 'red', 'green', 'orange');
         } else {
             $this->data_colors = $which_data;
@@ -609,7 +609,7 @@ class PHPlot {
     {
         if (is_null($which_br) && is_array($this->data_border_colors)) {
             // use already set data_border_colors
-        } else if (! is_array($which_br)) {
+        } elseif (! is_array($which_br)) {
             // Create new array with specified color
             $this->data_border_colors = ($which_br) ? array($which_br) : array('black');
         } else {
@@ -635,7 +635,7 @@ class PHPlot {
     {
         if (is_null($which_err) && is_array($this->error_bar_colors)) {
             // use already set error_bar_colors
-        } else if (! is_array($which_err)) {
+        } elseif (! is_array($which_err)) {
             $this->error_bar_colors = ($which_err) ? array($which_err) : array('black');
         } else {
             $this->error_bar_colors = $which_err;
@@ -707,7 +707,7 @@ class PHPlot {
     {
         if (is_null($which_lw)) {
             // Do nothing, use default value.
-        } else if (is_array($which_lw)) {
+        } elseif (is_array($which_lw)) {
             // Did we get an array with line widths?
             $this->line_widths = $which_lw;
         } else {
@@ -723,7 +723,7 @@ class PHPlot {
     {
         if (is_null($which_ls)) {
             // Do nothing, use default value.
-        } else if ( is_array($which_ls)) {
+        } elseif ( is_array($which_ls)) {
             // Did we get an array with line styles?
             $this->line_styles = $which_ls;
         } else {
@@ -1493,7 +1493,7 @@ class PHPlot {
      *    + Trigger a user-level error containing the error message.
      *      If no error handler was set up, the script will log the
      *      error and exit with non-zero status.
-     *  
+     *
      *  PrintError() and DrawError() are now equivalent. Both are provided for
      *  compatibility. (In earlier releases, PrintError sent the message to
      *  stdout only, and DrawError sent it in an image only.)
@@ -1574,15 +1574,15 @@ class PHPlot {
                                           __FUNCTION__);
         if (!$which_ydlp) return FALSE;
         $this->y_data_label_pos = $which_ydlp;
-        //This bit in SetYDataLabelPos about plotleft is for those who were 
+        //This bit in SetYDataLabelPos about plotleft is for those who were
         //using this function to set SetYTickLabelPos.
-        if ( ($which_ydlp == 'plotleft') || ($which_ydlp == 'plotright') || 
-             ($which_ydlp == 'both') || ($which_ydlp == 'yaxis') ) { 
+        if ( ($which_ydlp == 'plotleft') || ($which_ydlp == 'plotright') ||
+             ($which_ydlp == 'both') || ($which_ydlp == 'yaxis') ) {
 
             //Call sety_TICK_labelpos instead of sety_DATA_labelpos
             $this->SetYTickLabelPos($which_ydlp);
 
-        } elseif ($which_ydlp != 'none') { 
+        } elseif ($which_ydlp != 'none') {
             //right now its plotin or none
             $this->y_data_label_pos = 'plotin';
         }
@@ -1994,7 +1994,7 @@ class PHPlot {
     {
         if (is_null($which_pt)) {
             // Do nothing, use default value.
-        } else if (is_array($which_pt)) {
+        } elseif (is_array($which_pt)) {
             // Did we get an array with point shapes?
             $this->point_shapes = $which_pt;
         } else {
@@ -2016,7 +2016,7 @@ class PHPlot {
 
         if ($ps < $pt) {
             $this->pad_array($this->point_sizes, $pt);
-        } else if ($pt > $ps) {
+        } elseif ($pt > $ps) {
             $this->pad_array($this->point_shapes, $ps);
         }
         return TRUE;
@@ -2031,7 +2031,7 @@ class PHPlot {
     {
         if (is_null($which_ps)) {
             // Do nothing, use default value.
-        } else if (is_array($which_ps)) {
+        } elseif (is_array($which_ps)) {
             // Did we get an array with point sizes?
             $this->point_sizes = $which_ps;
         } else {
@@ -2045,7 +2045,7 @@ class PHPlot {
 
         if ($ps < $pt) {
             $this->pad_array($this->point_sizes, $pt);
-        } else if ($pt > $ps) {
+        } elseif ($pt > $ps) {
             $this->pad_array($this->point_shapes, $ps);
         }
 
@@ -2102,7 +2102,7 @@ class PHPlot {
         $this->num_data_rows = count($which_dv);
         $this->total_records = 0;               // Perform some useful calculations.
         $this->records_per_group = 1;
-        for ($i = 0, $recs = 0; $i < $this->num_data_rows; $i++) {
+        for ($i = 0; $i < $this->num_data_rows; $i++) {
             // Copy
             $this->data[$i] = array_values($which_dv[$i]);   // convert to numerical indices.
 
@@ -2613,7 +2613,7 @@ class PHPlot {
             $this->x_left_margin = max($min_margin, $left_margin);
             $this->x_right_margin = max($min_margin, $right_margin);
         }
- 
+
         if ($this->GetCallback('debug_scale')) {
             // (Too bad compact() doesn't work on class member variables...)
             $this->DoCallback('debug_scale', __FUNCTION__, array(
@@ -2807,7 +2807,7 @@ class PHPlot {
         // Note that the extra space due to group_frac_width and bar_extra_space will be
         // evenly divided on each side of the group: the drawn bars are centered in the group.
 
-        // Within each bar's allocated space, if bar_width_adjust=1 the bar fills the 
+        // Within each bar's allocated space, if bar_width_adjust=1 the bar fills the
         // space, otherwise it is centered.
         // This is the actual drawn bar width:
         $this->actual_bar_width = $this->record_bar_width * $this->bar_width_adjust;
@@ -2846,7 +2846,7 @@ class PHPlot {
                 $this->x_axis_position = 1;
             elseif ($this->plot_min_y <= 0 && 0 <= $this->plot_max_y)
                 $this->x_axis_position = 0;
-             else 
+             else
                 $this->x_axis_position = $this->plot_min_y;
         } else
             $this->x_axis_position = min(max($this->plot_min_y, $this->x_axis_position), $this->plot_max_y);
@@ -3293,10 +3293,10 @@ class PHPlot {
         if ($mode == 'scale') {
             imagecopyresized($this->img, $im, $xorig, $yorig, 0, 0, $width, $height, $tile_width, $tile_height);
             return TRUE;
-        } else if ($mode == 'centeredtile') {
+        } elseif ($mode == 'centeredtile') {
             $x0 = - floor($tile_width/2);   // Make the tile look better
             $y0 = - floor($tile_height/2);
-        } else if ($mode = 'tile') {
+        } elseif ($mode == 'tile') {
             $x0 = 0;
             $y0 = 0;
         }
@@ -3676,17 +3676,17 @@ class PHPlot {
      * This is currently only used for Y data labels for bar charts.
      */
     function DrawDataLabel($which_font, $which_angle, $x_world, $y_world, $which_color, $which_text,
-                      $which_halign = 'center', $which_valign = 'bottom', $x_adjustment=0, $y_adjustment=0) 
+                      $which_halign = 'center', $which_valign = 'bottom', $x_adjustment=0, $y_adjustment=0)
     {
         $data_label = $this->FormatLabel('y', $which_text);
-        //since DrawDataLabel is going to be called alot - perhaps for speed it is better to 
+        //since DrawDataLabel is going to be called alot - perhaps for speed it is better to
         //not use this if statement and just always assume which_font is x_label_font (ditto for color).
-        if ( empty($which_font) ) 
+        if ( empty($which_font) )
             $which_font = $this->x_label_font;
 
         $which_angle = empty($which_angle)?'0':$this->x_label_angle;
 
-        if ( empty($which_color) ) 
+        if ( empty($which_color) )
             $which_color = $this->ndx_title_color;
 
         $x_pixels = $this->xtr($x_world) + $x_adjustment;
@@ -3755,12 +3755,12 @@ class PHPlot {
             ImageLine($this->img, $xpos, $this->plot_area[3], $xpos, $this->plot_area[1], $style);
         }
         // Lines from the bottom of the plot up to the max Y value at this X:
-        else if ($this->x_data_label_pos == 'plotdown') {
+        elseif ($this->x_data_label_pos == 'plotdown') {
             $ypos = $this->ytr($this->data_maxy[$row]);
             ImageLine($this->img, $xpos, $ypos, $xpos, $this->plot_area[3], $style);
         }
         // Lines from the top of the plot down to the min Y value at this X:
-        else if ($this->x_data_label_pos == 'plotup') {
+        elseif ($this->x_data_label_pos == 'plotup') {
             $ypos = $this->ytr($this->data_miny[$row]);
             ImageLine($this->img, $xpos, $this->plot_area[1], $xpos, $ypos, $style);
         }
@@ -3911,7 +3911,6 @@ class PHPlot {
         $xpos = $this->plot_area[0] + $this->plot_area_width/2;
         $ypos = $this->plot_area[1] + $this->plot_area_height/2;
         $diameter = min($this->plot_area_width, $this->plot_area_height);
-        $radius = $diameter/2;
 
         // Get sum of each column? One pie slice per column
         if ($this->data_type === 'text-data') {
@@ -3922,13 +3921,13 @@ class PHPlot {
             }
         }
         // Or only one column per row, one pie slice per row?
-        else if ($this->data_type == 'text-data-single') {
+        elseif ($this->data_type == 'text-data-single') {
             for ($i = 0; $i < $this->num_data_rows; $i++) {
                 $legend[$i] = $this->data[$i][0];                   // Set the legend to column labels
                 $sumarr[$i] = $this->data[$i][1];
             }
         }
-        else if ($this->data_type == 'data-data') {
+        elseif ($this->data_type == 'data-data') {
             for ($i = 0; $i < $this->num_data_rows; $i++) {
                 for ($j = 2; $j < $this->num_recs[$i]; $j++) {
                     @ $sumarr[$j] += abs($this->data[$i][$j]);
@@ -3954,7 +3953,6 @@ class PHPlot {
 
         for ($h = $this->shading; $h >= 0; $h--) {
             $color_index = 0;
-            $start_angle = 0;
             $end_angle = 0;
             foreach ($sumarr as $val) {
                 // For shaded pies: the last one (at the top of the "stack") has a brighter color:
@@ -4029,7 +4027,7 @@ class PHPlot {
         // Suppress duplicate X data labels in linepoints mode; let DrawLinesError() do them.
         $do_labels = ($this->plot_type != 'linepoints');
 
-        for($row = 0, $cnt = 0; $row < $this->num_data_rows; $row++) {
+        for($row = 0; $row < $this->num_data_rows; $row++) {
             $record = 1;                                // Skip record #0 (title)
 
             $x_now = $this->data[$row][$record++];  // Read it, advance record index
@@ -4366,7 +4364,7 @@ class PHPlot {
                     $start_lines[$idx] = TRUE;
                 }
                 // Y data missing... should we leave a blank or not?
-                else if ($this->draw_broken_lines) {
+                elseif ($this->draw_broken_lines) {
                     $start_lines[$idx] = FALSE;
                 }
             }   // end for
@@ -4389,7 +4387,7 @@ class PHPlot {
 
         $start_lines = array_fill(0, $this->records_per_group, FALSE);
 
-        for ($row = 0, $cnt = 0; $row < $this->num_data_rows; $row++) {
+        for ($row = 0; $row < $this->num_data_rows; $row++) {
             $record = 1;                                    // Skip record #0 (data label)
 
             $x_now = $this->data[$row][$record++];          // Read X value, advance record index
@@ -4500,7 +4498,7 @@ class PHPlot {
                     $start_lines[$idx] = TRUE;
                 }
                 // Y data missing... should we leave a blank or not?
-                else if ($this->draw_broken_lines) {
+                elseif ($this->draw_broken_lines) {
                     $start_lines[$idx] = FALSE;
                 }
             }

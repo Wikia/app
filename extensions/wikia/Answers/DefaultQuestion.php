@@ -5,8 +5,6 @@ class DefaultQuestion {
 	function __construct( $question ) {
 		global $wgRequest;
 
-		wfLoadExtensionMessages( 'Answers' );
-
 		//if its all caps, tone it down!
 		if( strtoupper( $question ) == $question ){
 			$question = strtolower( $question );

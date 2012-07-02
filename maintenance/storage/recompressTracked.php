@@ -1,14 +1,36 @@
 <?php
+/**
+ * Moves blobs indexed by trackBlobs.php to a specified list of destination
+ * clusters, and recompresses them in the process.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup Maintenance ExternalStorage
+ */
 
 $optionsWithArgs = RecompressTracked::getOptionsWithArgs();
-require( dirname( __FILE__ ) .'/../commandLine.inc' );
+require( dirname( __FILE__ ) . '/../commandLine.inc' );
 
 if ( count( $args ) < 1 ) {
 	echo "Usage: php recompressTracked.php [options] <cluster> [... <cluster>...]
 Moves blobs indexed by trackBlobs.php to a specified list of destination clusters, and recompresses them in the process. Restartable.
 
-Options: 
-    --procs <procs>         Set the number of child processes (default 1)
+Options:
+	--procs <procs>         Set the number of child processes (default 1)
 	--copy-only             Copy only, do not update the text table. Restart without this option to complete.
 	--debug-log <file>      Log debugging data to the specified file
 	--info-log <file>       Log progress messages to the specified file
@@ -99,7 +121,7 @@ class RecompressTracked {
 	}
 
 	function logToFile( $msg, $file ) {
-		$header = '[' . date('d\TH:i:s') . '] ' . wfHostname() . ' ' . posix_getpid();
+		$header = '[' . date( 'd\TH:i:s' ) . '] ' . wfHostname() . ' ' . posix_getpid();
 		if ( $this->slaveId !== false ) {
 			$header .= "({$this->slaveId})";
 		}
@@ -109,8 +131,8 @@ class RecompressTracked {
 
 	/**
 	 * Wait until the selected slave has caught up to the master.
-	 * This allows us to use the slave for things that were committed in a 
-	 * previous part of this batch process. 
+	 * This allows us to use the slave for things that were committed in a
+	 * previous part of this batch process.
 	 */
 	function syncDBs() {
 		$dbw = wfGetDB( DB_MASTER );
@@ -147,6 +169,7 @@ class RecompressTracked {
 
 	/**
 	 * Make sure the tracking table exists and isn't empty
+	 * @return bool
 	 */
 	function checkTrackingTable() {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -179,14 +202,14 @@ class RecompressTracked {
 				$cmd .= " --$cmdOption";
 			}
 		}
-		$cmd .= ' --child' . 
+		$cmd .= ' --child' .
 			' --wiki ' . wfEscapeShellArg( wfWikiID() ) .
 			' ' . call_user_func_array( 'wfEscapeShellArg', $this->destClusters );
 
 		$this->slavePipes = $this->slaveProcs = array();
 		for ( $i = 0; $i < $this->numProcs; $i++ ) {
 			$pipes = false;
-			$spec = array( 
+			$spec = array(
 				array( 'pipe', 'r' ),
 				array( 'file', 'php://stdout', 'w' ),
 				array( 'file', 'php://stderr', 'w' )
@@ -228,7 +251,7 @@ class RecompressTracked {
 	function dispatch( /*...*/ ) {
 		$args = func_get_args();
 		$pipes = $this->slavePipes;
-		$numPipes = stream_select( $x=array(), $pipes, $y=array(), 3600 );
+		$numPipes = stream_select( $x = array(), $pipes, $y = array(), 3600 );
 		if ( !$numPipes ) {
 			$this->critical( "Error waiting to write to slaves. Aborting" );
 			exit( 1 );
@@ -264,8 +287,8 @@ class RecompressTracked {
 		if ( $this->noCount ) {
 			$numPages = '[unknown]';
 		} else {
-			$numPages = $dbr->selectField( 'blob_tracking', 
-				'COUNT(DISTINCT bt_page)', 
+			$numPages = $dbr->selectField( 'blob_tracking',
+				'COUNT(DISTINCT bt_page)',
 				# A condition is required so that this query uses the index
 				array( 'bt_moved' => 0 ),
 				__METHOD__
@@ -277,15 +300,15 @@ class RecompressTracked {
 			$this->info( "Moving pages..." );
 		}
 		while ( true ) {
-			$res = $dbr->select( 'blob_tracking', 
+			$res = $dbr->select( 'blob_tracking',
 				array( 'bt_page' ),
-				array( 
+				array(
 					'bt_moved' => 0,
 					'bt_page > ' . $dbr->addQuotes( $startId )
 				),
 				__METHOD__,
-				array( 
-					'DISTINCT', 
+				array(
+					'DISTINCT',
 					'ORDER BY' => 'bt_page',
 					'LIMIT' => $this->batchSize,
 				)
@@ -330,8 +353,8 @@ class RecompressTracked {
 		if ( $this->noCount ) {
 			$numOrphans = '[unknown]';
 		} else {
-			$numOrphans = $dbr->selectField( 'blob_tracking', 
-				'COUNT(DISTINCT bt_text_id)', 
+			$numOrphans = $dbr->selectField( 'blob_tracking',
+				'COUNT(DISTINCT bt_text_id)',
 				array( 'bt_moved' => 0, 'bt_page' => 0 ),
 				__METHOD__ );
 			if ( !$numOrphans ) {
@@ -440,8 +463,8 @@ class RecompressTracked {
 		$trx = new CgzCopyTransaction( $this, $this->pageBlobClass );
 
 		while ( true ) {
-			$res = $dbr->select( 
-				array( 'blob_tracking', 'text' ), 
+			$res = $dbr->select(
+				array( 'blob_tracking', 'text' ),
 				'*',
 				array(
 					'bt_page' => $pageId,
@@ -451,7 +474,7 @@ class RecompressTracked {
 					'bt_text_id=old_id',
 				),
 				__METHOD__,
-				array( 
+				array(
 					'ORDER BY' => 'bt_text_id',
 					'LIMIT' => $this->batchSize
 				)
@@ -496,7 +519,7 @@ class RecompressTracked {
 	 *
 	 * This is done in a single transaction to provide restartable behaviour
 	 * without data loss.
-	 * 
+	 *
 	 * The transaction is kept short to reduce locking.
 	 */
 	function moveTextRow( $textId, $url ) {
@@ -536,16 +559,16 @@ class RecompressTracked {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$startId = 0;
-		$conds = array_merge( $conds, array( 
+		$conds = array_merge( $conds, array(
 			'bt_moved' => 0,
 			'bt_new_url IS NOT NULL'
-		));
+		) );
 		while ( true ) {
 			$res = $dbr->select( 'blob_tracking',
 				'*',
 				array_merge( $conds, array( 'bt_text_id > ' . $dbr->addQuotes( $startId ) ) ),
 				__METHOD__,
-				array( 
+				array(
 					'ORDER BY' => 'bt_text_id',
 					'LIMIT' => $this->batchSize,
 				)
@@ -566,6 +589,7 @@ class RecompressTracked {
 
 	/**
 	 * Returns the name of the next target cluster
+	 * @return string
 	 */
 	function getTargetCluster() {
 		$cluster = next( $this->destClusters );
@@ -577,6 +601,8 @@ class RecompressTracked {
 
 	/**
 	 * Gets a DB master connection for the given external cluster name
+	 * @param $cluster string
+	 * @return DatabaseBase
 	 */
 	function getExtDB( $cluster ) {
 		$lb = wfGetLBFactory()->getExternalLB( $cluster );
@@ -592,17 +618,17 @@ class RecompressTracked {
 			$this->finishIncompleteMoves( array( 'bt_text_id' => $textIds ) );
 			$this->syncDBs();
 		}
-		
+
 		$trx = new CgzCopyTransaction( $this, $this->orphanBlobClass );
 
 		$res = wfGetDB( DB_SLAVE )->select(
-			array( 'text', 'blob_tracking' ), 
-			array( 'old_id', 'old_text', 'old_flags' ), 
-			array( 
+			array( 'text', 'blob_tracking' ),
+			array( 'old_id', 'old_text', 'old_flags' ),
+			array(
 				'old_id' => $textIds,
 				'bt_text_id=old_id',
 				'bt_moved' => 0,
-			), 
+			),
 			__METHOD__,
 			array( 'DISTINCT' )
 		);
@@ -610,10 +636,10 @@ class RecompressTracked {
 		foreach ( $res as $row ) {
 			$text = Revision::getRevisionText( $row );
 			if ( $text === false ) {
-				$this->critical( "Error: cannot load revision text for old_id=$textId" );
+				$this->critical( "Error: cannot load revision text for old_id={$row->old_id}" );
 				continue;
 			}
-			
+
 			if ( !$trx->addItem( $text, $row->old_id ) ) {
 				$this->debug( "[orphan]: committing blob with " . $trx->getSize() . " rows" );
 				$trx->commit();
@@ -625,7 +651,7 @@ class RecompressTracked {
 		$trx->commit();
 	}
 
-	/** 
+	/**
 	 * Wait for slaves (quietly)
 	 */
 	function waitForSlaves() {
@@ -662,6 +688,9 @@ class CgzCopyTransaction {
 	/**
 	 * Add text.
 	 * Returns false if it's ready to commit.
+	 * @param $text string
+	 * @param $textId
+	 * @return bool
 	 */
 	function addItem( $text, $textId ) {
 		if ( !$this->cgz ) {
@@ -704,14 +733,14 @@ class CgzCopyTransaction {
 
 		// Check to see if the target text_ids have been moved already.
 		//
-		// We originally read from the slave, so this can happen when a single 
-		// text_id is shared between multiple pages. It's rare, but possible 
+		// We originally read from the slave, so this can happen when a single
+		// text_id is shared between multiple pages. It's rare, but possible
 		// if a delete/move/undelete cycle splits up a null edit.
 		//
 		// We do a locking read to prevent closer-run race conditions.
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
-		$res = $dbw->select( 'blob_tracking', 
+		$res = $dbw->select( 'blob_tracking',
 			array( 'bt_text_id', 'bt_moved' ),
 			array( 'bt_text_id' => array_keys( $this->referrers ) ),
 			__METHOD__, array( 'FOR UPDATE' ) );

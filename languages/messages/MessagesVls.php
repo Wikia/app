@@ -108,15 +108,13 @@ $messages = array(
 'qbspecialpages' => 'Specioale bloadn',
 
 # Vector skin
-'vector-action-delete'     => 'Wegdoen',
-'vector-action-move'       => 'Ernoemn',
-'vector-namespace-project' => 'Projectblad',
-'vector-namespace-special' => 'Specioal blad',
-'vector-view-create'       => 'Anmoakn',
-'vector-view-edit'         => 'Bewerkn',
-'vector-view-history'      => 'Geschiedenisse bekykn',
-'vector-view-view'         => 'Leezn',
-'vector-view-viewsource'   => 'Brontekst bekykn',
+'vector-action-delete'   => 'Wegdoen',
+'vector-action-move'     => 'Ernoemn',
+'vector-view-create'     => 'Anmoakn',
+'vector-view-edit'       => 'Bewerkn',
+'vector-view-history'    => 'Geschiedenisse bekykn',
+'vector-view-view'       => 'Leezn',
+'vector-view-viewsource' => 'Brontekst bekykn',
 
 'tagline'           => 'Van {{SITENAME}}',
 'help'              => 'Ulpe',
@@ -124,7 +122,6 @@ $messages = array(
 'searchbutton'      => 'Zoekn',
 'history_short'     => 'Geschiedenisse',
 'updatedmarker'     => 'bygewerkt sinds min latste visite',
-'info_short'        => 'Informoatie',
 'printableversion'  => 'Drukboare versie',
 'permalink'         => 'Bluuvende link',
 'print'             => 'Drukn',
@@ -191,8 +188,7 @@ $messages = array(
 'newpages-username' => 'Gebrukersnoame:',
 
 # Special:Log/newusers
-'newuserlogpage'          => 'Logboek nieuwe gebrukers',
-'newuserlog-create-entry' => 'Nieuwe gebruker',
+'newuserlogpage' => 'Logboek nieuwe gebrukers',
 
 # Watchlist
 'mywatchlist' => 'Myn volglyste',
@@ -207,7 +203,6 @@ $messages = array(
 'undeletepage'           => 'Weggedoane bloadn erstelln of bekykn',
 'undeletehistorynoadmin' => "'t Artikel is weggedoan. De reden davôorn ku je zien in de soamnvattienge ieronder, tôpe me uutleg over wie dat 't blad bewerkt èt vôorn dat weggedoan es gewist. Den tekst van die weggedoane versies kan allêene door sysops gelezen wordn.",
 'undeletebtn'            => 'Erstelln',
-'undeletedarticle'       => '"[[$1]]" ersteld',
 'undeletedfiles'         => '{{PLURAL:$1|1 bestand|$1 bestandn}} ersteld',
 
 # Contributions

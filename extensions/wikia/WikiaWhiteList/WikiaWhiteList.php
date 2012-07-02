@@ -13,9 +13,6 @@ if ( ! defined( 'MEDIAWIKI' ) ) {
 	die();
 }
 
-if (!class_exists('SpamRegexBatch')) {
-    require_once ("$IP/extensions/wikia/SpamRegexBatch/SpamRegexBatch.php");
-}
 
 // defines
 define ('REGEX_PARSE_WHITELIST', '#%s\s*?=\s*?([\'"]?)((?(1)[^\'>"]*|[^\'>" ]*))(\b)%s(\b)((?(1)[^\'>"]*|[^\'>" ]*))[\'"]?#i');
@@ -38,7 +35,7 @@ function wfWhiteListParseSetup() {
 		$whiteListSetup['files'] = null;
 	else 
 		$whiteListSetup['files'] = (is_array($wgWhitelistFiles)) ? $wgWhitelistFiles : array($wgWhitelistFiles);
-		
+
 	if ( empty($wgWhiteListCacheTime) ) # default values
 		$whiteListSetup['expiryTime'] = 900;
 	else 
@@ -84,7 +81,7 @@ function wfWhiteListParse($text) {
 					# check edited page title -> if page with regexes just clear memcache.
 					$whiteList->getSpamList()->clearListMemCache();
 				}
-				
+
 				//---
 				if (!empty($wgWhiteListLinks) && is_array($wgWhiteListLinks)) {
 					foreach ($wgWhiteListLinks as $id => $regex) {
@@ -111,8 +108,7 @@ function wfWhiteListParse($text) {
 	return $text;
 }
 	
-function wfWhiteListRemoveNoFollowLinks(&$str)
-{
+function wfWhiteListRemoveNoFollowLinks(&$str) {
 	return preg_replace_callback("#(<a.*?>)#i", create_function('$matches', 'return wfWhiteListParse($matches[1]);'), $str);
 }
 
@@ -164,7 +160,7 @@ class WikiaWhitelist
         }
 
 		$this->settings = $settings;
-		$this->spamList = new SpamRegexBatch("whitelistlinks", $this->settings);
+		$this->spamList = new WikiaSpamRegexBatch("whitelistlinks", $this->settings);
 		$this->regexes = $this->spamList->getRegexes();
 	}
 

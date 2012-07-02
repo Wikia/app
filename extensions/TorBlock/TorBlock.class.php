@@ -5,6 +5,14 @@ if ( ! defined( 'MEDIAWIKI' ) )
 class TorBlock {
 	public static $mExitNodes;
 
+	/**
+	 * @static
+	 * @param $title Title
+	 * @param $user User
+	 * @param $action
+	 * @param $result
+	 * @return bool
+	 */
 	public static function onGetUserPermissionsErrorsExpensive( &$title, &$user, $action, &$result ) {
 		global $wgTorAllowedActions;
 		if (in_array( $action, $wgTorAllowedActions)) {
@@ -31,18 +39,6 @@ class TorBlock {
 
 			$ip = wfGetIp();
 			wfDebug( "-User detected as editing from Tor node. Adding Tor block to permissions errors\n" );
-			wfLoadExtensionMessages( 'TorBlock' );
-
-			// sanitize $result parameter
-			$oldResult = $result; $result = array();
-			if ($oldResult != array() && is_array($oldResult) && !is_array($oldResult[0]))
-				$result[] = $oldResult; # A single array representing an error
-			else if (is_array($oldResult) && is_array($oldResult[0]))
-				$result = array_merge( $result, $oldResult ); # A nested array representing multiple result
-			else if ($oldResult != '' && $oldResult != null && $oldResult !== true && $oldResult !== false)
-				$result[] = array($oldResult); # A string representing a message-id
-			else if ($oldResult === false )
-				$result[] = array('badaccess-group0'); # a generic "We don't want them to do that"
 
 			$result[] = array('torblock-blocked', $ip);
 
@@ -52,15 +48,22 @@ class TorBlock {
 		return true;
 	}
 
+	/**
+	 * @static
+	 * @param $user User
+	 * @param $editToken
+	 * @param $hookError
+	 * @return bool
+	 */
 	public static function onEmailUserPermissionsErrors( $user, $editToken, &$hookError ) {
 		wfDebug( "Checking Tor status\n" );
-		
+
 		// Just in case we're checking another user
 		global $wgUser;
 		if ( $user->getName() != $wgUser->getName() ) {
 			return true;
 		}
-		
+
 		if (self::isExitNode()) {
 			wfDebug( "-User detected as editing through tor.\n" );
 
@@ -71,7 +74,7 @@ class TorBlock {
 					return true;
 				}
 			}
-			
+
 			if (Block::isWhitelistedFromAutoblocks( wfGetIp() )) {
 				wfDebug( "-IP is in autoblock whitelist. Exempting from Tor blocks.\n" );
 				return true;
@@ -79,22 +82,20 @@ class TorBlock {
 
 			$ip = wfGetIp();
 			wfDebug( "-User detected as editing from Tor node. Denying email.\n" );
-			
-			wfLoadExtensionMessages( 'TorBlock' );
+
 			$hookError = array( 'permissionserrors', 'torblock-blocked', array( $ip ) );
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	public static function onAbuseFilterFilterAction( &$vars, $title ) {
 		$vars->setVar( 'tor_exit_node', self::isExitNode() ? 1 : 0 );
 		return true;
 	}
 
 	public static function onAbuseFilterBuilder( &$builder ) {
-		wfLoadExtensionMessages( 'TorBlock' );
 		$builder['vars']['tor_exit_node'] = 'tor-exit-node';
 		return true;
 	}
@@ -113,9 +114,21 @@ class TorBlock {
 			wfDebug( "Loading Tor exit node list from memcached.\n" );
 			// Lucky.
 			return self::$mExitNodes = $nodes;
-		} elseif ($nodes == 'loading') {
-			// Somebody else is loading it.
-			return array();
+		} else {
+			$liststatus = $wgMemc->get( 'mw-tor-list-status' );
+			if ( $liststatus == 'loading' ) {
+				// Somebody else is loading it.
+				wfDebug( "Old Tor list expired and we are still loading the new one.\n" );
+				return array();
+			} elseif ( $liststatus == 'loaded' ) {
+				$nodes = $wgMemc->get( 'mw-tor-exit-nodes' );
+				if (is_array($nodes)) {
+					return self::$mExitNodes = $nodes;
+				} else {
+					wfDebug( "Tried very hard to get the Tor list since mw-tor-list-status says it is loaded, to no avail.\n" );
+					return array();
+				}
+			}
 		}
 
 		// We have to actually load from the server.
@@ -139,7 +152,7 @@ class TorBlock {
 
 		// Set loading key, to prevent DoS of server.
 
-		$wgMemc->set( 'mw-tor-exit-nodes', 'loading', 300 );
+		$wgMemc->set( 'mw-tor-list-status', 'loading', 300 );
 
 		$nodes = array();
 		foreach( $wgTorIPs as $ip ) {
@@ -148,6 +161,7 @@ class TorBlock {
 
 		// Save to cache.
 		$wgMemc->set( 'mw-tor-exit-nodes', $nodes, 1800 ); // Store for half an hour.
+		$wgMemc->set( 'mw-tor-list-status', 'loaded', 1800 );
 
 		wfProfileOut( __METHOD__ );
 
@@ -155,8 +169,8 @@ class TorBlock {
 	}
 
 	public static function loadNodesForIP( $ip ) {
-		$url = 'http://check.torproject.org/cgi-bin/TorBulkExitList.py?ip='.$ip;
-		$data = Http::get( $url );
+		$url = 'https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip='.$ip;
+		$data = Http::get( $url, 'default', array( 'sslVerifyCert' => false ) );
 		$lines = explode("\n", $data);
 
 		$nodes = array();
@@ -179,11 +193,16 @@ class TorBlock {
 		return in_array( $ip, $nodes );
 	}
 
+	/**
+	 * @static
+	 * @param $user User
+	 * @return bool
+	 */
 	public static function onGetBlockedStatus( &$user ) {
 		global $wgTorDisableAdminBlocks;
-		if ($wgTorDisableAdminBlocks && self::isExitNode() && $user->mBlock && !$user->mBlock->mUser) {
+		if ( $wgTorDisableAdminBlocks && self::isExitNode() && $user->mBlock && $user->mBlock->getType() != Block::TYPE_USER ) {
 			wfDebug( "User using Tor node. Disabling IP block as it was probably targetted at the tor node." );
-			
+
 			// Node is probably blocked for being a Tor node. Remove block.
 			$user->mBlockedby = 0;
 		}
@@ -195,6 +214,12 @@ class TorBlock {
 		return !self::isExitNode( $autoblockip );
 	}
 
+	/**
+	 * @static
+	 * @param $user User
+	 * @param $promote
+	 * @return bool
+	 */
 	public static function onGetAutoPromoteGroups( $user, &$promote ) {
 		// Check against stricter requirements for tor nodes.
 		// Counterintuitively, we do the requirement checks first.
@@ -257,7 +282,6 @@ class TorBlock {
 			return true;
 		}
 
-		wfLoadExtensionMessages( 'TorBlock' );
 		$msg[] = Html::rawElement(
 			'span',
 			array( 'class' => 'mw-torblock-isexitnode' ),

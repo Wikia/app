@@ -6,7 +6,9 @@ if ( !defined( 'MEDIAWIKI' ) )
 /**#@+
  * Provides integration with Project Honey Pot for MediaWiki sites.
  * Requires
- * @addtogroup Extensions
+ *
+ * @file
+ * @ingroup Extensions
  *
  *
  * @author Andrew Garrett <andrew@werdn.us>
@@ -18,7 +20,6 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'HoneypotIntegration',
 	'author'         => 'Andrew Garrett',
-	'description'    => 'Provides integration with Project Honey Pot for MediaWiki sites',
 	'descriptionmsg' => 'honeypot-desc',
 );
 

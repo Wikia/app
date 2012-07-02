@@ -9,7 +9,5 @@ $wgExtensionMessagesFiles['wikiamiscmessages'] = dirname( __FILE__ ) . '/WikiaMi
 $wgHooks['MsgHTMLwithLanguageAndAlternativeBefore'][] = 'efAddWikiaMiscMessages';
 
 function efAddWikiaMiscMessages() {
-	wfLoadExtensionMessages( 'wikiamiscmessages' );
-
 	return true;
 }

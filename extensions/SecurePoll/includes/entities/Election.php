@@ -17,6 +17,8 @@
  *      Election
  *          min-edits
  *              Minimum number of edits needed to be qualified
+ *          max-registration
+ *              Latest acceptable registration date
  *          not-blocked
  *              True if voters need to not be blocked
  *          not-bot
@@ -31,6 +33,10 @@
  *              True if a voter is not allowed to change their vote
  *          encrypt-type
  *              The encryption module name
+ *          not-centrally-blocked
+ *          	True if voters need to not be blocked on more than X projects
+ *          central-block-threshold
+ *          	Number of blocks across projects that disqualify a user from voting.
  *      
  *      See the other module for documentation of the following.
  *
@@ -53,17 +59,20 @@
  */
 class SecurePoll_Election extends SecurePoll_Entity {
 	var $questions, $auth, $ballot;
-	var $title, $ballotType, $tallyType, $primaryLang, $startDate, $endDate, $authType;
+	var $id, $title, $ballotType, $tallyType, $primaryLang;
+	var $startDate, $endDate, $authType;
 
 	/**
 	 * Constructor. 
 	 *
-	 * Do not use this constructor directly, instead use SecurePoll_Context::getElection(). 
+	 * Do not use this constructor directly, instead use 
+	 * SecurePoll_Context::getElection(). 
 	 *
 	 * @param $id integer
 	 */
 	function __construct( $context, $info ) {
 		parent::__construct( $context, 'election', $info );
+		$this->id = $info['id'];
 		$this->title = $info['title'];
 		$this->ballotType = $info['ballot'];
 		$this->tallyType = $info['tally'];
@@ -84,6 +93,13 @@ class SecurePoll_Election extends SecurePoll_Entity {
 			'return-text',
 			'unqualified-error',
 		);
+	}
+	
+	/**
+	 * Get the election's parent election... hmm...
+	 */
+	function getElection() {
+		return $this;
 	}
 
 	/**
@@ -143,6 +159,7 @@ class SecurePoll_Election extends SecurePoll_Entity {
 	 * @return Status
 	 */
 	function getQualifiedStatus( $params ) {
+		global $wgLang;
 		$props = $params['properties'];
 		$status = Status::newGood();
 
@@ -150,7 +167,20 @@ class SecurePoll_Election extends SecurePoll_Entity {
 		$minEdits = $this->getProperty( 'min-edits' );
 		$edits = isset( $props['edit-count'] ) ? $props['edit-count'] : 0;
 		if ( $minEdits && $edits < $minEdits ) {
-			$status->fatal( 'securepoll-too-few-edits', $minEdits, $edits );
+			$status->fatal( 'securepoll-too-few-edits', $wgLang->formatNum( $minEdits), $wgLang->formatNum( $edits ) );
+		}
+
+		# Registration date
+		$maxDate = $this->getProperty( 'max-registration' );
+		$date = isset( $props['registration'] ) ? $props['registration'] : 0;
+		if ( $maxDate && $date > $maxDate ) {
+			$status->fatal( 
+				'securepoll-too-new', 
+				$wgLang->date( $maxDate ), 
+				$wgLang->date( $date ),
+				$wgLang->time( $maxDate ), 
+				$wgLang->time( $date )
+			);
 		}
 
 		# Blocked
@@ -158,6 +188,14 @@ class SecurePoll_Election extends SecurePoll_Entity {
 		$isBlocked = !empty( $props['blocked'] );
 		if ( $notBlocked && $isBlocked ) {
 			$status->fatal( 'securepoll-blocked' );
+		}
+		
+		# Centrally blocked on more than X projects
+		$notCentrallyBlocked = $this->getProperty( 'not-centrally-blocked' );
+		$centralBlockCount = isset( $props['central-block-count'] ) ? $props['central-block-count'] : 0;
+		$centralBlockThreshold = $this->getProperty( 'central-block-threshold', 1 );
+		if ( $notCentrallyBlocked && $centralBlockCount >= $centralBlockThreshold ) {
+			$status->fatal( 'securepoll-blocked-centrally', $wgLang->formatNum( $centralBlockThreshold ) );
 		}
 
 		# Bot
@@ -188,6 +226,7 @@ class SecurePoll_Election extends SecurePoll_Entity {
 				$status = Status::newFatal( 'securepoll-custom-unqualified', $errorMsg );
 			}
 		}
+
 		return $status;
 	}
 
@@ -340,7 +379,7 @@ class SecurePoll_Election extends SecurePoll_Entity {
 				Xml::element( 'auth', array(), 'local' ) . "\n" .
 				Xml::element( 'property', 
 					array( 'name' => 'jump-url' ), 
-					$this->context->getSpecialTitle()->getFullURL()
+					$this->context->getSpecialTitle()->getCanonicalUrl()
 				) . "\n" .
 				Xml::element( 'property',
 					array( 'name' => 'jump-id' ),

@@ -33,7 +33,6 @@ $wgHooks['ArticleService::getTextSnippet::beforeStripping'][] = 'efLyricWikiGetT
  * Will modify the value of 'content' parameter to cause any changes desired.
  */
 function efLyricWikiGetTextSnippet(&$article, &$content, $length){
-	//wfLoadExtensionMessages('BetterLyricWikiTextSnippets');
 	$matches = array();
 
 	// If the page contains lyrics, use that as the summary.

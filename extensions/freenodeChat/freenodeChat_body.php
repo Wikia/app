@@ -15,7 +15,6 @@ class FreenodeChat extends SpecialPage {
 		global $wgFreenodeChatChannel, $wgFreenodeChatExtraParameters;
 
 		// Preperation.
-		wfLoadExtensionMessages( 'FreenodeChat' );
 		$this->setHeaders();
 
 		// Introduction message, explaining to users what this is etc.

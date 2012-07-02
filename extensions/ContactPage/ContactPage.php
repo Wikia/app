@@ -20,17 +20,16 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'ContactPage',
 	'author' => 'Daniel Kinzler',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:ContactPage',
-	'description' => 'Contact form for visitors',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:ContactPage',
 	'descriptionmsg' => 'contactpage-desc',
 );
 
 // Set up the new special page
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['ContactPage'] = $dir . 'ContactPage.i18n.php';
-$wgExtensionAliasesFiles['ContactPage'] = $dir . 'ContactPage.alias.php';
+$wgExtensionMessagesFiles['ContactPageAliases'] = $dir . 'ContactPage.alias.php';
 
-$wgAutoloadClasses['SpecialContact'] = $dir . 'SpecialContact.php';
+$wgAutoloadClasses['SpecialContact'] = $dir . 'ContactPage_body.php';
 $wgSpecialPages['Contact'] = 'SpecialContact';
 
 # Configuration
@@ -47,3 +46,6 @@ $wgContactSenderName = 'Contact Form on ' . $wgSitename;
 // If true, users will be required to supply a name and an e-mail address
 // on Special:Contact.
 $wgContactRequireAll = false;
+
+// If true, the form will include a checkbox offering to put the IP address of the submitter in the subject line
+$wgContactIncludeIP = false;

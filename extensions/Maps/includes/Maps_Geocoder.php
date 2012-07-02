@@ -143,7 +143,7 @@ abstract class MapsGeocoder {
 	 * 
 	 * @return array
 	 */
-	public function getOverrides() {
+	public static function getOverrides() {
 		return array();
 	}
 	

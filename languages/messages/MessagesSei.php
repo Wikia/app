@@ -5,6 +5,7 @@
  * @file
  *
  * @author Ccaxjoj Iteja Z Iti Poop
+ * @author Kaganer
  * @author SeriCtam
  * @author Teak
  * @author Urhixidur
@@ -24,8 +25,7 @@ $messages = array(
 'tog-editsection'             => 'Ton ticpatlöx seccion [edit] linkám via',
 'tog-editsectiononrightclick' => 'Ton ticpatlöx seccion pok clickám mii<br /> seccion titelám iti (JavaScript)',
 'tog-showtoc'                 => 'Cohuatlöx insacualte (páhinám bajlip 3 text corridór mii)',
-'tog-rememberpassword'        => 'Qualtiinii he quimx canj jan ordinator iti',
-'tog-editwidth'               => 'Cui ticpatlöx janvam',
+'tog-rememberpassword'        => 'Qualtiinii he quimx canj jan ordinator iti (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'tog-watchcreations'          => 'Plusöx páhinám he hun he listade cáminot',
 'tog-watchdefault'            => 'Plusöx páhinám he ticpatlöx he listade cáminot',
 'tog-watchmoves'              => 'Plusöx páhinám he yacom he listade cáminot',
@@ -116,8 +116,6 @@ $messages = array(
 'category-empty'         => "''Cayliib danjobam nihíl''",
 'listingcontinuesabbrev' => 'korb.',
 
-'mainpagetext' => "'''MediaWiki coccebj installöx successua zo mii.'''",
-
 'about'         => 'Miixaz',
 'article'       => 'Artículo',
 'newwindow'     => '(dansinám precquen)',
@@ -151,7 +149,6 @@ $messages = array(
 'history'           => 'Historiám páhina',
 'history_short'     => 'Historiám',
 'updatedmarker'     => 'Par hiineditar visitua ciónsam',
-'info_short'        => 'Informacion',
 'printableversion'  => 'Cabjöxino printino',
 'permalink'         => 'Link permanentöj',
 'print'             => 'Printom',
@@ -298,14 +295,13 @@ Sysop zo locköx zo xuniim jan rae': $1",
 'badtitle'             => 'Ahisharliit',
 'badtitletext'         => 'Zo páhina coccebj ahisharliit zo.
 Jan pos-coccebj plusöxde 1 jöx 1 characterám jan nepos-coccebj usadas titlenám iti.',
-'perfcached'           => 'Jan data coccebj cache ö necoccebj updatenom.',
-'perfcachedts'         => "Jan data coccebj cache ö coccebjöx updatenom $1 'de.",
+'perfcached'           => 'Jan data coccebj cache ö necoccebj updatenom. A maximum of {{PLURAL:$1|one result is|$1 results are}} available in the cache.',
+'perfcachedts'         => "Jan data coccebj cache ö coccebjöx updatenom $1 'de. A maximum of {{PLURAL:$4|one result is|$4 results are}} available in the cache.",
 'querypage-no-updates' => 'Updatenámde jan páhina coccebj disablenöx cmaa. Jan data necanj cmaa.',
 'wrong_wfQuery_params' => 'Parameterám incorrectámde wfQuery()<br />
 Funccion: $1<br />
 Query: $2',
 'viewsource'           => 'Cohuatlöx sourcenam',
-'viewsourcefor'        => '$1 mii',
 'protectedpagetext'    => 'Jan páhina coccebj lockom neticpatlöx pos-poop.',
 'viewsourcetext'       => 'Mecohuatlöx ö copynom sourcenam zode jan páhina:',
 'protectedinterface'   => "Jan páhina coccebj textuade interface software zo 'de ö coccebj lockom neticpatlöx abusenam.",
@@ -314,7 +310,6 @@ Query: $2',
 'cascadeprotected'     => 'Jan páhina coccebj protectöxde ticpatlöx, zo coccebj cascadande jan {{PLURAL:$1|páhina|páhinám}}, jan coccebj protëctox cascadanöx opcion zo mii:
 $2',
 'namespaceprotected'   => "Me necoccebj permiccion ticpatlöx páhinám '''$1''' ipartuatl zo iti.",
-'customcssjsprotected' => 'Me necoccebj permiccion ticpatlöx jan páhina, zo coccebj diijömde caitom quáatlaác.',
 'ns-specialprotected'  => 'Páhinámde {{ns:special}} zo iti neticpatlöx.',
 
 # Login and logout pages
@@ -328,7 +323,7 @@ Mecaitom coccebj creatöx. Quiix hequáatlaácde {{SITENAME}} pos-poop.",
 'yourname'                   => 'Caitom ID:',
 'yourpassword'               => 'Quimx canj:',
 'yourpasswordagain'          => 'Vanquimx canj:',
-'remembermypassword'         => 'Qualtiinii he quimx canj jan ordinator iti',
+'remembermypassword'         => 'Qualtiinii he quimx canj jan ordinator iti (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'yourdomainname'             => 'Hedomino:',
 'externaldberror'            => 'Pos-römjde authenticacionde database extername jöx me necoccebj permiccionde updatan mecaitom externom.',
 'login'                      => 'Caápo',
@@ -353,7 +348,7 @@ Mecaitom coccebj creatöx. Quiix hequáatlaácde {{SITENAME}} pos-poop.",
 'loginsuccesstitle'          => 'Caápo tampua',
 'loginsuccess'               => "'''Me coccebj caápo {{SITENAME}} itide \"\$1\".'''",
 'nosuchuser'                 => 'Jan caitom necoccebj zo, ID "$1". Cohuatlöx mecuáxiit jöx creatom huncaitom.',
-'nosuchusershort'            => 'Jan caitom necoccebj zo, ID "<nowiki>$1</nowiki>". Cohuatlöx mecuáxiit.',
+'nosuchusershort'            => 'Jan caitom necoccebj zo, ID "$1". Cohuatlöx mecuáxiit.',
 'nouserspecified'            => 'Me coccebj IDde caitom caápo.',
 'wrongpassword'              => 'Römjde quimx canj. Vanquimx canj.',
 'wrongpasswordempty'         => 'Quimx canj blankanj. Vanquimx canj.',
@@ -384,7 +379,7 @@ confirmom account zo coccebj de'me.",
 'accountcreatedtext'         => 'Jönneram $1 mii puo.',
 'loginlanguagelabel'         => 'Itom: $1',
 
-# Password reset dialog
+# Change password dialog
 'resetpass'           => "Account quimx canj'reset",
 'resetpass_announce'  => "Me caápo code temp e-iitomöx mii. Fini caápo, me reset' hunquimx canj cmaadexepe:",
 'resetpass_header'    => "Reset'quimx canj",
@@ -406,8 +401,6 @@ confirmom account zo coccebj de'me.",
 'extlink_tip'     => 'Link extern (¡hajbazxo http:// ö!)',
 'headline_sample' => 'Text corridor',
 'headline_tip'    => 'Text corridor 2',
-'math_sample'     => 'Heformula cuerte damir',
-'math_tip'        => 'Formula mathematatl (LaTeX)',
 'nowiki_sample'   => 'Neformattám cuerte damir',
 'nowiki_tip'      => 'Neformatöxde wiki',
 'image_sample'    => 'Cuáxiit.jpg',
@@ -458,9 +451,6 @@ Me contactam $1 jöx pac [[{{MediaWiki:Grouppage-sysop}}|sysop]] discussom iti b
 Me nenusor e-iitom päzxo hab' adressade e-iitom validom coccebj [[Special:Preferences|mequáatlaác]] ö'me neblockomde e-iitom.
 
 Me IDde block coccebj $5. Includam 1 jöx 2 pac querinám iti.",
-'blockedoriginalsource'     => "Sourcenam zode '''$1''' coccebj cohuatlöx:",
-'blockededitsource'         => "Textua zode '''meticpatlöxde''' '''$1''' coccebj cohuatlöx:",
-'whitelistedittitle'        => 'Caápo Neces ticpatlöx',
 'whitelistedittext'         => 'Mecoccebj $1 ticpatlöx páhinám.',
 'confirmedittext'           => "Me confirmöx menadressade de e-iitom ticpatlöx 'depre. Set' ö validatenan menadressade IP [[Special:Preferences|hequáatlaác]] mii.",
 'nosuchsectiontitle'        => "Ne'dáár partam",
@@ -482,7 +472,7 @@ Me coccebj römjasi poop, clickom meback-buttonde browser coccebj perfectua.',
 'userjsyoucanpreview'       => "'''Tip:''' Usadad 'Cohuatlöx cuáxiit' testom me hun JS xuniim 'depre.",
 'usercsspreview'            => "'''He cuáxiit he CSSde caitom, zo necoccebj xuniim!'''",
 'userjspreview'             => "'''He cuáxiit/testom he JavaScriptde caitom, zo necoccebj xuniim!'''",
-'userinvalidcssjstitle'     => "'''Attencion:''' Skin \"\$1\" coccebj ne'dáár. Regardom .css ö .js páhinám usadad titlenam lowercase zo, yanuiíxzo mii yahöxde ti {{ns:user}}:Foo/monobook.css opposadadde {{ns:user}}:Foo/Monobook.css.",
+'userinvalidcssjstitle'     => "'''Attencion:''' Skin \"\$1\" coccebj ne'dáár. Regardom .css ö .js páhinám usadad titlenam lowercase zo, yanuiíxzo mii yahöxde ti {{ns:user}}:Foo/vector.css opposadadde {{ns:user}}:Foo/Vector.css.",
 'updated'                   => '(varupdatenám)',
 'note'                      => "'''Notificacion:'''",
 'previewnote'               => "'''Jan coccebj cuáxiit zo; quiíx necoccebj xuniim!'''",
@@ -505,8 +495,6 @@ Jan lajxepe occuram me usadad proxy service anon web-based buggy.'''",
 'nonunicodebrowser'         => "'''ATTENCION: Mebrowser necoccebj compliantede 'unicode' (characterám sans huáp ti). Workaround coccebj hant itide me permiccion ticpatlöx páhinám: non-ASCII characterám coccebj codes hexidecimales.'''",
 'editingold'                => "'''ATTENCION: Me coccebj ticpatlöx revicion outdatenam zode jan páhina. Me xuniim zo, jömde quiíx hunde jan revicion coccebj delar poop.'''",
 'yourdiff'                  => 'Quiíx',
-'longpagewarning'           => "'''ATTENCION: Jan páhina coccebj $1 kilobynám; browserám pac pos-coccebj problemámde ticpatlöx páhinám necade jöx plusöxde 32 kb.
-Cahöx ticpatlöx jan páhina minöx seccion iti.'''",
 'longpageerror'             => "'''RÖMJ: Textua zo mexuniim coccebj $1 kilobytenám, jan coccebj plusöxde maxde $2 kilobytenám. Zo necoccebj xuniim.'''",
 'readonlywarning'           => "'''ATTENCION: Database zo coccebj lockomde kyépöx, zo necoccebj posde xuniim meticpatlöx cmaa. Me coccebj considerom ''cut-n-paste'' textua zo ciúchande textua iti ö xuniimde diijömdexepe.'''",
 'protectedpagewarning'      => "'''ATTENCION: Jan páhina coccebj lockomde sysopám coccebj ticpatlöx zo permiccional.'''",
@@ -577,8 +565,6 @@ Informacion: (curt) = quiíxde vercion currentua,
 'revdelete-hide-comment'  => 'Camaát commentuade ticpatlöx',
 'revdelete-hide-user'     => 'Camaát IDde caitom/IDde IP',
 'revdelete-log'           => 'Ra:',
-'revdelete-logentry'      => 'quiixöx revicion visibilitiitde [[$1]]',
-'logdelete-logentry'      => 'quiixöx eventua visibilitiitde [[$1]]',
 
 # Diffs
 'history-title'           => 'Históriade revicionde "$1"',
@@ -611,7 +597,6 @@ Informacion: (curt) = quiíxde vercion currentua,
 'changepassword'      => "Reset'quimx canj",
 'prefs-skin'          => 'Zuláugaum',
 'skin-preview'        => 'Cuáxiit',
-'prefs-math'          => 'HTML-cuat',
 'datedefault'         => 'Diiquáatlaac',
 'prefs-datetime'      => 'Datum ö xepe',
 'prefs-personal'      => 'Caitom profile',
@@ -888,12 +873,9 @@ iitom e-iitomde diijömde caitóm.',
 # Watchlist
 'watchlist'        => 'He listade cáminot',
 'mywatchlist'      => 'He listade cáminot',
-'watchlistfor'     => "('''$1''' mii)",
 'nowatchlist'      => 'Hecoccebj 0 itémii helistade cáminot iti.',
 'watchnologin'     => 'Necaápo',
 'watchnologintext' => 'Zo coccebj Neces [[Special:UserLogin|caápo]] ticpatlöx helistade cáminot.',
-'addedwatch'       => 'Plusöxaj listade cáminot',
-'removedwatch'     => 'Delatajde he listade cáminot',
 'removedwatchtext' => 'Páhina zo "[[:$1]]" coccebj delataj me listade cáminot.',
 'watch'            => 'Cáminot',
 'watchthispage'    => 'Cáminot jan páhina',
@@ -947,7 +929,6 @@ iitom e-iitomde diijömde caitóm.',
 
 # Block/unblock
 'blockip'                 => 'Block caitom',
-'ipaddress'               => 'Addressade IP:',
 'ipadressorusername'      => 'Addressade IP jöx caitom ID:',
 'ipbreason'               => 'Ra:',
 'ipbreasonotherlist'      => "Ra pac'de",
@@ -962,7 +943,6 @@ iitom e-iitomde diijömde caitóm.',
 'unblockip'               => 'Diiblockom caitom',
 'ipusubmit'               => 'Diiblockom jan adressa',
 'ipblocklist-legend'      => 'Yahöx caimát blockát pac',
-'ipblocklist-username'    => 'Caitom ID jöx addressade IP:',
 'ipblocklist-submit'      => 'Yahöx',
 'anononlyblock'           => 'Anonytiit',
 'emailblock'              => "e-iitom c'blockan",
@@ -989,7 +969,6 @@ iitom e-iitomde diijömde caitóm.',
 'movepagebtn'      => 'Yacom páhina',
 'movedto'          => 'yacomöxde',
 'movetalk'         => 'Yacom czaxö páhina yodina ipríi',
-'1movedto2'        => '[[$1]] yacomöxde [[$2]]',
 'movereason'       => 'Ra:',
 'delete_and_move'  => 'Delatom ö yacom',
 
@@ -1042,17 +1021,8 @@ iitom e-iitomde diijömde caitóm.',
 # Spam protection
 'spambot_username' => 'MediaWiki nespam',
 
-# Info page
-'infosubtitle' => 'Informacionde páhina',
-
-# Math errors
-'math_unknown_error'    => 'römj ác',
-'math_unknown_function' => 'functión ác',
-'math_lexing_error'     => 'römjde lexám',
-'math_syntax_error'     => 'römjde syntáx',
-
 # Media information
-'widthheightpage' => '$1×$2, $3 páhinám',
+'widthheightpage' => '$1 × $2, $3 páhinám',
 
 # Special:NewFiles
 'showhidebots' => '($1 botám)',
@@ -1070,11 +1040,9 @@ iitom e-iitomde diijömde caitóm.',
 'exif-focalplaneresolutionunit-2' => 'inchám',
 
 # 'all' in various places, this might be different for inflected languages
-'recentchangesall' => 'jöxdem',
-'imagelistall'     => 'jöxdem',
-'watchlistall2'    => 'jöxdem',
-'namespacesall'    => 'jöxdem',
-'monthsall'        => 'jöxdem',
+'watchlistall2' => 'jöxdem',
+'namespacesall' => 'jöxdem',
+'monthsall'     => 'jöxdem',
 
 # action=purge
 'confirm_purge_button' => 'ton',

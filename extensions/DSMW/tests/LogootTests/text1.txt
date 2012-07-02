@@ -1,0 +1,113 @@
+     From the message sender's point of view, once a message M has been sent by Pi to Pj , all
+subsequent messages to Pj can be delivered only after M has been delivered. The delivery
+of M at Pj implies the satisfaction of all the previous delivery constraints at Pj with respect
+to Pi . So, having sent M to Pj , the old delivery constraints for Pj are replaced by the new
+constraint corresponding to the delivery of M , as stated in Step 3 of Message Send.
+     The set destination(M ) received by Pi with the message M informs Pi about all the
+destinations of M . Subsequent messages sent by Pi are causally dependent on M . So,
+if these messages are destined to any of the destinations of M , such messages should be
+delivered at those processes only after M has been delivered. Hence, in Step 5 of Message
+Reception, CBi k] is updated by adding (j; sentM ), which represents a direct dependency,
+and deleting the older transitive dependencies (CBM k]).
+     If (j; x) 2 CBi k], (j; y) 2 CBi k], and x < y, future messages whose transmission is
+causally dependent on the current state of Pi should be delivered to Pk after the xth and
+the yth messages from Pj have been delivered to Pk . As the yth message from Pj is causally
+dependent on the xth message from Pj , it will carry appropriate dependency information so
+that it is delivered to Pk only after the xth message. Hence, (j; x) can be deleted from CBi k]
+using the max operator (Step 6 of Message Reception) without a ecting the correctness of
+the algorithm. Only (j; y) needs to be maintained as a delivery constraint for Pk .
+     CBj j ] is a set of tuples containing the most recent mutually concurrent messages deliv-
+ered to Pj from other processes. Hence, when a message sent by Pj is delivered to Pi , Pi
+updates its Delivered matrix using CBM j ] in Step 4 of Message Reception. The Delivered
+matrix can be used for garbage collection and thus reduce communication overheads as fol-
+lows: If Deliveredi l; k] = y, Pi knows that the yth message from Pl has been delivered to Pk .
+This implies that all previous messages from Pl to Pk have also been delivered to Pk . Hence,
+(l; x) 2 CBi k], such that x y, is a delivery constraint that Pi knows to have already
+been satis ed. Therefore, (l; x) is deleted from CBi k] as described in Step 8 of Message
+Reception.27
+As mentioned above, only the non-empty components of CBi are sent, and there are at most
+N such components. Each component is a set of 2-tuples. In a set, there can be at most one
+tuple for each process. This is because of the following reasons:
+    In the worst case, all the N components of CBi are non-empty and each component
+has N tuples. So, O(N 2) integers worth of control information is sent with each message.
+However, usually the communication overhead is likely to be much lower than this worst
+case scenario. Several components will be empty, and the number of tuples in each non-
+empty component will be less than N . This compares favorably with the (N 2) integer
+communication overheads of the most e cient algorithms proposed in the literature. In fact
+the proposed algorithm is highly adaptive in nature. The higher the number of messages
+sent concurrently in the immediate past of a message, the more control information the
+message has to carry. When message concurrency is low, the control information carried by
+the messages is also low.
+    Process Pi needs to locally maintain only two data structures: (i) the vector CBi which
+has a maximum of N 2 2-tuples of integers and (ii) Deliveredi | an N N matrix of integers.
+Hence, the storage requirements are O(N 2 ) integers.43
+From the message sender's point of view, once a message M has been sent by Pi to Pj , all
+subsequent messages to Pj can be delivered only after M has been delivered. The delivery
+of M at Pj implies the satisfaction of all the previous delivery constraints at Pj with respect
+to Pi . So, having sent M to Pj , the old delivery constraints for Pj are replaced by the new
+constraint corresponding to the delivery of M , as stated in Step 3 of Message Send.
+     The set destination(M ) received by Pi with the message M informs Pi about all the
+destinations of M . Subsequent messages sent by Pi are causally dependent on M . So,
+if these messages are destined to any of the destinations of M , such messages should be
+delivered at those processes only after M has been delivered. Hence, in Step 5 of Message
+Reception, CBi k] is updated by adding (j; sentM ), which represents a direct dependency,
+and deleting the older transitive dependencies (CBM k]).
+     If (j; x) 2 CBi k], (j; y) 2 CBi k], and x < y, future messages whose transmission is
+causally dependent on the current state of Pi should be delivered to Pk after the xth and
+the yth messages from Pj have been delivered to Pk . As the yth message from Pj is causally
+dependent on the xth message from Pj , it will carry appropriate dependency information so
+that it is delivered to Pk only after the xth message. Hence, (j; x) can be deleted from CBi k]
+using the max operator (Step 6 of Message Reception) without a ecting the correctness of
+the algorithm. Only (j; y) needs to be maintained as a delivery constraint for Pk .
+     CBj j ] is a set of tuples containing the most recent mutually concurrent messages deliv-
+ered to Pj from other processes. Hence, when a message sent by Pj is delivered to Pi , Pi
+updates its Delivered matrix using CBM j ] in Step 4 of Message Reception. The Delivered
+matrix can be used for garbage collection and thus reduce communication overheads as fol-
+lows: If Deliveredi l; k] = y, Pi knows that the yth message from Pl has been delivered to Pk .
+This implies that all previous messages from Pl to Pk have also been delivered to Pk . Hence,
+(l; x) 2 CBi k], such that x y, is a delivery constraint that Pi knows to have already
+been satis ed. Therefore, (l; x) is deleted from CBi k] as described in Step 8 of Message
+Reception.27
+As mentioned above, only the non-empty components of CBi are sent, and there are at most
+N such components. Each component is a set of 2-tuples. In a set, there can be at most one
+tuple for each process. This is because of the following reasons:
+    In the worst case, all the N components of CBi are non-empty and each component
+has N tuples. So, O(N 2) integers worth of control information is sent with each message.
+However, usually the communication overhead is likely to be much lower than this worst
+case scenario. Several components will be empty, and the number of tuples in each non-
+empty component will be less than N . This compares favorably with the (N 2) integer
+communication overheads of the most e cient algorithms proposed in the literature. In fact
+the proposed algorithm is highly adaptive in nature. The higher the number of messages
+sent concurrently in the immediate past of a message, the more control information the
+message has to carry. When message concurrency is low, the control information carried by
+the messages is also low.
+    Process Pi needs to locally maintain only two data structures: (i) the vector CBi which
+has a maximum of N 2 2-tuples of integers and (ii) Deliveredi | an N N matrix of integers.
+Hence, the storage requirements are O(N 2 ) integers.43
+From the message sender's point of view, once a message M has been sent by Pi to Pj , all
+subsequent messages to Pj can be delivered only after M has been delivered. The delivery
+of M at Pj implies the satisfaction of all the previous delivery constraints at Pj with respect
+to Pi . So, having sent M to Pj , the old delivery constraints for Pj are replaced by the new
+constraint corresponding to the delivery of M , as stated in Step 3 of Message Send.
+     The set destination(M ) received by Pi with the message M informs Pi about all the
+destinations of M . Subsequent messages sent by Pi are causally dependent on M . So,
+if these messages are destined to any of the destinations of M , such messages should be
+delivered at those processes only after M has been delivered. Hence, in Step 5 of Message
+Reception, CBi k] is updated by adding (j; sentM ), which represents a direct dependency,
+and deleting the older transitive dependencies (CBM k]).
+     If (j; x) 2 CBi k], (j; y) 2 CBi k], and x < y, future messages whose transmission is
+causally dependent on the current state of Pi should be delivered to Pk after the xth and
+the yth messages from Pj have been delivered to Pk . As the yth message from Pj is causally
+dependent on the xth message from Pj , it will carry appropriate dependency information so
+that it is delivered to Pk only after the xth message. Hence, (j; x) can be deleted from CBi k]
+using the max operator (Step 6 of Message Reception) without a ecting the correctness of
+the algorithm. Only (j; y) needs to be maintained as a delivery constraint for Pk .
+     CBj j ] is a set of tuples containing the most recent mutually concurrent messages deliv-
+ered to Pj from other processes. Hence, when a message sent by Pj is delivered to Pi , Pi
+updates its Delivered matrix using CBM j ] in Step 4 of Message Reception. The Delivered
+matrix can be used for garbage collection and thus reduce communication overheads as fol-
+lows: If Deliveredi l; k] = y, Pi knows that the yth message from Pl has been delivered to Pk .
+This implies that all previous messages from Pl to Pk have also been delivered to Pk . Hence,
+(l; x) 2 CBi k], such that x y, is a delivery constraint that Pi knows to have already
+been satis ed. Therefore, (l; x) is deleted from CBi k] as described in Step 8 of Message
+Reception.27

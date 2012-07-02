@@ -26,6 +26,9 @@
 			}
 
 			target.miniEditor({
+				config: {
+					animations: window.WallAnimations
+				},
 				events: {
 					editorReady: function(event, wikiaEditor) {
 						// Wait till after editor is loaded to know whether RTE is enabled. 
@@ -35,9 +38,9 @@
 						}
 					}
 				}
-			});			
+			});
 		},
-//TODO: this can't be a part of this class
+		//TODO: this can't be a part of this class
 		doReplyToMessage: function(main, newreply, reload) {
 			var wikiaEditor = $('.wikiaEditor', newreply).data('wikiaEditor'),
 				format = wikiaEditor.mode == 'wysiwyg' ? 'wikitext' : '';
@@ -69,5 +72,4 @@
 	
 	// Exports
 	window.MiniEditorReplyMessageForm = MiniEditorReplyMessageForm;
-
 })(this, jQuery);

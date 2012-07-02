@@ -6,7 +6,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  *
  * @ingroup Extensions
  */
-abstract class ConfigurationDiff {
+abstract class ConfigurationDiff extends ContextSource {
 	protected $diff;
 	protected $version;
 	protected $wikis;
@@ -19,7 +19,8 @@ abstract class ConfigurationDiff {
 	 * @param $version String: new versions
 	 * @param $wikis Array: array of wiki names
 	 */
-	public function __construct( $diff, $version, $wikis ) {
+	public function __construct( $context, $diff, $version, $wikis ) {
+		$this->setContext( $context );
 		$this->diff = $diff;
 		$this->version = $version;
 		$this->wikis = $wikis;
@@ -113,12 +114,11 @@ abstract class ConfigurationDiff {
 	 * Get the HTML of the diff
 	 */
 	function getHTML() {
-		global $wgOut;
-		$wgOut->addStyle( 'common/diff.css' );
+		$this->getOutput()->addStyle( 'common/diff.css' );
 		$old = $this->getOldVersion();
 		$new = $this->getNewVersion();
 		if ( !( $wikis = $this->cleanWikis( $old, $new ) ) ) {
-			return wfMsgExt( 'configure-no-diff', array( 'parse' ) );
+			return $this->msg( 'configure-no-diff' )->parseAsBlock();
 		}
 		$text = '';
 		foreach ( $wikis as $wiki ) {
@@ -152,22 +152,25 @@ abstract class ConfigurationDiff {
 						$groupDiff .= $this->processDiffSetting( $setting, $oldSetting, $newSetting, $type ) . "\n";
 				}
 				if ( $groupDiff != '' ) {
-					$name = wfMsgExt( 'configure-section-' . $groupName, array( 'parseinline' ) );
-					if ( wfEmptyMsg( 'configure-section-' . $groupName, $name ) )
+					$msg = $this->msg( 'configure-section-' . $groupName );
+					if ( $msg->exists() ) {
+						$name = $msg->parse();
+					} else {
 						$name = $groupName;
+					}
 					$sectionDiff .= "<tr><td colspan=\"4\"><h4 class=\"config-diff-group\">{$name}</h4></td></tr>\n";
 					$sectionDiff .= $groupDiff;
 				}
 			}
 			if ( $sectionDiff != '' ) {
-				$name = wfMsgExt( 'configure-section-' . $sectionName, array( 'parseinline' ) );
+				$name = $this->msg( 'configure-section-' . $sectionName )->parse();
 				$text .= "<tr><td colspan=\"4\"><h3 class=\"config-diff-section\">{$name}</h3></td></tr>\n";
 				$text .= $sectionDiff;
 			}
 		}
 
 		if ( empty( $text ) )
-			return wfMsgExt( 'configure-no-diff', array( 'parse' ) );
+			return $this->msg( 'configure-no-diff' )->parseAsBlock();
 
 		$ret = "<table class='diff'>\n";
 		$ret .= "<col class='diff-marker' />";
@@ -189,13 +192,13 @@ abstract class ConfigurationDiff {
 	 * @return String: XHTML
 	 */
 	function processDiffSetting( $name, $old, $new, $type ) {
-		$msg =  'configure-setting-' . $name;
-		$msgVal = wfMsgExt( $msg, array( 'parseinline' ) );
+		$msg = $this->msg( 'configure-setting-' . $name );
 		$rawVal = Xml::element( 'tt', null, "\$$name" );
-		if ( wfEmptyMsg( $msg, $msgVal ) )
+		if ( $msg->exists() ) {
+			$msgVal = $msg->parse() . " ($rawVal)";
+		} else {
 			$msgVal = $rawVal;
-		else
-			$msgVal = "$msgVal ($rawVal)";
+		}
 
 		$oldSet = $this->getSettingAsArray( WebConfiguration::filterVar( $old ), $name, $type );
 		$newSet = $this->getSettingAsArray( WebConfiguration::filterVar( $new ), $name, $type );
@@ -217,25 +220,25 @@ abstract class ConfigurationDiff {
 	function getSettingAsArray( $setting, $name, $type ) {
 		if ( $setting === null ) {
 			$val = array();
-		} else if ( $type == 'array' ) {
+		} elseif ( $type == 'array' ) {
 			if( !is_array( $setting ) )
 				return array();
 			$arrType = $this->getArrayType( $name );
 			if ( $arrType == 'simple' || $arrType == 'ns-simple' ) {
 				$val = array_values( $setting );
-			} else if ( $arrType == 'assoc' ) {
+			} elseif ( $arrType == 'assoc' ) {
 				$arrVal = array();
 				foreach ( $setting as $key => $value ) {
 					$arrVal[] = "$key: $value";
 				}
 				$val = $arrVal;
-			} else if ( $arrType == 'simple-dual' ) {
+			} elseif ( $arrType == 'simple-dual' ) {
 				$arrVal = array();
 				foreach ( $setting as $key => $value ) {
 					$arrVal[] = implode( ',', $value );
 				}
 				$val = $arrVal;
-			} else if ( $arrType == 'ns-bool' || $arrType == 'ns-text' || $arrType == 'ns-array' ) {
+			} elseif ( $arrType == 'ns-bool' || $arrType == 'ns-text' || $arrType == 'ns-array' ) {
 				$arrVal = array();
 				foreach ( $setting as $key => $value ) {
 					if ( $arrType == 'ns-bool' )
@@ -245,13 +248,13 @@ abstract class ConfigurationDiff {
 					$arrVal[] = "$key: $value";
 				}
 				$val = $arrVal;
-			} else if ( $arrType == 'group-array' ) {
+			} elseif ( $arrType == 'group-array' ) {
 				$arrVal = array();
 				foreach ( $setting as $key => $value ) {
 					$arrVal[] = "$key: " . implode( ',', $value );
 				}
 				$val = $arrVal;
-			} else if ( $arrType == 'group-bool' ) {
+			} elseif ( $arrType == 'group-bool' ) {
 				$arrVal = array();
 				ksort($setting);
 				foreach ( $setting as $key1 => $value1 ) {
@@ -262,7 +265,7 @@ abstract class ConfigurationDiff {
 					}
 				}
 				$val = $arrVal;
-			} else if ( $arrType == 'rate-limits' ) {
+			} elseif ( $arrType == 'rate-limits' ) {
 				$val = array();
 				## Just walk the tree and print out the data.
 				foreach( $setting as $action => $limits ) {
@@ -272,11 +275,11 @@ abstract class ConfigurationDiff {
 							if ($count == 0 || $period == 0)
 								continue;
 
-							$val[] = "$action, $group: " . wfMsg( 'configure-throttle-summary', $count, $period );
+							$val[] = "$action, $group: " . $this->msg( 'configure-throttle-summary', $count, $period )->text();
 						}
 					}
 				}
-			} else if ( $arrType == 'promotion-conds' ) {
+			} elseif ( $arrType == 'promotion-conds' ) {
 				## For each group, print out the full conditions.
 				$val = array();
 
@@ -285,11 +288,11 @@ abstract class ConfigurationDiff {
 
 				foreach( $setting as $group => $conds ) {
 					if ( !is_array( $conds ) ) {
-						$val[] = "$group: ".wfMsg( "configure-condition-description-$conds" );
+						$val[] = "$group: ".$this->msg( "configure-condition-description-$conds" )->text();
 						continue;
 					}
 					if ( count( $conds ) == 0 ) {
-						$val[] = "$group: ".wfMsg( 'configure-autopromote-noconds' );
+						$val[] = "$group: ".$this->msg( 'configure-autopromote-noconds' )->text();
 						continue;
 					}
 
@@ -297,7 +300,7 @@ abstract class ConfigurationDiff {
 						$boolop = array_shift( $conds );
 						$boolop = $opToName[$boolop];
 
-						$val[] = "$group: " . wfMsg( "configure-boolop-description-$boolop" );
+						$val[] = "$group: " . $this->msg( "configure-boolop-description-$boolop" )->text();
 					} else {
 						$conds = array( $conds );
 					}
@@ -305,7 +308,7 @@ abstract class ConfigurationDiff {
 					// Analyse each individual one...
 					foreach( $conds as $cond ) {
 						if ($cond == array( APCOND_AGE, -1 ) ) {
-							$val[] = "$group: " . wfMsg( 'configure-autopromote-noconds' );
+							$val[] = "$group: " . $this->msg( 'configure-autopromote-noconds' )->text();
 							continue;
 						}
 
@@ -318,13 +321,13 @@ abstract class ConfigurationDiff {
 						$argSummary = implode( ', ', $cond );
 						$count = count( $cond );
 
-						$val[] = "$group: ".wfMsgExt( "configure-condition-description-$name", array( 'parsemag' ), $argSummary, $count );
+						$val[] = "$group: ".$this->msg( "configure-condition-description-$name", $argSummary, $count )->text();
 					}
 				}
 			} else {
 				$val = explode( "\n", var_export( $setting, 1 ) );
 			}
-		} else if ( $type == 'bool' ) {
+		} elseif ( $type == 'bool' ) {
 			$val = array( $setting ? 'true' : 'false' );
 		} else {
 			$val = explode( "\n", (string)$setting );

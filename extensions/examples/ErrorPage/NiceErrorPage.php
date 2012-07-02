@@ -8,7 +8,7 @@
  * @license GNU GPL 2 or later
  */
 
-//$wgExceptionHooks['DBConnectionErrorRaw'][] = array( 'NiceErrorPage', 'dbConnectionOP' );
+// $wgExceptionHooks['DBConnectionErrorRaw'][] = array( 'NiceErrorPage', 'dbConnectionOP' );
 $wgExceptionHooks['DBConnectionErrorRaw'][] = array( 'NiceErrorPage', 'dbConnection' );
 $wgExceptionHooks['DBQueryErrorRaw'][] = array( 'NiceErrorPage', 'dbQueryError' );
 
@@ -17,7 +17,7 @@ $wgNiceErrorPagePath = "{$wgServer}{$wgScriptPath}/extensions/examples/ErrorPage
 class NiceErrorPage {
 	static function dbConnection( $error ) {
 		if ( trim( $error->error ) == '' ) {
-			$error->error = $error->db->getProperty('mServer');
+			$error->error = $error->db->getProperty( 'mServer' );
 		}
 		return self::preprocessPage( 'dbconn', array( 'dberror' => $error->error ) );
 	}
@@ -35,7 +35,7 @@ class NiceErrorPage {
 	static function preprocessPage( $name, $args = array() ) {
 		$page = file_get_contents( dirname( __FILE__ ) . "/{$name}.html" );
 		$args = array_merge( self::commonArgs(), $args );
-		foreach( $args as $aname => $aval ) {
+		foreach ( $args as $aname => $aval ) {
 			$page = preg_replace( '/{{' . $aname . '}}/i', $aval, $page );
 		}
 		return $page;

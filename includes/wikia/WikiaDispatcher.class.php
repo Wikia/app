@@ -115,6 +115,17 @@ class WikiaDispatcher {
 					throw new WikiaException( "Could not dispatch {$controllerClassName}::{$method}" );
 				}
 
+				// Initialize the RequestContext object if it is not already set
+				// SpecialPageController context is already set by SpecialPageFactory::execute by the time it gets here
+				if ($controller->getContext() === null) {
+					$controller->setContext( RequestContext::getMain() );					
+				}				
+
+				// If a SpecialPageController is dispatching a request to itself, preserve the original request context
+				// TODO: come up with a better fix for this (it's because of the setInstance call in WikiaSpecialPageController)
+				$originalRequest = $controller->getRequest();
+				$originalResponse = $controller->getResponse();
+
 				$controller->setRequest( $request );
 				$controller->setResponse( $response );
 				$controller->setApp( $app );
@@ -137,6 +148,13 @@ class WikiaDispatcher {
 						$controller->skipRendering();
 					}
 				}
+				// Preserve original request (this happens for SpecialPageControllers)
+				if ($originalRequest != null) {
+					$controller->setRequest($originalRequest);
+				}
+				if ($originalResponse != null) {
+					$controller->setResponse($originalResponse);
+				}
 
 				$app->runHook( ( "{$controllerName}{$originalMethod}AfterExecute" ), array( &$controller, &$params ) );
 
@@ -146,11 +164,6 @@ class WikiaDispatcher {
 				$app->wf->profileOut($fname);
 			} catch ( Exception $e ) {
 				$app->wf->profileOut($fname);
-
-				// Work around for errors thrown inside modules -- remove when modules go away
-				if ( $response instanceof Module ) {
-					$response = F::build( 'WikiaResponse', array( 'format' => $format ) );
-				}
 
 				$response->setException($e);
 				Wikia::log(__METHOD__, $e->getMessage() );

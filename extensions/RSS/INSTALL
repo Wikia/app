@@ -1,0 +1,11 @@
+[[RSS 1.7]]
+
+== Installation ==
+
+# Save the [[#Source|source]] in your /extensions directory.
+# Place the following text in your [[Manual:LocalSettings.php|LocalSettings.php]] file: <tt>require_once("$IP/extensions/RSS/RSS.php");</tt><br />(Make sure there's a semicolon (;) at the end of that line)
+# Finally, load your wiki, and have fun with RSS feeds!
+
+More information can be found at [0].
+
+[0] http://www.mediawiki.org/wiki/Extension:RSS#Installation

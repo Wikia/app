@@ -14,6 +14,7 @@ Check your spelling.',
 	'piggyback-firstlogout' => 'Please first logout back to your account.',
 	'piggyback-itisyou' => 'You cannot piggyback yourself.',
 	'piggyback-issysopto' => 'You cannot piggyback a user with the right to piggyback.',
+	'action-piggyback' => 'log on as another user',
 );
 
 /** Afrikaans (Afrikaans) */
@@ -102,7 +103,7 @@ Vérifiez l'orthographe.",
 	'piggyback-issysopto' => 'Vous ne pouvez pas vous connecter de manière superposée sur le compte d’un utilisateur ayant lui-même ce droit.',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -347,14 +348,6 @@ Kontrollera stavningen.',
 $messages['te'] = array(
 	'piggyback-otherusername' => 'ఇతర వాడుకరిపేరు:',
 	'piggyback-wronguser' => '$1 అన్నది మీ వాడుకరి పేరు కాదు',
-);
-
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
-	'piggybac-desc' => 'Nagpapahintulot na lumagda bilang ibang tagagamit',
-	'piggyback-otherusername' => 'Ibang pangalan ng tagagamit:',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

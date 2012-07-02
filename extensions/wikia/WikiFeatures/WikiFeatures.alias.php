@@ -6,19 +6,19 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'WikiFeatures' => array( 'WikiFeatures' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'WikiFeatures' => array( 'WikiFunktionen' ),
 );
 
 /** Polish (Polski) */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'WikiFeatures' => array( 'Rozszerzenia wiki', 'WikiFeatures' ),
 );

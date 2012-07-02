@@ -23,8 +23,6 @@ class SpecialNewLanguageStats extends IncludableSpecialPage {
 	function execute( $par ) {
 		global $wgRequest, $wgOut;
 
-		wfLoadExtensionMessages( 'Translate' );
-
 		$this->setHeaders();
 		$this->outputHeader();
 
@@ -64,7 +62,7 @@ class SpecialNewLanguageStats extends IncludableSpecialPage {
 
 		$out  = Xml::openElement( 'div', array( 'class' => 'languagecode' ) );
 		$out .= Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) );
-		$out .= Xml::hidden( 'title', $t->getPrefixedText() );
+		$out .= Html::hidden( 'title', $t->getPrefixedText() );
 		$out .= Xml::openElement( 'fieldset' );
 		$out .= Xml::element( 'legend', null, wfMsg( 'translate-language-code' ) );
 		$out .= Xml::openElement( 'table', array( 'id' => 'langcodeselect', 'class' => 'allpages' ) );

@@ -38,10 +38,13 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Pinodd
  * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'fckeditor-desc' => '{{desc}}',
+	'textrichditor' => "questo dovrebbe essere solo il nome dell'estensione e quindi lo lascerei com'è",
+	'prefs-fckeditor' => "questo dovrebbe essere semplicemente il nome dell'estensione e a mio parere va lasciato così com'è",
 );
 
 /** Arabic (العربية)
@@ -76,7 +79,7 @@ $messages['ar'] = array(
 	'tog-riched_toggle_remember_state' => 'تذكر آخر حالة تبديل',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -109,10 +112,13 @@ $messages['be-tarask'] = array(
 );
 
 /** Bulgarian (Български)
+ * @author Borislav
  * @author DCLXVI
  */
 $messages['bg'] = array(
+	'fckeditor-desc' => 'Възможност за редактиране с помощта на разширения редактор FCKeditor',
 	'textrichditor' => 'Разширен редактор',
+	'prefs-fckeditor' => 'Разширен редактор',
 	'tog-riched_disable' => 'Изключване на разширения редактор',
 	'tog-riched_disable_ns_main' => 'Изключване на разширения редактор в основното именно пространство',
 	'tog-riched_disable_ns_talk' => 'Изключване на разширения редактор в именно пространство „{{ns:Talk}}“',
@@ -130,6 +136,37 @@ $messages['bg'] = array(
 	'tog-riched_disable_ns_help_talk' => 'Изключване на разширения редактор в именно пространство „{{ns:Help_talk}}“',
 	'tog-riched_disable_ns_category' => 'Изключване на разширения редактор в именно пространство „{{ns:Category}}“',
 	'tog-riched_disable_ns_category_talk' => 'Изключване на разширения редактор в именно пространство „{{ns:Category_talk}}“',
+	'rich_editor_new_window' => 'Разширен редактор в нов прозорец',
+	'tog-riched_start_disabled' => 'Без автоматично пускане на разширения редактор',
+	'tog-riched_use_popup' => 'Отваряне на разширения редактор в нов прозорец',
+	'tog-riched_use_toggle' => 'Възможност за превключване между уикитекст и разширен редактор (замества текстовото поле с разширения редактор)',
+	'tog-riched_toggle_remember_state' => 'Запомняне на текущото състояние',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'textrichditor' => 'রিচ এডিটর',
+	'prefs-fckeditor' => 'রিচ এডিটর',
+	'tog-riched_disable' => 'রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_main' => 'প্রধান নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_talk' => '"{{ns:talk}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_user' => '"{{ns:user}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_user_talk' => '"{{ns:user_talk}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_project' => '"{{ns:project}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_project_talk' => '"{{ns:project_talk}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_image' => '"{{ns:file}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_image_talk' => '"{{ns:file_talk}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_mediawiki' => '"{{ns:mediawiki}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_mediawiki_talk' => '"{{ns:mediawiki_talk}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_template' => '"{{ns:template}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_template_talk' => '"{{ns:template_talk}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_help' => '"{{ns:help}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_help_talk' => '"{{ns:help_talk}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_category' => '"{{ns:category}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'tog-riched_disable_ns_category_talk' => '"{{ns:category_talk}}" নামস্থানে রিচ এডিটর নিষ্ক্রিয় করো',
+	'rich_editor_new_window' => 'রিচ এডিটর নতুন পাতায় চালু করো',
 );
 
 /** Breton (Brezhoneg)
@@ -195,12 +232,15 @@ $messages['bs'] = array(
 );
 
 /** Catalan (Català)
+ * @author BroOk
  * @author Solde
  */
 $messages['ca'] = array(
+	'fckeditor-desc' => "Permet l'edició amb l'editor WYSIWYG FCKeditor",
 	'textrichditor' => 'Editor enriquit',
 	'prefs-fckeditor' => 'Editor enriquit',
 	'tog-riched_disable' => "Deshabilita l'editor enriquit",
+	'tog-riched_disable_ns_main' => "Deshabilita l'editor enriquit dins de l'espai de noms",
 	'tog-riched_disable_ns_talk' => 'Deshabilita l\'editor enriquit dins de l\'espai de noms "{{ns:talk}}"',
 	'tog-riched_disable_ns_user' => 'Deshabilita l\'editor enriquit dins de l\'espai de noms "{{ns:user}}"',
 	'tog-riched_disable_ns_user_talk' => 'Deshabilita l\'editor enriquit dins de l\'espai de noms "{{ns:user_talk}}"',
@@ -216,36 +256,49 @@ $messages['ca'] = array(
 	'tog-riched_disable_ns_help_talk' => 'Deshabilita l\'editor enriquit dins de l\'espai de noms "{{ns:help_talk}}"',
 	'tog-riched_disable_ns_category' => 'Deshabilita l\'editor enriquit dins de l\'espai de noms "{{ns:category}}"',
 	'tog-riched_disable_ns_category_talk' => 'Deshabilita l\'editor enriquit dins de l\'espai de noms "{{ns:category_talk}}"',
+	'rich_editor_new_window' => "Obre l'editor enriquit en una nova finestra",
+	'tog-riched_start_disabled' => "Comença amb l'editor enriquit deshabilitat",
+	'tog-riched_use_popup' => "Obre l'editor enriquit en una finestra emergent",
+	'tog-riched_use_toggle' => "Usa la palanca per canviar entre wikitext i l'editor visual (reemplaça l'àrea de text amb l'editor enriquit)",
+	'tog-riched_toggle_remember_state' => "Recorda canviar l'estat passat",
+);
+
+/** Czech (Česky)
+ * @author Jkjk
+ */
+$messages['cs'] = array(
+	'fckeditor-desc' => 'Umožnit editace s použitím WYSIWYG edigoru FCKeditor',
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'fckeditor-desc' => 'Ermöglicht die Nutzung des WYSIWYG-Editors „FCKeditor“',
-	'textrichditor' => 'Rich Editor',
-	'prefs-fckeditor' => 'Rich Editor',
-	'tog-riched_disable' => 'Rich Editor deaktivieren',
-	'tog-riched_disable_ns_main' => 'Rich Editor im Haupt-Namensraum deaktivieren',
-	'tog-riched_disable_ns_talk' => 'Rich Editor im Namensraum „{{ns:talk}}“ deaktivieren',
-	'tog-riched_disable_ns_user' => 'Rich Editor im Namensraum „{{ns:user}}“ deaktivieren',
-	'tog-riched_disable_ns_user_talk' => 'Rich Editor im Namensraum „{{ns:user_talk}}“ deaktivieren',
-	'tog-riched_disable_ns_project' => 'Rich Editor im Namensraum „{{ns:project}}“ deaktivieren',
-	'tog-riched_disable_ns_project_talk' => 'Rich Editor im Namensraum „{{ns:project_talk}}“ deaktivieren',
-	'tog-riched_disable_ns_image' => 'Rich Editor im Namensraum „{{ns:file}}“ deaktivieren',
-	'tog-riched_disable_ns_image_talk' => 'Rich Editor im Namensraum „{{ns:file_talk}}“ deaktivieren',
-	'tog-riched_disable_ns_mediawiki' => 'Rich Editor im Namensraum „{{ns:mediawiki}}“ deaktivieren',
-	'tog-riched_disable_ns_mediawiki_talk' => 'Rich Editor im Namensraum „{{ns:mediawiki_talk}}“ deaktivieren',
-	'tog-riched_disable_ns_template' => 'Rich Editor im Namensraum „{{ns:template}}“ deaktivieren',
-	'tog-riched_disable_ns_template_talk' => 'Rich Editor im Namensraum „{{ns:template_talk}}“ deaktivieren',
-	'tog-riched_disable_ns_help' => 'Rich Editor im Namensraum „{{ns:help}}“ deaktivieren',
-	'tog-riched_disable_ns_help_talk' => 'Rich Editor im Namensraum „{{ns:help_talk}}“ deaktivieren',
-	'tog-riched_disable_ns_category' => 'Rich Editor im Namensraum „{{ns:category}}“ deaktivieren',
-	'tog-riched_disable_ns_category_talk' => 'Rich Editor im Namensraum „{{ns:category_talk}}“ deaktivieren',
-	'rich_editor_new_window' => 'Rich Editor in einem neuen Fenster öffnen',
-	'tog-riched_start_disabled' => 'Rich Editor nicht automatisch starten',
-	'tog-riched_use_popup' => 'Rich Editor als Popup öffnen',
-	'tog-riched_use_toggle' => 'Schalter zum Wechseln zwischen Wikitext und Rich Editor benutzen (ersetzt den Textbereich mit dem Rich Editor)',
+	'fckeditor-desc' => 'Ermöglicht die Nutzung des WYSIWYG-Editors CKEditor, vormals FCKeditor',
+	'textrichditor' => 'Mit dem Texteditor öffnen',
+	'prefs-fckeditor' => 'Texteditor',
+	'tog-riched_disable' => 'Texteditor deaktivieren',
+	'tog-riched_disable_ns_main' => 'Texteditor im Haupt-Namensraum deaktivieren',
+	'tog-riched_disable_ns_talk' => 'Texteditor im Namensraum „{{ns:talk}}“ deaktivieren',
+	'tog-riched_disable_ns_user' => 'Texteditor im Namensraum „{{ns:user}}“ deaktivieren',
+	'tog-riched_disable_ns_user_talk' => 'Texteditor im Namensraum „{{ns:user_talk}}“ deaktivieren',
+	'tog-riched_disable_ns_project' => 'Texteditor im Namensraum „{{ns:project}}“ deaktivieren',
+	'tog-riched_disable_ns_project_talk' => 'Texteditor im Namensraum „{{ns:project_talk}}“ deaktivieren',
+	'tog-riched_disable_ns_image' => 'Texteditor im Namensraum „{{ns:file}}“ deaktivieren',
+	'tog-riched_disable_ns_image_talk' => 'Texteditor im Namensraum „{{ns:file_talk}}“ deaktivieren',
+	'tog-riched_disable_ns_mediawiki' => 'Texteditor im Namensraum „{{ns:mediawiki}}“ deaktivieren',
+	'tog-riched_disable_ns_mediawiki_talk' => 'Texteditor im Namensraum „{{ns:mediawiki_talk}}“ deaktivieren',
+	'tog-riched_disable_ns_template' => 'Texteditor im Namensraum „{{ns:template}}“ deaktivieren',
+	'tog-riched_disable_ns_template_talk' => 'Texteditor im Namensraum „{{ns:template_talk}}“ deaktivieren',
+	'tog-riched_disable_ns_help' => 'Texteditor im Namensraum „{{ns:help}}“ deaktivieren',
+	'tog-riched_disable_ns_help_talk' => 'Texteditor im Namensraum „{{ns:help_talk}}“ deaktivieren',
+	'tog-riched_disable_ns_category' => 'Texteditor im Namensraum „{{ns:category}}“ deaktivieren',
+	'tog-riched_disable_ns_category_talk' => 'Texteditor im Namensraum „{{ns:category_talk}}“ deaktivieren',
+	'rich_editor_new_window' => 'Mit dem Texteditor in einem neuen Fenster öffnen',
+	'tog-riched_start_disabled' => 'Texteditor nicht automatisch starten',
+	'tog-riched_use_popup' => 'Texteditor als Popup öffnen',
+	'tog-riched_use_toggle' => 'Schalter zum Wechseln zwischen Wikitext und Texteditor benutzen (ersetzt den Textbereich mit dem Texteditor)',
 	'tog-riched_toggle_remember_state' => 'Letzten Umschaltzustand merken',
 );
 
@@ -359,12 +412,18 @@ $messages['eu'] = array(
 	'tog-riched_toggle_remember_state' => 'Gogoratu erabilitako azken editore hautua',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author Ebraminio
+ * @author Huji
+ * @author Reza1615
+ */
 $messages['fa'] = array(
-	'textrichditor' => 'ويرايشگر پيشرفته',
-	'tog-riched_disable' => 'غيرفعال کردن ويرايشگر پيشرفته',
-	'tog-riched_disable_ns_main' => 'غيرفعال کردن ويرايشگر پيشرفته در فضاي نام اصلي',
-	'tog-riched_disable_ns_talk' => 'غيرفعال کردن ويرايشگر پيشرفته در فضاي نام "{{ns:talk}}"',
+	'fckeditor-desc' => 'اجازه ویرایش با استفاده از ویرایشگر WYSIWYG FCKeditor را می‌دهد',
+	'textrichditor' => 'ویرایشگر پیشرفته',
+	'prefs-fckeditor' => 'ویرایشگر پیشرفته',
+	'tog-riched_disable' => 'غیرفعال کردن ویرایشگر پیشرفته',
+	'tog-riched_disable_ns_main' => 'غیرفعال کردن ویرایشگر پیشرفته در فضای نام اصلی',
+	'tog-riched_disable_ns_talk' => 'غیرفعال کردن ویرایشگر پیشرفته در فضای نام "{{ns:talk}}"',
 	'tog-riched_disable_ns_user' => 'غيرفعال کردن ويرايشگر پيشرفته در فضاي نام "{{ns:user}}"',
 	'tog-riched_disable_ns_user_talk' => 'غيرفعال کردن ويرايشگر پيشرفته در فضاي نام "{{ns:user_talk}}"',
 	'tog-riched_disable_ns_project' => 'غيرفعال کردن ويرايشگر پيشرفته در فضاي نام "{{ns:project}}"',
@@ -379,6 +438,11 @@ $messages['fa'] = array(
 	'tog-riched_disable_ns_help_talk' => 'غيرفعال کردن ويرايشگر پيشرفته در فضاي نام "{{ns:help_talk}}"',
 	'tog-riched_disable_ns_category' => 'غيرفعال کردن ويرايشگر پيشرفته در فضاي نام "{{ns:category}}"',
 	'tog-riched_disable_ns_category_talk' => 'غيرفعال کردن ويرايشگر پيشرفته در فضاي نام "{{ns:category_talk}}"',
+	'rich_editor_new_window' => 'ویرایشگر پیشرفته را در پنجره جدید باز کن',
+	'tog-riched_start_disabled' => 'شروع با ویرایشگر پیشرفته غیر فعال شد',
+	'tog-riched_use_popup' => 'بازکردن ویرایشگر پیشرفته در یک پنجره',
+	'tog-riched_use_toggle' => 'استفاده از زبانهٔ انتخاب‌کردن بین ویکی‌متن و ویرایشگر پیشرفته (جایگزینی جعبه ویرایش با ویرایشگر پیشرفته)',
+	'tog-riched_toggle_remember_state' => 'آخرین وضعیت زبانه را به یاد داشته باش',
 );
 
 /** Finnish (Suomi)
@@ -445,6 +509,15 @@ $messages['fr'] = array(
 	'tog-riched_use_popup' => "Ouvrir l'éditeur enrichi dans une popup",
 	'tog-riched_use_toggle' => "Donner la possibilité de changer entre l'éditeur original WikiText et l'éditeur enrichi",
 	'tog-riched_toggle_remember_state' => "Se souvenir de la dernière selection de l'éditeur",
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'textrichditor' => 'Èditor enrechiê',
+	'prefs-fckeditor' => 'Èditor enrechiê',
+	'tog-riched_disable' => 'Dèsactivar l’èditor enrechiê',
 );
 
 /** Galician (Galego)
@@ -665,6 +738,37 @@ $messages['id'] = array(
 	'tog-riched_toggle_remember_state' => 'Ingat keadaan tuas terakhir',
 );
 
+/** Italian (Italiano)
+ * @author Pinodd
+ */
+$messages['it'] = array(
+	'fckeditor-desc' => "Consenti la modifica utilizzando l'editor WYSIWYG FCKeditor",
+	'textrichditor' => 'Rich Editor',
+	'prefs-fckeditor' => 'Rich Editor',
+	'tog-riched_disable' => 'Disabilita editor avanzato',
+	'tog-riched_disable_ns_main' => "Disattiva editor avanzato all'interno del namespace principale",
+	'tog-riched_disable_ns_talk' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:talk}}"',
+	'tog-riched_disable_ns_user' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:user}}"',
+	'tog-riched_disable_ns_user_talk' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:user_talk}}"',
+	'tog-riched_disable_ns_project' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:project}}"',
+	'tog-riched_disable_ns_project_talk' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:project_talk}}"',
+	'tog-riched_disable_ns_image' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:file}}"',
+	'tog-riched_disable_ns_image_talk' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:file_talk}}"',
+	'tog-riched_disable_ns_mediawiki' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:mediawiki}}"',
+	'tog-riched_disable_ns_mediawiki_talk' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:mediawiki_talk}}"',
+	'tog-riched_disable_ns_template' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:template}}"',
+	'tog-riched_disable_ns_template_talk' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:template_talk}}"',
+	'tog-riched_disable_ns_help' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:help}}"',
+	'tog-riched_disable_ns_help_talk' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:help_talk}}"',
+	'tog-riched_disable_ns_category' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:category}}"',
+	'tog-riched_disable_ns_category_talk' => 'Disattiva editor avanzato all\'interno del namespace "{{ns:category_talk}}"',
+	'rich_editor_new_window' => 'Apri editor avanzato in una nuova finestra',
+	'tog-riched_start_disabled' => "Inizia con l'editor avanzato disabilitato",
+	'tog-riched_use_popup' => 'Apri editor avanzato in una finestra popup',
+	'tog-riched_use_toggle' => "Usa il pulsante per passare dal normale wikitext all'editor avanzato e viceversa (sostituisce la textarea con l'editor avanzato)",
+	'tog-riched_toggle_remember_state' => "Ricorda l'ultima modalità di editing utilizzata (avanzata o normale)",
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -697,9 +801,11 @@ $messages['ja'] = array(
 );
 
 /** Korean (한국어)
+ * @author Devunt
  * @author Klutzy
  */
 $messages['ko'] = array(
+	'fckeditor-desc' => '위지윅 편집기 FCKeditor를 이용하여 편집하는것을 허용',
 	'textrichditor' => '리치 에디터',
 	'prefs-fckeditor' => '리치 에디터',
 	'tog-riched_disable' => '리치 에디터 사용하지 않기',
@@ -726,7 +832,7 @@ $messages['ko'] = array(
 	'tog-riched_toggle_remember_state' => '마지막 토글 상태를 기억하기',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -784,6 +890,36 @@ $messages['lb'] = array(
 	'rich_editor_new_window' => 'Editeur mat erweiderte Fonctiounen an enger neier Fënster opmaachen',
 	'tog-riched_start_disabled' => 'Editeur mat erweiderte Fonctiounen beim Start ausgeschalt',
 	'tog-riched_use_popup' => 'Editeur mat erweiderte Fonctiounen an engem Popup opmaachen',
+	'tog-riched_use_toggle' => "Schalter benotze fir tëschen dem Benotze vu Wikitext an engem 'rich editor' ze wiesselen (den Textberäich gëtt duerch e 'rich editor' ersat)",
+	'tog-riched_toggle_remember_state' => 'De leschten Ëmschaltzoustand verhalen',
+);
+
+/** Latvian (Latviešu)
+ * @author GreenZeb
+ */
+$messages['lv'] = array(
+	'textrichditor' => 'Formatējuma redaktors',
+	'prefs-fckeditor' => 'Formatējuma redaktors',
+	'tog-riched_disable' => 'Atspējot formatējuma redaktoru',
+	'tog-riched_disable_ns_main' => 'Atspējot formatējuma redaktoru galvenajā vārdtelpā',
+	'tog-riched_disable_ns_talk' => 'Atspējot formatējuma redaktoru "{{ns:talk}}"  vārdtelpā',
+	'tog-riched_disable_ns_user' => 'Atspējot formatējuma redaktoru "{{ns:user}}" vārdtelpā',
+	'tog-riched_disable_ns_user_talk' => 'Atspējot formatējuma redaktoru "{{ns:user_talk}}" vārdtelpā',
+	'tog-riched_disable_ns_project' => 'Atspējot formatējuma redaktoru "{{ns:project}}" vārdtelpā',
+	'tog-riched_disable_ns_project_talk' => 'Atspējot formatējuma redaktoru "{{ns:project_talk}}" vārdtelpā',
+	'tog-riched_disable_ns_image' => 'Atspējot formatējuma redaktoru "{{ns:file}}" vārdtelpā',
+	'tog-riched_disable_ns_image_talk' => 'Atspējot formatējuma redaktoru "{{ns:file_talk}}" vārdtelpā',
+	'tog-riched_disable_ns_mediawiki' => 'Atspējot formatējuma redaktoru "{{ns:mediawiki}}" vārdtelpā',
+	'tog-riched_disable_ns_mediawiki_talk' => 'Atspējot formatējuma redaktoru "{{ns:mediawiki_talk}}" vārdtelpā',
+	'tog-riched_disable_ns_template' => 'Atspējot formatējuma redaktoru "{{ns:template}}" vārdtelpā',
+	'tog-riched_disable_ns_template_talk' => 'Atspējot formatējuma redaktoru "{{ns:template_talk}}" vārdtelpā',
+	'tog-riched_disable_ns_help' => 'Atspējot formatējuma redaktoru "{{ns:help}}" vārdtelpā',
+	'tog-riched_disable_ns_help_talk' => 'Atspējot formatējuma redaktoru "{{ns:help_talk}}" vārdtelpā',
+	'tog-riched_disable_ns_category' => 'Atspējot formatējuma redaktoru "{{ns:category}}" vārdtelpā',
+	'tog-riched_disable_ns_category_talk' => 'Atspējot formatējuma redaktoru "{{ns:category_talk}}" vārdtelpā',
+	'rich_editor_new_window' => 'Atvērt formatējuma redaktoru jaunā logā',
+	'tog-riched_start_disabled' => 'Sākt ar atspējotu formatējuma redaktoru',
+	'tog-riched_use_popup' => 'Atvērt formatējuma redaktoru uzlecošā logā',
 );
 
 /** Macedonian (Македонски)
@@ -841,6 +977,37 @@ $messages['mr'] = array(
 	'tog-riched_disable_ns_category_talk' => '"{{ns:Category_talk}}" नामविश्वात वाढीव संपादक रद्द करा',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'fckeditor-desc' => 'Membolehkan penggunaan editor WYSIWYG, FCKeditor',
+	'textrichditor' => 'Editor Teks Beraneka',
+	'prefs-fckeditor' => 'Editor Teks Beraneka',
+	'tog-riched_disable' => 'Matikan editor teks beraneka',
+	'tog-riched_disable_ns_main' => 'Matikan editor teks beraneka di dalam ruang nama utama',
+	'tog-riched_disable_ns_talk' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:talk}}"',
+	'tog-riched_disable_ns_user' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:user}}"',
+	'tog-riched_disable_ns_user_talk' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:user_talk}}"',
+	'tog-riched_disable_ns_project' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:project}}"',
+	'tog-riched_disable_ns_project_talk' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:project_talk}}"',
+	'tog-riched_disable_ns_image' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:file}}"',
+	'tog-riched_disable_ns_image_talk' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:file_talk}}"',
+	'tog-riched_disable_ns_mediawiki' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:mediawiki}}"',
+	'tog-riched_disable_ns_mediawiki_talk' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:mediawiki_talk}}"',
+	'tog-riched_disable_ns_template' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:template}}"',
+	'tog-riched_disable_ns_template_talk' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:template_talk}}"',
+	'tog-riched_disable_ns_help' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:help}}"',
+	'tog-riched_disable_ns_help_talk' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:help_talk}}"',
+	'tog-riched_disable_ns_category' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:category}}"',
+	'tog-riched_disable_ns_category_talk' => 'Matikan editor teks beraneka di dalam ruang nama "{{ns:category_talk}}"',
+	'rich_editor_new_window' => 'Buka Editor teks beraneka dalam tetingkap baru',
+	'tog-riched_start_disabled' => 'Mulakan tanpa menghidupkan editor teks beraneka',
+	'tog-riched_use_popup' => 'Buka editor teks beraneka dalam tetimbul (pop-up)',
+	'tog-riched_use_toggle' => 'Gunakan togol untuk beralih antara teks wiki dan editor teks beraneka (ganti ruangan teks dengan editor teks beraneka)',
+	'tog-riched_toggle_remember_state' => 'Ingati keadaan togol terkini',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -884,7 +1051,7 @@ $messages['nn'] = array(
  * @author Laaknor
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'fckeditor-desc' => 'Tillatt redigeringer med «WYSIWYG»-editoren FCKeditor',
 	'textrichditor' => 'Rik tekstredigering',
 	'prefs-fckeditor' => 'Rik editor',
@@ -948,30 +1115,30 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'fckeditor-desc' => 'Umożliwia korzystanie z edytora WYSIWYG o nazwie FCKeditor',
-	'textrichditor' => 'Rich Editor',
-	'prefs-fckeditor' => 'Zaawansowany edytor',
-	'tog-riched_disable' => 'Wyłącz Rich Editora',
-	'tog-riched_disable_ns_main' => 'Wyłącz Rich Editora wewątrz głównej przestrzeni nazw',
-	'tog-riched_disable_ns_talk' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:talk}}"',
-	'tog-riched_disable_ns_user' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:user}}"',
-	'tog-riched_disable_ns_user_talk' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:user_talk}}"',
-	'tog-riched_disable_ns_project' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:project}}"',
-	'tog-riched_disable_ns_project_talk' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:project_talk}}"',
-	'tog-riched_disable_ns_image' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:file}}"',
-	'tog-riched_disable_ns_image_talk' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:file_talk}}"',
-	'tog-riched_disable_ns_mediawiki' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:mediawiki}}"',
-	'tog-riched_disable_ns_mediawiki_talk' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:mediawiki_talk}}"',
-	'tog-riched_disable_ns_template' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:template}}"',
-	'tog-riched_disable_ns_template_talk' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:template_talk}}"',
-	'tog-riched_disable_ns_help' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:help}}"',
-	'tog-riched_disable_ns_help_talk' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:help_talk}}"',
-	'tog-riched_disable_ns_category' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:category}}"',
-	'tog-riched_disable_ns_category_talk' => 'Wyłącz Rich Editora wewątrz przestrzeni nazw "{{ns:category_talk}}"',
-	'rich_editor_new_window' => 'Otwórz rich editor w nowym oknie',
-	'tog-riched_start_disabled' => 'Rich editor domyślnie wyłączony',
-	'tog-riched_use_popup' => 'Pozwól otwierać Rich Editor w okienku popup',
-	'tog-riched_use_toggle' => 'Pozwól otwierać Rich Editor na żądanie (zastąpi domyślne pole textarea)',
-	'tog-riched_toggle_remember_state' => 'Zapamiętuj ostatni stan Rich Editora',
+	'textrichditor' => 'Rozbudowany edytor',
+	'prefs-fckeditor' => 'Rozbudowany edytor',
+	'tog-riched_disable' => 'Wyłącz rozbudowany edytor',
+	'tog-riched_disable_ns_main' => 'Wyłącz rozbudowany edytor w głównej przestrzeni nazw',
+	'tog-riched_disable_ns_talk' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:talk}}“',
+	'tog-riched_disable_ns_user' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:user}}“',
+	'tog-riched_disable_ns_user_talk' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:user_talk}}“',
+	'tog-riched_disable_ns_project' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:project}}“',
+	'tog-riched_disable_ns_project_talk' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:project_talk}}“',
+	'tog-riched_disable_ns_image' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:file}}“',
+	'tog-riched_disable_ns_image_talk' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:file_talk}}“',
+	'tog-riched_disable_ns_mediawiki' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:mediawiki}}“',
+	'tog-riched_disable_ns_mediawiki_talk' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:mediawiki_talk}}“',
+	'tog-riched_disable_ns_template' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:template}}“',
+	'tog-riched_disable_ns_template_talk' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:template_talk}}“',
+	'tog-riched_disable_ns_help' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:help}}“',
+	'tog-riched_disable_ns_help_talk' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:help_talk}}“',
+	'tog-riched_disable_ns_category' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:category}}“',
+	'tog-riched_disable_ns_category_talk' => 'Wyłącz rozbudowany edytor w przestrzeni nazw „{{ns:category_talk}}“',
+	'rich_editor_new_window' => 'Otwieraj rozbudowany edytor w nowym oknie',
+	'tog-riched_start_disabled' => 'Rozbudowany edytor ma być domyślnie wyłączony',
+	'tog-riched_use_popup' => 'Otwieraj rozbudowany edytor w okienku popup',
+	'tog-riched_use_toggle' => 'Używaj rozbudowanego edytora zamiennie ze standardowym (umieści rozbudowany edytor w polu „textarea“)',
+	'tog-riched_toggle_remember_state' => 'Zapamiętuj ostatni używany edytor',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1132,9 +1299,13 @@ $messages['sk'] = array(
 	'tog-riched_toggle_remember_state' => 'Pamätať si posledný stav prepínača',
 );
 
-/** Swedish (Svenska) */
+/** Swedish (Svenska)
+ * @author Sertion
+ */
 $messages['sv'] = array(
+	'fckeditor-desc' => 'Skapar möjligheten att redigera med WYSIWYG-redigeraren FGKeditor',
 	'textrichditor' => 'Grafiskt läge',
+	'prefs-fckeditor' => 'Grafiskt läge',
 	'tog-riched_disable' => 'Inaktivera grafiskt läge',
 	'tog-riched_disable_ns_main' => 'Inaktivera grafiskt läge i huvudnamnrymden',
 	'tog-riched_disable_ns_talk' => 'Inaktivera grafiskt läge i "{{ns:talk}}" namnrymden',
@@ -1160,12 +1331,50 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
 	'textrichditor' => 'సిరి కూర్పరి',
 	'prefs-fckeditor' => 'సిరి కూర్పరి',
 	'tog-riched_disable' => 'సిరి కూర్పరిని అచేతనం చేయండి',
+	'tog-riched_disable_ns_help_talk' => '"{{ns:help_talk}}" పేరుబరిలో రిచ్ ఎడిటరును అచేతనం చెయ్యి',
+	'tog-riched_disable_ns_category' => '"{{ns:category}}" పేరుబరిలో రిచ్ ఎడిటరును అచేతనం చెయ్యి',
+	'tog-riched_disable_ns_category_talk' => '"{{ns:category_talk}}" పేరుబరిలో రిచ్ ఎడిటరును అచేతనం చెయ్యి',
+	'rich_editor_new_window' => 'రిచ్ ఎడిటరును కొత్త విండోలో తెరువు',
+	'tog-riched_use_popup' => 'రిచ్ ఎడిటరును పాపప్ లో తెరువు',
+	'tog-riched_toggle_remember_state' => 'గత టాగుల్ స్థితిని గుర్తు పెట్టుకో',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'fckeditor-desc' => 'Ipahintulot ang pamamatnugot na gamit ang patnugot na FCK ng patnugot na WYSIWYG',
+	'textrichditor' => 'Mayamang Patnugot',
+	'prefs-fckeditor' => 'Mayamang Patnugot',
+	'tog-riched_disable' => 'Huwag paganahin ang mayamang patnugot',
+	'tog-riched_disable_ns_main' => 'Huwag paganahin ang mayamang patnugot sa loob ng pangunang puwang na pampangalan',
+	'tog-riched_disable_ns_talk' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:talk}}"',
+	'tog-riched_disable_ns_user' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:user}}"',
+	'tog-riched_disable_ns_user_talk' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:user_talk}}"',
+	'tog-riched_disable_ns_project' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:project}}"',
+	'tog-riched_disable_ns_project_talk' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:project_talk}}"',
+	'tog-riched_disable_ns_image' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:file}}"',
+	'tog-riched_disable_ns_image_talk' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:file_talk}}"',
+	'tog-riched_disable_ns_mediawiki' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:mediawiki}}"',
+	'tog-riched_disable_ns_mediawiki_talk' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:mediawiki_talk}}"',
+	'tog-riched_disable_ns_template' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:template}}"',
+	'tog-riched_disable_ns_template_talk' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:template_talk}}"',
+	'tog-riched_disable_ns_help' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:help}}"',
+	'tog-riched_disable_ns_help_talk' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:help_talk}}"',
+	'tog-riched_disable_ns_category' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:category}}"',
+	'tog-riched_disable_ns_category_talk' => 'Huwag paganahin ang mayamang patnugot sa loob ng puwang na pampangalang "{{ns:category_talk}}"',
+	'rich_editor_new_window' => 'Buksan ang mayamang patnugot sa loob ng bagong dungawan',
+	'tog-riched_start_disabled' => 'Magsimulang hindi gumagana ang mayamang patnugot',
+	'tog-riched_use_popup' => 'Buksan ang mayamang patnugot sa loob ng isang biglang-litaw',
+	'tog-riched_use_toggle' => 'Gamitin ang panglipat-lipat upang magpalipat-lipat sa pagitan ng wikiteksto at mayamang patnugot (palitan ang lugar ng teksto ng mayamang patnugot)',
+	'tog-riched_toggle_remember_state' => 'Tandaan ang huling katayuan ng panglipat-lipat',
 );
 
 /** Turkish (Türkçe)
@@ -1180,6 +1389,17 @@ $messages['tr'] = array(
 	'tog-riched_disable_ns_user' => 'Zengin editörü "{{ns:user}}" isim alanında devre dışı bırak',
 	'tog-riched_start_disabled' => 'Zengin editör devre dışı bırakılmış şekilde başla',
 	'tog-riched_use_popup' => 'Zengin editörü açılır pencerede aç',
+);
+
+/** Ukrainian (Українська)
+ * @author Apromix
+ */
+$messages['uk'] = array(
+	'fckeditor-desc' => 'Дозволяє редагувати за допомогою візуального редактора FCKeditor',
+	'textrichditor' => 'Візуальний редактор',
+	'prefs-fckeditor' => 'Візуальний редактор',
+	'tog-riched_disable' => 'Вимкнути візуальний редактор',
+	'tog-riched_disable_ns_main' => 'Вимкнути візуальний редактор, в головному просторі імен',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1247,39 +1467,42 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  */
 $messages['zh-hant'] = array(
-	'fckeditor-desc' => '允許在編輯時使用所見即所得工具FCKeditor',
-	'textrichditor' => '富文本編輯器',
-	'prefs-fckeditor' => '富文本編輯器',
-	'tog-riched_disable' => '禁用富文本編輯器',
-	'tog-riched_disable_ns_main' => '在主名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_talk' => '在“{{ns:talk}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_user' => '在“{{ns:user}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_user_talk' => '在“{{ns:user_talk}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_project' => '在“{{ns:project}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_project_talk' => '在“{{ns:project_talk}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_image' => '在“{{ns:file}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_image_talk' => '在“{{ns:file_talk}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_mediawiki' => '在“{{ns:mediawiki}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_mediawiki_talk' => '在“{{ns:mediawiki_talk}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_template' => '在“{{ns:template}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_template_talk' => '在“{{ns:template_talk}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_help' => '在“{{ns:help}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_help_talk' => '在“{{ns:help_talk}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_category' => '在“{{ns:category}}”名字空間禁用富文本編輯器',
-	'tog-riched_disable_ns_category_talk' => '在“{{ns:category_talk}}”名字空間禁用富文本編輯器',
-	'rich_editor_new_window' => '在新窗口打開富文本編輯器',
-	'tog-riched_start_disabled' => '默認禁用富文本編輯器',
-	'tog-riched_use_popup' => '在彈出窗口中使用富文本編輯器',
-	'tog-riched_use_toggle' => '使用開關在wiki文本和富文本編輯器間切換（用富文本編輯器替換textarea）',
+	'fckeditor-desc' => '允許在編輯時使用所見即所得工具 FCKeditor',
+	'textrichditor' => 'RTF 編輯器',
+	'prefs-fckeditor' => 'RTF 編輯器',
+	'tog-riched_disable' => '禁用 RTF 編輯器',
+	'tog-riched_disable_ns_main' => '在主名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_talk' => '在「{{ns:talk}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_user' => '在「{{ns:user}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_user_talk' => '在「{{ns:user_talk}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_project' => '在「{{ns:project}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_project_talk' => '在「{{ns:project_talk}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_image' => '在「{{ns:file}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_image_talk' => '在「{{ns:file_talk}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_mediawiki' => '在「{{ns:mediawiki}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_mediawiki_talk' => '在「{{ns:mediawiki_talk}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_template' => '在「{{ns:template}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_template_talk' => '在「{{ns:template_talk}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_help' => '在「{{ns:help}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_help_talk' => '在「{{ns:help_talk}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_category' => '在「{{ns:category}}」名字空間禁用 RTF 編輯器',
+	'tog-riched_disable_ns_category_talk' => '在「{{ns:category_talk}}」名字空間禁用 RTF 編輯器',
+	'rich_editor_new_window' => '在新視窗開啟 RTF 編輯器',
+	'tog-riched_start_disabled' => '預設禁用 RTF 編輯器',
+	'tog-riched_use_popup' => '在彈出視窗中使用 RTF 編輯器',
+	'tog-riched_use_toggle' => '使用開關在 wiki 文字和 RTF 編輯器間切換（用 RTF 編輯器替換 textarea）',
 	'tog-riched_toggle_remember_state' => '記住上次切換狀態',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Pbdragonwang
  * @author Roc michael
  */
 $messages['zh-tw'] = array(
+	'fckeditor-desc' => '允許在編輯時使用所見即所得工具FCKeditor',
 	'textrichditor' => '視覺化編輯器(Rich Editor)',
 	'prefs-fckeditor' => '視覺化編輯器',
 	'tog-riched_disable' => '停用視覺化編輯器(rich editor)',

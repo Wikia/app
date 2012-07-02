@@ -1,0 +1,30 @@
+DSMW tests :
+
+    * install 3 mediawiki wiki1, wiki2, wiki3 with all extensions require by 
+      DSMW extension (see the INSTALL file about the DSMW installation).
+    * The admin user must be "wikiSysop" and the password "admin", for each mediawiki
+    * Database name must be wikidbTest1 for wiki1, wikidbTest2 for wiki2 and wikidbTest3 for wiki3
+    * Before executing the tests, you have to create a dump of the database :
+        mysqldump -u "myUser" -p"MyPassword" wikidbTest3 > dump.sql
+    * dump.sql must be in [wikiPath]/extensions/DSMW/tests
+
+    * you have to replace the  following lines in the initWikiTest.sh file:
+        mysql -u root -padmin < createDBTest.sql
+
+        mysql -u root -padmin wikidbTest1 < dump.sql
+        mysql -u root -padmin wikidbTest2 < dump.sql
+        mysql -u root -padmin wikidbTest3 < dump.sql
+
+        by :
+
+        mysql -u "myUser" -p"MyPassword" < createDBTest.sql
+
+        mysql -u "myUser" -p"MyPassword" wikidbTest1 < dump.sql
+        mysql -u "myUser" -p"MyPassword" wikidbTest2 < dump.sql
+        mysql -u "myUser" -p"MyPassword" wikidbTest3 < dump.sql
+
+        "myUser" must have all privileges on the database server
+
+    * Be sure that you have the executable permission on initWikiTest.sh
+
+    * Put your wiki location in setting.php

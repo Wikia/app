@@ -13,7 +13,7 @@ public class SpecialPreferencesTest extends BaseTest {
 		waitForElement("//select[@name='wpskin']");
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureRegisteredUserCanChangeSkin() throws Exception {
 		loginAsRegular();
 

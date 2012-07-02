@@ -1,8 +1,5 @@
 <?php
 
-# Add messages
-wfLoadExtensionMessages( 'ExpandTemplates' );
-
 class ExpandTemplates extends SpecialPage {
 	var $generateXML, $removeComments, $removeNowiki, $isNewParser;
 
@@ -33,6 +30,7 @@ class ExpandTemplates extends SpecialPage {
 			$this->removeNowiki = $wgRequest->getBool( 'removenowiki', false );
 			$options = new ParserOptions;
 			$options->setRemoveComments( $this->removeComments );
+			$options->setTidy( true );
 			$options->setMaxIncludeSize( self::MAX_INCLUDE_SIZE );
 			if ( $this->generateXML ) {
 				$wgParser->startExternalParse( $title, $options, OT_PREPROCESS );
@@ -54,12 +52,17 @@ class ExpandTemplates extends SpecialPage {
 		$wgOut->addHTML( $this->makeForm( $titleStr, $input ) );
 
 		if( $output !== false ) {
+			global $wgUseTidy, $wgAlwaysUseTidy;
+
 			if ( $this->generateXML ) {
 				$wgOut->addHTML( $this->makeOutput( $xml, 'expand_templates_xml_output' ) );
 			}
 			$tmp = $this->makeOutput( $output );
 			if ( $this->removeNowiki ) {
 				$tmp = preg_replace( array( '_&lt;nowiki&gt;_', '_&lt;/nowiki&gt;_', '_&lt;nowiki */&gt;_' ), '', $tmp );
+			}
+			if( ( $wgUseTidy && $options->getTidy() ) || $wgAlwaysUseTidy ) {
+				$tmp = MWTidy::tidy( $tmp );
 			}
 			$wgOut->addHTML( $tmp );
 			$this->showHtmlPreview( $title, $output, $wgOut );

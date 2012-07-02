@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Created on Jul 26, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -22,7 +22,7 @@ function wfSpecialMediaSearch() {
 // extends search page
 // @@todo add link to "media search"
 class MV_SpecialSearch extends SpecialPage {
-	function MV_SpecialSearch() {
+	function __construct() {
 		global $wgOut, $wgRequest, $wgUser, $wgTitle;
 		if($wgTitle->getText()!='SpecialPages'){
 			//mvfAddHTMLHeader( 'search' );
@@ -37,11 +37,11 @@ class MV_SpecialSearch extends SpecialPage {
 						)
 					)
 				);
-			SpecialPage :: SpecialPage( 'Search' );
+			parent::__construct( 'Search' );
 		}
 	}
 }
-/*
+/**
  * simple/quick implementation ...
  * @@todo future version should be better integrated with semantic wiki and or
  * an external scalable search engine ie sphinx or lucene
@@ -101,7 +101,7 @@ class MV_SpecialMediaSearch {
 			// add the search placeholder
 			// $wgOut->addWikiText( wfMsg( 'searchresulttext' ) );
 			$sk = $wgUser->getSkin();
-			$title = Title :: MakeTitle( NS_SPECIAL, 'Search' );
+			$title = Title::MakeTitle( NS_SPECIAL, 'Search' );
 
 			// check if the skin already includes the dynamicSearchControl
 			global $wgUser;
@@ -127,7 +127,7 @@ class MV_SpecialMediaSearch {
 		}
 	}
 	function dynamicSearchControl() {
-		$title = SpecialPage :: getTitleFor( 'MediaSearch' );
+		$title = SpecialPage::getTitleFor( 'MediaSearch' );
 		$action = $title->escapeLocalURL();
 
 		$o = "<div id=\"msms_form_search_row\" class=\"form_search_row\">
@@ -226,7 +226,7 @@ class MV_SpecialMediaSearch {
 							if ( $this->unified_term_search != '' )
 								$this->unified_term_search .= ' ';
 							$this->unified_term_search .= $f['v'];
-						} else if ( $f['t'] == 'spoken_by' ) {
+						} elseif ( $f['t'] == 'spoken_by' ) {
 							$this->unified_term_search = $f['v'];
 						}
 
@@ -352,13 +352,13 @@ class MV_SpecialMediaSearch {
 		$prevnext = '';
 		// pagging
 		if ( $this->numResultsFound > $this->limit ) {
-			$prevnext = mvViewPrevNext( $this->offset, $this->limit, SpecialPage :: getTitleFor( 'MediaSearch' ), $this->get_httpd_filters_query(), ( $this->num < $this->limit ) );
+			$prevnext = mvViewPrevNext( $this->offset, $this->limit, SpecialPage::getTitleFor( 'MediaSearch' ), $this->get_httpd_filters_query(), ( $this->num < $this->limit ) );
 			$o .= '<li class="prevnext">' . $prevnext . '</li>';
 		}
 		$br = '<br />';
 		$enddash = '';
 
-		$sTitle = Title :: MakeTitle( NS_SPECIAL, 'MvExportSearch' );
+		$sTitle = Title::MakeTitle( NS_SPECIAL, 'MvExportSearch' );
 
 		// force host for script (should be a better way to do this)
 		if ( !isset( $_SERVER['HTTP_HOST'] ) )
@@ -383,7 +383,7 @@ class MV_SpecialMediaSearch {
 				if ( $wgRequest->getVal( 'limit' ) != '' || $wgRequest->getVal( 'order' ) != '' )
 					$q_req .= '&' . http_build_query( array( 'limit' => $this->limit, 'offset' => $this->offset ) );
 				$q_req .= '&order=' . $type;
-				$o .= $enddash . '<li class="relevant">' . $sk->makeKnownLinkObj( SpecialPage :: getTitleFor( 'MediaSearch' ),
+				$o .= $enddash . '<li class="relevant">' . $sk->makeKnownLinkObj( SpecialPage::getTitleFor( 'MediaSearch' ),
 								wfMsg( 'mv_most_' . $type ), $q_req ) . '</li>';
 			}
 			$br = '';
@@ -413,10 +413,10 @@ class MV_SpecialMediaSearch {
 
 				if( $pmvd->wiki_title ){
 					$pMvTitle =  new MV_Title( $pmvd->wiki_title );
-					$pAnnoStreamLink = Title :: MakeTitle( MV_NS_STREAM, $pMvTitle->getNearStreamName( 0 ) );
+					$pAnnoStreamLink = Title::MakeTitle( MV_NS_STREAM, $pMvTitle->getNearStreamName( 0 ) );
 					$clip_desc_txt = 'Segment';
 					if($pmvd->Speech_by){
-						$personTitle = Title :: newFromText( $pmvd->Speech_by );
+						$personTitle = Title::newFromText( $pmvd->Speech_by );
 						$clip_desc_txt = 'Speech By ' . $personTitle->getText();
 					}
 
@@ -427,7 +427,7 @@ class MV_SpecialMediaSearch {
 						$pmeta_out.='<br />Covering: ';
 						$coma='';
 						foreach($pmvd->category as $cat_titlekey ){
-							$cTitle = $cTitle = Title :: MakeTitle( NS_CATEGORY, $cat_titlekey );
+							$cTitle = $cTitle = Title::MakeTitle( NS_CATEGORY, $cat_titlekey );
 							$pmeta_out .= $coma . $sk->makeKnownLinkObj( $cTitle, $cTitle->getText() );
 							$coma=', ';
 							assoc_array_increment( $sideBarLinkBucket, 'category', $cat_titlekey );
@@ -435,7 +435,7 @@ class MV_SpecialMediaSearch {
 					}
 					if($pmvd->Bill){
 						$pmeta_out.='<br />Bill: ';
-						$bTitle = Title :: newFromText( $pmvd->Bill );
+						$bTitle = Title::newFromText( $pmvd->Bill );
 						$pmeta_out .= $sk->makeKnownLinkObj( $bTitle, $bTitle->getText() );
 						assoc_array_increment( $sideBarLinkBucket, 'bill', $pmvd->Bill );
 					}
@@ -443,7 +443,7 @@ class MV_SpecialMediaSearch {
 			}
 			$mvd_cnt_links = '';
 			if ( isset ( $mvd->spoken_by ) ) {
-				$ptitle = Title :: MakeTitle( NS_MAIN, $mvd->spoken_by );
+				$ptitle = Title::MakeTitle( NS_MAIN, $mvd->spoken_by );
 				$mvd_cnt_links .= wfMsg( 'mv_search_spoken_by' ) . ': ' . $sk->makeKnownLinkObj( $ptitle );
 				$mvd_cnt_links .= '<br />';
 				assoc_array_increment( $sideBarLinkBucket, 'person', $mvd->spoken_by );
@@ -452,7 +452,7 @@ class MV_SpecialMediaSearch {
 			$coma = '';
 			if ( isset ( $mvd->categories ) ) {
 				foreach ( $mvd->categories as $cat_id => $na ) {
-					$cTitle = Title :: MakeTitle( NS_CATEGORY, $cat_id );
+					$cTitle = Title::MakeTitle( NS_CATEGORY, $cat_id );
 					if ( $mvd_cat_links == '' )
 						$mvd_cat_links .= wfMsg( 'mv_search_categories' ) .
 						': ';
@@ -464,7 +464,7 @@ class MV_SpecialMediaSearch {
 			$coma = '';
 			if ( isset ( $mvd->bills ) ) {
 				foreach ( $mvd->bills as $bill_id => $na ) {
-					$bTitle = Title :: newFromText( $bill_id );
+					$bTitle = Title:: newFromText( $bill_id );
 					if ( $mvd_bill_links == '' )
 						$mvd_bill_links .= wfMsg( 'mv_search_bills' ) .
 						': ';
@@ -477,9 +477,9 @@ class MV_SpecialMediaSearch {
 			//if the clip length is < $mvDefaultClipLength get range:
 			global $mvDefaultClipLength;
 			if( $mvTitle->getSegmentDuration() < $mvDefaultClipLength){
-				$mvStreamTitle = Title :: MakeTitle( MV_NS_STREAM, $mvTitle->getNearStreamName( $mvDefaultClipRange ) );
+				$mvStreamTitle = Title::MakeTitle( MV_NS_STREAM, $mvTitle->getNearStreamName( $mvDefaultClipRange ) );
 			}else{
-				$mvStreamTitle = Title :: MakeTitle( MV_NS_STREAM, $mvTitle->getNearStreamName( 0 ) );
+				$mvStreamTitle = Title::MakeTitle( MV_NS_STREAM, $mvTitle->getNearStreamName( 0 ) );
 			}
 			// $mvTitle->getStreamName() .'/'.$mvTitle->getStartTime() .'/'. $mvTitle->getEndTime() );
 
@@ -527,7 +527,7 @@ class MV_SpecialMediaSearch {
 		$first_block = ' first_block';
 		$matches = 0;
 		$person_out_ary = array();
-		$person_out = MV_SpecialMediaSearch :: auto_complete_person( $this->unified_term_search, 3, 'person_html', $matches, $person_out_ary );
+		$person_out = MV_SpecialMediaSearch::auto_complete_person( $this->unified_term_search, 3, 'person_html', $matches, $person_out_ary );
 		if ( $person_out != '' || count( $sideBarLinkBucket['person'] ) != 0 ) {
 			// for now don't include({$matches})
 			$o .= "<div class=\"block{$first_block}\">
@@ -543,7 +543,7 @@ class MV_SpecialMediaSearch {
 					if ( in_array( $person_name, $person_out_ary ) )continue;
 					if ( $i == $perSectionCount )
 						break;
-					$o .= MV_SpecialMediaSearch :: format_ac_line( $person_name, '', '', MV_SpecialMediaSearch :: getPersonImageURL( $person_name ), $format = 'person_html' );
+					$o .= MV_SpecialMediaSearch::format_ac_line( $person_name, '', '', MV_SpecialMediaSearch::getPersonImageURL( $person_name ), $format = 'person_html' );
 					$i++;
 				}
 			}
@@ -551,7 +551,7 @@ class MV_SpecialMediaSearch {
 			$first_block = '';
 		}
 		// get categories
-		$category_out = MV_SpecialMediaSearch :: auto_complete_search_categories( $this->unified_term_search, 3, 'block_html', $matches );
+		$category_out = MV_SpecialMediaSearch::auto_complete_search_categories( $this->unified_term_search, 3, 'block_html', $matches );
 		if ( $category_out != '' || count( $sideBarLinkBucket['category'] ) != 0 ) {
 			$o .= '<div class="block' . htmlspecialchars( $first_block ) . '\">
 								<h6>' . wfMsg( 'mv_category_results' ) . '</h6>
@@ -565,7 +565,7 @@ class MV_SpecialMediaSearch {
 				foreach ( $cAry as $cat_name => $count ) {
 					if ( $i == $perSectionCount )
 						break;
-					$o .= MV_SpecialMediaSearch :: format_ac_line( $cat_name, '', $catNStxt . ':', 'no_image', $format = 'block_html' );
+					$o .= MV_SpecialMediaSearch::format_ac_line( $cat_name, '', $catNStxt . ':', 'no_image', $format = 'block_html' );
 					$i++;
 				}
 			}
@@ -573,7 +573,7 @@ class MV_SpecialMediaSearch {
 			$first_block = '';
 		}
 		// get bills:
-		$bill_out = MV_SpecialMediaSearch :: auto_complete_category( 'Bill', $this->unified_term_search, 3, 'block_html', $matches );
+		$bill_out = MV_SpecialMediaSearch::auto_complete_category( 'Bill', $this->unified_term_search, 3, 'block_html', $matches );
 		if ( $bill_out != '' || count( $sideBarLinkBucket['bill'] ) != 0 ) {
 			global $wgContLang;
 			$o .= '<div class=\"block ' . htmlspecialchars( $first_block ) . '">
@@ -587,7 +587,7 @@ class MV_SpecialMediaSearch {
 				foreach ( $bAry as $bill_name => $count ) {
 					if ( $i == $perSectionCount )
 						break;
-					$o .= MV_SpecialMediaSearch :: format_ac_line( $bill_name, '', '', 'no_image', $format = 'block_html' );
+					$o .= MV_SpecialMediaSearch::format_ac_line( $bill_name, '', '', 'no_image', $format = 'block_html' );
 					$i++;
 				}
 			}
@@ -595,7 +595,7 @@ class MV_SpecialMediaSearch {
 			$first_block = '';
 		}
 		// intrest out is just simple title matching (for now)
-		$intrest_out = MV_SpecialMediaSearch :: auto_complete_category( 'Interest_Group', $this->unified_term_search, 3, 'block_html', $matches );
+		$intrest_out = MV_SpecialMediaSearch::auto_complete_category( 'Interest_Group', $this->unified_term_search, 3, 'block_html', $matches );
 		if ( $intrest_out != '' ) {
 			$o .= "<div class=\"block{$first_block}\">
 								<h6>" . wfMsg( 'mv_intrest_group_results' ) . "</h6>
@@ -675,12 +675,12 @@ class MV_SpecialMediaSearch {
 				continue;
 			}
 			-- $contextlines;
-			$pre = $wgContLang->truncate( $m[1], - $contextchars );
+			$pre = $wgContLang->truncate( $m[1], - $contextchars, '...', false );
 
 			if ( count( $m ) < 3 ) {
 				$post = '';
 			} else {
-				$post = $wgContLang->truncate( $m[3], $contextchars );
+				$post = $wgContLang->truncate( $m[3], $contextchars, '...', false );
 			}
 
 			$found = $m[2];
@@ -694,7 +694,7 @@ class MV_SpecialMediaSearch {
 		}
 		// if we found no matches just return the first line:
 		if ( $extract == '' )
-			return ' ' . $wgContLang->truncate( $text, ( $contextchars * 2 ) ) . '';
+			return ' ' . $wgContLang->truncate( $text, ( $contextchars * 2 ), '...', false ) . '';
 		// wfProfileOut( "$fname-extract" );
 		// wfProfileOut( $fname );
 		// return "<li>{$link} ({$size}){$extract}</li>\n";
@@ -705,7 +705,7 @@ class MV_SpecialMediaSearch {
 		global $wgOut, $mvgIP;
 		global $mvDefaultSearchVideoPlaybackRes;
 
-		$mvd = MV_Index :: getMVDbyId( $mvd_id );
+		$mvd = MV_Index::getMVDbyId( $mvd_id );
 		if ( count( $mvd ) != 0 ) {
 			$mvTitle = new MV_Title( $mvd->wiki_title );
 			// validate title and load stream ref:
@@ -758,7 +758,7 @@ class MV_SpecialMediaSearch {
 
 			// output the master selecter per line:
 			$s .= '<br /><span id="mvs_' . htmlspecialchars( $i ) . '">';
-			$s .= '&nbsp;&nbsp;';
+			$s .= '&#160;&#160;';
 			// selctor (don't display if i==0')
 			$s .= $this->selector( $i, 'a', $filter['a'], ( $i == 0 ) ? false : true );
 			$s .= $this->selector( $i, 't', $filter['t'] ); // type selector
@@ -808,7 +808,7 @@ class MV_SpecialMediaSearch {
 			}
 			$s .= '</span>';
 			if ( $i > 0 )
-				$s .= '&nbsp; <a href="javascript:mv_remove_filter(' .
+				$s .= '&#160; <a href="javascript:mv_remove_filter(' .
 				$i . ');">' .
 				' <img title="' . wfMsg( 'mv_remove_filter' ) . '" ' .
 					'src="' . $mvgScriptPath . '/skins/images/cog_delete.png"></a>';
@@ -846,10 +846,10 @@ class MV_SpecialMediaSearch {
 		return $o;
 	}
 	function getSearchLink() {
-		return SpecialPage :: getTitleFor( 'MediaSearch' ) .
+		return SpecialPage::getTitleFor( 'MediaSearch' ) .
 		$this->get_httpd_filters_query();
 	}
-	/*
+	/**
 	 * returns human readable description of filters
 	 */
 	function getFilterDesc( $query_key = false ) {
@@ -883,9 +883,9 @@ class MV_SpecialMediaSearch {
 			$disp = 'none';
 		}
 		// make the missing person image ref:
-		$imgTitle = Title :: makeTitle( NS_IMAGE, $person_name . '.jpg' );
+		$imgTitle = Title::makeTitle( NS_IMAGE, $person_name . '.jpg' );
 		if ( !$imgTitle->exists() ) {
-			$imgTitle = Title :: makeTitle( NS_IMAGE, MV_MISSING_PERSON_IMG );
+			$imgTitle = Title::makeTitle( NS_IMAGE, MV_MISSING_PERSON_IMG );
 		}
 
 		$img = wfFindFile( $imgTitle );
@@ -945,25 +945,25 @@ class MV_SpecialMediaSearch {
 		// make sure people know they can "search" too (formated by
 		$out = 'do_search|' . wfMsg( 'mv_search_transcripts_for', '<B>$1</B>' ) . '|no_image' . "\n";
 		// get keywords
-		$category_out = MV_SpecialMediaSearch :: auto_complete_search_categories( $val, 3 );
+		$category_out = MV_SpecialMediaSearch::auto_complete_search_categories( $val, 3 );
 		if ( $category_out != '' ) {
 			$out .= $catNStxt . ':Categories|<h6>' . wfMsg( 'mv_category_matches' ) . '</h6>|no_image' . "\n";
 			$out .= $category_out;
 		}
 		// get people
-		$person_out = MV_SpecialMediaSearch :: auto_complete_person( $val, 3 );
+		$person_out = MV_SpecialMediaSearch::auto_complete_person( $val, 3 );
 		if ( $person_out != '' ) {
 			$out .= $catNStxt . ':Person|<h6>' . wfMsg( 'mv_people_matches' ) . '</h6>|no_image' . "\n";
 			$out .= $person_out;
 		}
 		// get bills
-		$bill_out = MV_SpecialMediaSearch :: auto_complete_category( 'Bill', $val, 3 );
+		$bill_out = MV_SpecialMediaSearch::auto_complete_category( 'Bill', $val, 3 );
 		if ( $bill_out != '' ) {
 			$out .= $catNStxt . ':Bill|<h6>' . wfMsg( 'mv_bill_matches' ) . '</h6>|no_image' . "\n";
 			$out .= $bill_out;
 		}
 		// get interests
-		$intrest_out = MV_SpecialMediaSearch :: auto_complete_category( 'Interest_Group', $val, 3 );
+		$intrest_out = MV_SpecialMediaSearch::auto_complete_category( 'Interest_Group', $val, 3 );
 		if ( $intrest_out != '' ) {
 			$out .= $catNStxt . ':Interest Group|<h6>' . wfMsg( 'mv_interest_group_matches' ) . '</h6>|no_image' . "\n";
 			$out .= $intrest_out;
@@ -985,7 +985,7 @@ class MV_SpecialMediaSearch {
 		$out = '';
 		$catNStxt = $wgContLang->getNsText( NS_CATEGORY );
 		while ( $row = $dbr->fetchObject( $result ) ) {
-			$out .= MV_SpecialMediaSearch :: format_ac_line( $row->page_title, $val, $catNStxt . ':', 'no_image', $format );
+			$out .= MV_SpecialMediaSearch::format_ac_line( $row->page_title, $val, $catNStxt . ':', 'no_image', $format );
 		}
 		return $out;
 	}
@@ -1008,7 +1008,7 @@ class MV_SpecialMediaSearch {
 			return '';
 		$out = '';
 		while ( $row = $dbr->fetchObject( $result ) ) {
-			$out .= MV_SpecialMediaSearch :: format_ac_line( $row->cl_sortkey, $val, '', 'no_image', $format );
+			$out .= MV_SpecialMediaSearch::format_ac_line( $row->cl_sortkey, $val, '', 'no_image', $format );
 		}
 		return $out;
 	}
@@ -1040,12 +1040,12 @@ class MV_SpecialMediaSearch {
 
 		foreach($person_ary as $person_name=>$na){
 			// make sure the person page exists:
-			$personTitle = Title :: makeTitle( NS_MAIN, $person_name );
+			$personTitle = Title::makeTitle( NS_MAIN, $person_name );
 			if ( $personTitle->exists() ) {
 				// dont try and get person full name from semantic table if available
 				$person_full_name = $person_name;
 				// format and output the line:
-				$out .= MV_SpecialMediaSearch :: format_ac_line( $person_full_name, $val, '', MV_SpecialMediaSearch :: getPersonImageURL( $person_name ), $format );
+				$out .= MV_SpecialMediaSearch::format_ac_line( $person_full_name, $val, '', MV_SpecialMediaSearch::getPersonImageURL( $person_name ), $format );
 			}
 		}
 		// $out.='</ul>';
@@ -1080,9 +1080,9 @@ class MV_SpecialMediaSearch {
 	}
 	function getPersonImageURL( $person_name ) {
 		// make the missing person image ref:
-		$imgTitle = Title :: makeTitle( NS_IMAGE, $person_name . '.jpg' );
+		$imgTitle = Title::makeTitle( NS_IMAGE, $person_name . '.jpg' );
 		if ( !$imgTitle->exists() ) {
-			$imgTitle = Title :: makeTitle( NS_IMAGE, MV_MISSING_PERSON_IMG );
+			$imgTitle = Title::makeTitle( NS_IMAGE, MV_MISSING_PERSON_IMG );
 		}
 		$img = wfFindFile( $imgTitle );
 		if ( !$img ) {
@@ -1113,7 +1113,7 @@ class MV_SpecialMediaSearch {
 			if ( $format == 'block_html' || $format == 'person_html' ) {
 				global $wgUser;
 				$sk = $wgUser->getSkin();
-				$title = Title :: newFromText( $prefix . $page_title );
+				$title = Title::newFromText( $prefix . $page_title );
 
 				if ( $format == 'block_html' )
 					return "<p class=\"normal_match\">" . $sk->makeKnownLinkObj( $title, '<span>' .

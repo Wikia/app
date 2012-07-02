@@ -45,8 +45,6 @@ class SpecialForm extends SpecialPage {
 	public function execute( $par ) {
 		global $wgRequest, $wgOut;
 
-		wfLoadExtensionMessages( 'Form' );
-
 		# Must have a name, like Special:Form/Nameofform
 		# XXX: instead of an error, show a list of available forms
 		if( !$par ) {

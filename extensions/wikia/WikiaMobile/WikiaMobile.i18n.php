@@ -24,10 +24,11 @@ $messages['en'] = array(
 	'wikiamobile-hide-section' => 'hide',
 
 	//footer
-	'wikiamobile-footer-link-license' => 'Licensing',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entertainment]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Games]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Licensing]]',
+	'mobile-full-site' => 'Full site',
 
 	//categories
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
@@ -349,7 +350,7 @@ $1',
 	'wikiamobile-ad-close' => 'fermer',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -368,7 +369,7 @@ $messages['gl'] = array(
 	'wikiamobile-hide-section' => 'agochar',
 	'wikiamobile-footer-link-license' => 'Licenza',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Estilo de vida]]',
-	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Lecer]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entretemento]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Xogos]]',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artigo|artigos}}',
 	'wikiamobile-category-items-more' => 'Cargar máis',

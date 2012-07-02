@@ -271,7 +271,7 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Aucune page de blog trouvée.',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -594,19 +594,19 @@ $messages['pfl'] = array(
  * @author Sovq
  */
 $messages['pl'] = array(
-	'globalwatchlist-desc' => 'Wysyła e-maile z tygodniowym zestawieniem listy obserwowanych stron ze wszystkich wiki',
+	'globalwatchlist-desc' => 'Wysyła e-maile z tygodniowym streszczeniem listy obserwowanych stron ze wszystkich wiki',
 	'tog-watchlistdigest' => 'Chcę otrzymywać tygodniowe zestawienie obserwowanych stron',
 	'tog-watchlistdigestclear' => 'Oznacz wszystkie strony z mojego tygodniowego zestawienia obserwowanych stron jako przeczytane.',
-	'globalwatchlist-see-more' => 'Sprawdź, czy zmieniło się coś jeszcze na Twojej lokalnej liście obserwowanych stron',
+	'globalwatchlist-see-more' => 'Sprawdź, czy zmieniło się coś jeszcze na twojej lokalnej liście obserwowanych stron',
 	'globalwatchlist-digest-email-subject' => 'Tygodniowe zestawienie',
 	'globalwatchlist-digest-email-body' => 'Witaj $1,
 
-Oto lista obserwowanych stron na Wikii, które zostały zmienione od Twojej ostatniej wizyty.
+To jest lista obserwowanych stron z Wikia, które zostały zmienione od twojej ostatniej wizyty.
 
 $2
 
 
-To jest lista wpisów na obserwowanych blogach, które zostały zmienione lub skomentowane od Twojej ostatniej wizyty.
+To jest lista wpisów na obserwowanych blogach, które zostały zmienione lub skomentowane od twojej ostatniej wizyty.
 
 $3
 
@@ -614,11 +614,11 @@ Odwiedzaj i edytuj często...
 
 Wikia
 
- * Aby zmienić preferencje powiadomień listy obserwowanych stron, przejdź na http://www.wikia.com/wiki/Special:Preferences
- * Aby oznaczyć wszystkie strony z tego tygodniowego streszczenia jako przeczytane, odwiedź kartę "Obserwowane" w swoich preferencjach',
+ * Aby zmienić preferencje dla powiadomień listy obserwowanych stron, przejdź na http://www.wikia.com/wiki/Special:Preferences
+ * Aby oznaczyć wszystkie strony z tego tygodniowego streszczenia jako odwiedzone, sprawdź opcję na karcie "Obserwowane" na twojej stronie preferencji',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|komentarz|komentarze|komentarzy}})',
-	'globalwatchlist-no-page-found' => 'Nie znaleziono strony.',
-	'globalwatchlist-no-blog-page-found' => 'Nie znaleziono wpisu na blogu.',
+	'globalwatchlist-no-page-found' => 'Nie znaleziono stron.',
+	'globalwatchlist-no-blog-page-found' => 'Nie znaleziono wpisów na blogach.',
 );
 
 /** Piedmontese (Piemontèis)

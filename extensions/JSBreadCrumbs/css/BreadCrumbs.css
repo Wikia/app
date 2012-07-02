@@ -1,0 +1,7 @@
+/* BreadCrumbs plugin */
+
+.breadcrumbs {
+	position: relative;
+	font-size:0.8em;
+	top: -15px;
+}

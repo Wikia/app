@@ -1,5 +1,5 @@
 <?
-/*
+/**
  * this encoder is run from the command line and takes "encoding" jobs from the command line
  */
 
@@ -46,7 +46,7 @@ function doJobLoop(){
 			print "no jobs found waiting $wahJobDelay \n";
 		sleep($wahJobDelay);
 		return doJobLoop();
-	}else if(!$job  && $wahRunOnce == true){
+	}elseif(!$job  && $wahRunOnce == true){
 		if($wahStatusOutput)
 			print "no job found \n";
 		return ;
@@ -60,7 +60,7 @@ function doJobLoop(){
 	$file = wfLocalFile( $fTitle );
 	$thumbPath = $file->getThumbPath( $jobSet->set_encodekey );
 	//make sure the directory is ready:
-	wfMkdirParents( $thumbPath );
+	wfMkdirParents( $thumbPath, null, __METHOD__ );
 
 	$destTarget = $thumbPath . '.ogg';
 	//issue the encoding command
@@ -79,5 +79,3 @@ function doJobLoop(){
 			print "job not complete? (might be mixing chunkDuration types?) ";
 	}
 }
-
-?>

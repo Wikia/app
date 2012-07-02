@@ -14,7 +14,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class NewWikisSpecialPage extends SpecialPage {
 
 	function __construct() {
-		wfLoadExtensionMessages( "Newwikis" );
 		parent::__construct( 'Newwikis' );
 	}
 
@@ -150,7 +149,8 @@ class NewWikisPage extends AlphabeticPager {
 		}
 
 		if ( $this->firstChar != "" ) {
-			$query['conds'][] = sprintf( "upper(city_title) like upper('%s%%')", $this->mDb->escapeLike( $this->firstChar ) );
+			$like = $this->mDB->buildLike( sprintf( "%s/", strtoupper( $this->firstChar ) ), $this->mDB->anyString() );
+			$query['conds'][] = "upper(city_title) $like";
 		}
 		if( $this->lang != "" ) {
 			$query['conds'][] = 'city_lang = ' . $this->mDb->addQuotes( $this->lang );
@@ -251,7 +251,7 @@ class NewWikisPage extends AlphabeticPager {
 		$out  = Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) ) .
 			'<fieldset>' .
 			Xml::element( 'legend', array(), wfMsg( 'newwikis' ) );
-		$out .= Xml::hidden( 'title', $self->getPrefixedDbKey() );
+		$out .= Html::hidden( 'title', $self->getPrefixedDbKey() );
 		# First character in title name
 		$out .= Xml::label( wfMsg( 'newwikisstart' ), 'offset' ) . ' ' .
 			Xml::input( 'start', 20, $this->firstChar, array( 'id' => 'offset' ) ) . ' ';
@@ -286,7 +286,7 @@ class NewWikisPage extends AlphabeticPager {
 
 		# Submit button and form bottom
 		if( $this->mLimit )
-			$out .= Xml::hidden( 'limit', $this->mLimit );
+			$out .= Html::hidden( 'limit', $this->mLimit );
 		$out .= Xml::submitButton( wfMsg( 'allpagessubmit' ) );
 		$out .= '</fieldset>' .
 			Xml::closeElement( 'form' );

@@ -11,7 +11,6 @@
  * @author Jeroen De Dauw
  */
 class ValidatorListErrors extends ParserHook {
-	
 	/**
 	 * Array to map the possible values for the 'minseverity' parameter
 	 * to their equivalent in the ValidationError::SEVERITY_ enum.
@@ -27,17 +26,7 @@ class ValidatorListErrors extends ParserHook {
 		'high' => ValidationError::SEVERITY_HIGH,
 		'fatal' => ValidationError::SEVERITY_FATAL
 	);
-	
-	/**
-	 * No LSB in pre-5.3 PHP *sigh*.
-	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
-	 */
-	public static function staticMagic( array &$magicWords, $langCode ) {
-		$className = __CLASS__;
-		$instance = new $className();
-		return $instance->magic( $magicWords, $langCode );
-	}
-	
+
 	/**
 	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
@@ -216,5 +205,4 @@ class ValidatorListErrors extends ParserHook {
 	public function getDescription() {
 		return wfMsg( 'validator-listerrors-description' );
 	}	
-	
 }

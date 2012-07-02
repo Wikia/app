@@ -6,16 +6,16 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'Leaderboard' => array( 'Leaderboard' ),
 	'AchievementsCustomize' => array( 'AchievementsCustomize' ),
 );
 
 /** German(Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Leaderboard' => array( 'Rangliste' ),
 	'AchievementsCustomize' => array( 'HerausforderungenAnpassen' ),
 );

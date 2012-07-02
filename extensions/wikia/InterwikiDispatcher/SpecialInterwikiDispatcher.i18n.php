@@ -34,7 +34,7 @@ $messages['af'] = array(
 	'interwikidispatcher-desc' => 'Los interwikiskakels op om Apache-aansture te verminder',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -86,7 +86,7 @@ $messages['fr'] = array(
 	'interwikidispatcher-desc' => 'Résout les liens interwiki pour réduire les redirections Apache',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -94,7 +94,7 @@ $messages['gl'] = array(
 	'interwikidispatcher-desc' => 'Soluciona as ligazóns interwiki para reducir as redireccións Apache',
 );
 
-/** Upper Sorbian (hornjoserbsce)
+/** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(

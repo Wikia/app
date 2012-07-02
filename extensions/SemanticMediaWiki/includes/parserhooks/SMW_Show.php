@@ -33,12 +33,10 @@ class SMWShow {
 
 			$result = SMWQueryProcessor::getResultFromFunctionParams( $params, SMW_OUTPUT_WIKI, SMWQueryProcessor::INLINE_QUERY, true );
 		} else {
-			smwfLoadExtensionMessages( 'SemanticMediaWiki' );
 			$result = smwfEncodeMessages( array( wfMsgForContent( 'smw_iq_disabled' ) ) );
 		}
 
-		// Starting from MW 1.16, there is a more suited method available: Title::isSpecialPage
-		if ( $wgTitle->getNamespace() == NS_SPECIAL ) {
+		if ( !is_null( $wgTitle ) && $wgTitle->isSpecialPage() ) {
 			global $wgOut;
 			SMWOutputs::commitToOutputPage( $wgOut );
 		}

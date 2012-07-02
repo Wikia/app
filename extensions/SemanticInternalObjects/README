@@ -1,6 +1,6 @@
 Semantic Internal Objects Extension
 
-        Version 0.3
+        Version 0.6.8
         Yaron Koren
 
 This is free software licensed under the GNU General Public License. Please
@@ -67,8 +67,8 @@ http://www.mediawiki.org/wiki/Extension:Semantic_Internal_Objects
 
 == Requirements ==
 
-This version of the Semantic Internal Objects extension requires MediaWiki 1.8
-or higher and Semantic MediaWiki 1.4 or higher.
+This version of the Semantic Internal Objects extension requires MediaWiki 1.11
+or higher and Semantic MediaWiki 1.5.2 or higher.
 
 == Installation ==
 
@@ -80,6 +80,10 @@ line to your 'LocalSettings.php' file:
 
 == Contact ==
 
-Comments, questions, suggestions and bug reports are welcome, and can
-be placed on the Talk page for the extension, or sent to Yaron at
-yaron57@gmail.com.
+Most comments, questions, suggestions and bug reports should be sent to
+the Semantic MediaWiki mailing list:
+
+ https://lists.sourceforge.net/lists/listinfo/semediawiki-user
+
+If possible, please add "[SIO]" at the beginning of the subject line, to
+clarify the subject matter.

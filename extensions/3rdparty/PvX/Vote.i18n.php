@@ -8,8 +8,7 @@
  * Please see the LICENCE file for terms of use and redistribution
  */
 
-function efVoteMessages() {
-	$messages = array(
+$messages = array(
 
 /* English (Rob Church) */
 'en' => array(
@@ -134,8 +133,6 @@ sphinx|Esfinx',
 'vote-invalid-choice' => 'Musíte vybrať jednu z dostupných možností.',
 ),
 
-	);
-	return $messages;
-}
+);
 
 ?>

@@ -5,8 +5,6 @@
  * @file
  * @ingroup Extensions
  */
-// FIXME: enable after 1.16 branching. This extension has not been branched yet.
-// require_once( dirname(__FILE__) . '/WikiArticleFeeds.i18n.magic.php' );
 
 $messages = array();
 
@@ -31,12 +29,28 @@ $messages['af'] = array(
 	'wikiarticlefeeds_combined_description' => "Hierdie is 'n gekombineerde voer, met items vanuit verskeie bronne.",
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'wikiarticlefeeds-desc' => 'Prodhon prurjet e gjeneruara nga faqet MediaWiki',
+	'wikiarticlefeeds_combined_description' => 'Ky është një ushqim i kombinuar, që përmban artikuj nga disa burime të ushqehen.',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
 $messages['ar'] = array(
 	'wikiarticlefeeds-desc' => 'ينتج تلقيمات مولدة من صفحات ميدياويكي',
 	'wikiarticlefeeds_combined_description' => 'هذا تلقيم مركب، يحتوي على مدخلات من عدة مصادر للتلقيم.',
+);
+
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'wikiarticlefeeds-desc' => 'Produz fluxos RSS xeneraos poles páxines de MediaWiki',
+	'wikiarticlefeeds_combined_description' => "Esti ye un fluxu combináu, que contién elementos de fluxos d'orixe distintu.",
 );
 
 /** Bavarian (Boarisch)
@@ -46,7 +60,7 @@ $messages['bar'] = array(
 	'wikiarticlefeeds-desc' => 'Eazeigt Feeds aus MediaWiki-Seitn',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -142,6 +156,14 @@ $messages['fr'] = array(
 	'wikiarticlefeeds_combined_description' => 'Ceci est un flux combiné qui contient des éléments issus de plusieurs sources.',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'wikiarticlefeeds-desc' => 'Fât des flux dês des pâges MediaWiki.',
+	'wikiarticlefeeds_combined_description' => 'O est un flux combinâ que contint des èlèments que vegnont d’un mouél de sôrses.',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -215,7 +237,7 @@ $messages['ja'] = array(
 	'wikiarticlefeeds_combined_description' => 'これは合成されたフィードで、いくつかのフィード元からの項目を含んでいます。',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -239,6 +261,22 @@ $messages['mk'] = array(
 	'wikiarticlefeeds_combined_description' => 'Ова е комбинирано емитување, со содржини од неколку напојни извори.',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wikiarticlefeeds-desc' => 'Menghasilkan suapan yang dijana daripada laman MediaWiki',
+	'wikiarticlefeeds_combined_description' => 'Ini ialah suapan gabungan yang mengandungi perkara-perkara daripada beberapa sumber suapan.',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'wikiarticlefeeds-desc' => 'Produserer mating generert fra MediaWikisider',
+	'wikiarticlefeeds_combined_description' => 'Dette er en kombinert mating som inneholder deler fra flere kilder.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -256,20 +294,12 @@ $messages['nn'] = array(
 	'wikiarticlefeeds_combined_description' => 'Dette er ein kombinert feed, som inneheld delar frå fleire feed-kjelder.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'wikiarticlefeeds-desc' => 'Produserer mating generert fra MediaWikisider',
-	'wikiarticlefeeds_combined_description' => 'Dette er en kombinert mating som inneholder deler fra flere kilder.',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'wikiarticlefeeds-desc' => 'Genèra de fluxes dempuèi de paginas MediaWiki',
-	'wikiarticlefeeds_combined_description' => "Aquò es un flus combinat que conten d'elements eissits de mantuna font.",
+	'wikiarticlefeeds_combined_description' => "Aquò es un flux combinat que conten d'elements eissits de mantuna font.",
 );
 
 /** Polish (Polski)
@@ -336,12 +366,44 @@ $messages['sk'] = array(
 	'wikiarticlefeeds_combined_description' => 'Toto je kombinovaný kanál, ktorý obsahuje položky z niekoľkých zdrojov kanálov.',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'wikiarticlefeeds-desc' => 'Ustvari vire, ustvarjene iz strani MediaWiki',
+	'wikiarticlefeeds_combined_description' => 'To je združen vir, ki vsebuje elemente iz več virov.',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'wikiarticlefeeds-desc' => 'Израђује фидове произведене код МедијаВики страна',
+	'wikiarticlefeeds_combined_description' => 'Ово је комбиновани довод који садржи ставке из неколико извора.',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
+ * @author Rancher
+ */
+$messages['sr-el'] = array(
+	'wikiarticlefeeds-desc' => 'Izrađuje fidove proizvedene kod MedijaViki strana',
+	'wikiarticlefeeds_combined_description' => 'Ovo je kombinovani dovod koji sadrži stavke iz nekoliko izvora.',
+);
+
 /** Swedish (Svenska)
  * @author Micke
  */
 $messages['sv'] = array(
 	'wikiarticlefeeds-desc' => 'Producerar feeds som genereras av MediaWikisidor',
 	'wikiarticlefeeds_combined_description' => 'Detta är en kombinerad feed som innehåller artiklar från flera källor.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Ravichandra
+ */
+$messages['te'] = array(
+	'wikiarticlefeeds-desc' => 'మీడియావికీ పుటలనుంచి ఫీడును ఉత్పత్తి చేస్తుంది',
 );
 
 /** Tagalog (Tagalog)
@@ -366,5 +428,21 @@ $messages['tr'] = array(
 $messages['vi'] = array(
 	'wikiarticlefeeds-desc' => 'Tạo ra các bản tin do các trang MediaWiki tạo ra',
 	'wikiarticlefeeds_combined_description' => 'Đây là bản tin phối hợp, chứa các mẩu tin từ nhiều nguồn tin khác nhau.',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wilsonmess
+ */
+$messages['zh-hans'] = array(
+	'wikiarticlefeeds-desc' => '为MediaWiki页面生成源',
+	'wikiarticlefeeds_combined_description' => '这是一个包含多个源来源的复合源。',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
+$messages['zh-hant'] = array(
+	'wikiarticlefeeds-desc' => '為 MediaWiki 頁面產生消息來源',
+	'wikiarticlefeeds_combined_description' => '這是一個包含多個 feed 來源的復合源。',
 );
 

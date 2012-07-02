@@ -2,205 +2,223 @@
 /**
  * Aliases for special pages of Watchers extension.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English
- * @author Magnus Manske
- */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'Watchers' => array( 'Watchers' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Watchers' => array( 'مراقبون' ),
+);
+
+/** Aramaic (ܐܪܡܝܐ) */
+$specialPageAliases['arc'] = array(
+	'Watchers' => array( 'ܪ̈ܗܝܢܐ' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'Watchers' => array( 'مراقبون' ),
+$specialPageAliases['arz'] = array(
+	'Watchers' => array( 'مراقبين' ),
 );
 
 /** Breton (Brezhoneg) */
-$aliases['br'] = array(
+$specialPageAliases['br'] = array(
 	'Watchers' => array( 'Sellerien' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Watchers' => array( 'Beobachter' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'Watchers' => array( 'Wobglědowarje' ),
 );
 
 /** Persian (فارسی) */
-$aliases['fa'] = array(
+$specialPageAliases['fa'] = array(
 	'Watchers' => array( 'پی‌گیری‌کنندگان' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
-	'Watchers' => array( 'Sivun tarkkailijat' ),
+$specialPageAliases['fi'] = array(
+	'Watchers' => array( 'Sivun_tarkkailijat' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
+$specialPageAliases['fr'] = array(
 	'Watchers' => array( 'Suiveurs', 'Suiveur' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
+$specialPageAliases['frp'] = array(
 	'Watchers' => array( 'Siuvors' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
+$specialPageAliases['gl'] = array(
 	'Watchers' => array( 'Vixilantes' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'Watchers' => array( 'Beobachter' ),
 );
 
 /** Gujarati (ગુજરાતી) */
-$aliases['gu'] = array(
+$specialPageAliases['gu'] = array(
 	'Watchers' => array( 'દર્શકો' ),
 );
 
 /** Hebrew (עברית) */
-$aliases['he'] = array(
+$specialPageAliases['he'] = array(
 	'Watchers' => array( 'עוקבים' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'Watchers' => array( 'Wobkedźbowarjo' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'Watchers' => array( 'Veyè' ),
+);
+
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
+$specialPageAliases['hu'] = array(
 	'Watchers' => array( 'Figyelők' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
+$specialPageAliases['ia'] = array(
 	'Watchers' => array( 'Observatores' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
+$specialPageAliases['id'] = array(
 	'Watchers' => array( 'Pemantau' ),
 );
 
 /** Italian (Italiano) */
-$aliases['it'] = array(
+$specialPageAliases['it'] = array(
 	'Watchers' => array( 'Osservatori' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'Watchers' => array( 'ウォッチしている利用者' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
-$aliases['km'] = array(
+$specialPageAliases['km'] = array(
 	'Watchers' => array( 'អ្នកតាមដាន' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'Watchers' => array( 'Oppassere' ),
 );
 
-/** Cornish (Kernewek) */
-$aliases['kw'] = array(
+/** Cornish (Kernowek) */
+$specialPageAliases['kw'] = array(
 	'Watchers' => array( 'Golyoryon' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'Watchers' => array( 'Iwwerwaacher' ),
 );
 
 /** Lithuanian (Lietuvių) */
-$aliases['lt'] = array(
+$specialPageAliases['lt'] = array(
 	'Watchers' => array( 'Stebėtojai' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'Watchers' => array( 'Набљудувачи' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'Watchers' => array( 'ശ്രദ്ധിക്കുന്നവർ' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'Watchers' => array( 'प्रेक्षक' ),
 );
 
-/** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'Watchers' => array( 'Volgers' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
 	'Watchers' => array( 'Overvåkere' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'Watchers' => array( 'Volgers' ),
+);
+
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'Watchers' => array( 'Volgers' ),
+);
+
 /** Polish (Polski) */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Watchers' => array( 'Obserwujący' ),
 );
 
 /** Pashto (پښتو) */
-$aliases['ps'] = array(
+$specialPageAliases['ps'] = array(
 	'Watchers' => array( 'کتونکي' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'Watchers' => array( 'पश्यक्‌' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'Watchers' => array( 'Sledujúci' ),
 );
 
 /** Swahili (Kiswahili) */
-$aliases['sw'] = array(
+$specialPageAliases['sw'] = array(
 	'Watchers' => array( 'Waangalizi' ),
 );
 
 /** Telugu (తెలుగు) */
-$aliases['te'] = array(
+$specialPageAliases['te'] = array(
 	'Watchers' => array( 'వీక్షకులు' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'Watchers' => array( 'Mga tagapagbantay' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'Watchers' => array( 'İzleyenler' ),
 );
 
 /** Vèneto (Vèneto) */
-$aliases['vec'] = array(
+$specialPageAliases['vec'] = array(
 	'Watchers' => array( 'Osservadori' ),
 );
 
+/** Yiddish (ייִדיש) */
+$specialPageAliases['yi'] = array(
+	'Watchers' => array( 'אויפפאסער' ),
+);

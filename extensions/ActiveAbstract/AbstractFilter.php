@@ -22,14 +22,17 @@ class AbstractFilter {
 	/**
 	 * Register the filter function with the dump manager
 	 * @param BackupDumper $dumper
-	 * @static
 	 */
 	function register( &$dumper ) {
 		$dumper->registerFilter( 'abstract', 'AbstractFilter' );
 		$dumper->registerFilter( 'noredirect', 'NoredirectFilter' );
 	}
 
-	function AbstractFilter( &$sink, $params = '' ) {
+	/**
+	 * @param $sink ExportProgressFilter
+	 * @param $params string
+	 */
+	function __construct( &$sink, $params = '' ) {
 		$this->sink =& $sink;
 
 		$bits = explode( '=', $params, 2 );
@@ -55,7 +58,7 @@ class AbstractFilter {
 
 		$xml = "<doc>\n";
 		$xml .= Xml::element( 'title', null, $this->_variant( $title ) ) . "\n";
-		$xml .= Xml::element( 'url', null, $this->title->getFullUrl() ) . "\n";
+		$xml .= Xml::element( 'url', null, $this->title->getCanonicalUrl() ) . "\n";
 
 		// add abstract and links when we have revision data...
 		$this->revision = null;
@@ -99,7 +102,6 @@ class AbstractFilter {
 	 * Extract an abstract from the page
 	 * @params object $rev Database rows with revision data
 	 * @return string
-	 * @access private
 	 */
 	function _abstract( $rev ) {
 		$text = Revision::getRevisionText( $rev ); // FIXME cache this
@@ -115,7 +117,6 @@ class AbstractFilter {
 	 * Convert text to the preferred output language variant, if set.
 	 * @param string $text
 	 * @return string
-	 * @access private
 	 */
 	function _variant( $text ) {
 		if ( $this->variant ) {
@@ -130,7 +131,6 @@ class AbstractFilter {
 	 * Strip markup to show plaintext
 	 * @param string $text
 	 * @return string
-	 * @access private
 	 */
 	function _stripMarkup( $text ) {
 		global $wgContLang;
@@ -167,7 +167,6 @@ class AbstractFilter {
 	 * Extract the first two sentences, if detectable, from the text.
 	 * @param string $text
 	 * @return string
-	 * @access private
 	 */
 	function _extractStart( $text ) {
 		$endchars = array(
@@ -182,6 +181,8 @@ class AbstractFilter {
 		$sentence = ".*?$end+";
 		$firsttwo = "/^($sentence$sentence)/u";
 
+		$matches = array();
+
 		if ( preg_match( $firsttwo, $text, $matches ) ) {
 			return $matches[1];
 		} else {
@@ -195,12 +196,13 @@ class AbstractFilter {
 	 * Extract a list of TOC links
 	 * @param object $rev Database rows with revision data
 	 * @return array of URL strings, indexed by name/title
-	 * @access private
 	 *
 	 * @fixme extract TOC items properly
 	 * @fixme check for explicit __NOTOC__
 	 */
 	function _sectionLinks( $rev ) {
+		global $wgParser;
+
 		$text = Revision::getRevisionText( $rev );
 		$secs =
 		  preg_split(
@@ -213,8 +215,8 @@ class AbstractFilter {
 			$inside = preg_replace( '/^=+\s*(.*?)\s*=+/', '$1', $secs[$i] );
 			$stripped = $this->_stripMarkup( $inside ); // strip internal markup and <h[1-6]>
 			$header = UtfNormal::cleanUp( $stripped );
-			$anchor = EditPage::sectionAnchor( $header );
-			$url = $this->title->getFullUrl() . $anchor;
+			$anchor = $wgParser->guessSectionNameFromWikiText( $header );
+			$url = $this->title->getCanonicalUrl() . $anchor;
 			$headers[$header] = $url;
 		}
 		return $headers;
@@ -224,7 +226,6 @@ class AbstractFilter {
 	 * Fetch the list of category links for this page
 	 * @param object $rev Database rows with revision data
 	 * @return array of URL strings, indexed by category name
-	 * @access private
 	 */
 	function _categoryLinks( $rev ) {
 		$id = $rev->page_id;
@@ -232,14 +233,13 @@ class AbstractFilter {
 		$result = $dbr->select( 'categorylinks',
 			array( 'cl_to' ),
 			array( 'cl_from' => $id ),
-			'AbstractFilter::_categoryLinks' );
+			__METHOD__ );
 
 		$links = array();
-		while ( $row = $dbr->fetchObject( $result ) ) {
+		foreach( $result as $row ) {
 			$category = Title::makeTitle( NS_CATEGORY, $row->cl_to );
-			$links[$category->getText()] = $category->getFullUrl();
+			$links[$category->getText()] = $category->getCanonicalUrl();
 		}
-		$dbr->freeResult( $result );
 
 		return $links;
 	}
@@ -253,9 +253,8 @@ class AbstractFilter {
 	 *
 	 * @param string $url
 	 * @param string $anchor Human-readable link text; eg title or fragment
-	 * @param string $linktype "nav" or "image"
+	 * @param string $type "nav" or "image"
 	 * @return string XML fragment
-	 * @access private
 	 */
 	function _formatLink( $url, $anchor, $type ) {
 		$maxUrlLength = 1024; // as defined in Yahoo's .xsd
@@ -267,6 +266,12 @@ class AbstractFilter {
 }
 
 class NoredirectFilter extends DumpFilter {
+
+	/**
+	 * @param $page
+	 * @param $string
+	 * @return bool
+	 */
 	function pass( $page, $string ) {
 		return !$page->page_is_redirect;
 	}

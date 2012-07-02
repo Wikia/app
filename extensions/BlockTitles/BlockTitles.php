@@ -1,10 +1,13 @@
 <?php
 if ( ! defined( 'MEDIAWIKI' ) )
 	die();
-    
+
 /**#@+
- * Provides a basic way of preventing articles with certain titles from being saved or created
- * @addtogroup Extensions
+ * Provides a basic way of preventing articles with certain titles from being
+ * saved or created
+ *
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:BlockTitles Documentation
  *
@@ -13,40 +16,33 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-$wgExtensionFunctions[] = 'wfBlockTitles';
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'BlockTitles',
 	'author' => 'Travis Derouin',
-	'description' => 'Provides a basic way of preventing articles with certain titles from being saved or created',
-	'descriptionmsg' => 'block_title_error-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:BlockTitles',
+	'descriptionmsg' => 'blocktitles-desc',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:BlockTitles',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['BlockTitles'] = $dir . 'BlockTitles.i18n.php';
-// CONFIGURE - place any regular expressions you want here.  
+// CONFIGURE - place any regular expressions you want here.
 $wgBlockTitlePatterns = array (
-		#"/^http/i",  // if you want to block titles of articles that are URLs
+		# "/^http/i",  // if you want to block titles of articles that are URLs
 	);
 
 $wgHooks['ArticleSave'][] = 'wfCheckBlockTitles';
 
-function wfBlockTitles() {
-	wfLoadExtensionMessages( 'BlockTitles' );
-}
-
-function wfCheckBlockTitles (&$article ) {
+function wfCheckBlockTitles ( &$article ) {
 	global $wgBlockTitlePatterns;
 	global $wgOut;
 	$title = $article->getTitle();
 	$t = $title->getFullText();
-	foreach ($wgBlockTitlePatterns as $re) {
-		if (preg_match($re, $t)) {
+	foreach ( $wgBlockTitlePatterns as $re ) {
+		if ( preg_match( $re, $t ) ) {
 			// too bad you can't pass parameter to errorpage
-			$wgOut->errorpage('block_title_error_page_title', 'block_title_error' );
-			return false;
-		}	
+			throw new ErrorPageError( 'block_title_error_page_title', 'block_title_error' );
+		}
 	}
 
 	return true;

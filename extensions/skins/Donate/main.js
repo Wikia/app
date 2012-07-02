@@ -26,7 +26,7 @@ function story(s) {
 		} else {
 			storyBox.innerHTML = httpRequest.responseText;
 		}
-	}
+	};
 	httpRequest.open( 'GET', url, true );
 	httpRequest.send(null);
 }

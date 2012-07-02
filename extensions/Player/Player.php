@@ -2,8 +2,8 @@
 /**
  * Player extension - multimedia playback using common browser plugins
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
@@ -20,16 +20,15 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Player',
 	'author' => 'Daniel Kinzler, brightbyte.de',
 	'url' => 'http://mediawiki.org/wiki/Extension:Player',
-	'description' => 'embedded multimedia playback using common browser plugins',
 	'descriptionmsg' => 'player-desc',
 );
 
-$wgExtensionFunctions[] = "playerSetup";
+$wgHooks['ParserFirstCallInit'][] = 'playerSetup';
 $wgHooks['OutputPageParserOutput'][] = 'playerParserOutput';
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['Player'] = $dir . 'Player.i18n.php';
-$wgExtensionAliasesFiles['Player'] = $dir . 'Player.alias.php';
+$wgExtensionMessagesFiles['PlayerAlias'] = $dir . 'Player.alias.php';
 $wgAutoloadClasses['Player'] = $dir . 'PlayerClass.php';
 $wgAutoloadClasses['SpecialPlayer'] = $dir . 'SpecialPlayer.php';
 $wgSpecialPages['Player'] = 'SpecialPlayer';
@@ -45,10 +44,9 @@ $wgPlayerVideoResolutionDetector = null;
 
 require_once( dirname( __FILE__ ) . '/PlayerDefaultSettings.php' );
 
-function playerSetup() {
-	global $wgParser;
-
-	$wgParser->setHook( "player", "renderPlayerTag" );
+function playerSetup( $parser ) {
+	$parser->setHook( 'player', 'renderPlayerTag' );
+	return true;
 }
 
 function renderPlayerTag( $name, $args, &$parser ) {
@@ -91,7 +89,7 @@ function renderPlayerTag( $name, $args, &$parser ) {
 		if ($ex->getCode() == '404') {
 			return $skin->makeBrokenLinkObj( Title::makeTitleSafe(NS_IMAGE, $name) );
 		}
-		else if (@$player && $ex->getCode() == '403') {
+		elseif (@$player && $ex->getCode() == '403') {
 			//TODO: show "normal" image thumbnail. requires parameter mangeling, though...
 			return $skin->makeKnownLinkObj( $player->title );
 		}
@@ -124,7 +122,7 @@ function playerAjaxHandler( $file, $options ) {
 * Hook callback that injects messages and things into the <head> tag
 * Does nothing if $parserOutput->mPlayerTag is not set
 */
-function playerParserOutput( &$outputPage, &$parserOutput )  {
+function playerParserOutput( &$outputPage, $parserOutput )  {
 	if ( !empty( $parserOutput->mPlayerTag ) ) {
 		Player::setHeaders( $outputPage );
 	}
@@ -158,7 +156,7 @@ if (!function_exists('urlencodeMap')) {
 			$s.= urlencode($k);
 
 			if ($v === false || $v === null) continue;
-			else if ($v !== true) $s.= '=' . urlencode($v);
+			elseif ($v !== true) $s.= '=' . urlencode($v);
 		}
 
 		return $s;

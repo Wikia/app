@@ -1,7 +1,9 @@
 <?php
 /**
  * ReplaceSet
- * @package ReplaceSet
+ *
+ * @file
+ * @ingroup Extensions
  * @author Daniel Friesen (http://mediawiki.org/wiki/User:Dantman) <mediawiki@danielfriesen.name>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
@@ -88,7 +90,6 @@ class ReplaceSet {
 	}
 
 	static function error( $msg /*, ... */ ) {
-		wfLoadExtensionMessages( 'ReplaceSet' );
 		$args = func_get_args();
 		return '<strong class="error">' . call_user_func_array( 'wfMsgForContent', $args ) . '</strong>';
 	}

@@ -58,27 +58,27 @@ class MediaQueryService extends Service {
 		wfProfileOut(__METHOD__);
 		return $images;
 	}
-	
+
 	public function __construct() {
 		$this->app = F::app();
 	}
-	
+
 	protected function getArticleMediaMemcKey($title) {
 		return $this->app->wf->MemcKey( 'MQSArticleMedia', '1.0', $title->getDBkey() );
 	}
-		
+
 	public function unsetCache( $title ) {
 		$this->app->wg->memc->delete( $this->getArticleMediaMemcKey( $title ) );
 	}
-	
+
 	public static function onArticleEditUpdates( &$article, &$editInfo, $changed ) {
 		// article links are updated, so we invalidate the cache
 		$title = $article->getTitle();
 		$mqs = new self( );
-		$mqs->unsetCache( $title );		
+		$mqs->unsetCache( $title );
 		return true;
 	}
-	
+
 	public function getMediaFromArticle(Title $title, $type = null, $limit = null) {
 		wfProfileIn(__METHOD__);
 
@@ -95,9 +95,9 @@ class MediaQueryService extends Service {
 							__METHOD__,
 							array( "ORDER BY" => "il_to" )
 					);
-					
+
 					$titles = array();
-					
+
 					while ($row = $db->fetchObject( $result ) ) {
 						$media = F::build('Title', array($row->il_to, NS_FILE), 'newFromText');
 						$file = wfFindFile( $media );
@@ -112,7 +112,7 @@ class MediaQueryService extends Service {
 			}
 		}
 		if ( ! is_array($titles) ) $titles = array();
-		
+
 		if ( ( count($titles) > 0 ) && $type ) {
 			$titles = array_filter($titles, function ($item) use ($type) {
 				return $type == $item['type'];
@@ -124,7 +124,7 @@ class MediaQueryService extends Service {
 		wfProfileOut(__METHOD__);
 		return $titles;
 	}
-			
+
 	/**
 	 * Get list of recently uploaded files (RT #79288)
 	 */
@@ -167,7 +167,9 @@ class MediaQueryService extends Service {
 			}
 
 			// use numeric keys
-			$images = array_values($images);
+			if (is_array($images)) {
+				$images = array_values($images);
+			}
 		}
 
 		wfProfileOut(__METHOD__);

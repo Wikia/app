@@ -87,7 +87,7 @@ class scribe_Log_args {
           'etype' => TType::STRUCT,
           'elem' => array(
             'type' => TType::STRUCT,
-            'class' => 'LogEntry',
+            'class' => 'ScribeLogEntry',
             ),
           ),
         );
@@ -127,7 +127,7 @@ class scribe_Log_args {
             for ($_i4 = 0; $_i4 < $_size0; ++$_i4)
             {
               $elem5 = null;
-              $elem5 = new LogEntry();
+              $elem5 = new ScribeLogEntry();
               $xfer += $elem5->read($input);
               $this->messages []= $elem5;
             }

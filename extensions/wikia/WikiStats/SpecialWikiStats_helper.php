@@ -49,7 +49,6 @@ class WikiStats {
 	 * @param $cityid
 	 */
 	function __construct( $mCityId ) {
-		wfLoadExtensionMessages("WikiStats");
 		$this->mCityId = $mCityId;
 		$this->mAllStats = ( $this->mCityId === 0 );
 				

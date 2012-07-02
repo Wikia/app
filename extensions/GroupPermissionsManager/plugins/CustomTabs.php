@@ -32,7 +32,6 @@ function efGPManagerCustomTabs(&$ca) {
 		return true;
 	}
 	global $wgUser, $wgGPManagerShowEditTab;
-	loadGPMessages();
 	$dt = array();
 	$dto = array();
 	foreach($ca as $tab => $stuff) {

@@ -17,8 +17,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @file
  * @author Evan Prodromou <evan@vinismo.com>
- * @addtogroup Extensions
+ * @ingroup Extensions
  */
 
 
@@ -28,31 +29,25 @@ if (!defined('MEDIAWIKI')) {
 
 define('DESCRIPTION_VERSION', '0.1');
 
-$wgExtensionFunctions[] = 'DescriptionSetup';
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Description',
 	'version' => DESCRIPTION_VERSION,
 	'author' => 'Evan Prodromou',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Description',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Description',
 	'description' => 'Adds a description meta-tag to MW pages');
 
-function DescriptionSetup() {
-	
-	global $wgHooks;
-	
-	$wgHooks['ArticleViewHeader'][] = 'DescriptionArticleViewHeader';
-}
+$wgHooks['ArticleViewHeader'][] = 'DescriptionArticleViewHeader';
 
 function DescriptionArticleViewHeader(&$article, &$outputDone = null, &$pcache = null) {
 	global $wgOut;
-	
+
 	$desc = DescriptionFromArticle($article);
-	
+
 	if (!is_null($desc)) {
 		$wgOut->addMeta('description', htmlspecialchars($desc));
 	}
-	
+
 	return TRUE;
 }
 
@@ -61,11 +56,11 @@ function DescriptionFromArticle(&$article) {
 	if (defined('MWRDF_VERSION')) {
 		$desc = DescriptionFromRDF($article);
 	}
-	
+
 	if (is_null($desc) || strlen($desc) == 0) {
 		$desc = DescriptionFromText($article);
 	}
-	
+
 	return $desc;
 }
 
@@ -73,7 +68,7 @@ function DescriptionFromRDF(&$article) {
 
 	$nt = $article->getTitle();
 	$uri = $nt->getFullUrl();
-	
+
 	$model = MwRdfGetModel($article);
 
 	$results = $model->rdqlQuery("SELECT ?description " .
@@ -82,23 +77,23 @@ function DescriptionFromRDF(&$article) {
 								 FALSE);
 
 	$desc = '';
-	
+
 	foreach ($results as $row) {
 		$rowval = preg_replace("/^\"(.*?)\"$/", '\1', $row['?description']);
 		$desc .= (($desc) ? ' ' : '') . $rowval;
 	}
-	
+
 	return $desc;
 }
 
 function DescriptionFromText(&$article) {
 	global $wgParser, $wgContLang;
-	
+
 	# Expand all templates
-	
+
 	$text = $article->getContent(true);
 	$text = $wgParser->preprocess($text, $article->mTitle, new ParserOptions());
-	
+
 	# Find first non-ws, non-empty, non-image, non-table content
 
 	$imageLabel = $wgContLang->getNsText(NS_IMAGE);
@@ -106,18 +101,18 @@ function DescriptionFromText(&$article) {
 	$paragraphs = explode("\n", $text);
 
 	$desc = '';
-	
+
 	foreach ($paragraphs as $paragraph) {
 		if (preg_match("/^\s*(=|__|\[\[[Ii]mage:|\[\[$imageLabel:|\{\||\|#|\*)/", $paragraph)) {
 			continue;
-		} else if (preg_match("/^\s*$/", $paragraph)) {
+		} elseif (preg_match("/^\s*$/", $paragraph)) {
 			continue;
 		} else {
 			$desc = DescriptionStripParagraph($paragraph);
 			break;
 		}
 	}
-	
+
 	return $desc;
 }
 
@@ -125,11 +120,11 @@ function DescriptionStripParagraph($para) {
 		$para = preg_replace("/'''''(.*?)'''''/", '\1', $para);
 		$para = preg_replace("/'''(.*?)'''/", '\1', $para);
 		$para = preg_replace("/''(.*?)''/", '\1', $para);
-		$para = preg_replace("@<(.*?)>(.*?)</\1>@", '\2', $para);		
+		$para = preg_replace("@<(.*?)>(.*?)</\1>@", '\2', $para);
 		$para = preg_replace("/\[\[([^\]]*?)\|([^\]]*?)\]\]/", '\2', $para);
-		$para = preg_replace("/\[\[([^\]]*?)\]\]/", '\1', $para);	
+		$para = preg_replace("/\[\[([^\]]*?)\]\]/", '\1', $para);
 		$para = preg_replace("/\[(\S*)\s+(.*?)\]/", '\2', $para);
 		$para = preg_replace("/\[(\S*)\s*\]/", '\1', $para);
-	
+
 		return $para;
 }

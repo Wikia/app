@@ -18,15 +18,14 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version'        => '1.0',
 	'author'         => 'Al Maghi',
 	'email'          => 'alfred.maghi@gmail.com',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:CooperationStatistics',
-	'description'    => '',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:CooperationStatistics',
 	'descriptionmsg' => 'cooperationstatistics-desc',
 );
 
 // Set extension files.
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['CooperationStatistics'] = $dir . 'CooperationStatistics.i18n.php';
-$wgExtensionAliasesFiles['CooperationStatistics'] = $dir . 'CooperationStatistics.alias.php';
+$wgExtensionMessagesFiles['CooperationStatisticsAlias'] = $dir . 'CooperationStatistics.alias.php';
 $wgAutoloadClasses['CooperationStatistics'] = $dir . 'CooperationStatistics_body.php';
 $wgSpecialPages['CooperationStatistics'] = 'CooperationStatistics';
 $wgSpecialPageGroups['CooperationStatistics'] = 'wiki';

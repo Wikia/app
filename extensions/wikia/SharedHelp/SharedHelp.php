@@ -23,8 +23,10 @@ $wgExtensionMessagesFiles['SharedHelp'] =  dirname( __FILE__ ) . '/SharedHelp.i1
 
 $wgHooks['OutputPageBeforeHTML'][] = 'SharedHelpHook';
 $wgHooks['EditPage::showEditForm:initial'][] = 'SharedHelpEditPageHook';
-$wgHooks['BrokenLink'][] = 'SharedHelpBrokenLink';
-$wgHooks['WantedPages::getSQL'][] = 'SharedHelpWantedPagesSql';
+$wgHooks['LinkBegin'][] = 'SharedHelpLinkBegin';
+
+/* in MW 1.19 WantedPages::getSQL hook changes into WantedPages::getQueryInfo */
+$wgHooks['WantedPages::getQueryInfo'][] = 'SharedHelpWantedPagesSql';
 
 define( 'NOSHAREDHELP_MARKER', '<!--NOSHAREDHELP-->' );
 
@@ -318,24 +320,24 @@ function SharedHelpEditPageHook(&$editpage) {
 	return true;
 }
 
-function SharedHelpBrokenLink( $linker, $nt, $query, $u, $style, $prefix, $text, $inside, $trail  ) {
+function SharedHelpLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
 	global $wgTitle;
-	if (isset($wgTitle)) {
-		$specialpage = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
-		if( ( $nt->getNamespace() == 12 ) && ( 'Wantedpages' != $specialpage ) ) {
 
-			if (SharedHelpArticleExists($nt)) {
-				//not red, blue
-				$style = $linker->getInternalLinkAttributesObj( $nt, $text, '' );
-				$u = str_replace( "&amp;action=edit&amp;redlink=1", "", $u );
-				$u = str_replace( "?action=edit&amp;redlink=1&amp;", "?", $u );
-				$u = str_replace( "?action=edit&amp;redlink=1", "", $u );
-				$u .= $nt->getFragmentForURL();	//fix rt#11382
+	// First do simple checks before going to more expensive ones
+	if ( $target->getNamespace() == 12 && isset($wgTitle) && !$wgTitle->isSpecial('Wantedpages') ) {
+		if ( SharedHelpArticleExists($target) ) {
+			// The link is known
+			$options[] = 'known';
+			// ...and not broken
+			$key = array_search( 'broken', $options );
+			if ($key !== false) {
+				unset($options[$key]);
 			}
 		}
 	}
-	return true;
+		return true;
 }
+
 
 /**
  * does $title article exist @help.wikia?
@@ -433,19 +435,11 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 
 	$blogNamespaces = "";
 	if ( defined('NS_BLOG_ARTICLE') ) {
-		$blogNamespaces = "," . implode(",", array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK));
+		$blogNamespaces = implode(",", array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK));
 	}
 
-	$sql = "SELECT '{$type}' AS type, pl_namespace AS namespace, pl_title AS title, COUNT(*) AS value
-	FROM pagelinks
-	LEFT JOIN page AS pg1 ON pl_namespace = pg1.page_namespace AND pl_title = pg1.page_title
-	LEFT JOIN page AS pg2 ON pl_from = pg2.page_id
-	WHERE pg1.page_namespace IS NULL
-	AND pl_namespace NOT IN ( 2, 3 {$blogNamespaces})
-	AND pg2.page_namespace != 8
-	AND ( pl_namespace != 12 {$notInHelpPages} )
-	{$page->excludetitles}
-	GROUP BY pl_namespace, pl_title HAVING COUNT(*) > $count";
+	$sql['conds'][] = " pl_namespace NOT IN ( {$blogNamespaces} ) ";
+	$sql['conds'][] = " ( pl_namespace != 12 {$notInHelpPages} ) ";
 
 	wfProfileOut( __METHOD__ );
 	return true;

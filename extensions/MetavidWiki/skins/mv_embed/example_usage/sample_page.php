@@ -99,9 +99,9 @@ $sample_embed[8]['desc'] = ' <br /><b>Crossfading Videos</b><br /><a href="http:
 	    }
    } ?>
   </table>
-	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />&nbsp;
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />&#160;
   </body>
 </html>
 <?php
 }
-?>
+

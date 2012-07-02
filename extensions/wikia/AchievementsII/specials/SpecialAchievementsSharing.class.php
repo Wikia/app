@@ -3,7 +3,6 @@
 class SpecialAchievementsSharing extends UnlistedSpecialPage {
 
 	function __construct() {
-		wfLoadExtensionMessages('AchievementsII');
 		parent::__construct('AchievementsSharing');
 	}
 

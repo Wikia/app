@@ -6,216 +6,247 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'PasswordReset' => array( 'PasswordReset' ),
 	'Disabledusers' => array( 'DisabledUsers', 'Disabledusers' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'PasswordReset' => array( 'إعادة_ضبط_كلمة_السر' ),
 	'Disabledusers' => array( 'مستخدمون_معطلون' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'PasswordReset' => array( 'إعادة_ضبط_كلمة_السر' ),
-	'Disabledusers' => array( 'مستخدمون_معطلون' ),
+$specialPageAliases['arz'] = array(
+	'PasswordReset' => array( 'اعمل_پاسوورد_جديده' ),
+	'Disabledusers' => array( 'يوزرات_متعطلين' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'PasswordReset' => array( 'PonistavanjeSifre' ),
 	'Disabledusers' => array( 'OnemoguceniKorisnici', 'Onemogucenikorisnici' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
-	'PasswordReset' => array( 'Passwort neu vergeben' ),
-	'Disabledusers' => array( 'Deaktivierte Benutzer' ),
+$specialPageAliases['de'] = array(
+	'PasswordReset' => array( 'Passwort_neu_vergeben' ),
+	'Disabledusers' => array( 'Deaktivierte_Benutzer' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
-	'PasswordReset' => array( 'Gronidło slědk stajiś' ),
-	'Disabledusers' => array( 'Znjemóžnjone wužywarje' ),
+$specialPageAliases['dsb'] = array(
+	'PasswordReset' => array( 'Gronidło_slědk_stajiś' ),
+	'Disabledusers' => array( 'Znjemóžnjone_wužywarje' ),
+);
+
+/** Spanish (Español) */
+$specialPageAliases['es'] = array(
+	'Disabledusers' => array( 'Usuarios_deshabilitados' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'PasswordReset' => array( 'بازنشاندن_گذرواژه' ),
+	'Disabledusers' => array( 'کاربران_غیرفعال‌شده' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
-	'PasswordReset' => array( 'Salasanan pyyhkiminen' ),
+$specialPageAliases['fi'] = array(
+	'PasswordReset' => array( 'Salasanan_pyyhkiminen' ),
 	'Disabledusers' => array( 'Käytöstä_poistetut_käyttäjät' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
-	'PasswordReset' => array( 'Réinitialisation du mot de passe', 'RéinitialisationDuMotDePasse' ),
-	'Disabledusers' => array( 'Utilisateurs désactivés' ),
+$specialPageAliases['fr'] = array(
+	'PasswordReset' => array( 'Réinitialisation_du_mot_de_passe', 'RéinitialisationDuMotDePasse' ),
+	'Disabledusers' => array( 'Utilisateurs_désactivés' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
-	'PasswordReset' => array( 'Rèinicialisacion du mot de pâssa', 'RèinicialisacionDuMotDePâssa' ),
-	'Disabledusers' => array( 'Utilisators dèsactivâs', 'UtilisatorsDèsactivâs' ),
+$specialPageAliases['frp'] = array(
+	'PasswordReset' => array( 'Rèinicialisacion_du_mot_de_pâssa', 'RèinicialisacionDuMotDePâssa' ),
+	'Disabledusers' => array( 'Utilisators_dèsactivâs', 'UtilisatorsDèsactivâs' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'PasswordReset' => array( 'Passwort zrucksetze' ),
 	'Disabledusers' => array( 'Deaktivierti Benutzer' ),
 );
 
 /** Hebrew (עברית) */
-$aliases['he'] = array(
+$specialPageAliases['he'] = array(
 	'PasswordReset' => array( 'איפוס_סיסמה' ),
 );
 
 /** Croatian (Hrvatski) */
-$aliases['hr'] = array(
+$specialPageAliases['hr'] = array(
 	'PasswordReset' => array( 'Ponovno_postavi_lozinku' ),
 	'Disabledusers' => array( 'Onesposobljeni_suradnici' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
-	'PasswordReset' => array( 'Hesło wróćo stajić' ),
-	'Disabledusers' => array( 'Znjemóžneni wužiwarjo' ),
+$specialPageAliases['hsb'] = array(
+	'PasswordReset' => array( 'Wróćostajenje_hesłow' ),
+	'Disabledusers' => array( 'Znjemóžneni_wužiwarjo' ),
+);
+
+/** Hungarian (Magyar) */
+$specialPageAliases['hu'] = array(
+	'PasswordReset' => array( 'Jelszó_helyreállítása' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'PasswordReset' => array( 'Reinitialisar contrasigno' ),
-	'Disabledusers' => array( 'Usatores disactivate' ),
+$specialPageAliases['ia'] = array(
+	'PasswordReset' => array( 'Reinitialisar_contrasigno' ),
+	'Disabledusers' => array( 'Usatores_disactivate' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'PasswordReset' => array( 'Reset sandi', 'ResetSandi' ),
-	'Disabledusers' => array( 'Pengguna nonaktif', 'PenggunaNonaktif' ),
+$specialPageAliases['id'] = array(
+	'PasswordReset' => array( 'Reset_sandi', 'ResetSandi' ),
+	'Disabledusers' => array( 'Pengguna_nonaktif', 'PenggunaNonaktif' ),
 );
 
 /** Italian (Italiano) */
-$aliases['it'] = array(
+$specialPageAliases['it'] = array(
 	'PasswordReset' => array( 'ReimpostaPassword' ),
 	'Disabledusers' => array( 'UtentiDisabilitati' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'PasswordReset' => array( 'パスワード再設定', 'パスワードの再設定', 'パスワードのリセット', 'パスワードリセット' ),
 	'Disabledusers' => array( '無効化済利用者' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
-$aliases['km'] = array(
+$specialPageAliases['km'] = array(
 	'PasswordReset' => array( 'កំណត់ពាក្យសំងាត់ឡើងវិញ' ),
 );
 
 /** Korean (한국어) */
-$aliases['ko'] = array(
+$specialPageAliases['ko'] = array(
 	'PasswordReset' => array( '암호변경' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'PasswordReset' => array( 'NeuPaßwoot' ),
-	'Disabledusers' => array( 'Stilljelaate Metmaacher', 'StilljelaateMetmaacher' ),
+	'Disabledusers' => array( 'Stilljelaate_Metmaacher', 'StilljelaateMetmaacher' ),
+);
+
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'PasswordReset' => array( 'Meter_á_zero_el_kóddiche' ),
+	'Disabledusers' => array( 'UsadoresSakates' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'PasswordReset' => array( 'Zrécksetze vum Passwuert' ),
-	'Disabledusers' => array( 'Desaktivéiert Benotzer' ),
+$specialPageAliases['lb'] = array(
+	'PasswordReset' => array( 'Zrécksetze_vum_Passwuert' ),
+	'Disabledusers' => array( 'Desaktivéiert_Benotzer' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'PasswordReset' => array( 'ПроменаНаЛозинка' ),
 	'Disabledusers' => array( 'ОневозможениКорисници' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
-	'PasswordReset' => array( 'രഹസ്യവാക്ക്‌‌പുനർക്രമീകരണം' ),
+$specialPageAliases['ml'] = array(
+	'PasswordReset' => array( 'രഹസ്യവാക്ക്‌‌പുനക്രമീകരണം' ),
 	'Disabledusers' => array( 'നിർജീവരാക്കിയ‌‌ഉപയോക്താക്കൾ' ),
 );
 
 /** Maltese (Malti) */
-$aliases['mt'] = array(
+$specialPageAliases['mt'] = array(
 	'PasswordReset' => array( 'PasswordĠdida' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'PasswordReset' => array( 'Niej wachwoord instellen' ),
+$specialPageAliases['nds-nl'] = array(
+	'PasswordReset' => array( 'Niej_wachwoord_instellen' ),
 	'Disabledusers' => array( 'Uut-eschakelen_gebrukers' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'PasswordReset' => array( 'WachtwoordOpnieuwInstellen' ),
 	'Disabledusers' => array( 'UitgeschakeldeGebruikers' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'PasswordReset' => array( 'Nullstill passord' ),
-	'Disabledusers' => array( 'Inaktive kontoer' ),
+$specialPageAliases['nb'] = array(
+	'PasswordReset' => array( 'Nullstill_passord' ),
+	'Disabledusers' => array( 'Inaktive_kontoer' ),
 );
 
 /** Occitan (Occitan) */
-$aliases['oc'] = array(
-	'PasswordReset' => array( 'Reïnicializacion del senhal', 'ReïnicializacionDelSenhal' ),
-	'Disabledusers' => array( 'Utilizaires desactivats' ),
+$specialPageAliases['oc'] = array(
+	'PasswordReset' => array( 'ReïnicializacionDelSenhal' ),
+	'Disabledusers' => array( 'Utilizaires_desactivats' ),
 );
 
 /** Polish (Polski) */
-$aliases['pl'] = array(
-	'PasswordReset' => array( 'Wyczyść hasło' ),
-	'Disabledusers' => array( 'Wyłączone konta użytkowników' ),
+$specialPageAliases['pl'] = array(
+	'PasswordReset' => array( 'Wyczyść_hasło' ),
+	'Disabledusers' => array( 'Wyłączone_konta_użytkowników' ),
 );
 
 /** Romanian (Română) */
-$aliases['ro'] = array(
-	'PasswordReset' => array( 'Resetare parolă' ),
-	'Disabledusers' => array( 'Utilizatori dezactivaţi' ),
+$specialPageAliases['ro'] = array(
+	'PasswordReset' => array( 'Resetare_parolă' ),
+	'Disabledusers' => array( 'Utilizatori_dezactivați' ),
 );
 
 /** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+$specialPageAliases['sa'] = array(
 	'PasswordReset' => array( 'सङ्केतशब्दपुन:प्रयु्क्ता' ),
 	'Disabledusers' => array( 'असमर्थयोजक' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'PasswordReset' => array( 'ObnovenieHesla' ),
 	'Disabledusers' => array( 'ZamknutíPoužívatelia' ),
 );
 
 /** Swahili (Kiswahili) */
-$aliases['sw'] = array(
+$specialPageAliases['sw'] = array(
 	'PasswordReset' => array( 'SetiupassNywila' ),
 	'Disabledusers' => array( 'LemazaWatumiaji' ),
 );
 
 /** Thai (ไทย) */
-$aliases['th'] = array(
+$specialPageAliases['th'] = array(
 	'PasswordReset' => array( 'เปลี่ยนรหัสผ่าน' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'PasswordReset' => array( 'Muling pagtatakda ng hudyat' ),
 	'Disabledusers' => array( 'Hindi pinaganang mga tagagamit', 'Hindi pinagaganang mga tagagamit' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'PasswordReset' => array( 'ParolaSıfırlama', 'ŞifreSıfırlama' ),
 	'Disabledusers' => array( 'DevreDışıBırakılanKullanıcılar' ),
 );
 
+/** Simplified Chinese (‪中文(简体)‬) */
+$specialPageAliases['zh-hans'] = array(
+	'Disabledusers' => array( '残疾用户' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'PasswordReset' => array( '重設密碼' ),
+);

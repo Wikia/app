@@ -169,7 +169,8 @@ window.WikiaTracker = (function(){
 			'n': wgNamespaceNumber,
 			'u': window.trackID || window.wgTrackID || 0,
 			's': skin,
-			'beacon': window.beacon_id || ''
+			'beacon': window.beacon_id || '',
+			'cb': Math.floor(Math.random()*99999)
 		};
 
 		// Add data object to params object

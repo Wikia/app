@@ -2,44 +2,48 @@
 
 /**
  * Parameter manipulation ensuring the value is width or height.
- * 
+ *
  * @since 0.7
- * 
+ *
  * @file Maps_ParamDimension.php
  * @ingroup Maps
  * @ingroup ParameterManipulations
- * 
+ *
  * @author Jeroen De Dauw
  */
 class MapsParamDimension extends ItemParameterManipulation {
-	
+
 	/**
 	 * String indicating if this is for a width or a height.
-	 * 
+	 *
 	 * @since 0.7
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $dimension;
-	
+
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @since 0.7
 	 */
 	public function __construct( $dimension ) {
 		parent::__construct();
-		
-		$this->dimension = $dimension;		
+
+		$this->dimension = $dimension;
 	}
-	
+
 	/**
 	 * @see ItemParameterManipulation::doManipulation
-	 * 
+	 *
 	 * @since 0.7
-	 */	
+	 */
 	public function doManipulation( &$value, Parameter $parameter, array &$parameters ) {
-		global $egMapsSizeRestrictions;
+		global $egMapsSizeRestrictions, $egMapsMapWidth, $egMapsMapHeight;
+
+		if ( $value == 'auto' && $this->dimension == 'width' ) {
+			return;
+		}
 
 		// Set the default if the value is not valid.
 		if ( !preg_match( '/^\d+(\.\d+)?(px|ex|em|%)?$/', $value ) ) {
@@ -66,13 +70,13 @@ class MapsParamDimension extends ItemParameterManipulation {
 		$number = preg_replace( '/[^0-9]/', '', $value );
 		if ( $number < $min ) {
 			$value = $min;
-		} else if ( $number > $max ) {
+		} elseif ( $number > $max ) {
 			$value = $max;
 		}
-		
-		if ( !preg_match( '/(px|ex|em|%)$/', $value ) ) { 
-			$value .= 'px'; 
+
+		if ( !preg_match( '/(px|ex|em|%)$/', $value ) ) {
+			$value .= 'px';
 		}
 	}
-	
+
 }

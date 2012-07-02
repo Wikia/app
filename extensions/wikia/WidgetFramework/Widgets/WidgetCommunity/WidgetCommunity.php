@@ -65,7 +65,6 @@ function WidgetCommunity($id, $params) {
 	);
 	$userLangEqContent = $uselang == $wgLanguageCode;
 
-	wfLoadExtensionMessages('MyHome');
 	$feedHTML = ActivityFeedHelper::getListForWidget($parameters, $userLangEqContent);
 
 	// template stuff

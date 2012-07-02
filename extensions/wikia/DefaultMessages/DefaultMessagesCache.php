@@ -295,8 +295,7 @@ class DefaultMessagesCache {
 			# database or in code.
 			if ( $code !== 'en' ) {
 				# Messages for particular language
-				$escapedCode = $dbr->escapeLike( $code );
-				$conds[] = "page_title like '%%/$escapedCode'";
+				$conds[] = "page_title" . $dbr->buildLike( $dbr->anyString(), "/$code" );
 			} else {
 				# Effectively disallows use of '/' character in NS_MEDIAWIKI for uses
 				# other than language code.

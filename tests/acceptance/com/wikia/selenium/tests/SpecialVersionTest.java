@@ -7,7 +7,7 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class SpecialVersionTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureSpecialVersionPageDisplaysMediaWikiAndWikiaVersion() throws Throwable {
 		openAndWait("index.php?title=Special:Version");
 

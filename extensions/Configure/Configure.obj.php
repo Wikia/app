@@ -28,8 +28,6 @@ class WebConfiguration extends SiteConfiguration {
 	 * directory
 	 */
 	public function initialise( $useCache = true ) {
-		parent::initialise();
-
 		// Special case for manage.php maintenance script so that it can work
 		// even if the current configuration is broken
 		if ( defined( 'EXT_CONFIGURE_NO_EXTRACT' ) )
@@ -293,10 +291,12 @@ class WebConfiguration extends SiteConfiguration {
 	/**
 	 * Save a new configuration
 	 * @param $settings array of settings
+	 * @param $user User doing the modification
 	 * @param $wiki String: wiki name or false to use the current one
+	 * @param $reason String
 	 * @return bool true on success
 	 */
-	public function saveNewSettings( $settings, $wiki = false, $reason = '' ) {
+	public function saveNewSettings( $settings, User $user, $wiki = false, $reason = '' ) {
 		if ( !is_array( $settings ) )
 			# hmmm
 			return false;
@@ -310,7 +310,7 @@ class WebConfiguration extends SiteConfiguration {
 			$this->mConf[$wiki] = $settings;
 		}
 
-		return $this->getHandler()->saveNewSettings( $this->mConf, $wiki, false, $reason );
+		return $this->getHandler()->saveNewSettings( $this->mConf, $user, $wiki, false, $reason );
 	}
 
 	/**

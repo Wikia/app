@@ -1,6 +1,6 @@
 <?php
 
-class RealgravityApiWrapper extends WikiaVideoApiWrapper {
+class RealgravityApiWrapper extends NoConnectionApiWrapper {
 
 	protected static $CACHE_KEY = 'realgravityapi';
 	protected static $aspectRatio = 1.7777778;

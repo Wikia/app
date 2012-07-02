@@ -8,8 +8,6 @@
 
 if (!defined('MEDIAWIKI')) { echo "This is MediaWiki extension.\n"; exit(1); }
 
-wfLoadExtensionMessages('WikiFactoryReporter');
-
 class WikiFactoryReporter extends SpecialPage
 {
 	function __construct() { parent::__construct('WikiFactoryReporter', 'wikifactory'); }

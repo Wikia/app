@@ -12,8 +12,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'CatBoxAtTop',
 	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
-	'description'    => 'Adds a category box to the top right of pages',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Category_Box_at_Top',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Uniwiki_Category_Box_at_Top',
 	'descriptionmsg' => 'catboxattop-desc',
 );
 
@@ -37,7 +36,7 @@ function UW_CatBoxAtTop_Rejig ( &$out, &$text ) {
 	if ( !$out->mCategoryLinks )
 		return true;
 
-	wfLoadExtensionMessages( 'CatBoxAtTop' );
+	
 
 	/* add a category box to the top of the output,
 	 * to be dropped into the top right via CSS */

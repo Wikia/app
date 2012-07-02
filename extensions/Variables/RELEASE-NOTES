@@ -1,0 +1,80 @@
+ svn era Changelog:
+ ==================
+ 
+ * (trunk) -- Version 2.0.1
+   - Localization added for various languages.
+ 
+ * November 16, 2010 -- Version 2.0 by Daniel Werner
+   Version 2.0 almost is a complete rewrite of the extension, just the idea remains the
+   same. It's the attempt to get rid of several bugs caused by the fact that MediaWiki
+   is using several Parser objects. Therefore in v2 each Parser has its own Variables
+   store, so nothing will get mixed up anymore. Full compatbility is given, except perhaps
+   in cases where bugs were used intentionally.
+
+   New features and bugfixes:
+   - Inclusion of special pages in the middle of the page won't reset all defined
+     variables anymore.
+   - Variables should now be compatible with all other extensions, except for those still
+     using Parser::parse() recursivelly in any way (which should never be done!).
+   - For MW 1.12 and later, '#var' default value no longer gets expanded when not needed.
+   - Experimental new function '#var_final' which allows to insert the variables final
+     (last) value after page processing is almost through.
+   - Global configuration variable '$egVariablesDisabledFunctions' added.
+
+   Internal changes:
+   - Parser class member $mExtVariables now contains an instance of ExtVariables where
+     only variables for that parser are getting stored. They won't be deleted by other
+     Parser actions anymore (e.g. special page inclusion doesn't reset variables anymore)
+   - ExtVariables class now has public functions which should be used by other extensions
+     for getting and setting variables information.
+   - Removed global '$wgExtVariables' variable.
+   - 'Variables_Settings.php' file for configuration settings added.
+
+   Others:
+   - Put under 'ISC License' (public domain before).
+   - In case you are using Extension:Loops, you should update it as well to remain compatbility.
+
+   
+ * November 14, 2011 -- Version 1.3.1.1 (re-pack of 1.3.1 tagged version for svn)
+   - Although 1.4 is released already and 2.0 in the trunk, ensure one last version
+     compatible with MW < 1.12 still is available
+   - Some comments cleaned, 'RELEASE-NOTES' and 'README' files added.
+
+   
+ * November 13, 2011 -- Version 1.4 by Daniel Werner
+   - Cleanup for use with more current MW versions:
+     + 'ParserFirstCallInit' hook in use and no more global extension functions.
+     + State of the Art internationalization files added.
+   - Dropped support for MW before 1.12
+   - 'ExtVariables::VARIABLES' constant with version info added.
+   - Put into mediawiki.org svn, 'RELEASE-NOTES' and 'README' files added.
+ 
+ 
+ Pre svn Changelog:
+ ==================
+ 
+ The following pre-svn changelog was composed by Daniel Werner in the hope it might
+ give an almost complete overview of all major releases of 'Variables' extension.
+ All changes can still be retrace at
+ 
+ https://www.mediawiki.org/w/index.php?title=Extension:VariablesExtension&action=history 
+ 
+ * July 20, 2010 -- Version 1.3 by Daniel Werner
+   - Removed critical bug. Some kind of "Superglobal" variables. In some cases values
+     were passed from one page to another page during page imports and job queue jobs.
+ 
+ * March 28, 2009 -- Version 1.2 by Daniel Werner
+   - '#varexists' function introduced
+   - parameter for default value for '#var' function in case the variable doesn't exist
+     or its value is just an empty string.
+ 
+ * December 5, 2008 -- Version 1.1 by user 'Xiloynaha'
+   - '#vardefineecho' function introduced
+ 
+ * June 24, 2007 -- r3, Language file added by unknown contributor
+ 
+ * October 11, 2006 -- r2, Fixes for MediaWiki 1.8 compatbility by Tom Hempel
+   - '$wgExtensionCredits' and '$wgHooks' being used.
+ 
+ * October 11, 2006 -- r1, initial release by Rob Adams
+   - First version of 'Variables', introducing '#vardefine' and '#var'

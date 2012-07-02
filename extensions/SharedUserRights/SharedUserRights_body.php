@@ -25,7 +25,7 @@ class SharedUserRights extends SpecialPage {
 		return true;
 	}
 
-	public function userCanExecute( $user ) {
+	public function userCanExecute( User $user ) {
 		return $user->isAllowed( 'userrights-shared' );
 	}
 
@@ -38,7 +38,7 @@ class SharedUserRights extends SpecialPage {
 	function execute( $par ) {
 		global $wgUser, $wgRequest;
 
-		wfLoadExtensionMessages( 'SharedUserRights' );
+		
 
 		if ( $par ) {
 			$this->mTarget = $par;
@@ -60,7 +60,7 @@ class SharedUserRights extends SpecialPage {
 		}
 
 		$this->outputHeader();
-
+		$wgOut->addModuleStyles( 'mediawiki.special' );
 		$this->setHeaders();
 
 		# show user selection form
@@ -304,7 +304,7 @@ class SharedUserRights extends SpecialPage {
 		global $wgOut, $wgScript;
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript, 'name' => 'uluser', 'id' => 'mw-userrights-form1' ) ) .
-			Xml::hidden( 'title',  $this->getTitle()->getPrefixedText() ) .
+			Html::Hidden( 'title',  $this->getTitle()->getPrefixedText() ) .
 			Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', array(), wfMsg( 'userrights-lookup-user' ) ) .
 			Xml::inputLabel( wfMsg( 'userrights-user-editname' ), 'user', 'username', 30, $this->mTarget ) . ' ' .
@@ -337,8 +337,8 @@ class SharedUserRights extends SpecialPage {
 		}
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalURL(), 'name' => 'editGroup', 'id' => 'mw-userrights-form2' ) ) .
-			Xml::hidden( 'user', $this->mTarget ) .
-			Xml::hidden( 'wpEditToken', $wgUser->editToken( $this->mTarget ) ) .
+			Html::Hidden( 'user', $this->mTarget ) .
+			Html::Hidden( 'wpEditToken', $wgUser->editToken( $this->mTarget ) ) .
 			Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', array(), wfMsg( 'userrights-editusergroup' ) ) .
 			wfMsgExt( 'editinguser', array( 'parse' ), wfEscapeWikiText( $user->getName() ) ) .

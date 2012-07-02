@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class CategorySelectTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testAddCategory() throws Exception {
 		loginAsStaff();
 		String title = "WikiaAutomatedTest" + ((new Date()).toString());

@@ -26,12 +26,14 @@ $messages['en'] = array(
  * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'layouts-desc' => '{{desc}}',
 	'layouts_title' => '{{Identical|Createpage}}',
 	'layouts_continue' => '{{Identical|Continue}}',
 	'layouts_unknown' => '{{Identical|Unknown}}',
+	'layouts-layoutcategorypage' => '{{optional}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -41,6 +43,20 @@ $messages['af'] = array(
 	'layouts_title' => "Skep 'n bladsy",
 	'layouts_continue' => 'Volgende',
 	'layouts_unknown' => 'Onbekend',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'layouts-desc' => 'Rrituni me të sapo-krijuar faqet me "Layouts editable" për të inkurajuar një strukturë të përbashkët për faqe',
+	'layouts_title' => 'Krijo një faqe',
+	'layouts_chooselayout' => 'Zgjidhni një plan urbanistik për $1:',
+	'layouts_nolayout' => 'Nuk ka plan urbanistik',
+	'layouts_continue' => 'Vazhdoj',
+	'layouts_choosecategory' => 'Zgjidhni një kategori për $1:',
+	'layouts_unknown' => 'I panjohur',
+	'layouts_tagline' => "Kjo faqe është e gjeneruar nga '''$1''' layout.",
 );
 
 /** Arabic (العربية)
@@ -82,7 +98,7 @@ $messages['arz'] = array(
 	'layouts_tagline' => "هذه الصفحة تم توليدها بواسطة هيئة '''$1'''.",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Red Winged Duck
@@ -110,6 +126,14 @@ $messages['bg'] = array(
 	'layouts_choosecategory' => 'Избиране на категория за $1:',
 	'layouts_tagline' => "Тази страница е създадена с формат '''$1'''.",
 	'layouts-layoutcategorypage' => 'MediaWiki:Editpagetags',
+);
+
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'layouts_title' => 'পাতা তৈরি কর',
+	'layouts_unknown' => 'অজানা',
 );
 
 /** Breton (Brezhoneg)
@@ -156,10 +180,10 @@ $messages['ca'] = array(
 	'layouts_tagline' => "Aquesta pàgina va ser generada pel format '''$1'''.",
 );
 
-/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+/** Sorani (کوردی)
  * @author Marmzok
  */
-$messages['ckb-arab'] = array(
+$messages['ckb'] = array(
 	'layouts_title' => 'دروست‌کردنی لاپەڕەیەک',
 	'layouts_continue' => 'درێژەدان',
 	'layouts_choosecategory' => 'هاوپۆلێک هەڵبژێرە بۆ $1:',
@@ -197,7 +221,7 @@ $messages['de'] = array(
 	'layouts-layoutcategorypage' => 'MediaWiki:Editpagetags',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  */
 $messages['de-formal'] = array(
@@ -212,7 +236,7 @@ $messages['dsb'] = array(
 	'layouts-desc' => 'Pśipóra rowno napórane boki z wobźěłujobnymi "wugótowanjami", aby spěchował jadnotnu strukturu za boki',
 	'layouts_title' => 'Bok napóraś',
 	'layouts_chooselayout' => 'Wugótowanje za $1 wubraś:',
-	'layouts_nolayout' => 'Žedne wugótowanje',
+	'layouts_nolayout' => 'Žedno wugótowanje',
 	'layouts_continue' => 'Dalej',
 	'layouts_choosecategory' => 'Kategoriju za $1 wubraś:',
 	'layouts_unknown' => 'Njeznaty',
@@ -311,7 +335,7 @@ $messages['fi'] = array(
  * @author Verdy p
  */
 $messages['fr'] = array(
-	'layouts-desc' => 'Remplit les pages nouvellement créées à l’aide de « mises en page » modifiables afin d’encourager une structure commune à toutes les pages',
+	'layouts-desc' => 'Remplit les pages nouvellement créées à l’aide de « mises en page » modifiables afin d’encourager une structure homogène à toutes les pages',
 	'layouts_title' => 'Créer une page',
 	'layouts_chooselayout' => 'Choisir une mise en page pour $1 :',
 	'layouts_nolayout' => 'Aucune mise en page',
@@ -324,11 +348,16 @@ $messages['fr'] = array(
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
 	'layouts_title' => 'Fâre una pâge',
+	'layouts_chooselayout' => 'Chouèsir una misa en pâge por $1 :',
+	'layouts_nolayout' => 'Gins de misa en pâge',
 	'layouts_continue' => 'Continuar',
+	'layouts_choosecategory' => 'Chouèsir una catègorie por $1 :',
 	'layouts_unknown' => 'Encognu',
+	'layouts_tagline' => "Ceta pâge at étâ fêta avouéc la misa en pâge '''$1'''.",
 );
 
 /** Irish (Gaeilge)
@@ -391,6 +420,16 @@ $messages['he'] = array(
 	'layouts_unknown' => 'לא ידוע',
 	'layouts_tagline' => "הדף נוצר על ידי הפריסה '''$1'''.",
 	'layouts-layoutcategorypage' => 'MediaWiki:Editpagetags',
+);
+
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'layouts_continue' => 'Nastavi',
+	'layouts_choosecategory' => 'Odaberite kategoriju za $1:',
+	'layouts_unknown' => 'Nepoznato',
+	'layouts_tagline' => "Ova stranica je generirana od '''$1''' izgleda (''layouta'').",
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -459,7 +498,7 @@ $messages['id'] = array(
 $messages['ig'] = array(
 	'layouts_title' => 'Ké ihü',
 	'layouts_continue' => 'Gawákwa',
-	'layouts_unknown' => 'Nke amaghị',
+	'layouts_unknown' => 'Nke námaghị',
 );
 
 /** Italian (Italiano)
@@ -525,7 +564,7 @@ $messages['km'] = array(
 	'layouts_tagline' => "ទំព័រ​នេះ​ត្រូវ​បាន​បង្កើតឡើង​ដោយ​ប្លង់ '''$1''' ។",
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -582,11 +621,39 @@ $messages['mn'] = array(
 	'layouts_unknown' => 'Үл мэдэгдэх',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'layouts-desc' => 'Mengisi halaman yang baru diwujudkan dengan "tata letak" yang boleh disunting untuk menggalakkan struktur bersama untuk laman-laman',
+	'layouts_title' => 'Cipta laman',
+	'layouts_chooselayout' => 'Pilih tataletak untuk $1:',
+	'layouts_nolayout' => 'Tiada tataletak',
+	'layouts_continue' => 'Sambung',
+	'layouts_choosecategory' => 'Pilih kategori untuk $1:',
+	'layouts_unknown' => 'Tidak diketahui',
+	'layouts_tagline' => "Laman ini dijana oleh tataletak '''$1'''.",
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
 	'layouts_unknown' => 'Апак содань',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'layouts-desc' => 'Befolker nyopprettede sider med redigerbare «utforminger» for å fremme en fellesstruktur for sider',
+	'layouts_title' => 'Opprett en side',
+	'layouts_chooselayout' => 'Velg et utseende for $1:',
+	'layouts_nolayout' => 'Inget utseende',
+	'layouts_continue' => 'Fortsett',
+	'layouts_choosecategory' => 'Velg en kategori for $1:',
+	'layouts_unknown' => 'Ukjent',
+	'layouts_tagline' => "Denne siden ble opprettet med utseende '''$1'''.",
 );
 
 /** Dutch (Nederlands)
@@ -618,20 +685,6 @@ $messages['nn'] = array(
 	'layouts_tagline' => "Denne sida vart oppretta med utforminga '''$1'''.",
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'layouts-desc' => 'Befolker nyopprettede sider med redigerbare «utforminger» for å fremme en fellesstruktur for sider',
-	'layouts_title' => 'Opprett en side',
-	'layouts_chooselayout' => 'Velg et utseende for $1:',
-	'layouts_nolayout' => 'Inget utseende',
-	'layouts_continue' => 'Fortsett',
-	'layouts_choosecategory' => 'Velg en kategori for $1:',
-	'layouts_unknown' => 'Ukjent',
-	'layouts_tagline' => "Denne siden ble opprettet med utseende '''$1'''.",
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -647,18 +700,33 @@ $messages['oc'] = array(
 	'layouts-layoutcategorypage' => 'MediaWiki:Editpagetags',
 );
 
+/** Punjabi (ਪੰਜਾਬੀ)
+ * @author Aalam
+ */
+$messages['pa'] = array(
+	'layouts_title' => 'ਇੱਕ ਸਫ਼ਾ ਬਣਾਉ',
+	'layouts_chooselayout' => '$1 ਲਈ ਲੇਆਉਟ ਚੁਣੋ:',
+	'layouts_nolayout' => 'ਕੋਈ ਲੇਆਉਟ ਨਹੀਂ',
+	'layouts_continue' => 'ਜਾਰੀ ਰੱਖੋ',
+	'layouts_choosecategory' => '$1 ਲਈ ਕੈਟਾਗਰੀ ਚੁਣੋ:',
+	'layouts_unknown' => 'ਅਣਜਾਣ',
+	'layouts_tagline' => "ਇਹ ਪੇਜ਼ ਨੂੰ '''$1''' ਲੇਆਉਟ ਨਾਲ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ।",
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
-	'layouts_continue' => 'Weiter',
+	'layouts_title' => 'Neies Blatt schtaerte',
+	'layouts_continue' => 'Weider',
 );
 
 /** Polish (Polski)
  * @author Leinad
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'layouts-desc' => 'Wypełnianie nowo utworzonych stron edytowalnym układem strony, tak aby wspierać jednolitą strukturę stron',
+	'layouts-desc' => 'Wypełnianie nowo utworzonych stron edytowalnym wzorem układu strony, w celu ujednolicania struktury stron',
 	'layouts_title' => 'Utwórz stronę',
 	'layouts_chooselayout' => 'Wybierz układ strony dla $1:',
 	'layouts_nolayout' => 'Brak układu strony',
@@ -688,6 +756,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'layouts_title' => 'يو مخ جوړول',
+	'layouts_nolayout' => 'اډانه نشته',
 	'layouts_choosecategory' => 'د $1 لپاره يوه وېشنيزه وټاکۍ:',
 	'layouts_unknown' => 'ناجوت',
 );
@@ -728,7 +797,7 @@ $messages['pt-br'] = array(
 $messages['ro'] = array(
 	'layouts_title' => 'Creează o pagină',
 	'layouts_continue' => 'Continuă',
-	'layouts_choosecategory' => 'Alegeţi o categorie pentru $1:',
+	'layouts_choosecategory' => 'Alegeți o categorie pentru $1:',
 	'layouts_unknown' => 'Necunoscut',
 );
 
@@ -736,9 +805,14 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'layouts-desc' => 'Popole pàggene nuève e ccrejate cu "disposiziune" cangiabbele pe \'ngoraggià \'na strutture comune pe le pàggene',
 	'layouts_title' => "Ccreje 'na vosce",
+	'layouts_chooselayout' => "Scacchie 'na disposizione pe $1:",
+	'layouts_nolayout' => 'Nisciuna disposizione',
 	'layouts_continue' => 'Condinue',
+	'layouts_choosecategory' => "Scacchie 'a categorije pe $1:",
 	'layouts_unknown' => 'Scanusciute',
+	'layouts_tagline' => "Sta pàgene ga state generate da 'a disposizione '''$1'''.",
 );
 
 /** Russian (Русский)
@@ -754,6 +828,14 @@ $messages['ru'] = array(
 	'layouts_choosecategory' => 'Выбор категории для $1:',
 	'layouts_unknown' => 'Неизвестно',
 	'layouts_tagline' => "Эта страница была создана с помощью макета '''$1'''.",
+);
+
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'layouts_title' => 'Створити сторінку',
+	'layouts_continue' => 'Продовжовати',
 );
 
 /** Sinhala (සිංහල)
@@ -785,7 +867,22 @@ $messages['sk'] = array(
 	'layouts-layoutcategorypage' => 'MediaWiki:Editpagetags',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'layouts-desc' => 'Obda na novo ustvarjene strani z uredljivimi »postavitvami«, ki vzpodbudijo skupno zgradbo strani',
+	'layouts_title' => 'Ustvari stran',
+	'layouts_chooselayout' => 'Izberite postavitev za $1:',
+	'layouts_nolayout' => 'Ni postavitve',
+	'layouts_continue' => 'Nadaljuj',
+	'layouts_choosecategory' => 'Izberite kategorijo za $1:',
+	'layouts_unknown' => 'Neznano',
+	'layouts_tagline' => "Ta stran je bila ustvarjena s postavitvijo '''$1'''.",
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -793,9 +890,10 @@ $messages['sr-ec'] = array(
 	'layouts_continue' => 'Настави',
 	'layouts_choosecategory' => 'Изабери категорију за $1:',
 	'layouts_unknown' => 'Непознато',
+	'layouts-layoutcategorypage' => 'MediaWiki:Editpagetags',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -803,6 +901,7 @@ $messages['sr-el'] = array(
 	'layouts_continue' => 'Nastavi',
 	'layouts_choosecategory' => 'Izaberi kategoriju za $1:',
 	'layouts_unknown' => 'Nepoznato',
+	'layouts-layoutcategorypage' => 'MediaWiki:Editpagetags',
 );
 
 /** Seeltersk (Seeltersk)
@@ -829,6 +928,21 @@ $messages['sv'] = array(
 	'layouts_continue' => 'Fortsätt',
 	'layouts_choosecategory' => 'Välj en kategori för $1:',
 	'layouts_unknown' => 'Okänd',
+);
+
+/** Tamil (தமிழ்)
+ * @author Mahir78
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'layouts-desc' => "தொகுக்கக்கூடிய ''பக்கவடிமைப்பை'' புதிய பக்கங்கள் உருவாக்கும் போது ஒரு பொதுவான அமைப்பு கொண்ட பக்கங்களை உருவாக்க எல்லோருக்கும் தெரிவித்து ஊக்கப்படுத்துங்கள்",
+	'layouts_title' => 'ஒரு பக்கத்தை உருவாக்கவும்',
+	'layouts_chooselayout' => '$1 க்கான ஒரு இடைமுகப்பை தேர்ந்தெடுக்கவும்',
+	'layouts_nolayout' => 'வடிவமைப்பு இல்லை',
+	'layouts_continue' => 'தொடரவும்',
+	'layouts_choosecategory' => '$1 க்கான ஒரு பகுப்பை தேர்ந்தெடுக்கவும்',
+	'layouts_unknown' => 'தெரியாது',
+	'layouts_tagline' => "இப்பக்கம் '''$1''' வடிவமைப்பின் மூலம் உருவாக்கப்பட்டுள்ளது.",
 );
 
 /** Telugu (తెలుగు)
@@ -886,19 +1000,27 @@ $messages['tr'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
+	'layouts_title' => 'Створити сторінку',
 	'layouts_continue' => 'Продовжити',
+	'layouts_choosecategory' => 'Вибір категорії для $1:',
 );
 
-/** Veps (Vepsan kel')
+/** Veps (Vepsän kel')
  * @author Triple-ADHD-AS
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
+	'layouts-desc' => 'Täutab uded lehtesed redaktiruidud "šablonil", miše lehtpoliden tipine struktur oliži ühtejitte.',
 	'layouts_title' => "Säta lehtpol'",
+	'layouts_chooselayout' => 'Valikat maket $1-n täht:',
+	'layouts_nolayout' => 'Eile maketad',
 	'layouts_continue' => 'Jatkata',
+	'layouts_choosecategory' => 'Valikat kategorii $1-n täht:',
 	'layouts_unknown' => 'Tundmatoi',
+	'layouts_tagline' => "Nece lehtpol' sätihe '''$1'''-maketan abul.",
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -937,9 +1059,12 @@ $messages['yi'] = array(
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
  * @author Liangent
+ * @author Wilsonmess
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
-	'layouts_title' => '建立一个页面',
+	'layouts_title' => '创建页面',
+	'layouts_chooselayout' => '为$1选择一个样式：',
 	'layouts_nolayout' => '没有布局',
 	'layouts_continue' => '继续',
 	'layouts_choosecategory' => '为$1选择一个分类：',
@@ -949,13 +1074,15 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Gzdavidwong
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'layouts_title' => '建立一個頁面',
+	'layouts_chooselayout' => '為$1選擇一個樣式：',
 	'layouts_nolayout' => '沒有布局',
 	'layouts_continue' => '繼續',
-	'layouts_choosecategory' => '為$1選擇一個分類：',
+	'layouts_choosecategory' => '為 $1 選擇一個分類：',
 	'layouts_unknown' => '未知',
 );
 

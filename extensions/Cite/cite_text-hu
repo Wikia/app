@@ -14,7 +14,7 @@ Mint minden [[{{ns:project}}:Ki írja a Wikipédiát|közösség által készít
 * Kiadó: ''{{SITENAME}}, {{MediaWiki:Sitesubtitle}}''. 
 * A legutóbbi változat dátuma: {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}} {{CURRENTTIME}} UTC
 * Letöltés dátuma: <citation>{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}} {{CURRENTTIME}} UTC</citation>
-* Állandó hivatkozás: {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
+* Állandó hivatkozás: {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
 * Lapváltozat-azonosító: {{REVISIONID}}
 
 Légy szíves, ellenőrizd, hogy ezek az adatok megfelelnek-e a kívánalmaidnak.  További információhoz lásd az '''[[{{ns:project}}:Idézés a Wikipédiából|Idézés a Wikipédiából]]''' lapot.
@@ -25,23 +25,23 @@ Légy szíves, ellenőrizd, hogy ezek az adatok megfelelnek-e a kívánalmaidnak
 == Idézési stílusok a(z) {{FULLPAGENAME}} laphoz ==
 
 === APA stílus ===
-{{FULLPAGENAME}}. ({{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}). ''{{SITENAME}}, {{MediaWiki:Sitesubtitle}}''. Retrieved <citation>{{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}. {{CURRENTTIME}}</citation> from {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
+{{FULLPAGENAME}}. ({{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}). ''{{SITENAME}}, {{MediaWiki:Sitesubtitle}}''. Retrieved <citation>{{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}. {{CURRENTTIME}}</citation> from {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
 
 === MLA stílus ===
-\"{{FULLPAGENAME}}.\" ''{{SITENAME}}, {{MediaWiki:Sitesubtitle}}''. {{CURRENTYEAR}}. {{CURRENTMONTHABBREV}}. {{CURRENTDAY}}. {{CURRENTTIME}} UTC. <citation>{{CURRENTYEAR}}. {{CURRENTMONTHABBREV}}. {{CURRENTDAY}}. {{CURRENTTIME}}</citation> &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;.
+\"{{FULLPAGENAME}}.\" ''{{SITENAME}}, {{MediaWiki:Sitesubtitle}}''. {{CURRENTYEAR}}. {{CURRENTMONTHABBREV}}. {{CURRENTDAY}}. {{CURRENTTIME}} UTC. <citation>{{CURRENTYEAR}}. {{CURRENTMONTHABBREV}}. {{CURRENTDAY}}. {{CURRENTTIME}}</citation> &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;.
 
 === MHRA stílus ===
-Wiki szerkesztők, '{{FULLPAGENAME}}',  ''{{SITENAME}}, {{MediaWiki:Sitesubtitle}},'' {{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}. {{CURRENTTIME}} UTC, &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt; [accessed <citation>{{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}.</citation>]
+Wiki szerkesztők, '{{FULLPAGENAME}}',  ''{{SITENAME}}, {{MediaWiki:Sitesubtitle}},'' {{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}. {{CURRENTTIME}} UTC, &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt; [accessed <citation>{{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}.</citation>]
 
 === Chicago stílus ===
-Wiki szerkesztők, \"{{FULLPAGENAME}},\"  ''{{SITENAME}}, {{MediaWiki:Sitesubtitle}},'' {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (accessed <citation>{{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}.</citation>).
+Wiki szerkesztők, \"{{FULLPAGENAME}},\"  ''{{SITENAME}}, {{MediaWiki:Sitesubtitle}},'' {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (accessed <citation>{{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}.</citation>).
 
 === CBE/CSE stílus ===
 wiki szerkesztők. {{FULLPAGENAME}} [Internet].  {{SITENAME}}, {{MediaWiki:Sitesubtitle}};  {{CURRENTYEAR}}. {{CURRENTMONTHABBREV}}. {{CURRENTDAY}}.  {{CURRENTTIME}} UTC [cited <citation>{{CURRENTYEAR}}. {{CURRENTMONTHABBREV}}. {{CURRENTDAY}}.</citation>].  Elérhető: 
-{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
+{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
 
 === Bluebook stílus ===
-{{FULLPAGENAME}}, {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (last visited <citation>{{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}.</citation>).
+{{FULLPAGENAME}}, {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (last visited <citation>{{CURRENTYEAR}}. {{CURRENTMONTHNAME}} {{CURRENTDAY}}.</citation>).
 
 === [[BibTeX]] bejegyzés ===
 
@@ -49,7 +49,7 @@ wiki szerkesztők. {{FULLPAGENAME}} [Internet].  {{SITENAME}}, {{MediaWiki:Sites
     author = \"{{SITENAME}}\",
     title = \"{{FULLPAGENAME}} --- {{SITENAME}}{,} {{MediaWiki:Sitesubtitle}}\",
     year = \"{{CURRENTYEAR}}\",
-    url = \"{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}\",
+    url = \"{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}\",
     note = \"[Online; accessed <citation>{{CURRENTDAY}}-{{CURRENTMONTHNAME}}-{{CURRENTYEAR}}</citation>]\"
   }
 
@@ -59,7 +59,7 @@ Az <code>url</code> nevű [[LaTeX]] csomag használata esetén (<code>\\usepacka
     author = \"{{SITENAME}}\",
     title = \"{{FULLPAGENAME}} --- {{SITENAME}}{,} {{MediaWiki:Sitesubtitle}}\",
     year = \"{{CURRENTYEAR}}\",
-    url = \"'''\\url{'''{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''\",
+    url = \"'''\\url{'''{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''\",
     note = \"[Online; accessed <citation>{{CURRENTDAY}}-{{CURRENTMONTHNAME}}-{{CURRENTYEAR}}</citation>]\"
   }
 

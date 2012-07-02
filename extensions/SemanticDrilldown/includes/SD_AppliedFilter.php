@@ -43,7 +43,7 @@ class SDAppliedFilter {
 	 */
 	function checkSQL( $value_field ) {
 		$sql = "(";
-		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr = wfGetDB( DB_SLAVE );
 		if ( $this->search_term != null ) {
 			$search_term = str_replace( "'", "\'", $this->search_term );
 			if ( $this->filter->is_relation ) {

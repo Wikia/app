@@ -1,5 +1,8 @@
 <?php
 /**
+ * Init the user_editcount database field based on the number of rows in the
+ * revision table.
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -15,10 +18,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class InitEditCount extends Maintenance {
 	public function __construct() {
@@ -30,12 +34,11 @@ class InitEditCount extends Maintenance {
 
 Background mode will be automatically used if the server is MySQL 4.0
 (which does not support subqueries) or if multiple servers are listed
-in $wgDBservers, usually indicating a replication environment.' );
+in the load balancer, usually indicating a replication environment.' );
 		$this->mDescription = "Batch-recalculate user_editcount fields from the revision table";
 	}
 
 	public function execute() {
-		global $wgDBservers;
 		$dbw = wfGetDB( DB_MASTER );
 		$user = $dbw->tableName( 'user' );
 		$revision = $dbw->tableName( 'revision' );
@@ -43,16 +46,16 @@ in $wgDBservers, usually indicating a replication environment.' );
 		$dbver = $dbw->getServerVersion();
 
 		// Autodetect mode...
-		$backgroundMode = count( $wgDBservers ) > 1 ||
-			($dbw instanceof DatabaseMySql && version_compare( $dbver, '4.1' ) < 0);
-	
-		if( $this->hasOption('background') ) {
+		$backgroundMode = wfGetLB()->getServerCount() > 1 ||
+			( $dbw instanceof DatabaseMysql && version_compare( $dbver, '4.1' ) < 0 );
+
+		if ( $this->hasOption( 'background' ) ) {
 			$backgroundMode = true;
-		} elseif( $this->hasOption('quick') ) {
+		} elseif ( $this->hasOption( 'quick' ) ) {
 			$backgroundMode = false;
 		}
 
-		if( $backgroundMode ) {
+		if ( $backgroundMode ) {
 			$this->output( "Using replication-friendly background mode...\n" );
 
 			$dbr = wfGetDB( DB_SLAVE );
@@ -61,7 +64,7 @@ in $wgDBservers, usually indicating a replication environment.' );
 
 			$start = microtime( true );
 			$migrated = 0;
-			for( $min = 0; $min <= $lastUser; $min += $chunkSize ) {
+			for ( $min = 0; $min <= $lastUser; $min += $chunkSize ) {
 				$max = $min + $chunkSize;
 				$result = $dbr->query(
 					"SELECT
@@ -73,17 +76,16 @@ in $wgDBservers, usually indicating a replication environment.' );
 					GROUP BY user_id",
 					__METHOD__ );
 
-				foreach( $result as $row ) {
+				foreach ( $result as $row ) {
 					$dbw->update( 'user',
 						array( 'user_editcount' => $row->user_editcount ),
 						array( 'user_id' => $row->user_id ),
 						__METHOD__ );
 					++$migrated;
 				}
-				$dbr->freeResult( $result );
 
 				$delta = microtime( true ) - $start;
-				$rate = ($delta == 0.0) ? 0.0 : $migrated / $delta;
+				$rate = ( $delta == 0.0 ) ? 0.0 : $migrated / $delta;
 				$this->output( sprintf( "%s %d (%0.1f%%) done in %0.1f secs (%0.3f accounts/sec).\n",
 					wfWikiID(),
 					$migrated,
@@ -91,7 +93,7 @@ in $wgDBservers, usually indicating a replication environment.' );
 					$delta,
 					$rate ) );
 
-				wfWaitForSlaves( 10 );
+				wfWaitForSlaves();
 			}
 		} else {
 			// Subselect should work on modern MySQLs etc
@@ -105,4 +107,4 @@ in $wgDBservers, usually indicating a replication environment.' );
 }
 
 $maintClass = "InitEditCount";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

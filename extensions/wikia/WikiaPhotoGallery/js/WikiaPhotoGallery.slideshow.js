@@ -6,15 +6,20 @@ var WikiaPhotoGallerySlideshow = {
 
 	init: function(params) {
 		var slideshow = $('#' + params.id),
-			hash = slideshow.attr('data-hash'),
-			item = slideshow.find('li').first(),
-			title = item.attr('title');
-
-		if (title != '') {
-			item.css('backgroundImage', 'url(' + title + ')');
+			hash = slideshow.attr('data-hash');
+		
+		var slideCallback = function(index) {
+			var item = slideshow.find('li').eq(index),
+				img = item.find('img'),
+				src = img.attr('data-src');
+				
+			if(src) {
+				WikiaPhotoGalleryView.loadAndResizeImage(img, parseInt(params.width), parseInt(params.height), false, true)
+			}
 		}
-
-		item.removeAttr('title');
+		
+		// Lazy load first image
+		slideCallback(0);
 
 		slideshow.slideshow({
 			buttonsClass: 'wikia-button',
@@ -22,21 +27,14 @@ var WikiaPhotoGallerySlideshow = {
 			prevClass: 'wikia-slideshow-prev',
 			slideWidth: params.width,
 			slidesClass: 'wikia-slideshow-images',
-			slideCallback: function(index) {
-				var item = slideshow.find('li').eq(index),
-					title = item.attr('title');
-				if (title) {
-					item.css('backgroundImage', 'url(' + title + ')');
-					item.removeAttr('title');
-				}
-			}
+			slideCallback: slideCallback
 		});
-
+		
 		// handle clicks on "Pop Out" button
-		slideshow.find('.wikia-slideshow-popout').click(this.onPopOutClickFn);
+		//slideshow.find('.wikia-slideshow-popout').click(this.onPopOutClickFn);
 
 		// handle clicks on slideshow images
-		slideshow.find('.wikia-slideshow-images a').click(this.onPopOutClickFn);
+		//slideshow.find('.wikia-slideshow-images a').click(this.onPopOutClickFn);
 
 		// handle clicks on "Add Image"
 		slideshow.find('.wikia-slideshow-addimage').click(function(e) {
@@ -103,7 +101,7 @@ var WikiaPhotoGallerySlideshow = {
 
 		this.log('#' + params.id + ' initialized');
 	},
-
+	
 	onPopOutClickFn: function(ev) {
 		var node = $(this),
 		slideshow = node.closest('.wikia-slideshow'),
@@ -146,7 +144,7 @@ var WikiaPhotoGallerySlideshow = {
 
 		// load popout
 		WikiaPhotoGalleryView.loadEditorJS(function() {
-			WikiaPhotoGallery.showSlideshowPopOut(slideshow.attr('id'), slideshow.attr('data-hash'), index, WikiaPhotoGalleryView.isViewPage(), isFromFeed);
+			//WikiaPhotoGallery.showSlideshowPopOut(slideshow.attr('id'), slideshow.attr('data-hash'), index, WikiaPhotoGalleryView.isViewPage(), isFromFeed);
 		});
 	}
 };

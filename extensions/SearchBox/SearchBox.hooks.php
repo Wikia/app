@@ -25,7 +25,7 @@ class SearchBoxHooks {
 		global $wgContLang;
 
 		// Internationalization
-		wfLoadExtensionMessages( 'SearchBox' );
+		
 
 		/*
 		 * Label

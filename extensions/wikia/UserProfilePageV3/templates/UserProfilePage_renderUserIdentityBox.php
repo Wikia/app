@@ -14,7 +14,7 @@
 		<? endif; ?>
 		<?php if( $canRemoveAvatar ): ?>
 			<span>
-				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"> <a id="UserAvatarRemove" data-name="<?= $user['name']; ?>"  href="#"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
+				<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"> <a id="UserAvatarRemove" data-name="<?= $user['name']; ?>"  href="#" data-confirm="<?= htmlspecialchars(wfMsg('user-identity-remove-confirmation')); ?>"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
 			</span>
 		<?php endif; ?>
 	</div>
@@ -147,7 +147,8 @@
 				
 				<? if( !empty($user['occupation']) ): ?>
 					<li><?= wfMsg('user-identity-box-occupation', array( '$1' => $user['occupation'] )); ?></li>
-				<? else: ?>
+				<? elseif( !empty($user['showZeroStates']) ): ?>
+				<li><?='A'.$user['showZeroStates'].'B' ?></li>
 					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
 					<li><?= wfMsg('user-identity-box-zero-state-occupation'); ?></li>
 					<? endif; ?>

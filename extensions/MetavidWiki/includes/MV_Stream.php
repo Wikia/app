@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * MV_Stream.php Created on Apr 24, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -8,7 +8,7 @@
  * @author Michael Dale
  * @email dale@ucsc.edu
  * @url http://metavid.org
- * 
+ *
  */
 if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 
@@ -21,22 +21,22 @@ class MV_Stream {
 	var $date_start_time = '';
 	var $duration = '';
 
-	# private state vars (start with _):	
+	# private state vars (start with _):
 	var $_streamExists = false;
 	var $_table_name = 'mv_streams';
 	var $_files = null;
 
-	# pointers: 
+	# pointers:
 	var $mvTitle = '';
 
-	/*
+	/**
 	 * Array init of stream
 	 */
 	function __construct( $initVal = array() ) {
 		// convert the object to an array
 		if ( is_object( $initVal ) )
 			$initVal = get_object_vars( $initVal );
-			
+
 		if ( is_array( $initVal ) ) {
 			foreach ( $initVal as $key => $val ) {
 				// make sure the key is present and is not private
@@ -44,8 +44,8 @@ class MV_Stream {
 					$this-> $key = $val;
 				}
 			}
-		}		
-		// normalize stream title: 		
+		}
+		// normalize stream title:
 	}
 	function newStreamByName( $name ) {
 		$s = new MV_Stream( array( 'name' => $name ) );
@@ -68,7 +68,7 @@ class MV_Stream {
 		$result = $dbr->select( $dbr->tableName( 'mv_streams' ), '*', array (
 			'name' => $this->name
 			) );
-		} else if ( $this->id != '' ) {
+		} elseif ( $this->id != '' ) {
 			$result = $dbr->select( $dbr->tableName( 'mv_streams' ), '*', array (
 			'id' => $this->id
 		) );
@@ -103,8 +103,8 @@ class MV_Stream {
 			return $this->date_start_time;
 		}
 	}
-	/*
-	 * @@todo cache this!: 
+	/**
+	 * @@todo cache this!:
 	 */
 	function getStreamNameFromId( $id ) {
 		$dbr = & wfGetDB( DB_SLAVE );
@@ -120,10 +120,10 @@ class MV_Stream {
 		if ( is_numeric( $this->duration ) )
 			return $this->duration;
 		$this->db_load_stream();
-		// if still not set return null	
+		// if still not set return null
 		return $this->duration;
 	}
-	/*
+	/**
 	 * returns a list of files from the mv_stream_files table
 	 */
 	function getFileList() {
@@ -131,20 +131,20 @@ class MV_Stream {
 		$result = $dbr->select( 'mv_stream_files', '*', array (
 			'stream_id' => $this->getStreamId()
 		) );
-		// print_r($result);		
+		// print_r($result);
 		$file_list = array();
 		while ( $row = $dbr->fetchObject( $result ) ) {
 			$file_list[] = new MV_StreamFile( $this, $row );
 		}
 		return $file_list;
 	}
-	/*
+	/**
 	 * returns full web accessible path to stream
 	 * (by default this is the web streamable version of the file)
 	 * web stream is file_desc_msg as: mv_ogg_low_quality
 	 * $mvDefaultVideoQualityKey in MV_Settings.php
-	 * 
-	 * @@todo move into mvTitle class 
+	 *
+	 * @@todo move into mvTitle class
 	 * @@todo point to MV_OggSplit (for segmenting the ogg stream)
 	 * (for now using anx)
 	 */
@@ -154,28 +154,28 @@ class MV_Stream {
 	function getStreamImageURL( $size = null, $req_time = null ) {
 		return 	$this->mvTitle->getStreamImageURL( $size, $req_time );
 	}
-	/*
-	 * Inserts the current stream 
+	/**
+	 * Inserts the current stream
 	 */
 	function insertStream( $stream_type = '' ) {
 		// @@todo local file check (add formats to stream table)
-		// @@set state 
+		// @@set state
 		if ( $stream_type != '' )$this->stream_type = $stream_type;
 		switch ( $this->stream_type ) {
 			case 'metavid_file' :
 				/*check local file exists and in what formats are available
-				 * stream state: available				
+				 * stream state: available
 				*/
 				break;
 			case 'metavid_live' :
-				/*set up icecast to broadcast the stream and copy it to archive folder 
+				/*set up icecast to broadcast the stream and copy it to archive folder
 				 * state live_otw
 				 */
 				break;
 			case 'upload_file' :
 				// use mediaWiki OggHanlder .. so just reference media in Image: namespace
 				/*present an ajax upload progress bar (handled on initial request)
-				* once done uploading 
+				* once done uploading
 				*	check if ogg at reasonable bit rate/resolution
 				*		add to stream
 				*	else
@@ -191,7 +191,7 @@ class MV_Stream {
 				*/
 			break;
 		}
-		
+
 		$insAry = array ();
 		foreach ( $this as $key => $val ) {
 			if ( $key == 'name' || $key == 'state' || $key == 'date_start_time' || $key == 'duration' ) {
@@ -208,13 +208,13 @@ class MV_Stream {
 			return false;
 		}
 	}
-	// removes the stream and assoc meta data. 
+	// removes the stream and assoc meta data.
 	function removeStream( $removeMVDs = true ) {
  		$dbw = wfGetDB( DB_WRITE );
  		$dbr = wfGetDB( DB_SLAVE );
  		if ( $removeMVDs ) {
- 			// delete metadata pages: 
- 			// @@todo figure out a way to do this quickly/group sql queries.  
+ 			// delete metadata pages:
+ 			// @@todo figure out a way to do this quickly/group sql queries.
  			$mvd_rows = MV_Index::getMVDInRange( $this->getStreamId() );
  			foreach ( $mvd_rows as $row ) {
 					$title = Title::newFromText( $row->wiki_title, MV_NS_MVD );
@@ -222,20 +222,20 @@ class MV_Stream {
 					$article->doDelete( 'parent stream removed' );
 			}
  		}
- 		//remove the stream db entries and images:  
+ 		//remove the stream db entries and images:
  		$this->deleteDB();
  		return true;
 	}
 	// removes the stream from the db:
 	function deleteDB() {
-		$dbw = & wfGetDB( DB_WRITE );		
-		//remove any MVD index items: 
-		MV_Index::remove_by_stream_id(  $this->id  );		
-		//remove any digest 
+		$dbw = & wfGetDB( DB_WRITE );
+		//remove any MVD index items:
+		MV_Index::remove_by_stream_id(  $this->id  );
+		//remove any digest
 		$dbw->delete('mv_clipview_digest', array('stream_id'=> $this->id ));
 		//remove any images
 		$dbw->delete('mv_stream_images', array('stream_id'	=> $this->id));
-		//remove pointers to any files:				
+		//remove pointers to any files:
 		$dbw->delete( 'mv_stream_files', array( 'stream_id' => $this->id ));
 	}
 	function updateStreamDB() {

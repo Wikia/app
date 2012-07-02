@@ -4,12 +4,13 @@
  *
  * @file
  * @author Niklas Laxström
- * @copyright Copyright © 2009-2010 Niklas Laxström
+ * @copyright Copyright © 2009-2012 Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 /**
  * This class represents one individual section in translatable page.
+ *
  * @ingroup PageTranslation
  */
 class TPSection {
@@ -66,7 +67,7 @@ class TPSection {
 	 * @return \string Wikitext.
 	 */
 	public function getOldText() {
-		return isset( $this->oldtext ) ? $this->oldtext : $this->text;
+		return isset( $this->oldText ) ? $this->oldText : $this->text;
 	}
 
 	/**

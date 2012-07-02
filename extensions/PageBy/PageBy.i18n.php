@@ -2,8 +2,8 @@
 /**
  * Internationalisation file for the extension PageBy
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
@@ -27,9 +27,11 @@ $messages['en'] = array(
  * @author Jon Harald Søby
  * @author Purodha
  * @author Siebrand
+ * @author The Evil IP address
+ * @author Тест
  */
 $messages['qqq'] = array(
-	'pageby-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'pageby-desc' => '{{desc}}',
 	'pageby-first' => '* $1 link to user page
 * $2 timeanddate
 * $3 (optional) link to initial version of page',
@@ -37,6 +39,7 @@ $messages['qqq'] = array(
 * $2 timeanddate
 * $3 link to diff (or first revision of page)',
 	'pageby-contributors' => '{{Identical|Contributors}}',
+	'pageby-anon' => '{{Identical|Anonymous}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -64,7 +67,9 @@ $messages['ar'] = array(
  * @author Basharh
  */
 $messages['arc'] = array(
+	'pageby-first' => 'ܕܦܐ ܐܬܒܪܝܬ ܒܝܕ $1, $2',
 	'pageby-contributors' => 'ܫܘܬܦܢ̈ܐ:',
+	'pageby-anon' => '<i>ܠܐ ܝܕܝܥܐ</i>',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -78,7 +83,18 @@ $messages['arz'] = array(
 	'pageby-anon' => '<i>مجهول</i>',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'pageby-desc' => 'Amuesa les collaboraciones feches a una páxina wiki usando la etiqueta <code><nowiki><pageby></nowiki></code>',
+	'pageby-first' => 'Páxina creada por $1, $2',
+	'pageby-last' => 'Últimu  <a href="$3">cambiu</a> fechu por $1, $2',
+	'pageby-contributors' => 'Collaboradores:',
+	'pageby-anon' => '<i>anónimu</i>',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -101,9 +117,11 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Bellayet
+ * @author Wikitanvir
  */
 $messages['bn'] = array(
 	'pageby-contributors' => 'অবদানকারী:',
+	'pageby-anon' => '<i>বেনামী</i>',
 );
 
 /** Breton (Brezhoneg)
@@ -176,13 +194,14 @@ $messages['el'] = array(
 );
 
 /** Esperanto (Esperanto)
+ * @author Petrus Adamus
  * @author Yekrats
  */
 $messages['eo'] = array(
 	'pageby-desc' => 'Montras kontribuantojn enlinie en vikia paĝo uzante la etikedon <code><nowiki><pageby></nowiki></code>',
 	'pageby-first' => 'Paĝo kreiita de $1, $2',
 	'pageby-last' => 'Laste <a href="$3">ŝanĝita</a> de $1, $2',
-	'pageby-contributors' => 'Kontribuantoj:',
+	'pageby-contributors' => 'Kontribuintoj:',
 	'pageby-anon' => '<i>anonima</i>',
 );
 
@@ -223,20 +242,25 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Sherbrooke
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'pageby-desc' => 'Affiche les contributeurs en ligne sur une page wiki utilisant la balise <code><nowiki><pageby></nowiki></code>',
 	'pageby-first' => 'Page créée par $1, $2',
 	'pageby-last' => 'Dernière <a href="$3">modification</a> le $1, $2',
-	'pageby-contributors' => 'Contributeurs:',
+	'pageby-contributors' => 'Contributeurs :',
 	'pageby-anon' => "''anonymes''",
 );
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
+ * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'pageby-first' => 'Pâge fêta per $1, $2',
+	'pageby-last' => 'Dèrriér <a href="$3">changement</a> lo $1, $2',
 	'pageby-contributors' => 'Contributors :',
+	'pageby-anon' => '<i>anonimo</i>',
 );
 
 /** Galician (Galego)
@@ -395,7 +419,7 @@ $messages['km'] = array(
 	'pageby-anon' => '<i>អនាមិក</i>',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -422,10 +446,10 @@ $messages['lb'] = array(
  * @author Brest
  */
 $messages['mk'] = array(
-	'pageby-desc' => 'Прикажува уредувачи на самата вики страница со користење на ознаката <code><nowiki><pageby></nowiki></code>',
+	'pageby-desc' => 'Прикажува уредници на самата вики-страница со користење на ознаката <code><nowiki><pageby></nowiki></code>',
 	'pageby-first' => 'Страницата е создадена од $1, $2',
-	'pageby-last' => 'Последно <a href="$3">модифицирано</a> од $1, $2',
-	'pageby-contributors' => 'Уредувачи:',
+	'pageby-last' => 'Последната <a href="$3">измена</a> ја извршил $1, $2',
+	'pageby-contributors' => 'Учесници:',
 	'pageby-anon' => '<i>анонимни</i>',
 );
 
@@ -433,10 +457,10 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'pageby-first' => '$1, $2 നാണ്‌ താള്‍ സൃഷ്ടിച്ചത്',
+	'pageby-first' => '$1, $2 നാണ്‌ താൾ സൃഷ്ടിച്ചത്',
 	'pageby-last' => '$1, $2 നാണ്‌ അവസാനമായി <a href="$3">തിരുത്തിയത്</a>',
-	'pageby-contributors' => 'സംഭാവന ചെയ്തവര്‍:',
-	'pageby-anon' => '<i>അജ്ഞാതര്‍</i>',
+	'pageby-contributors' => 'സംഭാവന ചെയ്തവർ:',
+	'pageby-anon' => '<i>അജ്ഞാതർ</i>',
 );
 
 /** Marathi (मराठी)
@@ -449,6 +473,28 @@ $messages['mr'] = array(
 	'pageby-last' => 'शेवटचा <a href="$3">बदल</a> $1, $2 ने',
 	'pageby-contributors' => 'योगदानकर्ते :',
 	'pageby-anon' => '<i>अनामिक</i>',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'pageby-desc' => 'Menunjukkan para penyumbang dalam baris di laman wiki dengan menggunakan tag <code><nowiki><pageby></nowiki></code>',
+	'pageby-first' => 'Laman dibuat oleh $1 pada $2',
+	'pageby-last' => 'Kali terakhir <a href="$3">diubah</a> oleh $1, $2',
+	'pageby-contributors' => 'Penyumbang:',
+	'pageby-anon' => '<i>tanpa nama</i>',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'pageby-desc' => 'Viser bidragsytere på innholdssider med taggen <code><nowiki><pageby></nowiki></code>',
+	'pageby-first' => 'Side opprettet av $1 $2',
+	'pageby-last' => 'Sist <a href="$3">endret</a> av $1 $2',
+	'pageby-contributors' => 'Bidragsytere:',
+	'pageby-anon' => '<i>anonym</i>',
 );
 
 /** Dutch (Nederlands)
@@ -471,17 +517,6 @@ $messages['nn'] = array(
 	'pageby-first' => 'Sida oppretta av $1 $2',
 	'pageby-last' => 'Sist <a href="$3">endra</a> av $1 $2',
 	'pageby-contributors' => 'Forfattarar:',
-	'pageby-anon' => '<i>anonym</i>',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'pageby-desc' => 'Viser bidragsytere på innholdssider med taggen <code><nowiki><pageby></nowiki></code>',
-	'pageby-first' => 'Side opprettet av $1 $2',
-	'pageby-last' => 'Sist <a href="$3">endret</a> av $1 $2',
-	'pageby-contributors' => 'Bidragsytere:',
 	'pageby-anon' => '<i>anonym</i>',
 );
 
@@ -529,10 +564,11 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'pageby-desc' => 'Mostra contribuidores dentro de uma página wiki usando a marca <code><nowiki><pageby></nowiki></code>',
+	'pageby-desc' => 'Mostra os contribuidores de uma página wiki usando o elemento <code><nowiki><pageby></nowiki></code>',
 	'pageby-first' => 'Página criada por $1, $2',
 	'pageby-last' => '<a href="$3">Modificado</a> pela última vez por $1, $2',
 	'pageby-contributors' => 'Contribuidores:',
@@ -593,6 +629,21 @@ $messages['sk'] = array(
 	'pageby-anon' => '<i>anonymní</i>',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'pageby-contributors' => 'Доприносиоци:',
+	'pageby-anon' => '<i>анонимно</i>',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'pageby-contributors' => 'Doprinosi:',
+	'pageby-anon' => '<i>anonimno</i>',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
@@ -626,7 +677,7 @@ $messages['te'] = array(
 	'pageby-anon' => '<i>అనామకులు</i>',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -634,7 +685,7 @@ $messages['tg-cyrl'] = array(
 	'pageby-contributors' => 'Ҳиссагузорон:',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -665,7 +716,7 @@ $messages['tr'] = array(
 	'pageby-anon' => '<i>anonim</i>',
 );
 
-/** ئۇيغۇرچە (ئۇيغۇرچە)
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Sahran
  */
 $messages['ug-arab'] = array(
@@ -677,11 +728,14 @@ $messages['ug-arab'] = array(
 
 /** Ukrainian (Українська)
  * @author Prima klasy4na
+ * @author Тест
  */
 $messages['uk'] = array(
+	'pageby-desc' => 'Показує учасників редагування безпосередньо на вікі-сторінці за допомогою тегу <code><nowiki><pageby></nowiki></code>',
 	'pageby-first' => 'Сторінка створена $1 $2',
 	'pageby-last' => 'Востаннє <a href="$3">змінювалась</a> $1 $2',
 	'pageby-contributors' => 'Автори:',
+	'pageby-anon' => '<i>анонім</i>',
 );
 
 /** Vèneto (Vèneto)
@@ -718,7 +772,18 @@ $messages['vo'] = array(
 	'pageby-anon' => '<i>nennemik</i>',
 );
 
-/** Yue (粵語)
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'pageby-desc' => 'ווײַזט בײַשטײַערער אין א וויקי בלאט ניצנדיק דעם טאג <code><nowiki><pageby></nowiki></code>',
+	'pageby-first' => 'בלאַט באַשאַפֿן דורך $1, $2',
+	'pageby-last' => 'צו לעצט <a href="$3">מאדיפיצירט</a> דורך $1, $2',
+	'pageby-contributors' => 'בײַשטײַערער:',
+	'pageby-anon' => 'אַנאנים',
+);
+
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -739,12 +804,13 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
-	'pageby-first' => '頁面由$1，在$2創建',
-	'pageby-last' => '上次在$2，由$1<a href="$3">修改</a>',
-	'pageby-contributors' => '貢獻者:',
+	'pageby-first' => '頁面由 $1，在 $2 建立',
+	'pageby-last' => '上次在 $2，由 $1 <a href=「$3」>修改</a>',
+	'pageby-contributors' => '貢獻者：',
 	'pageby-anon' => '<i>匿名</i>',
 );
 

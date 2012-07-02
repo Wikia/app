@@ -5,19 +5,13 @@
  * @author Yaron Koren
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 class AdminLinks extends SpecialPage {
-	var $skin;
 
 	/**
 	 * Constructor
 	 */
-	function AdminLinks() {
-		SpecialPage::SpecialPage( 'AdminLinks' );
-		wfLoadExtensionMessages( 'AdminLinks' );
-		global $wgUser;
-		$this->skin = $wgUser->getSkin();
+	function __construct() {
+		parent::__construct( 'AdminLinks' );
 	}
 
 	function createInitialTree() {
@@ -26,7 +20,10 @@ class AdminLinks extends SpecialPage {
 		// 'general' section
 		$general_section = new ALSection( wfMsg( 'adminlinks_general' ) );
 		$main_row = new ALRow( 'main' );
+		$main_row->addItem( ALItem::newFromSpecialPage( 'Statistics' ) );
+		$main_row->addItem( ALItem::newFromSpecialPage( 'Version' ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Specialpages' ) );
+		$main_row->addItem( ALItem::newFromSpecialPage( 'Log' ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Allmessages' ) );
 		$main_row->addItem( ALItem::newFromEditLink( 'Sidebar', wfMsg( 'adminlinks_editsidebar' ) ) );
 		$main_row->addItem( ALItem::newFromEditLink( 'Common.css', wfMsg( 'adminlinks_editcss' ) ) );
@@ -40,7 +37,8 @@ class AdminLinks extends SpecialPage {
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Listusers' ) );
 		$ul = SpecialPage::getTitleFor( 'Userlogin' );
 		$al = SpecialPage::getTitleFor( 'AdminLinks' );
-		$main_row->addItem( AlItem::newFromPage( $ul, wfMsg( 'adminlinks_createuser' ), "type=signup&returnto=$al" ) );
+		$main_row->addItem( AlItem::newFromPage( $ul, wfMsg( 'adminlinks_createuser' ),
+			array( 'type' => 'signup', 'returnto' => $al->getPrefixedText() ) ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Userrights' ) );
 		$users_section->addRow( $main_row );
 		$tree->addSection( $users_section );
@@ -49,6 +47,7 @@ class AdminLinks extends SpecialPage {
 		$browse_search_section = new ALSection( wfMsg( 'adminlinks_browsesearch' ) );
 		$main_row = new ALRow( 'main' );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Allpages' ) );
+		$main_row->addItem( ALItem::newFromSpecialPage( 'Listfiles' ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Search' ) );
 		$browse_search_section->addRow( $main_row );
 		$tree->addSection( $browse_search_section );
@@ -69,19 +68,27 @@ class AdminLinks extends SpecialPage {
 		$admin_links_tree = $this->createInitialTree();
 		wfRunHooks( 'AdminLinks', array( &$admin_links_tree ) );
 		global $wgOut;
+		if ( method_exists( $wgOut, 'addModuleStyles' ) &&
+			!is_null( $wgOut->getResourceLoader()->getModule( 'mediawiki.special' ) ) ) {
+			$wgOut->addModuleStyles( 'mediawiki.special' );
+		}
 		$wgOut->addHTML( $admin_links_tree->toString() );
 	}
 
 	/**
 	 * For administrators, add a link to the special 'AdminLinks' page
 	 * among the user's "personal URLs" at the top, if they have
-	 * the 'adminlinks' permission
+	 * the 'adminlinks' permission.
+	 *
+	 * @param array $personal_urls
+	 * @param Title $title
+	 *
+	 * @return true
 	 */
-	public static function addURLToUserLinks( &$personal_urls, &$title ) {
+	public static function addURLToUserLinks( array &$personal_urls, Title &$title ) {
 		global $wgUser;
 		// if user is a sysop, add link
 		if ( $wgUser->isAllowed( 'adminlinks' ) ) {
-			wfLoadExtensionMessages( 'AdminLinks' );
 			$al = SpecialPage::getTitleFor( 'AdminLinks' );
 			$href = $al->getLocalURL();
 			$admin_links_vals = array(
@@ -89,6 +96,7 @@ class AdminLinks extends SpecialPage {
 				'href' => $href,
 				'active' => ( $href == $title->getLocalURL() )
 			);
+
 			// find the location of the 'my preferences' link, and
 			// add the link to 'AdminLinks' right before it.
 			// this is a "key-safe" splice - it preserves both the
@@ -100,10 +108,11 @@ class AdminLinks extends SpecialPage {
 			$prefs_location = array_search( 'preferences', $tab_keys );
 			array_splice( $tab_keys, $prefs_location, 0, 'adminlinks' );
 			array_splice( $tab_values, $prefs_location, 0, array( $admin_links_vals ) );
-			$personal_urls = array();
-			for ( $i = 0; $i < count( $tab_keys ); $i++ )
-				$personal_urls[$tab_keys[$i]] = $tab_values[$i];
 
+			$personal_urls = array();
+			for ( $i = 0; $i < count( $tab_keys ); $i++ ) {
+				$personal_urls[$tab_keys[$i]] = $tab_values[$i];
+			}
 		}
 		return true;
 	}
@@ -116,7 +125,7 @@ class AdminLinks extends SpecialPage {
 class ALTree {
 	var $sections;
 
-	function ALTree() {
+	function __construct() {
 		$this->sections = array();
 	}
 
@@ -159,7 +168,7 @@ class ALSection {
 	var $header;
 	var $rows;
 
-	function ALSection( $header ) {
+	function __construct( $header ) {
 		$this->header = $header;
 		$this->rows = array();
 	}
@@ -188,7 +197,7 @@ class ALSection {
 	}
 
 	function toString() {
-		$text = '	<h4 class="mw-specialpagesgroup">' . $this->header . "</h4>\n";
+		$text = '	<h2 class="mw-specialpagesgroup">' . $this->header . "</h2>\n";
 		foreach ( $this->rows as $row ) {
 			$text .= $row->toString();
 		}
@@ -204,7 +213,7 @@ class ALRow {
 	var $name;
 	var $items;
 
-	function ALRow( $name ) {
+	function __construct( $name ) {
 		$this->name = $name;
 		$this->items = array();
 	}
@@ -227,7 +236,7 @@ class ALRow {
 		$text = "	<p>\n";
 		foreach ( $this->items as $i => $item ) {
 			if ( $i > 0 )
-				$text .= " &middot;\n";
+				$text .= " ·\n";
 			$text .= '		' . $item->text;
 		}
 		return $text . "\n	</p>\n";
@@ -248,7 +257,7 @@ class ALItem {
 		$item->label = $desc;
 		if ( $params != null ) {
 			global $wgUser;
-			$item->text = $wgUser->getSkin()->makeKnownLinkObj( $page_name, $desc, $params );
+			$item->text = $wgUser->getSkin()->linkKnown( $page_name, $desc, array(), $params );
 		} else
 			$item->text = "[[$page_name|$desc]]";
 		return $item;
@@ -259,7 +268,7 @@ class ALItem {
 		$item->label = $page_name;
 		$page = SpecialPage::getPage( $page_name );
 		global $wgUser;
-		$item->text = $wgUser->getSkin()->makeKnownLinkObj( $page->getTitle(), $page->getDescription() );
+		$item->text = $wgUser->getSkin()->linkKnown( $page->getTitle(), $page->getDescription() );
 		return $item;
 	}
 
@@ -278,4 +287,5 @@ class ALItem {
 		$item->text = "<a class=\"external text\" rel=\"nofollow\" href=\"$url\">$label</a>";
 		return $item;
 	}
+
 }

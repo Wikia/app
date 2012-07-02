@@ -8,7 +8,6 @@ var UserProfilePage = {
 	userId: null,
 	wasDataChanged: false,
 	forceRedirect: false,
-	isLightboxGenerating: false,
 	reloadUrl: false,
 	
 	init: function() {
@@ -31,7 +30,7 @@ var UserProfilePage = {
 		
 		$('#UserAvatarRemove').click(function(event) {
 			event.preventDefault();
-			UserProfilePage.removeAvatar($(event.target).attr('data-name'));
+			UserProfilePage.removeAvatar($(event.target).attr('data-name'), $(event.target).attr('data-confirm'));
 		});
 		
 		$('#userAvatarEdit').click(function(event) {
@@ -54,7 +53,7 @@ var UserProfilePage = {
 	},
 	
 	renderLightbox: function(tabName) {
-		if( UserProfilePage.isLightboxGenerating === false ) {
+		if( !UserProfilePage.isLightboxGenerating ) {
 		//if lightbox is generating we don't want to let user open second one
 			UserProfilePage.isLightboxGenerating = true;
 			UserProfilePage.newAvatar = false;
@@ -196,7 +195,7 @@ var UserProfilePage = {
 						if( typeof(response.result.error) !== 'undefined' ) {
 							UserProfilePage.modal.find('.avatar-loader').hide();
 							avatarImg.show();
-							GlobalNotification.notify(response.result.error);
+							GlobalNotification.show(response.result.error, 'error');
 						}
 					}
 					
@@ -314,7 +313,7 @@ var UserProfilePage = {
 			data: "answers="+$.toJSON(this.questions),
 			success: function(data) {
 				if( data.status == "error" ) {
-					GlobalNotification.notify(data.errorMsg);
+					GlobalNotification.show(data.errorMsg, 'error');
 				} else {
 					UserProfilePage.closeModal(UserProfilePage.modal);
 					
@@ -369,7 +368,7 @@ var UserProfilePage = {
 			data: 'userId=' + UserProfilePage.userId + '&data=' + $.toJSON(userData),
 			success: function(data) {
 				if( data.status == "error" ) {
-					GlobalNotification.notify(data.errorMsg);
+					GlobalNotification.show(data.errorMsg, 'warn');
 				} else {
 					UserProfilePage.userData = null;
 					
@@ -641,8 +640,8 @@ var UserProfilePage = {
 		});
 	},
 	
-	removeAvatar: function(name) {
-		var answer = confirm($.msg('user-identity-remove-confirmation'));	
+	removeAvatar: function(name, question) {
+		var answer = confirm(question);	
 		
 		if(answer){
 			$.nirvana.sendRequest({
@@ -656,7 +655,7 @@ var UserProfilePage = {
 					if(data.status == "ok") {
 						window.location.reload();
 					} else {
-						alert($.msg('user-identity-remove-fail'));
+						alert(data.error);
 					}
 				}
 			});

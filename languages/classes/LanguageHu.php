@@ -5,9 +5,15 @@
  * @ingroup Language
  */
 class LanguageHu extends Language {
+
+	/**
+	 * @param $word string
+	 * @param $case
+	 * @return string
+	 */
 	function convertGrammar( $word, $case ) {
 		global $wgGrammarForms;
-		if ( isset($wgGrammarForms[$this->getCode()][$case][$word]) ) {
+		if ( isset( $wgGrammarForms[$this->getCode()][$case][$word] ) ) {
 			return $wgGrammarForms[$this->getCode()][$case][$word];
 		}
 
@@ -19,5 +25,6 @@ class LanguageHu extends Language {
 			case 'k':
 				return $word . 'k';
 		}
+		return '';
 	}
 }

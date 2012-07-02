@@ -21,7 +21,7 @@ class ExtDelayedDefinition {
 	}
 
 	// Initialize hooks and tags
-	function ExtDelayedDefinition( &$parser ) {
+	function __construct( &$parser ) {
 		global $wgHooks;
 
 		$parser->setHook( 'define', array( &$this, 'define' ) );

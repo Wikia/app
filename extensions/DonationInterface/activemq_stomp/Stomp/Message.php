@@ -29,9 +29,9 @@ require_once 'Stomp/Frame.php';
  */
 class Stomp_Message extends Stomp_Frame
 {
-    public function __construct ($body, $headers = null)
+    public function __construct ( $body, $headers = null )
     {
-        $this->_init("SEND", $headers, $body);
+        $this->_init( "SEND", $headers, $body );
     }
 }
 ?>

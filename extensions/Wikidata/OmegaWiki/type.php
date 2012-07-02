@@ -24,20 +24,40 @@ function booleanAsHTML( $value ) {
 }
 
 function pageAsURL( $nameSpace, $title, $usedc = true ) {
-	global
-		$wgScript;
 
-	$url = $wgScript . '?title=' . $nameSpace . ':' . htmlspecialchars( $title );
+	global $wgArticlePath, $wdDefaultViewDataSet;
+
+	$myTitle = str_replace( "&", urlencode("&") , $title ) ;
+	$myTitle = str_replace( "?", urlencode("?") , $title ) ;
+	$url = str_replace( "$1", $nameSpace . ':' . $myTitle , $wgArticlePath );
+
 	if ( $usedc ) {
 		$dc = wdGetDataSetContext();
-		$url .= "&dataset=$dc";
+		if ( $dc == $wdDefaultViewDataSet ) return $url;
+		if ( strpos($url , "?") ) {
+			$url .= "&dataset=$dc";
+		} else {
+			$url .= "?dataset=$dc";
+		}
 	}
 	return $url;
-		
 }
 
-function spellingAsURL( $spelling ) {
-	return pageAsURL( "Expression", $spelling );
+function spellingAsURL( $spelling, $lang = 0 ) {
+	global $wdDefaultViewDataSet;
+
+	$title = Title::makeTitle( NS_EXPRESSION, $spelling );
+	$query = array() ;
+
+	$dc = wdGetDataSetContext();
+	if ( $dc != $wdDefaultViewDataSet ) {
+		$query['dataset'] = $dc ;
+	}
+	if ( $lang != 0 ) {
+		$query['explang'] = $lang ;
+	}
+
+	return $title->getLocalURL( $query ) ;
 }
 
 function definedMeaningReferenceAsURL( $definedMeaningId, $definingExpression ) {
@@ -52,8 +72,8 @@ function createLink( $url, $text ) {
 	return '<a href="' . htmlspecialchars( $url ) . '">' . htmlspecialchars( $text ) . '</a>';
 }
 
-function spellingAsLink( $spelling ) {
-	return createLink( spellingAsURL( $spelling ), $spelling );
+function spellingAsLink( $spelling, $lang = 0 ) {
+	return createLink( spellingAsURL( $spelling, $lang ), $spelling );
 }
 
 function definedMeaningReferenceAsLink( $definedMeaningId, $definingExpression, $label ) {

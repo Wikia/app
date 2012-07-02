@@ -5,8 +5,14 @@
  * @ingroup Language
  */
 class LanguagePl extends Language {
+
+	/**
+	 * @param $count string
+	 * @param $forms array
+	 * @return string
+	 */
 	function convertPlural( $count, $forms ) {
-		if ( !count($forms) ) { return ''; }
+		if ( !count( $forms ) ) { return ''; }
 		$forms = $this->preConvertPlural( $forms, 3 );
 		$count = abs( $count );
 		if ( $count == 1 )
@@ -22,9 +28,13 @@ class LanguagePl extends Language {
 		}
 	}
 
-	function commafy($_) {
-		if (!preg_match('/^\d{1,4}(.\d+)?$/',$_)) {
-			return strrev((string)preg_replace('/(\d{3})(?=\d)(?!\d*\.)/','$1,',strrev($_)));
+	/**
+	 * @param $_ string
+	 * @return string
+	 */
+	function commafy( $_ ) {
+		if ( !preg_match( '/^\-?\d{1,4}(\.\d+)?$/', $_ ) ) {
+			return strrev( (string)preg_replace( '/(\d{3})(?=\d)(?!\d*\.)/', '$1,', strrev( $_ ) ) );
 		} else {
 			return $_;
 		}

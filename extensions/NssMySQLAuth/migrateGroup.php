@@ -32,7 +32,7 @@ function migrateGroup( $group ) {
 		}
 	}
 
-	$dbw->immediateCommit();
+	$dbw->commit();
 	wfDoUpdates();
 	return true;
 }

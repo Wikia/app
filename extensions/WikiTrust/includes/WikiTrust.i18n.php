@@ -24,4 +24,3 @@ $messages['en'] = array (
   | This page is not part of the trust experement yet.
   |}',
 			 );
-?>

@@ -21,7 +21,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Refresh Special',
 	'author' => array( 'Bartek Łapiński', 'Jack Phoenix' ),
 	'version' => '1.2.1',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:RefreshSpecial',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:RefreshSpecial',
 	'descriptionmsg' => 'refreshspecial-desc',
 );
 
@@ -32,7 +32,7 @@ $wgGroupPermissions['bureaucrat']['refreshspecial'] = true;
 // Set up the new special page
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['RefreshSpecial'] = $dir . 'RefreshSpecial.i18n.php';
-$wgExtensionAliasesFiles['RefreshSpecial'] = $dir . 'RefreshSpecial.alias.php';
+$wgExtensionMessagesFiles['RefreshSpecialAlias'] = $dir . 'RefreshSpecial.alias.php';
 $wgAutoloadClasses['RefreshSpecial'] = $dir. 'RefreshSpecial.body.php';
 $wgSpecialPages['RefreshSpecial'] = 'RefreshSpecial';
 $wgSpecialPageGroups['RefreshSpecial'] = 'wiki';

@@ -47,8 +47,8 @@ mediawiki.AjaxLogin.prototype.showLoginPanel = function() {
 mediawiki.AjaxLogin.prototype.postAjax = function( action ) {
 	var actionURL = wgServer + wgScriptPath + '/api.php?action=ajaxlogin&format=json';
 	var dataString = this._loginForm.serialize();
-	dataString += '&' + action + '=' + action;
 	this.disableForm();
+	dataString += '&' + action + '=' + action;
 	var that = this;
 	$.ajax({
 		type : 'POST',
@@ -56,7 +56,7 @@ mediawiki.AjaxLogin.prototype.postAjax = function( action ) {
 		dataType : 'json',
 		data : dataString,
 		success : function( data ) {
-			that.requestSuccess( data );
+			that.requestSuccess( data, dataString, actionURL );
 		},
 		error : function( XMLHttpRequest, textStatus, errorThrown ) {
 			// TODO : add error handling here
@@ -110,7 +110,7 @@ mediawiki.AjaxLogin.prototype.doClose = function( event ) {
 	this._loginPanel.jqmHide();
 };
 
-mediawiki.AjaxLogin.prototype.requestSuccess = function( data ) {
+mediawiki.AjaxLogin.prototype.requestSuccess = function( data, dataString, actionURL ) {
 	var responseResult = data.ajaxlogin.result;
 	switch( responseResult ) {
 		case 'Reset':
@@ -142,6 +142,26 @@ mediawiki.AjaxLogin.prototype.requestSuccess = function( data ) {
 					window.location.reload( true );
 				}
 			}
+			break;
+		case 'NeedToken':
+		case 'WrongToken':
+			// TODO: make it so this can't go in an infinite loop
+			var that = this;
+			$.ajax({
+				type : 'POST',
+				url : actionURL,
+				dataType : 'json',
+				data : dataString + '&wpToken=' + data.ajaxlogin.token,
+				success : function( data ) {
+					that.requestSuccess( data, dataString, actionURL );
+				},
+				error : function( XMLHttpRequest, textStatus, errorThrown ) {
+					// TODO : add error handling here
+					if( typeof console != 'undefined' ) {
+						console.log( 'Error in AjaxLogin.js!' );
+					}
+				}
+			});
 			break;
 		case 'NotExists':
 			this.enableForm();

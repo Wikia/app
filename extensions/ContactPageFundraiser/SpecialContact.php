@@ -3,7 +3,8 @@
  * Speclial:Contact, a contact form for visitors.
  * Based on SpecialEmailUser.php
  *
- * @addtogroup SpecialPage
+ * @file
+ * @ingroup SpecialPage
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
@@ -14,9 +15,6 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-global $IP; #needed when called from the autoloader
-require_once("$IP/includes/UserMailer.php");
-
 /**
  *
  */
@@ -26,8 +24,7 @@ class SpecialContact extends SpecialPage {
 	 * Constructor
 	 */
 	function __construct() {
-		global $wgOut;
-		SpecialPage::SpecialPage( 'Contact', '', true );
+		parent::__construct( 'Contact', '', true );
 	}
 
 	/**
@@ -37,27 +34,20 @@ class SpecialContact extends SpecialPage {
 	function execute( $par ) {
 		global $wgUser, $wgOut, $wgRequest, $wgEnableEmail, $wgContactUser;
 
-		wfLoadExtensionMessages( 'ContactPage' );
 		$fname = "SpecialContact::execute";
 
 	 	if ( $wgRequest->wasPosted() ) {
 			$nu = User::newFromName( $wgContactUser );
 			$f = new EmailContactForm( $nu );
 
-			$form['fname']     = $wgRequest->getVal('fname');
-			$form['lname']     = $wgRequest->getVal('lname');
-			$form['orgname']   = $wgRequest->getVal('orgname');
-			$form['jobname']   = $wgRequest->getVal('jobname');
-			$form['urlname']   = $wgRequest->getVal('urlname');
+			$form['name']      = $wgRequest->getVal('name');
+			$form['age']       = $wgRequest->getVal('age');
 			$form['email']     = $wgRequest->getVal('email');
-			$form['telephone'] = $wgRequest->getVal('telephone');
-			$form['other']	   = $wgRequest->getVal('other');
-			$form['url']	   = $wgRequest->getVal('url');
-			$form['country']   = $wgRequest->getVal('country');
-			$form['citytown']  = $wgRequest->getVal('city-town');
-		        $form['provstat']  = $wgRequest->getVal('prov-state');	
+			$form['location']  = $wgRequest->getVal('location');
 			$form['story']	   = $wgRequest->getVal('story');
-			$form['followup']  = $wgRequest->getVal('follow-up');
+			$form['followup']  = $wgRequest->getVal('followup');
+			$form['username']  = $wgRequest->getVal('username');
+			$form['country']   = $wgRequest->getVal('country');
 
 			$text = '';
 			foreach( $form as $key => $value) {
@@ -66,62 +56,58 @@ class SpecialContact extends SpecialPage {
 			$f->setText( $text );
 			$f->doSubmit();
 		}
-
-		else {
-				
-			}		
-			if( !$wgEnableEmail || !$wgContactUser ) {
-				$wgOut->showErrorPage( "nosuchspecialpage", "nospecialpagetext" );
-				return;
-			}
-
-			$action = $wgRequest->getVal( 'action' );
-
-			$nu = User::newFromName( $wgContactUser );
-			if( is_null( $nu ) || !$nu->canReceiveEmail() ) {
-				wfDebug( "Target is invalid user or can't receive.\n" );
-				$wgOut->showErrorPage( "noemailtitle", "noemailtext" );
-				return;
-			}
-
-			$f = new EmailContactForm( $nu );
-
-			if ( "success" == $action ) {
-				wfDebug( "$fname: success.\n" );
-				$f->showSuccess( );
-			} else if ( "submit" == $action && $wgRequest->wasPosted() && $f->hasAllInfo() ) {
-				$token = $wgRequest->getVal( 'wpEditToken' );
-
-				if( $wgUser->isAnon() ) {
-					# Anonymous users may not have a session
-					# open. Check for suffix anyway.
-					$tokenOk = ( EDIT_TOKEN_SUFFIX == $token );
-				} else {
-					$tokenOk = $wgUser->matchEditToken( $token );
-				}
-
-				if ( !$tokenOk ) {
-					wfDebug( "$fname: bad token (".($wgUser->isAnon()?'anon':'user')."): $token\n" );
-					$wgOut->addWikiText( wfMsg( 'sessionfailure' ) );
-					$f->showForm();
-				} else if ( !$f->passCaptcha() ) {
-					wfDebug( "$fname: captcha failed" );
-					$wgOut->addWikiText( wfMsg( 'contactpage-captcha-failed' ) ); //TODO: provide a message for this!
-					$f->showForm();
-				} else {
-					wfDebug( "$fname: submit\n" );
-					$f->doSubmit();
-				}
-			} else {
-				wfDebug( "$fname: form\n" );
-				$f->showForm();
-			}
+		if( !$wgEnableEmail || !$wgContactUser ) {
+			$wgOut->showErrorPage( "nosuchspecialpage", "nospecialpagetext" );
+			return;
 		}
+
+		$action = $wgRequest->getVal( 'action' );
+
+		$nu = User::newFromName( $wgContactUser );
+		if( is_null( $nu ) || !$nu->canReceiveEmail() ) {
+			wfDebug( "Target is invalid user or can't receive.\n" );
+			$wgOut->showErrorPage( "noemailtitle", "noemailtext" );
+			return;
+		}
+
+		$f = new EmailContactForm( $nu );
+
+		if ( "success" == $action ) {
+			wfDebug( "$fname: success.\n" );
+			$f->showSuccess( );
+		} elseif ( "submit" == $action && $wgRequest->wasPosted() && $f->hasAllInfo() ) {
+			$token = $wgRequest->getVal( 'wpEditToken' );
+
+			if( $wgUser->isAnon() ) {
+				# Anonymous users may not have a session
+				# open. Check for suffix anyway.
+				$tokenOk = ( EDIT_TOKEN_SUFFIX == $token );
+			} else {
+				$tokenOk = $wgUser->matchEditToken( $token );
+			}
+
+			if ( !$tokenOk ) {
+				wfDebug( "$fname: bad token (".($wgUser->isAnon()?'anon':'user')."): $token\n" );
+				$wgOut->addWikiText( wfMsg( 'sessionfailure' ) );
+				$f->showForm();
+			} elseif ( !$f->passCaptcha() ) {
+				wfDebug( "$fname: captcha failed" );
+				$wgOut->addWikiText( wfMsg( 'contactpage-captcha-failed' ) ); //TODO: provide a message for this!
+				$f->showForm();
+			} else {
+				wfDebug( "$fname: submit\n" );
+				$f->doSubmit();
+			}
+		} else {
+			wfDebug( "$fname: form\n" );
+			$f->showForm();
+		}
+	}
 }
 
 /**
  * @todo document
- * @addtogroup SpecialPage
+ * @ingroup SpecialPage
  */
 class EmailContactForm {
 
@@ -132,9 +118,8 @@ class EmailContactForm {
 	/**
 	 * @param User $target
 	 */
-	function EmailContactForm( $target ) {
+	function __construct( $target ) {
 		global $wgRequest, $wgUser;
-		global $wgCaptchaClass;
 
 		$this->target = $target;
 		$this->text = $wgRequest->getText( 'wpText' );
@@ -156,7 +141,7 @@ class EmailContactForm {
 			$captcha->action = 'contact';
 		}
 	}
-	
+
 	function setText( $text ) {
 		$this->text = $text;
 	}
@@ -241,7 +226,7 @@ class EmailContactForm {
 <span id='wpTextLabel'><label for=\"wpText\">{$emm}:</label><br /></span>
 <textarea name=\"wpText\" rows='20' cols='80' wrap='virtual' style=\"width: 100%;\">" . htmlspecialchars( $this->text ) .
 "</textarea>
-" . wfCheckLabel( $emc, 'wpCCMe', 'wpCCMe', $wgUser->getBoolOption( 'ccmeonemails' ) ) . "<br />
+" . Xml::checkLabel( $emc, 'wpCCMe', 'wpCCMe', $wgUser->getBoolOption( 'ccmeonemails' ) ) . "<br />
 " . $this->getCaptcha() . "
 <input type='submit' name=\"wpSend\" value=\"{$ems}\" />
 <input type='hidden' name='wpEditToken' value=\"$token\" />
@@ -264,7 +249,7 @@ class EmailContactForm {
 
 	function getCaptcha() {
 		global $wgCaptcha;
-		if ( !$this->useCaptcha() ) return ""; 
+		if ( !$this->useCaptcha() ) return "";
 
 		wfSetupSession(); #NOTE: make sure we have a session. May be required for captchas to work.
 
@@ -283,8 +268,8 @@ class EmailContactForm {
 
 	function doSubmit( ) {
 		global $wgOut, $wgRequest;
-		global $wgEnableEmail, $wgUserEmailUseReplyTo, $wgEmergencyContact;
-		global $wgContactUser, $wgContactSender, $wgContactSenderName;
+		global $wgUserEmailUseReplyTo, $wgEmergencyContact;
+		global $wgContactSender, $wgContactSenderName;
 
 		$csender = $wgContactSender ? $wgContactSender : $wgEmergencyContact;
 		$cname = $wgContactSenderName;
@@ -299,7 +284,7 @@ class EmailContactForm {
 		if ( !$this->fromaddress ) {
 			$from = new MailAddress( $csender, $cname );
 		}
-		else if ( $wgUserEmailUseReplyTo ) {
+		elseif ( $wgUserEmailUseReplyTo ) {
 			$from = new MailAddress( $csender, $cname );
 			$replyto = new MailAddress( $this->fromaddress, $this->fromname );
 		}
@@ -316,7 +301,7 @@ class EmailContactForm {
 		if ( $this->fromname !== "" ) {
 			$subject = wfMsgForContent( "contactpage-subject-and-sender", $subject, $this->fromname );
 		}
-		else if ( $this->fromaddress !== "" ) {
+		elseif ( $this->fromaddress !== "" ) {
 			$subject = wfMsgForContent( "contactpage-subject-and-sender", $subject, $this->fromaddress );
 		}
 
@@ -324,13 +309,9 @@ class EmailContactForm {
 
 			wfDebug( "$fname: sending mail from ".$from->toString()." to ".$to->toString()." replyto ".($replyto==null?'-/-':$replyto->toString())."\n" );
 
-			#HACK: in MW 1.9, replyto must be a string, in MW 1.10 it must be an object!
-			$ver = preg_replace( '![^\d._+]!', '', $GLOBALS['wgVersion'] );
-			$replyaddr = $replyto == null
-					? null : version_compare( $ver, '1.10', '<' )
-						? $replyto->toString() : $replyto;
+			$replyaddr = $replyto == null ? null : $replyto;
 
-			$mailResult = userMailer( $to, $from, $subject, $this->text, $replyaddr );
+			$mailResult = UserMailer::send( $to, $from, $subject, $this->text, $replyaddr );
 
 			if( WikiError::isError( $mailResult ) ) {
 				$wgOut->addWikiText( wfMsg( "usermailererror" ) . $mailResult->getMessage());
@@ -342,7 +323,7 @@ class EmailContactForm {
 					$cc_subject = wfMsg('emailccsubject', $this->target->getName(), $subject);
 					if( wfRunHooks( 'ContactForm', array( &$from, &$replyto, &$cc_subject, &$this->text ) ) ) {
 						wfDebug( "$fname: sending cc mail from ".$from->toString()." to ".$replyto->toString()."\n" );
-						$ccResult = userMailer( $replyto, $from, $cc_subject, $this->text );
+						$ccResult = UserMailer::send( $replyto, $from, $cc_subject, $this->text );
 						if( WikiError::isError( $ccResult ) ) {
 							// At this stage, the user's CC mail has failed, but their
 							// original mail has succeeded. It's unlikely, but still, what to do?

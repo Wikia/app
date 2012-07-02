@@ -47,7 +47,7 @@ $messages['az'] = array(
 	'mostpopularcategories' => 'Ən çox müraciət edilən kateqoriyalar',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -132,7 +132,7 @@ $messages['gd'] = array(
 	'mostpopularcategories' => 'Na roinnean air a bheil an fhèill as motha',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -146,7 +146,7 @@ $messages['he'] = array(
 	'mostpopularcategories' => 'הקטגוריות הפופולריות ביותר',
 );
 
-/** Upper Sorbian (hornjoserbsce)
+/** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(

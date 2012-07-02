@@ -3,7 +3,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 
 /**
  * Special page to allow users to configure the wiki via a web based interface
- * Require MediaWiki version 1.14.0 or greater
+ * Require MediaWiki version 1.17.0 or greater
  *
  * @file
  * @ingroup Extensions
@@ -15,10 +15,9 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Configure',
 	'author' => array( 'Alexandre Emsenhuber', 'Andrew Garrett' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Configure',
-	'description' => 'Allow authorised users to configure the wiki via a web-based interface',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Configure',
 	'descriptionmsg' => 'configure-desc',
-	'version' => '0.15.12 (1.16 branch-2)',
+	'version' => '0.17.2',
 );
 
 # Configuration part
@@ -176,13 +175,6 @@ $wgConfigureUpdateCacheEpoch = false;
  */
 $wgConfigureStyleVersion = '21';
 
-/**
- * Whether to add JS variables to the output
- * THIS IS *NOT* A CONFIGURATION OPTION AND MUST *NOT* BE CHANGED IN
- * LocalSetting.php
- */
-$wgConfigureAddJsVariables = false;
-
 # Adding new rights...
 $wgAvailableRights[] = 'configure';
 $wgAvailableRights[] = 'configure-all';
@@ -219,7 +211,7 @@ $wgExtensionMessagesFiles['Configure'] = $dir . 'Configure.i18n.php';
 $wgExtensionMessagesFiles['ConfigureSettings'] = $dir . 'settings/Settings.i18n.php';
 
 # And special pages aliases...
-$wgExtensionAliasesFiles['Configure'] = $dir . 'Configure.alias.php';
+$wgExtensionMessagesFiles['ConfigureAliases'] = $dir . 'Configure.alias.php';
 
 # Add custom rights defined in $wgRestrictionLevels
 $wgHooks['UserGetAllRights'][] = 'efConfigureGetAllRights';
@@ -285,10 +277,31 @@ $wgAutoloadClasses['ConfigurationPagerFiles'] = $dir . 'pager/PagerFiles.php';
 
 # API module
 $wgAutoloadClasses['ApiConfigure'] = $dir . 'Configure.api.php';
-$wgExtensionFunctions[] = 'efConfigureSetupAPI';
+$wgAPIModules['configure'] = 'ApiConfigure';
 
-# Adding the ajax function
-$wgAjaxExportList[] = 'efConfigureAjax';
+# Ressource loader
+$wgResourceModules['ext.configure'] = array(
+	'scripts' => 'Configure.js',
+	'styles'  => 'Configure.css',
+ 
+	'messages' => array(
+		'configure-js-add',
+		'configure-js-remove',
+		'configure-js-remove-row',
+		'configure-js-prompt-group',
+		'configure-js-group-exists',
+		'configure-js-get-image-url',
+		'configure-js-image-error',
+		'configure-js-biglist-shown',
+		'configure-js-biglist-hidden',
+		'configure-js-biglist-show',
+		'configure-js-biglist-hide',
+		'configure-js-summary-none',
+		'configure-throttle-summary',
+	),
 
-# JS stuff
-$wgHooks['MakeGlobalVariablesScript'][] = 'efConfigureMakeGlobalVariablesScript';
+	'dependencies' => 'mediawiki.legacy.wikibits',
+
+	'localBasePath' => dirname( __FILE__ ),
+	'remoteExtPath' => 'Configure'
+);

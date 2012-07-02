@@ -1,13 +1,13 @@
 <?php
-
 /**
  * Book information driver for Amazon
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
-class BookInformationAmazon implements BookInformationDriver {
 
+class BookInformationAmazon implements BookInformationDriver {
 	/**
 	 * Submit a request to the information source and
 	 * return the result
@@ -17,19 +17,19 @@ class BookInformationAmazon implements BookInformationDriver {
 	 */
 	public function submitRequest( $isbn ) {
 		global $wgBookInformationService;
-		if( isset( $wgBookInformationService['accesskeyid'] ) ) {
+		if ( isset( $wgBookInformationService['accesskeyid'] ) ) {
 			$aki = $wgBookInformationService['accesskeyid'];
 			$uri = self::buildRequestURI( $aki, $isbn );
-			if( ( $xml = Http::get( $uri ) ) !== false ) {
+			if ( ( $xml = Http::get( $uri ) ) !== false ) {
 				return $this->parseResponse( $xml );
 			} else {
 				return new BookInformationResult( BookInformationResult::RESPONSE_TIMEOUT );
-			}			
+			}
 		} else {
 			return new BookInformationResult( BookInformationResult::RESPONSE_FAILED );
 		}
 	}
-	
+
 	/**
 	 * Build the URI for an Amazon Web Service request
 	 *
@@ -46,7 +46,7 @@ class BookInformationAmazon implements BookInformationDriver {
 		return 'http://webservices.amazon.com/onca/xml'
 				. '?' . implode( '&', $bits );
 	}
-	
+
 	/**
 	 * Parse an XML response from the service and extract
 	 * the information we require
@@ -57,9 +57,9 @@ class BookInformationAmazon implements BookInformationDriver {
 	private function parseResponse( $response ) {
 		try {
 			$xml = new SimpleXMLElement( $response );
-			if( is_object( $xml ) && $xml instanceof SimpleXMLElement ) {
+			if ( is_object( $xml ) && $xml instanceof SimpleXMLElement ) {
 				$items =& $xml->Items[0];
-				if( $items->Request[0]->IsValid == 'True' && isset( $items->Item[0] ) ) {
+				if ( $items->Request[0]->IsValid == 'True' && isset( $items->Item[0] ) ) {
 					$item =& $items->Item[0]->ItemAttributes[0];
 					$title = (string)$item->Title;
 					$author = (string)$item->Author;
@@ -71,12 +71,12 @@ class BookInformationAmazon implements BookInformationDriver {
 				}
 			} else {
 				return new BookInformationResult( BookInformationResult::RESPONSE_FAILED );
-			}		
-		} catch( Exception $ex ) {
+			}
+		} catch ( Exception $ex ) {
 			return new BookInformationResult( BookInformationResult::RESPONSE_FAILED );
 		}
 	}
-	
+
 	/**
 	 * Prepare a BookInformationResult corresponding to a successful
 	 * request and containing the available book information
@@ -94,7 +94,7 @@ class BookInformationAmazon implements BookInformationDriver {
 			self::buildPurchaseLink( $purchase ) );
 		return $result;
 	}
-	
+
 	/**
 	 * Build a link to Amazon Web Services' web site
 	 *
@@ -113,6 +113,4 @@ class BookInformationAmazon implements BookInformationDriver {
 	private static function buildPurchaseLink( $purchase ) {
 		return '<a href="' . $purchase . '">Amazon.com</a>';
 	}
-	
 }
-

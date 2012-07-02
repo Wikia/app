@@ -5,7 +5,7 @@
  *
  * @file
  * @author Niklas Laxström
- * @copyright Copyright © 2009-2010 Niklas Laxström
+ * @copyright Copyright © 2009-2012 Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -46,6 +46,7 @@ class TranslationEditPage {
 
 	/**
 	 * Change the title of the page we are working on.
+	 * @param $title Title
 	 */
 	public function setTitle( Title $title ) { $this->title = $title; }
 	/**
@@ -59,12 +60,13 @@ class TranslationEditPage {
 	 * disabled all other output.
 	 */
 	public function execute() {
-		global $wgOut, $wgServer, $wgScriptPath;
+		global $wgOut, $wgServer, $wgScriptPath, $wgUser, $wgRequest;
 
 		$wgOut->disable();
 
 		$data = $this->getEditInfo();
-		$helpers = new TranslationHelpers( $this->getTitle() );
+		$groupId = $wgRequest->getText( 'loadgroup', '' );
+		$helpers = new TranslationHelpers( $this->getTitle(), $groupId );
 
 		$id = "tm-target-{$helpers->dialogID()}";
 		$helpers->setTextareaId( $id );
@@ -80,14 +82,21 @@ class TranslationEditPage {
 		}
 
 		$translation = $helpers->getTranslation();
+		$targetLang = Language::factory( $helpers->getTargetLanguage() );
 		$textareaParams = array(
 			'name' => 'text',
 			'class' => 'mw-translate-edit-area',
 			'id' => $id,
 			/* Target language might differ from interface language. Set
 			 * a suitable default direction */
-			'dir' => Language::factory( $helpers->getTargetLanguage() )->getDir(),
+			'lang' => $targetLang->getCode(),
+			'dir' => $targetLang->getDir(),
 		);
+
+		if ( !$wgUser->isAllowed( 'translate' ) ) {
+			$textareaParams['readonly'] = 'readonly';
+		}
+
 		$textarea = Html::element( 'textarea', $textareaParams, $translation );
 
 		$hidden = array();
@@ -102,8 +111,8 @@ class TranslationEditPage {
 		$hidden[] = Html::hidden( 'format', 'json' );
 		$hidden[] = Html::hidden( 'action', 'edit' );
 
-		$summary = Xml::inputLabel( wfMsg( 'summary' ), 'summary', 'summary', 40 );
-		$save = Xml::submitButton( wfMsg( 'savearticle' ), array( 'style' => 'font-weight:bold', 'class' => 'mw-translate-save' ) );
+		$summary = Xml::inputLabel( wfMsg( 'translate-js-summary' ), 'summary', 'summary', 40 );
+		$save = Xml::submitButton( wfMsg( 'translate-js-save' ), array( 'class' => 'mw-translate-save' ) );
 		$saveAndNext = Xml::submitButton( wfMsg( 'translate-js-next' ), array( 'class' => 'mw-translate-next' ) );
 		$skip = Html::element( 'input', array( 'class' => 'mw-translate-skip', 'type' => 'button', 'value' => wfMsg( 'translate-js-skip' ) ) );
 
@@ -122,6 +131,14 @@ class TranslationEditPage {
 
 		$support = $this->getSupportButton( $this->getTitle() );
 
+		if ( $wgUser->isAllowed( 'translate' ) ) {
+			$bottom = "$summary$save$saveAndNext$skip$history$support";
+		} else {
+			$text = wfMessage( 'translate-edit-nopermission' )->escaped();
+			$button = $this->getPermissionPageButton();
+			$bottom = "$text $button$skip$history$support";
+		}
+
 		// Use the api to submit edits
 		$formParams = array(
 			'action' => "{$wgServer}{$wgScriptPath}/api.php",
@@ -131,7 +148,7 @@ class TranslationEditPage {
 		$form = Html::rawElement( 'form', $formParams,
 			implode( "\n", $hidden ) . "\n" .
 			$helpers->getBoxes( $this->suggestions ) . "\n" .
-			"$textarea\n$summary$save$saveAndNext$skip$history$support"
+			"$textarea\n$bottom"
 		);
 
 		echo Html::rawElement( 'div', array( 'class' => 'mw-ajax-dialog' ), $form );
@@ -177,8 +194,8 @@ class TranslationEditPage {
 		}
 
 		return array(
-			'onclick' => TranslateBC::encodeJsCall(
-				'return trlOpenJsEdit', array( $title->getPrefixedDbKey(), $group ) ),
+			'onclick' => Xml::encodeJsCall(
+				'return mw.translate.openDialog', array( $title->getPrefixedDbKey(), $group ) ),
 			'title' => wfMsg( 'translate-edit-title', $title->getPrefixedText() )
 		);
 	}
@@ -206,6 +223,25 @@ class TranslationEditPage {
 			)
 		);
 		return $support;
+	}
+
+	protected function getPermissionPageButton() {
+		global $wgTranslatePermissionUrl;
+		if ( !$wgTranslatePermissionUrl ) return '';
+
+		$title = Title::newFromText( $wgTranslatePermissionUrl );
+		if ( !$title ) return '';
+
+		$button = Html::element(
+			'input',
+			array(
+				'class' => 'mw-translate-askpermission',
+				'type' => 'button',
+				'value' => wfMsg( 'translate-edit-askpermission' ),
+				'data-load-url' => $title->getLocalUrl(),
+			)
+		);
+		return $button;
 	}
 
 }

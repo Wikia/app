@@ -1,10 +1,10 @@
 <?php
-/*
+/**
  * MV_ImageGallery.php Created on Oct 22, 2007
- * 
+ *
  * All Metavid Wiki code is Released Under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
  * @url http://metavid.org
@@ -12,7 +12,6 @@
 if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
  class MV_ImageGallery extends ImageGallery {
  	private $mAttribs = array();
- 	private $contextTitle = false;
 
 	private $mPerRow = 4; // How many images wide should the gallery be?
 	private $mWidths = 160, $mHeights = 120; // How wide/tall each thumbnail should be
@@ -38,20 +37,19 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 		foreach ( $this->mImages as $pair ) {
 			$nt = $pair[0];
 			$text = $pair[1];
-			
+
 			# Give extensions a chance to select the file revision for us
 			$time = false;
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time ) );
 
 			$img = wfFindFile( $nt, array( 'time' => $time ) );
-			
-			
+
 			if ( $nt->getNamespace() == MV_NS_MVD ||
 				$nt->getNamespace() == MV_NS_STREAM ||
 				$nt->getNamespace() == MV_NS_SEQUENCE ) { // @@todo fix sequence embed
-				// $vpad = floor( ( 1.25*$this->mHeights - $thumb->height ) /2 ) - 2;				
+				// $vpad = floor( ( 1.25*$this->mHeights - $thumb->height ) /2 ) - 2;
 				$mvTitle = new MV_Title( $nt );
-				
+
 				// remap MVD namespace links into the Stream view (so contextual metadata is present)
 				if ( $nt->getNamespace() == MV_NS_MVD ) {
 					$nt = Title::MakeTitle( MV_NS_STREAM, ucfirst( $mvTitle->getStreamName() ) . '/' . $mvTitle->getTimeRequest() );
@@ -63,7 +61,7 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 					'<div class="thumb" style="padding: 4px 0; width: ' . htmlspecialchars( $this->mWidths + 5 ) . 'px;">'
 					# Auto-margin centering for block-level elements. Needed now that we have video
 					# handlers since they may emit block-level elements as opposed to simple <img> tags.
-					# ref http://css-discuss.incutio.com/?page=CenteringBlockElement				
+					# ref http://css-discuss.incutio.com/?page=CenteringBlockElement
 					. '<div style="margin-left: auto; margin-right: auto; width: ' . htmlspecialchars( $this->mWidths ) . 'px;">'
 					.  $sk->makeKnownLinkObj( $nt, '<img title="'. htmlspecialchars($mvTitle->getStreamNameText()) .'"'
 							. ' width="160" height="120" src="'.$mvTitle->getStreamImageURL('160x120') . '">')
@@ -77,7 +75,7 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 					$nb = '';
 					$textlink = '';
 			} else {
-				
+
 				if ( $nt->getNamespace() != NS_IMAGE || !$img ) {
 					# We're dealing with a non-image, spit out the name and be done with it.
 					$thumbhtml = "\n\t\t\t" . '<div style="height: ' . ( $this->mHeights * 1.25 + 2 ) . 'px;">'
@@ -92,7 +90,7 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 						. htmlspecialchars( $img->getLastError() ) . '</div>';
 				} else {
 					$vpad = floor( ( 1.25 * $this->mHeights - $thumb->height ) / 2 ) - 2;
-						
+
 					$thumbhtml = "\n\t\t\t" .
 						'<div class="thumb" style="padding: ' . htmlspecialchars( $vpad ) . 'px 0; width: ' . htmlspecialchars( $this->mWidths + 30 ) . 'px;">'
 						# Auto-margin centering for block-level elements. Needed now that we have video
@@ -100,15 +98,12 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 						# ref http://css-discuss.incutio.com/?page=CenteringBlockElement
 						. '<div style="margin-left: auto; margin-right: auto; width: ' . htmlspecialchars( $this->mWidths ) . 'px;">'
 						. $thumb->toHtml( array( 'desc-link' => true ) ) . '</div></div>';
-	
+
 					// Call parser transform hook
 					if ( $this->mParser && $img->getHandler() ) {
 						$img->getHandler()->parserTransformHook( $this->mParser, $img );
 					}
 				}
-	
-				// TODO
-				// $ul = $sk->makeLink( $wgContLang->getNsText( MWNamespace::getUser() ) . ":{$ut}", $ut );
 
 				if ( $this->mShowBytes ) {
 					if ( $img ) {
@@ -121,7 +116,7 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 				} else {
 					$nb = '';
 				}
-	
+
 				$textlink = $this->mShowFilename ?
 					$sk->makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 20 ) ) ) . "<br />\n" :
 					'' ;

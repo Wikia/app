@@ -20,9 +20,9 @@ class SecurePoll_ApprovalBallot extends SecurePoll_Ballot {
 			$s .= 
 				'<div class="securepoll-option-approval">' .
 				Xml::check( $inputId, $oldValue, array( 'id' => $inputId ) ) .
-				'&nbsp;' .
+				'&#160;' .
 				Xml::tags( 'label', array( 'for' => $inputId ), $optionHTML ) .
-				'&nbsp;' .
+				'&#160;' .
 				"</div>\n";
 		}
 		return $s;

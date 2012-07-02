@@ -114,7 +114,6 @@ $wgHooks['ContributionsToolLinks'][] = 'efLoadPhalanxLink';
 function efLoadPhalanxLink( $id, $nt, &$links ) {
 	global $wgUser;
 	if( $wgUser->isAllowed( 'phalanx' ) ) {
-		wfLoadExtensionMessages( 'Phalanx' );
 		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
 			GlobalTitle::newFromText('Phalanx', NS_SPECIAL, 177),
 			'PhalanxBlock',

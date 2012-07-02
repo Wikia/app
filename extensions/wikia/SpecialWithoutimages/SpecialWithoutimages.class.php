@@ -10,17 +10,10 @@
  *
  * @ingroup SpecialPage
  */
-class SpecialWithoutimages extends SpecialPage {
+class SpecialWithoutimages extends WithoutimagesPage {
 
 	function __construct() {
 		parent::__construct( 'Withoutimages' );
-		wfLoadExtensionMessages( 'Withoutimages' );
 	}
 
-	function execute() {
-		$this->setHeaders();
-		list( $limit, $offset ) = wfCheckLimits();
-		$wpp = new WithoutimagesPage();
-		$wpp->doQuery( $offset, $limit );
-	}
 }

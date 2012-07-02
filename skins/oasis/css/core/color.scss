@@ -14,13 +14,14 @@ $page-opacity: get_command_line_param("page-opacity", 100);	// default: 100
 $color-wikiahome-videogames: #8ca038;
 $color-wikiahome-entertainment: #07b2e0;
 $color-wikiahome-lifestyle: #ff6600;
+$color-wikiahome-community: #002e54;
 
 // Darkened verticals colors for buttons
 $color-wikiahome-videogames-dark: #607727;
 $color-wikiahome-entertainment-dark: #0496bd;
 $color-wikiahome-lifestyle-dark: #c75000; // TODO: replace with value verified by design
 
-$color-wikiahome-community: #002e54;
+$color-wikiahome-community-dark: #141e24;
 
 ////////// DO NOT CHANGE PER THEME - BASED ON ABOVE VALUES //////////
 // Mixing colors

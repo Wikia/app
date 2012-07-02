@@ -25,7 +25,6 @@ class RemoveUnusedGroups extends SpecialPage {
 			return;
 		}
 		
-		loadGPMessages();
 		$this->setHeaders();
 		$wgOut->addWikiText( wfMsg( 'grouppermissions-rug-header' ) );
 		if($wgRequest->wasPosted() || !$wgGPManagerRUGconfirm) {

@@ -23,7 +23,6 @@ class SpecialInvitations extends SpecialPage {
 	}
 
 	function execute( $subpage ) {
-		wfLoadExtensionMessages('Invitations');
 		global $wgRequest;
 
 		if ($subpage != '' && $wgRequest->getBool('invite_submit')) {

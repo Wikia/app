@@ -59,21 +59,18 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 			$this->displayRestrictionError();
 			return false; // skip rendering
 		}
-
-		$this->wg->MessageCache->loadAllMessages();	
 		$this->sk = $this->wg->User->getSkin();
-
-		$pages = SpecialPage::getUsablePages();
+		$pages = SpecialPageFactory::getUsablePages();
 	
 		if( count( $pages ) == 0 ) {
 			return;
 		}
-	
+			
 		/** Put them into a sortable array */
 		$groups = array();
 		foreach ( $pages as $pagename => $page ) {
 			if ( !AdminDashboardLogic::isGeneralApp($pagename) && $page->isListed() ) {
-				$group = SpecialPage::getGroup( $page );
+				$group = SpecialPageFactory::getGroup( $page );
 				if( !isset($groups[$group]) ) {
 					$groups[$group] = array();
 				}
@@ -143,7 +140,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		try {
 			$basePages = array("Categories", "Recentchanges", "Specialpages");
 			if (in_array($pageName, $basePages)) {
-				$sp = SpecialPage::getPage($pageName);
+				$sp = SpecialPageFactory::getPage($pageName);
 			} else {
 				$sp = new $pageName(); 
 			}

@@ -138,7 +138,7 @@ $messages['fr'] = array(
 	'timeago-second' => 'il y a une minute',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

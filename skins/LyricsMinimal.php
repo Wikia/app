@@ -231,7 +231,7 @@ EOS;
 		global $wgAllInOne;
 		wfProfileIn(__METHOD__ . '::JSloader');
 
-		$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
+		$allinone = $wgAllInOne;
 
 		$jsReferences = array();
 
@@ -253,7 +253,7 @@ EOS;
 			$tpl->data['headscripts'] = $headScripts;
 
 			// generate code to load JS files
-			$jsReferences = Wikia::json_encode($jsReferences);
+			$jsReferences = json_encode($jsReferences);
 			$jsLoader = <<<EOF
 
 		<script type="text/javascript">/*<![CDATA[*/
@@ -674,7 +674,7 @@ class LyricsMinimalTemplate extends QuickTemplate {
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
 <?php
-	$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
+	$allinone = $wgAllInOne;
 
 	// Getting the extension CSS in a similar way to Oasis (whole skin should ideally be ported to Oasis soon).
 

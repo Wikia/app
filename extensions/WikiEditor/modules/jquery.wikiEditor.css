@@ -1,0 +1,112 @@
+/*
+ * CSS for WikiEditor jQuery plugin
+ */
+
+.wikiEditor-ui {
+	float: left;
+	position: relative;
+	clear: both;
+	width: 100%;
+	background-color: #E0EEf7;
+	border: solid silver 1px;
+}
+.wikiEditor-ui textarea:focus {
+	outline: none;
+}
+.wikiEditor-ui .wikiEditor-ui-bottom {
+	
+}
+.wikiEditor-ui .wikiEditor-ui-text {
+	line-height: 0;
+}
+.wikiEditor-ui .wikiEditor-ui-top {
+	position: relative;
+	border-bottom: solid silver 1px;
+}
+.wikiEditor-ui .wikiEditor-ui-left {
+	float: left;
+	width: 100%;
+}
+.wikiEditor-ui .wikiEditor-ui-right {
+	float: right;
+	background: #F3F3F3;
+	overflow: hidden;
+}
+.wikiEditor-wikitext {
+	float: left;
+	width: 100%;
+}
+.wikiEditor-ui-controls {
+	float: left;
+	width: 100%;
+	background-color: white;
+	margin-top: -1px;
+	border-bottom: solid 1px silver;
+}
+.wikiEditor-ui-tabs {
+	float: left;
+	height: 2.5em;
+	margin-left: -1px;
+	background-color: white;
+	border-left: solid 1px silver;
+	border-top: solid 1px silver;
+}
+.wikiEditor-ui-buttons {
+	float: right;
+	height: 2.5em;
+	margin-right: -1px;
+	background-color: white;
+	padding-left: 1em;
+	border-top: solid 1px white;
+}
+.wikiEditor-ui-buttons button {
+	margin-left: 0.5em;
+}
+.wikiEditor-ui-tabs div {
+	float: left;
+	height: 2.5em;
+	background-color: #f3f3f3;
+	border-right: solid 1px silver;
+	border-bottom: solid 1px silver;
+}
+.wikiEditor-ui-tabs div.current {
+	border-bottom: solid 1px white;
+	background-color: white;
+}
+.wikiEditor-ui-tabs div a {
+	display: inline-block;
+	padding: 0 0.75em;
+	line-height: 2.5em;
+	color: #0645AD;
+}
+.wikiEditor-ui-tabs div.current a {
+	color: #333333;
+}
+.wikiEditor-ui-tabs div.current a:hover {
+	text-decoration: none;
+}
+
+.wikiEditor-view-wikitext {
+	line-height: 1em;
+}
+.wikiEditor-ui-loading {
+	background: #f3f3f3;
+	z-index: 10;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+	height: 100%;
+	width: 100%;
+	border: 1px solid silver;
+	margin: -1px;
+}
+.wikiEditor-ui-loading span {
+	display: block;
+	height: 24px;
+	width: 24px;
+	/* @embed */
+	background: url(images/toolbar/loading.gif) 0 0 no-repeat;
+	text-indent: -9999px;
+	margin: 0 auto;
+}

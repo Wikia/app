@@ -14,8 +14,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version'        => '2.0',
 	'author'         => 'Al Maghi',
 	'email'          => 'alfred.maghi@gmail.com',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:MostRevisors',
-	'description'    => '',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:MostRevisors',
 	'descriptionmsg' => 'mostrevisors-desc',
 );
 
@@ -24,7 +23,7 @@ $wgMostRevisorsLinkContributors = True;
 // Set extension files.
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['MostRevisors'] = $dir . 'MostRevisors.i18n.php';
-$wgExtensionAliasesFiles['MostRevisors'] = $dir . 'MostRevisors.alias.php';
+$wgExtensionMessagesFiles['MostRevisorsAlias'] = $dir . 'MostRevisors.alias.php';
 $wgAutoloadClasses['MostRevisors'] = $dir . 'MostRevisors_body.php';
 $wgSpecialPages['MostRevisors'] = 'MostRevisors';
 $wgSpecialPageGroups['MostRevisors'] = 'wiki';

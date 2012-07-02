@@ -33,7 +33,7 @@
  * e.g. immobile_namespace for namespaces which can't be moved
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class MoveBatch extends Maintenance {
 	public function __construct() {
@@ -44,7 +44,7 @@ class MoveBatch extends Maintenance {
 		$this->addOption( 'i', "Interval to sleep between moves" );
 		$this->addArg( 'listfile', 'List of pages to move, newline delimited', false );
 	}
-	
+
 	public function execute() {
 		global $wgUser;
 
@@ -56,18 +56,21 @@ class MoveBatch extends Maintenance {
 		$user = $this->getOption( 'u', 'Move page script' );
 		$reason = $this->getOption( 'r', '' );
 		$interval = $this->getOption( 'i', 0 );
-		if( $this->hasArg() ) {
+		if ( $this->hasArg() ) {
 			$file = fopen( $this->getArg(), 'r' );
 		} else {
 			$file = $this->getStdin();
 		}
 
 		# Setup
-		if( !$file ) {
+		if ( !$file ) {
 			$this->error( "Unable to read file, exiting", true );
 		}
 		$wgUser = User::newFromName( $user );
-		
+		if ( !$wgUser ) {
+			$this->error( "Invalid username", true );
+		}
+
 		# Setup complete, now start
 		$dbw = wfGetDB( DB_MASTER );
 		for ( $linenum = 1; !feof( $file ); $linenum++ ) {
@@ -86,25 +89,25 @@ class MoveBatch extends Maintenance {
 				$this->error( "Invalid title on line $linenum" );
 				continue;
 			}
-	
-	
+
+
 			$this->output( $source->getPrefixedText() . ' --> ' . $dest->getPrefixedText() );
 			$dbw->begin();
 			$err = $source->moveTo( $dest, false, $reason );
-			if( $err !== true ) {
+			if ( $err !== true ) {
 				$msg = array_shift( $err[0] );
 				$this->output( "\nFAILED: " . wfMsg( $msg, $err[0] ) );
 			}
 			$dbw->commit();
 			$this->output( "\n" );
-	
+
 			if ( $interval ) {
 				sleep( $interval );
 			}
-			wfWaitForSlaves( 5 );
+			wfWaitForSlaves();
 		}
 	}
 }
 
 $maintClass = "MoveBatch";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

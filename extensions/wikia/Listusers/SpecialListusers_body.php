@@ -6,11 +6,11 @@
  * @version: 1.0
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) { 
-	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ; 
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ;
 }
 
-class Listusers extends SpecialPage {
+class Listusers extends SpecialRedirectToSpecial {
 	var $mCityId;
 	var $mAction;
 	var $mTitle;
@@ -33,16 +33,15 @@ class Listusers extends SpecialPage {
 	 * constructor
 	 */
 	function  __construct() {
-		parent::__construct( self::TITLE  /*class*/ );
-		wfLoadExtensionMessages( self::TITLE );
+		parent::__construct( 'Listusers', self::TITLE  /*class*/ );
 	}
 
 	/*
 	 * main function - check request params and set defaults
-	 * 
+	 *
 	 * @access public
-	 * 
-	 * show form 
+	 *
+	 * show form
 	 */
 	public function execute( $subpage ) {
 		global $wgOut, $wgRequest, $wgCityId;
@@ -58,8 +57,8 @@ class Listusers extends SpecialPage {
 		$this->mCityId = $wgCityId;
 		$this->mDefGroups = array( self::DEF_GROUP_NAME, 'bot', 'sysop', 'rollback', 'bureaucrat', 'fb-user' );
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, self::TITLE );
-		$this->mAction = $this->mTitle->escapeLocalURL("");	 
-		$this->mContribs = array( 
+		$this->mAction = htmlspecialchars($this->mTitle->getLocalURL(""));
+		$this->mContribs = array(
 			0 	=> wfMsg('listusersallusers'),
 			1	=> wfMsg('listusers-1contribution'),
 			5 	=> wfMsg('listusers-5contributions'),
@@ -80,7 +79,7 @@ class Listusers extends SpecialPage {
 			$target = $wgRequest->getVal('group');
 		}
 
-		if ( !empty( $target ) ) { 
+		if ( !empty( $target ) ) {
 			if ( strpos($target, ",") !== false )  {
 				$this->mDefGroups = explode( ",", $target );
 			} else {
@@ -114,10 +113,10 @@ class Listusers extends SpecialPage {
 
 	/*
 	 * HTML form
-	 * 
+	 *
 	 * @access public
-	 * 
-	 * show form 
+	 *
+	 * show form
 	 */
 	function showForm ( $error = "" ) {
 		global $wgOut, $wgContLang, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgStylePath, $wgUser;
@@ -133,7 +132,7 @@ class Listusers extends SpecialPage {
 			"action"			=> $this->mAction,
 			"obj"				=> $this,
 			"wgContLang"		=> $wgContLang,
-			"wgExtensionsPath"	=> $wgExtensionsPath, 
+			"wgExtensionsPath"	=> $wgExtensionsPath,
 			"wgStylePath"		=> $wgStylePath,
 			"defContrib"		=> $this->mDefContrib,
 			"defUser"			=> $this->mUserStart,

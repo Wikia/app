@@ -19,8 +19,9 @@
 	<?php endif; ?>
 	<?php foreach ($value['data'] as $key => $value2): ?>
 		<li>
+			<?php $title = Title::newFromText( $value2[1], $value2['wl_namespace'] ); ?>
 			<?php if ($owner): ?>
-			<a  class="ajax-unwatch" href="<?php echo $value2['hideurl'] ?>" >
+			<a  class="ajax-unwatch" title="<?php echo $title->getPrefixedText() ?>" >
 				<?php
 				global $wgBlankImgUrl;
 				?>
@@ -28,7 +29,7 @@
 			</a>
 			<?php endif; ?>
 			<span>
-				<?php echo $sk->link( Title::newFromText( $value2[1], $value2['wl_namespace'] ), $value2['wl_title'], array( 'class' => 'title-link' ) ); ?>
+				<?php echo $sk->link( $title , $value2['wl_title'], array( 'class' => 'title-link' ) ); ?>
 				<?php if(!empty($value2['by_user'])): ?>
 					<?php echo wfMsg('wikiafollowedpages-special-blog-by', array("$1" => $value2['by_user']) ) ?>
 				<?php endif;?>

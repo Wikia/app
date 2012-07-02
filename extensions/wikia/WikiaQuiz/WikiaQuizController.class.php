@@ -12,7 +12,7 @@ class WikiaQuizController extends WikiaController {
 		$this->quizElement = null;
 		$this->data = null;
 	}
-	
+
 	public function executeIndex($params) {
 		if (!$this->checkPermissions()) {
 			return;
@@ -53,10 +53,10 @@ class WikiaQuizController extends WikiaController {
 		$wgOut->addMeta('property:og:type', 'game');
 		$wgOut->addMeta('property:og:url', $wgRequest->getFullRequestURL());
 		$wgOut->addMeta('property:og:site_name', $wgSiteName);
-		
+
 		// mech: simply stripping the tags wont work, as some tags have to be replaced with a space
 		$descrition = $this->data['fbrecommendationtext'];
-		if (!$descrition) {		
+		if (!$descrition) {
 			/* mech: fbrecommendationtext field was intoduced while fixing bug 14843.
 			 * For older quizes the FB recommendation description defaults to titlescreentext
 			 */
@@ -85,7 +85,7 @@ class WikiaQuizController extends WikiaController {
 		$this->defaultEmail = $wgUser->isLoggedIn() ? $wgUser->getEmail() : '';
 
 		// use token to prevent direct requests to the backend for storing emails
-		$this->token = $wgUser->editToken('WikiaQuiz' /* $salt */);
+		$this->token = $wgUser->getEditToken('WikiaQuiz' /* $salt */);
 	}
 
 	/**

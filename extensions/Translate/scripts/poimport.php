@@ -36,7 +36,7 @@ if ( !isset( $options['file'] ) ) {
 	exit( 1 );
 }
 
-/*
+/**
  * Parse the po file.
  */
 $p = new PoImporter( $options['file'] );
@@ -52,7 +52,7 @@ if ( !count( $changes ) ) {
 	exit( 0 );
 }
 
-/*
+/**
  * Import changes to wiki.
  */
 $w = new WikiWriter( $changes, $group, $options['user'], !isset( $options['really'] ) );
@@ -91,6 +91,7 @@ class PoImporter {
 
 	/**
 	 * Parses relevant stuff from the po file.
+	 * @return array|bool
 	 */
 	public function parse() {
 		$data = file_get_contents( $this->file );
@@ -225,6 +226,9 @@ class WikiWriter {
 
 	/**
 	 * Actually adds the new translation.
+	 * @param $namespace
+	 * @param $page
+	 * @param $text
 	 */
 	private function updateMessage( $namespace, $page, $text ) {
 		$title = Title::makeTitleSafe( $namespace, $page );

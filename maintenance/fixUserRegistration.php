@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class FixUserRegistration extends Maintenance {
 	public function __construct() {
@@ -52,4 +52,4 @@ class FixUserRegistration extends Maintenance {
 }
 
 $maintClass = "FixUserRegistration";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

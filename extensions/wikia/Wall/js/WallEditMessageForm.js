@@ -124,6 +124,7 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 		var format = this.getSaveFormat(msg);
 
 		buttons.attr('disabled', true);
+
 		this.model.saveEdit( this.page, id, newtitle, newbody, isreply, format, this.proxy(function(data) {
 			var bubble = $('.speech-bubble-message', msg).first();
 

@@ -7,27 +7,6 @@ window.RTE.tools = {
 		window.$.showModal(title, '<p>' + content + '</p>', {className: 'RTEModal', width: 500});
 	},
 
-	// block given button (RTE command) when cursor is placed within a header (RT #67987)
-	// as per BugId:4440 it should no longer be used
-	/**
-	blockCommandInHeader: function(commandName) {
-		var editor = RTE.getInstance(),
-			command = editor.getCommand(commandName);
-
-		if (command) {
-			editor.on('selectionChange', CKEDITOR.tools.bind(RTE.tools.blockCommandInHeaderOnSelectionChange, command));
-		}
-	},
-
-	blockCommandInHeaderOnSelectionChange: function(ev) {
-		var path = ev.data.path,
-			nodeName = path.block ? path.block.getName() : '',
-			disabled = (/h\d/).test(nodeName);
-
-		return this.setState(disabled ? CKEDITOR.TRISTATE_DISABLED : CKEDITOR.TRISTATE_OFF);
-	},
-	**/
-
 	// call given function with special RTE event type and provide function with given element and extra data
 	callFunction: function(fn, element, data) {
 		// extra check
@@ -200,13 +179,15 @@ window.RTE.tools = {
 
 	// get text content of current selection
 	getSelectionContent: function() {
+		var text;
+
 		if (CKEDITOR.env.ie) {
 			// IE
-			var text = RTE.getInstance().document.$.selection.createRange().text;
+			text = RTE.getInstance().document.$.selection.createRange().text;
 		}
 		else {
 			// Gecko, Opera, Safari
-			var text = RTE.getInstance().window.$.getSelection().toString();
+			text = RTE.getInstance().window.$.getSelection().toString();
 		}
 
 		return text;

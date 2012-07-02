@@ -12,8 +12,3 @@ $specialPageAliases = array();
 $specialPageAliases['en'] = array(
 	'CloakCheck' => array( 'CloakCheck' ),
 );
-
-/**
- * For backwards compatibility with MediaWiki 1.15 and earlier.
- */
-$aliases =& $specialPageAliases;

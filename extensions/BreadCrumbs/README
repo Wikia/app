@@ -5,7 +5,7 @@ Licenses: GNU General Public Licence (GPL)
           GNU Free Documentation License (GFDL)
 --------------------------------------------------------------------------
 
-The BreadCrumbs extensions provides a breadcrumb navigation which shows 
+The BreadCrumbs extensions provides a breadcrumb navigation which shows
 the users path through a wiki.
 
 INSTALLING
@@ -35,7 +35,7 @@ APPEARANCE
 --------------------------------------------------------------------------
 
 To customize the design of the breadcrumb trail use the CSS id
-"BreadCrumbsTrail" and attach your own settings to 
+"BreadCrumbsTrail" and attach your own settings to
 [[MediaWiki:Common.css]] or your users [[User:USERNAME/Common.css]].
 
 BUGS, CONTACT
@@ -44,7 +44,7 @@ BUGS, CONTACT
 Write us on http://www.mediawiki.org/wiki/Extension_talk:BreadCrumbs and
 I'll see what we can do for you.
 
-Alternatively you can reach me on 
+Alternatively you can reach me on
 - Manuel Schneider: <manuel.schneider@wikimedia.ch>
 
 The download and description page of this extension can be found at:

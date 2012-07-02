@@ -1,0 +1,6 @@
+Please run
+  php ../buildLRTables.php --ctable
+before compiling.
+
+(FIXME: this should go to makefile)
+

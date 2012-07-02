@@ -80,7 +80,7 @@ function wfEmailSpecialpage() {
   class Email extends SpecialPage {
 
     function Email() {
-      SpecialPage::SpecialPage( 'Email' );
+      parent::__construct( 'Email' );
       $this->includable(true);
       $this->listed(false);
     }

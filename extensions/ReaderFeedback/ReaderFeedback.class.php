@@ -26,7 +26,7 @@ class ReaderFeedback {
 	
 	/**
 	 * Get the array of tag feedback tags
-	 * @returns array
+	 * @return array
 	 */
 	public static function getFeedbackTags() {
 		self::load();
@@ -36,7 +36,7 @@ class ReaderFeedback {
 	/**
 	 * Get the weight of a feedback tag
 	 * @param string $tag
-	 * @returns array
+	 * @return array
 	 */
 	public static function getFeedbackWeight( $tag ) {
 		self::load();
@@ -45,7 +45,7 @@ class ReaderFeedback {
 
 	/**
 	 * Get the number of reviews that is considered a good sample
-	 * @returns int
+	 * @return int
 	 */	
 	public static function getFeedbackSize() {
 		global $wgFeedbackSizeThreshhold;
@@ -55,31 +55,6 @@ class ReaderFeedback {
 	################# Utility functions #################
 
 	/**
-	 * @param string $val
-	 * @return obj array
-	 * Get a memcache storage object
-	 */
-	public static function makeMemcObj( $val ) {
-		$data = (object) array();
-		$data->value = $val;
-		$data->time = wfTimestampNow();
-		return $data;
-	}
-	
-	/**
-	* @param mixed $data Memc data returned
-	* @param Article $article
-	* @return mixed
-	* Return memc value if not expired
-	*/		
-	public static function getMemcValue( $data, $article ) {
-		if( is_object($data) && $data->time >= $article->getTouched() ) {
-			return $data->value;
-		}
-		return false;
-	}
-	
-	/**
 	 * @param Article $article
 	 * @param string $tag
 	 * @param bool $forUpdate, use master?
@@ -88,12 +63,14 @@ class ReaderFeedback {
 	 */
 	public static function getAverageRating( $article, $tag, $forUpdate=false ) {
 		global $wgFeedbackAge;
-		$cutoff_unixtime = time() - $wgFeedbackAge;
 		$db = $forUpdate ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
+		$cutoff_unixtime = time() - $wgFeedbackAge;
+		// rfh_date is always MW format on all dbms
+		$encCutoff = $db->addQuotes( wfTimestamp( TS_MW, $cutoff_unixtime ) );
 		$row = $db->selectRow( 'reader_feedback_history', 
 			array('SUM(rfh_total)/SUM(rfh_count) AS ave, SUM(rfh_count) AS count'),
 			array( 'rfh_page_id' => $article->getId(), 'rfh_tag' => $tag,
-				"rfh_date >= {$cutoff_unixtime}" ),
+				"rfh_date >= {$encCutoff}" ),
 			__METHOD__ );
 		$data = $row && $row->count ?
 			array($row->ave,$row->count) : array(0,0);
@@ -102,7 +79,7 @@ class ReaderFeedback {
 	
 	/**
 	 * Purge outdated page average data
-	 * @returns bool
+	 * @return bool
 	 */	
 	public static function purgeExpiredAverages() {
 		global $wgFeedbackAge;
@@ -131,7 +108,7 @@ class ReaderFeedback {
    	/**
 	* Expand feedback ratings into an array
 	* @param string $ratings
-	* @returns Array
+	* @return Array
 	*/
 	public static function expandRatings( $rating ) {
 		$dims = array();
@@ -151,13 +128,12 @@ class ReaderFeedback {
 	* @param int $period, number of days back
 	* @param array $add, optional vote to add on (used to visually avoid lag)
 	* @param string $cache, optional param to not use cache
-	* @returns string HTML table
+	* @return string HTML table
 	*/	
-	public static function getVoteAggregates( $page, $period, $add = array(), $cache = 'useCache' ) {
+	public static function getVoteAggregates(
+		$page, $period, $add = array(), $cache = 'useCache'
+	) {
 		global $wgLang, $wgMemc;
-		if( $period > 93 ) {
-			return ''; // too big
-		}
 		$votes = null;
 		$now = time();
 		$key = wfMemcKey( 'feedback', 'ratingtally', $page->getArticleId(), $period );
@@ -182,7 +158,7 @@ class ReaderFeedback {
 			$cutoff_unixtime = $now - ($period * 24 * 3600);
 			// Use integral number of days to be consistent with graphs
 			$cutoff_unixtime = $cutoff_unixtime - ($cutoff_unixtime % 86400);
-			$cutoff = $dbr->addQuotes( wfTimestamp( TS_MW, $cutoff_unixtime ) );
+			$cutoff = $dbr->addQuotes( $dbr->timestamp( $cutoff_unixtime ) );
 			// Get the first revision possibly voted on in the range
 			$firstRevTS = $dbr->selectField( 'revision',
 				'rev_timestamp',
@@ -206,7 +182,7 @@ class ReaderFeedback {
 				$votes[$tag] = array( 0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0 );
 			}
 			// Read votes and tally the numbers
-			while( $row = $dbr->fetchObject($res) ) {
+			foreach ( $res as $row ) {
 				$dims = ReaderFeedback::expandRatings( $row->rfb_ratings );
 				foreach( $dims as $tag => $val ) {
 					if( isset($votes[$tag]) && isset($votes[$tag][$val]) ) {
@@ -234,11 +210,11 @@ class ReaderFeedback {
 			} else {
 				$ave = '-'; // DIV by zero
 			}
-			$html .= '<td align="center"><b>'.wfMsgHtml("readerfeedback-$tag").'</b>&nbsp;&nbsp;'.
+			$html .= '<td align="center"><b>'.wfMsgHtml("readerfeedback-$tag").'</b>&#160;&#160;'.
 				'<sup>('.wfMsgHtml('ratinghistory-ave',$wgLang->formatNum($ave)).')</sup></td>';
 		}
 		$html .= '</tr><tr>';
-		foreach( $votes as $tag => $dist ) {
+		foreach( $votes as $dist ) {
 			$html .= '<td><table>';
 			$html .= '<tr><th align="left">'.wfMsgHtml('ratinghistory-table-rating').'</th>';
 			for( $i = 1; $i <= 5; $i++ ) {

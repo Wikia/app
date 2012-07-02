@@ -55,11 +55,11 @@ class PlaceStorage {
 	/**
 	 * Return PlaceStorage model for given article
 	 *
-	 * @param Article $article article object
+	 * @param Page $article article object
 	 * @return PlaceStorage model object
 	 */
-	public static function newFromArticle(Article $article) {
-		return self::newFromId($article->getID());
+	public static function newFromArticle(Page $article) {
+		return self::newFromId($article->getId());
 	}
 
 	/**

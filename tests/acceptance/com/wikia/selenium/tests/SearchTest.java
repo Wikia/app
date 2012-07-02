@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class SearchTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureThatWhenThereAreNoSearchResultProperMessageIsDisplayed() throws Exception {
 		openAndWait("/");
 
@@ -29,7 +29,7 @@ public class SearchTest extends BaseTest {
 		waitForTextPresent("There were no results matching the query.");
 	}
 	
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureThatWhenUserSearchesForExactPageTitleTheSearchedPageIsDisplayed() throws Exception {
 		openAndWait("wiki/Special:Random");
 		

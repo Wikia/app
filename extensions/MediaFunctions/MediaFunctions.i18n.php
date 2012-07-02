@@ -2,12 +2,11 @@
 /**
  * Internationalisation file for extension MediaFunctions.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * @version 1.2
  */
-
-require_once( dirname( __FILE__ ) . '/MediaFunctions.i18n.magic.php' );
 
 $messages = array();
 
@@ -23,11 +22,20 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Purodha
  * @author Siebrand
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'mediafunctions-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'mediafunctions-desc' => '{{desc}}',
 	'mediafunctions-invalid-title' => '* $1 is input that has been found invalid as a page title',
 	'mediafunctions-not-exist' => '* $1 is a file name',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'mediafunctions-invalid-title' => '"$1" nuk është një titull i vlefshëm',
+	'mediafunctions-not-exist' => '"$1" nuk ekziston',
 );
 
 /** Arabic (العربية)
@@ -48,12 +56,22 @@ $messages['arz'] = array(
 	'mediafunctions-not-exist' => '"$1" غير موجود',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'mediafunctions-desc' => "Funciones d'analís pa obtener información de los ficheros multimedia",
+	'mediafunctions-invalid-title' => '"$1" nun ye un títulu válidu',
+	'mediafunctions-not-exist' => '"$1" nun esiste',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
-	'mediafunctions-desc' => 'Функцыя парсэра для атрыманьня інфармацыя пра мэдыя-файлы',
+	'mediafunctions-desc' => 'Функцыя парсэра для атрыманьня інфармацыя пра мэдыяфайлы',
 	'mediafunctions-invalid-title' => '«$1» не зьяўляецца слушнай назвай',
 	'mediafunctions-not-exist' => '«$1» не існуе',
 );
@@ -64,6 +82,14 @@ $messages['be-tarask'] = array(
 $messages['bg'] = array(
 	'mediafunctions-invalid-title' => '"$1" не е валидно заглавие',
 	'mediafunctions-not-exist' => '"$1" не съществува',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'mediafunctions-invalid-title' => '"$1" গ্রহণযোগ্য শিরোনাম নয়',
+	'mediafunctions-not-exist' => '"$1" পাতাটির অস্তিত্ব নেই',
 );
 
 /** Breton (Brezhoneg)
@@ -187,6 +213,14 @@ $messages['fr'] = array(
 	'mediafunctions-not-exist' => '« $1 » n’existe pas',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'mediafunctions-invalid-title' => '« $1 » est pas un titro valido',
+	'mediafunctions-not-exist' => '« $1 » ègziste pas',
+);
+
 /** Galician (Galego)
  * @author Toliño
  * @author Xosé
@@ -305,7 +339,7 @@ $messages['km'] = array(
 	'mediafunctions-not-exist' => '"$1" មិនមាន',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -324,11 +358,20 @@ $messages['lb'] = array(
 	'mediafunctions-not-exist' => '"$1" gëtt et net',
 );
 
+/** Latvian (Latviešu)
+ * @author GreenZeb
+ */
+$messages['lv'] = array(
+	'mediafunctions-desc' => 'Parsētāja funkcijas, lai iegūtu informāciju par multivides failu',
+	'mediafunctions-invalid-title' => '"$1" nav derīgs nosaukums',
+	'mediafunctions-not-exist' => '"$1" nepastāv',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'mediafunctions-desc' => 'Аналитички (парсер) функции за добивање на информации за медиски податотеки',
+	'mediafunctions-desc' => 'Аналитички (парсерски) функции за добивање на информации за медиски податотеки',
 	'mediafunctions-invalid-title' => '„$1“ е неважечки наслов',
 	'mediafunctions-not-exist' => '„$1“ не постои',
 );
@@ -338,7 +381,7 @@ $messages['mk'] = array(
  */
 $messages['ml'] = array(
 	'mediafunctions-invalid-title' => '"$1" എന്നത് സാധുവായ തലക്കെട്ടല്ല',
-	'mediafunctions-not-exist' => '"$1" എന്ന താള്‍ നിലവിലില്ല',
+	'mediafunctions-not-exist' => '"$1" എന്ന താൾ നിലവിലില്ല',
 );
 
 /** Marathi (मराठी)
@@ -355,6 +398,15 @@ $messages['mr'] = array(
  */
 $messages['nah'] = array(
 	'mediafunctions-not-exist' => '"$1" ahmo ia',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'mediafunctions-desc' => 'Parserfunksjoner for å hente informasjon om mediefiler',
+	'mediafunctions-invalid-title' => '«$1» er en ugyldig tittel',
+	'mediafunctions-not-exist' => '«$1» eksisterer ikke',
 );
 
 /** Low German (Plattdüütsch)
@@ -381,15 +433,6 @@ $messages['nn'] = array(
 	'mediafunctions-desc' => 'Parserfunksjonar for å henta informasjon om mediefiler.',
 	'mediafunctions-invalid-title' => '«$1» er ikkje ein gyldig tittel',
 	'mediafunctions-not-exist' => '«$1» finst ikkje',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'mediafunctions-desc' => 'Parserfunksjoner for å hente informasjon om mediefiler',
-	'mediafunctions-invalid-title' => '«$1» er en ugyldig tittel',
-	'mediafunctions-not-exist' => '«$1» eksisterer ikke',
 );
 
 /** Occitan (Occitan)
@@ -425,15 +468,16 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'mediafunctions-invalid-title' => '"$1" يو ناسم سرليک دی',
-	'mediafunctions-not-exist' => '"$1" هېڅ شتون نه لري',
+	'mediafunctions-not-exist' => '"$1" نشته',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
-	'mediafunctions-desc' => 'Funções do analisador (parser) para obter informação sobre ficheiros multimédia.',
+	'mediafunctions-desc' => 'Funções do analisador sintáctico para obter informação sobre ficheiros multimédia',
 	'mediafunctions-invalid-title' => '"$1" não é um título válido',
 	'mediafunctions-not-exist' => '"$1" não existe',
 );
@@ -483,16 +527,17 @@ $messages['sk'] = array(
 	'mediafunctions-not-exist' => '„$1“ neexistuje',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'mediafunctions-desc' => 'Парсер функције за преузимање података о медија фајловима',
+	'mediafunctions-desc' => 'Рашчлањивачке функције за преузимање података о медијским датотекама',
 	'mediafunctions-invalid-title' => '"$1" није исправан наслов',
-	'mediafunctions-not-exist' => '"$1" не постоји',
+	'mediafunctions-not-exist' => 'Датотека „$1“ не постоји',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -520,9 +565,11 @@ $messages['sv'] = array(
 );
 
 /** Tamil (தமிழ்)
+ * @author TRYPPN
  * @author Trengarasu
  */
 $messages['ta'] = array(
+	'mediafunctions-desc' => 'ஊடக கோப்புக்களை பற்றிய விவரங்களைப் பெற்றுக்கொள்ள பயன்படும், சொற்களை பிரித்தெடுக்கும் செயலாற்றிகள்',
 	'mediafunctions-invalid-title' => '"$1" செல்லுபடியற்றத் தலைப்பாகும்',
 	'mediafunctions-not-exist' => '"$1" இல்லை',
 );
@@ -589,21 +636,27 @@ $messages['vo'] = array(
 	'mediafunctions-not-exist' => '"$1" no dabinon',
 );
 
-/** Yue (粵語) */
+/** Cantonese (粵語) */
 $messages['yue'] = array(
 	'mediafunctions-invalid-title' => '"$1" 唔係一個有效嘅標題',
 	'mediafunctions-not-exist' => '"$1" 唔存在',
 );
 
-/** Simplified Chinese (‪中文(简体)‬) */
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Chenxiaoqino
+ */
 $messages['zh-hans'] = array(
+	'mediafunctions-desc' => '有关媒体的信息获取文件分析器功能',
 	'mediafunctions-invalid-title' => '"$1" 不是一个有效的标题',
 	'mediafunctions-not-exist' => '"$1" 不存在',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
 $messages['zh-hant'] = array(
-	'mediafunctions-invalid-title' => '"$1" 不是一個有效的標題',
-	'mediafunctions-not-exist' => '"$1" 不存在',
+	'mediafunctions-desc' => '有關媒體的信息獲取文件分析器功能',
+	'mediafunctions-invalid-title' => '「$1」不是一個有效的標題',
+	'mediafunctions-not-exist' => '「$1」不存在',
 );
 

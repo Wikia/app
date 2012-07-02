@@ -281,7 +281,7 @@ class WikiaQuizAjax {
 		if ($fbRecommendationText) {
 			$quizContent .= WikiaQuiz::FBRECOMMENDATIONTEXT_MARKER . $fbRecommendationText . "\n";
 		}
-		
+
 		// title screen images
 		$titleScreenImages = $request->getArray ('titlescreenimage');
 		foreach($titleScreenImages as $image) {
@@ -507,13 +507,6 @@ class WikiaQuizAjax {
 	private static function isValidVideo($name) {
 
 		$bResult = WikiaFileHelper::isTitleVideo( $name );
-		// double check if old video page exists
-		if ( !$bResult && !self::isVideoStoredAsFile() ) {
-			$videoTitle = Title::newFromText( $name, NS_LEGACY_VIDEO );
-			$videoPage = new VideoPage( $videoTitle );
-			$videoPage->load();
-			$bResult = $videoPage->checkIfVideoExists();
-		}
 		return $bResult;
 	}
 
@@ -546,7 +539,7 @@ class WikiaQuizAjax {
 		// validate token
 		if ($wgUser->matchEditToken($token, 'WikiaQuiz' /* $salt */)) {
 			// validate email
-			if (User::isValidEmailAddr($email)) {
+			if (Sanitizer::validateEmail($email)) {
 				$to = new MailAddress($email);
 				$from = new MailAddress(WikiaQuiz::EMAIL_SENDER);
 				$subject = wfMsg('wikiaquiz-game-email-subject');
@@ -555,7 +548,7 @@ class WikiaQuizAjax {
 				// send an email
 				$result = UserMailer::send($to, $from, $subject, $body, null /* $replyto */, null /* $contentType */, WikiaQuiz::EMAIL_CATEGORY /* $category */);
 
-				if (!WikiError::isError($result)) {
+				if ($result->isOK()) {
 					$ret['ok'] = true;
 				}
 				else {

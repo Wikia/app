@@ -1,7 +1,16 @@
 <?php
+/**
+ * Functions to be used with PHP's output buffer
+ *
+ * @file
+ */
 
 /**
  * Standard output handler for use with ob_start
+ * 
+ * @param $s string
+ * 
+ * @return string
  */
 function wfOutputHandler( $s ) {
 	global $wgDisableOutputCompression, $wgValidateAllHtml;
@@ -35,9 +44,11 @@ function wfOutputHandler( $s ) {
  * the currently-requested URL.
  * This isn't on WebRequest because we need it when things aren't initialized
  * @private
+ *
+ * @return string
  */
 function wfRequestExtension() {
-	/// @todo Fixme: this sort of dupes some code in WebRequest::getRequestUrl()
+	/// @todo FIXME: this sort of dupes some code in WebRequest::getRequestUrl()
 	if( isset( $_SERVER['REQUEST_URI'] ) ) {
 		// Strip the query string...
 		list( $path ) = explode( '?', $_SERVER['REQUEST_URI'], 2 );
@@ -59,6 +70,10 @@ function wfRequestExtension() {
 /**
  * Handler that compresses data with gzip if allowed by the Accept header.
  * Unlike ob_gzhandler, it works for HEAD requests too.
+ * 
+ * @param $s string
+ *
+ * @return string
  */
 function wfGzipHandler( $s ) {
 	if( !function_exists( 'gzencode' ) || headers_sent() ) {
@@ -100,6 +115,10 @@ function wfGzipHandler( $s ) {
 
 /**
  * Mangle flash policy tags which open up the site to XSS attacks.
+ *
+ * @param $s string
+ *
+ * @return string
  */
 function wfMangleFlashPolicy( $s ) {
 	# Avoid weird excessive memory usage in PCRE on big articles
@@ -112,6 +131,8 @@ function wfMangleFlashPolicy( $s ) {
 
 /**
  * Add a Content-Length header if possible. This makes it cooperate with squid better.
+ *
+ * @param $length int
  */
 function wfDoContentLength( $length ) {
         /* Wikia change - begin */
@@ -123,6 +144,10 @@ function wfDoContentLength( $length ) {
 
 /**
  * Replace the output with an error if the HTML is not valid
+ *
+ * @param $s string
+ *
+ * @return string
  */
 function wfHtmlValidationHandler( $s ) {
 

@@ -50,7 +50,7 @@ class SassUtil {
 			}
 		}
 
-		wfDebug(__METHOD__ . ': ' . Wikia::json_encode($oasisSettings) . "\n");
+		wfDebug(__METHOD__ . ': ' . json_encode($oasisSettings) . "\n");
 
 		wfProfileOut(__METHOD__);
 		

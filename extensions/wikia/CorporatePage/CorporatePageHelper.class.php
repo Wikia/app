@@ -58,7 +58,6 @@ class CorporatePageHelper{
 
 	static function jsVars($vars){
 		global $wgUser;
-		wfLoadExtensionMessages( 'CorporatePage' );
 		if ($wgUser->isAllowed( 'corporatepagemanager' )){
 			$vars['corporatepage_hide_confirm'] = wfMsg('corporatepage-hide-confirm');
 			$vars['corporatepage_hide_error'] = wfMsg('corporatepage-hide-error');
@@ -305,13 +304,13 @@ class CorporatePageHelper{
 			case 503: //NS_BLOG_LISTING_TALK
 			case 1200: // NS_WALL
 				if (!$title->exists() && !empty( $wgCorporatePageRedirectWiki )) {
-					$redirect = $wgCorporatePageRedirectWiki . $title->prefix($title->getPartialURL());
+					$redirect = $wgCorporatePageRedirectWiki . self::getPrefixedText($title->getPartialURL(),array($title->getInterwiki(),$title->getNsText()));
 				}
 				break;
 			case NS_FILE:
 				$file = wfFindFile($title);
 				if (empty($file) && !empty( $wgCorporatePageRedirectWiki )) {
-					$redirect = $wgCorporatePageRedirectWiki . $title->prefix($title->getPartialURL());
+					$redirect = $wgCorporatePageRedirectWiki . self::getPrefixedText($title->getPartialURL(),array($title->getInterwiki(),$title->getNsText()));
 				}
 				break;
 			case NS_PROJECT:
@@ -349,16 +348,21 @@ class CorporatePageHelper{
 	 *
 	 * @param string hub name to get blog post for
 	 * @return mixed blog post data or false when there's no blog post chosen
+	 * this method is not yet implemented
  	 */
  	public static function getHotNews($hubName) {
- 		wfProfileIn(__METHOD__);
-
- 		wfProfileOut(__METHOD__);
-		return $data;
+ 		return null;
  	}
  	
  	public static function onArticleCommentCheck($title) {
  		return false;
  	}
- 	
+
+	public static function getPrefixedText($text,$prefixes = array()) {
+		if(!empty($prefixes)) {
+		    return implode(':', array_merge($prefixes,array($text)));
+		} else {
+			return $text;
+		}
+	}
 }

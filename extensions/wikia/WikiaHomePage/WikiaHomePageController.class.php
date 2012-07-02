@@ -19,38 +19,40 @@ class WikiaHomePageController extends WikiaController {
 	 * @var int
 	 */
 	static $seoSamplesNo = 17;
-	static $seoMemcKeyVer = '1.2';
+	static $seoMemcKeyVer = '1.32';
 
 	//images sizes
-	static $remixImgSmallWidth = 155;
-	static $remixImgSmallHeight = 100;
-	static $remixImgMediumWidth = 320;
-	static $remixImgMediumHeight = 210;
-	static $remixImgBigWidth = 320;
-	static $remixImgBigHeight = 320;
+	const REMIX_IMG_SMALL_WIDTH = 155;
+	const REMIX_IMG_SMALL_HEIGHT = 100;
+	const REMIX_IMG_MEDIUM_WIDTH = 320;
+	const REMIX_IMG_MEDIUM_HEIGHT = 210;
+	const REMIX_IMG_BIG_WIDTH = 320;
+	const REMIX_IMG_BIG_HEIGHT = 320;
+
 	const hubsImgWidth = 320;
 	const hubsImgHeight = 160;
 
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
-	protected $source = null;
-	protected $verticalsPercentage = array();
-	protected $verticalsWikis = array();
-	protected $currentPercentage = 0;
+	const HUBS_IMAGES_MEMC_KEY_VER = '1.00';
 
+	/**
+	 * @var WikiaHomePageHelper
+	 */
+	protected $helper;
+	protected $source = null;
+	protected $verticalsSlots = array();
+	protected $verticalsWikis = array();
+	protected $currentSlotsNo = 0;
+
+	private $imageServing = null;
 	private $imageSmallServing = null;
 	private $imageMediumServing = null;
 
-	// list of hubs
-	protected static $wikiaHubs = array(
-		'Entertainment',
-		'Video_Games',
-		'Lifestyle',
-	);
-
 	public function __construct() {
 		parent::__construct();
+		$this->helper = F::build('WikiaHomePageHelper');
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'));
 	}
 
@@ -60,18 +62,22 @@ class WikiaHomePageController extends WikiaController {
 
 		$this->response->addAsset('extensions/wikia/WikiaHomePage/js/WikiaHomePage.js');
 		$this->response->addAsset('skins/oasis/css/wikiagrid.scss');
+		$this->response->addAsset('skins/oasis/css/modules/WikiaMediaCarousel.scss');
 
-		$response = $this->app->sendRequest('WikiaHomePage', 'getHubImages');
+		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->hubImages = $response->getVal('hubImages', '');
+		F::build('JSMessages')->enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 	}
 
 	public function wikiaMobileIndex() {
 		//$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePageMobile.scss');
-		$response = $this->app->sendRequest('WikiaHomePage', 'getHubImages');
-		$this->hubImages = $response->getVal('hubImages', '');
+		$response = $this->app->sendRequest( 'WikiaHomePageController', 'getHubImages' );
+		$this->hubImages = $response->getVal( 'hubImages' , '' );
 	}
 
 	public function footer() {
+		$this->response->addAsset('extensions/wikia/WikiaHomePage/js/CorporateFooterTracker.js');
+		$this->interlang = HubService::isCorporatePage($this->wg->cityId);
 	}
 
 	/**
@@ -87,16 +93,16 @@ class WikiaHomePageController extends WikiaController {
 		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'stats');
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
-			$stats['visitors'] = $this->getStatsFromArticle('StatsVisitors');
+			$stats['visitors'] = $this->helper->getStatsFromArticle('StatsVisitors');
 
-			$stats['edits'] = $this->getEdits();
+			$stats['edits'] = $this->helper->getEdits();
 			if (empty($stats['edits'])) {
-				$stats['editsDefault'] = $this->getStatsFromArticle('StatsEdits');
+				$stats['editsDefault'] = $this->helper->getStatsFromArticle('StatsEdits');
 			}
 
-			$stats['communities'] = $this->getStatsFromArticle('StatsCommunities');
+			$stats['communities'] = $this->helper->getStatsFromArticle('StatsCommunities');
 
-			$defaultTotalPages = $this->getStatsFromArticle('StatsTotalPages');
+			$defaultTotalPages = $this->helper->getStatsFromArticle('StatsTotalPages');
 			$totalPages = intval(Wikia::get_content_pages());
 			$stats['totalPages'] = ($totalPages > $defaultTotalPages) ? $totalPages : $defaultTotalPages;
 
@@ -116,109 +122,32 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	/**
-	 * get unique visitors last 30 days (exclude today)
-	 * @return integer edits
-	 */
-	protected function getVisitors() {
-		$this->wf->ProfileIn(__METHOD__);
-
-		$visitors = 0;
-		if (!empty($this->wg->StatsDBEnabled)) {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
-
-			// for testing
-			if ($this->wg->DevelEnvironment) {
-				$row = $db->selectRow(
-					array('page_views'),
-					array('sum(pv_views) cnt'),
-					array("pv_use_date between date_format(curdate() - interval 30 day,'%Y%m%d') and date_format(curdate(),'%Y%m%d')"),
-					__METHOD__
-				);
-			} else {
-				$row = $db->selectRow(
-					array('google_analytics.pageviews'),
-					array('sum(pageviews) cnt'),
-					array("date between curdate() - interval 30 day and curdate()"),
-					__METHOD__
-				);
-			}
-
-			if ($row) {
-				$visitors = intval($row->cnt);
-			}
-		}
-
-		$this->wf->ProfileOut(__METHOD__);
-
-		return $visitors;
-	}
-
-	/**
-	 * get number of edits made the day before yesterday
-	 * @return integer edits
-	 */
-	protected function getEdits() {
-		$this->wf->ProfileIn(__METHOD__);
-
-		$edits = 0;
-		if (!empty($this->wg->StatsDBEnabled)) {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->StatsDB);
-
-			$row = $db->selectRow(
-				array('events'),
-				array('count(*) cnt'),
-				array('event_date between curdate() - interval 2 day and curdate() - interval 1 day'),
-				__METHOD__
-			);
-
-			if ($row) {
-				$edits = intval($row->cnt);
-			}
-		}
-
-		$this->wf->ProfileOut(__METHOD__);
-
-		return $edits;
-	}
-
-	/**
-	 * get stats from article
-	 * @param string articleName
-	 * @return integer stats
-	 */
-	protected function getStatsFromArticle($articleName) {
-		$this->wf->ProfileIn(__METHOD__);
-
-		$title = Title::newFromText($articleName);
-		$article = new Article($title);
-		$content = $article->getRawText();
-		$stats = (empty($content)) ? 0 : $content;
-
-		$this->wf->ProfileOut(__METHOD__);
-
-		return intval($stats);
-	}
-
-	/**
 	 * get list of wikis
 	 */
 	public function getList() {
 		$this->source = $this->getMediaWikiMessage();
-		$this->imageSmallServing = F::build('ImageServing', array(null, self::$remixImgSmallWidth, self::$remixImgSmallHeight));
-		$this->imageMediumServing = F::build('ImageServing', array(null, self::$remixImgMediumWidth, self::$remixImgMediumHeight));
+		$this->imageSmallServing = F::build('ImageServing', array(null, self::REMIX_IMG_SMALL_WIDTH, self::REMIX_IMG_SMALL_HEIGHT));
+		$this->imageMediumServing = F::build('ImageServing', array(null, self::REMIX_IMG_MEDIUM_WIDTH, self::REMIX_IMG_MEDIUM_HEIGHT));
 
 		try {
-			$status = true;
+			$status = 'true';
 			$this->response->setVal(
 				'data',
-				json_encode($this->parseSourceMessage())
+				$this->helper->getData($this->wg->contLang->getCode())
 			);
 		} catch (Exception $e) {
-			$status = false;
-			$this->response->setVal('exception', $e->getMessage());
+			try {
+				$status = 'false';
+				$this->response->setVal('failoverData', $this->parseSourceMessage());
+				$this->response->setVal('exception', $e->getMessage());
+			} catch (Exception $e) {
+				$status = 'false';
+				$this->response->setVal('failoverData', $this->getFailoverWikiList());
+				$this->response->setVal('exception', $e->getMessage());
+			}
 		}
-		$this->response->setVal('failoverData', $this->getFailoverWikiList());
-		$this->response->setVal('status', intval($status));
+
+		$this->response->setVal('status', $status);
 	}
 
 	public function getMediaWikiMessage() {
@@ -231,12 +160,17 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function getSeoList() {
 		$list = $this->app->wg->Memc->get('wikia-home-page-seo-samples' . self::$seoMemcKeyVer);
+
+		if (empty($list) && empty($this->verticalsWikis)) {
+			$this->getList();
+		}
+
 		if (empty($list) && !empty($this->verticalsWikis)) {
 			$list = array();
 			$verticals = array_keys($this->verticalsWikis);
 			foreach ($verticals as $verticalName) {
-				$wikisInVertical = $this->verticalsWikis[$verticalName];
-				$wikiNoPerVertical = ceil($this->verticalsPercentage[$verticalName] / 100 * self::$seoSamplesNo);
+				$wikisInVertical = $this->getWikisInVertical($verticalName);
+				$wikiNoPerVertical = $this->getVerticalSlotsForWiki($verticalName);
 				for ($wikiNoPerVertical; $wikiNoPerVertical > 0; $wikiNoPerVertical--) {
 					shuffle($wikisInVertical);
 					$wiki = array_shift($wikisInVertical);
@@ -244,11 +178,13 @@ class WikiaHomePageController extends WikiaController {
 						$list[] = array(
 							'title' => $wiki['wikiname'],
 							'url' => $wiki['wikiurl'],
+							'wikiid' => $wiki['wikiid'],
 						);
 					} else {
 						$list[] = array(
 							'title' => $wiki['wikiname'],
 							'url' => '#',
+							'wiki-id' => 0,
 						);
 					}
 				}
@@ -258,6 +194,14 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		return $list;
+	}
+
+	public function getVerticalSlotsForWiki($verticalName) {
+		return $this->verticalsSlots[$verticalName];
+	}
+
+	public function getWikisInVertical($verticalName) {
+		return $this->verticalsWikis[$verticalName];
 	}
 
 	/**
@@ -284,19 +228,26 @@ class WikiaHomePageController extends WikiaController {
 				}
 			}
 
-			if ($this->currentPercentage === 100) {
-				$data = array();
+			if ($this->currentSlotsNo == WikiaHomePageHelper::SLOTS_IN_TOTAL) {
+				$data = array(
+					'slots' => array(),
+					'wikis' => array()
+				);
 				foreach ($this->verticalsWikis as $verticalName => $wikis) {
-					$data[] = array(
+					$slots = $this->getVerticalSlotsForWiki($verticalName);
+
+					$data['wikis'][] = array(
 						'vertical' => $verticalName,
-						'percentage' => $this->verticalsPercentage[$verticalName],
-						'wikilist' => $this->verticalsWikis[$verticalName],
+						'slots' => $slots,
+						'wikilist' => $this->getWikisInVertical($verticalName),
 					);
 				}
+				$data['slots']['hotwikis'] = $this->helper->getNumberOfHotWikiSlots();
+				$data['slots']['newwikis'] = $this->helper->getNumberOfNewWikiSlots();
 
 				return $data;
 			} else {
-				throw new Exception(wfMsg('wikia-home-parse-source-invalid-percentage'));
+				throw new Exception(wfMsg('wikia-home-parse-source-invalid-slots-number'));
 			}
 		} else {
 			throw new Exception(wfMsg('wikia-home-parse-source-empty-exception'));
@@ -315,19 +266,19 @@ class WikiaHomePageController extends WikiaController {
 	private function parseVerticalData($data) {
 		$data = explode(self::$dataSeparator, $data);
 
-		if (!empty($data[0]) && !empty($data[1])) {
+		if( !empty($data[0]) ) {
 			$verticalName = trim(strtolower(str_replace(self::$verticalIndicator, '', $data[0])));
-			$percentage = intval($data[1]);
+			$slots = $this->helper->getNumberOfSlotsForType($verticalName);
 
-			if (isset($this->verticalsPercentage[$verticalName])) {
-				$prevPercentage = $this->verticalsPercentage[$verticalName];
-				$this->currentPercentage -= $prevPercentage;
+			if( isset($this->verticalsSlots[$verticalName]) ) {
+				$prevSlots = $this->verticalsSlots[$verticalName];
+				$this->currentSlotsNo -= $prevSlots;
 
-				$this->verticalsPercentage[$verticalName] = $percentage;
+				$this->verticalsSlots[$verticalName] = $slots;
 			} else {
-				$this->verticalsPercentage[$verticalName] = $percentage;
+				$this->verticalsSlots[$verticalName] = $slots;
 			}
-			$this->currentPercentage += $percentage;
+			$this->currentSlotsNo += $slots;
 
 			return $verticalName;
 		} else {
@@ -351,16 +302,22 @@ class WikiaHomePageController extends WikiaController {
 			$wikiName = trim(str_replace(self::$wikiIndicator, '', $data[0]));
 			$wikiUrl = trim($data[1]);
 			$wikiDesc = !empty($data[3]) ? trim($data[3]) : '';
-			$wikiNew = !empty($data[4]) ? trim($data[4]) : false;
-			$wikiHot = !empty($data[5]) ? trim($data[5]) : false;
+			$wikiHot = !empty($data[4]) ? trim($data[4]) : false;
+			$wikiNew = !empty($data[5]) ? trim($data[5]) : false;
 
-			$wikiImg = trim($data[2]);
-			$wikiImg = wfFindFile($wikiImg);
-			$wikiImgSmall = ($wikiImg !== false) ? $this->imageSmallServing->getUrl($wikiImg, $wikiImg->getWidth(), $wikiImg->getHeight()) : $this->wg->BlankImgUrl;
-			$wikiImgMedium = ($wikiImg !== false) ? $this->imageMediumServing->getUrl($wikiImg, $wikiImg->getWidth(), $wikiImg->getHeight()) : $this->wg->BlankImgUrl;
-			$wikiImgBig = ($wikiImg !== false) ? $wikiImg->transform(array('width' => self::$remixImgBigWidth, 'height' => self::$remixImgBigHeight))->getUrl() : $this->wg->BlankImgUrl;
+			$wikiImgName = trim($data[2]);
+			$wikiImg = $this->wf->FindFile($wikiImgName);
+			$wikiImgSmall = ($wikiImg !== false) ? $this->helper->getImageUrl($wikiImgName, $wikiImg->getWidth(), $wikiImg->getHeight()) : '';
+			$wikiImgMedium = ($wikiImg !== false) ? $this->helper->getImageUrl($wikiImgName, $wikiImg->getWidth(), $wikiImg->getHeight()) : '';
+			$wikiImgBig = ($wikiImg !== false) ? $wikiImg->transform(array('width' => self::REMIX_IMG_BIG_WIDTH, 'height' => self::REMIX_IMG_BIG_HEIGHT))->getUrl() : '';
+
+			$wikiId = WikiFactory::UrlToID(trim($wikiUrl));
+			if (!$wikiId) {
+				$wikiId = 0;
+			}
 
 			return array(
+				'wikiid' => $wikiId,
 				'wikiname' => $wikiName,
 				'wikiurl' => $wikiUrl,
 				'wikidesc' => $wikiDesc,
@@ -380,7 +337,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @responseParam array hubImages
 	 */
 	public function getHubImages() {
-		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'hubimages');
+		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'hubimages', self::HUBS_IMAGES_MEMC_KEY_VER);
 		$hubImages = $this->wg->Memc->get($memKey);
 
 		if (empty($hubImages)) {
@@ -398,10 +355,29 @@ class WikiaHomePageController extends WikiaController {
 			'h' => self::hubsImgHeight,
 		)));
 
-		foreach (self::$wikiaHubs as $hubName) {
-			$hubImages[$hubName] = $this->getImageUrlForHub($hubName);
+		foreach ($this->wg->wikiaHubsPages as $groupId => $hubGroup) {
+			if(!empty($hubGroup[0])) {
+				$hubName = $hubGroup[0];
+				$hubEngName = $this->getEnglishHubName($groupId);
+				$hubImages[$hubEngName] = $this->getImageUrlForHub($hubName);
+			}
 		}
 		return $hubImages;
+	}
+
+	protected function getEnglishHubName($hubId) {
+		switch($hubId) {
+			case 1:
+				return 'Lifestyle';
+				break;
+			case 2:
+				return 'Video_Games';
+				break;
+			case 3:
+			default:
+				return 'Entertainment';
+				break;
+		}
 	}
 
 	protected function getImageUrlForHub($hubName) {
@@ -422,16 +398,18 @@ class WikiaHomePageController extends WikiaController {
 	protected function getLinesFromHubGallerySlider($hubName) {
 		$content = $this->getRawArticleContent($hubName);
 		$lines = $this->extractMosaicGalleryImages($content);
+
 		if (empty($lines)) {
 			// no gallery tag found directly in hub, so there is possibility of transclusion
 			$transcludedContent = $this->getTranscludedArticleForTodaysHub($hubName);
 			$lines = $this->extractMosaicGalleryImages($transcludedContent);
 		}
+
 		if (empty($lines)) {
-			// no gallery tag found in hub nor transcluded article, trying failsafe page
-			$transcludedContent = $this->getFailsafeArticleForTodaysHub($hubName);
-			$lines = $this->extractMosaicGalleryImages($transcludedContent);
+			$failsafeTranscludedContent = $this->getFailsafeArticleForTodaysHub($hubName);
+			$lines = $this->extractMosaicGalleryImages($failsafeTranscludedContent);
 		}
+
 		return $lines;
 	}
 
@@ -516,12 +494,70 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	/**
-	 * @desc get hardcoded failover data from file
+	 * @desc get failover data from file
+	 * get real file paths
 	 * @return String
-	 * @todo After moving to production database rewrite returned string so it has links to production's images' urls
 	 */
 	final private function getFailoverWikiList() {
-		return file_get_contents(dirname(__FILE__) . '/text_files/FailOverWikiList.txt');
+		$this->source = file_get_contents(
+			dirname(__FILE__) .
+			'/text_files/FailOverWikiList_' .
+			strtolower($this->wg->contLang->getCode()) .
+			'.txt'
+		);
+
+		return $this->parseSourceMessage();
+	}
+
+	/**
+	 * Get interstitial data.  If format is json, returns data only.  Has template.
+	 * @requestParam integer wikiId
+	 * @responseParam array wikiAdminAvatars
+	 * @responseParam array wikiTopEditorAvatars
+	 * @responseParam array wikiStats
+	 * @responseParam array wikiInfo
+	 */
+	public function getInterstitial() {
+		$wikiId = $this->request->getVal('wikiId', 0);
+		$this->wikiAdminAvatars = $this->helper->getWikiAdminAvatars($wikiId);
+		$this->wikiTopEditorAvatars = $this->helper->getWikiTopEditorAvatars($wikiId);
+		$tempArray = array();
+		foreach ($this->helper->getWikiStats($wikiId) as $key => $value) {
+			$tempArray[$key] = $this->wg->Lang->formatNum($value);
+		}
+		$this->wikiStats = $tempArray;
+		$this->wikiInfo = $this->helper->getWikiInfoForVisualization($wikiId,$this->wg->contLang->getCode());
+
+		/* TODO: remove after full design QA */
+		if(!empty($this->wikiAdminAvatars) && !empty($this->wg->mockInterstitialAvatars)) {
+			$keys = array_keys($this->wikiAdminAvatars);
+			$avatar = $this->wikiAdminAvatars[$keys[0]];
+			$this->wikiAdminAvatars = array($avatar,$avatar,$avatar);
+			$this->wikiTopEditorAvatars  = array($avatar,$avatar,$avatar,$avatar,$avatar,$avatar,$avatar);
+		}
+
+		$images = array();
+
+		foreach($this->wikiInfo['images'] as $image) {
+			$images[] = $this->helper->getImageDataForSlider($wikiId, $image);
+		}
+		$this->wikiMainImageUrl = $images[0]['image_url'];
+
+		$this->imagesSlider = $this->sendRequest('WikiaMediaCarouselController', 'renderSlider', array('data' => $images));
+	}
+
+	/**
+	 * Returns lines of text contained inside mosaic slider gallery tag
+	 * @param $articleText
+	 * @return array
+	 */
+	protected function extractMosaicGalleryImages($articleText) {
+		$lines = array();
+
+		if (preg_match('/\<gallery.+mosaic.+\>([\s\S]+)\<\/gallery\>/', $articleText, $matches)) {
+			$lines = StringUtils::explode("\n", $matches[1]);
+		}
+		return $lines;
 	}
 
 	public static function onGetHTMLAfterBody($skin, &$html) {
@@ -537,7 +573,7 @@ class WikiaHomePageController extends WikiaController {
 		if ( ArticleAdLogic::isMainPage() && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
 			$text = '';
 			$out->clearHTML();
-			$out->addHTML(F::app()->sendRequest('WikiaHomePage', 'index')->toString());
+			$out->addHTML(F::app()->sendRequest('WikiaHomePageController', 'index')->toString());
 		}
 		return $out;
 	}
@@ -558,17 +594,16 @@ class WikiaHomePageController extends WikiaController {
 		return true;
 	}
 
-	/**
-	 * Returns lines of text contained inside mosaic slider gallery tag
-	 * @param $articleText
-	 * @return array
-	 */
-	protected function extractMosaicGalleryImages($articleText) {
-		$lines = array();
-
-		if (preg_match('/\<gallery.+mosaic.+\>([\s\S]+)\<\/gallery\>/', $articleText, $matches)) {
-			$lines = StringUtils::explode("\n", $matches[1]);
+	public static function onAfterGlobalHeader(&$menuNodes, $category, $messageName) {
+		if( !empty($menuNodes) && isset($category->cat_id) && $category->cat_id == WikiFactoryHub::CATEGORY_ID_CORPORATE ) {
+			foreach($menuNodes as $key => $node) {
+				if( !empty($node['specialAttr']) ) {
+					$menuNodes[$key]['class'] = $node['specialAttr'];
+				}
+			}
 		}
-		return $lines;
+
+		return true;
 	}
+
 }

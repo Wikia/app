@@ -147,6 +147,28 @@
 	.RTEVideoButton.cke_button_big .cke_icon {
 		@include sprite-edit-page('video', 48px, 32px);
 	}
+	.RTEMUTButton.cke_button_big .cke_icon {
+		@include sprite-edit-page('video', 48px, 32px);
+	}
+	.RTEMUTButton.cke_button_big a {
+		position: relative;
+		.cke_icon {
+			position: relative;
+		}
+		.cke_icon:after {
+			@include border-radius-nw(3px);
+			@include border-radius-ne(3px);
+			position: absolute;
+			content: 'BETA';
+			background-color: #ff8080; /* for IE8 */
+			background-color: rgba(255,0,0,0.4);
+			left: -2px;
+			top: -4px;
+			text-align: center;
+			width: 53px;
+			color: $color-page;
+		}
+	}
 	.RTEPollButton.cke_button_big .cke_icon {
 		@include sprite-edit-page('poll', 48px, 32px);
 	}

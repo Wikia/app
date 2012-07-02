@@ -2,7 +2,7 @@
 /**
  * We want to make this whole thing as seamless as possible to the
  * end-user. Unfortunately, we can't do _all_ of the work in the class
- * because A) included files are not in global scope, but in the scope 
+ * because A) included files are not in global scope, but in the scope
  * of their caller, and B) MediaWiki has way too many globals. So instead
  * we'll kinda fake it, and do the requires() inline. <3 PHP
  *
@@ -26,18 +26,21 @@
  * @ingroup Maintenance
  */
 
-if ( !defined( 'DO_MAINTENANCE' ) ) {
+if ( !defined( 'RUN_MAINTENANCE_IF_MAIN' ) ) {
 	echo "This file must be included after Maintenance.php\n";
 	exit( 1 );
 }
 
-if( !$maintClass || !class_exists( $maintClass ) ) {
-	echo "\$maintClass is not set or is set to a non-existent class.\n";
-	exit( 1 );
+// Wasn't included from the file scope, halt execution (probably wanted the class)
+// If a class is using commandLine.inc (old school maintenance), they definitely
+// cannot be included and will proceed with execution
+if( !Maintenance::shouldExecute() && $maintClass != 'CommandLineInc' ) {
+	return;
 }
 
-if( defined( 'MW_NO_SETUP' ) ) {
-	return;
+if ( !$maintClass || !class_exists( $maintClass ) ) {
+	echo "\$maintClass is not set or is set to a non-existent class.\n";
+	exit( 1 );
 }
 
 // Get an object to start us off
@@ -50,44 +53,52 @@ $maintenance->setup();
 // to $maintenance->mSelf. Keep that here for b/c
 $self = $maintenance->getName();
 
-# Setup the profiler
-if ( file_exists( "$IP/StartProfiler.php" ) ) {
-	require_once( "$IP/StartProfiler.php" );
+// Detect compiled mode
+if ( isset( $_SERVER['MW_COMPILED'] ) ) {
+	define( 'MW_COMPILED', 1 );
 } else {
-	require_once( "$IP/includes/ProfilerStub.php" );
+	# Get the MWInit class
+	require_once( "$IP/includes/Init.php" );
+	require_once( "$IP/includes/AutoLoader.php" );
 }
+
+# Stub the profiler
+require_once( MWInit::compiledPath( 'includes/profiler/Profiler.php' ) );
 
 // Some other requires
-require_once( "$IP/includes/AutoLoader.php" );
-require_once( "$IP/includes/Defines.php" );
-
-// Load settings, using wikimedia-mode if needed
-// Fixme: replace this hack with general farm-friendly code
-if( file_exists( "$IP/wmf-config/wikimedia-mode" ) ) {
-	# TODO FIXME! Wikimedia-specific stuff needs to go away to an ext
-	# Maybe a hook?
-	global $cluster;
-	$wgWikiFarm = true;
-	$cluster = 'pmtpa';
-	require_once( "$IP/includes/SiteConfiguration.php" );
-	require( "$IP/wmf-config/wgConf.php" );
-	$maintenance->loadWikimediaSettings();
-	require( $IP.'/wmf-config/CommonSettings.php' );
-} else {
-	require_once( $maintenance->loadSettings() );
+if ( !defined( 'MW_COMPILED' ) ) {
+	require_once( "$IP/includes/Defines.php" );
 }
+require_once( MWInit::compiledPath( 'includes/DefaultSettings.php' ) );
+
+if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
+	# Use a callback function to configure MediaWiki
+	MWFunction::call( MW_CONFIG_CALLBACK );
+} else {
+	if ( file_exists( "$IP/../wmf-config/wikimedia-mode" ) ) {
+		// Load settings, using wikimedia-mode if needed
+		// @todo FIXME: Replace this hack with general farm-friendly code
+		# @todo FIXME: Wikimedia-specific stuff needs to go away to an ext
+		# Maybe a hook?
+		global $cluster;
+		$cluster = 'pmtpa';
+		require( MWInit::interpretedPath( '../wmf-config/wgConf.php' ) );
+	}
+	// Require the configuration (probably LocalSettings.php)
+	require( $maintenance->loadSettings() );
+}
+
 if ( $maintenance->getDbType() === Maintenance::DB_ADMIN &&
-		is_readable( "$IP/AdminSettings.php" ) )
+	is_readable( "$IP/AdminSettings.php" ) )
 {
-	require( "$IP/AdminSettings.php" );
+	require( MWInit::interpretedPath( 'AdminSettings.php' ) );
 }
 $maintenance->finalSetup();
 // Some last includes
-require_once( "$IP/includes/Setup.php" );
-require_once( "$IP/maintenance/install-utils.inc" );
+require_once( MWInit::compiledPath( 'includes/Setup.php' ) );
 
 // Much much faster startup than creating a title object
-$wgTitle = null; 
+$wgTitle = null;
 
 // Do the work
 try {
@@ -95,7 +106,7 @@ try {
 
 	// Potentially debug globals
 	$maintenance->globals();
-} catch( MWException $mwe ) {
+} catch ( MWException $mwe ) {
 	echo( $mwe->getText() );
 	exit( 1 );
 }

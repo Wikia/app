@@ -46,8 +46,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name'        => 'PSINoTocNum',
 	'version'     => '1.5',
 	'author'      => 'Benedikt Meuthrath',
-	'url'         => 'http://www.mediawiki.org/wiki/Extension:PSINoTocNum',
-	'description' => 'New MagicWord "<nowiki>__NOTOCNUM__</nowiki>".',
+	'url'         => 'https://www.mediawiki.org/wiki/Extension:PSINoTocNum',
 	'descriptionmsg' => 'psinotocnum-desc',
 );
 

@@ -8,8 +8,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * Extension enforces a minimum username length
  * during account registration
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
 
@@ -22,9 +22,8 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Minimum Username Length',
 	'version' => '1.1',
 	'author' => 'Rob Church',
-	'description' => 'Enforce a minimum username length',
 	'descriptionmsg' => 'minnamelength-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Minimum_Name_Length',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Minimum_Name_Length',
 );
 
 $wgExtensionMessagesFiles['MinimumNameLength'] = dirname(__FILE__) . '/MinimumNameLength.i18n.php';
@@ -43,7 +42,7 @@ function efMinimumNameLength( $user, &$error ) {
 	global $wgMinimumUsernameLength;
 
 	if( mb_strlen( $user->getName() ) < $wgMinimumUsernameLength ) {
-		wfLoadExtensionMessages( 'MinimumNameLength' );
+		
 		$error = wfMsgHtml( 'minnamelength-error', $wgMinimumUsernameLength );
 		return false;
 	}

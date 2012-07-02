@@ -1,11 +1,10 @@
 <?php
-
 /**
  * Extension based on SkinPerPage to allow a customized skin per namespace
  *
- * Require MediaWiki 1.13.0 for the new version of BeforePageDisplay hook, will
- * produce a warning on older versions.
+ * Require MediaWiki 1.15.0 or greater.
  *
+ * @file
  * @author Alexandre Emsenhuber
  * @license GPLv2
  */
@@ -16,11 +15,11 @@ $wgHooks['BeforePageDisplay'][] = 'efSkinPerPageBeforePageDisplayHook';
 $wgExtensionCredits['other'][] = array(
 	'path'        => __FILE__,
 	'name'        => 'SkinPerNamespace',
-	'url'         => 'http://www.mediawiki.org/wiki/Extension:SkinPerNamespace',
-	'version'     => '2009-04-25',
+	'url'         => 'https://www.mediawiki.org/wiki/Extension:SkinPerNamespace',
+	'version'     => '2011-01-10',
 	'description' => 'Allow a per-namespace skin',
 	'author'      => 'Alexandre Emsenhuber',
-	
+
 );
 
 // Configuration part, you can copy it to your LocalSettings.php and change it
@@ -49,20 +48,19 @@ $wgSkinPerNamespaceOverrideLoggedIn = true;
 /**
  * Hook function for BeforePageDisplay
  */
-function efSkinPerPageBeforePageDisplayHook( &$out, &$skin ){
+function efSkinPerPageBeforePageDisplayHook( OutputPage &$out, Skin &$skin ){
 	global $wgSkinPerNamespace, $wgSkinPerSpecialPage,
-		$wgSkinPerNamespaceOverrideLoggedIn, $wgUser, $wgTitle;
+		$wgSkinPerNamespaceOverrideLoggedIn, $wgUser;
 
 	if( !$wgSkinPerNamespaceOverrideLoggedIn && $wgUser->isLoggedIn() )
 		return true;
 
-	$title = is_callable( array( $out, 'getTitle' ) ) ? # 1.15 +
-		$out->getTitle() : $wgTitle;
+	$title = $out->getTitle();
 	$ns = $title->getNamespace();
 	$skinName = null;
 
 	if( $ns == NS_SPECIAL ) {
-		list( $canonical, /* $subpage */ ) = SpecialPage::resolveAliasWithSubpage( $title->getDBkey() );
+		list( $canonical, /* $subpage */ ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
 		if( isset( $wgSkinPerSpecialPage[$canonical] ) ) {
 			$skinName = $wgSkinPerSpecialPage[$canonical];
 		}
@@ -71,11 +69,10 @@ function efSkinPerPageBeforePageDisplayHook( &$out, &$skin ){
 	if( $skinName === null && isset( $wgSkinPerNamespace[$ns] ) ) {
 		$skinName = $wgSkinPerNamespace[$ns];
 	}
-	
+
 	if( $skinName !== null ) {
 		$skin = Skin::newFromKey( $skinName );
-		if( is_callable( array( $skin, 'setTitle' ) ) ) # 1.15 +
-			$skin->setTitle( $out->getTitle() );
+		$skin->setRelevantTitle( $title );
 	}
 
 	return true;

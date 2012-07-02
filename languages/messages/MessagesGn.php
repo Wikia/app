@@ -186,7 +186,7 @@ $messages = array(
 'yourname'                => 'Hero',
 'yourpassword'            => 'Ne remiñemi',
 'yourpasswordagain'       => 'Repita ne remiñemi',
-'remembermypassword'      => "Aipota chemomandu'ajepi amba'apo jave.",
+'remembermypassword'      => "Aipota chemomandu'ajepi amba'apo jave (for a maximum of $1 {{PLURAL:$1|day|days}})",
 'login'                   => 'Terañemboguapy/Ke',
 'nav-login-createaccount' => 'Terañemboguapy/Ke',
 'userlogin'               => 'Terañemboguapy/Ke',
@@ -207,7 +207,6 @@ $messages = array(
 'link_tip'      => 'Joaju hyepyguávandi',
 'extlink_tip'   => 'Joaju okapeguávandi (recuerde añadir el prefijo http://)',
 'headline_tip'  => 'Teraete mokõiha',
-'math_tip'      => 'Matemátika kuaareko (LaTeX)',
 'nowiki_tip'    => "Viki jehaireko ñembo'yke",
 'image_tip'     => "Ta'ãnga moĩngepyréva",
 'media_tip'     => "Joaju jehai'aty multimediaguándi",
@@ -227,13 +226,11 @@ $messages = array(
 'newarticletext'        => "Rehapykuehókuri peteĩ joaju peteĩ kuatiarogue ndaipórivape.
 Nde remoheñoisérõ ko kuatiarogue, eñepyrũkatu ehai.
 Reikotevẽvérõ marandu, emoñe'ẽ kuatiarogue ñepytyvõ rehegua. Oiméramo reikereínte térã rejavyhaguére, upéicharõ terehojey [[{{MediaWiki:Helppage}}|kuatiarogue mboyveguápe]].",
-'userinvalidcssjstitle' => "'''Aviso:''' No existe la piel \"\$1\". Recuerda que las páginas personalizadas .css y .js tienen un título en minúsculas, p.e. Usuario:Foo/monobook.css en vez de  Usuario:Foo/Monobook.css.",
+'userinvalidcssjstitle' => "'''Aviso:''' No existe la piel \"\$1\". Recuerda que las páginas personalizadas .css y .js tienen un título en minúsculas, p.e. Usuario:Foo/vector.css en vez de  Usuario:Foo/Vector.css.",
 'editing'               => 'Ojehaihína $1',
 'editingsection'        => 'Ojehaihína $1 (vore)',
 'editingcomment'        => 'Ojehaihína $1 (comentario)',
 'yourtext'              => "Mba'ehaipyre",
-'longpagewarning'       => "'''Ejesarekóke: ko kuatiarogue, tuichakuépe, oguereko $1 kb; heta kundahára ikatu iñapañuãi jehaijeýpe kuatiarogue ohaságui 32 kb.
-Aipórõ, eñeha'ãna emboja'o ne rembiapo, vore michĩvévape.'''",
 
 # History pages
 'cur'         => "ko'ag̃agua",
@@ -429,9 +426,8 @@ Reomĩsérõ ta'ãnga peteĩ kuatiaroguépe, eipuru peteĩ joaju:
 'watch'       => 'Ñangareko',
 
 # Delete
-'deletedarticle' => 'oñembogue "[[$1]]"',
-'dellogpage'     => 'Ñemboguepyre ñonagatupy',
-'deletionlog'    => 'ñemboguepyre ñonagatupy',
+'dellogpage'  => 'Ñemboguepyre ñonagatupy',
+'deletionlog' => 'ñemboguepyre ñonagatupy',
 
 # Rollback
 'rollback_short' => 'Embojevy',
@@ -474,13 +470,12 @@ Reomĩsérõ ta'ãnga peteĩ kuatiaroguépe, eipuru peteĩ joaju:
 'ipblocklist-submit' => 'Heka',
 'blocklink'          => 'ejoko',
 'contribslink'       => "mba'emoĩmbyre",
-'blocklogtext'       => 'Esto es un registro de bloqueos y desbloqueos de usuarios. Las direcciones bloqueadas automáticamente no aparecen aquí. Consulte la [[Special:IPBlockList|IP mbohape rysýi imbotypyréva]] para ver la lista de prohibiciones y bloqueos actualmente vigente.',
+'blocklogtext'       => 'Esto es un registro de bloqueos y desbloqueos de usuarios. Las direcciones bloqueadas automáticamente no aparecen aquí. Consulte la [[Special:BlockList|IP mbohape rysýi imbotypyréva]] para ver la lista de prohibiciones y bloqueos actualmente vigente.',
 
 # Move page
 'movearticle'     => 'Guerova kuatiarogue',
 'move-watch'      => 'Toñeñangareko ko tembiapóre',
 'movepagebtn'     => 'Guerova kuatiarogue',
-'1movedto2'       => '[[$1]] oñembohasa [[$2]]-pe',
 'revertmove'      => 'embojevy',
 'delete_and_move' => "Mboje'o ha guerova",
 
@@ -515,7 +510,7 @@ Reomĩsérõ ta'ãnga peteĩ kuatiaroguépe, eipuru peteĩ joaju:
 'spam_blanking'       => 'Todas las revisiones contienen enlaces a $1, blanqueando',
 
 # Media information
-'file-info' => "(tamaño de jehai'aty: $1; tipo MIME: $2)",
+'file-info' => "tamaño de jehai'aty: $1; tipo MIME: $2",
 
 # Special:NewFiles
 'newimages' => "Ta'ãnga pyahu renda",

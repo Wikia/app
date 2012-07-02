@@ -70,8 +70,10 @@ class WikiaForeignDBFile extends ForeignDBFile {
 
 	function getHandler(){
 		wfProfileIn( __METHOD__ );
-		parent::getHandler();
-		$this->getLocalFileLogic()->afterGetHandler();
+		if ( !isset( $this->handler ) ) {
+			parent::getHandler();
+			$this->getLocalFileLogic()->afterGetHandler($this->handler);
+		}
 		wfProfileOut( __METHOD__ );
 		return $this->handler;
 	}

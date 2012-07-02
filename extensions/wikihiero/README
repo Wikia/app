@@ -1,8 +1,6 @@
 //////////////////////////////////////////////////////////////////////////
 
- WikiHiero - A PHP converter from text using "Manual for the encoding of 
- hieroglyphic texts for computer input" syntax into HTML entities (table and
- images).
+ WikiHiero - WikiHiero - adds Ancient Egyptian hieroglyphs support to MediaWiki
 
  Copyright (C) 2004 Guillaume Blanchard (Aoineko)
 
@@ -34,38 +32,6 @@
  Free Documentation License".
 
 //////////////////////////////////////////////////////////////////////////
-
-== INSTALL AS A WEB PAGE ==
-
-You need a server running Apache and PHP. WikiHiero was tested with 
-Apache 1.3.27 and PHP 4.3.3, but must work with oldest version.
-
-1) Copy all file to your server.
-2) Enjoy!
-
-If you rename the pictures directory, pictures prefix or extension, please 
-modify "wikihiero.php" to fit your changes. If you modify any picture size, 
-or add/remove pictures, you need to run "wh_generate.php" to build an updated
-"wh_list.php".
-
-
-== ADD WIKI-HIERO TO YOUR HOMEPAGE, FORUM ==
-
-You need a server running Apache and PHP. WikiHiero was tested with 
-Apache 1.3.27 and PHP 4.3.3, but must work with oldest version.
-
-1) Copy "wikihiero.php", "wh_list.php" and "img" directory to your server.
-2) Include "wikihiero.php" at the top of the file where you want to use it:
-   <?php include "wikihiero.php"; ?>
-   In both file are not in the same folder, don't forget to specify the path.
-3) Where you want show hieroglyphs, add the line
-   <?php echo WikiHiero("my_text"); ?>
-4) Enjoy!
-
-If you rename the pictures directory, pictures prefix or extension, please 
-modify "wikihiero.php" to fit your changes. If you modify any picture size, 
-or add/remove pictures, you need to run "wh_generate.php" to build an updated
-"wh_list.php".
 
 == Version history ==
 
@@ -102,3 +68,12 @@ or add/remove pictures, you need to run "wh_generate.php" to build an updated
 0.2.9: 
 - Add Esperanto interface. 
 - Fix cartouche size
+
+1.0:
+- Seriously rewritten to conform with modern standards:
+-- Code overhauled and improved.
+-- Uses CSS instead of inline styles/attributes and produces valid HTML5.
+-- Adds Special:Hieroglyphs page that replaces two old and broken extra entry points.
+-- Uses MediaWiki localisation system.
+-- Honors $wgExtensionAssetsPath.
+- Support for functioning as something other than a MediaWiki extension dropped.

@@ -9,10 +9,10 @@ class RT {
 		$parser->setHook( 'rt', array( 'RT::render' ) );
 		return true;
 	}
-	
+
 	// This is called to process <rt>...</rt> within a page
 	public static function render( $input, $args = array(), $parser = null ) {
-   
+
 		global $wgRequestTracker_Cachepage,
 			$wgRequestTracker_Active,
 			$wgRequestTracker_DBconn,
@@ -24,21 +24,21 @@ class RT {
 			$wgRequestTracker_TIMEFORMAT_RESOLVED,
 			$wgRequestTracker_TIMEFORMAT_RESOLVED2,
 			$wgRequestTracker_TIMEFORMAT_NOW;
-   
-		wfLoadExtensionMessages( 'RT' );
-   
+
+
+
 		// Grab the number if one was given between the <tr> tags
 		$ticketnum = 0;
 		$matches = array();
 		if ( preg_match( '/^\s*(\d+)\s*$/', $input, $matches ) ) {
 			$ticketnum = $matches[0];
 		}
-   
+
 		// Disable all caching unless told not to
 		if ( !$wgRequestTracker_Cachepage ) {
 			$parser->disableCache();
 		}
-   
+
 		// Try and connect to the database if we are active
 		if ( $wgRequestTracker_Active ) {
 			global $wgUser;
@@ -61,7 +61,7 @@ class RT {
 				}
 			}
 		}
-   
+
 		// If we are not 'active', we leave right away, with minimal output
 		if ( !$wgRequestTracker_Active ) {
 			if ( $ticketnum ) {
@@ -70,7 +70,7 @@ class RT {
 			$msg = wfMsg( 'rt-inactive' );
 			return "<table class='rt-table-inactive' border='1'><tr><td>$msg</td></tr></table>";
 		}
-   
+
 		// Standard info we gather
 		$TZ = "AT TIME ZONE 'GMT'";
 		$ticketinfo = 't.id, t.subject, t.priority, INITCAP(t.status) AS status, q.name AS queue,'
@@ -92,17 +92,17 @@ class RT {
 			. " CASE WHEN (now() $TZ - t.created) <= '2 hour'::interval THEN EXTRACT(minutes FROM now() $TZ - t.created) || ' minutes' ELSE"
 			. " CASE WHEN (now() $TZ - t.created) <= '2 day'::interval THEN EXTRACT(hours FROM now() $TZ - t.created) || ' hours' ELSE"
 			. " EXTRACT(days FROM now() $TZ - t.created) || ' days' END END END END AS age";
-   
+
 		$ticketquery = "SELECT $ticketinfo\nFROM tickets t, queues q, users u, users u2";
 		$whereclause = "WHERE t.queue = q.id\nAND t.owner = u.id\nAND t.creator = u2.id";
-   
+
 		// If just a single number, treat it as <rt>#</rt>
 		if ( 1 === count( $args ) ) {
 			if ( preg_match( '/^\d+$/', key( $args ) ) ) {
 				$ticketnum = key( $args );
 			}
 		}
-   
+
 		// Look up a single ticket number
 		if ( $ticketnum ) {
 			$SQL = "$ticketquery $whereclause\nAND t.id = $ticketnum";
@@ -116,7 +116,7 @@ class RT {
 			}
 			return self::fancyLink( $info, $args, $parser, 0 );
 		}
-   
+
 		// Add in a LIMIT clause if l=xx or limit=xx was used
 		$limit = '';
 		if ( array_key_exists( 'limit', $args ) ) {
@@ -129,7 +129,7 @@ class RT {
 			}
 			$limit = " LIMIT $limit";
 		}
-   
+
 		// Change the default ORDER BY clause if ob=xx was used
 		$orderby = 'ORDER BY t.lastupdated DESC, t.id';
 		$valid_orderby = array
@@ -158,14 +158,14 @@ class RT {
 				if ( array_key_exists( $word, $valid_orderby ) ) {
 					$word = $valid_orderby[$word];
 				}
-				else if ( !preg_match ( '/^\d+$/', $word ) ) {
+				elseif ( !preg_match ( '/^\d+$/', $word ) ) {
 					die ( wfMsg ( 'rt-badorderby', $word ) );
 				}
 				$orderby .= " $word$mod,";
 			}
 			$orderby = rtrim( $orderby, ',' );
 		}
-   
+
 		// Determine what status to use. Default is new and open:
 		$searchstatus = "t.status IN ('new','open')";
 		$valid_status = array( 'new', 'open', 'resolved', 'deleted', 'stalled', 'rejected' );
@@ -204,7 +204,7 @@ class RT {
 			$searchq = preg_replace( '/.$/', ')', $searchq );
 			$whereclause .= "\nAND $searchq";
 		}
-   
+
 		// See if we are limiting to one or more owners
 		$searchowner = '';
 		if ( array_key_exists( 'o', $args ) ) {
@@ -220,14 +220,14 @@ class RT {
 			$searchowner = preg_replace( '/.$/', ')', $searchowner );
 			$whereclause .= "\nAND $searchowner";
 		}
-   
+
 		// Allow use of custom fields
 		$searchcustom = '';
 		if ( array_key_exists('custom', $args ) ) {
 			$searchcustom = trim( $args['custom'] );
 			$cfargs = trim( strtolower( $args['custom'] ) );
 			$ticketquery .= ', customfields cf, objectcustomfieldvalues ov';
-			$whereclause .= "\nAND ov.objectid = t.id\nAND ov.customfield=cf.id";
+			$whereclause .= "\nAND ov.objectid = t.id\nAND ov.customfield=cf.id\nAND ov.disabled = 0";
 			$whereclause .= "\nAND LOWER(cf.name) IN (";
 			foreach ( preg_split( '/\s*,\s*/', $cfargs ) as $word ) {
 				$word = trim( $word );
@@ -265,7 +265,7 @@ class RT {
 				&& !array_key_exists( 'queue', $args ) ) ) {
 			$showqueue = 0;
 		}
-   
+
 		// The owner: show by default unless searching a single owner
 		$showowner = 1;
 		if ( array_key_exists( 'noowner', $args )
@@ -274,7 +274,7 @@ class RT {
 				&& !array_key_exists( 'owner', $args ) ) ) {
 			$showowner = 0;
 		}
-   
+
 		// The status: show by default unless searching a single status
 		$showstatus = 1;
 		if ( array_key_exists( 'nostatus', $args )
@@ -282,12 +282,12 @@ class RT {
 				&& !array_key_exists( 'status', $args ) ) ) {
 			$showstatus = 0;
 		}
-   
+
 		// Things we always show unless told not to:
 		$showsubject = ! array_key_exists( 'nosubject', $args );
 		$showupdated = ! array_key_exists( 'noupdated', $args );
 		$showticket  = ! array_key_exists( 'noticket',  $args );
-   
+
 		// Things we don't show unless asked to:
 		$showpriority  = array_key_exists( 'priority',  $args );
 		$showupdated2  = array_key_exists( 'updated2',  $args );
@@ -297,10 +297,10 @@ class RT {
 		$showresolved2 = array_key_exists( 'resolved2', $args );
 		$showage       = array_key_exists( 'age',       $args );
 		$showcustom    = array_key_exists( 'custom',    $args );
-   
+
 		// Unless 'tablerows' has been set, output the table and header tags
 		if ( !array_key_exists( 'tablerows', $args ) ) {
-   
+
 			$class = $wgRequestTracker_Sortable ? 'wikitable sortable' : 'rt-table';
 
 			// Allow override of the default sortable table option
@@ -333,12 +333,12 @@ class RT {
 			if ( $showresolved )  { $output .= "<th style='white-space: nowrap'>Resolved</th>\n";     }
 			if ( $showresolved2 ) { $output .= "<th style='white-space: nowrap'>Resolved</th>\n";     }
 			if ( $showage )       { $output .= "<th style='white-space: nowrap'>Age</th>\n";          }
-   
+
 			$output .= "</tr>\n";
 		}
-   
+
 		foreach ( $info as $row ) {
-   
+
 			if ( $showticket )  {
 				$id = self::fancyLink( $row, $args, $parser, 1 );
 				$output .= "<td style='white-space: nowrap'>$id</td>";
@@ -367,21 +367,21 @@ class RT {
 			if ( $showage )       { $output .= '<td>' . $row['age'] . "</td>\n"; }
 			$output .= "\n</tr>\n";
 		}
-   
+
 		if ( !array_key_exists( 'tablerows', $args ) ) {
 			$output .= "\n</table>\n";
 		}
-   
+
 		return $output;
 	}
 
 	private static function fancyLink( $row, $args, $parser, $istable ) {
-   
+
 		global $wgRequestTracker_URL, $wgRequestTracker_Formats, $wgRequestTracker_Useballoons;
-   
+
 		$ticketnum = $row['id'];
 		$ret = "[$wgRequestTracker_URL=$ticketnum RT #$ticketnum]";
-   
+
 		# Check for any custom format args in the rt tag.
 		# If any are found, use that and ignore any other args
 		$foundformat = 0;
@@ -396,7 +396,7 @@ class RT {
 				break;
 			}
 		}
-   
+
 		# Process any column-based args to the rt tag
 		if ( !$foundformat and !$istable ) {
 			foreach ( array_keys( $args ) as $val ) {
@@ -412,18 +412,18 @@ class RT {
 				}
 			}
 		}
-   
+
 		$ret = $parser->recursiveTagParse( $ret );
-   
+
 		// Not using balloons? Just return the current text
 		if ( !$wgRequestTracker_Useballoons || array_key_exists( 'noballoon', $args ) ) {
 			return "<span class='rt-ticket-noballoon'>$ret</span>";
 		}
-   
+
 		$safesub = preg_replace( '/\"/', '\"', $row['subject'] );
 		$safesub = preg_replace( '/\'/', "\'", $safesub );
 		$safesub = htmlspecialchars( $safesub );
-   
+
 		$safeowner = $row['owner'];
 		if ( $row['owner'] !== $row['username'] ) {
 			$safeowner .= " ($row[username])";
@@ -431,11 +431,11 @@ class RT {
 		$safeowner = preg_replace( '/\"/', '\"', $safeowner );
 		$safeowner = preg_replace( '/\'/', "\'", $safeowner );
 		$safeowner = htmlspecialchars( $safeowner );
-   
+
 		$safeq = preg_replace( '/\"/', '\"', $row['queue'] );
 		$safeq = preg_replace( '/\'/', "\'", $safeq );
 		$safeq = htmlspecialchars( $safeq );
-   
+
 		$text = "RT #<b>$ticketnum</b>";
 		$text .= "<br />Status: <b>$row[status]</b>";
 		$text .= "<br />Subject: <b>$safesub</b>";
@@ -448,26 +448,26 @@ class RT {
 		else {
 			$text .= "<br />Last updated: <b>$row[lastupdated]</b>";
 		}
-   
+
 		# Prepare some balloon-tek
 		$link   = isset( $args['link'] )   ? $args['link']   : '';
 		$target = isset( $args['target'] ) ? $args['target'] : '';
 		$sticky = isset( $args['sticky'] ) ? $args['sticky'] : '0';
 		$width  = isset( $args['width'] )  ? $args['width']  : '0';
-   
+
 		$event  = isset( $args['click'] ) && $args['click'] && !$link ? 'onclick' : 'onmouseover';
 		$event2 = '';
 		$event  = "$event=\"balloon.showTooltip(event,'${text}',${sticky},${width})\"";
-   
+
 		if ( preg_match( '/onclick/', $event ) && $args['hover'] ) {
 			$event2 = " onmouseover=\"balloon.showTooltip(event,'" . $args['hover'] . "',0,${width})\"";
 		}
-   
+
 		$has_style = isset( $args['style'] ) && $args['style'];
 		$style  = "style=\"" . ( $has_style ? $args['style'] . ";cursor:pointer\"" : "cursor:pointer\"" );
 		$target = $target ? "target=${target}" : '';
 		$output = "<span class='rt-ticket' ${event} ${event2} ${style}>$ret</span>";
-   
+
 		return $output;
 	}
 }

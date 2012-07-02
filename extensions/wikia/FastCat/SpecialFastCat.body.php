@@ -49,7 +49,6 @@ class FastCat extends UnlistedSpecialPage {
 
 		$rev = Revision::newFromTitle( $title );
 
-		wfLoadExtensionMessages( 'FastCat' );
 		$emptycat = '[[' . $wgContLang->getNsText(NS_CATEGORY) . ':' . wfMsgForContent( 'fastcat-marker-category' ) . ']]';
 
 		if( $rev && (strstr($rev->getText(), $emptycat ))) {

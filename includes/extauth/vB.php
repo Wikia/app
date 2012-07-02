@@ -1,21 +1,26 @@
 <?php
-
-# Copyright (C) 2009 Aryeh Gregor
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-# http://www.gnu.org/copyleft/gpl.html
+/**
+ * External authentication with a vBulletin database.
+ *
+ * Copyright © 2009 Aryeh Gregor
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ */
 
 /**
  * This class supports the proprietary vBulletin forum system
@@ -29,14 +34,14 @@
  *       'username' => 'forum',
  *       'password' => 'udE,jSqDJ<""p=fI.K9',
  *       'dbname' => 'forum',
- *       'tableprefix' => '',
+ *       'tablePrefix' => '',
  *       'cookieprefix' => 'bb'
  *   );
  *
  * @ingroup ExternalUser
  */
 class ExternalUser_vB extends ExternalUser {
-	private $mDb, $mRow;
+	private $mRow;
 
 	protected function initFromName( $name ) {
 		return $this->initFromCond( array( 'username' => $name ) );
@@ -50,13 +55,13 @@ class ExternalUser_vB extends ExternalUser {
 		# Try using the session table.  It will only have a row if the user has
 		# an active session, so it might not always work, but it's a lot easier
 		# than trying to convince PHP to give us vB's $_SESSION.
-		global $wgExternalAuthConf;
+		global $wgExternalAuthConf, $wgRequest;
 		if ( !isset( $wgExternalAuthConf['cookieprefix'] ) ) {
 			$prefix = 'bb';
 		} else {
 			$prefix = $wgExternalAuthConf['cookieprefix'];
 		}
-		if ( !isset( $_COOKIE["{$prefix}sessionhash"] ) ) {
+		if ( $wgRequest->getCookie( 'sessionhash', $prefix ) === null ) {
 			return false;
 		}
 
@@ -67,7 +72,7 @@ class ExternalUser_vB extends ExternalUser {
 			$this->getFields(),
 			array(
 				'session.userid = user.userid',
-				'sessionhash' => $_COOKIE["{$prefix}sessionhash"]
+				'sessionhash' => $wgRequest->getCookie( 'sessionhash', $prefix ),
 			),
 			__METHOD__
 		);
@@ -98,13 +103,14 @@ class ExternalUser_vB extends ExternalUser {
 
 	private function getDb() {
 		global $wgExternalAuthConf;
-		return new Database(
-			$wgExternalAuthConf['server'],
-			$wgExternalAuthConf['username'],
-			$wgExternalAuthConf['password'],
-			$wgExternalAuthConf['dbname'],
-			false, 0,
-			$wgExternalAuthConf['tableprefix']
+		return DatabaseBase::factory( 'mysql',
+			array(
+				'host' => $wgExternalAuthConf['server'],
+				'user' => $wgExternalAuthConf['username'],
+				'password' => $wgExternalAuthConf['password'],
+				'dbname' => $wgExternalAuthConf['dbname'],
+				'tablePrefix' => $wgExternalAuthConf['tablePrefix'],
+			)
 		);
 	}
 

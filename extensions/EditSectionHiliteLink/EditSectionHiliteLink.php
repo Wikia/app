@@ -30,8 +30,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'EditSectionHiliteLink',
 	'author' => 'Arash Boostani',
 	'version' => '0.1.0',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:EditSectionHiliteLink',
-	'description' => 'Hilight the appropriate section of an article when you mouse over the edit link',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:EditSectionHiliteLink',
 	'descriptionmsg' => 'editsectionhilitelink-desc',
 );
 

@@ -24,14 +24,14 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class DumpSisterSites extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Quickie page name dump script for SisterSites usage";
 	}
-	
+
 	public function execute() {
 		$dbr = wfGetDB( DB_SLAVE );
 		$dbr->bufferResults( false );
@@ -42,15 +42,14 @@ class DumpSisterSites extends Maintenance {
 			),
 			__METHOD__ );
 
-		foreach( $result as $row ) {
+		foreach ( $result as $row ) {
 			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$url = $title->getFullUrl();
 			$text = $title->getPrefixedText();
 			$this->output( "$url $text\n" );
 		}
-		$dbr->freeResult( $result );
 	}
 }
 
 $maintClass = "DumpSisterSites";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

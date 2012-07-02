@@ -4,9 +4,8 @@ $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'DismissableSiteNotice',
 	'author' => 'Brion Vibber',
-	'description' => 'Allows users to close the sitenotice.',
 	'descriptionmsg' => 'sitenotice-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:DismissableSiteNotice',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice',
 );
 
 $wgExtensionMessagesFiles['DismissableSiteNotice'] = dirname(__FILE__) . '/DismissableSiteNotice.i18n.php';
@@ -18,25 +17,24 @@ function wfDismissableSiteNotice( &$notice ) {
 		return true;
 	}
 
-	wfLoadExtensionMessages( 'DismissableSiteNotice' );
 	$encNotice = Xml::escapeJsString($notice);
 	$encClose = Xml::escapeJsString( wfMsg( 'sitenotice_close' ) );
 	$id = intval( $wgMajorSiteNoticeID ) . "." . intval( wfMsgForContent( 'sitenotice_id' ) );
 
 	// No dismissal for anons
 	if ( $wgUser->isAnon() ) {
-		$notice = <<<EOT
-<script type="text/javascript" language="JavaScript">
+		$notice = <<<HTML
+<script type="text/javascript">
 /* <![CDATA[ */
 document.writeln("$encNotice");
 /* ]]> */
 </script>
-EOT;
+HTML;
 		return true;
 	}
 
-	$notice = <<<EOT
-<script type="text/javascript" language="JavaScript">
+	$notice = <<<HTML
+<script type="text/javascript">
 /* <![CDATA[ */
 var cookieName = "dismissSiteNotice=";
 var cookiePos = document.cookie.indexOf(cookieName);
@@ -62,12 +60,12 @@ if (cookieValue != siteNoticeID) {
 		var element = document.getElementById('mw-dismissable-notice');
 		element.parentNode.removeChild(element);
 	}
-	document.writeln('<table width="100%" id="mw-dismissable-notice"><tr><td width="100%">'+siteNoticeValue+'</td>');
-	document.writeln('<td align="right"><span style="margin: 0 15px 0 20px">[<a href="javascript:dismissNotice();">'+msgClose+'</a>]</span></td></tr></table>');
+	document.writeln('<table width="100%" id="mw-dismissable-notice"><tr><td width="80%">'+siteNoticeValue+'</td>');
+	document.writeln('<td width="20%" align="right">[<a href="javascript:dismissNotice();">'+msgClose+'</a>]</td></tr></table>');
 }
 /* ]]> */
 </script>
-EOT;
+HTML;
 	// Compact the string a bit
 	/*
 	$notice = strtr( $notice, array(

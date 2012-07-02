@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class PageTypesTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testContentPage() throws Exception {
 		openAndWait("index.php?title=Special:Random");
 
@@ -28,7 +28,7 @@ public class PageTypesTest extends BaseTest {
 		assertTrue(session().isElementPresent("WikiaSearch"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testMediawikiPage() throws Exception {
 		loginAsStaff();
 		editArticle("MediaWiki:Mainpage", "Mainpage");
@@ -52,7 +52,7 @@ public class PageTypesTest extends BaseTest {
 		assertTrue(session().isElementPresent("WikiaSearch"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testCategoryPage() throws Exception {
 		loginAsStaff();
 		editArticle("Category:Some category", "Wikia PageTypes test");
@@ -83,7 +83,7 @@ public class PageTypesTest extends BaseTest {
 		doDelete("label=regexp:^.*Author request", "Wikia PageTypes test");
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testForumPage() throws Exception {
 		String page = "Forum:WikiaTest";
 
@@ -111,7 +111,7 @@ public class PageTypesTest extends BaseTest {
 		doDelete("label=regexp:^.*Author request", "Wikia PageTypes test");
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testBlogPostPage() throws Exception {
 		String page = "User_blog:" + getTestConfig().getString("ci.user.wikiastaff.username") + "/Test_Blog_Post";
 
@@ -137,7 +137,7 @@ public class PageTypesTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@class='author-details']//span[@class='post-author']//a[contains(@href,'User:" + getTestConfig().getString("ci.user.wikiastaff.username") + "')]"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testBlogPostsListingPage() throws Exception {
 		openAndWait("index.php?title=Blog:Recent_posts");
 
@@ -158,7 +158,7 @@ public class PageTypesTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='WikiaUserPagesHeader']/a[contains(@href,'Special:CreateBlogPage')]"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testUserPage() throws Exception {
 		loginAsRegular();
 		editArticle("User:" + getTestConfig().getString("ci.user.regular.username") + "/Subpage", "Lorem ipsum");

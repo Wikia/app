@@ -1,0 +1,1094 @@
+<html>
+<head>
+<title>Docs For Class CF_Object</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">php-cloudfiles</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                    
+                                                                      		  [ <a href="../classtrees_php-cloudfiles.html" class="menu">class tree: php-cloudfiles</a> ]
+		  [ <a href="../elementindex_php-cloudfiles.html" class="menu">index: php-cloudfiles</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+	<div id="ric">
+					<p><a href="../ric_README.html">README</a></p>
+					<p><a href="../ric_Changelog.html">Changelog</a></p>
+					<p><a href="../ric_AUTHORS.html">AUTHORS</a></p>
+					<p><a href="../ric_COPYING.html">COPYING</a></p>
+			</div>
+      <b>Packages:</b><br />
+              <a href="../li_php-cloudfiles.html">php-cloudfiles</a><br />
+              <a href="../li_php-cloudfiles-exceptions.html">php-cloudfiles-exceptions</a><br />
+              <a href="../li_php-cloudfiles-http.html">php-cloudfiles-http</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="../php-cloudfiles/_cloudfiles.php.html">		cloudfiles.php
+		</a><br>
+	  </div><br />
+      
+      
+            <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../php-cloudfiles/CF_Authentication.html">CF_Authentication</a><br />
+	    		<a href="../php-cloudfiles/CF_Connection.html">CF_Connection</a><br />
+	    		<a href="../php-cloudfiles/CF_Container.html">CF_Container</a><br />
+	    		<a href="../php-cloudfiles/CF_Object.html">CF_Object</a><br />
+	  </div>
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Class: CF_Object</h1>
+Source Location: /cloudfiles.php<br /><br />
+
+
+<table width="100%" border="0">
+<tr><td valign="top">
+
+<h3><a href="#class_details">Class Overview</a></h3>
+<pre></pre><br />
+<div class="description">Object operations</div><br /><br />
+
+
+
+
+
+
+        
+</td>
+
+<td valign="top">
+<h3><a href="#class_vars">Variables</a></h3>
+<ul>
+    <li><a href="../php-cloudfiles/CF_Object.html#var$container">$container</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#var$content_length">$content_length</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#var$content_type">$content_type</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#var$headers">$headers</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#var$last_modified">$last_modified</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#var$manifest">$manifest</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#var$metadata">$metadata</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#var$name">$name</a></li>
+  </ul>
+</td>
+
+
+<td valign="top">
+<h3><a href="#class_methods">Methods</a></h3>
+<ul>
+    <li><a href="../php-cloudfiles/CF_Object.html#method__construct">__construct</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodcompute_md5sum">compute_md5sum</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodgetETag">getETag</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodload_from_filename">load_from_filename</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodpublic_ssl_uri">public_ssl_uri</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodpublic_streaming_uri">public_streaming_uri</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodpublic_uri">public_uri</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodpurge_from_cdn">purge_from_cdn</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodread">read</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodsave_to_filename">save_to_filename</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodset_etag">set_etag</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodstream">stream</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodsync_manifest">sync_manifest</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodsync_metadata">sync_metadata</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#methodwrite">write</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#method_guess_content_type">_guess_content_type</a></li>
+    <li><a href="../php-cloudfiles/CF_Object.html#method__toString">__toString</a></li>
+  </ul>
+</td>
+
+</tr></table>
+<hr />
+
+<table width="100%" border="0"><tr>
+
+
+
+
+
+
+</tr></table>
+<hr />
+
+<a name="class_details"></a>
+<h3>Class Details</h3>
+<div class="tags">
+[line 1883]<br />
+Object operations<br /><br /><p>An Object is analogous to a file on a conventional filesystem. You can  read data from, or write data to your Objects. You can also associate  arbitrary metadata with them.</p><br /></div><br /><br />
+<div class="top">[ <a href="#top">Top</a> ]</div><br />
+
+<hr />
+<a name="class_vars"></a>
+<h3>Class Variables</h3>
+<div class="tags">
+	<a name="var$container"></a>
+	<p></p>
+	<h4>$container = <span class="value"></span></h4>
+	<p>[line 1885]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$content_length"></a>
+	<p></p>
+	<h4>$content_length = <span class="value"></span></h4>
+	<p>[line 1889]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$content_type"></a>
+	<p></p>
+	<h4>$content_type = <span class="value"></span></h4>
+	<p>[line 1888]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$headers"></a>
+	<p></p>
+	<h4>$headers = <span class="value"></span></h4>
+	<p>[line 1891]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$last_modified"></a>
+	<p></p>
+	<h4>$last_modified = <span class="value"></span></h4>
+	<p>[line 1887]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$manifest"></a>
+	<p></p>
+	<h4>$manifest = <span class="value"></span></h4>
+	<p>[line 1892]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$metadata"></a>
+	<p></p>
+	<h4>$metadata = <span class="value"></span></h4>
+	<p>[line 1890]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$name"></a>
+	<p></p>
+	<h4>$name = <span class="value"></span></h4>
+	<p>[line 1886]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+</div><br />
+
+<hr />
+<a name="class_methods"></a>
+<h3>Class Methods</h3>
+<div class="tags">
+
+  <hr />
+	<a name="method__construct"></a>
+	<h3>constructor __construct <span class="smalllinenumber">[line 1902]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>CF_Object __construct(
+
+&$container, string
+$name, [boolean
+$force_exists = False], [
+$dohead = True], obj
+$container)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Class constructor<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">obj&nbsp;&nbsp;</td>
+        <td><b>$container</b>&nbsp;&nbsp;</td>
+        <td>CF_Container instance</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$name</b>&nbsp;&nbsp;</td>
+        <td>name of Object</td>
+      </tr>
+          <tr>
+        <td class="type">boolean&nbsp;&nbsp;</td>
+        <td><b>$force_exists</b>&nbsp;&nbsp;</td>
+        <td>if set, throw an error if Object doesn't exist</td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>&$container</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$dohead</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodcompute_md5sum"></a>
+	<h3>method compute_md5sum <span class="smalllinenumber">[line 2522]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string compute_md5sum(
+
+&$data, filename|obj|string
+$data)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Compute the MD5 checksum<br /><br /><p>Calculate the MD5 checksum on either a PHP resource or data.  The argument  may either be a local filename, open resource for reading, or a string.</p><p><strong>WARNING:</strong> if you are uploading a big file over a stream  it could get very slow to compute the md5 you probably want to  set the $verify parameter to False in the write() method and  compute yourself the md5 before if you have it.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>MD5 checksum hexidecimal string</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">filename|obj|string&nbsp;&nbsp;</td>
+        <td><b>$data</b>&nbsp;&nbsp;</td>
+        <td>filename, open resource, or string</td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>&$data</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetETag"></a>
+	<h3>method getETag <span class="smalllinenumber">[line 2503]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string getETag(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Object's MD5 checksum<br /><br /><p>Accessor method for reading Object's private ETag attribute.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>MD5 checksum hexidecimal string</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodload_from_filename"></a>
+	<h3>method load_from_filename <span class="smalllinenumber">[line 2393]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean load_from_filename(
+string
+$filename, [boolean
+$verify = True])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Upload Object data from local filename<br /><br /><p>This is a convenience function to upload the data from a local file.  A  True value for $verify will cause the method to compute the Object's MD5  checksum prior to uploading.</p><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;authentication/connection/container&nbsp;code&nbsp;excluded</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;see&nbsp;previous&nbsp;examples</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$my_docs&nbsp;</span>=&nbsp;<span class="src-var">$conn</span><span class="src-sym">-&gt;</span><span class="src-id">get_container</span><span class="src-sym">(</span><span class="src-str">&quot;documents&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc&nbsp;</span>=&nbsp;<span class="src-var">$my_docs</span><span class="src-sym">-&gt;</span><span class="src-id">get_object</span><span class="src-sym">(</span><span class="src-str">&quot;README&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Upload&nbsp;my&nbsp;local&nbsp;README's&nbsp;content</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Object.html#methodload_from_filename">load_from_filename</a><span class="src-sym">(</span><span class="src-str">&quot;/home/ej/cloudfiles/readme&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td><kbd>True</kbd> if data uploaded successfully</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>SyntaxException missing required parameters</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>BadContentTypeException if no Content-Type was/could be set</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>MisMatchedChecksumException $verify is set and checksums unequal</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>InvalidResponseException unexpected response</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>IOException error opening file</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$filename</b>&nbsp;&nbsp;</td>
+        <td>full path to local file</td>
+      </tr>
+          <tr>
+        <td class="type">boolean&nbsp;&nbsp;</td>
+        <td><b>$verify</b>&nbsp;&nbsp;</td>
+        <td>enable local/remote MD5 checksum validation</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodpublic_ssl_uri"></a>
+	<h3>method public_ssl_uri <span class="smalllinenumber">[line 2052]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string public_ssl_uri(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		String representation of the Object's public SSL URI<br /><br /><p>A string representing the Object's public SSL URI assuming that it's  parent Container is CDN-enabled.</p><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;authentication/connection/container&nbsp;code&nbsp;excluded</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;see&nbsp;previous&nbsp;examples</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Print&nbsp;out&nbsp;the&nbsp;Object's&nbsp;CDN&nbsp;SSL&nbsp;URI&nbsp;(if&nbsp;it&nbsp;has&nbsp;one)&nbsp;in&nbsp;an&nbsp;HTML&nbsp;img-tag</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;print&nbsp;<span class="src-str">&quot;</span><span class="src-str">&lt;img&nbsp;src='<span class="src-var">$pic</span><span class="src-sym">-&gt;</span><span class="src-id">public_ssl_uri</span>()'&nbsp;/&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Object's public SSL URI or NULL</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodpublic_streaming_uri"></a>
+	<h3>method public_streaming_uri <span class="smalllinenumber">[line 2077]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string public_streaming_uri(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		String representation of the Object's public Streaming URI<br /><br /><p>A string representing the Object's public Streaming URI assuming that it's  parent Container is CDN-enabled.</p><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;authentication/connection/container&nbsp;code&nbsp;excluded</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;see&nbsp;previous&nbsp;examples</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Print&nbsp;out&nbsp;the&nbsp;Object's&nbsp;CDN&nbsp;Streaming&nbsp;URI&nbsp;(if&nbsp;it&nbsp;has&nbsp;one)&nbsp;in&nbsp;an&nbsp;HTML&nbsp;img-tag</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;print&nbsp;<span class="src-str">&quot;</span><span class="src-str">&lt;img&nbsp;src='<span class="src-var">$pic</span><span class="src-sym">-&gt;</span><span class="src-id">public_streaming_uri</span>()'&nbsp;/&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Object's public Streaming URI or NULL</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodpublic_uri"></a>
+	<h3>method public_uri <span class="smalllinenumber">[line 2026]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string public_uri(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		String representation of the Object's public URI<br /><br /><p>A string representing the Object's public URI assuming that it's  parent Container is CDN-enabled.</p><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;authentication/connection/container&nbsp;code&nbsp;excluded</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;see&nbsp;previous&nbsp;examples</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Print&nbsp;out&nbsp;the&nbsp;Object's&nbsp;CDN&nbsp;URI&nbsp;(if&nbsp;it&nbsp;has&nbsp;one)&nbsp;in&nbsp;an&nbsp;HTML&nbsp;img-tag</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;print&nbsp;<span class="src-str">&quot;</span><span class="src-str">&lt;img&nbsp;src='<span class="src-var">$pic</span><span class="src-sym">-&gt;</span><span class="src-id">public_uri</span>()'&nbsp;/&gt;\n</span><span class="src-str">&quot;</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Object's public URI or NULL</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodpurge_from_cdn"></a>
+	<h3>method purge_from_cdn <span class="smalllinenumber">[line 2466]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean purge_from_cdn(
+[
+$email = null])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Purge this Object from CDN Cache.<br /><br /><p>Example:</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>True if successful</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>CDNNotEnabledException if CDN Is not enabled on this connection</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>InvalidResponseException if the response expected is not returned</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$email</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodread"></a>
+	<h3>method read <span class="smalllinenumber">[line 2113]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string read(
+[array
+$hdrs = array()])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Read the remote Object's data<br /><br /><p>Returns the Object's data.  This is useful for smaller Objects such  as images or office documents.  Object's with larger content should use  the stream() method below.</p><p>Pass in $hdrs array to set specific custom HTTP headers such as  If-Match, If-None-Match, If-Modified-Since, Range, etc.</p><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;authentication/connection/container&nbsp;code&nbsp;excluded</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;see&nbsp;previous&nbsp;examples</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$my_docs&nbsp;</span>=&nbsp;<span class="src-var">$conn</span><span class="src-sym">-&gt;</span><span class="src-id">get_container</span><span class="src-sym">(</span><span class="src-str">&quot;documents&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc&nbsp;</span>=&nbsp;<span class="src-var">$my_docs</span><span class="src-sym">-&gt;</span><span class="src-id">get_object</span><span class="src-sym">(</span><span class="src-str">&quot;README&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$data&nbsp;</span>=&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Object.html#methodread">read</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;&nbsp;</span><span class="src-comm">#&nbsp;read&nbsp;image&nbsp;content&nbsp;into&nbsp;a&nbsp;string&nbsp;variable</span></div></li>
+<li><div class="src-line">&nbsp;print&nbsp;<span class="src-var">$data</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Or&nbsp;see&nbsp;stream()&nbsp;below&nbsp;for&nbsp;a&nbsp;different&nbsp;example.</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Object's data</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>InvalidResponseException unexpected response</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$hdrs</b>&nbsp;&nbsp;</td>
+        <td>user-defined headers (Range, If-Match, etc.)</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsave_to_filename"></a>
+	<h3>method save_to_filename <span class="smalllinenumber">[line 2438]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean save_to_filename(
+string
+$filename)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Save Object's data to local filename<br /><br /><p>Given a local filename, the Object's data will be written to the newly  created file.</p><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;authentication/connection/container&nbsp;code&nbsp;excluded</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;see&nbsp;previous&nbsp;examples</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Whoops!&nbsp;&nbsp;I&nbsp;deleted&nbsp;my&nbsp;local&nbsp;README,&nbsp;let&nbsp;me&nbsp;download/save&nbsp;it</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$my_docs&nbsp;</span>=&nbsp;<span class="src-var">$conn</span><span class="src-sym">-&gt;</span><span class="src-id">get_container</span><span class="src-sym">(</span><span class="src-str">&quot;documents&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc&nbsp;</span>=&nbsp;<span class="src-var">$my_docs</span><span class="src-sym">-&gt;</span><span class="src-id">get_object</span><span class="src-sym">(</span><span class="src-str">&quot;README&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Object.html#methodsave_to_filename">save_to_filename</a><span class="src-sym">(</span><span class="src-str">&quot;/home/ej/cloudfiles/readme.restored&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td><kbd>True</kbd> if successful</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>IOException error opening file</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>InvalidResponseException unexpected response</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$filename</b>&nbsp;&nbsp;</td>
+        <td>name of local file to write data to</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodset_etag"></a>
+	<h3>method set_etag <span class="smalllinenumber">[line 2490]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void set_etag(
+string
+$etag)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Set Object's MD5 checksum<br /><br /><p>Manually set the Object's ETag.  Including the ETag is mandatory for  Cloud Files to perform end-to-end verification.  Omitting the ETag forces  the user to handle any data integrity checks.</p><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$etag</b>&nbsp;&nbsp;</td>
+        <td>MD5 checksum hexidecimal string</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstream"></a>
+	<h3>method stream <span class="smalllinenumber">[line 2170]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string stream(
+
+&$fp, [array
+$hdrs = array()], resource
+$fp)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Streaming read of Object's data<br /><br /><p>Given an open PHP resource (see PHP's fopen() method), fetch the Object's  data and write it to the open resource handle.  This is useful for  streaming an Object's content to the browser (videos, images) or for  fetching content to a local file.</p><p>Pass in $hdrs array to set specific custom HTTP headers such as  If-Match, If-None-Match, If-Modified-Since, Range, etc.</p><p>Example:  <ol><li><div class="src-line">&nbsp;#&nbsp;...&nbsp;authentication/connection/container&nbsp;code&nbsp;excluded</div></li>
+<li><div class="src-line">&nbsp;#&nbsp;...&nbsp;see&nbsp;previous&nbsp;examples</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;#&nbsp;Assuming&nbsp;this&nbsp;is&nbsp;a&nbsp;web&nbsp;script&nbsp;to&nbsp;display&nbsp;the&nbsp;README&nbsp;to&nbsp;the</div></li>
+<li><div class="src-line">&nbsp;#&nbsp;user's&nbsp;browser:</div></li>
+<li><div class="src-line">&nbsp;#</div></li>
+<li><div class="src-line">&nbsp;<span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">//&nbsp;grab&nbsp;README&nbsp;from&nbsp;storage&nbsp;system</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">//</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$my_docs&nbsp;</span>=&nbsp;<span class="src-var">$conn</span><span class="src-sym">-&gt;</span><span class="src-id">get_container</span><span class="src-sym">(</span><span class="src-str">&quot;documents&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc&nbsp;</span>=&nbsp;<span class="src-var">$my_docs</span><span class="src-sym">-&gt;</span><span class="src-id">get_object</span><span class="src-sym">(</span><span class="src-str">&quot;README&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">//&nbsp;Hand&nbsp;it&nbsp;back&nbsp;to&nbsp;user's&nbsp;browser&nbsp;with&nbsp;appropriate&nbsp;content-type</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">//</span></div></li>
+<li><div class="src-line">&nbsp;<a href="http://www.php.net/header">header</a><span class="src-sym">(</span><span class="src-str">&quot;Content-Type:&nbsp;&quot;&nbsp;</span>.&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><span class="src-id"><a href="../php-cloudfiles/CF_Object.html#var$content_type">content_type</a></span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$output&nbsp;</span>=&nbsp;<a href="http://www.php.net/fopen">fopen</a><span class="src-sym">(</span><span class="src-str">&quot;php://output&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;w&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Object.html#methodstream">stream</a><span class="src-sym">(</span><span class="src-var">$output</span><span class="src-sym">)</span><span class="src-sym">;&nbsp;</span><span class="src-comm">#&nbsp;stream&nbsp;object&nbsp;content&nbsp;to&nbsp;PHP's&nbsp;output&nbsp;buffer</span></div></li>
+<li><div class="src-line">&nbsp;<a href="http://www.php.net/fclose">fclose</a><span class="src-sym">(</span><span class="src-var">$output</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;#&nbsp;See&nbsp;read()&nbsp;above&nbsp;for&nbsp;a&nbsp;more&nbsp;simple&nbsp;example.</div></li>
+<li><div class="src-line">&nbsp;#</div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Object's data</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>InvalidResponseException unexpected response</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">resource&nbsp;&nbsp;</td>
+        <td><b>$fp</b>&nbsp;&nbsp;</td>
+        <td>open resource for writing data to</td>
+      </tr>
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$hdrs</b>&nbsp;&nbsp;</td>
+        <td>user-defined headers (Range, If-Match, etc.)</td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>&$fp</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsync_manifest"></a>
+	<h3>method sync_manifest <span class="smalllinenumber">[line 2263]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean sync_manifest(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Store new Object manifest<br /><br /><p>Write's an Object's manifest to the remote Object.  This will overwrite  an prior Object manifest.</p><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;authentication/connection/container&nbsp;code&nbsp;excluded</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;see&nbsp;previous&nbsp;examples</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$my_docs&nbsp;</span>=&nbsp;<span class="src-var">$conn</span><span class="src-sym">-&gt;</span><span class="src-id">get_container</span><span class="src-sym">(</span><span class="src-str">&quot;documents&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc&nbsp;</span>=&nbsp;<span class="src-var">$my_docs</span><span class="src-sym">-&gt;</span><span class="src-id">get_object</span><span class="src-sym">(</span><span class="src-str">&quot;README&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Define&nbsp;new&nbsp;manifest&nbsp;for&nbsp;the&nbsp;object</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><span class="src-id"><a href="../php-cloudfiles/CF_Object.html#var$manifest">manifest</a>&nbsp;</span>=&nbsp;<span class="src-str">&quot;container/prefix&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Push&nbsp;the&nbsp;new&nbsp;manifest&nbsp;up&nbsp;to&nbsp;the&nbsp;storage&nbsp;system</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Object.html#methodsync_manifest">sync_manifest</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td><kbd>True</kbd> if successful, <kbd>False</kbd> otherwise</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>InvalidResponseException unexpected response</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsync_metadata"></a>
+	<h3>method sync_metadata <span class="smalllinenumber">[line 2221]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean sync_metadata(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Store new Object metadata<br /><br /><p>Write's an Object's metadata to the remote Object.  This will overwrite  an prior Object metadata.</p><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;authentication/connection/container&nbsp;code&nbsp;excluded</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;see&nbsp;previous&nbsp;examples</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$my_docs&nbsp;</span>=&nbsp;<span class="src-var">$conn</span><span class="src-sym">-&gt;</span><span class="src-id">get_container</span><span class="src-sym">(</span><span class="src-str">&quot;documents&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc&nbsp;</span>=&nbsp;<span class="src-var">$my_docs</span><span class="src-sym">-&gt;</span><span class="src-id">get_object</span><span class="src-sym">(</span><span class="src-str">&quot;README&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Define&nbsp;new&nbsp;metadata&nbsp;for&nbsp;the&nbsp;object</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><span class="src-id"><a href="../php-cloudfiles/CF_Object.html#var$metadata">metadata</a>&nbsp;</span>=&nbsp;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;Author&quot;&nbsp;</span>=&gt;&nbsp;<span class="src-str">&quot;EJ&quot;</span><span class="src-sym">,</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;Subject&quot;&nbsp;</span>=&gt;&nbsp;<span class="src-str">&quot;How&nbsp;to&nbsp;use&nbsp;the&nbsp;PHP&nbsp;tests&quot;</span><span class="src-sym">,</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;Version&quot;&nbsp;</span>=&gt;&nbsp;<span class="src-str">&quot;1.2.2&quot;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Define&nbsp;additional&nbsp;headers&nbsp;for&nbsp;the&nbsp;object</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><span class="src-id"><a href="../php-cloudfiles/CF_Object.html#var$headers">headers</a>&nbsp;</span>=&nbsp;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">&quot;Content-Disposition&quot;&nbsp;</span>=&gt;&nbsp;<span class="src-str">&quot;attachment&quot;</span><span class="src-sym">,</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Push&nbsp;the&nbsp;new&nbsp;metadata&nbsp;up&nbsp;to&nbsp;the&nbsp;storage&nbsp;system</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Object.html#methodsync_metadata">sync_metadata</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td><kbd>True</kbd> if successful, <kbd>False</kbd> otherwise</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>InvalidResponseException unexpected response</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodwrite"></a>
+	<h3>method write <span class="smalllinenumber">[line 2297]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean write(
+[string|resource
+$data = NULL], [float
+$bytes = 0], [boolean
+$verify = True])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Upload Object's data to Cloud Files<br /><br /><p>Write data to the remote Object.  The $data argument can either be a  PHP resource open for reading (see PHP's fopen() method) or an in-memory  variable.  If passing in a PHP resource, you must also include the $bytes  parameter.</p><p>Example:  <ol><li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;authentication/connection/container&nbsp;code&nbsp;excluded</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;...&nbsp;see&nbsp;previous&nbsp;examples</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$my_docs&nbsp;</span>=&nbsp;<span class="src-var">$conn</span><span class="src-sym">-&gt;</span><span class="src-id">get_container</span><span class="src-sym">(</span><span class="src-str">&quot;documents&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc&nbsp;</span>=&nbsp;<span class="src-var">$my_docs</span><span class="src-sym">-&gt;</span><span class="src-id">get_object</span><span class="src-sym">(</span><span class="src-str">&quot;README&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#&nbsp;Upload&nbsp;placeholder&nbsp;text&nbsp;in&nbsp;my&nbsp;README</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-comm">#</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-var">$doc</span><span class="src-sym">-&gt;</span><a href="../php-cloudfiles/CF_Object.html#methodwrite">write</a><span class="src-sym">(</span><span class="src-str">&quot;This&nbsp;is&nbsp;just&nbsp;placeholder&nbsp;text&nbsp;for&nbsp;now...&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td><kbd>True</kbd> when data uploaded successfully</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>SyntaxException missing required parameters</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>BadContentTypeException if no Content-Type was/could be set</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>MisMatchedChecksumException $verify is set and checksums unequal</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>InvalidResponseException unexpected response</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string|resource&nbsp;&nbsp;</td>
+        <td><b>$data</b>&nbsp;&nbsp;</td>
+        <td>string or open resource</td>
+      </tr>
+          <tr>
+        <td class="type">float&nbsp;&nbsp;</td>
+        <td><b>$bytes</b>&nbsp;&nbsp;</td>
+        <td>amount of data to upload (required for resources)</td>
+      </tr>
+          <tr>
+        <td class="type">boolean&nbsp;&nbsp;</td>
+        <td><b>$verify</b>&nbsp;&nbsp;</td>
+        <td>generate, send, and compare MD5 checksums</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_guess_content_type"></a>
+	<h3>method _guess_content_type <span class="smalllinenumber">[line 1964]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean _guess_content_type(
+string
+$handle)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Internal check to get the proper mimetype.<br /><br /><p>This function would go over the available PHP methods to get  the MIME type.</p><p>By default it will try to use the PHP fileinfo library which is  available from PHP 5.3 or as an PECL extension  (http://pecl.php.net/package/Fileinfo).</p><p>It will get the magic file by default from the system wide file  which is usually available in /usr/share/magic on Unix or try  to use the file specified in the source directory of the API  (share directory).</p><p>if fileinfo is not available it will try to use the internal  mime_content_type function.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td><kbd>True</kbd> if successful</td>
+  </tr>
+  <tr>
+    <td><b>throws:</b>&nbsp;&nbsp;</td><td>BadContentTypeException</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$handle</b>&nbsp;&nbsp;</td>
+        <td>name of file or buffer to guess the type from</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method__toString"></a>
+	<h3>method __toString <span class="smalllinenumber">[line 1937]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string __toString(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		String representation of Object<br /><br /><p>Pretty print the Object's location and name</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Object information</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+</div><br />
+
+
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Wed, 07 Sep 2011 15:19:57 -0500 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

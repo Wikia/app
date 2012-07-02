@@ -7,6 +7,7 @@
  *
  */
 
+// TODO: extend SpecialNewFiles class instead of using a function
 function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode, $wgUseWikiaNewFiles;
 	global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
@@ -74,8 +75,8 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	if ( $wpIlMatch != '' && !$wgMiserMode ) {
 		$nt = Title::newFromUrl( $wpIlMatch );
 		if ( $nt ) {
-			$m = $dbr->escapeLike( strtolower( $nt->getDBkey() ) );
-			$where[] = "LOWER(img_name) LIKE '%{$m}%'";
+			$m = $dbr->buildLike( $dbr->anyString(), strtolower( $nt->getDBkey() ), $dbr->anyString() );			
+			$where[] = 'LOWER(img_name)' . $m;
 			$searchpar = '&wpIlMatch=' . urlencode( $wpIlMatch );
 		}
 	}
@@ -124,7 +125,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 		"rowdivider" => true,
 		"hideoverflow" => true
 		) );
-	
+
 	//FB#1150 - make the images fit the whole horizontal space in Oasis and Oasis HD
 	if ( get_class( $sk ) == 'SkinOasis' ) {
 		if ( $wgOasisHD ) {
@@ -133,7 +134,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 			$gallery->setWidths( 212 );
 		}
 	}
-	
+
 	$firstTimestamp = null;
 	$lastTimestamp = null;
 	$shownImages = 0;

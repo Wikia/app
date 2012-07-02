@@ -2,7 +2,7 @@
  margin: 0;
  padding: 0;
  overflow-y: hidden;
- background-color: #FFFFFF;/
+ background-color: #FFFFFF;
 }
 
 .tweet .tweet_list .awesome, .tweet .tweet_list .epic, .query .tweet_list .awesome, .query .tweet_list .epic {

@@ -34,22 +34,27 @@ class SRFExhibit extends SMWResultPrinter {
 		$row = $res->getNext();
 		if ( $row != null ) {
 			$tmp = clone $row[0];
-			$object = $tmp->getNextObject();
+			$object = $tmp->getNextDataValue();
+
 			if ( $object instanceof SMWWikiPageValue ) {
 				$value = $object->getPrefixedText();
-				if ( strpos( $value, ":" ) ) {
-					$value = explode( ":", $value, 2 );
-					return $value[0] . ":";
+				if ( strpos( $value, ':' ) ) {
+					$value = explode( ':', $value, 2 );
+					return $value[0] . ':';
 				}
 			}
 			return "";
 		}
 	}
 
-	protected function getResultText( $res, $outputmode ) {
+	protected function getResultText( SMWQueryResult $res, $outputmode ) {
 
-		global $smwgIQRunningNumber, $wgScriptPath, $wgGoogleMapsKey, $smwgScriptPath, $srfgIP, $srfgScriptPath;
+		global $smwgIQRunningNumber, $wgScriptPath, $wgGoogleMapsKey, $srfgScriptPath;
 
+		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
+			SMWOutputs::requireHeadItem( 'exhibit-compat', Html::linkedScript( "$wgScriptPath/common/wikibits.js" ) );
+		}
+		
 		// //////////////////////////////
 		// ///////REMOTE STUFF///////////
 		// //////////////////////////////
@@ -63,7 +68,6 @@ class SRFExhibit extends SMWResultPrinter {
 			$remote = true;
 
 			// fetch interwiki link
-			$list = array();
 			$dbr  = &wfGetDB( DB_SLAVE );
 			$cl   = $dbr->tableName( 'interwiki' );
 			$dbres  = $dbr->select( $cl, 'iw_url', "iw_prefix='" . $this->m_params['remote'] . "'", __METHOD__, array() );
@@ -202,7 +206,7 @@ class SRFExhibit extends SMWResultPrinter {
 						if ( sizeof( $dates ) == 1 ) {
 							$tlparams[] = 'ex:start=\'.' . $this->encodePropertyName( $dates[0]->getLabel() ) . '\' ';
 						}
-						else if ( sizeof( $dates ) == 2 ) {
+						elseif ( sizeof( $dates ) == 2 ) {
 							$tlparams[] = 'ex:start=\'.' . $this->encodePropertyName( $dates[0]->getLabel() ) . '\' ';
 							$tlparams[] = 'ex:end=\'.' . $this->encodePropertyName( $dates[1]->getLabel() ) . '\' ';
 						}
@@ -384,7 +388,7 @@ class SRFExhibit extends SMWResultPrinter {
 			foreach ( $row as $field ) {
 				$result .= "\t\t<td>";
 				$textstack = array();
-				while ( ( $object = $field->getNextObject() ) !== false ) {
+				while ( ( $object = $field->getNextDataValue() ) !== false ) {
 					switch( $object->getTypeID() ) {
 						case '_wpg':
 							$textstack[] = $object->getLongText( $outputmode, $this->getLinker( 0 ) );
@@ -422,7 +426,7 @@ class SRFExhibit extends SMWResultPrinter {
 							$textstack[] = $object->getWikiValue();
 							break;
 						default:
-							$textstack[] = $object->getLongHTMLText( $outputmode, $this->getLinker( 0 ) );
+							$textstack[] = $object->getLongHTMLText( $this->getLinker( 0 ) );
 					}
 				}
 

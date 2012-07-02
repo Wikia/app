@@ -147,14 +147,14 @@ class WallThread {
 		$title = Title::newFromId( $this->mThreadId );
 		
 		if( empty($title) ) {
-			$title = Title::newFromId( $this->mThreadId, GAID_FOR_UPDATE );
+			$title = Title::newFromId( $this->mThreadId, Title::GAID_FOR_UPDATE );
 		}
 
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
 		$table = array( 'page' );
 		$vars = array( 'page_id' );
-		$conds[]  = "page_title LIKE '" . $dbr->escapeLike( $title->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX ."%'";
+		$conds[]  = "page_title" . $dbr->buildLike( sprintf( "%s/%s", $title->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() );
 		$conds[] = "page_latest > 0";	// BugId:22821
 		$conds['page_namespace'] = MWNamespace::getTalk($title->getNamespace());
 		$options = array( 'ORDER BY' => 'page_id ASC' );

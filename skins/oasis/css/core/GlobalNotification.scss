@@ -2,49 +2,85 @@
 @import "../mixins/border-radius";
 
 .global-notification {
+	padding: 8px 10px;
+	margin: 0 10px 10px 10px;
 	.msg{
-		background: #FEF4BC;
-		color: #3a3a3a;
-		display: inline-block;
-		font-size: 11px;
-		line-height: 12px;
-		padding: 8px 11px;
-		zoom: 1;
-		*display: inline; /* IE7 hack */
-		.warning{
-			background: url(/extensions/wikia/GlobalNotification/bullet_error.png) -2px -3px no-repeat;	/* $wgCdnStylePath */
-			display: block;
-			float: left;
-			height: 10px;
-			margin-right: 5px;
-			position: relative;
-			top: 1px;
-			width: 11px;
+		font-size: 13px;
+		line-height: 16px;
+	}
+	.close {
+		float: right;
+		height: 14px;
+		width: 14px;
+		margin: 0;
+		img {
+			height: 11px;
+			width: 12px;
 		}
 	}
 } 
 
-body >.global-notification {
-	position: fixed;
-	text-align: center;
-	top: 0;
-	width: 100%;
-	*z-index: $zTop + 1;	/* IE7 hack */
-	.msg{
-		@include border-radius-se(10px);
-		@include border-radius-sw(10px);
-		border-bottom: 1px solid #404040;
-		border-left: 1px solid #404040;
-		border-right: 1px solid #404040;
-		position: relative;
-		z-index: $zTop + 1;
+.global-notification {
+	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
+	width: 958px;
+	z-index: $zTop + 1;
+	&.confirm { // Green
+		background: #92CD8E;
+		border: 1px solid #7EB37D;
+		border-top-width: 0;
+		color: #28482E;
+		.close{
+			background-color: mix(#92CD8E , #000000, 15%);
+		}
+	}
+	&.notify { // Blue
+		background: #7ABFDD;
+		border: 1px solid #6DA8C1;
+		border-top-width: 0;
+		color: #22424F;
+		.close{
+			background-color: mix(#7ABFDD, #000000, 15%);
+		}
+	}
+	&.error { // Red
+		background: #E56667;
+		border: 1px solid #C859CA;
+		border-top-width: 0;
+		color: #511616;
+		.close{
+			background-color: mix(#E56667, #000000, 15%);
+		}
+	}
+	&.warn { // Yellow
+		background: #F2CF60;
+		border: 1px solid #D2B554;
+		border-top-width: 0;
+		color: #524616;
+		.close{
+			background-color: mix(#F2CF60, #000000, 15%);
+		}
+	}
+	&.float {
+		position: fixed;
+		top: 0;
 	}
 }
 
 .modalWrapper >.global-notification {
-	background: #FEF4BC;
-	.msg {
-		background: none;
+	@include box-shadow(0, 0, 0, #000);
+	margin: auto;
+	width: auto;
+	.close {
+		display: none;
+	}
+	&.float {
+		position: absolute;
+		left: 0;
 		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+	.msg {
+		padding: 8px 10px;
 	}
 }

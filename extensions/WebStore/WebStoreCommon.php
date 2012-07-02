@@ -41,7 +41,7 @@ class WebStoreCommon {
 		}
 		$this->windows = wfIsWindows();
 
-		wfLoadExtensionMessages( 'WebStore' );
+
 	}
 
 	function setErrorHandler() {
@@ -86,6 +86,7 @@ EOT;
 		global $wgLogo;
 		$msgText = htmlspecialchars( wfMsgReal( $msgName, $msgParams ) );
 		$encMsgName = htmlspecialchars( $msgName );
+		wfDebug( "WebStore failed with '$encMsgName: $msgText; additional info: $extra'\n" );
 		$info = self::$httpErrors[$code];
 		$logo = htmlspecialchars( $wgLogo );
 		header( "HTTP/1.1 $code $info" );
@@ -183,7 +184,7 @@ EOT;
 		$success = true;
 		do {
 			// Create destination directory
-			if ( !wfMkdirParents( dirname( $dstPath ) ) ) {
+			if ( !wfMkdirParents( dirname( $dstPath ), null, __METHOD__ ) ) {
 				$this->errors[] = new WebStoreError( 'webstore_dest_mkdir', $dstPath );
 				$success = false;
 				break;
@@ -233,7 +234,7 @@ EOT;
 		return $success;
 	}
 
-	/*
+	/**
 	 * Atomically copy a file from one place to another. Fails if the destination file
 	 * already exists. Requires a filesystem with locking semantics to work concurrently,
 	 * i.e. not NFS.
@@ -252,7 +253,7 @@ EOT;
 		do {
 			// Create destination directory
 			$dstDir = dirname( $dstPath );
-			if ( !wfMkdirParents( $dstDir ) ) {
+			if ( !wfMkdirParents( $dstDir, null, __METHOD__ ) ) {
 				$this->errors[] = new WebStoreError( 'webstore_dest_mkdir', $dstDir );
 				$success = false;
 				break;

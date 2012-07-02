@@ -15,7 +15,10 @@ class JsSelectToInput {
 	protected $targetId;
 	/// Id of the \<option> field
 	protected $sourceId;
-	/// XmlSelect
+
+	/**
+	 * @var XmlSelect
+	 */
 	protected $select;
 	/// Id on the button
 	protected $buttonId;
@@ -72,8 +75,8 @@ class JsSelectToInput {
 	 */
 	public function getHtmlAndPrepareJS() {
 		if ( $this->sourceId === false ) {
-			if ( is_callable( array( $select, 'getAttribute' ) ) ) {
-				$this->sourceId = $select->getAttribute['id'];
+			if ( is_callable( array( $this->select, 'getAttribute' ) ) ) {
+				$this->sourceId = $this->select->getAttribute['id'];
 			}
 
 			if ( !$this->sourceId ) {
@@ -93,6 +96,7 @@ class JsSelectToInput {
 	 * @param $msg \string Message key.
 	 * @param $source \string Html id.
 	 * @param $target \string Html id.
+	 * @return string
 	 */
 	protected function getButton( $msg, $source, $target ) {
 		$source = Xml::escapeJsString( $source );
@@ -112,6 +116,6 @@ class JsSelectToInput {
 		if ( $done ) return;
 
 		global $wgOut;
-		$wgOut->addScriptFile( TranslateUtils::assetPath( 'utils/JsSelectToInput.js' ) );
+		$wgOut->addModules( 'ext.translate.selecttoinput' );
 	}
 }

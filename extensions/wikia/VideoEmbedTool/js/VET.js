@@ -225,15 +225,13 @@ if(mwCustomEditButtons) {
 $(function() {
 	$.loadYUI(function(){
 		if(skin != 'monobook') {
-			addOnloadHook(function () {
-				if(document.forms.editform) {
-					VET_addHandler();
-				} else if ( $G( 'VideoEmbedCreate' ) && ( 400 == wgNamespaceNumber ) ) {
-					VET_addCreateHandler();
-				} else if ( $G( 'VideoEmbedReplace' ) && ( 400 == wgNamespaceNumber ) ) {
-					VET_addReplaceHandler();
-				}
-			});
+			if(document.forms.editform) {
+				VET_addHandler();
+			} else if ( $G( 'VideoEmbedCreate' ) && ( 400 == wgNamespaceNumber ) ) {
+				VET_addCreateHandler();
+			} else if ( $G( 'VideoEmbedReplace' ) && ( 400 == wgNamespaceNumber ) ) {
+				VET_addReplaceHandler();
+			}
 		}
 	});
 });
@@ -286,7 +284,7 @@ function VET_readjustSlider( value ) {
 		if ( 500 < value ) { // too big, hide slider
 			if ( $('#VideoEmbedSlider .ui-slider-handle').is(':visible') ) {
 				$('#VideoEmbedSlider .ui-slider-handle').hide();
-				$('#VideoEmbedSlider').slider({
+				$('#VideoEmbedSlider').slider && $('#VideoEmbedSlider').slider({
 					value: 200
 				});
 			}
@@ -295,7 +293,7 @@ function VET_readjustSlider( value ) {
 				$('#VideoEmbedSlider .ui-slider-handle' ).show();
 			}
 
-			$('#VideoEmbedSlider').slider({
+			$('#VideoEmbedSlider').slider && $('#VideoEmbedSlider').slider({
 				value: value
 			});
 		}
@@ -501,6 +499,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			}
 		}
 	}
+	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);
 
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'none');
 	if(VET_panel != null) {
@@ -725,19 +724,10 @@ function VET_preQuery(e) {
 		return false;
 	} else {
 		var query = $G('VideoEmbedUrl').value;
-		if ( !( query.match( 'http://' ) || query.match( 'www.' ) ) ) {
-			VET_track('query/url/' + query); // tracking
-			VET_sendQuery(query, 1, VET_curSourceId);
-			return false;
-		} else {
-			VET_track('query/search/' + query); // tracking
-			VET_indicator(1, true);
-			VET_sendQueryEmbed( query );
-			return false;
-		}
-		// TODO: FIXME: WHY IS THIS HERE?  This is unreachable.
-		var element = document.createElement('div');
-		element.style.height = '500px';
+		VET_track('query/search/' + query); // tracking
+		VET_indicator(1, true);
+		VET_sendQueryEmbed( query );
+		return false;
 	}
 }
 
@@ -775,7 +765,8 @@ function VET_displayDetails(responseText) {
 		VET_orgThumbSize = null;
 	}
 
-	$('.WikiaSlider').slider({
+	/* can't figure out why $().slider is not loaded */
+	$('.WikiaSlider').slider && $('.WikiaSlider').slider({
 		min: 100,
 		max: 500,
 		value: 300,
@@ -834,6 +825,7 @@ function VET_displayDetails(responseText) {
 }
 
 function VET_insertFinalVideo(e, type) {
+	VET_tracking(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);
 	VET_track('insertVideo/' + type); // tracking
 
 	YAHOO.util.Event.preventDefault(e);
@@ -949,6 +941,9 @@ function VET_insertFinalVideo(e, type) {
 
 							if ('-1' == VET_gallery) {
 								if (!VET_inGalleryPosition) {
+									if($G('wpTextbox1')){
+										 $G('wpTextbox1').focus();
+									}
 									insertTags( $G('VideoEmbedTag').value, '', '', VET_getTextarea());
 								} else {
 									VET_insertTag( VET_getTextarea(), $G('VideoEmbedTag').value, VET_inGalleryPosition );
@@ -1013,7 +1008,10 @@ function VET_insertFinalVideo(e, type) {
 					break;
 			}
 			VET_indicator(1, false);
-		}
+		},
+		failure: function(o) {
+			alert( vet_insert_error );
+		}	
 	}
 
 	VET_indicator(1, true);
@@ -1098,6 +1096,18 @@ function VET_close(e) {
 
 function VET_track(str) {
 //	YAHOO.Wikia.Tracker.track('VET/' + str);
+}
+
+function VET_tracking(action, label, value) {
+	/*
+		tracking using new werehouse
+	 */
+	WikiaTracker.trackEvent(null, {
+		ga_category: 'vet',
+		ga_action: action,
+		ga_label: label || '',
+		ga_value: value || 0
+	}, 'internal');
 }
 
 function VET_sendQueryEmbed(query) {

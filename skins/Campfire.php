@@ -33,7 +33,7 @@ class SkinCampfire extends WikiaSkin {
 	function setupSkinUserCss( OutputPage $out ) {}
 }
 
-class CampfireTemplate extends WikiaQuickTemplate {
+class CampfireTemplate extends WikiaBaseTemplate {
 	function execute() {
 		F::app()->setSkinTemplateObj($this);
 		$response = $this->app->sendRequest( Wikia::getVar( 'CampfireEntryControllerName', 'Campfire' ), 'index', null, false );

@@ -51,7 +51,7 @@ $messages['fr'] = array(
 	'globalnotification-general-ajax-failure' => 'Le navigateur n’a pas pu se connecter à Wikia. Veuillez réessayer plus tard.',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -61,10 +61,8 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Misibacsi
- * @author TK-999
  */
 $messages['hu'] = array(
-	'globalnotification-desc' => 'Rendszereseményekről, például AJAX hibákról szóló értesítéseket jelenít meg.',
 	'globalnotification-general-ajax-failure' => 'A böngésző nem tud kapcsolódni ide: Wikia.  Próbálkozzon később.',
 );
 
@@ -122,7 +120,7 @@ $messages['nl'] = array(
  */
 $messages['pl'] = array(
 	'globalnotification-desc' => 'Wyświetla komunikaty systemowe dla zdarzeń takich jak błędy AJAX',
-	'globalnotification-general-ajax-failure' => 'Przeglądarka nie była w stanie połączyć się z Wikią. Spróbuj później.',
+	'globalnotification-general-ajax-failure' => 'Przeglądarka nie była w stanie połączyć się z Wikia. Spróbuj później.',
 );
 
 /** Piedmontese (Piemontèis)

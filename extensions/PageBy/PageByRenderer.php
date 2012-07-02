@@ -2,8 +2,8 @@
 /**
  * PageBy renderer for PageBy extension.
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @licence GNU General Public Licence 2.0 or later
@@ -27,7 +27,7 @@ class PageByRenderer {
 	var $showfirst;
 	var $showcomments;
 
-	function __construct( $page, $argv, &$parser ) {
+	function __construct( $page, $argv, $parser ) {
 		global $wgTitle;
 
 		$this->parser = $parser;
@@ -150,12 +150,12 @@ class PageByRenderer {
 
 		$html = '<ul class="pageby">';
 
-		wfLoadExtensionMessages( 'PageBy' );
+		
 		#TODO: somehere link the page history. And mention the page name, if it's not the local page.
 
 		if ($this->showfirst) {
 			$firstuser = Title::makeTitle(NS_USER, $first->rev_user_text);
-			$ulink =  $sk->makeLinkObj($firstuser, $first->rev_user_text);
+			$ulink =  $sk->makeLinkObj($firstuser, htmlspecialchars($first->rev_user_text));
 			$date = $this->showtime ? $wgContLang->timeanddate($first->rev_timestamp) : $wgContLang->date($first->rev_timestamp);
 			$diff = $this->title->getLocalURL('diff=' . $first->rev_id);
 			$comment = htmlspecialchars( $first->rev_comment );
@@ -176,7 +176,7 @@ class PageByRenderer {
 				}
 				else {
 					$cuser = Title::makeTitle(NS_USER, $u['name']);
-					$ulink =  $sk->makeLinkObj($cuser, $u['name']);
+					$ulink =  $sk->makeLinkObj($cuser, htmlspecialchars($u['name']));
 				}
 
 				if ($contributors !== '') $contributors .= ', ';
@@ -199,7 +199,7 @@ class PageByRenderer {
 
 		if (!$this->showfirst || $edits > 1) {
 			$lastuser = Title::makeTitle(NS_USER, $last->rev_user_text);
-			$ulink =  $sk->makeLinkObj($lastuser, $last->rev_user_text);
+			$ulink =  $sk->makeLinkObj($lastuser, htmlspecialchars($last->rev_user_text));
 			$date = $this->showtime ? $wgContLang->timeanddate($last->rev_timestamp) : $wgContLang->date($last->rev_timestamp);
 			$diff = $this->title->getLocalURL('diff=' . $last->rev_id);
 			$comment = htmlspecialchars( $last->rev_comment );

@@ -116,10 +116,11 @@ class ContentDisplayController extends WikiaController {
 	 * Modify section headline markup (for Oasis only)
 	 */
 	public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, $ret ) {
+		global $wgRTEParserEnabled;
 		wfProfileIn(__METHOD__);
 
 		// modify Oasis only (BugId:8444)
-		if (!$skin instanceof SkinOasis) {
+		if ((!$skin instanceof SkinOasis) || !empty($wgRTEParserEnabled)) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}

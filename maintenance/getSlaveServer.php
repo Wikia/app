@@ -19,8 +19,8 @@
  *
  * @ingroup Maintenance
  */
- 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class GetSlaveServer extends Maintenance {
 	public function __construct() {
@@ -30,21 +30,19 @@ class GetSlaveServer extends Maintenance {
 	}
 	public function execute() {
 		global $wgAllDBsAreLocalhost;
-		if( $wgAllDBsAreLocalhost ) {
+		if ( $wgAllDBsAreLocalhost ) {
 			$host = 'localhost';
+		} elseif ( $this->hasOption( 'group' ) ) {
+			$db = wfGetDB( DB_SLAVE, $this->getOption( 'group' ) );
+			$host = $db->getServer();
 		} else {
-			if( $this->hasOption('group') ) {
-				$db = wfGetDB( DB_SLAVE, $this->getOption('group') );
-				$host = $db->getServer();
-			} else {
-				$lb = wfGetLB();
-				$i = $lb->getReaderIndex();
-				$host = $lb->getServerName( $i );
-			}
+			$lb = wfGetLB();
+			$i = $lb->getReaderIndex();
+			$host = $lb->getServerName( $i );
 		}
 		$this->output( "$host\n" );
 	}
 }
 
 $maintClass = "GetSlaveServer";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

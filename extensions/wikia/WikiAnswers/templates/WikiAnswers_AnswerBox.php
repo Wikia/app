@@ -1,5 +1,5 @@
 <?php
-global $wgBlankImgUrl, $wgTitle, $wgStylePath, $wgUser;
+global $wgBlankImgUrl, $wgTitle, $wgStylePath, $wgUser, $wgScriptPath;
 ?>
 			<div id="answer_level">
 			<div id="answer_box" class="accent">
@@ -13,7 +13,7 @@ global $wgBlankImgUrl, $wgTitle, $wgStylePath, $wgUser;
 			//FIXME port the code from Answer::getBlockedInfo()
 			//echo $this->getBlockedInfo();
 		} else {
-			?>
+			?>	<script>var wgScriptPath = "<?= $wgScriptPath ?>"; </script>
 				<script src="<?=$wgStylePath?>/../extensions/wikia/JavascriptAPI/Mediawiki.js"></script>
 				<form onsubmit="return handleEditForm(this)">
 				<textarea name="article" class="answer-input" rows="7" id="article_textarea"></textarea><br />

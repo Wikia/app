@@ -28,7 +28,6 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name'				=> 'Slippy Map',
 	'author'			=> array('[http://harrywood.co.uk Harry Wood]', 'Jens Frank', 'Aude', 'Ævar Arnfjörð Bjarmason'),
 	'url'				=> 'http://www.mediawiki.org/wiki/Extension:SlippyMap',
-	'description'		=> 'Adds a <tt>&lt;slippymap&gt;</tt> tag which allows for embedding of static & dynamic maps.Supports multiple map services including [http://openstreetmap.org OpenStreetMap] and NASA Worldwind',
 	'descriptionmsg'	=> 'slippymap_desc',
 );
 
@@ -48,19 +47,14 @@ $wgAutoloadClasses['WorldWind']					= $dir . 'SlippyMap.worldwind.php';
 $wgParserTestFiles[]							= $dir . '/slippyMapParserTests.txt';
 
 /* Parser hook */
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'wfSlippyMapHook';
-} else {
-	// Legacy support
-	$wgExtensionFunctions[] = 'wfSlippyMapHook';
-}
+$wgHooks['ParserFirstCallInit'][] = 'wfSlippyMapHook';
 
 function wfSlippyMapHook() {
 	new SlippyMapHook;
 	return true;
 }
 
-/*
+/**
  * Configuration variables for the SlippyMap extension.
  */
 
@@ -157,4 +151,3 @@ $wgSlippyMapSizeRestrictions = array(
  * see see the static map and nothing else.
  */
 $wgSlippyMapAutoLoadMaps = false;
-

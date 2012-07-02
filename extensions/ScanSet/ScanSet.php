@@ -15,22 +15,21 @@ if ( !defined( 'MEDIAWIKI' ) ) die( 'Not a valid entry point.' );
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'ScanSet',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:ScanSet',
-	'description' => 'View scanned page images from Andreas Grosz\'s CD/DVD sets',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:ScanSet',
 	'descriptionmsg' => 'scanset-desc',
 	'author' => 'Tim Starling',
 );
 
 $wgExtensionMessagesFiles['ScanSet'] = dirname(__FILE__) . '/ScanSet.i18n.php';
-$wgExtensionFunctions[] = 'wfScanSetSetup';
+$wgHooks['ParserFirstCallInit'][] = 'wfScanSetSetup';
 $wgScanSetSettings = array();
 
-function wfScanSetSetup() {
-	global $wgParser;
-	$wgParser->setHook( 'scanset', 'wfScanSetHook' );
+function wfScanSetSetup( $parser ) {
+	$parser->setHook( 'scanset', 'wfScanSetHook' );
+	return true;
 }
 
-function wfScanSetHook( $content, $params, &$parser ) {
+function wfScanSetHook( $content, $params, $parser ) {
 	global $wgScanSetSettings;
 
 	require_once( dirname( __FILE__ ) . '/ScanSet_body.php');

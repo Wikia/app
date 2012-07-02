@@ -26,8 +26,8 @@ $wgExtensionCredits['other'][] = array(
     'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
     'version' => 0.4 ,
     'description' => 'Simple spambot blocking mechanism.'
-
 );
+$wgExtensionMessagesFiles['AntiSpamInput'] = dirname(__FILE__) . '/AntiSpamInput.i18n.php';
 
 function wfAntiSpamInputInit () {
 	global $wgHooks;
@@ -45,11 +45,6 @@ function wfAntiSpamInputInit () {
 }
 
 function wfAntiSpamInputBoxInclusion ( $form = false ) {
-	global $wgMessageCache;
-	$wgMessageCache->addMessages( array(
-		'antispam_label' => 'This field is a spam trap. <strong>DO NOT</strong> fill it in!'
-	));
-
 	$input = "\n<div id='antispam_container' style='display: none'>\n".
                  "<label for='antispam'>". wfMsg('antispam_label'). "</label>\n".
                  "<input type='text' value='' id='antispam' name='antispam' />\n".
@@ -73,8 +68,8 @@ function wfAntiSpamInputCheck () {
 		$title = new Title();
 		$article = new Article( $title );
 		$edit = new EditPage( $article );
-		$edit->spamPage();
-		return false;	
+		$edit->spamPageWithContent();
+		return false;
 	}
 	else return true;
 }

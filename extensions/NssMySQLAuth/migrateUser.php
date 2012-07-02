@@ -33,7 +33,7 @@ function migrateUser( $username, $email ) {
 		), __METHOD__ ) )
 		return false;
 
-	$dbw->immediateCommit();
+	$dbw->commit();
 	wfDoUpdates();
 	return true;
 }

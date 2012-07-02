@@ -1,4 +1,4 @@
-<?
+<?php
 if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 
 # ##
@@ -141,7 +141,7 @@ $mvEmbedKey = 'Embed';
 //wars people of archive inacuracys (given its a wiki and the source is close caption feed)
 $mvEnableStreamNotice = false;
 
-/*
+/**
  * All Available meta data layers
  * these type keys are used to allow multiple layers of metadata per stream.
  * These values key into template_names, msg_descriptions, and application logic )
@@ -150,7 +150,7 @@ $mvEnableStreamNotice = false;
  */
 $mvMVDTypeAllAvailable = array( 'ht_en', 'anno_en', 'thomas_en' );
 
-/*
+/**
  * the default display set of layers (must be a subset of $mvMVDTypeAllAvaliable)
  * note: this is equivalent to ?mvd_tracks=ht_en,anno_en  in the url for the stream page.
  * this also dictates the default search layers

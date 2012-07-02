@@ -57,7 +57,7 @@ class transversemercator
 	var $Northing_Offset       =        0.0;
 	var $Northing_Offset_South = 10000000.0; /* for Southern hemisphere */
 
-	function transversemercator( )
+	function __construct( )
 	{
 	}
 

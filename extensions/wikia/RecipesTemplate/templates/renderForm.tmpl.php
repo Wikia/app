@@ -278,5 +278,5 @@
 </form>
 
 <script type="text/javascript">/*<![CDATA[*/
-	var RecipesTemplateMessages = <?= Wikia::json_encode($messages) ?>;
+	var RecipesTemplateMessages = <?= json_encode($messages) ?>;
 /*]]>*/</script>

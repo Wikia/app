@@ -148,7 +148,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->wf->SetupSession();
 		}
 
-		$signupForm = F::build( 'UserLoginForm', array(&$this->wg->request, 'signup') );
+		if ( $this->wg->request->getVal( 'type', '' ) == '' ) {
+			$this->wg->request->setVal( 'type', 'signup' );
+		}
+		$signupForm = F::build( 'UserLoginForm', array(&$this->wg->request) );
+		$signupForm->load();
 
 		$byemail = $this->wg->request->getBool( 'byemail', false );
 		if ( $byemail ) {
@@ -255,7 +259,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					$this->errParam = $response->getVal( 'errParam', '');
 				} else if ( $this->result == 'confirmed' ) {
 					$this->heading = $this->wf->Msg( 'usersignup-confirm-page-heading-confirmed-user' );
-					$this->subheading = $this->wf->Msg( 'usersignup-confirm-page-subheading-confirmed-user' );					
+					$this->subheading = $this->wf->Msg( 'usersignup-confirm-page-subheading-confirmed-user' );
 					$this->msg = $response->getVal( 'msg','' );
 				}
 			}
@@ -292,7 +296,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		if ( !User::isValidEmailAddr( $email ) ) {
+		if ( !Sanitizer::validateEmail( $email ) ) {
 			$this->result = 'error';
 			$this->msg = $this->wf->Msg( 'usersignup-error-invalid-email' );
 			$this->errParam = 'email';
@@ -355,7 +359,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$memKey = $this->userLoginHelper->getMemKeyConfirmationEmailsSent( $tempUser->getId() );
 			$this->wg->Memc->set( $memKey, 1, 24*60*60 );
 
-			if( WikiError::isError( $result ) ) {
+			if( !$result->isGood() ) {
 				$this->result = 'error';
 				$this->msg = $this->wf->Msg( 'userlogin-error-mail-error', $result->getMessage() );
 			}
@@ -378,17 +382,18 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	public function formValidation() {
 		$field = $this->request->getVal( 'field', '' );
 
-		$signupForm = F::build( 'UserLoginForm', array(&$this->wg->request, 'signup') );
+		$signupForm = F::build( 'UserLoginForm', array(&$this->wg->request) );
+		$signupForm->load();
 
 		switch( $field ) {
 			case 'username' :
 				$response = $signupForm->initValidationUsername();
 				if ( $signupForm->msgType != 'error' ) {
-					$result = $this->wf->ValidateUserName( $signupForm->mName );
+					$result = $this->wf->ValidateUserName( $signupForm->mUsername );
 
 					if ( $result === true ) {
 						$msgKey = '';
-						if ( !$this->wf->RunHooks('cxValidateUserName', array($signupForm->mName, &$msgKey)) ) {
+						if ( !$this->wf->RunHooks('cxValidateUserName', array($signupForm->mUsername, &$msgKey)) ) {
 							$result = $msgKey;
 						}
 					}

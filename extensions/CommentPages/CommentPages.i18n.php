@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension CommentPages.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -16,9 +17,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'commentpages-desc' => 'Short description of the Commentpages extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'commentpages-desc' => '{{desc}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -45,6 +47,14 @@ $messages['arz'] = array(
 	'nstab-comments' => 'تعليق',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'commentpages-desc' => 'Páxines de comentarios del espaciu de nomes principal',
+	'nstab-comments' => 'Comentariu',
+);
+
 /** Kotava (Kotava)
  * @author Wikimistusik
  */
@@ -53,12 +63,20 @@ $messages['avk'] = array(
 	'nstab-comments' => 'Sebuks',
 );
 
-/** Azerbaijani (Azərbaycan)
+/** Azerbaijani (Azərbaycanca)
  * @author Sortilegus
  */
 $messages['az'] = array(
 	'commentpages-desc' => 'Əsas adlar fəzası üçün şərh səhifələri',
 	'nstab-comments' => 'İzahat',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'commentpages-desc' => 'Төп исемдәр арауығы өсөн аңлатма биттәре',
+	'nstab-comments' => 'Аңлатма',
 );
 
 /** Bavarian (Boarisch)
@@ -69,7 +87,7 @@ $messages['bar'] = array(
 	'nstab-comments' => 'Kommentar',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -211,6 +229,14 @@ $messages['fr'] = array(
 	'nstab-comments' => 'Commentaire',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'commentpages-desc' => 'Pâges de comentèros por l’èspâço de noms principâl.',
+	'nstab-comments' => 'Comentèro',
+);
+
 /** Galician (Galego)
  * @author Alma
  */
@@ -299,6 +325,14 @@ $messages['id'] = array(
 	'nstab-comments' => 'Komentar',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'commentpages-desc' => 'Ihü okwú na okwú maka áhàámá íshí',
+	'nstab-comments' => 'Okwú na okwú',
+);
+
 /** Ido (Ido)
  * @author Malafaya
  */
@@ -330,6 +364,14 @@ $messages['ja'] = array(
 	'nstab-comments' => 'コメント',
 );
 
+/** Jamaican Creole English (Patois)
+ * @author Yocahuna
+ */
+$messages['jam'] = array(
+	'commentpages-desc' => 'Kament piej fi di mien niemspies',
+	'nstab-comments' => 'Kamenchri',
+);
+
 /** Javanese (Basa Jawa)
  * @author Meursault2004
  */
@@ -345,7 +387,7 @@ $messages['km'] = array(
 	'nstab-comments' => 'វចនាធិប្បាយ',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -361,6 +403,22 @@ $messages['lb'] = array(
 	'nstab-comments' => 'Kommentar',
 );
 
+/** Limburgish (Limburgs)
+ * @author Pahles
+ */
+$messages['li'] = array(
+	'commentpages-desc' => "Opmirkingepagina's veur de hoofnaamruumde",
+	'nstab-comments' => 'Opmirkinge',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'commentpages-desc' => "Pejin-dresaka ho an'ny anaran-tsehatra fotony",
+	'nstab-comments' => 'Resaka',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -374,7 +432,7 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'commentpages-desc' => 'മുഖ്യ നാമമേഖലയിലുള്ള കമെന്റ് താളുകള്‍',
+	'commentpages-desc' => 'മുഖ്യ നാമമേഖലയിലുള്ള കമെന്റ് താളുകൾ',
 );
 
 /** Marathi (मराठी)
@@ -397,7 +455,16 @@ $messages['ms'] = array(
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
+	'commentpages-desc' => 'Прякс лемпотмонть мелень-арсемань лопанзо',
 	'nstab-comments' => 'Мельть-арьсемат',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'commentpages-desc' => 'Legger til kommentarsider for sider i hovednavnerommet',
+	'nstab-comments' => 'Kommentarer',
 );
 
 /** Low German (Plattdüütsch)
@@ -421,14 +488,6 @@ $messages['nl'] = array(
 $messages['nn'] = array(
 	'commentpages-desc' => 'Legg til kommentarsider for sider i hovudnamnerommet',
 	'nstab-comments' => 'Kommentarar',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'commentpages-desc' => 'Legger til kommentarsider for sider i hovednavnerommet',
-	'nstab-comments' => 'Kommentarer',
 );
 
 /** Occitan (Occitan)
@@ -492,7 +551,7 @@ $messages['qu'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'commentpages-desc' => 'Pagini de comentarii pentru spaţiul de nume principal',
+	'commentpages-desc' => 'Pagini de comentarii pentru spațiul de nume principal',
 	'nstab-comments' => 'Comentariu',
 );
 
@@ -512,7 +571,14 @@ $messages['ru'] = array(
 	'nstab-comments' => 'Примечание',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'nstab-comments' => 'Коментарь',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -528,19 +594,29 @@ $messages['sk'] = array(
 	'nstab-comments' => 'Komentár',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'commentpages-desc' => 'Komentirajte strani v glavnem imenskem prostoru',
+	'nstab-comments' => 'Komentar',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Жељко Тодоровић
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'commentpages-desc' => 'Коментарисање страна главног именског простора',
+	'commentpages-desc' => 'Коментарисање страница главног именског простора',
 	'nstab-comments' => 'Коментари',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Жељко Тодоровић
  */
 $messages['sr-el'] = array(
-	'commentpages-desc' => 'Komentarisanje strana glavnog imenskog prostora',
+	'commentpages-desc' => 'Komentarisanje stranica glavnog imenskog prostora',
 	'nstab-comments' => 'Komentari',
 );
 
@@ -561,21 +637,22 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Veeven
  * @author వైజాసత్య
  */
 $messages['te'] = array(
 	'commentpages-desc' => 'ప్రధాన నేంస్పేసులోని పేజీలకు చర్చా పేజీలు',
-	'nstab-comments' => 'వ్యాఖ్యానము',
+	'nstab-comments' => 'వ్యాఖ్యానం',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'nstab-comments' => 'Тафсир',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -619,6 +696,7 @@ $messages['vec'] = array(
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
+	'commentpages-desc' => 'Kommentarijoiden lehtpoled pänimiavarusen täht',
 	'nstab-comments' => 'Kommentarii',
 );
 
@@ -636,5 +714,27 @@ $messages['vi'] = array(
 $messages['vo'] = array(
 	'commentpages-desc' => 'Küpetapads pro nemaspad cifik',
 	'nstab-comments' => 'Küpets',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'nstab-comments' => 'קאמענטאַר',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Chenxiaoqino
+ * @author PhiLiP
+ */
+$messages['zh-hans'] = array(
+	'commentpages-desc' => '主名字空间的评论页',
+	'nstab-comments' => '注释',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$messages['zh-hant'] = array(
+	'commentpages-desc' => '主名字空間的評論頁',
+	'nstab-comments' => '注釋',
 );
 

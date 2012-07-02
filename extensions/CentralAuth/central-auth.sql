@@ -80,14 +80,14 @@ CREATE TABLE globaluser (
   -- Random key for password resets
   gu_password_reset_key tinyblob,
   gu_password_reset_expiration varchar(14) binary,
-  
+
   -- Random key for crosswiki authentication tokens
   gu_auth_token varbinary(32) NULL,
 
   primary key (gu_id),
   unique key (gu_name),
   key (gu_email),
-  
+
   key gu_locked( gu_name(255), gu_locked ),
   key gu_hidden( gu_name(255), gu_hidden(255) )
 ) /*$wgDBTableOptions*/;
@@ -122,7 +122,7 @@ CREATE TABLE localuser (
 CREATE TABLE global_user_groups (
 	gug_user int(11) not null,
 	gug_group varchar(255) not null,
-	
+
 	PRIMARY KEY (gug_user,gug_group),
 	KEY (gug_user),
 	key (gug_group)
@@ -132,7 +132,7 @@ CREATE TABLE global_user_groups (
 CREATE TABLE global_group_permissions (
 	ggp_group varchar(255) not null,
 	ggp_permission varchar(255) not null,
-	
+
 	PRIMARY KEY (ggp_group, ggp_permission),
 	KEY (ggp_group),
 	KEY (ggp_permission)
@@ -152,7 +152,7 @@ CREATE TABLE wikiset (
 	-- Let's suppose that max length of db name is 31 (32 with ","), then we have space for
 	-- 2048 wikis. More than we need
 	ws_wikis blob not null,
-	
+
 	PRIMARY KEY ws_id (ws_id),
 	UNIQUE ws_name (ws_name)
 ) /*$wgDBTableOptions*/;

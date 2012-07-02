@@ -1,6 +1,6 @@
 <?php
 
-class IgnApiWrapper extends WikiaVideoApiWrapper {
+class IgnApiWrapper extends NoConnectionApiWrapper {
 
 	protected static $CACHE_KEY = 'ignapi';
 	protected static $aspectRatio = 1.7777778;

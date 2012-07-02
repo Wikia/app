@@ -217,4 +217,4 @@ set
 * $wgNewsFeedUserPattern: this defines the pattern used to generate author
 names in feed items. In the pattern, $1 is replaced by the user name. To 
 e.g. generate email-addresses at your site as author names, use
-  $wgNewsFeedUserPattern = '$1@' . $wgServerName;
+  $wgNewsFeedUserPattern = '$1@example.com';

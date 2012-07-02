@@ -14,11 +14,14 @@
  * @ingroup PageTranslation JobQueue
  */
 class RenderJob extends Job {
-	public static function newJob( Title $target ) {
-		global $wgTranslateFuzzyBotName;
 
+	/**
+	 * @param $target Title
+	 * @return RenderJob
+	 */
+	public static function newJob( Title $target ) {
 		$job = new self( $target );
-		$job->setUser( $wgTranslateFuzzyBotName );
+		$job->setUser( FuzzyBot::getUser() );
 		$job->setFlags( EDIT_FORCE_BOT );
 		$job->setSummary( wfMsgForContent( 'tpt-render-summary' ) );
 
@@ -46,6 +49,7 @@ class RenderJob extends Job {
 
 		$group = $page->getMessageGroup();
 		$collection = $group->initCollection( $code );
+		$collection->loadTranslations( DB_MASTER );
 
 		$text = $page->getParse()->getTranslationPageText( $collection );
 
@@ -56,7 +60,7 @@ class RenderJob extends Job {
 
 		$article = new Article( $title, 0 );
 
-		// @todo Fuzzybot hack
+		// @todo FuzzyBot hack
 		PageTranslationHooks::$allowTargetEdit = true;
 
 		// Do the edit
@@ -87,6 +91,9 @@ class RenderJob extends Job {
 		return $this->params['summary'];
 	}
 
+	/**
+	 * @param $user User|string
+	 */
 	public function setUser( $user ) {
 		if ( $user instanceof User ) {
 			$this->params['user'] = $user->getName();
@@ -97,6 +104,8 @@ class RenderJob extends Job {
 
 	/**
 	 * Get a user object for doing edits.
+	 *
+	 * @return User
 	 */
 	public function getUser() {
 		return User::newFromName( $this->params['user'], false );

@@ -12,16 +12,16 @@ if ( isset( $options['help'] ) ) {
 	echo "Usage:\n";
 	echo "  php extensions/FundraiserPortal/rebuildButtons.php [-o|Output to disk]\n";
 } else {
-	echo "Rebuilding button templates ...\n";	
-  
+	echo "Rebuilding button templates ...\n";
+
 	$builder = new DonateButton();
 	$js = $builder->getJsOutput();
 
 	if ( isset( $options['o'] ) ) {
 		$lang = $wgLang->getCode();
 		$outputDir = "$wgFundraiserPortalDirectory/wikipedia/$lang";
-		if ( wfMkDirParents( $outputDir ) ) {
-	
+		if ( wfMkDirParents( $outputDir, null, __METHOD__ ) ) {
+
 			$outputFile = "$outputDir/fundraiserportal.js";
 			$ok = file_put_contents( $outputFile, $js );
 			if ( !$ok ) {

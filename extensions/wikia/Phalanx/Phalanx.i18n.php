@@ -590,7 +590,7 @@ Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La 
 	'right-phalanxemailblock' => 'Vous pouvez lister, voir et gérer les blocs basés sur les courriels.',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -706,17 +706,14 @@ Se pensa que se trata dun erro, [[Special:Contact|póñase en contacto con Wikia
 
 /** Hungarian (magyar)
  * @author Dani
- * @author TK-999
  */
 $messages['hu'] = array(
-	'phalanx-desc' => 'A Phalanx egy beépített spam elleni mechanizmus',
 	'phalanx' => 'Phalanx',
 	'phalanx-title' => 'Phalanx - Integrált spam elleni védelmi mechanizmus',
 	'phalanx-type-content' => 'lap tartalma',
 	'phalanx-type-summary' => 'lap összefoglalója',
 	'phalanx-type-title' => 'lap címe',
 	'phalanx-type-user' => 'felhasználó',
-	'phalanx-type-user-email' => 'e-mail',
 	'phalanx-type-answers-question-title' => 'kérdés címe',
 	'phalanx-type-answers-recent-questions' => 'legújabb kérdések',
 	'phalanx-type-wiki-creation' => 'wiki létrehozás',
@@ -728,7 +725,6 @@ $messages['hu'] = array(
 	'phalanx-label-type' => 'Típus:',
 	'phalanx-label-lang' => 'Nyelv:',
 	'phalanx-view-type' => 'Blokk típusa...',
-	'phalanx-view-blocker' => 'Keresés szűrt szöveg alapján:',
 	'phalanx-view-blocks' => 'Szűrők keresése',
 	'phalanx-view-id' => 'Szűrő lekérése azonosító alapján:',
 	'phalanx-view-id-submit' => 'Szűrő lekérése',
@@ -738,25 +734,9 @@ $messages['hu'] = array(
 	'phalanx-format-exact' => 'pontos',
 	'phalanx-tab-main' => 'Szűrők karbantartása',
 	'phalanx-tab-secondary' => 'Szűrők tesztelése',
-	'phalanx-block-success' => 'A tiltás felvétele sikerült.',
-	'phalanx-block-failure' => 'Hiba történt a tiltás hozzáadása közben.',
-	'phalanx-modify-success' => 'A tiltás módosítása sikerült.',
-	'phalanx-modify-failure' => 'Hiba történt a tiltás módosítása közben.',
-	'phalanx-modify-warning' => 'Jelenleg az #$1 azonosítójú tiltást szerkeszted.
-Az "{{int:phalanx-edit-block}}"-ra kattintva elmentheted a változtatásaidat!',
-	'phalanx-test-description' => 'Érvényben lévő tiltások tesztelése megadott szöveggel.',
 	'phalanx-test-submit' => 'Teszt',
 	'phalanx-test-results-legend' => 'Teszteredmények',
-	'phalanx-display-row-blocks' => 'tiltások: $1',
-	'phalanx-display-row-created' => "létrehozta '''$1''' $2",
 	'phalanx-link-unblock' => 'blokk feloldása',
-	'phalanx-link-modify' => 'módosítás',
-	'phalanx-link-stats' => 'statisztikák',
-	'phalanx-reset-form' => 'Űrlap alaphelyzetbe állítása',
-	'phalanx-legend-input' => 'Szűrő létrehozása vagy módosítása',
-	'phalanx-legend-listing' => 'A jelenleg alkalmazott szűrők',
-	'phalanx-unblock-message' => 'Az #$1 azonosítójú tiltás sikeresen el lett távolítva.',
-	'phalanx-help-type-content' => 'Ez a szűrő megakadályozza a szerkesztés mentését, amennyiben az tartalmazza bármelyik feketelistás kifejezést.',
 	'phalanx-stats-table-id' => 'Blokkazonosító',
 	'phalanx-stats-table-user' => 'Hozzáadta',
 	'phalanx-stats-table-type' => 'Típus',

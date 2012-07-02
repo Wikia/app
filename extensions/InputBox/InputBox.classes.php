@@ -17,10 +17,12 @@ class InputBox {
 	private $mPreload = '';
 	private $mEditIntro = '';
 	private $mSummary = '';
+	private $mNosummary = '';
 	private $mMinor = '';
 	private $mPage = '';
 	private $mBR = 'yes';
 	private $mDefaultText = '';
+	private $mPlaceholderText = '';
 	private $mBGColor = 'transparent';
 	private $mButtonLabel = '';
 	private $mSearchButtonLabel = '';
@@ -39,9 +41,6 @@ class InputBox {
 	}
 
 	public function render() {
-		// Internationalization
-		wfLoadExtensionMessages( 'InputBox' );
-
 		// Handle various types
 		switch( $this->mType ) {
 			case 'create':
@@ -62,8 +61,8 @@ class InputBox {
 							'class' => 'error'
 						),
 						strlen( $this->mType ) > 0
-						? wfMsgForContent( 'inputbox-error-bad-type', $this->mType ) 
-						: wfMsgForContent( 'inputbox-error-no-type' ) 
+						? wfMsgForContent( 'inputbox-error-bad-type', $this->mType )
+						: wfMsgForContent( 'inputbox-error-no-type' )
 					)
 				);
 		}
@@ -71,10 +70,10 @@ class InputBox {
 
 	/**
 	 * Generate search form
-	 * @param $type 
+	 * @param $type
 	 */
 	public function getSearchForm( $type ) {
-		global $wgContLang;
+		global $wgContLang, $wgNamespaceAliases;
 
 		// Use button label fallbacks
 		if ( !$this->mButtonLabel ) {
@@ -105,10 +104,11 @@ class InputBox {
 				'name' => 'search',
 				'type' => $this->mHidden ? 'hidden' : 'text',
 				'value' => $this->mDefaultText,
+				'placeholder' => $this->mPlaceholderText,
 				'size' => $this->mWidth,
 			)
 		);
-		
+
 		if( $this->mPrefix != '' ){
 			$htmlOut .= Xml::element( 'input',
 				array(
@@ -116,49 +116,82 @@ class InputBox {
 					'type' => 'hidden',
 					'value' => $this->mPrefix,
 				)
-			);	
+			);
 		}
-		
+
 		$htmlOut .= $this->mBR;
 
 		// Determine namespace checkboxes
-		$namespaces = $wgContLang->getNamespaces();
 		$namespacesArray = explode( ',', $this->mNamespaces );
 		if ( $this->mNamespaces ) {
-			foreach ( $namespacesArray as $userNamespace ) {
+			$namespaces = $wgContLang->getNamespaces();
+			$nsAliases = array_merge( $wgContLang->getNamespaceAliases(), $wgNamespaceAliases );
+			$showNamespaces = array();
+			$checkedNS = array();
+			# Check for valid namespaces
+			foreach ( $namespacesArray as $userNS ) {
+				$userNS = trim( $userNS ); # no whitespace
+
+				# Namespace needs to be checked if flagged with "**"
+				if ( strpos( $userNS, '**' ) ) {
+					$userNS = str_replace( '**', '', $userNS );
+					$checkedNS[$userNS] = true;
+				}
+
+				$mainMsg = wfMsgForContent( 'inputbox-ns-main' );
+				if( $userNS == 'Main' || $userNS == $mainMsg ) {
+					$i = 0;
+				} elseif( array_search( $userNS, $namespaces ) ) {
+					$i = array_search( $userNS, $namespaces );
+				} elseif ( isset( $nsAliases[$userNS] ) ) {
+					$i = $nsAliases[$userNS];
+				} else {
+					continue; # Namespace not recognised, skip
+				}
+				$showNamespaces[$i] = $userNS;
+				if( isset( $checkedNS[$userNS] ) && $checkedNS[$userNS] ) {
+					$checkedNS[$i] = true;
+				}
+			}
+
+			# Show valid namespaces
+			foreach( $showNamespaces as $i => $name ) {
 				$checked = array();
-				// Namespace needs to be checked if flagged with "**" or if it's the only one
-				if ( strstr( $userNamespace, '**' ) || count( $namespacesArray ) == 1 ) {
-					$userNamespace = str_replace( '**', '', $userNamespace );
+				// Namespace flagged with "**" or if it's the only one
+				if ( ( isset( $checkedNS[$i] ) && $checkedNS[$i] ) || count( $showNamespaces ) == 1 ) {
 					$checked = array( 'checked' => 'checked' );
 				}
 
-				// Namespace checkboxes
-				foreach ( $namespaces as $i => $name ) {
-					if ( $i < 0 ) {
-						continue;
-					} elseif ( $i == 0 ) {
-						$name = 'Main';
-					}
-					if ( $userNamespace == $name ) {
-						// Checkbox
-						$htmlOut .= Xml::element( 'input',
-							array(
-								'type' => 'checkbox',
-								'name' => 'ns' . $i,
-								'value' => 1,
-								'id' => 'mw-inputbox-ns' . $i
-							) + $checked
-						);
-						// Label
-						$htmlOut .= '&nbsp;' . Xml::label( $userNamespace, 'mw-inputbox-ns' . $i );
-					}
+				if ( count( $showNamespaces ) == 1 ) {
+					// Checkbox
+					$htmlOut .= Xml::element( 'input',
+						array(
+							'type' => 'hidden',
+							'name' => 'ns' . $i,
+							'value' => 1,
+							'id' => 'mw-inputbox-ns' . $i
+						) + $checked
+					);
+				} else {
+					// Checkbox
+					$htmlOut .= ' <div class="inputbox-element" style="display: inline; white-space: nowrap;">';
+					$htmlOut .= Xml::element( 'input',
+						array(
+							'type' => 'checkbox',
+							'name' => 'ns' . $i,
+							'value' => 1,
+							'id' => 'mw-inputbox-ns' . $i
+						) + $checked
+					);
+					// Label
+					$htmlOut .= '&#160;' . Xml::label( $name, 'mw-inputbox-ns' . $i );
+					$htmlOut .= '</div> ';
 				}
 			}
 
 			// Line break
 			$htmlOut .= $this->mBR;
-		} else if( $type == 'search' ) {
+		} elseif( $type == 'search' ) {
 			// Go button
 			$htmlOut .= Xml::element( 'input',
 				array(
@@ -168,7 +201,7 @@ class InputBox {
 					'value' => $this->mButtonLabel
 				)
 			);
-			$htmlOut .= '&nbsp;';
+			$htmlOut .= '&#160;';
 		}
 
 		// Search button
@@ -180,12 +213,12 @@ class InputBox {
 				'value' => $this->mSearchButtonLabel
 			)
 		);
-		
+
 		// Hidden fulltext param for IE (bug 17161)
 		if( $type == 'fulltext' ) {
-			$htmlOut .= Xml::hidden( 'fulltext', 'Search' );
+			$htmlOut .= Html::hidden( 'fulltext', 'Search' );
 		}
-		
+
 		$htmlOut .= Xml::closeElement( 'form' );
 		$htmlOut .= Xml::closeElement( 'div' );
 
@@ -193,7 +226,7 @@ class InputBox {
 		return $htmlOut;
 	}
 
-	/*
+	/**
 	 * Generate search form version 2
 	 */
 	public function getSearchForm2() {
@@ -275,7 +308,6 @@ class InputBox {
 				$this->mButtonLabel = wfMsgHtml( "postcomment" );
 			}
 		} else {
-			$comment = '';
 			if ( !$this->mButtonLabel ) {
 				$this->mButtonLabel = wfMsgHtml( 'createarticle' );
 			}
@@ -328,6 +360,20 @@ class InputBox {
 		$htmlOut .= Xml::openElement( 'input',
 			array(
 				'type' => 'hidden',
+				'name' => 'nosummary',
+				'value' => $this->mNosummary,
+			)
+		);
+		$htmlOut .= Xml::openElement( 'input',
+			array(
+				'type' => 'hidden',
+				'name' => 'prefix',
+				'value' => $this->mPrefix,
+			)
+		);
+		$htmlOut .= Xml::openElement( 'input',
+			array(
+				'type' => 'hidden',
 				'name' => 'minor',
 				'value' => $this->mMinor,
 			)
@@ -347,6 +393,7 @@ class InputBox {
 				'name' => 'title',
 				'class' => 'createboxInput',
 				'value' => $this->mDefaultText,
+				'placeholder' => $this->mPlaceholderText,
 				'size' => $this->mWidth
 			)
 		);
@@ -365,7 +412,7 @@ class InputBox {
 		// Return HTML
 		return $htmlOut;
 	}
-	
+
 	/**
 	 * Generate new section form
 	 */
@@ -419,6 +466,7 @@ class InputBox {
 				'name' => 'preloadtitle',
 				'class' => 'commentboxInput',
 				'value' => $this->mDefaultText,
+				'placeholder' => $this->mPlaceholderText,
 				'size' => $this->mWidth
 			)
 		);
@@ -466,7 +514,7 @@ class InputBox {
 			if ( strpos( $line, '=' ) === false )
 				continue;
 			list( $name, $value ) = explode( '=', $line, 2 );
-			$values[ strtolower( trim( $name ) ) ] = trim( $value );
+			$values[ strtolower( trim( $name ) ) ] = Sanitizer::decodeCharReferences( trim( $value ) );
 		}
 
 		// Build list of options, with local member names
@@ -477,9 +525,11 @@ class InputBox {
 			'page' => 'mPage',
 			'editintro' => 'mEditIntro',
 			'summary' => 'mSummary',
+			'nosummary' => 'mNosummary',
 			'minor' => 'mMinor',
 			'break' => 'mBR',
 			'default' => 'mDefaultText',
+			'placeholder' => 'mPlaceholderText',
 			'bgcolor' => 'mBGColor',
 			'buttonlabel' => 'mButtonLabel',
 			'searchbuttonlabel' => 'mSearchButtonLabel',

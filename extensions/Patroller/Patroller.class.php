@@ -3,7 +3,8 @@
 /**
  * Class file for the Patroller extension
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * @copyright © 2006 Rob Church
  * @licence GNU General Public Licence 2.0
@@ -24,7 +25,7 @@ class Patroller extends SpecialPage {
 	public function execute( $par ) {
 		global $wgUser, $wgRequest, $wgOut;
 
-		wfLoadExtensionMessages( 'Patroller' );
+		
 
 		$this->setHeaders();
 
@@ -71,7 +72,7 @@ class Patroller extends SpecialPage {
 		# the user wants to pause or stop patrolling
 		if( $wgRequest->getCheck( 'wpToken' ) && !$wgRequest->getCheck( 'wpAnother' ) ) {
 			$skin =& $wgUser->getSkin();
-			$self = Title::makeTitle( NS_SPECIAL, 'Patrol' );
+			$self = SpecialPage::getTitleFor( 'Patrol' );
 			$link = $skin->makeKnownLinkObj( $self, wfMsgHtml( 'patrol-resume' ) );
 			$wgOut->addHTML( wfMsgWikiHtml( 'patrol-stopped', $link ) );
 			return;
@@ -131,17 +132,17 @@ class Patroller extends SpecialPage {
 	 */
 	private function showControls( &$edit ) {
 		global $wgUser, $wgOut;
-		$self = Title::makeTitle( NS_SPECIAL, 'Patrol' );
+		$self = SpecialPage::getTitleFor( 'Patrol' );
 		$form = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
 		$form .= '<table>';
 		$form .= '<tr><td align="right">' . Xml::submitButton( wfMsg( 'patrol-endorse' ), array( 'name' => 'wpPatrolEndorse' ) ) . '</td><td></td></tr>';
 		$form .= '<tr><td align="right">' . Xml::submitButton( wfMsg( 'patrol-revert' ), array( 'name' => 'wpPatrolRevert' ) ) . '</td>';
-		$form .= '<td>' . Xml::label( wfMsg( 'patrol-revert-reason' ), 'reason' ) . '&nbsp;';
+		$form .= '<td>' . Xml::label( wfMsg( 'patrol-revert-reason' ), 'reason' ) . '&#160;';
 		$form .= $this->revertReasonsDropdown() . ' / ' . Xml::input( 'wpPatrolRevertReason' ) . '</td></tr>';
 		$form .= '<tr><td align="right">' . Xml::submitButton( wfMsg( 'patrol-skip' ), array( 'name' => 'wpPatrolSkip' ) ) . '</td></tr></table>';
 		$form .= '<tr><td>' . Xml::check( 'wpAnother', true ) . '</td><td>' . wfMsgHtml( 'patrol-another' ) . '</td></tr>';
-		$form .= Xml::hidden( 'wpRcId', $edit->mAttribs['rc_id'] );
-		$form .= Xml::hidden( 'wpToken', $wgUser->editToken() );
+		$form .= Html::Hidden( 'wpRcId', $edit->mAttribs['rc_id'] );
+		$form .= Html::Hidden( 'wpToken', $wgUser->editToken() );
 		$form .= '</form>';
 		$wgOut->addHTML( $form );
 	}

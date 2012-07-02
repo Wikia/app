@@ -79,7 +79,7 @@ function WidgetCategoryCloudGetData() {
 	wfProfileIn( __METHOD__ );
 
 	$class = new MostpopularcategoriesSpecialPage();
-	$class->execute($LIMIT * 2, 0, false);
+	$class->setList( false );
 	foreach ($class->getResult() as $name => $value) {
 		if (WidgetCategoryCloudSkipRow($name)) continue;
 

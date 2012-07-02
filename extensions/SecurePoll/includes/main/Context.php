@@ -21,6 +21,9 @@ class SecurePoll_Context {
 
 	/** Message text cache */
 	var $messageCache = array();
+	
+	/** election cache */
+	var $electionCache = array();
 
 	/** 
 	 * Which messages are loaded. 2-d array: language and entity ID, value arbitrary. 
@@ -58,7 +61,10 @@ class SecurePoll_Context {
 		}
 	}
 
-	/** Get the ParserOptions instance */
+	/**
+	 * Get the ParserOptions instance
+	 * @return ParserOptions
+	 */
 	function getParserOptions() {
 		if ( !$this->parserOptions ) {
 			$this->parserOptions = new ParserOptions;
@@ -66,7 +72,10 @@ class SecurePoll_Context {
 		return $this->parserOptions;
 	}
 
-	/** Get the SecurePoll_Store instance */
+	/**
+	 * Get the SecurePoll_Store instance
+	 * @return SecurePoll_Store
+	 */
 	function getStore() {
 		if ( !isset( $this->store ) ) {
 			$this->store = new $this->storeClass;
@@ -91,18 +100,26 @@ class SecurePoll_Context {
 		$this->messageCache = $this->messagesLoaded = array();
 		$this->store = $store;
 	}
+	
+	/** Get the type of a particular entity **/
+	function getEntityType( $id ) {
+		return $this->getStore()->getEntityType( $id );
+	}
 
 	/** 
 	 * Get an election object from the store, with a given entity ID. Returns 
 	 * false if it does not exist.
 	 */
 	function getElection( $id ) {
-		$info = $this->getStore()->getElectionInfo( array( $id ) );
-		if ( $info ) {
-			return $this->newElection( reset( $info ) );
-		} else {
-			return false;
+		if( !isset( $this->electionCache[$id] ) ) {
+			$info = $this->getStore()->getElectionInfo( array( $id ) );
+			if ( $info ) {
+				$this->electionCache[$id] = $this->newElection( reset( $info ) );
+			} else {
+				$this->electionCache[$id] = false;
+			}
 		}
+		return $this->electionCache[$id];
 	}
 
 	/**
@@ -156,6 +173,7 @@ class SecurePoll_Context {
 	/**
 	 * Get a SecurePoll_Random instance. This provides cryptographic random 
 	 * number generation.
+	 * @return SecurePoll_Random
 	 */
 	function getRandom() {
 		if ( !$this->random ) {
@@ -227,6 +245,7 @@ class SecurePoll_Context {
 	/**
 	 * Get a database object, or throw an exception if the current store object 
 	 * does not support database operations.
+	 * @return DatabaseBase
 	 */
 	function getDB() {
 		if ( !isset( $this->db ) ) {

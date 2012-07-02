@@ -26,8 +26,8 @@ class SpecialSpamWikisSpecialPageController extends WikiaSpecialPageController {
         }
         // init some basic data
         $this->wg->Out->setPageTitle( wfMsg( 'specialspamwikis-pagetitle' ) );
-        $this->mTitle = Title::makeTitle( NS_SPECIAL, $this->mName );
-        $this->mAction = $this->mTitle->escapeLocalURL( '' );
+        $this->mTitle = Title::makeTitle( NS_SPECIAL, $this->getName() );
+        $this->mAction = htmlspecialchars($this->mTitle->getLocalURL());
 
         // placeholder for the actual data
         $this->mData = new StdClass;
@@ -63,10 +63,10 @@ class SpecialSpamWikisSpecialPageController extends WikiaSpecialPageController {
                     // get some info about the wiki
                     $city = WikiFactory::getWikiByID( $k );
                     // set the public status to "spam"
-                    //$status = WikiFactory::setPublicStatus( -2, $k, 'SpecialSpamWikis' );
-                    $status = 0;
-                    // clear the cached settings for the wiki
-                    //WikiFactory::clearCache( $k );
+                    $status = WikiFactory::setPublicStatus( -2, $k, 'SpecialSpamWikis' );
+
+		    // clear the cached settings for the wiki
+                    WikiFactory::clearCache( $k );
 
                     // prepare the output data
                     $this->mData->close[] = array(
@@ -83,14 +83,14 @@ class SpecialSpamWikisSpecialPageController extends WikiaSpecialPageController {
                         }
                     }
                     // remove from the noreptemp.spamwikis
-                    /*$tmpDb->delete(
+                    $tmpDb->delete(
                          'noreptemp.spamwikis',
                          array( 'city_id' => $k ),
                          __METHOD__
-                    );*/
+                    );
                 }
                 // clear the interwiki links for ALL languages in memcached.
-                //WikiFactory::clearInterwikiCache();
+                WikiFactory::clearInterwikiCache();
 
                 unset( $tmpDb );
             }

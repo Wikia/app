@@ -1,36 +1,36 @@
-<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.3/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.3/ http://www.mediawiki.org/xml/export-0.3.xsd" version="0.3" xml:lang="en">
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.4/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.4/ http://www.mediawiki.org/xml/export-0.4.xsd" version="0.4" xml:lang="en">
   <siteinfo>
     <sitename>JWiki</sitename>
     <base>http://wiki.juliano.info/wiki/Welcome</base>
-    <generator>MediaWiki 1.15.1</generator>
+    <generator>MediaWiki 1.16.0</generator>
     <case>case-sensitive</case>
     <namespaces>
-      <namespace key="-2">Media</namespace>
-      <namespace key="-1">Special</namespace>
-      <namespace key="0" />
-      <namespace key="1">Talk</namespace>
-      <namespace key="2">User</namespace>
-      <namespace key="3">User talk</namespace>
-      <namespace key="4">JWiki</namespace>
-      <namespace key="5">JWiki talk</namespace>
-      <namespace key="6">File</namespace>
-      <namespace key="7">File talk</namespace>
-      <namespace key="8">MediaWiki</namespace>
-      <namespace key="9">MediaWiki talk</namespace>
-      <namespace key="10">Template</namespace>
-      <namespace key="11">Template talk</namespace>
-      <namespace key="12">Help</namespace>
-      <namespace key="13">Help talk</namespace>
-      <namespace key="14">Category</namespace>
-      <namespace key="15">Category talk</namespace>
-      <namespace key="100">Wikilog</namespace>
-      <namespace key="101">Wikilog talk</namespace>
-      <namespace key="202">Property</namespace>
-      <namespace key="203">Property talk</namespace>
-      <namespace key="204">Type</namespace>
-      <namespace key="205">Type talk</namespace>
-      <namespace key="208">Concept</namespace>
-      <namespace key="209">Concept talk</namespace>
+      <namespace key="-2" case="case-sensitive">Media</namespace>
+      <namespace key="-1" case="first-letter">Special</namespace>
+      <namespace key="0" case="case-sensitive" />
+      <namespace key="1" case="case-sensitive">Talk</namespace>
+      <namespace key="2" case="first-letter">User</namespace>
+      <namespace key="3" case="first-letter">User talk</namespace>
+      <namespace key="4" case="case-sensitive">JWiki</namespace>
+      <namespace key="5" case="case-sensitive">JWiki talk</namespace>
+      <namespace key="6" case="case-sensitive">File</namespace>
+      <namespace key="7" case="case-sensitive">File talk</namespace>
+      <namespace key="8" case="first-letter">MediaWiki</namespace>
+      <namespace key="9" case="first-letter">MediaWiki talk</namespace>
+      <namespace key="10" case="case-sensitive">Template</namespace>
+      <namespace key="11" case="case-sensitive">Template talk</namespace>
+      <namespace key="12" case="case-sensitive">Help</namespace>
+      <namespace key="13" case="case-sensitive">Help talk</namespace>
+      <namespace key="14" case="case-sensitive">Category</namespace>
+      <namespace key="15" case="case-sensitive">Category talk</namespace>
+      <namespace key="100" case="case-sensitive">Wikilog</namespace>
+      <namespace key="101" case="case-sensitive">Wikilog talk</namespace>
+      <namespace key="202" case="case-sensitive">Property</namespace>
+      <namespace key="203" case="case-sensitive">Property talk</namespace>
+      <namespace key="204" case="case-sensitive">Type</namespace>
+      <namespace key="205" case="case-sensitive">Type talk</namespace>
+      <namespace key="208" case="case-sensitive">Concept</namespace>
+      <namespace key="209" case="case-sensitive">Concept talk</namespace>
     </namespaces>
   </siteinfo>
   <page>
@@ -53,65 +53,47 @@ This category contains the user and administration manual of the extension.</tex
     <title>Template:Wikilog user manual header</title>
     <id>90</id>
     <revision>
-      <id>238</id>
-      <timestamp>2009-09-07T18:44:35Z</timestamp>
+      <id>306</id>
+      <timestamp>2010-08-08T02:49:54Z</timestamp>
       <contributor>
         <username>Juliano</username>
         <id>1</id>
       </contributor>
-      <text xml:space="preserve">This template creates a navigation bar at the top of [[Help:Wikilog|Wikilog]] manual articles.
+      <text xml:space="preserve">== Summary ==
+
+This template creates a navigation bar at the top of [[Help:Wikilog|Wikilog]] manual articles.
 
 == Parameters ==
 
 ; 1
 : Manual chapter: &quot;intro&quot;, &quot;wikilog&quot;, &quot;article&quot; or &quot;advanced&quot;.
 
-== Example ==
+== Template ==
 
 &lt;onlyinclude&gt;&lt;!--
---&gt;&lt;table cellspacing=&quot;0&quot; style=&quot;background:#EEEEEE;border:1px solid #999999;width:100%;margin:6pt 0pt;&quot;&gt;&lt;!--
+--&gt;&lt;table border=&quot;1&quot; cellspacing=&quot;0&quot; style=&quot;background: #F6F6F6; border: 1px solid #A7D9F9;
+     border-collapse: collapse; width: 100%; margin: 6pt 0pt 0pt;&quot;&gt;&lt;!--
   --&gt;&lt;tr&gt;&lt;!--
-    --&gt;&lt;td style=&quot;background:#DDDDDD;text-align:center;width:10%;padding:3pt 6pt;&quot; rowspan=&quot;2&quot;&gt;&lt;!--
-      --&gt;[[Image:Wikilog.png|80px|link=Help:Wikilog]]&lt;!--
+    --&gt;&lt;td style=&quot;background: #F6F6F6; text-align: center; width: 15%; padding: 0 6pt;&quot;&gt;&lt;!--
+      --&gt;[[Image:Wikilog.png|80px|text-bottom|link=Help:Wikilog]]&lt;!--
     --&gt;&lt;/td&gt;&lt;!--
-    --&gt;&lt;td style=&quot;padding:1pt 6pt;background:#DDDDDD;&quot;&gt;&lt;!--
-      --&gt;&lt;span style=&quot;font-weight:bold;margin:0 1em;&quot;&gt;Wikilog user manual&lt;/span&gt;&lt;!--
-      --&gt; • {{#ifeq: {{{1}}} | intro
-             | &lt;span style=&quot;font-weight:bold;background:#EEEEEE;margin:1pt 0 -2pt;padding:0 1em 2pt&quot;&gt;Introduction&lt;/span&gt;
-             | [[Help:Wikilog|Introduction]]
-            }}&lt;!--
-      --&gt; • {{#ifeq: {{{1}}} | wikilog
-             | &lt;span style=&quot;font-weight:bold;background:#EEEEEE;margin:1pt 0 -2pt;padding:0 1em 2pt&quot;&gt;Wikilogs&lt;/span&gt;
-             | [[Help:Overview of wikilogs|Wikilogs]]
-            }}&lt;!--
-      --&gt; • {{#ifeq: {{{1}}} | article
-             | &lt;span style=&quot;font-weight:bold;background:#EEEEEE;margin:1pt 0 -2pt;padding:0 1em 2pt&quot;&gt;Articles&lt;/span&gt;
-             | [[Help:Overview of wikilog articles|Articles]]
-            }}&lt;!--
-      --&gt; • {{#ifeq: {{{1}}} | advanced
-             | &lt;span style=&quot;font-weight:bold;background:#EEEEEE;margin:1pt 0 -2pt;padding:0 1em 2pt&quot;&gt;Advanced&lt;/span&gt;
-             | [[Help:Special:Wikilog|Advanced]]
-            }} • &lt;!--
-    --&gt;&lt;/td&gt;&lt;!--
-  --&gt;&lt;/tr&gt;&lt;!--
-  --&gt;&lt;tr&gt;&lt;!--
-    --&gt;&lt;td style=&quot;padding:1pt 6pt;&quot;&gt; • &lt;!--
-      --&gt;{{#ifeq: {{{1}}} | intro
-          | [[Help:Wikilog|Overview]]
-         }}&lt;!--
-      --&gt;{{#ifeq: {{{1}}} | wikilog
-          | [[Help:Overview of wikilogs|Overview]] • [[Help:Wikilog settings|Settings]]
-         }}&lt;!--
-      --&gt;{{#ifeq: {{{1}}} | article
-          | [[Help:Overview of wikilog articles|Overview]] • [[Help:Writing a wikilog article|Writing]]
-         }}&lt;!--
-      --&gt;{{#ifeq: {{{1}}} | advanced
-          | [[Help:Special:Wikilog|Special:Wikilog]] • [[Help:Embedding wikilogs|Embedding]] • [[Help:Wikilog styling|Styling]]
-         }}&lt;!--
-      --&gt; • &lt;!--
+    --&gt;&lt;td style=&quot;background: #F6F6F6; text-align: left; padding: 0 6pt;&quot;&gt;&lt;!--
+      --&gt;&lt;span style=&quot;font-family: Times, serif; font-size: 110%; font-weight: bold;
+           font-style: italic;&quot;&gt;User Manual&lt;/span&gt;&lt;!--
     --&gt;&lt;/td&gt;&lt;!--
   --&gt;&lt;/tr&gt;&lt;!--
 --&gt;&lt;/table&gt;&lt;!--
+
+--&gt;&lt;table border=&quot;1&quot; cellspacing=&quot;0&quot; style=&quot;background: #F6F6F6; border: 1px solid #A7D9F9;
+     border-top: 0px; border-collapse: collapse; margin: 0pt 0pt 6pt 6pt; width: 15em;
+     float: right;&quot;&gt;&lt;!--
+  --&gt;&lt;tr&gt;&lt;!--
+    --&gt;&lt;td&gt;&lt;!--
+      --&gt;{{Wikilog user manual index}}&lt;!--
+    --&gt;&lt;/td&gt;&lt;!--
+  --&gt;&lt;/tr&gt;&lt;!--
+--&gt;&lt;/table&gt;&lt;!--
+
 --&gt;[[{{ns:Category}}:Wikilog manual|{{{title|{{SUBPAGENAME}}}}}]]&lt;!--
 --&gt;&lt;/onlyinclude&gt;
 
@@ -138,15 +120,44 @@ This category contains the user and administration manual of the extension.</tex
     </revision>
   </page>
   <page>
-    <title>Help:Wikilog</title>
-    <id>58</id>
+    <title>Template:Wikilog user manual index</title>
+    <id>128</id>
     <revision>
-      <id>265</id>
-      <timestamp>2009-09-13T01:29:43Z</timestamp>
+      <id>305</id>
+      <timestamp>2010-08-08T02:35:39Z</timestamp>
       <contributor>
         <username>Juliano</username>
         <id>1</id>
       </contributor>
+      <comment>Created page with '&lt;onlyinclude&gt; * [[Help:Wikilog|Introduction]] * Wikilogs ** [[Help:Overview of wikilogs|Overview of wikilogs]] ** [[Help:Wikilog settings|Wikilog settings]] * Wikilog articles **…'</comment>
+      <text xml:space="preserve">&lt;onlyinclude&gt;
+* [[Help:Wikilog|Introduction]]
+* Wikilogs
+** [[Help:Overview of wikilogs|Overview of wikilogs]]
+** [[Help:Wikilog settings|Wikilog settings]]
+* Wikilog articles
+** [[Help:Overview of wikilog articles|Overview of wikilog articles]]
+** [[Help:Writing a wikilog article|Writing a wikilog article]]
+* Advanced
+** [[Help:Special:Wikilog|Special:Wikilog]]
+** [[Help:Embedding wikilogs|Embedding wikilogs]]
+** [[Help:Wikilog styling|Styling]]
+&lt;/onlyinclude&gt;
+
+[[{{ns:Category}}:Wikilog manual]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>Help:Wikilog</title>
+    <id>58</id>
+    <revision>
+      <id>309</id>
+      <timestamp>2010-08-08T02:53:20Z</timestamp>
+      <contributor>
+        <username>Juliano</username>
+        <id>1</id>
+      </contributor>
+      <comment>/* User manual */</comment>
       <text xml:space="preserve">{{Wikilog user manual header|intro}}
 
 '''Wikilog''' is a [http://www.mediawiki.org/ MediaWiki] extension that enhances the wiki software with some common blogging features, making it a wiki-blog hybrid.
@@ -159,16 +170,7 @@ The philosophy of Wikilog is not to just make a blog out of a wiki, but to combi
 
 == User manual ==
 
-* Wikilogs
-** [[Help:Overview of wikilogs|Overview of wikilogs]]
-** [[Help:Wikilog settings|Wikilog settings]]
-* Wikilog articles
-** [[Help:Overview of wikilog articles|Overview of wikilog articles]]
-** [[Help:Writing a wikilog article|Writing a wikilog article]]
-* Advanced
-** [[Help:Special:Wikilog|Special:Wikilog]]
-** [[Help:Embedding wikilogs|Embedding wikilogs]]
-** [[Help:Wikilog styling|Styling]]
+{{Wikilog user manual index}}
 
 == External links ==
 
@@ -181,13 +183,12 @@ The philosophy of Wikilog is not to just make a blog out of a wiki, but to combi
     <title>Help:Embedding wikilogs</title>
     <id>109</id>
     <revision>
-      <id>269</id>
-      <timestamp>2009-10-30T19:44:52Z</timestamp>
+      <id>328</id>
+      <timestamp>2011-12-11T03:19:46Z</timestamp>
       <contributor>
         <username>Juliano</username>
         <id>1</id>
       </contributor>
-      <comment>/* Templated embedding */</comment>
       <text xml:space="preserve">{{Wikilog user manual header|advanced}}
 
 It is possible to embed a list of wikilog articles in other wiki pages.  Any listing that may be generated by [[Help:Special:Wikilog|Special:Wikilog]] can also be embedded like a template in other wiki pages.
@@ -248,26 +249,23 @@ The following parameters are provided to the template:
  | '''published'''
  | Whether the article was published or still a draft.  An asterisk is returned if the article was published, otherwise the parameter is blank.  This is designed to be used with the &lt;code&gt;[[Help:Extension:ParserFunctions##if:|&lt;nowiki&gt;{{#if:...}}&lt;/nowiki&gt;]]&lt;/code&gt; parser function.
  |-
- | '''pubdate'''
- | The article publication date and time.  This is the date that the article was signed, which is the first argument to the &lt;code&gt;&lt;nowiki&gt;{{wl-publish:...}}&lt;/nowiki&gt;&lt;/code&gt; parser function call. ''Deprecated since Wikilog 1.0.1, use 'date' and 'time' instead.''
- |-
  | '''date'''
- | The article publication date.  This is the date that the article was signed, which is the first argument to the &lt;code&gt;&lt;nowiki&gt;{{wl-publish:...}}&lt;/nowiki&gt;&lt;/code&gt; parser function call.  ''Available since Wikilog 1.0.1.''
+ | The article publication date.  This is the date that the article was signed, which is the first argument to the &lt;code&gt;&lt;nowiki&gt;{{wl-publish:...}}&lt;/nowiki&gt;&lt;/code&gt; parser function call.
  |-
  | '''time'''
- | The article publication time.  This is the time that the article was signed, which is the first argument to the &lt;code&gt;&lt;nowiki&gt;{{wl-publish:...}}&lt;/nowiki&gt;&lt;/code&gt; parser function call.  ''Available since Wikilog 1.0.1.''
+ | The article publication time.  This is the time that the article was signed, which is the first argument to the &lt;code&gt;&lt;nowiki&gt;{{wl-publish:...}}&lt;/nowiki&gt;&lt;/code&gt; parser function call.
  |-
- | '''updated'''
- | The date and time the article was last edited. ''Deprecated since Wikilog 1.0.1, use 'updatedDate' and 'updatedTime' instead.''
+ | '''tz'''
+ | Timezone information for the article publication date/time.
  |-
  | '''updatedDate'''
- | The date the article was last edited.  ''Available since Wikilog 1.0.1.''
+ | The date the article was last edited.
  |-
  | '''updatedTime'''
- | The time the article was last edited.  ''Available since Wikilog 1.0.1.''
+ | The time the article was last edited.
  |-
  | '''hasMore'''
- | Whether the article has more text than provided by 'summary'.  An asterisk is returned if the article contains more text, otherwise the parameter is blank.  This is designed to be used with the &lt;code&gt;[[Help:Extension:ParserFunctions##if:|&lt;nowiki&gt;{{#if:...}}&lt;/nowiki&gt;]]&lt;/code&gt; parser function.  ''Available since Wikilog 1.0.1.''
+ | Whether the article has more text than provided by 'summary'.  An asterisk is returned if the article contains more text, otherwise the parameter is blank.  This is designed to be used with the &lt;code&gt;[[Help:Extension:ParserFunctions##if:|&lt;nowiki&gt;{{#if:...}}&lt;/nowiki&gt;]]&lt;/code&gt; parser function.
  |-
  | '''summary'''
  | The article summary.
@@ -289,7 +287,7 @@ The following parameters are provided to the template:
 '''[[{{{page}}}|{{{title}}}]]'''
 &lt;blockquote&gt;
 {{{summary}}}
-&lt;p&gt;&lt;small&gt;-- {{{authors}}}, {{{pubdate}}}.&lt;/small&gt;&lt;/p&gt;
+&lt;p&gt;&lt;small&gt;-- {{{authors}}}, {{{time}}}, {{{date}}}.&lt;/small&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;/div&gt;
 &lt;/pre&gt;
@@ -303,7 +301,7 @@ The following parameters are provided to the template:
 &lt;li&gt;'''Title:''' [[{{{page}}}|{{{title}}}]]&lt;/li&gt;
 &lt;li&gt;'''Wikilog:''' [[{{{wikilogPage}}}|{{{wikilogTitle}}}]]&lt;/li&gt;
 &lt;li&gt;'''Authors:''' {{{authors}}}&lt;/li&gt;
-&lt;li&gt;'''Published:''' {{{pubdate}}}&lt;/li&gt;
+&lt;li&gt;'''Published:''' {{{time}}}, {{{date}}}&lt;/li&gt;
 &lt;li&gt;'''Summary:''' {{{summary}}}&lt;/li&gt;
 &lt;li&gt;'''Comments:''' {{{comments}}}&lt;/li&gt;
 &lt;/ul&gt;
@@ -352,8 +350,8 @@ Wikilog pages have an additional content action tab called &quot;wikilog&quot;, 
     <title>Help:Overview of wikilog articles</title>
     <id>96</id>
     <revision>
-      <id>223</id>
-      <timestamp>2009-09-07T02:13:11Z</timestamp>
+      <id>327</id>
+      <timestamp>2011-12-11T03:15:02Z</timestamp>
       <contributor>
         <username>Juliano</username>
         <id>1</id>
@@ -362,14 +360,14 @@ Wikilog pages have an additional content action tab called &quot;wikilog&quot;, 
 
 '''Wikilog articles''' are wiki pages that contain the actual stories published in [[Help:Overview of wikilogs|wikilogs]].  They may have many different names in different blog software: articles, posts, entries, pages, items, news, etc.  In this manual, they are strictly referred as wikilog articles, or just articles.
 
-Each wikilog article belongs to exactly one wikilog.  Articles are stored as [[Help:Subpages|subpages]] of wikilog pages, where the wiki page title consists of the wikilog title concatenated with a slash character (&quot;&lt;code&gt;/&lt;/code&gt;&quot;) and followed by the proper article title.
+Each wikilog article belongs to exactly one wikilog.  Articles are stored as [[Help:Subpages|subpages]] of wikilog pages, where the wiki page title consists of the wikilog title, followed by slash character (&quot;&lt;code&gt;/&lt;/code&gt;&quot;) and the article title.
 
-To avoid confusion, this manual always refer to these titles as ''full page title'' and ''article title''.  For example, an article ''The brown fox'' in the ''General Rants'' wikilog in the ''{{wl-info:namespace-by-index}}'' namespace has these titles:
+To avoid confusion, this manual always refers to these titles as ''full page title'' and ''article title''.  For example, an article ''The brown fox'' in the ''General Rants'' wikilog in the ''{{wl-info:namespace-by-index}}'' namespace has these titles:
 
 * '''''{{wl-info:namespace-by-index}}:General Rants/The brown fox'''''
 *: This is the full page title.  It is used to identify and store the wikilog article in the wiki database, and also to link to the article from other pages of the wiki by using it between &lt;code&gt;[[&lt;/code&gt; and &lt;code&gt;]]&lt;/code&gt; marks in wikitext.
 * '''''The brown fox'''''
-*: This is the article title.  It is shown to the visitor at the top of the page and also used to identify the article anywhere within the wikilog.
+*: This is the article title.  It is shown to the visitor at the top of the page and is also used to identify the article anywhere within the wikilog.
 
 Wikilog articles can be classified in multiple [[Help:Categories|categories]], like standard wiki pages.  Articles may also have [[Help:Wikilog article tags|tags]], which provide a secondary, less formal classification.  Also, unlike most blogs, wikilog articles can be prepared, signed and published by multiple authors, in a collaborative way that follows the wiki philosophy.  Wikilog provides a special page, [[Help:Special:Wikilog|Special:Wikilog]], which allows the user to query articles by category, author or other criteria.
 
@@ -390,12 +388,13 @@ All MediaWiki features are automatically available to wikilog articles and comme
     <title>Help:Special:Wikilog</title>
     <id>107</id>
     <revision>
-      <id>246</id>
-      <timestamp>2009-09-07T22:10:48Z</timestamp>
+      <id>318</id>
+      <timestamp>2010-08-08T04:46:56Z</timestamp>
       <contributor>
         <username>Juliano</username>
         <id>1</id>
       </contributor>
+      <comment>/* Parameters */</comment>
       <text xml:space="preserve">{{Wikilog user manual header|advanced}}
 
 The '''[[Special:Wikilog]]''' special page is a central query page for wikilog listings.  By default, it displays a list of all articles in all wikilogs, like an aggregator for all hosted wikilogs.  It also allows queries based on categories, authors, tags, status, etc.  This special page can be included in other pages, so you can embed lists or summaries of wikilog posts anywhere in the wiki.  For more information, see [[Help:Embedding wikilogs|embedding wikilogs]].
@@ -430,9 +429,11 @@ The following table lists the parameters accepted by the Special:Wikilog special
  ! Inline syntax
  ! Description
  |- style=&quot;vertical-align: top;&quot;
- | '''wikilog='''''wikilog-title''
- | ''wikilog-title''
+ |rowspan=2| '''wikilog='''''wikilog-title''
+ |rowspan=2| ''wikilog-title''
  | Display only articles from the given wikilog.  In both cases, ''wikilog-title'' is the wikilog page title including the namespace, since multiple namespaces can be configured to have wikilogs.  Example: ''&quot;{{wl-info:namespace-by-index}}:General rants&quot;''.
+ |- style=&quot;vertical-align: top;&quot;
+ | It is also possible to display all articles in a given namespace by using an asterisk as the page title.  Example: ''&quot;{{wl-info:namespace-by-index}}:*&quot;''
  |- style=&quot;vertical-align: top;&quot;
  | '''category='''''category-name''
  | '''{{ns:Category}}:'''''category-name''
@@ -503,18 +504,17 @@ All drafts from all wikilogs:
     <title>Help:Wikilog settings</title>
     <id>93</id>
     <revision>
-      <id>222</id>
-      <timestamp>2009-09-07T02:12:57Z</timestamp>
+      <id>308</id>
+      <timestamp>2010-08-08T02:52:11Z</timestamp>
       <contributor>
         <username>Juliano</username>
         <id>1</id>
       </contributor>
+      <minor/>
+      <comment>fix for new header style</comment>
       <text xml:space="preserve">{{Wikilog user manual header|wikilog}}
 
-&lt;div style=&quot;float:right;&quot;&gt;__TOC__&lt;/div&gt;
-
 Each wikilog has a few settings that can be set by adding some special markup to the wikilog page.  These settings are more relevant to the syndication feeds (Atom and RSS) that are automatically generated by Wikilog.
-&lt;div style=&quot;clear:both;&quot;&gt;&lt;/div&gt;
 
 == Icon, logo and subtitle ==
 
@@ -587,13 +587,13 @@ The author name should be the name of the user in the wiki.  The wiki user page 
     <title>Help:Wikilog styling</title>
     <id>88</id>
     <revision>
-      <id>283</id>
-      <timestamp>2009-11-05T03:52:11Z</timestamp>
+      <id>316</id>
+      <timestamp>2010-08-08T04:39:51Z</timestamp>
       <contributor>
         <username>Juliano</username>
         <id>1</id>
       </contributor>
-      <comment>/* Summary pager */</comment>
+      <comment>new comments page</comment>
       <text xml:space="preserve">{{Wikilog user manual header|advanced}}
 
 This page shows topographic diagrams of HTML blocks that may be useful in order to customize the appearance of the content generated by the Wikilog extension. The extension can be customized by adding CSS rules to [[MediaWiki:Common.css]].
@@ -630,21 +630,22 @@ A single wikilog article (entry).
 The title of the wikilog article.
       &lt;/div&gt;
 
-      &lt;div style=&quot;&quot;&gt;
-''([[MediaWiki:Wikilog-item-brief-header|wikilog-item-brief-header]] -- customizable)''
+      &lt;div style=&quot;background:#BBB; border:1px dashed gray; padding:3pt; margin:3pt;&quot;&gt;
+'''.wl-summary-header'''&lt;br/&gt;
+Optional. Contains the header of the summary entry, with authors, date, time, comments link, etc.&lt;br/&gt;
+''([[MediaWiki:Wikilog-summary-header|wikilog-summary-header]] -- customizable)''
       &lt;/div&gt;
 
       &lt;div style=&quot;background:#BBB; border:1px dashed gray; padding:3pt; margin:3pt;&quot;&gt;
 '''.wl-summary'''&lt;br/&gt;
-The summary text of the wikilog article.
+The summary text of the wikilog article.&lt;br/&gt;
+''([[MediaWiki:Wikilog-summary-more|wikilog-summary-more]] -- customizable, conditional)''
       &lt;/div&gt;
 
-      &lt;div style=&quot;&quot;&gt;
-''([[MediaWiki:Wikilog-item-more|wikilog-item-more]] -- customizable, conditional)''
-      &lt;/div&gt;
-
-      &lt;div style=&quot;&quot;&gt;
-''([[MediaWiki:Wikilog-item-brief-footer|wikilog-item-brief-footer]] -- customizable)''
+      &lt;div style=&quot;background:#BBB; border:1px dashed gray; padding:3pt; margin:3pt;&quot;&gt;
+'''.wl-summary-footer'''&lt;br/&gt;
+Optional. Contains the header of the summary entry, with authors, date, time, comments link, etc.&lt;br/&gt;
+''([[MediaWiki:Wikilog-summary-footer|wikilog-summary-footer]] -- customizable)''
       &lt;/div&gt;
 
     &lt;/div&gt;
@@ -706,15 +707,25 @@ Indents the comment and all its replies in a thread.
 
   &lt;div style=&quot;background:#DDD; border:1px dashed gray; padding:3pt; margin:3pt;&quot;&gt;
 '''.wl-comment''' [ ''.wl-comment-pending'' | ''.wl-comment-deleted'' ] [ ''.wl-comment-by-anon'' | ''.wl-comment-by-user'' [ ''.wl-comment-by-author'' ] ]&lt;br/&gt;
-Contains the visible comment and its metadata.
+Contains the visible comment.
 
     &lt;div style=&quot;background:#CCC; border:1px dashed gray; padding:3pt; margin:3pt;&quot;&gt;
-'''.wl-comment-meta'''&lt;br/&gt;
-The user name, timestamp, status and actions on the comment.
+'''.wl-comment-header'''&lt;br/&gt;
+Optional. Contains the header of the comment, with author, date, time, etc.&lt;br/&gt;
+''([[MediaWiki:Wikilog-comment-header|wikilog-comment-header]] -- customizable)''
     &lt;/div&gt;
     &lt;div style=&quot;background:#CCC; border:1px dashed gray; padding:3pt; margin:3pt;&quot;&gt;
 '''.wl-comment-text'''&lt;br/&gt;
 The comment text itself.
+    &lt;/div&gt;
+    &lt;div style=&quot;background:#CCC; border:1px dashed gray; padding:3pt; margin:3pt;&quot;&gt;
+'''.wl-comment-footer'''&lt;br/&gt;
+Optional. Contains the footer of the comment, with author, date, time, etc.&lt;br/&gt;
+''([[MediaWiki:Wikilog-comment-footer|wikilog-comment-footer]] -- customizable)''
+    &lt;/div&gt;
+    &lt;div style=&quot;background:#CCC; border:1px dashed gray; padding:3pt; margin:3pt;&quot;&gt;
+'''.wl-comment-tools'''&lt;br/&gt;
+Contains links related to the comment, like reply, page, edit, etc.
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -753,12 +764,14 @@ Placeholder of the hidden comment.
     <title>Help:Writing a wikilog article</title>
     <id>101</id>
     <revision>
-      <id>225</id>
-      <timestamp>2009-09-07T02:13:52Z</timestamp>
+      <id>315</id>
+      <timestamp>2010-08-08T04:25:29Z</timestamp>
       <contributor>
         <username>Juliano</username>
         <id>1</id>
       </contributor>
+      <minor/>
+      <comment>/* Article summary */</comment>
       <text xml:space="preserve">{{Wikilog user manual header|article}}
 
 In order to create a new wikilog article, a new wiki page must be created as a subpage of the wikilog page.  The wikilog article title is the subpage part of the page title.  For example, a wikilog article ''&quot;The brown fox&quot;'' in the ''&quot;{{wl-info:namespace-by-index}}:General Rants&quot;'' wikilog must have the full page title ''&quot;{{wl-info:namespace-by-index}}:General Rants/The brown fox&quot;''.
@@ -801,16 +814,28 @@ It may be noticed that the meanings of these markups are very intuitive when com
 
 == Article summary ==
 
-[[Image:Wikilog summary auto.png|thumb|right|Example of text selected as automatic summary.]]
-[[Image:Wikilog summary manual.png|thumb|right|Example of text manually defined as summary.]]
+&lt;div class=&quot;thumb&quot;&gt;&lt;div class=&quot;thumbinner&quot;&gt;
+[[Image:Wikilog summary auto.png|frameless|border]]
+[[Image:Wikilog summary delim.png|frameless|border]]
+[[Image:Wikilog summary manual.png|frameless|border]]
+&lt;div class=&quot;thumbcaption&quot;&gt;Examples of article summary text automatically selected by Wikilog and summary defined by the author using the &lt;code&gt;--more--&lt;/code&gt; delimiter and using the &lt;code&gt;&lt;nowiki&gt;&lt;summary&gt;&lt;/nowiki&gt;&lt;/code&gt; tag.&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
 
-Wikilog articles, like any wiki page, can be quite long.  Wikilog pages list many articles at a time, and visitors may not be interested in reading entire articles when casually visiting the wikilog.  Instead, wikilog pages shows only article summaries, visitors show click the article title or a &quot;continue reading...&quot; link to read the full article in its own page.
+Wikilog articles, like any wiki page, can be very long.  Wikilog pages list several articles at a time, and visitors may not be interested in reading entire articles when casually visiting the wikilog.  Instead, wikilog pages shows only article summaries.  Visitors click the article title or a &quot;continue reading...&quot; link to read the full article in its own page.
 
-Summaries are either inferred automatically by Wikilog, or defined explicitly by article authors.
+Summaries are either inferred automatically by Wikilog or defined explicitly by article authors.
 
 Automatic summaries are used when no indication is explicitly provided.  The algorithm is very simple: all the text from the beginning up to the first page heading is used as a summary of the article.  In other words, the zeroth section of the page is its summary.  This usually leads to good results: short articles usually have only a single section and no headings, so the whole article is its own summary; long articles, on the other hand, are usually divided in many sections, and only the leading section is used.  But this implementation will give really bad results for a long article with no headings.  In this case, a summary should be manually defined.
 
-Manual summaries are defined by surrounding part of the article text with the &lt;code&gt;&lt;nowiki&gt;&lt;summary&gt;...&lt;/summary&gt;&lt;/nowiki&gt;&lt;/code&gt; markup.  Only the text between these tags will be shown as a summary of the article in the main page of the wikilog and other listings.  The summary is also normally shown as part of the article text.
+Manual summaries can be defined by using specific delimiters in the article text. There are two methods to define a manual summary for an article.
+
+The first method is to place the &lt;code&gt;--more--&lt;/code&gt; delimiter in a line by itself.  Everything before the delimiter is used as the article summary.  The full article includes all the text before the delimiter (the summary) and the text after the delimiter.  The delimiter itself is invisible.  Due to the nature of this method, only the beginning of the article can be used as a summary.
+
+ ''summary text''
+ '''--more--'''
+ ''rest of article text''
+
+The second method is to surround part of the article text with the &lt;code&gt;&lt;nowiki&gt;&lt;summary&gt;...&lt;/summary&gt;&lt;/nowiki&gt;&lt;/code&gt; markup.  Only the text between these tags will be used as the summary of the article.  The summary is also normally shown as part of the article text.
 
 It is possible to define a summary that will only be used in wikilog listings, and not appear in the article page itself.  This can be useful in order to display a slightly different text in wikilog listings, perhaps with different formatting or with a thumbnail of an image of the article.  In this case, the &lt;code&gt;hidden&lt;/code&gt; parameter must be passed in the opening summary tag.  The text between the summary tags will not appear in the article page.
 
@@ -819,8 +844,6 @@ The general syntax of the summary tag is:
  '''&lt;nowiki&gt;&lt;summary&lt;/nowiki&gt;''' [ hidden ]'''&gt;'''
  ''summary text''
  '''&lt;nowiki&gt;&lt;/summary&gt;&lt;/nowiki&gt;'''
-
-
 
 {{Wikilog user manual footer}}</text>
     </revision>
@@ -888,14 +911,44 @@ Special:Wikilog special page query form.
     <title>File:Wikilog summary auto.png</title>
     <id>102</id>
     <revision>
-      <id>260</id>
-      <timestamp>2009-09-12T04:49:27Z</timestamp>
+      <id>313</id>
+      <timestamp>2010-08-08T04:10:28Z</timestamp>
       <contributor>
         <username>Juliano</username>
         <id>1</id>
       </contributor>
+      <comment>uploaded a new version of &quot;[[File:Wikilog summary auto.png]]&quot;</comment>
       <text xml:space="preserve">== Summary ==
 Wikilog automatic summary example.
+
+== License ==
+* '''Author:''' [http://juliano.info/ Juliano F. Ravasi]
+* '''License:''' [http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons Attribution-Share Alike 3.0 Unported License]
+
+{{Wikilog user manual footer|kind=image}}
+[[Category:Wikilog manual]]</text>
+    </revision>
+  </page>
+  <page>
+    <title>File:Wikilog summary delim.png</title>
+    <id>129</id>
+    <revision>
+      <id>312</id>
+      <timestamp>2010-08-08T04:07:58Z</timestamp>
+      <contributor>
+        <username>Juliano</username>
+        <id>1</id>
+      </contributor>
+      <comment>== Summary ==
+Wikilog manual summary example.
+
+== License ==
+* '''Author:''' [http://juliano.info/ Juliano F. Ravasi]
+* '''License:''' [http://creativecommons.org/licenses/by-sa/3.0/ Creative Commons Attribution-Share Alike 3.0 Unported License]
+
+{{Wikilo</comment>
+      <text xml:space="preserve">== Summary ==
+Wikilog manual summary example.
 
 == License ==
 * '''Author:''' [http://juliano.info/ Juliano F. Ravasi]
@@ -909,12 +962,13 @@ Wikilog automatic summary example.
     <title>File:Wikilog summary manual.png</title>
     <id>103</id>
     <revision>
-      <id>261</id>
-      <timestamp>2009-09-12T04:49:57Z</timestamp>
+      <id>311</id>
+      <timestamp>2010-08-08T04:07:15Z</timestamp>
       <contributor>
         <username>Juliano</username>
         <id>1</id>
       </contributor>
+      <comment>uploaded a new version of &quot;[[File:Wikilog summary manual.png]]&quot;</comment>
       <text xml:space="preserve">== Summary ==
 Wikilog manual summary example.
 

@@ -61,7 +61,6 @@ function sandboxParse($wikiText)
 	}
 
 	// use some sensible defaults
-	$myParserOptions->initialiseFromUser($wgUser);
 	$myParserOptions->setTidy(true);
 
 	// do the parsing

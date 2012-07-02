@@ -5,12 +5,12 @@ $wgWebStoreSettings = array(
 	 * Set this in LocalSettings.php to an array of IP ranges allowed to access
 	 * the store. Empty by default for maximum security.
 	 */
-	'accessRanges' => array( '127.0.0.1' ),
+	'accessRanges' => array( '127.0.0.1', '::1' ),
 
 	/**
 	 * Access ranges for inplace-scaler.php
 	 */
-	'scalerAccessRanges' => array( '127.0.0.1' ),
+	'scalerAccessRanges' => array( '127.0.0.1', '::1' ),
 
 	/**
 	 * Main public directory. If false, uses $wgUploadDirectory
@@ -71,9 +71,8 @@ $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'WebStore',
 	'author' => 'Tim Starling',
-	'description' => 'Web-only (non-NFS) file storage middleware',
 	'descriptionmsg' => 'webstore-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:WebStore',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:WebStore',
 );
 
 define( 'MW_WEBSTORE_ENABLED', 1 );

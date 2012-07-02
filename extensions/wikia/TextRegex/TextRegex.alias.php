@@ -5,11 +5,11 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English
  * @author Moli
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'TextRegex' => array( 'TextRegex' ),
 );

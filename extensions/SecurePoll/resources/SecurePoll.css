@@ -47,21 +47,21 @@
 }
 
 .securepoll-table {
-    margin: 1em 1em 1em 0;
-    background: #f9f9f9;
-    border: thin #aaa solid;
-    border-collapse: collapse;
+	margin: 1em 1em 1em 0;
+	background: #f9f9f9;
+	border: thin #aaa solid;
+	border-collapse: collapse;
 }
 .securepoll-table th, .securepoll-table td {
-    border: thin #aaa solid;
-    padding: 0.4em;
+	border: thin #aaa solid;
+	padding: 0.4em;
 }
 .securepoll-table th {
-    background: #f2f2f2;
-    text-align: center;
+	background: #f2f2f2;
+	text-align: center;
 }
 .securepoll-table caption {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .securepoll-ballot-table {
@@ -71,14 +71,14 @@
 	font-weight: bold;
 	text-align: center;
 	border: thin #999 solid;
-    padding: 0 1.5em 0 1.5em;
+	padding: 0 1.5em;
 }
 .securepoll-ballot-table td {
 	text-align: center;
 	border-left: thin #999 solid;
 	border-right: thin #999 solid;
 	border-bottom: thin #bbb dotted;
-    padding: 0 1.5em 0 1.5em;
+	padding: 0 1.5em;
 }
 .securepoll-ballot-table td.securepoll-ballot-optlabel { /* High specificity */
 	text-align: left;
@@ -96,4 +96,18 @@
 }
 .securepoll-election-closed {
 	color: #aaa;
+}
+
+.securepoll-results th {
+	padding-right:5px;
+	text-align: left;
+}
+
+tr.securepoll-exhausted th, tr.securepoll-exhausted td {
+	font-style: italic;
+	border-top: 1px solid #aaa;
+}
+
+tr.securepoll-spoilt {
+	font-style: italic;
 }

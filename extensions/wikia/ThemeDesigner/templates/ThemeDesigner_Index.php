@@ -19,13 +19,13 @@
 
 	<script>
 		var returnTo = <?= Xml::encodeJSVar($returnTo) ?>;
-		var themeHistory = <?= Wikia::json_encode($themeHistory) ?>;
-		var themeSettings = <?= Wikia::json_encode($themeSettings) ?>;
-		var themes = <?= Wikia::json_encode($wg->OasisThemes) ?>;
+		var themeHistory = <?= json_encode($themeHistory) ?>;
+		var themeSettings = <?= json_encode($themeSettings) ?>;
+		var themes = <?= json_encode($wg->OasisThemes) ?>;
 	</script>
 
 	<!--[if lt IE 8]>
-		<script src="<?= $wg->StylePath ?>/common/json2.js"></script>
+		<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/json2/json2.js"></script>
 	<![endif]-->
 
 <?php

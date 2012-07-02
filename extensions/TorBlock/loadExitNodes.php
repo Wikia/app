@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Updates the tor exit node list in
  */
 

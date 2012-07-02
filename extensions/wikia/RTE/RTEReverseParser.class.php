@@ -1849,7 +1849,7 @@ class RTEReverseParser {
 	public static function encodeRTEData($data) {
 		wfProfileIn(__METHOD__);
 
-		$encoded = rawurlencode(Wikia::json_encode($data));
+		$encoded = rawurlencode(json_encode($data));
 
 		wfProfileOut(__METHOD__);
 
@@ -1863,7 +1863,7 @@ class RTEReverseParser {
 		wfProfileIn(__METHOD__);
 
 		$data['type'] = $type;
-		$data = Wikia::json_encode($data);
+		$data = json_encode($data);
 
 		wfProfileOut(__METHOD__);
 

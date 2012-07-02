@@ -79,7 +79,7 @@ var WikiFeatures = {
 						}, 4000);
 					} else {
 						// TODO: show error message
-						GlobalNotification.warn('Something is wrong');
+						GlobalNotification.show('Something is wrong', 'error');
 					}
 				});
 			});
@@ -112,7 +112,7 @@ var WikiFeatures = {
 				WikiFeatures.lockedFeatures[featureName] = false;
 			} else {
 				// TODO: show error message
-				GlobalNotification.warn(res['error']);
+				GlobalNotification.show(res['error'], 'error');
 			}
 		});
 	}

@@ -1,0 +1,14 @@
+# ClickTracking lets you track users' clicks on links/buttons.
+# The current implementation tracks clicks on the navigation bar - the
+# WikiEditor toolbar makes use of this if present
+
+# This extension requires MediaWiki 1.17+ because it makes use of ResourceLoader.
+
+# To track a dynamic action, be sure that $.trackAction( 'something to identify action' ) is called in JS
+# To track an action that has state information associated with it, fire $.trackActionWithInfo( 'action', 'state information' );
+
+# Example LocalSettings.php additions
+
+require_once("$IP/extensions/ClickTracking/ClickTracking.php");
+// Track 1 in every 10 clicks; set to 1 to track all clicks, -1 to disable
+$wgClickTrackThrottle = 10;

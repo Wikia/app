@@ -127,7 +127,7 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 		return 'List all pages in a given category AND with given un/answered status';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array (
 				"Get most recent 10 unanswered questions in [[Category:Muppet Wiki]]:",
 				"  api.php?action=query&list=categoriesonanswers&coatitle=Muppet%20Wiki",

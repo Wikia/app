@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension StalePages.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -15,9 +16,19 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'stalepages-desc' => 'Short description of the extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'stalepages-desc' => '{{desc}}',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'stalepages' => 'Stale faqe',
+	'stalepages-desc' => 'Gjeneron një [[Special:Stalepages|Lista e faqeve]] që nuk janë redaktuar kohët e fundit',
+	'stalepages-summary' => 'Kjo është një listë e faqeve që nuk janë edituar në fundit $1 {{PLURAL:$1|ditë|ditëve}}.',
 );
 
 /** Arabic (العربية)
@@ -39,7 +50,7 @@ $messages['arz'] = array(
 	'stalepages-summary' => 'هذه قائمة بالصفحات التى لم يتم تعديلها فى آخر $1 {{PLURAL:$1|يوم|يوم}}.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -126,11 +137,13 @@ $messages['es'] = array(
 );
 
 /** Basque (Euskara)
+ * @author An13sa
  * @author Kobazulo
  */
 $messages['eu'] = array(
 	'stalepages' => 'Orrialde zaharkituak',
 	'stalepages-desc' => 'Berriki editatu ez diren [[Special:Stalepages|orrialdeen zerrenda]] sortzen du',
+	'stalepages-summary' => 'Azken {{PLURAL:$1|egunean|$1 egunetan}} aldatu gabeko orrialdeak zerrendatzen dira hemen.',
 );
 
 /** Finnish (Suomi)
@@ -157,6 +170,15 @@ $messages['fr'] = array(
 	'stalepages' => 'Pages vieillies',
 	'stalepages-desc' => 'Crée une [[Special:Stalepages|liste des pages]] qui n’ont pas été modifiées récemment',
 	'stalepages-summary' => 'Ceci est une liste de pages qui n’ont pas été modifiées depuis $1 jour{{PLURAL:$1||s}}.',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'stalepages' => 'Pâges dèpassâs',
+	'stalepages-desc' => 'Fât una [[Special:Stalepages|lista de les pâges]] qu’ont pas étâ changiês dèrriérement.',
+	'stalepages-summary' => 'O est una lista de pâges qu’ont pas étâ changiês dês $1 jorn{{PLURAL:$1||s}}.',
 );
 
 /** Galician (Galego)
@@ -279,7 +301,7 @@ $messages['km'] = array(
 	'stalepages-summary' => 'នេះ​ជា​បញ្ជី​នៃ​ទំព័រ​ដែល​ត្រូវ​បាន​កែប្រែ​ក្នុង​រយៈពេល $1 {{PLURAL:$1|ថ្ងៃ|ថ្ងៃ}} ចុងក្រោយនេះ​។',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -302,16 +324,17 @@ $messages['lb'] = array(
  */
 $messages['mk'] = array(
 	'stalepages' => 'Бајати страници',
-	'stalepages-desc' => 'Создава [[Special:Stalepages|листа на страници]] кои не биле уредувани во последно време',
-	'stalepages-summary' => 'Ова е листа на страници кои не се уредувани веќе $1 {{PLURAL:$1|ден|дена}}.',
+	'stalepages-desc' => 'Создава [[Special:Stalepages|список на страници]] кои не биле уредувани во последно време',
+	'stalepages-summary' => 'Ова е список на страници кои не се уредувани веќе $1 {{PLURAL:$1|ден|дена}}.',
 );
 
 /** Malayalam (മലയാളം)
  * @author Jacob.jose
+ * @author Praveenp
  */
 $messages['ml'] = array(
-	'stalepages' => 'പഴക്കം തട്ടിയ താളുകള്‍',
-	'stalepages-summary' => 'കഴിഞ്ഞ $1 ദിവസങ്ങളാ‍യി ഒരിക്കല്‍പ്പോലും തിരുത്തപ്പെടാത്ത താളുകളുടെ പട്ടികയാണ് ഇത്.',
+	'stalepages' => 'പഴക്കം തട്ടിയ താളുകൾ',
+	'stalepages-summary' => 'കഴിഞ്ഞ {PLURAL:$1|ഒരു ദിവസമായി|$1 ദിവസങ്ങളായി}} തിരുത്തപ്പെടാത്ത താളുകളുടെ പട്ടികയാണ് ഇത്.',
 );
 
 /** Marathi (मराठी)
@@ -320,6 +343,15 @@ $messages['ml'] = array(
 $messages['mr'] = array(
 	'stalepages' => 'शिळी पाने',
 	'stalepages-summary' => 'गेल्या $1 दिवसांत संपादन न झालेल्या पानांची यादी खाली दिलेली आहे.',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'stalepages' => 'Foreldede sider',
+	'stalepages-desc' => 'Skaper en [[Special:Stalepages|liste over sider]] som ikke har blitt redigert i det siste',
+	'stalepages-summary' => 'Dette er en liste over sider som ikke har blitt redigert {{PLURAL:$1|dette døgnet|de siste $1 dagene}}.',
 );
 
 /** Low German (Plattdüütsch)
@@ -347,15 +379,6 @@ $messages['nn'] = array(
 	'stalepages' => 'Forelda sider',
 	'stalepages-desc' => 'Oppretter ei [[Special:Stalepages|liste over sider]] som ikkje er endra i det siste',
 	'stalepages-summary' => 'Dette er ei liste over sider som ikkje har vortne endra {{PLURAL:$1|den siste dagen|dei siste $1 dagane}}.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'stalepages' => 'Foreldede sider',
-	'stalepages-desc' => 'Skaper en [[Special:Stalepages|liste over sider]] som ikke har blitt redigert i det siste',
-	'stalepages-summary' => 'Dette er en liste over sider som ikke har blitt redigert {{PLURAL:$1|dette døgnet|de siste $1 dagene}}.',
 );
 
 /** Occitan (Occitan)
@@ -433,6 +456,18 @@ $messages['sk'] = array(
 	'stalepages-summary' => 'Toto je zoznam stránok, ktoré neboli upravované aspoň $1 {{PLURAL:$1|deň|dni|dní}}.',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'stalepages-summary' => 'Ово је списак страна које нису биле мењане током {{PLURAL:$1|задњег дана|задња $1 дана|задња $1 дана|задња $1 дана|задњих $1 дана}}.',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'stalepages-summary' => 'Ovo je spisak strana koje nisu bile menjane tokom {{PLURAL:$1|zadnjeg dana|zadnja $1 dana|zadnja $1 dana|zadnja $1 dana|zadnjih $1 dana}}.',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
@@ -507,15 +542,21 @@ $messages['vo'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Hydra
+ * @author Jding2010
  */
 $messages['zh-hans'] = array(
-	'stalepages-summary' => '这是在最近$1天内未曾编辑的页面列表。',
+	'stalepages' => '已失效的页面',
+	'stalepages-desc' => '列出最近未被编辑的[[Special:Stalepages|list of pages]]',
+	'stalepages-summary' => '这是一个不在最后的 $1 天中进行编辑的页面的列表。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'stalepages-summary' => '這是在最近$1天內未曾編輯的頁面單。',
+	'stalepages' => '已失效的頁面',
+	'stalepages-desc' => '列出最近未被編輯的[[Special:Stalepages|list of pages]]',
+	'stalepages-summary' => '這是一個不在最後的 $1 天中進行編輯的頁面的列表。',
 );
 

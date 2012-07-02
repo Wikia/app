@@ -1,11 +1,15 @@
 <?php
-/*
+/**
  * Created on 19.10.2008
  *
- * Author: dch
+ * Author: ning
  */
 
+
+
 class SNMDBHelper {
+
+
 	/**
 	 * Make sure the table of the given name has the given fields, provided
 	 * as an array with entries fieldname => typeparams. typeparams should be
@@ -60,7 +64,7 @@ class SNMDBHelper {
 					$type .= ' NOT NULL';
 				}
 				if ( $row->Key == 'PRI' ) { // / FIXME: updating "KEY" is not possible, the below query will fail in this case.
-					$type .= ' KEY';
+				$type .= ' KEY';
 				}
 				if ( $row->Extra == 'auto_increment' ) {
 					$type .= ' AUTO_INCREMENT';

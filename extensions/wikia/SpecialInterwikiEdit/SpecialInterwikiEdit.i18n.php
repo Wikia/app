@@ -71,7 +71,7 @@ $messages['bar'] = array(
 	'iwedit-success' => '<p>Link-Erzeigung erfoigreich.</p>',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -194,7 +194,7 @@ $messages['fr'] = array(
 	'iwedit-success' => '<p>Le lien a été créé avec succès.</p>',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

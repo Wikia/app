@@ -18,8 +18,6 @@ define('RTE_POPUP', 4);
 class FCKeditor_MediaWiki {
 	public $showFCKEditor;
 	private $count = array();
-	private $wgFCKBypassText = '';
-	private $debug = 0;
 	private $excludedNamespaces;
 	private $oldTextBox1;
 	static $nsToggles = array(
@@ -77,12 +75,6 @@ class FCKeditor_MediaWiki {
 		return $this->excludedNamespaces;
 	}
 
-	public static function onLanguageGetMagic( &$magicWords, $langCode ) {
-		$magicWords['NORICHEDITOR'] = array( 0, '__NORICHEDITOR__' );
-
-		return true;
-	}
-
 	public static function onParserBeforeInternalParse( &$parser, &$text, &$strip_state ) {
 		MagicWord::get( 'NORICHEDITOR' )->matchAndRemove( $text );
 
@@ -127,7 +119,7 @@ class FCKeditor_MediaWiki {
 	}
 
 	public static function onParserBeforeStrip( &$parser, &$text, &$stripState ) {
-		$text = $parser->strip( $text, $stripState );
+		$text = $parser->replaceVariables( $text );
 		return true;
 	}
 
@@ -147,25 +139,22 @@ class FCKeditor_MediaWiki {
 	}
 
 	public function onCustomEditor( $article, $user ) {
-		global $wgRequest, $mediaWiki;
+		global $wgRequest, $wgUseExternalEditor;
 
-		$action = $mediaWiki->getVal( 'Action' );
+		$action = $wgRequest->getVal( 'action', 'view' );
 
 		$internal = $wgRequest->getVal( 'internaledit' );
 		$external = $wgRequest->getVal( 'externaledit' );
 		$section = $wgRequest->getVal( 'section' );
 		$oldid = $wgRequest->getVal( 'oldid' );
-		if( !$mediaWiki->getVal( 'UseExternalEditor' ) || $action == 'submit' || $internal ||
+		if( !$wgUseExternalEditor || $action == 'submit' || $internal ||
 		$section || $oldid || ( !$user->getOption( 'externaleditor' ) && !$external ) ) {
 			$editor = new FCKeditorEditPage( $article );
-			$editor->submit();
-		} elseif( $mediaWiki->getVal( 'UseExternalEditor' ) && ( $external || $user->getOption( 'externaleditor' ) ) ) {
-			$mode = $wgRequest->getVal( 'mode' );
-			$extedit = new ExternalEdit( $article, $mode );
-			$extedit->edit();
+			$editor->edit();
+			return false;
+		} else {
+			return true;
 		}
-
-		return false;
 	}
 
 	public function onEditPageBeforePreviewText( &$editPage, $previewOnOpen ) {
@@ -235,7 +224,7 @@ class FCKeditor_MediaWiki {
 	 */
 	public static function onGetPreferences( $user, &$preferences ){
 		global $wgDefaultUserOptions;
-		wfLoadExtensionMessages( 'FCKeditor' );
+
 
 		$preferences['riched_disable'] = array(
 			'type' => 'toggle',
@@ -299,9 +288,9 @@ class FCKeditor_MediaWiki {
 	 */
 	public function onEditPageShowEditFormInitial( $form ) {
 		global $wgOut, $wgTitle, $wgScriptPath, $wgContLang, $wgUser;
-		global $wgStylePath, $wgStyleVersion, $wgDefaultSkin, $wgExtensionFunctions, $wgHooks, $wgDefaultUserOptions;
+		global $wgStylePath, $wgStyleVersion, $wgExtensionFunctions, $wgHooks, $wgDefaultUserOptions;
 		global $wgFCKWikiTextBeforeParse, $wgFCKEditorIsCompatible;
-		global $wgFCKEditorExtDir, $wgFCKEditorDir, $wgFCKEditorHeight, $wgFCKEditorToolbarSet;
+		global $wgFCKEditorDir;
 
 		if( !isset( $this->showFCKEditor ) ){
 			$this->showFCKEditor = 0;
@@ -351,19 +340,6 @@ class FCKeditor_MediaWiki {
 
 		$printsheet = htmlspecialchars( "$wgStylePath/common/wikiprintable.css?$wgStyleVersion" );
 
-		// CSS trick,  we need to get user CSS stylesheets somehow... it must be done in a different way!
-		$skin = $wgUser->getSkin();
-		$skin->loggedin = $wgUser->isLoggedIn();
-		$skin->mTitle =& $wgTitle;
-		$skin->initPage( $wgOut );
-		$skin->userpage = $wgUser->getUserPage()->getPrefixedText();
-		$skin->setupUserCss( $wgOut );
-
-		if( !empty( $skin->usercss ) && preg_match_all( '/@import "([^"]+)";/', $skin->usercss, $matches ) ) {
-			$userStyles = $matches[1];
-		}
-		// End of CSS trick
-
 		$script = <<<HEREDOC
 <script type="text/javascript" src="$wgScriptPath/$wgFCKEditorDir/fckeditor.js"></script>
 <script type="text/javascript">
@@ -375,11 +351,6 @@ var sEditorAreaCSS = '$printsheet,/mediawiki/skins/monobook/main.css?{$wgStyleVe
 <!--[if IE 7]><script type="text/javascript">sEditorAreaCSS += ',/mediawiki/skins/monobook/IE70Fixes.css?{$wgStyleVersion}'; </script><![endif]-->
 <!--[if lt IE 7]><script type="text/javascript">sEditorAreaCSS += ',/mediawiki/skins/monobook/IEFixes.css?{$wgStyleVersion}'; </script><![endif]-->
 HEREDOC;
-
-		$script .= '<script type="text/javascript"> ';
-		if( !empty( $userStyles ) ) {
-			$script .= 'sEditorAreaCSS += ",' . implode( ',', $userStyles ) . '";';
-		}
 
 		# Show references only if Cite extension has been installed
 		$showRef = false;
@@ -394,14 +365,15 @@ HEREDOC;
 			$showSource = true;
 		}
 
-		wfLoadExtensionMessages( 'FCKeditor' );
+
 		$script .= '
+<script type="text/javascript">
 var showFCKEditor = ' . $this->showFCKEditor . ';
 var popup = false; // pointer to popup document
 var firstLoad = true;
-var editorMsgOn = "' . wfMsg( 'textrichditor' ) . '";
-var editorMsgOff = "' . wfMsg( 'tog-riched_disable' ) . '";
-var editorLink = "' . ( ( $this->showFCKEditor & RTE_VISIBLE ) ? wfMsg( 'tog-riched_disable' ) : wfMsg( 'textrichditor' ) ) . '";
+var editorMsgOn = "' . Xml::escapeJsString( wfMsgHtml( 'textrichditor' ) ) . '";
+var editorMsgOff = "' . Xml::escapeJsString( wfMsgHtml( 'tog-riched_disable' ) ) . '";
+var editorLink = "' . ( ( $this->showFCKEditor & RTE_VISIBLE ) ? Xml::escapeJsString( wfMsgHtml( 'tog-riched_disable' ) ) : Xml::escapeJsString( wfMsgHtml( 'textrichditor' ) ) ) . '";
 var saveSetting = ' . ( $wgUser->getOption( 'riched_toggle_remember_state', $wgDefaultUserOptions['riched_toggle_remember_state']  ) ?  1 : 0 ) . ';
 var RTE_VISIBLE = ' . RTE_VISIBLE . ';
 var RTE_TOGGLE_LINK = ' . RTE_TOGGLE_LINK . ';
@@ -415,7 +387,7 @@ oFCKeditor.BasePath = wgScriptPath + "/" + wgFCKEditorDir;
 oFCKeditor.Config["CustomConfigurationsPath"] = wgScriptPath + "/" + wgFCKEditorExtDir + "/fckeditor_config.js";';
 		// Load fckeditor-rtl.css for right-to-left languages, but only fckeditor.css for other languages
 		if( $wgContLang->isRTL() ) {
-			$script .= 'oFCKeditor.Config["EditorAreaCSS"] = wgScriptPath + "/" + wgFCKEditorExtDir + "/css/fckeditor.css, wgScriptPath + "/" + wgFCKEditorExtDir + "/css/fckeditor-rtl.css";';
+			$script .= 'oFCKeditor.Config["EditorAreaCSS"] = wgScriptPath + "/" + wgFCKEditorExtDir + "/css/fckeditor.css," + wgScriptPath + "/" + wgFCKEditorExtDir + "/css/fckeditor-rtl.css";';
 		} else {
 			$script .= 'oFCKeditor.Config["EditorAreaCSS"] = wgScriptPath + "/" + wgFCKEditorExtDir + "/css/fckeditor.css";';
 		}
@@ -427,7 +399,7 @@ oFCKeditor.Config["showsource"] = ' . ( ( $showSource ) ? 'true' : 'false' ) . '
 ';
 		$script .= '</script>';
 
-		$newWinMsg = wfMsg( 'rich_editor_new_window' );
+		$newWinMsg = Xml::escapeJsString( wfMsgHtml( 'rich_editor_new_window' ) );
 		$script .= <<<HEREDOC
 <script type="text/javascript">
 
@@ -628,7 +600,7 @@ function initEditor(){
 	}
 	return true;
 }
-addOnloadHook( initEditor );
+$( initEditor );
 
 HEREDOC;
 
@@ -728,5 +700,4 @@ $script .= '</script>';
 
 		return true;
 	}
-
 }

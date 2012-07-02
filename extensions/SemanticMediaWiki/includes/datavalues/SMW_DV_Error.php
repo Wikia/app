@@ -5,44 +5,47 @@
  */
 
 /**
- * This datavalue implements Error-Datavalues.
+ * This datavalue implements error datavalues, a kind of pseudo data value that
+ * is used in places where a data value is expected but no more meaningful
+ * value could be created. It is always invalid and never gets stored or
+ * exported, but it can help to transport an error message.
  *
- * @author Nikolas Iwan
+ * @author Markus Krötzsch
  * @ingroup SMWDataValues
  */
 class SMWErrorValue extends SMWDataValue {
 
-	private $m_value;
-
-	public function SMWErrorValue( $errormsg = '', $uservalue = '', $caption = false ) {
-		$this->setUserValue( $uservalue, $caption );
-		if ( $errormsg != '' ) $this->addError( $errormsg );
+	public function __construct( $typeid, $errormsg = '', $uservalue = '', $caption = false ) {
+		parent::__construct( $typeid );
+		$this->m_caption = ( $caption !== false ) ? $caption : $uservalue;
+		if ( $errormsg !== '' ) {
+			$this->addError( $errormsg );
+		}
 	}
 
 	protected function parseUserValue( $value ) {
 		if ( $this->m_caption === false ) {
 			$this->m_caption = $value;
 		}
-		$this->m_value = $value;
-		return true;
+		$this->addError( wfMsgForContent( 'smw_parseerror' ) );
 	}
 
-	protected function parseDBkeys( $args ) {
-		$this->setUserValue( strval( $args[0] ) ); // compatible syntax
-		// Note that errors are never a proper result of reading data from the
-		// store, so it is quite unlikely that the data we get here fits this
-		// datatype. Normally, it will not be displayed either since this value
-		// is not valid by default. So keeping the DB key here is rather
-		// irrelevant.
-	}
-
-	public function setOutputFormat( $formatstring ) {
-		// no output formats
+	/**
+	 * @see SMWDataValue::loadDataItem()
+	 * @param $dataitem SMWDataItem
+	 * @return boolean
+	 */
+	protected function loadDataItem( SMWDataItem $dataItem ) {
+		if ( $dataItem->getDIType() == SMWDataItem::TYPE_ERROR ) {
+			$this->addError( $dataItem->getErrors() );
+			$this->m_caption = $this->getErrorText();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function getShortWikiText( $linked = null ) {
-		$this->unstub();
-		// TODO: support linking?
 		return $this->m_caption;
 	}
 
@@ -51,22 +54,15 @@ class SMWErrorValue extends SMWDataValue {
 	}
 
 	public function getLongWikiText( $linked = null ) {
-		// TODO: support linking?
-		$this->unstub();
 		return $this->getErrorText();
 	}
 
 	public function getLongHTMLText( $linker = null ) {
-		$this->unstub();
 		return $this->getErrorText();
 	}
 
-	public function getDBkeys() {
-		return array( $this->getShortWikiText() ); ///TODO: really? (errors are not meant to be saved, or are they?)
-	}
-
 	public function getWikiValue() {
-		return $this->getShortWikiText(); /// FIXME: wikivalue must not be influenced by the caption
+		return $this->m_dataitem->getString();
 	}
 
 	public function isValid() {

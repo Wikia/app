@@ -18,10 +18,10 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Purodha
  * @author Raymond
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'minify-desc' => 'Short description of the extension. Shown in [[Special:Version]].
-Do not translate "<code>action=raw</code>".',
+	'minify-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -31,7 +31,7 @@ $messages['ar'] = array(
 	'minify-desc' => 'يقلص مُخرج CSS وجافاسكربت من action=raw',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -50,6 +50,20 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'minify-desc' => 'Smanjuje CSS i JavaScript izlaz od action=raw',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'minify-desc' => 'Comprimeix la sortida del CSS i del JavaScript de action=raw',
+);
+
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'minify-desc' => 'Zmenšuje JavaScriptový a CSS výstup action=raw',
 );
 
 /** German (Deutsch)
@@ -166,7 +180,7 @@ $messages['ja'] = array(
 	'minify-desc' => 'action=rawで作られるCSSとJavascriptの出力を圧縮する',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -197,7 +211,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'minify-desc' => 'Minimerer CSS- og JavaScript-utdata fra action=raw',
 );
 
@@ -258,6 +272,18 @@ $messages['sk'] = array(
 	'minify-desc' => 'Zmenší výstup CSS a JavaScript z action=raw',
 );
 
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'minify-desc' => 'Избацује CSS и JavaScript излаз из action=raw',
+);
+
+/** Serbian Latin ekavian (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'minify-desc' => 'Izbacuje CSS i JavaScript izlaz iz action=raw',
+);
+
 /** Swedish (Svenska)
  * @author Skalman
  */
@@ -265,11 +291,25 @@ $messages['sv'] = array(
 	'minify-desc' => 'Minimerar CSS och JavaScript i utdata från action=raw',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'minify-desc' => 'Pinapaliit mga lumalabas mula sa CSS and JavaScript mula sa action=raw',
+);
+
 /** Turkish (Türkçe)
  * @author Vito Genovese
  */
 $messages['tr'] = array(
 	'minify-desc' => 'action=way kaynağından alınan CSS ve JavaScript çıktılarını küçültür',
+);
+
+/** Ukrainian (Українська)
+ * @author Ytsukeng Fyvaprol
+ */
+$messages['uk'] = array(
+	'minify-desc' => 'Зменшує розмір виведення CSS і JavaScript з action=raw',
 );
 
 /** Vietnamese (Tiếng Việt)

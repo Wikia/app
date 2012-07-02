@@ -37,8 +37,6 @@
 		);
 
 		public function buildData() {
-			global $wgUser, $wgTitle;
-
 			if ( !isset(self::$pageActionsMap[$this->name]) ) {
 				return;
 			}

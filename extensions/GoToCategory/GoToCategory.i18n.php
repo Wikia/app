@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension GotoCategory.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -17,9 +18,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'gotocategory-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'gotocategory-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -36,7 +38,14 @@ $messages['arz'] = array(
 	'gotocategory-desc' => "يتحقق من مدخلات البحث فى نطاق Category: لوظيفة اذهب 'اقفز إلى الصفحة'",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'gotocategory-desc' => 'Comprueba los términos de gueta nel espaciu de nomes «Categoría:» pa la función «saltar a páxina» de Dir',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -186,7 +195,7 @@ $messages['ja'] = array(
 	'gotocategory-desc' => '「ページへ移動」機能において、{{ns:category}}: 名前空間に対して検索語の照合を行う',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -197,7 +206,7 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'gotocategory-desc' => "Iwwerpréift Sichbegreffer géint den Nummraum-Kategorien fir d'fonctioun 'Op d'Säit sprangen'",
+	'gotocategory-desc' => "Iwwerpréift Sichbegrëffer géint d'Kategorie: Nummraum fir d'Fonctioun 'Op d'Säit sprangen'",
 );
 
 /** Limburgish (Limburgs)
@@ -222,6 +231,13 @@ $messages['mr'] = array(
 	'gotocategory-desc' => "'पानावर उडी मारा' कडे जाण्यासाठीचे कार्य वाढविण्यासाठी शोध शब्द वर्ग: नामविश्वाप्रमाणे तपासतो",
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'gotocategory-desc' => "Menyemak istilah carian dengan ruang nama Category: untuk kefungsian 'melompat ke halaman'",
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -239,7 +255,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'gotocategory-desc' => 'Sjekker søkeord opp mot kategorinavnerommet for «Gå»-funksjonaliteten i søkeboksen',
 );
 
@@ -254,7 +270,7 @@ $messages['oc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'gotocategory-desc' => 'Przeszukiwanie przestrzeni nazw Kategoria: dla funkcjonalności „Przejdź” w wyszukiwarce',
+	'gotocategory-desc' => 'Przeszukiwanie przestrzeni nazw Kategoria – dla funkcji „Idź do strony” w wyszukiwarce',
 );
 
 /** Piedmontese (Piemontèis)
@@ -345,7 +361,7 @@ $messages['tl'] = array(
  * @author Vito Genovese
  */
 $messages['tr'] = array(
-	'gotocategory-desc' => "Git 'sayfaya atla' işlevi için Kategori: isim alanı ile aranan kelimeleri karşılaştırır",
+	'gotocategory-desc' => "Git 'sayfaya atla' işlevi için Kategori: ad alanı ile aranan kelimeleri karşılaştırır",
 );
 
 /** Ukrainian (Українська)
@@ -371,8 +387,9 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  */
 $messages['zh-hant'] = array(
-	'gotocategory-desc' => "檢查的搜索字詞的種類：名字空間的到'跳轉到頁'的功能",
+	'gotocategory-desc' => "檢查的搜尋字詞的種類：名字空間的到'跳轉到頁'的功能",
 );
 

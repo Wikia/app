@@ -3,7 +3,7 @@
 /**
  * ImageReview Helper
  */
-class ImageReviewHelper extends WikiaModel {
+class ImageReviewHelper extends ImageReviewHelperBase {
 
 	const LIMIT_IMAGES = 20;
 	/*
@@ -12,30 +12,12 @@ class ImageReviewHelper extends WikiaModel {
 	 */
 	const LIMIT_IMAGES_FROM_DB = 24;
 
-	const STATE_UNREVIEWED = 0;
-	const STATE_IN_REVIEW = 1;
-	const STATE_APPROVED = 2;
-	const STATE_REJECTED = 4;
-	const STATE_DELETED = 3;
-	const STATE_QUESTIONABLE = 5;
-	const STATE_QUESTIONABLE_IN_REVIEW = 6;
-
-	const STATE_INVALID_IMAGE = 98;
-	const STATE_ICO_IMAGE = 99;
-
-	const FLAG_SUSPICOUS_USER = 2;
-	const FLAG_SUSPICOUS_WIKI = 4;
-	const FLAG_SKIN_DETECTED = 8;
-
 	static $sortOptions = array(
-                'latest first' => 0,
-                'by priority and recency' => 1,
-                'oldest first' => 2,
+		'latest first' => 0,
+		'by priority and recency' => 1,
+		'oldest first' => 2,
 	);
 
-	const ORDER_LATEST = 0;
-	const ORDER_PRIORITY_LATEST = 1;
-	const ORDER_OLDEST = 2;
 	/**
 	 * update image state
 	 * @param array images
@@ -45,7 +27,6 @@ class ImageReviewHelper extends WikiaModel {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$deletionList = array();
-		$sqlWhere = array();
 		$statsInsert = array();
 
 		$sqlWhere = array(
@@ -70,7 +51,7 @@ class ImageReviewHelper extends WikiaModel {
 				'wiki_id' => $image['wikiId'],
 				'page_id' => $image['pageId'],
 				'review_state' => $image['state'],
-				'reviewer_id' => $this->wg->user->getId(),
+				'reviewer_id' => $this->wg->user->getId()
 			);
 		}
 
@@ -116,7 +97,7 @@ class ImageReviewHelper extends WikiaModel {
 					break;
 				case ImageReviewSpecialController::ACTION_REJECTED:
 					$changedState = count( $sqlWhere[self::STATE_APPROVED] ) + count( $sqlWhere[self::STATE_DELETED] );
-					$stats['rejected'] -= $chagedState;
+					$stats['rejected'] -= $changedState;
 					break;
 			}
 			$this->wg->memc->set( $key, $stats, 3600 /* 1h */ );
@@ -301,7 +282,6 @@ class ImageReviewHelper extends WikiaModel {
 			);
 		}
 
-
 		if ( count($iconsWhere) > 0 ) {
 			$db->update(
 				'image_review',
@@ -360,62 +340,19 @@ class ImageReviewHelper extends WikiaModel {
 
 		if ( $commit ) $db->commit();
 
-
 		error_log("ImageReview : fetched new " . count($imageList) . " images");
 
 		$this->wf->ProfileOut( __METHOD__ );
 
 		return $imageList;
 	}
-	/**
-	 * get image thumbnail
-	 * @param integer wikiId
-	 * @param integer pageId
-	 * @return string imageUrl
-	 */
-	protected function getImageSrc( $wikiId, $pageId ) {
-		$this->wf->ProfileIn( __METHOD__ );
-
-		$dbname = WikiFactory::IDtoDB( $wikiId );
-		$param = array(
-			'action' => 'imagecrop',
-			'imgId' => $pageId,
-			'imgSize' => 250,
-			'imgFailOnFileNotFound' => 'true',
-		);
-
-		$response = ApiService::foreignCall( $dbname, $param );
-		$imageSrc = ( empty($response['image']['imagecrop']) ) ? '' : $response['image']['imagecrop'] ;
-		$imagePage = ( empty($response['imagepage']['imagecrop']) ) ? '' : $response['imagepage']['imagecrop'] ;	
-		
-		$this->wf->ProfileOut( __METHOD__ );
-		return array('src' => $imageSrc, 'page' => $imagePage );
-	}
-
-
-	/**
-	 * get image page url
-	 * @param integer wikiId
-	 * @param integer pageId
-	 * @return string image page URL
-	 */
-	protected function getImagePage( $wikiId, $pageId ) {
-		$this->wf->ProfileIn( __METHOD__ );
-
-		$title = GlobalTitle::newFromId($pageId, $wikiId);
-		$imagePage = ($title instanceof Title) ? $title->getFullURL() : '';
-
-		$this->wf->ProfileOut( __METHOD__ );
-		return $imagePage;
-	}
-
 
 	protected function getWhitelistedWikis() {
 		$this->wf->ProfileIn( __METHOD__ );
 
-		$topWikis =  $this->getTopWikis();
+		$topWikis = $this->getTopWikis();
 
-		$whitelistedWikis =  $this->getWhitelistedWikisFromWF();
+		$whitelistedWikis = $this->getWhitelistedWikisFromWF();
 
 		$out = array_keys( $whitelistedWikis + $topWikis );
 
@@ -529,27 +466,67 @@ class ImageReviewHelper extends WikiaModel {
 		$total['questionable'] = $this->wg->Lang->formatNum($total['questionable']);
 		$this->wg->memc->set( $key, $total, 3600 /* 1h */ );
 
-		return $total;
 		$this->wf->ProfileOut( __METHOD__ );
+		return $total;
+	}
+
+	public function getStatsData( $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay ) {
+
+		$startDate = $startYear . '-' . $startMonth . '-' . $startDay . ' 00:00:00';
+		$endDate = $endYear . '-' . $endMonth . '-' . $endDay . ' 23:59:59';
+
+		$summary = array(
+			'all' => 0,
+			self::STATE_APPROVED => 0,
+			self::STATE_REJECTED => 0,
+			self::STATE_QUESTIONABLE => 0,
+			'avg' => 0,
+		);
+		$data = array();
+		$userCount = 0;
+
+		$dbr = $this->wf->GetDB( DB_SLAVE, array(), $this->wg->ExternalDatawareDB );
+
+		$res = $dbr->query( "select review_state, reviewer_id, count( page_id ) as count from
+		image_review_stats WHERE review_end BETWEEN '{$startDate}' AND '{$endDate}' group by review_state, reviewer_id with rollup" );
+
+		while ( $row = $dbr->fetchRow( $res ) ) {
+			if ( is_null( $row['review_state'] ) ) {
+				// total
+				$summary['all'] = $row['count'];
+			} elseif ( is_null( $row['reviewer_id'] ) ) {
+				$summary[$row['review_state']] = $row['count'];
+			} else {
+				if ( empty( $data[$row['reviewer_id']] ) ) {
+					$user = User::newFromId( $row['reviewer_id'] );
+
+					$data[$row['reviewer_id']] = array(
+						'name' => $user->getName(),
+						'total' => 0,
+						ImageReviewHelper::STATE_APPROVED => 0,
+						ImageReviewHelper::STATE_REJECTED => 0,
+						ImageReviewHelper::STATE_QUESTIONABLE => 0,
+					);
+				}
+				$data[$row['reviewer_id']][$row['review_state']] = $row['count'];
+				$data[$row['reviewer_id']]['total'] += $row['count'];
+				$userCount++;
+			}
+		}
+
+		$summary['avg'] = $userCount > 0 ? $summary['all'] / $userCount : 0;
+
+		foreach ( $data as $reviewer => &$stats ) {
+			$stats['toavg'] = $stats['total'] - $summary['avg'];
+		}
+
+		return array(
+			'summary' => $summary,
+			'data' => $data,
+		);
 	}
 
 	public function getUserTsKey() {
 		return $this->wf->MemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
-	}
-
-
-	private function getOrder( $order ) {
-		switch ( $order ) {
-			case self::ORDER_PRIORITY_LATEST:
-				$ret = 'priority desc, last_edited desc';
-				break;
-			case self::ORDER_OLDEST:
-				$ret = 'last_edited asc';
-				break;
-			case self::ORDER_LATEST:
-			default:
-				$ret = 'last_edited desc';
-		}
-		return $ret;
 	}
 }

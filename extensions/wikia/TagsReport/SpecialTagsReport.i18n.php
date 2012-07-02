@@ -48,7 +48,7 @@ $messages['az'] = array(
 	'tagsreportmainnspace' => 'Əsas',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -198,7 +198,7 @@ $messages['fr'] = array(
 	'tagsreportgenerated' => 'Généré le $1 à $2',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

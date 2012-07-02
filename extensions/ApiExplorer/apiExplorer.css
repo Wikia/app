@@ -48,7 +48,7 @@ dd.paramContent{ /* per-module */
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
-	
+
 	/* Not collapsed... so hide the bottom border so it bleeds into the rest */
 	border-bottom:0px;
 	border-bottom-left-radius:0px;
@@ -68,7 +68,7 @@ dd.paramContent{ /* per-module */
 	background-image: -o-linear-gradient(top, #2C85D6 0%, #00396D 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2C85D6), color-stop(1, #00396D));
 	background-image: -webkit-linear-gradient(top, #2C85D6 0%, #00396D 100%);
-	background-image: linear-gradient(top, #2C85D6 0%, #00396D 100%); 
+	background-image: linear-gradient(top, #2C85D6 0%, #00396D 100%);
 
 	color:white;
 }

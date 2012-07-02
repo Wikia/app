@@ -31,7 +31,7 @@ abstract class ApiWrapper {
 	/**
 	 * Does hostname match a URL from this video provider
 	 * @param string $hostname in lower case
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public static function isMatchingHostname( $hostname ) {
 		return false;
@@ -64,7 +64,7 @@ abstract class ApiWrapper {
 
 	/**
 	 *
-	 * @return string 
+	 * @return string
 	 */
 	public function getTitle() {
 		if ( !empty( $this->metadata['title'] ) ) {
@@ -72,11 +72,11 @@ abstract class ApiWrapper {
 		}
 		return $this->getVideoTitle();
 	}
-	
+
 	abstract protected function getVideoTitle();
-	
+
 	abstract public function getDescription();
-	
+
 	abstract public function getThumbnailUrl();
 
 	public function getProvider() {
@@ -86,17 +86,17 @@ abstract class ApiWrapper {
 	public function getMimeType() {
 		return 'video/'.$this->getProvider();
 	}
-	
+
 	public function getVideoId() {
 		if (!$this->videoId) {
 			if (isset($this->metadata['videoId'])) {
 				$this->videoId = $this->metadata['videoId'];
 			}
 		}
-		
+
 		return $this->videoId;
 	}
-	
+
 	protected function isIngestedFromFeed() {
 
 		wfProfileIn( __METHOD__ );
@@ -111,7 +111,7 @@ abstract class ApiWrapper {
 	protected function postProcess( $return ){
 		return $return;
 	}
-	
+
 	protected function sanitizeVideoId( $videoId ) {
 		return $videoId;
 	}
@@ -133,7 +133,7 @@ abstract class ApiWrapper {
 		$cacheMe = false;
 		if ( empty( $response ) ){
 			$cacheMe = true;
-			$req = HttpRequest::factory( $apiUrl );
+			$req = MWHttpRequest::factory( $apiUrl );
 			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
@@ -141,7 +141,7 @@ abstract class ApiWrapper {
 				if ( empty( $response ) ) {
 					throw new EmptyResponseException($apiUrl);
 				} else {
-					
+
 				}
 			} else {
 				$this->checkForResponseErrors( $req->status, $req->getContent(), $apiUrl );
@@ -154,7 +154,7 @@ abstract class ApiWrapper {
 
 		return $processedResponse;
 	}
-	
+
 	protected function getApiUrl() {
 		$apiUrl = str_replace( '$1', $this->videoId, static::$API_URL );
 		return $apiUrl;
@@ -173,7 +173,7 @@ abstract class ApiWrapper {
 				}
 			}
 		}
-		
+
 		throw new NegativeResponseException( $status, $content, $apiUrl );
 	}
 
@@ -218,10 +218,10 @@ abstract class ApiWrapper {
 		if (empty($this->metadata)) {
 			$this->loadMetadata();
 		}
-		
+
 		return $this->metadata;
 	}
-	
+
 	protected function loadMetadata(array $overrideFields=array()) {
 
 		wfProfileIn( __METHOD__ );
@@ -256,7 +256,7 @@ abstract class ApiWrapper {
 			if (!isset($metadata['aspectRatio']))
 				$metadata['aspectRatio']	= $this->getAspectRatio();
 			if (!isset($metadata['description']))
-				$metadata['description']	= $this->getOriginalDescription();	
+				$metadata['description']	= $this->getOriginalDescription();
 			// for providers that use diffrent video id for embeded code
 			if (!isset($metadata['altVideoId']))
 				$metadata['altVideoId']		= $this->getAltVideoId();
@@ -269,7 +269,7 @@ abstract class ApiWrapper {
 			if (!isset($metadata['language']))
 				$metadata['language']		= $this->getLanguage();
 		}
-		
+
 		if ( $cacheMe ) {
 			$result = F::app()->wg->memc->set( $memcKey, $metadata, static::$CACHE_EXPIRY );
 		}
@@ -278,7 +278,7 @@ abstract class ApiWrapper {
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	protected function getMetadataCacheKey() {
 		$key = static::$CACHE_KEY . '_metadata' . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoId;
 		return $key;
@@ -323,25 +323,25 @@ abstract class ApiWrapper {
 	protected function getAltVideoId() {
 		return '';
 	}
-	
+
 	/**
-	 * MPAA trailer rating (e.g. "greenband", "redband") 
-	 * @return string 
+	 * MPAA trailer rating (e.g. "greenband", "redband")
+	 * @return string
 	 */
 	protected function getTrailerRating() {
 		return '';
 	}
-	
+
 	/**
 	 * Rating from industry board.
 	 * Examples from MPAA: R, PG-13
 	 * Examples from ESRB: E, T, AO
-	 * @return string 
+	 * @return string
 	 */
 	protected function getIndustryRating() {
 		return '';
 	}
-	
+
 	/**
 	 * Is clip age-gated?
 	 * @return boolean
@@ -349,7 +349,7 @@ abstract class ApiWrapper {
 	protected function isAgeGate() {
 		return false;
 	}
-	
+
 	protected function getLanguage() {
 		return '';
 	}
@@ -380,36 +380,29 @@ class VideoNotFound extends Exception {}
  * might connect to a database instead of an API.
  */
 abstract class PseudoApiWrapper extends ApiWrapper {
-	
+
 	protected function getInterfaceObjectFromType( $type ) {
 		// override me!
 	}
-	
+
 	protected function processResponse( $response, $type ) {
 		// override me!
 	}
 }
 
 /**
- * A class that gets video data for "old" videos from the WikiaVideo extension
+ * Class used by feed ingestion (does not connect, just initializes data)
  */
-abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
-	
+abstract class NoConnectionApiWrapper extends PseudoApiWrapper {
+
 	protected $videoName;
 	protected $provider;
-	
+
 	public function __construct( $videoName, array $overrideMetadata=array() ) {
 
 		wfProfileIn( __METHOD__ );
 
 		$this->videoName = $videoName;
-		if (!empty($overrideMetadata['ingestedFromFeed'])
-		|| $this->isIngestedFromFeed()) {
-			// don't connect to api
-		}
-		else {
-			$this->initializeInterfaceObject();
-		}
 		if (!is_array($overrideMetadata)) {
 			$overrideMetadata = array();
 		}
@@ -418,33 +411,11 @@ abstract class WikiaVideoApiWrapper extends PseudoApiWrapper {
 
 		wfProfileOut( __METHOD__ );
 	}
-	
-	protected function getInterfaceObjectFromType( $type ) {
 
-		wfProfileIn( __METHOD__ );
-
-		$title = Title::newFromText($this->videoName, NS_LEGACY_VIDEO);
-		$videoPage = new VideoPage($title);
-		$videoPage->load();
-		$this->videoId = $videoPage->getVideoId();
-		$this->provider = $videoPage->getProvider();
-		$response = $videoPage->getData();
-		$this->response = $response;	// only for migration purposes
-		if ( empty( $response ) ) {
-			throw new EmptyResponseException( $this->getApiUrl() );
-		} else {
-
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $response;
-	}
-	
 	protected function getVideoTitle() {
 		return $this->videoName;
 	}
-	
+
 	protected function getMetadataCacheKey() {
 		$key = static::$CACHE_KEY . '_metadata' . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoName;
 		return $key;
@@ -464,10 +435,6 @@ abstract class NullApiWrapper extends PseudoApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$this->videoId = $this->sanitizeVideoId( $videoId );
-		if (!empty($overrideMetadata['ingestedFromFeed'])
-		|| $this->isIngestedFromFeed()) {
-			// don't connect to api
-		}
 		if (!is_array($overrideMetadata)) {
 			$overrideMetadata = array();
 		}
@@ -475,27 +442,27 @@ abstract class NullApiWrapper extends PseudoApiWrapper {
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	protected function getVideoTitle() {
 		$classname = get_class($this);
 		$provider = substr($classname, 0, strlen($classname)-strlen('ApiWrapper'));
 		return wfMsg('videohandler-unknown-title') . " ($provider $this->videoId)";
 	}
-	
+
 	public function getDescription() {
 		return '';
 	}
-	
+
 	public function getThumbnailUrl() {
 		return self::$THUMBNAIL_URL;
 	}
-	
+
 	protected function getInterfaceObjectFromType( $type ) {
 		return null;
 	}
-	
+
 	protected function processResponse( $response, $type ) {
 		return null;
 	}
-	
+
 }

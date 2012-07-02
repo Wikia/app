@@ -2,9 +2,6 @@
 /**
  * Internationalization file for Transliterator
  */
-
-require_once( dirname(__FILE__) . '/Transliterator.i18n.magic.php' );
-
 $messages = array();
 
 /**
@@ -14,7 +11,6 @@ $messages = array();
  */
 $messages['en'] = array(
 	'transliterator-desc' => "Provides a configurable parser function for transliteration",
-	'transliterator-prefix' => 'Transliterator:', // [[MediaWiki:Transliterator:blah]] NOTE: changing this requires moving all maps
 	// $1 is the line from the map, 'a => z', $2 is the map-page including prefix.
 	'transliterator-error-ambiguous' => "Ambiguous rule <code>$1</code> in [[MediaWiki:$2]]",
 	'transliterator-error-syntax' => "Invalid syntax <code>$1</code> in [[MediaWiki:$2]]",
@@ -23,18 +19,17 @@ $messages['en'] = array(
 	// $3 is the limit on the length of the left hand side (e.g. 'alpha => beta' has 5)
 	'transliterator-error-rulesize' => "Rule <code>$1</code> has more than $3 {{PLURAL:$3|character|characters}} on the left in [[MediaWiki:$2]]",
 	// $1 is the minimum transliterator prefix length, $2 is the name of the message containing the prefix
-	'transliterator-error-prefix' => "[[MediaWiki:$2]] must be at least $1 {{PLURAL:$1|character|characters}} long."
+	'transliterator-error-prefix' => "[[MediaWiki:$2]] must be at least $1 {{PLURAL:$1|character|characters}} long.",
 );
 
 /** Message documentation (Message documentation)
  * @author Conrad.Irwin
  * @author Fryed-peach
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'transliterator-desc' => 'This is a short description of the extension. It is shown in [[Special:Version]].',
-	'transliterator-prefix' => "{{optional}}
-This is a prefix for the transliteration maps, used in the MediaWiki namespace like [<nowiki />[MediaWiki:Transliterator:''blah'']]. Changing this requires moving all maps.",
+	'transliterator-desc' => '{{desc}}',
 	'transliterator-error-ambiguous' => 'Parameters:
 * $1 is the line from the map, such as: <code>a => z</code>
 * $2 is the map-page including the prefix {{msg-mw|transliterator-invoke}}',
@@ -69,7 +64,6 @@ $messages['af'] = array(
  */
 $messages['ar'] = array(
 	'transliterator-desc' => 'يوفر دالة محلل قابلة للضبط للترجمة الحرفية',
-	'transliterator-prefix' => 'مترجم حرفي:',
 	'transliterator-error-ambiguous' => 'قاعدة غير واضحة <code>$1</code> في [[MediaWiki:$2]]',
 	'transliterator-error-syntax' => 'صياغة غير صحيحة <code>$1</code> في [[MediaWiki:$2]]',
 	'transliterator-error-rulecount' => 'أكثر من $1 {{PLURAL:$1|قاعدة|قواعد}} في [[MediaWiki:$2]]',
@@ -77,7 +71,7 @@ $messages['ar'] = array(
 	'transliterator-error-prefix' => '[[MediaWiki:$2]] يجب أن تكون $1 {{PLURAL:$1|حرف|حروف}} كطول.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -88,6 +82,13 @@ $messages['be-tarask'] = array(
 	'transliterator-error-rulecount' => 'Больш за $1 {{PLURAL:$1|правіла|правілы|правілаў}} у [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => 'Правіла <code>$1</code> мае больш за $3 {{PLURAL:$3|сымбаль у|сымбалі ў|сымбаляў у}} у левай частцы ў [[MediaWiki:$2]]',
 	'transliterator-error-prefix' => '[[MediaWiki:$2]] павінен зьмяшчаць ня менш за $1 {{PLURAL:$1|сымбаль|сымбалі|сымбаляў}}.',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'transliterator-error-syntax' => 'Невалиден синтаксис <code>$1</code> в [[MediaWiki:$2]]',
 );
 
 /** Breton (Brezhoneg)
@@ -116,14 +117,16 @@ $messages['bs'] = array(
 );
 
 /** Catalan (Català)
+ * @author Paucabot
  * @author SMP
  */
 $messages['ca'] = array(
 	'transliterator-desc' => 'Proporciona una funció configurable per a fer transliteració',
 	'transliterator-error-ambiguous' => 'Regla ambigua <code>$1</code> a [[MediaWiki:$2]]',
 	'transliterator-error-syntax' => 'Sintaxi incorrecta <code>$1</code> a [[MediaWiki:$2]]',
-	'transliterator-error-rulecount' => 'Més {{PLURAL:$1|d\'una regla|de $3 regles}} a [[MediaWiki: $ 2]]',
+	'transliterator-error-rulecount' => 'Més de $1 {{PLURAL:$1|regla|regles}} a [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => "La regla <code>$1</code> té més {{PLURAL:$3|d'un caràcter|de $3 caràcters}} a l'esquerra a [[MediaWiki:$2]]",
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] ha de tenir com a mínim $1 {{PLURAL:$1|caràcter|caràcters}}.',
 );
 
 /** Czech (Česky)
@@ -165,9 +168,13 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Omnipaedista
+ * @author Απεργός
  */
 $messages['el'] = array(
+	'transliterator-error-ambiguous' => 'Αμφίσημος κανόνας <code>$1</code> στο [[MediaWiki:$2]]',
 	'transliterator-error-rulecount' => 'Περισσότεροι από $1 {{PLURAL:$1|κανόνα|κανόνες}} στο [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'Ο κανόνας <code>$1</code> έχει περισσότερους από $3 χαρακτήρες αριστερά στο [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => 'Το [[MediaWiki:$2]] πρέπει να αποτελείται τουλάχιστον από $1 {{PLURAL:$1|χαρακτήρα|χαρακτήρες}}',
 );
 
 /** Spanish (Español)
@@ -199,14 +206,27 @@ $messages['fi'] = array(
  * @author Crochet.david
  * @author IAlex
  * @author PieRRoMaN
+ * @author Urhixidur
  */
 $messages['fr'] = array(
-	'transliterator-desc' => 'Fournit une fonction parseur configurable pour la translittération',
+	'transliterator-desc' => 'Fournit une fonction d’analyseur syntaxique configurable pour la translittération',
 	'transliterator-error-ambiguous' => 'Règle ambiguë <code>$1</code> dans [[MediaWiki:$2]]',
 	'transliterator-error-syntax' => 'Syntaxe incorrecte <code>$1</code> dans [[MediaWiki:$2]]',
 	'transliterator-error-rulecount' => 'Plus de $1 {{PLURAL:$1|règle|règles}} dans [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => 'La règle <code>$1</code> a plus de $3 {{PLURAL:$3|caractère|caractères}} sur la gauche dans [[MediaWiki:$2]]',
 	'transliterator-error-prefix' => '[[MediaWiki:$2]] doit avoir au moins $1 caractères.',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'transliterator-desc' => 'Balye una fonccion du parsor configurâbla por la translitèracion.',
+	'transliterator-error-ambiguous' => 'Règlla pas cllâra <code>$1</code> dens [[MediaWiki:$2]]',
+	'transliterator-error-syntax' => 'Sintaxa fôssa <code>$1</code> dens [[MediaWiki:$2]]',
+	'transliterator-error-rulecount' => 'Més de $1 règll{{PLURAL:$1|a|es}} dens [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'La règlla <code>$1</code> at més de $3 caractèro{{PLURAL:$3||s}} sur la gôche dens [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] dêt avêr u muens $1 caractèro{{PLURAL:$1||s}}.',
 );
 
 /** Galician (Galego)
@@ -234,15 +254,17 @@ $messages['gsw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
 $messages['he'] = array(
-	'transliterator-desc' => 'הוספת פונקציות פענוח לתעתוק',
+	'transliterator-desc' => 'הוספת פונקציית פענוח גמישה לתעתיק אותיות',
 	'transliterator-error-ambiguous' => 'כלל רב־משמעי <code>$1</code> בדף [[MediaWiki:$2]]',
 	'transliterator-error-syntax' => 'תחביר שגוי <code>$1</code> בדף [[MediaWiki:$2]]',
-	'transliterator-error-rulecount' => 'יש יותר מ{{PLURAL:$1|כלל אחד|־$1 כללים}} בדף [[MediaWiki:$2]]',
-	'transliterator-error-rulesize' => 'בכלל <code>$1</code> יש יותר מ{{PLURAL:$3|תו אחד|־$3 תווים}} בשמאל בדף [[MediaWiki:$2]]',
+	'transliterator-error-rulecount' => 'יש יותר {{PLURAL:$1|מכלל אחד|מ־$1 כללים}} בדף [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'בכלל <code>$1</code> יש יותר {{PLURAL:$3|מתו אחד|מ־$3 תווים}} בצד שמאל בדף [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => 'על [[MediaWiki:$2]] להכיל {{PLURAL:$1|תו אחד|$1 תווים}} לפחות.',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -257,6 +279,14 @@ $messages['hsb'] = array(
 	'transliterator-error-prefix' => '[[MediaWiki:$2]] dyrbi znajmjeńša $1 {{PLURAL:$1|znamješko|znamješce|znamješka|znamješkow}} dołho być.',
 );
 
+/** Haitian (Kreyòl ayisyen)
+ * @author Boukman
+ * @author Internoob
+ */
+$messages['ht'] = array(
+	'transliterator-error-rulecount' => 'Plis pase $1 {{PLURAL:$1|règ|règ yo}} nan [[MediaWiki:$2]]',
+);
+
 /** Hungarian (Magyar)
  * @author Glanthor Reviol
  */
@@ -266,13 +296,14 @@ $messages['hu'] = array(
 	'transliterator-error-syntax' => 'Érvénytelen szintaxis a(z) [[MediaWiki:$2]] lapon: <code>$1</code>',
 	'transliterator-error-rulecount' => 'Több mint {{PLURAL:$1|egy|$1}} szabály itt: [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => 'A(z) <code>$1</code> szabályban több, mint {{PLURAL:$3|egy|$3}} karakter van a bal oldalon, itt: [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => 'A(z) [[MediaWiki:$2]] névnek legalább $1 karakter hosszúnak kell lennie',
 );
 
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'transliterator-desc' => 'Forni un function configurabile de analysator syntactic pro transliteration',
+	'transliterator-desc' => 'Forni un function configurabile del analysator syntactic pro translitteration',
 	'transliterator-error-ambiguous' => 'Regula ambigue <code>$1</code> in [[MediaWiki:$2]]',
 	'transliterator-error-syntax' => 'Syntaxe invalide <code>$1</code> in [[MediaWiki:$2]]',
 	'transliterator-error-rulecount' => 'Plus de $1 {{PLURAL:$1|regula|regulas}} in [[MediaWiki:$2]]',
@@ -282,6 +313,7 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author Kenrick95
  */
 $messages['id'] = array(
 	'transliterator-desc' => 'Menyediakan fungsi parser yang dapat dikonfigurasi untuk transliterasi',
@@ -289,9 +321,11 @@ $messages['id'] = array(
 	'transliterator-error-syntax' => 'Sintaks tidak sah <code>$1</code> pada [[MediaWiki:$2]]',
 	'transliterator-error-rulecount' => 'Lebih dari $1 {{PLURAL:$1||}}aturan pada [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => 'Aturan <code>$1</code> memiliki lebih dari $3 {{PLURAL:$3||}}karakter di sebelah kiri di [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] harus berisi paling sedikit $1 {{PLURAL:$1|karakter|karakter}}.',
 );
 
 /** Italian (Italiano)
+ * @author Civvì
  * @author Darth Kule
  */
 $messages['it'] = array(
@@ -300,6 +334,7 @@ $messages['it'] = array(
 	'transliterator-error-syntax' => 'Sintassi <code>$1</code> non valida in [[MediaWiki:$2]]',
 	'transliterator-error-rulecount' => 'Più di $1 {{PLURAL:$1|regola|regole}} in [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => 'Regola <code>$1</code> ha più di $3 {{PLURAL:$3|carattere|caratteri}} a sinistra in [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] deve essere lungo almeno $1 {{PLURAL:$1|carattere|caratteri}}.',
 );
 
 /** Japanese (日本語)
@@ -314,13 +349,16 @@ $messages['ja'] = array(
 	'transliterator-error-prefix' => '[[MediaWiki:$2]] は最低でも$1文字の長さが必要です。',
 );
 
-/** Ripoarisch (Ripoarisch) */
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
 $messages['ksh'] = array(
 	'transliterator-desc' => 'Deiht en ennstellbaa Paaserfunxjuhn en et Wiki, di Boochshtabe tuusche kann.',
 	'transliterator-error-ambiguous' => 'En unkloh Rejel <code>$1</code> es en [[MediaWiki:$2]]',
 	'transliterator-error-syntax' => 'En kappodde Syntax <code>$1</code> es en [[MediaWiki:$2]]',
 	'transliterator-error-rulecount' => 'Et {{PLURAL:$1|es mieh wi ein Rejel|sinn_er mieh wi $1 Rejelle|es kei Rejel}} en [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => 'En de Rejel <code>$1</code> {{PLURAL:$3|es|sinn_er}} mieh wi $3 Zeische op de lengke Sigg, en [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] moß winnishsdens {{PLURAL:$1|ei|$1}} Zeiche lang sin.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -347,6 +385,31 @@ $messages['mk'] = array(
 	'transliterator-error-prefix' => '[[MediaWiki:$2]] мора да биде со должина од барем $1 {{PLURAL:$1|знак|знаци}}.',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'transliterator-desc' => 'Menyediakan fungsi penghurai yang boleh dikonfigurasi untuk alih huruf',
+	'transliterator-error-ambiguous' => 'Peraturan taksa <code>$1</code> dalam [[MediaWiki:$2]]',
+	'transliterator-error-syntax' => 'Sintaks tidak sah <code>$1</code> dalam [[MediaWiki:$2]]',
+	'transliterator-error-rulecount' => 'Melebihi $1 peraturan dalam [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'Peraturan <code>$1</code> ada lebih daripada $3 aksara di kiri dalam [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] mestilah sekurang-kurangnya $1 aksara panjangnya.',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'transliterator-desc' => 'Gir en konfigurerbar parserfunksjon for transliterasjon',
+	'transliterator-error-ambiguous' => 'Tvetydig regel <code>$1</code> i [[MediaWiki:$2]]',
+	'transliterator-error-syntax' => 'Ugyldig syntaks <code>$1</code> i [[MediaWiki:$2]]',
+	'transliterator-error-rulecount' => 'Mer enn {{PLURAL:$1|én regel|$1 regler}} i [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'Regelen <code>$1</code> har mer enn {{PLURAL:$3|ett tegn|$3 tegn}} til venstre i [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] må være minst {{PLURAL:$1|ett tegn|$1 tegn}} langt.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -357,19 +420,6 @@ $messages['nl'] = array(
 	'transliterator-error-rulecount' => 'Meer dan $1 {{PLURAL:$1|regel|regels}} in [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => 'Regel <code>$1</code> heeft meer dan $3 {{PLURAL:$3|teken|tekens}} aan de linkerkant in [[MediaWiki:$2]]',
 	'transliterator-error-prefix' => '[[MediaWiki:$2]] moet tenminste $1 {{PLURAL:$1|teken|tekens}} lang zijn.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'transliterator-desc' => 'Gir en konfigurerbar parserfunksjon for transliterasjon',
-	'transliterator-error-ambiguous' => 'Tvetydig regel <code>$1</code> i [[MediaWiki:$2]]',
-	'transliterator-error-syntax' => 'Ugyldig syntaks <code>$1</code> i [[MediaWiki:$2]]',
-	'transliterator-error-rulecount' => 'Mer enn {{PLURAL:$1|én regel|$1 regler}} i [[MediaWiki:$2]]',
-	'transliterator-error-rulesize' => 'Regelen <code>$1</code> har mer enn {{PLURAL:$3|ett tegn|$3 tegn}} til venstre i [[MediaWiki:$2]]',
-	'transliterator-error-prefix' => '[[MediaWiki:$2]] må være minst {{PLURAL:$1|ett tegn|$1 tegn}} langt.',
 );
 
 /** Occitan (Occitan)
@@ -389,6 +439,11 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'transliterator-desc' => 'Dodaje funkcję analizatora składni do transliteracji',
+	'transliterator-error-ambiguous' => 'Niejasna reguła <code>$1</code> w [[MediaWiki:$2]]',
+	'transliterator-error-syntax' => 'Nieprawidłowa składnia <code>$1</code> w [[MediaWiki:$2]]',
+	'transliterator-error-rulecount' => 'Więcej niż $1 {{PLURAL:$1|reguła|reguły|reguł}} w [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'Reguła <code>$1</code> składa się z więcej niż $1 {{PLURAL:$3|znaku|znaków}} od lewej [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] musi mieć co najmniej $1 {{PLURAL:$1|znak|znaki|znaków}} długości',
 );
 
 /** Piedmontese (Piemontèis)
@@ -404,6 +459,13 @@ $messages['pms'] = array(
 	'transliterator-error-prefix' => '[[MediaWiki:$2]] a dev esse longh almanch $1 {{PLURAL:$1|caràter|caràter}}.',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'transliterator-error-rulecount' => 'په [[MediaWiki:$2]] کې له $1 نه ډېر {{PLURAL:$1|قانون|قوانين}}',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
@@ -413,11 +475,12 @@ $messages['pt'] = array(
 	'transliterator-error-syntax' => 'Sintaxe inválida <code>$1</code> em [[MediaWiki:$2]]',
 	'transliterator-error-rulecount' => 'Mais de {{PLURAL:$1|uma regra|$1 regras}} em [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => 'A regra <code>$1</code> tem mais de {{PLURAL:$3|um carácter|$3 caracteres}} à esquerda em [[MediaWiki:$2]]',
-	'transliterator-error-prefix' => '[[MediaWiki:$2]] tem de ter pelo menos {{PLURAL:$1|um caracter|$1 caracteres}}.',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] tem de ter pelo menos $1 {{PLURAL:$1|carácter|caracteres}}.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'transliterator-desc' => 'Provê uma função de análise configurável para transliteração',
@@ -425,6 +488,7 @@ $messages['pt-br'] = array(
 	'transliterator-error-syntax' => 'Sintaxe inválida <code>$1</code> em [[MediaWiki:$2]]',
 	'transliterator-error-rulecount' => 'Mais de $1 {{PLURAL:$1|regra|regras}} em [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => 'Regra <code>$1</code> tem mais que $3 {{PLURAL:$3|caracter|caracteres}} à esquerda em [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] tem de ter pelo menos $1 {{PLURAL:$1|carácter|caracteres}}.',
 );
 
 /** Russian (Русский)
@@ -450,6 +514,40 @@ $messages['sk'] = array(
 	'transliterator-error-rulesize' => 'Pravidlo <code>$1</code> má viac než $3 {{PLURAL:$3|znak|znaky|znakov}} naľavo v [[MediaWiki:$2]]',
 );
 
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'transliterator-desc' => 'Nudi nastavljivo funkcijo razčlenjevalnika za prečrkovanje',
+	'transliterator-error-ambiguous' => 'Dvoumno pravilo <code>$1</code> v [[MediaWiki:$2]]',
+	'transliterator-error-syntax' => 'Neveljavna skladnja <code>$1</code> v [[MediaWiki:$2]]',
+	'transliterator-error-rulecount' => 'Več kot $1 {{PLURAL:$1|pravilo|pravili|pravila|pravil}} v [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'Pravilo <code>$1</code> ima na levi več kot $3 {{PLURAL:$3|znak|znaka|znake|znakov}} v [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] mora biti dolg vsaj $1 {{PLURAL:$1|znak|znaka|znake|znakov}}.',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'transliterator-desc' => 'Пружа подесиви рашчлањивач за пресловљавање',
+	'transliterator-error-ambiguous' => 'Двосмислено правило <code>$1</code> у [[MediaWiki:$2]]',
+	'transliterator-error-syntax' => 'Неисправна синтакса <code>$1</code> у [[MediaWiki:$2]]',
+	'transliterator-error-rulecount' => 'Више од $1 {{PLURAL:$1|правила|правила|правила}} у [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'Правило <code>$1</code> има више од $3 {{PLURAL:$3|знака|знака|знакова}} с леве стране у [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] мора имати најмање $1 {{PLURAL:$1|знак|знака|знакова}}.',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'transliterator-desc' => 'Pruža podesivi raščlanjivač za preslovljavanje',
+	'transliterator-error-ambiguous' => 'Dvosmisleno pravilo <code>$1</code> u [[MediaWiki:$2]]',
+	'transliterator-error-syntax' => 'Neispravna sintaksa <code>$1</code> u [[MediaWiki:$2]]',
+	'transliterator-error-rulecount' => 'Više od $1 {{PLURAL:$1|pravila|pravila|pravila}} u [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'Pravilo <code>$1</code> ima više od $3 {{PLURAL:$3|znaka|znaka|znakova}} s leve strane u [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] mora imati najmanje $1 {{PLURAL:$1|znak|znaka|znakova}}.',
+);
+
 /** Swedish (Svenska)
  * @author Ozp
  * @author Per
@@ -463,6 +561,43 @@ $messages['sv'] = array(
 	'transliterator-error-prefix' => '[[MediaWiki:$2]] måste vara minst {{PLURAL:$1|ett tecken|$1 tecken}} långt.',
 );
 
+/** Tamil (தமிழ்)
+ * @author செல்வா
+ */
+$messages['ta'] = array(
+	'transliterator-desc' => 'எழுத்துப் பெயர்ப்பதற்கு ஏற்ற பிரிப்பான் செயற்கூற்றைத் தருகின்றது',
+	'transliterator-error-ambiguous' => '[[MediaWiki:$2]] இல் <code>$1</code> என்னும் தெளிவற்ற (பலபொருள் கொள்ளத்தக்க) விதி',
+	'transliterator-error-syntax' => '[[MediaWiki:$2]] இல் <code>$1</code> என்னும் பிழையான நிரல் தொடர்',
+	'transliterator-error-rulecount' => '[[MediaWiki:$2]] இல் $1 {{PLURAL:$1|rule|rules}} விதிகளுக்கும் மேல் உள்ளது',
+	'transliterator-error-rulesize' => ' [[MediaWiki:$2]] இல் <code>$1</code>  என்னும் விதியில் இடப்புறம் $3 {{PLURAL:$3|character|characters}} எழுத்துகளுக்கு மேல் உள்ளன',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] குறைந்தது $1 {{PLURAL:$1|character|characters}} முன்னொட்டு எழுத்துகள் நீளமேனும் இருக்க வேண்டும்',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'transliterator-desc' => 'Nagbibigay ng isang maisasaayos na tungkuling pamparser para sa transliterasyon',
+	'transliterator-error-ambiguous' => 'Alanganing tuntuning <code>$1</code> sa loob ng [[MediaWiki:$2]]',
+	'transliterator-error-syntax' => 'Hindi tanggap na sintaks na <code>$1</code> sa loob ng [[MediaWiki:$2]]',
+	'transliterator-error-rulecount' => 'Mahigit sa  $1 {{PLURAL:$1|tuntunin|mga tuntunin}} sa loob ng [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'Ang tuntuning <code>$1</code> ay may mahigit sa $3 {{PLURAL:$3|panitikr|mga panitiks}} sa kaliwa sa loob ng [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => 'Hindi dapat bababa sa $1 na {{PLURAL:$1|panitik|mga panitik}} ang haba ng [[MediaWiki:$2]].',
+);
+
+/** Ukrainian (Українська)
+ * @author Arturyatsko
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'transliterator-desc' => 'Забезпечує фукцію парсера для транслітерації, що можна налаштовувати',
+	'transliterator-error-ambiguous' => 'Неоднозначне правило <code>$1</code> в [[MediaWiki:$2]]',
+	'transliterator-error-syntax' => 'Невірний синтаксис <code>$1</code> в [[MediaWiki:$2]]',
+	'transliterator-error-rulecount' => 'Більше $1 {{PLURAL:$1|правила|правил|правил}} в [[MediaWiki:$2]]',
+	'transliterator-error-rulesize' => 'Правило <code>$1</code> містить більше, ніж $3 {{PLURAL:$3|символ|символи|символів}} у лівій частині [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] повинне мати довжину принаймні $1 {{PLURAL:$1|символу|символів}}.',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
@@ -472,5 +607,6 @@ $messages['vi'] = array(
 	'transliterator-error-syntax' => 'Cú pháp không hợp lệ <code>$1</code> trong [[MediaWiki:$2]]',
 	'transliterator-error-rulecount' => 'Hơn $1 quy tắc trong [[MediaWiki:$2]]',
 	'transliterator-error-rulesize' => 'Quy tắc <code>$1</code> có hơn $3 ký tự vào bên trái trong [[MediaWiki:$2]]',
+	'transliterator-error-prefix' => '[[MediaWiki:$2]] phải có ít nhất $1 ký tự.',
 );
 

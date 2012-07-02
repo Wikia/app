@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension Patroller.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * @copyright © 2006 Rob Church
  * @license GNU General Public Licence 2.0
@@ -34,25 +35,32 @@ $messages['en'] = array(
 	'patrol-stopped'         => 'You have opted not to patrol another edit. $1',
 	'patrol-resume'          => 'Click here to resume.',
 	'group-patroller'        => 'Patrollers',
-	'group-patroller-member' => 'patroller',
+	'group-patroller-member' => '{{GENDER:$1|patroller}}',
 	'grouppage-patroller'    => '{{ns:project}}:Patroller',
 	'right-patroller'        => 'Patrol pages',
 );
 
 /** Message documentation (Message documentation)
  * @author Aotake
+ * @author EugeneZelenko
  * @author Ferrer
  * @author Jon Harald Søby
  * @author Purodha
+ * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'patrol-desc' => 'Short description of the Patrol extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'patrol-desc' => '{{desc}}',
 	'patrol-revert' => '{{Identical|Revert}}',
 	'patrol-revert-reason' => '{{Identical|Reason}}',
+	'patrol-skip' => '{{Identical|Skip}}',
 	'patrol-reverting' => '{{Identical|Revert}}',
 	'patrol-reverted-ok' => '{{Identical|Revert}}',
 	'patrol-reverted-failed' => '{{Identical|Revert}}',
-	'right-patroller' => '{{doc-right}}',
+	'group-patroller' => '{{doc-group|patroller}}',
+	'group-patroller-member' => '{{doc-group|patroller|member}}',
+	'grouppage-patroller' => '{{doc-group|patroller|page}}',
+	'right-patroller' => '{{doc-right|patroller}}',
 );
 
 /** Niuean (ko e vagahau Niuē)
@@ -71,8 +79,38 @@ $messages['af'] = array(
 	'patrol-revert' => 'Rol terug',
 	'patrol-revert-reason' => 'Rede:',
 	'patrol-skip' => 'Slaan oor',
+	'patrol-reverting' => '$1 aan die terugrol',
+	'patrol-reverted-ok' => 'Die wysiging is teruggerol.',
+	'patrol-reverted-failed' => 'Die wysiging kon nie teruggerol word nie.',
 	'group-patroller' => 'Kontroleurs',
 	'group-patroller-member' => 'Kontroleur',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'patrol' => 'Patrol redaktimet',
+	'patrol-desc' => 'ndërfaqe Enhanced patrullojnë me ndarjen e punës',
+	'patrol-endorse' => 'Miratojë',
+	'patrol-revert' => 'Rikthehem',
+	'patrol-revert-reason' => 'Arsyeja:',
+	'patrol-skip' => 'Skip',
+	'patrol-reverting' => 'U kthye: $1',
+	'patrol-nonefound' => 'Nuk ka të përshtatshme redaktimet mund të gjendet për patrullimin.',
+	'patrol-endorsed-ok' => 'Redakto u shënua patrulluar.',
+	'patrol-endorsed-failed' => 'Redakto nuk mund të shënohen patrulluar.',
+	'patrol-reverted-ok' => 'I redaktimit ishte rikthyer.',
+	'patrol-reverted-failed' => 'Redakto nuk mund të rikthyer.',
+	'patrol-skipped-ok' => 'Injoruar redakto.',
+	'patrol-reasons' => '* Vandalizmin Simple * Newbie * provë më të flasim faqe',
+	'patrol-another' => 'Trego tjetër modifikoni, nëse është e mundur.',
+	'patrol-stopped' => 'Ju nuk kanë vendosur për të patrulluar një tjetër redaktuar. $1',
+	'patrol-resume' => 'Kliko këtu për të rifilluar.',
+	'group-patroller' => 'Patrollers',
+	'group-patroller-member' => 'patroller',
+	'grouppage-patroller' => '{{ns:project}}: Patroller',
+	'right-patroller' => 'faqe Patrol',
 );
 
 /** Amharic (አማርኛ)
@@ -86,10 +124,23 @@ $messages['am'] = array(
  * @author Juanpabl
  */
 $messages['an'] = array(
+	'patrol-revert' => 'Revertir',
 	'patrol-revert-reason' => 'Razón:',
+	'patrol-reverting' => 'Revertindo: $1',
+	'group-patroller' => 'Patrullers',
+	'group-patroller-member' => '{{GENDER:$1|patrullero|patrullera}}',
+);
+
+/** Old English (Ænglisc)
+ * @author Wōdenhelm
+ */
+$messages['ang'] = array(
+	'group-patroller' => 'Ƿeardmenn',
+	'group-patroller-member' => 'ƿeard',
 );
 
 /** Arabic (العربية)
+ * @author AwamerT
  * @author Meno25
  * @author OsamaK
  */
@@ -114,9 +165,16 @@ $messages['ar'] = array(
 	'patrol-stopped' => 'لقد اخترت عدم مراجعة تعديل آخر. $1',
 	'patrol-resume' => 'اضغط هنا للمتابعة.',
 	'group-patroller' => 'مراجعون',
-	'group-patroller-member' => 'مراجع',
+	'group-patroller-member' => '{{GENDER:$1|مدقق}}',
 	'grouppage-patroller' => '{{ns:project}}:مراجع',
 	'right-patroller' => 'مراجعة الصفحات',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'patrol-revert-reason' => 'ܥܠܬܐ:',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -148,6 +206,54 @@ $messages['arz'] = array(
 	'right-patroller' => 'مراجعة الصفحات',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'group-patroller' => 'Patrulleros',
+	'group-patroller-member' => '{{GENDER:$1|patrulleru|patrullera}}',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vugar 1981
+ */
+$messages['az'] = array(
+	'patrol-revert-reason' => 'Səbəb:',
+	'group-patroller' => 'Patrullar',
+	'group-patroller-member' => 'patrul',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ * @author Haqmar
+ */
+$messages['ba'] = array(
+	'patrol' => 'Тикшереү',
+	'patrol-desc' => 'Эш йөкләмәһен бүлеү менән яҡшыртылған тикшереү интерфейсы',
+	'patrol-endorse' => 'Раҫларға',
+	'patrol-revert' => 'Кире алырға',
+	'patrol-revert-reason' => 'Сәбәп:',
+	'patrol-skip' => 'Торғоҙоп ҡалдырырға',
+	'patrol-reverting' => 'Кире алыу: $1',
+	'patrol-nonefound' => 'Тикшереү өсөн кәрәкле өлгөләрҙе табып булмай.',
+	'patrol-endorsed-ok' => 'Өлгө тикшерелгән тип билдәләнде.',
+	'patrol-endorsed-failed' => 'Өлгөнө тикшерелгән тип билдәләп булмай.',
+	'patrol-reverted-ok' => 'Өлгө кире алынды.',
+	'patrol-reverted-failed' => 'Өлгөнө кире алып булманы.',
+	'patrol-skipped-ok' => 'Өлгө торғоҙоп ҡалдырылды.',
+	'patrol-reasons' => '* Ябай вандаллыҡ
+* Яңы ҡатнашыусыны һынау
+* Фекер алышыу битен ҡара',
+	'patrol-another' => 'Мөмкин булһа, икенсе өлгөнө күрһәтергә.',
+	'patrol-stopped' => 'Һеҙ икенсе өлгөнө тикшермәҫкә булдығыҙ. $1',
+	'patrol-resume' => 'Дауам итер өсөн, ошонда баҫығыҙ.',
+	'group-patroller' => 'Тикшереүселәр',
+	'group-patroller-member' => '{{GENDER:$1|патруль}}',
+	'grouppage-patroller' => '{{ns:project}}:Тикшерелеүсе',
+	'right-patroller' => 'Биттәрҙе тикшереү',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Filipinayzd
  */
@@ -159,9 +265,17 @@ $messages['bcl'] = array(
 	'patrol-resume' => 'Lagatik digdi tangarig magpadagos.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'patrol-revert-reason' => 'Прычына:',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
 	'patrol' => 'Патруляваныя рэдагаваньні',
@@ -170,7 +284,7 @@ $messages['be-tarask'] = array(
 	'patrol-revert' => 'Адмяніць',
 	'patrol-revert-reason' => 'Прычына:',
 	'patrol-skip' => 'Прапусьціць',
-	'patrol-reverting' => 'Адмена: $1',
+	'patrol-reverting' => 'Адкат: $1',
 	'patrol-nonefound' => 'Немагчыма знайсьці адпаведныя рэдагаваньні для патруляваньня.',
 	'patrol-endorsed-ok' => 'Рэдагаваньне было пазначанае як патруляванае.',
 	'patrol-endorsed-failed' => 'Рэдагаваньне ня можа быць пазначанае як патруляванае.',
@@ -184,7 +298,7 @@ $messages['be-tarask'] = array(
 	'patrol-stopped' => 'Вы вырашылі не патруляваць іншае рэдагаваньне. $1',
 	'patrol-resume' => 'Націсьніце тут, каб працягваць.',
 	'group-patroller' => 'Патруліруючыя',
-	'group-patroller-member' => 'патруліруючы',
+	'group-patroller-member' => '{{GENDER:$1|патрулюючы|патрулюючая}}',
 	'grouppage-patroller' => '{{ns:project}}:Патруліруючыя',
 	'right-patroller' => 'патруляваньне старонак',
 );
@@ -216,12 +330,19 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Bellayet
+ * @author Wikitanvir
  */
 $messages['bn'] = array(
 	'patrol' => 'সম্পাদনা যাচাই',
 	'patrol-endorse' => 'সত্যায়িত',
+	'patrol-revert' => 'বাতিল',
 	'patrol-revert-reason' => 'কারণ:',
+	'patrol-skip' => 'উপেক্ষা করো',
+	'patrol-reverting' => 'বাতিল করা হচ্ছে: $1',
 	'patrol-skipped-ok' => 'সম্পাদনা উপেক্ষা করুন।',
+	'group-patroller' => 'পর্যবেক্ষক',
+	'group-patroller-member' => 'পর্যবেক্ষক',
+	'right-patroller' => 'পাতা পরীক্ষণ',
 );
 
 /** Breton (Brezhoneg)
@@ -231,23 +352,27 @@ $messages['bn'] = array(
  */
 $messages['br'] = array(
 	'patrol' => "Gwiriekadur ar c'hemmoù",
+	'patrol-desc' => 'Etrefas patrouilhañ gwellaet evit rannañ ar garg labour',
 	'patrol-endorse' => 'Aprouiñ',
 	'patrol-revert' => 'Assevel',
 	'patrol-revert-reason' => 'Abeg :',
 	'patrol-skip' => 'Lezel a-gostez',
-	'patrol-reverting' => 'Nuladennoù: $1',
-	'patrol-endorsed-failed' => "N'eo ket bet merket an embann evel gwiriekaet.",
-	'patrol-reverted-ok' => 'Nullet eo bet an embann-se.',
-	'patrol-reverted-failed' => "N'eus ket bet tu nulañ ar c'hemm-se",
-	'patrol-skipped-ok' => 'Dianavezout an embann.',
-	'patrol-reasons' => '* Vandalerezh simpl
-* Amprouadennoù tud nevez
-* Gwelet ar bajenn kaozeadenn',
-	'patrol-another' => "Diskouez ur c'hemm all, ma 'z eo posubl.",
+	'patrol-reverting' => 'O tisteuler : $1',
+	'patrol-nonefound' => "N'eus bet kavet degasadenn genglotus ebet da wiriañ.",
+	'patrol-endorsed-ok' => "Merket eo bet ar c'hemm evel gwiriekaet.",
+	'patrol-endorsed-failed' => "Dibosupl eo bet gwiriañ ar c'hemm.",
+	'patrol-reverted-ok' => "Distaolet eo bet ar c'hemm-se.",
+	'patrol-reverted-failed' => "N'eus ket bet tu nullañ ar c'hemm-mañ.",
+	'patrol-skipped-ok' => "O lezel ar c'hemm a-gostez.",
+	'patrol-reasons' => '* Vandalerezh eeun
+* Taol esae un den nevez
+* Gwelet ar bajenn gaozeal',
+	'patrol-another' => "Diskouez ur c'hemm all, ma 'z eo posupl.",
+	'patrol-stopped' => "Dibabet hoc'h eus chom hep gwiriañ degasadenn ebet all. $1",
 	'patrol-resume' => "Klikit amañ evit kenderc'hel.",
 	'group-patroller' => 'Patrouilherien',
-	'group-patroller-member' => 'patrouilher',
-	'grouppage-patroller' => '{{ns:project}}: Patrouilher',
+	'group-patroller-member' => '{{GENDER:$1|patrouilher|patrouilherez}}',
+	'grouppage-patroller' => '{{ns:project}}:Patrouilher',
 	'right-patroller' => 'Pajennoù patrouilhañ',
 );
 
@@ -281,23 +406,49 @@ $messages['bs'] = array(
 );
 
 /** Catalan (Català)
+ * @author El libre
+ * @author SMP
  * @author Solde
  */
 $messages['ca'] = array(
 	'patrol-revert-reason' => 'Motiu:',
+	'group-patroller' => 'Patrullers',
+	'group-patroller-member' => '{{GENDER:$1|patruller|patrullera}}',
+	'grouppage-patroller' => '{{ns:project}}:Patrullers',
+);
+
+/** Chechen (Нохчийн) */
+$messages['ce'] = array(
+	'patrol-revert-reason' => 'Бахьан:',
+);
+
+/** Sorani (کوردی) */
+$messages['ckb'] = array(
+	'patrol-revert-reason' => 'هۆکار:',
 );
 
 /** Czech (Česky)
  * @author Matěj Grabovský
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'group-patroller' => 'Strážci',
-	'group-patroller-member' => 'strážce',
+	'group-patroller-member' => '{{GENDER:$1|strážce|strážkyně}}',
+	'grouppage-patroller' => '{{ns:project}}:Strážci',
+);
+
+/** Welsh (Cymraeg)
+ * @author Xxglennxx
+ */
+$messages['cy'] = array(
+	'group-patroller' => 'Patrolwyr',
+	'group-patroller-member' => 'patrolwr',
 );
 
 /** Danish (Dansk)
  * @author Jon Harald Søby
  * @author Masz
+ * @author Peter Alberti
  */
 $messages['da'] = array(
 	'patrol-endorse' => 'Godkendt',
@@ -318,17 +469,18 @@ $messages['da'] = array(
 	'patrol-stopped' => 'Du har valgt ikke at patruljere en anden ændring. $1',
 	'patrol-resume' => 'Tryk her for at fortsætte.',
 	'group-patroller' => 'Patruljanter',
-	'group-patroller-member' => 'patruljant',
+	'group-patroller-member' => '{{GENDER:$1|patruljant}}',
 	'grouppage-patroller' => '{{ns:project}}:Patruljanter',
 	'right-patroller' => 'Patruljere ssider',
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Raimond Spekking
  */
 $messages['de'] = array(
 	'patrol' => 'Kontrolle der Bearbeitungen',
-	'patrol-desc' => 'Erweiterte Schnittstelle für die Kontrolle von Bearbeitungen',
+	'patrol-desc' => 'Ermöglicht einer erweiterte Schnittstelle zur Kontrolle von Bearbeitungen',
 	'patrol-endorse' => 'Bestätigen',
 	'patrol-revert' => 'Zurücksetzen',
 	'patrol-revert-reason' => 'Grund:',
@@ -345,14 +497,14 @@ $messages['de'] = array(
 * Siehe Diskussionsseite',
 	'patrol-another' => 'Zeige eine weitere Bearbeitung, sofern verfügbar.',
 	'patrol-stopped' => 'Du hast entschieden, keine weitere Bearbeitung zu kontrollieren. $1',
-	'patrol-resume' => 'Klicke hier zum fortsetzen.',
+	'patrol-resume' => 'Klicke hier, um weiterzumachen.',
 	'group-patroller' => 'Kontrolleure',
-	'group-patroller-member' => 'Kontrolleur',
+	'group-patroller-member' => '{{GENDER:$1|Kontrolleur|Kontrolleurin}}',
 	'grouppage-patroller' => '{{ns:project}}:Kontrolleur',
 	'right-patroller' => 'Seiten kontrollieren',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Raimond Spekking
  */
 $messages['de-formal'] = array(
@@ -392,13 +544,14 @@ $messages['dsb'] = array(
 	'patrol-stopped' => 'Sy rozsuźił žednu dalšnu změnu doglědowaś. $1',
 	'patrol-resume' => 'Klikni sem, aby pokšacował.',
 	'group-patroller' => 'Doglědowarje',
-	'group-patroller-member' => 'doglědowaŕ',
+	'group-patroller-member' => '{{GENDER:$1|doglědowaŕ|doglědowarka}}',
 	'grouppage-patroller' => '{{ns:project}}:Doglědowaŕ',
 	'right-patroller' => 'Boki doglědowaś',
 );
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Dada
  * @author Konsnos
  * @author ZaDiak
  */
@@ -414,6 +567,9 @@ $messages['el'] = array(
 	'patrol-reverted-ok' => 'Η επεξεργασία αναστράφηκε.',
 	'patrol-reverted-failed' => 'Η επεξεργασία δεν μπορούσε να αναστραφεί.',
 	'patrol-skipped-ok' => 'Αγνόηση επεξεργασίας.',
+	'patrol-reasons' => '* Βανδαλισμός 
+* Δοκιμή νέου χρήστη 
+* Βλέπε σελίδα συζήτησης',
 	'patrol-another' => 'Προβολή άλλης επεξεργασίας, εάν είναι διαθέσιμη.',
 	'patrol-resume' => 'Πατήστε εδώ για συνέχεια.',
 	'group-patroller' => 'Περιπολητές',
@@ -447,12 +603,13 @@ $messages['eo'] = array(
 	'patrol-stopped' => 'Vi elektis ne patroli alian redakton. $1',
 	'patrol-resume' => 'Klaku ĉi tie por reaktivigi.',
 	'group-patroller' => 'Patrolantoj',
-	'group-patroller-member' => 'Patrolanto',
+	'group-patroller-member' => '{{GENDER:$1|patrolanto|patrolantino}}',
 	'grouppage-patroller' => '{{ns:project}}:Patrolanto',
 	'right-patroller' => 'Patroli paĝojn',
 );
 
 /** Spanish (Español)
+ * @author Armando-Martin
  * @author Crazymadlover
  * @author Dferg
  * @author Manuelt15
@@ -481,7 +638,7 @@ $messages['es'] = array(
 	'patrol-stopped' => 'Has optado no marcar otra edición como verificada. $1',
 	'patrol-resume' => 'Haz click aquí para continuar.',
 	'group-patroller' => 'Patrulleros',
-	'group-patroller-member' => 'verificador',
+	'group-patroller-member' => '{{GENDER:$1|patrullero|patrullera}}',
 	'grouppage-patroller' => '{{ns:project}}:Verificador',
 	'right-patroller' => 'Verificar páginas',
 );
@@ -505,6 +662,39 @@ $messages['eu'] = array(
 	'group-patroller-member' => 'patruilaria',
 	'grouppage-patroller' => '{{ns:project}}:Patruilaria',
 	'right-patroller' => 'Orriak patruilatu',
+);
+
+/** Persian (فارسی)
+ * @author Ebraminio
+ * @author Huji
+ * @author Mjbmr
+ * @author Sahim
+ * @author ZxxZxxZ
+ */
+$messages['fa'] = array(
+	'patrol' => 'گشت‌زنی ویرایش‌ها',
+	'patrol-desc' => 'رابط بهبودیافتهٔ گشت با امکان به اشتراک گذاری پرونده بارگذاری‌شده',
+	'patrol-endorse' => 'تأیید',
+	'patrol-revert' => 'واگردانی',
+	'patrol-revert-reason' => 'دلیل:',
+	'patrol-skip' => 'گذشتن',
+	'patrol-reverting' => 'واگردانی: $1',
+	'patrol-nonefound' => 'ویرایش مناسب برای گشت‌زنی پیدا نشد.',
+	'patrol-endorsed-ok' => 'ویرایش برچسب گشت خورد.',
+	'patrol-endorsed-failed' => 'نشد به ویرایش برچسب گشت زد.',
+	'patrol-reverted-ok' => 'ویرایش واگردانی شد.',
+	'patrol-reverted-failed' => 'ویرایش را نمی‌شد واگردانی کرد.',
+	'patrol-skipped-ok' => 'ویرایش نادیده گرفته شد.',
+	'patrol-reasons' => '* خرابکاری ساده
+* آزمایش تازه‌کار
+* رجوع شود به صفحهٔ بحث',
+	'patrol-another' => 'ویرایشی دیگر را در صورت وجود نمایش بده.',
+	'patrol-stopped' => 'شما انتخاب کردید که ویرایشی دیگر را گشت نزنید. $1',
+	'patrol-resume' => 'برای ادامه اینجا کلیک کنید.',
+	'group-patroller' => 'گشت‌زنان',
+	'group-patroller-member' => 'گشت‌زن',
+	'grouppage-patroller' => '{{ns:project}}:گشت‌زن',
+	'right-patroller' => 'گشت‌زنی صفحه‌ها',
 );
 
 /** Finnish (Suomi)
@@ -534,13 +724,15 @@ $messages['fi'] = array(
 	'patrol-stopped' => 'Olet valinnut olla tarkastamatta lisää muokkauksia. $1',
 	'patrol-resume' => 'Napsauta jatkaaksesi.',
 	'group-patroller' => 'tarkastajat',
-	'group-patroller-member' => 'tarkastaja',
+	'group-patroller-member' => '{{GENDER:$1|tarkastaja}}',
 	'grouppage-patroller' => '{{ns:project}}:Tarkastajat',
 	'right-patroller' => 'Tarkastaa sivuja',
 );
 
 /** French (Français)
  * @author Grondin
+ * @author IAlex
+ * @author Urhixidur
  * @author Verdy p
  */
 $messages['fr'] = array(
@@ -564,7 +756,7 @@ $messages['fr'] = array(
 	'patrol-stopped' => 'Vous avez choisi de ne pas vérifier une autre modification. $1',
 	'patrol-resume' => 'Cliquer ici pour reprendre.',
 	'group-patroller' => 'Patrouilleurs',
-	'group-patroller-member' => 'Patrouilleur',
+	'group-patroller-member' => 'patrouilleur',
 	'grouppage-patroller' => '{{ns:project}}:Patrouilleur',
 	'right-patroller' => 'Pages de patrouille',
 );
@@ -574,9 +766,34 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'patrol' => 'Contrôlo des changements',
+	'patrol-endorse' => 'Accèptar',
+	'patrol-revert' => 'Rètablir',
 	'patrol-revert-reason' => 'Rêson :',
+	'patrol-skip' => 'Passar',
+	'patrol-reverting' => 'Anulacion : $1',
+	'patrol-endorsed-ok' => 'Lo changement at étâ marcâ coment controlâ.',
+	'patrol-endorsed-failed' => 'Lo changement at pas possu étre controlâ.',
+	'patrol-reverted-ok' => 'Lo changement at étâ anulâ.',
+	'patrol-reverted-failed' => 'Lo changement at pas possu étre anulâ.',
+	'patrol-skipped-ok' => 'Ignorar lo changement.',
+	'patrol-reasons' => '* Simplo vandalismo
+* Èprôva de comencient
+* Vêde la pâge de discussion',
+	'patrol-another' => 'Fâre vêre un ôtro changement, se disponiblo.',
+	'patrol-resume' => 'Clicar ique por reprendre.',
 	'group-patroller' => 'Patrolyors',
-	'group-patroller-member' => 'Patrolyor',
+	'group-patroller-member' => 'patrolyor',
+	'grouppage-patroller' => '{{ns:project}}:Patrolyors',
+	'right-patroller' => 'Controlar des pâges',
+);
+
+/** Northern Frisian (Nordfriisk)
+ * @author Murma174
+ */
+$messages['frr'] = array(
+	'group-patroller' => 'Kontrolöören',
+	'group-patroller-member' => '{{GENDER:$1|kontrolöör}}',
 );
 
 /** Western Frisian (Frysk)
@@ -612,7 +829,7 @@ $messages['gl'] = array(
 	'patrol-stopped' => 'Optou por non patrullar outra edición. $1',
 	'patrol-resume' => 'Prema aquí para continuar.',
 	'group-patroller' => 'Patrulleiros',
-	'group-patroller-member' => 'patrulleiro',
+	'group-patroller-member' => '{{GENDER:$1|patrulleiro|patrulleira}}',
 	'grouppage-patroller' => '{{ns:project}}:Patrulleiro',
 	'right-patroller' => 'Patrullar páxinas',
 );
@@ -622,7 +839,7 @@ $messages['gl'] = array(
  * @author Jocke Pirat
  */
 $messages['got'] = array(
-	'patrol-revert-reason' => 'Faírina',
+	'patrol-revert-reason' => '𐍆𐌰𐌹𐍂𐌹𐌽𐌰:',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -633,6 +850,7 @@ $messages['grc'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Chlämens
  * @author Als-Holder
  */
 $messages['gsw'] = array(
@@ -656,9 +874,17 @@ $messages['gsw'] = array(
 	'patrol-stopped' => 'Du hesch entschide, keini Bearbeitige meh as Fäldhieter aazluege. $1',
 	'patrol-resume' => 'Druck doo zum Wytermache.',
 	'group-patroller' => 'Fäldhieter',
-	'group-patroller-member' => 'Fäldhieter',
+	'group-patroller-member' => '{{GENDER:$1|Fäldhieter|Fäldhieteri}}',
 	'grouppage-patroller' => '{{ns:project}}:Fäldhieter',
 	'right-patroller' => 'Syte as Fäldhieter aaluege',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Sushant savla
+ */
+$messages['gu'] = array(
+	'group-patroller' => 'પ્રહરીઓ',
+	'group-patroller-member' => '{{GENDER:$1|પ્રહરી}}',
 );
 
 /** Manx (Gaelg)
@@ -666,6 +892,11 @@ $messages['gsw'] = array(
  */
 $messages['gv'] = array(
 	'patrol-revert-reason' => 'Fa:',
+);
+
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'patrol-revert-reason' => 'Dalili:',
 );
 
 /** Hawaiian (Hawai`i)
@@ -676,24 +907,39 @@ $messages['haw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
 $messages['he'] = array(
+	'patrol' => 'ניטור עריכות',
+	'patrol-desc' => 'ממשק ניטור מורחב עם שיתוף עומס עבודה',
+	'patrol-endorse' => 'לאשר',
+	'patrol-revert' => 'לשחזר',
 	'patrol-revert-reason' => 'סיבה:',
 	'patrol-skip' => 'דילוג',
-	'patrol-skipped-ok' => 'התעלמות מהעריכה.',
+	'patrol-reverting' => 'שחזור: $1',
+	'patrol-nonefound' => 'לא נמצאו עריכות שאפשר לנטר.',
+	'patrol-endorsed-ok' => 'העריכה סומנה כמנוטרת.',
+	'patrol-endorsed-failed' => 'לא ניתן לסמן את העריכה כמנוטרת.',
+	'patrol-reverted-ok' => 'העריכה שוחזרה.',
+	'patrol-reverted-failed' => 'לא ניתן לשחזר את העריכה.',
+	'patrol-skipped-ok' => 'דילוג על עריכה.',
 	'patrol-reasons' => '* השחתה פשוטה
-* נסיון של חדשים
+* ניסיון של חדשים
 * ראו בדף השיחה',
 	'patrol-another' => 'הצגת עריכה נוספת, אם ניתן.',
+	'patrol-stopped' => 'בחרתם לא לנטר עוד עריכה. $1',
 	'patrol-resume' => 'לחצו כאן להמשך.',
-	'group-patroller' => 'בודקי עריכות',
-	'group-patroller-member' => 'בודק עריכות',
+	'group-patroller' => 'מנטרים',
+	'group-patroller-member' => '{{GENDER:$1|מנטר|מנטרת}}',
+	'grouppage-patroller' => '{{ns:project}}:מנטר',
+	'right-patroller' => 'לנטר דפים',
 );
 
 /** Hindi (हिन्दी)
  * @author Kaustubh
+ * @author Mayur
  */
 $messages['hi'] = array(
 	'patrol' => 'बदलावोंपर नजर रखें',
@@ -718,6 +964,7 @@ $messages['hi'] = array(
 	'group-patroller' => 'निरीक्षक',
 	'group-patroller-member' => 'निरीक्षक',
 	'grouppage-patroller' => '{{ns:project}}:निरीक्षक',
+	'right-patroller' => 'पृष्ठ निरीक्षण करें',
 );
 
 /** Hiligaynon (Ilonggo)
@@ -734,9 +981,12 @@ $messages['hr'] = array(
 	'patrol' => 'Patrolirane promjene',
 	'patrol-revert' => 'Ukloni',
 	'patrol-revert-reason' => 'Razlog:',
+	'patrol-stopped' => 'Vi ste odabrali ne provjeravati drugo uređivanje. $1',
+	'patrol-resume' => 'Kliknite ovdje za nastavak.',
 	'group-patroller' => 'Patroleri',
-	'group-patroller-member' => 'Patroler',
+	'group-patroller-member' => 'patroler',
 	'grouppage-patroller' => '{{ns:project}}:Patroler',
+	'right-patroller' => 'Patroliranje stranica',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -763,13 +1013,14 @@ $messages['hsb'] = array(
 	'patrol-stopped' => 'Sy rozsudźił, zo njeby žane dalše změny dohladował. $1',
 	'patrol-resume' => 'Klikń sem, zo by pokročował.',
 	'group-patroller' => 'Dohladowarjo',
-	'group-patroller-member' => 'Dohladowar',
+	'group-patroller-member' => '{{GENDER:$1|dohladowar|dohladowarka}}',
 	'grouppage-patroller' => '{{ns:project}}:Dohladowar',
 	'right-patroller' => 'Strony dohladować',
 );
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Dj
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -807,7 +1058,7 @@ $messages['ia'] = array(
 	'patrol-endorse' => 'Approbar',
 	'patrol-revert' => 'Reverter',
 	'patrol-revert-reason' => 'Motivo:',
-	'patrol-skip' => 'Omitter',
+	'patrol-skip' => 'Saltar',
 	'patrol-reverting' => 'Reversion de: $1',
 	'patrol-nonefound' => 'Nulle modificationes appropriate esseva trovate pro esser patruliate.',
 	'patrol-endorsed-ok' => 'Le modification esseva marcate como patruliate.',
@@ -822,7 +1073,7 @@ $messages['ia'] = array(
 	'patrol-stopped' => 'Tu ha optate pro non patruliar on altere modification. $1',
 	'patrol-resume' => 'Clicca hic pro reprender.',
 	'group-patroller' => 'Patruliatores',
-	'group-patroller-member' => 'patruliator',
+	'group-patroller-member' => '{{GENDER:$1|patruliator|patruliatrice}}',
 	'grouppage-patroller' => '{{ns:project}}:Patruliator',
 	'right-patroller' => 'Paginas de patrulia',
 );
@@ -861,7 +1112,17 @@ $messages['id'] = array(
  * @author Ukabia
  */
 $messages['ig'] = array(
+	'patrol-revert-reason' => 'Mgbághapụtà:',
+	'patrol-skip' => 'Gáfè',
 	'group-patroller-member' => 'onye na léfuru ihe anyà',
+);
+
+/** Iloko (Ilokano)
+ * @author Lam-ang
+ */
+$messages['ilo'] = array(
+	'group-patroller' => 'Dagiti agpatpattrulia',
+	'group-patroller-member' => '{{GENDER:$1|agpatpatrulia}}',
 );
 
 /** Icelandic (Íslenska)
@@ -881,6 +1142,7 @@ $messages['is'] = array(
 
 /** Italian (Italiano)
  * @author BrokenArrow
+ * @author Nemo bis
  * @author Pietrodn
  */
 $messages['it'] = array(
@@ -904,7 +1166,7 @@ $messages['it'] = array(
 	'patrol-stopped' => 'Si è scelto di non verificare altre modifiche. $1',
 	'patrol-resume' => 'Fare clic qui per riprendere.',
 	'group-patroller' => 'Patrollatori',
-	'group-patroller-member' => 'Patrollatore',
+	'group-patroller-member' => '{{GENDER:$1|patrollatore|patrollatrice|patrollatore/trice}}',
 	'grouppage-patroller' => '{{ns:project}}:Patrollatore',
 	'right-patroller' => 'Verifica le pagine',
 );
@@ -912,13 +1174,15 @@ $messages['it'] = array(
 /** Japanese (日本語)
  * @author Fryed-peach
  * @author Hosiryuhosi
+ * @author Whym
+ * @author 青子守歌
  */
 $messages['ja'] = array(
 	'patrol' => '編集をパトロール',
 	'patrol-desc' => 'パトロール負荷を共有する機能をもつ、パトロール機能の拡張インタフェース',
 	'patrol-endorse' => '承認',
 	'patrol-revert' => '差し戻し',
-	'patrol-revert-reason' => '理由:',
+	'patrol-revert-reason' => '理由：',
 	'patrol-skip' => 'スキップ',
 	'patrol-reverting' => '差し戻し中: $1',
 	'patrol-nonefound' => 'パトロールすべき編集は見つかりませんでした。',
@@ -933,8 +1197,8 @@ $messages['ja'] = array(
 	'patrol-another' => 'あれば別の編集を表示する。',
 	'patrol-stopped' => 'あなたは別の編集をパトロールしないよう設定しています。$1',
 	'patrol-resume' => '再開するにはここをクリックしてください。',
-	'group-patroller' => 'パトローラー',
-	'group-patroller-member' => 'パトローラー',
+	'group-patroller' => '巡回者',
+	'group-patroller-member' => '{{GENDER:$1|巡回者}}',
 	'grouppage-patroller' => '{{ns:project}}:パトローラー',
 	'right-patroller' => 'ページをパトロールする',
 );
@@ -980,7 +1244,7 @@ $messages['km'] = array(
 	'patrol-reverted-failed' => 'កំណែប្រែមិនអាចត្រឡប់បានទេ។',
 	'patrol-resume' => 'ចុច​ទីនេះ ដើម្បី​បន្ត​។',
 	'group-patroller' => 'អ្នកតាមដាន',
-	'group-patroller-member' => 'អ្នកតាមដាន',
+	'group-patroller-member' => '{{GENDER:$1|អ្នកល្បាត}}',
 	'grouppage-patroller' => '{{ns:project}}:អ្នកតាមដាន',
 	'right-patroller' => 'ទំព័រតាមដាន',
 );
@@ -989,10 +1253,20 @@ $messages['km'] = array(
  * @author Nayvik
  */
 $messages['kn'] = array(
+	'patrol-revert' => 'ಹಿಂದಿನಂತಾಗಿಸು',
 	'patrol-revert-reason' => 'ಕಾರಣ:',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Korean (한국어)
+ * @author Devunt
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'group-patroller' => '검토자',
+	'group-patroller-member' => '{{GENDER:$1|검토자}}',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -1016,7 +1290,7 @@ $messages['ksh'] = array(
 	'patrol-stopped' => 'Do häß Desch entschiede, dat De jetz kei Änderunge mieh nohloore wells. $1',
 	'patrol-resume' => 'Wigger maache!',
 	'group-patroller' => 'Patrullje',
-	'group-patroller-member' => 'Patrullje',
+	'group-patroller-member' => '{{GENDER:$1|Patrullör|Patrullören|Patrullör|Patrullören|Patrullör}}',
 	'grouppage-patroller' => '{{ns:project}}:Patrullje',
 	'right-patroller' => 'Sigge Nohloore (Patrullje)',
 );
@@ -1040,7 +1314,7 @@ $messages['lb'] = array(
 	'patrol-skip' => 'Iwwersprangen',
 	'patrol-reverting' => 'Zrécksetzen: $1',
 	'patrol-nonefound' => "Et goufe keng passend Ännerunge fir z'iwerkucke fonnt.",
-	'patrol-endorsed-ok' => 'Dës Ännerung gouf als kontrolléiert markéiert.',
+	'patrol-endorsed-ok' => 'Dës Ännerung gouf als nogekuckt markéiert.',
 	'patrol-endorsed-failed' => "D'Ännerung konnt net als kontolléiert markéiert ginn.",
 	'patrol-reverted-ok' => "D'Ännerung gouf zréckgesat.",
 	'patrol-reverted-failed' => "D'Ännerung konnt net zréck gesat ginn.",
@@ -1052,9 +1326,17 @@ $messages['lb'] = array(
 	'patrol-stopped' => 'Dir hutt decidéiert keng weider Ännerung ze kontrolléieren. $1',
 	'patrol-resume' => 'Hei clicke fir weiderzefueren.',
 	'group-patroller' => 'Kontrolleren',
-	'group-patroller-member' => 'Kontroller',
+	'group-patroller-member' => '{{GENDER:$1|Kontroller|Kontrollesch}}',
 	'grouppage-patroller' => '{{ns:project}}:Kontroller',
 	'right-patroller' => 'Sàiten iwwerkucken',
+);
+
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'group-patroller' => 'Controleurs',
+	'group-patroller-member' => 'Controleur',
 );
 
 /** Lumbaart (Lumbaart)
@@ -1063,6 +1345,13 @@ $messages['lb'] = array(
 $messages['lmo'] = array(
 	'patrol-resume' => 'Fà click chì-inscì-chì per tacà ancamò.',
 	'group-patroller' => 'Gent de rónda',
+);
+
+/** Lithuanian (Lietuvių)
+ * @author Hugo.arg
+ */
+$messages['lt'] = array(
+	'group-patroller' => 'Patruliai',
 );
 
 /** Malagasy (Malagasy)
@@ -1104,35 +1393,40 @@ $messages['mk'] = array(
 	'patrol-another' => 'Прикажи друго уредување, ако го има.',
 	'patrol-stopped' => 'Одлучивте да не патролирате друго уредување. $1',
 	'patrol-resume' => 'Кликнете тука за да продолжите',
-	'group-patroller' => 'Патролирачи',
-	'group-patroller-member' => 'патролирач',
-	'grouppage-patroller' => '{{ns:project}}:Патролирач',
+	'group-patroller' => 'Патролери',
+	'group-patroller-member' => 'патролер',
+	'grouppage-patroller' => '{{ns:project}}:Патролер',
 	'right-patroller' => 'Патролирани страници',
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'patrol' => 'തിരുത്തലുകളില്‍ റോന്തു ചുറ്റുക',
-	'patrol-revert' => 'പൂര്‍വ്വസ്ഥിതിയിലാക്കുക',
+	'patrol' => 'തിരുത്തലുകളിൽ റോന്തു ചുറ്റുക',
+	'patrol-desc' => 'ജോലിഭാര പങ്ക് വെയ്ക്കൽ ഉള്ള മെച്ചപ്പെട്ട റോന്ത് ചുറ്റൽ സമ്പർക്കമുഖം',
+	'patrol-endorse' => 'അംഗീകാരം നൽകുക',
+	'patrol-revert' => 'പൂർവ്വസ്ഥിതിയിലാക്കുക',
 	'patrol-revert-reason' => 'കാരണം:',
-	'patrol-reverting' => 'പൂര്‍വ്വസ്ഥിതിയിലാക്കുന്നു: $1',
-	'patrol-nonefound' => 'റോന്തു ചുറ്റുന്നതിനു അനുയോജ്യമായ തിരുത്തലുകള്‍ കണ്ടില്ല.',
-	'patrol-endorsed-ok' => 'ഈ തിരുത്തല്‍ റോന്തു ചുറ്റപ്പെട്ടതായി രേഖപ്പെടുത്തി.',
-	'patrol-endorsed-failed' => 'ഈ തിരുത്തല്‍ റോന്തു ചുറ്റപ്പെട്ടതായി രേഖപ്പെടുത്തുന്നതിനു സാദ്ധ്യമല്ല.',
-	'patrol-reverted-ok' => 'ഈ തിരുത്തല്‍ തിരസ്ക്കരിച്ചിരിക്കുന്നു.',
-	'patrol-reverted-failed' => 'ഈ തിരുത്തല്‍ തിരസ്ക്കരിക്കുവാന്‍ സാദ്ധ്യമല്ല.',
-	'patrol-skipped-ok' => 'തിരുത്തല്‍ അവഗണിക്കുന്നു.',
-	'patrol-reasons' => '* ലഘുവായ വാന്‍ഡലിസം
+	'patrol-skip' => 'മറികടക്കുക',
+	'patrol-reverting' => 'പൂർവ്വസ്ഥിതിയിലാക്കുന്നു: $1',
+	'patrol-nonefound' => 'റോന്തു ചുറ്റുന്നതിനു അനുയോജ്യമായ തിരുത്തലുകൾ കണ്ടില്ല.',
+	'patrol-endorsed-ok' => 'ഈ തിരുത്തൽ റോന്തു ചുറ്റപ്പെട്ടതായി രേഖപ്പെടുത്തി.',
+	'patrol-endorsed-failed' => 'ഈ തിരുത്തൽ റോന്തു ചുറ്റപ്പെട്ടതായി രേഖപ്പെടുത്തുന്നതിനു സാദ്ധ്യമല്ല.',
+	'patrol-reverted-ok' => 'ഈ തിരുത്തൽ തിരസ്ക്കരിച്ചിരിക്കുന്നു.',
+	'patrol-reverted-failed' => 'ഈ തിരുത്തൽ തിരസ്ക്കരിക്കുവാൻ സാദ്ധ്യമല്ല.',
+	'patrol-skipped-ok' => 'തിരുത്തൽ അവഗണിക്കുന്നു.',
+	'patrol-reasons' => '* ലഘുവായ നശീകരണപ്രവർത്തനം
 * പുതുമുഖത്തിന്റെ പരീക്ഷണം
-* സം‌വാദം താള്‍ കാണുക',
-	'patrol-another' => '* ലഭ്യമാണെങ്കില്‍ മറ്റൊരു തിരുത്തല്‍ കാണിക്കുക.',
-	'patrol-stopped' => 'മറ്റൊരു തിരുത്തലില്‍ റോന്തു ചുറ്റേണ്ടതില്ല എന്നു താങ്കള്‍ തിരഞ്ഞെടുത്തു.   $1',
+* സം‌വാദം താൾ കാണുക',
+	'patrol-another' => '* ലഭ്യമാണെങ്കിൽ മറ്റൊരു തിരുത്തൽ കാണിക്കുക.',
+	'patrol-stopped' => 'മറ്റൊരു തിരുത്തലിൽ റോന്തു ചുറ്റേണ്ടതില്ല എന്നു താങ്കൾ തിരഞ്ഞെടുത്തു.   $1',
 	'patrol-resume' => 'തുടരുന്നതിനായി ഇവിടെ ഞെക്കുക.',
-	'group-patroller' => 'റോന്തു ചുറ്റുന്നവര്‍',
-	'group-patroller-member' => 'റോന്തു ചുറ്റുന്നവര്‍',
-	'grouppage-patroller' => '{{ns:project}}:റോന്തു ചുറ്റുന്നവര്‍',
+	'group-patroller' => 'റോന്തു ചുറ്റുന്നവർ',
+	'group-patroller-member' => '{{GENDER:$1|റോന്തു ചുറ്റുന്നവർ}}',
+	'grouppage-patroller' => '{{ns:project}}:റോന്തു ചുറ്റുന്നവർ',
+	'right-patroller' => 'താളുകളിൽ റോന്തുചുറ്റുക',
 );
 
 /** Mongolian (Монгол)
@@ -1140,14 +1434,17 @@ $messages['ml'] = array(
  */
 $messages['mn'] = array(
 	'patrol-revert' => 'Хуучин төлөвт шилжүүлэх',
+	'patrol-revert-reason' => 'Шалтгаан:',
 	'patrol-reverting' => 'Хуучин төлөвт шилжүүлж байна: $1',
 	'patrol-reverted-ok' => 'Засварыг хуучин төлөвт шилжүүллээ.',
 	'patrol-reverted-failed' => 'Засварыг хуучин төлөвт шилжүүлэх боломжгүй байв',
 );
 
 /** Marathi (मराठी)
+ * @author Htt
  * @author Kaustubh
  * @author Mahitgar
+ * @author Rahuldeshmukh101
  */
 $messages['mr'] = array(
 	'patrol' => 'संपादनांवर पहारा ठेवा',
@@ -1170,11 +1467,14 @@ $messages['mr'] = array(
 	'patrol-stopped' => 'तुम्ही इतर संपादनांवर पहारा देण्याचे नाकारले आहे. $1',
 	'patrol-resume' => 'पुन्हा चालू करण्यासाठी इथे टिचकी द्या.',
 	'group-patroller' => 'निरीक्षक',
-	'group-patroller-member' => 'निरीक्षक',
+	'group-patroller-member' => '{{GENDER:$1|निरीक्षक}}',
 	'grouppage-patroller' => '{{ns:project}}:निरीक्षक',
+	'right-patroller' => 'पानांवर पहारा करा',
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ * @author Aviator
  * @author Kurniasan
  */
 $messages['ms'] = array(
@@ -1185,6 +1485,8 @@ $messages['ms'] = array(
 	'patrol-revert-reason' => 'Sebab:',
 	'patrol-skip' => 'Langkau',
 	'patrol-reverting' => 'Membalikkan: $1',
+	'patrol-nonefound' => 'Tiada suntingan yang bersesuaian untuk dirondai.',
+	'patrol-endorsed-ok' => 'Suntingan ini telah ditanda ronda.',
 	'patrol-endorsed-failed' => 'Suntingan tersebut tidak dapat ditandakan telah dironda.',
 	'patrol-reverted-ok' => 'Suntingan telah dikembalikan.',
 	'patrol-reverted-failed' => 'Suntingan ini tidak dapat dikembalikan.',
@@ -1211,21 +1513,60 @@ $messages['myv'] = array(
 
 /** Nahuatl (Nāhuatl)
  * @author Fluence
+ * @author Teòtlalili
  */
 $messages['nah'] = array(
 	'patrol-revert' => 'Tlacuepāz',
 	'patrol-revert-reason' => 'Īxtlamatiliztli:',
+	'group-patroller' => 'Tlapîpiànimë',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'patrol' => 'Patruljer redigeringer',
+	'patrol-desc' => 'Forbedret patruljeringsgrensesnitt med arbeidsfordeling',
+	'patrol-endorse' => 'Godkjenn',
+	'patrol-revert' => 'Tilbakestill',
+	'patrol-revert-reason' => 'Årsak:',
+	'patrol-skip' => 'Hopp over',
+	'patrol-reverting' => 'Tilbakestiller: $1',
+	'patrol-nonefound' => 'Ingen redigeringer passende for patruljering kunne finnes.',
+	'patrol-endorsed-ok' => 'Redigeringen ble merket som patruljert.',
+	'patrol-endorsed-failed' => 'Redigeringen kunne ikke merkes som patruljert.',
+	'patrol-reverted-ok' => 'Redigeringen ble tilbakestilt.',
+	'patrol-reverted-failed' => 'Redigeringen kunne ikke tilbakestilles.',
+	'patrol-skipped-ok' => 'Ignorerer redigering.',
+	'patrol-reasons' => '* Enkel vandalisme
+* Nybegynnertest
+* Se diskusjonsside',
+	'patrol-another' => 'Vis en annen redigering, om tilgjenglig.',
+	'patrol-stopped' => 'Du har valgt å ikke patruljere en annen redigering. $1',
+	'patrol-resume' => 'Klikk her for å fortsette.',
+	'group-patroller' => 'Patruljører',
+	'group-patroller-member' => 'patruljør',
+	'grouppage-patroller' => '{{ns:project}}:Patruljør',
+	'right-patroller' => 'Patruljere sider',
 );
 
 /** Nedersaksisch (Nedersaksisch)
  * @author Servien
  */
 $messages['nds-nl'] = array(
-	'group-patroller' => 'contreleurs',
-	'group-patroller-member' => 'contreleur',
+	'group-patroller' => 'kontroleurs',
+	'group-patroller-member' => 'kontroleur',
+);
+
+/** Nepali (नेपाली)
+ * @author सरोज कुमार ढकाल
+ */
+$messages['ne'] = array(
+	'group-patroller' => 'गस्तीकर्ताहरु',
 );
 
 /** Dutch (Nederlands)
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -1248,8 +1589,8 @@ $messages['nl'] = array(
 	'patrol-another' => 'Volgende bewerking weergeven als beschikbaar.',
 	'patrol-stopped' => 'U hebt gekozen geen andere bewerking te controleren. $1',
 	'patrol-resume' => 'Klik hier om verder te gaan.',
-	'group-patroller' => 'Controleurs',
-	'group-patroller-member' => 'Controleur',
+	'group-patroller' => 'controleurs',
+	'group-patroller-member' => '{{GENDER:$1|controleur}}',
 	'grouppage-patroller' => '{{ns:project}}:Controleur',
 	'right-patroller' => "Pagina's markeren",
 );
@@ -1282,35 +1623,6 @@ $messages['nn'] = array(
 	'group-patroller-member' => 'endringsvaktar',
 	'grouppage-patroller' => '{{ns:project}}:Endringsvaktar',
 	'right-patroller' => 'Patruljera sider',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'patrol' => 'Patruljer redigeringer',
-	'patrol-desc' => 'Forbedret patruljeringsgrensesnitt med arbeidsfordeling',
-	'patrol-endorse' => 'Godkjenn',
-	'patrol-revert' => 'Tilbakestill',
-	'patrol-revert-reason' => 'Årsak:',
-	'patrol-skip' => 'Hopp over',
-	'patrol-reverting' => 'Tilbakestiller: $1',
-	'patrol-nonefound' => 'Ingen redigeringer passende for patruljering kunne finnes.',
-	'patrol-endorsed-ok' => 'Redigeringen ble merket som patruljert.',
-	'patrol-endorsed-failed' => 'Redigeringen kunne ikke merkes som patruljert.',
-	'patrol-reverted-ok' => 'Redigeringen ble tilbakestilt.',
-	'patrol-reverted-failed' => 'Redigeringen kunne ikke tilbakestilles.',
-	'patrol-skipped-ok' => 'Ignorerer redigering.',
-	'patrol-reasons' => '* Enkel vandalisme
-* Nybegynnertest
-* Se diskusjonsside',
-	'patrol-another' => 'Vis en annen redigering, om tilgjenglig.',
-	'patrol-stopped' => 'Du har valgt å ikke patruljere en annen redigering. $1',
-	'patrol-resume' => 'Klikk her for å fortsette.',
-	'group-patroller' => 'Patruljører',
-	'group-patroller-member' => 'patruljør',
-	'grouppage-patroller' => '{{ns:project}}:Patruljør',
-	'right-patroller' => 'Patruljere sider',
 );
 
 /** Novial (Novial)
@@ -1349,11 +1661,19 @@ $messages['oc'] = array(
 	'right-patroller' => 'Paginas de patrolha',
 );
 
-/** Ossetic (Иронау)
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'group-patroller' => 'ପହରାଦାର',
+	'group-patroller-member' => '{{GENDER:$1|ପହରାଦାର}}',
+);
+
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
-	'patrol-revert-reason' => 'Аххос',
+	'patrol-revert-reason' => 'Аххос:',
 );
 
 /** Deitsch (Deitsch)
@@ -1373,7 +1693,7 @@ $messages['pl'] = array(
 	'patrol-desc' => 'Rozszerzony interfejs patrolowania ostatnich zmian',
 	'patrol-endorse' => 'Zatwierdź',
 	'patrol-revert' => 'Cofnij',
-	'patrol-revert-reason' => 'Powód:',
+	'patrol-revert-reason' => 'Powód',
 	'patrol-skip' => 'Pomiń',
 	'patrol-reverting' => 'Wycofanie: $1',
 	'patrol-nonefound' => 'Nie znaleziono edycji do patrolowania.',
@@ -1387,7 +1707,7 @@ $messages['pl'] = array(
 	'patrol-stopped' => 'Wybrano, by nie patrolować więcej edycji. $1',
 	'patrol-resume' => 'Kliknij tu by kontynuować',
 	'group-patroller' => 'Patrolujący',
-	'group-patroller-member' => 'Patrolujący',
+	'group-patroller-member' => '{{GENDER:$1|patrolujący|patrolująca}}',
 	'grouppage-patroller' => '{{ns:project}}:Patrolujący',
 	'right-patroller' => 'Patrolowanie stron',
 );
@@ -1417,9 +1737,17 @@ $messages['pms'] = array(
 	'patrol-stopped' => "A l'ha sërnù dë nen patojé n'àotra modìfica. $1",
 	'patrol-resume' => "Ch'a bata ambelessì për andé anans da andova a l'era.",
 	'group-patroller' => 'Gent ëd patoja',
-	'group-patroller-member' => 'ëd patoja',
+	'group-patroller-member' => '{{GENDER:$1|ëd patoja}}',
 	'grouppage-patroller' => '{{ns:project}}:patoja',
 	'right-patroller' => 'Verìrica le pàgine',
+);
+
+/** Western Punjabi (پنجابی)
+ * @author Khalid Mahmood
+ */
+$messages['pnb'] = array(
+	'group-patroller' => 'گشت کرن والے',
+	'group-patroller-member' => 'گشت کرن والے',
 );
 
 /** Pashto (پښتو)
@@ -1432,6 +1760,7 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Giro720
  * @author Hamilton Abreu
  * @author Lijealso
  * @author Malafaya
@@ -1447,24 +1776,25 @@ $messages['pt'] = array(
 	'patrol-reverting' => 'Revertendo: $1',
 	'patrol-nonefound' => 'Nenhuma edição apropriada foi encontrada para ser patrulhada.',
 	'patrol-endorsed-ok' => 'A edição foi marcada como patrulhada.',
-	'patrol-endorsed-failed' => 'A edição não pôde ser marcada como patrulhada.',
+	'patrol-endorsed-failed' => 'Não foi possível marcar a edição como patrulhada.',
 	'patrol-reverted-ok' => 'A edição foi revertida.',
-	'patrol-reverted-failed' => 'A edição não pôde ser revertida.',
+	'patrol-reverted-failed' => 'Não foi possível reverter a edição.',
 	'patrol-skipped-ok' => 'Ignorando edição.',
 	'patrol-reasons' => '* Simples vandalismo
 * Teste de principiante
 * Ver página de discussão',
 	'patrol-another' => 'Mostrar outra edição, se disponível.',
-	'patrol-stopped' => 'Você optou por não patrulhar uma outra edição. $1',
+	'patrol-stopped' => 'Optou por não patrulhar uma outra edição. $1',
 	'patrol-resume' => 'Carregue aqui para continuar.',
 	'group-patroller' => 'Patrulhadores',
-	'group-patroller-member' => 'patrulhador',
+	'group-patroller-member' => '{{GENDER:$1|patrulhador|patrulhadora}}',
 	'grouppage-patroller' => '{{ns:project}}:Patrulhador',
 	'right-patroller' => 'Patrulhar páginas',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Rafael Vargas
  */
 $messages['pt-br'] = array(
 	'patrol' => 'Patrulha de edições',
@@ -1487,12 +1817,20 @@ $messages['pt-br'] = array(
 	'patrol-stopped' => 'Você optou por não patrulhar uma outra edição. $1',
 	'patrol-resume' => 'Clique aqui para continuar.',
 	'group-patroller' => 'Patrulhadores',
-	'group-patroller-member' => 'Patrulhador',
+	'group-patroller-member' => '{{GENDER:$1|Patrulhador|Patrulhadora}}',
 	'grouppage-patroller' => '{{ns:project}}:Patrulhador',
 	'right-patroller' => 'Patrulhar páginas',
 );
 
-/** Rhaeto-Romance (Rumantsch) */
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'group-patroller' => 'Patrullaqkuna',
+	'group-patroller-member' => '{{GENDER:$1|}}patrullaq',
+);
+
+/** Romansh (Rumantsch) */
 $messages['rm'] = array(
 	'patrol-revert-reason' => 'Motiv:',
 );
@@ -1500,13 +1838,14 @@ $messages['rm'] = array(
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Minisarm
  */
 $messages['ro'] = array(
 	'patrol' => 'Patrulează modificări',
 	'patrol-revert-reason' => 'Motiv:',
 	'patrol-skip' => 'Sari peste',
 	'patrol-another' => 'Arată altă modificare, dacă e posibil.',
-	'patrol-resume' => 'Apăsaţi aici pentru a reveni.',
+	'patrol-resume' => 'Apăsați aici pentru a reveni.',
 	'group-patroller' => 'Patrule',
 	'group-patroller-member' => 'patrulă',
 	'grouppage-patroller' => '{{ns:project}}:Patrule',
@@ -1518,7 +1857,7 @@ $messages['ro'] = array(
  */
 $messages['roa-tara'] = array(
 	'group-patroller' => 'Condrollore',
-	'group-patroller-member' => 'condrollore',
+	'group-patroller-member' => '{{GENDER:$1|condrollore}}',
 );
 
 /** Russian (Русский)
@@ -1547,20 +1886,29 @@ $messages['ru'] = array(
 	'patrol-stopped' => 'Вы решили не патрулировать другую правку. $1',
 	'patrol-resume' => 'Нажмите здесь для продолжения.',
 	'group-patroller' => 'Патрулирующие',
-	'group-patroller-member' => 'патрулирующий',
+	'group-patroller-member' => '{{GENDER:$1|патрулирующий|патрулирующая}}',
 	'grouppage-patroller' => '{{ns:project}}:Патрулирование',
 	'right-patroller' => 'Патрулирование страниц',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'patrol-skip' => 'Перескочіти',
+	'group-patroller' => 'Патролы',
+	'group-patroller-member' => 'патрола',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
 	'group-patroller' => 'Ботурууллар',
-	'group-patroller-member' => 'ботуруул',
+	'group-patroller-member' => '{{GENDER:$1|ботуруул}}',
 );
 
-/** Serbo-Croatian (Srpskohrvatski / Српскохрватски)
+/** Serbo-Croatian (Srpskohrvatski)
  * @author OC Ripper
  */
 $messages['sh'] = array(
@@ -1569,10 +1917,12 @@ $messages['sh'] = array(
 
 /** Sinhala (සිංහල)
  * @author Calcey
+ * @author Singhalawap
+ * @author බිඟුවා
  */
 $messages['si'] = array(
 	'group-patroller' => 'මුර සංචාරකයන්',
-	'group-patroller-member' => 'මුර සංචාරකයා',
+	'group-patroller-member' => '{{GENDER:$1|මුර-සංචාරක}}',
 );
 
 /** Slovak (Slovenčina)
@@ -1604,34 +1954,73 @@ $messages['sk'] = array(
 	'right-patroller' => 'Sledovať stránky',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'patrol' => 'Nadziranje urejanj',
+	'patrol-desc' => 'Izboljšan vmesnik za nadziranje z delitvijo delovne obremenitve',
+	'patrol-endorse' => 'Vključi se',
+	'patrol-revert' => 'Vrni',
+	'patrol-revert-reason' => 'Razlog:',
+	'patrol-skip' => 'Preskoči',
+	'patrol-reverting' => 'Vračanje: $1',
+	'patrol-nonefound' => 'Za nadziranje ni bilo najdeno nobeno primerno urejanje.',
+	'patrol-endorsed-ok' => 'Urejanje je bilo označeno kot nadzorovano.',
+	'patrol-endorsed-failed' => 'Urejanja ni bilo mogoče označiti kot nadzorovano.',
+	'patrol-reverted-ok' => 'Urejanje je bilo vrnjeno.',
+	'patrol-reverted-failed' => 'Urejanja ni bilo mogoče vrniti.',
+	'patrol-skipped-ok' => 'Preziranje urejanja.',
+	'patrol-reasons' => '* Preprost vandalizem
+* Preizkus novinca
+* Glej pogovorno stran',
+	'patrol-another' => 'Prikaži drugo urejanje, če je na voljo.',
+	'patrol-stopped' => 'Odločili ste se za prenehanje nadziranja urejanj. $1',
+	'patrol-resume' => 'Kliknite tukaj za nadaljevanje.',
+	'group-patroller' => 'Nadzorniki',
+	'group-patroller-member' => 'nadzornik',
+	'grouppage-patroller' => '{{ns:project}}:Nadzornik',
+	'right-patroller' => 'Nadziranje strani',
+);
+
+/** Albanian (Shqip)
+ * @author Mikullovci11
+ * @author Olsi
+ */
+$messages['sq'] = array(
+	'group-patroller' => 'Patrolluesit',
+	'group-patroller-member' => 'inspektorues',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'patrol' => 'Потролирање измена',
+	'patrol' => 'Патролирај измене',
 	'patrol-revert' => 'Врати',
 	'patrol-revert-reason' => 'Разлог:',
 	'patrol-skip' => 'Прескочи',
 	'patrol-reverting' => 'Враћање: $1',
-	'patrol-nonefound' => 'Нема измена које би се могле патролирати',
-	'patrol-endorsed-ok' => 'Измена је обележена као патролисана.',
-	'patrol-endorsed-failed' => 'Измена није могла бити обележена као патролирана.',
+	'patrol-nonefound' => 'Нема одговарајућих измена за патролирање.',
+	'patrol-endorsed-ok' => 'Измена је означена као прегледана.',
+	'patrol-endorsed-failed' => 'Не могу да означим измену као прегледану.',
 	'patrol-reverted-ok' => 'Измена је враћена.',
-	'patrol-reverted-failed' => 'Измена није могла бити враћена.',
-	'patrol-skipped-ok' => 'Игнорисање измене.',
-	'patrol-reasons' => '* Обичан вандализам
+	'patrol-reverted-failed' => 'Не могу да вратим измену.',
+	'patrol-skipped-ok' => 'Занемарујем измену.',
+	'patrol-reasons' => '* Прост вандализам
 * Тест почетника
-* Види страну за разговор',
-	'patrol-another' => 'Покажи неку другу измену, ако је доступна.',
-	'patrol-resume' => 'Кликните овде да се вратите.',
+* Види страницу за разговор',
+	'patrol-another' => 'Прикажи другу измену, ако постоји.',
+	'patrol-resume' => 'Кликните овде за наставак.',
 	'group-patroller' => 'Патролери',
 	'group-patroller-member' => 'патролер',
 	'grouppage-patroller' => '{{ns:project}}:Патролер',
 	'right-patroller' => 'Патролирање страна',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -1678,7 +2067,7 @@ $messages['stq'] = array(
 * Test fon n Näiling
 * Sjuch Diskussionssiede',
 	'patrol-another' => 'Wies ne wiedere Beoarbaidenge, sofier ferföichboar.',
-	'patrol-stopped' => 'Jie hääbe äntscheeden, neen wiedere Beoarbaidenge tou kontrollierjen. $1',
+	'patrol-stopped' => 'Jie hääbe äntskeeden, neen wiedere Beoarbaidenge tou kontrollierjen. $1',
 	'patrol-resume' => 'Klik hier toun Foutsätten.',
 	'group-patroller' => 'Kontrolleure',
 	'group-patroller-member' => 'Kontrolleur',
@@ -1714,6 +2103,7 @@ $messages['su'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Diupwijk
  * @author Lejonel
  * @author Lokal Profil
  * @author M.M.S.
@@ -1739,7 +2129,7 @@ $messages['sv'] = array(
 	'patrol-stopped' => 'Du har valt och inte patrullera en annan redigering. $1',
 	'patrol-resume' => 'Klicka här för att fortsätta.',
 	'group-patroller' => 'Patrullerare',
-	'group-patroller-member' => 'patrullerare',
+	'group-patroller-member' => '{{GENDER:$1|patrullerare}}',
 	'grouppage-patroller' => '{{ns:project}}:Patrullerare',
 	'right-patroller' => 'Patrullera sidor',
 );
@@ -1771,7 +2161,7 @@ $messages['tet'] = array(
 	'patrol-revert-reason' => 'Motivu:',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -1779,7 +2169,7 @@ $messages['tg-cyrl'] = array(
 	'patrol-skip' => 'Ҷаҳиш',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -1837,6 +2227,7 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Emperyan
  * @author Joseph
  * @author Karduelis
  * @author Suelnur
@@ -1862,14 +2253,36 @@ $messages['tr'] = array(
 	'patrol-stopped' => 'Başka bir değişikliği gözlememeyi seçtiniz. $1',
 	'patrol-resume' => 'Devam etmek için buraya tıklayın.',
 	'group-patroller' => 'Devriyeler',
-	'group-patroller-member' => 'Devriye',
+	'group-patroller-member' => '{{GENDER:$1|devriye}}',
 	'grouppage-patroller' => '{{ns:project}}:Devriye',
 	'right-patroller' => 'Sayfaları gözle',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ильнар
+ * @author Рашат Якупов
+ */
+$messages['tt-cyrl'] = array(
+	'patrol' => 'Тикшерү',
+	'patrol-resume' => 'Дәвам итү өчен монда басыгыз',
+	'group-patroller' => 'Тикшерүче',
+	'group-patroller-member' => '{{GENDER:$1|тикшерүче}}',
+	'grouppage-patroller' => '{{ns:project}}:Тикшерү',
+	'right-patroller' => 'Битләрне тикшерү',
+);
+
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
+ * @author Sahran
+ */
+$messages['ug-arab'] = array(
+	'group-patroller' => 'چارلىغۇچىلار',
+	'group-patroller-member' => 'چارلىغۇچى',
 );
 
 /** Ukrainian (Українська)
  * @author AS
  * @author Ahonc
+ * @author Тест
  */
 $messages['uk'] = array(
 	'patrol' => 'Патрулювання',
@@ -1879,7 +2292,12 @@ $messages['uk'] = array(
 	'patrol-skip' => 'Відкласти',
 	'patrol-reverting' => 'Відкіт: $1',
 	'group-patroller' => 'Патрульні',
-	'group-patroller-member' => 'патрульний',
+	'group-patroller-member' => '{{GENDER:$1|патрульний|патрульна}}',
+);
+
+/** Urdu (اردو) */
+$messages['ur'] = array(
+	'patrol-revert-reason' => 'وجہ:',
 );
 
 /** Vèneto (Vèneto)
@@ -1890,14 +2308,17 @@ $messages['vec'] = array(
 	'group-patroller-member' => 'patujador',
 );
 
-/** Veps (Vepsan kel')
+/** Veps (Vepsän kel')
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
 	'patrol-revert-reason' => 'Sü:',
+	'group-patroller' => 'Patrulirujad',
+	'group-patroller-member' => '{{GENDER:$1|patrulirui}}',
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
  * @author Vinhtantran
  */
 $messages['vi'] = array(
@@ -1921,7 +2342,7 @@ $messages['vi'] = array(
 	'patrol-stopped' => 'Bạn đã chọn không tuần tra sửa đổi khác. $1',
 	'patrol-resume' => 'Nhấn vào đây để tiếp tục.',
 	'group-patroller' => 'Tuần tra viên',
-	'group-patroller-member' => 'Tuần tra viên',
+	'group-patroller-member' => '{{GENDER:$1}}tuần tra viên',
 	'grouppage-patroller' => '{{ns:project}}:Tuần tra viên',
 	'right-patroller' => 'Tuần tra trang',
 );
@@ -1933,6 +2354,11 @@ $messages['vi'] = array(
 $messages['vo'] = array(
 	'patrol-revert' => 'Sädunön',
 	'patrol-revert-reason' => 'Kod:',
+);
+
+/** Wu (吴语) */
+$messages['wuu'] = array(
+	'patrol-revert-reason' => '理由：',
 );
 
 /** Yiddish (ייִדיש)
@@ -1947,12 +2373,12 @@ $messages['yi'] = array(
 	'patrol-reverted-ok' => 'די באַאַרבעטעונג איז געווארן צוריקגעשטעלט',
 	'patrol-reverted-failed' => 'די באַאַרבעטונג האט נישט געקענט ווערן צוריקגעשטעלט.',
 	'group-patroller' => 'פאטראלירער',
-	'group-patroller-member' => 'פאטראלירער',
+	'group-patroller-member' => '{{GENDER:$1|פאטראלירער|פאטראלירערין}}',
 	'grouppage-patroller' => '{{ns:project}}:פאטראלירער',
 	'right-patroller' => 'פאטראלירן בלעטער',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author Hillgentleman
  * @author Shinjiman
  */
@@ -1960,7 +2386,7 @@ $messages['yue'] = array(
 	'patrol' => '巡啲編輯',
 	'patrol-endorse' => '簽署支持',
 	'patrol-revert' => '打回頭',
-	'patrol-revert-reason' => '理由:',
+	'patrol-revert-reason' => '原因:',
 	'patrol-skip' => '跳',
 	'patrol-reverting' => '打回頭：$1',
 	'patrol-nonefound' => '揾唔到好嘅版本來簽。',
@@ -1982,10 +2408,12 @@ $messages['yue'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Liangent
  * @author Shinjiman
  */
 $messages['zh-hans'] = array(
 	'patrol' => '编辑巡逻',
+	'patrol-desc' => '分担工作量以增强巡逻界面',
 	'patrol-endorse' => '批注',
 	'patrol-revert' => '回退',
 	'patrol-revert-reason' => '原因：',
@@ -2004,38 +2432,41 @@ $messages['zh-hans'] = array(
 	'patrol-stopped' => '您选择不巡逻其他编辑。$1',
 	'patrol-resume' => '点击这里继续。',
 	'group-patroller' => '巡逻员',
-	'group-patroller-member' => '巡逻员',
+	'group-patroller-member' => '{{GENDER:$1|巡查员}}',
 	'grouppage-patroller' => '{{ns:project}}:巡逻员',
 	'right-patroller' => '巡查页面',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Frankou
  * @author KilluaZaoldyeck
+ * @author Mark85296341
  * @author Shinjiman
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'patrol' => '覆查編輯',
+	'patrol' => '複查編輯',
+	'patrol-desc' => '分擔工作量以增強巡查介面',
 	'patrol-endorse' => '批註',
 	'patrol-revert' => '回退',
 	'patrol-revert-reason' => '原因：',
 	'patrol-skip' => '略過',
 	'patrol-reverting' => '正在回退：$1',
-	'patrol-nonefound' => '沒有覆查修改的記錄。',
-	'patrol-endorsed-ok' => '此編輯已標記覆查記錄。',
-	'patrol-endorsed-failed' => '此編輯無法標記覆查記錄。',
+	'patrol-nonefound' => '沒有複查修改的記錄。',
+	'patrol-endorsed-ok' => '此編輯已標記複查記錄。',
+	'patrol-endorsed-failed' => '此編輯無法標記複查記錄。',
 	'patrol-reverted-ok' => '編輯被回退。',
 	'patrol-reverted-failed' => '編輯無法回退。',
 	'patrol-skipped-ok' => '忽略編輯。',
 	'patrol-reasons' => '* 純粹破壞
 * 新人測試
-* 參看討論頁',
+* 參見討論頁',
 	'patrol-another' => '列出其他存在的編輯。',
-	'patrol-stopped' => '你選擇不覆查其他編輯。$1',
+	'patrol-stopped' => '你選擇不複查其他編輯。$1',
 	'patrol-resume' => '點擊這裡繼續。',
-	'group-patroller' => '巡邏員',
-	'group-patroller-member' => '巡邏員',
+	'group-patroller' => '巡查員',
+	'group-patroller-member' => '{{GENDER:$1|巡查員}}',
 	'grouppage-patroller' => '{{ns:project}}:巡邏員',
-	'right-patroller' => '巡視頁面',
+	'right-patroller' => '巡查頁面',
 );
 

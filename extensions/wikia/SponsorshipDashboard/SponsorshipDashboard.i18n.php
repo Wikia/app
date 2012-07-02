@@ -1457,7 +1457,7 @@ $messages['fr'] = array(
 	'sponsorship-dashboard-download' => 'actions supplémentaires',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

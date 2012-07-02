@@ -5,12 +5,13 @@
  * @file
  * @author Niklas Laxström
  * @author Siebrand Mazeland
- * @copyright Copyright © 2010, Niklas Laxström, Siebrand Mazeland
+ * @copyright Copyright © 2010-2012, Niklas Laxström, Siebrand Mazeland
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 /**
  * Contains methods that provide statistics for message groups.
+ *
  * @ingroup Stats
  */
 class TranslationStats {
@@ -18,7 +19,6 @@ class TranslationStats {
 	 * Returns translated percentage for message group in given
 	 * languages
 	 *
-	 * @todo Add ability to return localised fuzzy percentage.
 	 * @param $group \string Unique key identifying the group
 	 * @param $languages \array List of language codes
 	 * @param $threshold \int Minimum required percentage translated to

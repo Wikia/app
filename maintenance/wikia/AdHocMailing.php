@@ -51,7 +51,7 @@ class AdHocMailing {
         foreach ( $this->recipients as $recipient ) {
             echo "Sending to: {$recipient}... ";
             $to = new MailAddress( $recipient );
-            $sent = UserMailer::sendHTML( $to, $this->from, $this->subject, $this->body['text'], $this->body['html'], $this->replyTo, $category='unknown', $priority = 0 );
+            $sent = UserMailer::send( $to, $this->from, $this->subject, $this->body, $this->replyTo, null );
             if ( $sent ) {
                 echo "done!\n";
             } else {

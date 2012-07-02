@@ -448,7 +448,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	/**
 	 * Get image gallery data (tag parameters, list of images and their parameters)
 	 *
-	 * This data is used by JS front-end in Wysiwyg editor. Cast to object is needed to properly handle params in JS code.
+	 * This data is used by JS front-end in Visual Editor. Cast to object is needed to properly handle params in JS code.
 	 */
 	public function getData() {
 		return array(
@@ -581,7 +581,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			return '';
 		}
 
-		$skin = $this->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$thumbSize = $this->mWidths;
 		$orientation = $this->getParam('orientation');
 		$ratio = WikiaPhotoGalleryHelper::getRatioFromOption($orientation);
@@ -594,27 +594,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$widths = array();
 
 		if( F::app()->checkSkin( 'wikiamobile' ) ) {
-			$pics = array();
-
-			foreach($this->mImages as $val) {
-				$img = wfFindFile( $val[0], false );
-
-				if( !empty( $img ) ) {
-					$pics[] = array( $img->transform( array("width" => "320", "height" => "480") )->url, $val[1] );
-				}
-			}
-
-			$count = count($pics);
-
-			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
-			$template->set_vars(array(
-				'images' => $pics,
-				'count' => $count,
-				'footerText' => wfMsg('wikiaPhotoGallery-slideshow-view-number', '1', $count)
-			));
-
-			$html =  $template->render('renderWikiaMobileImageStack');
-
+			$html =  $this->renderWikiaMobileImageStack();
 		} else {
 
 			// loop throught the images and get height of the tallest one
@@ -785,7 +765,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					$image['classes'] = 'image broken-image accent new';
 				} else {
 					$thumbParams = WikiaPhotoGalleryHelper::getThumbnailDimensions($fileObject, $thumbSize, $height, $crop);
-					$image['thumbnail'] = $fileObject->getThumbnail($thumbParams['width'], $thumbParams['height'])->url;
+					$image['thumbnail'] = $fileObject->createThumb($thumbParams['width'], $thumbParams['height']);
 
 					$image['height'] = ($orientation == 'none') ? $heights[$index] : min($thumbParams['height'], $height);
 					$imgHeightCompensation = ($height - $image['height']) / 2;
@@ -878,18 +858,19 @@ class WikiaPhotoGallery extends ImageGallery {
 					)
 				);
 				if (!empty($image['thumbnail'])) {
-					
+
 					if ( WikiaFileHelper::isFileTypeVideo( $fileObject ) ) {
 						$html .= WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
 					}
-					
+
 					$html .= Xml::openElement(
 						'img',
 						array(
 							'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
 								$imgStyle,
 							'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
-							'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':"")
+							'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
+							'class' => 'thumbimage',
 						)
 					);
 				} else {
@@ -964,7 +945,7 @@ class WikiaPhotoGallery extends ImageGallery {
  	 * Return a HTML representation of the image slideshow
 	 */
 	private function renderSlideshow() {
-		global $wgBlankImgUrl, $wgStylePath;
+		global $wgStylePath;
 
 		wfProfileIn(__METHOD__);
 
@@ -974,7 +955,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			return '';
 		}
 
-		$sk = $this->getSkin();
+		$sk = RequestContext::getMain()->getSkin();
 
 		// slideshow wrapper CSS class
 		$class = 'wikia-slideshow clearfix';
@@ -1010,26 +991,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		//renderSlideshow for WikiaMobile
 		if( F::app()->checkSkin( 'wikiamobile' ) ) {
-			$pics = array();
-
-			foreach($this->mImages as $key => $val) {
-				$img = wfFindFile( $val[0], false );
-
-				if ( !empty( $img ) ) {
-					$pics[] = array( $img->transform( array("width" => "320", "height" => "480") )->url, $val[1] );
-				}
-			}
-
-			$count = count( $pics );
-
-			$template = new EasyTemplate(dirname(__FILE__) . '/templates');
-			$template->set_vars(array(
-				'images' => $pics,
-				'count' => $count,
-				'footerText' => wfMsg('wikiaPhotoGallery-slideshow-view-number', '1', $count)
-			));
-			$slideshowHtml = $template->render('renderWikiaMobileImageStack');
-
+			$slideshowHtml = $this->renderWikiaMobileImageStack();
 		} else {
 
 		$slideshowHtml = Xml::openElement('div', $attribs);
@@ -1069,11 +1031,11 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
 			$img = wfFindFile( $nt, $time );
-			
+
 			if ( WikiaFileHelper::isFileTypeVideo($img) ) {
 				continue;
 			}
-			
+
 			$thumb = null;
 
 			// let's properly scale image (don't make it bigger than original size) and handle "crop" attribute
@@ -1119,6 +1081,8 @@ class WikiaPhotoGallery extends ImageGallery {
 					. Xml::closeElement('span');
 			}
 
+			$linkAttribs['class'] .= ' image lightbox';
+
 			// generate HTML for a single slideshow image
 			$thumbHtml = null;
 			$liAttribs = array(
@@ -1140,7 +1104,9 @@ class WikiaPhotoGallery extends ImageGallery {
 				$thumbHtml = '<div style="height: '.($this->mHeights*1.25+2).'px;">'
 					. htmlspecialchars( $img->getLastError() ) . '</div>';
 			} else {
-				$liAttribs[ 'title' ] = $thumb->url;
+				$linkAttribs['data-image-name'] = $img->getName();
+				$liAttribs['data-image-name'] = $img->getName();
+				$thumbHtml = Xml::openElement('img', array('data-src' => $thumb->url, 'class' => 'thumbimage'));
 			}
 
 			// add CSS class so we can show first slideshow image before JS is loaded
@@ -1149,8 +1115,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			}
 
 			$slideshowHtml .= Xml::openElement('li', $liAttribs)
-				. Xml::element('a', $linkAttribs, ' ')
 				. $thumbHtml
+				. Xml::element('a', $linkAttribs, ' ')
 				. $caption
 				. $linkOverlay
 				. '</li>';
@@ -1229,6 +1195,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// output JS to init slideshow
 		$width = "{$params['width']}px";
+		$height = "{$params['height']}px";
 
 		$slideshowHtml .= F::build('JSSnippets')->addToStack(
 			array(
@@ -1237,7 +1204,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			),
 			array(),
 			'WikiaPhotoGallerySlideshow.init',
-			array('id' => $id, 'width' => $width)
+			array('id' => $id, 'width' => $width, 'height' => $height)
 		);
 
 		}
@@ -1260,7 +1227,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			wfProfileOut(__METHOD__);
 			return '';
 		}
-		
+
 		$orientation = $this->getParam('orientation');
 
 		// setup image serving for "big" images
@@ -1300,9 +1267,9 @@ class WikiaPhotoGallery extends ImageGallery {
 		$imageServingForThumbs = new ImageServing(null, $thumbDimensions['w'], $thumbDimensions);
 
 		$out = array();
-		
-		$sliderImageLimit = $orientation == 'mosaic' ? 5 : 4; 
-		
+
+		$sliderImageLimit = $orientation == 'mosaic' ? 5 : 4;
+
 		foreach ( $this->mImages as $p => $pair ) {
 			$nt = $pair[0];
 			$text = $pair[1];
@@ -1375,7 +1342,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if ($orientation == 'mosaic') {
 				$sliderResources = array(
-					'/skins/common/modernizr/modernizr-2.0.6.js',
+					'/resources/wikia/libraries/modernizr/modernizr-2.0.6.js',
 					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss',
 					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js'
 				);
@@ -1387,7 +1354,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				);
 				$javascriptInitializationFunction = 'WikiaPhotoGallerySlider.init';
 			}
-			
+
 			$html .= F::build('JSSnippets')->addToStack(
 				$sliderResources,
 				array(),
@@ -1626,7 +1593,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @author Marooned
 	 */
 	private function renderFeedSlideshow() {
-		global $wgStylePath;
+		global $wgStylePath, $wgBlankImgUrl;
 		wfProfileIn(__METHOD__);
 
 		// don't render empty slideshows
@@ -1688,7 +1655,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$html .= Xml::openElement('div', array('class' => 'wikia-slideshow-images-wrapper accent'));
 		$html .= Xml::openElement('ul', array(
 			'class' => 'wikia-slideshow-images neutral',
-			'style' => "height: {$params['height']}px; width: {$params['width']}px",
+			'style' => "height: {$params['height']}px; width: {$params['width']}px;",
 		));
 
 		foreach ($this->mExternalImages as $index => $imageData) {
@@ -1710,7 +1677,8 @@ class WikiaPhotoGallery extends ImageGallery {
 			// extra link tag attributes
 			$linkAttribs['id'] = "{$id}-{$index}";
 			$linkAttribs['style'] = 'width: ' . ($params['width'] - 80) . 'px';
-			$linkAttribs['class'] = 'image lightbox wikia-slideshow-image';
+			$linkAttribs['class'] = 'wikia-slideshow-image';
+			$linkAttribs['target'] = "_blank";
 
 			if ($imageData['link'] == '') {
 				// tooltip to be used for not-linked images
@@ -1745,12 +1713,23 @@ class WikiaPhotoGallery extends ImageGallery {
 		// render prev/next buttons
 		$top = ($params['height'] >> 1) - 30 /* button height / 2 */ + 5 /* top border of slideshow area */;
 		$html .= Xml::openElement('div', array('class' => 'wikia-slideshow-prev-next'));
-		$html .= Xml::element('a',
-			array('class' => 'wikia-slideshow-sprite wikia-slideshow-prev', 'style' => "top: {$top}px", 'title' => wfMsg('wikiaPhotoGallery-slideshow-view-prev-tooltip')),
-			' ');
-		$html .= Xml::element('a',
-			array('class' => 'wikia-slideshow-sprite wikia-slideshow-next', 'style' => "top: {$top}px", 'title' =>  wfMsg('wikiaPhotoGallery-slideshow-view-next-tooltip')),
-			' ');
+
+		// prev
+		$html .= Xml::openElement('a',
+			array('class' => 'wikia-slideshow-sprite wikia-slideshow-prev', 'style' => "top: {$top}px", 'title' => wfMsg('wikiaPhotoGallery-slideshow-view-prev-tooltip')));
+		$html .= Xml::openElement('span');
+		$html .= Xml::element('img', array('class' => 'chevron', 'src' => $wgBlankImgUrl));
+		$html .= Xml::closeElement('span');
+		$html .= Xml::closeElement('a');
+
+		// next
+		$html .= Xml::openElement('a',
+			array('class' => 'wikia-slideshow-sprite wikia-slideshow-next', 'style' => "top: {$top}px", 'title' =>  wfMsg('wikiaPhotoGallery-slideshow-view-next-tooltip')));
+		$html .= Xml::openElement('span');
+		$html .= Xml::element('img', array('class' => 'chevron', 'src' => $wgBlankImgUrl));
+		$html .= Xml::closeElement('span');
+		$html .= Xml::closeElement('a');
+
 		$html .= Xml::closeElement('div');
 
 		// render slideshow toolbar
@@ -1790,7 +1769,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			),
 			array(),
 			'WikiaPhotoGallerySlideshow.init',
-			array('id' => $id, 'width' => $width)
+			array('id' => $id, 'width' => $width, 'height'=> $height)
 		);
 
 		wfProfileOut(__METHOD__);
@@ -1814,5 +1793,31 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		wfProfileOut(__METHOD__);
 		return $img;
+	}
+
+	/**
+	 * Renders a gallery/slideshow as a stack from the WikiaMobile skin
+	 */
+	private function renderWikiaMobileImageStack() {
+		$pics = array();
+
+		foreach($this->mImages as $val) {
+			$img = wfFindFile( $val[0], false );
+
+			if( !empty( $img ) ) {
+				$pics[] = array( $img->transform( array("width" => "320", "height" => "480") )->url, $val[1], $val[0]->getText() );
+			}
+		}
+
+		$count = count($pics);
+
+		$template = new EasyTemplate( dirname(__FILE__) . '/templates' );
+		$template->set_vars( array(
+			'images' => $pics,
+			'count' => $count,
+			'footerText' => wfMsg( 'wikiaPhotoGallery-slideshow-view-number', '1', $count )
+		) );
+
+		return $template->render('renderWikiaMobileImageStack');
 	}
 }

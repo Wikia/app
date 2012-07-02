@@ -81,7 +81,7 @@ class CommunityMessages {
 		}
 
 		// render message
-		if( SpecialPage::exists( 'WikiActivity' ) ) {
+		if( SpecialPageFactory::exists( 'WikiActivity' ) ) {
 			$msg = wfMsgExt('communitymessages-notice-msg', array( 'parseinline', 'content' ));
 		}
 

@@ -17,7 +17,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 function axACWRequestCheckWikiName() {
 	global $wgRequest, $wgDBname, $wgContLang, $wgLang, $wgOut;
-	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	$sName = $wgRequest->getVal('name');
 	$sLang = $wgRequest->getVal('lang');
@@ -26,12 +25,11 @@ function axACWRequestCheckWikiName() {
 	$isError = ( !empty($sResponse) ) ? true : false;
 	$aResponse = array( 'div-body' => $sResponse, 'div-name' => 'wiki-name-error', 'div-error' => $isError );
 
-	return Wikia::json_encode( $aResponse );
+	return json_encode( $aResponse );
 }
 
 function axACWRequestCheckName() {
 	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
-	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	$sName = $wgRequest->getVal( "name" );
 	$sLang = $wgRequest->getVal( "lang" );
@@ -74,12 +72,11 @@ function axACWRequestCheckName() {
 
 	$aResponse = array( 'div-body' => $sResponse, 'div-name' => 'wiki-domain-error', 'div-error' => $isError );
 
-	return Wikia::json_encode( $aResponse );
+	return json_encode( $aResponse );
 }
 
 function axACWRequestCheckAccount() {
 	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
-	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	$sName = $wgRequest->getVal('name');
 	$sLang = $wgRequest->getVal('lang');
@@ -113,12 +110,11 @@ function axACWRequestCheckAccount() {
 	$isError = (!empty($sResponse)) ? true : false;
 	$aResponse = array( 'div-body' => $sResponse, 'div-name' => $errDiv, 'div-error' => $isError );
 
-	return Wikia::json_encode( $aResponse );
+	return json_encode( $aResponse );
 }
 
 function axACWRequestCheckBirthday() {
 	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
-	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	$sYear = $wgRequest->getVal('year');
 	$sMonth = $wgRequest->getVal('month');
@@ -139,7 +135,6 @@ function axACWRequestCheckBirthday() {
 
 function axACWRequestCheckLog() {
 	global $wgUser;
-	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	$sInfo = "";
 	if ( !empty($_SESSION) && isset($_SESSION['awcName']) ) {
@@ -160,5 +155,5 @@ function axACWRequestCheckLog() {
 		$aResponse = array( 'type' => '', 'info' => wfMsg('autocreatewiki-stepdefault') );
 	}
 
-	return Wikia::json_encode( $aResponse );
+	return json_encode( $aResponse );
 }

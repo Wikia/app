@@ -11,7 +11,7 @@ $messages = array();
 /** English */
 $messages['en'] = array(
 	'linksuggest-desc' => 'Suggests links to editors on edit view',
-	'tog-disablelinksuggest' => 'Do not show link suggest in Source mode',
+	'tog-disablelinksuggest' => 'Do not show link suggest',
 );
 
 /** Message documentation (Message documentation)
@@ -26,6 +26,14 @@ $messages['qqq'] = array(
  */
 $messages['af'] = array(
 	'tog-disablelinksuggest' => 'Moet nie skakel-voorstelle wys nie',
+);
+
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'linksuggest-desc' => "Suxerir enllaces a los editores na vista d'edición",
+	'tog-disablelinksuggest' => "Nun amosar suxerencies d'enllaces",
 );
 
 /** Azerbaijani (Azərbaycanca)
@@ -81,6 +89,14 @@ $messages['cs'] = array(
 $messages['de'] = array(
 	'linksuggest-desc' => 'Ermöglicht im Bearbeitungsfenster Linkvorschläge für Bearbeiter',
 	'tog-disablelinksuggest' => 'Keine Linkvorschläge anzeigen',
+);
+
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'linksuggest-desc' => 'Naraźujo wobźěłowarjam wótkaze we wobźěłowańskem woknje',
+	'tog-disablelinksuggest' => 'Žedne wótkazowe naraźenje pokazaś',
 );
 
 /** Spanish (Español) */
@@ -144,9 +160,11 @@ $messages['hsb'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Dj
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
+	'linksuggest-desc' => 'Hivatkozásokat javasol a szerkesztőknek a szerkesztési nézetben',
 	'tog-disablelinksuggest' => 'Ne jelenítse meg a hivatkozás-javaslatot',
 );
 
@@ -174,8 +192,11 @@ $messages['it'] = array(
 	'tog-disablelinksuggest' => 'Non mostrare link suggeriti',
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Schu
+ */
 $messages['ja'] = array(
+	'linksuggest-desc' => '編集ビューで編集者へのリンクを 提案します',
 	'tog-disablelinksuggest' => '編集時のリンク補完を使わない',
 );
 
@@ -218,6 +239,15 @@ $messages['ms'] = array(
 	'tog-disablelinksuggest' => 'Jangan paparkan cadangan pautan',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'linksuggest-desc' => 'Foreslår lenker til bidragsytere på redigeringsvisningen',
+	'tog-disablelinksuggest' => 'Ikke vis lenkeforslag',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -233,15 +263,6 @@ $messages['nn'] = array(
 	'tog-disablelinksuggest' => 'Ikkje vis lenkjeframlegg',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'linksuggest-desc' => 'Foreslår lenker til bidragsytere på redigeringsvisningen',
-	'tog-disablelinksuggest' => 'Ikke vis lenkeforslag',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -251,8 +272,10 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author Sp5uhe
+ * @author Woytecr
  */
 $messages['pl'] = array(
+	'linksuggest-desc' => 'Proponuje linki podczas edycji',
 	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków',
 );
 
@@ -298,6 +321,8 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author AlexSm
+ * @author KPu3uC B Poccuu
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -305,13 +330,19 @@ $messages['ru'] = array(
 	'tog-disablelinksuggest' => 'Не показывать предложения ссылок',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
 	'linksuggest-desc' => 'Предлаже везе уређивачима у приказу за уређивање',
 	'tog-disablelinksuggest' => 'Не приказуј предлог везе',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'linksuggest-desc' => 'Predlaže veze uređivačima u prikazu za uređivanje',
+	'tog-disablelinksuggest' => 'Ne prikazuj predlog veze',
 );
 
 /** Sundanese (Basa Sunda)
@@ -343,7 +374,7 @@ $messages['tr'] = array(
 	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme',
 );
 
-/** Tatar (Cyrillic) (Татарча/Tatarça (Cyrillic))
+/** Tatar (Cyrillic script) (Татарча)
  * @author Ильнар
  */
 $messages['tt-cyrl'] = array(

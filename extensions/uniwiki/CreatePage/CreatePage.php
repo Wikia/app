@@ -18,14 +18,13 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'CreatePage',
 	'author'         => array( 'Travis Derouin', 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
-	'description'    => 'Adds a [[Special:CreatePage|special page]] for creating new pages',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Generic_Edit_Page',
-	'descriptionmsg' => 'createpage-desc',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Uniwiki_Generic_Edit_Page',
+	'descriptionmsg' => 'uwcreatepage-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['CreatePage'] = $dir . '/CreatePage.i18n.php';
-$wgExtensionAliasesFiles['CreatePage'] = $dir . 'CreatePage.alias.php';
+$wgExtensionMessagesFiles['CreatePageAlias'] = $dir . 'CreatePage.alias.php';
 $wgAutoloadClasses['SpecialCreatePage'] = $dir . '/CreatePage_body.php';
 $wgSpecialPages['CreatePage'] = 'SpecialCreatePage';
 $wgSpecialPageGroups['CreatePage'] = 'pagetools';

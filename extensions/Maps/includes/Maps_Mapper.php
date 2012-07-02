@@ -13,54 +13,6 @@
 final class MapsMapper {
 	
 	/**
-	 * Add a JavaScript file out of skins/common, or a given relative path.
-	 * 
-	 * This is a copy of the native function in OutputPage to work around a pre MW 1.16 bug.
-	 * Should be used for adding external files, like the Google Maps API.
-	 * 
-	 * @param OutputPage $out
-	 * @param string $file
-	 */
-	public static function addScriptFile( OutputPage $out, $file ) {
-		global $wgStylePath, $wgStyleVersion;
-		if( substr( $file, 0, 1 ) == '/' || preg_match( '#^[a-z]*://#i', $file ) ) {
-			$path = $file;
-		} else {
-			$path =  "{$wgStylePath}/common/{$file}";
-		}
-		$out->addScript( Html::linkedScript( wfAppendQuery( $path, $wgStyleVersion ) ) );		
-	}
-	
-	/**
-	 * Adds a string of JavaScript as dependency for a mapping service
-	 * after wrapping it in an onload hook and script tag. This is sort
-	 * of a hack, but it takes care of the difference between artciles
-	 * and special pages.
-	 * 
-	 * @since 0.7
-	 * 
-	 * @param iMappingService $service 
-	 * @param string $script
-	 */
-	public static function addInlineScript( iMappingService $service, $script ) {
-		static $addOnloadJs = false;
-		
-		if ( method_exists( 'OutputPage', 'addModules' ) && !$addOnloadJs ) {
-			global $egMapsScriptPath, $egMapsStyleVersion;
-			
-			$service->addDependency(
-				Html::linkedScript( "$egMapsScriptPath/includes/mapsonload.js?$egMapsStyleVersion" )
-			);
-			
-			$addOnloadJs = true;
-		} 		
-		
-		$service->addDependency( Html::inlineScript( 
-			( method_exists( 'OutputPage', 'addModules' ) ? 'addMapsOnloadHook' : 'addOnloadHook' ) . "( function() { $script } );"
-		) );
-	}
-	
-	/**
 	 * Encode a variable of unknown type to JavaScript.
 	 * Arrays are converted to JS arrays, objects are converted to JS associative
 	 * arrays (objects). So cast your PHP associative arrays to objects before
@@ -123,23 +75,20 @@ final class MapsMapper {
 		$params['mappingservice'] = new Parameter( 'mappingservice' );
 		$params['mappingservice']->addAliases( 'service' );
 		$params['mappingservice']->setDefault( $egMapsDefaultService );
-		$params['mappingservice']->addCriteria( new CriterionInArray( MapsMappingServices::getAllServiceValues() ) );
+		$params['mappingservice']->addCriteria( new CriterionInArray( MapsMappingServices::getAllServiceValues() ) );		
 		
-		$params['geoservice'] = new Parameter(
-			'geoservice', 
-			Parameter::TYPE_STRING,
-			$egMapsDefaultGeoService,
-			array(),
-			array(
-				new CriterionInArray( $egMapsAvailableGeoServices ),
-			),
-			array( 'mappingservice' )
-		);
+		$params['geoservice'] = new Parameter( 'geoservice' );
+		$params['geoservice']->setDefault( $egMapsDefaultGeoService );
+		$params['geoservice']->addCriteria( new CriterionInArray( $egMapsAvailableGeoServices ) );
+		$params['geoservice']->addDependencies( 'mappingservice' );
+		$params['geoservice']->addManipulations( new MapsParamGeoService( 'mappingservice' ) );
+		$params['geoservice']->setDescription( wfMsg( 'maps-par-geoservice' ) );
 		
 		$params['zoom'] = new Parameter(
 			'zoom', 
 			Parameter::TYPE_INTEGER
 		);
+		$params['zoom']->setDescription( wfMsg( 'maps-par-zoom' ) );
 		
 		$params['width'] = new Parameter(
 			'width', 
@@ -151,6 +100,7 @@ final class MapsMapper {
 			)
 		);
 		$params['width']->addManipulations( new MapsParamDimension( 'width' ) );
+		$params['width']->setDescription( wfMsg( 'maps-par-width' ) );
 
 		$params['height'] = new Parameter(
 			'height', 
@@ -162,6 +112,7 @@ final class MapsMapper {
 			)
 		);
 		$params['height']->addManipulations( new MapsParamDimension( 'height' ) );
+		$params['height']->setDescription( wfMsg( 'maps-par-height' ) );
 		
 		return $params;
 	}
@@ -169,21 +120,49 @@ final class MapsMapper {
 	/**
 	 * Resolves the url of images provided as wiki page; leaves others alone.
 	 * 
-	 * @since 0.7.1
+	 * @since 1.0
 	 * 
-	 * @param string $image
+	 * @param string $file
 	 * 
 	 * @return string
 	 */
-	public static function getImageUrl( $image ) {
-		$title = Title::newFromText( $image, NS_FILE );
+	public static function getFileUrl( $file ) {
+		$title = Title::newFromText( $file, NS_FILE );
 
 		if ( !is_null( $title ) && $title->getNamespace() == NS_FILE && $title->exists() ) {
 			$imagePage = new ImagePage( $title );
-			$image = $imagePage->getDisplayedFile()->getURL();
+			$file = $imagePage->getDisplayedFile()->getURL();
 		}		
 		
-		return $image;
+		return $file;
+	}
+	
+	/**
+	 * Returns JS to init the vars to hold the map data when they are not there already.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @param string $serviceName
+	 */
+	public static function getBaseMapJSON( $serviceName ) {
+		static $baseInit = false;
+		static $serviceInit = array();
+		
+		$json = '';
+		
+		if ( !$baseInit ) {
+			$baseInit = true;
+			global $egMapsScriptPath;
+			$json .= 'var egMapsScriptPath =' . FormatJson::encode( $egMapsScriptPath ) . ';';
+			$json .= 'var mwmaps={};';
+		}
+		
+		if ( !in_array( $serviceName, $serviceInit ) ) {
+			$serviceInit[] = $serviceName;
+			$json .= "mwmaps.$serviceName={};";
+		}
+		
+		return $json;
 	}
 	
 }

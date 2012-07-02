@@ -1,12 +1,12 @@
 <?php
 /* Copyright (c) 2008 River Tarnell <river@loreley.flyingparchment.org.uk>. */
-/*
+/**
  * Permission is granted to anyone to use this software for any purpose,
  * including commercial applications, and to alter it and redistribute it
  * freely. This software is provided 'as-is', without any express or implied
  * warranty.
  */
-/* $Id: ABC.php 62426 2010-02-13 13:51:04Z siebrand $ */
+/* $Id: ABC.php 106136 2011-12-13 23:49:33Z brion $ */
 
 if ( !defined( 'MEDIAWIKI' ) )
 	die();
@@ -56,8 +56,7 @@ $wgExtensionCredits['parserhooks'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'ABC',
 	'author'         => 'River Tarnell',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:ABC',
-	'description'    => 'Adds <tt>&lt;abc&gt;</tt> tag to format ABC music',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:ABC',
 	'descriptionmsg' => 'abc-desc',
 );
 $wgExtensionMessagesFiles['ABC'] =  dirname( __FILE__ ) . '/ABC.i18n.php';
@@ -65,7 +64,6 @@ $wgHooks['ParserFirstCallInit'][] = 'efABCInit';
 
 function efABCInit( &$parser ) {
 	global $wgOut, $abcOggHandler;
-	wfLoadExtensionMessages( 'ABC' );
 	$parser->setHook( 'abc', 'efABCRender' );
 
 	if ( $abcOggHandler ) {
@@ -83,7 +81,7 @@ function efABCRender( $input, $args, $parser ) {
 	if ( $abcPath == false || $abcURL == false )
 		return 'Error: $abcPath and $abcURL must be set to use the ABC extension.';
 
-	/*
+	/**
 	 * To avoid re-rendering the same tunes on every view,
 	 * use the hash of the ABC content for the filename.
 	 * This has the added benefit that rendering the same tune
@@ -108,7 +106,7 @@ function efABCRender( $input, $args, $parser ) {
 		if ( !@mkdir( "$abcPath/$directory", 0777, true ) )
 			return "Cannot create directory \"$abcPath/$directory\".";
 
-	/*
+	/**
 	 * Try to extract the title from the ABC.  This is used as the
 	 * alt text for the image.
 	 */
@@ -134,7 +132,7 @@ function efABCRender( $input, $args, $parser ) {
 				return str_replace( "\n", "<br />", htmlspecialchars( $error ) );
 	}
 
-	/*
+	/**
 	 * Succeeded to create all the output formats, return the
 	 * output.  We produce an image from the PNG, and include
 	 * links to the ABC and PS.

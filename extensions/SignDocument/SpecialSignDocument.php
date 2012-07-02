@@ -10,9 +10,6 @@ class SpecialSignDocument extends SpecialPage {
 	 */
 	private $mDocumentId;
 
-	private $mArticle;
-	private $mTitle;
-
 	private $mCurrentSig;
 	private $mForm;
 
@@ -20,14 +17,14 @@ class SpecialSignDocument extends SpecialPage {
 	 * Constructor
 	 */
 	function __construct() {
-		SpecialPage::SpecialPage( 'SignDocument', 'sigadmin' );
+		parent::__construct( 'SignDocument', 'sigadmin' );
 		$this->includable( true );
 	}
 
 	function execute( $par = null ) {
 		global $wgOut, $wgRequest, $wgUser;
 
-		wfLoadExtensionMessages( 'SpecialSignDocument' );
+
 
 		$this->setHeaders();
 		if ( $wgUser->isAllowed( 'sigadmin' ) ) {
@@ -41,7 +38,7 @@ class SpecialSignDocument extends SpecialPage {
 
 			if ( $this->mDocumentId == null )
 				$this->showSelectDocument();
-			else if ( !$wgRequest->wasPosted() ) {
+			elseif ( !$wgRequest->wasPosted() ) {
 				$this->mCurrentSig = SignDocumentSignature::newBasic();
 				$this->showSignForm();
 			}
@@ -65,7 +62,7 @@ class SpecialSignDocument extends SpecialPage {
 			'action' => $wgTitle->escapeLocalUrl(),
 			'method' => 'get' ) );
 
-		$out .= '<p><strong>' . wfMsg( 'sign-selectdoc' ) . '</strong>&nbsp;';
+		$out .= '<p><strong>' . wfMsg( 'sign-selectdoc' ) . '</strong>&#160;';
 
 		$out .= $this->buildDocSelector();
 
@@ -142,7 +139,7 @@ class SpecialSignDocument extends SpecialPage {
 			return;
 		}
 
-		$wgOut->addWikiText( wfMsg( 'sign-docheader', $this->mForm->mPagename ) );
+		$wgOut->wrapWikiMsg( '<div class="noarticletext">$1</div>', array( 'sign-docheader', $this->mForm->mPagename ) );
 
 		$wgOut->addHTML( '<h1>' . $this->mForm->mPagename . '</h1>' );
 		$wgOut->addWikiText( $this->mForm->mArticle->getContent() );
@@ -233,7 +230,7 @@ class SpecialSignDocument extends SpecialPage {
 		if ( $hidden ) return '';
 		$out = '<tr><td>';
 		if ( !$optional ) $caption .= '<font color="red">*</font>';
-		$out .= "<strong>$caption&nbsp;";
+		$out .= "<strong>$caption&#160;";
 		$out .= '</td><td>';
 		$out .= Xml::element( 'input', array(
 			'id' => "wmSignDocument-$name",
@@ -252,11 +249,6 @@ class SpecialSignDocument extends SpecialPage {
 		$out .= '</td></tr>';
 
 		return $out;
-	}
-
-	function loadDocument() {
-		$this->mTitle = Title::newFromId( 1 );
-		$this->mArticle = new Article( $this->mTitle );
 	}
 
 	function dealWithPost() {
@@ -318,7 +310,7 @@ class SignatureViewer {
 		if ( $wgRequest->wasPosted() && $wgUser->isAllowed( 'sigadmin' ) ) {
 		   	if ( !is_null( $wgRequest->getVal( 'opensigning' ) ) )
 				$this->openSigning();
-			else if ( !is_null( $wgRequest->getVal( 'closesigning' ) ) )
+			elseif ( !is_null( $wgRequest->getVal( 'closesigning' ) ) )
 				$this->closeSigning();
 		}
 
@@ -382,7 +374,7 @@ class SignatureViewer {
 			'method' => 'post' ) );
 
 		if ( $this->mForm->mOpen ) {
-			$out .= wfMsg( 'sign-sigadmin-currentlyopen' ) . '&nbsp;';
+			$out .= wfMsg( 'sign-sigadmin-currentlyopen' ) . '&#160;';
 			$out .= Xml::element( 'input', array(
 					'type'  => 'submit',
 					'name'  => 'closesigning-submit',
@@ -391,7 +383,7 @@ class SignatureViewer {
 					'type'  => 'hidden',
 					'name'  => 'closesigning' ) );
 		} else {
-			$out .= wfMsg( 'sign-sigadmin-currentlyclosed' ) . '&nbsp;';
+			$out .= wfMsg( 'sign-sigadmin-currentlyclosed' ) . '&#160;';
 			$out .= Xml::element( 'input', array(
 					'type'  => 'submit',
 					'name'  => 'opensigning-submit',
@@ -413,7 +405,7 @@ class SignatureViewer {
 			'action' => $wgTitle->escapeLocalUrl(),
 			'method' => 'get' ) );
 
-		$out .= wfMsg( 'sign-view-selectfields' );
+		$out .= wfMsgExt( 'sign-view-selectfields', 'parseinline' );
 
 		$out .= Xml::element( 'input', array(
 			'type' => 'hidden', 'name' => 'doc',
@@ -425,7 +417,7 @@ class SignatureViewer {
 		foreach ( array_keys( $this->mFields ) as $field )
 			$out .= $this->fieldCheck( $field );
 
-		$out .= '&nbsp;' . Xml::element( 'input', array(
+		$out .= '&#160;' . Xml::element( 'input', array(
 			'type' => 'submit', 'value' => wfMsg( 'go' ) ) );
 
 		$out .= '</form>';
@@ -437,7 +429,7 @@ class SignatureViewer {
 		if ( $id == 'ip' || $id == 'agent' ) {
 			if ( !$wgUser->isAllowed( 'sigadmin' ) ) return '';
 		}
-		return '&nbsp;' . Xml::checkLabel(
+		return '&#160;' . Xml::checkLabel(
 			wfMsg( "sign-viewfield-$id" ),
 			$id, $id,
 			$this->mFields[$id] );
@@ -487,8 +479,8 @@ class SignatureViewer {
 
 	private function getSigCell( $id, $text, $del = false ) {
 		if ( !$this->mFields[$id] ) return '';
-		if ( $del ) return "<td><del>$text</del>&nbsp;&nbsp;</td>";
-		return "<td>$text&nbsp;&nbsp;</td>";
+		if ( $del ) return "<td><del>$text</del>&#160;&#160;</td>";
+		return "<td>$text&#160;&#160;</td>";
 	}
 
 	private function closeSigning() {
@@ -549,14 +541,14 @@ class SignatureViewer {
 			'strikesig',
 			$sig->mStricken );
 
-		$out .= '&nbsp;&nbsp;' . wfMsg( 'sign-review-comment' ) . ':&nbsp;';
+		$out .= '&#160;&#160;' . wfMsg( 'sign-review-comment' ) . ':&#160;';
 		$out .= Xml::element( 'input', array(
 			'type'  => 'text',
 			'name'  => 'reviewcomment',
 			'value' => $sig->mStrickenComment,
 			'style' => 'width: 450px;'	) );
 
-		$out .= '&nbsp;&nbsp;' . Xml::element( 'input', array(
+		$out .= '&#160;&#160;' . Xml::element( 'input', array(
 			'type'  => 'submit',
 			'name'  => 'doreview',
 			'value' => wfMsg( 'sign-submitreview' ) ) );
@@ -620,7 +612,7 @@ class SignatureViewer {
 
 	private function getDetailTableRow( $fieldid, $val, $priv = false ) {
 		return '<tr><td><strong>' . wfMsg( "sign-viewfield-$fieldid" ) . ':</strong></td><td>'
-				. $val . ( ( $priv ) ? ( ' (' . wfMsg( 'sig-private' ) . ')' ):'' ) . '</td></tr>';
+				. $val . ( ( $priv ) ? wfMsg( 'parentheses', wfMsgExt( 'sig-private', 'parseinline' ) ) : '' ) . '</td></tr>';
 	}
 
 	private function runDetailUniqueQuery( $sig ) {

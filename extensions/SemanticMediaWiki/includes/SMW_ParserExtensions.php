@@ -23,16 +23,10 @@ class SMWParserExtensions {
 	 *
 	 * @param Parser $parser
 	 * @param string $text
+	 *
+	 * @return true
 	 */
-	static public function onInternalParseBeforeLinks( &$parser, &$text ) {
-		// Wikia - start
-		// ignore SMW links when rendering for RTE (BugId:3186)
-		global $wgRTEParserEnabled;
-		if (!empty($wgRTEParserEnabled)) {
-			return true;
-		}
-		// Wikia - end
-
+	static public function onInternalParseBeforeLinks( Parser &$parser, &$text ) {
 		global $smwgStoreAnnotations, $smwgLinksInValues;
 
 		SMWParseData::stripMagicWords( $text, $parser );
@@ -43,13 +37,13 @@ class SMWParserExtensions {
 		SMWParserExtensions::$mTempStoreAnnotations = true; // used for [[SMW::on]] and [[SMW:off]]
 
 		// Process redirects, if any (it seems that there is indeed no more direct way of getting this info from MW)
-		$rt = Title::newFromRedirect( $text );
-		if ( $rt !== null ) {
-			$p = SMWPropertyValue::makeProperty( '_REDI' );
-			$dv = SMWDataValueFactory::newPropertyObjectValue( $p, $rt->getPrefixedText() );
-
-			if ( $smwgStoreAnnotations ) {
-				SMWParseData::getSMWData( $parser )->addPropertyObjectValue( $p, $dv );
+		if ( $smwgStoreAnnotations ) {
+			$rt = Title::newFromRedirect( $text );
+			
+			if ( !is_null( $rt ) ) {
+				$p = new SMWDIProperty( '_REDI' );
+				$di = SMWDIWikiPage::newFromTitle( $rt, '__red' );
+				SMWParseData::getSMWData( $parser )->addPropertyObjectValue( $p, $di );
 			}
 		}
 
@@ -142,7 +136,7 @@ class SMWParserExtensions {
 			$value = '';
 		}
 
-		if ( $value == '' ) { // silently ignore empty values
+		if ( $value === '' ) { // silently ignore empty values
 			wfProfileOut( 'smwfParsePropertiesCallback (SMW)' );
 			return '';
 		}

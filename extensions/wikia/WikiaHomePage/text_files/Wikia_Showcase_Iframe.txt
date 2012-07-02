@@ -1,0 +1,282 @@
+<html>
+<style type="text/css">
+body {
+        background: #fff;
+}
+
+#WikiaPage {
+        border: 0;
+        width: 793px;
+}
+
+#WikiaArticle p {
+        border: 0;
+        margin: 0;
+}
+
+.subheader{
+	padding: 32px 0 0 16px;
+	font-size:15px;
+	font-family:Helvetica;
+	color:#FFFFFF;
+	background-color:#C6D2D8;
+	width:761px;
+}
+
+.overlay {
+	position: absolute;
+	font-size: 15px;
+	padding-left: 10px;
+	font-weight: bold;
+	font-family: Helvetica;
+	z-index: 1;
+	margin-top: 5px;
+}
+
+.img {
+	position: relative;
+	padding-left:16px;
+}
+
+.line1, .line3{
+	height: 1px;
+        width: 468px;
+        background-color: #003053;
+        color: #003053;
+        border: none;
+        margin-left: 278px;
+        position: relative;
+        margin-top: -1px;
+        margin-bottom: 0px;
+}
+
+.line2 {
+	height:1px;
+	width:242px;
+	background-color:#959595;
+	color:#959595;
+	margin-top:6px;
+	border:none;
+}
+
+.line3 {
+	width: 745px;
+	margin: 20px 0;
+	position: relative;
+	left: -503px;
+}
+
+#showCaseList {
+	list-style: none;
+	width: 761px;
+	background-color: #C6D2D8;
+	font-family: Helvetica;
+	color: #003053;
+	font-weight: bold;
+	font-size: 13px;
+	margin: 0;
+	padding: 20px 0 25px 16px;
+}
+
+#showCaseList li {
+	display: inline-block;
+	margin: 0 6px 0 0;
+	width: 242px;
+}
+
+#showCaseList li img {
+	border: 1px solid #959595;
+	margin: 0 10px 6px 0;
+}
+
+#showCaseList .socialMedia {
+	margin: 10px 0 0 0;
+	padding: 0;
+}
+
+#showCaseList .socialMedia li {
+	display: inline-block;
+	width: auto;
+	margin: 0;
+	padding: 0 15px;
+}
+
+#showCaseList .socialMedia li {
+	border: 0;
+	border-left: 1px solid #013153;
+}
+
+#showCaseList .socialMedia li:first-child {
+	border: 0;
+	padding: 0 15px 0 0;
+}
+
+#showCaseList .socialMedia li img {
+	margin: 0;
+	border: 0;
+}
+
+#showCaseList .socialMedia .facebook iframe {
+	position: relative;
+        top: 0px;
+}
+
+#showCaseList .socialMedia .twitter iframe {
+	position: relative;
+        top: 3px;
+}
+
+#RelatedVideos {
+        display: none;
+}
+</style>
+<div class="WikiaFrameContainer">
+<div class="WikiaFrame">
+</html>
+[[File:Fb_iframe_wikia_header.png|link=http://www.wikia.com/]]
+<html><div class="subheader"><span class="overlay"></html>
+POPULAR WIKIS ON FACEBOOK
+<html></span></html>[[File:Fb_iframe_header_ribbon.png]]
+<html><hr class="line1" /></div><ul id="showCaseList"></html>
+<html><li></html>
+[[File:Fb_iframe_vampire_diaries2.jpg|link=http://vampirediaries.wikia.com/wiki/The_Vampire_Diaries_Wiki]]
+<html><span></html>
+THE VAMPIRE DIARIES WIKI
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/tvdwikia" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/TVD_Wiki" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @TVD_Wiki</a>
+</li></ul>
+</li></html>
+<html><li></html>
+[[File:Fb_iframe_wookipedia.jpg|link=http://starwars.wikia.com/wiki/Main_Page]]
+<html><span></html>
+WOOKIEEPEDIA
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/pages/Wookieepedia/8118663418" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/WookieeNewsNet" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @WookieeNewsNet</a>
+</li></ul>
+</li></html>
+<html><li></html>
+[[File:Fb_iframe_assassins_creed.png|link=http://assassinscreed.wikia.com/wiki/Assassin%27s_Creed_Wiki]]
+<html><span></html>
+ASSASSINS CREED WIKI
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/AssassinsCreedWiki" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/AC_Wiki" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @AC_Wiki</a>
+</li></ul>
+<hr class="line3" />
+</li></html>
+<html><li></html>
+[[File:Fb_iframe_muppet2.jpg|link=http://muppet.wikia.com/wiki/Muppet_Wiki]]
+<html><span></html>
+MUPPET WIKI
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/muppetwiki" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/MuppetWiki" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @MuppetWiki</a>
+</li></ul>
+</li></html>
+<html><li></html>[[File:Fb_iframe_lostpedia.jpg|link=http://lostpedia.wikia.com/wiki/Main_Page]]<html><span></html>
+LOSTPEDIA
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/Lostpedia" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/lostpedia" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @lostpedia</a>
+</li></ul>
+</li></html>
+<html><li></html>[[File:Fb_iframe_runscape.png|link=http://runescape.wikia.com/wiki/RuneScape_Wiki]]
+<html><span></html>
+RUNESCAPE WIKI
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/runescapewiki" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/rswiki" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @rswiki</a>
+</li></ul>
+<hr class="line3" />
+</li></html>
+<html><li></html>[[File:Fb_iframe_hunger_games.jpg|link=http://thehungergames.wikia.com/wiki/The_Hunger_Games_Wiki]]
+<html><span></html>
+THE HUNGER GAMES WIKI
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/TheHungerGamesWiki" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/HungerGamesWiki" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @HungerGamesWiki</a>
+</li></ul>
+</li></html>
+<html><li></html>[[File:Fb_iframe_league_of_legends.jpg|link=http://leagueoflegends.wikia.com/wiki/League_of_Legends_Wiki]]
+<html><span></html>
+LEAGUE OF LEGENDS WIKI
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/LoL.Wikia" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/LoLWikia" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @LoLWikia</a>
+</li></ul>
+</li></html>
+<html><li></html>[[File:Fb_iframe_avatar.png|link=http://avatar.wikia.com/wiki/Avatar_Wiki]]
+<html><span></html>
+AVATAR WIKI
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/AvatarWiki" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/AvatarWiki" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @AvatarWiki</a>
+</li></ul>
+<hr class="line3" />
+</li></html>
+<html><li></html>[[File:Fb_iframe_harry_potter.jpg|link=http://harrypotter.wikia.com/wiki/Main_Page]]
+<html><span></html>
+HARRY POTTER WIKI
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/HarryPotterWikia" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/Official_HPWiki" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @Official_HPWiki</a>
+</li></ul>
+</li></html>
+<html><li></html>[[File:Fb_iframe_brickpedia.png|link=http://lego.wikia.com/wiki/LEGO_Wiki]]
+<html><span></html>
+BRICKPEDIA
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/legowikia" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/brickipedia" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @brickipedia</a>
+</li></ul>
+</li></html>
+<html><li></html>[[File:Fb_iframe_marvel.png|link=http://marvel.wikia.com/Main_Page]]
+<html><span></html>
+MARVEL DATABASE
+<html></span><hr class="line2" />
+<ul class="socialMedia"><li class="facebook">
+<div class="fb-like" data-href="http://www.facebook.com/marveldatabase" data-send="false" data-layout="button_count" data-width="51" data-show-faces="false"></div>
+</li><li class="twitter">
+<a href="https://twitter.com/#!/MarvelDatabase" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @MarvelDatabase</a>
+</li></ul>
+<hr class="line3" />
+</li></html>
+<html>
+</div>
+</div>
+<div id="fb-root"></div>
+<!-- Twitter -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<!-- Google+ -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+</html>__NORAIL__ __NOTOC__

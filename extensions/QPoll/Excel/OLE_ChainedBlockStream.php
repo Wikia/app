@@ -225,5 +225,3 @@ class OLE_ChainedBlockStream extends PEAR
     // bool dir_rewinddir ( void )
     // bool dir_closedir ( void )
 }
-
-?>

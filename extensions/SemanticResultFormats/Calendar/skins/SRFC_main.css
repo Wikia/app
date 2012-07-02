@@ -47,7 +47,6 @@ table.month_calendar td div.day_other_month {
 	color: #aaaaaa;
 	border: none;
 }
-}
 table.month_calendar td div.day_other_month {
 	background: #fcffb1;
 	color: #aaaaaa;
@@ -90,9 +89,12 @@ table.month_calendar tr.weekdays td {
 	color: #555555;
 	padding: 8px 2px 2px 2px;
 }
-table.month_calendar td p.colored-entry {
-	border-top: 1px #f4f4d2 solid;
-	border-bottom: 1px #f4f4d2 solid;
-	padding: 2px 0 2px 6px;
+table.month_calendar td div.colored-entry {
+	border: 1px #f4f4d2 solid;
 	background: #ffffdd;
+	margin: 4px 0 4px 0;
+}
+table.month_calendar td div.colored-entry p {
+	margin: 0;
+	padding: 2px 0 2px 6px;
 }

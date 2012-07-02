@@ -47,7 +47,7 @@ $messages['fr'] = array(
 	'campfire-licensed-under' => 'Sous licence $1',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

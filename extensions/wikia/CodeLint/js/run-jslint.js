@@ -131,6 +131,7 @@ var regExpRules = [
 				case 'right':
 				case 'top':
 				case 'bottom':
+				case 'visibility':
 					return false;
 
 				default:
@@ -162,7 +163,7 @@ var regExpRules = [
 	{
 		name: 'Nested callback',
 		regexp: /\(\S+[^\(\)]*function\([^\)]*\)\s*{$/,
-		reason: function(matches, nextLine) {
+		reason: function(matches, currLine, nextLine) {
 			var nextLineRegexp = /^\s*[^\{\}]*function\([^\(]?\)\s?\{\s?$/;
 
 			if (nextLine && nextLineRegexp.test(nextLine)) {
@@ -178,6 +179,22 @@ var regExpRules = [
 		name: 'Skin check',
 		regexp: /skin\s?==\s?['"]oasis['"]/,
 		reason: 'Deprecated skin check found'
+	},
+	// MW1.19 deprecated functions and variables (BugId:32267)
+	{
+		name: 'MW1.19',
+		regexp: require('./jslint-deprecated').regexp,
+		reason: function(matches) {
+			return "'" + matches[2] + "' is deprecated in MW 1.19";
+		}
+	},
+	// old tracking code
+	{
+		name: 'Tracking',
+		regexp: /((WET.byId|WET.byStr|\$\(.*\).trackClick|\$.tracker).*)\(/,
+		reason: function(matches) {
+			return matches[1] + ' - old tracking code found (use WikiaTracker.trackEvent instead)';
+		}
 	}
 ];
 
@@ -195,7 +212,7 @@ for(var n=0, len = lines.length; n < len; n++) {
 				return;
 			}
 
-			var reason = (typeof rule.reason === 'function') ? rule.reason.call(this, matches, lines[n+1]) : rule.reason;
+			var reason = (typeof rule.reason === 'function') ? rule.reason.call(this, matches, lines[n], lines[n+1]) : rule.reason;
 			if (reason === false) {
 				return;
 			}

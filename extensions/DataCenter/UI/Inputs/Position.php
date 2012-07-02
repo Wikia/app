@@ -165,33 +165,22 @@ class DataCenterInputPosition extends DataCenterInput {
 					// Builds javascript to connect button to input
 					$jsOutput .= <<<END
 
-						addHandler(
-							document.getElementById(
-								'{$fields[$field]['id']}_{$direction}'
-							),
-							'mouseover',
+						$('#{$fields[$field]['id']}_{$direction}).on({
+							'mouseover':
 							function() {
 								document.getElementById(
 									'{$parameters['id']}'
 								).src = '{$resources[$direction]}';
-							}
-						);
-						addHandler(
-							document.getElementById(
-								'{$fields[$field]['id']}_{$direction}'
-							),
-							'mouseout',
+							},
+
+							'mouseout':
 							function() {
 								document.getElementById(
 									'{$parameters['id']}'
 								).src = '{$resources['normal']}';
-							}
-						);
-						addHandler(
-							document.getElementById(
-								'{$fields[$field]['id']}_{$direction}'
-							),
-							'click',
+							},
+
+							'click':
 							function() {
 								var input = document.getElementById(
 									'{$fields[$field]['id']}'
@@ -205,7 +194,7 @@ class DataCenterInputPosition extends DataCenterInput {
 								}
 								{$effect}
 							}
-						);
+						});
 END;
 				}
 			}

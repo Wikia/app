@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * MV_Language.php Created on Jan 8, 2008
  *
  * All Metavid Wiki code is Released under the GPL2

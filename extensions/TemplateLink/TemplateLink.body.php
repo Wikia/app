@@ -2,8 +2,7 @@
 /**
  * TemplateLink extension - shows a template as a new page
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @ingroup Extensions
  * @author Magnus Manske
  * @copyright © 2007 Magnus Manske
  * @licence GNU General Public Licence 2.0 or later
@@ -12,13 +11,13 @@
 class TemplateLink extends SpecialPage
 {
 	public function __construct() {
-		SpecialPage::SpecialPage("TemplateLink");
+		parent::__construct("TemplateLink");
 	}
 
 	public function execute( $par ){
 		global $wgOut, $wgRequest;
 
-		wfLoadExtensionMessages( 'TemplateLink' );
+		
 
 		$this->setHeaders();
 		$template = $wgRequest->getText('template');
@@ -50,8 +49,7 @@ class TemplateLink extends SpecialPage
 	function sandboxParse($wikiText){
 		global $wgUser;
 		$myParser = new Parser();
-		$myParserOptions = new ParserOptions();
-		$myParserOptions->initialiseFromUser($wgUser);
+		$myParserOptions = ParserOptions::newFromUser( $wgUser );
 		$result = $myParser->parse($wikiText, $this->getTitle(), $myParserOptions);
 		return $result->getText();
 	}

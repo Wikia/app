@@ -2,6 +2,7 @@
 /**
  * Internationalisation file for the RT extension.
  *
+ * @file
  * @ingroup Extensions
  */
 
@@ -25,6 +26,8 @@ You tried: '''\$1'''",
 	'rt-badorderby'   => "Invalid ORDER BY (ob) arg: must be a standard field (see documentation).
 You tried: '''\$1'''",
 	'rt-badstatus'    => "Invalid status (s) arg: must be a standard field (see documentation).
+You tried: '''\$1'''",
+	'rt-badcfield'    => "Invalid custom field arg: must be a simple word (see documentation).
 You tried: '''\$1'''",
 	'rt-badqueue'     => "Invalid queue (q) arg: must be a simple word.
 You tried: '''\$1'''",
@@ -73,7 +76,7 @@ $messages['ar'] = array(
 	'rt-nomatches' => 'لا تذاكر RT مطابقة تم العثور عليها',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author McDutchie
@@ -88,6 +91,8 @@ $messages['be-tarask'] = array(
 Вы спрабавалі ўвесьці: '''$1'''",
 	'rt-badstatus' => "Няслушны аргумэнт status (s): ён павінен мець стандартны выгляд (глядзіце дакумэнтацыю).
 Вы спрабавалі ўвесьці: '''$1'''",
+	'rt-badcfield' => "Няслушны аргумэнт для нестандартнага поля: мусіць мець стандартны выгляд (глядзіце дакумэнтацыю).
+Вы спрабавалі ўвесьці: '''$1'''",
 	'rt-badqueue' => "Няслушны аргумэнт queue (q): ён павінен быць простам словам.
 Вы спрабавалі ўвесьці: '''$1'''",
 	'rt-badowner' => "Няслушны аргумэнт owner (o): павінна быць існуючае імя ўдзельніка.
@@ -97,23 +102,26 @@ $messages['be-tarask'] = array(
 
 /** Breton (Brezhoneg)
  * @author Fohanno
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
-	'rt-desc' => 'Etrefas evit RT (Request Tracker)',
+	'rt-desc' => 'Etrefas plijus evit RT (Request Tracker)',
 	'rt-inactive' => "An astenn RT n'eo ket oberiant",
-	'rt-badquery' => "Ur fazi a zo bet gant an astenn RT a-pad ur reked d'an diaz roadennoù",
-	'rt-badlimit' => "N'eo ket mat an arguzenn LIMIT (l) : rankout a ra bezañ un niver.
-Klasket ho peus : '''$1'''",
-	'rt-badorderby' => "N'eo ket mat an arguzenn ORDER BY (ob) : rankout a ra bezañ ur maezienn skoueriek (gwelet an teuliadur).
-Klasket ho peus : '''$1'''",
-	'rt-badstatus' => "N'eo ket mat ar status queue (o) : rankout a ra bezañ ur maezienn skoueriek (gwelet an teuliadur).
-Klasket ho peus : '''$1'''",
-	'rt-badqueue' => "N'eo ket mat an arguzenn queue (o) : rankout a ra bezañ ur ger eeun.
-Klasket ho peus : '''$1'''",
-	'rt-badowner' => "N'eo ket mat an arguzenn owner (o) : rankout a ra bezañ un anv gwiriek.
-Klasket ho peus : '''$1'''",
-	'rt-nomatches' => "N'eo bet kavet tiked RT ebet",
+	'rt-badquery' => 'Ur fazi zo bet gant an astenn RT en ur eskemm gant an diaz roadennoù RT',
+	'rt-badlimit' => "Arguzenn LIMIT (l) direizh : rankout a ra bezañ un niver.
+Lakaet hoc'h eus : '''$1'''",
+	'rt-badorderby' => "Arguzenn ORDER BY (ob) direizh : rankout a ra bezañ ur vaezienn voutin(gwelet an teuliadur).
+Lakaet hoc'h eus : '''$1'''",
+	'rt-badstatus' => "Arguzenn status direizh (s) : rankout a ra bezañ ur vaezienn voutin (gwelet an teuliadur).
+Lakaet hoc'h eus : '''$1'''",
+	'rt-badcfield' => "Arguzenn maezienn bersonelaet direizh : rankout a ra bezañ ur ger eeun (sellit ouzh an teulioù titouriñ).
+Klasket hoc'h eus gant : '''$1'''",
+	'rt-badqueue' => "Arguzenn queue (o) direizh : rankout a ra bezañ ur ger eeun.
+Lakaet hoc'h eus : '''$1'''",
+	'rt-badowner' => "Arguzenn owner (o) direizh : rankout a ra bezañ un anv implijer reizh.
+Lakaet hoc'h eus : '''$1'''",
+	'rt-nomatches' => "N'eus bet kavet tiked RT ebet o klotañ",
 );
 
 /** Bosnian (Bosanski)
@@ -129,6 +137,8 @@ Pokušali ste: '''$1'''",
 Pokušali ste: '''$1'''",
 	'rt-badstatus' => "Nevaljan status (s) argument: mora biti standardno polje (vidi dokumentaciju).
 Pokušali ste: '''$1'''",
+	'rt-badcfield' => "Nevaljan proizvoljno polje argumenta: mora biti jednostavna riječ (vidi dokumentaciju).
+Pokušali ste: '''$1'''",
 	'rt-badqueue' => "Nevaljan queue (q) argument: mora biti jednostavna riječ.
 Pokušali ste: '''$1'''",
 	'rt-badowner' => "Nevaljan owner (o) argument: mora biti validno korisničko ime.
@@ -138,6 +148,7 @@ Vi ste pokušali: '''$1'''",
 
 /** German (Deutsch)
  * @author Imre
+ * @author LWChris
  * @author Pill
  */
 $messages['de'] = array(
@@ -150,6 +161,8 @@ Deine Eingabe: '''$1'''",
 Versuchte Eingabe: '''$1'''",
 	'rt-badstatus' => "Ungültiger status (s)-Parameter: muss ein Standardfeld sein (siehe Dokumentation).
 Versuchte Eingabe: '''$1'''",
+	'rt-badcfield' => "Ungültiger Parameter für benutzerdefiniertes Feld: muss ein einfaches Wort sein (siehe Dokumentation).
+Versuchte Eingabe: '''$1'''",
 	'rt-badqueue' => "Parameter „queue (q)“ ungültig: Muss ein einfaches Wort sein.
 Deine Eingabe: '''$1'''",
 	'rt-badowner' => "Parameter „owner (o)“ ungültig: Muss ein gültiger Benutzername sein.
@@ -157,7 +170,7 @@ Deine Eingabe: '''$1'''",
 	'rt-nomatches' => 'Es wurden keine passenden RT-Tickets gefunden',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Umherirrender
  */
 $messages['de-formal'] = array(
@@ -182,6 +195,8 @@ Sy wopytał: '''$1'''",
 Sy wopytał: '''$1'''",
 	'rt-badstatus' => "Njepłaśiwy argument status (s): musy standardne pólo byś (glědaj dokumentaciju).
 Sy wopytał: '''$1'''",
+	'rt-badcfield' => "Njepłaśiwy swójski pólny argument: musy jadnore słowo byś (glědaj dokumentaciju).
+Sy wopytał: '''$1'''",
 	'rt-badqueue' => "Njepłaśiwy argument queue (q): musy jadnore słowo byś.
 Sy wopytał: '''$1'''",
 	'rt-badowner' => "Njepłaśiwy argument owner (o): musy płaśiwe wužywarske mě byś.
@@ -199,6 +214,7 @@ $messages['el'] = array(
 /** Spanish (Español)
  * @author Antur
  * @author Crazymadlover
+ * @author Pertile
  * @author Translationista
  */
 $messages['es'] = array(
@@ -211,6 +227,8 @@ Intentaste: '''$1'''",
 Intentaste: '''$1'''",
 	'rt-badstatus' => "status inválido (s) arg: debe ser un campo estándar (ver documentación).
 Intentaste: '''$1'''",
+	'rt-badcfield' => "Argumento de campo personalizado inválido: debe ser una palabra simple (consulte la documentación).
+Ha intentado: '''$1'''.",
 	'rt-badqueue' => "cola inválida (q) arg: debe ser una palabra simple.
 Intentaste: '''$1'''",
 	'rt-badowner' => "propietario inválido (o) arg: debe ser un nombre de usuario.
@@ -235,6 +253,7 @@ Yritit: '''$1'''",
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
+ * @author Peter17
  */
 $messages['fr'] = array(
 	'rt-desc' => 'Interface pour RT (Request Tracker)',
@@ -246,6 +265,8 @@ Vous avez essayé : '''$1'''",
 Vous avez essayé : '''$1'''",
 	'rt-badstatus' => "Argument status (s) invalide : il doit être un champ standard (voir la documentation).
 Vous avez essayé : '''$1'''",
+	'rt-badcfield' => "Argument de champ personnalisé invalide : doit être un mot simple (voir documentation).
+Vous avec essayé : '''$1'''",
 	'rt-badqueue' => "Argument queue (q) invalide : il doit être un mot simple.
 Vous avez essayé : '''$1'''",
 	'rt-badowner' => "Argument owner (o) invalide : il doit être un nom d’utilisateur valide.
@@ -261,16 +282,18 @@ $messages['gl'] = array(
 	'rt-desc' => "Interface da extensión RT (''Request Tracker'')",
 	'rt-inactive' => 'A extensión RT non está activa',
 	'rt-badquery' => 'A extensión RT atopou un erro ao conectar coa súa base de datos',
-	'rt-badlimit' => "O parámetro LIMIT (l) é inválido: debe ser un número.
-Vostede tentou: '''$1'''",
-	'rt-badorderby' => "O parámetro ORDER BY (ob) é inválido: debe ser un campo estándar (véxase a documentación).
-Vostede tentou: '''$1'''",
-	'rt-badstatus' => "O parámetro status (s) é inválido: debe ser un campo estándar (véxase a documentación).
-Vostede tentou: '''$1'''",
-	'rt-badqueue' => "O parámetro queue (q) é inválido: debe ser unha palabra sinxela.
-Vostede tentou: '''$1'''",
-	'rt-badowner' => "O parámetro owner (o) é inválido: debe ser un nome de usuario válido.
-Vostede tentou: '''$1'''",
+	'rt-badlimit' => "O argumento LIMIT (l) é inválido: debe ser un número.
+Vostede intentou: '''$1'''",
+	'rt-badorderby' => "O argumento ORDER BY (ob) é inválido: debe ser un campo estándar (véxase a documentación).
+Vostede intentou: '''$1'''",
+	'rt-badstatus' => "O argumento status (s) é inválido: debe ser un campo estándar (véxase a documentación).
+Vostede intentou: '''$1'''",
+	'rt-badcfield' => "O argumento do campo personalizado é inválido: debe ser unha palabra simple (véxase a documentación).
+Vostede intentou: '''$1'''",
+	'rt-badqueue' => "O argumento queue (q) é inválido: debe ser unha palabra simple.
+Vostede intentou: '''$1'''",
+	'rt-badowner' => "O argumento owner (o) é inválido: debe ser un nome de usuario válido.
+Vostede intentou: '''$1'''",
 	'rt-nomatches' => 'Non se atoparon boletos RT que coincidisen',
 );
 
@@ -287,6 +310,8 @@ Du hesch yygee: '''$1'''",
 Du hesch yygee: '''$1'''",
 	'rt-badstatus' => "Nit giltig status (s)-Argumänt: muess e Standard fäld syy (lueg Dokumäntation).
 Du hesch yygee: '''$1'''",
+	'rt-badcfield' => "Nit giltig Argumänt fir benutzerdefinierti Fälder: muess e eifach Wort syy (lueg Dokumäntation).
+Du hesch yygee: '''$1'''",
 	'rt-badqueue' => "Nit giltig queue (q)-Argumänt: muess e eifach Wort syy.
 Du hesch yygee: '''$1'''",
 	'rt-badowner' => "Nit giltig owner (o)-Argumänt: muess e giltige Benutzername Wort syy.
@@ -295,13 +320,26 @@ Du hesch yygee: '''$1'''",
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
 $messages['he'] = array(
-	'rt-desc' => 'ממשק מהודר למעקב הבקשות (RT)',
-	'rt-inactive' => 'הרחבת ה־RT אינה פעילה',
-	'rt-badquery' => 'הרחבת ה־RT נתקלה בשגיאה בעת ההתקשרות עם בסיס הנתונים של RT',
+	'rt-desc' => 'ממשק יפה ל־Request Tracker&rlm; (RT)',
+	'rt-inactive' => 'הרחבת RT אינה פעילה',
+	'rt-badquery' => 'הרחבת RT נתקלה בשגיאה בעת ההתקשרות עם מסד הנתונים של RT',
+	'rt-badlimit' => "ארגומנט LIMIT (l)&lrm; אינו תקין: צריך להיות מספר.
+אתם ניסיתם: '''$1'''",
+	'rt-badorderby' => "ארגומנט ORDER BY (ob)&lrm; בלתי תקין: צריך להיות שדה תקני (ר' תיעוד).
+אתם ניסיתם: '''$1'''",
+	'rt-badstatus' => "ארגומנט status (s)&lrm; בלתי תקין: צריך להיות שדה תקני (ר' תיעוד).
+אתם ניסיתם: '''$1'''",
+	'rt-badcfield' => "ארגומנט שדה מותאם אישי בלתי תקין: צריכה להיות מילה פשוטה (ר' תיעוד).
+אתם ניסיתם: '''$1'''",
+	'rt-badqueue' => "ארגומנט queue (q)&lrm; בלתי תקין: צריכה להיות מילה פשוטה (ר' תיעוד).
+אתם ניסיתם: '''$1'''",
+	'rt-badowner' => "ארגומנט owner (o)&lrm; בלתי תקין: צריך להיות שם משתמש.
+אתם ניסיתם: '''$1'''",
 	'rt-nomatches' => 'לא נמצאו כרטיסיות RT תואמות',
 );
 
@@ -318,6 +356,7 @@ Sy spytał: '''$1'''",
 Sy spytał: '''$1'''",
 	'rt-badstatus' => "Njepłaćiwy argument status (s): dyrbi standardne polo być (hlej dokumentaciju).
 Sy spytał: '''$1'''",
+	'rt-badcfield' => "Njepłaćiwy swójski pólny argument: dyrbi jednore słowo (hlej dokumentaciju). Sy spytał: '''$1'''",
 	'rt-badqueue' => "Njepłaćiwy argument queue (q): dyrbi jednore słowo być.
 Sy spytał: '''$1'''",
 	'rt-badowner' => "Njepłaćiwy argument owner (o): dyrbi płaćiwe wužiwarske mjeno być.
@@ -337,6 +376,8 @@ A következőt próbáltad: '''$1'''",
 	'rt-badorderby' => "Érvénytelen ORDER BY (ob) paraméter: standard mezőnek kell lennie (lásd a dokumentációt).
 A következőt próbáltad: '''$1'''",
 	'rt-badstatus' => "Érvénytelen status (s) paraméter: standard mezőnek kell lennie (lásd a dokumentációt).
+A következőt próbáltad: '''$1'''",
+	'rt-badcfield' => "Érvénytelen egyedi mező argumentum: egyszerű szónak kell lennie (lásd a dokumentációt).
 A következőt próbáltad: '''$1'''",
 	'rt-badqueue' => "Érvénytelen queue (q) paraméter: egyszerű szónak kell lennie.
 A következőt próbáltad: '''$1'''",
@@ -358,6 +399,8 @@ Tu entrava: '''$1'''",
 Tu entrava: '''$1'''",
 	'rt-badstatus' => "Le parametro status (s) es invalide: debe esser un campo standard (vide le documentation).
 Tu entrava: '''$1'''",
+	'rt-badcfield' => "Le parametro de campo personalisate es invalide: debe esser un parola simple (vide le documentation).
+Tu entrava: '''$1'''",
 	'rt-badqueue' => "Le parametro queue (q) es invalide: debe esser un parola simple.
 Tu entrava: '''$1'''",
 	'rt-badowner' => "Le parametro owner (o) es invalide: debe esser un nomine de usator valide.
@@ -367,6 +410,7 @@ Tu entrava: '''$1'''",
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
+ * @author Farras
  */
 $messages['id'] = array(
 	'rt-desc' => 'Antarmuka keren untuk RT (Request Tracker)',
@@ -378,6 +422,8 @@ Anda mencoba: '''$1'''",
 Anda mencoba: '''$1'''",
 	'rt-badstatus' => "Argumen status (s) tidak sah: harus standar (lihat dokumentasi).
 Anda mencoba: '''$1'''",
+	'rt-badcfield' => "Argumen bidang status tidak sah: harus sederhana (lihat dokumentasi).
+Anda mencoba: '''$1'''",
 	'rt-badqueue' => "Argumen queue (q) tidak sah: harus kata sederhana.
 Anda mencoba: '''$1'''",
 	'rt-badowner' => "Argumen owner (o) tidak sah: harus nama pengguna yang sah
@@ -386,6 +432,7 @@ Anda mencoba: '''$1'''",
 );
 
 /** Japanese (日本語)
+ * @author Aotake
  * @author Fryed-peach
  */
 $messages['ja'] = array(
@@ -398,6 +445,8 @@ $messages['ja'] = array(
 与えられた値: '''$1'''",
 	'rt-badstatus' => "status (s) の引数が不正: 標準のフィールドでなくてはなりません(ドキュメントを参照)。
 与えられた値: '''$1'''",
+	'rt-badcfield' => "カスタムフィールドの引数が不正: 単純な単語である必要があります（説明書を参照）。
+与えられた値: '''$1'''",
 	'rt-badqueue' => "queue (q) の引数が不正: 単純な語でなくてはなりません。
 与えられた値: '''$1'''",
 	'rt-badowner' => "owner (o) の引数が不正: 有効な利用者名でなくてはなりません。
@@ -405,7 +454,7 @@ $messages['ja'] = array(
 	'rt-nomatches' => '一致する RT チケットは見つかりませんでした',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -415,6 +464,9 @@ $messages['ksh'] = array(
 	'rt-badlimit' => 'Dinge Versooch met „$1“ för dä Parrameeter „<code lang="en">LIMIT (l)</code>“ wor nix. De häts en Zahl aanjävve möße.',
 	'rt-badorderby' => 'Dinge Versooch met „$1“ för dä Parrameeter „<code lang="en">ORDER BY (ob)</code>“ wohr nix. De häts en shtandatt Feld aanjävve möße. Loor Der de Dokkemäntazjuhn aan, wat dat es.',
 	'rt-badstatus' => 'Dinge Versooch met „$1“ för dä Parrameeter „<code lang="en">status (s)</code>“ wohr nix. De häts e shtandatt Feld aanjävve möße. Loor Der de Dokkemäntazjuhn aan, wat dat es.',
+	'rt-badcfield' => 'Dä Parrameeter för e selfsjemaat Feld es nix: Dat moß eijfach ei Woot sin.
+Loor Der de Dokkemäntazjuhn aan, wat domet es.
+Do hatts „$1“ probeet.',
 	'rt-badqueue' => 'Dinge Versooch met „$1“ för dä Parrameeter „<code lang="en">queue (q)</code>“ wohr nix. De häts e eijnfach Woot aanjävve möße.',
 	'rt-badowner' => 'Dinge Versooch met „$1“ för dä Parrameeter „<code lang="en">owner (o)</code>“ wohr nix. De häts ene jöltijje Name för ene Metmaacher aanjävve möße.',
 	'rt-nomatches' => 'Mer hann kein zopaß Aanforderunge (ov <i lang="en">tickets</i>) em RT (<i lang="en">Request Tracker</i>) för de Aanforderungs-Verfoljung jevonge.',
@@ -427,21 +479,26 @@ $messages['lb'] = array(
 	'rt-desc' => 'Interface fir RT (Request Tracker)',
 	'rt-inactive' => "D'RT-Erweiderung ass net aktiv",
 	'rt-badquery' => "D'RT-Erweiderung hat bäi der Kommunikatioun mat der RT-Datebank e Problem",
+	'rt-badlimit' => "Parameter \"LIMIT (l)\" net valabel: Et muss eng Zuel sinn.
+Dir hutt '''\$1''' probéiert",
+	'rt-nomatches' => 'Et goufe keng RT Tickete fonnt déi dorop passen',
 );
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'rt-desc' => 'Збогатен интерфејс за RT (Request Tracker, „Следење на барања“)',
-	'rt-inactive' => 'Проширувањето RT не е активно',
-	'rt-badquery' => 'Проширувањето RT наиде на грешка при комуницирањето со RT базата на податоци',
+	'rt-desc' => 'Збогатен посредник за RT (Request Tracker, „Следење на барања“)',
+	'rt-inactive' => 'Додатокот RT не е активен',
+	'rt-badquery' => 'Додатокот RT наиде на грешка при општењето со базата на податоци RT',
 	'rt-badlimit' => "Неважечки LIMIT (l) аргумент: мора да биде број.
 Вие наведовте: '''$1'''",
 	'rt-badorderby' => "Неважечки ORDER BY (ob) аргумент: мора да биде стандардно поле (погледајте во документацијата).
 Вие наведовте: '''$1'''",
 	'rt-badstatus' => "Неважечки status (s) аргумент: мора да биде стандардно поле (погледајте во документацијата).
 Вие наведовте: '''$1'''",
+	'rt-badcfield' => "Погрешен аргумент за прилагодливо поле: мора да е прост збор (видете во документацијата).
+Вие се обидовте со: '''$1'''",
 	'rt-badqueue' => "Неважечки queue (q) аргумент: мора да биде прост збор.
 Вие наведовте: '''$1'''",
 	'rt-badowner' => "Неважечки owner (o) аргумент: мора да биде важечко корисничко име.
@@ -463,6 +520,8 @@ U hebt het volgende geprobeerd: '''$1'''",
 U hebt het volgende geprobeerd: '''$1'''",
 	'rt-badstatus' => "Ongeldige parameterstatus (s): moet een standaard veld zijn (zie documentatie).
 U hebt het volgende geprobeerd: '''$1'''",
+	'rt-badcfield' => "Ongeldig maatwerkveldargument: het moet een eenvoudig woord zijn (zie documentatie).
+U hebt geprobeerd: '''$1'''",
 	'rt-badqueue' => "Ongeldige parameter queue (q): moet een eenvoudig woord zijn.
 U hebt het volgende geprobeerd: '''$1'''",
 	'rt-badowner' => "Ongeldige parameter owner (o): moet een geldige gebruikersnaam zijn.
@@ -473,7 +532,7 @@ U hebt het volgende geprobeerd: '''$1'''",
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'rt-desc' => 'Fancy grensesnitt til RT (Request Tracker)',
 	'rt-inactive' => 'RT-utvidelsen er ikke aktiv',
 	'rt-badquery' => 'RT-utvidelsen støtte på en feil når den forsøkte å kommunisere med RT-databasen',
@@ -482,6 +541,8 @@ Du prøvde: '''$1'''",
 	'rt-badorderby' => "Ugyldig ORDER BY (ob) argument: må være et standardfelt (se dokumentasjonen).
 Du prøvde: '''$1'''",
 	'rt-badstatus' => "Ugyldig status (s) argument: må være et standardfelt (se dokumentasjonen).
+Du prøvde: '''$1'''",
+	'rt-badcfield' => "Ugyldig egendefinert feltargument: må være et enkelt ord (se dokumentasjonen).
 Du prøvde: '''$1'''",
 	'rt-badqueue' => "Ugyldig queue (q) argument: må være et enkelt ord.
 Du prøvde: '''$1'''",
@@ -503,6 +564,8 @@ Avètz ensajat : '''$1'''",
 Avètz ensajat : '''$1'''",
 	'rt-badstatus' => "Argument status (s) invalid : deu èsser un camp estandard (vejatz la documentacion).
 Avètz ensajat : '''$1'''",
+	'rt-badcfield' => "Argument de camp personalizat invalid : deu èsser un mot simple (veire documentacion).
+Avètz ensajat : '''$1'''",
 	'rt-badqueue' => "Argument queue (q) invalid : deu èsser un mot simple.
 Avètz ensajat : '''$1'''",
 	'rt-badowner' => "Argument owner (o) invalid : deu èsser un nom d'utilizaire valid.
@@ -523,6 +586,8 @@ Próbowałeś '''$1'''",
 Próbowałeś '''$1'''",
 	'rt-badstatus' => "Nieprawidłowe status (s) – argument musi być standardowym polem (sprawdź w dokumentacji).
 Próbowałeś '''$1'''",
+	'rt-badcfield' => "Nieprawidłowy argument w niestandardowym polu – musi to być proste słowo (sprawdź w dokumentacji).
+Próbowałeś – '''$1'''",
 	'rt-badqueue' => "Nieprawidłowe queue (s) – argument musi być prostym słowem.
 Próbowałeś '''$1'''",
 	'rt-badowner' => "Nieprawidłowe owner (o) – argument musi być poprawną nazwą użytkownika.
@@ -542,6 +607,8 @@ It l'has provà: '''$1'''",
 	'rt-badorderby' => "Arg ORDER BY (ob) pa bon: a deuv esse un camp standard (varda la documentassion).
 It l'has provà: '''$1'''",
 	'rt-badstatus' => "Arg status (s) pa bon: a deuv esse un camp standard (varda la documentassion).
+It l'has provà: '''$1'''",
+	'rt-badcfield' => "Argoment dël camp utent pa bon: a deuv esse na paròla sola (varda la documentassion).
 It l'has provà: '''$1'''",
 	'rt-badqueue' => "Arg queue (s) pa bon: a deuv esse na paròla sempia.
 It l'has provà: '''$1'''",
@@ -566,6 +633,8 @@ Tentou: '''$1'''",
 Tentou: '''$1'''",
 	'rt-badstatus' => "Parâmetro status (s) inválido: deve ser um campo padrão (veja a documentação).
 Tentou: '''$1'''",
+	'rt-badcfield' => "Argumento inválido para o campo personalizado: tem de ser uma palavra simples (consulte a documentação).
+Tentou: '''$1'''",
 	'rt-badqueue' => "Parâmetro queue (q) inválido: deve ser uma palavra simples.
 Tentou: '''$1'''",
 	'rt-badowner' => "Parâmetro owner (o) inválido: deve ser um nome de utilizador válido.
@@ -575,6 +644,7 @@ Tentou: '''$1'''",
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
  */
 $messages['pt-br'] = array(
 	'rt-desc' => 'Interface para o RT (Request Tracker)',
@@ -586,6 +656,8 @@ Você tentou: '''$1'''",
 Você tentou: '''$1'''",
 	'rt-badstatus' => "Parâmetro status (s) inválido: é necessário que seja um campo padrão (veja a documentação).
 Você tentou: '''$1'''",
+	'rt-badcfield' => "Argumento inválido para o campo personalizado: tem de ser uma palavra simples (consulte a documentação).
+Tentou: '''$1'''",
 	'rt-badqueue' => "Parâmetro queue (q) inválido: é preciso que seja uma palavra simples.
 Você tentou: '''$1'''",
 	'rt-badowner' => "Parâmetro owner (o) inválido: é necessário que seja um nome de utilizador válido.
@@ -620,6 +692,8 @@ $messages['ru'] = array(
 	'rt-badorderby' => "Неверный аргумент ORDER BY (ob): должно быть стандартное поле (смотрите документацию).
 Вы указали: '''$1'''",
 	'rt-badstatus' => "Неверный аргумент status (s): должно быть стандартное поле (смотрите документацию).
+Вы указали: '''$1'''",
+	'rt-badcfield' => "Недопустимый аргумент пользовательского поля: должно быть простое слово (см. документацию).
 Вы указали: '''$1'''",
 	'rt-badqueue' => "Неверный аргумент queue (l): должно простое слово.
 Вы указали: '''$1'''",
@@ -668,6 +742,28 @@ Du försökte: '''$1'''",
 	'rt-nomatches' => 'Inga matchande RT-tickets hittades',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'rt-desc' => 'Makapritsong hugpungang-mukha sa RT (Request Tracker)',
+	'rt-inactive' => 'Hindi gumagana ang dugtong sa RT',
+	'rt-badquery' => 'Nakasalubong ng kamalian ang dugtong na RT habang nakikipag-usap sa talaan ng mga dato ng RT',
+	'rt-badlimit' => "Hindi tanggap na  LIMIT (l) katwiran: dapat na isang bilang.
+Sinubok mo ang: '''$1'''",
+	'rt-badorderby' => "Hindi tanggap na ORDER BY (ob) katwiran: dapat na pampantayang larangan (tingnan ang dokumentasyon).
+Sinubok mo ang: '''$1'''",
+	'rt-badstatus' => "Hindi tanggap na status (s) katwiran: dapat na pampamantayang larangan (tingnan ang dokumentasyon).
+Sinubok mo ang: '''$1'''",
+	'rt-badcfield' => "Hindi tanggap na pasadyang larangan, katwiran: dapat na isang payak na salita (tingnan ang dokumentasyon).
+Sinubok mo ang: '''$1'''",
+	'rt-badqueue' => "Hindi tanggap na queue (q) katwiran: dapat na isang payak na salita.
+Sinubok mo ang: '''$1'''",
+	'rt-badowner' => "Hindi tanggap na owner (o) katwiran: dapat na isang tanggap na pangalan ng tagagamit.
+Sinubok mo ang: '''$1'''",
+	'rt-nomatches' => 'Walang natagpuang tumutugma na mga tiket ng RT',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
@@ -682,7 +778,9 @@ Bạn đã gọi: '''$1'''",
 Bạn đã gọi: '''$1'''",
 	'rt-badstatus' => "Thông số status (s) sai: phải là một trường chuẩn (xem tài liệu đi kèm).
 Bạn đã gọi: '''$1'''",
-	'rt-badqueue' => "Thông số queue (q) sai: phải là từ đơn giản.
+	'rt-badcfield' => "Thông số trường tùy biến sai: phải là một từ đơn giản (xem tài liệu đi kèm).
+Bạn đã gọi: '''$1'''",
+	'rt-badqueue' => "Thông số hàng đợi (q) sai: phải là từ đơn giản.
 Bạn đã gọi: '''$1'''",
 	'rt-badowner' => "Thông số owner (o) sai: phải là một tên người dùng đã có.
 Bạn đã gọi: '''$1'''",

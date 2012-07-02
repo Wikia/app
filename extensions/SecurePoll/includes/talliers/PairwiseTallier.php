@@ -95,7 +95,7 @@ abstract class SecurePoll_PairwiseTallier extends SecurePoll_Tallier {
 		$s = "<table class=\"securepoll-results\">";
 
 		# Corner box
-		$s .= "<tr>\n<th>&nbsp;</th>\n";
+		$s .= "<tr>\n<th>&#160;</th>\n";
 
 		# Header row
 		foreach ( $rankedIds as $oid ) {

@@ -186,8 +186,8 @@ class Wall {
 		     or page_wikia_props.propname = ".WPP_WALL_REMOVE."
 		     or page_wikia_props.propname = ".WPP_WALL_ARCHIVE.")
 		where page_wikia_props.page_id is null
-		and page.page_title LIKE '" . $dbr->escapeLike( $this->mTitle->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX . "%'
-		and page.page_title NOT LIKE '" . $dbr->escapeLike( $this->mTitle->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX . "%/" . ARTICLECOMMENT_PREFIX ."%'
+		and page.page_title" . $dbr->buildLike( sprintf( "%s/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . " 
+		and page.page_title NOT " . $dbr->buildLike( sprintf( "%s/%s%%/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX, ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . " 
 		and page.page_namespace = ".MWNamespace::getTalk($this->mTitle->getNamespace())."
 		and page.page_latest > 0
 		order by page.page_id desc";
@@ -236,7 +236,7 @@ class Wall {
 	private function getInList($dbr, $title, $flags = array()) {
 		$conds = array();
 		$conds['page_wikia_props.propname'] = $flags;
-		$conds[] = "page.page_title LIKE '" . $dbr->escapeLike( $this->mTitle->getDBkey() ) . '/' . ARTICLECOMMENT_PREFIX . "%'";
+		$conds[] = "page.page_title " . $dbr->buildLike( sprintf( "%s/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() );
 		$conds[] = "page_wikia_props.page_id = page.page_id";
 		
 		$res = $dbr->select( array('page', 'page_wikia_props'), 
@@ -269,7 +269,7 @@ class Wall {
 		$conds = array();
 		$like = array();
 		foreach( $this->notCached as $tId => $tTitle ) {
-			$like[]  = "page_title LIKE '" . $dbr->escapeLike( $tTitle ) . '/' . ARTICLECOMMENT_PREFIX ."%'";
+			$like[]  = "page_title" . $dbr->buildLike( sprintf( "%s/%s", $tTitle, ARTICLECOMMENT_PREFIX ), $dbr->anyString() );
 		}
 		$conds[] = implode(' OR ', $like);
 		$conds[] = "page_latest > 0";	// BugId:22821

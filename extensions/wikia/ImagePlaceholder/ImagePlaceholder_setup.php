@@ -8,8 +8,8 @@ if(!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['other'][] = array(
-        'name' => 'Image Placeholder (Add Images)',
-        'author' => 'Bartek Łapiński',
+	'name' => 'Image Placeholder (Add Images)',
+	'author' => 'Bartek Łapiński',
 	'version' => '0.61',
 );
 
@@ -37,7 +37,6 @@ $wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'ImagePlaceholderBeforeParse
 function ImagePlaceholderFetchTemplateAndTitle( $text, $finalTitle ) {
         global $wgContLang, $wgWikiaImagesFoundInTemplates;
         $img_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsg( 'imgplc-placeholder' );
-	// todo NS_IMAGE!
 
         if ($text !== false) {
                 $count = 0;
@@ -65,7 +64,7 @@ function ImagePlaceholderTranslateNsImage() {
 
 // this function is to bypass the default MW parameter handling, because it assumes we have an actual file on the way
 // it passes $params array by reference to be used later
-function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( $parser, $title, $parts, $params, $time, $descQuery, $options ) {
+function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( Parser $parser, Title $title, $parts, $params, $time, $descQuery, $options ) {
 	// we have to ready the parameters and then fire up makeLink, heh
 	// other way parameters are mangled
 
@@ -144,7 +143,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$fp =& $frameParams;
 	$hp =& $handlerParams;
 
-	global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled, $wgWysiwygMetaData;
+	global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgRTEParserEnabled;
 
 	$plc_tag = '';
 	$plc_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsgForContent( 'imgplc-placeholder' );
@@ -217,10 +216,11 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$lmarg = ceil( ( $width - 90 ) / 2 );
 	$tmarg = ceil( ( $height - 30 ) / 2 );
 
-	// macbre: Wysiwyg support for video placeholder
-	if (empty($wgWysiwygParserEnabled)) {
+	// macbre: RTE support for video placeholder
+	// TODO: use JSSnippets to load dependencies
+	if (empty($wgRTEParserEnabled)) {
 		if( ($wgRequest->getVal('diff',0) == 0) && ($wgRequest->getVal('oldid',0) == 0) ) {
-			$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )';
+			$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); mw.loader.load( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion, "text/css" ) } ) } )';
 		} else {
 			$onclick = 'alert('.escapeshellarg(wfMsg('imgplc-notinhistory')).'); return false;';
 		}

@@ -20,29 +20,42 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class PurgeList extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Send purge requests for listed pages to squid";
+		$this->addOption( 'purge', 'Whether to update page_touched.' , false, false );
+		$this->addOption( 'namespace', 'Namespace number', false, true );
+		$this->setBatchSize( 100 );
 	}
 
 	public function execute() {
+		if( $this->hasOption( 'namespace' ) ) {
+			$this->purgeNamespace();
+		} else {
+			$this->purgeList();
+		}
+		$this->output( "Done!\n" );
+	}
+
+	/** Purge URL coming from stdin */
+	private function purgeList() {
 		$stdin = $this->getStdin();
 		$urls = array();
 
-		while( !feof( $stdin ) ) {
+		while ( !feof( $stdin ) ) {
 			$page = trim( fgets( $stdin ) );
-			if ( substr( $page, 0, 7 ) == 'http://' ) {
+			if ( preg_match( '%^https?://%', $page ) ) {
 				$urls[] = $page;
-			} elseif( $page !== '' ) {
+			} elseif ( $page !== '' ) {
 				$title = Title::newFromText( $page );
-				if( $title ) {
-					$url = $title->getFullUrl();
+				if ( $title ) {
+					$url = $title->getInternalUrl();
 					$this->output( "$url\n" );
 					$urls[] = $url;
-					if( isset( $options['purge'] ) ) {
+					if ( $this->getOption( 'purge' ) ) {
 						$title->invalidateCache();
 					}
 				} else {
@@ -50,14 +63,70 @@ class PurgeList extends Maintenance {
 				}
 			}
 		}
+		$this->sendPurgeRequest( $urls );
+	}
 
-		$this->output( "Purging " . count( $urls ) . " urls...\n" );
+	/** Purge a namespace given by --namespace */
+	private function purgeNamespace() {
+		$dbr = wfGetDB( DB_SLAVE );
+		$ns = $dbr->addQuotes( $this->getOption( 'namespace') );
+
+		$result = $dbr->select(
+			array( 'page' ),
+			array( 'page_namespace', 'page_title' ),
+			array( "page_namespace = $ns" ),
+			__METHOD__,
+			array( 'ORDER BY' => 'page_id' )
+		);
+
+		$start   = 0;
+		$end = $dbr->numRows( $result );
+		$this->output( "Will purge $end pages from namespace $ns\n" );
+
+		# Do remaining chunk
+		$end += $this->mBatchSize - 1;
+		$blockStart = $start;
+		$blockEnd = $start + $this->mBatchSize - 1;
+
+		while( $blockEnd <= $end ) {
+			# Select pages we will purge:
+			$result = $dbr->select(
+				array( 'page' ),
+				array( 'page_namespace', 'page_title' ),
+				array( "page_namespace = $ns" ),
+				__METHOD__,
+				array( # conditions
+					'ORDER BY' => 'page_id',
+					'LIMIT'    => $this->mBatchSize,
+					'OFFSET'   => $blockStart,
+				)
+			);
+			# Initialize/reset URLs to be purged
+			$urls = array();
+			foreach( $result as $row ) {
+				$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+				$url = $title->getInternalUrl();
+				$urls[] = $url;
+			}
+
+			$this->sendPurgeRequest( $urls );
+
+			$blockStart += $this->mBatchSize;
+			$blockEnd   += $this->mBatchSize;
+		}
+	}
+
+	/**
+	 * Helper to purge an array of $urls
+	 * @param $urls array List of URLS to purge from squids
+	 */
+	private function sendPurgeRequest( $urls ) {
+		$this->output( "Purging " . count( $urls ). " urls\n" );
 		$u = new SquidUpdate( $urls );
 		$u->doUpdate();
-
-		$this->output( "Done!\n" );
 	}
+
 }
 
 $maintClass = "PurgeList";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

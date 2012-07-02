@@ -12,10 +12,11 @@
  *
  * ----------
  *
- * Copyright (C) 2001-2010 Magnus Manske, Brion Vibber, Lee Daniel Crocker,
+ * Copyright (C) 2001-2011 Magnus Manske, Brion Vibber, Lee Daniel Crocker,
  * Tim Starling, Erik Möller, Gabriel Wicke, Ævar Arnfjörð Bjarmason,
  * Niklas Laxström, Domas Mituzas, Rob Church, Yuri Astrakhan, Aryeh Gregor,
- * Aaron Schulz and others.
+ * Aaron Schulz, Andrew Garrett, Raimond Spekking, Alexandre Emsenhuber
+ * Siebrand Mazeland, Chad Horohoe, Roan Kattouw and others.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,94 +36,23 @@
  * @file
  */
 
+# Bail on old versions of PHP.  Pretty much every other file in the codebase
+# has structures (try/catch, foo()->bar(), etc etc) which throw parse errors in
+# PHP 4. Setup.php and ObjectCache.php have structures invalid in PHP 5.0 and
+# 5.1, respectively.
+if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.2.3' ) < 0 ) {
+	require( dirname( __FILE__ ) . '/includes/PHPVersionError.php' );
+	wfPHPVersionError( 'index.php' );
+}
 
-# Initialise common code
-$preIP = dirname( __FILE__ );
-require_once( "$preIP/includes/WebStart.php" );
-# Initialize MediaWiki base class
-require_once( "$preIP/includes/Wiki.php" );
+# Initialise common code.  This gives us access to GlobalFunctions, the
+# AutoLoader, and the globals $wgRequest, $wgOut, $wgUser, $wgLang and
+# $wgContLang, amongst others; it does *not* load $wgTitle
+if ( isset( $_SERVER['MW_COMPILED'] ) ) {
+	require ( 'phase3/includes/WebStart.php' );
+} else {
+	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
+}
+
 $mediaWiki = new MediaWiki();
-
-wfAppendTimerHeader('AS', $wgRequestTime, true);
-wfProfileIn( 'main-misc-setup' );
-OutputPage::setEncodings(); # Not really used yet
-
-$maxLag = $wgRequest->getVal( 'maxlag' );
-if( !is_null( $maxLag ) && !$mediaWiki->checkMaxLag( $maxLag ) ) {
-	exit;
-}
-
-# Query string fields
-$action = $wgRequest->getVal( 'action', 'view' );
-$title = $wgRequest->getVal( 'title' );
-
-# Set title from request parameters
-$wgTitle = $mediaWiki->checkInitialQueries( $title, $action );
-if( $wgTitle === null ) {
-	unset( $wgTitle );
-}
-
-wfProfileOut( 'main-misc-setup' );
-
-// Wikia change -- Send a more meaningful transaction name to newrelic
-if (function_exists('newrelic_name_transaction')) {
-	newrelic_name_transaction("$wgDBname/$action");
-}
-
-#
-# Send Ajax requests to the Ajax dispatcher.
-#
-if( $wgUseAjax && $action == 'ajax' ) {
-	require_once( $IP . '/includes/AjaxDispatcher.php' );
-	$dispatcher = new AjaxDispatcher();
-	$dispatcher->performAction();
-	$mediaWiki->restInPeace();
-	exit;
-}
-
-if( $wgUseFileCache && isset( $wgTitle ) ) {
-	wfProfileIn( 'main-try-filecache' );
-	// Raw pages should handle cache control on their own,
-	// even when using file cache. This reduces hits from clients.
-	if( $action != 'raw' && HTMLFileCache::useFileCache() ) {
-		/* Try low-level file cache hit */
-		$cache = new HTMLFileCache( $wgTitle, $action );
-		if( $cache->isFileCacheGood( /* Assume up to date */ ) ) {
-			/* Check incoming headers to see if client has this cached */
-			if( !$wgOut->checkLastModified( $cache->fileCacheTime() ) ) {
-				$cache->loadFromFileCache();
-			}
-			# Do any stats increment/watchlist stuff
-			$wgArticle = MediaWiki::articleFromTitle( $wgTitle );
-			$wgArticle->viewUpdates();
-			# Tell $wgOut that output is taken care of
-			wfProfileOut( 'main-try-filecache' );
-			$mediaWiki->restInPeace();
-			exit;
-		}
-	}
-	wfProfileOut( 'main-try-filecache' );
-}
-
-# Setting global variables in mediaWiki
-$mediaWiki->setVal( 'action', $action );
-$mediaWiki->setVal( 'CommandLineMode', $wgCommandLineMode );
-$mediaWiki->setVal( 'DisabledActions', $wgDisabledActions );
-$mediaWiki->setVal( 'DisableHardRedirects', $wgDisableHardRedirects );
-$mediaWiki->setVal( 'DisableInternalSearch', $wgDisableInternalSearch );
-$mediaWiki->setVal( 'EnableCreativeCommonsRdf', $wgEnableCreativeCommonsRdf );
-$mediaWiki->setVal( 'EnableDublinCoreRdf', $wgEnableDublinCoreRdf );
-$mediaWiki->setVal( 'JobRunRate', $wgJobRunRate );
-$mediaWiki->setVal( 'Server', $wgServer );
-$mediaWiki->setVal( 'SquidMaxage', $wgSquidMaxage );
-$mediaWiki->setVal( 'UseExternalEditor', $wgUseExternalEditor );
-$mediaWiki->setVal( 'UsePathInfo', $wgUsePathInfo );
-
-$mediaWiki->performRequestForTitle( $wgTitle, $wgArticle, $wgOut, $wgUser, $wgRequest );
-$mediaWiki->finalCleanup( $wgDeferredUpdateList, $wgOut );
-
-# Not sure when $wgPostCommitUpdateList gets set, so I keep this separate from finalCleanup
-$mediaWiki->doUpdates( $wgPostCommitUpdateList );
-
-$mediaWiki->restInPeace();
-
+$mediaWiki->run();

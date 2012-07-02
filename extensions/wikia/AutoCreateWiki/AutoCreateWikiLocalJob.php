@@ -21,13 +21,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /**
  * sometimes class Job is uknown in this point
  */
-include_once( $GLOBALS[ "IP" ] . "/includes/JobQueue.php" );
+include_once( "$IP/includes/job/JobQueue.php" );
 $wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
 
 /**
  * maintenance script from CheckUser
  */
-include_once( $GLOBALS['IP'] . "/extensions/CheckUser/install.inc" );
+include_once( "$IP/extensions/CheckUser/install.inc" );
 
 
 class AutoCreateWikiLocalJob extends Job {
@@ -549,25 +549,25 @@ class AutoCreateWikiLocalJob extends Job {
 			$oUser = User::newFromId($oRow->rev_user);
 			# revision
 			$oRevision = Revision::newFromId($oRow->rev_id);
-			if ( $wgEnableScribeNewReport ) {	
-				$key = ( isset($pages[$oRow->page_id]) ) ? 'edit' : 'create';			
-				$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => $key, 'archive' => 0 ) );		
+			if ( $wgEnableScribeNewReport ) {
+				$key = ( isset($pages[$oRow->page_id]) ) ? 'edit' : 'create';
+				$oScribeProducer = F::build( 'ScribeEventProducer', array( 'key' => $key, 'archive' => 0 ) );
 				if ( is_object( $oScribeProducer ) ) {
 					if ( $oScribeProducer->buildEditPackage( $oArticle, $oUser, $oRevision ) ) {
 						$oScribeProducer->sendLog();
 					}
 				}
 			} else {
-				$flags = "";				
+				$flags = "";
 				# status - new or edit
 				$status = Status::newGood( array() );
 				# check is new
 				$status->value['new'] = ( isset($pages[$oRow->page_id]) ? false : true );
 				# call function
 				$archive = 0;
-		
-				$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );		
-			}			
+
+				$res = ScribeProducer::saveComplete( $oArticle, $oUser, null, null, null, $archive, null, $flags, $oRevision, $status, 0 );
+			}
 
 			$pages[$oRow->page_id] = $oRow->rev_id;
 			$loop++;

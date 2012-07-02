@@ -112,9 +112,8 @@ class DataCenterInputNumber extends DataCenterInput {
 		);
 		// Builds javascript to connect buttons to number
 		$jsOutput = <<<END
-
-			addHandler(
-				document.getElementById( '{$parameters['id']}' ),
+			$('#{$parameters['id']}')
+			.on(
 				'change',
 				function() {
 					var input = document.getElementById( '{$parameters['id']}' );
@@ -127,8 +126,7 @@ class DataCenterInputNumber extends DataCenterInput {
 					}
 				}
 			)
-			addHandler(
-				document.getElementById( '{$parameters['id']}' ),
+			.on(
 				'keyup',
 				function() {
 					var input = document.getElementById( '{$parameters['id']}' );
@@ -141,8 +139,7 @@ class DataCenterInputNumber extends DataCenterInput {
 					}
 				}
 			)
-			addHandler(
-				document.getElementById( '{$parameters['id']}_dec' ),
+			$('#{$parameters['id']}_dec').on(
 				'click',
 				function() {
 					var input = document.getElementById( '{$parameters['id']}' );
@@ -153,8 +150,7 @@ class DataCenterInputNumber extends DataCenterInput {
 					{$effect}
 				}
 			);
-			addHandler(
-				document.getElementById( '{$parameters['id']}_inc' ),
+			$('#{$parameters['id']}_inc').on(
 				'click',
 				function() {
 					var input = document.getElementById( '{$parameters['id']}' );

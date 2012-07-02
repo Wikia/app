@@ -3,12 +3,9 @@
 require_once( 'OmegaWikiAttributes.php' );
 require_once( 'Record.php' );
 require_once( 'RecordSet.php' );
-require_once( 'WikiDataAPI.php' );
-require_once( 'Transaction.php' );
-require_once( 'WikiDataTables.php' );
 require_once( 'RecordSetQueries.php' );
-require_once( 'DefinedMeaningModel.php' );
 require_once( 'ViewInformation.php' );
+require_once( 'Wikidata.php' );
 require_once( 'WikiDataGlobals.php' );
 
 
@@ -18,9 +15,9 @@ function getSynonymSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 	# Query building
     $frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS label " .
 		" FROM {$dc}_defined_meaning, {$dc}_syntrans, {$dc}_expression " .
-		" WHERE " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) .
+		" WHERE {$dc}_syntrans.remove_transaction_id IS NULL " .
+		" AND {$dc}_expression.remove_transaction_id IS NULL " .
+		" AND {$dc}_defined_meaning.remove_transaction_id IS NULL " .
 		" AND {$dc}_expression.language_id=" . $languageId .
 		" AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
 		" AND {$dc}_defined_meaning.defined_meaning_id={$dc}_syntrans.defined_meaning_id " .
@@ -41,9 +38,9 @@ function getSynonymSQLForAnyLanguage( array &$definedMeaningIds ) {
 	# Query building
     $frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS label " .
 		" FROM {$dc}_defined_meaning, {$dc}_syntrans, {$dc}_expression " .
-		" WHERE " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) .
+		" WHERE {$dc}_syntrans.remove_transaction_id IS NULL " .
+		" AND {$dc}_expression.remove_transaction_id IS NULL " .
+		" AND {$dc}_defined_meaning.remove_transaction_id IS NULL" .
 		" AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
 		" AND {$dc}_defined_meaning.defined_meaning_id={$dc}_syntrans.defined_meaning_id " .
 		" AND {$dc}_syntrans.identical_meaning=1 " .
@@ -63,9 +60,9 @@ function getDefiningSQLForLanguage( $languageId, array &$definedMeaningIds ) {
 	# Query building
     $frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS label " .
 		" FROM {$dc}_defined_meaning, {$dc}_syntrans, {$dc}_expression " .
-		" WHERE " . getLatestTransactionRestriction( "{$dc}_syntrans" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) .
+		" WHERE {$dc}_syntrans.remove_transaction_id IS NULL " .
+		" AND {$dc}_expression.remove_transaction_id IS NULL " .
+		" AND {$dc}_defined_meaning.remove_transaction_id IS NULL " .
 		" AND {$dc}_expression.expression_id={$dc}_syntrans.expression_id " .
 		" AND {$dc}_defined_meaning.defined_meaning_id={$dc}_syntrans.defined_meaning_id " .
 		" AND {$dc}_syntrans.identical_meaning=1 " .
@@ -101,7 +98,7 @@ function fetchDefinedMeaningReferenceRecords( $sql, array &$definedMeaningIds, a
 		$record = new ArrayRecord( $specificStructure );
 		$record->definedMeaningId = $definedMeaningId;
 		$record->definedMeaningLabel = $row->label;
-				
+
 		$definedMeaningReferenceRecords[$definedMeaningId] = $record;
 		$foundDefinedMeaningIds[] = $definedMeaningId;
 	}
@@ -121,8 +118,8 @@ function fetchDefinedMeaningDefiningExpressions( array &$definedMeaningIds, arra
 	$frontQuery = "SELECT {$dc}_defined_meaning.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling" .
 		" FROM {$dc}_defined_meaning, {$dc}_expression " .
 		" WHERE {$dc}_defined_meaning.expression_id={$dc}_expression.expression_id " .
-		" AND " . getLatestTransactionRestriction( "{$dc}_defined_meaning" ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
+		" AND {$dc}_defined_meaning.remove_transaction_id IS NULL " .
+		" AND {$dc}_expression.remove_transaction_id IS NULL " .
 		" AND {$dc}_defined_meaning.defined_meaning_id = ";
 
     # Build atomic queries
@@ -165,9 +162,9 @@ function getNullDefinedMeaningReferenceRecord() {
 }
 
 function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) {
-	global
-		$wgUser;
-	
+	global $wgLang ;
+	$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
+
 //	$startTime = microtime(true);
 
 	$result = array();
@@ -180,7 +177,7 @@ function getDefinedMeaningReferenceRecords( array $definedMeaningIds, $usedAs ) 
 			$userLanguage = $wgRecordSetLanguage;
 		}
 		else {
-			$userLanguage = getLanguageIdForCode( $wgUser->getOption( 'language' ) );
+			$userLanguage = getLanguageIdForCode( $wgLang->getCode() );
 		}
 		
 		if ( $userLanguage > 0 )
@@ -272,34 +269,30 @@ function getExpressionReferenceRecords( $expressionIds ) {
 	if ( count( $expressionIds ) > 0 ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		
-        # Query building
+		# Query building
 		$frontQuery = "SELECT expression_id, language_id, spelling" .
-			" FROM {$dc}_expression" .
-			" WHERE expression_id = ";
-		$queueQuery = " AND " . getLatestTransactionRestriction( "{$dc}_expression" );
+		  " FROM {$dc}_expression" .
+		  " WHERE expression_id = ";
 
-        # Build atomic queries
-        foreach ( $expressionIds as &$value ) { $value = $frontQuery . $value . $queueQuery; }
-        unset( $value );
+		# Build atomic queries
+		foreach ( $expressionIds as &$value ) { $value = $frontQuery . $value ; }
+		unset( $value );
 		# Union of the atoms
-        $finalQuery = implode( ' UNION ', $expressionIds );
-		
+		$finalQuery = implode( ' UNION ', $expressionIds );
+
 		$queryResult = $dbr->query( $finalQuery );
-		
+
 		$result = array();
 	
 		while ( $row = $dbr->fetchObject( $queryResult ) ) {
 			$record = new ArrayRecord( $o->expressionStructure );
 			$record->language = $row->language_id;
 			$record->spelling = $row->spelling;
-			
 			$result[$row->expression_id] = $record;
 		}
-			
 		return $result;
 	}
-	else
-		return array();
+	else return array();
 }
 
 function expandExpressionReferencesInRecordSet( RecordSet $recordSet, array $expressionAttributes ) {
@@ -324,7 +317,7 @@ function getExpressionSpellings( array $expressionIds ) {
 		
 		# Prepare steady components
 		$frontQuery = "SELECT expression_id, spelling FROM {$dc}_expression WHERE expression_id =";
-        $queueQuery	= " AND " . getLatestTransactionRestriction( "{$dc}_expression" );
+        $queueQuery	= " AND {$dc}_expression.remove_transaction_id IS NULL ";
         # Build atomic queries
         foreach ( $expressionIds as &$value ) { $value = $frontQuery . $value . $queueQuery; }
         unset( $value );
@@ -418,7 +411,7 @@ function getExpressionMeaningsRecordSet( $expressionId, $exactMeaning, ViewInfor
 	$queryResult = $dbr->query(
 		"SELECT defined_meaning_id FROM {$dc}_syntrans" .
 		" WHERE expression_id=$expressionId AND identical_meaning=" . $identicalMeaning .
-		" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" )
+		" AND {$dc}_syntrans.remove_transaction_id IS NULL "
 	);
 
 	while ( $definedMeaning = $dbr->fetchObject( $queryResult ) ) {
@@ -450,27 +443,36 @@ function getExpressionsRecordSet( $spelling, ViewInformation $viewInformation, $
 	$dc = wdGetDataSetContext( $dc );
 	$o = OmegaWikiAttributes::getInstance();
 
-	$languageRestriction = $viewInformation->filterLanguageId != 0 ? " AND language_id=" . $viewInformation->filterLanguageId : "";
-
 	$dbr = wfGetDB( DB_SLAVE );
 	$sql =
 		"SELECT expression_id, language_id " .
 		" FROM {$dc}_expression" .
 		" WHERE spelling=BINARY " . $dbr->addQuotes( $spelling ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
-		$languageRestriction .
-		" AND EXISTS (" .
-			"SELECT expression_id " .
-			" FROM {$dc}_syntrans " .
-			" WHERE {$dc}_syntrans.expression_id={$dc}_expression.expression_id" .
-			" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" )
-		. ")";
+		" AND {$dc}_expression.remove_transaction_id IS NULL " ;
+
+	// needed because expression.remove_transaction_id is not updated automatically
+	$sql .= " AND EXISTS (" .
+		"SELECT * " .
+		" FROM {$dc}_syntrans " .
+		" WHERE {$dc}_syntrans.expression_id={$dc}_expression.expression_id" .
+		" AND {$dc}_syntrans.remove_transaction_id IS NULL " .
+		")";
+
+
+	if ( $viewInformation->expressionLanguageId != 0 ) {
+		// display the expression in that language
+		$sql .= " AND language_id=" . $viewInformation->expressionLanguageId ;
+	} else {
+		// no language is given: display in any language that comes first
+		$sql .= " LIMIT 1";
+	}
+
 	$queryResult = $dbr->query( $sql );
 	
 	$result = new ArrayRecordSet( $o->expressionsStructure, new Structure( "expression-id", $o->expressionId ) );
 	$languageStructure = new Structure( "language", $o->language );
 
-	while ( $expression = $dbr->fetchObject( $queryResult ) ) {
+	foreach ( $queryResult as $expression ) {
 		$expressionRecord = new ArrayRecord( $languageStructure );
 		$expressionRecord->language = $expression->language_id;
 
@@ -492,26 +494,26 @@ function getExpressionIdThatHasSynonyms( $spelling, $languageId ) {
 		"SELECT expression_id, language_id " .
 		" FROM {$dc}_expression" .
 		" WHERE spelling=BINARY " . $dbr->addQuotes( $spelling ) .
-		" AND " . getLatestTransactionRestriction( "{$dc}_expression" ) .
+		" AND {$dc}_expression.remove_transaction_id IS NULL " .
 		" AND language_id=$languageId" .
 		" AND EXISTS (" .
 			"SELECT expression_id " .
 			" FROM {$dc}_syntrans " .
 			" WHERE {$dc}_syntrans.expression_id={$dc}_expression.expression_id" .
-			" AND " . getLatestTransactionRestriction( "{$dc}_syntrans" )
+			" AND {$dc}_syntrans.remove_transaction_id IS NULL "
 		. ")"
 	);
 	
-	if ( $expression = $dbr->fetchObject( $queryResult ) )
+	if ( $expression = $dbr->fetchObject( $queryResult ) ) {
 		return $expression->expression_id;
-	else
+	} else {
 		return 0;
+	}
 }
  
 
 function getClassAttributesRecordSet( $definedMeaningId, ViewInformation $viewInformation ) {
-	global
-		$dataSet;
+	global $dataSet;
 
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -547,8 +549,7 @@ function expandOptionAttributeOptionsInRecordSet( RecordSet $recordSet, Attribut
 }
 
 function getAlternativeDefinitionsRecordSet( $definedMeaningId, ViewInformation $viewInformation ) {
-	global
-		$dataSet;
+	global $dataSet;
 
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -702,8 +703,7 @@ function getTranslatedContentValue( $translatedContentId, ViewInformation $viewI
 }
 
 function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $viewInformation ) {
-	global
-		$dataSet;
+	global $dataSet;
 
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -725,8 +725,7 @@ function getTranslatedContentRecordSet( $translatedContentId, ViewInformation $v
 }
 
 function getFilteredTranslatedContentRecordSet( $translatedContentId, ViewInformation $viewInformation ) {
-	global
-		$dataSet;
+	global $dataSet;
 	
 	$o = OmegaWikiAttributes::getInstance();
 
@@ -751,8 +750,7 @@ function getFilteredTranslatedContentRecordSet( $translatedContentId, ViewInform
 }
 
 function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $viewInformation ) {
-	global
-		$dataSet;
+	global $dataSet;
 
 	$o = OmegaWikiAttributes::getInstance();
 	$dc = wdGetDataSetContext();
@@ -765,7 +763,7 @@ function getSynonymAndTranslationRecordSet( $definedMeaningId, ViewInformation $
 				" FROM {$dc}_expression AS expressions" .
 				" WHERE expressions.expression_id=expression_id" .
 				" AND language_id=" . $viewInformation->filterLanguageId .
-				" AND " . getLatestTransactionRestriction( 'expressions' ) .
+				" AND expressions.remove_transaction_id IS NULL " .
 			")";
 	
 	$recordSet = queryRecordSet(

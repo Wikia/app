@@ -4,7 +4,7 @@
  * This file provides the access to the database tables that are
  * used by the NotifyMe extension.
  *
- * @author dch
+ * @author ning
  *
  */
 if ( !defined( 'MEDIAWIKI' ) ) die;
@@ -57,7 +57,7 @@ class NMStorage {
 	 * Returns the single instance of this class.
 	 *
 	 * @return NMStorage
-	 *		 The single instance of this class.
+	 * 		The single instance of this class.
 	 */
 	public static function getInstance() {
 		if ( !isset( self::$mInstance ) ) {
@@ -72,7 +72,7 @@ class NMStorage {
 	 * Returns the actual database.
 	 *
 	 * @return object
-	 *		 The object to access the database.
+	 * 		The object to access the database.
 	 */
 	public static function getDatabase() {
 		self::getInstance(); // Make sure, singleton is initialized
@@ -80,3 +80,4 @@ class NMStorage {
 	}
 
 }
+

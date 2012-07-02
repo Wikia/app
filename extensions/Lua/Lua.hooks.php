@@ -3,76 +3,87 @@
  * Lua parser extensions for MediaWiki - Hooks
  *
  * @author Fran Rogers
- * @package MediaWiki
- * @addtogroup Extensions
+ * @ingroup Extensions
  * @license See 'COPYING'
  * @file
  */
 
 class LuaHooks {
-	/** ParserFirstCallInit hook */
+	/**
+	 * ParserFirstCallInit hook
+	 * @param $parser Parser
+	 * @return bool
+	 */
 	public static function parserInit( &$parser ) {
 		$parser->setHook( 'lua', 'LuaHooks::renderTag' );
 		$parser->setFunctionHook('luaexpr', 'LuaHooks::renderExpr');
 		return true;
 	}
 
-	/** LanguageGetMagic hook */
-	public static function magic(&$magicWords, $langCode) {
-		$magicWords['luaexpr'] = array(0, 'luaexpr');
-		return true;
-	}
-
 	/** ParserBeforeTidy hook */
 	public static function beforeTidy(&$parser, &$text) {
 		global $wgLua;
-		if (isset($wgLua)) {
+		if ( $wgLua !== null ) {
 			$wgLua->destroy();
 		}
-		return TRUE;
+		return true;
 	}
 
-	/** Parser hook for the <lua> tag */
+	/**
+	 * Parser hook for the <lua> tag
+	 * @param $input
+	 * @param $args
+	 * @param $parser Parser
+	 * @return string
+	 */
 	public static function renderTag($input, $args, $parser) {
-		global $wgLua;
-		# Create a new LuaWrapper if needed
-		if (!isset($wgLua))
-			$wgLua = new LuaWrapper;
-
-		# Process the tag's arguments into a chunk of Lua code
-		# that initializes them in the Lua sandbox
-		$arglist = '';
-		foreach ($args as $key => $value)
-			$arglist .= (preg_replace('/\W/', '', $key) . '=\'' .
-				     addslashes($parser->recursiveTagParse($value)) .
-				     '\';');
-		if ($arglist) {
-			try {
-				$wgLua->wrap($arglist);
-			} catch (LuaError $e) {
-				return $e->getMessage();
-			}
-		}
-
-		# Execute this Lua chunk, and send the results through the 
-		# Parser.
 		try {
+			global $wgLua;
+			# Create a new LuaWrapper if needed
+			if ( $wgLua === null ) {
+				$wgLua = new LuaWrapper;
+			}
+
+			# Process the tag's arguments into a chunk of Lua code
+			# that initializes them in the Lua sandbox
+			$arglist = '';
+			foreach ($args as $key => $value)
+				$arglist .= (preg_replace('/\W/', '', $key) . '=\'' .
+						 addslashes($parser->recursiveTagParse($value)) .
+						 '\';');
+			if ($arglist) {
+				try {
+					$wgLua->wrap($arglist);
+				} catch (LuaError $e) {
+					return $e->getMessage();
+				}
+			}
+
+			# Execute this Lua chunk, and send the results through the 
+			# Parser.
 			return $parser->recursiveTagParse($wgLua->wrap($input));
 		} catch (LuaError $e) {
 			return $e->getMessage();
 		}
 	}
-	
-	/** Parser function hook for the #luaexpr function */
+
+	/**
+	 * Parser function hook for the #luaexpr function
+	 * @param $parser Parser
+	 * @param $param1 bool
+	 * @return string
+	 */
 	public static function renderExpr(&$parser, $param1 = FALSE) {
 		global $wgLua;
 		# Create a new LuaWrapper if needed
-		if (!isset($wgLua))
+		if ( $wgLua === null ) {
 			$wgLua = new LuaWrapper;
+		}
 		
 		# Execute this Lua chunk, wrapped in io.write().
-		if ($param1 == FALSE)
+		if ( $param1 == false ) {
 			return '';
+		}
 		try {
 			return $wgLua->wrap("io.write($param1)");
 		} catch (LuaError $e) {

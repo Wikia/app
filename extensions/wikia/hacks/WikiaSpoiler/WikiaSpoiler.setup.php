@@ -45,8 +45,6 @@ function renderSpoiler( $input, $argv, $parser ) {
 	$localParser = new Parser();
 	$outputObj = $localParser->parse($input, $parser->mTitle, $parser->mOptions);
 
-	wfLoadExtensionMessages('WikiaSpoiler');
-
 	// quick hack to get rid of 'undefined index' notices...
 	foreach (array('collapsed', 'contentstyle', 'footwarningtext', 'headwarningtext', 'linkstyle', 'linktext', 'spoilerstyle', 'warningstyle') as $a)
 	{

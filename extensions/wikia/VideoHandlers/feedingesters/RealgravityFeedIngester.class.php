@@ -6,20 +6,20 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 	protected static $FEED_URL = 'http://mediacast.realgravity.com/vs/2/videos/$1.json?providers=$2&lookup_columns=tag_list,title&search_term=$3&per_page=$4&page=$5';
 	private static $API_PROVIDER_IDS = array('MACHINIMA'=>240);
 	const API_PAGE_SIZE = 100;
-	
+
 	public function import($content='', $params=array()) {
 
 		wfProfileIn( __METHOD__ );
 
 		$numCreated = 0;
-		
+
 		if (!empty($params['keyphrasesCategories'])) {
 			foreach ($params['keyphrasesCategories'] as $keyphrase=>$categories) {
 				$movieParams = array(
 				    'addlCategories'	=> $categories,
-				    'debug'		=> !empty($params['debug']), 
+				    'debug'		=> !empty($params['debug']),
 				    'startDate'		=> !empty($params['startDate']) ? $params['startDate'] : '',
-				    'endDate'		=> !empty($params['endDate']) ? $params['endDate'] : ''					
+				    'endDate'		=> !empty($params['endDate']) ? $params['endDate'] : ''
 				    );
 				$numCreated += $this->importVideosForKeyphrase($keyphrase, $movieParams);
 			}
@@ -37,17 +37,17 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		$debug = !empty($params['debug']);
 		$startDate = !empty($params['startDate']) ? $params['startDate'] : '';
 		$endDate = !empty($params['endDate']) ? $params['endDate'] : '';
-		
-		$articlesCreated = 0;		
+
+		$articlesCreated = 0;
 		$page = 1;
 
 		do {
 			$numVideos = 0;
-	
+
 			// connect to provider API
 			$url = $this->initFeedUrl($keyword, $startDate, $endDate, $page++);
 			print("Connecting to $url...\n");
-			$req = HttpRequest::factory( $url );
+			$req = MWHttpRequest::factory( $url );
 			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
@@ -55,7 +55,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			else {
 				print("ERROR: problem downloading content!\n");
 				wfProfileOut( __METHOD__ );
-				return 0;				
+				return 0;
 			}
 
 			// parse response
@@ -92,7 +92,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 
 	private function initFeedUrl($keyword, $startDate, $endDate, $page=1) {
 		global $wgRealgravityApiKey;
-		
+
 		$url = str_replace('$1', $wgRealgravityApiKey, static::$FEED_URL);
 		$url = str_replace('$2', self::$API_PROVIDER_IDS['MACHINIMA'], $url);
 		$url = str_replace('$3', urlencode($keyword), $url);
@@ -103,29 +103,29 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		}
 		return $url;
 	}
-	
+
 	protected function generateName(array $data) {
 		$name = $data['clipTitle'];
-		
+
 		// per parent class's definition, do not sanitize
 
-		return $name;		
+		return $name;
 	}
-	
+
 	protected function generateTitleName(array $data) {
 		// not relevant because there are no movies/TV shows from
-		// our RealGravity providers		
+		// our RealGravity providers
 		return '';
 	}
-	
+
 	protected function generateCategories(array $data, $addlCategories) {
 		$categories = !empty($addlCategories) ? $addlCategories : array();
 		$categories[] = 'RealGravity';
 		$categories[] = 'Games';
-		
-		return $categories;		
+
+		return $categories;
 	}
-	
+
 	protected function generateMetadata(array $data, &$errorMsg) {
 		$keywords = explode(',', $data['keywords']);	// keywords is a comma-delimited string
 		array_walk($keywords, array($this, 'trimArrayItem'));
@@ -139,10 +139,10 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		    'description'	=> $data['description'],
 		    'aspectRatio'	=> $data['aspectRatio']
 		    );
-		
+
 		return $parsedData;
 	}
-	
+
 	private function trimArrayItem(&$item, $key) {
 		$item = trim($item);
 	}

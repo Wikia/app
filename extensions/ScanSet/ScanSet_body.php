@@ -8,7 +8,7 @@ class ScanSet {
 	/** Settings */
 	var $basePath, $baseDirectory, $type, $height, $width;
 
-	function ScanSet( $attributes, &$parser, $settings = array() ) {
+	function __construct( $attributes, &$parser, $settings = array() ) {
 		global $wgUploadPath, $wgUploadDirectory;
 
 		// Defaults
@@ -26,8 +26,6 @@ class ScanSet {
 		// Non-overrideable variables
 		$this->attributes = $attributes;
 		$this->parser =& $parser;
-
-		wfLoadExtensionMessages( 'ScanSet' );
 	}
 
 	function execute() {
@@ -37,7 +35,7 @@ class ScanSet {
 		$this->parser->disableCache();
 
 		// Add style to the head
-		$wgHooks['SkinTemplateSetupPageCss'][] = array( &$this, 'getCss' );
+		$wgHooks['BeforePageDisplay'][] = array( $this, 'addCss' );
 
 		$this->text = '';
 
@@ -111,38 +109,10 @@ class ScanSet {
 		return $text;
 	}
 
-	function getCss( &$css ) {
-		if ( $css === false ) {
-			$css = '';
-		}
-		$css .= '
-			/*<![CDATA[*/
-			.scanset_vollist {
-				border-color: #cccccc;
-				border-width: thin;
-				border-style: solid;
-				float: left;
-			}
-			.scanset_pagelist {
-				border-color: #cccccc;
-				border-width: thin;
-				border-style: solid;
-				float: left;
-			}
-			.scanset_index {
-				float: left;
-			}
-			.scanset_image {
-				clear: both;
-				text-align: center;
-			}
-			.scanset_next_right {
-				float: right;
-			}
-			.scanset_next_left {
-				float: left;
-			}
-			/*]]>*/';
+	function addCss( $out, &$sk ) {
+		global $wgExtensionAssetsPath;
+
+		$out->addExtensionStyle( "$wgExtensionAssetsPath/ScanSet/ScanSet.css" );
 		return true;
 	}
 
@@ -188,6 +158,7 @@ class ScanSet {
 
 		$volumes = array();
 		while ( ( $file = readdir( $dir ) ) !== false ) {
+			$m = array();
 			if ( preg_match( '/^VOL([0-9]+) (.*)$/', $file, $m ) ) {
 				$volumes[$m[1]] = $m[2];
 				// Is this the current volume? Use strcmp to enforce leading zeros
@@ -228,6 +199,7 @@ class ScanSet {
 		$passedCurrent = false;
 		for ( $i = 0; $i < count( $lines ); $i++) {
 			$line = $lines[$i];
+			$m = array();
 			if ( !preg_match( '/^(\w+)\.(\w+),(.*)$/', trim( $line ), $m ) ) {
 				$this->doError( 'index_file_error', $i + 1 );
 				return false;
@@ -301,7 +273,7 @@ class ScanSet {
 	function doError( $msg /*, ...*/) {
 		$args = func_get_args();
 		array_shift( $args );
-		$this->text .= "<p>" . wfMsgReal( 'scanset_' . $msg, $args, true ) . "</p>";
+		$this->text .= "<p>" . wfMsg( 'scanset_' . $msg, $args ) . "</p>";
 	}
 
 	/**

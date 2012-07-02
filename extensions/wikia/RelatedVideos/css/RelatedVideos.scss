@@ -23,16 +23,35 @@ $color-related-videos-background: darken($color-page, 20%);
 	background-image: url(/extensions/wikia/RelatedVideos/images/mock1.png); /* wgCdnStylePath */
 }
 
+.WikiaMainContent .RelatedVideos {
+	margin-top: 55px;
+	margin-bottom: 20px;
+}
+
+.modalContent .RelatedVideos {
+	.item-title {
+		overflow: hidden;
+		max-height: 60px;
+	}
+}
+
 .RelatedVideos {
 	@include clearfix;
 	display: inline-block;
 	width: 660px;
 	height: 230px;
-	margin-top: 55px;
-	margin-bottom: 20px;
 
 	.messageHolder {
 		display: none;
+	}
+
+	.add-this-video {
+		position: absolute;
+		bottom: 10px;
+		text-align: center;
+		width: 100%;
+		margin: -5px; // correcting padding from parent
+		cursor: pointer;
 	}
 
 	img.sprite {
@@ -136,6 +155,11 @@ $color-related-videos-background: darken($color-page, 20%);
 				}
 			}
 		}
+        .seemore {
+          clear:both;
+          margin-top:10px;
+          margin-bottom:10px;
+        }
 		.wrapper {
 			position: absolute;
 			width: 580px;
@@ -169,17 +193,6 @@ $color-related-videos-background: darken($color-page, 20%);
 						height: 90px;
 						overflow: hidden;
 						position: relative;
-						.timer {
-							position: absolute;
-							right: 3px;
-							bottom: 3px;
-							color: white;
-							font-size: 11px;
-							line-height: 14px;
-							background-color: black;
-							padding: 1px 4px 1px 6px;
-							@include border-radius(4px);
-						}
 						.new {
 							position: absolute;
 							left: 0px;
@@ -323,17 +336,13 @@ $color-related-videos-background: darken($color-page, 20%);
 
 #relatedvideos-add-video {
 
-	input {
-		line-height: 20px;
-		height: 20px;
-		font-size:14px;
-		font-family: Helvetica, Arial, sans-serif;
-		padding: 1px 1px 1px 5px;
-		width: 400px;
-		background-color: mix( #FFFFFF, $color-page, 75% );
-		border-color: mix( #FFFFFF, $color-page, 65% );
-		&:focus {
-			@include box-shadow( 0px, 0px, 4px, $color-buttons );
+	&.loading {
+		cursor: busy;
+	}
+
+	fieldset {
+		input {
+			width: 400px;
 		}
 	}
 
@@ -341,12 +350,12 @@ $color-related-videos-background: darken($color-page, 20%);
 		display: none;
 	}
 
-	.relatedVideosConfirm{
-		margin-top: 40px;
-		button {
-			float: right;
-		}
-	}
+  .RVSuggestPreviewVideo .preview_video { float:left; width:65%; }
+  .RVSuggestPreviewVideo .preview_options { float:left; width:30%; }
+  .RVSuggestPreviewVideo .preview_options a { display:block; margin-bottom:15px; }
+  .RVSuggestPreviewVideo a.insert { font-weight: bold; }
+
+    button.relatedVideosConfirm { height: 24px }
 
 	&.error-mode {
 		.rv-error {
@@ -401,15 +410,13 @@ $color-related-videos-background: darken($color-page, 20%);
 }
 
 .WikiaRail .RelatedVideosModule.module {
-	padding: 10px;
 	#RelatedVideosRL {
 		&.RelatedVideosHidden { display: block }
 		width: auto;
 		height: auto;
 		margin: 0;
-		.RVTitle {
-			font-size: 25px;
-			margin: 10px 5px;
+		h1 {
+			margin-bottom: 0;
 		}
 		.RVHeader {
 			border: none;
@@ -435,6 +442,7 @@ $color-related-videos-background: darken($color-page, 20%);
 		.RVBody {
 			height: auto;
 			clear: both;
+			padding: 2px;
 			.novideos { padding: 7px; }
 			.wrapper {
 				width: 278px;
@@ -463,17 +471,6 @@ $color-related-videos-background: darken($color-page, 20%);
 						top: 5px;
 						.playButton {
 							width: 150px;
-						}
-						.timer {
-							position: absolute;
-							right: 3px;
-							bottom: 3px;
-							color: white;
-							font-size: 11px;
-							line-height: 14px;
-							background-color: black;
-							padding: 1px 4px 1px 6px;
-							@include border-radius(4px);
 						}
 					}
 					.description {
@@ -543,30 +540,40 @@ $color-related-videos-background: darken($color-page, 20%);
 					//height: 370px;
 				}
 			}
-			.button {
+			.scrollleft, .scrollright {
 				left: 0;
 				position: static;
 				height: 25px;
 				margin: 0;
-				&.scrollleft {
-					float: left;
-					padding: 0 4px;
-					img {
-					 margin: 5px -4px;
-					 border-width: 7px;
-					 //position: relative;
-					 //top: -2px;
-				 }
+				background: none;
+				cursor: pointer;
+			}
+			.scrollleft {
+				float: left;
+				padding: 0 4px;
+				img {
+					border-color: transparent $color-buttons transparent transparent;
+					margin: 5px -4px;
+				 	border-width: 9px;
+			 	}
+			}
+			.scrollright {
+				float: right;
+				padding: 0 4px;
+				img {
+					border-color: transparent transparent transparent $color-buttons;
+					margin: 5px 5px;
+					border-width: 8px;
 				}
-				&.scrollright {
-					float: right;
-					padding: 0 4px;
-					img {
-					 margin: 5px 5px;
-					 border-width: 7px;
-					 //position: relative;
-					 //top: -2px;
-				 }
+			}
+			.scrollleft.inactive {
+				img {
+					border-color: transparent $color-inactive-button transparent transparent;
+				}
+			}
+			.scrollright.inactive {
+				img {
+					border-color: transparent transparent transparent $color-inactive-button;
 				}
 			}
 			.paginationbar {
@@ -581,6 +588,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				margin: 0 -10px;
 				padding: 0 0 2px 0;
 				text-align: center;
+                clear: both;
 				&:before{ 
 					@include opacity(50);
 					border-top: 1px solid $color-secondary-button-border;
@@ -596,3 +604,4 @@ $color-related-videos-background: darken($color-page, 20%);
 		}
 	}
 }
+

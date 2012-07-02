@@ -30,7 +30,16 @@ $messages['ar'] = array(
 	'tspoll-id-error' => 'لا رقم معطى!',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'tspoll-desc' => 'Incluír el [http://www.toolserver.org/~jan/poll/index.php Toolserver-Poll-Skript] como etiqueta HTML',
+	'tspoll-fetch-error' => '¡Fallu al buscar la URL!',
+	'tspoll-id-error' => '¡Nun se dio denguna ID!',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -84,6 +93,13 @@ $messages['de'] = array(
 	'tspoll-id-error' => 'Keine ID angegeben!',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'tspoll-fetch-error' => 'URL! amyayış de xeta',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -129,11 +145,21 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Crochet.david
  * @author IAlex
+ * @author Urhixidur
  */
 $messages['fr'] = array(
 	'tspoll-desc' => 'Inclut le [http://www.toolserver.org/~jan/poll/index.php Script de sondage du Toolserver] via une balise HTML',
 	'tspoll-fetch-error' => 'Erreur lors de la recherche de l’URL !',
-	'tspoll-id-error' => 'Aucun ID n’a été donné !',
+	'tspoll-id-error' => 'Aucun identifiant n’a été donné !',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'tspoll-desc' => 'Encllut lo [http://www.toolserver.org/~jan/poll/index.php scripte de sondâjo du Toolserver] avouéc una balisa HTML.',
+	'tspoll-fetch-error' => 'Èrror pendent la rechèrche de l’URL !',
+	'tspoll-id-error' => 'Nion numerô at étâ balyê !',
 );
 
 /** Galician (Galego)
@@ -225,7 +251,7 @@ $messages['ka'] = array(
 	'tspoll-id-error' => 'იდენტიფიკაცია არ იყო მოცემული!',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -253,6 +279,24 @@ $messages['mk'] = array(
 	'tspoll-id-error' => 'Нема дадено ид. бр.!',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'tspoll-desc' => 'Menyertakan [http://www.toolserver.org/~jan/poll/index.php Toolserver-Poll-Skript] sebagai tag HTML',
+	'tspoll-fetch-error' => 'Ralat ketika mengambil URL!',
+	'tspoll-id-error' => 'ID belum diberikan!',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'tspoll-desc' => 'Inkluder [http://www.toolserver.org/~jan/poll/index.php Toolserver-Poll-Skript] som en HTML-tagg',
+	'tspoll-fetch-error' => 'Feil under henting av nettadressen!',
+	'tspoll-id-error' => 'Ingen ID er gitt!',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -268,15 +312,6 @@ $messages['nl'] = array(
 $messages['nn'] = array(
 	'tspoll-fetch-error' => 'Feil under henting av nettadressa!',
 	'tspoll-id-error' => 'Ingen ID er oppgjeven!',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'tspoll-desc' => 'Inkluder [http://www.toolserver.org/~jan/poll/index.php Toolserver-Poll-Skript] som en HTML-tagg',
-	'tspoll-fetch-error' => 'Feil under henting av nettadressen!',
-	'tspoll-id-error' => 'Ingen ID er gitt!',
 );
 
 /** Occitan (Occitan)
@@ -334,8 +369,10 @@ $messages['pt-br'] = array(
 
 /** Romanian (Română)
  * @author Firilacroco
+ * @author Stelistcristi
  */
 $messages['ro'] = array(
+	'tspoll-fetch-error' => 'Eroare în timpul preluării adresei!',
 	'tspoll-id-error' => 'Niciun ID introdus!',
 );
 
@@ -357,7 +394,7 @@ $messages['ru'] = array(
 	'tspoll-id-error' => 'Не указан ID!',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -392,6 +429,24 @@ $messages['sv'] = array(
 	'tspoll-id-error' => 'Inget ID är angivet!',
 );
 
+/** Thai (ไทย)
+ * @author Passawuth
+ */
+$messages['th'] = array(
+	'tspoll-desc' => 'รวม [http://www.toolserver.org/~jan/poll/index.php Toolserver-Poll-Skript] เป็น HTML-tag',
+	'tspoll-fetch-error' => 'มีข้อผิดพลาดขณะกำลังโหลด',
+	'tspoll-id-error' => 'ต้องระบุไอดี',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'tspoll-desc' => 'Isama ang [http://www.toolserver.org/~jan/poll/index.php Toolserver-Poll-Skript] bilang tatak na HTML',
+	'tspoll-fetch-error' => 'May mali habang kinukuha ang URL!',
+	'tspoll-id-error' => 'Walang ibinigay na ID!',
+);
+
 /** Turkish (Türkçe)
  * @author Vito Genovese
  */
@@ -399,6 +454,15 @@ $messages['tr'] = array(
 	'tspoll-desc' => '[http://www.toolserver.org/~jan/poll/index.php Toolserver Havuz Betiğini] bir HTML etiketi olarak ekler',
 	'tspoll-fetch-error' => 'URL getirmede hata!',
 	'tspoll-id-error' => 'Kimlik girilmedi!',
+);
+
+/** Ukrainian (Українська)
+ * @author Alex Khimich
+ */
+$messages['uk'] = array(
+	'tspoll-desc' => 'Включити [http://www.toolserver.org/~jan/poll/index.php Toolserver-Poll-Skript] як HTML-тег',
+	'tspoll-fetch-error' => 'Помилка звернення URL!',
+	'tspoll-id-error' => 'Не вказаний ID!',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -411,9 +475,12 @@ $messages['vi'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Chenxiaoqino
  * @author Liangent
  */
 $messages['zh-hans'] = array(
+	'tspoll-desc' => '将[http://www.toolserver.org/~jan/poll/index.php Toolserver-Poll-Skript]包括为HTML标签',
+	'tspoll-fetch-error' => '获取URL时发生错误！',
 	'tspoll-id-error' => '没有提供ID！',
 );
 
@@ -421,6 +488,8 @@ $messages['zh-hans'] = array(
  * @author Liangent
  */
 $messages['zh-hant'] = array(
+	'tspoll-desc' => '將[http://www.toolserver.org/~jan/poll/index.php Toolserver-Poll-Skript]包括為HTML標籤',
+	'tspoll-fetch-error' => '獲取URL時發生錯誤！',
 	'tspoll-id-error' => '沒有提供ID！',
 );
 

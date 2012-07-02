@@ -19,7 +19,7 @@ class MWSearchUpdater {
 	 * @return bool
 	 * @static
 	 */
-	function updatePage( $dbname, $title, $text ) {
+	static function updatePage( $dbname, $title, $text ) {
 		return MWSearchUpdater::sendRPC( 'searchupdater.updatePage',
 			array( $dbname, $title, $text ) );
 	}
@@ -35,7 +35,7 @@ class MWSearchUpdater {
 	 * @return bool
 	 * @static
 	 */
-	function updatePageData( $dbname, $title, $text, $metadata ) {
+	static function updatePageData( $dbname, $title, $text, $metadata ) {
 		$translated = array();
 		foreach( $metadata as $pair ) {
 			list( $key, $value ) = explode( '=', $pair, 2 );
@@ -53,7 +53,7 @@ class MWSearchUpdater {
 	 * @return bool
 	 * @static
 	 */
-	function deletePage( $dbname, $title ) {
+	static function deletePage( $dbname, $title ) {
 		return MWSearchUpdater::sendRPC( 'searchupdater.deletePage',
 			array( $dbname, $title ) );
 	}
@@ -63,7 +63,7 @@ class MWSearchUpdater {
 	 * @return string
 	 * @static
 	 */
-	function getStatus() {
+	static function getStatus() {
 		return MWSearchUpdater::sendRPC( 'searchupdater.getStatus' );
 	}
 	
@@ -72,7 +72,7 @@ class MWSearchUpdater {
 	 * @return bool
 	 * @static
 	 */
-	function start() {
+	static function start() {
 		return MWSearchUpdater::sendRPC( 'searchupdater.start' );
 	}
 	
@@ -81,7 +81,7 @@ class MWSearchUpdater {
 	 * @return bool
 	 * @static
 	 */
-	function stop() {
+	static function stop() {
 		return MWSearchUpdater::sendRPC( 'searchupdater.stop' );
 	}
 	
@@ -90,7 +90,7 @@ class MWSearchUpdater {
 	 * @return bool
 	 * @static
 	 */
-	function quit() {
+	static function quit() {
 		return MWSearchUpdater::sendRPC( 'searchupdater.quit' );
 	}
 
@@ -100,7 +100,7 @@ class MWSearchUpdater {
 	 * @return bool
 	 * @static
 	 */
-	function flushAll() {
+	static function flushAll() {
 		return MWSearchUpdater::sendRPC( 'searchupdater.flushAll' );
 	}
 	
@@ -111,7 +111,7 @@ class MWSearchUpdater {
 	 * @return bool
 	 * @static
 	 */
-	function optimize() {
+	static function optimize() {
 		return MWSearchUpdater::sendRPC( 'searchupdater.optimize' );
 	}
 	
@@ -121,7 +121,7 @@ class MWSearchUpdater {
 	 * @return bool
 	 * @static
 	 */
-	function flush( $dbname ) {
+	static function flush( $dbname ) {
 		return MWSearchUpdater::sendRPC( 'searchupdater.flush',
 			array( $dbname ) );
 	}
@@ -130,13 +130,13 @@ class MWSearchUpdater {
 	 * @access private
 	 * @static
 	 */
-	function outParam( $param ) {
+	static function outParam( $param ) {
 		if( $param instanceof Title ) {
 			return new XML_RPC_Value(
 				array(
 					'Namespace' => new XML_RPC_Value( $param->getNamespace(), 'int' ),
 					'Text'      => new XML_RPC_Value( $param->getText(), 'string' ) ),
-				'struct' );
+					'struct' );
 		} elseif( is_string( $param ) ) {
 			return new XML_RPC_Value( $param, 'string' );
 		} elseif( is_array( $param ) ) {
@@ -150,7 +150,7 @@ class MWSearchUpdater {
 			$translated = array_map( array( 'MWSearchUpdater', 'outParam' ), $param );
 			return new XML_RPC_Value( $translated, $type );
 		} else {
-			return new WikiError( 'MWSearchUpdater::sendRPC given bogus parameter' );
+			throw new MWException( 'MWSearchUpdater::sendRPC given bogus parameter' );
 		}
 	}
 	
@@ -158,7 +158,7 @@ class MWSearchUpdater {
 	 * @access private
 	 * @static
 	 */
-	function sendRPC( $method, $params=array() ) {
+	static function sendRPC( $method, $params = array() ) {
 		global $mwSearchUpdateHost, $mwSearchUpdatePort, $mwSearchUpdateDebug;
 		$client = new XML_RPC_Client( '/SearchUpdater', $mwSearchUpdateHost, $mwSearchUpdatePort );
 		if( $mwSearchUpdateDebug ) {
@@ -182,9 +182,9 @@ class MWSearchUpdater {
 		}
 		
 		if( !is_object( $result ) ) {
-			return new WikiError( "Unknown XML-RPC error" );
+			throw new MWException( "Unknown XML-RPC error" );
 		} elseif( $result->faultCode() ) {
-			return new WikiError( $result->faultCode() . ': ' . $result->faultString() );
+			throw new MWException( $result->faultCode() . ': ' . $result->faultString() );
 		} else {
 			$value = $result->value();
 			return $value->getval();

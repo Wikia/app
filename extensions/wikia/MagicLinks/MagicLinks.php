@@ -26,7 +26,8 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
 	'name' => 'MagicLinks',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
-	'description' => 'Replaces some syntex into clickable links (generaly used for svn revisions and ticket systems).'
+	'description' => "Replaces some syntex into clickable links (generaly used for svn revisions and ticket systems).\n
+		Possible uses: t:r50000 | r50000 | rt#50000 | trac#50000 | fb#30000"
 );
 
 $wgExtensionFunctions[] = 'MagicLinksInit';

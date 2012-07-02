@@ -1,7 +1,7 @@
 <?php
 /**
  * take old revisions and put events in events table via scribe
- * 
+ *
  *
  * @file
  * @ingroup Maintenance
@@ -33,7 +33,7 @@ function time_duration($seconds, $use = null, $zeros = false) {
 		'minutes'   => 60,
 		'seconds'   => 1
 	);
-	
+
 	// Break into periods
 	$seconds = (float) $seconds;
 	$segments = array();
@@ -48,7 +48,7 @@ function time_duration($seconds, $use = null, $zeros = false) {
 		$segments[strtolower($period)] = $count;
 		$seconds = $seconds % $value;
 	}
-	
+
 	// Build the string
 	$string = array();
 	foreach ($segments as $key => $value) {
@@ -71,11 +71,11 @@ function getEventsRecords($wikia = 0, $limit = 100) {
 	global $wgStatsDB;
 	$dbr = wfGetDB( DB_SLAVE, 'stats', $wgStatsDB );
 	$where = array();
-	
+
 	if ( !empty($wikia) ) {
 		$where = array('wiki_id' => $wikia);
 	}
-	
+
 	$oRes = $dbr->select(
 		array( "events" ),
 		array( "*" ),
@@ -92,7 +92,7 @@ function getEventsRecords($wikia = 0, $limit = 100) {
 		$records[] = $oRow;
 	}
 	$dbr->freeResult( $oRes );
-	
+
 	return $records;
 }
 
@@ -100,7 +100,7 @@ function _user_is_bot($user_text) {
 	$user_is_bot = false;
 	$oUser = User::newFromName($user_text);
 	if ( $oUser instanceof User ) {
-		$user_is_bot = $oUser->isBot();
+		$user_is_bot = $oUser->isAllowed( 'bot' );
 	}
 	return $user_is_bot ? 'Y' : 'N';
 }
@@ -113,11 +113,11 @@ function _revision_is_redirect($content) {
 
 function _revision_is_content() {
 	global $wgEnableBlogArticles, $wgTitle;
-	
+
 	$is_content_ns = 0;
 	if ( $wgTitle instanceof Title ) {
 		$is_content_ns = $wgTitle->isContentPage();
-		if ( empty($is_content_ns) && $wgEnableBlogArticles ) { 
+		if ( empty($is_content_ns) && $wgEnableBlogArticles ) {
 			$is_content_ns = (in_array($wgTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)));
 		}
 	}
@@ -127,7 +127,7 @@ function _revision_is_content() {
 function _make_links($page_id, $rev_id, $content) {
 	$links = array(
 		'image' => 0,
-		'video' => 0			
+		'video' => 0
 	);
 	$oArticle = Article::newFromId($page_id);
 	if ( $oArticle instanceof Article ) {
@@ -136,7 +136,7 @@ function _make_links($page_id, $rev_id, $content) {
 		if ( !empty($images) ) {
 			foreach ($images as $iname => $dummy) {
 				if ( substr($iname, 0, 1) == ':' ) {
-					$links['video']++;							
+					$links['video']++;
 				} else {
 					$links['image']++;
 				}
@@ -153,10 +153,10 @@ function loadFromDB($dbname, $page_id, $rev_id) {
 	$fields = array_merge($fields, Revision::selectFields());
 	$fields[] = " date_format(rev_timestamp, '%Y-%m-%d %H:%i:%s') as ts ";
 
-	$oRow = $db->selectRow( 
-		array('revision', 'page'), 
-		$fields, 
-		array( 
+	$oRow = $db->selectRow(
+		array('revision', 'page'),
+		$fields,
+		array(
 			"rev_page = page_id",
 			'page_id' => $page_id,
 			'rev_id' => $rev_id,
@@ -183,14 +183,14 @@ function loadFromDB($dbname, $page_id, $rev_id) {
 			'date_format(ar_timestamp, \'%Y-%m-%d %H:%i:%s\') as ts'
 		);
 
-		$conditions = array( 
-			'ar_page_id'	=> $page_id , 
+		$conditions = array(
+			'ar_page_id'	=> $page_id ,
 			'ar_rev_id'		=> $rev_id
 		);
 
-		$oRow = $db->selectRow( 
-			'archive', 
-			$fields, 
+		$oRow = $db->selectRow(
+			'archive',
+			$fields,
 			$conditions,
 			__METHOD__
 		);
@@ -206,7 +206,7 @@ function compareEventRecordWithRevision($dbname, $oRow, $debug) {
 	$lang_id = WikiFactory::LangCodeToId($langcode);
 	$cats = WikiFactory::getCategory($oRow->wiki_id);
 	$cat_id = ( !emptY($cats) ) ? $cats->cat_id : 0;
-	
+
 	$result = false;
 	if ( is_object($oRow) && !empty($oRow->page_id) && !empty($oRow->rev_id) ) {
 		$data = loadFromDB($dbname, $oRow->page_id, $oRow->rev_id);
@@ -217,7 +217,7 @@ function compareEventRecordWithRevision($dbname, $oRow, $debug) {
 			} else {
 				$wgTitle = $oRevision->getTitle();
 			}
-			$content = $oRevision->revText();
+			$content = $oRevision->getText( Revision::FOR_THIS_USER );
 			$is_bot = _user_is_bot($data->rev_user_text);
 			$is_content = _revision_is_content();
 			$is_redirect = _revision_is_redirect($content);
@@ -225,8 +225,8 @@ function compareEventRecordWithRevision($dbname, $oRow, $debug) {
 			$words = str_word_count( $content );
 			$links = _make_links($oRow->page_id, $oRow->rev_id, $content);
 			$timestamp = $data->ts;
-			
-			if ( 
+
+			if (
 				( $data->rev_page		== $oRow->page_id ) &&
 				( $data->page_namespace	== $oRow->page_ns ) &&
 				( $data->rev_id			== $oRow->rev_id  ) &&
@@ -240,7 +240,7 @@ function compareEventRecordWithRevision($dbname, $oRow, $debug) {
 				( $cat_id				== $oRow->wiki_cat_id ) &&
 				( $lang_id				== $oRow->wiki_lang_id ) &&
 				( $links['image']		== $oRow->image_links ) &&
-				( $links['video']		== $oRow->video_links ) 
+				( $links['video']		== $oRow->video_links )
 			) {
 				$result = true;
 			} else {
@@ -270,7 +270,7 @@ TEXT;
 	} else {
 		echo "Not events data found for: page: {$oRow->page_id} && revision: {$oRow->rev_id}  \n";
 	}
-	
+
 	return $result;
 }
 

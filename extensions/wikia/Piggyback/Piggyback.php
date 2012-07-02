@@ -23,8 +23,10 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['Piggyback'] = $dir . 'Piggyback_body.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PBLoginForm']  = $dir . 'Piggyback_body.php'; # Tell MediaWiki to load the extension body.
 $wgAutoloadClasses['PiggybackTemplate'] = $dir . 'Piggyback_form.php'; # Tell MediaWiki to load the extension body.
+
 $wgExtensionMessagesFiles['Piggyback'] = $dir . 'Piggyback.i18n.php';
-$wgExtensionAliasesFiles['Piggyback'] = $dir . 'Piggyback.alias.php';
+$wgExtensionMessagesFiles['PiggybackAliases'] = $dir . 'Piggyback.alias.php';
+
 $wgSpecialPages['Piggyback'] = 'Piggyback'; # Let MediaWiki know about your new special page.
 
 $wgSpecialPageGroups['Piggyback'] = 'users';
@@ -66,4 +68,4 @@ function efPiggybackAddToolLinks( $id, $nt, &$tools ) {
 	);
 
 	return true;
-} 
+}

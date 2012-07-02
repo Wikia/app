@@ -52,7 +52,7 @@ class MediaWikiFarmer_Wiki {
 		if ( in_array( $k, array( 'name', 'title', 'description', 'creator', 'extensions' ) ) ) {
 			$property = '_' . $k;
 			$this->$property = $v;
-		} else if ( substr( $k, 0, 2 ) == 'wg' ) {
+		} elseif ( substr( $k, 0, 2 ) == 'wg' ) {
 			$this->_variables[$k] = $v;
 		}
 	}
@@ -412,7 +412,7 @@ class MediaWikiFarmer_Wiki {
 		$user = $farmer->dbAdminUser;
 		$password = $farmer->dbAdminPassword;
 		$class = 'Database' . ucfirst( $wgDBtype );
-		$object = new $class( $wgDBserver, $user, $password, $db, false, 0, $prefix );
+		$object = new $class( $wgDBserver, $user, $password, $db, 0, $prefix );
 		if ( $selectDB )
 			$this->_db = $object;
 		return $object;
@@ -464,7 +464,7 @@ class MediaWikiFarmer_Wiki {
 	protected function _createMainPageForWiki() {
 		$db = $this->getDatabase();
 
-		$titleobj = Title::newFromText( wfMsgNoDB( 'mainpage' ) );
+		$titleobj = Title::newFromText( wfMessage( 'mainpage' )->inContentLanguage()->useDatabase( false )->plain() );
 		$article = new Article( $titleobj );
 		$newid = $article->insertOn( $db );
 		$revision = new Revision( array(

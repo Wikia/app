@@ -2,35 +2,58 @@
 /**
  * Aliases for Special:Plotters. Based on the Gadgets extension.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English
- * @author Ryan Lane, rlane32+mwext@gmail.com
- */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'Plotters' => array( 'Plotters' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Plotters' => array( 'طابعات' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'Plotters' => array( 'طابعات' ),
 );
 
+/** Spanish (Español) */
+$specialPageAliases['es'] = array(
+	'Plotters' => array( 'Gráficos' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'Plotters' => array( 'رسم‌کنندگان' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'Plotters' => array( 'Desinatè' ),
+);
+
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'Plotters' => array( 'プロッター' ),
 );
 
-/** Macedonian (Македонски) */
-$aliases['mk'] = array(
-	'Plotters' => array( 'Цртачи' ),
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'Plotters' => array( 'Pintador' ),
 );
 
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'Plotters' => array( 'Исцртувачи' ),
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'Plotters' => array( 'Plottere' ),
+);

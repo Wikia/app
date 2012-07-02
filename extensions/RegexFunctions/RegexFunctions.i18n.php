@@ -1,21 +1,24 @@
 <?php
 /**
- * Internationalisation file for extension RegexFunctions.
+ * Internationalisation file for RegexFunctions extension.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
+/** English */
 $messages['en'] = array(
 	'regexfunctions-desc' => 'Regular expression parser functions',
 );
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'regexfunctions-desc' => 'Short description of this extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'regexfunctions-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -32,7 +35,14 @@ $messages['arz'] = array(
 	'regexfunctions-desc' => 'دوال محلل تعبيرات منتظمة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'regexfunctions-desc' => "Funciones de analís d'espresiones regulares",
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -98,14 +108,22 @@ $messages['eu'] = array(
  * @author Vililikku
  */
 $messages['fi'] = array(
-	'regexfunctions-desc' => 'Säännöllisten lausekkeiden jäsennysfunktioita.',
+	'regexfunctions-desc' => 'Säännöllisten lausekkeiden jäsennysfunktioita',
 );
 
 /** French (Français)
  * @author Grondin
+ * @author Urhixidur
  */
 $messages['fr'] = array(
-	'regexfunctions-desc' => 'Fonctions parseurs des expressions régulières',
+	'regexfunctions-desc' => 'Fonctions parseurs des expressions rationnelles',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'regexfunctions-desc' => 'Fonccions du parsor de les èxprèssions racionèles',
 );
 
 /** Galician (Galego)
@@ -186,7 +204,14 @@ $messages['ja'] = array(
 	'regexfunctions-desc' => '正規表現パーサー関数',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'regexfunctions-desc' => '정규 표현식 파서 함수',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -214,6 +239,20 @@ $messages['mk'] = array(
 	'regexfunctions-desc' => 'Парсерски функции со регуларен израз',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'regexfunctions-desc' => 'Fungsi penghurai ungkapan nalar',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'regexfunctions-desc' => 'Parserfunksjon for regulære uttrykk',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -233,13 +272,6 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'regexfunctions-desc' => 'Parserfunksjonar for regulære uttrykk',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'regexfunctions-desc' => 'Parserfunksjon for regulære uttrykk',
 );
 
 /** Occitan (Occitan)
@@ -265,10 +297,11 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Waldir
  */
 $messages['pt'] = array(
-	'regexfunctions-desc' => 'funções do analisador (parser) para expressões regulares',
+	'regexfunctions-desc' => 'Funções do analisador sintático para expressões regulares',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -282,7 +315,7 @@ $messages['pt-br'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'regexfunctions-desc' => 'Funcţii de parsare a expresiilor regulate',
+	'regexfunctions-desc' => 'Funcții de parsare a expresiilor regulate',
 );
 
 /** Tarandíne (Tarandíne)
@@ -306,18 +339,20 @@ $messages['sk'] = array(
 	'regexfunctions-desc' => 'Funkcie syntaktického analyzátora regulárnych výrazov',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'regexfunctions-desc' => 'Парсерске функције за регуларне изразе',
+	'regexfunctions-desc' => 'Рашчлањивачке функције с регуларним изразом',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
  */
 $messages['sr-el'] = array(
-	'regexfunctions-desc' => 'Parserske funkcije za regularne izraze',
+	'regexfunctions-desc' => 'Raščlanjivačke funkcije s regularnim izrazom',
 );
 
 /** Swedish (Svenska)
@@ -353,5 +388,17 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'regexfunctions-desc' => 'Hàm phân tích biểu thức chính quy',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hydra
+ */
+$messages['zh-hans'] = array(
+	'regexfunctions-desc' => '正则表达式解析器功能',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$messages['zh-hant'] = array(
+	'regexfunctions-desc' => '正則表達式解析器功能',
 );
 

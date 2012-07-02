@@ -2,7 +2,8 @@
 if (!defined('MEDIAWIKI')) die();
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $wgExtensionCredits['parserhook'][] = array(
@@ -10,19 +11,19 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name'           => 'Skin per page',
 	'version'        => '1.0',
 	'author'         => 'Tim Starling',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:SkinPerPage',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:SkinPerPage',
 	'descriptionmsg' => 'skinperpage-desc',
 );
 
 $wgExtensionMessagesFiles['SkinPerPage'] = dirname( __FILE__ ) . "/SkinPerPage.i18n.php";
 
-$wgExtensionFunctions[] = array( 'SkinPerPage', 'setup' );
+$wgHooks['ParserFirstCallInit'][] = 'SkinPerPage::setup';
 $wgHooks['OutputPageParserOutput'][] = 'SkinPerPage::outputHook';
 
 class SkinPerPage {
-	static function setup() {
-		global $wgParser;
-		$wgParser->setHook( 'skin', array( __CLASS__, 'parserHook' ) );
+	static function setup( $parser ) {
+		$parser->setHook( 'skin', array( __CLASS__, 'parserHook' ) );
+		return true;
 	}
 
 	static function parserHook( $text, $attribs, $parser ) {

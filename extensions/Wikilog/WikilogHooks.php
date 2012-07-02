@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -61,7 +62,7 @@ class WikilogHooks
 				$wi->getItemTitle()->invalidateCache();
 				$wi->getItemTitle()->purgeSquid();
 			}
-		} else if ( $wi->isItem() ) {
+		} elseif ( $wi->isItem() ) {
 			# ::WikilogItemPage::
 			$item = WikilogItem::newFromInfo( $wi );
 			if ( !$item ) {
@@ -73,6 +74,17 @@ class WikilogHooks
 			$item->mParentName = $wi->getName();
 			$item->mParentTitle = $wi->getTitle();
 			$item->mParent = $item->mParentTitle->getArticleId();
+
+			# Override item name if {{DISPLAYTITLE:...}} was used.
+			$dtText = $editInfo->output->getDisplayTitle();
+			if ( $dtText ) {
+				# Tags are stripped on purpose.
+				$dtText = Sanitizer::stripAllTags( $dtText );
+				$dtParts = explode( '/', $dtText, 2 );
+				if ( count( $dtParts ) > 1 ) {
+					$item->mName = $dtParts[1];
+				}
+			}
 
 			$item->resetID( $article->getId() );
 
@@ -217,20 +229,21 @@ class WikilogHooks
 			$item = WikilogItem::newFromID( $pageid );
 			if ( $wi && $wi->isItem() && !$wi->isTalk() && $item ) {
 				$item->mName = $wi->getItemName();
+				# FIXME: need to reparse due to {{DISPLAYTITLE:...}}.
 				$item->mTitle = $wi->getItemTitle();
 				$item->mParentName = $wi->getName();
 				$item->mParentTitle = $wi->getTitle();
 				$item->mParent = $item->mParentTitle->getArticleId();
 				$item->saveData();
 			}
-		} else if ( $newwl ) {
+		} elseif ( $newwl ) {
 			# Moving from normal namespace to wikilog namespace.
 			# Create wikilog data.
 			wfDebug( __METHOD__ . ": Moving from another namespace to wikilog " .
 				"namespace ($oldns, $newns). Creating wikilog data.\n" );
 			# FIXME: This needs a reparse of the wiki text in order to
 			# populate wikilog metadata. Or forbid this action.
-		} else if ( $oldwl ) {
+		} elseif ( $oldwl ) {
 			# Moving from wikilog namespace to normal namespace.
 			# Purge wikilog data.
 			wfDebug( __METHOD__ . ": Moving from wikilog namespace to another " .
@@ -243,35 +256,6 @@ class WikilogHooks
 			$dbw->delete( 'wikilog_tags',     array( 'wlt_page'   => $pageid ) );
 //			$dbw->delete( 'wikilog_comments', array( 'wlc_post'   => $pageid ) );
 			# FIXME: Decide what to do with the comments.
-		}
-		return true;
-	}
-
-	/**
-	 * LanguageGetSpecialPageAliases hook handler function.
-	 * Adds language aliases for special pages.
-	 * @note Deprecated in MediaWiki 1.16.
-	 * @todo Remove this in Wikilog 1.1.0, along with support for Mw < 1.16.
-	 */
-	static function LanguageGetSpecialPageAliases( &$specialPageAliases, $lang ) {
-		wfLoadExtensionMessages( 'Wikilog' );
-		$title = Title::newFromText( wfMsg( 'wikilog-specialwikilog' ) );
-		$specialPageAliases['SpecialWikilog'][] = $title->getDBKey();
-		return true;
-	}
-
-	/**
-	 * LanguageGetMagic hook handler function.
-	 * Adds language aliases for magic words.
-	 * @note Deprecated in MediaWiki 1.16.
-	 * @todo Remove this in Wikilog 1.1.0, along with support for Mw < 1.16.
-	 */
-	static function LanguageGetMagic( &$words, $lang ) {
-		require( 'Wikilog.i18n.magic.php' );
-		if ( $lang == 'en' || !isset( $magicWords[$lang] ) ) {
-			$words += $magicWords['en'];
-		} else {
-			$words += array_merge( $magicWords['en'], $magicWords[$lang] );
 		}
 		return true;
 	}
@@ -300,7 +284,7 @@ class WikilogHooks
 					Xml::check( 'wlSignpub', $checked, array(
 						'id' => 'wl-signpub',
 						'tabindex' => 1, // after text, before summary
-					) ) . '&nbsp;' .
+					) ) . WL_NBSP .
 					Xml::element( 'label', array(
 						'for' => 'wl-signpub',
 						'title' => $tooltip,
@@ -332,16 +316,8 @@ class WikilogHooks
 	/**
 	 * EditPage::attemptSave hook handler function.
 	 * Check edit page options.
-	 * @todo Remove $editpage->wlSignpub hack in Wikilog 1.1.0, along with
-	 *   support for Mw < 1.16.
 	 */
 	static function EditPageAttemptSave( $editpage ) {
-		# HACK: For Mw < 1.16, due to the lack of 'EditPage::importFormData' hook.
-		if ( !isset( $editpage->wlSignpub ) ) {
-			global $wgRequest;
-			$editpage->wlSignpub = $wgRequest->getCheck( 'wlSignpub' );
-		}
-
 		$options = array(
 			'signpub' => $editpage->wlSignpub
 		);
@@ -358,14 +334,14 @@ class WikilogHooks
 	 *
 	 * @todo Add support for PostgreSQL and SQLite databases.
 	 */
-	static function ExtensionSchemaUpdates() {
-		global $wgDBtype, $wgExtNewFields, $wgExtPGNewFields, $wgExtNewIndexes, $wgExtNewTables;
-
+	static function ExtensionSchemaUpdates( $updater ) {
 		$dir = dirname( __FILE__ ) . '/';
 
-		if ( $wgDBtype == 'mysql' ) {
-			$wgExtNewTables[] = array( "wikilog_wikilogs", "{$dir}wikilog-tables.sql" );
-			$wgExtNewIndexes[] = array( "wikilog_comments", "wlc_timestamp", "{$dir}archives/patch-comments-indexes.sql" );
+		if ( $updater->getDB()->getType() == 'mysql' ) {
+			$updater->addExtensionUpdate( array( 'addTable', "wikilog_wikilogs",
+				"{$dir}wikilog-tables.sql", true ) );
+			$updater->addExtensionUpdate( array( 'addIndex', "wikilog_comments",
+				"wlc_timestamp", "{$dir}archives/patch-comments-indexes.sql", true ) );
 		} else {
 			// TODO: PostgreSQL, SQLite, etc...
 			print "\n" .

@@ -6,10 +6,6 @@
 class FakeTitle extends Title {
 	function error() { throw new MWException( "Attempt to call member function of FakeTitle\n" ); }
 
-	// PHP 5.1 method overload
-	function __call( $name, $args ) { $this->error(); }
-
-	// PHP <5.1 compatibility
 	function isLocal() { $this->error(); }
 	function isTrans() { $this->error(); }
 	function getText() { $this->error(); }
@@ -33,11 +29,11 @@ class FakeTitle extends Title {
 	function getSubpageText() { $this->error(); }
 	function getSubpageUrlForm() { $this->error(); }
 	function getPrefixedURL() { $this->error(); }
-	function getFullURL( $query = '', $variant = false ) {$this->error(); }
+	function getFullURL( $query = '', $variant = false ) { $this->error(); }
 	function getLocalURL( $query = '', $variant = false ) { $this->error(); }
-	function getLinkUrl( $query = array(), $variant = false ) { $this->error(); }
-	function escapeLocalURL( $query = '' ) { $this->error(); }
-	function escapeFullURL( $query = '' ) { $this->error(); }
+	function getLinkURL( $query = array(), $variant = false ) { $this->error(); }
+	function escapeLocalURL( $query = '', $query2 = false ) { $this->error(); }
+	function escapeFullURL( $query = '', $query2 = false ) { $this->error(); }
 	function getInternalURL( $query = '', $variant = false ) { $this->error(); }
 	function getEditURL() { $this->error(); }
 	function getEscapedText() { $this->error(); }
@@ -46,9 +42,9 @@ class FakeTitle extends Title {
 	function isProtected( $action = '' ) { $this->error(); }
 	function isConversionTable() { $this->error(); }
 	function userIsWatching() { $this->error(); }
-	function quickUserCan( $action ) { $this->error(); }
-	function isNamespaceProtected() { $this->error(); }
-	function userCan( $action, $doExpensiveQueries = true ) { $this->error(); }
+	function quickUserCan( $action, $user = null ) { $this->error(); }
+	function isNamespaceProtected( User $user ) { $this->error(); }
+	function userCan( $action, $user = null, $doExpensiveQueries = true ) { $this->error(); }
 	function getUserPermissionsErrors( $action, $user, $doExpensiveQueries = true, $ignoreErrors = array() ) { $this->error(); }
 	function updateTitleProtection( $create_perm, $reason, $expiry ) { $this->error(); }
 	function deleteTitleProtection() { $this->error(); }
@@ -60,7 +56,6 @@ class FakeTitle extends Title {
 	function getSubpages( $limit = -1 ) { $this->error(); }
 	function isCssJsSubpage() { $this->error(); }
 	function isCssOrJsPage() { $this->error(); }
-	function isValidCssJsSubpage() { $this->error(); }
 	function getSkinFromCssJsSubpage() { $this->error(); }
 	function isCssSubpage() { $this->error(); }
 	function isJsSubpage() { $this->error(); }
@@ -106,7 +101,7 @@ class FakeTitle extends Title {
 	function getNextRevisionID( $revId, $flags=0 ) { $this->error(); }
 	function getFirstRevision( $flags=0 ) { $this->error(); }
 	function isNewPage() { $this->error(); }
-	function getEarliestRevTime() { $this->error(); }
+	function getEarliestRevTime( $flags = 0 ) { $this->error(); }
 	function countRevisionsBetween( $old, $new ) { $this->error(); }
 	function equals( Title $title ) { $this->error(); }
 	function exists() { $this->error(); }
@@ -116,8 +111,6 @@ class FakeTitle extends Title {
 	function touchLinks() { $this->error(); }
 	function getTouched( $db = null ) { $this->error(); }
 	function getNotificationTimestamp( $user = null ) { $this->error(); }
-	function trackbackURL() { $this->error(); }
-	function trackbackRDF() { $this->error(); }
 	function getNamespaceKey( $prepend = 'nstab-' ) { $this->error(); }
 	function isSpecialPage() { $this->error(); }
 	function isSpecial( $name ) { $this->error(); }

@@ -16,8 +16,10 @@ class RecentChangesController extends WikiaController {
 			$this->response->setVal('status', "error");
 			return true;
 		}
-		$rcf = new RecentChangesFiltersStorage($this->wg->User);
-		$rcf->set($this->request->getVal('filters'));
+
+		$rcfs = new RecentChangesFiltersStorage($this->wg->User);
+		$rcfs->set($this->request->getVal('filters'));
+
 		$this->response->setVal('status', "ok"); 
 	}
 	
@@ -31,16 +33,19 @@ class RecentChangesController extends WikiaController {
 
 		$options = array();
 		foreach( $namespaces as $index => $name ) {
-			if( $index < NS_MAIN )
+			if( $index < NS_MAIN ) {
 				continue;
-			if( $index === 0 )
-				$options[$index] = $this->wf->Msg( 'blanknamespace' );
-			else
-				$options[$index] = $name;
+			}
+
+			$options[] = array(
+				'value' => $index,
+				'label' => $index === 0 ? $this->wf->Msg( 'blanknamespace' ) : $name
+			);
 		}
 
 		$rcfs = new RecentChangesFiltersStorage($this->wg->User);
-		$selected = array_flip($rcfs->get());
+		$selected = $rcfs->get();
+
 		$this->html = $this->app->renderView( 'WikiaStyleGuideDropdownController', 'multiSelect', array(
 			'options' => $options,
 			'selected' => $selected,

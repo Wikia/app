@@ -6,4 +6,4 @@ CREATE TABLE /*$wgDBprefix*/editings (
   PRIMARY KEY  (`editings_page`,`editings_user`),
   KEY `editings_page` (`editings_page`),
   KEY `editings_page_started` (`editings_page`,`editings_user`,`editings_started`)
-) TYPE=MEMORY;
+) ENGINE=MEMORY;

@@ -189,7 +189,6 @@ class Paginator extends Service{
 		if ( $this->pagesCount <= 1 ){
 			return '';
 		}
-		wfLoadExtensionMessages( 'Paginator' );
 
 		$aData = $this->getBarData();
 		$aData['paginatorId'] = strip_tags( trim( stripslashes( $paginatorId ) ) );

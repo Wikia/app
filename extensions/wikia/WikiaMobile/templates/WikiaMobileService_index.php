@@ -3,7 +3,7 @@
 	<head>
 		<title><?= htmlspecialchars( $pageTitle ) ;?></title>
 		<? if( !$showAllowRobotsMetaTag ): ?>
-			<meta name=robots content=noindex, nofollow>
+			<meta name=robots content='noindex, nofollow'>
 		<?endif; ?>
 		<meta http-equiv=Content-Type content="<?= $mimeType ;?>; charset=<?= $charSet ;?>">
 		<meta name=HandheldFriendly content=true>
@@ -12,7 +12,8 @@
 		<meta name=apple-mobile-web-app-capable content=yes>
 		<?= $headLinks ;?>
 		<?= $cssLinks ;?>
-		<?= $globalsScript ;?>
+		<?= $topScripts ?>
+		<?= $globalVariablesScript ;?>
 		<?= $jsHeadFiles ;?>
 		<?= $headItems ;?>
 	</head>
@@ -26,5 +27,6 @@
 		<?= $comscoreTracking ;?>
 		<?= $gaTracking ;?>
 		<?= $gaOneWikiTracking ;?>
+		<div class=curtain></div>
 	</body>
 </html>

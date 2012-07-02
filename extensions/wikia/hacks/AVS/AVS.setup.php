@@ -35,7 +35,7 @@ $wgAutoloadClasses['AVS'] = $dir . 'AVS.body.php'; # Tell MediaWiki to load the 
 $wgAutoloadClasses['AVSSpecialPage'] = $dir . 'AVS.body.php'; # Tell MediaWiki to load the extension body.
 
 $wgExtensionMessagesFiles['AVS'] = $dir . 'AVS.i18n.php';
-$wgExtensionAliasesFiles['AVS'] = $dir . 'AVS.alias.php';
+$wgExtensionMessagesFiles['AVSAliases'] = $dir . 'AVS.alias.php';
 $wgHooks['ParserFirstCallInit'][] = 'AVS::initHooks';
 
 

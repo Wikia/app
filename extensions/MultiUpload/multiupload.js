@@ -185,7 +185,7 @@ var wgUploadWarningObj = {
 		if ( !wgAjaxUploadDestCheck || !sajax_init_object() ) {
 			return;
 		}
-		injectSpinner( document.getElementById( 'wpDestFile' + current ), 'destcheck' );
+		$( '#wpDestFile' + current ).injectSpinner( 'destcheck' );
 
 		// Get variables into local scope so that they will be preserved for the
 		// anonymous callback. fileName is copied so that multiple overlapping
@@ -200,7 +200,7 @@ var wgUploadWarningObj = {
 	},
 
 	'processResult' : function( result, fileName ) {
-		removeSpinner( 'destcheck' );
+		$.removeSpinner( 'destcheck' );
 		this.setWarning(result.responseText);
 		this.responseCache[fileName] = result.responseText;
 	},
@@ -337,7 +337,7 @@ var wgUploadLicenseObj = {
 				return;
 			}
 		}
-		injectSpinner( document.getElementById( 'wpLicense' ), 'license' );
+		$("#wpLicense").injectSpinner( 'license' );
 
 		var title = document.getElementById( 'wpDestFile' + current ).value;
 		if ( !title ) {
@@ -346,7 +346,7 @@ var wgUploadLicenseObj = {
 
 		var url = wgScriptPath + '/api' + wgScriptExtension
 			+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
-			+ '&title=' + encodeURIComponent( title.replace(/\./g, "%2E") )
+			+ '&title=' + encodeURIComponent( title )
 			+ '&prop=text&pst&format=json';
 
 		var req = sajax_init_object();
@@ -360,7 +360,7 @@ var wgUploadLicenseObj = {
 	},
 
 	'processResult' : function( result, license ) {
-		removeSpinner( 'license' );
+		$.removeSpinner( 'license' );
 		this.responseCache[license] = result['parse']['text']['*'];
 		this.showPreview( this.responseCache[license] );
 	},
@@ -374,4 +374,4 @@ var wgUploadLicenseObj = {
 
 }
 
-addOnloadHook( wgUploadSetup );
+$( wgUploadSetup );

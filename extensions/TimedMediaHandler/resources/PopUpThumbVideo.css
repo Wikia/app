@@ -1,0 +1,23 @@
+.PopUpMediaTransform a .play-btn-large{
+	position : absolute;
+	top: 50%;
+	left : 50%;
+	width: 70px;
+	height: 53px;
+	margin-left: -35px;
+	margin-top: -25px;
+	/* @embed */
+	background-image:url('player_big_play_button.png');
+}
+.PopUpMediaTransform a .play-btn-large :hover{
+	/* @embed */
+	background-image:url('player_big_play_button_hover.png');
+}
+.PopUpMediaTransform { 
+	position : relative;
+	display: inline-block;
+}
+
+li.gallerybox div.thumb div.PopUpMediaTransform {
+        margin: 0 auto;
+}

@@ -1,10 +1,10 @@
 <?php
-/*
+/**
  * MV_SequenceTools.php Created on Nov 2, 2007
- * 
+ *
  * All Metavid Wiki code is Released Under the GPL2
  * for more info visit http://metavid.org/wiki/Code
- * 
+ *
  * @author Michael Dale
  * @email dale@ucsc.edu
  * @url http://metavid.org
@@ -19,7 +19,7 @@
  		'transition',
 		'clipedit',
  		'cliplib',
- 		'options' 		 		
+ 		'options'
  	);
  	function getHTML() {
  		global $wgOut;
@@ -32,9 +32,9 @@
 		$wgOut->addHTML( '</div>' );
 	}
 	function get_tool_html( $tool_id,  $ns = '', $title_str = '' ) {
-		global $wgOut, $wgUser;		
+		global $wgOut, $wgUser;
 		//check if we are proccessing a set:
-		$tool_set = explode('|', $tool_id); 
+		$tool_set = explode('|', $tool_id);
 		if(count($tool_set)>1){
 			$tool_values = array();
 			foreach($tool_set as $tool_id){
@@ -45,33 +45,33 @@
 			return mvOutputJSON( $tool_values );
 		}
 		$wgOut->clearHTML();
-		//else process a single tool: 
+		//else process a single tool:
 		switch( $tool_id ) {
 			case 'sequence_page':
 				global $mvgIP, $wgOut, $wgParser, $wgTitle;
-				// put in header preview div: 
+				// put in header preview div:
 				$wgOut->addHTML( '<div id="mv_seq_edit_preview"></div>' );
-									
+
 				$article = & $this->mv_interface->article;
 				$wgTitle = & $this->mv_interface->article->mTitle;
 				$sk =& $wgUser->getSkin();
-				
-				// get the ajax edit		
+
+				// get the ajax edit
 				$editPageAjax = new MV_EditPageAjax( $article );
 				$editPageAjax->mvd_id = 'seq';
-				
-				// fill wgOUt with edit form: 
+
+				// fill wgOUt with edit form:
 				$editPageAjax->edit();
 			break;
 			case 'add_clips_manual':
 				$this->add_clips_manual();
-			break;				
+			break;
 			case 'clipedit':
 				//the default clip view provides a "welcome / help  page"
 				$wgOut->addHTML( wfMsg('mv_welcome_to_sequencer') );
 			break;
 			case 'cliplib':
-				$this->add_embed_search();		
+				$this->add_embed_search();
 			break;
 			case 'options':
 				$this->add_editor_options();
@@ -79,39 +79,39 @@
 			case 'transition':
 				$this->add_transitions();
 			break;
-			default:				
+			default:
 				$wgOut->addHTML( wfMsg('mv_tool_missing',  htmlspecialchars ($tool_id) ) );
 			break;
 		}
 		return $wgOut->getHTML();
-	}	
+	}
 	//handles copy / paste clip board data actions
 	function do_clipboard( $action ){
 		global $wgRequest, $wgUser;
-		//validate the user-edit token (for both copy and paste)	
+		//validate the user-edit token (for both copy and paste)
 		$token = $wgRequest->getVal( 'clipboardEditToken');
-					 
+
 		//store the clipboard
-		if( $action == 'copy' ){			
-			return '1'; 	
+		if( $action == 'copy' ){
+			return '1';
 		}
 		//get the clipboard
 		if( $action == 'paste'){
 			return '';
-		}						
-		//error out: 
+		}
+		//error out:
 		return  php2jsObj( array( 	'status' => 'error',
-									'error_txt' => wfMsg('mv_unknown_clipboard_action') 
-								) 
+									'error_txt' => wfMsg('mv_unknown_clipboard_action')
+								)
 						 );
 	}
 	function add_embed_search() {
 		global $wgOut;
-		// grab a de-encapsulated search with prefix		
+		// grab a de-encapsulated search with prefix
 		$wgOut->addHTML( '<h3>'. wfMsg('mv_resource_locator') . '</h3>' );
-		//add the input form 
-		/*$wgOut->addHTML( 			
-			xml::input('mv_ams_search', 50,'', array( 'id' => 'mv_ams_search' , 'class' => 'searchField' )) . 
+		//add the input form
+		/*$wgOut->addHTML(
+			xml::input('mv_ams_search', 50,'', array( 'id' => 'mv_ams_search' , 'class' => 'searchField' )) .
 			xml::submitButton( wfMsg('mv_media_search'), array('id'=>'mv_ams_submit') ) .
 			xml::element('div',array('id'=>'mv_ams_results'))
 		);*/
@@ -120,23 +120,23 @@
 		global $wgOut;
 		$wgOut->addHTML( '<h3>' . wfMsg('mv_editor_options') . '</h3>'.
 				wfMsg('mv_editor_mode') . '<br /> ' .
-				'<blockquote><input type="radio" value="simple_editor" name="opt_editor">' . 
+				'<blockquote><input type="radio" value="simple_editor" name="opt_editor">' .
 						wfMsg('mv_simple_editor_desc') . ' </blockquote>' .
 				'<blockquote><input type="radio" value="advanced_editor" name="opt_editor">' .
 						wfMsg('mv_advanced_editor_desc') . ' </blockquote>'.
-				wfMsg('mv_other_options') . '<br />' . 
-				'<blockquote><input type="checkbox" value="contextmenu_opt" name="contextmenu_opt">' . 
-						wfMsg('mv_contextmenu_opt') . ' </blockquote>'				
-				 );				
+				wfMsg('mv_other_options') . '<br />' .
+				'<blockquote><input type="checkbox" value="contextmenu_opt" name="contextmenu_opt">' .
+						wfMsg('mv_contextmenu_opt') . ' </blockquote>'
+				 );
 	}
 	function add_transitions(){
 		global $wgOut;
-		$wgOut->addHTML('<h3>'. wfMsg('mv_transitions') .'</h3>');				
+		$wgOut->addHTML('<h3>'. wfMsg('mv_transitions') .'</h3>');
 	}
 	function auto_complete_stream_name( $val ) {
 		global $mvDefaultSearchVideoPlaybackRes;
 		$dbr = wfGetDB( DB_SLAVE );
-		// check against stream name list: 
+		// check against stream name list:
 		$result = $dbr->select( 'mv_streams', array( 'name', 'duration' ),
 			array( '`name` LIKE \'%' . mysql_escape_string( $val ) . '%\'' ),
 			__METHOD__,
@@ -146,14 +146,14 @@
 		// $out='<ul>'."\n";
 		$out = '';
 		while ( $row = $dbr->fetchObject( $result ) ) {
-			// make sure the person page exists: 									
+			// make sure the person page exists:
 			$streamTitle =  new MV_Title( 'Stream:' . $row->name . '/0:00:00/0:00:30' );
 			// print "stream name:" . $streamTitle->getStreamName();
-			// @@TODO fix this up.. this is getting ugly new line in embed video for example breaks things	
+			// @@TODO fix this up.. this is getting ugly new line in embed video for example breaks things
 			$out .=  $row->name . '|' . $streamTitle->getStreamNameText() .
 				'|' . $streamTitle->getStreamImageURL( 'icon' ) .
 				'|' . $row->duration .
-				'|' . $streamTitle->getEmbedVideoHtml( array('id'=>'vid_seq', 
+				'|' . $streamTitle->getEmbedVideoHtml( array('id'=>'vid_seq',
 															 'size'=>$mvDefaultSearchVideoPlaybackRes)) . "\n";
 		}
 		// $out.='</ul>';
@@ -173,7 +173,7 @@
 			'value="">' );
 		$wgOut->addHTML( '<div id="mv_add_stream_name_choices" class="autocomplete"></div>' );
 		$wgOut->addHTML( '<br class="mv_css_form">' );
-		// get adjustment disp: 
+		// get adjustment disp:
 		$wgOut->addHTML( '<div id="mv_add_adj_cnt" style="display:none;">' .
 			$MV_Overlay->get_adjust_disp( 'seq', 'seq' ) .
 			'<input type="button" value="' . wfMsg( 'mv_seq_add_end' ) . '"  onClick="mv_add_to_seq();" >' .
@@ -186,7 +186,7 @@
 		// set up the title /article
 		$title = Title::newFromText( $titleKey, MV_NS_SEQUENCE );
 		$article = new MV_SequencePage( $title );
-				
+
 		// print "inline_seq:" .  $_POST['inline_seq'] . " wpbox: " . $_REQUEST['wpTextbox1'] . "\n";
 		$editPageAjax = new MV_EditPageAjax( $article );
 		$editPageAjax->mvd_id = 'seq';
@@ -198,11 +198,11 @@
 		if ( isset( $_POST['wpPreview'] ) ) {
 			$sk =& $wgUser->getSkin();
 			// $wgOut->addWikiText($_REQUEST['wpTextbox1']);
-			// run via parser so we get categories:			
+			// run via parser so we get categories:
 			$parserOptions = ParserOptions::newFromUser( $wgUser );
 			$parserOptions->setEditSection( false );
 			$parserOptions->setTidy( true );
-			// just parse the non-seq portion: 
+			// just parse the non-seq portion:
 			$parserOutput = $wgParser->parse( $_REQUEST['wpTextbox1'] , $title, $parserOptions );
 			$wgOut->addCategoryLinks( $parserOutput->getCategories() );
 			$wgOut->addHTML( $parserOutput->mText );
@@ -217,9 +217,8 @@
 		if ( $editPageAjax->edit( $textbox1 ) == false ) {
 			return php2jsObj( array( 'status' => 'ok' ) );
 		} else {
-			// error: retrun error msg and form: 
+			// error: retrun error msg and form:
 			return $wgOut->getHTML();
 		}
 	}
  }
-?>

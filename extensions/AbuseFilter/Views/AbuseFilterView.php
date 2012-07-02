@@ -1,20 +1,31 @@
 <?php
-if ( !defined( 'MEDIAWIKI' ) )
-	die();
 
-abstract class AbuseFilterView {
+abstract class AbuseFilterView extends ContextSource {
+	/**
+	 * @param $page SpecialPage
+	 * @param $params array
+	 */
 	function __construct( $page, $params ) {
 		$this->mPage = $page;
 		$this->mParams = $params;
+		$this->setContext( $this->mPage->getContext() );
 	}
 
+	/**
+	 * @param string $subpage
+	 * @return Title
+	 */
 	function getTitle( $subpage = '' ) {
 		return $this->mPage->getTitle( $subpage );
 	}
 
 	abstract function show();
 
-	function canEdit() {
+	/**
+	 * @static
+	 * @return bool
+	 */
+	static function canEdit() {
 		global $wgUser;
 		static $canEdit = null;
 
@@ -25,12 +36,16 @@ abstract class AbuseFilterView {
 		return $canEdit;
 	}
 
-	function canViewPrivate() {
+	/**
+	 * @static
+	 * @return bool
+	 */
+	static function canViewPrivate() {
 		global $wgUser;
 		static $canView = null;
 
 		if ( is_null( $canView ) ) {
-			$canView = $this->canEdit() || $wgUser->isAllowed( 'abusefilter-view-private' );
+			$canView = self::canEdit() || $wgUser->isAllowed( 'abusefilter-view-private' );
 		}
 
 		return $canView;
@@ -39,11 +54,10 @@ abstract class AbuseFilterView {
 
 class AbuseFilterChangesList extends OldChangesList {
 	public function insertExtra( &$s, &$rc, &$classes ) {
-		$sk = $this->skin;
 		$examineParams = empty( $rc->examineParams ) ? array() : $rc->examineParams;
 
 		$title = SpecialPage::getTitleFor( 'AbuseFilter', 'examine/' . $rc->mAttribs['rc_id'] );
-		$examineLink = $sk->link( $title, wfMsgExt( 'abusefilter-changeslist-examine', 'parseinline' ), array(), $examineParams );
+		$examineLink = Linker::link( $title, wfMsgExt( 'abusefilter-changeslist-examine', 'parseinline' ), array(), $examineParams );
 
 		$s .= " ($examineLink)";
 

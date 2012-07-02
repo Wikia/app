@@ -6,230 +6,249 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'WhatIsMyIP' => array( 'WhatIsMyIP' ),
 );
 
 /** Afrikaans (Afrikaans) */
-$aliases['af'] = array(
+$specialPageAliases['af'] = array(
 	'WhatIsMyIP' => array( 'WatIsMyIP' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'WhatIsMyIP' => array( 'ما_هو_الأيبي_خاصتي' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'WhatIsMyIP' => array( 'ما_هو_الأيبى_خاصتى' ),
+$specialPageAliases['arz'] = array(
+	'WhatIsMyIP' => array( 'ايه_هو_الIP_بتاعى' ),
+);
+
+/** Breton (Brezhoneg) */
+$specialPageAliases['br'] = array(
+	'WhatIsMyIP' => array( 'PetraEoMaIP' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'WhatIsMyIP' => array( 'KojiJeMojIP' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
-	'WhatIsMyIP' => array( 'Meine IP-Adresse' ),
+$specialPageAliases['de'] = array(
+	'WhatIsMyIP' => array( 'Meine_IP-Adresse' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
+$specialPageAliases['dsb'] = array(
 	'WhatIsMyIP' => array( 'Moja IP-adresa' ),
 );
 
 /** Divehi (ދިވެހިބަސް) */
-$aliases['dv'] = array(
+$specialPageAliases['dv'] = array(
 	'WhatIsMyIP' => array( 'އަހަރެންގެ އައި.ޕީ އަކީ' ),
 );
 
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'WhatIsMyIP' => array( 'Ki_ests_mia_IP?' ),
+);
+
 /** Spanish (Español) */
-$aliases['es'] = array(
+$specialPageAliases['es'] = array(
 	'WhatIsMyIP' => array( 'Mi_IP', 'Cuál_es_mi_IP' ),
 );
 
 /** Persian (فارسی) */
-$aliases['fa'] = array(
+$specialPageAliases['fa'] = array(
 	'WhatIsMyIP' => array( 'نشانی_اینترنتی_من_چیست' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
-	'WhatIsMyIP' => array( 'Oma IP-osoite' ),
+$specialPageAliases['fi'] = array(
+	'WhatIsMyIP' => array( 'Oma_IP-osoite' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
-	'WhatIsMyIP' => array( 'Quelle est mon IP', 'QuelleEstMonIP' ),
+$specialPageAliases['fr'] = array(
+	'WhatIsMyIP' => array( 'Quelle_est_mon_IP', 'QuelleEstMonIP' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
-	'WhatIsMyIP' => array( 'Quinta est mon adrèce IP', 'QuintaEstMonAdrèceIP' ),
+$specialPageAliases['frp'] = array(
+	'WhatIsMyIP' => array( 'Quinta_est_mon_adrèce_IP', 'QuintaEstMonAdrèceIP' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
-	'WhatIsMyIP' => array( 'Cal é a miña IP' ),
+$specialPageAliases['gl'] = array(
+	'WhatIsMyIP' => array( 'Cal_é_o_meu_enderezo_IP' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'WhatIsMyIP' => array( 'Myy IP-Adräss' ),
 );
 
 /** Croatian (Hrvatski) */
-$aliases['hr'] = array(
+$specialPageAliases['hr'] = array(
 	'WhatIsMyIP' => array( 'Moj_IP' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
+$specialPageAliases['hsb'] = array(
 	'WhatIsMyIP' => array( 'Moja IP-adresa' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'WhatIsMyIP' => array( 'KisaKiIPMwen' ),
+);
+
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
-	'WhatIsMyIP' => array( 'Mi az IP-címem' ),
+$specialPageAliases['hu'] = array(
+	'WhatIsMyIP' => array( 'Mi_az_IP-címem' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'WhatIsMyIP' => array( 'Que es mi IP' ),
+$specialPageAliases['ia'] = array(
+	'WhatIsMyIP' => array( 'Que_es_mi_IP' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'WhatIsMyIP' => array( 'IP saya', 'IPSaya' ),
+$specialPageAliases['id'] = array(
+	'WhatIsMyIP' => array( 'IP_saya', 'IPSaya' ),
 );
 
 /** Italian (Italiano) */
-$aliases['it'] = array(
-	'WhatIsMyIP' => array( 'IlMioIP' ),
+$specialPageAliases['it'] = array(
+	'WhatIsMyIP' => array( 'IlMioIP', 'MioIP' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'WhatIsMyIP' => array( '自分のIPアドレス', '自分のＩＰアドレス' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'WhatIsMyIP' => array( 'Ming IP Address' ),
 );
 
-/** Cornish (Kernewek) */
-$aliases['kw'] = array(
+/** Cornish (Kernowek) */
+$specialPageAliases['kw'] = array(
 	'WhatIsMyIP' => array( 'PythYwOwIP' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'WhatIsMyIP' => array( 'Wéi ass meng IP-Adress' ),
+$specialPageAliases['lb'] = array(
+	'WhatIsMyIP' => array( 'Wéi_ass_meng_IP-Adress' ),
 );
 
 /** Lithuanian (Lietuvių) */
-$aliases['lt'] = array(
+$specialPageAliases['lt'] = array(
 	'WhatIsMyIP' => array( 'Koks mano IP' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'WhatIsMyIP' => array( 'КојаЕМојатаIPАдреса' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'WhatIsMyIP' => array( 'എന്താണെൻഐപി' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'WhatIsMyIP' => array( 'माझाअंकपत्ताकाय' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'WhatIsMyIP' => array( 'Min_IP' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'WhatIsMyIP' => array( 'Wat_is_mien_IP-adres' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'WhatIsMyIP' => array( 'WatIsMijnIPAdres' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'WhatIsMyIP' => array( 'Min IP' ),
-);
-
 /** Occitan (Occitan) */
-$aliases['oc'] = array(
+$specialPageAliases['oc'] = array(
 	'WhatIsMyIP' => array( 'Quina es mon IP', 'QuinaEsMonIP' ),
 );
 
 /** Polish (Polski) */
-$aliases['pl'] = array(
-	'WhatIsMyIP' => array( 'Moje IP' ),
+$specialPageAliases['pl'] = array(
+	'WhatIsMyIP' => array( 'Moje_IP' ),
 );
 
 /** Pashto (پښتو) */
-$aliases['ps'] = array(
+$specialPageAliases['ps'] = array(
 	'WhatIsMyIP' => array( 'زما آی پي پته څه ده' ),
 );
 
 /** Portuguese (Português) */
-$aliases['pt'] = array(
-	'WhatIsMyIP' => array( 'Qual é o meu IP' ),
+$specialPageAliases['pt'] = array(
+	'WhatIsMyIP' => array( 'Qual_é_o_meu_IP' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'WhatIsMyIP' => array( 'मदियअङ्कसंकेतकिमस्ती' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'WhatIsMyIP' => array( 'AkúMámIP' ),
 );
 
 /** Albanian (Shqip) */
-$aliases['sq'] = array(
+$specialPageAliases['sq'] = array(
 	'WhatIsMyIP' => array( 'IPjaIme' ),
 );
 
 /** Sundanese (Basa Sunda) */
-$aliases['su'] = array(
+$specialPageAliases['su'] = array(
 	'WhatIsMyIP' => array( 'NaonIPKuring' ),
 );
 
 /** Telugu (తెలుగు) */
-$aliases['te'] = array(
+$specialPageAliases['te'] = array(
 	'WhatIsMyIP' => array( 'నాఐపిఏమిటి' ),
 );
 
 /** Thai (ไทย) */
-$aliases['th'] = array(
+$specialPageAliases['th'] = array(
 	'WhatIsMyIP' => array( 'ไอพีของฉัน' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'WhatIsMyIP' => array( 'Ano ang IP ko' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'WhatIsMyIP' => array( 'IPAdresimNe' ),
 );
 
 /** Vèneto (Vèneto) */
-$aliases['vec'] = array(
+$specialPageAliases['vec'] = array(
 	'WhatIsMyIP' => array( 'ElMeIP' ),
 );
 
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'WhatIsMyIP' => array( '我的IP' ),
+);

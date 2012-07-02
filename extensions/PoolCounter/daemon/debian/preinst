@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Borrowed from MySQL, not sure if that's where it came from originally -- TS
+
+# If we use NIS then errors should be tolerated. It's up to the
+# user to ensure that the poolcounter user is correctly setup.
+# Beware that there are two ypwhich one of them needs the 2>/dev/null!
+if test -n "`which ypwhich 2>/dev/null`"  &&  ypwhich >/dev/null 2>&1; then
+  set +e
+fi
+
+# creating poolcounter group if he isn't already there
+if ! getent group poolcounter >/dev/null; then
+ 	# Adding system group: poolcounter.
+	addgroup --system poolcounter >/dev/null
+fi
+
+# creating poolcounter user if he isn't already there
+if ! getent passwd poolcounter >/dev/null; then
+	# Adding system user: poolcounter.
+	adduser \
+	  --system \
+      --disabled-login \
+	  --ingroup poolcounter \
+	  --home / \
+	  --gecos "PoolCounter" \
+	  --shell /bin/false \
+	  poolcounter  >/dev/null
+fi
+
+# end of NIS tolerance zone
+set -e
+

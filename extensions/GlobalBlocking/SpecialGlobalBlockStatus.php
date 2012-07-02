@@ -4,8 +4,7 @@ class SpecialGlobalBlockStatus extends SpecialPage {
 	public $mAddress, $mReason;
 
 	function __construct() {
-		wfLoadExtensionMessages('GlobalBlocking');
-		SpecialPage::SpecialPage( 'GlobalBlockStatus', 'globalblock-whitelist' );
+		parent::__construct( 'GlobalBlockStatus', 'globalblock-whitelist' );
 	}
 
 	function execute( $par ) {
@@ -27,7 +26,7 @@ class SpecialGlobalBlockStatus extends SpecialPage {
 		
 		global $wgApplyGlobalBlocks;
 		if (!$wgApplyGlobalBlocks) {
-			$this->addWikiMsg( 'globalblocking-whitelist-notapplied' );
+			$wgOut->addWikiMsg( 'globalblocking-whitelist-notapplied' );
 			return;
 		}
 
@@ -68,7 +67,10 @@ class SpecialGlobalBlockStatus extends SpecialPage {
 
 	function loadParameters() {
 		global $wgRequest;
-		$this->mAddress = Block::normaliseRange( trim( $wgRequest->getText( 'address' ) ) );
+		$ip = trim( $wgRequest->getText( 'address' ) );
+		$this->mAddress = ( $ip !== '' || $wgRequest->wasPosted() )
+			? Block::normaliseRange( $ip )
+			: '';
 		$this->mReason = $wgRequest->getText( 'wpReason' );
 		$this->mWhitelistStatus = $wgRequest->getCheck( 'wpWhitelistStatus' );
 		$this->mEditToken = $wgRequest->getText( 'wpEditToken' );
@@ -136,7 +138,7 @@ class SpecialGlobalBlockStatus extends SpecialPage {
 	}
 
 	function form( $error ) {
-		global $wgRequest,$wgUser,$wgOut;
+		global $wgUser, $wgOut;
 		
 		$wgOut->addWikiMsg( 'globalblocking-whitelist-intro' );
 		
@@ -146,18 +148,19 @@ class SpecialGlobalBlockStatus extends SpecialPage {
 		$form .= Xml::openElement( 'fieldset' ) . Xml::element( 'legend', null, wfMsg( 'globalblocking-whitelist-legend' ) );
 		$form .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getFullURL(), 'name' => 'globalblock-whitelist' ) );
 
-		$form .= Xml::hidden( 'title', $this->getTitle()->getPrefixedText() );
-		$form .= Xml::hidden( 'action', 'whitelist' );
+		$form .= Html::hidden( 'title', $this->getTitle()->getPrefixedText() );
+		$form .= Html::hidden( 'action', 'whitelist' );
 
 		$fields = array();
 
-		$fields['ipaddress'] = Xml::input( 'address', 45, $this->mAddress );
+		// uses ipaddress msg
+		$fields['globalblocking-ipaddress'] = Xml::input( 'address', 45, $this->mAddress );
 		$fields['globalblocking-whitelist-reason'] = Xml::input( 'wpReason', 45, $this->mReason );
 		$fields['globalblocking-whitelist-status'] = Xml::checkLabel( wfMsgExt( 'globalblocking-whitelist-statuslabel', 'parsemag' ), 'wpWhitelistStatus', 'wpWhitelistStatus', $this->mCurrentStatus );
 
 		$form .= Xml::buildForm( $fields, 'globalblocking-whitelist-submit' );
 
-		$form .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
+		$form .= Html::hidden( 'wpEditToken', $wgUser->editToken() );
 
 		$form .= Xml::closeElement( 'form' );
 		$form .= Xml::closeElement( 'fieldset' );

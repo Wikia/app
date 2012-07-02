@@ -9,7 +9,6 @@ class WikiaVideoAddForm extends SpecialPage {
 	/* constructor */
 	function __construct () {
 		$this->mAction = "";
-		wfLoadExtensionMessages('WikiaVideoAdd');
 		parent::__construct( "WikiaVideoAdd", "wikiavideoadd" );
 	}
 
@@ -44,7 +43,7 @@ class WikiaVideoAddForm extends SpecialPage {
 	public function showForm() {
 		global $wgOut, $wgRequest, $wgUser;
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'WikiaVideoAdd' );
-		$action = $titleObj->escapeLocalURL( "action=submit" );
+		$action = htmlspecialchars($titleObj->getLocalURL( "action=submit" ));
 		( '' != $wgRequest->getVal( 'name' ) ) ? $name = $wgRequest->getVal( 'name' ) : $name = '';
 
 		if( !$wgUser->isAllowed( 'upload' ) ) {

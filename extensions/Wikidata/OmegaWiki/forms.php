@@ -2,17 +2,27 @@
 
 require_once( 'languages.php' );
 
-function getTextBox( $name, $value = "", $onChangeHandler = "", $maximumLength = 255 ) {
+function getTextBox( $name, $value = "", $onChangeHandler = "", $disabled = false ) {
 	if ( $onChangeHandler != "" )
 		$onChangeAttribute = ' onchange="' . $onChangeHandler . '"';
 	else
 		$onChangeAttribute = '';
 
-	return '<input type="text" id="' . $name . '" name="' . $name . '" value="' . htmlspecialchars( $value ) . '" maxlength="' . $maximumLength . '"' . $onChangeAttribute . ' style="width: 100%; padding: 0px; margin: 0px;"/>';
+	$disableText = $disabled ? 'disabled="disabled" ' : '' ;
+	$inputHTML = '<input ' . $disableText . 'type="text" id="' . $name . '" name="' . $name .
+		'" value="' . htmlspecialchars( $value ) . '"' . $onChangeAttribute .
+		' style="width: 100%; padding: 0px; margin: 0px;"/>' ;
+
+	return $inputHTML ;
 }
  
-function getTextArea( $name, $text = "", $rows = 5, $columns = 80 ) {
-	return '<textarea name="' . $name . '" rows="' . $rows . '" cols="' . $columns . '">' . htmlspecialchars( $text ) . '</textarea>';
+function getTextArea( $name, $text = "", $rows = 5, $columns = 80, $disabled = false ) {
+	if ( $disabled ) {
+		// READONLY alone is not enough: apparently, some browsers ignore it
+		return '<textarea disabled="disabled" name="' . $name . '" rows="' . $rows . '" cols="' . $columns . '" READONLY>' . htmlspecialchars( $text ) . '</textarea>';
+	} else {
+		return '<textarea name="' . $name . '" rows="' . $rows . '" cols="' . $columns . '">' . htmlspecialchars( $text ) . '</textarea>';
+	}
 }
 
 function checkBoxCheckAttribute( $isChecked ) {
@@ -22,18 +32,42 @@ function checkBoxCheckAttribute( $isChecked ) {
 		return '';
 }
  
-function getCheckBox( $name, $isChecked ) {
-	return '<input type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . '/>';
+function getCheckBox( $name, $isChecked, $disabled = false ) {
+	// a disabled checkbox returns no value, as if unchecked
+	// therefore the value of a disabled, but checked, checkbox must be sent with a hidden input
+	if ( $disabled ) {
+		if ( $isChecked ) {
+			return '<input disabled="disabled" type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . '/><input type="hidden" name="' . $name . '" value="1"/>';
+		} else {
+			return '<input disabled="disabled" type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . '/>';
+		}
+	} else {
+		return '<input type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . '/>';
+	}
 }
 
-function getCheckBoxWithOnClick( $name, $isChecked, $onClick ) {
-	return '<input type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . ' onclick="' . $onClick . '"/>';
+function getCheckBoxWithOnClick( $name, $isChecked, $onClick, $disabled = false ) {
+	if ( $disabled ) {
+		if ( $isChecked ) {
+			return '<input disabled="disabled" type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . '"/><input type="hidden" name="' . $name . '" value="1"/>';
+		} else {
+			return '<input disabled="disabled" type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . '"/>';
+		}
+	} else {
+		return '<input type="checkbox" name="' . $name . '"' . checkBoxCheckAttribute( $isChecked ) . ' onclick="' . $onClick . '"/>';
+	}
 }
 
 function getRemoveCheckBox( $name ) {
-	return getCheckBoxWithOnClick( $name, false, "removeClicked(this);" );
+	global $wgUser;
+	$dc = wdGetDataSetContext();
+	if ( ($dc == "uw") and (! $wgUser->isAllowed( 'deletewikidata-uw' ) ) ) {
+		return getCheckBoxWithOnClick( $name, false, "removeClicked(this);", true );
+	} else {
+		return getCheckBoxWithOnClick( $name, false, "removeClicked(this);" );
+	}
 }
-  
+
 # $options is an array of [value => text] pairs
 function getSelect( $name, $options, $selectedValue = "", $onChangeHandler = "" ) {
 	if ( $onChangeHandler != "" )
@@ -87,7 +121,7 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 		$dc = wdGetDataSetContext();
 	}
 	if ( $label == "" )
-		$label = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+		$label = '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;';
 	
 	$result =
 		'<span class="suggest">' .
@@ -139,7 +173,7 @@ function getSuggest( $name, $query, $parameters = array(), $value = 0, $label = 
 
 function getStaticSuggest( $name, $suggestions, $idColumns = 1, $value = 0, $label = '', $displayLabelColumns = array( 0 ) ) {
 	if ( $label == "" )
-		$label = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+		$label = '&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;';
 
 	$result =
 		'<span class="suggest">' .
@@ -166,10 +200,9 @@ function getStaticSuggest( $name, $suggestions, $idColumns = 1, $value = 0, $lab
 }
 
 function getLanguageOptions( $languageIdsToExclude = array() ) {
-	global
-		$wgUser;
+	global $wgLang ;
 		
-	$userLanguage = $wgUser->getOption( 'language' );
+	$userLanguage = $wgLang->getCode();
 	$idNameIndex = getLangNames( $userLanguage );
 	
 	$result = array();
@@ -182,11 +215,8 @@ function getLanguageOptions( $languageIdsToExclude = array() ) {
 }
 	
 function getLanguageSelect( $name, $languageIdsToExclude = array() ) {
-	global
-		$wgUser;
-		
-	$userLanguage = $wgUser->getOption( 'language' );
-	$userLanguageId = getLanguageIdForCode( $userLanguage );
+	global $wgLang ;
+	$userLanguageId = getLanguageIdForCode( $wgLang->getCode() ) ;
 
 	return getSelect( $name, getLanguageOptions( $languageIdsToExclude ), $userLanguageId );
 }

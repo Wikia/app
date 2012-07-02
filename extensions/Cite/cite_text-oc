@@ -3,35 +3,35 @@ __NOTOC__
 
 == Informacions bibliograficas sus {{FULLPAGENAME}} == 
 * Nom de la pagina : {{FULLPAGENAME}} 
-* Autors : {{fullurl:{{FULLPAGENAME}}|action=history}} 
+* Autors : {{canonicalurl:{{FULLPAGENAME}}|action=history}} 
 * Editor : {{SITENAME}} 
 * Darrièra revision : {{CURRENTDAY}} de {{CURRENTMONTHNAME}} de {{CURRENTYEAR}} a {{CURRENTTIME}} UTC 
 * Pagina consultada lo : <citation>{{CURRENTDAY}} de {{CURRENTMONTHNAME}} de {{CURRENTYEAR}} a {{CURRENTTIME}} UTC</citation> 
-* Ligam vèrs la version citada : {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} 
+* Ligam vèrs la version citada : {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} 
 * Numerò de version : {{REVISIONID}} </div> <div class="plainlinks" style="border: 1px solid grey; width: 90%; padding: 15px 30px 15px 30px; margin: 10px auto;"> 
 
 == Cossí citar la pagina {{FULLPAGENAME}} ==
 === [[APA style]] === 
-{{FULLPAGENAME}}. ({{CURRENTYEAR}}, {{CURRENTMONTHNAME}} {{CURRENTDAY}}). ''{{SITENAME}}, {{int:sitesubtitle}}''. Pagina consultada lo <citation>{{CURRENTTIME}}, de {{CURRENTMONTHNAME}}  {{CURRENTDAY}}, de {{CURRENTYEAR}}</citation> a partir de {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}. 
+{{FULLPAGENAME}}. ({{CURRENTYEAR}}, {{CURRENTMONTHNAME}} {{CURRENTDAY}}). ''{{SITENAME}}, {{int:sitesubtitle}}''. Pagina consultada lo <citation>{{CURRENTTIME}}, de {{CURRENTMONTHNAME}}  {{CURRENTDAY}}, de {{CURRENTYEAR}}</citation> a partir de {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}. 
 
 === [[The MLA style manual|MLA style]] === 
-"{{FULLPAGENAME}}." ''{{SITENAME}}, {{int:sitesubtitle}}''. {{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC. <citation>{{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}}</citation> &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;. 
+"{{FULLPAGENAME}}." ''{{SITENAME}}, {{int:sitesubtitle}}''. {{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC. <citation>{{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}}</citation> &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;. 
 
 === [[MHRA Style Guide|MHRA style]] === 
-Contributors a {{SITENAME}}, '{{FULLPAGENAME}}', ''{{SITENAME}}, {{int:sitesubtitle}},'' {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC, &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt; [Pagina consultada lo <citation>{{CURRENTDAY}} de {{CURRENTMONTHNAME}} de {{CURRENTYEAR}}</citation>]
+Contributors a {{SITENAME}}, '{{FULLPAGENAME}}', ''{{SITENAME}}, {{int:sitesubtitle}},'' {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC, &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt; [Pagina consultada lo <citation>{{CURRENTDAY}} de {{CURRENTMONTHNAME}} de {{CURRENTYEAR}}</citation>]
 
-=== [[The Chicago Manual of Style|Chicago style]] === Contributors a {{SITENAME}}, "{{FULLPAGENAME}}," ''{{SITENAME}}, {{int:sitesubtitle}},'' {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (Pagina consultada lo <citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, de {{CURRENTYEAR}}</citation>).
+=== [[The Chicago Manual of Style|Chicago style]] === Contributors a {{SITENAME}}, "{{FULLPAGENAME}}," ''{{SITENAME}}, {{int:sitesubtitle}},'' {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (Pagina consultada lo <citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, de {{CURRENTYEAR}}</citation>).
 
-=== [[Council of Science Editors|CBE/CSE style]] === Contributors a {{SITENAME}}. {{FULLPAGENAME}} [Internet]. {{SITENAME}}, {{int:sitesubtitle}}; {{CURRENTYEAR}} {{CURRENTMONTHABBREV}} {{CURRENTDAY}}, a {{CURRENTTIME}} UTC [cited <citation>{{CURRENTYEAR}} {{CURRENTMONTHABBREV}} {{CURRENTDAY}}</citation>]. Disponible a l'adreça: {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
+=== [[Council of Science Editors|CBE/CSE style]] === Contributors a {{SITENAME}}. {{FULLPAGENAME}} [Internet]. {{SITENAME}}, {{int:sitesubtitle}}; {{CURRENTYEAR}} {{CURRENTMONTHABBREV}} {{CURRENTDAY}}, a {{CURRENTTIME}} UTC [cited <citation>{{CURRENTYEAR}} {{CURRENTMONTHABBREV}} {{CURRENTDAY}}</citation>]. Disponible a l'adreça: {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
 
-=== [[Bluebook|Bluebook style]] === {{FULLPAGENAME}}, {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (Pagina consultada lo <citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, de {{CURRENTYEAR}}</citation>). 
+=== [[Bluebook|Bluebook style]] === {{FULLPAGENAME}}, {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (Pagina consultada lo <citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, de {{CURRENTYEAR}}</citation>). 
 
 === [[BibTeX]] === 
 @misc{ wiki:xxx, 
  author = "{{SITENAME}}",
  title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{int:sitesubtitle}}",
  year = "{{CURRENTYEAR}}",
- url = "{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
+ url = "{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
  note = "[En linha; Pagina disponibla lo <citation>{{CURRENTDAY}}-{{CURRENTMONTHNAME}}-{{CURRENTYEAR}}</citation>]" }
 
 Quand utilisatz lo modul url jos [[LaTeX]] (<code>\usepackage{url}</code> endacòm dins lo preambul) qu'amelhora l'afichatge de las adreças internet, utilisatz de preferéncia aqueste format: 
@@ -39,7 +39,7 @@ Quand utilisatz lo modul url jos [[LaTeX]] (<code>\usepackage{url}</code> endac�
 @misc{ wiki:xxx, author = "{{SITENAME}}",
  title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{int:sitesubtitle}}",
  year = "{{CURRENTYEAR}}",
- url = "'''\url{'''{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
+ url = "'''\url{'''{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
  note = "[En linha; Pagina disponibla lo <citation>{{CURRENTDAY}}-{{CURRENTMONTHNAME}}-{{CURRENTYEAR}}</citation>]" }
 
 </div> <!--closing div for "plainlinks"-->

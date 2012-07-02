@@ -8,9 +8,15 @@ require_once( "$IP/maintenance/commandLine.inc" );
 global $smwgIP;
 require_once( $smwgIP . '/includes/SMW_Factbox.php' );
 
-require_once( dirname(__FILE__) . '/SemanticTasks.classes.php' );
+require_once( dirname( __FILE__ ) . '/SemanticTasks.classes.php' );
 
 // Let's send reminders
-SemanticTasksMailer::remindAssignees( 'http://teamspace.creativecommons.org/' );
+if ( empty($wgServerNamePath) )
+{
+    print( "ST check for reminders $wgServerNamePath not set." );
+    return 1;
+}
+
+SemanticTasksMailer::remindAssignees( $wgServerNamePath );
 
 print( "ST check for reminders\n" );

@@ -9,30 +9,37 @@
 class DraftHooks {
 
 	/* Static Functions */
-public static function schema() {
-		global $wgExtNewTables, $wgExtModifiedFields;
-		
-		$wgExtNewTables[] = array(
-			'drafts',
-			dirname( __FILE__ ) . '/Drafts.sql'
-		);
-		$wgExtModifiedFields[] = array(
-			'drafts',
-			'draft_token',
-			dirname( __FILE__ ) . '/patch-draft_token.sql'
-		);
-		
+	public static function schema( $updater = null ) {
+		if ( $updater === null ) {
+			global $wgExtNewTables, $wgExtModifiedFields, $wgDBtype;
+
+			$wgExtNewTables[] = array(
+				'drafts',
+				dirname( __FILE__ ) . '/Drafts.sql'
+			);
+			if ( $wgDBtype != 'sqlite' ) {
+				$wgExtModifiedFields[] = array(
+					'drafts',
+					'draft_token',
+					dirname( __FILE__ ) . '/patch-draft_token.sql'
+				);
+			}
+		} else {
+			$updater->addExtensionUpdate( array( 'addTable', 'drafts',
+				dirname( __FILE__ ) . '/Drafts.sql', true ) );
+			if ( $updater->getDb()->getType() != 'sqlite' ) {
+				$updater->addExtensionUpdate( array( 'modifyField', 'drafts', 'draft_token',
+					dirname( __FILE__ ) . '/patch-draft_token.sql', true ) );
+			}
+		}
+
 		return true;
 	}
 
 	/**
 	 * SpecialMovepageAfterMove hook
 	 */
-	public static function move(
-		$this,
-		$ot,
-		$nt
-	) {
+	public static function move( $this, $ot, $nt ) {
 		// Update all drafts of old article to new article for all users
 		Drafts::move( $ot, $nt );
 		// Continue
@@ -42,16 +49,8 @@ public static function schema() {
 	/**
 	 * ArticleSaveComplete hook
 	 */
-	public static function discard(
-		$article,
-		$user,
-		$text,
-		$summary,
-		$m,
-		$watchthis,
-		$section,
-		$flags,
-		$rev
+	public static function discard( $article, $user, $text, $summary, $m,
+		$watchthis, $section, $flags, $rev
 	) {
 		global $wgRequest;
 		// Check if the save occured from a draft
@@ -68,9 +67,7 @@ public static function schema() {
 	 * EditPage::showEditForm:initial hook
 	 * Load draft...
 	 */
-	public static function loadForm(
-		$editpage
-	) {
+	public static function loadForm( $editpage ) {
 		global $wgUser, $wgRequest, $wgOut, $wgTitle, $wgLang;
 		// Check permissions
 		if ( $wgUser->isAllowed( 'edit' ) && $wgUser->isLoggedIn() ) {
@@ -87,7 +84,8 @@ public static function schema() {
 
 			// Save draft on non-save submission
 			if ( $wgRequest->getVal( 'action' ) == 'submit' &&
-				$wgUser->editToken() == $wgRequest->getText( 'wpEditToken' ) )
+				$wgUser->editToken() == $wgRequest->getText( 'wpEditToken' ) &&
+				is_null( $wgRequest->getText( 'wpDraftTitle' ) ) )
 			{
 				// If the draft wasn't specified in the url, try using a
 				// form-submitted one
@@ -115,7 +113,7 @@ public static function schema() {
 			}
 		}
 		// Internationalization
-		wfLoadExtensionMessages( 'Drafts' );
+
 		$numDrafts = Drafts::num( $wgTitle );
 		// Show list of drafts
 		if ( $numDrafts  > 0 ) {
@@ -155,12 +153,7 @@ public static function schema() {
 	 * Intercept the saving of an article to detect if the submission was from
 	 * the non-javascript save draft button
 	 */
-	public static function interceptSave(
-		$editor,
-		$text,
-		$section,
-		$error
-	) {
+	public static function interceptSave( $editor, $text, $section, $error ) {
 		global $wgRequest;
 		// Don't save if the save draft button caused the submit
 		if ( $wgRequest->getText( 'wpDraftSave' ) !== '' ) {
@@ -175,16 +168,13 @@ public static function schema() {
 	 * EditPageBeforeEditButtons hook
 	 * Add draft saving controls
 	 */
-	public static function controls(
-		$editpage,
-		$buttons
-	) {
+	public static function controls( $editpage, $buttons ) {
 		global $wgUser, $wgTitle, $wgRequest;
 		global $egDraftsAutoSaveWait, $egDraftsAutoSaveTimeout;
 		// Check permissions
 		if ( $wgUser->isAllowed( 'edit' ) && $wgUser->isLoggedIn() ) {
 			// Internationalization
-			wfLoadExtensionMessages( 'Drafts' );
+
 			// Build XML
 			$buttons['savedraft'] = Xml::openElement( 'script',
 				array(
@@ -294,14 +284,12 @@ public static function schema() {
 
 	/**
 	 * AjaxAddScript hook
-	 * Add ajax support script
+	 * Add AJAX support script
 	 */
-	public static function addJS(
-		$out
-	) {
+	public static function addJS( $out ) {
 		global $wgScriptPath, $wgJsMimeType, $wgDraftsStyleVersion;
 		// FIXME: assumes standard dir structure
-		// Add javascript to support ajax draft saving
+		// Add JavaScript to support AJAX draft saving
 		$out->addScript(
 			Xml::element(
 				'script',
@@ -320,14 +308,12 @@ public static function schema() {
 
 	/**
 	 * BeforePageDisplay hook
-	 * Add css style sheet
+	 * Add CSS style sheet
 	 */
-	public static function addCSS(
-		$out
-	) {
+	public static function addCSS( $out ) {
 		global $wgScriptPath, $wgDraftsStyleVersion;
 		// FIXME: assumes standard dir structure
-		// Add css for various styles
+		// Add CSS for various styles
 		$out->addLink(
 			array(
 				'rel' => 'stylesheet',
@@ -342,20 +328,10 @@ public static function schema() {
 
 	/**
 	 * AJAX function export DraftHooks::AjaxSave
-	 * Respond to ajax queries
+	 * Respond to AJAX queries
 	 */
-	public static function save(
-		$dtoken,
-		$etoken,
-		$id,
-		$title,
-		$section,
-		$starttime,
-		$edittime,
-		$scrolltop,
-		$text,
-		$summary,
-		$minoredit
+	public static function save( $dtoken, $etoken, $id, $title, $section,
+		$starttime, $edittime, $scrolltop, $text, $summary, $minoredit
 	) {
 		global $wgUser, $wgRequest;
 		// Verify token

@@ -12,7 +12,7 @@ class SecurePoll_EntryPage extends SecurePoll_Page {
 		global $wgOut;
 		$pager = new SecurePoll_ElectionPager( $this );
 		$wgOut->addWikiMsg( 'securepoll-entry-text' );
-		$wgOut->addHTML( 
+		$wgOut->addHTML(
 			$pager->getBody() .
 			$pager->getNavigationBar()
 		);
@@ -76,10 +76,10 @@ class SecurePoll_ElectionPager extends TablePager {
 
 	function isFieldSortable( $field ) {
 		return in_array( $field, array(
-			'el_title', 'el_start_date', 'el_end_date' 
+			'el_title', 'el_start_date', 'el_end_date'
 		) );
 	}
-	
+
 	/**
 	 * Add classes based on whether the poll is open or closed
 	 * @param $row database object
@@ -104,7 +104,7 @@ class SecurePoll_ElectionPager extends TablePager {
 			return htmlspecialchars( $value );
 		}
 	}
-	
+
 	function formatRow( $row ) {
 		global $wgUser;
 		$id = $row->el_entity;
@@ -120,11 +120,16 @@ class SecurePoll_ElectionPager extends TablePager {
 	function getLinks() {
 		global $wgUser;
 		$id = $this->mCurrentRow->el_entity;
-		
+
 		$s = '';
 		$sep = wfMsg( 'pipe-separator' );
 		$skin = $wgUser->getSkin();
 		foreach ( $this->subpages as $subpage => $props ) {
+			// Message keys used here:
+			// securepoll-subpage-vote, securepoll-subpage-translate,
+			// securepoll-subpage-list, securepoll-subpage-dump,
+			// securepoll-subpage-tally
+
 			$linkText = wfMsgExt( "securepoll-subpage-$subpage", 'parseinline' );
 			if ( $s !== '' ) {
 				$s .= $sep;
@@ -135,7 +140,7 @@ class SecurePoll_ElectionPager extends TablePager {
 				$title = $this->entryPage->parent->getTitle( "$subpage/$id" );
 				$s .= $skin->makeKnownLinkObj( $title, $linkText );
 			} else {
-				$s .= "<span class=\"securepoll-link-disabled\">" . 
+				$s .= "<span class=\"securepoll-link-disabled\">" .
 					$linkText . "</span>";
 			}
 		}
@@ -152,7 +157,7 @@ class SecurePoll_ElectionPager extends TablePager {
 			if ( $field == 'links' ) {
 				$names[$field] = '';
 			} else {
-				$msgName = 'securepoll-header-' . 
+				$msgName = 'securepoll-header-' .
 					strtr( $field, array( 'el_' => '', '_' => '-' ) );
 				$names[$field] = wfMsg( $msgName );
 			}
@@ -164,4 +169,4 @@ class SecurePoll_ElectionPager extends TablePager {
 		return $this->entryPage->getTitle();
 	}
 }
-	
+

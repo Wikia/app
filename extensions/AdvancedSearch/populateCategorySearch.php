@@ -1,15 +1,17 @@
 <?php
 /**
- * @addtogroup Maintenance
+ * @file
+ * @ingroup Maintenance
  * @author Roan Kattouw
  */
 
 $optionsWithArgs = array( 'begin', 'max-slave-lag', 'throttle' );
 
 $commandLineInc = dirname( __FILE__ ) . "/../../maintenance/commandLine.inc";
-if ( !file_exists( $commandLineInc ) )
+if ( !file_exists( $commandLineInc ) ) {
 	die( "Can't find commandLine.inc\nPlease copy it to " .
 	realpath( dirname( __FILE__ ) . "/../../" ) . "maintenance or make a symlink." );
+}
 require_once $commandLineInc;
 require_once "populateCategorySearch.inc";
 

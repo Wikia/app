@@ -84,7 +84,7 @@ $dbw = wfGetDB( DB_MASTER );
 			wfRunHooks('ArticleDeleteComplete', array(&$art, &$wgUser, $reason, $page_id));
 		}
 	}
-	$dbw->immediateCommit();
+	$dbw->commit();
 
 	if ( $success ) {
 		print "\n";

@@ -14,23 +14,21 @@
 class MapsGeocode extends ParserHook {
 	
 	/**
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 */
 	public static function staticMagic( array &$magicWords, $langCode ) {
-		$className = __CLASS__;
-		$instance = new $className();
+		$instance = new self;
 		return $instance->magic( $magicWords, $langCode );
 	}
 	
 	/**
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 */	
-	public static function staticInit( Parser &$wgParser ) {
-		$className = __CLASS__;
-		$instance = new $className();
-		return $instance->init( $wgParser );
+	public static function staticInit( Parser &$parser ) {
+		$instance = new self;
+		return $instance->init( $parser );
 	}	
 	
 	/**
@@ -63,6 +61,7 @@ class MapsGeocode extends ParserHook {
 		$params['location'] = new Parameter( 'location' );
 		$params['location']->addDependencies( 'mappingservice', 'geoservice' );
 		$params['location']->addCriteria( new CriterionIsLocation() );	
+		$params['location']->setMessage( 'maps-geocode-par-location' );
 		
 		$params['mappingservice'] = new Parameter(
 			'mappingservice', 
@@ -74,6 +73,7 @@ class MapsGeocode extends ParserHook {
 			)
 		);
 		$params['mappingservice']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
+		$params['mappingservice']->setMessage( 'maps-geocode-par-mappingservice' );
 		
 		$params['geoservice'] = new Parameter(
 			'geoservice', 
@@ -85,12 +85,14 @@ class MapsGeocode extends ParserHook {
 			)
 		);	
 		$params['geoservice']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );	
+		$params['geoservice']->setMessage( 'maps-geocode-par-geoservice' );
 		
 		$params['allowcoordinates'] = new Parameter(
 			'allowcoordinates', 
 			Parameter::TYPE_BOOLEAN,
 			$egMapsAllowCoordsGeocoding
 		);
+		$params['allowcoordinates']->setMessage( 'maps-geocode-par-allowcoordinates' );
 		
 		$params['format'] = new Parameter(
 			'format',
@@ -102,12 +104,14 @@ class MapsGeocode extends ParserHook {
 			)	
 		);
 		$params['format']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );		
+		$params['format']->setMessage( 'maps-geocode-par-format' );
 		
 		$params['directional'] = new Parameter(
 			'directional',
 			Parameter::TYPE_BOOLEAN,
 			$egMapsCoordinateDirectional			
 		);		
+		$params['directional']->setMessage( 'maps-geocode-par-directional' );
 		
 		return $params;
 	}
@@ -153,5 +157,14 @@ class MapsGeocode extends ParserHook {
 
 		return $output;		
 	}
+
+	/**
+	 * @see ParserHook::getMessage()
+	 * 
+	 * @since 1.0
+	 */
+	public function getMessage() {
+		return 'maps-geocode-description';
+	}		
 	
 }

@@ -10,67 +10,18 @@
  *
  * @author Jeroen De Dauw
  */
-abstract class MapsBasePointMap {
+class MapsBasePointMap {
 	
 	/**
+	 * @since 0.6.x
+	 * 
 	 * @var iMappingService
 	 */
 	protected $service;
 	
-	protected $centreLat, $centreLon;
-	protected $markerJs;
-
-	protected $output = '';
-	
-	protected $markerString;
-	
-	private $specificParameters = false;
-	private $markerData = array();
-	
 	public function __construct( iMappingService $service ) {
 		$this->service = $service;
 	}
-	
-	/**
-	 * Sets the map properties as class fields.
-	 * 
-	 * @param array $mapProperties
-	 */
-	protected function setMapProperties( array $mapProperties ) {
-		foreach ( $mapProperties as $paramName => $paramValue ) {
-			if ( !property_exists( __CLASS__, $paramName ) ) {
-				$this-> { $paramName } = $paramValue;
-			}
-			else {
-				// If this happens in any way, it could be a big vunerability, so throw an exception.
-				throw new Exception( 'Attempt to override a class field during map property assignment. Field name: ' . $paramName );
-			}
-		}
-	}
-	
-	/**
-	 * Returns the specific parameters by first checking if they have been initialized yet,
-	 * doing to work if this is not the case, and then returning them.
-	 * 
-	 * @return array
-	 */
-	public final function getSpecificParameterInfo() {
-		if ( $this->specificParameters === false ) {
-			$this->specificParameters = array();
-			$this->initSpecificParamInfo( $this->specificParameters );
-		}
-		
-		return $this->specificParameters;
-	}
-	
-	/**
-	 * Initializes the specific parameters.
-	 * 
-	 * Override this method to set parameters specific to a feature service comibination in
-	 * the inheriting class.
-	 */
-	protected function initSpecificParamInfo( array &$parameters ) {
-	}	
 	
 	/**
 	 * Handles the request from the parser hook by doing the work that's common for all
@@ -81,150 +32,124 @@ abstract class MapsBasePointMap {
 	 * 
 	 * @return html
 	 */
-	public final function getMapHtml( array $params, Parser $parser ) {
-		$this->setMapProperties( $params );
+	public final function renderMap( array $params, Parser $parser ) {
+		$this->handleMarkerData( $params, $parser );
 		
-		$this->setMarkerData();
-
-		$this->setCentre();
+		$mapName = $this->service->getMapId();
 		
-		// TODO
-		if ( count( $this->markerData ) <= 1 && $this->zoom == 'null' ) {
-			$this->zoom = $this->service->getDefaultZoom();
+		$output = $this->getMapHTML( $params, $parser, $mapName ) . $this->getJSON( $params, $parser, $mapName );
+		
+		$configVars = Skin::makeVariablesScript( $this->service->getConfigVariables() );
+		
+		// MediaWiki 1.17 does not play nice with addScript, so add the vars via the globals hook.
+		if ( version_compare( $GLOBALS['wgVersion'], '1.18', '<' ) ) {
+			$GLOBALS['egMapsGlobalJSVars'] += $this->service->getConfigVariables();
 		}
 		
-		$this->markerJs = $this->service->createMarkersJs( $this->markerData );
-		
-		$this->addSpecificMapHTML( $parser );
-		
 		global $wgTitle;
-		if ( $wgTitle->getNamespace() == NS_SPECIAL ) {
+		if ( !is_null( $wgTitle ) && $wgTitle->isSpecialPage() ) {
 			global $wgOut;
 			$this->service->addDependencies( $wgOut );
+			$wgOut->addScript( $configVars );
 		}
 		else {
-			$this->service->addDependencies( $parser );			
+			$this->service->addDependencies( $parser );
+			$parser->getOutput()->addHeadItem( $configVars );			
 		}
 		
-		return $this->output;
+		return $output;
 	}
 	
 	/**
-	 * Fills the $markerData array with the locations and their meta data.
-	 */
-	private function setMarkerData() {
-		global $wgTitle;
-		
-		// New parser object to render popup contents with.
-		$parser = new Parser();			
-		
-		$this->title = $parser->parse( $this->title, $wgTitle, new ParserOptions() )->getText();
-		$this->label = $parser->parse( $this->label, $wgTitle, new ParserOptions() )->getText();
-		
-		// Each $args is an array containg the coordinate set as first element, possibly followed by meta data. 
-		foreach ( $this->coordinates as $args ) {
-			$markerData = MapsCoordinateParser::parseCoordinates( array_shift( $args ) );
-
-			if ( !$markerData ) continue;
-			
-			$markerData = array( $markerData['lat'], $markerData['lon'] );
-			
-			if ( count( $args ) > 0 ) {
-				// Parse and add the point specific title if it's present.
-				$markerData['title'] = $parser->parse( $args[0], $wgTitle, new ParserOptions() )->getText();
-				
-				if ( count( $args ) > 1 ) {
-					// Parse and add the point specific label if it's present.
-					$markerData['label'] = $parser->parse( $args[1], $wgTitle, new ParserOptions() )->getText();
-					
-					if ( count( $args ) > 2 ) {
-						// Add the point specific icon if it's present.
-						$markerData['icon'] = $args[2];
-					}
-				}
-			}
-			
-			// If there is no point specific icon, use the general icon parameter when available.
-			if ( !array_key_exists( 'icon', $markerData ) ) {
-				$markerData['icon'] = $this->icon;
-			}
-			
-			if ( $markerData['icon'] != '' ) {
-				$markerData['icon'] = MapsMapper::getImageUrl( $markerData['icon'] );
-			}
-			
-			// Temporary fix, will refactor away later
-			// TODO
-			$markerData = array_values( $markerData );
-			if ( count( $markerData ) < 5 ) {
-				if ( count( $markerData ) < 4 ) {
-					$markerData[] = '';
-				}				
-				$markerData[] = '';
-			} 
-			
-			$this->markerData[] = $markerData;
-		}
-		
-	}
-
-	/**
-	 * Sets the $centre_lat and $centre_lon fields.
-	 * Note: this needs to be done AFTRE the maker coordinates are set.
-	 */
-	protected function setCentre() {
-		global $egMapsDefaultMapCentre;
-		
-		if ( $this->centre === false ) {
-			if ( count( $this->markerData ) == 1 ) {
-				// If centre is not set and there is exactly one marker, use its coordinates.
-				$this->centreLat = Xml::escapeJsString( $this->markerData[0][0] );
-				$this->centreLon = Xml::escapeJsString( $this->markerData[0][1] );				
-			}
-			elseif ( count( $this->markerData ) > 1 ) {
-				// If centre is not set and there are multiple markers, set the values to null,
-				// to be auto determined by the JS of the mapping API.
-				$this->centreLat = 'null';
-				$this->centreLon = 'null';
-			}
-			else  {
-				$this->setCentreToDefault();
-			}
-			
-		}
-		else { // If a centre value is set, geocode when needed and use it.
-			$this->centre = MapsGeocoders::attemptToGeocode( $this->centre, $this->geoservice, $this->service->getName() );
-			
-			// If the centre is not false, it will be a valid coordinate, which can be used to set the latitude and longitutde.
-			if ( $this->centre ) {
-				$this->centreLat = Xml::escapeJsString( $this->centre['lat'] );
-				$this->centreLon = Xml::escapeJsString( $this->centre['lon'] );
-			}
-			else { // If it's false, the coordinate was invalid, or geocoding failed. Either way, the default's should be used.
-				$this->setCentreToDefault();
-			}
-		}
-
-	}
-	
-	/**
-	 * Attempts to set the centreLat and centreLon fields to the Maps default.
-	 * When this fails (aka the default is not valid), an exception is thrown.
+	 * Returns the HTML to display the map.
 	 * 
-	 * @since 0.7
+	 * @since 1.0
+	 * 
+	 * @param array $params
+	 * @param Parser $parser
+	 * @param string $mapName
+	 * 
+	 * @return string
 	 */
-	protected function setCentreToDefault() {
-		global $egMapsDefaultMapCentre;
+	protected function getMapHTML( array $params, Parser $parser, $mapName ) {
+		return Html::element(
+			'div',
+			array(
+				'id' => $mapName,
+				'style' => "width: {$params['width']}; height: {$params['height']}; background-color: #cccccc; overflow: hidden;",
+			),
+			wfMsg( 'maps-loading-map' )
+		);
+	}		
+	
+	/**
+	 * Returns the JSON with the maps data.
+	 *
+	 * @since 1.0
+	 *
+	 * @param array $params
+	 * @param Parser $parser
+	 * @param string $mapName
+	 * 
+	 * @return string
+	 */	
+	protected function getJSON( array $params, Parser $parser, $mapName ) {
+		$object = $this->getJSONObject( $params, $parser );
 		
-		$centre = MapsGeocoders::attemptToGeocode( $egMapsDefaultMapCentre, $this->geoservice, $this->service->getName() );
+		if ( $object === false ) {
+			return '';
+		}
 		
-		if ( $centre === false ) {
-			throw new Exception( 'Failed to parse the default centre for the map. Please check the value of $egMapsDefaultMapCentre.' );
-		}
-		else {
-			$this->centreLat = Xml::escapeJsString( $centre['lat'] );
-			$this->centreLon = Xml::escapeJsString( $centre['lon'] );			
-		}
+		return Html::inlineScript(
+			MapsMapper::getBaseMapJSON( $this->service->getName() )
+			. "mwmaps.{$this->service->getName()}.{$mapName}=" . FormatJson::encode( $object ) . ';'
+		);
 	}
 	
+	/**
+	 * Returns a PHP object to encode to JSON with the map data.
+	 *
+	 * @since 1.0
+	 *
+	 * @param array $params
+	 * @param Parser $parser
+	 * 
+	 * @return mixed
+	 */	
+	protected function getJSONObject( array $params, Parser $parser ) {
+		return $params;
+	}	
+	
+	/**
+	 * Converts the data in the coordinates parameter to JSON-ready objects.
+	 * These get stored in the locations parameter, and the coordinates on gets deleted.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @param array &$params
+	 * @param Parser $parser
+	 */
+	protected function handleMarkerData( array &$params, Parser $parser ) {
+		$parserClone = clone $parser;
+		$iconUrl = MapsMapper::getFileUrl( $params['icon'] );
+		$params['locations'] = array();
+
+		foreach ( $params['coordinates'] as $location ) {
+			if ( $location->isValid() ) {
+				$jsonObj = $location->getJSONObject( $params['title'], $params['label'], $iconUrl );
+				
+				$jsonObj['title'] = $parserClone->parse( $jsonObj['title'], $parserClone->getTitle(), new ParserOptions() )->getText();
+				$jsonObj['text'] = $parserClone->parse( $jsonObj['text'], $parserClone->getTitle(), new ParserOptions() )->getText();
+				
+				$hasTitleAndtext = $jsonObj['title'] !== '' && $jsonObj['text'] !== '';
+				$jsonObj['text'] = ( $hasTitleAndtext ? '<b>' . $jsonObj['title'] . '</b><hr />' : $jsonObj['title'] ) . $jsonObj['text'];
+				$jsonObj['title'] = strip_tags( $jsonObj['title'] );
+				
+				$params['locations'][] = $jsonObj;				
+			}
+		}
+		
+		unset( $params['coordinates'] );
+	}
+
 }

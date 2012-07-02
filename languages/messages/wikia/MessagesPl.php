@@ -155,15 +155,4 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'hub-Video_Games' => 'Gry wideo',
 'hub-Lifestyle' => 'Lifestyle',
 'hub-Wikia' => 'Wikia',
-
-# Oasis
-'shared-Oasis-footer-wikia-links' => "*http://www.wikia.com/About_Us|<span>O nas</span>
-*http://www.spolecznosc.wikia.com|<span>Wiki Społeczności</span>
-*http://www.wikia.com/Careers|<span>Kariera</span>
-*http://www.wikia.com/Advertising|<span>Reklama</span>
-*Special:Contact|<span>Kontakt</span>
-*http://www.wikia.com/Terms_of_Use|<span>Zasady Użytkowania</span>
-*http://www.wikia.com/Privacy_Policy|<span>Polityka Prywatności</span>
-*_LICENSE_
-*http://www.wikia.com/Special:CreateWiki|<span>Utwórz wiki</span>",
 ) );

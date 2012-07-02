@@ -26,7 +26,6 @@ class CodeLintJs extends CodeLint {
 			'_wtq',
 			'$',
 			'$G',
-			'addOnloadHook',
 			'AjaxLogin',
 			'CKEDITOR',
 			'define',
@@ -34,12 +33,11 @@ class CodeLintJs extends CodeLint {
 			'Geo',
 			'GlobalNotification',
 			'GlobalTriggers',
-			'insertTags',
 			'jQuery',
 			'Liftium',
-			'Mediawiki',
+			'mw',
+			'mediaWiki',
 			'Modernizr',
-			'mwCustomEditButtons',
 			'Node',
 			'Observable',
 			'require',
@@ -241,6 +239,11 @@ class CodeLintJs extends CodeLint {
 
 		// Don't pass a string to setInterval/setTimeout (implied eval)
 		if (strpos($errorMsg, 'implied eval') !== false) {
+			$ret = true;
+		}
+
+		// 'fixalpha' is deprecated in MW 1.19
+		if (strpos($errorMsg, 'is deprecated in MW 1.19') !== false) {
 			$ret = true;
 		}
 

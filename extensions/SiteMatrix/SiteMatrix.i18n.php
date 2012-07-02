@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for SiteMatrix extension.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -14,6 +15,7 @@ $messages['en'] = array(
 	'sitematrix-language'  => 'Language',
 	'sitematrix-project'   => 'Name of project, interproject link and interwiki link',
 	'sitematrix-others'    => 'Other projects of Wikimedia',
+	'sitematrix-other-projects' => 'Other projects',
 	'sitematrix-total'     => "'''Total count: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private'   => 'private',
@@ -21,15 +23,25 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Jon Harald Søby
  * @author Meno25
  * @author Sanbec
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'sitematrix-summary' => 'Text for the Wikimedia sites special page "Special:SiteMatrix"',
-	'sitematrix-desc' => 'Short description of the SiteMatrix extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'sitematrix-desc' => '{{desc}}',
 	'sitematrix-language' => '{{Identical|Language}}',
 	'sitematrix-sitetotal' => '{{Identical|Total}}',
+	'sitematrix-private' => '{{Identical|Private}}',
+);
+
+/** Goan Konkani (Latin script) (Konknni)
+ * @author The Discoverer
+ */
+$messages['gom-latn'] = array(
+	'sitematrix-language' => 'Bhas',
 );
 
 /** Afrikaans (Afrikaans)
@@ -45,10 +57,27 @@ $messages['af'] = array(
 	'sitematrix-language' => 'Taal',
 	'sitematrix-project' => 'Projeknaam, skakels na projekte en taalskakels',
 	'sitematrix-others' => 'Ander projekte van Wikimedia',
+	'sitematrix-other-projects' => 'Ander projekte',
 	'sitematrix-total' => "'''Totale aantal: $1'''",
 	'sitematrix-sitetotal' => 'Totaal',
 	'sitematrix-private' => 'beperkte toegang',
 	'sitematrix-fishbowl' => 'wysiging beperk',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'sitematrix' => 'Lista e wikis Wikipedia',
+	'sitematrix-summary' => 'Kjo faqe të veçanta listat e të gjithë Wikimedia wikis.',
+	'sitematrix-desc' => 'Displays a [[Special:SiteMatrix|Lista e Wikimedia wikis]]',
+	'sitematrix-language' => 'Gjuhë',
+	'sitematrix-project' => 'Emri i projektit, Lidhje interproject dhe interwiki link',
+	'sitematrix-others' => 'Projekte të tjera të Wikipedia',
+	'sitematrix-total' => "'''numërimin Gjithsej: $1'''",
+	'sitematrix-sitetotal' => 'Total',
+	'sitematrix-private' => 'privat',
+	'sitematrix-fishbowl' => 'redaktimi i kufizuar',
 );
 
 /** Amharic (አማርኛ)
@@ -63,18 +92,19 @@ $messages['am'] = array(
  */
 $messages['an'] = array(
 	'sitematrix' => 'Lista de wikis de Wikimedia',
-	'sitematrix-summary' => 'Ista pachina espezial amuestra a lista de wikis de Wikimedia.',
+	'sitematrix-summary' => 'Ista pachina especial amuestra a lista de wikis de Wikimedia.',
 	'sitematrix-desc' => 'Amuestra una [[Special:SiteMatrix|lista de wikis de Wikimedia]]',
-	'sitematrix-language' => 'Luenga',
-	'sitematrix-project' => "Nombre d'o procheuto, binclo entre procheutos y binclo interwiki",
+	'sitematrix-language' => 'Idioma',
+	'sitematrix-project' => "Nombre d'o procheuto, vinclo entre procheutos y vinclo interwiki",
 	'sitematrix-others' => 'Atros procheutos de Wikimedia',
+	'sitematrix-other-projects' => 'Atros prochectos',
 	'sitematrix-total' => "'''Total: $1'''",
 	'sitematrix-sitetotal' => 'Total',
-	'sitematrix-private' => 'pribau',
-	'sitematrix-fishbowl' => 'edizión restrinchita',
+	'sitematrix-private' => 'privau',
+	'sitematrix-fishbowl' => 'edición restrinchita',
 );
 
-/** Old English (Anglo-Saxon) */
+/** Old English (Ænglisc) */
 $messages['ang'] = array(
 	'sitematrix-language' => 'Sprǣc',
 );
@@ -89,6 +119,7 @@ $messages['ar'] = array(
 	'sitematrix-language' => 'اللغة',
 	'sitematrix-project' => 'اسم المشروع، وصلة المشروع الداخلية ووصلة الإنترويكي',
 	'sitematrix-others' => 'مشاريع ويكيميديا الأخرى',
+	'sitematrix-other-projects' => 'المشاريع الأخرى',
 	'sitematrix-total' => "'''إجمالي العدد: $1'''",
 	'sitematrix-sitetotal' => 'الإجمالي',
 	'sitematrix-private' => 'خاص',
@@ -100,6 +131,7 @@ $messages['ar'] = array(
  */
 $messages['arc'] = array(
 	'sitematrix-language' => 'ܠܫܢܐ',
+	'sitematrix-private' => 'ܦܪܨܘܦܝܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -122,6 +154,7 @@ $messages['arz'] = array(
 
 /** Asturian (Asturianu)
  * @author Esbardu
+ * @author Xuacu
  */
 $messages['ast'] = array(
 	'sitematrix' => 'Llista de wikis de Wikimedia',
@@ -130,20 +163,37 @@ $messages['ast'] = array(
 	'sitematrix-language' => 'Llingua',
 	'sitematrix-project' => 'Nomes del proyeutu, del enllaz interproyeutu y del enllaz interwiki',
 	'sitematrix-others' => 'Otros proyeutos de Wikimedia',
+	'sitematrix-other-projects' => 'Otros proyeutos',
 	'sitematrix-total' => "'''Númberu total: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'priváu',
 	'sitematrix-fishbowl' => 'edición restrinxida',
 );
 
-/** Samogitian (Žemaitėška)
- * @author Hugo.arg
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
  */
-$messages['bat-smg'] = array(
-	'sitematrix-summary' => 'Tas specēlus poslapis ešdiesta vėsos Vikimedėjės pruojektos',
-	'sitematrix-project' => 'Pruojekta pavadėnėms, terppruojektėnė nūruoda ėr interwiki nūruoda.',
-	'sitematrix-others' => 'Kėtė Vikimedėjės pruojektā',
-	'sitematrix-private' => 'nūsavs',
+$messages['az'] = array(
+	'sitematrix-language' => 'Dil',
+	'sitematrix-sitetotal' => 'Ümumi',
+	'sitematrix-private' => 'xüsusi',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'sitematrix' => 'Викимедиа проекттары исемлеге',
+	'sitematrix-summary' => 'Был махсус бит Викимедианың бөтә проекттары исемлеген күрһәтә.',
+	'sitematrix-desc' => '[[Special:SiteMatrix|Викимедианың проекттары исемлеген]] күрһәтә',
+	'sitematrix-language' => 'Тел',
+	'sitematrix-project' => 'Проект исеме, проект-ара һылтанма һәм вики-ара һылтанма',
+	'sitematrix-others' => 'Викимедианың башҡа проекттары',
+	'sitematrix-other-projects' => 'Башҡа проекттар',
+	'sitematrix-total' => "'''Барыһы: $1'''",
+	'sitematrix-sitetotal' => 'Барыһы',
+	'sitematrix-private' => 'шәхси',
+	'sitematrix-fishbowl' => 'мөхәррирләү сикләнгән',
 );
 
 /** Southern Balochi (بلوچی مکرانی)
@@ -183,10 +233,11 @@ $messages['be'] = array(
 	'sitematrix-others' => 'Іншыя праекты Фонду Вікімедыя',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Red Winged Duck
+ * @author Wizardist
  */
 $messages['be-tarask'] = array(
 	'sitematrix' => 'Сьпіс усіх праектаў фундацыі «Вікімэдыя»',
@@ -195,6 +246,7 @@ $messages['be-tarask'] = array(
 	'sitematrix-language' => 'Мова',
 	'sitematrix-project' => 'Назва праекту, міжпраектная спасылка і спасылка інтэрвікі',
 	'sitematrix-others' => 'Іншыя праекты фундацыі «Вікімэдыя»',
+	'sitematrix-other-projects' => 'Іншыя праекты',
 	'sitematrix-total' => "'''Агульная колькасьць: $1'''",
 	'sitematrix-sitetotal' => 'Усяго',
 	'sitematrix-private' => 'прыватны',
@@ -221,6 +273,7 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Bellayet
+ * @author Wikitanvir
  * @author Zaheen
  */
 $messages['bn'] = array(
@@ -230,6 +283,7 @@ $messages['bn'] = array(
 	'sitematrix-language' => 'ভাষা',
 	'sitematrix-project' => 'প্রকল্পের নাম, আন্তঃপ্রকল্প সংযোগ এবং আন্তঃউইকি সংযোগ',
 	'sitematrix-others' => 'উইকিমিডিয়ার অন্যান্য প্রকল্প',
+	'sitematrix-other-projects' => 'অন্যান্য প্রকল্প',
 	'sitematrix-total' => "'''সর্বমোট: $1'''",
 	'sitematrix-sitetotal' => 'মোট',
 	'sitematrix-private' => 'প্রাইভেট',
@@ -246,6 +300,7 @@ $messages['br'] = array(
 	'sitematrix-language' => 'Yezh',
 	'sitematrix-project' => 'Anv ar raktres, liamm etreraktres ha liamm etrewiki',
 	'sitematrix-others' => 'Raktresoù all eus Wikimedia',
+	'sitematrix-other-projects' => 'Raktresoù all',
 	'sitematrix-total' => "'''Hollad ar gont : $1'''",
 	'sitematrix-sitetotal' => 'Hollad',
 	'sitematrix-private' => 'prevez',
@@ -262,13 +317,22 @@ $messages['bs'] = array(
 	'sitematrix-language' => 'Jezik',
 	'sitematrix-project' => 'Naziv projekta, link ka međuprojektu i međuwiki link',
 	'sitematrix-others' => 'Ostali projekti Wikimedije',
+	'sitematrix-other-projects' => 'Drugi projekti',
 	'sitematrix-total' => "'''Ukupni zbir: $1'''",
 	'sitematrix-sitetotal' => 'Ukupno',
 	'sitematrix-private' => 'privatno',
 	'sitematrix-fishbowl' => 'uređivanje zabranjeno',
 );
 
+/** Буряад (Буряад)
+ * @author ОйЛ
+ */
+$messages['bxr'] = array(
+	'sitematrix-language' => 'Хэлэн',
+);
+
 /** Catalan (Català)
+ * @author Aleator
  * @author Jordi Roqué
  * @author Paucabot
  * @author SMP
@@ -282,6 +346,7 @@ $messages['ca'] = array(
 	'sitematrix-language' => 'Idioma',
 	'sitematrix-project' => 'Nom del projecte, enllaç interwiki entre projectes',
 	'sitematrix-others' => 'Altres projectes de Wikimedia',
+	'sitematrix-other-projects' => 'Altres projectes',
 	'sitematrix-total' => "'''Recompte total: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privat',
@@ -293,10 +358,34 @@ $messages['cdo'] = array(
 	'sitematrix' => 'Wikimedia wiki gì dăng-dăng',
 );
 
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'sitematrix' => 'Викимедиа колламашан магIам',
+	'sitematrix-desc' => 'Гойту [[Special:SiteMatrix|Викимедиа колламашан магIам]]',
+);
+
+/** Sorani (کوردی)
+ * @author Asoxor
+ */
+$messages['ckb'] = array(
+	'sitematrix' => 'لیستی ویکییەکانی ویکیمیدیا',
+	'sitematrix-summary' => 'ئەم پەڕە تایبەتە گشت ویکییەکانی ویکیمیدیای بە ڕیزکردووە.',
+	'sitematrix-desc' => '[[Special:SiteMatrix|لیستێکی ویکییەکانی ویکیمیدیا]] نیشان دەدات',
+	'sitematrix-language' => 'زمان',
+	'sitematrix-project' => 'ناوی پرۆژە، بەستەرکانی نێوانپرۆژە و بەستەرەکانی نێوانویکی',
+	'sitematrix-others' => 'پرۆژەکانی دیکەی ویکیمیدیا',
+	'sitematrix-other-projects' => 'پرۆژەکانی تر',
+	'sitematrix-total' => "'''ژمارەی سەرجەم: $1'''",
+	'sitematrix-sitetotal' => 'سەرجەم',
+);
+
 /** Czech (Česky)
  * @author Danny B.
  * @author Li-sung
  * @author Matěj Grabovský
+ * @author Mormegil
  * @author לערי ריינהארט
  */
 $messages['cs'] = array(
@@ -306,6 +395,7 @@ $messages['cs'] = array(
 	'sitematrix-language' => 'Jazyk',
 	'sitematrix-project' => 'Jméno projektu, meziprojektový odkaz a mezijazykový odkaz',
 	'sitematrix-others' => 'Ostatní projekty nadace Wikimedia',
+	'sitematrix-other-projects' => 'Ostatní projekty',
 	'sitematrix-total' => "'''Celkový počet: $1'''",
 	'sitematrix-sitetotal' => 'Celkem',
 	'sitematrix-private' => 'privátní',
@@ -316,8 +406,9 @@ $messages['cs'] = array(
  * @author ОйЛ
  */
 $messages['cu'] = array(
-	'sitematrix' => 'Викимє́дїѩ опꙑтьствова́нии ката́логъ',
-	'sitematrix-language' => 'ѩꙁꙑ́къ',
+	'sitematrix' => 'Викимєдїѩ опꙑтьствовании каталогъ',
+	'sitematrix-language' => 'ѩꙁꙑкъ',
+	'sitematrix-others' => 'дроуꙃи Викимєдїѩ опꙑтьствованиꙗ',
 );
 
 /** Welsh (Cymraeg)
@@ -330,6 +421,7 @@ $messages['cy'] = array(
 	'sitematrix-language' => 'Iaith',
 	'sitematrix-project' => "Enw'r prosiect, rhagddodiad cysylltu rhyngprosiect a rhagddodiad cysylltu rhyngwici",
 	'sitematrix-others' => 'Prosiectau eraill Wikimedia',
+	'sitematrix-other-projects' => 'Prosiectau eraill',
 	'sitematrix-total' => "'''Nifer y cwbl i gyd: $1'''",
 	'sitematrix-sitetotal' => 'Cyfanswm',
 	'sitematrix-private' => 'preifat',
@@ -339,6 +431,7 @@ $messages['cy'] = array(
 /** Danish (Dansk)
  * @author Jan Friberg
  * @author Morten LJ
+ * @author Peter Alberti
  */
 $messages['da'] = array(
 	'sitematrix' => 'Alle Wikimedias wikier',
@@ -347,6 +440,7 @@ $messages['da'] = array(
 	'sitematrix-language' => 'Sprog',
 	'sitematrix-project' => 'Projektnavn, interprojektlink og interwikilink',
 	'sitematrix-others' => 'Andre projekter under Wikimedia',
+	'sitematrix-other-projects' => 'Andre projekter',
 	'sitematrix-total' => "'''I alt $1 wikier'''",
 	'sitematrix-sitetotal' => 'I alt',
 	'sitematrix-private' => 'privat',
@@ -354,30 +448,33 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Raimond Spekking
  * @author לערי ריינהארט
  */
 $messages['de'] = array(
 	'sitematrix' => 'Liste der Wikimedia-Wikis',
-	'sitematrix-summary' => 'Diese Spezialseite zeigt alle Wikis der Wikimedia Foundation.',
-	'sitematrix-desc' => 'Zeigt eine [[Special:SiteMatrix|Liste der Wikimedia-Wikis]]',
+	'sitematrix-summary' => 'Diese Spezialseite listet alle Wikis der Wikimedia Foundation auf.',
+	'sitematrix-desc' => 'Stellt eine Spezialseite mit einer [[Special:SiteMatrix|Liste der Wikimedia-Wikis]] bereit',
 	'sitematrix-language' => 'Sprache',
-	'sitematrix-project' => 'Projektname, Interprojekt-Link und Interwiki-Link',
+	'sitematrix-project' => 'Projektname, Interprojektlink und Interwikilink',
 	'sitematrix-others' => 'Weitere Wikimedia-Projekte',
+	'sitematrix-other-projects' => 'Weitere Projekte',
 	'sitematrix-total' => "'''Gesamtanzahl: $1'''",
-	'sitematrix-sitetotal' => 'Gesamt',
+	'sitematrix-sitetotal' => 'Insgesamt',
 	'sitematrix-private' => 'Privat',
 	'sitematrix-fishbowl' => 'Bearbeitung eingeschränkt',
 );
 
 /** Zazaki (Zazaki)
  * @author Aspar
+ * @author Erdemaslancan
  */
 $messages['diq'] = array(
 	'sitematrix' => 'listeya wiki yê heme wikimediyayan',
 	'sitematrix-summary' => 'no pelo xas listeya wiki yê heme wikimedyayan liste keno',
 	'sitematrix-desc' => '[[Special:SiteMatrix|listeya wikiyê Wikimedyayan]] mocneno ra',
-	'sitematrix-language' => 'zıwan',
+	'sitematrix-language' => 'Zuwan',
 	'sitematrix-project' => 'nameyê projeyi, gıreyê benateyê projeyan, wikiyan',
 	'sitematrix-others' => 'Projeyê Wîkîmedyayê binî',
 	'sitematrix-total' => "'''pêro amari: $1'''",
@@ -396,22 +493,29 @@ $messages['dsb'] = array(
 	'sitematrix-language' => 'Rěc',
 	'sitematrix-project' => 'Projektowe mě, interprojektowy wótkaz a interwiki-wótkaz',
 	'sitematrix-others' => 'Dalšne projekty Wikimedije',
+	'sitematrix-other-projects' => 'Druge projekty',
 	'sitematrix-total' => "'''Cełkowna licba: $1'''",
 	'sitematrix-sitetotal' => 'Dogromady',
 	'sitematrix-private' => 'priwatny',
 	'sitematrix-fishbowl' => 'wobźěłowanje wobgranicowane',
 );
 
-/** Ewe (Eʋegbe) */
+/** Ewe (Eʋegbe)
+ * @author Natsubee
+ */
 $messages['ee'] = array(
 	'sitematrix' => 'Wikimedia wikiwo ƒe xexlẽme',
+	'sitematrix-summary' => 'Axa tɔxe sia fia Wikimedia wikiwo katã ƒe xexlẽme',
+	'sitematrix-desc' => 'Efia [[Special:SiteMatrix|Wikimedia wikiwo ƒe ŋkɔwo]]',
 	'sitematrix-language' => 'Gbe',
+	'sitematrix-others' => 'Wikimedia dɔwɔwɔ bubuwo',
 );
 
 /** Greek (Ελληνικά)
  * @author Badseed
  * @author Consta
  * @author Dead3y3
+ * @author Glavkos
  * @author Omnipaedista
  * @author ZaDiak
  */
@@ -422,6 +526,7 @@ $messages['el'] = array(
 	'sitematrix-language' => 'Γλώσσα',
 	'sitematrix-project' => 'Όνομα εγχειρήματος, διαεγχειρηματικός (interproject) σύνδεσμος και διαγλωσσικός (interwiki) σύνδεσμος',
 	'sitematrix-others' => 'Άλλα εγχειρήματα του Wikimedia',
+	'sitematrix-other-projects' => 'Άλλα εγχειρήματα',
 	'sitematrix-total' => "'''Συνολικός αριθμός: $1'''",
 	'sitematrix-sitetotal' => 'Συνολικά',
 	'sitematrix-private' => 'ιδιωτικό',
@@ -440,6 +545,7 @@ $messages['eo'] = array(
 	'sitematrix-language' => 'Lingvo',
 	'sitematrix-project' => 'Nomo de projekto, interprojekta ligilo kaj intervikia ligilo',
 	'sitematrix-others' => 'Aliaj projektoj de Wikimedia',
+	'sitematrix-other-projects' => 'Aliaj projektoj',
 	'sitematrix-total' => "'''Tuta nombrado: $1'''",
 	'sitematrix-sitetotal' => 'Tuto',
 	'sitematrix-private' => 'privata',
@@ -447,6 +553,7 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Imre
  * @author Remember the dot
  * @author Sanbec
  * @author לערי ריינהארט
@@ -458,6 +565,7 @@ $messages['es'] = array(
 	'sitematrix-language' => 'Idioma',
 	'sitematrix-project' => 'Nombre del proyecto, enlace interproyecto y enlace interwiki',
 	'sitematrix-others' => 'Otros proyectos de Wikimedia',
+	'sitematrix-other-projects' => 'Otros proyectos',
 	'sitematrix-total' => "'''Cuenta total: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privado',
@@ -506,6 +614,7 @@ $messages['ext'] = array(
 
 /** Persian (فارسی)
  * @author Huji
+ * @author Wayiran
  */
 $messages['fa'] = array(
 	'sitematrix' => 'فهرست ویکی‌های ویکی‌مدیا',
@@ -514,6 +623,7 @@ $messages['fa'] = array(
 	'sitematrix-language' => 'زبان',
 	'sitematrix-project' => 'نام پروژه، پیوند میان‌پروژه و پیوند میان‌ویکی',
 	'sitematrix-others' => 'دیگر پروژه‌های ویکی‌مدیا',
+	'sitematrix-other-projects' => 'دیگر پروژه‌ها',
 	'sitematrix-total' => "'''جمع کل: $1'''",
 	'sitematrix-sitetotal' => 'کل',
 	'sitematrix-private' => 'خصوصی',
@@ -523,6 +633,7 @@ $messages['fa'] = array(
 /** Finnish (Suomi)
  * @author Crt
  * @author Nike
+ * @author Olli
  */
 $messages['fi'] = array(
 	'sitematrix' => 'Luettelo Wikimedian wikeistä',
@@ -531,10 +642,21 @@ $messages['fi'] = array(
 	'sitematrix-language' => 'Kieli',
 	'sitematrix-project' => 'Projektin nimi, projektienvälinen linkki ja interwiki-linkki',
 	'sitematrix-others' => 'Muut Wikimedian projektit',
+	'sitematrix-other-projects' => 'Muut projektit',
 	'sitematrix-total' => "'''Wikejä yhteensä: $1'''",
 	'sitematrix-sitetotal' => 'Yhteensä',
 	'sitematrix-private' => 'yksityinen',
 	'sitematrix-fishbowl' => 'muokkaaminen rajoitettu',
+);
+
+/** Faroese (Føroyskt)
+ * @author EileenSanda
+ */
+$messages['fo'] = array(
+	'sitematrix' => 'Listi yvir wikiir á Wikimedia',
+	'sitematrix-summary' => 'Henda serstaka síða hevur yvirlit yvir allar wikiir á Wikimedia',
+	'sitematrix-desc' => 'Vísir ein [[Special:SiteMatrix|lista yvir allar wikiir á Wikimedia]]',
+	'sitematrix-language' => 'Mál',
 );
 
 /** French (Français)
@@ -551,6 +673,7 @@ $messages['fr'] = array(
 	'sitematrix-language' => 'Langue',
 	'sitematrix-project' => 'Nom du projet, lien interprojet et lien interwiki',
 	'sitematrix-others' => 'Autres projets de Wikimedia Foundation',
+	'sitematrix-other-projects' => 'Autres projets',
 	'sitematrix-total' => "'''Total du compte : $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privé',
@@ -568,12 +691,13 @@ $messages['frc'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
-	'sitematrix' => 'Lista des vouiquis de la Fondacion Wikimedia',
-	'sitematrix-summary' => 'Ceta pâge spèciâla montre tôs los vouiquis de la Fondacion Wikimedia.',
-	'sitematrix-desc' => 'Montre una [[Special:SiteMatrix|lista des vouiquis de la Fondacion Wikimedia]].',
+	'sitematrix' => 'Lista des vouiquis de la Wikimedia Foundation',
+	'sitematrix-summary' => 'Ceta pâge spèciâla montre tôs los vouiquis de la Wikimedia Foundation.',
+	'sitematrix-desc' => 'Montre una [[Special:SiteMatrix|lista des vouiquis de la Wikimedia Foundation]].',
 	'sitematrix-language' => 'Lengoua',
 	'sitematrix-project' => 'Nom du projèt, lim entèrprojèt et lim entèrvouiqui',
-	'sitematrix-others' => 'Ôtros projèts de la Fondacion Wikimedia',
+	'sitematrix-others' => 'Ôtros projèts de la Wikimedia Foundation',
+	'sitematrix-other-projects' => 'Ôtros projèts',
 	'sitematrix-total' => "'''Soma du compto : $1'''",
 	'sitematrix-sitetotal' => 'Soma',
 	'sitematrix-private' => 'privâ',
@@ -588,6 +712,7 @@ $messages['fur'] = array(
 	'sitematrix-summary' => 'Cheste pagjine speciâl e mostre ducj i progjets Wikimedia.',
 	'sitematrix-language' => 'Lenghe',
 	'sitematrix-others' => 'Altris progjets di Wikimedia',
+	'sitematrix-other-projects' => 'Altris progjets',
 	'sitematrix-total' => "'''Cont totâl: $1'''",
 	'sitematrix-sitetotal' => 'Totâl',
 );
@@ -615,10 +740,11 @@ $messages['gl'] = array(
 	'sitematrix-language' => 'Lingua',
 	'sitematrix-project' => 'Nome do proxecto, ligazón entre proxectos e ligazón entre wikis',
 	'sitematrix-others' => 'Outros proxectos da Wikimedia',
+	'sitematrix-other-projects' => 'Outros proxectos',
 	'sitematrix-total' => "'''Suma total: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privado',
-	'sitematrix-fishbowl' => 'editado restrinxido',
+	'sitematrix-fishbowl' => 'edición restrinxida',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -642,6 +768,7 @@ $messages['gsw'] = array(
 	'sitematrix-language' => 'Sproch',
 	'sitematrix-project' => 'Projäktname, Interprojäkt-Gleich un Interwiki-Gleich',
 	'sitematrix-others' => 'Wyteri Wikimedia-Projäkt',
+	'sitematrix-other-projects' => 'Andri Projäkt',
 	'sitematrix-total' => "'''Gsamtaazahl: $1'''",
 	'sitematrix-sitetotal' => 'Gsamt',
 	'sitematrix-private' => 'Privat',
@@ -651,6 +778,7 @@ $messages['gsw'] = array(
 /** Gujarati (ગુજરાતી)
  * @author Ashok modhvadia
  * @author Dsvyas
+ * @author KartikMistry
  */
 $messages['gu'] = array(
 	'sitematrix' => 'વિકિમીડીયા વિકિઓની યાદી',
@@ -659,6 +787,7 @@ $messages['gu'] = array(
 	'sitematrix-language' => 'ભાષા',
 	'sitematrix-project' => 'પરિયોજનાનું નામ, આંતરપરિયોજનાની કડી અને આંતરવિકિની કડી',
 	'sitematrix-others' => 'વિકિમીડીયાની અન્ય પરિયોજનાઓ',
+	'sitematrix-other-projects' => 'બીજાં પ્રોજેક્ટ્સ',
 	'sitematrix-total' => "'''કુલ સંખ્યા: $1'''",
 	'sitematrix-sitetotal' => 'કુલ',
 	'sitematrix-private' => 'અંગત',
@@ -687,6 +816,7 @@ $messages['haw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotem Liss
  */
 $messages['he'] = array(
@@ -696,6 +826,7 @@ $messages['he'] = array(
 	'sitematrix-language' => 'שפה',
 	'sitematrix-project' => 'שם המיזם וקישורי הבינוויקי',
 	'sitematrix-others' => 'מיזמים אחרים של ויקימדיה',
+	'sitematrix-other-projects' => 'מיזמים אחרים',
 	'sitematrix-total' => "'''מספר האתרים: $1'''",
 	'sitematrix-sitetotal' => 'סך הכל',
 	'sitematrix-private' => 'פרטי',
@@ -703,6 +834,7 @@ $messages['he'] = array(
 );
 
 /** Hindi (हिन्दी)
+ * @author Ansumang
  * @author Kaustubh
  * @author Shyam
  */
@@ -713,6 +845,7 @@ $messages['hi'] = array(
 	'sitematrix-language' => 'भाषा',
 	'sitematrix-project' => 'प्रकल्पका नाम, आंतरप्रकल्प कड़ीयाँ और आंतरविकि कड़ीयाँ',
 	'sitematrix-others' => 'विकिमीडियाके अन्य प्रकल्प',
+	'sitematrix-other-projects' => 'अन्य प्रकल्प',
 	'sitematrix-total' => "'''कुल गिनती: $1'''",
 	'sitematrix-sitetotal' => 'कुल',
 	'sitematrix-private' => 'निजी',
@@ -720,8 +853,10 @@ $messages['hi'] = array(
 );
 
 /** Croatian (Hrvatski)
+ * @author Anton008
  * @author Dalibor Bosits
  * @author Dnik
+ * @author Ex13
  * @author SpeedyGonsales
  * @author לערי ריינהארט
  */
@@ -731,7 +866,8 @@ $messages['hr'] = array(
 	'sitematrix-desc' => 'Prikazuje [[Special:SiteMatrix|popis wikija Wikimedije]]',
 	'sitematrix-language' => 'Jezik',
 	'sitematrix-project' => 'Ime projekta, poveznica među projektima i međuwiki poveznica',
-	'sitematrix-others' => 'Ostali projekti Wikimedije',
+	'sitematrix-others' => 'Ostali Wikimedijini projekti',
+	'sitematrix-other-projects' => 'Ostali projekti',
 	'sitematrix-total' => "'''Ukupni broj: $1'''",
 	'sitematrix-sitetotal' => 'Ukupno',
 	'sitematrix-private' => 'privatno',
@@ -748,6 +884,7 @@ $messages['hsb'] = array(
 	'sitematrix-language' => 'Rěč',
 	'sitematrix-project' => 'Projektowe mjeno, mjezyprojektowy wotkaz a mjezyrěčny wotkaz',
 	'sitematrix-others' => 'Dalše projekty we Wikimediji',
+	'sitematrix-other-projects' => 'Druhe projekty',
 	'sitematrix-total' => "'''Cyłkowna ličba: $1'''",
 	'sitematrix-sitetotal' => 'Dohromady',
 	'sitematrix-private' => 'priwatny',
@@ -764,6 +901,7 @@ $messages['hu'] = array(
 	'sitematrix-language' => 'Nyelv',
 	'sitematrix-project' => 'A projekt neve, projekt- és nyelvközi link',
 	'sitematrix-others' => 'Más Wikimedia projektek',
+	'sitematrix-other-projects' => 'További projektek',
 	'sitematrix-total' => "'''Összes: $1'''",
 	'sitematrix-sitetotal' => 'Összesen',
 	'sitematrix-private' => 'zártkörű',
@@ -791,6 +929,7 @@ $messages['ia'] = array(
 	'sitematrix-language' => 'Lingua',
 	'sitematrix-project' => 'Nomine del projecto, ligamine interprojecto e ligamine interwiki',
 	'sitematrix-others' => 'Altere projectos de Wikimedia',
+	'sitematrix-other-projects' => 'Altere projectos',
 	'sitematrix-total' => "'''Total: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'private',
@@ -809,10 +948,38 @@ $messages['id'] = array(
 	'sitematrix-language' => 'Bahasa',
 	'sitematrix-project' => 'Nama proyek, pranala interproyek dan pranala interwiki',
 	'sitematrix-others' => 'Proyek lain Wikimedia',
+	'sitematrix-other-projects' => 'Proyek lain',
 	'sitematrix-total' => "'''Jumlah total: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privat',
 	'sitematrix-fishbowl' => 'penyuntingan tidak diperbolehkan',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'sitematrix-language' => 'Asụsụ',
+	'sitematrix-total' => "'''Ọgụgụ nílé: $1'''",
+	'sitematrix-sitetotal' => 'Òlé níle',
+	'sitematrix-private' => 'zonàrì ñkịtị',
+);
+
+/** Iloko (Ilokano)
+ * @author Lam-ang
+ */
+$messages['ilo'] = array(
+	'sitematrix' => 'Listaan dagiti Wikimedia wiki',
+	'sitematrix-summary' => 'Daytoy a naipangruna a panid ket ilista na amin dagiti Wikimedia wiki.',
+	'sitematrix-desc' => 'Agipakita ti [[Special:SiteMatrix|listaan dagiti Wikimedia wiki]]',
+	'sitematrix-language' => 'Pagsasao',
+	'sitematrix-project' => 'Nagan ti gandat, interproject a panilpo ken interwiki a panilpo',
+	'sitematrix-others' => 'Dagiti sabsabali a gandat ti Wikimedia',
+	'sitematrix-other-projects' => 'Dagiti sabsabali a gandat',
+	'sitematrix-total' => "'''Dagup a bilang: $1'''",
+	'sitematrix-sitetotal' => 'Dagup',
+	'sitematrix-private' => 'pribado',
+	'sitematrix-fishbowl' => 'maiparit ti agurnos',
 );
 
 /** Ido (Ido)
@@ -834,6 +1001,7 @@ $messages['is'] = array(
 
 /** Italian (Italiano)
  * @author .anaconda
+ * @author Beta16
  * @author BrokenArrow
  * @author Nemo bis
  * @author Pietrodn
@@ -847,6 +1015,7 @@ $messages['it'] = array(
 	'sitematrix-language' => 'Lingua',
 	'sitematrix-project' => 'Nome del progetto, collegamento interprogetto e collegamento inter-wiki',
 	'sitematrix-others' => 'Altri progetti Wikimedia',
+	'sitematrix-other-projects' => 'Altri progetti',
 	'sitematrix-total' => "'''Conteggio totale: $1'''",
 	'sitematrix-sitetotal' => 'Totale',
 	'sitematrix-private' => 'privata',
@@ -858,6 +1027,7 @@ $messages['it'] = array(
  * @author Fryed-peach
  * @author JtFuruhata
  * @author Muttley
+ * @author Ohgi
  * @author לערי ריינהארט
  */
 $messages['ja'] = array(
@@ -867,6 +1037,7 @@ $messages['ja'] = array(
 	'sitematrix-language' => '言語',
 	'sitematrix-project' => 'プロジェクト名、プロジェクト間リンク、ウィキ間リンク',
 	'sitematrix-others' => 'ウィキメディアの他のプロジェクト',
+	'sitematrix-other-projects' => '他のプロジェクト',
 	'sitematrix-total' => "'''総計: $1'''",
 	'sitematrix-sitetotal' => '合計',
 	'sitematrix-private' => '非公開',
@@ -938,7 +1109,7 @@ $messages['kk-arab'] = array(
 	'sitematrix-others' => 'باسقا Wikimedia جوبالارى',
 );
 
-/** Kazakh (Cyrillic) (Қазақша (Cyrillic)) */
+/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬) */
 $messages['kk-cyrl'] = array(
 	'sitematrix' => 'Wikimedia уики тізімі',
 	'sitematrix-language' => 'Тілі',
@@ -946,7 +1117,7 @@ $messages['kk-cyrl'] = array(
 	'sitematrix-others' => 'Басқа Wikimedia жобалары',
 );
 
-/** Kazakh (Latin) (Қазақша (Latin)) */
+/** Kazakh (Latin script) (‪Qazaqşa (latın)‬) */
 $messages['kk-latn'] = array(
 	'sitematrix' => 'Barlıq Wikimedia wïkï tizimi',
 	'sitematrix-language' => 'Tili',
@@ -974,6 +1145,7 @@ $messages['km'] = array(
 	'sitematrix-language' => 'ភាសា',
 	'sitematrix-project' => 'ឈ្មោះ​គម្រោង តំណភ្ជាប់​អន្តរគម្រោង និងតំណភ្ជាប់អន្តរវិគី',
 	'sitematrix-others' => 'គម្រោងវិគីមេឌាផ្សេងៗទៀត',
+	'sitematrix-other-projects' => 'គំរោងផ្សេងៗទៀត',
 	'sitematrix-total' => "'''សរុប: $1'''",
 	'sitematrix-sitetotal' => 'សរុប',
 	'sitematrix-private' => 'ឯកជន',
@@ -985,6 +1157,7 @@ $messages['km'] = array(
  */
 $messages['kn'] = array(
 	'sitematrix-language' => 'ಭಾಷೆ',
+	'sitematrix-sitetotal' => 'ಒಟ್ಟು',
 );
 
 /** Korean (한국어)
@@ -1000,13 +1173,14 @@ $messages['ko'] = array(
 	'sitematrix-language' => '언어',
 	'sitematrix-project' => '프로젝트 이름, 각 프로젝트 간의 인터위키',
 	'sitematrix-others' => '다른 위키미디어 프로젝트 목록',
+	'sitematrix-other-projects' => '다른 프로젝트',
 	'sitematrix-total' => "'''총 합계: $1'''",
 	'sitematrix-sitetotal' => '합계',
 	'sitematrix-private' => '비공개',
 	'sitematrix-fishbowl' => '편집이 제한됨',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -1016,10 +1190,18 @@ $messages['ksh'] = array(
 	'sitematrix-language' => 'Sproch',
 	'sitematrix-project' => 'Dem Projek singe Name, dä Lengk zwesche de Projekte, un dä Engerwiki Lengk',
 	'sitematrix-others' => 'Noch mieh Projekte vun de Wikimedia-Steftung',
+	'sitematrix-other-projects' => 'Ander Projäkter',
 	'sitematrix-total' => "Zosamme jezallt: '''$1'''",
 	'sitematrix-sitetotal' => 'Zosamme',
 	'sitematrix-private' => '(nit öffentlesch)',
 	'sitematrix-fishbowl' => '(et Ändere is beschrängk)',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'sitematrix-sitetotal' => 'Hemû',
 );
 
 /** Latin (Latina)
@@ -1048,6 +1230,7 @@ $messages['lb'] = array(
 	'sitematrix-language' => 'Sprooch',
 	'sitematrix-project' => 'Numm vum Projet, Interprojet-Link an Interwiki-Link',
 	'sitematrix-others' => 'Aner Wikimedia-Projeten',
+	'sitematrix-other-projects' => 'Aner Projeten',
 	'sitematrix-total' => "'''Total vum Kont: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privat',
@@ -1072,6 +1255,7 @@ $messages['li'] = array(
 	'sitematrix-language' => 'Taal',
 	'sitematrix-project' => "Naam van 't perjèk, interperjèk link enne interwiki link",
 	'sitematrix-others' => 'Anger perjèkter van Wikimedia',
+	'sitematrix-other-projects' => 'Anger projekte',
 	'sitematrix-total' => "'''Totaal aantal: $1'''",
 	'sitematrix-sitetotal' => 'Totaal',
 	'sitematrix-private' => 'beperkte toegang',
@@ -1100,6 +1284,7 @@ $messages['loz'] = array(
 );
 
 /** Lithuanian (Lietuvių)
+ * @author Eitvys200
  * @author Matasg
  */
 $messages['lt'] = array(
@@ -1109,6 +1294,7 @@ $messages['lt'] = array(
 	'sitematrix-language' => 'Kalba',
 	'sitematrix-project' => 'Projekto pavadinimas, interprojektinė nuoroda ir interwiki nuoroda.',
 	'sitematrix-others' => 'Kiti Vikimedijos projektai',
+	'sitematrix-other-projects' => 'Kiti projektai',
 	'sitematrix-total' => "'''Viso: $1'''",
 	'sitematrix-sitetotal' => 'Viso',
 	'sitematrix-private' => 'privatus',
@@ -1116,6 +1302,8 @@ $messages['lt'] = array(
 );
 
 /** Latvian (Latviešu)
+ * @author GreenZeb
+ * @author Papuass
  * @author Xil
  * @author לערי ריינהארט
  */
@@ -1123,18 +1311,22 @@ $messages['lv'] = array(
 	'sitematrix' => 'Visu Wikimedia wiki projektu uzskaitījums',
 	'sitematrix-language' => 'Valoda',
 	'sitematrix-others' => 'Citi Wikimedia projekti',
+	'sitematrix-other-projects' => 'Citi projekti',
+	'sitematrix-sitetotal' => 'Kopā',
+	'sitematrix-private' => 'privāts',
 );
 
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'sitematrix' => 'Листа на вики-проектите на Викимедија',
-	'sitematrix-summary' => 'Оваа специјална страница е листа на сите вики-проекти на Викимедија.',
-	'sitematrix-desc' => 'Прикажува [[Special:SiteMatrix|листа на вики-проектите на Викимедија]]',
+	'sitematrix' => 'Список на вики-проектите на Викимедија',
+	'sitematrix-summary' => 'На оваа специјална страница се наведени сите вики-проекти на Викимедија.',
+	'sitematrix-desc' => 'Прикажува [[Special:SiteMatrix|список на вики-проектите на Викимедија]]',
 	'sitematrix-language' => 'Јазик',
-	'sitematrix-project' => 'Име на проектот, меѓупроектна врска и инервики',
+	'sitematrix-project' => 'Име на проектот, меѓупроектна врска и интервики',
 	'sitematrix-others' => 'Други проекти на Викимедија',
+	'sitematrix-other-projects' => 'Други проекти',
 	'sitematrix-total' => "'''Севкупно: $1'''",
 	'sitematrix-sitetotal' => 'Вкупно',
 	'sitematrix-private' => 'приватен',
@@ -1147,18 +1339,27 @@ $messages['mk'] = array(
  */
 $messages['ml'] = array(
 	'sitematrix' => 'വിക്കിമീഡിയ വിക്കികളുടെ പട്ടിക',
-	'sitematrix-summary' => 'ഈ താള്‍ വിക്കിമീഡിയ വിക്കികളുടെ പട്ടിക പ്രദര്‍ശിപ്പിക്കുന്നു.',
-	'sitematrix-desc' => '[[Special:SiteMatrix|മീഡിയാവിക്കി വിക്കികളുടെ പട്ടിക]] പ്രദര്‍ശിപ്പിക്കുന്നു',
+	'sitematrix-summary' => 'ഈ താൾ വിക്കിമീഡിയ വിക്കികളുടെ പട്ടിക പ്രദർശിപ്പിക്കുന്നു.',
+	'sitematrix-desc' => '[[Special:SiteMatrix|വിക്കിമീഡിയ വിക്കികളുടെ പട്ടിക]] പ്രദർശിപ്പിക്കുന്നു',
 	'sitematrix-language' => 'ഭാഷ',
 	'sitematrix-project' => 'സം‌രംഭത്തിന്റെ പേര്‌, സഹസം‌രംഭങ്ങളിലേക്കുള്ള കണ്ണി, മറ്റ് വിക്കികളിലേക്കുള്ള കണ്ണി',
-	'sitematrix-others' => 'വിക്കിമീഡിയയുടെ മറ്റു സം‌രംഭങ്ങള്‍',
+	'sitematrix-others' => 'വിക്കിമീഡിയയുടെ മറ്റു സം‌രംഭങ്ങൾ',
+	'sitematrix-other-projects' => 'ഇതരപദ്ധതികൾ',
 	'sitematrix-total' => "'''മൊത്തം എണ്ണം: $1'''",
-	'sitematrix-sitetotal' => 'മൊത്തം',
+	'sitematrix-sitetotal' => 'ആകെ',
 	'sitematrix-private' => 'സ്വകാര്യം',
 	'sitematrix-fishbowl' => 'തിരുത്തൽ പരിമിതപ്പെടുത്തിയിരിക്കുന്നു',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'sitematrix-language' => 'Хэл',
+);
+
 /** Marathi (मराठी)
+ * @author Htt
  * @author Kaustubh
  * @author Mahitgar
  */
@@ -1169,6 +1370,7 @@ $messages['mr'] = array(
 	'sitematrix-language' => 'भाषा',
 	'sitematrix-project' => 'प्रकल्पाचे नाव, आंतरप्रकल्प दुवे आणि आंतरविकि दुवे',
 	'sitematrix-others' => 'विकिमीडियाचे इतर प्रकल्प',
+	'sitematrix-other-projects' => 'इतर प्रकल्प',
 	'sitematrix-total' => "'''एकूण संख्या: $1'''",
 	'sitematrix-sitetotal' => 'एकूण',
 	'sitematrix-private' => 'खासगी',
@@ -1176,6 +1378,7 @@ $messages['mr'] = array(
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
  * @author Aviator
  */
 $messages['ms'] = array(
@@ -1185,6 +1388,7 @@ $messages['ms'] = array(
 	'sitematrix-language' => 'Bahasa',
 	'sitematrix-project' => 'Nama projek, pautan antara projek dan pautan antara wiki',
 	'sitematrix-others' => 'Projek-projek Wikimedia lain',
+	'sitematrix-other-projects' => 'Projek lain',
 	'sitematrix-total' => "'''Jumlah bilangan: $1'''",
 	'sitematrix-sitetotal' => 'Jumlah',
 	'sitematrix-private' => 'tertutup',
@@ -1211,10 +1415,11 @@ $messages['myv'] = array(
 
 /** Nahuatl (Nāhuatl)
  * @author Fluence
+ * @author Teòtlalili
  */
 $messages['nah'] = array(
 	'sitematrix' => 'Mochīntīn Huiquimedia huiqui',
-	'sitematrix-language' => 'Tlahtōlli',
+	'sitematrix-language' => 'Tlâtòlli',
 	'sitematrix-sitetotal' => 'Mochīntīn',
 	'sitematrix-private' => 'ichtac',
 );
@@ -1222,6 +1427,25 @@ $messages['nah'] = array(
 /** Min Nan Chinese (Bân-lâm-gú) */
 $messages['nan'] = array(
 	'sitematrix' => 'Wikimedia wiki lia̍t-toaⁿ',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ * @author לערי ריינהארט
+ */
+$messages['nb'] = array(
+	'sitematrix' => 'Liste over Wikimedia-prosjekter',
+	'sitematrix-summary' => 'Denne spesialsiden lister opp alle Wikimedias wikier.',
+	'sitematrix-desc' => 'Viser en [[Special:SiteMatrix|liste over Wikimedia-wikier]]',
+	'sitematrix-language' => 'Språk',
+	'sitematrix-project' => 'Prosjektets navn, interprosjektlenke og interwikilenke',
+	'sitematrix-others' => 'Andre Wikimedia-prosjekter',
+	'sitematrix-other-projects' => 'Andre prosjekt',
+	'sitematrix-total' => "'''Totalt antall: $1'''",
+	'sitematrix-sitetotal' => 'Totalt',
+	'sitematrix-private' => 'privat',
+	'sitematrix-fishbowl' => 'redigering begrenset',
 );
 
 /** Low German (Plattdüütsch)
@@ -1246,8 +1470,8 @@ $messages['nds'] = array(
 $messages['nds-nl'] = array(
 	'sitematrix' => "Lieste van Wikimedia-wiki's",
 	'sitematrix-language' => 'Taal',
-	'sitematrix-project' => "Naam van 't prejek, interprejekverwiezing en interwikiverwiezing",
-	'sitematrix-others' => 'Aandere prejekken van Wikimedia',
+	'sitematrix-project' => 'Naam van t projekt, interprojektverwiezing en interwikiverwiezing',
+	'sitematrix-others' => 'Aandere projekten van Wikimedia',
 	'sitematrix-sitetotal' => 'Alles samen',
 	'sitematrix-private' => 'beteunde toegang',
 );
@@ -1263,6 +1487,7 @@ $messages['nl'] = array(
 	'sitematrix-language' => 'Taal',
 	'sitematrix-project' => 'Naam van het project, interprojectverwijzing en interwikiverwijzing',
 	'sitematrix-others' => 'Andere projecten van Wikimedia',
+	'sitematrix-other-projects' => 'Andere projecten',
 	'sitematrix-total' => "'''Totaal aantal: $1'''",
 	'sitematrix-sitetotal' => 'Totaal',
 	'sitematrix-private' => 'beperkte toegang',
@@ -1286,24 +1511,8 @@ $messages['nn'] = array(
 	'sitematrix-fishbowl' => 'endring avgrensa',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author לערי ריינהארט
- */
-$messages['no'] = array(
-	'sitematrix' => 'Liste over Wikimedia-prosjekter',
-	'sitematrix-summary' => 'Denne spesialsiden lister opp alle Wikimedias wikier.',
-	'sitematrix-desc' => 'Viser en [[Special:SiteMatrix|liste over Wikimedia-wikier]]',
-	'sitematrix-language' => 'Språk',
-	'sitematrix-project' => 'Prosjektets navn, interprosjektlenke og interwikilenke',
-	'sitematrix-others' => 'Andre Wikimedia-prosjekter',
-	'sitematrix-total' => "'''Totalt antall: $1'''",
-	'sitematrix-sitetotal' => 'Totalt',
-	'sitematrix-private' => 'privat',
-	'sitematrix-fishbowl' => 'redigering begrenset',
-);
-
 /** Occitan (Occitan)
+ * @author Boulaur
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -1313,13 +1522,33 @@ $messages['oc'] = array(
 	'sitematrix-language' => 'Lenga',
 	'sitematrix-project' => 'Nom del projècte, ligam interprojècte e ligam interwiki',
 	'sitematrix-others' => 'Autres projèctes de Wikimedia Foundation',
+	'sitematrix-other-projects' => 'Autres projèctes',
 	'sitematrix-total' => "'''Total del compte : $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privat',
 	'sitematrix-fishbowl' => 'modificacions limitadas',
 );
 
-/** Ossetic (Иронау)
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Ansumang
+ * @author Odisha1
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'sitematrix' => 'ଉଇକିମିଡ଼ିଆ ଉଇକିମାନଙ୍କର ତାଲିକା',
+	'sitematrix-summary' => 'ଏହି ବିଶେଷ ପୃଷ୍ଠାଟିରେ ସବୁଯାକ ଉଇକିମିଡ଼ିଆ ଉଇକିର ତାଲିକା ଅଛି ।',
+	'sitematrix-desc' => '[[Special:SiteMatrix|ଉଇକିମିଡ଼ିଆ ଉଇକିର ତାଲିକା]] ଦେଖାଇଥାଏ',
+	'sitematrix-language' => 'ଭାଷା',
+	'sitematrix-project' => 'ପ୍ରକଳ୍ପର ନାମ, ଅନ୍ତ-ପ୍ରକଳ୍ପ ଲିଙ୍କ, ଇଣ୍ଟରଉଇକି ଲିଙ୍କ',
+	'sitematrix-others' => 'ଉଇକିମିଡ଼ିଆର ବାକି ପ୍ରକଳ୍ପ',
+	'sitematrix-other-projects' => 'ବାକି ପ୍ରକଳ୍ପସମୂହ',
+	'sitematrix-total' => "'''ମୋଟ ଗଣନା: $1'''",
+	'sitematrix-sitetotal' => 'ସର୍ବମୋଟ',
+	'sitematrix-private' => 'ନିଜସ୍ଵ',
+	'sitematrix-fishbowl' => 'ବଦଳାଇବାକୁ ବାରଣ କରାଯାଇଅଛି',
+);
+
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -1342,6 +1571,7 @@ $messages['pag'] = array(
 $messages['pdc'] = array(
 	'sitematrix' => 'Lischt vun Wikimedia-Wikis',
 	'sitematrix-language' => 'Schprooch',
+	'sitematrix-private' => 'private',
 );
 
 /** Polish (Polski)
@@ -1353,10 +1583,11 @@ $messages['pl'] = array(
 	'sitematrix-summary' => 'Ta strona specjalna zawiera spis wszystkich wiki Wikimedia.',
 	'sitematrix-desc' => 'Pokazuje [[Special:SiteMatrix|spis wiki Fundacji Wikimedia]]',
 	'sitematrix-language' => 'Język',
-	'sitematrix-project' => 'Nazwa projektu, link do projektu i link interwiki',
+	'sitematrix-project' => 'Nazwa projektu, link do projektu oraz link interwiki',
 	'sitematrix-others' => 'Inne projekty Wikimedia',
+	'sitematrix-other-projects' => 'Inne projekty',
 	'sitematrix-total' => "'''Ogólna liczba: $1'''",
-	'sitematrix-sitetotal' => 'Suma',
+	'sitematrix-sitetotal' => 'Łącznie',
 	'sitematrix-private' => 'poufny',
 	'sitematrix-fishbowl' => 'edycja ograniczona',
 );
@@ -1373,10 +1604,28 @@ $messages['pms'] = array(
 	'sitematrix-language' => 'Lenga',
 	'sitematrix-project' => 'Nòm dël proget, anliura antra proget e anliura antrawiki',
 	'sitematrix-others' => 'Àutri proget ëd Wikimedia',
+	'sitematrix-other-projects' => 'Àutri proget',
 	'sitematrix-total' => "'''Total count: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privà',
 	'sitematrix-fishbowl' => 'modìfica riservà',
+);
+
+/** Western Punjabi (پنجابی)
+ * @author Khalid Mahmood
+ */
+$messages['pnb'] = array(
+	'sitematrix' => 'وکیمیڈیا وکی دی لسٹ',
+	'sitematrix-summary' => 'ایس حاص صفے تے سارے وکیمیڈیا مکی دی سلٹ اے۔',
+	'sitematrix-desc' => 'وکھاندا اے اک [[خاص:سائیٹمیٹرکس|وکیمیڈیا وکی دی لسٹ]]',
+	'sitematrix-language' => 'بولی',
+	'sitematrix-project' => 'ویونت جوڑ، آپسی ویونت جوڑ تے انٹروکی جوڑ',
+	'sitematrix-others' => 'وکیمیڈیا دے ہور ویونت',
+	'sitematrix-other-projects' => 'ہور ویونت',
+	'sitematrix-total' => "'''پوری گنتی: $1'''",
+	'sitematrix-sitetotal' => 'ٹوٹل',
+	'sitematrix-private' => 'پرائیویٹ',
+	'sitematrix-fishbowl' => 'تبدیلی ولگن چ',
 );
 
 /** Pashto (پښتو)
@@ -1387,23 +1636,26 @@ $messages['ps'] = array(
 	'sitematrix-language' => 'ژبه',
 	'sitematrix-project' => 'د پروژې نوم، د پروژوترمېنځ تړنه او د ويکي-ګانوترمېنځ تړنه',
 	'sitematrix-others' => 'د ويکي-رسنۍ نورې پروژې',
+	'sitematrix-other-projects' => 'نورې پروژې',
 	'sitematrix-total' => "'''ټولټال شمېر: $1'''",
 	'sitematrix-sitetotal' => 'ټولټال',
 	'sitematrix-private' => 'ځاني',
 );
 
 /** Portuguese (Português)
+ * @author Giro720
  * @author Hamilton Abreu
  * @author Malafaya
  * @author לערי ריינהארט
  */
 $messages['pt'] = array(
-	'sitematrix' => 'Lista de sítios Wikimedia',
+	'sitematrix' => 'Lista de wikis da Wikimedia',
 	'sitematrix-summary' => 'Esta página especial lista todas as wikis Wikimedia.',
 	'sitematrix-desc' => 'Apresenta uma [[Special:SiteMatrix|lista de wikis Wikimedia]]',
 	'sitematrix-language' => 'Língua',
-	'sitematrix-project' => 'Nome do projecto, ligação interprojectos e ligação interwikis',
+	'sitematrix-project' => 'Nome do projecto, link interprojectos e link interwikis',
 	'sitematrix-others' => 'Outros projectos da Wikimedia',
+	'sitematrix-other-projects' => 'Outros projectos',
 	'sitematrix-total' => "'''Contagem total: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privado',
@@ -1412,6 +1664,8 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
+ * @author Helder.wiki
  * @author Heldergeovane
  */
 $messages['pt-br'] = array(
@@ -1421,6 +1675,7 @@ $messages['pt-br'] = array(
 	'sitematrix-language' => 'Idioma',
 	'sitematrix-project' => 'Nome do projeto, ligação interprojeto e ligação interwiki',
 	'sitematrix-others' => 'Outros projetos da Wikimedia',
+	'sitematrix-other-projects' => 'Outros projetos',
 	'sitematrix-total' => "'''Contagem total: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privado',
@@ -1432,31 +1687,46 @@ $messages['pt-br'] = array(
  */
 $messages['qu'] = array(
 	'sitematrix' => 'Wikimediap wikinkuna',
+	'sitematrix-summary' => "Kay sapaq p'anqaqa Wikimediap tukuy wikinkunatam rikuchin.",
+	'sitematrix-desc' => '[[Special:SiteMatrix|Wikimediap wikinkunatam]] rikuchin.',
 	'sitematrix-language' => 'Rimay',
 	'sitematrix-project' => "Ruraykamaypa sutin, ruraykamaypura t'inki, wikipura t'inki (interwiki)",
 	'sitematrix-others' => 'Wikimediap huk ruraykamayninkuna',
+	'sitematrix-other-projects' => 'Huk ruraykamaykuna',
+	'sitematrix-total' => "'''Tukuy yupasqa: $1'''",
+	'sitematrix-sitetotal' => 'Tukuy',
+	'sitematrix-private' => 'akuna',
+	'sitematrix-fishbowl' => "llamk'apuy saywachasqa",
 );
 
-/** Rhaeto-Romance (Rumantsch) */
+/** Romansh (Rumantsch)
+ * @author Kazu89
+ */
 $messages['rm'] = array(
+	'sitematrix' => 'Glista dals wikis da Wikimedia',
 	'sitematrix-language' => 'Linguatg',
 );
 
 /** Romanian (Română)
+ * @author AdiJapan
+ * @author Cin
  * @author KlaudiuMihaila
+ * @author Minisarm
  * @author Stelistcristi
  * @author לערי ריינהארט
  */
 $messages['ro'] = array(
 	'sitematrix' => 'Lista proiectelor Wikimedia',
-	'sitematrix-summary' => 'Această pagină specială afişează toate proiectele wiki ale Wikimedia.',
-	'sitematrix-desc' => 'Afişaţi o [[Special:SiteMatrix|listă de wikiuri ale Wikimedia]]',
+	'sitematrix-summary' => 'Această pagină specială afișează toate proiectele wiki ale Wikimedia.',
+	'sitematrix-desc' => 'Afișează o [[Special:SiteMatrix|listă de wikiuri susținute de Wikimedia]]',
 	'sitematrix-language' => 'Limbă',
-	'sitematrix-others' => 'Alte proiecte Wikimedia',
+	'sitematrix-project' => 'Numele proiectului, legătura către interproiect și legăturile interwiki',
+	'sitematrix-others' => 'Alte proiecte ale Fundației Wikimedia',
+	'sitematrix-other-projects' => 'Alte proiecte',
 	'sitematrix-total' => "'''Număr total: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privat',
-	'sitematrix-fishbowl' => 'modificare restricţionată',
+	'sitematrix-fishbowl' => 'modificare restricționată',
 );
 
 /** Tarandíne (Tarandíne)
@@ -1469,6 +1739,7 @@ $messages['roa-tara'] = array(
 	'sitematrix-language' => 'Lènghe',
 	'sitematrix-project' => "Nome de proggette, collegamende 'mbrà inderproggette e collegamende 'mbrà inderuicchi",
 	'sitematrix-others' => 'Otre pruggette de UicchiMedia',
+	'sitematrix-other-projects' => 'Otre pruggette',
 	'sitematrix-total' => "'''Condegge totale: $1'''",
 	'sitematrix-sitetotal' => 'Totele',
 	'sitematrix-private' => 'private',
@@ -1485,13 +1756,40 @@ $messages['ru'] = array(
 	'sitematrix-language' => 'Язык',
 	'sitematrix-project' => 'Имя проекта, межпроектная ссылка и интервики',
 	'sitematrix-others' => 'Другие проекты «Фонда Викимедиа»',
+	'sitematrix-other-projects' => 'Другие проекты',
 	'sitematrix-total' => "'''Общее количество: $1'''",
 	'sitematrix-sitetotal' => 'Всего',
 	'sitematrix-private' => 'частный',
 	'sitematrix-fishbowl' => 'редактирование ограничено',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'sitematrix' => 'Список проєктів Вікімедія',
+	'sitematrix-summary' => 'Тота шпеціална сторінка обсягує список вшыткых вікі Фонду Вікімедія',
+	'sitematrix-desc' => 'Указує [[Special:SiteMatrix|список проєктів фонду Вікімедія]]',
+	'sitematrix-language' => 'Язык',
+	'sitematrix-project' => 'Назва проєкту, міджіпроєктовый одказ і міджіязыковый одказ',
+	'sitematrix-others' => 'Іншы проєкты Фонду «Вікімедія»',
+	'sitematrix-other-projects' => 'Другы проєкты',
+	'sitematrix-total' => "'''Цілкове чісло: $1'''",
+	'sitematrix-sitetotal' => 'Цілком',
+	'sitematrix-private' => 'пріватный',
+	'sitematrix-fishbowl' => 'едітованя обмеджене',
+);
+
+/** Sanskrit (संस्कृतम्)
+ * @author Ansumang
+ */
+$messages['sa'] = array(
+	'sitematrix-language' => 'भाषा',
+	'sitematrix-sitetotal' => 'समस्त',
+	'sitematrix-private' => 'एकान्ते',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1501,23 +1799,44 @@ $messages['sah'] = array(
 	'sitematrix-language' => 'Тыла',
 	'sitematrix-project' => 'Бырайыак аата, бырайыак ыккардынааҕы ыйынньык уонна интервики',
 	'sitematrix-others' => '«Викимедиа» атын бырайыактара',
+	'sitematrix-other-projects' => 'Атын бырайыактар',
 	'sitematrix-total' => "'''Уопсай ахсаана: $1'''",
 	'sitematrix-sitetotal' => 'Барыта',
 	'sitematrix-private' => 'приватнай/чааһынай',
 	'sitematrix-fishbowl' => 'көннөрүү хааччахтаммыт',
 );
 
+/** Sardinian (Sardu)
+ * @author Andria
+ */
+$messages['sc'] = array(
+	'sitematrix-language' => 'Limba',
+);
+
+/** Samogitian (Žemaitėška)
+ * @author Hugo.arg
+ */
+$messages['sgs'] = array(
+	'sitematrix-summary' => 'Tas specēlus poslapis ešdiesta vėsos Vikimedėjės pruojektos',
+	'sitematrix-project' => 'Pruojekta pavadėnėms, terppruojektėnė nūruoda ėr interwiki nūruoda.',
+	'sitematrix-others' => 'Kėtė Vikimedėjės pruojektā',
+	'sitematrix-private' => 'nūsavs',
+);
+
 /** Sinhala (සිංහල)
+ * @author Singhalawap
+ * @author දසනැබළයෝ
  * @author නන්දිමිතුරු
  */
 $messages['si'] = array(
-	'sitematrix' => 'විකිමාධ්‍ය විකි ලැයිස්තුව',
-	'sitematrix-summary' => 'මෙම විශේෂ පිටුව සියළු විකිමාධ්‍ය විකියන් ලැයිස්තුගත කරයි.',
+	'sitematrix' => 'විකිමීඩියාවට අයත් විකි ලැයිස්තුව',
+	'sitematrix-summary' => 'මෙම විශේෂ පිටුව විකිමීඩියාවේ සියළු  විකියන් ලැයිස්තුගත කරයි.',
 	'sitematrix-desc' => '[[Special:SiteMatrix|විකිමාධ්‍ය විකියන්ගේ ලැයිස්තුවක්]] ප්‍රදර්ශනය කරන්න',
 	'sitematrix-language' => 'භාෂාව',
 	'sitematrix-project' => 'ව්‍යාපෘතිය, අන්තර්-ව්‍යාපෘති සබැඳිය හා අන්තර්විකි සබැඳිය හි නම',
-	'sitematrix-others' => 'විකිමාධ්‍යහි අනෙකුත් ව්‍යාපෘති',
-	'sitematrix-total' => "'''ම්‍රළු ගණනය: $1'''",
+	'sitematrix-others' => 'විකිමීඩියාවට අයත් අනෙකුත් ව්‍යාපෘති',
+	'sitematrix-other-projects' => 'අනෙකුත් ව්‍යාපෘති',
+	'sitematrix-total' => "'''මුළු ගණනය: $1'''",
 	'sitematrix-sitetotal' => 'මුළු',
 	'sitematrix-private' => 'පෞද්ගලික',
 	'sitematrix-fishbowl' => 'සංස්කරණය කෙරුම පරිසීමාකෙරිණි',
@@ -1533,10 +1852,28 @@ $messages['sk'] = array(
 	'sitematrix-language' => 'Jazyk',
 	'sitematrix-project' => 'Názov projektu, medziprojektový odkaz a interwiki odkaz',
 	'sitematrix-others' => 'Iné projekty nadácie Wikimedia',
+	'sitematrix-other-projects' => 'Ďalšie projekty',
 	'sitematrix-total' => "'''Celkový počet: $1'''",
 	'sitematrix-sitetotal' => 'Celkom',
 	'sitematrix-private' => 'súkromné',
 	'sitematrix-fishbowl' => 'úpravy obmedzené',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'sitematrix' => 'Seznam Wikimedijinih wikijev',
+	'sitematrix-summary' => 'Ta posebna stran navaja vse Wikimedijine wikije.',
+	'sitematrix-desc' => 'Prikaže [[Special:SiteMatrix|seznam Wikimedijinih wikijev]]',
+	'sitematrix-language' => 'Jezik',
+	'sitematrix-project' => 'Ime projekta, medprojektna povezava in povezava interwiki',
+	'sitematrix-others' => 'Drugi projekti Wikimedije',
+	'sitematrix-other-projects' => 'Drugi projekti',
+	'sitematrix-total' => "'''Skupno število: $1'''",
+	'sitematrix-sitetotal' => 'Skupaj',
+	'sitematrix-private' => 'zasebno',
+	'sitematrix-fishbowl' => 'urejanje omejeno',
 );
 
 /** Lower Silesian (Schläsch)
@@ -1548,41 +1885,59 @@ $messages['sli'] = array(
 );
 
 /** Albanian (Shqip)
+ * @author Mikullovci11
+ * @author Olsi
+ * @author Vinie007
  * @author לערי ריינהארט
  */
 $messages['sq'] = array(
 	'sitematrix' => 'Lista e wiki-ve të Wikimedia-s',
+	'sitematrix-summary' => 'Kjo faqe speciale liston të gjithë wiki-t e Wikimedia-s.',
+	'sitematrix-desc' => 'Shfaq një [[Special:SiteMatrix|listë të wiki-ve të Wikimedia-s]]',
+	'sitematrix-language' => 'Gjuha',
+	'sitematrix-project' => 'Emri i projektit, lidhja e ndërprojektit dhe lidhja ndërwiki',
+	'sitematrix-others' => 'Projekte të tjera të Wikimedia-s',
+	'sitematrix-other-projects' => 'Projekte të tjera',
+	'sitematrix-total' => "'''Numri total: $1'''",
+	'sitematrix-sitetotal' => 'Gjithësej',
+	'sitematrix-private' => 'privat',
+	'sitematrix-fishbowl' => 'redaktimi i kufizua',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Millosh
+ * @author Nikola Smolenski
  * @author Sasa Stefanovic
+ * @author Жељко Тодоровић
  * @author לערי ריינהארט
  */
 $messages['sr-ec'] = array(
 	'sitematrix' => 'Табела свих викија',
-	'sitematrix-summary' => 'Ова посебна страна листа све Викимедијине викије.',
+	'sitematrix-summary' => 'Ова посебна страница приказује све Викимедијине викије.',
 	'sitematrix-desc' => 'Приказује [[Special:SiteMatrix|списак Викимедијиних викија]].',
 	'sitematrix-language' => 'Језик',
 	'sitematrix-project' => 'Име пројекта, међупројекатска веза и међувики веза.',
 	'sitematrix-others' => 'Остали Викимедијини пројекти.',
+	'sitematrix-other-projects' => 'Остали пројекти',
 	'sitematrix-total' => "'''Укупан збир: $1.'''",
 	'sitematrix-sitetotal' => 'укупно',
 	'sitematrix-private' => 'приватно',
 	'sitematrix-fishbowl' => 'забрана мењања',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Жељко Тодоровић
  * @author לערי ריינהארט
  */
 $messages['sr-el'] = array(
 	'sitematrix' => 'Tabela svih vikija',
-	'sitematrix-summary' => 'Ova posebna strana lista sve Vikimedijine vikije.',
+	'sitematrix-summary' => 'Ova posebna stranica lista sve Vikimedijine vikije.',
 	'sitematrix-desc' => 'Prikazuje [[Special:SiteMatrix|spisak Vikimedijinih vikija]].',
 	'sitematrix-language' => 'Jezik',
 	'sitematrix-project' => 'Ime projekta, međuprojekatska veza i međuviki veza.',
 	'sitematrix-others' => 'Ostali Vikimedijini projekti.',
+	'sitematrix-other-projects' => 'Ostali projekti',
 	'sitematrix-total' => "'''Ukupan zbir: $1.'''",
 	'sitematrix-sitetotal' => 'ukupno',
 	'sitematrix-private' => 'privatno',
@@ -1591,9 +1946,10 @@ $messages['sr-el'] = array(
 
 /** Swati (SiSwati)
  * @author Jatrobat
+ * @author Sibande
  */
 $messages['ss'] = array(
-	'sitematrix-language' => 'Lúlwîmi',
+	'sitematrix-language' => 'Lulwimi',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1632,6 +1988,7 @@ $messages['su'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Ainali
  * @author Lejonel
  * @author M.M.S.
  * @author לערי ריינהארט
@@ -1643,10 +2000,16 @@ $messages['sv'] = array(
 	'sitematrix-language' => 'Språk',
 	'sitematrix-project' => 'Projektnamn, interprojektlänk och interwiki-länk',
 	'sitematrix-others' => 'Andra Wikimediaprojekt',
+	'sitematrix-other-projects' => 'Andra projekt',
 	'sitematrix-total' => "'''Totalt antal: $1'''",
 	'sitematrix-sitetotal' => 'Total',
 	'sitematrix-private' => 'privat',
 	'sitematrix-fishbowl' => 'redigering begränsad',
+);
+
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'sitematrix-language' => 'Lugha',
 );
 
 /** Silesian (Ślůnski)
@@ -1655,6 +2018,29 @@ $messages['sv'] = array(
 $messages['szl'] = array(
 	'sitematrix-language' => 'Godka',
 	'sitematrix-sitetotal' => 'Do kupy',
+);
+
+/** Tamil (தமிழ்)
+ * @author Shanmugamp7
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'sitematrix' => 'விக்கிபீடியா விக்கிகளின் பட்டியல்',
+	'sitematrix-language' => 'மொழி',
+	'sitematrix-others' => 'விக்கிமீடியாவின் மற்ற திட்டங்கள்',
+	'sitematrix-other-projects' => 'மற்ற திட்டங்கள்',
+	'sitematrix-total' => "'''மொத்த எண்ணிக்கை: $1'''",
+	'sitematrix-sitetotal' => 'மொத்தம்',
+	'sitematrix-private' => 'தனிப்பட்ட',
+	'sitematrix-fishbowl' => 'திருத்துதல் தடுக்கப்பட்டது.',
+);
+
+/** Tulu (ತುಳು)
+ * @author VASANTH S.N.
+ */
+$messages['tcy'] = array(
+	'sitematrix-language' => 'ಭಾಷೆ',
+	'sitematrix-sitetotal' => 'ಒಟ್ಟು',
 );
 
 /** Telugu (తెలుగు)
@@ -1685,7 +2071,7 @@ $messages['tet'] = array(
 	'sitematrix-others' => 'Projetu seluk Wikimedia nian',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -1701,7 +2087,7 @@ $messages['tg-cyrl'] = array(
 	'sitematrix-fishbowl' => 'вироишкунӣ маҳдуд шудааст',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -1718,16 +2104,21 @@ $messages['tg-latn'] = array(
 );
 
 /** Thai (ไทย)
+ * @author Horus
  * @author Passawuth
  */
 $messages['th'] = array(
 	'sitematrix' => 'รายชื่อวิกิของมูลนิธิวิกิมีเดีย',
 	'sitematrix-summary' => 'หน้าพิเศษนี้แสดงรายชื่อวิกิของมูลนิธิวิกิมีเดีย',
+	'sitematrix-desc' => 'แสดง[[Special:SiteMatrix|รายการวิกิทั้งหมดของวิกิมีเดีย]]',
 	'sitematrix-language' => 'ภาษา',
+	'sitematrix-project' => 'ชื่อโครงการ ลิงก์ข้ามโครงการและลิงก์ข้ามวิกิ',
 	'sitematrix-others' => 'โครงการอื่น ๆ ของวิกิมีเดีย',
+	'sitematrix-other-projects' => 'โครงการอื่น',
 	'sitematrix-total' => "'''จำนวนทั้งหมด: $1 เว็บไซต์'''",
 	'sitematrix-sitetotal' => 'รวม',
 	'sitematrix-private' => 'ส่วนตัว',
+	'sitematrix-fishbowl' => 'การแก้ไขถูกจำกัด',
 );
 
 /** Turkmen (Türkmençe)
@@ -1756,15 +2147,24 @@ $messages['tl'] = array(
 	'sitematrix-language' => 'Wika',
 	'sitematrix-project' => "Pangalan ng proyekto, kawing sa kaugnay na proyekto (inter-proyekto) at kawing sa kaugnay na wiki (''interwiki'')",
 	'sitematrix-others' => 'Iba pang mga proyekto ng Wikimedia',
+	'sitematrix-other-projects' => 'Iba pang mga proyekto',
 	'sitematrix-total' => "'''Kabuoang bilang: $1'''",
 	'sitematrix-sitetotal' => 'Kabuoan',
 	'sitematrix-private' => 'pribado (pansarili)',
 	'sitematrix-fishbowl' => 'pinagbabawalan ang pagbago',
 );
 
-/** Tonga (lea faka-Tonga) */
+/** Tongan (lea faka-Tonga) */
 $messages['to'] = array(
 	'sitematrix' => "Ko e hokohoko ʻo e ngaahi ''wiki''",
+);
+
+/** Tok Pisin (Tok Pisin)
+ * @author Iketsi
+ * @author Wantok
+ */
+$messages['tpi'] = array(
+	'sitematrix-language' => 'Tokples',
 );
 
 /** Turkish (Türkçe)
@@ -1794,14 +2194,21 @@ $messages['ts'] = array(
 	'sitematrix-language' => 'Ririmi',
 );
 
-/** ئۇيغۇرچە (ئۇيغۇرچە)
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'sitematrix' => 'Викимедиа проектларының исемлеге',
+);
+
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Alfredie
  */
 $messages['ug-arab'] = array(
 	'sitematrix-language' => 'تىل',
 );
 
-/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+/** Uyghur (Latin script) (Uyghurche‎)
  * @author Jose77
  */
 $messages['ug-latn'] = array(
@@ -1810,6 +2217,7 @@ $messages['ug-latn'] = array(
 
 /** Ukrainian (Українська)
  * @author Ahonc
+ * @author Тест
  */
 $messages['uk'] = array(
 	'sitematrix' => 'Список проектів Вікімедіа',
@@ -1818,6 +2226,7 @@ $messages['uk'] = array(
 	'sitematrix-language' => 'Мова',
 	'sitematrix-project' => 'Назва проекту, міжпроектне посилання та інтервікі-посилання',
 	'sitematrix-others' => 'Інші проекти Фонду «Вікімедіа»',
+	'sitematrix-other-projects' => 'Інші проекти',
 	'sitematrix-total' => "'''Загальна кількість: $1'''",
 	'sitematrix-sitetotal' => 'Усього',
 	'sitematrix-private' => 'приватний',
@@ -1868,6 +2277,7 @@ $messages['vi'] = array(
 	'sitematrix-language' => 'Ngôn ngữ',
 	'sitematrix-project' => 'Tên dự án, tiền tố trong liên kết, và liên kết liên wiki',
 	'sitematrix-others' => 'Các dự án khác của Wikimedia',
+	'sitematrix-other-projects' => 'Các dự án khác',
 	'sitematrix-total' => "'''Tổng cộng: $1'''",
 	'sitematrix-sitetotal' => 'Tổng cộng',
 	'sitematrix-private' => 'riêng tư',
@@ -1913,11 +2323,20 @@ $messages['wuu'] = array(
  * @author פוילישער
  */
 $messages['yi'] = array(
+	'sitematrix' => 'רשימה פֿון וויקימעדיע וויקיס',
 	'sitematrix-language' => 'שפראַך',
 	'sitematrix-others' => 'אַנדערע פראיעקטן פֿון וויקימעדיע',
 );
 
-/** Yue (粵語)
+/** Yoruba (Yorùbá)
+ * @author Demmy
+ */
+$messages['yo'] = array(
+	'sitematrix-summary' => 'Ojúewé pàtàkì yìí ṣàkójọ ggbogbo àwọn wiki Wikimedia.',
+	'sitematrix-language' => 'Èdè',
+);
+
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -1935,14 +2354,17 @@ $messages['yue'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Alexsh
+ * @author Hydra
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
-	'sitematrix' => '维基媒体站点列表',
+	'sitematrix' => '维基媒体网站列表',
 	'sitematrix-summary' => '本特殊页面列示所有维基媒体基金会的所有MediaWiki网站。',
 	'sitematrix-desc' => '显示[[Special:SiteMatrix|维基媒体所有网站的列表]]',
 	'sitematrix-language' => '语言',
 	'sitematrix-project' => '计划名称、跨计划链接以及跨维基链接',
 	'sitematrix-others' => '维基媒体的其它计划',
+	'sitematrix-other-projects' => '其他项目',
 	'sitematrix-total' => "'''合计：$1'''",
 	'sitematrix-sitetotal' => '总数',
 	'sitematrix-private' => '私用',
@@ -1951,14 +2373,17 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Alexsh
+ * @author Mark85296341
+ * @author Waihorace
  */
 $messages['zh-hant'] = array(
 	'sitematrix' => '維基媒體網站清單',
-	'sitematrix-summary' => '本特殊頁面列示所有維基媒體基金會的所有MediaWiki網站。',
+	'sitematrix-summary' => '本特殊頁面列示所有維基媒體基金會的所有 MediaWiki 網站。',
 	'sitematrix-desc' => '顯示[[Special:SiteMatrix|維基媒體所有網站的清單]]',
 	'sitematrix-language' => '語言',
 	'sitematrix-project' => '計劃名稱、跨計劃連結以及跨維基連結',
-	'sitematrix-others' => '維基媒體的其它計劃',
+	'sitematrix-others' => '維基媒體的其他計畫',
+	'sitematrix-other-projects' => '其他計劃',
 	'sitematrix-total' => "'''合計：$1'''",
 	'sitematrix-sitetotal' => '總數',
 	'sitematrix-private' => '私用',

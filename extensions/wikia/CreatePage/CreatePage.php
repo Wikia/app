@@ -27,7 +27,7 @@ $wgExtensionMessagesFiles['CreatePage'] = dirname( __FILE__ ) . '/CreatePage.i18
 /**
  * Aliases
  */
-$wgExtensionAliasesFiles['CreatePage'] = __DIR__ . '/CreatePage.aliases.php';
+$wgExtensionMessagesFiles['CreatePageAliases'] = __DIR__ . '/CreatePage.aliases.php';
 
 /**
  * Special page
@@ -79,7 +79,7 @@ function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, &$user, $r
 
 // and now use "redirected" title in the skin (BugId:7282)
 function wfCreatePageOnAfterInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
-	$user->getSkin()->setTitle($title);
+	$user->getSkin()->setRelevantTitle($title);
 	return true;
 }
 
@@ -251,7 +251,7 @@ function wfCreatePageAjaxCheckTitle() {
 		}
 	}
 
-	$json = Wikia::json_encode( $result );
+	$json = json_encode( $result );
 	$response = new AjaxResponse( $json );
 	$response->setCacheDuration( 3600 );
 

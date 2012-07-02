@@ -172,7 +172,7 @@ class DataCenterViewSettingsField extends DataCenterView {
 						)
 					)
 				),
-				'&nbsp;'
+				'&#160;'
 			)
 		);
 	}
@@ -274,7 +274,7 @@ class DataCenterViewSettingsField extends DataCenterView {
 						)
 					)
 				),
-				'&nbsp;'
+				'&#160;'
 			)
 		);
 	}

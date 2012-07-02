@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension ContactPage.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @license GNU General Public Licence 2.0 or later
@@ -734,7 +735,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'contact' => 'Kontaktside',
 	'contactpage' => 'Kontaktside',
 	'contactpage-desc' => '[[Special:Contact|Kontaktskjema for besøkende]]',

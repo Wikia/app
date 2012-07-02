@@ -5,7 +5,9 @@ if ( ! defined( 'MEDIAWIKI' ) )
 /**#@+
  * Prevents Tor exit nodes from editing a wiki.
  * Requires
- * @addtogroup Extensions
+ *
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:TorBlock Documentation
  *
@@ -15,13 +17,12 @@ if ( ! defined( 'MEDIAWIKI' ) )
  */
 
 $dir = dirname(__FILE__);
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits[version_compare($wgVersion, '1.17alpha', '>=') ? 'antispam' : 'other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'TorBlock',
 	'author'         => 'Andrew Garrett',
-	'description'    => 'Prevents Tor exit nodes from editing a wiki',
 	'descriptionmsg' => 'torblock-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:TorBlock',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:TorBlock',
 );
 
 $wgExtensionMessagesFiles['TorBlock'] =  "$dir/TorBlock.i18n.php";

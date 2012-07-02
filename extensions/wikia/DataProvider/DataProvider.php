@@ -553,9 +553,6 @@ class DataProvider {
 		$results = array();
 
 		if (count($aResult['query']['wkevents']) > 0) {
-			#---
-			#$wgMessageCache->loadFromDB();
-			#---
 			foreach ($aResult['query']['wkevents'] as $eventType => $val)
 			{
 				#--- title

@@ -246,14 +246,23 @@ class ApiResult extends ApiBase {
 
 	/**
 	 * Add value to the output data at the given path.
-	 * Path is an indexed array, each element specifying the branch at which to add the new value
-	 * Setting $path to array('a','b','c') is equivalent to data['a']['b']['c'] = $value
-	 * If $name is empty, the $value is added as a next list element data[] = $value
+	 * Path can be an indexed array, each element specifying the branch at which to add the new
+	 * value. Setting $path to array('a','b','c') is equivalent to data['a']['b']['c'] = $value.
+	 * If $path is null, the value will be inserted at the data root.
+	 * If $name is empty, the $value is added as a next list element data[] = $value.
+	 *
+	 * @param $path array|string|null
+	 * @param $name string
+	 * @param $value mixed
+	 * @param $overwrite bool
+	 *
 	 * @return bool True if $value fits in the result, false if not
 	 */
 	public function addValue( $path, $name, $value, $overwrite = false ) {
 		global $wgAPIMaxResultSize;
+
 		$data = &$this->mData;
+
 		if ( $this->mCheckingSize ) {
 			$newsize = $this->mSize + self::size( $value );
 			if ( $newsize > $wgAPIMaxResultSize ) {
@@ -330,6 +339,8 @@ class ApiResult extends ApiBase {
 
 	/**
 	 * Callback function for cleanUpUTF8()
+	 *
+	 * @param $s string
 	 */
 	private static function cleanUp_helper( &$s ) {
 		if ( !is_string( $s ) ) {
@@ -339,11 +350,31 @@ class ApiResult extends ApiBase {
 		$s = $wgContLang->normalize( $s );
 	}
 
+	/**
+	 * Converts a Status object to an array suitable for addValue
+	 * @param Status $status
+	 * @param string $errorType
+	 * @return array
+	 */
+	public function convertStatusToArray( $status, $errorType = 'error' ) {
+		if ( $status->isGood() ) {
+			return array();
+		}
+
+		$result = array();
+		foreach ( $status->getErrorsByType( $errorType ) as $error ) {
+			$this->setIndexedTagName( $error['params'], 'param' );
+			$result[] = $error;
+		}
+		$this->setIndexedTagName( $result, $errorType );
+		return $result;
+	}
+
 	public function execute() {
 		ApiBase::dieDebug( __METHOD__, 'execute() is not supported on Result object' );
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiResult.php 78829 2010-12-22 20:52:06Z reedy $';
+		return __CLASS__ . ': $Id$';
 	}
 }

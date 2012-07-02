@@ -1,14 +1,14 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
     'Scribeevents' => array( 'Scribeevents' ),
 );
 /**
  * German
  */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
     'Scribeevents' => array( 'LetzteEreignisse', 'Scribeevents' ),
 );

@@ -27,7 +27,7 @@ class SMWDeclare {
 	public static function render( Parser &$parser, PPFrame $frame, array $args ) {
 		if ( $frame->isTemplate() ) {
 			foreach ( $args as $arg )
-				if ( trim( $arg ) != '' ) {
+				if ( trim( $arg ) !== '' ) {
 					$expanded = trim( $frame->expand( $arg ) );
 					$parts = explode( '=', $expanded, 2 );
 
@@ -48,11 +48,11 @@ class SMWDeclare {
 
 						if ( $type == '_wpg' ) {
 							$matches = array();
-							preg_match_all( '/\[\[([^\[\]]*)\]\]/', $valuestring, $matches );
+							preg_match_all( '/\[\[([^\[\]]*)\]\]/u', $valuestring, $matches );
 							$objects = $matches[1];
 
 							if ( count( $objects ) == 0 ) {
-								if ( trim( $valuestring ) != '' ) {
+								if ( trim( $valuestring ) !== '' ) {
 									SMWParseData::addProperty( $propertystring, $valuestring, false, $parser, true );
 								}
 							} else {
@@ -60,13 +60,11 @@ class SMWDeclare {
 									SMWParseData::addProperty( $propertystring, $object, false, $parser, true );
 								}
 							}
-						} else {
-							if ( trim( $valuestring ) != '' ) {
+						} elseif ( trim( $valuestring ) !== '' ) {
 								SMWParseData::addProperty( $propertystring, $valuestring, false, $parser, true );
-							}
 						}
 
-						$value = SMWDataValueFactory::newPropertyObjectValue( $property, $valuestring );
+						// $value = SMWDataValueFactory::newPropertyObjectValue( $property->getDataItem(), $valuestring );
 						// if (!$value->isValid()) continue;
 					}
 				}
@@ -74,9 +72,8 @@ class SMWDeclare {
 			// @todo Save as metadata
 		}
 
-		// Starting from MW 1.16, there is a more suited method available: Title::isSpecialPage
 		global $wgTitle;
-		if ( $wgTitle->getNamespace() == NS_SPECIAL ) {
+		if ( !is_null( $wgTitle ) && $wgTitle->isSpecialPage() ) {
 			global $wgOut;
 			SMWOutputs::commitToOutputPage( $wgOut );
 		}

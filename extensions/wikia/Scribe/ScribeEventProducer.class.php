@@ -4,7 +4,7 @@ class ScribeEventProducer {
 	private $app = null;
 	private $mParams, $mKey, $mEventType;
 
-	private $mediaNS = array(NS_LEGACY_VIDEO, NS_IMAGE, NS_FILE);
+	private $mediaNS = array(NS_IMAGE, NS_FILE);
 
 	const 
 		EDIT_CATEGORY 		    = 'log_edit',
@@ -41,7 +41,7 @@ class ScribeEventProducer {
 		
 		$this->setCityId( $this->app->wg->CityId );
 		$this->setServerName( $this->app->wg->Server );
-		$this->setIp( wfGetIp() );
+		$this->setIp( $this->app->wg->Request->getIP() );
 		$this->setHostname( wfHostname() );
 		$this->setBeaconId ( wfGetBeaconId() );
 		$this->setArchive( $archive );	
@@ -49,11 +49,11 @@ class ScribeEventProducer {
 		$this->setCategory();
 	}
 	
-	public function buildEditPackage( $oArticle, $oUser, $oRevision = null, $revision_id = null ) {
+	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $revision_id = null ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 
-		if ( !is_object( $oArticle ) ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid article object" );
+		if ( !is_object( $oPage ) ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return false;
 		}
@@ -73,7 +73,7 @@ class ScribeEventProducer {
 		}
 		
 		$revision_id = $page_id = $page_namespace = 0;
-		$oTitle = $oArticle->getTitle();
+		$oTitle = $oPage->getTitle();
 		
 		if ( $oRevision instanceof Revision ) {
 			if ( empty( $revision_id ) ) {
@@ -84,14 +84,14 @@ class ScribeEventProducer {
 			$rev_text = $oRevision->getText();
 			$rev_size = $oRevision->getSize();
 		} else {
-			$page_id = $oArticle->getID();
+			$page_id = $oPage->getId();
 			if ( empty( $revision_id ) ) {
-				$revision_id = $oTitle->getLatestRevID(GAID_FOR_UPDATE);
+				$revision_id = $oTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
 			}
 			if ( empty( $page_id ) ) {
-				$page_id = $oTitle->getArticleID( GAID_FOR_UPDATE );
+				$page_id = $oTitle->getArticleID( Title::GAID_FOR_UPDATE );
 			}
-			$rev_timestamp = $oArticle->getTimestamp();
+			$rev_timestamp = $oPage->getTimestamp();
 			$rev_text = $oTitle->getText();
 			$rev_size = strlen( $rev_text );
 		}
@@ -107,7 +107,7 @@ class ScribeEventProducer {
 		$this->setRevisionTimestamp( wfTimestamp( TS_DB, $rev_timestamp ) );
 		$this->setRevisionSize( $rev_size );
 		$this->setMediaType( $oTitle );
-		$this->setMediaLinks( $oArticle );
+		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
 
 		$t = microtime(true);
@@ -120,11 +120,11 @@ class ScribeEventProducer {
 		return true;
 	}
 	
-	public function buildRemovePackage ( $oArticle, $oUser, $page_id ) {
+	public function buildRemovePackage ( $oPage, $oUser, $page_id ) {
 		$this->app->wf->ProfileIn( __METHOD__ );
 	
-		if ( !is_object( $oArticle ) ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid article object" );
+		if ( !is_object( $oPage ) ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return false;
 		}
@@ -135,15 +135,15 @@ class ScribeEventProducer {
 			return false;
 		}
 			
-		$oTitle = $oArticle->getTitle();
+		$oTitle = $oPage->getTitle();
                                     
 		$table = 'recentchanges';
 		$what = array( 'rc_logid' );
 		$cond = array(
-			'rc_title'			=> $oTitle->getDBkey(),
+			'rc_title'		=> $oTitle->getDBkey(),
 			'rc_namespace'	=> $oTitle->getNamespace(),
 			'rc_log_action'	=> 'delete',
-			'rc_user' 			=> $oUser->getID()
+			'rc_user' 		=> $oUser->getID()
 		);
 		$options = array( 'ORDER BY' => 'rc_id DESC' );
 
@@ -160,12 +160,12 @@ class ScribeEventProducer {
 			$this->setPageId( $page_id ) ;
 			$this->setPageNamespace( $oTitle->getNamespace() );
 			$this->setPageTitle( $oTitle->getDBkey() );
-			$this->setRevisionId( $oArticle->getLatest() );
+			$this->setRevisionId( $oPage->getLatest() );
 			$this->setUserId( $oUser->getId() );
 			$this->setUserIsBot( $oUser->isAllowed( 'bot' ) );
 			$this->setIsContent( $oTitle->isContentPage() );
 			$this->setIsRedirect( $oTitle->isRedirect() );
-			$this->setRevisionTimestamp( wfTimestamp( TS_DB, $oArticle->getTimestamp() ) );
+			$this->setRevisionTimestamp( wfTimestamp( TS_DB, $oPage->getTimestamp() ) );
 			$this->setLogId( $logid );
 		}	
 
@@ -182,14 +182,14 @@ class ScribeEventProducer {
 			return true;
 		}
 
-		$oArticle = new Article( $oTitle );
-		if ( !$oArticle instanceof Article ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid article object" );
+		$oPage = WikiPage::factory( $oTitle );
+		if ( !$oPage instanceof Article ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return true;
 		}
 		
-		$username = $oArticle->getUserText();
+		$username = $oPage->getUserText();
 		if ( empty( $username ) ) {
 			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid username" );
 			$this->app->wf->ProfileOut( __METHOD__ );
@@ -205,7 +205,7 @@ class ScribeEventProducer {
 		
 		$this->app->wf->ProfileOut( __METHOD__ );
 		
-		return $this->buildEditPackage( $oArticle, $oUser );
+		return $this->buildEditPackage( $oPage, $oUser );
 	}
 	
 	public function buildMovePackage( $oTitle, $oUser, $page_id = null, $redirect_id = null ) {
@@ -236,16 +236,16 @@ class ScribeEventProducer {
 			$page_id = $oTitle->getArticleId();
 		}		
 
-		$oArticle = F::build('Article', array( $page_id ), 'newFromId');		
-		if ( !$oArticle instanceof Article ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid article object" );
+		$oPage = WikiPage::newFromID( $page_id );
+		if ( !$oPage instanceof WikiPage ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
 			$this->app->wf->ProfileOut( __METHOD__ );
 			return true;
 		}
 
 		$this->app->wf->ProfileOut( __METHOD__ );
 		
-		return $this->buildEditPackage( $oArticle, $oUser, $oRevision );
+		return $this->buildEditPackage( $oPage, $oUser, $oRevision );
 	}
 						
 	public function setCityId ( $city_id ) { 
@@ -318,15 +318,6 @@ class ScribeEventProducer {
 		$result = 0;
 		$page_namespace = $oTitle->getNamespace();
 		if ( in_array( $page_namespace, $this->mediaNS ) ) {
-
-			if ( $page_namespace == NS_LEGACY_VIDEO ) {
-				if ( !empty($this->app->wg->EnableVideoToolExt) && class_exists( 'VideoPage' ) ) {
-					$videoName = F::build('VideoPage', array( $oTitle ), 'getNameFromTitle');
-					if ( $videoName ) {
-						$oTitle = F::build('Title', array( $page_namespace, $videoName ), 'makeTitle');
-					}
-				}
-			}
 			
 			$mediaType = MEDIATYPE_UNKNOWN;
 			$oLocalFile = RepoGroup::singleton()->getLocalRepo()->newFile( $oTitle );
@@ -399,15 +390,15 @@ class ScribeEventProducer {
 		$this->app->wf->ProfileOut( __METHOD__ );
 	}
 	
-	public function setMediaLinks( $oArticle ) {
+	public function setMediaLinks( $oPage ) {
 		wfProfileIn(__METHOD__);
 		
 		$links = array( 'image' => 0, 'video' => 0 );
-		if ( isset( $oArticle->mPreparedEdit ) && isset( $oArticle->mPreparedEdit->output ) ) {
-			$images = $oArticle->mPreparedEdit->output->getImages();
+		if ( isset( $oPage->mPreparedEdit ) && isset( $oPage->mPreparedEdit->output ) ) {
+			$images = $oPage->mPreparedEdit->output->getImages();
 			if ( !empty($images) ) {
 				foreach ($images as $iname => $dummy) {
-					if (WikiaFileHelper::isVideoStoredAsFile()) {
+					if ( WikiaFileHelper::isVideoStoredAsFile() ) {
 						$file = wfFindFile($iname);
 						if ($file instanceof LocalFile) {
 							$mediaType = $file->getMediaType();

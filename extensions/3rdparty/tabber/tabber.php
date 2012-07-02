@@ -22,11 +22,21 @@ function renderTabber( $paramstring, $params, $parser ){
 
 	$path = $wgExtensionsPath . '/3rdparty/tabber/';
 
-	$htmlHeader = '<script type="text/javascript" src="'.$path.'tabber.js?' . $wgStyleVersion . '"></script>'
-		. '<link rel="stylesheet" href="'.$path.'tabber.css?' . $wgStyleVersion . '" TYPE="text/css" MEDIA="screen">'
-		. '<div class="tabber">';
+	/*
+	 * Wikia Change Start @author: marzjan
+	 */
+	$snippets = F::build('JSSnippets')->addToStack(
+		array('/extensions/3rdparty/tabber/tabber.js'),
+		array('$.loadJQueryUI')
+	);
 
+	$htmlHeader = '<link rel="stylesheet" href="'.$path.'tabber.css?' . $wgStyleVersion . '" TYPE="text/css" MEDIA="screen">'
+		. $snippets
+		. '<div class="tabber">';
 	$htmlFooter = '</div>';
+	/*
+	 * Wikia Change End
+	 */
 
 	$htmlTabs = "";
 

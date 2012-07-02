@@ -525,7 +525,7 @@ function LS_realPreview(s) {
 	YAHOO.util.Dom.get('LS_imagePreview').innerHTML = s;
 }
 
-addOnloadHook(function() {
+$(function() {
 	// So far this extension works only in Firefox and Internet Explorer
 	if(YAHOO.env.ua.ie > 0 || YAHOO.env.ua.gecko > 0 || YAHOO.env.ua.webkit > 0) {
 		var oDS = new YAHOO.widget.DS_XHR(wgServer + wgScriptPath, ["\n"]);

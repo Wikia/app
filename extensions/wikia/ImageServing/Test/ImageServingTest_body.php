@@ -5,7 +5,6 @@ class ImageServingTest extends SpecialPage {
     private $mpa = null;
 
 	function __construct() {
-		wfLoadExtensionMessages( 'ImageServingTest' );
 		parent::__construct( 'ImageServingTest', 'imageservingtest' );
 	}
 

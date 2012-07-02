@@ -1,0 +1,52 @@
+/* CSS for SiteMetrics extension */
+.sm-navigation {
+	float: right;
+	background-color: #F2F4F7;
+	border: 1px solid #dcdcdc;
+	width: 180px;
+	padding: 5px 10px;
+	margin: 15px 0px 0px 10px;
+}
+
+.sm-navigation a {
+	display: block;
+	margin: 0px 0px 0px 0px;
+}
+
+.sm-navigation h2 {
+	color: #333;
+	font-size: 16px;
+	letter-spacing: -1px;
+	margin: 0px 0px 5px 0px !important;
+}
+
+.sm-content {
+	width: 75%;
+	margin: 5px 0px 0px 0px;
+}
+
+.sm-content h3 {
+	margin-bottom: 10px !important;
+}
+
+.sm-content table {
+	border-collapse: collapse !important;
+	border: 1px solid #dcdcdc;
+	margin: 10px 0px 10px 0px;
+}
+
+.sm-content td {
+	padding: 2px;
+}
+
+.smt-header {
+	font-weight: bold;
+	background-color: #F2F4F7;
+}
+
+.smt-table {
+	width: 400px;
+	padding: 0px;
+	border-spacing: 0px;
+	border: 1px;
+}

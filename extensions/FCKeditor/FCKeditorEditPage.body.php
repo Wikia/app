@@ -8,6 +8,9 @@ class FCKeditorEditPage extends EditPage {
 	 */
 	public function previewOnOpen() {
 		global $wgRequest, $wgUser;
+		if ( !$wgUser->getOption( 'riched_disable' ) ) {
+			return false;
+		}
 		if( $wgRequest->getVal( 'preview' ) == 'yes' ) {
 			// Explicit override from request
 			return true;
@@ -31,11 +34,7 @@ class FCKeditorEditPage extends EditPage {
 	function getPreviewText() {
 		if( !$this->isCssJsSubpage ) {
 			wfRunHooks( 'EditPageBeforePreviewText', array( &$this, $this->previewOnOpen() ) );
-			if( $this->previewOnOpen() ) {
-				$result = html_entity_decode( parent::getPreviewText() );
-			} else {
-				$result = parent::getPreviewText();
-			}
+			$result = parent::getPreviewText();
 			wfRunHooks( 'EditPagePreviewTextEnd', array( &$this, $this->previewOnOpen() ) );
 		} else {
 			$result = parent::getPreviewText();

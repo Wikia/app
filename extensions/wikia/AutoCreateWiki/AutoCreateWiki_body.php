@@ -147,8 +147,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		global $wgRequest, $wgAuth, $wgUser, $wgOut, $wgContLanguageCode;
 		wfProfileIn( __METHOD__ );
 
-		wfLoadExtensionMessages( "AutoCreateWiki" );
-
 		$this->mTitle        = Title::makeTitle( NS_SPECIAL, "CreateWiki" );
 		$this->mLang         = $wgRequest->getVal( "uselang", $wgUser->getOption( 'language' ) );
 		$this->mAction       = $wgRequest->getVal( "action", false );

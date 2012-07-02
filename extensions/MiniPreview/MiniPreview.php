@@ -4,7 +4,8 @@
  * MiniPreview displays, next to an image, small previews
  * of other images in the same categories or displayed on the same pages
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Magnus Manske
  * @copyright © 2007 Magnus Manske
  * @licence GNU General Public Licence 2.0 or later
@@ -38,8 +39,7 @@ $wgMiniPreviewMaxTotal = 15; # Maximum number of categories and galleries shown
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'MiniPreview',
 	'author' => 'Magnus Manske',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:MiniPreview',
-	'description' => 'MiniPreview displays, next to an image, small previews of other images in the same categories or displayed on the same pages',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:MiniPreview',
 	'descriptionmsg' => 'minipreview-desc',
 );
 
@@ -55,7 +55,7 @@ function efMiniPreviewShow ( &$imagePage, &$output )  {
 	if ( !$wgMiniPreviewEnabled )
 		return ;
 
-	wfLoadExtensionMessages( 'MiniPreview' );
+	
 	# Register CSS
 	$output->addLink(
 		array(
@@ -113,7 +113,7 @@ function efMiniPreviewShow ( &$imagePage, &$output )  {
 		if ( $p->entry[1]->id != 0 ) $image_titles[$p->entry[1]->title] = $p->entry[1]->title ;
 	}
 	$image_data = array();
-	wfMiniPreviewGetImageData ( $image_titles , &$image_data ) ;
+	wfMiniPreviewGetImageData ( $image_titles , $image_data ) ;
 
 	# Output
 	$mainwidth = ( $wgMiniPreviewThumbnailSize + 2 ) * 3 ;
@@ -128,7 +128,7 @@ function efMiniPreviewShow ( &$imagePage, &$output )  {
 	} else {
 		$last_type = $previews[0]->from_category;
 		foreach ( $previews AS $p ) {
-			if ( $last_type != $p->from_category ) $html .= "<div class='MiniPreviewSeparator'>&nbsp;</div>" ; # Visually separate categories from galleries
+			if ( $last_type != $p->from_category ) $html .= "<div class='MiniPreviewSeparator'>&#160;</div>" ; # Visually separate categories from galleries
 			$last_type = $p->from_category;
 			$nsid = $p->from_category ? 14 : $wgMiniPreviewGalleryNamespace ;
 			$ns = MWNamespace::getCanonicalName ( $nsid ) . ':' ;
@@ -147,14 +147,14 @@ function efMiniPreviewShow ( &$imagePage, &$output )  {
 				'style' => "width:{$wgMiniPreviewThumbnailSize}px;height:{$wgMiniPreviewThumbnailSize}px;",
 				'class' => 'MiniPreview_count' ));
 			$html .= wfMsgExt( 'minipreview-files_in_'.$mode , array( 'parsemag' ), $p->image_count );
-			$html .= wfCloseElement ( "div" ) ;
-			$html .= wfCloseElement ( "td" ) ;
-			$html .= wfCloseElement ( "tr" ) ;
-			$html .= wfCloseElement ( "table" ) ;
-			$html .= wfCloseElement ( "div" ) ;
+			$html .= Xml::closeElement( "div" ) ;
+			$html .= Xml::closeElement( "td" ) ;
+			$html .= Xml::closeElement( "tr" ) ;
+			$html .= Xml::closeElement( "table" ) ;
+			$html .= Xml::closeElement( "div" ) ;
 		}
 	}
-	$html .= wfCloseElement ( "div" ) ;
+	$html .= Xml::closeElement( "div" ) ;
 	$output->addHTML( $html );
 
 	return true;
@@ -201,14 +201,14 @@ function wfMiniPreviewGetThumbnail ( $entry , &$image_data ) {
 		$image_url = $image_data[$entry->title]->getTitle()->getLocalURL();
 		$image_name = $image_data[$entry->title]->getTitle()->getText();
 
-		$ret .= wfOpenElement ( 'a' , array ( 'href' => $image_url ));
-		$ret .= wfElement ( 'img' , array ( 'border' => '0', 'style' => $style, 'src' => $thumb_url , 'alt' => $image_name ));
-		$ret .= wfCloseElement ( 'a' );
+		$ret .= Xml::openElement( 'a' , array ( 'href' => $image_url ));
+		$ret .= Xml::element( 'img' , array ( 'border' => '0', 'style' => $style, 'src' => $thumb_url , 'alt' => $image_name ));
+		$ret .= Xml::closeElement ( 'a' );
 	} else { # No such file
 		$ret .= wfMsg ( 'minipreview-no_more_files_here' ) ;
 	}
-	$ret .= wfCloseElement ( "div" ) ;
-	$ret .= wfCloseElement ( "td" ) ;
+	$ret .= Xml::closeElement ( "div" ) ;
+	$ret .= Xml::closeElement ( "td" ) ;
 	return $ret;
 }
 

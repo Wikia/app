@@ -4,10 +4,11 @@ if (!defined('MEDIAWIKI')) die();
  * An extension to show a nice compact changes list and few extra filters for
  * Special:RecentChanges.php
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @author Niklas Laxström
- * @copyright Copyright © 2008, Niklas Laxström
+ * @copyright Copyright © 2008-2012, Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -19,15 +20,16 @@ $wgAutoloadClasses['NCL'] =  $dir . 'CleanChanges_body.php';
 
 /* Hook into code */
 $wgHooks['FetchChangesList'][] = 'NCL::hook';
+$wgHooks['MakeGlobalVariablesScript'][] = 'NCL::addScriptVariables';
 
 /* Extension information */
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Clean Changes',
-	'version' => '2008-10-16',
+	'version' => '2012-01-30',
 	'author' => 'Niklas Laxström',
 	'descriptionmsg' => 'cleanchanges-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:CleanChanges',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:CleanChanges',
 );
 
 $wgCCUserFilter = true;
@@ -48,3 +50,14 @@ function ccSetupFilters() {
 		$wgHooks['SpecialRecentChangesPanel'][] = 'CCFilters::trailerForm';
 	}
 }
+
+$resourcePaths = array(
+	'localBasePath' => dirname( __FILE__ ),
+	'remoteExtPath' => 'CleanChanges'
+);
+
+// Client-side resource modules
+$wgResourceModules['ext.cleanchanges'] = array(
+	'scripts' => 'cleanchanges.js',
+) + $resourcePaths;
+

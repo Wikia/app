@@ -1,14 +1,14 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'PartnerFeed' => array( 'PartnerFeed' )
 );
 /**
  * Polish
  */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'PartnerFeed' => array( 'Subskrybuj', 'PartnerFeed' )
 );

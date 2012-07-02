@@ -46,7 +46,6 @@ function GetUserMenu($userName = '') {
 	}
 
 	if(!empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages) {
-		wfLoadExtensionMessages( 'Follow' );
 		$links['follow'] = array(
 			'text' => wfMsg('wikiafollowedpages-special-title-userbar'),
 			'id' => 'menuMyFollowing',

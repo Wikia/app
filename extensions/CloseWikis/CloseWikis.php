@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Copyright (C) 2008 Victor Vasiliev <vasilvv@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,14 +25,13 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'CloseWikis',
 	'author'         => 'Victor Vasiliev',
-	'description'    => 'Allows to close wiki sites',
 	'descriptionmsg' => 'closewikis-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:CloseWikis',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:CloseWikis',
 );
 
 $dir = dirname( __FILE__ );
 $wgExtensionMessagesFiles['CloseWikis'] =  "$dir/CloseWikis.i18n.php";
-$wgExtensionAliasesFiles['CloseWikis'] = "$dir/CloseWikis.alias.php";
+$wgExtensionMessagesFiles['CloseWikisAlias'] = "$dir/CloseWikis.alias.php";
 $wgHooks['getUserPermissionsErrors'][] = "CloseWikisHooks::userCan";
 
 $wgGroupPermissions['steward']['closewikis'] = true;
@@ -108,8 +107,9 @@ class CloseWikis {
 
 	/** Returns list of closed wikis in form of string array. Cached in CloseWikis::$cachedList */
 	static function getList() {
-		if( self::$cachedList )
+		if( self::$cachedList ) {
 			return self::$cachedList;
+		}
 		$list = array();
 		$dbr = self::getMasterDB();	// Used only on writes
 		$result = $dbr->select( 'closedwikis', 'cw_wiki', false, __METHOD__ );
@@ -132,15 +132,19 @@ class CloseWikis {
 		global $wgMemc;
 		$memcKey = "closedwikis:{$wiki}";
 		$cached = $wgMemc->get( $memcKey );
-		if( is_object( $cached ) )
+		if( is_object( $cached ) ) {
 			return $cached;
+		}
 		$dbr = self::getSlaveDB();
 		$result = new CloseWikisRow( $dbr->selectRow( 'closedwikis', '*', array( 'cw_wiki' => $wiki ), __METHOD__ ) );
 		$wgMemc->set( $memcKey, $result );
 		return $result;
 	}
 
-	/** Closes a wiki */
+	/** Closes a wiki
+	 *
+	 * @param $by User
+	 */
 	static function close( $wiki, $dispreason, $by ) {
 		global $wgMemc;
 		$dbw = CloseWikis::getMasterDB();
@@ -182,17 +186,28 @@ class CloseWikis {
 }
 
 class CloseWikisHooks {
+	/**
+	 * @static
+	 * @param $title
+	 * @param $user User
+	 * @param $action
+	 * @param $result
+	 * @return bool
+	 */
 	static function userCan( &$title, &$user, $action, &$result ) {
 		static $closed = null;
 		global $wgLang;
-		if( $action == 'read' )
+		if( $action == 'read' ) {
 			return true;
-		if( is_null( $closed ) )
+		}
+
+		if( is_null( $closed ) ) {
 			$closed = CloseWikis::getClosedRow( wfWikiID() );
+		}
+
 		if( $closed->isClosed() && !$user->isAllowed( 'editclosedwikis' ) ) {
-			wfLoadExtensionMessages( 'CloseWikis' );
 			$reason = $closed->getReason();
-			$ts = $closed->getTimestamp();	
+			$ts = $closed->getTimestamp();
 			$by = $closed->getBy();
 			$result[] =	array( 'closewikis-closed', $reason, $by,
 				$wgLang->timeanddate( $ts ), $wgLang->time( $ts ), $wgLang->date( $ts ) );

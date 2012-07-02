@@ -24,22 +24,20 @@
 
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['FramedVideo'] = $dir . 'FramedVideo.i18n.php';
-$wgExtensionFunctions[] = 'wfFramedVideo';
+$wgHooks['ParserFirstCallInit'][] = 'wfFramedVideoSetHook';
 
 $wgExtensionCredits['parserhook'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'FramedVideo',
-	'description'    => 'Allows embedding videos from various websites',
 	'descriptionmsg' => 'framedvideo-desc',
 	'author'         => '[http://filop.pl/wiki/U%C5%BCytkownik:Ruiz Ruiz]',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:FramedVideo',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:FramedVideo',
 	'version'        => '1.2.1',
 );
 
-function wfFramedVideo() {
-	global $wgParser;
-
-	$wgParser->setHook( 'video', 'renderFramedVideo' );
+function wfFramedVideoSetHook( $parser ) {
+	$parser->setHook( 'video', 'renderFramedVideo' );
+	return true;
 }
 
 function renderFramedVideo( $input, $args, $parser ) {
@@ -49,7 +47,7 @@ function renderFramedVideo( $input, $args, $parser ) {
 	global $wgFramedVideoPosition, $wgFramedVideoForcePosition;
 	if ( !isset( $wgFramedVideoConfigLoaded ) ) {
 	if ( !isset( $wgFramedVideoLightMode ) || $wgFramedVideoLightMode == false ) {
-		wfLoadExtensionMessages( 'FramedVideo' );
+		
 		$wgFramedVideoDefaultWidth = intval( wfMsg( 'framedvideo_default_width' ) );
 		$wgFramedVideoForceDefaultSize = false;
 		if ( ( wfMsg( 'framedvideo-forcesize' ) == "true" ) ) {
@@ -65,12 +63,12 @@ function renderFramedVideo( $input, $args, $parser ) {
 		$wgFramedVideoForcePosition = trueOrFalse( wfMsg( 'framedvideo_force_position' ) );
 		$wgFramedVideoConfigLoaded = true;
 	} else {
-		wfLoadExtensionMessages( 'FramedVideo' );
+		
 		if ( !isset( $wgFramedVideoDefaultWidth ) || !isset( $wgFramedVideoForceDefaultSize ) || !isset( $wgFramedVideoMaxWidth )
 		|| !isset( $wgFramedVideoMaxHeight ) || !isset( $wgFramedVideoAllowFullScreen ) || !isset( $wgFramedVideoForceAllowFullScreen )
 		|| !isset( $wgFramedVideoFrames ) || !isset( $wgFramedVideoForceFrames ) || !isset ( $wgFramedVideoPosition )
 		|| !isset( $wgFramedVideoForcePosition ) ) {
-			wfLoadExtensionMessages( 'FramedVideo' );
+			
 		}
 		if ( !isset( $wgFramedVideoDefaultWidth ) ) { $wgFramedVideoDefaultWidth = intval( wfMsg( 'framedvideo_default_width' ) ); }
 		if ( !isset( $wgFramedVideoForceDefaultSize ) ) {
@@ -598,7 +596,7 @@ function renderFramedVideo( $input, $args, $parser ) {
 		global $wgFramedVideoErrorFullSizeNotAllowed, $wgFramedVideoHeightAndWidthRequired, $wgFramedVideoErrorNoIntegerWidth;
 		global $wgFramedVideoErrorSeeHelp;
 		$output .= '<div class="thumbcaption" align="left">';
-		wfLoadExtensionMessages( 'FramedVideo' );
+		
 		$errors = array_sum( $errorid );
 		if ( $errors == 1 ) {
 			if ( !isset( $wgFramedVideoError ) ) { $wgFramedVideoError = wfMsg( 'framedvideo_error' ); }

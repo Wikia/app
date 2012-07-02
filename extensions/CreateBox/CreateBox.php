@@ -39,7 +39,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'CreateBox',
 	'author' => 'Ross McClure',
 	'version' => '1.6',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:CreateBox',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:CreateBox',
 	'descriptionmsg' => 'createbox-desc',
 );
 
@@ -52,7 +52,6 @@ function wfCreateBox( $parser ) {
 }
 
 function actionCreate( $action, $article ) {
-	wfLoadExtensionMessages( 'CreateBox' );
 	if( $action != 'create' ) {
 		return true;
 	}
@@ -95,12 +94,11 @@ function acGetOption( $input, $name, $value = null ) {
 }
 
 function acMakeBox( $input, $argv, $parser ) {
-	wfLoadExtensionMessages( 'CreateBox' );
 	global $wgRequest, $wgScript;
 	if( $wgRequest->getVal( 'action' ) == 'create' ) {
-		$prefix = $wgRequest->getVal( 'prefix' );
-		$preload = $wgRequest->getVal( 'preload' );
-		$editintro = $wgRequest->getVal( 'editintro' );
+		$prefix = acGetOption( $input, 'prefix' );
+		$preload = acGetOption( $input, 'preload' );
+		$editintro = acGetOption( $input, 'editintro' ); 
 		$text = $parser->getTitle()->getPrefixedText();
 		if( $prefix && strpos( $text, $prefix ) === 0 ) {
 			$text = substr( $text, strlen( $prefix ) );
@@ -132,10 +130,10 @@ ENDFORM;
 
 function acRedirect( $title, $action ) {
 	global $wgRequest, $wgOut;
-	$query = "action={$action}&prefix=" . $wgRequest->getVal( 'prefix' ) .
-		'&preload=' . $wgRequest->getVal( 'preload' ) .
-		'&editintro=' . $wgRequest->getVal( 'editintro' ) .
-		'&section=' . $wgRequest->getVal( 'section' );
+	$query = "action={$action}"
+		. '&preload=' . $wgRequest->getVal( 'preload' )
+		. '&editintro=' . $wgRequest->getVal( 'editintro' )
+		. '&section=' . $wgRequest->getVal( 'section' );
 	$wgOut->setSquidMaxage( 1200 );
 	$wgOut->redirect( $title->getFullURL( $query ), '301' );
 }

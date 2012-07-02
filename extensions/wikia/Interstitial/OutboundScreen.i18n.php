@@ -105,7 +105,7 @@ Voudriez-vous aller à la [[{{MediaWiki:Mainpage}}|page d'accueil]] ou peut-êtr
 	'outbound-screen-you-are-leaving' => 'Vous quittez maintenant Wikia.',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -117,7 +117,7 @@ Desexa ir á [[{{MediaWiki:Mainpage}}|páxina principal]] ou quizais a unha [[Sp
 	'outbound-screen-you-are-leaving' => 'Nestes intres está a saír de Wikia.',
 );
 
-/** Upper Sorbian (hornjoserbsce)
+/** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -266,14 +266,13 @@ Anatz a la [[{{MediaWiki:Mainpage}}|pagina d'acuèlh]] o benlèu a [[Special:Ran
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Cloudissimo
- * @author Sovq
  */
 $messages['pl'] = array(
-	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Utwórz nowe konto]] lub [[Special:UserLogin|zaloguj się na swoje istniejące konto]], żeby następnym razem ominąć tę stronę.',
-	'outbound-screen-already-logged-in-no-link' => 'Nie wskazano strony docelowej.
+	'outbound-screen-login-text' => '[[Special:UserLogin/signup|Utwórz nowe konto]] lub [[Special:UserLogin|zaloguj się na swoje istniejące konto]], żeby następnym razem pominąć tę stronę.',
+	'outbound-screen-already-logged-in-no-link' => 'Nie wskazano celu.
 Nie ma tu nic do oglądania!
 
-Może chcesz zobaczyć [[{{MediaWiki:Mainpage}}|Stronę główną]] lub [[Special:Random|losową stronę]]?',
+Zechcesz może zobaczyć [[{{MediaWiki:Mainpage}}|Stronę główną]] lub [[Special:Random|losową stronę]]?',
 	'outbound-screen-you-are-leaving' => 'Opuszczasz Wikię.',
 );
 

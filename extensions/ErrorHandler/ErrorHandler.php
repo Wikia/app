@@ -12,8 +12,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'ErrorHandler',
 	'author'         => 'Alexandre Emsenhuber',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:ErrorHandler',
-	'description'    => 'Error handler for MediaWiki',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:ErrorHandler',
 	'descriptionmsg' => 'errorhandler-desc',
 );
 
@@ -137,20 +136,20 @@ function efErrorHandler( $errType, $errMsg, $errFile, $errLine, $errVars ){
 				foreach( $call['args'] as $arg ){
 					if( is_object( $arg ) ){
 						$args[] = 'Object(' . get_class( $arg ) . ')';
-					} else if ( is_null( $arg ) ){
+					} elseif ( is_null( $arg ) ){
 						$args[] = 'null';
-					} else if ( is_array( $arg ) ){
+					} elseif ( is_array( $arg ) ){
 						$args[] = 'array()';
-					} else if ( is_string( $arg ) ){
+					} elseif ( is_string( $arg ) ){
 						if( strlen( $arg ) > $wgErrorHandlerMaxStringSize ){
 							$str = substr( $arg, 0, $wgErrorHandlerMaxStringSize ) . '...';
 						} else {
 							$str = $arg;
 						}
 						$args[] = '\'' . str_replace( "\n", '', $str ) . '\'';
-					} else if ( is_numeric( $arg ) ){
+					} elseif ( is_numeric( $arg ) ){
 						$args[] = (string)$arg;
-					} else if ( is_bool( $arg ) ){
+					} elseif ( is_bool( $arg ) ){
 						$args[] = 'bool(' . ( $arg ? 'true' : 'false' ) . ')';
 					} else {
 						$args[] = gettype( $arg ) . '(' . $arg . ')';
@@ -207,16 +206,8 @@ function efErrorHandler( $errType, $errMsg, $errFile, $errLine, $errVars ){
  */
 function efErrorHandlerGetMessage(){
 	static $messages = false;
-	static $loaded = false;
 	$args = func_get_args();
-	if( !$loaded ){
-		global $wgMessageCache;
-		if( function_exists( 'wfMsgExt' ) && is_object( $wgMessageCache ) ){
-			$loaded = true;
-			wfLoadExtensionMessages( 'ErrorHandler' );
-		}
-	}
-	if( $loaded ){
+	if( function_exists( 'wfMsgExt' ) ){
 		global $wgTitle;
 		$msg = array_shift( $args );
 		$opts = array( 'replaceafter' );

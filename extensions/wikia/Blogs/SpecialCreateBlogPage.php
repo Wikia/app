@@ -36,6 +36,9 @@ class CreateBlogPage extends SpecialCustomEditPage {
 		}
 
 		parent::execute($par);
+		
+		/* bugId::34933 Actions::getActionName() assumes every Special page is a view.  Forcing a wgAction override for this page */
+		RequestContext::getMain()->getOutput()->addJsConfigVars('wgAction', 'edit');
 	}
 
 	protected function afterArticleInitialize($mode, $title, $article) {
@@ -121,7 +124,7 @@ class CreateBlogPage extends SpecialCustomEditPage {
 	}
 
 	protected function afterSave( $status ) {
-		switch( $status ) {
+		switch( $status->value ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 
@@ -153,14 +156,14 @@ class CreateBlogPage extends SpecialCustomEditPage {
 				break;
 
 			default:
-				Wikia::log( __METHOD__, "editpage", $status );
+				Wikia::log( __METHOD__, "editpage", $status->value );
 				if( $status == EditPage::AS_READ_ONLY_PAGE_LOGGED ) {
 					$sMsg = wfMsg('create-blog-cant-edit');
 				}
 				else {
 					$sMsg = wfMsg('create-blog-spam');
 				}
-
+				//FIXME: Member has protected access
 				$this->mFormErrors[] = $sMsg . "($status)";
 				break;
 		}

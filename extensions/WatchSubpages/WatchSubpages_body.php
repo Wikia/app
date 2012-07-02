@@ -27,7 +27,7 @@ class WatchSubpages extends SpecialPage {
 			return;
 		}
 
-		wfLoadExtensionMessages( 'WatchSubpages' );
+		
 
 		$namespace = $wgRequest->getInt( 'namespace' );
 		$guide = $wgRequest->getVal( 'guide' );
@@ -120,15 +120,24 @@ class WatchSubpages extends SpecialPage {
 		$dbw = wfGetDB( DB_MASTER );
 		$rows = array();
 		foreach( $titles as $title ) {
-			if ( !$title instanceof Title ) {
+			if( !$title instanceof Title )
 				$title = Title::newFromText( $title );
+			if( $title instanceof Title ) {
+				$rows[] = array(
+					'wl_user' => $user->getId(),
+					'wl_namespace' => ( $title->getNamespace() & ~1 ),
+					'wl_title' => $title->getDBkey(),
+					'wl_notificationtimestamp' => null,
+				);
+				$rows[] = array(
+					'wl_user' => $user->getId(),
+					'wl_namespace' => ( $title->getNamespace() | 1 ),
+					'wl_title' => $title->getDBkey(),
+					'wl_notificationtimestamp' => null,
+				);
 			}
-			if ( $title instanceof Title ) {
-				$wl = WatchedItem::fromUserTitle( $user, $title );
-				$wl->addWatch();
-				unset($wl);		
-			}			
 		}
+		$dbw->insert( 'watchlist', $rows, __METHOD__, 'IGNORE' );
 	}
 
 	/**
@@ -182,7 +191,7 @@ class WatchSubpages extends SpecialPage {
 		# Input boxes at the top
 		$form = Xml::openElement( 'div', array( 'class' => 'namespaceoptions' ) );
 		$form .= Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) );
-		$form .= Xml::hidden( 'title', $self->getPrefixedText() );
+		$form .= Html::Hidden( 'title', $self->getPrefixedText() );
 		$form .= Xml::openElement( 'table', array( 'id' => 'nsselect', 'class' => 'allpages' ) );
 		$form .= '<tr>
 				<td>' .
@@ -208,7 +217,7 @@ class WatchSubpages extends SpecialPage {
 		if( $guide !== '' ) {
 			$form .= Xml::openElement( 'form', array( 'method' => 'post',
 				'action' => $self->getLocalUrl( 'guide=' . $guide ) ) );
-			$form .= Xml::hidden( 'token', $user->editToken( 'watchsubpages' ) );
+			$form .= Html::Hidden( 'token', $user->editToken( 'watchsubpages' ) );
 			$form .= '<fieldset><legend>' . wfMsg( 'watchsubpages-addtitles' ) . '</legend>';
 			$form .= wfMsg( 'watchsubpages-form' );
 			foreach( $this->getPrefixlistInfo( $namespace, $guide . '/' ) as $namespace => $pages ) {
@@ -245,7 +254,7 @@ class WatchSubpages extends SpecialPage {
 			array( 'page_namespace', 'page_title', 'page_id', 'page_is_redirect' ),
 			array(
 				'page_namespace' => $prefixNS,
-				'page_title LIKE \'' . $dbr->escapeLike( $prefixKey ) .'%\'',
+				'page_title ' . $dbr->buildLike( $prefixKey, $dbr->anyString() ),
 			),
 			__METHOD__,
 			array(

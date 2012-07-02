@@ -3,26 +3,21 @@
 * \brief Contains code for the ContributionScores Class (extends SpecialPage).
 */
 
-///Special page class for the Contribution Scores extension
+/// Special page class for the Contribution Scores extension
 /**
  * Special page that generates a list of wiki contributors based
  * on edit diversity (unique pages edited) and edit volume (total
  * number of edits.
  *
- * @addtogroup Extensions
+ * @ingroup Extensions
  * @author Tim Laqua <t.laqua@gmail.com>
  */
-class ContributionScores extends IncludableSpecialPage
-{
+class ContributionScores extends IncludableSpecialPage {
 	public function __construct() {
 		parent::__construct( 'ContributionScores' );
 	}
 
-	function getDescription() {
-		return wfMsg( 'contributionscores' );
-	}
-
-	///Generates a "Contribution Scores" table for a given LIMIT and date range
+	/// Generates a "Contribution Scores" table for a given LIMIT and date range
 	/**
 	 * Function generates Contribution Scores tables in HTML format (not wikiText)
 	 *
@@ -32,23 +27,23 @@ class ContributionScores extends IncludableSpecialPage
 	 * @return HTML Table representing the requested Contribution Scores.
 	 */
 	function genContributionScoreTable( $days, $limit, $title = null, $options = 'none' ) {
-		global $wgContribScoreIgnoreBots, $wgContribScoreIgnoreBlockedUsers, $wgUser;
+		global $wgContribScoreIgnoreBots, $wgContribScoreIgnoreBlockedUsers, $wgContribScoresUseRealName, $wgLang;
 
-		$opts = explode(',', strtolower($options));
-		
+		$opts = explode( ',', strtolower( $options ) );
+
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$userTable = $dbr->tableName('user');
-		$userGroupTable = $dbr->tableName('user_groups');
-		$revTable = $dbr->tableName('revision');
-		$ipBlocksTable = $dbr->tableName('ipblocks');
-		
+		$userTable = $dbr->tableName( 'user' );
+		$userGroupTable = $dbr->tableName( 'user_groups' );
+		$revTable = $dbr->tableName( 'revision' );
+		$ipBlocksTable = $dbr->tableName( 'ipblocks' );
+
 		$sqlWhere = "";
 		$nextPrefix = "WHERE";
-		
+
 		if ( $days > 0 ) {
-			$date = time() - (60*60*24*$days);
-			$dateString = $dbr->timestamp($date);
+			$date = time() - ( 60 * 60 * 24 * $days );
+			$dateString = $dbr->timestamp( $date );
 			$sqlWhere .= " {$nextPrefix} rev_timestamp > '$dateString'";
 			$nextPrefix = "AND";
 		}
@@ -62,158 +57,184 @@ class ContributionScores extends IncludableSpecialPage
 			$sqlWhere .= " {$nextPrefix} rev_user NOT IN (SELECT ug_user FROM {$userGroupTable} WHERE ug_group='bot')";
 			$nextPrefix = "AND";
 		}
-			
-		$sqlMostPages = "SELECT rev_user, 
-						 COUNT(DISTINCT rev_page) AS page_count, 
-						 COUNT(rev_id) AS rev_count 
-						 FROM {$revTable} 
+
+		$sqlMostPages = "SELECT rev_user,
+						 COUNT(DISTINCT rev_page) AS page_count,
+						 COUNT(rev_id) AS rev_count
+						 FROM {$revTable}
 						 {$sqlWhere}
-						 GROUP BY rev_user 
+						 GROUP BY rev_user
 						 ORDER BY page_count DESC
 						 LIMIT {$limit}";
 
-		$sqlMostRevs  = "SELECT rev_user, 
-						 COUNT(DISTINCT rev_page) AS page_count, 
-						 COUNT(rev_id) AS rev_count 
-						 FROM {$revTable} 
+		$sqlMostRevs  = "SELECT rev_user,
+						 COUNT(DISTINCT rev_page) AS page_count,
+						 COUNT(rev_id) AS rev_count
+						 FROM {$revTable}
 						 {$sqlWhere}
-						 GROUP BY rev_user 
-						 ORDER BY rev_count DESC 
+						 GROUP BY rev_user
+						 ORDER BY rev_count DESC
 						 LIMIT {$limit}";
-		
-		$sql =  "SELECT user_id, " .
+
+		$sql = "SELECT user_id, " .
 			"user_name, " .
+			"user_real_name, " .
 			"page_count, " .
 			"rev_count, " .
 			"page_count+SQRT(rev_count-page_count)*2 AS wiki_rank " .
 			"FROM $userTable u JOIN (($sqlMostPages) UNION ($sqlMostRevs)) s ON (user_id=rev_user) " .
 			"ORDER BY wiki_rank DESC " .
 			"LIMIT $limit";
-			
-		$res = $dbr->query($sql);
-		
-		$sortable = in_array('nosort', $opts) ? '' : ' sortable';
-		
-		$output = "<table class=\"wikitable contributionscores plainlinks{$sortable}\" >\n".
-			"<tr class='header'>\n".
-			"<td>" . wfMsgHtml( 'contributionscores-score' ) . "</td>\n" .
-			"<td>" . wfMsgHtml( 'contributionscores-pages' ) . "</td>\n" .
-			"<td>" . wfMsgHtml( 'contributionscores-changes' ) . "</td>\n" .
-			"<td>" . wfMsgHtml( 'contributionscores-username' ) . "</td>\n";
 
-		$skin =& $wgUser->getSkin();
+		$res = $dbr->query( $sql );
+
+		$sortable = in_array( 'nosort', $opts ) ? '' : ' sortable';
+
+		$output = "<table class=\"wikitable contributionscores plainlinks{$sortable}\" >\n" .
+			"<tr class='header'>\n" .
+			Html::element( 'th', array(), wfMsg( 'contributionscores-score' ) ) .
+			Html::element( 'th', array(), wfMsg( 'contributionscores-pages' ) ) .
+			Html::element( 'th', array(), wfMsg( 'contributionscores-changes' ) ) .
+			Html::element( 'th', array(), wfMsg( 'contributionscores-username' ) );
+
 		$altrow = '';
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$output .= "</tr><tr class='{$altrow}'>\n<td class='content'>" .
-				round($row->wiki_rank,0) . "\n</td><td class='content'>" .
-				$row->page_count . "\n</td><td class='content'>" .
-				$row->rev_count . "\n</td><td class='content'>" .
-				$skin->userLink( $row->user_id, $row->user_name );
-			
+
+		foreach ( $res as $row ) {
+			// Use real name if option used and real name present.
+			if ( $wgContribScoresUseRealName && $row->user_real_name !== '' ) {
+				$userLink = Linker::userLink(
+					$row->user_id,
+					$row->user_name,
+					$row->user_real_name
+				);
+			} else {
+				$userLink = Linker::userLink(
+					$row->user_id,
+					$row->user_name
+				);
+			}
+
+			$output .= Html::closeElement( 'tr' );
+			$output .= "<tr class='{$altrow}'>\n<td class='content'>" .
+				$wgLang->formatNum( round( $row->wiki_rank, 0 ) ) . "\n</td><td class='content'>" .
+				$wgLang->formatNum( $row->page_count ) . "\n</td><td class='content'>" .
+				$wgLang->formatNum( $row->rev_count ) . "\n</td><td class='content'>" .
+				$userLink;
+
 			# Option to not display user tools
-			if ( !in_array( 'notools', $opts ) )
-				$output .= $skin->userToolLinks( $row->user_id, $row->user_name );
-			
-			$output .= "</td>\n";
-			
-			if ( $altrow == '' && empty($sortable) )
+			if ( !in_array( 'notools', $opts ) ) {
+				$output .= Linker::userToolLinks( $row->user_id, $row->user_name );
+			}
+
+			$output .= Html::closeElement( 'td' ) . "\n";
+
+			if ( $altrow == '' && empty( $sortable ) ) {
 				$altrow = 'odd ';
-			else
+			} else {
 				$altrow = '';
+			}
 		}
-		$output .= "</tr></table>";
+		$output .= Html::closeElement( 'tr' );
+		$output .= Html::closeElement( 'table' );
+
 		$dbr->freeResult( $res );
-		
+
 		if ( !empty( $title ) )
-			$output = "<table cellspacing='0' cellpadding='0' class='contributionscores-wrapper'>\n".
-			"<tr>\n".
-			"<td style='padding: 0px;'>{$title}</td>\n".
-			"</tr>\n".
-			"<tr>\n".
-			"<td style='padding: 0px;'>{$output}</td>\n".
-			"</tr>\n".
-			"</table>";
-		
+			$output = Html::rawElement( 'table', array( 'cellspacing' => 0, 'cellpadding' => 0,
+				'class' => 'contributionscores-wrapper', 'lang' => $wgLang->getCode(), 'dir' => $wgLang->getDir() ),
+			"\n" .
+			"<tr>\n" .
+			"<td style='padding: 0px;'>{$title}</td>\n" .
+			"</tr>\n" .
+			"<tr>\n" .
+			"<td style='padding: 0px;'>{$output}</td>\n" .
+			"</tr>\n" );
+
 		return $output;
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgVersion, $wgOut, $wgHooks;
-		
-		if( version_compare( $wgVersion, '1.11', '>=' ) )
-			wfLoadExtensionMessages( 'ContributionScores' );
-		
 		$this->setHeaders();
 
-		if( $this->including() ) {
+		if ( $this->including() ) {
 			$this->showInclude( $par );
 		} else {
 			$this->showPage();
 		}
+
 		return true;
 	}
 
+	/**
+	 * Called when being included on a normal wiki page.
+	 * Cache is disabled so it can depend on the user language.
+	 * @param $par
+	 */
 	function showInclude( $par ) {
-		global $wgOut, $wgContribScoreDisableCache;
-		
-		if($wgContribScoreDisableCache) {
-			global $wgParser;
-			$wgParser->disableCache();
-		}
+		global $wgOut, $wgLang;
 
 		$days = null;
 		$limit = null;
 		$options = 'none';
-		
+
 		if ( !empty( $par ) ) {
-			$params = explode('/', $par);
-			
+			$params = explode( '/', $par );
+
 			$limit = intval( $params[0] );
-			
-			if ( isset( $params[1] ) )
+
+			if ( isset( $params[1] ) ) {
 				$days = intval( $params[1] );
-			
-			if ( isset( $params[2] ) )
+			}
+
+			if ( isset( $params[2] ) ) {
 				$options = $params[2];
+			}
 		}
-			
-		if ( empty( $limit ) || $limit < 1 || $limit > CONTRIBUTIONSCORES_MAXINCLUDELIMIT )
+
+		if ( empty( $limit ) || $limit < 1 || $limit > CONTRIBUTIONSCORES_MAXINCLUDELIMIT ) {
 			$limit = 10;
-		if ( is_null( $days ) || $days < 0 )
+		}
+		if ( is_null( $days ) || $days < 0 ) {
 			$days = 7;
+		}
 
 		if ( $days > 0 ) {
-			$reportTitle = wfMsgExt( 'contributionscores-days', 'parsemag', $days );
+			$reportTitle = wfMsgExt( 'contributionscores-days', 'parsemag', $wgLang->formatNum( $days ) );
 		} else {
 			$reportTitle = wfMsg( 'contributionscores-allrevisions' );
 		}
-		$reportTitle .= " " . wfMsgExt( 'contributionscores-top', 'parsemag', $limit );
+		$reportTitle .= " " . wfMsgExt( 'contributionscores-top', 'parsemag', $wgLang->formatNum( $limit ) );
 		$title = Xml::element( 'h4', array( 'class' => 'contributionscores-title' ), $reportTitle ) . "\n";
 		$wgOut->addHTML( $this->genContributionScoreTable( $days, $limit, $title, $options ) );
 	}
-	
+
+	/**
+	 * Show the special page
+	 */
 	function showPage() {
-		global $wgOut, $wgContribScoreReports;
-		
-		if (!is_array($wgContribScoreReports)) {
+		global $wgOut, $wgLang, $wgContribScoreReports;
+
+		if ( !is_array( $wgContribScoreReports ) ) {
 			$wgContribScoreReports = array(
-				array(7,50),
-				array(30,50),
-				array(0,50));
+				array( 7, 50 ),
+				array( 30, 50 ),
+				array( 0, 50 )
+			);
 		}
 
-		$wgOut->addWikiText( wfMsg( 'contributionscores-info' ) );
+		$wgOut->addWikiMsg( 'contributionscores-info' );
 
-		foreach ( $wgContribScoreReports as $scoreReport) {
-			if ( $scoreReport[0] > 0 ) {
-				$reportTitle = wfMsgExt( 'contributionscores-days', 'parsemag', $scoreReport[0] );
+		foreach ( $wgContribScoreReports as $scoreReport ) {
+			list( $days, $revs ) = $scoreReport;
+			if ( $days > 0 ) {
+				$reportTitle = wfMsgExt( 'contributionscores-days', 'parsemag', $wgLang->formatNum( $days ) );
 			} else {
 				$reportTitle = wfMsg( 'contributionscores-allrevisions' );
 			}
-			$reportTitle .= " " . wfMsgExt('contributionscores-top', 'parsemag', $scoreReport[1] );
+			$reportTitle .= " " . wfMsgExt( 'contributionscores-top', 'parsemag', $wgLang->formatNum( $revs ) );
 			$title = Xml::element( 'h2', array( 'class' => 'contributionscores-title' ), $reportTitle ) . "\n";
 			$wgOut->addHTML( $title );
-			$wgOut->addHTML( $this->genContributionScoreTable( $scoreReport[0], $scoreReport[1] ) );
+			$wgOut->addHTML( $this->genContributionScoreTable( $days, $revs ) );
 		}
 	}
 }

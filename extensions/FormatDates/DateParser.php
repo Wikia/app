@@ -4,7 +4,7 @@
  * Class to parse and reformat dates according to a specific
  * user preference
  *
- * @addtogroup Extensions
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * Please see the LICENCE file for terms of use and redistribution
  */

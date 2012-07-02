@@ -1,16 +1,15 @@
 <?php
 
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once dirname(__FILE__) . '/commandLine.inc';
-
 /**
  * MapsCoordinateParser test case.
  * 
  * @ingroup Maps
  * @since 0.6.5
- * @author Jeroen De Dauw
+ * 
+ * @licence GNU GPL v3
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class MapsCoordinateParserTest extends PHPUnit_Framework_TestCase {
+class MapsCoordinateParserTest extends MediaWikiTestCase {
 	
 	/**
 	 * Valid coordinates.
@@ -85,15 +84,6 @@ class MapsCoordinateParserTest extends PHPUnit_Framework_TestCase {
 	);
 	
 	/**
-	 * Formatting tests.
-	 * 
-	 * @var array
-	 */
-	public static $formattingTests = array(
-		
-	);	
-	
-	/**
 	 * Invalid coordinates.
 	 * 
 	 * @var array
@@ -112,38 +102,9 @@ class MapsCoordinateParserTest extends PHPUnit_Framework_TestCase {
 	);
 	
 	/**
-	 * @var MapsCoordinateParser
-	 */
-	private $MapsCoordinateParser;
-	
-	/**
-	 * Prepares the environment before running a test.
-	 */
-	protected function setUp() {
-		parent::setUp ();
-		$this->MapsCoordinateParser = new MapsCoordinateParser(/* parameters */);
-	
-	}
-	
-	/**
-	 * Cleans up the environment after running a test.
-	 */
-	protected function tearDown() {
-		$this->MapsCoordinateParser = null;
-		parent::tearDown ();
-	}
-	
-	/**
-	 * Constructs the test case.
-	 */
-	public function __construct() {
-	}
-	
-	/**
 	 * Tests MapsCoordinateParser::parseCoordinates()
 	 */
 	public function testParseCoordinates() {
-		// TODO Auto-generated MapsCoordinateParserTest::testParseCoordinates()
 		foreach ( self::$fakeCoordinates as $coord ) {
 			$this->assertFalse( MapsCoordinateParser::parseCoordinates( $coord ), "parseCoordinates did not return false for $coord." );
 		}
@@ -175,22 +136,8 @@ class MapsCoordinateParserTest extends PHPUnit_Framework_TestCase {
 				
 	}
 	
-	/*
-	public function coordinatesProvider() {
-		die(__METHOD__);
-		$coords = array();
-		
-		foreach( self::$coordinates as $coordsOfType ) {
-			foreach( $coordsOfType as $coord ) {
-				$coords[] = array( $coord );
-			}			
-		}		
-		return $coords;
-	}
-	*/
-	
 	/**
-	 * @dataProvider coordinatesProvider
+	 * Tests MapsCoordinateParser::areCoordinates()
 	 */
 	public function testAreCoordinates() {
 		foreach( self::$coordinates as $coordsOfType ) {
@@ -202,28 +149,6 @@ class MapsCoordinateParserTest extends PHPUnit_Framework_TestCase {
 		foreach ( self::$fakeCoordinates as $coord ) {
 			$this->assertFalse( MapsCoordinateParser::areCoordinates( $coord ), "$coord was recognized as coordinate." );
 		}
-	}
-	
-	/**
-	 * Tests MapsCoordinateParser::formatCoordinates()
-	 */
-	public function testFormatCoordinates() {
-		// TODO Auto-generated MapsCoordinateParserTest::testFormatCoordinates()
-		$this->markTestIncomplete ( "formatCoordinates test not implemented" );
-		
-		MapsCoordinateParser::formatCoordinates(/* parameters */);
-	
-	}
-	
-	/**
-	 * Tests MapsCoordinateParser::formatToArray()
-	 */
-	public function testFormatToArray() {
-		// TODO Auto-generated MapsCoordinateParserTest::testFormatToArray()
-		$this->markTestIncomplete ( "formatToArray test not implemented" );
-		
-		MapsCoordinateParser::formatToArray(/* parameters */);
-	
 	}
 	
 	/**
@@ -278,7 +203,6 @@ class MapsCoordinateParserTest extends PHPUnit_Framework_TestCase {
 	 * Tests MapsCoordinateParser::parseAndFormat()
 	 */
 	public function testParseAndFormat() {
-		// TODO Auto-generated MapsCoordinateParserTest::testParseAndFormat()
 		foreach ( self::$fakeCoordinates as $coord ) {
 			$this->assertFalse( MapsCoordinateParser::parseAndFormat( $coord ), "parseAndFormat did not return false for $coord." );
 		}

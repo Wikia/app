@@ -1,17 +1,15 @@
 <?php
-/*
+/**
  * SMW_NMSendMailJob.php
  *
  * This job is triggered whenever a notify-me page was saved or removed.
  *
- * @author dch
+ * @author ning
  *
  */
 if ( !defined( 'MEDIAWIKI' ) ) {
   die( "This file is part of the Semantic NotifyMe Extension. It is not a valid entry point.\n" );
 }
-global $IP;
-require_once( "$IP/includes/JobQueue.php" );
 
 class SMW_NMSendMailJob extends Job {
 
@@ -36,7 +34,7 @@ class SMW_NMSendMailJob extends Job {
 		wfDebug( __METHOD__ );
 		wfProfileIn( __METHOD__ );
 
-		UserMailer::send( // userMailer(
+		UserMailer::send(
 			$this->params['to'],
 			$this->params['from'],
 			$this->params['subj'],

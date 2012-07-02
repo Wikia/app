@@ -15,8 +15,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Farmer',
 	'author' => array( 'Gregory Szorc <gregory.szorc@case.edu>', 'Alexandre Emsenhuber' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Farmer',
-	'description' => 'Manage a MediaWiki farm',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Farmer',
 	'descriptionmsg' => 'farmer-desc',
 	'version' => '0.0.8',
 );
@@ -26,7 +25,7 @@ $wgExtensionCredits['specialpage'][] = array(
  */
 $wgFarmerSettings = array(
 	// Path to the directory that holds settings for wikis
-	'configDirectory'           =>  realpath( dirname( __FILE__ ) ) . '/configs/',
+	'configDirectory'           =>  dirname( __FILE__ ) . '/configs/',
 
 	// Or use a database
 	'databaseName'              => null,
@@ -77,7 +76,7 @@ $root = dirname( __FILE__ ) . '/';
 
 $wgExtensionMessagesFiles['MediaWikiFarmer'] = $root . 'Farmer.i18n.php';
 
-$wgExtensionAliasesFiles['MediaWikiFarmer'] = $root . 'Farmer.alias.php';
+$wgExtensionMessagesFiles['MediaWikiFarmerAlias'] = $root . 'Farmer.alias.php';
 
 $wgAutoloadClasses['MediaWikiFarmer'] = $root . 'MediaWikiFarmer.php';
 $wgAutoloadClasses['MediaWikiFarmer_Extension'] = $root . 'MediaWikiFarmer_Extension.php';

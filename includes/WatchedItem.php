@@ -87,6 +87,8 @@ class WatchedItem {
 	 * @return bool
 	 */
 	public function removeWatch() {
+		wfProfileIn( __METHOD__ );
+
 		$success = false;
 		
 		$dbw = wfGetDB( DB_MASTER );
@@ -116,9 +118,11 @@ class WatchedItem {
 		if ( $dbw->affectedRows() ) {
 			$success = true;
 		}
-		
+
 		wfRunHooks( 'WatchedItem::removeWatch', array ( $this, $success ) );
-				
+
+		wfProfileOut( __METHOD__ );
+
 		return $success;
 	}
 
@@ -173,6 +177,11 @@ class WatchedItem {
 
 	/**
 	 * Handle duplicate entries. Backend for duplicateEntries().
+	 *
+	 * @param $ot Title
+	 * @param $nt Title
+	 *
+	 * @return bool
 	 */
 	private static function doDuplicateEntries( $ot, $nt ) {	
 		$oldnamespace = $ot->getNamespace();
@@ -187,14 +196,13 @@ class WatchedItem {
 		);
 		# Construct array to replace into the watchlist
 		$values = array();
-		while ( $s = $dbw->fetchObject( $res ) ) {
+		foreach ( $res as $s ) {
 			$values[] = array(
 				'wl_user' => $s->wl_user,
 				'wl_namespace' => $newnamespace,
 				'wl_title' => $newtitle
 			);
 		}
-		$dbw->freeResult( $res );
 
 		if( empty( $values ) ) {
 			// Nothing to do

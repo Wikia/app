@@ -10,7 +10,7 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class BlackListTest extends BaseTest {
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureBlacklistedWebsitesAreNotBeingAccepted() throws Exception {
 		String time = new Date().toString();
 		String articleTitle = "Project:WikiaBotAutomatedTest1";
@@ -26,7 +26,7 @@ public class BlackListTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureWhitelistedWebsitesAreBeingAccepted() throws Exception {
 		String time = new Date().toString();
 		String articleTitle = "Project:WikiaBotAutomatedTest1";
@@ -53,7 +53,7 @@ public class BlackListTest extends BaseTest {
 		}
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureWhitelistedImagesAreBeingAccepted() throws Exception {
 		String time = new Date().toString();
 		String articleTitle = "Project:WikiaBotAutomatedTest1";

@@ -28,9 +28,6 @@ class SlippyMapHook {
 		global $wgParser, $wgHooks, $wgOut, $wgScriptPath, $wgStyleVersion;
 		global $wgSlippyMapJs;
 
-		// Load i18n
-		self::loadMessages();
-
 		// Initialize unique map id
 		$this->mId = 0;
 
@@ -119,11 +116,5 @@ class SlippyMapHook {
 		$text = str_replace( $keys, $this->mParserMarkers, $text );
 
 	  	return true;
-	}
-
-	private static function loadMessages() {
-		wfProfileIn( __METHOD__ );
-		wfLoadExtensionMessages( 'SlippyMap' );
-		wfProfileOut( __METHOD__ );
 	}
 }

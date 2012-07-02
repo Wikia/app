@@ -113,8 +113,6 @@ class RTEAjax {
 		$parserOptions = new ParserOptions();
 		// don't show [edit] link for sections
 		$parserOptions->setEditSection(false);
-		// use modified Linker
-		$parserOptions->setSkin( new RTELinker() );
 		// disable headings numbering
 		$parserOptions->setNumberHeadings(false);
 
@@ -141,7 +139,7 @@ class RTEAjax {
 		global $wgRequest, $wgTitle, $wgRDBEnabled, $wgRDBData, $wgParser;
 
 		// initialization of required objects and settings
-		$wgParser->getstriplist(); //we need to create (unstub) this object, because of in_array($tagName, $stripList) in parser 
+		$wgParser->getstriplist(); //we need to create (unstub) this object, because of in_array($tagName, $stripList) in parser
 		$parser = new Parser();
 		//$parser->mDefaultStripList = $parser->mStripList = array();
 		$parser->mTagHooks = &$wgParser->mTagHooks;
@@ -197,7 +195,7 @@ class RTEAjax {
 
 		// get CK messages array
 		$messages = RTELang::getMessages($lang);
-		$js = "CKEDITOR.lang['{$lang}'] = " . Wikia::json_encode($messages) . ';';
+		$js = "CKEDITOR.lang['{$lang}'] = " . json_encode($messages) . ';';
 
 		$ret = new AjaxResponse($js);
 		$ret->setContentType('application/x-javascript');

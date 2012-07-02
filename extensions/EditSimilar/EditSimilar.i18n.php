@@ -55,6 +55,13 @@ $messages['ar'] = array(
 	'tog-edit-similar' => 'تفعيل اقتراحات الصفحات المشابهة',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'editsimilar-link-disable' => 'ܛܟܣ ܓܒܝܬ̈ܐ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
@@ -69,9 +76,10 @@ $messages['arz'] = array(
 	'tog-edit-similar' => 'تفعيل اقتراحات الصفحات المشابهة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Zedlik
  */
 $messages['be-tarask'] = array(
 	'editsimilar-desc' => 'Заахвочвае ўдзельнікаў рэдагаваць падобныя старонкі пасьля запісу старонкі',
@@ -80,7 +88,7 @@ $messages['be-tarask'] = array(
 	'editsimilar-thanks-notsimilar' => 'Дзякуй за Ваш унёсак.
 {{PLURAL:$2|Гэтая старонка таксама можа|Гэтыя старонкі таксама могуць}} патрабаваць Вашай дапамогі: $1.',
 	'editsimilar-thankyou' => 'Дзякуй за Ваш унёсак, $1!',
-	'editsimilar-link-disable' => 'зьмяніць устаноўкі',
+	'editsimilar-link-disable' => 'зьмяніць налады',
 	'tog-edit-similar' => 'Уключыць прапановы падобных старонак',
 );
 
@@ -132,6 +140,16 @@ $messages['ca'] = array(
 	'tog-edit-similar' => 'Activa els suggeriments de pàgines similars',
 );
 
+/** Czech (Česky)
+ * @author Jkjk
+ */
+$messages['cs'] = array(
+	'editsimilar-desc' => 'Nabádá uživatele editovat podobnou stránku po uložení stránky',
+	'editsimilar-thankyou' => 'Děkujeme za váš příspěvek, $1!',
+	'editsimilar-link-disable' => 'nastavit nastavení',
+	'tog-edit-similar' => 'Zapnout navrhování podobných stránek',
+);
+
 /** German (Deutsch)
  * @author ChrisiPK
  * @author Leithian
@@ -149,7 +167,7 @@ Diese {{PLURAL:$2|Seite könnte|Seiten könnten}} auch hilfreich sein: $1.',
 	'tog-edit-similar' => 'Vorschläge für ähnliche Seiten anzeigen',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Umherirrender
  */
 $messages['de-formal'] = array(
@@ -188,12 +206,14 @@ $messages['el'] = array(
  * @author Yekrats
  */
 $messages['eo'] = array(
+	'editsimilar-desc' => 'Instigas uzantojn redakti similan paĝon post konservante paĝon',
 	'editsimilar-thanks' => 'Dankon pro via kontribuo.
 Kontrolu {{PLURAL:$2|ĉi tiun rilatan paĝon|ĉi tiujn rilatajn paĝojn}}: $1.',
 	'editsimilar-thanks-notsimilar' => 'Dankon pro via kontribuo.
 {{PLURAL:$2|Ĉi tiu paĝo|Ĉi tiuj paĝoj}} ankaŭ povus bezoni vian helpon: $1.',
 	'editsimilar-thankyou' => 'Dankon pro via kontribuo, $1!',
 	'editsimilar-link-disable' => 'fari preferojn',
+	'tog-edit-similar' => 'Ŝaktu sugestojn por similaj paĝoj',
 );
 
 /** Spanish (Español)
@@ -221,6 +241,13 @@ Begira {{PLURAL:$2|ezazu lotutako orrialde hau|itzazu lotutako orrialde hauek}}:
 	'editsimilar-link-disable' => 'hobespenak ezarri',
 );
 
+/** Persian (فارسی)
+ * @author ZxxZxxZ
+ */
+$messages['fa'] = array(
+	'editsimilar-link-disable' => 'تنظیم ترجیحات',
+);
+
 /** Finnish (Suomi)
  * @author Jack Phoenix <jack@countervandalism.net>
  * @author Mobe
@@ -242,16 +269,25 @@ Katso {{PLURAL:$2|tämä aiheeseen liittyvä sivu|nämä aiheeseen liittyvät si
  * @author IAlex
  * @author McDutchie
  * @author Verdy p
+ * @author Wyz
  */
 $messages['fr'] = array(
 	'editsimilar-desc' => 'Encourage les utilisateurs à modifier les pages similaires après avoir publié une page',
 	'editsimilar-thanks' => 'Merci pour votre contribution.
-Vérifiez {{PLURAL:$2|cette page apparentée|ces pages apparentées}} : $1.',
+Pouvez-vous vérifier {{PLURAL:$2|cette page connexe|ces pages connexes}} ? $1',
 	'editsimilar-thanks-notsimilar' => 'Merci pour votre contribution.
-{{PLURAL:$2|Cette page devrait|Ces pages devraient}} avoir, aussi, besoin de votre aide : $1.',
+{{PLURAL:$2|Cette page pourrait|Ces pages pourraient}} également avoir besoin de votre aide : $1.',
 	'editsimilar-thankyou' => 'Merci pour votre contribution, $1 !',
-	'editsimilar-link-disable' => 'paramétrer les préférences',
+	'editsimilar-link-disable' => 'définir les préférences',
 	'tog-edit-similar' => 'Activer les suggestions des pages similaires',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'editsimilar-thankyou' => 'Grant-marci por voutra contribucion, $1 !',
+	'editsimilar-link-disable' => 'dèfenir les prèferences',
 );
 
 /** Galician (Galego)
@@ -397,7 +433,7 @@ $messages['km'] = array(
 	'editsimilar-link-disable' => 'កំណត់ចំណង់ចំណូលចិត្ត',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -417,7 +453,7 @@ Hee di {{PLURAL:$2|Sigg künnt|Sigge künnte|Sigge künnte}} och joot för Desch
 $messages['lb'] = array(
 	'editsimilar-desc' => "Ermontert Benotzer fir ähnlech Säiten z'änneren nodeem se eng Säit gespäichert hunn.",
 	'editsimilar-thanks' => 'Merci fir är Kontributioun. 
-Kuckt déi {{PLURAL:$2|Säit|Säiten}} déi a Verbindung mat däer stinn w.e.g. och no: $1',
+Kuckt déi {{PLURAL:$2|Säit|Säiten}} déi a Verbindung mat där stinn w.e.g. och no: $1',
 	'editsimilar-thanks-notsimilar' => 'Merci fir Är Kontributioun.
 Dës {{PLURAL:$2|Säit kéint|Säite kéinten}} och vun Ärer Hëllef profitéieren: $1',
 	'editsimilar-thankyou' => 'Merci fir är Kontributioun, $1!',
@@ -437,6 +473,28 @@ $messages['mk'] = array(
 	'editsimilar-thankyou' => 'Ви благодариме на придонесите, $1!',
 	'editsimilar-link-disable' => 'намести прилагодувања',
 	'tog-edit-similar' => 'Овозможи предлози за уредување на слични страници',
+);
+
+/** Malayalam (മലയാളം)
+ * @author Junaidpv
+ */
+$messages['ml'] = array(
+	'editsimilar-link-disable' => 'ക്രമീകരണങ്ങൾ നടത്തുക',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'editsimilar-desc' => 'Oppfordrer brukere til å redigere lignende sider etter å ha lagret en side',
+	'editsimilar-thanks' => 'Takk for bidraget ditt.
+Sjekk {{PLURAL:$2|denne relaterte siden|disse relaterte sidene}}: $1.',
+	'editsimilar-thanks-notsimilar' => 'Takk for bidraget ditt.
+{{PLURAL:$2|Denne siden|Disse sidene}} kan også trenge din hjelp: $1.',
+	'editsimilar-thankyou' => 'Takk for bidraget ditt, $1!',
+	'editsimilar-link-disable' => 'endre innstillinger',
+	'tog-edit-similar' => 'Slå på forslag for lignende sider',
 );
 
 /** Dutch (Nederlands)
@@ -465,21 +523,6 @@ Sjekk {{PLURAL:$2|denne relaterte sida|desse relaterte sidene}}: $1.',
 	'editsimilar-thankyou' => 'Takk for bidraget ditt, $1!',
 	'editsimilar-link-disable' => 'endra innstillingar',
 	'tog-edit-similar' => 'Slå på forslag for liknande sider',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'editsimilar-desc' => 'Oppfordrer brukere til å redigere lignende sider etter å ha lagret en side',
-	'editsimilar-thanks' => 'Takk for bidraget ditt.
-Sjekk {{PLURAL:$2|denne relaterte siden|disse relaterte sidene}}: $1.',
-	'editsimilar-thanks-notsimilar' => 'Takk for bidraget ditt.
-{{PLURAL:$2|Denne siden|Disse sidene}} kan også trenge din hjelp: $1.',
-	'editsimilar-thankyou' => 'Takk for bidraget ditt, $1!',
-	'editsimilar-link-disable' => 'endre innstillinger',
-	'tog-edit-similar' => 'Slå på forslag for lignende sider',
 );
 
 /** Occitan (Occitan)
@@ -557,17 +600,18 @@ Veja {{PLURAL:$2|esta página relacionada|estas páginas relacionadas}}: $1.',
 );
 
 /** Romanian (Română)
+ * @author AdiJapan
  * @author Firilacroco
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'editsimilar-desc' => 'Încurajează utilizatorii să modifice o pagină similară după salvearea unei pagini',
-	'editsimilar-thanks' => 'Mulţumim pentru contribuţie.
-Vizitează şi {{PLURAL:$2|această pagină conexă|aceste pagini conexe}}: $1.',
-	'editsimilar-thanks-notsimilar' => 'Mulţumim pentru contribuţie.
+	'editsimilar-thanks' => 'Mulțumim pentru contribuție.
+Vedeți și {{PLURAL:$2|această pagină conexă|aceste pagini conexe}}: $1.',
+	'editsimilar-thanks-notsimilar' => 'Mulțumim pentru contribuție.
 Şi {{PLURAL:$2|această pagină|aceste pagini}} ar avea nevoie de ajutor: $1.',
-	'editsimilar-thankyou' => 'Mulţumim pentru contribuţia dumneaovastră, $1!',
-	'editsimilar-link-disable' => 'setare preferinţe',
+	'editsimilar-thankyou' => 'Mulțumim pentru contribuția dumneaovastră, $1!',
+	'editsimilar-link-disable' => 'setare preferințe',
 	'tog-edit-similar' => 'Activează sugestiile paginilor similare',
 );
 
@@ -579,7 +623,9 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (Русский)
+ * @author AlexSm
  * @author Ferrer
+ * @author KPu3uC B Poccuu
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -607,6 +653,19 @@ Pozrite sa na {{PLURAL:$2|túto súvisiacu stránku|tieto súvisiace stránky}}:
 	'tog-edit-similar' => 'Zapnúť návrhy podobných stránok',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'editsimilar-link-disable' => 'подеси поставке',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'editsimilar-link-disable' => 'postavi podešavanja',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  * @author Skalman
@@ -623,12 +682,19 @@ Kolla {{PLURAL:$2|denna relaterade sida|dessa relaterade sidor}}: $1.',
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
 	'editsimilar-desc' => 'ఒక పేజీని భద్రపరిచిన తర్వాత అలాంటి పేజీలని దిద్దుబాటు చేయడానికి వాడుకరులను ప్రోత్సహిస్తుంది',
+	'editsimilar-thanks' => 'మీ తోడ్పాటుకు నెనరులు.
+{{PLURAL:$2|ఈ సంబంధిత పేజీని|ఈ సంబంధిత పేజీలను}} చూడండి: $1.',
+	'editsimilar-thanks-notsimilar' => 'మ్కీ తోడ్పాటుకు నెనరులు.
+{{PLURAL:$2|ఈ పేజీ|ఈ పేజీల}}లో కూడా మీ తోడ్పాటు అవసరం ఉండొచ్చు: $1.',
+	'editsimilar-thankyou' => '$1 గారూ, మీ తోడ్పాటుకు నెనరులు!',
 	'editsimilar-link-disable' => 'అభిరుచులను పేర్కొను',
+	'tog-edit-similar' => 'ఇలాంటి పేజీల సూచనలను చేతనం చెయ్యి',
 );
 
 /** Tagalog (Tagalog)
@@ -637,9 +703,9 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'editsimilar-desc' => 'Humihimok sa mga tagagamit na bumago ng isang katulad na pahina pagkaraan magsagip ng isang pahina',
 	'editsimilar-thanks' => 'Salamat sa iyong ambag.
-Suriin ang kaugnay na mga pahinang ito: $1.',
+Suriin ang {{PLURAL:$2|kaugnay na pahinang ito|kaugnay na mga pahinang ito}}: $1.',
 	'editsimilar-thanks-notsimilar' => 'Salamat sa iyong ambag. 
-Mapapakinabangan din ng mga pahinang ito ang tulong mo: $1.',
+Mapapakinabangan din ng {{PLURAL:$2|pahinang ito|mga pahinang ito }} ang tulong mo: $1.',
 	'editsimilar-thankyou' => 'Salamat sa iyong ambag, $1!',
 	'editsimilar-link-disable' => 'itakda ang mga kagustuhan',
 	'tog-edit-similar' => 'Paganahin ang mga mungkahi para sa katulad na mga pahina',
@@ -673,5 +739,29 @@ Bạn cũng có thể giúp đỡ {{PLURAL:$2|trang|những trang}} sau: $1.',
 	'editsimilar-thankyou' => 'Cảm ơn về sự đóng góp của $1!',
 	'editsimilar-link-disable' => 'tùy chọn',
 	'tog-edit-similar' => 'Kích hoạt đề nghị về trang tương tự',
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$messages['zh-hans'] = array(
+	'editsimilar-desc' => '当用户保存页面后鼓励用户编辑一个类似的页面。',
+	'editsimilar-thanks' => '多谢你的贡献。建议你编辑以下$2个相关页面：$1',
+	'editsimilar-thanks-notsimilar' => '多谢你的贡献，不防继续考虑编辑这$2个页面：$1',
+	'editsimilar-thankyou' => '$1，多谢你的贡献。',
+	'editsimilar-link-disable' => '设置参数',
+	'tog-edit-similar' => '启用类似页面编辑建议',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ * @author Mark85296341
+ * @author Waihorace
+ */
+$messages['zh-hant'] = array(
+	'editsimilar-desc' => '當使用者儲存頁面後鼓勵使用者編輯一個類似的頁面。',
+	'editsimilar-thanks' => '多謝你的貢獻。建議你編輯以下$2個相關頁面：$1',
+	'editsimilar-thanks-notsimilar' => '多謝你的貢獻，不防繼續考慮編輯這$2個頁面：$1',
+	'editsimilar-thankyou' => '$1，多謝你的貢獻。',
+	'editsimilar-link-disable' => '設定偏好',
+	'tog-edit-similar' => '啟用類似頁面編輯建議',
 );
 

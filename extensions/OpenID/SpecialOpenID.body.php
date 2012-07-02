@@ -18,8 +18,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @file
  * @author Evan Prodromou <evan@prodromou.name>
- * @addtogroup Extensions
+ * @ingroup Extensions
  */
 
 # FIXME: for login(); figure out better way to share this code
@@ -251,20 +252,20 @@ class SpecialOpenID extends SpecialPage {
 		// Create attribute request object. Depending on your endpoint, you can request many things:
 		// see http://code.google.com/apis/accounts/docs/OpenID.html#Parameters for parameters.
 		// Usage: make($type_uri, $count=1, $required=false, $alias=null)
-		$attribute[] = Auth_OpenID_AX_AttrInfo::make('http://axschema.org/contact/email', 1, 1, 'email');
-		$attribute[] = Auth_OpenID_AX_AttrInfo::make('http://axschema.org/namePerson/first', 1, 1, 'firstname');
-		$attribute[] = Auth_OpenID_AX_AttrInfo::make('http://axschema.org/namePerson/last', 1, 1, 'lastname');
+		$attribute[] = Auth_OpenID_AX_AttrInfo::make( 'http://axschema.org/contact/email', 1, 1, 'email' );
+		$attribute[] = Auth_OpenID_AX_AttrInfo::make( 'http://axschema.org/namePerson/first', 1, 1, 'firstname' );
+		$attribute[] = Auth_OpenID_AX_AttrInfo::make( 'http://axschema.org/namePerson/last', 1, 1, 'lastname' );
 
 		// Create AX fetch request and add attributes
 		$ax_request = new Auth_OpenID_AX_FetchRequest;
-		
-		foreach($attribute as $attr){
-			$ax_request->add($attr);
+
+		foreach ( $attribute as $attr ) {
+			$ax_request->add( $attr );
 		}
 
-		if ($ax_request) {
-			$auth_request->addExtension($ax_request);
-		}		
+		if ( $ax_request ) {
+			$auth_request->addExtension( $ax_request );
+		}
 
 		$process_url = $this->scriptUrl( $finish_page );
 
@@ -290,7 +291,9 @@ class SpecialOpenID extends SpecialPage {
 			} else {
 				$wgOut->addWikiMsg( 'openidautosubmit' );
 				$wgOut->addHTML( $form_html );
-				$wgOut->addInlineScript( "function submitOpenIDForm() {\n document.getElementById(\"" . $form_id . "\").submit()\n }\nhookEvent(\"load\", submitOpenIDForm);\n" );
+				$wgOut->addInlineScript(
+					"jQuery( document ).ready( function(){ jQuery( \"#" . $form_id . "\" ).submit() } );" 
+				);
 			}
 		}
 
@@ -315,9 +318,7 @@ class SpecialOpenID extends SpecialPage {
 	}
 
 	protected function setupSession() {
-		global $wgSessionStarted;
-
-		if ( !$wgSessionStarted ) {
+		if ( session_id() == '' ) {
 			wfSetupSession();
 		}
 	}
@@ -327,28 +328,29 @@ class SpecialOpenID extends SpecialPage {
 		$wgRequest->response()->setcookie( 'OpenID', $openid, time() +  $wgOpenIDCookieExpiration );
 	}
 
-	# Find the user with the given openid, if any
-	public static function getUserUrl( $user ) {
-		$openid_urls = array();
+	# Find the user with the given openid
+	# return the registered OpenID urls and registration timestamps (if available)
+	public static function getUserOpenIDInformation( $user ) {
+		$openid_urls_registration = array();
 
 		if ( $user instanceof User && $user->getId() != 0 ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 				array( 'user_openid' ),
-				array( 'uoi_openid' ),
+				array( 'uoi_openid', 'uoi_user_registration' ),
 				array( 'uoi_user' => $user->getId() ),
 				__METHOD__
 			);
 
-			foreach( $res as $row ) {
-				$openid_urls[] = $row->uoi_openid;
+			foreach ( $res as $row ) {
+				$openid_urls_registration[] = $row;
 			}
 			$res->free();
 		}
-		return $openid_urls;
+		return $openid_urls_registration;
 	}
 
-	public static function getUser( $openid ) {
+	public static function getUserFromUrl( $openid ) {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$id = $dbr->selectField(
@@ -372,7 +374,8 @@ class SpecialOpenID extends SpecialPage {
 			'user_openid',
 			array(
 				'uoi_user' => $user->getId(),
-				'uoi_openid' => $url
+				'uoi_openid' => $url,
+				'uoi_user_registration' => wfTimestamp( TS_MW )
 			),
 			__METHOD__
 		);

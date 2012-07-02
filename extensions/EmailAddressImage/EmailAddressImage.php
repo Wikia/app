@@ -5,7 +5,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * Allows the use of tag <email>foo@domain.com</email> which will result in
  * inline insertion of an image with the text foo@domain.com
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @author Maarten van Dantzich (http://www.mediawiki.org/wiki/User:Thinkling)
  * @comment email address regexp pattern borrowed from: http://www.regular-expressions.info/email.html
@@ -16,21 +17,15 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'EmailAddressImage',
 	'version'        => '1.1',
 	'author'         => 'Maarten van Dantzich',
-	'description'    => 'Adds <tt>&lt;email&gt;</tt> to display an email address as image',
 	'descriptionmsg' => 'emailaddressimage-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:EmailAddressImage',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:EmailAddressImage',
 );
 
 $wgExtensionMessagesFiles['AdvancedRandom'] = dirname(__FILE__) . '/EmailAddressImage.i18n.php';
-$wgExtensionFunctions[] = 'emailAddressImage';
+$wgHooks['ParserFirstCallInit'][] = 'emailAddressImage';
 
-# Sets the hook to be executed once the parser has stripped HTML tags.
-$wgHooks['ParserAfterStrip'][] = 'emailAddressImage';
-
-function emailAddressImage() {
-	global $wgParser;
-
-	$wgParser->setHook( 'email', 'doAddressImage' );
+function emailAddressImage( $parser ) {
+	$parser->setHook( 'email', 'doAddressImage' );
 	return true;
 }
 

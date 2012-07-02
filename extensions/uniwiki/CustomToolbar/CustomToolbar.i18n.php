@@ -2,9 +2,9 @@
 /* Internationalisation file for CustomToolbar extension.
  */
 
-$wgCustomToolbarMessages = array();
+$messages = array();
 
-$wgCustomToolbarMessages['en'] = array(
+$messages['en'] = array(
 	'ct-desc' => 'Adds an extensible toolbar',
 
 	'ct_bold_sample'   => "Bold text",
@@ -67,8 +67,9 @@ $wgCustomToolbarMessages['en'] = array(
  * @author Purodha
  * @author Siebrand
  */
-$wgCustomToolbarMessages['qqq'] = array(
+$messages['qqq'] = array(
 	'ct-desc' => '{{desc}}',
+	'ct_internal_caption' => '{{Identical|Internal link}}',
 	'ct_external_caption' => '{{Identical|External link}}',
 	'ct_upload' => '* $1 comes from the HTTP request parameter "type"',
 	'ct_submit' => '{{Identical|Go}}',
@@ -76,19 +77,31 @@ $wgCustomToolbarMessages['qqq'] = array(
 	'ct_user_sample' => '{{Identical|Username}}',
 );
 
-/** Laz (Laz)
- * @author Bombola
+/** толышә зывон (толышә зывон)
+ * @author Гусейн
  */
-$wgCustomToolbarMessages['lzz'] = array(
-	'ct_bold_sample' => "Mçxu nç'ara",
-	'ct_bold_caption' => 'Mçxu',
-	'ct_submit' => 'İgzali!',
+$messages['tly'] = array(
+	'ct_bold_sample' => 'Нимәтындә шрифт',
+	'ct_italic_sample' => 'Курсивә мәтн',
+	'ct_image_caption' => 'Шикил зијод кардеј',
+	'ct_nowiki_sample' => 'Формат кардә ныбә мәтн дәғандән ијо',
+	'ct_nowiki_tip_ins' => 'Вики формат кардеј бә нәзә ныстәнеј',
+	'ct_horizontal_tip' => 'Уфуғијә ријә дәғандән (рә-рә истифодә мәкән)',
+	'ct_user_user' => 'Иштирокәкә',
+	'ct_user_sample' => 'Иштирокәкә ном',
+);
+
+/** Abkhazian (Аҧсуа)
+ * @author Temuri rajavi
+ */
+$messages['ab'] = array(
+	'ct_user_user' => 'Алахәыла',
 );
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$wgCustomToolbarMessages['af'] = array(
+$messages['af'] = array(
 	'ct_bold_sample' => 'Vetgedrukte teks',
 	'ct_bold_tip_ins' => 'Voeg vetgedrukte teks by',
 	'ct_bold_tip_wrap' => 'Maak hierdie teks vetdruk',
@@ -124,10 +137,58 @@ $wgCustomToolbarMessages['af'] = array(
 	'ct_user_sample' => 'Gebruikersnaam',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'ct-desc' => 'Shton një toolbar zgjeruar',
+	'ct_bold_sample' => 'Tekst i trashë',
+	'ct_bold_tip_ins' => 'Vendos tekst bold',
+	'ct_bold_tip_wrap' => 'Bëni këtë tekst bold',
+	'ct_bold_caption' => 'Guximtar',
+	'ct_italic_sample' => 'Teksti i pjerrët',
+	'ct_italic_tip_ins' => 'Vendos tekst kursiv',
+	'ct_italic_tip_wrap' => 'Bëni këtë tekst kursiv',
+	'ct_italic_caption' => 'Kursiv',
+	'ct_internal_sample' => 'PageName',
+	'ct_internal_tip_ins' => 'Fut një lidhje të brendshme',
+	'ct_internal_tip_wrap' => 'Bëni këtë tekst një lidhje të brendshme',
+	'ct_internal_caption' => 'Lidhje të Brendshme',
+	'ct_external_tip_ins' => 'Fut një link i jashtëm',
+	'ct_external_tip_wrap' => 'Bëni këtë tekst një lidhje të jashtme',
+	'ct_external_caption' => 'Lidhje e jashtme',
+	'ct_image_tip' => 'Fut një imazh',
+	'ct_image_caption' => 'Shto imazh',
+	'ct_attachment_tip' => 'Fut një bashkëngjitje',
+	'ct_attachment_caption' => 'Shto bashkëngjitje',
+	'ct_math_sample' => 'Insert formula LaTeX këtu',
+	'ct_math_tip_ins' => 'Fut formula matematikore (LaTeX)',
+	'ct_math_tip_wrap' => 'Bëni këtë tekst një formulë matematike (LaTeX)',
+	'ct_math_caption' => 'Formulë',
+	'ct_nowiki_sample' => 'Vendos tekst këtu nuk duhet të formatohet',
+	'ct_nowiki_tip_ins' => 'Ignore wiki formatting',
+	'ct_nowiki_tip_wrap' => 'Ignore wiki formatting per kete tekst',
+	'ct_nowiki_caption' => 'Nuk wiki',
+	'ct_horizontal_tip' => 'Fut një vijë horizontale (të përdorur me masë)',
+	'ct_horizontal_caption' => 'vijë horizontale',
+	'ct_upload' => 'Ngarko $1',
+	'ct_select' => 'Zgjidhni $1 për ngarkim:',
+	'ct_caption' => 'Shto tekst i shkruar (me dëshirë):',
+	'ct_link' => 'Shto Emri Lidhje (opsional):',
+	'ct_submit' => 'Shko!',
+	'ct_close' => 'Mbylle dritaren',
+	'ct_success' => 'File upload suksesshëm!',
+	'ct_popupblocked' => 'Popup upload ishte ndaluar nga e hapjes. Ju lutem kontrolloni popup blocker tuaj.',
+	'ct_user_user' => 'Përdorues',
+	'ct_user_tip' => 'Fut një lidhje tek një faqe përdorues',
+	'ct_user_caption' => 'Lidhje Përdoruesi',
+	'ct_user_sample' => 'Emri i përdoruesit',
+);
+
 /** Amharic (አማርኛ)
  * @author Codex Sinaiticus
  */
-$wgCustomToolbarMessages['am'] = array(
+$messages['am'] = array(
 	'ct_bold_sample' => 'ጨለማ ጽሕፈት',
 	'ct_italic_sample' => 'ያንጋደደ ጽሕፈት',
 	'ct_external_caption' => 'የውጭ መያያዣ',
@@ -139,13 +200,15 @@ $wgCustomToolbarMessages['am'] = array(
  * @author Meno25
  * @author OsamaK
  * @author Ouda
+ * @author Zack wadghiri
+ * @author زكريا
  */
-$wgCustomToolbarMessages['ar'] = array(
+$messages['ar'] = array(
 	'ct-desc' => 'يضيف شريط أدوات ممدد',
-	'ct_bold_sample' => 'نص عريض',
-	'ct_bold_tip_ins' => 'إدراج نص عريض',
+	'ct_bold_sample' => 'نص غليظ',
+	'ct_bold_tip_ins' => 'إدراج نص غليظ',
 	'ct_bold_tip_wrap' => 'جعل هذا النص عريضا',
-	'ct_bold_caption' => 'عريض',
+	'ct_bold_caption' => 'غليظ',
 	'ct_italic_sample' => 'نص مائل',
 	'ct_italic_tip_ins' => 'إدراج نص مائل',
 	'ct_italic_tip_wrap' => 'اجعل هذا النص مائلا',
@@ -182,20 +245,20 @@ $wgCustomToolbarMessages['ar'] = array(
 	'ct_user_user' => 'مستخدم',
 	'ct_user_tip' => 'إدراج وصلة لصفحة مستخدم',
 	'ct_user_caption' => 'وصلة المستخدم',
-	'ct_user_sample' => 'أسم المستخدم',
+	'ct_user_sample' => 'اسم المستخدم',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
  * @author Basharh
  */
-$wgCustomToolbarMessages['arc'] = array(
+$messages['arc'] = array(
 	'ct_bold_sample' => 'ܟܬܒܬܐ ܥܒܝܬܐ',
 	'ct_bold_caption' => 'ܥܒܝܬܐ',
 	'ct_italic_sample' => 'ܟܬܒܬܐ ܦܠܝܡܬܐ',
 	'ct_italic_caption' => 'ܦܠܝܡܬܐ',
 	'ct_internal_caption' => 'ܐܣܘܪܐ ܓܘܝܐ',
 	'ct_external_caption' => 'ܐܣܘܪܐ ܒܪܝܐ',
-	'ct_image_caption' => 'ܐܘܣܦ ܠܦܦܐ',
+	'ct_image_caption' => 'ܐܘܣܦ ܨܘܪܬܐ',
 	'ct_nowiki_caption' => 'ܠܐ ܘܝܩܝ',
 	'ct_upload' => 'ܐܣܩ $1',
 	'ct_submit' => 'ܙܠ!',
@@ -211,7 +274,7 @@ $wgCustomToolbarMessages['arc'] = array(
  * @author Ouda
  * @author Ramsis II
  */
-$wgCustomToolbarMessages['arz'] = array(
+$messages['arz'] = array(
 	'ct-desc' => 'بيضيف توول بار قابل للتمدد',
 	'ct_bold_sample' => 'نص عريض',
 	'ct_bold_tip_ins' => 'إدراج نص عريض',
@@ -257,12 +320,12 @@ $wgCustomToolbarMessages['arz'] = array(
 	'ct_user_sample' => 'اسم اليوزر',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Red Winged Duck
  */
-$wgCustomToolbarMessages['be-tarask'] = array(
+$messages['be-tarask'] = array(
 	'ct-desc' => 'Дадае пашыраную панэль',
 	'ct_bold_sample' => 'Тлусты тэкст',
 	'ct_bold_tip_ins' => 'Уставіць тлусты тэкст',
@@ -311,7 +374,7 @@ $wgCustomToolbarMessages['be-tarask'] = array(
 /** Bulgarian (Български)
  * @author DCLXVI
  */
-$wgCustomToolbarMessages['bg'] = array(
+$messages['bg'] = array(
 	'ct_bold_sample' => 'Получер',
 	'ct_bold_tip_ins' => 'Вмъкване на текст в получер',
 	'ct_bold_caption' => 'Получер',
@@ -331,6 +394,7 @@ $wgCustomToolbarMessages['bg'] = array(
 	'ct_nowiki_tip_wrap' => 'Пренебрегване на уики форматирането за този текст',
 	'ct_horizontal_tip' => 'Вмъкване на хоризонтална линия (използва се пестеливо)',
 	'ct_horizontal_caption' => 'Хоризонтална линия',
+	'ct_submit' => 'Отваряне',
 	'ct_close' => 'Затваряне на прозореца',
 	'ct_success' => 'Качването беше успешно!',
 	'ct_user_user' => 'Потребител',
@@ -338,10 +402,36 @@ $wgCustomToolbarMessages['bg'] = array(
 	'ct_user_sample' => 'Потребителско име',
 );
 
+/** Bengali (বাংলা)
+ * @author Bellayet
+ */
+$messages['bn'] = array(
+	'ct_bold_sample' => 'গাঢ় লেখা',
+	'ct_bold_tip_ins' => 'গাঢ় লেখা যোগ',
+	'ct_bold_tip_wrap' => 'এই লেখাকে গাঢ় কর',
+	'ct_bold_caption' => 'গাঢ়',
+	'ct_italic_sample' => 'ইটালিক লেখা',
+	'ct_italic_tip_ins' => 'ইটালিক লেখা যোগ',
+	'ct_italic_tip_wrap' => 'এই লেখাকে ইটালিক কর',
+	'ct_italic_caption' => 'ইটালিক',
+	'ct_internal_caption' => 'আন্তঃসংযোগ',
+	'ct_external_caption' => 'বহিঃসংযোগ',
+	'ct_image_caption' => 'ছবি যোগ কর',
+	'ct_attachment_caption' => 'সংযুক্তি যোগ',
+	'ct_math_caption' => 'সূত্র',
+	'ct_nowiki_caption' => 'উইকি নয়',
+	'ct_horizontal_caption' => 'অনুভূমিক রেখা',
+	'ct_upload' => 'আপলোড $1',
+	'ct_submit' => 'চলো!',
+	'ct_close' => 'উইন্ডো বন্ধ',
+	'ct_user_user' => 'ব্যবহারকারী',
+	'ct_user_sample' => 'ব্যবহারকারী নাম',
+);
+
 /** Breton (Brezhoneg)
  * @author Fulup
  */
-$wgCustomToolbarMessages['br'] = array(
+$messages['br'] = array(
 	'ct-desc' => 'Ouzhpennañ a ra ur varrenn ostilhoù astennidik',
 	'ct_bold_sample' => 'Testenn dev',
 	'ct_bold_tip_ins' => "Ensoc'hañ un destenn e tev",
@@ -389,7 +479,7 @@ $wgCustomToolbarMessages['br'] = array(
 /** Bosnian (Bosanski)
  * @author CERminator
  */
-$wgCustomToolbarMessages['bs'] = array(
+$messages['bs'] = array(
 	'ct-desc' => 'Dodaje proširivu alatnu traku',
 	'ct_bold_sample' => 'Podebljan tekst',
 	'ct_bold_tip_ins' => 'Ubaci podebljan tekst',
@@ -437,8 +527,9 @@ $wgCustomToolbarMessages['bs'] = array(
 /** Catalan (Català)
  * @author Paucabot
  * @author Solde
+ * @author Toniher
  */
-$wgCustomToolbarMessages['ca'] = array(
+$messages['ca'] = array(
 	'ct_bold_sample' => 'Text en negreta',
 	'ct_bold_tip_ins' => 'Insereix text en negreta',
 	'ct_bold_tip_wrap' => 'Fes aquest text en negreta',
@@ -456,15 +547,24 @@ $wgCustomToolbarMessages['ca'] = array(
 	'ct_upload' => 'Carrega $1',
 	'ct_select' => 'Seleccioneu $1 per carregar:',
 	'ct_submit' => 'Vés-hi!',
+	'ct_close' => 'Tanca la finestra',
 	'ct_user_user' => 'Usuari',
 	'ct_user_caption' => "Enllaç d'usuari",
 	'ct_user_sample' => "Nom d'usuari",
 );
 
-/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'ct_user_user' => 'Декъашхо',
+);
+
+/** Sorani (کوردی)
+ * @author Asoxor
  * @author Marmzok
  */
-$wgCustomToolbarMessages['ckb-arab'] = array(
+$messages['ckb'] = array(
 	'ct_bold_sample' => 'دەقی تۆخ',
 	'ct_bold_tip_ins' => 'دەقی تۆخ دابنێ',
 	'ct_bold_tip_wrap' => 'ئەم دەقە تۆخ بکە',
@@ -473,7 +573,7 @@ $wgCustomToolbarMessages['ckb-arab'] = array(
 	'ct_italic_tip_ins' => 'دەقی لار دابنێ',
 	'ct_italic_tip_wrap' => 'ئەم دەقە لار بکە',
 	'ct_italic_caption' => 'لار',
-	'ct_internal_sample' => 'ناوی لاپەڕە',
+	'ct_internal_sample' => 'ناوی پەڕە',
 	'ct_internal_tip_ins' => 'بەستەرەکی ناوەکی دابنێ',
 	'ct_internal_tip_wrap' => 'ئەم دەقە بکە بە بەستەرەکی ناوەکی',
 	'ct_internal_caption' => 'بەستەرەی ناوەکی',
@@ -497,7 +597,7 @@ $wgCustomToolbarMessages['ckb-arab'] = array(
  * @author Kuvaly
  * @author Matěj Grabovský
  */
-$wgCustomToolbarMessages['cs'] = array(
+$messages['cs'] = array(
 	'ct-desc' => 'Přidává rozširitelný panel nástrojů',
 	'ct_bold_sample' => 'Tučný text',
 	'ct_bold_tip_ins' => 'Vložit tučný text',
@@ -544,10 +644,11 @@ Prosím, zkontrolujte blokování vyskakovacích oken ve vašem prohlížeči.',
 );
 
 /** German (Deutsch)
+ * @author Kghbln
  * @author Melancholie
  * @author Umherirrender
  */
-$wgCustomToolbarMessages['de'] = array(
+$messages['de'] = array(
 	'ct-desc' => 'Fügt eine erweiterbare Werkzeugleiste hinzu',
 	'ct_bold_sample' => 'Fetter Text',
 	'ct_bold_tip_ins' => 'Fetten Text einfügen',
@@ -567,7 +668,7 @@ $wgCustomToolbarMessages['de'] = array(
 	'ct_image_tip' => 'Ein Bild einfügen',
 	'ct_image_caption' => 'Bild einfügen',
 	'ct_attachment_tip' => 'Eine Anlage einfuegen',
-	'ct_attachment_caption' => 'Eine Anlage anfuegen',
+	'ct_attachment_caption' => 'Anhang hinzufügen',
 	'ct_math_sample' => 'Hier LaTeX Formel einfügen',
 	'ct_math_tip_ins' => 'Hier mathematische Formel einfügen (LaTeX)',
 	'ct_math_tip_wrap' => 'Diesen Text in eine mathematische Formel umwandeln (LaTeX)',
@@ -593,17 +694,17 @@ Bitte überprüfe deinen Popup-Blocker.',
 	'ct_user_sample' => 'Benutzername',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  */
-$wgCustomToolbarMessages['de-formal'] = array(
+$messages['de-formal'] = array(
 	'ct_popupblocked' => 'Das Hochladen-Popup wurde am Öffnen gehindert. Bitte überprüfen Sie Ihren Popup-Blocker.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
-$wgCustomToolbarMessages['dsb'] = array(
+$messages['dsb'] = array(
 	'ct-desc' => 'Pśidawa rozšyrjabnu rědowu kšomu',
 	'ct_bold_sample' => 'Tucny tekst',
 	'ct_bold_tip_ins' => 'Tucny tekst zasunuś',
@@ -649,12 +750,17 @@ Pšosym pśekontrolěruj swój blokěrowak wuskokowańskich woknow.',
 	'ct_user_sample' => 'Wužywarske mě',
 );
 
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'ct_submit' => 'Yi',
+);
+
 /** Greek (Ελληνικά)
  * @author Geraki
  * @author Omnipaedista
  * @author ZaDiak
  */
-$wgCustomToolbarMessages['el'] = array(
+$messages['el'] = array(
 	'ct-desc' => 'Προσθέτει μία επεκτάσιμη εργαλειοθήκη',
 	'ct_bold_sample' => 'Έντονο κείμενο',
 	'ct_bold_tip_ins' => 'Εισαγωγή έντονου κειμένου',
@@ -700,11 +806,12 @@ $wgCustomToolbarMessages['el'] = array(
 );
 
 /** Esperanto (Esperanto)
+ * @author ArnoLagrange
  * @author Melancholie
  * @author Michawiki
  * @author Yekrats
  */
-$wgCustomToolbarMessages['eo'] = array(
+$messages['eo'] = array(
 	'ct-desc' => 'Aldonas etendeblan ilobreton',
 	'ct_bold_sample' => 'Grasa teksto',
 	'ct_bold_tip_ins' => 'Enmeti grasan tekston',
@@ -745,7 +852,7 @@ $wgCustomToolbarMessages['eo'] = array(
 	'ct_popupblocked' => 'La alŝuta ŝprucfenestro estis preventita de malfermi.
 Bonvolu kontroli vian ŝprucfenestran barilon.',
 	'ct_user_user' => 'Uzanto',
-	'ct_user_tip' => 'Enmeti ligilon al uzula paĝo',
+	'ct_user_tip' => 'Enmeti ligilon al uzantopaĝo',
 	'ct_user_caption' => 'uzanto ligilo',
 	'ct_user_sample' => 'Salutnomo',
 );
@@ -754,7 +861,7 @@ Bonvolu kontroli vian ŝprucfenestran barilon.',
  * @author Crazymadlover
  * @author Imre
  */
-$wgCustomToolbarMessages['es'] = array(
+$messages['es'] = array(
 	'ct-desc' => 'Agregar una barra de herramientas extensible',
 	'ct_bold_sample' => 'Texto en negrita',
 	'ct_bold_tip_ins' => 'Insertar texto en negrita',
@@ -803,7 +910,7 @@ $wgCustomToolbarMessages['es'] = array(
  * @author Avjoska
  * @author Pikne
  */
-$wgCustomToolbarMessages['et'] = array(
+$messages['et'] = array(
 	'ct_bold_sample' => 'Rasvane kiri',
 	'ct_bold_tip_ins' => 'Sisesta rasvane tekst',
 	'ct_bold_tip_wrap' => 'Tee see kiri paksuks',
@@ -835,7 +942,7 @@ $wgCustomToolbarMessages['et'] = array(
  * @author An13sa
  * @author Kobazulo
  */
-$wgCustomToolbarMessages['eu'] = array(
+$messages['eu'] = array(
 	'ct_bold_sample' => 'Testu beltza',
 	'ct_bold_tip_ins' => 'Testu beltza txertatu',
 	'ct_bold_tip_wrap' => 'Testu hau belztu',
@@ -852,7 +959,7 @@ $wgCustomToolbarMessages['eu'] = array(
 	'ct_external_tip_wrap' => 'Testu hau kanpo loturan bihurtu',
 	'ct_external_caption' => 'Kanpo lotura',
 	'ct_image_tip' => 'Irudia txertatu',
-	'ct_image_caption' => 'Irudia txertatu',
+	'ct_image_caption' => 'Irudia gehitu',
 	'ct_attachment_tip' => 'Eranskin bat txertatu',
 	'ct_attachment_caption' => 'Eranskina gehitu',
 	'ct_math_sample' => 'Txertatu LaTeX formula hemen',
@@ -869,7 +976,7 @@ $wgCustomToolbarMessages['eu'] = array(
 	'ct_success' => 'Fitxategi igoera arrakastatsua!',
 	'ct_user_user' => 'Lankide',
 	'ct_user_caption' => 'Lankide lotura',
-	'ct_user_sample' => 'Lankide izena',
+	'ct_user_sample' => 'Erabiltzaile izena',
 );
 
 /** Finnish (Suomi)
@@ -878,7 +985,7 @@ $wgCustomToolbarMessages['eu'] = array(
  * @author Nike
  * @author Str4nd
  */
-$wgCustomToolbarMessages['fi'] = array(
+$messages['fi'] = array(
 	'ct-desc' => 'Lisää laajennettavan työkalupalkin.',
 	'ct_bold_sample' => 'Lihavoitu teksti',
 	'ct_bold_tip_ins' => 'Lisää lihavoitu teksti',
@@ -931,7 +1038,7 @@ Tarkista ponnahdusikkunoiden eston asetukset.',
  * @author Sherbrooke
  * @author Verdy p
  */
-$wgCustomToolbarMessages['fr'] = array(
+$messages['fr'] = array(
 	'ct-desc' => 'Ajoute une barre d’outils extensible',
 	'ct_bold_sample' => 'Texte gras',
 	'ct_bold_tip_ins' => 'Insérer un texte en gras',
@@ -969,36 +1076,67 @@ $wgCustomToolbarMessages['fr'] = array(
 	'ct_submit' => 'Lancer',
 	'ct_close' => 'Fermer la fenêtre',
 	'ct_success' => 'Téléversement du fichier réussi !',
-	'ct_popupblocked' => 'L’ouverture de la fenêtre de téléversement a été empêchée.
-Veuillez vérifier vos paramètres de blocage des fenêtres intruses.',
+	'ct_popupblocked' => 'L’ouverture de la fenêtre de téléversement a été empêchée. Veuillez vérifier les paramètres de votre outil de blocage de fenêtres intruses.',
 	'ct_user_user' => 'Utilisateur',
 	'ct_user_tip' => 'Insérer un lien vers une page utilisateur',
 	'ct_user_caption' => 'Lien de l’utilisateur',
-	'ct_user_sample' => 'Nom de l’utilisateur',
+	'ct_user_sample' => 'Nom d’utilisateur',
 );
 
 /** Franco-Provençal (Arpetan)
  * @author Cedric31
  * @author ChrisPtDe
  */
-$wgCustomToolbarMessages['frp'] = array(
+$messages['frp'] = array(
+	'ct-desc' => 'Apond una bârra d’outils èxtensibla.',
 	'ct_bold_sample' => 'Tèxto en grâs',
+	'ct_bold_tip_ins' => 'Entrebetar un tèxto en grâs',
+	'ct_bold_tip_wrap' => 'Betar ceti tèxto en grâs',
 	'ct_bold_caption' => 'Grâs',
 	'ct_italic_sample' => 'Tèxto en étalico',
+	'ct_italic_tip_ins' => 'Entrbetar un tèxto en étalico',
+	'ct_italic_tip_wrap' => 'Betar ceti tèxto en étalico',
+	'ct_italic_caption' => 'Étalico',
+	'ct_internal_sample' => 'Nom de la pâge',
+	'ct_internal_tip_ins' => 'Entrebetar un lim de dedens',
+	'ct_internal_tip_wrap' => 'Fâre de ceti tèxto un lim de dedens',
 	'ct_internal_caption' => 'Lim de dedens',
+	'ct_external_tip_ins' => 'Entrebetar un lim de defôr',
+	'ct_external_tip_wrap' => 'Fâre de ceti tèxto un lim de defôr',
 	'ct_external_caption' => 'Lim de defôr',
+	'ct_image_tip' => 'Entrebetar una émâge',
+	'ct_image_caption' => 'Apondre una émâge',
+	'ct_attachment_tip' => 'Entrebetar un fichiér apondu',
+	'ct_attachment_caption' => 'Apondre un fichiér apondu',
+	'ct_math_sample' => 'Entrebetar ique una formula LaTeX',
+	'ct_math_tip_ins' => 'Entrebetar una formula matèmatica (LaTeX)',
+	'ct_math_tip_wrap' => 'Fâre de ceti tèxto una formula matèmatica (LaTeX)',
 	'ct_math_caption' => 'Formula',
+	'ct_nowiki_sample' => 'Entrebetar ique un tèxto pas formatâ',
+	'ct_nowiki_tip_ins' => 'Ignorar lo formatâjo vouiqui',
+	'ct_nowiki_tip_wrap' => 'Ignorar lo formatâjo vouiqui por ceti tèxto',
+	'ct_nowiki_caption' => 'Gins de vouiqui',
+	'ct_horizontal_tip' => 'Entrebetar una legne plana (pas nen abusar)',
+	'ct_horizontal_caption' => 'Legne plana',
 	'ct_upload' => 'Tèlèchargiér $1',
+	'ct_select' => 'Chouèsir $1 a tèlèchargiér :',
+	'ct_caption' => 'Apondre un en-téta (u chouèx) :',
+	'ct_link' => 'Apondre un nom de lim (u chouèx) :',
 	'ct_submit' => 'Lanciér !',
-	'ct_user_user' => 'Utilisator',
-	'ct_user_caption' => 'Lim a l’utilisator',
-	'ct_user_sample' => 'Nom d’utilisator',
+	'ct_close' => 'Cllôre la fenétra',
+	'ct_success' => 'Tèlèchargement du fichiér reussi !',
+	'ct_popupblocked' => 'L’uvèrtura de la fenétra de tèlèchargement at étâ empachiê.
+Volyéd controlar voutron bloquior de fenétres sortentes.',
+	'ct_user_user' => 'Usanciér',
+	'ct_user_tip' => 'Entrebetar un lim de vers una pâge usanciér',
+	'ct_user_caption' => 'Lim a l’usanciér',
+	'ct_user_sample' => 'Nom d’usanciér',
 );
 
 /** Irish (Gaeilge)
  * @author Alison
  */
-$wgCustomToolbarMessages['ga'] = array(
+$messages['ga'] = array(
 	'ct_bold_sample' => 'Cló trom',
 	'ct_bold_caption' => 'Trom',
 );
@@ -1006,7 +1144,7 @@ $wgCustomToolbarMessages['ga'] = array(
 /** Galician (Galego)
  * @author Toliño
  */
-$wgCustomToolbarMessages['gl'] = array(
+$messages['gl'] = array(
 	'ct-desc' => 'Engade unha caixa de ferramentas extensible',
 	'ct_bold_sample' => 'Texto en negra',
 	'ct_bold_tip_ins' => 'Inserir texto en negra',
@@ -1031,7 +1169,7 @@ $wgCustomToolbarMessages['gl'] = array(
 	'ct_math_tip_ins' => 'Inserir unha fórmula matemática (LaTeX)',
 	'ct_math_tip_wrap' => 'Facer que este texto sexa unha fórmula matemática (LaTeX)',
 	'ct_math_caption' => 'Fórmula',
-	'ct_nowiki_sample' => 'Inserir aquí un texto sen formato',
+	'ct_nowiki_sample' => 'Insira aquí un texto sen formato',
 	'ct_nowiki_tip_ins' => 'Ignorar o formato wiki',
 	'ct_nowiki_tip_wrap' => 'Ignorar o formato wiki deste texto',
 	'ct_nowiki_caption' => 'Non wiki',
@@ -1056,7 +1194,7 @@ Por favor, comprobe o seu bloqueador de ventás emerxentes.',
  * @author Crazymadlover
  * @author Omnipaedista
  */
-$wgCustomToolbarMessages['grc'] = array(
+$messages['grc'] = array(
 	'ct_external_caption' => 'Ἐξωτερικὸς σύνδεσμος',
 	'ct_submit' => 'Ἰέναι!',
 	'ct_user_user' => 'Χρώμενος',
@@ -1066,7 +1204,7 @@ $wgCustomToolbarMessages['grc'] = array(
 /** Swiss German (Alemannisch)
  * @author Als-Holder
  */
-$wgCustomToolbarMessages['gsw'] = array(
+$messages['gsw'] = array(
 	'ct-desc' => 'Fiegt e uuswytbari Wärchzyygleischte zue',
 	'ct_bold_sample' => 'Fette Text',
 	'ct_bold_tip_ins' => 'Fette Text yyfiege',
@@ -1115,7 +1253,7 @@ Bitte iberprief Dyy Popup-Blocker.',
 /** Gujarati (ગુજરાતી)
  * @author Dineshjk
  */
-$wgCustomToolbarMessages['gu'] = array(
+$messages['gu'] = array(
 	'ct_user_sample' => 'સભ્ય નામ',
 );
 
@@ -1123,7 +1261,7 @@ $wgCustomToolbarMessages['gu'] = array(
  * @author Rotemliss
  * @author YaronSh
  */
-$wgCustomToolbarMessages['he'] = array(
+$messages['he'] = array(
 	'ct-desc' => 'הוספת סרגל כלים הניתן להרחבה',
 	'ct_bold_sample' => 'טקסט מודגש',
 	'ct_bold_tip_ins' => 'הוספת טקסט מודגש',
@@ -1169,10 +1307,21 @@ $wgCustomToolbarMessages['he'] = array(
 	'ct_user_sample' => 'שם המשתמש',
 );
 
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'ct_image_tip' => 'Umetnite sliku',
+	'ct_image_caption' => 'Dodajte sliku',
+	'ct_attachment_tip' => 'Umetanje privitaka',
+	'ct_attachment_caption' => 'Dodati privitak',
+	'ct_close' => 'Zatvori prozor',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
-$wgCustomToolbarMessages['hsb'] = array(
+$messages['hsb'] = array(
 	'ct-desc' => 'Přidawa rozšerjomnu gratowu lajstu',
 	'ct_bold_sample' => 'Tučny tekst',
 	'ct_bold_tip_ins' => 'Tučny tekst zasunyć',
@@ -1222,7 +1371,7 @@ Prošu skontroluj swój blokowak wuskakowacych woknow.',
  * @author Dani
  * @author Glanthor Reviol
  */
-$wgCustomToolbarMessages['hu'] = array(
+$messages['hu'] = array(
 	'ct-desc' => 'Bővíthető eszköztár',
 	'ct_bold_sample' => 'Félkövér szöveg',
 	'ct_bold_tip_ins' => 'Félkövér szöveg beillesztése',
@@ -1271,7 +1420,7 @@ Ellenőrízd a felugró ablakokat blokkoló programodat.',
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
-$wgCustomToolbarMessages['ia'] = array(
+$messages['ia'] = array(
 	'ct-desc' => 'Adde un barra extensibile de instrumentos',
 	'ct_bold_sample' => 'Texto grasse',
 	'ct_bold_tip_ins' => 'Inserer texto grasse',
@@ -1290,8 +1439,8 @@ $wgCustomToolbarMessages['ia'] = array(
 	'ct_external_caption' => 'Ligamine externe',
 	'ct_image_tip' => 'Inserer un imagine',
 	'ct_image_caption' => 'Adder un imagine',
-	'ct_attachment_tip' => 'Inserer un attachamento',
-	'ct_attachment_caption' => 'Adder attachamento',
+	'ct_attachment_tip' => 'Inserer un annexo',
+	'ct_attachment_caption' => 'Adder annexo',
 	'ct_math_sample' => 'Insere hic un formula LaTeX',
 	'ct_math_tip_ins' => 'Inserer un formula mathematic (LaTeX)',
 	'ct_math_tip_wrap' => 'Facer de iste texto un formula mathematic (LaTeX)',
@@ -1302,13 +1451,13 @@ $wgCustomToolbarMessages['ia'] = array(
 	'ct_nowiki_caption' => 'Nulle wiki',
 	'ct_horizontal_tip' => 'Inserer un linea horizontal (usa con moderation)',
 	'ct_horizontal_caption' => 'Linea horizontal',
-	'ct_upload' => 'Cargar $1',
-	'ct_select' => 'Selige $1 pro cargar:',
+	'ct_upload' => 'Incargar $1',
+	'ct_select' => 'Selige $1 a incargar:',
 	'ct_caption' => 'Adde subtitulo (optional):',
 	'ct_link' => 'Adde nomine de ligamine (optional):',
 	'ct_submit' => 'Ir!',
 	'ct_close' => 'Clauder fenestra',
-	'ct_success' => 'File cargate con successo!',
+	'ct_success' => 'File incargate con successo!',
 	'ct_popupblocked' => 'Le fenestra pop-up non poteva esser aperite.
 Per favor verifica que tu blocator de pop-up lo permitte.',
 	'ct_user_user' => 'Usator',
@@ -1320,7 +1469,7 @@ Per favor verifica que tu blocator de pop-up lo permitte.',
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
  */
-$wgCustomToolbarMessages['id'] = array(
+$messages['id'] = array(
 	'ct-desc' => 'Tambahkan batang penyuntingan berpengaya',
 	'ct_bold_sample' => 'Teks cetak tebal',
 	'ct_bold_tip_ins' => 'Masukkan teks cetak tebal',
@@ -1368,15 +1517,22 @@ $wgCustomToolbarMessages['id'] = array(
 /** Igbo (Igbo)
  * @author Ukabia
  */
-$wgCustomToolbarMessages['ig'] = array(
+$messages['ig'] = array(
+	'ct_bold_caption' => 'Shí íke',
+	'ct_external_caption' => 'Jikodo di èzí',
+	'ct_nowiki_caption' => 'Wiki àdíghị',
 	'ct_submit' => 'Gá!',
+	'ct_user_user' => "Ọ'bànifé",
+	'ct_user_caption' => "Jikodo ọ'bànifé",
+	'ct_user_sample' => "Áhà ọ'bànifé",
 );
 
 /** Italian (Italiano)
+ * @author Civvì
  * @author Darth Kule
  * @author Melos
  */
-$wgCustomToolbarMessages['it'] = array(
+$messages['it'] = array(
 	'ct-desc' => 'Aggiunge una toolbar estendibile',
 	'ct_bold_sample' => 'Testo in grassetto',
 	'ct_bold_tip_ins' => 'Inserisci testo in grassetto',
@@ -1404,6 +1560,7 @@ $wgCustomToolbarMessages['it'] = array(
 	'ct_nowiki_sample' => 'Inserisci qui il testo non formattato',
 	'ct_nowiki_tip_ins' => 'Ignora la formattazione wiki',
 	'ct_nowiki_tip_wrap' => 'Ignora la formattazione wiki per questo testo',
+	'ct_nowiki_caption' => 'Nessun wiki',
 	'ct_horizontal_tip' => 'Inserisci una linea orizzontale (usare con parsimonia)',
 	'ct_horizontal_caption' => 'Linea orizzontale',
 	'ct_upload' => 'Carica $1',
@@ -1424,8 +1581,9 @@ $wgCustomToolbarMessages['it'] = array(
  * @author Fryed-peach
  * @author Hosiryuhosi
  * @author Whym
+ * @author 青子守歌
  */
-$wgCustomToolbarMessages['ja'] = array(
+$messages['ja'] = array(
 	'ct-desc' => '拡張可能なツールバーを追加する',
 	'ct_bold_sample' => '太字テキスト',
 	'ct_bold_tip_ins' => '太字テキストを挿入する',
@@ -1451,7 +1609,7 @@ $wgCustomToolbarMessages['ja'] = array(
 	'ct_math_tip_wrap' => 'このテキストを数式 (LaTeX) にする',
 	'ct_math_caption' => '数式',
 	'ct_nowiki_sample' => 'ここに書式なしテキストを挿入',
-	'ct_nowiki_tip_ins' => 'ウィキ書式設定を無視する',
+	'ct_nowiki_tip_ins' => 'ウィキ書式を無視',
 	'ct_nowiki_tip_wrap' => 'このテキストのウィキ書式設定を無視する',
 	'ct_nowiki_caption' => 'ノーウィキ',
 	'ct_horizontal_tip' => '水平線を挿入する (使用は控えめに)',
@@ -1473,7 +1631,7 @@ $wgCustomToolbarMessages['ja'] = array(
 /** Javanese (Basa Jawa)
  * @author Pras
  */
-$wgCustomToolbarMessages['jv'] = array(
+$messages['jv'] = array(
 	'ct_bold_sample' => 'Tèks cithak kandel',
 	'ct_bold_tip_ins' => 'Seselaké tèks cithak kandel',
 	'ct_bold_tip_wrap' => 'Gawénen tèks iki cithak kandel',
@@ -1520,7 +1678,7 @@ $wgCustomToolbarMessages['jv'] = array(
  * @author Thearith
  * @author គីមស៊្រុន
  */
-$wgCustomToolbarMessages['km'] = array(
+$messages['km'] = array(
 	'ct-desc' => 'បន្ថែម​របារឧបករណ៍​ដែល​អាច​ដាក់​បាន',
 	'ct_bold_sample' => 'អក្សរ​ដិត',
 	'ct_bold_tip_ins' => 'បញ្ចូល​អក្សរ​ដិត',
@@ -1561,20 +1719,20 @@ $wgCustomToolbarMessages['km'] = array(
 	'ct_user_user' => 'អ្នកប្រើប្រាស់',
 	'ct_user_tip' => 'ដាក់​តំណ​ជាមួយ​ទំព័រ​អ្នកប្រើប្រាស់',
 	'ct_user_caption' => 'តំណ​អ្នកប្រើប្រាស់',
-	'ct_user_sample' => 'ឈ្មោះអ្នកប្រើប្រាស់',
+	'ct_user_sample' => 'អត្តនាម',
 );
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
-$wgCustomToolbarMessages['kn'] = array(
+$messages['kn'] = array(
 	'ct_submit' => 'ಹೋಗು!',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
-$wgCustomToolbarMessages['ksh'] = array(
+$messages['ksh'] = array(
 	'ct-desc' => 'Deiht en ußboubare Reih met Werkzüch dobei.',
 	'ct_bold_sample' => '{{int:bold sample}}',
 	'ct_bold_tip_ins' => '{{int:bold tip}} enfööje',
@@ -1609,7 +1767,7 @@ $wgCustomToolbarMessages['ksh'] = array(
 	'ct_select' => 'Sök $1 uß för huhzelade:',
 	'ct_caption' => 'Donn en Beschreftung dobei (kam_mer fott lohße):',
 	'ct_link' => 'Donn ene Name för dä Link dobei (kam_mer och fott lohße):',
-	'ct_submit' => 'Loß Jonn!',
+	'ct_submit' => 'Lohß Jonn!',
 	'ct_close' => 'He dat Finster zo maache',
 	'ct_success' => 'De Datei es huhjelaade.',
 	'ct_popupblocked' => 'Dat Finster för et Huhlade kunnt op Dingem Kompjutor nit opjemaat wääde.
@@ -1621,10 +1779,21 @@ Odder loor ens noh Dingem <i lang="en">Popup-Blocker</i>.',
 	'ct_user_sample' => 'Metmaachername',
 );
 
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ * @author Gomada
+ */
+$messages['ku-latn'] = array(
+	'ct_italic_caption' => 'Xwahr',
+	'ct_external_caption' => 'Lînka derve',
+	'ct_submit' => 'Biçe!',
+	'ct_user_sample' => 'Navê bikarhêner',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$wgCustomToolbarMessages['lb'] = array(
+$messages['lb'] = array(
 	'ct-desc' => 'Eng erweiderbar Toolbar derbäisetzen',
 	'ct_bold_sample' => 'Fetten Text',
 	'ct_bold_tip_ins' => 'Fetten Text drasetzen',
@@ -1670,10 +1839,19 @@ Kuckt w.e.g. d'Astellunge vu ärem Popup-Blocker no.",
 	'ct_user_sample' => 'Benotzernumm',
 );
 
+/** Lazuri (Lazuri)
+ * @author Bombola
+ */
+$messages['lzz'] = array(
+	'ct_bold_sample' => "Mçxu nç'ara",
+	'ct_bold_caption' => 'Mçxu',
+	'ct_submit' => 'İgzali!',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
-$wgCustomToolbarMessages['mk'] = array(
+$messages['mk'] = array(
 	'ct-desc' => 'Додава алатник на отворање',
 	'ct_bold_sample' => 'Дебел текст',
 	'ct_bold_tip_ins' => 'Вметни дебел текст',
@@ -1699,8 +1877,8 @@ $wgCustomToolbarMessages['mk'] = array(
 	'ct_math_tip_wrap' => 'Направи го текстот математичка формула (LaTeX)',
 	'ct_math_caption' => 'Формула',
 	'ct_nowiki_sample' => 'Тука вметнете неформатиран текст',
-	'ct_nowiki_tip_ins' => 'Игнорирај вики-форматирање',
-	'ct_nowiki_tip_wrap' => 'Игнорирај вики-форматирање за овој тест',
+	'ct_nowiki_tip_ins' => 'Занемари вики-форматирање',
+	'ct_nowiki_tip_wrap' => 'Занемари го вики-форматирањето во овој тест',
 	'ct_nowiki_caption' => 'Без вики',
 	'ct_horizontal_tip' => 'Вметни хоризонтална линија (не користете често)',
 	'ct_horizontal_caption' => 'Хоризонтална линија',
@@ -1718,10 +1896,73 @@ $wgCustomToolbarMessages['mk'] = array(
 	'ct_user_sample' => 'Корисничко име',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'ct_submit' => 'Явах',
+	'ct_user_sample' => 'Хэрэглэгчийн нэр',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'ct-desc' => 'Menyediakan bar alat yang boleh diperluas',
+	'ct_bold_sample' => 'Teks tebal',
+	'ct_bold_tip_ins' => 'Isikan teks tebal',
+	'ct_bold_tip_wrap' => 'Tebalkan teks ini',
+	'ct_bold_caption' => 'Tebal',
+	'ct_italic_sample' => 'Teks condong',
+	'ct_italic_tip_ins' => 'Isikan teks condong',
+	'ct_italic_tip_wrap' => 'Condongkan teks ini',
+	'ct_italic_caption' => 'Condong',
+	'ct_internal_sample' => 'Nama laman',
+	'ct_internal_tip_ins' => 'Sisipkan pautan dalam',
+	'ct_internal_tip_wrap' => 'Jadikan teks ini pautan dalam',
+	'ct_internal_caption' => 'Pautan dalam',
+	'ct_external_tip_ins' => 'Sisipkan pautan luar',
+	'ct_external_tip_wrap' => 'Jadikan teks ini pautan luar',
+	'ct_external_caption' => 'Pautan luar',
+	'ct_image_tip' => 'Sisipkan gambar',
+	'ct_image_caption' => 'Tambahkan gambar',
+	'ct_attachment_tip' => 'Sisipkan lampiran',
+	'ct_attachment_caption' => 'Tambahkan lampiran',
+	'ct_math_sample' => 'Sisipkan rumus LaTex di sini',
+	'ct_math_tip_ins' => 'Sisipkan rumus matematik (LaTeX)',
+	'ct_math_tip_wrap' => 'Jadikan teks ini formula matematik (LaTeX)',
+	'ct_math_caption' => 'Rumus',
+	'ct_nowiki_sample' => 'Isikan teks tak berformat di sini',
+	'ct_nowiki_tip_ins' => 'Abaikan pemformatan wiki',
+	'ct_nowiki_tip_wrap' => 'Abaikan pemformatan wiki untuks teks ini',
+	'ct_nowiki_caption' => 'Tiada wiki',
+	'ct_horizontal_tip' => 'Sisipkan garis melintang (gunakan dengan hemat)',
+	'ct_horizontal_caption' => 'Garis melintang',
+	'ct_upload' => 'Muat naik $1',
+	'ct_select' => 'Pilih $1 untuk dimuat naik:',
+	'ct_caption' => 'Bubuh kapsyen (pilihan):',
+	'ct_link' => 'Bubuh nama pautan (pilihan):',
+	'ct_submit' => 'Pergi!',
+	'ct_close' => 'Tutup tetingkap',
+	'ct_success' => 'Fail berjaya dimuat naik!',
+	'ct_popupblocked' => 'Tetimbul muat naik dihalang daripada dibuka. Sila semak penyekat tetimbul (pop-up blocker) anda.',
+	'ct_user_user' => 'Pengguna',
+	'ct_user_tip' => 'Sisipkan pautan kepada laman pengguna',
+	'ct_user_caption' => 'Pautan pengguna',
+	'ct_user_sample' => 'Nama pengguna',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'ct_submit' => 'Mur!',
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
-$wgCustomToolbarMessages['myv'] = array(
+$messages['myv'] = array(
 	'ct_bold_sample' => 'Эчкстэ текст',
 	'ct_italic_sample' => 'Комавтонь текст',
 	'ct_italic_tip_ins' => 'Совавтомс комавтонь текст',
@@ -1732,10 +1973,78 @@ $wgCustomToolbarMessages['myv'] = array(
 	'ct_submit' => 'Адя!',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'ct-desc' => 'Legger til en verktøymeny som kan utvides',
+	'ct_bold_sample' => 'Fet tekst',
+	'ct_bold_tip_ins' => 'Sett inn fet tekst',
+	'ct_bold_tip_wrap' => 'Gjør denne teksten fet',
+	'ct_bold_caption' => 'Fet',
+	'ct_italic_sample' => 'Kursiv tekst',
+	'ct_italic_tip_ins' => 'Sett inn kursiv tekst',
+	'ct_italic_tip_wrap' => 'Gjør denne teksten kursiv',
+	'ct_italic_caption' => 'Kursiv',
+	'ct_internal_sample' => 'Sidenavn',
+	'ct_internal_tip_ins' => 'Sett inn en intern lenke',
+	'ct_internal_tip_wrap' => 'Gjør denne teksten til en intern lenke',
+	'ct_internal_caption' => 'Intern lenke',
+	'ct_external_tip_ins' => 'Sett inn en ekstern lenke',
+	'ct_external_tip_wrap' => 'Gjør denne teksten til en ekstern lenke',
+	'ct_external_caption' => 'Ekstern lenke',
+	'ct_image_tip' => 'Sett inn et bilde',
+	'ct_image_caption' => 'Legg til et bilde',
+	'ct_attachment_tip' => 'Sett inn et vedlegg',
+	'ct_attachment_caption' => 'Legg til et vedlegg',
+	'ct_math_sample' => 'Sett in LaTeX-formel her',
+	'ct_math_tip_ins' => 'Sett inn matematisk formel (LaTeX)',
+	'ct_math_tip_wrap' => 'Gjør denne teksten til en matematisk formel (LaTeX)',
+	'ct_math_caption' => 'Formel',
+	'ct_nowiki_sample' => 'Sett inn uformatert tekst her',
+	'ct_nowiki_tip_ins' => 'Ignorer wikiformatering',
+	'ct_nowiki_tip_wrap' => 'Ignorer wikiformatering for denne teksten',
+	'ct_nowiki_caption' => 'Ingen wikitekst',
+	'ct_horizontal_tip' => 'Sett inn en horisantal linje (bruk sparsomt)',
+	'ct_horizontal_caption' => 'Horisontal linje',
+	'ct_upload' => 'Last opp $1',
+	'ct_select' => 'Velg $1 for å laste opp:',
+	'ct_caption' => 'Legg til bildetekst (valgfritt):',
+	'ct_link' => 'Legg til lenkenavn (valgfritt):',
+	'ct_submit' => 'Gå!',
+	'ct_close' => 'Lukk vinduet',
+	'ct_success' => 'Filopplasting vellykket!',
+	'ct_popupblocked' => 'Sprettoppvinduet for opplastingen ble hindret fra å åpne. Vennligst sjekk innstillingene dine for sprettoppvinduer.',
+	'ct_user_user' => 'Bruker',
+	'ct_user_tip' => 'Sett inn en lenke til en brukerside',
+	'ct_user_caption' => 'Brukerlenke',
+	'ct_user_sample' => 'Brukernavn',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'ct_bold_sample' => 'Vet-edrokten tekste',
+	'ct_bold_tip_ins' => 'Vet-edrokten tekste invoegen',
+	'ct_bold_tip_wrap' => 'Disse tekste vet-edrokt maken',
+	'ct_bold_caption' => 'Vet-edrokt',
+	'ct_italic_tip_ins' => 'Schunedrokten tekste invoegen',
+	'ct_italic_tip_wrap' => 'Disse tekste schunedrokt maken',
+	'ct_italic_caption' => 'Schunedrokt',
+);
+
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'ct_user_sample' => 'प्रयोगकर्ता नाम:',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
-$wgCustomToolbarMessages['nl'] = array(
+$messages['nl'] = array(
 	'ct-desc' => 'Voegt een uitbreidbare toolbar toe',
 	'ct_bold_sample' => 'Vetgedrukte tekst',
 	'ct_bold_tip_ins' => 'Vetgedrukte tekt invoegen',
@@ -1784,7 +2093,7 @@ Controleer uw pop-upblokkeerprogramma.',
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  */
-$wgCustomToolbarMessages['nn'] = array(
+$messages['nn'] = array(
 	'ct-desc' => 'Legg til ein verktymeny som kan bli utvida',
 	'ct_bold_sample' => 'Feit tekst',
 	'ct_bold_tip_ins' => 'Set inn feit tekst',
@@ -1830,58 +2139,10 @@ Kontroller innstillingane dine for sprettoppvindaugo.',
 	'ct_user_sample' => 'Brukarnamn',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Nghtwlkr
- */
-$wgCustomToolbarMessages['no'] = array(
-	'ct-desc' => 'Legger til en verktøymeny som kan utvides',
-	'ct_bold_sample' => 'Fet tekst',
-	'ct_bold_tip_ins' => 'Sett inn fet tekst',
-	'ct_bold_tip_wrap' => 'Gjør denne teksten fet',
-	'ct_bold_caption' => 'Fet',
-	'ct_italic_sample' => 'Kursiv tekst',
-	'ct_italic_tip_ins' => 'Sett inn kursiv tekst',
-	'ct_italic_tip_wrap' => 'Gjør denne teksten kursiv',
-	'ct_italic_caption' => 'Kursiv',
-	'ct_internal_sample' => 'Sidenavn',
-	'ct_internal_tip_ins' => 'Sett inn en intern lenke',
-	'ct_internal_tip_wrap' => 'Gjør denne teksten til en intern lenke',
-	'ct_internal_caption' => 'Intern lenke',
-	'ct_external_tip_ins' => 'Sett inn en ekstern lenke',
-	'ct_external_tip_wrap' => 'Gjør denne teksten til en ekstern lenke',
-	'ct_external_caption' => 'Ekstern lenke',
-	'ct_image_tip' => 'Sett inn et bilde',
-	'ct_image_caption' => 'Legg til et bilde',
-	'ct_attachment_tip' => 'Sett inn et vedlegg',
-	'ct_attachment_caption' => 'Legg til et vedlegg',
-	'ct_math_sample' => 'Sett in LaTeX-formel her',
-	'ct_math_tip_ins' => 'Sett inn matematisk formel (LaTeX)',
-	'ct_math_tip_wrap' => 'Gjør denne teksten til en matematisk formel (LaTeX)',
-	'ct_math_caption' => 'Formel',
-	'ct_nowiki_sample' => 'Sett inn uformatert tekst her',
-	'ct_nowiki_tip_ins' => 'Ignorer wikiformatering',
-	'ct_nowiki_tip_wrap' => 'Ignorer wikiformatering for denne teksten',
-	'ct_nowiki_caption' => 'Ingen wikitekst',
-	'ct_horizontal_tip' => 'Sett inn en horisantal linje (bruk sparsomt)',
-	'ct_horizontal_caption' => 'Horisontal linje',
-	'ct_upload' => 'Last opp $1',
-	'ct_select' => 'Velg $1 for å laste opp:',
-	'ct_caption' => 'Legg til bildetekst (valgfritt):',
-	'ct_link' => 'Legg til lenkenavn (valgfritt):',
-	'ct_submit' => 'Gå!',
-	'ct_close' => 'Lukk vinduet',
-	'ct_success' => 'Filopplasting vellykket!',
-	'ct_popupblocked' => 'Sprettoppvinduet for opplastingen ble hindret fra å åpne. Vennligst sjekk innstillingene dine for sprettoppvinduer.',
-	'ct_user_user' => 'Bruker',
-	'ct_user_tip' => 'Sett inn en lenke til en brukerside',
-	'ct_user_caption' => 'Brukerlenke',
-	'ct_user_sample' => 'Brukernavn',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
-$wgCustomToolbarMessages['oc'] = array(
+$messages['oc'] = array(
 	'ct-desc' => 'Apondre una barra d’espleches extensibla',
 	'ct_bold_sample' => 'Tèxte en gras',
 	'ct_bold_tip_ins' => 'Inserir un tèxte en gras',
@@ -1927,10 +2188,18 @@ Consultatz vòstres paramètres de blocatge dels popups.',
 	'ct_user_sample' => 'Nom de l’utilizaire',
 );
 
-/** Ossetic (Иронау)
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'ct_bold_sample' => 'ମୋଟା ଲେଖା',
+	'ct_bold_tip_ins' => 'ମୋଟା ଲେଖାଟିଏ ଭରିବେ',
+);
+
+/** Ossetic (Ирон)
  * @author Amikeco
  */
-$wgCustomToolbarMessages['os'] = array(
+$messages['os'] = array(
 	'ct_external_caption' => 'Æддаг æрвитæн',
 	'ct_math_caption' => 'Формулæ',
 );
@@ -1938,7 +2207,10 @@ $wgCustomToolbarMessages['os'] = array(
 /** Deitsch (Deitsch)
  * @author Xqt
  */
-$wgCustomToolbarMessages['pdc'] = array(
+$messages['pdc'] = array(
+	'ct_external_caption' => 'Gewebbgleecher',
+	'ct_nowiki_caption' => 'Ken Wiki',
+	'ct_submit' => 'Go!',
 	'ct_close' => 'Fenschder zumache',
 	'ct_user_user' => 'Yuuser',
 	'ct_user_sample' => 'Yuuser-Naame',
@@ -1949,7 +2221,7 @@ $wgCustomToolbarMessages['pdc'] = array(
  * @author Leinad
  * @author Sp5uhe
  */
-$wgCustomToolbarMessages['pl'] = array(
+$messages['pl'] = array(
 	'ct-desc' => 'Dodaje rozszerzony pasek narzędzi',
 	'ct_bold_sample' => 'Pogrubiony tekst',
 	'ct_bold_tip_ins' => 'Wstaw pogrubiony tekst',
@@ -1999,7 +2271,7 @@ Proszę sprawdzić swoją blokadę wyskakujących okienek.',
  * @author Borichèt
  * @author Dragonòt
  */
-$wgCustomToolbarMessages['pms'] = array(
+$messages['pms'] = array(
 	'ct-desc' => "A gionta na bara d'utiss estendìbil",
 	'ct_bold_sample' => 'Test an grassèt',
 	'ct_bold_tip_ins' => 'Anserì un test an grassèt',
@@ -2047,7 +2319,7 @@ $wgCustomToolbarMessages['pms'] = array(
 /** Western Punjabi (پنجابی)
  * @author Khalid Mahmood
  */
-$wgCustomToolbarMessages['pnb'] = array(
+$messages['pnb'] = array(
 	'ct_italic_caption' => 'ترچھا',
 	'ct_image_caption' => 'مورت لاؤ',
 	'ct_math_caption' => 'فارمولا',
@@ -2058,23 +2330,33 @@ $wgCustomToolbarMessages['pnb'] = array(
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$wgCustomToolbarMessages['ps'] = array(
+$messages['ps'] = array(
+	'ct_bold_sample' => 'زغرد متن',
+	'ct_bold_caption' => 'زغرد',
+	'ct_italic_sample' => 'د رېوندليک متن',
+	'ct_italic_caption' => 'رېوند',
 	'ct_internal_sample' => 'دمخ-نوم',
+	'ct_internal_caption' => 'کورنۍ تړنه',
+	'ct_external_caption' => 'باندنۍ تړنه',
 	'ct_image_caption' => 'انځور ورګډول',
 	'ct_math_caption' => 'فورمول',
+	'ct_nowiki_caption' => 'ويکي نشته',
+	'ct_upload' => '$1 پورته کول',
 	'ct_submit' => 'ورځه!',
 	'ct_close' => 'کړکۍ تړل',
-	'ct_user_user' => 'کارونکی',
+	'ct_user_user' => 'کارن',
+	'ct_user_caption' => 'د کارن تړنه',
 	'ct_user_sample' => 'کارن-نوم',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
-$wgCustomToolbarMessages['pt'] = array(
+$messages['pt'] = array(
 	'ct-desc' => 'Adiciona uma barra de ferramentas extensível',
-	'ct_bold_sample' => 'Texto negrito',
+	'ct_bold_sample' => 'Texto a negrito',
 	'ct_bold_tip_ins' => 'Inserir texto a negrito',
 	'ct_bold_tip_wrap' => 'Tornar este texto negrito',
 	'ct_bold_caption' => 'Negrito',
@@ -2083,12 +2365,12 @@ $wgCustomToolbarMessages['pt'] = array(
 	'ct_italic_tip_wrap' => 'Tornar este texto itálico',
 	'ct_italic_caption' => 'Itálico',
 	'ct_internal_sample' => 'NomeDaPágina',
-	'ct_internal_tip_ins' => 'Inserir uma ligação interna',
-	'ct_internal_tip_wrap' => 'Tornar este texto uma ligação interna',
-	'ct_internal_caption' => 'Ligação interna',
-	'ct_external_tip_ins' => 'Inserir uma ligação externa',
-	'ct_external_tip_wrap' => 'Tornar este texto uma ligação externa',
-	'ct_external_caption' => 'Ligação externa',
+	'ct_internal_tip_ins' => 'Inserir um link interno',
+	'ct_internal_tip_wrap' => 'Tornar este texto num link interno',
+	'ct_internal_caption' => 'Link interno',
+	'ct_external_tip_ins' => 'Inserir um link externo',
+	'ct_external_tip_wrap' => 'Tornar este texto num link externo',
+	'ct_external_caption' => 'Link externo',
 	'ct_image_tip' => 'Inserir uma imagem',
 	'ct_image_caption' => 'Adicionar imagem',
 	'ct_attachment_tip' => 'Inserir um anexo',
@@ -2106,29 +2388,30 @@ $wgCustomToolbarMessages['pt'] = array(
 	'ct_upload' => 'Carregar $1',
 	'ct_select' => 'Selecione $1 a carregar:',
 	'ct_caption' => 'Adicionar legenda (opcional):',
-	'ct_link' => 'Adicionar nome de ligação (opcional):',
+	'ct_link' => 'Adicionar nome do link (opcional):',
 	'ct_submit' => 'Ir!',
 	'ct_close' => 'Fechar janela',
 	'ct_success' => 'Carregamento do ficheiro com sucesso!',
 	'ct_popupblocked' => 'A janela popup do carregemento foi impedida de abrir. Por favor, verifique o seu bloqueador de janelas popup.',
 	'ct_user_user' => 'Utilizador',
-	'ct_user_tip' => 'Inserir uma ligação para uma página de utilizador',
-	'ct_user_caption' => 'Ligação de utilizador',
+	'ct_user_tip' => 'Inserir um link para uma página de utilizador',
+	'ct_user_caption' => 'Link de utilizador',
 	'ct_user_sample' => 'Nome de utilizador',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
+ * @author Giro720
  * @author Luckas Blade
  */
-$wgCustomToolbarMessages['pt-br'] = array(
+$messages['pt-br'] = array(
 	'ct-desc' => 'Adiciona uma barra de ferramentas extensível',
 	'ct_bold_sample' => 'Texto em negrito',
 	'ct_bold_tip_ins' => 'Digitar texto em negrito',
 	'ct_bold_tip_wrap' => 'Colocar este texto em negrito',
 	'ct_bold_caption' => 'Negrito',
 	'ct_italic_sample' => 'Texto em itálico',
-	'ct_italic_tip_ins' => 'Digitar texto em itálico',
+	'ct_italic_tip_ins' => 'Inserir texto em itálico',
 	'ct_italic_tip_wrap' => 'Colocar este texto em itálico',
 	'ct_italic_caption' => 'Itálico',
 	'ct_internal_sample' => 'Título do link',
@@ -2137,11 +2420,11 @@ $wgCustomToolbarMessages['pt-br'] = array(
 	'ct_internal_caption' => 'Link Interno',
 	'ct_external_tip_ins' => 'Incluir um link externo',
 	'ct_external_tip_wrap' => 'Transformar este texto em link externo',
-	'ct_external_caption' => 'Ligação externa',
+	'ct_external_caption' => 'Link externo',
 	'ct_image_tip' => 'Carregar uma imagem',
-	'ct_image_caption' => 'Adicionar uma Imagem',
+	'ct_image_caption' => 'Adicionar uma imagem',
 	'ct_attachment_tip' => 'Incluir um anexo',
-	'ct_attachment_caption' => 'Adicionar um Anexo',
+	'ct_attachment_caption' => 'Adicionar um anexo',
 	'ct_math_sample' => 'Incluir fórmula LaTeX aqui',
 	'ct_math_tip_ins' => 'Incluir fórmula matemática (LaTeX)',
 	'ct_math_tip_wrap' => 'Transformar este texto em fórmula matemática (LaTeX)',
@@ -2151,26 +2434,28 @@ $wgCustomToolbarMessages['pt-br'] = array(
 	'ct_nowiki_tip_wrap' => 'Ignorar a formatação wiki neste texto',
 	'ct_nowiki_caption' => 'Sem wiki',
 	'ct_horizontal_tip' => 'Incluir uma linha horizontal (use com moderação)',
-	'ct_horizontal_caption' => 'Linha Horizontal',
+	'ct_horizontal_caption' => 'Linha horizontal',
 	'ct_upload' => 'Carregar $1',
 	'ct_select' => 'Selecionar $1 para carregar:',
 	'ct_caption' => 'Adicionar legenda (opcional):',
 	'ct_link' => 'Adicionar nome de ligação (opcional):',
-	'ct_submit' => 'Salvar',
+	'ct_submit' => 'Ir!',
 	'ct_close' => 'Fechar a janela',
 	'ct_success' => 'O arquivo foi carregado com sucesso!',
 	'ct_popupblocked' => 'O pop-up para carregar o arquivo foi bloqueado. Verifique o seu bloqueador de pop-ups.',
-	'ct_user_user' => 'Utilizador',
+	'ct_user_user' => 'Usuário',
 	'ct_user_tip' => 'Inserir uma ligação para uma página de utilizador',
-	'ct_user_caption' => 'Ligação do utilizador',
-	'ct_user_sample' => 'Nome de utilizador',
+	'ct_user_caption' => 'Ligação de usuário',
+	'ct_user_sample' => 'Nome de usuário',
 );
 
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Minisarm
+ * @author Stelistcristi
  */
-$wgCustomToolbarMessages['ro'] = array(
+$messages['ro'] = array(
 	'ct-desc' => 'Adaugă o bară de unelte extensibilă',
 	'ct_bold_sample' => 'Text aldin',
 	'ct_bold_tip_ins' => 'Inserează text aldin',
@@ -2189,8 +2474,8 @@ $wgCustomToolbarMessages['ro'] = array(
 	'ct_external_caption' => 'Legătură externă',
 	'ct_image_tip' => 'Inserează o imagine',
 	'ct_image_caption' => 'Adaugă o imagine',
-	'ct_attachment_tip' => 'Inserează un ataşament',
-	'ct_attachment_caption' => 'Adaugă ataşament',
+	'ct_attachment_tip' => 'Inserează un atașament',
+	'ct_attachment_caption' => 'Adaugă atașament',
 	'ct_math_sample' => 'Inserează o formulă LaTeX aici',
 	'ct_math_tip_ins' => 'Inserează o formulă matematică (LaTeX)',
 	'ct_math_tip_wrap' => 'Fă acest text o formulă matematică (LaTeX)',
@@ -2199,29 +2484,67 @@ $wgCustomToolbarMessages['ro'] = array(
 	'ct_nowiki_tip_ins' => 'Ignoră formatarea wiki',
 	'ct_nowiki_tip_wrap' => 'Ignoră formatarea wiki pentru acest text',
 	'ct_nowiki_caption' => 'Niciun wiki',
-	'ct_horizontal_tip' => 'Inserează o linie orizontală (folosiţi-o cumpătat)',
+	'ct_horizontal_tip' => 'Inserează o linie orizontală (folosiți-o cumpătat)',
 	'ct_horizontal_caption' => 'Linie orizontală',
 	'ct_upload' => 'Încarcă $1',
 	'ct_select' => 'Selectează $1 pentru încărcare:',
+	'ct_caption' => 'Adăugare descriere (opțional):',
+	'ct_link' => 'Adăugare titlu pentru link (opțional):',
 	'ct_submit' => 'Salt',
 	'ct_close' => 'Închide fereastra',
-	'ct_success' => 'Încărcare a fişierului cu succes!',
+	'ct_success' => 'Încărcare a fișierului cu succes!',
+	'ct_popupblocked' => 'Fereastra popup de încărcare a fost blocată la deschidere. Vă rugăm să vă verificați sistemul de blocare al ferestrelor popup.',
 	'ct_user_user' => 'Utilizator',
 	'ct_user_tip' => 'Inserează o legătură într-o pagină de utilizator.',
+	'ct_user_caption' => 'Legătură utilizator',
 	'ct_user_sample' => 'Nume de utilizator',
 );
 
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
-$wgCustomToolbarMessages['roa-tara'] = array(
+$messages['roa-tara'] = array(
+	'ct-desc' => "Aggiunge 'na barre de le struminde estensibbele",
 	'ct_bold_sample' => 'Teste in grascette',
+	'ct_bold_tip_ins' => 'Sckaffe teste in grascette',
+	'ct_bold_tip_wrap' => 'Fà addevendò stu teste grascette',
+	'ct_bold_caption' => 'Grascette',
+	'ct_italic_sample' => 'Corsive',
+	'ct_italic_tip_ins' => 'Sckaffe teste in corsive',
+	'ct_italic_tip_wrap' => 'Fà addevendà stu teste corsive',
+	'ct_italic_caption' => 'Corsive',
+	'ct_internal_sample' => "Name d'a pàgene",
+	'ct_internal_tip_ins' => "Sckaffe 'nu collegamende inderne",
+	'ct_internal_tip_wrap' => "Fà addevendà stu teste 'nu collegamende inderne",
+	'ct_internal_caption' => 'Collegamende inderne',
+	'ct_external_tip_ins' => "Sckaffe 'nu collegamende esterne",
+	'ct_external_tip_wrap' => "Fà addevendà stu teste 'nu collegamende esterne",
+	'ct_external_caption' => 'Collegamende fore a Uicchipèdie',
+	'ct_image_tip' => "Sckaffe 'n'immaggine",
+	'ct_image_caption' => "Aggiunge 'n'immaggine",
+	'ct_attachment_tip' => "Sckaffe 'n'allegate",
+	'ct_attachment_caption' => "Aggiunge 'n'allegate",
+	'ct_math_sample' => "Sckatte 'na formula LaTex aqquà",
+	'ct_math_tip_ins' => "Sckaffe 'na formula matemateche (LaTeX)",
+	'ct_math_tip_wrap' => 'Fà addevendà stu teste na formula matemateche (LaTeX)',
 	'ct_math_caption' => 'Formule',
+	'ct_nowiki_sample' => 'Sckaffe teste non formattate aqquà',
+	'ct_nowiki_tip_ins' => "No scè penzanne 'a formattazione de Uicchi",
+	'ct_nowiki_tip_wrap' => "No scè penzanne 'a formattazione de Uicchi pe stu teste",
+	'ct_nowiki_caption' => 'None Uicchi',
+	'ct_horizontal_tip' => "Sckaffe 'na linèe orizzondale (ausele picche)",
+	'ct_horizontal_caption' => 'Linèe orizzondale',
 	'ct_upload' => 'Careche $1',
+	'ct_select' => 'Scacchie $1 da carecà:',
+	'ct_caption' => "Mitte 'n'indestazione (a scelte):",
+	'ct_link' => "Mitte 'u nome d'u collegamende (a scelte):",
 	'ct_submit' => 'Veje!',
 	'ct_close' => "Achiude 'a fenéstre",
 	'ct_success' => 'File carecate senza probbleme!',
+	'ct_popupblocked' => "'A finestre de carecamende ha state bloccate da l'aperture. Pe piacere condrolle 'u bloccatore de le popup",
 	'ct_user_user' => 'Utende',
+	'ct_user_tip' => "Sckaffe 'nu collegamende a 'na pàgene utende",
+	'ct_user_caption' => "Collegamende a l'utende",
 	'ct_user_sample' => "Nome de l'utende",
 );
 
@@ -2230,7 +2553,7 @@ $wgCustomToolbarMessages['roa-tara'] = array(
  * @author Ferrer
  * @author Александр Сигачёв
  */
-$wgCustomToolbarMessages['ru'] = array(
+$messages['ru'] = array(
 	'ct-desc' => 'Добавляет растяжимую панель',
 	'ct_bold_sample' => 'Жирный текст',
 	'ct_bold_tip_ins' => 'Вставить жирный текст',
@@ -2276,10 +2599,17 @@ $wgCustomToolbarMessages['ru'] = array(
 	'ct_user_sample' => 'Имя участника',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'ct_user_user' => 'Хоснователь',
+);
+
 /** Sicilian (Sicilianu)
  * @author Melos
  */
-$wgCustomToolbarMessages['scn'] = array(
+$messages['scn'] = array(
 	'ct_bold_sample' => 'Testu n grassettu',
 	'ct_bold_tip_ins' => 'Nserisci testu n grassettu',
 	'ct_bold_tip_wrap' => 'Fai stu testu grassettu',
@@ -2322,7 +2652,7 @@ $wgCustomToolbarMessages['scn'] = array(
 /** Sinhala (සිංහල)
  * @author Calcey
  */
-$wgCustomToolbarMessages['si'] = array(
+$messages['si'] = array(
 	'ct-desc' => 'විතන්‍ය මෙවලම් තීරුවක් එකතු කරයි',
 	'ct_bold_sample' => 'තද පැහැ පෙළ',
 	'ct_bold_tip_ins' => 'තද පැහැ පෙළ ඇතුල් කරන්න',
@@ -2370,7 +2700,7 @@ $wgCustomToolbarMessages['si'] = array(
 /** Slovak (Slovenčina)
  * @author Helix84
  */
-$wgCustomToolbarMessages['sk'] = array(
+$messages['sk'] = array(
 	'ct-desc' => 'Pridáva rozšíriteľný panel nástrojov',
 	'ct_bold_sample' => 'Hrubý text',
 	'ct_bold_tip_ins' => 'Vložiť hrubý text',
@@ -2416,19 +2746,70 @@ Prosím, skontrolujte blokovanie vyskakovacích okien vo vašom prehliadači.',
 	'ct_user_sample' => 'Používateľské meno',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'ct-desc' => 'Doda razširljivo orodno vrstico',
+	'ct_bold_sample' => 'Krepko besedilo',
+	'ct_bold_tip_ins' => 'Vstavi krepko besedilo',
+	'ct_bold_tip_wrap' => 'Naredi to besedilo krepko',
+	'ct_bold_caption' => 'Krepko',
+	'ct_italic_sample' => 'Ležeče besedilo',
+	'ct_italic_tip_ins' => 'Vstavi ležeče besedilo',
+	'ct_italic_tip_wrap' => 'Naredi to besedilo ležeče',
+	'ct_italic_caption' => 'Ležeče',
+	'ct_internal_sample' => 'ImeStrani',
+	'ct_internal_tip_ins' => 'Vstavi notranjo povezavo',
+	'ct_internal_tip_wrap' => 'Naredi to besedilo notranjo povezavo',
+	'ct_internal_caption' => 'Notranja povezava',
+	'ct_external_tip_ins' => 'Vstavi zunanjo povezavo',
+	'ct_external_tip_wrap' => 'Naredi to besedilo zunanjo povezavo',
+	'ct_external_caption' => 'Zunanja povezava',
+	'ct_image_tip' => 'Vstavi sliko',
+	'ct_image_caption' => 'Dodaj sliko',
+	'ct_attachment_tip' => 'Vstavi priponko',
+	'ct_attachment_caption' => 'Dodaj priponko',
+	'ct_math_sample' => 'Tukaj vstavite izraz LaTeX',
+	'ct_math_tip_ins' => 'Vstavi matematični izraz (LaTeX)',
+	'ct_math_tip_wrap' => 'Naredi to besedilo matematični izraz (LaTeX)',
+	'ct_math_caption' => 'Formula',
+	'ct_nowiki_sample' => 'Tukaj vstavite neoblikovano besedilo',
+	'ct_nowiki_tip_ins' => 'Prezri wikioblikovanje',
+	'ct_nowiki_tip_wrap' => 'Prezri wikioblikovanje tega besedila',
+	'ct_nowiki_caption' => 'Brez wikioblikovanja',
+	'ct_horizontal_tip' => 'Vstavi vodoravno črto (uporabljajte zmerno)',
+	'ct_horizontal_caption' => 'Vodoravna črta',
+	'ct_upload' => 'Nalaganje $1',
+	'ct_select' => 'Izberite $1 za nalaganje:',
+	'ct_caption' => 'Dodaj naslov (izbirno):',
+	'ct_link' => 'Dodaj ime povezave (izbirno):',
+	'ct_submit' => 'Pojdi!',
+	'ct_close' => 'Zapri okno',
+	'ct_success' => 'Nalaganje datoteke je bilo uspešno!',
+	'ct_popupblocked' => 'Odpiranje pojavnega okna za nalaganje je bilo preprečeno. Prosimo, preverite vaš preprečevalec pojavnih oken.',
+	'ct_user_user' => 'Uporabnik',
+	'ct_user_tip' => 'Vstavi povezavo na uporabniško stran',
+	'ct_user_caption' => 'Povezava uporabnika',
+	'ct_user_sample' => 'Uporabniško ime',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Жељко Тодоровић
  * @author Михајло Анђелковић
  */
-$wgCustomToolbarMessages['sr-ec'] = array(
+$messages['sr-ec'] = array(
 	'ct-desc' => 'Додаје проширив бар са алаткама',
 	'ct_bold_sample' => 'Подебљан текст',
 	'ct_bold_tip_ins' => 'Убаци подебљан текст',
 	'ct_bold_tip_wrap' => 'Учини овај текст подебљаним',
 	'ct_bold_caption' => 'Подебљано',
-	'ct_italic_sample' => 'Текст у курзиву',
+	'ct_italic_sample' => 'Курзив',
 	'ct_italic_tip_ins' => 'Унбаци текст у курзиву',
 	'ct_italic_tip_wrap' => 'Пребаци овај текст у курзив',
 	'ct_italic_caption' => 'Курзив',
+	'ct_internal_sample' => 'ИмеСтране',
 	'ct_internal_tip_ins' => 'Убаци унутрашњу везу',
 	'ct_internal_tip_wrap' => 'Учини овај текст унутрашњом везом',
 	'ct_internal_caption' => 'Унутрашња веза',
@@ -2438,15 +2819,15 @@ $wgCustomToolbarMessages['sr-ec'] = array(
 	'ct_image_tip' => 'Убаци слику',
 	'ct_image_caption' => 'Додај слику',
 	'ct_attachment_tip' => 'Убаци прикачени фајл',
-	'ct_attachment_caption' => 'Прикачи фајл',
-	'ct_math_sample' => 'Убаци LaTeX формулу овде',
-	'ct_math_tip_ins' => 'Убаци математичку формулу (LaTeX)',
+	'ct_attachment_caption' => 'Додај прилог',
+	'ct_math_sample' => 'Убаците формулу LaTeX овде',
+	'ct_math_tip_ins' => 'Убаци математичку формулу',
 	'ct_math_tip_wrap' => 'Учини овај текст математичком формулом (LaTeX)',
 	'ct_math_caption' => 'Формула',
-	'ct_nowiki_sample' => 'Убаци неформатиран текст овде',
-	'ct_nowiki_tip_ins' => 'Игнориши Вики-форматирање',
-	'ct_nowiki_tip_wrap' => 'Игнориши Вики-форматирање над овим текстом',
-	'ct_horizontal_tip' => 'Убаци хоризонталну линију (користити штедљиво)',
+	'ct_nowiki_sample' => 'Убаците необликован текст овде',
+	'ct_nowiki_tip_ins' => 'Занемари вики обликовање',
+	'ct_nowiki_tip_wrap' => 'Занемари вики обликовање у овом тексту',
+	'ct_horizontal_tip' => 'Убаци водоравну линију',
 	'ct_horizontal_caption' => 'Хоризонтална линија',
 	'ct_upload' => 'Пошаљи $1',
 	'ct_select' => 'Изабери $1 за слање:',
@@ -2454,26 +2835,29 @@ $wgCustomToolbarMessages['sr-ec'] = array(
 	'ct_link' => 'Додај назив линка (необавезно):',
 	'ct_submit' => 'Иди!',
 	'ct_close' => 'Затвори прозор',
-	'ct_success' => 'Слање фајла успешно!',
+	'ct_success' => 'Датотека је послата.',
 	'ct_user_user' => 'Корисник',
 	'ct_user_tip' => 'Убаци линк ка корисничкој страни',
-	'ct_user_caption' => 'Кориснички линк',
+	'ct_user_caption' => 'Корисничка веза',
 	'ct_user_sample' => 'Корисничко име',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
+ * @author Rancher
+ * @author Жељко Тодоровић
  */
-$wgCustomToolbarMessages['sr-el'] = array(
+$messages['sr-el'] = array(
 	'ct-desc' => 'Dodaje proširiv bar sa alatkama',
 	'ct_bold_sample' => 'Podebljan tekst',
 	'ct_bold_tip_ins' => 'Ubaci podebljan tekst',
 	'ct_bold_tip_wrap' => 'Učini ovaj tekst podebljanim',
 	'ct_bold_caption' => 'Podebljano',
-	'ct_italic_sample' => 'Tekst u kurzivu',
+	'ct_italic_sample' => 'Kurziv',
 	'ct_italic_tip_ins' => 'Unbaci tekst u kurzivu',
 	'ct_italic_tip_wrap' => 'Prebaci ovaj tekst u kurziv',
 	'ct_italic_caption' => 'Kurziv',
+	'ct_internal_sample' => 'ImeStrane',
 	'ct_internal_tip_ins' => 'Ubaci unutrašnju vezu',
 	'ct_internal_tip_wrap' => 'Učini ovaj tekst unutrašnjom vezom',
 	'ct_internal_caption' => 'Unutrašnja veza',
@@ -2483,15 +2867,15 @@ $wgCustomToolbarMessages['sr-el'] = array(
 	'ct_image_tip' => 'Ubaci sliku',
 	'ct_image_caption' => 'Dodaj sliku',
 	'ct_attachment_tip' => 'Ubaci prikačeni fajl',
-	'ct_attachment_caption' => 'Prikači fajl',
-	'ct_math_sample' => 'Ubaci LaTeX formulu ovde',
-	'ct_math_tip_ins' => 'Ubaci matematičku formulu (LaTeX)',
+	'ct_attachment_caption' => 'Dodaj prilog',
+	'ct_math_sample' => 'Ubacite formulu LaTeX ovde',
+	'ct_math_tip_ins' => 'Ubaci matematičku formulu',
 	'ct_math_tip_wrap' => 'Učini ovaj tekst matematičkom formulom (LaTeX)',
 	'ct_math_caption' => 'Formula',
-	'ct_nowiki_sample' => 'Ubaci neformatiran tekst ovde',
-	'ct_nowiki_tip_ins' => 'Ignoriši Viki-formatiranje',
+	'ct_nowiki_sample' => 'Ubacite neoblikovan tekst ovde',
+	'ct_nowiki_tip_ins' => 'Zanemari viki oblikovanje',
 	'ct_nowiki_tip_wrap' => 'Ignoriši Viki-formatiranje nad ovim tekstom',
-	'ct_horizontal_tip' => 'Ubaci horizontalnu liniju (koristiti štedljivo)',
+	'ct_horizontal_tip' => 'Ubaci vodoravnu liniju',
 	'ct_horizontal_caption' => 'Horizontalna linija',
 	'ct_upload' => 'Pošalji $1',
 	'ct_select' => 'Izaberi $1 za slanje:',
@@ -2499,26 +2883,26 @@ $wgCustomToolbarMessages['sr-el'] = array(
 	'ct_link' => 'Dodaj naziv linka (neobavezno):',
 	'ct_submit' => 'Idi!',
 	'ct_close' => 'Zatvori prozor',
-	'ct_success' => 'Slanje fajla uspešno!',
+	'ct_success' => 'Datoteka je poslata.',
 	'ct_user_user' => 'Korisnik',
 	'ct_user_tip' => 'Ubaci link ka korisničkoj strani',
-	'ct_user_caption' => 'Korisnički link',
+	'ct_user_caption' => 'Korisnička veza',
 	'ct_user_sample' => 'Korisničko ime',
 );
 
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
-$wgCustomToolbarMessages['stq'] = array(
+$messages['stq'] = array(
 	'ct-desc' => 'Föiget ne ärwiederboare Reewelieste bietou',
 	'ct_bold_sample' => 'Fatten Text',
 	'ct_bold_tip_ins' => 'Fatten Text ienföigje',
 	'ct_bold_tip_wrap' => 'Dissen Text fat markierje',
 	'ct_bold_caption' => 'Fat',
-	'ct_italic_sample' => 'Scheeuwen Text',
-	'ct_italic_tip_ins' => 'Scheeuwen Text ienföigje',
-	'ct_italic_tip_wrap' => 'Dissen Text scheeuw markierje',
-	'ct_italic_caption' => 'Scheeuw',
+	'ct_italic_sample' => 'Skeeuwen Text',
+	'ct_italic_tip_ins' => 'Skeeuwen Text ienföigje',
+	'ct_italic_tip_wrap' => 'Dissen Text skeeuw markierje',
+	'ct_italic_caption' => 'Skeeuw',
 	'ct_internal_sample' => 'Siedennoome',
 	'ct_internal_tip_ins' => 'N internen Link ienföigje',
 	'ct_internal_tip_wrap' => 'Dissen Text in n internen Link uumewondelje',
@@ -2542,7 +2926,7 @@ $wgCustomToolbarMessages['stq'] = array(
 	'ct_horizontal_caption' => 'Woage Lienje',
 	'ct_upload' => 'Hoochleede $1',
 	'ct_select' => 'Wääl $1 toun Hoochleeden',
-	'ct_caption' => 'Beschriftenge ienföigje (optionoal)',
+	'ct_caption' => 'Beskriftenge ienföigje (optionoal)',
 	'ct_link' => 'Link benaame (optionoal)',
 	'ct_submit' => 'Go!',
 	'ct_close' => 'Finster sluute',
@@ -2559,7 +2943,7 @@ Wröich din Popup-Blocker.',
  * @author Najami
  * @author Ozp
  */
-$wgCustomToolbarMessages['sv'] = array(
+$messages['sv'] = array(
 	'ct-desc' => 'Lägger till en utökad verktygslåda',
 	'ct_bold_sample' => 'Fet text',
 	'ct_bold_tip_ins' => 'Sätt in fet text',
@@ -2607,14 +2991,53 @@ $wgCustomToolbarMessages['sv'] = array(
 /** Silesian (Ślůnski)
  * @author Ozi64
  */
-$wgCustomToolbarMessages['szl'] = array(
+$messages['szl'] = array(
 	'ct_internal_sample' => 'MjanoZajty',
+);
+
+/** Tamil (தமிழ்)
+ * @author Mahir78
+ * @author TRYPPN
+ * @author செல்வா
+ */
+$messages['ta'] = array(
+	'ct_bold_sample' => 'தடித்த எழுத்து',
+	'ct_bold_tip_ins' => 'தடித்த எழுத்தை உள்ளிடு',
+	'ct_bold_tip_wrap' => 'இந்தச் சொல்லை தடிமனாக்கு',
+	'ct_bold_caption' => 'தடிமன்',
+	'ct_italic_sample' => 'சாய்வெழுத்து',
+	'ct_italic_tip_ins' => 'சாய்வெழுத்தை உள்ளிடு',
+	'ct_italic_tip_wrap' => 'இந்த எழுத்தை சாய்வாக்குக',
+	'ct_italic_caption' => 'சாய்வு',
+	'ct_internal_sample' => 'PageName',
+	'ct_internal_tip_ins' => 'உள்ளிணைப்பு ஒன்றை உள்ளிடு',
+	'ct_internal_caption' => 'உள்ளிணைப்பு',
+	'ct_external_tip_ins' => 'வெளியிணைப்பு ஒன்றை உள்ளிடு',
+	'ct_external_caption' => 'வெளி இணைப்பு',
+	'ct_image_tip' => 'ஒரு படத்தை உள்ளிடவும்',
+	'ct_image_caption' => 'படத்தை இணைக்கவும்',
+	'ct_attachment_tip' => 'ஒரு இணைப்பை உள்ளிடவும்',
+	'ct_attachment_caption' => 'இணைப்பைச் சேர்க்கவும்',
+	'ct_math_caption' => 'சூத்திரம்',
+	'ct_nowiki_caption' => 'விக்கி இல்லை',
+	'ct_horizontal_caption' => 'கிடைக்கோடு',
+	'ct_upload' => '$1-ஐ பதிவேற்று',
+	'ct_select' => 'பதிவேற்றத்திற்கு $1-ஐ தெரிவுசெய்யவும்:',
+	'ct_caption' => 'தலைப்பைக் கொடுக்கவும் (கட்டாயமில்லை):',
+	'ct_link' => 'இணைப்பின் பெயரைச் சேர்க்கவும் (விருப்பப்பட்டால்):',
+	'ct_submit' => 'செல்!',
+	'ct_close' => 'சாளரத்தை மூடவும்',
+	'ct_success' => 'பதிவேற்றம் வெற்றி !',
+	'ct_user_user' => 'பயனர்',
+	'ct_user_tip' => 'ஒரு பயனர் பக்கத்திற்கு இணைப்பைக்கொடுக்கவும்',
+	'ct_user_caption' => 'பயனர் இணைப்பு',
+	'ct_user_sample' => 'பயனர் பெயர்',
 );
 
 /** Telugu (తెలుగు)
  * @author Veeven
  */
-$wgCustomToolbarMessages['te'] = array(
+$messages['te'] = array(
 	'ct_bold_sample' => 'బొద్దు పాఠ్యం',
 	'ct_bold_tip_ins' => 'బొద్దు పాఠ్యాన్ని చేర్చండి',
 	'ct_bold_tip_wrap' => 'ఈ పాఠ్యాన్ని బొద్దుగా చేయండి',
@@ -2651,20 +3074,28 @@ $wgCustomToolbarMessages['te'] = array(
 	'ct_user_sample' => 'వాడుకరిపేరు',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'ct_submit' => 'OK!',
+	'ct_user_sample' => "Naran uza-na'in",
+);
+
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
-$wgCustomToolbarMessages['tg-cyrl'] = array(
+$messages['tg-cyrl'] = array(
 	'ct_external_caption' => 'Пайванди беруна',
 	'ct_image_tip' => 'Иловаи як акс',
 	'ct_image_caption' => 'Иловаи акс',
 	'ct_attachment_tip' => 'Иловаи як замима',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
-$wgCustomToolbarMessages['tg-latn'] = array(
+$messages['tg-latn'] = array(
 	'ct_external_caption' => 'Pajvandi beruna',
 	'ct_image_tip' => 'Ilovai jak aks',
 	'ct_image_caption' => 'Ilovai aks',
@@ -2674,7 +3105,7 @@ $wgCustomToolbarMessages['tg-latn'] = array(
 /** Thai (ไทย)
  * @author Woraponboonkerd
  */
-$wgCustomToolbarMessages['th'] = array(
+$messages['th'] = array(
 	'ct_bold_sample' => 'ตัวอักษรหนา',
 	'ct_bold_tip_ins' => 'ใส่ตัวอักษรหนา',
 	'ct_bold_tip_wrap' => 'ทำเป็นตัวอักษรหนา',
@@ -2688,7 +3119,7 @@ $wgCustomToolbarMessages['th'] = array(
 /** Turkmen (Türkmençe)
  * @author Hanberke
  */
-$wgCustomToolbarMessages['tk'] = array(
+$messages['tk'] = array(
 	'ct_bold_sample' => 'Goýy tekst',
 	'ct_bold_tip_ins' => 'Goýy tekst giriz',
 	'ct_bold_tip_wrap' => 'Teksti goýy et',
@@ -2719,7 +3150,7 @@ $wgCustomToolbarMessages['tk'] = array(
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$wgCustomToolbarMessages['tl'] = array(
+$messages['tl'] = array(
 	'ct-desc' => 'Nagdaragdag ng isang nauunat/napapahabang balansang o bareta ng mga kagamitan',
 	'ct_bold_sample' => 'Makapal na panitik',
 	'ct_bold_tip_ins' => 'Magsingit ng makapal na panitik',
@@ -2769,7 +3200,7 @@ Pakisuri ang iyong panghadlang ng sulpot-litaw.",
  * @author Karduelis
  * @author Vito Genovese
  */
-$wgCustomToolbarMessages['tr'] = array(
+$messages['tr'] = array(
 	'ct_bold_sample' => 'Kalın metin',
 	'ct_bold_tip_ins' => 'Kalın metin gir',
 	'ct_bold_caption' => 'Kalın',
@@ -2796,18 +3227,18 @@ $wgCustomToolbarMessages['tr'] = array(
 	'ct_user_sample' => 'Kullanıcı adı',
 );
 
-/** ئۇيغۇرچە (ئۇيغۇرچە)
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Alfredie
  */
-$wgCustomToolbarMessages['ug-arab'] = array(
+$messages['ug-arab'] = array(
 	'ct_submit' => 'كۆچۈش!',
 	'ct_user_sample' => 'ئىشلەتكۇچى ئىسمى',
 );
 
-/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+/** Uyghur (Latin script) (Uyghurche‎)
  * @author Jose77
  */
-$wgCustomToolbarMessages['ug-latn'] = array(
+$messages['ug-latn'] = array(
 	'ct_submit' => 'Köchüsh!',
 	'ct_user_sample' => 'Ishletkuchi ismi',
 );
@@ -2817,7 +3248,7 @@ $wgCustomToolbarMessages['ug-latn'] = array(
  * @author Aleksandrit
  * @author Prima klasy4na
  */
-$wgCustomToolbarMessages['uk'] = array(
+$messages['uk'] = array(
 	'ct-desc' => 'Додає розширювану панель',
 	'ct_bold_sample' => 'Жирний текст',
 	'ct_bold_tip_ins' => 'Вставити жирний текст',
@@ -2866,7 +3297,7 @@ $wgCustomToolbarMessages['uk'] = array(
 /** Veps (Vepsan kel')
  * @author Игорь Бродский
  */
-$wgCustomToolbarMessages['vep'] = array(
+$messages['vep'] = array(
 	'ct-desc' => 'Ližadab azegišt, kudambad sab levitada',
 	'ct_bold_sample' => 'Lihavoitud tekst',
 	'ct_bold_tip_ins' => 'Ližada lihavoitud tekst',
@@ -2913,23 +3344,49 @@ $wgCustomToolbarMessages['vep'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Vinhtantran
  */
-$wgCustomToolbarMessages['vi'] = array(
+$messages['vi'] = array(
+	'ct-desc' => 'Thêm thanh công cụ mở rộng',
 	'ct_bold_sample' => 'Văn bản in đậm',
+	'ct_bold_tip_ins' => 'Chèn chữ đậm',
+	'ct_bold_tip_wrap' => 'In đậm văn bản này',
 	'ct_bold_caption' => 'Đậm',
 	'ct_italic_sample' => 'Văn bản in xiên',
+	'ct_italic_tip_ins' => 'Chèn chữ xiên',
+	'ct_italic_tip_wrap' => 'In xiên văn bản này',
 	'ct_italic_caption' => 'Xiên',
 	'ct_internal_sample' => 'TênTrang',
+	'ct_internal_tip_ins' => 'Chènn liên kết nội bộ',
+	'ct_internal_tip_wrap' => 'Chuyển đoạn văn bản này thành liên kết trong',
 	'ct_internal_caption' => 'Liên kết nội bộ',
+	'ct_external_tip_ins' => 'Chèn một liên kết ngoài',
+	'ct_external_tip_wrap' => 'Chuyển đoạn văn bản này thành liên kết ngoài',
 	'ct_external_caption' => 'Liên kết ngoài',
+	'ct_image_tip' => 'Chèn hình ảnh',
 	'ct_image_caption' => 'Thêm hình',
+	'ct_attachment_tip' => 'Chèn tập tin đính kèm',
+	'ct_attachment_caption' => 'Thêm tập tin đính kèm',
+	'ct_math_sample' => 'Chèn công thức LaTeX vào đây',
+	'ct_math_tip_ins' => 'Chèn công thức toán học (LaTeX)',
+	'ct_math_tip_wrap' => 'Chuyển đoạn văn bản này thành công thức toán học (LaTeX)',
 	'ct_math_caption' => 'Biểu thức',
+	'ct_nowiki_sample' => 'Chèn văn bản chưa định dạng vào đây',
+	'ct_nowiki_tip_ins' => 'Bỏ qua định dạng wiki',
+	'ct_nowiki_tip_wrap' => 'Bỏ qua định dạng wiki trong văn bản này',
 	'ct_nowiki_caption' => 'Không wiki',
+	'ct_horizontal_tip' => 'Chèn dòng kẻ ngang (không nên lạm dụng)',
 	'ct_horizontal_caption' => 'Đường gạch ngang',
 	'ct_upload' => 'Tải liên $1',
+	'ct_select' => 'Chọn $1 để tải lên:',
+	'ct_caption' => 'Thêm chú thích (tùy chọn):',
+	'ct_link' => 'Thêm tên liên kết (tùy chọn):',
 	'ct_submit' => 'Đi!',
 	'ct_close' => 'Đóng cửa sổ',
+	'ct_success' => 'Tập tin tải lên thành công!',
+	'ct_popupblocked' => 'Cửa sổ nhảy để tải lên bị ngăn không cho mở. Vui lòng kiểm tra trình chặn cửa sổ nhảy lên.',
 	'ct_user_user' => 'Người dùng',
+	'ct_user_tip' => 'Chèn một liên kết vào trang cá nhân',
 	'ct_user_caption' => 'Liên kết người dùng',
 	'ct_user_sample' => 'Tên người dùng',
 );
@@ -2938,7 +3395,7 @@ $wgCustomToolbarMessages['vi'] = array(
  * @author Malafaya
  * @author Smeira
  */
-$wgCustomToolbarMessages['vo'] = array(
+$messages['vo'] = array(
 	'ct_bold_sample' => 'Vödem bigik',
 	'ct_bold_tip_ins' => 'Nüpladön vödemi bigik',
 	'ct_bold_tip_wrap' => 'Bigükön vödemi at',
@@ -2977,7 +3434,7 @@ $wgCustomToolbarMessages['vo'] = array(
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
-$wgCustomToolbarMessages['yi'] = array(
+$messages['yi'] = array(
 	'ct_internal_sample' => 'בלאַטנאָמען',
 	'ct_math_caption' => 'פֿארמל',
 	'ct_nowiki_caption' => 'קיין וויקי',
@@ -2989,8 +3446,10 @@ $wgCustomToolbarMessages['yi'] = array(
  * @author Gaoxuewei
  * @author Gzdavidwong
  * @author Liangent
+ * @author Xiaomingyan
+ * @author 阿pp
  */
-$wgCustomToolbarMessages['zh-hans'] = array(
+$messages['zh-hans'] = array(
 	'ct-desc' => '增加了可扩展工具栏',
 	'ct_bold_sample' => '粗体文字',
 	'ct_bold_tip_ins' => '插入粗体文字',
@@ -3023,9 +3482,9 @@ $wgCustomToolbarMessages['zh-hans'] = array(
 	'ct_horizontal_caption' => '水平线',
 	'ct_upload' => '上传 $1',
 	'ct_select' => '选择要上传的$1：',
-	'ct_caption' => '添加标题（可选）',
-	'ct_link' => '添加链接名称（可选）',
-	'ct_submit' => 'Go!',
+	'ct_caption' => '添加标题 （可选）：',
+	'ct_link' => '添加链接名称 （可选）：',
+	'ct_submit' => '提交！',
 	'ct_close' => '关闭窗口',
 	'ct_success' => '文件上传成功！',
 	'ct_popupblocked' => '弹出的上传窗口被拦截。
@@ -3042,7 +3501,7 @@ $wgCustomToolbarMessages['zh-hans'] = array(
  * @author Mark85296341
  * @author Wrightbus
  */
-$wgCustomToolbarMessages['zh-hant'] = array(
+$messages['zh-hant'] = array(
 	'ct-desc' => '增加了可擴展工具欄',
 	'ct_bold_sample' => '粗體文字',
 	'ct_bold_tip_ins' => '插入粗體文字',
@@ -3053,17 +3512,17 @@ $wgCustomToolbarMessages['zh-hant'] = array(
 	'ct_italic_tip_wrap' => '將文字變為斜體',
 	'ct_italic_caption' => '斜體',
 	'ct_internal_sample' => '頁面名稱',
-	'ct_internal_tip_ins' => '插入內部鏈接',
-	'ct_internal_tip_wrap' => '將文字變為內部鏈接',
+	'ct_internal_tip_ins' => '插入內部連結',
+	'ct_internal_tip_wrap' => '將文字變為內部連結',
 	'ct_internal_caption' => '內部連結',
-	'ct_external_tip_ins' => '插入外部鏈接',
-	'ct_external_tip_wrap' => '將文字變為外部鏈接',
+	'ct_external_tip_ins' => '插入外部連結',
+	'ct_external_tip_wrap' => '將文字變為外部連結',
 	'ct_external_caption' => '外部連結',
 	'ct_image_tip' => '插入圖片',
 	'ct_image_caption' => '增加圖片',
 	'ct_attachment_tip' => '插入附件',
 	'ct_attachment_caption' => '增加附件',
-	'ct_math_sample' => '在此插入LaTeX公式',
+	'ct_math_sample' => '在此插入 LaTeX 公式',
 	'ct_math_tip_ins' => '插入數學公式（LaTeX）',
 	'ct_math_tip_wrap' => '將文字變為數學公式（LaTeX）',
 	'ct_math_caption' => '公式',
@@ -3073,15 +3532,15 @@ $wgCustomToolbarMessages['zh-hant'] = array(
 	'ct_nowiki_caption' => '非維基',
 	'ct_horizontal_tip' => '插入水平線（小心使用）',
 	'ct_horizontal_caption' => '水平線',
-	'ct_upload' => '上載$1',
-	'ct_select' => '選擇要上載的$1：',
-	'ct_caption' => '添加標題（可選）',
-	'ct_link' => '添加鏈接名稱（可選）',
+	'ct_upload' => '上傳 $1',
+	'ct_select' => '選擇要上傳的$1：',
+	'ct_caption' => '添加標題 （可選）：',
+	'ct_link' => '添加鏈接名稱 （可選）：',
 	'ct_submit' => 'Go!',
 	'ct_close' => '關閉視窗',
-	'ct_success' => '上載檔案成功！',
-	'ct_popupblocked' => '彈出的上傳窗口被攔截。
-請檢查您的彈出窗口阻止程序。',
+	'ct_success' => '檔案成功上傳！',
+	'ct_popupblocked' => '彈出的上傳視窗被攔截。
+請檢查您的彈出視窗阻擋程式。',
 	'ct_user_user' => '使用者',
 	'ct_user_tip' => '插入一個用戶頁面的連結',
 	'ct_user_caption' => '用戶連結',

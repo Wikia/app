@@ -5,7 +5,7 @@ class Minify {
 	var $mType;
 
 	// Initialize
-	function Minify( $text ) {
+	function __construct( $text ) {
 		global $wgRequest;
 
 		$this->mType = $wgRequest->getVal( 'ctype' );
@@ -35,7 +35,7 @@ class Minify {
 		return $this->mText;
 	}
 
-	/*
+	/**
 	 * Port of the Java based YUI CSS compressor written by Julien Lecomte <jlecomte@yahoo-inc.com>
 	 * Code under the BSD license
 	 * http://developer.yahoo.com/yui/compressor/
@@ -154,7 +154,7 @@ class Minify {
 		$this->mText = $text;
 	}
 
-	/*
+	/**
 	 * Calls Ryan Grove's PHP port of
 	 * Douglas Crockford's JSMin, see jsmin.php for details
 	 */

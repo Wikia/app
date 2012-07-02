@@ -13,6 +13,13 @@ if ( $wgUseFileCache ) {
 	exit( 1 );
 }
 
+$wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
+	'name'           => 'FormPreloadPostCache',
+	'author'         => '',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:FormPreloadPostCache',
+);
+
 $wgHooks['OutputPageBeforeHTML'][] = 'FormPreloadPostCache::htmlHook';
 
 class FormPreloadPostCache {

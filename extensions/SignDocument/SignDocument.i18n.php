@@ -1,8 +1,7 @@
 <?php
-
 /*Intersationalizaton file for Signdocument extension
-/* @MessagesGroups SignDocument
-*/
+ * @MessagesGroups SignDocument
+ */
 
 $messages = array();
 $messages['en'] = array(
@@ -16,9 +15,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'signature-desc' => 'Short description of this extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'signature-desc' => '{{desc}}',
 	'right-sigadmin' => '{{doc-right|sigadmin}}',
 	'right-createsigndocument' => '{{doc-right|createsigndocument}}',
 );
@@ -33,6 +33,13 @@ $messages['ar'] = array(
 	'signaturelogentry' => 'وقع الوثيقة $1',
 	'right-sigadmin' => 'إدارة توقيع الوثائق',
 	'right-createsigndocument' => 'إنشاء وثائق يمكن توقيعها',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'signaturelogpage' => 'ܣܓܠܐ ܕܪܡܝ ܐܝܕܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -52,7 +59,7 @@ $messages['bar'] = array(
 	'signaturelogpage' => 'Untaschrifts-Logbuach',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -73,6 +80,13 @@ $messages['bg'] = array(
 	'signature-desc' => 'Позволява [[Special:SignDocument|подписването на документи]]',
 	'signaturelogpagetext' => 'Тази страница съдържа дневник на [[Special:SignDocument|всички подписи, добавяни към документите]].',
 	'signaturelogentry' => 'подписа документа $1',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'signaturelogpage' => 'স্বাক্ষর লগ',
 );
 
 /** Breton (Brezhoneg)
@@ -101,12 +115,15 @@ $messages['bs'] = array(
 
 /** Catalan (Català)
  * @author Aleator
+ * @author SMP
  */
 $messages['ca'] = array(
 	'signaturelogpage' => 'Registre de signatura',
 	'signature-desc' => 'Permet la [[Special:SignDocument|signatura]] de documents',
 	'signaturelogpagetext' => 'Això és un registre de [[Special:SignDocument|totes les signatures afegides als douments]].',
 	'signaturelogentry' => 'ha signat el document $1',
+	'right-sigadmin' => 'Administrar la signatura de documents',
+	'right-createsigndocument' => 'Crear documents que es poden signar',
 );
 
 /** German (Deutsch)
@@ -154,6 +171,7 @@ $messages['el'] = array(
 $messages['eo'] = array(
 	'signaturelogpage' => 'Protokolo pri subskriboj',
 	'signaturelogentry' => 'subskribas la dokumenton $1',
+	'right-sigadmin' => 'Administri subskribadon de dokumentoj',
 );
 
 /** Spanish (Español)
@@ -178,14 +196,15 @@ $messages['eu'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Crt
  * @author Nike
  * @author Str4nd
  * @author Vililikku
  */
 $messages['fi'] = array(
 	'signaturelogpage' => 'Allekirjoitusloki',
-	'signature-desc' => 'Sallii dokumentin [[Special:SignDocument|allekirjoituksen]].',
-	'signaturelogpagetext' => 'Tämä on [[Special:SignDocument|kaikkien asiakirjoihin lisättyjen allekirjoitusten]] loki..',
+	'signature-desc' => 'Mahdollistaa dokumentin [[Special:SignDocument|allekirjoituksen]].',
+	'signaturelogpagetext' => 'Tämä on [[Special:SignDocument|kaikkien asiakirjoihin lisättyjen allekirjoitusten]] loki.',
 	'signaturelogentry' => 'allekirjoitti dokumentin $1',
 	'right-sigadmin' => 'Ylläpitää asiakirjojen allekirjoituksia',
 	'right-createsigndocument' => 'Luoda allekirjoitettavia asiakirjoja',
@@ -203,6 +222,18 @@ $messages['fr'] = array(
 	'signaturelogentry' => 'a signé le document $1.',
 	'right-sigadmin' => 'Administrer la signature de documents',
 	'right-createsigndocument' => 'Créer des documents qui peuvent être signés',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'signaturelogpage' => 'Jornal de les signatures',
+	'signature-desc' => 'Active la [[Special:SignDocument|signatura]] des documents.',
+	'signaturelogpagetext' => 'O est lo jornal de [[Special:SignDocument|totes les signatures apondues ux documents]].',
+	'signaturelogentry' => 'at signê lo document $1',
+	'right-sigadmin' => 'Administrar la signatura de documents',
+	'right-createsigndocument' => 'Fâre des documents que pôvont étre signês',
 );
 
 /** Galician (Galego)
@@ -335,7 +366,19 @@ $messages['km'] = array(
 	'signaturelogentry' => 'បានចុះហត្ថលេខាលើឯកសារ $1',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'signaturelogpage' => '서명 기록',
+	'signature-desc' => '[[Special:SignDocument|문서 서명]]을 활성화',
+	'signaturelogpagetext' => '[[Special:SignDocument|문서에 추가된 모든 서명]]의 기록입니다.',
+	'signaturelogentry' => '사용자가 $1 문서에 서명하였습니다.',
+	'right-sigadmin' => '관리 문서에 서명하기',
+	'right-createsigndocument' => '서명 가능한 문서를 생성하기',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -348,12 +391,13 @@ $messages['ksh'] = array(
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
 	'signaturelogpage' => 'Lëscht vun den Ënnerschreften',
 	'signature-desc' => "Aktivéiert d'[[Special:SignDocument|ënnerschreiwen]] vun Dokumenten",
-	'signaturelogpagetext' => "Dëst ass d'Lëscht vun [[Special:SignDocument|allen Ënnnerschreften déi op dëst Dokument derbäigesat goufen]].",
+	'signaturelogpagetext' => "Dëst ass d'Lëscht vun [[Special:SignDocument|allen Ënnnerschrëften déi op dëst Dokument derbäigesat goufen]].",
 	'signaturelogentry' => "huet d'Dokument $1 ënnerschriwwen",
 	'right-sigadmin' => 'Ënnerschreiwe vun Dokuementer geréieren',
 	'right-createsigndocument' => 'Dokumenter uleeën déi ënnerschriwwe kënne ginn',
@@ -375,9 +419,9 @@ $messages['mk'] = array(
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'signature-desc' => 'പ്രമാണത്തില്‍ [[Special:SignDocument|ഒപ്പിടല്‍]] അനുവദിക്കുക.',
-	'signaturelogpagetext' => '[[Special:SignDocument]] ഉപയോഗിച്ച് പ്രമാണങ്ങളിലേക്ക് ചേര്‍ക്കപ്പെട്ട ഒപ്പിടലിന്റെ പ്രവര്‍ത്തനരേഖയാണ്‌ ഇത്.',
-	'signaturelogentry' => '$1 എന്ന പ്രമാണത്തില്‍ ഒപ്പിട്ടിരിക്കുന്നു',
+	'signature-desc' => 'പ്രമാണത്തിൽ [[Special:SignDocument|ഒപ്പിടൽ]] അനുവദിക്കുക.',
+	'signaturelogpagetext' => '[[Special:SignDocument]] ഉപയോഗിച്ച് പ്രമാണങ്ങളിലേക്ക് ചേർക്കപ്പെട്ട ഒപ്പിടലിന്റെ പ്രവർത്തനരേഖയാണ്‌ ഇത്.',
+	'signaturelogentry' => '$1 എന്ന പ്രമാണത്തിൽ ഒപ്പിട്ടിരിക്കുന്നു',
 );
 
 /** Marathi (मराठी)
@@ -388,6 +432,20 @@ $messages['mr'] = array(
 	'signature-desc' => 'डक्यूमेंटवर [[Special:SignDocument|सही]] करण्याची परवानगी देतो',
 	'signaturelogpagetext' => '[[Special:SignDocument]] वापरून डॉक्यूमेंटमध्ये वाढविलेल्या सर्व सह्यांची ही सूची आहे.',
 	'signaturelogentry' => '$ डक्यूमेंट वर सही केली',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ * @author Simny
+ */
+$messages['nb'] = array(
+	'signaturelogpage' => 'Signaturlogg',
+	'signature-desc' => 'Slår på [[Special:SignDocument|dokumentsignering]]',
+	'signaturelogpagetext' => 'Dette er en logg over [[Special:SignDocument|alle signaturer lagt til dokumenter]].',
+	'signaturelogentry' => 'signerte dokumentet $1',
+	'right-sigadmin' => 'Administrer dokumentsignering',
+	'right-createsigndocument' => 'Lag dokumenter som kan signeres',
 );
 
 /** Dutch (Nederlands)
@@ -413,20 +471,6 @@ $messages['nn'] = array(
 	'signaturelogentry' => 'signerte dokumentet $1',
 	'right-sigadmin' => 'Administrer signering av dokument',
 	'right-createsigndocument' => 'Lag dokument som kan signerast',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- * @author Simny
- */
-$messages['no'] = array(
-	'signaturelogpage' => 'Signaturlogg',
-	'signature-desc' => 'Slår på [[Special:SignDocument|dokumentsignering]]',
-	'signaturelogpagetext' => 'Dette er en logg over [[Special:SignDocument|alle signaturer lagt til dokumenter]].',
-	'signaturelogentry' => 'signerte dokumentet $1',
-	'right-sigadmin' => 'Administrer dokumentsignering',
-	'right-createsigndocument' => 'Lag dokumenter som kan signeres',
 );
 
 /** Occitan (Occitan)
@@ -533,7 +577,7 @@ $messages['sk'] = array(
 	'right-createsigndocument' => 'Vytvoriť dokumenty, ktoré možno podpísať',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -543,7 +587,7 @@ $messages['sr-ec'] = array(
 	'signaturelogentry' => 'потписао документ $1',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -557,9 +601,9 @@ $messages['sr-el'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
-	'signaturelogpage' => 'Unnerschrifts-Logbouk',
-	'signaturelogpagetext' => 'Dit is dät [[Special:SignDocument|Unnerschrifts-Logbouk foar Dokumente]].',
-	'signaturelogentry' => 'häd dät Dokument $1 unnerschrieuwen',
+	'signaturelogpage' => 'Unnerskrifts-Logbouk',
+	'signaturelogpagetext' => 'Dit is dät [[Special:SignDocument|Unnerskrifts-Logbouk foar Dokumente]].',
+	'signaturelogentry' => 'häd dät Dokument $1 unnerskrieuwen',
 );
 
 /** Swedish (Svenska)
@@ -585,6 +629,13 @@ $messages['te'] = array(
 	'signaturelogentry' => '$1 అనే పత్రంపై సంతకం చేసారు',
 );
 
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'signaturelogentry' => 'asina dokumentu $1',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -593,6 +644,8 @@ $messages['tl'] = array(
 	'signature-desc' => 'Nagpapagana/nagpapaandar sa [[Special:SignDocument|paglalagda]] sa kasulatan',
 	'signaturelogpagetext' => 'Isa itong talaan ng [[Special:SignDocument|lahat ng mga lagdang idinagdag sa mga kasulatan]].',
 	'signaturelogentry' => 'nilagdaan na ang kasulatang $1',
+	'right-sigadmin' => 'Pangasiwaan ang paglagda ng kasulatan',
+	'right-createsigndocument' => 'Lumikha ng mga kasulatang maaaring lagdaan',
 );
 
 /** Turkish (Türkçe)
@@ -641,7 +694,7 @@ $messages['vo'] = array(
 	'signaturelogentry' => 'edispenon dokümi: $1',
 );
 
-/** Yue (粵語) */
+/** Cantonese (粵語) */
 $messages['yue'] = array(
 	'signaturelogpage' => '簽名日誌',
 	'signaturelogpagetext' => '呢個係全部經過[[Special:SignDocument]]簽過名嘅文件嘅日誌。',
@@ -655,10 +708,12 @@ $messages['zh-hans'] = array(
 	'signaturelogentry' => '已经签署$1文件',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
+ */
 $messages['zh-hant'] = array(
 	'signaturelogpage' => '簽署日誌',
-	'signaturelogpagetext' => '這個是所有經過[[Special:SignDocument]]簽署文件的日誌。',
-	'signaturelogentry' => '已經簽署$1文件',
+	'signaturelogpagetext' => '這個是所有經過 [[Special:SignDocument]] 簽署文件的日誌。',
+	'signaturelogentry' => '已經簽署 $1 文件',
 );
 

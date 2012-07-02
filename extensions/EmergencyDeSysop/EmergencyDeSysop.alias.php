@@ -1,138 +1,177 @@
 <?php
-$aliases = array();
- 
-/** English */
-$aliases['en'] = array( 
+
+$specialPageAliases = array();
+
+/** English (English) */
+
+$specialPageAliases = array();
+
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'EmergencyDeSysop' => array( 'EmergencyDeSysop', 'EmergencyDesysop' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'EmergencyDeSysop' => array( 'عزل_طارئ' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'EmergencyDeSysop' => array( 'عزل_طارئ' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'EmergencyDeSysop' => array( 'HitnoUklanjanjeSysopa' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'EmergencyDeSysop' => array( 'Notfall-Administratorrechtentzug' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
-	'EmergencyDeSysop' => array( 'Zajmjeśe administratorowych pšawach w nuznem paźe' ),
+$specialPageAliases['dsb'] = array(
+	'EmergencyDeSysop' => array( 'Zajmjeśe_administratorowych_pšawach_w_nuznem_paźe' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'EmergencyDeSysop' => array( 'خلع_مدیریت_اضطراری' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
+$specialPageAliases['fi'] = array(
 	'EmergencyDeSysop' => array( 'Ylläpitäjyyden_hätäpoisto' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
-	'EmergencyDeSysop' => array( 'Désysoppage d’urgence', 'DeSysopageUrgent' ),
+$specialPageAliases['fr'] = array(
+	'EmergencyDeSysop' => array( 'Désysoppage_d’urgence', 'DeSysopageUrgent' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
-	'EmergencyDeSysop' => array( "DèSisopâjo d'urgence", 'DèSisopâjoDUrgence', "Dèsisopâjo d'urgence", 'DèsisopâjoDUrgence' ),
+$specialPageAliases['frp'] = array(
+	'EmergencyDeSysop' => array( 'DèSisopâjo_d\'urgence', 'DèSisopâjoDUrgence', 'Dèsisopâjo_d\'urgence', 'DèsisopâjoDUrgence' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
-	'EmergencyDeSysop' => array( 'Emerxencia de administrador' ),
+$specialPageAliases['gl'] = array(
+	'EmergencyDeSysop' => array( 'Emerxencia_de_administrador' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
-	'EmergencyDeSysop' => array( 'Prawa administratora w nuzowym padźe preč wzać' ),
+$specialPageAliases['hsb'] = array(
+	'EmergencyDeSysop' => array( 'Prawa_administratora_w_nuzowym_padźe_preč_wzać' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'EmergencyDeSysop' => array( 'RetireDwaSysopIjan' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
-	'EmergencyDeSysop' => array( 'Vészhelyzeti adminisztrátori jog elvonás' ),
+$specialPageAliases['hu'] = array(
+	'EmergencyDeSysop' => array( 'Vészhelyzeti_adminisztrátori_jog_elvonás' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'EmergencyDeSysop' => array( 'Disadmin de urgentia' ),
+$specialPageAliases['ia'] = array(
+	'EmergencyDeSysop' => array( 'Disadmin_de_urgentia' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'EmergencyDeSysop' => array( 'Demutasi opsis darurat', 'DemutasiOpsisDarurat' ),
+$specialPageAliases['id'] = array(
+	'EmergencyDeSysop' => array( 'Demutasi_opsis_darurat', 'DemutasiOpsisDarurat' ),
+);
+
+/** Italian (Italiano) */
+$specialPageAliases['it'] = array(
+	'EmergencyDeSysop' => array( 'DeflagCoatto' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'EmergencyDeSysop' => array( '緊急管理者解任' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'EmergencyDeSysop' => array( 'Kamikaze' ),
 );
 
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'EmergencyDeSysop' => array( 'Urgencia_de_sisop' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'EmergencyDeSysop' => array( 'Noutprozedur fir Administrateurrechter ewechzehuelen' ),
+$specialPageAliases['lb'] = array(
+	'EmergencyDeSysop' => array( 'Noutprozedur_fir_Administrateurrechter_ewechzehuelen' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'EmergencyDeSysop' => array( 'ИтноОдземањеНаСисопПрава' ),
 );
 
+/** Malayalam (മലയാളം) */
+$specialPageAliases['ml'] = array(
+	'EmergencyDeSysop' => array( 'അടിയന്തരസിസോപ്‌‌തരംതാഴ്‌‌ത്തൽ' ),
+);
+
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'EmergencyDeSysop' => array( 'तातडीनेप्रचालकरद्दीकरण' ),
 );
 
-/** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'EmergencyDeSysop' => array( 'Noodgreep_beheerdersrechen_ontnemen' ),
-);
-
-/** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'EmergencyDeSysop' => array( 'NoodgreepBeheerdersrechtenVerwijderen' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
 	'EmergencyDeSysop' => array( 'Nødrettighetsfjerning' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'EmergencyDeSysop' => array( 'Noodgreep_beheerdersrechten_ontnemen' ),
+);
+
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'EmergencyDeSysop' => array( 'NoodgreepBeheerdersrechtenVerwijderen' ),
+);
+
 /** Occitan (Occitan) */
-$aliases['oc'] = array(
+$specialPageAliases['oc'] = array(
 	'EmergencyDeSysop' => array( 'DesysopatgeUrgent', 'DesisopatgeUrgent', 'DeSysopatgeUrgent', 'DeSisopatgeUrgent' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Polish (Polski) */
+$specialPageAliases['pl'] = array(
+	'EmergencyDeSysop' => array( 'Awaryjne_odebranie_uprawnień_administratora' ),
+);
+
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'EmergencyDeSysop' => array( 'आपत्कालप्रचालकनिष्कासन' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'EmergencyDeSysop' => array( 'NúdzovéZbavenieSprávcu' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'EmergencyDeSysop' => array( 'Biglaang pagtanggal bilang tagapagpatakbo ng sistema' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
-	'EmergencyDeSysop' => array( 'AcilHizmetlilikAlma' ),
+$specialPageAliases['tr'] = array(
+	'EmergencyDeSysop' => array( 'AcilHizmetliAzlet' ),
 );
 
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'EmergencyDeSysop' => array( '緊急解除管理員權限' ),
+);

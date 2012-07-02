@@ -20,6 +20,12 @@ require_once( "$IP/maintenance/Maintenance.php" );
 
 /// Script which lists required i18n files for MediaWiki extensions.
 class MWExtFileList extends Maintenance {
+
+	/**
+	 * @var array
+	 */
+	protected $files;
+
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Script which lists required i18n files for mediawiki extensions';

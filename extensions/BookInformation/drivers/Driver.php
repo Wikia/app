@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Book information driver interface
  *
@@ -7,9 +6,11 @@
  * of obtaining information about a given ISBN; see
  * docs/driver-info.htm for more details
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
+
 interface BookInformationDriver {
 
 	/**
@@ -20,7 +21,5 @@ interface BookInformationDriver {
 	 * @return BookInformationResult
 	 */
 	public function submitRequest( $isbn );
-	
+
 }
-
-

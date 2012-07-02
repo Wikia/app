@@ -5,11 +5,6 @@
 
 @import "../../../../../skins/oasis/css/mixins/clearfix"; 
 
-.WikiaArticle {
-	@include clearfix;
-	min-height: 0;
-}
-
 html.resizing {
 	overflow-y: hidden;
 }
@@ -17,4 +12,9 @@ html.resizing {
 #bodyContent {
 	margin-bottom: 0;
 	word-wrap: break-word;
+
+	&.WikiaArticle {
+		@include clearfix;
+		min-height: 0;
+	}
 }

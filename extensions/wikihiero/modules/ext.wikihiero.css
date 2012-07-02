@@ -1,0 +1,18 @@
+.mw-hiero-table {
+	border: 0;
+	border-spacing: 0;
+}
+
+.mw-hiero-outer {
+	display: inline;
+}
+
+.mw-hiero-table td {
+	padding: 0;
+	align: center;
+	vertical-align: middle;
+}
+
+.mw-hiero-box {
+	background: black;
+}

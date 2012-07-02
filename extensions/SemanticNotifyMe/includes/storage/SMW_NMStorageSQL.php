@@ -3,7 +3,7 @@
  * This file provides the access to the MediaWiki SQL database tables that are
  * used by the NotifyMe extension.
  *
- * @author dch
+ * @author ning
  *
  */
 if ( !defined( 'MEDIAWIKI' ) ) die;
@@ -26,39 +26,39 @@ class NMStorageSQL {
 		extract( $db->tableNames( 'smw_nm_monitor', 'smw_nm_query', 'smw_nm_relations', 'smw_nm_rss' ) );
 
 		// page_id, monitored page id
-		SNMDBHelper::setupTable( $smw_nm_monitor,
-		array( 'notify_id'	=> 'INT(8) UNSIGNED NOT NULL',
-							'page_id'	  => 'INT(8) UNSIGNED NOT NULL' ), $db, $verbose );
+		SNMDBHelper::setupTable( $smw_nm_monitor, array(
+			'notify_id' => 'INT(8) UNSIGNED NOT NULL',
+			'page_id'   => 'INT(8) UNSIGNED NOT NULL' ), $db, $verbose );
 		SNMDBHelper::setupIndex( $smw_nm_monitor, array( 'page_id' ), $db );
-		SNMDBHelper::setupTable( $smw_nm_query,
-		array( 'notify_id' => 'INT(8) UNSIGNED NOT NULL KEY AUTO_INCREMENT',
-							'user_id'   => 'INT(8) UNSIGNED NOT NULL',
-							'delegate'  => 'BLOB',
-							'name'	  => 'VARCHAR(255) binary NOT NULL',
-							  'rep_all'   => 'TINYINT(1) NOT NULL default \'1\'',
-							  'show_all'  => 'TINYINT(1) NOT NULL default \'0\'',
-							  'query'	 => 'BLOB NOT NULL',
-							  'nm_sql'	=> 'BLOB',
-							'nm_hierarchy' => 'BLOB',
-							'enable'	=> 'TINYINT(1) NOT NULL default \'0\'' ), $db, $verbose );
+		SNMDBHelper::setupTable( $smw_nm_query, array(
+			'notify_id' => 'INT(8) UNSIGNED NOT NULL KEY AUTO_INCREMENT',
+			'user_id'   => 'INT(8) UNSIGNED NOT NULL',
+			'delegate'  => 'BLOB',
+			'name'      => 'VARCHAR(255) binary NOT NULL',
+			'rep_all'   => 'TINYINT(1) NOT NULL default \'1\'',
+			'show_all'  => 'TINYINT(1) NOT NULL default \'0\'',
+			'query'     => 'BLOB NOT NULL',
+			'nm_sql'    => 'BLOB',
+			'nm_hierarchy' => 'BLOB',
+			'enable'    => 'TINYINT(1) NOT NULL default \'0\'' ), $db, $verbose );
 		SNMDBHelper::setupIndex( $smw_nm_query, array( 'user_id' ), $db );
 		// page_id, related page / property id in notify query
-		SNMDBHelper::setupTable( $smw_nm_relations,
-		array( 'notify_id'	=> 'INT(8) UNSIGNED NOT NULL',
-							'smw_id'	   => 'INT(8) UNSIGNED NOT NULL',
+		SNMDBHelper::setupTable( $smw_nm_relations, array(
+			'notify_id'	=> 'INT(8) UNSIGNED NOT NULL',
+			'smw_id'    => 'INT(8) UNSIGNED NOT NULL',
 		// 0 category, 1 instance, 2 property
-							'type'		 => 'INT(8) UNSIGNED NOT NULL',
-							  'subquery'	 => 'INT(8) UNSIGNED NOT NULL default \'0\'' ), $db, $verbose );
+			'type'      => 'INT(8) UNSIGNED NOT NULL',
+			'subquery'  => 'INT(8) UNSIGNED NOT NULL default \'0\'' ), $db, $verbose );
 		SNMDBHelper::setupIndex( $smw_nm_relations, array( 'smw_id', 'notify_id' ), $db );
-		SNMDBHelper::setupTable( $smw_nm_rss,
-		array( 'msg_id'		=> 'INT(8) UNSIGNED NOT NULL KEY AUTO_INCREMENT',
-							  'mailed'	 => 'TINYINT(1) NOT NULL default \'0\'',
-							  'user_id'	=> 'INT(8) UNSIGNED',
-							  'notify_id'  => 'INT(8) UNSIGNED',
-							  'title'	  => 'VARCHAR(255) binary NOT NULL',
-							  'link'	   => 'BLOB',
-							  'notify'	 => 'BLOB NOT NULL',
-							  'timestamp'  => 'VARCHAR(14) binary NOT NULL' ), $db, $verbose );
+		SNMDBHelper::setupTable( $smw_nm_rss, array(
+			'msg_id'    => 'INT(8) UNSIGNED NOT NULL KEY AUTO_INCREMENT',
+			'mailed'    => 'TINYINT(1) NOT NULL default \'0\'',
+			'user_id'   => 'INT(8) UNSIGNED',
+			'notify_id' => 'INT(8) UNSIGNED',
+			'title'     => 'VARCHAR(255) binary NOT NULL',
+			'link'      => 'BLOB',
+			'notify'    => 'BLOB NOT NULL',
+			'timestamp' => 'VARCHAR(14) binary NOT NULL' ), $db, $verbose );
 		SNMDBHelper::setupIndex( $smw_nm_rss, array( 'user_id' ), $db );
 
 		SNMDBHelper::reportProgress( "... done!\n", $verbose );
@@ -136,7 +136,7 @@ class NMStorageSQL {
 		foreach ( $rels as $smw ) {
 			$res = $dbw->select( $dbw->tableName( 'smw_ids' ),
 					'smw_id',
-					// array( 'smw_namespace' => $smw['namespace'], 'smw_title' => $smw['title']),
+			// array( 'smw_namespace' => $smw['namespace'], 'smw_title' => $smw['title']),
 					'smw_namespace=' . $smw['namespace'] . ' AND smw_title=' . $dbw->addQuotes( $smw['title'] ),
 					'NotifyMe::getRelatedSmwId' );
 			$rel_smw_id = 0;
@@ -197,8 +197,8 @@ class NMStorageSQL {
 
 		$db = wfGetDB( DB_SLAVE );
 		$res = $db->select( $db->tableName( 'smw_nm_query' ),
-			array( 'notify_id', 'name', 'query', 'show_all' ),
-			array( 'notify_id' => $notify_ids ), $fname );
+		array( 'notify_id', 'name', 'query', 'show_all' ),
+		array( 'notify_id' => $notify_ids ), $fname );
 		if ( $db->numRows( $res ) > 0 ) {
 			while ( $row = $db->fetchObject( $res ) ) {
 				$result[$row->notify_id] = array( 'query' => $row->query,
@@ -234,6 +234,14 @@ class NMStorageSQL {
 		$db->freeResult( $res );
 		wfProfileOut( $fname );
 		return $result;
+	}
+	public function cleanUp() {
+		$fname = 'NotifyMe::cleanUp';
+		wfProfileIn( $fname );
+		$db = wfGetDB( DB_MASTER );
+		$db->delete( $db->tableName( 'smw_nm_monitor' ), '*', $fname );
+		$db->delete( $db->tableName( 'smw_nm_relations' ), '*', $fname );
+		wfProfileOut( $fname );
 	}
 	public function disableNotifyState( $notify_id ) {
 		$fname = 'NotifyMe::disableState';
@@ -380,7 +388,7 @@ class NMStorageSQL {
 		$result = array( 0 => array(), 1 => array() );
 		extract( $db->tableNames( 'smw_nm_query', 'smw_nm_relations' ) );
 		$res = $db->query( "SELECT q.notify_id, q.name, q.user_id, q.delegate, q.nm_sql, q.nm_hierarchy, c1.subquery FROM (" .
-				"SELECT count(*) cnt, notify_id, subquery FROM $smw_nm_relations " .
+			"SELECT count(*) cnt, notify_id, subquery FROM $smw_nm_relations " .
 					"WHERE $cond GROUP BY notify_id, subquery" .
 			") c1 INNER JOIN (" .
 				"SELECT count(*) cnt, notify_id, subquery FROM $smw_nm_relations " .
@@ -390,19 +398,19 @@ class NMStorageSQL {
 		if ( $db->numRows( $res ) > 0 ) {
 			while ( $row = $db->fetchObject( $res ) ) {
 				$ds = explode( ',', $row->delegate );
-				$delegated = false;
+				$uids = array();
 				foreach ( $ds as $delegate ) {
 					$u = User::newFromName( trim( $delegate ) );
 					if ( $u == null ) continue;
 					$id = $u->getId();
 					if ( $id > 0 ) {
-						$result[$row->subquery > 0 ? 1:0][$row->notify_id] = array( 'user_id' => $id, 'name' => $row->name, 'sql' => $row->nm_sql, 'hierarchy' => $row->nm_hierarchy );
-						$delegated = true;
+						$uids[] = $id;
 					}
 				}
-				if ( !$delegated ) {
-					$result[$row->subquery > 0 ? 1:0][$row->notify_id] = array( 'user_id' => $row->user_id, 'name' => $row->name, 'sql' => $row->nm_sql, 'hierarchy' => $row->nm_hierarchy );
+				if ( count( $uids ) == 0 ) {
+					$uids[] = $row->user_id;
 				}
+				$result[$row->subquery > 0 ? 1:0][$row->notify_id] = array( 'user_ids' => $uids, 'name' => $row->name, 'sql' => $row->nm_sql, 'hierarchy' => $row->nm_hierarchy );
 			}
 		}
 		$db->freeResult( $res );
@@ -413,6 +421,7 @@ class NMStorageSQL {
 		$fname = 'NotifyMe::getMonitoredQuery';
 		wfProfileIn( $fname );
 
+		$result = array();
 		$db = wfGetDB( DB_SLAVE );
 		$res = $db->select( array( $db->tableName( 'smw_nm_monitor' ) . ' m', $db->tableName( 'smw_nm_query' ) . ' q' ),
 		array( 'q.notify_id, q.delegate, q.name, q.user_id, q.nm_sql, q.nm_hierarchy' ),
@@ -420,19 +429,19 @@ class NMStorageSQL {
 		if ( $db->numRows( $res ) > 0 ) {
 			while ( $row = $db->fetchObject( $res ) ) {
 				$ds = explode( ',', $row->delegate );
-				$delegated = false;
+				$uids = array();
 				foreach ( $ds as $delegate ) {
 					$u = User::newFromName( trim( $delegate ) );
 					if ( $u == null ) continue;
 					$id = $u->getId();
 					if ( $id > 0 ) {
-						$result[$row->notify_id] = array( 'user_id' => $id, 'name' => $row->name, 'sql' => $row->nm_sql, 'hierarchy' => $row->nm_hierarchy );
-						$delegated = true;
+						$uids[] = $id;
 					}
 				}
-				if ( !$delegated ) {
-					$result[$row->notify_id] = array( 'user_id' => $row->user_id, 'name' => $row->name, 'sql' => $row->nm_sql, 'hierarchy' => $row->nm_hierarchy );
+				if ( count( $uids ) == 0 ) {
+					$uids[] = $row->user_id;
 				}
+				$result[$row->notify_id] = array( 'user_ids' => $uids, 'name' => $row->name, 'sql' => $row->nm_sql, 'hierarchy' => $row->nm_hierarchy );
 			}
 		}
 		$db->freeResult( $res );
@@ -591,7 +600,7 @@ class NMStorageSQL {
 		wfProfileIn( $fname );
 
 		$db = wfGetDB( DB_SLAVE );
-		$result = $db->selectRow( 'user', array( 'user_name', 'user_real_name', 'user_email', 'user_options' ), array( 'user_id' => $user_id ), $fname );
+		$result = $db->selectRow( 'user', array( 'user_name', 'user_real_name', 'user_email' ), array( 'user_id' => $user_id ), $fname );
 
 		wfProfileOut( $fname );
 		return $result;
@@ -688,10 +697,15 @@ class NMStorageSQL {
 	function getNMQueryResult( SMWQuery $query ) {
 		wfProfileIn( 'SMWSQLStore2::getNMQueryResult (SMW)' );
 		global $smwgNMIP;
-		include_once( "$smwgNMIP/includes/storage/SMW_SQLStore2_QueriesNM.php" );
+		if ( defined( 'SMW_VERSION' ) && strpos( SMW_VERSION, '1.5' ) == 0 ) {
+			include_once( "$smwgNMIP/includes/storage/SMW_SQLStore2_QueriesNM.smw15.php" );
+		} else {
+			include_once( "$smwgNMIP/includes/storage/SMW_SQLStore2_QueriesNM.php" );
+		}
 		$qe = new SMWSQLStore2QueryEngineNM( smwfGetStore(), wfGetDB( DB_SLAVE ) );
 		$result = $qe->getQueryResult( $query );
 		wfProfileOut( 'SMWSQLStore2::getNMQueryResult (SMW)' );
 		return $result;
 	}
+
 }

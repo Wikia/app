@@ -16,6 +16,11 @@
  * @ingroup FFS
  */
 class DtdFFS extends SimpleFFS {
+
+	/**
+	 * @param $data string
+	 * @return array
+	 */
 	public function readFromVariable( $data ) {
 		preg_match_all( ',AUTHOR: ([^\n]+)\n,', $data, $matches );
 		$authors = array();

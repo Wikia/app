@@ -1,0 +1,10 @@
+td.left {
+	padding-right: 10px
+}
+td.right {
+	padding-left: 10px;
+	text-align: right;
+}
+td.alt {
+	background-color: #DDDDDD;
+}

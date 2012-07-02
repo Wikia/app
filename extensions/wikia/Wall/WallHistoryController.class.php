@@ -33,7 +33,7 @@ class WallHistoryController extends WallController {
 			($this->isThreadLevel && 
 			!in_array(MWNamespace::getSubject($title->getNamespace() ), $this->app->wg->WallNS)) 
 		) {
-		//paranoia -- where the message is not in DB
+		//paranoia -- why the message is not in DB
 			$this->response->setVal('wallmessageNotFound', true);
 			return;
 		}
@@ -82,6 +82,9 @@ class WallHistoryController extends WallController {
 			'url' => $wallUrl 
 		)), $path); 
 		
+		$wallOwnerName = $wallOwnerUsername = $wallOwnerUser->getName();
+		$this->response->setVal('wallOwnerName', $wallOwnerName);
+
 		if( $this->isThreadLevel ) {
 			wfRunHooks('WallHistoryThreadHeader', array($title, $wallMessage, &$path, &$this->response, &$this->request));
 		}

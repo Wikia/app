@@ -16,6 +16,13 @@ $wgStaticWikiNamespaces = array ( 0 , 10 , 14 ) ;
 
 if (!defined('MEDIAWIKI')) die();
 
+$wgExtensionCredits['other'][] = array(
+	'path'           => __FILE__,
+	'name'           => 'StaticWiki',
+	'author'         => 'Magnus Manske',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:StaticWiki',
+);
+
 $wgHooks['AlternateEdit'][] = 'wfStaticEditHook' ;
 
 function wfStaticWikiGetRevisionText ( $url_title , $revision ) {
@@ -32,12 +39,9 @@ function wfStaticEditHook ( $a ) {
 	if ( !in_array ( $wgTitle->getNamespace() , $wgStaticWikiNamespaces ) ) return true ; # This article namespace is not imported => normal edit
 
 	if ( ! $a->mTitle->userCan( 'edit' ) ) { # Only users that can edit may import as well
-			wfDebug( "$fname: user can't edit\n" );
-			$wgOut->readOnlyPage( $this->mArticle->getContent( true ), true );
-			wfProfileOut( $fname );
-			return true;
-		}
-		
+		return true;
+	}
+
 	$url_title = $wgTitle->getPrefixedDBkey() ;
 	$title = $wgTitle->getText () ;	
 	$wgOut->setPageTitle ( 'Importing ' . $wgTitle->getPrefixedText() ) ;

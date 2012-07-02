@@ -68,6 +68,6 @@ function axAjaxPollSubmit() {
 	$pool_id = $wgRequest->getVal( "wpPollId", null );
 	$poll = AjaxPollClass::newFromId( $pool_id );
 
-	return Wikia::json_encode( $poll->doSubmit( $wgRequest ) );
+	return json_encode( $poll->doSubmit( $wgRequest ) );
 }
 $wgAjaxExportList[] = "axAjaxPollSubmit";

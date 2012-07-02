@@ -1,6 +1,5 @@
 <?php
 require_once dirname(__FILE__) . '/../EditPageLayout_setup.php';
-wfLoadAllExtensions();
 
 class EditPageLayoutTest extends PHPUnit_Framework_TestCase {
 

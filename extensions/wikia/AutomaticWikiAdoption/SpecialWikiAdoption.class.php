@@ -34,7 +34,6 @@ class SpecialWikiAdoption extends UnlistedSpecialPage {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	function __construct() {
-		wfLoadExtensionMessages('AutomaticWikiAdoption');
 		parent::__construct('WikiAdoption');
 	}
 

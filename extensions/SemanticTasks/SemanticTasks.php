@@ -1,8 +1,13 @@
 <?php
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "Not a valid entry point";
-    exit( 1 );
+	echo 'Not a valid entry point';
+	exit( 1 );
+}
+
+if ( !defined( 'SMW_VERSION' ) ) {
+	echo 'This extension requires Semantic MediaWiki to be installed.';
+	exit( 1 );
 }
 
 #
@@ -13,30 +18,26 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $stScriptPath = $wgScriptPath . '/extensions/SemanticTasks';
 #
 
-# Informations
-$wgExtensionCredits['parserhook'][] = array(
+# Extension credits
+$wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'other'][] = array(
 	'path' => __FILE__,
 	'name' => 'SemanticTasks',
-	'author' => 'Steren Giannini, Ryan Lane',
-	'version' => '1.3',
+	'author' => array(
+		'Steren Giannini',
+		'Ryan Lane',
+		'[http://www.mediawiki.org/wiki/User:Jeroen_De_Dauw Jeroen De Dauw]'
+	),
+	'version' => '1.4.1',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Semantic_Tasks',
-	'description' => 'E-mail notifications for assigned or updated tasks',
 	'descriptionmsg' => 'semantictasks-desc',
 );
-
-// Do st_SetupExtension after the mediawiki setup, AND after SemanticMediaWiki setup
-// FIXME: only hook added is ArticleSaveComplete. There appears to be no need for this.
-$wgExtensionFunctions[] = 'SemanticTasksSetupExtension';
 
 // i18n
 $wgExtensionMessagesFiles['SemanticTasks'] = dirname( __FILE__ ) . '/SemanticTasks.i18n.php';
 
-$dir = dirname( __FILE__ ) . '/';
-$wgAutoloadClasses['SemanticTasksMailer'] = $dir . 'SemanticTasks.classes.php';
+// Autoloading
+$wgAutoloadClasses['SemanticTasksMailer'] = dirname( __FILE__ ) . '/SemanticTasks.classes.php';
 
-function SemanticTasksSetupExtension() {
-        global $wgHooks;
-        $wgHooks['ArticleSaveComplete'][] = 'SemanticTasksMailer::mailAssigneesUpdatedTask';
-	$wgHooks['ArticleSave'][] = 'SemanticTasksMailer::findOldValues';
-        return true;
-}
+// Hooks
+$wgHooks['ArticleSaveComplete'][] = 'SemanticTasksMailer::mailAssigneesUpdatedTask';
+$wgHooks['ArticleSave'][] = 'SemanticTasksMailer::findOldValues';

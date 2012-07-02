@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 if( !defined( 'MEDIAWIKI' ) ) {
@@ -50,13 +50,20 @@ function efMetisAddPixel( &$article ) {
 	return true;
 }
 
-function efMetisSchemaUpdate() {
-	global $wgDBtype, $wgExtNewTables;
-
-	if ( $wgDBtype == 'mysql' ) {
-		$wgExtNewTables[] = array( 'metis', dirname( __FILE__ ) . '/METIS.sql' );
-	} elseif( $wgDBtype == 'postgres' ) {
-		$wgExtNewTables[] = array( 'metis', dirname( __FILE__ ) . '/METIS.pg.sql' );
+function efMetisSchemaUpdate( $updater = null ) {
+	if ( $updater === null ) {
+		global $wgDBtype, $wgExtNewTables;
+		if ( $wgDBtype == 'mysql' ) {
+			$wgExtNewTables[] = array( 'metis', dirname( __FILE__ ) . '/METIS.sql' );
+		} elseif ( $wgDBtype == 'postgres' ) {
+			$wgExtNewTables[] = array( 'metis', dirname( __FILE__ ) . '/METIS.pg.sql' );
+		}
+	} else {
+		if ( $updater->getDB()->getType() == 'mysql' ) {
+			$updater->addExtensionUpdate( array( 'addTable', 'metis', dirname( __FILE__ ) . '/METIS.sql', true ) );
+		} elseif ( $updater->getDB()->getType() == 'postgres' ) {
+			$updater->addExtensionUpdate( array( 'addTable', 'metis', dirname( __FILE__ ) . '/METIS.pg.sql', true ) );
+		}
 	}
 	return true;
 }

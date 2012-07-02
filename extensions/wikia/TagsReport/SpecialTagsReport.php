@@ -17,7 +17,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgExtensionMessagesFiles["TagsReport"] = dirname(__FILE__) . '/SpecialTagsReport.i18n.php';
-$wgExtensionAliasesFiles['TagsReport'] = __DIR__ . '/SpecialTagsReport.aliases.php';
+$wgExtensionMessagesFiles['TagsReportAliases'] = __DIR__ . '/SpecialTagsReport.aliases.php';
 
 $wgAvailableRights[] = 'tagsreport';
 $wgGroupPermissions['*']['tagsreport'] = true;

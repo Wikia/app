@@ -1,14 +1,13 @@
 <?php
-
 /**
  * Book information driver for ISBNdb.com
  *
- * @package MediaWiki
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
-class BookInformationIsbnDb implements BookInformationDriver {
 
+class BookInformationIsbnDb implements BookInformationDriver {
 	/**
 	 * Submit a request to the information source and
 	 * return the result
@@ -18,19 +17,19 @@ class BookInformationIsbnDb implements BookInformationDriver {
 	 */
 	public function submitRequest( $isbn ) {
 		global $wgBookInformationService;
-		if( isset( $wgBookInformationService['accesskey'] ) ) {
+		if ( isset( $wgBookInformationService['accesskey'] ) ) {
 			$ak = $wgBookInformationService['accesskey'];
 			$uri = self::buildRequestURI( $ak, $isbn );
-			if( ( $xml = Http::get( $uri ) ) !== false ) {
+			if ( ( $xml = Http::get( $uri ) ) !== false ) {
 				return $this->parseResponse( $xml );
 			} else {
 				return new BookInformationResult( BookInformationResult::RESPONSE_TIMEOUT );
-			}			
+			}
 		} else {
 			return new BookInformationResult( BookInformationResult::RESPONSE_FAILED );
 		}
 	}
-	
+
 	/**
 	 * Build the URI for an ISBNdb.com request
 	 *
@@ -44,7 +43,7 @@ class BookInformationIsbnDb implements BookInformationDriver {
 		$bits[] = 'value1=' . urlencode( $isbn );
 		return 'http://isbndb.com/api/books.xml?' . implode( '&', $bits );
 	}
-	
+
 	/**
 	 * Parse an XML response from the service and extract
 	 * the information we require
@@ -55,8 +54,8 @@ class BookInformationIsbnDb implements BookInformationDriver {
 	private function parseResponse( $response ) {
 		try {
 			$xml = new SimpleXMLElement( $response );
-			if( is_object( $xml ) && $xml instanceof SimpleXMLElement ) {
-				if( isset( $xml->BookList[0]->BookData[0] ) ) {
+			if ( is_object( $xml ) && $xml instanceof SimpleXMLElement ) {
+				if ( isset( $xml->BookList[0]->BookData[0] ) ) {
 					$book =& $xml->BookList[0]->BookData[0];
 					return $this->prepareResult(
 						(string)$book->Title,
@@ -69,11 +68,11 @@ class BookInformationIsbnDb implements BookInformationDriver {
 			} else {
 				return new BookInformationResult( BookInformationResult::RESPONSE_FAILED );
 			}
-		} catch( Exception $ex ) {
+		} catch ( Exception $ex ) {
 			return new BookInformationResult( BookInformationResult::RESPONSE_FAILED );
 		}
 	}
-	
+
 	/**
 	 * Prepare a BookInformationResult corresponding to a successful
 	 * request and containing the available book information
@@ -102,6 +101,4 @@ class BookInformationIsbnDb implements BookInformationDriver {
 	private static function buildProviderLink() {
 		return '<a href="http://www.isbndb.com">ISBNdb.com</a>';
 	}
-	
 }
-

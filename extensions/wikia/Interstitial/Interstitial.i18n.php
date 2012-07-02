@@ -108,7 +108,7 @@ $messages['fr'] = array(
 	'exitstitial-button' => 'Ignorer cette annonce',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -225,7 +225,7 @@ $messages['pl'] = array(
 	'interstitial-already-logged-in-no-link' => 'Jesteś już zalogowany i nie ustawiono lokalizacji docelowej.',
 	'interstitial-disabled-no-link' => 'Nie ustawiono docelowej lokalizacji a strony pośrednie nie są włączone na tej wiki.',
 	'interstitial-link-away' => 'Nie ma tu nic do oglądania! <br /><br />Może chcesz zobaczyć [[{{MediaWiki:Mainpage}}|Stronę główną]] lub [[Special:Random|losową stronę]]?',
-	'exitstitial-register' => '<a href="#" class="register">Zarejestruj się</a> lub <a href="#" class="login">zaloguj</a> żeby ominąć reklamy.',
+	'exitstitial-register' => '<a href="#" class="register">Zarejestruj się</a> lub <a href="#" class="login">zaloguj</a> żeby pomijać reklamy.',
 	'exitstitial-button' => 'Pomiń reklamę',
 );
 

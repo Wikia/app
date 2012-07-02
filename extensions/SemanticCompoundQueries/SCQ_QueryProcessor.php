@@ -1,171 +1,248 @@
 <?php
 
-if ( !defined( 'MEDIAWIKI' ) ) die();
-
 /**
  * Class that holds static functions for handling compound queries.
- * This class is heavily based on Semantic MediaWiki's SMWQueryProcessor,
- * and calls that class's functions when possible.
+ * This class inherits from Semantic MediaWiki's SMWQueryProcessor.
  *
  * @ingroup SemanticCompoundQueries
+ * 
  * @author Yaron Koren
  */
-class SCQQueryProcessor {
+class SCQQueryProcessor extends SMWQueryProcessor {
+
+	/**
+	 * Comparison helper function, used in sorting results.
+	 */
+	public static function compareQueryResults( $a, $b ) {
+		if ( $a->getDBKey() == $b->getDBKey() ) {
+			return 0;
+		}
+		return ( $a->getDBKey() < $b->getDBKey() ) ? -1 : 1;
+	}
+
+	/**
+	 * Handler for the #compound_query parser function.
+	 * 
+	 * @param Parser $parser
+	 * 
+	 * @return string
+	 */
+	public static function doCompoundQuery( Parser &$parser ) {
+		global $smwgQEnabled, $smwgIQRunningNumber;
+
+		if ( !$smwgQEnabled ) {
+			return smwfEncodeMessages( array( wfMsgForContent( 'smw_iq_disabled' ) ) );
+		}
+
+		$smwgIQRunningNumber++;
+
+		$params = func_get_args();
+		array_shift( $params ); // We already know the $parser.
+
+		$other_params = array();
+		$results = array();
+		$printRequests = array();
+		$queryParams = array();
+
+		foreach ( $params as $param ) {
+			// Very primitive heuristic - if the parameter
+			// includes a square bracket, then it's a
+			// sub-query; otherwise it's a regular parameter.
+			if ( strpos( $param, '[' ) !== false ) {
+				$queryParams[] = $param;
+			} else {
+				$parts = explode( '=', $param, 2 );
+
+				if ( count( $parts ) >= 2 ) {
+					$other_params[strtolower( trim( $parts[0] ) )] = $parts[1]; // don't trim here, some params care for " "
+				}
+			}
+		}
+
+		foreach ( $queryParams as $param ) {
+			$subQueryParams = self::getSubParams( $param );
+
+			if ( array_key_exists( 'format', $other_params ) && !array_key_exists( 'format', $subQueryParams ) ) {
+				$subQueryParams['format'] = $other_params['format'];
+			}
+
+			$next_result = self::getQueryResultFromFunctionParams(
+				$subQueryParams,
+				SMW_OUTPUT_WIKI
+			);
+
+			$results = self::mergeSMWQueryResults( $results, $next_result->getResults() );
+			$printRequests = self::mergeSMWPrintRequests( $printRequests, $next_result->getPrintRequests() );
+		}
+
+		// Sort results so that they'll show up by page name
+		uasort( $results, array( 'SCQQueryProcessor', 'compareQueryResults' ) );
+
+		$query_result = new SCQQueryResult( $printRequests, new SMWQuery(), $results, smwfGetStore() );
+
+		if ( version_compare( SMW_VERSION, '1.6.1', '>' ) ) {
+			SMWQueryProcessor::addThisPrintout( $printRequests, $other_params );
+			$other_params = parent::getProcessedParams( $other_params, $printRequests );
+		}
+
+		return self::getResultFromQueryResult(
+			$query_result,
+			$other_params,
+			SMW_OUTPUT_WIKI
+		);
+	}
 
 	/**
 	 * An alternative to explode() - that function won't work here,
 	 * because we don't want to split the string on all semicolons, just
 	 * the ones that aren't contained within square brackets
+	 * 
+	 * @param string $param
+	 * 
+	 * @return array
 	 */
-	public static function getSubParams( $param ) {
+	protected static function getSubParams( $param ) {
 		$sub_params = array();
-		$sub_param = "";
+		$sub_param = '';
 		$uncompleted_square_brackets = 0;
+
 		for ( $i = 0; $i < strlen( $param ); $i++ ) {
 			$c = $param[$i];
+
 			if ( ( $c == ';' ) && ( $uncompleted_square_brackets <= 0 ) ) {
-				$sub_params[] = $sub_param;
-				$sub_param = "";
+				$sub_params[] = trim( $sub_param );
+				$sub_param = '';
 			} else {
 				$sub_param .= $c;
-				if ( $c == '[' )
+
+				if ( $c == '[' ) {
 					$uncompleted_square_brackets++;
-				elseif ( $c == ']' )
+				}
+
+				elseif ( $c == ']' ) {
 					$uncompleted_square_brackets--;
+				}
 			}
 		}
-		$sub_params[] = $sub_param;
+
+		$sub_params[] = trim( $sub_param );
+
 		return $sub_params;
 	}
 
 	/**
+	 * @param $rawparams
+	 * @param $outputmode
+	 * @param $context
+	 * @param $showmode
+	 * 
+	 * @return SMWQueryResult
 	 */
-	public static function doCompoundQuery( &$parser ) {
-		global $smwgQEnabled, $smwgIQRunningNumber;
-		if ( $smwgQEnabled ) {
-			$smwgIQRunningNumber++;
-			$params = func_get_args();
-			array_shift( $params ); // we already know the $parser ...
-			$other_params = array();
-			$query_result = null;
-			$results = array();
-			foreach ( $params as $param ) {
-				// very primitive heuristic - if the parameter
-				// includes a square bracket, then it's a
-				// sub-query; otherwise it's a regular parameter
-				if ( strpos( $param, '[' ) !== false ) {
-					$sub_params = SCQQueryProcessor::getSubParams( $param );
-					$next_result = SCQQueryProcessor::getQueryResultFromFunctionParams( $sub_params, SMW_OUTPUT_WIKI );
-					if (method_exists($next_result, 'getResults')) { // SMW 1.5+
-						$results = array_merge($results, $next_result->getResults());
-					} else {
-						if ( $query_result == null )
-							$query_result = new SCQQueryResult( $next_result->getPrintRequests(), new SMWQuery() );
-						$query_result->addResult( $next_result );
-					}
-				} else {
-					$parts = explode( '=', $param, 2 );
-					if ( count( $parts ) >= 2 ) {
-						$other_params[strtolower( trim( $parts[0] ) )] = $parts[1]; // don't trim here, some params care for " "
-					}
-				}
-			}
-			if ( is_null($query_result) ) // SMW 1.5+
-				$query_result = new SCQQueryResult( $next_result->getPrintRequests(), new SMWQuery(), $results, smwfGetStore() );
-			$result = SCQQueryProcessor::getResultFromQueryResult( $query_result, $other_params, null, SMW_OUTPUT_WIKI );
-		} else {
-			wfLoadExtensionMessages( 'SemanticMediaWiki' );
-			$result = smwfEncodeMessages( array( wfMsgForContent( 'smw_iq_disabled' ) ) );
-		}
-		return $result;
-	}
-
-	static function getQueryResultFromFunctionParams( $rawparams, $outputmode, $context = SMWQueryProcessor::INLINE_QUERY, $showmode = false ) {
-		SMWQueryProcessor::processFunctionParams( $rawparams, $querystring, $params, $printouts, $showmode );
-		return SCQQueryProcessor::getQueryResultFromQueryString( $querystring, $params, $printouts, SMW_OUTPUT_WIKI, $context );
+	protected static function getQueryResultFromFunctionParams( $rawparams, $outputmode, $context = SMWQueryProcessor::INLINE_QUERY, $showmode = false ) {
+		$printouts = null;
+		self::processFunctionParams( $rawparams, $querystring, $params, $printouts, $showmode );
+		return self::getQueryResultFromQueryString( $querystring, $params, $printouts, SMW_OUTPUT_WIKI, $context );
 	}
 
 	/**
-	 * Combine the values from two SMWQueryResult objects into one
+	 * Combine two arrays of SMWWikiPageValue objects into one
+	 * 
+	 * @param array $result1
+	 * @param array $result2
+	 * 
+	 * @return array
 	 */
-	static function mergeSMWQueryResults( $result1, $result2 ) {
+	protected static function mergeSMWQueryResults( $result1, $result2 ) {
 		if ( $result1 == null ) {
-			$result1 = new SMWQueryResult( $result2->getPrintRequests(), new SMWQuery() );
+			return $result2;
 		}
+
 		$existing_page_names = array();
-		while ( $row = $result1->getNext() ) {
-			if ( $row[0] instanceof SMWResultArray ) {
-				$content = $row[0]->getContent();
-				$existing_page_names[] = $content[0]->getLongText( SMW_OUTPUT_WIKI );
+		foreach ( $result1 as $r1 ) {
+			$existing_page_names[] = $r1->getDBkey();
+		}
+
+		foreach ( $result2 as $r2 ) {
+			$page_name = $r2->getDBkey();
+			if ( ! in_array( $page_name, $existing_page_names ) ) {
+				$result1[] = $r2;
 			}
 		}
-		while ( ( $row = $result2->getNext() ) !== false ) {
-			$row[0]->display_options = $result2->display_options;
-			$content = $row[0]->getContent();
-			$page_name = $content[0]->getLongText( SMW_OUTPUT_WIKI );
-			if ( ! in_array( $page_name, $existing_page_names ) )
-				$result1->addRow( $row );
-		}
+
 		return $result1;
 	}
 
-	// this method is an exact copy of SMWQueryProcessor's function,
-	// but it needs to be duplicated because there it's protected
-	static function getResultFormat( $params ) {
-		$format = 'auto';
-		if ( array_key_exists( 'format', $params ) ) {
-			$format = strtolower( trim( $params['format'] ) );
-			global $smwgResultFormats;
-			if ( !array_key_exists( $format, $smwgResultFormats ) ) {
-				$format = 'auto'; // If it is an unknown format, defaults to list/table again
+	protected static function mergeSMWPrintRequests( $printRequests1, $printRequests2 ) {
+		$existingPrintoutLabels = array();
+		foreach ( $printRequests1 as $p1 ) {
+			$existingPrintoutLabels[] = $p1->getLabel();
+		}
+
+		foreach ( $printRequests2 as $p2 ) {
+			$label = $p2->getLabel();
+			if ( ! in_array( $label, $existingPrintoutLabels ) ) {
+				$printRequests1[] = $p2;
 			}
 		}
-		return $format;
+		return $printRequests1;
 	}
 
-	static function getQueryResultFromQueryString( $querystring, $params, $extraprintouts, $outputmode, $context = SMWQueryProcessor::INLINE_QUERY ) {
+	/**
+	 * @param $querystring
+	 * @param array $params
+	 * @param $extraprintouts
+	 * @param $outputmode
+	 * @param $context
+	 * 
+	 * @return SMWQueryResult
+	 */
+	protected static function getQueryResultFromQueryString( $querystring, array $params, $extraprintouts, $outputmode, $context = SMWQueryProcessor::INLINE_QUERY ) {
 		wfProfileIn( 'SCQQueryProcessor::getQueryResultFromQueryString' );
-		$query  = SMWQueryProcessor::createQuery( $querystring, $params, $context, null, $extraprintouts );
+
+		if ( version_compare( SMW_VERSION, '1.6.1', '>' ) ) {
+			SMWQueryProcessor::addThisPrintout( $extraprintouts, $params );
+			$params = self::getProcessedParams( $params, $extraprintouts, false );
+		}
+
+		$query = self::createQuery( $querystring, $params, $context, null, $extraprintouts );
 		$query_result = smwfGetStore()->getQueryResult( $query );
-		$display_options = array();
-		foreach ( $params as $key => $value ) {
-			// special handling for 'icon' field, since it requires
-			// conversion of a name to a URL
-			if ( $key == 'icon' ) {
-				$icon_title = Title::newFromText( $value );
-				$icon_image_page = new ImagePage( $icon_title );
-				// method was only added in MW 1.13
-				if ( method_exists( 'ImagePage', 'getDisplayedFile' ) ) {
-					$icon_url = $icon_image_page->getDisplayedFile()->getURL();
-					$display_options['icon'] = $icon_url;
-				}
-			} else {
-				$display_options[$key] = $value;
-			}
-			if ( method_exists($query_result, 'getResults') ) { // SMW 1.5+
-				foreach ($query_result->getResults() as $wiki_page) {
-					$wiki_page->display_options = $display_options;
-				}
-			} else {
-				$query_result->display_options = $display_options;
-			}
+
+		foreach ( $query_result->getResults() as $wiki_page ) {
+			$wiki_page->display_options = $params;
 		}
 
 		wfProfileOut( 'SCQQueryProcessor::getQueryResultFromQueryString' );
+
 		return $query_result;
 	}
 
-	/*
+	/**
 	 * Matches getResultFromQueryResult() from SMWQueryProcessor,
-	 * except that formats of type 'debug' and 'count' aren't handled
+	 * except that formats of type 'debug' and 'count' aren't handled.
+	 * 
+	 * @param SCQQueryResult $res
+	 * @param array $params These need to be the result of a list fed to getProcessedParams as of SMW 1.6.2
+	 * @param $outputmode
+	 * @param $context
+	 * @param string $format
+	 * 
+	 * @return string
 	 */
-	static function getResultFromQueryResult( $res, $params, $extraprintouts, $outputmode, $context = SMWQueryProcessor::INLINE_QUERY, $format = '' ) {
+	protected static function getResultFromQueryResult( SCQQueryResult $res, array $params, $outputmode, $context = SMWQueryProcessor::INLINE_QUERY, $format = '' ) {
 		wfProfileIn( 'SCQQueryProcessor::getResultFromQueryResult' );
-		$format = SCQQueryProcessor::getResultFormat( $params );
-		$printer = SMWQueryProcessor::getResultPrinter( $format, $context, $res );
+
+		if ( version_compare( SMW_VERSION, '1.6.1', '>' ) ) {
+			$format = $params['format'];
+		} else {
+			$format = self::getResultFormat( $params );
+		}
+
+		$printer = self::getResultPrinter( $format, $context, $res );
 		$result = $printer->getResult( $res, $params, $outputmode );
+
 		wfProfileOut( 'SCQQueryProcessor::getResultFromQueryResult' );
+
 		return $result;
 	}
-}
 
+}

@@ -1,18 +1,35 @@
 <?php
 
+/**
+ * Redirect classes to hijack the core UserLogin and CreateAccount facilities, because
+ * they're so badly written as to be impossible to extend
+ */
+class SpecialOpenIDCreateAccount extends SpecialRedirectToSpecial {
+	function __construct() {
+		parent::__construct( 'SpecialOpenIDCreateAccount', 'OpenIDLogin' );
+	}
+}
+class SpecialOpenIDUserLogin extends SpecialRedirectToSpecial {
+	function __construct() {
+		parent::__construct( 'SpecialOpenIDUserLogin', 'OpenIDLogin', false, array( 'returnto', 'returntoquery' ) );
+	}
+}
+
 class OpenIDHooks {
 	public static function onSpecialPage_initList( &$list ) {
 		global $wgOpenIDOnly, $wgOpenIDClientOnly;
 
 		if ( $wgOpenIDOnly ) {
-			$list['Userlogin'] = array( 'SpecialRedirectToSpecial', 'Userlogin', 'OpenIDLogin', false, array( 'returnto', 'returntoquery' ) );
-			# Used in 1.12.x and above
-			$list['CreateAccount'] = array( 'SpecialRedirectToSpecial', 'CreateAccount', 'OpenIDLogin' );
+			$list['Userlogin'] = 'SpecialOpenIDLogin';
+
+			# as Special:CreateAccount is an alias for Special:UserLogin/signup
+			# we show our own OpenID page here, too
+			$list['CreateAccount'] = 'SpecialOpenIDLogin';
 		}
 
-		# Special pages are added at global scope; remove server-related ones
-		# if client-only flag is set
-		$addList = array( 'Login', 'Convert' );
+		# Special pages are added at global scope;
+		# remove server-related ones if client-only flag is set
+		$addList = array( 'Login', 'Convert', 'Dashboard' );
 		if ( !$wgOpenIDClientOnly ) {
 			$addList[] = 'Server';
 			$addList[] = 'XRDS';
@@ -20,6 +37,7 @@ class OpenIDHooks {
 
 		foreach ( $addList as $sp ) {
 			$list['OpenID' . $sp] = 'SpecialOpenID' . $sp;
+			SpecialPageFactory::setGroup( 'OpenID' . $sp, 'openid' );
 		}
 
 		return true;
@@ -27,7 +45,7 @@ class OpenIDHooks {
 
 	# Hook is called whenever an article is being viewed
 	public static function onArticleViewHeader( &$article, &$outputDone, &$pcache ) {
-		global $wgOut, $wgOpenIDClientOnly;
+		global $wgOut, $wgOpenIDClientOnly, $wgOpenIDAllowServingOpenIDUserAccounts;
 
 		$nt = $article->getTitle();
 
@@ -40,8 +58,8 @@ class OpenIDHooks {
 		if ( $nt && $nt->getNamespace() == NS_USER && strpos( $nt->getText(), '/' ) === false ) {
 			$user = User::newFromName( $nt->getText() );
 			if ( $user && $user->getID() != 0 ) {
-				$openid = SpecialOpenID::getUserUrl( $user );
-				if ( count( $openid ) && strlen( $openid[0] ) != 0 ) {
+				$openid = SpecialOpenID::getUserOpenIDInformation( $user );
+				if ( count( $openid ) && strlen( $openid[0]->uoi_openid ) != 0 ) {
 					global $wgOpenIDShowUrlOnUserPage;
 
 					if ( $wgOpenIDShowUrlOnUserPage == 'always' ||
@@ -49,26 +67,27 @@ class OpenIDHooks {
 					{
 						global $wgOpenIDLoginLogoUrl;
 
-						$url = SpecialOpenID::OpenIDToUrl( $openid[0] );
-						$disp = htmlspecialchars( $openid[0] );
+						$url = SpecialOpenID::OpenIDToUrl( $openid[0]->uoi_openid );
+						$disp = htmlspecialchars( $openid[0]->uoi_openid );
 						$wgOut->setSubtitle( "<span class='subpages'>" .
 											"<img src='$wgOpenIDLoginLogoUrl' alt='OpenID' />" .
 											"<a href='$url'>$disp</a>" .
 											"</span>" );
 					}
-				} else {
-					# Add OpenID data if its allowed
-					if ( !$wgOpenIDClientOnly ) {
-						$st = SpecialPage::getTitleFor( 'OpenIDServer' );
-						$wgOut->addLink( array( 'rel' => 'openid.server',
-												'href' => $st->getFullURL() ) );
-						$wgOut->addLink( array( 'rel' => 'openid2.provider',
-												'href' => $st->getFullURL() ) );
-						$rt = SpecialPage::getTitleFor( 'OpenIDXRDS', $user->getName() );
-						$wgOut->addMeta( 'http:X-XRDS-Location', $rt->getFullURL() );
-						header( 'X-XRDS-Location: ' . $rt->getFullURL() );
-					}
 				}
+
+				# Add OpenID data if its allowed
+				if ( !$wgOpenIDClientOnly && !( count( $openid ) && ( strlen( $openid[0]->uoi_openid ) != 0 ) && !$wgOpenIDAllowServingOpenIDUserAccounts ) ) {
+					$st = SpecialPage::getTitleFor( 'OpenIDServer' );
+					$wgOut->addLink( array( 'rel' => 'openid.server',
+											'href' => $st->getFullURL() ) );
+					$wgOut->addLink( array( 'rel' => 'openid2.provider',
+											'href' => $st->getFullURL() ) );
+					$rt = SpecialPage::getTitleFor( 'OpenIDXRDS', $user->getName() );
+					$wgOut->addMeta( 'http:X-XRDS-Location', $rt->getFullURL() );
+					header( 'X-XRDS-Location: ' . $rt->getFullURL() );
+				}
+
 			}
 		}
 
@@ -79,7 +98,6 @@ class OpenIDHooks {
 		global $wgHideOpenIDLoginLink, $wgUser, $wgLang, $wgOpenIDOnly;
 
 		if ( !$wgHideOpenIDLoginLink && $wgUser->getID() == 0 ) {
-			wfLoadExtensionMessages( 'OpenID' );
 			$sk = $wgUser->getSkin();
 			$returnto = $title->isSpecial( 'Userlogout' ) ?
 			  '' : ( 'returnto=' . $title->getPrefixedURL() );
@@ -106,7 +124,7 @@ class OpenIDHooks {
 	public static function onBeforePageDisplay( $out, &$sk ) {
 		global $wgHideOpenIDLoginLink, $wgUser;
 
-		# We need to do this *before* PersonalUrls is called 
+		# We need to do this *before* PersonalUrls is called
 		if ( !$wgHideOpenIDLoginLink && $wgUser->getID() == 0 ) {
 			$out->addHeadItem( 'openidloginstyle', self::loginStyle() );
 		}
@@ -115,29 +133,63 @@ class OpenIDHooks {
 	}
 
 	private static function getInfoTable( $user ) {
-		$urls = SpecialOpenID::getUserUrl( $user );
+		global $wgLang;
+		$openid_urls_registration = SpecialOpenID::getUserOpenIDInformation( $user );
 		$delTitle = SpecialPage::getTitleFor( 'OpenIDConvert', 'Delete' );
 		$sk = $user->getSkin();
 		$rows = '';
-		foreach( $urls as $url ) {
+		foreach ( $openid_urls_registration as $url_reg ) {
+		
+			if ( !empty( $url_reg->uoi_user_registration ) ) { $registrationTime = wfMsgExt(
+				'openid-urls-registration-date-time', 
+				'parsemag',
+				$wgLang->timeanddate( $url_reg->uoi_user_registration, true ),
+				$wgLang->date( $url_reg->uoi_user_registration, true ),
+				$wgLang->time( $url_reg->uoi_user_registration, true ) 
+				);
+			} else {
+				$registrationTime = '';
+			}
+
 			$rows .= Xml::tags( 'tr', array(),
-				Xml::tags( 'td', array(), Xml::element( 'a', array( 'href' => $url ), $url ) ) .
-				Xml::tags( 'td', array(), $sk->link( $delTitle, wfMsg( 'openid-urls-delete' ), array(), array( 'url' => $url ) ) )
+				Xml::tags( 'td',
+					array(),
+					Xml::element( 'a', array( 'href' => $url_reg->uoi_openid ), $url_reg->uoi_openid )
+				) .
+				Xml::tags( 'td',
+					array(),
+					$registrationTime
+				) .
+				Xml::tags( 'td',
+					array(),
+					$sk->link( $delTitle, wfMsgHtml( 'openid-urls-delete' ),
+						array(),
+						array( 'url' => $url_reg->uoi_openid ) 
+					) 
+				)
 			) . "\n";
 		}
 		$info = Xml::tags( 'table', array( 'class' => 'wikitable' ),
-			Xml::tags( 'tr', array(), Xml::element( 'th', array(), wfMsg( 'openid-urls-url' ) ) . Xml::element( 'th', array(), wfMsg( 'openid-urls-action' ) ) ) . "\n" .
+			Xml::tags( 'tr', array(),
+				Xml::element( 'th',
+					array(), 
+					wfMsg( 'openid-urls-url' ) ) .
+				Xml::element( 'th',
+					array(), 
+					wfMsg( 'openid-urls-registration' ) ) .
+				Xml::element( 'th', 
+					array(), 
+					wfMsg( 'openid-urls-action' ) )
+				) . "\n" .
 			$rows
 		);
-		$info .= $user->getSkin()->link( SpecialPage::getTitleFor( 'OpenIDConvert' ), wfMsgHtml( 'openid-add-url' ) );
+		$info .= $sk->link( SpecialPage::getTitleFor( 'OpenIDConvert' ), wfMsgHtml( 'openid-add-url' ) );
 		return $info;
 	}
-	
 
 	public static function onGetPreferences( $user, &$preferences ) {
-		global $wgOpenIDShowUrlOnUserPage, $wgAllowRealName;
-
-		wfLoadExtensionMessages( 'OpenID' );
+		global $wgOpenIDShowUrlOnUserPage, $wgHiddenPrefs;
+		global $wgAuth, $wgUser, $wgLang;
 
 		if ( $wgOpenIDShowUrlOnUserPage == 'user' ) {
 			$preferences['openid-hide'] =
@@ -151,7 +203,7 @@ class OpenIDHooks {
 		$update = array();
 		$update[wfMsg( 'openidnickname' )] = 'nickname';
 		$update[wfMsg( 'openidemail' )] = 'email';
-		if ( $wgAllowRealName )
+		if ( !in_array( 'realname', $wgHiddenPrefs ) )
 			$update[wfMsg( 'openidfullname' )] = 'fullname';
 		$update[wfMsg( 'openidlanguage' )] = 'language';
 		$update[wfMsg( 'openidtimezone' )] = 'timezone';
@@ -173,142 +225,151 @@ class OpenIDHooks {
 					'raw' => true,
 					'section' => 'openid',
 				);
-		
 
-		return true;
-	}
+       		if ( $wgAuth->allowPasswordChange() ) {
 
+			$resetlink = $wgUser->getSkin()->link( SpecialPage::getTitleFor( 'PasswordReset' ),
+				wfMsgHtml( 'passwordreset' ), array(),
+				array( 'returnto' => SpecialPage::getTitleFor( 'Preferences' ) ) );
 
-	# list of preferences used by extension
-	private static $oidPrefs = array( 'hide' );
-	private static $oidUpdateOnLogin = array( 'nickname', 'email', 'fullname',
-		'language', 'timezone' );
-
-	private static function getToggles() {
-		$toggles = self::$oidPrefs;
-		foreach( self::$oidUpdateOnLogin as $pref ) {
-			$toggles[] = 'update-on-login-' . $pref;
-		}
-		return $toggles;
-	}
-
-	public static function onInitPreferencesForm( $prefs, $request ) {
-		foreach ( self::getToggles() as $oidPref ) {
-			$prefs->mToggles['openid-' . $oidPref]
-				= $request->getCheck( "wpOpOpenID-" . $oidPref ) ? 1 : 0;
-		}
-
-		return true;
-	}
-
-	public static function onRenderPreferencesForm( $prefs, $out ) {
-		global $wgUser;
-
-		wfLoadExtensionMessages( 'OpenID' );
-
-		$out->addHeadItem( 'openidwikitablestyle', self::wikitableStyle() );
-
-		$out->addHTML( "\n<fieldset>\n<legend>" . wfMsgHtml( 'prefs-openid' ) . "</legend>\n<table>\n" );
-
-		#$out->addWikiText( wfMsg( 'openid-prefstext' ) );
-
-		foreach ( self::$oidPrefs as $oidPref ) {
-			$name = 'wpOpOpenID-' . $oidPref;
-			$out->addHTML(
-				Xml::tags( 'tr', array(),
-					Xml::tags( 'td', array( 'style' => 'width: 20%;' ), '' ) .
-					Xml::tags( 'td', array(),
-						Xml::tags( 'div', array( 'class' => 'toggle' ),
-							Xml::check( $name, $prefs->mToggles['openid-' . $oidPref] ) .
-							Xml::tags( 'span', array( 'class' => 'toggletext' ),
-								Xml::label( wfMsg( 'openid-pref-' . $oidPref ), $name )
-							)
-						)
-					)
-				)
-			);
-		}
-
-		$out->addHTML( Xml::openElement( 'tr' ) . Xml::element( 'td', array(),
-			wfMsg( 'openid-pref-update-userinfo-on-login' ) ) . Xml::openElement( 'td' ) );
-
-		$first = true;
-		foreach ( self::$oidUpdateOnLogin as $oidPref ) {
-			if ( $first ) {
-				$first = false;
+			if ( empty( $wgUser->mPassword ) && empty( $wgUser->mNewpassword ) ) {
+ 				$preferences['password'] = array(
+					'type' => 'info',
+					'raw' => true,
+					'default' => $resetlink,
+					'label-message' => 'yourpassword',
+					'section' => 'personal/info',
+				);
 			} else {
-				#$out->addHTML( '<br />' );
+				$preferences['resetpassword'] = array(
+					'type' => 'info',
+					'raw' => true,
+					'default' => $resetlink,
+					'label-message' => null,
+					'section' => 'personal/info',
+				);
 			}
-			$name = 'wpOpOpenID-update-on-login-' . $oidPref;
-			$out->addHTML(
-				Xml::tags( 'div', array( 'class' => 'toggle' ),
-					Xml::check( $name, $prefs->mToggles['openid-update-on-login-' . $oidPref] ) .
-					Xml::tags( 'span', array( 'class' => 'toggletext' ),
-						Xml::label( wfMsg( 'openid' . $oidPref ), $name )
-					)
-				)
+
+			global $wgCookieExpiration;
+			if ( $wgCookieExpiration > 0 ) {
+				unset( $preferences['rememberpassword'] );
+				$preferences['rememberpassword'] = array(
+					'type' => 'toggle',
+					'label' => wfMsgExt(
+						'tog-rememberpassword',
+						array( 'parsemag' ),
+						$wgLang->formatNum( ceil( $wgCookieExpiration / ( 3600 * 24 ) ) )
+						),
+					'section' => 'personal/info',
+				);
+			}
+
+		}
+
+		return true;
+	}
+
+	public static function onDeleteAccount( &$userObj ) {
+		global $wgOut;
+
+		if ( is_object( $userObj ) ) {
+
+			$username = $userObj->getName();
+			$userID = $userObj->getID();
+
+  			$dbw = wfGetDB( DB_MASTER );
+
+			$dbw->delete( 'user_openid', array( 'uoi_user' => $userID ) );
+			$wgOut->addHTML( "OpenID " . wfMsgExt( 'usermerge-userdeleted', array( 'escape' ), $username, $userID ) );
+
+			wfDebug( "OpenID: deleted OpenID user $username ($userID)\n" );
+
+                }
+
+		return true;
+
+	}
+
+	public static function onMergeAccountFromTo( &$fromUserObj, &$toUserObj ) {
+		global $wgOut, $wgOpenIDMergeOnAccountMerge;
+
+		if ( is_object( $fromUserObj ) && is_object( $toUserObj ) ) {
+
+			$fromUsername = $fromUserObj->getName();
+			$fromUserID = $fromUserObj->getID();
+			$toUsername = $toUserObj->getName();
+			$toUserID = $toUserObj->getID();
+
+                  	if ( $wgOpenIDMergeOnAccountMerge ) {
+
+				$dbw = wfGetDB( DB_MASTER );
+
+				$dbw->update( 'user_openid', array( 'uoi_user' => $toUserID ), array( 'uoi_user' => $fromUserID ) );
+				$wgOut->addHTML( "OpenID " . wfMsgExt( 'usermerge-updating', array( 'escape' ), 'user_openid', $fromUsername, $toUsername ) . "<br />\n" );
+
+				wfDebug( "OpenID: transferred OpenID(s) of $fromUsername ($fromUserID) => $toUsername ($toUserID)\n" );
+
+			} else {
+
+				$wgOut->addHTML( wfMsgHtml( 'openid-openids-were-not-merged' ) . "<br />\n" );
+				wfDebug( "OpenID: OpenID(s) were not merged for merged users $fromUsername ($fromUserID) => $toUsername ($toUserID)\n" );
+
+			}
+
+		}
+
+		return true;
+
+	}
+
+	public static function onLoadExtensionSchemaUpdates( $updater = null ) {
+		if ( $updater === null ) {
+			// <= 1.16 support - but OpenID does not work with such old MW versions
+			global $wgExtNewTables, $wgExtNewFields;
+			$wgExtNewTables[] = array(
+				'user_openid',
+				dirname( __FILE__ ) . '/patches/openid_table.sql'
 			);
-		}
 
-		$out->addHTML(
-			"</td></tr>\n<tr><td>" . wfMsgHtml( 'openid-urls-desc' ) .
-			"</td><td>" . self::getInfoTable( $wgUser ) .
-			"</td></tr></table></fieldset>\n\n"
-		);
-
-		return true;
-	}
-
-	public static function onSavePreferences( $prefs, $user, &$message, $old ) {
-		foreach ( self::getToggles() as $oidPref ) {
-			$user->setOption( 'openid-' . $oidPref, $prefs->mToggles['openid-' . $oidPref] );
-			wfDebugLog( 'OpenID', 'Setting user preferences: ' . print_r( $user, true ) );
-		}
-
-		$user->saveSettings();
-
-		return true;
-	}
-
-	public static function onResetPreferences( $prefs, $user ) {
-		foreach ( self::getToggles() as $oidPref ) {
-			$prefs->mToggles['openid-' . $oidPref] = $user->getOption( 'openid-' . $oidPref );
-		}
-
-		return true;
-	}
-
-	public static function onLoadExtensionSchemaUpdates() {
-		global $wgDBtype, $wgUpdates, $wgExtNewTables;
-
-		$base = dirname( __FILE__ );
-
-		if ( $wgDBtype == 'mysql' ) {
-			$wgExtNewTables[] = array( 'user_openid', "$base/openid_table.sql" );
-			$wgUpdates['mysql'][] = array( array( __CLASS__, 'makeUoiUserNotUnique' ) );
-		} else if ( $wgDBtype == 'postgres' ) {
-			$wgExtNewTables[] = array( 'user_openid', "$base/openid_table.pg.sql" );
-			# This doesn't work since MediaWiki doesn't use $wgUpdates when
-			# updating a PostgreSQL database
-			#$wgUpdates['postgres'][] = array( array( __CLASS__, 'makeUoiUserNotUnique' ) );
-		}
-
-		return true;
-	}
-
-	public static function makeUoiUserNotUnique() {
-		$db = wfGetDB( DB_MASTER );
-		if ( !$db->tableExists( 'user_openid' ) )
-			return;
-
-		$info = $db->fieldInfo( 'user_openid', 'uoi_user' );
-		if ( !$info->isMultipleKey() ) {
-			wfOut( "Making uoi_user filed not unique..." );
-			$db->sourceFile( dirname( __FILE__ ) . '/patch-uoi_user-not-unique.sql' );
-			wfOut( " done.\n" );
+			# when updating an older OpenID version
+			# make the index non unique (remove unique index uoi_user, add new index user_openid_user)
+			$db = wfGetDB( DB_MASTER );
+			$info = $db->fieldInfo( 'user_openid', 'uoi_user' );
+			if ( $info && !$info->isMultipleKey() ) {
+				echo( "Making uoi_user field non UNIQUE...\n" );
+				$db->sourceFile( dirname( __FILE__ ) . '/patches/patch-uoi_user-not-unique.sql' );
+				echo( " done.\n" );
+			} else {
+				echo( "...uoi_user field is already non UNIQUE.\n" );
+			}
+			
+			# uoi_user_registration field was added in OpenID version 0.937
+			$wgExtNewFields[] = array(
+				'user_openid',
+				'uoi_user_registration',
+				dirname( __FILE__ ) . '/patches/patch-add_uoi_user_registration.sql'
+			);
 		} else {
-			wfOut( "...uoi_user field is already not unique.\n" );
+			// >= 1.17 support
+			$updater->addExtensionTable( 'user_openid',
+				dirname( __FILE__ ) . '/patches/openid_table.sql' );
+
+			# when updating an older OpenID version
+			# make the index non unique (remove unique index uoi_user, add new index user_openid_user)
+			$db = $updater->getDB();
+			$info = $db->fieldInfo( 'user_openid', 'uoi_user' );
+			if ( $info && !$info->isMultipleKey() ) {
+				$updater->addExtensionUpdate( array( 'dropIndex', 'user_openid', 'uoi_user',
+					dirname( __FILE__ ) . '/patches/patch-drop_non_multiple_key_index_uoi_user.sql', true ) );
+				$updater->addExtensionIndex( 'user_openid', 'user_openid_user',
+					dirname( __FILE__ ) . '/patches/patch-add_multiple_key_index_user_openid_user.sql' );
+			}
+
+			# uoi_user_registration field was added in OpenID version 0.937
+			$updater->addExtensionField( 'user_openid', 'uoi_user_registration',
+				dirname( __FILE__ ) . '/patches/patch-add_uoi_user_registration.sql' );
 		}
+		return true;
 	}
 
 	private static function loginStyle() {
@@ -321,31 +382,6 @@ class OpenIDHooks {
 		  text-transform: none;
 		}
 		</style>
-
-EOS;
-	}
-	
-	private static function wikitableStyle() {
-		return <<<EOS
-<style type='text/css'>
-table.wikitable {
-    margin: 1em 1em 1em 0;
-    background: #f9f9f9;
-    border: 1px #aaa solid;
-    border-collapse: collapse;
-}
-.wikitable th, .wikitable td {
-    border: 1px #aaa solid;
-    padding: 0.2em;
-}
-.wikitable th {
-    background: #f2f2f2;
-    text-align: center;
-}
-.wikitable caption {
-    font-weight: bold;
-}
-</style>
 
 EOS;
 	}

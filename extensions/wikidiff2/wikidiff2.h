@@ -3,37 +3,85 @@
 
 #define MAX_DIFF_LINE 10000
 
+/** Set WD2_USE_STD_ALLOCATOR to compile for standalone (non-PHP) operation */
+#ifdef WD2_USE_STD_ALLOCATOR
+#define WD2_ALLOCATOR std::allocator
+#else
+#define WD2_ALLOCATOR PhpAllocator
+#include "php_cpp_allocator.h"
+#endif
+
 #include "DiffEngine.h"
 #include "Word.h"
 #include <string>
+#include <vector>
+#include <set>
 
+class Wikidiff2 {
+	public:
+		typedef std::basic_string<char, std::char_traits<char>, WD2_ALLOCATOR<char> > String;
+		typedef std::vector<String, WD2_ALLOCATOR<String> > StringVector;
+		typedef std::vector<Word, WD2_ALLOCATOR<Word> > WordVector;
+		typedef std::vector<int, WD2_ALLOCATOR<int> > IntVector;
+		typedef std::set<int, std::less<int>, WD2_ALLOCATOR<int> > IntSet;
 
-// operations for the diff, as returned by do_diff
-template<class T>
-struct diff_op
-{
-	unsigned char op;
-	const T *from, *to;
-	unsigned from_ind, to_ind;
+		typedef Diff<String> StringDiff;
+		typedef Diff<Word> WordDiff;
 
-	diff_op<T> () {}
+		const String & execute(const String & text1, const String & text2, int numContextLines);
+
+		inline const String & getResult() const;
+
+	protected:
+		String result;
+
+		void diffLines(const StringVector & lines1, const StringVector & lines2, 
+				int numContextLines);
+		void printAdd(const String & line);
+		void printDelete(const String & line);
+		void printWordDiff(const String & text1, const String & text2);
+		void printWordDiffSide(WordDiff &worddiff, bool added);
+		void printTextWithDiv(const String & input);
+		void printText(const String & input);
+		inline bool isLetter(int ch);
+		inline bool isSpace(int ch);
+		void debugPrintWordDiff(WordDiff & worddiff);
+
+		int nextUtf8Char(String::const_iterator & p, String::const_iterator & charStart, 
+				String::const_iterator end);
+
+		void explodeWords(const String & text, WordVector &tokens);
+		void explodeLines(const String & text, StringVector &lines);
 };
 
-template<class T>
-std::vector<diff_op<T> > do_diff(const std::vector<T> &text1, const std::vector<T> &text2);
+bool Wikidiff2::isLetter(int ch)
+{
+	// Standard alphanumeric
+	if ((ch >= '0' && ch <= '9') ||
+	   (ch == '_') ||
+	   (ch >= 'A' && ch <= 'Z') ||
+	   (ch >= 'a' && ch <= 'z'))
+	{
+		return true;
+	}
+	// Punctuation and control characters
+	if (ch < 0xc0) return false;
+	// Chinese, Japanese: split up character by character
+	if (ch >= 0x3000 && ch <= 0x9fff) return false;
+	if (ch >= 0x20000 && ch <= 0x2a000) return false;
+	// Otherwise assume it's from a language that uses spaces
+	return true;
+}
 
-void print_diff(std::vector<std::string> &text1, std::vector<std::string> &text2, int num_lines_context, std::string &ret);
-void print_worddiff(const std::string & text1, const std::string & text2, std::string &ret);
-void print_worddiff_side(Diff<Word> &worddiff, bool added, std::string &ret);
-void split_tokens(const std::string & text, std::vector<Word> &tokens);
-void print_add(const std::string & line, std::string & ret);
-void print_del(const std::string & line, std::string & ret);
-void print_div_htmlspecialchars(const std::string & input, std::string & ret);
-void print_htmlspecialchars(const std::string & input, std::string & ret);
-void debug_print_worddiff(Diff<Word> &worddiff, std::string &ret);
-const char *wikidiff2_do_diff(const char *text1, const char *text2, int num_lines_context);
-int next_utf8_char(std::string::const_iterator & p, std::string::const_iterator & charStart, 
-		std::string::const_iterator end);
+bool Wikidiff2::isSpace(int ch)
+{
+	return ch == ' ' || ch == '\t';
+}
+
+const Wikidiff2::String & Wikidiff2::getResult() const
+{
+	return result;
+}
 
 #endif
 

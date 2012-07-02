@@ -4,79 +4,99 @@
  *
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'PovWatch' => array( 'PovWatch' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'PovWatch' => array( 'مراقبة_وجهة_النظر' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'PovWatch' => array( 'مراقبة_وجهة_النظر' ),
+$specialPageAliases['arz'] = array(
+	'PovWatch' => array( 'مراقبه_وجهة_نظر' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'PovWatch' => array( 'PovNazdor' ),
 );
 
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'PovWatch' => array( 'پیگیری_دیدگاه' ),
+);
+
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'PovWatch' => array( 'Lueg POV' ),
 );
 
 /** Croatian (Hrvatski) */
-$aliases['hr'] = array(
+$specialPageAliases['hr'] = array(
 	'PovWatch' => array( 'Predbilježeno_praćenje' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'PovWatch' => array( 'GadePov' ),
+);
+
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'PovWatch' => array( 'Observa PdV' ),
+$specialPageAliases['ia'] = array(
+	'PovWatch' => array( 'Observa_PdV' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'PovWatch' => array( 'Pantau sudut pandang', 'PantauSudutPandang' ),
+$specialPageAliases['id'] = array(
+	'PovWatch' => array( 'Pantau_sudut_pandang', 'PantauSudutPandang' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'PovWatch' => array( '編集合戦の監視' ),
 );
 
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'PovWatch' => array( 'НадзорНаГТ' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'PovWatch' => array( 'Staandpuntsvolglieste' ),
+$specialPageAliases['nds-nl'] = array(
+	'PovWatch' => array( 'Staandpuntvolglieste' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'PovWatch' => array( 'PovVolglijst' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'PovWatch' => array( 'पक्षवृत्तीनिरिक्षा' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'PovWatch' => array( 'SledovaniePOV' ),
 );
 
 /** Swedish (Svenska) */
-$aliases['sv'] = array(
+$specialPageAliases['sv'] = array(
 	'PovWatch' => array( 'Povövervakning' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'PovWatch' => array( 'Pagbantay sa POV' ),
 );
 
+/** Turkish (Türkçe) */
+$specialPageAliases['tr'] = array(
+	'PovWatch' => array( 'TBATakibi' ),
+);

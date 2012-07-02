@@ -1,10 +1,11 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 /**
  * A special page extension that adds a special page that generates citations
  * for pages.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:Cite/Special:Cite.php Documentation
  *
@@ -17,15 +18,14 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Cite',
 	'author' => 'Ævar Arnfjörð Bjarmason',
-	'description' => 'adds a [[Special:Cite|citation]] special page & toolbox link', // kept for b/c
 	'descriptionmsg' => 'cite_article_desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Cite/Special:Cite.php'
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Cite/Special:Cite.php'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 # Internationalisation file
 $wgExtensionMessagesFiles['SpecialCite'] = $dir . 'SpecialCite.i18n.php';
-$wgExtensionAliasesFiles['SpecialCite'] = $dir . 'SpecialCite.alias.php';
+$wgExtensionMessagesFiles['SpecialCiteAliases'] = $dir . 'SpecialCite.alias.php';
 
 $wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'wfSpecialCiteNav';
 $wgHooks['SkinTemplateToolboxEnd'][] = 'wfSpecialCiteToolbox';
@@ -33,11 +33,17 @@ $wgHooks['SkinTemplateToolboxEnd'][] = 'wfSpecialCiteToolbox';
 $wgSpecialPages['Cite'] = 'SpecialCite';
 $wgAutoloadClasses['SpecialCite'] = $dir . 'SpecialCite_body.php';
 
+/**
+ * @param $skintemplate SkinTemplate
+ * @param $nav_urls
+ * @param $oldid
+ * @param $revid
+ * @return bool
+ */
 function wfSpecialCiteNav( &$skintemplate, &$nav_urls, &$oldid, &$revid ) {
-	wfLoadExtensionMessages( 'SpecialCite' );
 	// check whether we’re in the right namespace, the $revid has the correct type and is not empty 
 	// (what would mean that the current page doesn’t exist)
-	if ( $skintemplate->mTitle->isContentPage() && $revid !== 0 && !empty( $revid ) )
+	if ( $skintemplate->getTitle()->isContentPage() && $revid !== 0 && !empty( $revid ) )
 		$nav_urls['cite'] = array(
 			'args'   => "page=" . wfUrlencode( "{$skintemplate->thispage}" ) . "&id=$revid"
 		);
@@ -47,19 +53,21 @@ function wfSpecialCiteNav( &$skintemplate, &$nav_urls, &$oldid, &$revid ) {
 
 /**
  * add the cite link to the toolbar
+ *
+ * @param $skin Skin
+ *
+ * @return bool
  */
 function wfSpecialCiteToolbox( &$skin ) {
 	if ( isset( $skin->data['nav_urls']['cite'] ) ) {
-		wfLoadExtensionMessages( 'SpecialCite' );
-		echo Xml::tags( 
-			'li', 
-			array( 'id' => 't-cite' ), 
-			$skin->skin->link(
+		echo Html::rawElement(
+			'li',
+			array( 'id' => 't-cite' ),
+			Linker::link(
 				SpecialPage::getTitleFor( 'Cite' ),
 				wfMsg( 'cite_article_link' ),
-				array(
-					'title' => wfMsg( 'cite_article_link_title' )
-				),
+				# Used message keys: 'tooltip-cite-article', 'accesskey-cite-article'
+				Linker::tooltipAndAccessKeyAttribs( 'cite-article' ),
 				$skin->data['nav_urls']['cite']['args']
 			)
 		);

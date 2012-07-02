@@ -9,7 +9,8 @@
  * implementation, it will not be add to the following skins:
  * cologneblue, standard, nostalgia
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Siebrand Mazeland
  * @license MIT
  */
@@ -49,9 +50,8 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'Google AdSense',
 	'version'        => '1.1',
 	'author'         => 'Siebrand Mazeland',
-	'description'    => 'Adds GoogleAdSense to the sidebar',
 	'descriptionmsg' => 'googleadsense-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Google_AdSense_2',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Google_AdSense_2',
 );
 
 // Register class and localisations

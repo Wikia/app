@@ -5,7 +5,7 @@ class BodyController extends WikiaController {
 
 	public function init() {
 		$this->subtitle = $this->app->getSkinTemplateObj()->data['subtitle'];
-		
+
 		$this->afterBodyHtml = '';
 		$this->afterContentHookText = '';
 		$this->afterCommentsHookText = '';
@@ -93,31 +93,13 @@ class BodyController extends WikiaController {
 		return $namespaces;
 	}
 
-	/**
-	 * Get (and cache) DB key for current special page
-	 * not needed any more?
-
-	private static function getDBkey() {
-		global $wgTitle;
-		static $dbKey = false;
-
-		if ($dbKey === false) {
-			if ($wgTitle->getNamespace() == NS_SPECIAL) {
-				$dbKey = SpecialPage::resolveAlias($wgTitle->getDBkey());
-			}
-		}
-
-		return $dbKey;
-	}
-	 */
-
 	public function getRailModuleList() {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgUser, $wgEnableAchievementsExt, $wgContentNamespaces,
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableCorporatePageExt,
 			$wgEnableWikiAnswers,
-			$wgSalesTitles,
+			$wgSalesTitles, $wgEnableHuluVideoPanel,
 			$wgEnableGamingCalendarExt, $wgEnableWallExt, $wgRequest;
 
 		$namespace = $wgTitle->getNamespace();
@@ -137,6 +119,7 @@ class BodyController extends WikiaController {
 
 		$latestPhotosKey = $wgUser->isAnon() ? 1300 : 1250;
 		$latestActivityKey = $wgUser->isAnon() ? 1250 : 1300;
+		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
 		if($namespace == NS_SPECIAL) {
 			if (ArticleAdLogic::isSearch()) {
@@ -149,7 +132,10 @@ class BodyController extends WikiaController {
 
 					if( empty( $wgEnableWikiAnswers ) ) {
 						$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
-					}					
+						if ($wgEnableHuluVideoPanel) {
+							$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
+						}
+					}
 				} elseif ($wgEnableCorporatePageExt) {
 					$railModuleList = array(
 						1490 => array('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD'))
@@ -182,6 +168,9 @@ class BodyController extends WikiaController {
 
 				if( empty( $wgEnableWikiAnswers ) ) {
 					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
+					if ($wgEnableHuluVideoPanel) {
+						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
+					}
 				}
 			} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
 				$railModuleList = array (
@@ -222,6 +211,9 @@ class BodyController extends WikiaController {
 
 			if( empty( $wgEnableWikiAnswers ) ) {
 				$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
+				if ($wgEnableHuluVideoPanel) {
+					$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
+				}
 			}
 		}
 
@@ -296,7 +288,7 @@ class BodyController extends WikiaController {
 			return array();
 		}
 		// If the entire page is non readable due to permissions, don't display the rail either RT#75600
-		if (!$wgTitle->userCanRead()) {
+		if (!$wgTitle->userCan( 'read' )) {
 			wfProfileOut(__METHOD__);
 			return array();
 		}
@@ -346,16 +338,18 @@ class BodyController extends WikiaController {
 	public function executeIndex() {
 		global $wgOut, $wgTitle, $wgUser, $wgEnableCorporatePageExt, $wgEnableInfoBoxTest, $wgMaximizeArticleAreaArticleIds, $wgEnableAdminDashboardExt, $wgEnableTopButton, $wgTopButtonPosition, $wgEnableWikiaHomePageExt;
 
+		wfProfileIn(__METHOD__);
+
 		// set up global vars
 		if (is_array($wgMaximizeArticleAreaArticleIds)
 		&& in_array($wgTitle->getArticleId(), $wgMaximizeArticleAreaArticleIds)) {
 			$this->wg->SuppressRail = true;
 			$this->wg->SuppressPageHeader = true;
 		}
-		
+
 		// Double-click to edit
 		$skinVars = $this->app->getSkinTemplateObj()->data;
-		$this->body_ondblclick = $skinVars['body_ondblclick'];
+		$this->body_ondblclick = ''; //$skinVars['body_ondblclick']; // FIXME handling moved to OutputPage::addDefaultModules()
 
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
@@ -375,19 +369,9 @@ class BodyController extends WikiaController {
 		wfRunHooks('SkinAfterContent', array( &$afterContentHookText ) );
 		$this->afterContentHookText = $afterContentHookText;
 
-		wfRunHooks('SkinAfterComments', array( &$wgOut, &$afterCommentsHookText ) );
-		$this->afterCommentsHookText = $afterCommentsHookText;
-
 		$this->headerModuleAction = 'Index';
 		$this->headerModuleParams = array ('showSearchBox' => false);
 
-		// Display comments on content and blog pages
-		if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
-			$this->displayComments = true;
-		} else {
-			$this->displayComments = false;
-		}
-		
 		// show user pages header on this page?
 		if (self::showUserPagesHeader()) {
 			$this->headerModuleName = 'UserPagesHeader';
@@ -414,7 +398,6 @@ class BodyController extends WikiaController {
 				$this->wg->SuppressSlider = true;
 			} else if ($wgEnableCorporatePageExt) {
 				// RT:71681 AutoHubsPages extension is skipped when follow is clicked
-				wfLoadExtensionMessages( 'AutoHubsPages' );
 
 				$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("extensions/wikia/CorporatePage/css/CorporateSite.scss"));
 
@@ -436,7 +419,7 @@ class BodyController extends WikiaController {
 			OasisController::addBodyClass('oasis-one-column');
 			$this->headerModuleParams = array ('showSearchBox' => true);
 		}
-		
+
 		// if we are on a special search page, pull in the css file and don't render a header
 		if($wgTitle && $wgTitle->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/SpecialSearch.scss"));
@@ -516,7 +499,7 @@ class BodyController extends WikiaController {
 		else {
 			$this->topAdsExtraClasses = '';
 		}
-
+		wfProfileOut(__METHOD__);
 	}
 
 

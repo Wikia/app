@@ -18,32 +18,45 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @file
  * @author Evan Prodromou <evan@wikitravel.org>
- * @addtogroup Extensions
+ * @ingroup Extensions
  */
 
-require_once( 'commandLine.inc' );
-ini_set( "include_path", "/usr/share/php:" . ini_get( "include_path" ) );
+$IP = getenv( 'MW_INSTALL_PATH' );
+if ( $IP === false ) {
+	$IP = dirname( __FILE__ ) . '/../..';
+}
+require_once( "$IP/maintenance/Maintenance.php" );
 
-require_once( "$IP/extensions/OpenID/Consumer.php" );
+class OpenIDOptionToTable extends Maintenance {
+	public function __construct() {
+		parent::__construct();
+		$this->mDescription = 'Convert user_option-stored urls to the new openID table';
+	}
 
-global $wgSharedDB, $wgDBprefix;
-$tableName = "${wgDBprefix}user_openid";
-if ( isset( $wgSharedDB ) ) {
-	$tableName = "`$wgSharedDB`.$tableName";
+	public function execute() {
+		$dbr = wfGetDB( DB_SLAVE );
+		if ( !$dbr->tableExists( 'user_properties' ) ) {
+			$this->error( "The OpenID extension requires at least MediaWiki 1.16.", true );
+		}
+
+		$this->output( "Checking for legacy user_property rows..." );
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( array( 'user_properties' ), array( 'up_user' ),
+			array( 'up_property' => 'openid_url' ), __METHOD__ );
+		if ( $dbr->numRows( $res ) ) {
+			foreach ( $res as $row ) {
+				$user = User::newFromId( $row->up_user );
+				$this->output( "\n\tFixing {$user->getName()}" );
+				SpecialOpenID::addUserUrl( $user, $user->getOption( 'openid_url' ) );
+			}
+			$this->output( "done\n" );
+		} else {
+			$this->output( "none found\n" );
+		}
+	}
 }
 
-$dbr = wfGetDB( DB_SLAVE );
-
-$res = $dbr->select( array( 'user' ),
-					array( 'user_name' ),
-					array( 'user_options LIKE "%openid_url%"' ),
-					'optionToTable',
-					array( 'ORDER BY' => 'user_name' ) );
-
-while ( $res && $row = $dbr->fetchObject( $res ) ) {
-	$user = User::newFromName( $row->user_name );
-	print( $user->getName() . ": " . $user->getOption( 'openid_url' ) . "\n" );
-	OpenIDSetUserUrl( $user, $user->getOption( 'openid_url' ) );
-}
-$dbr->freeResult( $res );
+$maintClass = 'OpenIDOptionToTable';
+require_once( RUN_MAINTENANCE_IF_MAIN );

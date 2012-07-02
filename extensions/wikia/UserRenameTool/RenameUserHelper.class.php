@@ -26,7 +26,7 @@ class RenameUserHelper {
 	static public function lookupRegisteredUserActivity($userID) {
 		wfProfileIn(__METHOD__);
 
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgDevelEnvironment, $wgStatsDB, $wgStatsDBEnabled;
 		
 		//check for non admitted values
 		if(empty($userID) || !is_int($userID)){
@@ -36,27 +36,28 @@ class RenameUserHelper {
 
 		wfDebugLog(__CLASS__.'::'.__METHOD__, "Looking up registered user activity for user with ID {$userID}");
 
-		if ( !defined('ENV_DEVBOX') && !empty( $wgStatsDBEnabled ) ) {
-			$dbr =& wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$res = $dbr->select('events', 'wiki_id', array('user_id' => $userID), __METHOD__, array('DISTINCT'));
-			$result = array();
+		$result = array();
+		if ( empty($wgDevelEnvironment) ) { // on production
+			if ( !empty( $wgStatsDBEnabled ) ) {
+				$dbr =& wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+				$res = $dbr->select('events', 'wiki_id', array('user_id' => $userID), __METHOD__, array('DISTINCT'));
+				$result = array();
 
-			while($row = $dbr->fetchObject($res)) {
-				if ( !in_array( $row->wiki_id, self::$excludedWikis ) ) {
-					$result[] = (int)$row->wiki_id;
-					wfDebugLog(__CLASS__.'::'.__METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}");
-				} else {
-					wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id}");
+				while($row = $dbr->fetchObject($res)) {
+					if ( !in_array( $row->wiki_id, self::$excludedWikis ) ) {
+						$result[] = (int)$row->wiki_id;
+						wfDebugLog(__CLASS__.'::'.__METHOD__, "Registered user with ID {$userID} was active on wiki with ID {$row->wiki_id}");
+					} else {
+						wfDebugLog(__CLASS__.'::'.__METHOD__, "Skipped wiki with ID {$row->wiki_id}");
+					}
 				}
-			}
 
-			$dbr->freeResult($res);
+				$dbr->freeResult($res);
+			}
 		}
-		else {
+		else { // on devbox - set up the list manually
 			$result = array(
-				673,//simpsons
-				831,//muppets
-				49688//farmville
+				165, // firefly
 			);
 		}
 

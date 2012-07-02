@@ -21,10 +21,10 @@
  *
  * @ingroup Maintenance
  * @author Tim Starling
- * @author Ashar Voultoiz
+ * @author Antoine Musso
  */
- 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class ShowJobs extends Maintenance {
 	public function __construct() {
@@ -42,7 +42,7 @@ class ShowJobs extends Maintenance {
 				__METHOD__,
 				array( 'GROUP BY' => 'job_cmd' )
 			);
-			foreach( $res as $row ) {
+			foreach ( $res as $row ) {
 				$this->output( $row->job_cmd . ': ' . $row->count . "\n" );
 			}
 		} else {
@@ -52,4 +52,4 @@ class ShowJobs extends Maintenance {
 }
 
 $maintClass = "ShowJobs";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

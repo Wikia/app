@@ -70,14 +70,14 @@ var Wall = $.createClass(Object, {
 			this.newMessageForm = new MiniEditorNewMessageForm(this.page, this.model);
 			this.editMessageForm = new MiniEditorEditMessageForm(this.page, this.model);
 			this.replyMessageForm = new MiniEditorReplyMessageForm(this.page, this.model);
-
 		} else {
 			this.newMessageForm = new WallNewMessageForm(this.page, this.model);
 			this.editMessageForm = new WallEditMessageForm(this.page, this.model);
 			this.replyMessageForm = new WallReplyMessageForm(this.page, this.model);
-		}
 
-		this.newMessageForm.on('afterNewMessagePost', this.proxy(this.afterNewMessagePost));
+			// This breaks stuff for MiniEditor instances.  See comment below, needs to be refactored. 
+			this.newMessageForm.on('afterNewMessagePost', this.proxy(this.afterNewMessagePost));
+		}
 
 		$(window).bind('hashchange', this.proxy(this.onHashChange));
 		this.onHashChange();

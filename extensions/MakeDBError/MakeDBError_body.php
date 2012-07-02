@@ -5,8 +5,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class SpecialMakeDBError extends UnlistedSpecialPage
 {
-	function MakeDBErrorPage() {
-		UnlistedSpecialPage::UnlistedSpecialPage("MakeDBError");
+	function __construct() {
+		parent::__construct("MakeDBError");
 	}
 
 	function execute( $par ) {
@@ -14,9 +14,10 @@ class SpecialMakeDBError extends UnlistedSpecialPage
 		$this->setHeaders();
 		if ( $par == 'connection' ) {
 			$lb = wfGetLB();
-			$lb->mServers[1234] = $lb->mServers[0];
-			$lb->mServers[1234]['user'] = 'chicken';
-			$lb->mServers[1234]['password'] = 'cluck cluck';
+			$failServer = $lb->getServerInfo( 0 );
+			$failServer['user'] = 'chicken';
+			$failServer['password'] = 'cluck cluck';
+			$lb->setServerInfo ( 1234, $failServer ); /* What happens when there *are* actually >1234 servers? */
 			$db = wfGetDB( 1234 );
 			$wgOut->addHTML("<pre>" . var_export( $db, true ) . "</pre>" );
 		} else {

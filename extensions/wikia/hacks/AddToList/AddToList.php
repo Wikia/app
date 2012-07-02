@@ -34,12 +34,12 @@ function efAddToListRenderInput( $input, $args, $parser, $frame ) {
 	$ret .= Xml::openElement( 'form', array( 'action' => $wgScriptPath, 'method' => 'POST' ) );
 
 	$ret .= Xml::input( 'item' );
-	$ret .= Xml::hidden( 'action', 'addtolist' );
-	$ret .= Xml::hidden( 'timestamp', wfTimestampNow() ); // for edit conflicts
-	$ret .= Xml::hidden( 'title', $wgTitle->getDBKey() );
+	$ret .= Html::hidden( 'action', 'addtolist' );
+	$ret .= Html::hidden( 'timestamp', wfTimestampNow() ); // for edit conflicts
+	$ret .= Html::hidden( 'title', $wgTitle->getDBKey() );
 
 	if ( !empty( $args['signature'] ) ) {
-		$ret .= Xml::hidden( 'postfix', ' --~~~' );
+		$ret .= Html::hidden( 'postfix', ' --~~~' );
 	}
 
 	$ret .= Xml::submitButton( 'Add to list' );

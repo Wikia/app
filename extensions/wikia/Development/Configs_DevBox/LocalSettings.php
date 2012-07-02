@@ -139,6 +139,7 @@ $wgCdnRootUrl = "http://{$wgDevelEnvironmentName}.wikia-dev.com";
 $wgCdnStylePath = "{$wgCdnRootUrl}/__cb{$wgStyleVersion}"; // paths for images requested from CSS/SASS
 $wgStylePath = "{$wgCdnStylePath}/skins";
 $wgExtensionsPath = "{$wgCdnStylePath}/extensions";
+$wgResourceBasePath = $wgCdnStylePath;
 $wgDevBoxImageServerOverride ="images.{$wgDevelEnvironmentName}.wikia-dev.com";
 
 // fetch GoogleMaps resources from devboxes

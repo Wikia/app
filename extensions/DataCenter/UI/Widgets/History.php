@@ -193,7 +193,7 @@ class DataCenterWidgetHistory extends DataCenterWidget {
 						$label = DataCenterUI::message(
 							'field', strtr( $field, '_', '-' )
 						);
-					} else if ( $group == 'meta' ) {
+					} elseif ( $group == 'meta' ) {
 						$metaField = DataCenterDB::getMetaField( $field );
 						$label = $metaField->get( 'name' );
 					}

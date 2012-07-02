@@ -121,7 +121,9 @@
 				wfProfileIn(__METHOD__);
 
 				// Nice trick to check if the current page is first page
-				if (is_null($viewer->from) && (is_null($viewer->until) || is_null($viewer->nextPage))) {
+				//   definition of this array is copied from CategoryViewer::__construct
+				$nullArray = array('page' => null, 'subcat' => null, 'file' => null);
+				if ($nullArray === $viewer->from && $nullArray === $viewer->until) {
 					$gallery = new CategoryGallery(self::$categoryPage);
 					$output = $gallery->render();
 
@@ -145,7 +147,7 @@
 		 */
 		static public function onCategoryServiceInvalidateTopArticles( $title, $ns ) {
 			if ($ns == NS_MAIN) {
-				$categoryPage = MediaWiki::articleFromTitle($title);
+				$categoryPage = Article::newFromTitle( $title, RequestContext::getMain() );
 				$gallery = new CategoryGallery($categoryPage);
 				$gallery->invalidate();
 			}
@@ -156,8 +158,8 @@
 		/**
 		 * Hook entry when article is purged (purge the gallery cache if purging the category page
 		 */
-		static public function onArticlePurge( Article $article ) {
-			$title = $article->getTitle();
+		static public function onArticlePurge( WikiPage $page ) {
+			$title = $page->getTitle();
 			$ns = $title->getNamespace();
 
 			if ($ns == NS_CATEGORY) {

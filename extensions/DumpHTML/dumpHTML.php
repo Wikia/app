@@ -1,7 +1,8 @@
 <?php
 /**
+ * @file
  * @todo document
- * @addtogroup Maintenance
+ * @ingroup Maintenance
  */
 
 $usage = <<<ENDS
@@ -23,7 +24,6 @@ php dumpHTML.php [options...]
 	--categories         only do category pages
 	--redirects          only do redirects
 	--special            only do miscellaneous stuff
-	--force-copy         copy commons instead of symlink, needed for Wikimedia
 	--interlang          allow interlanguage links
 	--image-snapshot     copy all images used to the destination directory
 	--compress           generate compressed version of the html pages
@@ -43,8 +43,9 @@ $profiling = false;
 if ( $profiling ) {
 	define( 'MW_CMDLINE_CALLBACK', 'wfSetupDump' );
 	function wfSetupDump() {
-		global $wgProfiling, $wgProfileToDatabase, $wgProfileSampleRate;
-		$wgProfiling = true;
+		global $wgProfileToDatabase, $wgProfileSampleRate;
+		// Override disabled profiling in maintenance scripts
+		Profiler::setInstance( new Profiler() );
 		$wgProfileToDatabase = false;
 		$wgProfileSampleRate = 1;
 	}
@@ -61,12 +62,6 @@ if ( $IP === false ) {
 require_once( $IP."/maintenance/commandLine.inc" );
 require_once( dirname(__FILE__)."/dumpHTML.inc" );
 require_once( dirname(__FILE__)."/SkinOffline.php" );
-
-if ( version_compare( $wgVersion, '1.11.1', '<' ) ) {
-	echo "Error, the DumpHTML extension needs at least MediaWiki version 1.11.1 to work, you have version $wgVersion.\n";
-	echo "Try using maintenance/dumpHTML.php instead.\n";
-	exit;
-}
 
 error_reporting( E_ALL & (~E_NOTICE) );
 
@@ -116,7 +111,6 @@ if ( $options['slice'] ) {
 
 $wgHTMLDump = new DumpHTML( array(
 	'dest' => $dest,
-	'forceCopy' => $options['force-copy'],
 	'alternateScriptPath' => $options['interlang'],
 	'interwiki' => $options['interlang'],
 	'skin' => $skin,
@@ -176,7 +170,7 @@ if ( isset( $options['debug'] ) ) {
 }
 
 if ( $profiling ) {
-	echo $wgProfiler->getOutput();
+	echo Profiler::instance()->getOutput();
 }
 
 

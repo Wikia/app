@@ -52,8 +52,6 @@ class WikiStatsPage extends IncludableSpecialPage
     public function execute( $subpage ) {
         global $wgUser, $wgOut, $wgRequest, $wgCityId, $wgDBname, $wgLang;
 
-		wfLoadExtensionMessages("WikiStats");
-
         if ( $wgUser->isBlocked() ) {
             $wgOut->blockedPage();
             return;

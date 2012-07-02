@@ -4,7 +4,7 @@ $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'ClientSide',
 	'author' => 'Trevor Parscal',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:ClientSide',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:ClientSide',
 	'descriptionmsg' => 'clientside-desc',
 	'version' => '0.1.1',
 );
@@ -30,7 +30,7 @@ abstract class CsHtml {
 			array_shift( $arguments );
 		}
 		if ( count( $arguments ) > 0 ) {
-			return self::tag( 'table', $attributes, implode( $arguments ) );
+			return self::tag( 'table', $attributes, implode( '', $arguments ) );
 		}
 		return null;
 	}
@@ -49,7 +49,7 @@ abstract class CsHtml {
 			array_shift( $arguments );
 		}
 		if ( count( $arguments ) > 0 ) {
-			return self::tag( 'tr', $attributes, implode( $arguments ) );
+			return self::tag( 'tr', $attributes, implode( '', $arguments ) );
 		}
 		return null;
 	}
@@ -163,7 +163,7 @@ abstract class CsHtml {
 		$contents = null
 	) {
 		if ( is_array( $contents ) && count( $contents ) > 1 ) {
-			return Xml::tags( $tag, $attributes, implode( $contents ) );
+			return Xml::tags( $tag, $attributes, implode( '', $contents ) );
 		} else {
 			return Xml::tags(
 				$tag, $attributes, $contents, ( $contents !== null )
@@ -235,7 +235,7 @@ abstract class CsJs {
 		foreach( $functions as $name => $arguments ) {
 			if ( is_int( $name ) ) {
 				$jsFunctions[] = sprintf( '%s()', $arguments );
-			} else if ( is_array( $arguments ) ) {
+			} elseif ( is_array( $arguments ) ) {
 				$jsFunctions[] = sprintf(
 					'%s(%s)', $name, implode( ',', $arguments )
 				);
@@ -313,7 +313,7 @@ abstract class CsJs {
 	) {
 		// Arrays
 		if ( is_array( $value ) ) {
-			return "'" . self::escape( implode( $value ) ) . "'";
+			return "'" . self::escape( implode( '', $value ) ) . "'";
 		}
 		// Scalars
 		if ( is_scalar( $value ) ) {
@@ -378,7 +378,7 @@ abstract class CsJs {
 			return sprintf(
 				'function(%s){%s}', implode( ',', $arguments ), $body
 			);
-		} else if ( $arguments !== null ) {
+		} elseif ( $arguments !== null ) {
 			return sprintf( 'function(%s){%s}', $arguments, $body );
 		} else {
 			return sprintf( 'function(){%s}', $body );

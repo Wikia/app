@@ -2,7 +2,7 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-/*
+/**
  * MV_SpecialMVAdmin.php Created on Apr 24, 2007
  *
  * All Metavid Wiki code is Released Under the GPL2
@@ -27,24 +27,22 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class MVAdmin extends SpecialPage {
 
-	/*
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		global $wgMessageCache; // /TODO: should these be messages?
-		$wgMessageCache->addMessages( array( 'mvadmin' => 'Admin functions for MetavidWiki' ) );
 		parent::__construct( 'MVAdmin', 'delete' );
 	}
 
 	public function execute( $par ) {
-		global $IP, $mvgIP;
+		//global $IP, $mvgIP;
 		// require_once($IP . '/includes/SpecialPage.php' );
 		// require_once($IP . '/includes/Title.php' );
 
 		global $wgOut, $wgRequest;
-		global $wgServer; // "http://www.yourserver.org"
+		//global $wgServer; // "http://www.yourserver.org"
 							// (should be equal to 'http://'.$_SERVER['SERVER_NAME'])
-		global $wgScript;   // "/subdirectory/of/wiki/index.php"
+		//global $wgScript;   // "/subdirectory/of/wiki/index.php"
 		global $wgUser;
 
 		if ( ! $wgUser->isAllowed( 'delete' ) ) {
@@ -73,7 +71,7 @@ class MVAdmin extends SpecialPage {
 				require_once( "$IP/install-utils.inc" );
 
 				print '<p><b>Creating database tables</b><p><pre>';
-				dbsource( "extensions/MetavidWiki/maintenance/mv_tables.sql" );
+				wfGetDB( DB_MASTER )->sourceFile( "extensions/MetavidWiki/maintenance/mv_tables.sql" );
 
 				print '</p><p><b>Creating templates</b><pre>';
 				upTemplates( false );

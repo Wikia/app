@@ -23,7 +23,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgUser, $wgCityId, $wgMessageCache, $wgRequest, $wgStyleVersion, $wgStylePath, $wgScriptPath;
+		global $wgOut, $wgUser, $wgCityId, $wgRequest, $wgStyleVersion, $wgStylePath, $wgScriptPath;
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 

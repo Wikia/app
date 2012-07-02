@@ -10,14 +10,14 @@
  * 	# Determines whether the article with the page_id 12345 is in both
  * 	# "Category 1" and "Category 2" or their subcategories, respectively
  *
- * 	$cf = new Categoryfinder ;
- * 	$cf->seed (
- * 		array ( 12345 ) ,
- * 		array ( "Category 1","Category 2" ) ,
- * 		"AND"
- * 	) ;
- * 	$a = $cf->run() ;
- * 	print implode ( "," , $a ) ;
+ * 	$cf = new Categoryfinder;
+ * 	$cf->seed(
+ * 		array( 12345 ),
+ * 		array( 'Category 1', 'Category 2' ),
+ * 		'AND'
+ * 	);
+ * 	$a = $cf->run();
+ * 	print implode( ',' , $a );
  * </code>
  *
  */
@@ -29,6 +29,10 @@ class Categoryfinder {
 	var $targets = array(); # Array of DBKEY category names
 	var $name2id = array();
 	var $mode; # "AND" or "OR"
+
+	/**
+	 * @var DatabaseBase
+	 */
 	var $dbr; # Read-DB slave
 
 	/**
@@ -42,8 +46,9 @@ class Categoryfinder {
 	 * @param $article_ids Array of article IDs
 	 * @param $categories FIXME
 	 * @param $mode String: FIXME, default 'AND'.
+	 * @todo FIXME: $categories/$mode
 	 */
-	function seed( $article_ids, $categories, $mode = "AND" ) {
+	function seed( $article_ids, $categories, $mode = 'AND' ) {
 		$this->articles = $article_ids;
 		$this->next = $article_ids;
 		$this->mode = $mode;
@@ -64,9 +69,9 @@ class Categoryfinder {
 	 * then checks the articles if they match the conditions
 	 * @return array of page_ids (those given to seed() that match the conditions)
 	 */
-	function run () {
+	function run() {
 		$this->dbr = wfGetDB( DB_SLAVE );
-		while ( count ( $this->next ) > 0 ) {
+		while ( count( $this->next ) > 0 ) {
 			$this->scan_next_layer();
 		}
 
@@ -85,12 +90,12 @@ class Categoryfinder {
 
 	/**
 	 * This functions recurses through the parent representation, trying to match the conditions
-	 * @param $id The article/category to check
-	 * @param $conds The array of categories to match
-	 * @param $path used to check for recursion loops
+	 * @param $id int The article/category to check
+	 * @param $conds array The array of categories to match
+	 * @param $path array used to check for recursion loops
 	 * @return bool Does this match the conditions?
 	 */
-	function check( $id , &$conds, $path = array() ) {
+	function check( $id, &$conds, $path = array() ) {
 		// Check for loops and stop!
 		if ( in_array( $id, $path ) ) {
 			return false;
@@ -114,13 +119,13 @@ class Categoryfinder {
 			# Is this a condition?
 			if ( isset( $conds[$pname] ) ) {
 				# This key is in the category list!
-				if ( $this->mode == "OR" ) {
+				if ( $this->mode == 'OR' ) {
 					# One found, that's enough!
 					$conds = array();
 					return true;
 				} else {
 					# Assuming "AND" as default
-					unset( $conds[$pname] ) ;
+					unset( $conds[$pname] );
 					if ( count( $conds ) == 0 ) {
 						# All conditions met, done
 						return true;
@@ -131,7 +136,7 @@ class Categoryfinder {
 			# Not done yet, try sub-parents
 			if ( !isset( $this->name2id[$pname] ) ) {
 				# No sub-parent
-				continue ;
+				continue;
 			}
 			$done = $this->check( $this->name2id[$pname], $conds, $path );
 			if ( $done || count( $conds ) == 0 ) {
@@ -152,10 +157,10 @@ class Categoryfinder {
 			/* FROM   */ 'categorylinks',
 			/* SELECT */ '*',
 			/* WHERE  */ array( 'cl_from' => $this->next ),
-			__METHOD__ . "-1"
+			__METHOD__ . '-1'
 		);
-		while ( $o = $this->dbr->fetchObject( $res ) ) {
-			$k = $o->cl_to ;
+		foreach ( $res as $o ) {
+			$k = $o->cl_to;
 
 			# Update parent tree
 			if ( !isset( $this->parents[$o->cl_from] ) ) {
@@ -164,9 +169,13 @@ class Categoryfinder {
 			$this->parents[$o->cl_from][$k] = $o;
 
 			# Ignore those we already have
-			if ( in_array ( $k , $this->deadend ) ) continue;
+			if ( in_array( $k, $this->deadend ) ) {
+				continue;
+			}
 
-			if ( isset ( $this->name2id[$k] ) ) continue;
+			if ( isset( $this->name2id[$k] ) ) {
+				continue;
+			}
 
 			# Hey, new category!
 			$layer[$k] = $k;
@@ -175,14 +184,14 @@ class Categoryfinder {
 		$this->next = array();
 
 		# Find the IDs of all category pages in $layer, if they exist
-		if ( count ( $layer ) > 0 ) {
+		if ( count( $layer ) > 0 ) {
 			$res = $this->dbr->select(
 				/* FROM   */ 'page',
 				/* SELECT */ array( 'page_id', 'page_title' ),
 				/* WHERE  */ array( 'page_namespace' => NS_CATEGORY , 'page_title' => $layer ),
-				__METHOD__ . "-2"
+				__METHOD__ . '-2'
 			);
-			while ( $o = $this->dbr->fetchObject( $res ) ) {
+			foreach ( $res as $o ) {
 				$id = $o->page_id;
 				$name = $o->page_title;
 				$this->name2id[$name] = $id;

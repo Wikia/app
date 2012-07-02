@@ -59,7 +59,7 @@ class HtmlTag {
 	 * Sets the tag content. Chain-accessor.
 	 *
 	 * @param $value \mixed  Optional. Null to view and string to set the content.
-	 * @return \mixed  The content as a string or self.
+	 * @return HtmlTag|string  The content as a string or self.
 	 */
 	public function content( $value = null ) {
 		if ( $value === null ) {
@@ -120,7 +120,7 @@ class HtmlTag {
 	 *
 	 * @param $name \string  The name of the parameter.
 	 * @param $value \mixed  Optional. False to unset, null to view and string to set the value.
-	 * @return \mixed  The value of the parameter or null if not set.
+	 * @return null|HtmlTag  The value of the parameter or null if not set.
 	 */
 	public function style( $name, $value = null ) {
 		$name = (string) $this->assert( 'is_string', $name );
@@ -140,6 +140,8 @@ class HtmlTag {
 
 	/**
 	 * Shortcut for param( name = id ). Chain-accessor.
+	 * @param $value
+	 * @return mixed
 	 */
 	public function id( $value = null ) {
 		return $this->param( 'id', $value );

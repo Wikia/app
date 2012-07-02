@@ -94,7 +94,7 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 				exit( 0 );
 
 			} else {
-				$oArticle = MediaWiki::articleFromTitle( $oTitle );
+				$oArticle = new Article( $oTitle );
 				if( $oArticle->exists() ) {
 					header( sprintf( "Location: %s", $oArticle->mTitle->getFullURL() ), true, 301 );
 					exit( 0 );

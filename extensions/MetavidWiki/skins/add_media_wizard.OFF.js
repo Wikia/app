@@ -35,7 +35,7 @@ mw.addMessages( {
 
 if( MV_EMBED_VIDEO_HANDLER ){
     var vidIdList = new Array();
-    addOnloadHook( function(){        
+    $( function(){
         var divs = document.getElementsByTagName('div');    
         for(var i = 0; i < divs.length; i++){        
             if( divs[i].id.substring(0,11) == 'ogg_player_'){
@@ -56,7 +56,7 @@ if( MV_EMBED_VIDEO_HANDLER ){
 //check if we are on a edit page:
 if( wgAction == 'edit' || wgAction == 'submit' ){	
     //add onPage ready request:
-    addOnloadHook( function(){                        
+    $( function(){
         var imE = document.createElement('img');
         imE.style.cursor = 'pointer';    
         imE.id = 'mv-add_media';        
@@ -65,16 +65,16 @@ if( wgAction == 'edit' || wgAction == 'submit' ){
         
         var toolbar = document.getElementById("toolbar");
         if(toolbar)
-            toolbar.appendChild(imE);     
-        
-        addHandler( imE, 'click', function() {
+            toolbar.appendChild(imE);
+
+		$(imE).on( 'click', function() {
             mv_do_load_wiz();
         });
     });
 }
 //add firefog support to Special Upload page:
 if( wgPageName== "Special:Upload" ){    
-    addOnloadHook( function(){        
+    $( function(){
         //(for commons force the &uploadformstyle=plain form
         /*var loc =  window.location.toString();
         if( loc.indexOf('commons.wikimedia.org')!==-1 ){
@@ -142,7 +142,7 @@ function mv_do_load_wiz(){
     //make sure the click action is still there
     var imE = document.getElementById('mv-add_media');    
     if(imE){
-        addHandler( imE, 'click', function() {
+		$(imE).on( 'click', function() {
             mv_do_load_wiz();
         });
     }

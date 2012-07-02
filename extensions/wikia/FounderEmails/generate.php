@@ -12,20 +12,20 @@
 
 	$dir = dirname(__FILE__).'/';
 	$wgAutoloadClasses['FounderEmailsController'] = $dir . 'FounderEmailsController.class.php';
-	
+
 	 // get options
 	$long_opts = array("email:","lang:");
 	$params = getopt("e:l:", $long_opts);
 
 	if (!array_key_exists('email', $params))
 		die("Invalid format. Format: SERVER_ID=12345 php generate.php --email=me@wikia-inc.com --lang=th\n");
-	
-	if (!User::isValidEmailAddr($params['email']))
+
+	if (!Sanitizer::validateEmail($params['email']))
 		die("Invalid email address.\n");
 
 	// set variables
 	global $wgTitle, $wgCityId, $wgPasswordSender, $wgContLang, $wgEnableAnswers;
-	
+
 	$params['name'] = strstr($params['email'], '@', TRUE);
 
 	if (!array_key_exists('lang',$params) || empty($params['lang']))
@@ -38,12 +38,12 @@
 	$city_id = ($wgCityId) ? $wgCityId : 177;
 	$foundingWiki = WikiFactory::getWikiById($city_id);
 	$wikiType = (!empty($wgEnableAnswers)) ? '-answers' : '' ;
-	
+
 	$emailParams = array(
 						'$USERNAME' => $params['name'],
 						'$WIKINAME' => $foundingWiki->city_title,
 						'$WIKIURL' => $foundingWiki->city_url,
-						'$UNIQUEVIEWS' => 789,	
+						'$UNIQUEVIEWS' => 789,
 						'$USERJOINS' => 456,
 						'$USEREDITS' => 123,
 						'$EDITORNAME' => 'Someone',
@@ -60,14 +60,14 @@
 						'$WIKIMAINPAGEURL' => 'http://www.wikia.com',
 						'$USERPAGEEDITURL' => 'http://www.wikia.com',
 					);
-	
+
 	$content_types = array('html', 'text');
 	$types = array('user-registered', 'anon-edit', 'general-edit', 'first-edit', 'lot-happening', 'views-digest', 'complete-digest','DayZero','DayThree','DayTen');
 	$days_passed_events = array('DayZero','DayThree','DayTen');
-	
+
 	$to = new MailAddress($params['email'], $params['name'], $params['name']);
 	$sender = new MailAddress($wgPasswordSender);
-	
+
 	foreach($content_types as $content_type) {
 		foreach($types as $type) {
 			// get messages
@@ -129,6 +129,7 @@
 					break;
 			}
 
+			$mailBody = $mailBodyHTML = '';
 			// send email
 			$subject = "Founder Email Test for $params[type] ($params[language]/$content_type): ";
 			$subject .= strtr(wfMsgExt($msg_key_subj, array('content')), $emailParams);
@@ -146,8 +147,6 @@
 				} else {	// old emails
 					$mailBodyHTML = strtr(wfMsgExt($msg_key_body_html, array('content', 'parseinline')), $emailParams);
 				}
-				
-				UserMailer::sendHTML($to, $sender, $subject, '', $mailBodyHTML);
 			} else {
 				if($params['type']=='views-digest') {
 					$mailBody = strtr(wfMsgExt($msg_key_body, array('content','parsemag'), $emailParams['$UNIQUEVIEWS']), $emailParams);
@@ -156,9 +155,10 @@
 				} else {
 					$mailBody = strtr(wfMsgExt($msg_key_body, array('content')), $emailParams);
 				}
-				
-				UserMailer::send( $to, $sender, $subject, $mailBody);
 			}
+
+			$body = array( 'text' => $mailBody, 'html' => $mailBodyHTML );
+			UserMailer::send( $to, $sender, $subject, $body );
 		}
 	}
 

@@ -1,13 +1,15 @@
 <?php
 /**
- * Internationalisation file for extension MyExtension.
+ * Internationalisation file for MyExtension extension.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
+/** English */
 $messages['en'] = array(
+	'myextension' => 'My extension',
 	'myextension-desc' => 'MyExtension description',
-	'myextension' => 'My extension'
 );

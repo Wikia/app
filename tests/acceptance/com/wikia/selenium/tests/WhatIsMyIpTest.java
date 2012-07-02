@@ -11,7 +11,7 @@ import static org.testng.AssertJUnit.assertEquals;
 import java.util.List;
 
 public class WhatIsMyIpTest extends BaseTest {
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testAssertThatInfrastructureIPsAreNotPresented() throws Exception {
 		openAndWait("index.php?title=Special:WhatIsMyIP");
 

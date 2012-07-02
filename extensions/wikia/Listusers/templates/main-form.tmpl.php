@@ -146,7 +146,7 @@ $(document).ready(function() {
 		$link = "";
 		if ( !wfEmptyMsg("Grouppage-{$groupName}", $groupLink) ) {
 			$sk = $wgUser->getSkin();
-			$link = $sk->makeLink($groupLink, $wgContLang->ucfirst($group['name']), "");
+			$link = $sk->link($groupLink, $wgContLang->ucfirst($group['name']), "");
 		} else {
 			$groupLink = "";
 			$link = $wgContLang->ucfirst($group['name']);

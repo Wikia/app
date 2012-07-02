@@ -9,19 +9,22 @@ var LightboxLoader = {
 	inlineVideos: $(),	// jquery array of inline videos
 	inlineVideoLinks: $(),	// jquery array of inline video links
 	lightboxLoading: false,
-	modal: {
+	defaults: {
 		// start with default modal options
-		initial: {
-			id: 'LightboxModal',
-			className: 'LightboxModal',
-			width: 970, // modal adds 30px of padding to width
-			noHeadline: true,
-			topOffset: 25,
-			height: 628,
-			onClose: function() {
-				$(window).off('.Lightbox');
-				LightboxLoader.lightboxLoading = false;
-			}
+		id: 'LightboxModal',
+		className: 'LightboxModal',
+		width: 970, // modal adds 30px of padding to width
+		noHeadline: true,
+		topOffset: 25,
+		height: 628,
+		videoHeight: 360,
+		onClose: function() {
+			$(window).off('.Lightbox');
+			LightboxLoader.lightboxLoading = false;
+			// Reset Ad Flags
+			Lightbox.ads.adMediaProgress = [];
+			Lightbox.ads.adWasShown = false;
+			Lightbox.ads.adIsShowing = false;
 		}
 	},
 	videoThumbWidthThreshold: 320,
@@ -49,29 +52,12 @@ var LightboxLoader = {
 
 	},
 	handleClick: function(ev, parent) {
-		var id = parent.attr('id');
-
-		// Set carousel type based on parent of image
-		switch(id) {
-			case "WikiaArticle": 
-				LightboxLoader.carouselType = "articleMedia";
-				break;
-			case "article-comments":
-				LightboxLoader.carouselType = "articleMedia";
-				break;
-			case "RelatedVideosRL":
-				LightboxLoader.carouselType = "relatedVideo";
-				break;
-			default: // .LatestPhotosModule
-				LightboxLoader.carouselType = "latestPhotos";
-		}
-		
 		// figure out target
 		if(LightboxLoader.lightboxLoading) {
 			ev.preventDefault();
 			return;
 		}
-		
+
 		var target = $(ev.target);
 
 		// move to parent of an image -> anchor
@@ -104,11 +90,6 @@ var LightboxLoader = {
 			return;
 		}
 
-		// don't show lightbox for linked slideshow with local images (RT #73121)
-		if (target.hasClass('wikia-slideshow-image') && !target.parent().hasClass('wikia-slideshow-from-feed')) {
-			return;
-		}
-
 		// don't open lightbox when user do Ctrl + click (RT #48476)
 		if (ev.ctrlKey) {
 			return;
@@ -123,8 +104,8 @@ var LightboxLoader = {
 			return false;
 		}
 
-		ev.preventDefault();		
-				
+		ev.preventDefault();
+		
 		// get file name
 		var mediaTitle = false;
 
@@ -164,6 +145,9 @@ var LightboxLoader = {
 			}
 		}
 		
+		// pass parent div to Lightbox.js
+		LightboxLoader.parentDiv = parent;
+
 		// load modal
 		if(mediaTitle != false) {
 			LightboxLoader.loadLightbox(mediaTitle);
@@ -175,28 +159,43 @@ var LightboxLoader = {
 		LightboxLoader.lightboxLoading = true;
 
 		// Display modal with default dimensions
-		var openModal = $("<div>").makeModal(LightboxLoader.modal.initial);
+		var openModal = $("<div>").makeModal(LightboxLoader.defaults);
 		openModal.find(".modalContent").startThrobbing();
 		
 		var lightboxParams = {
 			'title': mediaTitle,
 			'modal': openModal,
-			'carouselType': LightboxLoader.carouselType
+			'parent': LightboxLoader.parentDiv
 		};
 
-		// Load resources
-		if(LightboxLoader.assetsLoaded) {
-			Lightbox.makeLightbox(lightboxParams);
-		} else {
-			$.when(
-				$.loadMustache(),
-				$.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')]),
-				$.getResources([window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'])
-			).done(function() {
-				LightboxLoader.assetsLoaded = true;
-				Lightbox.makeLightbox(lightboxParams);
+		var deferredList = [];
+		if(!LightboxLoader.assetsLoaded) {
+			deferredList.push($.loadMustache());
+			deferredList.push($.getResources([$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss')]));
+			deferredList.push($.getResources([window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js']));
+			
+			var deferredTemplate = $.Deferred();
+			$.nirvana.sendRequest({
+				controller:	'Lightbox',
+				method:		'lightboxModalContent',
+				type:		'GET',
+				format: 'html',
+				callback: function(html) {
+					LightboxLoader.templateHtml = html;
+					deferredTemplate.resolve();
+				}
 			});
+			
+			deferredList.push( deferredTemplate );
 		}
+		
+		deferredList.push(LightboxLoader.getMediaDetailDeferred({title: mediaTitle}));	// NOTE: be careful with this, look below where it says LASTINDEX
+		
+		$.when.apply(this, deferredList).done(function() {
+			LightboxLoader.assetsLoaded = true;
+			Lightbox.initialFileDetail = arguments[arguments.length - 1];	// LASTINDEX: index is last-index due to how deferred resolve works in mulitiple deferred objects 
+			Lightbox.makeLightbox(lightboxParams);
+		});
 
 	},
 	displayInlineVideo: function(target, targetChildImg, mediaTitle) {
@@ -244,6 +243,13 @@ var LightboxLoader = {
 				}
 			});
 		}
+	},
+	getMediaDetailDeferred: function(mediaParams) {
+		var deferred = $.Deferred();
+		LightboxLoader.getMediaDetail(mediaParams, function(json) {
+			deferred.resolve(json);
+		});
+		return deferred;
 	},
 	/* function to normalize backend deficiencies */
 	normalizeMediaDetail: function(json, callback) {

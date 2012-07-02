@@ -8,7 +8,7 @@
 * Baspageri: ''{{SITENAME}}, {{int:sitesubtitle}}''.
 * Soñğı nusqasınıñ kezi: {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}} {{CURRENTTIME}} UTC
 * Alınğan kezi: <citation>{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}} {{CURRENTTIME}} UTC</citation>
-* Turaqtı siltemesi: {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
+* Turaqtı siltemesi: {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
 * Bet nusqasınıñ teñdestirw nomiri: {{REVISIONID}}
 
 </div>
@@ -18,26 +18,26 @@
 
 === [[GOST mäneri]] ===
 <!-- ([[GOST 7.1|GOST 7.1—2003]] jäne [[GOST 7.82|GOST 7.82—2001]]) -->
-{{SITENAME}}, {{int:sitesubtitle}} [Élektrondı qaýnar] : {{FULLPAGENAME}}, nusqasınıñ nömiri {{REVISIONID}}, soñğı tüzetwi {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC / Wïkïpedïya awtorları. — Élektrondı derek. — Florïda ştatı. : Wïkïmedïya Qorı, {{CURRENTYEAR}}. — Qatınaw reti: {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
+{{SITENAME}}, {{int:sitesubtitle}} [Élektrondı qaýnar] : {{FULLPAGENAME}}, nusqasınıñ nömiri {{REVISIONID}}, soñğı tüzetwi {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC / Wïkïpedïya awtorları. — Élektrondı derek. — Florïda ştatı. : Wïkïmedïya Qorı, {{CURRENTYEAR}}. — Qatınaw reti: {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}
 
 === [[APA mäneri]] ===
-{{FULLPAGENAME}}. ({{CURRENTYEAR}}, {{CURRENTMONTHNAME}} {{CURRENTDAY}}). ''{{SITENAME}}, {{int:sitesubtitle}}'' mağlumatı. {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} betinen <citation>{{CURRENTTIME}}, {{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation> kezinde alınğan.
+{{FULLPAGENAME}}. ({{CURRENTYEAR}}, {{CURRENTMONTHNAME}} {{CURRENTDAY}}). ''{{SITENAME}}, {{int:sitesubtitle}}'' mağlumatı. {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} betinen <citation>{{CURRENTTIME}}, {{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation> kezinde alınğan.
 
 === [[MLA mäneri]] ===
-«{{FULLPAGENAME}}». ''{{SITENAME}}, {{int:sitesubtitle}}''. {{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC. <citation>{{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}}</citation> &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;.
+«{{FULLPAGENAME}}». ''{{SITENAME}}, {{int:sitesubtitle}}''. {{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC. <citation>{{CURRENTDAY}} {{CURRENTMONTHABBREV}} {{CURRENTYEAR}}, {{CURRENTTIME}}</citation> &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt;.
 
 === [[MHRA mäneri]] ===
-{{SITENAME}} üleskerleri, '{{FULLPAGENAME}}', ''{{SITENAME}}, {{int:sitesubtitle}},'' {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC, &lt;{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt; [<citation>{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}</citation> kezinde qatınaldı]
+{{SITENAME}} üleskerleri, '{{FULLPAGENAME}}', ''{{SITENAME}}, {{int:sitesubtitle}},'' {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}, {{CURRENTTIME}} UTC, &lt;{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}&gt; [<citation>{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}</citation> kezinde qatınaldı]
 
 === [[Şïkago mäneri]] ===
-{{SITENAME}} üleskeri, «{{FULLPAGENAME}}», ''{{SITENAME}}, {{int:sitesubtitle}},'' {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (<citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation> kezinde qatınaldı).
+{{SITENAME}} üleskeri, «{{FULLPAGENAME}}», ''{{SITENAME}}, {{int:sitesubtitle}},'' {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (<citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation> kezinde qatınaldı).
 
 === [[CBE/CSE mäneri]] ===
 {{SITENAME}} üleskerleri. {{FULLPAGENAME}} [Ïnternet]. {{SITENAME}}, {{int:sitesubtitle}}; {{CURRENTYEAR}} {{CURRENTMONTHABBREV}} {{CURRENTDAY}}, {{CURRENTTIME}} UTC [<citation>{{CURRENTYEAR}} {{CURRENTMONTHABBREV}} {{CURRENTDAY}}</citation> kezinde däýeksöz alındı]. Qatınawı:
-{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
+{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}.
 
 === [[Kök kitap|Kök kitap mäneri]] ===
-{{FULLPAGENAME}}, {{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (soñğı qaralğanı <citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation> kezinde).
+{{FULLPAGENAME}}, {{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}} (soñğı qaralğanı <citation>{{CURRENTMONTHNAME}} {{CURRENTDAY}}, {{CURRENTYEAR}}</citation> kezinde).
 
 === [[BibTeX]] jazbası ===
 
@@ -45,7 +45,7 @@
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{int:sitesubtitle}}",
     year = "{{CURRENTYEAR}}",
-    url = "{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
+    url = "{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}",
     note = "[Jeliden; <citation>{{CURRENTDAY}}-{{CURRENTMONTHNAME}}-{{CURRENTYEAR}}</citation> kezinde qatınaldı]"
   }
 
@@ -55,7 +55,7 @@
     author = "{{SITENAME}}",
     title = "{{FULLPAGENAME}} --- {{SITENAME}}{,} {{int:sitesubtitle}}",
     year = "{{CURRENTYEAR}}",
-    url = "'''\url{'''{{fullurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
+    url = "'''\url{'''{{canonicalurl:{{FULLPAGENAME}}|oldid={{REVISIONID}}}}'''}'''",
     note = "[Jeliden; <citation>{{CURRENTDAY}}-{{CURRENTMONTHNAME}}-{{CURRENTYEAR}}</citation> kezinde qatınaldı]"
   }
 

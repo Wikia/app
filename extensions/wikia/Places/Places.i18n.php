@@ -137,7 +137,7 @@ $messages['fr'] = array(
 	'places-category-switch-off' => 'Activer le balisage géographique',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

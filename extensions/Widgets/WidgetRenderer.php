@@ -11,13 +11,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class WidgetRenderer {
 
 public static function renderWidget ( &$parser, $widgetName ) {
-	global $IP, $wgUploadDirectory;
+	global $IP;
 
 	$smarty = new Smarty;
 	$smarty->left_delimiter = '<!--{';
 	$smarty->right_delimiter = '}-->';
-	#$smarty->compile_dir  = "$IP/extensions/Widgets/compiled_templates/";
-	$smarty->compile_dir  = $wgUploadDirectory; // it's not perfect but for one wiki with few widgets...
+	$smarty->compile_dir  = "$IP/extensions/Widgets/compiled_templates/";
 
 	// registering custom Smarty plugins
 	$smarty->plugins_dir[] = "$IP/extensions/Widgets/smarty_plugins/";
@@ -43,10 +42,10 @@ public static function renderWidget ( &$parser, $widgetName ) {
 	$smarty->register_resource(
 		'wiki',
 		array(
-			'WidgetRenderer::wiki_get_template',
-			'WidgetRenderer::wiki_get_timestamp',
-			'WidgetRenderer::wiki_get_secure',
-			'WidgetRenderer::wiki_get_trusted'
+			array('WidgetRenderer', 'wiki_get_template'),
+			array('WidgetRenderer', 'wiki_get_timestamp'),
+			array('WidgetRenderer', 'wiki_get_secure'),
+			array('WidgetRenderer', 'wiki_get_trusted')
 		)
 	);
 

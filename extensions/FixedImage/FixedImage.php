@@ -15,10 +15,11 @@
  * 
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 /**
@@ -37,8 +38,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'FixedImage',
 	'author'         => 'Brion Vibber',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:FixedImage',
-	'description'    => 'Just include an image',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:FixedImage',
 	'descriptionmsg' => 'fixedimage-desc',
 );
 $wgExtensionMessagesFiles['FixedImage'] =  dirname(__FILE__) . '/FixedImage.i18n.php';

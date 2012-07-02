@@ -79,7 +79,6 @@ function wfWikiAnswersAnswerBox( &$out, &$html ) {
 	$answerObj = Answer::newFromTitle( $out->getTitle() );
 	if( $answerObj->isQuestion() &&
 	    in_array( ucfirst(Answer::getSpecialCategory("unanswered")), $out->getCategories() ) ) {
-		wfLoadExtensionMessages('WikiAnswers');
 		$html = F::app()->getView( 'WikiAnswers', 'AnswerBox' )->render();
 	}
 	return true;

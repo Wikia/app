@@ -33,7 +33,7 @@ class MapsGoogleMaps extends MapsMappingService {
 	function __construct( $serviceName ) {
 		parent::__construct(
 			$serviceName,
-			array( 'googlemaps', 'google', 'googlemap', 'gmap', 'gmaps' )
+			array( 'google2', 'gmap', 'gmaps' )
 		);
 	}
 	
@@ -43,7 +43,8 @@ class MapsGoogleMaps extends MapsMappingService {
 	 * @since 0.7
 	 */
 	public function addParameterInfo( array &$params ) {
-		global $egMapsGoogleMapsType, $egMapsGoogleMapsTypes, $egMapsGoogleAutozoom, $egMapsGMapControls, $egMapsGMapOverlays;
+		global $egMapsGoogleMapsType, $egMapsGoogleMapsTypes, $egMapsGoogleAutozoom;
+		global $egMapsGMapControls, $egMapsGMapOverlays, $egMapsResizableByDefault;
 		
 		$params['zoom']->addCriteria( new CriterionInRange( 0, 20 ) );
 		$params['zoom']->setDefault( self::getDefaultZoom() );
@@ -51,11 +52,9 @@ class MapsGoogleMaps extends MapsMappingService {
 		$params['controls'] = new ListParameter( 'controls' );
 		$params['controls']->setDefault( $egMapsGMapControls );
 		$params['controls']->addCriteria( new CriterionInArray( self::getControlNames() ) );
-		$params['controls']->addManipulations(
-			new ParamManipulationFunctions( 'strtolower' ),
-			new ParamManipulationImplode( ',', "'" )
-		);		
-
+		$params['controls']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );		
+		$params['controls']->setMessage( 'maps-googlemaps2-par-controls' );
+		
 		$params['type'] = new Parameter(
 			'type',
 			Parameter::TYPE_STRING,
@@ -67,6 +66,7 @@ class MapsGoogleMaps extends MapsMappingService {
 			array( 'types' )		
 		);
 		$params['type']->addManipulations( new MapsParamGMapType() );
+		$params['type']->setMessage( 'maps-googlemaps2-par-type' );
 
 		$params['types'] = new ListParameter(
 			'types',
@@ -78,23 +78,30 @@ class MapsGoogleMaps extends MapsMappingService {
 				new CriterionInArray( array_keys( self::$mapTypes ) ),
 			)
 		);
-		$params['types']->addManipulations( new MapsParamGMapType(), new ParamManipulationImplode( ',' ) );		
+		$params['types']->addManipulations( new MapsParamGMapType() );
+		$params['types']->setMessage( 'maps-googlemaps2-par-types' );		
 		
 		$params['autozoom'] = new Parameter(
 			'autozoom',
 			Parameter::TYPE_BOOLEAN,
 			$egMapsGoogleAutozoom
 		);
-		$params['autozoom']->addManipulations( new ParamManipulationBoolstr() );
+		$params['autozoom']->setMessage( 'maps-googlemaps2-par-autozoom' );
 		
 		$params['kml'] = new ListParameter( 'kml' );
 		$params['kml']->setDefault( array() );
-		$params['kml']->addManipulations( new ParamManipulationImplode( ',', "'" ) );
-
+		//$params['kml']->addManipulations( new MapsParamFile() );
+		$params['kml']->setMessage( 'maps-googlemaps2-par-kml' );
+		
 		$params['overlays'] = new ListParameter( 'overlays' );
 		$params['overlays']->setDefault( $egMapsGMapOverlays );
 		$params['overlays']->addCriteria( new CriterionGoogleOverlay( self::$overlayData ) );
 		$params['overlays']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) ); // TODO
+		$params['overlays']->setMessage( 'maps-googlemaps2-par-overlays' );
+		
+		$params['resizable'] = new Parameter( 'resizable', Parameter::TYPE_BOOLEAN );
+		$params['resizable']->setDefault( $egMapsResizableByDefault, false );
+		$params['resizable']->setMessage( 'maps-par-resizable' );
 	}
 	
 	/**
@@ -134,25 +141,12 @@ class MapsGoogleMaps extends MapsMappingService {
 	}
 
 	/**
-	 * @see MapsMappingService::createMarkersJs
+	 * @see MapsMappingService::getMapObject
 	 * 
-	 * @since 0.6.5
+	 * @since 1.0
 	 */
-	public function createMarkersJs( array $markers ) {
-		$markerItems = array();
-
-		foreach ( $markers as $marker ) {
-			$markerItems[] = MapsMapper::encodeJsVar( (object)array(
-				'lat' => $marker[0],
-				'lon' => $marker[1],
-				'title' => $marker[2],
-				'label' =>$marker[3],
-				'icon' => $marker[4]
-			) );
-		}
+	public function getMapObject() {
 		
-		// Create a string containing the marker JS.
-		return '[' . implode( ',', $markerItems ) . ']';
 	}
 	
 	/**
@@ -211,15 +205,21 @@ class MapsGoogleMaps extends MapsMappingService {
 	 */
 	protected function getDependencies() {
 		global $wgLang;
-		global $egGoogleMapsKey, $egMapsStyleVersion, $egMapsScriptPath;
+		global $egGoogleMapsKeys, $egGoogleMapsKey;
 		
 		$langCode = self::getMappedLanguageCode( $wgLang->getCode() ); 
 		
-		return array(
-			Html::linkedScript( "http://maps.google.com/maps?file=api&v=2&key=$egGoogleMapsKey&hl=$langCode" ),
-			Html::linkedScript( "$egMapsScriptPath/includes/services/GoogleMaps/GoogleMapFunctions.js?$egMapsStyleVersion" ),
-			Html::inlineScript( 'window.unload = GUnload; var msgOverlays = ' . Xml::encodeJsVar( wfMsg( 'maps_overlays' ) ) . ';' )
+		$dependencies = array();
+		
+		$dependencies[] = Html::linkedScript( "http://maps.google.com/maps?file=api&v=2&key=$egGoogleMapsKey&hl=$langCode" );
+		
+		$dependencies[] = Html::inlineScript(
+			'var googleMapsKey = '. FormatJson::encode( $egGoogleMapsKey ) . ';' .
+			'var googleMapsKeys = '. FormatJson::encode( $egGoogleMapsKeys ) . ';'  .
+			'var googleLangCode = '. FormatJson::encode( $langCode ) . ';'
 		);
+		
+		return $dependencies;
 	}
 	
 	/**
@@ -251,147 +251,22 @@ class MapsGoogleMaps extends MapsMappingService {
 	public static function validateGoogleMapsKey() {
 		global $egGoogleMapsKey, $wgGoogleMapsKey;
 		
-		if ( isset( $wgGoogleMapsKey ) && trim( $egGoogleMapsKey ) == '' ) {
+		if ( isset( $wgGoogleMapsKey ) &&  $egGoogleMapsKey !== '' ) {
 			$egGoogleMapsKey = $wgGoogleMapsKey;
 		}
 	}
 	
 	/**
-	 * Adds the needed output for the overlays control.
+	 * @see MapsMappingService::getResourceModules
 	 * 
-	 * @param string $output
-	 * @param string $mapName
-	 * @param string $overlays
-	 * @param string $controls
+	 * @since 1.0
 	 * 
-	 * FIXME: layer onload function kills maps for some reason
+	 * @return array of string
 	 */
-	public function addOverlayOutput( &$output, $mapName, $overlays, $controls ) {
-		global $egMapsGMapOverlays, $egMapsGoogleOverlLoaded;
-		
-		// Check to see if there is an overlays control.
-		$hasOverlayControl = in_string( 'overlays', $controls );
-		
-		$overlayNames = array_keys( self::$overlayData );
-		
-		$validOverlays = array();
-		foreach ( $overlays as $overlay ) {
-			$segements = explode( '-', $overlay );
-			$name = $segements[0];
-			
-			if ( in_array( $name, $overlayNames ) ) {
-				$isOn = count( $segements ) > 1 ? $segements[1] : '0';
-				$validOverlays[$name] = $isOn == '1';
-			}
-		}
-		$overlays = $validOverlays;
-		
-		// If there are no overlays or there is no control to hold them, don't bother the rest.
-		if ( !$hasOverlayControl || count( $overlays ) < 1 ) return;
-		
-		// Add the inputs for the overlays.
-		$addedOverlays = array();
-		$overlayHtml = '';
-		$onloadFunctions = array();
-		
-		foreach ( $overlays as $overlay => $isOn ) {
-			$overlay = strtolower( $overlay );
-			
-			if ( in_array( $overlay, $overlayNames ) ) {
-				if ( !in_array( $overlay, $addedOverlays ) ) {
-					$addedOverlays[] = $overlay;
-					$label = wfMsg( 'maps_' . $overlay );
-					$urlNr = self::$overlayData[$overlay];
-					
-					$overlayHtml .= Html::input(
-						"$mapName-overlay-box",
-						null,
-						'checkbox',
-						array(
-							'id' => "$mapName-overlay-box-$overlay",
-							'onclick' => "switchGLayer(GMaps['$mapName'], this.checked, GOverlays[$urlNr])"
-						)
-					) . htmlspecialchars( $label ) . '<br />' ;
-					
-					if ( $isOn ) {
-						$onloadFunctions[] = "addOnloadHook( function() { initiateGOverlay('$mapName-overlay-box-$overlay', '$mapName', $urlNr) } );";
-					}
-				}
-			}
-		}
-		
-		$output .= Html::rawElement(
-			'div',
-			array(
-				'class' => 'outer-more',
-				'id' => htmlspecialchars( "$mapName-outer-more" )
-			),
-			'<form action="">' .
-			Html::rawElement(
-				'div',
-				array(
-					'class' => 'more-box',
-					'id' => htmlspecialchars( "$mapName-more-box" )
-				),
-				$overlayHtml
-			) .
-			'</form>'
-		);
-			
-		// If the overlays JS and CSS has not yet loaded, do it.
-		if ( empty( $egMapsGoogleOverlLoaded ) ) {
-			$egMapsGoogleOverlLoaded = true;
-			
-			$this->addDependency(
-				$this->getOverlayCss()
-				. Html::inlineScript( 'var timer_' . htmlspecialchars( $mapName ) . ';' . implode( "\n", $onloadFunctions ) )
-			);
-		}		
-	}
-	
-	/**
-	 * Returns CSS for the overlays. 
-	 */
-	protected function getOverlayCss() {
-		return Html::inlineStyle( <<<EOT
-.inner-more {
-	text-align:center;
-	font-size:12px;
-	background-color: #fff;
-	color: #000;
-	border: 1px solid #fff;
-	border-right-color: #b0b0b0;
-	border-bottom-color: #c0c0c0;
-	width:7em;
-	cursor: pointer;
-}
-
-.inner-more.highlight {
-	font-weight: bold;
-	border: 1px solid #483D8B;
-	border-right-color: #6495ed;
-	border-bottom-color: #6495ed;
-} 
-
-.more-box {  position:absolute;
-	top:25px; left:0px;
-	margin-top:-1px;
-	font-size:12px;
-	padding: 6px 4px;
-	width:120px;
-	background-color: #fff;
-	color: #000;
-	border: 1px solid gray;
-	border-top:1px solid #e2e2e2;
-	display: none;
-	cursor:default;
-}
-
-.more-box.highlight {
-	width:119px;
-	border-width:2px;
-}
-EOT
+	public function getResourceModules() {
+		return array_merge(
+			parent::getResourceModules(),
+			array( 'ext.maps.googlemaps2' )
 		);
 	}
 	

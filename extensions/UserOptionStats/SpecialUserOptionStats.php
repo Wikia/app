@@ -3,7 +3,8 @@
 /**
  * Special page for generating pie charts of user options
  *
- * @addtogroup SpecialPages
+ * @file
+ * @ingroup SpecialPages
  *
  * @author Niklas Laxström
  * @copyright Copyright © 2009, Niklas Laxström
@@ -12,15 +13,13 @@
 class SpecialUserOptionStats extends SpecialPage {
 
 	function __construct() {
-		SpecialPage::SpecialPage( 'UserOptionStats' );
+		parent::__construct( 'UserOptionStats' );
 	}
 
 	public $blacklist = array( 'nickname' );
 
 	public function execute( $par ) {
-		global $wgRequest, $wgUser, $wgOut, $wgLang, $wgAutoloadClasses;
-
-		wfLoadExtensionMessages( 'UserOptionStats' );
+		global $wgRequest, $wgOut, $wgLang, $wgAutoloadClasses;
 
 		$this->setHeaders();
 		$this->outputHeader();
@@ -41,11 +40,22 @@ class SpecialUserOptionStats extends SpecialPage {
 
 		if ( !$par ) {
 			$opts = array();
-			$name = SpecialPage::getLocalNameFor( 'UserOptionStats' );
+			$hiddenoptions = $this->getHiddenOptions();
+			$name = SpecialPage::getTitleFor( 'UserOptionStats' )->getPrefixedText();
 			foreach ( $this->getOptions() as $k ) {
-				$opts[] = "[[Special:$name/$k|$k]]";
+				if( in_array( $k, $hiddenoptions ) ) {
+					continue; # List hidden options separately (see below)
+				}
+				$opts[] = "[[$name/$k|$k]]";
 			}
 			$wgOut->addWikiMsg( 'uos-choose', $wgLang->commaList( $opts ) );
+			if ( count( $hiddenoptions ) > 0 ) {
+				$hiddenopts = array();
+				foreach ( $hiddenoptions as $hk ) {
+					$hiddenopts[] = "[[$name/$hk|$hk]]";
+				}
+				$wgOut->addWikiMsg( 'uos-choose-hidden', $wgLang->commaList( $hiddenopts ) );
+			}
 			return;
 		}
 
@@ -104,7 +114,8 @@ class SpecialUserOptionStats extends SpecialPage {
 		$plot->SetTitle( $title );
 
 		// Better fonts
-		if ( method_exists( 'FCFontFinder', 'find' ) ) {
+		$realFunction = array( 'FCFontFinder', 'find' );
+		if ( is_callable( $realFunction ) ) {
 			$font = FCFontFinder::find( $wgLang->getCode() );
 			if ( $font ) {
 				$plot->SetDefaultTTFont( $font );
@@ -132,5 +143,13 @@ class SpecialUserOptionStats extends SpecialPage {
 		sort($opts);
 
 		return $opts;
+	}
+
+	public function getHiddenOptions() {
+		global $wgHiddenPrefs;
+		if ( isset( $wgHiddenPrefs ) && is_array( $wgHiddenPrefs ) ) {
+			return $wgHiddenPrefs;
+		}
+		return array();
 	}
 }

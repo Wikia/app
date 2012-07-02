@@ -12,19 +12,21 @@ abstract class Drafts {
 
 	private static function getDraftAgeCutoff() {
 		global $egDraftsLifeSpan;
+		if ( !$egDraftsLifeSpan ) {
+			// Drafts stay forever
+			return 0;
+		}
 		return wfTimestamp( TS_UNIX ) - ( $egDraftsLifeSpan * 60 * 60 * 24 );
 	}
 
 	/**
 	 * Counts the number of existing drafts for a specific user
+	 *
+	 * @param $title Object: [optional] Title of article, defaults to all articles
+	 * @param $userID Integer: [optional] ID of user, defaults to current user
 	 * @return Number of drafts which match condition parameters
-	 * @param object $title[optional] Title of article, defaults to all articles
-	 * @param integer $userID[optional] ID of user, defaults to current user
 	 */
-	public static function num(
-		$title = null,
-		$userID = null
-	) {
+	public static function num( $title = null, $userID = null ) {
 		global $wgUser;
 		// Get database connection
 		$dbr = wfGetDB( DB_SLAVE );
@@ -63,11 +65,11 @@ abstract class Drafts {
 
 	/**
 	 * Removes drafts which have not been modified for a period of time defined
-	 * by $wgDraftsLifeSpan
+	 * by $egDraftsCleanRatio
 	 */
 	public static function clean() {
 		global $egDraftsCleanRatio;
-		
+
 		// Only perform this action a fraction of the time
 		if ( rand( 0, $egDraftsCleanRatio ) == 0 ) {
 			// Get database connection
@@ -89,10 +91,7 @@ abstract class Drafts {
 	 * Re-titles drafts which point to a particlar article, as a response to the
 	 * article being moved.
 	 */
-	public static function move(
-		$oldTitle,
-		$newTitle
-	) {
+	public static function move( $oldTitle, $newTitle ) {
 		// Get database connection
 		$dbw = wfGetDB( DB_MASTER );
 		// Updates title and namespace of drafts upon moving
@@ -110,14 +109,12 @@ abstract class Drafts {
 
 	/**
 	 * Gets a list of existing drafts for a specific user
-	 * @return 
-	 * @param object $title[optional] Title of article, defaults to all articles
-	 * @param integer $userID[optional] ID of user, defaults to current user
+	 *
+	 * @param $title Object: [optional] Title of article, defaults to all articles
+	 * @param $userID Integer: [optional] ID of user, defaults to current user
+	 * @return List of drafts or null
 	 */
-	public static function get(
-		$title = null,
-		$userID = null
-	) {
+	public static function get( $title = null, $userID = null ) {
 		global $wgUser;
 		// Removes expired drafts for a more accurate list
 		Drafts::clean();
@@ -167,14 +164,12 @@ abstract class Drafts {
 
 	/**
 	 * Outputs a table of existing drafts
+	 *
+	 * @param $title Object: [optional] Title of article, defaults to all articles
+	 * @param $userID Integer: [optional] ID of user, defaults to current user
 	 * @return Number of drafts in the table
-	 * @param object $title[optional] Title of article, defaults to all articles
-	 * @param integer $userID[optional] ID of user, defaults to current user
 	 */
-	public static function display(
-		$title = null,
-		$userID = null
-	) {
+	public static function display( $title = null, $userID = null ) {
 		global $wgOut, $wgRequest, $wgUser, $wgLang;
 		// Gets draftID
 		$currentDraft = Draft::newFromID( $wgRequest->getIntOrNull( 'draft' ) );
@@ -183,7 +178,7 @@ abstract class Drafts {
 		if ( count( $drafts ) > 0 ) {
 			global $egDraftsLifeSpan;
 			// Internationalization
-			wfLoadExtensionMessages( 'Drafts' );
+
 			// Add a summary, on Special:Drafts only
 			if( !$title || $title->getNamespace() == NS_SPECIAL ) {
 				$wgOut->wrapWikiMsg(
@@ -226,11 +221,11 @@ abstract class Drafts {
 				// Get article title text
 				$htmlTitle = $draft->getTitle()->getEscapedText();
 				// Build Article Load link
-				$urlLoad = $draft->getTitle()->getFullUrl(
+				$urlLoad = $draft->getTitle()->getFullURL(
 					'action=edit&draft=' . urlencode( $draft->getID() )
 				);
 				// Build discard link
-				$urlDiscard = SpecialPage::getTitleFor( 'Drafts' )->getFullUrl(
+				$urlDiscard = SpecialPage::getTitleFor( 'Drafts' )->getFullURL(
 					sprintf( 'discard=%s&token=%s',
 						urlencode( $draft->getID() ),
 						urlencode( $wgUser->editToken() )
@@ -281,7 +276,8 @@ abstract class Drafts {
 				$wgOut->addHTML(
 					Xml::element( 'td',
 						null,
-						$wgLang->timeanddate( $draft->getSaveTime() )
+						$wgLang->timeanddate( $draft->getSaveTime(),
+							true /* Adjust to user time zone*/ )
 					)
 				);
 				$wgOut->addHTML(
@@ -314,7 +310,6 @@ abstract class Drafts {
 class Draft {
 
 	/* Members */
-
 	private $exists = false;
 	private $id;
 	private $token;
@@ -324,7 +319,7 @@ class Draft {
 	private $starttime;
 	private $edittime;
 	private $savetime;
-	private $scrolltop ;
+	private $scrolltop;
 	private $text;
 	private $summary;
 	private $minoredit;
@@ -333,25 +328,22 @@ class Draft {
 
 	/**
 	 * Creates a new Draft object from a draft ID
+	 *
+	 * @param $id Integer: ID of draft
+	 * @param $autoload Boolean: [optional] Whether to load draft information
 	 * @return New Draft object
-	 * @param integer $id ID of draft
-	 * @param boolean $autoload[optional] Whether to load draft information
 	 */
-	public static function newFromID(
-		$id,
-		$autoload = true
-	) {
+	public static function newFromID( $id, $autoload = true ) {
 		return new Draft( $id, $autoload );
 	}
 
 	/**
 	 * Creates a new Draft object from a database row
+	 *
+	 * @param $row Array: Database row to create Draft object with
 	 * @return New Draft object
-	 * @param array $row Database row to create Draft object with
 	 */
-	public static function newFromRow(
-		$row
-	) {
+	public static function newFromRow( $row ) {
 		$draft = new Draft( $row['draft_id'], false );
 		$draft->setToken( $row['draft_token'] );
 		$draft->setTitle(
@@ -393,28 +385,24 @@ class Draft {
 
 	/**
 	 * Sets the edit token, like one generated by wfGenerateToken()
-	 * @param string $token
+	 * @param $token String
 	 */
-	public function setToken(
-		$token
-	) {
+	public function setToken( $token ) {
 		$this->token = $token;
 	}
-	
+
 	/**
 	 * @return User ID of draft creator
 	 */
 	public function getUserID() {
 		return $this->userID;
 	}
-	
+
 	/**
 	 * Sets user ID of draft creator
-	 * @param integer $userID
+	 * @param $userID Integer: user ID
 	 */
-	public function setUserID(
-		$userID
-	) {
+	public function setUserID( $userID ) {
 		$this->userID = $userID;
 	}
 
@@ -424,14 +412,12 @@ class Draft {
 	public function getTitle() {
 		return $this->title;
 	}
-	
+
 	/**
 	 * Sets title of article of draft
-	 * @param object $title
+	 * @param $title Object
 	 */
-	public function setTitle(
-		$title
-	) {
+	public function setTitle( $title ) {
 		$this->title = $title;
 	}
 
@@ -441,14 +427,12 @@ class Draft {
 	public function getSection() {
 		return $this->section;
 	}
-	
+
 	/**
 	 * Sets section of the article of draft
-	 * @param integer $section
+	 * @param $section Integer
 	 */
-	public function setSection(
-		$section
-	) {
+	public function setSection( $section ) {
 		$this->section = $section;
 	}
 
@@ -458,14 +442,12 @@ class Draft {
 	public function getStartTime() {
 		return $this->starttime;
 	}
-	
+
 	/**
 	 * Sets time when draft of the article started
-	 * @param string $starttime
+	 * @param $starttime String
 	 */
-	public function setStartTime(
-		$starttime
-	) {
+	public function setStartTime( $starttime ) {
 		$this->starttime = $starttime;
 	}
 
@@ -475,14 +457,12 @@ class Draft {
 	public function getEditTime() {
 		return $this->edittime;
 	}
-	
+
 	/**
 	 * Sets time of most recent revision of article when this draft started
-	 * @param string $edittime
+	 * @param $edittime String
 	 */
-	public function setEditTime(
-		$edittime
-	) {
+	public function setEditTime( $edittime ) {
 		$this->edittime = $edittime;
 	}
 
@@ -492,14 +472,12 @@ class Draft {
 	public function getSaveTime() {
 		return $this->savetime;
 	}
-	
+
 	/**
 	 * Sets time when draft was last modified
-	 * @param string $savetime
+	 * @param $savetime String
 	 */
-	public function setSaveTime(
-		$savetime
-	) {
+	public function setSaveTime( $savetime ) {
 		$this->savetime = $savetime;
 	}
 
@@ -509,14 +487,12 @@ class Draft {
 	public function getScrollTop() {
 		return $this->scrolltop;
 	}
-	
+
 	/**
 	 * Sets scroll position of editor when draft was last modified
-	 * @param integer $scrolltop
+	 * @param $scrolltop Integer
 	 */
-	public function setScrollTop(
-		$scrolltop
-	) {
+	public function setScrollTop( $scrolltop ) {
 		$this->scrolltop = $scrolltop;
 	}
 
@@ -526,14 +502,12 @@ class Draft {
 	public function getText() {
 		return $this->text;
 	}
-	
+
 	/**
 	 * Sets text of draft version of article
-	 * @param string $text
+	 * @param $text String
 	 */
-	public function setText(
-		$text
-	) {
+	public function setText( $text ) {
 		$this->text = $text;
 	}
 
@@ -543,14 +517,12 @@ class Draft {
 	public function getSummary() {
 		return $this->summary;
 	}
-	
+
 	/**
 	 * Sets summary of changes
-	 * @param string $summary
+	 * @param $summary String
 	 */
-	public function setSummary(
-		$summary
-	) {
+	public function setSummary( $summary ) {
 		$this->summary = $summary;
 	}
 
@@ -560,7 +532,7 @@ class Draft {
 	public function getMinorEdit() {
 		return $this->minoredit;
 	}
-	
+
 	/**
 	 * Sets whether edit is considdered to be a minor change
 	 * @param boolean $minoredit
@@ -575,22 +547,19 @@ class Draft {
 
 	/**
 	 * Generic constructor
-	 * @param integer $id[optional] ID to use
-	 * @param boolean $autoload[optional] Whether to load from database
+	 * @param $id Integer: [optional] ID to use
+	 * @param $autoload Boolean: [optional] Whether to load from database
 	 */
-	public function __construct(
-		$id = null,
-		$autoload = true
-	) {
+	public function __construct( $id = null, $autoload = true ) {
 		// If an ID is a number the existence is actually checked on load
-		// If an ID is false the existance is always false durring load
+		// If an ID is false the existance is always false during load
 		$this->id = $id;
 		// Load automatically
 		if ( $autoload ) {
 			$this->load();
 		}
 	}
-	
+
 	/**
 	 * Selects draft row from database and populates object properties
 	 */
@@ -640,7 +609,7 @@ class Draft {
 		// Updates state
 		$this->exists = true;
 	}
-	
+
 	/**
 	 * Inserts or updates draft row in database
 	 */
@@ -704,14 +673,12 @@ class Draft {
 		// Returns success
 		return true;
 	}
-	
+
 	/**
 	 * Deletes draft row from database
-	 * @param integer $user[optional] User ID, defaults to current user ID
+	 * @param $user Integer: [optional] User ID, defaults to current user ID
 	 */
-	public function discard(
-		$user = null
-	) {
+	public function discard( $user = null ) {
 		global $wgUser;
 		// Uses $wgUser as a fallback
 		$user = $user === null ? $wgUser : $user;

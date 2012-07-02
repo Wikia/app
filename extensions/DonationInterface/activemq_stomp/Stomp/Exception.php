@@ -29,7 +29,7 @@
 class Stomp_Exception extends Exception
 {
     protected $_details;
-    
+
     /**
      * Constructor
      *
@@ -37,13 +37,13 @@ class Stomp_Exception extends Exception
      * @param int $code Error code
      * @param string $details Stomp server error details
      */
-    public function __construct($message = null, $code = 0, $details = '')
+    public function __construct( $message = null, $code = 0, $details = '' )
     {
         $this->_details = $details;
         $message = "Stomp Error.  Check host connection.  Details suppressed for security.";
-        parent::__construct($message, $code);
+        parent::__construct( $message, $code );
     }
-    
+
     /**
      * Stomp server error details
      *
@@ -52,8 +52,8 @@ class Stomp_Exception extends Exception
     public function getDetails()
     {
         return $this->_details;
-        
+
     }
-    
+
 }
 ?>

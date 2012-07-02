@@ -7,7 +7,7 @@ class POMTextNode extends POMElement {
 
 	protected $nodeText = '';
 
-	public function POMTextNode($text)
+	public function POMTextNode( $text )
 	{
 		$this->nodeText = $text;
 		$this->children = null; // forcefully ignore children
@@ -15,6 +15,7 @@ class POMTextNode extends POMElement {
 
 	public function asString()
 	{
+		if ( $this->hidden() ) return "";
 		return $this->nodeText;
 	}
 }

@@ -1,24 +1,19 @@
 <?php
-$wgHooks['SkinTemplateSetupPageCss'][] = 'wfGlobalWikiaCSS';
+$wgHooks['BeforePageDisplay'][] = 'wfGlobalWikiaCSS';
 $wgHooks['BeforePageDisplay'][] = 'wfGlobalWikiaJS';
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Global CSS/JS',
 	'author' => '[http://www.wikia.com/wiki/User:Datrio Dariusz Siedlecki]',
-#	'url' => '',
 	'description' => 'Adds global user CSS and JavaScript to a page, fetched from the Central Wikia.',
   	'version' => "1.0"
   );
 
 /**
  * Adds custom user CSS and JavaScript to a page - Dariusz Siedlecki, datrio@wikia.com
- * Usage: $wgHooks['SkinTemplateSetupPageCss'][] = 'wfGlobalWikiaCSS'; $wgHooks['BeforePageDisplay'][] = 'wfGlobalWikiaJS';
  * @param $out Handle to an OutputPage object (presumably $wgOut).
  */
-
-// www.wikia.com/index.php is hardcoded since we cannot read the LocalSettings of our Central Wikia
-
-function wfGlobalWikiaCSS( &$out ) {
+function wfGlobalWikiaCSS(OutputPage &$out, Skin &$skin ) {
 	global $wgDisableGlobalCSS, $wgUser;
 	if( !empty( $wgDisableGlobalCSS ) ) {
 		return true;
@@ -26,13 +21,13 @@ function wfGlobalWikiaCSS( &$out ) {
 
 	if (!$wgUser->isAnon()) {
 		$userName = str_replace(' ', '_', $wgUser->getName());
-		$out .= "@import \"http://community.wikia.com/index.php?title=User:{$userName}/global.css&action=raw&ctype=text/css&smaxage=0\";";
+		$out->addStyle("http://community.wikia.com/index.php?title=User:{$userName}/global.css&action=raw&ctype=text/css&smaxage=0");
 	}
 
 	return true;
 }
 
-function wfGlobalWikiaJS( &$out ) {
+function wfGlobalWikiaJS(OutputPage &$out, Skin &$skin) {
 	global $wgDisableGlobalJS, $wgJsMimeType, $wgUser;
 	if( !empty( $wgDisableGlobalJS ) ) {
 		return true;

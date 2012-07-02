@@ -129,10 +129,10 @@ class EditPageLayout extends EditPage {
 
 		$this->lastSaveStatus = $ret;
 
-		wfDebug(__METHOD__ . ": returned #{$ret}\n");
+		wfDebug(__METHOD__ . ": returned #" . $ret->value . "\n");
 
 		// fire a custom hook when an edit from the edit page is successful (BugId:1317)
-		if (in_array($ret, array(self::AS_SUCCESS_UPDATE, self::AS_SUCCESS_NEW_ARTICLE, self::AS_OK, self::AS_END))) {
+		if (in_array($ret->value, array(self::AS_SUCCESS_UPDATE, self::AS_SUCCESS_NEW_ARTICLE, self::AS_OK, self::AS_END))) {
 			wfDebug(__METHOD__ . ": successful save\n");
 			$this->app->wf->RunHooks('EditPageSuccessfulSave', array($this, $ret));
 		}
@@ -455,6 +455,10 @@ class EditPageLayout extends EditPage {
 	 */
 	protected function showFormBeforeText() {
 		parent::showFormBeforeText();
+
+		// Make AjaxLogin work on EditPage without losing user changes - @author: Inez
+		$this->out->addHtml(Html::hidden('wpLogin', '') . "\n");
+
 		$this->out->addHtml("\n" . $this->renderHiddenFields() . "\n");
 		$this->out->addHtml("\n" . $this->renderCallbackNotices() . "\n");
 	}
@@ -622,7 +626,6 @@ class EditPageLayout extends EditPage {
 				'class' => 'mw-editnotice',
 			);
 		}
-
 	}
 
 	/**
@@ -634,7 +637,7 @@ class EditPageLayout extends EditPage {
 		// Code based on EditPage.php
 		if ( $this->editintro ) {
 			$title = Title::newFromText( $this->editintro );
-			if ( $title instanceof Title && $title->exists() && $title->userCanRead() ) {
+			if ( $title instanceof Title && $title->exists() && $title->userCan( 'read' ) ) {
 				$revision = Revision::newFromTitle( $title );
 
 				$wgOut = new OutputPage();

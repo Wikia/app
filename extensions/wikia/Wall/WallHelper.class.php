@@ -124,8 +124,10 @@ class WallHelper {
 			$item['wall-url'] = $wmessage->getWallPageUrl();
 			
 			$owner = $wmessage->getWallOwner();
+
 			$item['wall-owner'] = $owner->getName();
-			
+			$item['wall-msg'] = '';
+
 			if( empty($parent) ) {
 			//parent
 				$metaTitle = $wmessage->getMetaTitle();
@@ -139,8 +141,7 @@ class WallHelper {
 				
 				$item['url'] = $wmessage->getMessagePageUrl();
 				$res['title'] = 'message-wall-thread-#'.$title->getArticleID();
-					
-				$item['wall-msg'] = wfMsg( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $item['wall-owner']).'</a>'); 
+				$item['wall-msg'] = wfMsg( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $item['wall-owner']).'</a>');
 			} else {
 			//child
 				$parent->load();
@@ -161,7 +162,7 @@ class WallHelper {
 		}
 
 		wfRunHooks('AfterWallWikiActivityFilter', array(&$item, $wmessage));
-		
+
 		$app->wf->ProfileOut(__METHOD__);
 		return $item;
 	}

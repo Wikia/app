@@ -91,7 +91,7 @@ O ipuletse akhaonte. O seka wa lebala go fetola tse o di dikgatlhegelo tsa gago 
 'yourname'           => 'Leina la modirisi:',
 'yourpassword'       => 'Selotlolo sa sephiri:',
 'yourpasswordagain'  => 'Kwala selotlolo sa gago sa sephiri gape:',
-'remembermypassword' => 'Gakologelwa ikwadiso yame mo khompiutareng e',
+'remembermypassword' => 'Gakologelwa ikwadiso yame mo khompiutareng e (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'login'              => 'Ikwadise',
 'userlogin'          => 'Ikwadise / ipulela tsebe',
 'logout'             => 'Tswala',
@@ -100,13 +100,12 @@ O ipuletse akhaonte. O seka wa lebala go fetola tse o di dikgatlhegelo tsa gago 
 'createaccount'      => 'Ipulela tsebe',
 
 # Edit pages
-'summary'            => 'Tshoboko:',
-'minoredit'          => 'Se ke paakanyo e potlana',
-'watchthis'          => 'Lebelela tsebe e',
-'savearticle'        => 'Boloka tsebe',
-'showpreview'        => 'Supa gore go tlaa lebega jang',
-'showdiff'           => 'Supa diphetogo',
-'whitelistedittitle' => 'Ikwadiso e a tlhokafala fa o batla go baakanya sengwe',
+'summary'     => 'Tshoboko:',
+'minoredit'   => 'Se ke paakanyo e potlana',
+'watchthis'   => 'Lebelela tsebe e',
+'savearticle' => 'Boloka tsebe',
+'showpreview' => 'Supa gore go tlaa lebega jang',
+'showdiff'    => 'Supa diphetogo',
 
 # History pages
 'currentrev'          => 'Dipaakanyo tsa sešeng',
@@ -161,7 +160,6 @@ O ipuletse akhaonte. O seka wa lebala go fetola tse o di dikgatlhegelo tsa gago 
 'movenologin'      => 'Ga o a ikwadisa',
 'movepagebtn'      => 'Sutisa tsebe',
 'movedto'          => 'sutela kwa',
-'1movedto2'        => '[[$1]] o sutisediwa kwa go [[$2]]',
 'movereason'       => 'Lebaka:',
 
 # Namespace 8 related

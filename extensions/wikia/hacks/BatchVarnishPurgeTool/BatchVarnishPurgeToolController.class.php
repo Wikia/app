@@ -89,7 +89,7 @@ class BatchVarnishPurgeToolController extends WikiaSpecialPageController {
 		$aWhere = array('city_id = cv_city_id');
 		
 		if( $type == "full" ) {
-			$aWhere[] = "cv_value like '%".$dbr->escapeLike($likeVal)."%'";
+			$aWhere[] = 'cv_value' . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );		
 		} else {
 			$aWhere[] = "cv_value $selectedCond '$selectedVal'";
 		}

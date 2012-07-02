@@ -10,8 +10,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'GenericEditPage',
 	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
-	'description'    => 'Supplements the edit page with something more usable',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Generic_Edit_Page',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Uniwiki_Generic_Edit_Page',
 	'descriptionmsg' => 'gep-desc',
 );
 
@@ -44,19 +43,17 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'UW_GenericEditPage_combineBefore
 $wgAjaxExportList[] = "UW_GenericEditPage_emailSuggestion";
 
 function UW_GenericEditPage_addJS( $out ) {
-	global $wgScriptPath;
-	$src = "$wgScriptPath/extensions/uniwiki/GenericEditPage/GenericEditPage.js";
-	$out->addScript ( "<script type='text/javascript' src='$src'></script>" );
-	$href = "$wgScriptPath/extensions/uniwiki/GenericEditPage/global.css";
-	$out->addScript ( "<link rel='stylesheet' href='$href' />" );
+	global $wgExtensionAssetsPath;
+
+	$out->addScriptFile( "$wgExtensionAssetsPath/uniwiki/GenericEditPage/GenericEditPage.js" );
+	$out->addExtensionStyle( "$wgExtensionAssetsPath/uniwiki/GenericEditPage/global.css" );
 	return true;
 }
 
 function UW_GenericEditPage_emailSuggestion ( $category ) {
 	global $wgSuggestCategoryRecipient, $wgEmergencyContact, $wgSitename, $wgUser;
-	require_once ( "UserMailer.php" );
 
-	wfLoadExtensionMessages( 'GenericEditPage' );
+	
 
 	$from = new MailAddress ( $wgEmergencyContact );
 	$to   = new MailAddress ( $wgSuggestCategoryRecipient );
@@ -64,7 +61,7 @@ function UW_GenericEditPage_emailSuggestion ( $category ) {
 	$body = wfMsg ( "gep-emailbody", $wgUser->getName(), $category, $wgSitename );
 
 	// attempt to send the notification
-	$result = userMailer ( $to, $from, $subj, $body, null, 'GenericEditPage' );
+	$result = UserMailer::send( $to, $from, $subj, $body );
 
 	/* send a message back to the client, to let them
 	 * know if the suggestion was successfully sent (or not) */
@@ -142,7 +139,7 @@ function UW_GenericEditPage_extractCategoriesIntoBox( &$text ) {
 		$wgEmergencyContact, $wgUseCategoryPage;
 	$out = "";
 
-	wfLoadExtensionMessages( 'GenericEditPage' );
+	
 
 	/* build an array of the categories, either from a page
 	 * or from all available categories in the wiki */
@@ -279,7 +276,7 @@ function UW_GenericEditPage_extractCategoriesIntoBox( &$text ) {
 function UW_GenericEditPage_renderSectionBox ( $sections ) {
 	global $wgAddSection;
 
-	wfLoadExtensionMessages( 'GenericEditPage' );
+	
 
 	$out = "
 		<div id='section-box'>
@@ -344,7 +341,7 @@ function UW_GenericEditPage_renderSectionBox ( $sections ) {
 function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 	global $wgHooks, $wgParser, $wgTitle, $wgRequest, $wgUser, $wgCategoryBox, $wgSectionBox, $wgRequireCategory;
 	global $wgGenericEditPageClass, $wgSwitchMode, $wgGenericEditPageWhiteList, $wgAllowSimilarTitles;
-	global $wgAlwaysShowIntroSection;
+	global $wgAlwaysShowIntroSection, $wgExtensionAssetsPath;
 
 	// disable this whole thing on conflict and comment pages
 	if ( $editor->section == "new" || $editor->isConflict )
@@ -360,7 +357,6 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 	 * checkboxes later (after the edit form) */
 	if ( $wgCategoryBox ) {
 		$catbox = UW_GenericEditPage_extractCategoriesIntoBox ( $text );
-		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UW_GenericEditPage_addCssHookSidebar';
 	}
 
 	/* break the page up into sections by splitting
@@ -368,9 +364,10 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 	$nodes = preg_split( '/^(==?[^=].*)$/mi', $text, -1, PREG_SPLIT_DELIM_CAPTURE );
 
 	// add css hooks only to the edit page
-	$wgHooks['SkinTemplateSetupPageCss'][] = 'UW_GenericEditPage_editPageCss';
-	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UW_GenericEditPage_addCssHookGenEd';
+	$out->addExtensionStyle( "$wgExtensionAssetsPath/uniwiki/GenericEditPage/style.css" );
 
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UW_GenericEditPage_addCssHookGenEd';
+	$wgHooks['OutputPageBodyAttributes'][] = 'UW_GenericEditPage_onOutputPageBodyAttributes';
 
 	/* the current contents of the page we are
 	 * editing will be broken up into $page(and
@@ -513,7 +510,7 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 	// this line is sort of outdated... may want to remove?
 	$gen_editor_class = $any_in_use ? "" : " show-instructions";
 
-	wfLoadExtensionMessages( 'GenericEditPage' );
+	
 
 	/* add the buttons to switch between editing modes
 	 * (only one is visible at a time, via css/js) and
@@ -678,22 +675,30 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
  * special class to the <body> tag, to make targetting our css easier
  * (also add a hook if we just switched modes, to hide the preview) */
 function UW_GenericEditPage_addCssHookGenEd ( &$sktemplate, &$tpl ) {
-	global $wgGenericEditPageClass, $wgSwitchMode;
+	global $wgGenericEditPageClass, $wgSwitchMode, $wgCategoryBox;
+
 	$tpl->data['pageclass'] .= " edit-$wgGenericEditPageClass";
-	if ( $wgSwitchMode ) $tpl->data['pageclass'] .= " switching-mode";
-	return true;
-}
-function UW_GenericEditPage_addCssHookSidebar ( &$sktemplate, &$tpl ) {
-	global $wgGenericEditPageClass;
-	$tpl->data['pageclass'] .= " with-sidebar";
+	if ( $wgSwitchMode ) {
+		$tpl->data['pageclass'] .= ' switching-mode';
+	}
+	if ( $wgCategoryBox ) {
+		$tpl->data['pageclass'] .= ' with-sidebar';
+	}
+
 	return true;
 }
 
+function UW_GenericEditPage_onOutputPageBodyAttributes( $out, $sk, &$attr ) {
+	global $wgGenericEditPageClass, $wgSwitchMode, $wgCategoryBox;
 
-// also attach our generic editor stylesheet
-function UW_GenericEditPage_editPageCss ( &$out ) {
-	global $wgScriptPath;
-	$out .= "@import '$wgScriptPath/extensions/uniwiki/GenericEditPage/style.css';\n";
+	$attr['class'] .= " edit-$wgGenericEditPageClass";
+	if ( $wgSwitchMode ) {
+		$attr['class'] .= ' switching-mode';
+	}
+	if ( $wgCategoryBox ) {
+		$attr['class'] .= ' with-sidebar';
+	}
+
 	return true;
 }
 

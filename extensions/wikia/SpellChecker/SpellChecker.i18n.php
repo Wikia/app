@@ -155,7 +155,7 @@ $messages['fr'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Suggestions d’orthographe pour « $1 » : $2',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -405,7 +405,6 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
- * @author Jprmvnvijay5
  * @author Ravichandra
  * @author Veeven
  */
@@ -413,7 +412,7 @@ $messages['te'] = array(
 	'spellchecker-info-languages' => 'అందుబాటులో ఉన్న భాషలు ($1)',
 	'spellchecker-info-dictionaries' => 'అందుబాటులో ఉన్న నిఘంటువులు',
 	'spellchecker-info-spellcheck-languages' => 'భాష',
-	'spellchecker-info-spellcheck-submit' => 'అక్షరక్రమ సరిజూపు',
+	'spellchecker-info-spellcheck-submit' => 'అక్షరక్రమ తనిఖీ',
 );
 
 /** Tagalog (Tagalog)

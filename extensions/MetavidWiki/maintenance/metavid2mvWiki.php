@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * metavid2mvWiki.php Created on May 8, 2007
  *
  * All Metavid Wiki code is Released under the GPL2
@@ -19,12 +19,12 @@ require_once ( 'metavid2mvWiki.inc.php' );
 
 // include util functions:
 require_once( 'maintenance_util.inc.php' );
-/*
+/**
  * assume the wiki user has access to the metavid table and that the
  * metavid table is titled `metavid`
  */
 
-/*
+/**
  * default pages (@@todo move to install script)
 
 
@@ -90,19 +90,19 @@ actions:
 		'all_sync_past_date' --date [mm/dd/yy] all in_sync streams past date (-d option required)
 		[stream_name] will insert all records for the given stream name
 		'people' [person_name] will insert all the people articles optional followed by a person name
-		'bill' [bill_key]? ...empty bill key will insert all bills based on gov track subject page		
+		'bill' [bill_key]? ...empty bill key will insert all bills based on gov track subject page
 		'interest' will insert interests (uses people as base so run people first)
 		'update_templates' will update templates & some semantic properties
 		'file_check' checks inserted streams file urls/pointers
 		'do_stream_date_check'
-		'do_remove_orphaned_streams' 
-		'mvd_consistancy_check' makes sure all mvd text layers are consistent  
+		'do_remove_orphaned_streams'
+		'mvd_consistancy_check' makes sure all mvd text layers are consistent
 
 EOT;
 	exit ();
 }
 
-/*
+/**
  * set up the article set for the given stream/set
  */
 $mvForceUpdate = ( isset( $options['force'] ) ) ? true:false;
@@ -120,7 +120,7 @@ switch ( $args[0] ) {
 	case 'all_sync_past_date':
 		if ( !isset( $options['date'] ) )die( 'date missing' . "\n" );
 		do_stream_insert( 'all_sync_past_date' );
-	break;	
+	break;
 	case 'people' :
 		$force = ( isset( $options['force'] ) ) ? true:false;
 		$person_name = ( isset( $args[1] ) ) ? $args[1]:'';
@@ -156,5 +156,5 @@ switch ( $args[0] ) {
 	break;
 	default :
 		do_stream_insert( 'stream', $args[0] );
-	break;	
+	break;
 }

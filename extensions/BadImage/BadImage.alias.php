@@ -6,205 +6,249 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
-	'Badimages'    => array( 'BadImages', 'Badimages' ),
+/** English (English) */
+$specialPageAliases['en'] = array(
+	'Badimages' => array( 'BadImages', 'Badimages' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Badimages' => array( 'صور_سيئة' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'Badimages' => array( 'صور_سيئة' ),
+$specialPageAliases['arz'] = array(
+	'Badimages' => array( 'صور_وحشه' ),
+);
+
+/** Breton (Brezhoneg) */
+$specialPageAliases['br'] = array(
+	'Badimages' => array( 'SkeudennoùFall' ),
 );
 
 /** Bosnian (Bosanski) */
-$aliases['bs'] = array(
+$specialPageAliases['bs'] = array(
 	'Badimages' => array( 'PogresnaSlika' ),
 );
 
 /** Catalan (Català) */
-$aliases['ca'] = array(
+$specialPageAliases['ca'] = array(
 	'Badimages' => array( 'Imatges dolentes' ),
 );
 
 /** German (Deutsch) */
-$aliases['de'] = array(
-	'Badimages' => array( 'Unerwünschte Bilder' ),
+$specialPageAliases['de'] = array(
+	'Badimages' => array( 'Unerwünschte_Bilder' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
-$aliases['dsb'] = array(
-	'Badimages' => array( 'Špatne wobraze' ),
+$specialPageAliases['dsb'] = array(
+	'Badimages' => array( 'Špatne_wobraze' ),
+);
+
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'Badimages' => array( 'Malbonaj_bildoj' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'Badimages' => array( 'تصاویر_بد' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
-	'Badimages' => array( 'Arveluttavat kuvat' ),
+$specialPageAliases['fi'] = array(
+	'Badimages' => array( 'Arveluttavat_kuvat' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
-	'Badimages' => array( 'Mauvaises images', 'MauvaisesImages' ),
+$specialPageAliases['fr'] = array(
+	'Badimages' => array( 'Mauvaises_images', 'MauvaisesImages' ),
 );
 
 /** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
-	'Badimages' => array( 'Crouyes émâges', 'CrouyesÉmâges' ),
+$specialPageAliases['frp'] = array(
+	'Badimages' => array( 'Crouyes_émâges', 'CrouyesÉmâges' ),
+);
+
+/** Galician (Galego) */
+$specialPageAliases['gl'] = array(
+	'Badimages' => array( 'Imaxes_incorrectas' ),
 );
 
 /** Swiss German (Alemannisch) */
-$aliases['gsw'] = array(
+$specialPageAliases['gsw'] = array(
 	'Badimages' => array( 'Bilder wu nit gwinscht sin' ),
 );
 
 /** Gujarati (ગુજરાતી) */
-$aliases['gu'] = array(
+$specialPageAliases['gu'] = array(
 	'Badimages' => array( 'ખરાબચિત્ર' ),
 );
 
 /** Hebrew (עברית) */
-$aliases['he'] = array(
+$specialPageAliases['he'] = array(
 	'Badimages' => array( 'תמונות_אסורות' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
-$aliases['hsb'] = array(
-	'Badimages' => array( 'Špatne wobrazy' ),
+$specialPageAliases['hsb'] = array(
+	'Badimages' => array( 'Špatne_wobrazy' ),
+);
+
+/** 湘语 (湘语) */
+$specialPageAliases['hsn'] = array(
+	'Badimages' => array( '冇用个图片' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'Badimages' => array( 'MovèImaj' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
-	'Badimages' => array( 'Tiltott képek', 'Rossz képek' ),
+$specialPageAliases['hu'] = array(
+	'Badimages' => array( 'Tiltott_képek', 'Rossz_képek' ),
 );
 
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'Badimages' => array( 'Mal imagines' ),
+$specialPageAliases['ia'] = array(
+	'Badimages' => array( 'Mal_imagines' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'Badimages' => array( 'Berkas yang buruk', 'BerkasBuruk' ),
+$specialPageAliases['id'] = array(
+	'Badimages' => array( 'Berkas_yang_buruk', 'BerkasBuruk' ),
 );
 
 /** Ido (Ido) */
-$aliases['io'] = array(
+$specialPageAliases['io'] = array(
 	'Badimages' => array( 'MalaImaji' ),
 );
 
-/** Japanese (日本語) */
-$aliases['ja'] = array(
-	'Badimages' => array( '好ましくない画像', '不良画像' ),
+/** Italian (Italiano) */
+$specialPageAliases['it'] = array(
+	'Badimages' => array( 'ImmaginiCorrotte' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
-	'Badimages' => array( 'Onjewönsch Bellder' ),
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Badimages' => array( '不良画像', '好ましくない画像' ),
+);
+
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
+	'Badimages' => array( 'Onjewönsch_Bellder' ),
+);
+
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'Badimages' => array( 'FotoggrafíasBozeadas' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'Badimages' => array( 'Net gewënschte Biller' ),
+$specialPageAliases['lb'] = array(
+	'Badimages' => array( 'Net_gewënschte_Biller' ),
 );
 
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'Badimages' => array( 'ЛошаСлика', 'ЛошиСлики' ),
 );
 
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
+$specialPageAliases['ml'] = array(
 	'Badimages' => array( 'മോശംചിത്രങ്ങൾ' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'Badimages' => array( 'वाईटचित्रे' ),
 );
 
 /** Maltese (Malti) */
-$aliases['mt'] = array(
+$specialPageAliases['mt'] = array(
 	'Badimages' => array( 'StampiĦżiena' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'Badimages' => array( 'Dårlige_bilder' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
-	'Badimages' => array( 'Zwarte_lieste_van_ofbeeldingen' ),
+$specialPageAliases['nds-nl'] = array(
+	'Badimages' => array( 'Zwarte_lieste_van_bestaanden' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'Badimages' => array( 'ZwarteLijstAfbeeldingen' ),
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
-$aliases['nn'] = array(
-	'Badimages' => array( 'Dårlege bilete' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'Badimages' => array( 'Dårlige bilder' ),
+$specialPageAliases['nn'] = array(
+	'Badimages' => array( 'Dårlege_bilete' ),
 );
 
 /** Occitan (Occitan) */
-$aliases['oc'] = array(
-	'Badimages' => array( 'Imatges marrits', 'ImatgesMarrits' ),
+$specialPageAliases['oc'] = array(
+	'Badimages' => array( 'Imatges_marrits', 'ImatgesMarrits' ),
 );
 
 /** Polish (Polski) */
-$aliases['pl'] = array(
-	'Badimages' => array( 'Nieprawidłowe grafiki' ),
+$specialPageAliases['pl'] = array(
+	'Badimages' => array( 'Nieprawidłowe_grafiki' ),
 );
 
 /** Pashto (پښتو) */
-$aliases['ps'] = array(
-	'Badimages' => array( 'بد انځورونه' ),
+$specialPageAliases['ps'] = array(
+	'Badimages' => array( 'بد_انځورونه' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'Badimages' => array( 'कुचित्र:' ),
 );
 
 /** Sinhala (සිංහල) */
-$aliases['si'] = array(
+$specialPageAliases['si'] = array(
 	'Badimages' => array( 'අසත්රූප' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'Badimages' => array( 'ZléObrázky' ),
 );
 
+/** Swedish (Svenska) */
+$specialPageAliases['sv'] = array(
+	'Badimages' => array( 'Dåliga_bilder' ),
+);
+
 /** Thai (ไทย) */
-$aliases['th'] = array(
+$specialPageAliases['th'] = array(
 	'Badimages' => array( 'ภาพเสีย' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'Badimages' => array( 'Masamang mga larawan', 'Masasamang mga larawan' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
-	'Badimages' => array( 'BozukResimler' ),
+$specialPageAliases['tr'] = array(
+	'Badimages' => array( 'BozukResimler', 'BozukDosyalar' ),
 );
 
 /** Simplified Chinese (‪中文(简体)‬) */
-$aliases['zh-hans'] = array(
-	'Badimages' => array( '坏图像' ),
+$specialPageAliases['zh-hans'] = array(
+	'Badimages' => array( '劣质图像' ),
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */
-$aliases['zh-hant'] = array(
+$specialPageAliases['zh-hant'] = array(
 	'Badimages' => array( '壞圖像' ),
 );
-

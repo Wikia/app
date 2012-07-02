@@ -3,7 +3,8 @@
  * Internationalisation file for img_auth script
  * This information is only needed if running in version prior to 1.16, otherwise messages are already included in core messages
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
 */
 
 $messages = array();

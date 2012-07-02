@@ -4,7 +4,7 @@
 
 /* Override "width: 100%" setting in standard MediaWiki skins */
 textarea.createboxInput {
-	width: auto;
+/*	width: auto;*/
 }
 textarea.mandatoryField {
 	width: auto;
@@ -27,9 +27,14 @@ textarea.mandatoryField {
 }
 
 /* Used in form pages */
+table.formtable {
+	/* width: 100%; */
+}
+
 table.formtable th {
 	text-align: left;
 	vertical-align: top;
+	/* max-width: 150px; */
 }
 /* another possible layout */
 table.formtable2 {
@@ -72,30 +77,64 @@ div.infoMessage {
 	border: 1px solid #777777;
 	padding: 12px;
 	margin: 25px;
-	width:auto;
+	width: auto;
 	background: #eeeeee;
 }
-div.warningMessage {
-	border: 1px solid #777777;
+/**
+ * errorbox and warningbox CSS classes were added in MediaWiki 1.19 -
+ * the CSS here exists for backwards compatibility, and to provide
+ * some improvements for SF's specific usage.
+ */
+.errorbox, .warningbox {
+	margin: 20px 0 0 0;
+	width: auto;
+	float: none;
+}
+.errorbox {
+	border: 2px solid red;
+	background-color: #fff2f2;
+	padding: 5px 10px 5px 10px;
+}
+.warningbox {
+	border: 2px solid #ff8c00;
+	background-color: #ffffc0;
 	padding: 12px;
-	margin: 25px;
-	width:auto;
-	font-weight: bold;
-	color: red;
 }
 span.errorMessage {
 	color: red;
 }
-.multipleTemplate {
-	background-color: #cccccc;
-	padding: 7px;
+.multipleTemplateInstance {
+	background-color: #dddddd;
+	border: 1px solid #cccccc;
+	padding: 5px;
 	margin: 10px 0px 10px 0px;
+}
+
+.multipleTemplateInstance table {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	color: inherit;
+	background-color: inherit;
+}
+
+td.removeButton {
+	text-align: right;
+	padding-right: 10px;
+}
+
+td.instanceRearranger {
+	max-width: 15px;
+}
+
+img.rearrangerImage {
+	cursor: move;
 }
 
 .autoGrow {
 	overflow: hidden;
 	height: auto;
-	width: 326px;
+/*	width: 326px;*/
 }
 
 /* Override some jQuery UI settings */
@@ -107,3 +146,7 @@ button.ui-button-icon-only {
 	vertical-align: bottom;
 	margin-top: 0.2em;
 } /* button elements seem to need a little more width */
+/* Override CSS from Header Tabs extension, if tabs are used in the form */
+input.sfComboBoxActual {
+	border: 1px #a6a6a6 solid;
+}

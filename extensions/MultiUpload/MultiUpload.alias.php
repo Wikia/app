@@ -8,9 +8,7 @@
 
 $specialPageAliases = array();
 
-/** English
- * @author Jon Harald Søby
- */
+/** English (English) */
 $specialPageAliases['en'] = array(
 	'MultipleUpload' => array( 'MultipleUpload' ),
 );
@@ -70,6 +68,11 @@ $specialPageAliases['hsb'] = array(
 	'MultipleUpload' => array( 'Wjacore_dataje_nahrać' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'MultipleUpload' => array( 'PlizyèChajman' ),
+);
+
 /** Interlingua (Interlingua) */
 $specialPageAliases['ia'] = array(
 	'MultipleUpload' => array( 'Incargar_plures', 'Cargar_plures' ),
@@ -120,19 +123,19 @@ $specialPageAliases['ml'] = array(
 	'MultipleUpload' => array( 'വിവിധ_അപ്‌ലോഡുകൾ' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'MultipleUpload' => array( 'Last_opp_mange_filer' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
 $specialPageAliases['nds-nl'] = array(
-	'MultipleUpload' => array( 'Meerdere_bestanen_toevoegen' ),
+	'MultipleUpload' => array( 'Meerdere_bestaanden_opsturen' ),
 );
 
 /** Dutch (Nederlands) */
 $specialPageAliases['nl'] = array(
 	'MultipleUpload' => array( 'MultiUploaden' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$specialPageAliases['no'] = array(
-	'MultipleUpload' => array( 'Last_opp_mange_filer' ),
 );
 
 /** Occitan (Occitan) */
@@ -150,7 +153,7 @@ $specialPageAliases['pt-br'] = array(
 	'MultipleUpload' => array( 'Carregamentos_em_massa' ),
 );
 
-/** Sanskrit (संस्कृत) */
+/** Sanskrit (संस्कृतम्) */
 $specialPageAliases['sa'] = array(
 	'MultipleUpload' => array( 'अनेकभारंन्यस्यति' ),
 );
@@ -180,17 +183,12 @@ $specialPageAliases['tr'] = array(
 	'MultipleUpload' => array( 'ÇokluYükleme' ),
 );
 
+/** Cantonese (粵語) */
+$specialPageAliases['yue'] = array(
+	'MultipleUpload' => array( '上傳多個檔案' ),
+);
+
 /** Traditional Chinese (‪中文(繁體)‬) */
 $specialPageAliases['zh-hant'] = array(
 	'MultipleUpload' => array( '大量上傳' ),
 );
-
-/** Polish (Polski) */
-$specialPageAliases['pl'] = array(
-	'MultipleUpload' => array( 'Prześlij wiele plików' )
-);
-
-/**
- * For backwards compatibility with MediaWiki 1.15 and earlier.
- */
-$aliases =& $specialPageAliases;

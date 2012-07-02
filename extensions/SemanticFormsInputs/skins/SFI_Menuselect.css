@@ -1,0 +1,55 @@
+/**
+ * Style sheet for the input type menuselect.
+ *
+ * @author Stephan Gambke
+ */
+
+.SFI_menuselect {
+	visibility: hidden; /* will be shown by JS when setup is finished*/
+	display: block;
+	cursor: default;
+	position: absolute;
+}
+
+.SFI_menuselect a {
+	cursor: default;
+}
+
+.SFI_menuselect ul { /* all lists */
+	margin: 0px;
+	padding: 0px;
+	list-style: none none outside;
+	position: absolute;
+	display: inline;
+}
+
+.SFI_menuselect ul ul { /* sub-item lists only */
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+
+.SFI_menuselect li { /* all entries */
+	margin: 1px 0px;
+	padding: 0px 0px;
+	text-align: left;
+	position: fixed;
+	list-style-image: none;
+}
+
+.SFI_menuselect table {
+	background: transparent;
+	border-collapse: collapse;
+	display: inline;
+}
+
+.SFI_menuselect .cont { 
+	padding:0px 2px;
+	width: 100%;
+	vertical-align: baseline;
+}
+
+.SFI_menuselect .arrow {
+	padding: 0px;
+}
+

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * ogg_thum_insert.php Created on Mar 13, 2008
  *
  * All Metavid Wiki code is Released under the GPL2
@@ -10,7 +10,7 @@
  * @url http://metavid.org
  */
 
- $cur_path = $IP = dirname( __FILE__ );
+$cur_path = $IP = dirname( __FILE__ );
 // include commandLine.inc from the mediaWiki maintance dir:
 require_once ( '../../../maintenance/commandLine.inc' );
 require_once ( 'metavid2mvWiki.inc.php' );

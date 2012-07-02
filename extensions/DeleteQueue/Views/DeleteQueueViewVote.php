@@ -96,8 +96,8 @@ class DeleteQueueViewVote extends DeleteQueueView {
 		$title = $this->getTitle( "vote/$article_id" );
 
 		$form = Xml::buildForm( $fields, 'deletequeue-vote-submit' ) .
-			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
-			Xml::hidden( 'title', $title->getPrefixedText() );
+			Html::Hidden( 'wpEditToken', $wgUser->editToken() ) .
+			Html::Hidden( 'title', $title->getPrefixedText() );
 
 		$form = Xml::tags( 'form',
 			array(

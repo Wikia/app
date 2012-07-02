@@ -12,8 +12,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'SendmailToWiki',
 	'author' => 'Jure Kajzer - freakolowsky <jure.kajzer@abakus.si>',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:SendmailToWiki',
-	'description' => 'Posting to wiki with sendmail redirection into a php script',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:SendmailToWiki',
 	'descriptionmsg' => 'sendmailtowiki-desc',
 	'version' => '0.1.0',
 );
@@ -31,9 +30,8 @@ $wgHooks['userCan'][] = 'sendmailtowikiUserCanHook';
 $sendmailtowikiPrefix = 'wikipost';
  
 function sendmailtowikiPinValidate( $value, $alldata ) {
-	global $wgMessageCache;
 	if ($value != '' && strlen($value) != 5)
-		return $wgMessageCache->get('sendmailtowiki-err-pinlength');
+		return wfMsg( 'sendmailtowiki-err-pinlength' );
 	return true;
 }
 	

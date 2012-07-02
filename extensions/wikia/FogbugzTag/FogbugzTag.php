@@ -19,5 +19,3 @@ $wgAutoloadClasses['FogbugzContainer'] = $dir . 'FogbugzContainer.class.php';
 $wgHooks['ParserFirstCallInit'][] = 'FogbugzTag::onFogbugzTagInit';
 
 $wgAjaxExportList[] = 'FogbugzTag::getFogbugzServiceResponse';
-
-

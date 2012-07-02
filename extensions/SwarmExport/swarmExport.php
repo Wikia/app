@@ -40,7 +40,7 @@ SH;
 }
 $file = $options['outfile'];
 $append = isset( $options['append'] );
-$start = isset( $options['startid'] ) ? $options['startid'] : null;
+$start = isset( $options['startid'] ) ? intval($options['startid']) : null;
 $prefix = isset( $options['pageprefix'] ) ? $options['pageprefix'] : '';
 $namespaces = isset( $options['namespaces'] )
 	? array_map( 'intval', explode( ',', $options['namespaces'] ) )
@@ -84,7 +84,7 @@ printf( "Writing data for %s rows\n", $res->numRows() );
 
 while ( $row = $res->fetchObject() ) {
 	$time = wfTimestamp( TS_UNIX, $row->rev_timestamp );
-	$title = $prefix . $wgCanonicalNamespaceNames[$row->page_namespace] . ':' . $row->page_title;
+	$title = $prefix . MWNamespace::getCanonicalName( $row->page_namespace ) . ':' . $row->page_title;
 	fwrite( $f, "{$row->rev_id}|{$title}|{$row->rev_user_text}|{$time}\n" );
 }
 

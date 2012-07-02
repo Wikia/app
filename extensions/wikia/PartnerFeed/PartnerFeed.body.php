@@ -16,14 +16,13 @@ class PartnerFeed extends SpecialPage {
 
 	function  __construct() {
 		parent::__construct( "PartnerFeed" , '' /*restriction*/);
-		wfLoadExtensionMessages("PartnerFeed");
 	}
 	private function shortenString($sString, $length){
 		return substr($sString,0,$length);
 	}
 
 	function execute() {
-		global $wgLang, $wgAllowRealName, $wgRequest, $wgOut;
+		global $wgLang, $wgRequest, $wgOut;
 
 		$this->mName = $wgRequest->getText( 'wpName' );
 		$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
@@ -279,12 +278,11 @@ class PartnerFeed extends SpecialPage {
  */
 	private function FeedRecentBadges ( $format ){
 
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgServerName, $wgEnableAchievementsExt;
+		global $wgUser, $wgOut, $wgExtensionsPath, $wgServer, $wgEnableAchievementsExt;
 
 		if ( empty ($wgEnableAchievementsExt) ){
 			$this->showMenu();
 		} else {
-			wfLoadExtensionMessages( 'AchievementsII' );
 			// local settings
 			$howOld = 30;
 			$maxBadgesToDisplay = 6;
@@ -310,7 +308,7 @@ class PartnerFeed extends SpecialPage {
 				$descriptionText = strip_tags( $descriptionText );
 				$imgURL = $badgeData['badge']->getPictureUrl( $badgeImageSize );
 				if ( strpos( $imgURL, 'http' ) === false ){
-					$imgURL = 'http://'.$wgServerName.$imgURL;
+					$imgURL = sprintf( "%s/%s", $wgServer, $imgURL );
 				}
 				$feedArray[] = array (
 					'title' => $badgeData['user']->getName(),
@@ -576,7 +574,6 @@ class PartnerFeed extends SpecialPage {
 		if ( empty($wgEnableAchievementsExt) ){
 			$this->showMenu();
 		} else {
-			wfLoadExtensionMessages('AchievementsII');
 
 			// local settings
 			$maxEntries = 20;
@@ -589,7 +586,7 @@ class PartnerFeed extends SpecialPage {
 			$levels = array( BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE );
 			$recents = array();
 
-			$specialPage = SpecialPage::getPage('Leaderboard');
+			$specialPage = SpecialPageFactory::getPage('Leaderboard');
 			$specialPageTitle = $specialPage->getTitle();
 			$pageUrl = $specialPageTitle->getFullUrl();
 

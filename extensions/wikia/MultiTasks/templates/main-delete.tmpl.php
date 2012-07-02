@@ -10,7 +10,7 @@
 	<div id="PaneInfo">
 		<?= wfMsg('multidelete_help') ?>
 	</div>
-	<form method="post" id="mainForm" action="<?= $obj->mTitle->escapeLocalURL( "action=submit" ) ?>">
+	<form method="post" id="mainForm" action="<?= htmlspecialchars($obj->mTitle->getLocalURL( "action=submit" )) ?>">
 		<table>
 			<tr>
 				<td class="right"><?= wfMsg('multiwikiedit_as') ?></td>
@@ -84,7 +84,7 @@ function MultiWikiEditEnhanceControls () {
 		selectedInbox.style.display = ((this.options[this.selectedIndex].value) == 'selected') ? '' : 'none';
 	}
 }
-addOnloadHook (MultiWikiEditEnhanceControls) ;
+$(MultiWikiEditEnhanceControls) ;
 -->
 </script>
 <!-- e:<?= __FILE__ ?> -->

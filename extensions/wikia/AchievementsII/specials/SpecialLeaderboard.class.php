@@ -3,7 +3,6 @@
 class SpecialLeaderboard extends SpecialPage {
 
 	function __construct() {
-		wfLoadExtensionMessages('AchievementsII');
 		parent::__construct('Leaderboard', '' /* no restriction */, true /* listed */);
 	}
 

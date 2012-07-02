@@ -158,15 +158,17 @@ class UserBlock {
 
 		// set expiry information
 		if ($user->mBlock) {
-			$user->mBlock->mId = $blockData['id'];
+			// protected
+			$user->mBlock->setId( $blockData['id'] );
+			$user->mBlock->setBlockEmail( true );
+			// public
 			$user->mBlock->mExpiry = is_null($blockData['expire']) ? 'infinity' : $blockData['expire'];
 			$user->mBlock->mTimestamp = wfTimestamp( TS_MW, $blockData['timestamp'] );
 			$user->mBlock->mAddress = $blockData['text'];
-			$user->mBlock->mBlockEmail = true;
 
 			// account creation check goes through the same hook...
 			if ($isBlockIP) {
-				$user->mBlock->mCreateAccount = 1;
+				$user->mBlock->setCreateAccount( 1 );
 			}
 		}
 
@@ -226,7 +228,7 @@ class UserBlock {
 		$user = User::newFromName($userName);
 		$message = '';
 		if ( !$user || !self::onAbortNewAccount($user, $message) ) {
-			$abortError = 'phalanx-user-block-new-account';
+			$abortError = wfMsg( 'phalanx-user-block-new-account' );
 			return false;
 		}
 		return true;

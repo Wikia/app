@@ -41,11 +41,11 @@ riddler|Riddler",
  * @author Lloffiwr
  * @author Purodha
  * @author Siebrand
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'vote' => '{{Identical|Vote}}',
-	'vote-desc' => 'Short desciption of this extension.
-Shown in [[Special:Version]].',
+	'vote-desc' => '{{desc}}',
 	'vote-submit' => '{{Identical|Vote}}',
 	'vote-results-count' => '{{Identical|Count}}',
 	'vote-login' => '$1 is the link to the log-in page.',
@@ -80,6 +80,32 @@ riddler|Riddler',
 	'vote-invalid-choice' => 'U moet een van die beskikbare opsies kies.',
 	'right-vote' => 'Stem',
 	'right-voteadmin' => 'Resultate van stemmings bekyk',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'vote' => 'Votim',
+	'vote-desc' => 'Ofron aftësive të thjeshtë votimi',
+	'vote-header' => "Ju mund të votojnë për'''Lartë zot e Botërore''' këtu!",
+	'vote-current' => "Vota juaj e tanishme është për '''$1'''.",
+	'vote-legend' => 'Vendi apo ndryshuar votave',
+	'vote-caption' => 'Zgjedhja juaj:',
+	'vote-choices' => 'joker|The Joker
+penguin|The Penguin
+riddler|Riddler',
+	'vote-submit' => 'Votim',
+	'vote-registered' => 'Vota juaj është regjistruar.',
+	'vote-view-results' => 'Shiko rezultatet',
+	'vote-results' => 'Rezultatet Voto',
+	'vote-results-choice' => 'Zgjedhje',
+	'vote-results-count' => 'Akuzë',
+	'vote-results-none' => 'Nuk ka vota kanë qenë të vendosur në këtë kohë.',
+	'vote-login' => 'Ju duhet [$1 hyni brënda] për të votuar.',
+	'vote-invalid-choice' => 'Ju duhet të zgjidhni një nga opsionet në dispozicion.',
+	'right-vote' => 'Votim',
+	'right-voteadmin' => 'Shiko rezultatet votave',
 );
 
 /** Amharic (አማርኛ)
@@ -147,6 +173,32 @@ $messages['arz'] = array(
 	'right-voteadmin' => 'شوف نتايج التصويت',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'vote' => 'Votación',
+	'vote-desc' => 'Ufre capacidá pa facer encuestes cencielles',
+	'vote-header' => "¡Equí pues votar pol '''Cabezaleru Supremu del Mundu'''!",
+	'vote-current' => "El to votu actual ye pa '''$1'''.",
+	'vote-legend' => 'Votar o camudar el votu',
+	'vote-caption' => 'La to seleición:',
+	'vote-choices' => 'joker|El Joker
+penguin|El Pingüín
+riddler|Riddler',
+	'vote-submit' => 'Votar',
+	'vote-registered' => 'Se rexistró el to votu.',
+	'vote-view-results' => 'Ver los resultaos',
+	'vote-results' => 'Resultaos de la votación',
+	'vote-results-choice' => 'Seleición',
+	'vote-results-count' => 'Recuentu',
+	'vote-results-none' => 'Entá nun se rexistró dengún votu.',
+	'vote-login' => "Tienes d'[$1 aniciar sesión] pa votar.",
+	'vote-invalid-choice' => "Tienes d'escoyer una de les opciones disponibles.",
+	'right-vote' => 'Votar',
+	'right-voteadmin' => "Ver los resultaos d'una votación",
+);
+
 /** Bikol Central (Bikol Central)
  * @author Filipinayzd
  */
@@ -162,7 +214,7 @@ $messages['bcl'] = array(
 	'vote-login' => 'Kaipuhan mong [$1 maglaog] magboto.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Red Winged Duck
@@ -211,6 +263,7 @@ $messages['bg'] = array(
 );
 
 /** Bengali (বাংলা)
+ * @author Bellayet
  * @author Zaheen
  */
 $messages['bn'] = array(
@@ -231,10 +284,13 @@ $messages['bn'] = array(
 	'vote-results-none' => 'এ পর্যন্ত কোন ভোট পড়েনি।',
 	'vote-login' => 'ভোট দিতে হলে আপনাকে অবশ্যই [$1 লগ ইন] করতে হবে।',
 	'vote-invalid-choice' => 'আপনাকে অবশ্যই প্রদত্ত পছন্দগুলি থেকে যেকোন একটি নির্বাচন করতে হবে।',
+	'right-vote' => 'ভোট',
+	'right-voteadmin' => 'ভোটের ফলাফল দেখুন',
 );
 
 /** Breton (Brezhoneg)
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
 	'vote' => 'Votiñ',
@@ -253,7 +309,7 @@ sfinks|Sfinks',
 	'vote-results-choice' => 'Dibab',
 	'vote-results-count' => 'Mouezh',
 	'vote-results-none' => "N'eus bet lakaet vot ebet evit c'hoazh",
-	'vote-login' => "Ret eo deoc'h [$1 en em lugañ] evit votiñ.",
+	'vote-login' => "Ret eo deoc'h [$1 kevreañ] evit votiñ.",
 	'vote-invalid-choice' => "Ret eo deoc'h dibab unan eus an dibarzhioù hegerz.",
 	'right-vote' => 'Vot',
 	'right-voteadmin' => "Gwelet disoc'hoù ar votadeg",
@@ -287,6 +343,7 @@ riddler|Zagonetka',
 
 /** Catalan (Català)
  * @author Paucabot
+ * @author SMP
  * @author Solde
  */
 $messages['ca'] = array(
@@ -294,12 +351,14 @@ $messages['ca'] = array(
 	'vote-submit' => 'Vota',
 	'vote-registered' => 'El vostre vot ha estat registrat.',
 	'vote-view-results' => 'Visualitza resultats',
+	'right-vote' => 'Votar',
+	'right-voteadmin' => 'Veure els resultats de la votació',
 );
 
-/** Sorani (Arabic script) (‫کوردی (عەرەبی)‬)
+/** Sorani (کوردی)
  * @author Marmzok
  */
-$messages['ckb-arab'] = array(
+$messages['ckb'] = array(
 	'vote-registered' => 'ده‌نگی تۆ تۆمار کرا.',
 	'vote-results' => 'ئه‌نجامه‌کانی ده‌نگ',
 	'vote-results-choice' => 'هه‌ڵبژێردراو',
@@ -393,7 +452,7 @@ riddler|Riddler',
 	'right-voteadmin' => 'Wahlergebnis anschauen',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Umherirrender
  */
 $messages['de-formal'] = array(
@@ -565,12 +624,21 @@ $messages['ext'] = array(
 	'vote-results-count' => 'Cuenta',
 );
 
-/** Persian (فارسی) */
+/** Persian (فارسی)
+ * @author Ebraminio
+ * @author Huji
+ * @author Mjbmr
+ */
 $messages['fa'] = array(
 	'vote' => 'رای‌گیری',
+	'vote-desc' => 'امکاناتی برای رای‌گیری ساده فراهم می‌کند',
+	'vote-header' => "شما می‌توانید برا '''خداوندگار عالی‌مرتبهٔ دنیا''' اینجا رأی دهید!",
 	'vote-current' => "رای فعلی شما '''$1''' است.",
 	'vote-legend' => 'رای خود را وارد یا اصلاح نمایید',
 	'vote-caption' => 'انتخاب شما:',
+	'vote-choices' => 'شوخ|جناب شوخ
+پنگوئن|جناب پنگوئن
+معماگو|جناب معماگو',
 	'vote-submit' => 'ثبت رای',
 	'vote-registered' => 'رای شما ثبت شد.',
 	'vote-view-results' => 'مشاهده نتایج',
@@ -578,8 +646,10 @@ $messages['fa'] = array(
 	'vote-results-choice' => 'انتخاب',
 	'vote-results-count' => 'شمارش',
 	'vote-results-none' => 'در حال حاضر هیچ رایی ثبت نشده است.',
-	'vote-login' => 'برای رای دادن باید [$1 به سیستم وارد شوید].',
+	'vote-login' => 'برای رای دادن باید [$1 به سامانه وارد شوید].',
 	'vote-invalid-choice' => 'شما باید یکی از گزینه‌های موجود را انتخاب کنید.',
+	'right-vote' => 'ثبت رای',
+	'right-voteadmin' => 'مشاهده نتایج آراء',
 );
 
 /** Finnish (Suomi)
@@ -649,8 +719,26 @@ sphinx|Sphinx',
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'vote' => 'Votar',
+	'vote-desc' => 'Pèrmèt de betar en place des sondâjos simplos.',
+	'vote-header' => "Vos pouede votar por lo '''mêtre de l’Univèrs''' ique !",
+	'vote-current' => "Voutron voto d’ora est por '''$1'''.",
+	'vote-legend' => 'Betar ou ben changiér un voto',
+	'vote-caption' => 'Voutron chouèx :',
+	'vote-choices' => 'j·oquère|Lo J·oquère
+pingoin|Lo Pingoin
+sfinxe|Sfinxe',
+	'vote-submit' => 'Votar',
+	'vote-registered' => 'Voutron voto at étâ encartâ.',
+	'vote-view-results' => 'Vêde los rèsultats',
+	'vote-results' => 'Rèsultats du voto',
 	'vote-results-choice' => 'Chouèx',
 	'vote-results-count' => 'Vouèx',
+	'vote-results-none' => 'Por lo moment, nion voto at étâ betâ.',
+	'vote-login' => 'Vos vos dête [$1 branchiér] por votar.',
+	'vote-invalid-choice' => 'Vos dête chouèsir yon des chouèx disponiblos.',
+	'right-vote' => 'Votar',
+	'right-voteadmin' => 'Vêde los rèsultats du voto',
 );
 
 /** Western Frisian (Frysk)
@@ -902,6 +990,17 @@ riddler|Riddler',
 	'right-voteadmin' => 'Melihat hasil pemungutan suara',
 );
 
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'vote' => 'Votu',
+	'vote-caption' => 'Ihe Í kpàtàrà áká:',
+	'vote-submit' => 'Votu',
+	'vote-results' => 'Ihe fútárá votu',
+	'right-vote' => 'Votu',
+);
+
 /** Italian (Italiano)
  * @author Aushulz
  * @author Cruccone
@@ -1022,7 +1121,7 @@ $messages['km'] = array(
 	'vote-results-choice' => 'ជម្រើស',
 	'vote-results-count' => 'រាប់',
 	'vote-results-none' => 'គ្មាន​សំឡេងឆ្នោត ត្រូវ​បាន​បោះ​​ទេ​នាពេលនេះ​។',
-	'vote-login' => 'អ្នកត្រូវតែ[$1 ឡុកអ៊ីន]ដើម្បីបោះឆ្នោត។',
+	'vote-login' => 'អ្នកត្រូវតែ[$1 កត់ឈ្មោះចូល]ដើម្បីបោះឆ្នោត។',
 	'vote-invalid-choice' => 'អ្នកត្រូវតែជ្រើសយកជម្រើសមួយក្នុងចំណោមជម្រើសទាំងឡាយដែលបានផ្ដល់ឱ្យ។',
 	'right-vote' => 'បោះ​ឆ្នោត​',
 	'right-voteadmin' => 'មើល​លទ្ធផល​ការបោះឆ្នោត​',
@@ -1063,7 +1162,7 @@ riddler|리들러',
 	'right-voteadmin' => '투표 결과 보기',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -1087,6 +1186,16 @@ Laachsack|Dä Laachsack',
 	'vote-invalid-choice' => 'Do moß ein fun de vörhande Müjjeleschkeite ußwähle.',
 	'right-vote' => 'Affstemme',
 	'right-voteadmin' => 'Affstemmunge beloore',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author Gomada
+ */
+$messages['ku-latn'] = array(
+	'vote' => 'Deng',
+	'vote-submit' => 'Deng bide',
+	'vote-results' => 'Encama dengan',
+	'right-vote' => 'Deng',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1167,19 +1276,20 @@ $messages['mk'] = array(
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
 	'vote' => 'വോട്ട്',
 	'vote-current' => "താങ്കളുടെ നിലവിലുള്ള വോട്ട് '''$1'''വിനാണ്‌.",
-	'vote-caption' => 'താങ്കള്‍ തിരഞ്ഞെടുത്തത്:',
+	'vote-caption' => 'താങ്കൾ തിരഞ്ഞെടുത്തത്:',
 	'vote-submit' => 'വോട്ട്',
 	'vote-registered' => 'താങ്കളുടെ വോട്ട് രേഖപ്പെടുത്തിയിരിക്കുന്നു.',
-	'vote-view-results' => 'ഫലങ്ങള്‍ കാണുക',
+	'vote-view-results' => 'ഫലങ്ങൾ കാണുക',
 	'vote-results' => 'വോട്ടെടുപ്പിന്റെ ഫലം',
 	'vote-results-count' => 'എണ്ണം',
-	'vote-results-none' => 'നിലവില്‍ വോട്ടുകളൊന്നും രേഖപ്പെടുത്തിയിട്ടില്ല.',
-	'vote-login' => 'വോട്ടു ചെയ്യാന്‍ താങ്കള്‍ [$1 ലോഗിന്‍ ചെയ്യുക] ചെയ്തിരിക്കണം.',
+	'vote-results-none' => 'നിലവിൽ വോട്ടുകളൊന്നും രേഖപ്പെടുത്തിയിട്ടില്ല.',
+	'vote-login' => 'വോട്ടു ചെയ്യാൻ താങ്കൾ [$1 ലോഗിൻ] ചെയ്തിരിക്കണം.',
 );
 
 /** Marathi (मराठी)
@@ -1204,6 +1314,7 @@ $messages['mr'] = array(
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
  * @author Aurora
  * @author Diagramma Della Verita
  * @author Zamwan
@@ -1211,16 +1322,24 @@ $messages['mr'] = array(
 $messages['ms'] = array(
 	'vote' => 'Undi',
 	'vote-desc' => 'Menyediakan keupayaan undian ringkas',
+	'vote-header' => "Anda boleh mengundi untuk '''Maharajalela Sedunia''' di sini!",
 	'vote-current' => "Undian terkini anda adalah untuk '''$1'''.",
+	'vote-legend' => 'Taruh atau pinda undian',
 	'vote-caption' => 'Pilihan anda:',
+	'vote-choices' => 'joker|The Joker
+penguin|The Penguin
+riddler|Riddler',
 	'vote-submit' => 'Undi',
 	'vote-registered' => 'Undian anda telah didaftar',
-	'vote-view-results' => 'Lihat keputusan',
+	'vote-view-results' => 'Lihat hasil',
 	'vote-results' => 'Keputusan undian',
 	'vote-results-choice' => 'Pilihan',
 	'vote-results-count' => 'Kira',
+	'vote-results-none' => 'Tiada undian yang ditaruh pada masa ini.',
 	'vote-login' => 'Anda perlu [$1 log masuk] untuk mengundi.',
 	'vote-invalid-choice' => 'Anda mesti memilih salah satu dari pilihan yang ada.',
+	'right-vote' => 'Mengundi',
+	'right-voteadmin' => 'Lihat keputusan undian',
 );
 
 /** Maltese (Malti)
@@ -1244,6 +1363,13 @@ $messages['mt'] = array(
 	'right-voteadmin' => 'Ara r-riżultati tal-voti',
 );
 
+/** Burmese (မြန်မာဘာသာ)
+ * @author Erikoo
+ */
+$messages['my'] = array(
+	'vote' => 'ဆန္ဒမဲ',
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
@@ -1254,6 +1380,41 @@ $messages['myv'] = array(
 	'vote-submit' => 'Каямс вайгель',
 	'vote-login' => 'Вайгелень каямга эряви [совамс $1 лопантень].',
 	'vote-invalid-choice' => 'Эряви кочкамс максозетнень эйстэ.',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'vote' => 'Avstemning',
+	'vote-desc' => 'Gir enkle avstemningsmuligheter',
+	'vote-header' => "Du kan stemme på '''(eksempelbruker)''' her!",
+	'vote-current' => "Din nåværende stemme er på '''$1'''.",
+	'vote-legend' => 'Velg hvordan du vil stemme',
+	'vote-caption' => 'Ditt valg:',
+	'vote-choices' => 'bruker1|Første brukernavn
+bruker2|Andre brukernavn
+bruker3|Tredje brukernavn',
+	'vote-submit' => 'Stem',
+	'vote-registered' => 'Din stemme har blitt registrert.',
+	'vote-view-results' => 'Vis resultater',
+	'vote-results' => 'Avstemningsresultater',
+	'vote-results-choice' => 'Valg',
+	'vote-results-count' => 'Antall',
+	'vote-results-none' => 'Ingen stemmer har blitt avgitt enda.',
+	'vote-login' => 'Du må [$1 logge inn] for å stemme.',
+	'vote-invalid-choice' => 'Du må velge en av de tilgjengelige alternativene.',
+	'right-vote' => 'Stem',
+	'right-voteadmin' => 'Se resultater fra avstemningen',
+);
+
+/** Nepali (नेपाली)
+ * @author RajeshPandey
+ */
+$messages['ne'] = array(
+	'vote' => 'भोट गर्नुहोस',
+	'vote-submit' => 'भोट गर्नुहोस',
 );
 
 /** Dutch (Nederlands)
@@ -1310,33 +1471,6 @@ brukar3|Tredje brukernamn',
 	'vote-invalid-choice' => 'Du må velje eit av dei tilgjengelege alternativa.',
 	'right-vote' => 'Stem',
 	'right-voteadmin' => 'Sjå resultatar frå avrøystinga',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'vote' => 'Avstemning',
-	'vote-desc' => 'Gir enkle avstemningsmuligheter',
-	'vote-header' => "Du kan stemme på '''(eksempelbruker)''' her!",
-	'vote-current' => "Din nåværende stemme er på '''$1'''.",
-	'vote-legend' => 'Velg hvordan du vil stemme',
-	'vote-caption' => 'Ditt valg:',
-	'vote-choices' => 'bruker1|Første brukernavn
-bruker2|Andre brukernavn
-bruker3|Tredje brukernavn',
-	'vote-submit' => 'Stem',
-	'vote-registered' => 'Din stemme har blitt registrert.',
-	'vote-view-results' => 'Vis resultater',
-	'vote-results' => 'Avstemningsresultater',
-	'vote-results-choice' => 'Valg',
-	'vote-results-count' => 'Antall',
-	'vote-results-none' => 'Ingen stemmer har blitt avgitt enda.',
-	'vote-login' => 'Du må [$1 logge inn] for å stemme.',
-	'vote-invalid-choice' => 'Du må velge en av de tilgjengelige alternativene.',
-	'right-vote' => 'Stem',
-	'right-voteadmin' => 'Se resultater fra avstemningen',
 );
 
 /** Occitan (Occitan)
@@ -1398,7 +1532,7 @@ riddler|Człowiek-Zagadka',
 	'vote-login' => 'Głosowanie możliwe jest po [$1 zalogowaniu się].',
 	'vote-invalid-choice' => 'Musisz wybrać jedną z dostępnych opcji.',
 	'right-vote' => 'Głosowanie',
-	'right-voteadmin' => 'Zobacz wyniki głosowania',
+	'right-voteadmin' => 'Przeglądanie wyników głosowania',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1434,15 +1568,15 @@ Gioanin|Gioanin',
 $messages['ps'] = array(
 	'vote' => 'رايه ورکول',
 	'vote-desc' => 'په ساده توګه د رايو ورکولو آسانتياوې برابروي',
-	'vote-current' => "ستاسو اوسنۍ رايه د '''$1''' لپاره ورکړ شوې.",
-	'vote-caption' => 'ستاسو ټاکنه:',
+	'vote-current' => "ستاسې اوسنۍ رايه د '''$1''' لپاره ورکړل شوې.",
+	'vote-caption' => 'ستاسې ټاکنه:',
 	'vote-submit' => 'رايه ورکول',
-	'vote-registered' => 'ستاسو رايه ثبته شوه.',
+	'vote-registered' => 'ستاسې رايه ثبته شوه.',
 	'vote-view-results' => 'پايلې کتل',
 	'vote-results' => 'د رايو پايلې',
 	'vote-results-choice' => 'خوښه',
 	'vote-results-count' => 'شمېرل',
-	'vote-results-none' => 'تر دم مهاله هېڅ کومه رايه نه ده ورکړ شوې.',
+	'vote-results-none' => 'تر اوسه پورې هېڅ کومه رايه نه ده ورکړل شوې.',
 	'vote-login' => 'د رايې ورکولو لپاره بايد [$1 غونډال ته ننوځۍ].',
 	'vote-invalid-choice' => 'بايد چې د شتو خوښو نه يوه وټاکۍ.',
 	'right-vote' => 'رايه ورکول',
@@ -1480,6 +1614,7 @@ riddler|Enigmático',
 /** Brazilian Portuguese (Português do Brasil)
  * @author Eduardo.mps
  * @author GKnedo
+ * @author Helder.wiki
  * @author Heldergeovane
  * @author Luckas Blade
  */
@@ -1512,22 +1647,22 @@ riddler|O Charada',
  * @author Minisarm
  */
 $messages['ro'] = array(
-	'vote' => 'Votaţi',
-	'vote-desc' => 'Furnizează capacităţi simple de votare',
+	'vote' => 'Votați',
+	'vote-desc' => 'Furnizează capacități simple de votare',
 	'vote-current' => "Votul dumneavoastră curent este pentru '''$1'''.",
-	'vote-legend' => 'Plasaţi sau modificaţi votul',
+	'vote-legend' => 'Plasați sau modificați votul',
 	'vote-caption' => 'Alegerea dumneavoastră:',
 	'vote-submit' => 'Votează',
 	'vote-registered' => 'Votul dumneavoastră a fost înregistrat.',
 	'vote-view-results' => 'Vizualizează rezultatele',
 	'vote-results' => 'Rezultatele votului',
-	'vote-results-choice' => 'Alegeţi',
+	'vote-results-choice' => 'Alegeți',
 	'vote-results-count' => 'Numărare',
 	'vote-results-none' => 'Niciun vot nu a fost plasat în acest timp.',
-	'vote-login' => 'Trebuie [$1 să vă autentificaţi] pentru a vota.',
-	'vote-invalid-choice' => 'Trebuie să selectaţi una din opţiunile disponibile.',
-	'right-vote' => 'Votaţi',
-	'right-voteadmin' => 'Vedeţi rezultatele votului',
+	'vote-login' => 'Trebuie [$1 să vă autentificați] pentru a vota.',
+	'vote-invalid-choice' => 'Trebuie să selectați una din opțiunile disponibile.',
+	'right-vote' => 'Votați',
+	'right-voteadmin' => 'Vedeți rezultatele votului',
 );
 
 /** Tarandíne (Tarandíne)
@@ -1582,6 +1717,14 @@ $messages['ru'] = array(
 	'vote-invalid-choice' => 'Вы можете выбрать один из доступных вариантов',
 	'right-vote' => 'голосовать',
 	'right-voteadmin' => 'просматривать результаты голосования',
+);
+
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'vote' => 'Голосованя',
+	'vote-submit' => 'Голосовати',
 );
 
 /** Sinhala (සිංහල)
@@ -1652,7 +1795,7 @@ $messages['sq'] = array(
 	'vote-invalid-choice' => 'Duhet të zgjidhni një nga zgjedhjet e mundshme.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -1678,7 +1821,7 @@ pecenje|Печење',
 	'right-voteadmin' => 'Прегледање резултата гласања',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -1811,7 +1954,7 @@ $messages['te'] = array(
 	'right-voteadmin' => 'వోటు ఫలితాలను చూడండి',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -1831,7 +1974,7 @@ $messages['tg-cyrl'] = array(
 	'vote-invalid-choice' => 'Шумо бояд яке аз ихтиёрҳои мавҷудро интихоб кунед.',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -1888,8 +2031,10 @@ riddler|''Riddler'' (\"Mambubugtong\")",
 	'vote-results-choice' => 'Pinili',
 	'vote-results-count' => 'Bilang',
 	'vote-results-none' => 'Wala pang iniligay na mga boto/paghalal sa panahong (oras) ito.',
-	'vote-login' => 'Dapat kang [$1 lumagda/tumala] para makapaghalal/makaboto.',
+	'vote-login' => 'Dapat kang [$1 lumagdang papasok] upang makaboto.',
 	'vote-invalid-choice' => 'Dapat kang pumili ng isa mula sa makukuhang mga pagpipilian.',
+	'right-vote' => 'Bumoto',
+	'right-voteadmin' => 'Tingnan ang mga resulta ng pagboto',
 );
 
 /** Turkish (Türkçe)
@@ -1986,7 +2131,7 @@ riddler|Riddler',
 	'vote-results-none' => 'Chưa có phiếu nào được bỏ vào lúc này.',
 	'vote-login' => 'Bạn cần [$1 đăng nhập] để bỏ phiếu.',
 	'vote-invalid-choice' => 'Bạn phải chọn một trong các tùy chọn hiện có.',
-	'right-vote' => 'Bổ phiếu',
+	'right-vote' => 'Bỏ phiếu',
 	'right-voteadmin' => 'Xem kết quả cuộc bỏ phiếu',
 );
 
@@ -2008,7 +2153,14 @@ $messages['vo'] = array(
 	'vote-invalid-choice' => 'Mutol välön bali välas gebidik.',
 );
 
-/** Yue (粵語)
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'right-vote' => 'שטימען',
+);
+
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -2035,32 +2187,34 @@ riddler|謎人',
  * @author Gzdavidwong
  * @author Liangent
  * @author Shinjiman
+ * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
 	'vote' => '投票',
-	'vote-desc' => '提供简单的投票能力',
-	'vote-header' => "您可以在这里投下'''在这个世界中至高无尚'''的一票！",
-	'vote-current' => "您现正为'''$1'''投票。",
-	'vote-legend' => '放下或更改投票',
-	'vote-caption' => '您的选择:',
+	'vote-desc' => '提供简单的投票功能',
+	'vote-header' => "你可以在这里为'''世界霸主'''投票！",
+	'vote-current' => "你正在为'''$1'''投票。",
+	'vote-legend' => '设置或修改投票',
+	'vote-caption' => '你的选择：',
 	'vote-choices' => 'joker|小丑
 penguin|企鹅
-riddler|谜人',
+riddler|谜题先生',
 	'vote-submit' => '投票',
-	'vote-registered' => '您的一票已经记录。',
-	'vote-view-results' => '看结果',
+	'vote-registered' => '已记录你的投票。',
+	'vote-view-results' => '查看结果',
 	'vote-results' => '投票结果',
-	'vote-results-choice' => '选择',
-	'vote-results-count' => '数量',
-	'vote-results-none' => '在这个时间无放任何投票。',
+	'vote-results-choice' => '选项',
+	'vote-results-count' => '总数',
+	'vote-results-none' => '现在没有投票。',
 	'vote-login' => '你必须[$1 登录]以投票。',
-	'vote-invalid-choice' => '您一定要在可以选择的选项中选择一个。',
+	'vote-invalid-choice' => '你必须选择一个可选选项。',
 	'right-vote' => '投票',
 	'right-voteadmin' => '查看投票结果',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  * @author Shinjiman
  * @author Wrightbus
  */
@@ -2081,7 +2235,7 @@ riddler|謎人',
 	'vote-results-choice' => '選擇',
 	'vote-results-count' => '數量',
 	'vote-results-none' => '在這個時間無放任何投票。',
-	'vote-login' => '你必須[$1 登錄]以投票。',
+	'vote-login' => '你必須[$1 登入]以投票。',
 	'vote-invalid-choice' => '您一定要在可以選擇的選項中選擇一個。',
 	'right-vote' => '投票',
 	'right-voteadmin' => '觀看投票結果',

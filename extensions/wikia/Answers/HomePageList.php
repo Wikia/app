@@ -16,7 +16,7 @@ function HomePageListAjax() {
 		$data = HomePageList::$method(/* is_ajax */ true);
 
 		if (is_array($data)) {
-			$json = Wikia::json_encode($data);
+			$json = json_encode($data);
 			$response = new AjaxResponse($json);
 			$response->setContentType("application/json; charset=utf-8");
 		} else {
@@ -66,7 +66,6 @@ class HomePageList {
 		$mkey =  wfMemcKey("HPL", "recent_unanswered_questions");
 		$html = $ignore_cache ? "" : $wgMemc->get($mkey);
 		if (empty($html)) {
-			wfLoadExtensionMessages('Answers');
 
 			$req = new FauxRequest(
 				array_merge(
@@ -160,8 +159,6 @@ class HomePageList {
 	function _related_questions($key, $answered, $wgTitle, $ignore_cache = false) {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
-
-		wfLoadExtensionMessages('Answers');
 
 		$category = array();
 		foreach (array_keys($wgTitle->getParentCategories()) as $c) {

@@ -54,7 +54,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'FundraiserPortal',
 	'author' => 'Trevor Parscal, Tomasz Finc',
 	'version' => '0.2.0',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:FundraiserPortal',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:FundraiserPortal',
 	'descriptionmsg' => 'fundraiserportal-desc',
 );
 
@@ -66,15 +66,7 @@ $wgAutoloadClasses['DonateButton'] = dirname( __FILE__ ) . '/' . 'DonateButton.p
 $wgExtensionMessagesFiles['FundraiserPortal'] =
 	dirname( __FILE__ ) . "/FundraiserPortal.i18n.php";
 
-$wgExtensionFunctions[] = 'efFundraiserPortalSetup';
-
-
-// Register hooks
-function efFundraiserPortalSetup() {
-	global $wgHooks;
-
-	$wgHooks['BeforePageDisplay'][] = 'efFundraiserPortalLoader';
-}
+$wgHooks['BeforePageDisplay'][] = 'efFundraiserPortalLoader';
 
 // Load the js that will choose the button client side
 function efFundraiserPortalLoader( $out, $skin ) {
@@ -92,7 +84,7 @@ function efFundraiserPortalLoader( $out, $skin ) {
 	$encFundraiserLoader = Xml::encodeJsVar( "$wgFundraiserPortalPath/$fundraiserLoader" );
 	$wgOut->addInlineScript(
 		"var wgFundraiserPortal='', wgFundraiserPortalCSS='';\n" .
-		"importScriptURI($encFundraiserLoader);\n"
+		"mediaWiki.loader.load($encFundraiserLoader);\n"
 	);
 
 	return true;

@@ -1,11 +1,159 @@
-This file lists changes on this extension.
-Localisation updates are done on betawiki and aren't listed here.
+This file lists changes on this extension. Localisation updates are done
+through translatewiki.net and are not listed here.
 
-1.16 branch-2 - 31 March 2010
+0.17.2 - 22 January 2012
+  * Added $wgIncludeLegacyJavaScript, $wgLegacyJavaScriptGlobals,
+    $wgResourceBasePath, $wgResourceLoaderMaxQueryLength,
+    $wgResourceLoaderMinifierMaxLineLength,
+    $wgResourceLoaderMinifierStatementsOnOwnLine, $wgResourceLoaderValidateJS,
+    $wgResourceLoaderValidateStaticJS, $wgEnableJavaScriptTest,
+    $wgJavaScriptTestConfig, $wgExtraGenderNamespaces,
+    $wgSitemapNamespacesPriorities, $wgAutopromoteOnce, $wgCanonicalServer,
+    $wgExiv2Command, $wgAllowSchemaUpdates, $wgCleanupPresentationalAttributes,
+    $wgSend404Code, $wgDebugToolbar, $wgDeprecationReleaseLimit,
+    $wgAggregateStatsID, $wgArticleCountMethod, $wgCachePrefix,
+    $wgCopyUploadsDomains, $wgDisableUploadScriptChecks, $wgUploadStashMaxAge,
+    $wgUpdateCompatibleMetadata, $wgEnableAutoRotation,
+    $wgExcludeFromThumbnailPurge, $wgImageMagickIdentifyCommand,
+    $wgSVGMetadataCutoff, $wgExportAllowAll, $wgQueryPageDefaultLimit,
+    $wgAutopromoteOnceLogInRC, $wgPasswordResetRoutes,
+    $wgEnableSearchContributorsByIP and $wgVaryOnXFP.
+  * Removed $wgResourceLoaderMinifyJSVerticalSpace, $wgAPICacheHelp,
+    $wgMathDirectory, $wgMathPath, $wgProto, $wgTexvc, $wgDBts2schema,
+    $wgSysopRangeBans, $wgSysopUserBans, $wgUseTeX, $wgTexvcBackgroundColor,
+    $wgMathCheckFiles, $wgAllowUserSkin, $wgLogAutocreatedAccounts and
+    $wgCheckCopyrightUpload.
+
+0.17.1 - 14 January 2012
+  Fixed a JavaScript error.
+
+0.17.0 - 13 January 2012
+  Rewrote the extension to use local context instead of global variables where
+  possible.
+  THIS VERSION NOW REQUIRES MediaWiki 1.18 TO WORK.
+
+
+0.16.3 - 3 March 2011
+  Updated the extension to work with the current development version.
+
+0.16.2 - 2 March 2011
+  * Added $wgUseCombinedLoginLink, $wgResourceLoaderMinifyJSVerticalSpace,
+    $wgEnableSelenium, $wgSeleniumConfigFile, $wgDBtestuser, $wgDBtestpassword,
+    $wgUploadStashScalerBaseUrl, $wgSQLiteDataDirMode, $wgAllowJavaUploads,
+    $wgUserEmailConfirmationTokenExpiry, $wgFileCacheDepth,
+    $wgInvalidateCacheOnLocalSettingsChange, wgEditPageFrameOptions and
+    $wgLivePasswordStrengthChecks
+  * Removed $wgServerName, $wgCategoryPrefixedDefaultSortkey, $wgWeakPasswords,
+    $wgSecureLoginStickHTTPS and $wgExternalAuthConfig
+
+0.16.1 - 24 February 2011
+  Use an extension function rather than SetupAfterCache hook when delaying
+  settings extraction.
+
+0.16.0 - 22 February 2011
+  Rewrote the extension to use the ressource loader and jQuery.
+  THIS VERSION NOW REQUIRES MediaWiki 1.17 TO WORK.
+
+
+0.15.38 - 2 December 2010
+  Updated CentralNotice, CodeReview, Collection, FlaggedRevs, GroupsSidebar and
+  SemanticForms extensions.
+
+0.15.37 - 11 November 2010
+  * Added $wgAllUnicodeFixes, $wgUpgradeKey, $wgResourceLoaderDebug,
+    $wgResourceLoaderInlinePrivateModules, $wgResourceLoaderMaxage,
+    $wgResourceLoaderUseESI, $wgDeletedDirectory, $wgLoadScript,
+    $wgUploadMissingFileUrl, $wgPasswordSenderName, $wgAdditionalMailParams,
+    $wgBetterDirectionality, $wgCanonicalLanguageLinks, $wgActiveUserDays,
+    $wgCategoryCollation, $wgAdaptiveMessageCache, $wgAllowAsyncCopyUploads,
+    $wgSecureLogin, $wgSecureLoginStickHTTPS, $wgWeakPasswords,
+    $wgExternalAuthConf and $wgLicenseTerms.
+  * Removed $wgJQueryVersion, $wgJQueryMinified, $wgJQueryOnEveryPage,
+    $wgDisableSearchContext, $wgUseZhdaemon, $wgZhdaemonHost, $wgZhdaemonPort,
+    $wgColorErrors and $wgUseMemCached.
+
+0.15.36 - 2 September 2010
+  Updated CategoryTree, FancyCaptcha, FlaggedRevs, SemanticForms and
+  SemanticMediaWiki extensions.
+
+0.15.35 - 8 August 2010
+  Updated CategoryWatch, CodeReview and Woopra extensions.
+
+0.15.34 - 4 July 2010
+  Updated FlaggedRevs and Translate extensions.
+
+0.15.33 - 3 July 2010
+  Added $wgSqlMode.
+
+0.15.32 - 23 June 2010
+  Updated Translate extension.
+
+0.15.31 - 18 June 2010
+  Updated CentralNotice, CommentPages and Translate extensions.
+
+0.15.30 - 9 June 2010
+  Updated Collection extension.
+
+0.15.29 - 1 June 2010
+  Updated CategoryTree extension.
+
+0.15.28 - 29 May 2010
+  Updated SematicMediaWiki extension.
+
+0.15.27 - 26 May 2010
+  Updated SemanticMediaWiki and Translate extensions.
+
+0.15.26 - 10 May 2010
+  Added $wgCommandLineDarkBg, $wgDBadminuser, $wgDBadminpassword.
+
+0.15.25 - 9 May 2010
+  $wgSQLiteDataDirMode removed in MediaWiki 1.17.
+
+0.15.24 - 7 May 2010
+  Added $wgJQueryVersion, $wgJQueryMinified and $wgJQueryOnEveryPage.
+
+0.15.23 - 2 May 2010
+  * (bug 23379) Settings based on radio button now longer throw errors if
+    nothing is selected
+  * Added $wgLocalStylePath and $wgVectorShowVariantName.
+
+0.15.22 - 25 April 2010
+  Added $wgAllowImageTag and $wgLogAutocreatedAccounts.
+
+0.15.21 - 19 April 2010
+  Updated OggHandler, SemanticDrilldown, UsageStatistics and Widgets extensions.
+
+0.15.20 - 18 April 2010
+  * Removed BoardVote and Click extensions
+  * Updated AdvancedRandom, AjaxQueryPages, AjaxShowEditors, APC, CategoryFeed,
+    ChangeAuthor, cldr, ConfirmAccount, CrossNamespaceLinks, EditCount,
+    ImportUsers, Interwiki, Nuke, Renameuser, UsageStatistics, UserContactLinks,
+    UserRightsNotif and WhoIsWatching extensions
+  * Updated scripts/findSettings.php to display extensions that aren't installed
+
+0.15.19 - 11 April 2010
+  Updated Collection and FlaggedRevs extensions.
+
+0.15.18 - 31 March 2010
   Fixed API module to work with current version of MediaWiki.
 
-1.16 branch-1 - 28 March 2010
+0.15.17 - 28 March 2010
   Fixed $wgDnsBlacklistUrls' type.
+
+0.15.16 - 21 March 2010
+  * Removed $wgUseMetadataEdit, $wgMetadataWhitelist and $wgCheckDBSchema
+  * Added $wgGalleryOptions and $wgAllowUserCssPrefs
+
+0.15.15 - 17 March 2010
+  * Fixed scripts/findSettings.php to work with current version of MediaWiki.
+  * Updated CodeReview, ContactPage, FlaggedRevs and SemanticMediaWiki
+    extensions.
+
+0.15.14 - 3 February 2010
+  Updated CodeReview extension.
+
+0.15.13 - 25 February 2010
+  Removed support of UsernameBlacklist extension.
 
 0.15.12 - 20 February 2010
   Added 'settings-file' option to $wgConfigureAdditionalExtensions.

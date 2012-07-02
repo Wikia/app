@@ -136,7 +136,7 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		// $wgHooks['MakeGlobalVariablesScript'][] = 'CategorySelectSetupVars'; // lazy load these ones (BugId:24570)
 	} else if ($action == 'edit' || $action == 'submit' || $force) {
 		//edit mode
-		$wgHooks['EditPage::importFormData::finished'][] = 'CategorySelectImportFormData';
+		$wgHooks['EditPage::importFormData'][] = 'CategorySelectImportFormData';
 		$wgHooks['EditPage::getContent::end'][] = 'CategorySelectReplaceContent';
 		$wgHooks['EditPage::CategoryBox'][] = 'CategorySelectCategoryBox';
 		$wgHooks['EditPage::showEditForm:fields'][] = 'CategorySelectAddFormFields';
@@ -238,10 +238,9 @@ function CategorySelectAjaxParseCategories($wikitext) {
 	if (trim($data['wikitext']) == '') {	//all categories handled
 		$result['categories'] = $data['categories'];
 	} else {	//unhandled syntax
-		wfLoadExtensionMessages('CategorySelect');
 		$result['error'] = wfMsg('categoryselect-unhandled-syntax');
 	}
-	return Wikia::json_encode($result);
+	return json_encode($result);
 }
 
 /**
@@ -250,12 +249,11 @@ function CategorySelectAjaxParseCategories($wikitext) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectAjaxSaveCategories($articleId, $categories) {
-	global $wgUser, $wgRequest;
+	global $wgUser;
 
 	if (wfReadOnly()) {
-		wfLoadExtensionMessages('CategorySelect');
 		$result['error'] = wfMsg('categoryselect-error-db-locked');
-		return Wikia::json_encode($result);
+		return json_encode($result);
 	}
 
 	wfProfileIn(__METHOD__);
@@ -266,14 +264,11 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 	if ($categories == '') {
 		$result['info'] = 'Nothing to add.';
 	} else {
-		wfLoadExtensionMessages('CategorySelect');
 		$title = Title::newFromID($articleId);
 		if (is_null($title)) {
 			$result['error'] = wfMsg('categoryselect-error-not-exist', $articleId);
 		} else {
 			if ($title->userCan('edit') && !$wgUser->isBlocked()) {
-				global $wgOut;
-
 				$result = null;
 				$article = new Article($title);
 				$article_text = $article->fetchContent();
@@ -288,25 +283,40 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 				$editPage->summary = wfMsgForContent('categoryselect-edit-summary');
 				$editPage->watchthis = $editPage->mTitle->userIsWatching();
 				$bot = $wgUser->isAllowed('bot');
-				$retval = $editPage->internalAttemptSave( $result, $bot );
+				$status = $editPage->internalAttemptSave( $result, $bot );
+				$retval = $status->value;
 				Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
-				if ( $retval == EditPage::AS_SUCCESS_UPDATE || $retval == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
-					$dbw->commit();
-					$title->invalidateCache();
-					Article::onArticleEdit($title);
 
-					//return HTML with new categories
-					$wgOut->tryParserCache($article, $wgUser);
-					$sk = $wgUser->getSkin();
-					$cats = $sk->getCategoryLinks();
-					$result['info'] = 'ok';
-					$result['html'] = $cats;
-				} elseif ( $retval == EditPage::AS_SPAM_ERROR ) {
-					$dbw->rollback();
-					$result['error'] = wfMsg('spamprotectiontext') . '<p>( Case #8 )</p>';
-				} else {
-					$dbw->rollback();
-					$result['error'] = wfMsg('categoryselect-edit-abort');
+				switch($retval) {
+					case EditPage::AS_SUCCESS_UPDATE:
+					case EditPage::AS_SUCCESS_NEW_ARTICLE:
+						$dbw->commit();
+						$title->invalidateCache();
+						Article::onArticleEdit($title);
+
+						$skin = RequestContext::getMain()->getSkin();
+
+						// return HTML with new categories
+						// OutputPage::tryParserCache become deprecated in MW1.17 and removed in MW1.18 (BugId:30443)
+						$parserOutput = ParserCache::singleton()->get( $article, $article->getParserOptions() );
+						if ($parserOutput !== false) {
+							$skin->getOutput()->addParserOutput($parserOutput);
+						}
+
+						$cats = $skin->getCategoryLinks();
+
+						$result['info'] = 'ok';
+						$result['html'] = $cats;
+						break;
+
+					case EditPage::AS_SPAM_ERROR:
+						$dbw->rollback();
+						$result['error'] = wfMsg('spamprotectiontext') . '<p>( Case #8 )</p>';
+						break;
+
+					default:
+						$dbw->rollback();
+						$result['error'] = wfMsg('categoryselect-edit-abort');
 				}
 			} else {
 				$result['error'] = wfMsg('categoryselect-error-user-rights');
@@ -336,9 +346,9 @@ function CategorySelectReplaceContent($editPage, &$text) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectCategoryBox($text) {
-	$text = '';
-	return true;
+function CategorySelectCategoryBox( &$editform ) {
+	// return false so that formatHiddenCategories will not be called
+	return false;
 }
 
 /**
@@ -348,7 +358,7 @@ function CategorySelectCategoryBox($text) {
  */
 function CategorySelectChangeFormat($categories, $from, $to) {
 	if ($from == 'json') {
-		$categories = $categories == '' ? array() : Wikia::json_decode($categories, true);
+		$categories = $categories == '' ? array() : json_decode($categories, true);
 	}
 
 	if ($to == 'wiki') {
@@ -369,7 +379,7 @@ function CategorySelectChangeFormat($categories, $from, $to) {
 	}
 
 	if ($from == 'array' && $to == 'json') {
-		return Wikia::json_encode($categories);
+		return json_encode($categories);
 	}
 }
 

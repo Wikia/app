@@ -1132,7 +1132,7 @@ extend(SVGWeb, {
           // execution now
           self._onDOMContentLoaded();
         }
-      }
+      };
       
       // needed to intercept window.onload when page loaded first time
       // (i.e. not in cache); see details above in script.onreadystatechange
@@ -3415,7 +3415,7 @@ NativeHandler._patchBrowserObjects = function(win, doc) {
     svg = NativeHandler._patchAddEventListener(svg);
     
     return svg;
-  }
+  };
   
   // Native browsers will fire the load event for SVG OBJECTs; we need to
   // intercept event listeners for these so that they don't get fired in
@@ -3434,7 +3434,7 @@ NativeHandler._patchBrowserObjects = function(win, doc) {
     } else {
       throw 'Unknown createElement() call for SVG: ' + name;
     }
-  }
+  };
   
   // cloneNode needs some help or it loses our reference to the patched
   // addEventListener
@@ -3468,6 +3468,8 @@ NativeHandler._patchCloneNode = function() {
     return results;
   }
 }
+
+};
 
 /** Adds a bit of magic we need on addEventListener so we can
     fire SVGLoad events for dynamically created SVG nodes and load events
@@ -3788,10 +3790,10 @@ extend(NativeHandler, {
       t = SVGPoint.prototype;
     }
     
-    t.setX = function(newValue) { return this.x = newValue; }
-    t.getX = function() { return this.x; }
-    t.setY = function(newValue) { return this.y = newValue; }
-    t.getY = function() { return this.y; }
+    t.setX = function(newValue) { return this.x = newValue; };
+    t.getX = function() { return this.x; };
+    t.setY = function(newValue) { return this.y = newValue; };
+    t.getY = function() { return this.y; };
     // custom extension in SVG Web to aid performance for Flash renderer
     t.setXY = function(newValue1, newValue2) {
       this.x = newValue1;
@@ -8568,12 +8570,12 @@ extend(_Document, {
 function createNodeList() {
   var results = [];
   results.item = function(i) {
-    if (i >= this.length) {
-      return null; // DOM Level 2 spec says return null
-    } else {
-      return this[i];
-    }
-  }
+	  if (i >= this.length) {
+		  return null; // DOM Level 2 spec says return null
+	  } else {
+		  return this[i];
+	  }
+  };
   
   return results;
 }

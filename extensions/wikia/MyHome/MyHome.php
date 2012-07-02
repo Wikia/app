@@ -5,7 +5,6 @@ $dir = dirname(__FILE__) . '/';
 // register extension classes
 $wgAutoloadClasses['MyHome'] = $dir.'MyHome.class.php';
 $wgAutoloadClasses['MyHomeAjax'] = $dir.'MyHomeAjax.class.php';
-$wgAutoloadClasses['SpecialActivityFeed'] = $dir.'SpecialActivityFeed.class.php';
 
 /// data providers
 $wgAutoloadClasses['iAPIProxy'] = $dir . 'data/iAPIProxy.php';
@@ -30,13 +29,11 @@ $wgHooks['RecentChange_beforeSave'][] = 'MyHome::storeInRecentChanges';
 $wgHooks['EditFilter'][] = 'MyHome::getSectionName';
 $wgHooks['LinksUpdateComplete'][] = 'MyHome::getInserts';
 
-global $wgWikiaForceAIAFdebug;
 $wgWikiaForceAIAFdebug = false;
 if((!empty($wgEnableAchievementsInActivityFeed)) && (!empty($wgEnableAchievementsExt))){
-	$wgHooks['AchievementEarned'][] = 'SpecialActivityFeed::attachAchievementToRc';
-	$wgHooks['RecentChange_beforeSave'][] = 'SpecialActivityFeed::savingAnRc';
-	$wgHooks['RecentChange_save'][] = 'SpecialActivityFeed::savedAnRc';
-	//$wgWikiaForceAIAFdebug = true;
+	$wgHooks['AchievementEarned'][] = 'MyHome::attachAchievementToRc';
+	$wgHooks['RecentChange_beforeSave'][] = 'MyHome::savingAnRc';
+	$wgHooks['RecentChange_save'][] = 'MyHome::savedAnRc';
 }
 
 // i18n
@@ -57,10 +54,9 @@ function MyHomeAjax() {
 
 	if (method_exists('MyHomeAjax', $method)) {
 		wfProfileIn(__METHOD__);
-		wfLoadExtensionMessages('MyHome');
 
 		$data = MyHomeAjax::$method();
-		$json = Wikia::json_encode($data);
+		$json = json_encode($data);
 
 		$response = new AjaxResponse($json);
 		$response->setContentType('application/json; charset=utf-8');

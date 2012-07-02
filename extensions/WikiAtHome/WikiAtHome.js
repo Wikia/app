@@ -136,7 +136,7 @@ var WikiAtHome = {
 		//set the initial stats layout
 		$j('#tab-stats').html(
 			'<h2>Some Cool Visual Stats Go here!</h2>'
-		)
+				);
 
 		//set tabs to initial layout
 		$j('#tab-jobs').html(
@@ -214,7 +214,7 @@ var WikiAtHome = {
 				$j('#tab-jobs .wah-gen-status').html( gM( 'wah-nojobfound', seconds2npt( _this.jobsearch_delay - i )) );
 			}
 			setTimeout(delayJobUpdate, 1000);
-		}
+		};
 		setTimeout(delayJobUpdate, 1000);
 	},
 	doProccessJob:function( job ){
@@ -274,7 +274,7 @@ var WikiAtHome = {
 				}else if( _this.fogg.state == "download failed"){
 					mw.log('download state failed');
 				}
-			}
+			};
 
 			//do the initial call to downloading state updates
 			if( _this.fogg.state == 'downloading'){
@@ -307,7 +307,7 @@ var WikiAtHome = {
 					return false;
 				}
 				setTimeout(updateEncodeState, 100);
-			}
+			};
 			//our updateUploadState update
 			var updateUploadState = function(){
 				_this.updateProgress( _this.fogg.progress(), 'wah-uploading');
@@ -340,7 +340,7 @@ var WikiAtHome = {
 	
 						var getNextTranscodeJob = function(){
 							_this.lookForJob( job.job_set_id );
-						}
+						};
 						//display the msg for 10 seconds
 						setTimeout(getNextTranscodeJob, 10000);
 					}else{

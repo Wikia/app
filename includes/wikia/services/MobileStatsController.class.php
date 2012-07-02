@@ -37,7 +37,7 @@ class MobileStatsController extends WikiaController {
 					'time' => time(),
 				);
 								
-				$data = Wikia::json_encode( array(
+				$data = json_encode( array(
 					'method' => self::SCRIBE_KEY,
 					'params' => $params
 				) );

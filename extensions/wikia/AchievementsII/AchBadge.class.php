@@ -93,9 +93,9 @@ class AchBadge {
 			$image = wfFindFile(AchConfig::getInstance()->getBadgePictureName($this->mBadgeTypeId, $realLap));
 
 			if($image) {
-				$thumb = $image->getThumbnail($width);
+				$url = $image->createThumb( $width );
 				wfProfileOut(__METHOD__);
-				return $thumb->getUrl();
+				return $url;
 			}
 		}
 
@@ -188,7 +188,6 @@ class AchBadge {
 	public static function renderForActivityFeed($badgeWrapper, $compact=true){
 		wfProfileIn( __METHOD__ );
 
-		wfLoadExtensionMessages('AchievementsII');
 
 		$badge_name = htmlspecialchars($badgeWrapper['badge']->getName());
 		$badge_url = $badgeWrapper['badge']->getPictureUrl(82);

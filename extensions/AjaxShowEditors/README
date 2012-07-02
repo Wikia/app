@@ -13,6 +13,6 @@ in the file 'patch-editings.sql'.
 
 Then you can enable the extension in your LocalSettings.php:
 
-  require_once('extensions/AjaxShowEditors/Load.php');
+  require_once('extensions/AjaxShowEditors/AjaxShowEditors.php');
 
 Then go edit a page.

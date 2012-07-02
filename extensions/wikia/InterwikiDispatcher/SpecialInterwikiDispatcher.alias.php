@@ -3,10 +3,10 @@
  * Aliases for special pages of SpecialInterwikiDispatcher extension.
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'InterwikiDispatcher' => array( 'InterwikiDispatcher' ),
 );

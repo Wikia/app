@@ -27,7 +27,7 @@ final class SemanticMapsHooks {
 	
 	    $smw_docu_row = $displaying_data_section->getRow( 'smw' );
 	
-	    $sm_docu_label = wfMsg( 'adminlinks_documentation', wfMsg( 'semanticmaps_name' ) );
+	    $sm_docu_label = wfMsg( 'adminlinks_documentation', 'Semantic Maps' );
 	    $smw_docu_row->addItem( AlItem::newFromExternalLink( 'http://mapping.referata.com/wiki/Semantic_Maps', $sm_docu_label ) );
 	
 	    return true;		

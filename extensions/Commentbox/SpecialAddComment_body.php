@@ -2,7 +2,8 @@
 /**
  * Specialpage for the Commentbox extension.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
@@ -19,12 +20,7 @@ class SpecialAddComment extends UnlistedSpecialPage {
 			return;
 		}
 		$this->setHeaders();
-		wfLoadExtensionMessages( 'Commentbox' );
 
-		if ( !$this->userCanExecute( $wgUser ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
 		$Pagename = $wgRequest->getText( 'wpPageName' );
 		$Author   = $wgRequest->getText( 'wpAuthor', '' );
 		$Comment  = $wgRequest->getText( 'wpComment', '' );
@@ -59,9 +55,9 @@ class SpecialAddComment extends UnlistedSpecialPage {
 			$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			$wgOut->setArticleRelated( false );
 
-			$wgOut->addWikiText( wfMsg( 'spamprotectiontext' ) . '<p>( Call #7 )</p>' );
-			$wgOut->addWikiText( wfMsg( 'spamprotectionmatch', "<nowiki>{$matches[0]}</nowiki>" ) );
-			$wgOut->returnToMain( false, $wgTitle );
+			$wgOut->addWikiMsg( 'spamprotectiontext' );
+			$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$matches[0]}</nowiki>" );
+			$wgOut->returnToMain( false, $title );
 			return;
 		}
 
@@ -74,43 +70,46 @@ class SpecialAddComment extends UnlistedSpecialPage {
 		// Append <br /> after each newline, except if the user started a new paragraph
 		$Comment = preg_replace( '/(?<!\n)\n(?!\n)/', "<br />\n", $Comment );
 		$text .= "\n\n" . $subject . $Comment . "\n<br />" . $sig;
-		try {
-			$req = new FauxRequest( array(
-						'action'  => 'edit',
-						'title'   => $title->getPrefixedText(),
-						'text'    => $text,
-						'summary' => wfMsgForContent( 'commentbox-log' ),
-						'token'   => $wgUser->editToken(),
-						), true );
-			$api = new ApiMain( $req, true );
-			$api->execute();
-			wfDebug( "Completed API-Save\n" );
-			// we only reach this point if Api doesn't throw an exception
-			$data = $api->getResultData();
-			if ( $data['edit']['result'] == 'Failure' ) {
-				$spamurl = $data['edit']['spamblacklist'];
-				if ( $spamurl != '' )
-					throw new Exception( "Die Seite enthaelt die Spam-Url ``{$spamurl}''" );
-				else
-					throw new Exception( "Unbekannter Fehler" );
-			}
-		} catch ( Exception $e ) {
-			global $wgOut;
-			$wgOut->setPageTitle( wfMsg( 'commentbox-errorpage-title' ) );
-			$wgOut->addHTML( "<div class='errorbox'>" . htmlspecialchars( $e->getMessage() ) . "</div><br clear='both' />" );
-			if ( $title != null )
-				$wgOut->returnToMain( false, $title );
-			return;
-		}
 
-		$wgOut->redirect( $title->getFullURL() );
-		return;
+		$reqArr = array(
+			'wpTextbox1' => $text,
+			'wpSummary' => wfMsgForContent( 'commentbox-log' ),
+			'wpEditToken' => $wgUser->editToken(),
+			'wpIgnoreBlankSummary' => '',
+			'wpStarttime' => wfTimestampNow(),
+			'wpEdittime' => $article->getTimestamp(),
+		);
+		$request = new FauxRequest( $reqArr, true );
+		$ep = new EditPage( $article );
+		$ep->setContextTitle( $title );
+		$ep->importFormData( $request );
+		$details = array(); // Passed by ref
+		$status = $ep->internalAttemptSave( $details );
+		$retval = $status->value;
+
+		switch ( $retval ) {
+		case EditPage::AS_SUCCESS_UPDATE:
+			$wgOut->redirect( $title->getFullURL() );
+			break;
+		case EditPage::AS_SPAM_ERROR:
+			$ep->spamPageWithContent( $details['spam'] );
+			break;
+		case EditPage::AS_BLOCKED_PAGE_FOR_USER:
+			$wgOut->blockedPage();
+			break;
+		case EditPage::AS_READ_ONLY_PAGE_ANON:
+		case EditPage::AS_READ_ONLY_PAGE_LOGGED:
+			$wgOut->permissionRequired( 'edit' );
+			break;
+		case EditPage::AS_READ_ONLY_PAGE:
+			$wgOut->readOnlyPage();
+		}
 	}
 
 	function fail( $str, $title = null ) {
 		global $wgOut;
 		$wgOut->setPageTitle( wfMsg( 'commentbox-errorpage-title' ) );
-		$wgOut->addWikiText( "<div class='errorbox'>" . wfMsg( $str ) . "</div><br clear='both' />" );
+		$wgOut->wrapWikiMsg( "<div class='errorbox'>$1</div><br clear='both' />", $str );
 		if ( $title != null )
 			$wgOut->returnToMain( false, $title );
 		return;

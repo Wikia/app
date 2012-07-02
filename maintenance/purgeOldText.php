@@ -21,7 +21,7 @@
  * @author Rob Church <robchur@gmail.com>
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class PurgeOldText extends Maintenance {
 	public function __construct() {
@@ -29,11 +29,11 @@ class PurgeOldText extends Maintenance {
 		$this->mDescription = "Purge old text records from the database";
 		$this->addOption( 'purge', 'Performs the deletion' );
 	}
-	
+
 	public function execute() {
-		$this->purgeRedundantText( $this->hasOption('purge') );
+		$this->purgeRedundantText( $this->hasOption( 'purge' ) );
 	}
 }
 
 $maintClass = "PurgeOldText";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

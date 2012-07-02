@@ -1,0 +1,48 @@
+These are the release notes for the SubPageList extension.
+	
+Extension page on mediawiki.org: http://www.mediawiki.org/wiki/Extension:SubPageList
+Latest version of the release notes: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/SubPageList/RELEASE-NOTES?view=co
+
+
+=== Version 0.5 ===
+2011-12-27
+
+* Added compatibility with MediaWiki 1.18 and 1.19.
+* Dropped compatibility with MediaWiki 1.15.
+* Added #subpagecount parser hook.
+* Fixed invalid HTML for ul and ol formats (bug 32131).
+
+=== Version 0.4 ===
+2011-07-27
+
+* Added parameters for better output control: element, class, intro,
+  outro, default, separator, template, links.
+* Added ability to list pages in a namespace.
+* Fixed compatibility with MediaWiki 1.18.
+
+=== Version 0.3 ===
+2011-03-05
+
+* Added $egSPLAutorefresh option.
+* Fix to display of the first list item.
+* Fixed inverted behaviour of the kidsonly parameter.
+* Fixed query issue when using PostGres.
+
+=== Version 0.2 ===
+2011-01-24
+
+* Fixed escaping issue when using the parser function.
+* Fixed bug in pathstyle and sortby parameters.
+* Added parameter descriptions.
+
+=== Version 0.1 ===
+2010-12-31
+
+* Copied the code of SubPageList3 and ...
+** Modified code to make use of Validator for parameter handling.
+** Rewrote most code of the SubPageList class.
+** Fixed namespace bug.
+** Fixed several minor layout issues.
+** Added alias file.
+** Added COPYING, INSTALL, README and RELEASE-NOTES.
+** Cleaned up and corrected formatting.

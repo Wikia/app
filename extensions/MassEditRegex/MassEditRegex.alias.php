@@ -2,12 +2,38 @@
 /**
  * Aliases for special pages
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
-	'MassEditRegex' => array('MassEditRegex'),
+/** English (English) */
+$specialPageAliases['en'] = array(
+	'MassEditRegex' => array( 'MassEditRegex' ),
+);
+
+/** Arabic (العربية) */
+$specialPageAliases['ar'] = array(
+	'MassEditRegex' => array( 'ريجيكس_التعديلات_الكمية' ),
+);
+
+/** Interlingua (Interlingua) */
+$specialPageAliases['ia'] = array(
+	'MassEditRegex' => array( 'Modificar_in_massa_con_regex' ),
+);
+
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'MassEditRegex' => array( 'РегуларенИзразЗаМасовноУредување' ),
+);
+
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'MassEditRegex' => array( 'Bulk_regex_bewarken' ),
+);
+
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'MassEditRegex' => array( 'BulkRegexBewerken' ),
 );

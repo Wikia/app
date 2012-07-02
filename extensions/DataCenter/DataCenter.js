@@ -183,8 +183,7 @@ function DataCenterScene( target ) {
 	var context = canvas.getContext( '2d' );
 	// Attaches click event
 	var target = "dataCenter.renderer.getTarget( '" + target + "' )";
-	addHandler(
-		element,
+	$(element).on(
 		'click',
 		new Function( target + ".getModule().click();" )
 	);
@@ -400,8 +399,8 @@ dataCenter.ui = {};
 dataCenter.ui.layouts = {};
 dataCenter.ui.widgets = {};
 // Adds hooks that cause dataCenter systems to react to window events
-hookEvent( 'load', dataCenter.renderer.setup );
-hookEvent( 'resize', dataCenter.renderer.render );
+$(dataCenter.renderer.setup);
+$(window).on( 'resize', dataCenter.renderer.render );
 // Adds rendering queues for scene system
 dataCenter.renderer.addQueue( 'scene', DataCenterScene );
 // Adds rendering queues for map system

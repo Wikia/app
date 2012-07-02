@@ -3,19 +3,9 @@ class ArticleCommentsController extends WikiaController {
 	private $dataLoaded = false;
 
 	public function executeIndex() {
-		wfProfileIn(__METHOD__);
+		$this->wf->ProfileIn(__METHOD__);
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
-			$isMobile = F::app()->checkSkin( 'wikiamobile' );
-
-			// Load MiniEditor assets, if enabled (don't enable for Mobile)
-			if ($this->wg->EnableMiniEditorExtForArticleComments && !$isMobile) {
-				$this->sendRequest('MiniEditor', 'loadAssets', array(
-					'loadOnDemand' => true,
-					'additionalAssets' => array(
-						'/extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss'
-					)
-				));
-			}
+			$isMobile = $this->app->checkSkin( 'wikiamobile' );
 
 			if ($this->wg->Request->wasPosted()) {
 				// for non-JS version !!! (used also for Monobook and WikiaMobile)
@@ -60,7 +50,7 @@ class ArticleCommentsController extends WikiaController {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		$this->wf->ProfileOut(__METHOD__);
 	}
 
 	/**
@@ -173,5 +163,22 @@ class ArticleCommentsController extends WikiaController {
 		$this->pagesCount = ( $data['commentsPerPage'] > 0 ) ? ceil( $data['countComments'] / $data['commentsPerPage'] ) : 0;
 
 		wfProfileOut(__METHOD__);
+	}
+	
+	public static function onSkinAfterContent( &$afterContentHookText ) {
+		global $wgArticleCommentsContent;
+		if(!empty($wgArticleCommentsContent)) {
+			$afterContentHookText .= $wgArticleCommentsContent;
+		}
+		return true;
+	} 
+	
+	public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin) {
+		global $wgArticleCommentsContent;
+		// Display comments on content and blog pages
+		if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
+			$wgArticleCommentsContent = wfRenderModule('ArticleComments');
+		}
+		return true;	
 	}
 }

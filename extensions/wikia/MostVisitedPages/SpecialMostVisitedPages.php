@@ -39,12 +39,3 @@ extAddSpecialPage( dirname(__FILE__) . '/SpecialMostVisitedPages_body.php', 'Mos
 
 $wgSpecialPageGroups['Mostvisitedpages'] = 'highuse';
 
-if (!function_exists('wfGetMostVisitedPages')) {
-    function wfGetMostVisitedPages($article_id) {
-        $class = new MostvisitedpagesSpecialPage();
-        $class->execute($article_id, 1, 0, false);
-        $data = $class->getResult();
-        
-        return $data;
-    }
-}

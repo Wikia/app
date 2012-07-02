@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * scrape_and_insert.inc.php Created on Feb 14, 2008
  *
  * All Metavid Wiki code is Released under the GPL2
@@ -197,7 +197,7 @@ class MV_BillScraper extends MV_BaseScraper {
 						if ( $potential_next_person == null && $k_person_inx == 1 ) {
 							$next_person = null;
 							break;
-						} else if ( $potential_next_person != null ) {
+						} elseif ( $potential_next_person != null ) {
 							$next_person = $potential_next_person;
 						}
 		   				$k_person_inx++;
@@ -394,7 +394,7 @@ class MV_BillScraper extends MV_BaseScraper {
 		   					if ( $k != 0 ) {
 		   						if ( isset( $bill_type_ary[0] ) ) {
 		   							$bill_name = $bill_type_ary[0];
-		   						} else if ( isset( $bill_type_ary[1] ) ) {
+		   						} elseif ( isset( $bill_type_ary[1] ) ) {
 		   							$bill_name = $bill_type_ary[1];
 		   						} else {
 		   							continue;
@@ -553,11 +553,11 @@ class MV_BillScraper extends MV_BaseScraper {
 		if ( $session == '' ) {
 			$year = date( 'y', $stream_date );
 			if ( $year == '01' || $year == '02' ) { $session = '107';
-			} else if ( $year == '03' || $year == '04' ) { $session = '108';
-			} else if ( $year == '06' || $year == '05' ) { $session = '109';
-			} else if ( $year == '07' || $year == '08' ) { $session = '110';
-			} else if ( $year == '09' || $year == '10' ) { $session = '111';
-			} else if ( $year == '11' || $year == '12' ) { $session = '112'; }
+			} elseif ( $year == '03' || $year == '04' ) { $session = '108';
+			} elseif ( $year == '06' || $year == '05' ) { $session = '109';
+			} elseif ( $year == '07' || $year == '08' ) { $session = '110';
+			} elseif ( $year == '09' || $year == '10' ) { $session = '111';
+			} elseif ( $year == '11' || $year == '12' ) { $session = '112'; }
 			$this->cur_session = $session;
 		}
 		foreach ( $this->bill_types as $cspanT => $govtrakT ) {
@@ -886,7 +886,7 @@ class MV_ArchiveOrgScrape extends MV_BaseScraper {
 
 class MV_BaseScraper {
 	var $number_of_tries = 3;
-	/*
+	/**
 	 * simple url cach using the mv_url_cache table
 	 *
 	 * @@todo handle post vars

@@ -21,6 +21,9 @@ class GettextPluralException extends MwException {}
 class GettextFFS extends SimpleFFS {
 	protected $offlineMode = false;
 
+	/**
+	 * @param $value bool
+	 */
 	public function setOfflineMode( $value ) {
 		$this->offlineMode = $value;
 	}
@@ -84,6 +87,9 @@ class GettextFFS extends SimpleFFS {
 		} else {
 			throw new MWException( "Gettext file header was not found:\n\n$data" );
 		}
+
+		$template = array();
+		$messages = array();
 
 		// Extract some metadata from headers for easier use
 		$metadata = array();
@@ -239,6 +245,8 @@ class GettextFFS extends SimpleFFS {
 	/**
 	 * Generates unique key for each message. Changing this WILL BREAK ALL
 	 * existing pages!
+	 * @param $item
+	 * @return string
 	 */
 	public static function generateKeyFromItem( $item ) {
 		$lang = Language::factory( 'en' );
@@ -261,6 +269,9 @@ class GettextFFS extends SimpleFFS {
 	 * not allowed in MediaWiki pages, the default action is to append
 	 * \-character at the end of the message. You can also choose to ignore it
 	 * and use the trim action instead.
+	 * @param $data
+	 * @param $whitespace string
+	 * @return string
 	 */
 	public static function formatForWiki( $data, $whitespace = 'mark' ) {
 		$quotePattern = '/(^"|"$\n?)/m';
@@ -312,7 +323,8 @@ class GettextFFS extends SimpleFFS {
 	}
 
 	protected function doGettextHeader( MessageCollection $collection, $template, &$pluralCount ) {
-		global $wgSitename, $wgServer;
+		global $wgSitename, $wgServer, $wgCanonicalServer;
+
 		$code = $collection->code;
 		$name = TranslateUtils::getLanguageName( $code );
 		$native = TranslateUtils::getLanguageName( $code, true );
@@ -333,16 +345,24 @@ PHP;
 		// Make sure there is no empty line before msgid
 		$output = trim( $output ) . "\n";
 
-		// @todo twn specific
-		$portal = Title::makeTitle( NS_PORTAL, $code )->getFullUrl();
+		// @todo portal is twn specific
+		// BC for MW <1.18
+		if ( method_exists( 'Title', 'getCanonicalUrl' ) ) {
+			$portal = Title::makeTitle( NS_PORTAL, $code )->getCanonicalUrl();
+			$server = $wgCanonicalServer;
+		} else {
+			$portal = Title::makeTitle( NS_PORTAL, $code )->getFullUrl();
+			$server = $wgServer;
+		}
 
 		$specs = isset( $template['HEADERS'] ) ? $template['HEADERS'] : array();
 
+		$timestamp = wfTimestampNow();
 		$specs['Project-Id-Version'] = $this->group->getLabel();
 		$specs['Report-Msgid-Bugs-To'] = $wgSitename;
-		$specs['PO-Revision-Date'] = self::formatTime( wfTimestampNow() );
+		$specs['PO-Revision-Date'] = self::formatTime( $timestamp );
 		if ( $this->offlineMode ) {
-			$specs['POT-Creation-Date'] = self::formatTime( wfTimestampNow() );
+			$specs['POT-Creation-Date'] = self::formatTime( $timestamp );
 		} elseif ( $this->group instanceof MessageGroupBase ) {
 			$specs['X-POT-Import-Date'] = self::formatTime( wfTimestamp( TS_MW, $this->getPotTime() ) );
 		}
@@ -350,7 +370,7 @@ PHP;
 		$specs['Content-Type'] = 'text/plain; charset=UTF-8';
 		$specs['Content-Transfer-Encoding'] = '8bit';
 		$specs['X-Generator'] = $this->getGenerator();
-		$specs['X-Translation-Project'] = "$wgSitename at $wgServer";
+		$specs['X-Translation-Project'] = "$wgSitename at $server";
 		$specs['X-Language-Code'] = $code;
 		if ( $this->offlineMode ) {
 			$specs['X-Message-Group'] = $this->group->getId();

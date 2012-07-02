@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Created on Nov 1, 2008
  *
  * GlobalBlocking extension
@@ -19,7 +19,7 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -36,7 +36,6 @@ class ApiQueryGlobalBlocks extends ApiQueryBase {
 	}
 
 	public function execute() {
-		global $wgUser;
 		$params = $this->extractRequestParams();
 
 		$prop = array_flip($params['prop']);
@@ -49,34 +48,40 @@ class ApiQueryGlobalBlocks extends ApiQueryBase {
 		$fld_range = isset($prop['range']);
 
 		$result = $this->getResult();
-		$pageSet = $this->getPageSet();
-		$titles = $pageSet->getTitles();
 		$data = array();
 
 		$this->addTables('globalblocks');
-		if($fld_id)
+		if ($fld_id) {
 			$this->addFields('gb_id');
-		if($fld_address)
+		}
+		if ($fld_address) {
 			$this->addFields(array('gb_address', 'gb_anon_only'));
-		if($fld_by)
+		}
+		if ($fld_by) {
 			$this->addFields(array('gb_by', 'gb_by_wiki'));
-		if($fld_timestamp)
+		}
+		if ($fld_timestamp) {
 			$this->addFields('gb_timestamp');
-		if($fld_expiry)
+		}
+		if ($fld_expiry) {
 			$this->addFields('gb_expiry');
-		if($fld_reason)
+		}
+		if ($fld_reason) {
 			$this->addFields('gb_reason');
-		if($fld_range)
+		}
+		if ($fld_range) {
 			$this->addFields(array('gb_range_start', 'gb_range_end'));
+		}
 
 		$this->addOption('LIMIT', $params['limit'] + 1);
 		$this->addWhereRange('gb_timestamp', $params['dir'], $params['start'], $params['end']);
-		if(isset($params['ids']))
+		if (isset($params['ids'])) {
 			$this->addWhereFld('gb_id', $params['ids']);
-		if(isset($params['addresses']))
+		}
+		if (isset($params['addresses'])) {
 			$this->addWhereFld('gb_address', $params['addresses']);
-		if(isset($params['ip']))
-		{
+		}
+		if(isset($params['ip'])) {
 			list($ip, $range) = IP::parseCIDR($params['ip']);
 			if($ip && $range)
 			{
@@ -99,8 +104,7 @@ class ApiQueryGlobalBlocks extends ApiQueryBase {
 		$res = $this->select(__METHOD__);
 
 		$count = 0;
-		while($row = $res->fetchObject())
-		{
+		foreach ( $res as $row ) {
 			if(++$count > $params['limit'])
 			{
 				// We've had enough
@@ -187,7 +191,7 @@ class ApiQueryGlobalBlocks extends ApiQueryBase {
 			)
 		);
 	}
-	
+
 	protected function getDB() {
 		return GlobalBlocking::getGlobalBlockingSlave();
 	}
@@ -209,20 +213,20 @@ class ApiQueryGlobalBlocks extends ApiQueryBase {
 	public function getDescription() {
 		return 'List all globally blocked IP addresses.';
 	}
-	
+
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
 			array ( 'code' => 'cidrtoobroad', 'info' => 'CIDR ranges broader than /16 are not accepted' ),
 		) );
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array (	'api.php?action=query&list=globalblocks',
 				'api.php?action=query&list=globalblocks&bgip=217.121.114.116'
 		);
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryGlobalBlocks.php 69932 2010-07-26 08:03:21Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryGlobalBlocks.php 99815 2011-10-14 21:30:16Z reedy $';
 	}
 }

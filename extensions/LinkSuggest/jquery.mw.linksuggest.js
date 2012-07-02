@@ -11,8 +11,6 @@
  *	jquery.ui.autocomplete.js
  */
 ( function( $ ) {
-$.loadJQueryUI(function() {
-	
 
 $.widget( 'mw.linksuggest', {
 	options: {
@@ -229,7 +227,7 @@ $.widget( 'mw.linksuggest', {
 					n = n.substr( pos + 1 );
 				}
 			}
-			return {label: n, value: format.replace( '$1', n )};
+			return { label: n, value: format.replace( '$1', n ) };
 		} );
 	},
 	_updateValue: function( oItem ) {
@@ -380,8 +378,9 @@ $.widget( 'mw.linksuggest', {
 		menu.width( '' ).position( props );
 	}
 
-
 });
+
+}( jQuery ));
 
 // Implementation: This should be done injecting this code into MediaWiki, not
 // in this JS file
@@ -389,8 +388,3 @@ $( function() {
 	// Apply font-style for bug in IE. This should be done using a style sheet
 	$( '#wpTextbox1' ).css( 'font-family', 'monospace' ).linksuggest();
 });
-
-});
-
-}( jQuery ));
-

@@ -15,7 +15,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class ListusersHooks {	
 
 	function __construct() { /* not used */ }
-
+	
 	/**
 	 * redirect Special::Activeusers to Special::Listusers
 	 *
@@ -25,7 +25,7 @@ class ListusersHooks {
 	 */	
 	public static function Activeusers( &$list ) {
 		wfProfileIn( __METHOD__ );		
-		$list['Activeusers'] = array( 'SpecialRedirectToSpecial', 'Activeusers', Listusers::TITLE );
+		$list['Activeusers'] = array( 'SpecialPage', 'Listusers' );
 		wfProfileOut( __METHOD__ );		
 		return true;
 	}

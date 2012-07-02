@@ -7,10 +7,105 @@ version of Maps. You can find the most up-do-date version at
 http://mapping.referata.com/wiki/Maps/Version_history#Maps_change_log
 
 
+=== Maps 1.0.5 ===
+(2011-11-30)
+
+* Fixed display of attribution control for OpenLayers.
+* Fixed to big precision of geographic coordinates in decimal minutes format (bug 32407).
+
+=== Maps 1.0.4 ===
+(2011-10-15)
+
+* Updated OpenLayers from 2.10 to 2.11.
+* Fixed bug in adding adittional markers for Google Maps v3 (mainly affecting the Semantic Maps form input).
+
+=== Maps 1.0.3 ===
+(2011-09-14)
+
+* Added API module for geocoding.
+* Added 'geocoding' right.
+* Added kmlrezoom parameter for Google Maps v3 and general $egMapsRezoomForKML setting.
+* Fixed Google Maps v3 JavaScript issue occuring on MediaWiki 1.17.
+
+=== Maps 1.0.2 ===
+(2011-08-24)
+
+* Fixed Google Maps v3 JavaScript issue occuring when using Google Earth on unsupported systems.
+* Fixed internationalization of distances (bug 30467).
+
+=== Maps 1.0.1 ===
+(2011-08-17)
+
+* Added language parameter to the mapsdoc hook.
+
+* Use of Validator 0.4.10s setMessage method instead of setDescription for better i18n.
+
+* Fixed zoom and types parameters for Google Maps v3.
+
+* Minor improvement to script loading.
+
+* Added support for Google Earth in Google Maps v3.
+
+* Added tilt parameter for Google Earth in Google Maps v3.
+
+=== Maps 1.0 ===
+(2011-07-19)
+
+This version branched from Maps 0.7.x at version 0.7.3.
+
+==== New features ====
+
+* Added full Google Maps v3 support and set it as the default mapping service.
+
+* Added new geocoder making use of the new GeoNames API.
+
+* Added support for the auto-documentation features for parser hooks introduced in Validator 0.4.3.
+
+* Added resizeable parameter to all mapping services except OSM.
+
+==== Removed features ====
+
+* Removed compatibility with pre MediaWiki 1.17.
+
+* Removed overlays parameter for Google Maps v2.
+
+* Removed the previously deprecated "display map", "display point" and "display points" parser hooks. Use their underscored equivalents, ie "display_map".
+
+==== Internal improvements ====
+
+* Usage of the Resource Loader for all scripts and stylesheets.
+
+* Rewrote all the map JavaScript to jQuery plugins.
+
+* Rewrote the way parameters are translated to JavaScript. Now one big PHP object is json_encoded.
+
+* Improved KML formatter.
+
+* Use of Google Maps geocoding service v3 instead of v2.
+
+* Completed coordinate and distance parser/formatter unit tests and made them compliant with the MediaWiki unit testing support.
+
+==== Bug fixes ====
+
+* Fixed geocoding service overriding based on mapping service (merged in from Maps 0.7.5).
+
+* Fixed fatal error occurring when running maintenance/refreshLinks.php.
+
+* Fixed DMS coordinate parsing issue (bug 29419).
+
+* Fixed coordinate normalization issue (bug 29421).
+
+==== Other tweaks ====
+
+* Improved default width of maps (merged in from Maps 0.7.5).
+
 === Maps 0.7.3 ===
-(2010-11-xx)
+(2010-11-30)
 
 * Some internal improvements and translation updates.
+
+* Fixed issue occurring when Maps is the only extension adding custom namespaces.
+
 
 === Maps 0.7.2 ===
 (2010-10-28)

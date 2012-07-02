@@ -44,14 +44,19 @@ class SpecialGeoLite extends UnlistedSpecialPage {
 				return;
 			}
 		}
-		// No valid IP or chapter page - let's just go for the general one
-		$wgOut->redirect( $wgLandingPageBase . $target . '/' . $lang . $tracking );
+		// No valid IP or chapter page - let's just go for the passed in url or our fallback
+		if ( Http::isValidURI ( $target ) ) {
+			$wgOut->redirect( $target . '/' . $lang . $tracking );
+			return;
+		} else {
+			$wgOut->redirect( $wgLandingPageBase . $target . '/' . $lang . $tracking );
+		}
 	}
 
 	public function getDestination( $utm_source ) {
 		global $wgChaptersPageBase, $wgAppealPageBase;
 
-		$dest = ( preg_match( '/Jimmy_Appeal/', $utm_source ) ) ? $wgAppealPageBase : $wgChaptersPageBase;
+		$dest = ( strpos( $utm_source, 'Jimmy_Appeal' ) !== false ) ? $wgAppealPageBase : $wgChaptersPageBase;
 
 		return $dest;
 	}

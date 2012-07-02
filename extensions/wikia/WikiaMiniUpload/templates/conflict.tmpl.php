@@ -24,11 +24,11 @@ echo wfMsg('wmu-conflict-inf', $file_name->getName());
 	</tr>
 	<tr id="ImageUploadCompare">
 		<td style="border-right: 1px solid #CCC;">
-			<?= $file_mwname->getThumbnail(265, 205)->toHtml() ?>
+			<?= $file_mwname->transform( array( 'width' => 265, 'height' => 205 ) )->toHtml() ?>
 		</td>
 		<td>
 			<input type="hidden" id="ImageUploadExistingName" value="<?= $file_name->getName() ?>" />
-			<?= $file_name->getThumbnail(265, 205)->toHtml() ?>
+			<?= $file_name->transform( array( 'width' => 265, 'height' => 205 ) )->toHtml() ?>
 		</td>
 	</tr>
 </table>

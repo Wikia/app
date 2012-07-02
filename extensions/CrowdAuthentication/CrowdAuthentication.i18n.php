@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension CrowdAuthentication.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -23,6 +24,13 @@ $messages['qqq'] = array(
 '''''Atlassian Crowd''''' is a proper noun and should not be translated.",
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'crowdauthentication-desc' => 'plugin Authentication për Atlassian turmë',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -37,7 +45,14 @@ $messages['arz'] = array(
 	'crowdauthentication-desc' => 'إضافة تأكيد لحشد الأتلاسيان',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'crowdauthentication-desc' => "Complementu d'autenticación pa Atlassian Crowd",
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -70,6 +85,13 @@ $messages['ca'] = array(
  */
 $messages['cs'] = array(
 	'crowdauthentication-desc' => 'Zásuvný modul pro ověření služby Atlassian Crowd',
+);
+
+/** Welsh (Cymraeg)
+ * @author Xxglennxx
+ */
+$messages['cy'] = array(
+	'crowdauthentication-desc' => 'Ategyn dilysu ar gyfer Atlassian Crowd',
 );
 
 /** German (Deutsch)
@@ -201,7 +223,7 @@ $messages['ja'] = array(
 	'crowdauthentication-desc' => 'Atlassian社のCrowdシングルサインオンツールを利用する認証プラグイン',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -236,6 +258,20 @@ $messages['mr'] = array(
 	'crowdauthentication-desc' => 'ऍट्लेशिअन क्राउड साठीचे प्रमाणिकरण प्लग-इन',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'crowdauthentication-desc' => "Pemalam (''plugin'') pengesahan untuk Atlassian Crowd",
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'crowdauthentication-desc' => 'Uutbreidingsmodule van de echtheidskontrole veur Atlassian Crowd',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -253,7 +289,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'crowdauthentication-desc' => 'Autentiseringsprogramtillegg for Atlassian Crowd',
 );
 
@@ -306,7 +342,7 @@ $messages['ru'] = array(
 	'crowdauthentication-desc' => 'Модуль аутентификации для Atlassian Crowd',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -320,14 +356,21 @@ $messages['sk'] = array(
 	'crowdauthentication-desc' => 'Zásuvný modul na overenie služby Atlassian Crowd',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'crowdauthentication-desc' => 'Vtičnik za overitev Atlassian Crowd',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'crowdauthentication-desc' => 'Ауторизацијски плагин за Atlassian Crowd',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -339,6 +382,13 @@ $messages['sr-el'] = array(
  */
 $messages['stq'] = array(
 	'crowdauthentication-desc' => 'Authentisiereng-Ärwiederenge foar Atlassian Crowd',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'crowdauthentication-desc' => 'Plugin oténtikasi pikeun Atlassian Crowd',
 );
 
 /** Swedish (Svenska)
@@ -390,7 +440,7 @@ $messages['vi'] = array(
 	'crowdauthentication-desc' => 'Phần bổ sung xác minh cho Atlassian Crowd',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -408,6 +458,13 @@ $messages['zh-hans'] = array(
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
+	'crowdauthentication-desc' => 'Atlassian Crowd的認證插件',
+);
+
+/** Chinese (Taiwan) (‪中文(台灣)‬)
+ * @author Pbdragonwang
+ */
+$messages['zh-tw'] = array(
 	'crowdauthentication-desc' => 'Atlassian Crowd的認證插件',
 );
 

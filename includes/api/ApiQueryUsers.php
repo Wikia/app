@@ -1,11 +1,10 @@
 <?php
-
-/*
+/**
+ *
+ *
  * Created on July 30, 2007
  *
- * API for MediaWiki 1.8+
- *
- * Copyright (C) 2007 Roan Kattouw <Firstname>.<Lastname>@home.nl
+ * Copyright © 2007 Roan Kattouw <Firstname>.<Lastname>@gmail.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,40 +18,41 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	// Eclipse helper - will be ignored in production
-	require_once ( 'ApiQueryBase.php' );
-}
 
 /**
  * Query module to get information about a list of users
  *
  * @ingroup API
  */
- class ApiQueryUsers extends ApiQueryBase {
+class ApiQueryUsers extends ApiQueryBase {
+
+	private $tokenFunctions, $prop;
 
 	public function __construct( $query, $moduleName ) {
-		parent :: __construct( $query, $moduleName, 'us' );
+		parent::__construct( $query, $moduleName, 'us' );
 	}
-	
+
 	/**
 	 * Get an array mapping token names to their handler functions.
 	 * The prototype for a token function is func($user)
 	 * it should return a token or false (permission denied)
-	 * @return array(tokenname => function)
+	 * @return Array tokenname => function
 	 */
 	protected function getTokenFunctions() {
 		// Don't call the hooks twice
-		if ( isset( $this->tokenFunctions ) )
+		if ( isset( $this->tokenFunctions ) ) {
 			return $this->tokenFunctions;
+		}
 
 		// If we're in JSON callback mode, no tokens can be obtained
-		if ( !is_null( $this->getMain()->getRequest()->getVal( 'callback' ) ) )
+		if ( !is_null( $this->getMain()->getRequest()->getVal( 'callback' ) ) ) {
 			return array();
+		}
 
 		$this->tokenFunctions = array(
 			'userrights' => array( 'ApiQueryUsers', 'getUserrightsToken' ),
@@ -60,19 +60,20 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 		wfRunHooks( 'APIQueryUsersTokens', array( &$this->tokenFunctions ) );
 		return $this->tokenFunctions;
 	}
-	
-	public static function getUserrightsToken( $user )
-	{
+
+	 /**
+	  * @param $user User
+	  * @return String
+	  */
+	public static function getUserrightsToken( $user ) {
 		global $wgUser;
 		// Since the permissions check for userrights is non-trivial,
 		// don't bother with it here
-		return $wgUser->editToken( $user->getName() );
+		return $wgUser->getEditToken( $user->getName() );
 	}
 
 	public function execute() {
 		$params = $this->extractRequestParams();
-		$result = $this->getResult();
-		$r = array();
 
 		if ( !is_null( $params['prop'] ) ) {
 			$this->prop = array_flip( $params['prop'] );
@@ -86,65 +87,92 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 		// Canonicalize user names
 		foreach ( $users as $u ) {
 			$n = User::getCanonicalName( $u );
-			if ( $n === false || $n === '' )
-			{
+			if ( $n === false || $n === '' ) {
 				$vals = array( 'name' => $u, 'invalid' => '' );
 				$fit = $result->addValue( array( 'query', $this->getModuleName() ),
 						null, $vals );
-				if ( !$fit )
-				{
+				if ( !$fit ) {
 					$this->setContinueEnumParameter( 'users',
 							implode( '|', array_diff( $users, $done ) ) );
 					$goodNames = array();
 					break;
 				}
 				$done[] = $u;
-			}
-			 else
+			} else {
 				$goodNames[] = $n;
+			}
 		}
 
-		if ( count( $goodNames ) )
-		{
-			$db = $this->getDb();
-			$this->addTables( 'user', 'u1' );
-			$this->addFields( 'u1.*' );
-			$this->addWhereFld( 'u1.user_name', $goodNames );
+		$result = $this->getResult();
 
-			if ( isset( $this->prop['groups'] ) ) {
+		if ( count( $goodNames ) ) {
+			$this->addTables( 'user' );
+			$this->addFields( '*' );
+			$this->addWhereFld( 'user_name', $goodNames );
+
+			if ( isset( $this->prop['groups'] ) || isset( $this->prop['rights'] ) ) {
 				$this->addTables( 'user_groups' );
-				$this->addJoinConds( array( 'user_groups' => array( 'LEFT JOIN', 'ug_user=u1.user_id' ) ) );
+				$this->addJoinConds( array( 'user_groups' => array( 'LEFT JOIN', 'ug_user=user_id' ) ) );
 				$this->addFields( 'ug_group' );
 			}
-			if ( isset( $this->prop['blockinfo'] ) ) {
-				$this->addTables( 'ipblocks' );
-				$this->addTables( 'user', 'u2' );
-				$u2 = $this->getAliasedName( 'user', 'u2' );
-				$this->addJoinConds( array(
-					'ipblocks' => array( 'LEFT JOIN', 'ipb_user=u1.user_id' ),
-					$u2 => array( 'LEFT JOIN', 'ipb_by=u2.user_id' ) ) );
-				$this->addFields( array( 'ipb_reason', 'u2.user_name AS blocker_name' ) );
-			}
+
+			$this->showHiddenUsersAddBlockInfo( isset( $this->prop['blockinfo'] ) );
 
 			$data = array();
 			$res = $this->select( __METHOD__ );
-			while ( ( $r = $db->fetchObject( $res ) ) ) {
-				$user = User::newFromRow( $r );
+
+			foreach ( $res as $row ) {
+				$user = User::newFromRow( $row );
 				$name = $user->getName();
+
+				$data[$name]['userid'] = $user->getId();
 				$data[$name]['name'] = $name;
-				if ( isset( $this->prop['editcount'] ) )
+
+				if ( isset( $this->prop['editcount'] ) ) {
 					$data[$name]['editcount'] = intval( $user->getEditCount() );
-				if ( isset( $this->prop['registration'] ) )
-					$data[$name]['registration'] = wfTimestampOrNull( TS_ISO_8601, $user->getRegistration() );
-				if ( isset( $this->prop['groups'] ) && !is_null( $r->ug_group ) )
-					// This row contains only one group, others will be added from other rows
-					$data[$name]['groups'][] = $r->ug_group;
-				if ( isset( $this->prop['blockinfo'] ) && !is_null( $r->blocker_name ) ) {
-					$data[$name]['blockedby'] = $r->blocker_name;
-					$data[$name]['blockreason'] = $r->ipb_reason;
 				}
-				if ( isset( $this->prop['emailable'] ) && $user->canReceiveEmail() )
+
+				if ( isset( $this->prop['registration'] ) ) {
+					$data[$name]['registration'] = wfTimestampOrNull( TS_ISO_8601, $user->getRegistration() );
+				}
+
+				if ( isset( $this->prop['groups'] ) ) {
+					if ( !isset( $data[$name]['groups'] ) ) {
+						$data[$name]['groups'] = self::getAutoGroups( $user );
+					}
+
+					if ( !is_null( $row->ug_group ) ) {
+						// This row contains only one group, others will be added from other rows
+						$data[$name]['groups'][] = $row->ug_group;
+					}
+				}
+
+				if ( isset( $this->prop['implicitgroups'] ) && !isset( $data[$name]['implicitgroups'] ) ) {
+					$data[$name]['implicitgroups'] =  self::getAutoGroups( $user );
+				}
+
+				if ( isset( $this->prop['rights'] ) ) {
+					if ( !isset( $data[$name]['rights'] ) ) {
+						$data[$name]['rights'] = User::getGroupPermissions( $user->getAutomaticGroups() );
+					}
+
+					if ( !is_null( $row->ug_group ) ) {
+						$data[$name]['rights'] = array_unique( array_merge( $data[$name]['rights'],
+							User::getGroupPermissions( array( $row->ug_group ) ) ) );
+					}
+				}
+				if ( $row->ipb_deleted ) {
+					$data[$name]['hidden'] = '';
+				}
+				if ( isset( $this->prop['blockinfo'] ) && !is_null( $row->ipb_by_text ) ) {
+					$data[$name]['blockedby'] = $row->ipb_by_text;
+					$data[$name]['blockreason'] = $row->ipb_reason;
+					$data[$name]['blockexpiry'] = $row->ipb_expiry;
+				}
+
+				if ( isset( $this->prop['emailable'] ) && $user->canReceiveEmail() ) {
 					$data[$name]['emailable'] = '';
+				}
 
 				if ( isset( $this->prop['gender'] ) ) {
 					$gender = $user->getOption( 'gender' );
@@ -154,75 +182,103 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 					$data[$name]['gender'] = $gender;
 				}
 
-				if ( !is_null( $params['token'] ) )
-				{
+				if ( !is_null( $params['token'] ) ) {
 					$tokenFunctions = $this->getTokenFunctions();
-					foreach ( $params['token'] as $t )
-					{
+					foreach ( $params['token'] as $t ) {
 						$val = call_user_func( $tokenFunctions[$t], $user );
-						if ( $val === false )
+						if ( $val === false ) {
 							$this->setWarning( "Action '$t' is not allowed for the current user" );
-						else
+						} else {
 							$data[$name][$t . 'token'] = $val;
+						}
 					}
 				}
 			}
 		}
+
 		// Second pass: add result data to $retval
 		foreach ( $goodNames as $u ) {
 			if ( !isset( $data[$u] ) ) {
 				$data[$u] = array( 'name' => $u );
 				$urPage = new UserrightsPage;
 				$iwUser = $urPage->fetchUser( $u );
+
 				if ( $iwUser instanceof UserRightsProxy ) {
 					$data[$u]['interwiki'] = '';
-					if ( !is_null( $params['token'] ) )
-					{
+
+					if ( !is_null( $params['token'] ) ) {
 						$tokenFunctions = $this->getTokenFunctions();
-						foreach ( $params['token'] as $t )
-						{
+
+						foreach ( $params['token'] as $t ) {
 							$val = call_user_func( $tokenFunctions[$t], $iwUser );
-							if ( $val === false )
+							if ( $val === false ) {
 								$this->setWarning( "Action '$t' is not allowed for the current user" );
-							else
+							} else {
 								$data[$u][$t . 'token'] = $val;
+							}
 						}
 					}
-				} else
+				} else {
 					$data[$u]['missing'] = '';
+				}
 			} else {
-				if ( isset( $this->prop['groups'] ) && isset( $data[$u]['groups'] ) )
-					$this->getResult()->setIndexedTagName( $data[$u]['groups'], 'g' );
+				if ( isset( $this->prop['groups'] ) && isset( $data[$u]['groups'] ) ) {
+					$result->setIndexedTagName( $data[$u]['groups'], 'g' );
+				}
+				if ( isset( $this->prop['implicitgroups'] ) && isset( $data[$u]['implicitgroups'] ) ) {
+					$result->setIndexedTagName( $data[$u]['implicitgroups'], 'g' );
+				}
+				if ( isset( $this->prop['rights'] ) && isset( $data[$u]['rights'] ) ) {
+					$result->setIndexedTagName( $data[$u]['rights'], 'r' );
+				}
 			}
+
 			$fit = $result->addValue( array( 'query', $this->getModuleName() ),
 					null, $data[$u] );
-			if ( !$fit )
-			{
+			if ( !$fit ) {
 				$this->setContinueEnumParameter( 'users',
 						implode( '|', array_diff( $users, $done ) ) );
 				break;
 			}
 			$done[] = $u;
 		}
-		return $this->getResult()->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'user' );
+		return $result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'user' );
+	}
+
+	/**
+	* Gets all the groups that a user is automatically a member of (implicit groups)
+	* @param $user User
+	* @return array
+	*/
+	public static function getAutoGroups( $user ) {
+		$groups = array();
+		$groups[] = '*';
+
+		if ( !$user->isAnon() ) {
+			$groups[] = 'user';
+		}
+
+		return array_merge( $groups, Autopromote::getAutopromoteGroups( $user ) );
 	}
 
 	public function getCacheMode( $params ) {
 		if ( isset( $params['token'] ) ) {
 			return 'private';
 		} else {
-			return 'public';
+			return 'anon-public-user-private';
 		}
 	}
 
 	public function getAllowedParams() {
-		return array (
-			'prop' => array (
-				ApiBase :: PARAM_DFLT => null,
-				ApiBase :: PARAM_ISMULTI => true,
-				ApiBase :: PARAM_TYPE => array (
+		return array(
+			'prop' => array(
+				ApiBase::PARAM_DFLT => null,
+				ApiBase::PARAM_ISMULTI => true,
+				ApiBase::PARAM_TYPE => array(
 					'blockinfo',
 					'groups',
+					'implicitgroups',
+					'rights',
 					'editcount',
 					'registration',
 					'emailable',
@@ -230,25 +286,27 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 				)
 			),
 			'users' => array(
-				ApiBase :: PARAM_ISMULTI => true
+				ApiBase::PARAM_ISMULTI => true
 			),
 			'token' => array(
-				ApiBase :: PARAM_TYPE => array_keys( $this->getTokenFunctions() ),
-				ApiBase :: PARAM_ISMULTI => true
+				ApiBase::PARAM_TYPE => array_keys( $this->getTokenFunctions() ),
+				ApiBase::PARAM_ISMULTI => true
 			),
 		);
 	}
 
 	public function getParamDescription() {
-		return array (
+		return array(
 			'prop' => array(
 				'What pieces of information to include',
-				'  blockinfo    - tags if the user is blocked, by whom, and for what reason',
-				'  groups       - lists all the groups the user belongs to',
-				'  editcount    - adds the user\'s edit count',
-				'  registration - adds the user\'s registration timestamp',
-				'  emailable    - tags if the user can and wants to receive e-mail through [[Special:Emailuser]]',
-				'  gender       - tags the gender of the user. Returns "male", "female", or "unknown"',
+				'  blockinfo      - Tags if the user is blocked, by whom, and for what reason',
+				'  groups         - Lists all the groups the user(s) belongs to',
+				'  implicitgroups - Lists all the groups a user is automatically a member of',
+				'  rights         - Lists all the rights the user(s) has',
+				'  editcount      - Adds the user\'s edit count',
+				'  registration   - Adds the user\'s registration timestamp',
+				'  emailable      - Tags if the user can and wants to receive e-mail through [[Special:Emailuser]]',
+				'  gender         - Tags the gender of the user. Returns "male", "female", or "unknown"',
 			),
 			'users' => 'A list of users to obtain the same information for',
 			'token' => 'Which tokens to obtain for each user',
@@ -259,11 +317,15 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 		return 'Get information about a list of users';
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return 'api.php?action=query&list=users&ususers=brion|TimStarling&usprop=groups|editcount|gender';
 	}
 
+	public function getHelpUrls() {
+		return 'https://www.mediawiki.org/wiki/API:Users';
+	}
+
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryUsers.php 69932 2010-07-26 08:03:21Z tstarling $';
+		return __CLASS__ . ': $Id$';
 	}
 }

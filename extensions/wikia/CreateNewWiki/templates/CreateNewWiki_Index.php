@@ -210,7 +210,7 @@
 		'descriptionplaceholder':'<?= wfMsg('cnw-desc-placeholder') ?>',
 		'cnw-error-general':'<?= wfMsg('cnw-error-general') ?>',
 		'cnw-error-general-heading':'<?= wfMsg('cnw-error-general-heading') ?>',
-		'cnw-keys': <?= Wikia::json_encode($keys) ?>
+		'cnw-keys': <?= json_encode($keys) ?>
 	};
-	var themes = <?= Wikia::json_encode($wg->OasisThemes) ?>;
+	var themes = <?= json_encode($wg->OasisThemes) ?>;
 </script>

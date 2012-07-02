@@ -1,7 +1,6 @@
 <?php
 
 class APCUtils {
-
 	public static function tableRow( $class, $first, $second = null ) {
 		$class = $class !== null ? array( 'class' => 'mw-apc-tr-' . $class ) : null;
 

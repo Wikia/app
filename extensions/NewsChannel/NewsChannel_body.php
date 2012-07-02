@@ -21,13 +21,12 @@ if (!defined('MEDIAWIKI')) die();
 class NewsChannel extends SpecialPage
 {
 	var $feedFormat = '';
-	var $renderingPage = null;
 
 	/**
 	 * Constructor is used to initialize class member variables and load extension messages.
 	 */
-	function NewsChannel() {
-		SpecialPage::SpecialPage( 'NewsChannel' );
+	function __construct() {
+		parent::__construct( 'NewsChannel' );
 	}
 
 	/**
@@ -37,15 +36,9 @@ class NewsChannel extends SpecialPage
 	 * @param string $par Custom parameters.
 	 */
 	function execute( $par ) {
-		global $wgRequest, $wgVersion, $wgOut, $wgNewsChannelCategory, $wgNewsChannelDefaultItems;
+		global $wgRequest, $wgOut, $wgNewsChannelCategory, $wgNewsChannelDefaultItems;
 
-		wfLoadExtensionMessages( 'NewsChannel' );
-
-		if( version_compare( $wgVersion, '1.8', '<' ) === true ) {
-			$wgOut->showErrorPage( "Error: Upgrade required", "The News Channel extension can't work " .
-				"on MediaWiki older than 1.8. Please, upgrade." );
-			return;
-		}
+		
 
 		if( $wgNewsChannelCategory == '' || $wgNewsChannelCategory == null ) {
 			$wgOut->showErrorPage( "Error: Misconfiguration", "Main category containing news articles " .
@@ -76,7 +69,7 @@ class NewsChannel extends SpecialPage
 	 * outputChannelMarkup( $newsItems ) function.
 	 */
 	function showChannel() {
-		global $wgContLang, $wgCanonicalNamespaceNames, $wgServer, $wgStylePath, $wgRequest, $wgOut;
+		global $wgContLang, $wgServer, $wgStylePath, $wgRequest, $wgOut;
 		global $wgNewsChannelDefaultItems, $wgNewsChannelMaxItems, $wgNewsChannelAuthorizedEditors;
 		global $wgNewsChannelCategory, $wgNewsChannelExcludeCategory, $wgNewsChannelRemoveArticlePrefix;
 
@@ -101,7 +94,7 @@ class NewsChannel extends SpecialPage
 
 		$categoryPrefixesRegex = '/^(' .
 			preg_quote( $wgContLang->getNsText( NS_CATEGORY ), "/" ) . '|' .
-			preg_quote( $wgCanonicalNamespaceNames[ NS_CATEGORY ] ) . '):/i';
+			preg_quote( MWNamespace::getCanonicalName( NS_CATEGORY ) ) . '):/i';
 
 		$inCategoriesStr = $dbr->addQuotes( str_replace( ' ', '_', $wgNewsChannelCategory ) ) . ',';
 		$inCategoriesCount = 1;
@@ -327,15 +320,9 @@ class NewsChannel extends SpecialPage
 	 * @param string $text Text with wiki markup to render.
 	 */
 	function renderWikiMarkup( $text ) {
-		global $wgServer;
+		global $wgServer, $wgOut;
 
-		if ( $this->renderingPage == null )
-			$this->renderingPage = new OutputPage();
-		else
-			$this->renderingPage->clearHTML();
-
-		$this->renderingPage->addWikiText( $text );
-		$text = $this->renderingPage->getHTML();
+		$text = $wgOut->parse( $text );
 
 		if ( $wgNewsChannelExportTextOnly ) {
 			$text = preg_replace( '/<(img|embed) [^>]+>/is', '', $text );
@@ -372,7 +359,7 @@ class NewsChannel extends SpecialPage
 		global $wgNewsChannelCategory, $wgNewsChannelExcludeCategory, $wgNewsChannelDefaultItems;
 
 		$wgOut->setPagetitle( wfMsgHtml( 'newschannel' ) );
-		$titleObj = Title::makeTitle( NS_SPECIAL, 'NewsChannel' );
+		$titleObj = SpecialPage::getTitleFor( 'NewsChannel' );
 		$msgPrefixedTitle = htmlspecialchars( $titleObj->getPrefixedText() );
 		$msgFormat = wfMsgHtml( 'newschannel_format' );
 		$msgLimit = wfMsgHtml( 'newschannel_limit' );

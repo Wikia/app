@@ -14,10 +14,10 @@
  * @ingroup SMW
  */
 class SMWConceptPage extends SMWOrderedListPage {
-	protected $m_errors;
 
 	/**
-	 * Use higher limit. This operation is very similar to showing members of categories.
+	 * Initialiye parameters to use a higher limit. This operation is very
+	 * similar to showing members of categories.
 	 */
 	protected function initParameters() {
 		global $smwgConceptPagingLimit;
@@ -26,96 +26,45 @@ class SMWConceptPage extends SMWOrderedListPage {
 	}
 
 	/**
-	 * Fill the internal arrays with the set of articles to be displayed (possibly plus one additional
-	 * article that indicates further results).
-	 */
-	protected function doQuery() {
-		if ( $this->limit > 0 ) {
-			$store = smwfGetStore();
-			$desc = new SMWConceptDescription( $this->mTitle );
-			if ( $this->from != '' ) {
-				$dv = SMWWikiPageValue::makePage( $this->from, NS_MAIN ); // make a dummy wiki page as boundary
-				$fromdesc = new SMWValueDescription( $dv, SMW_CMP_GEQ );
-				$desc = new SMWConjunction( array( $desc, $fromdesc ) );
-				$order = 'ASC';
-			} elseif ( $this->until != '' ) {
-				$dv = SMWWikiPageValue::makePage( $this->until, NS_MAIN ); // make a dummy wiki page as boundary
-				$fromdesc = new SMWValueDescription( $dv, SMW_CMP_LEQ );
-				$neqdesc = new SMWValueDescription( $dv, SMW_CMP_NEQ ); // do not include boundary in this case
-				$desc = new SMWConjunction( array( $desc, $fromdesc, $neqdesc ) );
-				$order = 'DESC';
-			} else {
-				$order = 'ASC';
-			}
-			$desc->addPrintRequest( new SMWPrintRequest( SMWPrintRequest::PRINT_THIS, '' ) );
-			$query = new SMWQuery( $desc );
-			$query->sortkeys[''] = $order;
-			$query->setLimit( $this->limit + 1 );
-
-			$result = $store->getQueryResult( $query );
-			$row = $result->getNext();
-			while ( $row !== false ) {
-				$this->articles[] = end( $row )->getNextObject();
-				$row = $result->getNext();
-			}
-			if ( $order == 'DESC' ) {
-				$this->articles = array_reverse( $this->articles );
-			}
-			$this->m_errors = $query->getErrors();
-		} else {
-			$this->articles = array();
-			$this->errors = array();
-		}
-	}
-
-	/**
-	 * Generates the headline for the page list and the HTML encoded list of pages which
-	 * shall be shown.
-	 */
-	protected function getPages() {
-		wfProfileIn( __METHOD__ . ' (SMW)' );
-		smwfLoadExtensionMessages( 'SemanticMediaWiki' );
-		$r = '';
-		$ti = htmlspecialchars( $this->mTitle->getText() );
-		$nav = $this->getNavigationLinks();
-		$r .= '<a name="SMWResults"></a>' . $nav . "<div id=\"mw-pages\">\n";
-
-		$r .= '<h2>' . wfMsg( 'smw_concept_header', $ti ) . "</h2>\n";
-		$r .= wfMsgExt( 'smw_conceptarticlecount', array( 'parsemag' ), min( $this->limit, count( $this->articles ) ) ) . smwfEncodeMessages( $this->m_errors ) .  "\n";
-
-		$r .= $this->formatList();
-		$r .= "\n</div>" . $nav;
-		wfProfileOut( __METHOD__ . ' (SMW)' );
-		return $r;
-	}
-
-	/**
-	 * Format a list of articles chunked by letter, either as a
-	 * bullet list or a columnar format, depending on the length.
+	 * Returns the HTML which is added to $wgOut after the article text.
 	 *
-	 * @param int   $cutoff
 	 * @return string
 	 */
-	private function formatList( $cutoff = 6 ) {
-		$end = count( $this->articles );
-		if ( $end > $this->limit ) {
-			if ( $this->until != '' ) {
-				$start = 1;
-			} else {
-				$start = 0;
-				$end --;
+	protected function getHtml() {
+		wfProfileIn( __METHOD__ . ' (SMW)' );
+
+		if ( $this->limit > 0 ) { // limit==0: configuration setting to disable this completely
+			$store = smwfGetStore();
+			$description = new SMWConceptDescription( $this->getDataItem() );
+			$query = SMWPageLister::getQuery( $description, $this->limit, $this->from, $this->until );
+			$queryResult = $store->getQueryResult( $query );
+
+			$diWikiPages = $queryResult->getResults();
+			if ( $this->until !== '' ) {
+				$diWikiPages = array_reverse( $diWikiPages );
 			}
+
+			$errors = $queryResult->getErrors();
 		} else {
-			$start = 0;
+			$diWikiPages = array();
+			$errors = array();
 		}
 
-		if ( count ( $this->articles ) > $cutoff ) {
-			return $this->columnList( $start, $end, $this->articles );
-		} elseif ( count( $this->articles ) > 0 ) {
-			// for short lists of articles
-			return $this->shortList( $start, $end, $this->articles );
-		}
-		return '';
+		$pageLister = new SMWPageLister( $diWikiPages, null, $this->limit, $this->from, $this->until );
+		$this->mTitle->setFragment( '#SMWResults' ); // Make navigation point to the result list.
+		$navigation = $pageLister->getNavigationLinks( $this->mTitle );
+
+		$titleText = htmlspecialchars( $this->mTitle->getText() );
+		$resultNumber = min( $this->limit, count( $diWikiPages ) );
+
+		$result = "<a name=\"SMWResults\"></a><div id=\"mw-pages\">\n" .
+		          '<h2>' . wfMsg( 'smw_concept_header', $titleText ) . "</h2>\n" .
+		          wfMsgExt( 'smw_conceptarticlecount', array( 'parsemag' ), $resultNumber ) .
+		          smwfEncodeMessages( $errors ) . "\n" .
+		          $navigation . $pageLister->formatList() . $navigation . "</div>\n";
+
+		wfProfileOut( __METHOD__ . ' (SMW)' );
+		return $result;
 	}
 
 }

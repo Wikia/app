@@ -43,6 +43,7 @@ When you have chosen all pages that you want to refresh, click on the "Refresh s
  * @author Purodha
  * @author Siebrand
  * @author The Evil IP address
+ * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'refreshspecial' => '{{Identical|Refresh special pages}}
@@ -67,7 +68,7 @@ Text displayed in the subtitle below the actual page title once the user has pre
 	'refreshspecial-reconnecting' => 'Displayed if the connection to the database was lost for some reason.',
 	'refreshspecial-page-result' => 'Displayed on Special:RefreshSpecial after the user has pressed the "Refresh selected" button and results were gotten from the DB.',
 	'refreshspecial-total-display' => 'Displayed on Special:RefreshSpecial after the user has pressed the "Refresh selected" button if the refreshing was done successfully. $1 is the amount of special pages refreshed, $2 is the amount of database rows touched, $3 is the time how long it took to refresh all the selected special pages and $4 is the complete time of the script run.',
-	'right-refreshspecial' => '{{doc-right}}',
+	'right-refreshspecial' => '{{doc-right|refreshspecial}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -173,7 +174,7 @@ $messages['arz'] = array(
 	'right-refreshspecial' => 'إنعاش الصفحات الخاصة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -221,8 +222,8 @@ $messages['br'] = array(
 	'refreshspecial-desc' => 'Aotreañ a ra ar [[Special:RefreshSpecial|freskadur gant an dorn]] eus ar bajennoù ispisial',
 	'refreshspecial-title' => 'Freskaat ar pajennoù arbennik',
 	'refreshspecial-help' => "Ar bajenn ispisial-mañ a ro an tro da freskaat pajennoù ispisial gant an dorn.
-P'ho peus dibabet an holl pajennoù ho peus c'hoant freskaat klikit war \"Freskaat\" amañ dindan evit diskouez ar bajennoù dibabet.
-'''Diwallit :''' war ar wikioù bras e c'hell padout an traoù un tamm.",
+Ur wezh dibabet an holl bajennoù hoc'h eus c'hoant da freskaat klikit war \"Freskaat\" amañ dindan evit diskouez ar pajennoù dibabet.
+'''Diwallit :''' war ar wikioù bras e c'hall padout an traoù un tamm.",
 	'refreshspecial-button' => 'Freskaat ar re ziuzet',
 	'refreshspecial-fail' => "Mar plij gevaskit ur bajenn ispisial da freskaat d'an nebeutañ.",
 	'refreshspecial-refreshing' => 'o freskaat ar pajennoù arbennik',
@@ -342,7 +343,7 @@ Achtung: Das Aktualisieren kann auf großen Wikis länger dauern.',
 	'right-refreshspecial' => 'Spezialseiten aktualisieren',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Imre
  * @author Revolus
  * @author Umherirrender
@@ -565,9 +566,9 @@ $messages['gl'] = array(
 	'refreshspecial' => 'Refrescar a páxina especial',
 	'refreshspecial-desc' => 'Permite [[Special:RefreshSpecial|refrescar páxinas especiais manualmente]]',
 	'refreshspecial-title' => 'Refrescar as páxinas especiais',
-	'refreshspecial-help' => 'Esta páxina especial proporciona medios para refrescar manualmente as páxinas especiais.
-Cando escolla todas as páxinas que quere refrescar, prema no botón "Actualizar o seleccionado" para levar a cabo a acción.
-Aviso: o refrescado pode levar uns intres nos wikis grandes.',
+	'refreshspecial-help' => "Esta páxina especial proporciona medios para refrescar manualmente as páxinas especiais.
+Cando escolla todas as páxinas que quere refrescar, prema no botón \"Actualizar o seleccionado\" para levar a cabo a acción.
+'''Aviso:''' O refrescado pode levar uns intres nos wikis grandes.",
 	'refreshspecial-button' => 'Actualizar o seleccionado',
 	'refreshspecial-fail' => 'Por favor, comprobe polo menos unha páxina especial para refrescar.',
 	'refreshspecial-refreshing' => 'actualizando as páxinas especiais',
@@ -617,6 +618,7 @@ Obacht: S Aktualisiere cha uf große Wiki lenger goh.',
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author Rotemliss
  * @author YaronSh
  */
@@ -642,7 +644,7 @@ $messages['he'] = array(
 	'refreshspecial-reconnected' => 'בוצעה התחברות מחדש.',
 	'refreshspecial-reconnecting' => 'ההתחברות נכשלה, מתחבר תוך 10 שניות...',
 	'refreshspecial-page-result' => 'יש {{PLURAL:$1|שורה אחת|$1 שורות}} ב',
-	'refreshspecial-total-display' => '{{PLURAL:$1|דף אחד עבר|$1 דפים עברו}} רענון, בסך הכל {{PLURAL:$2|שורה אחת|$2 שורות}} תוך $3 (זמן השלמת הרצת הסקריפט הוא $4)',
+	'refreshspecial-total-display' => '{{PLURAL:$1|דף אחד עבר|$1 דפים עברו}} רענון, בסך הכול {{PLURAL:$2|שורה אחת|$2 שורות}} תוך $3 (זמן השלמת הרצת הסקריפט הוא $4)',
 	'right-refreshspecial' => 'רענון דפים מיוחדים',
 );
 
@@ -912,14 +914,14 @@ Opgepasst: op méi grousse Wikie kann d'Aktualisatioun eng Zäit daueren.",
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'refreshspecial' => 'Ажурирај специјални страници',
-	'refreshspecial-desc' => 'Овозможува [[Special:RefreshSpecial|рачно ажурирање]] на специјални страници',
-	'refreshspecial-title' => 'Ажурирање на специјални страници',
-	'refreshspecial-help' => "Оваа специјална страница дава начин на рачно ажурирање на специјални страници.
-Откако ќе ги изберете сите страници кои сакате да ги ажурирате, кликнете на копчето „Освежи го одбраното“ подолу за да ги ажурирате тие страници.
-'''Предупредување:''' Ажурирањето може да потрае кај поголеми викија.",
-	'refreshspecial-button' => 'Ажурирај го избраното',
-	'refreshspecial-fail' => 'ОДберете барем една специјална страница за ажурирање.',
+	'refreshspecial' => 'Поднови специјални страници',
+	'refreshspecial-desc' => 'Овозможува [[Special:RefreshSpecial|рачна поднова]] на специјални страници',
+	'refreshspecial-title' => 'Превчитување на специјални страници',
+	'refreshspecial-help' => "Оваа специјална страница дава начин на рачно подновување на специјални страници.
+Откако ќе ги изберете сите страници што сакате да ги подновите, стиснете на копчето „Превчитај го одбраното“ подолу за да ги подновите тие страници.
+'''Предупредување:''' Подновата може да потрае кај поголеми викија.",
+	'refreshspecial-button' => 'Поднови го избраното',
+	'refreshspecial-fail' => 'Одберете барем една специјална страница за превчитување.',
 	'refreshspecial-refreshing' => 'ажурирање на специјалните страници',
 	'refreshspecial-skipped' => 'грешка, прескокнато',
 	'refreshspecial-choice' => 'ажурирање на специјалните страници',
@@ -933,8 +935,38 @@ $messages['mk'] = array(
 	'refreshspecial-reconnected' => 'Преповрзано.',
 	'refreshspecial-reconnecting' => 'Поврзувањето не успеа. Се преповрзувам за 10 секунди...',
 	'refreshspecial-page-result' => '{{PLURAL:$1|$Внесен е 1 ред|Внесени се $1 реда}} во',
-	'refreshspecial-total-display' => '{{PLURAL:$1|Ажурирана е $1 страница|Ажурирани се $1 страници}}, со вкупно $2 {{PLURAL:$2|ред|реда}} за време $3 (вкупното време откако скриптата работи изнесува $4)',
+	'refreshspecial-total-display' => '{{PLURAL:$1|Подновена е $1 страница|Подновени се $1 страници}}, со вкупно $2 {{PLURAL:$2|ред|реда}} во времетраење од $3 (скриптата работи вкупно $4)',
 	'right-refreshspecial' => 'Ажурирање на специјални страници',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'refreshspecial' => 'Oppdater spesialsider',
+	'refreshspecial-desc' => 'Muliggjør [[Special:RefreshSpecial|manuell oppdatering]] av spesialsider',
+	'refreshspecial-title' => 'Oppdater spesialsider',
+	'refreshspecial-help' => "Denne spesialsiden tilbyr metoder for å manuelt oppdatere spesialsider.
+Når du har valgt alle sidene du vil oppdatere, klikk på «Oppdater valgte»-knappen for å gjennomføre oppdateringen på de valgte spesialsidene.
+'''Advarsel:''' Oppdateringen kan ta en stund på større wikier.",
+	'refreshspecial-button' => 'Oppdater valgte',
+	'refreshspecial-fail' => 'Merk minst én spesialside for oppdatering',
+	'refreshspecial-refreshing' => 'oppdaterer spesialsider',
+	'refreshspecial-skipped' => 'billig, hoppet over',
+	'refreshspecial-choice' => 'oppdaterer spesialsider',
+	'refreshspecial-js-disabled' => "(''Du kan ikke merke alle sider om JavaScript er slått av'')",
+	'refreshspecial-select-all-pages' => 'Merk alle sider',
+	'refreshspecial-link-back' => 'Tilbake til utvidelsen',
+	'refreshspecial-none-selected' => 'Du har ikke merket noen spesialsider. Tilbakestiller til standardvalg.',
+	'refreshspecial-db-error' => 'Mislyktes: databasefeil',
+	'refreshspecial-no-page' => 'Ingen slik spesialside',
+	'refreshspecial-slave-lagged' => 'Forsinkelse i slavetjeneren, venter ...',
+	'refreshspecial-reconnected' => 'Tilkoblet på nytt.',
+	'refreshspecial-reconnecting' => 'Tilkobling mislyktes, prøver igjen om ti sekunder ...',
+	'refreshspecial-page-result' => 'fikk {{PLURAL:$1|én rad|$1 rader}} i',
+	'refreshspecial-total-display' => 'Oppdaterte {{PLURAL:$1|én side|$1 sider}} med totalt {{PLURAL:$2|én rad|$2 rader}} på tiden $3 (total skriptkjøretid er $4)',
+	'right-refreshspecial' => 'Oppdater spesialsider',
 );
 
 /** Dutch (Nederlands)
@@ -994,36 +1026,6 @@ Når du har valt kva sider du ønskjer å oppdatera, klikk på 'Oppdater valte' 
 	'refreshspecial-page-result' => 'fekk {{PLURAL:$1|éi rekkja|$1 rekkjer}} i',
 	'refreshspecial-total-display' => 'Oppdaterte {{PLURAL:$1|éi sida|$1 sider}} med totalt {{PLURAL:$2|éi rekkja|$2 rekkjer}} med tida $3 (total skriptkøyretid er $4)',
 	'right-refreshspecial' => 'Oppdatera spesialsider',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'refreshspecial' => 'Oppdater spesialsider',
-	'refreshspecial-desc' => 'Muliggjør [[Special:RefreshSpecial|manuell oppdatering]] av spesialsider',
-	'refreshspecial-title' => 'Oppdater spesialsider',
-	'refreshspecial-help' => "Denne spesialsiden tilbyr metoder for å manuelt oppdatere spesialsider.
-Når du har valgt alle sidene du vil oppdatere, klikk på «Oppdater valgte»-knappen for å gjennomføre oppdateringen på de valgte spesialsidene.
-'''Advarsel:''' Oppdateringen kan ta en stund på større wikier.",
-	'refreshspecial-button' => 'Oppdater valgte',
-	'refreshspecial-fail' => 'Merk minst én spesialside for oppdatering',
-	'refreshspecial-refreshing' => 'oppdaterer spesialsider',
-	'refreshspecial-skipped' => 'billig, hoppet over',
-	'refreshspecial-choice' => 'oppdaterer spesialsider',
-	'refreshspecial-js-disabled' => "(''Du kan ikke merke alle sider om JavaScript er slått av'')",
-	'refreshspecial-select-all-pages' => 'Merk alle sider',
-	'refreshspecial-link-back' => 'Tilbake til utvidelsen',
-	'refreshspecial-none-selected' => 'Du har ikke merket noen spesialsider. Tilbakestiller til standardvalg.',
-	'refreshspecial-db-error' => 'Mislyktes: databasefeil',
-	'refreshspecial-no-page' => 'Ingen slik spesialside',
-	'refreshspecial-slave-lagged' => 'Forsinkelse i slavetjeneren, venter ...',
-	'refreshspecial-reconnected' => 'Tilkoblet på nytt.',
-	'refreshspecial-reconnecting' => 'Tilkobling mislyktes, prøver igjen om ti sekunder ...',
-	'refreshspecial-page-result' => 'fikk {{PLURAL:$1|én rad|$1 rader}} i',
-	'refreshspecial-total-display' => 'Oppdaterte {{PLURAL:$1|én side|$1 sider}} med totalt {{PLURAL:$2|én rad|$2 rader}} på tiden $3 (total skriptkjøretid er $4)',
-	'right-refreshspecial' => 'Oppdater spesialsider',
 );
 
 /** Occitan (Occitan)
@@ -1276,40 +1278,45 @@ Upozornenie: na väčších wiki môže obnovenie chvíľu trvať.',
 	'right-refreshspecial' => 'Obnoviť špeciálne stránky',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Жељко Тодоровић
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
-	'refreshspecial-button' => 'Освежи назначено',
-	'refreshspecial-fail' => 'Треба да назначите макар једну специјалну страну за освежавање.',
-	'refreshspecial-refreshing' => 'Освежавање специјалних страна',
-	'refreshspecial-choice' => 'освежавање специјалних страна',
-	'refreshspecial-js-disabled' => '(<i>Не можете да назначите све стране када је JavaScript онемогућен</i>)',
-	'refreshspecial-select-all-pages' => 'Означи све стране',
-	'refreshspecial-link-back' => 'Врати се на специјалну страну',
-	'refreshspecial-none-selected' => 'Можда нисте означили ни једну специјалну страну. Враћање на подразумеван избор.',
-	'refreshspecial-db-error' => 'Није успело: Грешка у бази података',
-	'refreshspecial-no-page' => 'Нема такве специјалне стране',
-	'refreshspecial-reconnected' => 'Реконектован.',
-	'refreshspecial-reconnecting' => 'Конекција није успела, реконекција за 10 секунди...',
-	'refreshspecial-page-result' => '{{PLURAL:$1|добијен|добијено}} $1 {{PLURAL:$1|ред|редова}} у',
+	'refreshspecial-button' => 'Освежи изабрано',
+	'refreshspecial-fail' => 'Изаберите барем једну посебну страницу за освежавање.',
+	'refreshspecial-refreshing' => 'освежавам посебне странице',
+	'refreshspecial-choice' => 'освежавам посебне странице',
+	'refreshspecial-js-disabled' => '(<i>Не можете изабрати све странице када је онемогућен јаваскрипт</i>)',
+	'refreshspecial-select-all-pages' => 'Изабери све странице',
+	'refreshspecial-link-back' => 'Назад на посебну страницу',
+	'refreshspecial-none-selected' => 'Нисте изабрали ниједну посебну страницу. Враћам на подразумевани избор.',
+	'refreshspecial-db-error' => 'Неуспешно: грешка у бази података',
+	'refreshspecial-no-page' => 'Нема такве посебне странице',
+	'refreshspecial-reconnected' => 'Преповезано.',
+	'refreshspecial-reconnecting' => 'Не могу да се повежем. Преповезивање за десет секунди…',
+	'refreshspecial-page-result' => '{{PLURAL:$1|добијен је|добијена су|добијено је}} $1 {{PLURAL:$1|ред|реда|редова}} у',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica)) */
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
+ * @author Rancher
+ * @author Жељко Тодоровић
+ */
 $messages['sr-el'] = array(
-	'refreshspecial-button' => 'Osveži naznačeno',
-	'refreshspecial-fail' => 'Treba da naznačite makar jednu specijalnu stranu za osvežavanje.',
-	'refreshspecial-refreshing' => 'Osvežavanje specijalnih strana',
-	'refreshspecial-choice' => 'osvežavanje specijalnih strana',
-	'refreshspecial-js-disabled' => '(<i>Ne možete da naznačite sve strane kada je JavaScript onemogućen</i>)',
-	'refreshspecial-select-all-pages' => 'Označi sve strane',
-	'refreshspecial-link-back' => 'Vrati se na specijalnu stranu',
-	'refreshspecial-none-selected' => 'Možda niste označili ni jednu specijalnu stranu. Vraćanje na podrazumevan izbor.',
-	'refreshspecial-db-error' => 'Nije uspelo: Greška u bazi podataka',
-	'refreshspecial-no-page' => 'Nema takve specijalne strane',
-	'refreshspecial-reconnected' => 'Rekonektovan.',
-	'refreshspecial-reconnecting' => 'Konekcija nije uspela, rekonekcija za 10 sekundi...',
-	'refreshspecial-page-result' => '{{PLURAL:$1|dobijen|dobijeno}} $1 {{PLURAL:$1|red|redova}} u',
+	'refreshspecial-button' => 'Osveži izabrano',
+	'refreshspecial-fail' => 'Izaberite barem jednu posebnu stranicu za osvežavanje.',
+	'refreshspecial-refreshing' => 'osvežavam posebne stranice',
+	'refreshspecial-choice' => 'osvežavam posebne stranice',
+	'refreshspecial-js-disabled' => '(<i>Ne možete izabrati sve stranice kada je onemogućen javaskript</i>)',
+	'refreshspecial-select-all-pages' => 'Izaberi sve stranice',
+	'refreshspecial-link-back' => 'Nazad na posebnu stranicu',
+	'refreshspecial-none-selected' => 'Niste izabrali nijednu posebnu stranicu. Vraćam na podrazumevani izbor.',
+	'refreshspecial-db-error' => 'Neuspešno: greška u bazi podataka',
+	'refreshspecial-no-page' => 'Nema takve posebne stranice',
+	'refreshspecial-reconnected' => 'Prepovezano.',
+	'refreshspecial-reconnecting' => 'Ne mogu da se povežem. Prepovezivanje za deset sekundi…',
+	'refreshspecial-page-result' => '{{PLURAL:$1|dobijen je|dobijena su|dobijeno je}} $1 {{PLURAL:$1|red|reda|redova}} u',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1320,7 +1327,7 @@ $messages['stq'] = array(
 	'refreshspecial-desc' => 'Ferlööwet dät [[Special:RefreshSpecial|manuelle Apfriskjen fon Spezioalsieden]]',
 	'refreshspecial-title' => 'Spezioalsieden aktualisierje',
 	'refreshspecial-help' => 'Disse Spezioalsiede stoalt ne Reewe toun manuellen Aktualisierjen fon do Spezioalsieden kloor.
-Sogau du aal Spezioalsieden toun Aktualisierjen uutwääld hääst, druk ju Aktualisierje-Schaltfläche, uum ju Aktualisierenge tou starjen.
+Sogau du aal Spezioalsieden toun Aktualisierjen uutwääld hääst, druk ju Aktualisierje-Skaltfläche, uum ju Aktualisierenge tou starjen.
 Oachtenge: Dät Aktualisierjen kon ap groote Wikis laanger duurje.',
 	'refreshspecial-button' => 'uutwäälde apfriskje',
 	'refreshspecial-fail' => 'Hoak toumindest een Spezioalsiede toun Apfriskjen an.',
@@ -1329,7 +1336,7 @@ Oachtenge: Dät Aktualisierjen kon ap groote Wikis laanger duurje.',
 	'refreshspecial-choice' => 'aktualisier Spezioalsieden',
 	'refreshspecial-js-disabled' => '(<i>Du koast nit aal Sieden uutwääle, wan du Javascript deaktivierd hääst</i>)',
 	'refreshspecial-select-all-pages' => 'aal Sieden uutwääle',
-	'refreshspecial-link-back' => 'Tourääch tou juu Spezioalsiede',
+	'refreshspecial-link-back' => 'Tourääch tou ju Spezioalsiede',
 );
 
 /** Swedish (Svenska)
@@ -1505,9 +1512,16 @@ $messages['zh-hans'] = array(
 	'refreshspecial-title' => '刷新特殊页面',
 	'refreshspecial-button' => '刷新已选页面',
 	'refreshspecial-choice' => '正在刷新特殊页面',
+	'refreshspecial-select-all-pages' => '选择所有页面',
+	'refreshspecial-link-back' => '回到特殊页面',
+	'refreshspecial-db-error' => '失败：资料库错误',
+	'refreshspecial-no-page' => '此特殊页面不存在',
+	'refreshspecial-reconnecting' => '连接失败，在 10 秒后重新连接...',
+	'right-refreshspecial' => '重新载入特殊页面',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
@@ -1515,5 +1529,11 @@ $messages['zh-hant'] = array(
 	'refreshspecial-title' => '重新載入特殊頁面',
 	'refreshspecial-button' => '重新載入已選頁面',
 	'refreshspecial-choice' => '正在重新載入特殊頁面',
+	'refreshspecial-select-all-pages' => '選擇所有頁面',
+	'refreshspecial-link-back' => '回到特殊頁面',
+	'refreshspecial-db-error' => '失敗：資料庫錯誤',
+	'refreshspecial-no-page' => '此特殊頁面不存在',
+	'refreshspecial-reconnecting' => '連接失敗，在 10 秒後重新連接...',
+	'right-refreshspecial' => '重新載入特殊頁面',
 );
 

@@ -107,7 +107,15 @@ class AFComputedVariable {
 		$this->mParameters = $parameters;
 	}
 
-	/** It's like Article::prepareTextForEdit, but not for editing (old wikitext usually) */
+	/**
+	 * It's like Article::prepareTextForEdit, but not for editing (old wikitext usually)
+	 *
+	 *
+	 * @param $wikitext String
+	 * @param $article Article
+	 *
+	 * @return object
+	 */
 	function parseNonEditWikitext( $wikitext, $article ) {
 		static $cache = array();
 
@@ -121,7 +129,7 @@ class AFComputedVariable {
 		$edit = (object)array();
 		$options = new ParserOptions;
 		$options->setTidy( true );
-		$edit->output = $wgParser->parse( $wikitext, $article->mTitle, $options );
+		$edit->output = $wgParser->parse( $wikitext, $article->getTitle(), $options );
 		$cache[$cacheKey] = $edit;
 
 		return $edit;
@@ -177,10 +185,14 @@ class AFComputedVariable {
 		}
 
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 'externallinks', array( 'el_to' ),
-			array( 'el_from' => $id ), __METHOD__ );
+		$res = $dbr->select(
+			'externallinks',
+			array( 'el_to' ),
+			array( 'el_from' => $id ),
+			__METHOD__
+		);
 		$links = array();
-		while ( $row = $dbr->fetchObject( $res ) ) {
+		foreach( $res as $row ) {
 			$links[] = $row->el_to;
 		}
 		return $links;
@@ -212,28 +224,24 @@ class AFComputedVariable {
 				break;
 			case 'links-from-wikitext':
 				// This should ONLY be used when sharing a parse operation with the edit.
-				global $wgArticle;
 
-				$article = self::articleFromTitle( $parameters['namespace'],
-													$parameters['title'] );
-
-				if ( $wgArticle && $article->getTitle()->equals( $wgArticle->getTitle() ) ) {
+				$article = $parameters['article'];
+				if ( $article ) {
 					$textVar = $parameters['text-var'];
 
 					$new_text = $vars->getVar( $textVar )->toString();
 					$editInfo = $article->prepareTextForEdit( $new_text );
 					$links = array_keys( $editInfo->output->getExternalLinks() );
 					$result = $links;
-				} else {
-					// Change to links-from-wikitext-nonedit.
-					$this->mMethod = 'links-from-wikitext-nonedit';
-					$result = $this->compute( $vars );
+					break;
 				}
-				break;
+				// Otherwise fall back to database
 			case 'links-from-wikitext-nonedit':
 			case 'links-from-wikitext-or-database':
-				$article = self::articleFromTitle( $parameters['namespace'],
-													$parameters['title'] );
+				$article = self::articleFromTitle(
+					$parameters['namespace'],
+					$parameters['title']
+				);
 
 				if ( $vars->getVar( 'context' )->toString() == 'filter' ) {
 					$links = $this->getLinksFromDB( $article );
@@ -269,10 +277,9 @@ class AFComputedVariable {
 				break;
 			case 'parse-wikitext':
 				// Should ONLY be used when sharing a parse operation with the edit.
-				global $wgArticle;
-				$article = self::articleFromTitle( $parameters['namespace'], $parameters['title'] );
-
-				if ( $wgArticle && $article->getTitle() === $wgArticle->getTitle() ) {
+	
+				$article = $parameters['article'];
+				if ( $article ) {
 					$textVar = $parameters['wikitext-var'];
 
 					$new_text = $vars->getVar( $textVar )->toString();
@@ -281,12 +288,9 @@ class AFComputedVariable {
 					// Kill the PP limit comments. Ideally we'd just remove these by not setting the
 					// parser option, but then we can't share a parse operation with the edit, which is bad.
 					$result = preg_replace( '/<!--\s*NewPP limit report[^>]*-->\s*$/si', '', $newHTML );
-				} else {
-					// Change to parse-wikitext-nonedit.
-					$this->mMethod = 'parse-wikitext-nonedit';
-					$result = $this->compute( $vars );
+					break;
 				}
-				break;
+				// Otherwise fall back to database
 			case 'parse-wikitext-nonedit':
 				$article = self::articleFromTitle( $parameters['namespace'], $parameters['title'] );
 				$textVar = $parameters['wikitext-var'];
@@ -311,7 +315,8 @@ class AFComputedVariable {
 				}
 
 				$dbr = wfGetDB( DB_SLAVE );
-				$res = $dbr->select( 'revision', 'distinct rev_user_text',
+				$res = $dbr->select( 'revision',
+					'DISTINCT rev_user_text',
 					array(
 						'rev_page' => $title->getArticleId(),
 						'rev_timestamp<' . $dbr->addQuotes( $dbr->timestamp( $cutOff ) )
@@ -321,8 +326,8 @@ class AFComputedVariable {
 				);
 
 				$users = array();
-				while ( $user = $dbr->fetchRow( $res ) ) {
-					$users[] = $user[0];
+				foreach( $res as $row ) {
+					$users[] = $row->rev_user_text;
 				}
 				$result = $users;
 				break;
@@ -390,10 +395,11 @@ class AFComputedVariable {
 
 				$rev = Revision::loadFromTimestamp( $dbr, $title, $timestamp );
 
-				if ( $rev )
+				if ( $rev ) {
 					$result = $rev->getText();
-				else
+				} else {
 					$result = '';
+				}
 				break;
 			default:
 				if ( wfRunHooks( 'AbuseFilter-computeVariable',

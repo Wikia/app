@@ -1,0 +1,36 @@
+<html>
+  <head>
+    
+<script type="text/javascript" src="../../../mwEmbedLoader.php"></script>
+  </head>
+  <body>
+    <h2>mwEmbed / archive.org server side seek</h2>
+	Start Playing at <input id="startTime" size="5" value ="50"></input> seconds. <input value="go" type="button" id="doPageSeek"></input></br> 	
+    <video id="vid1" poster="http://www.archive.org/download/night_of_the_living_dead/format=Thumbnail&x.jpg"
+           style="width:400px;height:300px" data-durationhint="5717.21">
+      <source src="http://www.archive.org/download/night_of_the_living_dead/night_of_the_living_dead_512kb.mp4"/>
+      <source src="http://www.archive.org/download/night_of_the_living_dead/night_of_the_living_dead.ogv"/>
+    </video>
+    <script type="text/javascript">
+    	mw.ready( function(){
+        	// check for hash:
+        	var urlParts = new mw.Uri( document.URL);
+        	if( urlParts.fragment ){
+				// run the start offset:
+				var startTime = urlParts.anchor.split('=')[1];
+
+				//update the input box:
+				$('#startTime').val( startTime );
+
+				// update current time then play: 
+				$('#vid1').get(0).currentTime = startTime;
+				$('#vid1').get(0).play();
+        	}
+    		// bind button: 
+    		$('#doPageSeek').click(function(){        		
+        		document.location = 'Player_Seek.html?' + Math.random(1) + '#start=' + $("#startTime").val();
+    		});
+    	});
+    </script>
+  </body>
+</html>

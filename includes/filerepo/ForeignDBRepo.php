@@ -1,7 +1,14 @@
 <?php
+/**
+ * A foreign repository with an accessible MediaWiki database
+ *
+ * @file
+ * @ingroup FileRepo
+ */
 
 /**
  * A foreign repository with an accessible MediaWiki database
+ *
  * @ingroup FileRepo
  */
 class ForeignDBRepo extends LocalRepo {
@@ -28,10 +35,16 @@ class ForeignDBRepo extends LocalRepo {
 
 	function getMasterDB() {
 		if ( !isset( $this->dbConn ) ) {
-			$class = 'Database' . ucfirst( $this->dbType );
-			$this->dbConn = new $class( $this->dbServer, $this->dbUser,
-				$this->dbPassword, $this->dbName, false, $this->dbFlags,
-				$this->tablePrefix );
+			$this->dbConn = DatabaseBase::factory( $this->dbType,
+				array(
+					'host' => $this->dbServer,
+					'user'   => $this->dbUser,
+					'password' => $this->dbPassword,
+					'dbname' => $this->dbName,
+					'flags' => $this->dbFlags,
+					'tablePrefix' => $this->tablePrefix
+				)
+			);
 		}
 		return $this->dbConn;
 	}
@@ -65,7 +78,7 @@ class ForeignDBRepo extends LocalRepo {
 	function publish( $srcPath, $dstRel, $archiveRel, $flags = 0 ) {
 		throw new MWException( get_class($this) . ': write operations are not supported' );
 	}
-	function deleteBatch( $fileMap ) {
+	function deleteBatch( $sourceDestPairs ) {
 		throw new MWException( get_class($this) . ': write operations are not supported' );
 	}
 }

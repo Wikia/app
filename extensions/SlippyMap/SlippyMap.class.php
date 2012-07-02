@@ -9,7 +9,7 @@
 class SlippyMap {
 
 	/* Fields */
-	
+
 	/**
 	 * Our parser instance, passed from above
 	 *
@@ -122,7 +122,7 @@ class SlippyMap {
 		}
 
 		if ( count( $this->argsError ) == 0 ) {
-			
+
 			wfProfileOut( __METHOD__ );
 			return true;
 		} else {
@@ -192,7 +192,7 @@ class SlippyMap {
 					}
 				}
 			}
-			
+
 			/* lon */
 			if ( $key === 'lon' && $has_val ) {
 				if ( ! preg_match( '~^ -? [0-9]{1,3} (?: \\. [0-9]{1,20} )? $~x', $val ) ) {
@@ -235,7 +235,7 @@ class SlippyMap {
 
 					if ( $key === 'width' ) {
 						$this->width  = $thumbsize;
-					} else if ( $key === 'height' ) {
+					} elseif ( $key === 'height' ) {
 						$this->height = $thumbsize * .72;
 					}
 
@@ -255,7 +255,7 @@ class SlippyMap {
 								$min_width,
 								$max_width
 							);
-						} else if ( $key == 'height' && ( $val > $max_height || $val < $min_height ) ) {
+						} elseif ( $key == 'height' && ( $val > $max_height || $val < $min_height ) ) {
 							$this->argsError[] = wfMsg(
 								'slippymap_error_invalid_attribute_' . $key . '_value_out_of_range',
 								$val,
@@ -325,7 +325,7 @@ class SlippyMap {
 				height: {$this->height},
 				marker: {$this->marker}
 			}));</script>
-			 
+
 			<!-- mapframe -->
 			<div class="mapframe" style="width:{$this->width}px">
 EOT;
@@ -368,7 +368,7 @@ EOT;
 	 * This generates static map code
 	 *
 	 * @return string: containing static map html code
-	 */	
+	 */
 	protected function getStaticMap( $id, $static_rendering ) {
 		$staticType				= $static_rendering['type'];
 		$staticOptions			= $static_rendering['options'];
@@ -433,7 +433,7 @@ EOT;
 					'strong',
 					array( 'class' => 'error' ),
 					wfMsgNoTrans( 'slippymap_errors', wfMsgNoTrans( 'slippymap_extname' ) )
-					. 
+					.
 					Xml::tags(
 						'ul',
 						null,

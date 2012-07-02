@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Script to clean up broken, unparseable upload filenames.
  *
  * Usage: php cleanupImages.php [--fix]
@@ -24,11 +24,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @author Brion Vibber <brion at pobox.com>
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/cleanupTable.inc' );
+require_once( dirname( __FILE__ ) . '/cleanupTable.inc' );
 
 class ImageCleanup extends TableCleanup {
 	protected $defaultParams = array(
@@ -54,50 +55,53 @@ class ImageCleanup extends TableCleanup {
 			return $this->progress( 0 );
 		}
 
-		if( $source == '' ) {
+		if ( $source == '' ) {
 			// Ye olde empty rows. Just kill them.
 			$this->killRow( $source );
 			return $this->progress( 1 );
 		}
 
-		
 		$cleaned = $source;
-		
+
 		// About half of old bad image names have percent-codes
 		$cleaned = rawurldecode( $cleaned );
 
 		// We also have some HTML entities there
 		$cleaned = Sanitizer::decodeCharReferences( $cleaned );
-		
+
 		// Some are old latin-1
 		$cleaned = $wgContLang->checkTitleEncoding( $cleaned );
-		
+
 		// Many of remainder look like non-normalized unicode
 		$cleaned = $wgContLang->normalize( $cleaned );
-		
+
 		$title = Title::makeTitleSafe( NS_FILE, $cleaned );
-		
-		if( is_null( $title ) ) {
+
+		if ( is_null( $title ) ) {
 			$this->output( "page $source ($cleaned) is illegal.\n" );
 			$safe = $this->buildSafeTitle( $cleaned );
-			if( $safe === false )
+			if ( $safe === false ) {
 				return $this->progress( 0 );
+			}
 			$this->pokeFile( $source, $safe );
 			return $this->progress( 1 );
 		}
 
-		if( $title->getDBkey() !== $source ) {
+		if ( $title->getDBkey() !== $source ) {
 			$munged = $title->getDBkey();
 			$this->output( "page $source ($munged) doesn't match self.\n" );
 			$this->pokeFile( $source, $munged );
 			return $this->progress( 1 );
 		}
 
-		$this->progress( 0 );
+		return $this->progress( 0 );
 	}
 
+	/**
+	 * @param $name string
+	 */
 	private function killRow( $name ) {
-		if( $this->dryrun ) {
+		if ( $this->dryrun ) {
 			$this->output( "DRY RUN: would delete bogus row '$name'\n" );
 		} else {
 			$this->output( "deleting bogus row '$name'\n" );
@@ -107,7 +111,7 @@ class ImageCleanup extends TableCleanup {
 				__METHOD__ );
 		}
 	}
-	
+
 	private function filePath( $name ) {
 		if ( !isset( $this->repo ) ) {
 			$this->repo = RepoGroup::singleton()->getLocalRepo();
@@ -122,14 +126,15 @@ class ImageCleanup extends TableCleanup {
 	private function pageExists( $name, $db ) {
 		return $db->selectField( 'page', '1', array( 'page_namespace' => NS_FILE, 'page_title' => $name ), __METHOD__ );
 	}
-	
+
 	private function pokeFile( $orig, $new ) {
 		$path = $this->filePath( $orig );
-		if( !file_exists( $path ) ) {
+		if ( !file_exists( $path ) ) {
 			$this->output( "missing file: $path\n" );
-			return $this->killRow( $orig );
+			$this->killRow( $orig );
+			return;
 		}
-		
+
 		$db = wfGetDB( DB_MASTER );
 
 		/*
@@ -142,22 +147,22 @@ class ImageCleanup extends TableCleanup {
 		$version = 0;
 		$final = $new;
 		$conflict = ( $this->imageExists( $final, $db ) ||
-			      ( $this->pageExists( $orig, $db ) && $this->pageExists( $final, $db ) ) );
-		
-		while( $conflict ) {
+				( $this->pageExists( $orig, $db ) && $this->pageExists( $final, $db ) ) );
+
+		while ( $conflict ) {
 			$this->output( "Rename conflicts with '$final'...\n" );
 			$version++;
 			$final = $this->appendTitle( $new, "_$version" );
 			$conflict = ( $this->imageExists( $final, $db ) || $this->pageExists( $final, $db ) );
 		}
-		
+
 		$finalPath = $this->filePath( $final );
-		
-		if( $this->dryrun ) {
+
+		if ( $this->dryrun ) {
 			$this->output( "DRY RUN: would rename $path to $finalPath\n" );
 		} else {
 			$this->output( "renaming $path to $finalPath\n" );
-			// XXX: should this use File::move()?  FIXME?
+			// @todo FIXME: Should this use File::move()?
 			$db->begin();
 			$db->update( 'image',
 				array( 'img_name' => $final ),
@@ -172,14 +177,14 @@ class ImageCleanup extends TableCleanup {
 				array( 'page_title' => $orig, 'page_namespace' => NS_FILE ),
 				__METHOD__ );
 			$dir = dirname( $finalPath );
-			if( !file_exists( $dir ) ) {
-				if( !wfMkdirParents( $dir ) ) {
-					$this->log( "RENAME FAILED, COULD NOT CREATE $dir" );
+			if ( !file_exists( $dir ) ) {
+				if ( !wfMkdirParents( $dir, null, __METHOD__ ) ) {
+					$this->output( "RENAME FAILED, COULD NOT CREATE $dir" );
 					$db->rollback();
 					return;
 				}
 			}
-			if( rename( $path, $finalPath ) ) {
+			if ( rename( $path, $finalPath ) ) {
 				$db->commit();
 			} else {
 				$this->error( "RENAME FAILED" );
@@ -199,16 +204,16 @@ class ImageCleanup extends TableCleanup {
 			"/([^$wgLegalTitleChars]|~)/",
 			array( $this, 'hexChar' ),
 			$name );
-		
+
 		$test = Title::makeTitleSafe( NS_FILE, $x );
-		if( is_null( $test ) || $test->getDBkey() !== $x ) {
+		if ( is_null( $test ) || $test->getDBkey() !== $x ) {
 			$this->error( "Unable to generate safe title from '$name', got '$x'" );
 			return false;
 		}
-		
+
 		return $x;
 	}
 }
 
 $maintClass = "ImageCleanup";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

@@ -90,7 +90,7 @@ if ( $err !== true ) {
 	exit(1);
 }
 
-$dbw->immediateCommit();
+$dbw->commit();
 
 print "Add/remove watching \n";
 

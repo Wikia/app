@@ -9,15 +9,15 @@ $messages['en'] = array(
 	'stafflog-piggybackloginmsg' => '$1 Piggyback - user $2 login as $3', // @todo FIXME: event contains 4 parameters.
 	'stafflog-piggybacklogoutmsg' => '$1 Piggyback - user $2 logout from $3 acount', // @todo FIXME: event contains 4 parameters.
 	'right-stafflog' => 'Can view the stafflog',
-        'stafflog-wiki-status-change' => '$1 changed the status of $2 to $3. Reason: $4',
-        'stafflog-filter-label' => 'Filter',
-        'stafflog-filter-user' => 'User:',
-        'stafflog-filter-type' => 'Type:',
-        'stafflog-filter-apply' => 'Apply filter',
-        'stafflog-filter-type-block' => 'Blocks',
-        'stafflog-filter-type-piggyback' => 'Piggyback',
-        'stafflog-filter-type-renameuser' => 'User renames',
-        'stafflog-filter-type-wikifactory' => 'Wiki status',
+	'stafflog-wiki-status-change' => '$1 changed the status of $2 to $3. Reason: $4',
+	'stafflog-filter-label' => 'Filter',
+	'stafflog-filter-user' => 'User:',
+	'stafflog-filter-type' => 'Type:',
+	'stafflog-filter-apply' => 'Apply filter',
+	'stafflog-filter-type-block' => 'Blocks',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
+	'stafflog-filter-type-renameuser' => 'User renames',
+	'stafflog-filter-type-wikifactory' => 'Wiki status',
 );
 
 /** Message documentation (Message documentation)
@@ -148,7 +148,7 @@ $messages['fr'] = array(
 	'stafflog-filter-type-wikifactory' => 'Statut du wiki',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

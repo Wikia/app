@@ -14,9 +14,21 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'stalkerlog-desc' => 'Short description of the extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'stalkerlog-desc' => '{{desc}}',
+);
+
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'stalkerlog-desc' => 'Shton [[Special:Log/stalkerlog|një regjistër]] e hyrje të përdoruesit dhe mbylljes',
+	'stalkerlog-log-login' => 'futur me emrin tuaj',
+	'stalkerlog-log-logout' => 'regjistruar jashtë.',
+	'stalkerlog-log-type' => 'log User authentication',
+	'stalkerlog-log-text' => 'Ky është një regjistër për hyrje të përdoruesit dhe mbylljes.',
 );
 
 /** Arabic (العربية)
@@ -28,6 +40,13 @@ $messages['ar'] = array(
 	'stalkerlog-log-logout' => 'مسجل الخروج.',
 	'stalkerlog-log-type' => 'سجل تسجيل المستخدمين',
 	'stalkerlog-log-text' => 'هذا سجل بعمليات تسجيل الدخول والخروج للمستخدمين.',
+);
+
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'stalkerlog-log-login' => 'ܥܠܝܠܐ',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -42,7 +61,7 @@ $messages['arz'] = array(
 	'stalkerlog-log-text' => 'ده سجل بعمليات تسجيل الدخول والخروج لليوزرز.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -67,13 +86,14 @@ $messages['bg'] = array(
 
 /** Breton (Brezhoneg)
  * @author Fulup
+ * @author Y-M D
  */
 $messages['br'] = array(
-	'stalkerlog-desc' => 'Ouzhpennañ a ra ur [[Special:Log/stalkerlog|marilh]] eus taolioù lugañ/dilugañ an implijerien',
-	'stalkerlog-log-login' => 'Luget.',
+	'stalkerlog-desc' => 'Ouzhpennañ a ra ur [[Special:Log/stalkerlog|marilh]] eus taolioù kevreañ/digevreañ an implijerien',
+	'stalkerlog-log-login' => 'kevreet.',
 	'stalkerlog-log-logout' => 'Diluget.',
 	'stalkerlog-log-type' => 'Marilh anaoudadurioù an implijer',
-	'stalkerlog-log-text' => 'Setu aze ur marilh eus taolioù lugañ/dilugañ an implijer',
+	'stalkerlog-log-text' => 'Setu aze ur marilh eus taolioù kevreañ/digevreañ an implijer.',
 );
 
 /** Bosnian (Bosanski)
@@ -101,14 +121,15 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Als-Holder
  * @author DaSch
+ * @author Kghbln
  * @author Revolus
  */
 $messages['de'] = array(
-	'stalkerlog-desc' => 'Fügt ein [[Special:Log/stalkerlog|Logbuch]] der An- und Abmeldungen hinzu',
-	'stalkerlog-log-login' => 'angemeldet.',
-	'stalkerlog-log-logout' => 'abgemeldet.',
+	'stalkerlog-desc' => 'Ergänzt ein [[Special:Log/stalkerlog|Logbuch]] der An- und Abmeldungen von Benutzern',
+	'stalkerlog-log-login' => 'meldete sich an.',
+	'stalkerlog-log-logout' => 'meldete sich ab.',
 	'stalkerlog-log-type' => 'Authentifizierungs-Logbuch',
-	'stalkerlog-log-text' => 'Dies ist das Logbuch der An- und Abmeldungen.',
+	'stalkerlog-log-text' => 'Dies ist das Logbuch der An- und Abmeldungen von Benutzern.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -187,13 +208,14 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Cedric31
  * @author Grondin
+ * @author Urhixidur
  */
 $messages['fr'] = array(
-	'stalkerlog-desc' => 'Ajoute [[Special:Log/stalkerlog|un journal]] des connections des utilisateurs',
+	'stalkerlog-desc' => 'Ajoute [[Special:Log/stalkerlog|un journal]] des connexions des utilisateurs',
 	'stalkerlog-log-login' => 'connecté.',
 	'stalkerlog-log-logout' => 'déconnecté.',
 	'stalkerlog-log-type' => 'Journal d’authentification de l’utilisateur',
-	'stalkerlog-log-text' => 'Voici un journal des connections et des déconnections de l’utilisateur.',
+	'stalkerlog-log-text' => 'Voici un journal des connexions et des déconnexions de l’utilisateur.',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -202,6 +224,7 @@ $messages['fr'] = array(
  */
 $messages['frp'] = array(
 	'stalkerlog-log-login' => 'branchiê.',
+	'stalkerlog-log-logout' => 'dèbranchiê.',
 );
 
 /** Galician (Galego)
@@ -321,16 +344,17 @@ $messages['jv'] = array(
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
  * @author Thearith
+ * @author គីមស៊្រុន
  */
 $messages['km'] = array(
-	'stalkerlog-desc' => 'បន្ថែម [[Special:Log/stalkerlog|កំណត់ហេតុ]]​នៃការ​ឡុកអ៊ីន​ចូល និង​ចាកចេញ របស់​​អ្នកប្រើប្រាស់',
-	'stalkerlog-log-login' => 'បាន​ឡុកអ៊ីន​ហើយ។',
-	'stalkerlog-log-logout' => 'បាន​ចាកចេញ​ហើយ។',
+	'stalkerlog-desc' => 'បន្ថែម[[Special:Log/stalkerlog|កំណត់ហេតុ]]​នៃការ​កត់ឈ្មោះ​ចូលនិង​កត់ឈ្មោះចេញរបស់​​អ្នកប្រើប្រាស់',
+	'stalkerlog-log-login' => 'បានកត់ឈ្មោះចូល​ហើយ។',
+	'stalkerlog-log-logout' => 'បាន​កត់ឈ្មោះចេញ​ហើយ។',
 	'stalkerlog-log-type' => 'កំណត់ហេតុ​ការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ​របស់​អ្នកប្រើប្រាស់',
-	'stalkerlog-log-text' => 'នេះ​ជា​កំណត់ហេតុ​នៃ​ការ​ឡុកអ៊ីន​និង​ការ​ចាកចេញ​របស់​អ្នកប្រើប្រាស់។',
+	'stalkerlog-log-text' => 'នេះ​ជា​កំណត់ហេតុ​នៃ​ការ​កត់ឈ្មោះចូលនិង​ការ​កត់ឈ្មោះចេញ​របស់​អ្នកប្រើប្រាស់។',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -405,7 +429,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'stalkerlog-desc' => 'Legger til en [[Special:Log/stalkerlog|logg]] over når brukere logger inn eller ut.',
 	'stalkerlog-log-login' => 'logget inn.',
 	'stalkerlog-log-logout' => 'logget ut.',
@@ -445,6 +469,14 @@ $messages['pms'] = array(
 	'stalkerlog-log-logout' => 'surtì.',
 	'stalkerlog-log-type' => "Registr ëd j'antenticassion ëd j'utent",
 	'stalkerlog-log-text' => "Sto sì a l'é un registr dij login e dij logout ëd j'utent.",
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'stalkerlog-log-login' => 'ننوتلۍ',
+	'stalkerlog-log-logout' => 'ووتلۍ',
 );
 
 /** Portuguese (Português)
@@ -501,7 +533,7 @@ $messages['sk'] = array(
 	'stalkerlog-log-text' => 'Toto je záznam prihlásení a odhlásení používateľov.',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -510,7 +542,7 @@ $messages['sr-ec'] = array(
 	'stalkerlog-log-type' => 'Историја логовања корисника',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -581,6 +613,13 @@ $messages['vo'] = array(
 	'stalkerlog-log-login' => 'enunädon oki.',
 	'stalkerlog-log-logout' => 'esänunädon oki.',
 	'stalkerlog-log-text' => 'Is palisedons nunädams e sänunädams gebanas.',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'stalkerlog-log-logout' => 'אַרויסלאגירט',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

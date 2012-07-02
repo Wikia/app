@@ -37,7 +37,7 @@ class DataCenterPage extends SpecialPage {
 
 	/* Private Static Members */
 
-	/*
+	/**
 	 * The path given to the special page is a string of text including any text
 	 * that was passed through the URL following the name of the special page
 	 * and a forward slash. This string is then broken up into parts delimited
@@ -61,7 +61,7 @@ class DataCenterPage extends SpecialPage {
 		array( 'limit', 'offset' ),
 	);
 
-	/*
+	/**
 	 * Once the path is interpreted it is determined if the request specified a
 	 * page. If the request did not specify a page, the first page in this array
 	 * is used. When attempting to construct instances of a page and page user
@@ -251,8 +251,6 @@ class DataCenterPage extends SpecialPage {
 	public function __construct() {
 		// Initialize special page
 		parent::__construct( 'DataCenter' );
-		// Internationalization
-		wfLoadExtensionMessages( 'DataCenter' );
 	}
 
 	public function execute( $sub ) {

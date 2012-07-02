@@ -31,7 +31,7 @@ include_once( "SRF_Ploticus.php" );
 class SRFPloticusVBar extends SRFPloticus {
 
 	protected function readParameters( $params, $outputmode ) {
-		SRFPloticus::readParameters( $params, $outputmode );
+		parent::readParameters( $params, $outputmode );
 
 		// All other options will be simply ignored;
 		$this->m_ploticusmode === 'prefab';

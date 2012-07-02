@@ -233,4 +233,15 @@ class ListParameter extends Parameter {
 		$this->setDoManipulationOfDefault( $manipulate );
 	}	
 	
+	/**
+	 * Returns the delimiter.
+	 * 
+	 * @since 0.4.11
+	 * 
+	 * @return string
+	 */
+	public function getDelimiter() {
+		return $this->delimiter;
+	}
+	
 }

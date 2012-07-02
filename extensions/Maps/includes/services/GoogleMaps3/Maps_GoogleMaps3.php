@@ -4,14 +4,65 @@
  * Class holding information and functionallity specific to Google Maps v3.
  * This infomation and features can be used by any mapping feature. 
  * 
- * @since 0.1
+ * @since 0.7
  * 
  * @file Maps_GoogleMaps3.php
  * @ingroup MapsGoogleMaps3
  * 
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsGoogleMaps3 extends MapsMappingService {
+	
+	/**
+	 * List of map types (keys) and their internal values (values). 
+	 * 
+	 * @since 0.7
+	 * 
+	 * @var array
+	 */
+	public static $mapTypes = array(
+		'normal' => 'ROADMAP',
+		'roadmap' => 'ROADMAP',
+		'satellite' => 'SATELLITE',
+		'hybrid' => 'HYBRID',
+		'terrain' => 'TERRAIN',
+		'physical' => 'TERRAIN',
+		'earth' => 'earth'
+	);
+	
+	/**
+	 * List of supported map layers. 
+	 * 
+	 * @since 1.0
+	 * 
+	 * @var array
+	 */
+	protected static $mapLayers = array(
+		'traffic',
+		'bicycling'
+	);	
+	
+	public static $tyepControlStyles = array(
+		'default' => 'DEFAULT',
+		'horizontal' => 'HORIZONTAL_BAR',
+		'dropdown' => 'DROPDOWN_MENU'
+	);
+	
+	/**
+	 * List of supported control names.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @var array
+	 */
+	protected static $controlNames = array(
+		'pan',
+		'zoom',
+		'type',
+		'scale',
+		'streetview'
+	);		
 	
 	/**
 	 * Constructor.
@@ -21,7 +72,7 @@ class MapsGoogleMaps3 extends MapsMappingService {
 	function __construct( $serviceName ) {
 		parent::__construct(
 			$serviceName,
-			array( 'google3', 'googlemap3', 'gmap3', 'gmaps3' )
+			array( 'googlemaps', 'google' )
 		);
 	}
 	
@@ -31,18 +82,76 @@ class MapsGoogleMaps3 extends MapsMappingService {
 	 * @since 0.7
 	 */	
 	public function addParameterInfo( array &$params ) {
-		global $egMapsGMaps3Type;
+		global $egMapsGMaps3Type, $egMapsGMaps3Types, $egMapsGMaps3Controls, $egMapsGMaps3Layers;
+		global $egMapsGMaps3DefTypeStyle, $egMapsGMaps3DefZoomStyle, $egMapsGMaps3AutoInfoWindows;
+		global $egMapsResizableByDefault, $egMapsGMaps3DefaultTilt;
 		
-		$params['type'] = new Parameter(
-			'type',
-			Parameter::TYPE_STRING,
-			$egMapsGMaps3Type,
-			array(),
-			array(
-				new CriterionInArray( self::getTypeNames() ),
-			)
-		);
-		$params['type']->addManipulations( new MapsParamGMap3Type() );		
+		$params['zoom']->addCriteria( new CriterionInRange( 0, 20 ) );
+		$params['zoom']->setDefault( self::getDefaultZoom() );		
+		
+		$params['type'] = new Parameter( 'type' );
+		$params['type']->setDefault( $egMapsGMaps3Type );
+		$params['type']->addCriteria( new CriterionInArray( self::getTypeNames() ) );
+		$params['type']->addManipulations( new MapsParamGMap3Type() );
+		$params['type']->setMessage( 'maps-googlemaps3-par-type' );
+		
+		$params['types'] = new ListParameter( 'types' );
+		$params['types']->addDependencies( 'type' );
+		$params['types']->setDefault( $egMapsGMaps3Types );
+		$params['types']->addCriteria( new CriterionInArray( self::getTypeNames() ) );		
+		$params['types']->addManipulations( new MapsParamGMap3Type(), new MapsParamGMap3Types() );
+		$params['types']->setMessage( 'maps-googlemaps3-par-types' );
+		
+		$params['layers'] = new ListParameter( 'layers' );
+		$params['layers']->setDefault( $egMapsGMaps3Layers );
+		$params['layers']->addCriteria( new CriterionInArray( self::getLayerNames() ) );
+		$params['layers']->setMessage( 'maps-googlemaps3-par-layers' );	
+		
+		$params['controls'] = new ListParameter( 'controls' );
+		$params['controls']->setDefault( $egMapsGMaps3Controls );
+		$params['controls']->addCriteria( new CriterionInArray( self::$controlNames ) );
+		$params['controls']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
+		$params['controls']->setMessage( 'maps-googlemaps3-par-controls' );
+		
+		$params['zoomstyle'] = new Parameter( 'zoomstyle' );
+		$params['zoomstyle']->setDefault( $egMapsGMaps3DefZoomStyle );
+		$params['zoomstyle']->addCriteria( new CriterionInArray( 'default', 'small', 'large' ) );
+		$params['zoomstyle']->addManipulations( new MapsParamGMap3Zoomstyle() );
+		$params['zoomstyle']->setMessage( 'maps-googlemaps3-par-zoomstyle' );
+		
+		$params['typestyle'] = new Parameter( 'typestyle' );
+		$params['typestyle']->setDefault( $egMapsGMaps3DefTypeStyle );
+		$params['typestyle']->addCriteria( new CriterionInArray( array_keys( self::$tyepControlStyles ) ) );
+		$params['typestyle']->addManipulations( new MapsParamGMap3Typestyle() );
+		$params['typestyle']->setMessage( 'maps-googlemaps3-par-typestyle' );
+
+		$params['autoinfowindows'] = new Parameter( 'autoinfowindows', Parameter::TYPE_BOOLEAN );
+		$params['autoinfowindows']->setDefault( $egMapsGMaps3AutoInfoWindows );
+		$params['autoinfowindows']->setMessage( 'maps-googlemaps3-par-autoinfowindows' );
+		
+		$params['kml'] = new ListParameter( 'kml' );
+		$params['kml']->setDefault( array() );
+		$params['kml']->setMessage( 'maps-googlemaps3-par-kml' );
+		
+		$params['gkml'] = new ListParameter( 'gkml' );
+		$params['gkml']->setDefault( array() );
+		$params['gkml']->setMessage( 'maps-googlemaps3-par-gkml' );
+
+		$params['fusiontables'] = new ListParameter( 'fusiontables' );
+		$params['fusiontables']->setDefault( array() );
+		$params['fusiontables']->setMessage( 'maps-googlemaps3-par-fusiontables' );
+
+		$params['resizable'] = new Parameter( 'resizable', Parameter::TYPE_BOOLEAN );
+		$params['resizable']->setDefault( $egMapsResizableByDefault, false );
+		$params['resizable']->setMessage( 'maps-par-resizable' );
+		
+		$params['tilt'] = new Parameter( 'tilt', Parameter::TYPE_INTEGER );
+		$params['tilt']->setDefault( $egMapsGMaps3DefaultTilt, false );
+		$params['tilt']->setMessage( 'maps-googlemaps3-par-tilt' );
+		
+		$params['kmlrezoom'] = new Parameter( 'kmlrezoom', Parameter::TYPE_BOOLEAN );
+		$params['kmlrezoom']->setDefault( $GLOBALS['egMapsRezoomForKML'], false );
+		$params['kmlrezoom']->setMessage( 'maps-googlemaps3-par-kmlrezoom' );
 	}
 	
 	/**
@@ -51,8 +160,8 @@ class MapsGoogleMaps3 extends MapsMappingService {
 	 * @since 0.6.5
 	 */	
 	public function getDefaultZoom() {
-		global $egMapsGoogleMaps3Zoom;
-		return $egMapsGoogleMaps3Zoom;
+		global $egMapsGMaps3Zoom;
+		return $egMapsGMaps3Zoom;
 	}	
 	
 	/**
@@ -71,44 +180,6 @@ class MapsGoogleMaps3 extends MapsMappingService {
 	}	
 	
 	/**
-	 * @see MapsMappingService::createMarkersJs
-	 * 
-	 * @since 0.6.5
-	 */
-	public function createMarkersJs( array $markers ) {
-		$markerItems = array();
-		
-		foreach ( $markers as $marker ) {
-			$markerItems[] = Xml::encodeJsVar( (object)array(
-				'lat' => $marker[0],
-				'lon' => $marker[1],
-				'title' => $marker[2],
-				'label' =>$marker[3],
-				'icon' => $marker[4]
-			) );
-		}
-		
-		// Create a string containing the marker JS.
-		return '[' . implode( ',', $markerItems ) . ']';
-	}	
-	
-	/**
-	 * List of map types (keys) and their internal values (values). 
-	 * 
-	 * @since 0.7
-	 * 
-	 * @var array
-	 */
-	public static $mapTypes = array(
-		'normal' => 'ROADMAP',
-		'roadmap' => 'ROADMAP',
-		'satellite' => 'SATELLITE',
-		'hybrid' => 'HYBRID',
-		'terrain' => 'TERRAIN',
-		'physical' => 'TERRAIN'
-	);
-	
-	/**
 	 * Returns the names of all supported map types.
 	 * 
 	 * @return array
@@ -116,6 +187,17 @@ class MapsGoogleMaps3 extends MapsMappingService {
 	public static function getTypeNames() {
 		return array_keys( self::$mapTypes );
 	}
+	
+	/**
+	 * Returns the names of all supported map layers.
+	 * 
+	 * @since 1.0
+	 * 
+	 * @return array
+	 */
+	public static function getLayerNames() {
+		return self::$mapLayers;
+	}	
 	
 	/**
 	 * @see MapsMappingService::getDependencies
@@ -129,8 +211,7 @@ class MapsGoogleMaps3 extends MapsMappingService {
 		$languageCode = self::getMappedLanguageCode( $wgLang->getCode() );
 		
 		return array(
-			Html::linkedScript( "http://maps.google.com/maps/api/js?sensor=false&language=$languageCode" ),
-			Html::linkedScript( "$egMapsScriptPath/includes/services/GoogleMaps3/GoogleMap3Functions.js?$egMapsStyleVersion" ),
+			Html::linkedScript( "http://maps.google.com/maps/api/js?sensor=false&language=$languageCode" )
 		);			
 	}
 	
@@ -155,4 +236,32 @@ class MapsGoogleMaps3 extends MapsMappingService {
 		return $code;
 	}
 	
-}								
+	/**
+	 * @see MapsMappingService::getResourceModules
+	 * 
+	 * @since 1.0
+	 * 
+	 * @return array of string
+	 */
+	public function getResourceModules() {
+		return array_merge(
+			parent::getResourceModules(),
+			array( 'ext.maps.googlemaps3' )
+		);
+	}
+
+	/**
+	 * Returns a list of all config variables that should be passed to the JS.
+	 * 
+	 * @since 1.0.1
+	 * 
+	 * @return array
+	 */
+	public final function getConfigVariables() {
+		return parent::getConfigVariables() 
+			+ array(
+				'egGoogleJsApiKey' => $GLOBALS['egGoogleJsApiKey']
+			);
+	}
+	
+}

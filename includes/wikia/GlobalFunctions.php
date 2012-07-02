@@ -177,7 +177,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
  *	Returns array of review reason id
  */
 function wfGetReviewReason($max = 5) {
-	global $wgMessageCache, $wgMemc, $wgDBname;
+	global $wgMemc, $wgDBname;
 
 	$key = "$wgDBname:ReviewReasons";
 	$result = $wgMemc->get($key);
@@ -449,7 +449,7 @@ function parseItem($line) {
 			if($title) {
 				if ($title->getNamespace() == NS_SPECIAL) {
 					$dbkey = $title->getDBkey();
-					$specialCanonicalName = SpecialPage::resolveAlias($dbkey);
+					$specialCanonicalName = array_shift(SpecialPageFactory::resolveAlias($dbkey));
 					if (!$specialCanonicalName) $specialCanonicalName = $dbkey;
 				}
 				$title = $title->fixSpecialName();
@@ -629,7 +629,7 @@ function getMenu() {
 			$menuArray = array('mainMenu' => array());
 		}
 
-		$content .= 'window.menuArray = '.Wikia::json_encode($menuArray).';$("#navigation_widget").mouseover(menuInit);$(function() { menuInit(); });';
+		$content .= 'window.menuArray = '.json_encode($menuArray).';$("#navigation_widget").mouseover(menuInit);$(function() { menuInit(); });';
 		$duration = 60 * 60 * 24 * 7; // one week
 
 		// close JS code
@@ -662,7 +662,7 @@ function getMenu() {
 				$magicWords[$word][] = array('className' => 'Monaco-sidebar_more', 'url' => Title::makeTitle(NS_CATEGORY, $name)->getLocalURL(), 'text' => '-more-');
 			}
 		}
-		$content .= 'window.magicWords = '.Wikia::json_encode($magicWords).';';
+		$content .= 'window.magicWords = '.json_encode($magicWords).';';
 		$duration = 60 * 60 * 12; // two days
 	}
 
@@ -753,10 +753,10 @@ function wfSharedMemcKey( /*... */ ) {
 
 	$args = func_get_args();
 	if( $wgSharedKeyPrefix === false ) { // non shared wiki, fallback to normal function
-		$key = 	wfWikiID() . ':' . implode( ':', $args );
+		$key = 	wfWikiID() . '-MW119:' . implode( ':', $args );
 	}
 	else {
-		$key = $wgSharedKeyPrefix . ':' . implode( ':', $args );
+		$key = $wgSharedKeyPrefix . '-MW119:' . implode( ':', $args );
 	}
 	return $key;
 }
@@ -772,7 +772,7 @@ function wfSharedMemcKey( /*... */ ) {
  *         - an int which is non-zero if the rich-text message fell back to the fallback language? (not sure this is the intention)
  */
 function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(), $wantHTML = true) {
-	global $wgContLanguageCode, $wgMessageCache;
+	global $wgContLanguageCode;
 
 	//remove 'content' option and pick proper language
 	if (isset($options['content'])) {
@@ -792,7 +792,7 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 		$langKey = "$key/$lang";
 	}
 
-	$msgPlainRaw = $wgMessageCache->get($langKey, true, $lang, $fullKey);
+	$msgPlainRaw = MessageCache::singleton()->get($langKey, true, $lang, $fullKey);
 	$msgPlainRawEmpty = wfEmptyMsg($langKey, $msgPlainRaw);
 	$fallbackLang = $lang;
 	while ($fallbackLang = Language::getFallbackFor($fallbackLang)) { // NOTE: assignment
@@ -803,7 +803,7 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 			$fullKey = true;
 			$langKey2 = "$key/$fallbackLang";
 		}
-		$msgPlainRawLang = $wgMessageCache->get($langKey2, true, $fallbackLang, $fullKey);
+		$msgPlainRawLang = MessageCache::singleton()->get($langKey2, true, $fallbackLang, $fullKey);
 		$msgPlainRawLangEmpty = wfEmptyMsg($langKey2, $msgPlainRawLang);
 		//if main message is empty and fallbacked is not, get fallbacked one
 		if (wfEmptyMsg($langKey, $msgPlainRaw) && !$msgPlainRawLangEmpty) {
@@ -828,7 +828,7 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 			$langKeyHTML = "$keyHTML/$lang";
 		}
 
-		$msgRichRaw = $wgMessageCache->get($langKeyHTML, true, $lang, $fullKey);
+		$msgRichRaw = MessageCache::singleton()->get($langKeyHTML, true, $lang, $fullKey);
 		$msgRichRawEmpty = wfEmptyMsg($langKeyHTML, $msgRichRaw);
 		$fallbackLang = $lang;
 		while ($fallbackLang = Language::getFallbackFor($fallbackLang)) {
@@ -839,7 +839,7 @@ function wfMsgHTMLwithLanguage($key, $lang, $options = array(), $params = array(
 				$fullKey = true;
 				$langKeyHTML2 = "$keyHTML/$fallbackLang";
 			}
-			$msgRichRawLang = $wgMessageCache->get($langKeyHTML2, true, $fallbackLang, true);
+			$msgRichRawLang = MessageCache::singleton()->get($langKeyHTML2, true, $fallbackLang, true);
 			$msgRichRawLangEmpty = wfEmptyMsg($langKeyHTML2, $msgRichRawLang);
 			if (wfEmptyMsg($langKeyHTML, $msgRich) && !$msgRichRawLangEmpty) {
 				//TODO: check if this ok or do we need to use $msgRichRaw plus parsing
@@ -1041,7 +1041,14 @@ function wfGetEmailPostbackToken($emailId, $emailAddr){
 function wfAutomaticReadOnly() {
 	global $wgReadOnly;
 
-	return (bool) wfMsgNoDBForContent( 'readonly_lag' ) == $wgReadOnly;
+	/**
+	 * @see includes/db/LoadBalancer.php getReaderIndex
+	 */
+	$automaticLagMessage = 'The database has been automatically locked ' .
+		'while the slave database servers catch up to the master';
+
+
+	return (bool) $automaticLagMessage == $wgReadOnly;
 }
 
 /**
@@ -1196,75 +1203,6 @@ function wfDeleteWikiaPageProp($type, $pageID, $dbname = '') {
 	);
 }
 
-/* Utility function to append a field to the X-Timer Header
- *
- * Params: Label, Time, Flag: Calc as Offset from Varnish true/false
- * labels so far: AS (apache start), AE (apache end), CD (cpu duration), MD (memcache duration), DD (database duration)
- *
- * Example: wfAppendTimerHeader('AS', $wgRequestTime, true);	// log apache start time as offset from X-Timer
- * Example: wfAppendTimerHeader('CD', $elapsedcpu);				// log absolute duration
- * Example: wfAppendTimerHeader('AE', microtime(true), true);   // log apache end time as offset from X-Timer
- *
- * Varnish turns this feature on by setting a header
- * X-Timer: S1289350323.474201918,VS0,AS13,CD150,MD30,DD30,AE240,VE255
- * Varnish also sets this as a cookie
- * Set-Cookie: loadtime=S1289350323.474201918,VS0,AS13,CD150,MD30,DD30,AE240,VE255;
- *
- * Also sends timing info to newrelic if the module is installed (Owen)
- */
-function wfAppendTimerHeader ($label, $time, $calculateOffset = false) {
-	global $wgApacheTimerString;
-	if ($wgApacheTimerString == false) {
-		$headers = function_exists('apache_request_headers') ? apache_request_headers() : array();  // seems like we can't re-read the header after setting it so do it once
-		if (isset($headers['X-Timer'])) {
-			$wgApacheTimerString = $headers['X-Timer'];
-		}
-	}
-	if( $wgApacheTimerString ) {
-		if ($calculateOffset) {
-			list($startTime) = explode(',',$wgApacheTimerString);
- 			$startTime = substr($startTime, 1);  // chop off the S
-			$elapsedTime = ($time - $startTime) * 1000;
-		} else {
-			// do not need offset from start, just append the label and duration to our header
-			$elapsedTime = ($time * 1000);
-		}
-		$wgApacheTimerString .= sprintf(",%s%d",$label, $elapsedTime);
-		if (function_exists('newrelic_add_custom_parameter')) {
-			newrelic_custom_metric($label, $elapsedTime);
-		}
-	}
-}
-
-/*
- * Set the X-Timer header at the end of page processing.
- * This is intended to be called from OutputPage::output
- */
-function wfSendTimerHeader () {
-	global $wgApacheTimerString, $wgProfiler;
-
-	if ($wgProfiler instanceof ProfilerSimpleText) {
-		$db_time = 0;
-		if (isset($wgProfiler->mCollated['MWMemcached::get']['real'])) {
-			wfAppendTimerHeader('MD', $wgProfiler->mCollated['MWMemcached::get']['real']);
-		}
-		if (isset($wgProfiler->mCollated['Database::query-master']['real'])) {
-			$db_time += $wgProfiler->mCollated['Database::query-master']['real'];
-		}
-		if (isset($wgProfiler->mCollated['Database::query']['real'])) {
-			$db_time += $wgProfiler->mCollated['Database::query']['real'];
-		}
-		if ($db_time > 0) {
-			wfAppendTimerHeader('DD', $db_time);
-		}
-	}
-	// Corresponding start time AS is at the top of index.php
-	if ($wgApacheTimerString) {
-		wfAppendTimerHeader('AE', microtime(true), true);
-		header ("X-Timer: $wgApacheTimerString");
-	}
-}
-
 if (!function_exists('http_build_url')) {
 	define('HTTP_URL_REPLACE', 1);				// Replace every part of the first URL when there's one of the second URL
 	define('HTTP_URL_JOIN_PATH', 2);			// Join relative paths
@@ -1416,40 +1354,40 @@ function endsWith($haystack, $needle, $case = true) {
 	return (strcasecmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);
 }
 
-function json_encode_jsfunc($input=array(), $funcs=array(), $level=0) 
- { 
-  foreach($input as $key=>$value) 
-         { 
-          if (is_array($value)) 
-             { 
-              $ret = json_encode_jsfunc($value, $funcs, 1); 
-              $input[$key]=$ret[0]; 
-              $funcs=$ret[1]; 
-             } 
-          else 
-             { 
-              if (substr($value,0,10)=='function()') 
-                 { 
-                  $func_key="#".uniqid()."#"; 
-                  $funcs[$func_key]=$value; 
-                  $input[$key]=$func_key; 
-                 } 
-             } 
-         } 
-  if ($level==1) 
-     { 
-      return array($input, $funcs); 
-     } 
-  else 
-     { 
-      $input_json = json_encode($input); 
-      foreach($funcs as $key=>$value) 
-             { 
-              $input_json = str_replace('"'.$key.'"', $value, $input_json); 
-             } 
-      return $input_json; 
-     } 
- } 
+function json_encode_jsfunc($input=array(), $funcs=array(), $level=0)
+ {
+  foreach($input as $key=>$value)
+         {
+          if (is_array($value))
+             {
+              $ret = json_encode_jsfunc($value, $funcs, 1);
+              $input[$key]=$ret[0];
+              $funcs=$ret[1];
+             }
+          else
+             {
+              if (substr($value,0,10)=='function()')
+                 {
+                  $func_key="#".uniqid()."#";
+                  $funcs[$func_key]=$value;
+                  $input[$key]=$func_key;
+                 }
+             }
+         }
+  if ($level==1)
+     {
+      return array($input, $funcs);
+     }
+  else
+     {
+      $input_json = json_encode($input);
+      foreach($funcs as $key=>$value)
+             {
+              $input_json = str_replace('"'.$key.'"', $value, $input_json);
+             }
+      return $input_json;
+     }
+ }
 
 /**
  * generate correct version of session key
@@ -1637,7 +1575,7 @@ function wfAssetManagerGetSASShashCB( $file, &$processedFiles, &$hash ) {
 }
 
 /**
- * Allow to find what staging machine we are on 
+ * Allow to find what staging machine we are on
  *
  * @author Tomasz Odrobny <tomek@wikia-inc.com>
  */
@@ -1646,16 +1584,16 @@ function getHostPrefix(){
 	global $wgStagingList, $wgServer;
 	static $cache;
 	if(!empty($cache)) {
-		return $cache;	
+		return $cache;
 	}
 	$hosts = $wgStagingList;
 	foreach($hosts as $host) {
 		$prefix = 'http://'.$host.'.';
 		if(strpos($wgServer, $prefix)  !== false ) {
 			$cache = $host;
-			return  $host; 
-		}			
-	}	
+			return  $host;
+		}
+	}
 	return null;
 }
 

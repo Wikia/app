@@ -1,10 +1,9 @@
 <?php
 
 class CodeReleaseNotes extends CodeView {
-	function __construct( $repoName ) {
-		global $wgRequest, $wgWikiSVN, $IP;
-		parent::__construct( $repoName );
-		$this->mRepo = CodeRepository::newFromName( $repoName );
+	function __construct( $repo ) {
+		global $wgRequest, $IP;
+		parent::__construct( $repo );
 		$this->mPath = htmlspecialchars( trim( $wgRequest->getVal( 'path' ) ) );
 		if ( strlen( $this->mPath ) && $this->mPath[0] !== '/' ) {
 			$this->mPath = "/{$this->mPath}"; // make sure this is a valid path
@@ -12,10 +11,6 @@ class CodeReleaseNotes extends CodeView {
 		$this->mPath = preg_replace( '/\/$/', '', $this->mPath ); // kill last slash
 		$this->mStartRev = $wgRequest->getIntOrNull( 'startrev' );
 		$this->mEndRev = $wgRequest->getIntOrNull( 'endrev' );
-		# Default start rev to last live one if possible
-		if ( !$this->mStartRev && $this->mRepo && $this->mRepo->getName() == $wgWikiSVN ) {
-			$this->mStartRev = SpecialVersion::getSvnRevision( $IP ) + 1;
-		}
 	}
 
 	function execute() {
@@ -25,13 +20,7 @@ class CodeReleaseNotes extends CodeView {
 			return;
 		}
 		$this->showForm();
-		# Sanity/performance check...
-		$lastRev = $this->mRepo->getLastStoredRev();
-		if ( $this->mStartRev < ( $lastRev - 5000 ) ) {
-			global $wgOut;
-			$wgOut->addHtml( wfMsgHtml('code-release-badrange') );
-			return;
-		}
+
 		# Show notes if we have at least a starting revision
 		if ( $this->mStartRev ) {
 			$this->showReleaseNotes();
@@ -44,13 +33,13 @@ class CodeReleaseNotes extends CodeView {
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'action' => $wgScript, 'method' => 'get' ) ) .
 			"<fieldset><legend>" . wfMsgHtml( 'code-release-legend' ) . "</legend>" .
-				Xml::hidden( 'title', $special->getPrefixedDBKey() ) . '<b>' .
+				Html::hidden( 'title', $special->getPrefixedDBKey() ) . '<b>' .
 				Xml::inputlabel( wfMsg( "code-release-startrev" ), 'startrev', 'startrev', 10, $this->mStartRev ) .
-				'</b>&nbsp;' .
+				'</b>&#160;' .
 				Xml::inputlabel( wfMsg( "code-release-endrev" ), 'endrev', 'endrev', 10, $this->mEndRev ) .
-				'&nbsp;' .
+				'&#160;' .
 				Xml::inputlabel( wfMsg( "code-pathsearch-path" ), 'path', 'path', 45, $this->mPath ) .
-				'&nbsp;' .
+				'&#160;' .
 				Xml::submitButton( wfMsg( 'allpagessubmit' ) ) . "\n" .
 			"</fieldset>" . Xml::closeElement( 'form' )
 		);
@@ -58,26 +47,24 @@ class CodeReleaseNotes extends CodeView {
 
 	protected function showReleaseNotes() {
 		global $wgOut;
-		$linker = new CodeCommentLinkerHtml( $this->mRepo );
 		$dbr = wfGetDB( DB_SLAVE );
+		$where = array();
 		if ( $this->mEndRev ) {
-			$where = 'cr_id BETWEEN ' . intval( $this->mStartRev ) . ' AND ' . intval( $this->mEndRev );
+			$where[] = 'cr_id BETWEEN ' . intval( $this->mStartRev ) . ' AND ' . intval( $this->mEndRev );
 		} else {
-			$where = 'cr_id >= ' . intval( $this->mStartRev );
+			$where[] = 'cr_id >= ' . intval( $this->mStartRev );
 		}
 		if ( $this->mPath ) {
-			$where .= ' AND (cr_path LIKE ' . $dbr->addQuotes( $dbr->escapeLike( "{$this->mPath}/" ) . '%' );
-			$where .= ' OR cr_path = ' . $dbr->addQuotes( $this->mPath ) . ')';
+			$where['cr_path'] = $this->mPath;
 		}
 		# Select commits within this range...
 		$res = $dbr->select( array( 'code_rev', 'code_tags' ),
 			array( 'cr_message', 'cr_author', 'cr_id', 'ct_tag AS rnotes' ),
-			array(
+			array_merge( array(
 				'cr_repo_id' => $this->mRepo->getId(), // this repo
 				"cr_status NOT IN('reverted','deferred','fixme')", // not reverted/deferred/fixme
 				"cr_message != ''",
-				$where // in range
-			),
+			), $where ),
 			__METHOD__,
 			array( 'ORDER BY' => 'cr_id DESC' ),
 			array( 'code_tags' => array( 'LEFT JOIN', # Tagged for release notes?
@@ -86,7 +73,7 @@ class CodeReleaseNotes extends CodeView {
 		);
 		$wgOut->addHTML( '<ul>' );
 		# Output any relevant seeming commits...
-		while ( $row = $dbr->fetchObject( $res ) ) {
+		foreach ( $res as $row ) {
 			$summary = htmlspecialchars( $row->cr_message );
 			# Add this commit summary if needed.
 			if ( $row->rnotes || $this->isRelevant( $summary ) ) {
@@ -97,8 +84,8 @@ class CodeReleaseNotes extends CodeView {
 					$summary = str_replace( "\n", "<br />", $summary ); // Newlines -> <br />
 					$wgOut->addHTML( "<li>" );
 					$wgOut->addHTML(
-						$linker->link( $summary ) . " <i>(" . htmlspecialchars( $row->cr_author ) .
-						', ' . $linker->link( "r{$row->cr_id}" ) . ")</i>"
+						$this->codeCommentLinkerHtml->link( $summary ) . " <i>(" . htmlspecialchars( $row->cr_author ) .
+						', ' . $this->codeCommentLinkerHtml->link( "r{$row->cr_id}" ) . ")</i>"
 					);
 					$wgOut->addHTML( "</li>\n" );
 				}
@@ -112,7 +99,7 @@ class CodeReleaseNotes extends CodeView {
 		if ( preg_match( '/(^|\n) ?\*/', $summary ) ) {
 			$blurbs = explode( '*', $summary );
 		# Double newlines separate importance generally
-		} else if ( strpos( $summary, "\n\n" ) !== false ) {
+		} elseif ( strpos( $summary, "\n\n" ) !== false ) {
 			$blurbs = explode( "\n\n", $summary );
 		} else {
 			return trim( $summary );
@@ -134,7 +121,7 @@ class CodeReleaseNotes extends CodeView {
 				if ( $header && $first && count( $summary ) == 0 ) {
 					$summary[] = $this->shortenSummary( $blurb, true );
 				# Is this bit important? Does it mention a revision?
-				} else if ( $this->isRelevant( $blurb ) || preg_match( '/\br(\d+)\b/', $blurb ) ) {
+				} elseif ( $this->isRelevant( $blurb ) || preg_match( '/\br(\d+)\b/', $blurb ) ) {
 					$bit = $this->shortenSummary( $blurb, false );
 					if ( $bit ) $summary[] = $bit;
 				}
@@ -146,21 +133,35 @@ class CodeReleaseNotes extends CodeView {
 		return $summary;
 	}
 
-	// Quick relevance tests (these *should* be over-inclusive a little if anything)
+	/**
+	 * Quick relevance tests (these *should* be over-inclusive a little if anything)
+	 *
+	 * @param  $summary
+	 * @param bool $whole
+	 * @return bool|int
+	 */
 	private function isRelevant( $summary, $whole = true ) {
-		# Fixed a bug? Mentioned a config var?
-		if ( preg_match( '/\b(bug #?(\d+)|\$[we]g[0-9a-z]{3,50})\b/i', $summary ) )
+		# Mentioned a bug?
+		if ( preg_match( CodeRevision::BugReference, $summary) ) {
 			return true;
+		}
+		#Mentioned a config var?
+		if ( preg_match( '/\b\$[we]g[0-9a-z]{3,50}\b/i', $summary ) ) {
+			return true;
+		}
 		# Sanity check: summary cannot be *too* short to be useful
 		$words = str_word_count( $summary );
-		if ( mb_strlen( $summary ) < 40 || $words <= 5 )
+		if ( mb_strlen( $summary ) < 40 || $words <= 5 ) {
 			return false;
+		}
 		# All caps words (like "BREAKING CHANGE"/magic words)?
-		if ( preg_match( '/\b[A-Z]{6,30}\b/', $summary ) )
+		if ( preg_match( '/\b[A-Z]{6,30}\b/', $summary ) ) {
 			return true;
+		}
 		# Random keywords
-		if ( preg_match( '/\b(wiki|HTML\d|CSS\d|UTF-?8|(Apache|PHP|CGI|Java|Perl|Python|\w+SQL) ?\d?\.?\d?)\b/i', $summary ) )
+		if ( preg_match( '/\b(wiki|HTML\d|CSS\d|UTF-?8|(Apache|PHP|CGI|Java|Perl|Python|\w+SQL) ?\d?\.?\d?)\b/i', $summary ) ) {
 			return true;
+		}
 		# Are we looking at the whole summary or an aspect of it?
 		if ( $whole ) {
 			return preg_match( '/(^|\n) ?\*/', $summary ); # List of items?

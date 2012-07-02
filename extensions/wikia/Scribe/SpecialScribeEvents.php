@@ -26,7 +26,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 #--- messages file
 $wgExtensionMessagesFiles["Scribeevents"] = dirname(__FILE__) . '/SpecialScribeEvents.i18n.php';
-$wgExtensionAliasesFiles['Scribeevents'] = __DIR__ . '/SpecialScribeEvents.aliases.php';
+$wgExtensionMessagesFiles['ScribeeventsAliases'] = __DIR__ . '/SpecialScribeEvents.aliases.php';
 
 $permname = "scribeevents";
 $wgAvailableRights[] = $permname;

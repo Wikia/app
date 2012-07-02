@@ -33,8 +33,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Regular Expression Spam Block',
 	'version' => '1.2.2',
 	'author' => array( 'Bartek Łapiński', 'Alexandre Emsenhuber', 'Jack Phoenix' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:SpamRegex',
-	'description' => 'Filters out unwanted phrases in edited pages, based on regular expressions',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:SpamRegex',
 	'descriptionmsg' => 'spamregex-desc',
 );
 
@@ -44,35 +43,20 @@ $wgGroupPermissions['staff']['spamregex'] = true;
 
 /* return the proper db key for Memc */
 function wfSpamRegexCacheKey( /*...*/ ) {
-	global $wgSharedDB, $wgSharedTables, $wgSharedPrefix, $wgExternalSharedDB;
+	global $wgSharedDB, $wgSharedTables, $wgSharedPrefix;
 	$args = func_get_args();
 	if( in_array( 'spam_regex', $wgSharedTables ) ) {
 		$args = array_merge( array( $wgSharedDB, $wgSharedPrefix ), $args );
-		return call_user_func_array( 'wfForeignMemcKey', $args );
-	} elseif( $wgExternalSharedDB && $wgSharedDB ) {
-		$args = array_merge( array( $wgExternalSharedDB ), $args );
 		return call_user_func_array( 'wfForeignMemcKey', $args );
 	} else {
 		return call_user_func_array( 'wfMemcKey', $args );
 	}
 }
 
-/* return the proper db connection hander */
-function wfSpamRegexGetDB( $db ) {
-	global $wgSharedDB, $wgSharedTables, $wgSharedPrefix, $wgExternalSharedDB;
-	if( in_array( 'spam_regex', $wgSharedTables ) ) {
-		return wfGetDB( $db );
-	} elseif( $wgExternalSharedDB && $wgSharedDB ) {
-		return wfGetDB( $db, array(), $wgExternalSharedDB );
-	} else {
-		return wfGetDB( $db );
-	}
-}
-
 // Set up the new special page
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['SpamRegex'] = $dir . 'SpamRegex.i18n.php';
-$wgExtensionAliasesFiles['SpamRegex'] = $dir . 'SpamRegex.alias.php';
+$wgExtensionMessagesFiles['SpamRegexAlias'] = $dir . 'SpamRegex.alias.php';
 $wgAutoloadClasses['SpamRegex'] = $dir . 'SpecialSpamRegex.php';
 $wgAutoloadClasses['SpamRegexHooks'] = $dir . 'SpamRegexCore.php';
 $wgSpecialPages['SpamRegex'] = 'SpamRegex';

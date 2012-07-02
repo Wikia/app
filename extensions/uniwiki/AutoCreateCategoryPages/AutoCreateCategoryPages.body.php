@@ -43,7 +43,7 @@ class UniwikiAutoCreateCategoryPages {
 		foreach ( $on_page as $db_key ) {
 			if ( !in_array( $db_key, $in_db ) ) {
 
-				wfLoadExtensionMessages( 'AutoCreateCategoryPages' );
+				
 
 				// Create a user object for the editing user and add it to the database
 				// if it is not there already
@@ -72,7 +72,7 @@ class UniwikiAutoCreateCategoryPages {
 	}
 
 	public function UW_OnUserGetReservedNames( &$names ) {
-		wfLoadExtensionMessages( 'AutoCreateCategoryPages' );
+		
 		$names[] = 'msg:autocreatecategorypages-editor';
 		return true;
 	}

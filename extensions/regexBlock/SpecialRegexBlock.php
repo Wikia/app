@@ -34,7 +34,6 @@ class RegexBlockForm extends SpecialPage {
 		$this->mFilter = $this->mRegexFilter = '';
 		$this->mError = $this->mMsg = '';
 		parent::__construct( 'RegexBlock'/*class*/, 'regexblock'/*restriction*/ );
-		wfLoadExtensionMessages( 'RegexBlock' );
 	}
 
 	/**
@@ -175,21 +174,21 @@ class RegexBlockForm extends SpecialPage {
 		$wgOut->addHTML('</td>
 			</tr>
 			<tr>
-				<td align="right">&nbsp;</td>
+				<td align="right">&#160;</td>
 				<td align="left">
 						<input type="checkbox" tabindex="4" name="wpRegexBlockedExact" id="wpRegexBlockedExact" value="1" '.$checkExact.' />
 						<label for="wpRegexBlockedExact">'. wfMsg( 'regexblock-form-match' ) .'</label>
 				</td>
 			</tr>
 			<tr>
-				<td align="right">&nbsp;</td>
+				<td align="right">&#160;</td>
 				<td align="left">
 					<input type="checkbox" tabindex="5" name="wpRegexBlockedCreation" id="wpRegexBlockedCreation" value="1" '.$checkCreation.' />
 					<label for="wpRegexBlockedCreation">'.wfMsg( 'regexblock-form-account-block' ).'</label>
 				</td>
 			</tr>
 			<tr>
-				<td align="right">&nbsp;</td>
+				<td align="right">&#160;</td>
 				<td align="left">
 					<input tabindex="6" name="wpRegexBlockedSubmit" type="submit" value="'.wfMsg( 'regexblock-form-submit' ).'" style="color:#2F6FAB;" />
 				</td>
@@ -242,7 +241,7 @@ class RegexBlockForm extends SpecialPage {
 			}
 		}
 
-		$wgOut->addHTML( '</select>&nbsp;' . wfMsg( 'regexblock-regex-filter' ) . wfMsg( 'word-separator' ) . '
+		$wgOut->addHTML( '</select>&#160;' . wfMsg( 'regexblock-regex-filter' ) . wfMsg( 'word-separator' ) . '
 			<input type="text" name="rfilter" id="regex_filter" value="'.$this->mRegexFilter.'" />
 			<input type="submit" value="'.wfMsg( 'regexblock-view-go' ).'" />
 			</form>
@@ -400,7 +399,7 @@ class RegexBlockForm extends SpecialPage {
 		$blockername_link = $skin->makeKnownLinkObj( $this->mTitle, $blockInfo->blckby_name, 'rfilter=' . urlencode( $blockInfo->blckby_name ) );
 		$blockReason = ( $blockInfo->blckby_reason ) ? wfMsg( 'regexblock-form-reason' ) . $blockInfo->blckby_reason : wfMsg( 'regexblock-view-reason-default' );
 
-		$wgOut->addHTML( '<h5>'.wfMsg( 'regexblock-stats-title' ).' <strong> '.$blockername_link.'</strong> ('.wfMsg( 'regexblock-view-block-by' ).' <b>'.$blocker_link.'</b>,&nbsp;<i>'. $blockReason .'</i>)</h5><br />' );
+		$wgOut->addHTML( '<h5>'.wfMsg( 'regexblock-stats-title' ).' <strong> '.$blockername_link.'</strong> ('.wfMsg( 'regexblock-view-block-by' ).' <b>'.$blocker_link.'</b>,&#160;<i>'. $blockReason .'</i>)</h5><br />' );
 		if ( !empty( $stats_list ) ) {
 			$wgOut->addHTML( '<p>'.$pager.'</p><br /><ul>' );
 			foreach( $stats_list as $id => $row ) {

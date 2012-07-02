@@ -3,7 +3,7 @@
 	<div class="media">
 	</div>
 	
-	<header class="LightboxHeader hidden">
+	<header class="LightboxHeader">
 	</header>
 
 	<div class="lightbox-arrows">
@@ -11,11 +11,16 @@
 		<span id="LightboxPrevious" class="arrow previous"></span>
 	</div>
 	
-	<div id="LightboxCarousel" class="LightboxCarousel hidden">
+	<div id="MODAL_INTERSTITIAL" class="wikia-ad noprint modal_interstitial">
+		<?= AdEngine::getInstance()->getAd('MODAL_INTERSTITIAL', array('ghostwriter'=>true)); ?>
+	</div>
+
+	
+	<div id="LightboxCarousel" class="LightboxCarousel">
 		<div id="LightboxCarouselInner" class="LightboxCarouselInner">
 		
 		</div>
-		<div id="MODAL_RECTANGLE" class="wikia-ad noprint">Ad goes here
+		<div id="MODAL_RECTANGLE" class="wikia-ad noprint">
 			<?= AdEngine::getInstance()->getAd('MODAL_RECTANGLE', array('ghostwriter'=>true)); ?>
 		</div>
 	</div>
@@ -25,11 +30,6 @@
 	
 	<div class="share">
 	</div>
-	
-	<script type="text/javascript">
-		Lightbox.initialFileDetail = <?= json_encode($initialFileDetail) ?>;
-		Lightbox.mediaThumbs = <?= json_encode($mediaThumbs) ?>;
-	</script>
 
 	<script id="LightboxPhotoTemplate" class="template" type="text/template">
 		<img src="{{imageUrl}}" height="{{imageHeight}}" >
@@ -53,6 +53,10 @@
 		</div>
 	</script>
 	
+	<script id="LightboxHeaderAdTemplate" class="template" type="text/template">
+		<h1><?= wfMsg('Fast-adv') ?></h1>
+	</script>
+
 	<script id="LightboxCarouselTemplate" type="text/template">
 		<div class="content">
 			<ul class="toolbar">

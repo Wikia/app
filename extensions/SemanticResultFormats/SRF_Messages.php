@@ -6,9 +6,6 @@
  * @ingroup Extensions
  */
 
-// FIXME: Can be enabled when new style magic words are used (introduced in r52503)
-// require_once( dirname( __FILE__ ) . '/SRF_Magic.php' );
-
 $messages = array();
 
 /** English
@@ -25,6 +22,7 @@ $messages['en'] = array(
 	'srfc_gotomonth'     => 'Go to month',
 	'srf_printername_calendar' => 'Monthly calendar',
 	'srf_paramdesc_calendarlang' => 'The code for the language in which to display the calendar',
+	'srf_paramdesc_calendarcolors' => 'The color to display for each date property (example: "Start date=>green,End date=>#09c")',
 	// format "vCard"
 	'srf_vcard_link'     => 'vCard',
 	'srf_printername_vcard' => 'vCard export',
@@ -40,13 +38,22 @@ $messages['en'] = array(
 	'srf_outline_novalue' => 'No value',
 	'srf_printername_outline' => 'Outline',
 	'srf_paramdesc_outlineproperties' => 'The list of properties to be displayed as outline headers, separated by commas',
+	
+	'srf_printername_D3Line' => 'D3 line chart',
+	'srf_printername_D3Bar' => 'D3 bar chart',
+	'srf_printername_D3Treemap' => 'D3 treemap',
+
 	// format "math"
 	'srf_printername_sum' => 'Sum of numbers',
 	'srf_printername_average' => 'Average of numbers',
 	'srf_printername_max' => 'Maximum number',
 	'srf_printername_min' => 'Minimum number',
 	'srf_paramdesc_limit' => 'The maximum number of pages to query',
-	// format "timeline"
+	'srf_printername_product' => 'Product of numbers',
+	'srf_printername_median' => 'Median of numbers',
+	'srf-paramdesc-default' => 'Default value that will be displayed when there are no numerical results',
+
+	// formats "timeline" and "eventline"
 	'srf_printername_timeline' => 'Timeline',
 	'srf_printername_eventline' => 'Eventline',
 	'srf_paramdesc_timelinebands' => 'Defines which bands are displayed in the result.',
@@ -54,12 +61,15 @@ $messages['en'] = array(
 	'srf_paramdesc_timelinestart' => 'A property name used to define a first time point',
 	'srf_paramdesc_timelineend' => 'A property name used to define a second time point',
 	'srf_paramdesc_timelinesize' => 'The height of the timeline (default is 300px)',
+	'srf-timeline-allresults' => 'Further results for this query.',
+	'srf-timeline-nojs' => 'You need to have JavaScript enabled to view the interactive timeline.',
 
 	// format "Exhibit"
 	'srf_paramdesc_views' => 'The views to be displayed',
 	'srf_paramdesc_facets' => 'The set of properties to be displayed for each page',
 	'srf_paramdesc_lens' => 'The name of a template with which to display page properties',
-	// formats "googlebar" and "googlepie"
+	
+	// formats "googlebar", "googlepie", jqplotpie and jqplotbar
 	'srf_printername_googlebar' => 'Google bar chart',
 	'srf_printername_googlepie' => 'Google pie chart',
 	'srf_printername_jqplotbar' => 'jqPlot bar chart',
@@ -70,6 +80,12 @@ $messages['en'] = array(
 	'srf_paramdesc_barcolor'   =>   'The color of the bars',
 	'srf_paramdesc_bardirection'=>  'The direction of the bar chart',
 	'srf_paramdesc_barnumbersaxislabel' => 'The label for the numbers axis',
+	'srf-paramdesc-minvalue' => 'The minimum value to show on the Y-axis',
+	'srf-paramdesc-pointlabels' => 'Display of individual data points',
+	'srf-paramdesc-chartlegend' => 'Display chart legend',	
+	'srf-paramdesc-legendlocation' => 'Set legend location',	  
+	'srf-paramdesc-datalabels' => 'Display pie data labels',
+	'srf-paramdesc-datalabeltype' => 'Set data label type',
 
 	// "gallery" format
 	'srf_printername_gallery' => 'Gallery',
@@ -77,6 +93,10 @@ $messages['en'] = array(
 	'srf_paramdesc_widths' => 'The width of the images',
 	'srf_paramdesc_heights' => 'The height of the images',
 	'srf_paramdesc_autocaptions' => 'Use file name as caption when none is provided',
+	'srf_paramdesc_fileextensions' => 'When using the filename as caption, also display the file extension',
+	'srf_paramdesc_captionproperty' => 'The name of a semantic property present on the queried pages to be used as caption',
+	'srf_paramdesc_imageproperty' => 'Name of a semantic property on the queried pages that points to images to use. When set, the queried pages themselves will not be displayed as images',
+	'srf_paramdesc_galleryformat' => 'Gallery format',
 
 	// "tagcloud" format
 	'srf_printername_tagcloud' => 'Tag cloud',
@@ -87,9 +107,51 @@ $messages['en'] = array(
 	'srf_paramdesc_minsize' => 'The size of the smallest tags in percent (default: 77)',
 	'srf_paramdesc_maxsize' => 'The size of the biggest tags in percent (default: 177)',
 	'srf_paramdesc_maxtags' => 'The maximum amount of tags in the cloud',
+
+	// "valuerank" format
+	'srf_printername_valuerank' => 'Value rank',
+
+	// format "Array" and "Hash"
+	'srf_printername_array' => 'Array',
+	'srf_paramdesc_pagetitle' => 'Whether to show page titles as result entries or to leave them out',
+	'srf_paramdesc_hidegaps' => 'Whether to print requested but unavailable property and record values separated by separators or leaving them out',
+	'srf_paramdesc_arrayname' => 'If given and ArrayExtension is available this will create an array with the specified name (no visible output then)',
+	'srf_paramdesc_propsep' => 'Separator between the requested properties',
+	'srf_paramdesc_manysep' => 'Separator between many valued property values',	
+	'srf_paramdesc_recordsep' => 'Separator between values of record properties',
+	'srf_paramdesc_headersep' => 'Separator between property name and value if "headers" is set to "show" or "plain"',
+	'srf_printername_hash' => 'Hash',
+	'srf_paramdesc_hashname' => 'If given and the HashTables extension is available this will create a hash with the specified name (no visible output then)',
+
+	// format "graph"
+	'srf-printername-graph' => 'Graph',
+	'srf-paramdesc-graph-relation' => 'Are the subjects or nameproperties parents or childs?',
+	'srf-paramdesc-graph-nameprop' => 'Allows setting a property that will be used as subject instead of the actual subject',
+	'srf-paramdesc-graph-nodeshape' => 'The shape of each node on the graph',
+	'srf_paramdesc_graphname' => 'Title',
+	'srf_paramdesc_graphsize' => 'Graph size (in px)',
+	'srf_paramdesc_graphlegend' => 'Show graph legend or not',
+	'srf_paramdesc_graphlabel' => 'Graph label',
+	'srf_paramdesc_rankdir' => 'Arrow direction',
+	'srf_paramdesc_graphlink' => 'Graph link',
+	'srf_paramdesc_graphcolor' => 'Graph color',
+	'srf-paramdesc-graph-wwl' => 'Word wrap limit (in # characters)',
+	
+	'srf-warn-empy-chart' => 'The chart is not shown because there are no results that can be displayed on it.',
+	
+	// DataTables
+	'srf_printername_datatables'  => 'DataTables',
+	'srf-paramdesc-rowindex'      => 'Table row index',
+	'srf-paramdesc-displaylength' => 'Initial display length', 
+	
+	// format "tree", "ultree", "oltree"
+	'srf-noparentprop' => 'No parent property given. The tree can not be built without a specified parent property.',
+	'srf-paramdesc-parent' => 'The property containing the parent page',
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ * @author Kghbln
  * @author Purodha
  * @author Raymond
  * @author Siebrand
@@ -97,13 +159,38 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'srf-desc' => '{{desc}}',
+	'srf_paramdesc_calendarcolors' => 'Hint for <code>"Start date=>green,End date=>#09c"</code>: "Start date" and "End date" should be translated, but not the other parts.',
 	'srf_vcard_link' => '{{optional}}',
 	'srf_icalendar_link' => '{{optional}}',
 	'srf_bibtex_link' => '{{optional}}',
 	'srf_printername_outline' => 'This is the name of an output format. It is basically a list, or nested list, of topics, subtopics, subsubtopics, etc., as deeply stacked as defined by page editors in an inline query. 
 There is an [http://discoursedb.org/wiki/Outline_example Outline example] ([http://semantic-mediawiki.org/wiki/Help:Outline_format more information]).',
 	'srf_paramdesc_outlineproperties' => '"Outline" means the outline of text or document here.',
+	'srf_printername_D3Line' => '{{doc-smwformat|D3Line}}',
+	'srf_printername_D3Bar' => '{{doc-smwformat|D3Bar}}',
+	'srf_printername_D3Treemap' => '{{doc-smwformat|D3Treemap}}',
 	'srf_paramdesc_timelinebands' => 'Available bands are DECADE, YEAR, MONTH, WEEK, and DAY. For details see http://semantic-mediawiki.org/wiki/Help:Timeline_format',
+	'srf_printername_googlebar' => '{{doc-smwformat|googlebar}}',
+	'srf_printername_googlepie' => '{{doc-smwformat|googlepie}}',
+	'srf_printername_jqplotbar' => '{{doc-smwformat|jqplotbar}}',
+	'srf_printername_jqplotpie' => '{{doc-smwformat|jqplotpie}}',
+	'srf_paramdesc_chartheight' => '{{doc-paramdesc|chartheight}}',
+	'srf_paramdesc_chartwidth' => '{{doc-paramdesc|chartwidth}}',
+	'srf_paramdesc_charttitle' => '{{doc-paramdesc|charttitle}}',
+	'srf_paramdesc_barcolor' => '{{doc-paramdesc|barcolor}}',
+	'srf_paramdesc_bardirection' => '{{doc-paramdesc|bardirection}}',
+	'srf_paramdesc_barnumbersaxislabel' => '{{doc-paramdesc|barnumbersaxislabel}}',
+	'srf-paramdesc-minvalue' => '{{doc-paramdesc|minvalue}}',
+	'srf-paramdesc-pointlabels' => '{{doc-paramdesc|pointlabels}}',
+	'srf-paramdesc-chartlegend' => '{{doc-paramdesc|chartlegend}}',
+	'srf-paramdesc-legendlocation' => '{{doc-paramdesc|legendlocation}}',
+	'srf-paramdesc-datalabels' => '{{doc-paramdesc|datalabels}}',
+	'srf-paramdesc-datalabeltype' => '{{doc-paramdesc|datalabeltype}}',
+	'srf_printername_gallery' => '{{Identical|Gallery}}',
+	'srf_paramdesc_headersep' => 'Do not translate "headers" since it is the name of a parameter. "show" and "plain" should not be translated either since these are setting options for this parameter.',
+	'srf_paramdesc_graphname' => '{{Identical|Title}}',
+	'srf-noparentprop' => 'No parent property given. The tree can not be built without a specified parent property.',
+	'srf-paramdesc-parent' => '{{doc-paramdesc|parent}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -124,6 +211,7 @@ $messages['am'] = array(
 /** Arabic (العربية)
  * @author Meno25
  * @author OsamaK
+ * @author روخو
  */
 $messages['ar'] = array(
 	'srf-desc' => 'صيغ إضافية لاستعلامات ميدياويكي الداخلية',
@@ -163,6 +251,10 @@ $messages['ar'] = array(
 	'srf_printername_googlepie' => 'رسم جوجل بالفطيرة',
 	'srf_paramdesc_chartheight' => 'ارتفاع الرسم بالبكسل',
 	'srf_paramdesc_chartwidth' => 'عرض الرسم بالبكسل',
+	'srf_printername_tagcloud' => 'وسم سحابة',
+	'srf_printername_array' => 'نسق',
+	'srf_printername_hash' => 'تجزئة',
+	'srf_paramdesc_graphname' => 'العنوان',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
@@ -220,6 +312,14 @@ $messages['arz'] = array(
 	'srf_paramdesc_chartwidth' => 'عرض الرسم بالبكسل',
 );
 
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'srfc_today' => 'Bu gün',
+	'srf_printername_gallery' => 'Qalereya',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
@@ -246,6 +346,7 @@ $messages['be-tarask'] = array(
 	'srf_printername_max' => 'Максымальны лік',
 	'srf_printername_min' => 'Мінімальны лік',
 	'srf_paramdesc_limit' => 'Максымальная колькасьць старонак для запыту',
+	'srf_printername_product' => 'Вынік лічбаў',
 	'srf_printername_timeline' => 'Храналёгія',
 	'srf_printername_eventline' => 'Храналёгія падзеяў',
 	'srf_paramdesc_timelinebands' => 'Вызначае, якія дыяпазоны будуць паказаныя ў выніку.',
@@ -253,6 +354,8 @@ $messages['be-tarask'] = array(
 	'srf_paramdesc_timelinestart' => 'Назва ўласьцівасьці, якая выкарыстоўваецца як першы пункт часу',
 	'srf_paramdesc_timelineend' => 'Назва ўласьцівасьці, якая выкарыстоўваецца для вызначэньня другога пункту часу',
 	'srf_paramdesc_timelinesize' => 'Вышыня шкалы часу (па змоўчваньні 300пкс)',
+	'srf-timeline-allresults' => 'Дадатковыя вынікі па гэтым запыце.',
+	'srf-timeline-nojs' => 'Вам неабходна дазволіць JavaScript, каб праглядаць інтэрактыўную лінію часу.',
 	'srf_paramdesc_views' => 'Прагляды для паказу',
 	'srf_paramdesc_facets' => 'Набор ўласьцівасьцяў для паказу на кожнай старонцы',
 	'srf_paramdesc_lens' => 'Назва шаблёну для паказу ўласьцівасьцяў старонкі',
@@ -267,7 +370,27 @@ $messages['be-tarask'] = array(
 	'srf_paramdesc_bardirection' => 'Накіраваньне слупкоў дыяграмы',
 	'srf_paramdesc_barnumbersaxislabel' => 'Надпісы для лічбавых восяў',
 	'srf_printername_gallery' => 'Галерэя',
+	'srf_paramdesc_perrow' => 'Колькасьць выяваў у радку',
+	'srf_paramdesc_widths' => 'Шырыня выяваў',
+	'srf_paramdesc_heights' => 'Вышыня выяваў',
+	'srf_paramdesc_autocaptions' => 'Выкарыстоўваць назву файла ў якасьці загалоўку, калі ён не пададзены',
+	'srf_paramdesc_fileextensions' => 'Падчас выкарыстаньня назвы файла ў якасьці загалоўку, таксама паказваць пашырэньне файла',
 	'srf_printername_tagcloud' => 'Воблака тэгаў',
+	'srf_paramdesc_increase' => 'Як павялічыць памер тэгаў',
+	'srf_paramdesc_tagorder' => 'Парадак тэгаў',
+	'srf_paramdesc_minsize' => 'Памер самых малых тэгаў у адсотках (па змоўчваньні: 77)',
+	'srf_paramdesc_maxsize' => 'Памер самых вялікіх тэгаў у адсотках (па змоўчваньні: 177)',
+	'srf_paramdesc_maxtags' => 'Максымальная колькасьць тэгаў у воблаку',
+	'srf_printername_array' => 'Масіў',
+	'srf_paramdesc_pagetitle' => 'Ці паказваць назвы старонак як элемэнты вынікаў ці іх хаваць',
+	'srf_paramdesc_hidegaps' => 'Ці паказваць пустыя ўласьцівасьці і значэньні запісаў падзеленыя разьдзяляльнікамі ці іх хаваць',
+	'srf_paramdesc_propsep' => 'Разьдзяляльнік паміж запытанымі ўласьцівасьцямі',
+	'srf_paramdesc_manysep' => 'Разьдзяляльнік паміж ўласьцівасьцямі з некалькімі значэньнямі',
+	'srf_paramdesc_recordsep' => 'Разьдзяляльнік паміж значэньнямі запісаных уласьцівасьцяў',
+	'srf_printername_hash' => 'Рашотка',
+	'srf-printername-graph' => 'Графік',
+	'srf_paramdesc_graphname' => 'Назва',
+	'srf_paramdesc_graphsize' => 'Памер дыяграмы (у піксэлях)',
 );
 
 /** Bulgarian (Български)
@@ -281,6 +404,7 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Bellayet
+ * @author Wikitanvir
  */
 $messages['bn'] = array(
 	'srfc_previousmonth' => 'পূর্ববর্তী মাস',
@@ -293,6 +417,13 @@ $messages['bn'] = array(
 	'srf_printername_average' => 'গড়',
 	'srf_printername_max' => 'সর্বোচ্চ',
 	'srf_printername_min' => 'সর্বোনিম্ন',
+	'srf_printername_googlebar' => 'গুগল বার চার্ট',
+	'srf_printername_gallery' => 'গ্যালারি',
+	'srf_paramdesc_perrow' => 'প্রতি সারিতে ছবির সংখ্যা',
+	'srf_paramdesc_widths' => 'ছবির প্রস্থ',
+	'srf_paramdesc_heights' => 'ছবির উচ্চতা',
+	'srf_printername_array' => 'অ্যারে',
+	'srf_paramdesc_graphname' => 'শিরোনাম',
 );
 
 /** Breton (Brezhoneg)
@@ -311,7 +442,7 @@ $messages['br'] = array(
 	'srfc_gotomonth' => "Mont d'ar miz",
 	'srf_printername_calendar' => 'Deiziataer miziek',
 	'srf_paramdesc_calendarlang' => 'Kod ar yezh a dalvez da ziskwel an deiziadur',
-	'srf_printername_vcard' => 'ezporzhiañ vCard',
+	'srf_printername_vcard' => 'Ezporzh e vCard',
 	'srf_printername_icalendar' => 'Enporzh e iCalendar',
 	'srf_paramdesc_icalendartitle' => 'Titl ar restr deiziataer',
 	'srf_paramdesc_icalendardescription' => 'Deskrivadur restr an deiziataer',
@@ -331,6 +462,7 @@ $messages['br'] = array(
 	'srf_paramdesc_timelinestart' => "Un anv perzh implijet da dermeniñ ur poent loc'hañ en amzer",
 	'srf_paramdesc_timelineend' => 'Un anv perzh implijet da dermeniñ un eil poent en amzer',
 	'srf_paramdesc_timelinesize' => 'Uhelder ar frizenn (300px dre ziouer)',
+	'srf-timeline-allresults' => "Disoc'hoù ouzhpenn evit ar reked-mañ.",
 	'srf_paramdesc_views' => 'Ar gweladennoù da ziskouez',
 	'srf_paramdesc_facets' => 'An hollad perzhioù da ziskwel evit pep pajenn',
 	'srf_paramdesc_lens' => 'Anv ar patrom implijet evit diskouez perzhioù ar bajenn',
@@ -345,6 +477,28 @@ $messages['br'] = array(
 	'srf_paramdesc_bardirection' => "Durc'hadur ar grafik e barrennoù",
 	'srf_paramdesc_barnumbersaxislabel' => 'Tikedenn ahel an niveroù',
 	'srf_printername_gallery' => 'Skeudennaoueg',
+	'srf_paramdesc_perrow' => 'An niver a skeudennoù dre linenn',
+	'srf_paramdesc_widths' => 'Ledander ar skeudennoù',
+	'srf_paramdesc_heights' => 'Uhelder ar skeudennoù',
+	'srf_paramdesc_autocaptions' => "Ober gant anv ar restr da alc'hwez ma n'eus ket bet resisaet hini",
+	'srf_printername_tagcloud' => 'Nivlennad tikedennoù',
+	'srf_paramdesc_includesubject' => 'Ma tlefer lakaat e-barzh anv an danvezioù o-unan',
+	'srf_paramdesc_increase' => 'Penaos kreskiñ ment an tikedennoù',
+	'srf_paramdesc_tagorder' => 'Urzh an tikedennoù',
+	'srf_paramdesc_mincount' => 'Nizver izelañ a wezhioù e rank un dalvoudenn bezañ implijet evit bezañ rollet',
+	'srf_paramdesc_minsize' => 'Ment an dikedenn vihanañ e dregantad (dre ziouer : 77)',
+	'srf_paramdesc_maxsize' => 'Ment an dikedenn vrasañ e dregantad (dre ziouer : 77)',
+	'srf_paramdesc_maxtags' => 'Niver brasañ a dikedennoù en nivlennad',
+	'srf_printername_array' => 'Taolenn',
+	'srf_printername_hash' => 'Hacherezh',
+	'srf-printername-graph' => 'Grafik',
+	'srf_paramdesc_graphname' => 'Titl',
+	'srf_paramdesc_graphsize' => 'Ment ar grafik (e px)',
+	'srf_paramdesc_graphlegend' => "Diskouez alc'hwez ar grafik pe get",
+	'srf_paramdesc_graphlabel' => 'Tikedenn ar grafik',
+	'srf_paramdesc_rankdir' => "Durc'hadur ar bir",
+	'srf_paramdesc_graphlink' => 'Liamm war-zu ar grafik',
+	'srf_paramdesc_graphcolor' => 'Liv ar grafik',
 );
 
 /** Bosnian (Bosanski)
@@ -381,21 +535,54 @@ $messages['bs'] = array(
  */
 $messages['ca'] = array(
 	'srf-desc' => 'Formats addicionals per a les consultes en línia del Semantic MediaWiki.',
+	'srf-name' => 'Semantic Result Formats',
 	'srfc_previousmonth' => 'Mes anterior',
 	'srfc_nextmonth' => 'Mes posterior',
 	'srfc_today' => 'Avui',
 	'srfc_gotomonth' => 'Vés al mes',
 	'srf_printername_calendar' => 'Calendari mensual',
 	'srf_paramdesc_calendarlang' => 'El codi de la llengua en què es mostrarà el calendari',
+	'srf_printername_vcard' => 'Exportació vCard',
+	'srf_printername_icalendar' => 'Exportació iCalendar',
 	'srf_paramdesc_icalendartitle' => 'El títol del fitxer del calendari',
 	'srf_paramdesc_icalendardescription' => 'La descripció del fitxer del calendari',
+	'srf_printername_bibtex' => 'Exportació BibTeX',
+	'srf_outline_novalue' => 'Sense valor',
 	'srf_printername_sum' => 'Suma dels nombres',
 	'srf_printername_average' => 'Mitjana dels nombres',
 	'srf_printername_max' => 'Nombre màxim',
 	'srf_printername_min' => 'Nombre mínim',
-	'srf_paramdesc_limit' => 'El nombre màxim de pàgines on fer la consulta',
+	'srf_paramdesc_limit' => 'El nombre màxim de pàgines per consultar',
+	'srf_printername_product' => 'Producte de nombres',
+	'srf_printername_median' => 'Mediana de nombres',
+	'srf_printername_timeline' => 'Línia temporal',
+	'srf_printername_eventline' => "Línia d'esdeveniments",
+	'srf_paramdesc_timelinebands' => 'Defineix quines bandes es mostren en el resultat.',
+	'srf_paramdesc_timelineposition' => "Defineix on s'enfoca inicialment la línia temporal.",
 	'srf_paramdesc_timelinesize' => 'La llargada de la línia de temps (per defecte són 300px)',
+	'srf-timeline-allresults' => "Més resultats d'aquesta consulta.",
+	'srf_paramdesc_lens' => "El nom d'una plantilla amb què mostrar les propietats de la pàgina",
+	'srf_paramdesc_barnumbersaxislabel' => "L'etiqueta de l'eix de nombres",
 	'srf_printername_gallery' => 'Galeria',
+	'srf_paramdesc_perrow' => "El nombre d'imatges per fila",
+	'srf_paramdesc_widths' => "L'amplada de les imatges",
+	'srf_paramdesc_heights' => "L'alçada de les imatges",
+	'srf_paramdesc_autocaptions' => "Utilitza el nom de fitxer com a llegenda quan no se'n proporcioni cap",
+	'srf_printername_tagcloud' => "Núvol d'etiquetes",
+	'srf_paramdesc_increase' => 'Com augmentar la mida de les etiquetes',
+	'srf_paramdesc_tagorder' => "L'ordre de les etiquetes",
+	'srf_paramdesc_maxtags' => "El nombre màxim d'etiquetes en el núvol",
+	'srf_paramdesc_propsep' => 'Separador entre les propietats sol·licitades',
+	'srf_paramdesc_manysep' => 'Separador entre moltes propietats amb valor',
+	'srf_paramdesc_recordsep' => 'Separador entre els valors de les propietats de registre',
+	'srf-printername-graph' => 'Gràfic',
+	'srf-paramdesc-graph-nodeshape' => 'La forma de cada node en el gràfic',
+	'srf_paramdesc_graphname' => 'Títol',
+	'srf_paramdesc_graphsize' => 'Mida del gràfic (en px)',
+	'srf_paramdesc_graphlabel' => 'Etiqueta del gràfic',
+	'srf_paramdesc_rankdir' => 'Direcció de la fletxa',
+	'srf_paramdesc_graphlink' => 'Enllaç del gràfic',
+	'srf_paramdesc_graphcolor' => 'Color del gràfic',
 );
 
 /** German (Deutsch)
@@ -408,49 +595,108 @@ $messages['ca'] = array(
  * @author Umherirrender
  */
 $messages['de'] = array(
-	'srf-desc' => 'Stellt Semantic MediaWiki zusätzliche Ausgabeformate für eingebettete Abfragen zur Verfügung',
+	'srf-desc' => 'Ermöglicht zusätzliche Ausgabeformate für eingebettete Abfragen',
 	'srf-name' => 'Semantische Ergebnisformate',
 	'srfc_previousmonth' => 'Voriger Monat',
 	'srfc_nextmonth' => 'Nächster Monat',
 	'srfc_today' => 'Heute',
 	'srfc_gotomonth' => 'Gehe zu Monat',
-	'srf_printername_calendar' => 'Monatlicher Kalendar',
-	'srf_paramdesc_calendarlang' => 'Der Code der Sprache in der der Kalender angezeigt werden soll',
+	'srf_printername_calendar' => 'Kalender',
+	'srf_paramdesc_calendarlang' => 'Der Sprachcode der Sprache, in der der Kalender angezeigt werden soll',
+	'srf_paramdesc_calendarcolors' => 'Die für das jeweilige Datumsattribut zur Darstellung zu verwendende Farbe (Beispiel: „Startdatum=>green,Enddatum=>#09C“)',
 	'srf_printername_vcard' => 'vCard-Export',
 	'srf_printername_icalendar' => 'iCalendar-Export',
-	'srf_paramdesc_icalendartitle' => 'Titel der Kalenderdatei',
-	'srf_paramdesc_icalendardescription' => 'Beschreibung der Kalenderdatei',
-	'srf_printername_bibtex' => 'BibTeX Export',
+	'srf_paramdesc_icalendartitle' => 'Der Name für die Kalenderdatei',
+	'srf_paramdesc_icalendardescription' => 'Die Beschreibung der Kalenderdatei',
+	'srf_printername_bibtex' => 'BibTeX-Export',
 	'srf_outline_novalue' => 'Kein Wert',
 	'srf_printername_outline' => 'Gliederung',
-	'srf_paramdesc_outlineproperties' => 'Liste der mit Kommas voneinander getrennten Attribute, die in der Kopfzeile der Übersicht angezeigt werden sollen.',
+	'srf_paramdesc_outlineproperties' => 'Die Liste der mit Kommata voneinander getrennten Attribute, die in der Kopfzeile der Übersicht angezeigt werden sollen',
+	'srf_printername_D3Line' => 'D3-Liniendiagramm',
+	'srf_printername_D3Bar' => 'D3-Balkendiagramm',
+	'srf_printername_D3Treemap' => 'D3-Tree-Map',
 	'srf_printername_sum' => 'Summe der Zahlen',
-	'srf_printername_average' => 'Durchschnittliche Zahl',
-	'srf_printername_max' => 'Maximale Zahl',
-	'srf_printername_min' => 'Minimale Zahl',
-	'srf_paramdesc_limit' => 'Die maximale Anzahl der abfragbaren Seiten',
+	'srf_printername_average' => 'Durchschnitt der Zahlen',
+	'srf_printername_max' => 'Höchste Zahl',
+	'srf_printername_min' => 'Niedrigste Zahl',
+	'srf_paramdesc_limit' => 'Die maximale Anzahl der abzufragenden Seiten',
+	'srf_printername_product' => 'Produkt der Zahlen',
+	'srf_printername_median' => 'Median der Zahlen',
+	'srf-paramdesc-default' => 'Der Standardwert, der angezeigt wird, sofern keine numerischen Ergebnisse vorhanden sind.',
 	'srf_printername_timeline' => 'Zeitlinie',
-	'srf_printername_eventline' => 'Eventlinie',
-	'srf_paramdesc_timelinebands' => 'Legt fest, welche Bereiche im Ergebnis angezeigt werden.',
-	'srf_paramdesc_timelineposition' => 'Legt fest, wo der Zeitstrahl anfänglich steht.',
-	'srf_paramdesc_timelinestart' => 'Ein Eigenname, der einen ersten Zeitpunkt festlegt',
-	'srf_paramdesc_timelineend' => 'Ein Eigenname, der einen zweiten Zeitpunkt festlegt',
-	'srf_paramdesc_timelinesize' => 'Höhe der Zeitleiste (Standard ist 300px)',
+	'srf_printername_eventline' => 'Ereignislinie',
+	'srf_paramdesc_timelinebands' => 'Die Zeitbänder, die angezeigt werden sollen',
+	'srf_paramdesc_timelineposition' => 'Die Stelle an der der Zeitstrahl zunächst einsetzen soll',
+	'srf_paramdesc_timelinestart' => 'Der Name des Attributs, mit dem der erste anzuzeigende Zeitpunkt festgelegt wird',
+	'srf_paramdesc_timelineend' => 'Der Name des Attributs, mit dem der zweite anzuzeigende Zeitpunkt festgelegt wird',
+	'srf_paramdesc_timelinesize' => 'Die Höhe der Zeitleiste (Standard ist 300 Pixel)',
+	'srf-timeline-allresults' => 'Weitere Ergebnisse dieser Abfrage.',
+	'srf-timeline-nojs' => 'JavaScript muss aktiviert sein, damit man die interaktive Zeitleiste ansehen kann.',
 	'srf_paramdesc_views' => 'Die anzuzeigenden Ansichten',
-	'srf_paramdesc_facets' => 'Die Zusammenstellung der Eigenschaften die für jede Seite angezeigt werden',
-	'srf_paramdesc_lens' => 'Der Name einer Vorlage um Seiteneigenschaften anzuzeigen',
-	'srf_printername_googlebar' => 'Google Säulen-Diagramm',
-	'srf_printername_googlepie' => 'Google Torten-Diagramm',
-	'srf_printername_jqplotbar' => 'jqPlot Säulen- oder Balkendiagramm',
-	'srf_printername_jqplotpie' => 'jqPlot Kreisdiagramm',
-	'srf_paramdesc_chartheight' => 'Höhe des Diagramms (in Pixeln)',
-	'srf_paramdesc_chartwidth' => 'Breite des Diagramms (in Pixeln)',
+	'srf_paramdesc_facets' => 'Die Gruppe der Attribute, die für jede Seite angezeigt werden sollen',
+	'srf_paramdesc_lens' => 'Der Name einer Vorlage zum Anzeigen der Seiteneigenschaften',
+	'srf_printername_googlebar' => 'Google - Säulendiagramm',
+	'srf_printername_googlepie' => 'Google - Tortendiagramm',
+	'srf_printername_jqplotbar' => 'jqPlot - Säulen- oder Balkendiagramm',
+	'srf_printername_jqplotpie' => 'jqPlot - Kreisdiagramm',
+	'srf_paramdesc_chartheight' => 'Die Höhe des Diagramms (in Pixeln)',
+	'srf_paramdesc_chartwidth' => 'Die Breite des Diagramms (in Pixeln)',
 	'srf_paramdesc_charttitle' => 'Der Titel des Diagramms',
 	'srf_paramdesc_barcolor' => 'Die Farbe der Balken',
-	'srf_paramdesc_bardirection' => 'Ein Säulen- (vertikale Ausrichtung) oder Balkendiagramm (horizontale Ausrichtung)',
+	'srf_paramdesc_bardirection' => 'Die Darstellung des Diagramms (entweder Balken oder Säulen)',
 	'srf_paramdesc_barnumbersaxislabel' => 'Die Beschriftung der y-Achse',
+	'srf-paramdesc-minvalue' => 'Der niedrigste Wert, der auf der y-Achse angezeigt werden soll',
+	'srf-paramdesc-pointlabels' => 'Anzeige der einzelnen Datenpunkte',
+	'srf-paramdesc-chartlegend' => 'Diagrammlegende anzeigen',
+	'srf-paramdesc-legendlocation' => 'Legendenposition festlegen',
+	'srf-paramdesc-datalabels' => 'Datenbeschriftung im Tortendiagramm anzeigen',
+	'srf-paramdesc-datalabeltype' => 'Datenbeschriftungsart festlegen',
 	'srf_printername_gallery' => 'Galerie',
-	'srf_printername_tagcloud' => 'Schlagwortwolke',
+	'srf_paramdesc_perrow' => 'Die Anzahl der Bilder pro Zeile',
+	'srf_paramdesc_widths' => 'Die Breite der Bilder',
+	'srf_paramdesc_heights' => 'Die Höhe der Bilder',
+	'srf_paramdesc_autocaptions' => 'Den Dateinamen als Beschreibung verwenden, sofern keine angegeben wurde',
+	'srf_paramdesc_fileextensions' => 'Sofern der Dateiname als Beschreibung verwendet wird, ebenso die Dateierweiterung anzeigen',
+	'srf_paramdesc_captionproperty' => 'Der Name des Attributs auf abgefragten Seiten, der als Beschreibung verwendet werden soll',
+	'srf_paramdesc_imageproperty' => 'Der Name des Attributs auf abgefragten Seiten, das auf das zu verwendende Bild hinweist. Sofern festgelegt, werden die abgefragten Seiten selbst, nicht als Bild angezeigt.',
+	'srf_paramdesc_galleryformat' => 'Galerie',
+	'srf_printername_tagcloud' => 'Stichwortwolke',
+	'srf_paramdesc_includesubject' => 'Ob die Themenbezeichnungen selbst mit einbezogen werden sollen',
+	'srf_paramdesc_increase' => 'Wie soll die Darstellungsgröße der Stichwörter verändert werden?',
+	'srf_paramdesc_tagorder' => 'Die Reihenfolge der Stichwörter',
+	'srf_paramdesc_mincount' => 'Das Mindestvorkommen eines Stichwortes, um aufgelistet zu werden',
+	'srf_paramdesc_minsize' => 'Die Darstellungsgröße des kleinsten Stichwortes in Prozent (Standard ist 77)',
+	'srf_paramdesc_maxsize' => 'Die Darstellungsgröße des größten Stichwortes in Prozent (Standard ist 177)',
+	'srf_paramdesc_maxtags' => 'Die maximale Anzahl der Stichwörter in der Stichwortwolke',
+	'srf_printername_valuerank' => 'Rang',
+	'srf_printername_array' => 'Datenfeld (Array)',
+	'srf_paramdesc_pagetitle' => 'Legt fest ob Seitentitel in der Ergebnisliste angezeigt oder weggelassen werden sollen',
+	'srf_paramdesc_hidegaps' => 'Legt fest, ob abgefragte, aber nicht vorhandene Attribut- und Datensatzwerte, durch Trennzeichen getrennt, angezeigt oder weggelassen werden sollen',
+	'srf_paramdesc_arrayname' => 'Sofern die Erweiterung Arrays installiert ist, wird anstelle einer sichtbaren Ergebnisausgabe ein Datenfeld (Array) dieses Namens angelegt',
+	'srf_paramdesc_propsep' => 'Das Trennzeichen zwischen gewünschten Attributen',
+	'srf_paramdesc_manysep' => 'Das Trennzeichen zwischen mehreren Attributwerten eines Attributs',
+	'srf_paramdesc_recordsep' => 'Das Trennzeichen zwischen den einzelnen Werten eines Attributs von Datentyp Verbund',
+	'srf_paramdesc_headersep' => 'Das Trennzeichen zwischen Attributnamen und -wert, sofern für den Parameter „headers“ entweder „show“ oder „plain“ festgelegt wurde',
+	'srf_printername_hash' => 'Assoziatives Datenfeld (Hash)',
+	'srf_paramdesc_hashname' => 'Sofern die Erweiterung HashTables vorhanden ist, wird anstelle einer sichtbaren Ergebnisausgabe ein assoziatives Datenfeld (Hash) dieses Namens angelegt',
+	'srf-printername-graph' => 'Grafik',
+	'srf-paramdesc-graph-relation' => 'Sind die Betreffe oder Namensattribute Haupt- oder Unterobjekte?',
+	'srf-paramdesc-graph-nameprop' => 'Das Attribut, dessen Wert als Betreff anstelle des eigentlichen Betreffs genutzt werden soll',
+	'srf-paramdesc-graph-nodeshape' => 'Die Form der Datenpunkte in der Grafik',
+	'srf_paramdesc_graphname' => 'Titel der Grafik',
+	'srf_paramdesc_graphsize' => 'Größe der Grafik (in Pixeln)',
+	'srf_paramdesc_graphlegend' => 'Legende zur Grafik anzeigen oder nicht',
+	'srf_paramdesc_graphlabel' => 'Beschriftung der Grafik',
+	'srf_paramdesc_rankdir' => 'Pfeilrichtung',
+	'srf_paramdesc_graphlink' => 'Link zur Grafik',
+	'srf_paramdesc_graphcolor' => 'Farbe der Grafik',
+	'srf-paramdesc-graph-wwl' => 'Begrenzung des Textumbruchs (Anzahl der Zeichen)',
+	'srf-warn-empy-chart' => 'Es wird kein Diagramm angezeigt, da keine anzuzeigende Ergebnisse vorhanden sind.',
+	'srf_printername_datatables' => 'Datentabellen',
+	'srf-paramdesc-rowindex' => 'Zeilenindex der Tabelle',
+	'srf-paramdesc-displaylength' => 'Ausgangsanzeigelänge',
+	'srf-noparentprop' => 'Es wurde kein übergeordnetes Attribut angegeben. Der Baum kann nicht ohne Angabe eines übergeordneten Attributs erstellt werden.',
+	'srf-paramdesc-parent' => 'Das Attribut, das die übergeordnete Seite enthält',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -499,7 +745,15 @@ $messages['dsb'] = array(
 	'srf_paramdesc_bardirection' => 'Směr słupowego diagrama',
 	'srf_paramdesc_barnumbersaxislabel' => 'Pópisanje za y-wósku',
 	'srf_printername_gallery' => 'Galerija',
+	'srf_paramdesc_perrow' => 'Licba wobrazow na smužku',
+	'srf_paramdesc_widths' => 'Šyrokosć wobrazow',
+	'srf_paramdesc_heights' => 'Wusokosć wobrazow',
+	'srf_paramdesc_autocaptions' => 'Datajowe mě ako wopisanje wužywaś, jolic žadno njeje pódane',
 	'srf_printername_tagcloud' => 'Tafličkowa mróčel',
+	'srf_paramdesc_includesubject' => 'Lěc mjenja temow same maju se zapśimjeś',
+	'srf_paramdesc_increase' => 'Kak ma se wjelikosć wobznamjenjow pówušyś',
+	'srf_paramdesc_tagorder' => 'Pórěd wobznamjenjow',
+	'srf_paramdesc_maxtags' => 'maksimalna licba wobznamjenjow w mrokawje',
 );
 
 /** Greek (Ελληνικά)
@@ -550,6 +804,7 @@ $messages['eo'] = array(
 
 /** Spanish (Español)
  * @author Antur
+ * @author Armando-Martin
  * @author Crazymadlover
  * @author Imre
  * @author Sanbec
@@ -564,6 +819,7 @@ $messages['es'] = array(
 	'srfc_gotomonth' => 'Ir al mes',
 	'srf_printername_calendar' => 'Calendario mensual',
 	'srf_paramdesc_calendarlang' => 'El código del idioma en el que se muestra el calendario',
+	'srf_paramdesc_calendarcolors' => 'El color a mostrar para cada propiedad de datos (ejemplo: "Fecha de inicio=>green, Fecha de fin=>#09c")',
 	'srf_printername_vcard' => 'Exportar vCard',
 	'srf_printername_icalendar' => 'Exportar iCalendar',
 	'srf_paramdesc_icalendartitle' => 'El título del archivo de calendario',
@@ -572,11 +828,17 @@ $messages['es'] = array(
 	'srf_outline_novalue' => 'Sin valor',
 	'srf_printername_outline' => 'Esquema',
 	'srf_paramdesc_outlineproperties' => 'La lista de propiedades que se mostrará como encabezados de esquema, separadas por comas',
+	'srf_printername_D3Line' => 'Gráfica lineal D3',
+	'srf_printername_D3Bar' => 'Diagrama de barras D3',
+	'srf_printername_D3Treemap' => 'Diagrama de árbol D3',
 	'srf_printername_sum' => 'Suma de números',
 	'srf_printername_average' => 'Promedio de números',
 	'srf_printername_max' => 'Número máximo',
 	'srf_printername_min' => 'Número mínimo',
 	'srf_paramdesc_limit' => 'La cantidad máxima de páginas a consultar',
+	'srf_printername_product' => 'Producto de números',
+	'srf_printername_median' => 'Mediana de los números',
+	'srf-paramdesc-default' => 'Valor por defecto que se mostrará cuando no haya resultados numéricos',
 	'srf_printername_timeline' => 'Línea de tiempo',
 	'srf_printername_eventline' => 'Línea de eventos',
 	'srf_paramdesc_timelinebands' => 'PDF',
@@ -584,6 +846,8 @@ $messages['es'] = array(
 	'srf_paramdesc_timelinestart' => 'Un nombre de propiedad utilizado para definir un primer punto temporal',
 	'srf_paramdesc_timelineend' => 'Un nombre de propiedad utilizado para definir un segundo punto temporal',
 	'srf_paramdesc_timelinesize' => 'La altura de la línea de tiempo (por defecto 300px)',
+	'srf-timeline-allresults' => 'Resultados adicionales para esta consulta.',
+	'srf-timeline-nojs' => 'Debe tener habilitado JavaScript para ver la línea de tiempo interactiva.',
 	'srf_paramdesc_views' => 'Las vistas a mostrar',
 	'srf_paramdesc_facets' => 'El grupo de propiedades a mostrar para cada página',
 	'srf_paramdesc_lens' => 'El nombre de una plantilla con la que se muestra la propiedades de la página',
@@ -597,7 +861,58 @@ $messages['es'] = array(
 	'srf_paramdesc_barcolor' => 'El color de las barras',
 	'srf_paramdesc_bardirection' => 'La dirección del gráfico de barras',
 	'srf_paramdesc_barnumbersaxislabel' => 'La etiqueta del eje de los números',
+	'srf-paramdesc-minvalue' => 'El valor mínimo a mostrar en el eje de ordenadas',
+	'srf-paramdesc-pointlabels' => 'Visualización de puntos de datos individuales',
+	'srf-paramdesc-chartlegend' => 'Mostrar la leyenda de la gráfica',
+	'srf-paramdesc-legendlocation' => 'Definir la posición de la leyenda',
+	'srf-paramdesc-datalabels' => 'Mostrar las etiquetas de datos de la gráfica circular',
+	'srf-paramdesc-datalabeltype' => 'Definir el tipo de las etiquetas de datos',
 	'srf_printername_gallery' => 'Galería',
+	'srf_paramdesc_perrow' => 'La cantidad de imágenes por línea',
+	'srf_paramdesc_widths' => 'La anchura de las imágenes',
+	'srf_paramdesc_heights' => 'La altura de las imágenes',
+	'srf_paramdesc_autocaptions' => 'Usar el nombre del archivo como pie de imagen cuando no se indique ninguna otra',
+	'srf_paramdesc_fileextensions' => 'Cuando se use el nombre del archivo como pie de imagen, mostrar también la extensión del archivo',
+	'srf_paramdesc_captionproperty' => 'El nombre de una propiedad semántica presente en las páginas consultadas a usar como pie de imagen',
+	'srf_paramdesc_imageproperty' => 'Nombre de una propiedad semántica en las páginas consultadas que apunta a las imágenes a usar. Cuando esté definido, las propias páginas consultadas no se mostrarán como imágenes',
+	'srf_paramdesc_galleryformat' => 'Formato de la galería',
+	'srf_printername_tagcloud' => 'Nube de etiquetas',
+	'srf_paramdesc_includesubject' => 'Si los propios nombres de los temas deben incluirse',
+	'srf_paramdesc_increase' => 'Como aumentar el tamaño de las etiquetas',
+	'srf_paramdesc_tagorder' => 'El orden de las etiquetas',
+	'srf_paramdesc_mincount' => 'La cantidad mínima de veces que un valor tiene que presentarse para estar en la lista',
+	'srf_paramdesc_minsize' => 'El tamaño de las etiquetas más pequeñas, en porcentaje (por defecto: 77)',
+	'srf_paramdesc_maxsize' => 'El tamaño de las etiquetas más grandes en porcentaje (por defecto: 177)',
+	'srf_paramdesc_maxtags' => 'La cantidad máxima de etiquetas en la nube',
+	'srf_printername_valuerank' => 'Valor del rango',
+	'srf_printername_array' => 'Tabla',
+	'srf_paramdesc_pagetitle' => 'Mostrar los títulos de las páginas como entradas de resultados, o bien omitirlos',
+	'srf_paramdesc_hidegaps' => 'Imprimir los valores de las propiedades y de los registros solicitados y no disponibles, separados por separadores,obien omitirlos',
+	'srf_paramdesc_arrayname' => 'Si se da un ArrayExtension y está disponible, esto creará una tabla con el nombre indicado (sin salida visible, en ese caso)',
+	'srf_paramdesc_propsep' => 'Separador entre las propiedades solicitadas',
+	'srf_paramdesc_manysep' => 'Separador entre los valores de las propiedades con muchos valores',
+	'srf_paramdesc_recordsep' => 'Separador entre los valores de las propiedades de registro',
+	'srf_paramdesc_headersep' => 'Separador entre el nombre y el valor de la propiedad si "headers" está definido como "show" o "plain"',
+	'srf_printername_hash' => 'Hash',
+	'srf_paramdesc_hashname' => 'Si se da una extensión HashTables y está disponible, esto creará un "hash" con el nombre indicado (sin salida visible, en ese caso)',
+	'srf-printername-graph' => 'Gráfico',
+	'srf-paramdesc-graph-relation' => 'Los asuntos o las propiedades de los nombres ¿son padres o hijos?',
+	'srf-paramdesc-graph-nameprop' => 'Permite definir una propiedad que se usará como asunto en vez del asunto real',
+	'srf-paramdesc-graph-nodeshape' => 'La forma de cada nodo en la gráfica',
+	'srf_paramdesc_graphname' => 'Título',
+	'srf_paramdesc_graphsize' => 'Tamaño de la gráfica (en px)',
+	'srf_paramdesc_graphlegend' => 'Mostrar o no la leyenda de la gráfica',
+	'srf_paramdesc_graphlabel' => 'Etiqueta de la gráfica',
+	'srf_paramdesc_rankdir' => 'Dirección de la flecha',
+	'srf_paramdesc_graphlink' => 'Enlace de la gráfica',
+	'srf_paramdesc_graphcolor' => 'Color de la gráfica',
+	'srf-paramdesc-graph-wwl' => 'Ajuste automático de línea (en número de caracteres)',
+	'srf-warn-empy-chart' => 'La tabla no se muestra porque no hay resultados que incluir en ella.',
+	'srf_printername_datatables' => 'Tablas de datos',
+	'srf-paramdesc-rowindex' => 'Índice de la fila de la tabla',
+	'srf-paramdesc-displaylength' => 'Longitud de presentación inicial',
+	'srf-noparentprop' => 'No se ha especificado ninguna propiedad padre. No se puede construir el árbol sin especificar una propiedad padre.',
+	'srf-paramdesc-parent' => 'La propiedad que contiene la página padre',
 );
 
 /** Basque (Euskara)
@@ -623,6 +938,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (Suomi)
+ * @author Nike
  * @author Silvonen
  * @author Str4nd
  */
@@ -648,16 +964,22 @@ $messages['fi'] = array(
 	'srf_printername_googlepie' => 'Googlen piirakkakuvaaja',
 	'srf_paramdesc_chartheight' => 'Kuvaajan korkeus pikseleinä',
 	'srf_paramdesc_chartwidth' => 'Kuvaajan leveys pikseleinä',
+	'srf_paramdesc_rankdir' => 'Nuolen suunta',
 );
 
 /** French (Français)
  * @author Crochet.david
+ * @author DavidL
+ * @author Gomoko
  * @author Grondin
+ * @author Hashar
  * @author IAlex
  * @author Iluvalar
+ * @author McDutchie
  * @author Peter17
  * @author PieRRoMaN
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'srf-desc' => 'Formats additionnels pour les requêtes de Semantic MediaWiki',
@@ -668,6 +990,7 @@ $messages['fr'] = array(
 	'srfc_gotomonth' => 'Aller vers le mois',
 	'srf_printername_calendar' => 'Calendrier mensuel',
 	'srf_paramdesc_calendarlang' => 'Le code de la langue dans laquelle afficher le calendrier',
+	'srf_paramdesc_calendarcolors' => 'La couleur à afficher pour chaque propriété date (exemple: "Date de démarrage => green,Date de fin => #09c")',
 	'srf_vcard_link' => 'vCarte',
 	'srf_printername_vcard' => 'export en vCard',
 	'srf_icalendar_link' => 'iCalendrier',
@@ -678,11 +1001,17 @@ $messages['fr'] = array(
 	'srf_outline_novalue' => 'Aucune valeur',
 	'srf_printername_outline' => 'esquisse',
 	'srf_paramdesc_outlineproperties' => 'La liste des propriétés à afficher comme en-têtes, séparées par des virgules',
+	'srf_printername_D3Line' => 'Graphique linéaire D3',
+	'srf_printername_D3Bar' => 'Diagramme à barres D3',
+	'srf_printername_D3Treemap' => 'Treemap D3',
 	'srf_printername_sum' => 'Somme de nombres',
 	'srf_printername_average' => 'Moyenne des nombres',
 	'srf_printername_max' => 'Nombre maximal',
 	'srf_printername_min' => 'Nombre minimal',
 	'srf_paramdesc_limit' => 'Le nombre maximum de pages à rechercher',
+	'srf_printername_product' => 'Produit de nombres',
+	'srf_printername_median' => 'Moyenne des nombres',
+	'srf-paramdesc-default' => "Valeur par défaut qui s'affichera lorsqu'il n'y a pas de résultats numériques",
 	'srf_printername_timeline' => 'Chronologie',
 	'srf_printername_eventline' => 'Chronologie des événements',
 	'srf_paramdesc_timelinebands' => 'Définit quels groupes sont affichées dans les résultats.',
@@ -690,6 +1019,8 @@ $messages['fr'] = array(
 	'srf_paramdesc_timelinestart' => 'Un nom de propriété utilisé pour définir un point de démarrage',
 	'srf_paramdesc_timelineend' => 'Un nom de propriété utilisé pour définir un point de seconde date',
 	'srf_paramdesc_timelinesize' => 'La hauteur de la frise (300px par défaut)',
+	'srf-timeline-allresults' => 'Autres résultats pour cette requête.',
+	'srf-timeline-nojs' => 'JavaScript doit être activé pour voir la chronologie interactive.',
 	'srf_paramdesc_views' => 'Les vues à afficher',
 	'srf_paramdesc_facets' => 'L’ensemble des propriétés à afficher pour chaque page',
 	'srf_paramdesc_lens' => 'Le nom du modèle utilisé pour afficher les propriétés de la page',
@@ -703,13 +1034,65 @@ $messages['fr'] = array(
 	'srf_paramdesc_barcolor' => 'La couleur des barres',
 	'srf_paramdesc_bardirection' => 'Direction du diagramme en barres',
 	'srf_paramdesc_barnumbersaxislabel' => 'Étiquette pour l’axe numérique',
+	'srf-paramdesc-minvalue' => "La valeur minimale à afficher sur l'axe des ordonnées",
+	'srf-paramdesc-pointlabels' => 'Affichage des points de données individuels',
+	'srf-paramdesc-chartlegend' => 'Afficher la légende du graphique',
+	'srf-paramdesc-legendlocation' => "Fixer l'emplacement de la légende",
+	'srf-paramdesc-datalabels' => 'Afficher les étiquettes de données du camembert',
+	'srf-paramdesc-datalabeltype' => 'Fixer le type des étiquettes de données',
 	'srf_printername_gallery' => 'Galerie',
+	'srf_paramdesc_perrow' => "Le nombre d'images par ligne",
+	'srf_paramdesc_widths' => 'La largeur des images',
+	'srf_paramdesc_heights' => 'La hauteur des images',
+	'srf_paramdesc_autocaptions' => "Utiliser le nom de fichier comme légende lorsqu'aucune n'est fournie",
+	'srf_paramdesc_fileextensions' => "Quand le nom de fichier est utilisé comme titre, afficher aussi l'extension du fichier",
+	'srf_paramdesc_captionproperty' => 'Le nom de la propriété sémantique présent sur les pages demandées doit être utilisé comme titre',
+	'srf_paramdesc_imageproperty' => 'Le nom de la propriété sémantique sur les pages demandées qui pointent vers des images à utiliser. Quand il est positionné, les pages demandées elles-mêmes ne seront aps affichées comme des images',
+	'srf_paramdesc_galleryformat' => 'Format de la galerie',
+	'srf_printername_tagcloud' => 'Nuage de tags',
+	'srf_paramdesc_includesubject' => 'Si les noms des sujets eux-mêmes devraient être inclus',
+	'srf_paramdesc_increase' => 'Comment augmenter la taille des tags',
+	'srf_paramdesc_tagorder' => "L'ordre des tags",
+	'srf_paramdesc_mincount' => "Le nombre minimal de fois qu'une valeur doit être utilisée pour être listée",
+	'srf_paramdesc_minsize' => 'La taille du plus petit tag en pourcent (par défaut : 77)',
+	'srf_paramdesc_maxsize' => 'La taille du plus grand des tags en pourcent (par défaut : 177)',
+	'srf_paramdesc_maxtags' => 'Le montant maximal des tags dans le nuage',
+	'srf_printername_valuerank' => 'Valeur du rang',
+	'srf_printername_array' => 'Tableau',
+	'srf_paramdesc_pagetitle' => "S'il faut afficher les titres de page comme entrées de résultat ou les omettre",
+	'srf_paramdesc_hidegaps' => "S'il faut afficher les valeurs de propriété ou d'enregistrement non disponibles séparées par des séparateurs ou les omettre",
+	'srf_paramdesc_arrayname' => 'Si un ArrayExtension donné est disponible, cela créera un tableau avec le nom spécifié (pas de sortie visible, dans ce cas)',
+	'srf_paramdesc_propsep' => 'Séparateur entre les propriétés demandées',
+	'srf_paramdesc_manysep' => 'Séparateur entre les valeurs de propriété multi-valuées',
+	'srf_paramdesc_recordsep' => "Séparateur entre les valeurs les propriétés d'enregistrement",
+	'srf_paramdesc_headersep' => 'Séparateur entre le nom de la propriété et la valeur si "<code>headers</code>" est positionné à "<code>show</code>" ou "<code>plain</code>"',
+	'srf_printername_hash' => 'Hachage',
+	'srf_paramdesc_hashname' => "Si l'extension HashTables est disponible et fournie, ceci créera un hachage avec le nom spécifié (pas de sortie visible dans ce cas)",
+	'srf-printername-graph' => 'Graphe',
+	'srf-paramdesc-graph-relation' => 'Est-ce que les sujets ou les propriétés de nom sont des parents ou des enfants ?',
+	'srf-paramdesc-graph-nameprop' => "Permet de définir une propriété qui sera utilisée comme sujet au lieu de l'objet réel",
+	'srf-paramdesc-graph-nodeshape' => 'La forme de chaque nœud sur le graphe.',
+	'srf_paramdesc_graphname' => 'Titre',
+	'srf_paramdesc_graphsize' => 'Taille du graphe (en px)',
+	'srf_paramdesc_graphlegend' => 'Afficher la légende de graphe ou non',
+	'srf_paramdesc_graphlabel' => 'Étiquette du graphe',
+	'srf_paramdesc_rankdir' => 'Direction de la flèche',
+	'srf_paramdesc_graphlink' => 'Lien vers le graphe',
+	'srf_paramdesc_graphcolor' => 'Couleur du graphe',
+	'srf-paramdesc-graph-wwl' => 'Limite de retour automatique (en nombre de caractères)',
+	'srf-warn-empy-chart' => "Le tableau n'est pas affiché parce qu'il n'y a pas de résultats qui peuvent être affichés dedans.",
+	'srf_printername_datatables' => 'Tables de données',
+	'srf-paramdesc-rowindex' => 'Index de la ligne de la table',
+	'srf-paramdesc-displaylength' => "Longueur d'affichage initiale",
+	'srf-noparentprop' => "Aucune propriété parente fournie. L'arbre ne peut pas être construit sans une propriété parente spécifiée.",
+	'srf-paramdesc-parent' => 'La propriété contenant la page parent',
 );
 
 /** Franco-Provençal (Arpetan)
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'srf-name' => 'Formatâjo des rèsultats sèmanticos',
 	'srfc_previousmonth' => 'Mês devant',
 	'srfc_nextmonth' => 'Mês aprés',
 	'srfc_today' => 'Houé',
@@ -724,9 +1107,39 @@ $messages['frp'] = array(
 	'srf_printername_outline' => 'Començon',
 	'srf_printername_sum' => 'Soma de nombros',
 	'srf_printername_average' => 'Moyena des nombros',
+	'srf_printername_max' => 'Nombro lo ples grant',
+	'srf_printername_min' => 'Nombro lo ples petiôt',
+	'srf_printername_product' => 'Fruit de nombros',
 	'srf_printername_timeline' => 'Diagramo cronologico',
 	'srf_printername_eventline' => 'Diagramo cronologico des èvènements',
+	'srf_printername_googlebar' => 'Diagramo en bârres de Google',
+	'srf_printername_googlepie' => 'Diagramo en torta de Google',
+	'srf_printername_jqplotbar' => 'Diagramo en bârres jqPlot',
+	'srf_printername_jqplotpie' => 'Diagramo en torta jqPlot',
+	'srf_paramdesc_chartheight' => 'La hôtior du diagramo, en pixèls',
+	'srf_paramdesc_chartwidth' => 'La largior du diagramo, en pixèls',
+	'srf_paramdesc_charttitle' => 'Lo titro du diagramo',
+	'srf_paramdesc_barcolor' => 'La color de les bârres',
+	'srf_paramdesc_bardirection' => 'La dirèccion du diagramo en bârres',
+	'srf_paramdesc_barnumbersaxislabel' => 'Lo lambél por l’axo numerico',
 	'srf_printername_gallery' => 'Galerie',
+	'srf_paramdesc_perrow' => 'Lo nombro d’émâges per legne',
+	'srf_paramdesc_widths' => 'La largior de les émâges',
+	'srf_paramdesc_heights' => 'La hôtior de les émâges',
+	'srf_printername_tagcloud' => 'Niola de tags',
+	'srf_paramdesc_tagorder' => 'L’ôrdre des tags',
+	'srf_printername_valuerank' => 'Valor du rang',
+	'srf_printername_array' => 'Tablô',
+	'srf_printername_hash' => 'Chaplâjo',
+	'srf-printername-graph' => 'Diagramo',
+	'srf_paramdesc_graphname' => 'Titro',
+	'srf_paramdesc_graphsize' => 'Talye du diagramo (en px)',
+	'srf_paramdesc_graphlegend' => 'Fâre vêre la lègenda du diagramo ou ben pas',
+	'srf_paramdesc_graphlabel' => 'Lambél du diagramo',
+	'srf_paramdesc_rankdir' => 'Dirèccion de la flèche',
+	'srf_paramdesc_graphlink' => 'Lim de vers lo diagramo',
+	'srf_paramdesc_graphcolor' => 'Color du diagramo',
+	'srf-paramdesc-graph-wwl' => 'Limita de retôrn ôtomatico (en nombro de caractèros)',
 );
 
 /** Galician (Galego)
@@ -742,6 +1155,7 @@ $messages['gl'] = array(
 	'srfc_gotomonth' => 'Ir ao mes',
 	'srf_printername_calendar' => 'Calendario mensual',
 	'srf_paramdesc_calendarlang' => 'O código da lingua na que mostrar o calendario',
+	'srf_paramdesc_calendarcolors' => 'A cor na que mostrar cada propiedade de data (exemplo: "Data de inicio=>green,Data de fin=>#09c")',
 	'srf_vcard_link' => 'vTarxeta',
 	'srf_printername_vcard' => 'Exportación en vCard',
 	'srf_icalendar_link' => 'iCalendario',
@@ -752,11 +1166,17 @@ $messages['gl'] = array(
 	'srf_outline_novalue' => 'Sen valor',
 	'srf_printername_outline' => 'Esquema',
 	'srf_paramdesc_outlineproperties' => 'A lista de propiedades a mostrar como cabeceiras de contorno, separadas por comas',
+	'srf_printername_D3Line' => 'Gráfica linear D3',
+	'srf_printername_D3Bar' => 'Diagrama de barras D3',
+	'srf_printername_D3Treemap' => 'Mapa de árbore D3',
 	'srf_printername_sum' => 'Suma dos números',
 	'srf_printername_average' => 'Media dos números',
 	'srf_printername_max' => 'Número máximo',
 	'srf_printername_min' => 'Número mínimo',
 	'srf_paramdesc_limit' => 'O número máximo de páxinas a pescudar',
+	'srf_printername_product' => 'Produto dos números',
+	'srf_printername_median' => 'Media dos números',
+	'srf-paramdesc-default' => 'O valor por defecto que se mostrará cando non haxa resultados numéricos',
 	'srf_printername_timeline' => 'Liña do tempo',
 	'srf_printername_eventline' => 'Liña do evento',
 	'srf_paramdesc_timelinebands' => 'Define as bandas que se mostrarán no resultado.',
@@ -764,6 +1184,8 @@ $messages['gl'] = array(
 	'srf_paramdesc_timelinestart' => 'Un nome de propiedade usado para definir un primeiro punto de tempo',
 	'srf_paramdesc_timelineend' => 'Un nome de propiedade usado para definir un segundo punto de tempo',
 	'srf_paramdesc_timelinesize' => 'A altura da liña do tempo (por defecto, 300px)',
+	'srf-timeline-allresults' => 'Máis resultados para esta pescuda.',
+	'srf-timeline-nojs' => 'Debe ter o JavaScript activado para ollar a liña do tempo interactiva.',
 	'srf_paramdesc_views' => 'As vistas a mostrar',
 	'srf_paramdesc_facets' => 'O conxunto de propiedades a mostrar en cada páxina',
 	'srf_paramdesc_lens' => 'O nome dun modelo co que mostrar as propiedades da páxina',
@@ -777,7 +1199,58 @@ $messages['gl'] = array(
 	'srf_paramdesc_barcolor' => 'A cor das barras',
 	'srf_paramdesc_bardirection' => 'A orientación do gráfico de barras',
 	'srf_paramdesc_barnumbersaxislabel' => 'A etiqueta para o eixe numérico',
+	'srf-paramdesc-minvalue' => 'O valor mínimo que mostrar no eixe de ordenadas',
+	'srf-paramdesc-pointlabels' => 'Visualización de puntos de datos individuais',
+	'srf-paramdesc-chartlegend' => 'Mostrar a lenda da gráfica',
+	'srf-paramdesc-legendlocation' => 'Fixar a posición da lenda',
+	'srf-paramdesc-datalabels' => 'Mostrar as etiquetas de datos da gráfica circular',
+	'srf-paramdesc-datalabeltype' => 'Fixar o tipo das etiquetas de datos',
 	'srf_printername_gallery' => 'Galería',
+	'srf_paramdesc_perrow' => 'A cantidade de imaxes por liña',
+	'srf_paramdesc_widths' => 'O largo das imaxes',
+	'srf_paramdesc_heights' => 'A altura das imaxes',
+	'srf_paramdesc_autocaptions' => 'Usar o nome do ficheiro como pé de imaxe cando non se indica ningún',
+	'srf_paramdesc_fileextensions' => 'Ao usar o nome do ficheiro como pé de imaxe, mostrar tamén a extensión do ficheiro',
+	'srf_paramdesc_captionproperty' => 'O nome dunha propiedade semántica presente nas páxinas consultadas a usar como pé de imaxe',
+	'srf_paramdesc_imageproperty' => 'Nome dunha propiedade semántica nas páxinas consultadas que apunta cara a imaxes a usar. Cando estea definido, as páxinas consultadas en si non se mostrarán como imaxes',
+	'srf_paramdesc_galleryformat' => 'Formato da galería',
+	'srf_printername_tagcloud' => 'Nube de etiquetas',
+	'srf_paramdesc_includesubject' => 'Se os nomes dos temas deben incluírse',
+	'srf_paramdesc_increase' => 'Como aumentar o tamaño das etiquetas',
+	'srf_paramdesc_tagorder' => 'A orde das etiquetas',
+	'srf_paramdesc_mincount' => 'A cantidade mínima de veces que un valor ten que producirse para estar na lista',
+	'srf_paramdesc_minsize' => 'O tamaño das etiquetas máis pequenas en porcentaxe (por defecto: 77)',
+	'srf_paramdesc_maxsize' => 'O tamaño das etiquetas máis grandes en porcentaxe (por defecto: 177)',
+	'srf_paramdesc_maxtags' => 'A cantidade máxima de etiquetas na nube',
+	'srf_printername_valuerank' => 'Valor do rango',
+	'srf_printername_array' => 'Táboa',
+	'srf_paramdesc_pagetitle' => 'Mostrar ou omitir os títulos das páxinas como entradas dos resultados',
+	'srf_paramdesc_hidegaps' => 'Imprimir ou non os valores non dispoñibles das propiedades e dos rexistros baleiros solicitados, separados por separadores',
+	'srf_paramdesc_arrayname' => 'En caso de que fose especificado e que a ArrayExtension estea dispoñible, isto creará unha táboa co nome indicado (sen saída visible)',
+	'srf_paramdesc_propsep' => 'Separador entre as propiedades solicitadas',
+	'srf_paramdesc_manysep' => 'Separador entre os valores das propiedades con moitos valores',
+	'srf_paramdesc_recordsep' => 'Separador entre os valores das propiedades de rexistro',
+	'srf_paramdesc_headersep' => 'Separador entre o nome e o valor da propiedade se "headers" está definido en "show" ou "plain"',
+	'srf_printername_hash' => 'Hash',
+	'srf_paramdesc_hashname' => 'En caso de que fose aclarado e que a extensión HashTables estea dispoñible, isto creará un hash co nome especificado (sen saída visible)',
+	'srf-printername-graph' => 'Gráfica',
+	'srf-paramdesc-graph-relation' => 'Son os asuntos ou as propiedades dos nomes pais ou fillos?',
+	'srf-paramdesc-graph-nameprop' => 'Permite definir unha propiedade que se usará como asunto no canto do asunto real',
+	'srf-paramdesc-graph-nodeshape' => 'A forma de cada nodo na gráfica',
+	'srf_paramdesc_graphname' => 'Título',
+	'srf_paramdesc_graphsize' => 'Tamaño da gráfica (en px)',
+	'srf_paramdesc_graphlegend' => 'Mostrar ou non a lenga da gráfica',
+	'srf_paramdesc_graphlabel' => 'Título da gráfica',
+	'srf_paramdesc_rankdir' => 'Dirección da frecha',
+	'srf_paramdesc_graphlink' => 'Ligazón da gráfica',
+	'srf_paramdesc_graphcolor' => 'Cor da gráfica',
+	'srf-paramdesc-graph-wwl' => 'Axuste automático de liña (en número de caracteres)',
+	'srf-warn-empy-chart' => 'A táboa non se mostra porque non hai resultados que incluír nela.',
+	'srf_printername_datatables' => 'Táboas de datos',
+	'srf-paramdesc-rowindex' => 'Índice da ringleira da táboa',
+	'srf-paramdesc-displaylength' => 'Lonxitude inicial de presentación',
+	'srf-noparentprop' => 'Non se especificou propiedade pai ningunha. Non se pode construír a árbore sen achegar unha propiedade pai.',
+	'srf-paramdesc-parent' => 'A propiedade que contén a páxina pai',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -847,21 +1320,27 @@ $messages['gv'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author StuB
  * @author YaronSh
  */
 $messages['he'] = array(
+	'srf-desc' => 'תבניות נוספות לשאילתות מובנות של מדיה־ויקי סמנטית',
+	'srf-name' => 'תבניות של תוצאות סמנטיות',
 	'srfc_previousmonth' => 'החודש הקודם',
 	'srfc_nextmonth' => 'החודש הבא',
 	'srfc_today' => 'היום',
 	'srfc_gotomonth' => 'מעבר לחודש',
 	'srf_printername_calendar' => 'לוח חודשי',
+	'srf_paramdesc_calendarlang' => 'קוד השפה שבה יוצג לוח השנה',
 	'srf_printername_vcard' => 'ייצוא vCard',
 	'srf_printername_icalendar' => 'ייצוא iCalendar',
 	'srf_paramdesc_icalendartitle' => 'כותרת קובץ לוח השנה',
 	'srf_paramdesc_icalendardescription' => 'תיאור קובץ לוח השנה',
 	'srf_printername_bibtex' => 'ייצוא BibTeX',
 	'srf_outline_novalue' => 'אין ערך',
+	'srf_printername_outline' => 'מִתאר',
+	'srf_paramdesc_outlineproperties' => 'רשימת מאפיינים להצגה ככותרות במִתאר, מופרדת בפסיקים',
 	'srf_printername_sum' => 'סכום של מספרים',
 	'srf_printername_average' => 'ממוצע של מספרים',
 	'srf_printername_max' => 'המספר המירבי',
@@ -869,16 +1348,58 @@ $messages['he'] = array(
 	'srf_paramdesc_limit' => 'מספר הדפים המרבי לתשאול',
 	'srf_printername_timeline' => 'ציר זמן',
 	'srf_printername_eventline' => 'ציר אירועים',
+	'srf_paramdesc_timelinebands' => 'מגדיר אילו פסים מוצגים בתוצאות.',
+	'srf_paramdesc_timelineposition' => 'מגדיר איפה קו הזמן מתמקד בתחילה.',
+	'srf_paramdesc_timelinestart' => 'שם המאפיין להגדרה בתור נקודת הזמן הראשונה',
+	'srf_paramdesc_timelineend' => 'שם המאפיין להגדרת נקודת זמן שנייה',
 	'srf_paramdesc_timelinesize' => 'גובה ציר הזמן (ברירת המחדל היא 300 פיקסלים)',
 	'srf_paramdesc_views' => 'התצוגות להצגה',
+	'srf_paramdesc_facets' => 'קבוצת מאפיינים להצגה בראש כל דף',
 	'srf_paramdesc_lens' => 'שם התבנית שבאמצעותה יוצגו מאפייני הדף',
 	'srf_printername_googlebar' => 'תרשים עמודות של Google',
 	'srf_printername_googlepie' => 'דיאגרמת עוגה של גוגל',
+	'srf_printername_jqplotbar' => 'תרשים עמודות jqPlot',
+	'srf_printername_jqplotpie' => 'תרשים עוגה jqPlot',
 	'srf_paramdesc_chartheight' => 'גובה התרשים, בפיקסלים',
 	'srf_paramdesc_chartwidth' => 'רוחב התרשים, בפיקסלים',
 	'srf_paramdesc_charttitle' => 'כותרת התרשים',
 	'srf_paramdesc_barcolor' => 'צבע הפסים',
+	'srf_paramdesc_bardirection' => 'כיוון תרשים העמודות',
+	'srf_paramdesc_barnumbersaxislabel' => 'התווית לציר המספרים',
 	'srf_printername_gallery' => 'גלריה',
+	'srf_paramdesc_perrow' => 'מספר התמונות לשורה',
+	'srf_paramdesc_widths' => 'רוחב התמונות',
+	'srf_paramdesc_heights' => 'גובה התמונות',
+	'srf_paramdesc_autocaptions' => 'להשתמש בקובץ בתור כותרת אם לא סופקה כותרת',
+	'srf_printername_tagcloud' => 'ענן תגים',
+	'srf_paramdesc_includesubject' => 'האם לכלול השמות של הנושאים עצמם',
+	'srf_paramdesc_increase' => 'איך להגדיל את גודל התגים',
+	'srf_paramdesc_tagorder' => 'סדר התגים',
+	'srf_paramdesc_mincount' => 'המספר המזערי של הפעמים שהערך צריך להופיע כדי להיכנס לרשימה',
+	'srf_paramdesc_minsize' => 'גודל התג הקטן ביותר באחוזים (בררת מחדל: 77)',
+	'srf_paramdesc_maxsize' => 'גודל התגים הגדולים ביותר באחוזים (בררת מחדל: 177)',
+	'srf_paramdesc_maxtags' => 'המספר המרבי של תגים בענן',
+	'srf_printername_array' => 'מערך',
+	'srf_paramdesc_pagetitle' => 'האם להציג כותרות דפים בתור עיולי תוצאה או להסתיר אותם',
+	'srf_paramdesc_hidegaps' => 'האם להדפיס תכונה שהתבקשה אבל אינה זמינה מופרדים בתו מפריד או להסתיר אותם',
+	'srf_paramdesc_arrayname' => 'אם ניתן וההרחבה ArrayExtension זמינה, זה ייצור מערך עם השם המוגדר (ואז לא יהיה פלט נראה לעין)',
+	'srf_paramdesc_propsep' => 'מפריד בין רשומות מבוקשות',
+	'srf_paramdesc_manysep' => 'מפריד בין ערכי מאפיינים מרובי־ערכים',
+	'srf_paramdesc_recordsep' => 'מפריד בין ערכים של מאפייני רשומות',
+	'srf_printername_hash' => 'גיבוב',
+	'srf_paramdesc_hashname' => 'אם זה ניתן ואם ההרחבה HashTables זמינה, זה ייצור גיבוב עם עם השם המוגדר (ואז לא יהיה פלט נראה לעין)',
+	'srf-printername-graph' => 'תרשים',
+	'srf-paramdesc-graph-relation' => 'האם הנושאים או מאפייני שם (nameproperties) הורים או ילדים?',
+	'srf-paramdesc-graph-nameprop' => 'מאפשר הגדרת מאפיין שישמש נושא במקום הנושא הנוכחי',
+	'srf-paramdesc-graph-nodeshape' => 'הצורה של כל צומת בגרף',
+	'srf_paramdesc_graphname' => 'כותרת',
+	'srf_paramdesc_graphsize' => 'גודל הגרף (בפיקסלים)',
+	'srf_paramdesc_graphlegend' => 'להציג את מקרא הגרף או לא',
+	'srf_paramdesc_graphlabel' => 'תווית גרף',
+	'srf_paramdesc_rankdir' => 'כיוון החץ',
+	'srf_paramdesc_graphlink' => 'קישור גרף',
+	'srf_paramdesc_graphcolor' => 'צבע הגרף',
+	'srf-paramdesc-graph-wwl' => 'מגבלת גלישת מילים (מספר תווים)',
 );
 
 /** Hindi (हिन्दी)
@@ -938,7 +1459,22 @@ $messages['hsb'] = array(
 	'srf_paramdesc_bardirection' => 'Stołpowy diagram abo hrjadowy diagram',
 	'srf_paramdesc_barnumbersaxislabel' => 'Popisanje y-wóski',
 	'srf_printername_gallery' => 'Galerija',
+	'srf_paramdesc_perrow' => 'Ličba wobrazow na rjadku',
+	'srf_paramdesc_widths' => 'Šěrokosć wobrazow',
+	'srf_paramdesc_heights' => 'Wysokosć wobrazow',
+	'srf_paramdesc_autocaptions' => 'Datajowe mjeno jako wobrazowe wopisanje wužiwać, jeli tajke njeje podate.',
+	'srf_paramdesc_galleryformat' => 'Galerijowy format',
 	'srf_printername_tagcloud' => 'Tafličkowa mróčel',
+	'srf_paramdesc_includesubject' => 'Hač mjena temow same maja so zapřijeć',
+	'srf_paramdesc_increase' => 'Kak woznamjenjace słowa powjetšić',
+	'srf_paramdesc_tagorder' => 'Porjad woznamjenjacych słowow',
+	'srf_paramdesc_mincount' => 'Maksimalna ličba razow, katraž hódnota dyrbi so jewić, zo by so nalistowała',
+	'srf_paramdesc_minsize' => 'Wulkosć najmjeńšich woznamjenjacych słowow w procenće (standard: 77)',
+	'srf_paramdesc_maxsize' => 'Wulkosć najwjetšich woznamjenjacych słowow w procenće (standard: 177)',
+	'srf_paramdesc_maxtags' => 'Maksimalna ličba woznamjenjacych słowow w mróčeli',
+	'srf_printername_valuerank' => 'Hódnota',
+	'srf_printername_array' => 'Datowe polo',
+	'srf_paramdesc_graphname' => 'Titul',
 );
 
 /** Haitian (Kreyòl ayisyen)
@@ -987,6 +1523,18 @@ $messages['hu'] = array(
 	'srf_paramdesc_bardirection' => 'Az oszlopdiagram iránya',
 	'srf_paramdesc_barnumbersaxislabel' => 'A számtengely felirata',
 	'srf_printername_gallery' => 'Galéria',
+	'srf_printername_tagcloud' => 'Címkefelhő',
+	'srf_printername_array' => 'Tömb',
+	'srf_printername_hash' => 'Hash',
+	'srf-printername-graph' => 'Grafikon',
+	'srf_paramdesc_graphname' => 'Cím',
+	'srf_paramdesc_graphsize' => 'Grafikon mérete (pixelben)',
+	'srf_paramdesc_graphlegend' => 'Jelmagyarázat megjelenítése vagy sem',
+	'srf_paramdesc_graphlabel' => 'Grafikon címkéje',
+	'srf_paramdesc_rankdir' => 'Nyíl iránya',
+	'srf_paramdesc_graphlink' => 'Grafikon linkje',
+	'srf_paramdesc_graphcolor' => 'Grafikon színe',
+	'srf-paramdesc-graph-wwl' => 'Sortörési határ (karakterszám)',
 );
 
 /** Interlingua (Interlingua)
@@ -1001,6 +1549,7 @@ $messages['ia'] = array(
 	'srfc_gotomonth' => 'Ir al mense',
 	'srf_printername_calendar' => 'Calendario mensual',
 	'srf_paramdesc_calendarlang' => 'Le codice del lingua in le qual monstrar le calendario',
+	'srf_paramdesc_calendarcolors' => 'Le color pro cata proprietate de data (exemplo: "Data de initio=>green,Data de fin=>#09c")',
 	'srf_printername_vcard' => 'Exportation in vCard',
 	'srf_printername_icalendar' => 'Exportation in iCalendar',
 	'srf_paramdesc_icalendartitle' => 'Le titulo del file del calendario',
@@ -1009,11 +1558,17 @@ $messages['ia'] = array(
 	'srf_outline_novalue' => 'Nulle valor',
 	'srf_printername_outline' => 'Schizzo',
 	'srf_paramdesc_outlineproperties' => 'Le lista de proprietates a presentar como capites de structura, separate per commas',
+	'srf_printername_D3Line' => 'Graphico de lineas D3',
+	'srf_printername_D3Bar' => 'Graphico de barras D3',
+	'srf_printername_D3Treemap' => 'Graphico arborescente D3',
 	'srf_printername_sum' => 'Total del numeros',
 	'srf_printername_average' => 'Media del numeros',
 	'srf_printername_max' => 'Numero maxime',
 	'srf_printername_min' => 'Numeros minime',
 	'srf_paramdesc_limit' => 'Le numero maxime de paginas a consultar',
+	'srf_printername_product' => 'Producto de numeros',
+	'srf_printername_median' => 'Mediana de numeros',
+	'srf-paramdesc-default' => 'Valor predefinite que es monstrate si il non ha resultatos numeric',
 	'srf_printername_timeline' => 'Chronologia',
 	'srf_printername_eventline' => 'Chronologia de eventos',
 	'srf_paramdesc_timelinebands' => 'Defini qual bandas es monstrate in le resultato.',
@@ -1021,6 +1576,8 @@ $messages['ia'] = array(
 	'srf_paramdesc_timelinestart' => 'Un nomine de proprietate usate pro definir un prime puncto de tempore',
 	'srf_paramdesc_timelineend' => 'Un nomine de proprietate usate pro definir un secunde puncto de tempore',
 	'srf_paramdesc_timelinesize' => 'Le altitude del chronologia (predefinition es 300px)',
+	'srf-timeline-allresults' => 'Ulterior resultatos de iste consulta.',
+	'srf-timeline-nojs' => 'Es necessari activar JavaScript pro vider le chronologia interactive.',
 	'srf_paramdesc_views' => 'Le vistas a monstrar',
 	'srf_paramdesc_facets' => 'Le insimul de proprietates a monstrar pro cata pagina',
 	'srf_paramdesc_lens' => 'Le nomine de un patrono con le qual monstrar le proprietates de pagina',
@@ -1034,13 +1591,64 @@ $messages['ia'] = array(
 	'srf_paramdesc_barcolor' => 'Le color del barras',
 	'srf_paramdesc_bardirection' => 'Le orientation del diagramma de barras',
 	'srf_paramdesc_barnumbersaxislabel' => 'Le etiquetta pro le axe de numeros',
+	'srf-paramdesc-minvalue' => 'Le valor minime a monstrar sur le axe Y',
+	'srf-paramdesc-pointlabels' => 'Presentation de punctos de datos individual',
+	'srf-paramdesc-chartlegend' => 'Monstrar legenda del graphico',
+	'srf-paramdesc-legendlocation' => 'Fixar le position del legenda',
+	'srf-paramdesc-datalabels' => 'Monstrar etiquettas de datos in diagramma circular',
+	'srf-paramdesc-datalabeltype' => 'Specificar typo de etiquetta de datos',
 	'srf_printername_gallery' => 'Galeria',
+	'srf_paramdesc_perrow' => 'Le numero de imagines per linea',
+	'srf_paramdesc_widths' => 'Le latitude del imagines',
+	'srf_paramdesc_heights' => 'Le altitude del imagines',
+	'srf_paramdesc_autocaptions' => 'Usar le nomine de file qua legenda si nulle es fornite',
+	'srf_paramdesc_fileextensions' => 'Si le nomine de file es usate como legenda, monstrar tamben le extension',
+	'srf_paramdesc_captionproperty' => 'Le nomine de un proprietate semantic presente in le paginas consultate, pro esser usate como legenda',
+	'srf_paramdesc_imageproperty' => 'Le nomine de un proprietate semantic presente in le paginas consultate, que indica imagines a usar. Si definite, le paginas consultate illos mesme non essera monstrate como imagines.',
+	'srf_paramdesc_galleryformat' => 'Formato del galeria',
 	'srf_printername_tagcloud' => 'Etiquettario',
+	'srf_paramdesc_includesubject' => 'Si le nomines del subjectos mesme debe esser includite',
+	'srf_paramdesc_increase' => 'Como augmentar le dimension de etiquettas',
+	'srf_paramdesc_tagorder' => 'Le ordine del etiquettas',
+	'srf_paramdesc_mincount' => 'Le numero minime de vices que un valor debe occurrer pro esser listate',
+	'srf_paramdesc_minsize' => 'Le dimension del etiquettas le plus parve, como percentage (predefinition: 77)',
+	'srf_paramdesc_maxsize' => 'Le dimension del etiquettas le plus grande como percentage (predefinition: 177)',
+	'srf_paramdesc_maxtags' => 'Le numero maxime de etiquettas in le nube',
+	'srf_printername_valuerank' => 'Valor del rango',
+	'srf_printername_array' => 'Array',
+	'srf_paramdesc_pagetitle' => 'Si monstrar titulos de pagina como lineas de resultato o omitter los',
+	'srf_paramdesc_hidegaps' => 'Si monstrar, con separatores, le valores de proprietate e de registro requestate ma indisponibile, o omitter los',
+	'srf_paramdesc_arrayname' => 'Si isto es specificate e ArrayExtension es disponibile, isto creara un array con le nomine specificate (sin producer un resultato visibile)',
+	'srf_paramdesc_propsep' => 'Separator inter le proprietates requestate',
+	'srf_paramdesc_manysep' => 'Separator inter valores de proprietate plurivalor',
+	'srf_paramdesc_recordsep' => 'Separator inter valores de proprietates de registro',
+	'srf_paramdesc_headersep' => 'Separator inter nomine e valor de proprietate si "headers" es mittite a "show" o "plain"',
+	'srf_printername_hash' => 'Hash',
+	'srf_paramdesc_hashname' => 'Si isto es specificate e le extension HashTables es disponibile, isto creara un hash con le nomine specificate (sin producer un resultato visibile)',
+	'srf-printername-graph' => 'Graphico',
+	'srf-paramdesc-graph-relation' => 'Le subjectos o proprietates de nomines es genitores o infantes?',
+	'srf-paramdesc-graph-nameprop' => 'Permitte definir un proprietate que essera usate como subjecto in loco del ver subjecto',
+	'srf-paramdesc-graph-nodeshape' => 'Le forma de cata nodo in le graphico',
+	'srf_paramdesc_graphname' => 'Titulo',
+	'srf_paramdesc_graphsize' => 'Dimension del graphico (in pixels)',
+	'srf_paramdesc_graphlegend' => 'Monstrar le legenda del graphico o non',
+	'srf_paramdesc_graphlabel' => 'Etiquetta del graphico',
+	'srf_paramdesc_rankdir' => 'Direction del sagitta',
+	'srf_paramdesc_graphlink' => 'Ligamine al graphico',
+	'srf_paramdesc_graphcolor' => 'Color del graphico',
+	'srf-paramdesc-graph-wwl' => 'Limite pro torno de parolas (in numero de characteres)',
+	'srf-warn-empy-chart' => 'Le graphico non es monstrate perque il non ha resultatos que pote esser presentate in illo.',
+	'srf_printername_datatables' => 'Tabellas de datos',
+	'srf-paramdesc-rowindex' => 'Indice de lineas de tabella',
+	'srf-paramdesc-displaylength' => 'Longitude initial del presentation',
+	'srf-noparentprop' => 'Nulle proprietate genitor specificate. Le arbore non pote esser construite sin specification de un proprietate genitor.',
+	'srf-paramdesc-parent' => 'Le proprietate que contine le pagina genitor',
 );
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
  * @author Farras
+ * @author IvanLanin
  * @author Kenrick95
  */
 $messages['id'] = array(
@@ -1086,6 +1694,39 @@ $messages['id'] = array(
 	'srf_paramdesc_bardirection' => 'Arah grafik batang',
 	'srf_paramdesc_barnumbersaxislabel' => 'Label untuk poros nomor',
 	'srf_printername_gallery' => 'Galeri',
+	'srf_paramdesc_perrow' => 'Jumlah gambar per baris',
+	'srf_paramdesc_widths' => 'Lebar gambar',
+	'srf_paramdesc_heights' => 'Tinggi gambar',
+	'srf_paramdesc_autocaptions' => 'Gunakan nama berkas sebagai judul jika judul tidak diberikan',
+	'srf_printername_tagcloud' => 'Awan tag',
+	'srf_paramdesc_includesubject' => 'Jika nama subjek sendiri harus dimasukkan',
+	'srf_paramdesc_increase' => 'Bagaimana meningkatkan ukuran tag',
+	'srf_paramdesc_tagorder' => 'Urutan tag',
+	'srf_paramdesc_mincount' => 'Jumlah minimum kemunculan suatu nilai untuk dapat didaftarkan',
+	'srf_paramdesc_minsize' => 'Ukuran tag terkecil dalam persen (bawaan: 77)',
+	'srf_paramdesc_maxsize' => 'Ukuran tag terbesar dalam persen (bawaan: 177)',
+	'srf_paramdesc_maxtags' => 'Jumlah maksimum tag di awan',
+	'srf_printername_array' => 'Larik',
+	'srf_paramdesc_pagetitle' => 'Tampilkan atau sembunyikan judul halaman sebagai entri hasil',
+	'srf_paramdesc_hidegaps' => 'Tampilkan atau sembunyikan nilai properti dan rekaman yang kosong, dipisahkan dengan pemisah',
+	'srf_paramdesc_arrayname' => 'Jika diberikan dan ArrayExtension tersedia, parameter ini akan membuat larik dengan nama yang diberikan',
+	'srf_paramdesc_propsep' => 'Pemisah antara properti yang diminta',
+	'srf_paramdesc_manysep' => 'Pemisah antara banyak properti bernilai',
+	'srf_paramdesc_recordsep' => 'Pemisah antara nilai properti rekaman',
+	'srf_printername_hash' => 'Hash',
+	'srf_paramdesc_hashname' => 'Jika diberikan dan ekstensi HashTables tersedia, parameter ini akan membuat hash dengan nama yang diberikan',
+	'srf-printername-graph' => 'Grafik',
+	'srf-paramdesc-graph-relation' => 'Apakah subjek atau properti nama merupakan induk atau turunan?',
+	'srf-paramdesc-graph-nameprop' => 'Memungkinkan pengaturan properti yang akan digunakan sebagai subjek, alih-alih subjek yang sebenarnya',
+	'srf-paramdesc-graph-nodeshape' => 'Bentuk masing-masing nodus (node) pada grafik',
+	'srf_paramdesc_graphname' => 'Judul',
+	'srf_paramdesc_graphsize' => 'Besar grafik (dalam px)',
+	'srf_paramdesc_graphlegend' => 'Tampilkan legenda grafik',
+	'srf_paramdesc_graphlabel' => 'Label grafik',
+	'srf_paramdesc_rankdir' => 'Arah panah',
+	'srf_paramdesc_graphlink' => 'Tautan grafik',
+	'srf_paramdesc_graphcolor' => 'Warna grafik',
+	'srf-paramdesc-graph-wwl' => 'Batas pemenggalan kata (dalam jumlah karakter)',
 );
 
 /** Igbo (Igbo)
@@ -1149,6 +1790,7 @@ $messages['it'] = array(
  * @author Hosiryuhosi
  * @author JtFuruhata
  * @author Naohiro19
+ * @author Schu
  * @author Whym
  * @author 青子守歌
  */
@@ -1181,6 +1823,7 @@ $messages['ja'] = array(
 	'srf_paramdesc_timelinestart' => '最初の時点を定義するプロパティーの名前',
 	'srf_paramdesc_timelineend' => '2番目の時点を定義するプロパティーの名前',
 	'srf_paramdesc_timelinesize' => 'タイムラインの縦幅 (既定では300ピクセル)',
+	'srf-timeline-nojs' => 'インタラクティブなタイムラインを表示するために JavaScript を有効にする必要があります。',
 	'srf_paramdesc_views' => '表示されるビュー',
 	'srf_paramdesc_facets' => '各ページで表示するプロパティーの集合',
 	'srf_paramdesc_lens' => 'ページのプロパティーとともに表示するテンプレートの名前',
@@ -1195,7 +1838,11 @@ $messages['ja'] = array(
 	'srf_paramdesc_bardirection' => '棒グラフの方向',
 	'srf_paramdesc_barnumbersaxislabel' => '数値軸のラベル',
 	'srf_printername_gallery' => 'ギャラリー',
+	'srf_paramdesc_perrow' => '行あたりの画像の量',
+	'srf_paramdesc_widths' => '画像の幅',
+	'srf_paramdesc_heights' => '画像の高さ',
 	'srf_printername_tagcloud' => 'タグクラウド',
+	'srf-printername-graph' => 'グラフ',
 );
 
 /** Javanese (Basa Jawa)
@@ -1262,7 +1909,7 @@ $messages['ksh'] = array(
 	'srf_paramdesc_chartwidth' => 'Dämm Dijajramm sing Breedt en Pixelle',
 );
 
-/** Kurdish (Latin) (Kurdî (Latin))
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1295,6 +1942,7 @@ $messages['lb'] = array(
 	'srf_printername_timeline' => 'Chronologie',
 	'srf_printername_eventline' => 'Chronologie vun den Evenementer',
 	'srf_paramdesc_timelinesize' => "D'Héicht vun der Zäitläischt (Standard ass 300px)",
+	'srf-timeline-nojs' => 'JavaScript muss aktivéiert si fir déi interaktiv Zäitläischt benotzen ze kënnen.',
 	'srf_paramdesc_views' => 'Déi Usiichten déi gewise solle ginn',
 	'srf_paramdesc_lens' => 'Den Numm vun enger Schabloun mat där Säiteneegeschafte gewise  ginn',
 	'srf_printername_googlebar' => 'Google-Sailen-Diagramm',
@@ -1307,7 +1955,20 @@ $messages['lb'] = array(
 	'srf_paramdesc_barcolor' => "D'Faarf vun de Balken",
 	'srf_paramdesc_bardirection' => "D'Ausriichtung vum Balken-Diagramm",
 	'srf_paramdesc_barnumbersaxislabel' => "D'Etiquette fir d'Achs vun den Zuelen",
-	'srf_printername_gallery' => 'Gallerie',
+	'srf_printername_gallery' => 'Galerie',
+	'srf_paramdesc_perrow' => "D'Zuel vu Biller pro Rei",
+	'srf_paramdesc_widths' => "D'Breet vun de Biller",
+	'srf_paramdesc_heights' => "D'Héicht vun de Biller",
+	'srf_paramdesc_autocaptions' => 'Den NUmm vum Fichier als Beschreiwung benotzen, wa keng ugi gouf',
+	'srf_printername_array' => 'Tabell',
+	'srf-printername-graph' => 'Grafik',
+	'srf_paramdesc_graphname' => 'Titel',
+	'srf_paramdesc_graphsize' => 'Gréisst vun der Grafik (a Pixel)',
+	'srf_paramdesc_graphlegend' => "D'Erklärung (Legend) vum Grafik weisen oder net",
+	'srf_paramdesc_graphlabel' => 'Etiquette vun der Grafik',
+	'srf_paramdesc_rankdir' => 'Richtung vum Feil',
+	'srf_paramdesc_graphlink' => 'Link op de Grafik',
+	'srf_paramdesc_graphcolor' => 'Faarf vun der Grafik',
 );
 
 /** Lithuanian (Lietuvių)
@@ -1320,11 +1981,21 @@ $messages['lt'] = array(
 	'srfc_gotomonth' => 'Eiti į mėnesį',
 );
 
+/** Latvian (Latviešu)
+ * @author GreenZeb
+ */
+$messages['lv'] = array(
+	'srfc_previousmonth' => 'Iepriekšējais mēnesis',
+	'srfc_nextmonth' => 'Nākamais mēnesis',
+	'srfc_today' => 'Šodiena',
+	'srfc_gotomonth' => 'Doties uz mēnesi',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'srf-desc' => 'Дополнителни формати за барања од Semantic MediaWiki',
+	'srf-desc' => 'Дополнителни формати за барања од Семантички МедијаВики',
 	'srf-name' => 'Семантички формати на резултати',
 	'srfc_previousmonth' => 'Претходен месец',
 	'srfc_nextmonth' => 'Следен месец',
@@ -1332,6 +2003,7 @@ $messages['mk'] = array(
 	'srfc_gotomonth' => 'Оди на месецот',
 	'srf_printername_calendar' => 'Месечен календар',
 	'srf_paramdesc_calendarlang' => 'Кодот на јазикот на кој ќе се прикажува календарот',
+	'srf_paramdesc_calendarcolors' => 'Бојата за приказ на секое датумско својство (пример: "Почетен датум=>green,Краен датум=>#09c")',
 	'srf_printername_vcard' => 'Извоз на vCard',
 	'srf_icalendar_link' => 'iКалендар',
 	'srf_printername_icalendar' => 'Извоз на iCalendar',
@@ -1341,11 +2013,17 @@ $messages['mk'] = array(
 	'srf_outline_novalue' => 'Нема вредност',
 	'srf_printername_outline' => 'Преглед',
 	'srf_paramdesc_outlineproperties' => 'Список на својствата за прикажување како заглавија, одделени со запирки',
+	'srf_printername_D3Line' => 'D3-линиски графикон',
+	'srf_printername_D3Bar' => 'D3-столбен графикон',
+	'srf_printername_D3Treemap' => 'D3-разгранет преглед',
 	'srf_printername_sum' => 'Збир од броевите',
 	'srf_printername_average' => 'Просек од броевите',
 	'srf_printername_max' => 'Максимален број',
 	'srf_printername_min' => 'Минимален број',
 	'srf_paramdesc_limit' => 'Максимален број на страници кои можат да се пребараат',
+	'srf_printername_product' => 'Производ на броеви',
+	'srf_printername_median' => 'Средна бројна вредност',
+	'srf-paramdesc-default' => 'Основна вредност што ќе се прикажува кога нема бројчени резултати',
 	'srf_printername_timeline' => 'Хронологија',
 	'srf_printername_eventline' => 'Преглед на настани',
 	'srf_paramdesc_timelinebands' => 'Определува кои ленти ќе се прикажуваат во резултатот.',
@@ -1353,6 +2031,8 @@ $messages['mk'] = array(
 	'srf_paramdesc_timelinestart' => 'Име на својството кое се користи за определување на првата временска точка',
 	'srf_paramdesc_timelineend' => 'Име на својството кое се користи за определување на втората временска точка',
 	'srf_paramdesc_timelinesize' => 'Висината на временската скала (300px по посновно)',
+	'srf-timeline-allresults' => 'Понатамошни резултати од ова барање.',
+	'srf-timeline-nojs' => 'За да можете да ја гледате интерактивната хронологија, ќе треба да имате овозможено JavaScript.',
 	'srf_paramdesc_views' => 'Погледите за прикажување',
 	'srf_paramdesc_facets' => 'Збирот својства кои ќе се прикажуваат на секоја страница',
 	'srf_paramdesc_lens' => 'Името на шаблонот со кој ќе се прикажат својствата на страницата',
@@ -1366,8 +2046,58 @@ $messages['mk'] = array(
 	'srf_paramdesc_barcolor' => 'Бојата на столбовите',
 	'srf_paramdesc_bardirection' => 'Насока на столбниот графикон',
 	'srf_paramdesc_barnumbersaxislabel' => 'Натпис за бројната оска',
+	'srf-paramdesc-minvalue' => 'Минимална вредност за приказ на Y-оската',
+	'srf-paramdesc-pointlabels' => 'Приказ на поединечни податочни точки',
+	'srf-paramdesc-chartlegend' => 'Прикажи легенда на графиконот',
+	'srf-paramdesc-legendlocation' => 'Задај место на легендата',
+	'srf-paramdesc-datalabels' => 'Прикажи натписи за податоците на кружниот графикон',
+	'srf-paramdesc-datalabeltype' => 'Задај тип на натпис за податоци',
 	'srf_printername_gallery' => 'Галерија',
+	'srf_paramdesc_perrow' => 'Број на слики по ред',
+	'srf_paramdesc_widths' => 'Ширина на сликите',
+	'srf_paramdesc_heights' => 'Висина на сликите',
+	'srf_paramdesc_autocaptions' => 'Користи го името на податотеката за опис ако не е внесен друг',
+	'srf_paramdesc_fileextensions' => 'При користење на податотечното име како опис, прикажувај ја и наставката',
+	'srf_paramdesc_captionproperty' => 'Име на семантичкото својство присутно на побараните страници што ќе се користи како опис',
+	'srf_paramdesc_imageproperty' => 'Име на семантичкото својство присутно на побараните страници што ќе посочува кои слики да се користат. Кога е зададено, самите побарани страници нема да се прикажуваат како слики',
+	'srf_paramdesc_galleryformat' => 'Формат на галеријата',
 	'srf_printername_tagcloud' => 'Облак со ознаки',
+	'srf_paramdesc_includesubject' => 'Дали да се вклучат имињата на самите теми',
+	'srf_paramdesc_increase' => 'Како да ги зголемите ознаките',
+	'srf_paramdesc_tagorder' => 'Редоследот на ознаките',
+	'srf_paramdesc_mincount' => 'Барем колку пати треба да се јави една вредност за да биде наведена',
+	'srf_paramdesc_minsize' => 'Големина на најмалата ознака во проценти (по основно: 77)',
+	'srf_paramdesc_maxsize' => 'Големина на најголемите ознаки во проценти (по основно: 177)',
+	'srf_paramdesc_maxtags' => 'Најголемиот допуштен број на ознаки во облакот',
+	'srf_printername_valuerank' => 'Ранг',
+	'srf_printername_array' => 'Податочен строј',
+	'srf_paramdesc_pagetitle' => 'Дали во резултатите да се прикажуваат наслови на страници или да се изоставуваат',
+	'srf_paramdesc_hidegaps' => 'Дали се испишуваат побараните, но недостапни вредности на својства и записи одделени со одделувачи, или пак да се изоставуваат',
+	'srf_paramdesc_arrayname' => 'Ако е зададено, и има додадок за податотечни строеви (ArrayExtension ), ова ќе создаде нов строј со наведеното име (тогаш нема да има видлив извод)',
+	'srf_paramdesc_propsep' => 'Одделувач помеѓу бараните својства',
+	'srf_paramdesc_manysep' => 'Одделувач на вредностите кај повеќевредносни својства',
+	'srf_paramdesc_recordsep' => 'Одделувач помеѓу вредностите на записните својства',
+	'srf_paramdesc_headersep' => 'Одделувач помеѓу името на својството и вредноста ако "headers" е наместено на „show“ или „plain“',
+	'srf_printername_hash' => 'Тараба',
+	'srf_paramdesc_hashname' => 'Ако е зададено, а на располагање е додатокот зе тарабни табели (HashTables), ова ќе создаде тараба со наведеното име (тогаш нема да има видлив извод)',
+	'srf-printername-graph' => 'Графикон',
+	'srf-paramdesc-graph-relation' => 'Дали предметите или именските својства се матични или зависни?',
+	'srf-paramdesc-graph-nameprop' => 'Овозможува задавање на својство што ќе се користи како предмет наместо фактичкиот предмет',
+	'srf-paramdesc-graph-nodeshape' => 'Обликот на секој јазол во графиконот',
+	'srf_paramdesc_graphname' => 'Наслов',
+	'srf_paramdesc_graphsize' => 'Големина на графиконот (во пиксели)',
+	'srf_paramdesc_graphlegend' => 'Дали да се прикажува легенда за графиконот',
+	'srf_paramdesc_graphlabel' => 'Натпис на графиконот',
+	'srf_paramdesc_rankdir' => 'Правец на стрелката',
+	'srf_paramdesc_graphlink' => 'Врска за графиконот',
+	'srf_paramdesc_graphcolor' => 'Боја на графиконот',
+	'srf-paramdesc-graph-wwl' => 'Граница за прелом (во бр. на знаци)',
+	'srf-warn-empy-chart' => 'Графикот не е прикажан бидејќи нема резултати што би го исцртале.',
+	'srf_printername_datatables' => 'ПодаточниТабели',
+	'srf-paramdesc-rowindex' => 'Индекс на табл. ред',
+	'srf-paramdesc-displaylength' => 'Првична должина на приказот',
+	'srf-noparentprop' => 'Нема зададено матично својство. Дрвото не може да се оформи без наведено матично својство.',
+	'srf-paramdesc-parent' => 'Својството што ја содржи матичната страница',
 );
 
 /** Malayalam (മലയാളം)
@@ -1392,6 +2122,13 @@ $messages['mr'] = array(
 	'srf_icalendar_link' => 'इ-कैलेंडर',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'srf_paramdesc_graphname' => 'Tajuk',
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
@@ -1411,9 +2148,110 @@ $messages['nah'] = array(
 	'srfc_gotomonth' => 'Yāuh mētzhuīc',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Event
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'srf-desc' => 'Ytterligere format for Semantic MediaWiki «inline»-spørringer',
+	'srf-name' => 'Semantisk resultatformat',
+	'srfc_previousmonth' => 'Forrige måned',
+	'srfc_nextmonth' => 'Neste måned',
+	'srfc_today' => 'I dag',
+	'srfc_gotomonth' => 'Gå til måned',
+	'srf_printername_calendar' => 'Månedlig kalender',
+	'srf_paramdesc_calendarlang' => 'Språkkoden for språket som kalenderen skal vises i',
+	'srf_printername_vcard' => 'vCard-eksport',
+	'srf_icalendar_link' => 'iKalender',
+	'srf_printername_icalendar' => 'iCalendar-eksport',
+	'srf_paramdesc_icalendartitle' => 'Tittelen på kalenderfilen',
+	'srf_paramdesc_icalendardescription' => 'Beskrivelsen av kalenderfilen',
+	'srf_printername_bibtex' => 'BibTeX-eksport',
+	'srf_outline_novalue' => 'Ingen verdi',
+	'srf_printername_outline' => 'Disposisjon',
+	'srf_paramdesc_outlineproperties' => 'Listen over egenskaper som skal vises som disposisjonsoverskrifter, adskilt med komma',
+	'srf_printername_sum' => 'Sum av tall',
+	'srf_printername_average' => 'Gjennomsnitt av tall',
+	'srf_printername_max' => 'Største tall',
+	'srf_printername_min' => 'Minste tall',
+	'srf_paramdesc_limit' => 'Maks antall sider å etterspørre',
+	'srf_printername_product' => 'Produktet av tallene',
+	'srf_printername_median' => 'Median av tall',
+	'srf_printername_timeline' => 'Tidslinje',
+	'srf_printername_eventline' => 'Hendelseslinje',
+	'srf_paramdesc_timelinebands' => 'Definerer hvilke bånd som vises i resultatet.',
+	'srf_paramdesc_timelineposition' => 'Definerer hvor tidslinjen først fokuseres rundt.',
+	'srf_paramdesc_timelinestart' => 'Et egenskapsnavn brukt for å definere et første tidspunkt',
+	'srf_paramdesc_timelineend' => 'Et egenskapsnavn brukt for å definere et andre tidspunkt',
+	'srf_paramdesc_timelinesize' => 'Høyden på tidslinjen (standard er 300px)',
+	'srf-timeline-allresults' => 'Flere resultater for denne spørringen',
+	'srf-timeline-nojs' => 'Du må tillate JavaScript for å kunne se den interaktive tidslinjen.',
+	'srf_paramdesc_views' => 'Visninger som skal fremvises',
+	'srf_paramdesc_facets' => 'Egenskapssettet som skal vises for hver side',
+	'srf_paramdesc_lens' => 'Navnet på malen som skal vise frem sideegenskapene',
+	'srf_printername_googlebar' => 'Google stolpediagram',
+	'srf_printername_googlepie' => 'Google kakediagram',
+	'srf_printername_jqplotbar' => 'jqPlot stolpediagram',
+	'srf_printername_jqplotpie' => 'jqPlot kakediagram',
+	'srf_paramdesc_chartheight' => 'Høyden til diagrammet, i piksler',
+	'srf_paramdesc_chartwidth' => 'Bredden til diagrammet, i piksler',
+	'srf_paramdesc_charttitle' => 'Tittelen på diagrammet',
+	'srf_paramdesc_barcolor' => 'Fargen på stolpene',
+	'srf_paramdesc_bardirection' => 'Retningen på stolpediagrammet',
+	'srf_paramdesc_barnumbersaxislabel' => 'Etiketten for tallaksen',
+	'srf-paramdesc-minvalue' => 'Minimumsverdi på Y-aksen',
+	'srf-paramdesc-pointlabels' => 'Visning av individuelle datapunkter',
+	'srf-paramdesc-chartlegend' => 'Vis diagramforklaring',
+	'srf-paramdesc-legendlocation' => 'Plasser diagramforklaring',
+	'srf-paramdesc-datalabels' => 'Vis dataetiketter for sektordiagram',
+	'srf-paramdesc-datalabeltype' => 'Angi dataetikettype',
+	'srf_printername_gallery' => 'Galleri',
+	'srf_paramdesc_perrow' => 'Antall bilder per rad',
+	'srf_paramdesc_widths' => 'Bredde på bildene',
+	'srf_paramdesc_heights' => 'Høyde på bildene',
+	'srf_paramdesc_autocaptions' => 'Bruk filnavn som bildetekst når denne mangler',
+	'srf_paramdesc_fileextensions' => 'Hvis filnavn brukes som figurtekst, vis også filtypen',
+	'srf_paramdesc_captionproperty' => 'Som figurtekst brukes navnet på den semantiske egenskapen tilgjengelig på sidene med spørringer',
+	'srf_paramdesc_imageproperty' => 'Navnet på en semantisk egenskap for sidene med spørringer som peker to bilder som skal brukes. Hvis satt, blir sidene med spørringer ikke selv vist frem som bilder.',
+	'srf_printername_tagcloud' => 'Tagg-sky',
+	'srf_paramdesc_includesubject' => 'Hvis emnetekstene selv bør være med',
+	'srf_paramdesc_increase' => 'Hvordan du øker størrelsen på taggene',
+	'srf_paramdesc_tagorder' => 'Tagrekkefølgen',
+	'srf_paramdesc_mincount' => 'Minste antall forekomster av en verdi for at den skal bli oppført',
+	'srf_paramdesc_minsize' => 'Størrelsen på de minste taggene i prosent',
+	'srf_paramdesc_maxsize' => 'Størrelsen på de største taggene i prosent',
+	'srf_paramdesc_maxtags' => 'Minste antall tagger i skyen',
+	'srf_printername_valuerank' => 'Verdirangering',
+	'srf_printername_array' => 'Array',
+	'srf_paramdesc_pagetitle' => 'Angi om sidetitlene skal vises eller skjules i resultatlisten',
+	'srf_paramdesc_hidegaps' => 'Angi om utilgjengelige egenskaper eller record-verdier adskilt med skilletegn skal vises eller skjules',
+	'srf_paramdesc_arrayname' => 'Hvis angitt samt at ArrayExtension er tilgjengelig, vil dette opprette et array med det angitte navnet',
+	'srf_paramdesc_propsep' => 'Skilletegn mellom valgte egenskaper',
+	'srf_paramdesc_manysep' => 'Skilletegn mellom flere verdier for samme egenskap',
+	'srf_paramdesc_recordsep' => 'Skilletegn mellom flerverdi-recordegenskaper',
+	'srf_paramdesc_headersep' => 'Skilletegn mellom egenskapsnavn og -verdi hvis "overskrifter" er satt til "vis" eller "vanlig"',
+	'srf_printername_hash' => 'Hash',
+	'srf_paramdesc_hashname' => 'Hvis angitt samt at HashTables-utvidelsen er tilgjengelig, vil dette opprette en hashkode med det angitte navnet',
+	'srf-printername-graph' => 'Graf',
+	'srf-paramdesc-graph-relation' => 'Er subjektene eller navnegenskapene foreldre eller barn?',
+	'srf-paramdesc-graph-nameprop' => 'Tillater å sette en egenskap som vil brukes som subjekt istedenfor det egentlige subjektet',
+	'srf-paramdesc-graph-nodeshape' => 'Formen på hver node i grafen',
+	'srf_paramdesc_graphname' => 'Tittel',
+	'srf_paramdesc_graphsize' => 'Grafstørrelse (i piksler)',
+	'srf_paramdesc_graphlegend' => 'Vis eller skjul graf-beskrivelse',
+	'srf_paramdesc_graphlabel' => 'Graf-etikett',
+	'srf_paramdesc_rankdir' => 'Pilretning',
+	'srf_paramdesc_graphlink' => 'Graf-lenke',
+	'srf_paramdesc_graphcolor' => 'Graf-farge',
+	'srf-paramdesc-graph-wwl' => 'Maksimal lengde av tekstlinje',
+	'srf-warn-empy-chart' => 'Diagrammet vises ikke fordi det ikke finnes resultater som kan presenteres.',
+);
+
 /** Dutch (Nederlands)
  * @author GerardM
  * @author McDutchie
+ * @author SPQRobin
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -1425,6 +2263,7 @@ $messages['nl'] = array(
 	'srfc_gotomonth' => 'Ga naar maand',
 	'srf_printername_calendar' => 'Maandkalender',
 	'srf_paramdesc_calendarlang' => 'De taalcode voor de taal waarin de kalender wordt weergegeven',
+	'srf_paramdesc_calendarcolors' => 'De kleur weer te geven voor elke datumeigenschap (voorbeeld: "Startdatum=>green,Einddatum=>#09c")',
 	'srf_printername_vcard' => 'Naar vCard exporteren',
 	'srf_printername_icalendar' => 'Naar iCalendar exporteren',
 	'srf_paramdesc_icalendartitle' => 'De titel van het kalenderbestand',
@@ -1433,11 +2272,17 @@ $messages['nl'] = array(
 	'srf_outline_novalue' => 'Geen waarde',
 	'srf_printername_outline' => 'Outline',
 	'srf_paramdesc_outlineproperties' => 'De koomagescheiden lijst met eigenschappen die weergegeven moet worden als overzichtskoptekst',
+	'srf_printername_D3Line' => 'D3-lijndiagram',
+	'srf_printername_D3Bar' => 'D3-staafdiagram',
+	'srf_printername_D3Treemap' => 'D3-boomdiagram',
 	'srf_printername_sum' => 'Som van getallen',
 	'srf_printername_average' => 'Gemiddelde van getallen',
 	'srf_printername_max' => 'Hoogste getal',
 	'srf_printername_min' => 'Laagste getal',
 	'srf_paramdesc_limit' => "Het maximaal aantal op te vragen pagina's",
+	'srf_printername_product' => 'Product van getallen',
+	'srf_printername_median' => 'Mediaan van getallen',
+	'srf-paramdesc-default' => 'De standaard waarde die wordt weergegeven als er geen numerieke resultaten zijn',
 	'srf_printername_timeline' => 'Tijdlijn',
 	'srf_printername_eventline' => 'Gebeurtenissenlijn',
 	'srf_paramdesc_timelinebands' => 'Geeft aan welke banden in het resultaat weergegeven moeten worden.',
@@ -1445,6 +2290,8 @@ $messages['nl'] = array(
 	'srf_paramdesc_timelinestart' => 'De naam van een eigenschap die wordt gebruikt om het eerst punt in de tijd te bepalen',
 	'srf_paramdesc_timelineend' => 'De naam van een eigenschap die wordt gebruikt om het tweede punt in de tijd te bepalen',
 	'srf_paramdesc_timelinesize' => 'De hoogte van de tijdlijn (standaard is 300 pixels)',
+	'srf-timeline-allresults' => 'Meer resultaten voor deze zoekopdracht.',
+	'srf-timeline-nojs' => 'U moet JavaScript ingeschakeld hebben om de interactieve tijdlijn te kunnen weergeven.',
 	'srf_paramdesc_views' => 'De weer te geven overzichten',
 	'srf_paramdesc_facets' => 'De op iedere pagina weer te geven eigenschappen',
 	'srf_paramdesc_lens' => 'De naam van het sjabloon waarmee de paginaeigenschappen weergegeven moeten worden',
@@ -1458,7 +2305,58 @@ $messages['nl'] = array(
 	'srf_paramdesc_barcolor' => 'De kleur van de balken',
 	'srf_paramdesc_bardirection' => 'De richting van de grafielbalken',
 	'srf_paramdesc_barnumbersaxislabel' => 'Het lavel van de Y-as',
+	'srf-paramdesc-minvalue' => 'De minimumwaarde om op de Y-as weer te geven',
+	'srf-paramdesc-pointlabels' => 'Individuele waarden weergeven',
+	'srf-paramdesc-chartlegend' => 'Grafieklegenda weergeven',
+	'srf-paramdesc-legendlocation' => 'Locatie van de legenda instellen',
+	'srf-paramdesc-datalabels' => 'Taartdiagramlabels weergeven',
+	'srf-paramdesc-datalabeltype' => 'Labeltype voor gegevens instellen',
 	'srf_printername_gallery' => 'Galerij',
+	'srf_paramdesc_perrow' => 'Het aantal afbeeldingen per rij',
+	'srf_paramdesc_widths' => 'De breedte van de afbeeldingen',
+	'srf_paramdesc_heights' => 'De hoogte van de afbeeldingen',
+	'srf_paramdesc_autocaptions' => 'Bestandsnaam als beschrijving gebruiken als er geen is opgegeven',
+	'srf_paramdesc_fileextensions' => 'Ook de extensie weergeven als bestandsnamen als bijschrift worden gebruikt',
+	'srf_paramdesc_captionproperty' => "De naam van een semantische eigenschap die aanwezig is op de doorzochte pagina's die gebruikt moet worden als bijschrift",
+	'srf_paramdesc_imageproperty' => "De naam van een semantische eigenschap die aanwezig is op de doorzochte pagina's die verwijst naar de te gebruiken afbeeldingen. Als deze instelling wordt gebruikt, worden de doorzochte pagina's zelf niet weergegeven als afbeeldingen",
+	'srf_paramdesc_galleryformat' => 'Galerij-indeling',
+	'srf_printername_tagcloud' => 'Woordwolk',
+	'srf_paramdesc_includesubject' => 'Of de namen van de onderwerpen zelf opgenomen moeten worden',
+	'srf_paramdesc_increase' => 'Hoe de grootte van de labels moet worden vergroot',
+	'srf_paramdesc_tagorder' => 'De volgorde van de labels',
+	'srf_paramdesc_mincount' => 'Het minimale aantal keren dat een waarde moet voorkomen om opgenomen te worden',
+	'srf_paramdesc_minsize' => 'De grootte van de kleinste labels in percentage (standaard: 77)',
+	'srf_paramdesc_maxsize' => 'De grootte van de grootste labels in percentage (standaard: 177)',
+	'srf_paramdesc_maxtags' => 'Het maximale aantal labels in de wolk',
+	'srf_printername_valuerank' => 'Rangwaarde',
+	'srf_printername_array' => 'Array',
+	'srf_paramdesc_pagetitle' => 'Of paginanamen moeten worden weergegeven of weggelaten in resultaatregels',
+	'srf_paramdesc_hidegaps' => "Of lege eigenschap- en recordwaardes door komma's gescheiden moeten worden weergegeven of weggelaten",
+	'srf_paramdesc_arrayname' => 'Als opgegeven en ArrayExtension is beschikbaar, wordt een array met de aangegeven naam gemaakt (er is dan geen zichtbare uitvoer)',
+	'srf_paramdesc_propsep' => 'Scheidingsteken voor de opgevraagde eigenschappen',
+	'srf_paramdesc_manysep' => 'Scheidingsteken voor eigenschappen met meerdere waarden',
+	'srf_paramdesc_recordsep' => 'Scheidingsteken voor waarden van recordeigenschappen',
+	'srf_paramdesc_headersep' => 'Scheidingsteken tussen de eigenschapnaam en de waarde als "headers" is ingesteld op "show" of "plain"',
+	'srf_printername_hash' => 'Hash',
+	'srf_paramdesc_hashname' => 'Als opgegeven en de uitbreiding HashTables is beschikbaar, dan wordt een hash met de aangegeven naam gemaakt (er is dan geen zichtbare uitvoer)',
+	'srf-printername-graph' => 'Grafiek',
+	'srf-paramdesc-graph-relation' => 'Zijn de onderwerpen of naameigenschappen ouders of kinderen?',
+	'srf-paramdesc-graph-nameprop' => 'Maakt het mogelijk een eigenschap in te stellen die wordt gebruikt als onderwerp in plaats van het eigenlijke onderwerp',
+	'srf-paramdesc-graph-nodeshape' => 'De vorm van de knooppunten in de grafiek.',
+	'srf_paramdesc_graphname' => 'Naam',
+	'srf_paramdesc_graphsize' => 'Grafiekgrootte (in pixels)',
+	'srf_paramdesc_graphlegend' => 'Legenda al dan niet weergeven',
+	'srf_paramdesc_graphlabel' => 'Grafieklabel',
+	'srf_paramdesc_rankdir' => 'Pijlrichting',
+	'srf_paramdesc_graphlink' => 'Grafiekverwijzing',
+	'srf_paramdesc_graphcolor' => 'Grafiekkleur',
+	'srf-paramdesc-graph-wwl' => 'Regellimiet (in aantal tekens)',
+	'srf-warn-empy-chart' => 'De grafiek wordt niet weergegeven omdat er geen weer te geven resultaten zijn.',
+	'srf_printername_datatables' => 'Gegevenstabellen',
+	'srf-paramdesc-rowindex' => 'Tabelrij-index',
+	'srf-paramdesc-displaylength' => 'Eerste weergavelengte',
+	'srf-noparentprop' => 'Er is geen bovenliggende eigenschap opgegeven. De boom kan niet opgebouwd worden zonder een bovenliggende eigenschap.',
+	'srf-paramdesc-parent' => 'De eigenschap die de bovenliggende pagina bevat',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -1485,59 +2383,8 @@ $messages['nn'] = array(
 	'srf_printername_eventline' => 'Tidsline for hendingar',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Event
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'srf-desc' => 'Ytterligere format for Semantic MediaWiki «inline»-spørringer',
-	'srf-name' => 'Semantisk resultatformat',
-	'srfc_previousmonth' => 'Forrige måned',
-	'srfc_nextmonth' => 'Neste måned',
-	'srfc_today' => 'I dag',
-	'srfc_gotomonth' => 'Gå til måned',
-	'srf_printername_calendar' => 'Månedlig kalender',
-	'srf_paramdesc_calendarlang' => 'Språkkoden for språket som kalenderen skal vises i',
-	'srf_printername_vcard' => 'vCard-eksport',
-	'srf_icalendar_link' => 'iKalender',
-	'srf_printername_icalendar' => 'iCalendar-eksport',
-	'srf_paramdesc_icalendartitle' => 'Tittelen på kalenderfilen',
-	'srf_paramdesc_icalendardescription' => 'Beskrivelsen av kalenderfilen',
-	'srf_printername_bibtex' => 'BibTeX-eksport',
-	'srf_outline_novalue' => 'Ingen verdi',
-	'srf_printername_outline' => 'Disposisjon',
-	'srf_paramdesc_outlineproperties' => 'Listen over egenskaper som skal vises som disposisjonsoverskrifter, adskilt med komma',
-	'srf_printername_sum' => 'Sum av tall',
-	'srf_printername_average' => 'Gjennomsnitt av tall',
-	'srf_printername_max' => 'Største tall',
-	'srf_printername_min' => 'Minste tall',
-	'srf_paramdesc_limit' => 'Maks antall sider å etterspørre',
-	'srf_printername_timeline' => 'Tidslinje',
-	'srf_printername_eventline' => 'Hendelseslinje',
-	'srf_paramdesc_timelinebands' => 'Definerer hvilke bånd som vises i resultatet.',
-	'srf_paramdesc_timelineposition' => 'Definerer hvor tidslinjen først fokuseres rundt.',
-	'srf_paramdesc_timelinestart' => 'Et egenskapsnavn brukt for å definere et første tidspunkt',
-	'srf_paramdesc_timelineend' => 'Et egenskapsnavn brukt for å definere et andre tidspunkt',
-	'srf_paramdesc_timelinesize' => 'Høyden på tidslinjen (standard er 300px)',
-	'srf_paramdesc_views' => 'Visninger som skal fremvises',
-	'srf_paramdesc_facets' => 'Egenskapssettet som skal vises for hver side',
-	'srf_paramdesc_lens' => 'Navnet på malen som skal vise frem sideegenskapene',
-	'srf_printername_googlebar' => 'Google stolpediagram',
-	'srf_printername_googlepie' => 'Google kakediagram',
-	'srf_printername_jqplotbar' => 'jqPlot stolpediagram',
-	'srf_printername_jqplotpie' => 'jqPlot sektordiagram',
-	'srf_paramdesc_chartheight' => 'Høyden til diagrammet, i pixler',
-	'srf_paramdesc_chartwidth' => 'Bredden til diagrammet, i pixler',
-	'srf_paramdesc_charttitle' => 'Tittelen på diagrammet',
-	'srf_paramdesc_barcolor' => 'Fargen på stolpene',
-	'srf_paramdesc_bardirection' => 'Retningen på stolpediagrammet',
-	'srf_paramdesc_barnumbersaxislabel' => 'Etiketten for tallaksen',
-	'srf_printername_gallery' => 'Galleri',
-	'srf_printername_tagcloud' => 'Tagg-sky',
-);
-
 /** Occitan (Occitan)
+ * @author Boulaur
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -1561,6 +2408,7 @@ $messages['oc'] = array(
 	'srf_printername_min' => 'Nombre minimal',
 	'srf_printername_timeline' => 'Cronologia',
 	'srf_printername_eventline' => 'Cronologia dels eveniments',
+	'srf_paramdesc_graphname' => 'Títol',
 );
 
 /** Deitsch (Deitsch)
@@ -1669,6 +2517,39 @@ $messages['pms'] = array(
 	'srf_paramdesc_bardirection' => 'La diression dël gràfich a bare',
 	'srf_paramdesc_barnumbersaxislabel' => "La tichëtta për l'ass dij nùmer",
 	'srf_printername_gallery' => 'Galarìa',
+	'srf_paramdesc_perrow' => 'Ël total ëd figure për riga',
+	'srf_paramdesc_widths' => 'La larghëssa dla figure',
+	'srf_paramdesc_heights' => "L'autëssa dle figure",
+	'srf_paramdesc_autocaptions' => "Dovré ël nòm d'archivi com descrission quand che gnun-a a l'é dàita",
+	'srf_printername_tagcloud' => 'Ansema ëd tichëtte',
+	'srf_paramdesc_includesubject' => 'Se ij nòm dël soget midem a dovrìo esse ancludù',
+	'srf_paramdesc_increase' => 'Com aumenté la dimension dle tichëtte',
+	'srf_paramdesc_tagorder' => "L'órdin dle tichëtte",
+	'srf_paramdesc_mincount' => 'Ël nùmer mìnim ëd vire che un valor a dev ancapité për esse listà',
+	'srf_paramdesc_minsize' => 'La dimension dle tichëtte pi cite an persentual (stàndard: 77)',
+	'srf_paramdesc_maxsize' => 'La dimension dle tichëtte pi gròsse an përsentual (stàndard: 77)',
+	'srf_paramdesc_maxtags' => "La quantità màssima ëd tichëtte ant l'ansema",
+	'srf_printername_array' => 'Tàula',
+	'srf_paramdesc_pagetitle' => "S'a venta smon-e ij tìtoj ëd pàgina com vos ëd l'arzultà o stërmeje",
+	'srf_paramdesc_hidegaps' => "S'a venta smon-e na propietà veuida e argistré ij valor separà da 'd separator o stërmeje",
+	'srf_paramdesc_arrayname' => "Se dàit e si ArrayEstension a l'é disponìbil sòn a creerà na tàula con ij nòm ëspessìfich",
+	'srf_paramdesc_propsep' => 'Separator tra le proprietà ciamà',
+	'srf_paramdesc_manysep' => 'Separator tra tante propietà con valor',
+	'srf_paramdesc_recordsep' => "Separator tra ij valor ëd le propietà d'argistrassion",
+	'srf_printername_hash' => 'Taj',
+	'srf_paramdesc_hashname' => "Se dàit e l'estension HashTables a l'é disponìbil sòn a creerà un taj con ël nòm ëspessìfich",
+	'srf-printername-graph' => 'Gràfich',
+	'srf-paramdesc-graph-relation' => 'Ij soget o le propietà ëd nòm son-ne dij pare o dij fieuj?',
+	'srf-paramdesc-graph-nameprop' => "A përmët d'amposté na propietà che a sarà dovrà com soget al pòst dël soget atual",
+	'srf-paramdesc-graph-nodeshape' => 'La forma ëd minca vértes ant ël gràf',
+	'srf_paramdesc_graphname' => 'Tìtol',
+	'srf_paramdesc_graphsize' => 'Dimension dël graf (an pontin)',
+	'srf_paramdesc_graphlegend' => 'Mostré la legenda dël graf o nò',
+	'srf_paramdesc_graphlabel' => 'Tichëtta dël gràfich',
+	'srf_paramdesc_rankdir' => 'Diression dla flecia',
+	'srf_paramdesc_graphlink' => 'Liura al graf',
+	'srf_paramdesc_graphcolor' => 'Color dël gràfich',
+	'srf-paramdesc-graph-wwl' => "Lìmit dl'a cap automàtich dla paròla (an nùmer ëd caràter)",
 );
 
 /** Pashto (پښتو)
@@ -1679,7 +2560,7 @@ $messages['ps'] = array(
 	'srfc_nextmonth' => 'راتلونکې مياشت',
 	'srfc_today' => 'نن',
 	'srfc_gotomonth' => 'مياشت ته ورځه',
-	'srf_printername_gallery' => 'نندارتون',
+	'srf_printername_gallery' => 'انځورتون',
 );
 
 /** Portuguese (Português)
@@ -1710,6 +2591,7 @@ $messages['pt'] = array(
 	'srf_printername_max' => 'Número máximo',
 	'srf_printername_min' => 'Número mínimo',
 	'srf_paramdesc_limit' => 'O número máximo de páginas a consultar',
+	'srf_printername_product' => 'Produto dos números',
 	'srf_printername_timeline' => 'Cronograma',
 	'srf_printername_eventline' => 'Cronograma de eventos',
 	'srf_paramdesc_timelinebands' => 'Define que bandas são apresentadas no resultado.',
@@ -1717,6 +2599,8 @@ $messages['pt'] = array(
 	'srf_paramdesc_timelinestart' => 'Um nome de propriedade, usado para definir um primeiro ponto no tempo',
 	'srf_paramdesc_timelineend' => 'Um nome de propriedade, usado para definir um segundo ponto no tempo',
 	'srf_paramdesc_timelinesize' => 'A altura do cronograma (por omissão, 300 px)',
+	'srf-timeline-allresults' => 'Mais resultados desta consulta.',
+	'srf-timeline-nojs' => 'Para ver o cronograma interactivo tem de activar o JavaScript.',
 	'srf_paramdesc_views' => 'As vistas que serão apresentadas',
 	'srf_paramdesc_facets' => 'O conjunto de propriedades que serão apresentadas para cada página',
 	'srf_paramdesc_lens' => 'O nome de uma predefinição usada para apresentar as propriedades das páginas',
@@ -1731,7 +2615,42 @@ $messages['pt'] = array(
 	'srf_paramdesc_bardirection' => 'A orientação do gráfico de barras',
 	'srf_paramdesc_barnumbersaxislabel' => 'A legenda para o eixo dos números',
 	'srf_printername_gallery' => 'Galeria',
+	'srf_paramdesc_perrow' => 'A quantidade de imagens por linha',
+	'srf_paramdesc_widths' => 'A largura das imagens',
+	'srf_paramdesc_heights' => 'A altura das imagens',
+	'srf_paramdesc_autocaptions' => 'Usar o nome do ficheiro como legenda se esta não for fornecida',
+	'srf_paramdesc_fileextensions' => 'Ao usar o nome do ficheiro como legenda, mostrar também a extensão',
+	'srf_paramdesc_captionproperty' => 'O nome de uma propriedade semântica presente nas páginas consultadas para ser usado como legenda',
+	'srf_paramdesc_imageproperty' => 'O nome de uma propriedade semântica nas páginas consultadas que aponta para imagens a usar. Quando definido, as próprias páginas consultadas não serão mostradas como imagens',
 	'srf_printername_tagcloud' => 'Nuvem de tags',
+	'srf_paramdesc_includesubject' => 'Se os nomes dos próprios temas devem ser incluídos',
+	'srf_paramdesc_increase' => 'Como aumentar o tamanho das tags',
+	'srf_paramdesc_tagorder' => 'A ordem das tags',
+	'srf_paramdesc_mincount' => 'O número mínimo de vezes que um valor deve ocorrer, para ser listado',
+	'srf_paramdesc_minsize' => 'O tamanho das tags menores, em percentagem (padrão: 77)',
+	'srf_paramdesc_maxsize' => 'O tamanho das tags maiores, em percentagem (padrão: 177)',
+	'srf_paramdesc_maxtags' => 'A quantidade máxima de tags na nuvem',
+	'srf_printername_array' => 'Matriz',
+	'srf_paramdesc_pagetitle' => 'Se deseja apresentar como resultados os títulos das páginas, ou escondê-los',
+	'srf_paramdesc_hidegaps' => 'Se deseja apresentar os valores das propriedades e registos vazios separados por separadores ou escondê-los',
+	'srf_paramdesc_arrayname' => 'Se especificado e a ArrayExtension estiver disponível, isto criará uma matriz com o nome especificado',
+	'srf_paramdesc_propsep' => 'Separador entre as propriedades solicitadas',
+	'srf_paramdesc_manysep' => 'Separador entre propriedades com mais do que um valor',
+	'srf_paramdesc_recordsep' => 'Separador entre os valores das propriedades do registo',
+	'srf_printername_hash' => 'Resumo criptográfico ("hash")',
+	'srf_paramdesc_hashname' => 'Se especificado e a extensão HashTables estiver disponível, isto cria um resumo criptográfico ("hash") com o nome especificado',
+	'srf-printername-graph' => 'Grafo',
+	'srf-paramdesc-graph-relation' => 'Os assuntos ("subjects") ou propriedades dos nomes ("nameproperties"), são pais ou filhos?',
+	'srf-paramdesc-graph-nameprop' => 'Permite definir uma propriedade que será usada como assunto ("subject") em vez do verdadeiro assunto',
+	'srf-paramdesc-graph-nodeshape' => 'A forma de cada vértice no grafo',
+	'srf_paramdesc_graphname' => 'Título',
+	'srf_paramdesc_graphsize' => 'Tamanho do grafo (em px)',
+	'srf_paramdesc_graphlegend' => 'Mostrar ou não a legenda do grafo',
+	'srf_paramdesc_graphlabel' => 'Título do grafo',
+	'srf_paramdesc_rankdir' => 'Direcção da seta',
+	'srf_paramdesc_graphlink' => 'Link do grafo',
+	'srf_paramdesc_graphcolor' => 'Cor do grafo',
+	'srf-paramdesc-graph-wwl' => 'Limite para forçar nova linha (em nº de caracteres)',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -1812,7 +2731,9 @@ $messages['roa-tara'] = array(
 
 /** Russian (Русский)
  * @author Ferrer
+ * @author Haffman
  * @author Innv
+ * @author Kaganer
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -1844,7 +2765,7 @@ $messages['ru'] = array(
 	'srf_paramdesc_timelineposition' => 'Определяет какое место временной шкалы будет отображаться первоначально',
 	'srf_paramdesc_timelinestart' => 'Имя свойства, используемое для определения первой временной точки',
 	'srf_paramdesc_timelineend' => 'Имя свойства, используемое для определения второй временной точки',
-	'srf_paramdesc_timelinesize' => 'Высота временной шкалы (по умолчанию 300 пикс)',
+	'srf_paramdesc_timelinesize' => 'Высота временной шкалы (по умолчанию 300 пикс.)',
 	'srf_paramdesc_views' => 'Виды для отображения',
 	'srf_paramdesc_facets' => 'Набор свойств, отображаемых на каждой странице',
 	'srf_paramdesc_lens' => 'Название шаблона для отображения свойств страницы',
@@ -1859,7 +2780,12 @@ $messages['ru'] = array(
 	'srf_paramdesc_bardirection' => 'Направление столбцов',
 	'srf_paramdesc_barnumbersaxislabel' => 'Надпись для числовых осей',
 	'srf_printername_gallery' => 'Галерея',
+	'srf_paramdesc_perrow' => 'Количество изображений в строке',
+	'srf_paramdesc_widths' => 'Ширина изображений',
+	'srf_paramdesc_heights' => 'Высота изображений',
 	'srf_printername_tagcloud' => 'Облако меток',
+	'srf_paramdesc_tagorder' => 'Порядок тегов',
+	'srf_printername_array' => 'Массив',
 );
 
 /** Rusyn (Русиньскый)
@@ -1896,7 +2822,8 @@ $messages['sk'] = array(
 	'srf_printername_eventline' => 'Os udalostí',
 );
 
-/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
@@ -1905,6 +2832,9 @@ $messages['sr-ec'] = array(
 	'srfc_today' => 'Данас',
 	'srfc_gotomonth' => 'Пређи на месец',
 	'srf_printername_calendar' => 'Месечни календар',
+	'srf_vcard_link' => 'vCard',
+	'srf_icalendar_link' => 'iCalendar',
+	'srf_bibtex_link' => 'BibTeX',
 	'srf_outline_novalue' => 'Нема вредности',
 	'srf_printername_sum' => 'Сума бројева',
 	'srf_printername_average' => 'Средња вредност бројева',
@@ -1913,7 +2843,7 @@ $messages['sr-ec'] = array(
 	'srf_printername_gallery' => 'Галерија',
 );
 
-/** Serbian Latin ekavian (‪Srpski (latinica)‬)
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -1922,6 +2852,9 @@ $messages['sr-el'] = array(
 	'srfc_today' => 'Danas',
 	'srfc_gotomonth' => 'Pređi na mesec',
 	'srf_printername_calendar' => 'Mesečni kalendar',
+	'srf_vcard_link' => 'vCard',
+	'srf_icalendar_link' => 'iCalendar',
+	'srf_bibtex_link' => 'BibTeX',
 	'srf_outline_novalue' => 'Nema vrednosti',
 	'srf_printername_sum' => 'Suma brojeva',
 	'srf_printername_average' => 'Srednja vrednost brojeva',
@@ -1977,9 +2910,10 @@ $messages['te'] = array(
 	'srf_printername_timeline' => 'కాలరేఖ',
 	'srf_paramdesc_chartheight' => 'చార్టు యొక్క ఎత్తు, పిక్సెళ్ళలో',
 	'srf_paramdesc_chartwidth' => 'చార్టు యొక్క వెడల్పు, పిక్సెళ్ళలో',
+	'srf_paramdesc_graphname' => 'శీర్షిక',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
@@ -1989,7 +2923,7 @@ $messages['tg-cyrl'] = array(
 	'srfc_gotomonth' => 'Рафтан ба моҳ',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
@@ -2045,6 +2979,27 @@ $messages['tl'] = array(
 	'srf_paramdesc_bardirection' => 'Ang kapupuntahan ng baretang talangguhit',
 	'srf_paramdesc_barnumbersaxislabel' => 'Ang tatak para sa painugan ng mga bilang',
 	'srf_printername_gallery' => 'Galerya',
+	'srf_paramdesc_perrow' => 'Ang dami ng mga larawan bawat hilera',
+	'srf_paramdesc_widths' => 'Ang lapad ng mga larawan',
+	'srf_paramdesc_heights' => 'Ang taas ng mga larawan',
+	'srf_paramdesc_autocaptions' => 'Gamitin ang pangalan ng talaksan bilang paliwag kapag walang ibinigay',
+	'srf_printername_tagcloud' => 'Ulap ng tatak',
+	'srf_paramdesc_includesubject' => 'Kung dapat bang isama ang mga pangalan ng mga paksa mismo',
+	'srf_paramdesc_increase' => 'Paano patataasin ang sukat ng mga tatak',
+	'srf_paramdesc_tagorder' => 'Ang pagkakasunud-sunod ng mga tatak',
+	'srf_printername_array' => 'Hanay',
+	'srf_printername_hash' => 'Muling paghahayag',
+	'srf-printername-graph' => 'Talangguhit',
+	'srf-paramdesc-graph-relation' => 'Mga magulang ba o mga anak ang mga paksa o mga kaarian ng pangalan?',
+	'srf-paramdesc-graph-nodeshape' => 'Ang hugis ng bawat buko sa ibabaw ng talangguhit',
+	'srf_paramdesc_graphname' => 'Pamagat',
+	'srf_paramdesc_graphsize' => 'Sukat ng talangguhit (nasa px)',
+	'srf_paramdesc_graphlegend' => 'Ipakita ang alamat ng talangguhit o hindi',
+	'srf_paramdesc_graphlabel' => 'Tatak ng talangguhit',
+	'srf_paramdesc_rankdir' => 'Patutunguhan ng palaso',
+	'srf_paramdesc_graphlink' => 'Kawing ng talangguhit',
+	'srf_paramdesc_graphcolor' => 'Kulay ng talangguhit',
+	'srf-paramdesc-graph-wwl' => 'Hangganan ng balot ng salita (sa loob ng # mga panitik)',
 );
 
 /** Turkish (Türkçe)
@@ -2138,20 +3093,117 @@ $messages['yi'] = array(
 	'srfc_previousmonth' => 'פֿאריגער חודש',
 	'srfc_nextmonth' => 'נעקסטער חודש',
 	'srfc_today' => 'הײַנט',
+	'srf_paramdesc_graphname' => 'טיטל',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
  * @author Liangent
+ * @author Linforest
  */
 $messages['zh-hans'] = array(
+	'srf-desc' => 'Semantic MediaWiki嵌入式查询的附加格式',
+	'srf-name' => '语义结果格式',
 	'srfc_previousmonth' => '上月',
 	'srfc_nextmonth' => '下月',
 	'srfc_today' => '今天',
 	'srfc_gotomonth' => '跳至月份',
+	'srf_printername_calendar' => '月历',
+	'srf_paramdesc_calendarlang' => '显示日历的语言代码',
+	'srf_paramdesc_calendarcolors' => '每个日期属性的显示颜色（示例："Start date=>green,End date=>#09c"）',
+	'srf_printername_vcard' => 'vCard导出',
+	'srf_printername_icalendar' => 'iCalendar导出',
+	'srf_paramdesc_icalendartitle' => '日历文件的标题',
+	'srf_paramdesc_icalendardescription' => '日历文件的说明',
+	'srf_printername_bibtex' => 'BibTeX导出',
+	'srf_outline_novalue' => '没有取值',
+	'srf_printername_outline' => '大纲',
+	'srf_paramdesc_outlineproperties' => '要显示为大纲标题的属性列表，以逗号分隔',
+	'srf_printername_D3Line' => 'D3 折线图',
+	'srf_printername_D3Bar' => 'D3 条形图',
+	'srf_printername_D3Treemap' => 'D3 树状图',
+	'srf_printername_sum' => '数值之和',
+	'srf_printername_average' => '数值的平均值',
 	'srf_printername_max' => '最大数目',
 	'srf_printername_min' => '最小数目',
+	'srf_paramdesc_limit' => '所要查询页面的最大数量',
+	'srf_printername_product' => '数值的乘积',
+	'srf_printername_median' => '数值的中位数',
+	'srf-paramdesc-default' => '没有数值型结果时将会显示的默认值',
+	'srf_printername_timeline' => '时间轴',
+	'srf_printername_eventline' => '事件轴',
+	'srf_paramdesc_timelinebands' => '定义在结果当中显示哪些条带。',
+	'srf_paramdesc_timelineposition' => '定义时间轴最初的焦点位于何处。',
+	'srf_paramdesc_timelinestart' => '用来定义第一个时间点的属性名称',
+	'srf_paramdesc_timelineend' => '用来定义第二个时间点的属性名称',
+	'srf_paramdesc_timelinesize' => '时间轴高度（默认值为300像素）',
+	'srf-timeline-allresults' => '此查询的进一步结果。',
+	'srf-timeline-nojs' => '要查看交互式的时间轴，您需要启用JavaScript。',
+	'srf_paramdesc_views' => '所要显示的视图',
+	'srf_paramdesc_facets' => '为每个页面所要显示的那套属性',
+	'srf_paramdesc_lens' => '用于显示页面属性的模板名称',
+	'srf_printername_googlebar' => 'Google条形图',
+	'srf_printername_googlepie' => 'Google饼图',
+	'srf_printername_jqplotbar' => 'jqPlot条形图',
+	'srf_printername_jqplotpie' => 'jqPlot饼图',
+	'srf_paramdesc_chartheight' => '以像素为单位的图表高度',
+	'srf_paramdesc_chartwidth' => '以像素为单位的图表宽度',
+	'srf_paramdesc_charttitle' => '图表标题',
+	'srf_paramdesc_barcolor' => '条形的颜色',
+	'srf_paramdesc_bardirection' => '条形图的方向',
+	'srf_paramdesc_barnumbersaxislabel' => '数字轴标签',
+	'srf-paramdesc-minvalue' => 'Y-轴上所要显示的最小值',
+	'srf-paramdesc-pointlabels' => '具体数据点的显示',
+	'srf-paramdesc-chartlegend' => '显示图表图例',
+	'srf-paramdesc-legendlocation' => '设置图例位置',
+	'srf-paramdesc-datalabels' => '显示饼图数据标签',
+	'srf-paramdesc-datalabeltype' => '设置数据标签类型',
 	'srf_printername_gallery' => '图库',
+	'srf_paramdesc_perrow' => '每行的图像个数',
+	'srf_paramdesc_widths' => '图像宽度',
+	'srf_paramdesc_heights' => '图像高度',
+	'srf_paramdesc_autocaptions' => '不提供任何标题时使用文件名称作为标题',
+	'srf_paramdesc_fileextensions' => '当使用文件名作为标题，同时也显示文件扩展名',
+	'srf_paramdesc_captionproperty' => '存在于所查询页面上的某个语义属性的名称要用作标题',
+	'srf_paramdesc_imageproperty' => '所查询页面上某一指向所要使用的图像的语义属性的名称。当设置时，所查询页面本身将不会显示为图像。',
+	'srf_paramdesc_galleryformat' => '画廊格式',
+	'srf_printername_tagcloud' => '标签云',
+	'srf_paramdesc_includesubject' => '如果主题名称本身应当包括在内',
+	'srf_paramdesc_increase' => '如何增加标签的大小',
+	'srf_paramdesc_tagorder' => '标签的顺序',
+	'srf_paramdesc_mincount' => '要列出某一取值所需出现的最少次数',
+	'srf_paramdesc_minsize' => '以百分比计算的最小标签的大小（默认值：77）',
+	'srf_paramdesc_maxsize' => '以百分比计算的最大标签的大小（默认值：177）',
+	'srf_paramdesc_maxtags' => '云中标签的最大数量',
+	'srf_printername_valuerank' => '取值排名',
+	'srf_printername_array' => '数组',
+	'srf_paramdesc_pagetitle' => '究竟是把页面标题显示为结果条目，还是略去它们',
+	'srf_paramdesc_hidegaps' => '究竟是打印输出所请求的但不可用的属性以及采用分隔符分隔的记录取值，还是略去它们',
+	'srf_paramdesc_arrayname' => '如果已经给出，且ArrayExtension可用，这将会创建一个带有指定名称的数组（没有任何可见的输出）',
+	'srf_paramdesc_propsep' => '所请求属性之间的分隔符',
+	'srf_paramdesc_manysep' => '许多已经赋值的属性取值之间的分隔符',
+	'srf_paramdesc_recordsep' => '记录属性的取值之间的分隔符',
+	'srf_paramdesc_headersep' => '当把"headers"设置为"show"或"plain"时，属性名称和取值之间的分隔符',
+	'srf_printername_hash' => '哈希',
+	'srf_paramdesc_hashname' => '如果已经给出，且HashTables可用，这将会创建一个带有指定名称的哈希表（没有任何可见的输出）',
+	'srf-printername-graph' => '图形',
+	'srf-paramdesc-graph-relation' => '这些主题或名称属性是父节点或子节点吗？',
+	'srf-paramdesc-graph-nameprop' => '允许设置一个属性，并将其作为主题来使用，而不是实际的主题',
+	'srf-paramdesc-graph-nodeshape' => '图形上每个节点的形状',
+	'srf_paramdesc_graphname' => '标题',
+	'srf_paramdesc_graphsize' => '图形尺寸（以像素计）',
+	'srf_paramdesc_graphlegend' => '显示或不显示图形图例',
+	'srf_paramdesc_graphlabel' => '图形标签',
+	'srf_paramdesc_rankdir' => '箭头方向',
+	'srf_paramdesc_graphlink' => '图形链接',
+	'srf_paramdesc_graphcolor' => '图形颜色',
+	'srf-paramdesc-graph-wwl' => 'Word自动换行限制（以字符计）',
+	'srf-warn-empy-chart' => '该图表未被显示是因为其中没有可加以显示的结果。',
+	'srf_printername_datatables' => '数据表',
+	'srf-paramdesc-rowindex' => '数据表行索引',
+	'srf-paramdesc-displaylength' => '初始显示长度',
+	'srf-noparentprop' => '未提供父属性。在没有指定父属性的情况下无法构建树种结构。',
+	'srf-paramdesc-parent' => '包含父页面的属性',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
@@ -2164,6 +3216,7 @@ $messages['zh-hant'] = array(
 	'srfc_gotomonth' => '跳至月份',
 	'srf_printername_max' => '最大數目',
 	'srf_printername_min' => '最小數目',
+	'srf_printername_gallery' => '圖庫',
 );
 
 /** Chinese (Taiwan) (‪中文(台灣)‬)

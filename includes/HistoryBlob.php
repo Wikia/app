@@ -11,14 +11,21 @@ interface HistoryBlob
 	 * Adds an item of text, returns a stub object which points to the item.
 	 * You must call setLocation() on the stub object before storing it to the
 	 * database
-	 * Returns the key for getItem()
+	 *
+	 * @param $text string
+	 *
+	 * @return String: the key for getItem()
 	 */
-	public function addItem( $text );
+	function addItem( $text );
 
 	/**
 	 * Get item by key, or false if the key is not present
+	 *
+	 * @param $key string
+	 *
+	 * @return String or false
 	 */
-	public function getItem( $key );
+	function getItem( $key );
 
 	/**
 	 * Set the "default text"
@@ -27,11 +34,15 @@ interface HistoryBlob
 	 * be other revisions in the same object.
 	 *
 	 * Default text is not required for two-part external storage URLs.
+	 *
+	 * @param $text string
 	 */
-	public function setText( $text );
+	function setText( $text );
 
 	/**
 	 * Get default text. This is called from Revision::getRevisionText()
+	 *
+	 * @return String
 	 */
 	function getText();
 }
@@ -48,12 +59,16 @@ class ConcatenatedGzipHistoryBlob implements HistoryBlob
 	public $mMaxCount = 100;
 
 	/** Constructor */
-	public function ConcatenatedGzipHistoryBlob() {
+	public function __construct() {
 		if ( !function_exists( 'gzdeflate' ) ) {
 			throw new MWException( "Need zlib support to read or write this kind of history object (ConcatenatedGzipHistoryBlob)\n" );
 		}
 	}
 
+	/**
+	 * @param $text string
+	 * @return string
+	 */
 	public function addItem( $text ) {
 		$this->uncompress();
 		$hash = md5( $text );
@@ -64,6 +79,10 @@ class ConcatenatedGzipHistoryBlob implements HistoryBlob
 		return $hash;
 	}
 
+	/**
+	 * @param $hash string
+	 * @return array|bool
+	 */
 	public function getItem( $hash ) {
 		$this->uncompress();
 		if ( array_key_exists( $hash, $this->mItems ) ) {
@@ -73,11 +92,18 @@ class ConcatenatedGzipHistoryBlob implements HistoryBlob
 		}
 	}
 
+	/**
+	 * @param $text string
+	 * @return void
+	 */
 	public function setText( $text ) {
 		$this->uncompress();
 		$this->mDefaultHash = $this->addItem( $text );
 	}
 
+	/**
+	 * @return array|bool
+	 */
 	public function getText() {
 		$this->uncompress();
 		return $this->getItem( $this->mDefaultHash );
@@ -85,6 +111,8 @@ class ConcatenatedGzipHistoryBlob implements HistoryBlob
 
 	/**
 	 * Remove an item
+	 *
+	 * @param $hash string
 	 */
 	public function removeItem( $hash ) {
 		$this->mSize -= strlen( $this->mItems[$hash] );
@@ -111,7 +139,9 @@ class ConcatenatedGzipHistoryBlob implements HistoryBlob
 		}
 	}
 
-
+	/**
+	 * @return array
+	 */
 	function __sleep() {
 		$this->compress();
 		return array( 'mVersion', 'mCompressed', 'mItems', 'mDefaultHash' );
@@ -124,6 +154,8 @@ class ConcatenatedGzipHistoryBlob implements HistoryBlob
 	/**
 	 * Helper function for compression jobs
 	 * Returns true until the object is "full" and ready to be committed
+	 *
+	 * @return bool
 	 */
 	public function isHappy() {
 		return $this->mSize < $this->mMaxSize 
@@ -133,26 +165,24 @@ class ConcatenatedGzipHistoryBlob implements HistoryBlob
 
 
 /**
- * One-step cache variable to hold base blobs; operations that
- * pull multiple revisions may often pull multiple times from
- * the same blob. By keeping the last-used one open, we avoid
- * redundant unserialization and decompression overhead.
- */
-global $wgBlobCache;
-$wgBlobCache = array();
-
-
-/**
  * Pointer object for an item within a CGZ blob stored in the text table.
  */
 class HistoryBlobStub {
+	/**
+	 * One-step cache variable to hold base blobs; operations that
+	 * pull multiple revisions may often pull multiple times from
+	 * the same blob. By keeping the last-used one open, we avoid
+	 * redundant unserialization and decompression overhead.
+	 */
+	protected static $blobCache = array();
+
 	var $mOldId, $mHash, $mRef;
 
 	/**
-	 * @param string $hash The content hash of the text
-	 * @param integer $oldid The old_id for the CGZ object
+	 * @param $hash Strng: the content hash of the text
+	 * @param $oldid Integer: the old_id for the CGZ object
 	 */
-	function HistoryBlobStub( $hash = '', $oldid = 0 ) {
+	function __construct( $hash = '', $oldid = 0 ) {
 		$this->mHash = $hash;
 	}
 
@@ -178,11 +208,14 @@ class HistoryBlobStub {
 		return $this->mRef;
 	}
 
+	/**
+	 * @return string
+	 */
 	function getText() {
 		$fname = 'HistoryBlobStub::getText';
-		global $wgBlobCache;
-		if( isset( $wgBlobCache[$this->mOldId] ) ) {
-			$obj = $wgBlobCache[$this->mOldId];
+
+		if( isset( self::$blobCache[$this->mOldId] ) ) {
+			$obj = self::$blobCache[$this->mOldId];
 		} else {
 			$dbr = wfGetDB( DB_SLAVE );
 			$row = $dbr->selectRow( 'text', array( 'old_flags', 'old_text' ), array( 'old_id' => $this->mOldId ) );
@@ -192,12 +225,12 @@ class HistoryBlobStub {
 			$flags = explode( ',', $row->old_flags );
 			if( in_array( 'external', $flags ) ) {
 				$url=$row->old_text;
-				@list( /* $proto */ ,$path)=explode('://',$url,2);
-				if ($path=="") {
+				$parts = explode( '://', $url, 2 );
+				if ( !isset( $parts[1] ) || $parts[1] == '' ) {
 					wfProfileOut( $fname );
 					return false;
 				}
-				$row->old_text=ExternalStore::fetchFromUrl($url);
+				$row->old_text = ExternalStore::fetchFromUrl($url);
 
 			}
 			if( !in_array( 'object', $flags ) ) {
@@ -224,13 +257,15 @@ class HistoryBlobStub {
 			// Save this item for reference; if pulling many
 			// items in a row we'll likely use it again.
 			$obj->uncompress();
-			$wgBlobCache = array( $this->mOldId => $obj );
+			self::$blobCache = array( $this->mOldId => $obj );
 		}
 		return $obj->getItem( $this->mHash );
 	}
 
 	/**
 	 * Get the content hash
+	 *
+	 * @return string
 	 */
 	function getHash() {
 		return $this->mHash;
@@ -250,20 +285,25 @@ class HistoryBlobCurStub {
 	var $mCurId;
 
 	/**
-	 * @param integer $curid The cur_id pointed to
+	 * @param $curid Integer: the cur_id pointed to
 	 */
-	function HistoryBlobCurStub( $curid = 0 ) {
+	function __construct( $curid = 0 ) {
 		$this->mCurId = $curid;
 	}
 
 	/**
 	 * Sets the location (cur_id) of the main object to which this object
 	 * points
+	 *
+	 * @param $id int
 	 */
 	function setLocation( $id ) {
 		$this->mCurId = $id;
 	}
 
+	/**
+	 * @return string|false
+	 */
 	function getText() {
 		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'cur', array( 'cur_text' ), array( 'cur_id' => $this->mCurId ) );
@@ -335,6 +375,11 @@ class DiffHistoryBlob implements HistoryBlob {
 		}
 	}
 
+	/**
+	 * @throws MWException
+	 * @param $text string
+	 * @return int
+	 */
 	function addItem( $text ) {
 		if ( $this->mFrozen ) {
 			throw new MWException( __METHOD__.": Cannot add more items after sleep/wakeup" );
@@ -346,18 +391,31 @@ class DiffHistoryBlob implements HistoryBlob {
 		return count( $this->mItems ) - 1;
 	}
 
+	/**
+	 * @param $key string
+	 * @return string
+	 */
 	function getItem( $key ) {
 		return $this->mItems[$key];
 	}
 
+	/**
+	 * @param $text string
+	 */
 	function setText( $text ) {
 		$this->mDefaultKey = $this->addItem( $text );
 	}
 
+	/**
+	 * @return string
+	 */
 	function getText() {
 		return $this->getItem( $this->mDefaultKey );
 	}
 
+	/**
+	 * @throws MWException
+	 */
 	function compress() {
 		if ( !function_exists( 'xdiff_string_rabdiff' ) ){ 
 			throw new MWException( "Need xdiff 1.5+ support to write DiffHistoryBlob\n" );
@@ -430,6 +488,11 @@ class DiffHistoryBlob implements HistoryBlob {
 		}
 	}
 
+	/**
+	 * @param $t1
+	 * @param $t2
+	 * @return string
+	 */
 	function diff( $t1, $t2 ) {
 		# Need to do a null concatenation with warnings off, due to bugs in the current version of xdiff
 		# "String is not zero-terminated"
@@ -439,6 +502,11 @@ class DiffHistoryBlob implements HistoryBlob {
 		return $diff;
 	}
 
+	/**
+	 * @param $base
+	 * @param $diff
+	 * @return bool|string
+	 */
 	function patch( $base, $diff ) {
 		if ( function_exists( 'xdiff_string_bpatch' ) ) {
 			wfSuppressWarnings();
@@ -509,6 +577,9 @@ class DiffHistoryBlob implements HistoryBlob {
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	function __sleep() {
 		$this->compress();
 		if ( !count( $this->mItems ) ) {
@@ -574,6 +645,8 @@ class DiffHistoryBlob implements HistoryBlob {
 	/**
 	 * Helper function for compression jobs
 	 * Returns true until the object is "full" and ready to be committed
+	 *
+	 * @return bool
 	 */
 	function isHappy() {
 		return $this->mSize < $this->mMaxSize 

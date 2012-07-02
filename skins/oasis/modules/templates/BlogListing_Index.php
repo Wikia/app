@@ -47,7 +47,7 @@
 ?>
 	</ul>
 	<?php  // only display more link for the bloglistingbox
-		if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) {
+		if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false && !empty($seeMoreUrl)) {
 			echo XML::element('a', array( 'href'=> $seeMoreUrl, 'class' => 'more'), wfMsg('oasis-more'));
 		}
 		if (isset($pager)) {

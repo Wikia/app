@@ -1,23 +1,25 @@
 <?php
-# Copyright (C) 2004 Brion Vibber <brion@pobox.com>
-# http://www.mediawiki.org/
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-# http://www.gnu.org/copyleft/gpl.html
-
 /**
+ * Oracle search engine
+ *
+ * Copyright © 2004 Brion Vibber <brion@pobox.com>
+ * http://www.mediawiki.org/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @file
  * @ingroup Search
  */
@@ -54,9 +56,13 @@ class SearchOracle extends SearchEngine {
 									'TRSYN' => 1, 
 									'TT' => 1, 
 									'WITHIN' => 1);
-	
+
+	/**
+	 * Creates an instance of this class
+	 * @param $db DatabasePostgres: database object
+	 */
 	function __construct($db) {
-		$this->db = $db;
+		parent::__construct( $db );
 	}
 
 	/**
@@ -117,18 +123,22 @@ class SearchOracle extends SearchEngine {
 
 	/**
 	 * Return a LIMIT clause to limit results on the query.
+	 *
+	 * @param string
+	 *
 	 * @return String
 	 */
-	function queryLimit($sql) {
+	function queryLimit( $sql ) {
 		return $this->db->limitResult($sql, $this->limit, $this->offset);
 	}
 
 	/**
 	 * Does not do anything for generic search engine
 	 * subclasses may define this though
+	 *
 	 * @return String
 	 */
-	function queryRanking($filteredTerm, $fulltext) {
+	function queryRanking( $filteredTerm, $fulltext ) {
 		return ' ORDER BY score(1)';
 	}
 
@@ -180,7 +190,7 @@ class SearchOracle extends SearchEngine {
 		$lc = SearchEngine::legalSearchChars();
 		$this->searchTerms = array();
 
-		# FIXME: This doesn't handle parenthetical expressions.
+		# @todo FIXME: This doesn't handle parenthetical expressions.
 		$m = array();
 		$searchon = '';
 		if (preg_match_all('/([-+<>~]?)(([' . $lc . ']+)(\*?)|"[^"]*")/',
@@ -240,16 +250,24 @@ class SearchOracle extends SearchEngine {
 				'si_title' => $title,
 				'si_text' => $text
 			), 'SearchOracle::update' );
-		$dbw->query("CALL ctx_ddl.sync_index('si_text_idx')");
-		$dbw->query("CALL ctx_ddl.sync_index('si_title_idx')");
+
+		// Sync the index
+		// We need to specify the DB name (i.e. user/schema) here so that 
+		// it can work from the installer, where
+		//     ALTER SESSION SET CURRENT_SCHEMA = ...
+		// was used.
+		$dbw->query( "CALL ctx_ddl.sync_index(" . 
+			$dbw->addQuotes( $dbw->getDBname() . '.' . $dbw->tableName( 'si_text_idx', 'raw' ) ) . ")" );
+		$dbw->query( "CALL ctx_ddl.sync_index(" . 
+			$dbw->addQuotes( $dbw->getDBname() . '.' . $dbw->tableName( 'si_title_idx', 'raw' ) ) . ")" );
 	}
 
 	/**
 	 * Update a search index record's title only.
 	 * Title should be pre-processed.
 	 *
-	 * @param int $id
-	 * @param string $title
+	 * @param $id Integer
+	 * @param $title String
 	 */
 	function updateTitle($id, $title) {
 		$dbw = wfGetDB(DB_MASTER);

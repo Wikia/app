@@ -2,8 +2,8 @@
 
 class SpecialCreateWikiaQuizArticle extends SpecialPage {
 
-	function SpecialCreateWikiaQuizArticle() {
-		SpecialPage::SpecialPage("CreateQuizArticle", "", false);
+	function __construct() {
+		parent::__construct("CreateQuizArticle", "", false);
 	}
 
 	public function execute ($subpage) {

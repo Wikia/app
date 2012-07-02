@@ -4,9 +4,9 @@ Data Transfer is an extension to MediaWiki that both exports XML
 based on the current contents of pages in a wiki, and imports pages
 in both XML format (using the same structure as the XML export) and
 CSV format.  Both the XML and CSV formats use template calls, and
-the fields within them, to define fields. Any text that is not
-within a template calls gets placed into one or more "free text"
-fields.
+the fields within them, to define the data structure. Any text that
+is not within a template calls gets placed into one or more "free
+text" fields.
 
 For more information on Data Transfer, see the extension
 homepage at

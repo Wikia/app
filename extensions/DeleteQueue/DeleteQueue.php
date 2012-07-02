@@ -4,7 +4,9 @@ if ( ! defined( 'MEDIAWIKI' ) )
 
 /**#@+
  * Creates a queue-based system for managing deletion.
- * @addtogroup Extensions
+ *
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:DeletionQueue Documentation
  *
@@ -18,15 +20,14 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'DeleteQueue',
 	'version'        => '0.1.1',
 	'author'         => 'Andrew Garrett',
-	'description'    => 'Creates a queue-based system for managing deletion.',
 	'descriptionmsg' => 'deletequeue-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:DeleteQueue',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:DeleteQueue',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionMessagesFiles['DeleteQueue'] = $dir . 'DeleteQueue.i18n.php';
-$wgExtensionAliasesFiles['DeleteQueue'] = $dir . 'DeleteQueue.alias.php';
+$wgExtensionMessagesFiles['DeleteQueueAliases'] = $dir . 'DeleteQueue.alias.php';
 
 $wgHooks['SkinTemplateTabs'][] = 'DeleteQueueHooks::onSkinTemplateTabs';
 $wgHooks['UnknownAction'][] = 'DeleteQueueHooks::onUnknownAction';

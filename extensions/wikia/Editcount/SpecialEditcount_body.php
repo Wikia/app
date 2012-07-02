@@ -6,10 +6,9 @@ class Editcount extends SpecialPage {
 	/**
 	 * Constructor
 	 */
-	function Editcount() {
-		SpecialPage::SpecialPage( 'Editcount' );
+	function __construct() {
+		parent::__construct( 'Editcount' );
 		$this->includable( true );
-		wfLoadExtensionMessages( 'Editcount' );
 	}
 
 	/**
@@ -34,14 +33,14 @@ class Editcount extends SpecialPage {
 
 		$username = Title::newFromText( $username );
 		$username = is_object( $username ) ? $username->getText() : '';
-		
+
 		//FB#1040: block requests for 'Default' username, using a configurable array, could be useful for further blocks
 		if ( in_array( strtolower( $username ), $wgSpecialEditCountExludedUsernames ) ) {
 			$uid = 0;
 		} else {
 			$uid = User::idFromName( $username );
 		}
-		
+
 		if ( $this->including() ) {
 			if ( !isset($namespace) ) {
 				if ($uid != 0) {
@@ -201,7 +200,7 @@ class Editcount extends SpecialPage {
 
 		return $res;
 	}
-	
+
 }
 
 class EditcountHTML extends Editcount {

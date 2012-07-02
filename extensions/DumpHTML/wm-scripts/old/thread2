@@ -1,6 +1,0 @@
-#!/bin/bash
-. $bindir/functions
-
-dolang en -s 694697 -e 2918581
-
-

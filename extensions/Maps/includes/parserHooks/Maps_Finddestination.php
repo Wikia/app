@@ -14,23 +14,21 @@
 class MapsFinddestination extends ParserHook {
 	
 	/**
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 */
 	public static function staticMagic( array &$magicWords, $langCode ) {
-		$className = __CLASS__;
-		$instance = new $className();
+		$instance = new self;
 		return $instance->magic( $magicWords, $langCode );
 	}
 	
 	/**
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 */	
-	public static function staticInit( Parser &$wgParser ) {
-		$className = __CLASS__;
-		$instance = new $className();
-		return $instance->init( $wgParser );
+	public static function staticInit( Parser &$parser ) {
+		$instance = new self;
+		return $instance->init( $parser );
 	}	
 	
 	/**
@@ -62,14 +60,17 @@ class MapsFinddestination extends ParserHook {
 		$params['location'] = new Parameter( 'location' );
 		$params['location']->addCriteria( new CriterionIsLocation() );
 		$params['location']->addDependencies( 'mappingservice', 'geoservice' );
+		$params['location']->setMessage( 'maps-finddestination-par-location' );
 		
 		$params['bearing'] = new Parameter(
 			'bearing',
 			Parameter::TYPE_FLOAT
 		);
+		$params['bearing']->setMessage( 'maps-finddestination-par-bearing' );
 		
 		$params['distance'] = new Parameter( 'distance' );
 		$params['distance']->addCriteria( new CriterionIsDistance() );
+		$params['distance']->setMessage( 'maps-finddestination-par-distance' );
 		// TODO: manipulate to distance object
 		
 		$params['mappingservice'] = new Parameter(
@@ -82,6 +83,7 @@ class MapsFinddestination extends ParserHook {
 			)
 		);
 		$params['mappingservice']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
+		$params['mappingservice']->setMessage( 'maps-finddestination-par-mappingservice' );
 		
 		$params['geoservice'] = new Parameter(
 			'geoservice', 
@@ -93,12 +95,14 @@ class MapsFinddestination extends ParserHook {
 			)
 		);
 		$params['geoservice']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
-
+		$params['geoservice']->setMessage( 'maps-finddestination-par-geoservice' );
+		
 		$params['allowcoordinates'] = new Parameter(
 			'allowcoordinates', 
 			Parameter::TYPE_BOOLEAN,
 			$egMapsAllowCoordsGeocoding
 		);			
+		$params['allowcoordinates']->setMessage( 'maps-finddestination-par-allowcoordinates' );
 		
 		$params['format'] = new Parameter(
 			'format',
@@ -110,12 +114,14 @@ class MapsFinddestination extends ParserHook {
 			)			
 		);
 		$params['format']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
+		$params['format']->setMessage( 'maps-finddestination-par-format' );
 		
 		$params['directional'] = new Parameter(
 			'directional',
 			Parameter::TYPE_BOOLEAN,
-			$egMapsCoordinateDirectional			
+			$egMapsCoordinateDirectional
 		);			
+		$params['directional']->setMessage( 'maps-finddestination-par-directional' );
 		
 		return $params;
 	}
@@ -170,5 +176,14 @@ class MapsFinddestination extends ParserHook {
 			
 		return $output;
 	}
+
+	/**
+	 * @see ParserHook::getMessage()
+	 * 
+	 * @since 1.0
+	 */
+	public function getMessage() {
+		return 'maps-finddestination-description';
+	}	
 	
 }

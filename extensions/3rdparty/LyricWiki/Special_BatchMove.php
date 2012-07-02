@@ -57,15 +57,13 @@ $wgSpecialPages['Batchmove'] = 'Batchmove';
 
 class Batchmove extends SpecialPage{
 
-	public function Batchmove(){
-		SpecialPage::SpecialPage('Batchmove');
+	public function __construct(){
+		parent::__construct('Batchmove');
 	}
-	
+
 	function execute() {
 		global $wgOut;
 		global $wgRequest, $wgUser;
-
-		wfLoadExtensionMessages('BatchMove');
 
 		// get the parameters
 		$from = trim($wgRequest->getText( 'from' ));
@@ -150,29 +148,29 @@ function doBatchMove( $from, $to, $reason, $fake=false )
 			'USE INDEX' => 'name_title',
 		)
 	);
-	
-	# make sure to log all actions of this 
+
+	# make sure to log all actions of this
 	$results = "";
 	$results .= "From: $from<br/>";
 	$results .= wfMsg("batchmove-header",$from,$to)."<br/>";
-	
+
 	# need to track pages so that they can be purged after all pages have been updated
 	$pagesToPurge = Array();
-	
+
 	while( $s = $dbr->fetchObject( $res ) )
 	{
 		#$results .= "<hr>";
 		$ot = Title::makeTitle( $s->page_namespace, $s->page_title );
-	
+
 		$titleRegexp = "/^$fromRegexp(|:[^\]]*)$/";
 		if( preg_match( $titleRegexp, $ot->getText(), $matches ) )
 		{
 			$newTitle = preg_replace("/^$fromRegexp/",$to,$ot->getText());
 			$nt = Title::newFromText( $newTitle );
-			
+
 			# keep track of pages that need to be purged
 			array_push( $pagesToPurge, $nt );
-			
+
 			# replace text strings in the article in this manner => s/$from/$to/
 			$ot_article = new Article( $ot );
 			$ot_text = $ot_article->getContent();
@@ -183,7 +181,7 @@ function doBatchMove( $from, $to, $reason, $fake=false )
 				$nt_text = $nt_article->getContent();
 				$nt_redirect = !( strpos( $nt_text, "#REDIRECT" ) === false );
 			}
-			
+
 			# update page contents
 			if( !$ot_redirect )
 			{
@@ -205,11 +203,11 @@ function doBatchMove( $from, $to, $reason, $fake=false )
 				# add merge banner to new article if it does not already exist
 				if( strpos( $ot_text, "{{mergeto|".$nt->getText()."}}" ) === FALSE )
 					$ot_text = "{{mergeto|".$nt->getText()."}}\n".$ot_text;
-					
+
 				if( $nt->exists() and strpos( $nt_text, "{{mergefrom|".$ot->getText()."}}" ) === FALSE )
 				{
 					$nt_text = "{{mergefrom|".$ot->getText()."}}\n".$nt_text;
-				
+
 					$results .= wfMsg("batchmove-marked",$nt->getText())."<br/>";
 				}
 
@@ -228,7 +226,7 @@ function doBatchMove( $from, $to, $reason, $fake=false )
 				{
 					$ot_article->doEdit( $ot_text, $reason, EDIT_UPDATE | EDIT_DEFER_UPDATES );
 				}
-				
+
 				# move page
 				if( $ot_redirect )
 				{
@@ -240,7 +238,7 @@ function doBatchMove( $from, $to, $reason, $fake=false )
 					{
 						# be nice and report what has been done.
 						$results .= wfMsg("batchmove-success",$ot->getText(), $nt->getText() )."<br/>";
-						
+
 						# move talk pages if the origional page was moved
 						$ott = $ot->getTalkPage();
 						if( $ott->exists() )
@@ -273,12 +271,12 @@ function doBatchMove( $from, $to, $reason, $fake=false )
 	}
 
 	$dbr->freeResult($res);
-	
+
 	# purge pages after everything has been moved
 	foreach( $pagesToPurge as $title )
 	{
 		$title->invalidateCache();
 	}
-	
+
 	return sandboxParse($results);
 }

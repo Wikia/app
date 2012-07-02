@@ -5,9 +5,6 @@
  * Pushes an item to Facebook News Feed when the user rates an article.
  */
 
-global $wgExtensionMessagesFiles;
-$pushDir = dirname(__FILE__) . '/';
-
 
 class FBPush_OnRateArticle extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnRateArticle'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
@@ -21,13 +18,6 @@ class FBPush_OnRateArticle extends FBConnectPushEvent {
 		wfProfileOut(__METHOD__);
 	}
 	
-	public function loadMsg() {
-		wfProfileIn(__METHOD__);
-				
-		wfLoadExtensionMessages('FBPush_OnRateArticle');
-		
-		wfProfileOut(__METHOD__);
-	}
 	
 	public function onArticleAfterVote($user_id, &$page, $vote) {
 		global $wgSitename;

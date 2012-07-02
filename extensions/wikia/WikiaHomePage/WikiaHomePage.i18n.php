@@ -1,9 +1,9 @@
 <?php
 /**
-* Internationalisation file for the WikiaDotCom extension.
-*
-* @addtogroup Languages
-*/
+ * Internationalisation file for the WikiaDotCom extension.
+ *
+ * @addtogroup Languages
+ */
 
 $messages = array();
 
@@ -12,7 +12,7 @@ $messages['en'] = array(
 	'wikiahome-page-header-subheading' => 'Share what you know and love.',
 	'wikiahome-page-header-create-wiki-button' => 'Start a Wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki',
-		
+
 	'wikiahome-visualisation-remix-mixitup' => 'Mix it up!',
 	'wikiahome-visualisation-remix-mixituptext' => 'Thousands of wikis are at your fingertips. Remix to explore even more wikis.',
 	'wikiahome-visualisation-remix-button' => 'Remix',
@@ -24,9 +24,12 @@ $messages['en'] = array(
 	'wikiahome-stats-communities' => 'Communities',
 	'wikiahome-stats-totalpages' => 'Total Pages',
 
+	'wikia-home-page-preview' => 'Preview',
+	'wikia-home-page-visit' => 'Visit',
+
 	'wikia-home-parse-source-empty-exception' => 'The MediaWiki message is empty',
 	'wikia-home-parse-vertical-invalid-data' => 'Invalid vertical data',
-	'wikia-home-parse-source-invalid-percentage' => 'Invalid vertical\'s percentage',
+	'wikia-home-parse-source-invalid-slots-number' => 'Invalid vertical\'s slot number',
 	'wikia-home-parse-wiki-too-few-parameters' => 'Invalid wiki data - more parameters required',
 
 	'wikiahome-hubs-videogames-heading' => 'Video Games',
@@ -63,11 +66,15 @@ $messages['en'] = array(
 	'wikiahome-community-column2-heading' => 'Innovation at Wikia',
 	'wikiahome-community-column2-creative' => 'See how Wikia is making a dent in the mobile universe with its new mobile website and apps like Game Guides and LyricWiki lyrics.',
 	'wikiahome-community-column3-heading' => 'Follow Us',
-	'wikiahome-community-wikia-blog' => 'Wikia Blog',
-	'wikiahome-community-twitter' => 'Twitter',
-	'wikiahome-community-facebook' => 'Facebook',
-	'wikiahome-community-plus' => 'Google+',
-	
+	'wikiahome-community-social-wikia-blog' => 'Wikia Blog',
+	'wikiahome-community-social-wikia-blog-link' => 'http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
+	'wikiahome-community-social-twitter' => 'Twitter',
+	'wikiahome-community-social-twitter-link' => 'http://twitter.com/#!/wikia',
+	'wikiahome-community-social-facebook' => 'Facebook',
+	'wikiahome-community-social-facebook-link' => 'http://www.facebook.com/wikia',
+	'wikiahome-community-social-googleplus' => 'Google+',
+	'wikiahome-community-social-googleplus-link' => 'http://gplus.to/wikia',
+
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
 *[http://www.wikia.com/About_Us About Us]
 *[http://www.wikia.com/Special:Contact Contact Wikia]
@@ -75,6 +82,7 @@ $messages['en'] = array(
 *[http://www.wikia.com/Press Press]',
 	'wikiahome-footer-get-started-heading' => '===Get Started===',
 	'wikiahome-footer-get-started-creative' => 'Find your community,<br />start something epic.',
+	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki',
 	'wikiahome-footer-follow-us' => '===Follow Us===
 *[http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog Wikia Blog]
 *[http://www.facebook.com/Wikia Facebook]
@@ -89,11 +97,169 @@ $messages['en'] = array(
 *[http://www.wikia.com/Mobile/GameGuides Video Game Apps]
 *[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]',
-    'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Advertise]===
+	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Advertise]===
 *[http://mediakit.wikia.com/Solutions/Audience Audience]
 *[http://mediakit.wikia.com/Solutions Solutions]
 *[http://mediakit.wikia.com/Advertising-Products Ad products]
+*[http://www.wikia.com/Advertising/Self_Service Self Service]',
+
+	'wikia-home-page-special-title' => 'Wikia Home Page -- staff tool',
+	'wikia-home-page-special-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
+
+	'wikia-home-page-special-wikis-in-slots-heading' => 'Slots setup',
+	'wikia-home-page-special-wikis-in-slots-total' => 'Total amount of slots: ',
+	'wikia-hone-page-special-wikis-in-slots-change-reason' => 'Wikia Home Page Staff Tool change',
+
+	'wikia-home-page-special-wikis-in-slots-success' => 'Numbers slots has been changed.',
+
+	'wikia-home-page-special-verticals-proportions' => 'Number of wikis for each vertical in WV',
+	'wikia-home-page-special-hot-new-numbers' => 'Number of hot/new wikis in WV',
+
+	'wikia-home-page-special-slot-type-hot-wikis' => 'Number of Hot wikis',
+	'wikia-home-page-special-slot-type-new-wikis' => 'Number of New wikis',
+
+	'wikia-home-page-special-error-invalid-total-no-of-slots' => "Invalid slots amount in total ($1). Please make sure sum of each hub's slots equals total amount of slots ($2).",
+	'wikia-home-page-special-error-exceeded-total-no-of-slots' => "Invalid slots amount for new and hot wikis. Please make sure neither hot nor new slots exceed total amount of slots ($1).",
+	'wikia-home-page-special-error-negative-slots-number-not-allowed' => 'Negative number of slots is not allowed',
+	'wikia-home-page-special-error-wikifactory-failure' => "Something wrong happened during saving the variables all of them wasn't saved or they were saved partly. Try again.",
+
+	'wikia-home-page-special-change-button' => 'Change',
+	'wikia-home-page-hot' => 'Hot',
+	'wikia-home-page-new' => 'New',
+
+	'wikia-home-parse-exception-empty-data-from-database' => 'There were no data pulled from database. Database table is empty or all wikis are blocked.',
+	'wikia-home-parse-exception-read-only' => 'Our databases are in read-only mode.',
+
+	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Page|'''$1''' Pages}}",
+	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' Photo|'''$1''' Photos}}",
+	'wikiahome-preview-stats-videos' => "{{PLURAL:$1|'''1''' Video|'''$1''' Videos}}",
+	'wikiahome-preview-user-edits' => "{{PLURAL:$1|1 Edit|$1 Edits}}",
+	'wikiahome-preview-description-heading' => "$1",
+	'wikiahome-preview-admins-heading' => 'Admins',
+	'wikiahome-preview-contributors-heading' => 'Top Contributors',
+	'wikiahome-preview-user-profile-link-label' => 'User Profile',
+	'wikiahome-preview-user-contributions-link-label' => 'Contributions',
+	'wikiahome-preview-go-to-wiki-label' => 'Visit Wiki',
+	'wikiahome-preview-error' => 'Interstitial error',
+	'wikiahome-preview-user-member-since' => "Member since $1",
+
+	'wikiahome-footer-interlang-flag-class' => 'de',
+	'wikiahome-footer-interlang-flag-href' => 'http://de.wikia.com',
+	'wikiahome-footer-interlang-flag-title' => 'Wikia Deutschland',
+
+	'wikiahome-import-script-no-description' => 'No description given',
+);
+
+
+$messages['de'] = array(
+	'wikiahome-page-header-heading' => 'Erschaffe. Mach mit. Sei kreativ.',
+	'wikiahome-page-header-subheading' => 'Teile, was du kennst und liebst.',
+	'wikiahome-page-header-create-wiki-button' => 'Starte ein Wiki',
+	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=de',
+	'wikiahome-visualisation-remix-mixitup' => 'Mix it up!',
+	'wikiahome-visualisation-remix-mixituptext' => 'Tausende von Wikis auf einen Klick. Drücke auf Remix, um noch viel mehr Wikis zu erkunden.',
+	'wikiahome-visualisation-remix-button' => 'Remix',
+	'wikiahome-stats-heading' => 'Interaktive Zusammenarbeit',
+	'wikiahome-stats-content' => 'Wir messen die Medienrevolution.',
+	'wikiahome-stats-visitors' => 'Monatliche Besucher',
+	'wikiahome-stats-edits' => 'Änderungen heute',
+	'wikiahome-stats-communities' => 'Communities',
+	'wikiahome-stats-totalpages' => 'Seiten gesamt',
+
+	'wikia-home-page-preview' => 'Vorschau',
+	'wikia-home-page-visit' => 'Aufrufen',
+
+	'wikia-home-parse-source-empty-exception' => 'The MediaWiki message is empty',
+	'wikia-home-parse-vertical-invalid-data' => 'Invalid vertical data',
+	'wikia-home-parse-source-invalid-percentage' => 'Invalid vertical\'s percentage',
+	'wikia-home-parse-wiki-too-few-parameters' => 'Invalid wiki data - more parameters required',
+
+	'wikiahome-hubs-videogames-heading' => 'Videospiele',
+	'wikiahome-hubs-videogames-url' => 'http://de.wikia.com/Videospiele',
+	'wikiahome-hubs-videogames-creative' => 'Tauche ein in die Welt der Videospiele. Beim Thema Gaming ist Wikia die erste Adresse.',
+	'wikiahome-hubs-videogames-more-heading' => 'Weiteres in Videospiele',
+	'wikiahome-hubs-videogames-more-list' => '
+*[http://de.wikia.com/Videospiele Spieleführer]
+*[http://de.wikia.com/Videospiele Neuigkeiten]
+*[http://de.wikia.com/Videospiele Das Beste aus 2012]',
+
+	'wikiahome-hubs-entertainment-heading' => 'Entertainment',
+	'wikiahome-hubs-entertainment-url' => 'http://de.wikia.com/Entertainment',
+	'wikiahome-hubs-entertainment-creative' => 'Deine tägliche Entertainment-Dosis, direkt von den Communities, die wissen, wovon sie sprechen.',
+	'wikiahome-hubs-entertainment-more-heading' => 'Weiteres in Entertainment',
+	'wikiahome-hubs-entertainment-more-list' => '
+*[http://de.wikia.com/Filme Filme]
+*[http://de.wikia.com/TV Serien]
+*[http://de.wikia.com/Bücher Bücher]',
+
+	'wikiahome-hubs-lifestyle-heading' => 'Lifestyle und mehr',
+	'wikiahome-hubs-lifestyle-url' => 'http://de.wikia.com/Lifestyle',
+	'wikiahome-hubs-lifestyle-creative' => 'Entdecke Communities, die sich leidenschaftlich mit allen Themen auseinandersetzen und ihr Wissen teilen.',
+	'wikiahome-hubs-lifestyle-more-heading' => 'Weiteres in Lifestyle und mehr',
+	'wikiahome-hubs-lifestyle-more-list' => '
+*[http://de.wikia.com/Rezepte Essen und Trinken]
+*[http://de.wikia.com/Lifestyle Empfehlungen]
+*[http://de.wikia.com/Sports Sport]',
+
+	'wikiahome-community-column1-heading' => 'Rund um die Community',
+	'wikiahome-community-column1-creative' => 'Alles was du brauchst, um eine Community in Wikia zu starten und sie weiter wachsen zu lassen. Neuigkeiten, Tipps und hilfreiche Menschen.',
+	'wikiahome-community-column2-heading' => 'Wikia ist innovativ',
+	'wikiahome-community-column2-creative' => 'Wikia macht einen gewaltigen Schritt voran im mobilen Umfeld mit der neuen mobilen Website und Apps wie Game Guides und LyricsWiki.',
+	'wikiahome-community-column3-heading' => 'Folge uns',
+	'wikiahome-community-social-wikia-blog' => 'Wikia Blog',
+	'wikiahome-community-social-wikia-blog-link' => 'http://de.community.wikia.com/wiki/Blog%3AWikia_Deutschland_News',
+	'wikiahome-community-social-twitter' => 'Twitter',
+	'wikiahome-community-social-twitter-link' => 'http://twitter.com/wikia_de',
+	'wikiahome-community-social-facebook' => 'Facebook',
+	'wikiahome-community-social-facebook-link' => 'http://www.facebook.com/wikia.de',
+	'wikiahome-community-social-googleplus' => '',
+	'wikiahome-community-social-googleplus-link' => '',
+
+	'wikiahome-footer-wikiainc' => '===Wikia===
+*[http://de.wikia.com/%C3%9Cber_Wikia Über Wikia]
+*[http://de.wikia.com/Spezial:Kontakt Kontakt zu Wikia]
+*[http://de.wikia.com/Stellen Stellenangebote]
+*[http://de.wikia.com/Presse Presse]',
+	'wikiahome-footer-get-started-heading' => '===Leg los===',
+	'wikiahome-footer-get-started-creative' => 'Gründe eine Community,<br />starte etwas Großes.',
+	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=de',
+	'wikiahome-footer-follow-us' => '===Folge uns===
+*[http://de.community.wikia.com/wiki/Blog%3AWikia_Deutschland_News Wikia Blog]
+*[http://www.facebook.com/wikia.de Facebook]
+*[http://twitter.com/wikia_de Twitter]',
+	'wikiahome-footer-community' => '===Community===
+*[http://de.community.wikia.com Community-Wiki]
+*[http://de.community.wikia.com/wiki/Admin-Bereich:Hauptseite Gründer- und Admins ]
+*[http://de.wikia.com/wiki/Spezial:Kontakt Wikia-Support]
+*[http://hilfe.wikia.com Hilfe]',
+	'wikiahome-footer-everywhere' => '===Wikia unterwegse===
+*[http://de.wikia.com/Mobil Wikia mobil]
+*[http://de.wikia.com/Mobil/GameGuides Videospiele-Apps]
+*[http://de.wikia.com/Mobil/PhotoPop Entertainment-Apps]
+*[http://api.wikia.com API (en)]',
+	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Auf Wikia werben (en)]===
+*[http://mediakit.wikia.com/Solutions/Audience Zielgruppe]
+*[http://mediakit.wikia.com/Solutions Lösungen]
+*[http://mediakit.wikia.com/Advertising-Products Produkte]
 *[http://www.wikia.com/Special:SelfServiceAdvertisingSplash Self Service]',
+
+	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Seite|'''$1''' Seiten }}",
+	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' Foto|'''$1''' Fotos}}",
+	'wikiahome-preview-stats-videos' => "{{PLURAL:$1|'''1''' Video|'''$1''' Videos}}",
+	'wikiahome-preview-user-edits' => "{{PLURAL:$1|Bearbeitung|Bearbeitungen}}",
+	'wikiahome-preview-description-heading' => "$1",
+	'wikiahome-preview-admins-heading' => 'Admins',
+	'wikiahome-preview-contributors-heading' => 'Top Anbieter',
+	'wikiahome-preview-user-profile-link-label' => 'User Profil',
+	'wikiahome-preview-user-contributions-link-label' => 'Bearbeitungen',
+	'wikiahome-preview-go-to-wiki-label' => 'Zeige die Wiki',
+
+	'wikiahome-preview-error' => 'Interstitial error',
+	'wikiahome-preview-user-member-since' => "Mitglied seit $1",
+
+	'wikiahome-footer-interlang-flag-class' => 'us',
+	'wikiahome-footer-interlang-flag-href' => 'http://www.wikia.com',
+	'wikiahome-footer-interlang-flag-title' => 'Wikia Inc.'
 );
 
 $messages['qqq'] = array(
@@ -102,6 +268,24 @@ $messages['qqq'] = array(
 	'wikia-home-parse-vertical-invalid-data' => 'Error while parsing a vertical data',
 	'wikia-home-parse-source-invalid-percentage' => 'Error: vertical\'s percentage is invalid < or > than 100',
 	'wikia-home-parse-wiki-too-few-parameters' => 'Error while parsing a wiki data',
-	
+
 	'wikiahome-hubs-videogames-heading' => 'Section header for Videogames section',
+
+	'wikia-home-page-special-title' => 'Title of Wikia Home Page special page',
+	'wikia-home-page-special-wrong-rights' => "A message displayed to a user if he doesn't have rights to use this special page",
+
+	'wikia-home-page-special-error-invalid-total-no-of-slots' => "An error which is displayed when set numbers in total doesn't equal required number of all slots; first parameter is the sum of entered numbers and second one is the required number",
+	'wikiahome-preview-stats-page' => "Number of pages on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
+	'wikiahome-preview-stats-photos' => "Number of photos on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
+	'wikiahome-preview-stats-videos' => "Number of videos on a wiki.  Could be singular or plural.  Please bold the number via wikitext or html.",
+	'wikiahome-preview-user-edits' => "Number of videos on a wiki.  Could be singular or plural.",
+	'wikiahome-preview-description-heading' => "Welcome heading for the wiki description.  $1 is the name of the wiki.  Assume the word 'Wiki' is already attached to the $1.",
+	'wikiahome-preview-admins-heading' => 'Heading for admin list',
+	'wikiahome-preview-contributors-heading' => 'Heading for top contributors',
+	'wikiahome-preview-user-profile-link-label' => 'Generic link label that navigates to user profile page.',
+	'wikiahome-preview-user-contributions-link-label' => 'Generic link label that navigates to user contributions',
+	'wikiahome-preview-go-to-wiki-label' => 'Generic link label that navigates to a wiki.',
+	'wikiahome-preview-error' => 'Interstitial error',
+	'wikiahome-preview-user-member-since' => 'Member since date',
+	'wikiahome-import-script-no-description' => 'This message should be used only when an edge case occurs and there is no wiki description on wikis list used in importing process. This message will be place in wiki description in Interstitial if original description is not provided.',
 );

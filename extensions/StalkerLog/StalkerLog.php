@@ -17,7 +17,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'StalkerLog',
 	'version'        => '0.6',
 	'url'            => 'http://mediawiki.org/wiki/Extension:StalkerLog',
-	'description'    => 'Adds an entry to [[Special:Log]] on user login/logout',
 	'author'         => '[mailto:innocentkiller@gmail.com Chad Horohoe]',
 	'descriptionmsg' => 'stalkerlog-desc',
 );
@@ -27,6 +26,7 @@ $wgExtensionMessagesFiles['stalkerlog'] = dirname(__FILE__) . '/' . 'StalkerLog.
 $wgAdditionalRights[] = 'stalkerlog-view-log';
 $wgGroupPermissions['*']['stalkerlog-view-log'] = true;
 $wgHooks['UserLoginComplete'][] = 'wfStalkerLogin';
+$wgHooks['UserLogoutComplete'][] = 'wfStalkerLogout';
 
 # Log setup
 $wgLogTypes[] = 'stalkerlog';
@@ -34,16 +34,11 @@ $wgLogHeaders['stalkerlog'] = 'stalkerlog-log-text';
 $wgLogNames['stalkerlog'] = 'stalkerlog-log-type';
 $wgLogRestrictions['stalkerlog'] = 'stalkerlog-view-log';
 $wgLogActions['stalkerlog/login'] = 'stalkerlog-log-login';
-
-# 1.13+ setup only
-if ( version_compare( $wgVersion, '1.13', '>=' ) ) {
-	$wgHooks['UserLogoutComplete'][] = 'wfStalkerLogout';
-	$wgLogActions['stalkerlog/logout'] = 'stalkerlog-log-logout';
-}
+$wgLogActions['stalkerlog/logout'] = 'stalkerlog-log-logout';
 
 # Login hook function
 function wfStalkerLogin( &$user ) {
-	wfLoadExtensionMessages('stalkerlog');
+	
 	$log = new LogPage( 'stalkerlog', false);
 	$log->addEntry( 'login', $user->getUserPage(), '', null, $user );
 	return true;
@@ -51,7 +46,7 @@ function wfStalkerLogin( &$user ) {
 
 # Logout hook function
 function wfStalkerLogout( &$user, &$inject_html, $old_name ) {
-	wfLoadExtensionMessages('stalkerlog');
+	
 	$log = new LogPage( 'stalkerlog', false);
 	$log->addEntry( 'logout', Title::newFromText( NS_USER, $old_name ), '', null, User::newFromName( $old_name ) );
 	return true;

@@ -21,8 +21,6 @@ class WikiaQuizArticle extends Article {
 		global $wgOut, $wgTitle, $wgRequest;
 		wfProfileIn(__METHOD__);
 
-		wfLoadExtensionMessages('WikiaQuiz');
-
 		// let MW handle basic stuff
 		parent::view();
 

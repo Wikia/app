@@ -9,20 +9,25 @@
  */
 
 /**
- * Contains class with job for moving translation pages.
+ * Contains class with job for moving translation pages. Used together with PageTranslationMovePage class.
  *
  * @ingroup PageTranslation JobQueue
- * @todo Get rid of direct reference to $wgMemc.
  */
 class MoveJob extends Job {
-	public static function newJob( Title $source, Title $target, $base, /*User*/ $performer ) {
-		global $wgTranslateFuzzyBotName;
 
+	/**
+	 * @param $source Title
+	 * @param $target Title
+	 * @param $params array, should include base-source and base-target
+	 * @param $performer
+	 * @return MoveJob
+	 */
+	public static function newJob( Title $source, Title $target, array $params, /*User*/ $performer ) {
 		$job = new self( $source );
-		$job->setUser( $wgTranslateFuzzyBotName );
+		$job->setUser( FuzzyBot::getUser() );
 		$job->setTarget( $target->getPrefixedText() );
-		$job->setSummary( wfMsgForContent( 'pt-movepage-logreason', $target->getPrefixedText() ) );
-		$job->setBase( $base );
+		$job->setSummary( wfMsgForContent( 'pt-movepage-logreason', $params['base-source'] ) );
+		$job->setParams( $params );
 		$job->setPerformer( $performer );
 		$job->lock();
 		return $job;
@@ -41,7 +46,7 @@ class MoveJob extends Job {
 		$user    = $this->getUser();
 		$summary = $this->getSummary();
 		$target  = $this->getTarget();
-		$base    = $this->getBase();
+		$base    = $this->params['base-source'];
 
 		PageTranslationHooks::$allowTargetEdit = true;
 		$oldUser = $wgUser;
@@ -66,21 +71,20 @@ class MoveJob extends Job {
 
 		$this->unlock();
 
-		global $wgMemc;
-		$pages = (array) $wgMemc->get( wfMemcKey( 'pt-base', $base ) );
-		$last = true;
 
-		foreach ( $pages as $page ) {
-			if ( $wgMemc->get( wfMemcKey( 'pt-lock', $page ) ) === true ) {
-				$last = false;
-				break;
-			}
-		}
+		$cache = wfGetCache( CACHE_ANYTHING );
+		$key = wfMemcKey( 'translate-pt-move', $base );
+
+		$count = $cache->decr( $key );
+		$last = strval( $count ) === "0";
 
 		if ( $last )  {
-			$wgMemc->delete( wfMemcKey( 'pt-base', $base ) );
+			$cache->delete( $key );
 			$logger = new LogPage( 'pagetranslation' );
-			$params = array( 'user' => $this->getPerformer() );
+			$params = array(
+				'user' => $this->getPerformer(),
+				'target' => $this->params['base-target'],
+			);
 			$doer = User::newFromName( $this->getPerformer() );
 			$logger->addEntry( 'moveok', Title::newFromText( $base ), null, array( serialize( $params ) ), $doer );
 		}
@@ -96,14 +100,6 @@ class MoveJob extends Job {
 
 	public function getSummary() {
 		return $this->params['summary'];
-	}
-
-	public function setBase( $base ) {
-		$this->params['base'] = $base;
-	}
-
-	public function getBase() {
-		return $this->params['base'];
 	}
 
 	public function setPerformer( $performer ) {
@@ -140,25 +136,33 @@ class MoveJob extends Job {
 
 	/**
 	 * Get a user object for doing edits.
+	 * @return User
 	 */
 	public function getUser() {
 		return User::newFromName( $this->params['user'], false );
 	}
 
+	public function setParams( array $params ) {
+		foreach ( $params as $k => $v ) {
+			$this->params[$k] = $v;
+		}
+	}
+
 	public function lock() {
-		global $wgMemc;
-		$wgMemc->set( wfMemcKey( 'pt-lock', $this->title->getPrefixedText() ), true, 60 * 60 * 6 );
-		$wgMemc->set( wfMemcKey( 'pt-lock', $this->getTarget()->getPrefixedText() ), true, 60 * 60 * 6 );
+		$cache = wfGetCache( CACHE_ANYTHING );
+		$cache->set( wfMemcKey( 'pt-lock', $this->title->getPrefixedText() ), true );
+		$cache->set( wfMemcKey( 'pt-lock', $this->getTarget()->getPrefixedText() ), true );
 	}
 
 	public function unlock() {
-		global $wgMemc;
-		$wgMemc->delete( wfMemcKey( 'pt-lock', $this->title->getPrefixedText() ) );
-		$wgMemc->delete( wfMemcKey( 'pt-lock', $this->getTarget()->getPrefixedText() ) );
+		$cache = wfGetCache( CACHE_ANYTHING );
+		$cache->delete( wfMemcKey( 'pt-lock', $this->title->getPrefixedText() ) );
+		$cache->delete( wfMemcKey( 'pt-lock', $this->getTarget()->getPrefixedText() ) );
 	}
 
 	/**
 	 * Adapted from wfSuppressWarnings to allow not leaving redirects.
+	 * @param $end bool
 	 */
 	public static function forceRedirects( $end = false ) {
 		static $suppressCount = 0;

@@ -23,10 +23,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 # web. Change it if required ($wgScriptPath is the path to the base directory
 # of your wiki). No final slash.
 ##
-$smwgScriptPath = ( 
-	( version_compare( $wgVersion, '1.16', '>=' ) && isset( $wgExtensionAssetsPath ) && $wgExtensionAssetsPath )
-	? $wgExtensionAssetsPath : $wgScriptPath . '/extensions'
-	) . '/SemanticMediaWiki';
+$smwgScriptPath = ( $wgExtensionAssetsPath === false ? $wgScriptPath . '/extensions' : $wgExtensionAssetsPath ) . '/SemanticMediaWiki';
 ##
 
 ###
@@ -45,8 +42,48 @@ $smwgIP = dirname( __FILE__ ) . '/';
 $smwgDefaultStore = "SMWSQLStore2";
 ##
 
+###
+# Configure SPARQL database connection for Semantic MediaWiki. This is used
+# when SPARQL-based features are enabled, e.g. when using SMWSparqlStore as
+# the $smwgDefaultStore.
+#
+# The default class SMWSparqlDatabase works with many databases that support
+# SPARQL and SPARQL Update. Three different endpoints (service URLs) are given
+# for query (reading queries like SELECT), update (SPARQL Update queries), and
+# data (SPARQL HTTP Protocol for Graph Management). The query endpoint is
+# necessary, but the update and data endpoints can be omitted if not supported.
+# This will lead to reduced functionality (e.g. the SMWSparqlStore will not
+# work if Update is not available). The data endpoint is always optional, but
+# in some SPARQL databases this method is more efficient than update.
+#
+# The default graph is similar to a database name in relational databases. It
+# can be set to any URI (e.g. the main page uri of your wiki with
+# "#graph" appended). Leaving the default graph URI empty only works if the
+# store is configure to use some default default graph or if it generally
+# supports this. Different wikis should normally use different default graphs
+# unless there is a good reason to share one graph.
+##
+$smwgSparqlDatabase = 'SMWSparqlDatabase';
+$smwgSparqlQueryEndpoint = 'http://localhost:8080/sparql/';
+$smwgSparqlUpdateEndpoint = 'http://localhost:8080/update/';
+$smwgSparqlDataEndpoint = 'http://localhost:8080/data/';
+$smwgSparqlDefaultGraph = '';
+##
+
 // load global constants and setup functions
 require_once( 'includes/SMW_Setup.php' );
+
+###
+# Setting this option to true before including this file to enable the old
+# Type: namespace that SMW used up to version 1.5.*. This should only be
+# done to make the pages of this namespace temporarily accessible in order to
+# move their content to other pages. If the namespace is not registered, then
+# existing pages in this namespace cannot be found in the wiki.
+##
+if ( !isset( $smwgHistoricTypeNamespace ) ) {
+	$smwgHistoricTypeNamespace = false;
+}
+##
 
 ###
 # If you already have custom namespaces on your site, insert
@@ -153,6 +190,7 @@ $smwgBrowseShowAll = true;
 # performance problems.
 ##
 $smwgSearchByPropertyFuzzy = true;
+##
 
 ###
 # Number results shown in the listings on pages in the namespaces Property,
@@ -184,7 +222,7 @@ $smwgIgnoreQueryErrors = true; // Should queries be executed even if some errors
 $smwgQSubcategoryDepth = 10;  // Restrict level of sub-category inclusion (steps within category hierarchy)
 $smwgQSubpropertyDepth = 10;  // Restrict level of sub-property inclusion (steps within property hierarchy)
                               // (Use 0 to disable hierarchy-inferencing in queries)
-if ( empty( $smwgQEqualitySupport ) ) $smwgQEqualitySupport = SMW_EQ_SOME; // Evaluate #redirects as equality between page names, with possible
+$smwgQEqualitySupport = SMW_EQ_SOME; // Evaluate #redirects as equality between page names, with possible
                                      // performance-relevant restrictions depending on the storage engine
   // $smwgQEqualitySupport = SMW_EQ_FULL; // Evaluate #redirects as equality between page names in all cases
   // $smwgQEqualitySupport = SMW_EQ_NONE; // Never evaluate #redirects as equality between page names
@@ -295,6 +333,7 @@ $smwgResultFormats = array(
 	'debug'      => 'SMWListResultPrinter',
 	'rss'        => 'SMWRSSResultPrinter',
 	'csv'        => 'SMWCsvResultPrinter',
+	'dsv'        => 'SMWDSVResultPrinter',
 	'json'       => 'SMWJSONResultPrinter',
 	'rdf'        => 'SMWRDFResultPrinter'
 );
@@ -408,6 +447,19 @@ $smwgNamespacesWithSemanticLinks = array(
 );
 ##
 
+### List of enabled special page properties.
+# Modification date (_MDAT) is enabled by default for backward compatibility.
+# Extend array to enable other properties:
+#     $smwgPageSpecialProperties[] = '_CDAT';
+# Or:
+#     array_merge( $smwgPageSpecialProperties, array( '_CDAT' ) );
+# Or rewrite entire array:
+#     $smwgPageSpecialProperties = array( '_MDAT', '_CDAT' );
+# However, DO NOT use `+=' operator! This DOES NOT work:
+#     $smwgPageSpecialProperties += array( '_MDAT' );
+##
+$smwgPageSpecialProperties = array( '_MDAT' );
+
 ###
 # Properties (usually given as internal ids or DB key versions of property
 # titles) that are relevant for declaring the behaviour of a property P on a
@@ -456,4 +508,11 @@ $smwgAdminRefreshStore = true;
 # on property names.
 ##
 $smwgAutocompleteInSpecialAsk = true;
+##
+
+###
+# Sets whether or not to refresh the pages of which semantic data is stored.
+# Introduced in SMW 1.5.6
+##
+$smwgAutoRefreshSubject = true;
 ##

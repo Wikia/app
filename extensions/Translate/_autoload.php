@@ -4,7 +4,7 @@
  *
  * @file
  * @author Niklas Laxström
- * @copyright Copyright © 2008-2010, Niklas Laxström
+ * @copyright Copyright © 2008-2011, Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -20,9 +20,11 @@ $wgAutoloadClasses['TranslateTasks'] = $dir . 'TranslateTasks.php';
 $wgAutoloadClasses['TaskOptions'] = $dir . 'TranslateTasks.php';
 
 $wgAutoloadClasses['TranslateUtils'] = $dir . 'TranslateUtils.php';
-$wgAutoloadClasses['HTMLSelector'] = $dir . 'TranslateUtils.php';
+
+$wgAutoloadClasses['TranslateHooks'] = $dir . 'TranslateHooks.php';
 
 $wgAutoloadClasses['MessageChecker'] = $dir . 'MessageChecks.php';
+$wgAutoloadClasses['MediaWikiMessageChecker'] = $dir . 'MediaWikiMessageChecker.php';
 
 $wgAutoloadClasses['MessageGroup'] = $dir . 'Groups.php';
 $wgAutoloadClasses['MessageGroupBase'] = $dir . 'Groups.php';
@@ -32,9 +34,12 @@ $wgAutoloadClasses['MessageGroupOld'] = $dir . 'MessageGroups.php';
 $wgAutoloadClasses['MessageGroups'] = $dir . 'MessageGroups.php';
 $wgAutoloadClasses['WikiPageMessageGroup'] = $dir . 'MessageGroups.php';
 $wgAutoloadClasses['AliasMessageGroup'] = $dir . 'MessageGroups.php';
+$wgAutoloadClasses['RecentMessageGroup'] = $dir . 'MessageGroups.php';
+$wgAutoloadClasses['WorkflowStatesMessageGroup'] = $dir . 'MessageGroups.php';
 
 $wgAutoloadClasses['MessageCollection'] = $dir . 'MessageCollection.php';
 $wgAutoloadClasses['MessageDefinitions'] = $dir . 'MessageCollection.php';
+
 $wgAutoloadClasses['TMessage'] = $dir . 'Message.php';
 $wgAutoloadClasses['ThinMessage'] = $dir . 'Message.php';
 $wgAutoloadClasses['FatMessage'] = $dir . 'Message.php';
@@ -45,7 +50,7 @@ $wgAutoloadClasses['TranslateRcFilter'] = $dir . 'RcFilter.php';
 
 /**
  * @name   MediaWiki core classes
- * These are not autoloaded by default in MediaWiki core.
+ * These are not autoloaded by default in MediaWiki core until 1.19.
  * @{
  */
 $wgAutoloadClasses['languages'] = $IP . '/maintenance/language/languages.inc';
@@ -59,10 +64,10 @@ $wgAutoloadClasses['MessageWriter'] = $IP . '/maintenance/language/writeMessages
  */
 $wgAutoloadClasses['SpecialTranslate'] = $dir . 'specials/SpecialTranslate.php';
 $wgAutoloadClasses['SpecialMagic'] = $dir . 'specials/SpecialMagic.php';
-$wgAutoloadClasses['SpecialTranslationChanges'] = $dir . 'specials/SpecialTranslationChanges.php';
 $wgAutoloadClasses['SpecialTranslationStats'] = $dir . 'specials/SpecialTranslationStats.php';
 $wgAutoloadClasses['SpecialTranslations'] = $dir . 'specials/SpecialTranslations.php';
 $wgAutoloadClasses['SpecialLanguageStats'] = $dir . 'specials/SpecialLanguageStats.php';
+$wgAutoloadClasses['SpecialMessageGroupStats'] = $dir . 'specials/SpecialMessageGroupStats.php';
 $wgAutoloadClasses['SpecialImportTranslations'] = $dir . 'specials/SpecialImportTranslations.php';
 $wgAutoloadClasses['SpecialFirstSteps'] = $dir . 'specials/SpecialFirstSteps.php';
 $wgAutoloadClasses['SpecialSupportedLanguages'] = $dir . 'specials/SpecialSupportedLanguages.php';
@@ -91,17 +96,19 @@ $wgAutoloadClasses['PHPVariableLoader'] = $dir . 'utils/ResourceLoader.php';
 $wgAutoloadClasses['StringMangler'] = $dir . 'utils/StringMatcher.php';
 $wgAutoloadClasses['StringMatcher'] = $dir . 'utils/StringMatcher.php';
 $wgAutoloadClasses['FCFontFinder'] = $dir . 'utils/Font.php';
-
-$wgAutoloadClasses['ArrayMemoryCache'] = $dir . 'utils/MemoryCache.php';
+$wgAutoloadClasses['FuzzyBot'] = $dir . 'utils/FuzzyBot.php';
 
 $wgAutoloadClasses['TranslatePreferences'] = $dir . 'utils/UserToggles.php';
 $wgAutoloadClasses['TranslateToolbox'] = $dir . 'utils/ToolBox.php';
 
-$wgAutoloadClasses['MessageIndexRebuilder'] = $dir . 'utils/MessageIndexRebuilder.php';
+$wgAutoloadClasses['MessageIndex'] = $dir . 'utils/MessageIndex.php';
+$wgAutoloadClasses['MessageIndexRebuildJob'] = $dir . 'utils/MessageIndexRebuildJob.php';
 $wgAutoloadClasses['MessageTable'] = $dir . 'utils/MessageTable.php';
+$wgAutoloadClasses['StatsTable'] = $dir . 'utils/StatsTable.php';
 $wgAutoloadClasses['JsSelectToInput'] = $dir . 'utils/JsSelectToInput.php';
 $wgAutoloadClasses['HTMLJsSelectToInputField'] = $dir . 'utils/HTMLJsSelectToInputField.php';
 $wgAutoloadClasses['MessageGroupCache'] = $dir . 'utils/MessageGroupCache.php';
+$wgAutoloadClasses['MessageGroupStats'] = $dir . 'utils/MessageGroupStats.php';
 $wgAutoloadClasses['MessageWebImporter'] = $dir . 'utils/MessageWebImporter.php';
 $wgAutoloadClasses['TranslationEditPage'] = $dir . 'utils/TranslationEditPage.php';
 $wgAutoloadClasses['TranslationHelpers'] = $dir . 'utils/TranslationHelpers.php';
@@ -111,9 +118,10 @@ $wgAutoloadClasses['TranslationMemoryUpdater'] = $dir . 'utils/TranslationMemory
 
 $wgAutoloadClasses['TranslateYaml'] = $dir . 'utils/TranslateYaml.php';
 
-$wgAutoloadClasses['TranslateBC'] = $dir . 'utils/CompatibilityCode.php';
+$wgAutoloadClasses['RevTag'] = $dir . 'utils/RevTag.php';
 
 $wgAutoloadClasses['MessageHandle'] = $dir . 'utils/MessageHandle.php';
+$wgAutoloadClasses['TTMServer'] = $dir . 'utils/TTMServer.php';
 
 
 /**@}*/
@@ -122,20 +130,19 @@ $wgAutoloadClasses['MessageHandle'] = $dir . 'utils/MessageHandle.php';
  * @name   Classes for predefined old-style message groups
  * @{
  */
-$wgAutoloadClasses['PremadeMediawikiExtensionGroups'] = $dir . 'groups/MediaWikiExtensions.php';
-$wgAutoloadClasses['PremadeWikiaExtensionGroups'] = $dir . 'groups/Wikia/WikiaExtensions.php';
-$wgAutoloadClasses['PremadeToolserverTextdomains'] = $dir . 'groups/Toolserver/ToolserverTextdomains.php';
-$wgAutoloadClasses['MediaWikiMessageChecker'] = $dir . 'groups/MediaWiki/Checker.php';
+$wgAutoloadClasses['PremadeMediawikiExtensionGroups'] = $dir . 'ffs/MediaWikiExtensions.php';
+$wgAutoloadClasses['PremadeWikiaExtensionGroups'] = $dir . 'ffs//WikiaExtensions.php';
+$wgAutoloadClasses['PremadeToolserverTextdomains'] = $dir . 'ffs/ToolserverTextdomains.php';
 /**@}*/
 
 /**
  * @name   Non-message translation item support
  * @{
  */
-$wgAutoloadClasses['ComplexMessages'] = $dir . 'groups/ComplexMessages.php';
-$wgAutoloadClasses['SpecialPageAliasesCM'] = $dir . 'groups/ComplexMessages.php';
-$wgAutoloadClasses['MagicWordsCM'] = $dir . 'groups/ComplexMessages.php';
-$wgAutoloadClasses['NamespaceCM'] = $dir . 'groups/ComplexMessages.php';
+$wgAutoloadClasses['ComplexMessages'] = $dir . 'ffs/MediaWikiComplexMessages.php';
+$wgAutoloadClasses['SpecialPageAliasesCM'] = $dir . 'ffs/MediaWikiComplexMessages.php';
+$wgAutoloadClasses['MagicWordsCM'] = $dir . 'ffs/MediaWikiComplexMessages.php';
+$wgAutoloadClasses['NamespaceCM'] = $dir . 'ffs/MediaWikiComplexMessages.php';
 /**@}*/
 
 /**
@@ -145,13 +152,15 @@ $wgAutoloadClasses['NamespaceCM'] = $dir . 'groups/ComplexMessages.php';
  */
 $wgAutoloadClasses['PageTranslationHooks'] = $dir . 'tag/PageTranslationHooks.php';
 $wgAutoloadClasses['TranslatablePage'] = $dir . 'tag/TranslatablePage.php';
-$wgAutoloadClasses['TPException'] = $dir . 'tag/TranslatablePage.php';
+$wgAutoloadClasses['TPException'] = $dir . 'tag/TPException.php';
 $wgAutoloadClasses['TPParse'] = $dir . 'tag/TPParse.php';
 $wgAutoloadClasses['TPSection'] = $dir . 'tag/TPSection.php';
 $wgAutoloadClasses['SpecialPageTranslation'] = $dir . 'tag/SpecialPageTranslation.php';
 $wgAutoloadClasses['SpecialPageTranslationMovePage'] = $dir . 'tag/SpecialPageTranslationMovePage.php';
+$wgAutoloadClasses['SpecialPageTranslationDeletePage'] = $dir . 'tag/SpecialPageTranslationDeletePage.php';
 $wgAutoloadClasses['RenderJob'] = $dir . 'tag/RenderJob.php';
 $wgAutoloadClasses['MoveJob'] = $dir . 'tag/MoveJob.php';
+$wgAutoloadClasses['DeleteJob'] = $dir . 'tag/DeleteJob.php';
 /**@}*/
 
 /**
@@ -187,5 +196,9 @@ $wgAutoloadClasses['TagContainer'] = $dir . 'utils/Html.php';
  */
 $wgAutoloadClasses['ApiQueryMessageCollection'] = $dir . 'api/ApiQueryMessageCollection.php';
 $wgAutoloadClasses['ApiQueryMessageGroups'] = $dir . 'api/ApiQueryMessageGroups.php';
-
+$wgAutoloadClasses['ApiQueryMessageGroupStats'] = $dir . 'api/ApiQueryMessageGroupStats.php';
+$wgAutoloadClasses['ApiQueryMessageTranslations'] = $dir . 'api/ApiQueryMessageTranslations.php';
+$wgAutoloadClasses['ApiTranslationReview'] = $dir . 'api/ApiTranslationReview.php';
+$wgAutoloadClasses['ApiGroupReview'] = $dir . 'api/ApiGroupReview.php';
+$wgAutoloadClasses['ApiTTMServer'] = $dir . 'api/ApiTTMServer.php';
 /**@}*/

@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension BackAndForth
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  */
 
@@ -13,19 +14,20 @@ $messages = array();
  */
 $messages['en'] = array(
 	'backforth-next' => 'Next ($1)',
-	'backforth-desc' => 'Adds "Next" and "Previous" alphabetic paging links to the top of pages',
+	'backandforth-desc' => 'Adds "Next" and "Previous" alphabetic paging links to the top of pages',
 	'backforth-prev' => 'Previous ($1)',
 );
 
 /** Message documentation (Message documentation)
  * @author Purodha
  * @author SPQRobin
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'backforth-next' => 'Part of the "Back-And-Forth" extension. A link to the next page shown on the top of every page. The opposite is {{msg|backforth-prev}}.
 
 {{Identical|Next}}',
-	'backforth-desc' => 'Short description of the Backforth extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'backandforth-desc' => '{{desc}}',
 	'backforth-prev' => 'Part of the "Back-And-Forth" extension. A link to the previous page shown on the top of every page. The opposite is {{msg|backforth-next}}.
 
 {{Identical|Previous}}',
@@ -37,7 +39,7 @@ $messages['qqq'] = array(
  */
 $messages['af'] = array(
 	'backforth-next' => 'Volgende ($1)',
-	'backforth-desc' => 'Voeg alfabetiese skakels na "Vorige" en "Volgende" blaaie by boaan bladsye',
+	'backandforth-desc' => 'Voeg alfabetiese skakels na "Vorige" en "Volgende" blaaie by boaan bladsye',
 	'backforth-prev' => 'Vorige ($1)',
 );
 
@@ -48,7 +50,7 @@ $messages['am'] = array(
 	'backforth-next' => 'ቀጥሎ ($1)',
 );
 
-/** Old English (Anglo-Saxon) */
+/** Old English (Ænglisc) */
 $messages['ang'] = array(
 	'backforth-next' => 'Nīehst ($1)',
 	'backforth-prev' => 'Beforan ($1)',
@@ -59,7 +61,7 @@ $messages['ang'] = array(
  */
 $messages['ar'] = array(
 	'backforth-next' => 'التالي ($1)',
-	'backforth-desc' => 'يضيف وصلات "التالي" و"السابق" الأبجدية لأعلى الصفحات',
+	'backandforth-desc' => 'يضيف وصلات "التالي" و"السابق" الأبجدية لأعلى الصفحات',
 	'backforth-prev' => 'السابق ($1)',
 );
 
@@ -68,7 +70,7 @@ $messages['ar'] = array(
  */
 $messages['arz'] = array(
 	'backforth-next' => 'التالى ($1)',
-	'backforth-desc' => 'يضيف وصلات "التالي" و "السابق" الأبجدية لأعلى الصفحات',
+	'backandforth-desc' => 'يضيف وصلات "التالي" و "السابق" الأبجدية لأعلى الصفحات',
 	'backforth-prev' => 'السابق ($1)',
 );
 
@@ -77,9 +79,9 @@ $messages['arz'] = array(
  * @author Rajuonline
  */
 $messages['as'] = array(
-	'backforth-next' => 'পৰবর্তী ($1)',
-	'backforth-desc' => 'পৃষ্ঠাৰ ওপৰত "পৰবর্তী" আৰু "পুর্ববর্তি" সংযোগ দেখুৱাই',
-	'backforth-prev' => 'পুর্ববর্তি ($1)',
+	'backforth-next' => 'পৰবৰ্তী ($1)',
+	'backandforth-desc' => 'পৃষ্ঠাৰ ওপৰত "পৰবৰ্তী" আৰু "পুৰ্ববৰ্তি" সংযোগ দেখুৱাই',
+	'backforth-prev' => 'পুৰ্ববৰ্তি ($1)',
 );
 
 /** Asturian (Asturianu)
@@ -87,7 +89,7 @@ $messages['as'] = array(
  */
 $messages['ast'] = array(
 	'backforth-next' => 'Siguiente ($1)',
-	'backforth-desc' => 'Añade los enllaces de paxinación alfabética "Siguiente" y "Anterior" a lo cimero les páxines',
+	'backandforth-desc' => 'Añade los enllaces de paxinación alfabética "Siguiente" y "Anterior" a lo cimero les páxines',
 	'backforth-prev' => 'Anterior ($1)',
 );
 
@@ -99,12 +101,22 @@ $messages['avk'] = array(
 	'backforth-prev' => 'Abdif ($1)',
 );
 
-/** Azerbaijani (Azərbaycan)
+/** Azerbaijani (Azərbaycanca)
  * @author Sortilegus
  */
 $messages['az'] = array(
 	'backforth-next' => 'Sonrakı ($1)',
+	'backandforth-desc' => 'Səhifənin yuxarı küncünə əlifba sırasına görə sonrakı və əvvəlki səhifələrə keçid əlavə edir',
 	'backforth-prev' => 'Əvvəlki ($1)',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Comp1089
+ */
+$messages['ba'] = array(
+	'backforth-next' => 'Киләһе ($1)',
+	'backandforth-desc' => 'Һылтанма бите өҫтә алфавит буйынса алдағы һәм киләһе биттәргә һылтанма яһа',
+	'backforth-prev' => 'Алдағы ($1)',
 );
 
 /** Bavarian (Boarisch)
@@ -112,7 +124,7 @@ $messages['az'] = array(
  */
 $messages['bar'] = array(
 	'backforth-next' => "d'nextn ($1)",
-	'backforth-desc' => 'Eagänzt alfabetische „nexte“- und „voarige“-Navigazionslinks am Seitnkopf.',
+	'backandforth-desc' => 'Eagänzt alfabetische „nexte“- und „voarige“-Navigazionslinks am Seitnkopf.',
 	'backforth-prev' => 'voarige ($1)',
 );
 
@@ -124,12 +136,12 @@ $messages['bcl'] = array(
 	'backforth-prev' => 'Nakaagi ($1)',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
 	'backforth-next' => 'Наступны ($1)',
-	'backforth-desc' => 'Дадайце "Наступную" і "Папярэднюю" спасылкі ў альфабэтычным парадку на версе старонкі',
+	'backandforth-desc' => 'Дадайце "Наступную" і "Папярэднюю" спасылкі ў альфабэтычным парадку на версе старонкі',
 	'backforth-prev' => 'Папярэдні ($1)',
 );
 
@@ -146,7 +158,7 @@ $messages['bg'] = array(
  */
 $messages['bn'] = array(
 	'backforth-next' => 'পরবর্তী ($1)',
-	'backforth-desc' => 'পাতার শীর্ষে "পূর্ববর্তী" ও "পরবর্তী" বর্ণানুক্রমিক সংযোগ যোগ করা হবে',
+	'backandforth-desc' => 'পাতার শীর্ষে "পূর্ববর্তী" ও "পরবর্তী" বর্ণানুক্রমিক সংযোগ যোগ করা হবে',
 	'backforth-prev' => 'পূর্ববর্তী ($1)',
 );
 
@@ -155,7 +167,7 @@ $messages['bn'] = array(
  */
 $messages['br'] = array(
 	'backforth-next' => "War-lerc'h ($1)",
-	'backforth-desc' => 'Ouzhpennañ a ra "da-heul" ha "kent" war pajenn al liammoù alfabetek e laez ar pajennoù',
+	'backandforth-desc' => 'Ouzhpennañ a ra "da-heul" ha "kent" war pajenn al liammoù alfabetek e laez ar pajennoù',
 	'backforth-prev' => 'Kent ($1)',
 );
 
@@ -164,7 +176,7 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'backforth-next' => 'slijedeći ($1)',
-	'backforth-desc' => 'Dodaje "Slijedeći" i "Prethodni" linkove na vrh stranica kod alfabetskog spiska stranica',
+	'backandforth-desc' => 'Dodaje "Slijedeći" i "Prethodni" linkove na vrh stranica kod alfabetskog spiska stranica',
 	'backforth-prev' => 'prethodni ($1)',
 );
 
@@ -174,8 +186,15 @@ $messages['bs'] = array(
  */
 $messages['ca'] = array(
 	'backforth-next' => 'Següent ($1)',
-	'backforth-desc' => 'Afegeix els enllaços de paginació alfabètica «Següent» i «Anterior» al capdamunt de les pàgines',
+	'backandforth-desc' => 'Afegeix els enllaços de paginació alfabètica «Següent» i «Anterior» al capdamunt de les pàgines',
 	'backforth-prev' => 'Anterior ($1)',
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'backforth-next' => 'Кхин ($1)',
 );
 
 /** Czech (Česky)
@@ -183,13 +202,28 @@ $messages['ca'] = array(
  */
 $messages['cs'] = array(
 	'backforth-next' => 'Následující ($1)',
-	'backforth-desc' => 'Přidává na začátek stránky odkazy „následující“ a „předchozí“ na stránky dle abecedního řazení',
+	'backandforth-desc' => 'Přidává na začátek stránky odkazy „následující“ a „předchozí“ na stránky dle abecedního řazení',
 	'backforth-prev' => 'Předchozí ($1)',
 );
 
-/** Danish (Dansk) */
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ * @author Xxglennxx
+ */
+$messages['cy'] = array(
+	'backforth-next' => 'Nesaf ($1)',
+	'backandforth-desc' => "Yn ychwanegu'r dolenni 'Nesaf' a 'Blaenorol' ar frig tudalennau sydd yn nhrefn yr wyddor",
+	'backforth-prev' => 'Blaenorol ($1)',
+);
+
+/** Danish (Dansk)
+ * @author Hylle
+ * @author Sarrus
+ */
 $messages['da'] = array(
 	'backforth-next' => 'Næste ($1)',
+	'backandforth-desc' => 'Tilføjer "Næste" og "Forrige" alfabetiske sidelinks til toppen af sider.',
+	'backforth-prev' => 'Forrige ($1)',
 );
 
 /** German (Deutsch)
@@ -197,7 +231,7 @@ $messages['da'] = array(
  */
 $messages['de'] = array(
 	'backforth-next' => 'Nächste ($1)',
-	'backforth-desc' => 'Ergänzt alphabetische „Nächste“- und „Vorherige“-Navigations-Links am Seitenkopf.',
+	'backandforth-desc' => 'Ergänzt alphabetische „Nächste“- und „Vorherige“-Navigations-Links am Seitenkopf.',
 	'backforth-prev' => 'Vorherige ($1)',
 );
 
@@ -206,7 +240,7 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'backforth-next' => 'Pśiducy ($1)',
-	'backforth-desc' => 'Pśidawa alfabetiske nawigaciske wótkaze "Pśiducy" a "Slědk" górjejce na boku.',
+	'backandforth-desc' => 'Pśidawa alfabetiske nawigaciske wótkaze "Pśiducy" a "Slědk" górjejce na boku.',
 	'backforth-prev' => 'Pśedchadny ($1)',
 );
 
@@ -216,7 +250,7 @@ $messages['dsb'] = array(
  */
 $messages['el'] = array(
 	'backforth-next' => 'Επόμενο ($1)',
-	'backforth-desc' => 'Προσθέτει τους σύνδεσμους αλφαβητικής σελιδοποίησης "Προηγούμενο" και "Επόμενο" στο πάνω μέρος των σελίδων',
+	'backandforth-desc' => 'Προσθέτει τους σύνδεσμους αλφαβητικής σελιδοποίησης "Προηγούμενο" και "Επόμενο" στο πάνω μέρος των σελίδων',
 	'backforth-prev' => 'Προηγούμενο ($1)',
 );
 
@@ -226,7 +260,7 @@ $messages['el'] = array(
  */
 $messages['eo'] = array(
 	'backforth-next' => 'Sekva ($1)',
-	'backforth-desc' => 'Aldonas "Sekva" kaj "Antaŭa" laŭalfabetajn ligilojn supren de paĝojn.',
+	'backandforth-desc' => 'Aldonas "Sekva" kaj "Antaŭa" laŭalfabetajn ligilojn supren de paĝojn.',
 	'backforth-prev' => 'Antaŭa ($1)',
 );
 
@@ -235,7 +269,7 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'backforth-next' => 'Siguiente ($1)',
-	'backforth-desc' => 'Agrega "Siguiente" y "Anterior" al inicio de las páginas para explorar alfabeticamente',
+	'backandforth-desc' => 'Agrega "Siguiente" y "Anterior" al inicio de las páginas para explorar alfabeticamente',
 	'backforth-prev' => 'Anterior ($1)',
 );
 
@@ -252,7 +286,7 @@ $messages['et'] = array(
  */
 $messages['eu'] = array(
 	'backforth-next' => 'Hurrengoa ($1)',
-	'backforth-desc' => '"Hurrengoa" eta "Aurrekoa" nabigazio alfabetikorako loturak gehitzen ditu orrialdeen goialdean',
+	'backandforth-desc' => '"Hurrengoa" eta "Aurrekoa" nabigazio alfabetikorako loturak gehitzen ditu orrialdeen goialdean',
 	'backforth-prev' => 'Aurrekoa ($1)',
 );
 
@@ -266,9 +300,13 @@ $messages['ext'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Huji
+ * @author Reza1615
  */
 $messages['fa'] = array(
 	'backforth-next' => ' بعدی ($1)',
+	'backandforth-desc' => 'پیوندهای صفحه‌بندی الفبایی «بعدی» و «قبلی» را به بالای صفحه می‌افزاید',
+	'backforth-prev' => 'قبلی ($1)',
 );
 
 /** Finnish (Suomi)
@@ -277,7 +315,7 @@ $messages['fa'] = array(
  */
 $messages['fi'] = array(
 	'backforth-next' => 'Seuraava ($1)',
-	'backforth-desc' => 'Lisää aakkosjärjestystä noudattavat ”Seuraava”- ja ”Edellinen”-linkitykset sivujen ylälaitaan.',
+	'backandforth-desc' => 'Lisää aakkosjärjestystä noudattavat ”Seuraava”- ja ”Edellinen”-linkitykset sivujen ylälaitaan.',
 	'backforth-prev' => 'Edellinen ($1)',
 );
 
@@ -287,7 +325,7 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'backforth-next' => 'Suivant ($1)',
-	'backforth-desc' => 'Ajoute des liens de navigation alphabétique « Suivant » et « Précédent » en haut des pages',
+	'backandforth-desc' => 'Ajoute des liens de navigation alphabétique « Suivant » et « Précédent » en haut des pages',
 	'backforth-prev' => 'Précédent ($1)',
 );
 
@@ -296,7 +334,7 @@ $messages['fr'] = array(
  */
 $messages['frp'] = array(
 	'backforth-next' => 'Aprés ($1)',
-	'backforth-desc' => 'Apond des lims de navigacion alfabèticos « Aprés » et « Devant » d’amont les pâges.',
+	'backandforth-desc' => 'Apond des lims de navigacion alfabèticos « Aprés » et « Devant » d’amont les pâges.',
 	'backforth-prev' => 'Devant ($1)',
 );
 
@@ -318,10 +356,11 @@ $messages['gag'] = array(
 
 /** Galician (Galego)
  * @author Alma
+ * @author Toliño
  */
 $messages['gl'] = array(
 	'backforth-next' => 'Seguinte ($1)',
-	'backforth-desc' => 'Engade "Seguinte" e "Anterior" ao buscar as ligazóns alfabéticas na cabeceira das páxinas',
+	'backandforth-desc' => 'Engade as ligazóns de navegación alfabética "Seguinte" e "Anterior" no canto superior das páxinas',
 	'backforth-prev' => 'Anterior ($1)',
 );
 
@@ -330,7 +369,7 @@ $messages['gl'] = array(
  */
 $messages['grc'] = array(
 	'backforth-next' => 'Ἑπομένη ($1)',
-	'backforth-desc' => 'Προσθέτει τοὺς συνδέσμους ἀλφαβητικῆς πλοηγήσεως "Ἐπομένη" καὶ "Προηγουμένη" εἰς τὴν κορυφὴν τῶν δέλτων',
+	'backandforth-desc' => 'Προσθέτει τοὺς συνδέσμους ἀλφαβητικῆς πλοηγήσεως "Ἐπομένη" καὶ "Προηγουμένη" εἰς τὴν κορυφὴν τῶν δέλτων',
 	'backforth-prev' => 'Προηγουμένη ($1)',
 );
 
@@ -339,8 +378,17 @@ $messages['grc'] = array(
  */
 $messages['gsw'] = array(
 	'backforth-next' => 'Negschti ($1)',
-	'backforth-desc' => 'Ergänzt alfabetischi „Negschti“- un „Vorigi“-Navigations-Gleicher am Sytechopf.',
+	'backandforth-desc' => 'Ergänzt alfabetischi „Negschti“- un „Vorigi“-Navigations-Gleicher am Sytechopf.',
 	'backforth-prev' => 'Vorigi ($1)',
+);
+
+/** Hawaiian (Hawai`i)
+ * @author Kolonahe
+ */
+$messages['haw'] = array(
+	'backforth-next' => 'Aʻe ($1)',
+	'backandforth-desc' => 'Hoʻohui i ka loulou ʻaoʻao o "Next" a me "Previous" ma luna pono o nā ʻaoʻao',
+	'backforth-prev' => 'Mua ($1)',
 );
 
 /** Hebrew (עברית)
@@ -349,7 +397,7 @@ $messages['gsw'] = array(
  */
 $messages['he'] = array(
 	'backforth-next' => 'הבא ($1)',
-	'backforth-desc' => 'הוספת קישורי דפדוף אלפבתי "הבא ו"הקודם" לראש הדפים',
+	'backandforth-desc' => 'הוספת קישורי דפדוף אלפבתי "הבא ו"הקודם" לראש הדפים',
 	'backforth-prev' => 'הקודם ($1)',
 );
 
@@ -358,7 +406,7 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'backforth-next' => 'अगला ($1)',
-	'backforth-desc' => 'पन्नेके उपरी हिस्से में "अगला" और "पिछला" कड़ीयाँ दर्शाता हैं',
+	'backandforth-desc' => 'पन्नेके उपरी हिस्से में "अगला" और "पिछला" कड़ीयाँ दर्शाता हैं',
 	'backforth-prev' => 'पिछला ($1)',
 );
 
@@ -367,7 +415,7 @@ $messages['hi'] = array(
  */
 $messages['hr'] = array(
 	'backforth-next' => 'Slijedeći ($1)',
-	'backforth-desc' => 'Dodaje poveznice "Sljedeća" i "Prethodna" na vrh stranica',
+	'backandforth-desc' => 'Dodaje poveznice "Sljedeća" i "Prethodna" na vrh stranica',
 	'backforth-prev' => 'Prethodni ($1)',
 );
 
@@ -376,7 +424,7 @@ $messages['hr'] = array(
  */
 $messages['hsb'] = array(
 	'backforth-next' => 'Přichodne ($1)',
-	'backforth-desc' => 'Přidawa wotkazej "Přichodny" a "Předchadny" za alfabetiske nawigaciju horjeka na stronje',
+	'backandforth-desc' => 'Přidawa wotkazej "Přichodny" a "Předchadny" za alfabetiske nawigaciju horjeka na stronje',
 	'backforth-prev' => 'Předchadne ($1)',
 );
 
@@ -385,7 +433,7 @@ $messages['hsb'] = array(
  */
 $messages['hu'] = array(
 	'backforth-next' => 'Következő ($1)',
-	'backforth-desc' => '„Előző” és „Következő” alfabetikus lapozóhivatkozások a lapok tetejére',
+	'backandforth-desc' => '„Előző” és „Következő” alfabetikus lapozóhivatkozások a lapok tetejére',
 	'backforth-prev' => 'Előző ($1)',
 );
 
@@ -402,7 +450,7 @@ $messages['hy'] = array(
  */
 $messages['ia'] = array(
 	'backforth-next' => 'Sequente ($1)',
-	'backforth-desc' => 'Adde ligamines de navigation alphabetic "Sequente" e "Precedente" in alto del paginas',
+	'backandforth-desc' => 'Adde ligamines de navigation alphabetic "Sequente" e "Precedente" in alto del paginas',
 	'backforth-prev' => 'Precedente ($1)',
 );
 
@@ -411,8 +459,16 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'backforth-next' => 'Selanjutnya ($1)',
-	'backforth-desc' => 'Menambahkan pranala halaman alfabetis "Sebelumnya" dan "Selanjutnya" di bagian atas halaman',
+	'backandforth-desc' => 'Menambahkan pranala halaman alfabetis "Sebelumnya" dan "Selanjutnya" di bagian atas halaman',
 	'backforth-prev' => 'Sebelumnya ($1)',
+);
+
+/** Igbo (Igbo)
+ * @author Ukabia
+ */
+$messages['ig'] = array(
+	'backforth-next' => 'Nke ozor ($1)',
+	'backforth-prev' => 'Nke àzú ($1)',
 );
 
 /** Ido (Ido)
@@ -428,7 +484,7 @@ $messages['io'] = array(
  */
 $messages['is'] = array(
 	'backforth-next' => 'Næsta ($1)',
-	'backforth-desc' => 'Setur „Næsta“ og „Fyrri“ tengla á stafrófsraðar síður efst á síðurnar',
+	'backandforth-desc' => 'Setur „Næsta“ og „Fyrri“ tengla á stafrófsraðar síður efst á síðurnar',
 	'backforth-prev' => 'Síðasta ($1)',
 );
 
@@ -438,7 +494,7 @@ $messages['is'] = array(
  */
 $messages['it'] = array(
 	'backforth-next' => 'Successivi ($1)',
-	'backforth-desc' => 'Aggiunge in cima alle pagine i collegamenti di scorrimento alfabetico "Successivi" e "Precedenti"',
+	'backandforth-desc' => 'Aggiunge in cima alle pagine i collegamenti di scorrimento alfabetico "Successivi" e "Precedenti"',
 	'backforth-prev' => 'Precedenti ($1)',
 );
 
@@ -447,7 +503,7 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'backforth-next' => '次へ ($1)',
-	'backforth-desc' => 'ページ上部に"次へ"と"前へ"のリンクを追加する',
+	'backandforth-desc' => 'ページ上部に"次へ"と"前へ"のリンクを追加する',
 	'backforth-prev' => '前へ ($1)',
 );
 
@@ -480,7 +536,7 @@ $messages['kl'] = array(
  */
 $messages['km'] = array(
 	'backforth-next' => 'បន្ទាប់ ($1)',
-	'backforth-desc' => 'បន្ថែម "បន្ទាប់" និង "មុន" លើទំព័រ​តាមលំដាប់អក្សរ នៅ​ផ្នែកខាងលើ​នៃ​ទំព័រ',
+	'backandforth-desc' => 'បន្ថែម "បន្ទាប់" និង "មុន" លើទំព័រ​តាមលំដាប់អក្សរ នៅ​ផ្នែកខាងលើ​នៃ​ទំព័រ',
 	'backforth-prev' => 'មុន ($1)',
 );
 
@@ -492,12 +548,21 @@ $messages['kn'] = array(
 	'backforth-prev' => 'ಹಿಂದಿನ ($1)',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'backforth-next' => '다음 ($1)',
+	'backandforth-desc' => '알파벳순으로 "이전"과 "다음" 페이지 링크를 문서 맨 위에 추가',
+	'backforth-prev' => '이전 ($1)',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
 	'backforth-next' => 'Nähkß ($1)',
-	'backforth-desc' => 'Deit „förije“ un „nähkß“ Lenks zom Bläddere nohm Alfabeet en der Kopp fun jede Sigg.',
+	'backandforth-desc' => 'Deit „förije“ un „nähkß“ Lenks zom Bläddere nohm Alfabeet en der Kopp fun jede Sigg.',
 	'backforth-prev' => 'Förije ($1)',
 );
 
@@ -515,7 +580,7 @@ $messages['kw'] = array(
  */
 $messages['lb'] = array(
 	'backforth-next' => 'Nächst ($1)',
-	'backforth-desc' => 'Setzt "Nächst"- a "Vireg"-Navigatiounslinke uewen op de Säiten derbäi',
+	'backandforth-desc' => 'Setzt "Nächst"- a "Vireg"-Navigatiounslinke uewen op de Säiten derbäi',
 	'backforth-prev' => '($1) virdrun',
 );
 
@@ -524,7 +589,7 @@ $messages['lb'] = array(
  */
 $messages['li'] = array(
 	'backforth-next' => 'Volgende ($1)',
-	'backforth-desc' => 'Voog alfabetische links nao "Veurige" en "Volgende" pagina toe bovenaan pagina\'s',
+	'backandforth-desc' => 'Voog alfabetische links nao "Veurige" en "Volgende" pagina toe bovenaan pagina\'s',
 	'backforth-prev' => 'Veurige ($1)',
 );
 
@@ -533,8 +598,16 @@ $messages['li'] = array(
  */
 $messages['lt'] = array(
 	'backforth-next' => 'Kitas ($1)',
-	'backforth-desc' => 'Prideda "Kitas" ir "Ankstesnis" alfabetiniam nuorodų rašymui puslapių viršuje',
+	'backandforth-desc' => 'Prideda "Kitas" ir "Ankstesnis" alfabetiniam nuorodų rašymui puslapių viršuje',
 	'backforth-prev' => 'Ankstesnis ($1)',
+);
+
+/** Latgalian (Latgaļu)
+ * @author Dark Eagle
+ */
+$messages['ltg'] = array(
+	'backforth-next' => 'Cyts ($1)',
+	'backforth-prev' => 'Pyrmuokais ($1)',
 );
 
 /** Malagasy (Malagasy)
@@ -542,7 +615,7 @@ $messages['lt'] = array(
  */
 $messages['mg'] = array(
 	'backforth-next' => 'Manaraka ($1)',
-	'backforth-desc' => "Manampy rohy ny fikarohana ara-abidy « Manaraka » sy « Teo arina » eo ambon'ny pejy",
+	'backandforth-desc' => "Manampy rohy ny fikarohana ara-abidy « Manaraka » sy « Teo arina » eo ambon'ny pejy",
 	'backforth-prev' => 'Teo aloha ($1)',
 );
 
@@ -552,7 +625,7 @@ $messages['mg'] = array(
  */
 $messages['mk'] = array(
 	'backforth-next' => 'Следна ($1)',
-	'backforth-desc' => 'Додава врски „Следна“ и „Претходна“ на врвот од азбучниот индекс',
+	'backandforth-desc' => 'Додава врски „Следна“ и „Претходна“ на врвот од азбучниот индекс',
 	'backforth-prev' => 'Претходна ($1)',
 );
 
@@ -562,7 +635,7 @@ $messages['mk'] = array(
  */
 $messages['ml'] = array(
 	'backforth-next' => 'അടുത്ത ($1)',
-	'backforth-desc' => 'താളുകളുടെ മുകളില്‍ "അടുത്തത്" "മുന്‍പുള്ളത്" എന്നീ നാവിഗേഷണല്‍ കണ്ണികള്‍ ചേര്‍ക്കുന്നു',
+	'backandforth-desc' => 'താളുകളുടെ മുകളിൽ "അടുത്തത്" "മുൻപുള്ളത്" എന്നീ നാവിഗേഷണൽ കണ്ണികൾ ചേർക്കുന്നു',
 	'backforth-prev' => 'മുമ്പത്തെ ($1)',
 );
 
@@ -572,15 +645,17 @@ $messages['ml'] = array(
  */
 $messages['mr'] = array(
 	'backforth-next' => 'पुढे ($1)',
-	'backforth-desc' => 'पानाच्या वरील भागामध्ये "पुढील" व "मागील" दुवे वाढवितो',
+	'backandforth-desc' => 'पानाच्या वरील भागामध्ये "पुढील" व "मागील" दुवे वाढवितो',
 	'backforth-prev' => 'मागे($1)',
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
  * @author Kurniasan
  */
 $messages['ms'] = array(
 	'backforth-next' => 'Berikutnya ($1)',
+	'backandforth-desc' => 'Membubuh pautan penghalaman "Sebelumnya" dan "Berikutnya" di atas laman',
 	'backforth-prev' => 'Sebelumnya ($1)',
 );
 
@@ -612,7 +687,7 @@ $messages['nah'] = array(
  */
 $messages['nds'] = array(
 	'backforth-next' => 'Tokamen ($1)',
-	'backforth-desc' => 'Föögt „{{int:backforth-next}}“- un „{{int:backforth-prev}}“-Lenken na de nächste Sied in’t Alphabet baven op de Sied to.',
+	'backandforth-desc' => 'Föögt „{{int:backforth-next}}“- un „{{int:backforth-prev}}“-Lenken na de nächste Sied in’t Alphabet baven op de Sied to.',
 	'backforth-prev' => 'Vörige ($1)',
 );
 
@@ -621,7 +696,7 @@ $messages['nds'] = array(
  */
 $messages['nl'] = array(
 	'backforth-next' => 'Volgende ($1)',
-	'backforth-desc' => 'Voegt alfabetische links naar "Vorige" en "Volgende" pagina toe bovenaan pagina\'s',
+	'backandforth-desc' => 'Voegt alfabetische links naar "Vorige" en "Volgende" pagina toe bovenaan pagina\'s',
 	'backforth-prev' => 'Vorige ($1)',
 );
 
@@ -631,16 +706,16 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'backforth-next' => 'Nest ($1)',
-	'backforth-desc' => 'Legg til lenkjer til «Neste» og «Førre» alfabetiske side på toppen av sider',
+	'backandforth-desc' => 'Legg til lenkjer til «Neste» og «Førre» alfabetiske side på toppen av sider',
 	'backforth-prev' => 'Førre ($1)',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'backforth-next' => 'Neste ($1)',
-	'backforth-desc' => 'Legger til lenker til «Neste» og «Forrige» alfabetiske side på toppen av sider',
+	'backandforth-desc' => 'Legger til lenker til «Neste» og «Forrige» alfabetiske side på toppen av sider',
 	'backforth-prev' => 'Forrige ($1)',
 );
 
@@ -657,8 +732,17 @@ $messages['nso'] = array(
  */
 $messages['oc'] = array(
 	'backforth-next' => 'Seguent ($1)',
-	'backforth-desc' => 'Apond « Seguent » e « Precedent » a la pagina dels ligams alfabetics en naut de las paginas',
+	'backandforth-desc' => 'Apond « Seguent » e « Precedent » a la pagina dels ligams alfabetics en naut de las paginas',
 	'backforth-prev' => 'Precedent ($1)',
+);
+
+/** Papiamento (Papiamentu)
+ * @author Sdm1985
+ */
+$messages['pap'] = array(
+	'backforth-next' => 'Siguiente ($1)',
+	'backandforth-desc' => 'Esaki ta agregá e botonnan "Siguiente" i "Anterior"  na e kabes di e páginanan alfabetiko',
+	'backforth-prev' => ' Anterior ($1)',
 );
 
 /** Deitsch (Deitsch)
@@ -669,6 +753,13 @@ $messages['pdc'] = array(
 	'backforth-prev' => 'Letscht ($1)',
 );
 
+/** Pälzisch (Pälzisch)
+ * @author Xqt
+ */
+$messages['pfl'] = array(
+	'backforth-prev' => 'Voriche ($1)',
+);
+
 /** Polish (Polski)
  * @author Derbeth
  * @author Sp5uhe
@@ -676,7 +767,7 @@ $messages['pdc'] = array(
  */
 $messages['pl'] = array(
 	'backforth-next' => 'Następny ($1)',
-	'backforth-desc' => 'Dodaje linki wyszukiwania alfabetycznego „Poprzedni” i „Następny” na początku strony',
+	'backandforth-desc' => 'Dodaje linki wyszukiwania alfabetycznego „Poprzedni” i „Następny” na początku strony',
 	'backforth-prev' => 'Poprzedni ($1)',
 );
 
@@ -686,7 +777,7 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'backforth-next' => 'Anans ($1)',
-	'backforth-desc' => 'A gionta an testa a la pàgina le anliure ëd paginassion "A ven-o d\'apress" e "A ven-o prima"',
+	'backandforth-desc' => 'A gionta an testa a la pàgina le anliure ëd paginassion "A ven-o d\'apress" e "A ven-o prima"',
 	'backforth-prev' => 'André ($1)',
 );
 
@@ -695,16 +786,17 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'backforth-next' => 'راتلونکي ($1)',
-	'backforth-desc' => 'د مخونو په سر کې د "راتلونکی" او "پخوانی" ابېڅيزه مخ تړنې ورګډوي',
+	'backandforth-desc' => 'د مخونو په سر کې د "راتلونکی" او "پخوانی" ابېڅيزه مخ تړنې ورګډوي',
 	'backforth-prev' => 'پخوانی ($1)',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
 	'backforth-next' => 'Próximo ($1)',
-	'backforth-desc' => 'Adiciona as ligações de paginação alfabética "Seguinte" e "Anterior" ao topo das páginas',
+	'backandforth-desc' => 'Adiciona os links de paginação alfabética "Seguinte" e "Anterior" ao topo das páginas',
 	'backforth-prev' => 'Anterior ($1)',
 );
 
@@ -713,7 +805,15 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'backforth-next' => 'Próximo ($1)',
-	'backforth-desc' => 'Adiciona as ligações de paginação alfabética "Seguinte" e "Anterior" ao topo das páginas',
+	'backandforth-desc' => 'Adiciona as ligações de paginação alfabética "Seguinte" e "Anterior" ao topo das páginas',
+	'backforth-prev' => 'Anterior ($1)',
+);
+
+/** Romanian (Română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'backforth-next' => 'Următorul ($1)',
 	'backforth-prev' => 'Anterior ($1)',
 );
 
@@ -722,7 +822,7 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'backforth-next' => 'Prossime ($1)',
-	'backforth-desc' => 'Aggiunge le collegaminde alfabbetece \'u "Prossime" e \'u "Precedende" \'ngape \'a le pàggene',
+	'backandforth-desc' => 'Aggiunge le collegaminde alfabbetece \'u "Prossime" e \'u "Precedende" \'ngape \'a le pàggene',
 	'backforth-prev' => 'Precedende ($1)',
 );
 
@@ -731,11 +831,18 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'backforth-next' => 'След. ($1)',
-	'backforth-desc' => 'Добавляет на верх страницы ссылки на следующую и предыдущую по алфавиту страницы',
+	'backandforth-desc' => 'Добавляет на верх страницы ссылки на следующую и предыдущую по алфавиту страницы',
 	'backforth-prev' => 'Пред. ($1)',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'backforth-next' => 'Наст. ($1)',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -751,7 +858,7 @@ $messages['scn'] = array(
 	'backforth-prev' => 'Pricidenti ($1)',
 );
 
-/** Serbo-Croatian (Srpskohrvatski / Српскохрватски)
+/** Serbo-Croatian (Srpskohrvatski)
  * @author OC Ripper
  */
 $messages['sh'] = array(
@@ -771,26 +878,35 @@ $messages['si'] = array(
  */
 $messages['sk'] = array(
 	'backforth-next' => 'Ďalšie ($1)',
-	'backforth-desc' => 'Pridáva odkazy abecedného triedenia a odkazy „Ďalej“ a „Späť“ na vrch stránok',
+	'backandforth-desc' => 'Pridáva odkazy abecedného triedenia a odkazy „Ďalej“ a „Späť“ na vrch stránok',
 	'backforth-prev' => 'Predošlé ($1)',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'backforth-next' => 'Naslednja ($1)',
+	'backandforth-desc' => 'Doda povezave »Naslednja« in »Prejšnja« na strani, razvrščene po abecedi, na vrh strani',
+	'backforth-prev' => 'Prejšnja ($1)',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Sasa Stefanovic
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'backforth-next' => 'Следеће ($1)',
-	'backforth-desc' => 'Додаје азбучно уређење преко линкова за "Следећи" и "Претходни", на врху страница чланака',
+	'backandforth-desc' => 'Додаје азбучно уређење преко линкова за "Следећи" и "Претходни", на врху страница чланака',
 	'backforth-prev' => 'Претходно ($1)',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
 	'backforth-next' => 'Sledeće ($1)',
-	'backforth-desc' => 'Dodaje azbučno uređenje preko linkova za "Sledeći" i "Prethodni", na vrhu stranica članaka',
+	'backandforth-desc' => 'Dodaje azbučno uređenje preko linkova za "Sledeći" i "Prethodni", na vrhu stranica članaka',
 	'backforth-prev' => 'Prethodno ($1)',
 );
 
@@ -799,7 +915,7 @@ $messages['sr-el'] = array(
  */
 $messages['srn'] = array(
 	'backforth-next' => 'Trawan',
-	'backforth-desc' => 'Disi e poti link go na "Trawan" nanga "Pasawan" n\'a tapsey fu den papira',
+	'backandforth-desc' => 'Disi e poti link go na "Trawan" nanga "Pasawan" n\'a tapsey fu den papira',
 	'backforth-prev' => 'Pasawan',
 );
 
@@ -808,7 +924,7 @@ $messages['srn'] = array(
  */
 $messages['stq'] = array(
 	'backforth-next' => 'Naiste ($1)',
-	'backforth-desc' => 'Föiget alfabetiske "Naiste"- un "Foarige"-Navigations-Linke tou an dän Siedenkop.',
+	'backandforth-desc' => 'Föiget alfabetiske "Naiste"- un "Foarige"-Navigations-Linke tou an dän Siedenkop.',
 	'backforth-prev' => 'Foarige ($1)',
 );
 
@@ -817,7 +933,7 @@ $messages['stq'] = array(
  */
 $messages['su'] = array(
 	'backforth-next' => 'Salajengna ($1)',
-	'backforth-desc' => 'Nambahkeun tumbu kaca “Salajengna” jeung “Saméméhna” nurutkeun alfabét ka punclut kaca',
+	'backandforth-desc' => 'Nambahkeun tumbu kaca “Salajengna” jeung “Saméméhna” nurutkeun alfabét ka punclut kaca',
 	'backforth-prev' => 'Saméméhna ($1)',
 );
 
@@ -826,15 +942,17 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'backforth-next' => 'Nästa ($1)',
-	'backforth-desc' => 'Lägger till länkar till "Nästa" och "Föregående" sida i alfabetisk ordning högst upp på sidor',
+	'backandforth-desc' => 'Lägger till länkar till "Nästa" och "Föregående" sida i alfabetisk ordning högst upp på sidor',
 	'backforth-prev' => 'Föregående ($1)',
 );
 
 /** Tamil (தமிழ்)
+ * @author TRYPPN
  * @author Trengarasu
  */
 $messages['ta'] = array(
 	'backforth-next' => 'அடுத்த ($1)',
+	'backandforth-desc' => 'பக்கங்களின் மேல்பகுதியில் "அடுத்த" மற்றும் "முந்தய" எழுத்துக்களின் பக்க இணைப்புக்களை சேர்க்கும்.',
 	'backforth-prev' => 'முந்தைய ($1)',
 );
 
@@ -843,7 +961,7 @@ $messages['ta'] = array(
  */
 $messages['te'] = array(
 	'backforth-next' => 'తర్వాత ($1)',
-	'backforth-desc' => 'పేజీల పై భాగాన "తర్వాత" మరియు "గత" అనే అక్షరానుసార పేజీకరణ లింకులును చేరుస్తుంది',
+	'backandforth-desc' => 'పేజీల పై భాగాన "తర్వాత" మరియు "గత" అనే అక్షరానుసార పేజీకరణ లింకులును చేరుస్తుంది',
 	'backforth-prev' => 'గత ($1)',
 );
 
@@ -855,21 +973,21 @@ $messages['tet'] = array(
 	'backforth-prev' => 'Molok ($1)',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'backforth-next' => 'Баъдӣ ($1)',
-	'backforth-desc' => 'Ба болои саҳифаҳои тартибии аз рӯи алифбо пайвандҳои "Баъдӣ" ва "Қаблӣ" илова мекунад',
+	'backandforth-desc' => 'Ба болои саҳифаҳои тартибии аз рӯи алифбо пайвандҳои "Баъдӣ" ва "Қаблӣ" илова мекунад',
 	'backforth-prev' => 'Қаблӣ ($1)',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
 	'backforth-next' => "Ba'dī ($1)",
-	'backforth-desc' => 'Ba boloi sahifahoi tartibiji az rūi alifbo pajvandhoi "Ba\'dī" va "Qablī" ilova mekunad',
+	'backandforth-desc' => 'Ba boloi sahifahoi tartibiji az rūi alifbo pajvandhoi "Ba\'dī" va "Qablī" ilova mekunad',
 	'backforth-prev' => 'Qablī ($1)',
 );
 
@@ -885,7 +1003,7 @@ $messages['th'] = array(
  */
 $messages['tl'] = array(
 	'backforth-next' => 'Susunod ($1)',
-	'backforth-desc' => 'Nagdaragdag ng alpabetikong pagpapahinang may mga kawing na "Susunod" at "Sinundan" sa ibabaw ng mga pahina',
+	'backandforth-desc' => 'Nagdaragdag ng alpabetikong pagpapahinang may mga kawing na "Susunod" at "Sinundan" sa ibabaw ng mga pahina',
 	'backforth-prev' => 'Sinundan ($1)',
 );
 
@@ -895,7 +1013,7 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'backforth-next' => 'Sonraki ($1)',
-	'backforth-desc' => '"Sonraki" ve "Önceki" alfabetik sayfalama linklerini sayfaların en üstüne ekler',
+	'backandforth-desc' => '"Sonraki" ve "Önceki" alfabetik sayfalama linklerini sayfaların en üstüne ekler',
 	'backforth-prev' => 'Önceki ($1)',
 );
 
@@ -904,7 +1022,7 @@ $messages['tr'] = array(
  */
 $messages['uk'] = array(
 	'backforth-next' => 'Наст. ($1)',
-	'backforth-desc' => 'Додає зверху сторінки посилання на наступну і попередню за алфавітом сторінки',
+	'backandforth-desc' => 'Додає зверху сторінки посилання на наступну і попередню за алфавітом сторінки',
 	'backforth-prev' => 'Попер. ($1)',
 );
 
@@ -913,7 +1031,7 @@ $messages['uk'] = array(
  */
 $messages['vec'] = array(
 	'backforth-next' => 'Sucessivi ($1)',
-	'backforth-desc' => 'Zonta in sima a le pagine i colegamenti ai "Sucessivi" e "Preçedenti" in tel\'ordine alfabetico',
+	'backandforth-desc' => 'Zonta in sima a le pagine i colegamenti ai "Sucessivi" e "Preçedenti" in tel\'ordine alfabetico',
 	'backforth-prev' => 'Preçedenti ($1)',
 );
 
@@ -922,7 +1040,7 @@ $messages['vec'] = array(
  */
 $messages['vep'] = array(
 	'backforth-next' => "Jäl'ghine ($1)",
-	'backforth-desc' => 'Ližadab "Jäl\'ghine" da "Edeline" kosketusid, kudambad ozutadas jäl\'ghižehe da edeližhe lehtpolihe kirjamišton mödhe, lehtpolen üläpol\'he',
+	'backandforth-desc' => 'Ližadab "Jäl\'ghine" da "Edeline" kosketusid, kudambad ozutadas jäl\'ghižehe da edeližhe lehtpolihe kirjamišton mödhe, lehtpolen üläpol\'he',
 	'backforth-prev' => 'Edeline ($1)',
 );
 
@@ -931,7 +1049,7 @@ $messages['vep'] = array(
  */
 $messages['vi'] = array(
 	'backforth-next' => 'Sau ($1)',
-	'backforth-desc' => 'Thêm các liên kết "Sau" và "Trước" đến trang theo thứ tự ABC vào đầu trang',
+	'backandforth-desc' => 'Thêm các liên kết "Sau" và "Trước" đến trang theo thứ tự ABC vào đầu trang',
 	'backforth-prev' => 'Trước ($1)',
 );
 
@@ -941,14 +1059,21 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'backforth-next' => 'Sököl ($1)',
-	'backforth-desc' => 'Läükon yümis: „büik(s)“ e „fovik(s)“ löpü pad',
+	'backandforth-desc' => 'Läükon yümis: „büik(s)“ e „fovik(s)“ löpü pad',
 	'backforth-prev' => 'Büik ($1)',
 );
 
-/** Yue (粵語) */
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'backforth-next' => 'נעקסטע ($1)',
+);
+
+/** Cantonese (粵語) */
 $messages['yue'] = array(
 	'backforth-next' => '下一篇 ($1)',
-	'backforth-desc' => '響頁嘅最頂度加入「上一篇」同埋「下一篇」嘅連結',
+	'backandforth-desc' => '響頁嘅最頂度加入「上一篇」同埋「下一篇」嘅連結',
 	'backforth-prev' => '上一篇 ($1)',
 );
 
@@ -957,14 +1082,22 @@ $messages['yue'] = array(
  */
 $messages['zh-hans'] = array(
 	'backforth-next' => '下一条（$1）',
-	'backforth-desc' => '在页面顶部增加“上一条”和“下一条”链接',
+	'backandforth-desc' => '在页面顶部增加“上一条”和“下一条”链接',
 	'backforth-prev' => '上一条（$1）',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */
 $messages['zh-hant'] = array(
 	'backforth-next' => '下一條 （$1）',
-	'backforth-desc' => '在頁面的最上面增加「上一條」和「下一條」的連結',
+	'backandforth-desc' => '在頁面的最上面增加「上一條」和「下一條」的連結',
 	'backforth-prev' => '上一條 （$1）',
+);
+
+/** Chinese (Hong Kong) (‪中文(香港)‬)
+ * @author Oapbtommy
+ */
+$messages['zh-hk'] = array(
+	'backforth-next' => '下一個（$1）',
+	'backforth-prev' => '上一個（$1）',
 );
 

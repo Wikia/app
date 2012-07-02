@@ -27,6 +27,7 @@ $wgExtensionCredits['other'][] = array(
 	'url'			=> 'http://trac.wikia-code.com/browser/wikia/trunk/extensions/wikia/PiggyQuick/',
 );
 
+
 /**
  * @var array $wgExtensionMessagesFiles
  * @brief Mapping the extension name to the filename where i18n could be found.

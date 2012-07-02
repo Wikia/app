@@ -1,0 +1,178 @@
+<script type="text/javascript">
+	mw.loader.load('gc.form.rapidhtml.webitects.bt');
+	// these must go through RapidHTML and thus are inline
+	var amountErrors = ["#general|escape",'#retryMsg|escape','#amount|escape'];
+	var billingErrors = ['#fname|escape','#lname|escape','#city|escape','#country|escape','#street|escape','#state|escape','#zip|escape','#emailAdd|escape'];
+	var paymentErrors = ['#card_num|escape','#card_type|escape','#cvv|escape'];
+	var actionURL = "@action";
+	var scriptPath = "@script_path";
+</script>
+<!--[if lt IE 7]>
+<script type="text/javascript">
+	mw.loader.load('gc.form.rapidhtml.webitects.ie6');
+</script>
+<style type="text/css">
+	body{
+		behavior: url("@script_path/skins/vector/csshover.min.htc");
+	}
+</style><![endif]-->
+<!--[if IE 7]>
+<style>
+	.gainlayout {
+		zoom: 1;
+		height: 1%;
+	}
+</style>
+<![endif]-->
+
+<div class="ltr">
+	<table id="layouttable">
+		<tr>
+			<td>
+				<div id="appeal">
+					<div id="appeal-content">
+						<h2 id="appeal-head"> <span class="mw-headline">{{LanguageSwitch|2011FR/@appeal/title|@language}}</span></h2>
+						<div id="appeal-body" class="plainlinks">{{LanguageSwitch|2011FR/@appeal/text|@language}}</div>
+					</div>
+				</div>
+			</td>
+			<td>
+				<div id="donate">
+					<div id="donate-content">
+						<div id="donate-body" style="padding: 0 1em;">
+							<form method="post" name="paypalcontribution">
+								<div id="step1header"><h3>%donate_interface-amount-legend% <span id="selected-amount"></span> <span class="mute" id="change-amount" style="display: none;">(<a href="#">%donate_interface-change%</a>)</span></h3></div>
+								<div id="step1wrapper" style="display: none;">
+									<div id="amtErrorMessages" class="small"></div>
+									<table id="amount-table-white">
+										<tr>
+											<td><label><input id="amountRadio0" type="radio" name="amountRadio" value="5" /> <span id="amountSpan0">5</span></label></td>
+											<td><label><input id="amountRadio1" type="radio" name="amountRadio" value="10" /> <span id="amountSpan1">10</span></label></td>
+											<td><label><input id="amountRadio2" type="radio" name="amountRadio" value="20" /> <span id="amountSpan2">20</span></label></td>
+											<td><label><input id="amountRadio3" type="radio" name="amountRadio" value="40" /> <span id="amountSpan3">40</span></label></td>
+										</tr>
+										<tr>
+											<td><label><input id="amountRadio4" type="radio" name="amountRadio" value="55" /> <span id="amountSpan4">55</span></label></td>
+											<td><label><input id="amountRadio5" type="radio" name="amountRadio" value="75" /> <span id="amountSpan5">75</span></label></td>
+											<td><label><input id="amountRadio6" type="radio" name="amountRadio" value="180" /> <span id="amountSpan6">180</span></label></td>
+											<td><input type="radio" name="amountRadio" id="input_amount_other" value="other" /> <label><span id="amountSpanOther"></span><input type="text" class="txt-sm hint"  name="amountGiven" size="4" id="other-amount" title="%donate_interface-other%" placeholder="%donate_interface-other%"  onfocus="this.form.input_amount_other.checked=true;"/></label></td>
+										</tr>
+									</table>
+								</div>
+
+
+								<div id="step2header"><h3>%donate_interface-cc-form-header-personal% <span class="mute" id="change-billing" style="display: none;">(<a href="#">%donate_interface-change%</a>)</span></h3></div>
+								<div id="step2wrapper">
+									<div id="billing-content" class="gainlayout">
+										<div id="billingErrorMessages" class="small"></div>
+										<div id="paymentErrorMessages" class="small"></div>
+										<!--<div class="name-fields">-->
+											<!--<span class="name-first"><input class="txt" id="fname" name="fname" title="%donate_interface-donor-fname%" value="@fname" placeholder="%donate_interface-donor-fname%"/></span>-->
+											<!--<span class="name-last"><input class="txt" id="lname" name="lname" title="%donate_interface-donor-lname%" value="@lname" placeholder="%donate_interface-donor-lname%"/></span>-->
+										<!--</div>-->
+										<div class="loc-fields nostate">
+											<!--<span class="loc-street"><input class="txt" id="street" name="street" title="%donate_interface-donor-street%" value="@street" placeholder="%donate_interface-donor-street%"/></span>-->
+											<!--<span class="loc-postal"><input class="txt" id="zip" name="zip" title="%donate_interface-donor-postal%" value="@zip" placeholder="%donate_interface-donor-postal%"/></span>-->
+											<!--<span class="loc-city"><input class="txt" id="city" name="city" title="%donate_interface-donor-city%" value="@city" placeholder="%donate_interface-donor-city%"/></span>-->
+											<!--<span class="loc-country">-->
+												<!--<select class="txt" id="country" name="country" value="@country" placeholder="%donate_interface-country%">-->
+													<!--<option value="">%donate_interface-select-country%</option>-->
+													<!--<option value="AT">%donate_interface-country-dropdown-AT%</option>-->
+												<!--</select>-->
+											<!--</span>-->
+										</div>
+										<!--<p><input class="txt" title="%donate_interface-donor-email%" id="emailAdd" name="emailAdd" value="@emailAdd" placeholder="%donate_interface-donor-email%"/> </p>-->
+										<table style="margin-top: 10px;" >
+											<tr><td>
+												<select style="margin-top: 15px;" id="issuer_id" name="issuer_id" value="@issuer_id">
+													<option value="">%donate_interface-rtbt-issuer_id%...</option>
+													<optgroup>
+														<option value="31">ABN AMRO</option>
+														<option value="91">Friesland Bank</option>
+														<option value="721">ING</option>
+														<option value="21">Rabobank</option>
+														<option value="751">SNS Bank</option>
+													</optgroup>
+													<optgroup label="%donate_interface-rtbt-issuer_id-longlist%">
+														<option value="761">ASN Bank</option>
+														<option value="771">RegioBank</option>
+														<option value="511">Triodos Bank</option>
+														<option value="161">Van Lanschot Bankiers</option>
+													</optgroup>
+												</select>
+
+												<div id="bt-continue" style="margin-top: 15px;"> <input class="btn" id="bt-continueBtn" type="button" value="%donate_interface-continue%" /></div>
+											</td><td>
+												<img style="margin-left: 25px;" src="@script_path/extensions/DonationInterface/gateway_forms/includes/iDEAL-klein.gif" alt="IDEAL klein">
+											</td></tr>
+										</table>
+
+									</div>
+								</div>
+
+
+								<input type="hidden" name="returnto" value="Thank_You/en" />
+								<input type="hidden" value="0" name="PaypalRedirect" id="PaypalRedirect">
+								<input type="hidden" value="@amount" name="amount" />
+								<input type="hidden" value="EUR" name="currency_code" />
+								<input type="hidden" value="@utm_source" name="utm_source"/>
+								<input type="hidden" value="@utm_medium" name="utm_medium"/>
+								<input type="hidden" value="@utm_campaign" name="utm_campaign"/>
+								<input type="hidden" value="@language" name="language"/>
+								<input type="hidden" value="@referrer" name="referrer"/>
+								<input type="hidden" value="@comment" name="comment"/>
+								<input type="hidden" value="@comment-option" name="comment-option"/>
+								<input type="hidden" value="1" name="email-opt"/>
+								<input type="hidden" value="@token" name="token"/>
+								<input type="hidden" value="@order_id"  name="order_id"/>
+								<input type="hidden" value="@numAttempt" name="numAttempt"/>
+								<input type="hidden" value="@contribution_tracking_id" name="contribution_tracking_id"/>
+								<input type="hidden" value="@data_hash" name="data_hash"/>
+								<input type="hidden" value="@owa_session" name="owa_session"/>
+								<input type="hidden" value="@owa_ref" name="owa_ref"/>
+								<!-- new required fields -->
+								<input type="hidden" value="@gateway" name="gateway"/>
+								<!-- required fields for bt and dd -->
+								<input type="hidden" value="rtbt" name="payment_method"/>
+								<input type="hidden" value="rtbt_ideal" name="payment_submethod"/>
+								<!-- required fields omitted above -->
+								<input type="hidden" value="John" name="fname" id="fname" />
+								<input type="hidden" value="Doe" name="lname" id="lname" />
+								<input type="hidden" value="n/a" name="street" id="street" />
+								<input type="hidden" value="n/a" name="city" id="city" />
+								<input type="hidden" value="XX" name="state" id="state" />
+								<input type="hidden" value="NL" name="country" id="country" />
+								<input type="hidden" value="00000" name="zip" id="zip" />
+								<input type="hidden" value="nobody@wikimedia.org" name="emailAdd" id="emailAdd" />
+							</form>
+							<div id="where-content">
+								{{LanguageSwitch|2011FR/core-appeal-whitebox-nodiv|@language}}
+							</div>
+						</div>
+					</div>
+					<p id="informationsharing">%donate_interface-informationsharing|url%</p>
+					<table>
+						<tr>
+							<td>
+								<ul id="moreinfolinks">
+									<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=Monthly_donations&language=@language&uselang=@language&country=@country">%donate_interface-monthly-donation%</a></li>
+									<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=Ways_to_Give&language=@language&uselang=@language&country=@country">%donate_interface-otherways-short%</a></li>
+									<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=FAQ&language=@language&uselang=@language&country=@country">%donate_interface-faqs%</a></li>
+									<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=Tax_Deductibility&language=@language&uselang=@language&country=@country">%donate_interface-tax-info%</a></li>
+								</ul>
+							</td>
+							<td>@verisign_logo</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+
+
+
+</div>
+
+<!-- Wikimedia Project logo
+<li id="footer-copyrightico"><a href="//wikimediafoundation.org/"><img src="//bits.wikimedia.org/images/wikimedia-button.png" width="88" height="31" alt="Wikimedia Foundation"/></a></li> 
+ -->

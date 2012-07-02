@@ -22,11 +22,18 @@ abstract class SecurePoll_Tallier {
 			return new SecurePoll_SchulzeTallier( $context, $electionTallier, $question );
 		case 'histogram-range':
 			return new SecurePoll_HistogramRangeTallier( $context, $electionTallier, $question );
+		case 'alternative-vote':
+			return new SecurePoll_AlternativeVoteTallier( $context, $electionTallier, $question );
 		default:
 			throw new MWException( "Invalid tallier type: $type" );
 		}
 	}
 
+	/**
+	 * @param  $context SecurePoll_Context
+	 * @param  $electionTallier SecurePoll_ElectionTallier
+	 * @param  $question SecurePoll_Question
+	 */
 	function __construct( $context, $electionTallier, $question ) {
 		$this->context = $context;
 		$this->question = $question;

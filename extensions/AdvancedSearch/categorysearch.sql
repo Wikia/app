@@ -15,4 +15,4 @@ CREATE TABLE /*$wgDBprefix*/categorysearch (
   UNIQUE KEY (cs_page),
   FULLTEXT cs_categories (cs_categories)
 
-) TYPE=MyISAM;
+) ENGINE=MyISAM;

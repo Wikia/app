@@ -7,8 +7,55 @@ version of Semantic Maps. You can find the most upt-do-date version at
 http://www.mediawiki.org/wiki/Extension:Semantic_Maps/Version_history#Semantic_Maps_change_log
 
 
-=== Semantic Maps 0.7.4 ===
+=== Semantic Maps 1.0.5 ===
+(2011-11-30)
 
+* Allow properties of type string to be used as title. (bug 32632)
+* Fixed error occuring when parsing invalid coordinates.
+
+=== Semantic Maps 1.0.4 ===
+(2011-10-15)
+
+* Added compatibility with SMW 1.7 and later.
+* Removed compatibility with SMW 1.6.1 and earlier.
+* Improved default map format handling.
+
+=== Semantic Maps 1.0.3 ===
+(2011-09-14)
+
+* Added geocodecontrol parameter for the form inputs.
+
+=== Semantic Maps 1.0.2 ===
+(2011-08-24)
+
+* Matching Maps 1.0.2 release. 
+
+=== Semantic Maps 1.0.1 ===
+(2011-08-17)
+
+* Fixed handling of the semantic link caption in the geographical coordinate datavalue class. 
+
+=== Semantic Maps 1.0 ===
+(2011-07-19)
+
+This version branched from Semantic Maps 0.7.x at version 0.7.3.
+See the maps release notes for all changes not specific to Semantic Maps.
+
+* Improved map query parameter support in the Special:Ask GUI
+
+* Fixed fatal error occurring when running maintenance/refreshLinks.php.
+
+* Rewrote all the form inputs to jQuery plugins.
+
+* Rewrote the map printers to use the SMQueryHandler class.
+
+* Added geocoding capability to the OpenLayers form input when having a GeoNames API account.
+
+* Added 'update map' button to all form inputs.
+
+* Fixed PostGres support for distance queries.
+
+* Use of the DataItems introduces in Semantic MediaWiki 1.6.
 
 === Semantic Maps 0.7.3 ===
 (2010-11-30)

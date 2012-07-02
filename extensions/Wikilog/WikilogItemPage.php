@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -47,16 +48,32 @@ class WikilogItemPage
 	 * @param $title Article title object.
 	 * @param $wi Wikilog info object.
 	 */
-	function __construct( &$title, &$wi ) {
+	public function __construct( Title $title, WikilogItem $item = null ) {
 		parent::__construct( $title );
-		wfLoadExtensionMessages( 'Wikilog' );
-		$this->mItem = WikilogItem::newFromInfo( $wi );
+		$this->mItem = $item;
+	}
+
+	/**
+	 * Return the appropriate WikiPage object for WikilogItemPage.
+	 */
+	protected function newPage( Title $title ) {
+		return new WikilogWikiItemPage( $title );
+	}
+
+	/**
+	 * Constructor from a page ID.
+	 * @param $id Int article ID to load.
+	 */
+	public static function newFromID( $id ) {
+		$t = Title::newFromID( $id );
+		$i = WikilogItem::newFromID( $id );
+		return $t == null ? null : new self( $t, $i );
 	}
 
 	/**
 	 * View page action handler.
 	 */
-	function view() {
+	public function view() {
 		global $wgOut, $wgUser, $wgContLang, $wgFeed, $wgWikilogFeedClasses;
 
 		# Get skin
@@ -97,7 +114,7 @@ class WikilogItemPage
 					$this->mItem->mName,
 					$this->mItem->mParentTitle->getPrefixedText()
 			);
-			$wgOut->setPageTitle( $this->mItem->mName );
+			$wgOut->setPageTitle( Sanitizer::escapeHtmlAllowEntities( $this->mItem->mName ) );
 			$wgOut->setHTMLTitle( wfMsg( 'pagetitle', $fullPageTitle ) );
 
 			# Item page footer.
@@ -132,35 +149,62 @@ class WikilogItemPage
 	}
 
 	/**
+	 * Compatibility with MediaWiki 1.17.
+	 * @todo Remove this in Wl1.3.
+	 */
+	public function preSaveTransform( $text ) {
+		return $this->newPage( $this->getTitle() )->preSaveTransform( $text );
+	}
+}
+
+/**
+ * Wikilog WikiPage class for WikilogItemPage.
+ */
+class WikilogWikiItemPage
+	extends WikiPage
+{
+	/**
+	 * Constructor from a page ID.
+	 * @param $id Int article ID to load.
+	 */
+	public static function newFromID( $id ) {
+		$t = Title::newFromID( $id );
+		return $t == null ? null : new self( $t );
+	}
+
+	/**
 	 * Override for preSaveTransform. Enables quick post publish by signing
 	 * the article using the standard --~~~~ marker. This causes the signature
 	 * marker to be replaced by a {{wl-publish:...}} parser function call,
 	 * that is then saved to the database and causes the post to be published.
 	 */
-	function preSaveTransform( $text ) {
+	public function preSaveTransform( $text, User $user = null, ParserOptions $popts = null ) {
 		global $wgParser, $wgUser;
+		$user = is_null( $user ) ? $wgUser : $user;
 
-		$popt = ParserOptions::newFromUser( $wgUser );
+		if ( $popts === null ) {
+			$popts = ParserOptions::newFromUser( $user );
+		}
 
 		$t = WikilogUtils::getPublishParameters();
-		$date = $t['date'];
-		$user = $t['user'];
+		$date_txt = $t['date'];
+		$user_txt = $t['user'];
 
 		$sigs = array(
-			'/\n?(--)?~~~~~\n?/m' => "\n{{wl-publish: {$date} }}\n",
-			'/\n?(--)?~~~~\n?/m' => "\n{{wl-publish: {$date} | {$user} }}\n",
-			'/\n?(--)?~~~\n?/m' => "\n{{wl-author: {$user} }}\n"
+			'/\n?(--)?~~~~~\n?/m' => "\n{{wl-publish: {$date_txt} }}\n",
+			'/\n?(--)?~~~~\n?/m' => "\n{{wl-publish: {$date_txt} | {$user_txt} }}\n",
+			'/\n?(--)?~~~\n?/m' => "\n{{wl-author: {$user_txt} }}\n"
 		);
 
 		if ( !StubObject::isRealObject( $wgParser ) ) {
 			$wgParser->_unstub();
 		}
-		$wgParser->startExternalParse( $this->mTitle, $popt, Parser::OT_WIKI );
+		$wgParser->startExternalParse( $this->mTitle, $popts, Parser::OT_WIKI );
 
 		$text = $wgParser->replaceVariables( $text );
 		$text = preg_replace( array_keys( $sigs ), array_values( $sigs ), $text );
 		$text = $wgParser->mStripState->unstripBoth( $text );
 
-		return parent::preSaveTransform( $text );
+		return parent::preSaveTransform( $text, $user, $popts );
 	}
 }

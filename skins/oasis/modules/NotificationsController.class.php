@@ -10,9 +10,10 @@ class NotificationsController extends WikiaController {
 	const SESSION_KEY = 'oasisConfirmation';
 
 	// confirmation types
-	const CONFIRMATION_NOTICE = 1;
-	const CONFIRMATION_PREVIEW = 2;
-	const CONFIRMATION_ERROR = 3;
+	const CONFIRMATION_CONFIRM = 1; // Green
+	const CONFIRMATION_NOTIFY = 2; // Blue
+	const CONFIRMATION_ERROR = 3; // Red
+	const CONFIRMATION_WARN = 4; // Yellow
 
 	// notification types
 	const NOTIFICATION_GENERIC_MESSAGE = 0;
@@ -130,12 +131,20 @@ class NotificationsController extends WikiaController {
 			$this->confirmation = $entry['message'];
 
 			switch($entry['type']) {
-				case self::CONFIRMATION_PREVIEW:
-					$this->confirmationClass = ' preview';
+				case self::CONFIRMATION_NOTIFY:
+					$this->confirmationClass = 'notify';
+					break;
+
+				case self::CONFIRMATION_CONFIRM:
+					$this->confirmationClass = 'confirm';
 					break;
 
 				case self::CONFIRMATION_ERROR:
-					$this->confirmationClass = ' error';
+					$this->confirmationClass = 'error';
+					break;
+
+				case self::CONFIRMATION_WARN:
+					$this->confirmationClass = 'warn';
 					break;
 			}
 
@@ -262,7 +271,7 @@ class NotificationsController extends WikiaController {
 
 			$title = Title::newFromText($mReturnTo);
 			if (!empty($title)) {
-				$mResolvedReturnTo = strtolower(SpecialPage::resolveAlias($title->getDBKey()));
+				$mResolvedReturnTo = strtolower(array_shift(SpecialPageFactory::resolveAlias($title->getDBKey())));
 				if (in_array($mResolvedReturnTo,array('userlogout','signup','connect'))) {
 					$title = Title::newMainPage();
 					$mReturnToQuery = '';
@@ -289,7 +298,6 @@ class NotificationsController extends WikiaController {
 
 		// FBConnect messages
 		if ( F::app()->checkSkin( 'oasis' ) && class_exists('FBConnectHooks')) {
-			wfLoadExtensionMessages('FBConnect');
 
 			$preferencesUrl = SpecialPage::getTitleFor('Preferences')->getFullUrl();
 			$fbStatus = $wgRequest->getVal('fbconnected');

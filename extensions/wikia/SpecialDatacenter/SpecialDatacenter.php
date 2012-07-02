@@ -12,7 +12,9 @@ class SpecialDatacenter extends UnlistedSpecialPage {
 	private
 		$mTitle,
 		$mCookie,
-		$mCookieName;
+		$mCookieName,
+		$mOut,
+		$mRequest;
 
 	public function __construct() {
 		parent::__construct( 'Datacenter' );
@@ -21,11 +23,12 @@ class SpecialDatacenter extends UnlistedSpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest, $wgMessageCache, $wgCookiePrefix;
-
-		$wgMessageCache->addMessages( array( "datacenter" => "Datacenter" ), "en" );
+		global $wgOut, $wgRequest, $wgCookiePrefix;
 
 		wfProfileIn( __METHOD__ );
+
+		$this->mRequest = RequestContext::getMain()->getRequest();
+		$this->mOut = RequestContext::getMain()->getOutput();
 
 		$this->setHeaders();
 		$this->mTitle = SpecialPage::getTitleFor( "Datacenter" );
@@ -33,31 +36,31 @@ class SpecialDatacenter extends UnlistedSpecialPage {
 		/**
 		 * if posted change cookie value
 		 */
-		if( $wgRequest->wasPosted() ) {
-			$val = $wgRequest->getVal( "iowacookie", 0 );
+		if( $this->mRequest->wasPosted() ) {
+			$val = $this->mRequest->getVal( "iowacookie", 0 );
 			if( $val == 2 ) {
-				$wgOut->addHTML( Wikia::successbox( "cookie set to sjc" ) );
-				$wgRequest->response()->setcookie( $this->mCookieName, "sjc" );
+				$this->mOut->addHTML( Wikia::successbox( "cookie set to sjc" ) );
+				$this->mRequest->response()->setcookie( $this->mCookieName, "sjc" );
 				$this->mCookie = "sjc";
 			}
 			elseif( $val == 1 ) {
-				$wgOut->addHTML( Wikia::successbox( "cookie set to iowa" ) );
-				$wgRequest->response()->setcookie( $this->mCookieName, "iowa" );
+				$this->mOut->addHTML( Wikia::successbox( "cookie set to iowa" ) );
+				$this->mRequest->response()->setcookie( $this->mCookieName, "iowa" );
 				$this->mCookie = "iowa";
 			}
 			elseif( $val == 3 ) {
-				$wgOut->addHTML( Wikia::successbox( "cookie set to ash" ) );
-				$wgRequest->response()->setcookie( $this->mCookieName, "ash" );
+				$this->mOut->addHTML( Wikia::successbox( "cookie set to ash" ) );
+				$this->mRequest->response()->setcookie( $this->mCookieName, "ash" );
 				$this->mCookie = "ash";
 			}
 			elseif( $val == 4 ) {
-				$wgOut->addHTML( Wikia::successbox( "cookie set to closest" ) );
-				$wgRequest->response()->setcookie( $this->mCookieName, "closest" );
+				$this->mOut->addHTML( Wikia::successbox( "cookie set to closest" ) );
+				$this->mRequest->response()->setcookie( $this->mCookieName, "closest" );
 				$this->mCookie = "closest";
 			}
 			else {
-				$wgOut->addHTML( Wikia::successbox( "cookie removed" ) );
-				$wgRequest->response()->setcookie( $this->mCookieName, "sjc", 1 );
+				$this->mOut->addHTML( Wikia::successbox( "cookie removed" ) );
+				$this->mRequest->response()->setcookie( $this->mCookieName, "sjc", 1 );
 				$this->mCookie = false;
 			}
 
@@ -70,7 +73,7 @@ class SpecialDatacenter extends UnlistedSpecialPage {
 				$this->mCookie = $_COOKIE[ $wgCookiePrefix . $this->mCookieName ];
 			}
 		}
-		$wgOut->addHTML(
+		$this->mOut->addHTML(
 			"Current value of cookie {$wgCookiePrefix}{$this->mCookieName}: <em>" .
 			( $this->mCookie ? $this->mCookie : "not set" ) . "</em>"
 		);
@@ -78,16 +81,16 @@ class SpecialDatacenter extends UnlistedSpecialPage {
 		/**
 		 * show input chooser
 		 */
-		$wgOut->addHTML( Xml::openElement( "form", array( "action" => $this->mTitle->getFullURL(), "method" => "post" ) ) );
+		$this->mOut->addHTML( Xml::openElement( "form", array( "action" => $this->mTitle->getFullURL(), "method" => "post" ) ) );
 		$select = new XMLSelect( "iowacookie", "iowacookie" );
 		$select->addOption( "Switch to the closest", 4 );
 		$select->addOption( "Switch to San Jose", 2 );
 		$select->addOption( "Switch to Iowa",     1 );
 		$select->addOption( "Switch to Ashburn",  3 );
 		$select->addOption( "Remove preferences", 0 );
-		$wgOut->addHTML( $select->getHTML() );
-		$wgOut->addHTML( Xml::submitButton( "submit" ) );
-		$wgOut->addHTML( Xml::closeElement( "form" ) );
+		$this->mOut->addHTML( $select->getHTML() );
+		$this->mOut->addHTML( Xml::submitButton( "submit" ) );
+		$this->mOut->addHTML( Xml::closeElement( "form" ) );
 
 		wfProfileOut( __METHOD__ );
 	}

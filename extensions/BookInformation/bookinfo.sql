@@ -8,9 +8,9 @@ CREATE TABLE /*wgDBprefix*/bookinfo (
 
   -- ISBN, 10 or 13 characters
   bi_isbn varchar(13) NOT NULL,
-  
+
   -- Result; a serialised BookInformationDriver
   bi_result blob NOT NULL,
-  
+
   PRIMARY KEY (bi_isbn)
 ) ENGINE=InnoDB;

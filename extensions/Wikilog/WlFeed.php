@@ -16,32 +16,32 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
 if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
-/*
+/**
  * General extension information.
  */
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'WlFeed',
-	'version'        => '1.0.99.1dev',
+	'version'        => '1.2.0',
 	'author'         => 'Juliano F. Ravasi',
-	'description'    => 'Enhanced feed generation classes.',
 	'descriptionmsg' => 'wlfeed-desc',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Wikilog',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Wikilog',
 );
 
-/*
+/**
  * Module autoload information.
  */
 
@@ -61,7 +61,7 @@ $wgAutoloadClasses += array(
 	'WlRSSFeedCompat'		=> $dir . 'WlFeed.body.php'
 );
 
-/*
+/**
  * Extension setup.
  */
 

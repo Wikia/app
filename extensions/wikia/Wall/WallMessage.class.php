@@ -22,7 +22,7 @@ class WallMessage {
 
 	static public function newFromId($id, $master = false) {
 		if( $master == true ) {
-			$title = F::build('Title', array($id, GAID_FOR_UPDATE), 'newFromId');
+			$title = F::build('Title', array($id, Title::GAID_FOR_UPDATE), 'newFromId');
 		} else {
 			$title = F::build('Title', array($id), 'newFromId');
 		}

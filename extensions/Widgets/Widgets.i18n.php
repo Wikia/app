@@ -195,10 +195,11 @@ Widgets desarrollados comunitariamente pueden ser encontrados en [http://www.med
 /** Finnish (Suomi)
  * @author Cimon Avaro
  * @author Crt
+ * @author Nike
  */
 $messages['fi'] = array(
-	'widgets-desc' => 'Mahdollistaa wikin ylläpitäjille pienoisohjelmien lisäyksen vapaamuotoisina muokkaamalla sivua nimiavaruudessa {{ns:widget}}.
-Alun perin kehitetty [http://www.ardorado.com Ardorado.com]-sivustoa varten.',
+	'widgets-desc' => 'Mahdollistaa wikin ylläpitäjille vapaamuotoisten pienoisohjelmien lisäämisen sivua nimiavaruudessa {{ns:widget}} muokkaamalla.
+Yhteisön tekemiä pienoisohjelmia löytyy osoitteesta [http://www.mediawikiwidgets.org/Main_Page MediaWikiWidgets.org].',
 	'widgets-error' => 'Virhe [[{{ns:widget}}:$1|pienoisohjelmassa $1]]',
 	'group-widgeteditor' => 'pienoisohjelmien muokkaajat',
 	'group-widgeteditor-member' => 'pienoisohjelman muokkaaja',
@@ -262,13 +263,13 @@ Vu dr Gmeinschaft aagleiti Widgets chenne unter [http://www.mediawikiwidgets.org
  * @author YaronSh
  */
 $messages['he'] = array(
-	'widgets-desc' => "מתן האפשרות למנהלי אתר הוויקי להוסיף וידג'טים הבנויים בצורה חופשית לאתר הוויקי באמצעות עריכת הדפים שבמרחב השם {{ns:widget}}.
-פותח במקור עבור [http://www.ardorado.com Ardorado.com]",
+	'widgets-desc' => 'מתן האפשרות למנהלי אתר הוויקי להוסיף וידג׳טים הבנויים בצורה חופשית לאתר הוויקי באמצעות עריכת הדפים שבמרחב השם {{ns:widget}}.
+ניתן למצוא וידג׳טים שנתרמו על ידי הקהילה ב־[http://www.mediawikiwidgets.org/Main_Page MediaWikiWidgets.org]',
 	'widgets-error' => "שגיאה ב[[{{ns:widget}}:$1|ווידג'ט $1]]",
 	'group-widgeteditor' => "עורכי וידג'טים",
 	'group-widgeteditor-member' => "עורך וידג'טים",
 	'grouppage-widgeteditor' => "Project:עורכי וידג'טים",
-	'right-editwidgets' => 'עריכת דפים במרחב השם "{{ns:widget}}"',
+	'right-editwidgets' => 'יצירה ועריכה של [http://www.mediawiki.org/wiki/Extension:Widgets וידג׳טים] במרחב השם <tt>{{ns:widget}}</tt>',
 );
 
 /** Upper Sorbian (Hornjoserbsce)

@@ -13,23 +13,21 @@
 class MapsDisplayMap extends ParserHook {
 	
 	/**
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 */
 	public static function staticMagic( array &$magicWords, $langCode ) {
-		$className = __CLASS__;
-		$instance = new $className();
+		$instance = new self;
 		return $instance->magic( $magicWords, $langCode );
 	}
 	
 	/**
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 */	
-	public static function staticInit( Parser &$wgParser ) {
-		$className = __CLASS__;
-		$instance = new $className();
-		return $instance->init( $wgParser );
+	public static function staticInit( Parser &$parser ) {
+		$instance = new self;
+		return $instance->init( $parser );
 	}	
 	
 	public static function initialize() {
@@ -63,12 +61,17 @@ class MapsDisplayMap extends ParserHook {
 		
 		$params['mappingservice']->setDefault( $egMapsDefaultServices['display_map'] );
 		$params['mappingservice']->addManipulations( new MapsParamService( 'display_map' ) );
+		$params['mappingservice']->setMessage( 'maps-displaymap-par-mappingservice' );
 		
 		$params['coordinates'] = new Parameter( 'coordinates' );
 		$params['coordinates']->addAliases( 'coords', 'location', 'address' );
 		$params['coordinates']->addCriteria( new CriterionIsLocation() );
-		$params['coordinates']->addManipulations( new MapsParamCoordSet() );		
 		$params['coordinates']->addDependencies( 'mappingservice', 'geoservice' );
+		$params['coordinates']->setMessage( 'maps-displaymap-par-coordinates' );
+		$params['coordinates']->setDoManipulationOfDefault( false );
+		$manipulation = new MapsParamLocation();
+		$manipulation->toJSONObj = true;
+		$params['coordinates']->addManipulations( $manipulation );		
 		
 		return $params;
 	}
@@ -118,6 +121,15 @@ class MapsDisplayMap extends ParserHook {
 			'noparse' => true,
 			'isHTML' => true
 		);
-	}	
-		
+	}
+
+	/**
+	 * @see ParserHook::getMessage()
+	 * 
+	 * @since 1.0
+	 */
+	public function getMessage() {
+		return 'maps-displaymap-description';
+	}		
+	
 }

@@ -3,7 +3,7 @@
  * @author Sean Colombo
  * @date 20120501
  *
- * 
+ *
  */
 
 class AbTesting extends WikiaObject {
@@ -29,12 +29,11 @@ class AbTesting extends WikiaObject {
 	 * @param string $scripts inline JS scripts
 	 * @return boolean return true to tell other functions on the same hook to continue executing
 	 */
-
-	public function onSkinGetHeadScripts( &$scripts ) {
+	public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
 		$this->wf->profileIn( __METHOD__ );
 
 		//AbTesting is an Oasis-only experiment for now
-		if ( $this->app->checkSkin( 'oasis' ) ) {
+		if ( $this->app->checkSkin( 'oasis', $skin ) ) {
 			// Config for experiments and treatment groups.
 			$scripts .= "\n\n<!-- A/B Testing code -->\n";
 			$js = $this->getJsExperimentConfig();
@@ -47,8 +46,7 @@ class AbTesting extends WikiaObject {
 
 	//keeping the response size (assets minification) and the number of external requests low (aggregation)
 	public function onWikiaMobileAssetsPackages( Array &$jsHeadPackages, Array &$jsBodyPackages, Array &$scssPackages ) {
-			$jsHeadPackages[] = 'abtesting';
-
+		array_unshift( $jsHeadPackages, 'abtesting' );
 		return true;
 	}
 
@@ -83,7 +81,7 @@ class AbTesting extends WikiaObject {
 
 		if ( empty( $jsString ) ) {
 			$db = $this->wf->getDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
-			
+
 			// Generate config JS from the experiments and treatment_groups tables in the datamart.
 			$result = $db->select(
 						array( 'experiments', 'treatment_groups' ),

@@ -43,7 +43,6 @@ function efUsernameBlacklist( &$user ) {
 	global $wgUser;
 	$blackList = UsernameBlacklist::fetch();
 	if( $blackList->match( $user->getName() ) && !$wgUser->isAllowed( 'uboverride' ) ) {
-		wfLoadExtensionMessages( 'UsernameBlacklist' );
 		global $wgOut;
 		$returnTitle = Title::makeTitle( NS_SPECIAL, 'Userlogin' );
 		$wgOut->errorPage( 'blacklistedusername', 'blacklistedusernametext' );
@@ -80,7 +79,6 @@ function efUsernameBlacklistValidate( $editPage, $text, $section, &$hookError ) 
 		$badLines = $blacklist->validate( $text );
 
 		if( $badLines ) {
-			wfLoadExtensionMessages( 'UsernameBlacklist' );
 			$badList = "*<tt>" .
 				implode( "</tt>\n*<tt>",
 					array_map( 'wfEscapeWikiText', $badLines ) ) .

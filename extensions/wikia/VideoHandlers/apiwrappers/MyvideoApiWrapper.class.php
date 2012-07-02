@@ -14,7 +14,12 @@ class MyvideoApiWrapper extends ApiWrapper {
 	public static function newFromUrl( $url ) {
 		$parsed = explode( "/", $url );
 		if( is_array( $parsed ) ) {
-			return new static( array_pop( $parsed ) );
+			// bugId:33385 url format or api req for myvideo must have changed.  It needs the numeric id for api to work.
+			$videoId = array_pop( $parsed );
+			if(!is_numeric($videoId)) {
+				$videoId = array_pop( $parsed );
+			}
+			return new static( $videoId );
 		}
 
 		return null;

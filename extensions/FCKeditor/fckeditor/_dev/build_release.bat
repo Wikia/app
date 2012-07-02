@@ -25,7 +25,7 @@
 ::
 
 :: Update this variable for each new release.
-SET RELEASER_VERSION=2.6.6
+SET RELEASER_VERSION=2.6.7
 
 CLS
 

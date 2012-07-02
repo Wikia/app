@@ -5,7 +5,7 @@
  *
  */
 
-class WikiaNewFiles extends IncludableSpecialPage {
+class WikiaNewFiles extends SpecialNewFiles {
 	function execute( $par ) {
 		$this->name( 'WikiaNewFiles' );
 		$this->setHeaders();

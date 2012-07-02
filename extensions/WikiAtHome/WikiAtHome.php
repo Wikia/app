@@ -29,7 +29,7 @@ foreach($tmpExt as $ext){
 }
 
 $wgExtensionMessagesFiles['WikiAtHome'] = "$exDir/WikiAtHome.i18n.php";
-$wgExtensionAliasesFiles['WikiAtHome'] = "$exDir/WikiAtHome.alias.php";
+$wgExtensionMessagesFiles['WikiAtHomeAlias'] = "$exDir/WikiAtHome.alias.php";
 
 //special pages
 $wgAutoloadClasses['SpecialWikiAtHome']		= "$exDir/SpecialWikiAtHome.php";
@@ -39,7 +39,7 @@ $wgSpecialPages['SpecialWikiAtHome']		= 'SpecialWikiAtHome';
 $wgAPIModules['wikiathome'] = 'ApiWikiAtHome';
 
 function wahAddGlobalPageVars(&$vars){
-	global $wgClientSearchInterval, $wgTitle;
+	global $wgClientSearchInterval;
 	//only add to the special page:
 	if($vars['wgCanonicalSpecialPageName'] == 'SpecialWikiAtHome'){
 		$vars['wgClientSearchInterval'] = $wgClientSearchInterval;
@@ -55,8 +55,7 @@ $wgExtensionCredits['media'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Wiki@Home',
 	'author'         => 'Michael Dale',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:WikiAtHome',
-	'description'    => 'Enables distributing transcoding & flattening video jobs to clients using firefogg.',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:WikiAtHome',
 	'descriptionmsg' => 'wah-desc',
 );
 /******************* CONFIGURATION STARTS HERE **********************/
@@ -138,7 +137,7 @@ $wgDerivativeSettings[ WikiAtHome::ENC_HQ_STREAM ] =
 		);
 
 
-/*
+/**
  * Main WikiAtHome Class hold some constants and config values
  *
  */
@@ -147,7 +146,7 @@ class WikiAtHome {
 	const ENC_WEB_STREAM = '400_300kbs';
 	const ENC_HQ_STREAM = 'high_quality';
 
-/*
+/**
  * the mapping between firefogg api and ffmpeg2theora command line
  * (this way shell command to ffmpeg2theora and firefogg can share a common api)
  * also see: http://firefogg.org/dev/index.html
@@ -223,7 +222,7 @@ class WikiAtHome {
 }
 
 //GLOBAL FUNCTIONS:
-/*
+/**
  * wahDoEncode issues an encode command to ffmpeg2theora
  */
 function wahDoEncode($source, $target, $encodeSettings ){
@@ -234,9 +233,9 @@ function wahDoEncode($source, $target, $encodeSettings ){
 		if( isset( $wah->foggMap[$key] ) ){
 			if( is_array(  $wah->foggMap[$key] ) ){
 				$cmd.= ' '. implode(' ', $wah->foggMap[$key] );
-			}else if($val == 'true' || $val===true){
+			}elseif($val == 'true' || $val===true){
 		 		$cmd.= ' '. $wah->foggMap[$key];
-			}else if( $val === false){
+			}elseif( $val === false){
 				//ignore "false" flags
 			}else{
 				//normal get/set value
@@ -257,7 +256,7 @@ function wahDoEncode($source, $target, $encodeSettings ){
 	return true;
 }
 
-/*
+/**
  * runs concatenation checks if we get a non zero length output
  */
 function wahDoOggCat( $destFile, $oggList ){

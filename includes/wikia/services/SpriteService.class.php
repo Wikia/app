@@ -286,10 +286,6 @@
 				if ($i !== false) {
 					$name = substr($name,0,$i);
 				}
-				$position =
-					  ($data['x']!=0 ? (-$data['x']).'px' : '0')
-					. ' '
-					. ($data['y']!=0 ? (-$data['y']).'px' : '0');
 				$images[] = array(
 					'file' => $file,
 					'name' => $name,

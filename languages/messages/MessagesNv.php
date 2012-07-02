@@ -161,7 +161,7 @@ $messages = array(
 # Login and logout pages
 'yourname'                => 'Choyoołʼįįhí bizhiʼ:',
 'yourpassword'            => 'Passwordígíí:',
-'remembermypassword'      => 'shipassword béédíínih',
+'remembermypassword'      => 'shipassword béédíínih (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'nav-login-createaccount' => 'Log in / accountígíí ádíílííł',
 'nologinlink'             => 'Accountígíí ádíílííł',
 'mailmypassword'          => 'passwordígíí ániidí shichʼįʼ ádíílííł (e-mail)',
@@ -276,16 +276,12 @@ $3',
 # Special:LinkSearch
 'linksearch' => 'linksígíí tłʼóoʼdi siʼánígíí',
 
-# Special:Log/newusers
-'newuserlog-create-entry' => 'choyoołʼįįhí ániidí',
-
 # E-mail user
 'emailuser' => 'E-mail bichʼįʼ áshłééh nisin',
 
 # Watchlist
 'watchlist'         => 'bikʼi déshʼį́į́ʼígíí',
 'mywatchlist'       => 'bikʼi déshʼį́į́ʼígíí',
-'watchlistfor'      => "('''$1''')",
 'addedwatchtext'    => "[[Special:Watchlist|Naaltsoos bikʼi díníʼį́į́ʼígíí]] bíhiniidééh. \"[[:\$1]]\" kʼad bikʼi díníʼį́į́ʼ.<br />Nááná [[Special:RecentChanges|\"áníídí łahgo ályaaígíí\"]] bikáaʼgi díí naaltsoos kʼad kodóó '''ditą́ą''' dooleeł.",
 'removedwatchtext'  => '"[[:$1]]" kʼad doo [[Special:Watchlist|bikʼi díníʼį́į]] da.',
 'watch'             => 'bikʼi déshʼį́į́ʼ nisin',
@@ -301,9 +297,6 @@ $3',
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching'   => '(...)',
 'unwatching' => '(...)',
-
-# Delete
-'deletedarticle' => '"[[$1]]" yiyiisxį́',
 
 # Protect
 'protectedarticle'          => '"[[$1]]" bichʼą́ą́h ííyá.',
@@ -349,14 +342,12 @@ $3',
 'blocklogentry' => '[[$1]] bichʼą́ą́h niiníyá ($2 $3)',
 
 # Move page
-'movearticle'     => 'naaltsoos:',
-'newtitle'        => 'naaltsoos bizhiʼ ániidí:',
-'move-watch'      => 'shinááł',
-'movepagebtn'     => '✔ bee lą́ ashłeeh',
-'movepage-moved'  => '\'\'\'"$1" kʼad "$2" wolyé\'\'\'',
-'1movedto2'       => 'naaltsoos "[[$1]]" → "[[$2]]"-góó yidiyiznááʼ',
-'1movedto2_redir' => 'naaltsoos "[[$1]]" → "[[$2]]"-góó yidiyiznááʼ (dah astsihí ńtʼę́ę́ʼ)',
-'revertmove'      => 'ńdíídleeł!',
+'movearticle'    => 'naaltsoos:',
+'newtitle'       => 'naaltsoos bizhiʼ ániidí:',
+'move-watch'     => 'shinááł',
+'movepagebtn'    => '✔ bee lą́ ashłeeh',
+'movepage-moved' => '\'\'\'"$1" kʼad "$2" wolyé\'\'\'',
+'revertmove'     => 'ńdíídleeł!',
 
 # Skin names
 'skinname-monobook' => "NaaltsoosŁáa'ígíí",
@@ -368,7 +359,7 @@ $3',
 
 # External editor support
 'edit-externally'      => "''external application''ígíí choinishʼįįhgo díí eʼelyaaígíí łahgo áshłééh nisin.",
-'edit-externally-help' => '([http://www.mediawiki.org/wiki/Manual:External_editors anáʼálwoʼ] (Bilagáanakʼehjí))',
+'edit-externally-help' => '([//www.mediawiki.org/wiki/Manual:External_editors anáʼálwoʼ] (Bilagáanakʼehjí))',
 
 # 'all' in various places, this might be different for inflected languages
 'watchlistall2' => 'tʼáá ałtso',

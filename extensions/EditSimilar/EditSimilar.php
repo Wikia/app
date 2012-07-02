@@ -8,10 +8,12 @@
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
  * @copyright Copyright © 2008, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @link http://www.mediawiki.org/wiki/Extension:EditSimilar Documentation
  */
 
-if ( !defined( 'MEDIAWIKI' ) )
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die( "This is not a valid entry point.\n" );
+}
 
 // Internationalization file
 $dir = dirname( __FILE__ ) . '/';
@@ -38,48 +40,66 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'EditSimilar',
 	'version' => '1.20',
 	'author' => array( 'Bartek Łapiński', 'Łukasz Garczewski' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:EditSimilar',
-	'description' => 'Encourages users to edit a page similar (by categories) to the one they just had edited.',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:EditSimilar',
 	'descriptionmsg' => 'editsimilar-desc',
 );
 
-// check if we had the extension enabled at all and if this is in a content namespace
+/**
+ * Check if we had the extension enabled at all and if the current page is in a
+ * content namespace.
+ *
+ * @param $article Object: Article object
+ * @return Boolean: true
+ */
 function wfEditSimilarCheck( $article ) {
 	global $wgUser, $wgContentNamespaces;
 
 	$namespace = $article->getTitle()->getNamespace();
-	if ( ( 1 == $wgUser->getOption( 'edit-similar', 1 ) ) && ( in_array( $namespace, $wgContentNamespaces ) ) ) {
+	if (
+		( $wgUser->getOption( 'edit-similar', 1 ) == 1 ) &&
+		( in_array( $namespace, $wgContentNamespaces ) )
+	)
+	{
 		$_SESSION['ES_saved'] = 'yes';
 	}
 	return true;
 }
 
-// view message depending on settings and the relevancy of the results
+/**
+ * Show a message, depending on settings and the relevancy of the results.
+ *
+ * @param $out Object: OutputPage instance
+ * @return Boolean: true
+ */
 function wfEditSimilarViewMesg( &$out ) {
-	global $wgTitle, $wgUser, $wgEditSimilarAlwaysShowThanks;
+	global $wgUser, $wgEditSimilarAlwaysShowThanks;
 
-	wfLoadExtensionMessages( 'EditSimilar' );
-
-	if ( !empty( $_SESSION['ES_saved'] ) && ( 1 == $wgUser->getOption( 'edit-similar', 1 ) ) && $out->isArticle() ) {
+	if (
+		!empty( $_SESSION['ES_saved'] ) &&
+		( $wgUser->getOption( 'edit-similar', 1 ) == 1 ) &&
+		$out->isArticle()
+	)
+	{
 		if ( EditSimilar::checkCounter() ) {
 			$message_text = '';
-			$article_title = $wgTitle->getText();
+			$title = $out->getTitle();
+			$articleTitle = $title->getText();
 			// here we'll populate the similar articles and links
-			$instance = new EditSimilar( $wgTitle->getArticleId(), 'category' );
+			$instance = new EditSimilar( $title->getArticleId(), 'category' );
 			$similarities = $instance->getSimilarArticles();
 
 			if ( !empty( $similarities ) ) {
 				global $wgLang;
 
 				if ( $instance->mSimilarArticles ) {
-					$message_text = wfMsgExt(
+					$messageText = wfMsgExt(
 						'editsimilar-thanks',
 						array( 'parsemag' ),
 						$wgLang->listToText( $similarities ),
 						count( $similarities )
 					);
 				} else { // the articles we found were rather just articles needing attention
-					$message_text = wfMsgExt(
+					$messageText = wfMsgExt(
 						'editsimilar-thanks-notsimilar',
 						array( 'parsemag' ),
 						$wgLang->listToText( $similarities ),
@@ -88,12 +108,12 @@ function wfEditSimilarViewMesg( &$out ) {
 				}
 			} else {
 				if ( $wgUser->isLoggedIn() && !empty( $wgEditSimilarAlwaysShowThanks ) ) {
-					$message_text = wfMsg( 'editsimilar-thankyou', $wgUser->getName() );
+					$messageText = wfMsg( 'editsimilar-thankyou', $wgUser->getName() );
 				}
 			}
 
-			if ( '' != $message_text ) {
-				EditSimilar::showMessage( $message_text );
+			if ( $messageText != '' ) {
+				EditSimilar::showMessage( $messageText, $articleTitle );
 			}
 		}
 		// display that only once
@@ -103,15 +123,14 @@ function wfEditSimilarViewMesg( &$out ) {
 }
 
 /**
- * Adds the new toggle to Special:Preferences for enabling EditSimilar extension on a per-user basis
+ * Adds the new toggle to Special:Preferences for enabling EditSimilar
+ * extension on a per-user basis.
  *
  * @param $user User object
  * @param $preferences Preferences object
- * @return true
+ * @return Boolean: true
  */
 function wfEditSimilarToggle( $user, &$preferences ) {
-	wfLoadExtensionMessages( 'EditSimilar' );
-
 	$preferences['edit-similar'] = array(
 		'type' => 'toggle',
 		'section' => 'editing',

@@ -1,0 +1,43 @@
+Page Schemas extension
+
+        Version 0.3
+        Ankit Garg and Yaron Koren
+
+This is free software licensed under the GNU General Public License. Please
+see http://www.gnu.org/copyleft/gpl.html for further details, including the
+full text and terms of the license.
+
+== Overview ==
+
+Page Schemas is an extension to MediaWiki that allows for defining all the
+schema information about a "class", or data type - for naming, display,
+data input, and browsing - within a single piece of XML contained within a
+category page. This XML can then be used to generate all the necessary
+additional pages needed to put the schema into effect, such as template
+pages and, for instance, if Semantic Forms is installed, form pages. The
+XML can be created and edited via a helper form, preventing users from
+having to generate or modify it manually.
+
+Page Schemas allows other extensions to define their own fields to add to
+the XML, using hooks.
+
+For more information, see the extension homepage at:
+http://www.mediawiki.org/wiki/Extension:Page_Schemas
+
+== Requirements ==
+
+This version of the Page Schemas extension requires MediaWiki 1.17 or higher.
+
+== Installation ==
+
+To install the extension, place the entire 'PageSchemas' directory
+within your MediaWiki 'extensions' directory, then add the following
+line to your 'LocalSettings.php' file:
+
+     require_once( "$IP/extensions/PageSchemas/PageSchemas.php" );
+
+== Contact ==
+
+Comments, questions, suggestions and bug reports are welcome, and can
+be placed on the Talk page for the extension, or sent to Yaron at
+yaron57@gmail.com.

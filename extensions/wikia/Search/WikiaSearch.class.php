@@ -295,7 +295,7 @@ class WikiaSearch extends WikiaObject {
 		$result['ns'] = $page->getTitle()->getNamespace();
 		$result['host'] = substr($this->wg->Server, 7);
 		$result['lang'] = $this->wg->Lang->mCode;
-		
+
 		# these need to be strictly typed as bool strings since they're passed via http when in the hands of the worker
 		$result['iscontent'] = in_array( $result['ns'], $this->wg->ContentNamespaces ) ? 'true' : 'false';
 		$result['is_main_page'] = ($page->getId() == Title::newMainPage()->getArticleId() && $page->getId() != 0) ? 'true' : 'false';
@@ -371,7 +371,7 @@ class WikiaSearch extends WikiaObject {
 			$result['activeusers'] = $statistics['activeusers'];
 			$result['wiki_images'] = $statistics['images'];
 		}
-		
+
 		$result['redirect_titles'] = $this->getRedirectTitles($page);
 
 		$wikiViews = $this->getWikiViews($page);
@@ -387,7 +387,9 @@ class WikiaSearch extends WikiaObject {
 	private function getRedirectTitles( Article $page ) {
 		wfProfileIn(__METHOD__);
 
-		$result = $page->getDB()->selectRow(array('redirect', 'page'),
+		$dbr = wfGetDB(DB_SLAVE);
+
+		$result = $dbr->selectRow(array('redirect', 'page'),
 				array('GROUP_CONCAT(page_title SEPARATOR " | ") AS redirect_titles'),
 				array(),
 				__METHOD__,
@@ -436,14 +438,33 @@ class WikiaSearch extends WikiaObject {
 	public function getRelatedVideos(array $params = array('start'=>0, 'size'=>20)) {
 	        wfProfileIn(__METHOD__);
 	        # going to need an "is_video" field
-	        $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) '
-		              . 'AND ns:6 AND -title:(jpg gif png jpeg svg ico ogg)';
+	        if ( !empty($params['video_wiki_only']) ) {
+				$params['fq'] = ' wid:' . self::VIDEO_WIKI_ID .' ';
+
+				
+	        } else {
+		        $params['fq'] = '(wid:' . $this->wg->cityId . ' OR wid:' . self::VIDEO_WIKI_ID . '^2) ';
+	        }
+		$params['fq'] .= 'AND ns:6 AND -title:(jpg gif png jpeg svg ico ogg pdf)';
 
 		$query = sprintf('wid:%d', $this->wg->cityId);
 		if (isset($params['pageId'])) {
 		  $query .= sprintf(' AND pageid:%d', $params['pageId']);
 		} else {
-		  $query .= ' AND iscontent:true';
+
+			// tweakable heuristic:
+			// the document frequency for the interesting terms needs to be at least 50% of the wiki's pages
+			$data = $this->callMediaWikiAPI( array( 'action' => 'query',
+													'prop' => 'info|categories',
+													'inprop' => 'url|created|views|revcount',
+													'meta' => 'siteinfo',
+													'siprop' => 'statistics|wikidesc|variables|namespaces|category'
+													));
+
+			if (isset($data['query']) && isset($data['query']['statistics']) && isset($data['query']['statistics']['articles'])) {
+				$params['mindf'] = (int) ($data['query']['statistics']['articles'] * .5);
+			}
+			$query .= ' AND iscontent:true';
 		}
 		wfProfileOut(__METHOD__);
 	        return $this->getSimilarPages($query, $params);
@@ -461,7 +482,11 @@ class WikiaSearch extends WikiaObject {
 		$params['mlt.fl'] = 'title,html';
 
 		$clientResponse = $this->client->getSimilarPages($query, $params);
-		$similarPages = $clientResponse->response->docs;
+
+		$similarPages = array();
+		if ( is_object($clientResponse->response) ) {
+			$similarPages = $clientResponse->response->docs;
+		}
 
 		$response = array();
 		foreach ($similarPages as $similarPage)

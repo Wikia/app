@@ -25,13 +25,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionFunctions[] = 'wfSetupImageSizeInfoFunctions';
 $wgExtensionCredits['parserhook'][] = array(
 		'name' => 'ImageSizeInfoFunctions',
-		'version' => '1.0.1',
+		'version' => '1.0.1~wikia',
 		'url' => 'http://www.mediawiki.org/wiki/Extension:ImageSizeInfoFunctions',
 		'author' => 'Dario de Judicibus',
 		'description' => 'Enhance parser with image size info functions',
 		);
 
-$wgHooks['LanguageGetMagic'][]       = 'wfImageSizeInfoFunctionsLanguageGetMagic';
+
+$wgExtensionMessagesFiles['ImageSizeInfoFunctions'] =  dirname( __FILE__ ) . '/ImageSizeInfoFunctions.i18n.php';
 
 class ExtImageSizeInfoFunctions {
 
@@ -47,39 +48,28 @@ class ExtImageSizeInfoFunctions {
 			return $width;
 		} catch(Exception $e) {
 			return $e->getMessage();
-		} 
+		}
 	}
 
 	function imageHeight( &$parser, $image = '' ) {
-		try {     
-			$title = Title::newFromText($image,NS_IMAGE);  
+		try {
+			$title = Title::newFromText($image,NS_IMAGE);
 			$file = function_exists( 'wfFindFile' ) ? wfFindFile( $title ) : new Image( $title );
 			$height = (is_object( $file ) && $file->exists()) ? $file->getHeight() : 0;
 			return $height;
 		} catch(Exception $e) {
 			return $e->getMessage();
-		}                         
-	} 
-} 
+		}
+	}
+}
 
 function wfSetupImageSizeInfoFunctions() {
-	global $wgParser, $wgMessageCache, $wgExtInfoFunctions, $wgMessageCache, $wgHooks;
+	global $wgParser, $wgExtInfoFunctions, $wgHooks;
 
 	$wgExtInfoFunctions = new ExtImageSizeInfoFunctions;
 
-	$wgParser->setFunctionHook( 'imgw', array( &$wgExtInfoFunctions, 'imageWidth' ) );      
-	$wgParser->setFunctionHook( 'imgh', array( &$wgExtInfoFunctions, 'imageHeight' ) );             
-
-	require_once( dirname( __FILE__ ) . '/ImageSizeInfoFunctions.i18n.php' );
-	foreach( efImageSizeInfoFunctionsMessages() as $lang => $messages )
-		$wgMessageCache->addMessages( $messages, $lang );
+	$wgParser->setFunctionHook( 'imgw', array( &$wgExtInfoFunctions, 'imageWidth' ) );
+	$wgParser->setFunctionHook( 'imgh', array( &$wgExtInfoFunctions, 'imageHeight' ) );
 
 	$wgHooks['ParserClearState'][] = array( &$wgExtInfoFunctions, 'clearState' );
-}
-
-function wfImageSizeInfoFunctionsLanguageGetMagic( &$magicWords, $langCode ) {
-	require_once( dirname( __FILE__ ) . '/ImageSizeInfoFunctions.i18n.php' );
-	foreach( efImageSizeInfoFunctionsWords( $langCode ) as $word => $trans )
-		$magicWords[$word] = $trans;
-	return true;
 }

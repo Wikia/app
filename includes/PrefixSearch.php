@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PrefixSearch - Handles searching prefixes of titles and finding any page
  * names that match. Used largely by the OpenSearch implementation.
@@ -16,18 +15,20 @@ class PrefixSearch {
 	 * @param $namespaces Array: used if query is not explicitely prefixed
 	 * @return Array of strings
 	 */
-	public static function titleSearch( $search, $limit, $namespaces=array() ) {
+	public static function titleSearch( $search, $limit, $namespaces = array() ) {
 		$search = trim( $search );
 		if( $search == '' ) {
 			return array(); // Return empty result
 		}
 		$namespaces = self::validateNamespaces( $namespaces );
 
+		// Find a Title which is not an interwiki and is in NS_MAIN
 		$title = Title::newFromText( $search );
 		if( $title && $title->getInterwiki() == '' ) {
 			$ns = array($title->getNamespace());
-			if($ns[0] == NS_MAIN)
+			if( $ns[0] == NS_MAIN ) {
 				$ns = $namespaces; // no explicit prefix, use default namespaces
+			}
 			return self::searchBackend(
 				$ns, $title->getText(), $limit );
 		}
@@ -38,12 +39,11 @@ class PrefixSearch {
 			&& $title->getNamespace() != NS_MAIN
 			&& $title->getInterwiki() == '' ) {
 			return self::searchBackend(
-				array($title->getNamespace()), '', $limit );
+				array( $title->getNamespace() ), '', $limit );
 		}
 
 		return self::searchBackend( $namespaces, $search, $limit );
 	}
-
 
 	/**
 	 * Do a prefix search of titles and return a list of matching page names.
@@ -53,10 +53,10 @@ class PrefixSearch {
 	 * @return Array of strings
 	 */
 	protected static function searchBackend( $namespaces, $search, $limit ) {
-		if( count($namespaces) == 1 ){
+		if( count( $namespaces ) == 1 ) {
 			$ns = $namespaces[0];
 			if( $ns == NS_MEDIA ) {
-				$namespaces = array(NS_FILE);
+				$namespaces = array( NS_FILE );
 			} elseif( $ns == NS_SPECIAL ) {
 				return self::specialSearch( $search, $limit );
 			}
@@ -77,19 +77,23 @@ class PrefixSearch {
 	 */
 	protected static function specialSearch( $search, $limit ) {
 		global $wgContLang;
+
+		# normalize searchKey, so aliases with spaces can be found - bug 25675
+		$search = str_replace( ' ', '_', $search );
+
 		$searchKey = $wgContLang->caseFold( $search );
 
 		// Unlike SpecialPage itself, we want the canonical forms of both
 		// canonical and alias title forms...
-		SpecialPage::initList();
-		SpecialPage::initAliasList();
 		$keys = array();
-		foreach( array_keys( SpecialPage::$mList ) as $page ) {
+		foreach( SpecialPageFactory::getList() as $page => $class ) {
 			$keys[$wgContLang->caseFold( $page )] = $page;
 		}
+
 		foreach( $wgContLang->getSpecialPageAliases() as $page => $aliases ) {
-			if( !array_key_exists( $page, SpecialPage::$mList ) ) # bug 20885
+			if( !array_key_exists( $page, SpecialPageFactory::getList() ) ) {# bug 20885
 				continue;
+			}
 
 			foreach( $aliases as $alias ) {
 				$keys[$wgContLang->caseFold( $alias )] = $alias;
@@ -100,12 +104,20 @@ class PrefixSearch {
 		$srchres = array();
 		foreach( $keys as $pageKey => $page ) {
 			if( $searchKey === '' || strpos( $pageKey, $searchKey ) === 0 ) {
-				$srchres[] = Title::makeTitle( NS_SPECIAL, $page )->getPrefixedText();
+				wfSuppressWarnings();
+				// bug 27671: Don't use SpecialPage::getTitleFor() here because it
+				// localizes its input leading to searches for e.g. Special:All
+				// returning Spezial:MediaWiki-Systemnachrichten and returning
+				// Spezial:Alle_Seiten twice when $wgLanguageCode == 'de'
+				$srchres[] = Title::makeTitleSafe( NS_SPECIAL, $page )->getPrefixedText();
+				wfRestoreWarnings();
 			}
+
 			if( count( $srchres ) >= $limit ) {
 				break;
 			}
 		}
+
 		return $srchres;
 	}
 
@@ -121,12 +133,13 @@ class PrefixSearch {
 	 * @return Array of title strings
 	 */
 	protected static function defaultSearchBackend( $namespaces, $search, $limit ) {
-		$ns = array_shift($namespaces); // support only one namespace
-		if( in_array(NS_MAIN,$namespaces))
+		$ns = array_shift( $namespaces ); // support only one namespace
+		if( in_array( NS_MAIN, $namespaces ) ) {
 			$ns = NS_MAIN; // if searching on many always default to main
+		}
 
 		// Prepare nested request
-		$req = new FauxRequest(array (
+		$req = new FauxRequest( array(
 			'action' => 'query',
 			'list' => 'allpages',
 			'apnamespace' => $ns,
@@ -135,7 +148,7 @@ class PrefixSearch {
 		));
 
 		// Execute
-		$module = new ApiMain($req);
+		$module = new ApiMain( $req );
 		$module->execute();
 
 		// Get resulting data
@@ -143,7 +156,7 @@ class PrefixSearch {
 
 		// Reformat useful data for future printing by JSON engine
 		$srchres = array ();
-		foreach ((array)$data['query']['allpages'] as $pageinfo) {
+		foreach ( (array)$data['query']['allpages'] as $pageinfo ) {
 			// Note: this data will no be printable by the xml engine
 			// because it does not support lists of unnamed items
 			$srchres[] = $pageinfo['title'];
@@ -156,19 +169,23 @@ class PrefixSearch {
 	 * Validate an array of numerical namespace indexes
 	 *
 	 * @param $namespaces Array
-	 * @return Array
+	 * @return Array (default: contains only NS_MAIN)
 	 */
-	protected static function validateNamespaces($namespaces){
+	protected static function validateNamespaces( $namespaces ) {
 		global $wgContLang;
+
+		// We will look at each given namespace against wgContLang namespaces
 		$validNamespaces = $wgContLang->getNamespaces();
-		if( is_array($namespaces) && count($namespaces)>0 ){
+		if( is_array( $namespaces ) && count( $namespaces ) > 0 ) {
 			$valid = array();
-			foreach ($namespaces as $ns){
-				if( is_numeric($ns) && array_key_exists($ns, $validNamespaces) )
+			foreach ( $namespaces as $ns ) {
+				if( is_numeric( $ns ) && array_key_exists( $ns, $validNamespaces ) ) {
 					$valid[] = $ns;
+				}
 			}
-			if( count($valid) > 0 )
+			if( count( $valid ) > 0 ) {
 				return $valid;
+			}
 		}
 
 		return array( NS_MAIN );

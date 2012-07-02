@@ -9,7 +9,6 @@
 class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
-		wfLoadExtensionMessages('WikiFeatures');
 		parent::__construct('WikiFeatures', 'wikifeaturesview');
 	}
 	

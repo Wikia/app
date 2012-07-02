@@ -11,7 +11,6 @@ class SOTD extends SpecialPage
 	function __construct()
 	{
 		parent::__construct( 'SOTD' );
-		wfLoadExtensionMessages('SOTD');
 		global $errors, $errorlist, $wgOut;
 		$wgOut->addStyle(AssetsManager::getInstance()->getOneLocalURL('extensions/3rdparty/LyricWiki/SongOfTheDay/Special_SOTD.css'));
 		$errors = array ( 'set' => false );

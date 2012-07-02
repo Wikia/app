@@ -15,7 +15,7 @@ wgAjaxShowEditors.onLoad = function() {
 	}
 
 	wgAjaxShowEditors.allowRefresh();
-}
+};
 
 
 // Ask for new data & update UI
@@ -38,7 +38,7 @@ wgAjaxShowEditors.refresh = function() {
 	if(!ShowEditorsCounting) {
 		wgAjaxShowEditors.countup();
 	}
-}
+};
 
 wgAjaxShowEditors.countup = function() {
 	ShowEditorsCounting = true;
@@ -52,13 +52,13 @@ wgAjaxShowEditors.countup = function() {
 			item.innerHTML = value ;
 		}
 	}
-	setTimeout( "wgAjaxShowEditors.countup()", 1000 );
-}
+	setTimeout( wgAjaxShowEditors.countup, 1000 );
+};
 
 // callback to allow refresh
 wgAjaxShowEditors.allowRefresh = function() {
 	canRefresh = true;
-}
+};
 
 // Register our initialization function.
-hookEvent( "load", wgAjaxShowEditors.onLoad);
+$(wgAjaxShowEditors.onLoad);

@@ -16,9 +16,11 @@ class TopListParser {
 	 * Callback implementation for the ParserFirstCallInit hook
 	 */
 	static public function onParserFirstCallInit( &$parser ) {
-		wfProfileIn( __METHOD__ );
-		$parser->setHook( TOPLIST_TAG, array( __CLASS__, "parseTag" ) );
-		wfProfileOut( __METHOD__ );
+		$app = F::app();
+
+		$app->wf->ProfileIn( __METHOD__ );
+		$app->wg->Parser->setHook( TOPLIST_TAG, array( __CLASS__, "parseTag" ) );
+		$app->wf->ProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -28,10 +30,6 @@ class TopListParser {
 	 * Implementation of a parser function
 	 */
 	static public function parseTag( $input, $args, $parser ) {
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgUser;
-
-		wfLoadExtensionMessages( 'TopLists' );
-
 		$relatedTitle = null;
 		$relatedImage = null;
 		$relatedUrl = null;
@@ -78,27 +76,27 @@ class TopListParser {
 		if ( !empty( $list ) ) {
 			$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
                         
-                        if ( $relatedTitle instanceof Title ) {
-                            $relatedTitleData = array(
-                                'localURL' => $relatedTitle->getLocalURL(),
-                                'text'     => $relatedTitle->getText()
-                            );
-                        } else {
-                            $relatedTitleData = null;
-                        }
+				if ( $relatedTitle instanceof Title ) {
+					$relatedTitleData = array(
+						'localURL' => $relatedTitle->getLocalURL(),
+						'text'     => $relatedTitle->getText()
+					);
+				} else {
+					$relatedTitleData = null;
+				}
                         
 			$template->set_vars(
 				array(
 					'list' => $list,
-                                        'listTitle' => $list->getTitle()->getText(),
-                                        'relatedTitleData' => $relatedTitleData,
-                                        'relatedImage' => $relatedImage,
+					'listTitle' => $list->getTitle()->getText(),
+					'relatedTitleData' => $relatedTitleData,
+					'relatedImage' => $relatedImage,
 					'attribs' => self::$mAttributes,
 					'relatedUrl' => $relatedUrl
 				)
 			);
 
-			self::$mOutput = $template->execute( 'list' );
+			self::$mOutput = $template->render( 'list' );
 
 			// remove whitespaces to avoid extra <p> tags
 			self::$mOutput = preg_replace("#[\n\t]+#", '', self::$mOutput);
@@ -127,13 +125,10 @@ class TopListParser {
 	 * @param TopList $list the list object representing the article to parse
 	 */
 	static public function parse( TopList $list ) {
-		global $wgParser;
-		$parserOptions = new ParserOptions();
 		self::$mList = $list;
-
-		$parsedText = $wgParser->parse($list->getArticle()->getContent(), $list->getTitle(), $parserOptions)->getText();
+		$text = F::app()->wg->Out->parse( $list->getArticle()->getContent() );
 		$list->invalidateCache();
 
-		return $parsedText;
+		return $text;
 	}
 }

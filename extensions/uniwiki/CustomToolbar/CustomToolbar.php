@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 # http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -25,17 +25,11 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'CustomToolbar',
 	'author'         => array( 'Mark Johnston', 'Adam Mckaig', 'Evan Wheeler' ),
 	'version'        => '0.1',
-	'description'    => 'Extension to build an extensible toolbar for MediaWiki',
 	'descriptionmsg' => 'ct-desc',
 );
 
 /* ---- INTERNATIONALIZATION ---- */
-
-require_once( 'CustomToolbar.i18n.php' );
-
-// add the internationalization function to the list
-global $wgExtensionFunctions;
-$wgExtensionFunctions[] = 'CustomToolbar_i18n';
+$wgExtensionMessagesFiles['CustomToolbar'] = dirname( __FILE__ ) . '/CustomToolbar.i18n.php';
 
 //add file extensions for acceptable images and attachments
 global $wgFileExtensions;
@@ -45,16 +39,6 @@ $wgFileExtensions = array( 'png', 'gif', 'jpg', 'jpeg', 'ogg', 'mp3', 'wav', 'do
 $ct_uploadable_images = array('png', 'gif', 'jpg', 'jpeg' );
 //these will get media links
 //$ct_uploadable_attachments = array('ogg', 'mp3', 'wav', 'doc', 'xls', 'csv', 'bmp', 'ppt', 'pdf', 'txt', 'rm', 'mov', 'avi' );
-
-
-
-function CustomToolbar_i18n() {
-	// add this extension's messages to the message cache
-	global $wgMessageCache, $wgCustomToolbarMessages;
-	foreach( $wgCustomToolbarMessages as $lang => $messages )
-		$wgMessageCache->addMessages($messages, $lang);
-}
-
 
 $wgHooks['EditPage::showEditForm:initial'][] = "CustomToolbar_turnOffToolbar";
 function CustomToolbar_turnOffToolbar() {
@@ -94,39 +78,37 @@ function CustomToolbar_addAssets(&$out) {
 
 }
 
-$wgExtensionFunctions[] = 'wfCustomToolbarUploadForm';
-function wfCustomToolbarUploadForm() {
-	$file = "extensions/uniwiki/CustomToolbar/CustomToolbar.php";
-	SpecialPage::AddPage(
-		new UnlistedSpecialPage('CustomToolbarUpload', '', false, $file)
-	);
-}
+$wgSpecialPages['CustomToolbarUpload'] = 'SpecialCustomToolbarUpload';
 
-function wfSpecialCustomToolbarUpload() {
-    global $wgRequest;
-    $form = new CustomToolbarUploadForm($wgRequest);
-    $form->execute();
+class SpecialCustomToolbarUpload extends SpecialPage {
+
+	public function __construct(){
+		parent::__construct( 'CustomToolbarUpload' );
+	}
+
+	function execute() {
+		global $wgRequest;
+		$form = new CustomToolbarUploadForm($wgRequest);
+		$form->execute();
+	}
 }
 $wgHooks['UploadComplete'][] = array('CustomToolbarUploadForm::showSuccess');
 //XX TODO investigate FileUpload hook for attachment purposes
 //$wgHooks['FileUpload'][] = array('CustomToolbarUploadForm::showSuccess', 'attachment');
-$wgSpecialRefactorVersion = '1.13.0';
-if (version_compare($wgVersion, $wgSpecialRefactorVersion, '<')) {
-    require_once('includes/SpecialUpload.php');
-} else {
-    require_once('includes/specials/SpecialUpload.php');
-}
+
+require_once('includes/specials/SpecialUpload.php');
+
 class CustomToolbarUploadForm extends UploadForm {
 	/* Some code poached from Travis Derouin's <travis@wikihow.com>
 	 * UploadPopup extension
 	 */
 	var $mType, $mSection, $mCaption, $mDestFile;
 
-	function CustomToolbarUploadForm(&$request) {
+	function __construct(&$request) {
 		$this->mType = $request->getVal('type');
 		$this->mCaption = $request->getText('wpCaption');
 		$this->mSection = $request->getVal('section');
-		UploadForm::UploadForm(&$request);
+		UploadForm::UploadForm($request);
 	}
 
 	function execute() {
@@ -190,7 +172,7 @@ class CustomToolbarUploadForm extends UploadForm {
 		$upload_button = wfMsgHtml( 'uploadbtn' );
 		$cancel_button = wfMsg('cancel');
 
-		$titleObj = Title::makeTitle( NS_SPECIAL, 'CustomToolbarUpload' );
+		$titleObj = SpecialPage::getTitleFor( 'CustomToolbarUpload' );
 		$action = $titleObj->escapeLocalURL();
 
 		$encDestFile = htmlspecialchars( $this->mDestFile );
@@ -319,7 +301,7 @@ class CustomToolbarUploadForm extends UploadForm {
         	$file_link = '[[' . 'Media:' . $file->mDestName . '|' . $file->mCaption . ']]';
 		}
 
-		$titleObj = Title::makeTitle( NS_SPECIAL, 'CustomToolbarUpload' );
+		$titleObj = SpecialPage::getTitleFor( 'CustomToolbarUpload' );
 		//insert the wiki markup in the appropriate section
 		//or the classic-mode textarea if we are in classic-mode
 		if($file->mDestWarningAck != 'wpTextbox1'){

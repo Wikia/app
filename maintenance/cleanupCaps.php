@@ -1,12 +1,12 @@
 <?php
-/*
+/**
  * Script to clean up broken page links when somebody turns on $wgCapitalLinks.
  *
  * Usage: php cleanupCaps.php [--dry-run]
  * Options:
  *   --dry-run  don't actually try moving them
  *
- * Copyright (C) 2005 Brion Vibber <brion@pobox.com>
+ * Copyright © 2005 Brion Vibber <brion@pobox.com>
  * http://www.mediawiki.org/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,11 +24,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @author Brion Vibber <brion at pobox.com>
- * @ingroup maintenance
+ * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/cleanupTable.inc' );
+require_once( dirname( __FILE__ ) . '/cleanupTable.inc' );
 
 class CapsCleanup extends TableCleanup {
 	public function __construct() {
@@ -39,11 +40,15 @@ class CapsCleanup extends TableCleanup {
 
 	public function execute() {
 		global $wgCapitalLinks, $wgUser;
+
+		if ( $wgCapitalLinks ) {
+			$this->error( "\$wgCapitalLinks is on -- no need for caps links cleanup.", true );
+		}
+
+		$wgUser = User::newFromName( 'Conversion script' );
+
 		$this->namespace = intval( $this->getOption( 'namespace', 0 ) );
 		$this->dryrun = $this->hasOption( 'dry-run' );
-		$wgUser->setName( 'Conversion script' );
-		if( $wgCapitalLinks )
-			$this->error( "\$wgCapitalLinks is on -- no need for caps links cleanup.", true );
 
 		$this->runTable( array(
 			'table' => 'page',
@@ -59,39 +64,38 @@ class CapsCleanup extends TableCleanup {
 		$display = $current->getPrefixedText();
 		$upper = $row->page_title;
 		$lower = $wgContLang->lcfirst( $row->page_title );
-		if( $upper == $lower ) {
+		if ( $upper == $lower ) {
 			$this->output( "\"$display\" already lowercase.\n" );
 			return $this->progress( 0 );
 		}
 
 		$target = Title::makeTitle( $row->page_namespace, $lower );
 		$targetDisplay = $target->getPrefixedText();
-		if( $target->exists() ) {
+		if ( $target->exists() ) {
 			$this->output( "\"$display\" skipped; \"$targetDisplay\" already exists\n" );
 			return $this->progress( 0 );
 		}
 
-		if( $this->dryrun ) {
+		if ( $this->dryrun ) {
 			$this->output( "\"$display\" -> \"$targetDisplay\": DRY RUN, NOT MOVED\n" );
 			$ok = true;
 		} else {
 			$ok = $current->moveTo( $target, false, 'Converting page titles to lowercase' );
 			$this->output( "\"$display\" -> \"$targetDisplay\": $ok\n" );
 		}
-		if( $ok === true ) {
+		if ( $ok === true ) {
 			$this->progress( 1 );
-			if( $row->page_namespace == $this->namespace ) {
+			if ( $row->page_namespace == $this->namespace ) {
 				$talk = $target->getTalkPage();
 				$row->page_namespace = $talk->getNamespace();
-				if( $talk->exists() ) {
+				if ( $talk->exists() ) {
 					return $this->processRow( $row );
 				}
 			}
-		} else {
-			$this->progress( 0 );
 		}
+		return $this->progress( 0 );
 	}
 }
 
 $maintClass = "CapsCleanup";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

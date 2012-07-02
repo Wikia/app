@@ -1,7 +1,8 @@
 <?php
 /**
- * MediaWiki page data importer
- * Copyright (C) 2003,2005 Brion Vibber <brion@pobox.com>
+ * Implements Special:Import
+ *
+ * Copyright © 2003,2005 Brion Vibber <brion@pobox.com>
  * http://www.mediawiki.org/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,15 +24,21 @@
  * @ingroup SpecialPage
  */
 
+/**
+ * MediaWiki page data importer
+ *
+ * @ingroup SpecialPage
+ */
 class SpecialImport extends SpecialPage {
-	
+
 	private $interwiki = false;
 	private $namespace;
 	private $frompage = '';
 	private $logcomment= false;
 	private $history = true;
 	private $includeTemplates = false;
-	
+	private $pageLinkDepth;
+
 	/**
 	 * Constructor
 	 */
@@ -40,82 +47,81 @@ class SpecialImport extends SpecialPage {
 		global $wgImportTargetNamespace;
 		$this->namespace = $wgImportTargetNamespace;
 	}
-	
+
 	/**
 	 * Execute
 	 */
 	function execute( $par ) {
-		global $wgRequest, $wgUser, $wgOut;
-		
 		$this->setHeaders();
 		$this->outputHeader();
-		
-		if ( wfReadOnly() ) {
-			global $wgOut;
-			$wgOut->readOnlyPage();
-			return;
-		}
-		
-		if( !$wgUser->isAllowed( 'import' ) && !$wgUser->isAllowed( 'importupload' ) )
-			return $wgOut->permissionRequired( 'import' );
 
-		# TODO: allow Title::getUserPermissionsErrors() to take an array
-		# FIXME: Title::checkSpecialsAndNSPermissions() has a very wierd expectation of what
+		$user = $this->getUser();
+		if ( !$user->isAllowedAny( 'import', 'importupload' ) ) {
+			throw new PermissionsError( 'import' );
+		}
+
+		# @todo Allow Title::getUserPermissionsErrors() to take an array
+		# @todo FIXME: Title::checkSpecialsAndNSPermissions() has a very wierd expectation of what
 		# getUserPermissionsErrors() might actually be used for, hence the 'ns-specialprotected'
 		$errors = wfMergeErrorArrays(
 			$this->getTitle()->getUserPermissionsErrors(
-				'import', $wgUser, true,
+				'import', $user, true,
 				array( 'ns-specialprotected', 'badaccess-group0', 'badaccess-groups' )
 			),
 			$this->getTitle()->getUserPermissionsErrors(
-				'importupload', $wgUser, true,
+				'importupload', $user, true,
 				array( 'ns-specialprotected', 'badaccess-group0', 'badaccess-groups' )
 			)
 		);
 
-		if( $errors ){
-			$wgOut->showPermissionsErrorPage( $errors );
-			return;
+		if ( $errors ) {
+			throw new PermissionsError( 'import', $errors );
 		}
 
-		if ( $wgRequest->wasPosted() && $wgRequest->getVal( 'action' ) == 'submit' ) {
+		$this->checkReadOnly();
+
+		$request = $this->getRequest();
+		if ( $request->wasPosted() && $request->getVal( 'action' ) == 'submit' ) {
 			$this->doImport();
 		}
 		$this->showForm();
 	}
-	
+
 	/**
 	 * Do the actual import
 	 */
 	private function doImport() {
-		global $wgOut, $wgRequest, $wgUser, $wgImportSources, $wgExportMaxLinkDepth;
+		global $wgImportSources, $wgExportMaxLinkDepth;
+
 		$isUpload = false;
-		$this->namespace = $wgRequest->getIntOrNull( 'namespace' );
-		$sourceName = $wgRequest->getVal( "source" );
+		$request = $this->getRequest();
+		$this->namespace = $request->getIntOrNull( 'namespace' );
+		$sourceName = $request->getVal( "source" );
 
-		$this->logcomment = $wgRequest->getText( 'log-comment' );
-		$this->pageLinkDepth = $wgExportMaxLinkDepth == 0 ? 0 : $wgRequest->getIntOrNull( 'pagelink-depth' );
+		$this->logcomment = $request->getText( 'log-comment' );
+		$this->pageLinkDepth = $wgExportMaxLinkDepth == 0 ? 0 : $request->getIntOrNull( 'pagelink-depth' );
 
-		if ( !$wgUser->matchEditToken( $wgRequest->getVal( 'editToken' ) ) ) {
-			$source = new WikiErrorMsg( 'import-token-mismatch' );
+		$user = $this->getUser();
+		if ( !$user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
+			$source = Status::newFatal( 'import-token-mismatch' );
 		} elseif ( $sourceName == 'upload' ) {
 			$isUpload = true;
-			if( $wgUser->isAllowed( 'importupload' ) ) {
+			if( $user->isAllowed( 'importupload' ) ) {
 				$source = ImportStreamSource::newFromUpload( "xmlimport" );
 			} else {
-				return $wgOut->permissionRequired( 'importupload' );
+				throw new PermissionsError( 'importupload' );
 			}
 		} elseif ( $sourceName == "interwiki" ) {
-			if( !$wgUser->isAllowed( 'import' ) ){
-				return $wgOut->permissionRequired( 'import' );
+			if( !$user->isAllowed( 'import' ) ){
+				throw new PermissionsError( 'import' );
 			}
-			$this->interwiki = $wgRequest->getVal( 'interwiki' );
+			$this->interwiki = $request->getVal( 'interwiki' );
 			if ( !in_array( $this->interwiki, $wgImportSources ) ) {
-				$source = new WikiErrorMsg( "import-invalid-interwiki" );
+				$source = Status::newFatal( "import-invalid-interwiki" );
 			} else {
-				$this->history = $wgRequest->getCheck( 'interwikiHistory' );
-				$this->frompage = $wgRequest->getText( "frompage" );
-				$this->includeTemplates = $wgRequest->getCheck( 'interwikiTemplates' );
+				$this->history = $request->getCheck( 'interwikiHistory' );
+				$this->frompage = $request->getText( "frompage" );
+				$this->includeTemplates = $request->getCheck( 'interwikiTemplates' );
 				$source = ImportStreamSource::newFromInterwiki(
 					$this->interwiki,
 					$this->frompage,
@@ -124,19 +130,22 @@ class SpecialImport extends SpecialPage {
 					$this->pageLinkDepth );
 			}
 		} else {
-			$source = new WikiErrorMsg( "importunknownsource" );
+			$source = Status::newFatal( "importunknownsource" );
 		}
 
-		if( WikiError::isError( $source ) ) {
-			$wgOut->wrapWikiMsg( '<p class="error">$1</p>', array( 'importfailed', $source->getMessage() ) );
+		$out = $this->getOutput();
+		if( !$source->isGood() ) {
+			$out->wrapWikiMsg( "<p class=\"error\">\n$1\n</p>", array( 'importfailed', $source->getWikiText() ) );
 		} else {
-			$wgOut->addWikiMsg( "importstart" );
+			$out->addWikiMsg( "importstart" );
 
-			$importer = new WikiImporter( $source );
+			$importer = new WikiImporter( $source->value );
 			if( !is_null( $this->namespace ) ) {
 				$importer->setTargetNamespace( $this->namespace );
 			}
 			$reporter = new ImportReporter( $importer, $isUpload, $this->interwiki , $this->logcomment);
+			$reporter->setContext( $this->getContext() );
+			$exception = false;
 
 			/* wikia change begin - author: uberfuzzy */
 			/* if var=true (not empty)-> turn off irc feed, so imports dont go to feed
@@ -149,36 +158,42 @@ class SpecialImport extends SpecialPage {
 			/* end wikia change */
 
 			$reporter->open();
-			$result = $importer->doImport();
-			$resultCount = $reporter->close();
+			try {
+				$importer->doImport();
+			} catch ( MWException $e ) {
+				$exception = $e;
+			}
+			$result = $reporter->close();
 
-			if( WikiError::isError( $result ) ) {
+			if ( $exception ) {
 				# No source or XML parse error
-				$wgOut->wrapWikiMsg( '<p class="error">$1</p>', array( 'importfailed', $result->getMessage() ) );
-			} elseif( WikiError::isError( $resultCount ) ) {
+				$out->wrapWikiMsg( "<p class=\"error\">\n$1\n</p>", array( 'importfailed', $exception->getMessage() ) );
+			} elseif( !$result->isGood() ) {
 				# Zero revisions
-				$wgOut->wrapWikiMsg( '<p class="error">$1</p>', array( 'importfailed', $resultCount->getMessage() ) );
+				$out->wrapWikiMsg( "<p class=\"error\">\n$1\n</p>", array( 'importfailed', $result->getWikiText() ) );
 			} else {
 				# Success!
-				$wgOut->addWikiMsg( 'importsuccess' );
+				$out->addWikiMsg( 'importsuccess' );
 			}
-			$wgOut->addWikiText( '<hr />' );
+			$out->addHTML( '<hr />' );
 		}
 	}
 
 	private function showForm() {
-		global $wgUser, $wgOut, $wgRequest, $wgImportSources, $wgExportMaxLinkDepth;
+		global $wgImportSources, $wgExportMaxLinkDepth;
 
 		$action = $this->getTitle()->getLocalUrl( array( 'action' => 'submit' ) );
+		$user = $this->getUser();
+		$out = $this->getOutput();
 
-		if( $wgUser->isAllowed( 'importupload' ) ) {
-			$wgOut->addWikiMsg( "importtext" );
-			$wgOut->addHTML(
+		if( $user->isAllowed( 'importupload' ) ) {
+			$out->addWikiMsg( "importtext" );
+			$out->addHTML(
 				Xml::fieldset( wfMsg( 'import-upload' ) ).
 				Xml::openElement( 'form', array( 'enctype' => 'multipart/form-data', 'method' => 'post',
 					'action' => $action, 'id' => 'mw-import-upload-form' ) ) .
-				Xml::hidden( 'action', 'submit' ) .
-				Xml::hidden( 'source', 'upload' ) .
+				Html::hidden( 'action', 'submit' ) .
+				Html::hidden( 'source', 'upload' ) .
 				Xml::openElement( 'table', array( 'id' => 'mw-import-table' ) ) .
 
 				"<tr>
@@ -205,17 +220,17 @@ class SpecialImport extends SpecialPage {
 					"</td>
 				</tr>" .
 				Xml::closeElement( 'table' ).
-				Xml::hidden( 'editToken', $wgUser->editToken() ) .
+				Html::hidden( 'editToken', $user->getEditToken() ) .
 				Xml::closeElement( 'form' ) .
 				Xml::closeElement( 'fieldset' )
 			);
 		} else {
 			if( empty( $wgImportSources ) ) {
-				$wgOut->addWikiMsg( 'importnosources' );
+				$out->addWikiMsg( 'importnosources' );
 			}
 		}
 
-		if( $wgUser->isAllowed( 'import' ) && !empty( $wgImportSources ) ) {
+		if( $user->isAllowed( 'import' ) && !empty( $wgImportSources ) ) {
 			# Show input field for import depth only if $wgExportMaxLinkDepth > 0
 			$importDepth = '';
 			if( $wgExportMaxLinkDepth > 0 ) {
@@ -229,13 +244,13 @@ class SpecialImport extends SpecialPage {
 						</tr>";
 			}
 
-			$wgOut->addHTML(
+			$out->addHTML(
 				Xml::fieldset(  wfMsg( 'importinterwiki' ) ) .
 				Xml::openElement( 'form', array( 'method' => 'post', 'action' => $action, 'id' => 'mw-import-interwiki-form' ) ) .
 				wfMsgExt( 'import-interwiki-text', array( 'parse' ) ) .
-				Xml::hidden( 'action', 'submit' ) .
-				Xml::hidden( 'source', 'interwiki' ) .
-				Xml::hidden( 'editToken', $wgUser->editToken() ) .
+				Html::hidden( 'action', 'submit' ) .
+				Html::hidden( 'source', 'interwiki' ) .
+				Html::hidden( 'editToken', $user->getEditToken() ) .
 				Xml::openElement( 'table', array( 'id' => 'mw-import-table' ) ) .
 				"<tr>
 					<td class='mw-label'>" .
@@ -246,10 +261,10 @@ class SpecialImport extends SpecialPage {
 			);
 			foreach( $wgImportSources as $prefix ) {
 				$selected = ( $this->interwiki === $prefix ) ? ' selected="selected"' : '';
-				$wgOut->addHTML( Xml::option( $prefix, $prefix, $selected ) );
+				$out->addHTML( Xml::option( $prefix, $prefix, $selected ) );
 			}
 
-			$wgOut->addHTML(
+			$out->addHTML(
 						Xml::closeElement( 'select' ) .
 						Xml::input( 'frompage', 50, $this->frompage ) .
 					"</td>
@@ -290,7 +305,7 @@ class SpecialImport extends SpecialPage {
 					<td>
 					</td>
 					<td class='mw-submit'>" .
-						Xml::submitButton( wfMsg( 'import-interwiki-submit' ), array( 'accesskey' => 's' ) ) .
+						Xml::submitButton( wfMsg( 'import-interwiki-submit' ), Linker::tooltipAndAccesskeyAttribs( 'import' ) ) .
 					"</td>
 				</tr>" .
 				Xml::closeElement( 'table' ).
@@ -305,11 +320,18 @@ class SpecialImport extends SpecialPage {
  * Reporting callback
  * @ingroup SpecialPage
  */
-class ImportReporter {
+class ImportReporter extends ContextSource {
 	private $reason=false;
+	private $mOriginalLogCallback = null;
+	private $mOriginalPageOutCallback = null;
+	private $mLogItemCount = 0;
 
 	function __construct( $importer, $upload, $interwiki , $reason=false ) {
-		$importer->setPageOutCallback( array( $this, 'reportPage' ) );
+		$this->mOriginalPageOutCallback =
+				$importer->setPageOutCallback( array( $this, 'reportPage' ) );
+		$this->mOriginalLogCallback =
+			$importer->setLogItemCallback( array( $this, 'reportLogItem' ) );
+		$importer->setNoticeCallback( array( $this, 'reportNotice' ) );
 		$this->mPageCount = 0;
 		$this->mIsUpload = $upload;
 		$this->mInterwiki = $interwiki;
@@ -317,22 +339,46 @@ class ImportReporter {
 	}
 
 	function open() {
-		global $wgOut;
-		$wgOut->addHTML( "<ul>\n" );
+		$this->getOutput()->addHTML( "<ul>\n" );
 	}
 
-	function reportPage( $title, $origTitle, $revisionCount, $successCount ) {
-		global $wgOut, $wgUser, $wgLang, $wgContLang;
+	function reportNotice( $msg, array $params ) {
+		$this->getOutput()->addHTML( Html::element( 'li', array(), $this->msg( $msg, $params )->text() ) );
+	}
 
-		$skin = $wgUser->getSkin();
+	function reportLogItem( /* ... */ ) {
+		$this->mLogItemCount++;
+		if ( is_callable( $this->mOriginalLogCallback ) ) {
+			call_user_func_array( $this->mOriginalLogCallback, func_get_args() );
+		}
+	}
+
+	/**
+	 * @param Title $title
+	 * @param Title $origTitle
+	 * @param int $revisionCount
+	 * @param  $successCount
+	 * @param  $pageInfo
+	 * @return void
+	 */
+	function reportPage( $title, $origTitle, $revisionCount, $successCount, $pageInfo ) {
+		global $wgContLang;
+
+		$args = func_get_args();
+		call_user_func_array( $this->mOriginalPageOutCallback, $args );
+
+		if ( $title === null ) {
+			# Invalid or non-importable title; a notice is already displayed
+			return;
+		}
 
 		$this->mPageCount++;
 
-		$localCount = $wgLang->formatNum( $successCount );
+		$localCount = $this->getLanguage()->formatNum( $successCount );
 		$contentCount = $wgContLang->formatNum( $successCount );
 
 		if( $successCount > 0 ) {
-			$wgOut->addHTML( "<li>" . $skin->linkKnown( $title ) . " " .
+			$this->getOutput()->addHTML( "<li>" . Linker::linkKnown( $title ) . " " .
 				wfMsgExt( 'import-revision-count', array( 'parsemag', 'escape' ), $localCount ) .
 				"</li>\n"
 			);
@@ -362,25 +408,29 @@ class ImportReporter {
 			$nullRevision = Revision::newNullRevision( $dbw, $title->getArticleId(), $comment, true );
 			if (!is_null($nullRevision)) {
 				$nullRevision->insertOn( $dbw );
-				$article = new Article( $title );
+				$page = WikiPage::factory( $title );
 				# Update page record
-				$article->updateRevisionOn( $dbw, $nullRevision );
-				wfRunHooks( 'NewRevisionFromEditComplete', array($article, $nullRevision, $latest, $wgUser) );
+				$page->updateRevisionOn( $dbw, $nullRevision );
+				wfRunHooks( 'NewRevisionFromEditComplete', array( $page, $nullRevision, $latest, $this->getUser() ) );
 			}
 		} else {
-			$wgOut->addHTML( "<li>" . $skin->linkKnown( $title ) . " " .
+			$this->getOutput()->addHTML( "<li>" . Linker::linkKnown( $title ) . " " .
 				wfMsgHtml( 'import-nonewrevisions' ) . "</li>\n" );
 		}
 	}
 
 	function close() {
-		global $wgOut;
-		if( $this->mPageCount == 0 ) {
-			$wgOut->addHTML( "</ul>\n" );
-			return new WikiErrorMsg( "importnopages" );
+		$out = $this->getOutput();
+		if ( $this->mLogItemCount > 0 ) {
+			$msg = wfMsgExt( 'imported-log-entries', 'parseinline',
+						$this->getLanguage()->formatNum( $this->mLogItemCount ) );
+			$out->addHTML( Xml::tags( 'li', null, $msg ) );
+		} elseif( $this->mPageCount == 0 && $this->mLogItemCount == 0 ) {
+			$out->addHTML( "</ul>\n" );
+			return Status::newFatal( 'importnopages' );
 		}
-		$wgOut->addHTML( "</ul>\n" );
+		$out->addHTML( "</ul>\n" );
 
-		return $this->mPageCount;
+		return Status::newGood( $this->mPageCount );
 	}
 }

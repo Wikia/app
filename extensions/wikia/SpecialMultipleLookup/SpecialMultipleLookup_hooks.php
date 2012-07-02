@@ -14,7 +14,6 @@ class MultiLookupHooks {
 	static public function ContributionsToolLinks( $id, $nt, &$links ) {
 		global $wgUser;
 		if ( $id == 0 && $wgUser->isAllowed( 'multilookup' ) ) {
-			wfLoadExtensionMessages( 'MultiLookup' );
 			$attribs = array(
 				'href' => 'http://community.wikia.com/wiki/Special:MultiLookup?target=' . urlencode( $nt->getText() ),
 				'title' => wfMsg( 'multilookupselectuser' )

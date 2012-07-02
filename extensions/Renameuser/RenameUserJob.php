@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Custom job to perform updates on tables in busier environments
  */
@@ -22,19 +21,32 @@ class RenameUserJob extends Job {
 	 */
 	public function run() {
 		$dbw = wfGetDB( DB_MASTER );
-		extract( $this->params );
+
+		$table = $this->params['table'];
+		$column = $this->params['column'];
+		$oldname = $this->params['oldname'];
+		$userID = isset( $this->params['userID'] ) ? $this->params['userID'] : null;
+		$uidColumn = isset( $this->params['uidColumn'] ) ? $this->params['uidColumn'] : null;
+		$timestampColumn = isset( $this->params['timestampColumn'] ) ? $this->params['timestampColumn'] : null;
+		$minTimestamp = $this->params['minTimestamp'];
+		$maxTimestamp = $this->params['maxTimestamp'];
+		$uniqueKey = isset( $this->params['uniqueKey'] ) ? $this->params['uniqueKey'] : null;
+		$keyId = isset( $this->params['keyId'] ) ? $this->params['keyId'] : null;
+		$newname = $this->params['newname'];
+		$count = $this->params['count'];
+
 		# Conditions like "*_user_text = 'x'
 		$conds = array( $column => $oldname );
 		# If user ID given, add that to condition to avoid rename collisions.
-		if( isset($userID) ) {
+		if ( isset( $userID ) ) {
 			$conds[$uidColumn] = $userID;
 		}
 		# Bound by timestamp if given
-		if( isset($timestampColumn) ) {
+		if ( isset( $timestampColumn ) ) {
 			$conds[] = "$timestampColumn >= '$minTimestamp'";
 			$conds[] = "$timestampColumn <= '$maxTimestamp'";
 		# Otherwise, bound by key (B/C)
-		} else if( isset($uniqueKey) ) {
+		} elseif ( isset( $uniqueKey ) ) {
 			$conds[$uniqueKey] = $keyId;
 		} else {
 			wfDebug( 'RenameUserJob::run - invalid job row given' ); // this shouldn't happen
@@ -47,11 +59,11 @@ class RenameUserJob extends Job {
 			__METHOD__
 		);
 		# Special case: revisions may be deleted while renaming...
-		if( $table == 'revision' && isset($timestampColumn) ) {
+		if ( $table == 'revision' && isset( $timestampColumn ) ) {
 			$actual = $dbw->affectedRows();
 			# If some revisions were not renamed, they may have been deleted.
 			# Do a pass on the archive table to get these straglers...
-			if( $actual < $count ) {
+			if ( $actual < $count ) {
 				$dbw->update( 'archive',
 					array( 'ar_user_text' => $newname ),
 					array( 'ar_user_text' => $oldname,
@@ -59,17 +71,17 @@ class RenameUserJob extends Job {
 						// No user,rev_id index, so use timestamp to bound
 						// the rows. This can use the user,timestamp index.
 						"ar_timestamp >= '$minTimestamp'",
-						"ar_timestamp <= '$maxTimestamp'"),
+						"ar_timestamp <= '$maxTimestamp'" ),
 					__METHOD__
 				);
 			}
 		}
 		# Special case: revisions may be restored while renaming...
-		if( $table == 'archive' && isset($timestampColumn) ) {
+		if ( $table == 'archive' && isset( $timestampColumn ) ) {
 			$actual = $dbw->affectedRows();
 			# If some revisions were not renamed, they may have been restored.
 			# Do a pass on the revision table to get these straglers...
-			if( $actual < $count ) {
+			if ( $actual < $count ) {
 				$dbw->update( 'revision',
 					array( 'rev_user_text' => $newname ),
 					array( 'rev_user_text' => $oldname,
@@ -77,12 +89,11 @@ class RenameUserJob extends Job {
 						// No user,rev_id index, so use timestamp to bound
 						// the rows. This can use the user,timestamp index.
 						"rev_timestamp >= '$minTimestamp'",
-						"rev_timestamp <= '$maxTimestamp'"),
+						"rev_timestamp <= '$maxTimestamp'" ),
 					__METHOD__
 				);
 			}
 		}
 		return true;
 	}
-
 }

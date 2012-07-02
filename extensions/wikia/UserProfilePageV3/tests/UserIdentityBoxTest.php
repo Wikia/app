@@ -1,6 +1,5 @@
 <?php 
 require_once dirname(__FILE__) . '/../UserIdentityBox.class.php';
-wfLoadAllExtensions();
 
 class UserIdentityBoxTest extends WikiaBaseTest {
 	const TOP_WIKI_LIMIT = 5;

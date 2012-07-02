@@ -1,15 +1,15 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
     'Signup' => array( 'Signup', 'Userlogin', 'UserLogin' )
 );
 /**
  * Polish
  */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Signup' => array( 'Zarejestruj' )
 );
 

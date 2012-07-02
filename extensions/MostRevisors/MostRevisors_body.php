@@ -10,8 +10,8 @@ class MostRevisors extends IncludableSpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgOut, $wgRequest, $wgLang, $wgContLang, $wgUser, $wgArticle, $wgTitle;
-		wfLoadExtensionMessages( 'MostRevisors' );
+		global $wgOut, $wgRequest, $wgLang, $wgContLang;
+		
 
 		# Decipher input passed to the page
 		$this->decipherParams( $par );
@@ -70,7 +70,7 @@ class MostRevisors extends IncludableSpecialPage {
 		if ( $count > 0 ) {
 			# Make list
 			if ( !$this->mIncluding )
-			$wgOut->addWikiMsg( 'mostrevisors-showing', $wgLang->formatNum( $count ) );
+				$wgOut->addWikiMsg( 'mostrevisors-showing', $wgLang->formatNum( $count ) );
 			$wgOut->addHTML( "<ol>" );
 			foreach ( $res as $row ) {
 				$wgOut->addHTML( $this->makeListItem( $row ) );
@@ -178,10 +178,10 @@ class MostRevisors extends IncludableSpecialPage {
 	private function makeNamespaceForm() {
 		$self = $this->getTitle();
 		$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
-		$form .= Xml::label( wfMsg( 'mostrevisors-namespace' ), 'namespace' ) . '&nbsp;';
+		$form .= Xml::label( wfMsg( 'mostrevisors-namespace' ), 'namespace' ) . '&#160;';
 		$form .= Xml::namespaceSelector( $this->namespace, 'all' );
-		$form .= Xml::hidden( 'limit', $this->limit );
-		$form .= Xml::hidden( 'redirects', $this->redirects );
+		$form .= Html::Hidden( 'limit', $this->limit );
+		$form .= Html::Hidden( 'redirects', $this->redirects );
 		$form .= Xml::submitButton( wfMsg( 'mostrevisors-submit' ) ) . '</form>';
 		return $form;
 	}

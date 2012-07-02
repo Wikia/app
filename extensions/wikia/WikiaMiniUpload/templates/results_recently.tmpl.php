@@ -34,7 +34,7 @@ if($data['gallery']) {
 				$file = wfLocalFile($data['gallery']->mImages[$i][0]);
 				$results['images'][$i]['file'] = $file;
 ?>
-				<td><a href="#" alt="<?= addslashes($file->getName()) ?>" title="<?= addslashes($file->getName()) ?>" onclick="WMU_chooseImage(0, '<?= urlencode($file->getName()) ?>'); return false;"><?= $file->getThumbnail(120, 90)->toHtml() ?></a></td>
+				<td><a href="#" alt="<?= addslashes($file->getName()) ?>" title="<?= addslashes($file->getName()) ?>" onclick="WMU_chooseImage(0, '<?= urlencode($file->getName()) ?>'); return false;"><?= $file->transform( array( 'width' => 120, 'height' => 90 ) )->toHtml() ?></a></td>
 <?php
 			}
 		}

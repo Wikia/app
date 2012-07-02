@@ -92,13 +92,13 @@ $messages = array(
 'viewsource' => 'Kitekite ke mouaga',
 
 # Login and logout pages
-'welcomecreation'         => '== Fakalofa atu, kua fiafia ke hu mai ==
+'welcomecreation'         => '== Fakalofa atu, kua fiafia ke hu mai $1 ==
 Kua talaga e haau a poko.
-Ua nimo ke hiki e haau tau manako {{SITENAME}}.',
+Ua nimo ke hiki e haau tau [[Special:Preferences|manako {{SITENAME}}]].',
 'yourname'                => 'Matahigoa he tagata:',
 'yourpassword'            => 'Kupu fufu:',
 'yourpasswordagain'       => 'Liu lolomi e kupu fufu:',
-'remembermypassword'      => 'Manatu e haaku loko ini',
+'remembermypassword'      => 'Manatu e haaku loko ini (for a maximum of $1 {{PLURAL:$1|day|days}})',
 'login'                   => 'Hu ki loto',
 'nav-login-createaccount' => 'Hu ki loto / talaga e poko',
 'userlogin'               => 'Hu ki loto / talaga e poko',
@@ -108,15 +108,17 @@ Ua nimo ke hiki e haau tau manako {{SITENAME}}.',
 'createaccount'           => 'Talaga e poko',
 'gotaccountlink'          => 'Hu ki loto',
 
+# Special:PasswordReset
+'passwordreset-username' => 'Matahigoa he tagata',
+
 # Edit pages
-'summary'            => 'Fakakatoakatoa:',
-'minoredit'          => 'Ko e fakahakohako fakatote',
-'watchthis'          => 'Onoono e lau e',
-'savearticle'        => 'Taofi e lau',
-'showpreview'        => 'Fakakite e foliga',
-'showdiff'           => 'Fakakite e tau hikihiki',
-'whitelistedittitle' => 'Kua lata ke loko ini ke fakahakohako',
-'loginreqlink'       => 'hu ki loto',
+'summary'      => 'Fakakatoakatoa:',
+'minoredit'    => 'Ko e fakahakohako fakatote',
+'watchthis'    => 'Onoono e lau e',
+'savearticle'  => 'Taofi e lau',
+'showpreview'  => 'Fakakite e foliga',
+'showdiff'     => 'Fakakite e tau hikihiki',
+'loginreqlink' => 'hu ki loto',
 
 # History pages
 'currentrev'          => 'Kitekiteaga mogonei',
@@ -208,7 +210,6 @@ Ua nimo ke hiki e haau tau manako {{SITENAME}}.',
 'movenologin' => 'Ai la hu ki loto',
 'move-watch'  => 'Onoono e lau e',
 'movedto'     => 'kua une ke he',
-'1movedto2'   => '[[$1]] kua une ke he [[$2]]',
 'movereason'  => 'Kakano:',
 
 # Namespace 8 related

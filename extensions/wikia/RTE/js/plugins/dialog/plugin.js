@@ -10,84 +10,53 @@ CKEDITOR.plugins.add('rte-dialog',
 
 		// setup MW suggest on given dialog field
 		CKEDITOR.dialog.prototype.enableSuggesionsOn = function(field, namespaces) {
-			if (typeof window.os_enableSuggestionsOn == 'function') {
-				var fieldId = field._.inputId;
+			var fieldId = field._.inputId,
+				node = $('#' + fieldId);
 
-				// prevent submittion of fake RTE form
-				document.getElementById('RTEFakeForm').submit = function() {};
-
-				// use provided list of namespaces
-				namespaces = (typeof namespaces != 'undefined' && namespaces.length) ? namespaces : [];
-				// FIXME: dirty hack
-				window.wgSearchNamespaces = namespaces;
-
-				// setup MW suggest just once
-				if (typeof window.os_map[fieldId] == 'undefined') {
-					RTE.log('enabling MW suggest on "' + fieldId + '"...');
-
-					window.os_enableSuggestionsOn(fieldId, 'RTEFakeForm');
-
-					// create results container ...
-					var container = $(window.os_createContainer(os_map[fieldId]));
-					var fieldElem = $('#' + fieldId);
-
-					// ... and move it to CK dialog
-					// so it scrolls together with dialog and is positioned within field container
-					fieldElem.parent().css('position', 'relative').append(container);
-
-					// hide results container
-					container.css('visibility', 'hidden');
-
-					// store MW suggest container node
-					this._.suggestContainer = container;
-
-					// Prevent some keys from bubbling up. (#4269)
-					var element = new CKEDITOR.dom.element(fieldElem[0]);
-
-					// fix for RT #37023
-					// Prevent some keys from bubbling up. (#4269)
-					var self = this;
-					for (var ev in { keyup :1, keydown :1, keypress :1}) {
-						element.on(ev, function(e) {
-							// ESC, ENTER
-							var preventKeyBubblingKeys = { 27 :1, 13 :1 };
-							if (e.data.getKeystroke() in preventKeyBubblingKeys) {
-								// check if suggestion is shown
-								var suggestBox = self._.suggestContainer;
-
-								if (suggestBox.css('visibility') != 'hidden') {
-									// set the flag
-									self._.dontHide = true;
-
-									e.data.stopPropagation();
-
-									// hide suggest box
-									suggestBox.css('visibility', 'hidden');
-								}
-							}
-						});
-					};
-
-					var eventCallback = function(ev) {
-						// prevent dialog hiding
-						if (this._.dontHide) {
-							RTE.log('dialog hide prevented');
-							ev.data.hide = false;
-
-							// unset this flag
-							this._.dontHide = false;
-						}
-					};
-
-					this.on('ok', eventCallback);
-					this.on('cancel', eventCallback);
-					// fix - end
-				}
-				else {
-					this._.suggestContainer = $('#' + os_map[fieldId].container);
-				}
+			if (!node.exists() || node.data('suggestSetUp')) {
+				return;
 			}
 
+			RTE.log('enabling MW suggest on #' + fieldId);
+
+			// @see http://www.mediawiki.org/wiki/ResourceLoader/JavaScript_Deprecations#mwsuggest.js
+			// uses CSS rules from 'wikia.jquery.ui' module
+			node.autocomplete({
+				minLength: 2,
+				source: function( request, response ) {
+					$.getJSON(
+						mw.util.wikiScript( 'api' ),
+						{
+							format: 'json',
+							action: 'opensearch',
+							search: request.term
+						},
+						function( arr ) {
+							if ( arr && arr.length > 1 ) {
+								response( arr[1] );
+							}
+							else {
+								response( [] );
+							}
+						}
+					);
+				}
+			});
+			node.data('suggestSetUp', true);
+
+			// Prevent some keys from bubbling up. (#4269)
+			var element = new CKEDITOR.dom.element(node[0]),
+				ev;
+
+			for (ev in { keyup :1, keydown :1, keypress :1}) {
+				element.on(ev, function(e) {
+					// ESC, ENTER
+					var preventKeyBubblingKeys = { 27 :1, 13 :1 };
+					if (e.data.getKeystroke() in preventKeyBubblingKeys) {
+						e.data.stopPropagation();
+					}
+				});
+			}
 		};
 
 		// set loading state of current dialog
@@ -106,10 +75,10 @@ CKEDITOR.plugins.add('rte-dialog',
 			CKEDITOR.dialog.prototype.showOriginal = CKEDITOR.dialog.prototype.show;
 			CKEDITOR.dialog.prototype.show = function() {
 				this.showOriginal();
-	
+
 				if(!this._.trackingSetUp) {
 					this.initTracking();
-	
+
 					// run this just once per dialog's instance
 					this._.trackingSetUp = true;
 				}

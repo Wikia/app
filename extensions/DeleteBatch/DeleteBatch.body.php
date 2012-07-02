@@ -1,7 +1,6 @@
 <?php
 
-class DeleteBatch extends SpecialPage {
-
+class SpecialDeleteBatch extends SpecialPage {
 	/**
 	 * Constructor
 	 */
@@ -35,20 +34,33 @@ class DeleteBatch extends SpecialPage {
 			return;
 		}
 
-		wfLoadExtensionMessages( 'DeleteBatch' );
-
 		$wgOut->setPageTitle( wfMsg( 'deletebatch-title' ) );
 		$cSF = new DeleteBatchForm( $par, $this->getTitle() );
 
 		$action = $wgRequest->getVal( 'action' );
 		if ( 'success' == $action ) {
 			/* do something */
-		} else if ( $wgRequest->wasPosted() && 'submit' == $action &&
+		} elseif ( $wgRequest->wasPosted() && 'submit' == $action &&
 			$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
 			$cSF->doSubmit();
 		} else {
 			$cSF->showForm();
 		}
+	}
+
+	/**
+	 * Adds a link to Special:DeleteBatch within the page
+	 * Special:AdminLinks, if the 'AdminLinks' extension is defined
+	 */
+	static function addToAdminLinks( &$admin_links_tree ) {
+		$general_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_general' ) );
+		$extensions_row = $general_section->getRow( 'extensions' );
+		if ( is_null( $extensions_row ) ) {
+			$extensions_row = new ALRow( 'extensions' );
+			$general_section->addRow( $extensions_row );
+		}
+		$extensions_row->addItem( ALItem::newFromSpecialPage( 'DeleteBatch' ) );
+		return true;
 	}
 }
 
@@ -75,7 +87,7 @@ class DeleteBatchForm {
 	 * @param $err Mixed: error message or null if there's no error
 	 */
 	function showForm( $errorMessage = false ) {
-		global $wgOut, $wgUser, $wgScript;
+		global $wgOut, $wgUser;
 
 		if ( $errorMessage ) {
 			$wgOut->setSubtitle( wfMsgHtml( 'formerror' ) );
@@ -130,8 +142,8 @@ class DeleteBatchForm {
 
 		$form .= '</table>';
 
-		$form .= Xml::hidden( 'title', $this->title );
-		$form .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
+		$form .= Html::Hidden( 'title', $this->title );
+		$form .= Html::Hidden( 'wpEditToken', $wgUser->editToken() );
 		$form .= '</form>';
 		$wgOut->addHTML( $form );
 	}
@@ -145,7 +157,14 @@ class DeleteBatchForm {
 		$select = new XmlSelect( $name, $name );
 		$select->setDefault( $this->mMode );
 		$select->setAttribute( 'tabindex', $tabindex );
-		$select->addOptions( $options );
+		// 'addOptions' method was added in MW 1.15
+		if ( method_exists( $select, 'addOptions' ) ) {
+			$select->addOptions( $options );
+		} else {
+			foreach ( $options as $option ) {
+				$select->addOption( $option );
+			}
+		}
 		return $select;
 	}
 
@@ -248,7 +267,11 @@ class DeleteBatchForm {
 		}
 
 		$sk = $wgUser->getSkin();
-		$link_back = $sk->linkKnown( $this->title, wfMsgHtml( 'deletebatch-link-back' ) );
+		// 'linkKnown' method was added in MW 1.15
+		if ( method_exists( $sk, 'linkKnown' ) )
+			$link_back = $sk->linkKnown( $this->title, wfMsgHtml( 'deletebatch-link-back' ) );
+		else
+			$link_back = $sk->makeKnownLinkObj( $this->title, wfMsgHtml( 'deletebatch-link-back' ) );
 		$wgOut->addHTML( "<br /><b>" . $link_back . "</b>" );
 	}
 
@@ -287,9 +310,6 @@ class DeleteBatchForm {
 		/* this stuff goes like articleFromTitle in Wiki.php */
 		if ( $page->getNamespace() == NS_FILE ) {
 			$art = new ImagePage( $page );
-			/*this is absolutely required - creating a new ImagePage object does not automatically
-			provide it with image  */
-			$art->img = new Image( $art->mTitle );
 		} else {
 			$art = new Article( $page );
 		}

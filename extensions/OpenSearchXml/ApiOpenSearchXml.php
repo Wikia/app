@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Created on Oct 13, 2006
  * Adapted to XML output variant, plus extra text extraction 2008
  * Text extraction adapted from ActiveAbstract extension.
@@ -22,7 +22,7 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -31,6 +31,11 @@
  */
 class ApiOpenSearchXml extends ApiOpenSearch {
 
+	private $mSeen;
+
+	/**
+	 * @return ApiFormatBase
+	 */
 	public function getCustomPrinter() {
 		$format = $this->validateFormat();
 		$printer = $this->getMain()->createPrinterByName( $format );
@@ -39,8 +44,14 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 		}
 		return $printer;
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	protected function validateFormat() {
+		// We can't use $this->getMan()->getParameter('format') as this
+		// seems to override our specified limits and defaults, picking
+		// 'xmlfm' instead of 'json' as default.
 		$params = $this->extractRequestParams();
 		$format = $params['format'];
 		$allowed = array( 'json', 'jsonfm', 'xml', 'xmlfm' );
@@ -51,29 +62,33 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function inXmlMode() {
 		$format = $this->validateFormat();
-		return ($format == 'xml' || $format == 'xmlfm');
+		return ( $format == 'xml' || $format == 'xmlfm' );
 	}
 
 	public function execute() {
-		if (!$this->inXmlMode()) {
+		if ( !$this->inXmlMode() ) {
 			// Pass back to the JSON defaults
-			return parent::execute();
+			parent::execute();
+			return;
 		}
-		
+
 		$params = $this->extractRequestParams();
 		$search = $params['search'];
 		$limit = $params['limit'];
 		$namespaces = $params['namespace'];
-		
+
 		// Open search results may be stored for a very long time
-		$this->getMain()->setCacheMaxAge(1200);
+		$this->getMain()->setCacheMaxAge( 1200 );
 
 		$srchres = PrefixSearch::titleSearch( $search, $limit, $namespaces );
 
 		$items = array_filter( array_map( array( $this, 'formatItem' ), $srchres ) );
-		
+
 		$result = $this->getResult();
 		$result->addValue( null, 'version', '2.0' );
 		$result->addValue( null, 'xmlns', 'http://opensearch.org/searchsuggest2' );
@@ -81,41 +96,68 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 		$result->setIndexedTagName( $items, 'Item' );
 		$result->addValue( null, 'Section', $items );
 	}
-	
+
 	public function getAllowedParams() {
 		$params = parent::getAllowedParams();
-		$params['format'] = null;
+		$params['format'] = array(
+			ApiBase::PARAM_DFLT => 'json',
+			ApiBase::PARAM_TYPE => array(
+				'json',
+				'jsonfm',
+				'xml',
+				'xmlfm'
+			)
+		);
 		return $params;
 	}
-	
+
+	public function getParamDescription() {
+		return parent::getParamDescription() + array(
+			'format' => 'Output format defaults to JSON, with expanded XML optional.',
+		);
+	}
+
+	/**
+	 * @param $name string
+	 * @return array|bool
+	 */
 	protected function formatItem( $name ) {
-		$title = TItle::newFromText( $name );
+		$title = Title::newFromText( $name );
 		if( $title ) {
 			$title = $this->_checkRedirect( $title );
 			if( $this->_seen( $title ) ) {
 				return false;
 			}
-			
+
 			list( $extract, $badge ) = $this->getExtract( $title );
 			$image = $this->getBadge( $title, $badge );
-			
+
+			$item = array();
 			$item['Text']['*'] = $title->getPrefixedText();
 			$item['Description']['*'] = $extract;
-			$item['Url']['*'] = $title->getFullUrl();
+			$item['Url']['*'] = wfExpandUrl( $title->getFullUrl(), PROTO_CURRENT );
 			if( $image ) {
-				$thumb = $image->getThumbnail( 50, 50, false );
-				$item['Image'] = array(
-					'source' => wfExpandUrl( $thumb->getUrl() ),
-					//alt
-					'width' => $thumb->getWidth(),
-					'height' => $thumb->getHeight() );
+				$thumb = $image->transform( array( 'width' => 50, 'height' => 50 ), 0 );
+				if( $thumb ) {
+					$item['Image'] = array(
+						'source' => wfExpandUrl( $thumb->getUrl(), PROTO_CURRENT ),
+						//alt
+						'width' => $thumb->getWidth(),
+						'height' => $thumb->getHeight()
+					);
+				}
 			}
 		} else {
 			$item = array( 'Text' => array( '*' => $name ) );
 		}
 		return $item;
 	}
-	
+
+	/**
+	 * @param $title Title
+	 *
+	 * @return
+	 */
 	protected function _checkRedirect( $title ) {
 		$art = new Article( $title );
 		$target = $art->getRedirectTarget();
@@ -125,7 +167,11 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 			return $title;
 		}
 	}
-	
+
+	/**
+	 * @param  $title Title
+	 * @return bool
+	 */
 	protected function _seen( $title ) {
 		$name = $title->getPrefixedText();
 		if( isset( $this->mSeen[$name] ) ) {
@@ -139,18 +185,15 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 	 * Strip markup to show plaintext
 	 * @param string $text
 	 * @return string
-	 * @access private
 	 */
 	function _stripMarkup( $text ) {
-		global $wgContLang;
-		
 		$text = substr( $text, 0, 4096 ); // don't bother with long text...
-		
+
 		$text = str_replace( "'''", "", $text );
 		$text = str_replace( "''", "", $text );
-		
+
 		$text = preg_replace( '#__[a-z0-9_]+__#i', '', $text ); // magic words
-		
+
 		$cleanChar = "[^|\[\]]";
 		$subLink = "\[\[$cleanChar*(?:\|$cleanChar*)*\]\]";
 		$pipeContents = "(?:$cleanChar|$subLink)*";
@@ -161,8 +204,7 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 				(?:\|$pipeContents)*
 			\]\]
 			#six", array( $this, '_stripLink' ), $text );
-		
-		$protocols = wfUrlProtocols();
+
 		$text = preg_replace( '#\\[(?:$protocols).*? (.*?)\\]#s', '$1', $text ); // URL links
 		$text = preg_replace( '#</?[a-z0-9]+.*?>#s', '', $text ); // HTML-style tags
 		$text = preg_replace( '#\\{\\|.*?\\|\\}#s', '', $text ); // tables
@@ -171,7 +213,11 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 		$text = Sanitizer::decodeCharReferences( $text );
 		return trim( $text );
 	}
-	
+
+	/**
+	 * @param $matches array
+	 * @return string
+	 */
 	function _stripLink( $matches ) {
 		$target = trim( $matches[1] );
 		if( isset( $matches[2] ) ) {
@@ -179,7 +225,7 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 		} else {
 			$text = $target;
 		}
-		
+
 		$title = Title::newFromText( $target );
 		if( $title ) {
 			$ns = $title->getNamespace();
@@ -188,11 +234,10 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 			} else {
 				return $text;
 			}
-		} else {
-			return $matches[0];
 		}
+		return $matches[0];
 	}
-	
+
 	/**
 	 * Extract the first two sentences, if detectable, from the text.
 	 * @param string $text
@@ -206,11 +251,12 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 			'．', '！', '？', // double-width roman forms
 			'｡', // half-width ideographic full stop
 			);
-		
+
 		$endgroup = implode( '|', $endchars );
 		$end = "(?:$endgroup)";
 		$sentence = ".*?$end+";
 		$firstone = "/^($sentence)/u";
+		$matches = array();
 		if( preg_match( $firstone, $text, $matches ) ) {
 			return $matches[1];
 		} else {
@@ -219,27 +265,34 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 			return trim( $lines[0] );
 		}
 	}
-	
+
 	/**
 	 * Grab the first thing that looks like an image link from the body text.
 	 * This will exclude any templates, including infoboxes...
+	 * @param $text string
+	 * @return string|bool
 	 */
 	function _extractBadge( $text ) {
 		global $wgContLang;
 		$image = preg_quote( $wgContLang->getNsText( NS_IMAGE ), '#' );
+		$matches = array();
 		if( preg_match( "#\[\[\s*(?:image|$image)\s*:\s*([^|\]]+)#", $text, $matches ) ) {
 			return trim( $matches[1] );
 		} else {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * @param $arg string
+	 * @return bool|String
+	 */
 	function _validateBadge( $arg ) {
 		// Some templates want an entire [[Image:Foo.jpg|250px]]
 		if( substr( $arg, 0, 2 ) == '[[' ) {
 			return $this->_extractBadge( $arg );
 		}
-		
+
 		// Others will take Image:Foo.jpg or Foo.jpg
 		$title = Title::newFromText( $arg, NS_IMAGE );
 		if( $title && $title->getNamespace() == NS_IMAGE ) {
@@ -247,29 +300,34 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 		}
 		return false;
 	}
-	
-	protected function getExtract( $title, $chars=50 ) {
+
+	/**
+	 * @param $title Title
+	 * @return array|string
+	 */
+	protected function getExtract( $title ) {
 		$rev = Revision::newFromTitle( $title );
 		if( $rev ) {
 			$text = substr( $rev->getText(), 0, 16384 );
-			
+
 			// Ok, first note this is a TERRIBLE HACK. :D
 			//
 			// First, we use the system preprocessor to break down the text
 			// into text, templates, extensions, and comments:
 			global $wgParser;
-			$wgParser->clearState();
+			$wgParser->setTitle( $title ); // force an unstub before the below...
 			$wgParser->mOptions = new ParserOptions();
+			$wgParser->clearState();
 			$frame = $wgParser->getPreprocessor()->newFrame();
 			$dom = $wgParser->preprocessToDom( $text );
-			
+
 			$imageArgs = array(
 				'image',
 				'image_skyline',
 				'img',
 				'Img',
 			);
-			
+
 			// Now, we strip out everything that's not text.
 			// This works with both DOM and Hash parsers, but feels fragile.
 			$node = $dom->getFirstChild();
@@ -300,7 +358,7 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 				}
 				$node = $node->getNextSibling();
 			}
-			
+
 			if( !$badge ) {
 				// Look for the first image in the body text if there wasn't
 				// one in an infobox.
@@ -311,7 +369,7 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 			// We'll use our shitty hand parser to strip most of those from
 			// the beginning of the text.
 			$stripped = $this->_stripMarkup( $out );
-			
+
 			// And now, we'll grab just the first sentence as text, and
 			// also try to rip out a badge image.
 			return array(
@@ -320,7 +378,12 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 		}
 		return '';
 	}
-	
+
+	/**
+	 * @param $title Title
+	 * @param $fromText
+	 * @return File
+	 */
 	protected function getBadge( $title, $fromText ) {
 		if( $title->getNamespace() == NS_IMAGE ) {
 			$image = wfFindFile( $title );
@@ -336,5 +399,14 @@ class ApiOpenSearchXml extends ApiOpenSearch {
 				}
 			}
 		}
+		return false;
+	}
+
+	/**
+	 * Returns a string that identifies the version of this class.
+	 * @return string
+	 */
+	public function getVersion() {
+		return __CLASS__ . ': $Id: ApiOpenSearchXml.php 101938 2011-11-04 01:01:13Z reedy $';
 	}
 }

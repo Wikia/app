@@ -2,9 +2,10 @@
 /**
  * Internationalisation file for extension ProfileMonitor.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Rob Church <rob.church@mintrasystems.com>
-*/
+ */
 
 $messages = array();
 
@@ -29,9 +30,10 @@ $messages['en'] = array(
  * @author Jon Harald Søby
  * @author McDutchie
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'profiling-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'profiling-desc' => '{{desc}}',
 	'profiling-process' => 'The \'\'process string\'\' is the literal text of the command that invoked the process in question. For example, the process string of a MySQL server process might look something like this:
  /usr/sbin/mysqld --basedir=/ --datadir=/var/lib/mysql --user=mysql --skip-external-locking
 It might be easier/clearer to translate this message as if it said "process invocation" or "command line" or even just "command".',
@@ -81,6 +83,13 @@ $messages['ar'] = array(
 	'profiling-no-data' => 'لم يتم إيجاد بيانات مطابقة.',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'profiling-ok' => 'ܛܒ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
@@ -98,7 +107,14 @@ $messages['arz'] = array(
 	'profiling-no-data' => 'لم يتم إيجاد بيانات مطابقة.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'profiling-ok' => 'OK',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -127,7 +143,13 @@ $messages['bg'] = array(
  * @author Bellayet
  */
 $messages['bn'] = array(
+	'profiling' => 'প্রোফাইল ডাটা',
 	'profiling-ok' => 'ঠিক আছে',
+	'profiling-data' => '`$1` এর জন্য প্রোফাইল ডাটা',
+	'profiling-data-process' => 'প্রসেস',
+	'profiling-data-count' => 'গণনা',
+	'profiling-data-time' => 'সময় (সমস্ত)',
+	'profiling-data-average' => 'সময় (গড়)',
 );
 
 /** Breton (Brezhoneg)
@@ -171,6 +193,12 @@ $messages['bs'] = array(
  */
 $messages['ca'] = array(
 	'profiling-ok' => 'OK',
+);
+
+/** Czech (Česky) */
+$messages['cs'] = array(
+	'profiling-ok' => 'OK',
+	'profiling-data-count' => 'Počet',
 );
 
 /** Danish (Dansk)
@@ -296,16 +324,17 @@ $messages['fi'] = array(
  * @author McDutchie
  * @author Sherbrooke
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'profiling' => 'Données pour évaluer',
-	'profiling-desc' => '[[Special:Profiling|Page spéciale]] pour rechercher et inspecter des données de profil',
-	'profiling-process' => 'Chaîne de caractères du processus :',
+	'profiling' => 'Données d’évaluation',
+	'profiling-desc' => '[[Special:Profiling|Page spéciale]] pour rechercher et inspecter des données d’évaluation',
+	'profiling-process' => 'Ligne de commande du processus :',
 	'profiling-wildcard' => 'Utiliser un passe-partout',
 	'profiling-ok' => 'Accepter',
 	'profiling-data' => 'Données d’évaluation de « $1 »',
 	'profiling-data-process' => 'Processus',
-	'profiling-data-count' => 'Compter',
+	'profiling-data-count' => 'Quantité',
 	'profiling-data-time' => 'Durée (totale)',
 	'profiling-data-average' => 'Durée (moyenne)',
 	'profiling-no-data' => 'Aucune donnée correspondante trouvée',
@@ -316,7 +345,14 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'profiling' => 'Balyês d’èstimacion',
+	'profiling-wildcard' => 'Utilisar un pâssa-pertot',
 	'profiling-ok' => 'Accèptar',
+	'profiling-data' => 'Balyês d’èstimacion de « $1 »',
+	'profiling-data-count' => 'Compto',
+	'profiling-data-time' => 'Temps (totâl)',
+	'profiling-data-average' => 'Temps (moyen)',
+	'profiling-no-data' => 'Gins de balyê que corrèspond trovâ.',
 );
 
 /** Galician (Galego)
@@ -329,7 +365,7 @@ $messages['gl'] = array(
 	'profiling-desc' => '[[Special:Profiling|Páxina especial]] para procurar e inspecionar os datos dun perfil',
 	'profiling-process' => 'Cadea do proceso:',
 	'profiling-wildcard' => 'Empregar comodín',
-	'profiling-ok' => 'De acordo',
+	'profiling-ok' => 'Aceptar',
 	'profiling-data' => 'Perfís de datos para `$1`',
 	'profiling-data-process' => 'Proceso',
 	'profiling-data-count' => 'Contar',
@@ -483,7 +519,7 @@ $messages['id'] = array(
  * @author Ukabia
  */
 $messages['ig'] = array(
-	'profiling-ok' => 'Odinma',
+	'profiling-ok' => 'Ngwanu',
 	'profiling-data-count' => 'Güó',
 	'profiling-data-time' => 'Ogẹ (nke níle)',
 );
@@ -554,7 +590,7 @@ $messages['krj'] = array(
 	'profiling-ok' => 'OK dun',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -569,6 +605,14 @@ $messages['ksh'] = array(
 	'profiling-data-time' => 'Zigg (Jesamp)',
 	'profiling-data-average' => 'Zigg (em Dorschnett)',
 	'profiling-no-data' => 'Kein zopass Date jefonge.',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'profiling-ok' => 'Temam',
+	'profiling-data-process' => 'Pêvajo',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -632,10 +676,12 @@ $messages['ml'] = array(
 );
 
 /** Marathi (मराठी)
+ * @author Htt
  * @author Kaustubh
  */
 $messages['mr'] = array(
 	'profiling' => 'प्रोफिलींग डाटा',
+	'profiling-desc' => 'रूपरेखित माहितीच्या शोधासाठी व निरीक्षणासाठी [[Special:Profiling|विशेष पान]]',
 	'profiling-process' => 'क्रिया स्ट्रींग:',
 	'profiling-wildcard' => 'वाईल्डकार्ड वापरा',
 	'profiling-ok' => 'सर्व ठीक',
@@ -659,6 +705,23 @@ $messages['ms'] = array(
  */
 $messages['nah'] = array(
 	'profiling-ok' => 'Cualli',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'profiling' => 'Profileringsdata',
+	'profiling-desc' => '[[Special:Profiling|Spesialside]] for søk og inspeksjon av profileringsdata',
+	'profiling-process' => 'Prosesseringsstreng:',
+	'profiling-wildcard' => 'Bruk vilkårlig tegn',
+	'profiling-ok' => 'OK',
+	'profiling-data' => 'Profileringsdata for «$1»',
+	'profiling-data-process' => 'Prosess',
+	'profiling-data-count' => 'Antall',
+	'profiling-data-time' => 'Tid (alle)',
+	'profiling-data-average' => 'Tid (gj.snitt)',
+	'profiling-no-data' => 'Ingen passende resultater.',
 );
 
 /** Dutch (Nederlands)
@@ -696,23 +759,6 @@ $messages['nn'] = array(
 	'profiling-no-data' => 'Fann ingen passande resultat.',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'profiling' => 'Profileringsdata',
-	'profiling-desc' => '[[Special:Profiling|Spesialside]] for søk og inspeksjon av profileringsdata',
-	'profiling-process' => 'Prosesseringsstreng:',
-	'profiling-wildcard' => 'Bruk vilkårlig tegn',
-	'profiling-ok' => 'OK',
-	'profiling-data' => 'Profileringsdata for «$1»',
-	'profiling-data-process' => 'Prosess',
-	'profiling-data-count' => 'Antall',
-	'profiling-data-time' => 'Tid (alle)',
-	'profiling-data-average' => 'Tid (gj.snitt)',
-	'profiling-no-data' => 'Ingen passende resultater.',
-);
-
 /** Northern Sotho (Sesotho sa Leboa)
  * @author Mohau
  */
@@ -738,7 +784,14 @@ $messages['oc'] = array(
 	'profiling-no-data' => 'Cap de donada correspondenta pas trobada',
 );
 
-/** Ossetic (Иронау)
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Psubhashish
+ */
+$messages['or'] = array(
+	'profiling-ok' => 'ଠିକ ଅଛି',
+);
+
+/** Ossetic (Ирон)
  * @author Amikeco
  */
 $messages['os'] = array(
@@ -792,8 +845,11 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'profiling-ok' => 'ښه',
+	'profiling-data-process' => 'پروسه',
 	'profiling-data-count' => 'شمېرل',
 	'profiling-data-time' => 'وخت (ټول)',
+	'profiling-data-average' => 'وخت (منځالی)',
 );
 
 /** Portuguese (Português)
@@ -867,6 +923,13 @@ $messages['ru'] = array(
 	'profiling-no-data' => 'Не найдено соответствующих данных.',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'profiling-ok' => 'ОК',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -882,6 +945,31 @@ $messages['sk'] = array(
 	'profiling-data-time' => 'Čas (všetky)',
 	'profiling-data-average' => 'Čas (priemer)',
 	'profiling-no-data' => 'Neboli nájdené vyhovujúce údaje.',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'profiling-process' => 'Наредба:',
+	'profiling-ok' => 'У реду',
+	'profiling-data-process' => 'Обради',
+	'profiling-data-count' => 'Број',
+	'profiling-data-time' => 'Време (све)',
+	'profiling-data-average' => 'Време (просечно)',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
+ * @author Rancher
+ */
+$messages['sr-el'] = array(
+	'profiling-process' => 'Naredba:',
+	'profiling-ok' => 'U redu',
+	'profiling-data-process' => 'Obradi',
+	'profiling-data-count' => 'Broj',
+	'profiling-data-time' => 'Vreme (sve)',
+	'profiling-data-average' => 'Vreme (prosečno)',
 );
 
 /** Seeltersk (Seeltersk)
@@ -983,14 +1071,14 @@ $messages['tr'] = array(
 	'profiling-no-data' => 'Eşleşen veri bulunamadı',
 );
 
-/** ئۇيغۇرچە (ئۇيغۇرچە)
+/** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Alfredie
  */
 $messages['ug-arab'] = array(
 	'profiling-ok' => 'ماقۇل',
 );
 
-/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+/** Uyghur (Latin script) (Uyghurche‎)
  * @author Jose77
  */
 $messages['ug-latn'] = array(
@@ -1000,9 +1088,20 @@ $messages['ug-latn'] = array(
 /** Ukrainian (Українська)
  * @author AS
  * @author Ahonc
+ * @author Alex Khimich
+ * @author Тест
  */
 $messages['uk'] = array(
+	'profiling' => 'Профілювання даних',
+	'profiling-process' => 'Командна стрічка:',
+	'profiling-wildcard' => 'Використання маски',
 	'profiling-ok' => 'Гаразд',
+	'profiling-data' => 'Профілювання даних для `$1`',
+	'profiling-data-process' => 'Обробка',
+	'profiling-data-count' => 'Кількість',
+	'profiling-data-time' => 'Час (весь)',
+	'profiling-data-average' => 'Час (середній)',
+	'profiling-no-data' => 'Не знайдено співпадаючих данних.',
 );
 
 /** Veps (Vepsan kel')
@@ -1040,7 +1139,7 @@ $messages['vo'] = array(
 	'profiling-no-data' => 'Nünods leigöl nonik petuvons.',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -1057,6 +1156,7 @@ $messages['yue'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gaoxuewei
+ * @author Mark85296341
  * @author Shinjiman
  */
 $messages['zh-hans'] = array(
@@ -1068,26 +1168,27 @@ $messages['zh-hans'] = array(
 	'profiling-data' => '正在检核`$1`的数据',
 	'profiling-data-process' => '处理',
 	'profiling-data-count' => '数量',
-	'profiling-data-time' => '时间 （全部）',
-	'profiling-data-average' => '时间 （平均）',
+	'profiling-data-time' => '时间（全部）',
+	'profiling-data-average' => '时间（平均）',
 	'profiling-no-data' => '找不到匹配的数据。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
 	'profiling' => '檢核資料',
-	'profiling-desc' => '[[Special:Profiling|特殊頁面]]用以查找和檢查配置信息',
-	'profiling-process' => '處理字串:',
+	'profiling-desc' => '[[Special:Profiling|特殊頁面]]用以尋找和檢查配置資料',
+	'profiling-process' => '處理字串：',
 	'profiling-wildcard' => '使用萬用字元',
 	'profiling-ok' => '確定',
 	'profiling-data' => '正在檢核`$1`的資料',
 	'profiling-data-process' => '處理',
 	'profiling-data-count' => '數量',
-	'profiling-data-time' => '時間 （全部）',
-	'profiling-data-average' => '時間 （平均）',
+	'profiling-data-time' => '時間（全部）',
+	'profiling-data-average' => '時間（平均）',
 	'profiling-no-data' => '找不到對應的資料。',
 );
 

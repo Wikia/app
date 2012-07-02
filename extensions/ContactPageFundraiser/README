@@ -28,7 +28,7 @@ LocalSettings.php file (near the end):
   require_once( "$IP/extensions/ContactPage/ContactPage.php" );
 
   $wgContactUser = 'WikiAdmin';
-  $wgContactSender = 'apache@' . $wgServerName;
+  $wgContactSender = $wgPasswordSender;
   $wgContactSenderName = 'Contact Form on ' . $wgSitename;
 
 

@@ -5,6 +5,7 @@
  * WhatIsMyIP extension for MediaWiki
  * shows user's IP address
  *
+ * @file
  * @author Łukasz Galezewski <lukasz@wikia.com>
  * @date 2008-01-22
  * @copyright Copyright © 2008 Łukasz Galezewski, Wikia Inc.
@@ -26,9 +27,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'WhatIsMyIP',
 	'version' => '1.3',
-	'description' => 'Shows current user\'s IP address on [[Special:WhatIsMyIP]]',
 	'author' => 'Łukasz Galezewski',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:WhatIsMyIP',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:WhatIsMyIP',
 	'descriptionmsg' => 'whatismyip-desc'
 );
 
@@ -39,7 +39,7 @@ $wgGroupPermissions['*']['whatismyip'] = true;
 // Set up the special page
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['WhatIsMyIP'] = $dir . 'WhatIsMyIP.i18n.php';
-$wgExtensionAliasesFiles['WhatIsMyIP'] = $dir . 'WhatIsMyIP.alias.php';
+$wgExtensionMessagesFiles['WhatIsMyIPAlias'] = $dir . 'WhatIsMyIP.alias.php';
 $wgAutoloadClasses['WhatIsMyIP'] = $dir . 'WhatIsMyIP_body.php';
 $wgSpecialPages['WhatIsMyIP'] = 'WhatIsMyIP';
 // Special page group for MediaWiki 1.13+

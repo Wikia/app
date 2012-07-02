@@ -9,8 +9,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'FormatSearch',
 	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
-	'description'    => 'Changes to clean up the search results page',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Format_Search',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Uniwiki_Format_Search',
 	'descriptionmsg' => 'formatsearch-desc',
 );
 

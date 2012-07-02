@@ -125,7 +125,7 @@ class OLE_PPS extends PEAR
     * @param string  $data  The (usually binary) source data of the PPS
     * @param array   $children Array containing children PPS for this PPS
     */
-    function OLE_PPS($No, $name, $type, $prev, $next, $dir, $time_1st, $time_2nd, $data, $children)
+    function __construct($No, $name, $type, $prev, $next, $dir, $time_1st, $time_2nd, $data, $children)
     {
         $this->No      = $No;
         $this->Name    = $name;
@@ -219,4 +219,3 @@ class OLE_PPS extends PEAR
         return $this->No;
     }
 }
-?>

@@ -1,3 +1,9 @@
+* v0.8.1 - 2011-06-07
+  - Fix for code structure and variable names (Yaron Koren)
+
+* v0.8
+  - using JQuery Treeview to collapse / expand branches
+
 * v0.7dev
   - Update to comply to the current MediaWiki core (Patch by Lambert Lum)
   - Changed the user interface to use checkboxes instead of scrolling lists

@@ -772,12 +772,13 @@ class SWMSendToGroupTask extends BatchTask {
 		$sqlValues = array();
 		if ( !empty( $wgStatsDBEnabled ) ) {
 			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$groupName = $dbr->escapeLike($params['groupName']);
+			$groupName = $params['groupName'];
+			$groupNameLike = $dbr->buildLike( $dbr->anyString(), $groupName, $dbr->anyString() );
 
 			$dbResult = $dbr->select(
 				array('`specials`.`events_local_users`'),
 				array('user_id', 'wiki_id'),
-				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')', "(single_group = '$groupName' OR all_groups LIKE '%$groupName;%')"),
+				array('wiki_id IN (' . implode(',', array_keys($wikisDB)) . ')', "(single_group = '$groupName' OR all_groups " . $groupNameLike .")"),
 				__METHOD__,
 				array('GROUP BY' => 'user_id')
 			);

@@ -1,0 +1,164 @@
+ Changelog:
+ ==========
+
+ * December 5, 2011 -- Version 2.0rc2
+    - Bug introduced in r105069 fixed where '#arrayprint' was broken in compatibility mode in some cases.
+    - '#arraysearcharray' with 'e' using 'Regex Fun' no longer requires an escaped transform (parameter 6)
+      input. It works just like the '#regex' parser functions replacement parameter.
+
+ * December 4, 2011 -- Version 2.0rc1
+    This release is built upon 1.4 alpha. See changes of 1.4 alpha as well.
+    'ArrayExtension' is now simply called 'Arrays'. Therefore you have to adjust your LocalSettings.php.
+    - Compatibility mode variable '$egArraysCompatibilityMode' ('$egArrayExtensionCompatbilityMode' in
+      Version 1.4 alpha) is set to false by default. See Version 1.4 alpha for further information.
+    - Additional changes to the compatibility mode behavior in version 2.0 include:
+      + '#arrayindex' will return its default also in case of existing index but empty value. This
+        makes the function consistent with Variables '#var' and HashTables '#hashvalue'.
+      + '#arrayunion', '#arraydiff' and '#arrayintersect' with only one array for the operation will make
+        a copy of that array instead of creating no array at all (just like '#arraymerge' behaved already).
+      + Default separator for '#arrayprint' now is the languages default separator instead of ', '.
+	  + '#arrayprint' will no longer expand the given wiki markup twice. Instead, it will escape special
+	    characters of array values before they will be inserted into the markup. This way it won't be
+		possible anymore that array values can break the functions output. '$egArraysExpansionEscapeTemplates'
+		defines which special characters should be escaped by which template/parser function.
+      + *** See 1.4 alpha for previous changes ***
+    - '#arrayindex' will only expand options/default when required.
+    - '#arraymerge', '#arrayunion', '#arraydiff' and '#arrayintersect' can handle multiple arrays now.
+    - '#arraydefine' option 'print' no longer supports 'print=print' and parameters beyond options.
+      This functionality never worked reliably anyways. 'print=list' still works.
+    - '#arrayprint' now has a new parameter for options. Option 'print=pretty' will print a list where
+      the last two strings are chained with an ' and ' or the local languages equivalent. 'print=pretty'
+      also can be used as option within '#arraydefine'.
+    - If 'Regex Fun' extension is installed, '#arraysearcharray' can use Regex Funs 'e' flag feature
+      for transforming the result and at the same time parsing them after each back-reference inclusion.
+    - 1.4 alpha bug solved, '#arraysearcharray' with empty string as start index was interpreted as 0.
+    - class 'ArrayExtension' renamed to 'ExtArrays'.
+
+
+ * November 20, 2001 -- Version 1.4 alpha (r103716)
+    This release introduces some useful bugfixes and optional new behavior for various functionality.
+    This version never made it into a final stage because version 2.0 will introduce some rather
+    radical changes, so this alpha release allows to profit from bugfixes that might be quite useful
+    if you don't want to use Version 2.0 for some reason.
+    - Configuration variable '$egArrayExtensionCompatbilityMode' for deactivating the following newly
+      introduced breaking changes:
+      + '#arrayprint' no longer returns an error text in case the array doesn't exist.
+      + '#arrayreset' now uses n parameters instead of ',' as separator for n arrays to reset
+      + '#arrayindex' options removed, instead third parameter simply is the default value (without
+        any 'default=' in front).
+      + '#arraysearch' returns an empty string '' instead of '-1' in case nothing was found.
+      + '#arraysearcharray' and '#arrayslice' without all necessary parameters set will always create
+        a new empty array.
+      Compatibility mode is active by default. In Version 2.0 it will be set to inactive by default.
+    - '#arraysearch' will only expand 'yes' or 'no' if given, but never both.
+    - negative indexes for '#arrayindex', '#arraysearch' and '#arraysearcharray' are possible now.
+    - bugfix in '#arraysearcharray', index and limit working fine now.
+    - arrayprint will handle <includeonly>/<noinclude> correct in case it's used in a template.
+    - Internationalization for several languages added.	
+    - moved into mediawiki.org svn repository.
+
+
+ * January 24, 2011 -- Version 1.3.2
+    - New public class methods for creating and removing arrays. Good for use by other extensions.
+    - VERSION constant added to ArrayExtension class 
+
+ * July 20, 2010 -- Version 1.3.1
+    - Removed critical bug. Some kind of "Superglobal" Arrays on page imports and job queue jobs.
+      Values were passed from one page to another page. 
+
+ * July 5, 2010 -- Version 1.3
+    - update arrayunion and arraydiff, fixed heavy bug (gaps between array indexes doing some serious
+      trouble in other arrayfunctions like arraysearch)
+    - array function ''#arraysearcharray'' added
+    - '#arraysearch' code cleanup, search parameter is optional now, searching for empty elements is
+      possible now
+    - advanced check for regular expressions in '#arraysearch,' '#arraydefine' and '#arraysearcharray'
+      Pivate function isValidRegEx() added
+    - '#arraymerge' bug fixed: Php message in case of non existant seccond array
+    - now using preg_quote in arraydefine when using a non regular expression delimiter
+    - some minor code changes and cleanup
+
+
+ * January 23, 2010 -- Version 1.2.4
+    - update arraydefine, add more parameter for combining print with arraydefine
+
+ * July 16, 2009 -- Version 1.2.3
+    - update arrayunique,  fixed bug (empty string should be eliminated in array after arrayunique)
+
+ * July 16, 2009 -- Version 1.2.2
+    - update arrayunique,  fixed bug (zero mistakenly eliminated in array after arrayunique)
+    - rename key=>arrayid, should not affect any existing users
+    - rename validate_array_by_name to validate_array_by_arrayid
+    - add "asc" as option of arraysort    
+
+ * May 03, 2009 -- Version 1.2.1
+   - update arraydefine by adding options:  "unique";  sort=( "desc", "asce", "random", "reverse"), and
+     print=( "list" ). Options are diliminated by comma, e.g. "unique, sort=desc,print=list". 
+   - fixed bug in arrayslice (offset can be greater than array size): if offset is no less than array
+     size, empty array will be returned, if offset if no greater than negative array size, a new array
+     with all elements will be returned
+   - update arrayindex by adding print option when (i) the array is not defined; (ii) the index is not
+     valid in the specified array: e.g. "default=bad array"
+
+ * April 24, 2009 -- Version 1.2
+   - fixed a bug in  arrayslice,   (offset=0)
+   - clean up code, added two private functions, validate_array_index, validate_array_offset,
+     validate_array_by_arrayid; rename some parameters key=> new_key,  differentiate offset and index
+	 
+ * April 18, 2009 -- Version 1.1.6
+   - fixed a bug in arraymerge and arrayslice,
+
+ * Mar 17, 2009 -- Version 1.1.5
+   - update '#arraysort,' add "reverse" option, http://us3.php.net/manual/en/function.array-reverse.php
+   - update '#arrayreset,' add option to reset a selection of arrays
+
+ * Feb 23, 2009 -- Version 1.1.4
+   - fixed '#arraysearch,' better recognize perl patterns identified by starting with "/",
+     http://www.perl.com/doc/manual/html/pod/perlre.html
+
+ * Feb 23, 2009 -- Version 1.1.3
+   - fixed '#arraysearch,' "Warning: Missing argument 4..."
+
+ * Feb 9, 2009 -- Version 1.1.2
+    - update '#arraysearch,' now support offset and preg regular expression
+
+ * Feb 8, 2009 -- Version 1.1.1
+    - update '#arrayprint,' now wiki links, parser functions and templates properly parsed. This enables
+      foreach loop call.
+    - update '#arraysearch,' now allows customized output upon found/non-found by specifying additional
+      parameters
+
+ * Feb 5, 2009 -- Version 1.1
+    - update '#arraydefine:' replacing  'explode' by 'preg_split', 
+      and we now allow delimitors to  be (i) a string; or (ii) a perl regular expressnion pattern,
+      sourrounded by '/', e.g. '/..blah.../'
+    - update '#arrayprint,' change parameters from "prefix","suffix" to a "template", and users can
+      replace a substring in the template with array value, similar to arraymap in semantic forms
+    - update '#arrayunique,'  empty elements will be removed
+    - update '#arraysort:' adding "random" option to make the array of values in random order
+    - add '#arrayreset' to free all defined arrays for memory saving
+    - add '#arrayslice' to return an array bounded by start_index and length.
+    - add  '#arraysearch.' now we can return the index of the first occurence of an element, return -1 if
+      not found
+    - remove '#arraymember,'  obsoleted by '#arraysearch'
+    - remove '#arraypush,' obsoleted by '#arraydefine' and '#arraymerge'
+    - remove '#arraypop,' obsoleted by  '#arrayslice'    
+    - add safty check code to avoid unset parameters
+ 
+ * Feb 1, 2009 -- Version 1.0.3 
+    - fixed bug on arrayunique,   php array_unique only make values unique, but the array index was not
+      updated.  (arraydefine is also affected)
+
+ * Jan 28, 2009 -- Version 1.0.2 
+    - changed arraypop  (add one parameter to support multiple pop)
+    - added arrayindex (return an array element at index)
+
+ * Jan 27, 2009  -- Version 1.0.1 
+    - changed arraydefine (allow defining empty array)
+
+ -------------------------------------------
+ the following fuctions are obsoleted
+    '#arraypush'   (replaced by arraymerge)
+    '#arraypop'    (replaced by arrayslice)
+    '#arraymember' (replaced by arraysearch)
+ -------------------------------------------

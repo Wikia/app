@@ -61,6 +61,7 @@ $wgUseFakeExternalStoreDB = false;
 require_once ( $IP."/includes/wikia/Defines.php" );
 require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
+require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
@@ -94,7 +95,7 @@ $wgAutoloadClasses['WikiaRequest'] = $IP . '/includes/wikia/WikiaRequest.class.p
 $wgAutoloadClasses['WikiaResponse'] = $IP . '/includes/wikia/WikiaResponse.class.php';
 $wgAutoloadClasses['WikiaView'] = $IP . '/includes/wikia/WikiaView.class.php';
 $wgAutoloadClasses['WikiaSkin'] = $IP . '/includes/wikia/WikiaSkin.class.php';
-$wgAutoloadClasses['WikiaQuickTemplate'] = $IP . '/includes/wikia/WikiaQuickTemplate.class.php';
+$wgAutoloadClasses['WikiaBaseTemplate'] = $IP . '/includes/wikia/WikiaBaseTemplate.class.php';
 $wgAutoloadClasses['WikiaFunctionWrapper'] = $IP . '/includes/wikia/WikiaFunctionWrapper.class.php';
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/WikiaBaseTest.class.php';
 
@@ -105,6 +106,10 @@ $app = F::build( 'App' );
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
+$wgAutoloadClasses['SpamBlacklist'] = $IP . '/extensions/SpamBlacklist/SpamBlacklist_body.php';
+$wgAutoloadClasses['BaseBlacklist'] = $IP . '/extensions/SpamBlacklist/BaseBlacklist.php';
+$wgAutoloadClasses['SpamRegexBatch'] = $IP . '/extensions/SpamBlacklist/SpamRegexBatch.php';
+$wgAutoloadClasses['WikiaSpamRegexBatch'] = $IP . '/extensions/wikia/WikiaSpamRegexBatch/WikiaSpamRegexBatch.php';
 
 /**
  * custom wikia classes
@@ -127,11 +132,12 @@ $wgAutoloadClasses[ 'WikiaDispatchedException'        ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSkinMonoBook'               ] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/services/PaginationController.class.php";
 $wgAutoloadClasses[ 'MemcacheSync'                    ] = "$IP/includes/wikia/MemcacheSync.class.php";
-$wgAutoloadClasses[ 'LibmemcachedBagOStuff'           ] = "$IP/includes/wikia/LibmemcachedBagOStuff.php";
-$wgAutoloadClasses[ 'LibmemcachedSessionHandler'      ] = "$IP/includes/wikia/LibmemcachedSessionHandler.php";
+$wgAutoloadClasses[ 'LibmemcachedBagOStuff'           ] = "$IP/includes/cache/wikia/LibmemcachedBagOStuff.php";
+$wgAutoloadClasses[ 'LibmemcachedSessionHandler'      ] = "$IP/includes/cache/wikia/LibmemcachedSessionHandler.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
 $wgAutoloadClasses[ "ExternalUser_Wikia"              ] = "$IP/includes/wikia/ExternalUser_Wikia.php";
 $wgAutoloadClasses[ 'AutomaticWikiAdoptionGatherData' ] = "$IP/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php";
+$wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/FakeSkin.class.php";
 
 // core
 $wgAutoloadClasses['Module']  =  $IP.'/includes/wikia/Module.php';
@@ -224,6 +230,7 @@ $wgAutoloadClasses['WikiaTempFilesUpload'] = $IP.'/includes/wikia/WikiaTempFiles
 $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
 $wgAutoloadClasses['ThemeDesignerHelper'] = $IP."/extensions/wikia/ThemeDesigner/ThemeDesignerHelper.class.php";//FB#22659 - dependency for ThemeSettings
 $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorController.class.php';
+$wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 
 // TODO:move this inclusion to CommonExtensions?
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
@@ -260,16 +267,12 @@ $wgAutoloadClasses[ "WikiaApiQueryMostVisitedPages" ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiAjaxLogin"             ] = "$IP/extensions/wikia/WikiaApi/WikiaApiAjaxLogin.php";
 $wgAutoloadClasses[ "WikiaApiQuerySiteInfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
 $wgAutoloadClasses[ "WikiaApiQueryPageinfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
-$wgAutoloadClasses[ "WikiaApiReportEmail"           ] = "$IP/extensions/wikia/WikiaApi/WikiaApiReportEmail.php";
 $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail"  ] = "$IP/extensions/wikia/AutoCreateWiki/WikiaApiCreatorReminderEmail.php";
 $wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
 $wgAutoloadClasses[ "WikiaApiQueryEventsData"       ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryEventsData.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
 $wgAutoloadClasses[ "ApiRunJob"                     ] = "$IP/extensions/wikia/WikiaApi/ApiRunJob.php";
-$wgAutoloadClasses[ "ApiCreateMultiplePages"        ] = "$IP/extensions/wikia/WikiaApi/ApiCreateMultiplePages.php";
-$wgAutoloadClasses[ "ApiUploadLogo"                 ] = "$IP/extensions/wikia/WikiaApi/ApiUploadLogo.php";
-$wgAutoloadClasses[ "ApiFounderSettings"            ] = "$IP/extensions/wikia/WikiaApi/ApiFounderSettings.php";
 
 if( $wgUseFakeExternalStoreDB !== true ) {
 	$wgAutoloadClasses[ "WikiaApiQueryBlob"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryBlob.php";
@@ -337,12 +340,8 @@ $wgAPIModules[ "update"            ] = "WikiaApiQueryWrite";
 $wgAPIModules[ "delete"            ] = "ApiDelete";
 $wgAPIModules[ "wdelete"           ] = "WikiaApiQueryWrite";
 $wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
-$wgAPIModules[ "theschwartz"       ] = "WikiaApiReportEmail";
 $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "runjob"            ] = "ApiRunJob";
-$wgAPIModules["createmultiplepages"] = "ApiCreateMultiplePages";
-$wgAPIModules[ "uploadlogo"        ] = "ApiUploadLogo";
-$wgAPIModules[ "foundersettings"   ] = "ApiFounderSettings";
 
 
 if( $wgUseFakeExternalStoreDB !== true ) {
@@ -373,6 +372,9 @@ include_once( "$IP/extensions/wikia/JSSnippets/JSSnippets_setup.php" );
 include_once( "$IP/extensions/wikia/WikiaTracker/WikiaTracker.setup.php" );
 include_once( "$IP/extensions/wikia/EmailsStorage/EmailsStorage.setup.php" );
 include_once( "$IP/extensions/wikia/ShareButtons/ShareButtons.setup.php" );
+include_once( "$IP/extensions/wikia/SpecialUnlockdb/SpecialUnlockdb.setup.php" );
+include_once( "$IP/extensions/wikia/WikiaWantedQueryPage/WikiaWantedQueryPage.setup.php" );
+include_once( "$IP/includes/wikia/Resources.php" );
 
 /**
  * @name $wgSkipSkins
@@ -626,6 +628,7 @@ $wgUseExternalEditor = false;
  * libmemcached related stuff
  */
 define( "CACHE_LIBMEMCACHED", 11 );
+$wgObjectCaches[ CACHE_LIBMEMCACHED ] = array( 'class', 'LibmemcachedBagOStuff' );
 $wgSessionsInLibmemcached = false;
 
 
@@ -779,15 +782,9 @@ $wgGlobalUserProperties = array('language');
 $wgMemCachedDebugLevel = 1;
 
 /**
- * enable this by default, since we 100% include it in assetmanager now
+ * enable Math extension everywhere
  */
-$wgEnableMWSuggest = true;
-
-/**
- * define binary for wgUseTex usage
- * @name wgTexvc
- */
-$wgTexvc = "$IP/math/texvc";
+$wgEnableMathExt = true;
 
 /**
  * enable extension to output OpenGraph meta tags so that facebook sharing
@@ -894,5 +891,20 @@ if( in_array( 'user_properties', $wgSharedTables ) ) {
  */
 $wgAutoloadClasses['WikiaFileHelper'] = $IP.'/includes/wikia/services/WikiaFileHelper.class.php';
 $wgAutoloadClasses['ArticlesUsingMediaQuery'] = $IP.'/includes/wikia/ArticlesUsingMediaQuery.class.php';
-$wgHooks['LinksUpdateConstructed'][] = 'ArticlesUsingMediaQuery::onUpdateLinks';
+$wgHooks['ArticleSaveComplete'][] = 'ArticlesUsingMediaQuery::onArticleSaveComplete';
 $wgHooks['ArticleDelete'][] = 'ArticlesUsingMediaQuery::onArticleDelete';
+
+/**
+ * Password reminder name
+ */
+$wgPasswordSenderName = 'Wikia';
+
+/**
+ * Defines the mapping for per-skin Common.js/css
+ * @var array
+ */
+$wgResourceLoaderAssetsSkinMapping = array(
+	'Oasis' => 'Wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
+);
+
+$wgWikiaHubsPages = array();

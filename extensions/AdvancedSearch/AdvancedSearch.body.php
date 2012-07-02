@@ -30,13 +30,14 @@ class AdvancedSearch extends SpecialPage {
 
 	public function execute( $par ) {
 		global $wgOut, $wgRequest;
-		wfLoadExtensionMessages( 'AdvancedSearch' );
+		
 		$this->setHeaders();
 		$wgOut->setPageTitle( wfMsg( 'advancedsearch-title' ) );
-		if ( $wgRequest->getVal( 'do' ) == 'search' || !is_null( $par ) )
+		if ( $wgRequest->getVal( 'do' ) == 'search' || !is_null( $par ) ) {
 			$wgOut->addHTML( $this->showResults( $par ) );
-		else
+		} else {
 			$wgOut->addHTML( $this->buildForm() );
+		}
 	}
 
 	/**
@@ -49,19 +50,19 @@ class AdvancedSearch extends SpecialPage {
 		return wfMsg( 'advancedsearch-permalink',
 			$wgUser->getSkin()->makeLinkObj(
 				SpecialPage::getTitleFor( "AdvancedSearch/$key" ),
-				wfMsg( 'advancedsearch-permalink-text' ) ) );
+				wfMsgHtml( 'advancedsearch-permalink-text' ) ) );
 	}
 
 	protected function showResults( $par ) {
 		global $wgRequest;
 		$key = $wgRequest->getVal( 'key', null );
-		if ( is_null( $key ) )
+		if ( is_null( $key ) ) {
 			$key = $par;
+		}
 		$searchTitle = $searchContent = true;
 		if ( !is_null( $key ) ) {
 			$pager = AdvancedSearchPager::newFromKey( $key );
-			if ( $pager instanceof AdvancedSearchPager )
-			{
+			if ( $pager instanceof AdvancedSearchPager ) {
 				$searchTitle = $pager->getSearchTitle();
 				$searchContent = $pager->getSearchContent();
 			}
@@ -147,12 +148,14 @@ class AdvancedSearch extends SpecialPage {
 
 			$retval .= Xml::openElement( 'td' );
 			$checked = false;
-			if ( in_array( $name, $scarr ) )
+			if ( in_array( $name, $scarr ) ) {
 				$checked = true;
+			}
 			$retval .= Xml::checkLabel( $display, 'speedcats[]', "speedcats-$n", $checked, array( 'value' => $name ) );
 			$retval .= Xml::closeElement( 'td' );
-			if ( $close )
+			if ( $close ) {
 				$retval .= Xml::closeElement( 'tr' );
+			}
 		}
 
 		if ( !$close ) {
@@ -176,12 +179,16 @@ class AdvancedSearch extends SpecialPage {
 
 	protected function speedcatCheckboxes() {
 		global $wgAdvancedSearchSpeedCats;
-		if ( !isset( $wgAdvancedSearchSpeedCats ) || empty( $wgAdvancedSearchSpeedCats ) )
+		if (
+			!isset( $wgAdvancedSearchSpeedCats ) ||
+			empty( $wgAdvancedSearchSpeedCats )
+		)
+		{
 			return array();
+		}
 		$retval = array();
 		$i = 1;
-		foreach ( @$wgAdvancedSearchSpeedCats as $name => $display )
-		{
+		foreach ( @$wgAdvancedSearchSpeedCats as $name => $display ) {
 			$retval[] = "speedcats-{$i}";
 			$i++;
 		}
@@ -203,8 +210,9 @@ class AdvancedSearch extends SpecialPage {
 		$retval .= Xml::option( '', '', is_null( $sel ) );
 
 		foreach ( @$wgAdvancedSearchSpeedCatDropdown as $key => $value ) {
-			if ( is_int( $key ) )
+			if ( is_int( $key ) ) {
 				$key = $value;
+			}
 			$retval .= Xml::option( $key, $value, $sel == $value );
 		}
 
@@ -218,9 +226,11 @@ class AdvancedSearch extends SpecialPage {
 	public static function searchableNamespaces() {
 		global $wgContLang;
 		$retval = array();
-		foreach ( $wgContLang->getFormattedNamespaces() as $ns => $value )
-			if ( $ns >= NS_MAIN )
+		foreach ( $wgContLang->getFormattedNamespaces() as $ns => $value ) {
+			if ( $ns >= NS_MAIN ) {
 				$retval[$ns] = $value;
+			}
+		}
 		return $retval;
 	}
 
@@ -231,35 +241,38 @@ class AdvancedSearch extends SpecialPage {
 		$cols = 2;
 		$retval = Xml::openElement( 'table' );
 		$nsarr = $wgRequest->getArray( 'namespaces', array() );
-		foreach ( self::searchableNamespaces() as $ns => $display )
-		{
+		foreach ( self::searchableNamespaces() as $ns => $display ) {
 			$close = false;
-			if ( $i == 0 )
+			if ( $i == 0 ) {
 				$retval .= Xml::openElement( 'tr' );
-			if ( $i == $cols - 1 )
-			{
+			}
+			if ( $i == $cols - 1 ) {
 				$i = 0;
 				$j++;
 				$close = true;
-			}
-			else
+			} else {
 				$i++;
+			}
 			$retval .= Xml::openElement( 'td' );
-			if ( $display == '' )
+			if ( $display == '' ) {
 				$display = wfMsg( 'blanknamespace' );
+			}
 			$checked = false;
-			if ( in_array( $ns, $nsarr ) )
+			if ( in_array( $ns, $nsarr ) ) {
 				$checked = true;
-			else if ( empty( $nsarr ) )
+			} elseif ( empty( $nsarr ) ) {
 				$checked = $wgUser->getOption( "searchNs$ns" );
+			}
 			$retval .= Xml::checkLabel( $display, 'namespaces[]', "namespaces-$ns",
 					$checked, array( 'value' => $ns ) );
 			$retval .= Xml::closeElement( 'td' );
-			if ( $close )
+			if ( $close ) {
 				$retval .= Xml::closeElement( 'tr' );
+			}
 		}
-		if ( !$close )
+		if ( !$close ) {
 			$retval .= Xml::closeElement( 'tr' );
+		}
 		$retval .= Xml::openElement( 'tr' );
 		$retval .= Xml::openElement( 'td', array( 'colspan' => 2 ) );
 		$retval .= Xml::element( 'a', array( 'href' => 'javascript:caNamespaces(\'all\');' ), wfMsg( 'advancedsearch-selectall' ) );
@@ -276,25 +289,26 @@ class AdvancedSearch extends SpecialPage {
 
 	protected function namespaceCheckboxes() {
 		$retval = array();
-		foreach ( self::searchableNamespaces() as $ns => $unused )
+		foreach ( self::searchableNamespaces() as $ns => $unused ) {
 			$retval[] = "namespaces-$ns";
+		}
 		return $retval;
 	}
 
 	protected function invertJS( $func, $checkboxes ) {
 		$retval = "function $func(action)\n{";
-		foreach ( $checkboxes as $c )
+		foreach ( $checkboxes as $c ) {
 			$retval .= "checkboxAction('$c', action);\n";
+		}
 		$retval .= "}\n";
 		return $retval;
 	}
 
 	protected function checkboxActionJS() {
 		return <<<ENDOFLINE
-function checkboxAction(c, action) {
-	var obj = document.getElementById(c);
-	switch(action)
-	{
+function checkboxAction( c, action ) {
+	var obj = document.getElementById( c );
+	switch( action ) {
 		case 'all':
 			obj.checked = true;
 			break;
@@ -313,11 +327,12 @@ ENDOFLINE;
 		$wgOut->addInlineScript(
 			$this->checkboxActionJS() .
 			$this->invertJS( 'caNamespaces', $this->namespaceCheckboxes() ) .
-			$this->invertJS( 'caSpeedcats', $this->speedcatCheckboxes() ) );
+			$this->invertJS( 'caSpeedcats', $this->speedcatCheckboxes() )
+		);
 		$retval = wfMsgExt( 'advancedsearch-toptext', array( 'parse' ) );
-		$retval .= Xml::openElement( 'form', array( 'method' => 'GET', 'action' => $wgScript ) );
-		$retval .= Xml::hidden( 'title', $this->getTitle()->getPrefixedDbKey() );
-		$retval .= Xml::hidden( 'do', 'search' );
+		$retval .= Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) );
+		$retval .= Html::Hidden( 'title', $this->getTitle()->getPrefixedDbKey() );
+		$retval .= Html::Hidden( 'do', 'search' );
 
 		// The big table everything is in
 		$retval .= Xml::openElement( 'table' );
@@ -347,8 +362,9 @@ ENDOFLINE;
 		$retval .= Xml::element( 'legend', array( 'class' => 'advancedsearchLegend' ), wfMsg( 'advancedsearch-content-include' ) );
 		$retval .= Xml::openElement( 'table' );
 		$retval .= $this->inputRow( 'content-incl' );
-		if ( is_array( $parseErrors ) && $parseErrors[0] !== false )
+		if ( is_array( $parseErrors ) && $parseErrors[0] !== false ) {
 			$retval .= $this->errorRow( $parseErrors[0] );
+		}
 		$retval .= Xml::closeElement( 'table' );
 		$retval .= Xml::closeElement( 'fieldset' );
 		$retval .= Xml::closeElement( 'td' );
@@ -361,8 +377,9 @@ ENDOFLINE;
 		$retval .= Xml::element( 'legend', array( 'class' => 'advancedsearchLegend' ), wfMsg( 'advancedsearch-content-exclude' ) );
 		$retval .= Xml::openElement( 'table' );
 		$retval .= $this->inputRow( 'content-excl' );
-		if ( is_array( $parseErrors ) && $parseErrors[1] !== false )
+		if ( is_array( $parseErrors ) && $parseErrors[1] !== false ) {
 			$retval .= $this->errorRow( $parseErrors[1] );
+		}
 		$retval .= Xml::closeElement( 'table' );
 		$retval .= Xml::closeElement( 'fieldset' );
 		$retval .= Xml::closeElement( 'td' );
@@ -395,8 +412,9 @@ ENDOFLINE;
 		$retval .= Xml::element( 'legend', array( 'class' => 'advancedsearchLegend' ), wfMsg( 'advancedsearch-category-include' ) );
 		$retval .= Xml::openElement( 'table' );
 		$retval .= $this->inputRow( 'cat-incl' );
-		if ( is_array( $parseErrors ) && $parseErrors[2] !== false )
+		if ( is_array( $parseErrors ) && $parseErrors[2] !== false ) {
 			$retval .= $this->errorRow( $parseErrors[2] );
+		}
 		$retval .= Xml::closeElement( 'table' );
 		$retval .= Xml::closeElement( 'fieldset' );
 		$retval .= Xml::closeElement( 'td' );
@@ -409,8 +427,9 @@ ENDOFLINE;
 		$retval .= Xml::element( 'legend', array( 'class' => 'advancedsearchLegend' ), wfMsg( 'advancedsearch-category-exclude' ) );
 		$retval .= Xml::openElement( 'table' );
 		$retval .= $this->inputRow( 'cat-excl' );
-		if ( is_array( $parseErrors ) && $parseErrors[3] !== false )
+		if ( is_array( $parseErrors ) && $parseErrors[3] !== false ) {
 			$retval .= $this->errorRow( $parseErrors[3] );
+		}
 		$retval .= Xml::closeElement( 'table' );
 		$retval .= Xml::closeElement( 'fieldset' );
 		$retval .= Xml::closeElement( 'td' );

@@ -286,7 +286,7 @@ $messages['az'] = array(
 	'myhome-namespace-blog' => 'Bloq',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -1192,7 +1192,7 @@ Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez cha
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un message|$1 messages}}',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1365,16 +1365,10 @@ $messages['he'] = array(
  * @author Dani
  * @author Glanthor Reviol
  * @author Misibacsi
- * @author TK-999
  */
 $messages['hu'] = array(
-	'myhome-desc' => 'Személyes kezdőlap a bejelentkezett felhasználóknak',
 	'myhome' => 'Kezdőlapom',
 	'wikiactivity' => 'Wiki tevékenység',
-	'myhome-activity-more' => 'további friss tevékenység megtekintése',
-	'myhome-activity-feed' => 'Tevékenységlista',
-	'myhome-activity-feed-empty' => "Ez a wiki csak rád vár!.
-Kattins az '''[[Special:CreatePage|ide]]''' a szerkesztés elkezdéséhez!",
 	'myhome-watchlist-feed' => 'Figyelőlista',
 	'myhome-user-contributions-feed' => 'Közreműködések',
 	'myhome-hot-spots-newest' => 'Új oldalak a wikin',
@@ -2870,7 +2864,7 @@ $messages['ru'] = array(
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|одно сообщение|$1 сообщений}}',
 );
 
-/** Rusyn (русиньскый)
+/** Rusyn (Русиньскый)
  * @author Gazeb
  */
 $messages['rue'] = array(

@@ -25,6 +25,8 @@ var ThemeDesignerPreview = {
 		//fade out
 		$("#clickmask").animate({"opacity": 0.65}, "fast", function() {
 			$.getCSS(url, function(link) {
+				//add link to body
+				$('body').append(link);
 				//remove old <link>
 				$(ThemeDesignerPreview.link).remove();
 				//save current <link>

@@ -450,7 +450,7 @@ $messages['af'] = array(
 	'wikistats_month' => 'Maandelikse statistieke',
 );
 
-/** Aragonese (aragonés) */
+/** Aragonese (Aragonés) */
 $messages['an'] = array(
 	'wikistats_other' => 'Atros',
 	'wikistats_date' => 'Calendata',
@@ -606,7 +606,7 @@ $messages['az'] = array(
 	'wikistats_title' => 'Başlıq',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -2584,7 +2584,7 @@ de noms',
 	'wikistats_error_malformed_date' => 'Erreur : La date saisie est incorrecte',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

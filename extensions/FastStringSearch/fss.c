@@ -9,6 +9,7 @@
 #endif
 
 #include "php.h"
+#include "Zend/zend.h"
 #include "php_ini.h"
 #include "ext/standard/info.h"
 #include "php_fss.h"
@@ -215,7 +216,7 @@ PHP_FUNCTION(fss_prep_replace)
 		if (zend_hash_get_current_key_ex(hash, &string_key, &string_key_len, &num_key, 0, 
 					&hpos) == HASH_KEY_IS_LONG) 
 		{
-			sprintf(buffer, "%u", num_key);
+			sprintf(buffer, "%lu", num_key);
 			string_key = buffer;
 			string_key_len = strlen(buffer);
 		} else {
@@ -240,7 +241,11 @@ PHP_FUNCTION(fss_prep_replace)
 
 		/* Add the value to the replace array */
 		convert_to_string_ex(value);
+#ifdef Z_ADDREF_P /* 5.3 */
+		Z_ADDREF_P(*value);
+#else
 		ZVAL_ADDREF(*value);
+#endif
 		res->replace[i] = *value;
 	}
 	kwsprep(res->set);

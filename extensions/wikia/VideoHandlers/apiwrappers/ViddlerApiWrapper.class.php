@@ -76,7 +76,7 @@ class ViddlerApiWrapper extends ApiWrapper {
 	protected function getVideoTitle() {
 		return $this->interfaceObj['video']['title'];
 	}
-	
+
 	public function getDescription() {
 
 		wfProfileIn( __METHOD__ );
@@ -94,12 +94,12 @@ class ViddlerApiWrapper extends ApiWrapper {
 
 		return $description;
 	}
-	
+
 	public function getThumbnailUrl() {
 		return $this->interfaceObj['video']['thumbnail_url'];
 	}
-	
-	
+
+
 	protected function getApiUrl() {
 		global $wgViddlerApiKey;
 		$watchUrl = str_replace( '$1', trim($this->videoId, '/'), static::$WATCH_URL );
@@ -110,19 +110,19 @@ class ViddlerApiWrapper extends ApiWrapper {
 	protected function getAltVideoId() {
 		return $this->interfaceObj['video']['id'];
 	}
-	
+
 	protected function getVideoDuration() {
 		return $this->interfaceObj['video']['length'];
 	}
-	
+
 	protected function getOriginalDescription() {
 		return $this->interfaceObj['video']['description'];
 	}
-	
+
 	protected function getVideoPublished() {
 		return $this->interfaceObj['video']['made_public_time'];
 	}
-	
+
 	protected function getVideoKeywords() {
 
 		wfProfileIn( __METHOD__ );
@@ -138,7 +138,7 @@ class ViddlerApiWrapper extends ApiWrapper {
 
 		return implode(', ', $keywords);
 	}
-	
+
 	public function getAspectRatio() {
 
 		wfProfileIn( __METHOD__ );
@@ -152,7 +152,7 @@ class ViddlerApiWrapper extends ApiWrapper {
 				$height = $matches[1];
 			}
 		}
-		
+
 		if ($width && $height) {
 
 			wfProfileOut( __METHOD__ );
@@ -167,7 +167,7 @@ class ViddlerApiWrapper extends ApiWrapper {
 
 		wfProfileIn( __METHOD__ );
 
-		$req = HttpRequest::factory( $url, array('timeout'=>'default', 'headersOnly'=>true) );
+		$req = MWHttpRequest::factory( $url, array('timeout'=>'default', 'headersOnly'=>true) );
 		$status = $req->execute();
 		$finalUrl = $req->getFinalUrl();
 

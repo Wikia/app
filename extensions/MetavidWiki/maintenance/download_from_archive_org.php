@@ -235,4 +235,3 @@ function hr_bytes( $size ) {
         }
         return round( $size, 2 ) . " " . $a[$pos];
 }
-?>

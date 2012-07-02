@@ -101,7 +101,8 @@ class FacebookSignupController extends WikiaController {
 			$this->wf->SetupSession();
 		}
 
-		$signupForm = F::build( 'UserLoginFacebookForm', array(&$this->wg->request, 'signup') );
+		$signupForm = F::build( 'UserLoginFacebookForm', array( &$this->wg->request ) );
+		$signupForm->load();
 		$user = $signupForm->addNewAccount();
 
 		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok' ;

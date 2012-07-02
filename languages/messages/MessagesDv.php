@@ -4,6 +4,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Deviathan (on dv.wikipedia.org)
  * @author Glacious
  * @author MF-Warburg
  * @author לערי ריינהארט
@@ -28,27 +29,27 @@ $namespaceNames = array(
 );
 
 $specialPageAliases = array(
-	'Userlogin'                 => array( 'ވަދެވަޑައިގަންނަވާ' ),
-	'Userlogout'                => array( 'ބޭރަށް ވަޑައިގަންނަވާ' ),
+	'Allpages'                  => array( 'ހުރިހާ ސަފްޙާއެއް' ),
+	'Contributions'             => array( 'ޙިއްސާ' ),
 	'CreateAccount'             => array( 'މެމްބަރުކަން ހާސިލްކުރައްވާ' ),
-	'Preferences'               => array( 'ތަރުޖީހުތައް' ),
-	'Recentchanges'             => array( 'އެންމެ ފަހުގެ ބަދަލްތައް' ),
-	'Upload'                    => array( 'ފޮނުއްވާ' ),
+	'Emailuser'                 => array( 'މެމްބަރަށް އީ-މެއިލް ފޮނުވާ' ),
+	'BlockList'                 => array( 'ބްލޮކް ކުރެވިފައިވާ ލިސްޓް' ),
 	'Listfiles'                 => array( 'ފައިލް ލިސްޓް' ),
+	'Longpages'                 => array( 'ދިގު ސަފްޙާތައް' ),
 	'Newimages'                 => array( 'އާ ފައިލް' ),
+	'Newpages'                  => array( 'އާ ސަފްހާތައް' ),
+	'Preferences'               => array( 'ތަރުޖީހުތައް' ),
+	'Protectedpages'            => array( 'ދިފާޢުކުރެވިފައިވާ ސަފްޙާތައް' ),
 	'Randompage'                => array( 'ކޮންމެވެސް ސަފްޙާއެއް' ),
+	'Recentchanges'             => array( 'އެންމެ ފަހުގެ ބަދަލްތައް' ),
+	'Shortpages'                => array( 'ކުރު ސަފްޙާތައް' ),
+	'Specialpages'              => array( 'ޙާއްސަ ސަފްޙާތައް' ),
 	'Uncategorizedtemplates'    => array( 'ޤިސްމުކުރެވިފައި ނުވާ ފަންވަތް' ),
 	'Unusedcategories'          => array( 'ބޭނުން ނުކުރާ ޤިސްމުތައް' ),
 	'Unusedimages'              => array( 'ބޭނުން ނުކުރާ ފައިލް' ),
-	'Shortpages'                => array( 'ކުރު ސަފްޙާތައް' ),
-	'Longpages'                 => array( 'ދިގު ސަފްޙާތައް' ),
-	'Newpages'                  => array( 'އާ ސަފްހާތައް' ),
-	'Protectedpages'            => array( 'ދިފާޢުކުރެވިފައިވާ ސަފްޙާތައް' ),
-	'Allpages'                  => array( 'ހުރިހާ ސަފްޙާއެއް' ),
-	'Ipblocklist'               => array( 'ބްލޮކް ކުރެވިފައިވާ ލިސްޓް' ),
-	'Specialpages'              => array( 'ޙާއްސަ ސަފްޙާތައް' ),
-	'Contributions'             => array( 'ޙިއްސާ' ),
-	'Emailuser'                 => array( 'މެމްބަރަށް އީ-މެއިލް ފޮނުވާ' ),
+	'Upload'                    => array( 'ފޮނުއްވާ' ),
+	'Userlogin'                 => array( 'ވަދެވަޑައިގަންނަވާ' ),
+	'Userlogout'                => array( 'ބޭރަށް ވަޑައިގަންނަވާ' ),
 );
 
 $messages = array(
@@ -129,7 +130,6 @@ $messages = array(
 'go'                => 'ދުރުވޭ',
 'history'           => 'ޞަފްޙާގެ ތާރީހު',
 'history_short'     => 'ތާރީހު',
-'info_short'        => 'މައުލޫމާތު',
 'printableversion'  => 'ޗާޕަށްފަހި ނުސްހާ',
 'permalink'         => 'ދާއިމީ ފާލަން',
 'print'             => 'ޗާޕުކުރައްވާ',
@@ -213,7 +213,7 @@ $messages = array(
 'mailmypassword'             => 'ސިއްރުބަސް އީމޭލުކުރައްވާ',
 'acct_creation_throttle_hit' => 'މާފު ކުރައްވާ، އެހެނީ ތިޔަބޭފުޅާ ވަނީ ކުރީއްސުރެ $1 މެންބަރުކަން ހޯއްދަވާފައި އެހެންވީމާ އިތުރަށް ލިބިވަޑައެއް ނުގަންނަވާނެ.',
 
-# Password reset dialog
+# Change password dialog
 'oldpassword' => 'ކުރީގެ ސިއްރުބަސް:',
 
 # Edit page toolbar
@@ -248,7 +248,6 @@ $messages = array(
 
 ތިބޭފުޅޭގެ އައި.ޕީ އެޑް ރެސް އަކީ  $3 އެވެ.
 އަދި ބްލޮކް އައި.ޑީ އަކީ #$5 އެވެ.",
-'blockedoriginalsource'    => "'''$1''' މަޒުމޫނުގެ މަސްދަރު ތިރީގައި މި ވަނީ އެވެ:",
 'accmailtitle'             => 'ސިއްރުބަސް ފޮނުވިއްޖެ.',
 'accmailtext'              => '"$1" އަށްޓަކައިވާ ސިއްރު ބަސް $2 އަށް ވަނީ ފޮނުވިފައި',
 'newarticle'               => '(އައު)',
@@ -357,7 +356,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 # Watchlist
 'watchlist'         => 'މަގޭ ނަޒަރު',
-'addedwatch'        => 'ނަޒަރުގެ ފިހުރިސްތަށް ލެވިއްޖެ',
 'addedwatchtext'    => "މި ޞަފްޙާ \"<nowiki>\$1</nowiki>\" ތިޔަބޭފުޅާގެ [[Special:Watchlist|ހާއްސަ ނަޒަރު]] ފިހުރިސްތަށް ލެވިއްޖެއެވެ. ދެން ކުރިމަގުގައި މި ޞަފްޙާ އަދި މިއާ ގުޅޭ ބަހުސް ގެ ޞަފްޙާ އަށް ގެނެވޭ އުނިއިތުރު ތަކުގެ މައުލޫމާތު މިޞަފްހާއަށް ލެވޭނެއެވެ. އަދި އެ ޞަފްޙާތަކުގެ ޝަނާހަތު ފަސޭހަ ކުރުމަށްޓަކައި [[Special:ފަހު ބަދަލުތައް|ފަހު ބަދަލުތަކުގެ ފިހުރިސްތު]] ގައި އެބައިތައް '''ބޯ''' (bold) އަކުރުން ލިޔެވޭނެއެވެ. <p> ކޮންމެ އިރަކުވެސް ތިޔަބޭފުޅާ ހާއްސަ ނަޒަރުގެ ފިހުރިސްތުން މި ޞަފްޙާ އުނިކުރައްވަން ބޭނުންފުޅިއްޔާ މަތީގައި ދެވިފައިވާ \"ހާއްސަ ނަޒަރުން އުނިކުރޭ\" ގައި ކޮއްޓަވާ ލައްވާށެވެ.",
 'watch'             => 'ނަޒަރުބަހައްޓަވާ',
 'watchthispage'     => 'މި ޞަފްޙާއަށް ނަޒަރުބަހައްޓަވާ',
@@ -423,8 +421,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'movepagebtn'             => 'ޞަފްޙާގެނަން ބަދަލުކުރައްވާ',
 'articleexists'           => 'ތިޔަ ސުރުހީގައި ކުރީއްސުރެ ވެސް ޞަފްޙައެއް ވޭ، ނުވަތަ ތިޔަ އިހުތިޔާރުކުރެއްވި ނަން ރަނގަޅެއް ނޫން، ވީމާ އެހެން ނަމެއް އިހުތިޔާރުކުރެއްވުން އެދެވިގެންވެއެވެ.',
 'movedto'                 => 'އަށް ބަދަލުކުރެވިފައި',
-'1movedto2'               => '[[$1]] އަށް ނަގުލުކުރެވިފައި [[$2]]',
-'1movedto2_redir'         => '[[$2]] އަށް ނަގުލުކުރެވިއްޖެ [[$1]] މިސްރާބުކުރައްވާ',
 'movelogpagetext'         => 'ތިރީގައި މިވަނީ ނަން/ތަން ބަދަލުކުރެވިފައިވާ ޞަފްޙާތަކުގެ ފިހުރިސްތެކެވެ.',
 'movereason'              => 'ސަބަބު',
 'delete_and_move'         => 'ފޮހެލައްވާފައި އެހެންނަމަކަށްބަދަލުކުރައްވާ',
@@ -454,7 +450,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'exif-gpsspeed-n' => 'ތަސްވީރުގެ ސުރުހީ',
 
 # 'all' in various places, this might be different for inflected languages
-'imagelistall'  => 'ހުރިހާ',
 'watchlistall2' => 'ހުރިހާ',
 'namespacesall' => 'ހުރިހާ',
 

@@ -6,35 +6,49 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'Piwik' => array( 'Piwik' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Piwik' => array( 'بيويك' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
+$specialPageAliases['arz'] = array(
 	'Piwik' => array( 'بيويك' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'Piwik' => array( 'پی‌ویک' ),
+);
+
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'Piwik' => array( 'Piwik-Shtatistike', 'PiwikShtatistike' ),
 );
 
+/** Malayalam (മലയാളം) */
+$specialPageAliases['ml'] = array(
+	'Piwik' => array( 'പൈവിക്' ),
+);
+
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'Piwik' => array( 'पायविकि' ),
 );
 
-/** Sanskrit (संस्कृत) */
-$aliases['sa'] = array(
+/** Sanskrit (संस्कृतम्) */
+$specialPageAliases['sa'] = array(
 	'Piwik' => array( 'पिविकि' ),
 );
 
+/** Telugu (తెలుగు) */
+$specialPageAliases['te'] = array(
+	'Piwik' => array( 'పివిక్' ),
+);

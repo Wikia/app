@@ -4,21 +4,21 @@
  * This add-on use three new messages.
  * For more info see http://mediawiki.org/wiki/Extension:Multiboilerplate
  *
- * @subpackage Extensions
+ * @file
+ * @ingroup Extensions
  * @author Al Maghi
  */
 
 class SpecialBoilerplates extends IncludableSpecialPage {
 
 	function __construct() {
-		parent::SpecialPage( 'Boilerplates' );
+		parent::__construct( 'Boilerplates' );
 		$this->mIncludable = true;
 	}
 
 	function execute( $par ) {
 		global $wgOut, $wgMultiBoilerplateOptions;
 		if ( !isset($wgMultiBoilerplateOptions)) return true; // No options found in either configuration file, abort.
-		wfLoadExtensionMessages( 'MultiBoilerplate' );
 		if( !$this->mIncluding ) {
 			$this->setHeaders();
 			$wgOut->addWikiMsg( "multiboilerplate-special-pagetext" );

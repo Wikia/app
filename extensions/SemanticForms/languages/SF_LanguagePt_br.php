@@ -1,8 +1,13 @@
 <?php
 /**
  * @author Leonardo Costa
+ * @file
+ * @ingroup SF
  */
 
+/**
+ * @ingroup SFLanguage
+ */
 class SF_LanguagePt_br extends SF_Language {
 
 	/* private */ var $m_SpecialProperties = array(

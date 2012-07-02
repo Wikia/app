@@ -125,7 +125,7 @@ class StructuredEditPage extends EditPage{
 		} else {
 			if( $this->isCssJsSubpage && $this->formtype != 'preview' ) {
 				# Check the skin exists
-				if( $this->isValidCssJsSubpage ) {
+				if( !$this->isWrongCaseCssJsPage ) {
 					$wgOut->addWikiText( wfMsg( 'usercssjsyoucanpreview' ) );
 				} else {
 					$wgOut->addWikiText( wfMsg( 'userinvalidcssjstitle', $this->mTitle->getSkinFromCssJsSubpage() ) );

@@ -5,7 +5,8 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * A parser extension that adds two tags, <ref> and <references> for adding
  * citations to pages
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  *
  * @link http://www.mediawiki.org/wiki/Extension:Cite/Cite.php Documentation
  *
@@ -16,26 +17,24 @@ if ( ! defined( 'MEDIAWIKI' ) )
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'wfCite';
-} else {
-	$wgExtensionFunctions[] = 'wfCite';
-}
+$wgHooks['ParserFirstCallInit'][] = 'wfCite';
+$wgHooks['BeforePageDisplay'][] = 'wfCiteBeforePageDisplay';
+
 
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'Cite',
 	'author' => 'Ævar Arnfjörð Bjarmason',
-	'description' => 'Adds <nowiki><ref[ name=id]></nowiki> and <nowiki><references/></nowiki> tags, for citations', // kept for b/c
-	'descriptionmsg' => 'cite_desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Cite/Cite.php'
+	'descriptionmsg' => 'cite-desc',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Cite/Cite.php'
 );
 $wgParserTestFiles[] = dirname( __FILE__ ) . "/citeParserTests.txt";
+$wgParserTestFiles[] = dirname( __FILE__ ) . "/citeCatTreeParserTests.txt";
 $wgExtensionMessagesFiles['Cite'] = dirname( __FILE__ ) . "/Cite.i18n.php";
 $wgAutoloadClasses['Cite'] = dirname( __FILE__ ) . "/Cite_body.php";
 $wgSpecialPageGroups['Cite'] = 'pagetools';
 
-define( 'CITE_DEFAULT_GROUP', '');
+define( 'CITE_DEFAULT_GROUP', '' );
 /**
  * The emergency shut-off switch.  Override in local settings to disable
  * groups; or remove all references from this file to enable unconditionally
@@ -47,18 +46,58 @@ $wgAllowCiteGroups = true;
  */
 $wgCiteCacheReferences = false;
 
-function wfCite($parser = null) {
-	// Wikia change - start
-	// BugId:4434 - can be removed once updated to the version from MW 1.18
-	global $wgParser;
-	if (empty($parser)) {
-		$parser = $wgParser;
+/**
+ * Enables experimental popups
+ */
+$wgCiteEnablePopups = false;
+
+/**
+ * Performs the hook registration.
+ * Note that several extensions (and even core!) try to detect if Cite is
+ * installed by looking for wfCite().
+ *
+ * @param $parser Parser
+ *
+ * @return bool
+ */
+function wfCite( $parser ) {
+	return Cite::setHooks( $parser );
+}
+
+// Resources
+$citeResourceTemplate = array(
+	'localBasePath' => dirname(__FILE__) . '/modules',
+	'remoteExtPath' => 'Cite/modules'
+);
+
+$wgResourceModules['ext.cite'] = $citeResourceTemplate + array(
+	'styles' => array(),
+	'scripts' => 'ext.cite/ext.cite.js',
+	'position' => 'bottom',
+	'dependencies' => array(
+		'jquery.tooltip',
+	),
+);
+
+$wgResourceModules['jquery.tooltip'] = $citeResourceTemplate + array(
+	'styles' => 'jquery.tooltip/jquery.tooltip.css',
+	'scripts' => 'jquery.tooltip/jquery.tooltip.js',
+	'position' => 'bottom',
+);
+
+/**
+ * @param $out OutputPage
+ * @param $sk Skin
+ * @return bool
+ */
+function wfCiteBeforePageDisplay( $out, &$sk ) {
+	global $wgCiteEnablePopups;
+
+	if ( $wgCiteEnablePopups ) {
+		$out->addModules( 'ext.cite' );
 	}
 
-	new Cite($parser);
-	// Wikia change - end
 	return true;
 }
 
 /**#@-*/
-

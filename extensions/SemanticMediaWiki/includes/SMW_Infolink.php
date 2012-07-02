@@ -211,7 +211,7 @@ class SMWInfolink {
 	 */
 	public function getText( $outputformat, $linker = null ) {
 		if ( $this->mStyle !== false ) {
-			SMWOutputs::requireHeadItem( SMW_HEADER_STYLE ); // make SMW styles available
+			SMWOutputs::requireResource( 'ext.smw.style' );
 			$start = "<span class=\"$this->mStyle\">";
 			$end = '</span>';
 		} else {
@@ -228,11 +228,11 @@ class SMWInfolink {
 
 			$title = Title::newFromText( $titletext );
 
-			if ( $title !== null ) {
+			if ( !is_null( $title ) ) {
 				if ( $outputformat == SMW_OUTPUT_WIKI ) {
 					$link = "[[$titletext|$this->mCaption]]";
 				} else { // SMW_OUTPUT_HTML, SMW_OUTPUT_FILE
-					$link = $this->getLinker( $linker )->makeKnownLinkObj( $title, $this->mCaption );
+					$link = $this->getLinker( $linker )->link( $title, $this->mCaption );
 				}
 			} else { // Title creation failed, maybe illegal symbols or too long; make a direct URL link
 			         // (only possible if offending target parts belong to some parameter
@@ -240,13 +240,14 @@ class SMWInfolink {
 			         //  e.g. as in Special:Bla/il<leg>al -> Special:Bla&p=il&lt;leg&gt;al)
 				$title = Title::newFromText( $this->mTarget );
 
-				if ( $title !== null ) {
+				if ( !is_null( $title ) ) {
 					if ( $outputformat == SMW_OUTPUT_WIKI ) {
 						$link = '[' . $title->getFullURL( SMWInfolink::encodeParameters( $this->mParams, false ) ) . " $this->mCaption]";
 					} else { // SMW_OUTPUT_HTML, SMW_OUTPUT_FILE
-						$link = $this->getLinker( $linker )->makeKnownLinkObj(
+						$link = $this->getLinker( $linker )->link(
 							$title,
 							$this->mCaption,
+							array(),
 							SMWInfolink::encodeParameters( $this->mParams, false )
 						);
 					}
@@ -296,7 +297,7 @@ class SMWInfolink {
 		if ( $this->mInternal ) {
 			$title = Title::newFromText( $this->mTarget );
 
-			if ( $title !== null ) {
+			if ( !is_null( $title ) ) {
 				return $title->getFullURL( SMWInfolink::encodeParameters( $this->mParams, false ) );
 			} else {
 				return ''; // the title was bad, normally this would indicate a software bug
@@ -325,8 +326,8 @@ class SMWInfolink {
 	 * @return Linker
 	 */
 	protected function getLinker( &$linker = null ) {
-		if ( $linker === null ) {
-			$linker = new Linker();
+		if ( is_null( $linker ) ) {
+			$linker = class_exists('DummyLinker') ? new DummyLinker : new Linker;
 		}
 		return $linker;
 	}
@@ -353,7 +354,7 @@ class SMWInfolink {
 
 		if ( $forTitle ) {
 			foreach ( $params as $name => $value ) {
-				if ( is_string( $name ) && ( $name != '' ) ) {
+				if ( is_string( $name ) && ( $name !== '' ) ) {
 					$value = $name . '=' . $value;
 				}
 				// Escape certain problematic values. Use SMW-escape
@@ -375,12 +376,12 @@ class SMWInfolink {
 				//      make URLs less readable
 				//
 				$value = str_replace(
-					array( '-', '#', "\n", ' ', '/', '[', ']', '<', '>', '&lt;', '&gt;', '&amp;', '\'\'', '|', '&', '%', '?' ),
-					array( '-2D', '-23', '-0A', '-20', '-2F', '-5B', '-5D', '-3C', '-3E', '-3C', '-3E', '-26', '-27-27', '-7C', '-26', '-25', '-3F' ),
+					array( '-', '#', "\n", ' ', '/', '[', ']', '<', '>', '&lt;', '&gt;', '&amp;', '\'\'', '|', '&', '%', '?', '$' ),
+					array( '-2D', '-23', '-0A', '-20', '-2F', '-5B', '-5D', '-3C', '-3E', '-3C', '-3E', '-26', '-27-27', '-7C', '-26', '-25', '-3F', '-24' ),
 					$value
 				);
 
-				if ( $result != '' ) {
+				if ( $result !== '' ) {
 					$result .= '/';
 				}
 
@@ -390,10 +391,10 @@ class SMWInfolink {
 			$q = array(); // collect unlabelled query parameters here
 
 			foreach ( $params as $name => $value ) {
-				if ( is_string( $name ) && ( $name != '' ) ) {
+				if ( is_string( $name ) && ( $name !== '' ) ) {
 					$value = $name . '=' . rawurlencode( $value );
 
-					if ( $result != '' ) {
+					if ( $result !== '' ) {
 						$result .= '&';
 					}
 
@@ -403,7 +404,7 @@ class SMWInfolink {
 				}
 			}
 			if ( count( $q ) > 0 ) { // prepend encoding for unlabelled parameters
-				if ( $result != '' ) {
+				if ( $result !== '' ) {
 					$result = '&' . $result;
 				}
 				$result = 'x=' . rawurlencode( SMWInfolink::encodeParameters( $q, true ) ) . $result;
@@ -445,7 +446,7 @@ class SMWInfolink {
 			$result = $wgRequest->getValues();
 
 			if ( array_key_exists( 'x', $result ) ) { // Considered to be part of the title param.
-				if ( $titleParam != '' ) {
+				if ( $titleParam !== '' ) {
 					$titleParam .= '/';
 				}
 				$titleParam .= $result['x'];
@@ -455,12 +456,12 @@ class SMWInfolink {
 
 		if ( is_array( $titleParam ) ) {
 			return $titleParam;
-		} elseif ( $titleParam != '' ) {
+		} elseif ( $titleParam !== '' ) {
 			// unescape $p; escaping scheme: all parameters rawurlencoded, "-" and "/" urlencoded, all "%" replaced by "-", parameters then joined with /
 			$ps = explode( '/', $titleParam ); // params separated by / here (compatible with wiki link syntax)
 
 			foreach ( $ps as $p ) {
-				if ( $p != '' ) {
+				if ( $p !== '' ) {
 					$p = rawurldecode( str_replace( '-', '%', $p ) );
 					$parts = explode( '=', $p, 2 );
 

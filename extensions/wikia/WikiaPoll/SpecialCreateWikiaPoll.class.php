@@ -2,8 +2,8 @@
 
 class SpecialCreateWikiaPoll extends SpecialPage {
 
-	function SpecialCreateWikiaPoll() {
-		SpecialPage::SpecialPage("CreatePoll", "", false);
+	function __construct() {
+		parent::__construct("CreatePoll", "", false);
 	}
 
 	public function execute ($subpage) {
@@ -36,4 +36,3 @@ class SpecialCreateWikiaPoll extends SpecialPage {
 		}
 	}
 }
-?>

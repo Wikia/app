@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * creates an stub for non-free video that is waiting to be transcoded once the free format file is available
  * it re-maps all requests to the free format file. (only transcoding jobs will get the non-free file)
  */
@@ -115,7 +115,7 @@ class NonFreeVideoHandler extends MediaHandler {
 			return false;
 		}
 	}
-	/*
+	/**
 	 * sucks we have to maintain two version of Ogg doTransform but it proved difficult to integrate them.
 	 * in the future we should have a concept of "derivatives" and greatly simplify the media handlers.
 	 */
@@ -158,7 +158,7 @@ class NonFreeVideoHandler extends MediaHandler {
 				# Seek to midpoint by default, it tends to be more interesting than the start
 				$thumbTime = $length / 2;
 			}
-			wfMkdirParents( dirname( $dstPath ) );
+			wfMkdirParents( dirname( $dstPath ), null, __METHOD__ );
 			if(!is_file($dstPath)){
 				$cmd = wfEscapeShellArg( $wgFFmpegLocation ) .
 				' -ss ' . intval( $thumbTime ) . ' ' .
@@ -191,7 +191,7 @@ class NonFreeVideoHandler extends MediaHandler {
 		return $this->unpackMetadata( $metadata ) !== false;
 	}
 
-	function getThumbType( $ext, $mime ) {
+	function getThumbType( $ext, $mime, $params = null ) {
 		return array( 'jpg', 'image/jpeg' );
 	}
 
@@ -330,4 +330,3 @@ class MediaQueueTransformOutput extends MediaTransformOutput {
 
 	}
 }
-?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * StarterWiki
- * @package StarterWiki
+ *
  * @author Daniel Friesen (http://mediawiki.org/wiki/User:Dantman) <mediawiki@danielfriesen.name>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
@@ -26,30 +26,8 @@
 
 $optionsWithArgs = array( 'database' );
 $wgUseMasterForMaintenance = true;
-require_once( "commandLine.inc" );
+require_once( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) . '/maintenance/commandLine.inc' );
 $wgTitle = Title::newFromText( "StarterWiki Database Creator" );
-$dbclass = 'Database' . ucfirst( $wgDBtype );
-
-# Do a pre-emptive check to ensure we've got credentials supplied
-# We can't, at this stage, check them, but we can detect their absence,
-# which seems to cause most of the problems people whinge about
-if ( !isset( $wgDBadminuser ) || !isset( $wgDBadminpassword ) ) {
-	echo( "No superuser credentials could be found. Please provide the details\n" );
-	echo( "of a user with appropriate permissions to update the database. See\n" );
-	echo( "AdminSettings.sample for more details.\n\n" );
-	exit();
-}
-
-# Attempt to connect to the database as a privileged user
-# This will vomit up an error if there are permissions problems
-$wgDatabase = new $dbclass( $wgDBserver, $wgDBadminuser, $wgDBadminpassword, $wgDBname, 1 );
-
-if ( !isset( $wgDatabase ) || !$wgDatabase->isOpen() ) {
-	# Appears to have failed
-	echo( "A connection to the database could not be established. Check the\n" );
-	echo( "values of \$wgDBadminuser and \$wgDBadminpassword.\n" );
-	exit();
-}
 
 function usageInfo() {
 	echo <<<TEXT
@@ -207,4 +185,4 @@ ORDER BY rev_id DESC" );
 	return true;
 }
 
-tryRunCreate( $wgDatabase );
+tryRunCreate( wfGetDB( DB_MASTER ) );

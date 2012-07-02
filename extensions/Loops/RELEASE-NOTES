@@ -1,0 +1,43 @@
+ Post svn Changelog:
+ ===================
+
+ * November 16, 2011 -- Version 0.4 by Daniel Werner
+   - The loops count now counts per parser instance. Before there were several hacks to reset the
+     counter, for example a special-page inclusion. This has been solved now.
+   - 'Loops' is working with MW 1.18+ now. Should be compatible down to MW 1.14 or even further.
+   - Compatbility to Variables Version 2.0.
+   - Configuration variable '$egLoopsEnabledFunctions' to enable certain Loops parser functions only.
+   - If 'Variables' extension is not active, '#loop', '#forargs' and '#fornumargs' will be disabled.
+   - If loop limit exceeded, the error message will be part of the output wrapped inside a 'div'
+     with error class so it can be caught by '#iferror'.
+   - '#fornumargs' parameter 1 can be empty to make it more consistent with other Loop parser
+     functions. E.g. '{{#fornumargs: | keyVarName | valVarName | code }}' istead of
+	 '{{#fornumargs: keyVarName | valVarName | code }}' (which still works as well).
+   - Language file clean-up.
+   - Internal structure changed, ExtLoops now works as a static class.
+   
+ * November 15, 2011 -- Version 0.3.2 by Daniel Werner
+   - Bug solved where '#loop' didn't create variables with name or starting index '0'.
+   - minor '#forargs' and '#fornumargs' bug solved where unnamed numeric argument values
+     could have ended up as variable value with leading space.
+   - 'README' and 'RELEASE-NOTES' files added.
+   - Put into mediawiki.org svn repository.
+   
+ 
+ Pre svn Changelog:
+ ==================
+
+ The following pre-svn changelog was composed after the extension has been moved into mediawiki.org
+ svn. All changes can still be retrace at:
+
+ http://www.mediawiki.org/w/index.php?title=Extension:Loops&action=history 
+
+ * Version 0.3.0 by David M. Sledge
+   - '#loop' and '#fornumargs' parser functions were introduced.
+   - '#foreachnamedarg' renamed to '#forargs' and loops through indexed template arguments as well
+     as named arguments now.
+
+ * Version 0.2.0 by David M. Sledge
+   - '#foreachnamedarg' parser function introduced. Allows to loop through named template arguments.     
+
+ * Version 0.1.0 (initial release) by David M. Sledge

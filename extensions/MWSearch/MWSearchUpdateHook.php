@@ -11,18 +11,42 @@ function mwSearchUpdateHookSetup() {
 	$wgHooks['TitleMoveComplete'    ][] = 'mwSearchUpdateMove';
 }
 
+/**
+ * @param $article Article
+ * @param $user
+ * @param $text
+ * @param $summary
+ * @param $isminor
+ * @param $iswatch
+ * @param $section
+ * @return bool
+ */
 function mwSearchUpdateSave( $article, $user, $text, $summary, $isminor, $iswatch, $section ) {
 	global $wgDBname;
 	MWSearchUpdater::updatePage( $wgDBname, $article->getTitle(), $text );
 	return true;
 }
 
+/**
+ * @param $article Article
+ * @param $user
+ * @param $reason
+ * @return bool
+ */
 function mwSearchUpdateDelete( $article, $user, $reason ) {
 	global $wgDBname;
 	MWSearchUpdater::deletePage( $wgDBname, $article->getTitle() );
 	return true;
 }
 
+/**
+ * @param $from
+ * @param $to Title
+ * @param $user
+ * @param $pageid
+ * @param $redirid
+ * @return bool
+ */
 function mwSearchUpdateMove( $from, $to, $user, $pageid, $redirid ) {
 	global $wgDBname;
 	

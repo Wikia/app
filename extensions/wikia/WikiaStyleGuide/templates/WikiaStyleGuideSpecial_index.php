@@ -29,7 +29,6 @@ var UISGNamespace = {};	/* generic UISG namespace for demos */
 <script>
 $(function() {
 	$('#UISGLoadingWheel').toggle(function() {
-		console.log(this);
 		$(this).startThrobbing();
 	}, function() {
 		$(this).stopThrobbing();
@@ -110,7 +109,21 @@ echo wfRenderModule('MenuButton',
 )
 </pre>
 
+<!-- Dropdowns -->
+<h2>Dropdowns</h2>
+<h3>Normal Dropdown</h3>
+<?
+// TODO
+?>
+<script>
+	
+</script>
+<h3>Normal Dropdown Sample Code</h3>
+<pre>
+TODO
+</pre>
 
+<!-- Modals -->
 <h2>Modal Dialog</h2>
 <h3>Normal Modal Sample</h3>
 <button id="UISGNormalModalButton">Click to make a normal modal dialog</button>
@@ -194,5 +207,68 @@ $(function() {
 <pre>
 $("#UISGContentModalShortcutButton").click(function() {
 	$.showModal("This is being created in javascript", "Content goes here", {width: 400});
+});
+</pre>
+
+<h2>Form</h2>
+<?php
+$uisgSampleForm = array (
+	'action' => '',
+	'method' => 'GET',
+    'inputs' => array (
+        array(
+            // Main input attributes
+            'label' => 'A Text Input',
+            'type' => 'text',	// for full list of types, look at /skins/oasis/modules/templates/WikiaForm_Index.php
+            'name' => 'uisgformsampletext',
+            // extra attributes (all optional)
+            'attributes' => array(
+                'placeholder' => 'default text if you want',
+                'maxlength' => 160,
+                'class' => 'uisgformsampleclass',
+            ),
+        ),
+        array(
+        	'type' => 'custom',
+        	'output' => '<label>Free form label</label>You can put whatever you want in here',
+        ),
+        array(
+            // Main input attributes
+            'label' => 'A Text Input',
+            'type' => 'text',	// for full list of types, look at /skins/oasis/modules/templates/WikiaForm_Index.php
+            'name' => 'uisgformsampletext',
+            // extra attributes (all optional)
+            'attributes' => array(
+            ),
+        ),
+    )
+);
+echo wfRenderModule('WikiaForm', 'Index', array('form' => $uisgSampleForm));
+?>
+
+<h2>System Notification (aka Global Notification)</h2>
+<div id="UISGGlobalNotification" class="uisg-sample-pane">
+	Click me to toggle Notification near top of the window.
+</div>
+<!-- Global Notification Sample Code -->
+<script>
+$(function() {
+	$('#UISGGlobalNotification').toggle(function() {
+		GlobalNotification.show('Hello there, I am Global Notification', 'notify');
+	}, function() {
+		GlobalNotification.hide();
+	});
+});
+</script>
+<h3>Sample Code:</h3>
+<pre>
+html:
+&lt;div id=&quot;UISGGlobalNotification&quot; class=&quot;uisg-sample-pane&quot;&gt;<br/>	Click me to toggle Notification near top of the window.<br/>&lt;/div&gt;
+
+javascript:
+$('#UISGGlobalNotification').toggle(function() {
+	GlobalNotification.show('Hello there, I am Global Notification', 'notify');
+}, function() {
+	GlobalNotification.hide();
 });
 </pre>

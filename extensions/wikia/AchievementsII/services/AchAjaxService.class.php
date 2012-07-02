@@ -4,7 +4,6 @@ class AchAjaxService {
 
 	public static function editPlatinumBadge() {
 		global $wgCityId, $wgRequest, $wgSitename, $wgServer, $wgScriptPath, $wgExternalSharedDB;
-		wfLoadExtensionMessages('AchievementsII');
 
 		$badge_type_id = $wgRequest->getVal('type_id');
 		$ret = array('errors' => null, 'typeId' => $badge_type_id);
@@ -121,7 +120,7 @@ class AchAjaxService {
 			$badge = array();
 			$badge['type_id'] = $badge_type_id;
 			$badge['enabled'] = $wgRequest->getBool('status');
-			$badge['thumb_url'] = $badgeImage->getThumbnail(90)->getUrl()."?cb=".rand();
+			$badge['thumb_url'] = $badgeImage->createThumb( 90 ) . "?cb=" . rand();
 			$badge['awarded_users'] = AchPlatinumService::getAwardedUserNames($badge_type_id, true);
 			$badge[ 'is_sponsored' ] = $isSponsored;
 			$badge[ 'badge_tracking_url' ] = $wgRequest->getText( 'badge_impression_pixel_url' );
@@ -138,7 +137,6 @@ class AchAjaxService {
 
 	public static function addPlatinumBadge() {
 		global $wgCityId, $wgRequest, $wgExternalSharedDB;
-		wfLoadExtensionMessages('AchievementsII');
 
 		$ret = array('errors' => null);
 		$isSponsored = $wgRequest->getBool( 'is_sponsored' );
@@ -201,7 +199,7 @@ class AchAjaxService {
 			$badge = array();
 			$badge['type_id'] = $badge_type_id;
 			$badge['enabled'] = false;
-			$badge['thumb_url'] = $badgeImage->getThumbnail(90)->getUrl();
+			$badge['thumb_url'] = $badgeImage->createThumb( 90 );
 			$badge['awarded_users'] = null;
 			$badge[ 'is_sponsored' ] = $isSponsored;
 			$badge[ 'badge_tracking_url' ] = $wgRequest->getText( 'badge_impression_pixel_url' );
@@ -217,7 +215,6 @@ class AchAjaxService {
 
 	public function uploadBadgeImage() {
 		global $wgRequest, $wgUser;
-		wfLoadExtensionMessages('AchievementsII');
 
 		$badge_type_id = $wgRequest->getVal('type_id');
 		$lap = ($wgRequest->getVal('lap') != '') ? $wgRequest->getVal('lap') : null;
@@ -230,14 +227,13 @@ class AchAjaxService {
 		if(!$badgeImage)
 			$ret['error'] = wfMsg('achievements-upload-error');
 		else {
-			$ret['output'] = $badgeImage->getThumbnail(90)->getUrl();
+			$ret['output'] = $badgeImage->createThumb( 90 );
 		}
 		return '<script type="text/javascript">window.document.responseContent = '.json_encode($ret).';</script>';
 	}
 
 	public static function resetBadge() {
 		global $wgRequest, $wgUser;
-		wfLoadExtensionMessages('AchievementsII');
 
 		if(!$wgUser->isAllowed('editinterface')) {
 			return false;
@@ -259,7 +255,7 @@ class AchAjaxService {
 
 	public static function resetPlatinumBadge() {
 		global $wgRequest;
-		wfLoadExtensionMessages('AchievementsII');
+		
 		$badge_type_id = ( int ) $wgRequest->getVal('type_id');
 		$ret = null;
 		

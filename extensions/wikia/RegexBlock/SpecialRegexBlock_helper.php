@@ -243,7 +243,7 @@ class RegexBlockData
 		
 		/* get from database */
 		$dbr = wfGetDB( (empty($master)) ? DB_SLAVE : DB_MASTER, array(), $wgExternalSharedDB );
-		$where = array( "blckby_name like '%". $dbr->escapeLike( $name )  ."%'" );
+		$where = array( "blckby_name " . $dbs->buildLike( $dbs->anyString(), $name, $dbs->anyString() ) );
 		if ( !empty($iregex) ) {
 			$where = array( "blckby_name = " . $dbr->addQuotes( $name ) );
 		}

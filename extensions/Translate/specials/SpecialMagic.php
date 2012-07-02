@@ -15,11 +15,6 @@
  * @ingroup SpecialPage TranslateSpecialPage
  */
 class SpecialMagic extends SpecialPage {
-	/**
-	 * Message prefix for translations
-	 * @todo Remove.
-	 */
-	const MSG = 'translate-magic-';
 
 	const MODULE_MAGIC     = 'words';
 	const MODULE_SPECIAL   = 'special';
@@ -47,14 +42,17 @@ class SpecialMagic extends SpecialPage {
 
 	/**
 	 * @see SpecialPage::getDescription
+	 *
+	 * @return string
 	 */
 	function getDescription() {
-		return wfMsg( self::MSG . 'pagename' );
+		return wfMsg( 'translate-magic-pagename' );
 	}
 
 	/**
 	 * Returns HTML5 output of the form
 	 * GLOBALS: $wgLang, $wgScript
+	 * @return string
 	 */
 	protected function getForm() {
 		global $wgLang, $wgScript;
@@ -74,7 +72,7 @@ class SpecialMagic extends SpecialPage {
 			'</td><td>' .
 				$this->moduleSelector( $this->options['module'] ) .
 			'</td></tr><tr><td colspan="2">' .
-				Xml::submitButton( wfMsg( self::MSG . 'submit' ) ) . ' ' .
+				Xml::submitButton( wfMsg( 'translate-magic-submit' ) ) . ' ' .
 				Xml::submitButton( wfMsg( 'translate-magic-cm-export' ), array( 'name' => 'export' ) ) .
 			'</td></tr></table>' .
 			Html::hidden( 'title', $this->getTitle()->getPrefixedText() )
@@ -89,9 +87,9 @@ class SpecialMagic extends SpecialPage {
 	 * @return \string HTML5-compatible select-element.
 	 */
 	protected function moduleSelector( $selectedId ) {
-		$selector = new HTMLSelector( 'module', 'module', $selectedId );
+		$selector = new XmlSelect( 'module', 'module', $selectedId );
 		foreach ( $this->aModules as $code ) {
-			$selector->addOption( wfMsg( self::MSG . $code ), $code );
+			$selector->addOption( wfMsg( 'translate-magic-' . $code ), $code );
 		}
 		return $selector->getHTML();
 	}
@@ -140,6 +138,7 @@ class SpecialMagic extends SpecialPage {
 
 		$this->setup( $parameters );
 		$this->setHeaders();
+		TranslateUtils::addSpecialHelpLink( $wgOut, '//translatewiki.net/wiki/FAQ#Special:AdvancedTranslate', true );
 
 		$wgOut->addHTML( $this->getForm() );
 
@@ -194,7 +193,7 @@ class SpecialMagic extends SpecialPage {
 			return;
 		}
 
-		$wgOut->addWikiMsg( self::MSG . 'help' );
+		$wgOut->addWikiMsg( 'translate-magic-help' );
 		$errors = array();
 		$o->validate( $errors );
 		if ( $errors ) $this->outputErrors( $errors );

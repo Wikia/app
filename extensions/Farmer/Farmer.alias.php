@@ -6,92 +6,124 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English
- * @author IAlex
- */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'Farmer' => array( 'Farmer' ),
 );
 
 /** Afrikaans (Afrikaans) */
-$aliases['af'] = array(
+$specialPageAliases['af'] = array(
 	'Farmer' => array( 'Boer' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'Farmer' => array( 'مزارع' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'Farmer' => array( 'مزارع' ),
+$specialPageAliases['arz'] = array(
+	'Farmer' => array( 'فلاح' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'Farmer' => array( 'کشاورز' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$specialPageAliases['frp'] = array(
+	'Farmer' => array( 'Grangiér' ),
 );
 
 /** Gujarati (ગુજરાતી) */
-$aliases['gu'] = array(
+$specialPageAliases['gu'] = array(
 	'Farmer' => array( 'ખેડુત' ),
 );
 
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'Farmer' => array( 'Kiltivatè' ),
+);
+
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
+$specialPageAliases['ia'] = array(
 	'Farmer' => array( 'Fermero' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
+$specialPageAliases['id'] = array(
 	'Farmer' => array( 'Petani' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'Farmer' => array( 'ウィキファーム管理' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
+/** Colognian (Ripoarisch) */
+$specialPageAliases['ksh'] = array(
 	'Farmer' => array( 'StallVollWikis', 'WikiStall' ),
 );
 
+/** Ladino (Ladino) */
+$specialPageAliases['lad'] = array(
+	'Farmer' => array( 'Agricultor' ),
+);
+
 /** Macedonian (Македонски) */
-$aliases['mk'] = array(
+$specialPageAliases['mk'] = array(
 	'Farmer' => array( 'Фармер' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'Farmer' => array( 'शेतकरी' ),
 );
 
-/** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'Farmer' => array( 'Wikifarm' ),
+/** Erzya (Эрзянь) */
+$specialPageAliases['myv'] = array(
+	'Farmer' => array( 'Фермер' ),
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
 	'Farmer' => array( 'Bonde' ),
 );
 
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'Farmer' => array( 'WikiBoerderieje' ),
+);
+
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'Farmer' => array( 'Wikifarm' ),
+);
+
 /** Romanian (Română) */
-$aliases['ro'] = array(
+$specialPageAliases['ro'] = array(
 	'Farmer' => array( 'Fermier' ),
 );
 
 /** Slovak (Slovenčina) */
-$aliases['sk'] = array(
+$specialPageAliases['sk'] = array(
 	'Farmer' => array( 'Farma' ),
 );
 
 /** Tagalog (Tagalog) */
-$aliases['tl'] = array(
+$specialPageAliases['tl'] = array(
 	'Farmer' => array( 'Magsasaka' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'Farmer' => array( 'Çiftçi' ),
 );
 
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'Farmer' => array( '農場' ),
+);

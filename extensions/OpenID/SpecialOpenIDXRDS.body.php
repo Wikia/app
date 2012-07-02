@@ -18,8 +18,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @file
  * @author Evan Prodromou <evan@prodromou.name>
- * @addtogroup Extensions
+ * @ingroup Extensions
  */
 
 if ( !defined( 'MEDIAWIKI' ) )
@@ -30,16 +31,14 @@ if ( !defined( 'MEDIAWIKI' ) )
 
 class SpecialOpenIDXRDS extends SpecialOpenID {
 
-	function SpecialOpenIDXRDS() {
-		SpecialPage::SpecialPage( 'OpenIDXRDS', '', false );
+	function __construct() {
+		parent::__construct( 'OpenIDXRDS', '', false );
 	}
 
 	# $par is a user name
 
 	function execute( $par ) {
 		global $wgOut, $wgOpenIDClientOnly;
-
-		wfLoadExtensionMessages( 'OpenID' );
 
 		# No server functionality if this site is only a client
 		# Note: special page is un-registered if this flag is set,

@@ -46,43 +46,6 @@ class AssetsConfig {
 		return array(Title::newFromText('-')->getFullURL('action=raw&smaxage=0&gen=js&useskin=oasis'));
 	}
 
-	/**
-	 * Generates the URL for the Weinre inspector script
-	 *
-	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
-	 * @see http://phonegap.github.com/weinre/
-	 * @param bool $combine
-	 *
-	 * @return array an array containing the asset url
-	 */
-	public static function getWeinreJS( $combine ) {
-		$app = F::app();
-		$server = '';
-		$ret = array();
-
-		//this asset request is generated only by the wiki and not served by AssetsManagerServer, so it's safe to rely on conf
-		if ( !empty( $app->wg->enableWeinre ) ) {
-			$weinre = F::build( 'Weinre' );
-
-			if ( $weinre->isEnabled() ) {
-				$host = $weinre->getRequestedHost();
-
-				//allow testing from non-owned test environment or production/staging
-				if ( !empty( $host ) ) {
-					$server = $host;
-				} else if ( !empty( $app->wg->develEnvironment ) ) {
-					$server = "{$_SERVER['SERVER_ADDR']}:{$app->wg->weinrePort}";
-				}
-			}
-		}
-
-		if ( !empty( $server ) ) {
-			$ret[] = "http://{$server}/target/target-script-min.js";
-		}
-
-		return $ret;
-	}
-
 	public static function getRTEAssets( $combine ) {
 		global $IP;
 		$path = "extensions/wikia/RTE";
@@ -115,6 +78,9 @@ class AssetsConfig {
 		}
 	}
 
+	/**
+	 * Was used by config.php to load jQuery from CDN
+	 * Now we're using ResourceLoader to load jQuery from our own servers
 	public static function getJQueryUrl( $combine, $minify, $params ) {
 		global $wgUseJQueryFromCDN;
 
@@ -128,6 +94,7 @@ class AssetsConfig {
 
 		return array($url);
 	}
+	**/
 
 	/**
 	 * Loads packages definitions from config.php
@@ -153,7 +120,7 @@ class AssetsConfig {
 	public function getGroupSkin( $groupName ) {
 		$this->load();
 
-		if ( is_string( $groupName ) && isset( $this->mConfig[$groupName] ) ) {
+		if ( isset( $this->mConfig[$groupName] ) ) {
 			return ( isset( $this->mConfig[$groupName]['skin'] ) ) ? $this->mConfig[$groupName]['skin'] : null;
 		} else {
 			//this is being called on non-defined groups programmatically, so no need to log failure
@@ -185,7 +152,7 @@ class AssetsConfig {
 	protected function getGroupAssets( $groupName ) {
 		$this->load();
 
-		if (isset( $this->mConfig[$groupName] ) ) {
+		if ( is_string( $groupName ) && isset( $this->mConfig[$groupName] ) ) {
 			return $this->mConfig[$groupName]['assets'];
 		} else {
 			$requestDetails = AssetsManager::getRequestDetails();

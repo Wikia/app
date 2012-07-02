@@ -1,7 +1,6 @@
 <?php
 class SpecialCreateTopList extends SpecialPage {
 	function __construct() {
-		wfLoadExtensionMessages( 'TopLists' );
 		parent::__construct( 'CreateTopList', 'toplists-create-edit-list' );
 	}
 
@@ -26,7 +25,7 @@ class SpecialCreateTopList extends SpecialPage {
 		
 		//Check blocks
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();
+			throw new UserBlockedError( $wgUser->getBlock() );
 			return;
 		}
 		
@@ -64,7 +63,6 @@ class SpecialCreateTopList extends SpecialPage {
 				$wgRequest->getArray( 'items_names', array() ),
 				'purgeInput'
 			);
-			
 			$listItems = array();
 
 			$list = TopList::newFromText( $listName );
@@ -129,7 +127,7 @@ class SpecialCreateTopList extends SpecialPage {
 				}
 
                 if ( !empty( $description ) ) {
-                    $setResult = $list->setDescription($description);
+                    $list->setDescription( $description );
                 }
 
 				$checkResult = $list->checkForProcessing( TOPLISTS_SAVE_CREATE );

@@ -23,7 +23,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 $wgExtensionMessagesFiles['BatchUserRights'] = dirname( __FILE__ ) . '/BatchUserRights.i18n.php';
-$wgExtensionAliasesFiles['BatchUserRights'] = dirname( __FILE__ ) . '/BatchUserRights.alias.php';
+$wgExtensionMessagesFiles['BatchUserRightsAliases'] = dirname( __FILE__ ) . '/BatchUserRights.alias.php';
 
 /**
  * A class to manage user levels rights.
@@ -69,8 +69,6 @@ class SpecialBatchUserRights extends SpecialPage {
 		// If the visitor doesn't have permissions to assign or remove
 		// any groups, it's a bit silly to give them the user search prompt.
 		global $wgUser, $wgRequest;
-
-		wfLoadExtensionMessages( 'BatchUserRights' );
 
 		if ( !$wgUser->isAllowed( 'batchuserrights' ) ) {
 			$this->displayRestrictionError();
@@ -343,7 +341,7 @@ class SpecialBatchUserRights extends SpecialPage {
 
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $this->getTitle()->getLocalURL(), 'name' => 'editGroup', 'id' => 'mw-userrights-form2' ) ) .
-			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
+			Html::hidden( 'wpEditToken', $wgUser->getEditToken() ) .
 			Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', array(), wfMsg( 'userrights-editusergroup' ) ) .
 			wfMsgExt( 'batchuserrights-intro', array( 'parse' ) ) .

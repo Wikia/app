@@ -1,20 +1,20 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'Following' => array( 'Following' )
 );
 /**
  * German
  */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
 	'Following' => array( 'Verfolgen' )
 );
 /**
  * Polish
  */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Following' => array( 'Obserwowane strony' )
 );

@@ -44,14 +44,13 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Oversight',
 	'author'         => 'Brion Vibber',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Oversight',
-	'description'    => 'Hide individual revisions from all users for legal reasons, etc.',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Oversight',
 	'descriptionmsg' => 'hiderevision-desc',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['HideRevision'] = $dir . 'HideRevision.i18n.php';
-$wgExtensionAliasesFiles['HideRevision'] = $dir . 'HideRevision.alias.php';
+$wgExtensionMessagesFiles['HideRevisionAlias'] = $dir . 'HideRevision.alias.php';
 
 $wgAutoloadClasses['HideRevisionForm'] = $dir . 'HideRevision_body.php';
 $wgAutoloadClasses['SpecialOversight'] = $dir . 'HideRevision_body.php';

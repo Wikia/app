@@ -8,7 +8,7 @@ class DailymotionApiWrapper extends ApiWrapper {
 	
 
 	public static function isMatchingHostname( $hostname ) {
-		return strpos($hostname, "www.dailymotion") ? true : false;
+		return strpos($hostname, "www.dailymotion")!==false ? true : false;
 	}
 
 	public static function newFromUrl( $url ) {

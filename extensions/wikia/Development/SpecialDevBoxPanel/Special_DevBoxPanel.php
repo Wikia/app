@@ -181,7 +181,7 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
  * @param User $user current user instance
  * @return boolean true
  */
-function wfDevBoxSeparateParserCache(&$hash, User &$user) {
+function wfDevBoxSeparateParserCache(&$hash) {
 	global $wgDevelEnvironmentName;
 
 	$hash .= "!dev-{$wgDevelEnvironmentName}";

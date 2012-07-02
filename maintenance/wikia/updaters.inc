@@ -20,9 +20,6 @@ $wgUpdates[ "mysql" ][] = array( "add_table", "blog_listing_relation",  "wikia/p
 $wgUpdates[ "mysql" ][] = array( "add_index", "archive", "page_revision", "wikia/patch-index-archive-page_revision.sql" );
 $wgUpdates[ "mysql" ][] = array( "add_table", "page_wikia_props",  "$IP/extensions/wikia/ImageServing/sql/table.sql", true );
 
-$wgUpdates[ "mysql" ][] = array( "add_table", "plb_field",  "$IP/extensions/wikia/PageLayoutBuilder/sql/plb_field.sql" , true );
-$wgUpdates[ "mysql" ][] = array( "add_table", "plb_page",  "$IP/extensions/wikia/PageLayoutBuilder/sql/plb_page.sql", true );
-
 $wgUpdates[ "mysql" ][] = array( "do_page_vote_unique_update" );
 $wgUpdates[ "mysql" ][] = array( "do_page_wikia_props_update" );
 $wgUpdates[ "mysql" ][] = array( "do_drop_table", "imagetags" );

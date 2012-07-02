@@ -10,8 +10,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Layouts',
 	'author'         => array( 'Merrick Schaefer', 'Mark Johnston', 'Evan Wheeler', 'Adam Mckaig (at UNICEF)' ),
-	'description'    => 'Populate newly-created pages with editable "layouts" to encourage a common structure for pages',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Layouts',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:Uniwiki_Layouts',
 	'descriptionmsg' => 'layouts-desc',
 );
 
@@ -44,16 +43,16 @@ $wgGroupPermissions['sysop']['editlayouts'] = true;
 
 /* ---- TAGS ---- */
 
-$wgExtensionFunctions[] = "UW_Layouts_EF";
-function UW_Layouts_EF() {
-	global $wgParser;
-	$wgParser->setHook ( "layout", "UW_Layouts_EF_Render" );
+$wgHooks['ParserFirstCallInit'][] = 'UW_Layouts_ParserFirstCallInit';
+function UW_Layouts_ParserFirstCallInit( $parser ) {
+	$parser->setHook( 'layout', 'UW_Layouts_EF_Render' );
+	return true;
 }
 
 /* render a note to display the name of the
  * layout that this page was created from */
 function UW_Layouts_EF_Render ( $input, $args, $parser ) {
-	// wfLoadExtensionMessages( 'Layouts' );
+	// 
 	// $name = isset($args['name']) ? Title::newFromURL("Layout:".$args['name'])->getText() : wfMsg('layouts_unknown');
 	// return "<div class='layout-name'><p>".wfMsg('layouts_tagline', $name)."</p></div>";
 	return "";
@@ -62,7 +61,7 @@ function UW_Layouts_EF_Render ( $input, $args, $parser ) {
 /* ---- HOOKS ---- */
 $wgHooks['CustomEditor'][] = "UW_Layouts_maybeRedirectToLayout";
 $wgHooks['UnknownAction'][] = "UW_Layouts_checkActionIsLayout";
-$wgHooks['SkinTemplateSetupPageCss'][] = "UW_Layouts_Css";
+$wgHooks['BeforePageDisplay'][] = "UW_Layouts_Css";
 $wgHooks['EditFormPreloadText'][] = "UW_Layouts_preFillTextBox";
 
 function UW_Layouts_maybeRedirectToLayout( $article, $user ) {
@@ -121,7 +120,7 @@ function UW_Layouts_checkActionIsLayout( $action, $article ) {
 	$name  = $article->mTitle->getPrefixedURL();
 	$namespace = $article->mTitle->getNamespace();
 
-	wfLoadExtensionMessages( 'Layouts' );
+	
 
 	$wgOut->setPageTitle ( wfMsg ( "layouts_title" ) );
 
@@ -233,9 +232,9 @@ function UW_Layouts_checkActionIsLayout( $action, $article ) {
 	return false;
 }
 
-function UW_Layouts_Css ( &$out ) {
-	global $wgScriptPath;
-	$out .= "@import '$wgScriptPath/extensions/uniwiki/Layouts/style.css';\n";
+function UW_Layouts_Css ( $out, $sk ) {
+	global $wgExtensionAssetsPath;
+	$out->addExtensionStyle( "$wgExtensionAssetsPath/uniwiki/Layouts/style.css" );
 	return true;
 }
 

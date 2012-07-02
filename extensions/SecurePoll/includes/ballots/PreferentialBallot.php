@@ -27,10 +27,10 @@ class SecurePoll_PreferentialBallot extends SecurePoll_Ballot {
 					'id' => $inputId,
 					'maxlength' => 3,
 				) ) .
-				'&nbsp;' .
+				'&#160;' .
 				$this->errorLocationIndicator( $inputId ) .
 				Xml::tags( 'label', array( 'for' => $inputId ), $optionHTML ) .
-				'&nbsp;' .
+				'&#160;' .
 				"</div>\n";
 		}
 		return $s;

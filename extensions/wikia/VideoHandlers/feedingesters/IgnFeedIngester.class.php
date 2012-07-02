@@ -49,10 +49,10 @@ class IgnFeedIngester extends VideoFeedIngester {
 			if (!empty($params['keyphrasesCategories'])) {
 				foreach( $video['objectRelations'] as $obj ) {
 					foreach ($params['keyphrasesCategories'] as $keyphrase=>$categories) {
-						if( $keyphrase != 'fallout' && $keyphrase != 'starcraft') {
+						//if( $keyphrase != 'fallout' && $keyphrase != 'starcraft') {
 							// only support those two for now
-							continue;
-						}
+							//continue;
+						//}
 						if ($this->isKeyphraseInString($obj['objectName'], $keyphrase)) {
 							echo "Matched for keywords $keyphrase\n";
 							$addlCategories = array_merge($addlCategories, $categories);
@@ -64,7 +64,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 			if($found == false) {
 				// if keywords don't match, skip this video
-				continue;
+				//continue;
 			}
 
 
@@ -73,8 +73,8 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['titleName'] = $video['metadata']['name'];
 			$clipData['publishDate'] = $video['metadata']['publishDate'];
 			$clipData['videoId'] = $video['videoId'];
-			$clipData['description'] = $video['metadata']['description'];
-			$clipData['duration'] =  $video['metadata']['duration'];
+			$clipData['description'] = isset($video['metadata']['description']) ? $video['metadata']['description'] : '';
+			$clipData['duration'] =  isset($video['metadata']['duration']) ? $video['metadata']['duration'] : '';
 			$clipData['thumbnail'] =  $video['metadata']['thumbnail'];
 			$clipData['videoUrl'] =  $video['metadata']['url'];
 			$clipData['classification'] = $video['metadata']['classification'];

@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for MWSearch extension.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -54,6 +55,20 @@ $messages['ast'] = array(
 	'mwsearch-desc' => 'Plugin MWSearch',
 );
 
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'mwsearch-desc' => 'MWSearch плагины',
+);
+
+/** Bavarian (Boarisch)
+ * @author Mucalexx
+ */
+$messages['bar'] = array(
+	'mwsearch-desc' => "Hintergrundprózess fyr d'Lucene-Suachmaschijn",
+);
+
 /** Southern Balochi (بلوچی مکرانی)
  * @author Mostafadaneshvar
  */
@@ -61,7 +76,7 @@ $messages['bcc'] = array(
 	'mwsearch-desc' => 'پلاگین گردگ م.و',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -115,6 +130,13 @@ $messages['cs'] = array(
  */
 $messages['cy'] = array(
 	'mwsearch-desc' => 'Ategyn MWSearch',
+);
+
+/** Danish (Dansk)
+ * @author Froztbyte
+ */
+$messages['da'] = array(
+	'mwsearch-desc' => 'MWSearch-plugin',
 );
 
 /** German (Deutsch)
@@ -190,9 +212,10 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author IAlex
+ * @author Urhixidur
  */
 $messages['fr'] = array(
-	'mwsearch-desc' => 'Plug-in pour les recherches dans MediaWiki',
+	'mwsearch-desc' => 'Extension pour les recherches dans MediaWiki',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -314,6 +337,13 @@ $messages['jv'] = array(
 	'mwsearch-desc' => 'plugin MWSearch',
 );
 
+/** Georgian (ქართული)
+ * @author BRUTE
+ */
+$messages['ka'] = array(
+	'mwsearch-desc' => 'MWSearch მოდული',
+);
+
 /** Korean (한국어)
  * @author Kwj2772
  */
@@ -321,7 +351,7 @@ $messages['ko'] = array(
 	'mwsearch-desc' => 'MWSearch 플러그인',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -356,18 +386,25 @@ $messages['lv'] = array(
 	'mwsearch-desc' => 'MWSearch spraudnis',
 );
 
+/** Basa Banyumasan (Basa Banyumasan)
+ * @author StefanusRA
+ */
+$messages['map-bms'] = array(
+	'mwsearch-desc' => 'Plugin MWSearch',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'mwsearch-desc' => 'MWSearch приклучок',
+	'mwsearch-desc' => 'Приклучок MWSearch',
 );
 
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'mwsearch-desc' => 'മീഡിയാവിക്കി തിരച്ചില്‍ പ്ലഗിന്‍',
+	'mwsearch-desc' => 'മീഡിയാവിക്കി തിരച്ചിൽ പ്ലഗിൻ',
 );
 
 /** Marathi (मराठी)
@@ -391,6 +428,13 @@ $messages['nah'] = array(
 	'mwsearch-desc' => 'HMTlatēmoaliztli',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'mwsearch-desc' => 'MWSearch-programtillegg',
+);
+
 /** Low German (Plattdüütsch)
  * @author Slomox
  */
@@ -410,13 +454,6 @@ $messages['nl'] = array(
  * @author Harald Khan
  */
 $messages['nn'] = array(
-	'mwsearch-desc' => 'MWSearch-programtillegg',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
 	'mwsearch-desc' => 'MWSearch-programtillegg',
 );
 
@@ -476,11 +513,25 @@ $messages['ru'] = array(
 	'mwsearch-desc' => 'Плагин MWSearch',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'mwsearch-desc' => 'Плаґін MWSearch',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
 	'mwsearch-desc' => 'MWSearch плагин',
+);
+
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'mwsearch-desc' => 'MWසෙවුම් ප්ලගිනය',
 );
 
 /** Slovak (Slovenčina)
@@ -490,14 +541,21 @@ $messages['sk'] = array(
 	'mwsearch-desc' => 'Zásuvný modul MWSearch',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'mwsearch-desc' => 'Vtičnik MWSearch',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Millosh
  */
 $messages['sr-ec'] = array(
 	'mwsearch-desc' => 'MWSearch додатак',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -508,7 +566,14 @@ $messages['sr-el'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
-	'mwsearch-desc' => 'Bäätergruundprozess foar ju Lucene-Säikmaschine',
+	'mwsearch-desc' => 'Bäätergruundprozess foar ju Lucene-Säikmaskine',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'mwsearch-desc' => 'Plugin MWSearch',
 );
 
 /** Swedish (Svenska)
@@ -525,18 +590,25 @@ $messages['te'] = array(
 	'mwsearch-desc' => 'మీ.వి.శోధనా పొడిగింపు',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'mwsearch-desc' => 'Афзунаи MWSearch',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
 	'mwsearch-desc' => 'Afzunai MWSearch',
+);
+
+/** Thai (ไทย)
+ * @author Octahedron80
+ */
+$messages['th'] = array(
+	'mwsearch-desc' => 'ปลั๊กอิน MWSearch',
 );
 
 /** Turkmen (Türkmençe)
@@ -578,7 +650,7 @@ $messages['vec'] = array(
  * @author Minh Nguyen
  */
 $messages['vi'] = array(
-	'mwsearch-desc' => 'Plugin MWSearch',
+	'mwsearch-desc' => 'Phần bổ trợ MWSearch',
 );
 
 /** Volapük (Volapük)
@@ -588,7 +660,14 @@ $messages['vo'] = array(
 	'mwsearch-desc' => 'program: MWSearch',
 );
 
-/** Yue (粵語)
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'mwsearch-desc' => 'MWSearch צוגאָב',
+);
+
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(
@@ -608,5 +687,12 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'mwsearch-desc' => 'MWSearch 增益集',
+);
+
+/** Chinese (Hong Kong) (‪中文(香港)‬)
+ * @author Oapbtommy
+ */
+$messages['zh-hk'] = array(
+	'mwsearch-desc' => 'MWSearch 外掛程式',
 );
 

@@ -1,79 +1,109 @@
 <?php
 /**
- * Aliases for Special:EmailPage
+ * Aliases for Special:E-mailPage
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English
- * @author Jon Harald Søby
- */
-$aliases['en'] = array(
-	'EmailPage' => array( 'EmailPage' ),
+/** English (English) */
+$specialPageAliases['en'] = array(
+	'E-mailPage' => array( 'E-mailPage', 'EmailPage' ),
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
-$aliases['ar'] = array(
-	'EmailPage' => array( 'مراسلة_الصفحة' ),
+/** Arabic (العربية) */
+$specialPageAliases['ar'] = array(
+	'E-mailPage' => array( 'مراسلة_الصفحة' ),
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- */
-$aliases['arz'] = array(
-	'EmailPage' => array( 'مراسلة_الصفحة' ),
+/** Egyptian Spoken Arabic (مصرى) */
+$specialPageAliases['arz'] = array(
+	'E-mailPage' => array( 'مراسلة_الصفحة' ),
+);
+
+/** German (Deutsch) */
+$specialPageAliases['de'] = array(
+	'E-mailPage' => array( 'Seite_mailen' ),
+);
+
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'E-mailPage' => array( 'صفحهٔ_پست_الکترونیکی' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
-	'EmailPage' => array( 'EnvoyerPage', 'Envoyer Page' ),
+$specialPageAliases['fr'] = array(
+	'E-mailPage' => array( 'EnvoyerPage', 'Envoyer Page' ),
+);
+
+/** Franco-Provençal (Arpetan) */
+$specialPageAliases['frp'] = array(
+	'E-mailPage' => array( 'Mandar_una_pâge', 'MandarUnaPâge' ),
 );
 
 /** Galician (Galego) */
-$aliases['gl'] = array(
-	'EmailPage' => array( 'Enviar páxinas por correo electrónico' ),
+$specialPageAliases['gl'] = array(
+	'E-mailPage' => array( 'Enviar_páxinas_por_correo_electrónico' ),
 );
 
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
-$aliases['he'] = array(
-	'EmailPage' => array( 'שליחת_דף_בדואר' ),
+/** Hebrew (עברית) */
+$specialPageAliases['he'] = array(
+	'E-mailPage' => array( 'שליחת_דף_בדואר' ),
 );
 
 /** Haitian (Kreyòl ayisyen) */
-$aliases['ht'] = array(
-	'EmailPage' => array( 'EmèlAtik' ),
+$specialPageAliases['ht'] = array(
+	'E-mailPage' => array( 'EmèlAtik' ),
 );
 
 /** Hungarian (Magyar) */
-$aliases['hu'] = array(
-	'EmailPage' => array( 'Szócikk elküldése e-mailben' ),
+$specialPageAliases['hu'] = array(
+	'E-mailPage' => array( 'Szócikk_elküldése_e-mailben' ),
+);
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'E-mailPage' => array( '電子メールでページを送信' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
-	'EmailPage' => array( 'E-Mail-Säiten' ),
+$specialPageAliases['lb'] = array(
+	'E-mailPage' => array( 'E-Mail-Säiten' ),
+);
+
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'E-mailPage' => array( 'СтраницаЗаЕ-пошта' ),
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'E-mailPage' => array( 'Send side som e-post' ),
+);
+
+/** Nedersaksisch (Nedersaksisch) */
+$specialPageAliases['nds-nl'] = array(
+	'E-mailPage' => array( 'Pagina_per_netpost_sturen' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'EmailPage' => array( 'PaginaE-mailen', 'PaginaEmailen' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$aliases['no'] = array(
-	'EmailPage' => array( 'Send side som e-post' ),
+$specialPageAliases['nl'] = array(
+	'E-mailPage' => array( 'PaginaE-mailen', 'PaginaEmailen' ),
 );
 
 /** Pashto (پښتو) */
-$aliases['ps'] = array(
-	'EmailPage' => array( 'د برېښليک مخونه' ),
+$specialPageAliases['ps'] = array(
+	'E-mailPage' => array( 'د برېښليک مخونه' ),
 );
 
+/** Simplified Chinese (‪中文(简体)‬) */
+$specialPageAliases['zh-hans'] = array(
+	'E-mailPage' => array( '电邮页面' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'E-mailPage' => array( '電郵頁面' ),
+);

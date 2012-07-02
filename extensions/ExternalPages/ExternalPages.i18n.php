@@ -35,6 +35,16 @@ $messages['af'] = array(
 	'externalpages-no-page' => 'Geen bladsy gespesifiseer nie',
 );
 
+/** Gheg Albanian (Gegë)
+ * @author Mdupont
+ */
+$messages['aln'] = array(
+	'externalpages' => 'Faqet e jashtme',
+	'externalpages-desc' => 'Rinxjerr dhe shfaq faqet nga zona të largëta WMF',
+	'externalpages-bad-page' => 'faqe Bad specifikuar',
+	'externalpages-no-page' => 'Asnjë faqe specifikuar',
+);
+
 /** Arabic (العربية)
  * @author OsamaK
  */
@@ -45,7 +55,29 @@ $messages['ar'] = array(
 	'externalpages-no-page' => 'لم تحدد الصفحة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'externalpages' => 'Páxines esternes',
+	'externalpages-desc' => 'Recupera y amuesa les páxines de sitios WMF remotos',
+	'externalpages-bad-page' => 'Se conseñó una páxina incorreuta',
+	'externalpages-no-page' => 'Nun se conseñó denguna páxina',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ * @author Comp1089
+ * @author Haqmar
+ */
+$messages['ba'] = array(
+	'externalpages' => 'Тышҡы биттәр',
+	'externalpages-desc' => 'Викимедиа Фондының башҡа сайттарынан биттәрҙе сығара һәм күрһәтә',
+	'externalpages-bad-page' => 'Яңылыш бит күрһәтелгән',
+	'externalpages-no-page' => 'Бер бит тә күрһәтелмәгән',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -80,6 +112,7 @@ $messages['bn'] = array(
  */
 $messages['br'] = array(
 	'externalpages' => 'Pajennoù diavaez',
+	'externalpages-desc' => "Adtapout ha diskwel a ra pajennoù adalek lec'hiennoù pell eus Diazezadur Wikimedia",
 	'externalpages-bad-page' => 'Pajenn lakaet direizh',
 	'externalpages-no-page' => "N'eus bet resisaet anv pajenn ebet",
 );
@@ -92,6 +125,16 @@ $messages['bs'] = array(
 	'externalpages-desc' => 'Preuzima i prikazuje stranice sa udaljenih WMF sajtova',
 	'externalpages-bad-page' => 'Navedena pogrešna stranica',
 	'externalpages-no-page' => 'Nije navedena stranica',
+);
+
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'externalpages' => 'Pàgines externes',
+	'externalpages-desc' => 'Recupera i mostra pàgines de llocs externs de la WMF',
+	'externalpages-bad-page' => 'Error en la pàgina especificada',
+	'externalpages-no-page' => "No s'ha especificat la pàgina",
 );
 
 /** Czech (Česky)
@@ -135,10 +178,12 @@ $messages['dsb'] = array(
 );
 
 /** Greek (Ελληνικά)
+ * @author Dada
  * @author ZaDiak
  */
 $messages['el'] = array(
 	'externalpages' => 'Εξωτερικές Σελίδες',
+	'externalpages-desc' => 'Ανακτά και εμφανίζει σελίδες από απομακρυσμένες τοποθεσίες του WMF',
 	'externalpages-bad-page' => 'Λανθασμένη σελίδα',
 	'externalpages-no-page' => 'Δεν διευκρινίζεται κάποια σελίδα',
 );
@@ -171,6 +216,18 @@ $messages['et'] = array(
 	'externalpages' => 'Välisleheküljed',
 	'externalpages-bad-page' => 'Lehekülg märgitud valesti',
 	'externalpages-no-page' => 'Lehte ei märgitud',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ * @author Sahim
+ * @author Wayiran
+ */
+$messages['fa'] = array(
+	'externalpages' => 'صفحات خارجی',
+	'externalpages-desc' => 'بازیابی مجدد و نمایش صفحات از راه دور توسط تارنمای بنیاد ویکی‌مدیا',
+	'externalpages-bad-page' => 'صفحهٔ بد مشخص‌شده',
+	'externalpages-no-page' => 'هیچ صفحه‌ای مشخص نشده',
 );
 
 /** Finnish (Suomi)
@@ -241,6 +298,16 @@ $messages['he'] = array(
 	'externalpages-no-page' => 'לא צוין דף',
 );
 
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'externalpages' => 'Vanjske stranice',
+	'externalpages-desc' => 'Preuzima i prikazuje stranice iz ostalih projekata Wikimedia zaklade',
+	'externalpages-bad-page' => 'Specificirana nepostojeća stranica',
+	'externalpages-no-page' => 'Stranica nije navedena',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -281,11 +348,22 @@ $messages['id'] = array(
 	'externalpages-no-page' => 'Halaman tak diberikan',
 );
 
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'externalpages' => 'Extera Pagini',
+);
+
 /** Italian (Italiano)
  * @author Aushulz
+ * @author Beta16
  */
 $messages['it'] = array(
+	'externalpages' => 'Pagine esterne',
+	'externalpages-desc' => 'Recupera e visualizza le pagine da altri siti della WMF',
 	'externalpages-bad-page' => "Errore nell'immissione della pagina",
+	'externalpages-no-page' => 'Nessuna pagina specificata',
 );
 
 /** Japanese (日本語)
@@ -302,11 +380,29 @@ $messages['ja'] = array(
  * @author BRUTE
  */
 $messages['ka'] = array(
+	'externalpages' => 'გარე გვერდები',
 	'externalpages-bad-page' => 'გვერდი შეცდომითაა მითითებული',
 	'externalpages-no-page' => 'გვერდი არ არის მითითებული',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Khmer (ភាសាខ្មែរ)
+ * @author វ័ណថារិទ្ធ
+ */
+$messages['km'] = array(
+	'externalpages' => 'ទំព័រខាងក្រៅ',
+);
+
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'externalpages' => '외부 문서',
+	'externalpages-desc' => '원격 위키미디어 사이트에서 문서를 읽어들여 보여 줌',
+	'externalpages-bad-page' => '문서 이름이 잘못되었습니다.',
+	'externalpages-no-page' => '문서를 지정하지 않았습니다.',
+);
+
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -326,12 +422,22 @@ $messages['lb'] = array(
 	'externalpages-no-page' => 'Keng Säit uginn',
 );
 
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'externalpages' => "Extern pagina's",
+	'externalpages-desc' => "Haolt pagina's óp van anger WMF-sites en tuint die hie",
+	'externalpages-bad-page' => 'Verkieërde pagina ópgegaeve',
+	'externalpages-no-page' => 'Gein pagina ópgegaeve',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'externalpages' => 'Надворешни страници',
-	'externalpages-desc' => 'Извлекува и прикажува страници од други WMF веб-страници',
+	'externalpages-desc' => 'Извлекува и прикажува страници од други WMF мрежни места',
 	'externalpages-bad-page' => 'Назначена е неправилна страница',
 	'externalpages-no-page' => 'Нема назначено страница',
 );
@@ -346,6 +452,27 @@ $messages['ml'] = array(
 	'externalpages-no-page' => 'താളുകളൊന്നും വ്യക്തമാക്കിയിട്ടില്ല',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'externalpages' => 'Laman Luaran',
+	'externalpages-desc' => 'Menerima dan memaparkan laman-laman dari tapak-tapak Yayasan Wikimedia yang berjauhan',
+	'externalpages-bad-page' => 'Laman tidak elok dinyatakan',
+	'externalpages-no-page' => 'Laman tidak dinyatakan',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Laaknor
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'externalpages' => 'Eksterne sider',
+	'externalpages-desc' => 'Henter og viser sider fra andre WMF-steder',
+	'externalpages-bad-page' => 'Ugyldig side spesifisert',
+	'externalpages-no-page' => 'Ingen side spesifisert',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -356,15 +483,11 @@ $messages['nl'] = array(
 	'externalpages-no-page' => 'Er is geen pagina opgegeven',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Laaknor
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nn'] = array(
 	'externalpages' => 'Eksterne sider',
-	'externalpages-desc' => 'Henter og viser sider fra andre WMF-steder',
-	'externalpages-bad-page' => 'Ugyldig side spesifisert',
-	'externalpages-no-page' => 'Ingen side spesifisert',
 );
 
 /** Occitan (Occitan)
@@ -375,6 +498,24 @@ $messages['oc'] = array(
 	'externalpages-desc' => 'Recobrís e aficha las paginas dempuèi de sites distants de la WMF',
 	'externalpages-bad-page' => 'Pagina indicada incorrècta',
 	'externalpages-no-page' => 'Cap de pagina pas indicada',
+);
+
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Jnanaranjan Sahu
+ */
+$messages['or'] = array(
+	'externalpages' => 'ବାହାର ପୃଷ୍ଠାଗୁଡିକ',
+	'externalpages-no-page' => 'କୌଣସି ପୃଷ୍ଠା ଦର୍ଶାଯାଇନାହିଁ',
+);
+
+/** Papiamento (Papiamentu)
+ * @author Sdm1985
+ */
+$messages['pap'] = array(
+	'externalpages' => 'Páginanan eksterno',
+	'externalpages-desc' => 'Buska i mustra páginanan for di wepsitenan WMF',
+	'externalpages-bad-page' => 'E spesifikashon pa e página aki no ta balido',
+	'externalpages-no-page' => 'No tin ningun página spesifiká',
 );
 
 /** Polish (Polski)
@@ -411,7 +552,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'externalpages' => 'Páginas Externas',
-	'externalpages-desc' => 'Importa e apresenta páginas de sítios WMF remotos',
+	'externalpages-desc' => 'Importa e apresenta páginas de sites WMF remotos',
 	'externalpages-bad-page' => 'Página incorrecta',
 	'externalpages-no-page' => 'Página não introduzida',
 );
@@ -428,11 +569,12 @@ $messages['pt-br'] = array(
 );
 
 /** Romanian (Română)
+ * @author Cin
  * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'externalpages' => 'Pagini externe',
-	'externalpages-bad-page' => 'Pagină greşită specificată',
+	'externalpages-bad-page' => 'Pagină greșit specificată',
 	'externalpages-no-page' => 'Nicio pagină specificată',
 );
 
@@ -456,6 +598,25 @@ $messages['ru'] = array(
 	'externalpages-no-page' => 'Не указана страница',
 );
 
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'externalpages' => 'Екстерны сторінкы',
+	'externalpages-desc' => 'Обтримує і указує сторінкы із сторінок WMF',
+	'externalpages-bad-page' => 'Неправилно уведена сторінка',
+	'externalpages-no-page' => 'Не была уведжена сторінка',
+);
+
+/** Sakha (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'externalpages' => 'Тас сирэйдэр',
+	'externalpages-bad-page' => 'Алҕас сирэй ыйыллыбыт',
+	'externalpages-no-page' => 'Сирэй ыйыллыбатах',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -464,6 +625,34 @@ $messages['sk'] = array(
 	'externalpages-desc' => 'Získa a zobrazí stránky zo vzdialených lokalít WMF',
 	'externalpages-bad-page' => 'Uvedená chybná stránka',
 	'externalpages-no-page' => 'Neuvedená stránka',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'externalpages' => 'Zunanje strani',
+	'externalpages-desc' => 'Pridobi in prikaže strani iz oddaljenih strani WMF',
+	'externalpages-bad-page' => 'Določena je slaba stran',
+	'externalpages-no-page' => 'Določena ni nobena stran',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Charmed94
+ */
+$messages['sr-ec'] = array(
+	'externalpages' => 'Спољашње странице',
+	'externalpages-desc' => 'Преузима и приказује странице из даљинских WMF сајтова',
+	'externalpages-bad-page' => 'Одређена је лоша страница',
+	'externalpages-no-page' => 'Страница није одређена.',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'externalpages' => 'Spoljašnje stranice',
+	'externalpages-desc' => 'Preuzima i prikazuje stranice iz daljinskih WMF sajtova',
+	'externalpages-bad-page' => 'Određena je loša stranica',
+	'externalpages-no-page' => 'Stranica nije određena.',
 );
 
 /** Swedish (Svenska)
@@ -477,11 +666,22 @@ $messages['sv'] = array(
 	'externalpages-no-page' => 'Ingen sida angiven',
 );
 
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'externalpages' => 'வெளிப்பக்கங்கள்',
+	'externalpages-desc' => 'எங்கோ இருக்கும் WMF தளங்களிலிருந்து பக்கங்களைத் தேடிப்பிடித்து காட்டுகிறது',
+	'externalpages-bad-page' => 'தவறான பக்கத்தைப்பற்றி குறிப்பிடப்பட்டுள்ளது',
+	'externalpages-no-page' => 'எந்தவொரு பக்கத்தைப்பற்றியும் குறிப்பிடப்படவில்லை',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
 $messages['te'] = array(
 	'externalpages' => 'బయటి పేజీలు',
+	'externalpages-desc' => 'సుదూర WMF గూళ్ళ నుండి పుటలను తెచ్చి చూపిస్తుంది',
 	'externalpages-bad-page' => 'తప్పుడు పేజీని ఇచ్చారు',
 	'externalpages-no-page' => 'పేజీని పేర్కొనలేదు',
 );
@@ -494,6 +694,16 @@ $messages['tk'] = array(
 	'externalpages-desc' => 'Uzak WMF saýtlaryndan sahypalary alýar we görkezýär',
 	'externalpages-bad-page' => 'Nädogry sahypa görkezildi',
 	'externalpages-no-page' => 'Hiç hili sahypa görkezilmedi',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'externalpages' => 'Panlabas na mga Pahina',
+	'externalpages-desc' => 'Nagbabawi at nagpapakita ng mga pahina mula sa malalayong mga sityong WMF',
+	'externalpages-bad-page' => 'Tumutukoy ng masamang pahina',
+	'externalpages-no-page' => 'Walang tinukoy na pahina',
 );
 
 /** Turkish (Türkçe)
@@ -538,14 +748,23 @@ $messages['vi'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
- * @author Liangent
+ * @author Hydra
  */
 $messages['zh-hans'] = array(
+	'externalpages' => '外部网页',
+	'externalpages-desc' => '检索和显示来自WMF的网站页面',
+	'externalpages-bad-page' => '指定的错误页',
+	'externalpages-no-page' => '未指定页',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
- * @author Liangent
+ * @author Horacewai2
+ * @author Waihorace
  */
 $messages['zh-hant'] = array(
+	'externalpages' => '外部網頁',
+	'externalpages-desc' => '檢索和顯示來自WMF的網站頁面',
+	'externalpages-bad-page' => '指定的錯誤頁',
+	'externalpages-no-page' => '未指定頁',
 );
 

@@ -43,21 +43,30 @@ class SMWPrintRequest {
 	 * @param $params optional array of further, named parameters for the print request
 	 */
 	public function __construct( $mode, $label, $data = null, $outputformat = false, $params = null ) {
+		if ( ( ( $mode == self::PRINT_CATS || $mode == self::PRINT_THIS ) &&
+		         !is_null( $data ) ) ||
+		     ( $mode == self::PRINT_PROP &&
+		         ( !( $data instanceof SMWPropertyValue ) || !$data->isValid() ) ) ||
+		     ( $mode == self::PRINT_CCAT &&
+		         !( $data instanceof Title ) ) ) {
+			throw new InvalidArgumentException( 'Data provided for print request does not fit the type of printout.' );
+		}
+
 		$this->m_mode = $mode;
 		$this->m_label = $label;
 		$this->m_data = $data;
 		$this->m_outputformat = $outputformat;
-		
-		if ( ( $mode == SMWPrintRequest::PRINT_CCAT ) && ( $outputformat == false ) ) {
+
+		if ( ( $mode == self::PRINT_CCAT ) && ( $outputformat == false ) ) {
 			$this->m_outputformat = 'x'; // changed default for Boolean case
 		}
-		
+
 		if ( $this->m_data instanceof SMWDataValue ) {
 			// $this->m_data = clone $data; // we assume that the caller denotes the object ot us; else he needs provide us with a clone
 			$this->m_data->setCaption( $label );
 		}
-		
-		if ( null != $params ) $m_params = $params;
+
+		if ( null != $params ) $this->m_params = $params;
 	}
 
 	public function getMode() {
@@ -74,18 +83,18 @@ class SMWPrintRequest {
 	 * If it is NULL, no links will be created.
 	 */
 	public function getHTMLText( $linker = null ) {
-		if ( ( $linker === null ) || ( $this->m_label == '' ) ) {
+		if ( is_null( $linker ) || ( $this->m_label === '' ) ) {
 			return htmlspecialchars( $this->m_label );
 		}
 		
 		switch ( $this->m_mode ) {
-			case SMWPrintRequest::PRINT_CATS:
+			case self::PRINT_CATS:
 				return htmlspecialchars( $this->m_label ); // TODO: link to Special:Categories
-			case SMWPrintRequest::PRINT_CCAT:
+			case self::PRINT_CCAT:
 				return $linker->makeLinkObj( $this->m_data, htmlspecialchars( $this->m_label ) );
-			case SMWPrintRequest::PRINT_PROP:
+			case self::PRINT_PROP:
 				return $this->m_data->getShortHTMLText( $linker );
-			case SMWPrintRequest::PRINT_THIS: default: return htmlspecialchars( $this->m_label );
+			case self::PRINT_THIS: default: return htmlspecialchars( $this->m_label );
 		}
 	}
 
@@ -93,17 +102,17 @@ class SMWPrintRequest {
 	 * Obtain a Wiki-formatted representation of the label.
 	 */
 	public function getWikiText( $linked = false ) {
-		if ( ( $linked === null ) || ( $linked === false ) || ( $this->m_label == '' ) ) {
+		if ( is_null( $linked ) || ( $linked === false ) || ( $this->m_label === '' ) ) {
 			return $this->m_label;
 		} else {
 			switch ( $this->m_mode ) {
-				case SMWPrintRequest::PRINT_CATS:
+				case self::PRINT_CATS:
 					return $this->m_label; // TODO: link to Special:Categories
-				case SMWPrintRequest::PRINT_PROP:
+				case self::PRINT_PROP:
 					return $this->m_data->getShortWikiText( $linked );
-				case SMWPrintRequest::PRINT_CCAT:
+				case self::PRINT_CCAT:
 					return '[[:' . $this->m_data->getPrefixedText() . '|' . $this->m_label . ']]';
-				case SMWPrintRequest::PRINT_THIS: default:
+				case self::PRINT_THIS: default:
 					return $this->m_label;
 			}
 		}
@@ -134,19 +143,19 @@ class SMWPrintRequest {
 
 	/**
 	 * If this print request refers to some property, return the type id of this property.
-	 * Otherwise return FALSE.
+	 * Otherwise return '_wpg' since all other types of print request return wiki pages.
 	 * 
 	 * @return string
 	 */
 	public function getTypeID() {
 		if ( $this->m_typeid === false ) {
-			if ( $this->m_mode == SMWPrintRequest::PRINT_PROP ) {
-				$this->m_typeid = $this->m_data->getPropertyTypeID();
+			if ( $this->m_mode == self::PRINT_PROP ) {
+				$this->m_typeid = $this->m_data->getDataItem()->findPropertyTypeID();
 			} else {
-				$this->m_typeid = '_wpg'; // return objects might be titles, but anyway
+				$this->m_typeid = '_wpg';
 			}
 		}
-		
+
 		return $this->m_typeid;
 	}
 
@@ -187,7 +196,7 @@ class SMWPrintRequest {
 		}
 		
 		switch ( $this->m_mode ) {
-			case SMWPrintRequest::PRINT_CATS:
+			case self::PRINT_CATS:
 				global $wgContLang;
 				$catlabel = $wgContLang->getNSText( NS_CATEGORY );
 				$result = '?' . $catlabel;
@@ -195,8 +204,8 @@ class SMWPrintRequest {
 					$result .= '=' . $this->m_label;
 				}
 				return $result . $parameters;
-			case SMWPrintRequest::PRINT_PROP: case SMWPrintRequest::PRINT_CCAT:
-				if ( $this->m_mode == SMWPrintRequest::PRINT_CCAT ) {
+			case self::PRINT_PROP: case self::PRINT_CCAT:
+				if ( $this->m_mode == self::PRINT_CCAT ) {
 					$printname = $this->m_data->getPrefixedText();
 					$result = '?' . $printname;
 					
@@ -207,7 +216,7 @@ class SMWPrintRequest {
 					$printname = $this->m_data->getWikiValue();
 					$result = '?' . $printname;
 					
-					if ( $this->m_outputformat != '' ) {
+					if ( $this->m_outputformat !== '' ) {
 						$result .= '#' . $this->m_outputformat;
 					}
 				}
@@ -215,11 +224,17 @@ class SMWPrintRequest {
 					$result .= '=' . $this->m_label;
 				}
 				return $result . $parameters;
-			case SMWPrintRequest::PRINT_THIS:
+			case self::PRINT_THIS:
 				$result = '?';
-				if ( $this->m_label != '' ) {
+				
+				if ( $this->m_label !== '' ) {
 					$result .= '=' . $this->m_label;
 				}
+				
+				if ( $this->m_outputformat !== '' ) {
+					$result .= '#' . $this->m_outputformat;
+				}
+									
 				return $result . $parameters; 
 			default: return ''; // no current serialisation
 		}

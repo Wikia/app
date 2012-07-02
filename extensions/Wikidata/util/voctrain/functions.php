@@ -75,7 +75,7 @@ function display_form() {
 	}
 
 
-	$form->addGroup( $expression_group, 'Expression', 'Search Expression:', '&nbsp; only in this language:', 0 );
+	$form->addGroup( $expression_group, 'Expression', 'Search Expression:', '&#160; only in this language:', 0 );
 
 	if ( $_REQUEST['settings'] == 1 ) {
 		$form->addElement( 'text', 'definedmeaning', 'definedmeaning (word-id):', array( 'value' => '', 'size' => 15 ) );

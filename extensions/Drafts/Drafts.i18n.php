@@ -39,16 +39,18 @@ Do you want to continue?',
  * @author Darth Kule
  * @author Dead3y3
  * @author EugeneZelenko
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
 	'drafts' => 'Title of Special:Drafts',
-	'drafts-desc' => 'Short description of the Drafts extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'drafts-desc' => '{{desc}}',
 	'drafts-view-summary' => 'Used in [[Special:Drafts]] when there is at least one draft saved.',
 	'drafts-view-article' => 'Name of column in Special:Drafts, when there are draft versions saved.
 
 {{Identical|Page}}',
 	'drafts-view-existing' => 'Shown at the top while editing a page with draft versions saved',
-	'drafts-view-saved' => 'Name of column in Special:Drafts, when there are draft versions saved',
+	'drafts-view-saved' => 'Name of column in Special:Drafts, when there are draft versions saved.
+{{Identical|Saved}}',
 	'drafts-view-discard' => 'Name of button to delete draft version of a page',
 	'drafts-view-nonesaved' => 'Displayed in Special:Drafts when there are no draft versions saved',
 	'drafts-view-notice' => "Shown at the top while previewing a page with draft versions saved. ''$1'' is {{msg-mw|Drafts-view-notice-link}} message",
@@ -57,7 +59,8 @@ $messages['qqq'] = array(
 	'drafts-save' => 'Tooltip of {{msg-mw|Drafts-save-save}} button',
 	'drafts-save-save' => 'Button shown near "Show changes" under editing form of a page
 {{Identical|Save draft}}',
-	'drafts-save-saved' => 'Message indicating that the draft has been saved.',
+	'drafts-save-saved' => 'Message indicating that the draft has been saved.
+{{Identical|Saved}}',
 	'drafts-save-saving' => 'Message indicating that the draft is in the process of being saved.',
 );
 
@@ -75,6 +78,8 @@ Biztosan folytatja?',
  * @author Naudefj
  */
 $messages['af'] = array(
+	'drafts' => 'Werkweergawes',
+	'drafts-view' => 'WysWerkweergawe',
 	'drafts-view-article' => 'Bladsy',
 	'drafts-view-saved' => 'Gestoor',
 	'drafts-view-discard' => 'Verwyder',
@@ -86,6 +91,13 @@ $messages['af'] = array(
 	'drafts-save-saving' => 'Besig om te stoor',
 	'drafts-save-error' => 'Fout tydens stoor van werkweergawe',
 	'tooltip-drafts-save' => 'As werkweergawe stoor',
+);
+
+/** Aragonese (Aragonés)
+ * @author Juanpabl
+ */
+$messages['an'] = array(
+	'drafts-view-article' => 'Pachina',
 );
 
 /** Arabic (العربية)
@@ -115,6 +127,15 @@ $messages['ar'] = array(
 	'tooltip-drafts-save' => 'حفظ كمسودة',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'drafts-view-article' => 'ܕܦܐ',
+	'drafts-view-saved' => 'ܠܒܟܬ',
+	'drafts-save-saved' => 'ܠܒܟܬ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  * @author Ramsis II
@@ -142,7 +163,43 @@ $messages['arz'] = array(
 	'tooltip-drafts-save' => 'حفظ كمسودة',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ * @author Vago
+ */
+$messages['az'] = array(
+	'drafts-view-article' => 'Səhifə',
+	'drafts-view-saved' => 'Yaddaşa verildi',
+	'drafts-save-saved' => 'Yaddaşa verildi',
+);
+
+/** Bashkir (Башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'drafts' => 'Ҡараламалар',
+	'drafts-desc' => 'Серверҙа биттәрҙең [[Special:Drafts|ҡараламаһын]] һаҡлау мөмкинлеген өҫтәй',
+	'drafts-view' => 'ҠараламаҠарау',
+	'drafts-view-summary' => 'Был махсус бит бөтә булған ҡараламаларҙы күрһәтә.
+Ҡулланылмаған ҡараламалар {{PLURAL:$1|$1 көндән}} үҙенән-үҙе юйыла.',
+	'drafts-view-article' => 'Бит',
+	'drafts-view-existing' => 'Булған ҡараламалар',
+	'drafts-view-saved' => 'Һаҡланған',
+	'drafts-view-discard' => 'Кире алырға',
+	'drafts-view-nonesaved' => 'Әлеге выҡытта һеҙҙең бер ҡараламағыҙ ҙа юҡ.',
+	'drafts-view-notice' => 'Һеҙҙең был бит өсөн $1 бар.',
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|ҡаралама}}',
+	'drafts-view-warn' => 'Был биттән китһәгеҙ, һеҙ биттәге бөтә һаҡланмаған үҙгәртеүҙәрҙе юғалтасаҡһығыҙ.
+Дауам итергә теләйһегеҙме?',
+	'drafts-save' => 'Ҡаралама рәүешендә һаҡларға',
+	'drafts-save-save' => 'Ҡараламаны һаҡларға',
+	'drafts-save-saved' => 'Һаҡланған',
+	'drafts-save-saving' => 'Һаҡлау',
+	'drafts-save-error' => 'Ҡараламаны һаҡлау хатаһы',
+	'tooltip-drafts-save' => 'Ҡаралама рәүешендә һаҡларға',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Red Winged Duck
@@ -195,17 +252,23 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Bellayet
+ * @author Wikitanvir
  */
 $messages['bn'] = array(
 	'drafts' => 'খসড়া',
 	'drafts-view' => 'খসড়া দেখো',
 	'drafts-view-article' => 'পাতা',
+	'drafts-view-existing' => 'বর্তমানে রয়েছে এমন খসড়াসমূহ',
 	'drafts-view-saved' => 'সংরক্ষিত',
 	'drafts-view-discard' => 'বাতিল',
+	'drafts-view-nonesaved' => 'আপনার বর্তমানে সংরক্ষিত কোনো খসড়া নেই।',
+	'drafts-view-notice' => 'এই পাতার জন্য আপনার $1টি রয়েছে।',
+	'drafts-view-notice-link' => '$1টি {{PLURAL:$1|খসড়া|খসড়া}}',
 	'drafts-save' => 'খসড়া হিসেবে সংরক্ষণ করো',
 	'drafts-save-save' => 'খসড়া সংরক্ষণ',
 	'drafts-save-saved' => 'সংরক্ষিত',
 	'drafts-save-saving' => 'সংরক্ষণ করা হচ্ছে',
+	'drafts-save-error' => 'ড্রাফট সংরক্ষণে ত্রুটি',
 	'tooltip-drafts-save' => 'খসড়া হিসেবে সংরক্ষণ করো',
 );
 
@@ -217,23 +280,23 @@ $messages['bn'] = array(
 $messages['br'] = array(
 	'drafts' => 'Brouilhedoù',
 	'drafts-desc' => 'Aotreañ a ra da enrollañ ur stumm [[Special:Drafts|brouilhed]] eus ur bajenn war ar servijer',
-	'drafts-view' => 'Gwelet ar brouilhoñs',
+	'drafts-view' => 'Gwelet ar brouilhed',
 	'drafts-view-summary' => 'Ar bajenn ispisial-mañ a zo ur roll eus an holl brouilhedoù a zo.
 Ar brouilhedoù nann-implijet a vo distaolet emgefre goude $1 devez{{PLURAL:$1||}}.',
 	'drafts-view-article' => 'Pajenn',
 	'drafts-view-existing' => 'Brouilhedoù zo anezho dija',
 	'drafts-view-saved' => 'Enrollet',
 	'drafts-view-discard' => 'Disteurel',
-	'drafts-view-nonesaved' => "N'ho peus brouilhoñs ebet enrollet er mare-mañ.",
+	'drafts-view-nonesaved' => "N'hoc'h eus tamm brouilhoñs ebet enrollet er mare-mañ.",
 	'drafts-view-notice' => '$1 ho peus evit ar bajenn-mañ.',
-	'drafts-view-notice-link' => '$1 {{PLURAL:$1|brouilhoñs|brouilhoñsoù}}',
-	'drafts-view-warn' => "En ur merdea er maez eus ar bajenn-mañ e kolloc'h holl kemmoù nann-enrollet ar bajenn-mañ.
-Ha c'hoant ho peus kenderc'hel ?",
-	'drafts-save' => 'Enrollañ evel ur brouilh',
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|brouilhed|brouilhed}}',
+	'drafts-view-warn' => "Ma'z it da verdeiñ er maez eus ar bajenn-mañ e kollot an holl gemmoù dienroll degaset d'ar bajenn-mañ.
+Ha kenderc'hel a fell deoc'h ober ?",
+	'drafts-save' => 'Enrollañ an dra-mañ evel brouilhed',
 	'drafts-save-save' => 'Enrollañ ar brouilhed',
 	'drafts-save-saved' => 'Enrollet',
 	'drafts-save-saving' => "Oc'h enrollañ",
-	'drafts-save-error' => 'Fazi enrollañ ar brouilh',
+	'drafts-save-error' => 'Fazi enrollañ ar brouilhed',
 	'tooltip-drafts-save' => 'Enrollañ evel brouilhed',
 );
 
@@ -320,13 +383,15 @@ Nepoužité koncepty budou po {{plural:$1|$1 dni|$1 dnech}} automaticky smazány
 
 /** German (Deutsch)
  * @author ChrisiPK
+ * @author Kghbln
  * @author Metalhead64
  * @author Pill
+ * @author Umherirrender
  * @author W (aka Wuzur)
  */
 $messages['de'] = array(
 	'drafts' => 'Zwischengespeicherte Versionen',
-	'drafts-desc' => 'Zwischenspeichern von Textentwürfen auf dem Server',
+	'drafts-desc' => 'Zwischenspeichern von [[Special:Drafts|Textentwürfen]] auf dem Server',
 	'drafts-view' => 'Zwischengespeicherte Version anzeigen',
 	'drafts-view-summary' => 'Diese Spezialseite listet alle bestehenden zwischengespeicherten Versionen auf.
 Nicht verwendete zwischengespeicherte Versionen werden nach {{PLURAL:$1|$1 Tag|$1 Tagen}} automatisch verworfen.',
@@ -342,12 +407,12 @@ Möchtest du dennoch fortfahren?',
 	'drafts-save' => 'Diese Version zwischenspeichern',
 	'drafts-save-save' => 'Zwischenspeichern',
 	'drafts-save-saved' => 'Gespeichert',
-	'drafts-save-saving' => 'Speichern',
+	'drafts-save-saving' => 'Am Speichern …',
 	'drafts-save-error' => 'Fehler beim Erstellen der zwischengespeicherten Version',
 	'tooltip-drafts-save' => 'Eine zwischengespeicherte Version erstellen',
 );
 
-/** German (formal address) (Deutsch (Sie-Form))
+/** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author ChrisiPK
  * @author Imre
  * @author MichaelFrey
@@ -410,6 +475,11 @@ Coš weto pókšacowaś?',
 	'drafts-save-saving' => 'Składowanje',
 	'drafts-save-error' => 'Zmólka pśi składowanju nacerjenja',
 	'tooltip-drafts-save' => 'Ako nacerjenje składowaś',
+);
+
+/** Ewe (Eʋegbe) */
+$messages['ee'] = array(
+	'drafts-view-article' => 'Axa',
 );
 
 /** Greek (Ελληνικά)
@@ -546,6 +616,7 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Huji
+ * @author Wayiran
  */
 $messages['fa'] = array(
 	'drafts' => 'پیش‌نویس‌ها',
@@ -565,6 +636,7 @@ $messages['fa'] = array(
 	'drafts-save' => 'ذخیره کردن این متن به عنوان پیش‌نویس',
 	'drafts-save-save' => 'ذخیره کردن پیش‌نویس',
 	'drafts-save-saved' => 'ذخیره شد',
+	'drafts-save-saving' => 'ذخیره‌سازی',
 	'drafts-save-error' => 'خطا در ذخیره کردن پیش‌نویس',
 	'tooltip-drafts-save' => 'ذخیره به عنوان پیش‌نویس',
 );
@@ -741,6 +813,11 @@ $messages['gu'] = array(
 	'tooltip-drafts-save' => 'મુસદ્દા તરીકે સાચવો',
 );
 
+/** Hausa (هَوُسَ) */
+$messages['ha'] = array(
+	'drafts-view-article' => 'Shafi',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author YaronSh
@@ -853,35 +930,36 @@ Biztosan folytatod?',
  */
 $messages['ia'] = array(
 	'drafts' => 'Versiones provisori',
-	'drafts-desc' => 'Adde le possibilitate de immagazinar versiones [[Special:Drafts|provisori]] de un pagina in le servitor',
-	'drafts-view' => 'ViderVersionProvisori',
+	'drafts-desc' => 'Adde le possibilitate de salveguardar [[Special:Drafts|versiones provisori]] de un pagina in le servitor',
+	'drafts-view' => 'Vider version provisori',
 	'drafts-view-summary' => 'Iste pagina special monstra un lista de tote le versiones provisori existente.
 Le versiones provisori non usate essera automaticamente abandonate post {{PLURAL:$1|$1 die|$1 dies}}.',
 	'drafts-view-article' => 'Pagina',
 	'drafts-view-existing' => 'Versiones provisori existente',
-	'drafts-view-saved' => 'Immagazinate',
+	'drafts-view-saved' => 'Salveguardate',
 	'drafts-view-discard' => 'Abandonar',
-	'drafts-view-nonesaved' => 'Tu non ha alcun version provisori immagazinate al momento.',
+	'drafts-view-nonesaved' => 'Tu non ha alcun version provisori salveguardate al momento.',
 	'drafts-view-notice' => 'Tu ha $1 pro iste pagina.',
 	'drafts-view-notice-link' => '$1 {{PLURAL:$1|version|versiones}} provisori',
-	'drafts-view-warn' => 'Si tu quita iste pagina, tu perdera tote le modificationes non immagazinate de iste pagina.
+	'drafts-view-warn' => 'Si tu quita iste pagina, tu perdera tote le modificationes non salveguardate de iste pagina.
 Continuar?',
-	'drafts-save' => 'Immagazinar isto como version provisori',
-	'drafts-save-save' => 'Immagazinar version provisori',
-	'drafts-save-saved' => 'Immagazinate',
-	'drafts-save-saving' => 'Immagazinage in curso',
-	'drafts-save-error' => 'Error immagazinante le version provisori',
-	'tooltip-drafts-save' => 'Immagazinar como version provisori',
+	'drafts-save' => 'Salveguardar isto como version provisori',
+	'drafts-save-save' => 'Salveguardar version provisori',
+	'drafts-save-saved' => 'Salveguardate',
+	'drafts-save-saving' => 'Salveguarda in curso',
+	'drafts-save-error' => 'Error salveguardante le version provisori',
+	'tooltip-drafts-save' => 'Salveguardar como version provisori',
 );
 
 /** Indonesian (Bahasa Indonesia)
  * @author Bennylin
  * @author Irwangatot
+ * @author IvanLanin
  * @author Kandar
  */
 $messages['id'] = array(
 	'drafts' => 'Rancangan',
-	'drafts-desc' => 'Menambahkan kemampuan untuk menyimpan versi [[Special:Drafts|tulisan rancangan]] suatu halaman di peladen',
+	'drafts-desc' => 'Menambahkan kemampuan untuk menyimpan versi [[Special:Drafts|tulisan rancangan]] suatu halaman di server',
 	'drafts-view' => 'LihatRancangan',
 	'drafts-view-summary' => 'Halaman istimewa ini menunjukkan daftar semua tulisan rancangan yang ada.
 Tulisan rancangan yang tidak digunakan akan dibuang secara otomatis setelah {{PLURAL:$1||}}$1 hari.',
@@ -892,7 +970,7 @@ Tulisan rancangan yang tidak digunakan akan dibuang secara otomatis setelah {{PL
 	'drafts-view-nonesaved' => 'Saat ini Anda tidak memiliki tulisan rancangan yang tersimpan.',
 	'drafts-view-notice' => 'Anda memiliki $1 untuk halaman ini.',
 	'drafts-view-notice-link' => '$1 {{PLURAL:$1||}}tulisan rancangan',
-	'drafts-view-warn' => 'Jika Anda meninggalkan halaman ini Anda akan kehilangan semua perubahan yang belum tersimpan. 
+	'drafts-view-warn' => 'Jika Anda meninggalkan halaman ini Anda akan kehilangan semua perubahan yang belum tersimpan.
 Apakah Anda ingin meninggalkan halaman ini?',
 	'drafts-save' => 'Simpan halaman ini sebagai tulisan rancangan',
 	'drafts-save-save' => 'Simpan tulisan rancangan',
@@ -906,9 +984,11 @@ Apakah Anda ingin meninggalkan halaman ini?',
  * @author Malafaya
  */
 $messages['io'] = array(
+	'drafts' => 'Kladi',
 	'drafts-view-article' => 'Pagino',
 	'drafts-view-saved' => 'Registragita',
 	'drafts-view-notice' => 'Vu havas $1 por ca pagino.',
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|klado|kladi}}',
 );
 
 /** Italian (Italiano)
@@ -963,6 +1043,7 @@ $messages['ja'] = array(
 );
 
 /** Georgian (ქართული)
+ * @author Dawid Deutschland
  * @author Sopho
  * @author გიორგიმელა
  */
@@ -970,7 +1051,7 @@ $messages['ka'] = array(
 	'drafts' => 'შავი ფურცლები',
 	'drafts-desc' => 'მატებს [[Special:Drafts|შავი ფურცლების]] შენახვის საშუალებას სერვერზე',
 	'drafts-view' => 'შავი ფურცლის ხილვა',
-	'drafts-view-summary' => 'ამ სპეცგვერდზე წარმოდგენილია ყველა შავი ფურცელი. 
+	'drafts-view-summary' => 'ამ სპეცგვერდზე წარმოდგენილია ყველა შავი ფურცელი.
 გამოუყენებელი შავი ფურცლები წაიშლება $1 {{PLURAL:$1|დღე|დღის|დღეები}}.',
 	'drafts-view-article' => 'გვერდი',
 	'drafts-view-existing' => 'არსებული შავი ფურცლები',
@@ -978,8 +1059,8 @@ $messages['ka'] = array(
 	'drafts-view-discard' => 'გაუქმება',
 	'drafts-view-nonesaved' => 'ამ დროისთვის თქვენ არ გაგაჩნიათ შენახული შავი ფურცლები',
 	'drafts-view-notice' => 'თქვენ გაქვთ  $1 ამ გვერდისთვის.',
-	'drafts-view-notice-link' => '$1 {{PLURAL:$1|შავი ფურცელი|შავი ფურცლის|შავი ფურცლების}}',
-	'drafts-view-warn' => 'ამ გვერდის დატოვებისას თქვენ კარგავთ ყველა შეუნახავ ცვლილებას. 
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|შეუმოწმებელი ვერსია|შეუმოწმებელი ვერსიები}}',
+	'drafts-view-warn' => 'ამ გვერდის დატოვებისას თქვენ კარგავთ ყველა შეუნახავ ცვლილებას.
 გაგრძელება?',
 	'drafts-save' => 'შეინახეთ როგორც შავი ფურცელი',
 	'drafts-save-save' => 'შეინახეთ შავი ფურცელი',
@@ -991,6 +1072,7 @@ $messages['ka'] = array(
 
 /** Khmer (ភាសាខ្មែរ)
  * @author Thearith
+ * @author គីមស៊្រុន
  * @author វ័ណថារិទ្ធ
  */
 $messages['km'] = array(
@@ -1004,12 +1086,22 @@ $messages['km'] = array(
 	'drafts-view-nonesaved' => 'អ្នក​មិន​មាន​ពង្រាង​ណាមួយ​ត្រូវ​បាន​រក្សាទុក​នាពេលនេះ​ទេ​។',
 	'drafts-view-notice' => 'អ្នក​មាន $1 សម្រាប់​ទំព័រ​នេះ​។',
 	'drafts-view-notice-link' => '$1 {{PLURAL:$1|ពង្រាង|ពង្រាង}}',
+	'drafts-view-warn' => 'បើចាកចេញពីទំព័រនេះ អ្នកនឹងបាត់បង់រាល់អ្វីដែលមិនទាន់បានរក្សាទុកនៅលើទំព័រនេះ។
+
+តើអ្នកចង់បន្តទេ?',
 	'drafts-save' => 'រក្សាទុក​ជា​ពង្រាង',
 	'drafts-save-save' => 'រក្សាទុក​ពង្រាង',
 	'drafts-save-saved' => 'បាន​រក្សាទុក',
 	'drafts-save-saving' => 'កំពុង​រក្សាទុក​',
 	'drafts-save-error' => 'កំហុស​រក្សាទុក​ពង្រាង',
 	'tooltip-drafts-save' => 'រក្សាទុក​ជា​ពង្រាង',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author Nayvik
+ */
+$messages['kn'] = array(
+	'drafts-view-article' => 'ಪುಟ',
 );
 
 /** Korean (한국어)
@@ -1039,7 +1131,7 @@ $messages['ko'] = array(
 	'tooltip-drafts-save' => '초안으로 저장하기',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -1126,12 +1218,32 @@ Wilse doorgaon?',
 	'tooltip-drafts-save' => 'Opslaon es draft',
 );
 
+/** Maithili (मैथिली)
+ * @author Vinitutpal
+ */
+$messages['mai'] = array(
+	'drafts' => 'प्रारूप',
+	'drafts-view' => 'प्रारूप देखू',
+	'drafts-view-article' => 'पृष्ठ',
+	'drafts-view-existing' => 'मौजूदा प्रारूप',
+	'drafts-view-saved' => 'सुरक्षित',
+	'drafts-view-discard' => 'छोडू',
+	'drafts-view-nonesaved' => 'अहि काल अहां के कोनो प्रारूप सुरक्षित नहि अछि.',
+	'drafts-view-notice' => 'अहि पृष्ठ लेल अहां लग $1 अछि',
+	'drafts-save' => 'प्रारूप जेना सुरुक्षित करू',
+	'drafts-save-save' => 'सुरक्षित प्रारूप',
+	'drafts-save-saved' => 'सुरक्षित',
+	'drafts-save-saving' => 'बचत करू',
+	'drafts-save-error' => 'प्रारूप सुरक्षित करहि मे त्रुटि',
+	'tooltip-drafts-save' => 'प्रारूप के सुरक्षित करू',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'drafts' => 'Работни верзии',
-	'drafts-desc' => 'Додава можност за зачувување на [[Special:Drafts|работни верзии]] на страниците на серверот',
+	'drafts-desc' => 'Додава можност за зачувување на [[Special:Drafts|работни верзии]] на страниците на опслужувачот',
 	'drafts-view' => 'ПрегледНаРаботнаВерзија',
 	'drafts-view-summary' => 'Оваа специјална страница ги наведува сите постоечки работни верзии.
 Неискористените работни верзии ќе бидат автоматски исфрлени по {{PLURAL:$1|$1 ден|$1 дена}}.',
@@ -1178,6 +1290,13 @@ $messages['ml'] = array(
 	'tooltip-drafts-save' => 'കരട് ആയി സേവ് ചെയ്യുക',
 );
 
+/** Mongolian (Монгол)
+ * @author Chinneeb
+ */
+$messages['mn'] = array(
+	'drafts-view-article' => 'Хуудас',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Aviator
  * @author Izzudin
@@ -1208,6 +1327,41 @@ $messages['ms'] = array(
  */
 $messages['mwl'] = array(
 	'drafts-view-article' => 'Páigina',
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'drafts-view-article' => 'Лопа',
+	'drafts-save-saved' => 'Ванстозь',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Laaknor
+ */
+$messages['nb'] = array(
+	'drafts' => 'Kladder',
+	'drafts-desc' => 'Legger til muligheten til å lagre [[Special:Drafts|utkast]]versjoner av en side på serveren',
+	'drafts-view' => 'Vis utkast',
+	'drafts-view-summary' => 'Denne spesialsiden viser en liste over nåværende utkast.
+Ubrukte utkast vil slettes automatisk etter {{PLURAL:$1|én dag|$1 dager}}.',
+	'drafts-view-article' => 'Side',
+	'drafts-view-existing' => 'Eksisterende utkast',
+	'drafts-view-saved' => 'Lagret',
+	'drafts-view-discard' => 'Forkast',
+	'drafts-view-nonesaved' => 'Du har ingen utkast lagret på nåværende tidspunkt',
+	'drafts-view-notice' => 'Du har $1 for denne siden.',
+	'drafts-view-notice-link' => '{{PLURAL:$1|ett utkast|$1 utkast}}',
+	'drafts-view-warn' => 'Ved å navigere vekk fra denne siden vil du miste alle ulagrede endringer til denne siden.
+Vil du fortsette?',
+	'drafts-save' => 'Lagre dette som et utkast',
+	'drafts-save-save' => 'Lagre utkast',
+	'drafts-save-saved' => 'Lagret',
+	'drafts-save-saving' => 'Lagrer',
+	'drafts-save-error' => 'Feil ved lagring av utkast',
+	'tooltip-drafts-save' => 'Lagre som et utkast',
 );
 
 /** Low German (Plattdüütsch)
@@ -1265,6 +1419,7 @@ Wilt u doorgaan?',
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
+ * @author Ranveig
  */
 $messages['nn'] = array(
 	'drafts' => 'Utkast',
@@ -1276,7 +1431,7 @@ Unytta utkast vil verta vraka av seg sjølv etter {{PLURAL:$1|éin dag|$1 dagar}
 	'drafts-view-existing' => 'Eksisterande utkast',
 	'drafts-view-saved' => 'Lagra',
 	'drafts-view-discard' => 'Vrak',
-	'drafts-view-nonesaved' => 'Du har ingen lagra utkast på noverande tidspunkt.',
+	'drafts-view-nonesaved' => 'Du har ingen lagra utkast nett no.',
 	'drafts-view-notice' => 'Du har $1 for denne sida.',
 	'drafts-view-notice-link' => '{{PLURAL:$1|eitt utkast|$1 utkast}}',
 	'drafts-view-warn' => 'Ved å navigera vekk frå denne sida vil du missa alle endringane på sida som ikkje er lagra.
@@ -1287,33 +1442,6 @@ Vil du halda fram?',
 	'drafts-save-saving' => 'Lagrar',
 	'drafts-save-error' => 'Det oppstod ein feil under lagring av utkast',
 	'tooltip-drafts-save' => 'Lagra som utkast',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Laaknor
- */
-$messages['no'] = array(
-	'drafts' => 'Kladder',
-	'drafts-desc' => 'Legger til muligheten til å lagre [[Special:Drafts|utkast]]versjoner av en side på serveren',
-	'drafts-view' => 'Vis utkast',
-	'drafts-view-summary' => 'Denne spesialsiden viser en liste over nåværende utkast.
-Ubrukte utkast vil slettes automatisk etter {{PLURAL:$1|én dag|$1 dager}}.',
-	'drafts-view-article' => 'Side',
-	'drafts-view-existing' => 'Eksisterende utkast',
-	'drafts-view-saved' => 'Lagret',
-	'drafts-view-discard' => 'Forkast',
-	'drafts-view-nonesaved' => 'Du har ingen utkast lagret på nåværende tidspunkt',
-	'drafts-view-notice' => 'Du har $1 for denne siden.',
-	'drafts-view-notice-link' => '{{PLURAL:$1|ett utkast|$1 utkast}}',
-	'drafts-view-warn' => 'Ved å navigere vekk fra denne siden vil du miste alle ulagrede endringer til denne siden.
-Vil du fortsette?',
-	'drafts-save' => 'Lagre dette som et utkast',
-	'drafts-save-save' => 'Lagre utkast',
-	'drafts-save-saved' => 'Lagret',
-	'drafts-save-saving' => 'Lagrer',
-	'drafts-save-error' => 'Feil ved lagring av utkast',
-	'tooltip-drafts-save' => 'Lagre som et utkast',
 );
 
 /** Occitan (Occitan)
@@ -1346,7 +1474,9 @@ Los borrolhons inutilizats seràn suprimits automaticament aprèp $1 {{PLURAL:$1
  */
 $messages['pdc'] = array(
 	'drafts-view-article' => 'Blatt',
+	'drafts-view-saved' => 'Bhalde',
 	'drafts-view-notice' => 'Du hast $1 fer des Blatt.',
+	'drafts-save-saved' => 'Bhalde',
 );
 
 /** Polish (Polski)
@@ -1368,7 +1498,7 @@ Nieużywane brudnopisy zostaną automatycznie usunięte po $1 {{PLURAL:$1|dniu|d
 	'drafts-view-nonesaved' => 'Nie masz obecnie zapisanych żadnych brudnopisów stron.',
 	'drafts-view-notice' => 'Masz obecnie $1 tej strony.',
 	'drafts-view-notice-link' => '$1 {{PLURAL:$1|brudnopis|brudnopisy|brudnopisów}}',
-	'drafts-view-warn' => 'Opuszczenie tej strony spowoduje utratę wszystkich niezapisanych zmian w jej treści. 
+	'drafts-view-warn' => 'Opuszczenie tej strony spowoduje utratę wszystkich niezapisanych zmian w jej treści.
 Czy chcesz kontynuować?',
 	'drafts-save' => 'Zapisuje jako brudnopis strony',
 	'drafts-save-save' => 'Zapisz brudnopis',
@@ -1408,10 +1538,20 @@ It veus-to continué?',
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'drafts' => 'ګارلیکونه',
 	'drafts-view-article' => 'مخ',
+	'drafts-view-existing' => 'شته ګارليکونه',
+	'drafts-view-notice' => 'د دې مخ لپاره تاسې $1 لرۍ.',
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|ګارليک|ګارليکونه}}',
+	'drafts-save' => 'د يوه ګارليک په توګه خوندي کول',
+	'drafts-save-save' => 'ګارليک خوندي کول',
+	'drafts-save-saved' => 'خوندي شو',
+	'drafts-save-saving' => 'د خوندي کېدلو په حال کې',
+	'tooltip-drafts-save' => 'د يوه ګارليک په توګه خوندي کول',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
@@ -1425,7 +1565,7 @@ Rascunhos não usados serão descartados automaticamente após {{PLURAL:$1|$1 di
 	'drafts-view-saved' => 'Gravado',
 	'drafts-view-discard' => 'Descartar',
 	'drafts-view-nonesaved' => 'Não tem neste momento quaisquer rascunhos gravados.',
-	'drafts-view-notice' => 'Você tem $1 para esta página.',
+	'drafts-view-notice' => 'Tem $1 para esta página.',
 	'drafts-view-notice-link' => '$1 {{PLURAL:$1|rascunho|rascunhos}}',
 	'drafts-view-warn' => 'Se navegar para fora desta página, perderá todas as alterações por gravar desta página.
 Pretende continuar?',
@@ -1466,35 +1606,52 @@ Deseja continuar?',
 /** Romanian (Română)
  * @author Firilacroco
  * @author KlaudiuMihaila
+ * @author Minisarm
  * @author Stelistcristi
  */
 $messages['ro'] = array(
-	'drafts' => 'Schiţe',
-	'drafts-view' => 'VizualizeazăSchiţă',
+	'drafts' => 'Schițe',
+	'drafts-desc' => 'Adaugă posibilitatea de a salva pe server versiuni-[[Special:Drafts|schițe]] ale unei pagini',
+	'drafts-view' => 'VizualizeazăSchiță',
+	'drafts-view-summary' => 'Această pagină specială afișează o listă cu toate schițele existente.
+Schițele nefolosite vor fi șterse automat după {{PLURAL:$1|$1 zi|$1 zile}}.',
 	'drafts-view-article' => 'Pagină',
-	'drafts-view-existing' => 'Schiţe existente',
+	'drafts-view-existing' => 'Schițe existente',
 	'drafts-view-saved' => 'Salvat',
 	'drafts-view-discard' => 'Respinge',
-	'drafts-view-nonesaved' => 'Nu aveţi vreo schiţă salvată în acest moment.',
-	'drafts-view-notice' => 'Aveţi $1 pentru această pagină.',
-	'drafts-save' => 'Salvează aceasta ca o schiţă',
-	'drafts-save-save' => 'Salvează schiţă',
+	'drafts-view-nonesaved' => 'Nu aveți vreo schiță salvată în acest moment.',
+	'drafts-view-notice' => 'Aveți $1 pentru această pagină.',
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|ciornă|ciorne}}',
+	'drafts-view-warn' => 'Dacă părăsiți această pagină veți pierde toate modificările nesalvate aduse paginii.
+Doriți să continuați?',
+	'drafts-save' => 'Salvează aceasta ca o schiță',
+	'drafts-save-save' => 'Salvează schiță',
 	'drafts-save-saved' => 'Salvat',
 	'drafts-save-saving' => 'Salvare',
-	'drafts-save-error' => 'Eroare la salvarea schiţei',
-	'tooltip-drafts-save' => 'Salvaţi ca o schiţă',
+	'drafts-save-error' => 'Eroare la salvarea schiței',
+	'tooltip-drafts-save' => 'Salvează ca schiță',
 );
 
 /** Tarandíne (Tarandíne)
  * @author Joetaras
+ * @author Reder
  */
 $messages['roa-tara'] = array(
 	'drafts' => 'Bozze',
+	'drafts-view' => 'ViewDraft',
 	'drafts-view-article' => 'Vosce',
+	'drafts-view-existing' => 'Pruggette esistende',
 	'drafts-view-saved' => 'Reggistrate',
 	'drafts-view-discard' => 'Scitte',
+	'drafts-view-nonesaved' => 'Non ge tène totte le pruggette salvate jndre stù momende.',
+	'drafts-view-notice' => 'Tu tène $1 pè quèste pàgene.',
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|pruggette|pruggette}}',
+	'drafts-save' => 'Salve quiste cumme bozze',
+	'drafts-save-save' => "Salve 'a bozze",
 	'drafts-save-saved' => 'Reggistrate',
 	'drafts-save-saving' => 'Stoche a reggistre',
+	'drafts-save-error' => "Errore de salvatagge d'u pruggette",
+	'tooltip-drafts-save' => 'Salve cumme bozze',
 );
 
 /** Russian (Русский)
@@ -1524,7 +1681,29 @@ $messages['ru'] = array(
 	'tooltip-drafts-save' => 'Сохранить как черновик',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'drafts' => 'Концепты',
+	'drafts-view' => 'Зобразити концепт',
+	'drafts-view-article' => 'Сторінка',
+	'drafts-view-existing' => 'Єстуючі концепты',
+	'drafts-view-saved' => 'Уложене',
+	'drafts-view-discard' => 'Змазати',
+	'drafts-view-nonesaved' => 'Моментално не маєте уложены жадны концепты',
+	'drafts-view-notice' => 'Маєте $1 той сторінкы.',
+	'drafts-view-notice-link' => '$1 {{plural:$1|концепт|концепты|концептів}}',
+	'drafts-view-warn' => 'Кідь одыйдете з той сторінкы, стратите вшыткы уложены зміны той сторінкы. Хочете продовжыти?',
+	'drafts-save' => 'Уложыти тоту верзію як концепт',
+	'drafts-save-save' => 'Уложыти концепт',
+	'drafts-save-saved' => 'Уложене',
+	'drafts-save-saving' => 'Укладать ся',
+	'drafts-save-error' => 'Хыба почас укладаня концепту',
+	'tooltip-drafts-save' => 'Уложыти як концепт',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -1550,6 +1729,15 @@ $messages['sah'] = array(
 	'tooltip-drafts-save' => 'Харатынан хааллар',
 );
 
+/** Sicilian (Sicilianu)
+ * @author Aushulz
+ */
+$messages['scn'] = array(
+	'drafts-view-article' => 'Pàggina',
+	'drafts-view-saved' => 'Sarvata',
+	'drafts-save-saved' => 'Sarvata',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -1573,6 +1761,69 @@ Nepoužité návrhy sa po {{PLURAL:$1|$1 dni|$1 dňoch}} automaticky zahodia.',
 	'drafts-save-saving' => 'Ukladá sa',
 	'drafts-save-error' => 'Chyba pri ukladaní návrhu',
 	'tooltip-drafts-save' => 'Uložiť ako návrh',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'drafts' => 'Osnutki',
+	'drafts-desc' => 'Doda zmožnost shranjevanja različic [[Special:Drafts|osnutkov]] strani na strežniku',
+	'drafts-view' => 'Ogled osnutka',
+	'drafts-view-summary' => 'Ta posebna stran prikazuje seznam vseh obstoječih osnutkov.
+Neuporabljeni osnutki bodo samodejno zavrženi po $1 {{PLURAL:$1|dnevu|dneh}}.',
+	'drafts-view-article' => 'Stran',
+	'drafts-view-existing' => 'Obstoječi osnutki',
+	'drafts-view-saved' => 'Shranjeno',
+	'drafts-view-discard' => 'Zavrzi',
+	'drafts-view-nonesaved' => 'Trenutno nimate shranjenih nobenih osnutkov.',
+	'drafts-view-notice' => 'Imate $1 za to stran.',
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|osnutek|osnutka|osnutke|osnutkov}}',
+	'drafts-view-warn' => 'Z odhodom iz te strani boste izgubili vse neshranjene spremembe na tej strani.
+Ali želite nadaljevati?',
+	'drafts-save' => 'Shrani kot osnutek',
+	'drafts-save-save' => 'Shrani osnutek',
+	'drafts-save-saved' => 'Shranjeno',
+	'drafts-save-saving' => 'Shranjevanje',
+	'drafts-save-error' => 'Napaka pri shranjevanju osnutka',
+	'tooltip-drafts-save' => 'Shrani kot osnutek',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'drafts' => 'Нацрти',
+	'drafts-view-article' => 'Страница',
+	'drafts-view-existing' => 'Постојећи нацрти',
+	'drafts-view-saved' => 'Сачувано',
+	'drafts-view-discard' => 'Одбаци',
+	'drafts-view-nonesaved' => 'Тренутно немате снимљених нацрта.',
+	'drafts-view-notice' => 'Имате $1 за ову страну.',
+	'drafts-save' => 'Сними ово као нацрт',
+	'drafts-save-save' => 'Сними нацрт',
+	'drafts-save-saved' => 'Сачувано',
+	'drafts-save-saving' => 'Чување',
+	'drafts-save-error' => 'Грешка приликом снимања нацрта',
+	'tooltip-drafts-save' => 'Сними као нацрт',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'drafts' => 'Nacrti',
+	'drafts-view-article' => 'Strana',
+	'drafts-view-existing' => 'Postojeći nacrti',
+	'drafts-view-saved' => 'Snimljeno',
+	'drafts-view-discard' => 'Odbaci',
+	'drafts-view-nonesaved' => 'Trenutno nemate snimljenih nacrta.',
+	'drafts-view-notice' => 'Imate $1 za ovu stranu.',
+	'drafts-save' => 'Snimi ovo kao nacrt',
+	'drafts-save-save' => 'Snimi nacrt',
+	'drafts-save-saved' => 'Snimljeno',
+	'drafts-save-saving' => 'Snimanje u toku',
+	'drafts-save-error' => 'Greška prilikom snimanja nacrta',
+	'tooltip-drafts-save' => 'Snimi kao nacrt',
 );
 
 /** Swedish (Svenska)
@@ -1602,15 +1853,44 @@ Vill du fortsätta?',
 	'tooltip-drafts-save' => 'Spara som ett utkast',
 );
 
+/** Swahili (Kiswahili) */
+$messages['sw'] = array(
+	'drafts-view-article' => 'Ukurasa',
+);
+
+/** Tamil (தமிழ்)
+ * @author TRYPPN
+ */
+$messages['ta'] = array(
+	'drafts-view-article' => 'பக்கம்',
+	'drafts-view-saved' => 'சேமிக்கப்பட்டது',
+	'drafts-save-saved' => 'சேமிக்கப்பட்டது',
+	'drafts-save-saving' => 'சேமிக்கப்படுகிறது',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
 $messages['te'] = array(
+	'drafts' => 'చిత్తుప్రతులు',
 	'drafts-view-article' => 'పేజీ',
+	'drafts-view-existing' => 'ప్రస్తుత చిత్తుప్రతులు',
+	'drafts-view-saved' => 'భద్రపరచినవి',
 	'drafts-view-nonesaved' => 'ప్రస్తుతం మీరు భద్రపరచిన ప్రతులు ఏమీ లేవు.',
+	'drafts-view-notice' => 'ఈ పుటకి మీకు $1.',
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|చిత్తుప్రతి ఉంది|చిత్తుప్రతులు ఉన్నాయి}}',
 	'drafts-view-warn' => 'మీ పేజీని వదిలివెళ్ళడం ద్వారా ఈ పేజీలోని భద్రపరచని అన్ని మార్పులనీ కోల్పోతారు.
 అయినా మీరు కొనసాగాలనుకుంటున్నరా?',
+	'drafts-save' => 'దీన్ని చిత్తుప్రతిగా భద్రపరచు',
+	'drafts-save-save' => 'చిత్తుప్రతిని భద్రపరచు',
 	'drafts-save-saved' => 'భద్రమయ్యింది',
+);
+
+/** Tetum (Tetun)
+ * @author MF-Warburg
+ */
+$messages['tet'] = array(
+	'drafts-view-article' => 'Pájina',
 );
 
 /** Thai (ไทย)
@@ -1679,6 +1959,7 @@ Nais mo bang magpatuloy?',
 
 /** Turkish (Türkçe)
  * @author Joseph
+ * @author Stultiwikia
  */
 $messages['tr'] = array(
 	'drafts' => 'Taslaklar',
@@ -1686,7 +1967,7 @@ $messages['tr'] = array(
 	'drafts-view' => 'TaslağıGör',
 	'drafts-view-summary' => 'Bu özel sayfa tüm mevcut taslakların bir listesini gösterir.
 Kullanılmayan taslaklar $1 {{PLURAL:$1|gün|gün}} sonra otomatik olarak silinir.',
-	'drafts-view-article' => 'Sayfa',
+	'drafts-view-article' => 'Madde',
 	'drafts-view-existing' => 'Mevcut taslaklar',
 	'drafts-view-saved' => 'Kaydedildi',
 	'drafts-view-discard' => 'Sil',
@@ -1703,7 +1984,7 @@ Devam etmek istiyor musunuz?',
 	'tooltip-drafts-save' => 'Taslak olarak kaydet',
 );
 
-/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+/** Uyghur (Latin script) (Uyghurche‎)
  * @author Jose77
  */
 $messages['ug-latn'] = array(
@@ -1796,18 +2077,42 @@ Bạn có muốn tiếp tục?',
 	'tooltip-drafts-save' => 'Lưu làm bản thảo',
 );
 
+/** Volapük (Volapük)
+ * @author Malafaya
+ */
+$messages['vo'] = array(
+	'drafts' => 'Rigets',
+	'drafts-view-article' => 'Pad',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'drafts-view-article' => 'בלאַט',
+);
+
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Chenxiaoqino
  * @author Gzdavidwong
+ * @author Hydra
  * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
 	'drafts' => '草稿',
+	'drafts-desc' => '添加要在服务器上保存页面的 [[Special:Drafts|草案]] 版本的能力',
 	'drafts-view' => '查看草稿',
+	'drafts-view-summary' => '此特殊页显示一个列表中的所有现有的草稿。
+未使用的草稿以后就会在{{PLURAL：$1|$1天|$1天}}自动被删除。',
 	'drafts-view-article' => '页面',
 	'drafts-view-existing' => '现有草稿',
 	'drafts-view-saved' => '已保存',
 	'drafts-view-discard' => '舍弃',
 	'drafts-view-nonesaved' => '您还没有任何已保存的草稿。',
+	'drafts-view-notice' => '您有$1供此页。',
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|草稿|草稿}}',
+	'drafts-view-warn' => '如果你离开这页，你将会失去你的更改。
+你想继续吗？',
 	'drafts-save' => '把此页面以草稿形式保存',
 	'drafts-save-save' => '保存草稿',
 	'drafts-save-saved' => '已保存',
@@ -1818,21 +2123,31 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Gzdavidwong
+ * @author Horacewai2
  * @author Liangent
+ * @author Mark85296341
+ * @author Waihorace
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'drafts' => '草稿',
-	'drafts-view' => '查看草稿',
+	'drafts-desc' => '新增要在伺服器上儲存頁面的 [[Special:Drafts|草案]] 版本的能力',
+	'drafts-view' => '檢視草稿',
+	'drafts-view-summary' => '此特殊頁面顯示一個列表中的所有現有的草稿。
+未使用的草稿以後就會在{{PLURAL:$1|$1天|$1天}}自動被刪除。',
 	'drafts-view-article' => '頁面',
 	'drafts-view-existing' => '現有草稿',
 	'drafts-view-saved' => '已儲存',
 	'drafts-view-discard' => '捨棄',
 	'drafts-view-nonesaved' => '您還沒有任何已保存的草稿。',
+	'drafts-view-notice' => '您有$1供此頁。',
+	'drafts-view-notice-link' => '$1 {{PLURAL:$1|草稿|草稿}}',
+	'drafts-view-warn' => '如果你離開這頁，你將會失去你的更改。
+你想繼續嗎？',
 	'drafts-save' => '把此頁面以草稿形式儲存',
 	'drafts-save-save' => '儲存草稿',
 	'drafts-save-saved' => '已儲存',
-	'drafts-save-saving' => '保存中',
+	'drafts-save-saving' => '儲存中',
 	'drafts-save-error' => '儲存草稿時發生錯誤',
 	'tooltip-drafts-save' => '以草稿形式儲存',
 );

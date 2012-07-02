@@ -23,7 +23,7 @@ public class BlogArticleReskinTest extends EditPageBaseTest {
 	String postPage;
 	String postTitle;
 
-	@Test(groups={"CI", "verified", "envProduction", "reskin"})
+	@Test(groups={"CI", "legacy", "envProduction", "reskin"})
 	public void testEnsureLoggedInUserCanCreateBlogPosts() throws Exception {
 		this.postTitle = "BlogPostPrettyLongTestTitle" + Integer.toString(new Random().nextInt(9999));
 		this.postPage = "User_blog:" + getTestConfig().getString("ci.user.wikiabot.username") + "/" + this.postTitle;
@@ -78,7 +78,7 @@ public class BlogArticleReskinTest extends EditPageBaseTest {
 		assertTrue(session().isTextPresent("test blog post --"));
 	}
 
-	@Test(groups={"CI", "verified", "envProduction", "reskin"},dependsOnMethods={"testEnsureLoggedInUserCanCreateBlogPosts"})
+	@Test(groups={"CI", "legacy", "envProduction", "reskin"},dependsOnMethods={"testEnsureLoggedInUserCanCreateBlogPosts"})
 	public void testEnsureUserCanPostCommentsOnBlogPosts() throws Exception {
 		loginAsBot();
 
@@ -94,7 +94,7 @@ public class BlogArticleReskinTest extends EditPageBaseTest {
 		assertTrue(session().isTextPresent(comment));
 	}
 
-	@Test(groups={"CI", "verified", "envProduction", "reskin"},dependsOnMethods={"testEnsureUserCanPostCommentsOnBlogPosts"})
+	@Test(groups={"CI", "legacy", "envProduction", "reskin"},dependsOnMethods={"testEnsureUserCanPostCommentsOnBlogPosts"})
 	public void testEditExistingBlogPost() throws Exception {
 		// login as staff user so we can remove blog post when the test is done
 		loginAsStaff();
@@ -121,7 +121,7 @@ public class BlogArticleReskinTest extends EditPageBaseTest {
 		doDelete("label=regexp:.*Author request", "Cleanup after BlogArticle test");
 	}
 
-	@Test(groups={"CI", "verified", "envProduction", "reskin"})
+	@Test(groups={"CI", "legacy", "envProduction", "reskin"})
 	public void testEnsureCreateBlogPageIsNotAvailableForAnons() throws Exception {
 		openAndWait("index.php?action=edit&useeditor=wysiwyg&title=Special:CreateBlogPage");
 

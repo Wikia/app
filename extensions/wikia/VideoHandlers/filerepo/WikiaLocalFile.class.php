@@ -73,7 +73,7 @@ class WikiaLocalFile extends LocalFile {
 		if ( method_exists( $this->getLocalFileLogic(), $name ) ){
 			return call_user_func_array( array( $this->getLocalFileLogic(), $name ), $arguments );
 		} else {
-			throw new Exception( 'Method ' .get_class( $this->getLocalFileLogic() ).'::' . $name . ' does not extist' );
+			throw new Exception( 'Method ' .get_class( $this->getLocalFileLogic() ).'::' . $name . ' does not exist' );
 		}
 	}
 
@@ -86,10 +86,12 @@ class WikiaLocalFile extends LocalFile {
 	}
 
 	function __get( $name ){
-		if ( !isset( $this->$name ) ) {
+		if( isset( $this->$name ) ) {
+			return $this->$name;
+		} else if ( isset( $this->getLocalFileLogic()->$name ) ) {
 			return $this->getLocalFileLogic()->$name;
 		} else {
-			return $this->$name;
+			return false;
 		}
 	}
 
@@ -105,8 +107,10 @@ class WikiaLocalFile extends LocalFile {
 
 	function getHandler(){
 		wfProfileIn( __METHOD__ );
-		parent::getHandler();
-		$this->getLocalFileLogic()->afterGetHandler();
+		if ( !isset( $this->handler ) ) {
+			parent::getHandler();
+			$this->getLocalFileLogic()->afterGetHandler($this->handler);
+		}
 		wfProfileOut( __METHOD__ );
 		return $this->handler;
 	}

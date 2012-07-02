@@ -27,14 +27,14 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				}
 				// Start checking the url to see if it is something we care about (BugId:30188)
 				if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'js') {
-					$this->mContent .= $wgUser->getSkin()->generateUserJs();
+					//$this->mContent .= $wgUser->getSkin()->generateUserJs(); // FIXME
 				} else if(strpos($asset, 'Wikia.css') !== false) {
 					$message = wfMsgForContent('Wikia.css');
 					if(!wfEmptyMsg('Wikia.css', $message)) {
 						$this->mContent .= $message;
 					}
 				} else if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'css') {
-					$this->mContent .= $wgUser->getSkin()->generateUserStylesheet();
+					//$this->mContent .= $wgUser->getSkin()->generateUserStylesheet(); // FIXME
 				} else {
 					//Debug added on May 4, 2012 to inquire external requests spikes
 					$start = microtime(true);

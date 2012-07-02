@@ -2,7 +2,7 @@
 
 class NavigationService {
 
-	const version = '0.02';
+	const version = '0.03';
 	const ORIGINAL = 'original';
 	const PARENT_INDEX = 'parentIndex';
 	const CHILDREN = 'children';
@@ -19,7 +19,7 @@ class NavigationService {
 
 	// magic word used to force given menu item to not be turned into a link (BugId:15189)
 	const NOLINK = '__NOLINK__';
-	
+
 	const ALLOWABLE_TAGS = '';
 
 	private $biggestCategories;
@@ -45,18 +45,18 @@ class NavigationService {
 	 * City ID can be specified to return key for different wiki
 	 *
 	 * @param string $name message / variable name
-	 * @param int cityId city ID (false - default to current wiki)
+	 * @param int $cityId city ID (false - default to current wiki)
 	 * @return string memcache key
 	 */
 	public function getMemcKey($messageName, $cityId = false) {
-		global $wgCityId, $wgDBname;
+		$app = F::app();
 
 		// use cityID for production wikis
-		$wikiId = (is_numeric($cityId)) ? $cityId : intval($wgCityId);
+		$wikiId = (is_numeric($cityId)) ? $cityId : intval($app->wg->CityId);
 
 		// fix for internal and staff (BugId:15149)
 		if ($wikiId == 0) {
-			$wikiId = $wgDBname;
+			$wikiId = $app->wg->DBname;
 		}
 
 		$messageName = str_replace(' ', '_', $messageName);
@@ -107,16 +107,15 @@ class NavigationService {
 	 */
 	private function parseHelper($type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
 		wfProfileIn( __METHOD__ );
-		global $wgLang, $wgContLang, $wgMemc;
+		$app = F::app();
 
 		$this->forContent = $forContent;
-		$useCache = ($wgLang->getCode() == $wgContLang->getCode()) || $this->forContent;
-		
+		$useCache = ($app->wg->Lang->getCode() == $app->wg->ContLang->getCode()) || $this->forContent;
+
 		if($useCache) {
 			$cacheKey = $this->getMemcKey($source);
-			$nodes = $wgMemc->get($cacheKey);
-		}
-		else {
+			$nodes = $app->wg->Memc->get($cacheKey);
+		} else {
 			$nodes = null;
 		}
 
@@ -126,12 +125,12 @@ class NavigationService {
 			// get wikitext from given source
 			switch($type) {
 				case self::TYPE_MESSAGE:
-					$text = $this->forContent ? wfMsgForContent($source) : wfMsg($source);
+					$text = $this->forContent ? $app->wf->MsgForContent($source) : $app->wf->Msg($source);
 					break;
 
 				case self::TYPE_VARIABLE:
 					// try to use "local" value
-					$text = F::app()->getGlobal($source);
+					$text = $app->getGlobal($source);
 
 					// fallback to WikiFactory value from community (city id 177)
 					if (!is_string($text)) {
@@ -144,7 +143,7 @@ class NavigationService {
 			$nodes = $this->parseText($text, $maxChildrenAtLevel, $forContent, $filterInactiveSpecialPages);
 
 			if($useCache) {
-				$wgMemc->set($cacheKey, $nodes, $duration);
+				$app->wg->Memc->set($cacheKey, $nodes, $duration);
 			}
 
 			wfProfileOut( __METHOD__  . '::miss');
@@ -169,21 +168,21 @@ class NavigationService {
 		wfProfileOut( __METHOD__ );
 		return $nodes;
 	}
-	
+
 	private function stripTags($nodes) {
 		wfProfileIn( __METHOD__ );
-		
+
 		foreach($nodes as &$node) {
 			$text = !empty($node['text']) ? $node['text'] : null;
 			if( !is_null($text)) {
 				$node['text'] = strip_tags($text, self::ALLOWABLE_TAGS);
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $nodes;
 	}
-	
+
 	private function filterSpecialPages( $nodes, $filterInactiveSpecialPages ){
 		if( !$filterInactiveSpecialPages ) {
 			return $nodes;
@@ -199,7 +198,7 @@ class NavigationService {
 			) {
 
 				list(, $specialPageName) = explode( ':', $node[ self::ORIGINAL ] );
-				if ( !SpecialPage::exists( $specialPageName ) ){
+				if ( !SpecialPageFactory::exists( $specialPageName ) ){
 					$inParentKey = array_search( $key, $nodes[ $node[ self::PARENT_INDEX ] ][ self::CHILDREN ]);
 					// remove from parent's child list
 					unset( $nodes[ $node[ self::PARENT_INDEX ] ][ self::CHILDREN ][$inParentKey] );
@@ -409,7 +408,7 @@ class NavigationService {
 
 			$data = getMenuHelper($name);
 
-			foreach($data as $key => $val) {
+			foreach($data as $val) {
 				$title = Title::newFromId($val);
 				if(is_object($title)) {
 					$this->addChildNode($node, $nodes, $title->getText(), $title->getLocalUrl());
@@ -460,14 +459,15 @@ class NavigationService {
 	 * @author: Inez Korczyński
 	 */
 	private function getBiggestCategory($index) {
-		global $wgMemc, $wgBiggestCategoriesBlacklist;
+		$app = F::app();
+
 		$limit = max($index, 15);
 		if($limit > count($this->biggestCategories)) {
 			$key = wfMemcKey('biggest', $limit);
-			$data = $wgMemc->get($key);
+			$data = $app->wg->Memc->get($key);
 			if(empty($data)) {
 				$filterWordsA = array();
-				foreach($wgBiggestCategoriesBlacklist as $word) {
+				foreach($app->wg->BiggestCategoriesBlacklist as $word) {
 					$filterWordsA[] = '(cl_to not like "%'.$word.'%")';
 				}
 				$dbr =& wfGetDB( DB_SLAVE );
@@ -476,11 +476,10 @@ class NavigationService {
 				$where = count($filterWordsA) > 0 ? array(implode(' AND ', $filterWordsA)) : array();
 				$options = array("ORDER BY" => "cnt DESC", "GROUP BY" => "cl_to", "LIMIT" => $limit);
 				$res = $dbr->select($tables, $fields, $where, __METHOD__, $options);
-				$categories = array();
 				while ($row = $dbr->fetchObject($res)) {
 					$this->biggestCategories[] = array('name' => $row->cl_to, 'count' => $row->cnt);
 				}
-				$wgMemc->set($key, $this->biggestCategories, 60 * 60 * 24 * 7);
+				$app->wg->Memc->set($key, $this->biggestCategories, 60 * 60 * 24 * 7);
 			} else {
 				$this->biggestCategories = $data;
 			}

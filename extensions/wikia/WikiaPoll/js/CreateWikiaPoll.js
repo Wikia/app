@@ -1,6 +1,13 @@
 var CreateWikiaPoll = {
 
 	init: function() {
+		$.when(
+			mw.loader.use('jquery.ui.sortable')
+		).
+		done(CreateWikiaPoll.initBindings);
+	},
+
+	initBindings: function () {
 		$("#CreateWikiaPoll")
 			.find("ul").sortable({
 				axis: "y",

@@ -50,7 +50,7 @@ this ''is'' a '''test'''
 !! result
 <div class="poem">
 <p><br />
-&nbsp;&nbsp;&nbsp;test<br />
+&#160;&#160;&#160;test<br />
 </p>
 </div>
 

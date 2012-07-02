@@ -1,0 +1,1 @@
+ALTER TABLE /*_*/contest_contestants MODIFY contestant_rating SMALLINT unsigned NOT NULL;

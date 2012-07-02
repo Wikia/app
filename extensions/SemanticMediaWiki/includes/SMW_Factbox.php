@@ -16,10 +16,17 @@ class SMWFactbox {
 	 * This function creates wiki text suitable for rendering a Factbox for a given
 	 * SMWSemanticData object that holds all relevant data. It also checks whether the
 	 * given setting of $showfactbox requires displaying the given data at all.
+	 * 
+	 * @param SMWSemanticData $semdata
+	 * @param boolean $showfactbox
+	 * 
+	 * @return string
 	 */
 	static public function getFactboxText( SMWSemanticData $semdata, $showfactbox = SMW_FACTBOX_NONEMPTY ) {
 		global $wgContLang;
+		
 		wfProfileIn( 'SMWFactbox::printFactbox (SMW)' );
+		
 		switch ( $showfactbox ) {
 			case SMW_FACTBOX_HIDDEN: // never show
 				wfProfileOut( 'SMWFactbox::printFactbox (SMW)' );
@@ -36,61 +43,70 @@ class SMWFactbox {
 					return '';
 				}
 			break;
-		// case SMW_FACTBOX_SHOWN: // just show ...
+			// case SMW_FACTBOX_SHOWN: // just show ...
 		}
 
 		// actually build the Factbox text:
 		$text = '';
 		if ( wfRunHooks( 'smwShowFactbox', array( &$text, $semdata ) ) ) {
-			smwfLoadExtensionMessages( 'SemanticMediaWiki' );
-			SMWOutputs::requireHeadItem( SMW_HEADER_STYLE );
+			$subjectDv = SMWDataValueFactory::newDataItemValue( $semdata->getSubject(), null );
+			
+			SMWOutputs::requireResource( 'ext.smw.style' );
+			
 			$rdflink = SMWInfolink::newInternalLink(
 				wfMsgForContent( 'smw_viewasrdf' ),
 				$wgContLang->getNsText( NS_SPECIAL ) . ':ExportRDF/' .
-					$semdata->getSubject()->getWikiValue(),
+					$subjectDv->getWikiValue(),
 				'rdflink'
 			);
 
 			$browselink = SMWInfolink::newBrowsingLink(
-				$semdata->getSubject()->getText(),
-				$semdata->getSubject()->getWikiValue(),
+				$subjectDv->getText(),
+				$subjectDv->getWikiValue(),
 				'swmfactboxheadbrowse'
 			);
+			
 			$text .= '<div class="smwfact">' .
-						'<span class="smwfactboxhead">' . wfMsgForContent( 'smw_factbox_head', $browselink->getWikiText() ) . '</span>' .
-					'<span class="smwrdflink">' . $rdflink->getWikiText() . '</span>' .
-					'<table class="smwfacttable">' . "\n";
-			foreach ( $semdata->getProperties() as $property ) {
-				if ( !$property->isShown() ) { // showing this is not desired, hide
+				'<span class="smwfactboxhead">' .
+				wfMsgForContent( 'smw_factbox_head', $browselink->getWikiText() ) . '</span>' .
+				'<span class="smwrdflink">' . $rdflink->getWikiText() . '</span>' .
+				'<table class="smwfacttable">' . "\n";
+
+			foreach ( $semdata->getProperties() as $propertyDi ) {
+				$propertyDv = SMWDataValueFactory::newDataItemValue( $propertyDi, null );
+				if ( !$propertyDi->isShown() ) { // showing this is not desired, hide
 					continue;
-				} elseif ( $property->isUserDefined() ) { // user defined property
-					$property->setCaption( preg_replace( '/[ ]/u', '&#160;', $property->getWikiValue(), 2 ) );
+				} elseif ( $propertyDi->isUserDefined() ) { // user defined property
+					$propertyDv->setCaption( preg_replace( '/[ ]/u', '&#160;', $propertyDv->getWikiValue(), 2 ) );
 					/// NOTE: the preg_replace is a slight hack to ensure that the left column does not get too narrow
-					$text .= '<tr><td class="smwpropname">' . $property->getLongWikiText( true ) . '</td><td class="smwprops">';
-				} elseif ( $property->isVisible() ) { // predefined property
-					$text .= '<tr><td class="smwspecname">' . $property->getLongWikiText( true ) . '</td><td class="smwspecs">';
+					$text .= '<tr><td class="smwpropname">' . $propertyDv->getShortWikiText( true ) . '</td><td class="smwprops">';
+				} elseif ( $propertyDv->isVisible() ) { // predefined property
+					$text .= '<tr><td class="smwspecname">' . $propertyDv->getShortWikiText( true ) . '</td><td class="smwspecs">';
 				} else { // predefined, internal property
 					continue;
 				}
 
-				$propvalues = $semdata->getPropertyValues( $property );
-				$l = count( $propvalues );
-				$i = 0;
-				foreach ( $propvalues as $propvalue ) {
-					if ( $i != 0 ) {
-						if ( $i > $l - 2 ) {
-							$text .= wfMsgForContent( 'smw_finallistconjunct' ) . ' ';
-						} else {
-							$text .= ', ';
-						}
+				$propvalues = $semdata->getPropertyValues( $propertyDi );
+
+				$valuesHtml = array();
+
+				foreach ( $propvalues as $dataItem ) {
+					$dataValue = SMWDataValueFactory::newDataItemValue( $dataItem, $propertyDi );
+
+					if ( $dataValue->isValid() ) {
+						$valuesHtml[] = $dataValue->getLongWikiText( true ) .
+							$dataValue->getInfolinkText( SMW_OUTPUT_WIKI );
 					}
-					$i += 1;
-					$text .= $propvalue->getLongWikiText( true ) . $propvalue->getInfolinkText( SMW_OUTPUT_WIKI );
 				}
+
+				$text .= $GLOBALS['wgLang']->listToText( $valuesHtml );
+
 				$text .= '</td></tr>';
 			}
+
 			$text .= '</table></div>';
 		}
+
 		wfProfileOut( 'SMWFactbox::printFactbox (SMW)' );
 		return $text;
 	}
@@ -100,10 +116,17 @@ class SMWFactbox {
 	 * information found in a given ParserOutput object. If the required custom data
 	 * is not found in the given ParserOutput, then semantic data for the provided Title
 	 * object is retreived from the store.
+	 * 
+	 * @param ParserOutput $parseroutput
+	 * @param Title $title
+	 * 
+	 * @return string
 	 */
-	static public function getFactboxTextFromOutput( $parseroutput, $title ) {
+	static public function getFactboxTextFromOutput( ParserOutput $parseroutput, Title $title ) {
 		global $wgRequest, $smwgShowFactboxEdit, $smwgShowFactbox;
-		$mws =  ( isset( $parseroutput->mSMWMagicWords ) ) ? $parseroutput->mSMWMagicWords : array();
+		
+		$mws = isset( $parseroutput->mSMWMagicWords ) ? $parseroutput->mSMWMagicWords : array();
+		
 		if ( in_array( 'SMW_SHOWFACTBOX', $mws ) ) {
 			$showfactbox = SMW_FACTBOX_NONEMPTY;
 		} elseif ( in_array( 'SMW_NOFACTBOX', $mws ) ) {
@@ -113,15 +136,18 @@ class SMWFactbox {
 		} else {
 			$showfactbox = $smwgShowFactbox;
 		}
+		
 		if ( $showfactbox == SMW_FACTBOX_HIDDEN ) { // use shortcut
 			return '';
 		}
+		
 		// Deal with complete dataset only if needed:
 		if ( !isset( $parseroutput->mSMWData ) || $parseroutput->mSMWData->stubObject ) {
-			$semdata = smwfGetStore()->getSemanticData( $title );
+			$semdata = smwfGetStore()->getSemanticData( SMWDIWikiPage::newFromTitle( $title ) );
 		} else {
 			$semdata = $parseroutput->mSMWData;
 		}
+		
 		return SMWFactbox::getFactboxText( $semdata, $showfactbox );
 	}
 
@@ -129,11 +155,17 @@ class SMWFactbox {
 	 * This hook copies SMW's custom data from the given ParserOutput object to
 	 * the given OutputPage object, since otherwise it is not possible to access
 	 * it later on to build a Factbox.
+	 * 
+	 * @param OutputPage $outputpage
+	 * @param ParserOutput $parseroutput
+	 * 
+	 * @return true
 	 */
-	static public function onOutputPageParserOutput( $outputpage, $parseroutput ) {
+	static public function onOutputPageParserOutput( OutputPage $outputpage, ParserOutput $parseroutput ) {
 		global $wgTitle, $wgParser;
 		$factbox = SMWFactbox::getFactboxTextFromOutput( $parseroutput, $wgTitle );
-		if ( $factbox != '' ) {
+		
+		if ( $factbox !== '' ) {
 			$popts = new ParserOptions();
 			$po = $wgParser->parse( $factbox, $wgTitle, $popts );
 			$outputpage->mSMWFactboxText = $po->getText();
@@ -141,13 +173,19 @@ class SMWFactbox {
 			SMWOutputs::requireFromParserOutput( $po );
 			SMWOutputs::commitToOutputPage( $outputpage );
 		} // else: nothing shown, don't even set any text
+		
 		return true;
 	}
 
 	/**
 	 * This hook is used for inserting the Factbox text directly after the wiki page.
+	 * 
+	 * @param OutputPage $outputpage
+	 * @param string $text
+	 * 
+	 * @return true
 	 */
-	static public function onOutputPageBeforeHTML( $outputpage, &$text ) {
+	static public function onOutputPageBeforeHTML( OutputPage $outputpage, &$text ) {
 		if ( isset( $outputpage->mSMWFactboxText ) ) {
 			$text .= $outputpage->mSMWFactboxText;
 		}
@@ -157,8 +195,13 @@ class SMWFactbox {
 	/**
 	 * This hook is used for inserting the Factbox text after the article contents (including
 	 * categories).
+	 * 
+	 * @param string $data
+	 * @param Skin|null $skin
+	 * 
+	 * @return true
 	 */
-	static public function onSkinAfterContent( &$data, $skin = null ) {
+	static public function onSkinAfterContent( &$data, Skin $skin = null ) {
 		global $wgOut;
 		if ( isset( $wgOut->mSMWFactboxText ) ) {
 			$data .= $wgOut->mSMWFactboxText;

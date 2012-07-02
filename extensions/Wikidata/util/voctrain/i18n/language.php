@@ -7,7 +7,7 @@ class NoSuchMessageFileException extends LocalisationException { } ;
 * (mediawiki version is overkill for our purposes though)
 * also, unlike mediawiki, we always use ISO 639-3 for language codes.
 */
-class Language {
+class WDLanguage {
 
 	private $code; # language code, mostly for debugging purposes
 	private $messages; # assoc array of translations
@@ -47,7 +47,7 @@ class Language {
 			if ( $fallback[$code] === false ) {
 				$this->fallback = false;
 			} else {
-				$this->fallback = new Language( $fallback[$code] );
+				$this->fallback = new WDLanguage( $fallback[$code] );
 			}
 		}
 
@@ -60,9 +60,9 @@ class Language {
 	}
 
 
-	/** safe takes a string and makes it safe for use as a key on betawiki.
-	 * betawiki (http://translatewiki.net/) will translate my i18n for me
-	 * if I do this. So it's a fair trade.
+	/** safe takes a string and makes it safe for use as a key on
+	 * translatewiki. http://translatewiki.net will translate my i18n for
+	 * me if I do this. So it's a fair trade.
 	 */
 	public static function safe( $string ) {
 		if ( substr_count( $string, "voctrain_" ) == 0 ) {
@@ -83,7 +83,7 @@ class Language {
 	 * @return true if safe($one)==safe($two)
 	*/
 	public static function safeMatch( $one, $two ) {
-		return Language::safe( $one ) == Language::safe( $two );
+		return WDLanguage::safe( $one ) == WDLanguage::safe( $two );
 	}
 
 	

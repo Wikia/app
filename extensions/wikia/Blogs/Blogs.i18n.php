@@ -219,7 +219,7 @@ Kies asseblief 'n ander naam.",
 	'blog-by' => '$1 deur $2',
 );
 
-/** Aragonese (aragonés)
+/** Aragonese (Aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -414,7 +414,7 @@ $messages['be'] = array(
 	'blog-comment-history' => 'гісторыя',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -1273,7 +1273,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-by' => '$1 par $2',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class mcTest extends Maintenance {
 	public function __construct() {
@@ -29,43 +29,44 @@ class mcTest extends Maintenance {
 		$this->mDescription = "Makes several 'set', 'incr' and 'get' requests on every"
 							  . " memcached server and shows a report";
 		$this->addOption( 'i', 'Number of iterations', false, true );
-		$this->addArg( 'server', 'Memcached server to test', false );
+		$this->addArg( 'server[:port]', 'Memcached server to test, with optional port', false );
 	}
 
 	public function execute() {
 		global $wgMemCachedServers;
 
 		$iterations = $this->getOption( 'i', 100 );
-		if( $this->hasArg() )
+		if ( $this->hasArg() ) {
 			$wgMemCachedServers = array( $this->getArg() );
+		}
 
 		foreach ( $wgMemCachedServers as $server ) {
-			$this->output( $server . " " );
-			$mcc = new MemCachedClientforWiki( array('persistant' => true) );
+			$this->output( $server . " ", $server );
+			$mcc = new MemCachedClientforWiki( array( 'persistant' => true ) );
 			$mcc->set_servers( array( $server ) );
 			$set = 0;
 			$incr = 0;
 			$get = 0;
 			$time_start = $this->microtime_float();
-			for ( $i=1; $i<=$iterations; $i++ ) {
+			for ( $i = 1; $i <= $iterations; $i++ ) {
 				if ( !is_null( $mcc->set( "test$i", $i ) ) ) {
 					$set++;
 				}
 			}
-			for ( $i=1; $i<=$iterations; $i++ ) {
+			for ( $i = 1; $i <= $iterations; $i++ ) {
 				if ( !is_null( $mcc->incr( "test$i", $i ) ) ) {
 					$incr++;
 				}
 			}
-			for ( $i=1; $i<=$iterations; $i++ ) {
+			for ( $i = 1; $i <= $iterations; $i++ ) {
 				$value = $mcc->get( "test$i" );
-				if ( $value == $i*2 ) {
+				if ( $value == $i * 2 ) {
 					$get++;
 				}
 			}
 			$exectime = $this->microtime_float() - $time_start;
-	
-			$this->output( "set: $set   incr: $incr   get: $get time: $exectime\n" );
+
+			$this->output( "set: $set   incr: $incr   get: $get time: $exectime", $server );
 		}
 	}
 
@@ -74,10 +75,10 @@ class mcTest extends Maintenance {
 	 * @return float
 	 */
 	private function microtime_float() {
-		list($usec, $sec) = explode(" ", microtime());
-		return ((float)$usec + (float)$sec);
+		list( $usec, $sec ) = explode( " ", microtime() );
+		return ( (float)$usec + (float)$sec );
 	}
 }
 
 $maintClass = "mcTest";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

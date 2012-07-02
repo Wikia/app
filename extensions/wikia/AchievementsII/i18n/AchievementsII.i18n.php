@@ -21,6 +21,7 @@ Please try another one!',
 	//rights
 	'right-platinum' => 'Create and edit Platinum badges',
 	'right-sponsored-achievements' => 'Manage Sponsored achievements',
+	'action-platinum' => 'create and edit Platinum badges',
 
 	/*
 	 * Badges' levels
@@ -794,7 +795,7 @@ $messages['be'] = array(
 	'achievements-viewless' => 'Закрыць',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -3435,7 +3436,7 @@ sur la page de discussion de quelqu’un d'autre !",
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Classé n°$1]]<br />sur ce wiki',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -3899,7 +3900,7 @@ Ellenőrizd, hogy .jpg vagy .png fájl-e. Ha még mindig nem működik, valósz�
 	'achievements-points-with-break' => '$1<br />pont',
 	'achievements-earned' => 'Ezt a jelvényt {{PLURAL:$1|egy|$1}} felhasználó kapta meg.',
 	'achievements-profile-title' => '$1 $2 jelvényt szerzett',
-	'achievements-profile-title-challenges' => 'További megszerezhető jelvények',
+	'achievements-profile-title-challenges' => 'Még több megszerezhető jelvény!',
 	'achievements-profile-customize' => 'Jelvények testreszabása',
 	'achievements-ranked' => '$1. helyezett a wikin',
 	'achievements-viewall' => 'Összes megtekintése',
@@ -5061,7 +5062,6 @@ $messages['ja'] = array(
 	'achievements-badge-name-edit-7' => 'Wiki エキスパート',
 	'achievements-badge-name-picture-0' => 'スナップショット',
 	'achievements-badge-name-picture-1' => 'パパラッチ',
-	'achievements-badge-name-picture-2' => 'イラストレーター',
 	'achievements-badge-name-picture-6' => 'デザイナー',
 	'achievements-badge-name-category-3' => 'ツアー ガイド',
 	'achievements-badge-name-blogpost-2' => 'トーク ショー',
@@ -5271,8 +5271,8 @@ $messages['ko'] = array(
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|얻을 수 있는 더 많은 배지 보기]]</big></strong>',
 	'achievements-points' => '$1 포인트',
 	'achievements-points-with-break' => '$1<br />포인트',
-	'achievements-earned' => '사용자 $1명이 이 배지를 갖고 있습니다.',
-	'achievements-profile-title' => '$1 사용자가 소유하고 있는 배지 목록 $2개',
+	'achievements-earned' => '$1명의 사용자가 이 배지를 갖고 있습니다.',
+	'achievements-profile-title' => '$1 사용자가 소유하고 있는 $2개의 배지 목록',
 	'achievements-profile-title-challenges' => '받을 수 있는 배지 목록',
 	'achievements-profile-customize' => '배지 사용자 정의',
 	'achievements-ranked' => '이 위키의 $1위',
@@ -5337,32 +5337,32 @@ $messages['ko'] = array(
 	'achievements-badge-name-sharing-3' => '아나운서',
 	'achievements-badge-name-welcome' => '위키에 어서 오세요',
 	'achievements-badge-name-creator' => '설립자',
-	'achievements-badge-to-get-edit' => '문서 $1개에 기여를 {{PLURAL:$1|한 번|$1번}} 해 주세요',
-	'achievements-badge-to-get-edit-plus-category' => '문서 $2개에 기여를 {{PLURAL:$1|한 번|$1번}} 해 주세요',
-	'achievements-badge-to-get-picture' => '문서 $1개에 그림 $1개를 추가해주세요',
-	'achievements-badge-to-get-category' => '문서 $1개에 분류 $1개를 추가해주세요',
+	'achievements-badge-to-get-edit' => '$1개의 문서에 기여를 {{PLURAL:$1|한 번|$1번}} 해 주세요',
+	'achievements-badge-to-get-edit-plus-category' => '$2개의 문서에 기여를 {{PLURAL:$1|한 번|$1번}} 해 주세요',
+	'achievements-badge-to-get-picture' => '$1개의 문서에 $1개의 그림을 추가해주세요',
+	'achievements-badge-to-get-category' => '$1개의 문서에 $1개의 분류를 추가해주세요',
 	'achievements-badge-to-get-blogpost' => '블로그 글을 $1개 작성해주세요',
-	'achievements-badge-to-get-blogcomment' => '{{PLURAL:$1||다른}} 블로그 글 {{PLURAL:$1|한 개|$1개}}에 댓글을 작성해주세요',
+	'achievements-badge-to-get-blogcomment' => '{{PLURAL:$1|한 개의|$1개의 다른}} 블로그 글에 댓글을 작성해주세요',
 	'achievements-badge-to-get-love' => '위키에 $1일동안 매일 기여해주세요',
 	'achievements-badge-to-get-welcome' => '위키에 방문해주세요',
 	'achievements-badge-to-get-introduction' => '당신의 사용자 문서를 만드세요',
 	'achievements-badge-to-get-sayhi' => '다른 사용자의 사용자 문서에 메시지를 남겨주세요',
 	'achievements-badge-to-get-creator' => '위키를 개설하세요',
-	'achievements-badge-to-get-caffeinated' => '하루에 문서에 기여를 $1회 해주세요',
+	'achievements-badge-to-get-caffeinated' => '하루에 $1번의 기여를 해주세요',
 	'achievements-badge-to-get-luckyedit' => '행운을 빌어요',
 	'achievements-badge-your-desc-edit' => '{{PLURAL:$1|문서|문서들}}에 {{PLURAL:$1|첫 기여|$1회의 기여}}을 해주셨으므로',
 	'achievements-badge-your-desc-edit-plus-category' => '{{PLURAL:$1|문서|문서들}}에 {{PLURAL:$1|첫 기여|$1회의 기여}}을 해주셨으므로',
 	'achievements-badge-your-desc-picture' => '{{PLURAL:$1|문서|문서들}}에 {{PLURAL:$1|그림|$1장의 그림}}을 추가하셨으므로',
-	'achievements-badge-your-desc-category' => '{{PLURAL:$1|문서 하나|문서 $1개}}에 분류를 추가하였으므로 수여합니다!',
-	'achievements-badge-your-desc-blogpost' => '{{PLURAL:$1|블로그 글 하나|블로그 글 $1개}}를 작성하였으므로 수여합니다!',
-	'achievements-badge-your-desc-blogcomment' => '{{PLURAL:$1|블로그 글|다른 블로그 글 $1개}}에 덧글을 달았으므로 수여합니다!',
+	'achievements-badge-your-desc-category' => '{{PLURAL:$1|한 문서|$1개의 문서}}에 {{PLURAL:$1|하나의 분류를|분류들을}} 추가하셨으므로',
+	'achievements-badge-your-desc-blogpost' => '{{PLURAL:$1|첫 블로그 글|$1개의 블로그 글들}}을 작성하셨으므로',
+	'achievements-badge-your-desc-blogcomment' => '{{PLURAL:$1|블로그 글|$1개의 다른 블로그 글들}}에 댓글을 달아주셨으므로',
 	'achievements-badge-your-desc-love' => '{{PLURAL:$1|하루|$1일}}동안 꾸준히 기여를 해주셨으므로',
 	'achievements-badge-your-desc-welcome' => '위키에 처음 방문하셨으므로',
 	'achievements-badge-your-desc-introduction' => '자신의 사용자 문서를 만드셨으므로',
 	'achievements-badge-your-desc-sayhi' => '다른 사용자의 토론 문서에 메시지를 남기셨으므로',
 	'achievements-badge-your-desc-creator' => '위키를 생성하셨으므로',
-	'achievements-badge-your-desc-pounce' => '한 시간 안에 문서 100개에 기여를 해주었으므로 수여합니다!',
-	'achievements-badge-your-desc-caffeinated' => '하루에 기여 100회를 해주었으므로 수여합니다!',
+	'achievements-badge-your-desc-pounce' => '한 시간 내에 100개의 문서에 기여를 해주셨으므로',
+	'achievements-badge-your-desc-caffeinated' => '하루에 100회의 기여를 해주셨으므로',
 	'achievements-badge-your-desc-luckyedit' => '위키에 $1번째 편집을 해주셨으므로',
 	'achievements-userprofile-title-no' => '$1 사용자가 획득한 배지',
 	'achievements-userprofile-title' => '$1 사용자가 획득한 배지 ($2)',
@@ -8485,10 +8485,10 @@ Continue a editar!',
 {{PLURAL:$1|a uma página|de páginas}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'por fazer $1 {{PLURAL:$1|edição|edições}}<br />
 a {{PLURAL:$1|uma página $2|páginas $2}}!',
-	'achievements-badge-hover-desc-picture' => 'Concedido para a adição de  $1  {{PLURAL:$1| picture|pictures}} <br>
- a  {{PLURAL:$1| um article|articles}}!',
-	'achievements-badge-hover-desc-category' => 'Concedido para a adição de  $1  {{PLURAL:$1| article|articles}} <br>
- a  {{PLURAL:$1| um category|categories}}!',
+	'achievements-badge-hover-desc-picture' => 'por acrescentar $1 {{PLURAL:$1|imagem|imagens}}<br />
+a {{PLURAL:$1|uma página|páginas}}!',
+	'achievements-badge-hover-desc-category' => 'por colocar $1 {{PLURAL:$1|página|páginas}}<br />
+{{PLURAL:$1|numa categoria|em categorias}}!',
 	'achievements-badge-hover-desc-blogpost' => 'Concedido por escrever $1 {{PLURAL:$1|entrada|entradas}} de blogue!',
 	'achievements-badge-hover-desc-blogcomment' => 'por escrever um comentário<br />
 {{PLURAL:$1|numa publicação num blogue|em $1 publicações diferentes em blogues}}!',
@@ -9956,41 +9956,9 @@ Kapag nabago mo na ang mga pangalan ng tsapa, pindutin ang "{{int:achievements-s
 Masiyahan ka sana!',
 	'achievements-edit-plus-category-track-name' => '$1 pagpatnugot ng bakas',
 	'achievements-create-edit-plus-category-title' => 'Lumikha ng isang bagong bakas ng Pamamatnugot',
-	'achievements-create-edit-plus-category-content' => 'Makakalikha ka ng isang bagong pangkat ng mga tsapa na naggagantimpala sa mga tagagamit dahil sa pamamatnugot ng mga pahina na nasa loob ng isang partikular na  kategorya, upang mapagliwanag ang isang partikular na lugar ng pook na makasisiyahang gawin ng mga tagagamit.
-Maaari kang maghanda ng mahigit sa isang bakas ng kategorya, kaya\'t subukang pumili ng dalawang mga kategorya na makakatulong sa mga tagagamit na maipamalas ang kanilang pinagdalubhasaan!
-Pasiklabin ang isang tunggalian sa pagitan ng mga tagagamit na namamatnugot ng mga pahina ng mga Bampira at ng mga tagagamit na namamatnugot ng mga pahina ng mga Taong-Lobo, o mga Bruho at mga Muggle, o mga Autobot at mga Decepticon.
-
-Upang makalikha ng isang bagong bakas ng "Baguhin sa kategorya", makinilyahin ang pangalan ng kategorya sa loob ng hanay na nasa ibaba.
-Ang karaniwang bakas ng Baguhin ay iiral pa rin;
-lilikha ito ng isang nakahiwalay na bakas na maipasasadya mo na nakahiwalay.
-
-Kapag nalikha na ang bakas, ang bagong mga tsapa ay lilitaw sa listahang nasa kaliwa, na nasa ilalim ng bakas na Baguhin.
-Gawing pasadya ang mga pangalan at mga larawan para sa bagong bakas, upang makita ng mga tagagamit ang pagkakaiba!
-
-Kapag nagawa mo na ang pagpapasadya, pindutin ang kahong pangtsek na "{{int:achievements-enable-track}}" upang buhayin ang bagong bakas, at pagkaraan ay pindutin ang "{{int:achievements-save}}".
-Makikita ng mga tagagamit ang paglitaw ng bagong bakas sa ibabaw ng kanilang mga balangkas-katangian na pangtagagamit, at magsisimula na silang magkamit ng mga tsapa kapag namatnugot sila ng mga pahinang nasa loob ng ganoong kategorya.
-Maaari mo ring huwag paganahin ang bakas mamaya, kapag pinagpasyahan mo na ayaw mo nang pagliwanagin ang kategoryang iyan.
-Ang mga tsapang nagkamit ng mga tsapa sa loob ng bakas na iyan ay palagiang mapapanatili ang kanilang mga tsapa, kahit na ang bakas ay hindi na pinagagana.
-
-Makakatulong ito sa pagdadala ng ibang antas ng kasiyahan sa mga nagagawa.
-Subukan ito!',
 	'achievements-create-edit-plus-category' => 'Likhain ang bakas na ito',
 	'platinum' => 'Platinum',
 	'achievements-community-platinum-awarded-email-subject' => 'Ginawaran ka ng isang bagong tsapang Platinum!',
-	'achievements-community-platinum-awarded-email-body-text' => "Maligayang bati $1!
-
-Nagantimpalaan ka na ng '$2' na tsapang Platinum doon sa $4 ($3).
-Nagdaragdag ito ng 250 mga puntos sa puntusan mo!
-
-Tanawin ang kaakit-akit na bagong tsapa mo doon sa iyong pahina ng balangkas-katangian ng tagagamit:
-
-$5",
-	'achievements-community-platinum-awarded-email-body-html' => '<strong>Maligayang bati $1!</strong><br /><br />
-
-Nagantimpalaan ka na ng \'<strong>$2</strong>\' na tsapang Platinum doon sa <a href="$3">$4</a>.
-Nagdaragdag ito ng 250 mga puntos sa puntusan mo!<br /><br />
-
-Tanawin ang kaakit-akit na bagong tsapa mo doon sa iyong <a href="$5">pahina ng balangkas-katangian ng tagagamit</a>.',
 	'achievements-community-platinum-awarded-for' => 'Iginawad para sa:',
 	'achievements-community-platinum-how-to-earn' => 'Paano magkamit:',
 	'achievements-community-platinum-awarded-for-example' => 'iyon ay "para sa paggawa ng..."',
@@ -10008,7 +9976,6 @@ Tanawin ang kaakit-akit na bagong tsapa mo doon sa iyong <a href="$5">pahina ng 
 	'achievements-community-platinum-sponsored-hover-content-label' => 'Palutangin ang larawan <small>(pinakamaliit na sukat ng paglutang: 270px x 100px)</small>:',
 	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'Sinusubaybayan ang URL para sa mga kintal ng tsapa:',
 	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'Sinusubaybayan ang URL para kintal ng Paglutang:',
-	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Kawing sa tsapa <small>(URL ng atas na lumagitik ng DART)</small>:',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Pindutin para sa mas maraming kabatiran',
 	'achievements-badge-name-edit-0' => 'Paggawa ng isang Kaibahan',
 	'achievements-badge-name-edit-1' => 'Ang Simula Lamang',

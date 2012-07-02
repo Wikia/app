@@ -126,7 +126,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 		}
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array_merge(
 			parent::getExamples(), 		
 			array (

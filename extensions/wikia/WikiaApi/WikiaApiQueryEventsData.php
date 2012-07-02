@@ -12,31 +12,31 @@ require_once( dirname(__FILE__). '/../../../lib/simplehtmldom/simple_html_dom.ph
 
 class WikiaApiQueryEventsData extends ApiQueryBase {
 
-	const 
+	const
 		REGEX = '@<(?P<tag>%s)(?P<parameters>\s[^>]+)?(\s*/?>)|((.*)</(?P=tag)>)@xsi',
 		REGEX_PARAMS = '@(?P<name>\w+)\s*=\s*((?P<quote>[\"\'])(?P<value_quoted>.*?)(?P=quote)|(?P<value_unquoted>[^\s"\']+?)(?:\s+|$))@xsi';
 
-	private 
+	private
 		$mPageId		= false,
 		$mLogid			= false,
 		$mRevId 		= false,
 		$mDetails		= false,
-		$mTimestamp		= false, 
+		$mTimestamp		= false,
 		$mSize 			= false,
 		$mIsNew			= false,
 		$mCityId		= 0,
 		$mTitle			= null,
 		$mContent		= '';
-	private 
-		$mediaNS = array(NS_LEGACY_VIDEO, NS_IMAGE, NS_FILE);
-	
+	private
+		$mediaNS = array(NS_IMAGE, NS_FILE);
+
 	private $stripTags = array(
 		"/\{\{#dpl(.*)\}\}/siU",
 		"/\{\{#dplchapter(.*)\}\}/siU",
 		"/<(dpl|dynamicpagelist)(.*)>(.*)<\/(dpl|dynamicpagelist)>/siU",
 		"/<(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)(.*)>(.*)<\/(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)>/siU",
 		"/<(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)(.*)>(.*)<\/(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)>/siU",
-	);		
+	);
 
 	/**
 	 * constructor
@@ -77,7 +77,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		wfProfileOut( __METHOD__ );
 		return $count;
 	}
-	
+
 	private function getDetailsCount() {
 		wfProfileIn( __METHOD__ );
 		$this->mDetails = false;
@@ -87,15 +87,15 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		wfProfileOut( __METHOD__ );
 		return $this->mDetails === true;
 	}
-	
+
 	private function getArchivePage($oRC) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( empty($this->mPageId) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		if ( !is_object($oRC) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -118,17 +118,17 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		);
 
 		$this->profileDBIn();
-		$oRow = $db->selectRow( 
-			'archive', 
-			$fields, 
-			array( 
+		$oRow = $db->selectRow(
+			'archive',
+			$fields,
+			array(
 				'ar_title'		=> $oRC->getAttribute('rc_title'),
 				'ar_namespace'	=> $oRC->getAttribute('rc_namespace'),
-				'ar_page_id'	=> $this->mPageId 
+				'ar_page_id'	=> $this->mPageId
 			),
-			__METHOD__, 
-			array( 
-				'ORDER BY' => 'ar_timestamp desc' 
+			__METHOD__,
+			array(
+				'ORDER BY' => 'ar_timestamp desc'
 			)
 		);
 		$this->profileDBOut();
@@ -144,20 +144,20 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 				$oRow->rev_user_text = $rc_user_text;
 			}
 			$result = $oRow;
-		} 
-		
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
-	
+
 	private function getRecentchangePage($oRC) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( empty($this->mPageId) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
-		
+
 		if ( !is_object($oRC) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -180,17 +180,17 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		);
 
 		$this->profileDBIn();
-		$oRow = $db->selectRow( 
-			'recentchanges', 
-			$fields, 
-			array( 
+		$oRow = $db->selectRow(
+			'recentchanges',
+			$fields,
+			array(
 				'rc_title'		=> $oRC->getAttribute('rc_title'),
 				'rc_namespace'	=> $oRC->getAttribute('rc_namespace'),
 				'rc_logid'		=> $oRC->getAttribute('rc_logid'),
 			),
-			__METHOD__, 
-			array( 
-				'ORDER BY' => 'rc_timestamp desc' 
+			__METHOD__,
+			array(
+				'ORDER BY' => 'rc_timestamp desc'
 			)
 		);
 		$this->profileDBOut();
@@ -206,15 +206,15 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 				$oRow->rev_user_text = $rc_user_text;
 			}
 			$result = $oRow;
-		} 
-		
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $result;
-	}	
+	}
 
 	private function getLoggingArchivePage() {
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( empty($this->mPageId) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -242,18 +242,18 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		);
 
 		$this->profileDBIn();
-		$oRow = $db->selectRow( 
-			array('archive', 'logging'), 
-			$fields, 
-			array( 
+		$oRow = $db->selectRow(
+			array('archive', 'logging'),
+			$fields,
+			array(
 				'log_title = ar_title',
 				'log_namespace = ar_namespace',
 				'ar_page_id' => $this->mPageId,
 				'log_id' => $this->mLogid
 			),
-			__METHOD__, 
-			array( 
-				'ORDER BY' => 'log_timestamp DESC, ar_timestamp DESC' 
+			__METHOD__,
+			array(
+				'ORDER BY' => 'log_timestamp DESC, ar_timestamp DESC'
 			)
 		);
 		$this->profileDBOut();
@@ -265,8 +265,8 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 				$oRow->rev_user_text = $oUser->getName();
 			}
 			$result = $oRow;
-		} 
-		
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
@@ -294,15 +294,15 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			'0 as rev_parent_id'
 		);
 
-		$conditions = array( 
-			'ar_page_id'	=> $this->mPageId , 
+		$conditions = array(
+			'ar_page_id'	=> $this->mPageId ,
 			'ar_rev_id'		=> $this->mRevId
 		);
 
 		$this->profileDBIn();
-		$oRow = $db->selectRow( 
-			'archive', 
-			$fields, 
+		$oRow = $db->selectRow(
+			'archive',
+			$fields,
 			$conditions,
 			__METHOD__
 		);
@@ -310,7 +310,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		if ( is_object($oRow) ) {
 			$result = $oRow;
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
@@ -335,17 +335,17 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			$oRC = RecentChange::newFromRow( $row );
 		}
 		$db->freeResult($res);
-		
+
 		$res = ( is_object($oRC) ) ? $this->getArchivePage($oRC) : false;
-		
+
 		if ( empty($res) && is_object($oRC) ) {
 			$res = $this->getRecentchangePage($oRC);
 		}
-		
+
 		if ( empty($res) && !is_object($oRC) ) {
 			$res = $this->getLoggingArchivePage();
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
@@ -370,7 +370,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			}
 		}
 		$db->freeResult($res);
-		
+
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
@@ -381,20 +381,20 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$db = $this->getDB();
 		$this->profileDBIn();
 		if ( empty($archive) ) {
-			$oRow = $db->selectRow( 
-				'revision', 
-				'rev_id', 
-				array( 
+			$oRow = $db->selectRow(
+				'revision',
+				'rev_id',
+				array(
 					"rev_id < '{$this->mRevId}'",
 					'rev_page' => $this->mPageId,
 				),
 				__METHOD__
 			);
 		} else {
-			$oRow = $db->selectRow( 
-				'archive', 
-				'ar_rev_id as rev_id', 
-				array( 
+			$oRow = $db->selectRow(
+				'archive',
+				'ar_rev_id as rev_id',
+				array(
 					"ar_rev_id < '{$this->mRevId}'",
 					'ar_page_id' => $this->mPageId,
 				),
@@ -402,8 +402,8 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			);
 		}
 		$this->profileDBOut();
-		$this->mIsNew = ( isset( $oRow->rev_id ) ) ? false : true; 
-		
+		$this->mIsNew = ( isset( $oRow->rev_id ) ) ? false : true;
+
 		wfProfileOut( __METHOD__ );
 		return intval($this->mIsNew);
 	}
@@ -416,13 +416,13 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		# extract request params
 		$this->mCityId = $wgCityId;
 		$this->params = $this->extractRequestParams(false);
-		
+
 		if( ! ( isset($this->params[ "token" ] ) && $this->params[ "token" ] === $wgTheSchwartzSecretToken ) ) {
 			if (!$wgUser->isAllowed('scribeevents')) {
 				$this->dieUsageMsg(array('readrequired'));
 			}
 		}
-		
+
 		// Error results should not be cached
 		$this->getMain()->setCacheMaxAge(0);
 
@@ -434,7 +434,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 
 		# check "logid" param
 		$logCount = $this->getLoggingCount();
-		
+
 		# check "details" param
 		$showDetails = $this->getDetailsCount();
 
@@ -478,14 +478,14 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 				$oRow->is_archive = 1;
 			}
 		}
-		
+
 		$vals = $this->extractRowInfo($oRow, $deleted);
-		
+
 		$details = array();
 		if ( $showDetails ) {
 			$details = $this->getDetailsInfo( $oRow );
 		}
-		
+
 		$mEndTime = $this->_get_microtime();
 		$pageInfo = array(
 			'id' => $oRow->page_id,
@@ -495,11 +495,11 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			'latest' => intval($vals['page_latest']),
 			'parsed' => bcsub($mEndTime, $mStartTime, 4)
 		);
-			
+
 		$this->getResult()->setIndexedTagName($vals, 'events');
 		$this->getResult()->addValue('query', 'page', $pageInfo);
 		$this->getResult()->addValue('query', 'revision', $vals);
-		
+
 		if ( $showDetails ) {
 			$this->getResult()->setIndexedTagName($details, 'details');
 			$this->getResult()->addValue('query', 'details', $details);
@@ -507,7 +507,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	private function _get_user_ip($user_id, $page_title, $page_namespace) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
@@ -518,17 +518,17 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 
 		if ( empty($oRow) ) {
 			$this->profileDBIn();
-			$oRow = $db->selectRow( 
-				'recentchanges', 
-				'rc_ip', 
-				array( 
+			$oRow = $db->selectRow(
+				'recentchanges',
+				'rc_ip',
+				array(
 					'rc_user'	   => $user_id,
 					'rc_title'     => $page_title,
 					'rc_namespace' => $page_namespace
 				),
-				__METHOD__, 
-				array( 
-					'ORDER BY' => 'rc_id DESC' 
+				__METHOD__,
+				array(
+					'ORDER BY' => 'rc_id DESC'
 				)
 			);
 			$this->profileDBOut();
@@ -539,22 +539,22 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		if ( is_object($oRow) && isset($oRow->rc_ip) ) {
 			$ip = $oRow->rc_ip;
 		}
-		
+
 		if ( empty($ip) ) {
 			$key = __METHOD__ . ":cu:" . intval($user_id);
 			$oRow = $wgMemc->get(md5($key));
 
 			if ( empty($oRow) ) {
 				$this->profileDBIn();
-				$oRow = $db->selectRow( 
-					'cu_changes', 
-					'cuc_user, cuc_ip, cuc_timestamp', 
-					array( 
-						'cuc_user'	=> $user_id 
+				$oRow = $db->selectRow(
+					'cu_changes',
+					'cuc_user, cuc_ip, cuc_timestamp',
+					array(
+						'cuc_user'	=> $user_id
 					),
-					__METHOD__, 
-					array( 
-						'ORDER BY' => 'cuc_user desc, cuc_ip desc, cuc_timestamp desc' 
+					__METHOD__,
+					array(
+						'ORDER BY' => 'cuc_user desc, cuc_ip desc, cuc_timestamp desc'
 					)
 				);
 				$this->profileDBOut();
@@ -566,7 +566,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 				$ip = $oRow->cuc_ip;
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $ip;
 	}
@@ -575,11 +575,11 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$user_is_bot = false;
 		$oUser = User::newFromName($user_text);
 		if ( $oUser instanceof User ) {
-			$user_is_bot = $oUser->isBot();
+			$user_is_bot = $oUser->isAllowed( 'bot' );
 		}
 		return $user_is_bot;
 	}
-	
+
 	private function _revision_is_redirect() {
 		$titleObj = Title::newFromRedirect( $this->mContent );
 		$rev_is_redirect = is_object($titleObj) ;
@@ -591,40 +591,40 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		$is_content_ns = 0;
 		if ( $this->mTitle instanceof Title ) {
 			$is_content_ns = $this->mTitle->isContentPage();
-			/*if ( empty($is_content_ns) && $wgEnableBlogArticles ) { 
+			/*if ( empty($is_content_ns) && $wgEnableBlogArticles ) {
 				$is_content_ns = (in_array($this->mTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK)));
 			}*/
 		}
 		return (int) $is_content_ns;
 	}
-	
+
 	private function _make_links() {
 		$links = array(
 			'image' => 0,
-			'video' => 0			
+			'video' => 0
 		);
-			
+
 		$content = $this->mContent;
 		$oArticle = Article::newFromId($this->mPageId);
 
 		if ( $oArticle instanceof Article ) {
-			
+
 			if (!empty($this->stripTags)) {
 				/* skip some special tags  */
 				foreach ($this->stripTags as $id => $tag) {
 					$content = preg_replace($tag, '', $content);
 				}
 			}
-			
-			$content = str_replace("{{", "", $content);	
-			global $wgParser;		
-			$wgParser->clearTagHooks();	
+
+			$content = str_replace("{{", "", $content);
+			global $wgParser;
+			$wgParser->clearTagHooks();
 			$editInfo = $oArticle->prepareTextForEdit( $content, $this->mRevId );
 			$images = $editInfo->output->getImages();
 			if ( !empty($images) ) {
 				foreach ($images as $iname => $dummy) {
 					if ( substr($iname, 0, 1) == ':' ) {
-						$links['video']++;							
+						$links['video']++;
 					} else {
 						$links['image']++;
 					}
@@ -645,7 +645,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			} else {
 				$this->mTitle = $oRevision->getTitle();
 			}
-			$this->mContent = $oRevision->revText();
+			$this->mContent = $oRevision->getText( Revision::FOR_THIS_USER );
 
 			# revision id
 			$vals['revid'] = intval($oRevision->getId());
@@ -718,60 +718,48 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		global $wgEnableVideoToolExt;
 		wfProfileIn( __METHOD__ );
 		$result = 0;
-		
+
 		$oTitle = $this->mTitle;
 		if ( in_array($ns, $this->mediaNS) ) {
-			# NS_LEGACY_VIDEO 
-			if ( $ns == NS_LEGACY_VIDEO ) {
-				if ( !empty($wgEnableVideoToolExt) && class_exists('VideoPage') ) {
-					$videoName = VideoPage::getNameFromTitle( $oTitle );
-					if ( $videoName ) {
-						$oTitle = Title::makeTitle($ns, $videoName);
-					}
-				}
-			}
-			
-			if ( empty($result) ) { 
-				$mediaType = MEDIATYPE_UNKNOWN;
-				$oLocalFile = LocalFile::newFromTitle( $oTitle, RepoGroup::singleton()->getLocalRepo() );
-				if ( $oLocalFile instanceof LocalFile ) {
-					$mediaType = $oLocalFile->getMediaType();
-				}
+			$mediaType = MEDIATYPE_UNKNOWN;
+			$oLocalFile = LocalFile::newFromTitle( $oTitle, RepoGroup::singleton()->getLocalRepo() );
+			if ( $oLocalFile instanceof LocalFile ) {
+				$mediaType = $oLocalFile->getMediaType();
 				if ( empty($mediaType) ) {
 					$mediaType = MEDIATYPE_UNKNOWN;
 				}
-				switch ( $mediaType ) {
-					case MEDIATYPE_BITMAP		: $result = 1; break;
-					case MEDIATYPE_DRAWING		: $result = 2; break;
-					case MEDIATYPE_AUDIO		: $result = 3; break;
-					case MEDIATYPE_VIDEO		: $result = 4; break;
-					case MEDIATYPE_MULTIMEDIA	: $result = 5; break;
-					case MEDIATYPE_OFFICE		: $result = 6; break;
-					case MEDIATYPE_TEXT			: $result = 7; break;
-					case MEDIATYPE_EXECUTABLE	: $result = 8; break;
-					case MEDIATYPE_ARCHIVE		: $result = 9; break;
-					default 					: $result = 1; break;
-				}
+			}
+			switch ( $mediaType ) {
+				case MEDIATYPE_BITMAP		: $result = 1; break;
+				case MEDIATYPE_DRAWING		: $result = 2; break;
+				case MEDIATYPE_AUDIO		: $result = 3; break;
+				case MEDIATYPE_VIDEO		: $result = 4; break;
+				case MEDIATYPE_MULTIMEDIA	: $result = 5; break;
+				case MEDIATYPE_OFFICE		: $result = 6; break;
+				case MEDIATYPE_TEXT			: $result = 7; break;
+				case MEDIATYPE_EXECUTABLE	: $result = 8; break;
+				case MEDIATYPE_ARCHIVE		: $result = 9; break;
+				default 					: $result = 1; break;
 			}
 		}
 		wfProfileOut( __METHOD__ );
-		
+
 		return $result;
 	}
-	
+
 	private function _get_metrics_types() {
 		global $wgMemc;
 
 		$key = "metrics:types:v1";
-		$metricsTypes = $wgMemc->get( $key );	
+		$metricsTypes = $wgMemc->get( $key );
 		if ( empty( $metricsTypes ) ) {
 			$dbr = 	wfGetDB( DB_SLAVE, array(), 'metrics' );
 			$oRes = $dbr->select(
-				array( 'event_type' ), 
-				array( 'type_id, type_name' ), 
-				array(), 
+				array( 'event_type' ),
+				array( 'type_id, type_name' ),
+				array(),
 				__METHOD__,
-				array( 'ORDER BY' => 'type_id') 
+				array( 'ORDER BY' => 'type_id')
 			);
 			$metricsTypes = array();
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
@@ -780,22 +768,22 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 			$dbr->freeResult( $oRes );
 			$wgMemc->set( $key, $metricsTypes, 60*60 );
 		}
-		
-		return $metricsTypes;	
+
+		return $metricsTypes;
 	}
-	
+
 	private function getDetailsInfo( $oRow ) {
 		$details = array();
-		
+
 		if ( empty($this->mContent) ) {
 			return $details;
 		}
-		
+
 		/* use SimpleHTMLDom extensions here ( include in lib/simplehtmldom ) */
 		$oHtmlDom = str_get_html( $this->mContent );
 
 		$metricsTypes = $this->_get_metrics_types();
-			
+
 		foreach ( $metricsTypes as $id => $name ) {
 			$res = 0;
 			switch ( $id ) {
@@ -821,7 +809,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 						$res = count( $oHtmlDom->find("gallery[type=slideshow]") );
 					}
 					break;
-				case 5: /* mainpage tag */	
+				case 5: /* mainpage tag */
 					if ( !empty( $oHtmlDom ) ) {
 						$left_column = count( $oHtmlDom->find("mainpage-leftcolumn-start") );
 						$end_column = count( $oHtmlDom->find("mainpage-endcolumn") );
@@ -832,7 +820,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 				default:
 					break;
 			}
-			
+
 			if ( $res > 0 ) {
 				$details[] = array( 'id' => $id, 'name' => $name, 'count' => $res );
 			}
@@ -845,12 +833,12 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		list($utime, $time) = explode(" ", microtime());
 		return ((float)$utime + (float)$time);
 	}
-    
+
 	private function _is_main_page() {
 		$is_main_page = $this->mTitle->getArticleId() == Title::newMainPage()->getArticleId() && $this->mTitle->getArticleId() != 0;
 		return intval($is_main_page);
 	}
-	
+
 	public function getAllowedParams() {
 		return array (
 			'pageid' => array (
@@ -892,7 +880,7 @@ class WikiaApiQueryEventsData extends ApiQueryBase {
 		);
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array (
 			'Get information about page and revision for page_id and rev_id',
 			'  api.php?action=query&prop=wkevinfo&pageid=28734&revid=120844&meta=siteinfo&siprop=wikidesc',

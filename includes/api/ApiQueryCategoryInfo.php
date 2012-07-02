@@ -1,11 +1,10 @@
 <?php
-
-/*
+/**
+ *
+ *
  * Created on May 13, 2007
  *
- * API for MediaWiki 1.8+
- *
- * Copyright (C) 2006 Yuri Astrakhan <Firstname><Lastname>@gmail.com
+ * Copyright © 2006 Yuri Astrakhan <Firstname><Lastname>@gmail.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,14 +18,11 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	// Eclipse helper - will be ignored in production
-	require_once ( "ApiQueryBase.php" );
-}
 
 /**
  * This query adds the <categories> subelement to all pages with the list of categories the page is in
@@ -36,7 +32,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class ApiQueryCategoryInfo extends ApiQueryBase {
 
 	public function __construct( $query, $moduleName ) {
-		parent :: __construct( $query, $moduleName, 'ci' );
+		parent::__construct( $query, $moduleName, 'ci' );
 	}
 
 	public function execute() {
@@ -50,8 +46,7 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 		$titles = $this->getPageSet()->getGoodTitles() +
 					$this->getPageSet()->getMissingTitles();
 		$cattitles = array();
-		foreach ( $categories as $c )
-		{
+		foreach ( $categories as $c ) {
 			$t = $titles[$c];
 			$cattitles[$c] = $t->getDBkey();
 		}
@@ -69,34 +64,30 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 		$this->addFields( array( 'cat_title', 'cat_pages', 'cat_subcats', 'cat_files', 'pp_propname AS cat_hidden' ) );
 		$this->addWhere( array( 'cat_title' => $cattitles ) );
 
-		if ( !is_null( $params['continue'] ) )
-		{
+		if ( !is_null( $params['continue'] ) ) {
 			$title = $this->getDB()->addQuotes( $params['continue'] );
 			$this->addWhere( "cat_title >= $title" );
 		}
 		$this->addOption( 'ORDER BY', 'cat_title' );
 
-		$db = $this->getDB();
 		$res = $this->select( __METHOD__ );
 
 		$catids = array_flip( $cattitles );
-		while ( $row = $db->fetchObject( $res ) )
-		{
+		foreach ( $res as $row ) {
 			$vals = array();
 			$vals['size'] = intval( $row->cat_pages );
 			$vals['pages'] = $row->cat_pages - $row->cat_subcats - $row->cat_files;
 			$vals['files'] = intval( $row->cat_files );
 			$vals['subcats'] = intval( $row->cat_subcats );
-			if ( $row->cat_hidden )
+			if ( $row->cat_hidden ) {
 				$vals['hidden'] = '';
+			}
 			$fit = $this->addPageSubItems( $catids[$row->cat_title], $vals );
-			if ( !$fit )
-			{
+			if ( !$fit ) {
 				$this->setContinueEnumParameter( 'continue', $row->cat_title );
 				break;
 			}
 		}
-		$db->freeResult( $res );
 	}
 
 	public function getCacheMode( $params ) {
@@ -104,13 +95,13 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 	}
 
 	public function getAllowedParams() {
-		return array (
+		return array(
 			'continue' => null,
 		);
 	}
 
 	public function getParamDescription() {
-		return array (
+		return array(
 			'continue' => 'When more results are available, use this to continue',
 		);
 	}
@@ -119,11 +110,15 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 		return 'Returns information about the given categories';
 	}
 
-	protected function getExamples() {
-		return "api.php?action=query&prop=categoryinfo&titles=Category:Foo|Category:Bar";
+	public function getExamples() {
+		return 'api.php?action=query&prop=categoryinfo&titles=Category:Foo|Category:Bar';
+	}
+
+	public function getHelpUrls() {
+		return 'https://www.mediawiki.org/wiki/API:Properties#categoryinfo_.2F_ci';
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryCategoryInfo.php 69932 2010-07-26 08:03:21Z tstarling $';
+		return __CLASS__ . ': $Id$';
 	}
 }

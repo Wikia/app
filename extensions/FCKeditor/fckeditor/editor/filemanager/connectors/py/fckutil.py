@@ -62,7 +62,7 @@ def getFileName(filename):
 def sanitizeFolderName( newFolderName ):
 	"Do a cleanup of the folder name to avoid possible problems"
 	# Remove . \ / | : ? * " < > and control characters
-	return re.sub( '\\.|\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|[\x00-\x1f\x7f-\x9f]', '_', newFolderName )
+	return re.sub( '\\.|\\\\|\\/|\\;|\\||\\:|\\?|\\*|"|<|>|[\x00-\x1f\x7f-\x9f]', '_', newFolderName )
 
 def sanitizeFileName( newFileName ):
 	"Do a cleanup of the file name to avoid possible problems"
@@ -72,7 +72,7 @@ def sanitizeFileName( newFileName ):
 	newFileName = newFileName.replace('\\','/')		# convert windows to unix path
 	newFileName = os.path.basename (newFileName)	# strip directories
 	# Remove \ / | : ? *
-	return re.sub ( '\\\\|\\/|\\||\\:|\\?|\\*|"|<|>|[\x00-\x1f\x7f-\x9f]/', '_', newFileName )
+	return re.sub ( '\\\\|\\/|\\||\\:|\\;|\\?|\\*|"|<|>|[\x00-\x1f\x7f-\x9f]/', '_', newFileName )
 
 def getCurrentFolder(currentFolder):
 	if not currentFolder:
@@ -93,7 +93,7 @@ def getCurrentFolder(currentFolder):
 		return None
 
 	# Check for invalid folder paths (..)
-	if re.search( '(/\\.)|(//)|([\\\\:\\*\\?\\""\\<\\>\\|]|[\x00-\x1F]|[\x7f-\x9f])', currentFolder ):
+	if re.search( '(/\\.)|(//)|([\\\\:\\;\\*\\?\\""\\<\\>\\|]|[\x00-\x1F]|[\x7f-\x9f])', currentFolder ):
 		return None
 
 	return currentFolder

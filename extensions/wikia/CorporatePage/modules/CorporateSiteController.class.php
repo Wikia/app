@@ -111,9 +111,13 @@ class CorporateSiteController extends WikiaController {
 //		$tag_id = AutoHubsPagesHelper::getHubIdFromTitle($wgTitle);
 //		$tag_name = AutoHubsPagesHelper::getHubNameFromTitle($wgTitle);
 
+		// TODO: use ApiService
+		wfProfileIn(__METHOD__ . '::HTTP');
 		$wikiurl = "http://community.wikia.com";
 		$html_out = Http::get( $wikiurl."/api.php?action=query&list=categorymembers&cmtitle=Category:Staff_blogs&cmnamespace=500&cmsort=timestamp&cmdir=desc&format=json" );
 		$data = json_decode($html_out, true);
+		wfProfileOut(__METHOD__ . '::HTTP');
+
 		$page_ids = array();
 		if (isset($data['query']) && isset($data['query']['categorymembers'])) {
 			foreach ($data['query']['categorymembers'] as $r) {
@@ -171,7 +175,6 @@ class CorporateSiteController extends WikiaController {
 
 	public function executeSlider() {
 		global $wgOut, $wgTitle, $wgParser;
-		wfLoadExtensionMessages( 'CorporatePage' );
 
 		if (BodyController::isHubPage()) {
 			$this->slider_class = "small";

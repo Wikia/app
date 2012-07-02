@@ -25,8 +25,7 @@ $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'MetaKeywords',
 	'author'         => '[http://en.wiktionary.org/wiki/User:Conrad.Irwin Conrad Irwin]',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:MetaKeywords',
-	'description'    => 'Lets wikis add meta keywords depending on namespace',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:MetaKeywords',
 	'descriptionmsg' => 'metakeywords-desc',
 );
 
@@ -34,22 +33,15 @@ $wgExtensionMessagesFiles['MetaKeywords'] = dirname( __FILE__ ) . '/MetaKeywords
 
 $wgHooks['BeforePageDisplay'][] = 'wfMetaKeywordOutput';
 $wgHooks['ArticleSaveComplete'][] = 'wfMetaKeywordClearCache';
-$wgHooks['ParserFirstCallInit'][] = 'wfMetaKeywordLoadMessages';
-
-//Load messages, seeing as wfLoadExtensionMessages isn't defined when the file is included.
-function wfMetaKeywordLoadMessages ( ){
-	wfLoadExtensionMessages ('MetaKeywords');
-	return true;
-}
 
 //Adds customised keywords after the pagename of the <meta keywords> tag
 function wfMetaKeywordOutput( &$out ){
-	global $wgTitle, $wgMemc;
-	$ns = $wgTitle->getNamespace();
+	global $wgMemc;
+	$ns = $out->getTitle()->getNamespace();
 	
 	//Keywords
 	$opts = $wgMemc->get( "metakeywords-opts" );
-	if($opts === null ){ //Reload if not in cache
+	if ( !is_array( $opts ) ) { //Reload if not in cache
 		$opts = wfMetaKeywordInput( 'keywords' );
 	}
 	$pagename = array_shift( $out->mKeywords );
@@ -65,7 +57,7 @@ function wfMetaKeywordOutput( &$out ){
 	//Descriptions
 	$opts = $wgMemc->get( "metadescription-opts" );
 
-	if($opts === null ){ //Reload if not in cache
+	if ( !is_array( $opts ) ) { //Reload if not in cache
 		$opts = wfMetaKeywordInput( 'description' );
 	}
 	if( array_key_exists( $ns, $opts ) && $opts[$ns] ){ //Namespace specific descrption
@@ -117,7 +109,7 @@ function wfMetaKeywordParse( $params ){
 }
 
 //Updates the cache if [[MediaWiki:Metakeywords]] or [[MediaWiki:Metadescription]] has been edited
-function wfMetaKeywordClearCache( &$article, &$wgUser, &$text ) {
+function wfMetaKeywordClearCache( &$article, &$wgUser, $text ) {
 	global $wgMemc;
 		$title = $article->mTitle;
 

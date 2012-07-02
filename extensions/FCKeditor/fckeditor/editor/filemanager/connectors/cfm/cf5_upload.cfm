@@ -90,7 +90,7 @@
 	<cfabort>
 </cfif>
 
-<cfif REFind('(/\.)|(//)|[[:cntrl:]]|([\\:\*\?\"<>])', url.currentFolder)>
+<cfif REFind('(/\.)|(//)|[[:cntrl:]]|([\\:\;\.\*\?\"<>])', url.currentFolder)>
 	<cfset SendUploadResults(102, "", "", "")>
 	<cfabort>
 </cfif>

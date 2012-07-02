@@ -84,6 +84,7 @@ var WallNewMessageForm = $.createClass(WallMessageForm, {
 	
 	doPostNewMessage: function(title, reload) {
 		this.model.postNew(this.page, title ? this.WallMessageTitle.val() : '', this.getMessageBody(), this.getFormat());
+
 		this.clearNewMessageTitle();
 		this.disableNewMessage();
 		this.track(title ? 'wall/new_message/post' : 'wall/new_message/post_without_title');

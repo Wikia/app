@@ -50,7 +50,7 @@ public class ToolbarTest extends BaseTest {
 		session().dragAndDrop("css=li[data-tool-id=\"" + actionId + "\"] img.drag", movement);
 	}
 	
-	@Test(groups={"envProduction","verified","manual"})
+	@Test(groups={"envProduction","legacy","manual"})
 	public void testMoveToToolbar() throws Exception {
 		openAndWait("/");
 		login();
@@ -63,7 +63,7 @@ public class ToolbarTest extends BaseTest {
 	}
 	*/
 	
-	@Test(groups={"envProduction","verified"})
+	@Test(groups={"envProduction","legacy"})
 	public void testEnsuresThatToolbarIsNotPresentForAnonymousUsers() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		openAndWait("/");
@@ -71,7 +71,7 @@ public class ToolbarTest extends BaseTest {
 		assertFalse(session().isElementPresent("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]"));
 	}
 
-	@Test(groups={"envProduction","verified"})
+	@Test(groups={"envProduction","legacy"})
 	public void testResetsDefaultsInCustomizedToolbar() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		openAndWait("/");
@@ -95,7 +95,7 @@ public class ToolbarTest extends BaseTest {
 	}
 	
 	
-	@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
+	@Test(groups={"envProduction","legacy"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
 	public void testEnsuresThatSignedInUserCanAddAnItemToCustomizedToolbar() throws Exception {
 		//Written by Aga Serowiec 02-Feb-2012
 		
@@ -150,7 +150,7 @@ public class ToolbarTest extends BaseTest {
 		assertTrue(session().isVisible("//footer[@id='WikiaFooter']//div[contains(@class, 'toolbar')]//a[@data-name='edit']"));
 		logout();
 	}
-	@Test(groups={"envProduction","verified"})
+	@Test(groups={"envProduction","legacy"})
 	public void testEnsuresThatSignedInUserCanSearchFindAndAddAnItemToCustomizedToolbar() throws Exception {
 		//Written by Rodrigo 11-Apr-2012
 		openAndWait("/");
@@ -181,8 +181,8 @@ public class ToolbarTest extends BaseTest {
 		logout();
 		
 	}	
-//@Test(groups={"envProduction","verified"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
-	//@Test(groups={"envProduction","verified"})
+//@Test(groups={"envProduction","legacy"},dependsOnMethods={"testResetsDefaultsInCustomizedToolbar"},alwaysRun=false)
+	//@Test(groups={"envProduction","legacy"})
 	//public void testVerifiesThatSignedInUserCanDeleteAnItemInCustomizedToolbar() throws Exception {
 		//WIP Written by Patrick Archbold 10-Apr-2012
 		

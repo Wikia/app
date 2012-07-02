@@ -2,7 +2,7 @@
 /**
  * A Special Page extension to rename users, runnable by staff members.
  * Based on the RenameUser MediaWiki extension by Arnfjörð Bjarmason and Aaron Schulz.
- * 
+ *
  * @ingroup Wikia
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>, Władysław Bodzek <wladek@wikia-inc.com>
@@ -43,7 +43,7 @@ $wgGroupPermissions['staff']['renameuser'] = true;
 
 //internationalization files
 $wgExtensionMessagesFiles['UserRenameTool'] = $dir . 'SpecialRenameuser.i18n.php';
-$wgExtensionAliasesFiles['UserRenameTool'] = $dir . 'SpecialRenameuser.alias.php';
+$wgExtensionMessagesFiles['UserRenameToolAliases'] = $dir . 'SpecialRenameuser.alias.php';
 
 //classes
 $wgAutoloadClasses['SpecialRenameuser'] = dirname( __FILE__ ) . '/SpecialRenameuser_body.php';

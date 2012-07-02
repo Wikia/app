@@ -184,7 +184,7 @@
 				$userLoginHelper = F::build( 'UserLoginHelper' );
 				$result = $userLoginHelper->sendConfirmationReminderEmail( $user );
 
-				if( WikiError::isError( $result ) ) {
+				if( !$result->isGood() ) {
 					echo "Error: Cannot Send reminder to temp user (id=".$tempUser->getId().", email=".$tempUser->getEmail()."): ".$result->getMessage()."\n";
 				} else {
 					$tempUser->saveSettingsTempUserToUser( $user );

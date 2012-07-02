@@ -22,5 +22,5 @@ $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['ImageServingTest'] = $dir . 'ImageServingTest_body.php'; # Tell MediaWiki to load the extension body.
 $wgExtensionMessagesFiles['ImageServingTest'] = $dir . 'ImageServingTest.i18n.php';
-$wgExtensionAliasesFiles['ImageServingTest'] = $dir . 'ImageServingTest.alias.php';
+$wgExtensionMessagesFiles['ImageServingTestAliases'] = $dir . 'ImageServingTest.alias.php';
 $wgSpecialPages['ImageServingTest'] = 'ImageServingTest'; # Let MediaWiki know about your new special page.

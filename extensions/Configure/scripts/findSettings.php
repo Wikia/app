@@ -26,7 +26,7 @@ class FindSettings extends Maintenance {
 		$this->addOption( 'alpha', 'get the alphabetical list of settings' );
 	}
 
-	protected function getDbType() {
+	public function getDbType() {
 		return Maintenance::DB_NONE;
 	}
 
@@ -47,7 +47,6 @@ class FindSettings extends Maintenance {
 	function execute() {
 		global $IP;
 
-		$coreSettings = ConfigurationSettings::singleton( CONF_SETTINGS_CORE );
 		if ( $this->hasOption( 'ext' ) ) {
 			$exts = ConfigurationSettings::singleton( CONF_SETTINGS_EXT )->getAllExtensionsObjects();
 			$ignoreList = array(
@@ -64,22 +63,24 @@ class FindSettings extends Maintenance {
 				'wgCheckUserStyleVersion',
 				'wgCaptcha', 'wgConfirmEditIP',
 				'wgCitationCache', 'wgCitationCounter', 'wgCitationRunning',
-				'wgCodeReviewStyleVersion',
 				'wgCollectionVersion', 'wgCollectionStyleVersion',
 				'wgCSS',
 				'wgDeleteQueueStyleVersion',
 				'wgDraftsStyleVersion',
 				'edgIP', 'edgValues',
 				'wgErrorHandlerErrors', 'wgErrorHandlerOutputDone',
-				'wgFlaggedRevStyleVersion',
+				'wgFlaggedRevStyleVersion', 'wgFlaggedRevsRCCrap',
 				'wgGoogleAdSenseCssLocation',
 				'wgOggScriptVersion', 'wgEnableJS2system',
 				'wgPFHookStub',
 				'wgQPollFunctionsHook', 'cell', 'celltag',
 				'sdgIP', 'sdgScriptPath', 'sdgNamespaceIndex',
-				'sfgIP', 'sfgScriptPath', 'sfgNamespaceIndex',
+				'sfgIP', 'sfgScriptPath', 'sfgPartialPath', 'sfgNamespaceIndex', 'sfgFancyBoxIncluded',
+					'sfgAdderButtons', 'sfgRemoverButtons', 'sfgShowOnSelectCalls', 'sfgJSValidationCalls',
+					'sfgAutocompleteMappings', 'sfgAutocompleteDataTypes', 'sfgAutocompleteValues',
+					'sfgComboBoxInputs', 'sfgAutogrowInputs',
 				'smwgIP', 'smwgScriptPath', 'smwgNamespaceIndex', 'smwgRAPPath', 'smwgSMWBetaCompatible',
-				'srfgIP', 'srfgScriptPath',
+				'srfgIP', 'srfgScriptPath', 'srfgJQPlotIncluded',
 				'wgUserBoardScripts', 'wgUserProfileDirectory', 'wgUserProfileScripts', 'wgUserRelationshipScripts',
 				'wgTimelineSettings',
 				'wgTitleBlacklist',
@@ -97,9 +98,12 @@ class FindSettings extends Maintenance {
 				'qp_enable_showresults',
 			);
 			foreach ( $exts as $ext ) {
-				if( !$ext->isInstalled() ) continue; // must exist
-				$file = file_get_contents( $ext->getSettingsFile() );
 				$name = $ext->getName();
+				if( !$ext->isInstalled() ) {
+					$this->output( "Extension $name is not installed\n" );
+					continue;
+				}
+				$file = file_get_contents( $ext->getSettingsFile() );
 				$m = array();
 				preg_match_all( '/\$((wg|eg|edg|sdg|sfg|smwg|srfg|abc|ce[^n]|ub|whoiswatching|wminc)[A-Za-z0-9_]+)\s*\=/', $file, $m );
 				$definedSettings = array_unique( $m[1] );
@@ -109,7 +113,7 @@ class FindSettings extends Maintenance {
 				$obsolete = array_diff( $allSettings, $definedSettings, $ignoreObsolete );
 				$missing = array();
 				foreach ( $remain as $setting ) {
-					if ( !$coreSettings->isSettingAvailable( $setting ) && !in_array( $setting, $ignoreList ) )
+					if ( !ConfigurationSettings::singleton( CONF_SETTINGS_CORE )->isSettingAvailable( $setting ) && !in_array( $setting, $ignoreList ) )
 						$missing[] = $setting;
 				}
 				if ( count( $missing ) == 0 && count( $obsolete ) == 0 ) {
@@ -133,17 +137,68 @@ class FindSettings extends Maintenance {
 				preg_match_all( '/\[\[[Mm]anual:\$(wg[A-Za-z0-9]+)\|/', $cont, $m );
 				$allSettings = array_unique( $m[1] );
 				$ignoreList = array(
-					'wgEnableNewpagesUserFilter', 'wgOldChangeTagsIndex', 'wgVectorExtraStyles'
+					'wgEnableNewpagesUserFilter',
+					'wgOldChangeTagsIndex',
 				);
 			} else {
-				$allSettings = array_keys( $coreSettings->getAllSettings() );
+				$allSettings = array_keys( ConfigurationSettings::singleton( CONF_SETTINGS_CORE )->getAllSettings() );
 				$ignoreList = array(
-					'wgAuth', 'wgCommandLineMode', 'wgCheckSerialized', 'wgConf',
-					'wgDBconnection', 'wgDummyLanguageCodes', 'wgEnableNewpagesUserFilter',
-					'wgEnableSerializedMessages', 'wgEnableSorbs', 'wgExperimentalHtmlIds',
-					'wgLegacySchemaConversion', 'wgMaintenanceScripts', 'wgMemCachedDebug',
-					'wgOldChangeTagsIndex', 'wgProxyKey', 'wgSorbsUrl', 'wgValidSkinNames',
-					'wgVectorExtraStyles', 'wgVersion',
+					'wgActions',                   // Needs PHP code
+					'wgAPIListModules',            // Extensions only
+					'wgAPIMetaModules',            // Extensions only
+					'wgAPIModules',                // Extensions only
+					'wgAPIPropModules',            // Extensions only
+					'wgAjaxExportList',            // Extensions only
+					'wgAuth',                      // Object
+					'wgAutoloadClasses',           // Extensions only
+					'wgAvailableRights',           // Extensions only
+					'wgCommandLineMode',           // Internal use
+					'wgCompiledFiles',             // Extensions only
+					'wgConf',                      // Object
+					'wgDBmysql4',                  // Deprecated
+					'wgDummyLanguageCodes',        // Internal use
+					'wgEditEncoding',              // Deprecated
+					'wgEnableNewpagesUserFilter',  // Temporary
+					'wgEnableSorbs',               // Deprecated
+					'wgExceptionHooks',            // Extensions only
+					'wgExperimentalHtmlIds',       // Temporary
+					'wgExtensionAliasesFiles',     // Extensions only
+					'wgExtensionCredits',          // Extensions only
+					'wgExtensionFunctions',        // Extensions only
+					'wgExtensionMessagesFiles',    // Extensions only
+					'wgFeedClasses',               // Needs PHP code
+					'wgFilterCallback',            // Needs PHP code
+					'wgHooks',                     // Extensions only
+					'wgInputEncoding',             // Deprecated
+					'wgJobClasses',                // Extensions only
+					'wgJobTypesExcludedFromDefaultQueue', // Extensions only
+					'wgLegacySchemaConversion',    // Deprecated
+					'wgLogActions',                // Extensions only
+					'wgLogActionsHandlers',        // Extensions only
+					'wgLogHeaders',                // Extensions only
+					'wgLogNames',                  // Extensions only
+					'wgLogTypes',                  // Extensions only
+					'wgMaintenanceScripts',        // Extensions only
+					'wgMemCachedDebug',            // Internal use
+					'wgObjectCaches',              // Too dificult
+					'wgOldChangeTagsIndex',        // Temporary
+					'wgOutputEncoding',            // Deprecated
+					'wgPagePropLinkInvalidations', // Extensions only
+					'wgParserOutputHooks',         // Extensions only
+					'wgParserTestFiles',           // Extensions only
+					'wgProxyKey',                  // Deprecated
+					'wgResourceLoaderSources',     // Extensions only
+					'wgResourceModules',           // Extensions only
+					'wgSeleniumTestConfigs',       // Needs PHP code
+					'wgSkinExtensionFunctions',    // Extensions only
+					'wgSpecialPageCacheUpdates',   // Extensions only
+					'wgSpecialPages',              // Extensions only
+					'wgSorbsUrl',                  // Deprecated
+					'wgStyleSheetPath',            // Deprecated
+					'wgTrivialMimeDetection',      // Internal use
+					'wgUseTeX',                    // Deprecated
+					'wgValidSkinNames',            // Extensions only
+					'wgVersion',                   // Internal use
 				);
 			}
 
@@ -155,17 +210,20 @@ class FindSettings extends Maintenance {
 
 			$missing = array_diff( $definedSettings, $allSettings );
 			$remain = array_diff( $allSettings, $definedSettings );
+
+			$reallyMissing = array_diff( $missing, $ignoreList );
+
 			$obsolete = array();
 			foreach ( $remain as $setting ) {
-				if ( $coreSettings->isSettingAvailable( $setting ) )
+				if ( ConfigurationSettings::singleton( CONF_SETTINGS_CORE )->isSettingAvailable( $setting ) )
 					$obsolete[] = $setting;
 			}
 
 			// let's show the results:
-			$this->printArray( 'missing', array_diff( $missing, $ignoreList ) );
+			$this->printArray( 'missing', $reallyMissing );
 			$this->printArray( 'obsolete', $obsolete );
 
-			if ( count( $missing ) == 0 && count( $obsolete ) == 0 )
+			if ( count( $reallyMissing ) == 0 && count( $obsolete ) == 0 )
 				$this->output( "Looks good!\n" );
 		}
 	}

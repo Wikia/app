@@ -537,14 +537,7 @@ function tabberAutomaticOnLoad(tabberArgs)
 	if (!tabberArgs) { tabberArgs = {}; }
   /* Taken from: http://simon.incutio.com/archive/2004/05/26/addLoadEvent */
 
-	if(typeof window.addOnloadHook != 'function') {
-		setTimeout(function() {
-			tabberAutomaticOnLoad(tabberArgs);
-		}, 500 ); 
-		return ;
-	}
-
-	addOnloadHook(function() {
+	$(function() {
 		tabberAutomatic(tabberArgs);
 	});
 	

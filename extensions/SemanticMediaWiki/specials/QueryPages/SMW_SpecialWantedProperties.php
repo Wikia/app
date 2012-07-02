@@ -1,24 +1,10 @@
 <?php
 
 /**
- * File holding the SMWSpecialWantedProperties class for the Special:WantedProperties page. 
+ * This special page (Special:WantedProperties) for MediaWiki shows all wanted properties (used but not having a page).
  *
  * @file SMW_SpecialWantedProperties.php
- * 
- * @ingroup SMWSpecialPage
- * @ingroup SpecialPage
  *
- * @author Markus Krötzsch
- * @author Jeroen De Dauw
- */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'Not an entry point.' );
-}
-
-/**
- * This special page for MediaWiki shows all wanted properties (used but not having a page).
- * 
  * @ingroup SMWSpecialPage
  * @ingroup SpecialPage
  * 
@@ -29,7 +15,6 @@ class SMWSpecialWantedProperties extends SpecialPage {
 	
 	public function __construct() {
 		parent::__construct( 'WantedProperties' );
-		smwfLoadExtensionMessages( 'SemanticMediaWiki' );
 	}
 	
 	public function execute( $param ) {
@@ -49,6 +34,7 @@ class SMWSpecialWantedProperties extends SpecialPage {
 		
 		wfProfileOut( 'smwfDoSpecialWantedProperties (SMW)' );	
 	}
+
 }
 
 /**
@@ -62,7 +48,6 @@ class SMWSpecialWantedProperties extends SpecialPage {
 class SMWWantedPropertiesPage extends SMWQueryPage {
 
 	function getName() {
-		/// TODO: should probably use SMW prefix
 		return "WantedProperties";
 	}
 
@@ -78,17 +63,26 @@ class SMWWantedPropertiesPage extends SMWQueryPage {
 		return '<p>' . wfMsg( 'smw_wantedproperties_docu' ) . "</p><br />\n";
 	}
 
+	/**
+	 * @param $skin
+	 * @param array $result First item is SMWDIProperty, second item is int
+	 * 
+	 * @return string
+	 */
 	function formatResult( $skin, $result ) {
-		global $wgLang;
+		$linker = smwfGetLinker();
+		
 		if ( $result[0]->isUserDefined() ) {
-			$proplink = $skin->makeLinkObj( $result[0]->getWikiPageValue()->getTitle(), $result[0]->getWikiValue(), 'action=view' );
+			$proplink = $linker->makeLinkObj( $result[0]->getDiWikiPage()->getTitle(), htmlspecialchars( $result[0]->getLabel() ), 'action=view' );
 		} else {
-			$proplink = $result[0]->getLongHTMLText( $skin );
+			$proplink = SMWDataValueFactory::newDataItemValue( $result[0], new SMWDIProperty( '_TYPE' ) )->getLongHTMLText( $linker );
 		}
+		
 		return wfMsgExt( 'smw_wantedproperty_template', array( 'parsemag' ), $proplink, $result[1] );
 	}
 
 	function getResults( $requestoptions ) {
 		return smwfGetStore()->getWantedPropertiesSpecial( $requestoptions );
 	}
+    
 }

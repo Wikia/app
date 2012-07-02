@@ -1,5 +1,5 @@
 /* ICP Reply agent */
-/* $Id: icpagent.c 584 2008-07-29 13:59:13Z emil $ */
+/* $Id: icpagent.c 11376 2005-10-16 17:04:43Z midom $ */
 /* vim: tabstop=8 number
    */
 #include <sys/types.h>

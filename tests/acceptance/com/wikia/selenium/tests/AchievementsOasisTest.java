@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class AchievementsOasisTest extends BaseTest {
 	private static String testPage = "AchievementsOasisTest";
 	
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void testEnsureAchievementsWidgetIsPresentOnUserProfilePage() throws Exception {
 		loginAsRegular();
 

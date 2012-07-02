@@ -15,15 +15,11 @@ require_once( "$IP/skins/Modern.php" );
 /**
  * Inherit main code from SkinTemplate, set the CSS and template filter.
  * @todo document
- * @addtogroup Skins
+ * @ingroup Skins
  */
 class SkinDaddio extends SkinTemplate {
-	function initPage( OutputPage $out ) {
-		SkinTemplate::initPage( $out );
-		$this->skinname  = 'daddio';
-		$this->stylename = 'daddio';
-		$this->template  = 'DaddioTemplate';
-	}
+	var $skinname = 'daddio', $stylename = 'daddio',
+		$template = 'DaddioTemplate', $useHeadElement = true;
 
 	function setupSkinUserCss( OutputPage $out ){
 		global $wgScriptPath;
@@ -41,7 +37,7 @@ class SkinDaddio extends SkinTemplate {
 
 /**
  * @todo document
- * @addtogroup Skins
+ * @ingroup Skins
  */
 class DaddioTemplate extends ModernTemplate {
 	/**
@@ -53,19 +49,14 @@ class DaddioTemplate extends ModernTemplate {
 	 * @access private
 	 */
 	function execute() {
-		global $wgRequest, $wgOut;
 		$this->skin = $skin = $this->data['skin'];
-		$action = $wgRequest->getText( 'action' );
 		
 		// Suppress warnings to prevent notices about missing indexes in $this->data
 		wfSuppressWarnings();
 
-		echo $wgOut->headElement( $this->skin );
+		$this->html( 'headelement' );
 
-?><body<?php if( $this->data['body_ondblclick'] ) { ?> ondblclick="<?php $this->text( 'body_ondblclick' ) ?>"<?php } ?>
-<?php if( $this->data['body_onload'] ) { ?> onload="<?php $this->text( 'body_onload' ) ?>"<?php } ?>
- class="mediawiki <?php $this->text('dir' ) ?> <?php $this->text( 'pageclass' ) ?> <?php $this->text( 'skinnameclass' ) ?>">
-
+?>
 	<!-- heading -->
 
 	<div id="mw_main">
@@ -194,4 +185,3 @@ class DaddioTemplate extends ModernTemplate {
 	} // end of execute() method
 } // end of class
 
-?>

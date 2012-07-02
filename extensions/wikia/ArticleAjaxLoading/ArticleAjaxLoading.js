@@ -25,11 +25,10 @@ var ArticleAjaxLoading = {
 										// backup variables that we have to recover after every ajax request
 										ArticleAjaxLoading.cache.articleComments = $('#article-comments').find('.session').html();
 										ArticleAjaxLoading.cache.wgUserName = wgUserName;
-										ArticleAjaxLoading.cache.wgOneDotURL = wgOneDotURL;
 										ArticleAjaxLoading.cache.wgUserGroups = wgUserGroups;
 
 										// handle clicks on links in article content
-										$('#WikiaArticle').on('click', 'a', ArticleAjaxLoading.linkClickHandler);
+										$('#WikiaPage').on('click', '#WikiaArticle a', ArticleAjaxLoading.linkClickHandler);
 
 									} else if(window.aal == 'G2') {
 
@@ -142,7 +141,6 @@ $.pjax = function( options ) {
 				}
 
 				wgUserName = ArticleAjaxLoading.cache.wgUserName;
-				wgOneDotURL = ArticleAjaxLoading.cache.wgOneDotURL;
 				wgUserGroups = ArticleAjaxLoading.cache.wgUserGroups;
 
 				$container.replaceWith(data.body);

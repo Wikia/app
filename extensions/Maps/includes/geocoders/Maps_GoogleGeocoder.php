@@ -1,23 +1,25 @@
 <?php
 
 /**
- * Class for geocoding requests with the Google Geocoding Service (v2).
+ * Class for geocoding requests with the Google Geocoding Service (v3).
  * 
- * Webservice documentation: http://code.google.com/apis/maps/documentation/services.html#Geocoding_Direct
+ * Webservice documentation: http://code.google.com/apis/maps/documentation/geocoding/
  *
  * @file Maps_GoogleGeocoder.php
  * @ingroup Maps
  * @ingroup Geocoders
  *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v3
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * @author Sergey Chernyshev
+ * @author Desiree Gennaro
  */
 final class MapsGoogleGeocoder extends MapsGeocoder {
 	
 	/**
 	 * Registeres the geocoder.
 	 * 
-	 * No LST in pre-5.3 PHP *sigh*.
+	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
 	 * 
 	 * @since 0.7
@@ -37,8 +39,7 @@ final class MapsGoogleGeocoder extends MapsGeocoder {
 	 * @return string
 	 */	
 	protected function getRequestUrl( $address ) {
-		global $egGoogleMapsKey;
-		return 'http://maps.google.com/maps/geo?q=' . urlencode( $address ) . '&output=csv&key=' . urlencode( $egGoogleMapsKey );
+		return 'http://maps.googleapis.com/maps/api/geocode/xml?address=' . urlencode( $address ) . '&sensor=false';
 	}
 	
 	/**
@@ -51,20 +52,16 @@ final class MapsGoogleGeocoder extends MapsGeocoder {
 	 * @return array
 	 */		
 	protected function parseResponse( $response ) {
-		// Check the Google Geocoder API Response code to ensure success.
-		if ( substr( $response, 0, 3 ) == '200' ) {
-			$result =  explode( ',', $response );
-			
-			// $precision = $result[1];
+		$lon = self::getXmlElementValue( $response, 'lng' );
+		$lat = self::getXmlElementValue( $response, 'lat' );
 
-			return array(
-				'lat' => $result[2],
-				'lon' => $result[3]
-			);
-		}
-		else { // When the request fails, return false.
-			return false;
-		}		
+		// In case on of the values is not found, return false.
+		if ( !$lon || !$lat ) return false;
+
+		return array(
+			'lat' => (float)$lat,
+			'lon' => (float)$lon
+		);
 	}
 	
 	/**
@@ -74,7 +71,7 @@ final class MapsGoogleGeocoder extends MapsGeocoder {
 	 * 
 	 * @return array
 	 */
-	public function getOverrides() {
+	public static function getOverrides() {
 		return array( 'googlemaps2', 'googlemaps3' );
 	}
 	

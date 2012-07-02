@@ -1,11 +1,31 @@
 <?php
+/**
+ * Implements Special:Randompage
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup SpecialPage
+ * @author Rob Church <robchur@gmail.com>, Ilmari Karonen
+ */
 
 /**
  * Special page to direct the user to a random page
  *
  * @ingroup SpecialPage
- * @author Rob Church <robchur@gmail.com>, Ilmari Karonen
- * @license GNU General Public Licence 2.0 or later
  */
 class RandomPage extends SpecialPage {
 	private $namespaces;  // namespaces to select pages from
@@ -13,13 +33,7 @@ class RandomPage extends SpecialPage {
 	protected $extra = array(); // Extra SQL statements
 
 	public function __construct( $name = 'Randompage' ){
-		global $wgContentNamespaces;
-		if (!empty( $wgContentNamespaces ) ) {
-			$this->namespaces = $wgContentNamespaces;
-		} else {
-			// should never happen, but...
-			$this->namespaces = array( NS_MAIN );
-		}
+		$this->namespaces = MWNamespace::getContentNamespaces();
 		parent::__construct( $name );
 	}
 
@@ -28,7 +42,9 @@ class RandomPage extends SpecialPage {
 	}
 
 	public function setNamespace ( $ns ) {
-		if( !$ns || $ns < NS_MAIN ) $ns = NS_MAIN;
+		if( !$ns || $ns < NS_MAIN ) {
+			$ns = NS_MAIN;
+		}
 		$this->namespaces = array( $ns );
 	}
 
@@ -38,9 +54,9 @@ class RandomPage extends SpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgOut, $wgContLang;
+		global $wgContLang;
 
-		if ($par) {
+		if ( $par ) {
 			$this->setNamespace( $wgContLang->getNsIndex( $par ) );
 		}
 
@@ -48,13 +64,15 @@ class RandomPage extends SpecialPage {
 
 		if( is_null( $title ) ) {
 			$this->setHeaders();
-			$wgOut->addWikiMsg( strtolower( $this->mName ) . '-nopages', 
+			$this->getOutput()->addWikiMsg( strtolower( $this->getName() ) . '-nopages',
 				$this->getNsList(), count( $this->namespaces ) );
 			return;
 		}
 
-		$query = $this->isRedirect() ? 'redirect=no' : '';
-		$wgOut->redirect( $title->getFullUrl( $query ) );
+		$redirectParam = $this->isRedirect() ? array( 'redirect' => 'no' ) : array();
+		$query = array_merge( $this->getRequest()->getValues(), $redirectParam );
+		unset( $query['title'] );
+		$this->getOutput()->redirect( $title->getFullUrl( $query ) );
 	}
 
 	/**
@@ -66,14 +84,14 @@ class RandomPage extends SpecialPage {
 		global $wgContLang;
 		$nsNames = array();
 		foreach( $this->namespaces as $n ) {
-			if( $n === NS_MAIN )
-				$nsNames[] = wfMsgForContent( 'blanknamespace' );
-			else
+			if( $n === NS_MAIN ) {
+				$nsNames[] = wfMsgNoTrans( 'blanknamespace' );
+			} else {
 				$nsNames[] = $wgContLang->getNsText( $n );
+			}
 		}
 		return $wgContLang->commaList( $nsNames );
 	}
-
 
 	/**
 	 * Choose a random title.
@@ -82,7 +100,8 @@ class RandomPage extends SpecialPage {
 	public function getRandomTitle() {
 		$randstr = wfRandom();
 		$title = null;
-		if ( !wfRunHooks( 'SpecialRandomGetRandomTitle', array( &$randstr, &$this->isRedir, &$this->namespaces, &$this->extra, &$title ) ) ) {
+		if ( !wfRunHooks( 'SpecialRandomGetRandomTitle', array( &$randstr, &$this->isRedir, &$this->namespaces,
+			&$this->extra, &$title ) ) ) {
 			return $title;
 		}
 		$row = $this->selectRandomPageFromDB( $randstr );
@@ -94,53 +113,50 @@ class RandomPage extends SpecialPage {
 		 * any more bias than what the page_random scheme
 		 * causes anyway.  Trust me, I'm a mathematician. :)
 		 */
-		if( !$row )
+		if( !$row ) {
 			$row = $this->selectRandomPageFromDB( "0" );
+		}
 
-		if( $row )
+		if( $row ) {
 			return Title::makeTitleSafe( $row->page_namespace, $row->page_title );
-		else
+		} else {
 			return null;
+		}
 	}
 
-	private function selectRandomPageFromDB( $randstr ) {
-		global $wgExtraRandompageSQL;
+	protected function getQueryInfo( $randstr ) {
+		$redirect = $this->isRedirect() ? 1 : 0;
+
+		return array(
+			'tables' => array( 'page' ),
+			'fields' => array( 'page_title', 'page_namespace' ),
+			'conds' => array_merge( array(
+				'page_namespace' => $this->namespaces,
+				'page_is_redirect' => $redirect,
+				'page_random >= ' . $randstr
+			), $this->extra ),
+			'options' => array(
+				'ORDER BY' => 'page_random',
+				'USE INDEX' => 'page_random',
+				'LIMIT' => 1,
+			),
+			'join_conds' => array()
+		);
+	}
+
+	private function selectRandomPageFromDB( $randstr, $fname = __METHOD__ ) {
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$use_index = $dbr->useIndexClause( 'page_random' );
-		$page = $dbr->tableName( 'page' );
+		$query = $this->getQueryInfo( $randstr );
+		$res = $dbr->select(
+			$query['tables'],
+			$query['fields'],
+			$query['conds'],
+			$fname,
+			$query['options'],
+			$query['join_conds']
+		);
 
-		$ns = implode( ",", $this->namespaces );
-		$redirect = $this->isRedirect() ? 1 : 0;
-		
-		if ( $wgExtraRandompageSQL ) {
-			$this->extra[] = $wgExtraRandompageSQL;
-		}
-		if ( $this->addExtraSQL() ) {
-			$this->extra[] = $this->addExtraSQL();
-		}
-		$extra = '';
-		if ( $this->extra ) {
-			$extra = 'AND (' . implode( ') AND (', $this->extra ) . ')';
-		}
-		$sql = "SELECT page_title, page_namespace
-			FROM $page $use_index
-			WHERE page_namespace IN ( $ns )
-			AND page_is_redirect = $redirect
-			AND page_random >= $randstr
-			$extra
-			ORDER BY page_random";
-
-		$sql = $dbr->limitResult( $sql, 1, 0 );
-		$res = $dbr->query( $sql, __METHOD__ );
 		return $dbr->fetchObject( $res );
-	}
-
-	/* an alternative to $wgExtraRandompageSQL so subclasses
-	 * can add their own SQL by overriding this function
-	 * @deprecated, append to $this->extra instead
-	 */
-	public function addExtraSQL() {
-		return '';
 	}
 }

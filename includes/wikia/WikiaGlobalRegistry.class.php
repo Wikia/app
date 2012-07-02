@@ -10,10 +10,24 @@
  * @author Wojciech Szela <wojtek(at)wikia-inc.com>
  */
 class WikiaGlobalRegistry extends WikiaRegistry {
+	/* mapping for MW 1.19+ compatibility, new code should use RequestContext instances to access those globals */
+	private static $requestContextMap = array(
+		'wgUser' => 'User',
+		'wgRequest' => 'Request',
+		'wgOut' => 'Output',
+		'wgLang' => 'Language',
+		'wgTitle' => 'Title'
+	);
 
 	public function get($propertyName) {
 		if($this->has($propertyName)) {
-			return $GLOBALS[$propertyName];
+			if ( $this->checkPropertyMapping( $propertyName ) ) {
+				$value = $this->processPropertyMapping( $propertyName );
+			} else {
+				$value = $GLOBALS[$propertyName];
+			}
+
+			return $value;
 		}
 
 		return null;
@@ -34,6 +48,11 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	public function set($propertyName, $value, $key = null) {
 		$this->validatePropertyName($propertyName);
 		if (is_null($key)) {
+			//set both in RequestContext main instance and in globals to ensure values are in sync
+			if ( $this->checkPropertyMapping( $propertyName ) ) {
+				$this->processPropertyMapping( $propertyName, true, $value );
+			}
+ 
 			$GLOBALS[$propertyName] = $value;
 		} else {
 			$GLOBALS[$propertyName][$key] = $value;
@@ -43,13 +62,21 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 
 	public function remove($propertyName) {
 		$this->validatePropertyName($propertyName);
+
+		//set both in RequestContext main instance and in globals to ensure values are in sync
+		if ( $this->checkPropertyMapping( $propertyName ) ) {
+			$this->processPropertyMapping( $propertyName, true, null );
+		}
+
 		unset($GLOBALS[$propertyName]);
+
 		return $this;
 	}
 
 	public function has($propertyName) {
 		$this->validatePropertyName($propertyName);
-		return isset($GLOBALS[$propertyName]);
+		//check both in globals and RequestContext's values
+		return isset($GLOBALS[$propertyName]) || $this->checkPropertyMapping( $propertyName );
 	}
 
 	public function __get($propertyName) {
@@ -66,5 +93,25 @@ class WikiaGlobalRegistry extends WikiaRegistry {
 	
 	public function __unset( $propertyName ) {
 		return $this->remove( 'wg' . ucfirst($propertyName) );
+	}
+
+	private function checkPropertyMapping( $propertyName ) {
+		return array_key_exists( $propertyName, self::$requestContextMap );
+	}
+
+	//set or get value in main RequestContext instance to keep values in sync
+	private function processPropertyMapping( $propertyName, $setValue = false, $value = null ) {
+		$setValue = !empty( $setValue );
+		$res = call_user_func(
+			array(
+				RequestContext::getMain(),
+				( ( $setValue ) ? 'set' : 'get' ) . self::$requestContextMap[$propertyName]
+			),
+			$value
+		);
+
+		if ( !$setValue ) {
+			return $res;
+		}
 	}
 }

@@ -106,13 +106,6 @@
 
 	img {
 		vertical-align: middle;
-
-		&.staffSig {
-			bottom: -1px;
-			margin-left: 5px;
-			position: relative;
-			vertical-align: baseline;
-		}
 	}
 
 	blockquote {
@@ -447,7 +440,11 @@
 				weight: bold;	
 			}
 		}
-	}	
+	}
+
+	.wikiaPlaceholder > div {
+		text-align: center;
+	}
 }
 
 /**

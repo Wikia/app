@@ -91,7 +91,7 @@ sub CreateFolder
 
 	if($FORM{'NewFolderName'} ne "") {
 		$sNewFolderName = $FORM{'NewFolderName'};
-		$sNewFolderName =~ s/\.|\\|\/|\||\:|\?|\*|\"|<|>|[[:cntrl:]]/_/g;
+		$sNewFolderName =~ s/\.|\\|\/|\||\:|\;|\?|\*|\"|<|>|[[:cntrl:]]/_/g;
 		# Map the virtual path to the local server path of the current folder.
 		$sServerDir = &ServerMapFolder($resourceType, $currentFolder);
 		if(-w $sServerDir) {
@@ -130,7 +130,7 @@ eval("use File::Copy;");
 
 		# Get the uploaded file name.
 		$sFileName = $new_fname;
-		$sFileName =~ s/\\|\/|\||\:|\?|\*|\"|<|>|[[:cntrl:]]/_/g;
+		$sFileName =~ s/\\|\/|\||\:|\;|\?|\*|\"|<|>|[[:cntrl:]]/_/g;
 		$sFileName =~ s/\.(?![^.]*$)/_/g;
 
 		$ext = '';

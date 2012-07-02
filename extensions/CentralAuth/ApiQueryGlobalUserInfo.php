@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created on Jan 30, 2010
  *
@@ -19,7 +18,7 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -30,60 +29,65 @@
  * @ingroup Extensions
  */
 class ApiQueryGlobalUserInfo extends ApiQueryBase {
-
 	public function __construct( $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'gui' );
 	}
 
 	public function execute() {
-		global $wgUser;
 		$params = $this->extractRequestParams();
 		$prop = array_flip( (array)$params['prop'] );
 		if ( is_null( $params['user'] ) ) {
-			$params['user'] = $wgUser->getName();
+			$params['user'] = $this->getUser()->getName();
 		}
 		$user = new CentralAuthUser( $params['user'] );
-		if ( !$user->exists() ) {
-			$this->dieUsageMsg( array( 'nosuchuser', $params['user'] ) );
-		}
-		
+
 		// Add basic info
 		$result = $this->getResult();
-		$data = array(
-			'id' => $user->getId(),
-			'registration' => wfTimestamp( TS_ISO_8601, $user->getRegistration() )
-		);
-		if ( $user->isLocked() ) {
-			$data['locked'] = '';
-		}
-		if ( $user->isHidden() ) {
-			$data['hidden'] = '';
+		$data = array();
+		$userExists = $user->exists();
+
+		if ( $userExists ) {
+			$data['home'] = $user->getHomeWiki();
+			$data['id'] = $user->getId();
+			$data['registration'] = wfTimestamp( TS_ISO_8601, $user->getRegistration() );
+
+			if ( $user->isLocked() ) {
+				$data['locked'] = '';
+			}
+			if ( $user->isHidden() ) {
+				$data['hidden'] = '';
+			}
+		} else {
+			$data['missing'] = '';
 		}
 		$result->addValue( 'query', $this->getModuleName(), $data );
-		
+
 		// Add requested info
-		if ( isset( $prop['groups'] ) ) {
+		if ( $userExists && isset( $prop['groups'] ) ) {
 			$groups = $user->getGlobalGroups();
 			$result->setIndexedTagName( $groups, 'g' );
 			$result->addValue( array( 'query', $this->getModuleName() ), 'groups', $groups );
 		}
-		if ( isset( $prop['rights'] ) ) {
+		if ( $userExists && isset( $prop['rights'] ) ) {
 			$rights = $user->getGlobalRights();
 			$result->setIndexedTagName( $rights, 'r' );
 			$result->addValue( array( 'query', $this->getModuleName() ), 'rights', $rights );
 		}
-		if ( isset( $prop['merged'] ) ) {
+		if ( $userExists && isset( $prop['merged'] ) ) {
 			$accounts = $user->queryAttached();
 			foreach ( $accounts as $account ) {
+				$dbname = $account['wiki'];
+
 				$a = array(
-					'wiki' => $account['wiki'],
+					'wiki' => $dbname,
+					'url' => $this->getUrl( $dbname ),
 					'timestamp' => wfTimestamp( TS_ISO_8601, $account['attachedTimestamp'] ),
 					'method' => $account['attachedMethod'],
 					'editcount' => $account['editCount']
 				);
 				if ( $account['blocked'] ) {
 					$a['blocked'] = array(
-						'expiry' => Block::decodeExpiry( $account['block-expiry'], TS_ISO_8601 ),
+						'expiry' => $this->getLanguage()->formatExpiry( $account['block-expiry'], TS_ISO_8601 ),
 						'reason' => $account['block-reason']
 					);
 				}
@@ -91,7 +95,7 @@ class ApiQueryGlobalUserInfo extends ApiQueryBase {
 			}
 			$result->setIndexedTagName_internal( array( 'query', $this->getModuleName(), 'merged' ), 'account' );
 		}
-		if ( isset ($prop['unattached'] ) ) {
+		if ( isset ( $prop['unattached'] ) ) {
 			$accounts = $user->queryUnattached();
 			foreach ( $accounts as $account ) {
 				$a = array(
@@ -100,7 +104,7 @@ class ApiQueryGlobalUserInfo extends ApiQueryBase {
 				);
 				if ( $account['blocked'] ) {
 					$a['blocked'] = array(
-						'expiry' => Block::decodeExpiry( $account['block-expiry'], TS_ISO_8601 ),
+						'expiry' => $this->getLanguage()->formatExpiry( $account['block-expiry'], TS_ISO_8601 ),
 						'reason' => $account['block-reason']
 					);
 				}
@@ -108,6 +112,19 @@ class ApiQueryGlobalUserInfo extends ApiQueryBase {
 			}
 			$result->setIndexedTagName_internal( array( 'query', $this->getModuleName(), 'unattached' ), 'account' );
 		}
+	}
+
+	/**
+	 * @param $dbname string
+	 * @return string
+	 */
+	public function getUrl( $dbname ){
+		global $wgConf;
+
+		list( $major, $minor ) = $wgConf->siteFromDB( $dbname );
+		$minor = str_replace( '_', '-', $minor );
+		return $wgConf->get( 'wgCanonicalServer', $dbname, $major,
+			array( 'lang' => $minor, 'site' => $major ) );
 	}
 
 	public function getCacheMode( $params ) {
@@ -138,8 +155,10 @@ class ApiQueryGlobalUserInfo extends ApiQueryBase {
 	public function getParamDescription() {
 		return array(
 			'user' => 'User to get information about. Defaults to the current user',
-			'prop' => array( 'Which properties to get:',
+			'prop' => array(
+				'Which properties to get:',
 				'  groups     - Get a list of global groups this user belongs to',
+				'  rights     - Get a list of global rights this user has',
 				'  merged     - Get a list of merged accounts',
 				'  unattached - Get a list of unattached accounts'
 			),
@@ -149,14 +168,8 @@ class ApiQueryGlobalUserInfo extends ApiQueryBase {
 	public function getDescription() {
 		return 'Show information about a global user.';
 	}
-	
-	public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
-			array( 'nosuchuser', 'user' ),
-		) );
-	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array(
 			'api.php?action=query&meta=globaluserinfo',
 			'api.php?action=query&meta=globaluserinfo&guiuser=Catrope&guiprop=groups|merged|unattached'
@@ -164,6 +177,6 @@ class ApiQueryGlobalUserInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryGlobalUserInfo.php 69932 2010-07-26 08:03:21Z tstarling $';
+		return __CLASS__ . ': $Id: ApiQueryGlobalUserInfo.php 108108 2012-01-05 01:39:49Z reedy $';
 	}
 }

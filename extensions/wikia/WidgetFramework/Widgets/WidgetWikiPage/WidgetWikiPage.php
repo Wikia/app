@@ -33,21 +33,21 @@ function WidgetWikiPage($id, $params) {
 	global $wgTitle, $wgParser;
 
 	wfProfileIn(__METHOD__);
-	
+
 	if ( !is_object($wgTitle) ) {
 		$wgTitle = new Title();
 	}
-    
+
 	// clean up inputs
 	$params['source'] = trim($params['source']);
 	$params['name'] = trim($params['name']);
 
 	//stopgap for 67038
 	$source = Title::newFromText( $params['source'] );
-	if( is_object( $source ) && !$source->userCanRead() ) {
+	if( is_object( $source ) && !$source->userCan( 'read' ) ) {
 		return array('body' => '', 'title' => $params['name'] );
 	}
-	
+
 	//
 	// parse message and clean it up
 	//
@@ -60,7 +60,7 @@ function WidgetWikiPage($id, $params) {
 	else {
 		$parser = & $wgParser;
 	}
-	
+
 	$options = new ParserOptions();
 	$options->setMaxIncludeSize(2048);
 
@@ -70,10 +70,10 @@ function WidgetWikiPage($id, $params) {
 	}
 	else {
 		// has a source value
-		
+
 		// get contents
 		$article = WidgetFramework::getArticle($params['source']);
-	
+
 		if ( $article == false ) {
 			// failed to get text, show error message, failed pagename is in $1
 			$ret = $parser->parse( '<span class="widget-error-wikipage-missing">' . wfMsg('widgetwikipagemissing', $params['source']) . '</span>' , $wgTitle, $options )->getText();
@@ -86,6 +86,6 @@ function WidgetWikiPage($id, $params) {
 	}
 
 	wfProfileOut(__METHOD__);
-    
+
 	return array('body' => $ret, 'title' => $params['name'] );
 }

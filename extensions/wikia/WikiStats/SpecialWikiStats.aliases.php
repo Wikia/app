@@ -1,20 +1,20 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
     'WikiStats' => array( 'WikiStats' ),
 );
 /**
  * German
  */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
     'WikiStats' => array( 'WikiStatistik', 'WikiStats' ),
 );
 /**
  * Polish
  */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'WikiStats' => array( 'StatystykiWiki', 'WikiStats' ),
 );

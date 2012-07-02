@@ -30,10 +30,12 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'newschannel-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'newschannel-desc' => '{{desc}}',
 	'newschannel_format' => '{{Identical|Format}}',
+	'newschannel_limit' => '{{Identical|Limit}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -83,7 +85,24 @@ $messages['ast'] = array(
 	'newschannel_submit_button' => "Crear fonte d'anuncies",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Azerbaijani (Azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'newschannel-desc' => 'Bir xəbər kanalını dinamik bir [[Special:NewsChannel|xüsusi səhifə]] olaraq uygulamaya qoyar',
+	'newschannel_format' => 'Format:',
+	'newschannel_limit' => 'Limit:',
+	'newschannel_exclude_category' => 'Bu kateqoriyanı kanarda saxla:',
+);
+
+/** Belarusian (Беларуская)
+ * @author Тест
+ */
+$messages['be'] = array(
+	'newschannel_format' => 'Фармат:',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -107,6 +126,17 @@ $messages['bg'] = array(
 	'newschannel_include_category' => 'Допълнителна категория:',
 	'newschannel_exclude_category' => 'Изключване на категория:',
 	'newschannel_submit_button' => 'Създаване на емисия',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'newschannel' => 'খবরের চ্যানেল',
+	'newschannel_format' => 'বিন্যাস:',
+	'newschannel_limit' => 'সীমা:',
+	'newschannel_include_category' => 'অতিরিক্ত বিষয়শ্রেণী:',
+	'newschannel_submit_button' => 'ফিড তৈরি',
 );
 
 /** Breton (Brezhoneg)
@@ -133,6 +163,19 @@ $messages['bs'] = array(
 	'newschannel_include_category' => 'Dodatna kategorija:',
 	'newschannel_exclude_category' => 'Isključi kategoriju:',
 	'newschannel_submit_button' => 'Napravi fid',
+);
+
+/** Chechen (Нохчийн)
+ * @author Sasan700
+ */
+$messages['ce'] = array(
+	'newschannel' => 'Хааман зlе',
+	'newschannel-desc' => 'Кхуллу хааман аса башхонца [[Special:NewsChannel|белха агlо санна]]',
+	'newschannel_format' => 'Хааман барам:',
+	'newschannel_limit' => 'Тlаьхьара хааман дукхалла:',
+	'newschannel_include_category' => 'Кхин тlе кадегар:',
+	'newschannel_exclude_category' => 'Юкъараяккха кадегар:',
+	'newschannel_submit_button' => 'Араяккха',
 );
 
 /** Czech (Česky)
@@ -224,6 +267,15 @@ $messages['et'] = array(
 	'newschannel_include_category' => 'Lisakategooria:',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'newschannel' => 'Albisteen kanala',
+	'newschannel_format' => 'Formatua:',
+	'newschannel_limit' => 'Muga:',
+);
+
 /** Finnish (Suomi)
  * @author Centerlink
  * @author Crt
@@ -260,9 +312,12 @@ $messages['fr'] = array(
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
+	'newschannel' => 'Chêna de novèles',
 	'newschannel_format' => 'Format :',
 	'newschannel_limit' => 'Limita :',
 	'newschannel_include_category' => 'Catègorie(s) de ples :',
+	'newschannel_exclude_category' => 'Catègorie èxcllua :',
+	'newschannel_submit_button' => 'Fâre lo flux',
 );
 
 /** Irish (Gaeilge)
@@ -377,7 +432,9 @@ $messages['id'] = array(
  */
 $messages['ig'] = array(
 	'newschannel' => 'Nkushi Akíkó Uwà',
+	'newschannel_format' => 'Udi:',
 	'newschannel_limit' => 'Érúrú:',
+	'newschannel_exclude_category' => 'Kúfù na uzor ebe ihe nor:',
 	'newschannel_submit_button' => 'Ké ntá',
 );
 
@@ -417,7 +474,7 @@ $messages['km'] = array(
 	'newschannel_exclude_category' => 'ចំណាត់ថ្នាក់មិនរាប់បញ្ចូល:',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -428,6 +485,14 @@ $messages['ksh'] = array(
 	'newschannel_include_category' => 'Zosätzlijje Saachjropp:',
 	'newschannel_exclude_category' => 'Ußjeschloße Saachjrupp:',
 	'newschannel_submit_button' => 'Kanaal opmaache',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'newschannel_format' => 'Format:',
+	'newschannel_limit' => 'Sînor:',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -456,6 +521,42 @@ $messages['mk'] = array(
 	'newschannel_submit_button' => 'Создај емитување',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'newschannel_limit' => 'പരിധി:',
+	'newschannel_include_category' => 'കൂടുതൽ വർഗ്ഗം:',
+	'newschannel_exclude_category' => 'വർഗ്ഗം ഒഴിവാക്കുക:',
+	'newschannel_submit_button' => 'ഫീഡ് സൃഷ്ടിക്കുക',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'newschannel' => 'Saluran berita',
+	'newschannel-desc' => 'Melaksanakan satu saluran berita dalam bentuk [[Special:NewsChannel|laman khas]] yang dinamik',
+	'newschannel_format' => 'Format:',
+	'newschannel_limit' => 'Had:',
+	'newschannel_include_category' => 'Kategori tambahan:',
+	'newschannel_exclude_category' => 'Kategori terkecuali:',
+	'newschannel_submit_button' => 'Cipta suapan',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['nb'] = array(
+	'newschannel' => 'Nyhtskanal',
+	'newschannel-desc' => 'Implementerer en nyhetskanal som en dynamisk [[Special:NewsChannel|spesialside]]',
+	'newschannel_format' => 'Format:',
+	'newschannel_limit' => 'Grense:',
+	'newschannel_include_category' => 'Ekstra kategori:',
+	'newschannel_exclude_category' => 'Ekskluder kategori:',
+	'newschannel_submit_button' => 'Opprett nyhetskilde',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -482,19 +583,6 @@ $messages['nn'] = array(
 	'newschannel_submit_button' => 'Opprett nyhendekjelda',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- */
-$messages['no'] = array(
-	'newschannel' => 'Nyhtskanal',
-	'newschannel-desc' => 'Implementerer en nyhetskanal som en dynamisk [[Special:NewsChannel|spesialside]]',
-	'newschannel_format' => 'Format:',
-	'newschannel_limit' => 'Grense:',
-	'newschannel_include_category' => 'Ekstra kategori:',
-	'newschannel_exclude_category' => 'Ekskluder kategori:',
-	'newschannel_submit_button' => 'Opprett nyhetskilde',
-);
-
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -505,7 +593,7 @@ $messages['oc'] = array(
 	'newschannel_limit' => 'Limit :',
 	'newschannel_include_category' => 'Categoria(s) addicionala(s) :',
 	'newschannel_exclude_category' => 'Categoria(s) excluida(s) :',
-	'newschannel_submit_button' => 'Crear lo flus',
+	'newschannel_submit_button' => 'Crear lo flux',
 );
 
 /** Deitsch (Deitsch)
@@ -546,16 +634,18 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'newschannel' => 'خبري کانال',
+	'newschannel_format' => 'بڼه:',
 	'newschannel_limit' => 'بريد:',
 	'newschannel_include_category' => 'اضافه وېشنيزه:',
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'newschannel' => 'Canal de "news"',
-	'newschannel-desc' => 'Implementa um canal de "news" como uma [[Special:NewsChannel|página especial]] dinâmica',
+	'newschannel' => 'Canal de notícias',
+	'newschannel-desc' => 'Implementa um canal de notícias como uma [[Special:NewsChannel|página especial]] dinâmica',
 	'newschannel_format' => 'Formato:',
 	'newschannel_limit' => 'Limite:',
 	'newschannel_include_category' => 'Categoria adicional:',
@@ -581,12 +671,12 @@ $messages['pt-br'] = array(
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
-	'newschannel' => 'Canal de ştiri',
+	'newschannel' => 'Canal de știri',
 	'newschannel_format' => 'Format:',
 	'newschannel_limit' => 'Limită:',
-	'newschannel_include_category' => 'Categorie adiţională:',
+	'newschannel_include_category' => 'Categorie adițională:',
 	'newschannel_exclude_category' => 'Exclude categoria:',
-	'newschannel_submit_button' => 'Creaţi flux',
+	'newschannel_submit_button' => 'Creați flux',
 );
 
 /** Tarandíne (Tarandíne)
@@ -624,17 +714,18 @@ $messages['sk'] = array(
 	'newschannel_submit_button' => 'Vytvoriť kanál',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Rancher
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'newschannel_format' => 'Формат:',
-	'newschannel_limit' => 'Лимит:',
+	'newschannel_limit' => 'Ограничење:',
 	'newschannel_include_category' => 'Додатна категорија:',
-	'newschannel_exclude_category' => 'Искључи категорију:',
+	'newschannel_exclude_category' => 'Изузми категорију:',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -705,14 +796,17 @@ $messages['uk'] = array(
 	'newschannel_submit_button' => 'Вивести',
 );
 
-/** Veps (Vepsan kel')
+/** Veps (Vepsän kel')
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
 	'newschannel' => 'Uzištusiden kanal',
+	'newschannel-desc' => "Sädab uzištusiden kanalan, kudamb nägub kuti [[Special:NewsChannel|specialine lehtpol']].",
 	'newschannel_format' => 'Uzištusiden format:',
 	'newschannel_limit' => 'Tantoižiden uzištusiden lugumär:',
 	'newschannel_include_category' => 'Ližakategorii:',
+	'newschannel_exclude_category' => 'Heitta poiš kategorii:',
+	'newschannel_submit_button' => 'Ozutada',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -722,10 +816,10 @@ $messages['vi'] = array(
 	'newschannel' => 'Đài tin tức',
 	'newschannel-desc' => 'Cung cấp đài tin tức tại [[Special:NewsChannel|trang đặc biệt]] động',
 	'newschannel_format' => 'Định dạng:',
-	'newschannel_limit' => 'Hạn chế:',
+	'newschannel_limit' => 'Giới hạn:',
 	'newschannel_include_category' => 'Thể loại khác:',
 	'newschannel_exclude_category' => 'Trừ thể loại:',
-	'newschannel_submit_button' => 'Tạo feed',
+	'newschannel_submit_button' => 'Tạo nguồn tin',
 );
 
 /** Volapük (Volapük)
@@ -747,17 +841,20 @@ $messages['zh-hans'] = array(
 	'newschannel' => '新闻频道',
 	'newschannel_format' => '格式：',
 	'newschannel_limit' => '限制：',
+	'newschannel_exclude_category' => '排除分类：',
 	'newschannel_submit_button' => '创建供稿',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Liangent
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'newschannel' => '新聞頻道',
 	'newschannel_format' => '格式：',
 	'newschannel_limit' => '限制：',
-	'newschannel_submit_button' => '創建供稿',
+	'newschannel_exclude_category' => '排除分類：',
+	'newschannel_submit_button' => '建立供稿',
 );
 

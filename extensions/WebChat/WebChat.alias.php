@@ -6,90 +6,139 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
-/** English */
-$aliases['en'] = array(
+/** English (English) */
+$specialPageAliases['en'] = array(
 	'WebChat' => array( 'WebChat' ),
 );
 
 /** Arabic (العربية) */
-$aliases['ar'] = array(
+$specialPageAliases['ar'] = array(
 	'WebChat' => array( 'دردشة_الويب' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
-$aliases['arz'] = array(
-	'WebChat' => array( 'دردشة_الويب' ),
+$specialPageAliases['arz'] = array(
+	'WebChat' => array( 'شات_الويب' ),
+);
+
+/** German (Deutsch) */
+$specialPageAliases['de'] = array(
+	'WebChat' => array( 'Web-Chat' ),
+);
+
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'WebChat' => array( 'Retbabili' ),
+);
+
+/** Spanish (Español) */
+$specialPageAliases['es'] = array(
+	'WebChat' => array( 'Chat_web' ),
 );
 
 /** Estonian (Eesti) */
-$aliases['et'] = array(
+$specialPageAliases['et'] = array(
 	'WebChat' => array( 'Jututuba' ),
 );
 
+/** Persian (فارسی) */
+$specialPageAliases['fa'] = array(
+	'WebChat' => array( 'گفتگوی_تحت_وب', 'وب‌چت' ),
+);
+
+/** Gagauz (Gagauz) */
+$specialPageAliases['gag'] = array(
+	'WebChat' => array( 'VebSözleşmäk', 'VebSözleşmä', 'VebSözleşme' ),
+);
+
+/** Haitian (Kreyòl ayisyen) */
+$specialPageAliases['ht'] = array(
+	'WebChat' => array( 'Klavardaj' ),
+);
+
 /** Interlingua (Interlingua) */
-$aliases['ia'] = array(
-	'WebChat' => array( 'Chat web' ),
+$specialPageAliases['ia'] = array(
+	'WebChat' => array( 'Chat_web' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
-$aliases['id'] = array(
-	'WebChat' => array( 'Obrolan web', 'ObrolanWeb' ),
+$specialPageAliases['id'] = array(
+	'WebChat' => array( 'Obrolan_web', 'ObrolanWeb' ),
 );
 
 /** Japanese (日本語) */
-$aliases['ja'] = array(
+$specialPageAliases['ja'] = array(
 	'WebChat' => array( 'ウェブチャット' ),
 );
 
 /** Korean (한국어) */
-$aliases['ko'] = array(
-	'WebChat' => array( '웹 채팅' ),
+$specialPageAliases['ko'] = array(
+	'WebChat' => array( '웹채팅' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
-$aliases['lb'] = array(
+$specialPageAliases['lb'] = array(
 	'WebChat' => array( 'Web-Chat' ),
 );
 
+/** Macedonian (Македонски) */
+$specialPageAliases['mk'] = array(
+	'WebChat' => array( 'МрежРазг' ),
+);
+
 /** Malayalam (മലയാളം) */
-$aliases['ml'] = array(
-	'WebChat' => array( 'വെബ് ചാറ്റ്' ),
+$specialPageAliases['ml'] = array(
+	'WebChat' => array( 'വെബ്_ചാറ്റ്' ),
 );
 
 /** Marathi (मराठी) */
-$aliases['mr'] = array(
+$specialPageAliases['mr'] = array(
 	'WebChat' => array( 'वेबगप्पा' ),
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+$specialPageAliases['nb'] = array(
+	'WebChat' => array( 'Chat' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
-$aliases['nds-nl'] = array(
+$specialPageAliases['nds-nl'] = array(
 	'WebChat' => array( 'Draodpraot' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
-	'WebChat' => array( 'Webchat' ),
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
-$aliases['no'] = array(
-	'WebChat' => array( 'Chat' ),
+$specialPageAliases['nl'] = array(
+	'WebChat' => array( 'WebChat' ),
 );
 
 /** Portuguese (Português) */
-$aliases['pt'] = array(
+$specialPageAliases['pt'] = array(
 	'WebChat' => array( 'Conversação' ),
 );
 
 /** Slovenian (Slovenščina) */
-$aliases['sl'] = array(
+$specialPageAliases['sl'] = array(
 	'WebChat' => array( 'SpletnaKlepetalnica' ),
 );
 
 /** Turkish (Türkçe) */
-$aliases['tr'] = array(
+$specialPageAliases['tr'] = array(
 	'WebChat' => array( 'WebSohbet' ),
 );
 
+/** Tatar (Cyrillic script) (Татарча) */
+$specialPageAliases['tt-cyrl'] = array(
+	'WebChat' => array( 'Веб-чат' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$specialPageAliases['zh-hans'] = array(
+	'WebChat' => array( '网上聊天' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$specialPageAliases['zh-hant'] = array(
+	'WebChat' => array( '網上聊天' ),
+);

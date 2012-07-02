@@ -364,16 +364,18 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
     * @param mixed   &$firstsheet  The first worksheet in the workbook we belong to
     * @param mixed   &$url_format  The default format for hyperlinks
     * @param mixed   &$parser      The formula parser created for the Workbook
+    * @param string  $tmp_dir      The path to the directory for temporary files
     * @access private
     */
-    function Spreadsheet_Excel_Writer_Worksheet($BIFF_version, $name,
+    function __construct($BIFF_version, $name,
                                                 $index, &$activesheet,
                                                 &$firstsheet, &$str_total,
                                                 &$str_unique, &$str_table,
-                                                &$url_format, &$parser)
+                                                &$url_format, &$parser,
+                                                $tmp_dir)
     {
         // It needs to call its parent's constructor explicitly
-        $this->Spreadsheet_Excel_Writer_BIFFwriter();
+        parent::__construct();
         $this->_BIFF_version   = $BIFF_version;
         $rowmax                = 65536; // 16384 in Excel 5
         $colmax                = 256;
@@ -461,6 +463,8 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
 
         $this->_dv                = array();
 
+        $this->_tmp_dir = $tmp_dir;
+
         $this->_initialize();
     }
 
@@ -473,14 +477,32 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
     */
     function _initialize()
     {
+        if ($this->_using_tmpfile == false) {
+            return;
+        }
+
+        if ($this->_tmp_dir === '' && ini_get('open_basedir') === false) {
+            // open_basedir restriction in effect - store data in memory
+            // ToDo: Let the error actually have an effect somewhere
+            $this->_using_tmpfile = false;  
+            return new PEAR_Error('Temp file could not be opened since open_basedir restriction in effect - please use setTmpDir() - using memory storage instead');
+        }
+
         // Open tmp file for storing Worksheet data
-        $fh = tmpfile();
-        if ($fh) {
-            // Store filehandle
-            $this->_filehandle = $fh;
+        if ($this->_tmp_dir === '') {
+            $fh = tmpfile();
         } else {
+            // For people with open base dir restriction
+            $tmpfilename = tempnam($this->_tmp_dir, "Spreadsheet_Excel_Writer");
+            $fh = @fopen($tmpfilename, "w+b");
+        }
+
+        if ($fh === false) {
             // If tmpfile() fails store data in memory
             $this->_using_tmpfile = false;
+        } else {
+            // Store filehandle
+            $this->_filehandle = $fh;
         }
     }
 
@@ -1155,9 +1177,6 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
         } elseif (preg_match("/^=/", $token)) {
             // Match formula
             return $this->writeFormula($row, $col, $token, $format);
-        } elseif (preg_match("/^@/", $token)) {
-            // Match formula
-            return $this->writeFormula($row, $col, $token, $format);
         } elseif ($token == '') {
             // Match blank
             return $this->writeBlank($row, $col, $format);
@@ -1319,15 +1338,17 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
         $row     = $match[2];
 
         // Convert base26 column string to number
-        $chars = split('', $col);
+        // empty split / explode always equals to false and produces a warning
+        //$chars = split('', $col);
         $expn  = 0;
         $col   = 0;
 
+        /* equals to false
         while ($chars) {
             $char = array_pop($chars);        // LS char first
             $col += (ord($char) -ord('A') +1) * pow(26,$expn);
             $expn++;
-        }
+        } */
 
         // Convert 1-index to zero-index
         $row--;
@@ -2879,7 +2900,7 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
         $colcount = count($this->_colinfo);
         for ($i = 0; $i < $colcount; $i++) {
            // Skip cols without outline level info.
-           if (count($col_level) >= 6) {
+           if (count($this->_colinfo[$i]) >= 6) {
               $col_level = max($this->_colinfo[$i][5], $col_level);
            }
         }
@@ -3499,4 +3520,3 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
         }
     }
 }
-?>

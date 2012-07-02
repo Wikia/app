@@ -14,7 +14,7 @@ CREATE TABLE /*$wgDBprefix*/sistersites_site (
   sss_listurl TEXT,
   
   PRIMARY KEY (sss_id)
-) TYPE=InnoDB;
+) /*$wgDBTableOptions*/;
 
 CREATE TABLE /*$wgDBprefix*/sistersites_page (
   ssp_id INT AUTO_INCREMENT,
@@ -42,4 +42,4 @@ CREATE TABLE /*$wgDBprefix*/sistersites_page (
   
   -- Index for updating sites
   KEY (ssp_site, ssp_url)
-) TYPE=InnoDB;
+) /*$wgDBTableOptions*/;

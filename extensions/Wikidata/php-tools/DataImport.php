@@ -86,7 +86,7 @@ startNewTransaction( $sibUserID, 0, "Swiss-Prot Import" );
 echo "\nImporting Swiss-Prot\n";
 # $nsstore=wfGetNamespaceStore();
 # print_r($nsstore->nsarray);
-# "Namespace id for expression=" . Namespace::getIndexForName('expression');
+# "Namespace id for expression=" . MWNamespace::getIndexForName('expression');
 
 // $umlsImport = new UMLSImportResult;
 // $umlsImport->umlsCollectionId = 5;

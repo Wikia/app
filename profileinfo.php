@@ -1,35 +1,43 @@
 <?php
+/**
+ * Show profiling data.
+ *
+ * Copyright 2005 Kate Turner.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @file
+ */
+
 ini_set( 'zlib.output_compression', 'off' );
 
 $wgEnableProfileInfo = $wgProfileToDatabase = false;
+if ( isset( $_SERVER['MW_COMPILED'] ) ) {
+	require ( 'phase3/includes/WebStart.php' );
+} else {
+	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
+}
 
-require_once( './includes/WebStart.php' );
+
+header( 'Content-Type: text/html; charset=utf-8' );
 
 ?>
-<!--
-     Show profiling data.
-
-     Copyright 2005 Kate Turner.
-
-     Permission is hereby granted, free of charge, to any person obtaining a copy
-     of this software and associated documentation files (the "Software"), to deal
-     in the Software without restriction, including without limitation the rights
-     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-     copies of the Software, and to permit persons to whom the Software is
-     furnished to do so, subject to the following conditions:
-
-     The above copyright notice and this permission notice shall be included in
-     all copies or substantial portions of the Software.
-
-     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-     AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-     SOFTWARE.
-
--->
 <html>
 <head>
 <title>Profiling data</title>
@@ -70,6 +78,17 @@ if ( !$wgEnableProfileInfo ) {
 	exit( 1 );
 }
 
+$dbr = wfGetDB( DB_SLAVE );
+
+if( !$dbr->tableExists( 'profiling' ) ) {
+	echo "<p>No 'profiling' table exists, so we can't show you anything.</p>\n";
+	echo "<p>If you want to log profiling data, create the table using "
+		. "<tt>maintenance/archives/patch-profiling.sql</tt> and enable "
+		. "<tt>\$wgProfileToDatabase</tt>.</p>\n";
+	echo "</body></html>";
+	exit( 1 );
+}
+
 $expand = array();
 if ( isset( $_REQUEST['expand'] ) )
 	foreach( explode( ',', $_REQUEST['expand'] ) as $f )
@@ -81,7 +100,9 @@ class profile_point {
 	var $time;
 	var $children;
 
-	function profile_point( $name, $count, $time, $memory ) {
+	static $totaltime, $totalmemory, $totalcount;
+
+	function __construct( $name, $count, $time, $memory ) {
 		$this->name = $name;
 		$this->count = $count;
 		$this->time = $time;
@@ -93,45 +114,46 @@ class profile_point {
 		$this->children[] = $child;
 	}
 
-	function display($indent = 0.0) {
-		global $expand, $totaltime, $totalmemory, $totalcount;
+	function display( $expand, $indent = 0.0 ) {
 		usort( $this->children, 'compare_point' );
 
-		$extet = '';
-		if ( isset( $expand[$this->name()] ) )
-			$ex = true;
-		else	$ex = false;
+		$ex = isset( $expand[$this->name()] );
+
 		if ( !$ex ) {
 			if ( count( $this->children ) ) {
 				$url = getEscapedProfileUrl( false, false, $expand + array( $this->name() => true ) );
 				$extet = " <a href=\"$url\">[+]</a>";
-			} else $extet = '';
+			} else {
+				$extet = '';
+			}
 		} else {
 			$e = array();
-			foreach ( $expand as $name => $ep )
-				if ( $name != $this->name() )
+			foreach ( $expand as $name => $ep ) {
+				if ( $name != $this->name() ) {
 					$e += array( $name => $ep );
+				}
+			}
 
-			$extet = " <a href=\"" . getEscapedProfileUrl( false, false, $e ) . "\">[&ndash;]</a>";
+			$extet = " <a href=\"" . getEscapedProfileUrl( false, false, $e ) . "\">[–]</a>";
 		}
 		?>
 		<tr>
 		<td class="name" style="padding-left: <?php echo $indent ?>em;">
 			<?php echo htmlspecialchars( $this->name() ) . $extet ?>
 		</td>
-		<td class="timep"><?php echo @wfPercent( $this->time() / $totaltime * 100 ) ?></td>
-		<td class="memoryp"><?php echo @wfPercent( $this->memory() / $totalmemory * 100 ) ?></td>
+		<td class="timep"><?php echo @wfPercent( $this->time() / self::$totaltime * 100 ) ?></td>
+		<td class="memoryp"><?php echo @wfPercent( $this->memory() / self::$totalmemory * 100 ) ?></td>
 		<td class="count"><?php echo $this->count() ?></td>
 		<td class="cpr"><?php echo round( sprintf( '%.2f', $this->callsPerRequest() ), 2 ) ?></td>
 		<td class="tpc"><?php echo round( sprintf( '%.2f', $this->timePerCall() ), 2 ) ?></td>
 		<td class="mpc"><?php echo round( sprintf( '%.2f' ,$this->memoryPerCall() / 1024 ), 2 ) ?></td>
-		<td class="tpr"><?php echo @round( sprintf( '%.2f', $this->time() / $totalcount ), 2 ) ?></td>
-		<td class="mpr"><?php echo @round( sprintf( '%.2f' ,$this->memory() / $totalcount / 1024 ), 2 ) ?></td>
+		<td class="tpr"><?php echo @round( sprintf( '%.2f', $this->time() / self::$totalcount ), 2 ) ?></td>
+		<td class="mpr"><?php echo @round( sprintf( '%.2f' ,$this->memory() / self::$totalcount / 1024 ), 2 ) ?></td>
 		</tr>
 		<?php
 		if ( $ex ) {
 			foreach ( $this->children as $child ) {
-				$child->display( $indent + 2 );
+				$child->display( $expand, $indent + 2 );
 			}
 		}
 	}
@@ -161,18 +183,15 @@ class profile_point {
 	}
 	
 	function callsPerRequest() {
-		global $totalcount;
-		return @( $this->count / $totalcount );
+		return @( $this->count / self::$totalcount );
 	}
 	
 	function timePerRequest() {
-		global $totalcount;
-		return @( $this->time / $totalcount );
+		return @( $this->time / self::$totalcount );
 	}
 	
 	function memoryPerRequest() {
-		global $totalcount;
-		return @( $this->memory / $totalcount );
+		return @( $this->memory / self::$totalcount );
 	}
 
 	function fmttime() {
@@ -180,7 +199,7 @@ class profile_point {
 	}
 };
 
-function compare_point( $a, $b ) {
+function compare_point(profile_point $a, profile_point $b) {
 	global $sort;
 	switch ( $sort ) {
 	case "name":
@@ -210,8 +229,6 @@ $sort = 'time';
 if ( isset( $_REQUEST['sort'] ) && in_array( $_REQUEST['sort'], $sorts ) )
 	$sort = $_REQUEST['sort'];
 
-
-$dbr = wfGetDB( DB_SLAVE );
 $res = $dbr->select( 'profiling', '*', array(), 'profileinfo.php', array( 'ORDER BY' => 'pf_name ASC' ) );
 
 if (isset( $_REQUEST['filter'] ) )
@@ -242,9 +259,9 @@ else
 <th><a href="<?php echo getEscapedProfileUrl( false, 'memory_per_req' ) ?>">kb/req</a></th>
 </tr>
 <?php
-$totaltime = 0.0;
-$totalcount = 0;
-$totalmemory = 0.0;
+profile_point::$totaltime = 0.0;
+profile_point::$totalcount = 0;
+profile_point::$totalmemory = 0.0;
 
 function getEscapedProfileUrl( $_filter = false, $_sort = false, $_expand = false ) {
 	global $filter, $sort, $expand;
@@ -270,9 +287,9 @@ $last = false;
 foreach( $res as $o ) {
 	$next = new profile_point( $o->pf_name, $o->pf_count, $o->pf_time, $o->pf_memory );
 	if( $next->name() == '-total' ) {
-		$totaltime = $next->time();
-		$totalcount = $next->count();
-		$totalmemory = $next->memory();
+		profile_point::$totaltime = $next->time();
+		profile_point::$totalcount = $next->count();
+		profile_point::$totalmemory = $next->memory();
 	}
 	if ( $last !== false ) {
 		if ( preg_match( "/^".preg_quote( $last->name(), "/" )."/", $next->name() ) ) {
@@ -300,12 +317,12 @@ foreach ( $points as $point ) {
 	if ( strlen( $filter ) && !strstr( $point->name(), $filter ) )
 		continue;
 
-	$point->display();
+	$point->display( $expand );
 }
 ?>
 </table>
 
-<p>Total time: <tt><?php printf("%5.02f", $totaltime) ?></tt></p>
-<p>Total memory: <tt><?php printf("%5.02f", $totalmemory / 1024 ) ?></tt></p>
+<p>Total time: <tt><?php printf("%5.02f", profile_point::$totaltime) ?></tt></p>
+<p>Total memory: <tt><?php printf("%5.02f", profile_point::$totalmemory / 1024 ) ?></tt></p>
 </body>
 </html>

@@ -26,6 +26,7 @@ ee.pl is a Perl script with the following dependencies:
   - Config::IniFiles
   - Gtk2
   - Encode
+  - Crypt::SSLeay (needed for SSL support)
 - Gtk2 libraries for graphical user itnerfaces
 
 == Installation under Unix ==
@@ -40,6 +41,7 @@ ee.pl is a Perl script with the following dependencies:
 
     install Config::IniFiles
     install Encode
+    install Crypt::SSLeay
 
 4) As for libgtk2-perl, it may be easiest to get binaries for your
    platform. See the FAQ at

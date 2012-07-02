@@ -2,7 +2,8 @@
 /**
  * Internationalisation file for extension EditSectionHiliteLink.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -28,6 +29,13 @@ $messages['ar'] = array(
 	'editsectionhilitelink-desc' => 'إظهار القسم المناسب لصفحة عندما تنقل الفأرة فوق وصلة التعديل',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'editsectionhilitelink-desc' => "Resalta la seición afayadiza d'una páxina al pasar el mur per riba del enllaz d'edición",
+);
+
 /** Bavarian (Boarisch)
  * @author Man77
  */
@@ -35,7 +43,7 @@ $messages['bar'] = array(
 	'editsectionhilitelink-desc' => "Hebt in entsprechadn Åbschnitt vu ana Seitn außa, wãnn'd Maus üwa'm „werkln“-Link is",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -63,6 +71,14 @@ $messages['bs'] = array(
  */
 $messages['ca'] = array(
 	'editsectionhilitelink-desc' => "Ressalta la secció apropiada d'una pàgina quan passeu el ratolí per a sobre l'enllaç per a editar",
+);
+
+/** Czech (Česky)
+ * @author Mormegil
+ * @author Mr. Richard Bolla
+ */
+$messages['cs'] = array(
+	'editsectionhilitelink-desc' => 'Zvýrazňování příslušné části stránky, pokud podržíte myš nad odkazem „editovat“',
 );
 
 /** Welsh (Cymraeg)
@@ -96,6 +112,13 @@ $messages['el'] = array(
  */
 $messages['es'] = array(
 	'editsectionhilitelink-desc' => 'Resaltar la sección apropiada de una página cuando pase el mouse por encima del vínculo de edición',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'editsectionhilitelink-desc' => 'Saguarekin aukeratutako orrialdearen atala azpimarratu',
 );
 
 /** Finnish (Suomi)
@@ -168,6 +191,13 @@ $messages['id'] = array(
 	'editsectionhilitelink-desc' => 'Tandai bagian halaman yang cocok pada saat Anda menggerakan tetikus ke atas pranala sunting',
 );
 
+/** Interlingue (Interlingue)
+ * @author Renan
+ */
+$messages['ie'] = array(
+	'editsectionhilitelink-desc' => 'Selecter li division convenent de un págine quande vu move li mouse súper li catenun de redaction',
+);
+
 /** Italian (Italiano)
  * @author Darth Kule
  */
@@ -182,7 +212,7 @@ $messages['ja'] = array(
 	'editsectionhilitelink-desc' => 'セクションの編集リンクの上にカーソルを乗せた際に、ページ中の該当するセクションをハイライト表示する',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -197,11 +227,32 @@ $messages['lb'] = array(
 	'editsectionhilitelink-desc' => "Den entspriechenden Abschnitt ervirhiewen wann Dir mat der Maus iwwert den 'Änneren'-Link fuert",
 );
 
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'editsectionhilitelink-desc' => 'Iezīmē atbilstošo lapas daļu, novietojot peli uz rediģēšanas saites',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
 	'editsectionhilitelink-desc' => 'Посинете го соодветниот дел од страницата кога ќе го донесете глушецот до врската за уредување',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'editsectionhilitelink-desc' => 'Menyerlahkan bahagian laman yang sesuai apabila anda menggerakkan tetikut ke atas pautan sunting',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'editsectionhilitelink-desc' => "Markeer de paragraaf die van toepassing is bie t selekteren van de verwiezing ''bewarken''",
 );
 
 /** Dutch (Nederlands)
@@ -222,7 +273,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'editsectionhilitelink-desc' => 'Uthev den aktuelle delen av en side når du fører musepekeren over lenken til endringen',
 );
 
@@ -252,7 +303,7 @@ $messages['pms'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
-	'editsectionhilitelink-desc' => 'Destacar a respectiva secção da página quando o cursor for colocado sobre a ligação de edição',
+	'editsectionhilitelink-desc' => 'Destacar a respectiva secção da página quando o cursor for colocado sobre o link de edição',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -276,7 +327,7 @@ $messages['ru'] = array(
 	'editsectionhilitelink-desc' => 'Подсвечивает на странице соответствующий раздел, когда вы перемещаете указатель мыши на ссылку «править»',
 );
 
-/** Yakut (Саха тыла)
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
@@ -290,14 +341,21 @@ $messages['sk'] = array(
 	'editsectionhilitelink-desc' => 'Zvýrazniť príslušnú sekciu článku keď podržíte ukazovateľ myši nad odkazom „upraviť“',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Slovenian (Slovenščina)
+ * @author Dbc334
+ */
+$messages['sl'] = array(
+	'editsectionhilitelink-desc' => 'Označi ustrezen razdelek strani, ko premaknete miško na povezavo za urejanje',
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'editsectionhilitelink-desc' => 'Истиче одговарајући одељак стране када се мишем пређе преко везе за његову измену',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -316,6 +374,13 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'editsectionhilitelink-desc' => "మౌస్ ని '''మార్చు''' లంకె మీదుగా తీసుకెళ్ళినప్పుడు వ్యాసములోని భాగమును గుర్తించేటట్టు చేస్తుంది",
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'editsectionhilitelink-desc' => 'Patindihin ang kulay ng naaangkop na seksyon ng isang pahina kapag pinagalaw ang maws sa ibaba ng kawing na pambago',
 );
 
 /** Turkish (Türkçe)
@@ -339,7 +404,7 @@ $messages['vi'] = array(
 	'editsectionhilitelink-desc' => 'Tô đậm phần trang khi để con trỏ trên liên kết sửa đổi',
 );
 
-/** Yue (粵語)
+/** Cantonese (粵語)
  * @author Shinjiman
  */
 $messages['yue'] = array(

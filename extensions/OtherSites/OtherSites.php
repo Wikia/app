@@ -19,9 +19,9 @@ if (!defined('MEDIAWIKI')) die();
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * @file
  * @author Mark Jaroski <mark@geekhive.net>
- * @package MediaWiki
- * @subpackage Extensions
+ * @ingroup Extensions
  */
 
 # to be redefined in LocalSettings.php
@@ -40,7 +40,7 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '1.0',
 	'author' => 'Mark Jaroski',
 	'descriptionmsg' => 'othersites-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:OtherSites',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:OtherSites',
 );
 
 $wgExtensionMessagesFiles['OtherSites'] = dirname(__FILE__) . '/OtherSites.i18n.php';
@@ -50,6 +50,7 @@ function setupOtherSites() {
 	require_once('languages/Names.php');
 
 	foreach ( array_keys( $wgOtherSites ) as $key ) {
+		/* FIXME: VERY VERY BROKEN */
 		$wgLanguageNames[$key] = $wgOtherSites[$key];
 	}
 }
@@ -69,7 +70,7 @@ function wfOtherSitesMonoBook( &$skin ) {
 			}
 		}
 		if ( count( $others ) > 0 ) {
-			wfLoadExtensionMessages( 'OtherSites' );
+			
 
 			echo '<div id="p-others" class="portlet">';
 			echo '<h5>';

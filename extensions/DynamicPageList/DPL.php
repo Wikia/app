@@ -263,7 +263,7 @@ class DPL {
 		$title = $article->mTitle->getText();
 		if ( strpos( $title, '%TITLE%' ) >= 0 ) {
 			if ( $this->mReplaceInTitle[0] != '' ) {
-				$title = preg_replace( $this->mReplaceInTitle[0], $this->mReplaceInTitle[1], $title );
+				$title = preg_replace( $this->mReplaceInTitle[0],  empty($this->mReplaceInTitle[1])?'':$this->mReplaceInTitle[1], $title );
 			}
 			if ( isset( $titleMaxLength ) && ( strlen( $title ) > $titleMaxLength ) ) {
 				$title = substr( $title, 0, $titleMaxLength ) . '...';
@@ -1615,7 +1615,7 @@ class DPL {
 			$options = array( $options );
 		}
 
-		$string = wfMsgGetKey( $key, true, false, false );
+		$string = wfMsgNoTrans( $key );
 
 		$string = wfMsgReplaceArgs( $string, $args );
 

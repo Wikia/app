@@ -47,7 +47,7 @@ var mapId = 0;
 var layer = null;
 
 if (wgSlippyMapSlippyByDefault) {
-	addOnloadHook(slippymap_init);
+	$(slippymap_init);
 }
 	
 function slippymap_init() {

@@ -92,7 +92,8 @@ $messages['en'] = array(
 	'swm-error-long-message'	=> 'Messages are limited to 500 characters.',
 	'swm-error-empty-group'		=> 'Enter the name of the group.',
 	'swm-error-invalid-time'    => 'Invalid time provided.',
-	'swm-lang-other'		=> 'all remaining languages'
+	'swm-lang-other'		    => 'all remaining languages',
+	'action-messagetool'        => 'send site wide messages',
 );
 
 /** Message documentation (Message documentation)
@@ -197,7 +198,7 @@ Dit kan nie ongedaan gemaak word nie!',
 	'swm-lang-other' => 'alle oorblywende tale',
 );
 
-/** Aragonese (aragonés)
+/** Aragonese (Aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -320,7 +321,7 @@ $messages['az'] = array(
 	'swm-no' => 'Xeyr',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -565,7 +566,7 @@ $messages['cs'] = array(
 	'swm-lang-other' => 'všechny zbývající jazyky',
 );
 
-/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+/** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
 $messages['cu'] = array(
@@ -999,7 +1000,7 @@ $messages['fr'] = array(
 	'swm-lang-other' => 'toutes les langues restantes',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1397,7 +1398,7 @@ $messages['ku-latn'] = array(
 	'swm-label-language' => 'Ziman',
 	'swm-list-no-messages' => 'Mesaj tune ne.',
 	'swm-list-table-group' => 'Grûp',
-	'swm-list-table-content' => 'Naverok',
+	'swm-list-table-content' => 'Naverrok',
 	'swm-yes' => 'Erê',
 	'swm-no' => 'Na',
 );
@@ -1415,18 +1416,12 @@ $messages['lb'] = array(
 	'swm-label-mode-users-all' => 'All Benotzer',
 	'swm-label-mode-users-active' => 'Aktiv Benotzer',
 	'swm-label-mode-users-user' => 'Erausgesichte Benotzer',
-	'swm-label-mode-users-user-multi' => 'Lëscht vun de Benotzer',
-	'swm-label-mode-users-anon' => 'All anonym Benotzer',
 	'swm-label-content' => 'Inhalt',
 	'swm-label-comment' => 'Bemierkung',
 	'swm-label-language' => 'Sprooch',
-	'swm-button-send' => '[ Schécken ]',
 	'swm-button-save' => '[ Späicheren ]',
 	'swm-button-new' => '[ Nei ]',
-	'swm-list-no-messages' => 'Keng Messagen.',
-	'swm-list-table-wiki' => 'Wiki',
 	'swm-list-table-group' => 'Grupp',
-	'swm-list-table-content' => 'Inhalt',
 	'swm-list-table-lang' => 'Sproochen',
 	'swm-yes' => 'Jo',
 	'swm-no' => 'Neen',

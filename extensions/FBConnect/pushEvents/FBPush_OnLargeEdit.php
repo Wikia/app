@@ -5,9 +5,6 @@
  * Pushes an item to Facebook News Feed in the event of a large edit.
  */
 
-global $wgExtensionMessagesFiles;
-$pushDir = dirname(__FILE__) . '/';
-
 
 class FBPush_OnLargeEdit extends FBConnectPushEvent {
 	protected $isAllowedUserPreferenceName = 'fbconnect-push-allow-OnLargeEdit'; // must correspond to an i18n message that is 'tog-[the value of the string on this line]'.
@@ -28,14 +25,6 @@ class FBPush_OnLargeEdit extends FBConnectPushEvent {
 		wfProfileOut(__METHOD__);
 	}
 	
-	
-	public function loadMsg() {
-		wfProfileIn(__METHOD__);
-				
-		wfLoadExtensionMessages('FBPush_OnLargeEdit');
-		
-		wfProfileOut(__METHOD__);
-	}
 	
 	/*
 	 * Author: Tomek Odrobny

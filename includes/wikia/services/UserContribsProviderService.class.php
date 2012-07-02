@@ -3,7 +3,7 @@ class UserContribsProviderService extends Service {
 
 	public function get( $limit = 10, User $user = null ) {
 		wfProfileIn(__METHOD__);
-		global $wgUser, $wgExternalSharedDB;
+		global $wgUser;
 
 		if( !($user instanceof User) ) {
 			$user = $wgUser;

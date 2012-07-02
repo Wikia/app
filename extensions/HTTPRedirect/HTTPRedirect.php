@@ -14,29 +14,12 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Ævar Arnfjörð Bjarmason',
 );
 
-$wgExtensionFunctions[] = 'wfHTTPRedirect';
+$wgHooks['ArticleViewRedirect'][] = 'efRedirectHook';
 
-function wfHTTPRedirect() {
-	wfUsePHP( 5.0 );
-	wfUseMW( '1.6alpha' );
-	
-	class HTTPRedirect {
-		public function __construct() {
-			global $wgHooks;
+function efRedirectHook( Article &$article ) {
+	global $wgOut;
 
-			$wgHooks['ArticleViewRedirect'][] = array( &$this, 'redirectHook' );
-		}
+	$wgOut->redirect( $article->getTitle()->escapeFullURL(), 302 );
 
-		
-		public static function redirectHook( Article &$article ) {
-			global $wgOut;
-
-			$wgOut->redirect( $article->mTitle->escapeFullURL(), 302 );
-
-			return false;
-		}
-	}
-
-	// Establish a singleton.
-	new HTTPRedirect;
+	return false;
 }

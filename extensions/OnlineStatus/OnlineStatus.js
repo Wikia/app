@@ -71,7 +71,7 @@ function ChangeOnlineStatus(){
 	sajax_do_call( 'OnlineStatus::Ajax', ['set', status], function( x ){
 		if( x.status == 200 ){
 			var resp = x.responseText;
-			jsMsg( resp, 'watch' );
+			mw.util.jsMessage( resp, 'watch' );
 			// Force update
 			var div = document.getElementById( 'online-status-js' );
 			div.parentNode.removeChild( div );
@@ -80,4 +80,4 @@ function ChangeOnlineStatus(){
 	} );
 }
 
-hookEvent( 'load', OnlineStatus );
+$( OnlineStatus );

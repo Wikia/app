@@ -9,11 +9,14 @@ $wgExtensionCredits['parserhook']['ImageMap'] = array(
 	'path'           => __FILE__,
 	'name'           => 'ImageMap',
 	'author'         => 'Tim Starling',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:ImageMap',
-	'description'    => 'Allows client-side clickable image maps using <nowiki><imagemap></nowiki> tag.',
+	'url'            => 'https://www.mediawiki.org/wiki/Extension:ImageMap',
 	'descriptionmsg' => 'imagemap_desc',
 );
 
+/**
+ * @param $parser Parser
+ * @return bool
+ */
 function wfSetupImageMap( &$parser ) {
 	$parser->setHook( 'imagemap', array( 'ImageMap', 'render' ) );
 	return true;

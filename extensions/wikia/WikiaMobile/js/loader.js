@@ -35,7 +35,7 @@
 			remove: function(elm) {
 				var ldr = elm.getElementsByClassName('wkMblLdr')[0];
 				if(ldr){
-					elm.removeChild(ldr);
+					ldr.parentElement.removeChild(ldr);
 				}
 			}
 		}

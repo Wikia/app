@@ -41,7 +41,7 @@ class UniwikiChangesList extends ChangesList {
 		}
 		// edits and new pages
 		else {
-			wfLoadExtensionMessages( 'FormatChanges' );
+			
 
 			$line .= "<li>";
 			$page_link = $this->skin->makeKnownLinkObj( $rc->getTitle(), '' );

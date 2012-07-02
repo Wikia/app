@@ -47,7 +47,7 @@ var WikiaPhotoGallery = {
 
 	// send AJAX request to extension's ajax dispatcher in MW
 	ajax: function(method, params, callback) {
-		$.post(wgScript + '?action=ajax&rs=WikiaPhotoGalleryAjax&method=' + method, params, callback, 'json');
+		return $.post(wgScript + '?action=ajax&rs=WikiaPhotoGalleryAjax&method=' + method, params, callback, 'json');
 	},
 
 	// track events
@@ -1091,32 +1091,35 @@ var WikiaPhotoGallery = {
 
 	// setup MW suggest for link field
 	setupLinkSuggest: function(fieldId) {
-		var self = this;
-
-		// setup suggest just once
-		if ($('#' + fieldId + 'Suggest').exists()) {
+		var field = $('#' + fieldId);
+		if (field.data('suggestSetUp')) {
 			return;
 		}
 
-		// prevent submittion of the form (it's needed only for MW suggest functions)
-		document.getElementById('WikiaPhotoGalleryEditorForm').submit = function() {};
-
-		// add MW suggest for Link field
-		window.os_enableSuggestionsOn(fieldId, 'WikiaPhotoGalleryEditorForm');
-
-		// create results container ...
-		var container = $(window.os_createContainer(os_map[fieldId]));
-		var fieldElem = $('#' + fieldId);
-
-		// ... add it to suggestions wrapper
-		container.appendTo('#' + fieldId + 'SuggestWrapper');
-
-		// handle ENTER hits (hide suggestion's dropdown)
-		$('#' + fieldId).keydown(function(ev) {
-			if (ev.keyCode == 13) {
-				$('#' + fieldId + 'Suggest').css('visibility', 'hidden');
+		// @see http://www.mediawiki.org/wiki/ResourceLoader/JavaScript_Deprecations#mwsuggest.js
+		// uses CSS rules from 'wikia.jquery.ui' module
+		field.autocomplete({
+			minLength: 2,
+			source: function( request, response ) {
+				$.getJSON(
+					mw.util.wikiScript( 'api' ),
+					{
+						format: 'json',
+						action: 'opensearch',
+						search: request.term
+					},
+					function( arr ) {
+						if ( arr && arr.length > 1 ) {
+							response( arr[1] );
+						}
+						else {
+							response( [] );
+						}
+					}
+				);
 			}
 		});
+		field.data('suggestSetUp', true);
 
 		this.log('MW suggest set up for #' + fieldId);
 	},
@@ -2530,76 +2533,85 @@ var WikiaPhotoGallery = {
 		//done here since the dialog closes in many different ways and some of them use animation fx
 		$('#WikiaPhotoGalleryEditor').remove();
 
-		// load CSS for editor popup, wikia-tabs and jQuery UI library (if not loaded yet) via loader function
-		$.getResources([
-			$.loadJQueryUI,
-			wgExtensionsPath + '/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.editor.css',
-			stylepath + '/common/wikia_ui/tabs.css'
-		], function() {
-			self.ajax('getEditorDialog', {title: wgPageName}, function(data) {
-				// store messages
-				self.editor.msg = data.msg;
+		// load CSS for editor popup, wikia-tabs, AIM upload lib and jQuery UI library (if not loaded yet) via loader function
+		$.when(
+			$.getResources([
+				wgExtensionsPath + '/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.editor.css',
+				stylepath + '/common/wikia_ui/tabs.css'
+			]),
 
-				// store default values
-				self.editor.defaultParamValues = data.defaultParamValues;
+			// jQuery UI (+ autocomplete plugin) and CSS and AIM plugin
+			mw.loader.use(['wikia.jquery.ui', 'jquery.aim', 'jquery.ui.autocomplete']),
 
-				// render editor popup
-				$.showModal('', data.html, {
-					callbackBefore: function() {
-						// change height of the editor popup before it's shown (RT #55203)
-						$('#WikiaPhotoGalleryEditorPagesWrapper').height(height);
-					},
-					callback: function() {
-						// remove loading indicator
-						$('#WikiaPhotoGalleryEditorLoader').remove();
+			// fetch dialog content
+			this.ajax('getEditorDialog', {title: wgPageName})
+		).then(function(getResourcesData, mwLoaderUseData, ajaxData) {
+			// "parse" data from promise of AJAX request
+			var data = ajaxData[0];
 
-						// mark editor dialog title node
-						if (skin == 'oasis') {
-							$('#WikiaPhotoGalleryEditor').children('h1').attr('id', 'WikiaPhotoGalleryEditorTitle');
+			// store messages
+			// TODO: use JSMessages - $.getMessages
+			self.editor.msg = data.msg;
+
+			// store default values
+			self.editor.defaultParamValues = data.defaultParamValues;
+
+			// render editor popup
+			$.showModal('', data.html, {
+				callbackBefore: function() {
+					// change height of the editor popup before it's shown (RT #55203)
+					$('#WikiaPhotoGalleryEditorPagesWrapper').height(height);
+				},
+				callback: function() {
+					// remove loading indicator
+					$('#WikiaPhotoGalleryEditorLoader').remove();
+
+					// mark editor dialog title node
+					if (skin == 'oasis') {
+						$('#WikiaPhotoGalleryEditor').children('h1').attr('id', 'WikiaPhotoGalleryEditorTitle');
+					}
+					else {
+						$('#WikiaPhotoGalleryEditor').children('.modalTitle').
+							append('<span id="WikiaPhotoGalleryEditorTitle"></span>');
+					}
+
+					self.setupEditor(params);
+				},
+				onClose: function(type) {
+					self.log('onClose');
+
+					// prevent close event triggered by ESCAPE key
+					if (type.keypress) {
+						return false;
+					}
+
+					// tracking
+					var trackerSuffix = self.getPageTrackerSuffix();
+					if (trackerSuffix) {
+						self.track('/dialog/' + trackerSuffix + '/close');
+					}
+
+					// X has been clicked
+					var currentPage = self.editor.currentPage;
+					if (type.click) {
+						if (currentPage == self.EDIT_CONFLICT_PAGE) {
+							// just close the dialog when on edit conflict page
+							return;
+						}
+						else if (currentPage == self.CHOOSE_TYPE_PAGE) {
+							// just close the dialog when on choice page
+							return;
 						}
 						else {
-							$('#WikiaPhotoGalleryEditor').children('.modalTitle').
-								append('<span id="WikiaPhotoGalleryEditorTitle"></span>');
-						}
-
-						self.setupEditor(params);
-					},
-					onClose: function(type) {
-						self.log('onClose');
-
-						// prevent close event triggered by ESCAPE key
-						if (type.keypress) {
+							// show "Save and quit" popup for the rest
+							self.showSaveAndQuitDialog();
 							return false;
 						}
-
-						// tracking
-						var trackerSuffix = self.getPageTrackerSuffix();
-						if (trackerSuffix) {
-							self.track('/dialog/' + trackerSuffix + '/close');
-						}
-
-						// X has been clicked
-						var currentPage = self.editor.currentPage;
-						if (type.click) {
-							if (currentPage == self.EDIT_CONFLICT_PAGE) {
-								// just close the dialog when on edit conflict page
-								return;
-							}
-							else if (currentPage == self.CHOOSE_TYPE_PAGE) {
-								// just close the dialog when on choice page
-								return;
-							}
-							else {
-								// show "Save and quit" popup for the rest
-								self.showSaveAndQuitDialog();
-								return false;
-							}
-						}
-					},
-					id: 'WikiaPhotoGalleryEditor',
-					persistent: false, // don't remove popup when user clicks X
-					width: self.editor.width
-				});
+					}
+				},
+				id: 'WikiaPhotoGalleryEditor',
+				persistent: false, // don't remove popup when user clicks X
+				width: self.editor.width
 			});
 		});
 	},
@@ -2852,7 +2864,7 @@ var WikiaPhotoGallery = {
 		});
 
 		// load CSS for slideshow popout
-		importStylesheetURI($.getSassCommonURL('extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.popout.scss'));
+		mw.loader.load($.getSassCommonURL('extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.popout.scss'), 'text/css');
 	},
 
 	// load thumbnail of image into given HTML node
@@ -3085,73 +3097,3 @@ var WikiaPhotoGallery = {
 
 // add toolbar button
 WikiaPhotoGallery.addToolbarButton();
-
-/**
-*
-* AJAX IFRAME METHOD (AIM) rewritten for jQuery
-* http://www.webtoolkit.info/
-*
-**/
-jQuery.AIM = {
-	// AIM entry point - used to handle submit event of upload forms
-	submit : function(form, options) {
-		var iframeName = jQuery.AIM.createIFrame(options);
-
-		// upload "into" iframe
-		$(form).
-			attr('target', iframeName).
-			log('AIM: uploading into "' + iframeName + '"');
-
-		if (options && typeof(options.onStart) == 'function') {
-			return options.onStart();
-		} else {
-			return true;
-		}
-	},
-
-	// create iframe to handle uploads and return value of its "name" attribute
-	createIFrame : function(options) {
-		var name = 'aim' + Math.floor(Math.random() * 99999);
-		var iframe = $('<iframe id="' + name + '" name="' + name + '" src="about:blank" style="display:none" />');
-
-		// function to be fired when upload is done
-		iframe.bind('load', function() {
-			jQuery.AIM.loaded($(this).attr('name'));
-		});
-
-		// wrap iframe inside <div> and it to <body>
-		$('<div>').
-			append(iframe).
-			appendTo('body');
-
-		// add custom callback to be fired when upload is completed
-		if (options && typeof(options.onComplete) == 'function') {
-			iframe[0].onComplete = options.onComplete;
-		}
-
-		return name;
-	},
-
-	// handle upload completed event
-	loaded : function(id) {
-		$().log('AIM: upload into "' + id + '" completed');
-
-		var i = document.getElementById(id);
-		if (i.contentDocument) {
-			var d = i.contentDocument;
-		} else if (i.contentWindow) {
-			var d = i.contentWindow.document;
-		} else {
-			var d = window.frames[id].document;
-		}
-		if (d.location.href == "about:blank") {
-			return;
-		}
-
-		if (typeof(i.onComplete) == 'function') {
-			//in Chrome/safari an empty div is appended to the JSON data in case of upload issues (e.g. already existing image)
-			//the solution was to append a new line at the end of the JSON string and split it here.
-			i.onComplete(d.body.innerHTML.split("\n")[0]);
-		}
-	}
-}

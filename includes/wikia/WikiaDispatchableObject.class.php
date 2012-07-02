@@ -10,6 +10,13 @@
  * @author Owen Davis <owen(at)wikia-inc.com>
  */
 abstract class WikiaDispatchableObject extends WikiaObject {
+	
+	/**
+	 * Mediawiki RequestContext object
+	 * @var RequestContext 
+	 */
+	protected $context = null;
+
 	/**
 	 * request object
 	 * @var WikiaRequest
@@ -33,10 +40,10 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 *
 	 * @param string $controllerName
 	 * @param string $methodName
-	 * @param bool $resetResponse
+	 * @param bool $resetData
 	 */
-	protected function forward( $controllerName, $methodName, $resetResponse = true ) {
-		if( $resetResponse ) {
+	protected function forward( $controllerName, $methodName, $resetData = true ) {
+		if( $resetData ) {
 			$this->response->resetData();
 		}
 
@@ -110,6 +117,19 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 */
 	public function init() {}
 
+	/**
+	 * set context 
+	 * @param RequestContext $context
+	 */
+
+	public function setContext(RequestContext $context) {
+		$this->context = $context;
+	}
+	
+	public function getContext() {
+		return $this->context;
+	}
+	
 	/**
 	 * set request
 	 * @param WikiaRequest $request

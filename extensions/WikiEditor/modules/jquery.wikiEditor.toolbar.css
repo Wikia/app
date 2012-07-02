@@ -1,0 +1,303 @@
+/*
+ * CSS for WikiEditor Toolbar jQuery plugin
+ */
+
+.wikiEditor-ui-toolbar {
+	position: relative;
+	width: 100%;
+}
+/* Expandable Sections */
+.wikiEditor-ui-toolbar .sections {
+	float: left;
+	width: 100%;
+	clear: both;
+	height: 0;
+}
+.wikiEditor-ui-toolbar .sections .section {
+	display: none;
+	float: left;
+	width: 100%;
+	border-top: solid 1px #DDDDDD;
+	background-color: #E0EEf7;
+}
+.wikiEditor-ui-toolbar {
+	/* @embed */
+	background-image: url(images/toolbar/base.png);
+	background-position: left top;
+	background-repeat: repeat-x;
+}
+/* Gets overridden when the section div is in class loading - see below */
+.wikiEditor-ui-toolbar .sections div .spinner {
+	display: none;
+}
+.wikiEditor-ui-toolbar .sections .loading .spinner {
+	display: block;
+	float: left;
+	/* @embed */
+	background-image: url(images/toolbar/loading.gif);
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 32px;
+	margin-left: 0.5em;
+	height: 32px;
+	color: #666666;
+}
+/* Top Level Containers */
+.wikiEditor-ui-toolbar .tabs,
+.wikiEditor-ui-toolbar .section-main {
+	position: relative;
+	float: left;
+	height: 26px;
+}
+/* Groups */
+.wikiEditor-ui-toolbar .group {
+	float: left;
+	height: 26px;
+	padding-right: 6px;
+	border-right: solid 1px #DDDDDD;
+	margin: 3px;
+}
+.wikiEditor-ui-toolbar .group-search {
+	float: right;
+	padding: 0 0 0 6px;
+	border-right: none;
+	border-left: 1px solid #DDDDDD;
+}
+.wikiEditor-ui-toolbar .group-insert {
+	border-right: none;
+}
+/* Sprited Buttons */
+.wikiEditor-toolbar-spritedButton { 
+	/* @embed */
+	background: url(images/toolbar/button-sprite.png) 0 0 no-repeat;
+	display: block;
+	float: left;
+	height: 22px;
+	text-indent: -9999px;
+	width: 22px;
+	padding: 2px;
+	cursor: pointer;
+	overflow: hidden;
+}
+/* Tabs */
+.wikiEditor-ui-toolbar .tabs {
+	list-style: none;
+	margin: 3px;
+}
+.wikiEditor-ui-toolbar .tabs span.tab {
+	display: block;
+	float: left;
+	line-height: 26px;
+}
+.wikiEditor-ui-toolbar .tabs span.tab a,
+.wikiEditor-ui-toolbar .tabs span.tab a:visited {
+	display: inline-block;
+	float: left;
+	padding-left: 18px;
+	padding-right: 12px;
+	height: 26px;
+	cursor: pointer;
+	color: #0645ad;
+	/* @embed */
+	background-image: url(images/toolbar/arrow-ltr.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+.wikiEditor-ui-toolbar .tabs span.tab a.current,
+.wikiEditor-ui-toolbar .tabs span.tab a.current:visited {
+	color: #333333;
+	/* @embed */
+	background-image: url(images/toolbar/arrow-down.png);
+}
+.wikiEditor-ui-toolbar .tabs span.tab a.current:hover {
+	text-decoration: none;
+}
+.wikiEditor-ui-toolbar .tabs span.tab a.loading {
+	/* @embed */
+	background-image: url(images/toolbar/loading-small.gif);
+}
+/* Toolbar */
+.wikiEditor-ui-toolbar .group .label {
+	float: left;
+	border: 0px;
+	height: 22px;
+	line-height: 22px;
+	margin: 2px;
+	margin-left: 5px;
+	margin-right: 8px;
+	color: #777777;
+	cursor: default;
+}
+.wikiEditor-ui-toolbar .group img.tool {
+	float: left;
+	border: 0px;
+	height: 22px;
+	width: 22px;
+	padding: 2px;
+	cursor: pointer;
+}
+.wikiEditor-ui-toolbar .group .tool-select {
+	float: left;
+	margin: 2px;
+	height: 22px;
+	cursor: pointer;
+	border: solid 1px silver;
+	padding: 0;
+	margin-right: 0;
+	cursor: pointer;
+	background-color: #ffffff;
+}
+.wikiEditor-ui-toolbar .group .tool-select .label {
+	/* @embed */
+	background-image: url(images/toolbar/arrow-down.png);
+	background-position: center right;
+	background-repeat: no-repeat;
+	padding: 0;
+	margin: 0;
+	padding-left: 4px;
+	padding-right: 22px;
+	margin-right: 4px;
+	cursor: pointer;
+	text-decoration: none;
+	color: #333333;
+}
+.wikiEditor-ui-toolbar .group .tool-select .menu .options {
+	position: absolute;
+	display: none;
+	margin-left: -1px;
+	margin-top: 22px;
+	border: solid 1px silver;
+	background-color: #ffffff;
+}
+.wikiEditor-ui-toolbar .group .tool-select .options .option {
+	display: block;
+	padding: 0.5em;
+	text-decoration: none;
+	color: black;
+	white-space: nowrap;
+}
+.wikiEditor-ui-toolbar .group .tool-select .options .option:hover {
+	background-color: #E0EEf7;
+}
+.wikiEditor-ui-toolbar .group .tool-select .options .option[rel=heading-2] {
+	font-size: 150%;
+	font-weight: normal;
+}
+.wikiEditor-ui-toolbar .group .tool-select .options .option[rel=heading-3] {
+	font-size: 132%;
+	font-weight: normal;
+}
+.wikiEditor-ui-toolbar .group .tool-select .options .option[rel=heading-4] {
+	font-size: 116%;
+	font-weight: normal;
+}
+.wikiEditor-ui-toolbar .group .tool-select .options .option[rel=heading-5] {
+	font-size: 100%;
+	font-weight: bold;
+}
+/* Booklet */
+.wikiEditor-ui-toolbar .booklet .index {
+	float: left;
+	width: 20%;
+	height: 125px;
+	overflow: auto;
+}
+.wikiEditor-ui-toolbar .booklet .index div {
+	padding: 4px;
+	padding-left: 6px;
+	cursor: pointer;
+	color: #0645ad;
+}
+.wikiEditor-ui-toolbar .booklet .index .current {
+	background-color: #FAFAFA;
+	color: #333333;
+	cursor: default;
+}
+.wikiEditor-ui-toolbar .booklet .pages {
+	float: right;
+	width: 80%;
+	height: 125px;
+	overflow: auto;
+	background-color: #FAFAFA;
+}
+/* Help Pages */
+.wikiEditor-ui-toolbar .page-table table {
+	padding-left: 5px;
+	padding-right: 5px;
+	background: none;
+}
+.wikiEditor-ui-toolbar .page-table th {
+	color: #999999;
+}
+.wikiEditor-ui-toolbar .page-table td {
+	color: black;
+	border-top: solid 1px #EEEEEE;
+}
+.wikiEditor-ui-toolbar .page-table th,
+.wikiEditor-ui-toolbar .page-table td {
+	text-align: left;
+	padding: 5px;
+	margin: 0px;
+}
+.wikiEditor-ui-toolbar .section-help .page-table td.cell-syntax,
+.wikiEditor-ui-toolbar .section-help .page-table td.syntax {
+	font-family: monospace, "Courier New";
+}
+.wikiEditor-ui-toolbar .section-help .page-table td.syntax,
+.wikiEditor-ui-toolbar .section-help .page-table td.cell-syntax,
+.wikiEditor-ui-toolbar .section-help .page-table td.cell-result,
+.wikiEditor-ui-toolbar .section-help .page-table td.result {
+	width: 40%;
+}
+.wikiEditor-ui-toolbar .section-help .page-table td.description,
+.wikiEditor-ui-toolbar .section-help .page-table td.description {
+	width: 20%;
+}
+/* Characters Pages */
+.wikiEditor-ui-toolbar .page-characters div span {
+	border: solid 1px #DDDDDD;
+	padding: 5px;
+	padding-left: 8px;
+	padding-right: 8px;
+	margin-left: 5px;
+	margin-top: 5px;
+	height: 1em;
+	float: left;
+	display: block;
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+	font-family: monospace, "Courier New";
+	font-size: 1.25em;
+}
+.wikiEditor-ui-toolbar .page-characters div[dir=rtl] span {
+	/* @noflip */ direction: rtl;
+}
+.wikiEditor-ui-toolbar .page-characters div span:hover {
+	background-color: white;
+	text-decoration: none;
+	border-color: #a8d7f9;
+}
+.ui-widget table td.wikieditor-toolbar-table-preview-wrapper span {
+	padding: 4px 6px 0px;
+	display: block;
+}
+.ui-widget table .wikieditor-toolbar-table-preview-frame {
+	width: 340px;
+	background: #fff;
+	padding: 10px;
+	overflow: hidden;
+	display: block;
+	position: relative;
+}
+.ui-widget table .wikieditor-toolbar-table-preview-content {
+	width: 375px;
+	display: block;
+}
+.ui-widget table .wikieditor-toolbar-table-preview {
+	width: 340px;
+}
+.ui-widget table td.wikieditor-toolbar-table-preview-wrapper {
+	background: #e5e5e5;
+	padding: 10px;
+}

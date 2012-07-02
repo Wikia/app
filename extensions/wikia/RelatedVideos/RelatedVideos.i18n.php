@@ -10,9 +10,10 @@ $messages['en'] = array(
 	'related-videos-add-video' => 'Add a video',
 	'related-videos-leave-feedback' => 'Leave feedback',
 	'related-videos-add-video-to-this-page' => 'Add a video to this page',
-	'related-videod-add-video-ok' => 'Done',
+	'related-videod-add-video-ok' => 'Add',
 	'related-videod-add-video-label-name' => 'Enter the full URL, from any of the supported sites.',
 	'related-videod-add-video-label-all' => 'See all',
+	'related-videos-see-more' => 'See more',
 	'related-videos-add-video-error-bad-url' => 'The supplied URL is invalid.',
 	'related-videos-add-video-error-nonexisting' => 'This video does not exist.',
 	'related-videos-add-video-error-bad-name' => 'The name of the video contains illegal characters. Please select another URL.',
@@ -43,23 +44,23 @@ $messages['en'] = array(
 	'related-videos-embed-text' => 'Embed code',
 	'related-videos-video-is-new' => 'New',
 	'related-videos-pagination' => '$1 of $2',
+	'related-videos-suggestions' => 'We think these videos might be related:',
+	'related-videos-add-this' => 'Add this video',
+	'related-videos-back' => 'Back to the list',
 	'related-videos-empty' => 'Be the first to add a video',
-	'related-videos-requestbutton' => 'Request New Videos',
-	'related-videos-requesttext' => 'What else would you like to see?',
+	'related-videos-requestbutton' => 'Take our Video Survey',
+	'related-videos-requesttext' => 'Take our Video Survey',
 
 	//popular videos on hubs
 	'related-videos-hubs-suggested-by' => 'Suggested by $1',
 );
 
-/** Message documentation (Message documentation)
- * @author Siebrand
- */
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'related-videos-update-summary-blacklist' => 'Appears as an edit summary in RecentChanges',
 	'related-videos-update-summary-whitelist' => 'Appears as an edit summary in RecentChanges',
 	'related-videos-embed-text' => 'This is a label for an input field holding the embed (HTML) code for the currently displayed video.',
-	'related-videos-hubs-suggested-by' => 'This is suffix text displayed after a video title in "Popular Videos" module on a hub page. Parameters:
-* $1 is a username which can be linked to a user page',
+	'related-videos-hubs-suggested-by' => 'This is suffix text displayed after a video title in "Popular Videos" module on a hub page. $1 = a username which can be link to user page',
 );
 
 /** Breton (brezhoneg)
@@ -181,7 +182,6 @@ $messages['es'] = array(
 	'related-videos-empty' => 'Sé el primero en añadir un vídeo',
 	'related-videos-requestbutton' => 'Solicita vídeos nuevos',
 	'related-videos-requesttext' => '¿Qué más te gustaría ver?',
-	'related-videos-hubs-suggested-by' => 'Sugerido por $1',
 );
 
 /** French (français)
@@ -232,10 +232,9 @@ $messages['fr'] = array(
 	'related-videos-empty' => 'Soyez le premier à ajouter une vidéo',
 	'related-videos-requestbutton' => 'Demande de nouvelles vidéos',
 	'related-videos-requesttext' => "Que voulez-vous voir d'autre ?",
-	'related-videos-hubs-suggested-by' => 'Proposée par $1',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -282,7 +281,6 @@ $messages['gl'] = array(
 	'related-videos-empty' => 'Sexa o primeiro en engadir un vídeo',
 	'related-videos-requestbutton' => 'Solicitar os novos vídeos',
 	'related-videos-requesttext' => 'Que máis quere ver?',
-	'related-videos-hubs-suggested-by' => 'Suxerido por $1',
 );
 
 /** Interlingua (interlingua)
@@ -332,7 +330,6 @@ $messages['ia'] = array(
 	'related-videos-empty' => 'Sia le prime a adder un video',
 	'related-videos-requestbutton' => 'Requestar nove videos',
 	'related-videos-requesttext' => 'Que altere vole tu vider?',
-	'related-videos-hubs-suggested-by' => 'Suggerite per $1',
 );
 
 /** Macedonian (македонски)
@@ -432,7 +429,6 @@ $messages['ms'] = array(
 	'related-videos-empty' => 'Jadilah yang pertama untuk meletakkan video',
 	'related-videos-requestbutton' => 'Pohon Video Baru',
 	'related-videos-requesttext' => 'Apakah lagi yang ingin anda lihat?',
-	'related-videos-hubs-suggested-by' => 'Dicadangkan $1',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -533,7 +529,6 @@ $messages['nl'] = array(
 	'related-videos-empty' => 'Wees de eerste om een video toe te voegen',
 	'related-videos-requestbutton' => "Nieuwe video's aanvragen",
 	'related-videos-requesttext' => 'Wat wilt u graag zien?',
-	'related-videos-hubs-suggested-by' => 'Voorgesteld door $1',
 );
 
 /** Pälzisch (Pälzisch)
@@ -591,7 +586,6 @@ $messages['pl'] = array(
 	'related-videos-empty' => 'Bądź pierwszym dodającym film',
 	'related-videos-requestbutton' => 'Nowe Filmy',
 	'related-videos-requesttext' => 'Chcesz obejrzeć coś innego?',
-	'related-videos-hubs-suggested-by' => 'Zasugerowane przez $1',
 );
 
 /** Portuguese (português)
@@ -649,7 +643,6 @@ $messages['ru'] = array(
 	'related-videos-empty' => 'Будьте первым, кто добавит видео',
 	'related-videos-requestbutton' => 'Запрос нового видео',
 	'related-videos-requesttext' => 'Что ещё вы хотели бы увидеть?',
-	'related-videos-hubs-suggested-by' => 'Предложено $1',
 );
 
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
@@ -718,34 +711,6 @@ $messages['ta'] = array(
 	'related-videod-add-video-ok' => 'முடிந்தது',
 	'related-videod-add-video-label-all' => 'எல்லாவற்றையும் பார்க்கவும்',
 	'related-videos-video-is-new' => 'புதிய',
-);
-
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
-	'related-videos-tally' => 'Kaugnay na mga Bidyo',
-	'related-videos-tally-article' => 'Mga bidyong nasa ibabaw ng artikulong ito',
-	'related-videos-added-by' => 'Idinagdag ni',
-	'related-videos-remove' => 'Tanggalin',
-	'related-videos-add-video' => 'Magdagdag ng isang bidyo',
-	'related-videos-leave-feedback' => 'Mag-iwan ng tugon',
-	'related-videos-add-video-to-this-page' => 'Magdagdag ng isang bidyo sa pahinang ito',
-	'related-videod-add-video-ok' => 'Nagawa na',
-	'related-videod-add-video-label-name' => 'Ipasok ang buong URL, mula sa anuman sa tinatangkilik na mga pook.',
-	'related-videod-add-video-label-all' => 'Tingnan lahat',
-	'related-videos-add-video-error-bad-url' => 'Hindi katanggap-katanggap ang ibinigay na URL.',
-	'related-videos-add-video-error-nonexisting' => 'Hindi umiiral ang bidyong ito.',
-	'related-videos-add-video-error-bad-name' => 'Ang pangalan ng bidyo ay naglalaman ng mga panitik na labag sa batas. Paki pumili ng ibang URL.',
-	'related-videos-add-video-error-permission-video' => 'Wala kang mga pribilehiyo upang magdagdag ng bidyo sa wiking ito.',
-	'related-videos-add-video-error-protected-video' => 'Hindi ka makapagdaragdag ng isang bidyo sa wiking ito.',
-	'related-videos-add-video-error-duplicate' => 'Naidagdag na ang bidyong ito.',
-	'related-videos-error-unknown' => 'Naganap ang isang hindi napag-aalamang kamalian. Kodigo: $1.',
-	'related-videos-error-permission-article' => 'Hindi mo maaaring baguhin ang artikulong ito.',
-	'related-videos-error-no-article-id' => 'Walang ibinigay na ID ng pinupukol na artikulo.',
-	'related-videos-error-no-video-url' => 'Walang ibinigay na URL ng bidyo.',
-	'related-videos-error-no-video-title' => 'Walang ibinigay na pamagat ng bidyo.',
-	'related-videos-error-while-loading' => 'Naganap ang kamalian habang ikinakarga ang dato. Pakisuring muli ang pagkakakunekta mo at sariwain ang pahina.',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

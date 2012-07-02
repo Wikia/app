@@ -12,7 +12,7 @@
  * @author Vipuser
  */
 
-$fallback = 'gan-hant';
+$fallback = 'gan-hant, zh-hant, zh-hans';
 
 $namespaceNames = array(
 	NS_MEDIA            => 'Media',

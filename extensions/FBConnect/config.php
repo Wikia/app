@@ -169,7 +169,7 @@ $fbScriptByLocale = 'http://connect.facebook.net/'.FBCONNECT_LOCALE.'/all.js';
  */
 //$fbExtensionScript = "$wgCdnStylePath/extensions/FBConnect/fbconnect.js"; // only recommended if you are changing this extension.
 //$fbExtensionScript = "$wgCdnStylePath/extensions/FBConnect/fbconnect.min.js";
-$fbExtensionScript = ''; // this file is in AssetsManager
+$fbExtensionScript = ''; // this file is in StaticChute
 
 /**
  * Whether to include jQuery.  If you already have jQuery included on your site, you can

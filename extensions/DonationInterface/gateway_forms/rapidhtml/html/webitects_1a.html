@@ -1,0 +1,353 @@
+<script type="text/javascript">
+mw.loader.load('pfp.form.rapidhtml.webitects');
+</script>
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("@script_path/skins/vector/csshover.min.htc")}</style><![endif]-->
+<style type="text/css">
+	#errorMessages { font-size: 0.75em; color: #FF0000; }
+	/* Force vertical scrollbar 
+	html { overflow-y: scroll; }
+	*/
+	/* Accordion */
+	#accordion h3 { background: #a4d4a6; border-bottom: 1px solid #5eac58; font-size: 1em; margin: 0; padding: 0.5em 0.9em; outline: 0; }
+	.accordion-content { padding: 0.9em; }
+	#step2accordion { display:none; }
+	 
+	/* Callouts */
+	.call-l, .call-r { width: 270px; }
+	 
+	/* Layout */
+	#appeal { float: left; width: 100%; }
+	#appeal-content { padding-right: 380px; }
+	.clear { clear: both; }
+	#donate { float: left; margin-left: -350px; width: 350px; }
+</style> 
+
+	<!--[if lt IE 7]><style>
+	/* style for IE6 + IE5.5 + IE5.0 */
+	.gainlayout { height: 0; }
+	</style><![endif]-->
+	 
+	<!--[if IE 7]><style>
+	.gainlayout { zoom: 1; height: 1%; }
+	</style><![endif]-->
+
+    <div class="ltr"> 
+      <div id="appeal"> 
+        <div id="appeal-content"> 
+          <h2 id="appeal-head"> <span class="mw-headline" id="From_Wikipedia_programmer_Brandon_Harris">From Wikipedia programmer Brandon Harris</span></h2> 
+          <div id="appeal-body" class="plainlinks"> 
+            <p>I feel like I'm living the first line of my obituary.</p> 
+            <p>I don't think there will be anything else that I do in my life as important as what I do now for Wikipedia. We're not just building an encyclopedia, we're working to make people free. When we have access to free knowledge, we are better people. We understand the world is bigger than us, and we become infected with tolerance and understanding.</p> 
+            <p>Wikipedia is the 5th largest website in the world. I work at the small non-profit that keeps it on the web. We don't run ads because doing so would sacrifice our independence. The site is not and should never be a propaganda tool.</p> 
+            <p>Our work is possible because of donations from our readers. Will you help protect Wikipedia by donating $5, $10, $20 or whatever you can afford?</p> 
+            <p>I work at the Wikimedia Foundation because everything in my soul tells me it's the right thing to do. I've worked at huge tech companies, doing some job to build some crappy thing that's designed to steal money from some kid who doesn't know it. I would come home from work crushed.</p> 
+            <p>You might not know this, but the Wikimedia Foundation operates with a very small staff. Most other top-ten sites have tens of thousands of people and massive budgets. But they produce a fraction of what we pull off with sticks and wire.</p> 
+            <p>When you give to Wikipedia, you're supporting free knowledge around the world. You're not only leaving a legacy for your children and for their children, you're elevating people around the world who have access to this treasure. You're assuring that one day everyone else will too.</p> 
+            <p>Thank you,</p> 
+            <p><strong>Brandon Harris</strong><br /></p> 
+            <p>Programmer, Wikimedia Foundation</p> 
+          </div> 
+        </div> 
+      </div> 
+      
+      <div id="donate"> 
+        <div id="donate-content"> 
+          <div id="donate-body"> 
+            
+            <div id="accordion"> 
+              <h3>1. Donation amount <span id="selected-amount"></span> <span class="mute" id="change-amount" style="display: none;">(<a href="#">Change</a>)</span></h3> 
+              <div id="step1accordion" class="accordion-content"> 
+                <form method="post" name="paypalcontribution"> 
+                  <table id="amount-table"> 
+                    <tr> 
+                      <td><label><input type="radio" name="amountRadio" value="5" /> $5</label></td> 
+                      <td><label><input type="radio" name="amountRadio" value="10" /> $10</label></td> 
+                      <td><label><input type="radio" name="amountRadio" value="20" /> $20</label></td> 
+                      <td><label><input type="radio" name="amountRadio" value="35" /> $35</label></td> 
+                    </tr> 
+                    <tr> 
+                      <td><label><input type="radio" name="amountRadio" value="50" /> $50</label></td> 
+                      <td><label><input type="radio" name="amountRadio" value="100" /> $100</label></td> 
+                      <td><label><input type="radio" name="amountRadio" value="250" /> $250</label></td> 
+                      <td><label><input type="radio" name="amountRadio" id="input_amount_other" value="other" /> $<input type="text" class="txt-sm hint"  name="amountGiven" size="4" id="other-amount" title="Other..."  onfocus="this.form.input_amount_other.checked=true;"/></label></td> 
+                    </tr> 
+                  </table> 
+                  
+                  <p class="donate-options"> 
+                    <input class="btn" id="cc" type="button" value="Donate by Credit Card" /> 
+                    <input class="btn" id="pp" type="button" value="Donate via PayPal"/><span id='loading'></span> 
+                  </p> 
+              </div> 
+              
+              <h3>2. Billing and payment</h3> 
+              <div id="step2accordion" class="accordion-content"> 
+              	<div id="errorMessages"></div>
+                <div class="name-fields"> 
+                  <span class="name-first"><input class="txt hint" id="fname" name="fname" title="First name" value="@fname" /></span> 
+                  <span class="name-last"><input class="txt hint" id="lname" name="lname" title="Last name" value="@lname" /></span> 
+                </div> 
+                <div class="loc-fields"> 
+                  <span class="loc-street"><input class="txt hint" id="street" name="street" title="Street address" value="@street" /></span> 
+                  <span class="loc-city"><input class="txt hint" id="city" name="city" title="City" value="@city" /></span> 
+                  <span class="loc-state"> 
+                    <select id="state" name="state" class="txt" value="@state" > 
+                      <option value=""></option> 
+                      <option value="AK">AK</option><option value="AL">AL</option><option value="AR">AR</option><option value="AZ">AZ</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DC">DC</option><option value="DE">DE</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="IA">IA</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="MA">MA</option><option value="MD">MD</option><option value="ME">ME</option><option value="MI">MI</option><option value="MN">MN</option><option value="MO">MO</option><option value="MS">MS</option><option value="MT">MT</option><option value="NC">NC</option><option value="ND">ND</option><option value="NE">NE</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NV">NV</option><option value="NY">NY</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="PR">PR</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VA">VA</option><option value="VT">VT</option><option value="WA">WA</option><option value="WI">WI</option><option value="WV">WV</option><option value="WY">WY</option><option value="AA">AA</option><option value="AE">AE</option><option value="AP">AP</option>
+                    </select> 
+                  </span> 
+                  <span class="loc-postal"><input class="txt hint" id="zip" name="zip" title="Zip" value="@zip"/></span> 
+                </div> 
+                <p><input class="txt hint" title="Email address" id="emailAdd" name="emailAdd" value="@emailAdd"/></p> 
+                <dl class=""> 
+                  <dt><span class="label">Select credit card</span></dt> 
+                  <dd class="field" style="margin-bottom: 0;"> 
+                    <ul class="options-h" id="cards" style="margin: 0;"> 
+                      <li><input id="cc-visa" name="cardtype" type="radio" value="Visa" /> <label for="cc-visa"><img alt="Visa" src="@script_path/extensions/DonationInterface/gateway_forms/includes/card-visa.png" /></label></li> 
+                      <li><input id="cc-mastercard" name="cardtype" type="radio" value="MasterCard" /> <label for="cc-mastercard"><img alt="MasterCard" src="@script_path/extensions/DonationInterface/gateway_forms/includes/card-mastercard.png" /></label></li> 
+                      <li><input id="cc-amex" name="cardtype" type="radio" value="American Express" /> <label for="cc-amex"><img alt="American Express" src="@script_path/extensions/DonationInterface/gateway_forms/includes/card-amex.png" /></label></li> 
+                      <li><input id="cc-discover" name="cardtype" type="radio" value="Discover" /> <label for="cc-discover"><img alt="Discover" src="@script_path/extensions/DonationInterface/gateway_forms/includes/card-discover.png" /></label></li> 
+                    </ul> 
+                  </dd> 
+                </dl> 
+                
+                <div id="payment"> 
+                  <dl class="form"> 
+                    <dt><span class="label"><label for="card_num">Card number</label></span></dt> 
+                    <dd class="field"><input class="txt" id="card_num" name="card_num" value="@card_num"/></dd> 
+                    
+                    <dt></dt> 
+                    <dd class="field"> 
+                      <div class="l" style="margin-right: 5%;"> 
+                        <span class="label">Expiration date</span> 
+                        <select id="mos" name="mos"> 
+                          <option value="">Month</option> 
+                          <option value="01">01 - January</option> 
+                          <option value="02">02 - February</option> 
+                          <option value="03">03 - March</option> 
+                          <option value="04">04 - April</option> 
+                          <option value="05">05 - May</option> 
+                          <option value="06">06 - June</option> 
+                          <option value="07">07 - July</option> 
+                          <option value="08">08 - August</option> 
+                          <option value="09">09 - September</option> 
+                          <option value="10">10 - October</option> 
+                          <option value="11">11 - November</option> 
+                          <option value="12">12 - December</option> 
+                        </select> 
+ 
+                        <select id="year" name="year"> 
+                          <option value="">Year</option> 
+                          <option value="2011">2011</option> 
+                          <option value="2012">2012</option> 
+                          <option value="2013">2013</option> 
+                          <option value="2014">2014</option> 
+                          <option value="2015">2015</option> 
+                          <option value="2016">2016</option> 
+                          <option value="2017">2017</option> 
+                          <option value="2018">2018</option> 
+                          <option value="2019">2019</option> 
+                          <option value="2020">2020</option> 
+                        </select> 
+                      </div> 
+                      <div class="l"> 
+                        <label class="label" for="cvv">Security code</label> 
+                        <input class="txt-sm" id="cvv" name="cvv"  value="@cvv"/> 
+                        <a class="mute" href="#" id="where">Where?</a> 
+                      </div> 
+                      
+                      <div class="clear" id="codes" style="display: none;"><img alt="Security codes" src="@script_path/extensions/DonationInterface/payflowpro_gateway/forms/rapidhtml/images/security-code.png" /></div> 
+                    </dd> 
+                    
+                    <dt></dt> 
+                    <dd class="field"> 
+                      <input id="submitcreditcard" class="btn" type="button" value="Submit donation" /> 
+                      <p class="mute"><img alt="" src="@script_path/extensions/DonationInterface/gateway_forms/includes/padlock.gif" /> Your credit card will be securely processed.</p> 
+                    </dd> 
+                  </dl> 
+                  		<input type="hidden" name="gateway" value="payflowpro" id="gateway" /> 
+						<input type="hidden" name="returnto" value="Thank_You/en" /> 
+
+						<input type="hidden" value="@amount" name="amount" />
+						<input type="hidden" value="@country" name="country" id="country" />
+						<input type="hidden" value="@expiration" name="expiration" />						
+						<input type="hidden" value="@currency_code" name="currency" />
+						<input type="hidden" value="@utm_source" name="utm_source"/>
+			            <input type="hidden" value="@utm_medium" name="utm_medium"/>
+						<input type="hidden" value="@utm_campaign" name="utm_campaign"/>
+						<input type="hidden" value="@language" name="language"/>
+			            <input type="hidden" value="@referrer" name="referrer"/>
+			            <input type="hidden" value="@comment" name="comment"/>
+			            <input type="hidden" value="@comment-option" name="comment-option"/>
+			            <input type="hidden" value="@email-opt" name="email-opt"/>
+						<input type="hidden" value="processed" name="payment_method"/>
+						<input type="hidden" value="@token" name="token"/>
+						<input type="hidden" value="@order_id"  name="order_id"/>
+						<input type="hidden" value="@numAttempt" name="numAttempt"/>
+						<input type="hidden" value="@contribution_tracking_id" name="contribution_tracking_id"/>
+						<input type="hidden" value="@data_hash" name="data_hash"/>
+						<input type="hidden" value="@owa_session" name="owa_session"/>
+						<input type="hidden" value="@owa_ref" name="owa_ref"/>
+					</form>
+                </div> 
+              </div> 
+            </div> 
+            
+          </div> 
+        </div>  
+        
+        <div class="call-r" style="float: none; margin: 15px 0 0 0; width: auto;"> 
+          <h3>Where your donation goes</h3> 
+          <p><strong>Technology:</strong> Servers, bandwidth, maintenance, development. Wikipedia is the #5 website in the world and it runs on a fraction of what other top websites spend.</p> 
+          <p><strong>People:</strong> The other top 10 website have thousands of employees. We have fewer than 100, making your donation a great investment in a highly-efficient not-for-profit organization.</p> 
+        </div> 
+        
+        <p>We do not store your credit card information, and your personal data is subject to our <a target="_blank" href="//wikimediafoundation.org/wiki/Donor_policy"> donor privacy policy</a>.</p> 
+        <p><a href="//wikimediafoundation.org/wiki/Ways_to_Give/en">More information or other ways to give</a><br /><a href="//wikimediafoundation.org/wiki/FAQ/en">Answers to frequently asked questions</a></p> 
+      </div> 
+    </div> 
+    <!-- load jquery (newer) -->
+    <script type="text/javascript">
+    	( function( $ ){
+	    	window.onload = function (){
+	    		// set all jQuery instances to 1.4.2
+		    	jQuery = $;
+		    	$j = $;
+    			// Init accordion
+			    $("#accordion").accordion({
+			      autoHeight: false
+			    });
+			    
+			    if (jQuery.browser.msie && jQuery.browser.version.substr(0,1)<7){
+			    	//get the current querystring
+			    	var qs = window.location.search.substring(1);
+			    	// redirect IE6 people to another form
+					window.location.replace("https://wikimediafoundation.org/wiki/Special:LandingCheck?language=en&landing_page=L11_ExtraInfo_0902_N&utm_campaign=C_0916_Webitects_US_ie6&utm_source=B_BR_0916_US&country_code=US&referrer=webitects1a");
+			    }
+    			
+    			// check for RapidHtml errors and display, if any
+    			var errors = ['#general','#retryMsg','#amount','#card_num','#card_type','#cvv','#fname',
+    						  '#lname','#city','#country','#street','#state','#zip','#emailAdd'];
+    			
+    			var count = 0;
+    			for( var i=0; i < errors.length; i++ ){
+    				if ( errors[i].length > 0 ){
+    					count++;
+    					if ( count > 1 )
+    						$('#errorMessages').append('<br />');
+    					$('#errorMessages').append(errors[i]);
+    				}
+    			}
+    			if( count > 0 ){
+    				// show the second step with the error
+    				$("#accordion").accordion( "activate" , 1 );
+    				
+    				//we have clearly selected an amount before, make sure it is shown
+    				showAmount( $('input[name="amount"]') );
+    				
+    				// hacks for IE6/IE7
+					if (jQuery.browser.msie && jQuery.browser.version.substr(0,1)<9){
+						$("#change-amount").click( function(){
+							$("#donate").css("width","335px");
+							$("#step1accordion").show();
+			            	$("#step2accordion").hide();
+						});
+						$("#donate").css("width","335px");
+						$("#step1accordion").hide();
+			            $("#step2accordion").show();
+					}
+    			}
+    			// Inline labels
+			    $(".hint").ezpz_hint();
+			    
+			    $("#cc").click(function(){		    
+			    	if ( validateAmount(document.paypalcontribution) ){
+			    		showAmount( $('input[name="amount"]') );
+						$("#accordion").accordion("activate", 1);
+						$("#change-amount").show();
+						
+						// hacks for IE6/IE7
+						if (jQuery.browser.msie && jQuery.browser.version.substr(0,1)<9){
+							$("#change-amount").click( function(){
+								$("#donate").css("width","335px");
+								$("#step1accordion").show();
+				            	$("#step2accordion").hide();
+							});
+							$("#donate").css("width","335px");
+							$("#step1accordion").hide();
+				            $("#step2accordion").show();
+						}						
+			    	}
+			      
+			    });
+			    $("#pp").click(function(){	
+			    	if ( validateAmount(document.paypalcontribution) ){
+			    		// set the action to go to PayPal
+			    		$('input[name="gateway"]').val("paypal");
+			    		document.paypalcontribution.action = "https://wikimediafoundation.org/wiki/Special:ContributionTracking/en";
+						$("#loading").html("<img src='@script_path/extensions/DonationInterface/payflowpro_gateway/forms/rapidhtml/images/loading-green.gif' /> Redirecting to PayPal…");
+			    		document.paypalcontribution.submit();
+					}
+			    });
+			    $("#submitcreditcard").click(function(){					    	
+			    	// set country to US
+		    		$('input[name="country"]').val("US");
+			    				    
+			    	if ( validate_form(document.paypalcontribution) ){
+			    		// set expiration date
+			    		$('input[name="expiration"]').val(
+			    			$("select[name=mos]").val() + $("select[name=year]").val().substring(2,4)
+			    		)
+			    		
+			    		document.paypalcontribution.action = "@action";
+			    		document.paypalcontribution.submit();
+			    	}
+			    })
+			    
+			    // Fix behavior of images in labels
+			    $("label img").live("click", function() { $("#" + $(this).parents("label").attr("for")).click(); });
+			    
+			    // Display selected amount
+			    function showAmount(e){ $("#selected-amount").html("($" + e.val() + ")"); }
+			    
+			    // Set selected amount to amount
+			    $('input[name="amountRadio"]').click(function(){ setAmount($(this)); });
+			    $("#other-amount").change(function(){ setAmount($(this)); });
+			    function setAmount(e){ $('input[name="amount"]').val(e.val()); }
+			    
+			    // Security codes
+			    $("#where").click(function(){
+			      $("#codes").toggle();
+			      return false;
+			    });
+			    
+			    function validateAmount(){
+			    	var error = true;
+						var amount = $('input[name="amount"]').val(); // get the amount
+					var otherAmount = amount // create a working copy
+					otherAmount = otherAmount.replace(/[,.](\d)$/, '\:$10');
+					otherAmount = otherAmount.replace(/[,.](\d)(\d)$/, '\:$1$2');
+					otherAmount = otherAmount.replace(/[,.]/g, '');
+					otherAmount = otherAmount.replace(/:/, '.');
+					amount = otherAmount; // idk, reset amount to working copy amount
+					$('input[name="amount"]').val(amount); // set the new amount back into the form
+					
+					// Check amount is a real number, sets error as true (good) if no issues
+					error = ( amount == null || isNaN( amount ) || amount.value <= 0 );
+					// Check amount is at least the minimum
+					var currency = 'USD'; // hard-coded for these forms and tests
+					$('input[name="currency"]').val(currency);
+					if ( typeof( wgCurrencyMinimums[currency] ) == 'undefined' ) {
+						wgCurrencyMinimums[currency] = 1;
+					}
+					if ( amount < wgCurrencyMinimums[currency] || error ) {
+						alert( 'You must contribute at least $1'.replace('$1', wgCurrencyMinimums[currency] + ' ' + currency ) );
+						error = true;
+					}
+					return !error;
+			    };
+	    	}
+       	})(jQuery);
+    </script>
+<!-- Wikimedia Project logo
+<li id="footer-copyrightico"><a href="//wikimediafoundation.org/"><img src="//bits.wikimedia.org/images/wikimedia-button.png" width="88" height="31" alt="Wikimedia Foundation"/></a></li> 
+ -->

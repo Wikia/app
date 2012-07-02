@@ -1,4 +1,4 @@
-<?
+<?php
 do_sample_page();
 
 function do_sample_page(){
@@ -17,10 +17,10 @@ Click on the little lower right "CC" icon to expose the timed text
 $examples = Array();
 //set up tags for easy display:
 $roe_url = 'http://metavid.org/w/index.php?title=Special:MvExportStream&stream_name=House_proceeding_07-18-06_00&t=1:23:16/1:23:44&feed_format=roe';
-$examples[] = array(  'tag'  => '<video roe="'.$roe_url.'" ></video>',
+$examples[] = array(  'tag'  => '<video roe="' . htmlspecialchars( $roe_url ) . '" ></video>',
 					  'desc' => 'Metavid based ROE file using CMML<br /> <pre>' .
-						htmlspecialchars('<video roe="'.$roe_url.'" ></video>'). '</pre>'.
-					  	'<iframe width="600" height="250" src="'.$roe_url.'" ></iframe>'
+						htmlspecialchars('<video roe="' . htmlspecialchars( $roe_url ) . '" ></video>' ) . '</pre>'.
+					  	'<iframe width="600" height="250" src="' . htmlspecialchars( $roe_url ) . '" ></iframe>'
 				);
 $srt_tag = ''.
 '<video src="sample_fish.ogg" poster="sample_fish.jpg" duration="26">
@@ -52,6 +52,6 @@ $examples[] = array(  'tag'  => $srt_tag,
  </table>
 </body>
 </html>
-<?
+<?php
 }
-?>
+

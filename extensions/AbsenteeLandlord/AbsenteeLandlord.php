@@ -15,9 +15,8 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Absentee Landlord',
 	'author' => array( 'Ryan Schmidt', 'Tim Laqua' ),
 	'version' => '1.1',
-	'description' => 'Auto-locks the wiki database if the sysops are all inactive for some time',
 	'descriptionmsg' => 'absenteelandlord-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:AbsenteeLandlord',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:AbsenteeLandlord',
 );
 
 $wgExtensionFunctions[] = 'efAbsenteeLandlord_Setup';
@@ -40,7 +39,7 @@ function efAbsenteeLandlord_Setup() {
 			global $wgReadOnly;
 
 			# Add Messages (don't need them unless we get here)
-			wfLoadExtensionMessages( 'AbsenteeLandlord' );
+			
 			$wgReadOnly = wfMsg( 'absenteelandlord-reason' );
 		}
 	}

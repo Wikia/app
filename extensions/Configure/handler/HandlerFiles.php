@@ -17,7 +17,7 @@ class ConfigureHandlerFiles implements ConfigureHandler {
 		if ( $wgConfigureFilesPath === null ) {
 			global $IP;
 			$wgConfigureFilesPath = "$IP/serialized/";
-		} else if ( substr( $wgConfigureFilesPath, -1 ) != '/' && substr( $wgConfigureFilesPath, -1 ) != '\\' ) {
+		} elseif ( substr( $wgConfigureFilesPath, -1 ) != '/' && substr( $wgConfigureFilesPath, -1 ) != '\\' ) {
 			$wgConfigureFilesPath .= '/';
 		}
 		$this->mDir = $wgConfigureFilesPath;
@@ -89,25 +89,29 @@ class ConfigureHandlerFiles implements ConfigureHandler {
 	/**
 	 * Save a new configuration
 	 * @param $settings array of settings
+	 * @param $user User doing the modification
 	 * @param $wiki String: wiki name or true for all
 	 * @return bool true on success
 	 */
-	public function saveNewSettings( $settings, $wiki, $ts = false, $reason = '' ) {
-		global $wgUser;
-
+	public function saveNewSettings( $settings, User $user, $wiki, $ts = false, $reason = '' ) {
 		$arch = $this->getArchiveFileName();
 		$cur = $this->getFileName();
 
 		## Add meta-data
 		$settings['__metadata'] = array(
 			'user_wiki' => wfWikiID(),
-			'user_name' => $wgUser->getName(),
+			'user_name' => $user->getName(),
 			'reason' => $reason
 		);
 
 		$cont = '<?php $settings = '.var_export( $settings, true ).";";
-		@file_put_contents( $arch, $cont );
-		return ( @file_put_contents( $cur, $cont ) !== false );
+
+		wfSuppressWarnings();
+		file_put_contents( $arch, $cont );
+		$ret = file_put_contents( $cur, $cont ) !== false;
+		wfRestoreWarnings();
+
+		return $ret;
 	}
 
 	/**

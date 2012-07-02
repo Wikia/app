@@ -220,7 +220,7 @@ if ( !isset( $user ) || !isset( $password ) ) {
 }
 # Attempt to connect to the database as a privileged user
 # This will vomit up an error if there are permissions problems
-$wdDatabase = new $dbclass( $server, $user, $password, $database, 1 );
+$wdDatabase = new $dbclass( $server, $user, $password, $database );
 
 if ( !$wdDatabase->isOpen() ) {
 	# Appears to have failed

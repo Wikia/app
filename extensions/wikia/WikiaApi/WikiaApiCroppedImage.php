@@ -39,6 +39,7 @@ class WikiaApiCroppedImage extends ApiBase {
 			$imageUrl = $imageServing->getUrl($image->getName(), $imageInfo[0], $imageInfo[1]);
 		}
 		$result = $this->getResult();
+
 		$result->addValue( 'image', $this->getModuleName(), $imageUrl );
 		$result->addValue( 'imagepage', $this->getModuleName(), $tmpTitle->getFullUrl() );
 

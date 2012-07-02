@@ -748,13 +748,10 @@ class ExtDynamicPageList2
         // Page Transclusion, adopted from Steve Sanbeg�s LabeledSectionTransclusion
         require_once( 'DynamicPageList2Include.php' );
 
-        global $wgParser, $wgMessageCache;
+        global $wgParser;
 
 		// Error and warning codes.
 		require_once( dirname(__FILE__).'/DynamicPageList2.codes.php' );
-
-        // Internationalization messages
-		wfLoadExtensionMessages('DynamicPageList2');
 
         /**
          *  Define codes and map debug message to min debug level above which message can be displayed
@@ -2707,9 +2704,9 @@ class ExtDynamicPageList2
             $output .= "DPL debug -- Query=<br>\n<tt>".$sSqlSelectFrom . $sSqlWhere."</tt>\n\n";
         }
 
-		global $wgMessageCache, $wgMemc;
+		global $wgMemc;
 		$__cacheKey = sha1($sSqlSelectFrom . $sSqlWhere);
-       	$wgMessageCache->lock($__cacheKey);
+       	MessageCache::singleton()->lock($__cacheKey);
 		$mem_key = wfMemcKey( 'dpl', 'query', $__cacheKey );
 		$mem_key_counter = wfMemcKey( 'dpl', 'counter' );
 		$data = $wgMemc->get( $mem_key );
@@ -2726,7 +2723,7 @@ class ExtDynamicPageList2
 							."Query text is:<br>\n<tt>".$sSqlSelectFrom . $sSqlWhere."</tt>\n\n"
 							."Error message is:<br>\n<tt>".$dbr->lastError()."</tt>\n\n";
 				}
-				$wgMessageCache->unlock($__cacheKey);
+				MessageCache::singleton()->unlock($__cacheKey);
 				return $result;
 			}
 
@@ -2735,7 +2732,7 @@ class ExtDynamicPageList2
 				if ($sNoResultsFooter != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $sNoResultsFooter));
 				if ($sNoResultsHeader == '' && $sNoResultsFooter == '')	$output .= $logger->escapeMsg(DPL2_i18n::WARN_NORESULTS);
 				$dbr->freeResult( $res );
-				$wgMessageCache->unlock($__cacheKey);
+				MessageCache::singleton()->unlock($__cacheKey);
 				return $output;
 			}
 
@@ -3010,7 +3007,7 @@ class ExtDynamicPageList2
 			$output = $mem_key;
 		}
 
-		$wgMessageCache->unlock($__cacheKey);
+		MessageCache::singleton()->unlock($__cacheKey);
 
         return $output;
 

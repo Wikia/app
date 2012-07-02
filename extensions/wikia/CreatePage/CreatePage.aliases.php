@@ -1,20 +1,20 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
     'CreatePage' => array( 'CreatePage' ),
 );
 /**
  * German
  */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
     'CreatePage' => array( 'SiteErstellen', 'CreatePage' ),
 );
 /**
  * Polish
  */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'CreatePage' => array( 'Utwórz stronę', 'CreatePage' ),
 );

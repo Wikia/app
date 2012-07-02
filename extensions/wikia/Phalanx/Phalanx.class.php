@@ -220,7 +220,7 @@ class Phalanx {
 					'blockUser' 		=> $wgUser->getName(),
 					'city_id' 			=> $wgCityId,
 				);	
-				$data = Wikia::json_encode( $fields );
+				$data = json_encode( $fields );
 				WScribeClient::singleton( self::SCRIBE_KEY )->send( $data );
 			}
 			catch( TException $e ) {

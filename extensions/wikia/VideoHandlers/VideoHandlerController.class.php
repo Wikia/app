@@ -2,6 +2,7 @@
 
 class VideoHandlerController extends WikiaController {
 	
+	//@todo wlee 2012/02/28 - this is not used at the moment. safe to delete?
 	public function getEmbedCode() {
 		$articleId = $this->getVal('articleId', '');
 		$title = $this->getVal('title', '');
@@ -10,11 +11,11 @@ class VideoHandlerController extends WikiaController {
 		
 		$error = '';
 		if (empty($title)) {
-			$error = $this->wf->msgForContent('videohandler-error-missing-parameter', 'title');
+			$error = $this->wf->msgForContent('videohandler-error-missing-title');
 		}
 		else {
 			if (empty($width)) {
-				$error = $this->wf->msgForContent('videohandler-error-missing-parameter', 'width');
+				$error = $this->wf->msgForContent('videohandler-error-missing-width');
 			}
 			else {
 				$file = wfFindFile($title);

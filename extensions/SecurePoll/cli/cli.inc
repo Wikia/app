@@ -13,6 +13,3 @@ if ( !file_exists( "$IP/includes/WebStart.php" ) ) {
 }
 
 require( $IP . '/maintenance/commandLine.inc' );
-
-wfLoadExtensionMessages( 'SecurePoll' );
-

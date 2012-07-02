@@ -1,7 +1,9 @@
 <?php
 /**
  * ReplaceSet
- * @package ReplaceSet
+ *
+ * @file
+ * @ingroup Extensions
  * @author Daniel Friesen (http://mediawiki.org/wiki/User:Dantman) <mediawiki@danielfriesen.name>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  *
@@ -19,8 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
-require_once( dirname(__FILE__) . '/ReplaceSet.i18n.magic.php' );
 
 $messages = array();
 
@@ -48,7 +48,7 @@ $messages['ar'] = array(
 	'replaceset-error-regexbadmodifier' => "معدل الريجيكس '$1' غير صحيح.",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -117,15 +117,28 @@ $messages['es'] = array(
 	'replaceset-error-regexbadmodifier' => "El modificador de expresión regular '$1' es inválido.",
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ * @author Crt
+ * @author Str4nd
+ */
+$messages['fi'] = array(
+	'replaceset-desc' => 'Lisää <nowiki>{{#replaceset}}</nowiki>-jäsenninfunktion, jota käytetään tekstiosioiden korvaamiseen muotoillulla datalla.',
+	'replaceset-error-calllimit' => 'ReplaceSet-funktion kutsuraja on saavutettu.',
+	'replaceset-error-regexnoend' => 'Säännöllisestä lausekkeesta ”$1” puuttuu loppurajoitin ”$2”',
+	'replaceset-error-regexbadmodifier' => 'Säännöllisen lausekkeen määre ”$1” ei ole kelvollinen.',
+);
+
 /** French (Français)
  * @author PieRRoMaN
+ * @author Urhixidur
  * @author Verdy p
  */
 $messages['fr'] = array(
 	'replaceset-desc' => 'Ajoute une fonction parseur <nowiki>{{#replaceset}}</nowiki> utilisée pour remplacer des sections de texte avec des données formatées',
 	'replaceset-error-calllimit' => "La limite des appels à la fonction ''ReplaceSet'' a été atteinte.",
-	'replaceset-error-regexnoend' => 'Le délimiteur de fin « $2 » est manquant dans le motif de l’expression régulière « $1 »',
-	'replaceset-error-regexbadmodifier' => 'Le modificateur d’expression régulière  « $1 » est invalide.',
+	'replaceset-error-regexnoend' => 'Le délimiteur de fin « $2 » est manquant dans le motif de l’expression rationnelle « $1 »',
+	'replaceset-error-regexbadmodifier' => 'Le modificateur d’expression rationnelle « $1 » est invalide.',
 );
 
 /** Galician (Galego)
@@ -183,7 +196,7 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'replaceset-desc' => 'Adde un function de analysator syntactic <nowiki>{{#replaceset}}</nowiki> pro reimplaciar sectiones de texto per datos formatate',
+	'replaceset-desc' => 'Adde un function del analysator syntactic <nowiki>{{#replaceset}}</nowiki> pro reimplaciar sectiones de texto per datos formatate',
 	'replaceset-error-calllimit' => 'Le limite de appellos al function ReplaceSet ha essite attingite.',
 	'replaceset-error-regexnoend' => 'Al patrono del expression regular "$1" manca le delimitator final \'$2\'',
 	'replaceset-error-regexbadmodifier' => "Le modificator de expression regular '$1' non es valide.",
@@ -200,9 +213,11 @@ $messages['id'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Civvì
  * @author Darth Kule
  */
 $messages['it'] = array(
+	'replaceset-desc' => 'Aggiunge una funzione parser <nowiki>{{#replaceset}}</nowiki> utilizzata per la sostituzione di parti di testo con dati formattati',
 	'replaceset-error-calllimit' => 'Il limite di chiamate ReplaceSet è stato raggiunto.',
 	'replaceset-error-regexnoend' => 'Il delimitatore finale \'$2\' manca al pattern della regex "$1"',
 	'replaceset-error-regexbadmodifier' => "Il modificatore della regex '$1' non è valido.",
@@ -219,7 +234,7 @@ $messages['ja'] = array(
 	'replaceset-error-regexbadmodifier' => "'$1' は正規表現の修飾子として無効です。",
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -261,7 +276,7 @@ $messages['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'replaceset-desc' => 'Legger til parserfunksjonen <nowiki>{{#replaceset}}</nowiki> som brukes for å erstatte seksjoner av tekst med formattert data',
 	'replaceset-error-calllimit' => 'Begrensningen i antall kall til funksjonen ReplaceSet har blitt nådd.',
 	'replaceset-error-regexnoend' => 'Det regulære uttrykket "$1" mangler en avsluttende avgrenser \'$2\'',
@@ -357,6 +372,16 @@ $messages['sv'] = array(
 	'replaceset-error-calllimit' => 'Begränsningen i antal anrop till funktionen ReplaceSet har uppnåtts.',
 	'replaceset-error-regexnoend' => 'Det reguljära uttrycket "$1" saknar en avslutande avgränsare \'$2\'',
 	'replaceset-error-regexbadmodifier' => "Regex-modifiern '$1' är inte giltig.",
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'replaceset-desc' => 'Nagdaragdag ng isang tungkuling pangparser na <nowiki>{{#replaceset}}</nowiki> na ginagamit sa pagpapalit ng mga seksyon ng teksto ng dato na binigyan ng anyo',
+	'replaceset-error-calllimit' => 'Naabot na ang pangtawag ng hangganan ng ReplaceSet.',
+	'replaceset-error-regexnoend' => 'Kulang ng pangtanggal ng hangganang $2\' ang padrong "$1" ng regex',
+	'replaceset-error-regexbadmodifier' => "Hindi tanggap ang panturing na '$1' ng regex.",
 );
 
 /** Turkish (Türkçe)

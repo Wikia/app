@@ -1,5 +1,7 @@
 <?php
 /**
+ * Script to wait until slave lag goes under a certain value.
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -15,11 +17,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @ingroup Maintenance
  * @see wfWaitForSlaves()
  */
 
-require_once( dirname(__FILE__) . '/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
 class WaitForSlave extends Maintenance {
 	public function __construct() {
@@ -31,4 +34,4 @@ class WaitForSlave extends Maintenance {
 }
 
 $maintClass = "WaitForSlave";
-require_once( DO_MAINTENANCE );
+require_once( RUN_MAINTENANCE_IF_MAIN );

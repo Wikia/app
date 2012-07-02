@@ -31,7 +31,7 @@
 
 		public function jsonToList( $json ) {
 			$result = array();
-			foreach ($json as $k => $v) {
+			foreach ($json as $v) {
 				$entry = array(
 					'type' => 'item',
 					'id' => $v['id'],
@@ -89,7 +89,7 @@
 		public function listToInstance( $data ) {
 			$blacklist = $this->getBlacklist();
 			$result = array();
-			foreach ($data as $k => $v) {
+			foreach ($data as $v) {
 				switch ($v['type']) {
 					case 'item':
 						if (!in_array($v['id'],$blacklist)) {
@@ -134,10 +134,9 @@
 		static protected $navigationUrls = null;
 
 		protected function getNavigationUrls() {
-			global $wgUser;
-
 			if (is_null(self::$navigationUrls)) {
-				$skin = $wgUser->getSkin();
+				$context = RequestContext::getMain();
+				$skin = $context->getSkin();
 
 				if (!isset($skin->iscontent)) {
 					/* safe and slow version - possible side-efectes */
@@ -150,13 +149,15 @@
 					ob_end_clean();
 					*/
 					/* unsafe but a lot faster version - hard trick */
-					$skin->iscontent = ( $skin->mTitle->getNamespace() != NS_SPECIAL || 1 == 1);
-					$skin->thispage = $skin->mTitle->getPrefixedDBkey();
-					$skin->loggedin = $wgUser->isLoggedIn();
+					$title = $skin->getTitle();
+
+					$skin->iscontent = ( $title->getNamespace() != NS_SPECIAL || 1 == 1);
+					$skin->thispage = $title->getPrefixedDBkey();
+					$skin->loggedin = $context->getUser()->isLoggedIn();
 				}
 
 				self::$navigationUrls = array(
-					'content_actions' => $skin->buildContentActionUrls(),
+					'content_actions' => $skin->buildContentActionUrls( $skin->buildContentNavigationUrls() ),
 					'nav_urls' => $skin->buildNavUrls(),
 				);
 			}
@@ -335,8 +336,6 @@
 		}
 
 		public function getCurrentList() {
-			global $wgUser;
-
 			$data = $this->loadToolbarList();
 			if ($data == false) {
 				$data = $this->getDefaultList();
@@ -495,7 +494,7 @@
 				'SpecialPage:WikiActivity',
 			);
 		}
-		
+
 		public function getBlacklist() {
                         $out = array(
                             'PageAction:Share',

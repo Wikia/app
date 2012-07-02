@@ -16,12 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  * @author Juliano F. Ravasi < dev juliano info >
  */
 
@@ -50,7 +51,6 @@ class SpecialWikilog
 	 */
 	function __construct( ) {
 		parent::__construct( 'Wikilog' );
-		wfLoadExtensionMessages( 'Wikilog' );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class SpecialWikilog
 		global $wgRequest, $wgFeedLimit;
 
 		$opts = $this->getDefaultOptions();
-		$opts->fetchValuesFromRequest( $wgRequest, array( 'show', 'limit' ) );
+		$opts->fetchValuesFromRequest( $wgRequest, array( 'wikilog', 'show', 'limit' ) );
 		$opts->validateIntBounds( 'limit', 0, $wgFeedLimit );
 		return $opts;
 	}
@@ -148,7 +148,7 @@ class SpecialWikilog
 		# Create the pager object that will create the list of articles.
 		if ( $opts['view'] == 'archives' ) {
 			$pager = new WikilogArchivesPager( $query, $this->including() );
-		} else if ( $opts['template'] ) {
+		} elseif ( $opts['template'] ) {
 			$templ = Title::makeTitle( NS_TEMPLATE, $opts['template'] );
 			$pager = new WikilogTemplatePager( $query, $templ, $opts['limit'], $this->including() );
 		} else {
@@ -168,7 +168,7 @@ class SpecialWikilog
 				$article = new Article( $title );
 				$content = $article->getContent();
 				$wgOut->setPageTitle( $title->getPrefixedText() );
-				$wgOut->addWikiTextWithTitle( $content, $title );
+				$wgOut->addWikiTextTitle( $content, $title );
 			}
 
 			# Display query options.
@@ -190,8 +190,8 @@ class SpecialWikilog
 
 		# Add feed links.
 		$wgOut->setSyndicated();
-		if ( isset( $qarr['show'] ) ) {
-			$altquery = wfArrayToCGI( array_intersect_key( $qarr, WikilogItemFeed::$paramWhitelist ) );
+		$altquery = wfArrayToCGI( array_intersect_key( $qarr, WikilogItemFeed::$paramWhitelist ) );
+		if ( $altquery ) {
 			$wgOut->setFeedAppendQuery( $altquery );
 		}
 
@@ -246,19 +246,19 @@ class SpecialWikilog
 		foreach ( preg_split( '|[/;]|', $parameters ) as $par ) {
 			if ( is_numeric( $par ) ) {
 				$opts['limit'] = intval( $par );
-			} else if ( in_array( $par, self::$statuses ) ) {
+			} elseif ( in_array( $par, self::$statuses ) ) {
 				$opts['show'] = $par;
-			} else if ( in_array( $par, self::$views ) ) {
+			} elseif ( in_array( $par, self::$views ) ) {
 				$opts['view'] = $par;
-			} else if ( preg_match( '/^t(?:ag)?=(.+)$/', $par, $m ) ) {
+			} elseif ( preg_match( '/^t(?:ag)?=(.+)$/', $par, $m ) ) {
 				$opts['tag'] = $m[1];
-			} else if ( preg_match( '/^y(?:ear)?=(.+)$/', $par, $m ) ) {
+			} elseif ( preg_match( '/^y(?:ear)?=(.+)$/', $par, $m ) ) {
 				$opts['year'] = intval( $m[1] );
-			} else if ( preg_match( '/^m(?:onth)?=(.+)$/', $par, $m ) ) {
+			} elseif ( preg_match( '/^m(?:onth)?=(.+)$/', $par, $m ) ) {
 				$opts['month'] = intval( $m[1] );
-			} else if ( preg_match( '/^d(?:ay)?=(.+)$/', $par, $m ) ) {
+			} elseif ( preg_match( '/^d(?:ay)?=(.+)$/', $par, $m ) ) {
 				$opts['day'] = intval( $m[1] );
-			} else if ( preg_match( '/^date=(.+)$/', $par, $m ) ) {
+			} elseif ( preg_match( '/^date=(.+)$/', $par, $m ) ) {
 				if ( ( $date = self::parseDateParam( $m[1] ) ) ) {
 					list( $opts['year'], $opts['month'], $opts['day'] ) = $date;
 				}
@@ -267,11 +267,11 @@ class SpecialWikilog
 					$ns = $t->getNamespace();
 					if ( in_array( $ns, $wgWikilogNamespaces ) ) {
 						$opts['wikilog'] = $t->getPrefixedDBkey();
-					} else if ( $ns == NS_CATEGORY ) {
+					} elseif ( $ns == NS_CATEGORY ) {
 						$opts['category'] = $t->getDBkey();
-					} else if ( $ns == NS_USER ) {
+					} elseif ( $ns == NS_USER ) {
 						$opts['author'] = $t->getDBkey();
-					} else if ( $ns == NS_TEMPLATE ) {
+					} elseif ( $ns == NS_TEMPLATE ) {
 						$opts['template'] = $t->getDBkey();
 					}
 				}
@@ -287,13 +287,13 @@ class SpecialWikilog
 	protected function getHeader( FormOptions $opts ) {
 		global $wgScript;
 
-		$out = Xml::hidden( 'title', $this->getTitle()->getPrefixedText() );
+		$out = Html::hidden( 'title', $this->getTitle()->getPrefixedText() );
 
 		$out .= self::getQueryForm( $opts );
 
 		$unconsumed = $opts->getUnconsumedValues();
 		foreach ( $unconsumed as $key => $value ) {
-			$out .= Xml::hidden( $key, $value );
+			$out .= Html::hidden( $key, $value );
 		}
 
 		$out = Xml::tags( 'form', array( 'action' => $wgScript ), $out );
@@ -399,10 +399,21 @@ class SpecialWikilog
 	 * @return Wikilog query object.
 	 */
 	public static function getQuery( $opts ) {
+		global $wgWikilogNamespaces;
+
 		$query = new WikilogItemQuery();
 		$query->setPubStatus( $opts['show'] );
-		if ( ( $t = $opts['wikilog'] ) ) {
-			$query->setWikilogTitle( Title::newFromText( $t ) );
+		if ( $opts['wikilog'] ) {
+			$t = Title::newFromText( $opts['wikilog'] );
+			if ( $t && in_array( $t->getNamespace(), $wgWikilogNamespaces ) ) {
+				if ( $t->getText() == '*' ) {
+					$query->setNamespace( $t->getNamespace() );
+				} else {
+					$query->setWikilogTitle( $t );
+				}
+			} else {
+				$query->setEmpty();
+			}
 		}
 		if ( ( $t = $opts['category'] ) ) {
 			$query->setCategory( $t );

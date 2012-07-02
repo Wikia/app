@@ -29,11 +29,12 @@ $wgExtensionCredits['parserhook'][] = array (
 	"name" => "Negref",
 	"author" => "[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]",
 	"description-msg" => 'negref-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Negref',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Negref',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['NegRef'] = $dir . 'Negref.i18n.php';
+$wgExtensionMessagesFiles['NegRefMagic'] = $dir . 'Negref.i18n.magic.php';
 $wgHooks['ParserFirstCallInit'][] = 'efNegrefRegisterParser';
 
 function efNegrefRegisterParser( &$parser ) {

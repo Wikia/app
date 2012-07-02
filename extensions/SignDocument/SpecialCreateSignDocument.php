@@ -9,13 +9,13 @@ class SpecialCreateSignDocument extends SpecialPage {
 	 * Constructor
 	 */
 	function __construct() {
-		SpecialPage::SpecialPage( 'CreateSignDocument', 'createsigndocument' );
+		parent::__construct( 'CreateSignDocument', 'createsigndocument' );
 	}
 
 	function execute( $par ) {
 		global $wgOut, $wgRequest, $wgUser;
 
-		wfLoadExtensionMessages( 'CreateSignDocument' );
+		
 
 		$this->setHeaders();
 		if ( $wgUser->isAllowed( 'createsigndocument' ) ) {
@@ -40,11 +40,11 @@ class SpecialCreateSignDocument extends SpecialPage {
 		$wgOut->addHTML( '
 			<form action="' . $this->getTitle()->escapeLocalUrl() . '" method="post">
 			<table><tr><td>
-			<strong>' . wfMsg( 'createsigndoc-pagename' ) . '&nbsp;</strong>
+			<strong>' . wfMsg( 'createsigndoc-pagename' ) . '&#160;</strong>
 			</td><td>
 			<input id="pagename" type="text" name="pagename" style="width: 400px;" />
 			</td></tr><tr><td>
-			<strong>' . wfMsg( 'createsigndoc-allowedgroup' ) . '&nbsp;</strong>
+			<strong>' . wfMsg( 'createsigndoc-allowedgroup' ) . '&#160;</strong>
 			</td><td>
 			<select id="allowedgroup" name="group" style="width: 400px;">'
 			. $this->makeComboItems( array_keys( $wgGroupPermissions ) ) . ' </select>
@@ -54,10 +54,10 @@ class SpecialCreateSignDocument extends SpecialPage {
 			$this->checkMarks( 'phone' ) .
 			$this->checkMarks( 'bday' ) . '
 			</td></tr><tr><td>
-			<strong>' . wfMsg( 'createsigndoc-minage' ) . '&nbsp;</strong>
+			<strong>' . wfMsg( 'createsigndoc-minage' ) . '&#160;</strong>
 			</td><td><input id="minage" type="text" name="minage" style="width: 400px;"/>
 			</td></tr><tr><td valign="top">
-			<strong>' . wfMsg( 'createsigndoc-introtext' ) . '&nbsp;</strong>
+			<strong>' . wfMsg( 'createsigndoc-introtext' ) . '&#160;</strong>
 			</td><td><textarea id="introtext" name="introtext" wrap="soft" style="height: 300px; width: 400px;">' .
 			'</textarea>
 			</td></tr><tr><td></td><td>
@@ -72,7 +72,7 @@ class SpecialCreateSignDocument extends SpecialPage {
 
 	function checkMarks( $id ) {
 		$out = '</td></tr><tr><td>';
-		$out .= '<strong>' . wfMsg( "createsigndoc-$id" ) . '&nbsp;</strong>';
+		$out .= '<strong>' . wfMsg( "createsigndoc-$id" ) . '&#160;</strong>';
 		$out .= '</td><td>';
 		$out .=  Xml::checkLabel(
 		            wfMsg( 'createsigndoc-hidden' ),

@@ -11,9 +11,9 @@
  * @author Jevin O. Sewaruth
  * @author Yaron Koren
  */
- 
-var autoGrowColsDefault = new Array();
-var autoGrowRowsDefault = new Array();
+
+var autoGrowColsDefault = [];
+var autoGrowRowsDefault = [];
 
 function autoGrowSetDefaultValues(textArea) {
 	var id = textArea.id

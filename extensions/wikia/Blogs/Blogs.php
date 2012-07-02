@@ -55,7 +55,7 @@ $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
  * messages file
  */
 $wgExtensionMessagesFiles['Blogs'] = $dir . '/Blogs.i18n.php';
-$wgExtensionAliasesFiles['Blogs'] = $dir . '/Blogs.alias.php';
+$wgExtensionMessagesFiles['BlogsAliases'] = $dir . '/Blogs.alias.php';
 
 /**
  * permissions (eventually will be moved to CommonSettings.php)
@@ -127,7 +127,7 @@ function wfBlogsOnBeforeInitialize(&$title, &$article, &$output, &$user, $reques
 
 // and now use "redirected" title in the skin (BugId:7282)
 function wfBlogsOnAfterInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
-	$user->getSkin()->setTitle($title);
+	$user->getSkin()->setRelevantTitle($title);
 	return true;
 }
 
@@ -146,7 +146,7 @@ $wgHooks[ 'AlternateEdit' ][] = 'BlogArticle::alternateEditHook';
 $wgHooks[ 'ArticleFromTitle' ][] = 'BlogArticle::ArticleFromTitle';
 $wgHooks[ 'CategoryViewer::getOtherSection' ][] = 'BlogArticle::getOtherSection';
 $wgHooks[ 'CategoryViewer::addPage' ][] = 'BlogArticle::addCategoryPage';
-$wgHooks[ 'SkinTemplateTabs' ][] = 'BlogArticle::skinTemplateTabs';
+$wgHooks[ 'onSkinTemplateNavigation' ][] = 'BlogArticle::skinTemplateTabs';
 $wgHooks[ 'EditPage::showEditForm:checkboxes' ][] = 'BlogArticle::editPageCheckboxes';
 $wgHooks[ 'LinksUpdate' ][] = 'BlogArticle::linksUpdate';
 $wgHooks[ 'UnwatchArticleComplete' ][] = 'BlogArticle::UnwatchBlogComments';

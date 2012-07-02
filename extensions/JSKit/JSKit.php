@@ -30,7 +30,6 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'JSKit',
-	'description'    => 'Integrates js-kit tools onto a wiki page',
 	'descriptionmsg' => 'jskit-desc',
 	'version'        => '0.1',
 	'author'         => 'Ryan Schmidt',
@@ -71,7 +70,7 @@ function efJSKitSetup( &$parser ) {
 	if( $wgJSKitTypes['reviews'] ) {
 		$parser->setHook( 'review', 'efJSKitReview' );
 	}
-	wfLoadExtensionMessages( 'JSKit' );
+	
 	return true;
 }
 
@@ -164,10 +163,10 @@ function efJSKitRender( $input, $args, $parser, $type ) {
 }
 
 # Appends the javascript
-function efJSKit(&$out, &$text) {
-	global $wgJSKitNamespaces, $wgJSKitAlways, $wgTitle;
-	$ns = $wgTitle->getNamespace();
-	if( !$wgTitle->getArticleId() ) {
+function efJSKit( $out, &$text ) {
+	global $wgJSKitNamespaces, $wgJSKitAlways;
+	$ns = $out->getTitle()->getNamespace();
+	if( !$out->getTitle()->getArticleId() ) {
 		// special page or wrong namespace, so don't do anything
 		return true;
 	}

@@ -1,4 +1,4 @@
-var openid = {
+var openid = window.openid = {
 	current: 'openid',
 
 	show: function(provider) {

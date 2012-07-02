@@ -1,0 +1,117 @@
+<script type="text/javascript">
+	mw.loader.load('gc.form.rapidhtml.cc');
+	// these must go through RapidHTML and thus are inline
+	var amountErrors = ['#general|escape','#retryMsg|escape','#amount|escape'];
+	var billingErrors = ['#fname|escape','#lname|escape','#city|escape','#country|escape','#street|escape','#state|escape','#zip|escape','#emailAdd|escape'];
+	var paymentErrors = ['#card_num|escape','#card_type|escape','#cvv|escape'];
+	var actionURL = "@action";
+	var scriptPath = "@script_path";
+</script>
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+	<tbody>
+	<tr>
+		<td id="appeal" valign="top">
+			{{LanguageSwitch|2011FR/@appeal/text|@language}}
+		</td>
+		<td id="donate" valign="top">
+			<div id="greenBackground" class="">
+			<noscript>
+				<div id="noscript">
+					<p id="noscript-msg">%donate_interface-noscript-msg%</p>
+					<p id="noscript-redirect-msg">%donate_interface-noscript-redirect-msg%</p>
+					<p id="noscript-redirect-link">
+						<a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=DonateNonJS&language=@language&uselang=@language&country=@country">https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=DonateNonJS&language=@language&uselang=@language&country=@country</a>
+					</p>
+				</div>
+			</noscript>
+			<p id="topError" class="creditcard-error-msg"></p>
+
+			<form name="payment" method="post" action="@action">
+				<div id="payflowpro_gateway-personal-info">
+					<table id="payflow-table-donor">
+						<tbody>
+						<tr>
+							<td colspan="2">
+								<div id="step1header">
+									<h3 class="amount_header">%donate_interface-amount-legend%:  <span id="selected-amount">{% block donation-amount currency_code %}</span></h3>
+								</div>
+							</td>
+						</tr>
+						{% block personal-information country %}
+                        <tr>
+                            <td>
+                                <dl class="">
+                                    <dd class="field" style="margin-bottom: 0; margin-left: 0;">
+                                        <ul class="options-h" id="cards" style="margin: 0;">
+                                            <li><input id="cc-visa" name="cardtype" type="radio" value="visa" class="cardradio" /> <label for="cc-visa"><img alt="Visa" src="@script_path/extensions/DonationInterface/gateway_forms/includes/card-visa.png" /></label></li>
+                                            <li><input id="cc-mastercard" name="cardtype" type="radio" value="mastercard" class="cardradio" /> <label for="cc-mastercard"><img alt="MasterCard" src="@script_path/extensions/DonationInterface/gateway_forms/includes/card-mastercard.png" /></label></li>
+                                            <li><input id="cc-amex" name="cardtype" type="radio" value="american" class="cardradio" /> <label for="cc-amex"><img alt="American Express" src="@script_path/extensions/DonationInterface/gateway_forms/includes/card-amex.png" /></label></li>
+                                            <!--<li><input id="cc-discover" name="cardtype" type="radio" value="discover" class="cardradio" /> <label for="cc-discover"><img alt="Discover" src="@script_path/extensions/DonationInterface/gateway_forms/includes/card-discover.png" /></label></li>-->
+											<li><input id="cc-jcb" name="cardtype" type="radio" value="jcb" class="cardradio" /> <label for="cc-jcb"><img alt="JCB" src="@script_path/extensions/DonationInterface/gateway_forms/includes/card-jcb.png" /></label></li>
+										</ul>
+                                        <div id="paymentContinue" style="margin-top: 10px; display: none;"> <input class="btn" id="paymentContinueBtn" type="button" value="%donate_interface-continue%" /></div>
+                                    </dd>
+                                </dl>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="payment" class="gainlayout" style="height:0px;text-align:center;"></div>
+                            </td>
+                        </tr>
+						<tr>
+                            <td>
+                                <div class="mw-donate-submessage" id="payflowpro_gateway-donate-submessage">
+                                    <img src="@script_path/extensions/DonationInterface/gateway_forms/includes/padlock.gif" style="vertical-align:baseline;margin-right:4px;"> %donate_interface-donate-click%
+                                </div>
+                            </td>
+                        </tr>
+						</tbody>
+					</table>
+				</div>
+				<input type="hidden" name="gateway" value="payflowpro" id="gateway" />
+				<input type="hidden" name="returnto" value="Thank_You/en" />
+				<input type="hidden" value="0" name="PaypalRedirect" id="PaypalRedirect">
+				<input type="hidden" value="@amount" name="amount">
+				<!-- This should be included in the personal_information templates -->
+				<!--<input type="hidden" value="@country" name="country" id="country" />-->
+				<input type="hidden" value="@expiration" name="expiration" id="expiration"/>
+				<input type="hidden" value="@currency_code" name="currency_code" />
+				<input type="hidden" value="@utm_source" name="utm_source"/>
+				<input type="hidden" value="@utm_medium" name="utm_medium"/>
+				<input type="hidden" value="@utm_campaign" name="utm_campaign"/>
+				<input type="hidden" value="@language" name="language"/>
+				<input type="hidden" value="@referrer" name="referrer"/>
+				<input type="hidden" value="@comment" name="comment"/>
+				<input type="hidden" value="@comment-option" name="comment-option"/>
+				<input type="hidden" value="1" name="email-opt"/>
+				<input type="hidden" value="@token" name="token"/>
+				<input type="hidden" value="@order_id"  name="order_id"/>
+				<input type="hidden" value="@numAttempt" name="numAttempt"/>
+				<input type="hidden" value="@contribution_tracking_id" name="contribution_tracking_id"/>
+				<input type="hidden" value="@data_hash" name="data_hash"/>
+				<input type="hidden" value="@owa_session" name="owa_session"/>
+				<input type="hidden" value="@owa_ref" name="owa_ref"/>
+				<input type="hidden" value="@gateway" name="gateway"/>
+				<input type="hidden" value="cc" name="payment_method"/>
+			</form>
+			</div>
+			<p id="informationsharing">%donate_interface-informationsharing|url%</p>
+			<table>
+				<tr>
+					<td>
+						<ul id="moreinfolinks">
+							<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=Monthly_donations&language=@language&uselang=@language&country=@country">%donate_interface-monthly-donation%</a></li>
+							<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=Ways_to_Give&language=@language&uselang=@language&country=@country">%donate_interface-otherways-short%</a></li>
+							<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=FAQ&language=@language&uselang=@language&country=@country">%donate_interface-faqs%</a></li>
+							<li><a href="https://wikimediafoundation.org/wiki/Special:LandingCheck?basic=true&landing_page=Tax_Deductibility&language=@language&uselang=@language&country=@country">%donate_interface-tax-info%</a></li>
+						</ul>
+					</td>
+					<td>@verisign_logo</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	</tbody>
+</table>

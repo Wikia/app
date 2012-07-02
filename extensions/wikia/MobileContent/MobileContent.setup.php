@@ -15,7 +15,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
         exit( 1 );
 }
 
-$app = F::build( 'App' );
+$app = F::app();
 $dir = dirname( __FILE__ );
 
 $app->wg->append(

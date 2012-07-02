@@ -30,25 +30,25 @@ require_once 'Stomp/Message.php';
 class Stomp_Message_Map extends Stomp_Message
 {
     public $map;
-    
+
     /**
      * Constructor
      *
      * @param Stomp_Frame|string $msg
      * @param array $headers
      */
-    function __construct ($msg, $headers = null)
+    function __construct ( $msg, $headers = null )
     {
-        if ($msg instanceof Stomp_Frame) {
-            $this->_init($msg->command, $msg->headers, $msg->body);
-            $this->map = json_decode($msg->body);
+        if ( $msg instanceof Stomp_Frame ) {
+            $this->_init( $msg->command, $msg->headers, $msg->body );
+            $this->map = json_decode( $msg->body );
         } else {
-            $this->_init("SEND", $headers, $msg);
-            if ($this->headers == null) {
+            $this->_init( "SEND", $headers, $msg );
+            if ( $this->headers == null ) {
                 $this->headers = array();
             }
             $this->headers['amq-msg-type'] = 'MapMessage';
-            $this->body = json_encode($msg);
+            $this->body = json_encode( $msg );
         }
     }
 }

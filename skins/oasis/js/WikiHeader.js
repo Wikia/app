@@ -361,7 +361,6 @@ var WikiHeaderV2 = {
 			WikiHeaderV2.hideNavL3();
 
 			$(self).addClass('marked');
-
 			//Hide all subnavs except for this one
 			var otherSubnavs = WikiHeaderV2.subnav2.not(  );
 			if( $('body').data('accessible') ) {
@@ -541,7 +540,6 @@ $(function() {
 
 		// modify size of preview modal
 		$(window).bind('EditPageRenderPreview', function(ev, options) {
-			options.height = 470;
 			options.width = ($('#WikiaPage').width() - 271) /* menu width */ + 32 /* padding */;
 		});
 

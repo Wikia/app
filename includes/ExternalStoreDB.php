@@ -1,26 +1,6 @@
 <?php
 
 /**
- * External database storage will use one (or more) separate connection pools
- * from what the main wiki uses. If we load many revisions, such as when doing
- * bulk backups or maintenance, we want to keep them around over the lifetime
- * of the script.
- *
- * Associative array of LoadBalancer objects, indexed by cluster name.
- */
-global $wgExternalLoadBalancers;
-$wgExternalLoadBalancers = array();
-
-/**
- * One-step cache variable to hold base blobs; operations that
- * pull multiple revisions may often pull multiple times from
- * the same blob. By keeping the last-used one open, we avoid
- * redundant unserialization and decompression overhead.
- */
-global $wgExternalBlobCache;
-$wgExternalBlobCache = array();
-
-/**
  * DB accessable external objects
  * @ingroup ExternalStorage
  */
@@ -38,7 +18,7 @@ class ExternalStoreDB {
 	 */
 	function &getLoadBalancer( $cluster ) {
 		$wiki = isset($this->mParams['wiki']) ? $this->mParams['wiki'] : false;
-		
+
 		return wfGetLBFactory()->getExternalLB( $cluster, $wiki );
 	}
 
@@ -49,8 +29,18 @@ class ExternalStoreDB {
 	 * @return DatabaseBase object
 	 */
 	function &getSlave( $cluster ) {
+		global $wgDefaultExternalStore;
+
 		$wiki = isset($this->mParams['wiki']) ? $this->mParams['wiki'] : false;
 		$lb =& $this->getLoadBalancer( $cluster );
+
+		if ( !in_array( "DB://" . $cluster, (array)$wgDefaultExternalStore ) ) {
+			wfDebug( "read only external store" );
+			$lb->allowLagged(true);
+		} else {
+			wfDebug( "writable external store" );
+		}
+
 		return $lb->getConnection( DB_SLAVE, array(), $wiki );
 	}
 
@@ -78,27 +68,6 @@ class ExternalStoreDB {
 			$table = 'blobs';
 		}
 		return $table;
-	}
-
-	/**
-	 * Get the list of tables to scan for the blob contents
-	 * required for (BugId: 9797)
-	 *
-	 * @author Władysław Bodzek
-	 *
-	 * @param $db DatabaseBase
-	 * @return array: tabels names
-	 */
-	function getReadTables( &$db ) {
-		$extraTables = $db->getLBInfo( 'extra blob tables' );
-		if ( empty( $extraTables ) ) {
-			$extraTables = array();
-		} else {
-			$extraTables = explode( ';', $extraTables );
-		}
-		$extraTables = (array)$extraTables;
-		array_unshift( $extraTables, $this->getTable( $db ) );
-		return $extraTables;
 	}
 
 	/**
@@ -134,36 +103,29 @@ class ExternalStoreDB {
 	 * @private
 	 */
 	function &fetchBlob( $cluster, $id, $itemID ) {
-		global $wgExternalBlobCache;
+		/**
+		 * One-step cache variable to hold base blobs; operations that
+		 * pull multiple revisions may often pull multiple times from
+		 * the same blob. By keeping the last-used one open, we avoid
+		 * redundant unserialization and decompression overhead.
+		 */
+		static $externalBlobCache = array();
+
 		$cacheID = ( $itemID === false ) ? "$cluster/$id" : "$cluster/$id/";
-		if( isset( $wgExternalBlobCache[$cacheID] ) ) {
+		if( isset( $externalBlobCache[$cacheID] ) ) {
 			wfDebug( "ExternalStoreDB::fetchBlob cache hit on $cacheID\n" );
-			return $wgExternalBlobCache[$cacheID];
+			return $externalBlobCache[$cacheID];
 		}
 
 		wfDebug( "ExternalStoreDB::fetchBlob cache miss on $cacheID\n" );
 
 		$dbr =& $this->getSlave( $cluster );
-		// Wikia -- change begin -- @author: wladek
-		// search multiple tables for blob contents (BugId: 9797)
-		$ret = false;
-		$tables = $this->getReadTables( $dbr );
-		foreach ($tables as $table) {
-			$ret = $dbr->selectField( $table, 'blob_text', array( 'blob_id' => $id ) );
-			if ( $ret !== false ) break;
-		}
-		// Wikia -- change end
+		$ret = $dbr->selectField( $this->getTable( $dbr ), 'blob_text', array( 'blob_id' => $id ), __METHOD__ );
 		if ( $ret === false ) {
 			wfDebugLog( 'ExternalStoreDB', "ExternalStoreDB::fetchBlob master fallback on $cacheID\n" );
 			// Try the master
 			$dbw =& $this->getMaster( $cluster );
-			// Wikia -- change begin -- @author: wladek
-			// search multiple tables for blob contents (BugId: 9797)
-			foreach ($tables as $table ) {
-				$ret = $dbw->selectField( $table, 'blob_text', array( 'blob_id' => $id ) );
-				if ( $ret !== false ) break;
-			}
-			// Wikia -- change end
+			$ret = $dbw->selectField( $this->getTable( $dbw ), 'blob_text', array( 'blob_id' => $id ), __METHOD__ );
 			if( $ret === false) {
 				wfDebugLog( 'ExternalStoreDB', "ExternalStoreDB::fetchBlob master failed to find $cacheID\n" );
 			}
@@ -173,7 +135,7 @@ class ExternalStoreDB {
 			$ret = unserialize( $ret );
 		}
 
-		$wgExternalBlobCache = array( $cacheID => &$ret );
+		$externalBlobCache = array( $cacheID => &$ret );
 		return $ret;
 	}
 
@@ -187,8 +149,8 @@ class ExternalStoreDB {
 	function store( $cluster, $data ) {
 		$dbw = $this->getMaster( $cluster );
 		$id = $dbw->nextSequenceValue( 'blob_blob_id_seq' );
-		$dbw->insert( $this->getTable( $dbw ), 
-			array( 'blob_id' => $id, 'blob_text' => $data ), 
+		$dbw->insert( $this->getTable( $dbw ),
+			array( 'blob_id' => $id, 'blob_text' => $data ),
 			__METHOD__ );
 		$id = $dbw->insertId();
 		if ( !$id ) {

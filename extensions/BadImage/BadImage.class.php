@@ -1,16 +1,14 @@
 <?php
-
 /**
  * Class for manipulating the bad_image table
  *
- * @addtogroup Extensions
+ * @ingroup Extensions
  * @author Rob Church <robchur@gmail.com>
  * @copyright © 2006 Rob Church
  * @licence Copyright holder allows use of the code for any purpose
  */
 
 class BadImageList {
-
 	public static function check( $name ) {
 		wfProfileIn( __METHOD__ );
 		static $titles = array();

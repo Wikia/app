@@ -10,7 +10,7 @@ class DataFeedProvider {
 	const UPLOAD_THUMB_WIDTH = 150;
 	const VIDEO_THUMB_WIDTH = 150;
 
-	public static function getImageThumb($imageName, &$imageObj="") {
+	public static function getThumb($imageName, &$imageObj="") {
 		wfProfileIn(__METHOD__);
 		$imageObj = wfFindFile(Title::newFromText($imageName, NS_FILE));
 		if ($imageObj) {
@@ -18,7 +18,7 @@ class DataFeedProvider {
 			$height = $imageObj->getHeight();
 
 			if ($width > self::UPLOAD_THUMB_WIDTH || $height > self::UPLOAD_THUMB_WIDTH) {
-				$thumbObj = $imageObj->getThumbnail(self::UPLOAD_THUMB_WIDTH, self::UPLOAD_THUMB_WIDTH);
+				$thumbObj = $imageObj->transform( array( 'width' => self::UPLOAD_THUMB_WIDTH, 'height' => self::UPLOAD_THUMB_WIDTH ) );
 				$width = $thumbObj->getWidth();
 				$height = $thumbObj->getHeight();
 				$html = $thumbObj->toHtml();
@@ -28,22 +28,6 @@ class DataFeedProvider {
 
 			wfProfileOut(__METHOD__);
 			return array('name' => $imageName, 'html' => $html, 'width' => $width, 'height' => $height);
-		}
-		wfProfileOut(__METHOD__);
-		return null;
-	}
-
-	public static function getVideoThumb($videoName) {
-		wfProfileIn(__METHOD__);
-		$title = Title::newFromText($videoName, NS_LEGACY_VIDEO);
-		if ($title && class_exists('VideoPage')) {
-			$videoObj = new VideoPage($title);
-			$videoObj->load();
-			if ($videoObj->getVideoId()) {
-				$ret = array('name' => $videoName, 'html' => $videoObj->getThumbnailCode(self::VIDEO_THUMB_WIDTH, false), 'width' => self::VIDEO_THUMB_WIDTH, 'height' => round(self::VIDEO_THUMB_WIDTH / $videoObj->getRatio()));
-				wfProfileOut(__METHOD__);
-				return $ret;
-			}
 		}
 		wfProfileOut(__METHOD__);
 		return null;
@@ -107,11 +91,11 @@ class DataFeedProvider {
 			$key = $res['user'].'#'.$res['title'].'#'.$res['comment'];
 
 			if (is_array($res['rc_params']) && !empty($res['rc_params']['imageInserts'])) {
-				$key .= Wikia::json_encode($res['rc_params']['imageInserts']);
+				$key .= json_encode($res['rc_params']['imageInserts']);
 			}
 
 			if (is_array($res['rc_params']) && !empty($res['rc_params']['categoryInserts'])) {
-				$key .= Wikia::json_encode($res['rc_params']['categoryInserts']);
+				$key .= json_encode($res['rc_params']['categoryInserts']);
 			}
 			global $wgWallNS;
 			if( !empty($res['ns']) && !empty($wgWallNS) && in_array(MWNamespace::getSubject($res['ns']), $wgWallNS) ) {
@@ -162,7 +146,7 @@ class DataFeedProvider {
 
 					foreach($res['rc_params']['imageInserts'] as $imageName) {
 						if (!$hidevideos && $imageName{0} == ':') { // video
-							$video = self::getVideoThumb(substr($imageName, 1));
+							$video = self::getThumb(substr($imageName, 1));
 							if ($video) $item['new_videos'][] = $video;
 						} elseif (!$hideimages) { // image
 							if (!isset(self::$images[$imageName])) {
@@ -186,7 +170,7 @@ class DataFeedProvider {
 							}
 							if (self::$images[$imageName] < 20) {
 								$imgageObj = false;
-								$image = self::getImageThumb($imageName, $imgageObj);
+								$image = self::getThumb($imageName, $imgageObj);
 
 								if ($image) {
 									if ( WikiaFileHelper::isFileTypeVideo($imgageObj) ) {
@@ -382,7 +366,7 @@ class DataFeedProvider {
 		global $wgContentNamespaces, $wgEnableWallExt, $wgWallNS;
 		
 		$item = array('type' => 'new');
-		
+
 		if (in_array($res['ns'], $wgContentNamespaces)
 		|| $res['ns'] == 110
 		|| $res['ns'] == NS_PROJECT
@@ -414,18 +398,7 @@ class DataFeedProvider {
 			$item['title'] = $parts['title'];
 			$item['url'] = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE_TALK)->getLocalUrl();
 
- 		} else if ($res['ns'] == 400) {
-
- 			if ($this->proxyType == self::WL) {
-				$video = new VideoPage($title);
-				$video->load();
-
-				$item['title'] = $res['title'];
-				$item['url'] = $title->getLocalUrl();
-				$item['thumbnail'] = $video->getThumbnailCode(self::VIDEO_THUMB_WIDTH, false);
- 			}
-
-		} else if (defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
+ 		} else if (defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
 
 			if ($this->proxyType == self::WL) {
 				$item['title'] = $res['title'];
@@ -520,7 +493,7 @@ class DataFeedProvider {
 						$this->add(array('type' => 'upload',
 												'title' => $title->getPrefixedText(),
 												'url' => $title->getLocalUrl(),
-												'thumbnail' => $file->getThumbnail(self::UPLOAD_THUMB_WIDTH)->toHtml()
+												'thumbnail' => $file->transform( array( 'width' => self::UPLOAD_THUMB_WIDTH ) )->toHtml()
 												),
 												$res);
 						wfProfileOut(__METHOD__);

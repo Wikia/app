@@ -17,8 +17,8 @@ class ApiAjaxLogin extends ApiBase {
 	}
 
 	public function execute() {
-		session_start();
-		$Name = $Password = $Remember = $Loginattempt = $Mailmypassword = null;
+		wfSetupSession();
+		$Name = $Password = $Remember = $Loginattempt = $Mailmypassword = $Token = null;
 		extract( $this->extractRequestParams() );
 
 		if ( !empty( $Loginattempt ) ) {
@@ -28,7 +28,8 @@ class ApiAjaxLogin extends ApiBase {
 					'wpName' => $Name,
 					'wpPassword' => $Password,
 					'wpRemember' => $Remember,
-					'wpLoginattempt' => $Loginattempt
+					'wpLoginattempt' => $Loginattempt,
+					'wpLoginToken' => $Token,
 				)
 			);
 
@@ -39,15 +40,26 @@ class ApiAjaxLogin extends ApiBase {
 					$result['result'] = 'Reset';
 					break;
 				case LoginForm::SUCCESS:
-					global $wgUser;
+					global $wgUser, $wgCookiePrefix;
 
 					$wgUser->setOption( 'rememberpassword', $Remember ? 1 : 0 );
 					$wgUser->setCookies();
 
 					$result['result'] = 'Success';
-					$result['lguserid'] = $_SESSION['wsUserID'];
-					$result['lgusername'] = $_SESSION['wsUserName'];
-					$result['lgtoken'] = $_SESSION['wsToken'];
+					$result['lguserid'] = intval( $wgUser->getId() );
+					$result['lgusername'] = $wgUser->getName();
+					$result['lgtoken'] = $wgUser->getToken();
+					$result['cookieprefix'] = $wgCookiePrefix;
+					$result['sessionid'] = session_id();
+					break;
+				case LoginForm::NEED_TOKEN:
+					$result['result'] = 'NeedToken';
+					$result['token'] = $loginForm->getLoginToken();
+					$result['cookieprefix'] = $wgCookiePrefix;
+					$result['sessionid'] = session_id();
+					break;
+				case LoginForm::WRONG_TOKEN:
+					$result['result'] = 'WrongToken';
 					break;
 				case LoginForm::NO_NAME:
 					$result['result'] = 'NoName';
@@ -65,6 +77,7 @@ class ApiAjaxLogin extends ApiBase {
 					$result['result'] = 'NotExists';
 					$result['text'] = wfMsg( 'al-nosuchuser', htmlspecialchars( $Name ) );
 					break;
+				case LoginForm::RESET_PASS:
 				case LoginForm::WRONG_PASS:
 					$result['result'] = 'WrongPass';
 					$result['text'] = wfMsg( 'wrongpassword' );
@@ -72,6 +85,18 @@ class ApiAjaxLogin extends ApiBase {
 				case LoginForm::EMPTY_PASS:
 					$result['result'] = 'EmptyPass';
 					$result['text'] = wfMsg( 'wrongpasswordempty' );
+					break;
+				case LoginForm::CREATE_BLOCKED:
+					$result['result'] = 'CreateBlocked';
+					$result['text'] = wfMsg( 'al-createblocked' );
+					break;
+				case LoginForm::THROTTLED:
+					global $wgPasswordAttemptThrottle, $wgLang;
+					$result['result'] = 'Throttled';
+					$result['text'] = wfMsgExt( 'al-throttled', 'parsemag', $wgLang->formatNum( intval( $wgPasswordAttemptThrottle['seconds'] ) ) );
+					break;
+				case LoginForm::USER_BLOCKED:
+					$result['result'] = 'Blocked';
 					break;
 				default:
 					ApiBase::dieDebug( __METHOD__, 'Unhandled case value' );
@@ -135,12 +160,12 @@ class ApiAjaxLogin extends ApiBase {
 			'Password' => null,
 			'Remember' => null,
 			'Loginattempt' => null,
-			'Mailmypassword' => null
-
+			'Mailmypassword' => null,
+			'Token' => null
 		);
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiAjaxLogin.php 62526 2010-02-15 16:47:39Z demon $';
+		return __CLASS__ . ': $Id: ApiAjaxLogin.php 83671 2011-03-10 21:09:49Z ialex $';
 	}
 }

@@ -90,7 +90,7 @@ public class BaseTest {
 		}
 		return this.testConfig;
 	}
-
+	
 	@BeforeMethod(alwaysRun = true)
 	@Parameters( { "seleniumHost", "seleniumPort", "browser", "webSite", "timeout", "noCloseAfterFail", "seleniumSpeed" })
 	protected void startSession(String seleniumHost, int seleniumPort,
@@ -106,7 +106,6 @@ public class BaseTest {
 		session().setTimeout(timeout);
 		session().setSpeed(this.seleniumSpeed);
 		session().open("/");
-
 	}
 
 	@AfterMethod(alwaysRun = true)

@@ -60,7 +60,7 @@ $messages['ar'] = array(
 	'dump-database-info-more' => 'الرجاء <a href="http://community.wikia.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -296,7 +296,7 @@ $messages['fr'] = array(
 	'dump-database-info-more' => 'Voyez <a href="http://community.wikia.com/wiki/Help:Database_download">ceci</a> pour plus d\'informations',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

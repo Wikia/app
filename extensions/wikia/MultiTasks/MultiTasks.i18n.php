@@ -56,6 +56,7 @@ $messages['en'] = array(
 	'multiwikiedit_tasks_list' => 'List of tasks to run',
 	'multiwikiedit_general_options' => 'General multi-edit options',
 	'multiwikiedit_edit_options' => 'Edit options',
+	'action-multiwikiedit' => 'edit a batch of pages',
 /*multidelete*/
 	'multidelete' => 'Delete batch of pages',
 	'multidelete_button' => 'DELETE',
@@ -109,11 +110,13 @@ $messages['en'] = array(
 	'multidelete_french_wikis' => 'all french wikis',
 	'multidelete_swedish_wikis' => 'all swedish wikis',
 	'multidelete_german_wikis' => 'all german wikis',
+	'action-multidelete' => 'delete a batch of pages',
 /*multi-wiki finder*/	
 	'multiwikifinder' => 'Multiwiki Title Finder',
 	'multiwikifindpagenames' => 'Find pagenames',
 	'multiwikienterpagename' => 'Enter a pagename:',
 	'multiwikirecords' => '$1 wiki found',
+	'action-multiwikifinder' => 'search for a specific title across Wikia',
 ) ;
 
 /** Message documentation (Message documentation)
@@ -257,7 +260,7 @@ $messages['az'] = array(
 	'multidelete_german_wikis' => 'almanca bütün vikilər',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -969,7 +972,7 @@ $messages['fr'] = array(
 	'multiwikirecords' => '$1 wikis trouvés',
 );
 
-/** Galician (galego)
+/** Galician (Galego)
  * @author Toliño
  */
 $messages['gl'] = array(

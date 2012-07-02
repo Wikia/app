@@ -2,7 +2,7 @@
 
 class SpecialConfigure extends SpecialPage {
 	function __construct() {
-		wfLoadExtensionMessages( 'ConfigureWMF' );
+		
 		parent::__construct( 'Configure', 'configure' );
 	}
 
@@ -56,7 +56,7 @@ class SpecialConfigure extends SpecialPage {
 	}
 
 	function showSiteSelectForm( $invalid = false ) {
-		global $wgOut, $wgScript, $wgTitle;
+		global $wgOut, $wgScript;
 		$legend = wfMsgHtml( 'configurewmf-selectsite' );
 		$wgOut->addHTML( "<fieldset><legend>{$legend}</legend>" );
 		if( $invalid ) {
@@ -65,7 +65,7 @@ class SpecialConfigure extends SpecialPage {
 		$wgOut->addHTML( '<strong id="cfgwmf-attention" style="color: red; font-size: 12pt">' . wfMsgHTML( 'configurewmf-attentionnotice' ) . '</strong>' );
 		$wgOut->addWikiMsg( 'configurewmf-selectsite-help' );
 		$wgOut->addHTML( "<form action='{$wgScript}' method='get'>" );
-		$wgOut->addHTML( '<p>' . Xml::hidden( 'title', $wgTitle->getFullText() ) . '</p><table><tr>' );
+		$wgOut->addHTML( '<p>' . Html::Hidden( 'title', $this->getTitle()->getFullText() ) . '</p><table><tr>' );
 		$wgOut->addHTML( '<td class="mw-label">' . Xml::label( wfMsg( 'configurewmf-site' ), 'cfg-site' ) . '</td>' );
 		$wgOut->addHTML( '<td class="mw-input">' . Xml::input( 'wiki', false, false, array( 'id' => 'cfg-site' ) ) . '</td>' );
 		$wgOut->addHTML( '</tr><tr><td></td><td class="mw-input">' . Xml::submitButton( wfMsg( 'configurewmf-select' ) ) . '</td>' );
@@ -73,7 +73,7 @@ class SpecialConfigure extends SpecialPage {
 	}
 
 	function showSettingsChoiceForm( $wiki, $success = false ) {
-		global $wgOut, $wgTitle;
+		global $wgOut;
 		$this->addNav( 1, $wiki );
 		$legend = wfMsgHtml( 'configurewmf-chooseconfig' );
 		$wgOut->addHTML( "<fieldset><legend>{$legend}</legend>" );
@@ -84,7 +84,7 @@ class SpecialConfigure extends SpecialPage {
 		$wgOut->addHTML( '<ul>' );
 		foreach( ConfigureWMF::$settings as $name => $value ) {
 			$descr = wfMsgHtml( "configurewmf-cfgname-{$name}" );
-			$url = htmlspecialchars( $wgTitle->getLocalURL( "wiki={$wiki}&config={$name}" ) );
+			$url = htmlspecialchars( $this->getTitle()->getLocalURL( "wiki={$wiki}&config={$name}" ) );
 			$wgOut->addHTML( "<li><a href='{$url}'>{$descr}</a></li>" );
 		}
 		$wgOut->addHTML( '</ul></fieldset>' );
@@ -109,20 +109,20 @@ class SpecialConfigure extends SpecialPage {
 		$wgOut->addHTML( "<ul>\n" );
 		$groups = $wgConfigure->getGroupPermissions( $wiki );
 		foreach( array_keys( $groups ) as $group ) {
-			$url = htmlspecialchars( $wgRequest->appendQueryValue( 'group', $group ) );
+			$url = htmlspecialchars( $this->getTitle()->getLocalURL( "wiki={$wiki}&config={$config}&group={$group}" ) );
 			$wgOut->addHTML( "<li><a href=\"{$url}\">{$group}</a></li>\n" );
 		}
 		$wgOut->addHTML( "</ul></fieldset>\n" );
 
 		$newLegend = wfMsgHtml( 'configurewmf-createnewgroup' );
 		$wgOut->addHTML( "<fieldset><legend>{$newLegend}</legend><form method='get' action='{$wgScript}'>" );
-		foreach( $_GET as $var => $val ) $wgOut->addHTML( Xml::hidden( $var, $val ) );
+		foreach( $_GET as $var => $val ) $wgOut->addHTML( Html::Hidden( $var, $val ) );
 		$wgOut->addHTML( Xml::buildForm( array( 'configurewmf-groupname' => Xml::input( 'group' ) ), 'configurewmf-creategroup' ) );
 		$wgOut->addHTML( "</form></fieldset>\n" );
 	}
 
 	function showChangeSettingsForm( $wiki, $config ) {
-		global $wgOut, $wgTitle, $wgScript, $wgUser, $wgRequest;
+		global $wgOut, $wgScript, $wgUser, $wgRequest;
 		$legend = wfMsgHtml( 'configurewmf-change' );
 		$submit = wfMsg( 'configurewmf-submit' );
 		$reason = wfMsg( 'configurewmf-reason' );
@@ -141,13 +141,13 @@ class SpecialConfigure extends SpecialPage {
 			$this->addNav( 2, $wiki, $config );
 		$wgOut->addHTML( "<fieldset><legend>{$legend}</legend>" );
 		$wgOut->addWikiMsg( "configurewmf-help-{$config}" );
-		$wgOut->addHTML( wfMsgWikiHtml( 'configurewmf-seealso', $vars ) );
+		$wgOut->addHTML( wfMsgExt( 'configurewmf-seealso', array( 'parse', 'replaceafter' ), $vars ) );
 		$wgOut->addHTML( "<hr/>" );
 		$wgOut->addHTML( "<form action='{$wgScript}' method='post'><p>" );
-		$wgOut->addHTML( Xml::hidden( 'title', $wgTitle->getFullText() ) );
-		$wgOut->addHTML( Xml::hidden( 'wiki', $wiki ) );
-		$wgOut->addHTML( Xml::hidden( 'config', $config ) );
-		$wgOut->addHTML( Xml::hidden( 'edittoken', $wgUser->editToken() ) );
+		$wgOut->addHTML( Html::Hidden( 'title', $this->getTitle()->getFullText() ) );
+		$wgOut->addHTML( Html::Hidden( 'wiki', $wiki ) );
+		$wgOut->addHTML( Html::Hidden( 'config', $config ) );
+		$wgOut->addHTML( Html::Hidden( 'edittoken', $wgUser->editToken() ) );
 		$wgOut->addHTML( "</p><table><tbody>" );
 		foreach( ConfigureWMF::$settings[$config] as $key => $value ) {
 			if( substr( $key, 0, 2 ) == '__' )
@@ -183,7 +183,7 @@ class SpecialConfigure extends SpecialPage {
 				$r .= '<div>' . Xml::radioLabel( wfMsgHtml( 'configurewmf-stdlogo' ),
 					$var, 'stdlogo', 'wgLogoStdlogo', $isstd ) . '</div>';
 				$r .= '<div>' . Xml::radioLabel( wfMsgHtml( 'configurewmf-otherlogo' ),
-					$var, 'other', 'wgLogoOther', !$isstd ) . '&nbsp;' .
+					$var, 'other', 'wgLogoOther', !$isstd ) . '&#160;' .
 					Xml::input( "{$var}Other", false, $isstd ? '' : $val ) . '</div>';
 				break;
 			case 'groupperms':
@@ -213,7 +213,7 @@ class SpecialConfigure extends SpecialPage {
 				$r .= '<table><tbody><tr><td><ul><li>' . implode( '</li><li>', $checkboxes1 ) .
 					'</li></ul></td><td><ul><li>' . implode( '</li><li>', $checkboxes2 ) .
 					'</li></ul></td></tr></tbody></table>';
-				$r .= Xml::hidden( 'group', $group );
+				$r .= Html::Hidden( 'group', $group );
 				break;
 			case 'grouplist':
 				$targetgroup = $wgRequest->getVal( 'group' );
@@ -313,7 +313,7 @@ class SpecialConfigure extends SpecialPage {
 	}
 
 	function addNav( $levels = 0, $wiki = '', $config = '', $group = '' ) {
-		global $wgUser, $wgTitle, $wgOut;
+		global $wgUser, $wgOut;
 		$skin = $wgUser->getSkin();
 		$bits = array();
 		$bits[] = array( '', wfMsg( 'configurewmf-nav-rootpage' ) );
@@ -331,9 +331,9 @@ class SpecialConfigure extends SpecialPage {
 				if( $i == count( $bits ) - 1 )
 					$bits[$i] = $bits[$i][1];
 				else
-					$bits[$i] = $skin->makeLinkObj( $wgTitle, $bits[$i][1], $bits[$i][0] );
+					$bits[$i] = $skin->makeLinkObj( $this->getTitle(), $bits[$i][1], $bits[$i][0] );
 			$wgOut->setSubtitle( '<div id="contentSub"><span class="subpages">&lt; ' .
-				implode( '&nbsp;|&nbsp;', $bits ) . '</span></div>' );
+				implode( '&#160;|&#160;', $bits ) . '</span></div>' );
 		}
 	}
 

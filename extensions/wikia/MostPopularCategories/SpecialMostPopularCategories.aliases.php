@@ -1,15 +1,15 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
  
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
     'Mostpopularcategories' => array( 'Mostpopularcategories' ),
 );
 /** German */
-$aliases['de'] = array(
+$specialPageAliases['de'] = array(
     'Mostpopularcategories' => array( 'BeliebtesteKategorien', 'Mostpopularcategories' ),
 );
 /** Polish */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Mostpopularcategories' => array( 'Najpopularniejsze kategorie', 'Mostpopularcategories' ),
 );

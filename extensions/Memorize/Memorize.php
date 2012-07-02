@@ -14,7 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 # Memorizable Extension
@@ -30,14 +30,13 @@
 if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
-$wgExtensionFunctions[] = "wfMemorize";
+$wgHooks['ParserFirstCallInit'][] = 'wfMemorizeSetHook';
 $wgHooks['BeforePageDisplay'][] = 'addMemorizeJavascriptAndCSS';
 
 
-function wfMemorize() {
-	global $wgParser;
-
-	$wgParser->setHook( 'memorize', 'renderMemorize' );
+function wfMemorizeSetHook( $parser ) {
+	$parser->setHook( 'memorize', 'renderMemorize' );
+	return true;
 }
 
 function renderMemorize( $input, $argv, &$parser ) {
@@ -60,7 +59,7 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '1.0b',
 	'author' => 'Ryan Lane',
 	'description' => 'Allows users to create tables that are memorizable like those on Memorizable.org',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Memorize'
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Memorize'
 	);
 
 

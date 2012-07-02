@@ -5,14 +5,15 @@
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
+ * @file
+ * @ingroup Extensions
  * @author Roan Kattouw <roan.kattouw@home.nl>
- * @copyright Copyright (C) 2008 Roan Kattouw
+ * @copyright Copyright © 2008 Roan Kattouw
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License
  *
  * An extension that allows for searching inside categories
  * Written for MixesDB <http://mixesdb.com> by Roan Kattouw <roan.kattouw@home.nl>
  * For information how to install and use this extension, see the README file.
- *
  */
 # Alert the user that this is not a valid entry point to MediaWiki if they try to access the extension file directly.
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -127,13 +128,13 @@ class AdvancedSearchPager {
 
 	/**
 	 * Constructor
-	 * @param $incltext string Text from the content-incl form field
-	 * @param $excltext string Text from the content-excl form field
-	 * @param $inclcats string Text from the cats-incl form field
-	 * @param $exclcats string Text from the cats-excl form field
-	 * @param $speedcats array Array of speedcat categories
-	 * @param $namespaces array Array of NS_* constants
-	 * @param $permalink bool If true, cache this query longer
+	 * @param $incltext String: text from the content-incl form field
+	 * @param $excltext String: text from the content-excl form field
+	 * @param $inclcats String: text from the cats-incl form field
+	 * @param $exclcats String: text from the cats-excl form field
+	 * @param $speedcats Array: array of speedcat categories
+	 * @param $namespaces Array: array of NS_* constants
+	 * @param $permalink Boolean: if true, cache this query longer
 	 */
 	public function __construct( $incltext, $excltext, $inclcats, $exclcats, $speedcats, $dropdown, $namespaces, $searchTitle, $searchContent ) {
 		$this->mInclText = $this->parse( $incltext, true );
@@ -153,9 +154,10 @@ class AdvancedSearchPager {
 
 		# Check whether all namespace boxes were checked
 		# If so, save some work
-		if ( $this->mNamespaces == array_keys( AdvancedSearch::searchableNamespaces() ) )
+		if ( $this->mNamespaces == array_keys( AdvancedSearch::searchableNamespaces() ) ) {
 			$this->mNamespaces = array();
-		$this->mDb = wfGetDb( DB_SLAVE );
+		}
+		$this->mDb = wfGetDB( DB_SLAVE );
 	}
 
 	public function getSearchTitle() {
@@ -176,8 +178,9 @@ class AdvancedSearchPager {
 	public static function newFromKey( $key ) {
 		global $wgMemc;
 		$retval = $wgMemc->get( wfMemcKey( 'advancedsearch', $key ) );
-		if ( $retval instanceof AdvancedSearchPager )
-			$retval->mDb = wfGetDb( DB_SLAVE );
+		if ( $retval instanceof AdvancedSearchPager ) {
+			$retval->mDb = wfGetDB( DB_SLAVE );
+		}
 		return $retval;
 	}
 
@@ -196,36 +199,38 @@ class AdvancedSearchPager {
 
 	/**
 	 * Get a value from an array
-	 * @param $arr array Array to get the value from
-	 * @param $indices array Array of indices, i.e. array(1,2,3) gets $arr[1][2][3]
+	 * @param $arr Array: array to get the value from
+	 * @param $indices Array: array of indices, i.e. array(1,2,3) gets $arr[1][2][3]
 	 * @return mixed
 	 */
 	public static function getFromArray( $arr, $indices ) {
 		$i = array_shift( $indices );
-		if ( empty( $indices ) )
+		if ( empty( $indices ) ) {
 			return @$arr[$i];
+		}
 		return self::getFromArray( @$arr[$i], $indices );
 	}
 
 	/**
 	 * Set a value in an array
-	 * @param $value mixed Value to set
-	 * @param $arr array Array to work on
-	 * @param $indices array See getFromArray()
+	 * @param $value Mixed: value to set
+	 * @param $arr Array: array to work on
+	 * @param $indices Array: see getFromArray()
 	 */
 	public static function setInArray( $value, &$arr, $indices ) {
 		$i = array_shift( $indices );
-		if ( empty( $indices ) )
+		if ( empty( $indices ) ) {
 			$arr[$i] = $value;
-		else
+		} else {
 			self::setInArray( $value, $arr[$i], $indices );
+		}
 	}
 
 	/**
 	 * Parse text from a form field
-	 * @param $text string Text from a form field
-	 * @param $parseSpaces bool If true, parse spaces as ANDs
-	 * @return mixed Array, or error message (string) if $text is invalid
+	 * @param $text String: text from a form field
+	 * @param $parseSpaces Boolean: if true, parse spaces as ANDs
+	 * @return Mixed: array, or error message (string) if $text is invalid
 	 */
 	protected function parse( $text, $parseSpaces ) {
 		$arr = array();
@@ -240,20 +245,16 @@ class AdvancedSearchPager {
 		// 'token': we expect AND, OR, ) or a continuation
 		// 'word': we expect ( or text
 		$expecting = 'word';
-		for ( $i = 0; $i < count( $boom ); $i++ )
-		{
-			if ( $expecting == 'token' )
-			{
-				if ( $boom[$i] == wfMsg( 'advancedsearch-keyword-and' ) )
-				{
+		for ( $i = 0; $i < count( $boom ); $i++ ) {
+			if ( $expecting == 'token' ) {
+				if ( $boom[$i] == wfMsg( 'advancedsearch-keyword-and' ) ) {
 					// Increment the last index
 					end( $indices );
 					$indices[key( $indices )]++;
 					$expecting = 'word';
 					continue;
 				}
-				if ( $boom[$i] == wfMsg( 'advancedsearch-keyword-or' ) )
-				{
+				if ( $boom[$i] == wfMsg( 'advancedsearch-keyword-or' ) ) {
 					// Increment the second-to-last index
 					// and set the last one to 0
 					end( $indices );
@@ -264,14 +265,14 @@ class AdvancedSearchPager {
 					continue;
 				}
 				// ( is invalid here
-				if ( $boom[$i] == '(' )
+				if ( $boom[$i] == '(' ) {
 					return wfMsg( 'advancedsearch-parse-error-1',
 						htmlspecialchars( @$boom[$i - 1] ),
 						htmlspecialchars( $boom[$i] ),
 						htmlspecialchars( @$boom[$i + 1] ) );
+				}
 				// We found a word, so it's a continuation
-				if ( $parseSpaces && $boom[$i] != ')' )
-				{
+				if ( $parseSpaces && $boom[$i] != ')' ) {
 					// Increment the last index
 					end( $indices );
 					$indices[key( $indices )]++;
@@ -281,13 +282,14 @@ class AdvancedSearchPager {
 			// Check that it's not a token
 			if ( $boom[$i] == wfMsg( 'advancedsearch-keyword-and' ) ||
 						$boom[$i] == wfMsg( 'advancedsearch-keyword-or' ) )
+			{
 				return wfMsg( 'advancedsearch-parse-error-1',
 					htmlspecialchars( @$boom[$i - 1] ),
 					htmlspecialchars( $boom[$i] ),
 					htmlspecialchars( @$boom[$i + 1] ) );
+			}
 			// See if it's ( or )
-			if ( $boom[$i] == '(' )
-			{
+			if ( $boom[$i] == '(' ) {
 				// Go one level deeper
 				$indices[] = 0;
 				$indices[] = 0;
@@ -295,59 +297,59 @@ class AdvancedSearchPager {
 				$expecting = 'word';
 				continue;
 			}
-			if ( $boom[$i] == ')' )
-			{
+			if ( $boom[$i] == ')' ) {
 				// Go one level down
 				$depth--;
-				if ( $depth < 0 )
+				if ( $depth < 0 ) {
 					// More ) than (
 					return wfMsg( 'advancedsearch-parse-error-2',
 						htmlspecialchars( @$boom[$i - 1] ),
 						htmlspecialchars( $boom[$i] ),
 						htmlspecialchars( @$boom[$i + 1] ) );
+				}
 				array_pop( $indices );
 				array_pop( $indices );
 				$expecting = 'token';
 				continue;
 			}
 			// Parse quotes
-			if ( substr( $boom[$i], 0, 1 ) == '"' )
-			{
+			if ( substr( $boom[$i], 0, 1 ) == '"' ) {
 				$word = $boom[$i];
-				while ( substr( $word, - 1 ) !== '"' )
-				{
+				while ( substr( $word, - 1 ) !== '"' ) {
 					$i++;
-					if ( !isset( $boom[$i] ) )
+					if ( !isset( $boom[$i] ) ) {
 						return wfMsg( 'advancedsearch-parse-error-4' );
+					}
 					$word .= ' ' . $boom[$i];
 				}
 				# Strip the quotes
 				$word = substr( $word, 1, - 1 );
-			}
-			else
+			} else {
 				$word = $boom[$i];
+			}
 			// Put this word in the array
 			$lastAdded = self::getFromArray( $arr, $indices );
-			if ( empty( $lastAdded ) )
-			{
-				if ( $parseSpaces || in_array( @$boom[$i + 1], $tokens ) )
-				{
+			if ( empty( $lastAdded ) ) {
+				if ( $parseSpaces || in_array( @$boom[$i + 1], $tokens ) ) {
 					# We got a single word. Check that it's not too
 					# short or a stop word
-					if ( strlen( $word ) <= 3 && $word != '' )
+					if ( strlen( $word ) <= 3 && $word != '' ) {
 						return wfMsg( 'advancedsearch-parse-error-5', $word );
-					if ( in_array( $word, self::$stopWords ) )
+					}
+					if ( in_array( $word, self::$stopWords ) ) {
 						return wfMsg( 'advancedsearch-parse-error-6', $word );
+					}
 				}
 				self::setInArray( $word, $arr, $indices );
-			}
-			else
+			} else {
 				self::setInArray( "$lastAdded $word", $arr, $indices );
+			}
 			$expecting = 'token';
 		}
 		// Check if all ( were closed
-		if ( $depth != 0 )
+		if ( $depth != 0 ) {
 			return wfMsg( 'advancedsearch-parse-error-3' );
+		}
 		return $arr;
 	}
 
@@ -358,13 +360,17 @@ class AdvancedSearchPager {
 	 * @return bool
 	 */
 	static function isEmpty( $arr ) {
-		if ( empty( $arr ) )
+		if ( empty( $arr ) ) {
 			return true;
-		if ( !is_array( $arr ) )
+		}
+		if ( !is_array( $arr ) ) {
 			return false;
-		foreach ( $arr as $a )
-			if ( !self::isEmpty( $a ) )
+		}
+		foreach ( $arr as $a ) {
+			if ( !self::isEmpty( $a ) ) {
 				return false;
+			}
+		}
 		return true;
 	}
 
@@ -376,19 +382,15 @@ class AdvancedSearchPager {
 	protected function getMatchString( $arr ) {
 		$conds = array();
 		$searchEngine = SearchEngine::create();
-		foreach ( $arr as $a )
-		{
+		foreach ( $arr as $a ) {
 			$subconds = array();
-			foreach ( (array)$a as $b )
-			{
-				if ( is_array( $b ) )
-				{
+			foreach ( (array)$a as $b ) {
+				if ( is_array( $b ) ) {
 					$m = $this->getMatchString( $b );
-					if ( !empty( $m ) )
+					if ( !empty( $m ) ) {
 						$subconds[] = "+($m)";
-				}
-				else
-				{
+					}
+				} else {
 					global $wgContLang;
 					$s = $wgContLang->normalizeForSearch( $b );
 					$s = $searchEngine->normalizeText( $s );
@@ -397,27 +399,33 @@ class AdvancedSearchPager {
 					if ( strpos( $s, ' ' ) !== false
 						|| strpos( $s, '(' ) !== false
 						|| strpos( $s, ')' ) !== false
-						|| strpos( $s, ':' ) !== false )
-							$s = "\"$s\"";
-					if ( !empty( $s ) )
+						|| strpos( $s, ':' ) !== false
+					)
+					{
+						$s = "\"$s\"";
+					}
+					if ( !empty( $s ) ) {
 						$subconds[] = "+$s";
+					}
 				}
 			}
 			$sc = implode( ' ', $subconds );
-			if ( !empty( $sc ) )
+			if ( !empty( $sc ) ) {
 				$conds[] = "($sc)";
+			}
 		}
 		return implode( ' ', $conds );
 	}
 
 	/**
 	 * Get the DB key for a category
-	 * @param $c string Category name
+	 * @param $c String: category name
 	 */
 	public static function categoryKey( &$c ) {
 		$t = Title::makeTitleSafe( NS_CATEGORY, $c );
-		if ( !$t )
+		if ( !$t ) {
 			return false;
+		}
 		$c = $t->getDBkey();
 	}
 
@@ -433,58 +441,74 @@ class AdvancedSearchPager {
 		$exclcats = $db->strencode( $this->getMatchString( $this->mExclCats ) );
 
 		$retval['tables'][] = 'page';
-		if ( !self::isEmpty( $this->mInclText ) || !self::isEmpty( $this->mExclText ) )
+		if (
+			!self::isEmpty( $this->mInclText ) ||
+			!self::isEmpty( $this->mExclText )
+		)
 		{
 			$retval['tables'][] = 'searchindex';
 			$retval['conds'][] = 'page_id=si_page';
-			if ( !self::isEmpty( $this->mInclText ) )
-			{
+			if ( !self::isEmpty( $this->mInclText ) ) {
 				$titlecond = $contentcond = $cond = '';
-				if ( $this->mSearchTitle )
+				if ( $this->mSearchTitle ) {
 					$titlecond = "MATCH (si_title) AGAINST ('$incltext' IN BOOLEAN MODE)";
-				if ( $this->mSearchContent )
+				}
+				if ( $this->mSearchContent ) {
 					$contentcond = "MATCH (si_text) AGAINST ('$incltext' IN BOOLEAN MODE)";
-				if ( !empty( $titlecond ) && !empty( $contentcond ) )
+				}
+				if ( !empty( $titlecond ) && !empty( $contentcond ) ) {
 					$cond = "$titlecond OR $contentcond";
-				else
+				} else {
 					$cond = $titlecond . $contentcond;
-				if ( !empty( $cond ) )
+				}
+				if ( !empty( $cond ) ) {
 					$retval['conds'][] = $cond;
+				}
 			}
-			if ( !self::isEmpty( $this->mExclText ) )
-			{
+			if ( !self::isEmpty( $this->mExclText ) ) {
 				$titlecond = $contentcond = $cond = '';
-				if ( $this->mSearchTitle )
+				if ( $this->mSearchTitle ) {
 					$titlecond = "NOT MATCH (si_title) AGAINST ('$excltext' IN BOOLEAN MODE)";
-				if ( $this->mSearchContent )
+				}
+				if ( $this->mSearchContent ) {
 					$contentcond = "NOT MATCH (si_text) AGAINST ('$excltext' IN BOOLEAN MODE)";
-				if ( !empty( $titlecond ) && !empty( $contentcond ) )
+				}
+				if ( !empty( $titlecond ) && !empty( $contentcond ) ) {
 					$cond = "$titlecond OR $contentcond";
-				else
+				} else {
 					$cond = $titlecond . $contentcond;
-				if ( !empty( $cond ) )
+				}
+				if ( !empty( $cond ) ) {
 					$retval['conds'][] = $cond;
+				}
 			}
 		}
-		if ( !self::isEmpty( $this->mInclCats ) || !self::isEmpty( $this->mExclCats ) )
+		if (
+			!self::isEmpty( $this->mInclCats ) ||
+			!self::isEmpty( $this->mExclCats )
+		)
 		{
 			$retval['tables'][] = 'categorysearch';
 			$retval['conds'][] = 'page_id=cs_page';
-			if ( !self::isEmpty( $this->mInclCats ) )
+			if ( !self::isEmpty( $this->mInclCats ) ) {
 				$retval['conds'][] = "MATCH (cs_categories) AGAINST ('$inclcats' IN BOOLEAN MODE)";
-			if ( !self::isEmpty( $this->mExclCats ) )
+			}
+			if ( !self::isEmpty( $this->mExclCats ) ) {
 				$retval['conds'][] = "NOT MATCH (cs_categories) AGAINST ('$exclcats' IN BOOLEAN MODE)";
+			}
 		}
-		if ( !empty( $this->mNamespaces ) )
+		if ( !empty( $this->mNamespaces ) ) {
 			$retval['conds']['page_namespace'] = $this->mNamespaces;
+		}
 
 		$retval['fields'] = array( 'page_namespace', 'page_title' );
 		return $retval;
 	}
 
 	public function reallyDoQuery() {
-		if ( isset( $this->mResult ) )
+		if ( isset( $this->mResult ) ) {
 			return $this->mResult;
+		}
 		global $wgRequest;
 		list( $this->mLimit, $this->mOffset ) = $wgRequest->getLimitOffset( 50, 'limit' );
 		$info = $this->getQueryInfo();
@@ -493,16 +517,18 @@ class AdvancedSearchPager {
 		$conds = isset( $info['conds'] ) ? $info['conds'] : array();
 		$options = isset( $info['options'] ) ? $info['options'] : array();
 		$join_conds = isset( $info['join_conds'] ) ? $info['join_conds'] : array();
-		if ( $this->mOffset != '' )
+		if ( $this->mOffset != '' ) {
 			$options['OFFSET'] = intval( $this->mOffset );
+		}
 		$options['LIMIT'] = intval( $this->mLimit );
 		$this->mResult = $this->mDb->select( $tables, $fields, $conds, __METHOD__, $options, $join_conds );
 		return new ResultWrapper( $this->mDb, $this->mResult );
 	}
 
 	public function getNumRows() {
-		if ( !isset( $this->mResult ) )
+		if ( !isset( $this->mResult ) ) {
 			$this->reallyDoQuery();
+		}
 		return $this->mResult->numRows();
 	}
 
@@ -510,7 +536,8 @@ class AdvancedSearchPager {
 		# Run a LinkBatch query
 		$lb = new LinkBatch;
 		$result->rewind();
-		while ( ( $row = $result->fetchObject() ) ) {
+		$row = $result->fetchObject();
+		while ( ( $row ) ) {
 			$lb->add( $row->page_namespace, $row->page_title );
 		}
 		$lb->execute();
@@ -531,12 +558,13 @@ class AdvancedSearchPager {
 		$open = Xml::openElement( 'td', array( 'valign' => 'top' ) ) . Xml::openElement( 'ul' );
 		$close = Xml::closeElement( 'ul' ) . Xml::closeElement( 'td' );
 		$tdb = $tdf = '';
-		if ( $i == 0 )
+		if ( $i == 0 ) {
 			$tdb = $open;
-		else if ( $i == ceil( $this->mLimit / 2 ) )
+		} elseif ( $i == ceil( $this->mLimit / 2 ) ) {
 			$tdb = $close . $open;
-		else if ( $i == $this->mLimit - 1 )
+		} elseif ( $i == $this->mLimit - 1 ) {
 			$tdf = $close;
+		}
 		$i++;
 		$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 		$link = $wgUser->getSkin()->makeLinkObj( $title, htmlspecialchars( $title->getPrefixedText() ) );
@@ -554,13 +582,18 @@ class AdvancedSearchPager {
 	public function getBody() {
 		$res = $this->reallyDoQuery();
 		$this->preprocessResults( $res );
-		$prevnext = wfViewPrevNext( $this->mOffset, $this->mLimit,
-				SpecialPage::getTitleFor( 'AdvancedSearch' ),
-				wfArrayToCGI( $this->getDefaultQuery() ),
-				( $this->getNumRows() < $this->mLimit ) );
+		$prevnext = wfViewPrevNext(
+			$this->mOffset,
+			$this->mLimit,
+			SpecialPage::getTitleFor( 'AdvancedSearch' ),
+			wfArrayToCGI( $this->getDefaultQuery() ),
+			( $this->getNumRows() < $this->mLimit )
+		);
 		$retval = $this->getStartBody();
-		while ( ( $row = $res->fetchObject() ) )
+		$row = $res->fetchObject();
+		while ( ( $row ) ) {
 			$retval .= $this->formatRow( $row );
+		}
 		$retval .= $this->getEndBody();
 		return $prevnext . $retval . $prevnext;
 	}

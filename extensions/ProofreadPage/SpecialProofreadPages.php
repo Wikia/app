@@ -4,67 +4,71 @@
  * @ingroup SpecialPage
  */
 
-
-if ( !defined( 'MEDIAWIKI' ) ) die( 1 );
-global $wgHooks, $IP;
-require_once "$IP/includes/QueryPage.php";
-
-
-class ProofreadPages extends SpecialPage {
-
-	function ProofreadPages() {
-		SpecialPage::SpecialPage( 'IndexPages' );
+class ProofreadPages extends QueryPage {
+	protected $index_namespace, $searchTerm;
+	
+	public function __construct( $name = 'IndexPages' ) {
+		parent::__construct( $name );
+		$this->index_namespace = wfMsgForContent( 'proofreadpage_index_namespace' );
 	}
 
-	function execute( $parameters ) {
-		global $wgOut, $wgRequest, $wgDisableTextSearch;
+	public function execute( $parameters ) {
+		global $wgOut, $wgRequest, $wgDisableTextSearch, $wgScript;
 
 		$this->setHeaders();
 		list( $limit, $offset ) = wfCheckLimits();
 		$wgOut->addWikiText( wfMsgForContentNoTrans( 'proofreadpage_specialpage_text' ) );
-		$searchList = array();
-		$searchTerm = $wgRequest->getText( 'key' );
-		if( ! $wgDisableTextSearch ) {
+		$this->searchList = null;
+		$this->searchTerm = $wgRequest->getText( 'key' );
+		$this->suppressSqlOffset = false;
+		if( !$wgDisableTextSearch ) {
+			$self = $this->getTitle();
 			$wgOut->addHTML(
-				Xml::openElement( 'form' ) .
+				Xml::openElement( 'form', array( 'action' => $wgScript ) ) .
+				Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) .
+				Xml::input( 'limit', false, $limit, array( 'type' => 'hidden' ) ) .
 				Xml::openElement( 'fieldset' ) .
 				Xml::element( 'legend', null, wfMsg( 'proofreadpage_specialpage_legend' ) ) .
-				Xml::input( 'key', 20, $searchTerm ) . ' ' .
+				Xml::input( 'key', 20, $this->searchTerm ) . ' ' .
 				Xml::submitButton( wfMsg( 'ilsubmit' ) ) .
 				Xml::closeElement( 'fieldset' ) .
 				Xml::closeElement( 'form' )
 			);
-			if( $searchTerm ) {
-				$index_namespace = pr_index_ns() ;
-				$index_ns_index = MWNamespace::getCanonicalIndex( strtolower( $index_namespace ) );
+			if( $this->searchTerm ) {
+				$index_namespace = $this->index_namespace;
+				$index_ns_index = MWNamespace::getCanonicalIndex( strtolower( str_replace( ' ', '_', $index_namespace ) ) );
 				$searchEngine = SearchEngine::create();
 				$searchEngine->setLimitOffset( $limit, $offset );
 				$searchEngine->setNamespaces( array( $index_ns_index ) );
 				$searchEngine->showRedirects = false;
-				$textMatches = $searchEngine->searchText( $searchTerm );
+				$textMatches = $searchEngine->searchText( $this->searchTerm );
+				$escIndex = preg_quote( $index_namespace, '/' );
+				$this->searchList = array();
 				while( $result = $textMatches->next() ) {
-					if ( preg_match( "/^$index_namespace:(.*)$/", $result->getTitle(), $m ) ) {
-						array_push( $searchList, str_replace( ' ' , '_' , $m[1] ) );
+					$title = $result->getTitle();
+					if ( $title->getNamespace() == $index_ns_index ) {
+						array_push( $this->searchList, $title->getDBkey() );
 					}
 				}
+				$this->suppressSqlOffset = true;
 			}
 		}
-		$cnl = new ProofreadPagesQuery( $searchList, $searchTerm );
-		$cnl->doQuery( $offset, $limit );
-	}
-}
-
-class ProofreadPagesQuery extends QueryPage {
-	function ProofreadPagesQuery( $searchList, $searchTerm ) {
-		$this->searchList = $searchList;
-		$this->searchTerm = $searchTerm;
+		parent::execute( $parameters );
 	}
 
-	function getName() {
-		return 'IndexPages';
+	function reallyDoQuery( $limit, $offset = false ) {
+		if ( $this->suppressSqlOffset ) {
+			// Bug #27678: Do not use offset here, because it was already used in
+			// search perfomed by execute method
+			return parent::reallyDoQuery( $limit, false );
+		}
+		else {
+			return parent::reallyDoQuery( $limit, $offset );
+		}
 	}
 
 	function isExpensive() {
+		// FIXME: the query does filesort, so we're kinda lying here right now
 		return false;
 	}
 
@@ -72,39 +76,40 @@ class ProofreadPagesQuery extends QueryPage {
 		return false;
 	}
 
-	function linkParameters() {
-		return array( 'key'=> $this->searchTerm );
+	function isCacheable() {
+		// The page is not cacheable due to its search capabilities
+		return false;
 	}
 
-	function getSQL() {
-		$dbr = wfGetDB( DB_SLAVE );
-		$page = $dbr->tableName( 'page' );
-		$pr_index = $dbr->tableName( 'pr_index' );
-
-		$query = "SELECT page_title as title,
-		pr_count,pr_q0,pr_q1,pr_q2,pr_q3,pr_q4
-		FROM $pr_index LEFT JOIN $page ON page_id = pr_page_id";
-
-		if( $this->searchTerm ) {
-			if( $this->searchList ) {
-				$index_namespace = pr_index_ns() ;
-				$index_ns_index = MWNamespace::getCanonicalIndex( strtolower( $index_namespace ) );
-				$querylist = '';
-				foreach( $this->searchList as $item ) {
-					if( $querylist ) $querylist .= ', ';
-					$querylist .= "'" . $dbr->strencode( $item ). "'";
+	function linkParameters() {
+		return array( 'key' => $this->searchTerm );
+	}
+	
+	public function getQueryInfo() {
+		$conds = array();
+		if ( $this->searchTerm ) {
+			if ( $this->searchList !== null ) {
+				$index_namespace = $this->index_namespace;
+				$index_ns_index = MWNamespace::getCanonicalIndex( strtolower( str_replace( ' ', '_', $index_namespace ) ) );
+				$conds = array( 'page_namespace' => $index_ns_index );
+				if ( $this->searchList ) {
+					$conds['page_title'] = $this->searchList;
+				} else {
+					// If not pages were found do not return results
+					$conds[] = 'false';
 				}
-				$query .= " WHERE page_namespace=$index_ns_index AND page_title IN ($querylist)";
 			} else {
-				# The SQL query is complete
+				$conds = null;
 			}
 		}
-		return $query;
-	}
-
-	function getOrder() {
-		return ' ORDER BY 2*pr_q4+pr_q3 ' .
-			($this->sortDescending() ? 'DESC' : '');
+		return array(
+			'tables' => array( 'pr_index', 'page' ),
+			'fields' => array( 'page_title AS title', '2*pr_q4+pr_q3 AS value', 'pr_count',
+			'pr_q0', 'pr_q1', 'pr_q2' ,'pr_q3', 'pr_q4' ),
+			'conds' => $conds,
+			'options' => array(),
+			'join_conds' => array( 'page' => array( 'LEFT JOIN', 'page_id=pr_page_id' ) )
+		);
 	}
 
 	function sortDescending() {
@@ -114,18 +119,17 @@ class ProofreadPagesQuery extends QueryPage {
 	function formatResult( $skin, $result ) {
 		global $wgLang;
 
-		$index_namespace = pr_index_ns();
-		$title = Title::newFromText( $index_namespace.":".$result->title );
+		$title = Title::newFromText( $this->index_namespace . ':' . $result->title );
 
 		if ( !$title ) {
-			return '<!-- Invalid title ' .  htmlspecialchars( $index_namespace.":".$result->title ). '-->';
+			return '<!-- Invalid title ' .  htmlspecialchars( $this->index_namespace . ':' . $result->title ) . '-->';
 		}
 		$plink = $this->isCached()
-		  ? $skin->link( $title , htmlspecialchars( $title->getText() ) )
+			? $skin->link( $title , htmlspecialchars( $title->getText() ) )
 			: $skin->linkKnown( $title , htmlspecialchars( $title->getText() ) );
 
 		if ( !$title->exists() ) {
-			return "<s>{$plink}</s>";
+			return "<del>{$plink}</del>";
 		}
 
 		$size = $result->pr_count;
@@ -135,19 +139,18 @@ class ProofreadPagesQuery extends QueryPage {
 		$q3 = $result->pr_q3;
 		$q4 = $result->pr_q4;
 		$num_void = $size-$q1-$q2-$q3-$q4-$q0;
-		$void_cell = $num_void ? "<td align=center style='border-style:dotted;background:#ffffff;border-width:1px;' width=\"{$num_void}\"></td>" : "";
+		$void_cell = $num_void ? "<td align=center style='border-style:dotted;background:#ffffff;border-width:1px;' width=\"{$num_void}\"></td>" : '';
 
-		// FIXME: consider using $size in 'proofreadpage_pages' instead of glueing it together in $output
-		$pages = wfMsgExt( 'proofreadpage_pages', 'parsemag', $size );
-		$size = $wgLang->formatNum( $size );
+		$dirmark = $wgLang->getDirMark();
+		$pages = wfMsgExt( 'proofreadpage_pages', 'parsemag', $size, $wgLang->formatNum( $size ) );
 
 		$output = "<table style=\"line-height:70%;\" border=0 cellpadding=5 cellspacing=0 >
 <tr valign=\"bottom\">
-<td style=\"white-space:nowrap;overflow:hidden;\">{$plink} [$size $pages]</td>
+<td style=\"white-space:nowrap;overflow:hidden;\">{$plink} {$dirmark}[$pages]</td>
 <td>
 <table style=\"line-height:70%;\" border=0 cellpadding=0 cellspacing=0 >
 <tr>
-<td width=\"2\">&nbsp;</td>
+<td width=\"2\">&#160;</td>
 <td align=center class='quality4' width=\"$q4\"></td>
 <td align=center class='quality3' width=\"$q3\"></td>
 <td align=center class='quality2' width=\"$q2\"></td>

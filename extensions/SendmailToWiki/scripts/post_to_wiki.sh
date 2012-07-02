@@ -15,7 +15,7 @@ $mailData = mailparse_msg_get_part_data($mailRes);
 $mailBody = substr($email, $mailData['starting-pos-body'], $mailData['ending-pos-body']-$mailData['starting-pos-body']);
 
 $postData = 'postsender='.urlencode($mailData['headers']['from']);
-$postData .= '&postaccount='.urlencode(preg_replace('/@.*/', '', $mailData['headers']['to']));
+$postData .= '&postaccount='.urlencode(preg_replace('/@.*/', '', preg_replace('/["]?([^"]*)/', '\\1', $mailData['headers']['to'])));
 $postData .= '&posttitle='.urlencode($mailData['headers']['subject']);
 $postData .= '&postcontent='.urlencode($mailBody);
 $postData .= '&postcontenttype='.urlencode($mailData['content-type']);

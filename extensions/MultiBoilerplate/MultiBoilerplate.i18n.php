@@ -3,7 +3,8 @@
 /**
  * Internationalisation file for MultiBoilerplate extension.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
@@ -68,7 +69,7 @@ $messages['arz'] = array(
 	'multiboilerplate-submit' => 'تحميل',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -87,6 +88,15 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'multiboilerplate-submit' => 'Зареждане',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'multiboilerplate-legend' => 'বয়লারপ্লেট নির্বাচন',
+	'multiboilerplate-submit' => 'লোড',
+	'boilerplates' => 'সহজলভ্য বয়লারপ্লেটসমূহ',
 );
 
 /** Breton (Brezhoneg)
@@ -121,6 +131,11 @@ $messages['bs'] = array(
  */
 $messages['ca'] = array(
 	'multiboilerplate-submit' => 'Carrega',
+);
+
+/** Czech (Česky) */
+$messages['cs'] = array(
+	'multiboilerplate-submit' => 'Načíst',
 );
 
 /** German (Deutsch)
@@ -225,6 +240,17 @@ $messages['fr'] = array(
 	'multiboilerplate-special-define-in-interface' => 'Les modèles sont définis dans [[MediaWiki:Multiboilerplate]].',
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'multiboilerplate-legend' => 'Chouèsir la pâge a apondre',
+	'multiboilerplate-submit' => 'Chargiér',
+	'boilerplates' => 'Modèlos disponiblos',
+	'multiboilerplate-special-define-in-localsettings' => 'Los modèlos sont dèfenis dens LocalSettings.',
+	'multiboilerplate-special-define-in-interface' => 'Los modèlos sont dèfenis dens [[MediaWiki:Multiboilerplate]].',
+);
+
 /** Western Frisian (Frysk)
  * @author Snakesteuben
  */
@@ -273,10 +299,17 @@ $messages['haw'] = array(
 );
 
 /** Hebrew (עברית)
+ * @author Amire80
  * @author YaronSh
  */
 $messages['he'] = array(
+	'multiboilerplate-desc' => 'הוספת תמליל חוזר לבחירה מתפריט נפתח מעל תיבת העריכה',
+	'multiboilerplate-legend' => 'בחירת תמליל חוזר',
 	'multiboilerplate-submit' => 'טעינה',
+	'boilerplates' => 'תמלילים חוזרים זמינים',
+	'multiboilerplate-special-pagetext' => 'אפשר לטעון את התבניות הבאות מראש בזמן יצירת הדף. (<span class=plainlinks>[{{fullurl:הדף הזה אינו קיים|action=edit}} demo]</span>)',
+	'multiboilerplate-special-define-in-localsettings' => 'תמלילים חוזרים מוגדרים ב־LocalSettings.',
+	'multiboilerplate-special-define-in-interface' => 'תמלילים חוזרים מוגדרים ב־[[MediaWiki:Multiboilerplate]].',
 );
 
 /** Hindi (हिन्दी)
@@ -348,6 +381,11 @@ $messages['is'] = array(
 	'multiboilerplate-submit' => 'Hlaða',
 );
 
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'multiboilerplate-submit' => 'Carica',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  * @author Hosiryuhosi
@@ -376,7 +414,7 @@ $messages['km'] = array(
 	'multiboilerplate-submit' => 'ផ្ទុក',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -385,7 +423,7 @@ $messages['ksh'] = array(
 	'multiboilerplate-submit' => 'Donn et Enndraare!',
 	'boilerplates' => 'Müjjelesche Vörlare',
 	'multiboilerplate-special-pagetext' => 'Di Vörlare künne beim neu Sigge Aanlääje en di Sigg jetrocke wäde (<span class=plainlinks>[{{fullurl:Jung, di Sigg jidd_et noch jaa nit!|action=edit}} e Beishpell]</span>)',
-	'multiboilerplate-special-define-in-localsettings' => 'De Vörlare wäde en dä Dattei <code lang="en">LocalSettings.php</code> om ßööver enjeschtallt.',
+	'multiboilerplate-special-define-in-localsettings' => 'De Vörlare wäde en dä Dattei <code lang="en">LocalSettings.php</code> om ẞööver enjeschtallt.',
 	'multiboilerplate-special-define-in-interface' => 'De Vörlare wäde op dä Sigg [[MediaWiki:Multiboilerplate]] enjeschtallt.',
 );
 
@@ -411,15 +449,16 @@ $messages['mk'] = array(
 	'multiboilerplate-submit' => 'Вчитај',
 	'boilerplates' => 'Достапни подготвени текстови',
 	'multiboilerplate-special-pagetext' => 'Овие шаблони можат да се вчитаат како готови при создавањето на страници. (<span class=plainlinks>[{{fullurl:This page does not exist|action=edit}} пример]</span>)',
-	'multiboilerplate-special-define-in-localsettings' => 'Подготвените текстови се дефинирани во LocalSettings.',
-	'multiboilerplate-special-define-in-interface' => 'Подготвените текстови се дефинирани на [[MediaWiki:Multiboilerplate]].',
+	'multiboilerplate-special-define-in-localsettings' => 'Подготвените текстови се определени во LocalSettings.',
+	'multiboilerplate-special-define-in-interface' => 'Подготвените текстови се определени на [[MediaWiki:Multiboilerplate]].',
 );
 
 /** Malayalam (മലയാളം)
+ * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
-	'multiboilerplate-submit' => 'ലോഡ് ചെയ്യുക',
+	'multiboilerplate-submit' => 'ശേഖരിക്കുക',
 );
 
 /** Marathi (मराठी)
@@ -429,6 +468,13 @@ $messages['mr'] = array(
 	'multiboilerplate-desc' => 'पाने संपादित करत असताना, संपादन पेटीच्या वर बॉइलरप्लेटस निवडण्यासाठी लागणारी ओढ-यादी (drop-down) दाखविण्याची परवानगी देते',
 	'multiboilerplate-legend' => 'बॉईलरप्लेट निवडा',
 	'multiboilerplate-submit' => 'लोड',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'multiboilerplate-submit' => 'Muatkan',
 );
 
 /** Dutch (Nederlands)
@@ -457,11 +503,16 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Nghtwlkr
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'multiboilerplate-desc' => 'Viser en boks på toppen av redigeringssiden for å velge og laste en standardtekst',
 	'multiboilerplate-legend' => 'Velg standardtekst',
 	'multiboilerplate-submit' => 'Last',
+	'boilerplates' => 'Tilgjengelige standardtekster',
+	'multiboilerplate-special-pagetext' => 'Disse malene kan være forhåndslastet ved sideopprettelse. (<span class=plainlinks>[{{fullurl:This page does not exist|action=edit}} demo]</span>)',
+	'multiboilerplate-special-define-in-localsettings' => 'Standardtekster er definert i LocalSettings.',
+	'multiboilerplate-special-define-in-interface' => 'Standardtekster er definert i [[MediaWiki:Multiboilerplate]].',
 );
 
 /** Occitan (Occitan)
@@ -486,9 +537,16 @@ $messages['pdc'] = array(
 
 /** Polish (Polski)
  * @author Maikking
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'multiboilerplate-submit' => 'Prześlij',
+	'multiboilerplate-desc' => 'Pozwala w czasie edycji strony wybrać z rozwijalnej listy umieszczonej powyżej formularza edycji jedną ze zdefiniowanych wcześniej treści strony',
+	'multiboilerplate-legend' => 'Wybierz treść do wstawienia',
+	'multiboilerplate-submit' => 'Wstaw',
+	'boilerplates' => 'Dostępne wcześniej zdefiniowane treści',
+	'multiboilerplate-special-pagetext' => 'Te szablony mogą zostać załadowane w czasie tworzenia nowej strony. (<span class=plainlinks>[{{fullurl:Strona nie istnieje|action=edit}} próba]</span>)',
+	'multiboilerplate-special-define-in-localsettings' => 'Wstępnie zdefiniowane treści znajdują się w LocalSettings.',
+	'multiboilerplate-special-define-in-interface' => 'Wstępnie zdefiniowane treści stron znajdują się w [[MediaWiki:Multiboilerplate]].',
 );
 
 /** Piedmontese (Piemontèis)
@@ -586,6 +644,18 @@ $messages['sk'] = array(
 	'multiboilerplate-special-define-in-interface' => 'Šablóny sú definované v [[MediaWiki:Multiboilerplate]].',
 );
 
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'multiboilerplate-submit' => 'Учитај',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+$messages['sr-el'] = array(
+	'multiboilerplate-submit' => 'Učitaj',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -616,6 +686,10 @@ $messages['tl'] = array(
 	'multiboilerplate-desc' => 'Nagpapahintulot na makapili ng isang "pakuluang-bakal" mula sa isang kahong bumabagsak pababa na nasa itaas ng pormularyong pampatnugot (pambago) kapag nagbabago ng mga pahina',
 	'multiboilerplate-legend' => 'Pumili ng pakuluang-bakal',
 	'multiboilerplate-submit' => 'Ikarga',
+	'boilerplates' => 'Makukuhang mga platong pampakulo',
+	'multiboilerplate-special-pagetext' => 'Maaaring mapaunang ikarga ang mga suleras na ito sa paglikha ng pahina. (<span class=plainlinks>[{{fullurl:This page does not exist|action=edit}} pagpapakita]</span>)',
+	'multiboilerplate-special-define-in-localsettings' => 'Binigyang kahulugana ng mga platong pamakulo sa loob ng LocalSettings.',
+	'multiboilerplate-special-define-in-interface' => 'Binigyang kahulugan ang mga platong pampakulo sa loob ng [[MediaWiki:Multiboilerplate]].',
 );
 
 /** Turkish (Türkçe)
@@ -623,6 +697,13 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'multiboilerplate-submit' => 'Yükle',
+);
+
+/** Ukrainian (Українська)
+ * @author Тест
+ */
+$messages['uk'] = array(
+	'multiboilerplate-submit' => 'Завантажити',
 );
 
 /** Vietnamese (Tiếng Việt)

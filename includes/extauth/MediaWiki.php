@@ -1,21 +1,26 @@
 <?php
-
-# Copyright (C) 2009 Aryeh Gregor
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-# http://www.gnu.org/copyleft/gpl.html
+/**
+ * External authentication with external MediaWiki database.
+ *
+ * Copyright © 2009 Aryeh Gregor
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ */
 
 /**
  * This class supports authentication against an external MediaWiki database,
@@ -45,8 +50,17 @@
  * @ingroup ExternalUser
  */
 class ExternalUser_MediaWiki extends ExternalUser {
-	private $mRow, $mDb;
+	private $mRow;
 
+	/**
+	 * @var DatabaseBase
+	 */
+	private $mDb;
+
+	/**
+	 * @param $name string
+	 * @return bool
+	 */
 	protected function initFromName( $name ) {
 		# We might not need the 'usable' bit, but let's be safe.  Theoretically 
 		# this might return wrong results for old versions, but it's probably 
@@ -60,22 +74,29 @@ class ExternalUser_MediaWiki extends ExternalUser {
 		return $this->initFromCond( array( 'user_name' => $name ) );
 	}
 
+	/**
+	 * @param $id int
+	 * @return bool
+	 */
 	protected function initFromId( $id ) {
 		return $this->initFromCond( array( 'user_id' => $id ) );
 	}
 
+	/**
+	 * @param $cond array
+	 * @return bool
+	 */
 	private function initFromCond( $cond ) {
 		global $wgExternalAuthConf;
 
-		$class = 'Database' . $wgExternalAuthConf['DBtype'];
-		$this->mDb = new $class(
-			$wgExternalAuthConf['DBserver'],
-			$wgExternalAuthConf['DBuser'],
-			$wgExternalAuthConf['DBpassword'],
-			$wgExternalAuthConf['DBname'],
-			false,
-			0,
-			$wgExternalAuthConf['DBprefix']
+		$this->mDb = DatabaseBase::factory( $wgExternalAuthConf['DBtype'],
+			array(
+				'host'        => $wgExternalAuthConf['DBserver'],
+				'user'        => $wgExternalAuthConf['DBuser'],
+				'password'    => $wgExternalAuthConf['DBpassword'],
+				'dbname'      => $wgExternalAuthConf['DBname'],
+				'tablePrefix' => $wgExternalAuthConf['DBprefix'],
+			)
 		);
 
 		$row = $this->mDb->selectRow(
@@ -101,6 +122,9 @@ class ExternalUser_MediaWiki extends ExternalUser {
 		return $this->mRow->user_id;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getName() {
 		return $this->mRow->user_name;
 	}
@@ -113,7 +137,7 @@ class ExternalUser_MediaWiki extends ExternalUser {
 	}
 
 	public function getPref( $pref ) {
-		# FIXME: Return other prefs too.  Lots of global-riddled code that does 
+		# @todo FIXME: Return other prefs too.  Lots of global-riddled code that does 
 		# this normally.
 		if ( $pref === 'emailaddress'
 		&& $this->row->user_email_authenticated !== null ) {
@@ -122,8 +146,11 @@ class ExternalUser_MediaWiki extends ExternalUser {
 		return null;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getGroups() {
-		# FIXME: Untested.
+		# @todo FIXME: Untested.
 		$groups = array();
 		$res = $this->mDb->select(
 			'user_groups',

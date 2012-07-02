@@ -2,8 +2,9 @@
 /**
  * Internationalisation file for extension OtherSites.
  *
- * @addtogroup Extensions
-*/
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
@@ -17,9 +18,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'othersites-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'othersites-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -30,12 +32,27 @@ $messages['ar'] = array(
 	'othersites-desc' => 'ينقل وصلات الإنترويكي غير وصلات اللغة إلى مكانها الخاص',
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'othersites' => 'ܕ̈ܘܟܝܬܐ ܐܚܪ̈ܢܝܬܐ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
 $messages['arz'] = array(
 	'othersites' => 'مواقع أخرى',
 	'othersites-desc' => 'ينقل وصلات الإنترويكى غير وصلات اللغة إلى مكانها الخاص',
+);
+
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'othersites' => 'Otros sitios',
+	'othersites-desc' => 'Pon los enllaces interwiki distintos de los enllaces de llingua nún cuadru propiu',
 );
 
 /** Bavarian (Boarisch)
@@ -46,7 +63,7 @@ $messages['bar'] = array(
 	'othersites-desc' => "Vaschiabt Intawiki-Links in a eigene Box, wãun's kane Språchn-Links san",
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -59,6 +76,13 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'othersites' => 'Други сайтове',
+);
+
+/** Bengali (বাংলা)
+ * @author Wikitanvir
+ */
+$messages['bn'] = array(
+	'othersites' => 'অন্যান্য সাইটসমূহ',
 );
 
 /** Breton (Brezhoneg)
@@ -149,27 +173,39 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Vahid
  */
 $messages['fa'] = array(
 	'othersites' => 'دیگر وبگاه‌ها',
+	'othersites-desc' => 'پیوندهای میان‌ویکی را به جای سایر پیوندهای زبان‌ها در پورتلت شخصی آن‌ها انتقال می‌دهد.',
 );
 
 /** Finnish (Suomi)
+ * @author Crt
  * @author Vililikku
  */
 $messages['fi'] = array(
 	'othersites' => 'Muut sivustot',
+	'othersites-desc' => 'Siirtää ne interwiki-linkit, jotka eivät ole kielilinkkejä, omaan portaalisovelmaan.',
 );
 
 /** French (Français)
  * @author Crochet.david
  * @author Grondin
+ * @author Verdy p
  * @author Zetud
  */
 $messages['fr'] = array(
-	'othersites' => 'autres sites',
-	'othersites-desc' => 'Déplace les liens interwiki autres que les liens liés à la langue vers leurs propres composants d’interface.',
+	'othersites' => 'Autres sites',
+	'othersites-desc' => 'Déplace dans leurs propres composants d’interface les liens interwiki autres que les liens vers d’autres langues',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'othersites' => 'Ôtros setos',
 );
 
 /** Galician (Galego)
@@ -239,9 +275,11 @@ $messages['id'] = array(
 
 /** Italian (Italiano)
  * @author Darth Kule
+ * @author Gianfranco
  */
 $messages['it'] = array(
 	'othersites' => 'Altri siti',
+	'othersites-desc' => 'Sposta i collegamenti interwiki diversi dai collegamenti interlinguistici nel quadrotto loro assegnato',
 );
 
 /** Japanese (日本語)
@@ -260,7 +298,7 @@ $messages['km'] = array(
 	'othersites' => 'គេហទំព័រផ្សេងទៀត',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -276,6 +314,13 @@ $messages['lb'] = array(
 	'othersites-desc' => 'Réckelt interwiki-Linken déi keng Sproochlinke sinn an hir eege Këscht',
 );
 
+/** Latvian (Latviešu)
+ * @author Xil
+ */
+$messages['lv'] = array(
+	'othersites' => 'Citas saites',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -284,11 +329,20 @@ $messages['mk'] = array(
 	'othersites-desc' => 'Ги преместува интервики врските, кои не се јазични врски, во посебни места',
 );
 
+/** Malayalam (മലയാളം)
+ * @author Praveenp
+ */
+$messages['ml'] = array(
+	'othersites' => 'മറ്റ് സൈറ്റുകൾ',
+);
+
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
  * @author Zamwan
  */
 $messages['ms'] = array(
 	'othersites' => 'Tapak-tapak lain',
+	'othersites-desc' => 'Mengalihkan pautan antara wiki selain pautan bahasa ke dalam portler sendiri',
 );
 
 /** Dutch (Nederlands)
@@ -310,7 +364,7 @@ $messages['nn'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
-$messages['no'] = array(
+$messages['nb'] = array(
 	'othersites' => 'andre sider',
 	'othersites-desc' => 'Flytter interwikilenker som ikke er andre språk til sin egen boks',
 );
@@ -321,6 +375,13 @@ $messages['no'] = array(
 $messages['oc'] = array(
 	'othersites' => 'autres sites',
 	'othersites-desc' => "Deplaça los ligams interwiki autres que los ligams ligats a la lenga de lors compausants d'interfàcia pròpris.",
+);
+
+/** Deitsch (Deitsch)
+ * @author Xqt
+ */
+$messages['pdc'] = array(
+	'othersites' => 'annere Bledder',
 );
 
 /** Polish (Polski)
@@ -340,12 +401,13 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
 	'othersites' => 'Outros sites',
-	'othersites-desc' => 'Move ligações interwiki que não sejam ligações de linguagem para o seu próprio "portlet"',
+	'othersites-desc' => 'Move os links interwikis que não sejam links de línguas para o seu próprio "portlet"',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -403,14 +465,14 @@ $messages['sq'] = array(
 	'othersites' => 'Faqet tjera',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'othersites' => 'Други сајтови',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
  * @author Michaello
  */
 $messages['sr-el'] = array(
@@ -456,6 +518,14 @@ $messages['tl'] = array(
 $messages['tr'] = array(
 	'othersites' => 'Diğer siteler',
 	'othersites-desc' => 'Dil bağlantıları dışındaki interviki bağlantılarını kendi portletine taşır',
+);
+
+/** Tatar (Cyrillic script) (Татарча)
+ * @author Ильнар
+ */
+$messages['tt-cyrl'] = array(
+	'othersites' => 'Башка сәхифәләр',
+	'othersites-desc' => 'Интервики-сылтамаларны башка блокка күчерә',
 );
 
 /** Vèneto (Vèneto)

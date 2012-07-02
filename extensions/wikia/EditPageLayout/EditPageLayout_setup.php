@@ -24,7 +24,7 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__);
 
 // WikiaApp
-$app = WF::build('App');
+$app = F::app();
 
 // classes
 $app->registerClass('EditPageLayout', $dir . '/EditPageLayout.class.php');
@@ -92,7 +92,7 @@ function EditPageLayoutAjax() {
 		$data = EditPageLayoutAjax::$method();
 
 		if (is_array($data)) {
-			$json = Wikia::json_encode($data);
+			$json = json_encode($data);
 
 			$response = new AjaxResponse($json);
 			$response->setContentType('application/json; charset=utf-8');

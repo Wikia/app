@@ -6,12 +6,12 @@ class Multilang {
 	 * Alternative text blocks
 	 * Index is the language code to which it corresponds
 	 */
-	private $text = array();
+	private static $text = array();
 	
 	/**
 	 * Fallback language
 	 */
-	private $fallback = '';
+	private static $fallback = '';
 
 	/**
 	 * Register a new alternative text block
@@ -22,11 +22,11 @@ class Multilang {
 	 * @param $parser Parent parser
 	 * @return string
 	 */
-	public function languageBlock( $text, $args, &$parser ) {
+	public static function languageBlock( $text, $args, $parser ) {
 		if( isset( $args['lang'] ) ) {
 			$lang = strtolower( $args['lang'] );
-			$this->text[$lang] = $text;
-			$this->updateFallback( $lang );
+			self::$text[$lang] = $text;
+			self::updateFallback( $lang );
 		} else {
 			# Disaster! We *have* to know the language code, otherwise
 			# we have no idea when to show the text in question
@@ -43,11 +43,11 @@ class Multilang {
 	 * @param $parser Parent parser
 	 * @return string
 	 */
-	public function outputBlock( $text, $args, &$parser ) {
+	public static function outputBlock( $text, $args, $parser ) {
 		global $wgLang;
 		# Cache is varied according to interface language...
 		$lang = $wgLang->getCode();
-		$text = $this->getText( $lang );
+		$text = self::getText( $lang );
 		$output = $parser->parse( $text, $parser->getTitle(), $parser->getOptions(), true, false );
 		return $output->getText();
 	}
@@ -59,8 +59,8 @@ class Multilang {
 	 * @param $lang Language code
 	 * @return string
 	 */
-	private function getText( $lang ) {
-		return isset( $this->text[$lang] ) ? $this->text[$lang] : $this->getFallback();
+	private static function getText( $lang ) {
+		return isset( self::$text[$lang] ) ? self::$text[$lang] : self::getFallback();
 	}
 	
 	/**
@@ -68,8 +68,8 @@ class Multilang {
 	 *
 	 * @return string
 	 */
-	private function getFallback() {
-		return isset( $this->text[$this->fallback] ) ? $this->text[$this->fallback] : '';
+	private static function getFallback() {
+		return isset( self::$text[self::$fallback] ) ? self::$text[self::$fallback] : '';
 	}
 	
 	/**
@@ -78,19 +78,28 @@ class Multilang {
 	 *
 	 * @param $lang Language code
 	 */
-	private function updateFallback( $lang ) {
+	private static function updateFallback( $lang ) {
 		global $wgContLang;
-		if( $this->fallback == '' || $lang == $wgContLang->getCode() ) {
-			$this->fallback = $lang;
+		if( self::$fallback == '' || $lang == $wgContLang->getCode() ) {
+			self::$fallback = $lang;
 		}
 	}
-	
+
+	/**
+	 * Set hooks on a Parser instance
+	 */
+	public static function onParserFirstCallInit( $parser ) {
+		$parser->setHook( 'language', array( __CLASS__, 'languageBlock' ) );
+		$parser->setHook( 'multilang', array( __CLASS__, 'outputBlock' ) );
+		return true;
+	}
+
 	/**
 	 * Clear all internal state information
 	 */
-	public function clearState() {
-		$this->text = array();
-		$this->fallback = '';
+	public static function clearState() {
+		self::$text = array();
+		self::$fallback = '';
 		return true;
 	}
 	

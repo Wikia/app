@@ -36,5 +36,5 @@ $wgHooks[ 'WatchedItem::addWatch' ][] = 'GlobalWatchlistHook::addGlobalWatch';
 $wgHooks[ 'WatchedItem::removeWatch' ][] = 'GlobalWatchlistHook::removeGlobalWatch';
 $wgHooks[ 'WatchedItem::updateWatch' ][] = 'GlobalWatchlistHook::updateGlobalWatch';
 $wgHooks[ 'WatchedItem::replaceWatch'][] = 'GlobalWatchlistHook::replaceGlobalWatch';
-$wgHooks[ 'WatchlistEditor::clearWatchlist'][] = 'GlobalWatchlistHook::clearGlobalWatch';
+$wgHooks[ 'SpecialEditWatchlist::clearWatchlist'][] = 'GlobalWatchlistHook::clearGlobalWatch';
 $wgHooks[ 'User::resetWatch' ][] = 'GlobalWatchlistHook::resetGlobalWatch';

@@ -207,10 +207,8 @@ $messages = array(
 'ilsubmit' => "Su'e",
 
 # 'all' in various places, this might be different for inflected languages
-'recentchangesall' => "mea 'uma",
-'imagelistall'     => "mea 'uma",
-'watchlistall2'    => "mea 'uma",
-'namespacesall'    => "mea 'uma",
+'watchlistall2' => "mea 'uma",
+'namespacesall' => "mea 'uma",
 
 # Multipage image navigation
 'imgmultigo' => 'Alu!',

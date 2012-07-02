@@ -1,0 +1,40 @@
+== About ==
+
+''Regex Fun'' is a MediaWiki extension by Daniel Werner which adds parser functions for performing regular expression
+searches and replacements.
+The '#regex' parser function is inspired by 'RegexParserFunctions' extension from Jim R. Wilson and mostly compatible
+with it. 'RegexParserFunctions' simply is outdated and lacks some advanced functionality provided by this extension.
+
+''Regex Fun'' defines the following parser functions within your wiki:
+
+ - #regex:        Search or replace with help of php preg regular expression. Returns first match in search mode.
+                  Use of the 'e' modifier behind the expression will be detected, the effect of using 'e' now is
+                  adapted for mediawiki. With 'e' the replacement string will be parsed after references are replaced.
+ - #regexall:     Searches the whole string for as many matches as possible and returns them separated by a separator.
+ - #regex_var:    Allows to access subexpression references of the last used 'regex' function.
+ - #regexquote:   Runs php function 'preg_quote' on a string to use user-input savelly in regex functions. In case the
+                  first character is a character with special meaning in MW, it will be replaced with its hexadecimal
+                  notation e.g. '\x23' instead of '#'. This will prevent from things going terribly wrong when using
+                  user input within a regular expression.
+
+* Website: http://www.mediawiki.org/wiki/Extension:Regex_Fun
+* License: ISC license
+* Author:  Daniel Werner < danweetz@web.de >
+
+
+== Installation ==
+
+Once you have downloaded the code, place the 'RegexFun' directory within your
+MediaWiki 'extensions' directory. Then add the following code to your
+[[Manual:LocalSettings.php|LocalSettings.php]] file:
+
+ # Regex Fun
+ require_once( "$IP/extensions/RegexFun/RegexFun.php" );
+ 
+ 
+== Contributing ==
+
+If you have bug reports or requests, please add them to the ''Regex Fun'' Talk page [0].
+You can also send them to Daniel Werner < danweetz@web.de >
+
+[0] http://www.mediawiki.org/w/index.php?title=Extension_talk:Regex_Fun

@@ -8,7 +8,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class MakeSysopPage extends SpecialPage {
 	function __construct() {
 		parent::__construct( 'Makesysop', 'makesysop' );
-		wfLoadExtensionMessages( 'Makesysop' );
 	}
 
 	function execute( $subpage ) {

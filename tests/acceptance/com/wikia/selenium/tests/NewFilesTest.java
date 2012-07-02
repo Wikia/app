@@ -18,7 +18,7 @@ public class NewFilesTest extends BaseTest {
 		editArticle(NewFilesTest.testArticleName, "Wikia automated test for NewFiles\n\n===Gallery===\n\n<gallery>\nWiki.png\n</gallery>\n\n[[Category:Wikia tests]]");
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void imageCaptions() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();
@@ -29,7 +29,7 @@ public class NewFilesTest extends BaseTest {
 		assertTrue(session().isElementPresent("//div[@id='gallery-']//div[@class='lightbox-caption']"));
 	}
 
-	@Test(groups={"CI", "verified"})
+	@Test(groups={"CI", "legacy"})
 	public void imageLightbox() throws Exception {
 		loginAsStaff();
 		prepareTestArticle();

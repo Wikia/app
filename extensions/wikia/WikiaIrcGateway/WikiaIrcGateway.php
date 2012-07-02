@@ -41,8 +41,6 @@ function printWikiaIrcGatewayLoginForm( $input, $argv ) {
 	}
 	$GatewayOnPage = true;
 
-	wfLoadExtensionMessages('WikiaIrcGateway');
-
 	$output = '<div id="ircform_container">
 <form id="ircform" method="get" action="http://irc.wikia.com/" name="loginform">
 	<table>

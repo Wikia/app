@@ -207,7 +207,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @param string $msgBody
 	 * @param array $emailParams
 	 * @param string $templateType
-	 * @return True on success, a WikiError object on failure.
+	 * @return Status object
 	 */
 	public function sendEmail( $user, $category, $msgSubject, $msgBody, $emailParams, $templateType, $template='GeneralMail', $priority=0 ) {
 		$subject = strtr( $this->wf->Msg($msgSubject), $emailParams );
@@ -253,7 +253,7 @@ class UserLoginHelper extends WikiaModel {
 			return $result;
 		}
 
-		if ( !$this->wg->EmailAuthentication || !User::isValidEmailAddr($tempUser->getEmail()) ) {
+		if ( !$this->wg->EmailAuthentication || !Sanitizer::validateEmail($tempUser->getEmail()) ) {
 			$result['result'] = 'error';
 			$result['msg'] = $this->wf->Msg( 'usersignup-error-invalid-email' );
 			return $result;
@@ -275,9 +275,9 @@ class UserLoginHelper extends WikiaModel {
 		}
 
 		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-email') );
-		$response = $user->sendConfirmationMail("ConfirmationMail", 'usersignup-confirmation-email', true, $emailTextTemplate);
+		$response = $user->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $emailTextTemplate );
 		$tempUser->saveSettingsTempUserToUser( $user );
-		if( WikiError::isError( $response ) ) {
+		if( !$response->isGood() ) {
 			$result['result'] = 'error';
 			$result['msg'] = $this->wf->Msg( 'userlogin-error-mail-error', $result->getMessage() );
 		} else {
@@ -297,16 +297,16 @@ class UserLoginHelper extends WikiaModel {
 	/**
 	 * send reconfirmation email to the email address without saving that email address
 	 * @param string $email
-	 * @return types{bool,type{WikiError}} True on success, a WikiError object on failure.
+	 * @return Status object
 	 */
-	public function sendReconfirmationEmail( &$user, $email ) {
+	public function sendReconfirmationEmail( &$user, $email, $type = 'change' ) {
 		$userId = $user->getId();
 		$userEmail = $user->getEmail();
 
 		$user->mId = 0;
 		$user->mEmail = $email;
 
-		$result = $user->sendReConfirmationMail();
+		$result = $user->sendReConfirmationMail( $type );
 
 		$user->mId = $userId;
 		$user->mEmail = $userEmail;
@@ -318,7 +318,7 @@ class UserLoginHelper extends WikiaModel {
 	/**
 	 * send reminder email
 	 * @param object $user
-	 * @return types{bool,type{WikiError}} True on success, a WikiError object on failure.
+	 * @return Status object
 	 */
 	public function sendConfirmationReminderEmail( &$user ) {
 		if( ($user->getOption("cr_mailed", 0) == 1) ) {
@@ -326,7 +326,7 @@ class UserLoginHelper extends WikiaModel {
 		}
 		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array('language' => $user->getOption('language'), 'type' => 'confirmation-reminder-email') );
 		$user->setOption( "cr_mailed","1" );
-		return $user->sendConfirmationMail("ConfirmationReminderMail", 'usersignup-confirmation-reminder-email', true, $emailTextTemplate);
+		return $user->sendConfirmationMail( false, 'ConfirmationReminderMail', 'usersignup-confirmation-reminder-email', true, $emailTextTemplate );
 	}
 
 	/**
@@ -447,49 +447,54 @@ class UserLoginHelper extends WikiaModel {
 	 * original function: showRequestForm() in EmailConfirmation class (Special:Confirmemail page)
 	 */
 	public function showRequestFormConfirmEmail( $pageObj ) {
-		$optionNewEmail = $this->wg->User->getOption( 'new_email' );
-		if( $this->wg->Request->wasPosted() && $this->wg->User->matchEditToken( $this->wg->Request->getText( 'token' ) ) ) {
+		$user = $pageObj->getUser();
+		$out = $pageObj->getOutput();
+		$optionNewEmail = $user->getOption( 'new_email' );
+		if( $pageObj->getRequest()->wasPosted() && $user->matchEditToken( $pageObj->getRequest()->getText( 'token' ) ) ) {
 			// Wikia change -- only allow one email confirmation attempt per hour
-			if (strtotime($this->wg->User->mEmailTokenExpires) - strtotime("+6 days 23 hours") > 0) {
-				$this->wg->Out->addWikiMsg( 'usersignup-error-throttled-email' );
+			if (strtotime($user->mEmailTokenExpires) - strtotime("+6 days 23 hours") > 0) {
+				$out->addWikiMsg( 'usersignup-error-throttled-email' );
 				return;
 			}
 
-			$email = ( $this->wg->User->isEmailConfirmed() && !empty($optionNewEmail) ) ? $optionNewEmail : $this->wg->user->getEmail() ;
-			$ok = $this->sendReconfirmationEmail( $this->wg->User, $email );
-			if ( WikiError::isError( $ok ) ) {
-				$this->wg->Out->addWikiMsg( 'userlogin-error-mail-error', $ok->toString() );
+			$email = ( $user->isEmailConfirmed() && !empty($optionNewEmail) ) ? $optionNewEmail : $user->getEmail() ;
+			$status = $this->sendReconfirmationEmail( $user, $email );
+			if ( $status->isGood() ) {
+				$out->addWikiMsg( 'usersignup-user-pref-reconfirmation-email-sent', $email );
 			} else {
-				$this->wg->Out->addWikiMsg( 'usersignup-user-pref-reconfirmation-email-sent', $email );
+				$out->addWikiText( $status->getWikiText( 'userlogin-error-mail-error' ) );
 			}
 		} else {
-			if ( $this->wg->User->isEmailConfirmed() && empty($optionNewEmail) ) {
+			if ( $user->isEmailConfirmed() && empty($optionNewEmail) ) {
 				// date and time are separate parameters to facilitate localisation.
 				// $time is kept for backward compat reasons.
 				// 'emailauthenticated' is also used in SpecialPreferences.php
-				$time = $this->wg->Lang->timeAndDate( $this->wg->User->mEmailAuthenticated, true );
-				$d = $this->wg->Lang->date( $this->wg->User->mEmailAuthenticated, true );
-				$t = $this->wg->Lang->time( $this->wg->User->mEmailAuthenticated, true );
-				$this->wg->Out->addWikiMsg( 'usersignup-user-pref-emailauthenticated', $time, $d, $t );
+				$lang = $pageObj->getLanguage();
+				$emailAuthenticated = $user->getEmailAuthenticationTimestamp();
+				$time = $lang->timeAndDate( $emailAuthenticated, $user );
+				$d = $lang->date( $emailAuthenticated, $user );
+				$t = $lang->time( $emailAuthenticated, $user );
+				$out->addWikiMsg( 'usersignup-user-pref-emailauthenticated', $time, $d, $t );
 				return;
 			}
 
-			if ( $this->wg->User->isEmailConfirmationPending() || !empty($optionNewEmail) ) {
-				$this->wg->Out->addWikiMsg( 'usersignup-confirm-email-unconfirmed-emailnotauthenticated' );
-				if (strtotime($this->wg->User->mEmailTokenExpires) - strtotime("+6 days 23 hours") > 0)
+			if ( $user->isEmailConfirmationPending() || !empty($optionNewEmail) ) {
+				$out->addWikiMsg( 'usersignup-confirm-email-unconfirmed-emailnotauthenticated' );
+				if (strtotime($user->mEmailTokenExpires) - strtotime("+6 days 23 hours") > 0)
 					return;
 			}
 
 			$form  = Xml::openElement( 'form', array( 'method' => 'post', 'action' => $pageObj->getTitle()->getLocalUrl() ) );
-			$form .= Xml::hidden( 'token', $this->wg->User->editToken() );
-			$form .= Xml::submitButton( $this->wf->Msg( 'usersignup-user-pref-confirmemail_send' ) );
+			$form .= Html::hidden( 'token', $user->getEditToken() );
+			$form .= Xml::submitButton( $pageObj->msg( 'usersignup-user-pref-confirmemail_send' )->text() );
 			$form .= Xml::closeElement( 'form' );
-			$this->wg->Out->addHTML( $form );
+			$out->addHTML( $form );
 		}
 	}
-	
+
 	public function onMakeGlobalVariablesScript(&$vars) {
 		$vars['wgEnableUserLoginExt'] = true;
 		return true;
 	}
+
 }

@@ -156,7 +156,7 @@ class WikiaApiQueryLastEditors extends ApiQueryBase {
 		wfProfileOut( __METHOD__ );
 	}
 
-	protected function getExamples() {
+	public function getExamples() {
 		return array_merge(
 			array (
 				"Get last logged-in editors of content pages Wiki",

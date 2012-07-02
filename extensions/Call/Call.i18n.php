@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Internationalization file for Call Extension
  *
  * @addGroup Extension
@@ -30,10 +30,15 @@ In case of problems you can try <b>{{#special:call}}/DebuG</b>',
 );
 
 /** Message documentation (Message documentation)
+ * @author Lloffiwr
  * @author Purodha
+ * @author The Evil IP address
  */
 $messages['qqq'] = array(
-	'call-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'call' => 'Title of a special page',
+	'call-desc' => '{{desc}}
+
+Parameter passing methods are the ways in which parameters are transferred between functions when one function calls another.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -89,7 +94,39 @@ $messages['arz'] = array(
 	'call-save-failed' => 'النص التالى لم يتم حفظه لصفحة <big>[[$1]]</big> لأن هذه الصفحة موجودة بالفعل.',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'call' => 'Llamada',
+	'call-desc' => 'Crea un hiperenllaz a una plantía (o páxina wiki normal) pasando parámetros.
+Se pue usar na llinia de comandu del restolador o dientro del testu wiki.',
+	'call-text' => "La estensión Call espera una páxina wiki y parámetros opcionales pa esa páxina como argumentos.
+
+Exemplu 1: &nbsp; <tt>[[{{#special:call}}/Mio plantía,parám1=valor1]]</tt><br />
+Exemplu 2: &nbsp; <tt>[[{{#special:call}}/Talk:Mio alderique,parám1=valor1]]</tt><br />
+Exemplu 3: &nbsp; <tt>[[{{#special:call}}/:Mio páxina,parám1=valor1,parám2=valor2]]</tt><br />
+Exemplu 4 (URL del restolador): &nbsp; <tt>http://miodominiu/miowiki/index.php?{{#special:call}}/:Mio Páxina,parám1=valor1</tt>
+
+La <i>estensión Call</i> llamará a la páxina dada y pasará-y los parámetros.<br />
+Verás el conteníu de la páxina llamada y el so títulu, pero la so \"triba\" será la de páxina especial, esto ye, esa páxina nun se pue editar.<br />El conteníu visible pue variar dependiendo del valor de los parámetros que pases.<br /><br />
+
+La <i>estensión Call</i> ye afayadiza pa construir aplicaciones interactives con MediaWiki.<br />
+Pa ver un exemplu, visita <a href='http://semeb.com/dpldemo/Template:Catlist'>la GUI DPL</a>...<br />
+En casu d'haber dalgún problema pues probar con <b>{{#special:call}}/DebuG</b>",
+	'call-save' => "A salida d'esta llamada se guardaría n'una páxina llamada ''$1''.",
+	'call-save-success' => 'El testu darréu se guardó na páxina <big>[[$1]]</big>.',
+	'call-save-failed' => 'El testu darréu NUN se guardó na páxina <big>[[$1]]</big> porque la páxina yá esiste.',
+);
+
+/** Azerbaijani (Azərbaycanca)
+ * @author Vago
+ */
+$messages['az'] = array(
+	'call' => 'Çağırış',
+);
+
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -121,6 +158,18 @@ $messages['bg'] = array(
 	'call' => 'Извикване',
 	'call-save-success' => 'Следният текст беше съхранен на страницата <big>[[$1]]</big> .',
 	'call-save-failed' => 'Следният текст НЕ БЕШЕ съхранен на страницата <big>[[$1]]</big>, тъй като тя вече съществува.',
+);
+
+/** Banjar (Bahasa Banjar)
+ * @author Alamnirvana
+ * @author Ezagren
+ * @author J Subhi
+ */
+$messages['bjn'] = array(
+	'call' => 'Kiauan',
+	'call-save' => "Kaluaran gasan kiauan ini pacang disimpan di sabuah tungkaran bangaran ''$1''.",
+	'call-save-success' => 'Naskah nang baumpat ini sudah disimpan ka tungkaran <big>[[$1]]</big>.',
+	'call-save-failed' => 'Naskah nang baumpat ini BALUM disimpan ka tungkaran <big>[[$1]]</big>  karana tungkaran itu sudah ada.',
 );
 
 /** Bengali (বাংলা)
@@ -188,10 +237,30 @@ U slučaju problema možete pokušati <b>{{#special:call}}/DebuG</b>",
 );
 
 /** Catalan (Català)
+ * @author BroOk
+ * @author El libre
  * @author Paucabot
  */
 $messages['ca'] = array(
+	'call' => 'Crida',
+	'call-desc' => "Crear un hipervincle a una plantilla (o en una pàgina wiki normal), amb el pas de paràmetres.
+Pot ser utilitzat en la línia d'ordres del navegador o en el text wiki",
+	'call-text' => "L'extensió Call espera una pàgina wiki i els paràmetres opcionals per a aquella pàgina com a argument.<br /><br />
+
+Exemple 1: &nbsp; <tt>[[{{#special:call}}/My Template,parm1=value1]]</tt><br />
+Exemple 2: &nbsp; <tt>[[{{#special:call}}/Talk:My Discussion,parm1=value1]]</tt><br />
+Exemple 3: &nbsp; <tt>[[{{#special:call}}/:My Page,parm1=value1,parm2=value2]]</tt><br />
+Exemple 4 (URL del navegador): &nbsp; <tt>http://mydomain/mywiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt><br /><br />
+
+L'<i>extensió Call</i> truca a la pàgina i passar els paràmetres.br />
+Podràs veure el contingut de la pàgina anomenat i el seu títol, però el seu \"tipus\" serà d'una pàgina especial, és a dir, com una pàgina no es pot editar.<br />El contingut que veus poden variar segons el valor dels paràmetres que ha passat.<br /><br />
+
+L'<i>extensió Call</i> és útil per a construir aplicacions interactives amb MediaWiki.<br />
+Per exemple, veure <a href='http://semeb.com/dpldemo/Template:Catlist'>the DPL GUI</a> ..<br />
+En cas de problemes pot provar <b>{{#special:call}}/DebuG</b>",
+	'call-save' => "La sortida d'aquesta Call es pot guardar en una pàgina anomenada'' $1 ''.",
 	'call-save-success' => 'El següent text ha estat desat a la pàgina <big>[[$1]]</big> .',
+	'call-save-failed' => "El següent text no s'ha desat a la pàgina <big>[[ $1 ]]</big> ja que aquesta pàgina ja existeix.",
 );
 
 /** Czech (Česky)
@@ -215,6 +284,32 @@ V případě problémů můžete zkusit <b>{{#special:call}}/DebuG</b>",
 	'call-save' => "Výstup této stránky byl uložen do stránky s názvem ''$1''.",
 	'call-save-success' => 'Následující text byl uložený do stránky <big>[[$1]]</big>',
 	'call-save-failed' => "Následující text NEBYL uložený do stránky ''$1'', protože tato stránka už existuje.",
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ * @author Xxglennxx
+ */
+$messages['cy'] = array(
+	'call' => 'Galw',
+	'call-desc' => "Creu hypergyswllt i nodyn (neu dudalen wici normal) sy'n pasio paramedrau.
+Gellir ei ddefnyddio ar linell gorchymyn y porydd neu o fewn testun wici.",
+	'call-text' => "Mae'r estyniad Galw yn disgwyl tudalen wici a pharamedrau dewisol ar gyfer y dudalen honno fel arg.<br /><br />
+
+Enghraifft 1: &nbsp; <tt>[[{{#special:call}}/My Template,parm1=value1]]</tt><br />
+Enghraifft 2: &nbsp; <tt>[[{{#special:call}}/Talk:My Discussion,parm1=value1]]</tt><br />
+Enghraifft 3: &nbsp; <tt>[[{{#special:call}}/:My Page,parm1=value1,parm2=value2]]</tt><br />
+Enghraifft 4 (URL y Porydd): &nbsp; <tt>http://mydomain/mywiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt><br /><br />
+
+Bydd yr <i>estyniad Galw</i> yn galw'r dudalen dan sylw ac yn pasio'r paramedrau .<br />
+Byddwch yn gweld cynnwys y dudalen a alwyd a'i theitl ond ar ffurf tudalen arbennig, h.y., ni ellid golygu'r fath dudalen.<br />Bydd y cynnwys yn amrywio yn ôl gwerthoedd y paramedrau a chawsant eu pasio gennych.<br /><br />
+
+Mae'r <i>estyniad Galw</i> yn ddefnyddiol wrth adeiladu rhaglenni rhyngweithiol gyda MediaWiki.<br />
+Am enghraifft, gweler <a href='http://semeb.com/dpldemo/Template:Catlist'>y rhyngwyneb defnyddio graffigol DPL</a> ..<br />
+Os oes problemau, rhowch gynnig ar <b>{{#special:call}}/DebuG</b>",
+	'call-save' => "Cedwir allbwn o'r galwad hon mewn tudalen o'r enw ''$1''.",
+	'call-save-success' => 'Rhoddwyd y testun yma ar gadw yn y dudalen <big>[[$1]]</big>.',
+	'call-save-failed' => "NI roddwyd y testun yma i gadw ar y dudalen <big>[[$1]]</big> am fod y dudalen yn bodoli'n barod.",
 );
 
 /** German (Deutsch)
@@ -319,6 +414,13 @@ $messages['eu'] = array(
 	'call-save-success' => 'Ondorengo testua gorde egin da <big>[[$1]]</big> orrialdera.',
 );
 
+/** Persian (فارسی)
+ * @author Ebraminio
+ */
+$messages['fa'] = array(
+	'call' => 'تماس',
+);
+
 /** Finnish (Suomi)
  * @author Cimon Avaro
  * @author Crt
@@ -373,6 +475,13 @@ En cas de problèmes, vous pouvez essayer <b>{{#special:call}}/DebuG</b>',
 	'call-save' => "Le résultat de cet appel pourrait être publié dans une page appelée ''$1''.",
 	'call-save-success' => 'Le texte suivant a été publié vers la page <big>[[$1]]</big>.',
 	'call-save-failed' => 'Le texte suivant n’a pu être publié vers la page <big>[[$1]]</big> car cette page existe déjà.',
+);
+
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'call' => 'Apèl',
 );
 
 /** Galician (Galego)
@@ -486,7 +595,7 @@ $messages['hi'] = array(
  * @author Michawiki
  */
 $messages['hsb'] = array(
-	'call' => 'Wołać',
+	'call' => 'Namołwa',
 	'call-desc' => 'Wotkaz k předłoze (abo k normalnej wikijowej stronje) z přepodaću parametrow wutworić. Da so w přikazowej lince wobhladowaka abo znutřka wikijoweho teksta wužiwać.',
 	'call-text' => "Rozšěrjenja Call wočakuje wiki-stronu a opcionalne parametry za tutu stronu jako argument.<br /><br />
 
@@ -555,7 +664,7 @@ In caso de problemas, tu pote probar <b>{{#special:call}}/DebuG</b>",
  */
 $messages['id'] = array(
 	'call' => 'Panggilan',
-	'call-desc' => 'Buat sebuah pranala ke templat (atau halaman wiki biasa) dengan parameter. 
+	'call-desc' => 'Buat sebuah pranala ke templat (atau halaman wiki biasa) dengan parameter.
 Dapat digunakan pada baris perintah penjelajah web atau di antara teks wiki',
 	'call-text' => "Pengaya \"Panggilan\" membutuhkan sebuah halaman wiki dan parameter opsional untuk halaman tersebut untuk digunakan sebagai argumen.
 
@@ -581,6 +690,31 @@ Jika ada masalah, lihat <b>{{#special:call}}/DebuG</b>",
 $messages['ig'] = array(
 	'call' => 'Kpo',
 	'call-save-success' => 'Mkpurụ édé á a donyérélé ime ihü <big>[[$1]]</big>',
+);
+
+/** Italian (Italiano)
+ * @author Gianfranco
+ */
+$messages['it'] = array(
+	'call' => 'Richiamo',
+	'call-desc' => 'Crea un hyperlink verso un template (o una normale pagina wiki) passandogli dei parametri.
+Può essere usato da linea di comando nel browser oppure dentro al wikitext',
+	'call-text' => "L'estensione Call (Richiamo) riceve come argomenti una pagina wiki e parametri opzionali per quella pagina.<br /><br />
+
+Esempio 1: &nbsp; <tt>[[{{#special:call}}/My Template,parm1=value1]]</tt><br />
+Esempio 2: &nbsp; <tt>[[{{#special:call}}/Talk:My Discussion,parm1=value1]]</tt><br />
+Esempio 3: &nbsp; <tt>[[{{#special:call}}/:My Page,parm1=value1,parm2=value2]]</tt><br />
+Esempio 4 (Browser URL): &nbsp; <tt>http://mydomain/mywiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt><br /><br />
+
+La <i>estensione Call</i> richiamerà la pagina indicata e le passerà i parametri.<br />
+Leggerai i contenuti della pagina richiamata ed il suo titolo, ma il suo 'tipo' sarà ora quello di una pagina speciale, e fra l'altro una pagina del genere non può essere editata.<br />I contenuti che leggerai potranno variare a seconda dei valori dei parametri che avrai specificato.<br /><br />
+
+La <i>estensione Call</i> è utile per costruire applicazioni interattive con MediaWiki.<br />
+Per esempio vedi <a href='http://semeb.com/dpldemo/Template:Catlist'>la GUI DPL</a> ..<br />
+In caso di problemi, puoi provare <b>{{#special:call}}/DebuG</b>",
+	'call-save' => "L'output di questa chiamata verrebbe salvato in una pagina chiamata ''$1''.",
+	'call-save-success' => 'Il testo che segue è stato salvato alla pagina <big>[[$1]].</big>',
+	'call-save-failed' => 'Il testo che segue NON è stato salvato alla pagina <big>[[$1]]</big> perché quella pagina esiste già.',
 );
 
 /** Japanese (日本語)
@@ -629,7 +763,7 @@ $messages['km'] = array(
 	'call-save-failed' => 'អត្ថបទដូចតទៅនេះមិនត្រូវបានរក្សាទុកទៅក្នុងទំព័រ <big>[[$1]]</big> ពីព្រោះទំព័រនោះមានរួចហើយ។',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
@@ -655,14 +789,15 @@ Wann de Probleme häß, versooch et enß met <b>[[{{#special:call}}/DebuG|{{#spe
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
 	'call' => 'Opruff',
-	'call-desc' => 'Mecht een Hyperlink op eng Schabloun (oder eng normal wiki-Säit) mat der Benotzung vu Parameteren. Kann an der Kommandozeil vum Browser oder am Wiki-Text benotzt ginn.',
+	'call-desc' => 'Mecht een Hyperlink op eng Schabloun (oder eng normal Wiki-Säit) mat Benotze vu Parameteren. Kann an der Kommandozeil vum Browser oder am Wiki-Text benotzt ginn.',
 	'call-save' => "D'Resultat vun dësem Opruff géif op der Säit '''$1''' gespäichert ginn.",
 	'call-save-success' => 'Dësen Text gouf op der Säit <big>[[$1]]</big> gespäichert.',
-	'call-save-failed' => 'Dësen Text konnt NET op der Säit <big>[[$1]]</big> ofgespäichert ginn, well et dës Säit scho gëtt.',
+	'call-save-failed' => 'Dësen Text konnt NET op der Säit <big>[[$1]]</big> ofgespäichert ginn, well et déi Säit scho gëtt.',
 );
 
 /** Limburgish (Limburgs)
@@ -670,6 +805,29 @@ $messages['lb'] = array(
  */
 $messages['li'] = array(
 	'call' => 'Kalle',
+);
+
+/** Lithuanian (Lietuvių)
+ * @author Eitvys200
+ * @author Ignas693
+ */
+$messages['lt'] = array(
+	'call' => 'Skambinti',
+	'call-desc' => 'Kurti hipersaitą į šabloną (arba į įprastą wiki puslapį) parametras, einančios.
+Gali būti naudojamas ne naršyklės komandų eilutę arba per wiki teksto',
+	'call-text' => 'Call pratęsimo tikisi wiki puslapį ir neprivalomų parametrų puslapio kaip argumentas.<br><br>
+N!1 Pavyzdys: <tt>[[{{# specialius: skambučių}} /My šabloną, parm1 = reikšmė1]]</tt><br>
+2 Pavyzdys: <tt>[[{{# specialius: skambučių}} / kalbėti: mano diskusijų, parm1 = reikšmė1]]</tt><br>
+3 Pavyzdys: <tt>[[{{# specialius: skambučių}} /: mano puslapį, parm1 = Reikšmė1, parm2 = reikšmė2]]</tt><br>
+4 (Naršyklės URL) pavyzdys: <tt>http://mydomain/mywiki/index.php? {{# specialius: skambučių}}/: Mano puslapyje, parm1 = reikšmė1</tt><br><br>
+N!<i>Skambinti pratęsimo</i> skambinti pateiktą puslapį ir perduoti parametrus.<br>
+Jūs pamatysite vadinamas puslapio ir jos pavadinimas turinį, bet savo "tipas" bus, kad specialios puslapio, t. y. tokių puslapio redaguoti negalima.<br>Jūs matote turinys gali skirtis atsižvelgiant į perduodama parametrų vertės.<br><br>
+N!<i>Skambinti plėtinys</i> yra naudinga sukurti interaktyviąsias programas su MediaWiki.<br>
+Žr <a href="http://semeb.com/dpldemo/Template:Catlist">TGA GUI</a> .<br>
+Dėl problemų galite pabandyti <b>{{# specialius: skambučių}} / DebuG</b>',
+	'call-save' => 'Šis kvietimas produkcijos būtų įrašyti į puslapį, vadinamas " $1 ".',
+	'call-save-success' => 'Šis tekstas buvo įrašytas į puslapį <big> [[$1]] </big> .',
+	'call-save-failed' => 'Šis tekstas nebuvo įrašytas į puslapį <big>[[$1]]</big> nes puslapis jau egzistuoja.',
 );
 
 /** Malagasy (Malagasy)
@@ -688,17 +846,17 @@ $messages['mk'] = array(
 	'call' => 'Повик',
 	'call-desc' => 'Создајте хиперврска до шаблон (или нормална вики-страница) со предавање на параметри.
 Може да се користи во командниот ред на прелистувачот, или пак во вики-текст',
-	'call-text' => "Проширувањето „Повик“ (Call) очекува вики-страница и изборни параметри за таа страница како аргумент.<br /><br />
+	'call-text' => "Додатокот „Повик“ (Call) очекува вики-страница и незадолжителни параметри за таа страница како аргумент.<br /><br />
 
 Пример 1: &nbsp; <tt>[[{{#special:call}}/My Template,parm1=value1]]</tt><br />
 Пример 2: &nbsp; <tt>[[{{#special:call}}/Talk:My Discussion,parm1=value1]]</tt><br />
 Пример 3: &nbsp; <tt>[[{{#special:call}}/:My Page,parm1=value1,parm2=value2]]</tt><br />
-Пример 4 (Browser URL): &nbsp; <tt>http://mydomain/mywiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt><br /><br />
+Пример 4 (URL за прелистувачот): &nbsp; <tt>http://mydomain/mywiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt><br /><br />
 
-<i>Проширувањето „Повик“</i> повикува дадена страница и ги предава параметрите.<br />
+<i>Додатокот „Повик“</i> повикува дадена страница и ги предава параметрите.<br />
 Ќе ја видите содржината на повиканата страница и нејзиниот наслов, но нејзиниот 'тип' ќе биде `специјална страница`, т.е. таквата страница не може да се уредува.<br />Содржината која ќе ја видите може да варира, зависно од вредноста на параметрите кои сте ги предале.<br /><br />
 
-<i>Проширувањето „Повик“</i> е полезно за изработка на интерактивни апликации со МедијаВики.<br />
+<i>Додатокот „Повик“</i> е полезно за изработка на интерактивни апликации со МедијаВики.<br />
 На пример, погледајте <a href='http://semeb.com/dpldemo/Template:Catlist'>DPL GUI</a> ..<br />
 Во случај да имете проблеми, послужете се со <b>{{#special:call}}/DebuG</b>",
 	'call-save' => "Излезните податоци од овој повик ќе бидат зачувани на страница по име ''$1''.",
@@ -711,8 +869,8 @@ $messages['mk'] = array(
  */
 $messages['ml'] = array(
 	'call' => 'വിളിക്കുക',
-	'call-save-success' => 'താഴെ പ്രദര്‍ശിപ്പിച്ചിരിക്കുന്ന ടെക്സ്റ്റ് <big>[[$1]]</big> എന്ന താളിലേക്ക് സേവ് ചെയ്തിരിക്കുന്നു.',
-	'call-save-failed' => 'താഴെ പ്രദര്‍ശിപ്പിച്ചിരിക്കുന്ന ടെക്സ്റ്റ് <big>[[$1]]</big> എന്ന താള്‍ മുന്‍പേ നിലവിലുള്ളതിനാല്‍ സേവ് ചെയ്യുന്നതിനു സാധിച്ചില്ല.',
+	'call-save-success' => 'താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്ന ടെക്സ്റ്റ് <big>[[$1]]</big> എന്ന താളിലേക്ക് സേവ് ചെയ്തിരിക്കുന്നു.',
+	'call-save-failed' => 'താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്ന ടെക്സ്റ്റ് <big>[[$1]]</big> എന്ന താൾ മുൻപേ നിലവിലുള്ളതിനാൽ സേവ് ചെയ്യുന്നതിനു സാധിച്ചില്ല.',
 );
 
 /** Marathi (मराठी)
@@ -737,12 +895,26 @@ $messages['mr'] = array(
 );
 
 /** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
  * @author Kurniasan
  */
 $messages['ms'] = array(
 	'call' => 'Panggil',
 	'call-desc' => 'Membuat hiperpautan ke templat (atau ke laman wiki biasa) melalui penguluran parameter.
 Boleh digunakan di baris perintah penyemak imbas atau di dalam teks wiki.',
+	'call-text' => "Sambungan Call menjangkakan laman wiki dan parameter pilihan untuk laman itu sebagai hujah.<br /><br />
+
+Contoh 1: &nbsp; <tt>[[{{#special:call}}/My Template,parm1=value1]]</tt><br />
+Contoh 2: &nbsp; <tt>[[{{#special:call}}/Talk:My Discussion,parm1=value1]]</tt><br />
+Contoh 3: &nbsp; <tt>[[{{#special:call}}/:My Page,parm1=value1,parm2=value2]]</tt><br />
+Contoh 4 (URL Pelayar): &nbsp; <tt>http://mydomain/mywiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt><br /><br />
+
+<i>Sambungan Call</i> akan memanggil laman yang dinyatakan dan menghantarkan parameter-parameternya.<br />
+Anda akan melihat kandungan laman yang dipanggil dan tajuknya tetapi dalam 'jenis' laman khas, yang mana ia tidak boleh disunting.<br />Kandungan yang anda lihat mungkin ada perbezaan, bergantung pada nilai parameter yang dihantarkan.<br /><br />
+
+<i>Sambungan Call</i> sesuai untuk membina aplikasi interaktif dengan MediaWiki.<br />
+Contohnya, perhatikan <a href='http://semeb.com/dpldemo/Template:Catlist'>antara muka pengguna bergrafik DPL</a> ..<br />
+Sekiranya ada masalah, anda boleh cuba <b>{{#special:call}}/DebuG</b>",
 	'call-save' => "Keluaran bagi panggilan ini akan disimpan di laman ''$1''.",
 	'call-save-success' => 'Teks berikut telah disimpan di laman <big>[[$1]]</big> .',
 	'call-save-failed' => 'Teks berikut TIDAK disimpan di laman <big>[[$1]]</big> kerana laman tersebut telah pun wujud.',
@@ -754,6 +926,39 @@ Boleh digunakan di baris perintah penyemak imbas atau di dalam teks wiki.',
 $messages['mt'] = array(
 	'call-save-success' => 'Dan it-test segwenti kien salvat fuq il-paġna <big>[[$1]]</big>.',
 	'call-save-failed' => 'Dan it-test segwenti ma ġiex salvat fuq il-paġna <big>[[$1]]</big> minħabba li din il-paġna diġà teżisti.',
+);
+
+/** Nahuatl (Nāhuatl)
+ * @author Ricardo gs
+ */
+$messages['nah'] = array(
+	'call' => 'Ticnōtzāz',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ * @author Nghtwlkr
+ */
+$messages['nb'] = array(
+	'call' => 'Kall opp',
+	'call-desc' => 'Gir mulighet til å skape linker til maler (eller vanlige wikisider) med angitte parametre. Lenkene kan brukes i nettleserens adressefelt eller i wikitekst.',
+	'call-text' => 'Utvidelsen Kall opp (Call) forventer seg at en wikiside og valgfrie parametere for den siden angis som et argument.<br /><br />
+
+Eksempel 1: &nbsp; <tt>[[{{#special:call}}/My Template,parm1=value1]]</tt><br />
+Eksempel 2: &nbsp; <tt>[[{{#special:call}}/Talk:My Discussion,parm1=value1]]</tt><br /><br />
+Eksempel 3: &nbsp; <tt>[[{{#special:call}}/:My Page,parm1=value1,parm2=value2]]</tt><br /><br />
+Eksempel 4 (URL for adressefeltet): &nbsp; <tt>http://mittdomene/minwiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt><br /><br />
+
+<i>Kall opp</i>-tillegget anroper den angitte siden og sender med parameterne.<br />
+Du kommer til å se den anropte sidens innhold og tittel, men siden som vises er en spesialside og kan derfor ikke redigeres.<br />
+Innholdet som vises kan variere avhengig av verdiene til de parameterne som sendes med.<br /><br />
+
+<i>Kall opp</i>-utvidelsen kan brukes for å skape interaktive applikasjoner med MediaWiki.<br />
+Se for eksempel <a href="http://semeb.com/dpldemo/Template:Catlist">grensesnittet for DPL</a> ..<br />
+Om du har noen problemer kan du prøve <b>{{#special:call}}/DebuG</b>.',
+	'call-save' => "Resultatet av denne oppkallingen ville blitt lagret på en side ved navn ''$1''.",
+	'call-save-success' => 'Følgende tekst har blitt lagret på siden <big>[[$1]]</big>.',
+	'call-save-failed' => 'Følgende tekst har IKKE blitt lagret på siden <big>[[$1]]</big> fordi siden allerede finnes.',
 );
 
 /** Dutch (Nederlands)
@@ -782,6 +987,26 @@ Bij problemen kunt u gebruik maken van <b>{{#special:call}}/DebuG</b>",
 	'call-save-failed' => 'De volgende tekst is NIET opgeslagen in pagina <big>[[$1]]</big> omdat die pagina al bestaat.',
 );
 
+/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
+ * @author Siebrand
+ */
+$messages['nl-informal'] = array(
+	'call-text' => "De uitbreiding Aanroepen (Call) verwacht een wikipagina en optioneel parameters voor die pagina.
+
+Voorbeeld 1: &nbsp; <tt>[[{{#special:call}}/My Template,parm1=value1]]</tt><br />
+Voorbeeld 2: &nbsp; <tt>[[{{#special:call}}/Talk:My Discussion,parm1=value1]]</tt><br />
+Voorbeeld 3: &nbsp; <tt>[[{{#special:call}}/:My Page,parm1=value1,parm2=value2]]</tt><br /><br />
+Voorbeeld 4 (Browser URL): &nbsp; <tt>http://mydomain/mywiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt>
+
+De <i>uitbreiding Aanroepen</i> roept de opgegeven pagina aan en geeft de parameters door.<br />
+Je krijgt de inhoud van de aangeroepen pagina te zien en de naam, maar deze is van het 'type' speciale pagina, dat wil zeggen dat de pagina niet bewerkt kan worden.<br />
+De inhoud die je te zien krijgt kan verschillen, afhankelijk van de parameters die u hebt meegegeven.
+
+De <i>uitbreiding Aanroepen</i> kan behulpzaam zijn bij het bouwen van interactieve applicaties met MediaWiki.
+De <a href='http://semeb.com/dpldemo/Template:Catlist'>DPL GUI</a> is daar een voorbeeld van.<br />
+Bij problemen kan gebruik maken van <b>{{#special:call}}/DebuG</b>",
+);
+
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  */
@@ -802,32 +1027,6 @@ Om du har problem, kan du prøva <b>{{#special:call}}/DebuG</b>.',
 	'call-save' => "Resultatet av denne oppkallinga ville blitt lagra på ei sida med namnet ''$1''.",
 	'call-save-success' => 'Følgjande tekst har blitt lagra på sida <big>[[$1]]</big>.',
 	'call-save-failed' => 'Følgjande tekst har IKKJE blitt lagra på sida <big>[[$1]]</big> av di sida allereie finst.',
-);
-
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Nghtwlkr
- */
-$messages['no'] = array(
-	'call' => 'Kall opp',
-	'call-desc' => 'Gir mulighet til å skape linker til maler (eller vanlige wikisider) med angitte parametre. Lenkene kan brukes i nettleserens adressefelt eller i wikitekst.',
-	'call-text' => 'Utvidelsen Kall opp (Call) forventer seg at en wikiside og valgfrie parametere for den siden angis som et argument.<br /><br />
-
-Eksempel 1: &nbsp; <tt>[[{{#special:call}}/My Template,parm1=value1]]</tt><br />
-Eksempel 2: &nbsp; <tt>[[{{#special:call}}/Talk:My Discussion,parm1=value1]]</tt><br /><br />
-Eksempel 3: &nbsp; <tt>[[{{#special:call}}/:My Page,parm1=value1,parm2=value2]]</tt><br /><br />
-Eksempel 4 (URL for adressefeltet): &nbsp; <tt>http://mittdomene/minwiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt><br /><br />
-
-<i>Kall opp</i>-tillegget anroper den angitte siden og sender med parameterne.<br />
-Du kommer til å se den anropte sidens innhold og tittel, men siden som vises er en spesialside og kan derfor ikke redigeres.<br />
-Innholdet som vises kan variere avhengig av verdiene til de parameterne som sendes med.<br /><br />
-
-<i>Kall opp</i>-utvidelsen kan brukes for å skape interaktive applikasjoner med MediaWiki.<br />
-Se for eksempel <a href="http://semeb.com/dpldemo/Template:Catlist">grensesnittet for DPL</a> ..<br />
-Om du har noen problemer kan du prøve <b>{{#special:call}}/DebuG</b>.',
-	'call-save' => "Resultatet av denne oppkallingen ville blitt lagret på en side ved navn ''$1''.",
-	'call-save-success' => 'Følgende tekst har blitt lagret på siden <big>[[$1]]</big>.',
-	'call-save-failed' => 'Følgende tekst har IKKE blitt lagret på siden <big>[[$1]]</big> fordi siden allerede finnes.',
 );
 
 /** Occitan (Occitan)
@@ -917,13 +1116,13 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'call' => 'Call',
-	'call-desc' => 'Cria uma ligação para uma predefinição (ou para uma página wiki normal) com passagem de parâmetros. Pode ser usada na linha de comando do navegador ou no texto wiki.',
+	'call-desc' => 'Cria um link para uma predefinição (ou para uma página wiki normal) com passagem de parâmetros. Pode ser usada na linha de comando do browser ou no texto wiki.',
 	'call-text' => "A extensão Call espera receber como argumentos uma página wiki e parâmetros opcionais para essa página.<br /><br />
 
 Exemplo 1: &nbsp; <tt>[[{{#special:call}}/Minha Predefinição,parm1=value1]]</tt><br />
 Exemplo 2: &nbsp; <tt>[[{{#special:call}}/Talk:Minha Discussão,parm1=value1]]</tt><br />
 Exemplo 3: &nbsp; <tt>[[{{#special:call}}/:Minha Página,parm1=value1,parm2=value2]]</tt><br /><br />
-Exemplo 4 (URL para navegador): &nbsp; <tt>http://meudominio/minhawiki/index.php?{{#special:call}}/:Minha Página,parm1=value1</tt><br /><br />
+Exemplo 4 (URL para o browser): &nbsp; <tt>http://meudominio/minhawiki/index.php?{{#special:call}}/:Minha Página,parm1=value1</tt><br /><br />
 
 A <i>extensão Call</i> irá realizar uma chamada à página fornecida e passar os parâmetros.<br />
 Verá o conteúdo da página chamada e o seu título, mas o seu 'tipo' será o de uma página especial, isto é, a página não pode ser editada.<br />O conteúdo que verá pode variar dependendo do valor dos parâmetros que passou.<br /><br />
@@ -957,8 +1156,10 @@ Em caso de problemas, você poderá experimentar <b>{{#special:call}}/DebuG</b>"
 
 /** Romanian (Română)
  * @author KlaudiuMihaila
+ * @author Minisarm
  */
 $messages['ro'] = array(
+	'call' => 'Apel',
 	'call-save-success' => 'Următorul text a fost salvat la pagina <big>[[$1]]</big> .',
 );
 
@@ -996,13 +1197,27 @@ $messages['ru'] = array(
 	'call-save-failed' => 'Следующий текст НЕ был сохранён на страницу <big>[[$1]]</big>, так как данная страница уже существует.',
 );
 
-/** Yakut (Саха тыла)
+/** Rusyn (Русиньскый)
+ * @author Gazeb
+ */
+$messages['rue'] = array(
+	'call' => 'Call',
+);
+
+/** Sakha (Саха тыла)
  * @author HalanTul
  */
 $messages['sah'] = array(
 	'call' => 'Ыҥырыы',
 	'call-desc' => 'Халыыпка (эбэтэр көннөрү сирэйгэ) сигэни оҥорор (туруорууарын биэрэн туран).
 Браузер аадырыһын устуруокатыгар эбэтэр биики тиэкискэ туттуллуон сөп.',
+);
+
+/** Sinhala (සිංහල)
+ * @author බිඟුවා
+ */
+$messages['si'] = array(
+	'call' => 'ඇමතුම',
 );
 
 /** Slovak (Slovenčina)
@@ -1028,6 +1243,31 @@ V prípade problémov môžete skúsiť <b>{{#special:call}}/DebuG</b>",
 	'call-save' => "Výstup tejto stránky by bol uložený na stránku s názvom ''$1''.",
 	'call-save-success' => 'Nasledovný text bol uložený na stránku <big>[[$1]]</big>.',
 	'call-save-failed' => "Nasledovný text NEBOL uložený na stránku ''$1'', pretože taká stránka už existuje.",
+);
+
+/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+ * @author Charmed94
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'call' => 'Позив',
+	'call-desc' => 'Прављење везе ка шаблону (или до обичне странице викија) с параметром у пролазу.
+Може се користити на командној линији прегледача или унутар вики текста',
+	'call-save' => "Одредишна датотека овог позива била би сачувана на страницу под називом ''$1''.",
+	'call-save-success' => 'Следећи текст је сачуван у страници <big>[[$1]]</big>.',
+	'call-save-failed' => 'Следећи текст није сачуван на страници <big>[[$1]]</big> јер та страница већ постоји.',
+);
+
+/** Serbian (Latin script) (‪Srpski (latinica)‬)
+ * @author Rancher
+ */
+$messages['sr-el'] = array(
+	'call' => 'Poziv',
+	'call-desc' => 'Pravljenje veze ka šablonu (ili do obične stranice vikija) s parametrom u prolazu.
+Može se koristiti na komandnoj liniji pregledača ili unutar viki teksta',
+	'call-save' => "Odredišna datoteka ovog poziva bila bi sačuvana na stranicu pod nazivom ''$1''.",
+	'call-save-success' => 'Sledeći tekst je sačuvan u stranici <big>[[$1]]</big>.',
+	'call-save-failed' => 'Sledeći tekst nije sačuvan na stranici <big>[[$1]]</big> jer ta stranica već postoji.',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1090,18 +1330,31 @@ $messages['te'] = array(
 	'call-save-failed' => '<big>[[$1]]</big> అనే పేజీ ఈసరికే ఉన్నందువల్ల ఈ క్రింది పాఠ్యాన్ని అందులో భద్రపరచలేకపోయాం.',
 );
 
-/** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
+/** Tajik (Cyrillic script) (Тоҷикӣ)
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'call-save-success' => 'Матни зерин ба саҳифа <big>[[$1]]</big> захира шуд.',
 );
 
-/** Tajik (Latin) (Тоҷикӣ (Latin))
+/** Tajik (Latin script) (tojikī)
  * @author Liangent
  */
 $messages['tg-latn'] = array(
 	'call-save-success' => 'Matni zerin ba sahifa <big>[[$1]]</big> zaxira şud.',
+);
+
+/** Thai (ไทย)
+ * @author Akkhaporn
+ */
+$messages['th'] = array(
+	'call' => 'ทั้งหมด',
+	'call-desc' => 'สร้างการเชื่อมโยงไปยังแม่แบบ (หรือหน้าวิกิปกติ) ด้วยำารามิเตอร์ที่ผ่านมา.
+สามารถใช้บรรทัดคำสั่งที่เบราว์เซอร์หรือในข้อความวิกิ',
+	'call-text' => '',
+	'call-save' => "การส่งออกของคำร้องถูกบันทึกไปยังหน้า ''$1''",
+	'call-save-success' => 'ข้อความต่อไปนี้ถูกบันทึกไปยังหน้า <big>[[$1]]</big>',
+	'call-save-failed' => 'ข้อความต่อไปนี้ไม่ได้บันทึกไปยังหน้า <big>[[$1]]</big> เพราะหน้านั้นมีอยู่แล้ว',
 );
 
 /** Tagalog (Tagalog)
@@ -1221,21 +1474,60 @@ $messages['vo'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Hydra
+ * @author PhiLiP
  */
 $messages['zh-hans'] = array(
 	'call' => '呼叫',
+	'call-desc' => '创建一个超链接到模板（或一般页面）的参数传递。可用于在浏览器的命令行或在wiki文本中使用。',
+	'call-text' => '作为参数，调用扩展预计 wiki 页面，该页面的可选参数。<br /><br />
+
+示例一： <tt>[[{{#special:call}}/My template,parm1=value1]]</tt><br />
+示例二： <tt>[[{{#special:call}}/Talk:My Discussion,parm1=value1]]</tt><br />
+示例三： <tt>[[{{#special:call}}/:My Page,parm1=value1,parm2=value2]]</tt><br />
+示例四（浏览器 URL）： <tt>http://mydomain/mywiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt><br /><br />
+
+<i>调用扩展</i> 的将调用给定的页面，并传递参数。<br />
+您将看到所调用的页和它的标题的内容，但其 type 将的一个特殊的页面即此类的页面无法编辑。<br />您看到的内容取决于您所传递的参数的值。<br /><br />
+
+<i>调用扩展</i> 的可用于构建具有 MediaWiki 的交互式应用程序。<br />
+有关示例，请参见 <a href="http://semeb.com/dpldemo/Template:Catlist">DPL GUI</a>...<br />
+问题的情况下，您可以尝试 <b>{{#special:call}}/DebuG</b>',
 	'call-save' => '本呼叫的输出将保存至名为“$1”的页面内。',
 	'call-save-success' => '以下文字经已保存至页面<big>[[$1]]</big>。',
 	'call-save-failed' => '由于页面已存在，以下文字并未保存至页面<big>[[$1]]</big>。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
+ * @author Horacewai2
+ * @author Mark85296341
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
 	'call' => '呼叫',
+	'call-desc' => '建立一個超連結到模板（或一般頁面）的參數傳遞。可用於在瀏覽器的命令行或在維基文字中使用。',
+	'call-text' => '作為參數，調用擴展預計 wiki 頁面，該頁面的可選參數。<br /><br />
+
+示例一： <tt>[[{{#special:call}}/My template,parm1=value1]]</tt><br />
+示例二： <tt>[[{{#special:call}}/Talk:My Discussion,parm1=value1]]</tt><br />
+示例三： <tt>[[{{#special:call}}/:My Page,parm1=value1,parm2=value2]]</tt><br />
+示例四（瀏覽器 URL）： <tt>http://mydomain/mywiki/index.php?{{#special:call}}/:My Page,parm1=value1</tt><br /><br />
+
+<i>調用擴展</i> 的將調用給定的頁面，並傳遞參數。<br />
+您將看到所調用的頁和它的標題的內容，但其 type 將的一個特殊的頁面即此類的頁面無法編輯。<br />您看到的內容取決於您所傳遞的參數的值。<br /><br />
+
+<i>調用擴展</i> 的可用於構建具有 MediaWiki 的交互式應用程序。<br />
+有關示例，請參見 <a href="http://semeb.com/dpldemo/Template:Catlist">DPL GUI</a>...<br />
+問題的情況下，您可以嘗試 <b>{{#special:call}}/DebuG</b>',
 	'call-save' => '本呼叫的輸出將儲存至名為「$1」的頁面內。',
 	'call-save-success' => '以下文字經已儲存至頁面<big>[[$1]]</big>。',
 	'call-save-failed' => '由於頁面已存在，以下文字並未儲存至頁面<big>[[$1]]</big>。',
+);
+
+/** Chinese (Hong Kong) (‪中文(香港)‬)
+ * @author Oapbtommy
+ */
+$messages['zh-hk'] = array(
+	'call' => '呼叫',
 );
 

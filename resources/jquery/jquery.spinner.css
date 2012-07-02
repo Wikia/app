@@ -1,0 +1,12 @@
+.mw-spinner {
+	/* @embed */
+	background: transparent url(images/spinner.gif);
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	vertical-align: middle;
+	
+	/* IE < 8 Hacks */
+	zoom: 1;
+	*display: inline;
+}

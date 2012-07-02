@@ -15,7 +15,7 @@
  */
 class TranslateRcFilter {
 	/**
-	 * Default action for the filter: ('', 'only', 'filter', 'site')
+	 * Default action for the filter: ('noaction', 'only', 'filter', 'site')
 	 */
 	protected static $defaultAction = 'filter';
 
@@ -24,6 +24,10 @@ class TranslateRcFilter {
 	 * documentation of the function parameters.
 	 *
 	 * Appends SQL filter conditions into $conds.
+	 * @param $conds array
+	 * @param $tables array|stromg
+	 * @param $join_conds array
+	 * @param $opts
 	 * @return \bool true
 	 */
 	public static function translationFilter( &$conds, &$tables, &$join_conds, $opts ) {
@@ -60,7 +64,9 @@ class TranslateRcFilter {
 	 * documentation of the function parameters.
 	 *
 	 * Adds a HTMl selector into $items
-	 * @return \bool true
+	 * @param $items
+	 * @param $opts
+	 * @return bool true
 	 */
 	public static function translationFilterForm( &$items, $opts ) {
 		$opts->consumeValue( 'translations' );
@@ -68,7 +74,7 @@ class TranslateRcFilter {
 
 		$label = Xml::label( wfMsg( 'translate-rc-translation-filter' ), 'mw-translation-filter' );
 		$select = new XmlSelect( 'translations', 'mw-translation-filter', $default );
-		$select->addOption( wfMsg( 'translate-rc-translation-filter-no' ), '' );
+		$select->addOption( wfMsg( 'translate-rc-translation-filter-no' ), 'noaction' );
 		$select->addOption( wfMsg( 'translate-rc-translation-filter-only' ), 'only' );
 		$select->addOption( wfMsg( 'translate-rc-translation-filter-filter' ), 'filter' );
 		$select->addOption( wfMsg( 'translate-rc-translation-filter-site' ), 'site' );

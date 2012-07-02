@@ -1,0 +1,20 @@
+Source: php-cloudfiles
+Section: web
+Priority: optional
+Maintainer: Chmouel Boudjnah <chmouel.boudjnah@rackspace.co.uk>
+Build-Depends: cdbs (>= 0.4.23-1.1), debhelper (>= 7.0.1)
+Homepage: http://github.com/rackspace/php-cloudfiles
+Standards-Version: 3.8.2
+
+Package: php-cloudfiles
+Architecture: all
+Depends: php5 | php5-cli, php5-curl, ${misc:Depends} 
+Description: Rackspace Cloud Files PHP API.
+ The Rackspace Cloud Files™ is an affordable, redundant, scalable, and
+ dynamic storage service offering. The core storage system is designed
+ to provide a safe, secure, automatically re-sizing and network accessible
+ way to store data. You can store an unlimited quantity of files and each
+ one can be as large as 5 gigabytes. Users can store as much as they want
+ and pay only for storage space they actually use.
+ .
+ This is the official API for PHP.

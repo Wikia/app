@@ -119,3 +119,21 @@ obj.bar = function() {
 
 var a = function(data) {return true},
 	b = function(foo) {return foo};
+
+
+// MW1.19 deprecations
+if (mwEditButtons.push({foo: 'bar'})) {
+	fixalpha();
+}
+
+os_toggle(foo);
+
+// tracking
+WET.byId('foo');
+WET.byStr('foo');
+$('#foo').trackClick('foo');
+$.tracker.byId('foo');
+$.tracker.byStr('foo');
+$.tracker.track('foo');
+$.tracker.trackStr('foo');
+$.tracker.trackEvent('foo');

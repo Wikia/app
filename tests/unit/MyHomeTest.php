@@ -2,8 +2,13 @@
 
 class MyHomeTest extends WikiaBaseTest {
 	function setUp() {
-		global $IP;
+		global $IP, $wgParser;
 		require_once("$IP/extensions/wikia/MyHome/MyHome.class.php");
+
+		if ( empty($wgParser->mOptions) ) {
+			$wgParser->Options(new ParserOptions());
+		}
+
 	}
 
 	function doEdit($edit) {
@@ -37,7 +42,7 @@ class MyHomeTest extends WikiaBaseTest {
 		$rc = RecentChange::newFromCurRow($row);
 
 		// call MyHome to add its data to rc object and Wikia vars
-		MyHome::storeInRecentChanges(&$rc);
+		MyHome::storeInRecentChanges($rc);
 
 		$data = Wikia::getVar('rc_data');
 
@@ -49,8 +54,9 @@ class MyHomeTest extends WikiaBaseTest {
 	function testNewPageCreation() {
 		// set content of new article
 		global $wgParser;
+
 		$wgParser->clearState();
-		$wgParser->mOutput->setText('<p>new content</p>');
+		$wgParser->getOutput()->setText('<p>new content</p>');
 
 		$edit = array(
 			'is_new' => true,
@@ -62,7 +68,8 @@ class MyHomeTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$out,
-			$this->doEdit($edit) );
+			$this->doEdit($edit)
+		);
 	}
 
 	function testEditFromViewMode() {
@@ -77,7 +84,8 @@ class MyHomeTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$out,
-			$this->doEdit($edit) );
+			$this->doEdit($edit)
+		);
 
 		// cleanup
 		Wikia::unsetVar('EditFromViewMode');
@@ -97,7 +105,8 @@ class MyHomeTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$out,
-			$this->doEdit($edit) );
+			$this->doEdit($edit)
+		);
 	}
 
 	function testSectionEditWithDefaultComment() {
@@ -113,7 +122,8 @@ class MyHomeTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$out,
-			$this->doEdit($edit) );
+			$this->doEdit($edit)
+		);
 	}
 
 	function testRollback() {
@@ -129,7 +139,8 @@ class MyHomeTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$out,
-			$this->doEdit($edit) );
+			$this->doEdit($edit)
+		);
 
 		// cleanup
 		Wikia::unsetVar('RollbackedRevId');
@@ -146,7 +157,8 @@ class MyHomeTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$out,
-			$this->doEdit($edit) );
+			$this->doEdit($edit)
+		);
 
 		// cleanup
 		Wikia::unsetVar('AutoSummaryType');
@@ -158,7 +170,8 @@ class MyHomeTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$out,
-			MyHome::packData($in) );
+			MyHome::packData($in)
+		);
 	}
 
 	function testUnpackData() {
@@ -167,6 +180,7 @@ class MyHomeTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			$out,
-			MyHome::unpackData($in) );
+			MyHome::unpackData($in)
+		);
 	}
 }

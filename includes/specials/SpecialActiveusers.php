@@ -1,38 +1,59 @@
 <?php
-# Copyright (C) 2008 Aaron Schulz
-#
-# http://www.mediawiki.org/
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-# http://www.gnu.org/copyleft/gpl.html
+/**
+ * Implements Special:Activeusers
+ *
+ * Copyright © 2008 Aaron Schulz
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup SpecialPage
+ */
 
 /**
  * This class is used to get a list of active users. The ones with specials
  * rights (sysop, bureaucrat, developer) will have them displayed
  * next to their names.
  *
- * @file
  * @ingroup SpecialPage
  */
 class ActiveUsersPager extends UsersPager {
 
-	function __construct( $group = null ) {
-		global $wgRequest, $wgRCMaxAge;
-		$this->RCMaxAge = ceil( $wgRCMaxAge / ( 3600 * 24 ) ); // Constant
+	/**
+	 * @var FormOptions
+	 */
+	protected $opts;
 
-		$un = $wgRequest->getText( 'username' );
+	/**
+	 * @var Array
+	 */
+	protected $groups;
+
+	/**
+	 * @param $context IContextSource
+	 * @param $group null Unused
+	 * @param $par string Parameter passed to the page
+	 */
+	function __construct( IContextSource $context = null, $group = null, $par = null ) {
+		global $wgActiveUserDays;
+
+		parent::__construct( $context );
+
+		$this->RCMaxAge = $wgActiveUserDays;
+		$un = $this->getRequest()->getText( 'username', $par );
 		$this->requestedUser = '';
 		if ( $un != '' ) {
 			$username = Title::makeTitleSafe( NS_USER, $un );
@@ -40,27 +61,25 @@ class ActiveUsersPager extends UsersPager {
 				$this->requestedUser = $username->getText();
 			}
 		}
-		
+
 		$this->setupOptions();
-		
-		parent::__construct();
 	}
 
 	public function setupOptions() {
-		global $wgRequest;
-		
 		$this->opts = new FormOptions();
 
 		$this->opts->add( 'hidebots', false, FormOptions::BOOL );
 		$this->opts->add( 'hidesysops', false, FormOptions::BOOL );
 
-		$this->opts->fetchValuesFromRequest( $wgRequest );
+		$this->opts->fetchValuesFromRequest( $this->getRequest() );
 
 		$this->groups = array();
-		if ($this->opts->getValue('hidebots') == 1)
+		if ( $this->opts->getValue( 'hidebots' ) == 1 ) {
 			$this->groups['bot'] = true;
-		if ($this->opts->getValue('hidesysops') == 1)
+		}
+		if ( $this->opts->getValue( 'hidesysops' ) == 1 ) {
 			$this->groups['sysop'] = true;
+		}
 	}
 
 	function getIndexField() {
@@ -72,7 +91,8 @@ class ActiveUsersPager extends UsersPager {
 		$conds = array( 'rc_user > 0' ); // Users - no anons
 		$conds[] = 'ipb_deleted IS NULL'; // don't show hidden names
 		$conds[] = "rc_log_type IS NULL OR rc_log_type != 'newusers'";
-		
+		$conds[] = "rc_timestamp >= '{$dbr->timestamp( wfTimestamp( TS_UNIX ) - $this->RCMaxAge*24*3600 )}'";
+
 		if( $this->requestedUser != '' ) {
 			$conds[] = 'rc_user_text >= ' . $dbr->addQuotes( $this->requestedUser );
 		}
@@ -99,52 +119,53 @@ class ActiveUsersPager extends UsersPager {
 	}
 
 	function formatRow( $row ) {
-		global $wgLang;
 		$userName = $row->user_name;
-		
-		$ulinks = $this->getSkin()->userLink( $row->user_id, $userName );
-		$ulinks .= $this->getSkin()->userToolLinks( $row->user_id, $userName );
+
+		$ulinks = Linker::userLink( $row->user_id, $userName );
+		$ulinks .= Linker::userToolLinks( $row->user_id, $userName );
+
+		$lang = $this->getLanguage();
 
 		$list = array();
 		foreach( self::getGroups( $row->user_id ) as $group ) {
-			if (isset($this->groups[$group]))
+			if ( isset( $this->groups[$group] ) ) {
 				return;
-			$list[] = self::buildGroupLink( $group );
+			}
+			$list[] = self::buildGroupLink( $group, $userName );
 		}
-		$groups = $wgLang->commaList( $list );
+		$groups = $lang->commaList( $list );
 
-		$item = wfSpecialList( $ulinks, $groups );
-		$count = wfMsgExt( 'activeusers-count',
-			array( 'parsemag' ),
-			$wgLang->formatNum( $row->recentedits ),
-			$userName,
-			$wgLang->formatNum ( $this->RCMaxAge )
-		);
-		$blocked = $row->blocked ? ' ' . wfMsgExt( 'listusers-blocked', array( 'parsemag' ), $userName ) : '';
+		$item = $lang->specialList( $ulinks, $groups );
+		$count = $this->msg( 'activeusers-count' )->numParams( $row->recentedits )
+			->params( $userName )->numParams( $this->RCMaxAge )->escaped();
+		$blocked = $row->blocked ? ' ' . $this->msg( 'listusers-blocked', $userName )->escaped() : '';
 
 		return Html::rawElement( 'li', array(), "{$item} [{$count}]{$blocked}" );
 	}
 
 	function getPageHeader() {
-		global $wgScript, $wgRequest;
+		global $wgScript;
 
 		$self = $this->getTitle();
-		$limit = $this->mLimit ? Xml::hidden( 'limit', $this->mLimit ) : '';
+		$limit = $this->mLimit ? Html::hidden( 'limit', $this->mLimit ) : '';
 
-		$out  = Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) ); # Form tag
-		$out .= Xml::fieldset( wfMsg( 'activeusers' ) ) . "\n";
-		$out .= Xml::hidden( 'title', $self->getPrefixedDBkey() ) . $limit . "\n";
+		$out = Xml::openElement( 'form', array( 'method' => 'get', 'action' => $wgScript ) ); # Form tag
+		$out .= Xml::fieldset( $this->msg( 'activeusers' )->text() ) . "\n";
+		$out .= Html::hidden( 'title', $self->getPrefixedDBkey() ) . $limit . "\n";
 
-		$out .= Xml::inputLabel( wfMsg( 'activeusers-from' ), 'username', 'offset', 20, $this->requestedUser ) . '<br />';# Username field
+		$out .= Xml::inputLabel( $this->msg( 'activeusers-from' )->text(),
+			'username', 'offset', 20, $this->requestedUser ) . '<br />';# Username field
 
-		$out .= Xml::checkLabel( wfMsg('activeusers-hidebots'), 'hidebots', 'hidebots', $this->opts->getValue( 'hidebots' ) );
+		$out .= Xml::checkLabel( $this->msg( 'activeusers-hidebots' )->text(),
+			'hidebots', 'hidebots', $this->opts->getValue( 'hidebots' ) );
 
-		$out .= Xml::checkLabel( wfMsg('activeusers-hidesysops'), 'hidesysops', 'hidesysops', $this->opts->getValue( 'hidesysops' ) ) . '<br />';
+		$out .= Xml::checkLabel( $this->msg( 'activeusers-hidesysops' )->text(),
+			'hidesysops', 'hidesysops', $this->opts->getValue( 'hidesysops' ) ) . '<br />';
 
-		$out .= Xml::submitButton( wfMsg( 'allpagessubmit' ) ) .  "\n";# Submit button and form bottom
+		$out .= Xml::submitButton( $this->msg( 'allpagessubmit' )->text() ) . "\n";# Submit button and form bottom
 		$out .= Xml::closeElement( 'fieldset' );
 		$out .= Xml::closeElement( 'form' );
-		
+
 		return $out;
 	}
 }
@@ -157,7 +178,7 @@ class SpecialActiveUsers extends SpecialPage {
 	/**
 	 * Constructor
 	 */
-	public function  __construct() {
+	public function __construct() {
 		parent::__construct( 'Activeusers' );
 	}
 
@@ -167,29 +188,30 @@ class SpecialActiveUsers extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgLang, $wgRCMaxAge;
+		global $wgActiveUserDays;
 
 		$this->setHeaders();
+		$this->outputHeader();
 
-		$up = new ActiveUsersPager();
+		$out = $this->getOutput();
+		$out->wrapWikiMsg( "<div class='mw-activeusers-intro'>\n$1\n</div>",
+			array( 'activeusers-intro', $this->getLanguage()->formatNum( $wgActiveUserDays ) ) );
+
+		$up = new ActiveUsersPager( $this->getContext(), null, $par );
 
 		# getBody() first to check, if empty
 		$usersbody = $up->getBody();
 
-                $s = Html::rawElement( 'div', array( 'class' => 'mw-activeusers-intro' ),
-                        wfMsgExt( 'activeusers-intro', array( 'parsemag', 'escape' ), $wgLang->formatNum( ceil( $wgRCMaxAge / 86400 ) ) )
-                );
-
-		$s .= $up->getPageHeader();
-		if( $usersbody ) {
-			$s .= $up->getNavigationBar();
-			$s .= Html::rawElement( 'ul', array(), $usersbody );
-			$s .= $up->getNavigationBar();
+		$out->addHTML( $up->getPageHeader() );
+		if ( $usersbody ) {
+			$out->addHTML(
+				$up->getNavigationBar() .
+				Html::rawElement( 'ul', array(), $usersbody ) .
+				$up->getNavigationBar()
+			);
 		} else {
-			$s .= Html::element( 'p', array(), wfMsg( 'activeusers-noresult' ) );
+			$out->addWikiMsg( 'activeusers-noresult' );
 		}
-
-		$wgOut->addHTML( $s );
 	}
 
 }

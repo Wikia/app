@@ -14,7 +14,7 @@ The Back-And-Forth extension requires MediaWiki 1.10.0 or above.
 
 1. Place extension files into a "BackAndForth" directory in your
    MediaWiki "extensions/" directory
-   
+
 2. Add the line
    `require_once( "{$IP}/extensions/BackAndForth/BackAndForth.php" );`
    to LocalSettings.php.

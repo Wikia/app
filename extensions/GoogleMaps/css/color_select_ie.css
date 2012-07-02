@@ -1,0 +1,9 @@
+.sv_crosshair_vert_cursor {
+	position:absolute;
+	border:solid 0px #000;
+	background-color:#000;
+	height:257px;
+	margin-top:-257px;  /* Needed because IE sucks */
+	width:1px;
+	padding:0px;
+}

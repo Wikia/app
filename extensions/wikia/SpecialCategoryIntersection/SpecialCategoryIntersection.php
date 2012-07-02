@@ -58,8 +58,6 @@ class SpecialCategoryIntersection extends SpecialPage {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 	
-		wfLoadExtensionMessages( 'CategoryIntersection' );
-
 		$wgOut->setPagetitle( wfMsg('categoryintersection') );
 		
 		// Just splurt some CSS onto the page for now (TODO: Make this an external file.. do it in a way that works for both AssetsManager and for MediaWiki in general)

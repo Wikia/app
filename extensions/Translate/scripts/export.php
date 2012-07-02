@@ -4,12 +4,12 @@
  *
  * @author Niklas Laxstrom
  * @author Siebrand Mazeland
- * @copyright Copyright © 2008-2010, Niklas Laxström, Siebrand Mazeland
+ * @copyright Copyright © 2008-2012, Niklas Laxström, Siebrand Mazeland
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @file
  */
 
-$optionsWithArgs = array( 'lang', 'skip', 'target', 'group', 'groups', 'grouptrail', 'threshold', 'ppgettext' );
+$optionsWithArgs = array( 'lang', 'skip', 'target', 'group', 'groupprefix', 'threshold', 'ppgettext' );
 require( dirname( __FILE__ ) . '/cli.inc' );
 
 function showUsage() {
@@ -22,16 +22,17 @@ Options:
   --target      Target directory for exported files
   --lang        Comma separated list of language codes or *
   --skip        Languages to skip, comma separated list
-  --group       Group ID (cannot use groups grouptrial)
-  --groups      Group IDs, comma separated list (cannot use group or grouptrial)
-  --grouptrail  Trial for IDs of to be exported message groups (cannot use
-                group or grouptrial)
+  --group       Comma separated list of group IDs (cannot use groupprefix)
+  --groupprefix Prefix of group IDs to be exported message groups (cannot use
+                group)
+  --help        This help message
   --threshold   Do not export under this percentage translated
   --ppgettext   Group root path for checkout of product. "msgmerge" will post
                 process on the export result based on the current definitionFile
                 in that location
   --no-location Only used combined with "ppgettext". This option will rebuild
                 the gettext file without location information.
+  --no-fuzzy    Do not include any messages marked as fuzzy/outdated.
 EOT
 );
 	exit( 1 );
@@ -57,8 +58,8 @@ if ( isset( $options['skip'] ) ) {
 	$skip = array();
 }
 
-if ( !isset( $options['group'] ) && !isset( $options['groups'] ) && !isset( $options['grouptrail'] ) ) {
-	STDERR( "You need to specify one or more groups using any of the options 'group', 'groups' or 'grouptrail'" );
+if ( !isset( $options['group'] ) && !isset( $options['groupprefix'] ) ) {
+	STDERR( "You need to specify one or more groups using any of the options 'group' or 'groupprefix'" );
 	exit( 1 );
 }
 
@@ -79,27 +80,38 @@ if ( isset( $options['no-location'] ) ) {
 	$noLocation = '';
 }
 
+if ( isset( $options['no-fuzzy'] ) ) {
+	$noFuzzy = true;
+} else {
+	$noFuzzy = false;
+}
+
 $reqLangs = Cli::parseLanguageCodes( $options['lang'] );
 
 $groups = array();
 
+// @todo FIXME: Code duplication with sync-group.php
 if ( isset( $options['group'] ) ) {
-	$groups[$options['group']] = MessageGroups::getGroup( $options['group'] );
-} elseif ( isset( $options['groups'] ) ) {
 	// Explode parameter
-	$groupIds = explode( ',', trim( $options['groups'] ) );
+	$groupIds = explode( ',', trim( $options['group'] ) );
 
 	// Get groups and add groups to array
 	foreach ( $groupIds as $groupId ) {
-		$groups[$groupId] = MessageGroups::getGroup( $groupId );
+		$group = MessageGroups::getGroup( $groupId );
+
+		if ( $group !== null ) {
+			$groups[$groupId] = $group;
+		} else {
+			STDERR( "Invalid group $groupId" );
+		}
 	}
 } else {
-	// Apparently using option grouptrail. Find groups that match.
+	// Apparently using option groupprefix. Find groups that match.
 	$allGroups = MessageGroups::singleton()->getGroups();
 
 	// Add matching groups to groups array.
 	foreach ( $allGroups as $groupId => $messageGroup ) {
-		if ( strpos( $groupId, $options['grouptrail'] ) === 0 && !$messageGroup->isMeta() ) {
+		if ( strpos( $groupId, $options['groupprefix'] ) === 0 && !$messageGroup->isMeta() ) {
 			$groups[$groupId] = $messageGroup;
 		}
 	}
@@ -113,15 +125,19 @@ foreach ( $groups as $groupId => $group ) {
 
 	STDERR( 'Exporting ' . $groupId );
 
+	$langs = $reqLangs;
 	if ( $threshold ) {
-		$langs = TranslationStats::getPercentageTranslated(
-			$groupId,
-			$reqLangs,
-			$threshold,
-			true
-		);
-	} else {
-		$langs = $reqLangs;
+		$stats = MessageGroupStats::forGroup( $groupId );
+		foreach ( $langs as $index => $code ) {
+			if ( !isset( $stats[$code] ) ) {
+				unset( $langs[$index] );
+			}
+
+			list( $total, $translated, ) = $stats[$code];
+			if ( $translated / $total * 100 < $threshold ) {
+				unset( $langs[$index] );
+			}
+		}
 	}
 
 	if ( $group instanceof FileBasedMessageGroup ) {
@@ -148,6 +164,11 @@ foreach ( $groups as $groupId => $group ) {
 			}
 
 			$collection->resetForNewLanguage( $lang );
+
+			if ( $noFuzzy ) {
+				$collection->filter( 'fuzzy' );
+			}
+
 			$ffs->write( $collection );
 
 			// Do post processing if requested.
@@ -168,6 +189,10 @@ foreach ( $groups as $groupId => $group ) {
 			}
 		}
 	} else {
+		if ( $noFuzzy ) {
+			STDERR( '--no-fuzzy is not supported for this message group.' );
+		}
+
 		$writer = $group->getWriter();
 		$writer->fileExport( $langs, $options['target'] );
 	}

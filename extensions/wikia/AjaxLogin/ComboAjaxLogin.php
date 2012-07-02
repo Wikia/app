@@ -22,6 +22,7 @@ $wgExtensionCredits['other'][] = array(
 $wgAjaxExportList[] = 'GetComboAjaxLogin';
 $wgHooks['MakeGlobalVariablesScript'][] = 'comboAjaxLoginVars';
 $wgHooks['GetHTMLAfterBody'][] = 'renderHiddenForm';
+$wgHooks['GetConfirmEditMessage'][] = 'onGetConfirmEditMessage';
 
 $wgExtensionMessagesFiles['ComboAjaxLogin'] = dirname(__FILE__) . '/ComboAjaxLogin.i18n.php';
 
@@ -56,10 +57,24 @@ function renderHiddenForm($skin, &$html) {
 }
 
 /**
+ * Get message for ConfirmEdit - FancyCaptcha (code come from FancyCaptcha::getMessage()).
+ */
+function onGetConfirmEditMessage( $captcha, &$message ) {
+	if ( !$captcha instanceof FancyCaptcha ) {
+		return true;
+	}
+
+	$name = 'fancycaptcha-createaccount';
+	$text = wfMsgExt( $name, array('parseinline') );
+	$message = wfEmptyMsg( $name, $text ) ? wfMsgExt( 'fancycaptcha-edit', array('parseinline') ) : $text;
+
+	return true;
+}
+
+/**
  * Returns an AjaxResponse containing the combo ajax login/register code.
  */
 function GetComboAjaxLogin() {
-	wfLoadExtensionMessages('ComboAjaxLogin');
 	$tmpl = AjaxLoginForm::getTemplateForCombinedForms();
 
 	$response = new AjaxResponse($tmpl->execute('ComboAjaxLogin'));
@@ -100,9 +115,6 @@ function getRegisterJS(){
 
 function comboAjaxLoginVars($vars) {
 	global $wgUser,$wgWikiaEnableConfirmEditExt, $wgRequest, $wgEnableAPI;
-	if ($wgWikiaEnableConfirmEditExt){
-		wfLoadExtensionMessages('ConfirmEdit');
-	}
 
 	$vars['wgReturnTo'] = $wgRequest->getVal('returnto', '');
 	$vars['wgReturnToQuery'] = $wgRequest->getVal('returntoquery', '');
@@ -136,6 +148,7 @@ function comboAjaxLoginVars($vars) {
 $wgAjaxExportList[] = 'createUserLogin';
 function createUserLogin(){
 	global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt, $wgEnableCOPPA, $wgDefaultSkin;
+
 	// Init session if necessary
 	if ( session_id() == '' ) {
 		wfSetupSession();
@@ -144,7 +157,7 @@ function createUserLogin(){
 	$response = new AjaxResponse();
 	$response->setCacheDuration( 3600 * 24 * 365);
 
-	if (!(($wgRequest->getCheck("wpCreateaccountMail") || $wgRequest->getCheck("wpCreateaccount") )&& ($wgRequest->wasPosted()))) {
+	if (!(($wgRequest->getCheck("wpCreateaccountMail") || $wgRequest->getCheck("wpCreateaccount") ) && ($wgRequest->wasPosted()))) {
 		$response->addText(json_encode(
 			array(
 					'status' => "ERROR",
@@ -153,7 +166,12 @@ function createUserLogin(){
 		return $response;
 	}
 
-	$form = new AjaxLoginForm($wgRequest,'signup');
+	if ( $wgRequest->getVal( 'type', '' ) == '' ) {
+		$wgRequest->setVal( 'type', 'signup' );
+	}
+
+	$form = new AjaxLoginForm( $wgRequest );
+	$form->load();
 
 	if ( $wgEnableCOPPA && !$form->checkDate() ) {
 		// If the users is too young to legally register.
@@ -171,7 +189,7 @@ function createUserLogin(){
 	$dbw->begin();
 	$dbl->begin();
 
-	$form->execute();
+	$form->execute('signup');
 
 	$dbw->commit();
 	$dbl->commit();
@@ -216,11 +234,12 @@ class AjaxLoginForm extends LoginForm {
 	var $lastmsg = "";
 	var $authenticateStatus = null;
 	var $successfulCreation = false;
-	function LoginForm( &$request, $par = '' ) {
-		parent::LoginForm( $request, $par);
 
+	function load() {
+		parent::load();
+		$request = $this->mOverrideRequest;
 		if($request->getText( 'wpName2Ajax', '' ) != '') {
-			$this->mName =	$request->getText( 'wpName2Ajax', '' );
+			$this->mUsername = $request->getText( 'wpName2Ajax', '' );
 		}
 
 		if($request->getText( 'wpPassword2Ajax', '' ) != '') {
@@ -253,7 +272,6 @@ class AjaxLoginForm extends LoginForm {
 			wfSetupSession();
 		}
 
-		wfLoadExtensionMessages('ComboAjaxLogin');
 		// TODO: Invstigate why this was here.
 		//if ($wgRequest->getCheck( 'wpCreateaccount' )) {
 		//	return "error";
@@ -266,9 +284,9 @@ class AjaxLoginForm extends LoginForm {
 
 		if (!wfReadOnly()){
 			if(empty($ajaxLoginForm)){
-				$ajaxLoginForm = new AjaxLoginForm($wgRequest,'signup');
+				$ajaxLoginForm = new AjaxLoginForm( $wgRequest );
 			}
-			$ajaxLoginForm->execute();
+			$ajaxLoginForm->execute($type);
 
 			if (!empty($ajaxLoginForm->ajaxTemplate)) {
 				$lastmsg = $ajaxLoginForm->ajaxTemplate->data['message'];
@@ -344,7 +362,6 @@ class AjaxLoginForm extends LoginForm {
 		$wgOut->disallowUserJs();  // just in case...
 
 		// Output the HTML which combines the two forms (which are already in the template) in a way that looks right for a standalone page.
-		wfLoadExtensionMessages('ComboAjaxLogin');
 
 		$tmpl = self::getTemplateForCombinedForms( true, $this->lastmsg, $this );
 		if( $this->authenticateStatus == self::RESET_PASS ) {
@@ -400,7 +417,7 @@ class AjaxLoginForm extends LoginForm {
 
 
 	function mainLoginForm( $msg, $msgtype = 'error' ) {
-		global $wgUser, $wgOut, $wgAllowRealName, $wgEnableEmail;
+		global $wgUser, $wgOut, $wgHiddenPrefs, $wgEnableEmail;
 		global $wgCookiePrefix, $wgLoginLanguageSelector;
 		global $wgAuth, $wgEmailConfirmToEdit, $wgCookieExpiration, $wgEnableCOPPA;
 
@@ -410,11 +427,11 @@ class AjaxLoginForm extends LoginForm {
 		$this->msg = $msg;
 		$this->msgtype = $msgtype;
 
-		if ( '' == $this->mName ) {
+		if ( '' == $this->mUsername ) {
 			if ( $wgUser->isLoggedIn() ) {
-				$this->mName = $wgUser->getName();
+				$this->mUsername = $wgUser->getName();
 			} else {
-				$this->mName = isset( $_COOKIE[$wgCookiePrefix.'UserName'] ) ? $_COOKIE[$wgCookiePrefix.'UserName'] : null;
+				$this->mUsername = isset( $_COOKIE[$wgCookiePrefix.'UserName'] ) ? $_COOKIE[$wgCookiePrefix.'UserName'] : null;
 			}
 		}
 
@@ -436,7 +453,7 @@ class AjaxLoginForm extends LoginForm {
 		$template->set( 'link', '' );
 
 		$template->set( 'header', '' );
-		$template->set( 'name', $this->mName );
+		$template->set( 'name', $this->mUsername );
 		$template->set( 'password', $this->mPassword );
 		$template->set( 'retype', $this->mRetype );
 		$template->set( 'actiontype', $this->mActionType );
@@ -446,7 +463,7 @@ class AjaxLoginForm extends LoginForm {
 		$template->set( 'message', $msg );
 		$template->set( 'messagetype', $msgtype );
 		$template->set( 'createemail', $wgEnableEmail && $wgUser->isLoggedIn() );
-		$template->set( 'userealname', $wgAllowRealName );
+		$template->set( 'userealname', !in_array( 'realname', $wgHiddenPrefs ) );
 		$template->set( 'useemail', $wgEnableEmail );
 		$template->set( 'emailrequired', $wgEmailConfirmToEdit );
 		$template->set( 'canreset', $wgAuth->allowPasswordChange() );

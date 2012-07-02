@@ -280,12 +280,20 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	.LightboxCarousel {
 		@include background-opacity($color-page, 90);
 		@include box-shadow( 0px, 0px, 5px, $color-shadow, false, 0);
+		@include opacity(100);
+		@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
 		position: absolute;
 		-webkit-backface-visibility: hidden;	/* flicker fix for webkit transition */
+		/* ie8 fix - opacity filter will not apply on positioned/floated elements to ie8 unless "filter: inherit" is applied to every element down to the actual element - fb:32565 */
+		.avatar,
+		.carousel,
+		.close,
+		div {
+			filter: inherit;
+		}
+		/* end ie8 fix */
 	}
 	.LightboxCarousel {
-		@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
-		@include opacity(100);
 		@include clearfix;
 		border-top: 1px solid $color-page-border;
 		bottom: 0;
@@ -297,6 +305,9 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			min-height: 21px;
 			b {
 				font-weight: bold;
+			}
+			&.invisible {
+				visibility: hidden;
 			}
 		}
 		.toolbar {
@@ -320,16 +331,21 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				position: absolute;
 			}
 			li {
+				background: black;
 				float: left;
 				margin: 0 5px 0 3px;
-				&.active img{
+				width: 90px;
+				height: 55px;
+				line-height: 55px;
+				overflow: hidden;
+				&.active {
 					outline: 3px solid $color-buttons;
 				}
 			}
 			img {
-				width: 90px; // TODO: get these dimensions from thumbnailer
-				height: 55px; // TODO: get these dimensions from thumbnailer
-				display: block;
+				width: 90px;
+				display: inline;
+				vertical-align: middle;
 				cursor: pointer;
 			}
 		}
@@ -362,12 +378,13 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 	&.show-ads .LightboxCarousel {
 		@include clearfix;
 		.wikia-ad {
-			width: 320px;
+			width: 318px;
 			float: right;
+			padding-top: 5px;
 		}
 		.LightboxCarouselInner {
 			float: left;
-			width: 588px;
+			width: 665px;
 		}
 		.LightboxCarouselContainer {
 			margin-left: 20px;
@@ -385,9 +402,13 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		}
 	}
 	
+	.modal_interstitial {
+		display: none;
+		text-align: center;
+		margin-top: 114px; // TODO: ad another top margin to small lifitum ads (if possible)
+	}
+	
 	.LightboxHeader {
-		@include transition-shorthand(opacity $lightbox-overlay-show-duration ease-out);
-		@include opacity(100);
 		border-bottom: 1px solid $color-lightbox-border;
 		height: 70px;
 		padding: 20px;
@@ -439,8 +460,6 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			font-size: 11px;
 			margin-left: 10px;
 			padding-left: 10px;
-			position: relative;
-			top: -1px;
 		}
 		.user-details {
 			clear: left;

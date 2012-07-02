@@ -1,14 +1,14 @@
 <?php
-$aliases = array();
+$specialPageAliases = array();
 /**
  * English
  */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'MultiLookup' => array( 'MultiLookup' )
 );
 /**
  * Polish (Polski)
  */
-$aliases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'MultiLookup' => array( 'Wyszukiwanie użytkownika w wielu wiki', 'MultiLookup' )
 );

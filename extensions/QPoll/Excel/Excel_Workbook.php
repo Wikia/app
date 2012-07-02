@@ -160,12 +160,6 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
     var $_country_code;
 
     /**
-    * The temporary dir for storing the OLE file
-    * @var string
-    */
-    var $_tmp_dir;
-
-    /**
     * number of bytes for sizeinfo of strings
     * @var integer
     */
@@ -177,10 +171,10 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
     * @param string filename for storing the workbook. "-" for writing to stdout.
     * @access public
     */
-    function Spreadsheet_Excel_Writer_Workbook($filename)
+    function __construct($filename)
     {
         // It needs to call its parent's constructor explicitly
-        $this->Spreadsheet_Excel_Writer_BIFFwriter();
+        parent::__construct();
 
         $this->_filename         = $filename;
         $this->_parser           = new Spreadsheet_Excel_Writer_Parser($this->_byte_order, $this->_BIFF_version);
@@ -207,7 +201,6 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
         $this->_str_unique      = 0;
         $this->_str_table       = array();
         $this->_setPaletteXl97();
-        $this->_tmp_dir         = '';
     }
 
     /**
@@ -276,6 +269,7 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
             $this->_tmp_format->_BIFF_version = $version;
             $this->_url_format->_BIFF_version = $version;
             $this->_parser->_BIFF_version = $version;
+            $this->_codepage = 0x04B0;
 
             $total_worksheets = count($this->_worksheets);
             // change version for all worksheets too
@@ -343,7 +337,7 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
                                    $this->_activesheet, $this->_firstsheet,
                                    $this->_str_total, $this->_str_unique,
                                    $this->_str_table, $this->_url_format,
-                                   $this->_parser);
+                                   $this->_parser, $this->_tmp_dir);
 
         $this->_worksheets[$index] = &$worksheet;    // Store ref for iterator
         $this->_sheetnames[$index] = $name;          // Store EXTERNSHEET names
@@ -495,6 +489,10 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
     */
     function _storeWorkbook()
     {
+        if (count($this->_worksheets) == 0) {
+            return true;
+        }
+
         // Ensure that at least one worksheet has been selected.
         if ($this->_activesheet == 0) {
             $this->_worksheets[0]->selected = 1;
@@ -560,22 +558,6 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
     }
 
     /**
-    * Sets the temp dir used for storing the OLE file
-    *
-    * @access public
-    * @param string $dir The dir to be used as temp dir
-    * @return true if given dir is valid, false otherwise
-    */
-    function setTempDir($dir)
-    {
-        if (is_dir($dir)) {
-            $this->_tmp_dir = $dir;
-            return true;
-        }
-        return false;
-    }
-
-    /**
     * Store the workbook in an OLE container
     *
     * @access private
@@ -583,7 +565,11 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
     */
     function _storeOLEFile()
     {
-        $OLE = new OLE_PPS_File(OLE::Asc2Ucs('Book'));
+        if($this->_BIFF_version == 0x0600) {
+            $OLE = new OLE_PPS_File(OLE::Asc2Ucs('Workbook'));
+        } else {
+            $OLE = new OLE_PPS_File(OLE::Asc2Ucs('Book'));
+        }
         if ($this->_tmp_dir != '') {
             $OLE->setTempDir($this->_tmp_dir);
         }
@@ -1311,8 +1297,7 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
            8228 : Maximum Excel97 block size
              -4 : Length of block header
              -8 : Length of additional SST header information
-		     -8 : Arbitrary number to keep within _add_continue() limit
-         = 8208
+	          -8 : Arbitrary number to keep within _add_continue() limit = 8208
         */
         $continue_limit     = 8208;
         $block_length       = 0;
@@ -1365,7 +1350,7 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
 							$align = 1;
 						}
 						# Split section without header => split on even boundary
-						else if ($split_string && $space_remaining % 2 == 1) {
+						elseif ($split_string && $space_remaining % 2 == 1) {
 							$space_remaining--;
 							$align = 1;
 						}
@@ -1539,7 +1524,7 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
 							$align = 1;
 						}
 						// Split section without header => split on even boundary
-						else if ($split_string && $space_remaining % 2 == 1) {
+						elseif ($split_string && $space_remaining % 2 == 1) {
 							$space_remaining--;
 							$align = 1;
 						}
@@ -1601,4 +1586,3 @@ class Spreadsheet_Excel_Writer_Workbook extends Spreadsheet_Excel_Writer_BIFFwri
         }
     }
 }
-?>

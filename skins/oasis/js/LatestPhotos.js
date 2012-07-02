@@ -80,20 +80,26 @@ var UploadPhotos = {
 
 				var title = UploadPhotos.destfile.val() || 'File:Sample.jpg';
 
-				var url = wgScriptPath + '/api' + wgScriptExtension
-					+ '?action=parse&text={{' + encodeURIComponent( license ) + '}}'
-					+ '&title=' + encodeURIComponent( title.replace(/\./g, "%2E") )
-					+ '&prop=text&pst&format=json';
-
-				$.get(url, function(data) {
-					UploadPhotos.wpLicenseTarget.html(data.parse.text['*']);
-				}, "json");
+				$.get(
+					mw.util.wikiScript('api'),
+					{
+						action: 'parse',
+						text: '{{' + license + '}}',
+						title: title,
+						prop: 'text',
+						format: 'json'
+					},
+					function(data) {
+						UploadPhotos.wpLicenseTarget.html(data.parse.text['*']);
+					},
+					"json"
+				);
 			});
 
 			$.tracker.byStr('action/uploadphoto/dialog');
 		});
 		if (!UploadPhotos.libinit) {
-			$.getScript(wgExtensionsPath + "/wikia/ThemeDesigner/js/aim.js");	// TODO: find a permanent place for aim
+			$.loadJQueryAIM();
 			UploadPhotos.libinit = true;
 		}
 	},

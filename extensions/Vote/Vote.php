@@ -19,14 +19,13 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Vote',
 	'version' => '1.0.2',
 	'author' => 'Rob Church',
-	'description' => 'Provides simple polling capabilities',
 	'descriptionmsg' => 'vote-desc',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Vote',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Vote',
 );
 
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Vote'] = $dir . 'Vote.i18n.php';
-$wgExtensionAliasesFiles['Vote'] = $dir . 'Vote.alias.php';
+$wgExtensionMessagesFiles['VoteAlias'] = $dir . 'Vote.alias.php';
 $wgAutoloadClasses['SpecialVote'] = $dir . 'Vote.page.php';
 $wgSpecialPages['Vote'] = 'SpecialVote';
 
@@ -42,17 +41,3 @@ $wgGroupPermissions['bureaucrat']['voteadmin'] = true;
 
 $wgAvailableRights[] = 'vote';
 $wgAvailableRights[] = 'voteadmin';
-
-$wgHooks['SkinTemplateSetupPageCss'][] = 'efVoteCss';
-
-/**
- * Add extra CSS to the skin
- */
-function efVoteCss( &$css ) {
-	global $wgTitle;
-	if ( $wgTitle->isSpecial( 'Vote' ) ) {
-		$file = dirname( __FILE__ ) . '/Vote.css';
-		$css .= "/*<![CDATA[*/\n" . htmlspecialchars( file_get_contents( $file ) ) . "\n/*]]>*/";
-	}
-	return true;
-}
