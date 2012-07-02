@@ -113,10 +113,8 @@ class WikiaSendgridMailer {
 		if ( $email_body_html ) {
 			$mime->setHTMLBody( $email_body_html );
 			//do not ever try to call these lines in reverse order
-			$body = $mime->get( $params );
-		} else {
-			$body = $mime->get();
-		}
+		}	
+		$body = $mime->get( $params );
 
 		$headers = $mime->headers( $headers );
 		wfDebug( "Sending mail via WikiaSendgridMailer::send\n" );
