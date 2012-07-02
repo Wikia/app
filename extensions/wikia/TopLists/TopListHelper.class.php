@@ -137,12 +137,14 @@ class TopListHelper {
 		return true;
 	}
 
-	static public function onComposeCommonBodyMail( $title, &$keys, &$body, $editor ) {
+	static public function onComposeCommonBodyMail( $title, &$keys, &$body, $editor, &$bodyHTML, &$postTransformKeys ) {
 		wfProfileIn( __METHOD__ );
 
 		if( ( $title instanceof Title )  && ( $title->getNamespace() == NS_TOPLIST ) ) {
-			$summary = strtr( TOPLISTS_STATUS_SEPARATOR, "\n", $keys['$PAGESUMMARY'] );
+			$summary = ($postTransformKeys['$PAGESUMMARY']) ? strtr( TOPLISTS_STATUS_SEPARATOR, "\n", $postTransformKeys['$PAGESUMMARY'] ) : "";
 			$body = wfMsg( 'toplists-email-body', array( $title->getFullUrl(), $title->getText(), $summary, $title->getFullUrl( 'action=unwatch' ) ) );
+			$bodyHTML = nl2br( $body );
+			$body = preg_replace( "#<a.+?href=\"(.+?)\"(\s*)>(.+?)<\/a>#", "$3 ($1)", $body );
 		}
 
 		wfProfileOut( __METHOD__ );
