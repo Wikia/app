@@ -25,11 +25,15 @@ $wgResourceModules['wikia.jquery.ui'] = array(
 
 // libraries
 $wgResourceModules['jquery.aim'] = array(
-	'scripts' => 'resources/wikia/libraries/aim/jquery.aim.js'
+	'scripts' => array(
+		'resources/wikia/libraries/aim/jquery.aim.js',
+	),
 );
 
 $wgResourceModules['jquery.mustache'] = array(
-	'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js'
+	'scripts' => array(
+		'resources/wikia/libraries/mustache/jquery.mustache.js',
+	),
 );
 
 // moved here from AssetsManager by wladek
