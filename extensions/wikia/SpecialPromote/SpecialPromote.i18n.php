@@ -45,7 +45,8 @@ $messages['en'] = array(
 	'promote-error-too-many-images' => 'Oops! You already have nine images. Remove some if you want to add more.',
 
 	'promote-manual-file-size-error' => 'Main image has a minimum size of 320x320px.',
-	'promote-manual-upload-error' => 'This file cannot be uploaded manually. Please use Admin Upload Tool.'
+	'promote-manual-upload-error' => 'This file cannot be uploaded manually. Please use Admin Upload Tool.',
+	'promote-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page."
 
 
 );
