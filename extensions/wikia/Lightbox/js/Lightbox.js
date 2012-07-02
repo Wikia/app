@@ -288,7 +288,7 @@ var Lightbox = {
 					// Calculate modal's top offset
 					var extraHeight = windowHeight - modalHeight - 10; // 5px modal border
 					
-					newOffset = (extraHeight / 2);
+					var newOffset = (extraHeight / 2);
 					if(newOffset < topOffset){
 						newOffset = topOffset; 
 					}
@@ -316,7 +316,7 @@ var Lightbox = {
 					topOffset: topOffset,
 					imageHeight: imageHeight,
 					imageContainerHeight: imageContainerHeight
-				}
+				};
 
 				// remove preloader image
 				$(this).remove();
