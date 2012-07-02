@@ -109,7 +109,6 @@ $wgAutoloadClasses['SpecialMyblog'] = $dir . '/SpecialMyblog.php';
 
 // initialize blogs special pages (BugId:7604)
 $wgHooks['BeforeInitialize'][] = 'wfBlogsOnBeforeInitialize';
-$wgHooks['AfterInitialize'][] = 'wfBlogsOnAfterInitialize';
 
 function wfBlogsOnBeforeInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
 	global $wgAutoloadClasses;
@@ -122,12 +121,6 @@ function wfBlogsOnBeforeInitialize(&$title, &$article, &$output, &$user, $reques
 		$wgAutoloadClasses['CreateBlogPage'] = dirname(__FILE__) . '/monobook/SpecialCreateBlogPage.php';
 	}
 
-	return true;
-}
-
-// and now use "redirected" title in the skin (BugId:7282)
-function wfBlogsOnAfterInitialize(&$title, &$article, &$output, &$user, $request, $mediaWiki) {
-	$user->getSkin()->setRelevantTitle($title);
 	return true;
 }
 
