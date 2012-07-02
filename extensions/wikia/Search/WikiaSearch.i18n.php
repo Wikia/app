@@ -30,7 +30,11 @@ $messages['en'] = array(
 	'wikiasearch2-noresults' => 'No results found.',
 	'wikiasearch2-spellcheck' => 'No results were found for <em>$1</em>. <strong>Showing results for <em>$2</em>.</strong>',
 	'wikiasearch2-search-all-namespaces' => 'Search all namespaces by default',
-	'wikiasearch2-search-ads-header' => 'Advertisements'
+	'wikiasearch2-search-ads-header' => 'Advertisements',
+
+    'wikiamobile-wikiasearch2-next' => 'Next',
+	'wikiamobile-wikiasearch2-prev' => 'Previous',
+    'wikiamobile-wikiasearch2-results-count-of' => '$1 of $2 {{PLURAL:$2|result|results}}'
 );
 
 /** Message documentation (Message documentation)

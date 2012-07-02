@@ -688,4 +688,14 @@ class WikiaSearch extends WikiaObject {
 		return true;
 	}
 
+    public static function highlightSearchResult($text, $word){
+        wfProfileIn( __METHOD__ );
+
+        $word = preg_quote($word);
+        $text = preg_replace("/\b($word)/i", '<b>\1</b>', $text);
+
+        wfProfileOut( __METHOD__ );
+        return $text;
+    }
+
 }
