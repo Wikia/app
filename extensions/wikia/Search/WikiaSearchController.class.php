@@ -140,11 +140,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setval( 'advancedSearchBox', $advancedSearchBox );
 		}
 
+        if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->app->registerHook('WikiaMobileAssetsPackages', 'WikiaSearchController', 'onWikiaMobileAssetsPackages');
+            $this->overrideTemplate( 'WikiaMobileIndex' );
+        }
+
 		$this->setVal( 'results', $results );
 		$this->setVal( 'resultsFound', $resultsFound );
 		$this->setVal( 'resultsFoundTruncated', $this->wg->Lang->formatNum( $this->getTruncatedResultsNum($resultsFound) ) );
 		$this->setVal( 'isOneResultsPageOnly', ( $resultsFound <= self::RESULTS_PER_PAGE ) );
-		$this->setVal( 'currentPage',  $page );
+        $this->setVal( 'pagesCount', ceil($resultsFound/self::RESULTS_PER_PAGE) );
+        $this->setVal( 'currentPage',  $page );
 		$this->setVal( 'paginationLinks', $paginationLinks );
 		$this->setVal( 'query', $query );
 		$this->setVal( 'resultsPerPage', self::RESULTS_PER_PAGE );
@@ -445,4 +451,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	  return $params;
 	}
 
+	//WikiaMobile hook to add assets so they are minified and concatenated
+	public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
+		$jsBodyPackages[] = 'wikiasearch_js_wikiamobile';
+		$scssPackages[] = 'wikiasearch_scss_wikiamobile';
+
+		return true;
+	}
 }
