@@ -327,8 +327,9 @@ class EditPageLayoutHelper {
 
 	static public function getAssets() {
 		return array(
-			// >> mediawiki editor core file
+			// 3rd party libraries
 			'skins/common/jquery/jquery.md5.js',
+			'skins/common/jquery/jquery.uniqueId.js',
 			// >> editor stack loaders and configurers
 			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 			// >> editor core
