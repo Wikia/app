@@ -144,6 +144,7 @@ class Wall {
 	
 	private function loadThreads() {
 		$this->threads = array();
+
 		foreach( $this->mThreadMapping as $tTitle => $tId ) {
 			$thread = WallThread::newFromId( $tId );
 			$this->threads[$tId] = $thread;
@@ -186,7 +187,8 @@ class Wall {
 		     or page_wikia_props.propname = ".WPP_WALL_REMOVE."
 		     or page_wikia_props.propname = ".WPP_WALL_ARCHIVE.")
 		where page_wikia_props.page_id is null
-		and page.page_title" . $dbr->buildLike( sprintf( "%s/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . " 
+		and page.page_title" . $dbr->buildLike( sprintf( "%s/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . "
+		and page.page_title not like '%@%@%'  
 		and page.page_title NOT " . $dbr->buildLike( sprintf( "%s/%s%%/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX, ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . " 
 		and page.page_namespace = ".MWNamespace::getTalk($this->mTitle->getNamespace())."
 		and page.page_latest > 0
@@ -305,7 +307,7 @@ class Wall {
 	}
 
 	private function getWallThreadListKey() {
-		return  __CLASS__ . '-'.$this->mCityId.'-wall-threadlist-key-v003-' . $this->mTitle->getDBkey().'-'.$this->mTitle->getNamespace();
+		return  wfSharedMemcKey( 'wall-threadlist-key-v005'.time(), __CLASS__, $this->mCityId, $this->mTitle->getDBkey(), $this->mTitle->getNamespace());
 	}
 	
 	private function getCache() {

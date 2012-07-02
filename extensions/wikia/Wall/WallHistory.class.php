@@ -122,26 +122,24 @@ class WallHistory extends WikiaModel {
 	}
 	
 	protected function getWhere($user, $parent_page_id = 0) {
+		$query = array();
+		
 		if( $parent_page_id === 0 ) {
 			$query[] = 'parent_page_id is null';
 		} else {
 			$query[] = '(page_id = '.$parent_page_id.' OR parent_page_id = '.$parent_page_id.')';
 		}
 
+		$query['wiki_id'] = $this->wikiId;
+		
 		if(empty($user)) {
 			return $query;
 		}
 		
 		if($user->getId() > 0 ) {
-			$query = array(
-				'wiki_id' => $this->wikiId,
-				'wall_user_id' => $user->getID()
-			);
+			$query['wall_user_id'] = $user->getID();
 		} elseif ( $this->ip2long($user->getName()) !== false ) {
-			$query = array(
-				'wiki_id' => $this->wikiId,
-				'wall_user_ip' => $this->ip2long($user->getName())
-			);
+			$query['wall_user_ip'] = $this->ip2long($user->getName());
 		} else {
 			return false;
 		}

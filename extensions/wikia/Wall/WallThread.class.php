@@ -175,7 +175,7 @@ class WallThread {
 	}
 	
 	private function getThreadKey() {
-		return  __CLASS__ . '-'.$this->mCityId.'-thread-key-v09-' . $this->mThreadId;
+		return wfSharedMemcKey( __CLASS__, 'thread-key-v09', $this->mCityId, $this->mThreadId);
 	}
 	
 	private function getCache() {
