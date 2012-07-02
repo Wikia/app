@@ -797,7 +797,7 @@ class EmailNotification {
 		$this->subject = strtr( $subject, $postTransformKeys );
 
 		$body = wfMsgExt( 'enotif_body', 'content' );
-		wfRunHooks('ComposeCommonBodyMail', array( $this->title, &$keys, &$body, $this->editor ));
+		wfRunHooks('ComposeCommonBodyMail', array( $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ));
 		$body = strtr( $body, $keys );
 		$body = MessageCache::singleton()->transform( $body, false, null, $this->title );
 		$this->body = wordwrap( strtr( $body, $postTransformKeys ), 72 );
