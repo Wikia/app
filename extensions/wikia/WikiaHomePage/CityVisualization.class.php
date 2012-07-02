@@ -249,11 +249,12 @@ class CityVisualization extends WikiaModel {
 	public function updateWikiPromoteDataCache($wikiId, $langCode, $data) {
 		$memcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
 
+		$cityImages = (!empty($data['city_images'])) ? (array)json_decode($data['city_images']) : array();
 		$wikiData = array(
 			'headline' => $data['city_headline'],
 			'description' => $data['city_description'],
 			'main_image' => $data['city_main_image'],
-			'images' => (array)json_decode($data['city_images'])
+			'images' => $cityImages
 		);
 
 		$this->wg->Memc->set($memcKey, $wikiData);

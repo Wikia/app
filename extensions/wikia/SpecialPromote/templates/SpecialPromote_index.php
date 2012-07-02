@@ -68,8 +68,8 @@
 							<img
 								src="<?= $image['image_url']; ?>"
 								data-filename="<?= $image['image_filename']; ?>"
-								data-imageIndex="<?= $i ?>"
-								data-imageType="additional"
+								data-image-index="<?= $i ?>"
+								data-image-type="additional"
 							/>
 						</div>
 					<? $i++; endforeach; ?>
