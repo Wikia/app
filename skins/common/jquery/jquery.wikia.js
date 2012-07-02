@@ -59,9 +59,6 @@ jQuery.fn.log = function (msg, group) {
 			console.log(msg);
 		}
 	}
-	else if (typeof opera != 'undefined') {
-		opera.postError((group ? (group + ': ') : '') + msg);
-	}
 	return this;
 };
 
@@ -218,35 +215,6 @@ jQuery.showCustomModal = function(title, content, options) {
 // send POST request and parse returned JSON
 jQuery.postJSON = function(u, d, callback) {
 	return jQuery.post(u, d, callback, "json");
-};
-
-/**
-* Finds the event in the window object, the caller's arguments, or
-* in the arguments of another method in the callstack.  This is
-* executed automatically for events registered through the event
-* manager, so the implementer should not normally need to execute
-* this function at all.
-* @method getEvent
-* @param {Event} e the event parameter from the handler
-* @param {HTMLElement} boundEl the element the listener is attached to
-* @return {Event} the event
-* @static
-*/
-$.getEvent = function(e, boundEl) {
-	var ev = e || window.event;
-
-	if (!ev) {
-		var c = this.getEvent.caller;
-		while (c) {
-			ev = c.arguments[0];
-			if (ev && Event == ev.constructor) {
-				break;
-			}
-			c = c.caller;
-		}
-	}
-
-	return ev;
 };
 
 //see http://jquery-howto.blogspot.com/2009/09/get-url-parameters-values-with-jquery.html
@@ -725,7 +693,7 @@ if (typeof [].indexOf == 'undefined') {
 		}
 		return -1;
 	}
-};
+}
 
 // add Array.filter function in IE8
 if (!Array.prototype.filter){

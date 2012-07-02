@@ -3,6 +3,37 @@
  * $G = YAHOO.util.Dom.get
  */
 
+/**
+ * Finds the event in the window object, the caller's arguments, or
+ * in the arguments of another method in the callstack.  This is
+ * executed automatically for events registered through the event
+ * manager, so the implementer should not normally need to execute
+ * this function at all.
+ * @method getEvent
+ * @param {Event} e the event parameter from the handler
+ * @param {HTMLElement} boundEl the element the listener is attached to
+ * @return {Event} the event
+ * @static
+ *
+ * @deprecated - used by WMU only
+ */
+$.getEvent = function(e, boundEl) {
+	var ev = e || window.event;
+
+	if (!ev) {
+		var c = this.getEvent.caller;
+		while (c) {
+			ev = c.arguments[0];
+			if (ev && Event == ev.constructor) {
+				break;
+			}
+			c = c.caller;
+		}
+	}
+
+	return ev;
+};
+
 /*
  * Variables
  */
