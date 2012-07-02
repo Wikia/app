@@ -31,20 +31,7 @@
         _gas.push(['special._setSampleRate', '100']); // No Sample
     }
 
-    // All domains that host content for wikia.
-    _gas.push(['_setDomainName', 'wikia.com']);
-    _gas.push(['_setDomainName', 'ffxiclopedia.org']);
-    _gas.push(['_setDomainName', 'jedipedia.de']);
-    _gas.push(['_setDomainName', 'marveldatabase.com']);
-    _gas.push(['_setDomainName', 'memory-alpha.org']);
-    _gas.push(['_setDomainName', 'uncyclopedia.org']);
-    _gas.push(['_setDomainName', 'websitewiki.de']);
-    _gas.push(['_setDomainName', 'wowwiki.com']);
-    _gas.push(['_setDomainName', 'yoyowiki.org']);
-
-    // Trigger cross-domain tracking
-    _gas.push(['_setAllowLinker', 'true']);
-    _gas.push(['_gasMultiDomain', 'click']);
+    _gas.push(['_setDomainName', window.wgCookieDomain]);
 
     /**** High-Priority CVs ****/
     // Or wgCityId
