@@ -4,9 +4,9 @@
 //
 if($.getUrlVar('nosockets', false) == 1 || 'ontouchstart' in document.createElement( 'div' )) {
 	var globalTransports = ['htmlfile', 'xhr-multipart', 'xhr-polling' ];
-	io.transports = globalTransports ;
+	io.transports = globalTransports;
 } else {
-	var globalTransports = [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling' ];
+	var globalTransports = [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling'];
 }
 
 var NodeChatSocketWrapper = $.createClass(Observable,{
@@ -74,7 +74,6 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 				$().log("timeout try without socket connection");
 				globalTransports = [ 'htmlfile', 'xhr-polling'];
 				io.transports = globalTransports;
-				
 				if(this.socket) {
 					this.socket.removeAllListeners('disconnect');
 					this.socket.socket.disconnect();
@@ -119,6 +118,10 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 			return true;
 		}
 	
+                if( this.socket && this.socket.socket.connected) {
+                        return true;
+                }
+
 		$().log("Node-server connection needs to be refreshed...");
 		this.connected = false;
 		this.announceConnection = true;
@@ -140,7 +143,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 			
 		};
 
-		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId);
+		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId + '&RCC=' + this.reConnectCount);
 	},
     
     
@@ -175,12 +178,9 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
     },
     
     tryconnect: function (){
-    	if(this.reConnectCount > 8) {
-    		return true;
-    	}
     	$().log('tryconnect');
 
-   		if(this.connected) {
+   		if(this.connected || this.reConnectCount > 8) {
    			return false;
    		}
 		$().log("Trying to re-connect to node-server:" + this.reConnectCount);
@@ -200,7 +200,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
         }
         
     }
-});	
+});
 
 var NodeRoomController = $.createClass(Observable,{
 	active: false,

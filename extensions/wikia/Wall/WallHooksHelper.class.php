@@ -1179,7 +1179,8 @@ class WallHooksHelper {
 			$wm = F::build('WallMessage', array($title));
 			$parentObj = $wm->getTopParentObj();
 			$reason = ''; //we don't want any comment
-			$log = new LogPage( $logtype );
+
+			$logPage = new LogPage( 'delete' );
 					
 			if( empty($parentObj) ) {
 				//thread message
