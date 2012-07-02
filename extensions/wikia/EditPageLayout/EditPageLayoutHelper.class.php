@@ -108,7 +108,7 @@ class EditPageLayoutHelper {
 	}
 
 	function isWidePage() {
-		global $wgTitle, $wgRequest;
+		global $wgTitle;
 
 		// Custom edit pages are mostly using special pages
 		// and the default Oasis logic is not to show any rail modules
