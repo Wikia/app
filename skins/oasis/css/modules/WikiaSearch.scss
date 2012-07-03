@@ -56,12 +56,12 @@ $form-negative-side-padding: $form-side-padding*-1;
 			padding: 5px 0;
 			margin: 0;
 		}
-		
+
 		.tabs {
 			margin: 24px $form-negative-side-padding 0;
 			padding: 0 $form-side-padding - 1px;
 		}
-		
+
 		.AdvancedSearch {
 			background: $color-page;
 			border-bottom: 1px solid $color-page-border;
@@ -84,7 +84,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 		color: $color-alternate-text;
 		margin-bottom: 0;
 		text-align: right;
-		
+
 		span {
 			text-transform: capitalize;
 		}
@@ -119,7 +119,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 			float: left;
 			list-style: none;
 			margin: 0;
-			
+
 			&:before {
 				content: "\00a0|\00a0";
 			}
@@ -127,7 +127,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 			&:first-child:before {
 				content: "";
 			}
-			
+
 			a {
 				color: $color-alternate-text;
 				&:hover {
@@ -140,10 +140,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 			line-height: 19px;
 		}
 		.grouped-result {
-			width: 280px; 
-			float: left; 
+			width: 280px;
+			float: left;
 			margin: 9px 0 9px 40px;
-			
+
 			h1 {
 				font-size: inherit;
 			}
@@ -164,6 +164,9 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 	.result-link {
 		color: $color-alternate-text;
+	}
+	.searchmatch {
+		font-weight: bold;
 	}
 	.wikia-paginator {
 		padding-top: 5px;
