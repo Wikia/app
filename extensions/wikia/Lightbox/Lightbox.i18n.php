@@ -26,6 +26,7 @@ $messages['en'] = array(
 	'lightbox-email-form-header' => 'Email',
 	'lightbox-pin-carousel-tooltip' => 'Pin top and bottom bars in place',
 	'lightbox-unpin-carousel-tooltip' => 'Unpin top and bottom bars',
+	'lightbox-carousel-more-items' => '{{PLURAL:+$1|<span>+$1</span> more item|<span>+$1</span> more items}} on this wiki',
 	
 	/* /new stuff */
 
@@ -63,7 +64,29 @@ $1
  */
 $messages['qqq'] = array(
 	/* new stuff for new lightbox */
+	'lightbox-header-more-info-button' => 'Click this button to view more information about an image or video, like where it\'s posted.',
+	'lightbox-header-share-button' => 'Click this button to go to a screen where you can email a video or image to a friend and get permalinks to the media.',
+	'lightbox-header-see-full-size-image' => 'Link text to go to the image page to see the image larger.',
+	'lightbox-header-added-by' => '$1 is the username of the person who added the image or video.',
+	'lightbox-header-posted-in' => '$1 is the article name where the image or video is posted.',
+	'lightbox-more-info-back-button' => 'From the "more info" screen, click this "back" button to go back to viewing the carousel/lightbox image or video.',
+	'lightbox-more-info-caption-heading' => 'Label that comes before the caption that is displayed for an image or video.',
+	'lightbox-more-info-description-heading' => 'Label that comes before the description of an image or video',
+	'lightbox-more-info-filelinks-heading' => 'Label that comes before the File Links section of the more info screen for images and videos.  File links are articles where the image is posted.',
 	'lightbox-carousel-progress' => 'Displays above thumbnail carousel to show which thumbnails are displaying.  Ex: 1-6 of 20',
+	'lightbox-embed-url' => 'Label for the input that contains a url where you can embed an image or video.',
+	'lightbox-file-page-url' => 'Label for the input that contains the url for the file page.',
+	'lightbox-email-label' => 'Label for an input where you can type in a friend\'s email to send them a link to an image or video',
+	'lightbox-email-placeholder' => 'Paceholder text for an image where you can type in a friend\'s email to send them a link to an image or video',
+	'lightbox-email-submit' => 'Button to send a link to a friend\'s email',
+	'lightbox-no-media-error-header' => 'Header text that displays when requesting a missing image or video in a Lightbox',
+	'lightbox-no-media-error' => 'Text that is displayed to a user if they request an image or video that is no longer available',
+	'lightbox-no-media-error-close' => 'Button text to close error message inside Lightbox',
+	'lightbox-urls-form-header' => 'Header text for the list of URLs users can use to share an image or video.',
+	'lightbox-email-form-header' => 'Header text for the form to send an email with a link to an image or video',
+	'lightbox-pin-carousel-tooltip' => 'Tooltip text when hovering over the icon that, when clicked, holds the lightbox carousel in place',
+	'lightbox-unpin-carousel-tooltip' => 'Tooltip text when hovering over the icon that, when clicked, unpins the lightbox carousel',
+	'lightbox-carousel-more-items' => 'Label to indicate the following thumbnails are not the ones specifically requested, but do exist on the wiki',
 	/* /new stuff */
 
 
