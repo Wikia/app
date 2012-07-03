@@ -75,6 +75,7 @@ F::build('JSMessages')->registerPackage( 'WkMbl', array(
 	'wikiamobile-sharing-page-text',
 	'wikiamobile-sharing-modal-text',
 	'wikiamobile-sharing-email-text',
+	'wikiamobile-image-not-loaded'
 ) );
 
 /**

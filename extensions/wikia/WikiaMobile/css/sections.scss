@@ -10,7 +10,7 @@ h1, h2, h3{
 		display: none;
 	}
 
-	/* reveal section chevrons when JS is enabled */
+	//reveal section chevrons when JS is enabled
 	.collSec{
 		.chev{
 			display: inline;
@@ -59,7 +59,7 @@ body {
 	position: relative;
 
     .chev {
-      display: none;/* hidden by default, will be revealed via JS */
+      display: none; //hidden by default, will be revealed via JS
       width: 22px;
       height: 22px;
       background-size: 75%;

@@ -21,27 +21,41 @@
 	#wkGalPag {
 		opacity: 1;
 	}
+
+	#wkGalTgl {
+		opacity: 1;
+		background-image: url('/extensions/wikia/WikiaMobile/images/gallery_blue.png'); /* base64 */
+	}
 }
 
 .galImg {
+	//placeholder moved to image_placeholder.scss
+	position: relative;
 	display: inline-block;
 	height: 100px;
 	width: 100px;
 	margin: 0 2.5px;
-	background-position: center;
-	background-size: cover;
+	background-size: 50%;
+	-webkit-transition: -webkit-transform .2s, opacity .2s;
 
 	&.this{
 		border: 4px solid rgba(0, 108, 176, .5);
+	}
+
+	&.load {
+		opacity: 0;
+		-webkit-transform: scale(.7);
+	}
+
+	&.loaded {
+		background-size: cover;
+		opacity: 1;
+		-webkit-transform: scale(1);
 	}
 }
 
 #wkGalTgl {
 	opacity: 1;
-
-	&.on {
-		background-image: url('/extensions/wikia/WikiaMobile/images/gallery_blue.png'); /* base64 */
-	}
 }
 
 #wkGalPag {

@@ -126,13 +126,9 @@ define('pager', function() {
 				onEnd && onEnd(currentPageNum);
 			},
 			loadCurrentPage = function(){
-				container.innerHTML =
-					//prev page
-					((currentPageNum > 0) ? pages[currentPageNum-1] :
+				container.innerHTML = ((currentPageNum > 0) ? pages[currentPageNum-1] :
 					(circle && currentPageNum == 0) ? pages[lastPage] : '') +
-					//current page
 					pages[currentPageNum] +
-					//next page
 					((lastPage > 0 && currentPageNum < lastPage) ? pages[currentPageNum+1] :
 					(circle && currentPageNum == lastPage) ? pages[0] : '');
 

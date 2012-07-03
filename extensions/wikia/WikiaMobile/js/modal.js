@@ -175,6 +175,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 			return wrapper;
 		},
 		hideUI: hideUI,
+		showUI: showUI,
 		setStopHiding: function(val){
 			stopHiding = (val) ? true : false;
 		},
