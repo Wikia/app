@@ -177,7 +177,7 @@
 
 			var url = window.wgEditPageHandler.replace('$1', encodeURIComponent(window.wgEditedTitle));
 
-			jQuery.post(url, params, function(data) {
+			return jQuery.post(url, params, function(data) {
 				if (typeof callback == 'function') {
 					callback(data);
 				}
@@ -451,22 +451,20 @@
 				self.getContent(function(content) {
 					extraData.content = extraData.content || content;
 					extraData.section = parseInt($.getUrlVar('section') || 0);
-					self.ajax('diff',
-						extraData,
-						function(data) {
-							var html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+
+					$.when(
+						// get wikitext diff
+						self.ajax('diff', extraData),
+						// load CSS for diff
+						mw.loader.use('mediawiki.action.history.diff')
+					).done(function(ajaxData) {
+							var data = ajaxData[0],
+								html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
+
 							contentNode.html(html);
 					});
 				});
 			});
-
-			// load diff.css
-			var self = this;
-			if (!this.diffCssLoaded) {
-				$.getCSS(stylepath + '/common/diff.css', function() {
-					self.diffCssLoaded = true;
-				});
-			}
 		},
 
 		// get editor's content (either wikitext or HTML)
