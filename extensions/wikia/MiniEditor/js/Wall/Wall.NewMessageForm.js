@@ -6,7 +6,7 @@
 			var self = this;
 
 			if (this.WallMessageBody.is(':focus')) {
-				self.initEditor();	
+				self.initEditor();
 			}
 
 			this.WallMessageBody.add(this.WallMessageTitle).focus(function(event) {
@@ -49,9 +49,9 @@
 			return this.WallMessageBody.data('wikiaEditor').getContent();
 		},
 
-		// Return an empty string if we don't need to convert, 
+		// Return an empty string if we don't need to convert,
 		// or 'wikitext' if we need to convert to wikitext.
-		getFormat: function() { 
+		getFormat: function() {
 			return this.WallMessageBody.data('wikiaEditor').mode == 'wysiwyg' ? 'wikitext' : '';
 		},
 
@@ -60,7 +60,7 @@
 		},
 
 		clearNewMessageTitle: function() {
-			this.WallMessageTitle.val('').trigger('blur').find('.no-title-warning').fadeOut('fast');	
+			this.WallMessageTitle.val('').trigger('blur').find('.no-title-warning').fadeOut('fast');
 		},
 
 		disableNewMessage: function() {
@@ -72,15 +72,15 @@
 			// Note: this was copied and pasted from parent class. Could be more dry
 			this.WallMessageSubmit.html($.msg('wall-button-to-submit-comment'));
 			this.WallMessageTitle.removeClass('no-title');
-			
+
 			$('.new-message .no-title-warning').fadeOut('fast');
 		},
-		
+
 		postNewMessage_ChangeText_handleContent: function() {
 			// empty override
 		}
 	});
-	
+
 	// Exports
 	window.MiniEditorNewMessageForm = MiniEditorNewMessageForm;
 
