@@ -49,7 +49,7 @@ you should definitely check this out:
 	'wikiamobile-ad-close' => 'close',
 
 	//modal
-	'wikiamobile-image-not-loaded' => 'Error: Image not loaded'
+	'wikiamobile-image-not-loaded' => 'Image is not available'
 );
 
 /** Message documentation (Message documentation) */
