@@ -327,9 +327,9 @@ class EditPageLayoutHelper {
 
 	static public function getAssets() {
 		return array(
-			// 3rd party libraries
-			'skins/common/jquery/jquery.md5.js',
-			'skins/common/jquery/jquery.uniqueId.js',
+			// >> 3rd party libraries
+			'resources/wikia/libraries/jquery/md5/jquery.md5.js',
+			'resources/wikia/libraries/jquery/uniqueId/jquery.uniqueId.js',
 			// >> editor stack loaders and configurers
 			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 			// >> editor core
