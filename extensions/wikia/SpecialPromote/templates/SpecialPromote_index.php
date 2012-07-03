@@ -44,7 +44,11 @@
 					<a class="modify" href="#"><?= wfMsg('promote-modify-photo'); ?></a>
 				</div>
 				<?php if (!empty($mainImage)): ?>
-					<img id="curMainImageName" src="<?= $mainImage['image_url']; ?>" data-filename="<?= $mainImage['image_filename']; ?>" />
+					<img
+						id="curMainImageName"
+						src="<?= $mainImage['image_url']; ?>"
+						data-filename="<?= $mainImage['image_filename']; ?>"
+						data-image-type="main" />
 				<? endif; ?>
 			</div>
 			<span class='explanatory-copy'><?= wfMsg('promote-upload-main-photo-explanation'); ?></span>
