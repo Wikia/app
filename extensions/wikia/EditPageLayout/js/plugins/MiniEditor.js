@@ -57,7 +57,7 @@
 
 		// Re-bind event listenners for elements inside wysiwyg iframe
 		'ck-wysiwygModeReady': function() {
-			this.editor.getEditbox().bind('keyup.MiniEditor', this.proxy(this.editorResize)).keyup();		
+			this.editor.getEditbox().bind('keyup.MiniEditor', this.proxy(this.editorResize)).keyup();
 		},
 
 		editorActivated: function(event) {
@@ -158,7 +158,7 @@
 		},
 
 		// Resizes the CKEditor body tag on keydown between min height and max height
-		// This doesn't work for RTE disabled.   
+		// This doesn't work for RTE disabled.
 		editorResize: function() {
 			var editbox = this.editor.getEditbox(),
 				currentHeight = editbox.outerHeight(true),
@@ -167,7 +167,7 @@
 						currentHeight : this.editor.config.minHeight;
 
 			this.editor.getEditboxWrapper().height(newHeight);
-			
+
 			// Hack to fix a scrollbar appearing for CKE when resizing
 			editbox.parent().toggleClass('resizing', newHeight < this.editor.config.maxHeight);
 		},
