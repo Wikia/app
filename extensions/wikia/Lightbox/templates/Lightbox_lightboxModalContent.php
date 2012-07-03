@@ -47,9 +47,11 @@
 		<div class="user-details">
 			<img class="avatar" src="{{userThumbUrl}}">
 			<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}" target="_blank">{{userName}}</a>') ?>
-			<span class="posted-in">
-				<?= wfMsg('lightbox-header-posted-in', '{{#smallerArticleList}}<span class="posted-in-article"><a href="{{articleUrl}}" target="_blank">{{articleTitle}}</a></span>{{/smallerArticleList}}{{#articleListIsSmaller}}&hellip;{{/articleListIsSmaller}}') ?>
-			</span>
+			{{#articles}}
+				<span class="posted-in">
+					<?= wfMsg('lightbox-header-posted-in', '{{#smallerArticleList}}<span class="posted-in-article"><a href="{{articleUrl}}" target="_blank">{{articleTitle}}</a></span>{{/smallerArticleList}}{{#articleListIsSmaller}}&hellip;{{/articleListIsSmaller}}') ?>
+				</span>
+			{{/articles}}
 		</div>
 	</script>
 	
