@@ -863,48 +863,60 @@ class WikiStats {
 	}
 
 	public function rollupStats($wiki_id, $by_month=null, $by_day=null) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgDatamartDB;
 
-		$date_ranges = array();
-		if ($by_month) {
-			$date_ranges[] = array(date('Y-m-01'),
-							       date('Y-m-01', strtotime('1 months')));
-			foreach (range(1, 12) as $month) {
-				$date_ranges[] = array(date('Y-m-01', strtotime('-'.$month.' months')),
-								       date('Y-m-01', strtotime('-'.($month-1).' months'))
-								 );
-			}
-		} else if ($by_day) {
-			$date_ranges[] = array(date('Y-m-d'),
-							       date('Y-m-d', strtotime('1 days')));
-			foreach (range(1, 30) as $day) {
-				$date_ranges[] = array(date('Y-m-d', strtotime('-'.$day.' days')),
-								       date('Y-m-d', strtotime('-'.($day-1).' days'))
-								 );
-			}
+		$data = $dates = $params = array();
+		
+		if ( $by_month ) {
+			$params = array( 
+				'range' 	=> range( 0, 12 ),
+				'period'	=> 'months',
+				'format'	=> 'Y-m-01',
+				'period_id'	=> 3 
+			);
+		} else if ( $by_day ) {
+			$params = array( 
+				'range' 	=> range( 0, 30 ),
+				'period'	=> 'days',
+				'format'	=> 'Y-m-d',
+				'period_id'	=> 1
+			);
+		} else {
+			return $data;
 		}
 
-		$data = array();
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-					
-			foreach ($date_ranges as $period) {
-				$start_date = $period[0];
-				$end_date   = $period[1];
+		foreach ( $params['range'] as $num ) {
+			$dates[] = date( $params['format'], strtotime("-{$num} {$params['period']}") );
+		}
+		
+		if ( !empty( $wgDatamartDB ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgDatamartDB);
+			
+			foreach ( $dates as $date ) {
+				$ts_date = sprintf( "%s 00:00:00", $date );
+				$oRes = $dbr->select(				
+					array( 'rollup_wiki_namespace_user_events' ),
+					array( 
+						'wiki_id', 
+						'namespace_id AS page_ns', 
+						'SUM(creates) AS stats_2', 
+						'SUM(edits) AS stats_1', 
+						'SUM(deletes) AS stats_3', 
+						'SUM(undeletes) AS stats_4' 
+					),
+					array( 
+						'wiki_id'	=> $wiki_id,
+						'period_id' => $params['period_id'],
+						'time_id' 	=> $ts_date
+					),
+					__METHOD__
+				);
 
-				$oRes = $dbr->select(
-						array( 'events' ),
-						array( 'page_ns', 'event_type', 'count(*) as cnt' ),
-						array( "rev_timestamp >= '$start_date 00:00:00'",
-							   "rev_timestamp < '$end_date 00:00:00'",
-							   "wiki_id = $wiki_id" ),
-						__METHOD__,
-						array( 'GROUP BY' => "page_ns, event_type",
-							   'ORDER BY' => "null")
-					);
-
-				while( $oRow = $dbr->fetchObject( $oRes ) ) {
-					$data[$start_date][$oRow->page_ns][$oRow->event_type] = $oRow->cnt;
+				if ( $oRow = $dbr->fetchObject( $oRes ) ) {
+					foreach ( range( 1, 4 ) as $id ) {
+						$key = 'stats_' . $id;
+						$data[ $date ][ $oRow->page_ns ][ $id ] = $oRow->$key;
+					}
 				}
 			}
 		}
@@ -1038,45 +1050,71 @@ class WikiStats {
 	 */
 	
 	public function loadMonthlyNSActions() {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgDatamartDB;
 
 		// The existing index requires a city ID, so don't try anything without it
 		if (!$this->mCityId) return array();
 
-		$startDate = sprintf("%04d-%02d-01", $this->mStatsDate['fromYear'], $this->mStatsDate['fromMonth']);
-		
-		$end_month = $this->mStatsDate['toMonth'] + 1;
-		$end_year  = $this->mStatsDate['toYear'];
-		if ($end_month == 13) {
-			$end_month = 1;
-			$end_year++;
+		$startDate = sprintf( "%04d-%02d-01", $this->mStatsDate['fromYear'], $this->mStatsDate['fromMonth'] );
+		if ( $this->mStatsDate['toMonth'] == 12 ) {
+			$this->mStatsDate['toMonth'] = 1;
+			$this->mStatsDate['toYear']++;
+		} 
+		$endDate = sprintf( "%04d-%02d-01", $this->mStatsDate['toYear'], $this->mStatsDate['toMonth'] );
+
+		$dates = array();
+		while (strtotime($date) <= strtotime($end_date)) {
+			$dates[] = $date;
+			$date = date ("Y-m-d", strtotime("+1 month", strtotime($date)));
 		}
-		
-		$endDate = sprintf("%04d-%02d-01", $end_year, $end_month);
 
 		$ns_actions = array();
-		if ( !empty( $wgStatsDB ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$oRes = $dbr->select(
-					array( 'events' ),
-					array( "DATE_FORMAT(rev_timestamp, '%Y%m') AS date", 'page_ns', 'event_type', 'count(*) AS cnt' ),
-					array( 'wiki_id' => $this->mCityId,
-						   "rev_timestamp BETWEEN '$startDate' AND '$endDate'",
-						 ),
-					__METHOD__,
-					array( 'GROUP BY' => 'date, page_ns, event_type' )
-			);
+		if ( !empty( $wgDatamartDB ) ) {
+			$dbr = wfGetDB(DB_SLAVE, array(), $wgDatamartDB);
 			
-			while( $oRow = $dbr->fetchObject( $oRes ) ) {
-				// Initialize this namespace to an empty array if neccessary
-				if (!array_key_exists($oRow->page_ns, $ns_actions)) $ns_actions[$oRow->page_ns] = array();
-				$for_ns = &$ns_actions[$oRow->page_ns];
+			$base_where = array( 'period_id' => 3 );
+			if ( $this->mCityId ) {
+				$base_where[] = array( 'wiki_id' => $this->mCityId );
+			}
+			
+			foreach ( $dates as $date ) {
+				$ts_date = sprintf( "%s 00:00:00", $date );
+				$oRes = $dbr->select(
+					array( 'rollup_wiki_namespace_user_events' ),
+					array( 
+						'wiki_id',
+						'time_id as date', 
+						'namespace_id as page_ns', 
+						'SUM(creates) AS event_2', 
+						'SUM(edits) AS event_1', 
+						'SUM(deletes) AS event_3', 
+						'SUM(undeletes) AS event_4'
+					),
+					array( 
+						'wiki_id' => $this->mCityId,
+						'period_id' => 3,
+						'time_id' => $ts_date 
+					),
+					__METHOD__,
+					array( 
+						'GROUP BY' => 'wiki_id, namespace_id' 
+					)
+				);
+			
+				while( $oRow = $dbr->fetchObject( $oRes ) ) {
+					// Initialize this namespace to an empty array if neccessary
+					if (!array_key_exists($oRow->page_ns, $ns_actions)) $ns_actions[$oRow->page_ns] = array();
+					$for_ns = &$ns_actions[$oRow->page_ns];
 
-				// Initialize this month to an empty array if neccessary
-				if (!array_key_exists($oRow->date, $for_ns)) $for_ns[$oRow->date] = array();
-				$for_month = &$for_ns[$oRow->date];
+					// Initialize this month to an empty array if neccessary
+					if (!array_key_exists($oRow->date, $for_ns)) $for_ns[$oRow->date] = array();
+					$for_month = &$for_ns[$oRow->date];
 
-				$for_month[$oRow->event_type] = $oRow->cnt;
+					foreach ( range( 1, 4 ) as $id ) {
+						$key = 'event_' . $id;
+						$for_month[$id] = $oRow->$key;
+					}
+				}
 			}
 		}
 

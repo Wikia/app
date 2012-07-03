@@ -89,11 +89,13 @@
 		}
 
 		/**
-		 * get top wikis by pageviews (last 30 days)
-		 * @param type $limit
+		 * get top wikis by pageviews (last 30 days) and optionally by language
+		 * @param integer $limit
+		 * @param string $lang (optional)
+		 * @param integer $public (optional)
 		 * @return array $topWikis [ array( wikiId => pageviews ) ]
 		 */
-		public static function getTopWikisByPageviews( $limit=200 ) {
+		public static function getTopWikisByPageviews( $limit=200, $lang=null, $public=null ) {
 			$app = F::app(); 
 
 			$app->wf->ProfileIn( __METHOD__ );
@@ -101,22 +103,41 @@
 			$limitDefault = 200;
 			$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault ;
 
-			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $limitUsed );
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'topwikis', $limitUsed, $lang );
 			$topWikis = $app->wg->Memc->get( $memKey );
-			if ( !is_array($topWikis) ) {
+			if (!is_array($topWikis) ) {
 				$topWikis = array();
 				if ( !empty($app->wg->StatsDBEnabled) ) {
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 
+					$tables[] = 'rollup_wiki_pageviews';
+					$where  = array('period_id' => self::PERIOD_ID_DAILY,
+									'time_id > CURDATE() - INTERVAL 30 DAY'
+							  );
+
+					if (!is_null($lang) || $public) {
+						$tables[] = 'dimension_wikis';
+						$where[]  = 'rollup_wiki_pageviews.wiki_id = dimension_wikis.wiki_id';
+					}
+					if ($lang) {
+						$where[] = "lang = '$lang'";
+					}
+
+					// Default to showing public wikis
+					if (!is_null($public)) {
+						$where[] = 'public = '.$public;
+					} else {
+						$where[] = 'public = 1';
+					}
+
 					$result = $db->select(
-							array( 'rollup_wiki_pageviews' ),
-							array( 'wiki_id, pageviews as cnt' ),
-							array(
-								'period_id' => self::PERIOD_ID_DAILY,
-								'time_id > curdate() - interval 30 day'
-							),
+							$tables,
+							array( 'rollup_wiki_pageviews.wiki_id, sum(pageviews) as cnt' ),
+							$where,
 							__METHOD__,
-							array( 'GROUP BY' => 'wiki_id', 'ORDER BY' => 'cnt desc', 'LIMIT' => $limitUsed )
+							array( 'GROUP BY' => 'rollup_wiki_pageviews.wiki_id',
+								   'ORDER BY' => 'cnt desc',
+								   'LIMIT'    => $limitUsed )
 					);
 
 					while ( $row = $db->fetchObject($result) ) {
@@ -159,7 +180,7 @@
 
 			$memKey = $app->wf->SharedMemcKey( 'datamart', 'events', $wikiId, $periodId, $startDate, $endDate );
 			$events = $app->wg->Memc->get( $memKey );
-			if ( !is_array($events) ) {
+			if (!is_array($events) ) {
 				$events = array();
 				if ( !empty($app->wg->StatsDBEnabled) ) {
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
