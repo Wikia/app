@@ -39,6 +39,8 @@ function interstitialAddJs( &$out, &$sk ){
 function interstitialsJsGlobalVariables(&$vars){
 	global $wgAdsInterstitialsEnabled, $wgAdsInterstitialsPagesBeforeFirstAd, $wgAdsInterstitialsPagesBetweenAds, $wgEnableOutboundScreenExt;
 
+	// TODO: load the following on-demand
+
 	// only emit when needed (BugId:20558)
 	if (!empty($wgAdsInterstitialsEnabled)) {
 		$vars['wgAdsInterstitialsEnabled'] = $wgAdsInterstitialsEnabled;
