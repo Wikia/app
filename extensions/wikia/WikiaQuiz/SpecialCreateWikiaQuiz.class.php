@@ -7,7 +7,7 @@ class SpecialCreateWikiaQuiz extends SpecialPage {
 	}
 
 	public function execute ($subpage) {
-		global $wgOut, $wgUser, $wgBlankImgUrl, $wgJsMimeType, $wgExtensionsPath, $wgStylePath, $wgStyleVersion;
+		global $wgOut, $wgUser, $wgExtensionsPath, $wgResourceBasePath;
 
 		// Boilerplate special page permissions
 		if ($wgUser->isBlocked()) {
@@ -23,7 +23,7 @@ class SpecialCreateWikiaQuiz extends SpecialPage {
 			return;
 		}
 
-		$wgOut->addScript('<script src="'.$wgStylePath.'/common/jquery/jquery-ui-1.8.14.custom.js"></script>');
+		$wgOut->addScript('<script src="'.$wgResourceBasePath.'/resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaQuiz/js/CreateWikiaQuiz.js"></script>');
 
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/WikiaQuiz/css/WikiaQuizBuilder.scss'));
@@ -36,4 +36,3 @@ class SpecialCreateWikiaQuiz extends SpecialPage {
 		}
 	}
 }
-?>

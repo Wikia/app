@@ -474,7 +474,7 @@ $config['mini_editor_js'] = array(
 		'//extensions/wikia/EditPageLayout/js/modules/InsertMiniEditor.js',
 		'//extensions/wikia/EditPageLayout/js/modules/ModeSwitch.js',
 		// TODO: Load this on the fly with JSSnippets. Only thing really needed is slider (so far)
-		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
+		'//resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET.js',
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js',
 		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
@@ -549,7 +549,7 @@ $config['theme_designer_js'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 		'//skins/common/jquery/jquery.wikia.tracker.js',
-		'//skins/common/jquery/jquery-ui-1.8.14.custom.js',
+		'//resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js',
 		'//skins/common/jquery/jquery.wikia.tooltip.js',
 		'//resources/wikia/libraries/aim/jquery.aim.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
