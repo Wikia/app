@@ -16,6 +16,7 @@ class LightboxController extends WikiaController {
 	}
 	
 	public function lightboxModalContent() {
+		$this->showAds = $this->wg->User->isAnon() || $this->wg->User->getOption('showAds');
 		// set cache control to 1 day 
 		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)); 
 	}
