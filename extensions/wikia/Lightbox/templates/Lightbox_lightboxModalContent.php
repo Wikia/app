@@ -11,18 +11,21 @@
 		<span id="LightboxPrevious" class="arrow previous"></span>
 	</div>
 	
-	<div id="MODAL_INTERSTITIAL" class="wikia-ad noprint modal_interstitial">
-		<?= AdEngine::getInstance()->getAd('MODAL_INTERSTITIAL', array('ghostwriter'=>true)); ?>
-	</div>
-
+	<? if($showAds) { ?>
+		<div id="MODAL_INTERSTITIAL" class="wikia-ad noprint modal_interstitial">
+			<?= AdEngine::getInstance()->getAd('MODAL_INTERSTITIAL', array('ghostwriter'=>true)); ?>
+		</div>
+	<? } ?>
 	
 	<div id="LightboxCarousel" class="LightboxCarousel">
 		<div id="LightboxCarouselInner" class="LightboxCarouselInner">
 		
 		</div>
-		<div id="MODAL_RECTANGLE" class="wikia-ad noprint">
-			<?= AdEngine::getInstance()->getAd('MODAL_RECTANGLE', array('ghostwriter'=>true)); ?>
-		</div>
+		<? if($showAds) { ?>
+			<div id="MODAL_RECTANGLE" class="wikia-ad noprint">
+				<?= AdEngine::getInstance()->getAd('MODAL_RECTANGLE', array('ghostwriter'=>true)); ?>
+			</div>
+		<? } ?>
 	</div>
 	
 	<div class="more-info">
