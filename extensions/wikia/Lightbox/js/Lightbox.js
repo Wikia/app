@@ -379,7 +379,7 @@ var Lightbox = {
 	},
 	ads: {
 		// should user see ads?
-		showAds: false; // !window.wgUserName || window.wgUserShowAds,
+		showAds: false, // !window.wgUserName || window.wgUserShowAds,
 		// show an ad after this number of unique images/videos are shown
 		adMediaCount: 2, 
 		// array of media titles shown for tracking unique views
