@@ -26,24 +26,24 @@ class RandomWikiHelper {
 	static public function loadData( $forceRefresh = false, $forceLanguage = null ) {
 		global $wgMemc, $wgStatsDB, $wgContLang, $wgExternalSharedDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
-		
+
 		self::$mLanguage = ( !empty( $forceLanguage ) ) ? $forceLanguage : $wgContLang->getCode();
 		$cacheKey = self::CACHE_KEY_TOKEN . ':' . strtoupper( self::$mLanguage );
-		
+
 		self::$mData = $wgMemc->get( $cacheKey );
-		
+
 		if ( empty( self::$mData ) || $forceRefresh ) {
 			self::$mData = array( );
-			
+
 			$wikisIDs = array();
-			
+
 			// get all the active wikis selected by the sales team
 			$wikiFactoryRecommended = WikiFactory::getVarByName( self::WF_VAR_NAME, null );
 			self::$mData[ 'recommended' ] = array( );
-			
+
 			if ( !empty( $wikiFactoryRecommended ) && !empty( $wikiFactoryRecommended->cv_variable_id ) ) {
 				$dbr = WikiFactory::db( DB_SLAVE );
-				
+
 				$res = $dbr->select(
 					array(
 						'city_list',
@@ -58,45 +58,24 @@ class RandomWikiHelper {
 						'cv_value' => serialize( true )
 					)
 				);
-				
+
 				while ( $row = $dbr->fetchObject( $res ) ) {
 					self::$mData[ 'recommended' ][] = $row->city_id;
 				}
-				
+
 				$dbr->freeResult( $res );
 			}
-			
+
 			$counter = 0;
-			self::$mData[ 'hubs' ] = array();			
+			self::$mData[ 'hubs' ] = array();
+			
 			if ( !empty( $wgStatsDBEnabled ) ) {
-				
-				$dbr = wfGetDB( DB_SLAVE, array( ), $wgStatsDB );
-				
-				$wikis = $dbr->select(
-						array(
-							'wikicities.city_list as cl',
-							'specials.page_views_summary_tags as pv'//this table stores only the last 4 weeks worth of data
-						),
-						array(
-							'pv.city_id AS city_id',
-							'sum(pv.pv_views) as pageviews'
-						),
-						array(
-							'cl.city_id = pv.city_id',
-							'cl.city_lang' => self::$mLanguage,
-							'cl.city_public' => 1,
-						),
-						__METHOD__,
-						array(
-							'GROUP BY' => 'cl.city_id'
-						)
-				);
-				
+				$wikis = DataMartService::getTopWikisByPageviews( 200, self::$mLanguage, 1 );
 				$minPageViews = ( isset( self::$pageviewsLimits[ self::$mLanguage ] ) ) ? self::$pageviewsLimits[ self::$mLanguage ] : self::$pageviewsLimits[ 'default' ];
 
-				while ( ( $wiki = $dbr->fetchObject( $wikis ) ) && ( $counter < self::COUNT_LIMIT ) ) {
-					if ( $wiki->pageviews >= $minPageViews ) {
-						$hub = WikiFactory::getCategory( $wiki->city_id );
+				foreach ( $wikis as $wikiID => $pvCount ) {
+					if ( $pvCount >= $minPageViews ) {
+						$hub = WikiFactory::getCategory( $wikiID );
 
 						if ( !$hub ) {
 							continue;
@@ -106,12 +85,10 @@ class RandomWikiHelper {
 							self::$mData[ 'hubs' ][ $hub->cat_id ] = array( );
 						}
 
-						self::$mData[ 'hubs' ][ $hub->cat_id ][ ] = $wiki->city_id;
+						self::$mData[ 'hubs' ][ $hub->cat_id ][ ] = $wikiID;
 						$counter++;
 					}
 				}
-
-				$dbr->freeResult( $wikis );
 			}
 
 			// removing entries from hubs that have a match in recommended

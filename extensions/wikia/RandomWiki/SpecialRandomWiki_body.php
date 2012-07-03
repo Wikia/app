@@ -49,9 +49,12 @@ class RandomWiki extends SpecialPage {
 
 			if ( !empty( $wikiID ) ) {
 				$hub = WikiFactory::getCategory( $wikiID );
-				$this->mCookie->origHub = $hub->cat_id;
-				$this->mCookie->langCode = WikiFactory::getWikiByID( $wikiID )->city_lang;
-				$this->mCookie->history[ ] = $wikiID;
+
+				if ( is_object( $hub ) ) {
+					$this->mCookie->origHub = $hub->cat_id;
+					$this->mCookie->langCode = WikiFactory::getWikiByID( $wikiID )->city_lang;
+					$this->mCookie->history[ ] = $wikiID;
+				}
 			}
 		}
 
@@ -131,8 +134,12 @@ class RandomWiki extends SpecialPage {
 			$url .= '?redirect=no';
 		}
 
-		// Redirect the user to a randomly-chosen wiki
-		$wgOut->redirect( $url );
+		// Redirect the user to a randomly-chosen wiki (or not if profiling requested)
+		$profiling = $wgRequest->getInt( 'forceprofile', 0);
+
+		if ( $profiling !== 1 ) {
+			$wgOut->redirect( $url );
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
