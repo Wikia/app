@@ -394,7 +394,7 @@
 				    var mode = editor.mode;
 					if (typeof config['click'+mode] == 'function'){
 						return config['click'+mode].apply(this,arguments);
-					} else{ 
+					} else{
 						editor.warn('Mode "'+mode+'" not supported for button: '+config.name);
 					}
 				};
@@ -938,6 +938,14 @@
 		},
 
 		editorFocused: function() {
+			var editorElement = this.getEditorElement();
+
+			// Fix IE placeholder text not disappearing (BugId:35209)
+			if (editorElement.hasClass('placeholder')) {
+				editorElement.removeClass('placeholder');
+				this.setContent('');
+			}
+
 			this.getEditbox().addClass('focused');
 			this.editor.fire('editorFocus', this.editor);
 		},
