@@ -248,7 +248,11 @@ SpecialPromote.prototype = {
 	addAdditionalImage: function (file) {
 		if (file.imageIndex) {
 			this.current.additionalImagesNames[file.imageIndex] = file.fileName;
-			var image = $('.small-photos img:eq(' + (file.imageIndex - 1) + ')');
+			$('.small-photos img').each(function(key, value) {
+				if ($(value).data('image-index') == file.imageIndex) {
+					var image = $(value);
+				}
+			});
 			image.attr('src', file.fileUrl);
 			image.data('filename', file.fileName);
 		} else {
