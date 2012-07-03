@@ -46,17 +46,15 @@ function efNegrefHook( $parser, $input, $replaceData='', $replaceRef='', $patter
 	$data = $input;
 	$ref = '';
 
-	$var = $parser->mStripState->general->getArray();
-	if( is_array( $var ) ) {
-		$keys = array_keys( $var );
-		foreach ( $keys as $key ) {
-			if ( preg_match( '/^' . preg_quote( $parser->uniqPrefix(), '/' ) . '-(ref)-.*$/', $key ) ) {
-				if ( substr_count( $input, $key ) > 0 ) {
-					$data = str_replace( $key, '', $data );
-					$ref .= $key;
-				}
+	$keys = array_keys( (array) $parser->mStripState->general->getArray() );
+	foreach ( $keys as $key ) {
+		if ( preg_match( '/^' . preg_quote( $parser->uniqPrefix(), '/' ) . '-(ref)-.*$/', $key ) ) {
+			if ( substr_count( $input, $key ) > 0 ) {
+				$data = str_replace( $key, '', $data );
+				$ref .= $key;
 			}
 		}
 	}
+
 	return str_replace( $replaceRef, $ref, str_replace( $replaceData, $data, $pattern ) );
 }
