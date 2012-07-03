@@ -17,7 +17,7 @@ var ThemeDesigner = {
 		// themes
 		ThemeDesigner.themes = window.themes;
 
-		$().log(ThemeDesigner, 'ThemeDesigner');
+		//$().log(ThemeDesigner, 'ThemeDesigner');
 
 		// iframe resizing
 		$(window).resize(ThemeDesigner.resizeIframe).resize();

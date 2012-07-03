@@ -16,9 +16,11 @@ $wgExtensionCredits['parserhook'][] = array(
 $wgHooks['TitleMoveComplete'][] = 'fnAutoMWMainpageFixer';
 
 function fnAutoMWMainpageFixer( &$title, &$newtitle, &$user, $oldid, $newid ) {
+	wfProfileIn(__METHOD__);
 
 	$mp = Title::newMainPage();
 	if( $mp->getFullText() != $title ) {
+		wfProfileOut(__METHOD__);
 		#NOT moving mainpage
 		return true;
 	}
@@ -33,5 +35,6 @@ function fnAutoMWMainpageFixer( &$title, &$newtitle, &$user, $oldid, $newid ) {
 
 	$article->doEdit($article_text, $edit_summary, $flags);
 
+	wfProfileOut(__METHOD__);
 	return true;
 }
