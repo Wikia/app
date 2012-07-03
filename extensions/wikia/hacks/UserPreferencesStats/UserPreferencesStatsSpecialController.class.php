@@ -27,8 +27,8 @@ class UserPreferencesStatsSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( $this->wf->msg( 'userpreferencesstats-specialpage-title' ) );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPreferencesStats/css/UserPreferencesStats_Oasis.scss' );
 		$this->response->addAsset( 'extensions/wikia/hacks/UserPreferencesStats/js/UserPreferencesStats.js' );
-		$this->response->addAsset( 'skins/common/jquery/jquery.flot.js' );
-		$this->response->addAsset( 'skins/common/jquery/jquery.flot.pie.js' );
+		$this->response->addAsset( 'resources/wikia/libraries/jquery/flot/jquery.flot.js' );
+		$this->response->addAsset( 'resources/wikia/libraries/jquery/flot/jquery.flot.pie.js' );
 
 		// setting response data
 		$this->setVal( 'header', $this->wf->msg('userpreferencesstats-hello-msg') );
