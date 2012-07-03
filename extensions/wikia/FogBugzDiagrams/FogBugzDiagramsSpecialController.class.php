@@ -17,11 +17,11 @@ class FogBugzDiagramsSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->wf->profileIn( __METHOD__ );
-		$this->response->addAsset( "./skins/common/jquery/jquery.flot.js" );
-		$this->response->addAsset( "./skins/common/jquery/jquery.flot.threshold.js" );
-		$this->response->addAsset( "./skins/common/jquery/jquery.flot.stack.js" );
-	 	$this->response->addAsset( "./extensions/wikia/FogBugzDiagrams/js/scripts.js" );
-		$this->response->addAsset( "./extensions/wikia/FogBugzDiagrams/css/cssFile.css" );
+		$this->response->addAsset( "resources/wikia/libraries/jquery/flot/jquery.flot.js" );
+		$this->response->addAsset( "resources/wikia/libraries/jquery/flot/jquery.flot.threshold.js" );
+		$this->response->addAsset( "resources/wikia/libraries/jquery/flot/jquery.flot.stack.js" );
+	 	$this->response->addAsset( "extensions/wikia/FogBugzDiagrams/js/scripts.js" );
+		$this->response->addAsset( "extensions/wikia/FogBugzDiagrams/css/cssFile.css" );
 
 		$report= new FogBugzReport();
 		$data_send = $report->getPreparedData();

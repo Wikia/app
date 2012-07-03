@@ -314,12 +314,8 @@ class SponsorshipDashboard extends SpecialPage {
 	 */
 
 	protected function HTMLAdminHeader( $subpage ) {
-
-		global $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
-
 		$wgOut = F::app()->getGlobal('wgOut');
 		$wgTitle = F::app()->getGlobal('wgTitle');
-		$wgRequest = F::app()->getGlobal('wgRequest');
 
 		$subpage = ( !in_array( $subpage, $this->adminTabs ) ) ? $this->adminTabs[0] : $subpage;
 
@@ -338,17 +334,14 @@ class SponsorshipDashboard extends SpecialPage {
 	}
 
 	protected function HTMLEditReport( $id ) {
-
-		global $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgExtensionsPath, $wgResourceBasePath;
 
 		$wgOut = F::app()->getGlobal('wgOut');
-		$wgRequest = F::app()->getGlobal('wgRequest');
-
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardEditor.js?{$wgStyleVersion}\" ></script>\n");
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.js?{$wgStyleVersion}\"></script>\n" );
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.selection.js?{$wgStyleVersion}\"></script>\n" );
+		$wgOut->addScript( "<script src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardEditor.js\" ></script>\n" );
+		$wgOut->addScript( "<script src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/flot/jquery.flot.js\"></script>\n" );
+		$wgOut->addScript( "<script src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/flot/jquery.flot.selection.js\"></script>\n" );
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardEditor.scss' ) );
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 		$this->HTMLAdminHeader( 'ViewReports' );
@@ -391,13 +384,7 @@ class SponsorshipDashboard extends SpecialPage {
 	}
 
 	protected function HTMLViewReport( $id ) {
-
-		global $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
-
 		$wgOut = F::app()->getGlobal('wgOut');
-		$wgRequest = F::app()->getGlobal('wgRequest');
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$this->HTMLAdminHeader( 'ViewReports' );
 
@@ -435,10 +422,9 @@ class SponsorshipDashboard extends SpecialPage {
 
 	protected function HTMLEditGroup( $id ) {
 
-		global $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 
 		$wgOut = F::app()->getGlobal('wgOut');
-		$wgRequest = F::app()->getGlobal('wgRequest');
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
@@ -469,10 +455,9 @@ class SponsorshipDashboard extends SpecialPage {
 
 	protected function HTMLEditUser( $id ) {
 
-		global $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 
 		$wgOut = F::app()->getGlobal('wgOut');
-		$wgRequest = F::app()->getGlobal('wgRequest');
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
@@ -512,7 +497,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 	protected function HTMLViewReports() {
 
-		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 
 		$wgOut = F::app()->getGlobal('wgOut');
 		$wgRequest = F::app()->getGlobal('wgRequest');
@@ -532,7 +517,6 @@ class SponsorshipDashboard extends SpecialPage {
 			)
 		);
 
-		$a = new OutputPage;
 		$wgOut->addHTML(
 			$oTmpl->execute( 'admin/viewReports' )
 		);
@@ -542,7 +526,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 	protected function HTMLViewGroups() {
 
-		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
@@ -573,7 +557,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 	protected function HTMLViewUsers() {
 
-		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgJsMimeType;
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$sMsg = '';
@@ -585,8 +569,7 @@ class SponsorshipDashboard extends SpecialPage {
 			$sMsg = ( $bSuccess ) ? '' : wfMsg('sponsorship-dashboard-users-error', $oUser->name );
 		}
 
-		$a = new OutputPage();
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardList.js?{$wgStyleVersion}\" ></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/SponsorshipDashboard/js/SponsorshipDashboardList.js\" ></script>\n");
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboardList.scss' ) );
 		$this->HTMLAdminHeader( 'ViewUsers' );
 
@@ -608,9 +591,7 @@ class SponsorshipDashboard extends SpecialPage {
 
 	protected function HTMLReport() {
 
-		global $wgTitle, $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		global $wgOut;
 
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SponsorshipDashboard/css/SponsorshipDashboard.scss' ) );
 		$this->displayHeader();

@@ -40,12 +40,11 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	}
 
 	public function getHTML( $setHtmlTitle=true ) {
+		global $wgResourceBasePath;
+
 		wfProfileIn( __METHOD__ );
 		$wgTitle = $this->App->getGlobal('wgTitle');
 		$wgOut = $this->App->getGlobal('wgOut');
-		$wgJsMimeType = $this->App->getGlobal('wgJsMimeType');
-		$wgStyleVersion = $this->App->getGlobal('wgStyleVersion');
-		$wgHTTPProxy = $this->App->getGlobal('wgHTTPProxy');
 
 		$this->report->loadSources();
 		$aData = $this->getChartData();
@@ -71,9 +70,11 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 					'description'		=> $description,
 				)
 			);
-			wfProfileOut( __METHOD__ );
 
-			return $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_CHART_INFOONLY );
+			$ret = $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_CHART_INFOONLY );
+
+			wfProfileOut( __METHOD__ );
+			return $ret;
 
 		} elseif ( ( !isset ( $aData['ticks'] ) || !isset ( $aData['serie'] ) || !isset ( $aData['fullTicks'] ) ||
 			empty ( $aData['ticks'] ) || empty ( $aData['serie'] ) || empty ( $aData['fullTicks'] ) ) )
@@ -115,14 +116,15 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 				)
 			);
 
-			$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.js\"></script>\n" );
-			$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.trendline.js\"></script>\n" );
-			$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/skins/common/jquery/jquery.flot.selection.js\"></script>\n" );
+			$wgOut->addScript( "<script src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/flot/jquery.flot.js\"></script>\n" );
+			$wgOut->addScript( "<script src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/flot/jquery.flot.trendline.js\"></script>\n" );
+			$wgOut->addScript( "<script src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/flot/jquery.flot.selection.js\"></script>\n" );
 		}
 
-		wfProfileOut( __METHOD__ );
+		$ret = $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_CHART );
 
-		return $oTmpl->execute( '../../templates/output/'.self::TEMPLATE_CHART );
+		wfProfileOut( __METHOD__ );
+		return $ret;
 	}
 
 	static function newFromReport( $oReport, $iGroupId = 0 ) {
