@@ -251,7 +251,7 @@ function allowAction(e) {
 }
 
 function setProgressImg(field) {
-	field.html('<img src="http://images.wikia.com/common/skins/common/images/ajax.gif?' + wgStyleVersion + '" width="16" height="16" alt="Wait..." border="0" />');
+	field.html('<img src="' + stylepath + '/common/images/ajax.gif" width="16" height="16" alt="Wait..." border="0" />');
 }
 
 function isTextCorrect(field) {

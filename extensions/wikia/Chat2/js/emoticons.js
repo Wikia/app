@@ -7,11 +7,11 @@
  * in MediaWiki Chat (specifically at Wikia... but it will almost certainly be reusable by
  * anyone using our Node.js Chat server).
  *
- * The 
- * 
+ * The
+ *
  */
 
- 
+
 /** CONSTANTS & VARIABLES **/
 // By explicitly setting the dimensions, this will make sure the feature stays as emoticons instead of getting
 // spammy or inviting disruptive vandalism (19px vandalism probably won't be AS offensive).
@@ -39,10 +39,10 @@ WikiaEmoticons.doReplacements = function(text, emoticonMapping){
 		 * so ignore them
 		 */
 		if(regexString == '') continue;
-		
+
 		imgSrc = imgUrlsByRegexString[regexString];
 		imgSrc = imgSrc.replace(/"/g, "%22"); // prevent any HTML-injection
-		
+
 		// Build the regex for the character (make it ignore the match if there is a "/" immediately after the emoticon. That creates all kinds of problems with URLs).
 		var numIters = 0;
 		var origText = text;
@@ -68,8 +68,9 @@ if(typeof EmoticonMapping === 'undefined'){
 			//			":\\)|:-\\)|\\(smile\\)": "http://images.wikia.com/lyricwiki/images/6/67/Smile001.gif",
 			//			":\\(|:-\\(": "http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png",
 		};
-		
+
 		// Since the values in here are processed and then cached, don't modify this directly.  Use mutators (which can invalidate the cached data such as self._regexes).
+		// TODO: fetch emoticons from nocookie domain
 		this._settings = {
 			"http://images.wikia.com/lyricwiki/images/6/67/Smile001.gif": [":)", ":-)", "(smile)"],
 			"http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png": [":(", ":-(", ":|"],
@@ -116,7 +117,7 @@ if(typeof EmoticonMapping === 'undefined'){
 		this.getImgUrlsByRegexString = function(){
 			// If the regexes haven't been built from the config yet, build them.
 			//$().log("settings len: " + Object.keys(self._settings).length + " regex len: " + Object.keys(self._regexes).length);
-			
+
 			// Object.keys() doesn't exist in IE 8, so do this the oldschool way.
 			//if(Object.keys(self._settings).length != Object.keys(self._regexes).length){
 			var numSettings = 0;
@@ -148,9 +149,9 @@ if(typeof EmoticonMapping === 'undefined'){
 					self._regexes[regexString] = imgSrc;
 				}
 			}
-			
+
 			return self._regexes;
 		};
-		
+
 	};
 }
