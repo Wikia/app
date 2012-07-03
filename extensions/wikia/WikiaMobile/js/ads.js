@@ -14,7 +14,9 @@ define('ads', ['events'], function(ev){
 		adSlot = d.getElementById('wkAdPlc');
 
 	function moveSlot(plus){
-		adSlotStyle.top = Math.min((w.pageYOffset + w.innerHeight - 50 + ~~plus), ftr.offsetTop + 150) + 'px';
+        if(adSlotStyle){
+		    adSlotStyle.top = Math.min((w.pageYOffset + w.innerHeight - 50 + ~~plus), ftr.offsetTop + 150) + 'px';
+        }
 	}
 
 	if(adSlot){

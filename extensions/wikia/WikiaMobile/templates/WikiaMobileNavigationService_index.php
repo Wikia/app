@@ -1,7 +1,8 @@
 <?php
 	$loggedIn = $wg->User->getId() > 0;
+    $searchPage = $wg->Title->isSpecial( 'Search' );
 ?>
-<section id=wkTopNav>
+<section id=wkTopNav<?= $searchPage ? ' class="srhOpn"' : ''?>>
 	<div id=wkTopBar>
 		<a href=<?= Title::newMainPage()->getFullURL() ?>>
 		<? if( $wordmarkType == "graphic" ) :?>
