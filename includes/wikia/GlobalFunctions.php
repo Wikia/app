@@ -195,26 +195,35 @@ function wfGetReviewReason($max = 5) {
 }
 
 /**
+ * @deprecated Use wfShortenText
+ */
+function shortenText( $text, $chars=25 ) {
+    wfDeprecated( __METHOD__, '1.19' );
+
+    return wfShortenText($text, $chars);
+}
+
+/**
  * Function to shorten / truncate a string of text into a specific number of
  * characters and add three dots (...) to the end. This will also round the
  * text to the nearest whole word instead of cutting off part way through a
  * word. From: http://www.totallyphp.co.uk/code/shorten_a_text_string.htm
+ * Added multibyte string support
  */
-function shortenText( $text, $chars=25 ) {
-	if( strlen( $text ) <= $chars )
-		return $text;
+function wfShortenText($text, $chars = 25){
+    if( mb_strlen( $text ) <= $chars )
+        return $text;
 
-	$text = $text . " ";
-	$text = substr( $text, 0, $chars );
-	// gerard@wikia.com - fix for long strings without spaces and slashes
-	if( strrpos( $text, ' ') || strrpos( $text, '/' ) )
-	{
-	    $text = substr( $text, 0, max( strrpos( $text, ' '), strrpos( $text, '/' ) ) );
-	}
-	//
-	$text = $text . "...";
+    $text = $text . " ";
+    $text = mb_substr( $text, 0, $chars );
 
-	return $text;
+    if( mb_strrpos( $text, ' ') || mb_strrpos( $text, '/' ) )
+    {
+        $text = mb_substr( $text, 0, max( mb_strrpos( $text, ' '), mb_strrpos( $text, '/' ) ) );
+    }
+
+    $text = $text . "...";
+    return $text;
 }
 
 function wfGetBreadCrumb( $cityId = 0 ) {
