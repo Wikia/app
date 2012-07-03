@@ -60,26 +60,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 		if(navBar.className.indexOf('srhOpn') > -1){
 			closeDropDown();
 		}else{
-			if(!searchInit){
-				Wikia.getMultiTypePackage({
-					scripts: 'wikiamobile_autocomplete_js',
-					messages: 'LinkSuggestWikiaMobile',
-					ttl: 604800,
-					callback: function(res){
-						Wikia.processScript(res.scripts[0]);
-						require('suggest', function(sug){
-							sug({
-								url: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
-								input: searchInput,
-								list: searchSug,
-								clear: d.getElementById('wkClear')
-							});
-						});
-					}
-				});
-				searchInit = true;
-			}
-
+            initAutocomplete();
 			openSearch();
 		}
 	});
@@ -214,6 +195,28 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 	}
 	//end profile/login setup
 
+    function initAutocomplete(){
+        if(!searchInit){
+            Wikia.getMultiTypePackage({
+                scripts: 'wikiamobile_autocomplete_js',
+                messages: 'LinkSuggestWikiaMobile',
+                ttl: 604800,
+                callback: function(res){
+                    Wikia.processScript(res.scripts[0]);
+                    require('suggest', function(sug){
+                        sug({
+                            url: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+                            input: searchInput,
+                            list: searchSug,
+                            clear: d.getElementById('wkClear')
+                        });
+                    })
+                }
+            });
+            searchInit = true;
+        }
+    }
+
 	function openProfile(){
 		reset();
 
@@ -295,6 +298,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 	}
 
 	return {
+        initAutocomplete: initAutocomplete,
 		openLogin: openLogin,
 		openProfile: openProfile,
 		openSearch: openSearch,
