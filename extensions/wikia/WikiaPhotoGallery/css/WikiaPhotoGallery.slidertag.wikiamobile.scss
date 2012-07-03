@@ -4,13 +4,10 @@
 	height: 280px;
 
 	.img{
-		position: relative;
+		//placeholder moved to image_placeholder.scss
 		display: inline-block;
-		background-image: url('/extensions/wikia/WikiaPhotoGallery/images/wikiamobile_img_placeholder.png'); /* base64 */
 		background-color: #EEE;
 		background-size: 25%;
-		background-repeat: no-repeat;
-		background-position: center;
 		-webkit-transition: opacity .3s;
 		width: 280px;
 		height: 280px;

@@ -46,7 +46,10 @@ you should definitely check this out:
 
  $1',
 	//ad
-	'wikiamobile-ad-close' => 'close'
+	'wikiamobile-ad-close' => 'close',
+
+	//modal
+	'wikiamobile-image-not-loaded' => 'Error: Image not loaded'
 );
 
 /** Message documentation (Message documentation) */

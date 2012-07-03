@@ -31,6 +31,7 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 			pager.reset({
 				pageNumber: current
 			});
+			loadImages();
 			updateDots();
 
 			//open specific image chosen from gallery
@@ -39,14 +40,56 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 
 			//open/close gallery
 		} else if (target.id === 'wkGalTgl') {
-			if(target.className === 'on') {
+			if(modalWrapper.className.indexOf('wkMedGal') > -1) {
 				goBackToImgModal(goToImg);
 			} else {
-				target.className = 'on';
 				open();
 			}
 		}
 	}, true);
+
+	function loadImages(){
+		var slice = Array.prototype.slice,
+			//this gives me a chance to first load current page then next and at the end prev
+			all = slice.call(modalWrapper.querySelectorAll('.current .galImg')).concat(
+				slice.call(modalWrapper.querySelectorAll('.prev .galImg'))
+			).concat(
+				slice.call(modalWrapper.querySelectorAll('.next .galImg'))
+			),
+			i = 0,
+			l = all.length,
+			updateImg = function(img, src){
+				if(src) img.style.backgroundImage = 'url("' + src + '")';
+				img.className = img.className.replace('imgPlcHld', 'loaded');
+			}
+
+		for(; i < l; i++){
+			var imgPreload,
+				img = all[i];
+
+			if(!img.style.backgroundImage) {
+				imgPreload = new Image();
+				imgPreload.src = img.getAttribute('data-img');
+
+				if(imgPreload.complete){
+					updateImg(img, imgPreload.src);
+				}else{
+					imgPreload.onload = (function(img, src){
+						//as there are more images I need to freeze references to img and src
+						return function(ev){
+							if(img.className.indexOf(' load') == -1) img.className += ' load'
+
+							setTimeout(function(){
+								updateImg(img, src);
+							},200);
+						}
+					})(img, imgPreload.src);
+				}
+			}else{
+				updateImg(img);
+			}
+		}
+	};
 
 	function goBackToImgModal(img){
 		mod.removeClass('wkMedGal');
@@ -82,7 +125,13 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 				pages[pagesNum] = '<div>';
 				dots += '<div class="dot'+((current == pagesNum) ? ' curr':'')+'" id=dot'+pagesNum+'><div></div></div>';
 			}
-			pages[pagesNum] += '<div class="galImg' + (images[i][2] ? ' video' : '') + ((goToImg == i) ? ' this' : '') + '" style="background-image:url('+images[i][0]+')" id=img'+i+'></div>';
+
+			pages[pagesNum] += '<div class="galImg imgPlcHld' +
+				(images[i].isVideo ? ' video' : '') +
+				((goToImg == i) ? ' this' : '') +
+				//use thumb if is available if not use full image
+				'" data-img="' + (images[i].thumb || images[i].image) +
+				'" id=img' + i + '></div>';
 		}
 
 		pages[pagesNum] += '</div>';
@@ -129,19 +178,26 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 			pageNumber: current,
 			center: true,
 			onEnd: function(currPageNum){
-				current = currPageNum;
-				updateDots();
+				if(current != currPageNum){
+					current = currPageNum;
+					loadImages();
+					updateDots();
+				}
 			},
 			onResize: function(){
 				var img  = current * imgsPerPage;
 				prepareGallery();
 				current = ~~(img / imgsPerPage);
+				loadImages();
 				pager.reset({
 					pages: pages,
 					pageNumber: current
 				});
 			}
 		});
+
+		loadImages();
+
 		mod.addClass('wkMedGal');
 	}
 

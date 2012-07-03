@@ -54,13 +54,22 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			element = elements[j];
 			className = element.className;
 
+			//get image form infobox
 			if(className.indexOf('image') > -1){
 				href = element.href;
 				name = encodeImageName(element.getAttribute('data-image-name'));
 				if (name === shrImg) shrImg = number;
-				images.push([href, name, false]);
+				images.push({
+					image: href,
+					name: name,
+					isVideo: false
+				});
 				element.setAttribute('data-num', number++);
+
+			//get images from image stacks
 			}else if (className.indexOf('wkImgStk') > -1){
+
+				//handle images from grouped images
 				if (className.indexOf('grp') > -1) {
 					figures = element.getElementsByTagName('figure');
 
@@ -76,15 +85,20 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 						if (img) {
 							href = img.href;
 							name = encodeImageName(img.getAttribute('data-image-name'));
-							images.push([
-								href, name, false,
-								(cap = elm.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:'',
-								i, leng
-							]);
+							images.push({
+								image: href,
+								name: name,
+								isVideo: false,
+								caption: (cap = elm.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:'',
+								number: i,
+								length: leng
+							});
 
 							if(name === shrImg) shrImg = number + i;
 						}
 					}
+
+				//handle images from galleries/slideshows
 				} else {
 					leng = parseInt(element.getAttribute('data-img-count'), 10);
 					lis = element.getElementsByTagName('li');
@@ -93,23 +107,25 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 					for (i=0; i < leng; i++) {
 						elm = lis[i];
-						href = elm.getAttribute('data-img');
-						//TODOL the href.match part is legacy for old parser cache, remember to remove it!
-						name = encodeImageName(elm.getAttribute('data-name') || href.match(nameMatch)[0].replace('.','-'));
 
-						images.push([
-							href,
-							name,
-							false,
-							elm.innerHTML,
+						images.push({
+							image: elm.getAttribute('data-img'),
+							thumb: elm.getAttribute('data-thumb'),
+							//TODO the href.match part is legacy for old parser cache, remember to remove it!
+							name: encodeImageName(elm.getAttribute('data-name') || href.match(nameMatch)[0].replace('.','-')),
+							isVideo: false,
+							caption: elm.innerHTML,
 							//I need these number to show counter in a modal
-							i, leng
-						]);
+							number: i,
+							length: leng
+						});
 
 						if (name === shrImg) shrImg = number + i;
 					}
 				}
 				number += leng;
+
+			//get normal images on a page
 			} else {
 				img = element.getElementsByClassName('image')[0];
 				if(img){
@@ -118,10 +134,12 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 					href = (!!videoattr ? img.getElementsByClassName('Wikia-video-thumb')[0].src : img.href);
 
 					if(name === shrImg) shrImg = number;
-					images.push([
-						href, name, !!videoattr,
-						(cap = element.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:''
-					]);
+					images.push({
+						image: href,
+						name: name,
+						isVideo: !!videoattr,
+						caption: (cap = element.getElementsByClassName('thumbcaption')[0])?cap.innerHTML:''
+					});
 					element.setAttribute('data-num', number++);
 				}
 			}
@@ -130,7 +148,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		imagesLength = images.length;
 
 		for(i = 0; i < imagesLength; i++){
-			pages[i] = '<div style="background-image: url('+images[i][0]+')"></div>';
+			pages[i] = '<div style="background-image: url(' + images[i].image + ')"></div>';
 		}
 
 		if(imagesLength > 1) {
@@ -161,8 +179,10 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 	function setupImage(){
 		var image = images[current];
 
-		if(image[2]) {// video
-			var imgTitle = 'File:' + image[1];
+		loader.hide(currentImage);
+
+		if(image.isVideo) {// video
+			var imgTitle = 'File:' + image.name;
 
 			currentImageStyle.backgroundImage = '';
 			if(videoCache[imgTitle]){
@@ -193,6 +213,28 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 					}
 				});
 			}
+		}else{
+			var img = new Image();
+			img.src = image.image;
+
+			if(!img.complete){
+				img.onload = function(){
+					loader.hide(currentImage);
+				};
+
+				img.onerror = function(){
+					loader.hide(currentImage);
+					modal.setCaption($.msg('wikiamobile-image-not-loaded'));
+					modal.showUI();
+					currentImage.style.backgroundImage = '';
+					currentImage.style.backgroundSize = '50%';
+					currentImage.className += ' imgPlcHld';
+				};
+
+				loader.show(currentImage, {
+					center: true
+				});
+			}
 		}
 
 		modal.setCaption(getCaption(current));
@@ -200,9 +242,9 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 	function getCaption(num){
 		var img = images[num],
-			cap = img[3] || '',
-			number = img[4],
-			length = img[5];
+			cap = img.caption || '',
+			number = img.number,
+			length = img.length;
 
 		if(number >= 0 && length >= 0) {
 			cap += '<div class=wkStkFtr> ' + (number+1) + ' / ' + length + ' </div>';
@@ -401,11 +443,9 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		widthFll = wkMdlImages.offsetWidth;
 		heightFll = wkMdlImages.offsetHeight;
 
-		//handling next/previous image
-
 		require('pager', function(pg){
+			//handling next/previous image
 			if(imagesLength > 1){
-
 				function tap(ev){
 					ev.stopPropagation();
 					resetZoom();
@@ -415,7 +455,6 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 					}else{
 						pager.prev();
 					}
-
 				}
 				document.getElementById('nxtImg').addEventListener('tap', tap);
 				document.getElementById('prvImg').addEventListener('tap', tap);
@@ -451,7 +490,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			},
 			open: function(ev){
 				ev.stopPropagation();
-				sharePopOver.changeContent(share(images[current][1]));
+				sharePopOver.changeContent(share(images[current].name));
 				//track('modal/share/open');
 			},
 			close: function(){
@@ -466,9 +505,6 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		openModal: openModal,
 		getImages: function(){
 			return images;
-		},
-		getCurrentImg: function(){
-			return images[current];
 		},
 		getCurrent: function(){
 			return current;

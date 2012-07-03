@@ -1805,7 +1805,14 @@ class WikiaPhotoGallery extends ImageGallery {
 			$img = wfFindFile( $val[0], false );
 
 			if( !empty( $img ) ) {
-				$pics[] = array( $img->transform( array("width" => "320", "height" => "480") )->url, $val[1], $val[0]->getText() );
+				$pics[] = array(
+					//image
+					$img->transform( array("width" => "320", "height" => "480") )->url,
+					//thumbnail
+					$img->transform( array("width" => "140", "height" => "140") )->url,
+					$val[1],
+					//name
+					$val[0]->getText() );
 			}
 		}
 
