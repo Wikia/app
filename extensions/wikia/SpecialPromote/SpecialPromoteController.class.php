@@ -46,9 +46,9 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		$this->additionalImages = $this->helper->getAdditionalImages();
 	}
 
-	protected function checkAccess($ajaxRequest = false) {
+	protected function checkAccess() {
 		if (!$this->wg->User->isLoggedIn() || !$this->wg->User->isAllowed('promote')) {
-			if (!$ajaxRequest) {
+			if (!$this->request->isXmlHttp()) {
 				$this->skipRendering();
 				$this->specialPage->displayRestrictionError();
 			}
@@ -58,7 +58,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	}
 
 	public function getUploadForm() {
-		$this->checkAccess = $this->checkAccess(true);
+		$this->checkAccess = $this->checkAccess();
 		$this->uploadType = $this->request->getVal('uploadType');
 		$this->imageIndex = $this->request->getVal('imageIndex',null);
 	}
