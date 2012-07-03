@@ -328,6 +328,10 @@ SpecialPromote.prototype = {
 		});
 	},
 	removeTempImage: function (imagename) {
+		if (!imagename) {
+			$.showModal($.msg('promote-error-upload-unknown-error'), '');
+			return false;
+		}
 		$.nirvana.sendRequest({
 			type: 'post',
 			format: 'json',
@@ -342,6 +346,7 @@ SpecialPromote.prototype = {
 				$().log('error');
 			}
 		});
+		return true;
 	},
 	modifyRemoveHandler: function(e) {
 		if ($(e.currentTarget).find('img').length > 0) {
