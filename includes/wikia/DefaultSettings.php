@@ -787,6 +787,11 @@ $wgMemCachedDebugLevel = 1;
 $wgEnableMathExt = true;
 
 /**
+ * We keep this enabled to support monobook
+ **/
+$wgEnableMWSuggest = true;
+
+/**
  * enable extension to output OpenGraph meta tags so that facebook sharing
  * and liking works well
  *
