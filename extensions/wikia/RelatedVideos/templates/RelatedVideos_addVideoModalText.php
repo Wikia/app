@@ -18,5 +18,7 @@
 <div class="notifyHolder messageHolder"><?= wfMsg('related-videos-notify') ?></div>
 <div class="somethingWentWrong messageHolder"><?= wfMsg('related-videos-something-went-wrong') ?></div>
 <?
-	echo F::app()->sendRequest( "RelatedVideos", "getSuggestedVideos", array('pageTitle'=>$pageTitle) );
+    if ( $wg->EnableRelatedVideosSuggestions ) {
+        echo F::app()->sendRequest( "RelatedVideos", "getSuggestedVideos", array('pageTitle'=>$pageTitle) );
+    }
 ?>
