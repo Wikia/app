@@ -169,10 +169,10 @@ $messages['de'] = array(
 	'wikia-home-page-preview' => 'Vorschau',
 	'wikia-home-page-visit' => 'Aufrufen',
 
-	'wikia-home-parse-source-empty-exception' => 'The MediaWiki message is empty',
-	'wikia-home-parse-vertical-invalid-data' => 'Invalid vertical data',
-	'wikia-home-parse-source-invalid-percentage' => 'Invalid vertical\'s percentage',
-	'wikia-home-parse-wiki-too-few-parameters' => 'Invalid wiki data - more parameters required',
+	'wikia-home-parse-source-empty-exception' => 'Die MediaWiki-Systemnachricht ist leer',
+	'wikia-home-parse-vertical-invalid-data' => 'Fehlerhafte Hub-Daten',
+	'wikia-home-parse-source-invalid-percentage' => 'Fehlerhafte Hub-Prozente',
+	'wikia-home-parse-wiki-too-few-parameters' => 'Ungültige Wiki-Daten - mehr Parameter erforderlich',
 
 	'wikiahome-hubs-videogames-heading' => 'Videospiele',
 	'wikiahome-hubs-videogames-url' => 'http://de.wikia.com/Videospiele',
@@ -249,12 +249,12 @@ $messages['de'] = array(
 	'wikiahome-preview-user-edits' => "{{PLURAL:$1|Bearbeitung|Bearbeitungen}}",
 	'wikiahome-preview-description-heading' => "$1",
 	'wikiahome-preview-admins-heading' => 'Admins',
-	'wikiahome-preview-contributors-heading' => 'Top Anbieter',
-	'wikiahome-preview-user-profile-link-label' => 'User Profil',
+	'wikiahome-preview-contributors-heading' => 'Top-Autoren',
+	'wikiahome-preview-user-profile-link-label' => 'Benutzerprofil',
 	'wikiahome-preview-user-contributions-link-label' => 'Bearbeitungen',
-	'wikiahome-preview-go-to-wiki-label' => 'Zeige die Wiki',
+	'wikiahome-preview-go-to-wiki-label' => 'Wiki aufrufen',
 
-	'wikiahome-preview-error' => 'Interstitial error',
+	'wikiahome-preview-error' => 'Fehler Zwischenseite',
 	'wikiahome-preview-user-member-since' => "Mitglied seit $1",
 
 	'wikiahome-footer-interlang-flag-class' => 'us',
