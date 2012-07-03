@@ -1,4 +1,4 @@
-var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use as a cache buster during the call for ad (OpenX and DART) 
+var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use as a cache buster during the call for ad (OpenX and DART)
 /**
  * Utility functions related to AdEngine
  * @author Nick Sullivan
@@ -114,9 +114,9 @@ AdEngine.normalizeColor = function(input){
 	} else if (input.match(/^rgb/)){
 		var str = input.replace(/[^0-9,]/g, '');
 		var rgb = str.split(",");
-		return AdEngine.dec2hex(rgb[0]) + 
-		       AdEngine.dec2hex(rgb[1]) + 
-		       AdEngine.dec2hex(rgb[2]); 
+		return AdEngine.dec2hex(rgb[0]) +
+		       AdEngine.dec2hex(rgb[1]) +
+		       AdEngine.dec2hex(rgb[2]);
 	} else {
 		// Input is a string, like "white"
 		return input;
@@ -124,7 +124,7 @@ AdEngine.normalizeColor = function(input){
 };
 
 AdEngine.dec2hex = function(d){
-	var h = parseInt(d, 10).toString(16); 
+	var h = parseInt(d, 10).toString(16);
 	if (h.toString() == "0"){
 		return "00";
 	} else {
@@ -137,6 +137,7 @@ window.AdGetColor = AdEngine.getAdColor;
 
 /* Display the div for an ad, as long as it is not a no-op ad, such as a clear gif */
 AdEngine.displaySlotIfAd = function (slotname) {
+		// TODO: use nocookie domain
         var noopStrings = [ 'http://images.wikia.com/common/wikia/noad.gif' ]; // This should be our standard no-op
 
         var noopFound = false;
@@ -170,7 +171,7 @@ AdEngine.getKeywords = function () {
 AdEngine.getMinuteTargeting = function (){
 	var myDate = new Date();
 	return myDate.getMinutes() % 15;
-}; 
+};
 
 AdEngine.isSlotHidable = function(slotname) {
 	return slotname in AdEngine.hidableSlotsThresholds;
