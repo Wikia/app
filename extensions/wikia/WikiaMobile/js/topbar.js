@@ -5,7 +5,7 @@
  * @author Jakub "Student" Olek
  */
 
-define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], function (qs, loader, m, toc, track, events){
+define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (qs, loader, toc, track, events){
 	var w = window,
 		d = document,
 		wkPrfTgl = d.getElementById('wkPrfTgl'),
@@ -27,7 +27,6 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 
 	function reset(){
 		window.scrollTo(0,0);
-		m.close();
 		toc.close();
 		w.location.hash = 'topbar';
 		hidePage();
@@ -257,6 +256,7 @@ define('topbar', ['querystring', 'loader', 'modal', 'toc', 'track', 'events'], f
 						query = new qs(form.getAttribute('action'));
 
 					query.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName));
+					query.setHash(new qs().getHash());
 					form.setAttribute('action', query.toString());
 				}
 			});

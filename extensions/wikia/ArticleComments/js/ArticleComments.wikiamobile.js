@@ -42,7 +42,7 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 			firstPage = commsUl.innerHTML;
 		}
 
-		track(['comment', 'page', (forward)?'next':'previous']);
+		track(['comment', 'page', (forward) ? 'next' : 'previous']);
 
 		if(condition){
 			elm.className += ' active';
@@ -161,20 +161,27 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 	}
 
 	function loginRequired(ev){
-		if(window.wgDisableAnonymousEditing && UserLogin.isForceLogIn()){
+		if(window.wgDisableAnonymousEditing && !window.wgUserName){
 			ev.stopPropagation();
-			toast.show($.msg('wikiamobile-article-comments-login-post'), {error: true});
 
-			var elm = (ev.currentTarget.nodeName == 'FORM') ? ev.currentTarget : ev.currentTarget.parentElement,
-				prev = elm.previousElementSibling;
+			require('topbar', function(t){
+				toast.show($.msg('wikiamobile-article-comments-login-post'), {error: true});
 
-			if(prev && prev.nodeName == 'LI'){
-				window.location.hash = 'comm-' + prev.id;
-			}else{
-				window.location.hash = 'comm-' + elm.parentElement.id;
-			}
+				t.openProfile();
 
-			return true
+				var elm = (ev.target.nodeName == 'FORM') ? ev.target : ev.target.parentElement,
+					prev = elm.previousElementSibling;
+
+				if(prev){
+					window.location.hash = 'comm-' + (prev.id || 'wkComm');
+				}else{
+					window.location.hash = 'comm-' + elm.parentElement.id;
+				}
+
+				modal.close(true);
+			});
+
+			return true;
 		}
 		return false;
 	}

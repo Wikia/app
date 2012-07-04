@@ -214,6 +214,7 @@ define('pager', function() {
 				wrapper.addEventListener('touchstart', onTouchStart, true);
 				wrapper.addEventListener('touchmove', onTouchMove, true);
 				wrapper.addEventListener('touchend', onTouchEnd, true);
+				wrapper.addEventListener('touchcancel', onTouchEnd, true);
 				window.addEventListener('resize', onResize);
 			}
 
@@ -234,9 +235,10 @@ define('pager', function() {
 					loadCurrentPage();
 				},
 				cleanup: function(){
-					wrapper.removeEventListener('touchstart', onTouchStart);
-					wrapper.removeEventListener('touchmove', onTouchMove);
-					wrapper.removeEventListener('touchend', onTouchEnd);
+					wrapper.removeEventListener('touchstart', onTouchStart, true);
+					wrapper.removeEventListener('touchmove', onTouchMove, true);
+					wrapper.removeEventListener('touchend', onTouchEnd, true);
+					wrapper.removeEventListener('touchcancel', onTouchEnd, true);
 					window.removeEventListener('resize', onResize);
 				}
 			};

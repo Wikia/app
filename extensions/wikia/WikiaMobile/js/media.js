@@ -413,8 +413,8 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			toolbar: toolbar,
 			classes: 'imgMdl',
 			onClose: function(){
-				removeZoom();
 				pager.cleanup();
+				removeZoom();
 			}
 		});
 
@@ -475,9 +475,10 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 				},
 				circle: true
 			});
-		});
 
-		refresh();
+			//setupImage and get references to currentImage and it's style property
+			refresh();
+		});
 
 		shareBtn = document.getElementById('wkShrImg');
 		sharePopOver = popover({

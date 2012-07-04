@@ -8,11 +8,14 @@
 define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, track, events, ads){
 	var d = document,
 		w = window,
-		opened, created,
-		toolbar, content, caption, wrapper,
+		opened,
+		created,
+		toolbar,
+		content,
+		caption,
+		wrapper,
 		topBar,
 		position,
-		clickEvent = events.click,
 		onClose,
 		stopHiding;
 
@@ -116,7 +119,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 		opened = true;
 	}
 
-	function close(){
+	function close(stopScrolling){
 		if(opened){
 			d.documentElement.className = d.documentElement.className.replace(' modal','');
 
@@ -129,7 +132,8 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 				onClose();
 			}
 
-			w.scrollTo(0, position);
+			!stopScrolling && w.scrollTo(0, position);
+
 			track('modal/close');
 			opened = false;
 		}
