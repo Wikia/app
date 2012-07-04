@@ -243,7 +243,7 @@ $config['wikiamobile_js_head'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//resources/wikia/libraries/zepto/zepto-0.8.js',
-		'//resources/wikia/module.js',
+		'//resources/wikia/libraries/modil/modil.js',
 		'//resources/wikia/modules/cookies.js',
 		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
