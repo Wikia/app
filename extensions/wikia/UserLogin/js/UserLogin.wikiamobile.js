@@ -1,6 +1,6 @@
 var UserLogin = UserLogin || {
 	isForceLogIn: function(){
-		if(wgUserName == null){
+		if(!window.wgUserName){
 			require('topbar', function(t){
 				t.openProfile();
 			});

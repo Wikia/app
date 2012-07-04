@@ -20,7 +20,7 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 		responseCounter = 0;
 
 	if(hash.indexOf('comm-') > -1){
-		open = hash.slice(6);
+		open = hash.slice(5);
 	}
 
 	//TODO: refactor when Deferreds will be pulled in in the mobile skin code
@@ -56,7 +56,7 @@ require(['loader', 'querystring', 'events'], function(loader, qs, events){
 	}
 	function init(){
 		loader.show(wkArtCom, {center: true, size:'40px'});
-		
+
 		$.nirvana.sendRequest({
 			controller: 'ArticleCommentsController',
 			method: 'WikiaMobileCommentsPage',
