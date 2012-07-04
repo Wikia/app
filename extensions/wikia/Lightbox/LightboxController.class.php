@@ -57,9 +57,11 @@ class LightboxController extends WikiaController {
 		// create a truncated list, and mark it if necessary (this is mostly for display, because mustache is a logicless templating system)
 		// TODO: hyun - maybe move this to JS?
 		$articles = $data['articles'];
+		$isPostedIn = false; // Bool to tell mustache to print "posted in" section
 		$smallerArticleList = array();
 		$articleListIsSmaller = 0;
 		if(!empty($articles)) {
+			$isPostedIn = true;
 			$numOfArticles = count($articles);
 			for($i = 0; $i < $numOfArticles && $i < 2; $i++) {
 				$smallerArticleList[] = $articles[$i];
@@ -79,6 +81,7 @@ class LightboxController extends WikiaController {
 		$this->userName = $data['userName'];
 		$this->userPageUrl = $data['userPageUrl'];
 		$this->articles = $data['articles'];
+		$this->isPostedIn = $isPostedIn;
 		$this->smallerArticleList = $smallerArticleList;
 		$this->articleListIsSmaller = $articleListIsSmaller;
 		$this->exists = $data['exists'];
