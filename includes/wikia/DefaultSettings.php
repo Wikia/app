@@ -782,10 +782,6 @@ $wgGlobalUserProperties = array('language');
  */
 $wgMemCachedDebugLevel = 1;
 
-/**
- * enable Math extension everywhere
- */
-$wgEnableMathExt = true;
 
 /**
  * We keep this enabled to support monobook
