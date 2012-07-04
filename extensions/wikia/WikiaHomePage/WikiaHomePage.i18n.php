@@ -236,10 +236,10 @@ $messages['de'] = array(
 *[http://de.community.wikia.com/wiki/Admin-Bereich:Hauptseite Gründer- und Admins ]
 *[http://de.wikia.com/wiki/Spezial:Kontakt Wikia-Support]
 *[http://hilfe.wikia.com Hilfe]',
-	'wikiahome-footer-everywhere' => '===Wikia unterwegse===
+	'wikiahome-footer-everywhere' => '===Wikia unterwegs===
 *[http://de.wikia.com/Mobil Wikia mobil]
 *[http://de.wikia.com/Mobil/GameGuides Videospiele-Apps]
-*[http://de.wikia.com/Mobil/PhotoPop Entertainment-Apps]
+*[http://de.wikia.com/Mobil/LyricWiki Entertainment-Apps]
 *[http://api.wikia.com API (en)]',
 	'wikiahome-footer-advertise' => '===[http://www.mediakit.wikia.com/ Auf Wikia werben (en)]===
 *[http://mediakit.wikia.com/Solutions/Audience Zielgruppe]
