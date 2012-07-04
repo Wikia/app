@@ -43,7 +43,7 @@
 									<? endif ?>
 									<div class="UserStatsMenu">
 										<div class="info">
-											<img src="<?= $wg->BlankImgUrl ?>" data-src="<?= $chatter['avatarUrl'] ?>" class="avatar" width="32" height="32" />
+											<img src="<?= $wg->BlankImgUrl ?>" data-src="<?= $chatter['avatarUrl'] ?>" class="avatar" width="24" height="24" />
 											<ul>
 												<li class="username"><?= $chatter['username'] ?></li>
 												<li class="edits"><?= wfMsgExt('chat-edit-count', array( 'parsemag' ), $chatter['editCount']) ?></li>
