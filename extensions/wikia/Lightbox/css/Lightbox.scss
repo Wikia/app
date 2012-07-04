@@ -344,7 +344,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			}
 			img {
 				width: 90px;
-				display: inline;
+				position: absolute;
 				vertical-align: middle;
 				cursor: pointer;
 			}
