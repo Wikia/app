@@ -87,7 +87,7 @@ class ContactForm extends SpecialPage {
 	 */
 	function processCreation() {
 		global $wgUser, $wgOut, $wgCityId, $wgSpecialContactEmail;
-		global $wgLanguageCode;
+		global $wgLanguageCode, $wgRequest;
 
 		// If not configured, fall back to a default just in case.
 		$wgSpecialContactEmail = (empty($wgSpecialContactEmail)?"community@wikia.com":$wgSpecialContactEmail);
@@ -109,7 +109,7 @@ class ContactForm extends SpecialPage {
 		$items[] = 'wkLang: ' . $wgLanguageCode;
 
 		//always add the IP
-		$items[] = 'IP:' . wfGetIP();
+		$items[] = 'IP:' . $wgRequest->getIP();
 
 		//if they are logged in, add the ID(and name) and their lang
 		$uid = $wgUser->getID();

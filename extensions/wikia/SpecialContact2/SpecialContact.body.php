@@ -186,7 +186,7 @@ class ContactForm extends SpecialPage {
 		$items[] = 'wkLang: ' . $wgLanguageCode;
 
 		//always add the IP
-		$items[] = 'IP:' . wfGetIP();
+		$items[] = 'IP:' . $wgRequest->getIP();
 
 		//if they are logged in, add the ID(and name) and their lang
 		$uid = $wgUser->getID();

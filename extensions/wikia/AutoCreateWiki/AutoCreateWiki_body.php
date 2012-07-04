@@ -960,7 +960,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		#--
 		$params = $this->fixSessionKeys();
 		if ( empty($params) && empty($this->mPosted) ) {
-			$ip = wfGetIP();
+			$ip = $wgRequest->getIP();
 			$key = wfMemcKey( self::CACHE_LOGIN_KEY, $wgDBname, $ip );
 			$params = $wgMemc->get($key);
 		}
@@ -1212,6 +1212,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		global $wgEnableSorbs, $wgProxyWhitelist;
 		global $wgMemc, $wgAccountCreationThrottle;
 		global $wgAuth;
+		global $wgRequest;
 
 		wfProfileIn( __METHOD__ );
 
@@ -1220,7 +1221,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			return false;
 		}
 
-		$ip = wfGetIP();
+		$ip = $wgRequest->getIP();
 
 		#-- check username
 		$sResponse = AutoCreateWiki::checkUsernameIsCorrect($this->mUsername);
@@ -1252,7 +1253,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->makeError( "wiki-username", wfMsg('autocreatewiki-blocked-username', $ip, $block_reason, $blocker) );
 		}
 
-		$ip = wfGetIP();
+		$ip = $wgRequest->getIP();
 		if ( $wgEnableSorbs && !in_array( $ip, $wgProxyWhitelist ) && $wgUser->inSorbsBlacklist( $ip ) ) {
 			$this->makeError( "wiki-username", wfMsg( 'sorbs_create_account_reason' ) . ' (' . htmlspecialchars( $ip ) . ')' );
 		}
@@ -1491,10 +1492,10 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * set form fields values to memc
 	 */
 	private function setValuesToSession() {
-		global $wgDBname, $wgMemc;
+		global $wgDBname, $wgMemc, $wgRequest;
 		$params = $this->fixSessionKeys();
 		if (!empty($params)) {
-			$ip = wfGetIP();
+			$ip = $wgRequest->getIP();
 			$key = wfMemcKey( self::CACHE_LOGIN_KEY, $wgDBname, $ip );
 			$wgMemc->set( $key, $params, 30);
 		}

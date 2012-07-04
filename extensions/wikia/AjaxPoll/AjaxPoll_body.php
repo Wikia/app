@@ -414,11 +414,11 @@ class AjaxPollClass {
 	 *
 	 */
 	private function doVote( $answer ) {
-		global $wgUser;
+		global $wgUser, $wgRequest;
 
 		wfProfileIn( __METHOD__ );
 
-		$ip = wfGetIP();
+		$ip = $wgRequest->getIP();
 		$user = $wgUser->getName();
 
 		$dbw = wfGetDB( DB_MASTER );
