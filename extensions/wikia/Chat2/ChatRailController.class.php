@@ -12,7 +12,7 @@ class ChatRailController extends WikiaController {
 	}
 
 	public function executeAnonLoginSuccess() {
-		global $wgExtensionsPath; 
+		global $wgExtensionsPath;
 		wfProfileIn( __METHOD__ );
 
 		$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
@@ -36,7 +36,7 @@ class ChatRailController extends WikiaController {
 			$this->profileType = !empty($wgEnableWallExt) ? 'message-wall' : 'talk-page';
 			$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
 			$this->isLoggedIn = $wgUser->isLoggedIn();
-			$this->profileAvatar = $this->isLoggedIn ? AvatarService::renderAvatar($wgUser->getName(), ChatRailController::AVATAR_SIZE) : '';
+			$this->profileAvatarUrl = $this->isLoggedIn ? AvatarService::getAvatarUrl($wgUser->getName(), ChatRailController::AVATAR_SIZE) : '';
 
 			// List of other people in chat
 			$this->totalInRoom = 0;
@@ -52,7 +52,7 @@ class ChatRailController extends WikiaController {
 					$chatters[$i] = $cacheChatter;
 					continue;
 				}
-			
+
 				$chatters[$i]['username'] = $val;
 				$chatters[$i]['avatarUrl'] = AvatarService::getAvatarUrl($chatters[$i]['username'], ChatRailController::AVATAR_SIZE);
 
@@ -73,7 +73,7 @@ class ChatRailController extends WikiaController {
 
 					// profile page
 					if($this->profileType == 'message-wall') {
-						$chatters[$i]['profileUrl'] = Title::makeTitle( NS_USER_WALL, $chatters[$i]['username'] )->getFullURL();						
+						$chatters[$i]['profileUrl'] = Title::makeTitle( NS_USER_WALL, $chatters[$i]['username'] )->getFullURL();
 					} else {
 						$chatters[$i]['profileUrl'] = Title::makeTitle( NS_USER_TALK, $chatters[$i]['username'] )->getFullURL();
 					}
@@ -81,7 +81,7 @@ class ChatRailController extends WikiaController {
 					// contribs page
 					$chatters[$i]['contribsUrl'] = SpecialPage::getTitleFor( 'Contributions', $chatters[$i]['username'] )->getFullURL();
 				}
-				
+
 				$this->cacheUser($val, $chatters[$i] );
 			}
 
@@ -89,14 +89,14 @@ class ChatRailController extends WikiaController {
 		}
 		wfProfileOut( __METHOD__ );
 	}
-		
+
 	public function cacheUser($user, $data) {
 		global $wgMemc;
 		$key = wfMemcKey( 'chatavatars', $user );
 		$wgMemc->set($key, $data , 60*60);
 		return $key;
 	}
-	
+
 	public function getCachedUser($user) {
 		global $wgMemc;
 		$key = wfMemcKey( 'chatavatars', $user );
