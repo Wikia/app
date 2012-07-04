@@ -1,7 +1,7 @@
 <div class="chat-contents chat-room-<?=
 		($totalInRoom ? 'active' : 'empty')
 	?> chat-user-<?=
-		(!empty($profileAvatar) ? 'logged-in' : 'anonymous')
+		(!empty($profileAvatarUrl) ? 'logged-in' : 'anonymous')
 	?>">
 	<h1 class="chat-headline">
 		<span class="chat-live"><?= wfMsg('chat-live2') ?></span>
@@ -29,16 +29,21 @@
 				<? if (!empty($totalInRoom) && !empty($chatters)): ?>
 					<li class="slide">
 						<ul class="chatters">
+							<? $rowSize = 6; ?>
 							<? foreach($chatters as $i => $chatter): ?>
 								<?
 									$isLast = ($totalInRoom - $i == 1);
-									$isLastInRow = !$isLast && ($i + 1) % 6 == 0;
+									$isLastInRow = !$isLast && ($i + 1) % $rowSize == 0;
 								?>
 								<li class="chatter<?= (($isLast || $isLastInRow) ? ' last' : '') ?>">
-									<img src="<?= $chatter['avatarUrl'] ?>" class="avatar" />
+									<? if ($i < $rowSize): ?>
+										<img src="<?= $chatter['avatarUrl'] ?>" class="avatar" width="32" height="32" />
+									<? else: ?>
+										<img src="<?= $wg->BlankImgUrl ?>" data-src="<?= $chatter['avatarUrl'] ?>" class="avatar lazyLoad" width="32" height="32" />
+									<? endif ?>
 									<div class="UserStatsMenu">
 										<div class="info">
-											<img src="<?= $chatter['avatarUrl'] ?>"/>
+											<img src="<?= $wg->BlankImgUrl ?>" data-src="<?= $chatter['avatarUrl'] ?>" class="avatar" width="32" height="32" />
 											<ul>
 												<li class="username"><?= $chatter['username'] ?></li>
 												<li class="edits"><?= wfMsgExt('chat-edit-count', array( 'parsemag' ), $chatter['editCount']) ?></li>
@@ -63,7 +68,7 @@
 												</li>
 											</ul>
 										</div>
-									</div>				
+									</div>
 								</li>
 								<? if ($isLastInRow): ?>
 							</ul>
@@ -74,8 +79,10 @@
 							<? endforeach; ?>
 						</ul>
 					</li>
-				<? else: ?>
-					<li class="slide"><?= $profileAvatar ?></li>
+				<? elseif (!empty($profileAvatarUrl)): ?>
+					<li class="slide">
+						<img src="<?= $profileAvatarUrl ?>" class="avatar" width="32" height="32" />
+					</li>
 				<? endif; ?>
 			</ul>
 		</div>

@@ -47,10 +47,20 @@ var ChatEntryPoint = {
 
 		// Hovering on avatar opens user stats menu
 		chatWhosHere.find('.chatter').hover(function(event) {
+			var userStatsMenu = $(this).find('.UserStatsMenu'),
+				userAvatar = userStatsMenu.find('.avatar'),
+				userAvatarUrl = userAvatar.data('src');
+
 			$('.UserStatsMenu').hide();
-			$(this).find('.UserStatsMenu').show();
+
+			// Lazy load user avatar image
+			if (userAvatarUrl) {
+				userAvatar.attr('src', userAvatarUrl).removeAttr('data-src').removeData('src');
+			}
+
+			userStatsMenu.show();
 		}, function() {
-			$(this).find('.UserStatsMenu').hide();		
+			$(this).find('.UserStatsMenu').hide();
 		});
 	},
 
@@ -63,7 +73,7 @@ var ChatEntryPoint = {
 				persistModal: true,
 				callback: function() {
 					$('.modalWrapper').children().not('.close').not('.modalContent').not('h1').remove();
-					$('.modalContent').load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=AnonLoginSuccess&outputType=html');						
+					$('.modalContent').load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=AnonLoginSuccess&outputType=html');
 				}
 			});
 		}
