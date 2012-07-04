@@ -52,10 +52,10 @@ class CreateNewWikiController extends WikiaController {
 
 		// remove wikia plus for now for all languages
 		$this->skipWikiaPlus = true;
-		
+
 		$this->keys = CreateNewWikiObfuscate::generateValidSeeds();
 		$_SESSION['cnw-answer'] = CreateNewWikiObfuscate::generateAnswer($this->keys);
-		
+
 		// prefill
 		$params['wikiName'] = $wgRequest->getVal('wikiName', '');
 		$params['wikiDomain'] = $wgRequest->getVal('wikiDomain', '');
@@ -112,20 +112,20 @@ class CreateNewWikiController extends WikiaController {
 
 		$params = $wgRequest->getArray('data');
 
-		if ( !empty($params) && 
+		if ( !empty($params) &&
 			(!empty($params['wikiName']) && !empty($params['wikiDomain']) ) )
 		{
 			// log if called with old params
 			$wgUser = $this->app->getGlobal('wgUser');
-			trigger_error("CreateWiki called with old params." . $params['wikiName'] . " " . $params['wikiDomain'] . " " . wfGetIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
+			trigger_error("CreateWiki called with old params." . $params['wikiName'] . " " . $params['wikiDomain'] . " " . $wgRequest->getIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
 		}
-		
-		if ( !empty($params) && 
+
+		if ( !empty($params) &&
 			(!empty($params['wikiaName']) && !empty($params['wikiaDomain']) ) )
 		{
 			// log if called with old params
 			$wgUser = $this->app->getGlobal('wgUser');
-			trigger_error("CreateWiki called with 2nd old params." . $params['wikiaName'] . " " . $params['wikiaDomain'] . " " . wfGetIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
+			trigger_error("CreateWiki called with 2nd old params." . $params['wikiaName'] . " " . $params['wikiaDomain'] . " " . $wgRequest->getIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
 		}
 
 		if ( empty($params) ||
@@ -140,7 +140,7 @@ class CreateNewWikiController extends WikiaController {
 			$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
 		} else {
 			$wgUser = $this->app->getGlobal('wgUser');
-			
+
 			/*
 			$stored_answer = $this->getStoredAnswer();
 			if(empty($stored_answer) || $params['wAnswer'].'' !== $stored_answer.'') {
@@ -185,7 +185,7 @@ class CreateNewWikiController extends WikiaController {
 					'<br>'.
 					$this->app->runFunction('wfMsg', 'cnw-error-general');
 				$this->statusHeader = $this->app->runFunction('wfMsg', 'cnw-error-general-heading');
-				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . wfGetIP(), E_USER_WARNING);
+				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . $wgRequest->getIP(), E_USER_WARNING);
 			} else {
 				$this->status = 'ok';
 				$this->siteName = $createWiki->getWikiInfo('sitename');
@@ -198,7 +198,7 @@ class CreateNewWikiController extends WikiaController {
 
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * a method that exists purely for unit test.  yay.  it shouldn't be public either
 	 */

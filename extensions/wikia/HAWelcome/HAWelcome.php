@@ -111,7 +111,7 @@ class HAWelcomeJob extends Job {
 		if( !in_array( $sysop, array( "@disabled", "-" ) ) ) {
 			$tmpUser = $wgUser;
 			$wgUser  = User::newFromName( self::WELCOMEUSER );
-			
+
 			$flags = 0;
 			$bot_message = trim( wfMsgForContent( "welcome-bot" ) );
 			if( ($bot_message == '@bot') || ($wgUser && $wgUser->isAllowed( 'bot' )) ) {
@@ -205,10 +205,10 @@ class HAWelcomeJob extends Job {
 						if( $welcomeMsg ) {
 							$wgTitle = $talkPage; /** is it necessary there? **/
 							//we posting it on talk page even when we have message wall
-							
+
 							//hack for notification problem
 							global $wgCityId, $wgServer;
-							
+
 							$wgServer = WikiFactory::getVarValueByName('wgServer', $wgCityId );
 
 							$this->doPost($talkArticle, $flags,  wfMsgForContent( "welcome-message-log" ), $welcomeMsg, $wgUser,  $this->mUser, $this->mSysop);
@@ -229,15 +229,15 @@ class HAWelcomeJob extends Job {
 
 		return true;
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * create message for talk page / wall 
-	 * 
+	 *
+	 * create message for talk page / wall
+	 *
 	 * @param unknown_type $postFix
 	 */
-	
+
 	public function getMessageKey($postFix) {
 		global $wgEnableWallExt;
 		$prefix = "welcome-message-";
@@ -246,23 +246,23 @@ class HAWelcomeJob extends Job {
 		}
 		return $prefix.$postFix;
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * Post message on talk page or wall 
-	 * 
+	 *
+	 * Post message on talk page or wall
+	 *
 	 * @access public
 	 *
 	 * @return Status
-	 * 
+	 *
 	 */
-	
+
 	public function doPost( $talkArticle, $flags, $title, $message, $from, $to, $admin = false ) {
 		global $wgEnableWallExt, $wgMemc;
-		
+
 		$key = wfMemcKey( "HAWelcome-isPosted", $to->getName());
-		
+
 		if(!empty($wgEnableWallExt)) {
 			$wallMessage = F::build('WallMessage', array($message, $to->getName(), $from, $title, false, false, $flags), 'buildNewMessageAndPost');
 			if( $wallMessage === false ) {
@@ -270,22 +270,22 @@ class HAWelcomeJob extends Job {
 			}
 			if($admin) {
 				$wallMessage->setPostedAsBot($admin);
-				$wallMessage->sendNotificationAboutLastRev();	
+				$wallMessage->sendNotificationAboutLastRev();
 			}
 		} else {
 			$talkArticle->doEdit( $message, wfMsgForContent( "welcome-message-log" ), $flags );
 		}
-		
+
 		$wgMemc->set( $key, true );
 		return false;
 	}
-	
-	
+
+
 	public static function isPosted( $talk, $user ) {
-		global $wgMemc, $wgEnableWallExt; 
-		
+		global $wgMemc, $wgEnableWallExt;
+
 		$key = wfMemcKey( "HAWelcome-isPosted", $user->getName());
-	
+
 		$isPosted = $wgMemc->get( $key, false );
 		if($isPosted) {
 			return true;
@@ -297,10 +297,10 @@ class HAWelcomeJob extends Job {
 				return true;
 			}
 		}
-		
+
 		$talkExists = $talk->exists();
 		$wgMemc->set( $key, $talkExists );
-		
+
 		return $talkExists;
 	}
 
@@ -438,7 +438,7 @@ class HAWelcomeJob extends Job {
 	 */
 	public static function revisionInsertComplete( &$revision, $url, $flags ) {
 		global $wgUser, $wgCityId, $wgCommandLineMode, $wgSharedDB,
-			$wgErrorLog, $wgMemc;
+			$wgErrorLog, $wgMemc, $wgRequest;
 
 		wfProfileIn( __METHOD__ );
 
@@ -513,7 +513,7 @@ class HAWelcomeJob extends Job {
 								array(
 									"is_anon"   => $wgUser->isAnon(),
 									"user_id"   => $wgUser->getId(),
-									"user_ip"   => wfGetIP(),
+									"user_ip"   => $wgRequest->getIP(),
 									"user_name" => $wgUser->getName(),
 								)
 							);

@@ -493,7 +493,7 @@ class ArticleCommentList {
 	 * @return String HTML text
 	 */
 	public function blockedPage() {
-		global $wgUser, $wgLang, $wgContLang;
+		global $wgUser, $wgLang, $wgContLang, $wgRequest;
 
 		// macbre: prevent fatals in code below
 		if (empty($wgUser->mBlock)) {
@@ -503,7 +503,7 @@ class ArticleCommentList {
 		list ($blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended) = array(
 			User::whoIs( $wgUser->blockedBy() ),
 			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMsg( 'blockednoreason' ),
-			wfGetIP(),
+			$wgRequest->getIP(),
 			$wgUser->getBlockId(),
 			$wgLang->timeanddate( wfTimestamp( TS_MW, $wgUser->mBlock->mTimestamp ), true ),
 			$wgUser->mBlock->mExpiry,

@@ -569,13 +569,9 @@ class WikiaApiQuery extends ApiQueryBase {
 	#---
 	private function getUniqueBrowserId()
 	{
-		global $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
+		global $wgRequest;
 		if (empty($_COOKIE['wgWikiaUniqueBrowserId'])) {
-			$unique_id = md5(wfGetIP());
-			/* previous version */
-			//$unique_id = md5(uniqid(rand(), true));
-			/* not used */
-			//setcookie('wgWikiaUniqueBrowserId', $unique_id, time() + COOKIE_EXPR, $wgCookiePath, $wgCookieDomain, $wgCookieSecure);
+			$unique_id = md5($wgRequest->getIP());
 		} else {
 			$unique_id = $_COOKIE['wgWikiaUniqueBrowserId'];
 		}

@@ -182,10 +182,10 @@ class WikiaPoll {
 	 * Register vote for given answer from current user (use IP for anons)
 	 */
 	public function vote($answerId) {
-		global $wgUser;
+		global $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
-		$ip = wfGetIP();
+		$ip = $wgRequest->getIP();
 		$user = $wgUser->getId();
 
 		wfDebug(__METHOD__ . ": voting for answer #{$answerId} on behalf of user #{$user} / {$ip}\n");
@@ -208,7 +208,7 @@ class WikiaPoll {
 		/**
 		 * insert new one
 		 */
-		$status = $dbw->insert(
+		$dbw->insert(
 			'poll_vote',
 			array(
 				'poll_id' => $this->mPollId,

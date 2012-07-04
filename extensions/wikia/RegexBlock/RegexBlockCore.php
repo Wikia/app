@@ -33,6 +33,7 @@ CREATE TABLE `blockedby_stats` (
     @param $current_user User: current user
 */
 function wfRegexBlockCheck ($current_user) {
+	global $wgRequest;
 	wfProfileIn( __METHOD__ );
 
 	$userGroups = $current_user->getGroups();
@@ -46,7 +47,7 @@ function wfRegexBlockCheck ($current_user) {
 		return true;
 	}
 
-	$ip_to_check = wfGetIP();
+	$ip_to_check = $wgRequest->getIP();
 
 	/* First check cache */
 	$blocked = wfRegexBlockIsBlockedCheck($current_user, $ip_to_check);
@@ -523,7 +524,7 @@ function wfGetRegexBlocked ($blocker, $blocker_block_data, $user, $user_ip) {
   @param $valid: blocked info
 */
 function wfRegexBlockSetUserData(&$user, $user_ip, $blocker, $valid) {
-    global $wgContactLink;
+    global $wgContactLink, $wgRequest;
 	wfProfileIn( __METHOD__ );
     $result = false;
 
@@ -557,7 +558,7 @@ function wfRegexBlockSetUserData(&$user, $user_ip, $blocker, $valid) {
         /* account creation check goes through the same hook... */
         if ($valid['create'] == 1) {
             if ($user->mBlock) {
-                $user->mBlock->mCreateAccount = 1;
+                $user->mBlock->setCreateAccount(1);
             }
         }
         /* set expiry information */
@@ -566,7 +567,7 @@ function wfRegexBlockSetUserData(&$user, $user_ip, $blocker, $valid) {
 	    # correct inifinity keyword on the fly, see rt#25419
             $user->mBlock->mExpiry = ($valid['expire'] == 'infinite') ? 'infinity' : $valid['expire'];
             $user->mBlock->mTimestamp = $valid['timestamp'];
-            $user->mBlock->mAddress = ($valid['ip'] == 1) ? wfGetIP() : $user->getName();
+            $user->mBlock->mAddress = ($valid['ip'] == 1) ? $wgRequest->getIP() : $user->getName();
         }
 
 		if ( wfReadOnly() ) {
@@ -585,7 +586,7 @@ function wfRegexBlockSetUserData(&$user, $user_ip, $blocker, $valid) {
    @param $username name of username
 */
 function wfRegexBlockUpdateMemcKeys ($username) {
-	global $wgUser, $wgMemc, $wgSharedDB;
+	global $wgMemc;
 	wfProfileIn( __METHOD__ );
 
 	$data = RegexBlockData::getRegexBlockByName($username, 1, 1);
@@ -598,17 +599,17 @@ function wfRegexBlockUpdateMemcKeys ($username) {
 	$key = RegexBlockData::getMemcKey("num_rec");
 	$memcData = $wgMemc->get($key);
 	if ( !is_null($memcData) ) {
-		$memcData++; 
+		$memcData++;
 		$wgMemc->set ($key, $memcData, REGEXBLOCK_EXPIRE) ;
 	}
-	
+
 	/* main cache of user-block data */
 	$key = RegexBlockData::getMemcKey("block_user", $username);
 	$memcData = $wgMemc->get($key);
 	if ( !is_null($memcData) ) {
 		$wgMemc->set ($key, $data) ;
 	}
-	
+
 	/* blockers */
 	$key = RegexBlockData::getMemcKey("blockers");
 	$blockers_array = $wgMemc->get($key);
@@ -616,7 +617,7 @@ function wfRegexBlockUpdateMemcKeys ($username) {
 		$blockers_array[] = $data->blckby_blocker;
 		$wgMemc->set( $key, $blockers_array, REGEXBLOCK_EXPIRE );
 	}
-	
+
 	/* blocker's matches */
 	$memkey = RegexBlockData::getMemcKey("all_blockers");
 	$blockData = $wgMemc->get($memkey);
@@ -633,7 +634,7 @@ function wfRegexBlockUpdateMemcKeys ($username) {
 		$blockData[$data->blckby_blocker][$key][] = $data->blckby_name;
 		$wgMemc->set( $memkey, $blockData, REGEXBLOCK_EXPIRE );
 	}
-	
+
 	/* clear user object in memc */
 	$userId = User::idFromName($username);
 	if( $userId ) {
@@ -647,7 +648,7 @@ function wfRegexBlockUpdateMemcKeys ($username) {
 }
 
 function wfRegexBlockUnsetKeys($username) {
-	global $wgUser, $wgMemc;
+	global $wgMemc;
 	wfProfileIn( __METHOD__ );
 
 	$data = RegexBlockData::getRegexBlockByName($username, 1, 1);
@@ -660,14 +661,14 @@ function wfRegexBlockUnsetKeys($username) {
 	$key = RegexBlockData::getMemcKey("num_rec");
 	$memcData = $wgMemc->get($key);
 	if ( !is_null($memcData) ) {
-		if ( $memcData > 0 ) $memcData--; 
+		if ( $memcData > 0 ) $memcData--;
 		$wgMemc->set ($key, $memcData, REGEXBLOCK_EXPIRE) ;
 	}
-	
+
 	/* main cache of user-block data */
 	$key = RegexBlockData::getMemcKey("block_user", $username);
 	$wgMemc->delete($key);
-	
+
 	/* blockers */
 	$key = RegexBlockData::getMemcKey("blockers");
 	$blockers_array = $wgMemc->get($key);
@@ -675,7 +676,7 @@ function wfRegexBlockUnsetKeys($username) {
 		$blockers_array = array_diff($blockers_array, array($data->blckby_blocker));
 		$wgMemc->set( $key, $blockers_array, REGEXBLOCK_EXPIRE );
 	}
-	
+
 	/* blocker's matches */
 	$memkey = RegexBlockData::getMemcKey("all_blockers");
 	$blockData = $wgMemc->get($memkey);
@@ -687,19 +688,19 @@ function wfRegexBlockUnsetKeys($username) {
 			$key = "exact";
 		}
 
-		if ( 
-			isset($blockData[$data->blckby_blocker]) && 
-			isset($blockData[$data->blckby_blocker][$key]) 
+		if (
+			isset($blockData[$data->blckby_blocker]) &&
+			isset($blockData[$data->blckby_blocker][$key])
 		) {
-			$blockData[$data->blckby_blocker][$key] = 
+			$blockData[$data->blckby_blocker][$key] =
 				array_diff(
-					$blockData[$data->blckby_blocker][$key], 
+					$blockData[$data->blckby_blocker][$key],
 					array($data->blckby_name)
 			);
 			$wgMemc->set( $memkey, $blockData, REGEXBLOCK_EXPIRE );
 		}
 	}
-	
+
 	/* clear user object in memc */
 	$userId = User::idFromName($username);
 	if( $userId ) {

@@ -61,7 +61,7 @@ class CreateWiki {
 	 * @param mixed $founder - creator of wiki, by default false which means $wgUser
 	 */
 	public function __construct( $name, $domain, $language, $hub, $type = self::DEFAULT_WIKI_TYPE, $founder = false ) {
-		global $wgUser, $IP, $wgJobClasses, $wgAutoloadClasses;
+		global $wgUser, $IP, $wgJobClasses, $wgAutoloadClasses, $wgRequest;
 
 		// wiki containter
 		$this->mNewWiki = new stdClass();
@@ -87,7 +87,7 @@ class CreateWiki {
 			}
 		}
 
-		$this->mFounderIp = wfGetIP();
+		$this->mFounderIp = $wgRequest->getIP();
 
 		wfDebugLog( "createwiki", "founder: " . print_r($this->mFounder, true) . "\n", true );
 		/**
@@ -465,7 +465,7 @@ class CreateWiki {
 		/**
 		 * show congratulation message
 		 */
-		 
+
 		/**
 		 * Unset database from mNewWiki, because database objects cannot be serialized from MW1.19
 		 */

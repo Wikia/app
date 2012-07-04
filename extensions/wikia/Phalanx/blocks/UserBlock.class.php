@@ -20,7 +20,7 @@ class UserBlock {
 	 * written in such way is below when you look at method UserBlock::onUserCanSendEmail().
 	 */
 	public static function blockCheck(&$user) {
-		global $wgUser, $wgMemc;
+		global $wgUser, $wgMemc, $wgRequest;
 		wfProfileIn( __METHOD__ );
 
 		$ret = true;
@@ -47,7 +47,7 @@ class UserBlock {
 				//do not check IP for current user when checking block status of different user
 				if ( $ret && $isCurrentUser ) {
 					// if the user name was not blocked, check for an IP block
-					$ret = self::blockCheckInternal( $user, $blocksData, wfGetIP(), true, $isCurrentUser );
+					$ret = self::blockCheckInternal( $user, $blocksData, $wgRequest->getIP(), true, $isCurrentUser );
 				}
 			}
 		}
