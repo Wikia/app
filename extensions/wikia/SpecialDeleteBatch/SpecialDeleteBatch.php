@@ -26,17 +26,15 @@ class Deletebatch extends SpecialPage{
 	public function Deletebatch(){
 		SpecialPage::SpecialPage('Deletebatch');
 	}
-	
+
 	function execute(){
 		global $wgOut, $wgUser, $wgRequest ;
-		
-		if( !$wgUser->isAllowed( 'deletebatch' ) ) { 
+
+		if( !$wgUser->isAllowed( 'deletebatch' ) ) {
 			$wgOut->permissionRequired( 'deletebatch' );
 			return;
 		}
-		
-		wfLoadExtensionMessages('deletebatch');
-		
+
 		$wgOut->setPageTitle (wfMsg('deletebatch_title'));
 		$cSF = new DeleteBatchForm () ;
 

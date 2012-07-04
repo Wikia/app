@@ -22,16 +22,14 @@ class ListIncludedFiles extends SpecialPage{
 	function execute(){
 		global $wgOut;
 		global $wgRequest, $wgUser;
-		
-		if( !$wgUser->isAllowed( 'listincludedfilesright' ) ) { 
+
+		if( !$wgUser->isAllowed( 'listincludedfilesright' ) ) {
 			$wgOut->permissionRequired( 'listincludedfilesright' );
 			return;
 		}
 
-		wfLoadExtensionMessages('listincludedfiles');
-
 		ob_start();
-		
+
 		$includedFiles = get_included_files();
 		sort($includedFiles);
 

@@ -32,7 +32,7 @@ class InterwikiEdit extends SpecialPage {
 	public function InterwikiEdit(){
 		SpecialPage::SpecialPage('InterwikiEdit');
 	}
-	
+
 	function execute(){
 		global $wgOut, $wgUser, $wgRequest;
 
@@ -43,8 +43,6 @@ class InterwikiEdit extends SpecialPage {
 
 		$action = $wgRequest->getVal('action', 'choose');
 		//$lang_only = $wgRequest->getVal('lang_only', 1);
-
-		wfLoadExtensionMessages('SpecialInterwikiEdit');
 
 		if ($action != 'choose') $ret = "<p class='subpages'>&lt; <a href=''>Back to menu</a></p>";
 		else $ret = "";
@@ -144,7 +142,7 @@ function wfSIWEChangeUmbrella(){
 	global $wgRequest, $wgExternalSharedDB;
 
 	$ret = '';
-	
+
 	list($wikia, $wikiaID) = wfSIWEGetRequestData();
 
 	$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
@@ -438,7 +436,7 @@ function wfSIWELinkWikis(){
 	#	"?action=change_umbrella&amp;wikia_id=$wikiaID'>edit</a>] and $ext_wikiaURL [<a href='".
 	#	$_SERVER['PHP_SELF']. "?action=change_umbrella&amp;wikia_id=$ext_wikiaID'>edit</a>] <b>do not match</b>.");
 	#}
-	
+
 	$ret = '';
 
 	$ret .= "<p>The following interwiki links will be added:</p>\n
@@ -544,7 +542,7 @@ function wfSIWEGetRequestData() {
 
 function wfSIWEClearCache() {
 	global $wgRequest, $wgMemc;
-	
+
 	$db = $wgRequest->getVal( 'db' );
 
 	$dbr = wfGetDB( DB_SLAVE, array(), $db );

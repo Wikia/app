@@ -563,8 +563,8 @@ function wfRegexBlockSetUserData(&$user, $user_ip, $blocker, $valid) {
         }
         /* set expiry information */
         if ($user->mBlock) {
-        	$user->mBlock->mId = $valid['blckid'];
-	    # correct inifinity keyword on the fly, see rt#25419
+        	$user->mBlock->mId = $valid['blckid']; # FIXME: mId is a protected member of Block class in MW1.19
+	    	# correct inifinity keyword on the fly, see rt#25419
             $user->mBlock->mExpiry = ($valid['expire'] == 'infinite') ? 'infinity' : $valid['expire'];
             $user->mBlock->mTimestamp = $valid['timestamp'];
             $user->mBlock->mAddress = ($valid['ip'] == 1) ? $wgRequest->getIP() : $user->getName();
