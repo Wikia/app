@@ -10,9 +10,10 @@ $separators: mix($color-page-border, $color-page, 50%);
 .Wall, .WallHistory {
 	.SortingBar {
 		display: block;
-		background: darken( $color-page, 3% );
 		@if $is-dark-wiki {
 			background: lighten( $color-page, 3% );
+		} @else {
+			background: darken( $color-page, 3% );
 		}
 		text-align: right;
 		height: 25px;
@@ -44,19 +45,19 @@ $separators: mix($color-page-border, $color-page, 50%);
 				cursor: pointer;
 				&:hover {
 					margin: 0px;
-					color: #3a3a3a;
-					border: 1px solid darken( $color-page, 5% );
 					background: $color-page;
 					@if $is-dark-wiki {
 						color: #ffffff;
 						border: 1px solid lighten( $color-page, 5% );
+					} @else {
+						color: #3a3a3a;
+						border: 1px solid darken( $color-page, 5% );
 					}
 				}
 				
 			}
 			.SortingList {
 				@include border-radius(3px);
-				@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
 				list-style: none;
 				display: none;
 				position: absolute;
@@ -68,13 +69,16 @@ $separators: mix($color-page-border, $color-page, 50%);
 				z-index: 1;
 				@if $is-dark-wiki {
 					@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
+				} @else {
+					@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
 				}
 				li { 
 					list-style: none;
 					&:hover {
-						background: mix($color-buttons, $color-page, 15%) !important;
 						@if $is-dark-wiki {
 							background: mix($color-buttons, $color-page, 30%) !important;
+						} @else {
+							background: mix($color-buttons, $color-page, 15%) !important;
 						}
 					}
 					&.current {
