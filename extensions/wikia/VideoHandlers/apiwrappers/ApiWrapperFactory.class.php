@@ -40,12 +40,12 @@ class ApiWrapperFactory {
 	}
 	
 	public function getApiWrapper( $url ) {
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 
-        if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
-            wfProfileOut( __METHOD__ );
-            return null;
-        }
+		if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
+			wfProfileOut( __METHOD__ );
+			return null;
+ 		}
 
 		$map = F::app()->wg->videoMigrationProviderMap;
 		$url = trim($url);
