@@ -50,8 +50,8 @@
 		</section>
 		<section class="wikiahomepage-community-section grid-2">
 			<h2><?= wfMsg('wikiahome-community-column2-heading') ?></h2>
-			<a href="http://www.wikia.com/Mobile" class="wikiahomepage-community-hero">
-				<img class="wikiahomepage-community-hero-image wikiahomepage-highlight-image" src="<?= $wg->BlankImgUrl ?>">
+			<a href="<?= wfMsg('wikiahome-community-column2-link') ?>" class="wikiahomepage-community-hero">
+				<img class="wikiahomepage-community-hero-image wikiahomepage-highlight-image wikiahomepage-highlight-image-<?= $lang ?>" src="<?= $wg->BlankImgUrl ?>">
 			</a>
 			<p><?= wfMsg('wikiahome-community-column2-creative') ?></p>
 		</section>
