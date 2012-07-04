@@ -60,7 +60,7 @@ class DevBoxPanel extends SpecialPage {
 		if (!empty($wgCommandLineMode)) {
 			return true;
 		}
-		
+
 		SpecialPage::SpecialPage('DevBoxPanel');
 	}
 
@@ -70,15 +70,14 @@ class DevBoxPanel extends SpecialPage {
 	 */
 	function execute() {
 		global $wgOut,$wgHooks,$wgDevelEnvironment,$wgUser;
-		
-		if( !$wgUser->isAllowed( 'devboxpanel' ) ) { 
+
+		if( !$wgUser->isAllowed( 'devboxpanel' ) ) {
 			$wgOut->permissionRequired( 'devboxpanel' );
 			return;
 		}
-		
+
 		$wgHooks['BeforePageDisplay'][] = 'devBoxPanelAdditionalScripts';
 
-		wfLoadExtensionMessages('DevBoxPanel');
 		$wgOut->setPageTitle(wfMsg("devbox-title"));
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
