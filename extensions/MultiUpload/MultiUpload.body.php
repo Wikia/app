@@ -298,13 +298,13 @@ class MultipleUpload extends SpecialUpload {
 
 		// tell the good news first
 		if ( sizeof( $this->mSuccesses ) > 0 ) {
-			$wgOut->addHTML( '<h2>' . wfMsgHtml( 'successfulupload' ) . "</h2>\n" );
+			$wgOut->addHTML( '<h2>' . wfMsgHtml( 'upload-success-subj' ) . "</h2>\n" );
 			$wgOut->addHTML( implode( $this->mSuccesses ) );
 		}
 
 		// the bad news
 		if ( sizeof( $this->mErrors ) > 0 ) {
-			$wgOut->addHTML( '<h2>' . wfMsgHtml( 'uploaderror' ) . "</h2>\n" );
+			$wgOut->addHTML( '<h2>' . wfMsgHtml( 'upload-failure-subj' ) . "</h2>\n" );
 			$wgOut->addHTML( implode( $this->mErrors ) );
 		}
 
