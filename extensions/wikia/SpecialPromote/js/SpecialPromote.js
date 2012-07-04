@@ -339,7 +339,7 @@ SpecialPromote.prototype = {
 	},
 	removeTempImage: function (imagename) {
 		if (!imagename) {
-			throw "removeTempImageError";
+			throw new Error('removeTempImageError');
 			return false;
 		}
 		$.nirvana.sendRequest({
@@ -363,9 +363,9 @@ SpecialPromote.prototype = {
 			$(e.currentTarget).find('.modify-remove').toggleClass('show');
 		}
 	},
-	errorHandler: function(error) {
+	errorHandler: function(errorObj) {
 		var msg;
-		switch (error) {
+		switch (errorObj.message) {
 			case 'removeTempImageError':
 				msg = 'promote-error-upload-unknown-error';
 				break;
@@ -373,7 +373,6 @@ SpecialPromote.prototype = {
 				msg = 'promote-error-upload-unknown-error';
 		}
 		$.showModal($.msg(msg), '');
-		new Error(error);
 	}
 };
 
