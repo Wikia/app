@@ -166,12 +166,22 @@ SpecialPromote.prototype = {
 	},
 	removeImage: function (params) {
 		if (params.uploadType == 'main') {
-			this.removeTempImage(this.current.mainImageName);
+			try {
+				this.removeTempImage(this.current.mainImageName);
+			}
+			catch(error) {
+				this.errorHandler(error);
+			}
 			this.current.mainImageName = null;
 			$('.large-photo img').remove();
 			$('.modify-remove').removeClass('show');
 		} else if (params.uploadType == 'additional') {
-			this.removeTempImage(this.current.additionalImagesNames[params.imageIndex - 1]);
+			try {
+				this.removeTempImage(this.current.additionalImagesNames[params.imageIndex - 1]);
+			}
+			catch(error) {
+				this.errorHandler(error);
+			}
 			this.current.additionalImagesNames.splice(params.imageIndex - 1, 1);
 			$.each($('.small-photos img'), function(i, element) {
 				if ($(element).data('image-index') == params.imageIndex) {
@@ -329,7 +339,7 @@ SpecialPromote.prototype = {
 	},
 	removeTempImage: function (imagename) {
 		if (!imagename) {
-			$.showModal($.msg('promote-error-upload-unknown-error'), '');
+			throw "removeTempImageError";
 			return false;
 		}
 		$.nirvana.sendRequest({
@@ -352,6 +362,18 @@ SpecialPromote.prototype = {
 		if ($(e.currentTarget).find('img').length > 0) {
 			$(e.currentTarget).find('.modify-remove').toggleClass('show');
 		}
+	},
+	errorHandler: function(error) {
+		var msg;
+		switch (error) {
+			case 'removeTempImageError':
+				msg = 'promote-error-upload-unknown-error';
+				break;
+			default:
+				msg = 'promote-error-upload-unknown-error';
+		}
+		$.showModal($.msg(msg), '');
+		new Error(error);
 	}
 };
 
