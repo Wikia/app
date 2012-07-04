@@ -41,6 +41,7 @@ $messages['en'] = array(
 	'promote-error-less-characters-than-minimum' => 'You entered $1 characters, but $2 is the minimum',
 	'promote-error-more-characters-than-maximum' => 'You entered $1 characters, but $2 is the maximum',
 	'promote-error-upload-unknown-error' => 'Unknown upload error',
+	'promote-error-upload-filetype-error' => 'Wrong file type (should be JPG)',
 	'promote-error-upload-dimensions-error' => 'Wrong file dimensions',
 	'promote-error-too-many-images' => 'Oops! You already have nine images. Remove some if you want to add more.',
 

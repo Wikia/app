@@ -131,6 +131,9 @@ class SpecialPromoteHelper extends WikiaObject {
 			case UploadVisualizationImageFromFile::FILEDIMENSIONS_ERROR:
 				$msg = wfMsg('promote-error-upload-dimensions-error');
 				break;
+			case UploadVisualizationImageFromFile::FILETYPE_ERROR:
+				$msg = wfMsg('promote-error-upload-filetype-error');
+				break;
 			case UploadBase::MIN_LENGTH_PARTNAME:
 				$msg = wfMsg('minlength1');
 				break;
@@ -226,8 +229,10 @@ class SpecialPromoteHelper extends WikiaObject {
 		$title = F::build('Title', array($imageName, NS_FILE), 'newFromText');
 		$file = F::build('LocalFile', array($title, RepoGroup::singleton()->getLocalRepo()));
 
+		$visualization = F::build('CityVisualization');
+		$visualization->removeImageFromReview($this->wg->cityId, $title->getArticleId(), $this->wg->contLang->getCode());
+
 		if ($file->exists()) {
-			/* @var $file LocalFile */
 			$file->delete('no longer needed');
 		}
 	}
@@ -286,14 +291,40 @@ class SpecialPromoteHelper extends WikiaObject {
 		);
 
 		$visualizationModel = F::build('CityVisualization');
+		$visualizationData = $visualizationModel->getWikiDataForVisualization($cityId, $langCode);
+
+		$originalImages = array_flip($visualizationData['images']);
+
+		foreach ($files['additionalImages'] as $image) {
+			if (!empty($image['deleted'])
+				&& isset($originalImages[$image['deletedname']])
+			) {
+				unset($originalImages[$image['deletedname']]);
+			}
+		}
+
+		$updateData = array(
+			'city_lang_code' => $langCode,
+			'city_headline' => $headline,
+			'city_description' => $description,
+			'city_images' => json_encode(array_flip($originalImages))
+		);
+
 		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
-		$visualizationModel->saveImagesForReview($cityId, $langCode, $files);
+		$visualizationModel->purgeWikiDataCache($cityId, $langCode);
+
+		$modifiedFiles = $this->extractModifiedFiles($files);
+		if (!empty($modifiedFiles)) {
+			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles);
+		}
 
 		$updateData['city_main_image'] = $files['mainImage']['name'];
 		if ($files['additionalImages']) {
 			$additionalImageNames = array();
 			foreach ($files['additionalImages'] as $image) {
-				$additionalImageNames []= $image['name'];
+				if (empty($image['deleted'])) {
+					$additionalImageNames [] = $image['name'];
+				}
 			}
 
 			$updateData['city_images'] = json_encode($additionalImageNames);
@@ -301,6 +332,20 @@ class SpecialPromoteHelper extends WikiaObject {
 
 		$visualizationModel->updateWikiPromoteDataCache($cityId, $langCode, $updateData);
 		$this->wf->ProfileOut(__METHOD__);
+	}
+
+	protected function extractModifiedFiles($files) {
+		$modifiedFiles = array();
+
+		if (!empty($files['mainImage']['modified'])) {
+			$modifiedFiles [] = $files['mainImage']['name'];
+		}
+		foreach ($files['additionalImages'] as $image) {
+			if (!empty($image['modified'])) {
+				$modifiedFiles [] = $image['name'];
+			}
+		}
+		return $modifiedFiles;
 	}
 
 	protected function saveAdditionalFiles($additionalImagesNames) {
@@ -314,6 +359,7 @@ class SpecialPromoteHelper extends WikiaObject {
 					($key),
 				)
 			) . UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_EXT;
+
 			if (!empty($additionalImagesNames[$count])) {
 				$singleFileName = $additionalImagesNames[$count];
 				if (strpos($singleFileName, 'Temp_file_') === 0) {
@@ -330,6 +376,11 @@ class SpecialPromoteHelper extends WikiaObject {
 				}
 			} else {
 				$this->removeImage($dstFileName);
+
+				$files[$key] = array(
+					'deletedname' => $dstFileName,
+					'deleted' => true
+				);
 			}
 		}
 
