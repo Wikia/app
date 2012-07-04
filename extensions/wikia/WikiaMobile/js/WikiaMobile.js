@@ -16,7 +16,6 @@ $(function(){
 	require(['media', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'sections', 'share', 'popover', 'cookies'],
 		function(media, qs, topbar, toc, events, hideURLBar, tables, sections, share, popover, cookies){
 			var d = document,
-				body = $(d.body),
 				clickEvent = events.click;
 
 			hideURLBar();
@@ -31,6 +30,8 @@ $(function(){
 			//must be done AFTER detecting size of elements on the page
 			d.body.className += ' js';
 
+
+			//close toc and topbar when 'curtain' is clicked
 			d.getElementsByClassName('curtain')[0].addEventListener(clickEvent, function(ev){
 				toc.close();
 				topbar.closeDropDown();
@@ -55,7 +56,7 @@ $(function(){
 				cookies.set('mobilefullsite', 'true');
 
 				var url = new qs();
-				url.setVal('useskin', 'oasis');
+				url.setVal('useskin', this.getAttribute('data-skin'));
 				url.addCb();
 				url.goTo();
 			});
