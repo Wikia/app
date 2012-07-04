@@ -8,6 +8,8 @@
  * $ SERVER_ID=111264 php WikiaComWikisList.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --file='../../../extensions/wikia/WikiaHomePage/text_files/Top wikis for de.wikia.com.csv'
  * Optional parameter
  * --message='TestMessageForVisualisation_test'
+ * --skipupload=1
+ * --overwritelang=en
  */
 require_once("../../commandLine.inc");
 
@@ -16,16 +18,23 @@ const WIKIA_COM_WIKIS_LIST_ADDITIONAL = 'additional';
 
 $csv = explode("\n", file_get_contents($options['file']));
 $putItToAmessage = isset($options['message']) ? true : false;
+$skipUpload = isset($options['skipupload']) ? true : false;
+$overwrittenLang = isset($options['overwritelang']) ? $options['overwritelang'] : false;
+
+if( $overwrittenLang !== false ) {
+	$overwrittenLang = strtolower( substr($overwrittenLang, 0, 2) );
+}
+
 array_shift($csv);
 
 if ($putItToAmessage) {
 	$mediaWikiMessage = $options['message'];
-	loadDataAndUpdateMessage($csv, $mediaWikiMessage);
+	loadDataAndUpdateMessage($csv, $mediaWikiMessage, $skipUpload);
 } else {
-	loadDataAndUpdateDatabase($csv);
+	loadDataAndUpdateDatabase($csv, $skipUpload, $overwrittenLang);
 }
 
-function loadDataAndUpdateMessage($csv, $mediaWikiMessage) {
+function loadDataAndUpdateMessage($csv, $mediaWikiMessage, $skipUpload) {
 	$verticalsNames = array('Video Games', 'Entertainment', 'Lifestyle');
 	$verticals = array(
 		$verticalsNames[0] => array(),
@@ -50,13 +59,15 @@ function loadDataAndUpdateMessage($csv, $mediaWikiMessage) {
 			$wikiImageName = basename($element[4]);
 			$wikiDesc = $element[5];
 
-			$result = uploadImage($wikiMainImageUrl, $wikiImageName);
-			if( $result === true ) {
-				$okuploads[] = $wikiImageName;
-				echo '.';
-			} else {
-				$faileduploads[] = $wikiImageName;
-				echo '!';
+			if( !$skipUpload ) {
+				$result = uploadImage($wikiMainImageUrl, $wikiImageName);
+				if( $result === true ) {
+					$okuploads[] = $wikiImageName;
+					echo '.';
+				} else {
+					$faileduploads[] = $wikiImageName;
+					echo '!';
+				}
 			}
 
 			$wikiUrl = (
@@ -68,22 +79,26 @@ function loadDataAndUpdateMessage($csv, $mediaWikiMessage) {
 		}
 	}
 
-	$totalimages = (count($faileduploads) + count($okuploads));
-	echo "\n";
-	echo 'Summary for importing images:';
-	echo "\n";
-	echo 'Total images processed: ' . $totalimages;
-	echo "\n";
-	echo 'OK uploads: ' . count($okuploads) . '/' . $totalimages;
-	echo "\n";
-	if (!empty($faileduploads)) {
-		echo 'Failed uploads: ' . count($faileduploads) . '/' . $totalimages;
+	if( !$skipUpload ) {
+		$totalimages = (count($faileduploads) + count($okuploads));
 		echo "\n";
-		echo 'Failed uploads list:';
+		echo 'Summary for importing images:';
 		echo "\n";
-		foreach ($faileduploads as $filename) {
-			echo $filename . "\n";
+		echo 'Total images processed: ' . $totalimages;
+		echo "\n";
+		echo 'OK uploads: ' . count($okuploads) . '/' . $totalimages;
+		echo "\n";
+		if (!empty($faileduploads)) {
+			echo 'Failed uploads: ' . count($faileduploads) . '/' . $totalimages;
+			echo "\n";
+			echo 'Failed uploads list:';
+			echo "\n";
+			foreach ($faileduploads as $filename) {
+				echo $filename . "\n";
+			}
 		}
+	} else {
+		echo 'Done.'."\n";
 	}
 
 
@@ -96,7 +111,7 @@ function loadDataAndUpdateMessage($csv, $mediaWikiMessage) {
 	$article->doEdit($content, $summary);
 }
 
-function loadDataAndUpdateDatabase($csv) {
+function loadDataAndUpdateDatabase($csv, $skipUpload, $overwrittenLang) {
 	global $wgCityId;
 
 	$faileduploads = array('main-images' => array(), 'slider-images' => array());
@@ -105,7 +120,12 @@ function loadDataAndUpdateDatabase($csv) {
 	$wikisAddedToTable = array();
 	$wikisUpdated = array();
 	$wikisNotAddedToTable = array();
-	$wikisVisualizationLangCode = WikiFactory::getVarValueByName('wgLanguageCode', $wgCityId);
+
+	if( !$overwrittenLang ) {
+		$wikisVisualizationLangCode = WikiFactory::getVarValueByName('wgLanguageCode', $wgCityId);
+	} else {
+		$wikisVisualizationLangCode = $overwrittenLang;
+	}
 
 	echo "\n";
 	echo 'Uploading wikis for "'.$wikisVisualizationLangCode.'" visualization: ';
@@ -130,49 +150,53 @@ function loadDataAndUpdateDatabase($csv) {
 			$wikiDesc = !empty($element[5]) ? $element[5] : wfMsg( 'wikiahome-import-script-no-description' );
 			$error = false;
 
+			if( !$skipUpload ) {
 			//upload main image
-			$result = uploadImage($imageUrl, $imageName);
-			if ($result['status'] === true) {
-				$okuploads['main-images'][] = $imageName;
-				echo '.';
-			} else {
-				if (!empty($result['errors'][0]['message']) && $result['errors'][0]['message'] === 'filerenameerror') {
-					$fileexists['main-images'][] = $imageName;
-					echo '!';
+				$result = uploadImage($imageUrl, $imageName);
+				if ($result['status'] === true) {
+					$okuploads['main-images'][] = $imageName;
+					echo '.';
 				} else {
-					$faileduploads['main-images'][] = $imageName;
-					$error = true;
-					echo '!';
-				}
-			}
-			//end of upload main image
-
-			//upload slider images
-			$index = 1;
-			$sliderUploadedImages = array();
-
-			foreach ($sliderImages as $sliderImage) {
-				if (!empty($sliderImage)) {
-					$sliderImageName = basename($sliderImage);
-					$result = uploadImage($sliderImage, $sliderImageName);
-					if ($result['status'] === true) {
-						$okuploads['slider-images'][] = $sliderImageName;
-						$sliderUploadedImages[] = $sliderImageName;
-						echo '.';
+					if (!empty($result['errors'][0]['message']) && $result['errors'][0]['message'] === 'filerenameerror') {
+						$fileexists['main-images'][] = $imageName;
+						echo '!';
 					} else {
-						if (!empty($result['errors'][0]['message']) && $result['errors'][0]['message'] === 'filerenameerror') {
-							$fileexists['slider-images'][] = $sliderImageName;
-							echo '!';
-						} else {
-							$faileduploads['slider-images'][] = $sliderImageName;
-							$error = true;
-							echo '!';
-						}
+						$faileduploads['main-images'][] = $imageName;
+						$error = true;
+						echo '.';
 					}
-					$index++;
 				}
+			//end of upload main image
 			}
+
+			if( !$skipUpload ) {
+			//upload slider images
+				$index = 1;
+				$sliderUploadedImages = array();
+
+				foreach ($sliderImages as $sliderImage) {
+					if (!empty($sliderImage)) {
+						$sliderImageName = basename($sliderImage);
+						$result = uploadImage($sliderImage, $sliderImageName);
+						if ($result['status'] === true) {
+							$okuploads['slider-images'][] = $sliderImageName;
+							$sliderUploadedImages[] = $sliderImageName;
+							echo '.';
+						} else {
+							if (!empty($result['errors'][0]['message']) && $result['errors'][0]['message'] === 'filerenameerror') {
+								$fileexists['slider-images'][] = $sliderImageName;
+								echo '!';
+							} else {
+								$faileduploads['slider-images'][] = $sliderImageName;
+								$error = true;
+								echo '!';
+							}
+						}
+						$index++;
+					}
+				}
 			//end of upload slider images
+			}
 
 			if (!$error) {
 				$wikiId = WikiFactory::DomainToID($wikiDomain);
@@ -220,38 +244,40 @@ function loadDataAndUpdateDatabase($csv) {
 		}
 	}
 
-	$okMainImagesUpload = count($okuploads['main-images']);
-	$failedMainUploads = count($faileduploads['main-images']);
-	$mainFileExists = count($fileexists['main-images']);
-	$totalMainImages = ($okMainImagesUpload + $failedMainUploads + $mainFileExists);
+	if( !$skipUpload ) {
+		$okMainImagesUpload = count($okuploads['main-images']);
+		$failedMainUploads = count($faileduploads['main-images']);
+		$mainFileExists = count($fileexists['main-images']);
+		$totalMainImages = ($okMainImagesUpload + $failedMainUploads + $mainFileExists);
 
-	$okSliderImagesUpload = count($okuploads['slider-images']);
-	$failedSliderUploads = count($faileduploads['slider-images']);
-	$sliderFileExists = count($fileexists['slider-images']);
-	$totalSliderImages = ($okSliderImagesUpload + $failedSliderUploads + $sliderFileExists);
+		$okSliderImagesUpload = count($okuploads['slider-images']);
+		$failedSliderUploads = count($faileduploads['slider-images']);
+		$sliderFileExists = count($fileexists['slider-images']);
+		$totalSliderImages = ($okSliderImagesUpload + $failedSliderUploads + $sliderFileExists);
 
-	echo "\n";
-	echo '== Summary for importing images: ==';
-	echo "\n";
-	echo 'Total main images processed: ' . $totalMainImages;
-	echo "\n";
-	echo 'OK uploads: ' . $okMainImagesUpload . '/' . $totalMainImages;
-	echo "\n";
-	echo 'Total slider images processed: ' . $totalSliderImages;
-	echo "\n";
-	echo 'OK uploads: ' . $okSliderImagesUpload . '/' . $totalSliderImages;
-	echo "\n";
-
-	if (!empty($faileduploads['slider-images']) || !empty($faileduploads['slider-images'])) {
-		echo 'Failed uploads: ' . ($failedMainUploads + $failedSliderUploads) . '/' . ($totalMainImages + $totalSliderImages);
 		echo "\n";
-		echo 'Failed uploads list:';
+		echo '== Summary for importing images: ==';
 		echo "\n";
-		foreach ($faileduploads['main-images'] as $filename) {
-			echo $filename . "\n";
-		}
-		foreach ($faileduploads['slider-images'] as $filename) {
-			echo $filename . "\n";
+		echo 'Total main images processed: ' . $totalMainImages;
+		echo "\n";
+		echo 'OK uploads: ' . $okMainImagesUpload . '/' . $totalMainImages;
+		echo "\n";
+		echo 'Total slider images processed: ' . $totalSliderImages;
+		echo "\n";
+		echo 'OK uploads: ' . $okSliderImagesUpload . '/' . $totalSliderImages;
+		echo "\n";
+
+		if (!empty($faileduploads['slider-images']) || !empty($faileduploads['slider-images'])) {
+			echo 'Failed uploads: ' . ($failedMainUploads + $failedSliderUploads) . '/' . ($totalMainImages + $totalSliderImages);
+			echo "\n";
+			echo 'Failed uploads list:';
+			echo "\n";
+			foreach ($faileduploads['main-images'] as $filename) {
+				echo $filename . "\n";
+			}
+			foreach ($faileduploads['slider-images'] as $filename) {
+				echo $filename . "\n";
+			}
 		}
 	}
 }
