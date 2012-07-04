@@ -303,6 +303,7 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
 
 		//extensions with assets to load on every page
+		//TODO: move to assets hook
 		'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js',
 	)
 );
