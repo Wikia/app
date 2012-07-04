@@ -26,7 +26,7 @@
 			border-top: 5px solid $color-wikiahome-community;
 			height: 100px;
 			img {
-				background-image: url('/extensions/wikia/WikiaHomePage/images/community-sprite-mobile.png'); /* base64 */
+				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-en-mobile.png'); /* base64 */
 				background-position: 0 0;
 				background-repeat: no-repeat;
 				height: 62px;
@@ -38,8 +38,8 @@
 		}
 		&.wkhome-community-de .wkhome-hero {
 			img {
-				background-image: url('/extensions/wikia/WikiaHomePage/images/community-sprite-mobile.png'); /* base64 */
-				background-position: 0 -100px;
+				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-de-mobile.png'); /* base64 */
+				background-position: 0 0;
 			}
 		}
 
@@ -87,8 +87,8 @@
 
 #wkTopBar {
 	&:before {
-		background-image: url('/extensions/wikia/WikiaHomePage/images/community-sprite-mobile.png'); /* base64 */
-		background-position: 0 -65px;
+		background-image: url('/extensions/wikia/WikiaHomePage/images/wikialogo-mobile.png'); /* base64 */
+		background-position: 0 0px;
 		background-repeat: no-repeat;
 		content: " ";
 		display: block;
