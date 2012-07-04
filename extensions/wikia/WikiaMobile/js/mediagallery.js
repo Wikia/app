@@ -60,7 +60,7 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 			l = all.length,
 			updateImg = function(img, src){
 				if(src) img.style.backgroundImage = 'url("' + src + '")';
-				img.className = img.className.replace('imgPlcHld', 'loaded');
+				img.className += ' loaded';
 			}
 
 		for(; i < l; i++){
@@ -77,7 +77,7 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 					imgPreload.onload = (function(img, src){
 						//as there are more images I need to freeze references to img and src
 						return function(ev){
-							if(img.className.indexOf(' load') == -1) img.className += ' load'
+							if(img.className.indexOf(' load') == -1) img.className += ' load';
 
 							setTimeout(function(){
 								updateImg(img, src);
@@ -126,7 +126,7 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 				dots += '<div class="dot'+((current == pagesNum) ? ' curr':'')+'" id=dot'+pagesNum+'><div></div></div>';
 			}
 
-			pages[pagesNum] += '<div class="galImg imgPlcHld' +
+			pages[pagesNum] += '<div class="galImg' +
 				(images[i].isVideo ? ' video' : '') +
 				((goToImg == i) ? ' this' : '') +
 				//use thumb if is available if not use full image
@@ -188,11 +188,11 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 				var img  = current * imgsPerPage;
 				prepareGallery();
 				current = ~~(img / imgsPerPage);
-				loadImages();
 				pager.reset({
 					pages: pages,
 					pageNumber: current
 				});
+				loadImages();
 			}
 		});
 
