@@ -120,6 +120,10 @@ SpecialPromote.prototype = {
 		}
 	},
 	getUploadForm: function (data) {
+		if (!data.uploadType) {
+			throw new Error('getUploadFormError');
+			return false;
+		}
 		$.nirvana.sendRequest({
 			type: 'post',
 			format: 'html',
@@ -130,6 +134,7 @@ SpecialPromote.prototype = {
 				$.showModal($.msg('promote-upload-form-modal-title'), html);
 			}
 		});
+		return true;
 	},
 	onAddPhotoBtnClick: function (e) {
 		e.preventDefault();
@@ -144,16 +149,28 @@ SpecialPromote.prototype = {
 			errorContainer.html('');
 		}
 
-		this.getUploadForm({uploadType: uploadType});
+		try {
+			this.getUploadForm({uploadType: uploadType});
+		}
+		catch(error) {
+			this.errorHandler(error);
+		}
 	},
 	onChangePhotoClick: function (e) {
 		e.preventDefault();
 		var target = $(e.target).parent().parent().find('img');
 
-		this.getUploadForm({
-			uploadType: target.data('image-type'),
-			imageIndex: target.data('image-index')
-		});
+		try {
+			this.getUploadForm({
+				uploadType: target.data('image-type'),
+				imageIndex: target.data('image-index')
+			});
+		}
+		catch(error) {
+			this.errorHandler(error);
+			return false;
+		}
+		return true;
 	},
 	onDeletePhotoClick: function (e) {
 		e.preventDefault();
@@ -181,6 +198,7 @@ SpecialPromote.prototype = {
 			}
 			catch(error) {
 				this.errorHandler(error);
+				return false;
 			}
 			this.current.additionalImagesNames.splice(params.imageIndex - 1, 1);
 			$.each($('.small-photos img'), function(i, element) {
@@ -189,7 +207,12 @@ SpecialPromote.prototype = {
 				}
 			});
 		}
+		else {
+			this.errorHandler(new Error('unknownUploadType'));
+			return false;
+		}
 		this.checkPublishButton();
+		return true;
 	},
 	saveAvatarAIM: function (event) {
 		var form = $("#ImageUploadForm");
@@ -257,10 +280,11 @@ SpecialPromote.prototype = {
 	},
 	addAdditionalImage: function (file) {
 		if (file.imageIndex) {
+			var image;
 			this.current.additionalImagesNames[file.imageIndex] = file.fileName;
 			$('.small-photos img').each(function(key, value) {
 				if ($(value).data('image-index') == file.imageIndex) {
-					var image = $(value);
+					image = $(value);
 				}
 			});
 			image.attr('src', file.fileUrl);
@@ -368,6 +392,12 @@ SpecialPromote.prototype = {
 		switch (errorObj.message) {
 			case 'removeTempImageError':
 				msg = 'promote-error-upload-unknown-error';
+				break;
+			case 'unknownUploadType':
+				msg = 'promote-error-upload-type';
+				break;
+			case 'getUploadFormError':
+				msg = 'promote-error-upload-form';
 				break;
 			default:
 				msg = 'promote-error-upload-unknown-error';

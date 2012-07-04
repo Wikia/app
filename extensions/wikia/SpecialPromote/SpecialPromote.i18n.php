@@ -44,6 +44,8 @@ $messages['en'] = array(
 	'promote-error-upload-filetype-error' => 'Wrong file type (should be JPG)',
 	'promote-error-upload-dimensions-error' => 'Wrong file dimensions',
 	'promote-error-too-many-images' => 'Oops! You already have nine images. Remove some if you want to add more.',
+	'promote-error-upload-type' => "Wrong upload type.",
+	'promote-error-upload-form' => "Wrong upload type in getUploadForm.",
 
 	'promote-manual-file-size-error' => 'Main image has a minimum size of 320x320px.',
 	'promote-manual-upload-error' => 'This file cannot be uploaded manually. Please use Admin Upload Tool.',
