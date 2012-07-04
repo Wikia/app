@@ -399,7 +399,7 @@
 	}
 }
 
-#wikiaThrobber {
+.wikiaThrobber {
 	@include opacity(75);
 	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
 	height: 100%;

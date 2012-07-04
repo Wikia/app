@@ -293,10 +293,10 @@ $(window).bind('load', function() {
  * and in the middle of it throbber will be displayed.
  */
 jQuery.fn.startThrobbing = function() {
-	this.append('<div id="wikiaThrobber"></div>');
+	this.append('<div class="wikiaThrobber"></div>');
 };
 jQuery.fn.stopThrobbing = function() {
-	this.find('#wikiaThrobber').remove();
+	this.find('.wikiaThrobber').remove();
 };
 
 $.htmlentities = function ( s ) {
