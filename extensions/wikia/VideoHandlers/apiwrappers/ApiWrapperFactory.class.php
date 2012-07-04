@@ -39,9 +39,13 @@ class ApiWrapperFactory {
 		return null;
 	}
 	
-	public function getApiWrapper($url) {
+	public function getApiWrapper( $url ) {
+        wfProfileIn( __METHOD__ );
 
-		wfProfileIn( __METHOD__ );
+        if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
+            wfProfileOut( __METHOD__ );
+            return null;
+        }
 
 		$map = F::app()->wg->videoMigrationProviderMap;
 		$url = trim($url);
@@ -58,7 +62,7 @@ class ApiWrapperFactory {
 
 		foreach( $map as $id => $name ) {
 			$class_name = $name . 'ApiWrapper';
-			if ( ( F::app()->wg->allowNonPremiumVideos || $class_name::isPremium() ) && $class_name::isMatchingHostname( $hostname ) ) {
+			if ( $class_name::isMatchingHostname( $hostname ) ) {
 				wfProfileOut( __METHOD__ );
 				return $class_name::newFromUrl( $url );
 			}

@@ -73,14 +73,6 @@ abstract class ApiWrapper {
 		return $this->getVideoTitle();
 	}
 
-    /**
-     * Flag indicating premium providers. By default it returns false, so it should be overridden
-     * in subclass if needed
-     */
-    public function isPremium() {
-        return false;
-    }
-
 	abstract protected function getVideoTitle();
 
 	abstract public function getDescription();
