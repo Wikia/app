@@ -742,7 +742,7 @@ var Lightbox = {
 				}
 					
 				thumbArr.push({
-					thumbUrl: $(this).data('src') || $(this).attr('src'), // TODO - turn this into a 90x55 thumbnail
+					thumbUrl: Lightbox.thumbParams($(this).data('src') || $(this).attr('src'), type),
 					title: title,
 					type: type,
 					playButtonSpan: playButtonSpan
@@ -770,7 +770,7 @@ var Lightbox = {
 				titles.push(title);
 					
 				thumbArr.push({
-					thumbUrl: thumbUrl, // TODO - turn this into a 90x55 thumbnail
+					thumbUrl: Lightbox.thumbParams(thumbUrl, 'video'),
 					title: title,
 					type: 'video',
 					playButtonSpan: playButton
@@ -797,7 +797,7 @@ var Lightbox = {
 				titles.push(title);
 					
 				thumbArr.push({
-					thumbUrl: thumbUrl, // TODO - turn this into a 90x55 thumbnail
+					thumbUrl: Lightbox.thumbParams(thumbUrl, 'image'),
 					title: title,
 					type: 'image',
 					playButtonSpan: ''
@@ -812,6 +812,13 @@ var Lightbox = {
 		other: function() {
 			// Stuff like category pages
 		}
+	},
+	thumbParams: function(url, type) {
+		/*
+			Get URL to a proper thumbnail
+		 */
+		return $.thumbUrl2ThumbUrl(url, type, 90, 55);
+
 	}
 };
 

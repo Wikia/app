@@ -299,6 +299,32 @@ jQuery.fn.stopThrobbing = function() {
 	this.find('.wikiaThrobber').remove();
 };
 
+/*
+	Generate URL to thumbnail from different URL to thumbnail :)
+	New URL has different paremeters (fixed width and height)
+ */
+$.thumbUrl2ThumbUrl = function( url, type, width, height ) {
+	if(url.indexOf('/thumb/') > 0) { // URL points to thumbnail
+		// remove current resize part of thumbnail
+		url = url.replace(/\/[0-9]+px\-/,'/');
+	} else { // direct image link
+		// convert URL to thumbnail type of URL
+		url = url.replace('/images/','/images/thumb/');
+		url += '/' + url.split('/').slice(-1)[0];
+	}
+
+	// add parameters to the URL
+	var urlArray = url.split('/');
+	var last = urlArray.slice(-1)[0];
+	if(type=='video') {
+		urlArray[urlArray.length-1] = width + 'x' + height + '-' + last + '.png';
+	} else {
+		urlArray[urlArray.length-1] = width + 'x' + height + 'x2-' + last + '.png';
+	}
+	url = urlArray.join('/');
+	return url;
+}
+
 $.htmlentities = function ( s ) {
 	return String(s).replace(/\&/g,'&'+'amp;').replace(/</g,'&'+'lt;')
     	.replace(/>/g,'&'+'gt;').replace(/\'/g,'&'+'apos;').replace(/\"/g,'&'+'quot;');
