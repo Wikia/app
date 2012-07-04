@@ -43,8 +43,8 @@
 	<div class="wikiahomepage-community">
 		<section class="wikiahomepage-community-section grid-2 alpha">
 			<h2><?= wfMsg('wikiahome-community-column1-heading') ?></h2>
-			<a href="http://community.wikia.com" class="wikiahomepage-community-hero">
-				<img class="wikiahomepage-community-hero-image wikiahomepage-community-image" src="<?= $wg->BlankImgUrl ?>">
+			<a href="<?= wfMsg('wikiahome-community-column1-link') ?>" class="wikiahomepage-community-hero">
+				<img class="wikiahomepage-community-hero-image wikiahomepage-community-image wikiahomepage-community-image-<?= $lang ?>" src="<?= $wg->BlankImgUrl ?>">
 			</a>
 			<p><?= wfMsg('wikiahome-community-column1-creative') ?></p>
 		</section>
