@@ -178,7 +178,7 @@ class MyHome {
 		// is enabled
 		if ($wgUser->isLoggedIn()
 			&& ($wgUser->getOption('myhomedisableredirect') != true)
-			&& !empty($wgEnableWikiaHomePageExt )) {
+			&& empty($wgEnableWikiaHomePageExt )) {
 			$title = Title::newFromText('WikiActivity', NS_SPECIAL);
 		}
 
