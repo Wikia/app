@@ -58,7 +58,7 @@ class ApiWrapperFactory {
 
 		foreach( $map as $id => $name ) {
 			$class_name = $name . 'ApiWrapper';
-			if ( $class_name::isMatchingHostname( $hostname ) ) {
+			if ( ( F::app()->wg->allowNonPremiumVideos || $class_name::isPremium() ) && $class_name::isMatchingHostname( $hostname ) ) {
 				wfProfileOut( __METHOD__ );
 				return $class_name::newFromUrl( $url );
 			}
