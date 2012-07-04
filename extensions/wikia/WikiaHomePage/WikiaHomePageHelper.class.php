@@ -362,7 +362,7 @@ class WikiaHomePageHelper extends WikiaModel {
 				$userInfo['userContributionsUrl'] = ($userContributionsTitle instanceof Title) ? $userContributionsTitle->getFullURL() : '#';
 
 				$userStatsService = F::build('UserStatsService', array($userId));
-				$stats = $userStatsService->getStats();
+				$stats = $userStatsService->getGlobalStats($wikiId);
 
 				$date = getdate(strtotime($stats['date']));
 				$userInfo['since'] = F::App()->wg->Lang->getMonthAbbreviation($date['mon']) . ' ' . $date['year'];
