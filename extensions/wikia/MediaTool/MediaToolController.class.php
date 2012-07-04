@@ -87,8 +87,6 @@ class MediaToolController extends WikiaController {
 				)
 			);
 
-			wyvlog($mediaThumb);
-
 			return $mediaThumb;
 		}
 		return '';
