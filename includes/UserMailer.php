@@ -780,7 +780,7 @@ class EmailNotification {
 
 		# <Wikia>
 		// RT #1294 Bartek 07.05.2009, use the language of the wiki
-		$summary = ($this->summary == '') ? wfMsgForContent( 'enotif_no_summary' ) : wfMsgForContent( 'enotif_summary'  ) . '"' . $this->summary . '"';
+		$summary = ($this->summary == '') ? wfMsgForContent( 'enotif_no_summary' ) : '"' . $this->summary . '"';
 		# </Wikia>
 		
 		# Replace this after transforming the message, bug 35019
@@ -802,7 +802,11 @@ class EmailNotification {
 		$body = MessageCache::singleton()->transform( $body, false, null, $this->title );
 		$this->body = wordwrap( strtr( $body, $postTransformKeys ), 72 );
 		# <Wikia>
-		if ($bodyHTML) $this->bodyHTML = strtr( $bodyHTML, $keys );
+		if ($bodyHTML) {
+			$bodyHTML = strtr( $bodyHTML, $keys );
+			$bodyHTML = MessageCache::singleton()->transform( $bodyHTML, false, null, $this->title );
+			$this->bodyHTML = strtr( $bodyHTML, $postTransformKeys );
+		}
 		# </Wikia>
 
 		# Reveal the page editor's address as REPLY-TO address only if
