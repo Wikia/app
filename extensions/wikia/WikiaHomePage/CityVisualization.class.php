@@ -242,7 +242,7 @@ class CityVisualization extends WikiaModel {
 		return false;
 	}
 
-		public function purgeWikiDataCache($wikiId, $langCode) {
+	public function purgeWikiDataCache($wikiId, $langCode) {
 		$memcKey = $this->getWikiDataCacheKey($wikiId, $langCode);
 		$this->wg->Memc->set($memcKey, null);
 	}
@@ -528,7 +528,41 @@ class CityVisualization extends WikiaModel {
 		}
 	}
 
-	public function removeImageFromReview($cityId,$pageId,$langCode) {
+	public function deleteImagesFromReview($cityId, $langCode, $images) {
+		$imagesToRemove = array();
+
+		foreach ($images as $image) {
+			$title = F::build('Title', array($image, NS_FILE), 'newFromText');
+
+			$imageData = new stdClass();
+			$imageData->city_id = $cityId;
+			$imageData->page_id = $title->getArticleId();
+			$imageData->city_lang_code = $langCode;
+			$imagesToRemove [] = $imageData;
+		}
+
+		if (!empty($imagesToRemove)) {
+			$dbm = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+			$dbm->begin(__METHOD__);
+
+			foreach ($imagesToRemove as $image) {
+				$removeConds = array();
+
+				foreach ($image as $field => $value) {
+					$removeConds[$field] = $value;
+				}
+
+				$dbm->delete(
+					'city_visualization_images',
+					$removeConds
+				);
+			}
+
+			$dbm->commit(__METHOD__);
+		}
+	}
+
+	public function removeImageFromReview($cityId, $pageId, $langCode) {
 		$dbm = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 		$dbm->delete(
 			'city_visualization_images',
