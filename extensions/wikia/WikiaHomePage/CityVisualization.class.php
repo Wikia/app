@@ -96,7 +96,7 @@ class CityVisualization extends WikiaModel {
 		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
 		$table = 'city_visualization';
-		$fields = array('city_visualization.city_id','city_flags');
+		$fields = array('city_visualization.city_id', 'city_flags');
 		$conds = array(
 			'city_visualization.city_id' => $wikiId,
 			'city_lang_code' => $langCode
@@ -119,6 +119,7 @@ class CityVisualization extends WikiaModel {
 			$mdb->Insert($table, $data, __METHOD__);
 			$data['city_flags'] = null;
 		}
+		$mdb->commit();
 	}
 
 	/**
@@ -241,7 +242,7 @@ class CityVisualization extends WikiaModel {
 		return false;
 	}
 
-	public function purgeWikiDataCache($wikiId, $langCode) {
+		public function purgeWikiDataCache($wikiId, $langCode) {
 		$memcKey = $this->getWikiDataCacheKey($wikiId, $langCode);
 		$this->wg->Memc->set($memcKey, null);
 	}
@@ -447,14 +448,121 @@ class CityVisualization extends WikiaModel {
 		return $wikiImages;
 	}
 
-	public function saveImagesForReview($cityId, $langCode, $files) {
-		/* TODO: implement body! */
-		/*
-		if($files['mainImage']['modified']) {
+	public function saveImagesForReview($cityId, $langCode, $images) {
+		$currentImages = $this->getImagesFromReviewTable($cityId, $langCode);
 
+		$reversedImages = array_flip($images);
+		$imagesToModify = array();
+
+		foreach ($currentImages as $image) {
+			if (isset($reversedImages[$image->image_name])) {
+				$image->last_edited = date('Y-m-d H:i:s');
+				$image->image_review_status = 0;
+				$imagesToModify [] = $image;
+				unset($reversedImages[$image->image_name]);
+			}
 		}
 
-		*/
+		$newImages = array_flip($reversedImages);
+
+		$imagesToAdd = array();
+		foreach ($newImages as $image) {
+			$imageData = new stdClass();
+
+			$imageIndex = 0;
+			$matches = array();
+			if (preg_match('/Wikia-Visualization-Add-([0-9])\.jpg/', $image, $matches)) {
+				$imageIndex = intval($matches[1]);
+			}
+
+			$title = F::build('Title', array($image, NS_FILE), 'newFromText');
+
+			$imageData->city_id = $cityId;
+			$imageData->page_id = $title->getArticleId();
+			$imageData->city_lang_code = $langCode;
+			$imageData->image_index = $imageIndex;
+			$imageData->image_name = $image;
+			$imageData->image_review_status = 0;
+			$imageData->last_edited = date('Y-m-d H:i:s');
+			$imageData->review_start = null;
+			$imageData->review_end = null;
+			$imageData->reviewer_id = null;
+
+			$imagesToAdd [] = $imageData;
+		}
+
+		if (!empty($imagesToAdd) || !empty($imagesToModify)) {
+			$dbm = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+			$dbm->begin(__METHOD__);
+			foreach ($imagesToAdd as $image) {
+				$insertArray = array();
+
+				foreach ($image as $field => $value) {
+					$insertArray[$field] = $value;
+				}
+
+				$dbm->insert(
+					'city_visualization_images',
+					$insertArray
+				);
+			}
+
+			foreach ($imagesToModify as $image) {
+				$updateArray = array();
+
+				foreach ($image as $field => $value) {
+					$updateArray[$field] = $value;
+				}
+
+				$dbm->update(
+					'city_visualization_images',
+					$updateArray,
+					array(
+						'city_id' => $image->city_id,
+						'page_id' => $image->page_id,
+						'city_lang_code' => $image->city_lang_code,
+					)
+				);
+			}
+			$dbm->commit(__METHOD__);
+		}
+	}
+
+	public function removeImageFromReview($cityId,$pageId,$langCode) {
+		$dbm = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$dbm->delete(
+			'city_visualization_images',
+			array(
+				'city_id' => $cityId,
+				'page_id' => $pageId,
+				'city_lang_code' => $langCode
+			)
+		);
+	}
+
+	protected function getImagesFromReviewTable($cityId, $langCode) {
+		$this->wf->ProfileIn(__METHOD__);
+
+		$wikiImages = array();
+		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+
+		$result = $db->select(
+			array('city_visualization_images'),
+			array('*'),
+			array(
+				'city_id' => $cityId,
+				'city_lang_code' => $langCode
+			),
+			__METHOD__
+		);
+
+		while ($row = $result->fetchObject()) {
+			$wikiImages [] = $row;
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+
+		return $wikiImages;
 	}
 
 	public static function isNewWiki($wikiFlags) {

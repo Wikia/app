@@ -99,7 +99,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 			$result['fileUrl'] = $this->helper->getImageUrl($file->getName(), $width, $height);
 			$result['fileName'] = $file->getName();
 
-			if ($this->fileUrl == null || $this->fileName == null) {
+			if ($result['fileUrl'] == null || $result['fileName'] == null) {
 				$result['errorMessages'] = array(wfMsg('promote-error-unknown-upload-error'));
 			}
 		} else if ($status['status'] === 'error') {
@@ -107,7 +107,6 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		}
 
 		$this->result = $result;
-
 
 		wfProfileOut(__METHOD__);
 	}
@@ -122,6 +121,9 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		wfProfileIn(__METHOD__);
 
 		$data = $this->request->getParams();
+		if(empty($data['additionalImagesNames'])) {
+			$data['additionalImagesNames'] = array();
+		}
 
 		try {
 			$this->helper->saveVisualizationData($data,$this->wg->contLang->getCode());
