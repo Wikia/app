@@ -284,21 +284,17 @@ class SpecialPromoteHelper extends WikiaObject {
 			}
 		}
 
-		$updateData = array(
-			'city_lang_code' => $langCode,
-			'city_headline' => $headline,
-			'city_description' => $description,
-		);
-
 		$visualizationModel = F::build('CityVisualization');
 		$visualizationData = $visualizationModel->getWikiDataForVisualization($cityId, $langCode);
 
 		$originalImages = array_flip($visualizationData['images']);
+		$deletedFiles = array();
 
 		foreach ($files['additionalImages'] as $image) {
 			if (!empty($image['deleted'])
 				&& isset($originalImages[$image['deletedname']])
 			) {
+				$deletedFiles[] = $image['deletedname'];
 				unset($originalImages[$image['deletedname']]);
 			}
 		}
@@ -316,6 +312,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		$modifiedFiles = $this->extractModifiedFiles($files);
 		if (!empty($modifiedFiles)) {
 			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles);
+			$visualizationModel->deleteImagesFromReview($cityId, $langCode, $deletedFiles);
 		}
 
 		$updateData['city_main_image'] = $files['mainImage']['name'];
