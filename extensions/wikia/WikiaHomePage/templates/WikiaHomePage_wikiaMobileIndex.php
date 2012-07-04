@@ -22,8 +22,8 @@
 		</a>
 		<p><?= wfMsg('wikiahome-hubs-lifestyle-creative') ?></p>
 	</section>
-		<section class="wkhome-section wkhome-community">
-		<a href="http://community.wikia.com" class=wkhome-hero>
+		<section class="wkhome-section wkhome-community  wkhome-community-<?= $lang ?>">
+		<a href="<?= wfMsg('wikiahome-community-column1-link') ?>" class=wkhome-hero>
 			<img class=wkhome-img src="<?= $wg->BlankImgUrl ?>">
 		</a>
 		<p><?=wfMsg('wikiahome-community-column1-creative') ?></p>

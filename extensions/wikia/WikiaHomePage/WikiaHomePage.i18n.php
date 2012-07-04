@@ -62,6 +62,7 @@ $messages['en'] = array(
 *[http://www.wikia.com/Lifestyle Featured]',
 
 	'wikiahome-community-column1-heading' => 'Community Resources',
+	'wikiahome-community-column1-link' => 'http://community.wikia.com',
 	'wikiahome-community-column1-creative' => 'Everything you need to start and grow your community on Wikia from tips and tools to news and access to really helpful people.',
 	'wikiahome-community-column2-heading' => 'Innovation at Wikia',
 	'wikiahome-community-column2-creative' => 'See how Wikia is making a dent in the mobile universe with its new mobile website and apps like Game Guides and LyricWiki lyrics.',
@@ -202,6 +203,7 @@ $messages['de'] = array(
 *[http://de.wikia.com/Sports Sport]',
 
 	'wikiahome-community-column1-heading' => 'Rund um die Community',
+	'wikiahome-community-column1-link' => 'http://de.community.wikia.com',
 	'wikiahome-community-column1-creative' => 'Alles was du brauchst, um eine Community in Wikia zu starten und sie weiter wachsen zu lassen. Neuigkeiten, Tipps und hilfreiche Menschen.',
 	'wikiahome-community-column2-heading' => 'Wikia ist innovativ',
 	'wikiahome-community-column2-creative' => 'Wikia macht einen gewaltigen Schritt voran im mobilen Umfeld mit der neuen mobilen Website und Apps wie Game Guides und LyricsWiki.',

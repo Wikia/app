@@ -66,12 +66,14 @@ class WikiaHomePageController extends WikiaController {
 
 		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->hubImages = $response->getVal('hubImages', '');
+		$this->lang = $this->wg->contLang->getCode();
 		F::build('JSMessages')->enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 	}
 
 	public function wikiaMobileIndex() {
 		//$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePageMobile.scss');
 		$response = $this->app->sendRequest( 'WikiaHomePageController', 'getHubImages' );
+		$this->lang = $this->wg->contLang->getCode();
 		$this->hubImages = $response->getVal( 'hubImages' , '' );
 	}
 
