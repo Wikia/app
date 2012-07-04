@@ -137,7 +137,7 @@ window.AdGetColor = AdEngine.getAdColor;
 
 /* Display the div for an ad, as long as it is not a no-op ad, such as a clear gif */
 AdEngine.displaySlotIfAd = function (slotname) {
-		// TODO: use nocookie domain
+		// FIXME: this check is highly unlikely to be used
         var noopStrings = [ 'http://images.wikia.com/common/wikia/noad.gif' ]; // This should be our standard no-op
 
         var noopFound = false;
