@@ -38,7 +38,6 @@ class UserBlock {
 		}
 
 		$blocksData = Phalanx::getFromFilter( self::TYPE );
-
 		if ( !empty($blocksData) && !empty($text) ) {
 			if ( $user->isAnon() ) {
 				$ret =  self::blockCheckInternal( $user, $blocksData, $text, true, $isCurrentUser );
@@ -127,7 +126,6 @@ class UserBlock {
 	//moved from RegexBlockCore.php
 	private static function setUserData(&$user, $blockData, $address /* not used at all */, $isBlockIP = false) {
 		wfProfileIn( __METHOD__ );
-
 		$user->mBlockedby = $blockData['author_id'];
 
 		//added to make User::isBlockedGlobally()
@@ -157,19 +155,18 @@ class UserBlock {
 		}
 
 		// set expiry information
-		if ($user->mBlock) {
-			// protected
-			$user->mBlock->setId( $blockData['id'] );
-			$user->mBlock->setBlockEmail( true );
-			// public
-			$user->mBlock->mExpiry = is_null($blockData['expire']) ? 'infinity' : $blockData['expire'];
-			$user->mBlock->mTimestamp = wfTimestamp( TS_MW, $blockData['timestamp'] );
-			$user->mBlock->mAddress = $blockData['text'];
+		$user->mBlock = new Block();
+		// protected
+		$user->mBlock->setId( $blockData['id'] );
+		$user->mBlock->setBlockEmail( true );
+		// public
+		$user->mBlock->mExpiry = is_null($blockData['expire']) ? 'infinity' : $blockData['expire'];
+		$user->mBlock->mTimestamp = wfTimestamp( TS_MW, $blockData['timestamp'] );
+		$user->mBlock->mAddress = $blockData['text'];
 
-			// account creation check goes through the same hook...
-			if ($isBlockIP) {
-				$user->mBlock->setCreateAccount( 1 );
-			}
+		// account creation check goes through the same hook...
+		if ($isBlockIP) {
+			$user->mBlock->setCreateAccount( 1 );
 		}
 
 		wfProfileOut( __METHOD__ );
