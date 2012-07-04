@@ -92,7 +92,7 @@ class WikiaHomePageController extends WikiaController {
 	public function getStats() {
 		$this->wf->ProfileIn(__METHOD__);
 
-		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'stats');
+		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'stats', $this->wg->lang->getCode());
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
 			$stats['visitors'] = $this->helper->getStatsFromArticle('StatsVisitors');
@@ -339,7 +339,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @responseParam array hubImages
 	 */
 	public function getHubImages() {
-		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'hubimages', self::HUBS_IMAGES_MEMC_KEY_VER);
+		$memKey = $this->wf->SharedMemcKey('wikiahomepage', 'hubimages', $this->wg->lang->getCode(), self::HUBS_IMAGES_MEMC_KEY_VER);
 		$hubImages = $this->wg->Memc->get($memKey);
 
 		if (empty($hubImages)) {
