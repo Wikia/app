@@ -184,7 +184,7 @@ function openFbLogin() {
 		return true;
 	}
 */
-	FB.login(FB.bind(sendToConnectOnLogin, null), { scope : "publish_stream" });
+	FB.login(sendToConnectOnLogin, { scope : "publish_stream" });
 }
 
 /**
