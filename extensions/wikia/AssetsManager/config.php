@@ -591,7 +591,7 @@ $config['walljs'] = array(
 		'//extensions/wikia/Wall/js/WallEditMessageForm.js',
 		'//extensions/wikia/Wall/js/WallReplyMessageForm.js',
 		'//extensions/wikia/Wall/js/WallSortingBar.js',
-		'//skins/common/jquery/jquery.autoresize.js'
+		'//resources/wikia/libraries/jquery/autoresize/jquery.autoresize.js'
 	)
 );
 

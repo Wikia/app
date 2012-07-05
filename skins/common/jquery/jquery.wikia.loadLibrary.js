@@ -50,7 +50,7 @@ $.loadYUI = function(callback) {
 };
 
 // jquery.wikia.modal.js in now a part of AssetsManager package
-// @deprecated
+// @deprecated no need to lazy load it
 $.loadModalJS = function(callback) {
 	if (typeof callback === 'function') {
 		callback();
@@ -63,12 +63,9 @@ $.loadJQueryUI = function(callback) {
 };
 
 // autocomplete plugin - not to be confused autocomplete feature of jQuery UI
+// @deprecated use $.ui.autocomplete
 $.loadJQueryAutocomplete = function(callback) {
-	return $.loadLibrary('jQuery Autocomplete',
-		stylepath + '/common/jquery/jquery.autocomplete.js',
-		typeof $.fn.pluginAutocomplete,
-		callback
-	);
+	return mw.loader.use('wikia.jquery.autocomplete').done(callback || $.noop);
 };
 
 $.loadWikiaTooltip = function(callback) {

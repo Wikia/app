@@ -1,12 +1,11 @@
 <!-- s:<?= __FILE__ ?> -->
-<script type="text/javascript">
-/*<![CDATA[*/
+<script>
 function deletechecked() {
     var answer = confirm("Delete tag?")
 	return answer;
 }
 
-$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+$.loadJQueryAutocomplete(function() {
 	$('.wftagautocomplete').autocomplete({
 		serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
 		minChars:3,
@@ -20,7 +19,6 @@ $(function () { // this line makes sure this code runs on page load
 	});
 })
 
-/*]]>*/
 </script>
 <form action="<?php echo $title->getFullUrl() ?>" method="post">
 <fieldset>

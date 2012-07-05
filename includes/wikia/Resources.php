@@ -32,6 +32,10 @@ $wgResourceModules['jquery.mustache'] = array(
 	'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js'
 );
 
+$wgResourceModules['wikia.jquery.autocomplete'] = array(
+	'scripts' => 'resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js'
+);
+
 // moved here from AssetsManager by wladek
 $wgResourceModules['wikia.yui'] = array(
 	'scripts' => array(
