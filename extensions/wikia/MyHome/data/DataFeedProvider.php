@@ -438,7 +438,7 @@ class DataFeedProvider {
 	private function filterLog($res) {
 		wfProfileIn(__METHOD__);
 		if ($res['logtype'] == 'move') {
-			if (isset($res['move'])) {
+			if( isset($res['move'], $res['move']['new_title'], $res['move']['new_ns']) ) { //FB#35775
 				//RT#27870
 				if (!empty($this->parameters['type']) && $this->parameters['type'] == 'widget') {
 					return;
