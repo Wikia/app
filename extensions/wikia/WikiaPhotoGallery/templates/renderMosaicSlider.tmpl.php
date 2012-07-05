@@ -23,13 +23,13 @@
 			<img width='<?= $imagesDimensions['w']; ?>' height='<?= $imagesDimensions['h'] ?>' src='<?=$val['imageUrl']?>' class="wikia-mosaic-hero-image">
 			<img width='<?= $thumbDimensions['w'] ?>' height='<?= $thumbDimensions['h'] ?>' src='<?= $val['imageThumbnail'] ?>' class="wikia-mosaic-thumb-image">
 
-			<div class="wikia-mosaic-description-mask">
-			</div>
-			<div class="wikia-mosaic-description">
-				<h3><?= $val['imageTitle'] ?></h3>
-				<div class="wikia-mosaic-short-title"><?= $val['imageShortTitle'] ?></div>
-				<p><?= $val['imageDescription'] ?></p>
-			</div>
+			<span class="wikia-mosaic-description-mask">
+			</span>
+			<span class="wikia-mosaic-description">
+				<span class="h3"><?= $val['imageTitle'] ?></span>
+				<span class="wikia-mosaic-short-title"><?= $val['imageShortTitle'] ?></span>
+				<span class="description-more"><?= $val['imageDescription'] ?></span>
+			</span>
 			<?php if ( !empty( $val['imageLink'] ) ): ?>
 					</a>
 			<?php endif; ?>

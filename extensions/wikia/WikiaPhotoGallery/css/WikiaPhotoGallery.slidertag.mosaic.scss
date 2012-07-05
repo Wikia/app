@@ -49,13 +49,14 @@
 			overflow: hidden;
 			white-space: nowrap;
 			z-index: 10;
-			h3 {
+			.h3 {
+				display: block;
 				font-size: 14px;
 				line-height: 14px;
 				margin: 5px;
 				padding: 0;
 			}
-			p {
+			p, .description-more {
 				margin: 0 5px;
 				padding: 0;
 			}
@@ -118,7 +119,7 @@
 				overflow: hidden;
 				white-space: nowrap;
 				z-index: 10;
-				h3 {
+				.h3 {
 					display: none;
 					font-size: 14px;
 					line-height: 14px;
@@ -135,6 +136,9 @@
 					padding: 0;
 				}
 			}
+		}
+		.wikia-mosaic-slider-description span, .wikia-mosaic-slide span {
+			display: block;
 		}
 	}
 }
