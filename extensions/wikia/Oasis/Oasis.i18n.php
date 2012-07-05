@@ -212,6 +212,7 @@ $messages['qqq'] = array(
 	'oasis-total-articles-mainpage' => '$1 is the number of pages on the wiki.
 
 PLEASE NOTE: This message MUST be separated into two lines by a <nowiki><BR /></nowiki>.',
+	'oasis-latest-photos-title' => 'Title displayed at the top of right rail "Recent Photos" module',
 	'oasis-latest-photos-by' => 'Should probably have parameters.',
 	'oasis-latest-photos-posted-in' => 'Needs parameter?',
 	'oasis-latest-photos-more-dotdotdot' => 'Appears on the file description page after the list of pages which include the file, if too long.',
