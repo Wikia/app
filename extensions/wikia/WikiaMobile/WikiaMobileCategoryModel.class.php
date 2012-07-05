@@ -15,6 +15,7 @@ class WikiaMobileCategoryModel extends WikiaModel{
 		$cacheKey = $this->getItemsCollectionCacheKey( $category->getName() );
 		$contents = $this->wg->memc->get( $cacheKey );
 
+
 		if ( empty( $contents ) ) {
 			$contents = F::build( 'WikiaMobileCategoryViewer', array( $category ) )->getContents();
 			$this->wg->memc->set( $cacheKey, $contents, self::CACHE_TTL_ITEMSCOLLECTION );
@@ -117,7 +118,8 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 
 	private function addItem( $title, $sortkey ){
  		if ( $title instanceof Title ) {
-			$index = strtolower( substr( $sortkey, 0, 1 ) );
+			 $sortkey = str_replace(array("\n", "\t", "\r", ' '), '', $sortkey);
+			 $index = (string) strtolower( substr( $sortkey, 0, 1 ) );
 
 			if ( empty( $this->items[$index] ) ) {
 				$this->items[$index] = F::build( 'WikiaMobileCategoryItemsCollection' );
@@ -136,9 +138,11 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 	public function getContents(){
 		parent::doCategoryQuery();
 
+		/*
 		if ( $this->count > 0 ) {
 			ksort( $this->items );
 		}
+		*/
 
 		$ret = F::build( 'WikiaMobileCategoryContents', array( $this->items, $this->count ) );
 

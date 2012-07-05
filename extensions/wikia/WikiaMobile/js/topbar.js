@@ -219,13 +219,12 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
         if(!searchInit){
             Wikia.getMultiTypePackage({
                 scripts: 'wikiamobile_autocomplete_js',
-                messages: 'LinkSuggestWikiaMobile',
                 ttl: 604800,
                 callback: function(res){
                     Wikia.processScript(res.scripts[0]);
                     require('suggest', function(sug){
                         sug({
-                            url: wgServer + wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+                            url: wgServer + '/api.php' + '?action=opensearch',
                             input: searchInput,
                             list: searchSug,
                             clear: d.getElementById('wkClear')
