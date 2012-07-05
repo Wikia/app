@@ -14,6 +14,8 @@ $app->registerClass('MediaToolController', $dir . 'MediaToolController.class.php
 
 // hooks
 $app->registerHook('EditPageLayoutExecute', 'MediaToolHooksHelper', 'onEditPageLayoutExecute');
+$app->registerHook('EditPage::showEditForm:initial2', 'MediaToolHooksHelper', 'onShowEditFormInitial2');
 
 // i18n mapping
 $wgExtensionMessagesFiles['MediaTool'] = $dir . 'MediaTool.i18n.php';
+F::build('JSMessages')->registerPackage('MediaTool', array('mediatool-*'));
