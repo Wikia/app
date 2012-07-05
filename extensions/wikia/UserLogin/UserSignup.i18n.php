@@ -67,7 +67,7 @@ Click the confirmation link in your email to finish creating your account.",  //
 	'usersignup-confirmation-email_subject' => 'Almost there! Confirm your Wikia account',
 	'usersignup-confirmation-email-greeting' => 'Hi $USERNAME,',
 	'usersignup-confirmation-email-content' => 'You\'re one step away from creating your account on Wikia! Click the link below to confirm your e-mail address and get started.
-<br/><br/>
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'The Wikia Team',
 	'usersignup-confirmation-email_body' => 'Hi $2,
@@ -418,7 +418,7 @@ Haz clic en el enlace de confirmación en tu correo para terminar de crear tu cu
 	'usersignup-confirmation-email_subject' => '¡Ya casi! Confirma tu cuenta de Wikia',
 	'usersignup-confirmation-email-greeting' => 'Hola $USERNAME,',
 	'usersignup-confirmation-email-content' => '¡Estás a un paso de crear tu cuenta en Wikia! Haz clic en el enlace de abajo para confirmar tu correo electrónico y comenzar a editar.
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'El Equipo de Wikia',
 	'usersignup-confirmation-email_body' => 'Hola $2,
@@ -625,7 +625,7 @@ Cliquez sur le lien de confirmation dans votre courriel pour terminer la créati
 	'usersignup-confirmation-email_subject' => 'Presque! Confirmez votre compte Wikia',
 	'usersignup-confirmation-email-greeting' => 'Bonjour $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Vous êtes à la dernière étape de la création de votre compte sur Wikia! Cliquez sur le lien ci-dessous pour confirmer votre adresse de courriel et démarrer.
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => "L'équipe Wikia",
 	'usersignup-confirmation-email_body' => "Bonjour $2,
@@ -733,7 +733,7 @@ Prema na ligazón de confirmación do seu correo para rematar a creación da sú
 	'usersignup-confirmation-email_subject' => 'Xa case está! Confirme a súa conta de Wikia',
 	'usersignup-confirmation-email-greeting' => 'Boas, $USERNAME:',
 	'usersignup-confirmation-email-content' => 'Está a un paso de crear a súa conta en Wikia! Prema na ligazón inferior para confirmar o seu enderezo de correo electrónico.
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'O equipo de Wikia',
 	'usersignup-confirmation-email_body' => 'Boas, $2:
@@ -994,7 +994,7 @@ $messages['mk'] = array(
 	'usersignup-confirmation-email_subject' => 'Речиси е готово! Потврдете ја сметката',
 	'usersignup-confirmation-email-greeting' => 'Здраво $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Ова е последниот чекор за да направите своја сметка на Викија! Стиснете на долунаведената врска за да ја потврдите е-поштата  да и започнете.
-<br/><br/>
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'Екипата на Викија',
 	'usersignup-confirmation-email_body' => 'Здраво $2,
@@ -1202,7 +1202,7 @@ Klik pautan pengesahan dalam e-mel anda untuk menyiapkan pembukaan akaun anda.",
 	'usersignup-confirmation-email_subject' => 'Hampir siap! Sahkan akaun Wikia anda',
 	'usersignup-confirmation-email-greeting' => '$USERNAME,',
 	'usersignup-confirmation-email-content' => 'Hanya tinggal selangkah lagi untuk anda membuka akaun di Wikia! Klik pautan di bawah untuk mengesahkan alamat e-mel anda dan mulakan.
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'Pasukan Wikia',
 	'usersignup-confirmation-email_body' => '$2,
@@ -1463,7 +1463,7 @@ Kliknij na link potwierdzający w niej aby ukończyć tworzenie konta.",
 	'usersignup-confirmation-email_subject' => 'Potwierdź swoje konto na Wikii',
 	'usersignup-confirmation-email-greeting' => 'Witaj $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Jesteś o krok od utworzenia konta na Wikii! Kliknij poniższy link aby potwierdzić swój adres e-mail i rozpocząć edytowanie!
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'Zespół Wikii',
 	'usersignup-confirmation-email_body' => 'Witaj $2,
@@ -1668,7 +1668,7 @@ $messages['ru'] = array(
 	'usersignup-confirmation-email_subject' => 'Почти готово! Подтвердите вашу учётную запись Викия',
 	'usersignup-confirmation-email-greeting' => 'Привет, $USERNAME',
 	'usersignup-confirmation-email-content' => 'Ты в одном шаге от создания учётной записи на Викия! Нажми на ссылку ниже, чтобы подтвердить свой адрес электронной почты и начать.
-<br/ ><br/ >
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'Команда Викия',
 	'usersignup-confirmation-email_body' => 'Привет, $2
@@ -1870,7 +1870,7 @@ Klicka på bekräftelselänken i din e-post för att slutföra skapandet av ditt
 	'usersignup-confirmation-email_subject' => 'Nästan klar! Bekräfta ditt Wikia-konto',
 	'usersignup-confirmation-email-greeting' => 'Hej $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Du är ett steg bort från att skapa ditt konto på Wikia! Klicka på länken nedan för att bekräfta din e-postadress och komma igång.
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'Wikia-teamet',
 	'usersignup-confirmation-email_body' => 'Hej $2,
