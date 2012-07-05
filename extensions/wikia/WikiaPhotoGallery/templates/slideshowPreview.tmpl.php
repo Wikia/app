@@ -20,15 +20,15 @@
 			<div><?php
 				if ( $image['isFileTypeVideo'] ) {
 					echo wfMsg('wikiaPhotoGallery-not-displayed');
-				} 
+				}
 			?></div>
-		</span>		
+		</span>
 <?php
 		}
 
 		if (!empty($image['image'])) {
 ?>
-		<img data-src="<?= htmlspecialchars($image['image']) ?>" alt="" />
+		<img data-src="<?= htmlspecialchars($image['image']) ?>" alt="" width="<?= $width ?>" height="<?= $height ?>" />
 <?php
 		}
 		else if (empty($image['thumbnailBg'])) {
@@ -59,8 +59,7 @@
 			} else {
 			// recently uploaded images: render 50% transparent, non-interactable (no moving, no menu).
 ?>
-	<span class="WikiaPhotoGalleryPreviewItem WikiaPhotoGalleryPreviewRecentlyUploaded" imageid="<?= $i ?>" style="background-image: url(<?= $image['thumbnailBg'] ?>); width: <?= $width?>px; height: <?= $height ?>px">
-	</span>
+	<span class="WikiaPhotoGalleryPreviewItem WikiaPhotoGalleryPreviewRecentlyUploaded" imageid="<?= $i ?>" style="background-image: url(<?= $image['thumbnailBg'] ?>); width: <?= $width?>px; height: <?= $height ?>px"></span>
 <?php
 			}
 		}

@@ -33,7 +33,7 @@ $extraClass = empty($fromFeed) ? ' WikiaPhotoGalleryPreviewDraggable' : ' WikiaP
 								<span class="WikiaPhotoGalleryPreviewItemLink" title="<?= $msg ?>"></span>
 							<?php }
 								if (!empty($image['image'])) { ?>
-								<img data-src="<?= htmlspecialchars($image['image']) ?>" alt="" />
+								<img data-src="<?= htmlspecialchars($image['image']) ?>" alt="" width="<?= $image['width'] ?>" height="<?= $width['height'] ?>" />
 							<?php
 								}
 							?>
