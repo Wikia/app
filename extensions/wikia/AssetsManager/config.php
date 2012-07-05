@@ -757,8 +757,8 @@ $config['imagedrop_js'] = array(
 	'skin' => array( 'monobook', 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/ImageDrop/js/ImageDrop.js',
-		'//skins/common/jquery/jquery.filedrop.js'
+		'//extensions/wikia/hacks/ImageDrop/js/ImageDrop.js',
+		'//resources/wikia/libraries/jquery/filedrop/jquery.filedrop.js'
 	)
 );
 
