@@ -15,7 +15,8 @@ $messages['en'] = array(
 	'mediatool-mediaoptions' => 'Media Options',
 	'mediatool-error-missing-video-url' => 'Missing video url',
 	'mediatool-error-unknown-video-provider' => 'Unknown video provider',
-	'mediatool-error-invalid-video' => 'Invalid video'
+	'mediatool-error-invalid-video' => 'Invalid video',
+	'mediatool-selected-media-count' => 'Your selected media ($1 Items)'
 );
 
 /** Message documentation (Message documentation)
