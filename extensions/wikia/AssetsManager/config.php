@@ -109,8 +109,8 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//skins/common/jquery/jquery.wikia.js',
 		'//skins/common/jquery/jquery.wikia.carousel.js',
-		'//skins/common/jquery/jquery.wikia.placeholder.js',
-		'//skins/common/jquery/jquery.expirystorage.js',
+		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
+		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
 		// libraries loaders
 		'//skins/common/jquery/jquery.wikia.getResources.js',
 		'//skins/common/jquery/jquery.wikia.loadLibrary.js',
@@ -159,7 +159,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',
-		'//skins/common/jquery/jquery.wikia.modal.js',
+		'//resources/wikia/libraries/jquery/wikia/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		// oasis specific files
@@ -498,7 +498,7 @@ $config['chat_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_jquery',
-		'//skins/common/jquery/jquery.wikia.placeholder.js',
+		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
 		'//extensions/wikia/Chat/js/lib/socket.io.client.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/Chat/js/emoticons.js', // must be before controllers.js
