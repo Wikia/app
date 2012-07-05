@@ -1,20 +1,17 @@
 <!-- s:<?= __FILE__ ?> -->
-<script type="text/javascript">
-/*<![CDATA[*/
+<script>
 function deletechecked() {
     var answer = confirm("Delete tag?")
 	return answer;
 }
 
-$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+$.loadJQueryAutocomplete(function() {
 	$('#wftaginput').autocomplete({
 		serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
 		minChars:3,
 		deferRequestBy: 0
 	});
 });
-
-/*]]>*/
 </script>
 <div>
 <?php

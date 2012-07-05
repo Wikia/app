@@ -1,14 +1,12 @@
 <!-- s:<?= __FILE__ ?> -->
-<script type="text/javascript">
-/*<![CDATA[*/
-$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+<script>
+$.loadJQueryAutocomplete(function() {
 	$('#wftaginput').autocomplete({
 		serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
 		minChars:3,
 		deferRequestBy: 0
 	});
 });
-/*]]>*/
 </script>
 <?php
 	if( !empty( $info ) ):

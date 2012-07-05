@@ -37,7 +37,7 @@ select {
 	<form method="get" action="<?php print $formData['actionURL'] ?>">
 		<div style="float: left; margin-right: 6px">
 
-			
+
 			<select size="10" style="width: 22em;" id="variableSelect" name="var">
 			<?php
 			$gVar = empty($formData['selectedVar']) ? '' : $formData['selectedVar'];
@@ -70,7 +70,7 @@ select {
 		<p class="likeValue"  style="display:none">
 			<?php print wfMsg('whereisextension-search-like-value') ?>
 		</p>
-		
+
 		<input value="<?php echo $formData['likeValue']; ?>" type="text" name="likeValue" class="likeValue"  style="display:none" />&nbsp;
 		<input type="submit" value="<?php print wfMsg('whereisextension-submit') ?>"/>
 	</form>
@@ -136,7 +136,7 @@ select {
 			return false;
 	});
 
-	$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+	$.loadJQueryAutocomplete(function() {
 		$('#wikiSelectTagName').autocomplete({
 			serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
 			minChars:3,
@@ -163,13 +163,13 @@ select {
 			$('.likeValue').show();
 			$('.boolValue').hide();
 		}
-	} 
+	}
 
 	$( function() {
 		var el = $('#searchType');
-		showHideLikeBool(el); 
+		showHideLikeBool(el);
 	});
-	
+
 	$('#searchType').change(
 		function(e) {
 			var el = $(e.target);

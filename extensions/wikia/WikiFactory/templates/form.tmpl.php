@@ -113,9 +113,7 @@ div.wf-info {
 
 /*]]>*/
 </style>
-<script type="text/javascript">
-/*<![CDATA[*/
-
+<script>
 var $Factory = {};
 $Factory.Domain = {};
 $Factory.Variable = {};
@@ -128,7 +126,7 @@ $Factory.VariableCallback = {
     success: function( aData ) {
     	$("#" + aData["div-name"]).html(aData["div-body"]);
         //--- now add listeners and events
-		$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+		$.loadJQueryAutocomplete(function() {
 			$('#tagName').autocomplete({
 				serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
 				minChars:3,
@@ -522,8 +520,6 @@ $(function() {
 		return $Factory.Variable.select(e, [ "wk-variable-select", 1]);
 	});
 });
-
-/*]]>*/
 </script>
 <div id="wiki-factory">
 	<div id="wk-busy-bar" style="display: none;"><img src="http://images.wikia.com/common/progress_bar.gif" width="70" height="11" alt="Wait..." border="0" /></div>

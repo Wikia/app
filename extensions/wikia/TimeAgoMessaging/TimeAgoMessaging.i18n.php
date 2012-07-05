@@ -394,4 +394,3 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'timeago-second' => '一分钟前',
 );
-

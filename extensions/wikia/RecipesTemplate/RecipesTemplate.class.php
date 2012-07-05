@@ -431,13 +431,13 @@ abstract class RecipesTemplate extends SpecialPage {
 	 * Return HTML of current recipes form
 	 */
 	protected function renderForm() {
-		global $wgOut, $wgStylePath, $wgExtensionsPath, $wgJsMimeType, $wgTitle, $wgUser, $wgRequest;
+		global $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgTitle, $wgUser, $wgRequest, $wgResourceBasePath;
 		wfProfileIn(__METHOD__);
 
 		// load dependencies (CSS and JS)
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.css");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/RecipesTemplate/RecipesTemplate.js\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.autocomplete.js\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/autoresize/jquery.autocomplete.js\"></script>\n");
 
 		// create form type: recipe / ingredient
 		$formType = strtolower(substr($wgTitle->getText(), 6));
