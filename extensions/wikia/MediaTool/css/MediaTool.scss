@@ -1,7 +1,7 @@
-@import "../../../../skins/oasis/css/core/color.scss";
-@import "../../../../skins/oasis/css/mixins/clearfix.scss";
-@import "../../../../skins/oasis/css/mixins/box-shadow.scss";
-@import "../../../../skins/oasis/css/mixins/opacity.scss";
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
 
 .MediaToolContainer {
 
@@ -69,11 +69,30 @@
 		}
 	}
 
-	#mediaToolItemList {
+    .media-tool-thumbnail-style {
+      img {
+        padding: 3px;
+        &.selected {
+          padding: 1px;
+          border: 2px solid $color-buttons;
+          margin-right: 15px;
+        }
+      }
+      .thumb-style-desc {
+        color: #9f9f9f;
+        font-style: italic;
+      }
+    }
+
+  .media-tool-thumbnail-size {
+    margin-top: 15px;
+  }
+
+    #mediaToolItemList {
 		&.custom-state-active {
 			background: #eee;
 		}
-  }
+    }
 
 	#mediaToolBasket {
 		width: 700px;
@@ -91,7 +110,7 @@
 			width: 96px;
 			text-align: center;
 		}
-	}
+    }
 
 	@include clearfix;
 }

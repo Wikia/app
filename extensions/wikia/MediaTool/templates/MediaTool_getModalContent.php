@@ -51,16 +51,37 @@
 
 			<ul class="tabs minor-tabs">
 				<li data-tab="edit-media-options" class="selected">
-					<a><?= wfMsg('mediatool-photooptions'); ?></a>
+					<a><?= wfMsg('mediatool-mediaoptions'); ?></a>
 				</li>
 			</ul>
 
 			<div data-tab-body="edit-media-options" class="tabBody selected">
 
-				<div id="VideoEmbedSlider" class="WikiaSlider"></div>
-				<span id="VideoEmbedInputWidth">
-					<input type="text" id="VideoEmbedManualWidth" name="VideoEmbedManualWidth" value="" onchange="" onkeyup="" /> px
-				<span>
+				<div class="media-tool-thumbnail-style">
+					<h4>Thumbnail Style</h4>
+					<div><img data-thumb-style="border" src="<?= F::app()->wg->ExtensionsPath.'/wikia/MediaTool/images/thumbnail_with_border.png' ?>" />
+						 <img data-thumb-style="no-border" src="<?= F::app()->wg->ExtensionsPath.'/wikia/MediaTool/images/thumbnail_without_border.png' ?>" />
+					</div>
+					<span class="thumb-style-desc">Border and Caption</span>
+				</div>
+
+				<div class="media-tool-thumbnail-size">
+					<h4>Thumbnail Size</h4>
+					<input type="radio" name="thumbsize" checked="checked" id="mediaToolLargeThumbnail"/>
+					<label for="mediaToolLargeThumbnail">Large (300px)</label>
+					<input type="radio" name="thumbsize" id="mediaToolSmallThumbnail"/>
+					<label for="mediaToolSmallThumbnail">Small (250px)</label>
+					<input type="radio" name="thumbsize" id="mediaToolCustomThumbnail"/>
+					<label for="mediaToolCustomThumbnail">Custom</label>
+					<div id="mediaToolThumbnailSizeSlider" class="WikiaSlider"></div>
+					<span id="VideoEmbedInputWidth">
+						<input type="text" id="VideoEmbedManualWidth" name="VideoEmbedManualWidth" value="" onchange="" onkeyup="" /> px
+					<span>
+				</div>
+				<div class="media-tool-thumbnail-position">
+					<h4>Media Position</h4>
+					<div>positions.....</div>
+				</div>
 			</div>
 
 		</div>
