@@ -1,3 +1,5 @@
+/*global deferred, Zepto*/
+
 /**
  * Extends Zepto to have $.Deferred() compatible API
  *
