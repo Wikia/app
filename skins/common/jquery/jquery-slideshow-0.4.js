@@ -84,6 +84,7 @@
 		startClass: 'startClass',				//class of "start" button
 		reverseClass: 'reverseClass',			//class of "reverse" button
 		blockedClass: 'blockedClass',			//wikia: class of blocked "play" / "pause" button
+		lazyLoadClass: 'lazyLoad',				//wikia: class for lazy loaded images
 		topZIndex: 100,							//z-index of top slide
 		stayOn: false,							//stay on a particular slide (e.g. 1,2,3) if false, slideshow automatically animates
 		stopOnSelect: true,						//stop slideshow if user presses controls
@@ -147,9 +148,16 @@
 
 			obj.find('.'+ options.slidesClass).each(function(){
 				var childNodes = jQuery(this).children('li');
+				// Wikia change start
+				var currentSlide = childNodes.eq(curslide);
+				currentSlide.find('.' + options.lazyLoadClass).each(function() {
+					var image = $(this);
+					image.attr('src', image.data('src')).removeAttr('data-src').removeData('src');
+				});
 
-				childNodes.eq(curslide).animate({opacity:'show'}, options.fadeDuration, enqueueNextSlide === true ? startAnimation : undefined);
-				childNodes.not(jQuery(this).children('li').eq(curslide)).animate({opacity:'hide'}, options.fadeDuration);
+				currentSlide.animate({opacity:'show'}, options.fadeDuration, enqueueNextSlide === true ? startAnimation : undefined);
+				childNodes.not(currentSlide).animate({opacity:'hide'}, options.fadeDuration);
+				// Wikia change end
 			});
 
 			// Wikia
