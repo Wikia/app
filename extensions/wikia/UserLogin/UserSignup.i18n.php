@@ -90,9 +90,9 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-reconfirmation-email_subject' => 'Confirm your e-mail address change on Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Hi $USERNAME',
 	'usersignup-reconfirmation-email-content' => 'Please click the link below to confirm your change of e-mail address on Wikia.
-<br/><br/>
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br/><br/>
+
 You\'ll continue to recieve email at your old e-mail address until you confirm this one.',
 	'usersignup-reconfirmation-email-signature' => 'The Wikia Team',
 	'usersignup-reconfirmation-email_body' => 'Hi $2,
@@ -438,9 +438,9 @@ Para consultar las últimas noticias de Wikia, visita http://es.wikia.com
 	'usersignup-reconfirmation-email_subject' => 'Confirma el cambio de correo electrónico en Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Hola $USERNAME',
 	'usersignup-reconfirmation-email-content' => 'Por favor haz clic en el enlace de abajo para confirmar el cambio de correo electrónico en Wikia.
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br /><br />
+
 Seguirás recibiendo mensajes a tu correo electrónico viejo hasta que confirmes este otro.',
 	'usersignup-reconfirmation-email-signature' => 'El Equipo de Wikia',
 	'usersignup-reconfirmation-email_body' => 'Hola $2,
@@ -645,9 +645,9 @@ Vous voulez contrôler quels courriels vous recevez? Allez à: {{fullurl:{{ns:sp
 	'usersignup-reconfirmation-email_subject' => "Confirmer votre changement d'adresse de courriel sur Wikia",
 	'usersignup-reconfirmation-email-greeting' => 'Bonjour $USERNAME',
 	'usersignup-reconfirmation-email-content' => 'Veuillez cliquer sur le lien ci-dessous pour confirmer votre changement d\'adresse de courriel sur Wikia.
-<br/><br/>
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br/><br/>
+
 Vous continuerez à recevoir des courriels à votre ancienne adresse tant que vous n\'aurez pas validé celle-ci.',
 	'usersignup-reconfirmation-email-signature' => "L'équipe Wikia",
 	'usersignup-reconfirmation-email_body' => "Bonjour $2,
@@ -753,9 +753,9 @@ Quere controlar os correos electrónicos que recibe? Vaia a: {{fullurl:{{ns:spec
 	'usersignup-reconfirmation-email_subject' => 'Confirme o cambio no enderezo de correo electrónico en Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Boas, $USERNAME:',
 	'usersignup-reconfirmation-email-content' => 'Prema na ligazón inferior para confirmar o cambio no enderezo de correo electrónico en Wikia.
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br /><br />
+
 Seguirá recibindo correos no enderezo vello ata que confirme este.',
 	'usersignup-reconfirmation-email-signature' => 'O equipo de Wikia',
 	'usersignup-reconfirmation-email_body' => 'Boas, $2:
@@ -1014,9 +1014,9 @@ ___________________________________________
 	'usersignup-reconfirmation-email_subject' => 'Потврдете ја измената на е-поштата на Викија',
 	'usersignup-reconfirmation-email-greeting' => 'Здраво $USERNAME',
 	'usersignup-reconfirmation-email-content' => 'Стиснете на долунаведената врска за да ја потврдите измената на вашата е-пошта на Викија.
-<br/><br/>
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br/><br/>
+
 Пораките ќе ви пристигаат на старата адреса сè додека не ја потврдите новата.',
 	'usersignup-reconfirmation-email-signature' => 'Екипата на Викија',
 	'usersignup-reconfirmation-email_body' => 'Hi $2,
@@ -1222,9 +1222,9 @@ Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-reconfirmation-email_subject' => 'Sahkan penukaran alamat e-mel anda di Wikia',
 	'usersignup-reconfirmation-email-greeting' => '$USERNAME,',
 	'usersignup-reconfirmation-email-content' => 'Sila klik pautan berikut untuk mengesahkan penukaran alamat e-mel anda di Wikia.
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br /><br />
+
 Anda akan masih menerima e-mel di alamat e-mel lama anda sehingga anda mengesahkan yang ini.',
 	'usersignup-reconfirmation-email-signature' => 'Pasukan Wikia',
 	'usersignup-reconfirmation-email_body' => '$2,
@@ -1483,9 +1483,9 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 	'usersignup-reconfirmation-email_subject' => 'Potwierdź zmianę adresu e-mail na Wikii',
 	'usersignup-reconfirmation-email-greeting' => 'Witaj $USERNAME,',
 	'usersignup-reconfirmation-email-content' => 'Kliknij na poniższy link aby potwierdzić zmianę adresu e-mail na Wikii.
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br /><br />
+
 Do czasu potwierdzenia nowego adresu, wszystkie powiadomienia będą przychodzić na stary adres.',
 	'usersignup-reconfirmation-email-signature' => 'Zespół Wikii',
 	'usersignup-reconfirmation-email_body' => 'Witaj $2,
@@ -1688,9 +1688,9 @@ ___________________________________________
 	'usersignup-reconfirmation-email_subject' => 'Подтвердить изменение адреса электронной почты на Викия',
 	'usersignup-reconfirmation-email-greeting' => 'Привет, $USERNAME',
 	'usersignup-reconfirmation-email-content' => 'Пожалуйста, нажмите на ссылку ниже для подтверждения изменения адреса электронной почты на Викия.
-<br/ ><br/ >
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br/ ><br/ >
+
 Вы будете продолжать получать почту на ваш старый адрес электронной почты, пока не подтвердите новый адрес.',
 	'usersignup-reconfirmation-email-signature' => 'Команда Викия',
 	'usersignup-reconfirmation-email_body' => 'Привет, $2
