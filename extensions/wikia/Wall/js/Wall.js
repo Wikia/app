@@ -27,22 +27,22 @@ var Wall = $.createClass(Object, {
 			.on('mouseleave', '.follow.wikia-button', this.proxy(this.unhoverFollow));
 
 		$('.load-more').on('click', 'a', this.proxy(this.loadMore));
-		
+
 		// Make timestamps dynamic
 		$('.timeago').timeago();
-		
+
 		// If any textarea has content make sure Reply / Post button is visible
 		$(document).ready(this.initTextareas);
-		
+
 		if(wgTitle.indexOf('/') > 0) {
 			var titlePart = wgTitle.split('/');
-			this.title = titlePart[0]; 
+			this.title = titlePart[0];
 		} else {
 			this.title = wgTitle;
 		}
-		
+
 		this.page = {'title': this.title, 'namespace': window.wgNamespaceNumber }
-		
+
 		//click tracking
 		$('#Wall')
 			.on('click', '.edited-by a', this.proxy(this.trackClick))
@@ -75,7 +75,7 @@ var Wall = $.createClass(Object, {
 			this.editMessageForm = new WallEditMessageForm(this.page, this.model);
 			this.replyMessageForm = new WallReplyMessageForm(this.page, this.model);
 
-			// This breaks stuff for MiniEditor instances.  See comment below, needs to be refactored. 
+			// This breaks stuff for MiniEditor instances.  See comment below, needs to be refactored.
 			this.newMessageForm.on('afterNewMessagePost', this.proxy(this.afterNewMessagePost));
 		}
 
@@ -85,7 +85,7 @@ var Wall = $.createClass(Object, {
 		// Expose to public
 		$('#Wall').data('Wall', this).triggerHandler('WallInit', [this]);
 	},
-	
+
 	onHashChange: function() {
 		if(window.location.hash) {
 			var number = parseInt(window.location.hash.substr(1));
@@ -96,11 +96,11 @@ var Wall = $.createClass(Object, {
 	onWallWatch: function(e) {
 		$('.SpeechBubble .follow.wikia-button').fadeOut();
 	},
-	
+
 	onWallUnwatch: function(e) {
 		$('.SpeechBubble .follow.wikia-button').fadeIn();
 	},
-	
+
 	//hack for safari tab index
 	focusButton: function(e) {
 		if(e.keyCode == 9 && !e.shiftKey) {
@@ -158,7 +158,7 @@ var Wall = $.createClass(Object, {
 		var element = $(e.target);
 		var isWatched = parseInt(element.attr('data-iswatched'));
 		var commentId = element.closest('li').attr('data-id');
-		
+
 		element.animate({'opacity':0.5},'slow');
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
@@ -174,13 +174,13 @@ var Wall = $.createClass(Object, {
 					if(isWatched) {
 						element.animate({'opacity':0.7},'slow', function() { element.css('opacity','');} );
 						$(e.target).text($.msg('oasis-follow')).addClass('secondary');
-						
+
 						//click tracking
 						this.track('wall/message/unfollow');
 					} else {
 						element.animate({'opacity':0.7},'slow', function() { element.css('opacity','');} );
 						$(e.target).text($.msg('wikiafollowedpages-following')).removeClass('secondary');
-						
+
 						//click tracking
 						this.track('wall/message/follow');
 					}
@@ -194,19 +194,19 @@ var Wall = $.createClass(Object, {
 			$(e.target).html($.msg('wall-message-unfollow'));
 		}
 	},
-	
+
 	unhoverFollow: function(e) {
 		if( $(e.target).html() == $.msg('wall-message-unfollow') ) {
 			$(e.target).html($.msg('wikiafollowedpages-following'));
 		}
 	},
-	
+
 	loadMore: function(e) {
 		e.preventDefault();
-		
+
 		$(e.target).closest('ul').find('li.SpeechBubble').show();
 		$(e.target).closest('.load-more').remove();
-		
+
 		var comment_id = $(e.target).closest('li.message').attr('data-id');
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
@@ -215,9 +215,9 @@ var Wall = $.createClass(Object, {
 			data: { id: comment_id },
 			callback: function(data) { }
 		});
-			
+
 	},
-	
+
 	undoRemoveOrAdminDelete: function(e) {
 		var target = $(e.target);
 		var id = target.attr('data-id');
@@ -225,7 +225,7 @@ var Wall = $.createClass(Object, {
 			controller: 'WallExternalController',
 			method: 'undoAction',
 			data: {
-				msgid: id 
+				msgid: id
 			},
 			callback: this.proxy(function(data) {
 				var msg = target.closest('li');
@@ -237,8 +237,8 @@ var Wall = $.createClass(Object, {
 				}));
 			})
 		});
-	},	
-	
+	},
+
 	doRestore: function(id, target, formdata) {
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
@@ -252,15 +252,15 @@ var Wall = $.createClass(Object, {
 			})
 		});
 	},
-	
+
 	afterRestore: function(data, target) {
 		var msg = target.closest('li');
-		
+
 		if(msg.attr('is-reply') != 1 ) {
 			$('#WallBrickHeader .TitleRemoved').hide();
 			$('.SpeechBubble.new-reply').show();
 		}
-		
+
 		if(data.buttons) {
 			var buttonswrap = msg.find('.buttonswrapper:first');
 			buttonswrap.html(data.buttons);
@@ -268,20 +268,20 @@ var Wall = $.createClass(Object, {
 				WikiaButtons.init(buttonswrap);
 			}
 		}
-	
+
 		var placeholder = msg.find('.deleteorremove-infobox:first');
 		if(placeholder.exists()) {
 			placeholder.html('');
 			placeholder.addClass('empty');
 			return true;
 		}
-	
+
 		if(data.buttons) {
 			var buttons = msg.find('.buttonswrapper:first');
 			buttons.html('');
 			$().log(data.buttons);
 		}
-		
+
 		msg.fadeOut('fast', this.proxy(function() {
 			if(this.deletedMessages[id]) {
 				msg.remove();
@@ -293,40 +293,41 @@ var Wall = $.createClass(Object, {
 	confirmAction: function(e) {
 		e.preventDefault();
 		var target = $(e.target);
-		
+
 		var isreply = target.closest('.SpeechBubble').attr('data-is-reply');
-		
+
 		var wallMsg = target.closest('li.message');
 		var id = wallMsg.attr('data-id');
-		
+
 		if(target.attr('data-id')) {
-			var id = target.attr('data-id');
+			id = target.attr('data-id');
 		}
-		
+
 		var type = isreply ? 'reply':'thread';
 		var mode = target.attr('data-mode').split('-');
-		
+
 		var submode = '';
 		if(mode[1]) {
-			submode = mode[1]; 
-		} 
-		
+			submode = mode[1];
+		}
+
 		mode = mode[0];
+		var formdata;
 		if(submode == 'fast') {
-			var formdata = {};
+			formdata = {};
 			this.doAction(id, mode, wallMsg, target, formdata );
 			return true;
 		}
-		
+
 		var msg;
 		var title;
 		var cancelmsg;
 		var okmsg;
-	
+
 		title = $.msg('wall-action-' + mode + '-' + type + '-title');
 		okmsg = $.msg('wall-action-' + mode + '-confirm-ok');
 		cancelmsg = $.msg('wall-action-all-confirm-cancel');
-		
+
 		//delete && remove
 		msg = $.msg('wall-action-'+mode+'-confirm');
 		var form = $('<form>');
@@ -339,7 +340,7 @@ var Wall = $.createClass(Object, {
 			}
 		}
 		msg += '<form>'+form.html()+'</form>';
-	
+
 		if( mode == 'rev' ) {
 		//rev delete
 			if(isreply) {
@@ -348,7 +349,7 @@ var Wall = $.createClass(Object, {
 				msg = $.msg('wall-action-rev-thread-confirm');
 			}
 		}
-		
+
 		if(this.isMonobook) {
 			this.confirmActionMonobook(id, mode, msg, target, wallMsg, target);
 		} else {
@@ -363,11 +364,11 @@ var Wall = $.createClass(Object, {
 					this.doAction(id, mode, wallMsg, target, formdata );
 				})
 			});
-			
+
 			if(mode != 'rev') {
-				$('#WikiaConfirmOk').attr('disabled', 'disabled');	
-			} 
-			
+				$('#WikiaConfirmOk').attr('disabled', 'disabled');
+			}
+
 			$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
 				var target = $(e.target);
 				if(target.val().length > 0) {
@@ -378,57 +379,58 @@ var Wall = $.createClass(Object, {
 			});
 		}
 	},
-	
+
 	confirmActionMonobook: function(id, mode, msg, target, wallMsg, formdata) {
+		var reply,
+			answer;
+
 		if( mode == 'rev' ) {
-			var answer = confirm(msg);
+			answer = confirm(msg);
 			if(answer){
 				this.doAction(id, 'rev', wallMsg);
 			}
 		} if( mode == 'restore' || mode == 'admin' || mode == 'adminnotify' || mode == 'remove' || mode == 'removenotify' ) {
-			var formdata = [];
-			
+			formdata = [];
+
 			if(mode == 'adminnotify' || mode == 'removenotify') {
-				formdata.push({name:'notify-admin', 'value': true});	
+				formdata.push({name:'notify-admin', 'value': true});
 			} else {
 				formdata.push({name:'notify-admin', 'value': false});
 			}
-			
+
 			do {
-				var reply = prompt( $.msg('wall-confirm-monobook-' + mode.replace('notify','')) , "");			
+				reply = prompt( $.msg('wall-confirm-monobook-' + mode.replace('notify','')) , "");
 				if(reply === null) {
 					return ;
 				}
-				
+
 				if(reply.length < 1 && mode !=  'restore') {
 					alert( $.msg('wall-confirm-monobook-lack-of-reason') );
 				} else {
 					break;
 				}
-				
 			} while(1);
 
-			
 			formdata.push({name:'reason', 'value': reply});
-			
+
 			if(mode == 'adminnotify'){
 				mode = 'admin';
 			}
-			
+
 			if(mode == 'removenotify'){
 				mode = 'remove';
 			}
-			
+
 			this.doAction(id, mode, wallMsg, target, formdata);
 		}
 	},
-	
-	
+
+
 	/*
-	 * work as delete(mode: rev), 
-	 * admin delete(mode:admin), 
-	 * remove(mode: remove), 
-	 * restore(mode: restore)   
+	 * work as delete(mode: rev),
+	 * admin delete(mode:admin),
+	 * remove(mode: remove),
+	 * restore(mode: restore)
 	 */
 
 	doAction: function(id, mode, msg, target, formdata){
@@ -441,7 +443,7 @@ var Wall = $.createClass(Object, {
 			break;
 		}
 	},
-	
+
 	doDelete: function(id, mode, msg, formdata){
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
@@ -468,9 +470,9 @@ var Wall = $.createClass(Object, {
 				//click tracking
 				this.track('wall/message/action/delete');
 			})
-		});	
+		});
 	},
-	
+
 	track: function(url) {
 		if( typeof($.tracker) != 'undefined' ) {
 			$.tracker.byStr(url);
@@ -478,15 +480,15 @@ var Wall = $.createClass(Object, {
 			WET.byStr(url);
 		}
 	},
-	
+
 	proxy: function(func) {
 		return $.proxy(func, this);
 	},
-	
+
 	trackClick: function(event) {
 		var node = $(event.target),
 			parent = node.parent();
-		
+
 		if( node.hasClass('user-talk-archive-anchor') ) {
 			this.track('wall/archived_talk_page/view');
 		} else if( node.hasClass('timeago-fmt') && parent.parent().hasClass('timestamp') ) {
