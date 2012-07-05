@@ -30,8 +30,6 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
 F::build('JSMessages')->registerPackage('LinkSuggest', array('tog-*'));
 
-F::build('JSMessages')->registerPackage('LinkSuggestWikiaMobile', array('tog-redirected-from'));
-
 $wgHooks['GetPreferences'][] = 'wfLinkSuggestGetPreferences' ;
 function wfLinkSuggestGetPreferences($user, &$preferences) {
 	$preferences['disablelinksuggest'] = array(

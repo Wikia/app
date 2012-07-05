@@ -6,7 +6,6 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 	currentValue,
 	cachedResponse = [],
 	serviceUrl,
-	redirect,
 	regExp,
 	t, a;
 
@@ -19,20 +18,17 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 			cr = cachedResponse[curVal];
 
 			if (cr && cr[0].length > 0) {
-				suggestions = cr[0];
-				redirect = cr[1];
+				suggestions = cr[1];
 				suggest();
 			} else {
 				t = setTimeout(function(){
 					$.ajax({
 						url: serviceUrl,
 						data: {
-							query: curVal,
-							useskin: 'wikiamobile'
+							search: curVal
 						},
 						success: function(resp) {
-							suggestions = resp[0];
-							redirect = resp[1];
+							suggestions = resp[1];
 							cachedResponse[curVal] = resp;
 							suggest();
 						},
@@ -46,7 +42,6 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 	function suggest() {
 		var len = suggestions.length,
 			lis = '',
-			red,
 			sug;
 
 		list.innerHTML = '';
@@ -57,10 +52,8 @@ var reEscape = /(\/|\.|\*|\+|\?|\||\(|\)|\[|\]|\{|\}|\\)/g,
 
 			for (var i = 0; i < len; i++) {
 				sug = suggestions[i];
-				red = redirect[sug];
-
-				li = '<li><span title="'+sug+'">' + sug.replace(regExp, '<em>$1</em>') + ((red) ? '<div class=redir>' + $.msg('tog-redirected-from', red) + '</div>': '') + '<span class=copySrh>+</span></span></li>';
-				lis = (red) ? li + lis : lis + li;
+                li = '<li><span title="'+sug+'">' + sug.replace(regExp, '<em>$1</em>') + '<span class=copySrh>+</span></span></li>';
+				lis = lis + li;
 			}
 
 			list.insertAdjacentHTML('afterbegin', lis);

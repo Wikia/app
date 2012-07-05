@@ -83,7 +83,7 @@ class WikiaMobileCategoryService extends WikiaService {
 		$batch = $this->request->getInt( 'batch' );
 		$err = false;
 
-		if ( !empty( $categoryName ) && !empty( $index ) && !empty( $batch ) ){
+		if ( !empty( $categoryName ) && isset( $index ) && !empty( $batch ) ){
 			$category = F::build( 'Category', array ( F::build( 'Title' , array ( $categoryName, NS_CATEGORY ), 'newFromText' ) ), 'newFromTitle' );
 
 			if ( $category instanceof Category ) {
