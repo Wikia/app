@@ -93,16 +93,37 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 		navBar.className = 'fllNav';
 
 		if(!minimumSet){
-			var uls = wkNavMenu.getElementsByTagName('ul'),
-				max = 0,
-				height;
+			var uls2 = wkNavMenu.getElementsByClassName('lvl2'),
+				uls3,
+				max = d.getElementById('lvl1').offsetHeight,
+				height,
+				i = 0,
+				ul2,
+				ul2l = uls2.length,
+				check = function(ul){
+					height = ul.offsetHeight;
+					max = (height > max) ? height : max;
+				},
+				j,
+				ul3,
+				uls3l;
 
-			for(var i = 0, l = uls.length; i < l; i++){
-				uls[i].style.display = 'block';
-				height = uls[i].offsetHeight;
-				max = (height > max) ? height : max;
-				uls[i].style.display = '';
+			for(;i < ul2l; i++){
+				ul2 = uls2[i];
+				ul2.style.display = 'block';
+				check(ul2);
+
+				uls3 = ul2.getElementsByClassName('lvl3');
+				for(j = 0, uls3l = uls3.length; j < uls3l; j++){
+					ul3 = uls3[j];
+					ul3.style.display = 'block';
+					check(ul3);
+					ul3.style.display = '';
+				}
+
+				ul2.style.display = '';
 			}
+
 			wkNavMenu.style.minHeight = (max + 50) + 'px';
 			minimumSet = true;
 		}
@@ -306,5 +327,5 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 		closeNav: closeNav,
 		closeSearch: closeSearch,
 		closeDropDown: closeDropDown
-	}
+	};
 });
