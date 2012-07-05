@@ -810,8 +810,9 @@ class WikiaPhotoGallery extends ImageGallery {
 						((!empty($borderColorCSS)) ? $borderColorCSS : null)
 				));
 
-				# Fix 59913 - thumbnail goes as <img /> not as <a> background.
+				$imgStyle = null;
 
+				# Fix 59913 - thumbnail goes as <img /> not as <a> background.
 				if ( $orientation != 'none' ) {
 
 				# Fix 65861 - gallery fix, now images are put inside <p> tags for cropping.
@@ -843,8 +844,9 @@ class WikiaPhotoGallery extends ImageGallery {
 					$imgStyle = ( ( !empty( $tempTopMargin ) ) ? " margin-top:".$tempTopMargin."px;" : null ).
 						( ( !empty( $tempLeftMargin ) ) ? " margin-left:".$tempLeftMargin."px;" : null );
 				}else{
-					$imgStyle = "height:{$image['height']}px;".
-						($useBuckets ? '' : " width:{$image['width']}px;");
+					// Do we need this?
+					//$imgStyle = "height:{$image['height']}px;".
+					//	($useBuckets ? '' : " width:{$image['width']}px;");
 
 				}
 				$html .= Xml::openElement(
@@ -866,11 +868,12 @@ class WikiaPhotoGallery extends ImageGallery {
 					$html .= Xml::openElement(
 						'img',
 						array(
-							'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
-								$imgStyle,
-							'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
+							'style' => (!empty($image['titleText']) ? " line-height:{$image['height']}px;" : null).$imgStyle,
+							'src' => ($image['thumbnail'] ? $image['thumbnail'] : null),
 							'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
 							'class' => 'thumbimage',
+							'width' => $image['width'],
+							'height' => $image['height'],
 						)
 					);
 				} else {
@@ -1089,8 +1092,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				'title' => null
 			);
 
-
-
 			if ( $nt->getNamespace() != NS_FILE || !$img ) {
 				# We're dealing with a non-image, spit out the name and be done with it.
 				$thumbHtml = '<a class="image broken-image new" style="line-height: '.( $this->mHeights ).'px;">'
@@ -1106,7 +1107,12 @@ class WikiaPhotoGallery extends ImageGallery {
 			} else {
 				$linkAttribs['data-image-name'] = $img->getName();
 				$liAttribs['data-image-name'] = $img->getName();
-				$thumbHtml = Xml::openElement('img', array('data-src' => $thumb->url, 'class' => 'thumbimage'));
+				$thumbHtml = Xml::openElement('img', array(
+					'data-src' => $thumb->url,
+					'class' => 'thumbimage',
+					'width' => $thumb->width,
+					'height' => $thumb->height,
+				));
 			}
 
 			// add CSS class so we can show first slideshow image before JS is loaded
