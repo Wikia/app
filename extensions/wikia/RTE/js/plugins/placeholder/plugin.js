@@ -241,10 +241,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 		var position = RTE.tools.getPlaceholderPosition(placeholder);
 		var tempTop,
 			freeBottomSpace = $(RTE.getInstance().getThemeSpace('contents').$).height() - position.top;
-		if (freeBottomSpace <= preview.height()) { 
+		if (freeBottomSpace <= preview.height()) {
 			tempTop = position.top - preview.height() - placeholder.height();
 			preview.addClass('bottom');
-			
+
 		} else {
 			tempTop = position.top + placeholder.height() + 6;
 			preview.removeClass('bottom');
@@ -277,17 +277,19 @@ CKEDITOR.plugins.add('rte-placeholder',
 		}, 150));
 
 		// clear timeout used to hide preview with small delay
-		if (timeoutId = placeholder.data('hideTimeout')) {
+		var timeoutId = placeholder.data('hideTimeout');
+		if (timeoutId) {
 			clearTimeout(timeoutId);
 		}
 	},
 
 	// hide preview popup
 	hidePreview: function(placeholder, hideNow) {
-		var preview = this.getPreview(placeholder);
+		var preview = this.getPreview(placeholder),
+			showTimeout = placeholder.data('showTimeout')
 
 		// clear show timeout
-		if (showTimeout = placeholder.data('showTimeout')) {
+		if (showTimeout) {
 			clearTimeout(showTimeout);
 		}
 

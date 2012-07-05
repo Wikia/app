@@ -1,7 +1,7 @@
 var ChatBanModal = function(title, okCallback, options) {
 	var self = this,
 		data = {};
-		
+
 	if (options) {
 		data = {
 			userId: options.userId || ""
@@ -15,23 +15,23 @@ var ChatBanModal = function(title, okCallback, options) {
 			width: 404,
 			buttons: [
 				{
-					id: 'cancel', 
-					message: $.msg('chat-ban-modal-button-cancel'), 
+					id: 'cancel',
+					message: $.msg('chat-ban-modal-button-cancel'),
 					handler: function(){
 						var dialog = $('#ChatBanModal');
 						dialog.closeModal();
 					}
 				},
 				{
-					id: 'ok', 
-					defaultButton: true, 
-					message: data.isChangeBan ? $.msg('chat-ban-modal-button-change-ban') : $.msg('chat-ban-modal-button-ok'), 
+					id: 'ok',
+					defaultButton: true,
+					message: data.isChangeBan ? $.msg('chat-ban-modal-button-change-ban') : $.msg('chat-ban-modal-button-ok'),
 					handler: function() {
-							reason = self.reasonInput.val(),
+						var reason = self.reasonInput.val(),
 							expires = self.expiresInput.val();
-			
+
 						okCallback(expires, reason);
-						
+
 						self.dialog.closeModal();
 					}
 				}
