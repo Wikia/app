@@ -119,11 +119,11 @@ class Listusers extends SpecialRedirectToSpecial {
 	 * show form
 	 */
 	function showForm ( $error = "" ) {
-		global $wgOut, $wgContLang, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgStylePath, $wgUser;
+		global $wgOut, $wgContLang, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgStylePath, $wgUser;
 
 		wfProfileIn( __METHOD__ );
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Listusers/js/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n");
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Listusers/css/table.scss'));
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );

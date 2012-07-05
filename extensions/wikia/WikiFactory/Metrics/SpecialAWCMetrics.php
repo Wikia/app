@@ -6,8 +6,8 @@
  * @version: 1.0
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) { 
-	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ; 
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ;
 }
 
 class WikiMetrics {
@@ -53,21 +53,21 @@ class WikiMetrics {
     private $axRedir;
     private $axRemoved;
     private $axDaily;
-	
+
 	/**
 	 * constructor
 	 */
 	function __construct() {
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "WikiFactory/metrics" );
-		$this->mPeriods = array( 
-			0 => "all", 
-			1 => "one-week", 
-			2 => "two-weeks", 
-			3 => "three-weeks", 
-			101 => "one-months", 
-			102 => "two-months", 
-			103 => "three-months", 
-			106 => "half-year" 
+		$this->mPeriods = array(
+			0 => "all",
+			1 => "one-week",
+			2 => "two-weeks",
+			3 => "three-weeks",
+			101 => "one-months",
+			102 => "two-months",
+			103 => "three-months",
+			106 => "half-year"
 		);
 		$this->mDefPeriod = 0;
 		$this->mSortList = array(
@@ -84,42 +84,41 @@ class WikiMetrics {
 			"images"			=> "images"
 		);
 	}
-	
+
 	public function show( $subtitle = "" ) {
-		global $wgUser, $wgOut, $wgRequest;
-		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath;
+		global $wgUser, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath;
 
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
 			return;
 		}
-		
+
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			return;
 		}
-		
+
 		if ( !$wgUser->isAllowed('wikifactory') ) {
 			$wgOut->redirect( $this->mTitle->getLocalURL() );
 			return;
 		}
-		
+
 		/**
 		 * initial output
 		 */
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiFactory/Metrics/css/table.css?{$wgStyleVersion}");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
-		
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiFactory/Metrics/css/table.css");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n");
+
 		/**
 		 * show form
 		 */
 		@list(, $this->mAction) = explode("/", $subtitle);
-		
+
 		$this->showForm();
-		
+
 		$this->mAction = empty($this->mAction) ? 'main' : $this->mAction;
 
 		if ( $this->mAction == 'main' ) {
@@ -135,9 +134,9 @@ class WikiMetrics {
 	function showForm ($error = "") {
 		global $wgOut, $wgContLang, $wgStyleVersion, $wgStylePath;
         wfProfileIn( __METHOD__ );
-		
+
 		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}");
-				
+
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"				=> $error,
@@ -147,7 +146,7 @@ class WikiMetrics {
         $wgOut->addHTML( $oTmpl->execute("tabs") );
         wfProfileOut( __METHOD__ );
 	}
-	
+
 	/* draws the form itself  */
 	function showMainForm ($error = "") {
 		global $wgOut, $wgContLang;
@@ -158,7 +157,7 @@ class WikiMetrics {
 		#---
 		$hubs = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
-		
+
 		$params = $wgRequest->getValues();
 		if ( empty($params['from']) ) {
 			$params['from'] = date('Y/m/d', time() - WikiMetrics::TIME_DELTA * 60 * 60 * 24 );
@@ -172,7 +171,7 @@ class WikiMetrics {
             "mPeriods"			=> $this->mPeriods,
             "mDefPeriod"		=> $this->mDefPeriod,
             "wgContLang"		=> $wgContLang,
-            "wgExtensionsPath" 	=> $wgExtensionsPath, 
+            "wgExtensionsPath" 	=> $wgExtensionsPath,
             "oCloseWikiTitle"	=> $oCloseWikiTitle,
             "aLanguages" 		=> $this->mLanguages,
 			"aTopLanguages" 	=> $this->mTopLanguages,
@@ -183,7 +182,7 @@ class WikiMetrics {
         $wgOut->addHTML( $oTmpl->execute("metrics-main-form") );
         wfProfileOut( __METHOD__ );
 	}
-	
+
 	/* draws the form itself  */
 	function showMonthlyForm ($error = "") {
 		global $wgOut, $wgContLang;
@@ -196,14 +195,14 @@ class WikiMetrics {
         $oTmpl->set_vars( array(
 			"error"				=> $error,
             "wgContLang"		=> $wgContLang,
-            "wgExtensionsPath" 	=> $wgExtensionsPath, 
+            "wgExtensionsPath" 	=> $wgExtensionsPath,
 			"aCategories"		=> $aCategories,
 			"obj"				=> $this,
         ));
         $wgOut->addHTML( $oTmpl->execute("metrics-monthly-form") );
         wfProfileOut( __METHOD__ );
 	}
-	
+
 	/* draws the form itself  */
 	function showDailyForm ($error = "") {
 		global $wgOut, $wgContLang;
@@ -216,14 +215,14 @@ class WikiMetrics {
         $oTmpl->set_vars( array(
 			"error"				=> $error,
             "wgContLang"		=> $wgContLang,
-            "wgExtensionsPath" 	=> $wgExtensionsPath, 
+            "wgExtensionsPath" 	=> $wgExtensionsPath,
 			"aCategories"		=> $aCategories,
 			"obj"				=> $this,
         ));
         $wgOut->addHTML( $oTmpl->execute("metrics-daily-form") );
         wfProfileOut( __METHOD__ );
 	}
-		
+
 	/* get languages */
 	private function getLangs() {
 		$this->mTopLanguages = explode(',', wfMsg('awc-metrics-language-top-list'));
@@ -231,7 +230,7 @@ class WikiMetrics {
 		asort($this->mLanguages);
 		return count($this->mLanguages);
 	}
-	
+
 	/* make values of request params */
 	public function getRequestParams() {
 		global $wgRequest;
@@ -250,7 +249,7 @@ class WikiMetrics {
 		}
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/* check session params */
 	public function getRequestParamsFromSession() {
 		wfProfileIn( __METHOD__ );
@@ -264,7 +263,7 @@ class WikiMetrics {
 			}
 		}
 	}
-	
+
 	/*
 	 * build stats records
 	 *
@@ -274,21 +273,21 @@ class WikiMetrics {
 	 */
 	public function getMainStatsRecords() {
 		global $wgStatsDB, $wgStatsDBEnabled;
-		
+
 		$res = array();
 		wfProfileIn( __METHOD__ );
-		
+
 		#---
 		list ($AWCCities, $AWCCitiesCount) = $this->getNewWikis();
-		
+
 		if ( !empty( $AWCCities ) ) {
-			#--- page views 
+			#--- page views
 			$wikiList = array_keys( $AWCCities );
-			
+
 			if ( !empty( $wgStatsDBEnabled ) ) {
 				$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-				$oRes = $db->select( 
-					array( 'page_views' ), 
+				$oRes = $db->select(
+					array( 'page_views' ),
 					array( 'pv_city_id, sum(pv_views) as cnt' ),
 					array( 'pv_city_id' => $wikiList ),
 					__METHOD__,
@@ -307,7 +306,7 @@ class WikiMetrics {
 				$db->freeResult( $oRes );
 			}
 		}
-		
+
 		#---
 		wfProfileOut( __METHOD__ );
 		return array($AWCCities, $AWCCitiesCount);
@@ -320,7 +319,7 @@ class WikiMetrics {
 	 * @return array
 	 *
 	 */
-	public function getFilteredWikis() {				
+	public function getFilteredWikis() {
 		$showAll = true;
 		$this->getRequestParamsFromSession();
 
@@ -389,7 +388,7 @@ class WikiMetrics {
 		}
 		$city_public = array( );
 		if ( !empty($this->axActive) ) {
-			$city_public[] = 1; 
+			$city_public[] = 1;
 		}
 		if ( !empty($this->axClosed) ) {
 			$city_public[] = 0;
@@ -409,7 +408,7 @@ class WikiMetrics {
 		#----
 		$this->mLimit = ( !empty($this->axLimit) ) ? intval($this->axLimit) : self::LIMIT;
 		$this->mOffset = ( !empty($this->axOffset) ) ? intval($this->axOffset) : 0;
-	
+
 		$order = array();
 		if ( !empty($this->axOrder) ) {
 			$list = explode("|", $this->axOrder);
@@ -421,14 +420,14 @@ class WikiMetrics {
 			}
 		} else {
 			$order = array( $this->mSortList[WikiMetrics::ORDER] . " " . WikiMetrics::DESC );
-		}		
-		
+		}
+
 		$this->mSort = implode(", ", $order);
 
 		wfProfileOut( __METHOD__ );
 		return $where;
 	}
-	
+
 	/*
 	 * get list of Wikis for some params
 	 *
@@ -443,13 +442,13 @@ class WikiMetrics {
 
 		#- find Wikis with nbr pageviews fewer than X
 		$this->cityIds = array();
-		if ( !empty($this->axNbrEdits) ) { 
+		if ( !empty($this->axNbrEdits) ) {
 			$this->cityIds = $this->getWikisByNbrEdits();
 			if ( empty($this->cityIds) ) {
 				$this->cityIds = array(0);
 			}
 		}
-		if ( !empty($this->axNbrArticles) ) { 
+		if ( !empty($this->axNbrArticles) ) {
 			$this->cityIds = $this->getWikisByNbrArticles();
 			if ( empty($this->cityIds) ) {
 				$this->cityIds = array(0);
@@ -461,7 +460,7 @@ class WikiMetrics {
 				$this->cityIds = array(0);
 			}
 		}
-		
+
 		$AWCMetrics = array();
 		$AWCCitiesCount = 0;
 		if ( !empty( $wgStatsDBEnabled ) ) {
@@ -469,20 +468,20 @@ class WikiMetrics {
 			$dbr = wfGetDB( DB_SLAVE, "stats", $wgStatsDB );
 			/* check params */
 			$where = $this->buildQueryOptions($dbr);
-			
+
 			/* number records */
 			$options = array();
 
 			$tables = array("wikicities.city_list", "stats.wikia_monthly_stats"); #, "stats.page_views");
 			$fields = array(
-				"city_id", 
-				"city_dbname", 
-				"city_url", 
-				"city_created", 
-				"city_founding_user", 
-				"city_title", 
-				"city_founding_email", 
-				"city_lang", 
+				"city_id",
+				"city_dbname",
+				"city_url",
+				"city_created",
+				"city_founding_user",
+				"city_title",
+				"city_founding_email",
+				"city_lang",
 				"city_public",
 				"ifnull(round(avg(users_all), 1), 0) as all_users",
 				"ifnull(round(avg(users_content_ns), 1),0) as content_users",
@@ -491,12 +490,12 @@ class WikiMetrics {
 				"ifnull(max(images_uploaded),0) as images",
 				//"ifnull(avg(pv_views),0) as pviews"
 			);
-			
+
 			$join = array(
 				'stats.wikia_monthly_stats' => array( 'LEFT JOIN', 'wiki_id = city_id'),
 				//'stats.page_views' => array('LEFT JOIN', 'pv_city_id = city_id')
 			);
-			
+
 			if ( $all == false ) {
 				$oRow = $dbr->selectRow( "wikicities.city_list", "COUNT(*) as cnt", $where, __METHOD__ );
 				if ( is_object($oRow) ) {
@@ -511,17 +510,17 @@ class WikiMetrics {
 			} else {
 				$options['GROUP BY'] = 'city_id';
 				$options['ORDER BY'] = $this->mSort;
-				$AWCCitiesCount = 0; 
+				$AWCCitiesCount = 0;
 			}
 
 			#----
-			$oRes = $dbr->select( 
-				$tables, 
+			$oRes = $dbr->select(
+				$tables,
 				$fields,
 				$where,
 				__METHOD__,
 				$options,
-				$join	
+				$join
 			);
 
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
@@ -532,7 +531,7 @@ class WikiMetrics {
 						$sk = $oFounder->getSkin();
 						$sFounderLink = $sk->makeLinkObj( Title::newFromText($oFounder->getName(), NS_USER), $oFounder->getName());
 						$sFounderName = $oFounder->getName();
-					}		
+					}
 					$AWCMetrics[ $oRow->city_id ] = array(
 						'id' 				=> $oRow->city_id,
 						'db' 				=> $oRow->city_dbname,
@@ -545,7 +544,7 @@ class WikiMetrics {
 						'founderName'		=> $sFounderName,
 						'founderEmail'		=> $oRow->city_founding_email,
 						'public'			=> $oRow->city_public,
-						#-- stats 
+						#-- stats
 						'articles' 			=> $oRow->articles,
 						'edits'				=> $oRow->edits,
 						'images'			=> $oRow->images,
@@ -565,8 +564,8 @@ class WikiMetrics {
 
 		wfProfileOut( __METHOD__ );
 		return array($AWCMetrics, $AWCCitiesCount);
-	}	
-	
+	}
+
 	/*
 	 * get # wikis per hubs per month
 	 *
@@ -587,14 +586,14 @@ class WikiMetrics {
 		if ( !empty($this->axDaily) ) {
 			$what = "IFNULL(date_format(cl.city_created, '%Y-%m-%d'), '0000-00-00')";
 		}
-			
+
 		$hubs = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
-			
+
 		$AWCMetrics = array();
 		$AWCCitiesCount = 0;
-		$oRow = $dbr->selectRow( 
-			"( select distinct($what) from city_list cl ) as c", 
+		$oRow = $dbr->selectRow(
+			"( select distinct($what) from city_list cl ) as c",
 			array( " count(*) as cnt " ),
 			array(),
 			__METHOD__
@@ -602,22 +601,22 @@ class WikiMetrics {
 		if ( $oRow ) {
 			$AWCCitiesCount = $oRow->cnt;
 		}
-			
+
 		if ( $AWCCitiesCount > 0 ) {
-			
-			$oRes = $dbr->select( 
-				"city_cat_mapping as ccm, city_list as cl", 
+
+			$oRes = $dbr->select(
+				"city_cat_mapping as ccm, city_list as cl",
 				array( "$what as row_date, count(*) as cnt" ),
 				$where,
 				__METHOD__,
 				array(
-					'GROUP BY' => 'row_date', 
+					'GROUP BY' => 'row_date',
 					'ORDER BY' => 'row_date DESC',
 					'LIMIT' => $this->mLimit,
 					'OFFSET' => $this->mOffset
 				)
 			);
-			while ( $oRow = $dbr->fetchObject( $oRes ) ) {	
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$firstDate = $lastDate = '';
 				if ( empty($this->axDaily) ) {
 					$sDate = ($oRow->row_date == '0000-00') ? '1970-01' : $oRow->row_date;
@@ -634,38 +633,38 @@ class WikiMetrics {
 					$firstDate = sprintf("%s 00:00:00", $sDate);
 					$lastDate = sprintf("%s 23:59:59", $sDate);
 				}
-				
+
 				$AWCMetrics[$out] = array('count' => $oRow->cnt, 'hubs' => array(), 'start' => $firstDate, 'end' => $lastDate );
-			}			
+			}
 			$dbr->freeResult( $oRes );
-			
+
 			if ( !empty($AWCMetrics) ) {
 				foreach ( $AWCMetrics as $date => $records ) {
 					$where = array(
 						"ccm.city_id = cl.city_id",
 						"cl.city_created between '". $records['start'] . "' and '" . $records['end'] . "'"
 					);
-					
-					$oRes = $dbr->select( 
-						"city_cat_mapping as ccm, city_list as cl", 
+
+					$oRes = $dbr->select(
+						"city_cat_mapping as ccm, city_list as cl",
 						array( "ccm.cat_id, count(*) as cnt" ),
 						$where,
 						__METHOD__,
 						array(
-							'GROUP BY' => 'cat_id', 
+							'GROUP BY' => 'cat_id',
 						)
 					);
-					while ( $oRow = $dbr->fetchObject( $oRes ) ) {	
+					while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 						$AWCMetrics[$date]['hubs'][$oRow->cat_id] = array(
 							'catName' 	=> (isset($aCategories[$oRow->cat_id])) ? $aCategories[$oRow->cat_id]['name'] : "Undefined",
-							'count'		=> $oRow->cnt						
+							'count'		=> $oRow->cnt
 						);
-					}			
+					}
 					$dbr->freeResult( $oRes );
 				}
 			}
 		}
-				
+
 		wfProfileOut( __METHOD__ );
 		return array($AWCMetrics, $AWCCitiesCount, $aCategories);
 	}
@@ -689,7 +688,7 @@ class WikiMetrics {
 		}
 		return $languages;
 	}
-	
+
 	/*
 	 * get a list Wikis where domain contain fragment of string
 	 *
@@ -698,19 +697,19 @@ class WikiMetrics {
 	 */
 	private function getWikisByDomain() {
 		global $wgExternalSharedDB;
-		
+
 		wfProfileIn( __METHOD__ );
 		$aCityIds = array();
 
 		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
 		$domain = strtolower( $this->axDomain );
-		
-		$where = ( isset($this->axExactDomain) && ($this->axExactDomain == 1) ) 
-				? array( "city_domain = 'www.{$domain}.wikia.com'" ) 
+
+		$where = ( isset($this->axExactDomain) && ($this->axExactDomain == 1) )
+				? array( "city_domain = 'www.{$domain}.wikia.com'" )
 				: array( "city_domain" .  $dbr->buildLike( $dbr->anyString(), $domain, $dbr->anyString() ) );
-		
-		$oRes = $dbr->select( 
-			"city_domains", 
+
+		$oRes = $dbr->select(
+			"city_domains",
 			array( 'city_id' ),
 			$where,
 			__METHOD__,
@@ -722,20 +721,20 @@ class WikiMetrics {
 			}
 		}
 		$dbr->freeResult( $oRes );
-		
+
 		wfProfileOut( __METHOD__ );
 		return $aCityIds;
 	}
-	
+
 	/*
-	 * get a list of Wikis that have nbr of pageviews fewer than X 
+	 * get a list of Wikis that have nbr of pageviews fewer than X
 	 *
 	 * @author moli@wikia-inc.com
 	 * @return array
 	 */
 	private function getWikisByNbrPageviews() {
 		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
-		
+
 		$pageViews = $this->axNbrPageviews;
 		$pageViewsDays = $this->axNbrPageviewsDays;
 		if ( empty($pageViewsDays) ) {
@@ -755,8 +754,8 @@ class WikiMetrics {
 		$cities = $wgMemc->get( $memkey );
 		if ( empty( $cities ) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$oRes = $dbs->select( 
-				"page_views", 
+			$oRes = $dbs->select(
+				"page_views",
 				array( 'pv_city_id', 'sum(pv_views) as cnt' ),
 				$where,
 				__METHOD__,
@@ -770,40 +769,40 @@ class WikiMetrics {
 			$dbs->freeResult( $oRes );
 			$wgMemc->set( $memkey, $cities, 3600 );
 		}
-		
+
 		return $cities;
 	}
 
 	/*
-	 * get a list of Wikis that have nbr of edits fewer than X 
+	 * get a list of Wikis that have nbr of edits fewer than X
 	 *
 	 * @author moli@wikia-inc.com
 	 * @return array
 	 */
 	private function getWikisByNbrEdits( ) {
 		global $wgStatsDB, $wgMemc, $wgStatsDBEnabled;
-		
+
 		$nbrEdits = $this->axNbrEdits;
 		$nbrEditsDays = $this->axNbrEditsDays;
 		if ( empty($nbrEditsDays) ) {
 			$nbrEditsDays = self::DEF_MONTH_EDITS;
 		}
-		
+
 		$date_sub = date('Ym', strtotime('-'.intval($nbrEditsDays).' months'));
-		
+
 		$where = array( 'stats_date >= ' . $date_sub );
 		$cityList = "";
 		if ( !empty($this->cityIds) ) {
 			$cityList = implode(",", $this->cityIds);
 			$where[] = " wiki_id in (" . $cityList . ") ";
 		}
-				
+
 		$memkey = __METHOD__ . "e:" . $nbrEdits . "ed:" . $nbrEditsDays . "ids:" . md5($cityList);
 		$cities = $wgMemc->get( $memkey );
 		if ( empty($cities) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$oRes = $dbs->select( 
-				"wikia_monthly_stats", 
+			$oRes = $dbs->select(
+				"wikia_monthly_stats",
 				array( 'wiki_id', 'sum(articles_edits) as cnt' ),
 				$where,
 				__METHOD__,
@@ -819,16 +818,16 @@ class WikiMetrics {
 		#---
 		return $cities;
 	}
-	
+
 	/*
-	 * get a list of Wikis that have nbr of articles fewer than X 
+	 * get a list of Wikis that have nbr of articles fewer than X
 	 *
 	 * @author moli@wikia-inc.com
 	 * @return array
 	 */
 	private function getWikisByNbrArticles() {
 		global $wgStatsDB, $wgMemc, $wgStatsDBEnabled;
-		
+
 		$nbrArticles = $this->axNbrArticles;
 		#----
 		$where = array();
@@ -837,17 +836,17 @@ class WikiMetrics {
 			$cityList = implode(",", $this->cityIds);
 			$where[] = " wiki_id in (" . $cityList . ") ";
 		}
-		$options = array( 
-			'GROUP BY' => 'wiki_id', 
+		$options = array(
+			'GROUP BY' => 'wiki_id',
 			'HAVING' => '(select c1.articles from wikia_monthly_stats c1 where c1.stats_date = max(c2.stats_date) and c1.wiki_id = c2.wiki_id) <= ' . intval($nbrArticles)
 		);
-				
+
 		$memkey = __METHOD__ . "a:" . $nbrArticles . "ids:" . md5($cityList);
 		$cities = $wgMemc->get( $memkey );
 		if ( empty( $cities ) && !empty( $wgStatsDBEnabled ) ) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$oRes = $dbs->select( 
-				"wikia_monthly_stats as c2", 
+			$oRes = $dbs->select(
+				"wikia_monthly_stats as c2",
 				array( 'c2.wiki_id', 'max(c2.stats_date) as m' ),
 				$where,
 				__METHOD__,
@@ -863,9 +862,9 @@ class WikiMetrics {
 		#---
 		return $cities;
 	}
-	
+
 	/*
-	 * get  params 
+	 * get  params
 	 *
 	 * @author moli@wikia-inc.com
 	 * @return array
@@ -881,7 +880,7 @@ class WikiMetrics {
 		}
 		return $selected;
 	}
-	
+
 	public function getFrom() { return $this->axFrom; }
 	public function setFrom( $value ) { $this->axFrom = $value; }
 

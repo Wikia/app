@@ -44,13 +44,13 @@ class LookupUserPage extends SpecialPage {
 		if( $wgRequest->getText( 'mode' ) == 'by_id' ) {
 			$id = $target;
 			$u = User::newFromId($id); #create
-			if ( $u->loadFromId() ) { 
+			if ( $u->loadFromId() ) {
 				#overwrite text
-				$target = $u->getName(); 
-			} else { 
+				$target = $u->getName();
+			} else {
 				// User with that ID doesn't exist, notify user
 				// Stops trying to display form with a user by that name which is confusing
-				$byIdInvalidUser = true; 
+				$byIdInvalidUser = true;
 			}
 		}
 
@@ -126,7 +126,7 @@ EOT
 	function showInfo( $target, $emailUser = "" ) {
 		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt;
 		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
-		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath, $wgEnableLookupContribsExt;
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgResourceBasePath, $wgEnableLookupContribsExt;
 
 		/**
 		 * look for @ in username
@@ -222,7 +222,7 @@ EOT
 					'User talk:' . $name . '|' . wfMsg( 'talkpagelinktext' ) ) . ']]',
 					'[[Special:Contributions/' . $name . '|' . wfMsg( 'contribslink' ) . ']]</span>)'
 				) ) );
-				
+
 			$wgOut->addWikiText( '*' . wfMsgForContent( 'lookupuser-toollinks', $name, urlencode($name) ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-id', $user->getId() ) );
 			$wgOut->addWikiText( '*' . $email_output );
@@ -235,7 +235,7 @@ EOT
 			if( !empty($wgEnableLookupContribsExt) ) {
 				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
 				$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css?{$wgStyleVersion}");
-				$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
+				$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n");
 
 				//checking and setting User::mBlockedGlobally if needed
 				//only for this instance of class User
@@ -260,12 +260,12 @@ EOT
 
 	/**
 	 * @brief: Returns memc key
-	 * 
+	 *
 	 * @param string $userName name of a use
 	 * @param integer $wikiId id of a wiki
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function getUserLookupMemcKey($userName, $wikiId) {
@@ -274,14 +274,14 @@ EOT
 
 	/**
 	 * @brief: Returns data for jQuery.table plugin used by ajax call LookupContribsAjax::axData()
-	 * 
+	 *
 	 * @param string $userName name of a use
 	 * @param integer $wikiId id of a wiki
 	 * @param string $wikiUrl url address of a wiki
 	 * @param boolean $checkingBlocks a flag which says if we're checking user groups or block information
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function getUserData($userName, $wikiId, $wikiUrl, $checkingBlocks = false) {
@@ -326,7 +326,7 @@ EOT
 
 	/**
 	 * @brief: Ajax call loads data for two new columns: user rights and blocked
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function requestApiAboutUser() {
@@ -383,11 +383,11 @@ EOT
 
 	/**
 	 * @brief: Returns only selected user groups/rights
-	 * 
+	 *
 	 * @param array $groups array with wiki names of groups like: sysop, bureaucrat, chatmoderator
-	 * 
+	 *
 	 * @return array
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public static function selectGroups($groups) {
@@ -415,12 +415,12 @@ EOT
 
 	/**
 	 * @brief Returns true if a user is founder of a wiki
-	 * 
+	 *
 	 * @param integer $userId user's id
 	 * @param integer $wikiId wiki's id
-	 * 
+	 *
 	 * @return boolean
-	 * 
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public static function isUserFounder($userName, $wikiId) {

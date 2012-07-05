@@ -44,8 +44,8 @@ class WikiStatsPage extends IncludableSpecialPage
     #--- constructor
     public function __construct() {
         parent::__construct( "WikiStats", "",  true/*class*/);
-        if ( method_exists( 'SpecialPage', 'setGroup' ) ) { 
-			parent::setGroup( 'WikiStats', 'wiki' );	
+        if ( method_exists( 'SpecialPage', 'setGroup' ) ) {
+			parent::setGroup( 'WikiStats', 'wiki' );
 		}
     }
 
@@ -56,7 +56,7 @@ class WikiStatsPage extends IncludableSpecialPage
             $wgOut->blockedPage();
             return;
         }
-        
+
         if ( wfReadOnly() ) {
             $wgOut->readOnlyPage();
             return;
@@ -64,23 +64,23 @@ class WikiStatsPage extends IncludableSpecialPage
 
 		// Set the current wiki ID, DB name and user from globals
 		$this->mCityId     = $wgCityId;
-		$this->mCityDBName = $wgDBname;    
+		$this->mCityDBName = $wgDBname;
 		$this->mUser       = $wgUser;
-		
+
 		// Check the current $wgUser against the set of groups WikiStats recognizes
 		$this->userIsSpecial = WikiStats::isAllowed();
-        
+
 		$this->mFromDate 	= $wgRequest->getVal("wsfrom", WIKISTATS_MIN_STATS_YEAR.WIKISTATS_MIN_STATS_MONTH);
 		$this->mToDate 		= $wgRequest->getVal("wsto", date("Ym"));
 		$this->mTitle 		= Title::makeTitle( NS_SPECIAL, "WikiStats" );
 		$this->mAction		= $wgRequest->getVal("action", "");
 		$this->mXLS 		= $wgRequest->getVal("wsxls", false);
 		$this->mMonth 		= $wgRequest->getVal("wsmonth", 0);
-		$this->mLimit		= $wgRequest->getVal("wslimit", WIKISTATS_WIKIANS_RANK_NBR);					
+		$this->mLimit		= $wgRequest->getVal("wslimit", WIKISTATS_WIKIANS_RANK_NBR);
 		$this->mAllWikis 	= 0;
 
 		// Use the first part of the subpage as the action
-		if ( $subpage ) { 
+		if ( $subpage ) {
 			$path = explode("/", $subpage);
 			$this->mAction = $path[0];
 		}
@@ -92,21 +92,21 @@ class WikiStatsPage extends IncludableSpecialPage
 
 		// Split out the the from and to month and year for convenience
 		if ( preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->mFromDate, $m) ) {
-			list (, $this->fromYear, $this->fromMonth) = $m; 
+			list (, $this->fromYear, $this->fromMonth) = $m;
 		} else {
 			$wgOut->showErrorPage("Bad parameters", "wikistats_error_malformed_date");
 			return;
 		}
 
 		if ( preg_match("/^([0-9]{4})([0-9]{1,2})/", $this->mToDate, $m) ) {
-			list (, $this->toYear, $this->toMonth) = $m; 
+			list (, $this->toYear, $this->toMonth) = $m;
 		} else {
 			$wgOut->showErrorPage("Bad parameters", "wikistats_error_malformed_date");
 			return;
 		}
 
 		$domain = $all = "";
-		if ( $this->userIsSpecial ) {		
+		if ( $this->userIsSpecial ) {
 			$this->mLang 		= $wgRequest->getVal("wslang", "");
 			$this->mHub 		= $wgRequest->getVal("wscat", "");
 			$this->mNS 			= $wgRequest->getIntArray("wsns", "");
@@ -132,7 +132,7 @@ class WikiStatsPage extends IncludableSpecialPage
         $this->mStats = WikiStats::newFromId($this->mCityId);
 		$this->mPredefinedNamespaces = $this->mStats->getPageNSList();
 
-        $this->mStats->setStatsDate( array( 
+        $this->mStats->setStatsDate( array(
         	'fromMonth' => $this->fromMonth,
         	'fromYear' 	=> $this->fromYear,
         	'toMonth'	=> $this->toMonth,
@@ -148,7 +148,7 @@ class WikiStatsPage extends IncludableSpecialPage
             $skinname = get_class( $this->mSkin );
             $skinname = strtolower(str_replace("Skin","", $skinname));
             $this->mSkinName = $skinname;
-        }     
+        }
 
 		$this->showForm();
 
@@ -157,9 +157,9 @@ class WikiStatsPage extends IncludableSpecialPage
 			if ( method_exists($this, $func) ) {
 				$this->$func($subpage);
 			}
-		} 
+		}
     }
-    
+
 	function showForm ($error = "") {
 		global $wgOut, $wgContLang, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath ;
         wfProfileIn( __METHOD__ );
@@ -181,7 +181,7 @@ class WikiStatsPage extends IncludableSpecialPage
         $oTmpl->set_vars( array(
         	"mTitle"			=> $this->mTitle,
         	"wgContLang"		=> $wgContLang,
-        	"wgExtensionsPath" 	=> $wgExtensionsPath, 
+        	"wgExtensionsPath" 	=> $wgExtensionsPath,
         	"wgStylePath"		=> $wgStylePath,
         	"wgCityId"			=> $this->mCityId,
         	"oUser"				=> $this->mUser,
@@ -196,14 +196,14 @@ class WikiStatsPage extends IncludableSpecialPage
         	"curYear"			=> intval($this->toYear),
 			"mHub"				=> $this->mHub,
 			"mLang"				=> $this->mLang,
-			"mAllWikis"			=> $this->mAllWikis        	
+			"mAllWikis"			=> $this->mAllWikis
         ));
         $wgOut->addHTML( $oTmpl->execute("main-form") );
-        
+
         wfProfileOut( __METHOD__ );
         return 1;
 	}
-	
+
 	private function showMenu($subpage = '', $namespaces = false) {
 		global $wgOut, $wgDBname;
         wfProfileIn( __METHOD__ );
@@ -243,16 +243,16 @@ class WikiStatsPage extends IncludableSpecialPage
 			"mAllWikis"			=> $this->mAllWikis,
 			"mAction"			=> $this->mAction
         );
-		
+
 		#- additional menu for namespaces;
 		if ( $namespaces ) {
 			$params['namespaces'] = $this->mNamespaces;
 			$params['definedNamespaces'] = $this->mPredefinedNamespaces;
 			$params['mNS'] = $this->mNS;
 		}
-        
+
         $oTmpl->set_vars( $params );
-        
+
         if ( $this->userIsSpecial == 1 && $wgDBname == WIKISTATS_CENTRAL_ID ) {
 			$res = $oTmpl->execute("select");
 		} else {
@@ -262,7 +262,7 @@ class WikiStatsPage extends IncludableSpecialPage
         wfProfileOut( __METHOD__ );
         return $res;
 	}
-	
+
 	private function showMain($subpage = '') {
         global $wgUser, $wgContLang, $wgLang, $wgStatsExcludedNonSpecialGroup, $wgOut;
 		#---
@@ -286,8 +286,8 @@ class WikiStatsPage extends IncludableSpecialPage
 			$wgOut->addHTML( $this->showMenu() );
 			if  ( $this->mFromDate <= $this->mToDate ) {
 				$wgOut->addHTML( $this->mStats->getBasicInformation() );
-				$wgOut->addHTML( $oTmpl->execute("main-table-stats") ); 
-				
+				$wgOut->addHTML( $oTmpl->execute("main-table-stats") );
+
 				$oTmpl->set_vars( array(
 					"columns" 		=> $this->mStats->getRangeColumns(),
 					"userIsSpecial"	=> $this->userIsSpecial,
@@ -300,7 +300,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			// These are sorted by default in descending order; reverse it.
 			$count_data = array_reverse($this->mStats->loadStatsFromDB(), true);
 			$diffs_data = array_reverse($this->mStats->loadMonthlyDiffs(), true);
-			
+
 			$XLSObj = new WikiStatsXLS( $this->mStats,
 									    array_merge($count_data,
 													array('X' => array('label' => '')),
@@ -309,9 +309,9 @@ class WikiStatsPage extends IncludableSpecialPage
 			$XLSObj->makeMainStats();
 		}
         #---
-        return 1; 
+        return 1;
 	}
-	
+
 	private function showRollup($subpage = '') {
 		global $wgOut, $wgCityId, $wgDBname, $wgRequest;
 
@@ -327,28 +327,28 @@ class WikiStatsPage extends IncludableSpecialPage
 	        	'mAction'	  => $this->mAction,
 	        	'wsperiod'    => $period
 			) );
-		
+
 		$wgOut->addHTML( $oTmpl->execute("rollup") );
-		
-		
+
+
 		return 1;
 	}
-	
+
 	private function showBreakdown($subpage = '') {
 		$this->__showBreakdown(0);
-        return 1; 
+        return 1;
 	}
-	
+
 	private function showAnonbreakdown($subpage = '') {
 		$this->__showBreakdown(1);
-        return 1; 
-	}	
-	
+        return 1;
+	}
+
 	private function __showBreakdown($anons = 0) {
         global $wgUser, $wgContLang, $wgLang, $wgOut;
 		#---
 		$out = $this->mStats->userBreakdown($this->mMonth, $this->mLimit, $anons);
-					
+
 		if ( empty($this->mXLS) ) {
 			wfProfileIn( __METHOD__ );
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -364,7 +364,7 @@ class WikiStatsPage extends IncludableSpecialPage
 				"anons"			=> $anons,
 				"data"			=> $out
 			) );
-			$wgOut->addHTML( $oTmpl->execute("activity") ); 
+			$wgOut->addHTML( $oTmpl->execute("activity") );
 			wfProfileOut( __METHOD__ );
 		} else {
 /*			$data = $this->mStats->loadStatsFromDB();
@@ -374,12 +374,12 @@ class WikiStatsPage extends IncludableSpecialPage
 */
 		}
 		#---
-		return 1; 
+		return 1;
 	}
-	
+
 	private function showLatestview($subpage = '') {
 		global $wgUser, $wgContLang, $wgLang, $wgOut;
-		
+
 		wfProfileIn( __METHOD__ );
 		$rows = $this->mStats->latestViewPages();
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -390,13 +390,13 @@ class WikiStatsPage extends IncludableSpecialPage
 			"wgLang"		=> $wgLang,
 			"data"			=> $rows,
 		) );
-		$wgOut->addHTML( $oTmpl->execute("latestview") ); 
+		$wgOut->addHTML( $oTmpl->execute("latestview") );
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	private function showUserview($subpage = '') {
 		global $wgUser, $wgContLang, $wgLang, $wgOut;
-		
+
 		wfProfileIn( __METHOD__ );
 		$rows = $this->mStats->userViewPages(1);
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -407,18 +407,18 @@ class WikiStatsPage extends IncludableSpecialPage
 			"wgLang"		=> $wgLang,
 			"data"			=> $rows,
 		) );
-		$wgOut->addHTML( $oTmpl->execute("user_activity") ); 
+		$wgOut->addHTML( $oTmpl->execute("user_activity") );
 		wfProfileOut( __METHOD__ );
 	}
-		
+
 	private function showActivity($subpage = '') {
-		global $wgUser, $wgContLang, $wgLang, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgJsMimeType;
-		
+		global $wgUser, $wgContLang, $wgLang, $wgOut, $wgJsMimeType, $wgResourceBasePath;
 		wfProfileIn( __METHOD__ );
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
-		
+
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n");
+
 		@list (, $pyear, $pmonth, $plang, $pcat) = explode("/", $subpage);
-		
+
 		$aTopLanguages = explode(',', wfMsg('wikistats_language_toplist'));
 		$aLanguages = wfGetFixedLanguageNames();
 		asort($aLanguages);
@@ -436,19 +436,19 @@ class WikiStatsPage extends IncludableSpecialPage
 				}
 			}
 		};
-		
+
 		if ( !is_numeric($pcat) ) {
 			$pcat = 0;
 		}
-		
+
 		if ( empty($pyear) ) {
 			$pyear = date('Y');
 		}
-		
+
 		if ( empty($pmonth) ) {
 			$pmonth = date('m');
 		}
-		
+
 		#$rows = $this->mStats->userEdits(1);
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
@@ -458,16 +458,16 @@ class WikiStatsPage extends IncludableSpecialPage
 			"wgLang"		=> $wgLang,
         	"topLanguages"	=> $aTopLanguages,
         	"aLanguages"	=> $aLanguages,
-        	"categories"	=> $aCategories,	
+        	"categories"	=> $aCategories,
         	"pyear"			=> $pyear,
         	"pmonth"		=> $pmonth,
         	"plang"			=> ( !empty($plang) ) ? $plang : $wgLang->getCode(),
         	"pcat"			=> $pcat
 		) );
-		$wgOut->addHTML( $oTmpl->execute("wiki_activity") ); 
+		$wgOut->addHTML( $oTmpl->execute("wiki_activity") );
 		wfProfileOut( __METHOD__ );
 	}
-			
+
 	private function showNamespaces() {
         global $wgUser, $wgContLang, $wgLang, $wgStatsExcludedNonSpecialGroup, $wgOut;
 		#---
@@ -476,13 +476,13 @@ class WikiStatsPage extends IncludableSpecialPage
 			foreach ( $this->mNS as $ns ) {
 				$selectedNamespace[$ns] = @$this->mNamespaces[$ns];
 				if ( empty($selectedNamespace[$ns]) ) {
-					$selectedNamespace[$ns] = @$this->mPredefinedNamespaces[$ns]['name'];				
+					$selectedNamespace[$ns] = @$this->mPredefinedNamespaces[$ns]['name'];
 				}
 			}
 		}
-		
+
 		$this->mStats->setPageNS($this->mNS);
-			
+
 		if ( empty($this->mXLS) ) {
 			wfProfileIn( __METHOD__ );
 			$menu = $this->showMenu('', 1);
@@ -501,7 +501,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			) );
 			$wgOut->addHTML( $menu );
 			if  ( $this->mFromDate <= $this->mToDate ) {
-				$wgOut->addHTML( $oTmpl->execute("ns-table-stats") ); 
+				$wgOut->addHTML( $oTmpl->execute("ns-table-stats") );
 			}
 			wfProfileOut( __METHOD__ );
 		} else {
@@ -510,7 +510,7 @@ class WikiStatsPage extends IncludableSpecialPage
 			$XLSObj->makeNamespaceStats($selectedNamespace);
 		}
         #---
-        return 1; 
+        return 1;
 	}
 
 	private function showCurrent() {

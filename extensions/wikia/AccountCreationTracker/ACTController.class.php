@@ -14,21 +14,16 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		global $wgJsMimeType, $wgStylePath;
 		if( !$this->wg->User->isAllowed( 'accounttracker' ) ) {
 			$this->displayRestrictionError($this->user);
 			$this->skipRendering();
 			return false;
 		}
 
-		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . "/wikia/AccountCreationTracker/ACT.js" );
-		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . "/wikia/AccountCreationTracker/jquery.dataTables.min.js" );
-
-		$this->wg->Out->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js\"></script>");
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
-
+		$this->response->addAsset("extensions/wikia/AccountCreationTracker/ACT.js");
+		$this->response->addAsset('resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js');
+		$this->response->addAsset('skins/oasis/css/modules/WikiaTooltip.scss');
 		$this->response->addAsset('extensions/wikia/AccountCreationTracker/ACT.scss');
-
 
 		$username = $this->getVal( 'username' );
 		$accounts = array();
@@ -64,18 +59,18 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 		}
 
 		$title = F::build('Title', array('Tracker', NS_SPECIAL), 'newFromText' );
-		
+
 
 		$this->setVal( 'username', $username );
 		$this->setVal( 'accounts', $accounts );
 		$this->setVal( 'url_form', $title->getFullURL() );
-		
+
 		if( !empty( $wikisCreated ) ) {
 			$this->setVal( 'wikis_created', count( $wikisCreated ) );
 		} else {
 			$this->setVal( 'wikis_created', 0 );
 		}
-		
+
 	}
 
 	public function actionBlockAccountGroup( $groupId ) {
@@ -98,7 +93,7 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 				'regex' => false,
 				'timestamp' => wfTimestampNow(),
 				'expire' => null,
-				'author_id' => $wgUser->getId(),
+				'author_id' => $this->wg->User->getId(),
 				'reason' => 'cookie-based block via AccountCreationTracker',
 				'lang' => 'all',
 				'type' => Phalanx::TYPE_COOKIE,
