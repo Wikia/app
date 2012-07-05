@@ -102,11 +102,11 @@ $config['oasis_jquery'] = array(
 	'assets' => array(
 //		jQuery is now loaded via ResourceLoader
 //		'#function_AssetsConfig::getJQueryUrl',
-		'//skins/common/jquery/jquery.json-2.2.js',
-		'//skins/common/jquery/jquery.getcss.js',
-		'//skins/common/jquery/jquery.cookies.2.1.0.js',
-		'//skins/common/jquery/jquery.timeago.js',
-		'//skins/common/jquery/jquery.store.js',
+		'//resources/jquery/jquery.json.js', // deprecated - @see BugId:36211
+		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
+		'//resources/wikia/libraries/jquery/cookies/jquery.cookies.2.1.0.js',
+		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
+		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//skins/common/jquery/jquery.wikia.js',
 		'//skins/common/jquery/jquery.wikia.carousel.js',
 		'//skins/common/jquery/jquery.wikia.placeholder.js',
