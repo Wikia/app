@@ -215,9 +215,9 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-confirmation-reminder-email_subject' => "Don't be a stranger…",
 	'usersignup-confirmation-reminder-email-greeting' => 'Hi $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'It\'s been a few days, but it looks like you haven\'t finished creating your account on Wikia yet. It\'s easy. Just click the confirmation link below:
-<br/><br/>
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br/><br/>
+
 If you don\'t confirm within 23 days your username, $USERNAME, will become available again, so don\'t wait!',
 	'usersignup-confirmation-reminder-email-signature' => 'The Wikia Team',
 	'usersignup-confirmation-reminder-email_body' => 'Hi $2,
@@ -549,9 +549,9 @@ Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
 	'usersignup-confirmation-reminder-email_subject' => 'No seas un desconocido...',
 	'usersignup-confirmation-reminder-email-greeting' => 'Hola $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'Han paso algunos días pero parece que no has terminado de crear tu cuenta en Wikia. Es fácil. Solo haz clic en el enlace de confirmación de abajo:
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br /><br />
+
 Si no confirmas tu cuenta en 23 días, $USERNAME estará disponible de nuevo, ¡así que no esperes!',
 	'usersignup-confirmation-reminder-email-signature' => 'El Equipo de Wikia',
 	'usersignup-confirmation-reminder-email_body' => 'Hola $2,
@@ -866,9 +866,9 @@ Quere controlar os correos electrónicos que recibe? Vaia a: {{fullurl:{{ns:spec
 	'usersignup-confirmation-reminder-email_subject' => 'Non se convirta nun estraño…',
 	'usersignup-confirmation-reminder-email-greeting' => 'Boas, $USERNAME:',
 	'usersignup-confirmation-reminder-email-content' => 'Pasaron varios días, pero semella que aínda non completou o proceso de creación da súa conta de Wikia. É doado. Simplemente ten que premer na seguinte ligazón de confirmación:
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br /><br />
+
 Se non completa a confirmación antes de 23 días, o nome de usuario $USERNAME estará dispoñible novamente. Non espere máis!',
 	'usersignup-confirmation-reminder-email-signature' => 'O equipo de Wikia',
 	'usersignup-confirmation-reminder-email_body' => 'Boas, $2:
@@ -1127,9 +1127,9 @@ ___________________________________________
 	'usersignup-confirmation-reminder-email_subject' => 'Не се отуѓувајте…',
 	'usersignup-confirmation-reminder-email-greeting' => 'Здраво $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'Има неколку дена како почнавте да правите сметка на Викија, но не ја довршивте. Лесно е. Едноставно стиснете на долунаведената потврдна врска:
-<br/><br/>
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br/><br/>
+
 Доколку не го потврдите во рок од 23 дена, вашето корисничко име, $USERNAME ќе биде достапно за други! Затоа, не чекајте да ви го земат!',
 	'usersignup-confirmation-reminder-email-signature' => 'Екипата на Викија',
 	'usersignup-confirmation-reminder-email_body' => 'Здраво $2,
@@ -1335,9 +1335,9 @@ Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-confirmation-reminder-email_subject' => 'Janganlah menyepi…',
 	'usersignup-confirmation-reminder-email-greeting' => '$USERNAME,',
 	'usersignup-confirmation-reminder-email-content' => '!Sudah beberapa hari berlalu, tetapi nampaknya anda belum menghabiskan pembukaan akaun anda di Wikia. Senang sahaja. Anda cuma perlu klik pautan pengesahan yang berikut:
-<br /><br />
+
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-<br /><br />
+
 Jika anda tidak membuat pengesahan dalam 23 hari, maka nama pengguna anda, $USERNAME, akan dibuka kepada orang lain semula, jadi jangan tunggu lagi!',
 	'usersignup-confirmation-reminder-email-signature' => 'Pasukan Wikia',
 	'usersignup-confirmation-reminder-email_body' => '$2,
