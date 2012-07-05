@@ -92,9 +92,10 @@
 	margin: 2px 0 -7px 0;
 	> fieldset {
 		@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
-		background-color: mix($color-page, #000000, 95%);
 		@if $is-dark-wiki {
 			background-color: mix($color-page, #ffffff, 85%);
+		} @else {
+			background-color: mix($color-page, #000000, 95%);
 		}
 		> .input-group {
 			padding: 0 12px;
