@@ -126,9 +126,8 @@ class SpecialSpamWikisSpecialPageController extends WikiaSpecialPageController {
         }
 
         // the code below handles the default behaviour: displays the form
-        $extPath = F::app()->wg->extensionsPath;
-        F::app()->wg->out->addScript( "<script src=\"{$extPath}/wikia/SpecialSpamWikis/js/jquery.dataTables.min.js\"></script>" );
-        F::app()->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/SpecialSpamWikis/css/table.scss' ) );
+		$this->response->addAsset('resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js');
+		$this->response->addAsset( 'extensions/wikia/SpecialSpamWikis/css/table.scss');
         $data = new SpecialSpamWikisData();
         $this->mData->criteria = $data->getCriteria();
     }

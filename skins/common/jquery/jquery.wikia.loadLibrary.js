@@ -46,7 +46,7 @@ $.loadLibrary = function(name, files, typeCheck, callback, failureFn) {
 
 // load YUI using ResourceLoader
 $.loadYUI = function(callback) {
-    return mw.loader.use('wikia.yui').done(callback || $.noop);
+    return mw.loader.use('wikia.yui').done(callback);
 };
 
 // jquery.wikia.modal.js in now a part of AssetsManager package
@@ -59,13 +59,13 @@ $.loadModalJS = function(callback) {
 
 // load various jQuery libraries (if not yet loaded)
 $.loadJQueryUI = function(callback) {
-	return mw.loader.use('wikia.jquery.ui').done(callback || $.noop);
+	return mw.loader.use('wikia.jquery.ui').done(callback);
 };
 
 // autocomplete plugin - not to be confused autocomplete feature of jQuery UI
 // @deprecated use $.ui.autocomplete
 $.loadJQueryAutocomplete = function(callback) {
-	return mw.loader.use('wikia.jquery.autocomplete').done(callback || $.noop);
+	return mw.loader.use('wikia.jquery.autocomplete').done(callback);
 };
 
 $.loadWikiaTooltip = function(callback) {

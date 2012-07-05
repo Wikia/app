@@ -23,7 +23,7 @@ class MultipleLookupPage extends SpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgUser, $wgOut, $wgRequest, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath;
+		global $wgUser, $wgOut, $wgRequest, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgResourceBasePath;
 
 		if ( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
@@ -50,7 +50,7 @@ class MultipleLookupPage extends SpecialPage {
 		if ( $this->mUsername !== null ) { $this->mUsername = trim( $this->mUsername ); }
 
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialMultipleLookup/css/table.css?{$wgStyleVersion}");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/jquery/jquery.dataTables.min.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n");
 
 		if ( !empty($this->mWiki) ) {
 			$this->showWikiForm();
