@@ -39,10 +39,11 @@ class ResourceLoaderSiteModule extends ResourceLoaderWikiModule {
 
 		// Wikia change - begin - @author: wladek
 		global $wgResourceLoaderAssetsSkinMapping;
-		$skinName = ucfirst( $context->getSkin() );
+		$skinName = $context->getSkin();
 		if ( isset( $wgResourceLoaderAssetsSkinMapping[$skinName] ) ) {
 			$skinName = $wgResourceLoaderAssetsSkinMapping[$skinName];
 		}
+		$skinName = ucfirst($skinName);
 
 		$pages = array(
 			'MediaWiki:Common.js' => array( 'type' => 'script' ),

@@ -906,7 +906,7 @@ $wgPasswordSenderName = 'Wikia';
  * @var array
  */
 $wgResourceLoaderAssetsSkinMapping = array(
-	'Oasis' => 'Wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
+	'oasis' => 'wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
 );
 
 $wgWikiaHubsPages = array();
