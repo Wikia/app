@@ -16,7 +16,7 @@ class WallHelper {
 	public function getArchiveSubPageText() {
 		return wfMsg('wall-user-talk-archive-page-title');
 	}
-		
+
 	/**
 	 * @brief Gets and returns user's talk page's content
 	 * 
@@ -103,7 +103,7 @@ class WallHelper {
 	 *
 	 * @return array | boolean returns false if ArticleComment class does not exist
 	 * 
-	 * @author Andrzej 'nAndy' Åukaszewski
+	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
 	public function wikiActivityFilterMessageWall($title, &$res) {
 		$app = F::app();
@@ -151,6 +151,8 @@ class WallHelper {
 					if( isset($parent->mMetadata['title']) ) $title = $wmessage->getMetaTitle();
 					$this->mapParentData($item, $parent, $title);
 					$res['title'] = 'message-wall-thread-#'.$parent->getTitle()->getArticleID();
+
+					$item['wall-msg'] = wfMsg( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $item['wall-owner']).'</a>');
 				} else {
 				//message was removed or deleted
 					$item = array();
