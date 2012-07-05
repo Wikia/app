@@ -15,7 +15,7 @@ var WikiaHubs = {
 		var WikiaFrame = $('.WikiaFrame');
 		if (WikiaFrame.length > 0) {
 			WikiaFrame.on('click', 'a', WikiaHubs.iframeLinkChanger);
-			onFBloaded = function () {
+			window.onFBloaded = function () {
 				FB.init();
 				FB.XFBML.parse();
 				FB.Canvas.setAutoGrow();
@@ -136,9 +136,7 @@ var WikiaHubs = {
 
 	modalClickTrackingHandler: function (e) {
 		var node = $(e.target),
-			lang;
-
-		lang = wgContentLanguage;
+			lang = wgContentLanguage;
 
 		if (node.closest('.VideoSuggestModal').length > 0) {
 			if (node.hasClass('submit')) {
