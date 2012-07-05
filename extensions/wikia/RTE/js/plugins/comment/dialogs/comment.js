@@ -58,7 +58,7 @@ CKEDITOR.dialog.add('rte-comment', function(editor)
 			var data = RTE.commentEditor.placeholder.getData();
 
 			// exclude comment beginning and end markers
-			wikitext = data.wikitext.replace(/^<!--\s+/, '').replace(/\s+-->$/, '');
+			var wikitext = data.wikitext.replace(/^<!--\s+/, '').replace(/\s+-->$/, '');
 
 			this.setValueOf('comment', 'content', wikitext);
 		}

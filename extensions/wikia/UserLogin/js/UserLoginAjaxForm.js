@@ -59,9 +59,11 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 	$().log(json);
 	$('.error-msg').remove();
 	this.form.find('.input-group').removeClass('error');
-	var result = json['result'];
+	var result = json['result'],
+		callback;
+
 	if(result === 'ok') {
-		var callback = this.options['callback'] || '';
+		callback = this.options['callback'] || '';
 		if(callback && typeof callback === 'function') {
 			callback(json);
 		} else {
@@ -69,7 +71,7 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 			this.reloadPage();
 		}
 	} else if(result === 'resetpass') {
-		var callback = this.options['resetpasscallback'] || '';
+		callback = this.options['resetpasscallback'] || '';
 		if(callback && typeof callback === 'function') {
 			callback(json);
 		} else {
