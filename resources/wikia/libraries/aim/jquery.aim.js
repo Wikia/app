@@ -37,7 +37,7 @@
 
 			i.onComplete(response);
 		}
-	};
+	}
 
 	// create iframe to handle uploads and return value of its "name" attribute
 	function createIFrame(options) {
@@ -60,7 +60,7 @@
 			iframe[0].onComplete = options.onComplete;
 		}
 		return name;
-	};
+	}
 
 	// AIM entry point - used to handle submit event of upload forms
 	function submit(form, options) {
@@ -71,12 +71,8 @@
 			attr('target', iframeName).
 			log('uploading into "' + iframeName + '"', 'AIM');
 
-		if (options && typeof(options.onStart) == 'function') {
-			return options.onStart();
-		} else {
-			return true;
-		}
-	};
+		return (options && (typeof options.onStart === 'function')) ? options.onStart() : true;
+	}
 
 	// export
 	$.AIM = {
