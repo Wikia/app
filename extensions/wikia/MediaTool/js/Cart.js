@@ -19,9 +19,8 @@ MediaTool.Cart = $.createClass(Observable,{
 
 	onShowModal: function() {
 		var self = this;
-        this.clear();       // @todo: or this.items = [];, not sure right now
 		this.$container = $('#'+this.containerId);
-
+        this.clear();       // @todo: or this.items = [];, not sure right now
 		// Item dropped to cart from list
 		this.$container.droppable({
 			accept: "#"+self.collectionListId+" li",
@@ -43,7 +42,7 @@ MediaTool.Cart = $.createClass(Observable,{
 
 		var headerTemplate = $('#mediaToolBasketHeaderTemplate');
 		var headerContent = $(headerTemplate).mustache({ itemsNum: self.getItemsNum() });
-		$('h4', this.$container).html(headerContent);
+        this.$container.find('h4').html(headerContent);
 	},
 
 	onCollectionItemAdded: function($item) {
