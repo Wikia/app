@@ -45,6 +45,8 @@ var MediaTool = MediaTool || (function () {
             cart = new MediaTool.Cart('mediaToolBasket', 'mediaToolItemList');
             cart.template = templateCart;
             this.bind('Cart::itemsChanged', onCartContentChange);
+			this.bind('Cart::thumbnailStyleChanged', onThumbnailStyleChange);
+
             this.bind('showModal', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);});
             this.bind('editDone', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);});
             initModalComplete = true;
@@ -79,6 +81,7 @@ var MediaTool = MediaTool || (function () {
 			self.fire('showModal');
 
 			appendUIActions.call(self);
+			cart.setThumbnailStyle('border');
 			changeCurrentView( "find" );
 		});
 	}
@@ -90,6 +93,20 @@ var MediaTool = MediaTool || (function () {
 		} else {
 			$('.tabs li[data-tab=edit-media]').removeClass('disabled');
 			$('.MediaTool-buttons button[name=continue]').removeAttr('disabled');
+		}
+	}
+
+	function onThumbnailStyleChange() {
+		$('.media-tool-thumbnail-style img').removeClass('selected');
+		$('.media-tool-thumbnail-style img[data-thumb-style="' + cart.getThumbnailStyle() + '"]').addClass('selected');
+		switch(cart.getThumbnailStyle())
+		{
+			case 'border':
+				$('.media-tool-thumbnail-style .thumb-style-desc').html($.msg('mediatool-thumbnail-style-border'));
+				break;
+			case 'no-border':
+				$('.media-tool-thumbnail-style .thumb-style-desc').html($.msg('mediatool-thumbnail-style-no-border'));
+				break;
 		}
 	}
 
@@ -147,6 +164,9 @@ var MediaTool = MediaTool || (function () {
 		});
 		$("ul.tabs li[data-tab='find-media'] a", dialogWrapper).on("click", function (e) {
 			changeCurrentView("find", true);
+		});
+		$(".media-tool-thumbnail-style img", dialogWrapper).on("click", function (e) {
+			cart.setThumbnailStyle($(e.target).attr("data-thumb-style"));
 		});
 	}
 

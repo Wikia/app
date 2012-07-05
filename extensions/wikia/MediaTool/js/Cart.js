@@ -5,6 +5,7 @@ MediaTool.Cart = $.createClass(Observable,{
 	containerId: null,
 	collectionListId: null,
 	template: null,
+	thumbnailStyle: '',
 
 	constructor: function( containerId, collectionListId ) {
 		MediaTool.Cart.superclass.constructor.call(this);
@@ -92,6 +93,17 @@ MediaTool.Cart = $.createClass(Observable,{
 	clear: function() {
 		this.items = [];
 		MediaTool.fire('Cart::itemsChanged');
+	},
+
+	getThumbnailStyle: function() {
+		return this.thumbnailStyle;
+	},
+
+	setThumbnailStyle: function(thumbnailStyle) {
+		if (thumbnailStyle != this.thumbnailStyle) {
+			this.thumbnailStyle = thumbnailStyle;
+			MediaTool.fire('Cart::thumbnailStyleChanged');
+		}
 	}
 
 });
