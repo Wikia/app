@@ -239,7 +239,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 		$unusedImages = array();
 		foreach ($rows as $row) {
 			if (count($imageList) < self::LIMIT_IMAGES) {
-				$img = $this->getImageSrc($row->city_id, $row->page_id);
+				$img = ImagesService::getImageSrc($row->city_id, $row->page_id);
 
 				if (empty($img['src'])) {
 					$invalidImages[] = "(city_id = {$row->city_id} and page_id = {$row->page_id})";
@@ -480,7 +480,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 	}
 
 	public function getImageUrl($wikiId, $pageId, $imgSize) {
-		$data = parent::getImageSrc($wikiId, $pageId, $imgSize);
+		$data = ImagesService::getImageSrc($wikiId, $pageId, $imgSize);
 		$url = (!empty($data['src'])) ? $data['src'] : null;
 
 		return $url;
