@@ -1,7 +1,7 @@
 <nav class=cur1 id=wkNavMenu<? if ( !empty( $parseErrors ) ) :?> data-error="<?= implode( '; ', $parseErrors ) ;?>"<? endif ;?>>
 		<header>
 			<button id=wkNavBack class=wkBtn><?= $wf->MsgExt( 'wikiamobile-back', array( 'parseinline' ) );?></button>
-			<h1 class=collSec><?= $wf->MsgForContent( 'wikiamobile-menu' ); ?><span class=chev></h1>
+			<h1 class='collSec addChev'><?= $wf->MsgForContent( 'wikiamobile-menu' ); ?></h1>
 			<a id=wkNavLink class=chvRgt></a>
 		</header>
 	<ul id=lvl1 class=wkLst>
