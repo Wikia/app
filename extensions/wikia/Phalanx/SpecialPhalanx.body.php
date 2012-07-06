@@ -11,7 +11,7 @@ class SpecialPhalanx extends SpecialPage {
 
 	function execute( $par ) {
 		wfProfileIn(__METHOD__);
-		global $wgOut, $wgRequest, $wgExtensionsPath, $wgStyleVersion, $wgStylePath;
+		global $wgOut, $wgRequest, $wgExtensionsPath, $wgStylePath;
 		global $wgPhalanxSupportedLanguages, $wgUser, $wgTitle;
 
 		// check restrictions
@@ -21,9 +21,9 @@ class SpecialPhalanx extends SpecialPage {
 		}
 
 		$this->setHeaders();
-		$wgOut->addStyle( "$wgExtensionsPath/wikia/Phalanx/css/Phalanx.css?$wgStyleVersion" );
-		$wgOut->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/Phalanx/js/Phalanx.js?$wgStyleVersion'></script>\n");
-		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}");
+		$wgOut->addStyle( "$wgExtensionsPath/wikia/Phalanx/css/Phalanx.css" );
+		$wgOut->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/Phalanx/js/Phalanx.js'></script>\n");
+		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css");
 		$wgOut->setPageTitle( wfMsg('phalanx-title') );
 
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');

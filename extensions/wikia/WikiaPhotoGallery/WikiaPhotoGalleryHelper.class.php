@@ -86,11 +86,11 @@ class WikiaPhotoGalleryHelper {
 	 * Load extension's JS on edit page
 	 */
 	static public function setupEditPage($editform) {
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgOut, $wgExtensionsPath, $wgJsMimeType;
 
 		wfProfileIn(__METHOD__);
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js\"></script>\n");
 
 		// load message for MW toolbar button tooltip
 		global $wgHooks;

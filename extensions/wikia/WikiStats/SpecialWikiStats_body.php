@@ -161,17 +161,17 @@ class WikiStatsPage extends IncludableSpecialPage
     }
 
 	function showForm ($error = "") {
-		global $wgOut, $wgContLang, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgStylePath ;
+		global $wgOut, $wgContLang, $wgExtensionsPath, $wgJsMimeType, $wgStylePath;
         wfProfileIn( __METHOD__ );
 
 		$this->setHeaders();
 
 		# css
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStats/css/wikistats.css?{$wgStyleVersion}");
-		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStats/css/wikistats.css");
+		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css");
 
 		# script
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStats/js/wikistats.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStats/js/wikistats.js\"></script>\n");
 
 		# main page
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );

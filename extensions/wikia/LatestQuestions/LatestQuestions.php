@@ -25,8 +25,8 @@ function efLatestQuestionsInit() {
 }
 
 function wfLatestQuestionsAjaxAddScript( &$out ) {
-	global $wgStyleVersion, $wgJsMimeType, $wgExtensionsPath;
-	$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/LatestQuestions/LatestQuestions.js?{$wgStyleVersion}\"></script>\n" );
+	global $wgJsMimeType, $wgExtensionsPath;
+	$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/LatestQuestions/LatestQuestions.js\"></script>\n" );
 	$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/LatestQuestions/LatestQuestions.scss'));
 	return true;
 }

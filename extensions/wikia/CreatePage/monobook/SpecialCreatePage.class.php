@@ -17,7 +17,7 @@ class SpecialCreatePage extends SpecialEditPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgUser, $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		global $wgUser, $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath;
 
 		if ( !empty( $subpage ) ) {
 			if ( !wfRunHooks('SpecialCreatePage::Subpage', array( $subpage )) ) {
@@ -25,7 +25,7 @@ class SpecialCreatePage extends SpecialEditPage {
 			}
 		}
 
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CreatePage/js/focus.js?{$wgStyleVersion}\" ></script>\n" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CreatePage/js/focus.js\" ></script>\n" );
 
 		if ( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();

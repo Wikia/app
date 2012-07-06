@@ -18,10 +18,10 @@ $wgHooks['TitleMoveComplete'][] = 'AttributionCache::purgeArticleContribsAfterMo
 // FIXME: this SHOULD NOT be here. Move to Skin.
 $wgExtensionFunctions[] = 'answersStyle';
 function answersStyle() {
-	global $wgOut, $wgStylePath, $wgStyleVersion, $wgUseNewAnswersSkin;
+	global $wgOut, $wgStylePath, $wgUseNewAnswersSkin;
 
 	if ( !empty( $wgUseNewAnswersSkin ) ) {
-		$wgOut->addExtensionStyle("{$wgStylePath}/answers/css/monaco_answers.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgStylePath}/answers/css/monaco_answers.css");
 	}
 	return true;
 }
@@ -276,7 +276,7 @@ $wgHooks['ExtendJSGlobalVars'][] = 'fnAddAnswerJSGlobalVariables';
 //1.14 version
 $wgHooks['MakeGlobalVariablesScript'][] = 'fnAddAnswerJSGlobalVariables';
 function fnAddAnswerJSGlobalVariables(&$vars){
-	
+
 	global $wgTitle, $wgContLang;
 	$vars['wgAskFormTitle'] = wfMsgForContent("ask_a_question");
 	$vars['wgAskFormCategory'] = wfMsgForContent("in_category");
@@ -317,9 +317,9 @@ function fnAddAnswerJSGlobalVariables(&$vars){
 //Calls UserProfilePage instead of standard article
 function wfUserProfileCSS( &$title, &$article ){
 
-	global $wgOut, $wgUserProfileScripts, $wgStyleVersion, $wgStylePath, $wgTitle;
+	global $wgOut, $wgUserProfileScripts, $wgStylePath, $wgTitle;
 	if( $wgTitle->getNamespace() == NS_USER ){
-		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgUserProfileScripts}/UserProfile.css?{$wgStyleVersion}\"/>\n");
+		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgUserProfileScripts}/UserProfile.css\"/>\n");
 	}
 	return true;
 }
@@ -605,7 +605,7 @@ class CategoryWithAds extends CategoryViewer{
 		$this->from = $from;
 		$this->until = $until;
 	}
-	
+
 	function doCategoryQuery() {
 		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 		if( $this->from != '' ) {

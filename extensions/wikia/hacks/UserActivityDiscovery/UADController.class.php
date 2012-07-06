@@ -74,9 +74,8 @@ class UADController extends WikiaController {
 	public function onOutputPageBeforeHTML( &$out, &$text ) {
 		$wgJsMimeType = $this->app->getGlobal('wgJsMimeType');
 		$wgExtensionsPath = $this->app->getGlobal('wgExtensionsPath');
-		$wgStyleVersion = $this->app->getGlobal('wgStyleVersion');
 
-		$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/hacks/UserActivityDiscovery/js/uad.js?{$wgStyleVersion}\"></script>\n" );
+		$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/hacks/UserActivityDiscovery/js/uad.js\"></script>\n" );
 
 		return true;
 	}

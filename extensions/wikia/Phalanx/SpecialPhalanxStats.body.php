@@ -11,8 +11,8 @@ class PhalanxStats extends UnlistedSpecialPage {
 		#set base title
 		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') );
 
-		global $wgExtensionsPath, $wgStyleVersion;
-		$wgOut->addStyle( "$wgExtensionsPath/wikia/Phalanx/css/Phalanx.css?$wgStyleVersion" );
+		global $wgExtensionsPath;
+		$wgOut->addStyle( "$wgExtensionsPath/wikia/Phalanx/css/Phalanx.css" );
 
 		// check restrictions
 		if ( !$this->userCanExecute( $wgUser ) ) {
@@ -39,17 +39,17 @@ class PhalanxStats extends UnlistedSpecialPage {
 		} else {
 			$show = 'blockId';
 		}
-		
+
 		if ( $show == 'blockId' ) {
 			$this->block_stats($par);
 		} else {
 			$this->block_wikia($par);
 		}
 	}
-	
+
 	private function block_stats($par) {
 		global $wgOut, $wgLang, $wgUser, $wgRequest;
-		
+
 		#we have a valid id, change title to use it
 		$wgOut->setPageTitle( wfMsg('phalanx-stats-title') . ' #' . $par);
 
@@ -134,7 +134,7 @@ class PhalanxStats extends UnlistedSpecialPage {
 
 		$wgOut->addHTML( $html );
 	}
-	
+
 	private function block_wikia($par) {
 		global $wgOut, $wgLang, $wgUser, $wgRequest;
 
@@ -155,7 +155,7 @@ class PhalanxStats extends UnlistedSpecialPage {
 		$data['last_timestamp'] = $wgLang->timeanddate( $oWiki->city_last_timestamp );
 
 		$html = '';
-		
+
 		$headers = array(
 			wfMsg('phalanx-stats-table-wiki-id'),
 			wfMsg('phalanx-stats-table-wiki-name'),
@@ -183,12 +183,12 @@ class PhalanxStats extends UnlistedSpecialPage {
 		$html .= $pager->getNavigationBar();
 
 		$wgOut->addHTML( $html );
-	}	
+	}
 
 	private function showForms() {
 		global $wgOut;
 		# TODO: move text to i18n (will do after coding is finished and text/flow is finalized)
-	
+
 		$PSurl = Title::newFromText( 'PhalanxStats', NS_SPECIAL )->getFullUrl();
 
 		//-------------------------------------------------
@@ -280,7 +280,7 @@ class PhalanxStatsPager extends ReverseChronologicalPager {
 		global $wgLang;
 
 		$type = implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
-		
+
 		$username = $row->ps_blocked_user;
 
 		$timestamp = $wgLang->timeanddate( $row->ps_timestamp );
@@ -349,7 +349,7 @@ class PhalanxWikiStatsPager extends ReverseChronologicalPager {
 		global $wgLang;
 
 		$type = implode( Phalanx::getTypeNames( $row->ps_blocker_type ) );
-		
+
 		$username = $row->ps_blocked_user;
 
 		$timestamp = $wgLang->timeanddate( $row->ps_timestamp );
@@ -358,12 +358,12 @@ class PhalanxWikiStatsPager extends ReverseChronologicalPager {
 
 		# block
 		$phalanxUrl = $this->mSkin->makeLinkObj( $this->mTitle, $blockId, 'id=' . $blockId );
-		
+
 		# stats
 		$statsUrl = $this->mSkin->makeLinkObj( $this->mTitleStats, wfMsg('phalanx-link-stats'), 'blockId=' . $blockId );
 
 		$html = '<li>';
-		$html .= wfMsgExt( 'phalanx-stats-row-per-wiki', array('parseinline', 'replaceafter'), $type, $username, $phalanxUrl, $timestamp, $statsUrl );  
+		$html .= wfMsgExt( 'phalanx-stats-row-per-wiki', array('parseinline', 'replaceafter'), $type, $username, $phalanxUrl, $timestamp, $statsUrl );
 		$html .= '</li>';
 
 		return $html;

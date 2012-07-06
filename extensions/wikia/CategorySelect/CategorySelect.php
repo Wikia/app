@@ -572,17 +572,17 @@ function CategorySelectGenerateHTMLforEditRaw($categories, $text = '') {
 }
 
 function CategorySelectGenerateHTMLforEdit($formId = '') {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgCategorySelectMetaData;
+	global $wgOut, $wgExtensionsPath, $wgCategorySelectMetaData;
 
 	$wgOut->addScript("<script type=\"text/javascript\">var formId = '$formId';</script>");
-	$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.js?$wgStyleVersion\"></script>");
+	$wgOut->addScript("<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.js\"></script>");
 
 	// use SCSS file for Oasis
 	if ( F::app()->checkSkin( 'oasis' ) ) {
 		$cssFile = AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss');
 	}
 	else {
-		$cssFile = "{$wgExtensionsPath}/wikia/CategorySelect/CategorySelect.css?{$wgStyleVersion}";
+		$cssFile = "{$wgExtensionsPath}/wikia/CategorySelect/CategorySelect.css";
 	}
 
 	$wgOut->addExtensionStyle($cssFile);

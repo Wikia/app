@@ -88,9 +88,9 @@ function SiteWideMessagesAbortDiffCache($oDiffEngine) {
  *
  */
 function SiteWideMessagesIncludeJSCSS( $skin, & $bottomScripts) {
-	global $wgExtensionsPath, $wgStyleVersion;
+	global $wgExtensionsPath;
 
-	$bottomScripts .= "<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.js?$wgStyleVersion\"></script>";
+	$bottomScripts .= "<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.js\"></script>";
 
 	return true;
 }
@@ -101,13 +101,13 @@ function SiteWideMessagesIncludeJSCSS( $skin, & $bottomScripts) {
  *
  */
 function SiteWideMessagesGetUserMessagesContent($dismissLink = true, $parse = true, $useForDiff = false, $addJSandCSS = true) {
-	global $wgExtensionsPath, $wgStyleVersion, $wgOut, $wgUser, $wgRequest;
+	global $wgExtensionsPath, $wgOut, $wgUser, $wgRequest;
 	if ($wgRequest->getText('diff') == '' || $useForDiff) {
 
 		if ($addJSandCSS) {
 			global $wgHooks;
 			$wgHooks['SkinAfterBottomScripts'][] = 'SiteWideMessagesIncludeJSCSS';
-			$wgOut->AddScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css?$wgStyleVersion\" />");
+			$wgOut->AddScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css\" />");
 		}
 
 		$content = SiteWideMessages::getAllUserMessages($wgUser, $dismissLink);

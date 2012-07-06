@@ -182,11 +182,11 @@ class TopListHelper {
 	 * Callback for the BeforePageDisplay hook
 	 */
 	public static function onBeforePageDisplay( &$out, &$skin) {
-		global $wgTitle, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		global $wgTitle, $wgJsMimeType, $wgExtensionsPath;
 
 		if( $wgTitle->getNamespace() == NS_TOPLIST ) {
 			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/TopLists/css/list.scss'));
-			$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/list.js?{$wgStyleVersion}\"></script>\n" );
+			$out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/list.js\"></script>\n" );
 		}
 
 		return true;

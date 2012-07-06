@@ -4,14 +4,14 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 	var $loggedIn;
 	var $logInClass;
 	var $destCityId = 80433; // this page will always redirect to this wiki
-	
-	
+
+
 	function __construct() {
 		parent::__construct('LandingPage');
 	}
 
 	function execute($par ) {
-		global $wgOut, $wgCityId, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgShowMyToolsOnly, $wgExtensionsPath, $wgBlankImgUrl, $wgJsMimeType, $wgStyleVersion, $wgTitle, $wgUser, $wgRequest;
+		global $wgOut, $wgCityId, $wgSuppressWikiHeader, $wgSuppressPageHeader, $wgShowMyToolsOnly, $wgExtensionsPath, $wgBlankImgUrl, $wgJsMimeType, $wgTitle, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		// redirect to www.wikia.com
@@ -26,7 +26,7 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 		$this->setHeaders();
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/LandingPage/css/LandingPage.scss'));
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/LandingPage/js/LandingPage.js?{$wgStyleVersion}\" ></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/LandingPage/js/LandingPage.js\" ></script>\n");
 		// hide wiki and page header
 		$wgSuppressWikiHeader = true;
 		$wgSuppressPageHeader = true;
@@ -47,10 +47,10 @@ class SpecialLandingPage extends UnlistedSpecialPage {
 				);
 			}
 		}
-		
+
 		// fetching the landingpage sites
 		$landingPageLinks = CorporatePageHelper::parseMsgImg( 'landingpage-sites', false, false );
-		
+
 		// render HTML
 		$template = new EasyTemplate(dirname(__FILE__).'/templates');
 		$template->set_vars(array(

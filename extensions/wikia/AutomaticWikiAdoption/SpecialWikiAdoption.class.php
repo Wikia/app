@@ -43,14 +43,14 @@ class SpecialWikiAdoption extends UnlistedSpecialPage {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	function execute($par) {
-		global $wgCityId, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgRequest, $wgUser, $wgTitle;
+		global $wgCityId, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgRequest, $wgUser, $wgTitle;
 		wfProfileIn(__METHOD__);
 
 		$this->setHeaders();
 
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/AutomaticWikiAdoption/css/AutomaticWikiAdoption.scss'));
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AutomaticWikiAdoption/js/AutomaticWikiAdoption.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/AutomaticWikiAdoption/js/AutomaticWikiAdoption.js\"></script>\n");
 
 		$canAdopt = AutomaticWikiAdoptionHelper::isAllowedToAdopt($wgCityId, $wgUser);
 		if ($canAdopt == AutomaticWikiAdoptionHelper::USER_ALLOWED) {

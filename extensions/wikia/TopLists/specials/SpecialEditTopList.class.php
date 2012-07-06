@@ -20,23 +20,23 @@ class SpecialEditTopList extends SpecialPage {
 	function execute( $editListName ) {
 		wfProfileIn( __METHOD__ );
 
-		global $wgExtensionsPath, $wgStyleVersion, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
-		
+		global $wgExtensionsPath, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
+
 		// set basic headers
 		$this->setHeaders();
-		
+
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		
+
 		//Check blocks
 		if( $wgUser->isBlocked() ) {
 			throw new UserBlockedError( $wgUser->getBlock() );
 			return;
 		}
-		
+
 		if( !$this->userCanExecute( $wgUser )  || !( F::app()->checkSkin( 'oasis' ) ) ) {
 			$this->displayRestrictionError();
 			return;
@@ -47,9 +47,8 @@ class SpecialEditTopList extends SpecialPage {
 		}
 
 		// include resources (css and js)
-		//$wgOut->addExtensionStyle( "{$wgExtensionsPath}/wikia/TopLists/css/editor.css?{$wgStyleVersion}\n" );
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/TopLists/css/editor.scss'));
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/editor.js?{$wgStyleVersion}\"></script>\n" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/editor.js\"></script>\n" );
 
 		//hide specialpage subtitle in Oasis
 		$wgSupressPageSubtitle = true;

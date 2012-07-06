@@ -12,32 +12,31 @@ class SpecialCreateTopList extends SpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
-		global $wgExtensionsPath, $wgStyleVersion, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
-		
+		global $wgExtensionsPath, $wgStylePath , $wgJsMimeType, $wgSupressPageSubtitle, $wgRequest, $wgOut, $wgUser;
+
 		// set basic headers
 		$this->setHeaders();
-		
+
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		
+
 		//Check blocks
 		if( $wgUser->isBlocked() ) {
 			throw new UserBlockedError( $wgUser->getBlock() );
 			return;
 		}
-		
+
 		if ( !$this->userCanExecute( $wgUser ) || !( F::app()->checkSkin( 'oasis' ) ) ) {
 			$this->displayRestrictionError();
 			return;
 		}
-		
+
 		// include resources (css and js)
-		//$wgOut->addExtensionStyle( "{$wgExtensionsPath}/wikia/TopLists/css/editor.css?{$wgStyleVersion}\n" );
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/TopLists/css/editor.scss'));
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/editor.js?{$wgStyleVersion}\"></script>\n" );
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/TopLists/js/editor.js\"></script>\n" );
 
 		//hide specialpage subtitle in Oasis
 		$wgSupressPageSubtitle = true;
@@ -86,13 +85,13 @@ class SpecialCreateTopList extends SpecialPage {
 					);
 
 					$result = $source->getThumbnails( array( $imageTitle->getText() ) );
-					
+
 					if( !empty( $result[ $text ] ) ) {
 						$selectedImage = $result[ $text ];
 					}
 				}
 			}
-			
+
 			if ( !( $list ) ) {
 				$errors[ 'list_name' ] = array( wfMsg( 'toplists-error-invalid-title' ) );
 			} else {

@@ -12,14 +12,14 @@ $wgExtensionMessagesFiles['AutoPageCreate'] = dirname(__FILE__) . '/AutoPageCrea
 $wgExtensionFunctions[] = 'wfAutoPageCreateInit';
 
 function wfAutoPageCreateInit() {
-	global $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion;
+	global $wgHooks, $wgOut, $wgExtensionsPath;
 
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfAutoPageCreateEditPage';
 	$wgHooks['ArticleNonExistentPage'][] = 'wfAutoPageCreateViewPage';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'wfAutoPageCreateSetupVars';
 	$wgHooks['WikiaMiniUpload::fetchTextForImagePlaceholder'][] = 'wfAutoPageCreateTextForImagePlaceholder';
 
-	$wgOut->addExtensionStyle( "$wgExtensionsPath/wikia/AutoPageCreate/AutoPageCreate.css?$wgStyleVersion" );
+	$wgOut->addExtensionStyle( "$wgExtensionsPath/wikia/AutoPageCreate/AutoPageCreate.css" );
 }
 
 function wfAutoPageCreateTextForImagePlaceholder( $title, $text ) {
@@ -59,9 +59,9 @@ function wfAutoPageCreateIsAnonUserpage( $title  ) {
 
 function wfAutoPageCreateSetupVars( $vars ) {
 	global $wgWikiaEnableAutoPageCreateExt;
-	
+
 	$vars['WikiaEnableAutoPageCreate'] = $wgWikiaEnableAutoPageCreateExt;
-	
+
 	return true;
 }
 
@@ -69,7 +69,7 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 	wfProfileIn(__METHOD__);
 
 	global $wgOut;
-	
+
 	$article->autoPageCreate__content = null;
 	$origText = $text;
 
@@ -153,7 +153,7 @@ END;
 				wfDebug(__METHOD__ . ": forced to not show the message\n");
 			}
 	}
-	
+
 	if ( $text !== $origText ) {
 		$article->autoPageCreate__content = $text;
 	}

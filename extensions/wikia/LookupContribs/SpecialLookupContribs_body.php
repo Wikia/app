@@ -22,7 +22,7 @@ class LookupContribsPage extends SpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgResourceBasePath, $wgUser;
+		global $wgOut, $wgRequest, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgUser;
 
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
@@ -77,7 +77,7 @@ class LookupContribsPage extends SpecialPage {
 		/**
 		 * show form
 		 */
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n");
 
 		if ( !empty($this->mMode) && !empty($this->mWiki) ) {

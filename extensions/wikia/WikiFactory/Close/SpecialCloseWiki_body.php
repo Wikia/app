@@ -382,16 +382,13 @@ class CloseWikiPage extends SpecialPage {
 	 * show closed message
 	 */
 	function showClosedMsg() {
-		global $wgOut, $wgStylePath, $wgStyleVersion, $wgExtensionsPath;
+		global $wgOut, $wgStylePath, $wgExtensionsPath;
 
 		wfProfileIn( __METHOD__ );
 		if ( $this->closedWiki === false ) {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-
-		//commented by ubrfzy. nothing in the current template seems to be using anything from this sheet, but its causing bugs with the new floating toolbar because of poor scope and conflicting specificity
-		//$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
 
 		$dbDumpUrl = sprintf("%s/%s/%s/%s/",
 			$this->mUrlDump,
@@ -408,7 +405,6 @@ class CloseWikiPage extends SpecialPage {
 		$this->mTmpl->reset();
 		$this->mTmpl->set_vars( array(
 			"wgExtensionsPath" => $wgExtensionsPath,
-			"wgStyleVersion" => $wgStyleVersion,
 			"dbDumpUrl" => $dbDumpUrl,
 			"dbDumpExist" => $res,
 			"isDisabled" => (($this->closedWiki->city_flags == 0) && ($this->closedWiki->city_public == 0))

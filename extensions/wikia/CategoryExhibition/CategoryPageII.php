@@ -13,14 +13,14 @@ if( !defined( 'MEDIAWIKI' ) )
 class CategoryPageII extends CategoryPage {
 
 	var $viewerClass = 'CategoryPageIIViewer';
-	
+
 	function addScripts(){
-		global $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js?{$wgStyleVersion}\" ></script>\n");
+		global $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgJsMimeType;
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CategoryExhibition/js/CategoryExhibition.js\" ></script>\n");
 	}
 
 	function openShowCategory() {
-		global $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgOut, $wgRequest, $wgExtensionsPath, $wgScriptPath, $wgJsMimeType;
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.scss'));
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/CategoryExhibition/css/CategoryExhibition.IE.scss'), '', 'lte IE 8' );
 		$this->addScripts();
