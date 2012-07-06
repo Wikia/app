@@ -175,7 +175,7 @@ var Lightbox = {
 		// Close more info and share screens on button click
 		}).on('click.Lightbox', '.more-info-close', function(evt) {
 			if(Lightbox.current.type === 'video') {
-				LightboxLoader.getMediaDetail({'title': Lightbox.current.title}, Lightbox.video.renderVideo);
+				LightboxLoader.getMediaDetail({title: Lightbox.current.title}, Lightbox.video.renderVideo);
 			}
 			Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 			Lightbox.openModal.share.html('');
