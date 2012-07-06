@@ -107,27 +107,27 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		$newestTs = $this->wg->Memc->get( $helper->getUserTsKey() );
+		$user_key = $helper->getUserTsKey();
+		$newestTs = $this->wg->Memc->get( $user_key );
 
 		if ( $ts > $newestTs ) {
 			error_log("ImageReview: I've got the newest ts ($ts), I won't refetch the images");
 			$this->imageList = array();
-			$this->wg->memc->set( $helper->getUserTsKey(), $ts, 3600 /* 1h */ );
+			$this->wg->memc->set( $user_key, $ts, 3600 /* 1h */ );
 		} else {
 			$this->imageList = $helper->refetchImageListByTimestamp( $ts );
 		}
 
 		if ( count($this->imageList) == 0 ) {
-			if ( $action == self::ACTION_QUESTIONABLE ) {
-				$this->imageList = $helper->getImageList( $ts, $helper::STATE_QUESTIONABLE, $order );
-			} elseif ( $action == self::ACTION_REJECTED ) {
-				$this->imageList = $helper->getImageList( $ts, $helper::STATE_REJECTED, $order );
-			} else { 
-				$this->imageList = $helper->getImageList( $ts, $helper::STATE_UNREVIEWED, $order );
-			}
+			$do = array( 
+				self::ACTION_QUESTIONABLE	=> $helper::STATE_QUESTIONABLE,
+				self::ACTION_REJECTED		=> $helper::STATE_REJECTED,
+				'default'					=> $helper::STATE_UNREVIEWED
+			);
+			$this->imageList = $helper->getImageList( $ts, isset( $do[ $action ] ) ? $do[ $action ] : $do['default'], $order );
 		}
 
-		if($this->accessQuestionable) {
+		if ( $this->accessQuestionable ) {
 			$this->imageCount = $helper->getImageCount();
 		}
 	}
@@ -185,8 +185,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	public function csvStats() {
 		if ( !$this->wg->User->isAllowed( 'imagereviewstats' )) {
-				$this->specialPage->displayRestrictionError( 'imagereviewstats' );
-				return false;
+			$this->specialPage->displayRestrictionError( 'imagereviewstats' );
+			return false;
 		}
 
 		$startDay = $this->request->getVal( 'startDay', date( 'd' ) );
