@@ -177,6 +177,7 @@ abstract class WikiaSkin extends SkinTemplate {
 			'TG_ONLOAD' => 1,
 			'TG_AFTER_DEPENDENCIES' => 2,
 			'TG_AS_WRAPPERS_ARE_RENDERED' => 3,
+			'wgJqueryUrl' => AssetsManager::getInstance()->getURL( 'jquery' ),
 		);
 
 		$this->wf->runHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );

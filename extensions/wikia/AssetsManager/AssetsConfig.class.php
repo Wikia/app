@@ -81,6 +81,7 @@ class AssetsConfig {
 	/**
 	 * Was used by config.php to load jQuery from CDN
 	 * Now we're using ResourceLoader to load jQuery from our own servers
+	 */
 	public static function getJQueryUrl( $combine, $minify, $params ) {
 		global $wgUseJQueryFromCDN;
 
@@ -89,12 +90,11 @@ class AssetsConfig {
 				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'
 				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js';
 		} else {
-			$url = 'skins/common/jquery/jquery-1.7.2.js';
+			$url = 'resources/jquery/jquery-1.7.2.js';
 		}
 
 		return array($url);
 	}
-	**/
 
 	/**
 	 * Loads packages definitions from config.php

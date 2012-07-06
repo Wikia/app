@@ -336,9 +336,12 @@ class AssetsManager {
 			}
 
 			// check for an #external_ URL being in the package (BugId:9522)
+			$isEmpty = true;
 			foreach($assets as $asset) {
 				if (substr($asset, 0, 10) == '#external_') {
 					$URLs[] = substr($asset, 10);
+				} else {
+					$isEmpty = false;
 				}
 			}
 
@@ -349,7 +352,9 @@ class AssetsManager {
 			}
 
 			// When AssetsManager works in "combine" mode return URL to the combined package
-			$URLs[] = $prefix . $this->getAMLocalURL('group', $groupName, $params);
+			if ( !$isEmpty ) {
+				$URLs[] = $prefix . $this->getAMLocalURL('group', $groupName, $params);
+			}
 		} else {
 			foreach($assets as $asset) {
 				if(substr($asset, 0, 10) == '#external_') {
