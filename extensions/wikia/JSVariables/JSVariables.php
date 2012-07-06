@@ -7,14 +7,20 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
 
 function wfJSVariablesTopScripts(Array $vars) {
+	global $wgWikiFactoryTags;
 	$vars['wgAfterContentAndJS'] = array();
+	if(isset($wgWikiFactoryTags) && is_array($wgWikiFactoryTags)) {
+		$vars['wgWikiFactoryTagIds'] = array_keys( $wgWikiFactoryTags );
+		$vars['wgWikiFactoryTagNames'] = array_values( $wgWikiFactoryTags );
+	}
+
 	return true;
 }
 
 function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
 	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgDBname, $wgPrivateTracker, $wgExtensionsPath,
-		$wgArticle, $wgStyleVersion, $wgSitename, $wgWikiFactoryTags, $wgDisableAnonymousEditing,
+		$wgArticle, $wgStyleVersion, $wgSitename, $wgDisableAnonymousEditing,
 		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath;
 
 	$skin = $out->getSkin();
@@ -83,11 +89,6 @@ function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	// macbre: get revision ID of current article
 	if ( ( $title->isContentPage() || $title->isTalkPage() ) && !is_null($wgArticle)) {
 		$vars['wgRevisionId'] = !empty($wgArticle->mRevision) ? $wgArticle->mRevision->getId() : intval($wgArticle->mLatest);
-	}
-
-	if(isset($wgWikiFactoryTags) && is_array($wgWikiFactoryTags)) {
-		$vars['wgWikiFactoryTagIds'] = array_keys( $wgWikiFactoryTags );
-		$vars['wgWikiFactoryTagNames'] = array_values( $wgWikiFactoryTags );
 	}
 
 	// is anon editing disabled?
