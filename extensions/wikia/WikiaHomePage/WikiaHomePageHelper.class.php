@@ -376,7 +376,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$dataGetter = F::build('WikiDataGetterForSpecialPromote');
-		return $this->getWikiInfo($wikiId,$langCode,$dataGetter);
+		return $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
 		$this->wf->ProfileOut(__METHOD__);
 	}
@@ -385,7 +385,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$dataGetter = F::build('WikiDataGetterForVisualization');
-		return $this->getWikiInfo($wikiId,$langCode,$dataGetter);
+		return $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
 		$this->wf->ProfileOut(__METHOD__);
 	}
@@ -612,28 +612,31 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 }
 
-interface WikiDataGetter {
-	public function getWikiData($wikiId, $langCode);
-}
+abstract class WikiDataGetter {
+	public abstract function getWikiData($wikiId, $langCode);
 
-class WikiDataGetterForVisualization implements WikiDataGetter {
-	public function    getWikiData($wikiId, $langCode) {
-		$visualization = F::build('CityVisualization');
-		$wikiData = $visualization->getWikiDataForVisualization($wikiId, $langCode);
-		if(empty($wikiData['flags'])) {
-			$wikiData['flags'] = null;
+	protected function sanitizeWikiData($wikiData) {
+		foreach (array('headline', 'description', 'flags') as $key) {
+			if (empty($wikiData[$key])) {
+				$wikiData[$key] = null;
+			}
 		}
 		return $wikiData;
 	}
 }
 
-class WikiDataGetterForSpecialPromote implements WikiDataGetter {
+class WikiDataGetterForVisualization extends WikiDataGetter {
+	public function    getWikiData($wikiId, $langCode) {
+		$visualization = F::build('CityVisualization');
+		$wikiData = $visualization->getWikiDataForVisualization($wikiId, $langCode);
+		return $this->sanitizeWikiData($wikiData);
+	}
+}
+
+class WikiDataGetterForSpecialPromote extends WikiDataGetter {
 	public function  getWikiData($wikiId, $langCode) {
 		$visualization = F::build('CityVisualization');
 		$wikiData = $visualization->getWikiDataForPromote($wikiId, $langCode);
-		if(empty($wikiData['flags'])) {
-			$wikiData['flags'] = null;
-		}
-		return $wikiData;
+		return $this->sanitizeWikiData($wikiData);
 	}
 }
