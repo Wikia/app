@@ -139,7 +139,7 @@ class AjaxPollClass {
 	 *
 	 * @return array: votes for this poll
 	 */
-	public function getVotes() {
+	public function getVotes($isSubmit = false) {
 		global $wgLang, $wgMemc;
 
 		if ( is_null( $this->mId ) ) {
@@ -151,14 +151,16 @@ class AjaxPollClass {
 		$total = 0;
 
 		$memcKey = wfMemcKey(self::MEMC_PREFIX_GETVOTES, $this->mId);
-		$votes = $wgMemc->get($memcKey);
-		if($votes){
+		if (!$isSubmit) {
+			$votes = $wgMemc->get($memcKey);
+		}
+		if (!empty($votes)) {
 			foreach($votes as $ans => $ansData){
 				$total += $ansData["value"];
 			}
 		} else {
 			$votes = array();
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( $isSubmit ? DB_MASTER : DB_SLAVE );
 			$oRes = $dbr->select(
 				array( "poll_vote" ),
 				array( "poll_answer" ),
@@ -385,7 +387,7 @@ class AjaxPollClass {
 				$status = wfMsg( "ajaxpoll-error" );
 			}
 		}
-		list ( $votes, $total ) = $this->getVotes();
+		list ( $votes, $total ) = $this->getVotes(true); //true because we need DB_MASTER and we don't want to use memcache here
 		$response = array(
 			"id" =>	$this->mId,
 			"votes" => $votes,
