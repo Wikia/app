@@ -28,56 +28,6 @@ abstract class ImageReviewHelperBase extends WikiaModel {
 
 	public abstract function getImageList($timestamp, $state = self::STATE_UNREVIEWED, $order = self::ORDER_LATEST);
 
-	/**
-	 * get image thumbnail
-	 * @param integer wikiId
-	 * @param integer pageId
-	 * @return string imageUrl
-	 */
-	protected function getImageSrc($wikiId, $pageId, $imgSize = 250) {
-		$this->wf->ProfileIn(__METHOD__);
-
-		$dbname = WikiFactory::IDtoDB($wikiId);
-
-		/* TODO: FOR TESTING ONLY: REMOVE BEFORE RELEASE */
-		if(!empty($this->wg->DevelEnvironment)) {
-			if($dbname == 'dehauptseite') {
-				$dbname = 'de';
-			}
-		}
-
-		$param = array(
-			'action' => 'imagecrop',
-			'imgId' => $pageId,
-			'imgSize' => $imgSize,
-			'imgFailOnFileNotFound' => 'true',
-		);
-
-		$response = ApiService::foreignCall($dbname, $param);
-
-		$imageSrc = (empty($response['image']['imagecrop'])) ? '' : $response['image']['imagecrop'];
-		$imagePage = (empty($response['imagepage']['imagecrop'])) ? '' : $response['imagepage']['imagecrop'];
-
-		$this->wf->ProfileOut(__METHOD__);
-		return array('src' => $imageSrc, 'page' => $imagePage);
-	}
-
-	/**
-	 * get image page url
-	 * @param integer wikiId
-	 * @param integer pageId
-	 * @return string image page URL
-	 */
-	protected function getImagePage($wikiId, $pageId) {
-		$this->wf->ProfileIn(__METHOD__);
-
-		$title = GlobalTitle::newFromId($pageId, $wikiId);
-		$imagePage = ($title instanceof Title) ? $title->getFullURL() : '';
-
-		$this->wf->ProfileOut(__METHOD__);
-		return $imagePage;
-	}
-
 	protected abstract function getWhitelistedWikis();
 
 	protected abstract function getWhitelistedWikisFromWF();

@@ -187,7 +187,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		$imageList = array();
 		while( $row = $db->fetchObject($result) ) {
-			$img = $this->getImageSrc( $row->wiki_id, $row->page_id );
+			$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
 			$tmp = array(
 				'wikiId' => $row->wiki_id,
 				'pageId' => $row->page_id,
@@ -296,7 +296,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$unusedImages = array();
 		foreach( $rows as $row) {
 			if (count($imageList) < self::LIMIT_IMAGES) {
-				$img = $this->getImageSrc( $row->wiki_id, $row->page_id );
+				$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
 
 				if ( empty($img['src'])) {
 					$invalidImages[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
