@@ -8,7 +8,7 @@ class SpecialAchievementsCustomize extends SpecialPage {
 
 	function execute($user_id) {
 		wfProfileIn(__METHOD__);
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgResourceBasePath, $wgStyleVersion, $wgSupressPageTitle, $wgRequest, $wgJsMimeType, $wgCityId, $wgExternalSharedDB;
+		global $wgUser, $wgOut, $wgExtensionsPath, $wgResourceBasePath, $wgSupressPageTitle, $wgRequest, $wgJsMimeType, $wgCityId, $wgExternalSharedDB;
 
 		// set basic headers
 		$this->setHeaders();

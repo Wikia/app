@@ -23,7 +23,7 @@ $wgResourceModules['wikia.jquery.ui'] = array(
 	'group' => 'jquery.ui',
 );
 
-// libraries
+// libraries and jQuery plugins
 $wgResourceModules['jquery.aim'] = array(
 	'scripts' => 'resources/wikia/libraries/aim/jquery.aim.js'
 );
@@ -32,8 +32,12 @@ $wgResourceModules['jquery.mustache'] = array(
 	'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js'
 );
 
-$wgResourceModules['wikia.jquery.autocomplete'] = array(
+$wgResourceModules['jquery.autocomplete'] = array(
 	'scripts' => 'resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js'
+);
+
+$wgResourceModules['jquery.slideshow'] = array(
+	'scripts' => 'resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js'
 );
 
 // moved here from AssetsManager by wladek
