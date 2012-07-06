@@ -201,7 +201,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset('skins/oasis/css/modules/WikiaTooltip.scss');
 			$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
 			$this->response->addAsset('extensions/wikia/UserLogin/css/ConfirmEmail.scss');
-			$this->response->addAsset('skins/common/jquery/jquery.wikia.tooltip.js');
+			$this->response->addAsset('resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js');
 			$this->response->addAsset('extensions/wikia/UserLogin/js/ConfirmEmail.js');
 
 			// hide things in the skin

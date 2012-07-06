@@ -108,12 +108,12 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//skins/common/jquery/jquery.wikia.js',
-		'//skins/common/jquery/jquery.wikia.carousel.js',
+		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
 		// libraries loaders
-		'//skins/common/jquery/jquery.wikia.getResources.js',
-		'//skins/common/jquery/jquery.wikia.loadLibrary.js',
+		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
+		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
 		'//skins/oasis/js/common.js'
@@ -552,7 +552,7 @@ $config['theme_designer_js'] = array(
 		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 		'//skins/common/jquery/jquery.wikia.tracker.js',
 		'//resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js',
-		'//skins/common/jquery/jquery.wikia.tooltip.js',
+		'//resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js',
 		'//resources/wikia/libraries/aim/jquery.aim.js',
 		'//extensions/wikia/ThemeDesigner/js/ThemeDesigner.js',
 	)
@@ -621,7 +621,7 @@ $config['relatedvideos_js_tooltips'] = array(
 	'skin' => 'oasis',
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/common/jquery/jquery.wikia.tooltip.js',
+		'//resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js',
 		'#group_relatedvideos_js'
 	)
 );

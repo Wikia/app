@@ -71,7 +71,7 @@ $.loadJQueryAutocomplete = function(callback) {
 $.loadWikiaTooltip = function(callback) {
 	return $.loadLibrary('Wikia Tooltip',
 		[
-			stylepath + '/common/jquery/jquery.wikia.tooltip.js',
+			stylepath + '/../resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js',
 			$.getSassCommonURL("skins/oasis/css/modules/WikiaTooltip.scss")
 		],
 		typeof jQuery.fn.wikiaTooltip,
