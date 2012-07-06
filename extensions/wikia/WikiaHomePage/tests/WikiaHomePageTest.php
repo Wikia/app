@@ -222,8 +222,12 @@ TXT;
 	}
 
 	public function testGetList() {
-		$wikiaHomePageHelperStub = $this->getMock('WikiaHomePageHelper', array('getWikisList', 'getNumberOfHotWikiSlots', 'getNumberOfNewWikiSlots'));
+		$wikiaHomePageHelperStub = $this->getMock('WikiaHomePageHelper', array('getWikisList', 'getNumberOfVideoGamesSlots', 'getNumberOfEntertainmentSlots', 'getNumberOfLifestyleSlots', 'getNumberOfHotWikiSlots', 'getNumberOfNewWikiSlots'));
 		$wikiaHomePageHelperStub->expects($this->any())->method('getWikisList')->will($this->throwException(new Exception(wfMsg('wikia-home-parse-source-invalid-slots-number'))));
+
+		$wikiaHomePageHelperStub->expects($this->any())->method('getNumberOfVideoGamesSlots')->will($this->returnValue(10));
+		$wikiaHomePageHelperStub->expects($this->any())->method('getNumberOfEntertainmentSlots')->will($this->returnValue(6));
+		$wikiaHomePageHelperStub->expects($this->any())->method('getNumberOfLifestyleSlots')->will($this->returnValue(1));
 
 		$wikiaHomePageHelperStub->expects($this->any())->method('getNumberOfHotWikiSlots')->will($this->returnValue(1));
 		$wikiaHomePageHelperStub->expects($this->any())->method('getNumberOfNewWikiSlots')->will($this->returnValue(1));

@@ -17,7 +17,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	const HOT_WIKI_SLOTS_VAR_NAME = 'wgWikiaHomePageHotWikiSlots';
 	const NEW_WIKI_SLOTS_VAR_NAME = 'wgWikiaHomePageNewWikiSlots';
 	const SLOTS_IN_TOTAL = 17;
-	const WIKIA_COM_ID = 80433;
 
 	const LIMIT_ADMIN_AVATARS = 3;
 	const LIMIT_TOP_EDITOR_AVATARS = 7;
@@ -93,7 +92,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	 */
 	public function getVarFromWikiFactory($varName) {
 		$this->wf->ProfileIn(__METHOD__);
-		$value = WikiFactory::getVarValueByName($varName, self::WIKIA_COM_ID);
+		$value = WikiFactory::getVarValueByName($varName, $this->wg->cityId);
 
 		if (is_null($value) || $value === false) {
 			Wikia::log(__METHOD__, false, "Variable's value not found in WikiFactory returning 0");
@@ -106,7 +105,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	public function setWikiFactoryVar($wfVar, $wfVarValue) {
-		return WikiFactory::setVarByName($wfVar, self::WIKIA_COM_ID, $wfVarValue, wfMsg('wikia-hone-page-special-wikis-in-slots-change-reason'));
+		return WikiFactory::setVarByName($wfVar, $this->wg->cityId, $wfVarValue, wfMsg('wikia-hone-page-special-wikis-in-slots-change-reason'));
 	}
 
 	/**
