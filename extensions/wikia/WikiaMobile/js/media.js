@@ -107,9 +107,10 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 					for (i=0; i < leng; i++) {
 						elm = lis[i];
+						href = elm.getAttribute('data-img');
 
 						images.push({
-							image: elm.getAttribute('data-img'),
+							image: href,
 							thumb: elm.getAttribute('data-thumb'),
 							//TODO the href.match part is legacy for old parser cache, remember to remove it!
 							name: encodeImageName(elm.getAttribute('data-name') || href.match(nameMatch)[0].replace('.','-')),
@@ -422,7 +423,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			Wikia.getMultiTypePackage({
 				styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
 				scripts: 'mediagallery_wikiamobile_js',
-				//ttl: 86400,
+				ttl: 604800,
 				callback: function(res){
 					Wikia.processScript(res.scripts[0]);
 					Wikia.processStyle(res.styles);
