@@ -117,7 +117,8 @@ $config['oasis_jquery'] = array(
 	'assets' => array(
 //		jQuery is now loaded via ResourceLoader
 //		'#function_AssetsConfig::getJQueryUrl',
-		'//resources/jquery/jquery.json.js', // deprecated - @see BugId:36211
+//		deprecated - @see BugId:36211
+//		'//resources/jquery/jquery.json.js',
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
 		'//resources/wikia/libraries/jquery/cookies/jquery.cookies.2.1.0.js',
 		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
