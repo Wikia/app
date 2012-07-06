@@ -80,16 +80,16 @@
 	-webkit-backface-visibility: hidden;
 
 	.dot {
-		background: #6F6F6F;
+		background-color: rgb(111, 111, 111);
 		border-radius: 200px; //iphone 3 does not support % so I make it bigger than width&height
 		padding: 4px;
 		margin: 5px;
 		display: inline-block;
 		position: relative;
-		@include transition(background-color .5s);
+		@include transition(background-color .4s);
 
 		&.curr {
-			background-color: #006CB0;
+			background-color: rgb(0, 108, 176);
 		}
 
 		div{
