@@ -28,12 +28,15 @@
 	}
 }
 
-.galImg {
+.galPlc {
 	position: relative;
 	display: inline-block;
 	height: 100px;
 	width: 100px;
 	margin: 0 2.5px;
+}
+
+.galPlc.img {
 	background-size: 50%;
 	-webkit-transition: -webkit-transform .2s, opacity .2s;
 	//placeholder
