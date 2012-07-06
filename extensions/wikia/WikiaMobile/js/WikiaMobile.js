@@ -30,13 +30,6 @@ $(function(){
 			//must be done AFTER detecting size of elements on the page
 			d.body.className += ' js';
 
-
-			//close toc and topbar when 'curtain' is clicked
-			d.getElementsByClassName('curtain')[0].addEventListener(clickEvent, function(ev){
-				toc.close();
-				topbar.closeDropDown();
-			});
-
 			//TODO: optimize selectors caching for this file
 			/*body.delegate('#wkMainCnt a', clickEvent, function(){
 			 track('link/content');
@@ -61,7 +54,25 @@ $(function(){
 				url.goTo();
 			});
 
-			var wkShrPag = document.getElementById('wkShrPag');
+			//add chevrons to elements that need it
+			var addChevs = d.getElementsByClassName('addChev'),
+				l = addChevs.length,
+				i = 0;
+
+			for(; i < l; i++){
+				addChevs[i].insertAdjacentHTML('beforeend', '<span class=chev></span>');
+			}
+
+			//add curtain
+			d.body.insertAdjacentHTML('beforeend', '<div id=wkCurtain></div>');
+
+			//close toc and topbar when 'curtain' is clicked
+			d.getElementById('wkCurtain').addEventListener(clickEvent, function(ev){
+				toc.close();
+				topbar.closeDropDown();
+			});
+
+			var wkShrPag = d.getElementById('wkShrPag');
 
 			if(wkShrPag){
 				popover({

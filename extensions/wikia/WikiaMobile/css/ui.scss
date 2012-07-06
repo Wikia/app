@@ -134,18 +134,19 @@
 
 //chevrons
 .chev {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
-  -webkit-animation: cute .3s ease-in;
-  -moz-animation: cute .3s ease-in;
-  -webkit-backface-visibility: hidden;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
+	-webkit-animation: cute .3s ease-in;
+	-moz-animation: cute .3s ease-in;
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000;
 }
 
 .open .chev {
-  background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-up.png'); /* base64 */
-  -webkit-animation: cute .3s ease-out;
-  -moz-animation: cute .3s ease-out;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-up.png'); /* base64 */
+	-webkit-animation: cute .3s ease-out;
+	-moz-animation: cute .3s ease-out;
 }
 
 @-webkit-keyframes cute {

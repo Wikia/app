@@ -2,6 +2,7 @@
 	<?= $pageHeaderContent ;?>
 	<article id=wkMainCnt>
 		<?= $bodyContent ;?>
+		<?= $navMenu ;?>
 		<footer id=wkMainCntFtr>
 			<nav id=wkRltdCnt>
 			<?= $relatedPages ;?>
@@ -13,7 +14,6 @@
 			<?= $afterBodyContent ;?>
 			</aside>
 			<? endif ;?>
-			<?= $navMenu ;?>
 		</footer>
 	</article>
 </section>

@@ -49,6 +49,9 @@ define('sections', ['events', 'track'], function(ev, track){
 
 						node.className += ' collSec';
 
+						//append chevron
+						node.insertAdjacentHTML('beforeend', '<span class=chev></span>');
+
 						wrapper.appendChild(node);
 						wrapper.appendChild(currentSection);
 						root = currentSection;
@@ -76,13 +79,14 @@ define('sections', ['events', 'track'], function(ev, track){
 				this.className += ' open';
 				next.className += ' open';
 			}
-		})
-		.on(click, '.goBck', function(){
+		}).on(click, '.goBck', function(){
 			var parent = this.parentElement,
 				prev = parent.previousElementSibling;
 
+			track('section/close');
+
 			parent.className = parent.className.replace(' open', '');
-			prev.className = prev.className.replace(' open' , '');
+			prev.className = prev.className.replace(' open', '');
 			prev.scrollIntoView();
 		});
 	}
