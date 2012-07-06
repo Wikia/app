@@ -27,6 +27,5 @@
 		<?= $comscoreTracking ;?>
 		<?= $gaTracking ;?>
 		<?= $gaOneWikiTracking ;?>
-		<div class=curtain></div>
 	</body>
 </html>

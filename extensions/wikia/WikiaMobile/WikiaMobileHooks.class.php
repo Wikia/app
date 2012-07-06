@@ -44,14 +44,7 @@ class WikiaMobileHooks extends WikiaObject{
 
 			//$link contains the section edit link, add it to the next line to put it back
 			//ATM editing is not allowed in WikiaMobile
-			$ret = "<h{$level} id=\"{$anchor}\"{$attribs}{$text}";
-
-			if ( $level == 2 ) {
-				//add chevron to expand the section
-				$ret .= '<span class=chev></span>';
-			}
-
-			$ret .= "</h{$level}>";
+			$ret = "<h{$level} id=\"{$anchor}\"{$attribs}{$text}</h{$level}>";
 		}
 
 		$this->wf->profileOut( __METHOD__ );
@@ -59,11 +52,13 @@ class WikiaMobileHooks extends WikiaObject{
 	}
 
 	public function onLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ){
+		$this->wf->profileIn( __METHOD__ );
 		if ( $this->app->checkSkin( 'wikiamobile', $skin ) && in_array( 'broken', $options ) ) {
 			$ret = $text;
 			return false;
 		}
 
+		$this->wf->profileOut( __METHOD__ );
 		return true;
 	}
 

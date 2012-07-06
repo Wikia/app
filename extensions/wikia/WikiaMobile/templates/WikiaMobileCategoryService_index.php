@@ -1,6 +1,6 @@
 <? if ( !empty( $categoryLinks ) ) :?>
 <section id=wkArtCat>
-	<h1 class=collSec><?= $wf->MsgForContent( 'wikiamobile-article-categories' ); ?><span class=chev></span></h1>
+	<h1 class='collSec addChev'><?= $wf->MsgForContent( 'wikiamobile-article-categories' ); ?></h1>
 	<?= $categoryLinks ?>
 </section>
 <? endif ;?>
