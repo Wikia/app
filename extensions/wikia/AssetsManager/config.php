@@ -20,13 +20,19 @@ $config['oasis_extensions_js'] = array(
     )
 );
 
+$config['oasis_tracker_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+		'//resources/wikia/tracker/jquery.wikia.tracker.js',
+	)
+);
+
 $config['oasis_ads_js'] = array(
     'type' => AssetsManager::TYPE_JS,
     'assets' => array(
-		// tracker
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//skins/common/jquery/jquery.wikia.tracker.js',
+		'#group_oasis_tracker_js',
 
 		// ads
 		'//extensions/wikia/Geo/geo.js',
@@ -107,7 +113,7 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/cookies/jquery.cookies.2.1.0.js',
 		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
-		'//skins/common/jquery/jquery.wikia.js',
+		'//resources/wikia/jquery.wikia.js',
 		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
@@ -548,9 +554,8 @@ $config['theme_designer_js'] = array(
 
 		'#group_oasis_jquery',
 
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
-		'//skins/common/jquery/jquery.wikia.tracker.js',
+		'#group_oasis_tracker_js',
+
 		'//resources/wikia/libraries/jquery-ui/jquery-ui-1.8.14.custom.js',
 		'//resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js',
 		'//resources/wikia/libraries/aim/jquery.aim.js',

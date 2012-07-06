@@ -1,7 +1,7 @@
 /*
 @test-framework QUnit
 @test-require-file resources/jquery/jquery-1.7.2.js
-@test-require-file skins/common/jquery/jquery.wikia.js
+@test-require-file resources/wikia/jquery.wikia.js
 @test-require-file extensions/wikia/Chat2/js/emoticons.js
 @test-require-file extensions/wikia/Chat2/js/lib/underscore.js
 @test-require-file extensions/wikia/Chat2/js/lib/backbone.js

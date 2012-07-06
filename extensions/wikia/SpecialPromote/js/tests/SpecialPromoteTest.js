@@ -3,7 +3,7 @@
 @test-framework QUnit
 // Include jQuery and jQuery.wikia and specialPromote
 @test-require-file resources/jquery/jquery-1.7.2.js
-@test-require-file skins/common/jquery/jquery.wikia.js
+@test-require-file resources/wikia/jquery.wikia.js
 @test-require-file extensions/wikia/SpecialPromote/js/SpecialPromote.js
 */
 
