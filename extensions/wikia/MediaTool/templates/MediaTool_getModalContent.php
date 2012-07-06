@@ -30,6 +30,9 @@
 				<input type="radio" id="source-recently-added" checked="checked"> <label for="source-recently-added"><?= wfMsg('mediatool-collection-recentlyadded'); ?></label>
 			</div>
 			<div data-tab-body="find-media-online" class="tabBody">
+				<label for="mediatool-online-url"><?= wfMsg('mediatool-addviaurl-label'); ?></label>
+				<input type="text" id="mediatool-online-url" value="" />
+				<button name="addviaurl"><?= wfMsg('mediatool-button-add');?></button>
 			</div>
 			<div data-tab-body="find-media-computer" class="tabBody">
 			</div>

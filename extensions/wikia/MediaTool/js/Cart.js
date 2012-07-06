@@ -40,7 +40,7 @@ MediaTool.Cart = $.createClass(Observable,{
 	renderHeader: function() {
 		var self = this;
 		$().log('Rendering header, items:'+self.getItemsNum());
-        this.$container.find('h4').html($.msg('mediatool-selected-media-count', self.getItemsNum()));
+		this.$container.find('h4').html($.msg('mediatool-selected-media-count', self.getItemsNum()));
 	},
 
 	onCollectionItemAdded: function($item) {
@@ -54,7 +54,6 @@ MediaTool.Cart = $.createClass(Observable,{
 	onCollectionItemFadedOut: function($item, itemObject) {
 		// Item faded out from list, adding it to cart
 		this.appendItem($item, itemObject);
-		this.addItem(itemObject);
 	},
 
 	addItem: function( item ) {
@@ -76,10 +75,29 @@ MediaTool.Cart = $.createClass(Observable,{
 		MediaTool.fire('Cart::itemsChanged');
 	},
 
-	appendItem: function( $item ) {
+	createItem: function( itemData, itemTemplate ) {
+		var item = new MediaTool.Item(itemData.id, itemData.title, itemData.thumbHtml);
+		var $item = $($.mustache(itemTemplate, item));
+
+		$item.draggable({
+			cancel: "a.ui-icon",
+			revert: "invalid",
+			containment: "document",
+			helper: "clone",
+			cursor: "move"
+		});
+
+		this.appendItem($item, item);
+	},
+
+	appendItem: function( $item, itemObject ) {
 		var $list = $( "ul", this.$container).length ? $( "ul", this.$container ) : $( "<ul class='mediaToolItemList ui-helper-reset'/>" ).appendTo( this.$container );
 
 		$item.appendTo( $list ).fadeIn();
+
+		if(typeof itemObject == 'object') {
+			this.addItem(itemObject);
+		}
 	},
 
 	getItemsNum: function() {
