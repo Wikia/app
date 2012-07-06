@@ -164,20 +164,16 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 		if(window.wgDisableAnonymousEditing && !window.wgUserName){
 			ev.stopPropagation();
 
+			var target = ev.target,
+				elm = (target.nodeName == 'FORM') ? target : target.parentElement,
+				prev = elm.previousElementSibling;
+
+			target.blur();
+
+			toast.show($.msg('wikiamobile-article-comments-login-post'), {error: true});
+
 			require('topbar', function(t){
-				toast.show($.msg('wikiamobile-article-comments-login-post'), {error: true});
-
-				t.openProfile();
-
-				var elm = (ev.target.nodeName == 'FORM') ? ev.target : ev.target.parentElement,
-					prev = elm.previousElementSibling;
-
-				if(prev){
-					window.location.hash = 'comm-' + (prev.id || 'wkComm');
-				}else{
-					window.location.hash = 'comm-' + elm.parentElement.id;
-				}
-
+				t.openProfile('comm-' + (prev ? (prev.id || 'wkComm') : elm.parentElement.id));
 				modal.close(true);
 			});
 
@@ -188,8 +184,8 @@ require(['loader', 'toast', 'modal', 'events', 'track'], function(loader, toast,
 
 	function openModal(elm, focus){
 		var parent = elm.parentElement,
-			num = parent.getAttribute('data-replies'),
-			toolbar = (~~num) ? replies + ' (' + num + ')' : postReply;
+			num = ~~parent.getAttribute('data-replies'),
+			toolbar = num ? replies + ' (' + num + ')' : postReply;
 
 		modal.open({
 			classes: 'cmnMdl',
