@@ -302,7 +302,7 @@ class MWHttpRequest {
 		}
 
 		if ( Http::isLocalURL( $this->url ) ) {
-			$this->proxy = '';
+			$this->proxy = 'http://localhost:80';
 		} elseif ( $wgHTTPProxy ) {
 			$this->proxy = $wgHTTPProxy ;
 		} elseif ( getenv( "http_proxy" ) ) {
