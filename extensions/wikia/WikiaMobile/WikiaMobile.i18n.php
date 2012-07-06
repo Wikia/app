@@ -54,6 +54,7 @@ you should definitely check this out:
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
+	'wikiamobile-image-not-loaded' => 'This is a message shown to a user when an image could not be loaded in the modal',
 	'wikiamobile-footer-link-license' => 'label for the link pointing to content licensing information',
 	'wikiamobile-footer-link-lifestyle' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-entertainment' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',

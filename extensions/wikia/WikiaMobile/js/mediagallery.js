@@ -35,7 +35,7 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 			updateDots();
 
 			//open specific image chosen from gallery
-		} else if (target.className.indexOf('galImg') > -1) {
+		} else if (target.className.indexOf('galPlc img') > -1) {
 			goBackToImgModal(~~target.id.slice(3));
 
 			//open/close gallery
@@ -51,10 +51,10 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 	function loadImages(){
 		var slice = Array.prototype.slice,
 			//this gives me a chance to first load current page then next and at the end prev
-			all = slice.call(modalWrapper.querySelectorAll('.current .galImg')).concat(
-				slice.call(modalWrapper.querySelectorAll('.prev .galImg'))
+			all = slice.call(modalWrapper.querySelectorAll('.current .img')).concat(
+				slice.call(modalWrapper.querySelectorAll('.prev .img'))
 			).concat(
-				slice.call(modalWrapper.querySelectorAll('.next .galImg'))
+				slice.call(modalWrapper.querySelectorAll('.next .img'))
 			),
 			i = 0,
 			l = all.length,
@@ -113,20 +113,26 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 			imagesize = 105; //width + margin
 		}
 
-		imgsPerPage = ~~((gal.offsetHeight - 50)/imagesize) * ~~(width/imagesize)
+		var cols = ~~(width/imagesize),
+			imgL = images.length,
+			//how many placeholders need to be added
+			//to keep gallery tiles in correct places
+			x = (Math.ceil(imgL/cols)*cols)-imgL;
+
+		imgsPerPage = cols * ~~((gal.offsetHeight - 50)/imagesize);
 		pagesNum = 0;
 		dots = '<div class="dot' + ((current == 0) ? ' curr':'') + '" id=dot0><div></div></div>';
 		pages.length = 0;
 		pages[pagesNum] = '<div>';
 
-		for (i = 0;i < images.length; i++) {
+		for (i = 0;i < imgL; i++) {
 			if(i > 0 && (i%imgsPerPage) === 0){
 				pages[pagesNum++] += '</div>';
 				pages[pagesNum] = '<div>';
 				dots += '<div class="dot'+((current == pagesNum) ? ' curr':'')+'" id=dot'+pagesNum+'><div></div></div>';
 			}
 
-			pages[pagesNum] += '<div class="galImg' +
+			pages[pagesNum] += '<div class="galPlc img' +
 				(images[i].isVideo ? ' video' : '') +
 				((goToImg == i) ? ' this' : '') +
 				//use thumb if is available if not use full image
@@ -134,10 +140,14 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 				'" id=img' + i + '></div>';
 		}
 
+		//add placeholders
+		while(x--) pages[pagesNum] += '<div class=galPlc></div>';
+
 		pages[pagesNum] += '</div>';
 
 		pagination.innerHTML = dots;
 
+		//18 is a width of a single dot
 		paginationWidth = (pagesNum * 18);
 		dotsPerWidth = ~~(width / 18);
 

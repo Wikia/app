@@ -36,7 +36,7 @@ body {
 		padding: 0;
 	}
 	&:after{
-		 content: "."; 
+		content: '';
 		display: block; 
 		height: 0; 
 		font-size:0;
@@ -59,13 +59,13 @@ body {
 	position: relative;
 
     .chev {
-      display: none; //hidden by default, will be revealed via JS
-      width: 22px;
-      height: 22px;
-      background-size: 75%;
-      position: absolute;
-      right: 0;
-      top: 37%;
+		display: none; //hidden by default, will be revealed via JS
+		width: 22px;
+		height: 22px;
+		background-size: 75%;
+		position: absolute;
+		right: 0;
+		top: 37%;
     }
 }
 
