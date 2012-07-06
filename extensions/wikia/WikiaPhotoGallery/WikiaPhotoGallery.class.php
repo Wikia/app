@@ -1205,10 +1205,11 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		$slideshowHtml .= F::build('JSSnippets')->addToStack(
 			array(
-				'/skins/common/jquery/jquery-slideshow-0.4.js',
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
 			),
-			array(),
+			array(
+				'$.loadJQuerySlideshow'
+			),
 			'WikiaPhotoGallerySlideshow.init',
 			array('id' => $id, 'width' => $width, 'height' => $height)
 		);
@@ -1770,10 +1771,11 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		$html .= F::build('JSSnippets')->addToStack(
 			array(
-				'/skins/common/jquery/jquery-slideshow-0.4.js',
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
 			),
-			array(),
+			array(
+				'$.loadJQuerySlideshow'
+			),
 			'WikiaPhotoGallerySlideshow.init',
 			array('id' => $id, 'width' => $width, 'height'=> $height)
 		);

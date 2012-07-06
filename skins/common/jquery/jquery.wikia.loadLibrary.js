@@ -65,7 +65,7 @@ $.loadJQueryUI = function(callback) {
 // autocomplete plugin - not to be confused autocomplete feature of jQuery UI
 // @deprecated use $.ui.autocomplete
 $.loadJQueryAutocomplete = function(callback) {
-	return mw.loader.use('wikia.jquery.autocomplete').done(callback);
+	return mw.loader.use('jquery.autocomplete').done(callback);
 };
 
 $.loadWikiaTooltip = function(callback) {
@@ -80,11 +80,15 @@ $.loadWikiaTooltip = function(callback) {
 };
 
 $.loadJQueryAIM = function(callback) {
-	return mw.loader.use('jquery.aim').done(callback || $.noop);
+	return mw.loader.use('jquery.aim').done(callback);
 };
 
 $.loadMustache = function(callback) {
-	return mw.loader.use('jquery.mustache').done(callback || $.noop);
+	return mw.loader.use('jquery.mustache').done(callback);
+};
+
+$.loadJQuerySlideshow = function(callback) {
+	return mw.loader.use('jquery.slideshow').done(callback);
 };
 
 $.loadGoogleMaps = function(callback) {
