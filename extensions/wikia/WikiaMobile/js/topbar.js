@@ -25,8 +25,8 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 	//replace menu from bottom to topBar - the faster the better
 	d.getElementById('wkNav').replaceChild(wkNavMenu, d.getElementById('wkWikiNav'));
 
-	function reset(){
-		window.scrollTo(0,0);
+	function reset(stopScrolling){
+		!stopScrolling && window.scrollTo(0,0);
 		toc.close();
 		w.location.hash = 'topbar';
 		hidePage();
@@ -34,10 +34,10 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 
 	function openSearch(){
 		closeNav();
-		reset();
-		window.scrollTo(0,40);
+		reset(true);
 		track('search/toggle/open');
 		navBar.className = 'srhOpn';
+		searchForm.scrollIntoView();
 		searchInput.focus();
 	}
 
@@ -50,8 +50,12 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 		}
 	}
 
-	searchForm.addEventListener('submit', function(){
-		track('search/submit');
+	searchForm.addEventListener('submit', function(ev){
+		if(searchInput.value === '') {
+			ev.preventDefault();
+		}else{
+			track('search/submit');
+		}
 	});
 
 	d.getElementById('wkSrhTgl').addEventListener(clickEvent, function(event){
