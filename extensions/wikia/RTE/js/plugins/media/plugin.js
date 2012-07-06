@@ -108,9 +108,7 @@ CKEDITOR.plugins.add('rte-media',
 		// setup overlay
 		var msgs = RTE.getInstance().lang.media;
 
-        alert(" TEST ");
-         console.log( media );
-     
+
     var standardButtons = [
 			{
 				label: msgs['edit'],
@@ -161,7 +159,7 @@ CKEDITOR.plugins.add('rte-media',
         buttonsWithMut.unshift( 
               {
                     label: msgs['edit']+" (beta)",
-                    'class': 'RTEMediaOverlayEdit',
+                    'class': 'RTEMediaOverlayEditBeta',
                     callback: function(node) {
                         var type = self.getTrackingType(node);
 
