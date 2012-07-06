@@ -36,9 +36,9 @@
  *	$.loadWikiaTooltip(function(){$('#test').wikiaTooltip('this is a tooltip');});
  *
  *	//loading the script and required stylesheet via PHP
- *	global $wgOut, $wgJsMimeType, $wgStylePath
- *	$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js\"></script>");
- *	$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
+ *	global $wgOut, $wgJsMimeType, $wgResourceBasePath;
+ *  $wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js\"></script>");
+ *  $wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
  */
 
 if(typeof jQuery.fn.wikiaTooltip === 'undefined'){

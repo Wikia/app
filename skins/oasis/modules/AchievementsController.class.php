@@ -13,25 +13,24 @@ class AchievementsController extends WikiaController {
 		$this->ownerCounters = array();
 		$this->challengesBadges = array();
 		$this->max_badges = 6; // sets how many badges are visible from the begining, more badges create 'more'-link
-		$this->max_challenges = 'all';  // limit how many badges are in the "more badges you can earn" list. either a number or 'all'		
+		$this->max_challenges = 'all';  // limit how many badges are in the "more badges you can earn" list. either a number or 'all'
 	}
-	
+
 	public function executeIndex() {
-		global $wgTitle, $wgUser, $wgOut, $wgExtensionsPath, $wgStylePath, $wgStyleVersion, $wgJsMimeType;
+		global $wgOut, $wgResourceBasePath, $wgStylePath, $wgJsMimeType;
 
 		// add CSS and JS for this module
-		
-		$wgOut->addScript("<script type=\"$wgJsMimeType\" src=\"$wgStylePath/common/jquery/jquery.wikia.tooltip.js?{$wgStyleVersion}\"></script>");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js\"></script>");
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/WikiaTooltip.scss'));
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("extensions/wikia/AchievementsII/css/oasis.scss"));
-		$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script src=\"{$wgStylePath}/oasis/js/Achievements.js\"></script>\n");
 
 		$this->getBadgesData();
 	}
 
-	private function getBadgesData(){
+	private function getBadgesData() {
 		global $wgContLang;
-		
+
 		// get achievement lists
 		$rankingService = new AchRankingService();
 		$userProfileService = new AchUserProfileService();
@@ -72,7 +71,6 @@ class AchievementsController extends WikiaController {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'AchievementsController::addAchievementsJSVariables';
 	}
 
-	
 	/**
 	 * adds JavaScript variables inside the page source, cl
 	 *
@@ -81,7 +79,7 @@ class AchievementsController extends WikiaController {
 	 */
 	static function addAchievementsJSVariables (&$vars) {
 		$lang_view_all = wfMsg('achievements-viewall-oasis');
-		$lang_view_less = wfMsg('achievements-viewless');		
+		$lang_view_less = wfMsg('achievements-viewless');
 		$vars['wgAchievementsMoreButton'] = array($lang_view_all, $lang_view_less);
 		return true;
 	}
