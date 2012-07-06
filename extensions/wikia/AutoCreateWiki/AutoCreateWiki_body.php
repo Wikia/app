@@ -947,7 +947,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function createWikiForm() {
-		global $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion, $wgScriptPath, $wgStylePath;
+		global $wgOut, $wgUser, $wgExtensionsPath, $wgScriptPath, $wgStylePath;
 		global $wgRequest, $wgDBname, $wgMemc;
 		wfProfileIn( __METHOD__ );
 		#-
@@ -965,12 +965,12 @@ class AutoCreateWikiPage extends SpecialPage {
 			$params = $wgMemc->get($key);
 		}
 		$fancyCaptcha = new FancyCaptcha();
-		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
-		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}\" />" );
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css\" />" );
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/wikia_ui/tabs.css\" />" );
 		// RT #19245
-		$wgOut->addStyle("common/form.ie7.css{$wgStyleVersion}", '', 'IE 7');
+		$wgOut->addStyle("common/form.ie7.css", '', 'IE 7');
 
-		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js?{$wgStyleVersion}\"></script>" );
+		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js\"></script>" );
 
 		/**
 		 * run template
@@ -990,7 +990,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			"subDomain"        => $this->mDefSubdomain,
 			"wgUser"           => $wgUser,
 			"wgExtensionsPath" => $wgExtensionsPath,
-			"wgStyleVersion"   => $wgStyleVersion,
 			"aLanguages"       => $aLanguages,
 			"aTopLanguages"    => $aTopLanguages,
 			"aCategories"      => $aCategories,
@@ -1024,7 +1023,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function processCreatePage() {
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgStylePath;
+		global $wgOut, $wgExtensionsPath, $wgStylePath;
 
 		wfProfileIn( __METHOD__ );
 
@@ -1033,8 +1032,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * run template
 		 */
-		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
-		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js?{$wgStyleVersion}\"></script>" );
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css\" />" );
+		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js\"></script>" );
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$query = array();
@@ -1054,7 +1053,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			"subdomain"        => ( $this->awcLanguage === 'en' && $this->mLangSubdomain ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) ),
 			"ajaxToken"        => md5($this->mTitle . "_" . $this->awcName . "_" . $this->awcDomain . "_" . $this->awcCategory . "_" . $this->awcLanguage ),
 			"wgExtensionsPath" => $wgExtensionsPath,
-			"wgStyleVersion"   => $wgStyleVersion,
 		));
 
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );

@@ -51,7 +51,7 @@ class ContentFeeds {
 	 * @return string tag body
 	 */
 	public static function wikiTweetsParserHook( $input, $args, $parser ) {
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgTitle;
+		global $wgOut, $wgExtensionsPath, $wgTitle;
 
 		$limit = isset($args['size']) && intval($args['size']) ? $args['size'] : 5;
 		$phrase = isset($args['keywords']) ? $args['keywords'] : '';
@@ -92,7 +92,7 @@ class ContentFeeds {
 	 * @return string tag body
 	 */
 	public static function userTweetsParserHook( $input, $args, $parser ) {
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgTitle;
+		global $wgOut, $wgExtensionsPath, $wgTitle;
 
 		$limit = isset($args['limit']) && intval($args['limit']) ? $args['limit'] : 5;
 		$user = isset($args['username']) ? $args['username'] : '';
@@ -270,7 +270,7 @@ class ContentFeeds {
 	 * @return string tag body
 	 */
 	public static function firstFewArticlesParserHook( $input, $args, $parser ) {
-		global $wgExtensionsPath, $wgStyleVersion;
+		global $wgExtensionsPath;
 
 		$limit = isset( $args['limit'] ) ? $args['limit'] : 1;
 
@@ -281,9 +281,9 @@ class ContentFeeds {
 		$jsBody .= <<<SCRIPT
 <script type="text/javascript">/*<![CDATA[*/
 	wgAfterContentAndJS.push(function() {
-		$.getScript('{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}', function() {
+		$.getScript('{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js', function() {
 			$( function() {
-				$.getScript('{$wgExtensionsPath}/wikia/ContentFeeds/js/FirstFewArticles.js?{$wgStyleVersion}', function() {
+				$.getScript('{$wgExtensionsPath}/wikia/ContentFeeds/js/FirstFewArticles.js', function() {
 					$( function() { } );
 				});
 			});

@@ -10,10 +10,10 @@
 // TODO: extend SpecialNewFiles class instead of using a function
 function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode, $wgUseWikiaNewFiles;
-	global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+	global $wgJsMimeType, $wgExtensionsPath;
 	global $wmu, $wgOasisHD;
 
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/WikiaNewFiles/js/WikiaNewFiles.js?$wgStyleVersion\"></script>\n" );
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/WikiaNewFiles/js/WikiaNewFiles.js\"></script>\n" );
 
 	$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
 	$dbr = wfGetDB( DB_SLAVE );
@@ -75,7 +75,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	if ( $wpIlMatch != '' && !$wgMiserMode ) {
 		$nt = Title::newFromUrl( $wpIlMatch );
 		if ( $nt ) {
-			$m = $dbr->buildLike( $dbr->anyString(), strtolower( $nt->getDBkey() ), $dbr->anyString() );			
+			$m = $dbr->buildLike( $dbr->anyString(), strtolower( $nt->getDBkey() ), $dbr->anyString() );
 			$where[] = 'LOWER(img_name)' . $m;
 			$searchpar = '&wpIlMatch=' . urlencode( $wpIlMatch );
 		}

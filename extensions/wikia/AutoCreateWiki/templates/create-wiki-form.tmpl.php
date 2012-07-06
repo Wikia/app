@@ -63,7 +63,7 @@ if( !empty( $mType ) ) {
 <form class="highlightform" id="highlightform" method="post" action="<?= htmlspecialchars($mTitle->getLocalURL( $cgiArgs )) ?>">
 <div id="monobook_font">
 	<div id="tagline"><? echo wfMsgExt('autocreatewiki-tagline', array('parse') ); ?></div>
-	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgStylePath}/common/required.png?{$wgStyleVersion}' />")?></div>
+	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgStylePath}/common/required.png' />")?></div>
 	<div id="moving" class="formhighlight"></div>
 	<div class="formblock">
 		<ul>
@@ -193,7 +193,7 @@ endif
 		<li class="data1">
 			<a id="AWClogin" class="wikia-button ajaxLogin" style="z-index: 10;" href="/index.php?title=Special:Signup&returnto=Special:CreateWiki&type=login" rel="nofollow"><?=wfMsg('login')?></a>
 		</li>
-		<li class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png?{$wgStyleVersion}' />")?></li>
+		<li class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png' />")?></li>
 		</ul>
 	</div>
 	<div class="formblock">
@@ -319,7 +319,7 @@ $(function () {
 });
 /*]]>*/
 </script>
-<script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/js/autocreatewiki.js?<?=$wgStyleVersion?>"></script>
+<script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/js/autocreatewiki.js"></script>
 <script type="text/javascript">
 /*<![CDATA[*/
 $(function () {

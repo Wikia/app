@@ -24,11 +24,11 @@ class VideoUploadHelper {
 	 * @author Marooned
 	 */
 	static public function setupEditPage($editform) {
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgOut, $wgExtensionsPath, $wgJsMimeType;
 
 		wfProfileIn(__METHOD__);
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/hacks/VideoUploadPrototype/js/VideoUpload.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/hacks/VideoUploadPrototype/js/VideoUpload.js\"></script>\n");
 
 		// load message for MW toolbar button tooltip
 //		global $wgHooks;

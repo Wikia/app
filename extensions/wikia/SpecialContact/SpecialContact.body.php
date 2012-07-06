@@ -16,10 +16,9 @@ class ContactForm extends SpecialPage {
 
 	function execute() {
 		global $wgLang, $wgRequest;
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+		global $wgOut, $wgExtensionsPath;
 		global $wgUser, $wgCaptchaClass, $wgJsMimeType;
 
-		//$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/SpecialContact/SpecialContact.css?{$wgStyleVersion}");
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact/SpecialContact.scss'));
 		$this->mName = null;
 		$this->mRealName = null;

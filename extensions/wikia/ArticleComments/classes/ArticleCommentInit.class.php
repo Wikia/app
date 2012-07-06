@@ -116,7 +116,7 @@ class ArticleCommentInit {
 		//don't touch $custom_article_footer! we don't want to replace the footer - we just want to echo something just before it
 		if (self::ArticleCommentCheck()) {
 			global $wgTitle;
-			
+
 			$page = ArticleCommentList::newFromTitle($wgTitle);
 			echo $page->render();
 		}
@@ -135,7 +135,7 @@ class ArticleCommentInit {
 			wfProfileIn( __METHOD__ );
 
 			if (self::ArticleCommentCheck()) {
-				
+
 				$page = ArticleCommentList::newFromTitle($wgTitle);
 				$data = $page->render();
 			}
@@ -147,7 +147,7 @@ class ArticleCommentInit {
 	}
 
 	static public function ArticleCommentAddJS( &$out, &$sk ){
-		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		global $wgJsMimeType, $wgExtensionsPath;
 		wfProfileIn( __METHOD__ );
 
 		if ( self::ArticleCommentCheck() ) {
@@ -159,12 +159,12 @@ class ArticleCommentInit {
 					$app->wg->ArticleCommentsEnabledSkins
 			) )
 			{
-				$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
+				$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js\" ></script>\n");
 			}
 
 			//FB#21244 this should run only for MonoBook, Oasis and WikiaMobile have their own SASS-based styling
-			if ( $sk instanceof SkinMonoBook ) { 
-				$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css?$wgStyleVersion");
+			if ( $sk instanceof SkinMonoBook ) {
+				$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css");
 			}
 		}
 

@@ -132,10 +132,10 @@ class WikiMetrics {
 
 	/* draws the form itself  */
 	function showForm ($error = "") {
-		global $wgOut, $wgContLang, $wgStyleVersion, $wgStylePath;
+		global $wgOut, $wgContLang, $wgStylePath;
         wfProfileIn( __METHOD__ );
 
-		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgStylePath}/common/wikia_ui/tabs.css");
 
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(

@@ -53,8 +53,8 @@ class SiteWideMessages extends SpecialPage {
 		global $wgUser, $wgOut, $wgRequest, $wgTitle, $wgParser;
 
 		//add CSS (from static file)
-		global $wgExtensionsPath, $wgStyleVersion, $wgExternalSharedDB;
-		$wgOut->addScript("\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css?$wgStyleVersion\" />");
+		global $wgExtensionsPath, $wgExternalSharedDB;
+		$wgOut->addScript("\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css\" />");
 
 		$template = 'editor';	//default template
 		$editMsgId = 0;			//edit message mode
@@ -805,7 +805,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
 			. ' AND msg_status IN (' . join(',', $status) . ')'
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
-			. ' AND msg_removed = ' . MSG_REMOVED_NO 
+			. ' AND msg_removed = ' . MSG_REMOVED_NO
 			. " AND (msg_wiki_id IS NULL OR msg_wiki_id = $localCityId)"
 			. ';'
 			, __METHOD__

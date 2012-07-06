@@ -29,7 +29,7 @@ class CrunchyrollVideo {
 	public function setSerie( $sSerie ){
 		$this->serie = ( isset ( $sSerie, $this->allowedSeries[ $sSerie ] ) ) ? $this->allowedSeries[ $sSerie ] : false;
 	}
-	
+
 	public function setSerieId( $iSerie ){
 		$this->serie = (int)$iSerie;
 	}
@@ -60,7 +60,7 @@ class CrunchyrollVideo {
 		$crunchyrollRSS = CrunchyrollRSS::newFromUrl( $this->getURLFromSerie() );
 		$crunchyrollRSS->setMaxItems( $this->number );
 		$crunchyrollRSS->setSerie( $this->serie );
-		
+
 		return $crunchyrollRSS;
 	}
 
@@ -81,7 +81,7 @@ class CrunchyrollVideo {
 	public function getGallery( $collumns = 3 ){
 
 		$crunchyrollRSS = $this->getRSSData();
-		
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars(
 			array(
@@ -96,7 +96,7 @@ class CrunchyrollVideo {
 	public function getPageURL(){
 
 		$url = '/wiki/special:crunchyroll/%s';
-		if ( !empty( $this->serie ) ){ 
+		if ( !empty( $this->serie ) ){
 			$url.= '/'.$this->serie;
 		}
 		return $url;
@@ -113,12 +113,12 @@ class CrunchyrollVideo {
 	}
 
 	public function getPaginatedGallery( $page = 1, $fromAjax = false ){
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath;
 
 		$this->currentPage = $page;
-		
+
 		$cachedData = $this->getFromCache();
-			
+
 		if ( !empty($cachedData) && is_array($cachedData) && isset( $cachedData['toolbar'] ) && isset( $cachedData['title'] ) && isset( $cachedData['data'] ) ){
 			$this->title = $cachedData['title'];
 			$aTmpData = $cachedData['data'];
@@ -136,7 +136,7 @@ class CrunchyrollVideo {
 			);
 		}
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Crunchyroll/js/Crunchyroll.js?{$wgStyleVersion}\" ></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Crunchyroll/js/Crunchyroll.js\"></script>\n");
 
 		if ( is_array( $aTmpData ) && count( $aTmpData ) > 0 ){
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -155,7 +155,7 @@ class CrunchyrollVideo {
 			}
 		} else {
 			return '';
-		}	
+		}
 	}
 
 	private function getURLFromSerie(){

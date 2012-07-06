@@ -60,9 +60,9 @@ function wfCOArticleViewHeader(&$article, &$outputDone, $useParserCache) {
 
 // add css
 function wfCOBeforePageDisplay(&$out, &$sk) {
-	global $wgExtensionsPath, $wgStyleVersion;
+	global $wgExtensionsPath;
 	if (wfCOCheck()) {
-		$out->addExtensionStyle("$wgExtensionsPath/wikia/CommentsOnly/CommentsOnly.css?$wgStyleVersion");
+		$out->addExtensionStyle("$wgExtensionsPath/wikia/CommentsOnly/CommentsOnly.css");
 	}
 	return true;
 }

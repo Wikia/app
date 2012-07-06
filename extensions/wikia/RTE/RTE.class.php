@@ -115,7 +115,7 @@ class RTE {
 	 * @author Inez KorczyDski, Macbre
 	 */
 	public static function init(&$form) {
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgAllInOne, $wgRequest;
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgHooks, $wgAllInOne, $wgRequest;
 
 		wfProfileIn(__METHOD__);
 
@@ -719,8 +719,8 @@ HTML
 	 */
 	static function onEditingPreferencesBefore($user, &$preferences) {
 		// add JS to hide certain switches when wysiwyg is enabled
-		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
-		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js?$wgStyleVersion\"></script>" );
+		global $wgOut, $wgJsMimeType, $wgExtensionsPath;
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js\"></script>" );
 
 		// add RTE related section under "Editing" tab
 		$preferences['enablerichtext'] = array(

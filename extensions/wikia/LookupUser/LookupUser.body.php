@@ -126,7 +126,7 @@ EOT
 	function showInfo( $target, $emailUser = "" ) {
 		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt;
 		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
-		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgResourceBasePath, $wgEnableLookupContribsExt;
+		global $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgEnableLookupContribsExt;
 
 		/**
 		 * look for @ in username
@@ -233,8 +233,8 @@ EOT
 
 			//Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
 			if( !empty($wgEnableLookupContribsExt) ) {
-				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css?{$wgStyleVersion}");
-				$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css?{$wgStyleVersion}");
+				$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/LookupContribs/css/table.css");
+				$wgOut->addExtensionStyle("{$wgExtensionsPath}/LookupUser/css/lookupuser.css");
 				$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js\"></script>\n");
 
 				//checking and setting User::mBlockedGlobally if needed

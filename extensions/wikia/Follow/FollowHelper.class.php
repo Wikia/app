@@ -343,10 +343,10 @@ class FollowHelper {
 
 
 	static public function renderFollowPrefs($user, &$defaultPreferences) {
-		global $wgUseRCPatrol, $wgEnableAPI, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgOut, $wgUser;
+		global $wgUseRCPatrol, $wgEnableAPI, $wgJsMimeType, $wgExtensionsPath, $wgOut, $wgUser;
 		wfProfileIn(__METHOD__);
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js\"></script>\n");
 
 		$watchTypes = array(
 			'edit' => 'watchdefault'
@@ -396,8 +396,8 @@ class FollowHelper {
 				$messageWallmy = 'tog-enotifmywall';
 				$messageWallthread = 'tog-enotifwallthread';
 			}
-	
-			//back compatybility 
+
+			//back compatybility
 			$option = $wgUser->getOption('enotifwallthread');
 			if(empty($option)){
 				$wgUser->setOption('enotifwallthread', WALL_EMAIL_NOEMAIL);
@@ -414,9 +414,9 @@ class FollowHelper {
 					wfMsg('tog-enotifmywall-noemail') => WALL_EMAIL_NOEMAIL
 				),
 				'label-message' => $messageWallthread,
-			);			
+			);
 		}
-		
+
 
 		$watchTypes = array();
 
@@ -576,7 +576,7 @@ class FollowHelper {
 
 
 	static public function renderUserProfile(&$out) {
-		global $wgTitle, $wgRequest, $wgOut, $wgStyleVersion, $wgExtensionsPath, $wgJsMimeType, $wgStyleVersion, $wgUser;
+		global $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgUser;
 		wfProfileIn(__METHOD__);
 		if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "hide_followed", 0) == 1) ) {
 			$wgUser->setOption( "hidefollowedpages", true );
@@ -611,7 +611,7 @@ class FollowHelper {
 
 		$data = FollowModel::getUserPageWatchList( $user->getId() );
 
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/Follow/css/userpage.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/Follow/css/userpage.css");
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
 		if ( count($data) == 0 ) $data = null;

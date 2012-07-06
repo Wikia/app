@@ -104,9 +104,9 @@ class DevBoxPanel extends SpecialPage {
 
 
 function devBoxPanelAdditionalScripts( &$out, &$sk ){
-	global $wgExtensionsPath,$wgStyleVersion;
-	$out->addStyle( "$wgExtensionsPath/wikia/Development/SpecialDevBoxPanel/DevBoxPanel.css?$wgStyleVersion" );
-	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/Development/SpecialDevBoxPanel/DevBoxPanel.js?$wgStyleVersion'></script>");
+	global $wgExtensionsPath;
+	$out->addStyle( "$wgExtensionsPath/wikia/Development/SpecialDevBoxPanel/DevBoxPanel.css" );
+	$out->addScript("<script type='text/javascript' src='$wgExtensionsPath/wikia/Development/SpecialDevBoxPanel/DevBoxPanel.js'></script>");
 	return true;
 }
 

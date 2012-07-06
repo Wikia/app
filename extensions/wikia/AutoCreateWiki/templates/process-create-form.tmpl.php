@@ -13,7 +13,7 @@ $wgSuppressAds = true;
 </style>
 <div style="text-align:center">
 	<div id="awc-log" class="note"></div>
-	<div><img id="awc-main-img" src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/images/processing.jpg?<?=$wgStyleVersion?>" /></div>
+	<div><img id="awc-main-img" src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/images/processing.jpg" /></div>
 </div>
 <br />
 <div style="clear:both"></div>
@@ -32,12 +32,12 @@ $(function () {
 	var setLog = function (inx, text, resType)	{
 		var logSteps = $('#awc-log');
 		var styleColor = (resType == 'OK' || resType == 'END') ? "green" : "red";
-		var styleMsg = (resType == 'OK' || resType == 'END') ? '<img style="vertical-align:middle;" src="http://images.wikia.com/common/skins/common/images/ajax.gif?<?=$wgStyleVersion?>" width="16" height="16" />' : '<?=wfMsg('autocreatewiki-error')?>';
+		var styleMsg = (resType == 'OK' || resType == 'END') ? '<img style="vertical-align:middle;" src="http://images.wikia.com/common/skins/common/images/ajax.gif" width="16" height="16" />' : '<?=wfMsg('autocreatewiki-error')?>';
 		var msgType = (resType != 'END') ? '&nbsp;&nbsp;<strong style="color:' + styleColor + '">' + styleMsg + '</strong>' : "";
 		var msg = ((resType == 'OK') ? waitMsg + "<br />" : "") + "<span style=\"vertical-align:middle;\">" + text + ((resType != '') ? msgType : "") + "</span>";
 		logSteps.html(msg);
 	}
-	
+
 	$.get( titleUrl );
 
 	var prevMsg = "";

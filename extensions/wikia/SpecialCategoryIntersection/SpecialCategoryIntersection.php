@@ -32,17 +32,17 @@ $wgExtensionCredits['specialpage'][] = array(
  */
 class SpecialCategoryIntersection extends SpecialPage {
 	public $defaultLimit = 25;
-	
+
 	static private $CAT_PREFIX = "category_";
 	private $CATEGORY_NS_PREFIX;
 
 	public function __construct() {
 		parent::__construct( 'CategoryIntersection' );
-		
+
 		global $wgContLang;
 		$this->CATEGORY_NS_PREFIX = $wgContLang->getNSText(NS_CATEGORY) . ":"; // the actual namespace prefix (includes the colon at the end).
 	}
-	
+
 	public function getDocumentationUrl(){
 		// TODO: Ideally, we should create documentation for the extension on MediaWiki.org, then instead of this function, we should use a static member var (string) for the URL.
 		global $wgServer;
@@ -55,11 +55,11 @@ class SpecialCategoryIntersection extends SpecialPage {
 	 * @param $subpage Mixed: string if any subpage provided, else null
 	 */
 	public function execute( $subpage ) {
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+		global $wgOut, $wgExtensionsPath;
 		wfProfileIn( __METHOD__ );
-	
+
 		$wgOut->setPagetitle( wfMsg('categoryintersection') );
-		
+
 		// Just splurt some CSS onto the page for now (TODO: Make this an external file.. do it in a way that works for both AssetsManager and for MediaWiki in general)
 		$wgOut->addHTML("
 			<style type='text/css'>
@@ -115,24 +115,24 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$wgOut->addHTML("<table><tr><td class='form'>"); // oh snap, tables for layout!
 			$this->showForm( $wgOut );
 		$wgOut->addHTML("</td><td class='results'>");
-		
+
 		$wgOut->addHTML("<h3>" . wfMsg('categoryintersection-instructions-title') . "</h3>");
 		$wgOut->addHTML(wfMsg('categoryintersection-instructions'));
-		
+
 		$wgOut->addHTML("</td></tr></table>\n");
 
 		$this->showResults( $wgOut );
 
 		// Show a footer w/links to more info and some example queries
 		$this->showFooter( $wgOut );
-		
+
 		// Javascript for the autocompletion - this must be done after the form exists since it does calculations on the form.
-		$js = "{$wgExtensionsPath}/wikia/SpecialCategoryIntersection/CategoryAutoComplete.js?{$wgStyleVersion}";
+		$js = "{$wgExtensionsPath}/wikia/SpecialCategoryIntersection/CategoryAutoComplete.js";
 		$wgOut->addScript('<script type="text/javascript" src="'.$js.'"></script>');
 
 		wfProfileOut( __METHOD__ );
 	} // end execute()
-	
+
 	/**
 	 * Prints a form to the OutputPage provided, which will alow the user to make a query for multiple categories.
 	 *
@@ -144,10 +144,10 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		$html = "";
 		$html .= "<h3>". wfMsg('categoryintersection-form-title') ."</h3>";
-		
+
 		$html .= "<div>\n";
 		$html .= "<form name='categoryintersection' id='CategoryAutoComplete' class='WikiaForm' action='' method='GET'>\n";
-		
+
 			// Display a couple of rows
 			$html .= $this->getHtmlForCategoryBox(1);
 			$html .= wfMsg('categoryintersection-and') . "<br/>\n";
@@ -173,10 +173,10 @@ class SpecialCategoryIntersection extends SpecialPage {
 		$html .= "</div>\n";
 
 		$out->addHTML($html);
-		
+
 		wfProfileOut( __METHOD__ );
 	} // end showForm()
-	
+
 	/**
 	 * @param num - a sequential number for the category box so that a bunch of them can be made.  The first should be "1"
 	 * @return a string which contains HTML for a text field for a category.  Will be pre-populated with a value if this page
@@ -203,7 +203,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		$html = "";
 		$html .= "<div class='ci_results'>\n";
-		
+
 			$html .= "<h2>". wfMsg('categoryintersection-results-title') ."</h2>\n";
 
 			$submit = $wgRequest->getVal('wpSubmit');
@@ -272,7 +272,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		wfProfileOut( __METHOD__ );
 	} // end showResults()
-	
+
 	/**
 	 * Prints a footer to the OutputPage provided, which contains example queries to get people thinking and show them some options.
 	 * In addition, links to the documentation.
@@ -289,7 +289,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		// Examples will be an array of arrays where each sub-array contains items for a single example.
 		$examples = array();
-		
+
 		// Examples are now kept in wikitext so that each wiki can have its own examples if it wishes.
 		$exampleText = wfMsg('categoryintersection-footer-examples');
 		$rawExamples = explode("\n\n", $exampleText);
