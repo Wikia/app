@@ -78,6 +78,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'wikifeatures-feature-description-wgEnableChat' => 'Feel free not to translate "lol omg rolfl" if there is no proper equivalent in your language. These are acronyms for Laughing Out Loud, Oh My God, and Rolling On The Floor Laughing.',
+	'action-wikifeaturesview' => '{{doc-action|wikifeaturesview}}',
 );
 
 /** Arabic (العربية)
