@@ -430,7 +430,7 @@ EOT;
 				<script type="text/javascript">/*<![CDATA[*/ 
 					(function(){ 
 						if (typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED))) { 
-							wsl.loadScript({$jquery_ads}); 
+							wsl.loadScript([].concat(window.getJqueryUrl()).concat({$jquery_ads}));
 						} 
 					})(); 
 				/*]]>*/</script>

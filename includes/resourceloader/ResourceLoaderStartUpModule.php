@@ -185,7 +185,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 		if ( $context->getOnly() === 'scripts' ) {
 
 			// The core modules:
-			$modules = array( 'jquery', 'mediawiki' );
+			$modules = array( /* wladek - we load jquery from google CDN - 'jquery', */ 'mediawiki' );
 			wfRunHooks( 'ResourceLoaderGetStartupModules', array( &$modules ) );
 
 			// Get the latest version
@@ -214,13 +214,21 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 				"\tmw.config = new " . Xml::encodeJsCall( 'mw.Map', array( $wgLegacyJavaScriptGlobals ) ) . "\n" .
 				"\t$registrations\n" .
 				"\t" . Xml::encodeJsCall( 'mw.config.set', array( $configuration ) ) .
+				// Wikia change - begin - @author: wladek
+				"\t" . Xml::encodeJsCall( 'mw.loader.state', array( array( 'jquery' => 'ready' ) ) ) .
+				// Wikia change - end
 				"};\n";
 
 			// Conditional script injection
 			// Wikia change - begin - @author: wladek
 //			$scriptTag = Html::linkedScript( $wgLoadScript . '?' . wfArrayToCGI( $query ) );
-			$scriptTag = Html::linkedScript( ResourceLoader::makeLoaderURL($modules, $query['lang'],
-					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') );
+			// get jquery from CDN
+			$scriptTag = "wsl.buildScript(window.getJqueryUrl()) + ";
+			$scriptTag .= Xml::encodeJsVar(
+					Html::linkedScript( ResourceLoader::makeLoaderURL($modules, $query['lang'],
+					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
+			);
+			$scriptTag = new XmlJsCode($scriptTag);
 			// Wikia change - end
 			$out .= "if ( isCompatible() ) {\n" .
 				"\t" . Xml::encodeJsCall( 'document.write', array( $scriptTag ) ) .

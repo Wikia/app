@@ -97,11 +97,20 @@ $config['site_user_css'] = array(
 $config['oasis_blocking'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/wikia/js/WikiaScriptLoader.js'
+		'//skins/wikia/js/WikiaScriptLoader.js',
+		'//skins/wikia/js/JqueryLoader.js'
 	)
 );
 
 /** jQuery **/
+
+$config['jquery'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#function_AssetsConfig::getJQueryUrl',
+		'//resources/wikia/libraries/jquery/jquery.pushstack-fix.js'
+	)
+);
 
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,

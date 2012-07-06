@@ -95,16 +95,20 @@ var WikiaScriptLoader = {};
 			headNode.appendChild(NodeFactories[type](urls[x], opts));
 		}
 	}
-	
-	function writeScript(urls, callback){
-		var output = '';
 
+	function buildScript(urls) {
+		var output = '';
 		if(!isArray(urls))
 			urls = [urls];
 
 		for(var x = 0, y = urls.length; x < y; x++){
 			output += '<scr' + 'ipt src="' + urls[x] + '" type="text/javascript"></scr' + 'ipt>';
 		}
+		return output;
+	}
+	
+	function writeScript(urls, callback){
+		var output = buildScript(urls);
 
 		document.write(output);
 
@@ -124,6 +128,8 @@ var WikiaScriptLoader = {};
 	/**
 	 * @public
 	 */
+
+	this.buildScript = buildScript;
 
 	this.loadScript = function(urls, callback){
 		if(useDOMInjection)
