@@ -212,12 +212,6 @@ class WikiaFileHelper extends Service {
 	 */
 	public static function getMediaDetail( $fileTitle, $config = array() ) {
 
-		if ( $fileTitle->getNamespace() != NS_FILE ) {
-			$fileTitle = F::build('Title', array($fileTitle->getDBKey(), NS_FILE), 'newFromText');
-		}
-
-		$config = self::getMediaDetailConfig( $config );
-
 		$data = array(
 			'mediaType' => '',
 			'videoEmbedCode' => '',
@@ -234,55 +228,64 @@ class WikiaFileHelper extends Service {
 			'exists' => false
 		);
 
-		$file = wfFindFile($fileTitle);
+		if ( !empty($fileTitle) ) {
 
-		if ( !empty( $file ) ) {
-			$data['exists'] = true;
-
-			$data['mediaType'] = self::isFileTypeVideo( $file ) ? 'video' : 'image';
-
-			$width = $file->getWidth();
-			$height = $file->getHeight();
-
-			if ( $data['mediaType'] == 'video' ) {
-
-				$width  = $config['contextWidth']  ? $config['contextWidth']  : $width;
-				$height = $config['contextHeight'] ? $config['contextHeight'] : $height;
-				if ( isset( $config['maxHeight'] ) ) {
-					$file->setEmbedCodeMaxHeight( $config['maxHeight'] );
-				}
-				$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true);
-				$data['playerAsset'] = $file->getPlayerAssetUrl();
-
-				$mediaPage = F::build( 'WikiaVideoPage', array($fileTitle) );
-
-			} else {
-
-				$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
-				$mediaPage = F::build( 'ImagePage', array($fileTitle) );
+			if ( $fileTitle->getNamespace() != NS_FILE ) {
+				$fileTitle = F::build('Title', array($fileTitle->getDBKey(), NS_FILE), 'newFromText');
 			}
 
-			$thumb = $file->transform( array('width'=>$width, 'height'=>$height), 0 );
-			$user = F::build('User', array( $file->getUser('id') ), 'newFromId' );
+			$file = wfFindFile( $fileTitle );
 
-			$data['imageUrl'] = $thumb->getUrl();
-			$data['fileUrl'] = $fileTitle->getLocalUrl();
-			$data['rawImageUrl'] = $file->getUrl();
-			$data['userId'] = $user->getId();
-			$data['userName'] = $user->getName();
-			$data['userThumbUrl'] = F::build( 'AvatarService', array($user, $config['userAvatarWidth'] ), 'getAvatarUrl' );
-			$data['userPageUrl'] = $user->getUserPage()->getFullURL();
-			$data['description']  = $mediaPage->getContent();
+			if ( !empty( $file ) ) {
+				$config = self::getMediaDetailConfig( $config );
 
-			$mediaQuery =  F::build( 'ArticlesUsingMediaQuery' , array( $fileTitle ) );
-			$articlesData = $mediaQuery->getArticleList();
+				$data['exists'] = true;
 
-			if ( is_array($articlesData) ) {
-				foreach ( $articlesData as $art ) {
-					$data['articles'][] = array( 'articleUrl' => $art['url'], 'articleTitle' => $art['title'], 'articleNS' => $art['ns'] );
+				$data['mediaType'] = self::isFileTypeVideo( $file ) ? 'video' : 'image';
+
+				$width = $file->getWidth();
+				$height = $file->getHeight();
+
+				if ( $data['mediaType'] == 'video' ) {
+
+					$width  = $config['contextWidth']  ? $config['contextWidth']  : $width;
+					$height = $config['contextHeight'] ? $config['contextHeight'] : $height;
+					if ( isset( $config['maxHeight'] ) ) {
+						$file->setEmbedCodeMaxHeight( $config['maxHeight'] );
+					}
+					$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true);
+					$data['playerAsset'] = $file->getPlayerAssetUrl();
+
+					$mediaPage = F::build( 'WikiaVideoPage', array($fileTitle) );
+
+				} else {
+
+					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
+					$mediaPage = F::build( 'ImagePage', array($fileTitle) );
 				}
-			}
 
+				$thumb = $file->transform( array('width'=>$width, 'height'=>$height), 0 );
+				$user = F::build('User', array( $file->getUser('id') ), 'newFromId' );
+
+				$data['imageUrl'] = $thumb->getUrl();
+				$data['fileUrl'] = $fileTitle->getLocalUrl();
+				$data['rawImageUrl'] = $file->getUrl();
+				$data['userId'] = $user->getId();
+				$data['userName'] = $user->getName();
+				$data['userThumbUrl'] = F::build( 'AvatarService', array($user, $config['userAvatarWidth'] ), 'getAvatarUrl' );
+				$data['userPageUrl'] = $user->getUserPage()->getFullURL();
+				$data['description']  = $mediaPage->getContent();
+
+				$mediaQuery =  F::build( 'ArticlesUsingMediaQuery' , array( $fileTitle ) );
+				$articlesData = $mediaQuery->getArticleList();
+
+				if ( is_array($articlesData) ) {
+					foreach ( $articlesData as $art ) {
+						$data['articles'][] = array( 'articleUrl' => $art['url'], 'articleTitle' => $art['title'], 'articleNS' => $art['ns'] );
+					}
+				}
+
+			}
 		}
 
 		return $data;
