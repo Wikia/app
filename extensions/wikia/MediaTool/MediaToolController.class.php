@@ -34,6 +34,7 @@ class MediaToolController extends WikiaController {
 				$data['status'] = self::RESPONSE_STATUS_OK;
 				$data['title'] = $wrapper->getTitle();
 				$data['thumbnailUrl'] = $wrapper->getThumbnailUrl();
+				$data['thumbHtml'] = $this->getMediaThumb('File:External'); // @todo getting thumbs for remote files
 			}
 			else {
 				$data['status'] = self::RESPONSE_STATUS_ERROR;

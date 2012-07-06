@@ -12,6 +12,7 @@ var MediaTool = MediaTool || (function () {
 	var templateDialog = null;
 	var templateCart = null;
 	var templateItemsList = null;
+	var templateItem = null;
 
 	function loadResources() {
 		return resourceLoaderCache = resourceLoaderCache ||
@@ -28,7 +29,9 @@ var MediaTool = MediaTool || (function () {
 					callBackend('getTemplates', function (resp) {
 						templateDialog = resp['dialog'];
 						templateCart = resp['cart'];
-						templateItemsList = resp['itemsList'];
+						//templateItemsList = resp['itemsList'];
+						templateItemsList = $("<div>").html(resp['itemsList']).find('#mediaToolBasketTemplate').text();
+						templateItem = $("<div>").html(resp['itemsList']).find('#mediaToolBasketItemTemplate').text();
 					})
 
 				).done(dfd.resolve);
@@ -42,6 +45,7 @@ var MediaTool = MediaTool || (function () {
             renderer = new MediaTool.Renderer();
             itemsCollection = new MediaTool.ItemsCollection('mediatool-thumbnail-browser', 'mediaToolItemList', 'mediaToolBasket');
             itemsCollection.template = templateItemsList;
+						itemsCollection.itemTemplate = templateItem;
             cart = new MediaTool.Cart('mediaToolBasket', 'mediaToolItemList');
             cart.template = templateCart;
             this.bind('Cart::itemsChanged', onCartContentChange);
@@ -68,7 +72,7 @@ var MediaTool = MediaTool || (function () {
 	function showModal(event) {
 		var self = this;
 		loadResources().done(function () {
-            self.initModal();
+		self.initModal();
 			var processedhtml = $.mustache(templateDialog, {
 					'cart':templateCart,
 					'itemslist':$.mustache(templateItemsList, {
@@ -147,6 +151,15 @@ var MediaTool = MediaTool || (function () {
 		}
 	}
 
+	function onAddViaUrlClick() {
+		var videoUrl = $('#mediatool-online-url').val();
+
+		callBackend('getVideoMetadata', { videoUrl: videoUrl }, function(response) {
+			response.id = 'viaurl';
+			cart.createItem(response, templateItem);
+		});
+	}
+
 	function appendUIActions() {
 		var self = this;
 		$("button[name='cancel']", dialogWrapper).on("click", function (e) {
@@ -157,6 +170,9 @@ var MediaTool = MediaTool || (function () {
 		});
 		$("button[name='done']", dialogWrapper).on("click", function (e) {
 			self.finalizeDialog();
+		});
+		$("button[name='addviaurl']", dialogWrapper).on("click", function (e) {
+			onAddViaUrlClick();
 		});
 
 		$("ul.tabs li[data-tab='edit-media'] a", dialogWrapper).on("click", function (e) {

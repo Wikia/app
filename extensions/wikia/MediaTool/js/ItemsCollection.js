@@ -7,6 +7,7 @@ MediaTool.ItemsCollection = $.createClass(Observable,{
 	$containerList: null,
 	cartId: null,
 	template: null,
+	itemTemplate: null,
 
 	constructor: function( containerId, containerListId, cartId ) {
 		MediaTool.ItemsCollection.superclass.constructor.call(this);
@@ -83,7 +84,8 @@ MediaTool.ItemsCollection = $.createClass(Observable,{
 		var html = $.mustache(this.template, {
 			'title':'Media recently added to wiki',
 			'items':this.items
-		});
+		}, {item: this.itemTemplate } /* partials */);
+
 		this.$container.html(html);
 		this.$container.removeClass('loading');
 
