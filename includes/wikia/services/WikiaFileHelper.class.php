@@ -212,8 +212,6 @@ class WikiaFileHelper extends Service {
 	 */
 	public static function getMediaDetail( $fileTitle, $config = array() ) {
 
-		if ( empty ($fileTitle) ) return null;
-
 		if ( $fileTitle->getNamespace() != NS_FILE ) {
 			$fileTitle = F::build('Title', array($fileTitle->getDBKey(), NS_FILE), 'newFromText');
 		}
