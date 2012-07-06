@@ -4,6 +4,7 @@ MediaTool.Item = $.createClass(Observable,{
 	video: null,
 	file: null,
 	thumbHtml: null,
+	editable: false,
 
 	constructor: function(id, video, file, thumbHtml) {
 		MediaTool.Item.superclass.constructor.call(this);
