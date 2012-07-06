@@ -50,6 +50,7 @@ $messages['qqq'] = array(
 	'protectsite-comment' => '{{Identical|Comment}}',
 	'protectsite-protect' => '{{Identical|Protect}}',
 	'protectsite-unprotect' => '{{Identical|Unprotect}}',
+	'action-protectsite' => '{{doc-action|protectsite}}',
 );
 
 /** Afrikaans (Afrikaans)

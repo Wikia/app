@@ -602,6 +602,7 @@ $4 is any of:
 	'achievements-userprofile-title' => "*$1 is the user's name
 *$2 is the number of badges the user has earned",
 	'achievements-userprofile-ranked' => '*$1 is the ranking of the user.',
+	'action-platinum' => '{{doc-action|platinum}}',
 );
 
 /** Afrikaans (Afrikaans)
