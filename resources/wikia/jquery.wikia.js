@@ -1,12 +1,14 @@
-jQuery.getSassCommonURL = function(scssFilePath, params) {
-	return jQuery.getSassURL(wgCdnRootUrl, scssFilePath, params);
+(function(window, $, undefined) {
+
+$.getSassCommonURL = function(scssFilePath, params) {
+	return $.getSassURL(wgCdnRootUrl, scssFilePath, params);
 };
 
-jQuery.getSassLocalURL = function(scssFilePath, params) {
-	return jQuery.getSassURL(wgServer, scssFilePath, params);
+$.getSassLocalURL = function(scssFilePath, params) {
+	return $.getSassURL(wgServer, scssFilePath, params);
 };
 
-jQuery.getSassURL = function(rootURL, scssFilePath, params) {
+$.getSassURL = function(rootURL, scssFilePath, params) {
 	return rootURL + wgAssetsManagerQuery.
 		replace('%1$s', 'sass').
 		replace('%2$s', scssFilePath).
@@ -14,7 +16,7 @@ jQuery.getSassURL = function(rootURL, scssFilePath, params) {
 		replace('%4$d', wgStyleVersion);
 };
 
-jQuery.getSassLocalURL = function(scssFilePath, params) {
+$.getSassLocalURL = function(scssFilePath, params) {
 	return wgAssetsManagerQuery.
 		replace('%1$s', 'sass').
 		replace('%2$s', scssFilePath).
@@ -27,8 +29,8 @@ $.ajaxSetup({cache: true});
 
 // replace stock function for getting rid of response-speed related issues in Firefox
 // @see http://stackoverflow.com/questions/1130921/is-the-callback-on-jquerys-getscript-unreliable-or-am-i-doing-something-wrong
-jQuery.getScript = function(url, callback, failureFn) {
-	return jQuery.ajax({
+$.getScript = function(url, callback, failureFn) {
+	return $.ajax({
 		type: "GET",
 		url: url,
 		success: function(xhr) {
@@ -49,7 +51,7 @@ jQuery.getScript = function(url, callback, failureFn) {
 	});
 };
 
-jQuery.fn.log = function (msg, group) {
+$.fn.log = function (msg, group) {
 	if (typeof console != 'undefined') {
 		if (group) {
 			// nice formatting of objects with group prefix
@@ -62,12 +64,12 @@ jQuery.fn.log = function (msg, group) {
 	return this;
 };
 
-jQuery.fn.exists = function() {
+$.fn.exists = function() {
 	return this.length > 0;
 };
 
 // show modal dialog with content fetched via AJAX request
-jQuery.fn.getModal = function(url, id, options) {
+$.fn.getModal = function(url, id, options) {
 	// get modal plugin
 
 	// where should modal be inserted?
@@ -96,7 +98,7 @@ jQuery.fn.getModal = function(url, id, options) {
 };
 
 // show modal popup with static title and content provided
-jQuery.showModal = function(title, content, options) {
+$.showModal = function(title, content, options) {
 	options = (typeof options != 'object') ? {} : options;
 
 	var dialog, header, wrapper;
@@ -127,7 +129,7 @@ jQuery.showModal = function(title, content, options) {
 };
 
 // show modal version of confirm()
-jQuery['confirm'] = function(options) {
+$.confirm = function(options) {
 	// init options
 	options = (typeof options != 'object') ? {} : options;
 	options.id = 'WikiaConfirm';
@@ -182,7 +184,7 @@ $.showCustomModal('title', '<b>content</b>',
 );
 */
 // show modal popup with title, content and set ot buttons
-jQuery.showCustomModal = function(title, content, options) {
+$.showCustomModal = function(title, content, options) {
 	options = (typeof options != 'object') ? {} : options;
 
 	var buttons = '';
@@ -213,8 +215,8 @@ jQuery.showCustomModal = function(title, content, options) {
 };
 
 // send POST request and parse returned JSON
-jQuery.postJSON = function(u, d, callback) {
-	return jQuery.post(u, d, callback, "json");
+$.postJSON = function(u, d, callback) {
+	return $.post(u, d, callback, "json");
 };
 
 //see http://jquery-howto.blogspot.com/2009/09/get-url-parameters-values-with-jquery.html
@@ -238,11 +240,11 @@ $.extend({
 });
 
 // see http://www.texotela.co.uk/code/jquery/reverse/
-jQuery.fn.reverse = function() {
+$.fn.reverse = function() {
 	return this.pushStack(this.get().reverse(), arguments);
 };
 
-jQuery.fn.isChrome = function() {
+$.fn.isChrome = function() {
 	if ( $.browser.webkit && !$.browser.opera && !$.browser.msie && !$.browser.mozilla ) {
 		var userAgent = navigator.userAgent.toLowerCase();
 		if ( userAgent.indexOf("chrome") >  -1 ) {
@@ -253,7 +255,7 @@ jQuery.fn.isChrome = function() {
 };
 
 // https://github.com/Modernizr/Modernizr/issues/84
-jQuery.fn.isTouchscreen = function() {
+$.fn.isTouchscreen = function() {
 	return ('ontouchstart' in window);
 }
 
@@ -261,7 +263,7 @@ jQuery.fn.isTouchscreen = function() {
  * Tests whether first element in current collection is a child of node matching selector provided
  *
  * @return boolean
- * @param string a jQuery selector
+ * @param string a $ selector
  *
  * @author Macbre
  */
@@ -292,10 +294,10 @@ $(window).bind('load', function() {
  * after using it selected elements content will apply proper css class
  * and in the middle of it throbber will be displayed.
  */
-jQuery.fn.startThrobbing = function() {
+$.fn.startThrobbing = function() {
 	this.append('<div class="wikiaThrobber"></div>');
 };
-jQuery.fn.stopThrobbing = function() {
+$.fn.stopThrobbing = function() {
 	this.find('.wikiaThrobber').remove();
 };
 
@@ -330,47 +332,40 @@ $.htmlentities = function ( s ) {
     	.replace(/>/g,'&'+'gt;').replace(/\'/g,'&'+'apos;').replace(/\"/g,'&'+'quot;');
 };
 
-$.extend({
-	createClass: function (sc,o) {
-//		$().log(sc,'createClass-superclass');
-//		$().log(o,'createClass-overrides');
-		var constructor = o.constructor;
-		if (typeof constructor != 'function' || constructor == Object.prototype.constructor) {
-			constructor = function(){sc.apply(this,arguments);};
-//			$().log('constructor created','createClass');
-		}
-		var bc = constructor;
-		var f = function() {};
-		f.prototype = sc.prototype || {};
-		bc.prototype = new f();
-
-		// macbre: support static members
-		if (typeof o.statics == 'object') {
-			bc = $.extend(bc, o.statics);
-			delete o.statics;
-		}
-
-		for (var m in o) {
-			bc.prototype[m] = o[m];
-		}
-
-		bc.prototype.constructor = bc;
-		bc.superclass = sc.prototype;
-
-		return bc;
+$.createClass = function (sc,o) {
+	var constructor = o.constructor;
+	if (typeof constructor != 'function' || constructor == Object.prototype.constructor) {
+		constructor = function(){sc.apply(this,arguments);};
 	}
-});
+	var bc = constructor;
+	var f = function() {};
+	f.prototype = sc.prototype || {};
+	bc.prototype = new f();
 
-$.extend({
-	proxyBind: function (fn,thisObject,baseArgs) {
-		return function() {
-			var args = baseArgs.slice(0).concat(Array.prototype.call(arguments,0));
-			return fn.apply(thisObject,args);
-		}
+	// macbre: support static members
+	if (typeof o.statics == 'object') {
+		bc = $.extend(bc, o.statics);
+		delete o.statics;
 	}
-});
 
-var Observable = $.createClass(Object,{
+	for (var m in o) {
+		bc.prototype[m] = o[m];
+	}
+
+	bc.prototype.constructor = bc;
+	bc.superclass = sc.prototype;
+
+	return bc;
+};
+
+$.proxyBind = function (fn,thisObject,baseArgs) {
+	return function() {
+		var args = baseArgs.slice(0).concat(Array.prototype.call(arguments,0));
+		return fn.apply(thisObject,args);
+	}
+};
+
+var Observable = $.createClass(Object, {
 	constructor: function() {
 		Observable.superclass.constructor.apply(this,arguments);
 		this.events = {};
@@ -480,7 +475,6 @@ var Observable = $.createClass(Object,{
 			}).call(this,fns[i]);
 		}
 	}
-
 });
 
 var GlobalTriggers = (function(){
@@ -521,7 +515,6 @@ var GlobalTriggers = (function(){
 })();
 
 var Timer = $.createClass(Object,{
-
 	callback: null,
 	timeout: 1000,
 	timer: null,
@@ -547,11 +540,9 @@ var Timer = $.createClass(Object,{
 			this.timer = null;
 		}
 	}
-
 });
 
-$.extend(Timer,{
-
+$.extend(Timer, {
 	create: function( callback, timeout ) {
 		var timer = new Timer(callback,timeout);
 		return timer;
@@ -562,13 +553,12 @@ $.extend(Timer,{
 		timer.start();
 		return timer;
 	}
-
 });
 
-//Extension to jQuery.support to detect browsers/platforms that don't support
+//Extension to $.support to detect browsers/platforms that don't support
 //CSS directive position:fixed
-if(jQuery.support){
-	jQuery.support.fileUpload = jQuery.support.keyboardShortcut = jQuery.support.positionFixed = !( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} || (navigator.userAgent.match(/android/i) != null));
+if($.support){
+	$.support.fileUpload = $.support.keyboardShortcut = $.support.positionFixed = !( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} || (navigator.userAgent.match(/android/i) != null));
 }
 
 //Simple JavaScript Templating
@@ -603,14 +593,14 @@ $.tmpl = function tmpl(str, data) {
 	return data ? fn(data) : fn;
 };
 
-jQuery.nirvana = {};
+$.nirvana = {};
 
 /**
  * Helper to send ajax request to nirvana controller
  *
  * @author TomekO
  */
-jQuery.nirvana.sendRequest = function(attr) {
+$.nirvana.sendRequest = function(attr) {
 	var type = (typeof attr.type == 'undefined') ? 'POST' : attr.type.toUpperCase();
 	var format = (typeof attr.format == 'undefined') ?  'json' : attr.format.toLowerCase();
 	var data = (typeof attr.data == 'undefined') ? {} : attr.data;
@@ -645,8 +635,8 @@ jQuery.nirvana.sendRequest = function(attr) {
 	});
 };
 
-jQuery.nirvana.getJson = function(controller, method, data, callback, onErrorCallback) {
-	return jQuery.nirvana.ajaxJson(
+$.nirvana.getJson = function(controller, method, data, callback, onErrorCallback) {
+	return $.nirvana.ajaxJson(
 		controller,
 		method,
 		data,
@@ -656,8 +646,8 @@ jQuery.nirvana.getJson = function(controller, method, data, callback, onErrorCal
 	);
 };
 
-jQuery.nirvana.postJson = function(controller, method, data, callback, onErrorCallback) {
-	return jQuery.nirvana.ajaxJson(
+$.nirvana.postJson = function(controller, method, data, callback, onErrorCallback) {
+	return $.nirvana.ajaxJson(
 		controller,
 		method,
 		data,
@@ -667,14 +657,14 @@ jQuery.nirvana.postJson = function(controller, method, data, callback, onErrorCa
 	);
 };
 
-jQuery.nirvana.ajaxJson = function(controller, method, data, callback, onErrorCallback, requestType) {
+$.nirvana.ajaxJson = function(controller, method, data, callback, onErrorCallback, requestType) {
 	// data parameter can be omitted
 	if ( typeof data == 'function' ) {
 		callback = data;
 		data = {};
 	}
 
-	return jQuery.nirvana.sendRequest({
+	return $.nirvana.sendRequest({
 		controller: controller,
 		method: method,
 		data: data,
@@ -685,7 +675,7 @@ jQuery.nirvana.ajaxJson = function(controller, method, data, callback, onErrorCa
 	});
 };
 
-jQuery.openPopup = function(url, name, moduleName, width, height) {
+$.openPopup = function(url, name, moduleName, width, height) {
 	if (wgUserName) {
 		window.open(
 			url,
@@ -746,7 +736,7 @@ $(function() {
 // http://bit.ly/ishiv | WTFPL License
 // IE < 9 fix for inserting HTML5 elements into the dom.
 //
-// Add 2nd param of False to return jQuery-friendly object instead of document fragment
+// Add 2nd param of False to return $-friendly object instead of document fragment
 //
 // http://jdbartlett.com/innershiv/ says:
 //
@@ -781,3 +771,15 @@ var innerShiv = function(){
 	    return f;
 	}
 }();
+
+// These functions are deprecated, but we will keep aliases around for old code and user scripts
+$.toJSON = JSON.stringify;
+$.evalJSON = $.secureEvalJSON = JSON.parse;
+
+// Exports
+window.innerShiv = innerShiv;
+window.GlobalTriggers = GlobalTriggers;
+window.Observable = Observable;
+window.Timer = Timer;
+
+})(window, jQuery);
