@@ -108,7 +108,10 @@ CKEDITOR.plugins.add('rte-media',
 		// setup overlay
 		var msgs = RTE.getInstance().lang.media;
 
-		RTE.overlay.add(media, [
+        alert(" TEST ");
+         console.log( media );
+     
+    var standardButtons = [
 			{
 				label: msgs['edit'],
 				'class': 'RTEMediaOverlayEdit',
@@ -145,7 +148,33 @@ CKEDITOR.plugins.add('rte-media',
 					RTE.track(type, 'menu', 'delete');
 				}
 			}
-		]);
+		]; 
+         
+		RTE.overlay.add(media, standardButtons);
+    
+    if (typeof window.MediaTool == 'object') {
+      
+
+
+        var buttonsWithMut = standardButtons.slice(0);
+        
+        buttonsWithMut.unshift( 
+              {
+                    label: msgs['edit']+" (beta)",
+                    'class': 'RTEMediaOverlayEdit',
+                    callback: function(node) {
+                        var type = self.getTrackingType(node);
+
+                        RTE.tools.callFunction($.proxy(window.MediaTool.showModal, window.MediaTool));
+    
+                        // tracking
+                        RTE.track(type, 'menu', 'edit');
+                    }
+                }			
+    		);
+        RTE.overlay.add(media.filter(".video"), buttonsWithMut);
+    }
+    
 
 		// unbind previous events
 		media.unbind('.media');
