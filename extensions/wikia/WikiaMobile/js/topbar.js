@@ -240,19 +240,21 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
         }
     }
 
-	function openProfile(){
+	//hash - hash to be set to after returnto query
+	//used in ie. ArticleComments.wikiamobile.js
+	function openProfile(hash){
 		reset();
 
 		if(wgUserName){
 			track('profile/open');
 		}else{
-			openLogin();
+			openLogin(hash);
 		}
 
 		navBar.className = 'prf';
 	}
 
-	function openLogin(){
+	function openLogin(hash){
 		if(wkPrf.className.indexOf('loaded') == -1){
 			loader.show(wkPrf, {center: true});
 			Wikia.getMultiTypePackage({
@@ -280,7 +282,7 @@ define('topbar', ['querystring', 'loader', 'toc', 'track', 'events'], function (
 						query = new qs(form.getAttribute('action'));
 
 					query.setVal('returnto', (wgCanonicalSpecialPageName && (wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ? wgMainPageTitle : wgPageName));
-					query.setHash(new qs().getHash());
+					hash && query.setHash(hash);
 					form.setAttribute('action', query.toString());
 				}
 			});
