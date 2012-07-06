@@ -9,13 +9,29 @@ $messages['en'] = array(
 	'timeago-minute' => '{{PLURAL:$1|a minute|$1 minutes}} ago',
 	'timeago-month' => '{{PLURAL:$1|a month|$1 months}} ago',
 	'timeago-second' => 'a minute ago',
+	'timeago-day-from-now' => '{{PLURAL:$1|a day|$1 days}} from now',
+	'timeago-hour-from-now' => '{{PLURAL:$1|an hour|$1 hours}} from now',
+	'timeago-minute-from-now' => '{{PLURAL:$1|a minute|$1 minutes}} from now',
+	'timeago-month-from-now' => '{{PLURAL:$1|a month|$1 months}} from now',
+	'timeago-second-from-now' => 'a minute from now',
 );
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author macbre
  */
 $messages['qqq'] = array(
 	'timeagomessaging-desc' => '{{desc}}',
+	'timeago-day' => 'Message saying that something happened x days ago ($1 is number of days)',
+	'timeago-hour' => 'Message saying that something happened x hours ago ($1 is number of hours)',
+	'timeago-minute' => 'Message saying that something happened x minutes ago ($1 is number of minutes)',
+	'timeago-month' => 'Message saying that something happened x months ago ($1 is number of months)',
+	'timeago-seconds' => 'Message saying that something happened x seconds ago ($1 is number of seconds)',
+	'timeago-day-from-now' => 'Message saying that something will happen in x days ($1 is number of days)',
+	'timeago-hour-from-now' => 'Message saying that something will happen in x hours ($1 is number of hours)',
+	'timeago-minute-from-now' => 'Message saying that something will happen in x minutes ($1 is number of minutes)',
+	'timeago-month-from-now' => 'Message saying that something will happen in x months ($1 is number of months)',
+	'timeago-seconds-from-now' => 'Message saying that something will happen in x seconds ($1 is number of seconds)',
 );
 
 /** Afrikaans (Afrikaans)
@@ -252,6 +268,11 @@ $messages['pl'] = array(
 	'timeago-minute' => '{{PLURAL:$1|minutę|$1 minuty|$1 minut}} temu',
 	'timeago-month' => '{{PLURAL:$1|miesiąc|$1 miesiące}} temu',
 	'timeago-second' => 'minutę temu',
+	'timeago-day-from-now' => '{{PLURAL:$1|jutro|za $1 dni}}',
+	'timeago-hour-from-now' => 'za {{PLURAL:$1|godzinę|$1 godziny|$1 godzin}}',
+	'timeago-minute-from-now' => 'za {{PLURAL:$1|minutę|$1 minuty|$1 minut}}',
+	'timeago-month-from-now' => 'za {{PLURAL:$1|miesiąc|$1 miesiące}}',
+	'timeago-second-from-now' => 'za minutę',
 );
 
 /** Piedmontese (Piemontèis)

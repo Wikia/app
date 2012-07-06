@@ -2,13 +2,13 @@
 
 class TimeAgoMessaging {
 
-	const VERSION = 2;
+	const VERSION = 3;
 	const TTL = 86400;
 
 	/**
 	 * Add inline JS with i18n messages for jquery.timeago.js
 	 */
-	public static function onMakeGlobalVariablesScript(&$vars) {
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgTimeAgoi18n'] = self::getMessages();
 		return true;
 	}
@@ -36,22 +36,31 @@ class TimeAgoMessaging {
 				'minute',
 				'second',
 			);
+			// message names suffixes to iterate over (BugId:30226
+			$suffixes = array(
+				'', // handling the past
+				'-from-now' // handling the future
+			);
 
-			// get singular and plural form
-			foreach($keys as $key) {
-				$singular = wfMsgExt("timeago-{$key}", array('parsemag'), 1);
-				$plural = str_replace('2', '%d', wfMsgExt("timeago-{$key}", array('parsemag'),  2));
+			foreach($suffixes as $suffix) {
+				// get singular and plural form
+				foreach($keys as $key) {
+					$msgName = "timeago-{$key}{$suffix}";
 
-				$messages[$key] = $singular;
-				$messages["{$key}s"] = $plural;
+					$singular = wfMsgExt($msgName, array('parsemag'), 1);
+					$plural = str_replace('2', '%d', wfMsgExt($msgName, array('parsemag'),  2));
 
-				// TODO: handle cases like "2 godziny" vs "5 godzin" (pl)
-				/*
-				$plural2 = str_replace('5', '%d', wfMsgExt("timeago-{$key}", array('parsemag'), 5));
-				if ($plural != $plural2) {
-					$messages["{$key}s2"] = $plural2;
+					$messages[$key . $suffix] = $singular;
+					$messages[$key . 's' . $suffix] = $plural;
+
+					// TODO: handle cases like "2 godziny" vs "5 godzin" (pl)
+					/*
+					$plural2 = str_replace('5', '%d', wfMsgExt("timeago-{$key}", array('parsemag'), 5));
+					if ($plural != $plural2) {
+						$messages["{$key}s2"] = $plural2;
+					}
+					*/
 				}
-				*/
 			}
 
 			unset($messages['second']);
