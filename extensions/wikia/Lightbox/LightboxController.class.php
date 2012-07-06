@@ -43,9 +43,20 @@ class LightboxController extends WikiaController {
 	 */
 	public function getMediaDetail() {
 		$fileTitle = $this->request->getVal('title', '');
-		
 		$fileTitle = urldecode($fileTitle);
+
+		// BugId:32939
+		// There is no sane way to check whether $fileTitle is OK other
+		// than an attempt to create a Title object and then a check
+		// whether the object has been created.
 		$title = F::build('Title', array($fileTitle, NS_FILE), 'newFromText');
+
+		// BugId:32939
+		// Can't create a valid Title object based on $fileTitle. This method
+		// only changes $this's properties. Leave them unchanged.
+		if ( !( $title instanceof Title ) ) {
+			return;
+		}
 		
 		$data = WikiaFileHelper::getMediaDetail($title, array('imageMaxWidth'  => 1000,
 									'contextWidth'   => $this->request->getVal('width', 660),
