@@ -19,7 +19,7 @@
 	<? endif ; ?>
 	</div>
 	<div id=wkSrh>
-		<form id=wkSrhFrm action=index.php?title=Special:Search method=get>
+		<form id=wkSrhFrm action="<?= SpecialPage::getSafeTitleFor( 'Search' )->getLocalURL()?>" method=get>
 			<input type=hidden name=fulltext value=Search>
 			<input class=wkInp id=wkSrhInp type=text name=search placeholder="<?= $wf->Msg( 'wikiamobile-search-this-wiki' ); ?>" required=required autocomplete=off>
 			<div id=wkClear class='clsIco hide'></div>
@@ -43,7 +43,7 @@
 		?>
 		</header>
 	<? if($loggedIn) :?>
-		<a id=wkLogOut href=<?= str_replace( "$1", SpecialPage::getSafeTitleFor('UserLogout')->getPrefixedText() . '?returnto=' . $wg->Title->getPrefixedURL(), $wg->ArticlePath ) ;?>><?= $wf->Msg('logout'); ?></a>
+		<a id=wkLogOut href="<?= str_replace( "$1", SpecialPage::getSafeTitleFor('UserLogout')->getPrefixedText() . '?returnto=' . $wg->Title->getPrefixedURL(), $wg->ArticlePath ) ;?>"><?= $wf->Msg('logout'); ?></a>
 	<? endif; ?>
 	</div>
 	<? endif ; ?>
