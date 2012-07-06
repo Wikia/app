@@ -3473,7 +3473,7 @@ $wgGroupPermissions['*']['writeapi']         = true;
 $wgGroupPermissions['user']['move']             = true;
 $wgGroupPermissions['user']['move-subpages']    = true;
 $wgGroupPermissions['user']['move-rootuserpages'] = true; // can move root userpages
-$wgGroupPermissions['user']['movefile']         = true;
+// $wgGroupPermissions['user']['movefile']         = true; // Disabled for now due to possible bugs and security concerns
 $wgGroupPermissions['user']['read']             = true;
 $wgGroupPermissions['user']['edit']             = true;
 $wgGroupPermissions['user']['createpage']       = true;
@@ -4216,7 +4216,7 @@ $wgParserTestFiles = array(
  * );
  */
 $wgParserTestRemote = false;
- 
+
 /**
  * Allow running of javascript test suites via [[Special:JavaScriptTest]] (such as QUnit).
  */
@@ -5757,4 +5757,3 @@ $wgDBtestpassword = '';
  * wikia change
  */
 require_once( "$IP/includes/wikia/DefaultSettings.php" );
-
