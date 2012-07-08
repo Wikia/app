@@ -159,16 +159,18 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		// Wikia change - begin
 		// modified by Emil, 10 secs is not enough for us
 		// so the most popular URLs are cached longer and purged on every edit
-		$requestUrl = $this->getRequest()->getFullRequestURL();
-		$specialPageTitle = SpecialPage::getTitleFor('RecentChanges');
+		// @todo still needed? --tor
+		$squidMaxage = 10;
 
-		if( $requestUrl == $specialPageTitle->getInternalURL()
-		 || $requestUrl == $specialPageTitle->getInternalURL('feed=rss')
-		 || $requestUrl == $specialPageTitle->getInternalURL('feed=atom') ) {
-			$squidMaxage = $wgSquidMaxage;
-		} else {
-			// all others are treated old-fashion
-			$squidMaxage = 10;
+		if ( !$this->including() ) {
+			$requestUrl = $this->getRequest()->getFullRequestURL();
+			$specialPageTitle = SpecialPage::getTitleFor('RecentChanges');
+
+			if( $requestUrl == $specialPageTitle->getInternalURL()
+				|| $requestUrl == $specialPageTitle->getInternalURL('feed=rss')
+				|| $requestUrl == $specialPageTitle->getInternalURL('feed=atom') ) {
+				$squidMaxage = $wgSquidMaxage;
+			}
 		}
 		// Wikia change - end
 
