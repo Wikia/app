@@ -18,14 +18,11 @@
 		<?= $headItems ;?>
 	</head>
 	<body class="<?= implode(' ', $bodyClasses) ?>">
+		<?= $trackingCode ;?>
 		<?= $advert ;?>
 		<?= $wikiaNavigation ;?>
 		<?= $pageContent ;?>
 		<?= $wikiaFooter ;?>
 		<?= $jsBodyFiles ;?>
-		<?= $quantcastTracking ;?>
-		<?= $comscoreTracking ;?>
-		<?= $gaTracking ;?>
-		<?= $gaOneWikiTracking ;?>
 	</body>
 </html>
