@@ -128,24 +128,33 @@ class WikiaMobileService extends WikiaService {
 		$this->jsBodyFiles = $jsBodyFiles;
 
 		//tracking
-		$isEditing = in_array( $this->wg->request->getVal( 'action' ), array( 'edit', 'submit' ) );
+		$trackingCode = '';
 
-		$this->quantcastTracking = ( !$isEditing ) ?
-			AnalyticsEngine::track(
+		if(!in_array( $this->wg->request->getVal( 'action' ), array( 'edit', 'submit' ) ) ) {
+			$trackingCode .= AnalyticsEngine::track(
 					'QuantServe',
 					AnalyticsEngine::EVENT_PAGEVIEW,
 					array(),
 					array( 'extraLabels'=> array( 'mobilebrowser' ) )
-			) :
-			'';
-		$this->comscoreTracking = ( !$isEditing ) ? AnalyticsEngine::track( 'Comscore', AnalyticsEngine::EVENT_PAGEVIEW ) : '';
-		$this->gaOneWikiTracking = AnalyticsEngine::track( 'GA_Urchin', 'onewiki', array( $this->wg->cityId ) );
-		$this->gaTracking = AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW );
+				) .
+				AnalyticsEngine::track(
+					'Comscore',
+					AnalyticsEngine::EVENT_PAGEVIEW
+				);
+		}
 
 		//Stats for Gracenote reporting
 		if ( $this->wg->cityId == self::LYRICSWIKI_ID ){
-			$this->gaTracking .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
+			$trackingCode .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
 		}
+
+		$trackingCode .= AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW ).
+			AnalyticsEngine::track( 'GA_Urchin', 'onewiki', array( $this->wg->cityId ) ).
+			AnalyticsEngine::track( 'GA_Urchin', 'pagetime', array( 'wikiamobile' ) ).
+			AnalyticsEngine::track('GA_Urchin', 'varnish-stat').
+			AnalyticsEngine::track( 'GAS', 'usertiming' );
+
+		$this->response->setVal( 'trackingCode', $trackingCode );
 		$this->wf->profileOut( __METHOD__ );
 	}
 }

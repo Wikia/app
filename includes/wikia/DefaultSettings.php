@@ -120,7 +120,6 @@ $wgAutoloadClasses[ "GlobalTitle"                     ] = "$IP/includes/wikia/Gl
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
 $wgAutoloadClasses[ "WikiMover"                       ] = "$IP/extensions/wikia/WikiFactory/Mover/WikiMover.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
-$wgAutoloadClasses[ 'AnalyticsEngine'                 ] = "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'Mustache'                        ] = "$IP/lib/mustache.php/Mustache.php";
 $wgAutoloadClasses[ 'Minify_CSS_Compressor'           ] = "$IP/lib/Minify_CSS_Compressor.php";
@@ -364,6 +363,7 @@ $wgAjaxExportList[] = "searchSuggest";
  * Wikia custom extensions, enabled sitewide. Pre-required by some skins
  */
 include_once( "$IP/extensions/ExtensionFunctions.php" );
+include_once( "$IP/extensions/wikia/AnalyticsEngine/AnalyticsEngine.setup.php" );
 include_once( "$IP/extensions/wikia/AjaxFunctions.php" );
 include_once( "$IP/extensions/wikia/DataProvider/DataProvider.php" );
 include_once( "$IP/extensions/wikia/StaffSig/StaffSig.php" );

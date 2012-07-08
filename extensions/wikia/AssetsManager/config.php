@@ -794,3 +794,12 @@ $config['abtesting'] = array(
 		'//extensions/wikia/AbTesting/js/AbTesting.js',
 	)
 );
+
+/** AnalyticsEngine **/
+$config['analytics_gas_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array( 'wikiamobile' ),
+	'assets' => array(
+		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
+	)
+);

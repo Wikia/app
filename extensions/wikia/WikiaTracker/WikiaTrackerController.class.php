@@ -3,7 +3,7 @@
 class WikiaTrackerController extends WikiaController {
 
 	/**
-	 * Implementation of new WikiaSkinTopScripts hook since we want it to be 
+	 * Implementation of new WikiaSkinTopScripts hook since we want it to be
 	 * at the top of the page
 	 *
 	 * @param array $vars global variables list
@@ -24,13 +24,13 @@ class WikiaTrackerController extends WikiaController {
 	 */
 	public function onMakeGlobalVariablesScript(&$vars) {
 		$vars['wikiaTrackingSpool'] = array();
-	
-	
+
+
 		// TODO: REMOVE? (PERFORMANCE?) We probably won't need these queues once the new system is done (since all calls will use wikiaTrackingSpool).
 		// There are a few usages around the code-base that would need to be removed if they really aren't needed & migrated otherwise.
 		$vars['_gaq'] = array();
 		$vars['_wtq'] = array();
-		
+
 		$app = F::app();
 		if (!empty($app->wg->IsGASpecialWiki)) {
 			$vars['wgIsGASpecialWiki'] = true;
@@ -55,7 +55,7 @@ class WikiaTrackerController extends WikiaController {
 			Html::inlineScript( self::getTrackerSpoolingJs() ) . "\n";
 
 		// debug
-		/** 
+		/**
 		$scripts .= Html::inlineScript(<<<JS
 _wtq.push('/1_wikia/foo/bar');
 _wtq.push(['/1_wikia/foo/bar', 'profil1']);
@@ -63,10 +63,6 @@ _wtq.push([['1_wikia', 'user', 'foo', 'bar'], 'profil1']);
 JS
 );
 		**/
-
-		global $wgJsMimeType, $wgExtensionsPath;
-
-		$scripts .= "\n<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiaTracker/js/analytics_prod.js?v=5\"></script>";
 
 		return true;
 	}
