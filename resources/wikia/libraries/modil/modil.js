@@ -1,8 +1,8 @@
 /**
  * modil.js
- * 
+ *
  * A no-frills, lightweight and fast AMD implementation for modular Javascript projects.
- * 
+ *
  * @author Federico "Lox" Lucignano <https://plus.google.com/117046182016070432246>
  * @author Jakub Olek <https://plus.google.com/112565259111817320425>
  * @see https://github.com/federico-lox/modil.js
