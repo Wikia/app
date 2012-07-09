@@ -39,8 +39,8 @@ class AssetsManager {
 
 	public static function getInstance() {
 		if( self::$mInstance == false ) {
-			global $wgCdnRootUrl, $wgStyleVersion, $wgAllInOne, $wgRequest;
-			self::$mInstance = new AssetsManager($wgCdnRootUrl, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
+			global $wgCdnStylePath, $wgStyleVersion, $wgAllInOne, $wgRequest;
+			self::$mInstance = new AssetsManager($wgCdnStylePath, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
 		}
 		return self::$mInstance;
 	}
@@ -57,7 +57,7 @@ class AssetsManager {
 
 		$vars['sassParams'] = $params;
 		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;
-		$vars['wgCdnRootUrl'] = $wgCdnRootUrl;
+		$vars['wgCdnRootUrl'] = $wgCdnRootUrl; // TODO: REVIEW THIS: Do we really want just the wgCdnRootUrl here or do we want wgCdnStylePath which has the cb value in it?
 
 		return true;
 	}
