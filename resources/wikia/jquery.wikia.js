@@ -303,7 +303,7 @@ $.fn.stopThrobbing = function() {
 
 /*
 	Generate URL to thumbnail from different URL to thumbnail :)
-	New URL has different paremeters (fixed width and height)
+	New URL has different parameters (fixed width and height)
  */
 $.thumbUrl2ThumbUrl = function( url, type, width, height ) {
 	if(url.indexOf('/thumb/') > 0) { // URL points to thumbnail
@@ -561,120 +561,6 @@ if($.support){
 	$.support.fileUpload = $.support.keyboardShortcut = $.support.positionFixed = !( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} || (navigator.userAgent.match(/android/i) != null));
 }
 
-//Simple JavaScript Templating
-//John Resig - http://ejohn.org/ - MIT Licensed
-$.tmpl = function tmpl(str, data) {
-
-	// Figure out if we're getting a template, or if we need to
-	// load the template - and be sure to cache the result.
-	try {
-		var fn = new Function("obj",
-				"var p=[],print=function(){p.push.apply(p,arguments);};"
-						+
-
-						// Introduce the data as local variables using with(){}
-						"with(obj){p.push('"
-						+
-						// Convert the template into pure JavaScript
-						str.replace(/[\r\t\n]/g, " ").split("<%")
-								.join("\t")
-								.replace(/((^|%>)[^\t]*)'/g, "$1\r")
-								.replace(/\t=(.*?)%>/g, "',$1,'")
-								.split("\t")
-								.join("');").split("%>").join("p.push('")
-								.split("\r").join("\\'")
-						+ "');}return p.join('');");
-	}
-	catch(e) {
-		$().log(e, '$.tmpl');
-		$().log(str, '$.tmpl');
-	}
-	// Provide some basic currying to the user
-	return data ? fn(data) : fn;
-};
-
-$.nirvana = {};
-
-/**
- * Helper to send ajax request to nirvana controller
- *
- * @author TomekO
- */
-$.nirvana.sendRequest = function(attr) {
-	var type = (typeof attr.type == 'undefined') ? 'POST' : attr.type.toUpperCase();
-	var format = (typeof attr.format == 'undefined') ?  'json' : attr.format.toLowerCase();
-	var data = (typeof attr.data == 'undefined') ? {} : attr.data;
-	var callback = (typeof attr.callback == 'undefined') ? function(){} : attr.callback;
-	var onErrorCallback = (typeof attr.onErrorCallback == 'undefined') ? function(){} : attr.onErrorCallback;
-
-	if((typeof attr.controller == 'undefined') || (typeof attr.method == 'undefined')) {
-		throw "controller and method are required";
-	}
-
-	if( !(format === 'json' || format === 'html'  || format === 'jsonp' ) ) {
-		throw "Only Json,Jsonp and Html format are allowed";
-	}
-
-	$().log(data, 'request to nirvana');
-
-	var url = (typeof attr.scriptPath == 'undefined') ? wgScriptPath : attr.scriptPath;
-
-	return $.ajax({
-		url: url + '/wikia.php?' + $.param({
-			//Iowa strips out POST parameters, Nirvana requires these to be set
-			//so we're passing them in the GET part of the request
-			controller: attr.controller,
-			method: attr.method,
-			format: format
-		}),
-		dataType: format,
-		type: type,
-		data: data,
-		success: callback,
-		error: onErrorCallback
-	});
-};
-
-$.nirvana.getJson = function(controller, method, data, callback, onErrorCallback) {
-	return $.nirvana.ajaxJson(
-		controller,
-		method,
-		data,
-		callback,
-		onErrorCallback,
-		'GET'
-	);
-};
-
-$.nirvana.postJson = function(controller, method, data, callback, onErrorCallback) {
-	return $.nirvana.ajaxJson(
-		controller,
-		method,
-		data,
-		callback,
-		onErrorCallback,
-		'POST'
-	);
-};
-
-$.nirvana.ajaxJson = function(controller, method, data, callback, onErrorCallback, requestType) {
-	// data parameter can be omitted
-	if ( typeof data == 'function' ) {
-		callback = data;
-		data = {};
-	}
-
-	return $.nirvana.sendRequest({
-		controller: controller,
-		method: method,
-		data: data,
-		type: requestType,
-		format: 'json',
-		callback: callback,
-		onErrorCallback: onErrorCallback
-	});
-};
-
 $.openPopup = function(url, name, moduleName, width, height) {
 	if (wgUserName) {
 		window.open(
@@ -695,34 +581,6 @@ $.openPopup = function(url, name, moduleName, width, height) {
 			}
 		}, false, message); // show the 'login required for this action' message.
 	}
-}
-
-// add Array.indexOf function in IE8
-// @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf
-if (typeof [].indexOf == 'undefined') {
-	Array.prototype.indexOf = function(val, fromIndex) {
-		fromIndex = fromIndex || 0;
-		for (var i = fromIndex, m = this.length; i < m; i++) {
-			if (this[i] === val) {
-				return i;
-			}
-		}
-		return -1;
-	}
-}
-
-// add Array.filter function in IE8
-if (!Array.prototype.filter){
-	Array.prototype.filter = function(fun, t){
-		var len = this.length,
-			res = [];
-
-		for (var i = 0; i < len; i++){
-			if (fun.call(t, this[i], i, this)) res[res.length] = this[i];
-		}
-
-		return res;
-	};
 }
 
 $(function() {

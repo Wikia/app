@@ -119,13 +119,22 @@ $config['oasis_jquery'] = array(
 //		'#function_AssetsConfig::getJQueryUrl',
 //		deprecated - @see BugId:36211
 //		'//resources/jquery/jquery.json.js',
+
+		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
 		'//resources/wikia/libraries/jquery/cookies/jquery.cookies.2.1.0.js',
 		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
-		'//resources/wikia/jquery.wikia.js',
-		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
+		'//resources/wikia/libraries/jquery/tmpl/jquery.tmpl.js',
+
+		// polyfills
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',
+		'//resources/wikia/polyfills/array.js',
+
+		// Wikia plugins
+		'//resources/wikia/jquery.wikia.js',
+		'//resources/wikia/libraries/jquery/nirvana/jquery.wikia.nirvana.js',
+		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
@@ -175,7 +184,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',
-		'//resources/wikia/libraries/jquery/wikia/jquery.wikia.modal.js',
+		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		// oasis specific files
