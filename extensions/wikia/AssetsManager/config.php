@@ -357,6 +357,14 @@ $config['categorypage_wikiamobile_js'] = array(
 	)
 );
 
+$config['wikiamobile_404_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/css/404.scss',
+	)
+);
+
 /** WikiaApp **/
 
 $config['wikiaapp_css'] = array(

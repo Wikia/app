@@ -49,11 +49,15 @@ you should definitely check this out:
 	'wikiamobile-ad-close' => 'close',
 
 	//modal
-	'wikiamobile-image-not-loaded' => 'Image is not available'
+	'wikiamobile-image-not-loaded' => 'Image is not available',
+
+	//404 page
+	'wikiamobile-page-not-found' => 'Oops! $1 does not exist.'
 );
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
+	'wikiamobile-page-not-found' => 'Message shown to a user on 404 page; $1 is a page title that was not found',
 	'wikiamobile-image-not-loaded' => 'This is a message shown to a user when an image could not be loaded in the modal',
 	'wikiamobile-footer-link-license' => 'label for the link pointing to content licensing information',
 	'wikiamobile-footer-link-lifestyle' => 'interwiki link, please translate only the last paramenter after the last "|" if that makes sense',

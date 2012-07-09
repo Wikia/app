@@ -25,37 +25,59 @@ class WikiaMobileService extends WikiaService {
 	function init(){
 		$this->wf->LoadExtensionMessages( 'WikiaMobile' );
 		F::build('JSMessages')->enqueuePackage('WkMbl', JSMessages::INLINE);
+
+		$this->skin = $this->wg->User->getSkin();
+		$this->templateObject = $this->app->getSkinTemplateObj();
 	}
 
 	public function index() {
 		$this->wf->profileIn( __METHOD__ );
-		$skin = $this->wg->user->getSkin();
+		$title = $this->app->wg->Title;
+
+		//Bottom Scripts
+		//do not run this hook, all the functionalities hooking in this don't take into account the pecularity of the mobile skin
+		//$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
+
+		//AppCache will be disabled for the first several releases
+		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
+
+		//head items
+		$this->mimeType = $this->templateObject->get( 'mimetype' );
+		$this->charSet = $this->templateObject->get( 'charset' );
+		$this->headItems = $this->skin->getHeadItems();
+		$this->languageCode = $this->templateObject->get( 'lang' );
+		$this->languageDirection = $this->templateObject->get( 'dir' );
+		$this->headLinks = $this->wg->Out->getHeadLinks();
+		$this->pageTitle = $this->wg->Out->getHTMLTitle();
+
+		if( !$title->exists() &&
+			!( $title->getNamespace() == NS_CATEGORY && Category::newFromTitle( $title )->getPageCount() ) ) {
+			//"404" Page - on title that do not exists
+			$this->forward( 'WikiaMobileErrorService', WikiaMobileErrorService::PAGENOTFOUND, false );
+		} else {
+			//Normal Page
+			$this->forward( 'WikiaMobileService', 'viewArticle' , false );
+		}
+		$this->wf->profileOut( __METHOD__ );
+	}
+
+	function viewArticle(){
+		$this->wf->profileIn( __METHOD__ );
+
 		$jsHeadPackages = array( 'wikiamobile_js_head' );
 		$jsBodyPackages = array( 'wikiamobile_js_body' );
 		$scssPackages = array( 'wikiamobile_scss' );
+		$cssLinks = '';
 		$jsBodyFiles = '';
 		$jsHeadFiles = '';
-		$cssLinks = '';
-		$styles = $skin->getStyles();
-		$scripts = $skin->getScripts();
+		$styles = $this->skin->getStyles();
+		$scripts = $this->skin->getScripts();
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-		$templateObject = $this->app->getSkinTemplateObj();
-
-		//let extensions manipulate the asset packages (e.g. ArticleComments,
-		//this is done to cut down the number or requests)
-		$this->app->runHook(
-				'WikiaMobileAssetsPackages',
-				array(
-						&$jsHeadPackages,
-						&$jsBodyPackages,
-						&$scssPackages
-				)
-		);
 
 		//force main SCSS as first to make overriding it possible
 		foreach ( $assetsManager->getURL( $scssPackages ) as $s ) {
 			//packages/assets are enqueued via an hook, let's make sure we should actually let them through
-			if ( $assetsManager->checkAssetUrlForSkin( $s, $skin ) ) {
+			if ( $assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
 				//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
 				$cssLinks .= "<link rel=stylesheet href=\"" . $s . "\"/>";
 			}
@@ -67,16 +89,28 @@ class WikiaMobileService extends WikiaService {
 			$cssLinks .= "<link rel=stylesheet href=\"{$s['url']}\"/>";//this is a strict skin, getStyles returns only elements with a set URL
 		}
 
-		foreach ( $assetsManager->getURL( $jsHeadPackages ) as $s ) {
-			if ( $assetsManager->checkAssetUrlForSkin( $s, $skin ) ) {
-				//HTML5 standard, no type attribute required == smaller output
-				$jsHeadFiles .= "<script src=\"{$s}\"></script>";
-			}
+		//let extensions manipulate the asset packages (e.g. ArticleComments,
+		//this is done to cut down the number or requests)
+		$this->app->runHook(
+			'WikiaMobileAssetsPackages',
+			array(
+				&$jsHeadPackages,
+				&$jsBodyPackages,
+				&$scssPackages
+			)
+		);
+
+		//core JS in the head section, definitely safe
+		$srcs = $assetsManager->getURL( $jsHeadPackages );
+
+		foreach ( $srcs as $src ) {
+			//HTML5 standard, no type attribute required == smaller output
+			$jsHeadFiles .= "<script src=\"{$src}\"></script>";
 		}
 
 		foreach ( $assetsManager->getURL( $jsBodyPackages ) as $s ) {
 			//packages/assets are enqueued via an hook, let's make sure we should actually let them through
-			if ( $assetsManager->checkAssetUrlForSkin( $s, $skin ) ) {
+			if ( $assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
 				//HTML5 standard, no type attribute required == smaller output
 				$jsBodyFiles .= "<script src=\"{$s}\"></script>";
 			}
@@ -88,59 +122,51 @@ class WikiaMobileService extends WikiaService {
 			$jsBodyFiles .= "<script src=\"{$s['url']}\"></script>";
 		}
 
-		//Bottom Scripts
-		//do not run this hook, all the functionalities hooking in this don't take into account the pecularity of the mobile skin
-		//$this->wf->RunHooks( 'SkinAfterBottomScripts', array ( $this->wg->User->getSkin(), &$bottomscripts ) );
-
+		//body items
+		$this->bodyClasses = array( 'wkMobile', $this->templateObject->get( 'pageclass' ) );
+		$this->cssLinks = $cssLinks;
+		$this->jsBodyFiles = $jsBodyFiles;
+		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
+		$this->globalVariablesScript = Skin::makeGlobalVariablesScript( $this->templateObject->get( 'skinname' ) );
+		$this->jsHeadFiles = $jsHeadFiles;
+		$this->wikiaNavigation = $this->app->renderView( 'WikiaMobileNavigationService', 'index' );
+		$this->advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
+		$this->pageContent = $this->app->renderView( 'WikiaMobileBodyService', 'index', array(
+			'bodyText' => $this->templateObject->get( 'bodytext' ),
+			'categoryLinks' => $this->templateObject->get( 'catlinks')
+		) );
+		//$this->wikiaFooter = $this->app->renderView( 'WikiaMobileFooterService', 'index', array(
+		//	'copyrightLink' => str_replace( 'CC-BY-SA', $this->wf->msg( 'wikiamobile-footer-link-license' ), $this->templateObject->get( 'copyright' ) )
+		//) );
+		$this->wikiaFooter = $this->app->renderView( 'WikiaMobileFooterService', 'index' );
 
 		//global variables
 		//from Output class
 		//and from ResourceLoaderStartUpModule
 		$res = new ResourceVariablesGetter();
 		$vars = array_diff_key(
-					//I found that this array merge is the fastest
-					$this->wg->Out->getJSVars() + $res->get(),
-					array_flip( $this->wg->WikiaMobileExcludeJSGlobals )
+		//I found that this array merge is the fastest
+			$this->wg->Out->getJSVars() + $res->get(),
+			array_flip( $this->wg->WikiaMobileExcludeJSGlobals )
 		);
 
-		//AppCache will be disabled for the first several releases
-		//$this->appCacheManifestPath = ( $this->wg->DevelEnvironment && !$this->wg->Request->getBool( 'appcache' ) ) ? null : self::CACHE_MANIFEST_PATH . "&{$this->wg->StyleVersion}";
-		$this->mimeType = $templateObject->get( 'mimetype' );
-		$this->charSet = $templateObject->get( 'charset' );
-		$this->showAllowRobotsMetaTag = !$this->wg->DevelEnvironment;
-		$this->topScripts = $skin->getTopScripts();
+		$this->topScripts = $this->skin->getTopScripts();
 		$this->globalVariablesScript = WikiaSkin::makeInlineVariablesScript( $vars );
-		$this->bodyClasses = array( 'wkMobile', $templateObject->get( 'pageclass' ) );
-		$this->pageTitle = $this->wg->Out->getHTMLTitle();
-		$this->cssLinks = $cssLinks;
-		$this->headLinks = $this->wg->Out->getHeadLinks();
-		$this->headItems = $skin->getHeadItems();
-		$this->jsHeadFiles = $jsHeadFiles;
-		$this->languageCode = $templateObject->get( 'lang' );
-		$this->languageDirection = $templateObject->get( 'dir' );
-		$this->wikiaNavigation = $this->app->renderView( 'WikiaMobileNavigationService', 'index' );
-		$this->advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
-		$this->pageContent = $this->app->renderView( 'WikiaMobileBodyService', 'index', array(
-			'bodyText' => $templateObject->get( 'bodytext' ),
-			'categoryLinks' => $templateObject->get( 'catlinks')
-		) );
-		$this->wikiaFooter = $this->app->renderView( 'WikiaMobileFooterService', 'index' );
-		$this->jsBodyFiles = $jsBodyFiles;
 
 		//tracking
 		$trackingCode = '';
 
 		if(!in_array( $this->wg->request->getVal( 'action' ), array( 'edit', 'submit' ) ) ) {
-			$trackingCode .= AnalyticsEngine::track(
-					'QuantServe',
-					AnalyticsEngine::EVENT_PAGEVIEW,
-					array(),
-					array( 'extraLabels'=> array( 'mobilebrowser' ) )
-				) .
-				AnalyticsEngine::track(
-					'Comscore',
-					AnalyticsEngine::EVENT_PAGEVIEW
-				);
+			$this->quantcastTracking = AnalyticsEngine::track(
+				'QuantServe',
+				AnalyticsEngine::EVENT_PAGEVIEW,
+				array(),
+				array( 'extraLabels'=> array( 'mobilebrowser' ) )
+			) .
+		   	AnalyticsEngine::track(
+			'Comscore',
+ 			AnalyticsEngine::EVENT_PAGEVIEW
+			);
 		}
 
 		//Stats for Gracenote reporting
@@ -151,10 +177,11 @@ class WikiaMobileService extends WikiaService {
 		$trackingCode .= AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW ).
 			AnalyticsEngine::track( 'GA_Urchin', 'onewiki', array( $this->wg->cityId ) ).
 			AnalyticsEngine::track( 'GA_Urchin', 'pagetime', array( 'wikiamobile' ) ).
-			AnalyticsEngine::track('GA_Urchin', 'varnish-stat').
+			AnalyticsEngine::track( 'GA_Urchin', 'varnish-stat').
 			AnalyticsEngine::track( 'GAS', 'usertiming' );
 
 		$this->response->setVal( 'trackingCode', $trackingCode );
+
 		$this->wf->profileOut( __METHOD__ );
 	}
 }
