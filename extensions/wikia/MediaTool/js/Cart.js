@@ -80,8 +80,10 @@ MediaTool.Cart = $.createClass(Observable,{
 		MediaTool.fire('Cart::itemsChanged');
 	},
 
-	createItem: function( itemData, itemTemplate ) {
-		var item = new MediaTool.Item(itemData.id, itemData.title, itemData.thumbHtml);
+	createItem: function( itemData, itemTemplate, itemOrigin ) {
+		var item = new MediaTool.Item((itemOrigin+'-'+itemData.hash), itemData.title, itemData.thumbUrl, false, itemOrigin);
+		item.origin = itemOrigin;
+
 		var $item = $($.mustache(itemTemplate, item));
 
 		$item.draggable({
