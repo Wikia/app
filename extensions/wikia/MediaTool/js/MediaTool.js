@@ -307,7 +307,8 @@ var MediaTool = MediaTool || (function (smallThumbnailSize, largeThumbnailSize) 
 		getRenderer: function() {
 			return renderer;
 		},
-        initialBasketContent:[]
+        initialBasketContent: [],
+        initialMediaSettings: { align:false, alt:"", caption:"", thumbnail:true, width:300 }
 	});
 
 	return new MediaToolClass;
