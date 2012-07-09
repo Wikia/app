@@ -7,15 +7,15 @@ $wgHooks['LoadExtensionSchemaUpdates'][] = 'WikiaUpdater::update';
 
 class WikiaUpdater {
 	
-	static private function get_patch_dir() {
+	static public function get_patch_dir() {
 		return dirname( __FILE__ ) . "/../archives/wikia/";
 	}
 	
-	static private function get_extensions_dir() {
+	static public function get_extensions_dir() {
 		return MWInit::getExtensionsDirectory();
 	}
 	
-	static private function is_valid_utf8_text( $text ) {
+	static public function is_valid_utf8_text( $text ) {
 		$converted = @iconv('utf8','utf8',$text);
 		return $text === $converted;
 	}
@@ -72,7 +72,7 @@ class WikiaUpdater {
 		return true;
 	}
 	
-	static private function do_drop_table ( DatabaseUpdater $updater, $table, $condition = true ) {
+	static public function do_drop_table ( DatabaseUpdater $updater, $table, $condition = true ) {
 		if ( !$condition ) {
 			$updater->output( "Dropping $table table not allowed\n" );
 			return;
@@ -88,12 +88,13 @@ class WikiaUpdater {
 	}
 	
 	static public function do_page_vote_unique_update( DatabaseUpdater $updater ) {
+		$dir = self::get_patch_dir();
 		$updater->output( "Checking wikia page_vote table...\n" );
 		if( $updater->getDB()->indexExists( 'page_vote', 'unique_vote' ) ) {
 			$updater->output( "...page_vote unique key already set.\n" );
 		} else {
 			$updater->output( "Making page_vote unique key... " );
-			$updater->applyPatch( 'wikia/patch-page_vote_unique_vote.sql', true );
+			$updater->applyPatch( $dir . 'patch-page_vote_unique_vote.sql', true );
 			$updater->output( "ok\n" );
 		}
 	}
