@@ -282,7 +282,6 @@ class CityVisualization extends WikiaModel {
 		return $this->wf->memcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
 	}
 
-
 	public function getWikiDataForPromote($wikiId, $langCode) {
 		$this->wf->ProfileIn(__METHOD__);
 
