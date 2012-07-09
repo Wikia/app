@@ -4,6 +4,7 @@ var WallBackendBridge = $.createClass(Observable, {
 	},
 
 	loadPage: function(page, pagenumber, callback) {
+		// TODO: consider using GET method (BugId:36611)
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'getCommentsPage',
@@ -11,7 +12,7 @@ var WallBackendBridge = $.createClass(Observable, {
 			data: {
 				page: pagenumber,
 				pagetitle: page['title'],
-				pagenamespace: page['namespace'],
+				pagenamespace: page['namespace']
 			},
 			callback: this.proxy(function(data) {
 				var html = innerShiv(data.html, false),
@@ -73,7 +74,7 @@ var WallBackendBridge = $.createClass(Observable, {
 				this.fire('postReply', newmsg);
 			})
 		});
-	}, 
+	},
 
 	cancelEdit: function(username, id, callback) {
 		if ($.isFunction(callback)) {
@@ -108,7 +109,7 @@ var WallBackendBridge = $.createClass(Observable, {
 
 					window.location.href = url + '?reload=' + Math.floor(Math.random() * 999);
 				}
-				
+
 				data.mode = mode;
 				data.id = id;
 
