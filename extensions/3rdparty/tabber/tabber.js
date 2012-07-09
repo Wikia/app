@@ -287,6 +287,9 @@ tabberObj.prototype.init = function(e)
   e.className = e.className.replace(this.REclassMain, this.classMainLive);
 
   /* Activate the default tab, and do not call the onclick handler */
+  /* Wikia Change Start */
+  this.tabHideAll();
+  /* Wikia Change End */
   this.tabShow(defaultTab);
 
   /* If the user specified an onLoad function, call it now. */
@@ -560,4 +563,4 @@ if (typeof tabberOptions == 'undefined') {
 
 }
 
-document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+/* Wikia Change - removed document.write() */
