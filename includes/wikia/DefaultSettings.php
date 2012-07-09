@@ -235,6 +235,7 @@ $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/W
 
 // TODO:move this inclusion to CommonExtensions?
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
+include( "$IP/extensions/wikia/WikiaMobile/WikiaMobile.setup.php" );
 
 /**
  * i18n support for jquery.timeago.js (used in History Dropdown)
@@ -813,6 +814,12 @@ $wgSpecialEditCountExludedUsernames = array(
  * List of mobile skins
  */
 $wgMobileSkins = array( 'wikiphone', 'wikiaapp', 'wikiamobile' );
+
+/*
+ * @name $wgEnableWikiaMobile
+ * Enables the WikiaPhone skin and disables WikiaMobile skin
+ */
+$wgEnableWikiaPhone = false;
 
 /**
  * variable for disabling memcached deleted key replication
