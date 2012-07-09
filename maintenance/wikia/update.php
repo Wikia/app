@@ -88,13 +88,12 @@ class WikiaUpdater {
 	}
 	
 	static public function do_page_vote_unique_update( DatabaseUpdater $updater ) {
-		$dir = $self::get_patch_dir();
 		$updater->output( "Checking wikia page_vote table...\n" );
 		if( $updater->getDB()->indexExists( 'page_vote', 'unique_vote' ) ) {
 			$updater->output( "...page_vote unique key already set.\n" );
 		} else {
 			$updater->output( "Making page_vote unique key... " );
-			$updater->applyPatch( $dir . 'patch-page_vote_unique_vote.sql', true );
+			$updater->applyPatch( 'wikia/patch-page_vote_unique_vote.sql', true );
 			$updater->output( "ok\n" );
 		}
 	}
