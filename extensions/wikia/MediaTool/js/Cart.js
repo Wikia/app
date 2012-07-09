@@ -23,10 +23,10 @@ MediaTool.Cart = $.createClass(Observable,{
 		var self = this;
 		this.$container = $('#'+this.containerId);
 		this.clear();       // @todo: or this.items = [];, not sure right now
-		this.thumbnailStyle = '';
-		this.thumbnailSize = null;
+		//this.thumbnailStyle = '';
+		//this.thumbnailSize = null;
 		this.setThumbnailStyle('border');
-		this.setThumbnailSize(220);
+		this.setThumbnailSize(300);
 		// Item dropped to cart from list
 		this.$container.droppable({
 			accept: "#"+self.collectionListId+" li",
@@ -125,18 +125,17 @@ MediaTool.Cart = $.createClass(Observable,{
 	},
 
 	setThumbnailStyle: function(thumbnailStyle) {
-		if (thumbnailStyle != this.thumbnailStyle) {
-			this.thumbnailStyle = thumbnailStyle;
-			MediaTool.fire('Cart::thumbnailStyleChanged');
-		}
+		this.thumbnailStyle = thumbnailStyle;
+		MediaTool.fire('Cart::thumbnailStyleChanged');
 	},
 
 	setThumbnailSize: function(thumbnailSize) {
-		//@todo - add some validation
-		if (thumbnailSize != this.thumbnailSize) {
-			this.thumbnailSize = thumbnailSize;
-			MediaTool.fire('Cart::thumbnailSizeChanged');
-		}
+		this.thumbnailSize = thumbnailSize;
+		MediaTool.fire('Cart::thumbnailSizeChanged');
+	},
+
+	getThumbnailSize: function() {
+		return this.thumbnailSize;
 	}
 
 });

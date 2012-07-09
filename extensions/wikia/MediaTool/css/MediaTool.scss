@@ -70,23 +70,36 @@
 	}
 
     .media-tool-thumbnail-style {
-      img {
-        padding: 3px;
-        &.selected {
-          padding: 1px;
-          border: 2px solid $color-buttons;
-          margin-right: 15px;
-        }
-      }
-      .thumb-style-desc {
-        color: #9f9f9f;
-        font-style: italic;
-      }
-    }
+		img {
+			padding: 3px;
+			&.selected {
+				padding: 1px;
+				border: 2px solid $color-buttons;
+				/*margin-right: 15px;*/
+			}
+		}
+		.thumb-style-desc {
+			color: #9f9f9f;
+			font-style: italic;
+		}
+	}
 
-  .media-tool-thumbnail-size {
-    margin-top: 15px;
-  }
+	.media-tool-thumbnail-size {
+		margin-top: 15px;
+
+		#mediaToolThumbnailSizeSlider {
+			float: left;
+			margin-left: 20px;
+			width: 130px;
+		}
+
+		#mediaToolThumbnailSizeInput {
+			height: 16px;
+			width: 36px;
+		}
+
+		@include clearfix;
+	}
 
     #mediaToolItemList {
 		&.custom-state-active {

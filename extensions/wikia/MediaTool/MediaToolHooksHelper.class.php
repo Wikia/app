@@ -17,6 +17,14 @@ class MediaToolHooksHelper extends WikiaModel {
 
 	function onShowEditFormInitial2($editform) {
 		F::build('JSMessages')->enqueuePackage('MediaTool', JSMessages::EXTERNAL);
+		F::app()->registerHook('MakeGlobalVariablesScript', 'MediaToolHooksHelper', 'onMakeGlobalVariablesScript');
 		return true;
 	}
+
+	function onMakeGlobalVariablesScript($vars) {
+		$vars['wgMediaToolSmallThumbnail'] = MediaToolController::THUMBNAIL_SIZE_SMALL;
+		$vars['wgMediaToolLargeThumbnail'] = MediaToolController::THUMBNAIL_SIZE_LARGE;
+		return true;
+	}
+
 }
