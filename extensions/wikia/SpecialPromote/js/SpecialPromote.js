@@ -102,7 +102,7 @@ SpecialPromote.prototype = {
 
 	},
 	checkMainImage: function() {
-		var image = $('.large-photo img').data('filename');
+		var image = $('.large-photo img#curMainImageName').data('filename');
 		if(typeof image == 'undefined') {
 			this.status.mainPhoto = false;
 		} else if (image == '' || image == null) {
@@ -158,7 +158,7 @@ SpecialPromote.prototype = {
 	},
 	onChangePhotoClick: function (e) {
 		e.preventDefault();
-		var target = $(e.target).parent().parent().find('img');
+		var target = $(e.target).parent().parent().find('img#curMainImageName');
 
 		try {
 			this.getUploadForm({

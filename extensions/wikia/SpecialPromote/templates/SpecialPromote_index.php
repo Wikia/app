@@ -43,6 +43,18 @@
 				<div class="modify-remove">
 					<a class="modify" href="#"><?= wfMsg('promote-modify-photo'); ?></a>
 				</div>
+				<div class="status">
+					<div class="rejected hidden">
+						<p><span>
+							<?= wfMsg('promote-image-rejected');?> <img src="<?= $wg->BlankImgUrl ?>" class="sprite error">
+						</span></p>
+					</div>
+					<div class="accepted hidden">
+						<p><span>
+							<?= wfMsg('promote-image-accepted');?> <img src="<?= $wg->BlankImgUrl ?>" class="sprite ok">
+						</span></p>
+					</div>
+				</div>
 				<?php if (!empty($mainImage)): ?>
 					<img
 						id="curMainImageName"
