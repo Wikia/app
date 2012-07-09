@@ -440,7 +440,7 @@ class AssetsManager {
  	 */
 	public function getGroupsCommonURL( Array $groupNames, /* array */ $params = array(), /* boolean */ $combine = null, /* boolean */ $minify = null ) {
 		if ( ( $combine !== null ? $combine : $this->mCombine ) || ( $minify !== null ? $minify : $this->mMinify ) ) {
-			return $this->getGroupsURL( $groupNames, $params, $this->mCommonHost, $combine, $minify );
+			return $this->getGroupsURL( $groupNames, $params, $wgCdnRootUrl, $combine, $minify );
 		} else {
 			return $this->getGroupsURL( $groupNames, $params, '', $combine, $minify );
 		}
