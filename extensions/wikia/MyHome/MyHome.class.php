@@ -10,9 +10,6 @@ class MyHome {
 	// prefix for our custom data stored in rc_params
 	const customDataPrefix = "\x7f\x7f";
 
-	// use JSON to encode data?
-	const useJSON = true;
-
 	// name of section edited
 	private static $editedSectionName = false;
 
@@ -24,7 +21,7 @@ class MyHome {
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
-	public static function storeInRecentChanges($rc, $data = array()) {
+	public static function storeInRecentChanges(RecentChange $rc, $data = array()) {
 		wfProfileIn(__METHOD__);
 		global $wgParser;
 
@@ -121,7 +118,6 @@ class MyHome {
 		Wikia::setVar('rc_data', $data);
 
 		wfProfileOut(__METHOD__);
-
 		return true;
 	}
 
@@ -151,12 +147,13 @@ class MyHome {
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return true;
 	}
 
 	/*
 	 * Return page user is redirected to when title is not specified in URL
+	 *
+	 * http://muppet.wikia.com -> http://muppet.wikia.com/wiki/Special:WikiActivity (happens for logged-in only)
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
@@ -234,7 +231,7 @@ class MyHome {
 		if ( !is_object($rc) ) {
 			$rc = Wikia::getVar('rc');
 		}
-		if ( is_object( $rc ) ) {
+		if ($rc instanceof RecentChange) {
 			$rc_id = $rc->getAttribute('rc_id');
 
 			$dbw = wfGetDB( DB_MASTER );
@@ -260,12 +257,7 @@ class MyHome {
 	 */
 	public static function packData($data) {
 		wfProfileIn(__METHOD__);
-		if (self::useJSON) {
-			$packed = json_encode($data);
-		}
-		else {
-			$packed = serialize($data);
-		}
+		$packed = json_encode($data);
 
 		wfProfileOut(__METHOD__);
 		// store encoded data with our custom prefix
@@ -299,19 +291,13 @@ class MyHome {
 
 		// and try to unpack it
 		try {
-			if (self::useJSON) {
-				$data = json_decode($field, true);
-			}
-			else {
-				$data = unserialize($field);
-			}
+			$data = json_decode($field, true);
 		}
 		catch(Exception $e) {
 			$data = null;
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return $data;
 	}
 
@@ -356,7 +342,6 @@ class MyHome {
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return false;
 	}
 
@@ -376,7 +361,6 @@ class MyHome {
 		}
 
 		wfProfileOut(__METHOD__);
-
 		return $defaultView;
 	}
 
@@ -391,7 +375,7 @@ class MyHome {
 	 * and can be inserted later (when the RC actually does get saved).
 	 */
 	public static function attachAchievementToRc($user, $badge ){
-		global $wgEnableAchievementsInActivityFeed, $wgEnableAchievementsExt, $wgWikiaForceAIAFdebug;
+		global $wgWikiaForceAIAFdebug;
 		wfProfileIn( __METHOD__ );
 
 		// If user has 'hidepersonalachievements' set, then they probably don't want to play.
