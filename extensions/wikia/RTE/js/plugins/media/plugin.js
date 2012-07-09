@@ -161,12 +161,7 @@ CKEDITOR.plugins.add('rte-media',
                     label: msgs['edit']+" (beta)",
                     'class': 'RTEMediaOverlayEditBeta',
                     callback: function(node) {
-                        var type = self.getTrackingType(node);
-
-                        RTE.tools.callFunction($.proxy(window.MediaTool.showModal, window.MediaTool));
-    
-                        // tracking
-                        RTE.track(type, 'menu', 'edit');
+                        node.trigger('mediaupload');
                     }
                 }			
     		);
@@ -330,6 +325,25 @@ CKEDITOR.plugins.add('rte-media',
 			// call VideoEmbedTool and provide VET with video clicked
 			if (!UserLogin.isForceLogIn()) RTE.tools.callFunction(window.VET_show,$(this));
 		});
+
+        video.bind('mediaupload.media', function(ev) {
+
+            if (!UserLogin.isForceLogIn()) {
+
+                var data = $(this).getData();
+
+                window.MediaTool.initialBasketContent = [];
+
+                window.MediaTool.callBackend('getMediaItems', {mediaList:[data.title]}, function(items) {
+
+                    $.each(items, function(i, item) {
+                        window.MediaTool.initialBasketContent.push( {title:item.title, file:item.title, thumbHtml:item.thumbHtml, thumbUrl:item.thumbUrl, hash:item.hash} );
+                    });
+                    RTE.tools.callFunction($.proxy(window.MediaTool.showModal, window.MediaTool));
+                });
+            }
+        });
+
 	},
 
 	// poll specific setup
