@@ -56,7 +56,8 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'user_register_track' ),
 			array( 'WikiaUpdater::do_drop_table', 'user_board' ),
 			array( 'WikiaUpdater::do_drop_table', 'watchlist_old' ),
-			array( 'WikiaUpdater::do_clean_math_table' )
+			array( 'WikiaUpdater::do_clean_math_table' ),
+			array( 'WikiaUpdater::do_transcache_update' )
 		);
 		
 		if ( $wgDBname === $wgExternalSharedDB ) {
@@ -131,6 +132,34 @@ class WikiaUpdater {
 		}
 	}
 
+	function do_transcache_update( DatabaseUpdater $updater ) {
+		$db = $updater->getDB();
+		$transcache = $db->tableName( 'transcache' );
+		$res = $db->query( "SHOW COLUMNS FROM transcache" );
+		$columns = array(
+			'tc_contents'	=> array('old' => 'text', 'new' => 'blob'),
+			'tc_url' 		=> array('old' => ' varchar(255)', 'new' => 'varbinary(255)' )
+		);
+		$patch = array();
+		while ( $row = $db->fetchRow( $res ) ) {
+			$column = !empty( $columns[ $row->name ] ) ? $columns[ $row->name ] : '';
+			
+			if ( $column && $columns[ $row->name ]['old'] == $row->type ) {
+				$patch[] = sprintf( "MODIFY %s %s", $row->name, $columns[ $row->name ]['new'] );
+			} else {
+				$this->output( "...{$row->name} is up-to-date.\n" );
+			}
+		}
+			
+		if ( !empty( $patch ) ) {	
+			$db->query( sprintf( "ALTER TABLE transcache %s", implode( ",", $patch ) ), __METHOD__ );
+			$updater->output( "... altered to binary.\n" );
+		}
+		else {
+			$updater->output( "... transcache table is up-to-date.\n" );
+		}
+	}
+	
 	/**
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 * @modify Piotr Molski <moli@wikia-inc.com>
