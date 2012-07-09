@@ -285,7 +285,7 @@ class AssetsManager {
 		// as it build our whole PHP stack and reads file from filesystem
 		// which cannot be cached by web server as the content is assumed
 		// to be dynamic
-		$url = $wgScriptPath . '/' . $filePath . '?cb=' . $this->mCacheBuster;
+		$url = $wgScriptPath . '/' . $filePath;
 		// TODO: remove it completely
 		//if ($minify !== null ? $minify : $this->mMinify) {
 		//	$url = $this->getAMLocalURL('one', $filePath);
