@@ -207,6 +207,12 @@ var regExpRules = [
 		name: 'Found $.toJSON',
 		regexp: /(\$|jQuery).(toJSON|evalJSON|secureEvalJSON)/,
 		reason: 'Deprecated JSON handling function called (use native JSON object)'
+	},
+	// detect use of module proxy
+	{
+		name: 'Found moduleProxy',
+		regexp: /\&rs=moduleProxy\&/,
+		reason: 'Use of deprecated Oasis module API (use $.nirvana)'
 	}
 ];
 
