@@ -203,8 +203,12 @@ class SpecialEmailUser extends UnlistedSpecialPage {
 			return 'actionthrottledtext';
 		}
 
+		if ( !$user->canSendEmail( ) ) {
+			wfDebug( "User is blocked from sending e-mail.\n" );
+			return "blockedemailuser";			
+		}
+
 		$hookErr = false;
-		wfRunHooks( 'UserCanSendEmail', array( &$user, &$hookErr ) );
 		wfRunHooks( 'EmailUserPermissionsErrors', array( $user, $editToken, &$hookErr ) );
 		if ( $hookErr ) {
 			return $hookErr;
