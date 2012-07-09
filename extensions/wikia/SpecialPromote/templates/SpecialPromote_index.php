@@ -44,12 +44,12 @@
 					<a class="modify" href="#"><?= wfMsg('promote-modify-photo'); ?></a>
 				</div>
 				<div class="status">
-					<div class="rejected hidden">
+					<div class="rejected<?= ($mainImage['review'] == AdminUploadReviewHelper::STATE_REJECTED) ? '' : ' hidden' ?>">
 						<p><span>
 							<?= wfMsg('promote-image-rejected');?> <img src="<?= $wg->BlankImgUrl ?>" class="sprite error">
 						</span></p>
 					</div>
-					<div class="accepted hidden">
+					<div class="accepted<?= ($mainImage['review'] == AdminUploadReviewHelper::STATE_APPROVED) ? '' : ' hidden' ?>">
 						<p><span>
 							<?= wfMsg('promote-image-accepted');?> <img src="<?= $wg->BlankImgUrl ?>" class="sprite ok">
 						</span></p>
