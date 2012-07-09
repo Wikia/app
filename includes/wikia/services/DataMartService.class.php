@@ -40,7 +40,7 @@
 
 			$memKey = $app->wf->SharedMemcKey( 'datamart', 'pageviews', $wikiId, $periodId, $startDate, $endDate );
 			$pageviews = $app->wg->Memc->get( $memKey );
-			if ( !is_array($pageviews) ) {
+			if (!is_array($pageviews) ) {
 				$pageviews = array();
 				if ( !empty($app->wg->StatsDBEnabled) ) {
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
@@ -110,15 +110,13 @@
 				if ( !empty($app->wg->StatsDBEnabled) ) {
 					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 
-					$tables[] = 'rollup_wiki_pageviews';
+					$tables = array('rollup_wiki_pageviews',
+									  'dimension_wikis');
 					$where  = array('period_id' => self::PERIOD_ID_DAILY,
-									'time_id > CURDATE() - INTERVAL 30 DAY'
+									'time_id > CURDATE() - INTERVAL 30 DAY',
+									'rollup_wiki_pageviews.wiki_id = dimension_wikis.wiki_id'
 							  );
 
-					if (!is_null($lang) || $public) {
-						$tables[] = 'dimension_wikis';
-						$where[]  = 'rollup_wiki_pageviews.wiki_id = dimension_wikis.wiki_id';
-					}
 					if ($lang) {
 						$where[] = "lang = '$lang'";
 					}
