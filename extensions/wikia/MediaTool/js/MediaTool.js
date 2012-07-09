@@ -50,6 +50,7 @@ var MediaTool = MediaTool || (function () {
             cart.template = templateCart;
             this.bind('Cart::itemsChanged', onCartContentChange);
 			this.bind('Cart::thumbnailStyleChanged', onThumbnailStyleChange);
+			this.bind('Cart::thumbnailStyleChanged', onThumbnailSizeChange);
 
             this.bind('showModal', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);});
             this.bind('editDone', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);});
@@ -82,11 +83,24 @@ var MediaTool = MediaTool || (function () {
 				}
 			);
 			dialogWrapper = $.showModal('MUT', processedhtml, { width:970, className:"MediaToolModal" });
-			self.fire('showModal');
 
 			appendUIActions.call(self);
-			cart.setThumbnailStyle('border');
+
+			self.fire('showModal');
+
 			changeCurrentView( "find" );
+			//$('.WikiaSlider').slider();
+			//$('.WikiaSlider').slider('value', 120);
+			/*
+
+			ustawic styl slidera:
+			 #VideoEmbedSlider {
+			 float: left;
+			 margin-right: 20px;
+			 width: 208px;
+			 }
+
+			 */
 		});
 	}
 
@@ -112,6 +126,10 @@ var MediaTool = MediaTool || (function () {
 				$('.media-tool-thumbnail-style .thumb-style-desc').html($.msg('mediatool-thumbnail-style-no-border'));
 				break;
 		}
+	}
+
+	function onThumbnailSizeChange() {
+		// update the whole UI
 	}
 
 	function closeModal() {
@@ -183,6 +201,22 @@ var MediaTool = MediaTool || (function () {
 		});
 		$(".media-tool-thumbnail-style img", dialogWrapper).on("click", function (e) {
 			cart.setThumbnailStyle($(e.target).attr("data-thumb-style"));
+		});
+
+		//@todo: init the slider, append all events to inputs...
+		$('.WikiaSlider').slider({
+			min: 60,
+			max: 660,
+			value: 500,
+			step: 3,
+			slide: function(event, ui) {
+				console.log('WikiaSlider.slide ' + ui.value);
+				//$('#VideoEmbedManualWidth').val(ui.value);
+			},
+			create: function(event, ui) {
+				console.log('WikiaSlider.create');
+				$('#VideoEmbedManualWidth').val(500);
+			}
 		});
 	}
 
