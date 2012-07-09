@@ -4,8 +4,8 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 	containerId: null,
 	collectionListId: null,
 	template: null,
-	thumbnailStyle: '',
-	thumbnailSize: null,
+	thumbnailStyle: false,
+	mediaSize: null,
 	mediaLocation: '',
 
 	constructor: function( containerId, collectionListId ) {
@@ -29,9 +29,6 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 		var self = this;
 		this.$container = $('#'+this.containerId);
 		this.clear();
-		this.setThumbnailStyle('border');
-		this.setMediaLocation('left');
-		this.setThumbnailSize(300);
 		// Item dropped to cart from list
 		this.$container.droppable({
 			accept: "#"+self.collectionListId+" li",
@@ -105,13 +102,13 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 		MediaTool.fire('Cart::thumbnailStyleChanged');
 	},
 
-	setThumbnailSize: function(thumbnailSize) {
-		this.thumbnailSize = thumbnailSize;
-		MediaTool.fire('Cart::thumbnailSizeChanged');
+	setMediaSize: function(mediaSize) {
+		this.mediaSize = mediaSize;
+		MediaTool.fire('Cart::mediaSizeChanged');
 	},
 
-	getThumbnailSize: function() {
-		return this.thumbnailSize;
+	getMediaSize: function() {
+		return this.mediaSize;
 	},
 
 	getMediaLocation: function() {

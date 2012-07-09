@@ -68,17 +68,17 @@
 					<span class="thumb-style-desc" />
 				</div>
 
-				<div class="media-tool-thumbnail-size">
+				<div class="media-tool-media-size">
 					<h4><?= wfMsg('mediatool-thumbnail-size'); ?></h4>
-					<input type="radio" name="thumbsize" id="mediaToolLargeThumbnail"/>
-					<label for="mediaToolLargeThumbnail"><?= wfMsg('mediatool-large-thumbnail', MediaToolController::THUMBNAIL_SIZE_LARGE) ?></label><br/>
-					<input type="radio" name="thumbsize" id="mediaToolSmallThumbnail"/>
-					<label for="mediaToolSmallThumbnail"><?= wfMsg('mediatool-small-thumbnail', MediaToolController::THUMBNAIL_SIZE_SMALL) ?></label><br/>
-					<input type="radio" name="thumbsize" id="mediaToolCustomThumbnail"/>
-					<label for="mediaToolCustomThumbnail"><?= wfMsg('mediatool-custom-thumbnail') ?></label><br/>
-					<div id="mediaToolThumbnailSizeSlider" class="WikiaSlider"></div>
-					<span id="mediaToolThumbnailSize">
-						<input type="text" id="mediaToolThumbnailSizeInput" name="mediaToolThumbnailSizeInput" value="" onchange="" onkeyup="" /> px
+					<input type="radio" name="mediasize" id="mediaToolLargeMedia"/>
+					<label for="mediaToolLargeMedia"><?= wfMsg('mediatool-large-thumbnail', MediaToolController::MEDIA_SIZE_LARGE) ?></label><br/>
+					<input type="radio" name="mediasize" id="mediaToolSmallMedia"/>
+					<label for="mediaToolSmallMedia"><?= wfMsg('mediatool-small-thumbnail', MediaToolController::MEDIA_SIZE_SMALL) ?></label><br/>
+					<input type="radio" name="mediasize" id="mediaToolCustomMedia"/>
+					<label for="mediaToolCustomMedia"><?= wfMsg('mediatool-custom-thumbnail') ?></label><br/>
+					<div id="mediaToolMediaSizeSlider" class="WikiaSlider"></div>
+					<span id="mediaToolMediaSize">
+						<input type="text" id="mediaToolMediaSizeInput" name="mediaToolMediaSizeInput" value="" onchange="" onkeyup="" /> px
 					<span>
 				</div>
 
