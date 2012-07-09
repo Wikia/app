@@ -253,6 +253,9 @@ class SpecialPromoteHelper extends WikiaObject {
 		$cityId = $this->wg->cityId;
 		$files = array('additionalImages' => array());
 
+		$visualizationModel = F::build('CityVisualization');
+		$visualizationData = $visualizationModel->getWikiDataForVisualization($cityId, $langCode);
+
 		foreach ($data as $fileType => $dataContent) {
 
 			switch ($fileType) {
@@ -280,9 +283,6 @@ class SpecialPromoteHelper extends WikiaObject {
 			}
 		}
 
-		$visualizationModel = F::build('CityVisualization');
-		$visualizationData = $visualizationModel->getWikiDataForVisualization($cityId, $langCode);
-
 		$originalImages = array_flip($visualizationData['images']);
 		$deletedFiles = array();
 
@@ -290,9 +290,18 @@ class SpecialPromoteHelper extends WikiaObject {
 			if (!empty($image['deleted'])
 				&& isset($originalImages[$image['deletedname']])
 			) {
-				$deletedFiles[] = $image['deletedname'];
+				$deletedFiles[] = array(
+					'cityId' => $this->wg->cityId,
+					'lang' => $this->wg->contLang->getCode(),
+					'name' => $image['deletedname']
+				);
 				unset($originalImages[$image['deletedname']]);
 			}
+		}
+
+		if(!empty($deletedFiles)) {
+			$this->createRemovalTask($deletedFiles);
+			$visualizationModel->deleteImagesFromReview($cityId, $langCode, $deletedFiles);
 		}
 
 		$updateData = array(
@@ -308,7 +317,6 @@ class SpecialPromoteHelper extends WikiaObject {
 		$modifiedFiles = $this->extractModifiedFiles($files);
 		if (!empty($modifiedFiles)) {
 			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles);
-			$visualizationModel->deleteImagesFromReview($cityId, $langCode, $deletedFiles);
 		}
 
 		$updateData['city_main_image'] = $files['mainImage']['name'];
@@ -402,4 +410,15 @@ class SpecialPromoteHelper extends WikiaObject {
 		return $this->homePageHelper->getImageUrl($imageName, $requestedWidth, $requestedHeight);
 	}
 
+	protected function createRemovalTask($taskDeletionList) {
+		if (!empty($taskDeletionList) && class_exists('AdminUploadReviewTask')) {
+			$task = new AdminUploadReviewTask();
+			$task->createTask(
+				array(
+					'deletion_list' => $taskDeletionList,
+				),
+				TASK_QUEUED
+			);
+		}
+	}
 }

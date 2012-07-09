@@ -82,19 +82,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		if( $this->wg->request->wasPosted() ) {
 			$data = $this->wg->request->getValues();
 			if ( !empty($data) ) {
-				$images = array();
+				$images = $this->parseImageData($data);
 
-				foreach( $data as $name => $value ) {
-					if (preg_match('/img-(\d*)-(\d*)/', $name, $matches)) {
-						if ( !empty($matches[1]) && !empty($matches[2]) ) {
-							$images[] = array(
-								'wikiId' => $matches[1],
-								'pageId' => $matches[2],
-								'state' => $value,
-							);
-						}
-					}
-				}
 				if ( count($images) > 0 ) {
 					$helper->updateImageState( $images, $action );
 				}
@@ -236,5 +225,23 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 	protected function getStatsPageTitle() {
 		return 'Image Review tool statistics';
+	}
+
+	protected function parseImageData($data) {
+		$images = array();
+
+		foreach( $data as $name => $value ) {
+			if (preg_match('/img-(\d*)-(\d*)/', $name, $matches)) {
+				if ( !empty($matches[1]) && !empty($matches[2]) ) {
+					$images[] = array(
+						'wikiId' => $matches[1],
+						'pageId' => $matches[2],
+						'state' => $value,
+					);
+				}
+			}
+		}
+
+		return $images;
 	}
 }

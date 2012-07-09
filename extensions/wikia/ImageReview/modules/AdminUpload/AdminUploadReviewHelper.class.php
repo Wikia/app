@@ -4,6 +4,8 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 
 	const LIMIT_IMAGES = 20;
 	const LIMIT_IMAGES_FROM_DB = 20;
+	const GERMAN_CORPORATE_SITE_ID = 111264;
+	const ENGLISH_CORPORATE_SITE_ID = 80433;
 
 	static $sortOptions = array(
 		'latest first' => 0,
@@ -20,6 +22,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 		$rejectionList = array();
 		$deletionList = array();
 		$statsInsert = array();
+		$taskAdditionList = array();
 
 		$sqlWhere = array(
 			self::STATE_APPROVED => array(),
@@ -31,6 +34,21 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 			if ($image['state'] == self::STATE_APPROVED) {
 				$sqlWhere[self::STATE_APPROVED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$approvalList [] = $image;
+
+				$targetWikiId = $this->getTargetWikiId($image['lang']);
+
+				if (empty($taskAdditionList[$targetWikiId])) {
+					$taskAdditionList[$targetWikiId] = array();
+				}
+				if (empty($taskAdditionList[$targetWikiId][$image['wikiId']])) {
+					$taskAdditionList[$targetWikiId][$image['wikiId']] = array();
+				}
+
+				$taskAdditionList[$targetWikiId][$image['wikiId']] [] = array(
+					'id' => $image['pageId'],
+					'name' => $image['name'],
+				);
+
 			} elseif ($image['state'] == self::STATE_REJECTED) {
 				$sqlWhere[self::STATE_REJECTED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$rejectionList [] = $image;
@@ -67,8 +85,22 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 				$db->commit();
 			}
 		}
+
+		$this->createUploadTask($taskAdditionList);
 		$this->saveStats($statsInsert, $sqlWhere, $action);
 		$this->wf->ProfileOut(__METHOD__);
+	}
+
+	protected function createUploadTask($taskAdditionList) {
+		if (!empty($taskAdditionList)) {
+			$task = new AdminUploadReviewTask();
+			$task->createTask(
+				array(
+					'upload_list' => $taskAdditionList,
+				),
+				TASK_QUEUED
+			);
+		}
 	}
 
 	protected function saveStats($statsInsert, $sqlWhere, $action) {
@@ -245,6 +277,8 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 					$imageList[] = array(
 						'wikiId' => $row->city_id,
 						'pageId' => $row->page_id,
+						'name' => $row->image_name,
+						'lang' => $row->city_lang_code,
 						'state' => $row->image_review_status,
 						'src' => $img['src'],
 						'url' => $img['page'],
@@ -484,4 +518,16 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 		return $url;
 	}
 
+	public function getTargetWikiId($langCode) {
+		switch ($langCode) {
+			case 'de':
+				$wikiId = self::GERMAN_CORPORATE_SITE_ID;
+				break;
+
+			case 'en':
+			default:
+				$wikiId = self::ENGLISH_CORPORATE_SITE_ID;
+		}
+		return $wikiId;
+	}
 }

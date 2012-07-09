@@ -6,8 +6,8 @@
  */
 
 // dependency on main component
-if(!class_exists('ImageReviewSpecialController')) {
-	include( "{$IP}/extensions/wikia/ImageReview/ImageReview.setup.php" );
+if (!class_exists('ImageReviewSpecialController')) {
+	include("{$IP}/extensions/wikia/ImageReview/ImageReview.setup.php");
 }
 
 // extension setup
@@ -26,6 +26,10 @@ $dir = dirname(__FILE__) . '/modules/AdminUpload/';
 $app = F::app();
 
 // classes
+$app->registerClass('AdminUploadReviewTask', $dir . 'AdminUploadReviewTask.php');
+if (function_exists('extAddBatchTask')) {
+	extAddBatchTask($dir . "./AdminUploadReviewTask.php", "adminuploadreview", "AdminUploadReviewTask");
+}
 
 $app->registerClass('AdminUploadReviewSpecialController', $dir . 'AdminUploadReviewSpecialController.class.php');
 $app->registerClass('AdminUploadReviewHelper', $dir . 'AdminUploadReviewHelper.class.php');
