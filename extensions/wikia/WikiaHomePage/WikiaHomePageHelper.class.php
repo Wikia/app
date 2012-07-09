@@ -475,11 +475,15 @@ class WikiaHomePageHelper extends WikiaModel {
 		$imageUrl = $this->getImageUrl($imageName, $requestedWidth, $requestedHeight);
 		$thumbImageUrl = $this->getImageUrl($imageName, $requestedThumbWidth, $requestedThumbHeight);
 
+		$imageId = $this->getImagesArticleId($imageName);
+		$reviewStatus = $this->getImageReviewStatus($imageId);
+
 		return array(
 			'href' => '',
 			'image_url' => $imageUrl,
 			'thumb_url' => $thumbImageUrl,
 			'image_filename' => $imageName,
+			'review_status' => $reviewStatus,
 			'user_href' => '',
 			'links' => array(),
 			'isVideoThumb' => false,
@@ -515,6 +519,38 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		$this->wf->ProfileOut(__METHOD__);
 		return $imageUrl;
+	}
+
+	protected function getImageReviewStatus($imageId) {
+		$this->wf->ProfileIn(__METHOD__);
+		$reviewStatus = false;
+
+		$visualizationModel = F::build('CityVisualization');
+		$rowAssigner = F::build('wikiImageReviewStatusRowHelper');
+		if( $imageId > 0 ) {
+			$reviewStatus = $visualizationModel->getImageReviewStatus($this->wg->CityId, $imageId, $rowAssigner);
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return $reviewStatus;
+	}
+
+	/**
+	 * @param string $imageName image name
+	 *
+	 * @return int page_id or 0 if fails
+	 */
+	protected function getImagesArticleId($imageName) {
+		$this->wf->ProfileIn(__METHOD__);
+		$imageId = 0;
+
+		$imageTitle = F::build('Title', array($imageName, NS_FILE), 'newFromText');
+		if( $imageTitle instanceof Title ) {
+			$imageId = $imageTitle->getArticleID();
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return $imageId;
 	}
 
 	protected function getImageServingParamsForResize($requestedWidth, $requestedHeight, $originalWidth, $originalHeight) {

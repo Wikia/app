@@ -71,7 +71,6 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
-
 	protected function saveStats($statsInsert, $sqlWhere, $action) {
 		$db = $this->wf->GetDB(DB_MASTER, array(), $this->wg->SharedDB);
 
@@ -108,7 +107,6 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 			}
 		}
 	}
-
 
 	/**
 	 * reset state in abandoned work

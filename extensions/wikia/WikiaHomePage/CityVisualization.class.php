@@ -370,7 +370,6 @@ class CityVisualization extends WikiaModel {
 		return $wikiData;
 	}
 
-
 	protected function getWikiImagesConditions($wikiId, $filter) {
 		$conditions = array();
 
@@ -599,6 +598,31 @@ class CityVisualization extends WikiaModel {
 		return $wikiImages;
 	}
 
+	public function getImageReviewStatus($wikiId, $pageId, wikiImageRowAssigner $rowAssigner) {
+		$this->wf->ProfileIn(__METHOD__);
+		$reviewStatus = AdminUploadReviewHelper::STATE_UNREVIEWED;
+
+		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$conditions['city_id'] = $wikiId;
+		$conditions['page_id'] = $pageId;
+
+		$result = $db->select(
+			array('city_visualization_images'),
+			array(
+				'image_review_status',
+			),
+			$conditions,
+			__METHOD__
+		);
+
+		while( $row = $result->fetchObject() ) {
+			$reviewStatus = $rowAssigner->returnParsesWikiImageRow($row);
+		}
+
+		$this->wf->ProfileOut(__METHOD__);
+		return $reviewStatus;
+	}
+
 	public static function isNewWiki($wikiFlags) {
 		return (($wikiFlags & self::FLAG_NEW) == self::FLAG_NEW);
 	}
@@ -623,6 +647,12 @@ interface wikiImageRowAssigner {
 class wikiImageNameRowHelper implements wikiImageRowAssigner {
 	public function returnParsesWikiImageRow($row) {
 		return $row->image_name;
+	}
+}
+
+class wikiImageReviewStatusRowHelper implements wikiImageRowAssigner {
+	public function returnParsesWikiImageRow($row) {
+		return $row->image_review_status;
 	}
 }
 
