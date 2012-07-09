@@ -19,6 +19,10 @@ MediaTool.Renderer = $.createClass(Observable,{
 			result += "[["+item.file+"]]\n";
 		});
 		return result;
+	},
+
+	getMediaThumb: function(item) {
+		return '<span class="Wikia-video-play-button min" style="width: 96px; height: 72px;"></span><img alt="" src="'+item.file+'" width="96" height="72" data-video="'+item.video+'" class="Wikia-video-thumb"/>';
 	}
 
 });

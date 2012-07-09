@@ -173,8 +173,7 @@ var MediaTool = MediaTool || (function () {
 		var videoUrl = $('#mediatool-online-url').val();
 
 		callBackend('getVideoMetadata', { videoUrl: videoUrl }, function(response) {
-			response.id = 'viaurl';
-			cart.createItem(response, templateItem);
+			cart.createItem(response, templateItem, 'online');
 		});
 	}
 

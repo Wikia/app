@@ -5,6 +5,7 @@ MediaTool.Item = $.createClass(Observable,{
 	file: null,
 	thumbHtml: null,
 	editable: false,
+	origin: 'wiki',
 
 	constructor: function(id, video, file, thumbHtml) {
 		MediaTool.Item.superclass.constructor.call(this);
@@ -12,7 +13,13 @@ MediaTool.Item = $.createClass(Observable,{
 		this.id = id;
 		this.video = video;
 		this.file = file;
-		this.thumbHtml = thumbHtml;
+		if(thumbHtml != false) {
+			this.thumbHtml = thumbHtml;
+		}
+		else {
+			var renderer = new MediaTool.Renderer();
+			this.thumbHtml = renderer.getMediaThumb(this);
+		}
 	}
 
 });

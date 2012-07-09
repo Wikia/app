@@ -74,7 +74,7 @@ MediaTool.ItemsCollection = $.createClass(Observable,{
 		MediaTool.callBackend('getRecentMedia', {}, function(items) {
 			self.items = [];
 			$.each(items, function(i, item) {
-				self.items.push(new MediaTool.Item('item-'+(i+1), item.video, item.file, item.thumbHtml));
+				self.items.push(new MediaTool.Item(('wiki-'+item.hash), item.video, item.file, item.thumbHtml, 'wiki'));
 			});
 			self.refreshTemplate();
 		});

@@ -35,8 +35,8 @@ class MediaToolController extends WikiaController {
 			if($wrapper instanceof ApiWrapper) {
 				$data['status'] = self::RESPONSE_STATUS_OK;
 				$data['title'] = $wrapper->getTitle();
-				$data['thumbnailUrl'] = $wrapper->getThumbnailUrl();
-				$data['thumbHtml'] = $this->getMediaThumb('File:External'); // @todo getting thumbs for remote files
+				$data['hash'] = md5($wrapper->getTitle());
+				$data['thumbUrl'] = $wrapper->getThumbnailUrl();
 			}
 			else {
 				$data['status'] = self::RESPONSE_STATUS_ERROR;
@@ -58,11 +58,13 @@ class MediaToolController extends WikiaController {
 		$data = array();
 		$data[] = array(
 			'video' => true,
+			'hash' => md5('File:Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)'),
 			'file' => 'File:Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)',
 			'thumbHtml' => $this->getMediaThumb('Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)')
 		);
 		$data[] = array(
 			'video' => false,
+			'hash' => md5('File:256.jpeg'),
 			'file' => 'File:256.jpeg',
 			'thumbHtml' => $this->getMediaThumb('256.jpeg')
 		);
