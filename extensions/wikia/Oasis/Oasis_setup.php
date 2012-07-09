@@ -224,11 +224,11 @@ $wgOasisThemes = array(
 
 // AJAX dispatcher
 // TODO: Remove this and unify ajax call entry point
+// migrate JS code to $.nirvana.sendRequest
 $wgAjaxExportList[] = 'moduleProxy';
 function moduleProxy() {
-	wfProfileIn(__METHOD__);
-
 	global $wgRequest;
+	wfProfileIn(__METHOD__);
 
 	$outputType = $wgRequest->getVal('outputType'); // html or data for oasis modules
 	if ($outputType == 'data') $outputType = 'json';
