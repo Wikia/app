@@ -333,6 +333,9 @@ CKEDITOR.plugins.add('rte-media',
                 var data = $(this).getData();
 
                 window.MediaTool.initialBasketContent = [];
+                if ( data.params ) {
+                    window.MediaTool.initialMediaSettings = data.params;
+                }
 
                 window.MediaTool.callBackend('getMediaItems', {mediaList:[data.title]}, function(items) {
 
