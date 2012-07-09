@@ -13,7 +13,7 @@ class CityVisualization extends WikiaModel {
 	const CITY_TAG_VIDEO_GAMES_ID = 131;
 	const CITY_TAG_LIFESTYLE_ID = 127;
 
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.07';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.08';
 
 	protected static $wikiaListMemcKey = 'wikis_data_for_visualization_wikia_v1.0';
 	protected static $comscoreListMemcKey = 'wikis_data_for_visualization_comscore_v1.0';
