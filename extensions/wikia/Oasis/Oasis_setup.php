@@ -230,6 +230,8 @@ function moduleProxy() {
 	global $wgRequest;
 	wfProfileIn(__METHOD__);
 
+	wfDeprecated(__METHOD__);
+
 	$outputType = $wgRequest->getVal('outputType'); // html or data for oasis modules
 	if ($outputType == 'data') $outputType = 'json';
 
