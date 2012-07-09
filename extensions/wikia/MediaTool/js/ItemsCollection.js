@@ -58,7 +58,9 @@ MediaTool.ItemsCollection = $.createClass(MediaTool.Collection,{
 	},
 
 	onCartItemFadedOut: function($item, itemObject) {
-		this.appendItem($item, itemObject);
+		if(itemObject.origin != 'online') {
+			this.appendItem($item, itemObject);
+		}
 	},
 
 	appendItem: function( $item, itemObject ) {

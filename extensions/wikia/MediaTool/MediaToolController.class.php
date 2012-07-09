@@ -33,10 +33,13 @@ class MediaToolController extends WikiaController {
 			}
 
 			if($wrapper instanceof ApiWrapper) {
+				$metaData = $wrapper->getMetadata();
+
 				$data['status'] = self::RESPONSE_STATUS_OK;
 				$data['title'] = $wrapper->getTitle();
 				$data['hash'] = md5($wrapper->getTitle());
 				$data['thumbUrl'] = $wrapper->getThumbnailUrl();
+				$data['duration'] = floor($metaData['duration'] / 60) . ':' . ( $metaData['duration'] - (floor($metaData['duration'] / 60) * 60) );
 			}
 			else {
 				$data['status'] = self::RESPONSE_STATUS_ERROR;
