@@ -21,6 +21,7 @@ var MediaTool = MediaTool || (function (smallThumbnailSize, largeThumbnailSize) 
 			$.Deferred(function (dfd) {
 				$.when(
 					$.getResources([
+						wgExtensionsPath + '/wikia/MediaTool/js/Collection.js',
 						wgExtensionsPath + '/wikia/MediaTool/js/Cart.js',
 						wgExtensionsPath + '/wikia/MediaTool/js/Item.js',
 						wgExtensionsPath + '/wikia/MediaTool/js/Renderer.js',

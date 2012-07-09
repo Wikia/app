@@ -22,7 +22,8 @@ MediaTool.Renderer = $.createClass(Observable,{
 	},
 
 	getMediaThumb: function(item) {
-		return '<span class="Wikia-video-play-button min" style="width: 96px; height: 72px;"></span><img alt="" src="'+item.file+'" width="96" height="72" data-video="'+item.video+'" class="Wikia-video-thumb"/>';
+		// @todo implement video time
+		return '<div class="timer">00:00</div><span class="Wikia-video-play-button min" style="width: 96px; height: 72px;"></span><img alt="" src="'+item.file+'" width="96" height="72" data-video="'+item.video+'" class="Wikia-video-thumb"/>';
 	}
 
 });
