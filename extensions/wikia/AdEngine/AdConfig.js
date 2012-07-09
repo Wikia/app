@@ -333,7 +333,7 @@ AdConfig.DART.isWikiaHub = function() {
 	if (window.wgWikiaHubType) {	// defined in source of hub article
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -562,7 +562,7 @@ AdConfig.DART.getCustomVarAB = function() {
 			return 'ab=e1g' + ab + ';';
 		}
 	}
-	
+
 	return '';
 };
 

@@ -122,7 +122,6 @@ if ( empty( $app->wg->WikiaMobileExcludeJSGlobals ) ) {
 			'wgEnableAdMeldAPIClient',
 			'wgEnableAdMeldAPIClientPixels',
 			'wgEnableOpenXSPC',
-			'cityShort',
 			'cscoreCat',
 			'wgTimeAgoi18n',
 			'sassParams',
@@ -173,7 +172,6 @@ if ( empty( $app->wg->WikiaMobileExcludeJSGlobals ) ) {
 			'wgFileCanRotate',
 			'wgFileExtensions',
 			'wgAvailableSkins',
-			'wgSiteName',
-			'wgUserShowAds'
+			'wgSiteName'
 	) );
 }
