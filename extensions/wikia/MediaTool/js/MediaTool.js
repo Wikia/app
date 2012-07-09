@@ -88,21 +88,28 @@ var MediaTool = MediaTool || (function () {
 
 			self.fire('showModal');
 
-			changeCurrentView( "find" );
-			//$('.WikiaSlider').slider();
-			//$('.WikiaSlider').slider('value', 120);
-			/*
+            if ( self.initialBasketContent.length ) {
 
-			ustawic styl slidera:
-			 #VideoEmbedSlider {
-			 float: left;
-			 margin-right: 20px;
-			 width: 208px;
-			 }
+                useInitialBasketContent( self.initialBasketContent, 'wiki' );
 
-			 */
+            } else {
+
+                changeCurrentView( "find" );
+            }
+
 		});
 	}
+
+    function useInitialBasketContent( basketContent, source ) {
+
+        var self = this;
+
+        $( basketContent).each( function(i, item){
+            cart.createItem(item, templateItem, source);
+        });
+        //TODO: switch to "Edit media tab"
+        changeCurrentView( "find" );
+    }
 
 	function onCartContentChange() {
 		if(cart.isEmpty()) {
@@ -248,7 +255,8 @@ var MediaTool = MediaTool || (function () {
 		},
 		getRenderer: function() {
 			return renderer;
-		}
+		},
+        initialBasketContent:[]
 	});
 
 	return new MediaToolClass;

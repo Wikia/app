@@ -51,6 +51,34 @@ class MediaToolController extends WikiaController {
 		$this->response->setData( $data );
 	}
 
+	public function getMediaItems() {
+
+		$mediaList = $this->request->getVal("mediaList", array());
+		$data = array();
+
+		if ( count($mediaList) > 0 ) {
+
+			foreach ( $mediaList as $sFileTitle ) {
+
+				$oFileTitle = Title::newFromText( $sFileTitle, NS_FILE );
+				if ( !empty($oFileTitle) ) {
+					$oFile = wfFindFile($oFileTitle);
+					if ( !empty($oFile) ) {
+						$data[] = array(
+							"video" => WikiaFileHelper::isFileTypeVideo( $oFile ),
+							"title" => $oFileTitle->getFullText(),
+							"hash" => md5($oFileTitle->getFullText()),
+							"status" => self::RESPONSE_STATUS_OK,
+							"thumbHtml" => $this->getMediaThumb( $sFileTitle ),
+							"thumbUrl" => $this->getThumbnailUrl( $sFileTitle )
+						);
+					}
+				}
+			}
+		}
+		$this->response->setData( $data );
+	}
+
 	public function getRecentMedia() {
 		$this->response->setFormat('json');
 
@@ -93,6 +121,17 @@ class MediaToolController extends WikiaController {
 			);
 
 			return $mediaThumb;
+		}
+		return '';
+	}
+
+	public function getThumbnailUrl($sTitle) {
+		$mediaTitle = F::build('Title', array($sTitle, NS_FILE), 'newFromText'); /* @var $mediaTitle Title */
+		$mediaFile = wfFindFile($mediaTitle);
+
+		if( $mediaFile ) {
+			$mediaThumbObj = $mediaFile->transform( array('width'=>96, 'height'=>72 ) );
+			return $mediaThumbObj->getUrl();
 		}
 		return '';
 	}
