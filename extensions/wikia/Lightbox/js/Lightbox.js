@@ -704,17 +704,20 @@ var Lightbox = {
 			type:		'GET',
 			format: 'html',
 			callback: function(html) {
-				Lightbox.openModal.find(".modalContent").html(html);
+				var modalContent = Lightbox.openModal.find(".modalContent");
+				modalContent.html(html);
+				
+				// Fix H1 styling
+				modalContent.find('h1:first').insertBefore(modalContent);
+				
 				$('#close-lightbox').click(function() {
-					$('#' + LightboxLoader.modal.initial.id).closeModal();
+					$('#' + LightboxLoader.defaults.id).closeModal();
 				});
 			}
 		});
 		
-		/*
-		// Fix H1 styling
-		modalContent.find('h1:first').insertBefore(modalContent);
-		*/
+		
+		
 	},
 	getMediaThumbs: {
 		articleMedia: function() {
