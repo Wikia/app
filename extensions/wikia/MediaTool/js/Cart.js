@@ -64,20 +64,24 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 	},
 
 	createItem: function( itemData, itemTemplate, itemOrigin ) {
-		var item = new MediaTool.Item((itemOrigin+'-'+itemData.hash), itemData.title, itemData.thumbUrl, false, itemOrigin);
-		item.origin = itemOrigin;
+		var itemId = itemOrigin+'-'+itemData.hash;
 
-		var $item = $($.mustache(itemTemplate, item));
+		if(!this.exists(itemId)) {
+			var item = new MediaTool.Item(itemId, itemData.title, itemData.thumbUrl, false, itemOrigin);
+			item.origin = itemOrigin;
 
-		$item.draggable({
-			cancel: "a.ui-icon",
-			revert: "invalid",
-			containment: "document",
-			helper: "clone",
-			cursor: "move"
-		});
+			var $item = $($.mustache(itemTemplate, item));
 
-		this.appendItem($item, item);
+			$item.draggable({
+				cancel: "a.ui-icon",
+				revert: "invalid",
+				containment: "document",
+				helper: "clone",
+				cursor: "move"
+			});
+
+			this.appendItem($item, item);
+		}
 	},
 
 	appendItem: function( $item, itemObject ) {
