@@ -54,6 +54,7 @@ var MediaTool = MediaTool || (function (smallThumbnailSize, largeThumbnailSize) 
             this.bind('Cart::itemsChanged', onCartContentChange);
 			this.bind('Cart::thumbnailStyleChanged', onThumbnailStyleChange);
 			this.bind('Cart::thumbnailSizeChanged', onThumbnailSizeChange);
+			this.bind('Cart::mediaLocationChanged', onMediaLocationChange);
 
             this.bind('showModal', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);});
             this.bind('editDone', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);});
@@ -122,6 +123,11 @@ var MediaTool = MediaTool || (function (smallThumbnailSize, largeThumbnailSize) 
 			$('.tabs li[data-tab=edit-media]').removeClass('disabled');
 			$('.MediaTool-buttons button[name=continue]').removeAttr('disabled');
 		}
+	}
+
+	function onMediaLocationChange() {
+		$('.media-tool-media-location img').removeClass('selected');
+		$('.media-tool-media-location img[data-media-location="' + cart.getMediaLocation() + '"]').addClass('selected');
 	}
 
 	function onThumbnailStyleChange() {
@@ -263,6 +269,9 @@ var MediaTool = MediaTool || (function (smallThumbnailSize, largeThumbnailSize) 
 		});
 		$(".media-tool-thumbnail-style img", dialogWrapper).on("click", function (e) {
 			cart.setThumbnailStyle($(e.target).attr("data-thumb-style"));
+		});
+		$(".media-tool-media-location img", dialogWrapper).on("click", function (e) {
+			cart.setMediaLocation($(e.target).attr("data-media-location"));
 		});
 
 		initThumbnailSizeActions.call(self);

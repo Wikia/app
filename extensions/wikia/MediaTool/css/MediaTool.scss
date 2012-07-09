@@ -75,7 +75,6 @@
 			&.selected {
 				padding: 1px;
 				border: 2px solid $color-buttons;
-				/*margin-right: 15px;*/
 			}
 		}
 		.thumb-style-desc {
@@ -101,7 +100,19 @@
 		@include clearfix;
 	}
 
-    #mediaToolItemList {
+	.media-tool-media-location {
+		margin-top: 19px;
+		img {
+			padding: 3px;
+            margin-right: 18px;
+			&.selected {
+				padding: 1px;
+				border: 2px solid $color-buttons;
+			}
+		}
+	}
+
+  #mediaToolItemList {
 		&.custom-state-active {
 			background: #eee;
 		}
