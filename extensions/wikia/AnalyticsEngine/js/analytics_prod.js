@@ -3,15 +3,15 @@
  *
  * ! Please don't touch this file without consulting Cardinal Path.
  *
- * Based on GAS https://bitbucket.org/dpc/gas/
+ * Based on GAS https://github.com/CardinalPath/gas
  *
  * @preserve Copyright(c) 2012 Cardinal Path
  * @author Eduardo Cereto <ecereto@cardinalpath.com>
  *
- * @version: prod_5
+ * @version: prod_6
  */
 
-(function(window, undefined){
+(function(window, undefined) {
     /**
      * Main Tracker, uses GAS
      *
@@ -21,163 +21,145 @@
      */
     var _gas = window._gas = window._gas || [];
 
+    // XXX DEBUG MODE
+    //_gas.push(['_setDebug', true]);
+
     // Main Roll-up Account - UA-32129070-1
     _gas.push(['_setAccount', 'UA-32129070-1']); // PROD
+    //_gas.push(['_setAccount', 'UA-32129070-2']); // DEV
     _gas.push(['_setSampleRate', '10']); // 10% Sampling
 
-    if(window.wgIsGASpecialWiki) {
+    if (window.wgIsGASpecialWiki) {
         // Special Wikis account - UA-32132943-1
         _gas.push(['special._setAccount', 'UA-32132943-1']); // PROD
+        //_gas.push(['special._setAccount', 'UA-32132943-2']); // DEV
         _gas.push(['special._setSampleRate', '100']); // No Sample
     }
 
-    _gas.push(['_setDomainName', window.wgCookieDomain]);
+    // All domains that host content for wikia.
+    _gas.push(['_setDomainName', 'wikia.com']);
+    _gas.push(['_setDomainName', 'ffxiclopedia.org']);
+    _gas.push(['_setDomainName', 'jedipedia.de']);
+    _gas.push(['_setDomainName', 'marveldatabase.com']);
+    _gas.push(['_setDomainName', 'memory-alpha.org']);
+    _gas.push(['_setDomainName', 'uncyclopedia.org']);
+    _gas.push(['_setDomainName', 'websitewiki.de']);
+    _gas.push(['_setDomainName', 'wowwiki.com']);
+    _gas.push(['_setDomainName', 'yoyowiki.org']);
+
+
+    // Use allow linker to make cookies compatible in case we use the same
+    //_gaq.push(['ads._setAllowLinker', 'true']);
+    // Trigger cross-domain tracking = DISABLED FOR NOW =
+    //_gas.push(['_setAllowLinker', 'true']);
+    //_gas.push(['_gasMultiDomain', 'click']);
 
     /**** High-Priority CVs ****/
     // Or wgCityId
     _gas.push(['_setCustomVar', 1, 'DBname', window.wgDBname, 3]);
-    _gas.push(['_setCustomVar', 2, 'ContentLanguage', 
+    _gas.push(['_setCustomVar', 2, 'ContentLanguage',
         window.wgContentLanguage, 3]);
     // Or cityShort, cscoreCat, wgCatId
     _gas.push(['_setCustomVar', 3, 'Hub', window.cscoreCat, 3]);
     _gas.push(['_setCustomVar', 4, 'Skin', window.skin, 3]);
-    _gas.push(['_setCustomVar', 5, 'LoginStatus', 
+    _gas.push(['_setCustomVar', 5, 'LoginStatus',
         !!window.wgUserName ? 'user' : 'anon', 3]);
 
-    // To be used for MS#2
-    //_gas.push(['_setCustomVar', 2, 'wgSitename', window.wgSitename, 3]);
-    /*
-    _gas.push(['_setCustomVar', 11, 'UserLanguage', 
-        window.wgUserLanguage, 3]);
-    */
-
     /**** Medium-Priority CVs ****/
-    _gas.push(['_setCustomVar', 8, 'PageType', 
+    _gas.push(['_setCustomVar', 8, 'PageType',
         window.adLogicPageType, 3]);
 
     _gas.push(['_setCustomVar', 9, 'CityId', window.wgCityId, 3]);
 
-    // Tracks the first DB Name and first landing page as User level Custom Var
-    // Uses slots 6 and 7
-    // It's important that nothing else goes into these slots
-    _gas.push(function(){
-        var i,
-            _gas = window._gas,
-            firstLandingDB_slot = 6,
-            firstLandingPage_slot = 7,
-            trackers = _gat._getTrackers(),
-            prevDB, prevPage
-            firstLandingPage = document.location.hostname + document.location.pathname + document.location.search,
-            firstLandingDB = window.wgDBname;
-
-        for (i=0 ; i < trackers.length ; i++){
-            prevPage = trackers[i]._getVisitorCustomVar(firstLandingPage_slot);
-            prevDB = trackers[i]._getVisitorCustomVar(firstLandingDB_slot);
-            if(prevDB || prevPage){
-                return;
-            }
-        }
-        _gas.push(['_setCustomVar', firstLandingDB_slot, 'firstDBName', 
-            firstLandingDB, 1]);
-        _gas.push(['_setCustomVar', firstLandingPage_slot, 'firstPage', 
-            firstLandingPage, 1]);
-    });
-
-    // Some extra logic to get the WikiHistory right
-    // Keeps a list of all visited wikis.
-    // The list is ordered so that the first ones are the latest ones visited
-    // If the CV get's longer than 164 It may discard ols ones.
-    // It's important that nothing else goes into this slot. Uses slot #10.
-    _gas.push(function(){
-        var _gas = window._gas,
-            history_key = 'History',
-            history_slot = 10,
-            trackers = _gat._getTrackers(),
-            history = '',
-            current = window.wgDBname,
-            i;
-
-        if(!current){
-            // No current found, give up
-            return;
-        }
-
-        // Look for a previous history
-        for (i=0 ; i < trackers.length ; i++){
-            history = trackers[i]._getVisitorCustomVar(history_slot);
-            if(history) break;
-        }
-        // If a previous history is found
-        if(!!history){
-            history = history.split(':');
-            // Look if current site already in there and remove it
-            for (i=0 ; i < history.length ; i++){
-                if(history[i] === current) {
-                    history.pop(i);
-                    break;
-                }
-            }
-            // Current site will be the first in the list
-            history.unshift(current);
-            history = history.join(':');
-            // Remove duplicate colons just to be safe
-            history.replace(/::/g, ':');
-        }else{
-            // If no previous history is found just set the current one
-            history = current;
-        }
-        while(history_key.length + history.length > 164){
-            history = history.split(':');
-            history.pop();
-            history = history.join(':');
-        }
-        _gas.push(['_setCustomVar', history_slot, history_key, history, 1]);
-    });
+    _gas.push(['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3]);
 
     // Unleash
     _gas.push(['_trackPageview']);
+
 
     /**
      * Advertisement Tracker, doesn't use GAS.
      *
      * To be used for all ad impression and click events
      */
-
     var _gaq = window._gaq = window._gaq || [];
     // Advertisment Account UA-32129071-1
-    _gaq.push(['ads._setAccount', 'UA-32129071-1']); // PROD 
+    _gaq.push(['ads._setAccount', 'UA-32129071-1']); // PROD
+    //_gaq.push(['ads._setAccount', 'UA-32129071-2']); // DEV
 
     // Try to use the full domain to get a different cookie domain
     _gaq.push(['ads._setDomainName', document.location.hostname]);
-    // Use allow linker to make cookies compatible in case we use the same
-    _gaq.push(['ads._setAllowLinker', 'true']);
 
-    // No pageview for this account
+    /* Ads Account customVars */
+    _gaq.push(['ads._setCustomVar', 1, 'DBname', window.wgDBname, 3]);
+    _gaq.push(['ads._setCustomVar', 2, 'ContentLanguage',
+        window.wgContentLanguage, 3]);
+    // Or cityShort, cscoreCat, wgCatId
+    _gaq.push(['ads._setCustomVar', 3, 'Hub', window.cscoreCat, 3]);
+    _gaq.push(['ads._setCustomVar', 4, 'Skin', window.skin, 3]);
+    _gaq.push(['ads._setCustomVar', 5, 'LoginStatus',
+        !!window.wgUserName ? 'user' : 'anon', 3]);
+
+    /**** Medium-Priority CVs ****/
+    _gaq.push(['ads._setCustomVar', 8, 'PageType',
+        window.adLogicPageType, 3]);
+
+    _gaq.push(['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3]);
+
+    _gaq.push(['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3]);
+
 
     /**
      * Function used by the backend to trigger advertisement events
      *
-     * Will sample the advertisement hits and send them to the appropriate 
+     * Will sample the advertisement hits and send them to the appropriate
      * account.
      *
-     * Has the same parameters as _trackEvent. 
+     * Has the same parameters as _trackEvent.
      * eg:
      *    gaTrackAdEvent('Impression', 'Top Banner', 'AdId');
      *
-     * @param {string} category Event Category
-     * @param {string} action Event Action
-     * @param {string=""} opt_value Event Label 
-     * @param {number=0} opt_value Event Value. Have to be an integer. 
-     * @param {boolean=false} opt_noninteractive Event noInteractive 
+     * @param {string} category Event Category.
+     * @param {string} action Event Action.
+     * @param {string=""} opt_value Event Label.
+     * @param {number=0} opt_value Event Value. Have to be an integer.
+     * @param {boolean=false} opt_noninteractive Event noInteractive.
      */
     window.gaTrackAdEvent = function(category, action, opt_label, opt_value, 
-    opt_noninteractive){
+                                     opt_noninteractive) {
         var ad_hit_sample = 1; //1%
-        if(Math.random()*100 <= ad_hit_sample){
+        if (Math.random() * 100 <= ad_hit_sample) {
             var args = Array.prototype.slice.call(arguments);
             args.unshift('ads._trackEvent');
-            window._gaq.push(args);
+            try {
+                window._gaq.push(args);
+            }catch (e) {}
         }
+    };
+
+    /**
+     * Function used by the backend to trigger non-advertisement events
+     *
+     * Will fire the event to Main account and Special wikis accounts
+     * respectig standard GA sampling for the main.
+     *
+     * Has the same parameters as _trackEvent.
+     * eg:
+     *    gaTrackEvent('Impression', 'Top Banner', 'AdId');
+     *
+     * @param {string} category Event Category.
+     * @param {string} action Event Action.
+     * @param {string=""} opt_value Event Label.
+     * @param {number=0} opt_value Event Value. Have to be an integer.
+     * @param {boolean=false} opt_noninteractive Event noInteractive.
+     */
+    window.gaTrackEvent = function(category, action, opt_label, opt_value, 
+                                   opt_noninteractive) {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift('_trackEvent');
+        try {
+            window._gas.push(args);
+        } catch (e) {}
     };
 
 })(window);
