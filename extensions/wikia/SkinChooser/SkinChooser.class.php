@@ -178,7 +178,7 @@ class SkinChooser {
 	 */
 	public static function onGetSkin(RequestContext $context, &$skin) {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme,
-			$wgSkinTheme, $wgOut, $wgForceSkin, $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgDevelEnvironment, $wgEnableWikiaMobile, $wgEnableAnswers;
+			$wgSkinTheme, $wgOut, $wgForceSkin, $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgDevelEnvironment, $wgEnableWikiaPhone, $wgEnableAnswers;
 
 		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 
@@ -188,15 +188,8 @@ class SkinChooser {
 		$title = $context->getTitle();
 		$user = $context->getUser();
 
-		//allow showing wikiaphone on wikis where WikiaMobile is enabled for functionality comparison and testing
-		//will be removed on Dec 7th 2011
-		$wikiaMobileEnabled = !empty( $wgEnableWikiaMobile );
-
-		if( $request->getVal('useskin') == 'wikiaphone' && $wikiaMobileEnabled ) {
-			$skin = Skin::newFromKey(  $request->getVal('useskin') );
-			wfProfileOut(__METHOD__);
-			return false;
-		}
+		//Allow showing wikiaphone on wikis where WikiaMobile
+		$wikiaPhoneEnabled = !empty( $wgEnableWikiaPhone );
 
 		/**
 		 * check headers sent by varnish, if X-Skin is send force skin
@@ -204,26 +197,11 @@ class SkinChooser {
 		 */
 		if( function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
-			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiaphone", "wikiaapp" ) ) ) {
+			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiamobile", "wikiaapp" ) ) ) {
 				//FB#16417 - for the first release bind wikiaphone to wikiamobile via a WF variable
 				//TODO: remove after Ad performance test ends and WikiaMobile will be the default (FB#16582)
-				if ( $headers[ "X-Skin" ] == 'wikiaphone' ) {
-					//give mobile skin users with no js support a chance to use different skins
-					//FB#19758
-					$requestedSkin = $request->getVal( 'useskin' );
-
-					if (
-						!empty( $requestedSkin ) &&
-						/* avoid causing an error if WikiaMobile is disabled, FB#20041 */
-						!(
-							!$wikiaMobileEnabled &&
-							$requestedSkin == 'wikiamobile'
-						)
-					) {
-						$headers[ "X-Skin" ] = $requestedSkin;
-					} elseif ( $wikiaMobileEnabled ) {
-						$headers[ "X-Skin" ] = 'wikiamobile';
-					}
+				if ( $headers[ "X-Skin" ] == 'wikiamobile' && $wikiaPhoneEnabled ) {
+					$headers[ "X-Skin" ] = 'wikiaphone';
 				}
 
 				$skin = Skin::newFromKey( $headers[ "X-Skin" ] );
@@ -303,22 +281,6 @@ class SkinChooser {
 		$userSkin = ( array_key_exists(0, $elems) ) ? ( (empty($wgEnableAnswers) && $elems[0] == 'answers') ? 'oasis' : $elems[0]) : null;
 		$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : $userTheme;
 		$userTheme = $request->getVal('usetheme', $userTheme);
-
-		//Fix RT#133364 and makes crazy mobile users get the correct one
-		if( $userSkin == 'smartphone' ){
-			$userSkin = 'wikiaphone';
-		}
-
-		//WikiaMobile is a devbox-only for now
-		if( $userSkin == 'wikiamobile' && !$wgEnableWikiaMobile ){
-			$userSkin = 'wikiaphone';
-		}
-
-		//FB#16417 - for the first release bind wikiaphone to wikiamobile via a WF variable
-		//TODO: remove after Ad performance test ends and WikiaMobile will be the default (FB#16582)
-		if ( !empty( $wgEnableWikiaMobile ) && $userSkin == 'wikiaphone' ) {
-			$userSkin = 'wikiamobile';
-		}
 
 		$skin = &Skin::newFromKey($userSkin);
 
