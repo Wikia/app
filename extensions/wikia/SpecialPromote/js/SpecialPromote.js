@@ -38,7 +38,7 @@ SpecialPromote.prototype = {
 
 		this.current.headline = this.original.headline = this.headlineNode.val();
 		this.current.description = this.original.description = this.descriptionNode.val();
-		this.current.mainImageName = this.original.mainImageName = $('.large-photo img').data('filename');
+		this.current.mainImageName = this.original.mainImageName = $('.large-photo img#curMainImageName').data('filename');
 
 		$(".small-photos img").each($.proxy(function (i, img) {
 			var fileName = $(img).data('filename');
@@ -261,7 +261,7 @@ SpecialPromote.prototype = {
 		this.current.mainImageName = file.fileName;
 
 		var mainImgDiv = $('.large-photo');
-		var imageNode = mainImgDiv.find('img').get(0);
+		var imageNode = mainImgDiv.find('img#curMainImageName').get(0);
 		if (typeof(imageNode) !== 'undefined') {
 			$(imageNode)
 				.attr('src', file.fileUrl)
