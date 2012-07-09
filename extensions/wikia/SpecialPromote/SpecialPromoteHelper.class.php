@@ -88,10 +88,6 @@ class SpecialPromoteHelper extends WikiaObject {
 		}
 	}
 
-	public function getImage() {
-
-	}
-
 	public function uploadImage($upload) {
 		$uploadStatus = array("status" => "error");
 
