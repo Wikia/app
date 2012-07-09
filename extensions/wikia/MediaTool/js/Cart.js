@@ -1,6 +1,5 @@
-MediaTool.Cart = $.createClass(Observable,{
+MediaTool.Cart = $.createClass(MediaTool.Collection,{
 
-	items: [],
 	$container: null,
 	containerId: null,
 	collectionListId: null,
@@ -16,13 +15,19 @@ MediaTool.Cart = $.createClass(Observable,{
 		MediaTool.bind('showModal', this.onShowModal, this);
 		MediaTool.bind('ItemsCollection::itemAdded', this.onCollectionItemAdded, this);
 		MediaTool.bind('ItemsCollection::itemFadedOut', this.onCollectionItemFadedOut, this);
-		MediaTool.bind('Cart::itemsChanged', this.onItemsChanged, this);
+
+		this.bind('itemsChanged', this.onItemsChanged, this);
+	},
+
+	onItemsChanged: function() {
+		MediaTool.fire('Cart::itemsChanged');
+		this.renderHeader();
 	},
 
 	onShowModal: function() {
 		var self = this;
 		this.$container = $('#'+this.containerId);
-		this.clear();       // @todo: or this.items = [];, not sure right now
+		this.clear();
 		//this.thumbnailStyle = '';
 		//this.thumbnailSize = null;
 		this.setThumbnailStyle('border');
@@ -38,46 +43,24 @@ MediaTool.Cart = $.createClass(Observable,{
 		this.renderHeader();
 	},
 
-	onItemsChanged: function() {
-		this.renderHeader();
-	},
-
 	renderHeader: function() {
 		var self = this;
-		$().log('Rendering header, items:'+self.getItemsNum());
 		this.$container.find('h4').html($.msg('mediatool-selected-media-count', self.getItemsNum()));
 	},
 
 	onCollectionItemAdded: function($item) {
 		// Item added to list, removing it from cart
+		var self = this;
+		var itemId = $item.attr('data-id');
 		$item.fadeOut(function() {
-			MediaTool.fire('Cart::itemFadedOut', $item);
+			MediaTool.fire('Cart::itemFadedOut', $item, self.getItem(itemId));
+			self.removeItem(itemId);
 		});
-		this.removeItem($item.attr('data-id'));
 	},
 
 	onCollectionItemFadedOut: function($item, itemObject) {
 		// Item faded out from list, adding it to cart
 		this.appendItem($item, itemObject);
-	},
-
-	addItem: function( item ) {
-		this.items.push(item);
-		MediaTool.fire('Cart::itemsChanged');
-	},
-
-	removeItem: function( itemId ) {
-		var self = this;
-		var items = [];
-
-		$.each(self.items, function(i, item) {
-			if(item.id != itemId) {
-				items.push(item);
-			}
-		});
-		this.items = items;
-
-		MediaTool.fire('Cart::itemsChanged');
 	},
 
 	createItem: function( itemData, itemTemplate, itemOrigin ) {
@@ -105,19 +88,6 @@ MediaTool.Cart = $.createClass(Observable,{
 		if(typeof itemObject == 'object') {
 			this.addItem(itemObject);
 		}
-	},
-
-	getItemsNum: function() {
-		return this.items.length;
-	},
-
-	isEmpty: function() {
-		return ( this.getItemsNum() == 0 );
-	},
-
-	clear: function() {
-		this.items = [];
-		MediaTool.fire('Cart::itemsChanged');
 	},
 
 	getThumbnailStyle: function() {

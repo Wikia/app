@@ -1,6 +1,5 @@
-MediaTool.ItemsCollection = $.createClass(Observable,{
+MediaTool.ItemsCollection = $.createClass(MediaTool.Collection,{
 
-	items: [],
 	containerId: null,
 	containerListId: null,
 	$container: null,
@@ -51,22 +50,23 @@ MediaTool.ItemsCollection = $.createClass(Observable,{
 	onCartItemAdded: function($item) {
 		// Item added to cart, removing it from list
 		var self = this;
+		var itemId = $item.attr('data-id');
 		$item.fadeOut(function() {
-			MediaTool.fire('ItemsCollection::itemFadedOut', $item, self.getItem($item.attr('data-id')));
+			MediaTool.fire('ItemsCollection::itemFadedOut', $item, self.getItem(itemId));
+			self.removeItem(itemId);
 		});
-		this.removeItem();
 	},
 
-	onCartItemFadedOut: function($item) {
-		this.appendItem($item);
+	onCartItemFadedOut: function($item, itemObject) {
+		this.appendItem($item, itemObject);
 	},
 
-	removeItem: function(itemId) {
-		// @todo implement
-	},
-
-	appendItem: function( $item ) {
+	appendItem: function( $item, itemObject ) {
 		$item.appendTo( this.$containerList ).fadeIn();
+
+		if(typeof itemObject == 'object') {
+			this.addItem(itemObject);
+		}
 	},
 
 	refreshItems: function() {
@@ -90,16 +90,6 @@ MediaTool.ItemsCollection = $.createClass(Observable,{
 		this.$container.removeClass('loading');
 
 		MediaTool.fire('ItemsCollection::refreshTemplate');
-	},
-
-	getItem: function(id) {
-		var result = null;
-		$.each(this.items, function(i, item) {
-			if(item.id == id) {
-				result = item;
-			}
-		});
-		return result;
 	}
 
 });
