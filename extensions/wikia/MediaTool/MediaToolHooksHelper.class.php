@@ -22,8 +22,8 @@ class MediaToolHooksHelper extends WikiaModel {
 	}
 
 	function onMakeGlobalVariablesScript($vars) {
-		$vars['wgMediaToolSmallThumbnail'] = MediaToolController::THUMBNAIL_SIZE_SMALL;
-		$vars['wgMediaToolLargeThumbnail'] = MediaToolController::THUMBNAIL_SIZE_LARGE;
+		$vars['wgMediaToolSmallMedia'] = MediaToolController::MEDIA_SIZE_SMALL;
+		$vars['wgMediaToolLargeMedia'] = MediaToolController::MEDIA_SIZE_LARGE;
 		return true;
 	}
 
