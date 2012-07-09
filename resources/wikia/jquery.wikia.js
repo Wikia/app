@@ -1,4 +1,4 @@
-(function(window, $, undefined) {
+(function(window, $) {
 
 $.getSassCommonURL = function(scssFilePath, params) {
 	return $.getSassURL(wgCdnRootUrl, scssFilePath, params);
