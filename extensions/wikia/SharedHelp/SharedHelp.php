@@ -436,9 +436,9 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 	$blogNamespaces = "";
 	if ( defined('NS_BLOG_ARTICLE') ) {
 		$blogNamespaces = implode(",", array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK));
+		$sql['conds'][] = " pl_namespace NOT IN ( {$blogNamespaces} ) ";
 	}
 
-	$sql['conds'][] = " pl_namespace NOT IN ( {$blogNamespaces} ) ";
 	$sql['conds'][] = " ( pl_namespace != 12 {$notInHelpPages} ) ";
 
 	wfProfileOut( __METHOD__ );
