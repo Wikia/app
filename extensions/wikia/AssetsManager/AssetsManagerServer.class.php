@@ -34,7 +34,7 @@ class AssetsManagerServer {
 
 		} catch (Exception $e) {
 			// HTTP 501 is not "grabbed" by the Varnish
-			header('HTTP/1.1 501 Not Implemented');
+			header('HTTP/1.1 404 Not Found');
 			echo $e->getMessage();
 			return;
 		}
