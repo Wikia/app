@@ -61,15 +61,15 @@
 			<div data-tab-body="edit-media-options" class="tabBody selected">
 
 				<div class="media-tool-thumbnail-style">
-					<h4>Thumbnail Style</h4>
+					<h4><?= wfMsg('mediatool-thumbnail-style'); ?></h4>
 					<div><img data-thumb-style="border" src="<?= F::app()->wg->ExtensionsPath.'/wikia/MediaTool/images/thumbnail_with_border.png' ?>" />
 						 <img data-thumb-style="no-border" src="<?= F::app()->wg->ExtensionsPath.'/wikia/MediaTool/images/thumbnail_without_border.png' ?>" />
 					</div>
-					<span class="thumb-style-desc">Border and Caption</span>
+					<span class="thumb-style-desc" />
 				</div>
 
 				<div class="media-tool-thumbnail-size">
-					<h4>Thumbnail Size</h4>
+					<h4><?= wfMsg('mediatool-thumbnail-size'); ?></h4>
 					<input type="radio" name="thumbsize" id="mediaToolLargeThumbnail"/>
 					<label for="mediaToolLargeThumbnail"><?= wfMsg('mediatool-large-thumbnail', MediaToolController::THUMBNAIL_SIZE_LARGE) ?></label><br/>
 					<input type="radio" name="thumbsize" id="mediaToolSmallThumbnail"/>
@@ -83,7 +83,7 @@
 				</div>
 
 				<div class="media-tool-media-location">
-					<h4>Media Position</h4>
+					<h4><?= wfMsg('mediatool-media-position'); ?></h4>
 					<div><img data-media-location="left" src="<?= F::app()->wg->ExtensionsPath.'/wikia/MediaTool/images/media_location_left.png' ?>" />
 						<img data-media-location="center" src="<?= F::app()->wg->ExtensionsPath.'/wikia/MediaTool/images/media_location_center.png' ?>" />
 						<img data-media-location="right" src="<?= F::app()->wg->ExtensionsPath.'/wikia/MediaTool/images/media_location_right.png' ?>" />
