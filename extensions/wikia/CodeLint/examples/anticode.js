@@ -147,4 +147,4 @@ $.secureEvalJSON('{foo: 1234}');
 $('.modalContent').load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=AnonLoginSuccess&outputType=html');
 
 // test ignore statement
-var foo = JSON.stringify({bar: 42}); /* JSlint ignore */
+$.toJSON({foo: true}); /* JSlint ignore */
