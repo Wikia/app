@@ -773,8 +773,8 @@ var innerShiv = function(){
 }();
 
 // These functions are deprecated, but we will keep aliases around for old code and user scripts
-$.toJSON = JSON.stringify;
-$.evalJSON = $.secureEvalJSON = JSON.parse;
+$.toJSON = JSON.stringify; /* JSlint ignore */
+$.evalJSON = $.secureEvalJSON = JSON.parse; /* JSlint ignore */
 
 // Exports
 window.innerShiv = innerShiv;

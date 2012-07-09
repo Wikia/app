@@ -7,6 +7,8 @@
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  */
 
+var IGNORE_STATEMENT = '/* JSlint ignore */';
+
 // require generic functions
 var print = require("sys").print,
 	parseArgs = require('./utils').parseArgs,
@@ -218,19 +220,27 @@ var regExpRules = [
 
 // scan each line
 var lines = fileSrc.split("\n"),
+	line,
 	matches;
 
 for(var n=0, len = lines.length; n < len; n++) {
+	line = lines[n];
+
+	// check for IGNORE_STATEMENT
+	if (line.indexOf(IGNORE_STATEMENT) > -1) {
+		continue;
+	}
+
 	regExpRules.forEach(function(rule) {
-		matches = lines[n].match(rule.regexp);
+		matches = line.match(rule.regexp);
 
 		if (matches) {
 			// omit lines that match 'dontMatch' rule field
-			if (rule.dontMatch && rule.dontMatch.test(lines[n])) {
+			if (rule.dontMatch && rule.dontMatch.test(line)) {
 				return;
 			}
 
-			var reason = (typeof rule.reason === 'function') ? rule.reason.call(this, matches, lines[n], lines[n+1]) : rule.reason;
+			var reason = (typeof rule.reason === 'function') ? rule.reason.call(this, matches, line, lines[n+1]) : rule.reason;
 			if (reason === false) {
 				return;
 			}
@@ -239,9 +249,9 @@ for(var n=0, len = lines.length; n < len; n++) {
 			result.errors.push({
 				id: '(error)',
 				raw: rule.name,
-				evidence: lines[n],
+				evidence: line,
 				line: n + 1,
-				character: lines[n].indexOf(matches[1]) + 1,
+				character: line.indexOf(matches[1]) + 1,
 				reason: reason
 			});
 		}
