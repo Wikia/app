@@ -556,10 +556,10 @@ AdConfig.DART.getDcoptKV = function(slotname){
 };
 
 AdConfig.DART.getCustomVarAB = function() {
-	if (typeof top.getCustomVarAB == 'function') {
-		var ab = top.getCustomVarAB();
-		if (ab != 'none') {
-			return 'ab=' + ab.replace(' ', '') + ';';
+	if (typeof top.getTreatmentGroup == 'function') {
+		var ab = top.getTreatmentGroup(1);
+		if (ab == 1 || ab == 2 || ab == 3) {
+			return 'ab=e1g' + ab + ';';
 		}
 	}
 	
