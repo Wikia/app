@@ -81,9 +81,13 @@
 						<input type="text" id="mediaToolThumbnailSizeInput" name="mediaToolThumbnailSizeInput" value="" onchange="" onkeyup="" /> px
 					<span>
 				</div>
-				<div class="media-tool-thumbnail-position">
+
+				<div class="media-tool-media-location">
 					<h4>Media Position</h4>
-					<div>positions.....</div>
+					<div><img data-media-location="left" src="<?= F::app()->wg->ExtensionsPath.'/wikia/MediaTool/images/media_location_left.png' ?>" />
+						<img data-media-location="center" src="<?= F::app()->wg->ExtensionsPath.'/wikia/MediaTool/images/media_location_center.png' ?>" />
+						<img data-media-location="right" src="<?= F::app()->wg->ExtensionsPath.'/wikia/MediaTool/images/media_location_right.png' ?>" />
+					</div>
 				</div>
 			</div>
 
