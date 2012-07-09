@@ -147,7 +147,7 @@ class WikiaUpdater {
 			if ( $column && $columns[ $row->name ]['old'] == $row->type ) {
 				$patch[] = sprintf( "MODIFY %s %s", $row->name, $columns[ $row->name ]['new'] );
 			} else {
-				$this->output( "...{$row->name} is up-to-date.\n" );
+				$updater->output( "...{$row->name} is up-to-date.\n" );
 			}
 		}
 			
