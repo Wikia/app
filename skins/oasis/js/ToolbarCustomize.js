@@ -263,14 +263,13 @@
 				$.getResources([
 					$.getSassCommonURL("skins/oasis/css/core/ToolbarCustomize.scss")
 				]),
-				$.ajax({
-					type: "POST",
-					url: wgScript + "?action=ajax&rs=moduleProxy&moduleName=Footer&actionName=ToolbarConfiguration&outputType=data",
-					success: $.proxy(this.onDataLoaded,this),
-					dataType: 'json'
+				$.nirvana.sendRequest({
+					controller: 'Footer',
+					method: 'ToolbarConfiguration',
+					callback: $.proxy(this.onDataLoaded,this)
 				})
 			).
-			then($.proxy(this.checkLoad,this)).
+			done($.proxy(this.checkLoad,this)).
 			fail($.proxy(this.onLoadFailure,this));
 		},
 
@@ -405,12 +404,15 @@
 
 		save: function() {
 			var toolbar = this.tree.save();
-			$.post(window.wgServer + window.wgScript + '?action=ajax&rs=moduleProxy&moduleName=Footer&actionName=ToolbarSave&outputType=data',
-				{
-					moduleParams: JSON.stringify({toolbar: toolbar}),
-					title: window.wgPageName
+			$.nirvana.sendRequest({
+				controller: 'Footer',
+				method: 'ToolbarSave',
+				data: {
+					title: window.wgPageName,
+					toolbar: toolbar
 				},
-				$.proxy(this.afterSave,this));
+				callback: $.proxy(this.afterSave,this)
+			});
 		},
 
 		afterSave: function(data,status,req) {
