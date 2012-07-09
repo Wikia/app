@@ -49,7 +49,8 @@ $messages['en'] = array(
 
 	'promote-manual-file-size-error' => 'Main image has a minimum size of 320x320px.',
 	'promote-manual-upload-error' => 'This file cannot be uploaded manually. Please use Admin Upload Tool.',
-	'promote-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page."
-
+	'promote-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
+	'promote-image-rejected' => 'Rejected',
+	'promote-image-accepted' => 'Accepted',
 
 );
