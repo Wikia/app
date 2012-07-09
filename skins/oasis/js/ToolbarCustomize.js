@@ -407,7 +407,7 @@
 			var toolbar = this.tree.save();
 			$.post(window.wgServer + window.wgScript + '?action=ajax&rs=moduleProxy&moduleName=Footer&actionName=ToolbarSave&outputType=data',
 				{
-					moduleParams: $.toJSON({toolbar: toolbar}),
+					moduleParams: JSON.stringify({toolbar: toolbar}),
 					title: window.wgPageName
 				},
 				$.proxy(this.afterSave,this));
