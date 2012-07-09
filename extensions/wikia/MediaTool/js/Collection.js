@@ -6,17 +6,19 @@ MediaTool.Collection = $.createClass(Observable,{
 		MediaTool.Collection.superclass.constructor.call(this);
 	},
 
-	addItem: function( item ) {
-		this.items.push(item);
-		this.fire('itemsChanged');
+	addItem: function(item) {
+		if(!this.exists(item.id)) {
+			this.items.push(item);
+			this.fire('itemsChanged');
+		}
 	},
 
-	removeItem: function( itemId ) {
+	removeItem: function(id) {
 		var self = this;
 		var items = [];
 
 		$.each(self.items, function(i, item) {
-			if(item.id != itemId) {
+			if(item.id != id) {
 				items.push(item);
 			}
 		});
@@ -46,6 +48,10 @@ MediaTool.Collection = $.createClass(Observable,{
 			}
 		});
 		return result;
+	},
+
+	exists: function(id) {
+		return (this.getItem(id) != null) ? true : false;
 	}
 
 });
