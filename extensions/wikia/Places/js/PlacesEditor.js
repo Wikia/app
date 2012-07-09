@@ -21,6 +21,10 @@ var PlacesEditor = {
 			controller:'PlacesEditor',
 			method: 'getEditorModal',
 			format: 'html',
+			data: {
+				uselang: wgUserLanguage
+			},
+			type: 'get',
 			callback: $.proxy(function(html) {
 				this.onModalShow(model, html, callback);
 			}, this)
