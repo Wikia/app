@@ -20,11 +20,14 @@ $messages['en'] = array(
 	'mediatool-selected-media-count' => 'Your selected media ($1 Items)',
 	'mediatool-addviaurl-label' => 'Add via direct URL',
 	'mediatool-thumbnail-style-border' => 'Border and Caption',
-	'mediatool-thumbnail-style-no-border' => 'No Border or Caption'
+	'mediatool-thumbnail-style-no-border' => 'No Border or Caption',
+	'mediatool-large-thumbnail' => 'Large ($1px)',
+	'mediatool-small-thumbnail' => 'Small ($1px)',
+	'mediatool-custom-thumbnail' => 'Custom'
 );
 
 /** Message documentation (Message documentation)
- * @author Siebrand
+ * @author Piotr Bablok
  */
 $messages['qqq'] = array(
 	/* new stuff for media tool */
@@ -37,11 +40,11 @@ $messages['qqq'] = array(
 	'mediatool-button-cancel' => 'Button that closes whole MediaTool dialog',
 	'mediatool-button-continue' => 'Button that advences from Find media tab to Edit media tab',
 	'mediatool-button-done' => 'Button that saves changes made in the MediaTool dialog',
-	'mediatool-mediaoptions' => 'Title of group of options related to the way pictures are shown on wiki',
+	'mediatool-mediaoptions' => 'Title of group of options related to the way media are shown on wiki',
 	'mediatool-error-missing-video-url' => 'Error displayed in case user failed to provide source URL',
 	'mediatool-error-unknown-video-provider' => 'Error displayed in case provider is not supported (URL cannot be recognized as from one of the providers)',
 	'mediatool-error-invalid-video' => 'Error displayed in case video the user is trying to add is invalid',
-	'mediatool-selected-media-count' => 'Title displayed above user selected media, $1 is replaced with the media count',
-	'mediatool-thumbnail-style-border' => 'Description displayed for border with caption thumbnail style',
-	'mediatool-thumbnail-style-no-border' => 'Description displayed for no border or caption thumbnail style'
+	'mediatool-selected-media-count' => 'Title displayed above the box with user selected media on Find Media tab, $1 is replaced with the media count',
+	'mediatool-thumbnail-style-border' => 'Description for border with caption thumbnail style, displayed on Media Options tab (under the thumbnail style icons)',
+	'mediatool-thumbnail-style-no-border' => 'Description for no border or caption thumbnail style, displayed on Media Options tab (under the thumbnail style icons)'
 );

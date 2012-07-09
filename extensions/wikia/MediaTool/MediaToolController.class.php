@@ -7,6 +7,8 @@
 class MediaToolController extends WikiaController {
 	const RESPONSE_STATUS_OK = 'ok';
 	const RESPONSE_STATUS_ERROR  = 'error';
+	const THUMBNAIL_SIZE_SMALL = 250;
+	const THUMBNAIL_SIZE_LARGE = 300;
 
 	public function __construct() {
 	}

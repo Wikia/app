@@ -6,6 +6,7 @@ MediaTool.Cart = $.createClass(Observable,{
 	collectionListId: null,
 	template: null,
 	thumbnailStyle: '',
+	thumbnailSize: null,
 
 	constructor: function( containerId, collectionListId ) {
 		MediaTool.Cart.superclass.constructor.call(this);
@@ -22,6 +23,10 @@ MediaTool.Cart = $.createClass(Observable,{
 		var self = this;
 		this.$container = $('#'+this.containerId);
 		this.clear();       // @todo: or this.items = [];, not sure right now
+		this.thumbnailStyle = '';
+		this.thumbnailSize = null;
+		this.setThumbnailStyle('border');
+		this.setThumbnailSize(220);
 		// Item dropped to cart from list
 		this.$container.droppable({
 			accept: "#"+self.collectionListId+" li",
@@ -121,6 +126,14 @@ MediaTool.Cart = $.createClass(Observable,{
 		if (thumbnailStyle != this.thumbnailStyle) {
 			this.thumbnailStyle = thumbnailStyle;
 			MediaTool.fire('Cart::thumbnailStyleChanged');
+		}
+	},
+
+	setThumbnailSize: function(thumbnailSize) {
+		//@todo - add some validation
+		if (thumbnailSize != this.thumbnailSize) {
+			this.thumbnailSize = thumbnailSize;
+			MediaTool.fire('Cart::thumbnailSizeChanged');
 		}
 	}
 
