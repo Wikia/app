@@ -60,8 +60,8 @@ function loadDataAndUpdateMessage($csv, $mediaWikiMessage, $skipUpload) {
 			$wikiDesc = $element[5];
 
 			if( !$skipUpload ) {
-				$result = uploadImage($wikiMainImageUrl, $wikiImageName);
-				if( $result === true ) {
+				$result = ImagesService::uploadImageFromUrl($wikiMainImageUrl, $wikiImageName);
+				if( $result['status'] === true ) {
 					$okuploads[] = $wikiImageName;
 					echo '.';
 				} else {
@@ -152,7 +152,7 @@ function loadDataAndUpdateDatabase($csv, $skipUpload, $overwrittenLang) {
 
 			if( !$skipUpload ) {
 			//upload main image
-				$result = uploadImage($imageUrl, $imageName);
+				$result = ImagesService::uploadImageFromUrl($imageUrl, $imageName);
 				if ($result['status'] === true) {
 					$okuploads['main-images'][] = $imageName;
 					echo '.';
@@ -177,7 +177,7 @@ function loadDataAndUpdateDatabase($csv, $skipUpload, $overwrittenLang) {
 				foreach ($sliderImages as $sliderImage) {
 					if (!empty($sliderImage)) {
 						$sliderImageName = basename($sliderImage);
-						$result = uploadImage($sliderImage, $sliderImageName);
+						$result = ImagesService::uploadImageFromUrl($sliderImage, $sliderImageName);
 						if ($result['status'] === true) {
 							$okuploads['slider-images'][] = $sliderImageName;
 							$sliderUploadedImages[] = $sliderImageName;
@@ -306,49 +306,7 @@ function uploadImageForDB($imageUrl, $uploadType = WIKIA_COM_WIKIS_LIST_MAIN, $i
 			break;
 	}
 
-	return uploadImage($imageUrl, $dstImageName);
-}
-
-function uploadImage($imageUrl, $dstImageName) {
-	// disable recentchange hook
-	global $wgHooks;
-	$wgHooks['RecentChange_save'] = array();
-	$wgHooks['RecentChange_beforeSave'] = array();
-
-	/* prepare temporary file */
-	$data = array(
-		'wpUpload' => 1,
-		'wpSourceType' => 'web',
-		'wpUploadFileURL' => $imageUrl
-	);
-
-	$upload = F::build('UploadFromUrl');
-	$upload->initializeFromRequest(F::build('FauxRequest', array($data, true)));
-	$upload->fetchFile();
-	$upload->verifyUpload();
-
-	// create destination file
-	$title = Title::newFromText($dstImageName, NS_FILE);
-	$file = F::build(
-		'WikiaLocalFile',
-		array(
-			$title,
-			RepoGroup::singleton()->getLocalRepo()
-		)
-	);
-
-	/* real upload */
-	$result = $file->upload(
-		$upload->getTempPath(),
-		$dstImageName,
-		$dstImageName,
-		File::DELETE_SOURCE
-	);
-
-	return array(
-		'status' => $result->ok,
-		'errors' => $result->errors,
-	);
+	return ImagesService::uploadImageFromUrl($imageUrl, $dstImageName);
 }
 
 function addToVisualizationTable($wikiData, &$wikisAddedToTable, &$wikisUpdated, &$wikisNotAddedToTable) {

@@ -35,48 +35,11 @@ if( UploadFromUrl::isAllowed($user) !== true ) {
 	exit;
 }
 
-// disable recentchange hook
-global $wgHooks;
-$wgHooks['RecentChange_save'] = array();
-$wgHooks['RecentChange_beforeSave'] = array();
+$result = ImagesService::uploadImageFromUrl($imageUrl, $destImageName, $user);
 
-/* prepare temporary file */
-$data = array(
-	'wpUpload' => 1,
-	'wpSourceType' => 'web',
-	'wpUploadFileURL' => $imageUrl
-);
-
-$upload = F::build('UploadFromUrl');
-$upload->initializeFromRequest( F::build('FauxRequest', array($data, true)) );
-$upload->fetchFile();
-$upload->verifyUpload();
-
-// create destination file
-$title = Title::newFromText($destImageName, NS_FILE);
-
-$file = F::build(
-	'WikiaLocalFile',
-	array(
-		$title,
-		RepoGroup::singleton()->getLocalRepo()
-	)
-);
-
-/* real upload */
-$result = $file->upload(
-	$upload->getTempPath(),	//source
-	$destImageName,			//comment
-	$destImageName,			//page text
-	File::DELETE_SOURCE,	//flags
-	false,					//props
-	false,					//timestamp
-	$user					//user
-);
-
-if( $result->ok === true ) {
+if( $result['status'] === true ) {
 	echo 'INFO: Image has been uploaded.'."\n";
 } else {
 	echo 'ERROR: Something went wrong with uploading the image.'."\n";
-	print_r($result->errors);
+	print_r($result['errors']);
 }
