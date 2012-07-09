@@ -1,0 +1,59 @@
+html{
+	height: 100%;
+}
+
+body {
+	position: relative;
+	height: 100%;
+	margin: 0;
+	padding: 10px 0;
+	background: rgb(37,37,37);
+	text-align: center;
+	color: white;
+	font-size: medium;
+	font-family: helvetica, android, sans-serif;
+	word-wrap: break-word;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+a {
+	display: block;
+	margin: 0 auto;
+}
+
+#wk404{
+	position: relative;
+	background-position: center 32%;
+	background-repeat: no-repeat;
+	background-size: 50%;
+	height: 80%;
+}
+
+#wk404::after {
+	content: '';
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top:0;
+	left:0;
+	background: url('/extensions/wikia/WikiaMobile/images/404_mask.png'); /* base64 */
+	background-size: 100%;
+	background-position: center 32%;
+	background-repeat: no-repeat;
+}
+
+#wkLnk {
+	background-image: url('/extensions/wikia/WikiaMobile/images/wikia-grey.png'); /* base64 */
+	background-position: 50%;
+	background-repeat: no-repeat;;
+	background-size: contain;
+	height: 30px;
+}
+
+@media screen and (orientation:landscape) and (min-width:321px) {
+	#wk404{
+		width: 320px;
+	}
+}

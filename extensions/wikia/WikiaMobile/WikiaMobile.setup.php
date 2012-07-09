@@ -48,6 +48,7 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileFooterService.class.php",
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileAdService.class.php", 'WikiaMobileAdService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryService.class.php", 'WikiaMobileCategoryService' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileSharingService.class.php", 'WikiaMobileSharingService' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileErrorService.class.php", 'WikiaMobileErrorService' );
 
 /**
  * models
