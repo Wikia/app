@@ -70,15 +70,15 @@
 
 				<div class="media-tool-thumbnail-size">
 					<h4>Thumbnail Size</h4>
-					<input type="radio" name="thumbsize" checked="checked" id="mediaToolLargeThumbnail"/>
-					<label for="mediaToolLargeThumbnail">Large (300px)</label>
+					<input type="radio" name="thumbsize" id="mediaToolLargeThumbnail"/>
+					<label for="mediaToolLargeThumbnail"><?= wfMsg('mediatool-large-thumbnail', MediaToolController::THUMBNAIL_SIZE_LARGE) ?></label><br/>
 					<input type="radio" name="thumbsize" id="mediaToolSmallThumbnail"/>
-					<label for="mediaToolSmallThumbnail">Small (250px)</label>
+					<label for="mediaToolSmallThumbnail"><?= wfMsg('mediatool-small-thumbnail', MediaToolController::THUMBNAIL_SIZE_SMALL) ?></label><br/>
 					<input type="radio" name="thumbsize" id="mediaToolCustomThumbnail"/>
-					<label for="mediaToolCustomThumbnail">Custom</label>
+					<label for="mediaToolCustomThumbnail"><?= wfMsg('mediatool-custom-thumbnail') ?></label><br/>
 					<div id="mediaToolThumbnailSizeSlider" class="WikiaSlider"></div>
-					<span id="VideoEmbedInputWidth">
-						<input type="text" id="VideoEmbedManualWidth" name="VideoEmbedManualWidth" value="" onchange="" onkeyup="" /> px
+					<span id="mediaToolThumbnailSize">
+						<input type="text" id="mediaToolThumbnailSizeInput" name="mediaToolThumbnailSizeInput" value="" onchange="" onkeyup="" /> px
 					<span>
 				</div>
 				<div class="media-tool-thumbnail-position">

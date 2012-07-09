@@ -1,4 +1,4 @@
-var MediaTool = MediaTool || (function () {
+var MediaTool = MediaTool || (function (smallThumbnailSize, largeThumbnailSize) {
 
 	/** @private **/
 	var cart = null;
@@ -13,6 +13,8 @@ var MediaTool = MediaTool || (function () {
 	var templateCart = null;
 	var templateItemsList = null;
 	var templateItem = null;
+	var minThumbnailSize = 60;
+	var maxThumbnailSize = 660;
 
 	function loadResources() {
 		return resourceLoaderCache = resourceLoaderCache ||
@@ -50,7 +52,7 @@ var MediaTool = MediaTool || (function () {
             cart.template = templateCart;
             this.bind('Cart::itemsChanged', onCartContentChange);
 			this.bind('Cart::thumbnailStyleChanged', onThumbnailStyleChange);
-			this.bind('Cart::thumbnailStyleChanged', onThumbnailSizeChange);
+			this.bind('Cart::thumbnailSizeChanged', onThumbnailSizeChange);
 
             this.bind('showModal', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);});
             this.bind('editDone', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);});
@@ -136,7 +138,60 @@ var MediaTool = MediaTool || (function () {
 	}
 
 	function onThumbnailSizeChange() {
-		// update the whole UI
+		if ($("input[name='thumbsize']:checked", dialogWrapper).length==0) {
+			// on first display select the proper radio
+			if (cart.getThumbnailSize() == largeThumbnailSize) {
+				$('#mediaToolLargeThumbnail').attr('checked',true);
+			} else if (cart.getThumbnailSize() == smallThumbnailSize) {
+				$('#mediaToolSmallThumbnail').attr('checked',true);
+			} else {
+				$('#mediaToolCustomThumbnail').attr('checked',true);
+			}
+		}
+		if ($('#mediaToolCustomThumbnail').attr("checked")) {
+			$('#mediaToolThumbnailSizeInput').prop('disabled', false);
+			$('#mediaToolThumbnailSizeSlider').slider("enable");
+		} else {
+			$('#mediaToolThumbnailSizeInput').prop('disabled', true);
+			$('#mediaToolThumbnailSizeSlider').slider("disable");
+		}
+		$('#mediaToolThumbnailSizeInput').val(cart.getThumbnailSize());
+		$('#mediaToolThumbnailSizeSlider').slider("value", cart.getThumbnailSize());
+	}
+
+	function initThumbnailSizeActions() {
+		$('#mediaToolThumbnailSizeSlider').slider({
+			min: minThumbnailSize,
+			max: maxThumbnailSize,
+			//value: 500,
+			step: 3,
+			slide: function(event, ui) {
+				cart.setThumbnailSize(ui.value);
+			}
+		});
+		$('#mediaToolThumbnailSizeInput').on('blur', function() {
+			var val = parseInt($('#mediaToolThumbnailSizeInput').val(), 10);
+			if ((val >= minThumbnailSize) && (val <= maxThumbnailSize)) {
+				cart.setThumbnailSize(val);
+			} else {
+				if (val < minThumbnailSize) cart.setThumbnailSize(minThumbnailSize);
+				else cart.setThumbnailSize(maxThumbnailSize);
+			}
+		}).on('keyup', function() {
+			var val = parseInt($('#mediaToolThumbnailSizeInput').val(), 10);
+			if ((val >= minThumbnailSize) && (val <= maxThumbnailSize)) {
+				cart.setThumbnailSize(val);
+			}
+		});
+		$('#mediaToolLargeThumbnail').on('click', function() {
+			cart.setThumbnailSize(largeThumbnailSize);
+		});
+		$('#mediaToolSmallThumbnail').on('click', function() {
+			cart.setThumbnailSize(smallThumbnailSize);
+		});
+		$('#mediaToolCustomThumbnail').on('click', function() {
+			cart.setThumbnailSize(cart.getThumbnailSize());
+		});
 	}
 
 	function closeModal() {
@@ -209,21 +264,7 @@ var MediaTool = MediaTool || (function () {
 			cart.setThumbnailStyle($(e.target).attr("data-thumb-style"));
 		});
 
-		//@todo: init the slider, append all events to inputs...
-		$('.WikiaSlider').slider({
-			min: 60,
-			max: 660,
-			value: 500,
-			step: 3,
-			slide: function(event, ui) {
-				console.log('WikiaSlider.slide ' + ui.value);
-				//$('#VideoEmbedManualWidth').val(ui.value);
-			},
-			create: function(event, ui) {
-				console.log('WikiaSlider.create');
-				$('#VideoEmbedManualWidth').val(500);
-			}
-		});
+		initThumbnailSizeActions.call(self);
 	}
 
 	function callBackend(method, params, callback) {
@@ -260,4 +301,4 @@ var MediaTool = MediaTool || (function () {
 	});
 
 	return new MediaToolClass;
-})();
+})(wgMediaToolSmallThumbnail, wgMediaToolLargeThumbnail);
