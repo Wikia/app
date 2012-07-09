@@ -142,12 +142,12 @@ class WikiaUpdater {
 		);
 		$patch = array();
 		while ( $row = $db->fetchRow( $res ) ) {
-			$column = !empty( $columns[ $row->name ] ) ? $columns[ $row->name ] : '';
+			$column = !empty( $columns[ $row->Field ] ) ? $columns[ $row->Field ] : '';
 			
-			if ( $column && $columns[ $row->name ]['old'] == $row->type ) {
-				$patch[] = sprintf( "MODIFY %s %s", $row->name, $columns[ $row->name ]['new'] );
+			if ( $column && $columns[ $row->Field ]['old'] == $row->type ) {
+				$patch[] = sprintf( "MODIFY %s %s", $row->Field, $columns[ $row->Field ]['new'] );
 			} else {
-				$updater->output( "...{$row->name} is up-to-date.\n" );
+				$updater->output( "...{$row->Field} is up-to-date.\n" );
 			}
 		}
 			
