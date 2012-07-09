@@ -201,6 +201,12 @@ var regExpRules = [
 		name: 'Found innerShiv()',
 		regexp: /innerShiv\(/,
 		reason: 'innerShiv() is deprecated'
+	},
+	// detect $.toJSON, $.evalJSON and $.secureEvalJSON (BugId:36542)
+	{
+		name: 'Found $.toJSON',
+		regexp: /(\$|jQuery).(toJSON|evalJSON|secureEvalJSON)/,
+		reason: 'Deprecated JSON handling function called (use native JSON object)'
 	}
 ];
 

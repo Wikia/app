@@ -221,6 +221,7 @@ class CodeLintJs extends CodeLint {
 			case 'Use $.show or $.hide':
 			case 'Deprecated skin check found':
 			case 'innerShiv() is deprecated':
+			case 'Deprecated JSON handling function called (use native JSON object)':
 				$ret = true;
 				break;
 
