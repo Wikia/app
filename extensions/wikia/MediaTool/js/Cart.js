@@ -69,6 +69,8 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 		if(!this.exists(itemId)) {
 			var item = new MediaTool.Item(itemId, itemData.title, itemData.thumbUrl, false, itemOrigin);
 			item.origin = itemOrigin;
+			item.duration = itemData.duration;
+			item.renderThumbHtml();
 
 			var $item = $($.mustache(itemTemplate, item));
 

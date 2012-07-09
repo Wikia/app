@@ -2,6 +2,7 @@ MediaTool.Item = $.createClass(Observable,{
 
 	id: null,
 	video: null,
+	duration: '00:00',
 	file: null,
 	thumbHtml: null,
 	editable: false,
@@ -17,9 +18,13 @@ MediaTool.Item = $.createClass(Observable,{
 			this.thumbHtml = thumbHtml;
 		}
 		else {
-			var renderer = new MediaTool.Renderer();
-			this.thumbHtml = renderer.getMediaThumb(this);
+			this.renderThumbHtml();
 		}
+	},
+
+	renderThumbHtml: function() {
+		var renderer = new MediaTool.Renderer();
+		this.thumbHtml = renderer.getMediaThumb(this);
 	}
 
 });
