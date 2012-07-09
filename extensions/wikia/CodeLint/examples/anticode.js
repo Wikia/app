@@ -137,3 +137,8 @@ $.tracker.byStr('foo');
 $.tracker.track('foo');
 $.tracker.trackStr('foo');
 $.tracker.trackEvent('foo');
+
+// deprecated JSON encoders / decoders
+$.toJSON({foo: true});
+jQuery.evalJSON('{foo: true}');
+$.secureEvalJSON('{foo: 1234}');
