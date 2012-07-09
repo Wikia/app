@@ -23,7 +23,10 @@ $messages['en'] = array(
 	'mediatool-thumbnail-style-no-border' => 'No Border or Caption',
 	'mediatool-large-thumbnail' => 'Large ($1px)',
 	'mediatool-small-thumbnail' => 'Small ($1px)',
-	'mediatool-custom-thumbnail' => 'Custom'
+	'mediatool-custom-thumbnail' => 'Custom',
+	'mediatool-thumbnail-style' => 'Thumbnail Style',
+	'mediatool-thumbnail-size' => 'Thumbnail Size',
+	'mediatool-media-position' => 'Media Position'
 );
 
 /** Message documentation (Message documentation)
@@ -46,5 +49,11 @@ $messages['qqq'] = array(
 	'mediatool-error-invalid-video' => 'Error displayed in case video the user is trying to add is invalid',
 	'mediatool-selected-media-count' => 'Title displayed above the box with user selected media on Find Media tab, $1 is replaced with the media count',
 	'mediatool-thumbnail-style-border' => 'Description for border with caption thumbnail style, displayed on Media Options tab (under the thumbnail style icons)',
-	'mediatool-thumbnail-style-no-border' => 'Description for no border or caption thumbnail style, displayed on Media Options tab (under the thumbnail style icons)'
+	'mediatool-thumbnail-style-no-border' => 'Description for no border or caption thumbnail style, displayed on Media Options tab (under the thumbnail style icons)',
+	'mediatool-large-thumbnail' => 'Label for large thumbnail radio button, $1 is replaced with the thumbnail size',
+	'mediatool-small-thumbnail' =>  'Label for small thumbnail radio button, $1 is replaced with the thumbnail size',
+	'mediatool-custom-thumbnail' => 'Label for custom thumbnail radio button',
+	'mediatool-thumbnail-style' => 'Title of thumbnail style section of Media Options (on Edit Media tab)',
+	'mediatool-thumbnail-size' => 'Title of thumbnail size section of Media Options (on Edit Media tab)',
+	'mediatool-media-position' => 'Title of media position section of Media Options (on Edit Media tab)'
 );
