@@ -1,33 +1,33 @@
 MediaTool.Item = $.createClass(Observable,{
 
 	id: null,
-	video: null,
-	duration: '00:00',
-	file: null,
+	title: null,
 	thumbHtml: null,
+	thumbUrl: null,
 	editable: false,
 	origin: 'wiki',
+	isVideo: true,
+	duration: '00:00',
+	renderer: null,
 
-	constructor: function(id, video, file, thumbHtml) {
+	constructor: function(id, title, thumbHtml, thumbUrl) {
 		MediaTool.Item.superclass.constructor.call(this);
+		this.renderer = new MediaTool.Renderer();
 
 		this.id = id;
-		this.video = video;
-		this.file = file;
+		this.title = title;
 		this.thumbHtml = thumbHtml;
-		this.renderThumbHtml();
+		this.thumbUrl = thumbUrl;
 	},
 
 	renderThumbHtml: function() {
 		if(this.thumbHtml == false) {
-			var renderer = new MediaTool.Renderer();
-			this.thumbHtml = renderer.getMediaThumb(this);
+			this.thumbHtml = this.renderer.getMediaThumb(this);
 		}
 	},
 
-    renderPreview: function(itemPreviewTpl) {
-            var renderer = new MediaTool.Renderer();
-            return renderer.getPreview(this, itemPreviewTpl);
-    }
+	renderPreview: function(itemPreviewTpl) {
+		return this.renderer.getPreview(this, itemPreviewTpl);
+	}
 
 });

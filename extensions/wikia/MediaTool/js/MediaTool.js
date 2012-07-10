@@ -119,8 +119,8 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
 		var self = this;
 
-		$( basketContent).each( function(i, item){
-		    cart.createItem(item, templateItem, source);
+		$( basketContent).each( function(i, item) {
+			cart.createItem(item, templateItem, source);
 		});
 		//TODO: switch to "Edit media tab"
 		changeCurrentView( "edit" );

@@ -9,7 +9,7 @@
 </script>
 
 <script id="mediaToolBasketItemTemplate" type="text/template">
-	<li class="ui-widget-content{{#video}} video{{/video}}" data-id="{{id}}">
+	<li class="ui-widget-content{{#isVideo}} video{{/isVideo}}" data-id="{{id}}">
 		{{{thumbHtml}}}
 	</li>
 </script>
