@@ -350,8 +350,8 @@ $.store.serializers = {
 			decoders.push( "json" );
 		},
 		// macbre: use interface provided by jQuery JSON plugin
-		encode: $.toJSON,
-		decode: $.secureEvalJSON
+		encode: JSON.stringify,
+		decode: JSON.parse
 	}
 };
 
