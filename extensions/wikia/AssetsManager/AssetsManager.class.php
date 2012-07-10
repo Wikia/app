@@ -39,8 +39,8 @@ class AssetsManager {
 
 	public static function getInstance() {
 		if( self::$mInstance == false ) {
-			global $wgCdnRootUrl, $wgStyleVersion, $wgAllInOne, $wgRequest;
-			self::$mInstance = new AssetsManager($wgCdnRootUrl, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
+			global $wgCdnStylePath, $wgStyleVersion, $wgAllInOne, $wgRequest;
+			self::$mInstance = new AssetsManager($wgCdnStylePath, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
 		}
 		return self::$mInstance;
 	}
@@ -57,7 +57,7 @@ class AssetsManager {
 
 		$vars['sassParams'] = $params;
 		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;
-		$vars['wgCdnRootUrl'] = $wgCdnRootUrl;
+		$vars['wgCdnRootUrl'] = $wgCdnRootUrl; // TODO: wgCdnStylePath?
 
 		return true;
 	}
@@ -233,7 +233,8 @@ class AssetsManager {
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
 	public function getSassCommonURL(/* string */ $scssFilePath, /* boolean */ $minify = null) {
-		return $this->getSassURL( $scssFilePath, $this->mCommonHost, $minify );
+		global $wgCdnRootUrl;
+		return $this->getSassURL( $scssFilePath, $wgCdnRootUrl, $minify );
 	}
 
 	/**
@@ -272,7 +273,8 @@ class AssetsManager {
 	}
 
 	public function getSassGroupCommonURL( $groupName, $minify = null ){
-		return $this->getSassGroupURL( $groupName, $this->mCommonHost, $minify );
+		global $wgCdnRootUrl;
+		return $this->getSassGroupURL( $groupName, $wgCdnRootUrl, $minify );
 	}
 
 	/**

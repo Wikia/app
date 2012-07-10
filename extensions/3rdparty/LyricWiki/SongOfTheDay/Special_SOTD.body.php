@@ -12,7 +12,7 @@ class SOTD extends SpecialPage
 	{
 		parent::__construct( 'SOTD' );
 		global $errors, $errorlist, $wgOut;
-		$wgOut->addStyle(AssetsManager::getInstance()->getOneLocalURL('extensions/3rdparty/LyricWiki/SongOfTheDay/Special_SOTD.css'));
+		$wgOut->addStyle(AssetsManager::getInstance()->getOneCommonURL('extensions/3rdparty/LyricWiki/SongOfTheDay/Special_SOTD.css'));
 		$errors = array ( 'set' => false );
 		$errorlist = '';
 	}
