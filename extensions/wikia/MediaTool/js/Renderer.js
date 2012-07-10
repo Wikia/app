@@ -25,13 +25,18 @@ MediaTool.Renderer = $.createClass(Observable,{
 		return '<div class="timer">'+item.duration+'</div><span class="Wikia-video-play-button min" style="width: 96px; height: 72px;"></span><img alt="" src="'+item.file+'" width="96" height="72" data-video="'+item.video+'" class="Wikia-video-thumb"/>';
 	},
 
-    getPreview: function(item) {
+	getPreview: function(item, itemPreviewTpl) {
 
-        return ' to jest podglad: <img src="'+item.file+'" /> ';
-    },
+		return $.mustache(itemPreviewTpl, {
+			itemTitle:"test",
+			itemWidth:"300",
+			itemHeight:"180",
+			itemUrl:item.file
+		});
+	},
 
-    updatePreview: function(item) {
+	updatePreview: function(item) {
 
-    }
+	}
 
 });

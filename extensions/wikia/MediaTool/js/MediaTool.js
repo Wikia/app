@@ -7,13 +7,15 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 	var resourceLoaderCache = null;
 	var dialogWrapper = null;
 	var currentView = "find"; // [ find, edit ]
-    var mt = null;
+	var mt = null;
 
 	/* templates */
 	var templateDialog = null;
 	var templateCart = null;
 	var templateItemsList = null;
 	var templateItem = null;
+	var itemPreviewTpl = null;
+	var itemPreviewBorderTpl = null;
 	var minMediaSize = 60;
 	var maxMediaSize = 660;
 
@@ -33,6 +35,8 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 					callBackend('getTemplates', function (resp) {
 						templateDialog = resp['dialog'];
 						templateCart = resp['cart'];
+						itemPreviewTpl = resp['itemPreviewTpl'];
+						itemPreviewBorderTpl = resp['itemPreviewBorderTpl'];
 						//templateItemsList = resp['itemsList'];
 						templateItemsList = $("<div>").html(resp['itemsList']).find('#mediaToolBasketTemplate').text();
 						templateItem = $("<div>").html(resp['itemsList']).find('#mediaToolBasketItemTemplate').text();
@@ -41,46 +45,49 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 				).done(dfd.resolve);
 			}).promise();
 	}
-    var initModalComplete = false;
 
-    function initModal() {
-        if (!initModalComplete) {
-            // loading resources, constructing dialog
-            renderer = new MediaTool.Renderer();
-            itemsCollection = new MediaTool.ItemsCollection('mediatool-thumbnail-browser', 'mediaToolItemList', 'mediaToolBasket');
-            itemsCollection.template = templateItemsList;
-						itemsCollection.itemTemplate = templateItem;
-            cart = new MediaTool.Cart('mediaToolBasket', 'mediaToolItemList');
-            cart.template = templateCart;
-            this.bind('Cart::itemsChanged', onCartContentChange);
-			this.bind('Cart::thumbnailStyleChanged', onThumbnailStyleChange);
-			this.bind('Cart::mediaSizeChanged', onMediaSizeChange);
-			this.bind('Cart::mediaLocationChanged', onMediaLocationChange);
+	var initModalComplete = false;
 
-            this.bind('showModal', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);});
-            this.bind('editDone', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);});
-            this.bind('changeTab', onChangeTab);
-            mt = this;
-            initModalComplete = true;
-        }
-    }
+	function initModal() {
+		if (!initModalComplete) {
+		    // loading resources, constructing dialog
+		    renderer = new MediaTool.Renderer();
+		    itemsCollection = new MediaTool.ItemsCollection('mediatool-thumbnail-browser', 'mediaToolItemList', 'mediaToolBasket');
+		    itemsCollection.template = templateItemsList;
+							itemsCollection.itemTemplate = templateItem;
+		    cart = new MediaTool.Cart('mediaToolBasket', 'mediaToolItemList');
+		    cart.template = templateCart;
+		    this.bind('Cart::itemsChanged', onCartContentChange);
+				this.bind('Cart::thumbnailStyleChanged', onThumbnailStyleChange);
+				this.bind('Cart::mediaSizeChanged', onMediaSizeChange);
+				this.bind('Cart::mediaLocationChanged', onMediaLocationChange);
 
-    function trackMUT(action, label, value) {
-        /*
-         tracking using new werehouse
-         */
-        WikiaTracker.trackEvent(null, {
-            ga_category: 'mut',
-            ga_action: action,
-            ga_label: label || '',
-            ga_value: value || 0
-        }, 'internal');
-    }
+		    this.bind('showModal', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);});
+		    this.bind('editDone', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);});
+		    this.bind('changeTab', onChangeTab);
+		    mt = this;
+		    initModalComplete = true;
+		}
+	}
+
+	function trackMUT(action, label, value) {
+
+		/*
+		 tracking using new werehouse
+		 */
+		WikiaTracker.trackEvent(null, {
+		    ga_category: 'mut',
+		    ga_action: action,
+		    ga_label: label || '',
+		    ga_value: value || 0
+		}, 'internal');
+	}
 
 	function showModal(event) {
 		var self = this;
 		loadResources().done(function () {
-		self.initModal();
+
+			self.initModal();
 			var processedhtml = $.mustache(templateDialog, {
 					'cart':templateCart,
 					'itemslist':$.mustache(templateItemsList, {
@@ -99,28 +106,25 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			cart.setMediaLocation(self.initialMediaSettings.align);
 			cart.setMediaSize(self.initialMediaSettings.width);
 
-            if ( self.initialBasketContent.length ) {
+			if ( self.initialBasketContent.length ) {
+				useInitialBasketContent( self.initialBasketContent, 'wiki' );
 
-                useInitialBasketContent( self.initialBasketContent, 'wiki' );
-
-            } else {
-
-                changeCurrentView( "find" );
-            }
-
+			} else {
+				changeCurrentView( "find" );
+			}
 		});
 	}
 
-    function useInitialBasketContent( basketContent, source ) {
+	function useInitialBasketContent( basketContent, source ) {
 
-        var self = this;
+		var self = this;
 
-        $( basketContent).each( function(i, item){
-            cart.createItem(item, templateItem, source);
-        });
-        //TODO: switch to "Edit media tab"
-        changeCurrentView( "edit" );
-    }
+		$( basketContent).each( function(i, item){
+		    cart.createItem(item, templateItem, source);
+		});
+		//TODO: switch to "Edit media tab"
+		changeCurrentView( "edit" );
+	}
 
 	function onCartContentChange() {
 		if(cart.isEmpty()) {
@@ -205,13 +209,12 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		});
 	}
 
-    function onChangeTab() {
+	function onChangeTab() {
 
-        if ( currentView == "edit" ) {
-
-           renderPreview();
-        }
-    }
+		if ( currentView == "edit" ) {
+			renderPreview();
+		}
+	}
 
 	function closeModal() {
 		//TODO: check state and add confirm
@@ -227,24 +230,22 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		this.closeModal();
 	}
 
-    function renderPreview() {
+	function renderPreview() {
 
-        var container = $('.mediatool-preview', dialogWrapper);
-        container.html('');
-        $.each( cart.items, function(i, item){
-            container.append( item.renderPreview() );
-        } );
+		var container = $('.mediatool-preview', dialogWrapper);
+		container.html('');
+		$.each( cart.items, function(i, item){
+			container.append( item.renderPreview() );
+		} );
+	}
 
+	function updatePreview() {
 
-    }
-
-    function updatePreview() {
-
-    }
+	}
 
 	function changeCurrentView(newView, fromTab) {
 
-        var previousView = currentView;
+		var previousView = currentView;
 
 		if (newView == "edit") {
 
@@ -266,9 +267,9 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			$("button[name='continue']", dialogWrapper).show();
 		}
 
-        if ( previousView != currentView ) {
-            mt.fire('changeTab');
-        }
+		if ( previousView != currentView ) {
+		    mt.fire('changeTab');
+		}
 	}
 
 	function onAddViaUrlClick() {
@@ -295,10 +296,10 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		});
 
 		$("ul.tabs li[data-tab='edit-media'] a", dialogWrapper).on("click", function (e) {
-            changeCurrentView("edit", true);
+			changeCurrentView("edit", true);
 		});
 		$("ul.tabs li[data-tab='find-media'] a", dialogWrapper).on("click", function (e) {
-            changeCurrentView("find", true);
+			changeCurrentView("find", true);
 		});
 		$(".media-tool-thumbnail-style img", dialogWrapper).on("click", function (e) {
 			cart.setThumbnailStyle($(e.target).attr("data-thumb-style") == "border");
@@ -326,7 +327,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			MediaToolClass.superclass.constructor.call(this);
 			//this.debugEvents();
 		},
-        initModal: initModal,
+		initModal: initModal,
 		showModal: showModal,
 		closeModal: closeModal,
 
@@ -341,8 +342,8 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		getRenderer: function() {
 			return renderer;
 		},
-        initialBasketContent: [],
-        initialMediaSettings: { align:'left', alt:"", caption:"", thumbnail:true, width:300 }
+		initialBasketContent: [],
+		initialMediaSettings: { align:'left', alt:"", caption:"", thumbnail:true, width:300 }
 	});
 
 	return new MediaToolClass;

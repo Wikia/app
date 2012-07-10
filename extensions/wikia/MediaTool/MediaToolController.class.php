@@ -179,12 +179,17 @@ class MediaToolController extends WikiaController {
 	public function getModalContent() {}
 	public function getBasket() {}
 	public function getItemsList() {}
+	public function itemPreview() {}
+	public function itemPreviewBorder() {}
 
 	public function getTemplates() {
+
 		$this->response->setFormat('json');
 		$this->response->setVal('dialog', $this->app->renderView( 'MediaTool', 'getModalContent' ) );
 		$this->response->setVal('cart', $this->app->renderView( 'MediaTool', 'getBasket' ) );
 		$this->response->setVal('itemsList', $this->app->renderView( 'MediaTool', 'getItemsList' ) );
+		$this->response->setVal('itemPreview', $this->app->renderView( 'MediaTool', 'itemPreview' ) );
+		$this->response->setVal('itemPreviewBorder', $this->app->renderView( 'MediaTool', 'itemPreviewBorder' ) );
 	}
 
 
