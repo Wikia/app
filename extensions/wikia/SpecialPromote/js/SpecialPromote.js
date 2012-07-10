@@ -183,14 +183,21 @@ SpecialPromote.prototype = {
 	},
 	removeImage: function (params) {
 		if (params.uploadType == 'additional') {
+			var selectedByName;
+			$.each($('.small-photos img.additionalImage'), function(i, element) {
+				if ($(element).data('image-index') == params.imageIndex) {
+					selectedByName = $(element).data('filename');
+				}
+			});
 			try {
-				this.removeTempImage(this.current.additionalImagesNames[params.imageIndex - 1]);
+				this.removeTempImage(selectedByName);
 			}
 			catch(error) {
 				this.errorHandler(error);
 				return false;
 			}
-			this.current.additionalImagesNames.splice(params.imageIndex - 1, 1);
+			var imagesNamesIndex = this.current.additionalImagesNames.indexOf(selectedByName);
+			this.current.additionalImagesNames.splice(imagesNamesIndex, 1);
 			$.each($('.small-photos img.additionalImage'), function(i, element) {
 				if ($(element).data('image-index') == params.imageIndex) {
 					$(element).parent().remove();
@@ -293,6 +300,7 @@ SpecialPromote.prototype = {
 				.append(
 					$(image)
 						.attr('src', file.fileUrl)
+						.attr('class', 'additionalImage')
 						.data('filename', file.fileName)
 						.data('image-type', this.UPLOAD_TYPE_ADDITIONAL)
 						.data('image-index', this.current.additionalImagesNames.length)
@@ -354,7 +362,6 @@ SpecialPromote.prototype = {
 	removeTempImage: function (imagename) {
 		if (!imagename) {
 			throw new Error('removeTempImageError');
-			return false;
 		}
 		$.nirvana.sendRequest({
 			type: 'post',
