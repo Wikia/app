@@ -373,7 +373,7 @@ class CityVisualization extends WikiaModel {
 		$wikiImages = $this->wg->Memc->get($memKey);
 
 		if (empty($wikiImages)) {
-			$rowAssigner = F::build('wikiImageRowHelper');
+			$rowAssigner = F::build('WikiImageRowHelper');
 			$wikiImages = $this->getWikiImageData($wikiId, $langCode, $rowAssigner, $filter);
 			$this->wg->Memc->set($memKey, $wikiImages, 60 * 60 * 24);
 		}
@@ -389,7 +389,7 @@ class CityVisualization extends WikiaModel {
 		$wikiImageNames = $this->wg->Memc->get($memKey);
 
 		if (empty($wikiImageNames)) {
-			$rowAssigner = F::build('wikiImageNameRowHelper');
+			$rowAssigner = F::build('WikiImageNameRowHelper');
 			$wikiImageNames = $this->getWikiImageData($wikiId, $langCode, $rowAssigner, $filter);
 			$this->wg->Memc->set($memKey, $wikiImageNames, 60 * 60 * 24);
 		}
