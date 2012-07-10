@@ -2,6 +2,36 @@
 
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
+	// Returns the width of the browsers scrollbar
+	function getScrollBarWidth() {
+		var inner = document.createElement("p");
+		inner.style.width = "100%";
+		inner.style.height = "100px";
+
+		var outer = document.createElement("div");
+		outer.style.position = "absolute";
+		outer.style.top = "0px";
+		outer.style.left = "0px";
+		outer.style.visibility = "hidden";
+		outer.style.width = "100px";
+		outer.style.height = "100px";
+		outer.style.overflow = "hidden";
+		outer.appendChild(inner);
+
+		document.body.appendChild(outer);
+		var w1 = inner.offsetWidth;
+		outer.style.overflow = "scroll";
+		var w2 = inner.offsetWidth;
+
+		if (w1 == w2) {
+			w2 = outer.clientWidth;
+		}
+
+		document.body.removeChild(outer);
+
+		return (w1 - w2);
+	}
+
 	WE.plugins.pagecontrols = $.createClass(WE.plugin,{
 
 		hiddenFields: false,
@@ -340,8 +370,7 @@
 							}
 						}).
 						css({
-							height: options.height || ($(window).height() - 250),
-							overflow: 'auto'
+							height: options.height || ($(window).height() - 250)
 						});
 
 					if (typeof callback == 'function') {
@@ -372,6 +401,9 @@
 				// wide wikis
 				width += config.extraPageWidth;
 			}
+
+			// add width of scrollbar (BugId:35767)
+			width += getScrollBarWidth();
 
 			var options = {
 				buttons: [
