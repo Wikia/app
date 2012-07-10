@@ -420,8 +420,6 @@
 					self.ajax('preview',
 						extraData,
 						function(data) {
-							// innerShiv is IE < 9 fix (BugId: 11294)
-							// innerShiv removed due to BugId:25952 (html5.js polyfill used instead)
 							contentNode.html(data.html);
 
 							// move "edit" link to the right side of heading names

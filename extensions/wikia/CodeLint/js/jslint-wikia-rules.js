@@ -110,12 +110,6 @@ exports.rules  = [
 			return matches[1] + ' - old tracking code found (use WikiaTracker.trackEvent instead)';
 		}
 	},
-	// innerShiv is deprecated (use html5.js now)
-	{
-		name: 'Found innerShiv()',
-		regexp: /innerShiv\(/,
-		reason: 'innerShiv() is deprecated'
-	},
 	// detect $.toJSON, $.evalJSON and $.secureEvalJSON (BugId:36542)
 	{
 		name: 'Found $.toJSON',
