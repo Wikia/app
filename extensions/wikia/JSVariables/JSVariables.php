@@ -21,7 +21,7 @@ function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
 	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgDBname, $wgPrivateTracker, $wgExtensionsPath,
 		$wgArticle, $wgStyleVersion, $wgSitename, $wgDisableAnonymousEditing,
-		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath;
+		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgMedusaSlot;
 
 	$skin = $out->getSkin();
 	$title = $out->getTitle();
