@@ -134,7 +134,7 @@ class MediaToolController extends WikiaController {
 		$mediaFile = wfFindFile($mediaTitle);
 
 		if( $mediaFile ) {
-			$mediaThumbObj = $mediaFile->transform( array('width'=>96, 'height'=>72 ) );
+			$mediaThumbObj = $mediaFile->transform( array('width'=>400 ) );
 			return $mediaThumbObj->getUrl();
 		}
 		return '';
