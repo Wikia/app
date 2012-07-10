@@ -45,12 +45,12 @@
 				</div>
 				<?php if (!empty($mainImage)): ?>
 					<div class="status">
-						<div class="rejected<?= ($mainImage['review'] == AdminUploadReviewHelper::STATE_REJECTED) ? '' : ' hidden' ?>">
+						<div class="rejected<?= ($mainImage['review_status'] == ImageReviewStatuses::STATE_REJECTED) ? '' : ' hidden' ?>">
 							<p><span>
 								<?= wfMsg('promote-image-rejected');?> <img src="<?= $wg->BlankImgUrl ?>" class="sprite error">
 							</span></p>
 						</div>
-						<div class="accepted<?= ($mainImage['review'] == AdminUploadReviewHelper::STATE_APPROVED) ? '' : ' hidden' ?>">
+						<div class="accepted<?= ($mainImage['review_status'] == ImageReviewStatuses::STATE_APPROVED) ? '' : ' hidden' ?>">
 							<p><span>
 								<?= wfMsg('promote-image-accepted');?> <img src="<?= $wg->BlankImgUrl ?>" class="sprite ok">
 							</span></p>
