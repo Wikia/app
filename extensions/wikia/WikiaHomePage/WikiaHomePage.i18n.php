@@ -103,7 +103,7 @@ $messages['en'] = array(
 *[http://mediakit.wikia.com/Solutions/Audience Audience]
 *[http://mediakit.wikia.com/Solutions Solutions]
 *[http://mediakit.wikia.com/Advertising-Products Ad products]
-*[http://www.wikia.com/Advertising/Self_Service Self Service]',
+*[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Self Service]',
 
 	'wikia-home-page-special-title' => 'Wikia Home Page -- staff tool',
 	'wikia-home-page-special-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
@@ -245,7 +245,7 @@ $messages['de'] = array(
 *[http://mediakit.wikia.com/Solutions/Audience Zielgruppe]
 *[http://mediakit.wikia.com/Solutions Lösungen]
 *[http://mediakit.wikia.com/Advertising-Products Produkte]
-*[http://www.wikia.com/Special:SelfServiceAdvertisingSplash Self Service]',
+*[https://wikia.sl.advertising.com/admin/advertisers/indexPl.jsp Self Service]',
 
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Seite|'''$1''' Seiten }}",
 	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' Foto|'''$1''' Fotos}}",
