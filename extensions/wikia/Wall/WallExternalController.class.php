@@ -339,5 +339,11 @@ class WallExternalController extends WikiaController {
 		//workaround to prevent index data expose
 		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace') ), 'newFromText');
 		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'index', array('title' => $title, 'page' => $this->request->getVal('page', 1) ) )); 
-	} 
+
+		// TODO: Tomek: please set caching here.
+		//$this->response->setCacheValidity( 3600, 3600,  array(
+		//	WikiaResponse::CACHE_TARGET_BROWSER,
+		//	WikiaResponse::CACHE_TARGET_VARNISH,
+		//));
+	}
 }

@@ -4,10 +4,10 @@ var WallBackendBridge = $.createClass(Observable, {
 	},
 
 	loadPage: function(page, pagenumber, callback) {
-		// TODO: consider using GET method (BugId:36611)
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'getCommentsPage',
+			type: 'GET',
 			format: 'json',
 			data: {
 				page: pagenumber,
