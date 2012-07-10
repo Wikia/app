@@ -17,7 +17,7 @@ class GamingCalendarController extends WikiaController {
 
 		$this->response->setCacheValidity( 3600, 3600,  array(
 			WikiaResponse::CACHE_TARGET_BROWSER,
-			WikiaResponse::CACHE_TARGET_BROWSER,
+			WikiaResponse::CACHE_TARGET_VARNISH,
 		));
 	}
 
