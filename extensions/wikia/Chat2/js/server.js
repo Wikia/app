@@ -572,7 +572,7 @@ function kick(client, socket, msg){
 		sendInlineAlertToClient(client, '', 'chat-kick-cant-kick-moderator', []);
 	} else {
     	var kickEvent = new models.KickEvent({
-    		kickedUserName: escape(kickedUser.get('name')),
+    		kickedUserName: kickedUser.get('name'),
     		moderatorName: client.myUser.get('name')
     	});
     	broadcastToRoom(client, socket, { 
