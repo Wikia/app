@@ -38,8 +38,8 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 						itemPreviewTpl = resp['itemPreviewTpl'];
 						itemPreviewBorderTpl = resp['itemPreviewBorderTpl'];
 						//templateItemsList = resp['itemsList'];
-						templateItemsList = $("<div>").html(resp['itemsList']).find('#mediaToolBasketTemplate').text();
-						templateItem = $("<div>").html(resp['itemsList']).find('#mediaToolBasketItemTemplate').text();
+						templateItemsList = $("<div>").html(resp['itemsList']).find('#mediaToolBasketTemplate').html();
+						templateItem = $("<div>").html(resp['itemsList']).find('#mediaToolBasketItemTemplate').html();
 					})
 
 				).done(dfd.resolve);
