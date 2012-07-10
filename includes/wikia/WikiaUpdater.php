@@ -3,24 +3,22 @@
  * @author Piotr Molski <MoLi> <moli@wikia-inc.com>
  */
 
-$wgHooks['LoadExtensionSchemaUpdates'][] = 'WikiaUpdater::update';
-
 class WikiaUpdater {
 	
-	static public function get_patch_dir() {
+	public static function get_patch_dir() {
 		return dirname( __FILE__ ) . "/../archives/wikia/";
 	}
 	
-	static public function get_extensions_dir() {
+	public static function get_extensions_dir() {
 		return MWInit::getExtensionsDirectory();
 	}
 	
-	static public function is_valid_utf8_text( $text ) {
+	public static function is_valid_utf8_text( $text ) {
 		$converted = @iconv('utf8','utf8',$text);
 		return $text === $converted;
 	}
 
-	static public function update( DatabaseUpdater $updater ) {
+	public static function update( DatabaseUpdater $updater ) {
 		global $wgCityId, $wgDBname, $wgExternalSharedDB;
 		
 		$dir = self::get_patch_dir();
@@ -72,7 +70,7 @@ class WikiaUpdater {
 		return true;
 	}
 	
-	static public function do_drop_table ( DatabaseUpdater $updater, $table, $condition = true ) {
+	public static function do_drop_table ( DatabaseUpdater $updater, $table, $condition = true ) {
 		if ( !$condition ) {
 			$updater->output( "Dropping $table table not allowed\n" );
 			return;
@@ -87,7 +85,7 @@ class WikiaUpdater {
 		}
 	}
 	
-	static public function do_page_vote_unique_update( DatabaseUpdater $updater ) {
+	public static function do_page_vote_unique_update( DatabaseUpdater $updater ) {
 		$dir = self::get_patch_dir();
 		$updater->output( "Checking wikia page_vote table...\n" );
 		if( $updater->getDB()->indexExists( 'page_vote', 'unique_vote' ) ) {
@@ -99,7 +97,7 @@ class WikiaUpdater {
 		}
 	}
 	
-	static public function do_page_wikia_props_update( DatabaseUpdater $updater ) {
+	public static function do_page_wikia_props_update( DatabaseUpdater $updater ) {
 		$db = $updater->getDB();
 		$updater->output( "Checking wikia page_wikia_props table...\n" );
 		if ( $db->tableExists( 'page_wikia_props' ) ) {
@@ -132,19 +130,26 @@ class WikiaUpdater {
 		}
 	}
 
-	function do_transcache_update( DatabaseUpdater $updater ) {
+	public static function do_transcache_update( DatabaseUpdater $updater ) {
 		$db = $updater->getDB();
 		$transcache = $db->tableName( 'transcache' );
 		$res = $db->query( "SHOW COLUMNS FROM transcache" );
 		$columns = array(
-			'tc_contents'	=> array('old' => 'text', 'new' => 'blob'),
-			'tc_url' 		=> array('old' => ' varchar(255)', 'new' => 'varbinary(255)' )
+			'tc_contents' => array(
+				'old' => 'text', 
+				'new' => 'blob'
+			),
+			'tc_url'      => array(
+				'old' => 'varchar(255)', 
+				'new' => 'varbinary(255)' 
+			)
 		);
 		$patch = array();
-		while ( $row = $db->fetchRow( $res ) ) {
+		while ( $row = $db->fetchObject( $res ) ) {
+			if ( !$row ) continue;
 			$column = !empty( $columns[ $row->Field ] ) ? $columns[ $row->Field ] : '';
 			
-			if ( $column && $columns[ $row->Field ]['old'] == $row->type ) {
+			if ( $column && $columns[ $row->Field ]['old'] == $row->Type ) {
 				$patch[] = sprintf( "MODIFY %s %s", $row->Field, $columns[ $row->Field ]['new'] );
 			} else {
 				$updater->output( "...{$row->Field} is up-to-date.\n" );
@@ -164,7 +169,7 @@ class WikiaUpdater {
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 * @modify Piotr Molski <moli@wikia-inc.com>
 	 */
-	function do_clean_math_table( DatabaseUpdater $updater ) {
+	public static function do_clean_math_table( DatabaseUpdater $updater ) {
 		$db = $updater->getDB();
 		$table = 'math';
 		$primaryKey = 'math_inputhash';
