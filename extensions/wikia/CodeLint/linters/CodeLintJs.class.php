@@ -220,7 +220,6 @@ class CodeLintJs extends CodeLint {
 			case 'jQuery.live() is deprecated':
 			case 'Use $.show or $.hide':
 			case 'Deprecated skin check found':
-			case 'innerShiv() is deprecated':
 			case 'Deprecated JSON handling function called (use native JSON object)':
 			case 'Use of deprecated Oasis module API (use $.nirvana)':
 				$ret = true;

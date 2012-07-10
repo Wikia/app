@@ -591,51 +591,11 @@ $(function() {
 	window.wgWikiaDOMReady = true;	// for selenium tests
 });
 
-// http://bit.ly/ishiv | WTFPL License
-// IE < 9 fix for inserting HTML5 elements into the dom.
-//
-// Add 2nd param of False to return $-friendly object instead of document fragment
-//
-// http://jdbartlett.com/innershiv/ says:
-//
-// STOP! Don't use innerShiv!
-// html5shiv now patches for the innerHTML issue! Update html5shiv and you won't have to use innerShiv anymore
-//
-// @deprecated
-// @see resources/wikia/libraries/html5/html5.min.js
-var innerShiv = function(){
-	function h(c,e,b){
-		return /^(?:area|br|col|embed|hr|img|input|link|meta|param)$/i.test(b)?c:e+"></"+b+">";
-	}
-	var c,e=document,j,
-		g="abbr article aside audio canvas datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video".split(" ");
-	return function (d, i) {
-	    if (!c &&
-	        (c = e.createElement("div"), c.innerHTML = "<nav></nav>", j = c.childNodes.length !== 1)) {
-	        for (var b = e.createDocumentFragment(), f = g.length; f--;) {
-	            b.createElement(g[f]);
-	        }
-	        b.appendChild(c);
-	    }
-	    d = d.replace(/^\s\s*/, "").replace(/\s\s*$/, "").replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "").replace(/(<([\w:]+)[^>]*?)\/>/g, h);
-	    c.innerHTML = (b = d.match(/^<(tbody|tr|td|col|colgroup|thead|tfoot)/i)) ? "<table>" + d + "</table>" : d;
-	    b = b ? c.getElementsByTagName(b[1])[0].parentNode : c;
-	    if (i === false) {
-	        return b.childNodes;
-	    }
-	    for (var f = e.createDocumentFragment(), k = b.childNodes.length; k--;) {
-	        f.appendChild(b.firstChild);
-	    }
-	    return f;
-	}
-}();
-
 // These functions are deprecated, but we will keep aliases around for old code and user scripts
 $.toJSON = JSON.stringify; /* JSlint ignore */
 $.evalJSON = $.secureEvalJSON = JSON.parse; /* JSlint ignore */
 
 // Exports
-window.innerShiv = innerShiv;
 window.GlobalTriggers = GlobalTriggers;
 window.Observable = Observable;
 window.Timer = Timer;
