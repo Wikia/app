@@ -1,17 +1,35 @@
 #wkArtCat {
-	#catlinks {
+	.catlinks {
 		margin-bottom: 10px;
-		
-		&.open {
-			display: block;
-		}
-	}
 
-	#mw-normal-catlinks span{
-		padding: 0 5px;
+		 ul{
+			display: inline;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			li{
+				border-left:  1px solid #AAA;
+				display: inline-block;
+				margin: 5px 0;
+				padding: 0 5px;
+			}
+
+			li:first-child{
+				border-left: none;
+			}
+		}
 	}
 }
 
-.js #catlinks {
+#mw-normal-catlinks span{
+	padding: 0 5px;
+}
+
+.js .catlinks {
 	display: none;
+
+	&.open {
+		display: block;
+	}
 }
