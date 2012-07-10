@@ -187,7 +187,7 @@ AdConfig.DART.getUrl = function(slotname, size, useIframe, adProvider) {
 		// TODO when we get better at search, support "kw" key-value
 		AdConfig.DART.getResolution() +
 		AdConfig.DART.getPrefooterStatus() +
-		(window.wgEnableKruxTargeting && Krux.dartKeyValues ? Krux.dartKeyValues : '') +
+		(window.wgEnableKruxTargeting && window.Krux && window.Krux.dartKeyValues ? window.Krux.dartKeyValues : '') +
 		AdConfig.DART.getImpressionCount(slotname) +
 		AdConfig.DART.getPartnerKeywords() +
 		AdConfig.DART.getCategories() +
