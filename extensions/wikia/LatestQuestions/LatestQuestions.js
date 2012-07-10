@@ -1,6 +1,16 @@
 var LatestQuestions = {
     init: function() {
-        $.getScript(wgAnswersServer + wgAnswersScript + '?action=ajax&rs=moduleProxy&moduleName=LatestActivity&actionName=Index&outputType=data&callback=LatestQuestions.onLoad&uselang='+wgUserLanguage);
+		$.nirvana.sendRequest({
+			controller: 'LatestActivity',
+			method: 'Index',
+			scriptPath: wgAnswersServer,
+			type:'get',
+			format: 'jsonp',
+			data: {
+				callback: 'LatestQuestions.onLoad',
+				uselang: wgUserLanguage
+			}
+		});
     },
     onLoad: function(data) {
 		if(data.changeList.length > 0) {
