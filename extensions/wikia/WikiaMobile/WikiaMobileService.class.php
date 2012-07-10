@@ -50,8 +50,15 @@ class WikiaMobileService extends WikiaService {
 		$this->headLinks = $this->wg->Out->getHeadLinks();
 		$this->pageTitle = $this->wg->Out->getHTMLTitle();
 
+		//first check if title does not exist
 		if( !$title->exists() &&
-			!( $title->getNamespace() == NS_CATEGORY && Category::newFromTitle( $title )->getPageCount() ) ) {
+
+			//check if title is Category and then if has not articles in it
+			!( $title->getNamespace() == NS_CATEGORY && Category::newFromTitle( $title )->getPageCount() ) &&
+
+			//and then check if it is not existing SpecialPage
+			!( $title->isSpecialPage() && SpecialPageFactory::exists( $title->getText() ) ) ) {
+
 			//"404" Page - on title that do not exists
 			$this->forward( 'WikiaMobileErrorService', WikiaMobileErrorService::PAGENOTFOUND, false );
 		} else {
