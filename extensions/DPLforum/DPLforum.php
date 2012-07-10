@@ -64,9 +64,6 @@ function wfDPLinit( &$parser ) {
 
 function parseForum( $input, $argv, $parser ) {
 	$f = new DPLForum();
-	# <Wikia>
-	$js = '<script type="text/javascript">wgAfterContentAndJS.push(function() {if (skin == "oasis") {mw.loader.load($.getSassCommonURL("extensions/DPLforum/css/oasis.scss"), "text/css");}});</script>';
-	# </Wikia>
 	return $js . $f->parse( $input, $parser );
 }
 
