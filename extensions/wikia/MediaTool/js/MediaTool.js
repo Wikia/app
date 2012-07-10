@@ -122,10 +122,10 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 	function onCartContentChange() {
 		if(cart.isEmpty()) {
 			$('.tabs li[data-tab=edit-media]').addClass('disabled');
-			$('.MediaTool-buttons button[name=continue]').attr('disabled','disabled');
+			$('.MediaToolButtons button[name=continue]').attr('disabled','disabled');
 		} else {
 			$('.tabs li[data-tab=edit-media]').removeClass('disabled');
-			$('.MediaTool-buttons button[name=continue]').removeAttr('disabled');
+			$('.MediaToolButtons button[name=continue]').removeAttr('disabled');
 		}
 	}
 
