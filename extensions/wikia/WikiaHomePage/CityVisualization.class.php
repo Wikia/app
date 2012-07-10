@@ -15,125 +15,12 @@ class CityVisualization extends WikiaModel {
 
 	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.09';
 
-	protected static $wikiaListMemcKey = 'wikis_data_for_visualization_wikia_v1.0';
-	protected static $comscoreListMemcKey = 'wikis_data_for_visualization_comscore_v1.0';
-
 	public function getList($contLang) {
-		return $this->getComscoreList($contLang);
-	}
-
-	/**
-	 * @desc Returns results from simple join between three tables: city_list, city_visualization, city_tag_map results
-	 * @return array
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public function getWikiaList() {
 		$this->wf->ProfileIn(__METHOD__);
 
-		$memKey = $this->wf->SharedMemcKey(self::$wikiaListMemcKey, __METHOD__);
+		$memKey = $this->getWikiComscoreListDataCacheKey($contLang);
 		$wikis = $this->wg->Memc->get($memKey);
-		if (!is_array($wikis)) {
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-			$tables = array('city_visualization', 'city_list', 'city_tag_map');
-			$fields = array(
-				'city_visualization.city_id',
-				'city_tag_map.tag_id',
-				'city_visualization.city_main_image',
-				'city_visualization.city_description',
-				'city_list.city_title',
-				'city_list.city_url',
-				'city_visualization.city_flags',
-			);
-			$conds = array(
-				'city_list.city_public' => 1,
-				'city_tag_map.tag_id in (' . $db->makeList(array(
-					self::CITY_TAG_LIFESTYLE_ID,
-					self::CITY_TAG_ENTERTAINMENT_ID,
-					self::CITY_TAG_VIDEO_GAMES_ID,
-				)) . ')',
-			);
-			$options = array('ORDER BY' => 'city_tag_map.tag_id');
-			$joinConds = array(
-				'city_list' => array(
-					'join',
-					'city_visualization.city_id = city_list.city_id'
-				),
-				'city_tag_map' => array(
-					'join',
-					'city_visualization.city_id = city_tag_map.city_id'
-				),
-			);
-
-			$results = $db->select($tables, $fields, $conds, __METHOD__, $options, $joinConds);
-			$wikis = array();
-			while ($row = $db->fetchObject($results)) {
-				$tagName = $this->getNameFromTagId($row->tag_id);
-				if ($tagName !== false) {
-					$wikiUrl = $row->city_url . '?redirect=no';
-
-					$wikis[$tagName][] = array(
-						'wikiid' => $row->city_id,
-						'wikiname' => $row->city_title,
-						'wikiurl' => $wikiUrl,
-						'wikidesc' => $row->city_description,
-						'main_image' => $row->city_main_image,
-						'wikinew' => $this->isNewWiki($row->city_flags),
-						'wikihot' => $this->isHotWiki($row->city_flags),
-					);
-				}
-			}
-
-			$this->wg->Memc->set($memKey, $wikis, 60 * 60 * 24);
-		}
-
-		$this->wf->ProfileOut(__METHOD__);
-		return $wikis;
-	}
-
-	public function saveVisualizationData($wikiId, $data, $langCode) {
-		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-
-		$table = 'city_visualization';
-		$fields = array('city_visualization.city_id', 'city_flags');
-		$conds = array(
-			'city_visualization.city_id' => $wikiId,
-			'city_lang_code' => $langCode
-		);
-		$results = $sdb->select(array($table), $fields, $conds, __METHOD__);
-
-		$row = $sdb->fetchObject($results);
-
-		if ($row) {
-			//UPDATE
-			$cond = array(
-				'city_id' => $wikiId,
-				'city_lang_code' => $this->wg->contLang->getCode()
-			);
-			$mdb->update($table, $data, $cond, __METHOD__);
-			$data['city_flags'] = $row->city_flags;
-		} else {
-			//INSERT
-			$data['city_id'] = $wikiId;
-			$mdb->Insert($table, $data, __METHOD__);
-			$data['city_flags'] = null;
-		}
-		$mdb->commit();
-	}
-
-	/**
-	 * @desc Returns results from simple join between two tables: city_list, city_visualization + comscore categories from HubService
-	 * @return array
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public function getComscoreList($contLang) {
-		$this->wf->ProfileIn(__METHOD__);
-
-		$memKey = $this->wf->SharedMemcKey(self::$comscoreListMemcKey, $contLang, __METHOD__);
-		$wikis = $this->wg->Memc->get($memKey);
-		if (!is_array($wikis)) {
+		if( !is_array($wikis) ) {
 			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 			$tables = array('city_visualization', 'city_list');
 			$fields = array(
@@ -199,6 +86,37 @@ class CityVisualization extends WikiaModel {
 		return $wikis;
 	}
 
+	public function saveVisualizationData($wikiId, $data, $langCode) {
+		$sdb = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$mdb = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+
+		$table = 'city_visualization';
+		$fields = array('city_visualization.city_id', 'city_flags');
+		$conds = array(
+			'city_visualization.city_id' => $wikiId,
+			'city_lang_code' => $langCode
+		);
+		$results = $sdb->select(array($table), $fields, $conds, __METHOD__);
+
+		$row = $sdb->fetchObject($results);
+
+		if( $row ) {
+			//UPDATE
+			$cond = array(
+				'city_id' => $wikiId,
+				'city_lang_code' => $this->wg->contLang->getCode()
+			);
+			$mdb->update($table, $data, $cond, __METHOD__);
+			$data['city_flags'] = $row->city_flags;
+		} else {
+			//INSERT
+			$data['city_id'] = $wikiId;
+			$mdb->Insert($table, $data, __METHOD__);
+			$data['city_flags'] = null;
+		}
+		$mdb->commit();
+	}
+
 	/**
 	 * @desc Mapping integer id of a tag to one of the main names recognized by visualization
 	 * @param integer $tagId tag id from city_tag table
@@ -261,6 +179,40 @@ class CityVisualization extends WikiaModel {
 		$this->wg->Memc->set($memcKey, $wikiData);
 	}
 
+	/**
+	 * @desc Updates memcached data (which have ONLY ONE wiki's informations) for visualization once a wiki's data has changed; in example: an image got reviewed and is sent to corporate page
+	 *
+	 * @param int $wikiId wiki id which data has changed
+	 * @param string $langCode wiki content lang
+	 * @param array $data new wiki data
+	 *
+	 * @author Andrzej 'nAndy' Łukaszewski
+	 */
+	public function updateComscoreWikiDataCache($wikiId, $langCode, $data) {
+		$helper = F::build('WikiGetDataForVisualizationHelper');
+		$memcKey = $helper->getMemcKey($wikiId, $langCode);
+
+		$wikiData = $this->wg->Memc->get($memcKey);
+
+		/*
+		nAndy::log(array(
+			'$wikiData' => $wikiData,
+		));
+		*/
+		if( is_array($wikiData) ) {
+			$result = array_merge($wikiData, $data);
+		}
+		/*
+		nAndy::log(array(
+			'$result' => $result,
+		));
+		*/
+		$this->wg->Memc->set($memcKey, $result);
+	}
+
+	public function getWikiComscoreListDataCacheKey($langCode) {
+		return $this->wf->memcKey('wikis_data_for_visualization_comscore', self::CITY_VISUALIZATION_MEMC_VERSION, $langCode, __METHOD__);
+	}
 
 	public function getWikiPromoteDataCacheKey($wikiId, $langCode) {
 		return $this->getVisualizationElementMemcKey('wiki_data_special_promote', $wikiId, $langCode);
@@ -299,7 +251,7 @@ class CityVisualization extends WikiaModel {
 	 */
 	public function getWikiDataForVisualization($wikiId, $langCode) {
 		$helper = F::build('WikiGetDataForVisualizationHelper');
-		return $this->getWikiData($wikiId,$langCode,$helper);
+		return $this->getWikiData($wikiId, $langCode, $helper);
 	}
 
 	/**
