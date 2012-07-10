@@ -4,6 +4,7 @@ MediaTool.Item = $.createClass(Observable,{
 	title: null,
 	thumbHtml: null,
 	thumbUrl: null,
+	remoteUrl: null,
 	editable: false,
 	origin: 'wiki',
 	isVideo: true,

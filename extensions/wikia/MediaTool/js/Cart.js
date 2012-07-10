@@ -68,6 +68,7 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 			item.isVideo = itemData.isVideo;
 			item.origin = itemOrigin;
 			item.duration = itemData.duration;
+			item.remoteUrl = itemData.remoteUrl;
 			item.renderThumbHtml();
 
 			var $item = $($.mustache(itemTemplate, item));
@@ -82,6 +83,25 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 
 			this.appendItem($item, item);
 		}
+	},
+
+	uploadRemoteItems: function() {
+		var urls = [];
+
+		$.each(this.items, function(i, item) {
+			if(item.origin == 'online') {
+				urls.push(item.remoteUrl);
+				hasItems = true;
+			}
+		});
+
+		if(urls.length > 0) {
+			MediaTool.callBackend('uploadVideos', { urls: urls }, function(r) {
+				$().log(r);
+			});
+		}
+
+		return (urls.length > 0);
 	},
 
 	appendItem: function( $item, itemObject ) {

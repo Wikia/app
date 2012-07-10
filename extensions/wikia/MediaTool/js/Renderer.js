@@ -4,9 +4,12 @@ MediaTool.Renderer = $.createClass(Observable,{
 		MediaTool.Renderer.superclass.constructor.call(this);
 
 		MediaTool.bind('editDone', this.onEditDone, this);
+		//MediaTool.bind('wikitextReady', this.onWikitextReady, this);
 	},
 
 	onEditDone: function(cart) {
+		cart.uploadRemoteItems();
+
 		RTE.mediaEditor.addVideo(this.getWikitext(cart), {});
 
 		// @todo use events for that
