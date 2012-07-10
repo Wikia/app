@@ -23,6 +23,11 @@ MediaTool.Item = $.createClass(Observable,{
 			var renderer = new MediaTool.Renderer();
 			this.thumbHtml = renderer.getMediaThumb(this);
 		}
-	}
+	},
+
+    renderPreview: function() {
+            var renderer = new MediaTool.Renderer();
+            return renderer.getPreview(this);
+    }
 
 });

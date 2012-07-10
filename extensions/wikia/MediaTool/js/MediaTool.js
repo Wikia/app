@@ -7,6 +7,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 	var resourceLoaderCache = null;
 	var dialogWrapper = null;
 	var currentView = "find"; // [ find, edit ]
+    var mt = null;
 
 	/* templates */
 	var templateDialog = null;
@@ -58,6 +59,8 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
             this.bind('showModal', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);});
             this.bind('editDone', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);});
+            this.bind('changeTab', onChangeTab);
+            mt = this;
             initModalComplete = true;
         }
     }
@@ -116,7 +119,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
             cart.createItem(item, templateItem, source);
         });
         //TODO: switch to "Edit media tab"
-        changeCurrentView( "find" );
+        changeCurrentView( "edit" );
     }
 
 	function onCartContentChange() {
@@ -202,6 +205,14 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		});
 	}
 
+    function onChangeTab() {
+
+        if ( currentView == "edit" ) {
+
+           renderPreview();
+        }
+    }
+
 	function closeModal() {
 		//TODO: check state and add confirm
 		$(dialogWrapper).closeModal();
@@ -216,7 +227,24 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		this.closeModal();
 	}
 
+    function renderPreview() {
+
+        var container = $('.mediatool-preview', dialogWrapper);
+        container.html('');
+        $.each( cart.items, function(i, item){
+            container.append( item.renderPreview() );
+        } );
+
+
+    }
+
+    function updatePreview() {
+
+    }
+
 	function changeCurrentView(newView, fromTab) {
+
+        var previousView = currentView;
 
 		if (newView == "edit") {
 
@@ -237,6 +265,10 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			$("button[name='done']", dialogWrapper).hide();
 			$("button[name='continue']", dialogWrapper).show();
 		}
+
+        if ( previousView != currentView ) {
+            mt.fire('changeTab');
+        }
 	}
 
 	function onAddViaUrlClick() {
@@ -263,10 +295,10 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		});
 
 		$("ul.tabs li[data-tab='edit-media'] a", dialogWrapper).on("click", function (e) {
-			changeCurrentView("edit", true);
+            changeCurrentView("edit", true);
 		});
 		$("ul.tabs li[data-tab='find-media'] a", dialogWrapper).on("click", function (e) {
-			changeCurrentView("find", true);
+            changeCurrentView("find", true);
 		});
 		$(".media-tool-thumbnail-style img", dialogWrapper).on("click", function (e) {
 			cart.setThumbnailStyle($(e.target).attr("data-thumb-style") == "border");
@@ -297,6 +329,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
         initModal: initModal,
 		showModal: showModal,
 		closeModal: closeModal,
+
 		finalizeDialog: finalizeDialog,
 		callBackend: callBackend,
 		getCart: function () {
