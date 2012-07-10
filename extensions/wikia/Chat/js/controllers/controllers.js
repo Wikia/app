@@ -255,7 +255,7 @@ var NodeRoomController = $.createClass(Observable,{
 				if(typeof match == "undefined"){
 					$().log("Found a ChatEntry that must have occurred during reconnection. Adding it to the model...");
 					var additionalEntry = new models.ChatEntry();
-					additionalEntry.mport( $.toJSON(item) );
+					additionalEntry.mport( JSON.stringify(item) );
 					chatEntries.add(additionalEntry);
 				}
 			});

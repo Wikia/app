@@ -70,7 +70,7 @@ var SpecialScavengerHunt = {
 			action: 'ajax',
 			method: 'getPreviewForm',
 			rs: 'ScavengerHuntAjax',
-			formData: $.toJSON(formData),
+			formData: JSON.stringify(formData),
 			type: type
 		};
 

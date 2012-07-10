@@ -4,14 +4,14 @@ var UADtracker = {
 
 	COOKIE_NAME: 'UADtracker',
 	COOKIE_LIFESPAN: 7776000,
-	
+
 	init: function() {
 		UADtracker.check();
 		$('body').bind('click', UADtracker.events );
 	},
 
 	check: function() {
-		
+
 		var UADTag = UADtracker.getCookie();
 		$().log( UADTag, UADTag );
 		if ( UADTag.date ){
@@ -38,7 +38,7 @@ var UADtracker = {
 		var strDate = currDate.getFullYear() + '-' + ( currDate.getMonth() + 1 ) + '-' + currDate.getDate();
 		return strDate;
 	},
-	
+
 	createCookie: function(){
 
 		UADtracker.setCookieData( UADtracker.freshCookie() );
@@ -46,7 +46,7 @@ var UADtracker = {
 	},
 
 	freshCookie: function(){
-		
+
 		return {
 			priority: Math.floor( Math.random()*10000 ),
 			date: UADtracker.getCurrentDate(),
@@ -80,7 +80,7 @@ var UADtracker = {
 		UADTag.events.save = UADTag.events.save + 1;
 		UADtracker.setCookieData( UADTag );
 	},
-	
+
 	addComment: function(){
 
 		var UADTag = UADtracker.getCookie();
@@ -100,7 +100,7 @@ var UADtracker = {
 
 		$.cookies.set(
 			UADtracker.COOKIE_NAME,
-			$.toJSON( cookieData ),
+			JSON.stringify( cookieData ),
 			{hoursToLive: 2400}
 		);
 	},
@@ -108,7 +108,7 @@ var UADtracker = {
 	getCookie: function(){
 
 		var cookieData = $.cookies.get( UADtracker.COOKIE_NAME );
-		
+
 		if ( cookieData !== "undefined" ){
 			return JSON.parse( cookieData );
 		} else {

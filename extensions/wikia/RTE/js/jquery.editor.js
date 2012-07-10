@@ -8,7 +8,7 @@ jQuery.fn.getData = function() {
 	// decode JSON
 	json = decodeURIComponent(json);
 
-	var data = $.secureEvalJSON(json) || {};
+	var data = JSON.parse(json) || {};
 	return data;
 };
 
@@ -28,7 +28,7 @@ jQuery.fn.setData = function(key, value) {
 	data = jQuery().extend(true, this.getData(), data);
 
 	// encode JSON
-	var json = $.toJSON(data);
+	var json = JSON.stringify(data);
 
 	this.attr('data-rte-meta', encodeURIComponent(json));
 

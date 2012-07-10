@@ -1399,7 +1399,7 @@ var WikiaPhotoGallery = {
 		preview.html('').addClass('WikiaPhotoGalleryProgress');
 
 		// send JSON-encoded gallery data to backend to render HTML for it
-		var galleryJSON = $.toJSON({
+		var galleryJSON = JSON.stringify({
 			images: gallery.images,
 			externalImages: gallery.externalImages || {},
 			params: gallery.params

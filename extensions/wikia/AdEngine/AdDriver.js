@@ -208,7 +208,7 @@ AdDriver.incrementNumCall = function(storageName, slotname) {
 			newSlotnameObjs.push( {slotname : slotname, num : ++numInStorage, ts : timestamp} );
 		}
 
-		$.expiryStorage.set(storageName, $.toJSON(newSlotnameObjs), window.wgAdDriverCookieLifetime*3600000);	// wgAdDriverCookieLifetime expressed in hours
+		$.expiryStorage.set(storageName, JSON.stringify(newSlotnameObjs), window.wgAdDriverCookieLifetime*3600000);	// wgAdDriverCookieLifetime expressed in hours
 	}
 
 	if (window.wgAdDriverUseCookie) {
@@ -231,7 +231,7 @@ AdDriver.incrementNumCall = function(storageName, slotname) {
 		}
 
 		var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath};	// do not set cookie domain
-		$.cookies.set(storageName, $.toJSON(newSlotnameObjs), cookieOptions);
+		$.cookies.set(storageName, JSON.stringify(newSlotnameObjs), cookieOptions);
 	}
 
 	return window.wgAdDriverUseExpiryStorage ? numInStorage : numInCookie;
@@ -335,7 +335,7 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 		}
 
 		if (newSlotnameTimestamps.length) {
-			$.expiryStorage.set(AdDriver.storageNameLastDARTCallNoAd, $.toJSON(newSlotnameTimestamps), window.wgAdDriverCookieLifetime*3600000);
+			$.expiryStorage.set(AdDriver.storageNameLastDARTCallNoAd, JSON.stringify(newSlotnameTimestamps), window.wgAdDriverCookieLifetime*3600000);
 		}
 	}
 
@@ -358,7 +358,7 @@ AdDriver.setLastDARTCallNoAd = function(slotname, value) {
 
 		if (newSlotnameTimestamps.length) {
 			var cookieOptions = {hoursToLive: window.wgAdDriverCookieLifetime, path: wgCookiePath};	// do not set cookie domain
-			$.cookies.set(AdDriver.storageNameLastDARTCallNoAd, $.toJSON(newSlotnameTimestamps), cookieOptions);
+			$.cookies.set(AdDriver.storageNameLastDARTCallNoAd, JSON.stringify(newSlotnameTimestamps), cookieOptions);
 		}
 	}
 
@@ -687,7 +687,7 @@ AdDriverDelayedLoader.loadNext = function() {
 		if (window.getTreatmentGroup && (window.wgLoadAdDriverOnLiftiumInit || getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)) {
 			if (AdDriverDelayedLoader.runFinalize) {
 				AdDriverDelayedLoader.finalize();
-			}						
+			}
 		}
 		else {
 			AdDriverDelayedLoader.finalize();
@@ -741,17 +741,17 @@ AdDriverDelayedLoader.prepareSlots = function(loadPriorityFloor) {
 	while (slots = AdDriverDelayedLoader.getNextSlotFromBuffer(loadPriorityFloor)) {
 		var slot = slots[0];
 		AdDriverDelayedLoader.appendItem(new AdDriverDelayedLoaderItem(slot[0], slot[1], slot[2]));
-	}	
-	
+	}
+
 	if (!AdDriverDelayedLoader.started) {
 		AdDriverDelayedLoader.load();
 	}
 }
 
-// Get highest priority slot from buffer and remove. Destructively changes 
+// Get highest priority slot from buffer and remove. Destructively changes
 // window.adslots
-// @param int loadPriorityFloor 
-// 
+// @param int loadPriorityFloor
+//
 AdDriverDelayedLoader.getNextSlotFromBuffer = function(loadPriorityFloor) {
 	var highestPriority = -1;
 	var highestPriorityIndex = -1;
@@ -760,14 +760,14 @@ AdDriverDelayedLoader.getNextSlotFromBuffer = function(loadPriorityFloor) {
 			if (window.adslots[i][3] > highestPriority) {
 				highestPriority = window.adslots[i][3];
 				highestPriorityIndex = i;
-			}			
+			}
 		}
-	}	
-	
+	}
+
 	if (highestPriorityIndex >= 0) {
 		return window.adslots.splice(highestPriorityIndex, 1);
 	}
-	
+
 	return null;
 }
 AdDriverDelayedLoader.startCalled = false;
@@ -817,7 +817,7 @@ AdDriverDelayedLoader.finalize = function() {
 			'internal'
 		);
 	}
-    
+
 	if (window.wgEnableKruxTargeting) {
 		AdDriver.log('loading krux');
 		Krux.load(window.wgKruxCategoryId);
@@ -840,13 +840,13 @@ if (window.wgEnableKruxTargeting) {
 	window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
 	(function(){
 		function store(n){var m,k='kx'+n;return((m=this.localStorage)?m[k]||'':(m=document.cookie)&&(m=m.match('\\b'+k+'=([^;]*)'))&&decodeURIComponent(m[1]))||''}
-		
+
 		// expose user and segments to javascript
 		Krux.user     = store('user');
 		Krux.segments = store('segs') && store('segs').split(',') || [];
-		
+
 		// dartKeyValues
-		var key = ';ksgmnt='; Krux.dartKeyValues = 
+		var key = ';ksgmnt='; Krux.dartKeyValues =
 			(Krux.segments.length ? key+Krux.segments.join(key) : '') +
 			(Krux.user ? ';u='+Krux.user+';' : '');
 	})();
@@ -890,7 +890,7 @@ if (window.getTreatmentGroup) {	// any page without getTreatmentGroup() defined 
 
 			$(document).ready(function() {
 				if (window.adDriverCanInit == false) {
-					adDriverFuncsToExecute.push(prepareLowPrioritySlots);	
+					adDriverFuncsToExecute.push(prepareLowPrioritySlots);
 				}
 				else {
 					prepareLowPrioritySlots();
