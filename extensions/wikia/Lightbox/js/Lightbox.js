@@ -563,7 +563,7 @@ var Lightbox = {
 			$.nirvana.sendRequest({
 				controller: 'Lightbox',
 				method: 'getShareCodes',
-				type: 'POST',	/* TODO (hyun) - might change to get */
+				type: 'GET',
 				format: 'json',
 				data: mediaParams,
 				callback: function(json) {
