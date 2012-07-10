@@ -938,7 +938,9 @@ function VET_insertFinalVideo(e, type) {
 					$G('VideoEmbed' + VET_curScreen).innerHTML = o.responseText;
 					if ( !$G( 'VideoEmbedCreate'  ) && !$G( 'VideoEmbedReplace' ) ) {
 						if(VET_refid == null) { // not FCK
-
+							if (typeof RTE !== 'undefined') {
+								RTE.getInstanceEditor().getEditbox().focus();
+							}
 							if ('-1' == VET_gallery) {
 								if (!VET_inGalleryPosition) {
 									if($G('wpTextbox1')){

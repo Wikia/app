@@ -1126,6 +1126,10 @@ function WMU_insertImage(e, type) {
 				case 'summary':
 
 					WMU_switchScreen('Summary');
+					if (typeof RTE !== 'undefined') {
+						RTE.getInstanceEditor().getEditbox().focus();
+					}
+
 					$G('ImageUploadBack').style.display = 'none';
 					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
 
