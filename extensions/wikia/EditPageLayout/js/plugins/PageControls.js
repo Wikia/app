@@ -3,7 +3,7 @@
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	// Returns the width of the browsers scrollbar
-	function getScrollBarWidth() {
+	function getScrollbarWidth() {
 		var inner = document.createElement("p");
 		inner.style.width = "100%";
 		inner.style.height = "100px";
@@ -57,6 +57,7 @@
 				menu = pageControls.find('nav');
 
 			this.textarea = pageControls.find('textarea');
+			this.scrollbarWidth = getScrollbarWidth();
 
 			// set up the caption of summary field
 			this.textarea.placeholder();
@@ -403,7 +404,7 @@
 			}
 
 			// add width of scrollbar (BugId:35767)
-			width += getScrollBarWidth();
+			width += this.scrollbarWidth;
 
 			var options = {
 				buttons: [
