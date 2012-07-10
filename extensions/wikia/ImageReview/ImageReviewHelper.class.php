@@ -36,15 +36,15 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$statsInsert = array();
 
 		$sqlWhere = array(
-			self::STATE_APPROVED => array(),
-			self::STATE_REJECTED => array(),
-			self::STATE_QUESTIONABLE => array(),
+			ImageReviewStatuses::STATE_APPROVED => array(),
+			ImageReviewStatuses::STATE_REJECTED => array(),
+			ImageReviewStatuses::STATE_QUESTIONABLE => array(),
 		);
 
 		foreach ( $images as $image ) {
 			$sqlWhere[ $image['state'] ][] = "( wiki_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			
-			if ( $image['state'] == self::STATE_DELETED ) {
+			if ( $image['state'] == ImageReviewStatuses::STATE_DELETED ) {
 				$deletionList[$image['wikiId']] = $image['pageId'];
 			}
 
@@ -90,15 +90,15 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				case '':
 				//	$stats['reviewer'] += count($images);
 				//	$stats['unreviewed'] -= count($images);
-					$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
+					$stats['questionable'] += count($sqlWhere[ImageReviewStatuses::STATE_QUESTIONABLE]);
 					break;
 				case ImageReviewSpecialController::ACTION_QUESTIONABLE:
-					$changedState = count( $sqlWhere[self::STATE_APPROVED] ) + count( $sqlWhere[self::STATE_REJECTED] );
+					$changedState = count( $sqlWhere[ImageReviewStatuses::STATE_APPROVED] ) + count( $sqlWhere[ImageReviewStatuses::STATE_REJECTED] );
 				//	$stats['reviewer'] += $changedState;
 					$stats['questionable'] -= $changedState;
 					break;
 				case ImageReviewSpecialController::ACTION_REJECTED:
-					$changedState = count( $sqlWhere[self::STATE_APPROVED] ) + count( $sqlWhere[self::STATE_DELETED] );
+					$changedState = count( $sqlWhere[ImageReviewStatuses::STATE_APPROVED] ) + count( $sqlWhere[ImageReviewStatuses::STATE_DELETED] );
 					$stats['rejected'] -= $changedState;
 					break;
 			}
@@ -138,13 +138,13 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			'image_review',
 			array(
 				'reviewer_id = null',
-				'state' => self::STATE_UNREVIEWED,
+				'state' => ImageReviewStatuses::STATE_UNREVIEWED,
 			),
 			array(
 				"review_start < '{$review_start}'",
 				"review_end = '0000-00-00 00:00:00'",
 				'reviewer_id' => $this->user_id,
-				'state' => self::STATE_IN_REVIEW,
+				'state' => ImageReviewStatuses::STATE_IN_REVIEW,
 			),
 			__METHOD__
 		);
@@ -152,12 +152,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		// for STATE_QUESTIONABLE
 		$db->update(
 			'image_review',
-			array( 'state' => self::STATE_QUESTIONABLE ),
+			array( 'state' => ImageReviewStatuses::STATE_QUESTIONABLE ),
 			array(
 				"review_start < '{$review_start}'",
 				"review_end = '0000-00-00 00:00:00'",
 				'reviewer_id' => $this->user_id,
-				'state' => self::STATE_QUESTIONABLE_IN_REVIEW,
+				'state' => ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
 			),
 			__METHOD__
 		);
@@ -229,7 +229,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	 * get image list
 	 * @return array imageList
 	 */
-	public function getImageList( $timestamp, $state = self::STATE_UNREVIEWED, $order = self::ORDER_LATEST ) {
+	public function getImageList( $timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST ) {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		// for testing
@@ -269,10 +269,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$values = array (
 				'reviewer_id' => $this->user_id,
 				'review_start' => $review_start,
-				'state' => ( $state == self::STATE_QUESTIONABLE ) ? self::STATE_QUESTIONABLE_IN_REVIEW : self::STATE_IN_REVIEW
+				'state' => ( $state == ImageReviewStatuses::STATE_QUESTIONABLE ) ? ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW : ImageReviewStatuses::STATE_IN_REVIEW
 			);
 			
-			if ( $state == self::STATE_QUESTIONABLE ) {
+			if ( $state == ImageReviewStatuses::STATE_QUESTIONABLE ) {
 				$values[] = "review_end = '0000-00-00 00:00:00'";
 			} 
 			
@@ -287,7 +287,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		if ( count($iconsWhere) > 0 ) {
 			$db->update(
 				'image_review',
-				array( 'state' => self::STATE_ICO_IMAGE),
+				array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE),
 				array( implode(' OR ', $iconsWhere) ),
 				__METHOD__
 			);
@@ -322,7 +322,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$db->update(
 				'image_review',
 				array( 
-					'state' => self::STATE_INVALID_IMAGE
+					'state' => ImageReviewStatuses::STATE_INVALID_IMAGE
 				),
 				array( implode(' OR ', $invalidImages) ),
 				__METHOD__
@@ -434,7 +434,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		
 		$db = $this->getDatawareDB( DB_SLAVE );
 		$where = array(
-			'state' => self::STATE_QUESTIONABLE
+			'state' => ImageReviewStatuses::STATE_QUESTIONABLE
 		);
 		
 		$list = $this->getWhitelistedWikis();
@@ -460,15 +460,15 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$total['questionable'] = $row->total;
 
 			// Rollup row with Reviewer total count
-		/*	if ($row->reviewer_id == $reviewer_id && ($row->state > self::STATE_IN_REVIEW)) {
+		/*	if ($row->reviewer_id == $reviewer_id && ($row->state > ImageReviewStatuses::STATE_IN_REVIEW)) {
 				$total['reviewer'] += $row->total;
 			}
 			// Rollup row with total unreviewed
-			if ($row->state == self::STATE_UNREVIEWED) {
+			if ($row->state == ImageReviewStatuses::STATE_UNREVIEWED) {
 				$total['unreviewed'] += $row->total;
 			}
 			// Rollup row with total questionable
-			if ($row->state == self::STATE_QUESTIONABLE) {
+			if ($row->state == ImageReviewStatuses::STATE_QUESTIONABLE) {
 				$total['questionable'] += $row->total;
 			} */
 		}
@@ -488,9 +488,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		$summary = array(
 			'all' => 0,
-			self::STATE_APPROVED => 0,
-			self::STATE_REJECTED => 0,
-			self::STATE_QUESTIONABLE => 0,
+			ImageReviewStatuses::STATE_APPROVED => 0,
+			ImageReviewStatuses::STATE_REJECTED => 0,
+			ImageReviewStatuses::STATE_QUESTIONABLE => 0,
 			'avg' => 0,
 		);
 		$data = array();

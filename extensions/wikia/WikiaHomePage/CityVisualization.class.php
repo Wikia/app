@@ -13,7 +13,7 @@ class CityVisualization extends WikiaModel {
 	const CITY_TAG_VIDEO_GAMES_ID = 131;
 	const CITY_TAG_LIFESTYLE_ID = 127;
 
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.08';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.09';
 
 	protected static $wikiaListMemcKey = 'wikis_data_for_visualization_wikia_v1.0';
 	protected static $comscoreListMemcKey = 'wikis_data_for_visualization_comscore_v1.0';
@@ -262,76 +262,56 @@ class CityVisualization extends WikiaModel {
 	}
 
 
-	protected function getWikiPromoteDataCacheKey($wikiId, $langCode) {
+	public function getWikiPromoteDataCacheKey($wikiId, $langCode) {
 		return $this->getVisualizationElementMemcKey('wiki_data_special_promote', $wikiId, $langCode);
 	}
 
-	protected function getWikiDataCacheKey($wikiId, $langCode) {
+	public function getWikiDataCacheKey($wikiId, $langCode) {
 		return $this->getVisualizationElementMemcKey('wiki_data_visualization', $wikiId, $langCode);
 	}
 
-	protected function getWikiImagesCacheKey($wikiId, $langCode) {
+    public function getWikiImagesCacheKey($wikiId, $langCode) {
 		return $this->getVisualizationElementMemcKey('wiki_data_visualization_images', $wikiId, $langCode);
 	}
 
-	protected function getWikiImageNamesCacheKey($wikiId, $langCode) {
+	public function getWikiImageNamesCacheKey($wikiId, $langCode) {
 		return $this->getVisualizationElementMemcKey('wiki_data_visualization_image_names', $wikiId, $langCode);
 	}
 
-	protected function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
+	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
 		return $this->wf->memcKey($prefix, self::CITY_VISUALIZATION_MEMC_VERSION, $wikiId, $langCode);
 	}
 
+	/**
+	 * Get wiki data for Special:Promote
+	 * @param integer $wikiId
+	 * @return array $wikiData
+	 */
 	public function getWikiDataForPromote($wikiId, $langCode) {
-		$this->wf->ProfileIn(__METHOD__);
-
-		$memcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
-		$wikiData = $this->wg->Memc->get($memcKey);
-
-		if (empty($wikiData)) {
-			$wikiData = array();
-			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-			$row = $db->selectRow(
-				array('city_visualization'),
-				array(
-					'city_headline',
-					'city_description',
-					'city_main_image',
-					'city_flags',
-					'city_images',
-				),
-				array(
-					'city_id' => $wikiId,
-					'city_lang_code' => $langCode
-				),
-				__METHOD__
-			);
-
-			if ($row) {
-				$wikiData['headline'] = $row->city_headline;
-				$wikiData['description'] = $row->city_description;
-				$wikiData['flags'] = $row->city_flags;
-				$wikiData['main_image'] = $row->city_main_image;
-				$wikiData['images'] = $this->getWikiImageNames($wikiId, $langCode);
-			}
-
-			$this->wg->Memc->set($memcKey, $wikiData, 60 * 60 * 24);
-		}
-
-		$this->wf->ProfileOut(__METHOD__);
-
-		return $wikiData;
+		$helper = F::build('WikiGetDataForPromoteHelper');
+		return $this->getWikiData($wikiId,$langCode,$helper);
 	}
 
 	/**
-	 * get wiki data
+	 * Get wiki data for Wikia Visualization
 	 * @param integer $wikiId
 	 * @return array $wikiData
 	 */
 	public function getWikiDataForVisualization($wikiId, $langCode) {
+		$helper = F::build('WikiGetDataForVisualizationHelper');
+		return $this->getWikiData($wikiId,$langCode,$helper);
+	}
+
+	/**
+	 * Get wiki data for Wikia Visualization
+	 * @param integer $wikiId
+	 * @param integer $wikiId
+	 * @return array $wikiData
+	 */
+	public function getWikiData($wikiId, $langCode, WikiGetDataHelper $dataHelper) {
 		$this->wf->ProfileIn(__METHOD__);
 
-		$memcKey = $this->getWikiDataCacheKey($wikiId, $langCode);
+		$memcKey = $dataHelper->getMemcKey($wikiId, $langCode);
 		$wikiData = $this->wg->Memc->get($memcKey);
 
 		if (empty($wikiData)) {
@@ -358,7 +338,7 @@ class CityVisualization extends WikiaModel {
 				$wikiData['description'] = $row->city_description;
 				$wikiData['flags'] = $row->city_flags;
 				$wikiData['main_image'] = $row->city_main_image;
-				$wikiData['images'] = (array)json_decode($row->city_images);
+				$wikiData['images'] = $dataHelper->getImages($wikiId,$langCode,$row);
 			}
 
 			$this->wg->Memc->set($memcKey, $wikiData, 60 * 60 * 24);
@@ -369,16 +349,16 @@ class CityVisualization extends WikiaModel {
 		return $wikiData;
 	}
 
-	protected function getWikiImagesConditions($wikiId, $filter) {
+		protected function getWikiImagesConditions($wikiId, $filter) {
 		$conditions = array();
 
 		$conditions ['city_id'] = $wikiId;
 		switch ($filter) {
 			case self::DIRT_REVIEWED_IMAGES_ONLY:
-				$conditions ['image_review_status'] = AdminUploadReviewHelper::STATE_APPROVED;
+				$conditions ['image_review_status'] = ImageReviewStatuses::STATE_APPROVED;
 				break;
 			case self::DIRT_UNREVIEWED_IMAGES_ONLY:
-				$conditions ['image_review_status'] = AdminUploadReviewHelper::STATE_UNREVIEWED;
+				$conditions ['image_review_status'] = ImageReviewStatuses::STATE_UNREVIEWED;
 				break;
 			default:
 				break;
@@ -418,7 +398,7 @@ class CityVisualization extends WikiaModel {
 		return $wikiImageNames;
 	}
 
-	public function getWikiImageData($wikiId, $langCode, wikiImageRowAssigner $rowAssigner, $filter = self::DIRT_REVIEWED_IMAGES_ONLY) {
+	public function getWikiImageData($wikiId, $langCode, WikiImageRowAssigner $rowAssigner, $filter = self::DIRT_REVIEWED_IMAGES_ONLY) {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$wikiImages = array();
@@ -438,7 +418,7 @@ class CityVisualization extends WikiaModel {
 		);
 
 		while ($row = $result->fetchObject()) {
-			$wikiImages[$row->image_index] = $rowAssigner->returnParsesWikiImageRow($row);
+			$wikiImages[$row->image_index] = $rowAssigner->returnParsedWikiImageRow($row);
 		}
 
 		$this->wf->ProfileOut(__METHOD__);
@@ -530,7 +510,7 @@ class CityVisualization extends WikiaModel {
 		$imagesToRemove = array();
 
 		foreach ($images as $image) {
-			$title = F::build('Title', array($image, NS_FILE), 'newFromText');
+			$title = F::build('Title', array($image['name'], NS_FILE), 'newFromText');
 
 			$imageData = new stdClass();
 			$imageData->city_id = $cityId;
@@ -597,9 +577,9 @@ class CityVisualization extends WikiaModel {
 		return $wikiImages;
 	}
 
-	public function getImageReviewStatus($wikiId, $pageId, wikiImageRowAssigner $rowAssigner) {
+	public function getImageReviewStatus($wikiId, $pageId, WikiImageRowAssigner $rowAssigner) {
 		$this->wf->ProfileIn(__METHOD__);
-		$reviewStatus = AdminUploadReviewHelper::STATE_UNREVIEWED;
+		$reviewStatus = ImageReviewStatuses::STATE_UNREVIEWED;
 
 		$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$conditions['city_id'] = $wikiId;
@@ -614,8 +594,8 @@ class CityVisualization extends WikiaModel {
 			__METHOD__
 		);
 
-		while( $row = $result->fetchObject() ) {
-			$reviewStatus = $rowAssigner->returnParsesWikiImageRow($row);
+		while ($row = $result->fetchObject()) {
+			$reviewStatus = $rowAssigner->returnParsedWikiImageRow($row);
 		}
 
 		$this->wf->ProfileOut(__METHOD__);
@@ -638,30 +618,3 @@ class CityVisualization extends WikiaModel {
 		return (($wikiFlags & self::FLAG_BLOCKED) == self::FLAG_BLOCKED);
 	}
 }
-
-interface wikiImageRowAssigner {
-	public function returnParsesWikiImageRow($row);
-}
-
-class wikiImageNameRowHelper implements wikiImageRowAssigner {
-	public function returnParsesWikiImageRow($row) {
-		return $row->image_name;
-	}
-}
-
-class wikiImageReviewStatusRowHelper implements wikiImageRowAssigner {
-	public function returnParsesWikiImageRow($row) {
-		return $row->image_review_status;
-	}
-}
-
-class wikiImageRowHelper implements wikiImageRowAssigner {
-	public function returnParsesWikiImageRow($row) {
-		return array(
-			'image_name' => $row->image_name,
-			'image_index' => $row->image_index,
-			'image_reviewed' => $row->image_reviewed
-		);
-	}
-}
-

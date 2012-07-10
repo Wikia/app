@@ -20,11 +20,29 @@ $wgExtensionCredits['other'][] = array(
 		'version'		=> 1.0
 );
 
+// helper hierarchy
+// row assigners
+
+$app->registerClass('WikiImageRowAssigner',$dir.'classes/WikiImageRowAssigner.class.php');
+$app->registerClass('WikiImageRowHelper',$dir.'classes/WikiImageRowHelper.class.php');
+$app->registerClass('WikiImageNameRowHelper',$dir.'classes/WikiImageNameRowHelper.class.php');
+$app->registerClass('WikiImageReviewStatusRowHelper',$dir.'classes/WikiImageReviewStatusRowHelper.class.php');
+
+// getdata helpers
+$app->registerClass('WikiGetDataHelper',$dir.'classes/WikiGetDataHelper.class.php');
+$app->registerClass('WikiGetDataForVisualizationHelper',$dir.'classes/WikiGetDataForVisualizationHelper.class.php');
+$app->registerClass('WikiGetDataForPromoteHelper',$dir.'classes/WikiGetDataForPromoteHelper.class.php');
+
+
 //classes
 $app->registerClass('WikiaHomePageController', $dir.'WikiaHomePageController.class.php');
 $app->registerClass('WikiaHomePageSpecialController', $dir.'WikiaHomePageSpecialController.class.php');
 $app->registerClass('WikiaHomePageHelper', $dir.'WikiaHomePageHelper.class.php');
 $app->registerClass('CityVisualization', $dir.'CityVisualization.class.php');
+
+
+
+
 
 //special page
 $app->registerSpecialPage('WikiaHomePage', 'WikiaHomePageSpecialController');

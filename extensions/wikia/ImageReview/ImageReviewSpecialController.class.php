@@ -109,9 +109,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 
 		if ( count($this->imageList) == 0 ) {
 			$do = array( 
-				self::ACTION_QUESTIONABLE	=> $helper::STATE_QUESTIONABLE,
-				self::ACTION_REJECTED		=> $helper::STATE_REJECTED,
-				'default'					=> $helper::STATE_UNREVIEWED
+				self::ACTION_QUESTIONABLE	=> ImageReviewStatuses::STATE_QUESTIONABLE,
+				self::ACTION_REJECTED		=> ImageReviewStatuses::STATE_REJECTED,
+				'default'					=> ImageReviewStatuses::STATE_UNREVIEWED
 			);
 			$this->imageList = $helper->getImageList( $ts, isset( $do[ $action ] ) ? $do[ $action ] : $do['default'], $order );
 		}

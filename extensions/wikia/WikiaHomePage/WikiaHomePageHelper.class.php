@@ -526,7 +526,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		$reviewStatus = false;
 
 		$visualizationModel = F::build('CityVisualization');
-		$rowAssigner = F::build('wikiImageReviewStatusRowHelper');
+		$rowAssigner = F::build('WikiImageReviewStatusRowHelper');
 		if( $imageId > 0 ) {
 			$reviewStatus = $visualizationModel->getImageReviewStatus($this->wg->CityId, $imageId, $rowAssigner);
 		}

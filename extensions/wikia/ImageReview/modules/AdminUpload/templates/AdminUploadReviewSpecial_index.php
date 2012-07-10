@@ -17,7 +17,7 @@
 		Sort order: <?php
 		$sortSelect = new XmlSelect( 'sort', 'sort', intval( $order ) );
 
-		$sortSelect->addOptions( ImageReviewHelper::$sortOptions );
+		$sortSelect->addOptions( ImageReviewStatuses::$sortOptions );
 
 		echo $sortSelect->getHTML();
 		?>
@@ -61,28 +61,28 @@
 								 src="<?= htmlspecialchars($image['src']) ?>">
 						</div>
 						<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="Go to image page"></a>
-						<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SUSPICOUS_USER ) { ?>
+						<?php if ( $image['flags'] & ImageReviewStatuses::FLAG_SUSPICOUS_USER ) { ?>
 						<a href="<?= htmlspecialchars($image['user_page']) ?>" target="_blank" class="internal sprite details magnify" title="Flagged: Susicious user. Click to go to uploader's profile" style="clear: both"></a>
 						<?php } ?>
-						<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SUSPICOUS_WIKI ) { ?>
+						<?php if ( $image['flags'] & ImageReviewStatuses::FLAG_SUSPICOUS_WIKI ) { ?>
 						<a href="<?= htmlspecialchars($image['wiki_url']) ?>" target="_blank" class="internal sprite details magnify" title="Flagged: Suspicious wiki. Click to go to wiki" style="clear: both"></a>
 						<?php } ?>
-						<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SKIN_DETECTED ) { ?>
+						<?php if ( $image['flags'] & ImageReviewStatuses::FLAG_SKIN_DETECTED ) { ?>
 						<span class="internal sprite details magnify" title="Flagged: Skin detected." style="clear: both"></span>
 						<?php } ?>
 
 						<label title="Mark as OK">
 							<input type="hidden" name="<?= $id ?>-lang" value="<?= $image['lang'] ?>" />
 							<input type="hidden" name="<?= $id ?>-fileName" value="<?= htmlspecialchars($image['name'],ENT_QUOTES) ?>" />
-							<input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_APPROVED ?>"<?= ($stateId == ImageReviewHelper::STATE_APPROVED || $stateId == ImageReviewHelper::STATE_IN_REVIEW || $stateId == ImageReviewHelper::STATE_QUESTIONABLE_IN_REVIEW || ( $stateId == ImageReviewHelper::STATE_QUESTIONABLE && $action == 'questionable' ) || $stateId == ImageReviewHelper::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
+							<input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_APPROVED ?>"<?= ($stateId == ImageReviewStatuses::STATE_APPROVED || $stateId == ImageReviewStatuses::STATE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW || ( $stateId == ImageReviewStatuses::STATE_QUESTIONABLE && $action == 'questionable' ) || $stateId == ImageReviewStatuses::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
 						<label title="Delete">
 							<input type="hidden" name="<?= $id ?>-lang" value="<?= $image['lang'] ?>" />
 							<input type="hidden" name="<?= $id ?>-fileName" value="<?= htmlspecialchars($image['name'],ENT_QUOTES) ?>" />
-							<input type="radio" name="<?= $id ?>" value="<?= ( $action == 'rejected' ) ? ImageReviewHelper::STATE_DELETED : ImageReviewHelper::STATE_REJECTED ?>"<?= ($stateId == ImageReviewHelper::STATE_REJECTED ? ' checked' :'') ?>>Del</label>
+							<input type="radio" name="<?= $id ?>" value="<?= ( $action == 'rejected' ) ? ImageReviewStatuses::STATE_DELETED : ImageReviewStatuses::STATE_REJECTED ?>"<?= ($stateId == ImageReviewStatuses::STATE_REJECTED ? ' checked' :'') ?>>Del</label>
 						<label title="Questionable">
 							<input type="hidden" name="<?= $id ?>-lang" value="<?= $image['lang'] ?>" />
 							<input type="hidden" name="<?= $id ?>-fileName" value="<?= htmlspecialchars($image['name'],ENT_QUOTES) ?>" />
-							<input type="radio" name="<?= $id ?>" value="<?= ImageReviewHelper::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewHelper::STATE_QUESTIONABLE && $action != 'questionable' ? ' checked' :'') ?>>Q</label>
+							<input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_QUESTIONABLE ?>"<?= ($stateId == ImageReviewStatuses::STATE_QUESTIONABLE && $action != 'questionable' ? ' checked' :'') ?>>Q</label>
 					</li>
 					<?php
 					/*
