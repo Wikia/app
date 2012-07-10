@@ -64,7 +64,8 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 		var itemId = itemOrigin+'-'+itemData.hash;
 
 		if(!this.exists(itemId)) {
-			var item = new MediaTool.Item(itemId, itemData.title, itemData.thumbUrl, itemData.thumbHtml);
+			var item = new MediaTool.Item(itemId, itemData.title, itemData.thumbHtml, itemData.thumbUrl);
+			item.isVideo = itemData.isVideo;
 			item.origin = itemOrigin;
 			item.duration = itemData.duration;
 			item.renderThumbHtml();

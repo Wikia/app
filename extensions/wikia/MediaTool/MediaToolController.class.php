@@ -42,6 +42,7 @@ class MediaToolController extends WikiaController {
 				$metaData = $wrapper->getMetadata();
 
 				$data['status'] = self::RESPONSE_STATUS_OK;
+				$data['isVideo'] = true;
 				$data['title'] = $wrapper->getTitle();
 				$data['hash'] = md5($wrapper->getTitle());
 				$data['thumbUrl'] = $wrapper->getThumbnailUrl();
@@ -75,7 +76,7 @@ class MediaToolController extends WikiaController {
 					$oFile = wfFindFile($oFileTitle);
 					if ( !empty($oFile) ) {
 						$data[] = array(
-							"video" => WikiaFileHelper::isFileTypeVideo( $oFile ),
+							"isVideo" => WikiaFileHelper::isFileTypeVideo( $oFile ),
 							"title" => $oFileTitle->getPrefixedDBkey(),
 							"hash" => md5($oFileTitle->getFullText()),
 							"status" => self::RESPONSE_STATUS_OK,
@@ -95,16 +96,18 @@ class MediaToolController extends WikiaController {
 		// @todo implement
 		$data = array();
 		$data[] = array(
-			'video' => true,
+			'isVideo' => true,
 			'hash' => md5('File:Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)'),
-			'file' => 'File:Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)',
-			'thumbHtml' => $this->getMediaThumb('Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)')
+			'title' => 'File:Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)',
+			'thumbHtml' => $this->getMediaThumb('Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)'),
+			'thumbUrl' => '',
 		);
 		$data[] = array(
-			'video' => false,
+			'isVideo' => false,
 			'hash' => md5('File:256.jpeg'),
-			'file' => 'File:256.jpeg',
-			'thumbHtml' => $this->getMediaThumb('256.jpeg')
+			'title' => 'File:256.jpeg',
+			'thumbHtml' => $this->getMediaThumb('256.jpeg'),
+			'thumbUrl' => '',
 		);
 
 		$this->response->setData( $data );

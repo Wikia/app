@@ -76,7 +76,12 @@ MediaTool.ItemsCollection = $.createClass(MediaTool.Collection,{
 		MediaTool.callBackend('getRecentMedia', {}, function(items) {
 			self.items = [];
 			$.each(items, function(i, item) {
-				self.items.push(new MediaTool.Item(('wiki-'+item.hash), item.video, item.file, item.thumbHtml, 'wiki'));
+				var newItem = new MediaTool.Item(('wiki-'+item.hash), item.title, item.thumbHtml, item.thumbUrl);
+
+				newItem.isVideo = item.isVideo;
+				newItem.origin = 'wiki';
+
+				self.items.push(newItem);
 			});
 			self.refreshTemplate();
 		});

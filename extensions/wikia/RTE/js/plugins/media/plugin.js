@@ -340,7 +340,7 @@ CKEDITOR.plugins.add('rte-media',
                 window.MediaTool.callBackend('getMediaItems', {mediaList:[data.title]}, function(items) {
 
                     $.each(items, function(i, item) {
-                        window.MediaTool.initialBasketContent.push( {title:item.title, file:item.title, thumbHtml:item.thumbHtml, thumbUrl:item.thumbUrl, hash:item.hash} );
+                        window.MediaTool.initialBasketContent.push( item );
                     });
                     RTE.tools.callFunction($.proxy(window.MediaTool.showModal, window.MediaTool));
                 });
