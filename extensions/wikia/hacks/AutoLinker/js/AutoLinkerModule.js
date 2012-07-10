@@ -116,7 +116,7 @@
 								$().log(pageName, 'Autolinker - link added');
 
 								var href = window.wgArticlePath.replace('$1', pageName.replace(/ /g, '_')),
-									dataAttr = 'data-rte-meta="' + encodeURIComponent($.toJSON({
+									dataAttr = 'data-rte-meta="' + encodeURIComponent(JSON.stringify({
 										type: 'internal',
 										link: pageName
 									})) + '"';

@@ -501,7 +501,7 @@ function expandAutoComplete(sQuery , aResults) {
 }
 
 function regularEditorSubmit(e) {
-	$('#wpCategorySelectWikitext').attr('value', $.toJSON(categories));
+	$('#wpCategorySelectWikitext').attr('value', JSON.stringify(categories));
 }
 
 function getCategories(sQuery) {
@@ -655,7 +655,7 @@ function csSave() {
 	if ($('#csCategoryInput').attr('value') != '') {
 		addCategory($('#csCategoryInput').attr('value'));
 	}
-	var pars = 'rs=CategorySelectAjaxSaveCategories&rsargs[]=' + wgArticleId + '&rsargs[]=' + encodeURIComponent($.toJSON(categories));
+	var pars = 'rs=CategorySelectAjaxSaveCategories&rsargs[]=' + wgArticleId + '&rsargs[]=' + encodeURIComponent(JSON.stringify(categories));
 	$.ajax({
 		url: csAjaxUrl,
 		data: pars,

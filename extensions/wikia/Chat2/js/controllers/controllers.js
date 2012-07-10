@@ -18,7 +18,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	autoReconnect: true,
 	isInitialized: false,
 	inAuthRequestWithMW: false,
-	comingBackFromAway: false,	
+	comingBackFromAway: false,
 	roomId: false,
 	socket: false,
 	reConnectCount: 0,
@@ -27,14 +27,14 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		this.sessionData = null;
 		this.roomId = roomId;
 	},
-	
+
 	send: function($msg) {
 		$().log( $msg, 'message');
 		if(this.socket) {
 			this.socket.emit('message', $msg);
 		}
 	},
-	
+
 	baseconnect: function() {
 		if(this.connected) {
 			$().log("already connected");
@@ -56,7 +56,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 					'reconnect':false
 				});
 				var transport = globalTransports[0];
-				socket.on('message', this.proxy( this.onMsgReceived, this ) );	
+				socket.on('message', this.proxy( this.onMsgReceived, this ) );
 				socket.on('connect', this.proxy( function(){this.onConnect(socket, transport); }, this ) );
 			});
 	//	} else {
@@ -65,10 +65,10 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	//		this.socket.socket.connect();
 	//	}
 	},
-		
+
 	connect: function() {
 		this.baseconnect();
-		
+
 		if(!this.firstConnected) {
 			this.connectTimeoutTimer = setTimeout($.proxy(function() {
 				$().log("timeout try without socket connection");
@@ -89,27 +89,27 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	onConnect: function(socket, transport) {
 		this.socket = socket;
 		this.reConnectCount = 0;
-		
+
 		if(!this.firstConnected) {
 			var InitqueryCommand = new models.InitqueryCommand();
 		//	if(transport != 'websocket') {
 				//Wait for session propagation
 				setTimeout($.proxy(function() {
 					this.socket.send(InitqueryCommand.xport());
-				}, this ), 500); 
+				}, this ), 500);
 		//	}
 		}
-		
+
 		socket.on('disconnect', this.proxy( this.onDisconnect, this ) );
-		
+
 		clearTimeout(this.tryconnect);
 		if(this.announceConnection){
 			$().log("Reconnected.");
 			this.announceConnection = false;
 		}
-		this.connected = true;	  
+		this.connected = true;
 	},
-	
+
 	onDisconnect: function(){
 
 		//problem with first connection (for example fire wall)
@@ -117,7 +117,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 			//TODO: call connectTimeoutTimer
 			return true;
 		}
-	
+
                 if( this.socket && this.socket.socket.connected) {
                         return true;
                 }
@@ -140,20 +140,20 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		var encodedWgUserName = encodeURIComponent(encodeURIComponent(wgUserName));
 		this.checkSession = function(data) {
 			$().log(encodedWgUserName);
-			
+
 		};
 
 		this.proxy(callback, this)('name=' + encodedWgUserName + '&key=' + wgChatKey + '&roomId=' + this.roomId + '&RCC=' + this.reConnectCount);
 	},
-    
-    
+
+
     forceReconnect: function() {
 		NodeChatSocketWrapper.sessionData = null;
 		this.socket.disconnect();
 		this.socket = null;
 		this.connect();
     },
-    
+
     onMsgReceived: function(message) {
     	switch(message.event) {
 			case 'disableReconnect':
@@ -163,20 +163,20 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 				this.forceReconnect();
 				break;
 			case 'initial':
-				clearTimeout(this.connectTimeoutTimer); 
+				clearTimeout(this.connectTimeoutTimer);
 				this.firstConnected = true; //we are 100% sure about conenction
 			default:
-				if(this.firstConnected) { 
+				if(this.firstConnected) {
 					this.fire( message.event, message );
 				}
 			break;
     	}
     },
-    
+
     getAllowedEvents: function() {
     	return ['updateUser', 'initial', 'chat:add', 'join', 'part', 'kick', 'logout'];
     },
-    
+
     tryconnect: function (){
     	$().log('tryconnect');
 
@@ -186,19 +186,19 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		$().log("Trying to re-connect to node-server:" + this.reConnectCount);
         clearTimeout(this.trying);
         this.reConnectCount++;
-            
+
         if(this.reConnectCount == 8) {
             	this.fire( "reConnectFail", {} );
         } else {
             var time = 10000;
             if(this.reConnectCount > 2) {
-            	time = 10000 + this.reConnectCount * 300; 
+            	time = 10000 + this.reConnectCount * 300;
             }
-            
+
 			this.connect();
-			this.trying = setTimeout(this.proxy(this.tryconnect, this), time);	
+			this.trying = setTimeout(this.proxy(this.tryconnect, this), time);
         }
-        
+
     }
 });
 
@@ -213,7 +213,7 @@ var NodeRoomController = $.createClass(Observable,{
 	userMain: null,
 	maxCharacterLimit: 1000,
 	constructor: function(roomId) {
-		
+
 		NodeRoomController.superclass.constructor.apply(this,arguments);
 
 		this.afterInitQueue = [];
@@ -222,47 +222,47 @@ var NodeRoomController = $.createClass(Observable,{
 		this.roomId = roomId;
 
 		this.model = new models.NodeChatModelCS();
-	
-		this.model.room.set({  
-			'roomId': roomId, 
-			'unreadMessage': 0, 
-			'isActive': this.active 
+
+		this.model.room.set({
+			'roomId': roomId,
+			'unreadMessage': 0,
+			'isActive': this.active
 		});
 
 		// This is called any time a new message arrives in the room.
-		this.model.chats.bind('add', $.proxy(function(current) {		
+		this.model.chats.bind('add', $.proxy(function(current) {
 			if(current.get('isInlineAlert') !== true && current.get('msgType') == 'chat' && current.get('name') != wgUserName) {
-				this.unreadMessage ++;	
+				this.unreadMessage ++;
 			}
-			
+
 			if(this.active == true) {
 				this.unreadMessage = 0
 			}
-			
+
 			var data = {
-				'unreadMessage': this.unreadMessage, 
-				'isActive': this.active 
+				'unreadMessage': this.unreadMessage,
+				'isActive': this.active
 			};
-			
+
 			this.model.room.set(data);
 		}, this));
-		
+
 		this.socket.bind('join',  $.proxy(this.onJoin, this));
 		this.socket.bind('initial',  $.proxy(this.onInitial, this));
 		this.socket.bind('chat:add',  $.proxy(this.onChatAdd, this));
-		
+
 		this.socket.bind('reConnectFail',  $.proxy(this.onReConnectFail, this));
 		this.socket.bind('part',  $.proxy(this.onPart, this));
 		this.socket.bind('kick',  $.proxy(this.onKick, this));
 		this.socket.bind('ban',  $.proxy(this.onBan, this));
-		
+
 		this.socket.bind('logout',  $.proxy(this.onLogout, this));
-		
+
 		this.viewDiscussion = new NodeChatDiscussion({model: this.model, el: $('body'), roomId: roomId});
 		this.viewDiscussion.bind('clickAnchor', $.proxy(this.clickAnchor, this) );
 		this.viewDiscussion.bind('sendMessage', $.proxy(this.sendMessage, this) );
 		this.viewDiscussion.bind('updateCharacterCount', $.proxy(this.updateCharacterCount, this) );
-		
+
 		//TODO: move to view ??
 		$(window).focus($.proxy(function(e) {// set focus on the text input
 			if($(e.target).attr('name') != 'message') {
@@ -271,24 +271,24 @@ var NodeRoomController = $.createClass(Observable,{
 		},this));
 
 		this.viewDiscussion.getTextInput().focus();
-	}, 	
-	
+	},
+
 	isMain: function() {
 		return this.mainController == null;
 	},
-	
+
 	onReConnectFail: function(message) {
 		var chatEntry = new models.InlineAlert({text: $.msg( 'chat-user-permanently-disconnected' ) });
-		this.model.chats.add(chatEntry);	
+		this.model.chats.add(chatEntry);
 	},
-	
+
 	onInitial: function(message) {
 		if(!this.isInitialized){
-			
+
 			_.each(this.model.chats.models, $.proxy(function(data) {
 				this.model.chats.remove(data);
-			},this)); 
-			
+			},this));
+
 			this.model.chats.trigger('clear');
 			// On first connection, just update the entire model.
 			this.model.mport(message.data);
@@ -297,10 +297,10 @@ var NodeRoomController = $.createClass(Observable,{
 			$().log(this.isInitialized, "isInitialized");
 			if(this.isMain()) {
 				var newChatEntry = new models.InlineAlert({text: $.msg('chat-welcome-message', wgSiteName ) });
-				this.model.chats.add(newChatEntry);				
+				this.model.chats.add(newChatEntry);
 			}
-			
-			this.userMain = this.model.users.findByName(wgUserName);				
+
+			this.userMain = this.model.users.findByName(wgUserName);
 		} else {
 			// If this is a reconnect... go through the model that was given and selectively, only add ChatEntries that were not already in the collection of chats.
 			var jsonObj = JSON.parse(message.data);
@@ -310,39 +310,39 @@ var NodeRoomController = $.createClass(Observable,{
 				if(typeof match == "undefined"){
 					$().log("Found a ChatEntry that must have occurred during reconnection. Adding it to the model...");
 					var additionalEntry = new models.ChatEntry();
-					additionalEntry.mport( $.toJSON(item) );
+					additionalEntry.mport( JSON.stringify(item) );
 					chatEntries.add(additionalEntry);
 				}
 			});
-			
+
 			// TODO: update the entire userlist (if the server went down or something, you're not going to get "part" messages for the users who are gone).
 			// See BugzId 6107 for more info & partially completed code.
 		}
-		
+
 		for(var i in this.afterInitQueue) {
-			this.socket.send(this.afterInitQueue[i]);	
-		} 
+			this.socket.send(this.afterInitQueue[i]);
+		}
 
 		this.afterInitQueue = [];
 	},
-	
+
 	setActive: function(status) {
 		this.active = status;
 		if(status) {
-			this.unreadMessage = 0;			
-			this.model.room.set({ 
+			this.unreadMessage = 0;
+			this.model.room.set({
 				'unreadMessage': 0,
 				'isActive': true
 			});
 		} else {
-			this.model.room.set({ 
+			this.model.room.set({
 				'isActive': false
 			});
 		}
 		//TODO: move it to view ???
 		this.viewDiscussion.getTextInput().focus();
 	},
-	
+
 	sendMessage: function(event) {
 		if (this.active && event.which == 13 && !event.shiftKey) {
 			var inputField = $(event.target),
@@ -358,16 +358,16 @@ var NodeRoomController = $.createClass(Observable,{
 					name: wgUserName,
 					text: inputValue
 				});
-	
+
 				// Private message
 				if( !this.isMain() ) {
 					if( this.afterInitQueue.length < 1 || this.model.users.length < 2 ){
-						this.mainController.socket.send( this.model.privateRoom.xport() );		
+						this.mainController.socket.send( this.model.privateRoom.xport() );
 					}
 					if( !this.isInitialized  ) {
 						this.afterInitQueue.push(chatEntry.xport());
 						//temp chat entry in case of slow connection time
-						chatEntry.set({temp : true, avatarSrc: wgAvatarUrl });  
+						chatEntry.set({temp : true, avatarSrc: wgAvatarUrl });
 						this.model.chats.add(chatEntry);
 					} else {
 						this.socket.send(chatEntry.xport());
@@ -375,7 +375,7 @@ var NodeRoomController = $.createClass(Observable,{
 				} else {
 					this.socket.send(chatEntry.xport());
 				}
-	
+
 				inputField.val('').focus();
 				$('body').removeClass('warn limit-near limit-reached');
 			}
@@ -405,21 +405,21 @@ var NodeRoomController = $.createClass(Observable,{
 		} else {
 			newChatEntry = new models.ChatEntry();
 		}
-		
-		
+
+
 		newChatEntry.mport(message.data);
-		
-		this.model.chats.add(newChatEntry); 
+
+		this.model.chats.add(newChatEntry);
 	},
-	
+
 	onJoin: function(message) {
 		var joinedUser = new models.User();
 		joinedUser.mport(message.joinData);
 
 		if(joinedUser.get('name') == wgUserName) {
-			this.userMain = joinedUser;			
+			this.userMain = joinedUser;
 		}
-		
+
 		if(this.partTimeOuts[joinedUser.get('name')]) {
 			clearTimeout(this.partTimeOuts[joinedUser.get('name')]);
 			this.partTimeOuts[joinedUser.get('name')] = null;
@@ -427,11 +427,11 @@ var NodeRoomController = $.createClass(Observable,{
 		}
 
 		var connectedUser = this.model.users.findByName(joinedUser.get('name'));
-		
+
 		if(typeof connectedUser == "undefined"){
 			this.model.users.add(joinedUser);
 			this.fire('afterJoin', joinedUser);
-			
+
 			//TODO: move it to other class
 			if(this.isMain()) {
 				if(joinedUser.get('name') != wgUserName) {
@@ -440,15 +440,15 @@ var NodeRoomController = $.createClass(Observable,{
 					this.model.chats.add(newChatEntry);
 				}
 			}
-			
+
 			this.disableRoom(joinedUser, false);
 		} else {
 			// The user is already in the room... just update them (in case they have changed).
 			this.model.users.remove(connectedUser);
 			this.model.users.add(joinedUser);
-		}		
+		}
 	},
-	
+
 	onPart: function(message) {
 		var partedUser = new models.User();
 		partedUser.mport(message.data);
@@ -459,32 +459,32 @@ var NodeRoomController = $.createClass(Observable,{
 			this.onPartBase(partedUser);
 		}), 25000);
 	},
-	
+
 	onLogout: function(message) {
 		var logoutEvent = new models.LogoutEvent();
 		logoutEvent.mport(message.data);
 		this.onPartBase(logoutEvent.get('leavingUserName'), false);
 	},
-	
+
 	onKick: function(message) {
 		var kickEvent = new models.KickEvent();
 		kickEvent.mport(message.data);
-		
+
 		this.onKickOrBan(kickEvent, 'kicked');
 	},
-	
+
 	onBan: function(message) {
 		var kickEvent = new models.KickEvent();
 		kickEvent.mport(message.data);
 		if(kickEvent.get('time') == 0) {
-			this.onKickOrBan(kickEvent, 'unbanned');		
+			this.onKickOrBan(kickEvent, 'unbanned');
 			this.banned[kickEvent.get('kickedUserName')] = false;
 		} else {
 			this.onKickOrBan(kickEvent, 'banned');
 			this.banned[kickEvent.get('kickedUserName')] = true;
 		}
 	},
-	
+
 	onKickOrBan: function(kickEvent, mode) {
 		if ( kickEvent.get('kickedUserName') != wgUserName  ) {
 			var undoLink = "";
@@ -494,7 +494,7 @@ var NodeRoomController = $.createClass(Observable,{
 
 			this.onPartBase(kickEvent.get('kickedUserName'), true);
 			var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-was-' + mode, kickEvent.get('kickedUserName'), kickEvent.get('moderatorName'), undoLink ) });
-			
+
 			this.model.chats.add(newChatEntry);
 		} else {
 			var newChatEntry = new models.InlineAlert({ text: $.msg('chat-you-were-' + mode, [kickEvent.get('moderatorName')] )});
@@ -502,29 +502,29 @@ var NodeRoomController = $.createClass(Observable,{
 			this.model.room.set({
 				'blockedMessageInput': true
 			});
-			
+
 			while(this.model.users.models[0] ) {
 				this.model.users.remove( this.model.users.models[0] );
 			}
 
 			for(var i in this.chats.privates ) {
-				/*	this.chats.privates[i].model.room.set({ 
+				/*	this.chats.privates[i].model.room.set({
 					'blockedMessageInput': true
 				});*/
 
 				this.chats.privates[ i ].model.room.set({
 					'hidden':  true
-				}); 
-			}	
-			
+				});
+			}
+
 			this.setActive(true);
 			this.viewDiscussion.updateRoom(this.model.room);
 		}
 	},
-	
+
 	onPartBase: function(partedUser, skipAlert) {
 		if (typeof partedUser !== 'string') partedUser = partedUser.get('name');
-		
+
 		var connectedUser = this.model.users.findByName(partedUser);
 
 		if(typeof connectedUser != "undefined"){
@@ -534,22 +534,22 @@ var NodeRoomController = $.createClass(Observable,{
 				var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-parted', [connectedUser.get('name')] ) });
 				this.model.chats.add(newChatEntry);
 			}
-			
+
 			this.model.users.remove(connectedUser);
 			this.disableRoom(connectedUser, true);
-		}		
+		}
 	},
 
 	//TODO: this is wrong place for this
 	disableRoom: function(user, flag) {
-		if( this.isMain() ) {	
+		if( this.isMain() ) {
 			//TODO: fix it for multiuser priv chat
 			var privateUser =  this.model.privateUsers.findByName(user.get('name'));
-			
+
 			if(typeof privateUser != "undefined"){
 				var roomId = privateUser.get('roomId');
 				if( typeof( this.chats.privates[roomId] ) != "undefined" ){
-					this.chats.privates[roomId].model.room.set({ 
+					this.chats.privates[roomId].model.room.set({
 						'blockedMessageInput': flag
 					});
 				}
@@ -558,10 +558,10 @@ var NodeRoomController = $.createClass(Observable,{
 					this.socket.send( this.chats.privates[roomId].model.privateRoom.xport() );
 				}
 			}
-		
-		}	
+
+		}
 	},
-	
+
 	clickAnchor: function(event) {
 		var target = $(event.target);
 		if(target.attr('data-type') == 'ban-undo') {
@@ -570,9 +570,9 @@ var NodeRoomController = $.createClass(Observable,{
 		}
 		window.open(target.closest('a').attr("href"));
 	},
-	
+
 	init: function() {
-		this.socket.connect();	
+		this.socket.connect();
 	}
 });
 
@@ -581,7 +581,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 	active: true,
 	chats: {
 		main: null,
-		opens: {}, //to store more than one open chat in one window not supported yet (for now only one) 
+		opens: {}, //to store more than one open chat in one window not supported yet (for now only one)
 		privates: {}
 	},
 	activeRoom: null,
@@ -593,16 +593,16 @@ var NodeChatController = $.createClass(NodeRoomController,{
 
 		this.bind('afterJoin', $.proxy(this.afterJoin, this));
 		this.viewUsers = new NodeChatUsers({model: this.model, el: $('body')});
-		
+
 		this.viewUsers.bind('showPrivateMessage', $.proxy(this.privateMessage, this) );
 		this.viewUsers.bind('kick', $.proxy(this.kick, this) );
 		this.viewUsers.bind('ban', $.proxy(this.ban, this) );
 		this.viewUsers.bind('giveChatMod', $.proxy(this.giveChatMod, this) );
-		
-		
+
+
 		this.viewUsers.bind('blockPrivateMessage', $.proxy(this.blockPrivate, this) );
 		this.viewUsers.bind('allowPrivateMessage', $.proxy(this.allowPrivate, this) );
-		
+
 		this.viewUsers.bind('mainListClick', $.proxy(this.mainListClick, this) );
 		this.viewUsers.bind('privateListClick', $.proxy(this.privateListClick, this) );
 
@@ -610,25 +610,25 @@ var NodeChatController = $.createClass(NodeRoomController,{
 
 		this.viewUsers.render();
 		this.viewDiscussion.show();
-		
-		// Handle Away status 
-		//TODO: move window to view ??? 
+
+		// Handle Away status
+		//TODO: move window to view ???
 		$(window)
 			.mousemove($.proxy(this.resetActivityTimer, this))
 			.keypress($.proxy(this.resetActivityTimer, this))
 			.focus($.proxy(this.resetActivityTimer, this));
-		
+
 		this.chats.main = this;
 		return this;
 	},
-	
+
 	afterJoin: function(newuser) {
 		var privateUser = this.model.privateUsers.findByName(newuser.get('name'));
-		
+
 		if(typeof privateUser == "undefined"){
 			return true;
 		}
-		
+
 		if( typeof( this.chats.privates[ privateUser.get('roomId') ] ) != "undefined" ){
 			this.chats.privates[ privateUser.get('roomId') ].model.room.set({
 				'blockedMessageInput': false
@@ -641,71 +641,71 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		$().log(this.model.blockedUsers);
 		if(typeof(user) == "undefined") {
 			return true;
-		}	
+		}
 		return false;
 	},
 
 	mainListClick: function(obj) {
 		var user = this.model.users.findByName(obj.name);
 		var userMain = this.model.users.findByName(wgUserName);
-		var userYouAreBlockedBy = this.model.blockedByUsers.findByName(obj.name); 
+		var userYouAreBlockedBy = this.model.blockedByUsers.findByName(obj.name);
 		var userPrivate = this.model.privateUsers.findByName(obj.name);
-		
+
 		var actions = {
 			regular: ['profile', 'contribs'],
 			admin: []
-		}; 
+		};
 
 		if(this.menuHavePrivatBlock(obj.name)) {
-		//	actions.push( 'private-block' );	
-		
+		//	actions.push( 'private-block' );
+
 			if( typeof(userPrivate) == 'undefined' && typeof(userYouAreBlockedBy) == 'undefined' ) {
-				actions.regular.push( 'private' );	
+				actions.regular.push( 'private' );
 			}
 		} else {
-			actions.regular.push( 'private-allow' );	
+			actions.regular.push( 'private-allow' );
 		}
 
 		if(this.userMain.get('isCanGiveChatMode') === true && user.get('isModerator') === false ){
 			actions.admin.push('give-chat-mod');
 		}
-		
+
 		if(this.userMain.get('isModerator') === true && user.get('isModerator') === false ) {
 			actions.admin.push('kick');
 			actions.admin.push('ban');
 		}
 
 		this.viewUsers.showMenu(obj.target, actions);
-		
+
 		if(this.model.get('isStaff') === true){
 			$(this.el).addClass('staff');
 		}
 	},
-	
+
 	privateListClick: function(obj) {
 		var user = this.model.users.findByName(obj.name);
-		
+
 		var actions = { regular: ['profile', 'contribs', 'private-block'] };
-		
+
 		//, 'private-close'
 		if(!this.privateMessage(obj)) {
-			this.viewUsers.showMenu(obj.target, actions);	
+			this.viewUsers.showMenu(obj.target, actions);
 		}
 	},
-	
+
 	showRoom: function(roomId) {
 		$().log(roomId);
 		if( this.activeRoom == roomId ) {
 			return false;
 		}
-		
+
 		this.activeRoom = roomId;
 		if(roomId == 'main') {
 			this.chats.main.setActive(true);
 		} else {
 			this.chats.main.setActive(false);
 		}
-		
+
 		for(var i in this.chats.privates) {
 			if(i == roomId) {
 				this.chats.privates[i].setActive(true);
@@ -715,7 +715,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		}
 		return true;
 	},
-	
+
 	privateMessage: function(obj) {
 		var connectedUser = false;
 		var userData;
@@ -732,8 +732,8 @@ var NodeChatController = $.createClass(NodeRoomController,{
 			this.openPrivateChat([obj.name]);
 			return true;
 		}
-	}, 
-	
+	},
+
 	openPrivateChat: function(users) {
 		users.push( wgUserName );
 		$.ajax({
@@ -743,7 +743,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 				users : users.join(',')
 			},
 			success: $.proxy(function(data) {
-				$().log("Attempting create private room with users " + users.join(','));	
+				$().log("Attempting create private room with users " + users.join(','));
 				var data = new models.OpenPrivateRoom({roomId: data.id, users: users});
 				this.baseOpenPrivateRoom(data, true);
 				this.showRoom(data.get('roomId') );
@@ -754,21 +754,21 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		this.viewUsers.hideMenu();
 	},
 
-	
+
 	blockAllowPrivateAjax: function(name, dir, callback) {
 		$.ajax({
 			type: 'POST',
 			url: wgScript + '?action=ajax&rs=ChatAjax&method=blockOrBanChat',
 			data: {
 				userToBan : name,
-				dir: dir 
+				dir: dir
 			},
 			success: callback
 		});
 	},
-	
+
 	blockPrivate: function(obj) {
-		
+
 		this.blockAllowPrivateAjax(obj.name, 'add', $.proxy(function(data) {
 			var user = this.model.privateUsers.findByName(obj.name);
 			var userClear = new models.User({'name': obj.name});
@@ -778,43 +778,43 @@ var NodeChatController = $.createClass(NodeRoomController,{
 				this.chats.privates[ user.get('roomId') ].model.room.set({
 					'hidden':  true
 				});
-				
+
 				var newChatEntry = new models.InlineAlert({text: $.msg( 'chat-user-blocked', wgUserName, userClear.get('name') ) });
-				this.chats.privates[ user.get('roomId') ].socket.send(newChatEntry.xport());	
-				
+				this.chats.privates[ user.get('roomId') ].socket.send(newChatEntry.xport());
+
 				if(this.chats.privates[ user.get('roomId') ].active) {
 					this.chats.privates[ user.get('roomId') ].setActive(false);
 					this.setActive(true);
-				} 
+				}
 			}
 		}, this));
-		
+
 		this.viewUsers.hideMenu();
 	},
 
 	allowPrivate: function(obj) {
-		
+
 		this.blockAllowPrivateAjax(obj.name, 'remove', $.proxy(function(data) {
 			var privateUser = this.model.privateUsers.findByName(obj.name);
 			var user = this.model.blockedUsers.findByName(obj.name);
-			
+
 			if(typeof(user) != "undefined") {
 				this.model.blockedUsers.remove(user);
 			}
-		
+
 			if(typeof(privateUser) != "undefined") {
 				this.chats.privates[ privateUser.get('roomId') ].model.room.set({
 					'hidden':  false
 				});
 
 				var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-allow', wgUserName, privateUser.get('name') ) });
-				this.chats.privates[ user.get('roomId') ].socket.send(newChatEntry.xport());		
+				this.chats.privates[ user.get('roomId') ].socket.send(newChatEntry.xport());
 			}
 		}, this));
-		
+
 		this.viewUsers.hideMenu();
 	},
-	
+
 	// Set the current user's status to 'away' and set an away message if provided.
 	setAway: function(){
 		var msg = '';
@@ -825,7 +825,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 		});
 		this.socket.send(setStatusCommand.xport());
 	},
-	
+
 	// Set the user as being back from their "away" state (they are here again) and remove the status message.
 	setBack: function(){
 		if( ! this.comingBackFromAway){ // if we have sent this command (but just haven't finished coming back yet), don't keep spamming the server w/this command
@@ -838,7 +838,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 			this.socket.send(setStatusCommand.xport());
 		}
 	},
-	
+
 	startActivityTimer: function() {
 		this.activityTimer = setTimeout($.proxy(this.setAway, this), 5 * 60 * 1000); // the first number is minutes.
 	},
@@ -846,21 +846,21 @@ var NodeChatController = $.createClass(NodeRoomController,{
 	resetActivityTimer: function() {
 		clearTimeout(this.activityTimer);
 		this.startActivityTimer();
-		
+
 		// If user had been set to away, ping server to unset away.
 		if($('#ChatHeader .User').hasClass('away')){
 			this.setBack();
 		}
 	},
-	
+
 	kick: function(userToKick) {
 		$().log("Attempting to kick user: " + userToKick);
 		var kickCommand = new models.KickCommand({userToKick: userToKick.name});
 		this.socket.send(kickCommand.xport());
-		
-		this.viewUsers.hideMenu(); 
+
+		this.viewUsers.hideMenu();
 	},
-	
+
 	ban: function(userToBan){
 		$().log("Attempting to ban user: " + userToBan);
 		var self = this;
@@ -876,8 +876,8 @@ var NodeChatController = $.createClass(NodeRoomController,{
 
 				self.socket.send(banCommand.xport());
 			};
-	
-		var chatBanModal = new ChatBanModal(title, okCallback);	
+
+		var chatBanModal = new ChatBanModal(title, okCallback);
 	},
 
 	undoBan: function(name, expires, reason) {
@@ -888,14 +888,14 @@ var NodeChatController = $.createClass(NodeRoomController,{
     			time: expires,
     			reason: reason
     		});
-        
+
         	this.socket.send(banCommand.xport());
         } else {
 			var newChatEntry = new models.InlineAlert({text: $.msg('chat-ban-cannt-undo') });
-			this.model.chats.add(newChatEntry);	
+			this.model.chats.add(newChatEntry);
         }
 	},
-	
+
 	giveChatMod: function(user){
 		$().log("Attempting to give chat mod to user: " + user.name);
 		var giveChatModCommand = new models.GiveChatModCommand({userToPromote: user.name});
@@ -907,76 +907,76 @@ var NodeChatController = $.createClass(NodeRoomController,{
 	onUpdateUser: function(message) {
 		var updatedUser = new models.User();
 		updatedUser.mport(message.data);
-		
+
 		var connectedUser = this.model.users.find(function(user){
 								return user.get('name') == updatedUser.get('name');
 							});
-		
+
 		if(typeof connectedUser != "undefined"){
 			// Is this the right way to do it?
 			this.model.users.remove(connectedUser);
 			this.model.users.add(updatedUser);
-			
+
 			// If it was the current user who changed (and they are "back") set them as no longer in the process of comingBackFromAway.
 			if((this.comingBackFromAway) && (connectedUser.get('name') == wgUserName) && (connectedUser.get('statusState') != STATUS_STATE_AWAY)){
 				this.comingBackFromAway = false;
 			}
 		}
 	},
-	
+
 	baseOpenPrivateRoom: function(data, active) {
 		this.chats.privates[ data.get('roomId') ] = new NodeRoomController(data.get('roomId'));
 		this.chats.privates[ data.get('roomId') ].mainController = this; //set main controller for this chat room
 		this.chats.privates[ data.get('roomId') ].model.privateRoom =  data;
-		var users = data.get('users'); 
+		var users = data.get('users');
 		for( var i in users) {
 			if( users[i] != wgUserName ) {
 				var privateUser = new models.PrivateUser(this.model.users.findByName(users[i]).attributes);
-				
+
 				privateUser.set({
 					'name' : users[i],
 					'active': active,
 					'roomId' : data.get('roomId')
 				});
-	
+
 				this.model.privateUsers.add( privateUser );
 				var roomData = { 'privateUser':  privateUser };
-				
+
 				//hide blocked room for case of allow
-				
+
 				this.chats.privates[ data.get('roomId') ].model.room.set(roomData);
-				
+
 				break;
 			}
 		}
 	},
-	
+
 	onOpenPrivateRoom: function(message) {
 		var room = new models.OpenPrivateRoom();
 		room.mport(message.data);
-		
-		var users = room.get('users'); 
+
+		var users = room.get('users');
 		for( var i in users) {
 			if( users[i] != wgUserName ) {
 				var blockedUser = this.model.blockedUsers.findByName( users[i] );
 				if(typeof(blockedUser ) != 'undefined' ) {
-					return ; 
+					return ;
 				}
 			}
 		}
-		
+
 		if( typeof( this.chats.privates[ room.get('roomId')  ] ) == 'undefined' ) {
 			this.baseOpenPrivateRoom(room, false);
 		}
 		this.chats.privates[ room.get('roomId') ].init();
 	},
-	
+
 	init: function() {
 		if($.browser.msie && parseFloat(jQuery.browser.version) < 8 ) {
 			var newChatEntry = new models.InlineAlert({text: $.msg( 'chat-browser-is-notsupported' ) });
 			this.model.chats.add(newChatEntry);
 			return true;
-		}	
+		}
 		$.getMessages('Chat', $.proxy(function() {
 			$.ajax({
 				type: 'POST',
@@ -984,21 +984,21 @@ var NodeChatController = $.createClass(NodeRoomController,{
 				success: $.proxy(function(data) {
 					for( var i in data.blockedChatUsers ) {
 						var userClear = new models.User({'name': data.blockedChatUsers[i] });
-						this.model.blockedUsers.add(userClear);					
+						this.model.blockedUsers.add(userClear);
 					}
-					
+
 					for( var i in data.blockedByChatUsers ) {
 						var userClear = new models.User({'name': data.blockedByChatUsers[i] });
-						this.model.blockedByUsers.add(userClear);					
+						this.model.blockedByUsers.add(userClear);
 					}
 					this.socket.connect();
 				}, this)
 			});
 		}, this));
-				
+
 		/*
 		 * we cannot bind to unload, cos it's too late for sending the command - the socket is already closed...
-		 */		
+		 */
 		$(window).bind('beforeunload', $.proxy(function () {
 			var logoutCommand = new models.LogoutCommand();
 			this.socket.send(logoutCommand.xport());
@@ -1012,6 +1012,6 @@ var NodeChatController = $.createClass(NodeRoomController,{
 $(function() {
 	if (typeof roomId !== "undefined") {
 		window.mainRoom = new NodeChatController(roomId);
-		window.mainRoom.init();		
+		window.mainRoom.init();
 	}
 });

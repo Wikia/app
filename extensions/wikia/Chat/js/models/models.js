@@ -257,7 +257,7 @@ var STATUS_STATE_AWAY = 'away';
 
 		process(result, this);
 
-		return typeof($) != 'undefined' ? $.toJSON(result):JSON.stringify(result);
+		return JSON.stringify(result);
 	};
 
 
