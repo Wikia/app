@@ -153,7 +153,7 @@ var Lightbox = {
 				Lightbox.video.destroyVideo();
 			}
 			Lightbox.openModal.addClass('more-info-mode');
-			LightboxLoader.getMediaDetail({title: Lightbox.current.title}, function(json) {
+			LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.title}, function(json) {
 				Lightbox.openModal.moreInfo.append(moreInfoTemplate.mustache(json));
 			});
 		// Show share screen on button click
@@ -175,7 +175,7 @@ var Lightbox = {
 		// Close more info and share screens on button click
 		}).on('click.Lightbox', '.more-info-close', function(evt) {
 			if(Lightbox.current.type === 'video') {
-				LightboxLoader.getMediaDetail({title: Lightbox.current.title}, Lightbox.video.renderVideo);
+				LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.title}, Lightbox.video.renderVideo);
 			}
 			Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 			Lightbox.openModal.share.html('');
@@ -461,7 +461,7 @@ var Lightbox = {
 	},
 	renderHeader: function() {
 		var headerTemplate = Lightbox.openModal.find("#LightboxHeaderTemplate");	//TODO: replace with cache
-		LightboxLoader.getMediaDetail({title: Lightbox.current.title}, function(json) {
+		LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.title}, function(json) {
 			var renderedResult = headerTemplate.mustache(json)
 			Lightbox.openModal.header
 				.html(renderedResult)
@@ -516,7 +516,7 @@ var Lightbox = {
 		}
 		
 		LightboxLoader.getMediaDetail({
-			title: title,
+			fileTitle: title,
 			type: type
 		}, function(data) {
 			Lightbox[type].updateLightbox(data);		

@@ -189,7 +189,7 @@ var LightboxLoader = {
 			deferredList.push( deferredTemplate );
 		}
 		
-		deferredList.push(LightboxLoader.getMediaDetailDeferred({title: mediaTitle}));	// NOTE: be careful with this, look below where it says LASTINDEX
+		deferredList.push(LightboxLoader.getMediaDetailDeferred({fileTitle: mediaTitle}));	// NOTE: be careful with this, look below where it says LASTINDEX
 		
 		$.when.apply(this, deferredList).done(function() {
 			LightboxLoader.assetsLoaded = true;
@@ -200,7 +200,7 @@ var LightboxLoader = {
 	},
 	displayInlineVideo: function(target, targetChildImg, mediaTitle) {
 		LightboxLoader.getMediaDetail({
-			title: mediaTitle,
+			fileTitle: mediaTitle,
 			height: targetChildImg.height(),
 			width: targetChildImg.width()
 		}, function(json) {
@@ -225,7 +225,7 @@ var LightboxLoader = {
 		LightboxLoader.inlineVideoLinks.show();
 	},
 	getMediaDetail: function(mediaParams, callback) {
-		var title = mediaParams['title'];
+		var title = mediaParams['fileTitle'];
 		if(LightboxLoader.cache.details[title]) {
 			callback(LightboxLoader.cache.details[title]);
 		} else {
