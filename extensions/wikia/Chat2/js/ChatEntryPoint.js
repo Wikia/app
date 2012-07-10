@@ -16,7 +16,16 @@ var ChatEntryPoint = {
 		// load the chat entry point content using Ajax
 		var currentTime = new Date();
 		var minuteTimestamp = currentTime.getFullYear() + currentTime.getMonth() + currentTime.getDate() + currentTime.getHours() + currentTime.getMinutes();
-		$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=Contents&outputType=html&cb=' + minuteTimestamp, ChatEntryPoint.entryPointLoaded);
+		$.nirvana.sendRequest({
+			controller: 'ChatRail',
+			method: 'Contents',
+			type: 'GET',
+			format: 'html',
+			data: {
+				cb: minuteTimestamp
+			},
+			callback: ChatEntryPoint.entryPointLoaded
+		});
 	},
 
 	entryPointLoaded: function(content) {
@@ -73,7 +82,15 @@ var ChatEntryPoint = {
 				persistModal: true,
 				callback: function() {
 					$('.modalWrapper').children().not('.close').not('.modalContent').not('h1').remove();
-					$('.modalContent').load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=AnonLoginSuccess&outputType=html');
+					$.nirvana.sendRequest({
+						controller: 'ChatRail',
+						method: 'AnonLoginSuccess',
+						type: 'GET',
+						format: 'html',
+						callback: function(html) {
+							$('.modalContent').html(html);
+						}
+					});
 				}
 			});
 		}
