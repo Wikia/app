@@ -52,6 +52,12 @@ class ResourceLoaderSiteModule extends ResourceLoaderWikiModule {
 			'MediaWiki:' . $skinName . '.css' => array( 'type' => 'style' ),
 			'MediaWiki:Print.css' => array( 'type' => 'style', 'media' => 'print' ),
 		);
+
+		// Wikia doesn't include Mediawiki:Common.css in Oasis
+		// lower-case skin name is returned by getSkin()
+		if ( $context->getSkin() == 'oasis' ) {
+			unset($pages['MediaWiki:Common.css']);
+		}
 		// Wikia change - end
 
 		if ( $wgHandheldStyle ) {
