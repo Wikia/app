@@ -13,7 +13,7 @@ var UserLoginFacebook = {
 			this.initialized = true;
 			this.loginSetup();
 			this.setupTooltips();
-	
+
 			this.log('init');
 		}
 	},
@@ -70,7 +70,7 @@ var UserLoginFacebook = {
 			}
 		}
 		else {
-			$.showCustomModal(resp.title, innerShiv(resp.modal) /* IE fix for HTML5 */, {
+			$.showCustomModal(resp.title, resp.modal, {
 				id: 'FacebookSignUp',
 				width: 710,
 				buttons: [{
