@@ -70,7 +70,7 @@ class MediaToolController extends WikiaController {
 					if ( !empty($oFile) ) {
 						$data[] = array(
 							"video" => WikiaFileHelper::isFileTypeVideo( $oFile ),
-							"title" => $oFileTitle->getFullText(),
+							"title" => $oFileTitle->getPrefixedDBkey(),
 							"hash" => md5($oFileTitle->getFullText()),
 							"status" => self::RESPONSE_STATUS_OK,
 							"thumbHtml" => $this->getMediaThumb( $sFileTitle ),
@@ -138,6 +138,36 @@ class MediaToolController extends WikiaController {
 			return $mediaThumbObj->getUrl();
 		}
 		return '';
+	}
+
+	public function uploadVideo() {
+		$this->response->setFormat('json');
+
+		$videoUrl = $this->request->getVal('url');
+		$response = array( 'status' => self::RESPONSE_STATUS_ERROR );
+
+		if(!empty($videoUrl)) {
+			$videoMetadataResponse = $this->sendSelfRequest( 'getVideoMetadata', array( 'videoUrl' => $videoUrl ) );
+			$videoMetaData = $videoMetadataResponse->getData();
+			if($videoMetaData['status'] == self::RESPONSE_STATUS_OK) {
+				/** @var $result Title */
+				$result = VideoFileUploader::URLtoTitle( $videoUrl, $videoMetaData['title'] );
+				if( $result instanceof Title ) {
+					$response['status'] = self::RESPONSE_STATUS_OK;
+					$response['title'] = $result->getPrefixedDBkey();
+				}
+				else {
+					$response['msg'] = wfMsg('mediatool-error-upload-failed');
+				}
+			}
+			else {
+				$response['msg'] = $videoMetaData['msg'];
+			}
+		}
+		else {
+			$response['msg'] = wfMsg('mediatool-error-missing-video-url');
+		}
+		$this->response->setData( $response );
 	}
 
 	public function getModalContent() {}
