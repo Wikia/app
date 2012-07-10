@@ -81,8 +81,21 @@
 								<a class="modify" href="#"><?= wfMsg('promote-modify-photo') ?></a>
 								<a class="remove" href="#"><?= wfMsg('promote-remove-photo') ?></a>
 							</div>
+							<div class="status">
+								<div class="rejected<?= ($image['review_status'] == ImageReviewStatuses::STATE_REJECTED) ? '' : ' hidden' ?>">
+									<p><span>
+										<?= wfMsg('promote-image-rejected');?> <img src="<?= $wg->BlankImgUrl ?>" class="sprite error">
+									</span></p>
+								</div>
+								<div class="accepted<?= ($image['review_status'] == ImageReviewStatuses::STATE_APPROVED) ? '' : ' hidden' ?>">
+									<p><span>
+										<?= wfMsg('promote-image-accepted');?> <img src="<?= $wg->BlankImgUrl ?>" class="sprite ok">
+									</span></p>
+								</div>
+							</div>
 							<img
 								src="<?= $image['image_url']; ?>"
+								class="additionalImage"
 								data-filename="<?= $image['image_filename']; ?>"
 								data-image-index="<?= $i ?>"
 								data-image-type="additional"
