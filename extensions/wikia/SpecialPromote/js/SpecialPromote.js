@@ -175,7 +175,7 @@ SpecialPromote.prototype = {
 	onDeletePhotoClick: function (e) {
 		e.preventDefault();
 
-		var target = $(e.target).parent().parent().find('img');
+		var target = $(e.target).parent().parent().find('img.additionalImage');
 		this.removeImage({
 			uploadType: target.data('image-type'),
 			imageIndex: target.data('image-index')
@@ -201,7 +201,7 @@ SpecialPromote.prototype = {
 				return false;
 			}
 			this.current.additionalImagesNames.splice(params.imageIndex - 1, 1);
-			$.each($('.small-photos img'), function(i, element) {
+			$.each($('.small-photos img.additionalImage'), function(i, element) {
 				if ($(element).data('image-index') == params.imageIndex) {
 					$(element).parent().remove();
 				}
