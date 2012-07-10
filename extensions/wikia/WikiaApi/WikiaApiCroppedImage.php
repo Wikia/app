@@ -31,7 +31,8 @@ class WikiaApiCroppedImage extends ApiBase {
 				$image->loadFromFile();  // side effect forces isMissing() check to fail if file really does not exist
 			}
 			if ( !($image instanceof File && $image->exists() )
-				|| $image->isMissing() || $image->mime == 'unknown/unknown' ) {
+				|| $image->isMissing() || $image->mime == 'unknown/unknown'
+			) {
 				$this->dieUsage( 'File not found', 'filenotfound' );
 			}
 			$width = $image->getWidth();
