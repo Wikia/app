@@ -47,6 +47,7 @@ class MediaToolController extends WikiaController {
 				$data['hash'] = md5($wrapper->getTitle());
 				$data['thumbUrl'] = $wrapper->getThumbnailUrl();
 				$data['thumbHtml'] = false;
+				$data['remoteUrl'] = $videoUrl;
 				$data['duration'] = $this->helper->secToMMSS($metaData['duration']);
 			}
 			else {
@@ -177,6 +178,24 @@ class MediaToolController extends WikiaController {
 			$response['msg'] = wfMsg('mediatool-error-missing-video-url');
 		}
 		$this->response->setData( $response );
+	}
+
+	public function uploadVideos() {
+		$this->response->setFormat('json');
+		$videoUrls = $this->request->getVal('urls');
+
+		$result = array();
+		if(is_array($videoUrls)) {
+			foreach($videoUrls as $videoUrl) {
+				//$response = $this->sendSelfRequest('uploadVideo', array( 'url' => $videoUrl ));
+				$result[] = array(
+					'url' => $videoUrl,
+					'title' => $response->getVal('title')
+				);
+			}
+		}
+
+		//$this->response->setData();
 	}
 
 	public function getModalContent() {}
