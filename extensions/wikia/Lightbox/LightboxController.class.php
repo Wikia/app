@@ -186,6 +186,9 @@ class LightboxController extends WikiaController {
 		$this->networks = $networks;
 		$this->fileTitle = $fileTitle;
 		$this->imageUrl = $thumbUrl;
+		
+		// set cache control to 1 day
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)); 
 	}
 
 	
