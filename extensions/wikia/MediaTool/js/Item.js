@@ -14,17 +14,15 @@ MediaTool.Item = $.createClass(Observable,{
 		this.id = id;
 		this.video = video;
 		this.file = file;
-		if(thumbHtml != false) {
-			this.thumbHtml = thumbHtml;
-		}
-		else {
-			this.renderThumbHtml();
-		}
+		this.thumbHtml = thumbHtml;
+		this.renderThumbHtml();
 	},
 
 	renderThumbHtml: function() {
-		var renderer = new MediaTool.Renderer();
-		this.thumbHtml = renderer.getMediaThumb(this);
+		if(this.thumbHtml == false) {
+			var renderer = new MediaTool.Renderer();
+			this.thumbHtml = renderer.getMediaThumb(this);
+		}
 	}
 
 });

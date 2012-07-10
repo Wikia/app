@@ -39,6 +39,7 @@ class MediaToolController extends WikiaController {
 				$data['title'] = $wrapper->getTitle();
 				$data['hash'] = md5($wrapper->getTitle());
 				$data['thumbUrl'] = $wrapper->getThumbnailUrl();
+				$data['thumbHtml'] = false;
 				$data['duration'] = floor($metaData['duration'] / 60) . ':' . ( $metaData['duration'] - (floor($metaData['duration'] / 60) * 60) );
 			}
 			else {
