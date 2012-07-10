@@ -26,6 +26,7 @@ require(['events', 'loader', 'track'], function(events, loader, track){
 			controller: 'WikiaMobileController',
 			method: 'getCategoryBatch',
 			format: 'html',
+			type: 'GET',
 			data:{
 				category: wgTitle,
 				batch: batch,

@@ -8,6 +8,9 @@
 class WikiaMobileCategoryService extends WikiaService {
 	private $model;
 
+	//3 hours
+	const CACHE_TIME = 10800;
+
 	private function initModel(){
 		if ( !isset( $this->model ) ){
 			$this->model = F::build( 'WikiaMobileCategoryModel' );
@@ -90,6 +93,14 @@ class WikiaMobileCategoryService extends WikiaService {
 				$data = F::build( 'WikiaMobileCategoryModel' )->getItemsCollection( $category );
 				
 				if ( !empty( $data[$index] ) && $batch > 0) {
+					//cache response for 3 hours in varnish and browser
+					$this->response->setCacheValidity(
+						WikiaMobileCategoryService::CACHE_TIME,
+						WikiaMobileCategoryService::CACHE_TIME,
+						array(
+							WikiaResponse::CACHE_TARGET_BROWSER,
+							WikiaResponse::CACHE_TARGET_VARNISH
+						));
 					$this->response->setVal( 'itemsBatch', $data[$index]->getItems( $batch ) );
 				} else {
 					$err = true;
