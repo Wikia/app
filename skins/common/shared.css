@@ -181,7 +181,9 @@ table.filehistory td.filehistory-selected {
 .filehistory a img,
 #file img:hover {
 	/* @embed */
-	background: white url(images/Checker-16x16.png) repeat;
+	/*Wikia change start - author Federico (FB#35346)*/
+	background: white url(/skins/common/images/Checker-16x16.png) repeat;
+	/*Wikia change end*/
 }
 
 /**
@@ -447,7 +449,9 @@ th.mw-revdel-checkbox {
 /* feed links */
 a.feedlink {
 	/* @embed */
-	background: url(images/feed-icon.png) center left no-repeat;
+	/*Wikia change start - author Federico (FB#35346)*/
+	background: url(/skins/common/images/feed-icon.png) center left no-repeat;
+	/*Wikia change end*/
 	padding-left: 16px;
 }
 
@@ -793,7 +797,9 @@ div.gallerytext {
 
 .mw-ajax-loader {
 	/* @embed */
-	background-image: url(images/ajax-loader.gif);
+	/*Wikia change start - author Federico (FB#35346)*/
+	background-image: url(/skins/common/images/ajax-loader.gif);
+	/*Wikia change end*/
 	background-position: center center;
 	background-repeat: no-repeat;
 	padding: 16px;
@@ -805,7 +811,9 @@ div.gallerytext {
 	padding: 10px !important;
 	margin-right: 0.6em;
 	/* @embed */
-	background-image: url(images/spinner.gif);
+	/*Wikia change start - author Federico (FB#35346)*/
+	background-image: url(/skins/common/images/spinner.gif);
+	/*Wikia change end*/
 	background-position: center center;
 	background-repeat: no-repeat;
 }
@@ -912,7 +920,9 @@ ol:lang(or) li {
 	margin-bottom: -8px;
 	padding: 0 0 0 15px;
 	/* @embed */
-	background-image: url('images/help-question.gif');
+	/*Wikia change start - author Federico (FB#35346)*/
+	background-image: url('/skins/common/images/help-question.gif');
+	/*Wikia change end*/
 	background-position: left center;
 	background-repeat: no-repeat;
 	cursor: pointer;
@@ -922,7 +932,9 @@ ol:lang(or) li {
 }
 .mw-help-field-hint:hover {
 	/* @embed */
-	background-image: url('images/help-question-hover.gif');
+	/*Wikia change start - author Federico (FB#35346)*/
+	background-image: url('/skins/commom/images/help-question-hover.gif');
+	/*Wikia change end*/
 }
 .mw-help-field-data {
 	display: block;
@@ -949,7 +961,9 @@ ol:lang(or) li {
 .tipsy-arrow {
 	position: absolute;
 	/* @embed */
-	background: url(images/tipsy-arrow.gif) no-repeat top left;
+	/*Wikia change start - author Federico (FB#35346)*/
+	background: url(/skins/common/images/tipsy-arrow.gif) no-repeat top left;
+	/*Wikia change end*/
 	width: 13px;
 	height: 13px;
 }
