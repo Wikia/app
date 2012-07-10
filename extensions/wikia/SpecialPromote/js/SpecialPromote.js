@@ -40,7 +40,7 @@ SpecialPromote.prototype = {
 		this.current.description = this.original.description = this.descriptionNode.val();
 		this.current.mainImageName = this.original.mainImageName = $('.large-photo img#curMainImageName').data('filename');
 
-		$(".small-photos img").each($.proxy(function (i, img) {
+		$(".small-photos img.additionalImage").each($.proxy(function (i, img) {
 			var fileName = $(img).data('filename');
 			this.current.additionalImagesNames.push(fileName);
 			this.original.additionalImagesNames.push(fileName);
@@ -182,17 +182,7 @@ SpecialPromote.prototype = {
 		});
 	},
 	removeImage: function (params) {
-		if (params.uploadType == 'main') {
-			try {
-				this.removeTempImage(this.current.mainImageName);
-			}
-			catch(error) {
-				this.errorHandler(error);
-			}
-			this.current.mainImageName = null;
-			$('.large-photo img').remove();
-			$('.modify-remove').removeClass('show');
-		} else if (params.uploadType == 'additional') {
+		if (params.uploadType == 'additional') {
 			try {
 				this.removeTempImage(this.current.additionalImagesNames[params.imageIndex - 1]);
 			}
