@@ -86,7 +86,7 @@ AdMeldAPIClient.init = function() {
 					'&container=' + slot;
 		this.log('calling ' + url, 'trace');
 		this.track(['call', slot]);
-		$.ajax({url:url, dataType:'jsonp'});
+		$.ajax({url:url, dataType:'jsonp', timeout:2000});
 		this.slots[slot].url = url;
 		this.slots[slot].timer = (new Date).getTime();
 
