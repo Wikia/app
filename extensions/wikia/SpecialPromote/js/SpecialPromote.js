@@ -27,7 +27,7 @@ var SpecialPromote = function (params) {
 	this.ADDITIONAL_IMAGES_LIMIT = 9;
 	this.UPLOAD_TYPE_MAIN = 'main';
 	this.UPLOAD_TYPE_ADDITIONAL = 'additional';
-}
+};
 
 SpecialPromote.prototype = {
 	init: function () {
