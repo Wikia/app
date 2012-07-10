@@ -58,13 +58,18 @@ var CreateWikiaPoll = {
 			$.getSassCommonURL('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'),
 			wgExtensionsPath + '/wikia/WikiaPoll/js/CreateWikiaPoll.js'
 		], function() {
-			$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=WikiaPoll&actionName=SpecialPage&outputType=html', function(data) {
-				$(data).makeModal({width: 600});
-				CreateWikiaPoll.init();
+			$.nirvana.sendRequest({
+				controller: 'WikiaPoll',
+				method: 'SpecialPage',
+				format: 'html',
+				callback: function(data) {
+					$(data).makeModal({width: 600});
+					CreateWikiaPoll.init();
 
-				// editing an existing poll?
-				if ($(event.target).hasClass("placeholder-poll")) {
-					CreateWikiaPoll.editExisting(event.target);
+					// editing an existing poll?
+					if ($(event.target).hasClass("placeholder-poll")) {
+						CreateWikiaPoll.editExisting(event.target);
+					}
 				}
 			});
 		});
