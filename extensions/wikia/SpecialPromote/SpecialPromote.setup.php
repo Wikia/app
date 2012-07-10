@@ -40,6 +40,9 @@ $app->registerClass('WikiImageReviewStatusRowHelper',$wikiaHomePageExtDir.'class
 $app->registerClass('WikiGetDataHelper',$wikiaHomePageExtDir.'classes/WikiGetDataHelper.class.php');
 $app->registerClass('WikiGetDataForVisualizationHelper',$wikiaHomePageExtDir.'classes/WikiGetDataForVisualizationHelper.class.php');
 $app->registerClass('WikiGetDataForPromoteHelper',$wikiaHomePageExtDir.'classes/WikiGetDataForPromoteHelper.class.php');
+$app->registerClass('WikiDataGetter',$wikiaHomePageExtDir.'classes/WikiDataGetter.class.php');
+$app->registerClass('WikiDataGetterForSpecialPromote',$wikiaHomePageExtDir.'classes/WikiDataGetterForSpecialPromote.class.php');
+$app->registerClass('WikiDataGetterForVisualization',$wikiaHomePageExtDir.'classes/WikiDataGetterForVisualization.class.php');
 
 $app->registerClass('WikiaHomePageHelper', $wikiaHomePageExtDir . 'WikiaHomePageHelper.class.php');
 $app->registerClass('CityVisualization', $wikiaHomePageExtDir . 'CityVisualization.class.php');
