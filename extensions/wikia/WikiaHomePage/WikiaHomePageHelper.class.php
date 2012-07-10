@@ -377,8 +377,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		$dataGetter = F::build('WikiDataGetterForSpecialPromote');
 		return $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
-
-
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
@@ -431,7 +429,6 @@ class WikiaHomePageHelper extends WikiaModel {
 				$wikiInfo['hot'] = intval(CityVisualization::isHotWiki($wikiData['flags']));
 				$wikiInfo['promoted'] = intval(CityVisualization::isPromotedWiki($wikiData['flags']));
 				$wikiInfo['blocked'] = intval(CityVisualization::isBlockedWiki($wikiData['flags']));
-
 
 				$wikiInfo['images'] = array();
 				if (!empty($wikiData['main_image'])) {
