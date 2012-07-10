@@ -10,7 +10,13 @@ class MediaToolController extends WikiaController {
 	const MEDIA_SIZE_SMALL = 250;
 	const MEDIA_SIZE_LARGE = 300;
 
+	/**
+	 * @var MediaToolhelper
+	 */
+	protected $helper = null;
+
 	public function __construct() {
+		$this->helper = F::build('MediaToolHelper');
 	}
 
 	public function getVideoMetadata() {
@@ -40,7 +46,7 @@ class MediaToolController extends WikiaController {
 				$data['hash'] = md5($wrapper->getTitle());
 				$data['thumbUrl'] = $wrapper->getThumbnailUrl();
 				$data['thumbHtml'] = false;
-				$data['duration'] = floor($metaData['duration'] / 60) . ':' . ( $metaData['duration'] - (floor($metaData['duration'] / 60) * 60) );
+				$data['duration'] = $this->helper->secToMMSS($metaData['duration']);
 			}
 			else {
 				$data['status'] = self::RESPONSE_STATUS_ERROR;
