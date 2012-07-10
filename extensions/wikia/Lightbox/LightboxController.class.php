@@ -29,7 +29,7 @@ class LightboxController extends WikiaController {
 	
 	/**
 	 * @brief - Returns complete details about a single media (file).  JSON only, no associated template to this method.
-	 * @requestParam string title
+	 * @requestParam string fileTitle
 	 * @requestParam string sourceArticleId (optional) - article id that the file belongs to
 	 * @responseParam string mediaType - media type.  either image or video
 	 * @responseParam string videoEmbedCode - embed html code if video
@@ -42,7 +42,7 @@ class LightboxController extends WikiaController {
 	 * @responseParam array articles - array of articles that has title and url
 	 */
 	public function getMediaDetail() {
-		$fileTitle = $this->request->getVal('title', '');
+		$fileTitle = $this->request->getVal('fileTitle', '');
 		$fileTitle = urldecode($fileTitle);
 
 		// BugId:32939
