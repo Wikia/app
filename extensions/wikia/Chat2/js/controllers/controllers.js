@@ -212,6 +212,9 @@ var NodeRoomController = $.createClass(Observable,{
 	banned: {},
 	userMain: null,
 	maxCharacterLimit: 1000,
+	sanitizeHtml: function(str) {
+		return escape(str);	//@todo - make it better :)
+	},
 	constructor: function(roomId) {
 
 		NodeRoomController.superclass.constructor.apply(this,arguments);
@@ -436,7 +439,7 @@ var NodeRoomController = $.createClass(Observable,{
 			if(this.isMain()) {
 				if(joinedUser.get('name') != wgUserName) {
 					// Create the inline-alert (on client side so that we only display it if the user actually IS new to the room and not just disconnecting/reconnecting).
-					var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-joined', [joinedUser.get('name')] ) });
+					var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-joined', [this.sanitizeHtml(joinedUser.get('name'))] ) });
 					this.model.chats.add(newChatEntry);
 				}
 			}
@@ -489,15 +492,15 @@ var NodeRoomController = $.createClass(Observable,{
 		if ( kickEvent.get('kickedUserName') != wgUserName  ) {
 			var undoLink = "";
 			if(this.userMain.get('isModerator') && mode == 'banned' ) {
-				undoLink = ' (<a href="#" data-type="ban-undo" data-user="' + kickEvent.get('kickedUserName') + '" >' + $.msg('chat-ban-undolink') + '</a>)';
+				undoLink = ' (<a href="#" data-type="ban-undo" data-user="' + this.sanitizeHtml(kickEvent.get('kickedUserName')) + '" >' + $.msg('chat-ban-undolink') + '</a>)';
 			}
 
 			this.onPartBase(kickEvent.get('kickedUserName'), true);
-			var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-was-' + mode, kickEvent.get('kickedUserName'), kickEvent.get('moderatorName'), undoLink ) });
+			var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-was-' + mode, this.sanitizeHtml(kickEvent.get('kickedUserName')), this.sanitizeHtml(kickEvent.get('moderatorName')), undoLink ) });
 
 			this.model.chats.add(newChatEntry);
 		} else {
-			var newChatEntry = new models.InlineAlert({ text: $.msg('chat-you-were-' + mode, [kickEvent.get('moderatorName')] )});
+			var newChatEntry = new models.InlineAlert({ text: $.msg('chat-you-were-' + mode, [this.sanitizeHtml(kickEvent.get('moderatorName'))] )});
 			this.model.chats.add(newChatEntry);
 			this.model.room.set({
 				'blockedMessageInput': true
@@ -531,7 +534,7 @@ var NodeRoomController = $.createClass(Observable,{
 
 			//TODO: move it to other class
 			if(this.isMain() && (connectedUser.get('name') != wgUserName) && (!skipAlert)) {
-				var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-parted', [connectedUser.get('name')] ) });
+				var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-parted', [this.sanitizeHtml(connectedUser.get('name'))] ) });
 				this.model.chats.add(newChatEntry);
 			}
 
@@ -779,7 +782,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 					'hidden':  true
 				});
 
-				var newChatEntry = new models.InlineAlert({text: $.msg( 'chat-user-blocked', wgUserName, userClear.get('name') ) });
+				var newChatEntry = new models.InlineAlert({text: $.msg( 'chat-user-blocked', wgUserName, this.sanitizeHtml(userClear.get('name')) ) });
 				this.chats.privates[ user.get('roomId') ].socket.send(newChatEntry.xport());
 
 				if(this.chats.privates[ user.get('roomId') ].active) {
@@ -807,7 +810,7 @@ var NodeChatController = $.createClass(NodeRoomController,{
 					'hidden':  false
 				});
 
-				var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-allow', wgUserName, privateUser.get('name') ) });
+				var newChatEntry = new models.InlineAlert({text: $.msg('chat-user-allow', wgUserName, this.sanitizeHtml(privateUser.get('name')) ) });
 				this.chats.privates[ user.get('roomId') ].socket.send(newChatEntry.xport());
 			}
 		}, this));
