@@ -15,7 +15,6 @@ MediaTool.Item = $.createClass(Observable,{
 		this.video = video;
 		this.file = file;
 		this.thumbHtml = thumbHtml;
-		this.renderThumbHtml();
 	},
 
 	renderThumbHtml: function() {
@@ -25,9 +24,9 @@ MediaTool.Item = $.createClass(Observable,{
 		}
 	},
 
-    renderPreview: function() {
-            var renderer = new MediaTool.Renderer();
-            return renderer.getPreview(this);
-    }
+	renderPreview: function() {
+		var renderer = new MediaTool.Renderer();
+		return renderer.getPreview(this);
+	}
 
 });
