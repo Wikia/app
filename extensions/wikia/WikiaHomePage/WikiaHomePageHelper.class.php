@@ -377,6 +377,8 @@ class WikiaHomePageHelper extends WikiaModel {
 		$dataGetter = F::build('WikiDataGetterForSpecialPromote');
 		return $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
+
+
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
@@ -429,6 +431,7 @@ class WikiaHomePageHelper extends WikiaModel {
 				$wikiInfo['hot'] = intval(CityVisualization::isHotWiki($wikiData['flags']));
 				$wikiInfo['promoted'] = intval(CityVisualization::isPromotedWiki($wikiData['flags']));
 				$wikiInfo['blocked'] = intval(CityVisualization::isBlockedWiki($wikiData['flags']));
+
 
 				$wikiInfo['images'] = array();
 				if (!empty($wikiData['main_image'])) {
@@ -644,34 +647,5 @@ class WikiaHomePageHelper extends WikiaModel {
 			'slots' => $slots,
 			'wikis' => $wikisPerVertical,
 		);
-	}
-}
-
-abstract class WikiDataGetter {
-	public abstract function getWikiData($wikiId, $langCode);
-
-	protected function sanitizeWikiData($wikiData) {
-		foreach (array('headline', 'description', 'flags') as $key) {
-			if (empty($wikiData[$key])) {
-				$wikiData[$key] = null;
-			}
-		}
-		return $wikiData;
-	}
-}
-
-class WikiDataGetterForVisualization extends WikiDataGetter {
-	public function    getWikiData($wikiId, $langCode) {
-		$visualization = F::build('CityVisualization');
-		$wikiData = $visualization->getWikiDataForVisualization($wikiId, $langCode);
-		return $this->sanitizeWikiData($wikiData);
-	}
-}
-
-class WikiDataGetterForSpecialPromote extends WikiDataGetter {
-	public function  getWikiData($wikiId, $langCode) {
-		$visualization = F::build('CityVisualization');
-		$wikiData = $visualization->getWikiDataForPromote($wikiId, $langCode);
-		return $this->sanitizeWikiData($wikiData);
 	}
 }

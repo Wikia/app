@@ -32,7 +32,9 @@ $app->registerClass('WikiImageReviewStatusRowHelper',$dir.'classes/WikiImageRevi
 $app->registerClass('WikiGetDataHelper',$dir.'classes/WikiGetDataHelper.class.php');
 $app->registerClass('WikiGetDataForVisualizationHelper',$dir.'classes/WikiGetDataForVisualizationHelper.class.php');
 $app->registerClass('WikiGetDataForPromoteHelper',$dir.'classes/WikiGetDataForPromoteHelper.class.php');
-
+$app->registerClass('WikiDataGetter',$dir.'classes/WikiDataGetter.class.php');
+$app->registerClass('WikiDataGetterForSpecialPromote',$dir.'classes/WikiDataGetterForSpecialPromote.class.php');
+$app->registerClass('WikiDataGetterForVisualization',$dir.'classes/WikiDataGetterForVisualization.class.php');
 
 //classes
 $app->registerClass('WikiaHomePageController', $dir.'WikiaHomePageController.class.php');
