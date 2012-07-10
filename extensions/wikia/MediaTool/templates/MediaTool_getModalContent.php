@@ -1,4 +1,4 @@
-<section id="mediaToolDialog">
+<section id="MediaTool" class="MediaTool">
 <ul class="tabs">
 	<li data-tab="find-media" class="selected">
 		<a><?= wfMsg('mediatool-tab-findmedia'); ?></a>
@@ -12,7 +12,7 @@
 
 	<div data-tab-body="find-media" class="tabBody selected border">
 
-		<div class="mediatool-left-bar">
+		<div class="media-tool-left-bar">
 
 			<ul class="tabs minor-tabs">
 				<li data-tab="find-media-wiki" class="selected">
@@ -31,18 +31,18 @@
 			</div>
 			<div data-tab-body="find-media-online" class="tabBody">
 				<label for="mediatool-online-url"><?= wfMsg('mediatool-addviaurl-label'); ?></label>
-				<input type="text" id="mediatool-online-url" value="" />
+				<input type="text" id="mediatool-online-url" class="media-tool-online-url" value="" />
 				<button name="addviaurl"><?= wfMsg('mediatool-button-add');?></button>
 			</div>
 			<div data-tab-body="find-media-computer" class="tabBody">
 			</div>
 
 		</div>
-		<div class="mediatool-content">
+		<div class="media-tool-content">
 			<div class="mediatool-basket">
 				{{{cart}}}
 			</div>
-			<div id="mediatool-thumbnail-browser" class="mediatool-thumbnail-browser">
+			<div id="mediatool-thumbnail-browser" class="media-tool-thumbnail-browser">
 				{{{itemsCollection}}}
 			</div>
 		</div>
@@ -50,7 +50,7 @@
 	</div>
 	<div data-tab-body="edit-media" class="tabBody border">
 
-		<div class="mediatool-left-bar">
+		<div class="media-tool-left-bar">
 
 			<ul class="tabs minor-tabs">
 				<li data-tab="edit-media-options" class="selected">
@@ -76,9 +76,9 @@
 					<label for="mediaToolSmallMedia"><?= wfMsg('mediatool-small-thumbnail', MediaToolController::MEDIA_SIZE_SMALL) ?></label><br/>
 					<input type="radio" name="mediasize" id="mediaToolCustomMedia"/>
 					<label for="mediaToolCustomMedia"><?= wfMsg('mediatool-custom-thumbnail') ?></label><br/>
-					<div id="mediaToolMediaSizeSlider" class="WikiaSlider"></div>
+					<div id="mediaToolMediaSizeSlider" class="WikiaSlider media-size-slider"></div>
 					<span id="mediaToolMediaSize">
-						<input type="text" id="mediaToolMediaSizeInput" name="mediaToolMediaSizeInput" value="" onchange="" onkeyup="" /> px
+						<input type="text" id="mediaToolMediaSizeInput" class="media-size-input" name="mediaToolMediaSizeInput" value="" onchange="" onkeyup="" /> px
 					<span>
 				</div>
 
@@ -92,7 +92,7 @@
 			</div>
 
 		</div>
-		<div class="mediatool-content">
+		<div class="media-tool-content">
 			<div class="mediatool-preview">
 
 			</div>
@@ -102,7 +102,7 @@
 </div>
 
 
-<div class="MediaTool-buttons">
+<div class="MediaToolButtons">
 	<button class="secondary" name="cancel"><?= wfMsg('mediatool-button-cancel'); ?></button>
 	<button  name="continue" disabled="disabled"><?= wfMsg('mediatool-button-continue'); ?></button>
 	<button  name="done"><?= wfMsg('mediatool-button-done'); ?></button>

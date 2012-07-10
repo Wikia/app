@@ -3,68 +3,142 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/opacity";
 
-.MediaToolContainer {
+.MediaToolButtons {
+	margin-bottom: 20px;
+	padding-right: 10px;
+	text-align: right;
+}
 
+.MediaToolContainer {
+	@include clearfix;
 	border: 1px solid $color-page-border;
+	height: 359px;
 	margin: 10px;
 	padding: 10px;
 	padding-left: 5px;
-	height: 359px;
 
-	.mediatool-left-bar {
+	.float-title {
+		@include box-shadow(2, 2, 2, #000);
+		@include opacity(80);
+		background: $color-page;
+		border: 1px bold $color-page-border;
+		font-color: #7e7e7e;
+		font-size: 14pt;
+		line-height: 24px;
+		padding: 5px;
+		position: absolute;
+		width: 690px;
+	}
 
-		width: 245px;
-		padding-right: 5px;
+	.media-tool-basket {
+		min-height: 140px;
+		width: 700px;
+
+		h4 {
+			line-height: 16px;
+			margin: 0 0 0.4em;
+
+			.ui-icon {
+				float: left;
+			}
+		}
+	}
+
+	.media-tool-content {
+		display: inline-block;
+		width: 700px;
+	}
+
+	.media-tool-item-list {
+		&.custom-state-active {
+			background: #eee;
+		}
+	}
+
+	.media-tool-item-list, .media-tool-basket {
+		li {
+			float: left;
+			height: 72px;
+			margin: 5px;
+			padding: 0;
+			position: relative;
+			text-align: center;
+			width: 96px;
+		}
+	}
+
+	.media-tool-left-bar {
 		border-right: 1px solid $color-page-border;
 		float: left;
-		margin-right: 10px;
 		height: 333px;
+		margin-right: 10px;
+		padding-right: 5px;
+		width: 245px;
 
 		.minor-tabs {
 			margin-bottom: 20px;
 		}
 	}
 
-	.mediatool-content {
-		width: 700px;
-		display: inline-block;
-	}
+	.media-tool-media-location {
+		margin-top: 19px;
 
-	.float-title {
-		@include box-shadow(2, 2, 2, #000);
-		@include opacity(80);
-		position: absolute;
-		width: 690px;
-		padding: 5px;
-		line-height: 24px;
-		font-size: 14pt;
-		font-color: #7e7e7e;
-		border: 1px bold $color-page-border;
-		background: $color-page;
-	}
+		img {
+			margin-right: 18px;
+			padding: 3px;
 
-	.mediatool-thumbnail-browser {
-		width: 700px;
-		border: 1px solid $color-page-border;
-		overflow: auto;
-		margin-top: 20px;
-		min-height: 150px;
-
-		.mediaToolItemList {
-			padding-top: 30px;
-			min-height: 150px;
-			li {
-				display: inline-block;
+			&.selected {
+				border: 2px solid $color-buttons;
+				padding: 1px;
 			}
 		}
+	}
+
+	.media-tool-media-size {
+		@include clearfix;
+		margin-top: 15px;
+
+		.media-size-input {
+			height: 16px;
+			width: 36px;
+		}
+
+		.media-size-slider {
+			float: left;
+			margin-left: 20px;
+			width: 130px;
+		}
+	}
+
+	.media-tool-online-url {
+		width: 98%;
+	}
+
+	.media-tool-thumbnail-browser {
+		border: 1px solid $color-page-border;
+		margin-top: 20px;
+		min-height: 150px;
+		overflow: auto;
+		width: 700px;
+
 		&.loading {
-			position: relative;
 			background-color: mix($color-page-border, $color-page, 20%);
+			position: relative;
+
 			&:after {
+				content: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */;
+				left: 330px;
 				position: absolute;
 				top: 60px;
-				left: 330px;
-				content: url(/skins/common/images/ajax.gif); /* $wgCdnStylePath */;
+			}
+		}
+
+		.media-tool-item-list {
+			min-height: 150px;
+			padding-top: 30px;
+
+			li {
+				display: inline-block;
 			}
 		}
 	}
@@ -72,82 +146,18 @@
     .media-tool-thumbnail-style {
 		img {
 			padding: 3px;
+
 			&.selected {
-				padding: 1px;
 				border: 2px solid $color-buttons;
+				padding: 1px;
 			}
 		}
+
 		.thumb-style-desc {
 			color: #9f9f9f;
 			font-style: italic;
 		}
 	}
-
-	.media-tool-media-size {
-		margin-top: 15px;
-
-		#mediaToolMediaSizeSlider {
-			float: left;
-			margin-left: 20px;
-			width: 130px;
-		}
-
-		#mediaToolMediaSizeInput {
-			height: 16px;
-			width: 36px;
-		}
-
-		@include clearfix;
-	}
-
-	.media-tool-media-location {
-		margin-top: 19px;
-		img {
-			padding: 3px;
-            margin-right: 18px;
-			&.selected {
-				padding: 1px;
-				border: 2px solid $color-buttons;
-			}
-		}
-	}
-
-	#mediaToolItemList {
-		&.custom-state-active {
-			background: #eee;
-		}
-	}
-
-	#mediaToolBasket {
-		width: 700px;
-		min-height: 140px;
-		h4 { line-height: 16px; margin: 0 0 0.4em; }
-		h4 .ui-icon { float: left; }
-  	}
-	#mediaToolItemList, #mediaToolBasket {
-		li {
-			float: left;
-			padding: 0;
-			margin: 5px;
-			position: relative;
-			height: 72px;
-			width: 96px;
-			text-align: center;
-		}
-    }
-
-   #mediatool-online-url {
-     width: 98%;
-   }
-
-	@include clearfix;
-}
-
-.MediaTool-buttons {
-
-	text-align: right;
-	padding-right: 10px;
-	margin-bottom: 20px;
 }
 
 .MediaToolModal .modalContent {
