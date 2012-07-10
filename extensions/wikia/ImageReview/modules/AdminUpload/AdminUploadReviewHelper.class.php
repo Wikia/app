@@ -25,14 +25,14 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 		$taskAdditionList = array();
 
 		$sqlWhere = array(
-			self::STATE_APPROVED => array(),
-			self::STATE_REJECTED => array(),
-			self::STATE_QUESTIONABLE => array(),
+			ImageReviewStatuses::STATE_APPROVED => array(),
+			ImageReviewStatuses::STATE_REJECTED => array(),
+			ImageReviewStatuses::STATE_QUESTIONABLE => array(),
 		);
 
 		foreach ($images as $image) {
-			if ($image['state'] == self::STATE_APPROVED) {
-				$sqlWhere[self::STATE_APPROVED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
+			if ($image['state'] == ImageReviewStatuses::STATE_APPROVED) {
+				$sqlWhere[ImageReviewStatuses::STATE_APPROVED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$approvalList [] = $image;
 
 				$targetWikiId = $this->getTargetWikiId($image['lang']);
@@ -49,14 +49,14 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 					'name' => $image['name'],
 				);
 
-			} elseif ($image['state'] == self::STATE_REJECTED) {
-				$sqlWhere[self::STATE_REJECTED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
+			} elseif ($image['state'] == ImageReviewStatuses::STATE_REJECTED) {
+				$sqlWhere[ImageReviewStatuses::STATE_REJECTED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$rejectionList [] = $image;
-			} elseif ($image['state'] == self::STATE_DELETED) {
-				$sqlWhere[self::STATE_DELETED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
+			} elseif ($image['state'] == ImageReviewStatuses::STATE_DELETED) {
+				$sqlWhere[ImageReviewStatuses::STATE_DELETED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$deletionList [] = $image;
-			} elseif ($image['state'] == self::STATE_QUESTIONABLE) {
-				$sqlWhere[self::STATE_QUESTIONABLE][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
+			} elseif ($image['state'] == ImageReviewStatuses::STATE_QUESTIONABLE) {
+				$sqlWhere[ImageReviewStatuses::STATE_QUESTIONABLE][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 			}
 		}
 
@@ -120,15 +120,15 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 				case '':
 					//	$stats['reviewer'] += count($images);
 					//	$stats['unreviewed'] -= count($images);
-					$stats['questionable'] += count($sqlWhere[self::STATE_QUESTIONABLE]);
+					$stats['questionable'] += count($sqlWhere[ImageReviewStatuses::STATE_QUESTIONABLE]);
 					break;
 				case ImageReviewSpecialController::ACTION_QUESTIONABLE:
-					$changedState = count($sqlWhere[self::STATE_APPROVED]) + count($sqlWhere[self::STATE_REJECTED]);
+					$changedState = count($sqlWhere[ImageReviewStatuses::STATE_APPROVED]) + count($sqlWhere[ImageReviewStatuses::STATE_REJECTED]);
 					//	$stats['reviewer'] += $changedState;
 					$stats['questionable'] -= $changedState;
 					break;
 				case ImageReviewSpecialController::ACTION_REJECTED:
-					$changedState = count($sqlWhere[self::STATE_APPROVED]) + count($sqlWhere[self::STATE_DELETED]);
+					$changedState = count($sqlWhere[ImageReviewStatuses::STATE_APPROVED]) + count($sqlWhere[ImageReviewStatuses::STATE_DELETED]);
 					$stats['rejected'] -= $changedState;
 					break;
 			}
@@ -153,25 +153,25 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 			'city_visualization_images',
 			array(
 				'reviewer_id = null',
-				'image_review_status' => self::STATE_UNREVIEWED,
+				'image_review_status' => ImageReviewStatuses::STATE_UNREVIEWED,
 			),
 			array(
 				"review_start < now() - " . $timeLimit,
 				"review_end = '0000-00-00 00:00:00'",
 				'reviewer_id' => $this->wg->User->getId(),
-				'image_review_status' => self::STATE_IN_REVIEW,
+				'image_review_status' => ImageReviewStatuses::STATE_IN_REVIEW,
 			),
 			__METHOD__
 		);
 
 		$db->update(
 			'city_visualization_images',
-			array('image_review_status' => self::STATE_QUESTIONABLE),
+			array('image_review_status' => ImageReviewStatuses::STATE_QUESTIONABLE),
 			array(
 				"review_start < now() - " . $timeLimit,
 				"review_end = '0000-00-00 00:00:00'",
 				'reviewer_id' => $this->wg->User->getId(),
-				'image_review_status' => self::STATE_QUESTIONABLE_IN_REVIEW,
+				'image_review_status' => ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
 			),
 			__METHOD__
 		);
@@ -201,7 +201,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 	 * get image list
 	 * @return array imageList
 	 */
-	public function getImageList($timestamp, $state = self::STATE_UNREVIEWED, $order = self::ORDER_LATEST) {
+	public function getImageList($timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST) {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$db = $this->wf->GetDB(DB_MASTER, array(), $this->wg->SharedDB);
@@ -226,11 +226,11 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 			" review_start = from_unixtime($timestamp)",
 		);
 
-		if ($state == self::STATE_QUESTIONABLE) {
-			$newState = self::STATE_QUESTIONABLE_IN_REVIEW;
+		if ($state == ImageReviewStatuses::STATE_QUESTIONABLE) {
+			$newState = ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW;
 			$values[] = " review_end = '0000-00-00 00:00:00'";
 		} else {
-			$newState = self::STATE_IN_REVIEW;
+			$newState = ImageReviewStatuses::STATE_IN_REVIEW;
 		}
 
 		$values[] = ' image_review_status = ' . $newState;
@@ -295,7 +295,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 		if (count($invalidImages) > 0) {
 			$db->update(
 				'city_visualization_images',
-				array('image_review_status' => self::STATE_INVALID_IMAGE),
+				array('image_review_status' => ImageReviewStatuses::STATE_INVALID_IMAGE),
 				array(implode(' OR ', $invalidImages)),
 				__METHOD__
 			);
@@ -406,7 +406,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 
 		$where = array();
 
-		$where['image_review_status'] = self::STATE_QUESTIONABLE;
+		$where['image_review_status'] = ImageReviewStatuses::STATE_QUESTIONABLE;
 
 		// select by reviewer, state and total count with rollup and then pick the data we want out
 		$result = $db->select(
@@ -436,9 +436,9 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 
 		$summary = array(
 			'all' => 0,
-			self::STATE_APPROVED => 0,
-			self::STATE_REJECTED => 0,
-			self::STATE_QUESTIONABLE => 0,
+			ImageReviewStatuses::STATE_APPROVED => 0,
+			ImageReviewStatuses::STATE_REJECTED => 0,
+			ImageReviewStatuses::STATE_QUESTIONABLE => 0,
 			'avg' => 0,
 		);
 		$data = array();

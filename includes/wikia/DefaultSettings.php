@@ -99,6 +99,7 @@ $wgAutoloadClasses['WikiaSkin'] = $IP . '/includes/wikia/WikiaSkin.class.php';
 $wgAutoloadClasses['WikiaBaseTemplate'] = $IP . '/includes/wikia/WikiaBaseTemplate.class.php';
 $wgAutoloadClasses['WikiaFunctionWrapper'] = $IP . '/includes/wikia/WikiaFunctionWrapper.class.php';
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/WikiaBaseTest.class.php';
+$wgAutoloadClasses['ImageReviewStatuses'] = $IP . '/extensions/wikia/ImageReview/ImageReviewStatuses.class.php';
 
 // Since we use this everywhere, we will just set up a global app reference now.
 F::setInstance( 'App', new WikiaApp() );
