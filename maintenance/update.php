@@ -33,9 +33,6 @@ if ( !function_exists( 'version_compare' ) || ( version_compare( phpversion(), '
 
 $wgUseMasterForMaintenance = true;
 require_once( dirname( __FILE__ ) . '/Maintenance.php' );
-#<Wikia>
-require_once( dirname( __FILE__ ) . '/wikia/update.php' );
-#</wikia>
 
 class UpdateMediaWiki extends Maintenance {
 
