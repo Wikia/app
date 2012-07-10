@@ -39,8 +39,8 @@ class AssetsManager {
 
 	public static function getInstance() {
 		if( self::$mInstance == false ) {
-			global $wgCdnStylePath, $wgStyleVersion, $wgAllInOne, $wgRequest;
-			self::$mInstance = new AssetsManager($wgCdnStylePath, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
+			global $wgCdnRootUrl, $wgStyleVersion, $wgAllInOne, $wgRequest;
+			self::$mInstance = new AssetsManager($wgCdnRootUrl, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
 		}
 		return self::$mInstance;
 	}
@@ -57,7 +57,7 @@ class AssetsManager {
 
 		$vars['sassParams'] = $params;
 		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;
-		$vars['wgCdnRootUrl'] = $wgCdnRootUrl; // TODO: REVIEW THIS: Do we really want just the wgCdnRootUrl here or do we want wgCdnStylePath which has the cb value in it?
+		$vars['wgCdnRootUrl'] = $wgCdnRootUrl;
 
 		return true;
 	}
@@ -439,9 +439,8 @@ class AssetsManager {
 	 * @return array Array of one or many full common URLs, uses not wiki specific host
  	 */
 	public function getGroupsCommonURL( Array $groupNames, /* array */ $params = array(), /* boolean */ $combine = null, /* boolean */ $minify = null ) {
-		global $wgCdnRootUrl;
 		if ( ( $combine !== null ? $combine : $this->mCombine ) || ( $minify !== null ? $minify : $this->mMinify ) ) {
-			return $this->getGroupsURL( $groupNames, $params, $wgCdnRootUrl, $combine, $minify );
+			return $this->getGroupsURL( $groupNames, $params, $this->mCommonHost, $combine, $minify );
 		} else {
 			return $this->getGroupsURL( $groupNames, $params, '', $combine, $minify );
 		}
