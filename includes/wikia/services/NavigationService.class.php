@@ -53,7 +53,7 @@ class NavigationService {
 		$app = F::app();
 
 		if ($this->useSharedMemcKey) {
-			$wikiId = $app->wf->SharedMemcKey();
+			$wikiId = substr($app->wf->SharedMemcKey(), 0, -1);
 
 		} else {
 			$wikiId = (is_numeric($cityId)) ? $cityId : intval($app->wg->CityId);
