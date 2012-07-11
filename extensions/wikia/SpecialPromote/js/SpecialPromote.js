@@ -122,7 +122,6 @@ SpecialPromote.prototype = {
 	getUploadForm: function (data) {
 		if (!data.uploadType) {
 			throw new Error('getUploadFormError');
-			return false;
 		}
 		$.nirvana.sendRequest({
 			type: 'post',
@@ -145,9 +144,8 @@ SpecialPromote.prototype = {
 		if (uploadType === this.UPLOAD_TYPE_ADDITIONAL && this.current.additionalImagesNames.length > this.ADDITIONAL_IMAGES_LIMIT) {
 			errorContainer.text($.msg('promote-error-too-many-images'));
 			return;
-		} else {
-			errorContainer.html('');
 		}
+		errorContainer.html('');
 
 		try {
 			this.getUploadForm({uploadType: uploadType});
@@ -159,7 +157,9 @@ SpecialPromote.prototype = {
 	onChangePhotoClick: function (e) {
 		e.preventDefault();
 		var target = $(e.target).parent().parent().find('img#curMainImageName');
-		if ($.isEmptyObject(target[0])) target = $(e.target).parent().parent().find('img.additionalImage');
+		if ($.isEmptyObject(target[0])) {
+			target = $(e.target).parent().parent().find('img.additionalImage');
+		}
 
 		try {
 			this.getUploadForm({
@@ -279,8 +279,8 @@ SpecialPromote.prototype = {
 		this.checkPublishButton();
 	},
 	addAdditionalImage: function (file) {
+		var image;
 		if (file.imageIndex) {
-			var image;
 			this.current.additionalImagesNames[file.imageIndex] = file.fileName;
 			$('.small-photos img').each(function(key, value) {
 				if ($(value).data('image-index') == file.imageIndex) {
@@ -292,7 +292,7 @@ SpecialPromote.prototype = {
 		} else {
 			this.current.additionalImagesNames.push(file.fileName);
 			var imagesContainer = $('.small-photos');
-			var image = new Image();
+			image = new Image();
 			var smallPhotosWrapper = $('<div class="small-photos-wrapper"></div>');
 			var modifyRemoveNode = $('<div class="modify-remove"><a class="modify" href="#">'
 			+$.msg('promote-modify-photo')
@@ -345,7 +345,9 @@ SpecialPromote.prototype = {
 			}
 		}, this));
 
-		if (doSave) this.saveWikiPromoData(this.current);
+		if (doSave) {
+			this.saveWikiPromoData(this.current);
+		}
 	},
 	saveWikiPromoData: function (data) {
 		$.nirvana.sendRequest({
