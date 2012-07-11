@@ -73,7 +73,7 @@ if(typeof EmoticonMapping === 'undefined'){
 		// TODO: fetch emoticons from nocookie domain
 		this._settings = {
 			"http://images.wikia.com/lyricwiki/images/6/67/Smile001.gif": [":)", ":-)", "(smile)"],
-			"http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png": [":(", ":-(", ":|"],
+			"http://images3.wikia.nocookie.net/__cb20100822133322/lyricwiki/images/d/d8/Sad.png": [":(", ":-(", ":|"]
 		};
 
 		/**
