@@ -102,6 +102,10 @@ for(var n=0, len = lines.length; n < len; n++) {
 
 	// check for IGNORE_STATEMENT
 	if (line.indexOf(IGNORE_STATEMENT) > -1) {
+		// filter out issues reported by "core" JSLint rules
+		result.errors = result.errors.filter(function(item) {
+			return (item && item.line == (n+1)) ?  false /* error should be ignored */ : true;
+		});
 		continue;
 	}
 
