@@ -29,27 +29,39 @@ class AdminUploadReviewTask extends BatchTask {
 		$this->mTaskID = $params->task_id;
 		$oUser = F::build('User', array($params->task_user_id), 'newFromId');
 
-		if ($oUser instanceof User) {
+		if( $oUser instanceof User ) {
 			$oUser->load();
-			$this->mUser = $oUser->getName();
+			$this->mUser = $oUser->getId();
 		} else {
 			$this->log(__CLASS__ . ' / ' . __METHOD__ . ": Invalid user - id: " . $params->task_user_id);
 			return true;
 		}
 
 		$data = unserialize($params->task_arguments);
+		if( isset($data['upload_list']) ) {
+			foreach( $data['upload_list'] as $targetWikiId => $wikis ) {
+				$this->uploadImages($targetWikiId, $wikis);
+			}
+		}
 
-		foreach ($data['upload_list'] as $targetWikiId => $images) {
-			$this->uploadImages($targetWikiId,$images);
+		if( isset($data['deletion_list']) ) {
+			foreach( $data['deletion_list'] as $wikis ) {
+				$this->removeSingleImage($wikis);
+			}
 		}
-		foreach ($data['deletion_list'] as $image) {
-			$this->removeSingleImage($image);
-		}
+
+		return true;
 	}
-	function uploadImages($targetWikiId ,$images) {
-		foreach($images as $sourceWikiId => $image) {
-			$this->uploadSingleImage($image['id'], $image['name'], $targetWikiId, $sourceWikiId);
+
+	function uploadImages($targetWikiId, $wikis) {
+		foreach($wikis as $sourceWikiId => $images) {
+			foreach($images as $image) {
+				$this->uploadSingleImage($image['id'], $image['name'], $targetWikiId, $sourceWikiId);
+			}
+			//todo: purge cached interstitial data for this wiki
+			//todo: update db data for this wiki
 		}
+		//todo: purge cached visualization data on target wiki
 	}
 
 	function uploadSingleImage($imageId, $destinationName, $targetWikiId, $sourceWikiId) {
@@ -57,15 +69,17 @@ class AdminUploadReviewTask extends BatchTask {
 
 		$retval = "";
 
-		$sourceImageUrl = ImagesService::getImageSrc($sourceWikiId,$imageId,WikiaHomePageHelper::INTERSTITIAL_LARGE_IMAGE_WIDTH);
+		$sourceImageUrl = ImagesService::getImageSrc($sourceWikiId, $imageId, WikiaHomePageHelper::INTERSTITIAL_LARGE_IMAGE_WIDTH);
 
-		if (empty($sourceImageUrl['src'])) {
+		if( empty($sourceImageUrl['src']) ) {
 			$this->log('Apparently the image is unaccessible');
 			return false;
+		} else {
+			$sourceImageUrl = $sourceImageUrl['src'];
 		}
 
-		$city_url = WikiFactory::getVarValueByName("wgServer", $sourceWikiId);
-		if (empty($city_url)) {
+		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
+		if( empty($city_url) ) {
 			$this->log('Apparently the server is not available via WikiFactory');
 			return false;
 		}
@@ -73,20 +87,21 @@ class AdminUploadReviewTask extends BatchTask {
 		$city_path = WikiFactory::getVarValueByName("wgScript", $targetWikiId);
 
 		$dbname = WikiFactory::IDtoDB($sourceWikiId);
-		$destinationName = $this->getNameWithWiki($destinationName,$dbname);
+		$destinationName = $this->getNameWithWiki($destinationName, $dbname);
 
 		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/AdminUpload/upload.php";
-		$sCommand .= "--originalimageurl=" . escapeshellarg($sourceImageUrl) . " ";
-		$sCommand .= "--destimagename=" . escapeshellarg($destinationName) . " ";
-		$sCommand .= "--user " . escapeshellarg( $this->mUser ) . " ";
-		$sCommand .= "--conf {$wgWikiaLocalSettingsPath}";
+		$sCommand .= " --originalimageurl=" . escapeshellarg($sourceImageUrl);
+		$sCommand .= " --destimagename=" . escapeshellarg($destinationName);
+		$sCommand .= " --userid=" . escapeshellarg( $this->mUser );
+		$sCommand .= " --wikiid=" . escapeshellarg( $sourceWikiId );
+		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
 
-		$actual_title = wfShellExec($sCommand, $retval);
+		$output = wfShellExec($sCommand, $retval);
 
-		if ($retval) {
-			$this->log('Upload error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $actual_title);
+		if( $retval ) {
+			$this->log('Upload error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
 		} else {
-			$this->log('Upload successful: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($actual_title) . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
+			$this->log('Upload successful: <a href="' . $city_url . $city_path . '/?title=' . wfEscapeWikiText($output) . '">' . $city_url . $city_path . '/?title=' . $output . '</a>');
 		}
 
 		return true;
@@ -105,11 +120,12 @@ class AdminUploadReviewTask extends BatchTask {
 		$retval = "";
 
 		$dbname = WikiFactory::IDtoDB($sourceWikiId);
-		$nameToRemove = $this->getNameWithWiki($imageName,$dbname);
+		$nameToRemove = $this->getNameWithWiki($imageName, $dbname);
 
 		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/AdminUpload/remove.php";
 		$sCommand .= "--imagename=" . escapeshellarg($nameToRemove) . " ";
 		$sCommand .= "--userid=" . escapeshellarg( $this->mUser ) . " ";
+		$sCommand .= "--wikiid " . escapeshellarg( $sourceWikiId ) . " ";
 		$sCommand .= "--conf {$wgWikiaLocalSettingsPath}";
 
 		$actual_title = wfShellExec($sCommand, $retval);
@@ -122,13 +138,22 @@ class AdminUploadReviewTask extends BatchTask {
 
 		$city_path = WikiFactory::getVarValueByName("wgScript", $targetWikiId);
 
-		if ($retval) {
+		if( $retval ) {
 			$this->log('Remove error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $actual_title);
 		} else {
 			$this->log('Removal successful: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($actual_title) . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
 		}
 
 		return true;
+	}
+
+	protected function getNameWithWiki($destinationName, $wikiDBname) {
+		$destinationFileNameArr = explode('.', $destinationName);
+		$destinationFileExt = array_pop($destinationFileNameArr);
+
+		array_splice($destinationFileNameArr, 1, 0, array(',', $wikiDBname));
+
+		return implode('', $destinationFileNameArr).'.'.$destinationFileExt;
 	}
 
 	function getForm($title, $errors = false) {

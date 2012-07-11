@@ -27,8 +27,8 @@ $app = F::app();
 
 // classes
 $app->registerClass('AdminUploadReviewTask', $dir . 'AdminUploadReviewTask.php');
-if (function_exists('extAddBatchTask')) {
-	extAddBatchTask($dir . "./AdminUploadReviewTask.php", "adminuploadreview", "AdminUploadReviewTask");
+if( function_exists('extAddBatchTask') ) {
+	extAddBatchTask($dir . "AdminUploadReviewTask.php", "adminuploadreview", "AdminUploadReviewTask");
 }
 
 $app->registerClass('AdminUploadReviewSpecialController', $dir . 'AdminUploadReviewSpecialController.class.php');
