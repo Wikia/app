@@ -172,6 +172,8 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		}
 		$('#mediaToolMediaSizeInput').val(cart.getMediaSize());
 		$('#mediaToolMediaSizeSlider').slider("value", cart.getMediaSize());
+
+		renderer.updatePreview( {width:cart.getMediaSize()} );
 	}
 
 	function initMediaSizeActions() {
@@ -235,7 +237,11 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		var container = $('.mediatool-preview', dialogWrapper);
 		container.html('');
 		$.each( cart.items, function(i, item){
-			container.append( item.renderPreview() );
+			container.append( item.renderPreview({
+				itemTpl: itemPreviewTpl,
+				borderTpl: itemPreviewBorderTpl,
+				width: cart.getMediaSize()
+			}) );
 		} );
 	}
 
@@ -333,6 +339,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
 		finalizeDialog: finalizeDialog,
 		callBackend: callBackend,
+		dialogWrapper: dialogWrapper,
 		getCart: function () {
 			return cart;
 		},

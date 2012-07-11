@@ -10,6 +10,7 @@ MediaTool.Item = $.createClass(Observable,{
 	isVideo: true,
 	duration: '00:00',
 	renderer: null,
+	ratio: 1,
 
 	constructor: function(id, title, thumbHtml, thumbUrl) {
 		MediaTool.Item.superclass.constructor.call(this);
@@ -19,6 +20,7 @@ MediaTool.Item = $.createClass(Observable,{
 		this.title = title;
 		this.thumbHtml = thumbHtml;
 		this.thumbUrl = thumbUrl;
+		this.ratio = 16/9;
 	},
 
 	renderThumbHtml: function() {
@@ -27,8 +29,12 @@ MediaTool.Item = $.createClass(Observable,{
 		}
 	},
 
-	renderPreview: function(itemPreviewTpl) {
-		return this.renderer.getPreview(this, itemPreviewTpl);
+	renderPreview: function( params ) {
+		return this.renderer.getPreview(this, params);
+	},
+
+	getHeight: function( width ) {
+		return Math.floor( width / this.ratio );
 	}
 
 });
