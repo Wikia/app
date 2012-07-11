@@ -77,8 +77,8 @@ class SpecialPromoteHelper extends WikiaObject {
 
 	public function getAdditionalImages() {
 		if (!empty($this->wikiInfo ['images']) && !empty($this->wikiInfo['images'][0])) {
-			$images = array();
 			$imagesNames = array_slice($this->wikiInfo['images'], 1);
+			$images = array();
 			foreach ($imagesNames as $imageName) {
 				$images[] = $this->homePageHelper->getImageData($imageName, self::SMALL_IMAGE_WIDTH, self::SMALL_IMAGE_HEIGHT);
 			}
@@ -351,42 +351,62 @@ class SpecialPromoteHelper extends WikiaObject {
 
 	protected function saveAdditionalFiles($additionalImagesNames) {
 		$files = array();
+		$keys = array();
+		$allKeys = array(1,2,3,4,5,6,7,8,9);
 
-		for ($count = 0; $count < 9; $count++) {
-			$key = $count + 1;
-			$dstFileName = implode('-',
-				array(
-					UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME,
-					($key),
-				)
-			) . UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_EXT;
+		// find all unchanged files
+		foreach($additionalImagesNames as $singleFileName) {
+			if (strpos($singleFileName, UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME) === 0) {
+				$key = str_replace(UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-','',
+					str_replace(UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_EXT,'',$singleFileName)
+				);
 
-			if (!empty($additionalImagesNames[$count])) {
-				$singleFileName = $additionalImagesNames[$count];
-				if (strpos($singleFileName, 'Temp_file_') === 0) {
-					$file = $this->moveTmpFile($singleFileName, $dstFileName);
-					$files[$key] = array(
-						'name' => $file['name'],
-						'modified' => true
-					);
-				} else {
-					$files[$key] = array(
-						'name' => $singleFileName,
-						'modified' => false
-					);
-				}
-			} else {
-				$this->removeImage($dstFileName);
-
+				$keys []= $key;
 				$files[$key] = array(
-					'deletedname' => $dstFileName,
-					'deleted' => true
+					'name' => $singleFileName,
+					'modified' => false
 				);
 			}
 		}
 
+		// find all new files
+		$availableKeys = array_diff($allKeys,$keys);
+		foreach($additionalImagesNames as $singleFileName) {
+			if (strpos($singleFileName, 'Temp_file_') === 0) {
+				$key = array_shift($availableKeys);
+				$dstFileName = $this->getAdditionalImageName($key);
+
+				$file = $this->moveTmpFile($singleFileName, $dstFileName);
+				$files[$key] = array(
+					'name' => $file['name'],
+					'modified' => true
+				);
+			}
+		}
+
+		foreach($availableKeys as $key) {
+			$dstFileName = $this->getAdditionalImageName($key);
+
+			$this->removeImage($dstFileName);
+
+			$files[$key] = array(
+				'deletedname' => $dstFileName,
+				'deleted' => true
+			);
+		}
+
 		return $files;
 	}
+
+	protected function getAdditionalImageName($index) {
+		return implode('-',
+			array(
+				UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME,
+				($index),
+			)
+		) . UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_EXT;
+	}
+
 
 	protected function moveTmpFile($fileName, $dstFileName) {
 		$temp_file_title = F::build('Title', array($fileName, NS_FILE), 'newFromText');

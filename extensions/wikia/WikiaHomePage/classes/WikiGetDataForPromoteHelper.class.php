@@ -7,6 +7,7 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 	}
 
 	public function getImages($wikiId, $langCode, $wikiRow) {
-		return (array)json_decode($wikiRow->city_images);
+		$visualization = F::build('CityVisualization');
+		return $visualization->getWikiImageNames($wikiId, $langCode, ImageReviewStatuses::STATE_ANY);
 	}
 }
