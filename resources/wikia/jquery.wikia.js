@@ -52,7 +52,7 @@ $.getScript = function(url, callback, failureFn) {
 };
 
 $.fn.log = function (msg, group) {
-	if (typeof console != 'undefined') {
+	if (typeof console != 'undefined') { /* JSlint ignore */
 		if (group) {
 			// nice formatting of objects with group prefix
 			console.log((typeof msg != 'object' ? '%s: %s' : '%s: %o'), group, msg);
