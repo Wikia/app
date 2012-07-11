@@ -7,7 +7,7 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 	const VISUALIZATION_MAIN_IMAGE_NAME = 'Wikia-Visualization-Main.jpg';
 	const VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME = 'Wikia-Visualization-Add';
 	const VISUALIZATION_ADDITIONAL_IMAGES_EXT = '.jpg';
-	const VISUALIZATION_MAIN_IMAGE_MIN_WIDTH = 320;
+	const VISUALIZATION_MAIN_IMAGE_MIN_WIDTH = 480;
 	const VISUALIZATION_MAIN_IMAGE_MIN_HEIGHT = 320;
 
 	const FILEDIMENSIONS_ERROR = 30;
