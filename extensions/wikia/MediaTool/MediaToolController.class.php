@@ -41,14 +41,18 @@ class MediaToolController extends WikiaController {
 			if($wrapper instanceof ApiWrapper) {
 				$metaData = $wrapper->getMetadata();
 
+				/** @var $item MediaToolItem */
+				$item = F::build('MediaToolItem');
+
+				$item->setIsVideo(true);
+				$item->setTitleText($wrapper->getTitle());
+				$item->setThumbUrl($wrapper->getThumbnailUrl());
+				$item->setThumbHtml(false);
+				$item->setRemoteUrl($videoUrl);
+				$item->setDuration($this->helper->secToMMSS($metaData['duration']));
+
+				$data = $item->toArray();
 				$data['status'] = self::RESPONSE_STATUS_OK;
-				$data['isVideo'] = true;
-				$data['title'] = $wrapper->getTitle();
-				$data['hash'] = md5($wrapper->getTitle());
-				$data['thumbUrl'] = $wrapper->getThumbnailUrl();
-				$data['thumbHtml'] = false;
-				$data['remoteUrl'] = $videoUrl;
-				$data['duration'] = $this->helper->secToMMSS($metaData['duration']);
 			}
 			else {
 				$data['status'] = self::RESPONSE_STATUS_ERROR;
@@ -64,28 +68,13 @@ class MediaToolController extends WikiaController {
 	}
 
 	public function getMediaItems() {
-
 		$mediaList = $this->request->getVal("mediaList", array());
 		$data = array();
 
-		if ( count($mediaList) > 0 ) {
-
-			foreach ( $mediaList as $sFileTitle ) {
-
-				$oFileTitle = Title::newFromText( $sFileTitle, NS_FILE );
-				if ( !empty($oFileTitle) ) {
-					$oFile = wfFindFile($oFileTitle);
-					if ( !empty($oFile) ) {
-						$data[] = array(
-							"isVideo" => WikiaFileHelper::isFileTypeVideo( $oFile ),
-							"title" => $oFileTitle->getPrefixedDBkey(),
-							"hash" => md5($oFileTitle->getFullText()),
-							"status" => self::RESPONSE_STATUS_OK,
-							"thumbHtml" => $this->getMediaThumb( $sFileTitle ),
-							"thumbUrl" => $this->getThumbnailUrl( $sFileTitle )
-						);
-					}
-				}
+		foreach ( $mediaList as $sFileTitle ) {
+			$item = F::build( 'MediaToolItem', array( 'title' => Title::newFromText( $sFileTitle, NS_FILE ) ) );
+			if ( $item->hasFile() ) {
+				$data[] = $item->toArray();
 			}
 		}
 		$this->response->setData( $data );
@@ -96,58 +85,10 @@ class MediaToolController extends WikiaController {
 
 		// @todo implement
 		$data = array();
-		$data[] = array(
-			'isVideo' => true,
-			'hash' => md5('File:Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)'),
-			'title' => 'File:Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)',
-			'thumbHtml' => $this->getMediaThumb('Battlefield_3_Myth_Busting_Episode_2_by_Fhrope_(Battlefield_3_Gameplay_Commentary)'),
-			'thumbUrl' => '',
-		);
-		$data[] = array(
-			'isVideo' => false,
-			'hash' => md5('File:256.jpeg'),
-			'title' => 'File:256.jpeg',
-			'thumbHtml' => $this->getMediaThumb('256.jpeg'),
-			'thumbUrl' => '',
-		);
+		$data[] = F::build('MediaToolItem', array( 'title' => Title::newFromText('Battlefield 3 Myth Busting Episode 2 by Fhrope (Battlefield 3 Gameplay Commentary)', NS_FILE) ))->toArray();
+		$data[] = F::build('MediaToolItem', array( 'title' => Title::newFromText('256.jpeg', NS_FILE) ))->toArray();
 
 		$this->response->setData( $data );
-	}
-
-	public function getMediaThumb($sTitle) {
-		$mediaTitle = F::build('Title', array($sTitle, NS_FILE), 'newFromText'); /* @var $mediaTitle Title */
-		$mediaFile = wfFindFile($mediaTitle);
-
-		if( $mediaFile ) {
-			$mediaThumbObj = $mediaFile->transform( array('width'=>96, 'height'=>72 ) );
-			$mediaThumb = $mediaThumbObj->toHtml(
-				array(
-					'custom-url-link' => '',
-					'linkAttribs' => array(
-						'class' => '',
-						'data-ref' => $mediaTitle->getPrefixedDbKey()
-					),
-					'duration' => true,
-					'src' => false,
-					'constHeight' => 72,
-					'usePreloading' => false
-				)
-			);
-
-			return $mediaThumb;
-		}
-		return '';
-	}
-
-	public function getThumbnailUrl($sTitle) {
-		$mediaTitle = F::build('Title', array($sTitle, NS_FILE), 'newFromText'); /* @var $mediaTitle Title */
-		$mediaFile = wfFindFile($mediaTitle);
-
-		if( $mediaFile ) {
-			$mediaThumbObj = $mediaFile->transform( array('width'=>400 ) );
-			return $mediaThumbObj->getUrl();
-		}
-		return '';
 	}
 
 	public function uploadVideo() {
@@ -211,8 +152,8 @@ class MediaToolController extends WikiaController {
 	public function itemPreviewBorder() {}
 
 	public function getTemplates() {
-
 		$this->response->setFormat('json');
+
 		$this->response->setVal('dialog', $this->app->renderView( 'MediaTool', 'getModalContent' ) );
 		$this->response->setVal('cart', $this->app->renderView( 'MediaTool', 'getBasket' ) );
 		$this->response->setVal('itemsList', $this->app->renderView( 'MediaTool', 'getItemsList' ) );
