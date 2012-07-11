@@ -1,6 +1,8 @@
 <?php
 
 class ImageReviewStatuses {
+	const STATE_ANY = -1;
+
 	const STATE_UNREVIEWED = 0;
 	const STATE_IN_REVIEW = 1;
 	const STATE_APPROVED = 2;

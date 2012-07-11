@@ -5,15 +5,11 @@ class CityVisualization extends WikiaModel {
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 
-	const DIRT_REVIEWED_IMAGES_ONLY = 1;
-	const DIRT_UNREVIEWED_IMAGES_ONLY = 2;
-	const DIRT_ALL_IMAGES = 4;
-
 	const CITY_TAG_ENTERTAINMENT_ID = 129;
 	const CITY_TAG_VIDEO_GAMES_ID = 131;
 	const CITY_TAG_LIFESTYLE_ID = 127;
 
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.09';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.15';
 
 	public function getList($contLang) {
 		$this->wf->ProfileIn(__METHOD__);
@@ -222,7 +218,7 @@ class CityVisualization extends WikiaModel {
 		return $this->getVisualizationElementMemcKey('wiki_data_visualization', $wikiId, $langCode);
 	}
 
-    public function getWikiImagesCacheKey($wikiId, $langCode) {
+	public function getWikiImagesCacheKey($wikiId, $langCode) {
 		return $this->getVisualizationElementMemcKey('wiki_data_visualization_images', $wikiId, $langCode);
 	}
 
@@ -241,7 +237,7 @@ class CityVisualization extends WikiaModel {
 	 */
 	public function getWikiDataForPromote($wikiId, $langCode) {
 		$helper = F::build('WikiGetDataForPromoteHelper');
-		return $this->getWikiData($wikiId,$langCode,$helper);
+		return $this->getWikiData($wikiId, $langCode, $helper);
 	}
 
 	/**
@@ -290,7 +286,7 @@ class CityVisualization extends WikiaModel {
 				$wikiData['description'] = $row->city_description;
 				$wikiData['flags'] = $row->city_flags;
 				$wikiData['main_image'] = $row->city_main_image;
-				$wikiData['images'] = $dataHelper->getImages($wikiId,$langCode,$row);
+				$wikiData['images'] = $dataHelper->getImages($wikiId, $langCode, $row);
 			}
 
 			$this->wg->Memc->set($memcKey, $wikiData, 60 * 60 * 24);
@@ -301,15 +297,15 @@ class CityVisualization extends WikiaModel {
 		return $wikiData;
 	}
 
-		protected function getWikiImagesConditions($wikiId, $filter) {
+	protected function getWikiImagesConditions($wikiId, $filter) {
 		$conditions = array();
 
 		$conditions ['city_id'] = $wikiId;
 		switch ($filter) {
-			case self::DIRT_REVIEWED_IMAGES_ONLY:
+			case ImageReviewStatuses::STATE_APPROVED:
 				$conditions ['image_review_status'] = ImageReviewStatuses::STATE_APPROVED;
 				break;
-			case self::DIRT_UNREVIEWED_IMAGES_ONLY:
+			case ImageReviewStatuses::STATE_UNREVIEWED:
 				$conditions ['image_review_status'] = ImageReviewStatuses::STATE_UNREVIEWED;
 				break;
 			default:
@@ -318,7 +314,7 @@ class CityVisualization extends WikiaModel {
 		return $conditions;
 	}
 
-	public function getWikiImages($wikiId, $langCode, $filter = self::DIRT_REVIEWED_IMAGES_ONLY) {
+	public function getWikiImages($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$memKey = $this->getWikiImagesCacheKey($wikiId, $langCode);
@@ -334,7 +330,7 @@ class CityVisualization extends WikiaModel {
 		return $wikiImages;
 	}
 
-	public function getWikiImageNames($wikiId, $langCode, $filter = self::DIRT_REVIEWED_IMAGES_ONLY) {
+	public function getWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$memKey = $this->getWikiImageNamesCacheKey($wikiId, $langCode);
@@ -350,7 +346,7 @@ class CityVisualization extends WikiaModel {
 		return $wikiImageNames;
 	}
 
-	public function getWikiImageData($wikiId, $langCode, WikiImageRowAssigner $rowAssigner, $filter = self::DIRT_REVIEWED_IMAGES_ONLY) {
+	public function getWikiImageData($wikiId, $langCode, WikiImageRowAssigner $rowAssigner, $filter = ImageReviewStatuses::STATE_APPROVED) {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$wikiImages = array();
@@ -440,6 +436,7 @@ class CityVisualization extends WikiaModel {
 			foreach ($imagesToModify as $image) {
 				$updateArray = array();
 
+				$image->reviewer_id = null;
 				foreach ($image as $field => $value) {
 					$updateArray[$field] = $value;
 				}
