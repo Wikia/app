@@ -2742,12 +2742,12 @@ class Title {
 	 * @return mixed TitleArray, or empty array if this page's namespace
 	 *  doesn't allow subpages
 	 */
-	public function getSubpages( $limit = -1 ) {
+	public function getSubpages( $limit = -1, /*<Wikia>*/ $db = DB_SLAVE /*</Wikia>*/ ) {
 		if ( !MWNamespace::hasSubpages( $this->getNamespace() ) ) {
 			return array();
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( $db );
 		$conds['page_namespace'] = $this->getNamespace();
 		$conds[] = 'page_title ' . $dbr->buildLike( $this->getDBkey() . '/', $dbr->anyString() );
 		$options = array();
