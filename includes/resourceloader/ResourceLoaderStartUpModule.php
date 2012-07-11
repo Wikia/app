@@ -185,7 +185,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 		if ( $context->getOnly() === 'scripts' ) {
 
 			// The core modules:
-			$modules = array( /* wladek - we load jquery from google CDN - 'jquery', */ 'mediawiki' );
+			$modules = array( 'jquery', 'mediawiki' );
 			wfRunHooks( 'ResourceLoaderGetStartupModules', array( &$modules ) );
 
 			// Get the latest version
@@ -222,12 +222,18 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			// Conditional script injection
 			// Wikia change - begin - @author: wladek
 //			$scriptTag = Html::linkedScript( $wgLoadScript . '?' . wfArrayToCGI( $query ) );
-			// get jquery from CDN
-			$scriptTag = "wsl.buildScript(window.getJqueryUrl()) + ";
-			$scriptTag .= Xml::encodeJsVar(
+			// get jquery from CDN if we have wsl and getJqueryUrl loaded
+			$scriptTagJquery .= Xml::encodeJsVar(
 					Html::linkedScript( ResourceLoader::makeLoaderURL($modules, $query['lang'],
 					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
 			);
+			$scriptTagNoJquery .= Xml::encodeJsVar(
+					Html::linkedScript( ResourceLoader::makeLoaderURL(array('mediawiki'), $query['lang'],
+					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
+			);
+			$scriptTag = <<<ENDSCRIPT
+( (window.wsl && window.getJqueryUrl) ? (document.write(wsl.buildScript(window.getJqueryUrl()) + $scriptTagNoJquery)) : ($scriptTagJquery) )
+ENDSCRIPT;
 			$scriptTag = new XmlJsCode($scriptTag);
 			// Wikia change - end
 			$out .= "if ( isCompatible() ) {\n" .
