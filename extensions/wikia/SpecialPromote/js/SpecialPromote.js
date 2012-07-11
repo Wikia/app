@@ -270,6 +270,7 @@ SpecialPromote.prototype = {
 			mainImgDiv.append(
 				$(image)
 					.attr('src', file.fileUrl)
+					.attr('id', 'curMainImageName')
 					.data('filename', file.fileName)
 					.data('image-type', 'main')
 			);
@@ -333,8 +334,8 @@ SpecialPromote.prototype = {
 		e.preventDefault();
 		$('.UploadTool').startThrobbing();
 		if(!this.validateData()) {
-			return false;
 			$('.UploadTool').stopThrobbing();
+			return false;
 		}
 		var doSave = false;
 
