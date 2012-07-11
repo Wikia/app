@@ -13,6 +13,13 @@
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/Chat2/css/Chat.scss')?>">
 
 	<!-- JS -->
+	<?php
+		$srcs = F::build('AssetsManager',array(),'getInstance')->getGroupCommonURL('oasis_blocking', array());
+	?>
+	<?php foreach($srcs as $src): ?>
+		<script src="<?php echo $src ?>"></script>
+	<?php endforeach;?>
+
 	<?= $globalVariablesScript ?>
 	<?php //TODO: use js var?>
 
