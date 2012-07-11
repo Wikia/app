@@ -86,7 +86,7 @@ class VideoFileUploader {
 
 		if ( $i == $retries ) {
 			/* prepare temporary file with default thumbnail */
-			$upload = $this->tmpUpload( NullApiWrapper::$THUMBNAIL_URL );
+			$upload = $this->tmpUpload( LegacyVideoApiWrapper::$THUMBNAIL_URL );
 			$upload->fetchFile();
 			$status = $upload->verifyUpload();
 			if ( isset( $status['status'] ) && ( $status['status'] == UploadBase::EMPTY_FILE ) ){

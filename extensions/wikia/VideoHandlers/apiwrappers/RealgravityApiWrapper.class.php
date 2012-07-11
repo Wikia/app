@@ -1,6 +1,6 @@
 <?php
 
-class RealgravityApiWrapper extends NoConnectionApiWrapper {
+class RealgravityApiWrapper extends IngestionApiWrapper {
 
 	protected static $CACHE_KEY = 'realgravityapi';
 	protected static $aspectRatio = 1.7777778;

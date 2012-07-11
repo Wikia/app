@@ -1,6 +1,6 @@
 <?php
 
-class IgnApiWrapper extends NoConnectionApiWrapper {
+class IgnApiWrapper extends IngestionApiWrapper {
 
 	protected static $CACHE_KEY = 'ignapi';
 	protected static $aspectRatio = 1.7777778;

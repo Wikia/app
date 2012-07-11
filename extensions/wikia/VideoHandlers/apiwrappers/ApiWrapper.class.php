@@ -393,7 +393,7 @@ abstract class PseudoApiWrapper extends ApiWrapper {
 /**
  * Class used by feed ingestion (does not connect, just initializes data)
  */
-abstract class NoConnectionApiWrapper extends PseudoApiWrapper {
+abstract class IngestionApiWrapper extends PseudoApiWrapper {
 
 	protected $videoName;
 	protected $provider;
@@ -425,8 +425,10 @@ abstract class NoConnectionApiWrapper extends PseudoApiWrapper {
 /**
  * ApiWrapper for a video provider that has no API. This class does not attempt
  * to connect to any API.
+ *
+ * those are only used by video migration scripts and serve no other purpose
  */
-abstract class NullApiWrapper extends PseudoApiWrapper {
+abstract class LegacyVideoApiWrapper extends PseudoApiWrapper {
 	//@todo change this url
 	static $THUMBNAIL_URL = 'http://community.wikia.com/extensions/wikia/VideoHandlers/images/NoThumbnailBg.png';
 
@@ -455,14 +457,6 @@ abstract class NullApiWrapper extends PseudoApiWrapper {
 
 	public function getThumbnailUrl() {
 		return self::$THUMBNAIL_URL;
-	}
-
-	protected function getInterfaceObjectFromType( $type ) {
-		return null;
-	}
-
-	protected function processResponse( $response, $type ) {
-		return null;
 	}
 
 }
