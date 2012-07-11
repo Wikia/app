@@ -42,13 +42,30 @@ MediaTool.Renderer = $.createClass(Observable,{
 
 	getPreview: function(item, params) {
 
-		return $.mustache(params.itemTpl, {
-			itemTitle:item.title,
-			itemWidth:params.width,
-			itemHeight:item.getHeight(params.width),
-			itemRatio:item.ratio,
-			itemUrl:item.thumbUrl
-		});
+		if ( params.useBorder ) {
+
+			return $.mustache(params.borderTpl, {
+				itemWidth:params.width+2,
+				photo: $.mustache(params.itemTpl, {
+					itemTitle:item.title,
+					itemWidth:params.width,
+					itemHeight:item.getHeight(params.width),
+					itemRatio:item.ratio,
+					itemUrl:item.thumbUrl
+				})
+			});
+
+
+		} else {
+
+			return $.mustache(params.itemTpl, {
+				itemTitle:item.title,
+				itemWidth:params.width,
+				itemHeight:item.getHeight(params.width),
+				itemRatio:item.ratio,
+				itemUrl:item.thumbUrl
+			});
+		}
 	},
 
 	updatePreview: function( params ) {
@@ -65,6 +82,7 @@ MediaTool.Renderer = $.createClass(Observable,{
 		}
 
 		 $('a.image', this.container).each(function() {
+
 			 var playButton = $(this).find('span.Wikia-video-play-button');
 			 var image = $(this).find('img');
 			 var aspectRatio =  image.attr('data-aspect-ratio') + 0;
@@ -72,7 +90,9 @@ MediaTool.Renderer = $.createClass(Observable,{
 			 image.css({ width:params.width, height:imgHeight} );
 			 playButton.css( {width:params.width, height:imgHeight} );
 			 playButton.attr("class", "Wikia-video-play-button "+playOverlayClass);
+			 $(this).parents('figure.thumb').eq(0).css( {width: parseInt(params.width,10)+2 } );
 		 });
+
 	}
 
 });

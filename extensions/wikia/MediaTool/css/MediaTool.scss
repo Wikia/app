@@ -44,7 +44,11 @@
 		}
 	}
 
-	.media-tool-content {
+   .mediatool-preview {
+       overflow: auto; height:360px;
+   }
+
+   .media-tool-content {
 		display: inline-block;
 		width: 700px;
 	}
