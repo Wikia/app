@@ -47,27 +47,6 @@ var CreateWikiaQuiz = {
 		});
 	},
 
-	showEditor: function(event) {
-		var self = CreateWikiaQuiz;
-
-		// load CSS for editor popup and jQuery UI library (if not loaded yet) via loader function
-		$.getResources([
-			$.loadJQueryUI,
-			$.getSassCommonURL('/extensions/wikia/WikiaQuiz/css/WikiaQuizBuilder.scss'),
-			wgExtensionsPath + '/wikia/WikiaQuiz/js/CreateWikiaQuiz.js'
-		], function() {
-			$.get(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=WikiaQuiz&actionName=SpecialPage&outputType=html', function(data) {
-				$(data).makeModal({width: 600});
-				CreateWikiaQuiz.init();
-
-				// editing an existing quiz?
-				if ($(event.target).hasClass("placeholder-quiz")) {
-					CreateWikiaQuiz.editExisting(event.target);
-				}
-			});
-		});
-	},
-
 	editExisting: function(placeholder) {
 		var quizData = $(placeholder).getData(),
 			index;
