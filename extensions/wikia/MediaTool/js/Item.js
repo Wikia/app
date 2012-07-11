@@ -11,6 +11,7 @@ MediaTool.Item = $.createClass(Observable,{
 	duration: '00:00',
 	renderer: null,
 	ratio: 1,
+	uploader: null,
 
 	constructor: function(id, title, thumbHtml, thumbUrl) {
 		MediaTool.Item.superclass.constructor.call(this);

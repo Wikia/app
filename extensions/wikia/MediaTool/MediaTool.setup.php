@@ -11,6 +11,7 @@ $app = F::app();
 $app->registerClass('MediaToolHelper', $dir . 'MediaToolHelper.class.php');
 $app->registerClass('MediaToolHooksHelper', $dir . 'MediaToolHooksHelper.class.php');
 $app->registerClass('MediaToolController', $dir . 'MediaToolController.class.php');
+$app->registerClass('MediaToolItem', $dir . 'MediaToolItem.class.php');
 
 // hooks
 $app->registerHook('EditPageLayoutExecute', 'MediaToolHooksHelper', 'onEditPageLayoutExecute');
