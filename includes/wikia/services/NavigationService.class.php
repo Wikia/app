@@ -40,6 +40,10 @@ class NavigationService {
 
 	const ERR_MAGIC_WORD_IN_LEVEL_1 = 1;
 
+	public function __construct($useSharedMemcKey = false) {
+		$this->useSharedMemcKey = $useSharedMemcKey;
+	}
+
 	/**
 	 * Return memcache key used for given message / variable
 	 *
@@ -81,19 +85,19 @@ class NavigationService {
 	/**
 	 * @author: Inez Korczyński
 	 */
-	public function parseMessage($messageName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false, $useSharedMemcKey = false ) {
+	public function parseMessage($messageName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false) {
 		wfProfileIn( __METHOD__ );
 
-		$nodes = $this->parseHelper(self::TYPE_MESSAGE, $messageName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages, $useSharedMemcKey);
+		$nodes = $this->parseHelper(self::TYPE_MESSAGE, $messageName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages);
 
 		wfProfileOut( __METHOD__ );
 		return $nodes;
 	}
 
-	public function parseVariable($variableName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false, $useSharedMemcKey = false ) {
+	public function parseVariable($variableName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false) {
 		wfProfileIn( __METHOD__ );
 
-		$nodes = $this->parseHelper(self::TYPE_VARIABLE, $variableName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages, $useSharedMemcKey);
+		$nodes = $this->parseHelper(self::TYPE_VARIABLE, $variableName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages);
 
 		wfProfileOut( __METHOD__ );
 		return $nodes;
@@ -110,12 +114,11 @@ class NavigationService {
 	 * @param boolean $filterInactiveSpecialPages ignore item linking to not existing special pages?
 	 * @return array parsed menu wikitext
 	 */
-	private function parseHelper($type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false, $useSharedMemcKey = false ) {
+	private function parseHelper($type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false) {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
 		$this->forContent = $forContent;
-		$this->useSharedMemcKey = $useSharedMemcKey;
 		$useCache = ($app->wg->Lang->getCode() == $app->wg->ContLang->getCode()) || $this->forContent;
 
 		if($useCache) {
