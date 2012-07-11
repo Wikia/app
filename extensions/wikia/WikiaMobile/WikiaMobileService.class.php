@@ -81,6 +81,17 @@ class WikiaMobileService extends WikiaService {
 		$scripts = $this->skin->getScripts();
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 
+		//let extensions manipulate the asset packages (e.g. ArticleComments,
+		//this is done to cut down the number or requests)
+		$this->app->runHook(
+			'WikiaMobileAssetsPackages',
+			array(
+				&$jsHeadPackages,
+				&$jsBodyPackages,
+				&$scssPackages
+			)
+		);
+
 		//force main SCSS as first to make overriding it possible
 		foreach ( $assetsManager->getURL( $scssPackages ) as $s ) {
 			//packages/assets are enqueued via an hook, let's make sure we should actually let them through
@@ -95,17 +106,6 @@ class WikiaMobileService extends WikiaService {
 			//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
 			$cssLinks .= "<link rel=stylesheet href=\"{$s['url']}\"/>";//this is a strict skin, getStyles returns only elements with a set URL
 		}
-
-		//let extensions manipulate the asset packages (e.g. ArticleComments,
-		//this is done to cut down the number or requests)
-		$this->app->runHook(
-			'WikiaMobileAssetsPackages',
-			array(
-				&$jsHeadPackages,
-				&$jsBodyPackages,
-				&$scssPackages
-			)
-		);
 
 		//core JS in the head section, definitely safe
 		$srcs = $assetsManager->getURL( $jsHeadPackages );
