@@ -122,6 +122,15 @@
 			}
 			img {
 				padding-bottom: 3px;
+				width: 16px;
+				height: 16px;
+				background-repeat: no-repeat;
+				&.ok {
+					background-image: url('/extensions/wikia/SpecialPromote/images/correct.png'); /* base64 */
+				}
+				&.error {
+					background-image: url('/extensions/wikia/SpecialPromote/images/x.png'); /* base64 */
+				}
 			}
 		}
 		
@@ -149,6 +158,9 @@
 				right: 0;
 				.rejected {
 					height: 100px;
+					width: 180px;
+				}
+				p {
 					width: 180px;
 				}
 			}
