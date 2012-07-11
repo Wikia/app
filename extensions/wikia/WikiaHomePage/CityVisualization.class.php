@@ -14,7 +14,7 @@ class CityVisualization extends WikiaModel {
 	public function getList($contLang) {
 		$this->wf->ProfileIn(__METHOD__);
 
-		$memKey = $this->getWikiComscoreListDataCacheKey($contLang);
+		$memKey = $this->getVisualizationWikisListDataCacheKey($contLang);
 		$wikis = $this->wg->Memc->get($memKey);
 		if( !is_array($wikis) ) {
 			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
@@ -156,6 +156,15 @@ class CityVisualization extends WikiaModel {
 		return false;
 	}
 
+	public function purgeVisualizationWikisListCache($langCode) {
+		$memcKey = $this->getVisualizationWikisListDataCacheKey($langCode);
+
+		nAndy::log($this->wg->Memc->get($memcKey));
+		nAndy::log(array('====='));
+
+		$this->wg->Memc->set($memcKey, null);
+	}
+
 	public function purgeWikiDataCache($wikiId, $langCode) {
 		$memcKey = $this->getWikiDataCacheKey($wikiId, $langCode);
 		$this->wg->Memc->set($memcKey, null);
@@ -175,38 +184,7 @@ class CityVisualization extends WikiaModel {
 		$this->wg->Memc->set($memcKey, $wikiData);
 	}
 
-	/**
-	 * @desc Updates memcached data (which have ONLY ONE wiki's informations) for visualization once a wiki's data has changed; in example: an image got reviewed and is sent to corporate page
-	 *
-	 * @param int $wikiId wiki id which data has changed
-	 * @param string $langCode wiki content lang
-	 * @param array $data new wiki data
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public function updateComscoreWikiDataCache($wikiId, $langCode, $data) {
-		$helper = F::build('WikiGetDataForVisualizationHelper');
-		$memcKey = $helper->getMemcKey($wikiId, $langCode);
-
-		$wikiData = $this->wg->Memc->get($memcKey);
-
-		/*
-		nAndy::log(array(
-			'$wikiData' => $wikiData,
-		));
-		*/
-		if( is_array($wikiData) ) {
-			$result = array_merge($wikiData, $data);
-		}
-		/*
-		nAndy::log(array(
-			'$result' => $result,
-		));
-		*/
-		$this->wg->Memc->set($memcKey, $result);
-	}
-
-	public function getWikiComscoreListDataCacheKey($langCode) {
+	public function getVisualizationWikisListDataCacheKey($langCode) {
 		return $this->wf->memcKey('wikis_data_for_visualization_comscore', self::CITY_VISUALIZATION_MEMC_VERSION, $langCode, __METHOD__);
 	}
 
