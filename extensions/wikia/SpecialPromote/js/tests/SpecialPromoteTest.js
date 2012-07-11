@@ -5,6 +5,7 @@
 @test-require-file resources/jquery/jquery-1.7.2.js
 @test-require-file resources/wikia/jquery.wikia.js
 @test-require-file extensions/wikia/SpecialPromote/js/SpecialPromote.js
+@test-require-file resources/wikia/libraries/jquery/nirvana/jquery.wikia.nirvana.js
 */
 
 function specialPromoteSetup() {
@@ -20,8 +21,8 @@ test("removeImage test", function() {
 	var s = specialPromoteSetup();
 	s.current.mainImageName = 'a';
 	s.current.additionalImagesNames = ['a', 'b'];
-	ok( s.removeImage({uploadType: s.UPLOAD_TYPE_MAIN, imageIndex: 1}) == true, 'main - Should return true' );
-	ok( s.removeImage({uploadType: s.UPLOAD_TYPE_MAIN}) == true, 'main, no index - Should return true' );
+	var smallPhotosContainer = $('<div class="small-photos"><div class="small-photos-wrapper"><img src="http://images.marcin.wikia-dev.com/__cb38/muppet/images/thumb/2/28/Wikia-Visualization-Add-2.jpg/180px-0%2C500%2C30%2C308-Wikia-Visualization-Add-2.jpg" class="additionalImage" data-filename="Wikia-Visualization-Add-2.jpg" data-image-index="1" data-image-type="additional"></div><div class="small-photos-wrapper"><img src="http://images.marcin.wikia-dev.com/__cb160/muppet/images/thumb/6/6b/Wikia-Visualization-Add-3.jpg/180px-0%2C550%2C32%2C338-Wikia-Visualization-Add-3.jpg" class="additionalImage" data-filename="Wikia-Visualization-Add-3.jpg" data-image-index="2" data-image-type="additional"></div><div class="small-photos-wrapper"><img src="http://images.marcin.wikia-dev.com/__cb441/muppet/images/thumb/9/96/Wikia-Visualization-Add-4.jpg/180px-0%2C236%2C17%2C148-Wikia-Visualization-Add-4.jpg" class="additionalImage" data-filename="Wikia-Visualization-Add-4.jpg" data-image-index="3" data-image-type="additional"></div></div>');
+	$('body').append(smallPhotosContainer);
 	ok( s.removeImage({uploadType: s.UPLOAD_TYPE_ADDITIONAL, imageIndex: 1}) == true, 'additional, index - Should return true' );
 	ok( s.removeImage({uploadType: s.UPLOAD_TYPE_ADDITIONAL, imageIndex: 0}) == !true, 'additional, index=0 - Should not return true' );
 	ok( s.removeImage({uploadType: s.UPLOAD_TYPE_ADDITIONAL}) == !true, 'additional, no index - Should not return true' );

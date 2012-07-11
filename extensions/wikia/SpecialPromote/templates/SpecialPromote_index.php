@@ -11,7 +11,7 @@
 			<p class="error"></p>
 			<div class="description-wrapper">
 				<input data-min='<?= $minHeaderLength; ?>' data-max='<?= $maxHeaderLength; ?>' type='text' name='title'
-					   value="<?= $wikiHeadline; ?>"
+					   value="<?= htmlspecialchars($wikiHeadline); ?>"
 					   placeholder='<?= wfMsg('promote-description-header'); ?>'>
 			</div>
 			<span class='explanatory-copy'><?= wfMsg('promote-description-header-explanation'); ?></span>
@@ -22,7 +22,7 @@
 			<div class="description-wrapper">
 				<textarea data-min='<?= $minDescriptionLength; ?>' data-max='<?= $maxDescriptionLength; ?>' type='text'
 						  name='description'
-						  placeholder="<?= wfMsg('promote-description-about'); ?>"><?= $wikiDesc; ?></textarea>
+						  placeholder="<?= wfMsg('promote-description-about'); ?>"><?= htmlspecialchars($wikiDesc); ?></textarea>
 				<p class="character-counter"></p>
 			</div>
 			<span class='explanatory-copy'><?= wfMsg('promote-description-about-explanation'); ?></span>

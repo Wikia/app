@@ -159,6 +159,7 @@ SpecialPromote.prototype = {
 	onChangePhotoClick: function (e) {
 		e.preventDefault();
 		var target = $(e.target).parent().parent().find('img#curMainImageName');
+		if ($.isEmptyObject(target[0])) target = $(e.target).parent().parent().find('img.additionalImage');
 
 		try {
 			this.getUploadForm({
@@ -273,6 +274,7 @@ SpecialPromote.prototype = {
 					.data('image-type', 'main')
 			);
 		}
+		$('.large-photo .status div').addClass('hidden');
 		this.checkPublishButton();
 	},
 	addAdditionalImage: function (file) {
