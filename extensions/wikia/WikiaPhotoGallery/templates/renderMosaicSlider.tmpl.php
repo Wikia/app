@@ -26,7 +26,7 @@
 			<span class="wikia-mosaic-description-mask">
 			</span>
 			<span class="wikia-mosaic-description">
-				<span class="h3"><?= $val['imageTitle'] ?></span>
+				<span class="image-description"><?= $val['imageTitle'] ?></span>
 				<span class="wikia-mosaic-short-title"><?= $val['imageShortTitle'] ?></span>
 				<span class="description-more"><?= $val['imageDescription'] ?></span>
 			</span>
