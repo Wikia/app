@@ -990,6 +990,10 @@ jasmine.Reporter.prototype.reportRunnerResults = function(runner) {
 };
 
 //noinspection JSUnusedLocalSymbols
+jasmine.Reporter.prototype.reportSuiteStarting = function(suite) {
+};
+
+//noinspection JSUnusedLocalSymbols
 jasmine.Reporter.prototype.reportSuiteResults = function(suite) {
 };
 
@@ -1080,6 +1084,10 @@ jasmine.JsApiReporter.prototype.resultsForSpec = function(specId) {
 //noinspection JSUnusedLocalSymbols
 jasmine.JsApiReporter.prototype.reportRunnerResults = function(runner) {
   this.finished = true;
+};
+
+//noinspection JSUnusedLocalSymbols
+jasmine.JsApiReporter.prototype.reportSuiteStarting = function(suite) {
 };
 
 //noinspection JSUnusedLocalSymbols
@@ -1728,6 +1736,7 @@ jasmine.MultiReporter.prototype.addReporter = function(reporter) {
   var functionNames = [
     "reportRunnerStarting",
     "reportRunnerResults",
+	"reportSuiteStarting",
     "reportSuiteResults",
     "reportSpecStarting",
     "reportSpecResults",
@@ -2447,6 +2456,7 @@ jasmine.Suite.prototype.children = function() {
 
 jasmine.Suite.prototype.execute = function(onComplete) {
   var self = this;
+	this.env.reporter.reportSuiteStarting(this);
   this.queue.start(function () {
     self.finish(onComplete);
   });

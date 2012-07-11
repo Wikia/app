@@ -3,10 +3,11 @@
  */
 
 /*
+@test-exclude AssetsManager packages are not supported
 // Set framework to QUnit
 @test-framework QUnit
 // Specify dependency list
-@test-require-group rte
+@test-require-asset rte
 */
 
 // Start writing module A

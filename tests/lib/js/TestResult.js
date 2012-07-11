@@ -27,7 +27,7 @@ TestResult.prototype.errorSuite = function() {
 };
 TestResult.prototype.startSuite = function(name,extra) {
 	name = this.findName(this.suites,name);
-	this.currentSuite = this.suites[name] = {
+	this.currentSuite = {
 		name: name,
 		tests: {},
 		extra: extra || {},
@@ -43,6 +43,7 @@ TestResult.prototype.startSuite = function(name,extra) {
 		},
 		started: new Date()
 	}
+	this.suites[name] = this.currentSuite;
 };
 TestResult.prototype.getStatus = function() {
 	for (var i in this.suites) {
@@ -59,7 +60,7 @@ TestResult.prototype.stopSuite = function() {
 };
 TestResult.prototype.startTest = function(name,extra) {
 	name = this.findName(this.currentSuite.tests,name);
-	this.currentTest = this.currentSuite.tests[name] = {
+	this.currentTest = {
 		name: name,
 		status: JTR.status.UNKNOWN,
 		time: 0,
@@ -69,8 +70,9 @@ TestResult.prototype.startTest = function(name,extra) {
 		extra: extra || {},
 		started: new Date()
 	};
+	this.currentSuite.tests[name] = this.currentTest;
 };
-TestResult.prototype.stopTest = function(status,assertions,messages) {
+TestResult.prototype.stopTest = function(status, assertions, messages) {
 	var suite = this.currentSuite;
 	var test = this.currentTest;
 

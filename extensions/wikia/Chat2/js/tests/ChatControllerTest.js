@@ -1,11 +1,11 @@
 /*
 @test-framework QUnit
-@test-require-file resources/jquery/jquery-1.7.2.js
-@test-require-file resources/wikia/jquery.wikia.js
-@test-require-file extensions/wikia/Chat2/js/emoticons.js
-@test-require-file extensions/wikia/Chat2/js/lib/underscore.js
-@test-require-file extensions/wikia/Chat2/js/lib/backbone.js
-@test-require-file extensions/wikia/Chat2/js/views/views.js
+@test-require-asset resources/jquery/jquery-1.7.2.js
+@test-require-asset resources/wikia/jquery.wikia.js
+@test-require-asset extensions/wikia/Chat2/js/emoticons.js
+@test-require-asset extensions/wikia/Chat2/js/lib/underscore.js
+@test-require-asset extensions/wikia/Chat2/js/lib/backbone.js
+@test-require-asset extensions/wikia/Chat2/js/views/views.js
 */
 module("ChatView Test");
 test("processText links", function() {

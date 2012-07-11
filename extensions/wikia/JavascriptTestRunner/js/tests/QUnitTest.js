@@ -4,6 +4,7 @@
 
 /*
 // Set framework to QUnit
+@test-exclude This test is just an example
 @test-framework QUnit
 */
 

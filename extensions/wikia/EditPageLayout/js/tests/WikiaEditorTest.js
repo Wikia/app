@@ -1,9 +1,11 @@
 /*
+@test-exclude AssetsManager packages are not supported
 @test-framework QUnit
-@test-require-group rte
-@test-require-group epl
+@test-require-asset rte
+@test-require-asset epl
 */
 module("WikiaEditor");
+
 test("Functions > addFunction()/callFunction() without scope",function(){
 	var we = window.WikiaEditor;
 	var s = false;

@@ -1,4 +1,7 @@
 ﻿/*
+	Wikia Change Start
+	 @test-exclude This is not a unit test
+	Wikia Change End
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2010 Frederico Caldeira Knabben
  *

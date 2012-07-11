@@ -1,3 +1,8 @@
+/*
+ Wikia Change Start
+ @test-exclude This is not a unit test
+ Wikia Change End
+ */
 /**
  * Initial parser tests runner for experimental JS parser
  *

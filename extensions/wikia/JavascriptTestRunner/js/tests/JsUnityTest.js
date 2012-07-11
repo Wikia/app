@@ -4,6 +4,7 @@
 
 /*
 // Set the testing framework to "jsUnity"
+@test-exclude This test is just an example
 @test-framework jsUnity
 */
 
