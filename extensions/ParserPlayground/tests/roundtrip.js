@@ -1,3 +1,8 @@
+/*
+ Wikia Change Start
+ @test-exclude This is not a unit test
+ Wikia Change End
+ */
 var fs = require('fs'),
 	jsDiff = require('diff'),
 	Worker = require('webworker').Worker,

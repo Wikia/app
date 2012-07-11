@@ -1,5 +1,8 @@
 /*
 @test-framework QUnit
+@test-require-asset resources/wikia/modules/cookies.js
+@test-require-asset extensions/wikia/AdEngine/AdConfig.js
+
 */
 module('AdConfig');
 
@@ -289,11 +292,11 @@ test('getHostnamePrefix', function() {
 
 test('getTitle', function() {
   window.wgPageName = 'Muppet_Wiki';
-  equal( AdConfig.DART.getTitle(), 'wpage='+encodeURIComponent(window.wgPageName)+';', window.wgPageName );
+  equal( AdConfig.DART.getTitle(), 'wpage='+encodeURIComponent(window.wgPageName.toLowerCase())+';', window.wgPageName );
   window.wgPageName = "Assassin's_Creed_Wiki";
-  equal( AdConfig.DART.getTitle(), 'wpage='+encodeURIComponent(window.wgPageName)+';', window.wgPageName );
+  equal( AdConfig.DART.getTitle(), 'wpage='+encodeURIComponent(window.wgPageName.toLowerCase())+';', window.wgPageName );
   window.wgPageName = 'Военная_база_Марипоза';
-  equal( AdConfig.DART.getTitle(), 'wpage='+encodeURIComponent(window.wgPageName)+';', window.wgPageName );
+  equal( AdConfig.DART.getTitle(), 'wpage='+encodeURIComponent(window.wgPageName.toLowerCase())+';', window.wgPageName );
   window.wgPageName = null;
   equal( AdConfig.DART.getTitle(), '', 'null' );
 });
@@ -353,7 +356,7 @@ test('getLocKV', function() {
   equal( AdConfig.DART.getLocKV('HOME_TOP_RIGHT_BOXAD'), 'loc=top;', 'HOME_TOP_RIGHT_BOXAD' );
   equal( AdConfig.DART.getLocKV('INVISIBLE_1'), 'loc=invisible;', 'INVISIBLE_1' );
   equal( AdConfig.DART.getLocKV('INVISIBLE_2'), 'loc=invisible;', 'INVISIBLE_2' );
-  equal( AdConfig.DART.getLocKV('INVISIBLE_MODAL'), 'loc=modal;', 'INVISIBLE_MODAL' );
+  equal( AdConfig.DART.getLocKV('INVISIBLE_MODAL'), 'loc=invisible;', 'INVISIBLE_MODAL' );
   equal( AdConfig.DART.getLocKV('LEFT_SKYSCRAPER_2'), 'loc=middle;', 'LEFT_SKYSCRAPER_2' );
   equal( AdConfig.DART.getLocKV('LEFT_SKYSCRAPER_3'), 'loc=footer;', 'LEFT_SKYSCRAPER_3' );
   equal( AdConfig.DART.getLocKV('MIDDLE_RIGHT_BOXAD'), 'loc=middle;', 'MIDDLE_RIGHT_BOXAD' );

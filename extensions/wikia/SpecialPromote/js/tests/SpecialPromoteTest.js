@@ -2,10 +2,10 @@
 // Set framework to QUnit
 @test-framework QUnit
 // Include jQuery and jQuery.wikia and specialPromote
-@test-require-file resources/jquery/jquery-1.7.2.js
-@test-require-file resources/wikia/jquery.wikia.js
-@test-require-file extensions/wikia/SpecialPromote/js/SpecialPromote.js
-@test-require-file resources/wikia/libraries/jquery/nirvana/jquery.wikia.nirvana.js
+@test-require-asset resources/jquery/jquery-1.7.2.js
+@test-require-asset resources/wikia/jquery.wikia.js
+@test-require-asset extensions/wikia/SpecialPromote/js/SpecialPromote.js
+@test-require-asset resources/wikia/libraries/jquery/nirvana/jquery.wikia.nirvana.js
 */
 
 function specialPromoteSetup() {

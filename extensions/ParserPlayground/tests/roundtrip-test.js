@@ -1,3 +1,8 @@
+/*
+ Wikia Change Start
+ @test-exclude This is not a unit test
+ Wikia Change End
+ */
 module.exports.init = function(worker) {
 	var fs = require('fs'),
 		path = require('path');

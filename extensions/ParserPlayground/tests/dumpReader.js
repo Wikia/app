@@ -1,3 +1,9 @@
+/*
+ Wikia Change Start
+ @test-exclude This is not a unit test
+ Wikia Change End
+ */
+
 var events = require('events'),
 	util = require('util'),
 	libxml = require('libxmljs'); // npm install libxmljs

@@ -1,3 +1,8 @@
+/*
+ Wikia Change Start
+ @test-exclude This is not a unit test
+ Wikia Change End
+ */
 var pageDatabase = {
 	'Boring': 'Just some text and [[a link]].',
 	'Template:Parens': '({{{1}}})',

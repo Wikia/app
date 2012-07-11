@@ -7,7 +7,7 @@
 // Set framework to QUnit
 @test-framework QUnit
 // Specify dependency list
-@test-require-file extensions/wikia/JavascriptTestRunner/js/tests/features/Calculator.js
+@test-require-asset extensions/wikia/JavascriptTestRunner/js/tests/features/Calculator.js
 */
 
 // Define new QUnit test module
@@ -16,26 +16,26 @@ module("Calculator Test");
 // Add the following tests to current test module
 test("add", function () {
 	var c = new Calculator();
-	equals(c.add(1, 1), 2, "1 + 1");
-	equals(c.add(2, 2), 4, "2 + 2");
+	equal(c.add(1, 1), 2, "1 + 1");
+	equal(c.add(2, 2), 4, "2 + 2");
 });
 
 test("subtract", function () {
 	var c = new Calculator();
-	equals(c.subtract(1, 1), 0, "1 - 1");
-	equals(c.subtract(100, 1), 99, "100 - 1");
+	equal(c.subtract(1, 1), 0, "1 - 1");
+	equal(c.subtract(100, 1), 99, "100 - 1");
 });
 
 test("multiply", function () {
 	var c = new Calculator();
-	equals(c.multiply(1, 1), 1, "1 * 1");
-	equals(c.multiply(2, 2), 4, "2 * 2");
-	equals(c.multiply(17, 23), 391, "17 * 23");
+	equal(c.multiply(1, 1), 1, "1 * 1");
+	equal(c.multiply(2, 2), 4, "2 * 2");
+	equal(c.multiply(17, 23), 391, "17 * 23");
 });
 
 test("divide", function () {
 	var c = new Calculator();
-	equals(c.divide(1, 1), 1, "1 / 1");
-	equals(c.divide(8, 2), 4, "8 / 2");
-	equals(c.divide(1, 0), Infinity, "1 / 0");
+	equal(c.divide(1, 1), 1, "1 / 1");
+	equal(c.divide(8, 2), 4, "8 / 2");
+	equal(c.divide(1, 0), Infinity, "1 / 0");
 });

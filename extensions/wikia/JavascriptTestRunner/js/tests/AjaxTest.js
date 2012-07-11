@@ -3,6 +3,7 @@
  */
 
 /*
+@test-exclude This test is just an example
 // Set framework to QUnit
 @test-framework QUnit
 // Specify dependency list

@@ -1,3 +1,8 @@
+/*
+ Wikia Change Start
+ @test-exclude This is not a unit test
+ Wikia Change End
+ */
 var path = require('path');
 
 // Fake a worker-like interface so we can test it in-process
