@@ -32,9 +32,9 @@ $messages['en'] = array(
 	'wikiasearch2-search-all-namespaces' => 'Search all namespaces by default',
 	'wikiasearch2-search-ads-header' => 'Advertisements',
 
-    'wikiamobile-wikiasearch2-next' => 'Next',
+	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
-    'wikiamobile-wikiasearch2-results-count-of' => '$1 of $2 {{PLURAL:$2|result|results}}'
+	'wikiamobile-wikiasearch2-results-count-of' => ' of $1 {{PLURAL:$1|result|results}}'
 );
 
 /** Message documentation (Message documentation)
@@ -49,7 +49,10 @@ $messages['qqq'] = array(
 	'wikiasearch2-results-count' => 'Parameters: $1 - a number of items in the search results list; $2 - a keyword or a search term searched for.',
 	'wikiasearch2-results-for' => 'Parameter: $1 - a keyword or a search term searched for.',
 	'wikiasearch2-enable-go-search' => 'Preferences setting next to a checkbox which asks you whether you want to enable Go-Search (going directly to a page title match in search) or not. Default = off',
-	'wikiasearch2-search-ads-header' => 'Heading displayed above search advertisements.'
+	'wikiasearch2-search-ads-header' => 'Heading displayed above search advertisements.',
+	'wikiamobile-wikiasearch2-next' => 'Message is used to go to next result page',
+	'wikiamobile-wikiasearch2-prev' => 'Message is used to go to previous result page',
+	'wikiamobile-wikiasearch2-results-count-of' => 'Message is used to go to show on which results number user is and whats total result number'
 );
 
 /** Afrikaans (Afrikaans)
