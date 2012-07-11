@@ -6,14 +6,22 @@ MediaTool.Renderer = $.createClass(Observable,{
 		MediaTool.Renderer.superclass.constructor.call(this);
 
 		MediaTool.bind('editDone', this.onEditDone, this);
-		//MediaTool.bind('wikitextReady', this.onWikitextReady, this);
+		MediaTool.bind('Cart::uploadRemoteItemsComplete', this.onUploadRemoteItemsComplete, this);
+	},
 
-
+	onUploadRemoteItemsComplete: function(cart) {
+		this.renderCartContent(cart);
 	},
 
 	onEditDone: function(cart) {
-		cart.uploadRemoteItems();
+		var hasRemoteItems = cart.uploadRemoteItems();
+		if(!hasRemoteItems) {
+			// no need to wait for upload result, proceed with rendering
+			this.renderCartContent(cart);
+		}
+	},
 
+	renderCartContent: function(cart) {
 		RTE.mediaEditor.addVideo(this.getWikitext(cart), {});
 
 		// @todo use events for that

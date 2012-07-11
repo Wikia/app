@@ -87,6 +87,7 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 
 	uploadRemoteItems: function() {
 		var urls = [];
+		var self = this;
 
 		$.each(this.items, function(i, item) {
 			if(item.origin == 'online') {
@@ -96,12 +97,34 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 		});
 
 		if(urls.length > 0) {
-			MediaTool.callBackend('uploadVideos', { urls: urls }, function(r) {
-				$().log(r);
+			MediaTool.callBackend('uploadVideos', { urls: urls }, function(result) {
+				$().log(result);
+				$.each(result, function(i, r) {
+					var item = self.findByRemoteUrl(r.url);
+					if(item != null) {
+						if(r.status == 'ok') {
+							item.title = r.title;
+						}
+						else {
+							self.removeItem(item.id);
+						}
+					}
+				});
+				MediaTool.fire('Cart::uploadRemoteItemsComplete', self);
 			});
 		}
 
 		return (urls.length > 0);
+	},
+
+	findByRemoteUrl: function(url) {
+		var result = null;
+		$.each(this.items, function(i, item) {
+			if(item.remoteUrl == url) {
+				result = item;
+			}
+		});
+		return result;
 	},
 
 	appendItem: function( $item, itemObject ) {

@@ -184,18 +184,24 @@ class MediaToolController extends WikiaController {
 		$this->response->setFormat('json');
 		$videoUrls = $this->request->getVal('urls');
 
-		$result = array();
+		$results = array();
 		if(is_array($videoUrls)) {
 			foreach($videoUrls as $videoUrl) {
-				//$response = $this->sendSelfRequest('uploadVideo', array( 'url' => $videoUrl ));
-				$result[] = array(
-					'url' => $videoUrl,
-					'title' => $response->getVal('title')
-				);
+				$response = $this->sendSelfRequest('uploadVideo', array( 'url' => $videoUrl ));
+				$result = array();
+				$result['url'] = $videoUrl;
+				$result['status'] = $response->getVal('status');
+				if($response->getVal('status') == self::RESPONSE_STATUS_OK) {
+					$result['title'] = $response->getVal('title');
+				}
+				else {
+					$result['msg'] = $response->getVal('msg');
+				}
+				$results[] = $result;
 			}
 		}
 
-		//$this->response->setData();
+		$this->response->setData($results);
 	}
 
 	public function getModalContent() {}
