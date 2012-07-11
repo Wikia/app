@@ -158,10 +158,6 @@ class CityVisualization extends WikiaModel {
 
 	public function purgeVisualizationWikisListCache($langCode) {
 		$memcKey = $this->getVisualizationWikisListDataCacheKey($langCode);
-
-		nAndy::log($this->wg->Memc->get($memcKey));
-		nAndy::log(array('====='));
-
 		$this->wg->Memc->set($memcKey, null);
 	}
 
