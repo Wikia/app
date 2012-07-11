@@ -150,6 +150,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			$('.media-tool-thumbnail-style img[data-thumb-style="no-border"]').addClass('selected');
 			$('.media-tool-thumbnail-style .thumb-style-desc').html($.msg('mediatool-thumbnail-style-no-border'));
 		}
+		renderPreview();
 	}
 
 	function onMediaSizeChange() {
@@ -237,16 +238,18 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		var container = $('.mediatool-preview', dialogWrapper);
 		container.html('');
 		$.each( cart.items, function(i, item){
-			container.append( item.renderPreview({
+			var it = $( item.renderPreview({
 				itemTpl: itemPreviewTpl,
 				borderTpl: itemPreviewBorderTpl,
-				width: cart.getMediaSize()
+				width: cart.getMediaSize(),
+				useBorder: cart.getThumbnailStyle()
 			}) );
+			container.append( it );
+			it.attr("data-item-nr", i);
+			cart.items[i].htmlObj = it;
 		} );
-	}
 
-	function updatePreview() {
-
+		renderer.updatePreview( { width:cart.getMediaSize() });
 	}
 
 	function changeCurrentView(newView, fromTab) {
