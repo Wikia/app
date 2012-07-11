@@ -50,28 +50,28 @@ var CreateWikiaPoll = {
 	},
 
 	showEditor: function(event) {
-		var self = CreateWikiaPoll;
-
 		// load CSS for editor popup and jQuery UI library (if not loaded yet) via loader function
-		$.getResources([
-			$.loadJQueryUI,
-			$.getSassCommonURL('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'),
-			wgExtensionsPath + '/wikia/WikiaPoll/js/CreateWikiaPoll.js'
-		], function() {
+		$.when(
+			$.loadJQueryUI(),
+			$.getResources([
+				$.getSassCommonURL('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'),
+				wgExtensionsPath + '/wikia/WikiaPoll/js/CreateWikiaPoll.js'
+			]),
 			$.nirvana.sendRequest({
 				controller: 'WikiaPoll',
 				method: 'SpecialPage',
-				format: 'html',
-				callback: function(data) {
-					$(data).makeModal({width: 600});
-					CreateWikiaPoll.init();
+				format: 'html'
+			})
+		).done(function(dataFromJQueryUI, dataFromGetResources, dataFromNirvana) {
+			var html = dataFromNirvana[0];
 
-					// editing an existing poll?
-					if ($(event.target).hasClass("placeholder-poll")) {
-						CreateWikiaPoll.editExisting(event.target);
-					}
-				}
-			});
+			$(html).makeModal({width: 600});
+			CreateWikiaPoll.init();
+
+			// editing an existing poll?
+			if ($(event.target).hasClass("placeholder-poll")) {
+				CreateWikiaPoll.editExisting(event.target);
+			}
 		});
 	},
 
