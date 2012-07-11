@@ -395,6 +395,8 @@ class SpecialPromoteHelper extends WikiaObject {
 			);
 		}
 
+		ksort($files);
+
 		return $files;
 	}
 
