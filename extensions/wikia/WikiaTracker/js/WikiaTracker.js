@@ -229,6 +229,8 @@ window.WikiaTracker = (function(){
 		}
 	};
 
+	// Adds the info from the second hash into the first.
+	// If the same key is in both, the key in the second object overrides what's in the first object.
 	function extendObject(obj, ext){
 		for(var p in ext){
 			obj[p] = ext[p];
