@@ -34,7 +34,7 @@
 		<div class='input-group main-image required'>
 			<label><?= wfMsg('promote-upload-main-photo-header'); ?></label>
 			<a href="#" data-image-type="main" class="wikia-button upload-button" title="<?= wfMsg('promote-add-photo'); ?>">
-				<img src="<?= $wg->BlankImageUrl; ?>" class="sprite photo" />
+				<img src="<?= $wg->BlankImgUrl; ?>" class="sprite photo" />
 				<?= wfMsg('promote-add-photo'); ?>
 			</a>
 			<br class="clear" />
@@ -67,7 +67,7 @@
 		<div class='input-group more-images required'>
 			<label><?= wfMsg('promote-upload-additional-photos-header'); ?></label>
 			<a href="#" data-image-type="additional" class="wikia-button upload-button" title="<?= wfMsg('promote-add-photo'); ?>">
-				<img src="<?= $wg->BlankImageUrl; ?>" class="sprite photo" />
+				<img src="<?= $wg->BlankImgUrl; ?>" class="sprite photo" />
 				<?= wfMsg('promote-add-photo'); ?>
 			</a>
 			<br class="clear" />
