@@ -103,6 +103,7 @@ exports.rules  = [
 		}
 	},
 	// old tracking code
+	/**
 	{
 		name: 'Tracking',
 		regexp: /((WET.byId|WET.byStr|\$\(.*\).trackClick|\$.tracker).*)\(/,
@@ -110,12 +111,7 @@ exports.rules  = [
 			return matches[1] + ' - old tracking code found (use WikiaTracker.trackEvent instead)';
 		}
 	},
-	// detect $.toJSON, $.evalJSON and $.secureEvalJSON (BugId:36542)
-	{
-		name: 'Found $.toJSON',
-		regexp: /(\$|jQuery).(toJSON|evalJSON|secureEvalJSON)/,
-		reason: 'Deprecated JSON handling function called (use native JSON object)'
-	},
+	**/
 	// detect use of module proxy
 	{
 		name: 'Found moduleProxy',
