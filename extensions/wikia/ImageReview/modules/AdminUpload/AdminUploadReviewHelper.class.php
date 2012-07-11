@@ -492,25 +492,6 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 		return $this->wf->MemcKey('AdminUploadReviewHelper', 'userts', $this->wg->user->getId());
 	}
 
-	public function createDestFileName($wikiId, $origFileTitle) {
-		$this->wf->ProfileIn( __METHOD__ );
-
-		$wikiDBname = WikiFactory::IDtoDB($wikiId);
-		$destFileName = '';
-		if( $wikiDBname && $origFileTitle instanceof Title ) {
-			$origFileName = $origFileTitle->getText();
-			$origFileNameArr = explode('.', $origFileName);
-			$origFileExt = array_pop($origFileNameArr);
-
-			array_splice($origFileNameArr, 1, 0, array(',', $wikiDBname));
-
-			$destFileName = implode('', $origFileNameArr).'.'.$origFileExt;
-		}
-
-		$this->wf->ProfileOut( __METHOD__ );
-		return $destFileName;
-	}
-
 	public function getImageUrl($wikiId, $pageId, $imgSize) {
 		$data = ImagesService::getImageSrc($wikiId, $pageId, $imgSize);
 		$url = (!empty($data['src'])) ? $data['src'] : null;
