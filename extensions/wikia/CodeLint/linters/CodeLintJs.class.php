@@ -222,6 +222,7 @@ class CodeLintJs extends CodeLint {
 			case 'Deprecated skin check found':
 			case 'Deprecated JSON handling function called (use native JSON object)':
 			case 'Use of deprecated Oasis module API (use $.nirvana)':
+			case 'Use of direct call to wikia.php (use $.nirvana)':
 				$ret = true;
 				break;
 
