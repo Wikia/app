@@ -149,3 +149,12 @@ $('.modalContent').load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&modul
 // test ignore statement
 $.toJSON({foo: true}); /* JSlint ignore */
 console.log('Core JS lint rule'); /* JSlint ignore */
+
+// hardcoded wikia.php -> use $.nirvana.sendRequest instead
+$.post(wgScriptPath + '/wikia.php', {
+	controller: 'WikiFeaturesSpecial',
+	method: 'saveFeedback',
+	format: 'json'
+}, function(res) {
+	// ...
+});
