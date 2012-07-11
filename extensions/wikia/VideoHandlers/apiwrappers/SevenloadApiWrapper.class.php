@@ -1,6 +1,6 @@
 <?php
 
-class SevenloadApiWrapper extends NullApiWrapper {
+class SevenloadApiWrapper extends LegacyVideoApiWrapper {
 	// inherit all functions from parent
 
 	protected static $aspectRatio = 1.59235669;	// 500 x 314

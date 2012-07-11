@@ -1,6 +1,6 @@
 <?php
 
-class GametrailersApiWrapper extends NullApiWrapper {
+class GametrailersApiWrapper extends LegacyVideoApiWrapper {
 	// inherit all functions from parent
 	protected static $aspectRatio = 1.77777778;	// 512 x 288
 

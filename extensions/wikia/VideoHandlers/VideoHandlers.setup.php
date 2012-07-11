@@ -34,9 +34,8 @@ $app->registerClass( 'WikiaVideoPage',		$dir . '/VideoPage.php' );
 $app->registerClass( 'ApiWrapperFactory',		$dir . '/apiwrappers/ApiWrapperFactory.class.php' );
 $app->registerClass( 'ApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'PseudoApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
-$app->registerClass( 'FakeApiWrapper',		$dir . '/apiwrappers/FakeApiWrapper.class.php' );
-$app->registerClass( 'NoConnectionApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
-$app->registerClass( 'NullApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
+$app->registerClass( 'IngestionApiWrapper',	$dir . '/apiwrappers/ApiWrapper.class.php' );
+$app->registerClass( 'LegacyVideoApiWrapper',		$dir . '/apiwrappers/ApiWrapper.class.php' );
 // api exceptions and errors
 $app->registerClass( 'EmptyResponseException',	$dir . '/apiwrappers/ApiWrapper.class.php' );
 $app->registerClass( 'VideoNotFoundException',	$dir . '/apiwrappers/ApiWrapper.class.php' );

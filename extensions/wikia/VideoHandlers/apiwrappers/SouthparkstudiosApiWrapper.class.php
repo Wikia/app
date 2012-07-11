@@ -1,6 +1,6 @@
 <?php
 
-class SouthparkstudiosApiWrapper extends NullApiWrapper {
+class SouthparkstudiosApiWrapper extends LegacyVideoApiWrapper {
 	// inherit all functions from parent
 	protected static $aspectRatio = 1.22866894;	// 360 x 293
 
