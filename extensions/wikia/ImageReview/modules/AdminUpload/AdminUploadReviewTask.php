@@ -40,28 +40,57 @@ class AdminUploadReviewTask extends BatchTask {
 		$data = unserialize($params->task_arguments);
 		if( isset($data['upload_list']) ) {
 			foreach( $data['upload_list'] as $targetWikiId => $wikis ) {
-				$this->uploadImages($targetWikiId, $wikis);
+				$uploadResult = $this->uploadImages($targetWikiId, $wikis);
 			}
 		}
 
 		if( isset($data['deletion_list']) ) {
 			foreach( $data['deletion_list'] as $wikis ) {
-				$this->removeSingleImage($wikis);
+				$deleteResult = $this->removeSingleImage($wikis);
 			}
 		}
 
-		return true;
+		if( $uploadResult || $deleteResult ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	function uploadImages($targetWikiId, $wikis) {
+		$targetWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $targetWikiId);
+		$cityVisualizationModel = F::build('CityVisualization');
+		$fileNamespace = MWNamespace::getCanonicalName(NS_FILE);
+
 		foreach($wikis as $sourceWikiId => $images) {
+			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
+
 			foreach($images as $image) {
-				$this->uploadSingleImage($image['id'], $image['name'], $targetWikiId, $sourceWikiId);
+				$result = $this->uploadSingleImage($image['id'], $image['name'], $targetWikiId, $sourceWikiId);
+
+				if( $result['status'] === 0 ) {
+					$uploadedImgName = str_replace( $fileNamespace.':', '', $result['title']);
+					$uploadedImages[] = $uploadedImgName;
+				}
 			}
-			//todo: purge cached interstitial data for this wiki
-			//todo: update db data for this wiki
+
+			if( !empty($uploadedImages) ) {
+				//update in db
+				$cityVisualizationModel->saveVisualizationData(
+					$sourceWikiId,
+					$this->getImagesToUpdateInDb($uploadedImages),
+					$sourceWikiLang
+				);
+				$cityVisualizationModel->purgeWikiDataCache($sourceWikiId, $sourceWikiLang);
+			}
 		}
-		//todo: purge cached visualization data on target wiki
+
+		if( !empty($uploadedImages) ) {
+			$cityVisualizationModel->purgeVisualizationWikisListCache($targetWikiLang);
+			return true;
+		}
+
+		return false;
 	}
 
 	function uploadSingleImage($imageId, $destinationName, $targetWikiId, $sourceWikiId) {
@@ -104,7 +133,10 @@ class AdminUploadReviewTask extends BatchTask {
 			$this->log('Upload successful: <a href="' . $city_url . $city_path . '/?title=' . wfEscapeWikiText($output) . '">' . $city_url . $city_path . '/?title=' . $output . '</a>');
 		}
 
-		return true;
+		return array(
+			'status' => $retval,
+			'title' => $output,
+		);
 	}
 
 	function removeSingleImage($image) {
@@ -154,6 +186,34 @@ class AdminUploadReviewTask extends BatchTask {
 		array_splice($destinationFileNameArr, 1, 0, array(',', $wikiDBname));
 
 		return implode('', $destinationFileNameArr).'.'.$destinationFileExt;
+	}
+
+	protected function getImagesToUpdateInDb($images) {
+		$data = array();
+
+		foreach($images as $imageName) {
+			if( $this->getImageType($imageName) === 'main' ) {
+				$data['city_main_image'] = $imageName;
+			}
+
+			if( $this->getImageType($imageName) === 'additional' ) {
+				$data['city_images'][] = $imageName;
+			}
+		}
+
+		if( !empty($data['city_images']) ) {
+			$data['city_images'] = json_encode($data['city_images']);
+		}
+
+		return $data;
+	}
+
+	protected function getImageType($imageName) {
+		if( preg_match('/Wikia-Visualization-Add-([0-9])\.*/', $imageName) ) {
+			return 'additional';
+		}
+
+		return 'main';
 	}
 
 	function getForm($title, $errors = false) {
