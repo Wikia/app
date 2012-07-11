@@ -331,8 +331,10 @@ SpecialPromote.prototype = {
 	},
 	onUploadFormSubmit: function (e) {
 		e.preventDefault();
+		$('.UploadTool').startThrobbing();
 		if(!this.validateData()) {
 			return false;
+			$('.UploadTool').stopThrobbing();
 		}
 		var doSave = false;
 
@@ -358,6 +360,7 @@ SpecialPromote.prototype = {
 			},
 			onErrorCallback: function () {
 				$().log('error');
+				$('.UploadTool').stopThrobbing();
 			}
 		});
 	},

@@ -8,7 +8,7 @@
 			<strong class="new"><?= wfMsg('wikia-home-page-new') ?></strong>
 		<? endif; ?>
 	</span>
-	<h1><?= $wikiInfo['name'] ?></h1>
+	<h1><?= htmlspecialchars($wikiInfo['name']) ?></h1>
 	<ul class="stats">
 		<li class="stat">
 			<?= wfMsgExt('wikiahome-preview-stats-page', 'parseinline', empty($wikiStats['articles']) ? 0 : $wikiStats['articles'] ) ?>
@@ -23,8 +23,8 @@
 </header>
 <div class="preview-aside">
 	<div class="wiki-description">
-		<h2 class="wiki-welcome-title"><?= wfMsg('wikiahome-preview-description-heading', $wikiInfo['name']) ?></h2>
-		<?= $wikiInfo['description'] ?>
+		<h2 class="wiki-welcome-title"><?= wfMsg('wikiahome-preview-description-heading', htmlspecialchars($wikiInfo['name'])) ?></h2>
+		<?= htmlspecialchars($wikiInfo['description']) ?>
 	</div>
 	<a href="<?= $wikiInfo['url'] ?>" class="button secondary big visit">
 		<img class="preview-grey" src="<?= $wg->BlankImgUrl; ?>" />
