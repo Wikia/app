@@ -33,6 +33,7 @@ class NavigationService {
 	);
 
 	private $forContent = false;
+	private $useSharedMemcKey = false;
 
 	// list of errors encountered when parsing the wikitext
 	private $errors = array();
@@ -51,12 +52,16 @@ class NavigationService {
 	public function getMemcKey($messageName, $cityId = false) {
 		$app = F::app();
 
-		// use cityID for production wikis
-		$wikiId = (is_numeric($cityId)) ? $cityId : intval($app->wg->CityId);
+		if ($this->useSharedMemcKey) {
+			$wikiId = $app->wf->SharedMemcKey();
 
-		// fix for internal and staff (BugId:15149)
-		if ($wikiId == 0) {
-			$wikiId = $app->wg->DBname;
+		} else {
+			$wikiId = (is_numeric($cityId)) ? $cityId : intval($app->wg->CityId);
+
+			// fix for internal and staff (BugId:15149)
+			if ($wikiId == 0) {
+				$wikiId = $app->wg->DBname;
+			}
 		}
 
 		$messageName = str_replace(' ', '_', $messageName);
@@ -76,19 +81,19 @@ class NavigationService {
 	/**
 	 * @author: Inez Korczyński
 	 */
-	public function parseMessage($messageName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
+	public function parseMessage($messageName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false, $useSharedMemcKey = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$nodes = $this->parseHelper(self::TYPE_MESSAGE, $messageName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages);
+		$nodes = $this->parseHelper(self::TYPE_MESSAGE, $messageName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages, $useSharedMemcKey);
 
 		wfProfileOut( __METHOD__ );
 		return $nodes;
 	}
 
-	public function parseVariable($variableName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
+	public function parseVariable($variableName, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false, $useSharedMemcKey = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$nodes = $this->parseHelper(self::TYPE_VARIABLE, $variableName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages);
+		$nodes = $this->parseHelper(self::TYPE_VARIABLE, $variableName, $maxChildrenAtLevel, $duration, $forContent, $filterInactiveSpecialPages, $useSharedMemcKey);
 
 		wfProfileOut( __METHOD__ );
 		return $nodes;
@@ -105,11 +110,12 @@ class NavigationService {
 	 * @param boolean $filterInactiveSpecialPages ignore item linking to not existing special pages?
 	 * @return array parsed menu wikitext
 	 */
-	private function parseHelper($type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
+	private function parseHelper($type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false, $useSharedMemcKey = false ) {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
 		$this->forContent = $forContent;
+		$this->useSharedMemcKey = $useSharedMemcKey;
 		$useCache = ($app->wg->Lang->getCode() == $app->wg->ContLang->getCode()) || $this->forContent;
 
 		if($useCache) {
