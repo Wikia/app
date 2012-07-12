@@ -4,9 +4,9 @@
  */
 
 class UploadVisualizationImageFromFile extends UploadFromFile {
-	const VISUALIZATION_MAIN_IMAGE_NAME = 'Wikia-Visualization-Main.jpg';
+	const VISUALIZATION_MAIN_IMAGE_NAME = 'Wikia-Visualization-Main.png';
 	const VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME = 'Wikia-Visualization-Add';
-	const VISUALIZATION_ADDITIONAL_IMAGES_EXT = '.jpg';
+	const VISUALIZATION_ADDITIONAL_IMAGES_EXT = '.png';
 	const VISUALIZATION_MAIN_IMAGE_MIN_WIDTH = 480;
 	const VISUALIZATION_MAIN_IMAGE_MIN_HEIGHT = 320;
 
@@ -30,7 +30,7 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 			}
 
 			// check file type (just by extension)
-			if ( !$this->checkFileExtension( $this->mFinalExtension, array( 'jpg' ) ) ) {
+			if ( !$this->checkFileExtension( $this->mFinalExtension, array( 'png' ) ) ) {
 				$details[ 'status' ] = self::FILETYPE_ERROR;
 			}
 		}
