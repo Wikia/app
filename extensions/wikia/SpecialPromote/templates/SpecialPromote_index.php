@@ -1,5 +1,6 @@
 <form method='post' name='upload-tool' class='WikiaForm UploadTool' enctype="multipart/form-data">
 	<p class='introduction'>
+		<strong><?= wfMsg('promote-introduction-header'); ?></strong><br/>
 		<?= wfMsg('promote-introduction-copy'); ?>
 	</p>
 	<fieldset>
