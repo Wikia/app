@@ -11,7 +11,8 @@
 define('ads', ['events'], function(ev){
 
 	var d = document,
-		adSlot = d.getElementById('wkAdPlc');
+		adSlot,
+		adSlotStyle;
 
 	function moveSlot(plus){
         if(adSlotStyle){
@@ -19,46 +20,53 @@ define('ads', ['events'], function(ev){
         }
 	}
 
-	if(adSlot){
-		var w = window,
-			close = d.getElementById('wkAdCls'),
-			adSlotStyle = adSlot.style,
-			ftr = d.getElementById('wkFtr'),
-			i = 0,
-			click = ev.click,
-			adExist = function(){
-				if(adSlot.childElementCount > 3){
-					close.className = 'show';
-					adSlotStyle.height = '50px';
-					close.addEventListener(click, function() {
-						//track('ad/close');
-						adSlot.className += ' anim';
-						setTimeout(function(){d.body.removeChild(adSlot);},800);
-						w.removeEventListener('scroll', moveSlot);
-					}, false);
+	function init(){
+		adSlot = d.getElementById('wkAdPlc');
 
-					if(Modernizr.positionfixed){
-						adSlotStyle.position = 'fixed';
-					}else{
-						w.addEventListener('scroll', moveSlot);
+		if(adSlot){
+			adSlotStyle = adSlot.style;
+
+			var w = window,
+				close = d.getElementById('wkAdCls'),
+				ftr = d.getElementById('wkFtr'),
+				i = 0,
+				click = ev.click,
+				adExist = function(){
+					if(adSlot.childElementCount > 3){
+						close.className = 'show';
+						adSlotStyle.height = '50px';
+						close.addEventListener(click, function() {
+							//track('ad/close');
+							adSlot.className += ' anim';
+							setTimeout(function(){d.body.removeChild(adSlot);},800);
+							w.removeEventListener('scroll', moveSlot);
+						}, false);
+
+						if(Modernizr.positionfixed){
+							adSlotStyle.position = 'fixed';
+						}else{
+							w.addEventListener('scroll', moveSlot);
+						}
+						return true;
 					}
-					return true;
-				}
-			};
+				};
 
-		if(!adExist()) {
-			var int = setInterval(function() {
-				if(!adExist() && i < 5) {
-					i += 1;
-				}else{
-					d.body.removeChild(adSlot);
-					clearInterval(int);
-				}
-			}, 1000);
+			if(!adExist()) {
+
+				var int = setInterval(function() {
+					if(!adExist() && i < 5) {
+						i += 1;
+					}else{
+						d.body.removeChild(adSlot);
+						clearInterval(int);
+					}
+				}, 1000);
+			}
 		}
 	}
 
 	return {
+		init: init,
 		moveSlot: moveSlot
 	}
 });
