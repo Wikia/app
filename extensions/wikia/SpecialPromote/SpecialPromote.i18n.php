@@ -12,12 +12,14 @@ $messages['en'] = array(
 	'promote' => 'Promote',
 
 	'promote-title' => 'Promote',
+	'promote-introduction-header' => 'Promote your wiki on wikia.com',
+
 	'promote-introduction-copy' => 'Using this tool allows you to promote your wiki by making it eligible to appear on wikia.com!
 	 	Choose an images that identify your wiki and write an introduction to tell people more about your wikis topic.',
 
 	'promote-description' => 'Describe your wiki',
 	'promote-description-header' => 'Headline',
-	'promote-description-header-explanation' => 'Your headline should contain your wikis name and welcome them to the wiki. Something as simple as "Learn more about the Bacon Wiki" or "Welcome to the Bacon Wiki" is great!',
+	'promote-description-header-explanation' => 'Something as simple as "Learn more about the Bacon Wiki" or "Welcome to the Bacon Wiki" is great!',
 
 	'promote-description-about' => 'Description',
 	'promote-description-about-explanation' => 'This is your chance to tell people more about your wiki. Include information about the subject of the wiki, a summary of your wiki\'s topic and let people know that anyone can contribute.',
@@ -58,6 +60,7 @@ $messages['qqq'] = array(
 	'promote' => 'Promote page heading',
 
 	'promote-title' => 'Promote page title',
+	'promote-introduction-header' => 'Promote page header inviting admin to promote his/her wiki',
 	'promote-introduction-copy' => 'Promote page explanatory copy and invitation to fill in wiki data',
 
 	'promote-description' => 'Title inviting to describe the wiki',
