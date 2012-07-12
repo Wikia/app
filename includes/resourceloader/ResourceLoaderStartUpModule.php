@@ -232,7 +232,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
 			);
 			$scriptTag = <<<ENDSCRIPT
-( (window.wsl && window.getJqueryUrl) ? (document.write(wsl.buildScript(window.getJqueryUrl()) + $scriptTagNoJquery)) : ($scriptTagJquery) )
+( (window.wsl && window.getJqueryUrl) ? (wsl.buildScript(window.getJqueryUrl()) + $scriptTagNoJquery) : ($scriptTagJquery) )
 ENDSCRIPT;
 			$scriptTag = new XmlJsCode($scriptTag);
 			// Wikia change - end
