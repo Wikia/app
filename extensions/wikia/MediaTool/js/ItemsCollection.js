@@ -80,6 +80,7 @@ MediaTool.ItemsCollection = $.createClass(MediaTool.Collection,{
 
 				newItem.isVideo = item.isVideo;
 				newItem.origin = 'wiki';
+				newItem.uploader = new MediaTool.User(item.uploaderId, item.uploaderName, item.uploaderPage, item.uploaderAvatar);
 
 				self.items.push(newItem);
 			});

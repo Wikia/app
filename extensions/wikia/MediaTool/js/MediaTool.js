@@ -26,10 +26,10 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 					$.getResources([
 						wgExtensionsPath + '/wikia/MediaTool/js/Collection.js',
 						wgExtensionsPath + '/wikia/MediaTool/js/User.js',
-						wgExtensionsPath + '/wikia/MediaTool/js/Cart.js',
 						wgExtensionsPath + '/wikia/MediaTool/js/Item.js',
 						wgExtensionsPath + '/wikia/MediaTool/js/Renderer.js',
-						wgExtensionsPath + '/wikia/MediaTool/js/ItemsCollection.js'
+						wgExtensionsPath + '/wikia/MediaTool/js/ItemsCollection.js',
+						wgExtensionsPath + '/wikia/MediaTool/js/Cart.js'
 					]),
 					$.loadMustache(),
 					$.loadJQueryUI(),

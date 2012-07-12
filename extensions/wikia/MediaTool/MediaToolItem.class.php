@@ -25,7 +25,7 @@ class MediaToolItem extends WikiaObject {
 	/**
 	 * @var User
 	 */
-	protected $uploader = null;
+	protected $uploader = false;
 	private $file = null;
 
 	public function __construct(Title $title = null) {
@@ -134,6 +134,36 @@ class MediaToolItem extends WikiaObject {
 		return (bool) $this->getFile();
 	}
 
+	/**
+	 * get user who uploaded this item
+	 * @return User|null
+	 */
+	public function getUploader() {
+		if($this->uploader === false) {
+			if($this->hasFile()) {
+				$userId = $this->getFile()->getUser('id');
+				if(!empty($userId)) {
+					$this->uploader = F::build('User', array( 'id' => $userId ), 'newFromId');
+				}
+				else {
+					$this->uploader = null;
+				}
+			}
+			else {
+				$this->uploader = null;
+			}
+		}
+		return $this->uploader;
+	}
+
+	public function hasUploader() {
+		return (bool) $this->getUploader();
+	}
+
+	public function setUploader(User $uploader) {
+		$this->uploader = $uploader;
+	}
+
 	public function getThumbHtml($reload = false) {
 		if(($this->thumbHtml === null) || $reload) {
 			$file = $this->getFile();
@@ -166,14 +196,26 @@ class MediaToolItem extends WikiaObject {
 	}
 
 	public function toArray() {
-		return array(
+		$array = array(
 			'isVideo' => $this->isVideo(),
 			'hash' => $this->getHash(),
 			'title' => is_null($this->titleText) ? $this->getTitle()->getPrefixedDBkey() : $this->titleText,
 			'thumbHtml' => $this->getThumbHtml(),
 			'thumbUrl' => $this->getThumbUrl(),
 			'remoteUrl' => $this->getRemoteUrl(),
-			'duration' => $this->getDuration()
+			'duration' => $this->getDuration(),
 		);
+
+		if( $this->hasUploader() ) {
+			$array['uploaderId'] = $this->getUploader()->getId();
+			$array['uploaderName'] = $this->getUploader()->getName();
+			$array['uploaderPage'] = $this->getUploader()->getUserPage()->getFullUrl();
+			$array['uploaderAvatar'] = AvatarService::getAvatarUrl($this->getUploader());
+		}
+		else {
+			$array['uploaderId'] = 0;
+		}
+
+		return $array;
 	}
 }
