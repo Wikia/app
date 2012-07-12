@@ -203,15 +203,6 @@ $specialPageAliases = array(
 	'Watchlist'                 => array( 'Obserwowane' ),
 	'Whatlinkshere'             => array( 'Linkujące' ),
 	'Withoutinterwiki'          => array( 'Strony_bez_interwiki' ),
-        'Signup'		    => array( 'Zarejestruj' ),
-        'ThemeDesigner'		    => array( 'Kreator motywu' ),
-        'Platinum'                  => array( 'Platyna' ),
-        'Leaderboard'		    => array( 'Ranking' ),
-        'AchievementsCustomize'     => array( 'Dostosuj odznaki' ),
-        'AdminDashboard' 	    => array( 'Panel administratora' ),
-        'RemoveUserAvatar'	    => array( 'Usuń avatar' ),
-        'UserManagement'            => array( 'Zarządzanie kontem' ),
-        'Connect'		    => array( 'Połącz z Facebookiem' ),
 );
 
 $magicWords = array(
