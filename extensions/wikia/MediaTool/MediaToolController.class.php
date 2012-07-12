@@ -46,6 +46,7 @@ class MediaToolController extends WikiaController {
 
 				$item->setIsVideo(true);
 				$item->setTitleText($wrapper->getTitle());
+				$item->setUploader($this->wg->User);
 				$item->setThumbUrl($wrapper->getThumbnailUrl());
 				$item->setThumbHtml(false);
 				$item->setRemoteUrl($videoUrl);
