@@ -72,7 +72,6 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 			item.uploader = new MediaTool.User(itemData.uploaderId, itemData.uploaderName, itemData.uploaderPage, itemData.uploaderAvatar);
 
 			item.renderThumbHtml();
-$().log(item);
 
 			var $item = $($.mustache(itemTemplate, item));
 
