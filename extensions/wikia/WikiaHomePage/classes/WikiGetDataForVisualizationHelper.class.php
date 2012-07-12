@@ -7,7 +7,6 @@ class WikiGetDataForVisualizationHelper implements WikiGetDataHelper {
 	}
 
 	public function getImages($wikiId, $langCode, $wikiRow) {
-		$visualization = F::build('CityVisualization');
-		return $visualization->getWikiImageNames($wikiId, $langCode);
+		return json_decode($wikiRow->city_images);
 	}
 }
