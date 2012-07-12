@@ -280,7 +280,7 @@ class WikiaHomePageHelper extends WikiaModel {
 				$userInfo = $this->getUserInfo($userId, $wikiId);
 
 				if (!empty($userInfo)) {
-					$userInfo['edits'] = $this->wg->Lang->formatNum( $wikiService->getUserEdits($userId, $wikiId) );
+					$userInfo['edits'] = $wikiService->getUserEdits($userId, $wikiId);
 					if (!empty($adminAvatars[$userInfo['name']])) {
 						$userInfo['edits'] += $adminAvatars[$userInfo['name']]['edits'];
 					}
