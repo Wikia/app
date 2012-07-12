@@ -147,3 +147,22 @@ window.Wikia.processStyle = function(css) {
 
 	document.getElementsByTagName('head')[0].appendChild(style);
 };
+
+/**
+ * Fetch AM group(s)
+ *
+ * @param groups string or array of AM groups to be fetched
+ */
+window.Wikia.getAMgroups = function(groups, callback) {
+	if (typeof groups === 'string') {
+		groups = [groups];
+	}
+
+	var url = wgAssetsManagerQuery.
+		replace('%1$s', 'groups').
+		replace('%2$s', groups.join(',')).
+		replace('%3$s', '-').
+		replace('%4$d', wgStyleVersion);
+
+	return $.getScript(url, callback);
+};
