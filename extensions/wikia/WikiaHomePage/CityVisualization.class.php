@@ -9,13 +9,14 @@ class CityVisualization extends WikiaModel {
 	const CITY_TAG_VIDEO_GAMES_ID = 131;
 	const CITY_TAG_LIFESTYLE_ID = 127;
 
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.15';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.20';
 
-	public function getList($contLang) {
+	public function getList($corpWikiId, $contLang) {
 		$this->wf->ProfileIn(__METHOD__);
 
-		$memKey = $this->getVisualizationWikisListDataCacheKey($contLang);
+		$memKey = $this->getVisualizationWikisListDataCacheKey($corpWikiId, $contLang);
 		$wikis = $this->wg->Memc->get($memKey);
+
 		if( !is_array($wikis) ) {
 			$db = $this->wf->GetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 			$tables = array('city_visualization', 'city_list');
@@ -156,8 +157,8 @@ class CityVisualization extends WikiaModel {
 		return false;
 	}
 
-	public function purgeVisualizationWikisListCache($langCode) {
-		$memcKey = $this->getVisualizationWikisListDataCacheKey($langCode);
+	public function purgeVisualizationWikisListCache($corpWikiId, $langCode) {
+		$memcKey = $this->getVisualizationWikisListDataCacheKey($corpWikiId, $langCode);
 		$this->wg->Memc->set($memcKey, null);
 	}
 
@@ -180,8 +181,8 @@ class CityVisualization extends WikiaModel {
 		$this->wg->Memc->set($memcKey, $wikiData);
 	}
 
-	public function getVisualizationWikisListDataCacheKey($langCode) {
-		return $this->wf->memcKey('wikis_data_for_visualization_comscore', self::CITY_VISUALIZATION_MEMC_VERSION, $langCode, __METHOD__);
+	public function getVisualizationWikisListDataCacheKey($corporateWikiId, $langCode) {
+		return $this->wf->SharedMemcKey('wikis_data_for_visualization_comscore', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $langCode, __METHOD__);
 	}
 
 	public function getWikiPromoteDataCacheKey($wikiId, $langCode) {

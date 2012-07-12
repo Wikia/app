@@ -135,7 +135,7 @@ class WikiaHomePageController extends WikiaController {
 			$status = 'true';
 			$this->response->setVal(
 				'data',
-				$this->helper->getData($this->wg->contLang->getCode())
+				$this->helper->getData($this->wg->CityId, $this->wg->contLang->getCode())
 			);
 		} catch (Exception $e) {
 			try {
@@ -529,15 +529,6 @@ class WikiaHomePageController extends WikiaController {
 		}
 		$this->wikiStats = $tempArray;
 		$this->wikiInfo = $this->helper->getWikiInfoForVisualization($wikiId,$this->wg->contLang->getCode());
-
-		/* TODO: remove after full design QA */
-		if(!empty($this->wikiAdminAvatars) && !empty($this->wg->mockInterstitialAvatars)) {
-			$keys = array_keys($this->wikiAdminAvatars);
-			$avatar = $this->wikiAdminAvatars[$keys[0]];
-			$this->wikiAdminAvatars = array($avatar,$avatar,$avatar);
-			$this->wikiTopEditorAvatars  = array($avatar,$avatar,$avatar,$avatar,$avatar,$avatar,$avatar);
-		}
-
 		$images = array();
 
 		foreach($this->wikiInfo['images'] as $image) {

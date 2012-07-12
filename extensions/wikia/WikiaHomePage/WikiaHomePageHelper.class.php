@@ -579,12 +579,12 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $imageServingParams;
 	}
 
-	public function getWikisList($contLang) {
+	public function getWikisList($corpWikiId, $contLang) {
 		$this->wf->ProfileIn(__METHOD__);
 
 		if (empty($this->wg->ReadOnly)) {
 			$cityVisualization = F::build('CityVisualization', array());
-			$wikisPerVertical = $cityVisualization->getList($contLang);
+			$wikisPerVertical = $cityVisualization->getList($corpWikiId, $contLang);
 
 			if (empty($wikisPerVertical)) {
 				throw new Exception(wfMsg('wikia-home-parse-exception-empty-data-from-database'));
@@ -632,13 +632,13 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 	}
 
-	public function getData($contLang) {
+	public function getData($corpWikiId, $contLang) {
 		$slots = array(
 			'hotwikis' => $this->getVarFromWikiFactory(self::HOT_WIKI_SLOTS_VAR_NAME),
 			'newwikis' => $this->getVarFromWikiFactory(self::NEW_WIKI_SLOTS_VAR_NAME),
 		);
 
-		$wikisPerVertical = $this->getWikisList($contLang);
+		$wikisPerVertical = $this->getWikisList($corpWikiId, $contLang);
 
 		return array(
 			'slots' => $slots,

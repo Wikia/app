@@ -16,6 +16,9 @@ class AdminUploadReviewTask extends BatchTask {
 		$mUser,
 		$mUsername;
 
+	protected $helper;
+	protected $model;
+
 	function __construct($params = array()) {
 		$this->mType = 'adminuploadreview';
 		$this->mVisible = false; // do not show form for this task
@@ -37,6 +40,10 @@ class AdminUploadReviewTask extends BatchTask {
 			return true;
 		}
 
+		/** @var WikiGetDataForVisualizationHelper $this->helper  */
+		$this->helper = F::build('WikiGetDataForVisualizationHelper');
+		/** @var WikiGetDataForVisualizationHelper $this->model  */
+		$this->model = F::build('CityVisualization');
 		$data = unserialize($params->task_arguments);
 		if( isset($data['upload_list']) ) {
 			foreach( $data['upload_list'] as $targetWikiId => $wikis ) {
@@ -45,12 +52,12 @@ class AdminUploadReviewTask extends BatchTask {
 		}
 
 		if( isset($data['deletion_list']) ) {
-			foreach( $data['deletion_list'] as $wikis ) {
-				$deleteResult = $this->removeSingleImage($wikis);
+			foreach( $data['deletion_list'] as $image ) {
+				$deleteResult = $this->removeSingleImage($image);
 			}
 		}
 
-		if( $uploadResult || $deleteResult ) {
+		if( !empty($uploadResult) || !empty($deleteResult) ) {
 			return true;
 		}
 
@@ -59,7 +66,6 @@ class AdminUploadReviewTask extends BatchTask {
 
 	function uploadImages($targetWikiId, $wikis) {
 		$targetWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $targetWikiId);
-		$cityVisualizationModel = F::build('CityVisualization');
 		$fileNamespace = MWNamespace::getCanonicalName(NS_FILE);
 
 		foreach($wikis as $sourceWikiId => $images) {
@@ -76,17 +82,18 @@ class AdminUploadReviewTask extends BatchTask {
 
 			if( !empty($uploadedImages) ) {
 				//update in db
-				$cityVisualizationModel->saveVisualizationData(
+				$this->model->saveVisualizationData(
 					$sourceWikiId,
 					$this->getImagesToUpdateInDb($uploadedImages),
 					$sourceWikiLang
 				);
-				$cityVisualizationModel->purgeWikiDataCache($sourceWikiId, $sourceWikiLang);
+				$memcKey = $this->helper->getMemcKey($sourceWikiId, $sourceWikiLang);
+				F::app()->wg->Memc->set($memcKey, null);
 			}
 		}
 
 		if( !empty($uploadedImages) ) {
-			$cityVisualizationModel->purgeVisualizationWikisListCache($targetWikiLang);
+			$this->model->purgeVisualizationWikisListCache($targetWikiId, $targetWikiLang);
 			return true;
 		}
 
@@ -102,7 +109,7 @@ class AdminUploadReviewTask extends BatchTask {
 
 		if( empty($sourceImageUrl['src']) ) {
 			$this->log('Apparently the image is unaccessible');
-			return false;
+			return array('status' => 2);
 		} else {
 			$sourceImageUrl = $sourceImageUrl['src'];
 		}
@@ -110,7 +117,7 @@ class AdminUploadReviewTask extends BatchTask {
 		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
 		if( empty($city_url) ) {
 			$this->log('Apparently the server is not available via WikiFactory');
-			return false;
+			return array('status' => 2);
 		}
 
 		$city_path = WikiFactory::getVarValueByName("wgScript", $targetWikiId);
@@ -145,7 +152,7 @@ class AdminUploadReviewTask extends BatchTask {
 		$sourceWikiId = $image['cityId'];
 		$imageName = $image['name'];
 
-		/* @var $helper  AdminUploadReviewHelper */
+		/* @var $helper AdminUploadReviewHelper */
 		$helper = F::build('AdminUploadReviewHelper');
 		$targetWikiId = $helper->getTargetWikiId($image['lang']);
 
@@ -155,27 +162,25 @@ class AdminUploadReviewTask extends BatchTask {
 		$nameToRemove = $this->getNameWithWiki($imageName, $dbname);
 
 		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/AdminUpload/remove.php";
-		$sCommand .= "--imagename=" . escapeshellarg($nameToRemove) . " ";
-		$sCommand .= "--userid=" . escapeshellarg( $this->mUser ) . " ";
-		$sCommand .= "--wikiid " . escapeshellarg( $sourceWikiId ) . " ";
-		$sCommand .= "--conf {$wgWikiaLocalSettingsPath}";
+		$sCommand .= " --imagename=" . escapeshellarg($nameToRemove);
+		$sCommand .= " --userid=" . escapeshellarg( $this->mUser );
+		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
 
-		$actual_title = wfShellExec($sCommand, $retval);
+		$output = wfShellExec($sCommand, $retval);
 
 		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
-		if (empty($city_url)) {
+		if( empty($city_url) ) {
 			$this->log('Apparently the server is not available via WikiFactory');
 			return false;
 		}
 
 		$city_path = WikiFactory::getVarValueByName("wgScript", $targetWikiId);
-
 		if( $retval ) {
-			$this->log('Remove error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $actual_title);
-		} else {
-			$this->log('Removal successful: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($actual_title) . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
+			$this->log('Remove error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
+			return false;
 		}
 
+		$this->log('Removal successful: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($output) . '">' . $city_url . $city_path . '?title=' . $output . '</a>');
 		return true;
 	}
 
