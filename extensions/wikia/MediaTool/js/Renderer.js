@@ -85,7 +85,7 @@ MediaTool.Renderer = $.createClass(Observable,{
 
 			 var playButton = $(this).find('span.Wikia-video-play-button');
 			 var image = $(this).find('img');
-			 var aspectRatio =  image.attr('data-aspect-ratio') + 0;
+			 var aspectRatio =  parseFloat( image.attr('data-aspect-ratio') );
 			 var imgHeight = Math.floor( params.width / aspectRatio );
 			 image.css({ width:params.width, height:imgHeight} );
 			 playButton.css( {width:params.width, height:imgHeight} );
