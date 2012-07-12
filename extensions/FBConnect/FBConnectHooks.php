@@ -652,7 +652,11 @@ HTML;
 			$html .= Xml::closeElement( "div" );
 
 			$html .= Xml::openElement("div",array("style" => "display:none","id" => "fbDisconnectDone" ));
+			if ( $user->getOption("fbFromExist") ) {
+				$html .= wfMsg('fbconnect-disconnect-info-existing');
+			} else {
 				$html .= wfMsg('fbconnect-disconnect-info');
+			}
 			$html .= Xml::closeElement( "div" );
 
 			$preferences['fbconnect-prefstext' ] = array(
