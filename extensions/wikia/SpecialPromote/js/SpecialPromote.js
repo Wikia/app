@@ -79,16 +79,19 @@ SpecialPromote.prototype = {
 			maxChars = parseInt(maxChars);
 
 			if (minChars > characterCount) {
+				targetObject.closest('div').parent().addClass('error');
 				targetObject.closest('div').parent().find('.error').text(
 					$.msg('promote-error-less-characters-than-minimum', characterCount, minChars)
 				);
 				this.status[fieldName] = false;
 			} else if (maxChars < characterCount) {
+				targetObject.closest('div').parent().addClass('error');
 				targetObject.closest('div').parent().find('.error').text(
 					$.msg('promote-error-more-characters-than-maximum', characterCount, maxChars)
 				);
 				this.status[fieldName] = false;
 			} else {
+				targetObject.closest('div').parent().removeClass('error');
 				targetObject.closest('div').parent().find('.error').text('');
 				this.status[fieldName] = true;
 			}
@@ -145,11 +148,13 @@ SpecialPromote.prototype = {
 		var uploadType = addPhotoBtn.data('image-type');
 		var errorContainer = addPhotoBtn.parent().find('.error');
 
-		if (uploadType === this.UPLOAD_TYPE_ADDITIONAL && this.current.additionalImagesNames.length > this.ADDITIONAL_IMAGES_LIMIT) {
+		if (uploadType === this.UPLOAD_TYPE_ADDITIONAL && this.current.additionalImagesNames.length >= this.ADDITIONAL_IMAGES_LIMIT) {
+			addPhotoBtn.parent().addClass('error');
 			errorContainer.text($.msg('promote-error-too-many-images'));
 			return;
 		}
 		errorContainer.html('');
+		addPhotoBtn.parent().removeClass('error');
 
 		try {
 			this.getUploadForm({uploadType: uploadType,lang: window.wgUserLang});
@@ -160,9 +165,10 @@ SpecialPromote.prototype = {
 	},
 	onChangePhotoClick: function (e) {
 		e.preventDefault();
-		var target = $(e.target).parent().parent().find('img#curMainImageName');
+		var parentNode = $(e.target).parent().parent();
+		var target = parentNode.find('img#curMainImageName');
 		if ($.isEmptyObject(target[0])) {
-			target = $(e.target).parent().parent().find('img.additionalImage');
+			target = parentNode.find('img.additionalImage');
 		}
 
 		try {
