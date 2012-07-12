@@ -287,11 +287,7 @@ class FBConnect {
 			return $statusError;
 		}
 
-		/**
-		 *  @todo: verify if lines 296-297 can be deleted, unreachable 
-		 */
 		return array('status' => "ok" );
-		$dbw->commit();
-		return $response;
 	}
 }
+		// probably need some logic to only display on user pages
