@@ -23,14 +23,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		return resourceLoaderCache = resourceLoaderCache ||
 			$.Deferred(function (dfd) {
 				$.when(
-					$.getResources([
-						wgExtensionsPath + '/wikia/MediaTool/js/Collection.js',
-						wgExtensionsPath + '/wikia/MediaTool/js/User.js',
-						wgExtensionsPath + '/wikia/MediaTool/js/Item.js',
-						wgExtensionsPath + '/wikia/MediaTool/js/Renderer.js',
-						wgExtensionsPath + '/wikia/MediaTool/js/ItemsCollection.js',
-						wgExtensionsPath + '/wikia/MediaTool/js/Cart.js'
-					]),
+					Wikia.getAMgroups('mediatool'),
 					$.loadMustache(),
 					$.loadJQueryUI(),
 					callBackend('getTemplates', function (resp) {
