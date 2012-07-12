@@ -6,7 +6,7 @@
 		<script>
 			(function() {
 				var jasmineEnv = jasmine.getEnv();
-				jasmineEnv.addReporter(new jasmine.ConsoleReporter());
+				jasmineEnv.addReporter(new jasmine.PhantomReporter());
 
 				window.onload = function() {
 					jasmineEnv.execute();

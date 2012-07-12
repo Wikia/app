@@ -3,11 +3,11 @@
 		throw new Exception("jasmine library does not exist in global namespace!");
 	}
 
-	var ConsoleReporter = function() {
+	var PhantomReporter = function() {
 		this.console = jasmine.getGlobal().console;
 	};
 
-	ConsoleReporter.prototype = {
+	PhantomReporter.prototype = {
 		//runner
 		reportRunnerResults : function(runner) {
 			this.log(JSON.stringify({
@@ -25,8 +25,7 @@
 
 		reportSuiteResults : function(suite) {
 			this.log(JSON.stringify({
-				command: 'stopSuite',
-				name: suite.description
+				command: 'stopSuite'
 			}));
 		},
 
@@ -45,13 +44,13 @@
 				msg = [],
 				i = 0;
 
+			//get messages
 			for(; i < l; i++ ){
 				msg.push(items[i].message);
 			}
 
 			this.log(JSON.stringify({
 				command: 'stopTest',
-				name: spec.description,
 				status: result.passed() ? 'SUCCESS' : 'FAILURE',
 				assertions: result.totalCount,
 				messages: msg.join('\n')
@@ -67,5 +66,5 @@
 	};
 
 	// export public
-	jasmine.ConsoleReporter = ConsoleReporter;
+	jasmine.PhantomReporter = PhantomReporter;
 })(); 
