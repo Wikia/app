@@ -5,7 +5,7 @@
 	<p class="error"></p>
 
 	<div class="input-group">
-		<? if($uploadType == 'additional'): ?>
+		<? if($uploadType == 'main'): ?>
 		<h1><?= wfMsg('promote-upload-main-image-form-modal-title'); ?></h1>
 		<p class='copy'>
 			<?= wfMsg('promote-upload-main-image-form-modal-copy'); ?>
