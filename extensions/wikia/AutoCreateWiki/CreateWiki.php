@@ -44,6 +44,7 @@ class CreateWiki {
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
 	const ACTIVE_CLUSTER       = "c3";
+	const DEFAULT_SLOT         = "slot2";
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
@@ -620,7 +621,7 @@ class CreateWiki {
 		$this->mNewWiki->subdomain = $this->mNewWiki->name;
 		$this->mNewWiki->redirect  = $this->mNewWiki->name;
 
-		$this->mNewWiki->path = "/usr/wikia/docroot/wiki.factory";
+		$this->mNewWiki->path = self::DEFAULT_SLOT;
 
 		$this->mNewWiki->images_url = $this->prepareDirValue( $this->mNewWiki->name, $this->mNewWiki->language );
 		$this->mNewWiki->images_dir = sprintf("%s/%s", strtolower( substr( $this->mNewWiki->name, 0, 1 ) ), $this->mNewWiki->images_url );
