@@ -230,7 +230,7 @@ class Masthead {
 				 * default avatar, path from messaging.wikia.com
 				 */
 				$hash = FileRepo::getHashPathForLevel( $url, 2 );
-				$url = $this->mDefaultPath . $thumb . $hash . $url;
+				$url = $this->mDefaultPath . trim( $thumb,  '/' ) . '/' . $hash . $url;
 			}
 		}
 		else {
