@@ -47,6 +47,9 @@ MediaTool.Renderer = $.createClass(Observable,{
 
 			itemPreview =  $.mustache(params.borderTpl, {
 				itemWidth:params.width+2,
+				name: item.uploader.name,
+				userPageUrl: item.uploader.userPageUrl,
+				avatarUrl: item.uploader.avatarUrl,
 				photo: $.mustache(params.itemTpl, {
 					itemTitle:item.title,
 					itemWidth:params.width,
