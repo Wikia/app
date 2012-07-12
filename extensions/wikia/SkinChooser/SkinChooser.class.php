@@ -2,8 +2,6 @@
 
 class SkinChooser {
 
-	static $isSample = false;
-
 	public static function onGetPreferences($user, &$defaultPreferences) {
 		global $wgEnableAnswers, $wgForceSkin, $wgAdminSkin, $wgDefaultSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgSkipOldSkins, $wgEnableUserPreferencesV2Ext;
 
@@ -182,8 +180,6 @@ class SkinChooser {
 		global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme,
 			$wgSkinTheme, $wgOut, $wgForceSkin, $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgDevelEnvironment, $wgEnableWikiaPhone, $wgEnableAnswers;
 
-		self::$isSample = (rand(1,100) % 99 == 0);
-
 		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 
 		wfProfileIn(__METHOD__);
@@ -215,7 +211,6 @@ class SkinChooser {
 		}
 
 		if(!($title instanceof Title) || in_array( self::getUserOption('skin'), $wgSkipSkins )) {
-			self::wikiaLog("10", true);
 			$skin = Skin::newFromKey(isset($wgDefaultSkin) ? $wgDefaultSkin : 'monobook');
 			wfProfileOut(__METHOD__);
 			return false;
@@ -223,11 +218,9 @@ class SkinChooser {
 
 		// only allow useskin=wikia for beta & staff.
 		if( $request->getVal('useskin') == 'wikia' ) {
-			self::wikiaLog("11");
 			$request->setVal('useskin', 'oasis');
 		}
 		if(!empty($wgForceSkin)) {
-			self::wikiaLog("12", true);
 			$wgForceSkin = $request->getVal('useskin', $wgForceSkin);
 			$elems = explode('-', $wgForceSkin);
 			$userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
@@ -247,16 +240,13 @@ class SkinChooser {
 
 		if(!$user->isLoggedIn()) { # If user is not logged in
 			if($wgDefaultSkin == 'oasis') {
-				self::wikiaLog("13");
 				$userSkin = $wgDefaultSkin;
 				$userTheme = null;
 			} else if(!empty($wgAdminSkin) && !$isOasisPublicBeta) {
-				self::wikiaLog("14", true);
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 			} else {
-				self::wikiaLog("15", true);
 				$userSkin = $wgDefaultSkin;
 				$userTheme = $wgDefaultTheme;
 			}
@@ -266,22 +256,18 @@ class SkinChooser {
 
 			//RT:81173 Answers force hack.  It's in here because wgForceSkin is overwritten in CommonExtensions to '', most likely due to allowing admin skins and themes.  This will force answers and falls through to admin skin and theme logic if there is one.
 			if(!empty($wgDefaultSkin) && $wgDefaultSkin == 'answers') {
-				self::wikiaLog("16");
 				$userSkin = 'answers';
 			}
 
 			if(empty($userSkin)) {
 				if(!empty($wgAdminSkin)) {
-					self::wikiaLog("17", true);
 					$adminSkinArray = explode('-', $wgAdminSkin);
 					$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 					$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 				} else {
-					self::wikiaLog("18");
 					$userSkin = 'oasis';
 				}
 			} else if(!empty($wgAdminSkin) && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook') {
-				self::wikiaLog("19", true);
 				$adminSkinArray = explode('-', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
@@ -305,13 +291,10 @@ class SkinChooser {
 		# Normalize theme name and set it as a variable for skin object.
 		if(isset($wgSkinTheme[$normalizedSkinName])){
 			wfProfileIn(__METHOD__.'::NormalizeThemeName');
-			self::wikiaLog("20", true);
 			if(!in_array($userTheme, $wgSkinTheme[$normalizedSkinName])){
 				if(in_array($wgDefaultTheme, $wgSkinTheme[$normalizedSkinName])){
-					self::wikiaLog("21", true);
 					$userTheme = $wgDefaultTheme;
 				} else {
-					self::wikiaLog("22", true);
 					$userTheme = $wgSkinTheme[$normalizedSkinName][0];
 				}
 			}
@@ -320,7 +303,6 @@ class SkinChooser {
 
 			# force default theme on monaco and oasis when there is no admin setting
 			if( $normalizedSkinName == 'oasis' && (empty($wgAdminSkin) && $isOasisPublicBeta) ) {
-				self::wikiaLog("23", true);
 				$skin->themename = $wgDefaultTheme;
 			}
 
@@ -340,17 +322,4 @@ class SkinChooser {
 	private static function log($method, $msg) {
 		wfDebug("{$method}: {$msg}\n");
 	}
-
-	private static function wikiaLog($message, $force=false){
-
-		if($force || self::$isSample){
-			Wikia::log(
-				'SkinChooser',
-				'onGetSkin',
-				$message,
-				true
-			);
-		}
-	}
-
 }
