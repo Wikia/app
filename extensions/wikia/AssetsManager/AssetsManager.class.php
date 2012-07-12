@@ -176,7 +176,8 @@ class AssetsManager {
 						// We always need to use common host for static assets since it has
 						// the information about the slot which is otherwise not available
 						// in varnish (BugId: 33905)
-						$urls[] =  ( !empty( $local ) ) ? $this->mCommonHost . $this->getOneLocalURL( $asset ) : $this->getOneCommonURL( $asset );
+//						$urls[] =  ( !empty( $local ) ) ? $this->mCommonHost . $this->getOneLocalURL( $asset ) : $this->getOneCommonURL( $asset );
+						$urls[] =  $this->getOneCommonURL( $asset );
 					}
 				}
 			}
@@ -301,7 +302,10 @@ class AssetsManager {
 	 */
 	public function getOneCommonURL(/* string */ $filePath, /* boolean */ $minify = null) {
 		if ($minify !== null ? $minify : $this->mMinify) {
-			return $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
+			// Remove cachebuster (if any) from common host path, because one will be
+			// added by call to getAMLocalURL()
+			$commonHost = preg_replace('#/__cb[0-9]+$#','',$this->mCommonHost);
+			return $commonHost . $this->getAMLocalURL('one', $filePath,array('minify'=>1));
 		} else {
 			// We always need to use common host for static assets since it has
 			// the information about the slot which is otherwise not available
@@ -367,7 +371,7 @@ class AssetsManager {
 					// We always need to use common host for static assets since it has
 					// the information about the slot which is otherwise not available
 					// in varnish (BugId: 33905)
-					$URLs[] = $this->mCommonHost . $this->getOneLocalURL($asset, $minify);
+					$URLs[] = $this->getOneCommonURL($asset,$minify);
 				}
 			}
 		}
