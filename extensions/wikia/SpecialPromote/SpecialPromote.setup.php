@@ -18,6 +18,7 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 $wikiaHomePageExtDir = dirname(dirname(__FILE__)) . '/WikiaHomePage/';
+$adminUploadReviewExtDir = dirname(dirname(__FILE__)) . '/ImageReview/modules/AdminUpload/';
 $app = F::app();
 
 // classes
@@ -25,6 +26,8 @@ $app->registerClass('SpecialPromoteController', $dir . 'SpecialPromoteController
 $app->registerClass('SpecialPromoteHelper', $dir . 'SpecialPromoteHelper.class.php');
 $app->registerClass('UploadVisualizationImageFromFile', $dir . 'UploadVisualizationImageFromFile.class.php');
 
+// needed task
+$app->registerClass('AdminUploadReviewTask', $adminUploadReviewExtDir  . 'AdminUploadReviewTask.php');
 
 // Needed Wikia Home Page classes
 
