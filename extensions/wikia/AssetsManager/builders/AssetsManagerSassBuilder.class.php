@@ -8,7 +8,7 @@
 class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 	public function __construct(WebRequest $request) {
-		global $wgDevelEnvironment, $wgSpeedBox;
+		global $wgDevelEnvironment;
 		$wgDevelEnvironment ? $timeStart = microtime( true ) : null;
 
 		parent::__construct($request);
