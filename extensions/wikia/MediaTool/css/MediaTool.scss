@@ -53,6 +53,20 @@
 		padding-top: 25px;
 		margin: 25px 0;
 		border-top: 1px solid $color-page-border;
+
+		&:before {
+			border-color: transparent transparent $color-page transparent;
+			border-style: solid;
+			border-width: 8px;
+			content: '';
+			height: 0px;
+			left: 28px;
+			position: relative;
+			top: -51px;
+			visibility: visible;
+			width: 0px;
+		}
+
 	}
 
 	.media-tool-item-list {
@@ -176,7 +190,6 @@
 
 	.WikiaArticle {
 		min-height: 60px;
-		position: static;
 
 		.tleft {
 			float: none;
