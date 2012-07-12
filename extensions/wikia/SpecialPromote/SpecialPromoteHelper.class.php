@@ -289,7 +289,6 @@ class SpecialPromoteHelper extends WikiaObject {
 		);
 
 		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
-		$visualizationModel->purgeWikiDataCache($cityId, $langCode);
 
 		$modifiedFiles = $this->extractModifiedFiles($files);
 		if (!empty($modifiedFiles)) {
