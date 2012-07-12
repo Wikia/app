@@ -3,11 +3,11 @@
  * How to run this script:
  * $ cd maintenance/wikia/ImageReview/AdminUpload/upload.php
  * To remove an image from wikia.com as a WikiaBot:
- * $ SERVER_ID=80433 php remove.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --imagename="Wikia-Visualization-Add-3,starwars.jpg" --userid=4663069 --wikiid=147
- * Optional parameter
- * --overwritelang=en
+ * $ SERVER_ID=80433 php remove.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --imagename="Wikia-Visualization-Add-3,starwars.jpg" --userid=4663069
  */
-require_once("../../../commandLine.inc");
+$dir = dirname(__FILE__) . '/';
+$cmdLineScript = realpath($dir . '../../../commandLine.inc');
+require_once($cmdLineScript);
 
 $imageName = $options['imagename'];
 $userId = $options['userid'];
@@ -20,19 +20,19 @@ if( !($user instanceof User) ) {
 
 if( !$user->isAllowed('delete') ) {
 	echo 'ERROR: You do not have right permissions'."\n";
-	exit(1);
+	exit(2);
 }
 
 if( empty($imageName) ) {
 	echo 'ERROR: Invalid image name'."\n";
-	exit(1);
+	exit(3);
 }
 
 $imageTitle = Title::newFromText($imageName, NS_FILE);
 
 if( !($imageTitle instanceof Title) ) {
 	echo 'ERROR: Could not get title object';
-	exit(1);
+	exit(4);
 }
 
 $file = wfFindFile($imageTitle);
@@ -50,5 +50,5 @@ if( $status->ok === true ) {
 } else {
 	echo "\n"."ERROR: File has not been deleted"."\n";
 	var_dump($status);
-	exit(1);
+	exit(5);
 }
