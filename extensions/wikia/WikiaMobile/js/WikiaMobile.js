@@ -13,8 +13,8 @@ WikiaTracker.trackEvent(
 
 //init
 $(function(){
-	require(['media', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'sections', 'share', 'popover', 'cookies'],
-		function(media, qs, topbar, toc, events, hideURLBar, tables, sections, share, popover, cookies){
+	require(['media', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'sections', 'share', 'popover', 'cookies', 'ads'],
+		function(media, qs, topbar, toc, events, hideURLBar, tables, sections, share, popover, cookies, ads){
 			var d = document,
 				clickEvent = events.click;
 
@@ -24,6 +24,9 @@ $(function(){
 			tables.init();
 			media.init();
 			toc.init();
+
+			//init ad (removing it if empty and closing in on close button)
+			ads.init();
 
 			//add class for styling to be applied only if JS is enabled
 			//(e.g. collapse sections)
