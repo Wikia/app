@@ -422,7 +422,7 @@ function wfWikiFeeds() {
       WHERE rc_this_oldid=rev_id AND rev_deleted=0
       ORDER BY rev_id DESC LIMIT $count";
 
-			if ($result = $db->doQuery($sql)) {
+			if ($result = $db->query($sql,__METHOD__)) {
 				if ($db->numRows($result)) {
 					while ($row = $db->fetchRow($result)) {
 						$title = Title::newFromID($row['page']);
