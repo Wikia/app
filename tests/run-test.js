@@ -105,7 +105,7 @@ function processTest( test ) {
 	try {
 		testSource = fs.read( test );
 	} catch(e) {
-		console.error(stylize( '[ERROR]', 'red' ), 'Error while opening the test file:' + test)
+		console.error(stylize( '[ERROR]', 'red' ), 'Error while opening the test file: ' + test)
 		nextTest();
 		return;
 	}
@@ -142,12 +142,12 @@ function processTest( test ) {
 		switch(testOptions.framework.toLowerCase()) {
 			case 'qunit':
 				requiredFiles.push('lib/qunit/qunit.js');
-				requiredFiles.push('lib/qunit/console_reporter.js');
+				requiredFiles.push('lib/qunit/phantom_reporter.js');
 				runner = 'lib/qunit/test-runner.html';
 				break;
 			case 'jasmine':
 				requiredFiles.push('lib/jasmine/jasmine.js');
-				requiredFiles.push('lib/jasmine/console_reporter.js');
+				requiredFiles.push('lib/jasmine/phantom_reporter.js');
 				runner = 'lib/jasmine/test-runner.html';
 				break;
 		}
@@ -306,17 +306,19 @@ function outputTestsResult() {
 			time += suite.stats.time / 1000;
 
 			for (var testName in suite.tests) {
-				var test = suite.tests[testName];
+				var test = suite.tests[testName],
+					assertions;
 
 				if (test.status == JTR.status.SUCCESS) {
-					var assertions = '1 assertion';
-					if (test.assertions > 1) {
-						assertions = test.assertions + ' assertions';
+
+					if (test.assertions > 0) {
+						assertions = test.assertions + ' assertion' + (test.assertions != 1 ? 's' : '' );
 					} else {
 						assertions = stylize('no assertions', 'yellow');
 					}
 
 					console.log('\t' + testName + '\t' + stylize( '[OK]', 'green' ) + ' (' + assertions + ')' );
+
 				} else {
 
 					console.log('\t'+testName+'\t'+stylize('[FAIL]', 'lightred'));
