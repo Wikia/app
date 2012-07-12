@@ -158,3 +158,6 @@ $.post(wgScriptPath + '/wikia.php', {
 }, function(res) {
 	// ...
 });
+
+// debugger statement
+debugger;

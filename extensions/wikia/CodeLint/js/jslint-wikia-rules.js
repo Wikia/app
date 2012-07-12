@@ -123,5 +123,11 @@ exports.rules  = [
 		name: '$.get(wikia.php) request',
 		regexp: /\/wikia.php/,
 		reason: 'Use of direct call to wikia.php (use $.nirvana)'
+	},
+	// detect debugger statement (BugId:32021)
+	{
+		name: 'Debugger statement found',
+		regexp: /debugger;/,
+		reason: 'debugger statement found'
 	}
 ];
