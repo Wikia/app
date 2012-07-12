@@ -310,7 +310,7 @@ $.thumbUrl2ThumbUrl = function( url, type, width, height ) {
 		// remove current resize part of thumbnail
 		url = url.replace(/\/[0-9]+px\-/,'/');
 		// remove crop part of thumbnail (if it exists)
-		url = url.replace(/\/[0-9]+(\,|%2C)[0-9]+(\,|%2C)[0-9]+(\,|%2C)[0-9]+\-/,'/')
+		url = url.replace(/\/[0-9]+(\,|%2C)[0-9]+(\,|%2C)[0-9]+(\,|%2C)[0-9]+\-/,'/');
 	} else { // direct image link
 		// convert URL to thumbnail type of URL
 		url = url.replace('/images/','/images/thumb/');
