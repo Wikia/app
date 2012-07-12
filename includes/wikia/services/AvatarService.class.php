@@ -111,8 +111,11 @@ class AvatarService extends Service {
 			// use per-user cachebuster when custom avatar is used
 			$cb = !$masthead->isDefault() ? intval($user->getOption('avatar_rev')) : 0;
 
-			// make URLs consistent and using no-cookie domain (BugId:22190)
-			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : 1);
+			// Make URLs consistent and using no-cookie domain.  We need to pass a
+			// stringified zero rather than an actual zero because this function
+			// treats them differently o_O  Setting this to string zero matches
+			// the anonymous user behavior (BugId:22190)
+			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : "0");
 
 			$avatarsCache[$key] = $avatarUrl;
 		}
