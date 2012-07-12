@@ -390,7 +390,7 @@ function wfWikiFeeds() {
         WHERE rc_cur_id=page_id AND rc_new=1 AND page_is_redirect=0
         ORDER BY rc_timestamp DESC LIMIT $count";
 
-			if ($result = $dbr->doQuery($sql)) {
+			if ($result = $dbr->query($sql,__METHOD__)) {
 				if ($dbr->numRows($result)) {
 					while ($row = $dbr->fetchRow($result)) {
 						$title = Title::newFromID($row['page']);
@@ -469,7 +469,7 @@ function wfWikiFeeds() {
       WHERE rc_cur_id=page_id AND rc_new=1 AND page_is_redirect=0 AND rc_user_text='{$u->getName()}'
       ORDER BY rc_timestamp DESC LIMIT $count";
 
-			if ($result = $db->doQuery($sql)) {
+			if ($result = $db->query($sql,__METHOD__)) {
 				if ($db->numRows($result)) {
 					while ($row = $db->fetchRow($result)) {
 						$title = Title::newFromID($row['page']);
@@ -512,7 +512,7 @@ function wfWikiFeeds() {
       WHERE rc_this_oldid=rev_id AND rev_deleted=0 AND rev_user_text='{$u->getName()}'
       ORDER BY rev_id DESC LIMIT $count";
 
-			if ($result = $db->doQuery($sql)) {
+			if ($result = $db->query($sql,__METHOD__)) {
 				if ($db->numRows($result)) {
 					while ($row = $db->fetchRow($result)) {
 						$title = Title::newFromID($row['page']);
@@ -553,7 +553,7 @@ function wfWikiFeeds() {
       AND rev_id=rc_this_oldid
       ORDER BY rev_id DESC LIMIT $count";
 
-			if ($result = $db->doQuery($sql)) {
+			if ($result = $db->query($sql,__METHOD__)) {
 				if ($db->numRows($result)) {
 					while ($row = $db->fetchRow($result)) {
 						$title = Title::newFromID($row['page']);
@@ -582,7 +582,7 @@ function wfWikiFeeds() {
       AND rev_deleted=0 AND rc_this_oldid=rev_id
       ORDER BY rev_id DESC LIMIT $count";
 
-			if ($result = $db->doQuery($sql)) {
+			if ($result = $db->query($sql,__METHOD__)) {
 				if ($db->numRows($result)) {
 					while ($row = $db->fetchRow($result)) {
 						$title = Title::newFromID($row['page']);
@@ -613,7 +613,7 @@ function wfWikiFeeds() {
       WHERE cl_to='{$catTitle->getDBkey()}' AND cl_from=page_id
       ORDER BY cl_timestamp DESC LIMIT $count";
 
-			if ($result = $db->doQuery($sql)) {
+			if ($result = $db->query($sql,__METHOD__)) {
 				if ($db->numRows($result)) {
 					while ($row = $db->fetchRow($result)) {
 						$title = Title::newFromID($row['page']);
@@ -641,7 +641,7 @@ function wfWikiFeeds() {
 
 			$r = array();
 
-			if ($result = $db->doQuery($sql)) {
+			if ($result = $db->query($sql,__METHOD__)) {
 				if ($db->numRows($result)) {
 					while ($row = $db->fetchRow($result)) {
 						$r[] = $row['page'];
