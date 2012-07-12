@@ -6,19 +6,17 @@
 
 describe("Test event object", function() {
 	it("check if events are set", function() {
-		var events,
-			flag = false;
+		var events;
 
 		runs(function(){
 			require('events', function(eve){
 				events = eve;
-				flag = true;
 			})
 		});
 
 		waitsFor(function(){
 
-			if ( flag ){
+			if ( events ){
 				expect(events).toBeDefined();
 				expect(events.click).toMatch('click');
 				expect(events.size).toMatch('resize');
@@ -28,7 +26,7 @@ describe("Test event object", function() {
 				expect(events.cancel).toMatch('touchcancel');
 			}
 
-			return flag;
-		}, 'events should be set', 200);
+			return events;
+		}, 'events to be set', 200);
 	});
 });
