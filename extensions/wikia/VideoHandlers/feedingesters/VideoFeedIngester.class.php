@@ -100,6 +100,13 @@ abstract class VideoFeedIngester {
 			print "parsed partner clip id $id. name: $name. categories: " . implode(',', $categories) . ". ";
 			print "metadata: \n";
 			print_r($metadata);
+
+			$metadata['ingestedFromFeed'] = true;
+			$apiWrapper = new static::$API_WRAPPER($videoId, $metadata);
+			$descriptionHeader = '==' . F::app()->wf->Msg('videohandler-description') . '==';
+			$body = $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription();
+			print "{{{ $body }}}\n";
+
 			wfProfileOut( __METHOD__ );
 			return 1;
 		}
