@@ -254,7 +254,6 @@ class SpecialPromoteHelper extends WikiaObject {
 		$files = array('additionalImages' => array());
 
 		$visualizationModel = F::build('CityVisualization');
-		$visualizationData = $visualizationModel->getWikiDataForVisualization($cityId, $langCode);
 
 		foreach ($data as $fileType => $dataContent) {
 
@@ -283,32 +282,10 @@ class SpecialPromoteHelper extends WikiaObject {
 			}
 		}
 
-		$originalImages = array_flip($visualizationData['images']);
-		$deletedFiles = array();
-
-		foreach ($files['additionalImages'] as $image) {
-			if (!empty($image['deleted'])
-				&& isset($originalImages[$image['deletedname']])
-			) {
-				$deletedFiles[] = array(
-					'cityId' => $this->wg->cityId,
-					'lang' => $this->wg->contLang->getCode(),
-					'name' => $image['deletedname']
-				);
-				unset($originalImages[$image['deletedname']]);
-			}
-		}
-
-		if(!empty($deletedFiles)) {
-			$this->createRemovalTask($deletedFiles);
-			$visualizationModel->deleteImagesFromReview($cityId, $langCode, $deletedFiles);
-		}
-
 		$updateData = array(
 			'city_lang_code' => $langCode,
 			'city_headline' => $headline,
-			'city_description' => $description,
-			'city_images' => json_encode(array_flip($originalImages))
+			'city_description' => $description
 		);
 
 		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
@@ -325,10 +302,21 @@ class SpecialPromoteHelper extends WikiaObject {
 			foreach ($files['additionalImages'] as $image) {
 				if (empty($image['deleted'])) {
 					$additionalImageNames [] = $image['name'];
+				} else {
+					$deletedFiles[] = array(
+						'cityId' => $this->wg->cityId,
+						'lang' => $this->wg->contLang->getCode(),
+						'name' => $image['deletedname']
+					);
 				}
 			}
 
 			$updateData['city_images'] = json_encode($additionalImageNames);
+		}
+
+		if(!empty($deletedFiles)) {
+			$this->createRemovalTask($deletedFiles);
+			$visualizationModel->deleteImagesFromReview($cityId, $langCode, $deletedFiles);
 		}
 
 		$visualizationModel->updateWikiPromoteDataCache($cityId, $langCode, $updateData);
