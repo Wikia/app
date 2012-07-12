@@ -41,10 +41,10 @@ MediaTool.Renderer = $.createClass(Observable,{
 	},
 
 	getPreview: function(item, params) {
-
+		var itemPreview = '';
 		if ( params.useBorder ) {
 
-			return $.mustache(params.borderTpl, {
+			itemPreview =  $.mustache(params.borderTpl, {
 				itemWidth:params.width+2,
 				photo: $.mustache(params.itemTpl, {
 					itemTitle:item.title,
@@ -55,10 +55,9 @@ MediaTool.Renderer = $.createClass(Observable,{
 				})
 			});
 
-
 		} else {
 
-			return $.mustache(params.itemTpl, {
+			itemPreview = $.mustache(params.itemTpl, {
 				itemTitle:item.title,
 				itemWidth:params.width,
 				itemHeight:item.getHeight(params.width),
@@ -66,11 +65,14 @@ MediaTool.Renderer = $.createClass(Observable,{
 				itemUrl:item.thumbUrl
 			});
 		}
+		return $.mustache(params.inputsTpl, {
+			itemPreview: itemPreview
+		});
 	},
 
 	updatePreview: function( params ) {
 
-		this.container = $('.mediatool-preview', MediaTool.dialogWrapper);
+		this.container = $('.media-tool-preview', MediaTool.dialogWrapper);
 
 		var playOverlayClass = "mid";
 
