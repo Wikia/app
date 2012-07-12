@@ -1,6 +1,11 @@
 <?php
 
 class WikiaSearchAdsController extends WikiaController {
+	public function onMakeGlobalVariablesScript($vars) {
+		$vars['wgEnableAdsInContent'] = 0;
+
+		return true;
+	}
 
 	public function getAds() {
 		$query = $this->request->getVal('query');
