@@ -223,11 +223,11 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			// Wikia change - begin - @author: wladek
 //			$scriptTag = Html::linkedScript( $wgLoadScript . '?' . wfArrayToCGI( $query ) );
 			// get jquery from CDN if we have wsl and getJqueryUrl loaded
-			$scriptTagJquery .= Xml::encodeJsVar(
+			$scriptTagJquery = Xml::encodeJsVar(
 					Html::linkedScript( ResourceLoader::makeLoaderURL($modules, $query['lang'],
 					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
 			);
-			$scriptTagNoJquery .= Xml::encodeJsVar(
+			$scriptTagNoJquery = Xml::encodeJsVar(
 					Html::linkedScript( ResourceLoader::makeLoaderURL(array('mediawiki'), $query['lang'],
 					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
 			);
