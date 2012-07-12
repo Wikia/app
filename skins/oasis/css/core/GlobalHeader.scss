@@ -107,7 +107,9 @@
 			text-decoration: none;
 		}
 	}
-
+	.chevron {
+		margin-left: 5px;
+	}
 	.subnav {
 		@include clearfix;
 		@include box-shadow(0, 5px, 10px, rgba(#000, .5));
@@ -171,7 +173,7 @@
 			display: block;
 		}
 	}
-	
+
 	/* Global Header vertical-specific colors */
 	&.vertical-colors {
 		.video-games-vertical-color .subnav a {

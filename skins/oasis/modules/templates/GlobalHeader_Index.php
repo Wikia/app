@@ -9,42 +9,14 @@
 				<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="wikia-button"><?= wfMsgHtml('oasis-global-nav-create-wiki'); ?></a>
 			</li>
 			<li>
-				<ul id="GlobalNavigation" class="GlobalNavigation<? if($wg->GlobalHeaderVerticalColors): ?> vertical-colors<? endif; ?>">
-<?
-				if(is_array($menuNodes) && isset($menuNodes[0])):
-					$i = 0;
-	
-					foreach($menuNodes[0]['children'] as $level0):
-?>
-					<li class="<?= str_replace(' ', '_', $menuNodes[$level0]['text']); ?> <? if( !empty($menuNodes[$level0]) && !empty($menuNodes[$level0]['class']) ) { echo $menuNodes[$level0]['class']; }  ?>">
-						<a href="<?= $menuNodes[$level0]['href'] ?>"><?= $menuNodes[$level0]['text'] ?> <img src="<?= $wg->BlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
-						<ul class="subnav">
-<? 
-							foreach($menuNodes[$level0]['children'] as $level1): 
-?>
-							<li>
-								<a href="<?= $menuNodes[$level1]['href'] ?>"><?= $menuNodes[$level1]['text'] ?></a>
-								<ul class="catnav">
-<?
-								if( is_array( $menuNodes[$level1]['children'] ) ):
-									foreach( $menuNodes[$level1]['children'] as $level2):
-?>
-									<li><a href="<?php echo $menuNodes[$level2]['href'] ?>"><?php echo $menuNodes[$level2]['text'] ?></a></li>
-<?
-									endforeach;
-								endif;
-?>
-								</ul>
-							</li>
-<?
-							endforeach;
-?>
-						</ul>
-					</li>
-<?
-					endforeach;
-				endif;
-?>
+				<ul id="GlobalNavigation" class="GlobalNavigation<?= $wg->GlobalHeaderVerticalColors ? ' vertical-colors' : '' ?>">
+					<? foreach($topNavMenuItems as $topNavIndex): ?>
+						<? $topNavItem = $menuNodes[$topNavIndex] ?>
+						<li class="topNav <?= str_replace(' ', '_', $topNavItem['text']) ?>" data-index="<?= $topNavIndex?>">
+							<a href="<?= $topNavItem['href'] ?>"><?= $topNavItem['text'] ?><img src="<?= $wg->BlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
+							<ul class="subnav"></ul>
+						</li>
+					<? endforeach ?>
 				</ul>
 			</li>
 		</ul>
