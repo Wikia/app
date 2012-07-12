@@ -15,7 +15,7 @@ class WikiaMobileFooterService extends WikiaService {
 
 		//get skin name from user preferences or default one
 		$this->response->setVal( 'defaultSkin', urlencode( $this->wg->User->getOption( 'skin' ) ) );
-		$this->response->setVal( 'feedbackLink', urlencode( 'https://docs.google.com/a/wikia-inc.com/spreadsheet/viewform?hl=en_US&formkey=dDlxWlYwLV8zTGszZmZPN3hEYTVDMFE6MQ&entry_1=' . urlencode( $_SERVER['HTTP_USER_AGENT'] ) . "&entry_2={$this->wg->Title->getFullURL()}" ) );
+		$this->response->setVal( 'feedbackLink', "https://docs.google.com/a/wikia-inc.com/spreadsheet/viewform?hl=en_US&formkey=dDlxWlYwLV8zTGszZmZPN3hEYTVDMFE6MQ&entry_1=" . urlencode( ( !empty( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '' ) ) . "&entry_2={$this->wg->Title->getFullURL()}" );
 	}
 
 	private function getLinkFromMessage( $msgName ){
