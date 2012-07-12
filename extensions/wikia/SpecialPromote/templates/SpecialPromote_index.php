@@ -9,7 +9,7 @@
 		<div class='input-group required'>
 			<label><?= wfMsg('promote-description-header'); ?></label>
 			<p class="error"></p>
-			<div class="description-wrapper">
+			<div class="headline-wrapper">
 				<input data-min='<?= $minHeaderLength; ?>' data-max='<?= $maxHeaderLength; ?>' type='text' name='title'
 					   value="<?= htmlspecialchars($wikiHeadline); ?>"
 					   placeholder='<?= wfMsg('promote-description-header'); ?>'>
@@ -55,6 +55,18 @@
 								<?= wfMsg('promote-image-accepted');?> <img src="<?= $wg->BlankImgUrl ?>" class="ok">
 							</span></p>
 						</div>
+						<div class="reviewed<?=
+							in_array($mainImage['review_status'],array(
+								ImageReviewStatuses::STATE_UNREVIEWED,
+								ImageReviewStatuses::STATE_IN_REVIEW,
+								ImageReviewStatuses::STATE_QUESTIONABLE,
+								ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW
+							)) ? '' : ' hidden'
+							?>">
+							<p><span>
+								<?= wfMsg('promote-image-in-review');?>
+							</span></p>
+						</div>
 					</div>
 					<img
 						id="curMainImageName"
@@ -90,6 +102,18 @@
 								<div class="accepted<?= ($image['review_status'] == ImageReviewStatuses::STATE_APPROVED) ? '' : ' hidden' ?>">
 									<p><span>
 										<?= wfMsg('promote-image-accepted');?> <img src="<?= $wg->BlankImgUrl ?>" class="ok">
+									</span></p>
+								</div>
+								<div class="reviewed<?=
+									in_array($image['review_status'],array(
+										ImageReviewStatuses::STATE_UNREVIEWED,
+										ImageReviewStatuses::STATE_IN_REVIEW,
+										ImageReviewStatuses::STATE_QUESTIONABLE,
+										ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW
+									)) ? '' : ' hidden'
+									?>">
+									<p><span>
+										<?= wfMsg('promote-image-in-review');?>
 									</span></p>
 								</div>
 							</div>

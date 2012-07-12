@@ -27,7 +27,7 @@ $messages['en'] = array(
 	'promote-upload' => 'Add Images',
 	'promote-upload-main-photo-header' => 'Main Image',
 	'promote-upload-main-photo-explanation' => 'This is the main image that will represent your wiki on wikia.com. Choose an image that will show people what the wiki is about. You can always change it to keep it current.',
-	'promote-upload-additional-photos-header' => 'More Images (optional)',
+	'promote-upload-additional-photos-header' => 'More Images',
 	'promote-upload-additional-photos-explanation' => ' Add a few more images that show people more about your wiki\'s topic. You can add up to nine. Adding more images makes your wiki look more interesting and engaging to potential visitors.',
 
 	'promote-publish' => 'Publish',
@@ -37,7 +37,12 @@ $messages['en'] = array(
 	'promote-remove-photo' => 'Remove',
 	'promote-modify-photo' => 'Modify',
 
-	'promote-upload-form-modal-title' => 'Upload file',
+	'promote-upload-main-image-form-modal-title' => 'Main Image',
+	'promote-upload-main-image-form-modal-copy' => 'Upload an image to represent your wiki. Your image should be a ".png" file with a minimum size of 480x320.',
+	'promote-upload-additional-image-form-modal-title' => 'More Images',
+	'promote-upload-additional-image-form-modal-copy' => 'Upload additional images that represent your wiki',
+
+	'promote-upload-submit-button' => 'Submit',
 
 	'promote-error-less-characters-than-minimum' => 'You entered $1 characters, but $2 is the minimum',
 	'promote-error-more-characters-than-maximum' => 'You entered $1 characters, but $2 is the maximum',
@@ -51,8 +56,10 @@ $messages['en'] = array(
 	'promote-manual-file-size-error' => 'Main image has a minimum size of 480x320px.',
 	'promote-manual-upload-error' => 'This file cannot be uploaded manually. Please use Admin Upload Tool.',
 	'promote-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
+
 	'promote-image-rejected' => 'Rejected',
 	'promote-image-accepted' => 'Accepted',
+	'promote-image-in-review' => 'In review',
 
 );
 
@@ -73,7 +80,7 @@ $messages['qqq'] = array(
 	'promote-upload' => 'Title inviting to add images',
 	'promote-upload-main-photo-header' => 'Label for main wiki image',
 	'promote-upload-main-photo-explanation' => 'Explanatory text for main wiki image',
-	'promote-upload-additional-photos-header' => 'Label for additional optional images section',
+	'promote-upload-additional-photos-header' => 'Label for additional images section',
 	'promote-upload-additional-photos-explanation' => 'Explanatory text for additional optional images section',
 
 	'promote-publish' => 'Label for publish button',
@@ -83,7 +90,12 @@ $messages['qqq'] = array(
 	'promote-remove-photo' => 'Label for image removal',
 	'promote-modify-photo' => 'Label for image modification',
 
-	'promote-upload-form-modal-title' => 'Upload file modal title',
+	'promote-upload-main-image-form-modal-title' => 'Headline for Main Image upload modal',
+	'promote-upload-main-image-form-modal-copy' => 'Explanatory text for Main Image upload',
+	'promote-upload-additional-image-form-modal-title' => 'Headline for Additional Images upload modal',
+	'promote-upload-additional-image-form-modal-copy' => 'Explanatory text for Additional Images upload',
+
+	'promote-upload-submit-button' => 'Submit button text',
 
 	'promote-error-less-characters-than-minimum' => 'Information about lower than minimal ($2) number of entered characters ($1)',
 	'promote-error-more-characters-than-maximum' => 'Information about higher than maximal ($2) number of entered characters ($1)',
@@ -97,8 +109,10 @@ $messages['qqq'] = array(
 	'promote-manual-file-size-error' => 'Information about minimum main image size',
 	'promote-manual-upload-error' => 'Information about the restriction to upload visualization images by means other than Admin Upload Tool',
 	'promote-wrong-rights' => 'Information about lost session / lack of permissions to this extension',
+
 	'promote-image-rejected' => 'Information about image rejection',
 	'promote-image-accepted' => 'Information about image approval',
+	'promote-image-in-review' => 'Information about image being in review',
 
 );
 

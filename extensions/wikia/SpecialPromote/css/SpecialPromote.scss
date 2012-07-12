@@ -1,8 +1,11 @@
-@import "../../../../extensions/wikia/AdminDashboard/css/AdminDashboard.scss";
+@import "../../../../skins/oasis/css/core/color.scss";
 @import "../../../../skins/oasis/css/mixins/box-shadow.scss";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 
 .WikiaArticle {
+	&.SpecialPromoteArticle {
+			border-bottom: none;
+	}
 	.UploadTool {
 		margin: 0 15px 70px 15px;
 		.introduction {
@@ -30,7 +33,7 @@
 				font-size: 16px;
 			}
 			.upload-button {
-				margin: 20px 0 10px 0;
+				margin: 0 0 10px 0;
 			}
 			p.error {
 				display: block;
@@ -40,10 +43,19 @@
 				float: left;
 				clear: left;
 			}
-			.description-wrapper {
+			.headline-wrapper {
 				clear: left;
 				float: left;
 				margin-bottom: 60px;
+				width: 580px;
+				p {
+					float: right;
+				}
+			}
+			.description-wrapper {
+				clear: left;
+				float: left;
+				margin-bottom: 35px;
 				width: 580px;
 				p {
 					float: right;
@@ -64,15 +76,19 @@
 		}
 		.button {
 			display: inline-block;
-			margin-top: 75px;
+			margin-top: 65px;
 			padding-right: 60px;
 			padding-left: 60px;
 		}
 		.large-photo {
-			@include box-shadow(0, 0, 10px, $color-page-border, true, 1px);
+			@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
 			float: left;
 			width: 560px;
-			background: $color-page-border;
+			@if $is-dark-wiki {
+			 background-color: mix($color-page, #ffffff, 85%);
+		 	} @else {
+				 background-color: mix($color-page, #000000, 95%);
+		 	}
 			height: 374px;
 			padding: 10px;
 			position: relative;
@@ -106,17 +122,17 @@
 				display: none;
 			}
 			p {
-				bottom: 10px;
+				bottom: 0;
 				margin: 0;
 				position: absolute;
-				right: 10px;
+				right: 0;
 				text-align: right;
 				width: 560px;
 			}
 			span {
-				@include border-radius(6px);
 				background-color: rgba(255, 255, 255, 0.7);
-				font-weight: bold;
+				font-weight: normal;
+				line-height: 26px;
 				margin: 0;
 				padding: 5px;
 			}
@@ -133,13 +149,22 @@
 				}
 			}
 		}
-
+		.main-image {
+			margin-bottom: 0;
+		}
+		.more-images {
+			margin: 35px 0 0;
+		}
 		.small-photos {
-			@include box-shadow(0, 0, 10px, $color-page-border, true, 1px);
+			@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
 			width: 580px;
 			min-height: 110px;
 			float: left;
-			background: $color-page-border;
+			@if $is-dark-wiki {
+				background-color: mix($color-page, #ffffff, 85%);
+			} @else {
+				background-color: mix($color-page, #000000, 95%);
+			}
 			overflow: hidden;
 			padding-bottom: 10px;
 			.small-photos-wrapper {
@@ -164,6 +189,18 @@
 					width: 180px;
 				}
 			}
+		}
+	}
+}
+.SpecialUploadForm {
+	margin-top: 60px;
+	.input-group {
+		clear:both;
+		&.submit-buttons {
+			width: 100%;
+		}
+		.submit {
+			float: right;
 		}
 	}
 }
