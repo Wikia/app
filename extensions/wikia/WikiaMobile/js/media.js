@@ -48,7 +48,8 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 			className,
 			leng,
 			figures,
-			lis;
+			lis,
+			imgCnt;
 
 		for (j = 0; j < l; j++) {
 			element = elements[j];
@@ -76,8 +77,9 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 					leng = figures.length;
 
 					element.setAttribute('data-num', number);
-
 					element.getElementsByTagName('footer')[0].insertAdjacentHTML('beforeend', leng);
+
+					imgCnt = 0;
 
 					for (i = 0; i < leng; i++) {
 						elm = figures[i];
@@ -94,9 +96,13 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 								length: leng
 							});
 
-							if(name === shrImg) shrImg = number + i;
+							imgCnt += 1;
+
+							if(name === shrImg) shrImg = number + imgCnt;
 						}
 					}
+
+					leng = imgCnt;
 
 				//handle images from galleries/slideshows
 				} else {
@@ -124,6 +130,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 						if (name === shrImg) shrImg = number + i;
 					}
 				}
+
 				number += leng;
 
 			//get normal images on a page
@@ -163,9 +170,9 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		$(document.body).delegate('.infobox .image, figure, .wkImgStk', clickEvent, function(event){
 			event.preventDefault();
 			event.stopPropagation();
-			var num = this.getAttribute('data-num') || this.parentElement.getAttribute('data-num');
+			var num = ~~(this.getAttribute('data-num') || this.parentElement.getAttribute('data-num'));
 
-			if(num) openModal(num);
+			if(num >= 0) openModal(num);
 		});
 	}
 
@@ -181,6 +188,8 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		var image = images[current];
 
 		loader.hide(currentImage);
+
+		console.log(image);
 
 		if(image.isVideo) {// video
 			var imgTitle = 'File:' + image.name;
