@@ -129,5 +129,11 @@ exports.rules  = [
 		name: 'Debugger statement found',
 		regexp: /debugger;/,
 		reason: 'debugger statement found'
+	},
+	// detect direct calls to document.cookie (BugId:32020)
+	{
+		name: 'document.cookie direcy call',
+		regexp: /document.cookie(\s?\=|\.)/,
+		reason: 'Use of document.cookie (use $.cookies)'
 	}
 ];

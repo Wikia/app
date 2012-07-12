@@ -161,3 +161,10 @@ $.post(wgScriptPath + '/wikia.php', {
 
 // debugger statement
 debugger;
+
+// document.cookie
+document.cookie = 'foo=bar';
+
+if (document.cookie.indexOf('foo')) {
+	// ...
+}
