@@ -8,22 +8,22 @@
 
 		<div class='input-group required'>
 			<label><?= wfMsg('promote-description-header'); ?></label>
-			<p class="error"></p>
 			<div class="headline-wrapper">
 				<input data-min='<?= $minHeaderLength; ?>' data-max='<?= $maxHeaderLength; ?>' type='text' name='title'
 					   value="<?= htmlspecialchars($wikiHeadline); ?>"
 					   placeholder='<?= wfMsg('promote-description-header'); ?>'>
+				<p class="error error-msg"></p>
 			</div>
 			<span class='explanatory-copy'><?= wfMsg('promote-description-header-explanation'); ?></span>
 		</div>
 		<div class='input-group required'>
 			<label><?= wfMsg('promote-description-about'); ?></label>
-			<p class="error"></p>
 			<div class="description-wrapper">
 				<textarea data-min='<?= $minDescriptionLength; ?>' data-max='<?= $maxDescriptionLength; ?>' type='text'
 						  name='description'
 						  placeholder="<?= wfMsg('promote-description-about'); ?>"><?= htmlspecialchars($wikiDesc); ?></textarea>
 				<p class="character-counter"></p>
+				<p class="error error-msg"></p>
 			</div>
 			<span class='explanatory-copy'><?= wfMsg('promote-description-about-explanation'); ?></span>
 		</div>
@@ -84,7 +84,6 @@
 				<?= wfMsg('promote-add-photo'); ?>
 			</a>
 			<br class="clear" />
-			<p class="error"></p>
 			<div class='small-photos'>
 				<? if (!empty($additionalImages)): ?>
 					<? $i=1; foreach ($additionalImages as $image): ?>
@@ -129,6 +128,7 @@
 				<? endif; ?>
 			</div>
 			<span class='explanatory-copy'><?= wfMsg('promote-upload-additional-photos-explanation'); ?></span>
+			<p class="error error-msg"></p>
 		</div>
 	</fieldset>
 

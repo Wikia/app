@@ -29,7 +29,7 @@
 				padding: 0;
 			}
 			label {
-				display: inline;
+				display: block;
 				font-size: 16px;
 			}
 			.upload-button {
@@ -37,6 +37,7 @@
 			}
 			p.error {
 				display: block;
+				clear: both;
 			}
 			input {
 				width: 562px;
@@ -131,6 +132,7 @@
 			}
 			span {
 				background-color: rgba(255, 255, 255, 0.7);
+				color: #000;
 				font-weight: normal;
 				line-height: 26px;
 				margin: 0;
@@ -193,7 +195,6 @@
 	}
 }
 .SpecialUploadForm {
-	margin-top: 60px;
 	.input-group {
 		clear:both;
 		&.submit-buttons {

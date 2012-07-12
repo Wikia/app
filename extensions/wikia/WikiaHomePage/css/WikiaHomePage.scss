@@ -354,6 +354,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			}
 			.hotNew {
 				@include transition-shorthand(all 150ms ease-in 350ms);
+				word-break: break-all;
 			}
 			.preview-pane {
 				@include opacity(0);
