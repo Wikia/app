@@ -15,12 +15,12 @@ $wgExtensionCredits['parserhook'][] = array(
 	'description' => 'A simple calendar extension',
 	'url'         => 'http://www.mediawiki.org/wiki/Extension:Simple_Calendar',
 	'version'     => SIMPLECALENDAR_VERSION
-	);
+);
 
 function wfCalendarLanguageGetMagic(&$magicWords,$langCode = 0) {
 	$magicWords['calendar'] = array(0,'calendar');
 	return true;
-	}
+}
 
 function wfSetupSimpleCalendar( $parser ) {
 	$parser->setFunctionHook('calendar','wfRenderCalendar');
@@ -33,7 +33,7 @@ function wfRenderCalendar(&$parser) {
 	$argv = array();
 	foreach (func_get_args() as $arg) if (!is_object($arg)) {
 		if (preg_match('/^(.+?)\\s*=\\s*(.+)$/',$arg,$match)) $argv[$match[1]]=$match[2];
-		}
+	}
 	if (isset($argv['format']))    $f = $argv['format']; else $f = '%e %B %Y';
 	if (isset($argv['dayformat'])) $df = $argv['dayformat']; else $df = false;
 	if (isset($argv['title']))     $p = $argv['title'].'/'; else $p = '';
@@ -42,13 +42,13 @@ function wfRenderCalendar(&$parser) {
 	if (isset($argv['month'])) {
 		$m = $argv['month'];
 		return wfRenderMonth(strftime('%m',strtotime("$y-$m-01")),$y,$p,$q,$f,$df);
-		} else $m = 1;
+	} else $m = 1;
 	$table = "{| class=\"calendar\"\n";
 	for ($rows = 3; $rows--; $table .= "|-\n")
 		for ($cols = 0; $cols < 4; $cols++)
 			$table .= '|'.wfRenderMonth($m++,$y,$p,$q,$f,$df)."\n";
 	return "$table\n|}\n";
-	}
+}
 
 # Return a calendar table of the passed month and year
 function wfRenderMonth($m,$y,$prefix = '',$query = '',$format = '%e %B %Y',$dayformat = false) {
@@ -68,15 +68,35 @@ function wfRenderMonth($m,$y,$prefix = '',$query = '',$format = '%e %B %Y',$dayf
 		if ($day < 29 or checkdate($m,$day,$y)) {
 			if ($i%7 == 1) $table .= "\n|-\n";
 			$t = ($day == $thisDay and $m == $thisMonth and $y == $thisYear) ? ' class="today"' : '';
+
+			/* Wikia Change start - make extension more locale - aware */
+			$timestamp = mktime(0, 0, 0, $m, $day, $y);
+			$i18nFormatStrings = array('%a', '%A', '%b', '%B', '%c', '%p');
+			foreach ($i18nFormatStrings as $formatString) {
+				$replacement = wfMsg(strftime($formatString, $timestamp));
+				$format = mb_ereg_replace($formatString, $replacement, $format);
+			}
+			/* Wikia Change end*/
+
 			$ttext = $prefix.trim(strftime($format,mktime(0,0,0,$m,$day,$y)));
 			$title = Title::newFromText($ttext);
 			if (is_object($title)) {
 				$class = $title->exists() ? 'day-active' : 'day-empty';
 				$url = $title->getFullURL($title->exists() ? '' : $query);
-				} else $url = $ttext;
-			$table .= "|$t|[$url <span class='$class'>$day</span>]\n";
-			}
+			} else $url = $ttext;
+
+			/* Wikia Change start */
+			$openingString =
+				implode('', array(
+					'<span ',
+					!empty($class) ? ('class="' . $class . '"') : null,
+					'>'));
+			$closingString = '</span>';
+			$table .= "|$t|[$url $openingString $day $closingString]\n";
+			/* Wikia Change end */
+
 		}
-	return "$table\n|}";
 	}
+	return "$table\n|}";
+}
 ?>
