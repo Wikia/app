@@ -69,7 +69,7 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgEnableWikiaHubsExt, $wgAllInOne;
 
 		wfProfileIn(__METHOD__);
 		// TODO: move to WikiaHubs extension - this code should use a hook
@@ -135,6 +135,15 @@ class OasisController extends WikiaController {
 			// Remove the non-inlined media="print" CSS from the normal array and add it to another so that it can be loaded asynchronously at the bottom of the page.
 			if ( !empty( $s['url'] ) && stripos($s['tag'], 'media="print"')!== false) {
 				$this->printStyles[] = $s['url'];
+			} else if ( !empty($s['url']) ) {
+				$tag = $s['tag'];
+				if ( !empty( $wgAllInOne ) ) {
+					$url = $this->minifySingleAsset($s['url']);
+					if ($url !== $s['url']) {
+						$tag = str_replace($s['url'],$url,$tag);
+					}
+				}
+				$this->csslinks .= $tag;
 			} else {
 				$this->csslinks .= $s['tag'];
 			}
@@ -266,9 +275,43 @@ class OasisController extends WikiaController {
 		return $link;
 	}
 
+	/**
+	 * Gets the URL and converts it to minified one if it points to single static file (JS or CSS)
+	 * If it's not recognized as static asset the original URL is returned
+	 *
+	 * @param $url string URL to be inspected
+	 * @return string
+	 */
+	private function minifySingleAsset( $url ) {
+		global $wgAllInOne;
+		if ( !empty( $wgAllInOne ) ) {
+			static $map;
+			if (empty($map)) {
+				$map = array(
+					array( $this->app->wg->ExtensionsPath, 'extensions/' ),
+					array( $this->app->wg->StylePath, 'skins/' ),
+					array( $this->app->wg->ResourceBasePath, 'resources/' ),
+				);
+			}
+			foreach ($map as $item) {
+				list( $prefix, $replacement ) = $item;
+				if (startsWith($url, $prefix)) {
+					$nurl = substr($url,strlen($prefix));
+					$matches = array();
+					if (preg_match("/^([^?]+)/",$nurl,$matches)) {
+						if (preg_match("/\\.(css|js)\$/i",$matches[1])) {
+							return $this->assetsManager->getOneCommonURL($replacement . $matches[1],true);
+						}
+					}
+				}
+			}
+		}
+		return $url;
+	}
+
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting;
+		global $wgTitle, $wgOut, $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
@@ -325,7 +368,14 @@ class OasisController extends WikiaController {
 					$this->globalVariablesScript = $s['tag'] . $this->globalVariablesScript;
 				}
 				else {
-					$jsReferences[] = ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) ? $this->rewriteJSlinks( $s['url'] ) : $s['url'];
+					$url = $s['url'];
+					if ( $wgAllInOne ) {
+						$url = $this->minifySingleAsset( $url );
+					}
+					if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
+						$url = $this->rewriteJSlinks( $url );
+					}
+					$jsReferences[] = $url;
 				}
 			} else {
 				$this->jsFiles .= $s['tag'];
