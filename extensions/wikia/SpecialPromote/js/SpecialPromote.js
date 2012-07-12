@@ -27,6 +27,7 @@ var SpecialPromote = function (params) {
 	this.ADDITIONAL_IMAGES_LIMIT = 9;
 	this.UPLOAD_TYPE_MAIN = 'main';
 	this.UPLOAD_TYPE_ADDITIONAL = 'additional';
+	this.IMAGE_MODAL_WIDTH = 600;
 };
 
 SpecialPromote.prototype = {
@@ -59,6 +60,7 @@ SpecialPromote.prototype = {
 		$('.UploadTool')
 			.on('click', '.modify-remove .modify', $.proxy(this.onChangePhotoClick, this))
 			.on('click', '.modify-remove .remove', $.proxy(this.onDeletePhotoClick, this));
+		$('.WikiaArticle').addClass('SpecialPromoteArticle');
 
 		this.headlineNode.keyup();
 		this.descriptionNode.keyup();
@@ -124,16 +126,18 @@ SpecialPromote.prototype = {
 			throw new Error('getUploadFormError');
 		}
 		$.nirvana.sendRequest({
-			type: 'post',
+			type: 'get',
 			format: 'html',
 			controller: 'SpecialPromote',
 			method: 'getUploadForm',
 			data: data,
-			callback: function (html) {
-				$.showModal($.msg('promote-upload-form-modal-title'), html);
-			}
+			callback: $.proxy(this.showImageModal,this)
 		});
 		return true;
+	},
+	showImageModal: function (html) {
+		$().log('making modal: ' + this.IMAGE_MODAL_WIDTH);
+		$(html).makeModal( {width: this.IMAGE_MODAL_WIDTH} );
 	},
 	onAddPhotoBtnClick: function (e) {
 		e.preventDefault();
@@ -148,7 +152,7 @@ SpecialPromote.prototype = {
 		errorContainer.html('');
 
 		try {
-			this.getUploadForm({uploadType: uploadType});
+			this.getUploadForm({uploadType: uploadType,lang: window.wgUserLang});
 		}
 		catch(error) {
 			this.errorHandler(error);
@@ -164,7 +168,8 @@ SpecialPromote.prototype = {
 		try {
 			this.getUploadForm({
 				uploadType: target.data('image-type'),
-				imageIndex: target.data('image-index')
+				imageIndex: target.data('image-index'),
+				lang: window.wgUserLang
 			});
 		}
 		catch(error) {
@@ -407,7 +412,7 @@ SpecialPromote.prototype = {
 			default:
 				msg = 'promote-error-upload-unknown-error';
 		}
-		$.showModal($.msg(msg), '');
+		$($.msg(msg)).makeModal( {width: this.IMAGE_MODAL_WIDTH} );
 	}
 };
 
