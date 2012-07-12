@@ -2,7 +2,8 @@
 	<div class="user-grouping <?= $userType ?>">
 		<h2><?= wfMsg('wikiahome-preview-'.$userType.'-heading') ?></h2>
 		<ul class="users">
-			<? 
+			<?
+				global $wgLang; 
 				$maxUsers = min(count($users), $limit);
 				$userKeys = array_keys($users);
 				for ($i = 0; $i < $maxUsers; $i++):
@@ -22,7 +23,7 @@
 									<?= $user['name'] ?>
 								</a>
 							</strong>
-							<?= wfMsgExt('wikiahome-preview-user-edits', 'parseinline', $user['edits']) ?>
+							<?= wfMsgExt('wikiahome-preview-user-edits', 'parseinline', $wgLang->formatNum( $user['edits'] ) ) ?>
 							<br /><?= wfMsg('wikiahome-preview-user-member-since', $user['since']) ?>
 						</div>
 						<ul>
