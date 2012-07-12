@@ -105,6 +105,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
 			if ( self.initialBasketContent.length ) {
 				useInitialBasketContent( self.initialBasketContent, 'wiki' );
+				renderPreview();
 
 			} else {
 				changeCurrentView( "find" );
