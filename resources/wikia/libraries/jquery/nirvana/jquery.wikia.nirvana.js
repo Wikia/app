@@ -26,7 +26,7 @@ $.nirvana = {
 		var url = (typeof attr.scriptPath == 'undefined') ? wgScriptPath : attr.scriptPath;
 
 		return $.ajax({
-			url: url + '/wikia.php?' + $.param({
+			url: url + '/wikia.php?' + $.param({ /* JSlint ignore */
 				//Iowa strips out POST parameters, Nirvana requires these to be set
 				//so we're passing them in the GET part of the request
 				controller: attr.controller,
