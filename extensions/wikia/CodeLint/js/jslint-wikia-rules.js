@@ -135,5 +135,17 @@ exports.rules  = [
 		name: 'document.cookie direcy call',
 		regexp: /document.cookie(\s?\=|\.)/,
 		reason: 'Use of document.cookie (use $.cookies)'
+	},
+	// not cached jQuery selectors (BugId: 37173)
+	{
+		name: 'Not cached jQuery selectors',
+		regexp: /(jQuery|\$)\([^\)]+\)/,
+		reason: function(matches, currLine, nextLine) {
+			var selector = matches[0];
+
+			return (nextLine.indexOf(selector) > -1)
+				? ('Not cached jQuery selector found - ' + selector)
+				: false;
+		}
 	}
 ];

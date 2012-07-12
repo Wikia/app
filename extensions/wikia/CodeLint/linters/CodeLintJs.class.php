@@ -251,6 +251,11 @@ class CodeLintJs extends CodeLint {
 			$ret = true;
 		}
 
+		//  Not cached jQuery selector found - $('#foo')
+		if (strpos($errorMsg, 'Not cached jQuery selector found') !== false) {
+			$ret = true;
+		}
+
 		return $ret;
 	}
 }

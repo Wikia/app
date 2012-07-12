@@ -168,3 +168,7 @@ document.cookie = 'foo=bar';
 if (document.cookie.indexOf('foo')) {
 	// ...
 }
+
+// not cached jQuery selectors
+var foo = $('#bar').attr('data-foo'),
+	bar = $('#bar').attr('data-bar');
