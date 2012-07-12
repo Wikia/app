@@ -92,13 +92,11 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 		$.each(this.items, function(i, item) {
 			if(item.origin == 'online') {
 				urls.push(item.remoteUrl);
-				hasItems = true;
 			}
 		});
 
 		if(urls.length > 0) {
 			MediaTool.callBackend('uploadVideos', { urls: urls }, function(result) {
-				$().log(result);
 				$.each(result, function(i, r) {
 					var item = self.findByRemoteUrl(r.url);
 					if(item != null) {
