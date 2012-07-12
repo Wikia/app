@@ -132,6 +132,8 @@ function processTest( test ) {
 					width: res[0],
 					height: res[1]
 				};
+			}else if( t == 'user-agent' ){
+				testOptions[t] = matches[x].replace('@test-user-agent ', '')
 			}else{
 				testOptions[tokens[0]] = tokens[1] || true;
 			}
