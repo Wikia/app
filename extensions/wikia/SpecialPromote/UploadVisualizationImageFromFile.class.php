@@ -18,16 +18,13 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 		$details = parent::verifyUpload();
 
 		if ( $details[ 'status' ] == self::OK ){
+			$imageSize = getimagesize($this->getTempPath());
 
-			$uploadType = F::app()->wg->request->getVal('uploadType');
-
-			if($uploadType == 'main') {
-				$imageSize = getimagesize($this->getTempPath());
-
-				if($imageSize[0] < self::VISUALIZATION_MAIN_IMAGE_MIN_WIDTH || $imageSize[1] < self::VISUALIZATION_MAIN_IMAGE_MIN_HEIGHT ) {
-					$details[ 'status' ] = self::FILEDIMENSIONS_ERROR;
-				}
+			// Currently the image size needs to be the same for main and additional
+			if($imageSize[0] < self::VISUALIZATION_MAIN_IMAGE_MIN_WIDTH || $imageSize[1] < self::VISUALIZATION_MAIN_IMAGE_MIN_HEIGHT ) {
+				$details[ 'status' ] = self::FILEDIMENSIONS_ERROR;
 			}
+
 
 			// check file type (just by extension)
 			if ( !$this->checkFileExtension( $this->mFinalExtension, array( 'png' ) ) ) {
