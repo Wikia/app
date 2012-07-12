@@ -7,44 +7,39 @@
 
 describe("Test ads module", function() {
 	it("is ad module defined", function() {
-		var ad,
-			flag = false;
+		var ad;
 
 		runs(function(){
 			require('ads', function(ads){
 				ad = ads;
-				flag = true;
 			})
 		});
 
 		waitsFor(function(){
-			if ( flag ){
+			if ( ad ){
 				expect(ad).toBeDefined();
-				expect(ad).toHaveBeenCalled();
 			}
 
-			return flag;
+			return ad;
 		}, 'is ad module defined', 200);
 	});
 
 	it("does ad module have moveSlot function", function() {
-		var ad,
-			flag = false;
+		var ad;
 
 		runs(function(){
 			require('ads', function(ads){
 				ad = ads;
-				flag = true;
 			})
 		});
 
 		waitsFor(function(){
-			if ( flag ){
+			if ( ad ){
 				expect(ad.moveSlot).toBeDefined();
 				expect(typeof ad.moveSlot).toEqual('function');
 			}
 
-			return flag;
+			return ad;
 		}, 'is ad module defined', 200);
 	});
 });

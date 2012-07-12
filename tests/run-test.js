@@ -42,8 +42,11 @@ var RUNNER_TEMP_PATH = '/tmp/run-test.js.' + (new Date()).getTime() + '.html',
 	timer,
 	page;
 
+//load Unit test runner dependancies
 phantom.injectJs('lib/js/JTR.js');
 phantom.injectJs('lib/js/TestResult.js');
+phantom.injectJs('lib/js/Xml.js');
+phantom.injectJs('lib/js/JUnitReport.js');
 
 function nextTest() {
 	try {
@@ -53,8 +56,7 @@ function nextTest() {
 	if(tests.length){
 		processTest(tests.pop());
 	}else{
-		var result = outputTestsResult();
-		phantom.exit( result ? 1 : 0 );
+		phantom.exit( outputTestsResult() ? 1 : 0 );
 	}
 }
 
@@ -81,11 +83,12 @@ function onPageLoaded( status ) {
 
 	timer = setTimeout( function () {
 		console.error( 'Maximum execution time exceeded, aborting.' );
-		nextTest(1);
+		nextTest();
 	}, SCRIPT_TIMEOUT );
 }
 
 function processTest( test ) {
+	//reset page
 	page = createPage();
 
 	var testSource,
@@ -254,10 +257,6 @@ var styles = {
 function stylize(str, style) {
 	return '\033[' + styles[style][0] + 'm' + str + '\033[' + styles[style][1] + 'm';
 };
-
-
-phantom.injectJs('lib/js/Xml.js');
-phantom.injectJs('lib/js/JUnitReport.js');
 
 function outputTestsResult() {
 	/*
