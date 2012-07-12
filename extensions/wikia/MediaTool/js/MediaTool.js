@@ -16,6 +16,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 	var templateItem = null;
 	var itemPreviewTpl = null;
 	var itemPreviewBorderTpl = null;
+	var itemPreviewInputsTpl = null;
 	var minMediaSize = 60;
 	var maxMediaSize = 660;
 
@@ -31,6 +32,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 						templateCart = resp['cart'];
 						itemPreviewTpl = resp['itemPreviewTpl'];
 						itemPreviewBorderTpl = resp['itemPreviewBorderTpl'];
+						itemPreviewInputsTpl = resp['itemPreviewInputsTpl'];
 						templateItemsList = $("<div>").html(resp['itemsList']).find('#mediaToolBasketTemplate').html();
 						templateItem = $("<div>").html(resp['itemsList']).find('#mediaToolBasketItemTemplate').html();
 					})
@@ -228,12 +230,13 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
 	function renderPreview() {
 
-		var container = $('.mediatool-preview', dialogWrapper);
+		var container = $('.media-tool-preview', dialogWrapper);
 		container.html('');
 		$.each( cart.items, function(i, item){
 			var it = $( item.renderPreview({
 				itemTpl: itemPreviewTpl,
 				borderTpl: itemPreviewBorderTpl,
+				inputsTpl: itemPreviewInputsTpl,
 				width: cart.getMediaSize(),
 				useBorder: cart.getThumbnailStyle()
 			}) );

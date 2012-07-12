@@ -93,7 +93,7 @@
 
 		</div>
 		<div class="media-tool-content">
-			<div class="mediatool-preview">
+			<div class="media-tool-preview">
 
 			</div>
 		</div>

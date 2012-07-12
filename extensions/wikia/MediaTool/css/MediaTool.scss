@@ -44,13 +44,15 @@
 		}
 	}
 
-   .mediatool-preview {
-       overflow: auto; height:360px;
-   }
-
    .media-tool-content {
 		display: inline-block;
 		width: 700px;
+	}
+
+	.media-item-details {
+		padding-top: 25px;
+		margin: 25px 0;
+		border-top: 1px solid $color-page-border;
 	}
 
 	.media-tool-item-list {
@@ -118,6 +120,11 @@
 		width: 98%;
 	}
 
+	.media-tool-preview {
+		overflow: auto;
+		height:360px;
+	}
+
 	.media-tool-thumbnail-browser {
 		border: 1px solid $color-page-border;
 		margin-top: 20px;
@@ -166,4 +173,15 @@
 
 .MediaToolModal .modalContent {
 	margin: 0;
+
+	.WikiaArticle {
+		min-height: 60px;
+		position: static;
+
+		.tleft {
+			float: none;
+			margin: 0;
+		}
+	}
+
 }

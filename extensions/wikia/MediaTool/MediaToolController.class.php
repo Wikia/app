@@ -151,6 +151,7 @@ class MediaToolController extends WikiaController {
 	public function getItemsList() {}
 	public function itemPreview() {}
 	public function itemPreviewBorder() {}
+	public function itemPreviewInputs() {}
 
 	public function getTemplates() {
 		$this->response->setFormat('json');
@@ -160,6 +161,7 @@ class MediaToolController extends WikiaController {
 		$this->response->setVal('itemsList', $this->app->renderView( 'MediaTool', 'getItemsList' ) );
 		$this->response->setVal('itemPreviewTpl', $this->app->renderView( 'MediaTool', 'itemPreview' ) );
 		$this->response->setVal('itemPreviewBorderTpl', $this->app->renderView( 'MediaTool', 'itemPreviewBorder' ) );
+		$this->response->setVal('itemPreviewInputsTpl', $this->app->renderView( 'MediaTool', 'itemPreviewInputs' ) );
 	}
 
 
