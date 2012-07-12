@@ -30,8 +30,9 @@ MediaTool.Renderer = $.createClass(Observable,{
 
 	getWikitext: function(cart) {
 		var result = '';
+		var mediaStyle = (cart.getThumbnailStyle() ? '|thumb' : '') + '|' + cart.getMediaLocation() + '|' + cart.getMediaSize() + 'px';
 		$.each(cart.items, function(i, item) {
-			result += "[["+item.title+"]]\n";
+			result += "[[" + item.title + mediaStyle + "]]\n";
 		});
 		return result;
 	},
