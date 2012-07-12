@@ -60,6 +60,8 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		    this.bind('showModal', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);});
 		    this.bind('editDone', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);});
 		    this.bind('changeTab', onChangeTab);
+				this.bind('error', onError);
+
 		    mt = this;
 		    initModalComplete = true;
 		}
@@ -119,6 +121,11 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		});
 		//TODO: switch to "Edit media tab"
 		changeCurrentView( "edit" );
+	}
+
+	function onError(info) {
+		// @todo will be implemented someday..
+		alert(info.msg);
 	}
 
 	function onCartContentChange() {
@@ -281,7 +288,13 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		var videoUrl = $('#mediatool-online-url').val();
 
 		callBackend('getVideoMetadata', { videoUrl: videoUrl }, function(response) {
-			cart.createItem(response, templateItem, 'online');
+			if(response.status == 'ok') {
+				cart.createItem(response, templateItem, 'online');
+				$('#mediatool-online-url').val('');
+			}
+			else {
+				mt.fire('error', response);
+			}
 		});
 	}
 
