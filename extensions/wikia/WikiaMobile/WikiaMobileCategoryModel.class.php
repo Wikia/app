@@ -120,7 +120,6 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
  		if ( $title instanceof Title ) {
 			 $sortkey = str_replace(array("\n", "\t", "\r", ' '), '', $sortkey);
 			 $index = (string) mb_strtoupper( mb_substr( $sortkey, 0, 1 ) );
-			 echo $sortkey;
 
 			if ( empty( $this->items[$index] ) ) {
 				$this->items[$index] = F::build( 'WikiaMobileCategoryItemsCollection' );
