@@ -116,9 +116,7 @@ $(function() {
 
 		var poll = function() {
 			if (FBbutton.children('span').filter(':visible').length > 1) {
-				$.hideAds();
 			} else {
-				$.showAds();
 				if (!mouseIn) {
 					clearInterval(timer);
 				}

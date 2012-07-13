@@ -116,11 +116,6 @@ $.fn.extend({
 
 		wrapper.log('makeModal: #' + id);
 
-		// hide ads
-		if($.hideAds) {
-			$.hideAds();
-		}
-
 		// get rid of tooltip - remove title attr
 		this.removeAttr('title');
 
@@ -254,8 +249,6 @@ $.fn.extend({
 			$(this).remove();
 		});
 
-		$.showAds();
-
 		// BugId:7498
 		$(document.body).removeClass('modalShown');
 	},
@@ -272,9 +265,6 @@ $.fn.extend({
 		}, "fast", function() {
 			$(this).hide();
 		});
-
-		//show ads again
-		$.showAds();
 
 		// BugId:7498
 		$(document.body).removeClass('modalShown');
@@ -310,8 +300,6 @@ $.fn.extend({
 				display: "block"
 			})
 			.log('showModal: #' + this.attr('id'));
-
-		$.hideAds();
 
 		// BugId:7498
 		$(document.body).addClass('modalShown');

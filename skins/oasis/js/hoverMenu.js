@@ -127,8 +127,6 @@ HoverMenu.prototype.mouseout = function(event) {
 		this.mouseoutTimer = setTimeout(function() {
 			$(event.currentTarget).children("ul").removeClass("show");
 			if (!$(".modalWrapper:visible").length) {
-				//no modals are visible. show ads.
-				$.showAds();
 			}
 		}, this.settings.mouseoutDelay);
 
@@ -137,7 +135,6 @@ HoverMenu.prototype.mouseout = function(event) {
 
 		//Hide nav immediately
 		this.hideNav();
-		$.showAds();
 	}
 };
 
@@ -147,7 +144,6 @@ HoverMenu.prototype.showNav = function(parent) {
 
 	if (nav.exists()) {
 		nav.addClass("show");
-		$.hideAds();
 
 		// tracking
 		switch(this.selector) {

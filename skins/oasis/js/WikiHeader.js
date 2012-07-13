@@ -151,7 +151,6 @@ var WikiHeader = {
 		if (subnav.exists()) {
 			WikiHeader.isDisplayed = true;
 			subnav.css("top", WikiHeader.navtop).show();
-			$.hideAds();
 
 			$.tracker.byStr('wikiheader/wikinav/open');
 		}
@@ -165,7 +164,6 @@ var WikiHeader = {
 		} else {
 			WikiHeader.subnav.hide();
 		}
-		$.showAds();
 	},
 
 	positionNav: function() {
@@ -446,7 +444,6 @@ var WikiHeaderV2 = {
 
 			WikiHeaderV2.isDisplayed = true;
 			subnav.css('top', WikiHeaderV2.navtop).show();
-			$.hideAds();
 
 			WikiHeaderV2.track('lvl3/open');
 		}
@@ -463,7 +460,6 @@ var WikiHeaderV2 = {
 		} else {
 			WikiHeaderV2.subnav3.hide();
 		}
-		$.showAds();
 	},
 
 	positionNav: function() {
