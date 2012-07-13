@@ -12,7 +12,9 @@ define('ads', ['events'], function(ev){
 
 	var d = document,
 		adSlot,
-		adSlotStyle;
+		adSlotStyle,
+		w,
+		ftr;
 
 	function moveSlot(plus){
 		if(adSlotStyle){
@@ -25,10 +27,10 @@ define('ads', ['events'], function(ev){
 
 		if(adSlot){
 			adSlotStyle = adSlot.style;
+			w = window;
+			ftr = d.getElementById('wkFtr');
 
-			var w = window,
-				close = d.getElementById('wkAdCls'),
-				ftr = d.getElementById('wkFtr'),
+			var close = d.getElementById('wkAdCls'),
 				i = 0,
 				click = ev.click,
 				adExist = function(){
