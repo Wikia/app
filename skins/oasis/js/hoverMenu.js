@@ -54,23 +54,29 @@ HoverMenu.prototype.mouseover = function(event) {
 	clearTimeout(this.mouseoutTimer);
 
 	// Lazy load content for Global Navigation (BugId:36973)
-	if (this.selector == '#GlobalNavigation' && globalNavigationMenusCached == false) {
-		var itemcount = $('#GlobalNavigation > li').length;
+	if (this.selector == '#GlobalNavigation' && !globalNavigationMenusCached) {
+		var $nav = $(this.selector),
+			$navItems = $nav.children('li'),
+			indexes = $navItems.map(function() {
+				return $(this).data('index');
+			}).get();
+
 		$.nirvana.sendRequest({
 			controller: 'GlobalHeaderController',
 			method: 'menuItemsAll',
 			format: 'json',
 			type: 'GET',
 			data: {
-				itemcount: itemcount
+				indexes: indexes
 			},
 			callback: $.proxy(function(items) {
-				var itemcount = $('#GlobalNavigation > li').length;
-				for(var i=0;i<itemcount;++i) {
-					$($('#GlobalNavigation > li')[i]).find('.subnav').html(items[i]);
-				}
-				this.handleShowNav(event);
+				$.each(items, function(index, html) {
+					$navItems.filter(function() {
+						return $(this).data('index') == index;
+					}).find('.subnav').html(html);
+				});
 				globalNavigationMenusCached = true;
+				this.handleShowNav(event);
 			}, this)
 		});
 
