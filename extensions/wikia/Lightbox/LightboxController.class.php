@@ -35,13 +35,14 @@ class LightboxController extends WikiaController {
 	* get a list of latest photos for the wiki
 	* @requestParam integer count - limit per request
 	* @requestParam string to - timestamp
+	* @requestParam string inclusive [true/false] - include Latest Photos
 	* @responseParam array thumbs - thumbnail data
 	* thumbs = array( 'title' => image title, 'type' => [image/video], 'thumbUrl' => thumbnail link )
 	*/
 	public function getThumbImages() {
 		$count = $this->request->getVal('count', 20);
 		$to = $this->request->getVal( 'to', 0 );
-		$latestPhotosExists = $this->request->getVal( 'inclusive', '' );
+		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
 
 		$thumbs = array();
 		$minTimestamp = 0;
@@ -51,7 +52,7 @@ class LightboxController extends WikiaController {
 			extract($imageList);
 
 			// add Latest Photos if not exist
-			if ( $latestPhotosExists == 'false' ) {
+			if ( $includeLatestPhotos == 'true' ) {
 				$latestPhotos = $this->getLatestPhotos();
 				$images = array_merge( $latestPhotos, $images );
 			}
@@ -339,6 +340,8 @@ class LightboxController extends WikiaController {
 
 	/**
 	 * get number of images on the wiki
+	 * @requestParam integer count - extra number to be included in total images
+	 * @requestParam string inclusive [true/false] - include Latest Photos
 	 * @responseParam string msg - contains the number of total images on the wiki
 	 * @responseParam string to - timestamp
 	 */
@@ -346,10 +349,10 @@ class LightboxController extends WikiaController {
 		$this->wf->ProfileIn( __METHOD__ );
 
 		$extra = $this->request->getVal( 'count', 0 );
-		$latestPhotosExists = $this->request->getVal( 'inclusive', '' );
+		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
 
 		// add Latest Photos if not exist
-		if ( $latestPhotosExists == 'false' ) {
+		if ( $includeLatestPhotos == 'true' ) {
 			$latestPhotos = $this->getLatestPhotos();
 			$extra += count( $latestPhotos );
 		}
