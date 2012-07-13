@@ -155,7 +155,7 @@ class ImageServing {
 	}
 
 	private function makeKey( $key ) {
-		return wfMemcKey("imageserving-article-details", $key, $this->proportionString);
+		return wfMemcKey("imageserving-article-details", $key, $this->width, $this->proportionString);
 	}
 
 	/**
