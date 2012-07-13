@@ -143,7 +143,6 @@ class WikiaMobileService extends WikiaService {
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript( $this->templateObject->get( 'skinname' ) );
 		$this->jsHeadFiles = $jsHeadFiles;
 		$this->wikiaNavigation = $this->app->renderView( 'WikiaMobileNavigationService', 'index' );
-		//$this->advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
 		$this->pageContent = $this->app->renderView( 'WikiaMobileBodyService', 'index', array(
 			'bodyText' => $this->templateObject->get( 'bodytext' ),
 			'categoryLinks' => $this->templateObject->get( 'catlinks')
