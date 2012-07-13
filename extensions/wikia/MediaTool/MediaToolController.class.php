@@ -81,6 +81,56 @@ class MediaToolController extends WikiaController {
 		$this->response->setData( $data );
 	}
 
+	public function getEmbedCode() {
+
+
+		$this->response->setFormat('json');
+
+		$imgTitle = $this->request->getVal('imgTitle');
+		$remoteUrl = $this->request->getVal('remoteUrl');
+
+		$oTitle = Title::newFromText($imgTitle, NS_FILE);
+
+		if ( !empty($remoteUrl) ) {
+
+			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
+			$apiwrapper = $awf->getApiWrapper( $remoteUrl );
+
+			if( !empty($apiwrapper) ) { // try ApiWrapper first - is it from partners?
+
+				$provider = $apiwrapper->getMimeType();
+				$image = new WikiaLocalFile( $oTitle, RepoGroup::singleton()->getLocalRepo() );
+				$image->forceMime( $provider );
+				$image->setVideoId( $apiwrapper->getVideoId() );
+				$image->setProps(array('mime'=>$provider ));
+			}
+
+		} else {
+
+			$image = wfFindFile($oTitle);
+		}
+
+
+		$maxWidth = $this->request->getInt('maxwidth', 500);
+		$embedCode = $image->getEmbedCode( $maxWidth, true, true );
+		$asset = $image->getPlayerAssetUrl();
+		if ( empty($asset) ) {
+			$html = $embedCode;
+			$jsonData = '';
+		} else {
+			$html = ''; // You can still add here some code, it will be displayed under the video
+			$jsonData = $embedCode;
+		}
+
+		$res = array(
+			'html' => $html,
+			'jsonData' => $jsonData,
+			'width' => $maxWidth,
+			'asset' => $asset
+		);
+		$this->response->setData( $res );
+	}
+
 	public function getRecentMedia() {
 		$this->response->setFormat('json');
 
