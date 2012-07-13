@@ -267,8 +267,17 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 				width: cart.getMediaSize(),
 				useBorder: cart.getThumbnailStyle()
 			}) );
+			var elem = null;
+			if ( it.find("a.image").length == 0 ) {
+				elem = it;
+			} else {
+				elem = it.find("a.image");
+			}
 			container.append( it );
-			it.attr("data-item-nr", i);
+			elem.attr("data-item-nr", i);
+			if ( item.remoteUrl != null ) {
+				elem.attr("data-remote-url", item.remoteUrl);
+			}
 			cart.items[i].htmlObj = it;
 		} );
 
