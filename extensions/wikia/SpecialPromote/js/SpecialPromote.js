@@ -51,13 +51,13 @@ SpecialPromote.prototype = {
 		this.descriptionNode.keyup($.proxy(this.onKeyUp, this));
 		$('body').on('submit', '#ImageUploadForm', $.proxy(this.saveAvatarAIM, this));
 		$('.upload-button').click($.proxy(this.onAddPhotoBtnClick, this));
-		$('.UploadTool').submit($.proxy(this.onUploadFormSubmit, this));
-		$('.UploadTool').on(
-			'hover',
-			'.large-photo, .small-photos-wrapper',
-			$.proxy(this.modifyRemoveHandler, this)
-		);
 		$('.UploadTool')
+			.submit($.proxy(this.onUploadFormSubmit, this))
+			.on(
+				'hover',
+				'.large-photo, .small-photos-wrapper',
+				$.proxy(this.modifyRemoveHandler, this)
+			)
 			.on('click', '.modify-remove .modify', $.proxy(this.onChangePhotoClick, this))
 			.on('click', '.modify-remove .remove', $.proxy(this.onDeletePhotoClick, this));
 		$('.WikiaArticle').addClass('SpecialPromoteArticle');
@@ -197,8 +197,9 @@ SpecialPromote.prototype = {
 		if (params.uploadType == 'additional') {
 			var selectedByName;
 			$.each($('.small-photos img.additionalImage'), function(i, element) {
-				if ($(element).data('image-index') == params.imageIndex) {
-					selectedByName = $(element).data('filename');
+				var elementObject = $(element);
+				if (elementObject.data('image-index') == params.imageIndex) {
+					selectedByName = elementObject.data('filename');
 				}
 			});
 			try {
@@ -210,9 +211,10 @@ SpecialPromote.prototype = {
 			}
 			var imagesNamesIndex = this.current.additionalImagesNames.indexOf(selectedByName);
 			this.current.additionalImagesNames.splice(imagesNamesIndex, 1);
-			$.each($('.small-photos img.additionalImage'), function(i, element) {
-				if ($(element).data('image-index') == params.imageIndex) {
-					$(element).parent().remove();
+			$.each($('.small-photos img.additionalImage'), function(i, domElement) {
+				var domElementObject = $(domElement);
+				if (domElementObject.data('image-index') == params.imageIndex) {
+					domElementObject.parent().remove();
 				}
 			});
 		}
@@ -294,8 +296,9 @@ SpecialPromote.prototype = {
 		if (file.imageIndex) {
 			this.current.additionalImagesNames[file.imageIndex] = file.fileName;
 			$('.small-photos img').each(function(key, value) {
-				if ($(value).data('image-index') == file.imageIndex) {
-					image = $(value);
+				var valueObject = $(value);
+				if (valueObject.data('image-index') == file.imageIndex) {
+					image = valueObject;
 				}
 			});
 			image.attr('src', file.fileUrl);
@@ -399,8 +402,9 @@ SpecialPromote.prototype = {
 		return true;
 	},
 	modifyRemoveHandler: function(e) {
-		if ($(e.currentTarget).find('img').length > 0) {
-			$(e.currentTarget).find('.modify-remove').toggleClass('show');
+		var targetObject = $(e.currentTarget);
+		if (targetObject.find('img').length > 0) {
+			targetObject.find('.modify-remove').toggleClass('show');
 		}
 	},
 	errorHandler: function(errorObj) {

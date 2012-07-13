@@ -11,6 +11,7 @@
 function specialPromoteSetup() {
 	// create a SpecialPromote instance and mock methods
 	$.showModal = function() {return true;}
+	$.fn.makeModal = function() {return true;}
 	$.nirvana.sendRequest = function() {return true;}
 	$.msg = function() {return true;}
 	return new SpecialPromote();
