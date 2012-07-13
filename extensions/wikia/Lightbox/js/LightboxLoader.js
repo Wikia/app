@@ -1,14 +1,17 @@
 var LightboxLoader = {
+	// cached thumbnail arrays and detailed info 
 	cache: {
 		articleMedia: [], // Article Media
 		relatedVideos: [], // Related Video
-		latestPhotos: [], // Lates Photos
+		latestPhotos: [], // Latest Photos from DOM
+		wikiPhotos: [], // Back fill of photos from wiki
 		details: {}, // all media details
 		share: {}
 	},
 	inlineVideos: $(),	// jquery array of inline videos
 	inlineVideoLinks: $(),	// jquery array of inline video links
 	lightboxLoading: false,
+	pageAds: $('#TOP_RIGHT_BOXAD'), // if more ads start showing up over lightbox, add them here
 	defaults: {
 		// start with default modal options
 		id: 'LightboxModal',
@@ -21,10 +24,15 @@ var LightboxLoader = {
 		onClose: function() {
 			$(window).off('.Lightbox');
 			LightboxLoader.lightboxLoading = false;
+			// Reset carousel
+			Lightbox.current.thumbs = [];
+			Lightbox.current.thumbTypesAdded = [];
 			// Reset Ad Flags
 			Lightbox.ads.adMediaProgress = [];
 			Lightbox.ads.adWasShown = false;
 			Lightbox.ads.adIsShowing = false;
+			// Re-show box ad
+			LightboxLoader.pageAds.css('visibility','visible');
 		}
 	},
 	videoThumbWidthThreshold: 320,
@@ -80,7 +88,7 @@ var LightboxLoader = {
 		}
 		
 		// handle clicks on "a.lightbox, a.image" only
-		if (!target.hasClass('lightbox') && !target.hasClass('image') && !target.hasClass('activityfeed-video-thumbnail')) {
+		if (!target.hasClass('lightbox') && !target.hasClass('image')) {
 			return;
 		}
 
@@ -154,10 +162,14 @@ var LightboxLoader = {
 		}
 	},
 	loadLightbox: function(mediaTitle) {
+
 		// restore inline videos to default state, because flash players overlaps with modal
 		LightboxLoader.removeInlineVideos();
 		LightboxLoader.lightboxLoading = true;
 
+		// Hide box ad so there's no z-index issues
+		LightboxLoader.pageAds.css('visibility','hidden');
+		
 		// Display modal with default dimensions
 		var openModal = $("<div>").makeModal(LightboxLoader.defaults);
 		openModal.find(".modalContent").startThrobbing();
@@ -185,8 +197,9 @@ var LightboxLoader = {
 					deferredTemplate.resolve();
 				}
 			});
-			
+
 			deferredList.push( deferredTemplate );
+			
 		}
 		
 		deferredList.push(LightboxLoader.getMediaDetailDeferred({fileTitle: mediaTitle}));	// NOTE: be careful with this, look below where it says LASTINDEX
@@ -284,7 +297,7 @@ $(function() {
 			localWindow.scrollTop(file.offset().top + file.height()/2 - localWindow.height()/2);
 			file.find('img').click();
 		} else {
-			LightboxLoader.carouselType = 'articleMedia';
+			LightboxLoader.parentDiv = $('#WikiaArticle');
 			LightboxLoader.loadLightbox(fileTitle);
 		}
 	}

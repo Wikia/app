@@ -864,18 +864,20 @@ class WikiaPhotoGallery extends ImageGallery {
 					if ( WikiaFileHelper::isFileTypeVideo( $fileObject ) ) {
 						$html .= WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
 					}
-
-					$html .= Xml::openElement(
-						'img',
-						array(
-							'style' => (!empty($image['titleText']) ? " line-height:{$image['height']}px;" : null).$imgStyle,
-							'src' => ($image['thumbnail'] ? $image['thumbnail'] : null),
-							'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
-							'class' => 'thumbimage',
-							'width' => $image['width'],
-							'height' => $image['height'],
-						)
+					
+					$imgAttribs = array(
+						'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
+							$imgStyle,
+						'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
+						'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
+						'class' => 'thumbimage',
 					);
+
+					if (!empty($image['caption'])) {
+						$imgAttribs['data-caption'] = $image['caption'];
+					}
+
+					$html .= Xml::openElement('img', $imgAttribs);
 				} else {
 					$html .= $image['linkTitle'];
 				}
@@ -1107,12 +1109,14 @@ class WikiaPhotoGallery extends ImageGallery {
 			} else {
 				$linkAttribs['data-image-name'] = $img->getName();
 				$liAttribs['data-image-name'] = $img->getName();
-				$thumbHtml = Xml::openElement('img', array(
-					'data-src' => $thumb->url,
+				$thumbAttribs = array(
+					'data-src' => $thumb->url, 
 					'class' => 'thumbimage',
-					'width' => $thumb->width,
-					'height' => $thumb->height,
-				));
+				);
+				if ($text != '') {
+					$thumbAttribs['data-caption'] = $text;
+				}
+				$thumbHtml = Xml::openElement('img', $thumbAttribs);
 			}
 
 			// add CSS class so we can show first slideshow image before JS is loaded

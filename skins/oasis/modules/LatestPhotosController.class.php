@@ -92,7 +92,7 @@ class LatestPhotosController extends WikiaController {
 		$thumb_url = array_pop($thumb_url);
 		$thumb_url = $thumb_url['url'];
 		$userName = $file->user_text;
-
+		
 		$retval = array (
 			"file_url" => $element['url'],
 			"image_url" => $file->getUrl(),
