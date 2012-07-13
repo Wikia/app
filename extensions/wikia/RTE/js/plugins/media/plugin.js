@@ -72,6 +72,7 @@ CKEDITOR.plugins.add('rte-media',
 			editor.addCommand('mediaupload', {
 				exec: function(editor) {
 					// call MediaUploadTool
+					window.MediaToolEditedElement = false;
 					RTE.tools.callFunction($.proxy(window.MediaTool.showModal, window.MediaTool));
 				}
 			});
@@ -109,7 +110,7 @@ CKEDITOR.plugins.add('rte-media',
 		var msgs = RTE.getInstance().lang.media;
 
 
-    var standardButtons = [
+		var standardButtons = [
 			{
 				label: msgs['edit'],
 				'class': 'RTEMediaOverlayEdit',
@@ -150,23 +151,21 @@ CKEDITOR.plugins.add('rte-media',
          
 		RTE.overlay.add(media, standardButtons);
     
-    if (typeof window.MediaTool == 'object') {
-      
+		if (typeof window.MediaTool == 'object') {
 
+			var buttonsWithMut = standardButtons.slice(0);
 
-        var buttonsWithMut = standardButtons.slice(0);
-        
-        buttonsWithMut.unshift( 
-              {
-                    label: msgs['edit']+" (beta)",
-                    'class': 'RTEMediaOverlayEditBeta',
-                    callback: function(node) {
-                        node.trigger('mediaupload');
-                    }
-                }			
-    		);
-        RTE.overlay.add(media.filter(".video"), buttonsWithMut);
-    }
+			buttonsWithMut.unshift(
+			      {
+				    label: msgs['edit']+" (beta)",
+				    'class': 'RTEMediaOverlayEditBeta',
+				    callback: function(node) {
+					node.trigger('mediaupload');
+				    }
+				}
+				);
+			RTE.overlay.add(media.filter(".video"), buttonsWithMut);
+		}
     
 
 		// unbind previous events
@@ -331,6 +330,7 @@ CKEDITOR.plugins.add('rte-media',
             if (!UserLogin.isForceLogIn()) {
 
                 var data = $(this).getData();
+		var editedElement = this;
 
                 window.MediaTool.initialBasketContent = [];
                 if ( data.params ) {
@@ -342,7 +342,9 @@ CKEDITOR.plugins.add('rte-media',
                     $.each(items, function(i, item) {
                         window.MediaTool.initialBasketContent.push( item );
                     });
+		    window.MediaToolEditedElement = $(editedElement);
                     RTE.tools.callFunction($.proxy(window.MediaTool.showModal, window.MediaTool));
+
                 });
             }
         });
@@ -526,7 +528,7 @@ RTE.mediaEditor = {
 
 			var newMedia = $(html).children('img');
 
-			// replace old one with new one
+			// replace old one with new one                           Z
 			newMedia.insertAfter(media);
 			newMedia.setData('wikitext', wikitext);
 			media.remove();
