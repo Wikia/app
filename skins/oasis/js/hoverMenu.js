@@ -67,6 +67,7 @@ HoverMenu.prototype.mouseover = function(event) {
 			format: 'json',
 			type: 'GET',
 			data: {
+				hash: $nav.data('hash'),
 				indexes: indexes
 			},
 			callback: $.proxy(function(items) {
