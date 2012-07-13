@@ -230,8 +230,8 @@
 			display: table-cell;
 			*float: left;  // /** IE 7  **/
 			padding: {
-				right: 10px;
-				left: 10px;
+				right: 8px;
+				left: 8px;
 			}
 			border-left: solid 1px $color-links;
 			&:first-child {
