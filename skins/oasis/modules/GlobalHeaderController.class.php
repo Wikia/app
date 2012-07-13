@@ -1,7 +1,6 @@
 <?php
 
 class GlobalHeaderController extends WikiaController {
-	const CACHE_TTL = 10800; // 3 hours
 	private $menuNodes;
 
 	public function init() {
@@ -19,8 +18,8 @@ class GlobalHeaderController extends WikiaController {
 			}
 		}
 
-		$navigation = new NavigationService(true/* useSharedMemcKey */);
-		$menuNodes = $navigation->parseMessage($messageName, array(3, 4, 5), self::CACHE_TTL);
+		$navigation = new NavigationService(true /* useSharedMemcKey */);
+		$menuNodes = $navigation->parseMessage($messageName, array(3, 4, 5), 10800 /* 3 hours */);
 
 		wfRunHooks('AfterGlobalHeader', array(&$menuNodes, $category, $messageName));
 
@@ -48,6 +47,7 @@ class GlobalHeaderController extends WikiaController {
 		$this->response->setVal('centralUrl', $centralUrl);
 		$this->response->setVal('createWikiUrl', $createWikiUrl);
 		$this->response->setVal('menuNodes', $this->menuNodes);
+		$this->response->setVal('menuNodesHash', $this->menuNodes[0]['hash']);
 		$this->response->setVal('topNavMenuItems', $this->menuNodes[0]['children']);
 	}
 
@@ -68,5 +68,11 @@ class GlobalHeaderController extends WikiaController {
 		}
 
 		$this->response->setData($menuItems);
+
+		// Cache for 1 day
+		$this->response->setCacheValidity(86400, 86400, array(
+			WikiaResponse::CACHE_TARGET_BROWSER,
+			WikiaResponse::CACHE_TARGET_VARNISH
+		));
 	}
 }

@@ -9,7 +9,7 @@
 				<a href="<?= htmlspecialchars($createWikiUrl) ?>" class="wikia-button"><?= wfMsgHtml('oasis-global-nav-create-wiki'); ?></a>
 			</li>
 			<li>
-				<ul id="GlobalNavigation" class="GlobalNavigation<?= $wg->GlobalHeaderVerticalColors ? ' vertical-colors' : '' ?>">
+				<ul id="GlobalNavigation" class="GlobalNavigation<?= $wg->GlobalHeaderVerticalColors ? ' vertical-colors' : '' ?>" data-hash="<?= $menuNodesHash ?>">
 					<? foreach($topNavMenuItems as $topNavIndex): ?>
 						<? $topNavItem = $menuNodes[$topNavIndex] ?>
 						<li class="topNav <?= str_replace(' ', '_', $topNavItem['text']) ?>" data-index="<?= $topNavIndex?>">

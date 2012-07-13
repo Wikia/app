@@ -8,6 +8,7 @@ class NavigationService {
 	const CHILDREN = 'children';
 	const DEPTH = 'depth';
 	const HREF = 'href';
+	const HASH = 'hash';
 	const TEXT = 'text';
 	const SPECIAL = 'specialAttr';
 	const CANONICAL_NAME = 'canonicalName';
@@ -173,6 +174,11 @@ class NavigationService {
 		$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
 		$nodes = $this->filterSpecialPages($nodes, $filterInactiveSpecialPages);
 		$nodes = $this->stripTags($nodes);
+
+		// Add hash for cache busting purposes
+		if (isset($nodes[0])) {
+			$nodes[0][ self::HASH ] = md5(serialize($nodes));
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $nodes;
