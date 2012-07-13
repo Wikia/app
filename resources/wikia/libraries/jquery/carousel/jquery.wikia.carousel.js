@@ -62,53 +62,21 @@
 			currIndex: 0, // index of first li shown in viewport
 			left: 0,
 			lazyLoadedAll: false,
-			noScrolling: false
 		};
 
 		function nextImage() {
-			if (states.browsing == false && states.enable_next == true) {
+			if(states.browsing == false && states.enable_next == true) {
 				states.browsing = true;
-
-				// calculate a full cycle of new items
-				var left = states.left - constants.viewPortWidth;
-
-				// don't go farther left than last image
-				if(left < constants.minLeft) {
-					var remainder = constants.minLeft - left,
-						itemDiff = options.itemsShown - (remainder / constants.itemWidth);
-
-					states.currIndex = states.currIndex + itemDiff;
-
-					left = constants.minLeft;
-
-				} else {
-					// update current index
-					states.currIndex = states.currIndex + options.itemsShown;
-				}
-				
-				doMove(left);
-
+				moveToIndex(states.currIndex + options.itemsShown);
 			}
 			return false;
 
 		}
 
 		function previousImage() {
-			if (states.browsing == false && states.enable_previous == true) {
+			if(states.browsing == false && states.enable_previous == true) {
 				states.browsing = true;
-
-				var left = states.left + constants.viewPortWidth;
-
-				// Don't go farther right than the first image
-				if(left > 0) {
-					left = 0;
-					states.currIndex = 0;
-				} else {
-					states.currIndex = states.currIndex - options.itemsShown;
-				}
-
-				doMove(left);
-
+				moveToIndex(states.currIndex - 1);
 			}
 			return false;
 		}
@@ -137,14 +105,10 @@
 				
 			} else {
 				afterMove();
-			}			
+			}
 		}
 
 		function doMove(left) {
-			if(states.noScrolling) {
-				return;
-			}
-
 			states.left = left;
 
 			if(typeof options.beforeMove == 'function') {
@@ -166,7 +130,7 @@
 				trackProgress(options.trackProgress);
 			}
 			if(typeof options.afterMove == 'function') {
-				options.afterMove();
+				options.afterMove(states.currIndex + options.itemsShown);
 			}
 		}
 		
@@ -311,6 +275,17 @@
 			states.enable_previous = true;
 			dom.previous.removeClass('disabled');
 		}
+		
+		// public functions
+		this.updateCarouselItems = function() {
+			dom.items = dom.carousel.find('li');
+		};
+		this.updateCarouselWidth = function() {
+			setCarouselWidth();
+		};
+		this.updateCarouselArrows = function() {
+			updateArrows();
+		};
 
 		return this.each(function() {
 
@@ -318,18 +293,11 @@
 			if(typeof options.attachBlindImages == 'function') {
 				attachBlindImages();
 			}
-			
-			// Don't enable scrolling if there's not enough thumbnails
-			if(dom.items.length > options.itemsShown) {
 
-				// Set up click events
-				dom.next.click(nextImage);
-				dom.previous.click(previousImage);
+			// Set up click events
+			dom.next.click(nextImage);
+			dom.previous.click(previousImage);
 	
-			} else {
-				states.noScrolling = true;
-			}
-
 			setCarouselWidth();
 
 			setAsActive(options.activeIndex);

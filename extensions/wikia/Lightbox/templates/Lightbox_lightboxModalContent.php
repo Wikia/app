@@ -19,7 +19,20 @@
 	
 	<div id="LightboxCarousel" class="LightboxCarousel">
 		<div id="LightboxCarouselInner" class="LightboxCarouselInner">
-		
+			<div class="content">
+				<ul class="toolbar">
+					<li><span class="icon pin button secondary" title="<?= wfMsg('lightbox-pin-carousel-tooltip') ?>" data-pinned-title="<?= wfMsg('lightbox-unpin-carousel-tooltip') ?>" data-pin-title="<?= wfMsg('lightbox-pin-carousel-tooltip') ?>" ></span></li>
+				</ul>
+				<p id="LightboxCarouselProgress" class="progress"></p>
+				<span class="carousel-arrow next"></span>
+				<span class="carousel-arrow previous"></span>
+	 			<div id="LightboxCarouselContainer" class="LightboxCarouselContainer">
+	 				<div>
+	 					<ul class="carousel">
+	 					</ul>
+	 				</div>
+	 			</div>
+			</div>		
 		</div>
 		<? if($showAds) { ?>
 			<div id="MODAL_RECTANGLE" class="wikia-ad noprint">
@@ -47,7 +60,8 @@
 		<button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button>
 		<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
 		<a href="{{rawImageUrl}}" class="see-full-size-link" target="_blank"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
-		<div class="user-details">
+		<div class="user-details caption">
+			{{#caption}}<p>{{caption}}</p>{{/caption}}
 			<img class="avatar" src="{{userThumbUrl}}">
 			<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}" target="_blank">{{userName}}</a>') ?>
 			{{#isPostedIn}}
@@ -62,31 +76,23 @@
 		<h1><?= wfMsg('Fast-adv') ?></h1>
 	</script>
 
-	<script id="LightboxCarouselTemplate" type="text/template">
-		<div class="content">
-			<ul class="toolbar">
-				<li><span class="icon pin button secondary" title="<?= wfMsg('lightbox-pin-carousel-tooltip') ?>" data-pinned-title="<?= wfMsg('lightbox-unpin-carousel-tooltip') ?>" data-pin-title="<?= wfMsg('lightbox-pin-carousel-tooltip') ?>" ></span></li>
-			</ul>
-			<p id="LightboxCarouselProgress" class="progress"></p>
-			<span class="carousel-arrow next"></span>
-			<span class="carousel-arrow previous"></span>
- 			<div id="LightboxCarouselContainer" class="LightboxCarouselContainer">
- 				<div>
- 					<ul class="carousel">
- 						{{#thumbs}}
- 							<li>
- 								{{{playButtonSpan}}}
- 								<img src="<?= $wg->BlankImgUrl ?>" data-src="{{thumbUrl}}">
- 							</li>
- 						{{/thumbs}}
- 					</ul>
- 				</div>
- 			</div>
-		</div>
+	<script id="LightboxCarouselThumbs" type="text/template">
+		{{#thumbs}}
+			<li{{#liClass}} class="{{liClass}}"{{/liClass}}>
+				{{{playButtonSpan}}}
+				<img src="<?= $wg->BlankImgUrl ?>" data-src="{{thumbUrl}}" data-caption="{{caption}}">
+			</li>
+		{{/thumbs}}
+	</script>
+	
+	<script id="LightboxCarouselMore" type="text/template">
+		<li class="more-items disabled">
+			<p class="subtle">{{{text}}}</p>
+		</li>
 	</script>
 	
 	<script id="LightboxCarouselProgressTemplate" type="text/template">
-		<?= wfMsg('lightbox-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{total}}")); ?>
+		<?= wfMsg('lightbox-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{{total}}}")); ?>
 	</script>
 	
 	<script id="LightboxMoreInfoTemplate" type="text/template">

@@ -13,4 +13,10 @@ class LightboxHelper extends WikiaModel {
 		return true;
 	}
 	
+	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+		F::build('JSMessages')->enqueuePackage('Lightbox', JSMessages::EXTERNAL);
+		return true;
+	}
+
+	
 }

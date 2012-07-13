@@ -2,10 +2,6 @@ var Lightbox = {
 	log: function(content) {
 		$().log(content, "Lightbox");
 	},
-	// cached thumbnail arrays and detailed info 
-	cache:{
-		share: {}
-	},
 	eventTimers: {
 		lastMouseUpdated: 0
 	},
@@ -13,10 +9,25 @@ var Lightbox = {
 		type: '', // image or video
 		title: '', // currently displayed file name
 		carouselType: '', // articleMedia, relatedVideos, or latestPhotos
-		index: -1 // ex: LightboxLoader.cache[Lightbox.current.carouselType][Lightbox.current.index]		
+		index: -1, // ex: LightboxLoader.cache[Lightbox.current.carouselType][Lightbox.current.index]
+		thumbs: [], // master list of thumbnails inside carousel; purged after closing the lightbox
+		placeholderIdx: -1
 	},
+	// Modal vars
 	openModal: false, // gets replaced with dom object of open modal
 	shortScreen: false, // flag if the screen is shorter than LightboxLoader.defaults.height
+	
+	// Carousel vars
+	thumbPlayButton: '<span class="Wikia-video-play-button min" style="width: 90px; height: 55px;"></span>', // overlay for thumb images
+	thumbLoadCount: 20, // Number of thumbs to load at a time.  Must be at least 9 (i.e. number of items in carousel)
+	backfillCount: 0,
+	backfillCountMessage: false,
+	to: 0, // timestamp for getting wiki images
+	includeLatestPhotos: !$('#LatestPhotosModule').length, // if we don't have latest photos in the DOM, request them from back end
+	
+	dom: {
+		relatedVideos: $('#RelatedVideosRL').find('.Wikia-video-thumb')
+	},
 	
 	makeLightbox: function(params) {	
 		Lightbox.openModal = params.modal;
@@ -33,7 +44,7 @@ var Lightbox = {
 				Lightbox.current.carouselType = "articleMedia";
 				break;
 			case "RelatedVideosRL":
-				Lightbox.current.carouselType = "relatedVideo";
+				Lightbox.current.carouselType = "relatedVideos";
 				break;
 			default: // .LatestPhotosModule
 				Lightbox.current.carouselType = "latestPhotos";
@@ -46,7 +57,6 @@ var Lightbox = {
 			visitedFiles: {}	// contains title history of visited files as key.  value will just default to true
 		};
 		
-			
 		// Check screen height for future interactions
 		Lightbox.shortScreen = $(window).height() < LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset ? true : false;
 		
@@ -64,30 +74,18 @@ var Lightbox = {
 			return;
 		}
 		
-		LightboxLoader.cache[Lightbox.current.carouselType] = Lightbox.getMediaThumbs[Lightbox.current.carouselType]();
+		//LightboxLoader.cache[Lightbox.current.carouselType] = Lightbox.getMediaThumbs[Lightbox.current.carouselType]();
 		
-		// Set up carousel
-		var carouselTemplate = $('#LightboxCarouselTemplate');	// TODO: template cache
-		var moreInfoTemplate = $('#LightboxMoreInfoTemplate');	// TODO: template cache
-		var shareTemplate = $('#LightboxShareTemplate');	// TODO: template cache
-		
-		var readableTitle = Lightbox.current.title.split('_').join(" ");
-		
-		for(var i = 0; i < Lightbox.mediaThumbs.length; i++) {
-			if(Lightbox.mediaThumbs[i].title == readableTitle) {
-				Lightbox.current.index = i;
-				break;
-			}
-		}
-		
-		// render carousel
-		var carousel = $(carouselTemplate).mustache({
-			thumbs: Lightbox.mediaThumbs,
-			progress: ""
-		});
+		// Template cache
+		Lightbox.openModal.moreInfoTemplate = $('#LightboxMoreInfoTemplate');
+		Lightbox.openModal.shareTemplate = $('#LightboxShareTemplate');
+		Lightbox.openModal.progressTemplate = $('#LightboxCarouselProgressTemplate');
+		Lightbox.openModal.videoTemplate = $("#LightboxVideoTemplate");
+		Lightbox.openModal.headerTemplate = $("#LightboxHeaderTemplate");
+		Lightbox.openModal.headerAdTemplate = $("#LightboxHeaderAdTemplate");
 		
 		// pre-cache known doms
-		Lightbox.openModal.carousel = $('#LightboxCarouselInner');
+		Lightbox.openModal.carousel = $('#LightboxCarouselContainer .carousel');
 		Lightbox.openModal.header = Lightbox.openModal.find('.LightboxHeader');
 		Lightbox.openModal.lightbox = Lightbox.openModal.find('.WikiaLightbox');
 		Lightbox.openModal.moreInfo = Lightbox.openModal.find('.more-info');
@@ -97,10 +95,6 @@ var Lightbox = {
 		Lightbox.openModal.closeButton = Lightbox.openModal.find('.close');
 		Lightbox.current.type = Lightbox.initialFileDetail.mediaType;
 		
-		// attach carousel
-		Lightbox.openModal.carousel.append(carousel);
-		Lightbox.openModal.progress = $('#LightboxCarouselProgress');
-		Lightbox.openModal.data('overlayactive', true);
 		Lightbox.setUpCarousel();
 		
 		// callback to finish lighbox loading
@@ -115,12 +109,12 @@ var Lightbox = {
 			/* lightbox loading ends here */
 			
 			/* tracking after lightbox has fully loaded */
-			LightboxLoader.track(WikiaTracker.ACTIONS.IMPRESSION, '', Lightbox.mediaThumbs.length);
+			LightboxLoader.track(WikiaTracker.ACTIONS.IMPRESSION, '', Lightbox.current.thumbs.length);
 			Lightbox.openModal.data('onClose', function() {
 				LightboxLoader.track(
 					WikiaTracker.ACTIONS.CLICK, 
 					'close-modal', 
-					Math.round(100 * Lightbox.openModal.tracking.uniqueViewCount/Lightbox.mediaThumbs.length)
+					Math.round(100 * Lightbox.openModal.tracking.uniqueViewCount/Lightbox.current.thumbs.length)
 				);
 			});
 		};
@@ -154,7 +148,7 @@ var Lightbox = {
 			}
 			Lightbox.openModal.addClass('more-info-mode');
 			LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.title}, function(json) {
-				Lightbox.openModal.moreInfo.append(moreInfoTemplate.mustache(json));
+				Lightbox.openModal.moreInfo.append(Lightbox.openModal.moreInfoTemplate.mustache(json));
 			});
 		// Show share screen on button click
 		}).on('click.Lightbox', '.LightboxHeader .share-button', function(evt) {
@@ -163,7 +157,7 @@ var Lightbox = {
 			}
 			Lightbox.openModal.addClass('share-mode');
 			Lightbox.getShareCodes({fileTitle: Lightbox.current.title, articleTitle:wgTitle}, function(json) {
-				Lightbox.openModal.share.append(shareTemplate.mustache(json))
+				Lightbox.openModal.share.append(Lightbox.openModal.shareTemplate.mustache(json))
 					.find('input[type=text]').click(function() {
 						$(this).select();
 					})
@@ -212,8 +206,16 @@ var Lightbox = {
 			} else {
 				if(target.is("#LightboxNext")) {
 					Lightbox.current.index++;
+					// Don't stop on placeholder
+					if(Lightbox.current.index == Lightbox.current.placeholderIdx) {
+						Lightbox.current.index++;
+					}
 				} else {
 					Lightbox.current.index--;
+					// Don't stop on placeholder
+					if(Lightbox.current.index == Lightbox.current.placeholderIdx) {
+						Lightbox.current.index--;
+					}
 				}						
 			}
 
@@ -335,11 +337,8 @@ var Lightbox = {
     },
 	video: {
 		renderVideo: function(data) {
-			// extract mustache templates
-			var videoTemplate = Lightbox.openModal.find("#LightboxVideoTemplate");	//TODO: cache template
-	
 			// render mustache template		
-			var renderedResult = videoTemplate.mustache(data);
+			var renderedResult = Lightbox.openModal.videoTemplate.mustache(data);
 			
 			Lightbox.openModal.media
 				.addClass('video-media')
@@ -435,7 +434,7 @@ var Lightbox = {
 			// Resize modal
 			Lightbox.openModal.css(css);
 	
-			$('#MODAL_INTERSTITIAL').show(); // TODO: check with ad ops to make sure hiding/showing ad will work
+			$('#MODAL_INTERSTITIAL').show();
 			
 			// Set flag to indicate we're showing an ad (for arrow click handler)
 			Lightbox.ads.adIsShowing = true;
@@ -460,7 +459,7 @@ var Lightbox = {
 		
 	},
 	renderHeader: function() {
-		var headerTemplate = Lightbox.openModal.find("#LightboxHeaderTemplate");	//TODO: replace with cache
+		var headerTemplate = Lightbox.openModal.headerTemplate;
 		LightboxLoader.getMediaDetail({fileTitle: Lightbox.current.title}, function(json) {
 			var renderedResult = headerTemplate.mustache(json)
 			Lightbox.openModal.header
@@ -470,9 +469,9 @@ var Lightbox = {
 	},
 	// Render special Header for ads
 	renderAdHeader: function() {
-		var headerTemplate = Lightbox.openModal.find("#LightboxHeaderAdTemplate").html();	//TODO: replace with cache
+		var headerAdTemplate = Lightbox.openModal.headerAdTemplate.html();
 		Lightbox.openModal.header
-			.html(headerTemplate)
+			.html(headerAdTemplate)
 			.prepend($(Lightbox.openModal.closeButton).clone(true, true));	// clone close button into header
 	},
 	showOverlay: function() {
@@ -519,6 +518,10 @@ var Lightbox = {
 			fileTitle: title,
 			type: type
 		}, function(data) {
+			// TODO: cache caption 
+			/*var idx = Lightbox.current.index,
+				caption = Lightbox.openModal.carousel.find('li').eq(idx).find('img').data('caption');
+			data['caption'] = caption || false;*/
 			Lightbox[type].updateLightbox(data);		
 			Lightbox.showOverlay();
 			Lightbox.hideOverlay();
@@ -534,8 +537,7 @@ var Lightbox = {
 		LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, type, tracking.aggregateViewCount);
 	},
 	updateArrows: function() {		
-		var carouselType = Lightbox.current.carouselType,
-			mediaArr = LightboxLoader.cache[carouselType],
+		var mediaArr = Lightbox.current.thumbs,
 			idx = Lightbox.current.index;
 			
 		var next = $('#LightboxNext'),
@@ -574,6 +576,71 @@ var Lightbox = {
 		}
 	},
 	setUpCarousel: function() {
+		// cache carousel template
+		Lightbox.openModal.carouselTemplate = $('#LightboxCarouselThumbs');
+		Lightbox.openModal.carouselContainer = $('#LightboxCarouselContainer');
+				
+		// get thumbs and attach carousel
+		Lightbox.getMediaThumbs[Lightbox.current.carouselType](false);
+
+		// Set up placeholder thumb index but don't insert it till we have collected all thumbs
+		Lightbox.current.placeholderIdx = Lightbox.current.thumbs.length;
+		Lightbox.current.thumbs.push({});
+		
+		// Load backfill content from DOM
+		var types = ['relatedVideos', 'articleMedia', 'latestPhotos'],
+			i;
+		
+		for(i=0; i<types.length; i++) {
+			var type = types[i];
+			if(type != Lightbox.current.carouselType) {
+				Lightbox.getMediaThumbs[type](true);
+			}
+		}
+		
+		// Add total wiki photos to backfill count
+		var deferredList = [];
+		if(Lightbox.backfillCountMessage == false) {
+			var deferredInfo = $.Deferred();
+			$.nirvana.sendRequest({
+				controller:	'Lightbox',
+				method: 	'getTotalWikiImages',
+				type: 		'GET',
+				format: 	'json',
+				data: {
+					count: Lightbox.backfillCount,
+					inclusive: Lightbox.includeLatestPhotos
+				},
+				callback: function(json) {
+					Lightbox.to = json.to;
+					Lightbox.backfillCount += json.totalWikiImages;
+					Lightbox.backfillCountMessage = json.msg;
+					deferredInfo.resolve();
+				}
+			});
+			
+			deferredList.push( deferredInfo );
+		}
+
+		// add more thumbs to carousel if we need them
+		if(Lightbox.current.thumbs.length < Lightbox.thumbLoadCount) {
+			// asynchronous 
+			Lightbox.getMediaThumbs.wikiPhotos();
+		}
+		
+		// Set current carousel index
+		var readableTitle = Lightbox.current.title.split('_').join(" ");				
+		for(var i = 0; i < Lightbox.current.thumbs.length; i++) {
+			if(Lightbox.current.thumbs[i].title == readableTitle) {
+				Lightbox.current.index = i;
+				break;
+			}
+		}
+
+		// Cache progress template
+		Lightbox.openModal.progress = $('#LightboxCarouselProgress');
+		Lightbox.openModal.data('overlayactive', true);
+
 		$(window).on('keydown.Lightbox', function(e) {
 			if(e.keyCode == 37) {
 				$('#LightboxPrevious').click();
@@ -581,12 +648,27 @@ var Lightbox = {
 				$('#LightboxNext').click();
 			}
 		});
+		
+		// Clicking on an image should advance you to the next one
+		Lightbox.openModal.media.on('click', 'img', function() {
+			var next = $('#LightboxNext');
+			if(next.hasClass('disabled')) {
+				Lightbox.openModal.carousel.find('li:first').click();
+			} else {
+				next.click();
+			}
+		});
 	
 		// Pass control functions to jquery.wikia.carousel.js
 		var itemClick = function(e) {
+			// If the clicked item is disabled, treat it as the next item in the batch
+			if($(this).hasClass('disabled')) {
+				$(this).next().click();
+				return false;
+			}
+			
 			var idx = $(this).index(),
-				carouselType = Lightbox.current.carouselType,
-				mediaArr = LightboxLoader.cache[carouselType];
+				mediaArr = Lightbox.current.thumbs;
 			
 			if(Lightbox.ads.adIsShowing) { 
 				Lightbox.ads.reset();
@@ -598,40 +680,88 @@ var Lightbox = {
 				Lightbox.current.type = mediaArr[idx].type;
 			}
 			
-			Lightbox.updateMedia();	
+			Lightbox.updateMedia();
+			
 		}
 		
 		var trackProgressCallback = function(idx1, idx2, total) {
-			var template = $('#LightboxCarouselProgressTemplate');
 			
-			var html = template.mustache({
-				idx1: idx1,
-				idx2: idx2,
-				total: total
-			});
+			var progress;
+			
+			// Track progress based on if we're in backfill content or original content
+			var firstThumb = Lightbox.openModal.carousel.find('li').eq(idx1);
+			if(firstThumb.hasClass('back-fill')) {
+				progress = trackBackfillProgress(idx1, idx2);
+			} else {
+				progress = trackOriginalProgress(idx1, idx2);				
+			}
+			
+			var template = Lightbox.openModal.progressTemplate,
+				html = template.mustache(progress);
 			
 			Lightbox.openModal.progress.html(html);
+		}
+		
+		var trackBackfillProgress = function(idx1, idx2) {
+			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
+
+			idx1 = idx1 - originalCount - 1;
+			idx2 = idx2 - originalCount - 1;
+			total = Lightbox.backfillCount;
+			
+			return {
+				idx1: idx1,
+				idx2: idx2,
+				total: Lightbox.backfillCountMessage
+			}
+		}
+		
+		var trackOriginalProgress = function(idx1, idx2) {
+			var originalCount = LightboxLoader.cache[Lightbox.current.carouselType].length;
+			
+			idx2 = Math.min(idx2, originalCount);
+			
+			return {
+				idx1: idx1,
+				idx2: idx2,
+				total: originalCount,
+			}			
 		}
 		
 		var beforeMove = function() {
 			Lightbox.openModal.carousel.find('.Wikia-video-play-button').hide();
 		}
 		
-		var afterMove = function() {
+		var afterMove = function(idx) {
 			Lightbox.openModal.carousel.find('.Wikia-video-play-button').show();
+			// if we're close to the end, load more thumbnails
+			if(Lightbox.current.thumbs.length - idx < Lightbox.thumbLoadCount) {
+				Lightbox.getMediaThumbs.wikiPhotos();
+			}
 		}
 		
 		var itemsShown = Lightbox.ads.showAds ? 6 : 9;
 
-		$('#LightboxCarouselContainer').carousel({
-			itemsShown: itemsShown,
-			itemSpacing: 8,
-			transitionSpeed: 1000,
-			itemClick: itemClick,
-			activeIndex: Lightbox.current.index,
-			trackProgress: trackProgressCallback,
-			beforeMove: beforeMove,
-			afterMove: afterMove
+		// Make sure we have our i18n message before initializing the carousel plugin
+		$.when.apply(this, deferredList).done(function() {
+
+			// Do insert of placeholder thumb now that we know the number of backfill items 
+			var placeholder = $('#LightboxCarouselMore').mustache({
+				text: Lightbox.backfillCountMessage
+			});
+			Lightbox.openModal.carousel.find('li').eq(Lightbox.current.placeholderIdx).before(placeholder);
+	
+
+			Lightbox.openModal.carouselContainer.carousel({
+				itemsShown: itemsShown,
+				itemSpacing: 8,
+				transitionSpeed: 1000,
+				itemClick: itemClick,
+				activeIndex: Lightbox.current.index,
+				trackProgress: trackProgressCallback,
+				beforeMove: beforeMove,
+				afterMove: afterMove
+			});
 		});
 	},
 
@@ -715,107 +845,238 @@ var Lightbox = {
 				});
 			}
 		});
-		
-		
-		
 	},
 	getMediaThumbs: {
-		articleMedia: function() {
-			var article = $('#WikiaArticle'),
-				playButton = '<span class="Wikia-video-play-button min" style="width: 90px; height: 55px;"></span>',
-				titles = [], // array to check for title dupes
-				thumbArr = [],
-				infobox = article.find('.infobox');
-				
-			// Collect images from DOM
-			var thumbs = article.find('.image, .lightbox, .activityfeed-video-thumbnail').find('img');
-			thumbs = thumbs.add(article.find('.thumbimage'));
+		// Get article images/videos from DOM
+		articleMedia: function(backfill) {
+			var cached = LightboxLoader.cache.articleMedia,
+				thumbArr = [];
 
-			thumbs.each(function() {
-				var type = ($(this).hasClass('Wikia-video-thumb')) ? 'video' : 'image',
-					title = (type == 'image') ? $(this).parent().data('image-name') : $(this).parent().data('video-name'),
-					playButtonSpan = (type == 'video') ? playButton : '';
+			if(cached.length) {
+				$().log("Loading articleMedia from cache", "Lightbox");
+				thumbArr = cached;
+			} else {
+			
+				var article = $('#WikiaArticle'),
+					playButton = Lightbox.thumbPlayButton,
+					titles = [], // array to check for title dupes
+					thumbArr = [],
+					infobox = article.find('.infobox');
+					
+				// Collect images from DOM
+				var thumbs = article.find('.image, .lightbox').find('img');
+				thumbs = thumbs.add(article.find('.thumbimage'));
+	
+				thumbs.each(function() {
+					var type = ($(this).hasClass('Wikia-video-thumb')) ? 'video' : 'image',
+						title = (type == 'image') ? $(this).parent().data('image-name') : $(this).parent().data('video-name'),
+						playButtonSpan = (type == 'video') ? playButton : '';
+					
+					// Check for dupes
+					if(title) {
+						if($.inArray(title, titles) > -1) {
+							return true;
+						}
+						titles.push(title);
+					}
+					
+					//var caption = Lightbox.getCaption($(this));
+					
+					thumbArr.push({
+						thumbUrl: Lightbox.thumbParams($(this).data('src') || $(this).attr('src'), type),
+						title: title,
+						type: type,
+						playButtonSpan: playButtonSpan,
+						//caption: caption
+					});
+				});
 				
-				// Check for dupes
-				if(title) {
+				// Fill articleMedia cache
+				LightboxLoader.cache.articleMedia = thumbArr;
+
+				// Count backfill items for progress bar
+				if(backfill) {
+					Lightbox.backfillCount += thumbArr.length;			
+				}
+				
+			}
+			
+			// Add thumbs to current lightbox cache
+			Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
+			
+			Lightbox.addThumbsToCarousel(thumbArr, backfill);
+		},
+		// Get related videos from DOM
+		relatedVideos: function(backfill) {
+			var cached = LightboxLoader.cache.relatedVideos,
+				thumbArr = [];
+				
+			if(cached.length) {
+				$().log("Loading relatedVideos from cache", "Lightbox");
+				thumbArr = cached;
+			} else {
+			
+				var thumbs = Lightbox.dom.relatedVideos,
+					playButton = Lightbox.thumbPlayButton,
+					titles = []; // array to check for title dupes
+	
+				thumbs.each(function() {
+					var thumbUrl = $(this).data('src') || $(this).attr('src'),
+						title = $(this).data('video');
+	
+					// Check for dupes
 					if($.inArray(title, titles) > -1) {
 						return true;
 					}
 					titles.push(title);
-				}
-					
-				thumbArr.push({
-					thumbUrl: Lightbox.thumbParams($(this).data('src') || $(this).attr('src'), type),
-					title: title,
-					type: type,
-					playButtonSpan: playButtonSpan
+						
+					thumbArr.push({
+						thumbUrl: Lightbox.thumbParams(thumbUrl, 'video'),
+						title: title,
+						type: 'video',
+						playButtonSpan: playButton
+					})
 				});
-			});
-			
-			Lightbox.mediaThumbs = thumbArr;
-			
-			return thumbArr;
-		},
-		relatedVideo: function() {
-			var thumbs = $('#RelatedVideosRL').find('.Wikia-video-thumb'),
-				playButton = '<span class="Wikia-video-play-button min" style="width: 90px; height: 55px;"></span>',
-				titles = [], // array to check for title dupes
-				thumbArr = [];
-
-			thumbs.each(function() {
-				var thumbUrl = $(this).data('src') || $(this).attr('src'),
-					title = $(this).data('video');
-
-				// Check for dupes
-				if($.inArray(title, titles) > -1) {
-					return true;
-				}
-				titles.push(title);
-					
-				thumbArr.push({
-					thumbUrl: Lightbox.thumbParams(thumbUrl, 'video'),
-					title: title,
-					type: 'video',
-					playButtonSpan: playButton
-				})
-			});
-
-			Lightbox.mediaThumbs = thumbArr;
-			
-			return thumbArr;
-		},
-		latestPhotos: function() {
-			var thumbs = $("#LatestPhotosModule .thumbimage"),
-				titles = [], // array to check for title dupes
-				thumbArr = [];
-			
-			thumbs.each(function() {
-				var thumbUrl = $(this).data('src') || $(this).attr('src'),
-					title = $(this).parent().data('ref').replace('File:', '');
-					
-				// Check for dupes
-				if($.inArray(title, titles) > -1) {
-					return true;
-				}
-				titles.push(title);
-					
-				thumbArr.push({
-					thumbUrl: Lightbox.thumbParams(thumbUrl, 'image'),
-					title: title,
-					type: 'image',
-					playButtonSpan: ''
-				})
 				
-			});
+				// Fill relatedVideos cache
+				LightboxLoader.cache.relatedVideos = thumbArr;
 
-			Lightbox.mediaThumbs = thumbArr;
+				// Count backfill items for progress bar
+				if(backfill) {
+					Lightbox.backfillCount += thumbArr.length;			
+				}				
+			}
 			
-			return thumbArr;
+			// Add thumbs to current lightbox cache
+			Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
+			
+			Lightbox.addThumbsToCarousel(thumbArr, backfill);
 		},
-		other: function() {
-			// Stuff like category pages
+		// Get latest photos from DOM
+		latestPhotos: function(backfill) {
+			var cached = LightboxLoader.cache.latestPhotos,
+				thumbArr = [];
+			if(cached.length) {
+				$().log("Loading latestPhotos from cache", "Lightbox");
+				thumbArr = cached;
+			} else {
+			
+				var thumbs = $("#LatestPhotosModule .thumbimage"),
+					titles = []; // array to check for title dupes
+				
+				thumbs.each(function() {
+					var thumbUrl = $(this).data('src') || $(this).attr('src'),
+						title = $(this).parent().data('ref').replace('File:', '');
+						
+					// Check for dupes
+					if($.inArray(title, titles) > -1) {
+						return true;
+					}
+					titles.push(title);
+						
+					thumbArr.push({
+						thumbUrl: Lightbox.thumbParams(thumbUrl, 'image'),
+						title: title,
+						type: 'image',
+						playButtonSpan: ''
+					})
+					
+				});
+				
+				// Fill latestPhotos cache
+				LightboxLoader.cache.latestPhotos = thumbArr;
+
+				// Count backfill items for progress bar
+				if(backfill) {
+					Lightbox.backfillCount += thumbArr.length;			
+				}
+			}
+			
+			// Add thumbs to current lightbox cache
+			Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
+
+			Lightbox.addThumbsToCarousel(thumbArr, backfill);
+		},
+		// Get the rest of the photos from the wiki
+		wikiPhotos: function() {
+			if(!Lightbox.to) {
+				return;
+			}
+			$().log("Backfilling with wiki photos", "Lightbox");
+			$.nirvana.sendRequest({
+				controller: 'Lightbox',
+				method: 'getThumbImages',
+				type: 'POST',
+				format: 'json',
+				data: {
+					to: Lightbox.to,
+					count: 30,
+					inclusive: Lightbox.includeLatestPhotos
+				},
+				callback: function(json) {
+					Lightbox.to = json.to;
+					if(!Lightbox.to) {
+						// TODO: set some flag that we're done
+						return false;
+					}
+					
+					var thumbArr = json.thumbs;
+
+					// Add thumbs to wikiPhotos cache
+					LightboxLoader.cache.wikiPhotos = LightboxLoader.cache.wikiPhotos.concat(thumbArr);
+					
+					// Add thumbs to current lightbox cache
+					Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
+
+					// only need latest photos once
+					Lightbox.includeLatestPhotos = false; 
+					
+					Lightbox.addThumbsToCarousel(thumbArr, true);
+				}
+			});
 		}
 	},
+	addThumbsToCarousel: function(thumbs, backfill) {
+		var liClass = false;
+		
+		if(backfill) {
+			liClass = 'back-fill';
+		}
+
+		// render carousel
+		var carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
+			liClass: liClass,
+			thumbs: thumbs
+		});
+		
+		Lightbox.openModal.carousel.append(carouselThumbs);
+
+		// if carousel is already instantiated, update settings with added thumbnails
+		var container = Lightbox.openModal.carouselContainer;
+		if(typeof container.updateCarouselItems == "function") {
+			container.updateCarouselItems();
+			container.updateCarouselWidth();
+			container.updateCarouselArrows();
+		}		
+	},
+	
+	// get caption html for given target node
+	/*getCaption: function(img) {
+		// TODO: this is broken on Special:NewFiles page
+		var caption = false;
+		
+		// gallery images
+		var dataCaption = img.data('caption');
+		
+		if(dataCaption) {
+			caption = dataCaption;
+		} else if (img.parent().hasClass('image')) {
+			// article images
+			caption = img.parent().nextAll('.thumbcaption').find('.thumb-caption-text').text();
+		}
+
+		return caption;
+	},*/
 	thumbParams: function(url, type) {
 		/*
 			Get URL to a proper thumbnail
@@ -823,5 +1084,6 @@ var Lightbox = {
 		return $.thumbUrl2ThumbUrl(url, type, 90, 55);
 
 	}
+
 };
 
