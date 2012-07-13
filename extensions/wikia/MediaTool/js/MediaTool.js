@@ -19,6 +19,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 	var itemPreviewInputsTpl = null;
 	var minMediaSize = 60;
 	var maxMediaSize = 660;
+	var defaultMediaSettings = { align:'left', alt:"", caption:"", thumbnail:true, width:300 };
 
 	function loadResources() {
 		return resourceLoaderCache = resourceLoaderCache ||
@@ -80,6 +81,13 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		}, 'internal');
 	}
 
+	function getInitialMediaSetting(key) {
+		if ((typeof this.initialMediaSettings[key] !== "undefined") && (this.initialMediaSettings[key] !== "")) {
+			return this.initialMediaSettings[key];
+		}
+		return defaultMediaSettings[key];
+	}
+
 	function showModal(event) {
 		var self = this;
 		loadResources().done(function () {
@@ -99,9 +107,11 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
 			self.fire('showModal');
 
-			cart.setThumbnailStyle(self.initialMediaSettings.thumbnail);
-			cart.setMediaLocation(self.initialMediaSettings.align);
-			cart.setMediaSize(self.initialMediaSettings.width);
+
+
+			cart.setThumbnailStyle(getInitialMediaSetting.call(self, 'thumbnail'));
+			cart.setMediaLocation(getInitialMediaSetting.call(self, 'align'));
+			cart.setMediaSize(getInitialMediaSetting.call(self, 'width'));
 
 			if ( self.initialBasketContent.length ) {
 				useInitialBasketContent( self.initialBasketContent, 'wiki' );
@@ -363,7 +373,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			return renderer;
 		},
 		initialBasketContent: [],
-		initialMediaSettings: { align:'left', alt:"", caption:"", thumbnail:true, width:300 }
+		initialMediaSettings: {}
 	});
 
 	return new MediaToolClass;
