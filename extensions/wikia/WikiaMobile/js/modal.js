@@ -126,7 +126,7 @@ define('modal', ['loader', 'track', 'events', 'ads'], function modal(loader, tra
 			content.innerHTML = '';
 			caption.innerHTML = '';
 			wrapper.className = caption.className = topBar.className = '';
-			if(!Modernizr.positionfixed) ads.moveSlot();
+			if(!Modernizr.positionfixed) ads && ads.moveSlot();
 
 			if(typeof onClose === 'function'){
 				onClose();

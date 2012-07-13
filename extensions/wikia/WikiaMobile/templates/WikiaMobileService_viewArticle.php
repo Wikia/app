@@ -19,7 +19,9 @@
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>">
 	<?= $trackingCode ;?>
-	<?= $advert ;?>
+	<? if( isset($advert) ): ?>
+		<?= $advert ;?>
+	<?endif; ?>
 	<?= $wikiaNavigation ;?>
 	<?= $pageContent ;?>
 	<?= $wikiaFooter ;?>

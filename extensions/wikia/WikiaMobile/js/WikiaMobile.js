@@ -26,7 +26,7 @@ $(function(){
 			toc.init();
 
 			//init ad (removing it if empty and closing in on close button)
-			ads.init();
+			ads && ads.init();
 
 			//add class for styling to be applied only if JS is enabled
 			//(e.g. collapse sections)
