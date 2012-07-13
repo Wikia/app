@@ -13,7 +13,7 @@ define('hideURLBar', ['ads'], function(ads){
 		if(w.pageYOffset < 20) {
 			setTimeout(function(){
 				w.scrollTo(0, 1);
-				if(!Modernizr.positionfixed) ads && ads.moveSlot();
+				if(!Modernizr.positionfixed && ads) ads.moveSlot();
 			}, 1);
 		}
 	}
