@@ -6,15 +6,20 @@ var WikiaPhotoGallerySlideshow = {
 
 	init: function(params) {
 		var slideshow = $('#' + params.id),
-			hash = slideshow.attr('data-hash');
-		
+			hash = slideshow.attr('data-hash'),
+			crop = slideshow.attr('data-crop');
+
 		var slideCallback = function(index) {
 			var item = slideshow.find('li').eq(index),
 				img = item.find('img'),
 				src = img.attr('data-src');
 				
 			if(src) {
-				WikiaPhotoGalleryView.loadAndResizeImage(img, parseInt(params.width), parseInt(params.height), false, true)
+				if(crop) {
+					src = $.thumbUrl2ThumbUrl(src, 'image', parseInt(params.width), parseInt(params.height));
+					img.css({width: params.width, height: params.height});
+				}
+				img.attr('src', src).removeAttr('data-src');
 			}
 		}
 		

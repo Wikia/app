@@ -990,6 +990,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			array(
 				'class' => $class,
 				'data-hash' => $this->mData['hash'],
+				'data-crop' => $this->mCrop,
 				'id' => $id,
 			),
 			$this->mAttribs );
@@ -1047,6 +1048,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			if (is_object($img) && ($nt->getNamespace() == NS_FILE)) {
 				$thumbParams = WikiaPhotoGalleryHelper::getThumbnailDimensions($img, $params['width'], $params['height'], $this->mCrop);
 			}
+
 			$caption = $linkOverlay = '';
 
 			// render caption overlay
@@ -1112,11 +1114,13 @@ class WikiaPhotoGallery extends ImageGallery {
 				$thumbAttribs = array(
 					'data-src' => $thumb->url, 
 					'class' => 'thumbimage',
+					'width' => $thumb->width,
+					'height' => $thumb->height,
 				);
 				if ($text != '') {
 					$thumbAttribs['data-caption'] = $text;
 				}
-				$thumbHtml = Xml::openElement('img', $thumbAttribs);
+				$thumbHtml = Xml::element('img', $thumbAttribs);
 			}
 
 			// add CSS class so we can show first slideshow image before JS is loaded
