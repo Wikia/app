@@ -61,7 +61,12 @@ MediaTool.MainRenderer = $.createClass(MediaTool.Renderer,{
 	},
 
 	renderCartContent: function(cart) {
-		RTE.mediaEditor.addVideo(this.getWikitext(cart), {});
+
+		if ( typeof window.MediaToolEditedElement  != "undefined" && window.MediaToolEditedElement !== false ) {
+			RTE.mediaEditor.update(window.MediaToolEditedElement, this.getWikitext(cart));
+		} else {
+			RTE.mediaEditor.addVideo(this.getWikitext(cart), {});
+		}
 
 		// @todo use events for that
 		cart.clear();
