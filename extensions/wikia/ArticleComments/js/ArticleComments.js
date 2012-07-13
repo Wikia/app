@@ -5,7 +5,7 @@ var ArticleComments = {
 	messagesLoaded: false,
 	miniEditorEnabled: typeof wgEnableMiniEditorExt != 'undefined',
 	initCompleted: false,
-	
+
 	init: function() {
 		if (ArticleComments.miniEditorEnabled) {
 			var newcomment = $('#article-comm');
@@ -25,7 +25,7 @@ var ArticleComments = {
 		$('#article-comments').on('click','.article-comm-history', ArticleComments.linkHistory);
 		$('#article-comments').on('click','.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
 		$('#article-comm-order').find('a').bind('click', ArticleComments.actionProxy(ArticleComments.changeOrder));
-		
+
 		$('#article-comments-pagination').find('div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));
 		/*$('#article-comments').delegate('.SpeechBubble', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
 		$('#article-comments').delegate('.SpeechBubble', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});*/
@@ -158,7 +158,7 @@ var ArticleComments = {
 		$('#article-comm-div-form-' + commentId).hide();
 		$(e.data.target).closest('.buttons').show();
 		$('#comm-text-' + commentId).show();
-		
+
 		ArticleComments.log('end: cancel edit');
 	},
 
@@ -170,7 +170,7 @@ var ArticleComments = {
 
 		var commentId = e.data.id,
 			commentFormDiv = $('#article-comm-form-' + commentId);
-			
+
 		if (commentFormDiv.length) {
 			var throbber =  $(e.target).siblings('.throbber'),
 				submitButton = $('#article-comm-submit-' + commentId),
@@ -230,7 +230,7 @@ var ArticleComments = {
 
 		ArticleComments.log('end: saveEdit');
 	},
-	
+
 	reply: function(e) {
 		ArticleComments.log('begin: reply');
 		e.preventDefault();
@@ -339,7 +339,7 @@ var ArticleComments = {
 		function makeRequest() {
 			$.postJSON(wgScript, data, function(json) {
 				throbber.css('visibility', 'hidden');
-				
+
 				if (ArticleComments.miniEditorEnabled) {
 					source.data('wikiaEditor').fire('editorReset');
 
@@ -557,7 +557,7 @@ var ArticleComments = {
 					events: events
 				});
 			}
-			
+
 			// Load assets first so we have the proper config.mode (BugId:25182)
 			if (!MiniEditor.assetsLoaded) {
 				MiniEditor.loading($element);
