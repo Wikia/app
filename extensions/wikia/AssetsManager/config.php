@@ -141,7 +141,6 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
-		'//skins/oasis/js/common.js'
 	)
 );
 
