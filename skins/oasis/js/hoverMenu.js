@@ -43,7 +43,7 @@ var HoverMenu = function(selector) {
 	this.menu.find(".subnav>li:last-child li:last-child a").focusout($.proxy(this.hideNav, this));
 };
 
-var globalNavigationMenus = [];
+var globalNavigationMenusCached = false;
 HoverMenu.prototype.mouseover = function(event) {
 	var li = $(event.currentTarget);
 
@@ -54,20 +54,23 @@ HoverMenu.prototype.mouseover = function(event) {
 	clearTimeout(this.mouseoutTimer);
 
 	// Lazy load content for Global Navigation (BugId:36973)
-	var index = li.data('index');
-	if (this.selector == '#GlobalNavigation' && ($.inArray(index, globalNavigationMenus) < 0)) {
+	if (this.selector == '#GlobalNavigation' && globalNavigationMenusCached == false) {
+		var itemcount = $('#GlobalNavigation > li').length;
 		$.nirvana.sendRequest({
 			controller: 'GlobalHeaderController',
-			method: 'menuItems',
-			format: 'html',
+			method: 'menuItemsAll',
+			format: 'json',
 			type: 'GET',
 			data: {
-				index: index
+				itemcount: itemcount
 			},
-			callback: $.proxy(function(html) {
-				li.find('.subnav').html(html);
-				globalNavigationMenus.push(index);
+			callback: $.proxy(function(items) {
+				var itemcount = $('#GlobalNavigation > li').length;
+				for(var i=0;i<itemcount;++i) {
+					$($('#GlobalNavigation > li')[i]).find('.subnav').html(items[i]);
+				}
 				this.handleShowNav(event);
+				globalNavigationMenusCached = true;
 			}, this)
 		});
 
