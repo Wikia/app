@@ -251,12 +251,12 @@ class SpecialPromoteHelper extends WikiaObject {
 	public function saveVisualizationData($data, $langCode) {
 		$this->wf->ProfileIn(__METHOD__);
 		$cityId = $this->wg->cityId;
+		$contentLang = $this->wg->contLang->getCode();
 		$files = array('additionalImages' => array());
 
 		$visualizationModel = F::build('CityVisualization');
 
 		foreach ($data as $fileType => $dataContent) {
-
 			switch ($fileType) {
 				case 'mainImageName':
 					$fileName = $dataContent;
@@ -296,15 +296,14 @@ class SpecialPromoteHelper extends WikiaObject {
 		}
 
 		$updateData['city_main_image'] = $files['mainImage']['name'];
-		if ($files['additionalImages']) {
+		if( $files['additionalImages'] ) {
 			$additionalImageNames = array();
-			foreach ($files['additionalImages'] as $image) {
-				if (empty($image['deleted'])) {
-					$additionalImageNames [] = $image['name'];
+			foreach( $files['additionalImages'] as $image ) {
+				if( empty($image['deleted']) ) {
+					$additionalImageNames[] = $image['name'];
 				} else {
-					$deletedFiles[] = array(
-						'cityId' => $this->wg->cityId,
-						'lang' => $this->wg->contLang->getCode(),
+					$deletedFiles[$contentLang][$cityId][] = array(
+						'city_id' => $cityId,
 						'name' => $image['deletedname']
 					);
 				}
@@ -313,7 +312,7 @@ class SpecialPromoteHelper extends WikiaObject {
 			$updateData['city_images'] = json_encode($additionalImageNames);
 		}
 
-		if(!empty($deletedFiles)) {
+		if( !empty($deletedFiles) ) {
 			$this->createRemovalTask($deletedFiles);
 			$visualizationModel->deleteImagesFromReview($cityId, $langCode, $deletedFiles);
 		}

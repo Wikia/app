@@ -18,27 +18,27 @@ $user = F::build('User', array($userId), 'newFromId');
 
 if( !($user instanceof User) ) {
 	echo 'ERROR: Could not get user object'."\n";
-	exit(1);
+	exit(2);
 }
 
 if( empty($imageUrl) ) {
 	echo 'ERROR: Invalid original image url'."\n";
-	exit(2);
+	exit(3);
 }
 
 if( empty($destImageName) ) {
 	echo 'ERROR: Invalid destination name'."\n";
-	exit(3);
+	exit(4);
 }
 
 if( $sourceWikiId <= 0 ) {
 	echo 'ERROR: Invalid source wiki id'."\n";
-	exit(4);
+	exit(5);
 }
 
 if( UploadFromUrl::isAllowed($user) !== true ) {
 	echo 'ERROR: You do not have right permissions'."\n";
-	exit(5);
+	exit(6);
 }
 
 $result = ImagesService::uploadImageFromUrl($imageUrl, $destImageName, $user);
@@ -49,5 +49,5 @@ if( $result['status'] === true ) {
 } else {
 	echo 'ERROR: Something went wrong with uploading the image.'."\n";
 	print_r($result['errors']);
-	exit(6);
+	exit(7);
 }
