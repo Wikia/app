@@ -133,7 +133,7 @@ exports.rules  = [
 	// detect direct calls to document.cookie (BugId:32020)
 	{
 		name: 'document.cookie direcy call',
-		regexp: /document.cookie(\s?\=|\.)/,
+		regexp: /document.cookie(\s?=|\.)/,
 		reason: 'Use of document.cookie (use $.cookies)'
 	},
 	// not cached jQuery selectors (BugId: 37173)
