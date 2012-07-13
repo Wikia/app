@@ -52,7 +52,7 @@ var CreateWikiaPoll = {
 	showEditor: function(event) {
 		// load CSS for editor popup and jQuery UI library (if not loaded yet) via loader function
 		$.when(
-			$.loadJQueryUI(),
+			mw.loader.use('jquery.ui.sortable'),
 			$.getResources([
 				$.getSassCommonURL('/extensions/wikia/WikiaPoll/css/CreateWikiaPoll.scss'),
 				wgExtensionsPath + '/wikia/WikiaPoll/js/CreateWikiaPoll.js'

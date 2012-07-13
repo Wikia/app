@@ -348,7 +348,7 @@ function initializeCategories(cats) {
 
 function initializeDragAndDrop() {
 	// sortable is a part of jQuery UI library - ensure it's loaded
-	$.loadJQueryUI(function() {
+	mw.loader.use('jquery.ui.sortable').then(function() {
 		$('#csItemsContainer').sortable({
 			items: '.CSitem:not(.CSaddCategory)',
 			revert: 200,
@@ -612,7 +612,7 @@ function showCSpanel() {
 
 	$.when(
 		$.getJSON(wgScript, {action: 'ajax', rs: 'CategorySelectGenerateHTMLforView', uselang: wgUserLanguage}),
-		$.loadJQueryUI(),
+		mw.loader.use('jquery.ui.sortable'),
 		$.getResources([
 			$.getSassCommonURL('/extensions/wikia/CategorySelect/oasis.scss')
 		])
@@ -692,15 +692,13 @@ function csCancel() {
 }
 
 initCatSelectForEdit = function() {
-	$.loadJQueryUI(function() {
-		initHandlers();
-		$('#csCategoryInput').focus(initAutoComplete);
-		initSourceModeSuggest();
-		initializeDragAndDrop();
-		initializeCategories();
-		$('#csHintContainer').hide();
-		$('#csMainContainer').show();
-	});
+	initHandlers();
+	$('#csCategoryInput').focus(initAutoComplete);
+	initSourceModeSuggest();
+	initializeDragAndDrop();
+	initializeCategories();
+	$('#csHintContainer').hide();
+	$('#csMainContainer').show();
 }
 
 // BugId:2823

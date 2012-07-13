@@ -53,11 +53,7 @@ class EditPageLayoutController extends WikiaController {
 			}
 		}
 
-		// MW1.19: load jQuery UI module (formerly known as /skins/common/jquery/jquery-ui-1.8.14.custom.js)
-		$this->app->wg->out->addModules('wikia.jquery.ui');
-
 		// render WikiLogo
-		//$wikiHeaderData = Module::get('WikiHeader', 'Wordmark')->getData();
 		$response = $this->app->sendRequest('WikiHeader', 'Wordmark');
 
 		// move wordmark data

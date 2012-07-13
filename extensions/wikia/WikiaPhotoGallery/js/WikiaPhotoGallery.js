@@ -2540,8 +2540,8 @@ var WikiaPhotoGallery = {
 				stylepath + '/common/wikia_ui/tabs.css'
 			]),
 
-			// jQuery UI (+ autocomplete plugin) and CSS and AIM plugin
-			mw.loader.use(['wikia.jquery.ui', 'jquery.aim', 'jquery.ui.autocomplete']),
+			// jQuery UI (autocomplete with CSS and slider plugin) and AIM plugin
+			mw.loader.use(['jquery.ui.autocomplete', 'jquery.ui.slider', 'jquery.aim']),
 
 			// fetch dialog content
 			this.ajax('getEditorDialog', {title: wgPageName})
