@@ -54,12 +54,19 @@ class GlobalHeaderController extends WikiaController {
 	public function menuItems() {
 		$index = $this->request->getVal('index', 0);
 		$this->response->setVal('menuNodes', $this->menuNodes);
-		$this->response->setVal('subNavMenuItems', $this->menuNodes[$index]['children']);
+		$nodeid = $this->menuNodes[0]['children'][$index];
+		$this->response->setVal('subNavMenuItems', $this->menuNodes[$nodeid]['children'] );
+	}
 
-		// FIXME: should be cached until menuNodes are regenerated
-		//$this->response->setCacheValidity(self::CACHE_TTL, self::CACHE_TTL, array(
-		//	WikiaResponse::CACHE_TARGET_BROWSER,
-		//	WikiaResponse::CACHE_TARGET_VARNISH
-		//));
+	public function menuItemsAll() {
+		$this->response->setFormat('json');
+
+		$itemcount = $this->request->getVal('itemcount', 0);
+		$data = array();
+		for($i=0; $i<$itemcount;$i++) {
+			$data[$i] = $this->app->renderView( 'GlobalHeader', 'menuItems', array('index'=>$i) );
+		}
+
+		$this->response->setData( $data );
 	}
 }
