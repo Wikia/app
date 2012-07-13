@@ -22,6 +22,7 @@ Options:
   -s <date>         Start date for searching videos by date (Unix timestamp)
   -e <date>         End date for searching videos by date (Unix timestamp)
   -d                Debug mode
+  -r				Reingest videos (overwrite existing)
   
 Args:
   provider          Partner to import video from. Int defined in VideoPage.php.
