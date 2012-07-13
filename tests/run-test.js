@@ -56,7 +56,7 @@ function nextTest() {
 	if(tests.length){
 		processTest(tests.pop());
 	}else{
-		phantom.exit( outputTestsResult() ? 1 : 0 );
+		phantom.exit( outputTestsResult() ? 0 : 1 );
 	}
 }
 
