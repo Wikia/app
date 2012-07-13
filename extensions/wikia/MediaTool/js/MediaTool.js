@@ -4,8 +4,10 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 	var cart = null;
 	var itemsCollection = null;
 	var renderer = null;
+	var videoPreview = null;
 	var resourceLoaderCache = null;
 	var dialogWrapper = null;
+	var isVideoPlayerDisplayed = false;
 	var currentView = "find"; // [ find, edit ]
 	var mt = null;
 
@@ -46,25 +48,28 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
 	function initModal() {
 		if (!initModalComplete) {
-		    // loading resources, constructing dialog
-		    renderer = new MediaTool.MainRenderer();
-		    itemsCollection = new MediaTool.ItemsCollection('mediatool-thumbnail-browser', 'mediaToolItemList', 'mediaToolBasket');
-		    itemsCollection.template = templateItemsList;
+
+		    	// loading resources, constructing dialog
+			renderer = new MediaTool.MainRenderer();
+			videoPreview = new MediaTool.VideoPreview();
+
+			itemsCollection = new MediaTool.ItemsCollection('mediatool-thumbnail-browser', 'mediaToolItemList', 'mediaToolBasket');
+			itemsCollection.template = templateItemsList;
 							itemsCollection.itemTemplate = templateItem;
-		    cart = new MediaTool.Cart('mediaToolBasket', 'mediaToolItemList');
-		    cart.template = templateCart;
-		    this.bind('Cart::itemsChanged', onCartContentChange);
-				this.bind('Cart::thumbnailStyleChanged', onThumbnailStyleChange);
-				this.bind('Cart::mediaSizeChanged', onMediaSizeChange);
-				this.bind('Cart::mediaLocationChanged', onMediaLocationChange);
+			cart = new MediaTool.Cart('mediaToolBasket', 'mediaToolItemList');
+			cart.template = templateCart;
+			this.bind('Cart::itemsChanged', onCartContentChange);
+			this.bind('Cart::thumbnailStyleChanged', onThumbnailStyleChange);
+			this.bind('Cart::mediaSizeChanged', onMediaSizeChange);
+			this.bind('Cart::mediaLocationChanged', onMediaLocationChange);
 
-		    this.bind('showModal', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);});
-		    this.bind('editDone', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);});
-		    this.bind('changeTab', onChangeTab);
-				this.bind('error', onError);
+			this.bind('showModal', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'open', wgCityId);});
+			this.bind('editDone', function() {trackMUT(WikiaTracker.ACTIONS.CLICK, 'complete', wgCityId);});
+			this.bind('changeTab', onChangeTab);
+			this.bind('error', onError);
 
-		    mt = this;
-		    initModalComplete = true;
+			mt = this;
+			initModalComplete = true;
 		}
 	}
 
@@ -188,6 +193,9 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		$('#mediaToolMediaSizeInput').val(cart.getMediaSize());
 		$('#mediaToolMediaSizeSlider').slider("value", cart.getMediaSize());
 
+		if ( isVideoPlayerDisplayed == true ) {
+			renderPreview();
+		}
 		renderer.updatePreview( {width:cart.getMediaSize()} );
 	}
 
@@ -265,6 +273,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		} );
 
 		renderer.updatePreview( { width:cart.getMediaSize() });
+		isVideoPlayerDisplayed = false;
 	}
 
 	function changeCurrentView(newView, fromTab) {
@@ -336,6 +345,11 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		});
 		$(".media-tool-media-location img", dialogWrapper).on("click", function (e) {
 			cart.setMediaLocation($(e.target).attr("data-media-location"));
+		});
+
+		$(".media-tool-preview", dialogWrapper).on("click", "a.video", function (e) {
+			videoPreview.thumbnailClickAction($(e.target));
+			isVideoPlayerDisplayed = true;
 		});
 
 		initMediaSizeActions.call(self);
