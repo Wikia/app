@@ -238,6 +238,13 @@ return array(
 				'resources/jquery.ui/themes/vector/jquery.ui.core.css',
 				'resources/jquery.ui/themes/vector/jquery.ui.theme.css',
 			),
+			// wikia change - begin
+			// @author macbre
+			'oasis' => array(
+				'resources/jquery.ui/themes/default/jquery.ui.core.css',
+				// TODO: use /skins/oasis/css/core/jquery.ui.autocomplete.scss SASS file here
+			)
+			// wikia change - end
 		),
 		'dependencies' => 'jquery',
 		'group' => 'jquery.ui',
