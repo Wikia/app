@@ -50,7 +50,7 @@ class ChatRailController extends WikiaController {
 			// Gets array of users currently in chat to populate rail module and user stats menus
 			$chattersIn = NodeApiClient::getChatters($this->totalInRoom);
 			$this->totalInRoom = count($chattersIn);
-			$chatters = array();
+			$chatters = array();			
 			foreach($chattersIn as $i => $val) {
 				$chatters[$i] = array();
 				$cacheChatter = $this->getCachedUser($val);
