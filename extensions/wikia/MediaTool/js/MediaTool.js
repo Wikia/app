@@ -46,7 +46,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 	function initModal() {
 		if (!initModalComplete) {
 		    // loading resources, constructing dialog
-		    renderer = new MediaTool.Renderer();
+		    renderer = new MediaTool.WikiTextRenderer();
 		    itemsCollection = new MediaTool.ItemsCollection('mediatool-thumbnail-browser', 'mediaToolItemList', 'mediaToolBasket');
 		    itemsCollection.template = templateItemsList;
 							itemsCollection.itemTemplate = templateItem;
