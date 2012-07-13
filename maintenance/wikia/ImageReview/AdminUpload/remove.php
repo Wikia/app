@@ -15,24 +15,24 @@ $user = F::build('User', array($userId), 'newFromId');
 
 if( !($user instanceof User) ) {
 	echo 'ERROR: Could not get user object'."\n";
-	exit(1);
+	exit(2);
 }
 
 if( !$user->isAllowed('delete') ) {
 	echo 'ERROR: You do not have right permissions'."\n";
-	exit(2);
+	exit(3);
 }
 
 if( empty($imageName) ) {
 	echo 'ERROR: Invalid image name'."\n";
-	exit(3);
+	exit(4);
 }
 
 $imageTitle = Title::newFromText($imageName, NS_FILE);
 
 if( !($imageTitle instanceof Title) ) {
 	echo 'ERROR: Could not get title object';
-	exit(4);
+	exit(5);
 }
 
 $file = wfFindFile($imageTitle);
@@ -50,5 +50,5 @@ if( $status->ok === true ) {
 } else {
 	echo "\n"."ERROR: File has not been deleted"."\n";
 	var_dump($status);
-	exit(5);
+	exit(6);
 }

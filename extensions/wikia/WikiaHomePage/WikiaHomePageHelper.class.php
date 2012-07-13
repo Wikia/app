@@ -400,7 +400,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	public function getWikiInfo($wikiId, $langCode, WikiDataGetter $dataGetter) {
 		$this->wf->ProfileIn(__METHOD__);
 
-
 		$wikiInfo = array(
 			'name' => '',
 			'description' => '',

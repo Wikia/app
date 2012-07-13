@@ -9,7 +9,7 @@ class CityVisualization extends WikiaModel {
 	const CITY_TAG_VIDEO_GAMES_ID = 131;
 	const CITY_TAG_LIFESTYLE_ID = 127;
 
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.20';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.25';
 
 	public function getList($corpWikiId, $contLang) {
 		$this->wf->ProfileIn(__METHOD__);
@@ -162,11 +162,6 @@ class CityVisualization extends WikiaModel {
 		$this->wg->Memc->set($memcKey, null);
 	}
 
-	public function purgeWikiDataCache($wikiId, $langCode) {
-		$memcKey = $this->getWikiDataCacheKey($wikiId, $langCode);
-		$this->wg->Memc->set($memcKey, null);
-	}
-
 	public function updateWikiPromoteDataCache($wikiId, $langCode, $data) {
 		$memcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
 
@@ -189,8 +184,8 @@ class CityVisualization extends WikiaModel {
 		return $this->getVisualizationElementMemcKey('wiki_data_special_promote', $wikiId, $langCode);
 	}
 
-	public function getWikiDataCacheKey($wikiId, $langCode) {
-		return $this->getVisualizationElementMemcKey('wiki_data_visualization', $wikiId, $langCode);
+	public function getWikiDataCacheKey($corporateWikiId, $wikiId, $langCode) {
+		return $this->wf->SharedMemcKey('wikis_data_visualization', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $wikiId, $langCode, __METHOD__);
 	}
 
 	public function getWikiImagesCacheKey($wikiId, $langCode) {
@@ -430,20 +425,24 @@ class CityVisualization extends WikiaModel {
 		}
 	}
 
-	public function deleteImagesFromReview($cityId, $langCode, $images) {
+	public function deleteImagesFromReview($cityId, $langCode, $corporateWikis) {
 		$imagesToRemove = array();
 
-		foreach ($images as $image) {
-			$title = F::build('Title', array($image['name'], NS_FILE), 'newFromText');
+		foreach( $corporateWikis as $corporateWikiWikis ) {
+			foreach( $corporateWikiWikis as $wiki ) {
+				foreach( $wiki as $image ) {
+					$title = F::build('Title', array($image['name'], NS_FILE), 'newFromText');
 
-			$imageData = new stdClass();
-			$imageData->city_id = $cityId;
-			$imageData->page_id = $title->getArticleId();
-			$imageData->city_lang_code = $langCode;
-			$imagesToRemove [] = $imageData;
+					$imageData = new stdClass();
+					$imageData->city_id = $cityId;
+					$imageData->page_id = $title->getArticleId();
+					$imageData->city_lang_code = $langCode;
+					$imagesToRemove[] = $imageData;
+				}
+			}
 		}
 
-		if (!empty($imagesToRemove)) {
+		if( !empty($imagesToRemove) ) {
 			$dbm = $this->wf->GetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 			$dbm->begin(__METHOD__);
 

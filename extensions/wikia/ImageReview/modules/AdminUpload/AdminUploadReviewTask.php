@@ -44,6 +44,7 @@ class AdminUploadReviewTask extends BatchTask {
 		$this->helper = F::build('WikiGetDataForVisualizationHelper');
 		/** @var WikiGetDataForVisualizationHelper $this->model  */
 		$this->model = F::build('CityVisualization');
+
 		$data = unserialize($params->task_arguments);
 		if( isset($data['upload_list']) ) {
 			foreach( $data['upload_list'] as $targetWikiId => $wikis ) {
@@ -52,8 +53,11 @@ class AdminUploadReviewTask extends BatchTask {
 		}
 
 		if( isset($data['deletion_list']) ) {
-			foreach( $data['deletion_list'] as $image ) {
-				$deleteResult = $this->removeSingleImage($image);
+			/** @var AdminUploadReviewHelper $adminUploadHelper  */
+			$adminUploadHelper = F::build('AdminUploadReviewHelper');
+
+			foreach( $data['deletion_list'] as $corpWikiLang => $wikis ) {
+				$deleteResult = $this->removeImages($corpWikiLang, $adminUploadHelper, $wikis);
 			}
 		}
 
@@ -81,14 +85,19 @@ class AdminUploadReviewTask extends BatchTask {
 			}
 
 			if( !empty($uploadedImages) ) {
-				//update in db
-				$this->model->saveVisualizationData(
-					$sourceWikiId,
-					$this->getImagesToUpdateInDb($uploadedImages),
-					$sourceWikiLang
-				);
-				$memcKey = $this->helper->getMemcKey($sourceWikiId, $sourceWikiLang);
-				F::app()->wg->Memc->set($memcKey, null);
+				$updateData = $this->getImagesToUpdateInDb($uploadedImages);
+
+				if( !empty($updateData) ) {
+					//update in db
+					$this->model->saveVisualizationData(
+						$sourceWikiId,
+						$updateData,
+						$sourceWikiLang
+					);
+					$memcKey = $this->helper->getMemcKey($sourceWikiId, $sourceWikiLang);
+
+					F::app()->wg->Memc->set($memcKey, null);
+				}
 			}
 		}
 
@@ -109,7 +118,7 @@ class AdminUploadReviewTask extends BatchTask {
 
 		if( empty($sourceImageUrl['src']) ) {
 			$this->log('Apparently the image is unaccessible');
-			return array('status' => 2);
+			return array('status' => 1);
 		} else {
 			$sourceImageUrl = $sourceImageUrl['src'];
 		}
@@ -117,7 +126,7 @@ class AdminUploadReviewTask extends BatchTask {
 		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
 		if( empty($city_url) ) {
 			$this->log('Apparently the server is not available via WikiFactory');
-			return array('status' => 2);
+			return array('status' => 1);
 		}
 
 		$city_path = WikiFactory::getVarValueByName("wgScript", $targetWikiId);
@@ -146,23 +155,55 @@ class AdminUploadReviewTask extends BatchTask {
 		);
 	}
 
-	function removeSingleImage($image) {
+	public function removeImages($corpWikiLang, AdminUploadReviewHelper $adminUploadHelper, $wikis) {
+		$app = F::app();
+		$corpWikiId = $adminUploadHelper->getTargetWikiId($corpWikiLang);
+		$removedImages = array();
+
+		foreach($wikis as $sourceWikiId => $images) {
+			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
+			$sourceWikiDbName = WikiFactory::IDtoDB($sourceWikiId);
+
+			if( !empty($images) ) {
+				foreach($images as $image) {
+					$imageName = $this->getNameWithWiki($image['name'], $sourceWikiDbName);
+					$result = $this->removeSingleImage($corpWikiId, $imageName);
+
+					if( $result['status'] === 0 || $app->wg->DevelEnvironment ) {
+					//almost all the time on devboxes images aren't removed because of no permissions
+					//when we run maintenance/wikia/ImageReview/AdminUpload/remove.php with sudo it works
+						$removedImages[] = $imageName;
+					}
+				}
+			}
+
+			if( !empty($removedImages) ) {
+				$memcKey = $this->helper->getMemcKey($sourceWikiId, $sourceWikiLang);
+				$updateData = $this->syncAdditionalImages($sourceWikiId, $sourceWikiLang, $removedImages);
+
+				//update in db
+				if( !empty($updateData) ) {
+					$this->model->saveVisualizationData(
+						$sourceWikiId,
+						$updateData,
+						$sourceWikiLang
+					);
+					$app->wg->Memc->set($memcKey, null);
+				}
+			}
+		}
+
+		//since an admin can't delete main image we don't purge visualization list cache
+		//as it happens during uploads
+	}
+
+	function removeSingleImage($targetWikiId, $imageName) {
 		global $IP, $wgWikiaLocalSettingsPath;
-
-		$sourceWikiId = $image['cityId'];
-		$imageName = $image['name'];
-
-		/* @var $helper AdminUploadReviewHelper */
-		$helper = F::build('AdminUploadReviewHelper');
-		$targetWikiId = $helper->getTargetWikiId($image['lang']);
 
 		$retval = "";
 
-		$dbname = WikiFactory::IDtoDB($sourceWikiId);
-		$nameToRemove = $this->getNameWithWiki($imageName, $dbname);
-
 		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/AdminUpload/remove.php";
-		$sCommand .= " --imagename=" . escapeshellarg($nameToRemove);
+		$sCommand .= " --imagename=" . escapeshellarg($imageName);
 		$sCommand .= " --userid=" . escapeshellarg( $this->mUser );
 		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
 
@@ -171,17 +212,19 @@ class AdminUploadReviewTask extends BatchTask {
 		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
 		if( empty($city_url) ) {
 			$this->log('Apparently the server is not available via WikiFactory');
-			return false;
+			return array('status' => 1);
 		}
 
 		$city_path = WikiFactory::getVarValueByName("wgScript", $targetWikiId);
 		if( $retval ) {
 			$this->log('Remove error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
-			return false;
 		}
 
 		$this->log('Removal successful: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($output) . '">' . $city_url . $city_path . '?title=' . $output . '</a>');
-		return true;
+		return array(
+			'status' => $retval,
+			'title' => $output,
+		);
 	}
 
 	protected function getNameWithWiki($destinationName, $wikiDBname) {
@@ -219,6 +262,27 @@ class AdminUploadReviewTask extends BatchTask {
 		}
 
 		return 'main';
+	}
+
+	protected function syncAdditionalImages($sourceWikiId, $sourceWikiLang, $deletedImages) {
+		$data = array();
+
+		$wikiData = $this->model->getWikiData($sourceWikiId, $sourceWikiLang, $this->helper);
+		$currentImages = $wikiData['images'];
+
+		if( !empty($currentImages) ) {
+			foreach($currentImages as $imageName) {
+				if( $this->getImageType($imageName) === 'additional' && !in_array($imageName, $deletedImages) ) {
+					$data['city_images'][] = $imageName;
+				}
+			}
+		}
+
+		if( isset($data['city_images']) ) {
+			$data['city_images'] = json_encode($data['city_images']);
+		}
+
+		return $data;
 	}
 
 	function getForm($title, $errors = false) {
