@@ -12,10 +12,11 @@
 				<input data-min='<?= $minHeaderLength; ?>' data-max='<?= $maxHeaderLength; ?>' type='text' name='title'
 					   value="<?= htmlspecialchars($wikiHeadline); ?>"
 					   placeholder='<?= wfMsg('promote-description-header'); ?>'>
+				<p class="headline-character-counter"></p>
 				<p class="error error-msg"></p>
 			</div>
-			<span class='explanatory-copy'><?= wfMsg('promote-description-header-explanation'); ?></span>
 		</div>
+		<span class='explanatory-copy'><?= wfMsg('promote-description-header-explanation'); ?></span>
 		<div class='input-group required'>
 			<label><?= wfMsg('promote-description-about'); ?></label>
 			<div class="description-wrapper">
@@ -25,8 +26,8 @@
 				<p class="character-counter"></p>
 				<p class="error error-msg"></p>
 			</div>
-			<span class='explanatory-copy'><?= wfMsg('promote-description-about-explanation'); ?></span>
 		</div>
+		<span class='explanatory-copy'><?= wfMsg('promote-description-about-explanation'); ?></span>
 	</fieldset>
 
 	<fieldset>

@@ -36,6 +36,7 @@ SpecialPromote.prototype = {
 		this.headlineNode = $('input[name=title]');
 		this.descriptionNode = $('textarea[name=description]');
 		this.characterCounter = $('.character-counter');
+		this.characterCounterHeadline = $('.headline-character-counter');
 
 		this.current.headline = this.original.headline = this.headlineNode.val();
 		this.current.description = this.original.description = this.descriptionNode.val();
@@ -98,6 +99,9 @@ SpecialPromote.prototype = {
 		}
 		if (fieldName == 'description') {
 			this.characterCounter.text(characterCount);
+		}
+		else if (fieldName == 'title') {
+			this.characterCounterHeadline.text(characterCount);
 		}
 
 		this.current.headline = this.headlineNode.val();

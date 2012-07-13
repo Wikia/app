@@ -77,10 +77,16 @@
 				color: mix($color-page, $color-text, 30%);
 				float: left;
 				line-height: 1.4em;
-				margin-left: 30px;
-				margin-bottom: 30px;
+				margin: 25px 0 0 30px;
 				padding: 1px 3px 3px 3px;
 				width: 310px;
+			}
+			.error label, .error .headline-character-counter, .error .character-counter {
+				@if $is-dark-wiki {
+					color: mix(#ff0000, #2b2b2b, 60%);
+				} @else {
+					color: mix(#ff0000, #d4d4d4, 75%);
+				}
 			}
 		}
 		.button {
