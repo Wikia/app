@@ -10,7 +10,7 @@
 
 	 	if(linksWrapper.exists()){
 	 		$.getMessages('Oasis-mobile-switch').then(function(resp){
-		 		var mobileSwitch = $('<a href="#">' + $.msg('oasis-mobile-site') + '</a>');
+		 		var mobileSwitch = $('<li><a href="#">' + $.msg('oasis-mobile-site') + '</a></li>');
 
 		 		mobileSwitch.on('click', function(ev){
 					ev.preventDefault();

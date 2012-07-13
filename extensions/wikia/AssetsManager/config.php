@@ -820,17 +820,3 @@ $config['analytics_gas_js'] = array(
 		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
 	)
 );
-
-/** MediaTool **/
-$config['mediatool'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => array( 'oasis' ),
-	'assets' => array(
-		'//extensions/wikia/MediaTool/js/Collection.js',
-		'//extensions/wikia/MediaTool/js/User.js',
-		'//extensions/wikia/MediaTool/js/Item.js',
-		'//extensions/wikia/MediaTool/js/Renderer.js',
-		'//extensions/wikia/MediaTool/js/ItemsCollection.js',
-		'//extensions/wikia/MediaTool/js/Cart.js'
-	)
-);
