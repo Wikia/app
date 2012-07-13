@@ -20,17 +20,19 @@ var ArticleComments = {
 		}
 
 		$('#article-comm-submit').bind('click', {source: '#article-comm'}, ArticleComments.actionProxy(ArticleComments.postComment));
-		$('#article-comments').on('click','.article-comm-delete', ArticleComments.linkDelete);
-		$('#article-comments').on('click','.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
-		$('#article-comments').on('click','.article-comm-history', ArticleComments.linkHistory);
-		$('#article-comments').on('click','.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
+		var $articleComments = $('#article-comments');
+		$articleComments.on('click','.article-comm-delete', ArticleComments.linkDelete);
+		$articleComments.on('click','.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
+		$articleComments.on('click','.article-comm-history', ArticleComments.linkHistory);
+		$articleComments.on('click','.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
 		$('#article-comm-order').find('a').bind('click', ArticleComments.actionProxy(ArticleComments.changeOrder));
 
 		$('#article-comments-pagination').find('div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));
-		/*$('#article-comments').delegate('.SpeechBubble', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
-		$('#article-comments').delegate('.SpeechBubble', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});*/
-		$('#article-comm-fbMonit').mouseenter(function() {$('#fbCommentMessage').fadeIn( 'slow' );});
-		$('#article-comm-fbMonit').mouseleave(function() {$('#fbCommentMessage').fadeOut( 'slow' );});
+		/*$articleComments.delegate('.SpeechBubble', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
+		$articleComments.delegate('.SpeechBubble', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});*/
+		var $articleCommFbMonit = $('#article-comm-fbMonit');
+		$articleCommFbMonit.mouseenter(function() {$('#fbCommentMessage').fadeIn( 'slow' );});
+		$articleCommFbMonit.mouseleave(function() {$('#fbCommentMessage').fadeOut( 'slow' );});
 
 		ArticleComments.addHover();
 		ArticleComments.showEditLink();
@@ -443,8 +445,9 @@ var ArticleComments = {
 		}, function(json) {
 			if (!json.error) {
 				$('#article-comments-ul').html(json.text);
-				if ($('.article-comments-pagination').exists()) {
-					$('.article-comments-pagination').find('div').html(json.pagination);
+				var $articleCommentsPagination = $('.article-comments-pagination');
+				if ($articleCommentsPagination.exists()) {
+					$articleCommentsPagination.find('div').html(json.pagination);
 
 					if(ArticleComments.clickedElementSelector == "" || !$(ArticleComments.clickedElementSelector).exists()) {
 						ArticleComments.clickedElementSelector = '.article-comments-pagination';
@@ -453,8 +456,9 @@ var ArticleComments = {
 				ArticleComments.addHover();
 
 				if(ArticleComments.clickedElementSelector != "") {
-					var docViewTop = $(window).scrollTop();
-					var docViewBottom = docViewTop + $(window).height();
+					var $window = $(window);
+					var docViewTop = $window.scrollTop();
+					var docViewBottom = docViewTop + $window.height();
 					var elemTop = $(ArticleComments.clickedElementSelector).eq(0).offset().top;
 					if(elemTop < docViewTop || elemTop > docViewBottom) {
 						$('html, body').animate({ scrollTop: elemTop }, 1);
