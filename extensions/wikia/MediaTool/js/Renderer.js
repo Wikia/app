@@ -4,37 +4,6 @@ MediaTool.Renderer = $.createClass(Observable,{
 
 	constructor: function() {
 		MediaTool.Renderer.superclass.constructor.call(this);
-
-		MediaTool.bind('editDone', this.onEditDone, this);
-		MediaTool.bind('Cart::uploadRemoteItemsComplete', this.onUploadRemoteItemsComplete, this);
-	},
-
-	onUploadRemoteItemsComplete: function(cart) {
-		this.renderCartContent(cart);
-	},
-
-	onEditDone: function(cart) {
-		var hasRemoteItems = cart.uploadRemoteItems();
-		if(!hasRemoteItems) {
-			// no need to wait for upload result, proceed with rendering
-			this.renderCartContent(cart);
-		}
-	},
-
-	renderCartContent: function(cart) {
-		RTE.mediaEditor.addVideo(this.getWikitext(cart), {});
-
-		// @todo use events for that
-		cart.clear();
-	},
-
-	getWikitext: function(cart) {
-		var result = '';
-		var mediaStyle = (cart.getThumbnailStyle() ? '|thumb' : '') + '|' + cart.getMediaLocation() + '|' + cart.getMediaSize() + 'px';
-		$.each(cart.items, function(i, item) {
-			result += "[[" + item.title + mediaStyle + "]]\n";
-		});
-		return result;
 	},
 
 	getMediaThumb: function(item) {
@@ -99,6 +68,43 @@ MediaTool.Renderer = $.createClass(Observable,{
 			 $(this).parents('figure.thumb').eq(0).css( {width: parseInt(params.width,10)+2 } );
 		 });
 
+	}
+
+});
+
+MediaTool.WikiTextRenderer = $.createClass(MediaTool.Renderer,{
+	constructor: function() {
+		MediaTool.WikiTextRenderer.superclass.constructor.call(this);
+		MediaTool.bind('editDone', this.onEditDone, this);
+		MediaTool.bind('Cart::uploadRemoteItemsComplete', this.onUploadRemoteItemsComplete, this);
+	},
+
+	onEditDone: function(cart) {
+		var hasRemoteItems = cart.uploadRemoteItems();
+		if(!hasRemoteItems) {
+			// no need to wait for upload result, proceed with rendering
+			this.renderCartContent(cart);
+		}
+	},
+
+	renderCartContent: function(cart) {
+		RTE.mediaEditor.addVideo(this.getWikitext(cart), {});
+
+		// @todo use events for that
+		cart.clear();
+	},
+
+	onUploadRemoteItemsComplete: function(cart) {
+		this.renderCartContent(cart);
+	},
+
+	getWikitext: function(cart) {
+		var result = '';
+		var mediaStyle = (cart.getThumbnailStyle() ? '|thumb' : '') + '|' + cart.getMediaLocation() + '|' + cart.getMediaSize() + 'px';
+		$.each(cart.items, function(i, item) {
+			result += "[[" + item.title + mediaStyle + "]]\n";
+		});
+		return result;
 	}
 
 });
