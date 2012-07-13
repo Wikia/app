@@ -93,7 +93,9 @@ class VideoHandlerHooks extends WikiaObject{
 	public function onBeforePageDisplay( $out, $skin ) {
 		wfProfileIn(__METHOD__);
 
-		if ( !( $this->app->checkSkin( 'wikiamobile', $skin ) ) ) {
+		if ( $this->app->checkSkin( 'monobook', $skin ) ) {
+			// not used on mobileskin
+			// part of oasis skin so not needed there
 			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/VideoHandlers/css/VideoHandlers.scss' ) );
 		}
 
