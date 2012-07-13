@@ -41,40 +41,13 @@ MediaTool.Renderer = $.createClass(Observable,{
 		return $.mustache(params.inputsTpl, {
 			itemPreview: itemPreview
 		});
-	},
-
-	updatePreview: function( params ) {
-
-		this.container = $('.media-tool-preview', MediaTool.dialogWrapper);
-
-		var playOverlayClass = "mid";
-
-		if ( params.width <= 170 ) {
-			playOverlayClass = 'min';
-		}
-		if ( params.width > 360 ) {
-			playOverlayClass = 'max';
-		}
-
-		 $('a.image', this.container).each(function() {
-
-			 var playButton = $(this).find('span.Wikia-video-play-button');
-			 var image = $(this).find('img');
-			 var aspectRatio =  parseFloat( image.attr('data-aspect-ratio') );
-			 var imgHeight = Math.floor( params.width / aspectRatio );
-			 image.css({ width:params.width, height:imgHeight} );
-			 playButton.css( {width:params.width, height:imgHeight} );
-			 playButton.attr("class", "Wikia-video-play-button "+playOverlayClass);
-			 $(this).parents('figure.thumb').eq(0).css( {width: parseInt(params.width,10)+2 } );
-		 });
-
 	}
 
 });
 
-MediaTool.WikiTextRenderer = $.createClass(MediaTool.Renderer,{
+MediaTool.MainRenderer = $.createClass(MediaTool.Renderer,{
 	constructor: function() {
-		MediaTool.WikiTextRenderer.superclass.constructor.call(this);
+		MediaTool.MainRenderer.superclass.constructor.call(this);
 		MediaTool.bind('editDone', this.onEditDone, this);
 		MediaTool.bind('Cart::uploadRemoteItemsComplete', this.onUploadRemoteItemsComplete, this);
 	},
@@ -105,6 +78,33 @@ MediaTool.WikiTextRenderer = $.createClass(MediaTool.Renderer,{
 			result += "[[" + item.title + mediaStyle + "]]\n";
 		});
 		return result;
+	},
+
+	updatePreview: function( params ) {
+
+		this.container = $('.media-tool-preview', MediaTool.dialogWrapper);
+
+		var playOverlayClass = "mid";
+
+		if ( params.width <= 170 ) {
+			playOverlayClass = 'min';
+		}
+		if ( params.width > 360 ) {
+			playOverlayClass = 'max';
+		}
+
+		$('a.image', this.container).each(function() {
+
+			var playButton = $(this).find('span.Wikia-video-play-button');
+			var image = $(this).find('img');
+			var aspectRatio =  parseFloat( image.attr('data-aspect-ratio') );
+			var imgHeight = Math.floor( params.width / aspectRatio );
+			image.css({ width:params.width, height:imgHeight} );
+			playButton.css( {width:params.width, height:imgHeight} );
+			playButton.attr("class", "Wikia-video-play-button "+playOverlayClass);
+			$(this).parents('figure.thumb').eq(0).css( {width: parseInt(params.width,10)+2 } );
+		});
+
 	}
 
 });
