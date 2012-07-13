@@ -2,14 +2,16 @@ var ChatEntryPoint = {
 	loading: false,
 
 	init: function() {
-		// check if content was pre-rendered to JS variable
-		if (wgWikiaChatModuleContent) {
-			ChatEntryPoint.initEntryPoint();
-		} else if ( ! ChatEntryPoint.loading ) {
-			// if we're not loading yet - start it
-			ChatEntryPoint.loading = true;
-			ChatEntryPoint.loadEntryPoint();
-		}					
+		$.loadJQuerySlideshow(function() {
+			// check if content was pre-rendered to JS variable
+			if (wgWikiaChatModuleContent) {
+				ChatEntryPoint.initEntryPoint();
+			} else if ( ! ChatEntryPoint.loading ) {
+				// if we're not loading yet - start it
+				ChatEntryPoint.loading = true;
+				ChatEntryPoint.loadEntryPoint();
+			}					
+		});
 	},
 
 	loadEntryPoint: function() {
