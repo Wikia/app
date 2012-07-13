@@ -3,7 +3,7 @@
 class MediaToolItem extends WikiaObject {
 	const THUMB_WIDTH = 96;
 	const THUMB_HEIGHT = 72;
-	const THUMB_BIG_WIDTH = 400;
+	const THUMB_BIG_WIDTH = 600;
 
 	/**
 	 * @var bool
