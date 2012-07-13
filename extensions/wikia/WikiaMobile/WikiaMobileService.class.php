@@ -81,6 +81,12 @@ class WikiaMobileService extends WikiaService {
 		$scripts = $this->skin->getScripts();
 		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
 
+		// show ads only for anon users
+		if($this->wg->user->isAnon()){
+			$jsBodyPackages[] = 'wikiamobile_js_ads';
+			$this->advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
+		}
+
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
 		$this->app->runHook(
@@ -137,7 +143,7 @@ class WikiaMobileService extends WikiaService {
 		$this->globalVariablesScript = Skin::makeGlobalVariablesScript( $this->templateObject->get( 'skinname' ) );
 		$this->jsHeadFiles = $jsHeadFiles;
 		$this->wikiaNavigation = $this->app->renderView( 'WikiaMobileNavigationService', 'index' );
-		$this->advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
+		//$this->advert = $this->app->renderView( 'WikiaMobileAdService', 'index' );
 		$this->pageContent = $this->app->renderView( 'WikiaMobileBodyService', 'index', array(
 			'bodyText' => $this->templateObject->get( 'bodytext' ),
 			'categoryLinks' => $this->templateObject->get( 'catlinks')

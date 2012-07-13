@@ -318,7 +318,6 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/WikiaMobile/js/media.js',
 		'//extensions/wikia/WikiaMobile/js/topbar.js',
 		'//extensions/wikia/WikiaMobile/js/popover.js',
-		'//extensions/wikia/WikiaMobile/js/ads.js',
 		'//extensions/wikia/WikiaMobile/js/hide_url_bar.js',
 		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/share.js',
@@ -331,6 +330,14 @@ $config['wikiamobile_js_body'] = array(
 		//TODO: move to assets hook
 		//We are not using it anywhere now
 		//'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js',
+	)
+);
+
+$config['wikiamobile_js_ads'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/js/ads.js'
 	)
 );
 

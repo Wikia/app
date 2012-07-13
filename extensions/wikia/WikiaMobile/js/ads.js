@@ -15,9 +15,9 @@ define('ads', ['events'], function(ev){
 		adSlotStyle;
 
 	function moveSlot(plus){
-        if(adSlotStyle){
-		    adSlotStyle.top = Math.min((w.pageYOffset + w.innerHeight - 50 + ~~plus), ftr.offsetTop + 150) + 'px';
-        }
+		if(adSlotStyle){
+			adSlotStyle.top = Math.min((w.pageYOffset + w.innerHeight - 50 + ~~plus), ftr.offsetTop + 150) + 'px';
+		}
 	}
 
 	function init(){
