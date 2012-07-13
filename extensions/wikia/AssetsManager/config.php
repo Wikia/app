@@ -837,6 +837,7 @@ $config['mediatool'] = array(
 		'//extensions/wikia/MediaTool/js/Item.js',
 		'//extensions/wikia/MediaTool/js/Renderer.js',
 		'//extensions/wikia/MediaTool/js/ItemsCollection.js',
-		'//extensions/wikia/MediaTool/js/Cart.js'
+		'//extensions/wikia/MediaTool/js/Cart.js',
+		'//extensions/wikia/MediaTool/js/VideoPreview.js'
 	)
 );
