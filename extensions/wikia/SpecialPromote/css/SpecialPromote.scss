@@ -7,7 +7,7 @@
 			border-bottom: none;
 	}
 	.UploadTool {
-		margin: 0 15px 70px 15px;
+		margin: 0 15px 150px 15px;
 		.introduction {
 			font-size: 14px;
 			margin: 25px 0 65px 0;
@@ -26,11 +26,13 @@
 				width: 580px;
 			}
 			.input-group {
-				padding: 0;
+				padding: 5px;
 			}
 			label {
 				display: block;
 				font-size: 16px;
+				float: left;
+				margin: 2px 5px 7px 0;
 			}
 			.upload-button {
 				margin: 0 0 10px 0;
@@ -47,10 +49,12 @@
 			.headline-wrapper {
 				clear: left;
 				float: left;
-				margin-bottom: 60px;
 				width: 580px;
 				p {
 					float: right;
+					&.error {
+						float: left;
+					}
 				}
 			}
 			.description-wrapper {
@@ -60,6 +64,9 @@
 				width: 580px;
 				p {
 					float: right;
+					&.error {
+						float: left;
+					}
 				}
 			}
 			textarea {
@@ -71,6 +78,7 @@
 				float: left;
 				line-height: 1.4em;
 				margin-left: 30px;
+				margin-bottom: 30px;
 				padding: 1px 3px 3px 3px;
 				width: 310px;
 			}
@@ -134,7 +142,7 @@
 				background-color: rgba(255, 255, 255, 0.7);
 				color: #000;
 				font-weight: normal;
-				line-height: 26px;
+				line-height: 25px;
 				margin: 0;
 				padding: 5px;
 			}
