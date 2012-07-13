@@ -13,9 +13,13 @@
 	var modules = {},
 		definitions = {},
 		processing = {},
+		//help minification
 		arrType = Array,
 		funcType = Function,
-		strType = 'string';
+		strType = 'string',
+		yes = true,
+		nil = null,
+		def;
 
 	/**
 	 * @private
@@ -24,45 +28,53 @@
 		var module = modules[name],
 			//manage the process chain per request call since it's async
 			pid = processing[requestId],
-			dependencies;
+			dependencies,
+			chain = '',
+			x = 0,
+			y,
+			p;
 
-		if(module)
+		if(module){
 			return module;
+		}
 
-		if(!pid)
+		if(!pid){
 			pid = {length: 0};
-		else if(pid[name]){
-			var chain = '',
-				p;
-
+		}else if(pid[name]){
 			for(p in pid){
-				if(p != 'length')
+				if(p !== 'length'){
 					chain += p + '->';
+				}
 			}
 
 			throw "circular dependency: " + chain + name;
 		}
 
-		pid[name] = true;
+		pid[name] = yes;
 		pid.length++;
 		processing[requestId] = pid;
 		module = definitions[name];
 
-		if(module.dep instanceof arrType){
-			dependencies = [];
+		if(module && module.def){
+			if(module.dep instanceof arrType){
+				dependencies = [];
+				y = module.dep.length;
 
-			for(var x = 0, y = module.dep.length; x < y; x++){
-				dependencies[x] = process(module.dep[x], requestId);
+				for(; x < y; x++){
+					dependencies[x] = process(module.dep[x], requestId);
+				}
 			}
+
+			modules[name] = module = module.def.apply(context, dependencies);
 		}
 
-		modules[name] = module = module.def.apply(context, dependencies);
 		delete definitions[name];
 		delete pid[name];
 		pid.length--;
 
-		if(!pid.length)
+		if(!pid.length){
 			delete processing[requestId];
+		}
 
 		return module;
 	}
@@ -70,46 +82,67 @@
 	/**
 	 * @public
 	 */
-	context.define = function(name, dependencies, definition){
-		if(typeof name != strType)
+	context.define = def = function(name, dependencies, definition){
+		if(typeof name !== strType){
 			throw "module name missing or not a string";
+		}
 
 		//no dependencies array, it's actually the definition
 		if(!definition && dependencies){
-			definition = dependencies
-			dependencies = undefined;
+			definition = dependencies;
+			dependencies = nil;
 		}
 
-		if(!definition)
+		if(!definition){
 			throw "module " + name + " is missing a definition";
+		}
 
-		if(definition instanceof funcType)
-			definitions[name] = {def: definition, dep: dependencies}
-		else
+		if(definition instanceof funcType){
+			definitions[name] = {def: definition, dep: dependencies};
+		}else{
 			modules[name] = definition;
+		}
+	};
+
+	/**
+	 * required for UMD checks and to let jQuery register correctly
+	 * @see https://github.com/amdjs/amdjs-api/wiki/jQuery-and-AMD
+	 */
+	def.amd = {
+		jQuery: yes
 	};
 
 	/**
 	 * @public
 	 */
 	context.require = function(name, callback){
-		//make the process asynchronous
+		//execute asynchronously
 		setTimeout(function(){
 			var isArray = name instanceof arrType,
 				id = Math.random();
 				m = [];
 
-			if(typeof name != strType && !isArray)
+			if(typeof name !== strType && !isArray){
 				throw "module name missing or not valid";
+			}
 
 			if(isArray){
-				for(var x = 0, y = name.length; x < y; x++)
-					m[x] = process(name[x], id);
-			}else
-				m[0] = process(name, id);
+				var x = 0,
+					y = name.length;
 
-			if(callback instanceof funcType)
+				for(; x < y; x++){
+					m[x] = process(name[x], id);
+				}
+			}else{
+				m[0] = process(name, id);
+			}
+
+			if(callback instanceof funcType){
 				callback.apply(context, m);
+			}
 		}, 0);
 	};
+
+	//clear up temporary refs
+	d = nil;
 }(this));
