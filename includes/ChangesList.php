@@ -638,8 +638,10 @@ class OldChangesList extends ChangesList {
 
 		/** Start of Wikia change @author nAndy */
 		if( wfRunHooks( 'OldChangesListRecentChangesLine', array($this, &$s, $rc) ) ) {
+			wfProfileOut( __METHOD__ );
 			return "$dateheader<li class=\"".implode( ' ', $classes )."\">".$s."</li>\n";
 		} else {
+			wfProfileOut( __METHOD__ );
 			return "$dateheader\n";
 		}
 		/** End of Wikia change */
