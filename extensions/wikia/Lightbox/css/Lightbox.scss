@@ -27,6 +27,7 @@ $color-shadow: #aaa;
 }
 
 $color-more: mix($color-page, $color-text, 25%);
+$color-more-border: lighten($color-more, 20%);
 
 $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 
@@ -345,7 +346,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 					line-height: normal;
 					text-align: left;
 					p {
-						border-left: 1px solid $color-more;
+						border-left: 1px solid $color-more-border;
 						color: $color-more;
 						height: 100%;
 						font-size: 11px;
