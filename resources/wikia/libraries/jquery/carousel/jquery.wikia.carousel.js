@@ -203,7 +203,7 @@
 			}
 			
 			var idx1 = states.currIndex - options.itemsShown,
-				idx2 = states.currIndex;
+				idx2 = states.currIndex,
 				idx3 = states.currIndex + options.itemsShown*2;
 			
 			idx1 = idx1 < 0 ? 0 : idx1;
@@ -223,8 +223,8 @@
 			images.each(function() {
 				var image = $(this);
 				image.
-					attr('src', image.data('src')).
-					removeData('src');
+					attr('src', image.attr('data-src')).
+					removeAttr('data-src');
 			});		
 		}
 
