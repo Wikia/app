@@ -12,26 +12,31 @@
 		 */
 		
 		static public function onArticleFromTitle( &$title, &$article ){
-			if ( !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
-				if ( $title->getNamespace() == NS_CATEGORY ) {
-					
-					$categoryExhibition = new CategoryExhibitionSection( $title );
-					$categoryExhibition->setDisplayTypeFromParam();
-					$categoryExhibition->setSortTypeFromParam();
-					$displayType = $categoryExhibition->getDisplayType();
-					if ( $displayType == 'exhibition' ){
-						$article = new CategoryExhibitionPage( $title );
-					} else {
-						$article = new CategoryPageII( $title );
-					};
-	
-					$magicWord = MagicWord::get( CATEXHIBITION_DISABLED );
-					$disabled = ( 0 < $magicWord->match( $article->getRawText() ) );
-					if ( $disabled ){
-						$article = false;
-					};
-				}
+			if ( F::app()->checkSkin( 'wikiamobile' ) || F::app()->checkSkin( 'monobook' ) ) {
+				return true;
 			}
+
+			if ( $title->getNamespace() != NS_CATEGORY ) {
+				return true;
+			}
+					
+			$categoryExhibition = new CategoryExhibitionSection( $title );
+			$categoryExhibition->setDisplayTypeFromParam();
+			$categoryExhibition->setSortTypeFromParam();
+			$displayType = $categoryExhibition->getDisplayType();
+			if ( $displayType == 'exhibition' ){
+				$article = new CategoryExhibitionPage( $title );
+			} else {
+				$article = new CategoryPageII( $title );
+			};
+
+			$magicWord = MagicWord::get( CATEXHIBITION_DISABLED );
+			$disabled = ( 0 < $magicWord->match( $article->getRawText() ) );
+			if ( $disabled ){
+				$article = false;
+			};
+		
+		
 			return true;
 		}
 
