@@ -612,7 +612,7 @@ var Lightbox = {
 					inclusive: Lightbox.includeLatestPhotos
 				},
 				callback: function(json) {
-					Lightbox.to = json.to;
+					Lightbox.to = LightboxLoader.cache.to = json.to;
 					Lightbox.backfillCount += json.totalWikiImages;
 					Lightbox.backfillCountMessage = json.msg;
 					deferredInfo.resolve();

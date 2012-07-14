@@ -6,7 +6,8 @@ var LightboxLoader = {
 		latestPhotos: [], // Latest Photos from DOM
 		wikiPhotos: [], // Back fill of photos from wiki
 		details: {}, // all media details
-		share: {}
+		share: {},
+		to: 0
 	},
 	inlineVideos: $(),	// jquery array of inline videos
 	inlineVideoLinks: $(),	// jquery array of inline video links
@@ -27,6 +28,7 @@ var LightboxLoader = {
 			// Reset carousel
 			Lightbox.current.thumbs = [];
 			Lightbox.current.thumbTypesAdded = [];
+			Lightbox.to = LightboxLoader.cache.to;
 			// Reset Ad Flags
 			Lightbox.ads.adMediaProgress = [];
 			Lightbox.ads.adWasShown = false;
