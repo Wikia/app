@@ -1016,7 +1016,6 @@ var Lightbox = {
 				callback: function(json) {
 					Lightbox.to = json.to;
 					if(!Lightbox.to) {
-						// TODO: set some flag that we're done
 						return false;
 					}
 					
