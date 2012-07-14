@@ -338,7 +338,6 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				width: 90px;
 				height: 55px;
 				line-height: 55px;
-				overflow: hidden;
 				&.active {
 					outline: 3px solid $color-buttons;
 				}
@@ -364,8 +363,6 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			img {
 				width: 90px;
 				height: 55px;
-				position: absolute;
-				vertical-align: middle;
 				cursor: pointer;
 			}
 		}

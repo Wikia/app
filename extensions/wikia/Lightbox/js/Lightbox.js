@@ -755,7 +755,7 @@ var Lightbox = {
 			Lightbox.openModal.carouselContainer.carousel({
 				itemsShown: itemsShown,
 				itemSpacing: 8,
-				transitionSpeed: 1000,
+				transitionSpeed: 700,
 				itemClick: itemClick,
 				activeIndex: Lightbox.current.index,
 				trackProgress: trackProgressCallback,
