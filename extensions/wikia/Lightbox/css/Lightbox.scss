@@ -370,19 +370,29 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			}
 		}
 		.carousel-arrow {
-			cursor: pointer;
-			margin-top: 20px;
-			
+			cursor: pointer;			
 			&.next {
-				@include arrow(10px, $color-buttons, 'right');
+				height: 56px;
 				clear: right;
 				display: block;
 				float: right;
+				&:after {
+					@include arrow(8px, $color-buttons, 'right');				
+					content: " ";
+					display: block;
+					margin: 20px -3px 0 0;
+				}
 			}
 			&.previous {
-				@include arrow(10px, $color-buttons, 'left');
+				height: 56px;
 				float: left;
 				display: block;
+				&:after {
+					@include arrow(8px, $color-buttons, 'left');
+					content: " ";
+					display: block;
+					margin: 20px 0 0 -3px;
+				}
 			}
 			&.disabled {
 				@include opacity(40);

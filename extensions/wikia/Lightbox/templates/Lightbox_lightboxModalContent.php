@@ -24,8 +24,8 @@
 					<li><span class="icon pin button secondary" title="<?= wfMsg('lightbox-pin-carousel-tooltip') ?>" data-pinned-title="<?= wfMsg('lightbox-unpin-carousel-tooltip') ?>" data-pin-title="<?= wfMsg('lightbox-pin-carousel-tooltip') ?>" ></span></li>
 				</ul>
 				<p id="LightboxCarouselProgress" class="progress"></p>
-				<span class="carousel-arrow next"></span>
-				<span class="carousel-arrow previous"></span>
+				<span class="carousel-arrow next button secondary"></span>
+				<span class="carousel-arrow previous button secondary"></span>
 	 			<div id="LightboxCarouselContainer" class="LightboxCarouselContainer">
 	 				<div>
 	 					<ul class="carousel">
