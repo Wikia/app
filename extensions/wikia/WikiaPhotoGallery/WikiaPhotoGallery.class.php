@@ -843,12 +843,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 					$imgStyle = ( ( !empty( $tempTopMargin ) ) ? " margin-top:".$tempTopMargin."px;" : null ).
 						( ( !empty( $tempLeftMargin ) ) ? " margin-left:".$tempLeftMargin."px;" : null );
-				}else{
-					// Do we need this?
-					//$imgStyle = "height:{$image['height']}px;".
-					//	($useBuckets ? '' : " width:{$image['width']}px;");
-
 				}
+
 				$html .= Xml::openElement(
 					'a',
 					array(
@@ -864,13 +860,14 @@ class WikiaPhotoGallery extends ImageGallery {
 					if ( WikiaFileHelper::isFileTypeVideo( $fileObject ) ) {
 						$html .= WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
 					}
-					
+
 					$imgAttribs = array(
-						'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
-							$imgStyle,
+						'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).$imgStyle,
 						'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
 						'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
 						'class' => 'thumbimage',
+						'width' => isset($thumbParams) ? $thumbParams['width'] : $image['width'],
+						'height' => isset($thumbParams) ? $thumbParams['height'] : $image['height'],
 					);
 
 					if (!empty($image['caption'])) {
@@ -1112,7 +1109,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$linkAttribs['data-image-name'] = $img->getName();
 				$liAttribs['data-image-name'] = $img->getName();
 				$thumbAttribs = array(
-					'data-src' => $thumb->url, 
+					'data-src' => $thumb->url,
 					'class' => 'thumbimage',
 					'width' => $thumb->width,
 					'height' => $thumb->height,
