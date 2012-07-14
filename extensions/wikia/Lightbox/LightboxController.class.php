@@ -62,6 +62,9 @@ class LightboxController extends WikiaController {
 
 		$this->thumbs = $thumbs;
 		$this->to = $minTimestamp;
+
+		// set cache control to 1 hour
+		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	/*
