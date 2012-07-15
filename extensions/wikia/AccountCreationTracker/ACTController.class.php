@@ -14,9 +14,12 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		wfProfileIn( __METHOD__ );
+		
 		if( !$this->wg->User->isAllowed( 'accounttracker' ) ) {
 			$this->displayRestrictionError($this->user);
 			$this->skipRendering();
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -70,19 +73,24 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 		} else {
 			$this->setVal( 'wikis_created', 0 );
 		}
-
+		
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function actionBlockAccountGroup( $groupId ) {
+		wfProfileIn( __METHOD__ );
+		
 		if ( !$this->wg->User->isAllowed( 'phalanx' ) ) {
 			$this->displayRestrictionError($this->user);
 			$this->skipRendering();
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		if ( !class_exists( 'Phalanx' ) ) {
 			// TODO display some error
 			$this->skipRendering();
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -101,15 +109,20 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 
 		$status = PhalanxHelper::save( $data );
 
+		wfProfileOut( __METHOD__ );
 		return $status;
 	}
 
 	function actionCloseWikis( Array $userIds ) {
+		wfProfileIn( __METHOD__ );
+
 		$wikis = $this->tracker->getWikisCreatedByUsers( $userIds );
 
 		foreach ( $wikis as $id ) {
 			WikiFactory::disableWiki( $id, 0, self::CLOSE_WIKI_REASON );
 		}
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function renderContributions() {
@@ -119,6 +132,8 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 
 
 	public function onAddNewAccount( $user, $byEmail ) {
+		wfProfileIn( __METHOD__ );
+
 		if(!($this->request instanceof WikiaRequest)) {
 			$this->setRequest( F::build('WikiaRequest', array( 'params' => array( $_POST, $_GET ) ) ) );
 		}
@@ -139,10 +154,12 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 
 		$this->tracker->trackAccount( $user, $hash );
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public function onUserLoginComplete( User &$user, &$inject_html ) {
+		wfProfileIn( __METHOD__ );
 		if(!($this->request instanceof WikiaRequest)) {
 			$this->setRequest( F::build('WikiaRequest', array( 'params' => array( $_POST, $_GET ) ) ) );
 		}
@@ -163,6 +180,7 @@ class AccountCreationTrackerController extends WikiaSpecialPageController {
 
 		$this->tracker->trackLogin( $user, $hash );
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

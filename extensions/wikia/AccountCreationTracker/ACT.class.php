@@ -20,6 +20,7 @@ class AccountCreationTracker extends WikiaObject {
 	}
 
 	public function trackAccount( User $user, $hash ) {
+		wfProfileIn( __METHOD__ );
 		if( !empty( $hash ) ) {
 			$dbw = $this->getDb( DB_MASTER );
 
@@ -29,9 +30,11 @@ class AccountCreationTracker extends WikiaObject {
 				 'utr_source' => AccountCreationTracker::TRACKING_USER_CREATION ) );
 			$dbw->commit();
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function trackLogin( User $user, $hash ) {
+		wfProfileIn( __METHOD__ );
 		if( !empty( $hash ) ) {
 			$dbw = $this->getDb( DB_MASTER );
 
@@ -41,10 +44,12 @@ class AccountCreationTracker extends WikiaObject {
 				 'utr_source' => AccountCreationTracker::TRACKING_USER_LOGIN ) );
 			$dbw->commit();
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 
 	public function getAccountsByUser( User $user ) {
+		wfProfileIn( __METHOD__ );
 		$results = array();
 		$results_user_set = array();
 		$results_hash_set = array();
@@ -119,10 +124,12 @@ class AccountCreationTracker extends WikiaObject {
 			);
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $results;
 	}
 
 	public function getHashesByUser( User $user ) {
+		wfProfileIn( __METHOD__ );
 		$results = array();
 
 		$dbr = $this->getDb();
@@ -133,10 +140,12 @@ class AccountCreationTracker extends WikiaObject {
 			$results[ $row['utr_user_hash'] ] = true;
 		}
 
+		wfProfileOut( __METHOD__ );
 		return array_keys($results);
 	}
 
 	public function getWikisCreatedByUsers( Array $users ) {
+		wfProfileIn( __METHOD__ );
 		$wikis = array();
 
 		$dbr = $this->wf->getDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
@@ -150,10 +159,13 @@ class AccountCreationTracker extends WikiaObject {
 			$wikis[] = $row->city_id;
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $wikis;
 	}
 
 	public function rollbackPage( $article, $user_name, $summary, &$messages = '' ) {
+		wfProfileIn( __METHOD__ );
+		
 		// build article object and find article id
 		$a = $article;
 		$pageId = $a->getID();
@@ -161,6 +173,7 @@ class AccountCreationTracker extends WikiaObject {
 		// check if article exists
 		if ( $pageId <= 0 ) {
 			$messages = 'page not found';
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -195,6 +208,7 @@ class AccountCreationTracker extends WikiaObject {
 			$status = $a->doEdit( $text, $summary, EDIT_UPDATE|EDIT_MINOR|EDIT_FORCE_BOT );
 			if ($status->isOK()) {
 				$messages = 'reverted';
+				wfProfileOut( __METHOD__ );
 				return true;
 			} else {
 				$messages = "edit errors: " . implode(', ',$status->getErrorsArray());
@@ -204,24 +218,32 @@ class AccountCreationTracker extends WikiaObject {
 			$status = $this->deleteArticle( $a, $summary, false, $errorDelete );
 			if ($status) {
 				$messages = 'deleted';
+				wfProfileOut( __METHOD__ );
 				return true;
 			} else {
 				$messages = "delete errors: " . $errorDelete;
 			}
 		}
+		
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
 	private function deleteArticle( $article, $reason, $suppress = false, &$error = '' ) {
+		wfProfileIn( __METHOD__ );
+
 		global $wgUser;
 		$id = $article->getTitle()->getArticleID( Title::GAID_FOR_UPDATE );
 
 		if ( wfRunHooks( 'ArticleDelete', array( &$article, &$wgUser, &$reason, &$error ) ) ) {
 			if ( $article->doDeleteArticle( $reason, $suppress, $id ) ) {
 				wfRunHooks( 'ArticleDeleteComplete', array( &$article, &$wgUser, $reason, $id ) );
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		}
+
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 

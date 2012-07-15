@@ -16,6 +16,7 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 	}
 
 	public function nukeContribs() {
+		wfProfileIn( __METHOD__ );
 		global $wgSharedDB;
 
 		$user_id = intval($_GET['user_id']);
@@ -24,30 +25,36 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 		
 
 		if( empty($wgSharedDB) ) {
+			wfProfileOut( __METHOD__ );
 			return $this->returnError( 'Non-shared Users DB, cannot continue' );
 		}
 
 		if(!$user_id || !$wiki_id || !$page_id) {
+			wfProfileOut( __METHOD__ );
 			return $this->returnError( 'Wrong parameters' );
 		}
 		
 		if($wiki_id != $this->wg->CityId) {
 			// can only process local requests
+			wfProfileOut( __METHOD__ );
 			return $this->returnError( 'Wrong wiki id' );
 		}
 		
 		if(!$this->wg->User->isAllowed('rollbacknuke')) {
 			// doesn't have permissions
+			wfProfileOut( __METHOD__ );
 			return $this->returnError( 'No permissions to execute action' );
 		}
 		
 		$user = User::newFromId( $user_id );
 		if( !($user instanceof User) ) {
+			wfProfileOut( __METHOD__ );
 			return $this->returnError ( 'Unable to create User obj with ID specified' );
 		} 
 		
 		$article = Article::newFromID( $page_id );
 		if( !($article instanceof Article) ) {
+			wfProfileOut( __METHOD__ );
 			return $this->returnError ( 'Article does not exist' );
 		}
 		
@@ -59,11 +66,15 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 		$output = array( 'status' => $status, 'msg'=>$msg );
 		echo json_encode( $output );
 		$this->skipRendering();
+
+		wfProfileOut( __METHOD__ );
 		return false;		
 	}
 
 		
 	public function fetchContributionsDataTables() {
+		wfProfileIn( __METHOD__ );
+
 		//error_log( "start" );
 		$aColumns = array( 'rev_timestamp', 'user_id', 'event_type', 'wiki_id', 'page_id', 'page_ns', 'rev_size', 'rev_id', 'ip' );
 		
@@ -186,6 +197,8 @@ class AccountCreationTrackerExternalController extends WikiaSpecialPageControlle
 
 		echo json_encode( $output );
 		$this->skipRendering();
+		
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
