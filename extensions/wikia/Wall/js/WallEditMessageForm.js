@@ -10,10 +10,11 @@ var WallEditMessageForm = $.createClass(WallMessageForm, {
 				
 		this.page = page;
 
-		$('#Wall').on('click', '.source-message', this.proxy(this.viewSource));
-		$('#Wall').on('click', '.edit-message', this.proxy(this.editMessage));
-		$('#Wall').on('click', '.cancel-edit', this.proxy(this.cancelEdit));
-		$('#Wall').on('click', '.save-edit', this.proxy(this.saveEdit));
+		var $wall = $('#Wall');
+		$wall.on('click', '.source-message', this.proxy(this.viewSource));
+		$wall.on('click', '.edit-message', this.proxy(this.editMessage));
+		$wall.on('click', '.cancel-edit', this.proxy(this.cancelEdit));
+		$wall.on('click', '.save-edit', this.proxy(this.saveEdit));
 	},
 	
 	initEditForm: function(msg, data, mode) {
