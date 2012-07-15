@@ -868,8 +868,9 @@ var Lightbox = {
 				thumbs = thumbs.add(article.find('.thumbimage'));
 	
 				thumbs.each(function() {
-					var type = ($(this).hasClass('Wikia-video-thumb')) ? 'video' : 'image',
-						title = (type == 'image') ? $(this).parent().data('image-name') : $(this).parent().data('video-name'),
+					var $thisThumb = $(this);
+					var type = ($thisThumb.hasClass('Wikia-video-thumb')) ? 'video' : 'image',
+						title = (type == 'image') ? $thisThumb.parent().data('image-name') : $thisThumb.parent().data('video-name'),
 						playButtonSpan = (type == 'video') ? playButton : '';
 					
 					// Check for dupes
@@ -880,10 +881,10 @@ var Lightbox = {
 						titles.push(title);
 					}
 					
-					//var caption = Lightbox.getCaption($(this));
+					//var caption = Lightbox.getCaption($thisThumb);
 					
 					thumbArr.push({
-						thumbUrl: Lightbox.thumbParams($(this).data('src') || $(this).attr('src'), type),
+						thumbUrl: Lightbox.thumbParams($thisThumb.data('src') || $thisThumb.attr('src'), type),
 						title: title,
 						type: type,
 						playButtonSpan: playButtonSpan,
