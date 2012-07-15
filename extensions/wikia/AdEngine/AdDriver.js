@@ -393,16 +393,17 @@ AdDriver.setLastDARTCallNoAdInStorageContents = function(lastDARTCallNoAdStorage
 }
 
 AdDriver.adjustSlotDisplay = function(slotname) {
+	var $slot = $('#'+slotname);
 	switch (slotname) {
 		case 'CORP_TOP_LEADERBOARD':
 		case 'HOME_TOP_LEADERBOARD':
 		case 'HUB_TOP_LEADERBOARD':
 		case 'TOP_LEADERBOARD':
-			$('#'+slotname).removeClass(AdDriver.classNameDefaultHeight);
+			$slot.removeClass(AdDriver.classNameDefaultHeight);
 			// if jumbo/expanding leaderboard, center ad
-			if (($('#'+slotname).height() >= 0 && $('#'+slotname).height() < AdDriver.standardLeaderboardMinHeight) // expandable leaderboard, minimized state
-			|| $('#'+slotname).height() > AdDriver.standardLeaderboardMaxHeight) { // jumbo leaderboard or expandable leaderboard, maximized state
-				$('#'+slotname).addClass('jumbo-leaderboard');
+			if (($slot.height() >= 0 && $slot.height() < AdDriver.standardLeaderboardMinHeight) // expandable leaderboard, minimized state
+			|| $slot.height() > AdDriver.standardLeaderboardMaxHeight) { // jumbo leaderboard or expandable leaderboard, maximized state
+				$slot.addClass('jumbo-leaderboard');
 				$('#WikiaTopAds').removeClass('WikiaTopButtonLeft WikiaTopButtonRight');
 				AdDriverDelayedLoader.removeItemsBySlotname('TOP_BUTTON');
 			}
@@ -415,12 +416,12 @@ AdDriver.adjustSlotDisplay = function(slotname) {
 		case 'TOP_RIGHT_BOXAD':
 		case 'PREFOOTER_LEFT_BOXAD':
 		case 'PREFOOTER_RIGHT_BOXAD':
-			$('#'+slotname).removeClass(AdDriver.classNameDefaultHeight);
+			$slot.removeClass(AdDriver.classNameDefaultHeight);
 			return true;
 			break;
 		case 'HOME_TOP_RIGHT_BUTTON':
-			if ($('#'+slotname).height() >= AdDriver.standardTopButtonMinHeight) {
-				$('#'+slotname).addClass('home-top-right-button-visible');
+			if ($slot.height() >= AdDriver.standardTopButtonMinHeight) {
+				$slot.addClass('home-top-right-button-visible');
 			}
 			break;
 
