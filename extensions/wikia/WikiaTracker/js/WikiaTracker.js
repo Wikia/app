@@ -122,7 +122,8 @@ window.WikiaTracker = (function(){
 			Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [GA track]', 'info', logGroup);
 
 			// uncomment the next line later when GA is re-implemented
-			WikiaTracker.track(null, 'main.sampled', gaqArgs);
+			//WikiaTracker.track(null, 'main.sampled', gaqArgs);
+			window.gaTrackEvent(ga_category, ga_action, ga_label, ga_value, true);
 		}
 
 		//delay at the end to make sure all of the above was at least invoked
@@ -278,11 +279,9 @@ WikiaTracker.track = function(page, profile, events) {
 };
 
 WikiaTracker._track = function(page, profile, sample, events) {
-
-return true; // gas rollout
-
 	this.debug(page + ' in ' + profile + ' at ' + sample + '%', 7);
 
+	/* ignore events, should be handled already
 	if (typeof events != 'undefined' && events instanceof Array) {
 		this.debug('...with events: ' + events.join('/'), 7);
 
@@ -292,6 +291,7 @@ return true; // gas rollout
 		// don't track real events *and* fakeurl events for the same call
 		return true;
 	}
+	*/
 
 	if (page != null) {
 		if (page.indexOf('/') != 0) {
@@ -302,24 +302,27 @@ return true; // gas rollout
 		if (page.indexOf('/999') != -1) {
 			// track errors in full
 			if (page.indexOf('/999/error') != -1) {
-				_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
+				//_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
+				window.gaTrackAdEvent(profile, page, null, null, true);
 				return true;
 			}
 
 			// sample slots @ 10%
 			if (page.indexOf('/999/slot') != -1) {
-				if (Math.floor(Math.random()*10) != 7) {
+				/*if (Math.floor(Math.random()*10) != 7) {
 					return false;
-				}
-				_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
+				}*/
+				//_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
+				window.gaTrackAdEvent(profile, page, null, null, true);
 				return true;
 			}
 
 			// sample the rest (init, beacon, hop) @ 1%
-			if (Math.floor(Math.random()*100) != 7) {
+			/*if (Math.floor(Math.random()*100) != 7) {
 				return false;
-			}
-			_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
+			}*/
+			//_gaq.push(['Ads._trackEvent', 'fakeurl3', page]);
+			window.gaTrackAdEvent(profile, page, null, null, true);
 			return true;
 		}
 
