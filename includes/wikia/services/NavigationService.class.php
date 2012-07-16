@@ -174,7 +174,7 @@ class NavigationService {
 		$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
 		$nodes = $this->filterSpecialPages($nodes, $filterInactiveSpecialPages);
 		$nodes = $this->stripTags($nodes);
-
+kylebug('------------>', $nodes);
 		// Add hash for cache busting purposes
 		if (isset($nodes[0])) {
 			$nodes[0][ self::HASH ] = md5(serialize($nodes));
@@ -320,7 +320,7 @@ class NavigationService {
 			$specialParam = trim( addslashes( $lineArr[2] ) );
 			unset( $lineArr[2] );
 		} else {
-			$specialParam = '';
+			$specialParam = null;
 		}
 
 		// trim [ and ] from line to have just http://www.wikia.com instrad of [http://www.wikia.com] for external links
