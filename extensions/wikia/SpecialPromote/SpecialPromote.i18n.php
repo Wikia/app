@@ -41,6 +41,7 @@ $messages['en'] = array(
 	'promote-upload-main-image-form-modal-copy' => 'Upload an image to represent your wiki. Your image should be a ".png" file with a minimum size of 480x320.',
 	'promote-upload-additional-image-form-modal-title' => 'More Images',
 	'promote-upload-additional-image-form-modal-copy' => 'Upload additional images that represent your wiki',
+	'promote-upload-form-modal-cancel' => 'Cancel',
 
 	'promote-upload-submit-button' => 'Submit',
 
@@ -82,6 +83,7 @@ $messages['qqq'] = array(
 	'promote-upload-main-photo-explanation' => 'Explanatory text for main wiki image',
 	'promote-upload-additional-photos-header' => 'Label for additional images section',
 	'promote-upload-additional-photos-explanation' => 'Explanatory text for additional optional images section',
+	'promote-upload-form-modal-cancel' => 'Cancel (close) image upload modal',
 
 	'promote-publish' => 'Label for publish button',
 

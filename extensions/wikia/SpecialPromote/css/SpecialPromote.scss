@@ -208,6 +208,16 @@
 		}
 	}
 }
+
+.modalContent .submit-buttons {
+	margin: 34px 0 0 0;
+	padding: 0;
+	#cancel-button {
+		float: right;
+		margin-right: 10px;
+	}
+}
+
 .SpecialUploadForm {
 	.input-group {
 		clear:both;
