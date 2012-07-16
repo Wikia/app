@@ -31,7 +31,7 @@
 			prevClass: "previous",
 			attachBlindImages: false,
 			itemClick: false,
-			trackProgress: false, // pass in function for inserting progress data into dom. 
+			trackProgress: false, // pass in function for inserting progress data into dom.
 			beforeMove: false, // execute before moving the caoursel
 			afterMove: false // execute after moving the carousel
 		};
@@ -61,7 +61,7 @@
 			enable_previous: false,
 			currIndex: 0, // index of first li shown in viewport
 			left: 0,
-			lazyLoadedAll: false,
+			lazyLoadedAll: false
 		};
 
 		function nextImage() {
@@ -80,7 +80,7 @@
 			}
 			return false;
 		}
-		
+
 		function moveToIndex(idx) {
 			// check if index is visible
 			if(!isVisible(idx)) {
@@ -102,7 +102,7 @@
 				states.currIndex = idx;
 
 				doMove(left);
-				
+
 			} else {
 				afterMove();
 			}
@@ -120,7 +120,7 @@
 			}, options.transitionSpeed, function() {
 				states.browsing = false;
 				afterMove();
-			});		
+			});
 		}
 
 		function afterMove() {
@@ -133,7 +133,7 @@
 				options.afterMove(states.currIndex + options.itemsShown);
 			}
 		}
-		
+
 		function isVisible(idx) {
 			// returns true if item at given index is inside viewport
 			return idx >= states.currIndex && idx < (states.currIndex + options.itemsShown);
@@ -144,7 +144,7 @@
 				// add an active class to the item that is selected (i.e. to show a larger view of it)
 				dom.items.removeClass('active');
 				dom.items.eq(idx).addClass('active');
-	
+
 				moveToIndex(idx);
 			} else {
 				updateArrows();
@@ -159,11 +159,11 @@
 			if (idx2 > total) {
 				idx2 = total;
 			}
-			
+
 			// callback will handle inserting values into the dom
 			callback(idx1, idx2, total);
 		}
-		
+
 		function updateArrows() {
 			// If we don't have enough items to fill the viewport, disable both arrows
 			if(dom.items.length <= options.itemsShown) {
@@ -174,13 +174,13 @@
 
 			// get css 'left' property without 'px'
 			var left = parseInt(dom.carousel.css('left'));
-			
+
 
 			// if css 'left' is undefined, set it to 0
 			if(isNaN(left)) {
 				left = 0;
 			}
-			
+
 			if(left == constants.minLeft) {
 				// disable right arrow
 				disableNext();
@@ -201,31 +201,31 @@
 			if(states.lazyLoadedAll) {
 				return;
 			}
-			
+
 			var idx1 = states.currIndex - options.itemsShown,
 				idx2 = states.currIndex,
 				idx3 = states.currIndex + options.itemsShown*2;
-			
+
 			idx1 = idx1 < 0 ? 0 : idx1;
-			
+
 			var firstImages = dom.items.slice(idx2, idx3).find('img[data-src]'), // visible + next panel
 				lastImages = dom.items.slice(idx1, idx2).find('img[data-src]'); // previous panel
-			
+
 			doImageLoad(firstImages);
-			doImageLoad(lastImages);			
-			
+			doImageLoad(lastImages);
+
 			if(!dom.items.find('img[data-src]').length) {
 				states.lazyLoadedAll = true;
 			}
 		}
-		
+
 		function doImageLoad(images) {
 			images.each(function() {
 				var image = $(this);
 				image.
 					attr('src', image.attr('data-src')).
 					removeAttr('data-src');
-			});		
+			});
 		}
 
 		// run this once on init
@@ -275,7 +275,7 @@
 			states.enable_previous = true;
 			dom.previous.removeClass('disabled');
 		}
-		
+
 		// public functions
 		this.updateCarouselItems = function() {
 			dom.items = dom.carousel.find('li');
@@ -297,7 +297,7 @@
 			// Set up click events
 			dom.next.click(nextImage);
 			dom.previous.click(previousImage);
-	
+
 			setCarouselWidth();
 
 			setAsActive(options.activeIndex);
