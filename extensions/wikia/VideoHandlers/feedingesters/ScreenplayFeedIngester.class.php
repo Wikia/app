@@ -170,19 +170,8 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		}
 		$name = sprintf("%s - %s", $this->generateTitleName($data), $description);
 
-		$name_final = $name;
-		$i = 2;
-		// is this name available?
-		$title = Title::newFromText($name_final, NS_FILE);
-		while ( $title && $title->exists() ) {
-			$name_final = $name . ' ' . $i;
-			$i++;
-			$title = Title::newFromText($name_final, NS_FILE);
-		}
-
-		// per parent class's definition, do not sanitize
 		wfProfileOut( __METHOD__ );
-		return $name_final;
+		return $name;
 	}
 
 	public function generateTitleName(array $data) {

@@ -29,7 +29,6 @@ abstract class VideoFeedIngester {
 	 * @return string video name 
 	 */
 	abstract protected function generateName(array $data);
-	abstract protected function generateTitleName(array $data);
 	abstract protected function generateMetadata(array $data, &$errorMsg);
 	abstract protected function generateCategories(array $data, $addlCategories);
 	
@@ -55,13 +54,19 @@ abstract class VideoFeedIngester {
 
 		wfProfileIn( __METHOD__ );
 		$debug = !empty($params['debug']);
-		if($debug) var_dump($data);
+		if($debug) {
+			print "\ndata from stream: \n";
+			foreach( explode("\n", var_export($data, 1)) as $line ) {
+				print ":: $line\n";
+			}
+		}
 		$addlCategories = !empty($params['addlCategories']) ? $params['addlCategories'] : array();
 		
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
 		$metadata = $this->generateMetadata($data, $msg);
 		if (!empty($msg)) {
+			print "Error when generating metadata\n";
 			var_dump($msg);
 			wfProfileOut( __METHOD__ );
 			return 0;
@@ -79,13 +84,20 @@ abstract class VideoFeedIngester {
 			// instead of generating new one
 			$name = $duplicates[0]['img_name'];
 			echo "Video already exists, using it's old name: $name\n";
+		} else {
+			// sanitize name
+			$name = VideoFileUploader::sanitizeTitle( $name );
+			// make sure the name is unique
+			$name = $this->getUniqueName( $name );
 		}
+		$metadata['destinationTitle'] = $name;
 
 		if (!$this->validateTitle($id, $name, $msg, $debug)) {
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
+		// prepare wiki categories string (eg [[Category:MyCategory]] )
 		$categories = $this->generateCategories($data, $addlCategories);
 		$categories[] = wfMsgForContent( 'videohandler-category' );
 		$categoryStr = '';
@@ -95,40 +107,35 @@ abstract class VideoFeedIngester {
 				$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
 			}
 		}
-		
-		if ($debug) {
-			print "parsed partner clip id $id. name: $name. categories: " . implode(',', $categories) . ". ";
-			print "metadata: \n";
-			print_r($metadata);
 
-			$metadata['ingestedFromFeed'] = true;
-			$apiWrapper = new static::$API_WRAPPER($videoId, $metadata);
-			$descriptionHeader = '==' . F::app()->wf->Msg('videohandler-description') . '==';
-			$body = $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription();
-			print "{{{ $body }}}\n";
+		// parepare article body
+		$apiWrapper = new static::$API_WRAPPER($id, $metadata);
+		$descriptionHeader = '==' . F::app()->wf->Msg('videohandler-description') . '==';
+		$body = $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription();
+
+		if ($debug) {
+			print "Ready to create video\n";
+			print "id:          $id\n";
+			print "name:        $name\n";
+			print "categories:  " . implode(',', $categories) . "\n";
+			print "metadata:\n";
+			foreach(explode("\n",var_export($metadata,1)) as $line) {
+				print ":: $line\n";
+			}
+
+			print "body:\n";
+			foreach(explode("\n",$body) as $line) {
+				print ":: $line\n";
+			}
 
 			wfProfileOut( __METHOD__ );
 			return 1;
 		}
 		else {
-			if (is_subclass_of(static::$API_WRAPPER, 'PseudoApiWrapper')) {
-				$videoId = $name;
-			}
-			else {
-				$videoId = $id;
-			}
-
-			$metadata['ingestedFromFeed'] = true;
-			$apiWrapper = new static::$API_WRAPPER($videoId, $metadata);
-			$uploadedTitle = null;
-			$descriptionHeader = '==' . F::app()->wf->Msg('videohandler-description') . '==';
-			$body = $categoryStr."\n".$descriptionHeader."\n".$apiWrapper->getDescription();
-			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $videoId, $uploadedTitle, $body );
+			$result = VideoFileUploader::uploadVideo(static::$PROVIDER, $id, $uploadedTitle, $body, false, $metadata );
 			if ($result->ok) {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n\n";
-				//print "sleeping " . self::THROTTLE_INTERVAL . " second(s)...\n";
-				//sleep(self::THROTTLE_INTERVAL);
 				wfWaitForSlaves(self::THROTTLE_INTERVAL);
 				wfProfileOut( __METHOD__ );
 				return 1;
@@ -136,6 +143,19 @@ abstract class VideoFeedIngester {
 		}
 		wfProfileOut( __METHOD__ );
 		return 0;
+	}
+
+	protected function getUniqueName( $name ) {
+		$name_final = $name;
+		$i = 2;
+		// is this name available?
+		$title = Title::newFromText($name_final, NS_FILE);
+		while ( $title && $title->exists() ) {
+			$name_final = $name . ' ' . $i;
+			$i++;
+			$title = Title::newFromText($name_final, NS_FILE);
+		}
+		return $name_final;
 	}
 	
 	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
