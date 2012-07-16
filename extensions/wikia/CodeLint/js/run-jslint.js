@@ -39,6 +39,8 @@ var OPTIONS = {
 	regexp: true,
 	// tolerate missing 'use strict' pragma
 	sloppy: true,
+	// comments starting with TODO should be allowed.
+	todo: true,
 	// tolerate many var statements per function
 	vars: true,
 	// tolerate messy white space
