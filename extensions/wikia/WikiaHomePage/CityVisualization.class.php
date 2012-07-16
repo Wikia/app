@@ -9,7 +9,7 @@ class CityVisualization extends WikiaModel {
 	const CITY_TAG_VIDEO_GAMES_ID = 131;
 	const CITY_TAG_LIFESTYLE_ID = 127;
 
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.25';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.29';
 
 	public function getList($corpWikiId, $contLang) {
 		$this->wf->ProfileIn(__METHOD__);
@@ -255,8 +255,8 @@ class CityVisualization extends WikiaModel {
 				$wikiData['headline'] = $row->city_headline;
 				$wikiData['description'] = $row->city_description;
 				$wikiData['flags'] = $row->city_flags;
-				$wikiData['main_image'] = $row->city_main_image;
 				$wikiData['images'] = $dataHelper->getImages($wikiId, $langCode, $row);
+				$wikiData['main_image'] = $dataHelper->getMainImage($wikiId, $langCode, $row, &$wikiData);
 			}
 
 			$this->wg->Memc->set($memcKey, $wikiData, 60 * 60 * 24);
@@ -267,10 +267,12 @@ class CityVisualization extends WikiaModel {
 		return $wikiData;
 	}
 
-	protected function getWikiImagesConditions($wikiId, $filter) {
+	protected function getWikiImagesConditions($wikiId, $langCode, $filter) {
 		$conditions = array();
 
 		$conditions ['city_id'] = $wikiId;
+		$conditions ['city_lang_code'] = $langCode;
+
 		switch ($filter) {
 			case ImageReviewStatuses::STATE_APPROVED:
 				$conditions ['image_review_status'] = ImageReviewStatuses::STATE_APPROVED;
@@ -281,6 +283,7 @@ class CityVisualization extends WikiaModel {
 			default:
 				break;
 		}
+
 		return $conditions;
 	}
 
