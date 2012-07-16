@@ -13,7 +13,6 @@ $app->registerClass('LightboxController', $dir . 'LightboxController.class.php')
 
 // hooks
 $app->registerHook('MakeGlobalVariablesScript', 'LightboxHelper', 'onMakeGlobalVariablesScript');
-$app->registerHook('BeforePageDisplay', 'LightboxHelper', 'onBeforePageDisplay');
 
 //$app->registerHook('ArticleEditUpdates', 'LightboxController', 'onArticleEditUpdates');
 
