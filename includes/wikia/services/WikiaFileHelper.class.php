@@ -86,7 +86,8 @@ class WikiaFileHelper extends Service {
 	 * (searches Image table)
 	 */
 	public static function findVideoDuplicates( $provider, $videoId ) {
-		$dbr = wfGetDB(DB_SLAVE);
+		//print "Looking for duplicaes of $provider $videoId\n";
+		$dbr = wfGetDB(DB_MASTER); // has to be master otherwise there's a chance of getting duplicates
 
 		$videoStr = (string)$videoId;
 		$rows = $dbr->select(

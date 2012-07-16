@@ -98,7 +98,12 @@ class VideoFileUploader {
 		$this->adjustThumbnailToVideoRatio( $upload );
 
 		/* create a reference to article that will contain uploaded file */
-		$titleText = self::sanitizeTitle( $this->getDestinationTitle() );
+		$titleText =  $this->getDestinationTitle();
+		if( !($this->getApiWrapper() instanceof IngestionApiWrapper ) ) {
+			// only sanitize name for external uploads
+			// video ingestion handles sanitization by itself
+			$titleText = self::sanitizeTitle( $titleText );
+		}
 		$oTitle = Title::newFromText( $titleText, NS_FILE );
 
 		if ( $oTitle->exists() ) {

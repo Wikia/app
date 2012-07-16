@@ -48,12 +48,7 @@ abstract class ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$this->videoId = $this->sanitizeVideoId( $videoId );
-		if ( !empty( $overrideMetadata[ 'ingestedFromFeed' ] )
-			|| $this->isIngestedFromFeed()) {
-			// don't connect to api
-		} else {
-			$this->initializeInterfaceObject();
-		}
+		$this->initializeInterfaceObject();
 		if ( !is_array( $overrideMetadata ) ) {
 			$overrideMetadata = array();
 		}
@@ -97,6 +92,7 @@ abstract class ApiWrapper {
 		return $this->videoId;
 	}
 
+/*
 	protected function isIngestedFromFeed() {
 
 		wfProfileIn( __METHOD__ );
@@ -107,6 +103,7 @@ abstract class ApiWrapper {
 
 		return !empty( $metadata['ingestedFromFeed'] );
 	}
+*/
 
 	protected function postProcess( $return ){
 		return $return;
@@ -396,18 +393,26 @@ abstract class PseudoApiWrapper extends ApiWrapper {
 abstract class IngestionApiWrapper extends PseudoApiWrapper {
 
 	protected $videoName;
-	protected $provider;
 
-	public function __construct( $videoName, array $overrideMetadata=array() ) {
+	public function __construct( $videoId, array $overrideMetadata=array() ) {
 
 		wfProfileIn( __METHOD__ );
 
-		$this->videoName = $videoName;
 		if (!is_array($overrideMetadata)) {
 			$overrideMetadata = array();
 		}
+
+		$this->videoId = $this->sanitizeVideoId( $videoId );
+		var_dump($overrideMetadata);
+		if(isset($overrideMetadata['destinationTitle'])) {
+			$this->videoName = $overrideMetadata['destinationTitle'];
+			// make sure that this field is not saved in the metadata
+			unset($overrideMetadata['destinationTitle']);
+		} else {
+			// this if just a fallback, shouldn't happen
+			$this->videoName = $this->getProvider() . '-' . $videoId;
+		}
 		$this->loadMetadata($overrideMetadata);
-		$this->getVideoId();	// lazy-load $this->videoId
 
 		wfProfileOut( __METHOD__ );
 	}

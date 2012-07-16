@@ -36,7 +36,6 @@ while($row = $dbw->fetchObject($rows)) {
 
 			// fake the upload
 			$metadata = unserialize($file->getMetadata());
-			$metadata['ingestedFromFeed'] = true;
 			if( $metadata['aspectRatio'] > 1.7 ) {
 				echo $metadata['aspectRatio'] . "<- skipping\n";
 				continue;

@@ -104,12 +104,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		return $articlesCreated;
 	}
 
-	public function generateTitleName(array $data) {
-		$name = $data['titleName'];
-
-		return $name;
-	}
-
 	public function generateCategories(array $data, $addlCategories) {
 
 		wfProfileIn( __METHOD__ );

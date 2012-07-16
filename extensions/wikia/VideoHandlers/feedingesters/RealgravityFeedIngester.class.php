@@ -112,12 +112,6 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		return $name;
 	}
 
-	protected function generateTitleName(array $data) {
-		// not relevant because there are no movies/TV shows from
-		// our RealGravity providers
-		return '';
-	}
-
 	protected function generateCategories(array $data, $addlCategories) {
 		$categories = !empty($addlCategories) ? $addlCategories : array();
 		$categories[] = 'RealGravity';
