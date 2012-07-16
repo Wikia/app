@@ -496,6 +496,7 @@ $config['eplrte'] = array(
 $config['mini_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//resources/wikia/libraries/jquery/tmpl/jquery.tmpl.js',
 		'//extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
 		'//extensions/wikia/EditPageLayout/js/editor/Buttons.js',
 		'//extensions/wikia/EditPageLayout/js/editor/Modules.js',
