@@ -71,7 +71,7 @@ class NavigationService {
 
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return implode(':', array(__CLASS__, $wikiId, $messageName, self::version));
+		return implode(':', array(__CLASS__, $wikiId, $app->wg->Lang->getCode(), $messageName, self::version));
 	}
 
 	/**
@@ -120,16 +120,11 @@ class NavigationService {
 		$app = F::app();
 
 		$this->forContent = $forContent;
-		$useCache = ($app->wg->Lang->getCode() == $app->wg->ContLang->getCode()) || $this->forContent;
 
-		if($useCache) {
-			$cacheKey = $this->getMemcKey($source);
-			$nodes = $app->wg->Memc->get($cacheKey);
-		} else {
-			$nodes = null;
-		}
+		$cacheKey = $this->getMemcKey($source);
+		$nodes = $app->wg->Memc->get($cacheKey);
 
-		if(!is_array($nodes)) {
+		if (!is_array($nodes)) {
 			wfProfileIn( __METHOD__  . '::miss');
 
 			// get wikitext from given source
@@ -151,10 +146,7 @@ class NavigationService {
 
 			// and parse it
 			$nodes = $this->parseText($text, $maxChildrenAtLevel, $forContent, $filterInactiveSpecialPages);
-
-			if($useCache) {
-				$app->wg->Memc->set($cacheKey, $nodes, $duration);
-			}
+			$app->wg->Memc->set($cacheKey, $nodes, $duration);
 
 			wfProfileOut( __METHOD__  . '::miss');
 		}
@@ -174,7 +166,7 @@ class NavigationService {
 		$nodes = $this->parseLines($lines, $maxChildrenAtLevel);
 		$nodes = $this->filterSpecialPages($nodes, $filterInactiveSpecialPages);
 		$nodes = $this->stripTags($nodes);
-kylebug('------------>', $nodes);
+
 		// Add hash for cache busting purposes
 		if (isset($nodes[0])) {
 			$nodes[0][ self::HASH ] = md5(serialize($nodes));
