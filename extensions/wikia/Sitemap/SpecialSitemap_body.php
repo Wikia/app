@@ -34,11 +34,11 @@ class SitemapPage extends UnlistedSpecialPage {
 			// MediaWiki standard namespaces
 			NS_MAIN                 => '1.0',
 			NS_TALK                 => '1.0',
-			NS_USER                 => '1.0',
+			NS_USER                 => '0.1',
 			NS_USER_TALK            => '1.0',
 			NS_PROJECT              => '1.0',
 			NS_PROJECT_TALK         => '1.0',
-			NS_FILE                 => '1.0',
+			NS_FILE                 => '0.5',
 			NS_FILE_TALK            => '1.0',
 			NS_MEDIAWIKI            => '0.5',
 			NS_MEDIAWIKI_TALK       => '0.5',
@@ -188,9 +188,12 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @access private
 	 */
 	private function generateIndex() {
-		global $wgServer, $wgOut, $wgMemc;
+		global $wgServer, $wgOut, $wgMemc, $wgContentNamespaces;
 
 		wfProfileIn( __METHOD__ );
+
+		$contentNamespaces = array (NS_MAIN, NS_CATEGORY, NS_FILE, NS_USER);
+		$contentNamespaces = array_merge($contentNamespaces, $wgContentNamespaces);
 
 		$timestamp = wfTimestamp( TS_ISO_8601, wfTimestampNow() );
 		$id = wfWikiID();
@@ -221,10 +224,12 @@ class SitemapPage extends UnlistedSpecialPage {
 		}
 		else {
 			foreach ( $this->mNamespaces as $namespace ) {
-				$out .= "\t<sitemap>\n";
-				$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-0.xml.gz</loc>\n";
-				$out .= "\t\t<lastmod>{$timestamp}</lastmod>\n";
-				$out .= "\t</sitemap>\n";
+				if(in_array($namespace, $contentNamespaces)){
+					$out .= "\t<sitemap>\n";
+					$out .= "\t\t<loc>{$wgServer}/sitemap-{$id}-NS_{$namespace}-0.xml.gz</loc>\n";
+					$out .= "\t\t<lastmod>{$timestamp}</lastmod>\n";
+					$out .= "\t</sitemap>\n";
+				}
 			}
 		}
 
