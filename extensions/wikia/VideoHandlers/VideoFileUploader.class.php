@@ -130,6 +130,12 @@ class VideoFileUploader {
 		$file->forceMime( $this->getApiWrapper()->getMimeType() );
 		$file->setVideoId( $this->getVideoId() );
 
+		/* ingestion video won't be able to load anything so we need to spoon feed it the correct data */
+		if( $this->getApiWrapper() instanceof IngestionApiWrapper ) {
+			$meta = $this->getApiWrapper()->getNonemptyMetadata();
+			$file->forceMetadata( serialize($meta) );
+		}
+
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),

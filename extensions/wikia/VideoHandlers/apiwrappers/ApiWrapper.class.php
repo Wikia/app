@@ -223,62 +223,47 @@ abstract class ApiWrapper {
 
 		wfProfileIn( __METHOD__ );
 
-		$memcKey = F::app()->wf->memcKey( $this->getMetadataCacheKey() );
-		$metadata = F::app()->wg->memc->get( $memcKey );
-		$cacheMe = false;
-		if ( empty( $metadata ) ){
-			$cacheMe = true;
-			$metadata = $overrideFields;	// $overrideFields may have more fields
-							// than the standard ones, listed below.
-							// This is ok.
-			$this->metadata = $metadata;	// must do this to facilitate getters below
-							// $this->metadata will be reset at end of this function
+		$metadata = $overrideFields;	// $overrideFields may have more fields
+						// than the standard ones, listed below.
+						// This is ok.
+		$this->metadata = $metadata;	// must do this to facilitate getters below
+						// $this->metadata will be reset at end of this function
 
-			if (!isset($metadata['videoId']))
-				$metadata['videoId']		= $this->videoId;
-			if (!isset($metadata['title']))
-				$metadata['title']		= $this->getTitle();
-			if (!isset($metadata['published']))
-				$metadata['published']		= $this->getVideoPublished();
-			if (!isset($metadata['category']))
-				$metadata['category']		= $this->getVideoCategory();
-			if (!isset($metadata['canEmbed']))
-				$metadata['canEmbed']		= $this->canEmbed();
-			if (!isset($metadata['hd']))
-				$metadata['hd']			= $this->isHdAvailable();
-			if (!isset($metadata['keywords']))
-				$metadata['keywords']		= $this->getVideoKeywords();
-			if (!isset($metadata['duration']))
-				$metadata['duration']		= $this->getVideoDuration();
-			if (!isset($metadata['aspectRatio']))
-				$metadata['aspectRatio']	= $this->getAspectRatio();
-			if (!isset($metadata['description']))
-				$metadata['description']	= $this->getOriginalDescription();
-			// for providers that use diffrent video id for embeded code
-			if (!isset($metadata['altVideoId']))
-				$metadata['altVideoId']		= $this->getAltVideoId();
-			if (!isset($metadata['trailerRating']))
-				$metadata['trailerRating']	= $this->getTrailerRating();
-			if (!isset($metadata['industryRating']))
-				$metadata['industryRating']	= $this->getIndustryRating();
-			if (!isset($metadata['ageGate']))
-				$metadata['ageGate']		= $this->isAgeGate();
-			if (!isset($metadata['language']))
-				$metadata['language']		= $this->getLanguage();
-		}
-
-		if ( $cacheMe ) {
-			$result = F::app()->wg->memc->set( $memcKey, $metadata, static::$CACHE_EXPIRY );
-		}
+		if (!isset($metadata['videoId']))
+			$metadata['videoId']		= $this->videoId;
+		if (!isset($metadata['title']))
+			$metadata['title']		= $this->getTitle();
+		if (!isset($metadata['published']))
+			$metadata['published']		= $this->getVideoPublished();
+		if (!isset($metadata['category']))
+			$metadata['category']		= $this->getVideoCategory();
+		if (!isset($metadata['canEmbed']))
+			$metadata['canEmbed']		= $this->canEmbed();
+		if (!isset($metadata['hd']))
+			$metadata['hd']			= $this->isHdAvailable();
+		if (!isset($metadata['keywords']))
+			$metadata['keywords']		= $this->getVideoKeywords();
+		if (!isset($metadata['duration']))
+			$metadata['duration']		= $this->getVideoDuration();
+		if (!isset($metadata['aspectRatio']))
+			$metadata['aspectRatio']	= $this->getAspectRatio();
+		if (!isset($metadata['description']))
+			$metadata['description']	= $this->getOriginalDescription();
+		// for providers that use diffrent video id for embeded code
+		if (!isset($metadata['altVideoId']))
+			$metadata['altVideoId']		= $this->getAltVideoId();
+		if (!isset($metadata['trailerRating']))
+			$metadata['trailerRating']	= $this->getTrailerRating();
+		if (!isset($metadata['industryRating']))
+			$metadata['industryRating']	= $this->getIndustryRating();
+		if (!isset($metadata['ageGate']))
+			$metadata['ageGate']		= $this->isAgeGate();
+		if (!isset($metadata['language']))
+			$metadata['language']		= $this->getLanguage();
 
 		$this->metadata = $metadata;
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	protected function getMetadataCacheKey() {
-		$key = static::$CACHE_KEY . '_metadata' . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoId;
-		return $key;
 	}
 
 	protected function getVideoPublished(){
@@ -395,7 +380,6 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	protected $videoName;
 
 	public function __construct( $videoId, array $overrideMetadata=array() ) {
-
 		wfProfileIn( __METHOD__ );
 
 		if (!is_array($overrideMetadata)) {
@@ -403,7 +387,6 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 		}
 
 		$this->videoId = $this->sanitizeVideoId( $videoId );
-		var_dump($overrideMetadata);
 		if(isset($overrideMetadata['destinationTitle'])) {
 			$this->videoName = $overrideMetadata['destinationTitle'];
 			// make sure that this field is not saved in the metadata
@@ -421,10 +404,17 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 		return $this->videoName;
 	}
 
-	protected function getMetadataCacheKey() {
-		$key = static::$CACHE_KEY . '_metadata' . '_' . static::$CACHE_KEY_VERSION . '_' . $this->videoName;
-		return $key;
+	public function getNonemptyMetadata() {
+		$meta = $this->getMetadata();
+		// get rid of empty fields - no need to store them in db
+		foreach( $meta as $k => $v) {
+			if($v === '') {
+				unset($meta[$k]);
+			}
+		}
+		return $meta;
 	}
+
 }
 
 /**

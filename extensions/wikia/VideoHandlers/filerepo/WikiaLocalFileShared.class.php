@@ -125,7 +125,7 @@ class WikiaLocalFileShared  {
 	 * Used only as part of video migration process (prevent
 	 * connecting to Provider, because we take metadata from
 	 * previously stored information)
-	 * TODO: remove after refactoring Video
+	 * and in video ingestion scripts from premium partners
 	 */
 	function forceMetadata( $metadata ) {
 		$this->forceMetadata = $metadata;
