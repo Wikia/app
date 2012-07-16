@@ -91,8 +91,11 @@ class SitemapPage extends UnlistedSpecialPage {
 			if ( $this->mType == "namespace" ) {
 				$this->generateNamespace();
 			}
-			else {
+			else if($subpage == 'sitemap-index.xml') {
 				$this->generateIndex();
+			}
+			else {
+				$this->print404();
 			}
 		}
 	}
@@ -349,5 +352,22 @@ class SitemapPage extends UnlistedSpecialPage {
 		wfProfileOut( __METHOD__ );
 
 		return $index;
+	}
+
+	/**
+	 * show 404
+	 *
+	 * @access private
+	 */
+	private function print404() {
+		global $wgOut;
+
+		$wgOut->disable();
+
+		$out = "";
+		header( "Cache-Control: no-cache" );
+		header( "HTTP/1.0 404 Not Found" );
+		$out .= "404: Page doesn't exist";
+		print $out;
 	}
 }
