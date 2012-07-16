@@ -276,9 +276,15 @@
 	}
 
 	// video gallery
-	div.gallerybox div.thumb {
-		background: $color-article-thumb-background;
-		border: 1px solid $color-article-thumb-border;
+	ul.gallery {
+		margin-left: 0;
+	}
+	div.gallerybox, li.gallerybox{
+		border: 1px solid $color-page-border; 
+		div.thumb {
+			background: $color-article-thumb-background;
+			border: 1px solid $color-article-thumb-border;
+		}
 	}
 
 	// for special pages
@@ -316,8 +322,12 @@
 	}
 
 	//history page
-	#pagehistory li.selected {
-		background-color: $color-pagehistory;
+	#pagehistory li {
+		border-style: none;
+		&.selected {
+			background-color: $color-pagehistory;
+			border-style: dashed;
+		}
 	}
 	//diff page
 	td.diff-context {
@@ -326,6 +336,9 @@
 	td.diff-deletedline,
 	td.diff-addedline {
 		color: #000;
+	}
+	table.diff, td.diff-otitle, td.diff-ntitle  {
+		background-color: $color-page;
 	}
 
 	.fbconnect-synced-profile {
@@ -518,13 +531,14 @@ table.wikitable {
 	background: darken($color-page, 2%);
 	border-collapse: collapse;
 	border: 1px $color-page-border solid;
+	color: $color-text;
 	margin: 1em 1em 1em 0;
 
 	th, td {
 		border: 1px darken($color-page, 35%) solid;
 		padding: 0.2em;
 	}
-	th {
+	> tr > th,  > * > tr > th {
 		background: darken($color-page, 5%);
 		text-align: center;
 	}
