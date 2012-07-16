@@ -9,7 +9,10 @@ class CityVisualization extends WikiaModel {
 	const CITY_TAG_VIDEO_GAMES_ID = 131;
 	const CITY_TAG_LIFESTYLE_ID = 127;
 
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.29';
+	const GERMAN_CORPORATE_SITE_ID = 111264;
+	const ENGLISH_CORPORATE_SITE_ID = 80433;
+
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.30';
 
 	public function getList($corpWikiId, $contLang) {
 		$this->wf->ProfileIn(__METHOD__);
@@ -256,7 +259,7 @@ class CityVisualization extends WikiaModel {
 				$wikiData['description'] = $row->city_description;
 				$wikiData['flags'] = $row->city_flags;
 				$wikiData['images'] = $dataHelper->getImages($wikiId, $langCode, $row);
-				$wikiData['main_image'] = $dataHelper->getMainImage($wikiId, $langCode, $row, &$wikiData);
+				$wikiData['main_image'] = $dataHelper->getMainImage($wikiId, $langCode, $row, $wikiData);
 			}
 
 			$this->wg->Memc->set($memcKey, $wikiData, 60 * 60 * 24);
@@ -542,5 +545,18 @@ class CityVisualization extends WikiaModel {
 
 	public static function isBlockedWiki($wikiFlags) {
 		return (($wikiFlags & self::FLAG_BLOCKED) == self::FLAG_BLOCKED);
+	}
+
+	public function getTargetWikiId($langCode) {
+		switch ($langCode) {
+			case 'de':
+				$wikiId = self::GERMAN_CORPORATE_SITE_ID;
+				break;
+
+			case 'en':
+			default:
+				$wikiId = self::ENGLISH_CORPORATE_SITE_ID;
+		}
+		return $wikiId;
 	}
 }

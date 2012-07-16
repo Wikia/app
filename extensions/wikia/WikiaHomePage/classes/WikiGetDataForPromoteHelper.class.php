@@ -30,7 +30,7 @@ class WikiGetDataForPromoteHelper implements WikiGetDataHelper {
 	 * @param $currentData array
 	 * @return bool
 	 */
-	public function getMainImage($wikiId, $langCode, $imageSource, $currentData) {
+	public function getMainImage($wikiId, $langCode, $imageSource, &$currentData) {
 		if(!empty($currentData['images']) && !empty($currentData['images'][0])) {
 			$mainImage = array_shift($currentData['images']);
 			return $mainImage;

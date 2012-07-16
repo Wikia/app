@@ -4,8 +4,6 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 
 	const LIMIT_IMAGES = 20;
 	const LIMIT_IMAGES_FROM_DB = 20;
-	const GERMAN_CORPORATE_SITE_ID = 111264;
-	const ENGLISH_CORPORATE_SITE_ID = 80433;
 
 	static $sortOptions = array(
 		'latest first' => 0,
@@ -497,18 +495,5 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 		$url = (!empty($data['src'])) ? $data['src'] : null;
 
 		return $url;
-	}
-
-	public function getTargetWikiId($langCode) {
-		switch ($langCode) {
-			case 'de':
-				$wikiId = self::GERMAN_CORPORATE_SITE_ID;
-				break;
-
-			case 'en':
-			default:
-				$wikiId = self::ENGLISH_CORPORATE_SITE_ID;
-		}
-		return $wikiId;
 	}
 }
