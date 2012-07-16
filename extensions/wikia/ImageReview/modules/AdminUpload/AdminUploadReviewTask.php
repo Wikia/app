@@ -53,11 +53,8 @@ class AdminUploadReviewTask extends BatchTask {
 		}
 
 		if( isset($data['deletion_list']) ) {
-			/** @var AdminUploadReviewHelper $adminUploadHelper  */
-			$adminUploadHelper = F::build('AdminUploadReviewHelper');
-
 			foreach( $data['deletion_list'] as $corpWikiLang => $wikis ) {
-				$deleteResult = $this->removeImages($corpWikiLang, $adminUploadHelper, $wikis);
+				$deleteResult = $this->removeImages($corpWikiLang, $wikis);
 			}
 		}
 
@@ -155,9 +152,9 @@ class AdminUploadReviewTask extends BatchTask {
 		);
 	}
 
-	public function removeImages($corpWikiLang, AdminUploadReviewHelper $adminUploadHelper, $wikis) {
+	public function removeImages($corpWikiLang, $wikis) {
 		$app = F::app();
-		$corpWikiId = $adminUploadHelper->getTargetWikiId($corpWikiLang);
+		$corpWikiId = $this->model->getTargetWikiId($corpWikiLang);
 		$removedImages = array();
 
 		foreach($wikis as $sourceWikiId => $images) {
