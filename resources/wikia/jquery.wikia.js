@@ -70,14 +70,9 @@ $.fn.exists = function() {
 
 // show modal dialog with content fetched via AJAX request
 $.fn.getModal = function(url, id, options) {
-	// get modal plugin
-
-	// where should modal be inserted?
-	var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
-
 	// get modal content via AJAX
 	$.get(url, function(html) {
-		$(insertionPoint).append(html);
+		$("body").append(html);
 
 		// fire callbackBefore if provided
 		if (typeof options == 'object' && typeof options.callbackBefore == 'function') {
@@ -101,17 +96,9 @@ $.fn.getModal = function(url, id, options) {
 $.showModal = function(title, content, options) {
 	options = (typeof options != 'object') ? {} : options;
 
-	var dialog, header, wrapper;
-
-	$().log('showModal: plugin loaded');
-
-	if (skin == 'oasis') {
-		header = $('<h1>').html(title);
-		dialog = $('<div>').html(content).prepend(header).appendTo('body');
-	}
-	else {
-		dialog = $('<div class="modalContent">').html(content).attr('title', title).appendTo('#positioned_elements');
-	}
+	var header = $('<h1>').html(title),
+		dialog = $('<div>').html(content).prepend(header).appendTo('body'),
+		wrapper;
 
 	// fire callbackBefore if provided
 	if (typeof options.callbackBefore == 'function') {
@@ -140,10 +127,8 @@ $.confirm = function(options) {
 		'<button id="WikiaConfirmOk" class="wikia-button">' + (options.okMsg || 'Ok') + '</button>' +
 		'</div>';
 
-	var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
-
 	var dialog = $('<div>').
-		appendTo(insertionPoint).
+		appendTo("body").
 		html(html).
 		attr('title', options.title || '');
 
@@ -198,8 +183,7 @@ $.showCustomModal = function(title, content, options) {
 
 	var dialog = $('<div>').html(content).attr('title', title).append(buttons);
 
-	var insertionPoint = (skin == "oasis") ? "body" : "#positioned_elements";
-	$(insertionPoint).append(dialog);
+	$("body").append(dialog);
 
 	// fire callbackBefore if provided
 	if (typeof options.callbackBefore == 'function') {
