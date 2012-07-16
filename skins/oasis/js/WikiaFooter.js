@@ -3,7 +3,7 @@ var WikiaFooterApp = {
 
 	init: function() {
 		//Variables
-		this.footer = $("#WikiaFooter"),
+		this.footer = $("#WikiaFooter");
 		this.toolbar = this.footer.children(".toolbar");
 		this.gn = $('.global-notification');
 		this.windowObj = $(window);
@@ -19,7 +19,7 @@ var WikiaFooterApp = {
 		}
 	},
 	addScrollEvent: function() {
-		WikiaFooterApp.windowObj.off('scroll.FooterAp'); // GlobalNotifications could be re-binding this event. 
+		WikiaFooterApp.windowObj.off('scroll.FooterAp'); // GlobalNotifications could be re-binding this event.
 		WikiaFooterApp.windowObj.on('scroll.FooterAp', WikiaFooterApp.resolvePosition).triggerHandler('scroll');
 	},
 	addResizeEvent: function (){
@@ -48,7 +48,7 @@ var WikiaFooterApp = {
 		var scrollTop = WikiaFooterApp.windowObj.scrollTop(),
 			scroll = scrollTop + WikiaFooterApp.windowObj.height(),
 			line = 0;
-			
+
 		if(WikiaFooterApp.footer.offset()){
 			line = WikiaFooterApp.footer.offset().top + WikiaFooterApp.toolbar.outerHeight();
 		}
@@ -60,7 +60,7 @@ var WikiaFooterApp = {
 			WikiaFooterApp.footer.addClass("float");
 			WikiaFooterApp.centerBar();
 		}
-		
+
 		// GlobalNotification uses same scroll event for performance reasons (BugId:33365)
 		if(GlobalNotification) {
 			GlobalNotification.onScroll(scrollTop);

@@ -108,7 +108,7 @@ $.loadGoogleMaps = function(callback) {
 		window.onGoogleMapsLoaded = function() {
 			delete window.onGoogleMapsLoaded;
 			onLoaded();
-		}
+		};
 
 		// load GoogleMaps main JS and provide a name of the callback to be called when API is fully initialized
 		$.loadLibrary('GoogleMaps',
