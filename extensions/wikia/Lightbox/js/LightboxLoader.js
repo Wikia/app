@@ -201,7 +201,6 @@ var LightboxLoader = {
 			});
 
 			deferredList.push( deferredTemplate );
-			
 		}
 		
 		deferredList.push(LightboxLoader.getMediaDetailDeferred({fileTitle: mediaTitle}));	// NOTE: be careful with this, look below where it says LASTINDEX
