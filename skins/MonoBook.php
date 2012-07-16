@@ -72,6 +72,12 @@ class MonoBookTemplate extends WikiaMonoBookTemplate {
 		wfSuppressWarnings();
 
 		$this->html( 'headelement' );
+		/* Wikia change begin - @author: Tomek */
+		global $wgUser;
+		$afterBodyHtml = '';
+		wfRunHooks('GetHTMLAfterBody', array ($wgUser->getSkin(), &$afterBodyHtml));
+		echo $afterBodyHtml;
+		/* Wikia change end */
 ?><div id="globalWrapper">
 <div id="column-content">
 <?php
