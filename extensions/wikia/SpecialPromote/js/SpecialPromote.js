@@ -50,7 +50,9 @@ SpecialPromote.prototype = {
 
 		this.headlineNode.keyup($.proxy(this.onKeyUp, this));
 		this.descriptionNode.keyup($.proxy(this.onKeyUp, this));
-		$('body').on('submit', '#ImageUploadForm', $.proxy(this.saveAvatarAIM, this));
+		$('body')
+			.on('submit', '#ImageUploadForm', $.proxy(this.saveAvatarAIM, this))
+			.on('click', '#cancel-button', function() {$('.modalWrapper').closeModal();});
 		$('.upload-button').click($.proxy(this.onAddPhotoBtnClick, this));
 		$('.UploadTool')
 			.submit($.proxy(this.onUploadFormSubmit, this))

@@ -26,6 +26,7 @@
 	</div>
 	<div class="input-group submit-buttons">
 		<input type="submit" class="wikia-button submit" id="submit-button" value="<?= wfMsg('promote-upload-submit-button'); ?>"/>
+		<input type="button" class="wikia-button secondary" id="cancel-button" value="<?= wfMsg('promote-upload-form-modal-cancel'); ?>"/>
 	</div>
 
 </form>
