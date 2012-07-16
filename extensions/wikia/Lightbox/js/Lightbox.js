@@ -744,12 +744,11 @@ var Lightbox = {
 
 		// Make sure we have our i18n message before initializing the carousel plugin
 		$.when.apply(this, deferredList).done(function() {
-
 			// Do insert of placeholder thumb now that we know the number of backfill items 
 			var placeholder = $('#LightboxCarouselMore').mustache({
 				text: Lightbox.backfillCountMessage
 			});
-			Lightbox.openModal.carousel.find('li').eq(Lightbox.current.placeholderIdx).before(placeholder);
+			Lightbox.openModal.carousel.find('li').eq(Lightbox.current.placeholderIdx-1).after(placeholder);
 	
 
 			Lightbox.openModal.carouselContainer.carousel({

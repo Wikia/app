@@ -60,8 +60,7 @@
 			enable_next: false,
 			enable_previous: false,
 			currIndex: 0, // index of first li shown in viewport
-			left: 0,
-			lazyLoadedAll: false
+			left: 0
 		};
 
 		function nextImage() {
@@ -198,10 +197,6 @@
 
 		// ranges is an array of ranges, ex: [visible, next, previous]
 		function lazyLoadImages() {
-			if(states.lazyLoadedAll) {
-				return;
-			}
-
 			var idx1 = states.currIndex - options.itemsShown,
 				idx2 = states.currIndex,
 				idx3 = states.currIndex + options.itemsShown*2;
@@ -214,9 +209,6 @@
 			doImageLoad(firstImages);
 			doImageLoad(lastImages);
 
-			if(!dom.items.find('img[data-src]').length) {
-				states.lazyLoadedAll = true;
-			}
 		}
 
 		function doImageLoad(images) {
@@ -279,6 +271,7 @@
 		// public functions
 		this.updateCarouselItems = function() {
 			dom.items = dom.carousel.find('li');
+			lazyLoadImages();
 		};
 		this.updateCarouselWidth = function() {
 			setCarouselWidth();
