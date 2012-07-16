@@ -762,10 +762,10 @@ function wfSharedMemcKey( /*... */ ) {
 
 	$args = func_get_args();
 	if( $wgSharedKeyPrefix === false ) { // non shared wiki, fallback to normal function
-		$key = 	wfWikiID() . '-MW119:' . implode( ':', $args );
+		$key = 	wfWikiID() . ':' . implode( ':', $args );
 	}
 	else {
-		$key = $wgSharedKeyPrefix . '-MW119:' . implode( ':', $args );
+		$key = $wgSharedKeyPrefix . ':' . implode( ':', $args );
 	}
 	return $key;
 }

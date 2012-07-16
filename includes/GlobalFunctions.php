@@ -3401,7 +3401,7 @@ function wfMemcKey( /*... */ ) {
 	global $wgCachePrefix;
 	$prefix = $wgCachePrefix === false ? wfWikiID() : $wgCachePrefix;
 	$args = func_get_args();
-	$key = $prefix . '-MW119:' . implode( ':', $args );
+	$key = $prefix . ':' . implode( ':', $args );
 	$key = str_replace( ' ', '_', $key );
 	return $key;
 }
@@ -3417,9 +3417,9 @@ function wfMemcKey( /*... */ ) {
 function wfForeignMemcKey( $db, $prefix /*, ... */ ) {
 	$args = array_slice( func_get_args(), 2 );
 	if ( $prefix ) {
-		$key = "$db-$prefix-MW119:" . implode( ':', $args );
+		$key = "$db-$prefix:" . implode( ':', $args );
 	} else {
-		$key = $db . '-MW119:' . implode( ':', $args );
+		$key = $db . ':' . implode( ':', $args );
 	}
 	return $key;
 }
