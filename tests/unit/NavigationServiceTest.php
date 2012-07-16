@@ -124,23 +124,26 @@ class NavigationServiceTest extends WikiaBaseTest {
 		$this->mockGlobalFunction('msg', '*whatever');
 		$this->mockApp();
 
-		$this->assertEquals(array(
-			0 => array(
+		$nodes = array(
+			array(
 				'children' => array(1)
 			),
-			1 => array (
+			array (
 				'original' => 'whatever',
 				'text' => 'whatever',
 				'href' => Title::newFromText('whatever')->fixSpecialName()->getLocalURL(),
 				'specialAttr' => null,
-				'depth' => 1,
-				'parentIndex' => 0
+				'parentIndex' => 0,
+				'depth' => 1
 			)
-		), $service->parseMessage($messageName, array(), 1));
+		);
+
+		$nodes[0]['hash'] = md5(serialize($nodes));
+
+		$this->assertEquals($nodes, $service->parseMessage($messageName, array(), 1));
 	}
 
 	function testParseOneLine() {
-
 		$service = new NavigationService();
 
 		$cases = array();
@@ -266,6 +269,7 @@ class NavigationServiceTest extends WikiaBaseTest {
 		);
 
 		foreach($cases as $case) {
+			$case['out'][0]['hash'] = md5(serialize($case['out']));
 			$this->assertEquals(
 				$case['out'],
 				$service->parseText($case['text'])
