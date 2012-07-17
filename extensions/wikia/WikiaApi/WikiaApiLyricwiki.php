@@ -5,7 +5,7 @@
  *
  * @author Sean Colombo <sean@wikia.com>
  * @author Lucas Garczewski <tor@wikia-inc.com>
- * 
+ *
   Problems:
    - The headers aren't being set (which is important for caching).  Find out where this page is called from.
    - a lot seems to be missing... should make one pass over the code next to the original code & see what's up.
@@ -21,6 +21,15 @@
 $wgAPIModules['lyrics'] = 'WikiaApiLyricwiki';
 
 class WikiaApiLyricwiki extends ApiBase {
+	/**
+	 * Add Comscore reporting (BugzId:33112),
+	 * unfortunately we can't repackage the app ATM,
+	 * this is hacky but we need to get that reporting now.
+	 *
+	 * @TODO remove when we'll get to v2 of the app
+	 * @author Jakub Olek
+	 */
+	const COMSCORE_TAG_PLACEHOLDER = '###COMSCORE_LYRICSWIKI_APP###';
 
 	var $root = "http://lyrics.wikia.com/"; // for links - TODO: This is an unhelpful var name. Fix it. - SWC
 
@@ -43,7 +52,7 @@ class WikiaApiLyricwiki extends ApiBase {
 		require( "$IP/extensions/3rdparty/LyricWiki/server.php" );
 
 		$func = $song = $artist = $fmt = null;
-		
+
 		$matches = array();
 
 		extract( $this->extractRequestParams() );
@@ -115,7 +124,7 @@ class WikiaApiLyricwiki extends ApiBase {
 		// TODO: hand over handling to MW API instead of doing this...
 		exit (1);
 	}
-	
+
 	/**
 	 * Rest endpoint for creating/updating a song page via the postSong() method.
 	 *
@@ -199,10 +208,10 @@ class WikiaApiLyricwiki extends ApiBase {
 				*/
 				break;
 		}
-		
-		
+
+
 		// TODO: IMPLEMENT
-	
+
 /*
 // NOTE: THIS IS CODE FROM THE SOAP CLIENT.
 // If the artist is left blank it defaults to the artist of the song.  Left out here to conserve space.
@@ -383,7 +392,7 @@ function albumResult($artist, $album, $year){
 				break;
 		}
 	} // end rest_getArtist()
-	
+
 	/**
 	 * REST wrapper to the SOAP's getAlbum function.  This returns the discography
 	 * for a single album.  Please note that the entry-point can parse 'album' into
@@ -436,7 +445,7 @@ function albumResult($artist, $album, $year){
 				print "</li>\n";
 				break;
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 	} // end rest_getAlbum()
 
@@ -473,7 +482,7 @@ function albumResult($artist, $album, $year){
 			break;
 		}
 	} // end rest_getTopSongs()
-	
+
 	// Returns the Song Of The Day.
 	function rest_getSotd($fmt = null){
 		if(empty( $fmt )){
@@ -560,7 +569,7 @@ function albumResult($artist, $album, $year){
 			$lyricsTagFound = false; // will be modified by reference
 			$doHyphens = true; $ns = NS_MAIN; $isOuterRequest = true; // optional parameters which we need to hardcode to get to the last parameter
 			$result = getSong($artist, $songName, $doHyphens, $ns, $isOuterRequest, $debugMode, $lyricsTagFound);
-			
+
 			// Special case: if there was no lyrics tag found, attempt to parse the returned wikitext to look for a tracklisting.
 			if( (!$lyricsTagFound) && (0<preg_match("/\[\[.*\]\]/", getVal($result, 'lyrics'))) ){
 				// The result wasn't lyrics, but was some other page which appears to contain a tracklisting. Pass off processing to handle that.
@@ -581,6 +590,19 @@ function albumResult($artist, $album, $year){
 					$this->writeJSON_deprecated($result);
 					break;
 				case "realjson":
+					/**
+					 * Add Comscore reporting (BugzId:33112),
+					 * unfortunately we can't repackage the app ATM,
+					 * this is hacky but we need to get that reporting now.
+					 *
+					 * @TODO remove when we'll get to v2 of the app
+					 * @author Jakub Olek
+					 */
+					$fullApiAuth = $wgRequest->getVal('fullApiAuth');
+					if( !empty( $fullApiAuth ) ) {
+						$result['lyrics'] .= self::COMSCORE_TAG_PLACEHOLDER;
+					}
+
 					$this->writeRealJSON($result);
 					break;
 				case "xml":
@@ -593,7 +615,7 @@ function albumResult($artist, $album, $year){
 						if(is_array($val)){
 							print "\t<$keyName>\n";
 							$innerTagName = $keyName."_value"; // standard name of inner-tag
-							
+
 							// If wrapping tag is plural, make inner-tag the singular if that's straightforward.
 							$matches = array();
 							if(0 < preg_match("/^(.*?)e?s$/i", $keyName, $matches)){
@@ -704,7 +726,7 @@ function albumResult($artist, $album, $year){
 		}
 		wfProfileOut( __METHOD__ );
 	} // end rest_getSong()
-	
+
 	/**
 	 * This is generally used as a fallback when a page is requested (through one of the other functions) which
 	 * doesn't end up being an artist, album, or song as expected but still contains links to other pages.
@@ -894,7 +916,7 @@ function albumResult($artist, $album, $year){
 			print htmlspecialchars($dataArray, ENT_QUOTES, "UTF-8");
         }
 	} // end dumpXml_hacky()
-	
+
 	////
 	// The second parameter is the optional indentation at the start of this item (used for recursion).
 	//
@@ -944,7 +966,7 @@ function albumResult($artist, $album, $year){
 				$tagName = $dataArray['tag'];
 				unset($dataArray['tag']);
 			}
-			
+
 			$cnt = 0;
 			foreach($dataArray as $tag => $val){
 				if($cnt === $tag){
@@ -965,13 +987,13 @@ function albumResult($artist, $album, $year){
 			print htmlspecialchars($dataArray, ENT_QUOTES, "UTF-8");
         }
 	} // end dumpXml()
-	
+
 	/**
 	 * Dumps the result in human-readable plaintext.
 	 */
 	function dumpText($result, $indent=""){
 		wfProfileIn( __METHOD__ );
-		
+
 		if(count($result) > 0){
 			foreach($result as $key => $val){
 				if(is_array($val)){
@@ -1043,13 +1065,28 @@ function albumResult($artist, $album, $year){
 	function writeRealJSON($result) {
 		header('Content-type: text/javascript; charset=UTF-8');
 
+		/**
+		 * Add Comscore reporting (BugzId:33112),
+		 * unfortunately we can't repackage the app ATM,
+		 * this is hacky but we need to get that reporting now.
+		 *
+		 * @TODO remove when we'll get to v2 of the app
+		 * @author Jakub Olek
+		 */
+		$comscoreTag = str_replace( "\n", '',
+			AnalyticsEngine::track( 'Comscore', AnalyticsEngine::EVENT_PAGEVIEW )
+		);
+		if ( !empty( $result['lyrics'] ) ) {
+			$result['lyrics'] = str_replace( self::COMSCORE_TAG_PLACEHOLDER, $comscoreTag, $result['lyrics'] );
+		}
+
 		// TODO: Use this once we are on PHP 5.3 or greater.
 		//print json_encode($result, JSON_HEX_APOS);
 
 		// TODO: Do we even need this? It might actually work already.
 		//$result = self::replaceApostrophes($result);
 		$json = json_encode($result);
-		
+
 		// Support for jsonp callbacks (using the 'callback' parameter just like core MediaWiki API).
 		global $wgRequest;
 		$callback = $wgRequest->getVal('callback');
@@ -1062,7 +1099,7 @@ function albumResult($artist, $album, $year){
 			print $json;
 		}
 	} // end writeRealJSON()
-	
+
 	////
 	// Until we upgrade to PHP 5.3 so we can use the options on json_encode, this will
 	// help to make the single-quotes safe in the JSON.
