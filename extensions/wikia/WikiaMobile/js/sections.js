@@ -11,14 +11,14 @@ define('sections', ['events', 'track'], function(ev, track){
 	var d = document,
 		article = d.getElementById('mw-content-text'),
 		page = d.getElementById('wkMainCnt'),
+		fragment = d.createDocumentFragment();
 		click = ev.click;
 
 	function init(){
 		//avoid running if there are no sections which are direct children of the article section
 		if(d.querySelector('#mw-content-text > h2')){
 			var contents = article.childNodes,
-				wrapper = article.cloneNode(false),
-				root = wrapper,
+				root = fragment,
 				x,
 				y = contents.length,
 				currentSection,
@@ -36,11 +36,11 @@ define('sections', ['events', 'track'], function(ev, track){
 					if(node.id == 'WkMainCntFtr' || node.className == 'printfooter' || (node.className && node.className.indexOf('noWrap') > -1)){
 						//do not wrap these elements
 						currentSection.insertAdjacentHTML('beforeend', goBck);
-						root = wrapper;
+						root = fragment;
 					}else if (isH2){
 						if (currentSection) {
 							currentSection.insertAdjacentHTML('beforeend', goBck);
-							wrapper.appendChild(currentSection);
+							fragment.appendChild(currentSection);
 						}
 
 						currentSection = d.createElement('section');
@@ -52,8 +52,8 @@ define('sections', ['events', 'track'], function(ev, track){
 						//append chevron
 						node.insertAdjacentHTML('beforeend', '<span class=chev></span>');
 
-						wrapper.appendChild(node);
-						wrapper.appendChild(currentSection);
+						fragment.appendChild(node);
+						fragment.appendChild(currentSection);
 						root = currentSection;
 						continue;
 					}
@@ -61,9 +61,8 @@ define('sections', ['events', 'track'], function(ev, track){
 				}
 			}
 
-			page.removeChild(article);
-			//insertAdjacentHTML does not parse scripts that may be inside sections
-			page.insertAdjacentHTML('afterbegin', wrapper.outerHTML);
+			article.innerHTML = '';
+			article.appendChild( fragment );
 		}
 		//this has to run even if we don't find any sections on a page for ie. Category Pages, pages without any sections but with readmore and stuff
 		$(d.body).on(click, '.collSec', function(){
