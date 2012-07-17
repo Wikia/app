@@ -429,4 +429,11 @@ class SpecialPromoteHelper extends WikiaObject {
 			);
 		}
 	}
+	
+	public function checkWikiStatus($WikiId, $langCode) {
+		$cityVisualization = F::build('CityVisualization');
+		$visualization = F::build('CityVisualization');
+		$wikiData = $visualization->getWikiDataForVisualization($WikiId, $langCode);
+		return !empty($wikiData['main_image']);
+	}
 }

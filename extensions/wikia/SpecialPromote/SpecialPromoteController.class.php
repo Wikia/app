@@ -47,6 +47,8 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		$this->wikiDesc = $this->helper->getWikiDesc();
 		$this->mainImage = $this->helper->getMainImage();
 		$this->additionalImages = $this->helper->getAdditionalImages();
+		
+		$this->wikiStatus = $this->helper->checkWikiStatus($this->wg->CityId, $this->wg->contLang->getCode());
 	}
 
 	protected function checkAccess() {

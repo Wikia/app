@@ -1,4 +1,13 @@
 <form method='post' name='upload-tool' class='WikiaForm UploadTool' enctype="multipart/form-data">
+	<div class="status-bar">
+		<div class="status-wrapper">
+			<span class="status-icon">
+				<?= wfMsg('promote-statusbar-icon') ?>
+			</span>
+			<span class="status-arrow"></span>
+		</div>
+		<?= $wikiStatus ? wfMsg('promote-statusbar-approved') : wfMsg('promote-statusbar-inreview') ?>
+	</div>
 	<p class='introduction'>
 		<strong><?= wfMsg('promote-introduction-header'); ?></strong><br/>
 		<?= wfMsg('promote-introduction-copy'); ?>
