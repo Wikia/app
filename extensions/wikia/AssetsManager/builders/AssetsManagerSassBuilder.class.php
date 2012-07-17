@@ -132,8 +132,8 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			
 			// As long as a URL was just replaced, check for a new match in the resulting code.
 			while($wasChanged) {
-				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n;]*?)([, ]url[^\n;]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$wgCdnStylePath.'\\2\\3\\4', $this->$mContent);
-				if($changedCss != $this->mContent) {
+				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n;]*?)([, ]url[^\n;]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$wgCdnStylePath.'\\2\\3\\4', $this->mContent);
+				if (($changedCss != $this->mContent) && ($changedCss != null)) {
 					$wasChanged = true;
 					$this->mContent = $changedCss;
 				} else {
@@ -153,7 +153,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	private function base64Processing() {
 		wfProfileIn(__METHOD__);
 
-		$this->mContent = preg_replace_callback("/([, ]url[^\n]*?)(\s*\/\*\s*base64\s*\*\/)/is", function($matches) {
+		$this->mContent = preg_replace_callback("/([, ]url[^\n;]*?)(\s*\/\*\s*base64\s*\*\/)/is", function($matches) {
 			global $IP;
 			$fileName = $IP . trim(substr($matches[1], 4, -1), '\'"() ');
 
