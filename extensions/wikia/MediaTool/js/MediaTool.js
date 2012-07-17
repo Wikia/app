@@ -19,8 +19,10 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 	var itemPreviewTpl = null;
 	var itemPreviewBorderTpl = null;
 	var itemPreviewInputsTpl = null;
-	var minMediaSize = 60;
-	var maxMediaSize = 660;
+	var sliderMinMediaSize = 60;
+	var sliderMaxMediaSize = 660;
+	var minMediaSize = 1;
+	var maxMediaSize = 9999;
 	var defaultMediaSettings = { align:'left', alt:"", caption:"", thumbnail:true, width:300 };
 
 	function loadResources() {
@@ -112,11 +114,9 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
 			self.fire('showModal');
 
-
-
 			cart.setThumbnailStyle(getInitialMediaSetting.call(self, initialMediaSettings, 'thumbnail'));
 			cart.setMediaLocation(getInitialMediaSetting.call(self, initialMediaSettings, 'align'));
-			cart.setMediaSize(getInitialMediaSetting.call(self, initialMediaSettings, 'width'));
+			cart.setMediaSize(Math.min(getInitialMediaSetting.call(self, initialMediaSettings, 'width'), maxMediaSize));
 			renderer.setWikiTextCallback(wikiTextCallback);
 
 			if ( typeof initialBasketContent  != "undefined" && initialBasketContent.length ) {
@@ -190,7 +190,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			$('#mediaToolMediaSizeInput').prop('disabled', true);
 			$('#mediaToolMediaSizeSlider').slider("disable");
 		}
-		$('#mediaToolMediaSizeInput').val(cart.getMediaSize());
+		$('#mediaToolMediaSizeInput').val(cart.getMediaSize());	//?
 		$('#mediaToolMediaSizeSlider').slider("value", cart.getMediaSize());
 
 		if ( isVideoPlayerDisplayed == true ) {
@@ -201,8 +201,8 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
 	function initMediaSizeActions() {
 		$('#mediaToolMediaSizeSlider').slider({
-			min: minMediaSize,
-			max: maxMediaSize,
+			min: sliderMinMediaSize,
+			max: sliderMaxMediaSize,
 			//value: 500,
 			step: 3,
 			slide: function(event, ui) {
