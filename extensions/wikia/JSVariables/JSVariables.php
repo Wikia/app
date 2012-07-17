@@ -27,9 +27,9 @@ function wfJSVariablesTopScripts(Array $vars) {
 
 function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
-	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgDBname, $wgPrivateTracker, $wgExtensionsPath,
+	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgPrivateTracker, $wgExtensionsPath,
 		$wgArticle, $wgStyleVersion, $wgSitename, $wgDisableAnonymousEditing,
-		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgMedusaSlot;
+		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath;
 
 	$skin = $out->getSkin();
 	$title = $out->getTitle();
