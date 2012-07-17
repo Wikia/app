@@ -73,7 +73,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$tempDir = str_replace('\\', '/', $tempDir);
 		$params = urldecode(http_build_query($this->mParams, '', ' '));
 
-		$cmd = "{$wgSassExecutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir}/sass --style compact -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
+		$cmd = "{$wgSassExecutable} {$IP}/{$this->mOid} {$tempOutFile} --cache-location {$tempDir}/sass --style compressed -r {$IP}/extensions/wikia/SASS/wikia_sass.rb {$params}";
 		$escapedCmd = escapeshellcmd($cmd) . " 2>&1";
 
 		$sassResult = shell_exec($escapedCmd);
