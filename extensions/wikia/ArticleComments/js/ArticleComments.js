@@ -3,7 +3,7 @@ var ArticleComments = {
 	clickedElementSelector: "",
 	mostRecentCount: 0,
 	messagesLoaded: false,
-	miniEditorEnabled: typeof wgEnableMiniEditorExt != 'undefined',
+	miniEditorEnabled: typeof wgEnableMiniEditorExt != 'undefined' && skin == 'oasis',
 	initCompleted: false,
 
 	init: function() {

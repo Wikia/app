@@ -154,14 +154,6 @@ class ArticleCommentInit {
 			global $wgUser;
 			$app = F::app();
 
-			if ( in_array(
-					get_class( $sk ),
-					$app->wg->ArticleCommentsEnabledSkins
-			) )
-			{
-				$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js\" ></script>\n");
-			}
-
 			//FB#21244 this should run only for MonoBook, Oasis and WikiaMobile have their own SASS-based styling
 			if ( $sk instanceof SkinMonoBook ) {
 				$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css");
