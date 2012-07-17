@@ -190,6 +190,8 @@ class SpecialCreateTopList extends SpecialPage {
 										$itemsErrors[] = array( wfMsg( $errorTuple[ 'msg' ], $errorTuple[ 'params' ] ) );
 										$counter++;
 									}
+								} else {
+									$item->getTitle()->invalidateCache();
 								}
 							}
 
