@@ -6,7 +6,8 @@
 class WikiaUpdater {
 	
 	public static function get_patch_dir() {
-		return dirname( __FILE__ ) . "/../archives/wikia/";
+		global $IP;
+		return $IP . "/maintenance/archives/wikia/";
 	}
 	
 	public static function get_extensions_dir() {
@@ -34,7 +35,7 @@ class WikiaUpdater {
 			array( 'addField', 'watchlist', 'wl_wikia_addedtimestamp', $dir . 'patch-watchlist-improvements.sql', true ),
 			
 			# indexes
-			array( 'addIndex', 'archive', 'page_revision', $dir. 'patch-index-archive-page_revision.sql' ),
+			array( 'addIndex', 'archive', 'page_revision', $dir. 'patch-index-archive-page_revision.sql', true ),
 			
 			# functions
 			array( 'WikiaUpdater::do_page_vote_unique_update' ),
