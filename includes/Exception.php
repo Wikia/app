@@ -225,11 +225,11 @@ class MWException extends Exception {
 	 * @return bool
 	 */
 	function htmlHeader() {
-		global $wgLogo, $wgSitename, $wgOutputEncoding;
+		global $wgLogo, $wgSitename;
 
 		if ( !headers_sent() ) {
 			header( 'HTTP/1.0 500 Internal Server Error' );
-			header( 'Content-type: text/html; charset='.$wgOutputEncoding );
+			header( 'Content-type: text/html; charset=UTF-8' );
 			/* Don't cache error pages!  They cause no end of trouble... */
 			header( 'Cache-control: none' );
 			header( 'Pragma: nocache' );

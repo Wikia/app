@@ -171,7 +171,7 @@ class UserMailer {
 	public static function send( $to, $from, $subject, $body, $replyto = null, $contentType = null, $category='UserMailer', $priority = 0,
 	$attachements = array() ) {
 		global $wgSMTP, $wgEnotifMaxRecips, $wgAdditionalMailParams;
-		global $wgErrorString, $wgOutputEncoding, $wgEnotifImpersonal, $wgForceSendgridEmail;
+		global $wgErrorString, $wgEnotifImpersonal, $wgForceSendgridEmail;
 
 		if ( !is_array( $to ) ) {
 			$to = array( $to );
@@ -233,7 +233,7 @@ class UserMailer {
 		if(empty($attachements)) {
 		/* </Wikia> */
 			$headers['Content-Type'] = ( is_null( $contentType ) ?
-				'text/plain; charset=' . $wgOutputEncoding : $contentType );
+				'text/plain; charset=UTF-8' : $contentType );
 			$headers['Content-Transfer-Encoding'] = '8bit';
 		/* <Wikia> */
 		}
@@ -796,7 +796,6 @@ class EmailNotification {
 		$subject = MessageCache::singleton()->transform( $subject, false, null, $this->title );
 		$this->subject = strtr( $subject, $postTransformKeys );
 
-		$body = wfMsgExt( 'enotif_body', 'content' );
 		wfRunHooks('ComposeCommonBodyMail', array( $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ));
 		$body = strtr( $body, $keys );
 		$body = MessageCache::singleton()->transform( $body, false, null, $this->title );
