@@ -541,12 +541,6 @@ $.extend(Timer, {
 	}
 });
 
-//Extension to $.support to detect browsers/platforms that don't support
-//CSS directive position:fixed
-if($.support){
-	$.support.fileUpload = $.support.keyboardShortcut = $.support.positionFixed = !( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} || (navigator.userAgent.match(/android/i) != null));
-}
-
 $.openPopup = function(url, name, moduleName, width, height) {
 	if (wgUserName) {
 		window.open(
