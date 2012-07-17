@@ -131,6 +131,9 @@ ignored = landingpage-site1-url, landingpage-site2-url, landingpage-site3-url, l
 ignored = landingpage-site1-alt, landingpage-site2-alt, landingpage-site3-alt, landingpage-site4-alt, landingpage-site5-alt
 ignored = landingpage-sites
 
+Lightbox
+file = Lightbox/Lightbox.i18n.php
+
 Link Suggest
 
 Logger
