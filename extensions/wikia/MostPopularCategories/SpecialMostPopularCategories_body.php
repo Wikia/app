@@ -9,7 +9,7 @@ class MostpopularcategoriesSpecialPage extends SpecialPage {
 		$this->page = $page;
 		parent::__construct( $this->page, '' );
 	}
-	
+
 	function setList( $showList = false ) { $this->showList = $showList; }
 
 	function execute( $par = '' ) {
@@ -34,8 +34,8 @@ class MostpopularcategoriesPage extends QueryPage {
 	var $data = array();
     var $show = true;
 
-    function __construct( $page ) { 
-		parent::__construct( $page, '' ); 
+    function __construct( $name = '' ) {
+		parent::__construct( $name, '' );
 	}
 
 	function setVisible( $show ) { $this->show = $show; }
@@ -49,14 +49,14 @@ class MostpopularcategoriesPage extends QueryPage {
 		foreach($filterWords as $word) {
 			$filterWordsA[] = '(cl_to not like "%'.$word.'%")';
         }
-        
+
 		return array (
 			'tables' => array ( 'categorylinks' ),
-			'fields' => array ( 
+			'fields' => array (
 				"'Mostpopularcategories' as type",
-				'0 as namespace', 
-				'cl_to as title', 
-				'COUNT(*) as value' 
+				'0 as namespace',
+				'cl_to as title',
+				'COUNT(*) as value'
 			),
 			'conds' => $filterWordsA,
 			'options' => array (
