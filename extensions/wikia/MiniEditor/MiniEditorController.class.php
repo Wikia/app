@@ -57,17 +57,13 @@ class MiniEditorController extends WikiaController {
 			}
 
 			// Don't include wgMiniEditorAssets in global page vars
-			unset($jsvars['wgMiniEditorAssets']);		
+			unset($jsvars['wgMiniEditorAssets']);
 
 			// Set the rest of our global JS vars
 			foreach ($jsvars as $var => $value) {
 				$this->response->setJsVar($var, $value);
 			}
 		}
-
-		// Required assets
-		$this->response->addAsset('extensions/wikia/MiniEditor/css/MiniEditor.scss');
-		$this->response->addAsset('extensions/wikia/MiniEditor/js/MiniEditor.js');
 
 		// Additional assets
 		foreach($additionalAssets as $asset) {
@@ -88,7 +84,7 @@ class MiniEditorController extends WikiaController {
 			$vars['RTEDisabledReason'] = 'sitedisabled';
 		} else {
 			// Need to call RTE::init to get Disabled reason (if any, usually preferences)
-			$ep = new EditPage(new Article(new Title())); 
+			$ep = new EditPage(new Article(new Title()));
 			RTE::init($ep);
 			RTE::makeGlobalVariablesScript(&$vars);
 		}
@@ -125,5 +121,5 @@ class MiniEditorController extends WikiaController {
 //TODO: fix the cache problem
 //		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 		$this->response->setData($vars);
-	}	
+	}
 }

@@ -13,11 +13,11 @@ $config['oasis_jquery_ads_js'] = array(
 );
 
 $config['oasis_extensions_js'] = array(
-    'type' => AssetsManager::TYPE_JS,
-    'assets' => array(
-        '#group_oasis_ads_js',
-        '#group_oasis_noads_extensions_js'
-    )
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_ads_js',
+		'#group_oasis_noads_extensions_js'
+	)
 );
 
 $config['oasis_tracker_js'] = array(
@@ -52,6 +52,7 @@ $config['oasis_ads_js'] = array(
 $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'#group_articlecomments_js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
@@ -60,6 +61,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to change login without logging out
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
 		'//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
+		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/Meebo/meebo.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
@@ -409,6 +411,7 @@ $config['monobook_js'] = array(
 		'//resources/wikia/modules/log.js',
 
 		'#group_oasis_jquery',
+		'#group_articlecomments_js',
 
 		// TODO: remove dependency on YUI (see BugId:3116)
 		'//resources/wikia/libraries/yui/utilities/utilities.js',
@@ -441,6 +444,15 @@ $config['monobook_js'] = array(
 /********** Extensions packages **********/
 
 /** Article Comments **/
+
+global $wgArticleCommentsEnabledSkins;
+$config['articlecomments_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => $wgArticleCommentsEnabledSkins,
+	'assets' => array(
+		'//extensions/wikia/ArticleComments/js/ArticleComments.js'
+	)
+);
 
 $config['articlecomments_js_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_JS,

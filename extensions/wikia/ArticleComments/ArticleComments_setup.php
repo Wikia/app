@@ -118,8 +118,7 @@ function efBeforePageDisplayArticleComments (&$vars) {
 		if ($app->wg->EnableMiniEditorExtForArticleComments && !$isMobile) {
 			$app->sendRequest('MiniEditor', 'loadAssets', array(
 				'loadOnDemand' => true,
-				'additionalAssets' => array(
-					'/extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss',
+				'loadOnDemandAssets' => array(
 					'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
 				)
 			));
