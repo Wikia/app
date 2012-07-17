@@ -339,22 +339,19 @@ CKEDITOR.plugins.add('rte-media',
             if (!UserLogin.isForceLogIn()) {
 
                 var data = $(this).getData();
-				var editedElement = this;
+                var editedElement = this;
 
-                window.MediaTool.initialBasketContent = [];
-                if ( data.params ) {
-                    window.MediaTool.initialMediaSettings = data.params;
-                }
+                var initialBasketContent = [];
 
                 window.MediaTool.callBackend('getMediaItems', {mediaList:[data.title]}, function(items) {
 
                     $.each(items, function(i, item) {
-                        window.MediaTool.initialBasketContent.push( item );
+                        initialBasketContent.push( item );
                     });
 
 					window.MediaTool.showModal.call(window.MediaTool, function(wikiText) {
 						self.addWikiText( wikiText, $(editedElement) );
-					});
+					}, data.params, initialBasketContent);
                 });
             }
         });

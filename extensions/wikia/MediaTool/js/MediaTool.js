@@ -86,14 +86,14 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		}, 'internal');
 	}
 
-	function getInitialMediaSetting(key) {
-		if ((typeof this.initialMediaSettings[key] !== "undefined") && (this.initialMediaSettings[key] !== "")) {
-			return this.initialMediaSettings[key];
+	function getInitialMediaSetting(initialMediaSettings, key) {
+		if ((typeof initialMediaSettings === "object") && (typeof initialMediaSettings[key] !== "undefined") && (initialMediaSettings[key] !== "")) {
+			return initialMediaSettings[key];
 		}
 		return defaultMediaSettings[key];
 	}
 
-	function showModal(wikiTextCallback) {
+	function showModal(wikiTextCallback, initialMediaSettings, initialBasketContent) {
 		var self = this;
 		loadResources().done(function () {
 
@@ -114,15 +114,14 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
 
 
-			cart.setThumbnailStyle(getInitialMediaSetting.call(self, 'thumbnail'));
-			cart.setMediaLocation(getInitialMediaSetting.call(self, 'align'));
-			cart.setMediaSize(getInitialMediaSetting.call(self, 'width'));
+			cart.setThumbnailStyle(getInitialMediaSetting.call(self, initialMediaSettings, 'thumbnail'));
+			cart.setMediaLocation(getInitialMediaSetting.call(self, initialMediaSettings, 'align'));
+			cart.setMediaSize(getInitialMediaSetting.call(self, initialMediaSettings, 'width'));
 			renderer.setWikiTextCallback(wikiTextCallback);
 
-			if ( self.initialBasketContent.length ) {
-				useInitialBasketContent( self.initialBasketContent, 'wiki' );
+			if ( typeof initialBasketContent  != "undefined" && initialBasketContent.length ) {
+				useInitialBasketContent( initialBasketContent, 'wiki' );
 				renderPreview();
-				self.initialBasketContent = [];
 
 			} else {
 				changeCurrentView( "find" );
@@ -396,9 +395,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		},
 		getRenderer: function() {
 			return renderer;
-		},
-		initialBasketContent: [],
-		initialMediaSettings: {}
+		}
 	});
 
 	return new MediaToolClass;
