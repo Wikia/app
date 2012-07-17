@@ -130,9 +130,9 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			// This will rewrite all but the last URL on the line (the last regex will fix the final URL and remove the special comment).
 			$wasChanged = true;
 			
-			// TODO: refactor?
+			// As long as a URL was just replaced, check for a new match in the resulting code.
 			while($wasChanged) {
-				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n]*?)([, ]url[^\n]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$wgCdnStylePath.'\\2\\3\\4', $this->mContent);
+				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n;]*?)([, ]url[^\n;]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$wgCdnStylePath.'\\2\\3\\4', $this->$
 				if($changedCss != $this->mContent) {
 					$wasChanged = true;
 					$this->mContent = $changedCss;
@@ -141,7 +141,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				}
 			}
 
-			$this->mContent = preg_replace("/([\(][\"']?)(\/[^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$wgCdnStylePath.'\\2', $this->mContent);
+			$this->mContent = preg_replace("/([\(][\"']?)(\/[^\n;]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$wgCdnStylePath.'\\2', $this->mContent);
 		}
 
 		wfProfileOut(__METHOD__);
