@@ -1,5 +1,5 @@
 <section class="WikiaSignup">
-<?php if (!$isMonobook) { ?>
+<?php if (!$isMonobookOrUncyclo) { ?>
 	<h2 class="pageheading">
 		<?= $pageHeading ?>
 	</h2>
@@ -36,11 +36,11 @@
 			</div>
 		</div>
 	<?php } //marketing ?>
-<?php } //isMonobook ?>
+<?php } //$isMonobookOrUncyclo ?>
 	<div class="form-container">
 	<?php
 		// 3rd party providers buttons
-		if (!$isMonobook) {
+		if (!$isMonobookOrUncyclo) {
 			echo $app->renderView('UserLoginSpecial', 'ProvidersTop', array('requestType' => 'signup') );
 		}
 	?>

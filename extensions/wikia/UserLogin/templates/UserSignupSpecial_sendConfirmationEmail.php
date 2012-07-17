@@ -1,5 +1,5 @@
 <section class="WikiaSignup ConfirmEmail">
-<? if(!$isMonobook) { ?>
+<? if(!$isMonobookOrUncyclo) { ?>
 	<h2 class="pageheading"><?= $heading ?></h2>
 	<h3 class="subheading"><?= $subheading ?></h3>
 	<?= wfRenderModule('WikiHeader', 'Wordmark') ?>
@@ -18,7 +18,7 @@
 			</div>
 		</fieldset>
 	</form>
-<? if(!$isMonobook) { ?>
+<? if(!$isMonobookOrUncyclo) { ?>
 	<p>
 		<span class="change-email-msg">
 			<?= wfMsg('usersignup-confirm-email-change-email-content') ?>
@@ -63,7 +63,7 @@
 
 	echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
 
-} //$isMonobook
+} //$isMonobookOrUncyclo
 
 } //$isbyemail
 ?>
