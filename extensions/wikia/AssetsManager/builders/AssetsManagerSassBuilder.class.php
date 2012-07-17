@@ -107,8 +107,8 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		wfProfileIn(__METHOD__);
 
 		$matches = array();
-		$importRegexOne = "/@import ['\\\"]([^\\n]*\\.css)['\\\"]([^\\n]*)(\\n|$)/is"; // since this stored is in a string, remember to escape quotes, slashes, etc.
-		$importRegexTwo = "/@import url[\\( ]['\\\"]?([^\\n]*\\.css)['\\\"]?[ \\)]([^\\n]*)(\\n|$)/is";
+		$importRegexOne = "/@import ['\\\"]([^\\n]*?\\.css)['\\\"]([^\\n]*?)(\\n|;|$)/is"; // since this stored is in a string, remember to escape quotes, slashes, etc.
+		$importRegexTwo = "/@import url[\\( ]['\\\"]?([^\\n]*?\\.css)['\\\"]?[ \\)]([^\\n]*?)(\\n|;|$)/is";
 		if ((0 < preg_match_all($importRegexOne, $this->mContent, $matches, PREG_SET_ORDER)) || (0 < preg_match_all($importRegexTwo, $this->mContent, $matches, PREG_SET_ORDER))) {
 			foreach($matches as $match) {
 				$lineMatched = $match[0];
@@ -117,7 +117,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				$this->mContent = str_replace($lineMatched, $fileContents, $this->mContent);
 			}
 		}
-
+	
 		wfProfileOut(__METHOD__);
 	}
 
@@ -129,7 +129,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			// Because of fonts in CSS, we have to allow for lines with multiple url()s in them.
 			// This will rewrite all but the last URL on the line (the last regex will fix the final URL and remove the special comment).
 			$wasChanged = true;
-
+			
 			// TODO: refactor?
 			while($wasChanged) {
 				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n]*?)([, ]url[^\n]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$wgCdnStylePath.'\\2\\3\\4', $this->mContent);
