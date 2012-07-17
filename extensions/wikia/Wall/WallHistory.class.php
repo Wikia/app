@@ -115,7 +115,7 @@ class WallHistory extends WikiaModel {
 			'post_ns' => $ns,
 			'deleted_or_removed' => 0
 		);
-		
+	
 		return $this->loadFromDB($where, 10, 0, 'desc');
 	}
 	
@@ -123,7 +123,7 @@ class WallHistory extends WikiaModel {
 		$db =  $this->getDatawareDB(DB_SLAVE);
 		
 		$res = $db->select(
-			'wall_history',
+			'wall_history_',
 			array(
 				'post_user_id',
 				'max(revision_id) as revision_id',
@@ -253,10 +253,13 @@ class WallHistory extends WikiaModel {
 				'ORDER BY' => 'event_date '.$sort,
 			)
 		);
-		
+
 		$out = array();
 		while($row = $db->fetchRow($res)) {
-			$out[] = $this->formatData($row);
+			$data = $this->formatData($row);
+			if(!empty($data)) {
+				$out[] = $this->formatData($row);
+			}
 		}
 		
 		return $out;
