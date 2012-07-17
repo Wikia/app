@@ -62,6 +62,11 @@ $messages['en'] = array(
 	'promote-image-accepted' => 'Accepted',
 	'promote-image-in-review' => 'In review',
 
+	'promote-statusbar-icon' => 'Status',
+	'promote-statusbar-inreview' => 'One or more of your images are currently in review. Your wiki will appear on www.wikia.com when the images have been approved.',
+	'promote-statusbar-approved' => 'Your wiki is currently being promoted on www.wikia.com!',
+	'promote-statusbar-rejected' => 'One or more of your images was not approved. Find out why.',
+
 );
 
 $messages['qqq'] = array(
@@ -115,6 +120,11 @@ $messages['qqq'] = array(
 	'promote-image-rejected' => 'Information about image rejection',
 	'promote-image-accepted' => 'Information about image approval',
 	'promote-image-in-review' => 'Information about image being in review',
+
+	'promote-statusbar-icon' => 'Text on the status icon at the top of the special:promote page',
+	'promote-statusbar-inreview' => 'Status information when wiki is in review',
+	'promote-statusbar-approved' => 'Status information when wiki is in approved',
+	'promote-statusbar-rejected' => 'Status information when wiki is in rejected',
 
 );
 
