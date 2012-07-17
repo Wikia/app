@@ -72,6 +72,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->signupToken = UserLoginHelper::getSignupToken();
 		$this->uselang = $this->request->getVal( 'uselang', 'en' );
 
+		//fb#38260 -- removed uselang
 		$this->avatars = $this->userLoginHelper->getRandomAvatars();
 		$this->popularWikis = $this->userLoginHelper->getRandomWikis();
 
@@ -98,7 +99,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					'method' => 'sendConfirmationEmail',
 					'username' => $this->username,
 					'byemail' => intval($this->byemail),
-					'uselang' => $this->uselang,
 				);
 				$redirectUrl = $this->wg->title->getFullUrl( $params );
 				$this->wg->out->redirect( $redirectUrl );
