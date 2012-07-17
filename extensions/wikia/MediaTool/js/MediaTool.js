@@ -93,7 +93,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		return defaultMediaSettings[key];
 	}
 
-	function showModal(event) {
+	function showModal(wikiTextCallback) {
 		var self = this;
 		loadResources().done(function () {
 
@@ -117,6 +117,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			cart.setThumbnailStyle(getInitialMediaSetting.call(self, 'thumbnail'));
 			cart.setMediaLocation(getInitialMediaSetting.call(self, 'align'));
 			cart.setMediaSize(getInitialMediaSetting.call(self, 'width'));
+			renderer.setWikiTextCallback(wikiTextCallback);
 
 			if ( self.initialBasketContent.length ) {
 				useInitialBasketContent( self.initialBasketContent, 'wiki' );

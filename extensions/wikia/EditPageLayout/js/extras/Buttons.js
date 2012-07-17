@@ -95,7 +95,11 @@
 		titleId: 'wikia-editor-media-mut-tooltip',
 		className: 'RTEMUTButton',
 		forceLogin: true,
-		clicksource: function() { MediaTool.showModal(); },
+		clicksource: function() {
+			MediaTool.showModal(function(wikiText) {
+				insertTags( wikiText, '', '', getTextarea());
+			});
+		},
 		ckcommand: 'mediaupload',
 		precondition: checkMUT
 	};

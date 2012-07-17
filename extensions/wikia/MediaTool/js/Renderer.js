@@ -52,6 +52,12 @@ MediaTool.MainRenderer = $.createClass(MediaTool.Renderer,{
 		MediaTool.bind('Cart::uploadRemoteItemsComplete', this.onUploadRemoteItemsComplete, this);
 	},
 
+	wikiTextCallback: null,
+
+	setWikiTextCallback: function(wikiTextCallback) {
+		this.wikiTextCallback = wikiTextCallback;
+	},
+
 	onEditDone: function(cart) {
 		var hasRemoteItems = cart.uploadRemoteItems();
 		if(!hasRemoteItems) {
@@ -61,11 +67,8 @@ MediaTool.MainRenderer = $.createClass(MediaTool.Renderer,{
 	},
 
 	renderCartContent: function(cart) {
-
-		if ( typeof window.MediaToolEditedElement  != "undefined" && window.MediaToolEditedElement !== false ) {
-			RTE.mediaEditor.update(window.MediaToolEditedElement, this.getWikitext(cart));
-		} else {
-			RTE.mediaEditor.addVideo(this.getWikitext(cart), {});
+		if (this.wikiTextCallback) {
+			this.wikiTextCallback( this.getWikitext(cart) );
 		}
 
 		// @todo use events for that
