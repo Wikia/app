@@ -24,10 +24,10 @@
 		}
 		elseif ($wg->EnableCorporatePageExt) {
 			if (ArticleAdLogic::isSearch()) {
-				echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));								
+				echo wfRenderModule('Ad', 'Index', array('slotname' => 'TOP_LEADERBOARD'));
 			}
 			else {
-				echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));				
+				echo wfRenderModule('Ad', 'Index', array('slotname' => 'CORP_TOP_LEADERBOARD'));
 			}
 		} else {
 			if (in_array('leaderboard', $wg->ABTests)) {
@@ -69,6 +69,10 @@
 			echo wfRenderModule($headerModuleName, $headerModuleAction, $headerModuleParams);
 		}
 		?>
+
+		<? if (!empty($wg->EnableForumExt) && !empty($wg->IsForum)): ?>
+			<?= F::app()->renderView( 'ForumController', 'header' ) ?>
+		<? endif ?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent">
 			<?php

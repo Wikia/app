@@ -23,6 +23,7 @@ $messages['en'] = array(
 	'wall-message-no-permission' => 'You don\'t have permissions to perfom this action on the message',
 
 	'wall-thread-removed' => 'Removed',
+	'wall-thread-isnotifyeveryone' => 'Highlight',
 	'wall-thread-deleted' => 'Deleted',
 
 	'wall-default-title' => 'Message from $1',
@@ -139,7 +140,7 @@ The original post and your summary will still appear in the wiki's history.",
 	'wn-user3-reply-other-a-wall' => '$1 and others replied to $3\'s message',
 	'wn-newmsg-onmywall' => '$1 left a new message on your wall',
 	'wn-newmsg' => 'You left a new message on $1\'s wall',
-	'wn-newmsg-on-followed-wall' => '$1 left a new message on $2\'s wall.',
+	'wn-newmsg-on-followed-wall' => '$1 left a new message on $2\'s wall',
 
 	'wn-admin-thread-deleted' => 'Thread removed from $1\'s wall',
 	'wn-admin-reply-deleted' => 'Reply removed from thread on $1\'s wall',
@@ -322,6 +323,18 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wallshowsource-toggle-v2' => 'Enable {{int:user-action-menu-view-source}} option on Message Wall posts',
 	'wallshowsource-toggle' => 'Enable {{int:user-action-menu-view-source}} on Message Wall posts',
 	'walldelete-toggle' => 'Enable Revision delete on Message Wall posts',
+	'wall-notifications-notifyeveryone' => 'Highlighted by $1',
+	'wall-message-notifyeveryone' => 'Highlight this thread',
+	'wall-message-unnotifyeveryone' => 'Un-Highlight this thread',
+	'wall-message-notifyeveryone-tooltip' => 'Every logged-in person on the wiki will be notified about this thread',
+
+	'wall-votes-modal-showmore' => 'See others who gave Kudos',
+	'wall-votes-modal-title' => 'Kudos',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|One person|$1 people}} gave Kudos to this message', 
+	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-number-tooltip' => 'See who gave Kudos to this message',
+	'wall-votes-vote-tooltip' => 'Give Kudos to this message',
+	'wall-votes-voted-tooltip' => 'You\'ve given this message Kudos!',
 );
 
 /** Message documentation (Message documentation)
@@ -349,6 +362,7 @@ $messages['qqq'] = array(
 * $1 is the username (GENDER is supported)",
 	'wall-message-no-permission' => 'Error message when a non-admin or staff tries to delete or revision-delete a message',
 	'wall-thread-removed' => 'In parentheses at the top of a removed thread page, next to the title',
+	'wall-thread-isnotifyeveryone' => 'In parentheses at the top of a higlated  thread page, next to the title',
 	'wall-thread-deleted' => 'In parentheses at the top of a deleted thread page, next to the title',
 	'wall-default-title' => "Default title if the user doesn't give a new thread a title",
 	'wall-no-title-warning' => 'Error message when a user tries to post a thread without a title',
@@ -663,6 +677,18 @@ $messages['qqq'] = array(
 	'wallshowsource-toggle-v2' => 'Preferences checkbox.',
 	'wallshowsource-toggle' => 'Preferences checkbox.',
 	'walldelete-toggle' => 'Preferences checkbox.',
+
+	'wall-message-notifyeveryone' => 'Dropdown menu for admin, option to  Highlight this thread',
+	'wall-message-unnotifyeveryone' => 'Dropdown menu for admin, Un-highlight this thread',
+	'wall-message-notifyeveryone-tooltip' => 'tooltip on checkbox instructing users they can highlight the thread if checked',
+	
+	'wall-votes-modal-showmore' => 'It is display in kudos modal (mainly forums)',
+	'wall-votes-modal-title' => 'Kudos modal title (mainly forums)',
+	'wall-votes-modal-title-desc' => 'description in user title (mainly forums).  $1 contains number of people, take note of plural.', 
+	'wall-votes-number' => 'kudos number on message (mainly forums)',
+	'wall-votes-number-tooltip' => 'tooltip tooltip under numbers of Kudos',
+	'wall-votes-vote-tooltip' => 'hover tooltip instructing users they can vote',
+	'wall-votes-voted-tooltip' => 'hover tooltip instructing users they have already voted',
 );
 
 /** Bulgarian (български)
@@ -930,6 +956,7 @@ ___________________________________________<br />
 	'wallshowsource-toggle-v2' => 'Aktiviere Option {{int:user-action-menu-view-source}} auf Nachrichtenseiten-Posts',
 	'wallshowsource-toggle' => 'Aktiviere {{int:user-action-menu-view-source}} für Nachrichtenseiten-Posts',
 	'walldelete-toggle' => 'Aktiviere Versionslöschung für Nachrichtenseiten-Posts',
+	'wall-notifications-notifyeveryone' => 'show in notfication dropdown for Highlighted messages, $1 - name of admin'
 );
 
 /** Zazaki (Zazaki)
@@ -2909,7 +2936,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'walldelete-toggle' => 'Hidupkan ciri Hapus semakan pada pos-pos Papan Pesanan',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål))
  * @author Audun
  */
 $messages['nb'] = array(
@@ -4810,7 +4837,7 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 	'wall-history-action-restore' => 'rapexhî',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

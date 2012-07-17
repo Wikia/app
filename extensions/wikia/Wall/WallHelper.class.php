@@ -16,7 +16,7 @@ class WallHelper {
 	public function getArchiveSubPageText() {
 		return wfMsg('wall-user-talk-archive-page-title');
 	}
-
+		
 	/**
 	 * @brief Gets and returns user's talk page's content
 	 * 
@@ -103,7 +103,7 @@ class WallHelper {
 	 *
 	 * @return array | boolean returns false if ArticleComment class does not exist
 	 * 
-	 * @author Andrzej 'nAndy' Lukaszewski
+	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	public function wikiActivityFilterMessageWall($title, &$res) {
 		$app = F::app();
@@ -151,8 +151,6 @@ class WallHelper {
 					if( isset($parent->mMetadata['title']) ) $title = $wmessage->getMetaTitle();
 					$this->mapParentData($item, $parent, $title);
 					$res['title'] = 'message-wall-thread-#'.$parent->getTitle()->getArticleID();
-
-					$item['wall-msg'] = wfMsg( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $item['wall-owner']).'</a>');
 				} else {
 				//message was removed or deleted
 					$item = array();
@@ -566,7 +564,7 @@ class WallHelper {
 		$app = F::App();
 		$rev = Revision::newFromId($revOldId);
 		$notif = F::build('WallNotificationEntity', array($rev, $app->wg->CityId), 'createFromRev');
-			
+		
 		$wh = F::build('WallHistory', array($app->wg->CityId));
 		$wh->add($rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $app->wg->User);
 
@@ -574,5 +572,15 @@ class WallHelper {
 			$wn = F::build('WallNotifications', array());
 			$wn->addNotification($notif);
 		}
+	}
+	
+	//TODO: move it some how to wall message class
+	
+	public function isAllowedNotifyEveryone($ns, $user) {
+		$app = F::App();
+		if(in_array(MWNamespace::getSubject($ns), $app->wg->WallNotifyEveryoneNS) && $user->isAllowed('notifyeveryone')) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -273,7 +273,7 @@ class WallNotifications {
 		}
 
 		if(!empty($notification->data->article_title_ns)) {
-			$users = $this->getWatchlist($notification->data->wall_username, $title, $notification->data->article_title_ns);
+			$users = $this->getWatchlist($notification->data->wall_username, $title, $notification->data->article_title_ns);			
 		} else {
 			$users = $this->getWatchlist($notification->data->wall_username, $title);
 		}
@@ -285,7 +285,7 @@ class WallNotifications {
 			unset($users[$notification->data->msg_author_id]);
 		}
 
-		$title = Title::newFromText($notification->data->wall_username. '/' . $notification->data->title_id, NS_USER_WALL );
+	///	$title = Title::newFromText($notification->data->wall_username. '/' . $notification->data->title_id, NS_USER_WALL );
 		$this->addNotificationLinks($users, $notification);
 		$this->sendEmails(array_keys($users), $notification );
 	}
@@ -340,7 +340,7 @@ class WallNotifications {
 			)) {
 
 				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
-				$watcherName = $watcher->getName();
+				$watcherName = $watcher->getName();	
 
 				if( $notification->data->msg_author_username == $notification->data->msg_author_displayname) {
 					$author_signature = $notification->data->msg_author_username;
@@ -371,7 +371,7 @@ class WallNotifications {
 						'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
 					);
 				}
-
+		
 				if(!($watcher->getBoolOption('unsubscribed') === true)) {
 					$this->sendEmail($watcher, $data);
 				}
@@ -397,7 +397,7 @@ class WallNotifications {
 		$keys[] = '$SUBJECT';
 		$values[] = $subject;
 
-		$data['$SUBJECT'] = $subject;
+		$data['$SUBJECT'] = $subject; 
 		$html = $this->app->getView('WallExternal', 'mail', array('data' => $data))->render();
 		$text = str_replace($keys, $values, $text);
 
@@ -428,7 +428,7 @@ class WallNotifications {
 		return $users;
 	}
 
-	protected function addNotificationLinks(Array $userIds, $notification) {
+	public function addNotificationLinks(Array $userIds, $notification) {
 		foreach($userIds as $userId) {
 			$this->addNotificationLink($userId, $notification);
 			$this->addWikiToList($userId, $this->app->wg->CityId, $this->app->wg->sitename);
@@ -642,10 +642,7 @@ class WallNotifications {
 		$this->cleanEntitiesFromDB();
 	}
 
-	/**
-	 * @todo why $wikiId is not used?
-	 */
-	protected function sleep( $userId, $wikiId = 0 ) {
+	protected function sleep($userId, $wikiId){
 		$time = 100000 - $count*1000; //change priority of process with access to resource
 		if($time < 0) {
 			$time = 0;

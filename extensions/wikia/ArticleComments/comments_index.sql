@@ -9,13 +9,14 @@ CREATE TABLE IF NOT EXISTS `comments_index` (
   `locked` tinyint(1) NOT NULL DEFAULT '0',
   `protected` tinyint(1) NOT NULL DEFAULT '0',
   `sticky` tinyint(1) NOT NULL DEFAULT '0',
-  `first_rev_id` int(10) unsigned NOT NULL,
-  `created_at` char(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `last_rev_id` int(10) unsigned NOT NULL,
-  `last_touched` char(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
+  `first_rev_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `last_rev_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `last_touched` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`parent_page_id`,`comment_id`),
-  KEY `parent_page_id` (`parent_page_id`,`archived`,`deleted`,`removed`),
+  KEY `parent_page_id` (`parent_page_id`,`archived`,`deleted`,`removed`,`parent_comment_id`),
   KEY `comment_id` (`comment_id`,`archived`,`deleted`,`removed`),
   KEY `parent_comment_id` (`parent_comment_id`,`archived`,`deleted`,`removed`),
-  KEY `sticky` (`sticky`, `created_at`)
+  KEY `last_touched` (`last_touched`,`archived`,`deleted`,`removed`,`parent_comment_id`,`parent_page_id`),
+  KEY `sticky` (`sticky`,`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

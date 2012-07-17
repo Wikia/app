@@ -4,11 +4,14 @@ $messages = array();
 
 $messages['en'] = array(
 	'timeagomessaging-desc' => 'Provides i18n for jquery.timeago.js plugin',
+
+	'timeago-year' => '{{PLURAL:$1|a year|$1 years}} ago',
+	'timeago-month' => '{{PLURAL:$1|a month|$1 months}} ago',
 	'timeago-day' => '{{PLURAL:$1|a day|$1 days}} ago',
 	'timeago-hour' => '{{PLURAL:$1|an hour|$1 hours}} ago',
 	'timeago-minute' => '{{PLURAL:$1|a minute|$1 minutes}} ago',
-	'timeago-month' => '{{PLURAL:$1|a month|$1 months}} ago',
 	'timeago-second' => 'a minute ago',
+
 	'timeago-day-from-now' => '{{PLURAL:$1|a day|$1 days}} from now',
 	'timeago-hour-from-now' => '{{PLURAL:$1|an hour|$1 hours}} from now',
 	'timeago-minute-from-now' => '{{PLURAL:$1|a minute|$1 minutes}} from now',

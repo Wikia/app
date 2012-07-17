@@ -9,3 +9,5 @@ wfLoadExtensionNamespaces( 'Forum', array( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_
 //add this namespace to list of wall namespaces
 
 $wgWallNS[] = NS_WIKIA_FORUM_BOARD;
+$wgWallNotifyEveryoneNS[] = NS_WIKIA_FORUM_BOARD;
+$wgWallVotesNS[] = NS_WIKIA_FORUM_BOARD;

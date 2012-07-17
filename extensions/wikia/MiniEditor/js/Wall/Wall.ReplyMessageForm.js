@@ -1,75 +1,76 @@
-(function(window, $) {
+(function($) {
 
-	// Reply Message
-	var MiniEditorReplyMessageForm = $.createClass(WallReplyMessageForm, {
-		init: function() {
-			var self = this;
+MiniEditor.Wall = MiniEditor.Wall || {};
+MiniEditor.Wall.ReplyMessageForm = $.createClass(Wall.settings.classBindings.replyMessageForm, {
+	initEvents: function() {
+		var self = this;
 
-			this.wall
-				.on('click.MiniEditor', '.replyButton', this.proxy(this.replyToMessage))
-				.on('click.MiniEditor', '.new-reply .body', this.proxy(this.click)).each(function() {
-					$(this).is(':focus') && self.initEditor(this);
-				});
-		},
+		$(this.replyWrapper)
+			.on('click.MiniEditor', this.replyButton, this.proxy(this.replyToMessage))
+			.on('click.MiniEditor', this.replyBody, this.proxy(this.initEditor));
 
-		click: function(e) {
-			this.initEditor(e.target);
-		},
-		
-		initEditor: function(target) {
-			target = $(target);
-
-			// check if editor exists before unbinding placeholder (BugId:23781)
-			if (!target.data('wikiaEditor')) {
-				// Unbind placeholder and clear textarea before initing mini editor (BugId:23221)
-				target.unbind('.placeholder').val('');
+		$(this.replyBody).each(function() {
+			if ($(this).is(':focus')) {
+				self.initEditor({ target: this });
 			}
+		});
+	},
 
-			target.miniEditor({
-				config: {
-					animations: window.WallAnimations
-				},
-				events: {
-					editorReady: function(event, wikiaEditor) {
-						// Wait till after editor is loaded to know whether RTE is enabled. 
-						// If no RTE, re-enable placeholder on the textarea. 
-						if (!MiniEditor.ckeditorEnabled) {
-							wikiaEditor.getEditbox().placeholder();
-						}
+	initEditor: function(e) {
+		var target = $(e.target);
+
+		// check if editor exists before unbinding placeholder (BugId:23781)
+		if (!target.data('wikiaEditor')) {
+			// Unbind placeholder and clear textarea before initing mini editor (BugId:23221)
+			target.unbind('.placeholder').val('');
+		}
+
+		target.miniEditor({
+			config: {
+				animations: MiniEditor.Wall.Animations
+			},
+			events: {
+				editorReady: function(event, wikiaEditor) {
+					// Wait till after editor is loaded to know whether RTE is enabled.
+					// If no RTE, re-enable placeholder on the textarea.
+					if (!MiniEditor.ckeditorEnabled) {
+						wikiaEditor.getEditbox().placeholder();
 					}
 				}
-			});
-		},
-		//TODO: this can't be a part of this class
-		doReplyToMessage: function(main, newreply, reload) {
-			var wikiaEditor = $('.wikiaEditor', newreply).data('wikiaEditor'),
-				format = wikiaEditor.mode == 'wysiwyg' ? 'wikitext' : '';
+			}
+		});
+	},
 
-			this.model.postReply(this.page, wikiaEditor.getContent(), format, main.attr('data-id'), this.proxy(function(msg) {
-				var newmsg = $(msg).hide().insertBefore(newreply).fadeIn('slow');
+	doReplyToMessage: function(thread, reply, reload) {
+		var wikiaEditor = $('.wikiaEditor', reply).data('wikiaEditor'),
+			format = wikiaEditor.mode == 'wysiwyg' ? 'wikitext' : '';
 
-				newmsg.find('.timeago').timeago();
-				newreply.find('textarea.body').placeholder();
+		this.model.postReply(this.page, wikiaEditor.getContent(), format, thread.attr('data-id'), this.proxy(function(newMessage) {
+			newMessage = $(newMessage);
 
-				wikiaEditor.fire('editorReset');
+			this.enable(reply);
 
-				if (window.skin && window.skin != 'monobook') {
-					WikiaButtons.init(newmsg);
-				}
+			reply.find(this.replyBody).val('').trigger('blur');
+			newMessage.insertBefore(reply).hide().fadeIn('slow').find('.timeago').timeago();
+			wikiaEditor.fire('editorReset');
 
-				main.find('ul li.load-more .count').html(main.find('ul li.message').length);
-				main.find('.follow').text($.msg('wikiafollowedpages-following')).removeClass('secondary');
+			if (window.skin && window.skin != 'monobook') {
+				WikiaButtons.init(newMessage);
+			}
 
-				this.track('wall/message/reply_post');
-				this.enable(newreply);
+			thread.find(this.replyThreadCount).html(thread.find(this.replyThreadMessages).length);
+			thread.find(this.replyThreadFollow).text($.msg('wikiafollowedpages-following')).removeClass('secondary');
 
-				if (reload) {
-					this.reloadAfterLogin();
-				}
-			}));
-		}
-	});
-	
-	// Exports
-	window.MiniEditorReplyMessageForm = MiniEditorReplyMessageForm;
-})(this, jQuery);
+			this.track('wall/message/reply_post');
+
+			if (reload) {
+				this.reloadAfterLogin();
+			}
+		}));
+	}
+});
+
+// Set as default class binding for ReplyMessageForm
+Wall.settings.classBindings.replyMessageForm = MiniEditor.Wall.ReplyMessageForm;
+
+})(jQuery);

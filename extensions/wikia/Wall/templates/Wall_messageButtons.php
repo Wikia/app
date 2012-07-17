@@ -36,6 +36,17 @@
 								<a href="#" class="delete-message" data-mode="rev"> <?= wfMsg('wall-message-rev-delete'); ?> </a>
 							</li>
 						<? endif; ?>
+						
+						<? if( $notifyeveryone ): ?>
+							<li>
+								<a href="#" class="edit-notifyeveryone" data-dir="1"> <?= wfMsg('wall-message-notifyeveryone'); ?> </a>
+							</li>
+						<? endif; ?>
+						<? if( $unnotifyeveryone ): ?>
+							<li>
+								<a href="#" class="edit-notifyeveryone" data-mode="0"> <?= wfMsg('wall-message-unnotifyeveryone'); ?> </a>
+							</li>
+						<? endif; ?>
 				</ul>
 			</div>
 		</div>
@@ -64,7 +75,15 @@
 				<?php if( $canDelete ): ?> 
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMsg('wall-message-delete'); ?></a> 
 				<?php endif; ?> 
-				
+
+
+				 <? if( $notifyeveryone ): ?>
+				 	<a href="#" class="edit-notifyeveryone" data-dir="1"> <?= wfMsg('wall-message-notifyeveryone'); ?> </a>
+				 <? endif; ?>
+				 <? if( $unnotifyeveryone ): ?>
+				 	<a href="#" class="edit-notifyeveryone" data-mode="0"> <?= wfMsg('wall-message-unnotifyeveryone'); ?> </a>
+				 <? endif; ?>
+
 			</span> 
 		</div> 
 <?php endif; ?> 

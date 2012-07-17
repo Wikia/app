@@ -1151,3 +1151,28 @@ div.mw-lag-warn-high {
 .MiniEditorWrapper .loading-indicator {
 	display: none;
 }
+
+/* Wikia monobook modification */
+#positioned_elements .blackout {
+	background-color: white;
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+
+#positioned_elements .modalWrapper {
+	background-color: white;
+	border: 5px solid black;
+	left: 50%;
+	padding: 10px;
+	position: absolute;
+}
+
+#positioned_elements .modalWrapper .close {
+	background-color: black;
+	cursor: pointer;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+/* end Wikia monobook modification */

@@ -780,10 +780,12 @@
 		},
 
 		editorFocused: function() {
+			this.getEditbox().addClass('focused');
 			this.editor.fire('editorFocus', this.editor);
 		},
 
 		editorBlurred: function() {
+			this.getEditbox().removeClass('focused');
 			this.editor.fire('editorBlur', this.editor);
 		},
 

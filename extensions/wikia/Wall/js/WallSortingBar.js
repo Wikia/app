@@ -1,53 +1,58 @@
-$(document).ready(function() {
-	var wallSortingBar = new WallSortingBar();
-});
+(function(window, $) {
 
-//var global_hide = 0;
-
-var WallSortingBar = $.createClass(Object, {
+Wall.SortingBar = $.createClass(Observable, {
 	constructor: function() {
-		//click tracking
-		$('.sortingOption').click(this.proxy(this.trackClick));
-		
-		// sorting menu
-		$('.SortingSelected').click( function(e) {
-			var menu = $(e.target).closest('.SortingMenu').children('.SortingList');
-			menu.show();
-			var ofs = menu.find('li.current').offset().top - menu.find('li').first().offset().top;
-			menu.css('top',-ofs -4);
-		} );
-		
-		$('.SortingList').mouseleave( function(e) {
-			$(e.target).closest('.SortingList').hide();
-		} );
+		this.initElements();
+		this.sortingOption.on('click', this.proxy(this.trackClick));
+		this.sortingSelected.on('click', this.proxy(this.showSortingMenu));
+		this.sortingList.on('mouseleave', this.proxy(this.hideSortingMenu));
 	},
-	
+
+	initElements: function() {
+		this.sortingOption = $('.SortingOption');
+		this.sortingSelected = $('.SortingSelected');
+		this.sortingList = $('.SortingList');
+	},
+
+	hideSortingMenu: function(event) {
+		this.sortingList.hide();
+	},
+
+	showSortingMenu: function(event) {
+		this.sortingList.show();
+
+		var firstItemOffset = this.sortingList.find('li:first').offset().top,
+			currentItemOffset = this.sortingList.find('.current').offset().top,
+			newOffset = (currentItemOffset - firstItemOffset) * -1;
+
+		this.sortingList.css('top', newOffset);
+	},
+
 	track: function(url) {
-		if( typeof($.tracker) != 'undefined' ) {
+		if (typeof($.tracker) != 'undefined') {
 			$.tracker.byStr(url);
 		} else {
 			WET.byStr(url);
 		}
 	},
-	
+
 	trackClick: function(event) {
-		var node = $(event.target),
-			parent = node.parent();
-		
-		if( node.hasClass('sortingOption') && parent.hasClass('nt') ) {
+		var parent = $(event.target).parent();
+
+		if (parent.hasClass('nt')) {
 			this.track('wall/sort/newest-thread');
-		} else if( node.hasClass('sortingOption') && parent.hasClass('ot') ) {
+		} else if (parent.hasClass('ot')) {
 			this.track('wall/sort/oldest-thread');
-		} else if( node.hasClass('sortingOption') && parent.hasClass('nr') ) {
+		} else if (parent.hasClass('nr')) {
 			this.track('wall/sort/newest-reply');
-		} else if( node.hasClass('sortingOption') && parent.hasClass('ma') ) {
+		} else if (parent.hasClass('ma')) {
 			this.track('wall/sort/most-active');
-		} else if( node.hasClass('sortingOption') && parent.hasClass('a') ) {
+		} else if (parent.hasClass('a')) {
 			this.track('wall/sort/archive');
 		}
-	},
-	
-	proxy: function(func) {
-		return $.proxy(func, this);
 	}
 });
+
+Wall.settings.classBindings.sortingBar = Wall.SortingBar;
+
+})(window, jQuery);

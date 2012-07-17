@@ -36,7 +36,7 @@ class WallHistory extends WikiaModel {
 		if(!($feed instanceof WallNotificationEntity)) {
 			return false;	
 		}
-
+		
 		$this->internalAdd(
 			(int) $feed->data->wall_userid,
 			$feed->data->wall_username, 
@@ -44,6 +44,7 @@ class WallHistory extends WikiaModel {
 			$user->getName(),
 			!$feed->isMain(),
 			$feed->data->title_id,
+			$feed->data->article_title_ns,
 			$feed->data->parent_id,
 			$feed->data_non_cached->thread_title_full,
 			$action,
@@ -63,7 +64,8 @@ class WallHistory extends WikiaModel {
 			$feed->data->user_removing_id,
 			'',
 			$feed->data->is_reply,
-			$feed->data->message_id,
+			$feed->data->title_id,
+			$feed->data->article_title_ns,
 			$feed->data->parent_id,
 			$feed->data->title,
 			$action, 
@@ -74,7 +76,7 @@ class WallHistory extends WikiaModel {
 		return true;
 	}
 	
-	private function internalAdd( $wallUserId, $wallUserName, $postUserId, $postUserName, $isReply, $pageId, $parentPageId, $metatitle, $action, $reason, $revId ) {
+	private function internalAdd( $wallUserId, $wallUserName, $postUserId, $postUserName, $isReply, $pageId, $ns, $parentPageId, $metatitle, $action, $reason, $revId ) {
 		$this->getDatawareDB(DB_MASTER)->insert(
 			'wall_history', 
 			array(
@@ -82,6 +84,7 @@ class WallHistory extends WikiaModel {
 				'wall_user_ip' => ( intval($wallUserId) === 0 ? $this->ip2long($wallUserName) : null),
 				'wall_user_id' => $wallUserId,
 				'post_user_id' => $postUserId,
+				'post_ns' => $ns,
 				'post_user_ip' => ( intval($postUserId) === 0 ? $this->ip2long($postUserName) : null),
 				'is_reply' => $isReply,
 				'page_id' => $pageId,
@@ -91,7 +94,71 @@ class WallHistory extends WikiaModel {
 				'action' => $action,
 				'revision_id' => $revId
 			)
-		); 
+		);
+
+		$this->getDatawareDB(DB_MASTER)->set(
+			'wall_history',
+			'deleted_or_removed',
+			(($action == WH_DELETE || $action == WH_REMOVE) ? 1:0),
+			$this->getDatawareDB(DB_MASTER)->makeList( array(
+				'wiki_id' => $this->wikiId,
+				'page_id' => $pageId 
+			), LIST_AND ),
+			__METHOD__
+		);
+	}
+	
+	public function  getLastPosts($ns) {
+		
+		$where = array(
+			'action' => WH_NEW,
+			'post_ns' => $ns,
+			'deleted_or_removed' => 0
+		);
+		
+		return $this->loadFromDB($where, 10, 0, 'desc');
+	}
+	
+	public function getLastUsers($ns) {
+		$db =  $this->getDatawareDB(DB_SLAVE);
+		
+		$res = $db->select(
+			'wall_history',
+			array(
+				'post_user_id',
+				'max(revision_id) as revision_id',
+
+			), 
+			array(
+				'action' => WH_NEW,
+				'post_ns' => $ns,
+				'deleted_or_removed' => 0
+			),
+			__METHOD__,
+			array(
+				'GROUP BY' => ' post_user_id,post_user_ip',		
+				'LIMIT' => 50,
+				'ORDER BY' => 'event_date desc'
+			)
+		);
+		
+		$in = array();
+				
+		while ($row = $db->fetchRow($res)) {
+			$rev = Revision::newFromId( (int) $row['revision_id'] );
+			if(!empty($rev)) {
+				$in[] = $row['revision_id'];
+			}
+		}
+		
+		$where = array(
+			'revision_id' => $in
+		);
+		
+//		'action' => WH_NEW,
+//		'deleted_or_removed' => 0
+		
+		return $this->loadFromDB($where, 10, 0, 'desc');
 	}
 	
 	public function get($user, $sort, $parent_page_id = 0) {
@@ -122,24 +189,26 @@ class WallHistory extends WikiaModel {
 	}
 	
 	protected function getWhere($user, $parent_page_id = 0) {
-		$query = array();
-		
 		if( $parent_page_id === 0 ) {
 			$query[] = 'parent_page_id is null';
 		} else {
 			$query[] = '(page_id = '.$parent_page_id.' OR parent_page_id = '.$parent_page_id.')';
 		}
 
-		$query['wiki_id'] = $this->wikiId;
-		
 		if(empty($user)) {
 			return $query;
 		}
 		
 		if($user->getId() > 0 ) {
-			$query['wall_user_id'] = $user->getID();
+			$query = array(
+				'wiki_id' => $this->wikiId,
+				'wall_user_id' => $user->getID()
+			);
 		} elseif ( $this->ip2long($user->getName()) !== false ) {
-			$query['wall_user_ip'] = $this->ip2long($user->getName());
+			$query = array(
+				'wiki_id' => $this->wikiId,
+				'wall_user_ip' => $this->ip2long($user->getName())
+			);
 		} else {
 			return false;
 		}
@@ -201,14 +270,16 @@ class WallHistory extends WikiaModel {
 			$user = User::newFromName($this->long2ip($row['post_user_ip']), false);
 		}
 		
-		$title = Title::newFromId($row['page_id'], NS_USER_WALL_MESSAGE);
+		$title = Title::newFromId($row['page_id']);
+		$message = WallMessage::newFromId($row['page_id']);
 		
-		if( $title instanceof Title) {
+		if( ($title instanceof Title) && ($message instanceof WallMessage) ) {
 			return array(
 				'user' => $user,
 				'event_date' => $row['event_date'],
 				'event_iso' => wfTimestamp(TS_ISO_8601, $row['event_date']),
 				'event_mw' => wfTimestamp(TS_MW, $row['event_date']),
+				'display_username' => $user->getId() == 0 ? wfMsg('oasis-anon-user'):$user->getName(),
 				'metatitle' => $row['metatitle'],
 				'page_id' => $row['page_id'],
 				'title' => $title,
@@ -216,7 +287,8 @@ class WallHistory extends WikiaModel {
 				'action' => $row['action'],
 				'metatitle' => $row['metatitle'],
 				'reason' => $row['reason'],
-				'revision_id' => $row['revision_id']
+				'revision_id' => $row['revision_id'],
+				'wall_message' => $message
 			);				
 		} else {
 		//it happened once on devbox when master&slave weren't sync'ed

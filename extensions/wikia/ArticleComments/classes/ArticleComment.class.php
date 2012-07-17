@@ -73,6 +73,10 @@ class ArticleComment {
 	public function setMetadata( $key, $val ) {
 		$this->mMetadata[$key] = $val;
 	}
+	
+	public function removeMetadata( $key ) {
+		unset($this->mMetadata[$key]);
+	}
 
 	/**
 	 *
@@ -619,9 +623,12 @@ class ArticleComment {
 		} else {
 			$res = false;
 		}
+		
+		$this->mLastRevId = $this->mTitle->getLatestRevID( Title::GAID_FOR_UPDATE );
+		$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
 
 		wfProfileOut( __METHOD__ );
-
+		
 		return $res;
 	}
 

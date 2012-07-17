@@ -30,7 +30,7 @@ if (function_exists( "extAddBatchTask" ) ) {
 // lower-left corner notification bubbles from Wall Wikis
 $app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
 $app->registerClass('WallMessage', $dir . '/WallMessage.class.php');
-include($dir . '/WallNotifications.setup.php');
+include($dir . '/notification/WallNotifications.setup.php');
 
 
 //don't let others edit wall messages after turning wall on and off

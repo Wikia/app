@@ -23,13 +23,13 @@
 			</td></tr></table>
 		</div>
 	<?php endif; ?>
-	
+
 	<? if($showRemovedBox): ?>
 		<div class='removed-info speech-bubble-message-removed' >
 			<?php echo wfMsg('wall-removed-reply'); ?>
 		</div>
 	<? endif; ?>
-	
+
 	<div class="speech-bubble-avatar">
 		<a href="<?= $user_author_url ?>">
 			<? if(!$isreply): ?>
@@ -40,6 +40,27 @@
 		</a>
 	</div>
 	<blockquote class="speech-bubble-message">
+		<? if(!$isreply): ?>
+			<?php if($isWatched): ?>
+				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="1" class="follow wikia-button"><?= wfMsg('wikiafollowedpages-following'); ?></a>
+			<?php else: ?>
+				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="0" class="follow wikia-button secondary"><?= wfMsg('oasis-follow'); ?></a>
+			<?php endif;?>
+		<? endif; ?>
+		
+		<?php if($showVotes): ?>
+			<div class="voting-controls">
+				<a class="votes<?= $votes > 0 ? "" : " notlink" ?>" data-votes="<?= $votes ?>">
+					<?php echo wfMsg('wall-votes-number', '<span class="number" >'.$votes.'</span>'); ?>
+				</a>			
+				<?php if($canVotes):?>
+					<a class="vote <?php if($isVoted): ?>voted<?php endif;?>">
+						<img src="<?= $wg->BlankImgUrl ?>" height="19" width="19" >
+					</a>
+				<?php endif; ?>
+			</div>
+		<?php endif; ?>	
+		
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Header', array(
 				'attributes' => array(
@@ -48,29 +69,26 @@
 				)
 			))->render();
 		endif; ?>
+		
 		<? if(!$isreply): ?>
-			<?php if($isWatched): ?>
-				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="1" class="follow wikia-button"><?= wfMsg('wikiafollowedpages-following'); ?></a>
-			<?php else: ?>	
-				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="0" class="follow wikia-button secondary"><?= wfMsg('oasis-follow'); ?></a>
-			<?php endif;?>
 			<div class="msg-title"><a href="<?= $fullpageurl; ?>"><? echo $feedtitle ?></a></div>
 		<? endif; ?>
+		
 		<div class="edited-by">
-			<a href="<?= $user_author_url ?>"><?= $displayname ?></a> 
+			<a href="<?= $user_author_url ?>"><?= $displayname ?></a>
 			<a href="<?= $user_author_url ?>" class="subtle"><?= $displayname2 ?></a>
-			<?php if( !empty($isStaff) ): ?> 
+			<?php if( !empty($isStaff) ): ?>
 				<span class="stafflogo"></span>
 			<?php endif; ?>
 		</div>
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render(); 
+			echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render();
 		endif; ?>
 		<div class="msg-body" id="WallMessage_<?= $id ?>">
 			<? echo $body ?>
 		</div>
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
+			echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render();
 		endif; ?>
 		<div class="msg-toolbar">
 			<div class="timestamp">
@@ -98,7 +116,7 @@
 			</div>
 		</div>
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
+			echo $app->getView( 'MiniEditorController', 'Footer' )->render();
 		endif; ?>
 	</blockquote>
 	<? if(!$isreply): ?>
@@ -107,14 +125,14 @@
 				<? $i =0;?>
 				<? if($showLoadMore): ?>
 					<?= $app->renderView( 'WallController', 'loadMore', array('repliesNumber' => $repliesNumber) ); ?>
-				<? endif; ?>	
+				<? endif; ?>
 				<? foreach( $replies as $key  => $val): ?>
 					<?php //TODO: move this logic to controler !!! ?>
 					<?php if(!$val->isRemove() || $showDeleteOrRemoveInfo): ?>
 						<?= $app->renderView( 'WallController', 'message', array('showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $val, 'isreply' => true, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)  ) ; ?>
 					<?php else: ?>
-						<?= $app->renderView( 'WallController', 'messageRemoved', array('comment' => $val, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)) ; ?>	
-					<?php endif; ?>	
+						<?= $app->renderView( 'WallController', 'messageRemoved', array('comment' => $val, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)) ; ?>
+					<?php endif; ?>
 					<? $i++; ?>
 				<? endforeach; ?>
 			<? endif; ?>

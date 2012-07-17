@@ -20,11 +20,15 @@ CREATE TABLE wall_history (
 ) ENGINE=InnoDB;
 
 
-/*
 ALTER TABLE wall_history DROP KEY wlh;
 ALTER TABLE wall_history DROP KEY tlh;
 ALTER TABLE wall_history ADD KEY `w_wip_pid_ed` (wiki_id, wall_user_ip, page_id, event_date);
 ALTER TABLE wall_history ADD KEY `w_wid_pid_ed` (wiki_id, wall_user_id, page_id, event_date);
 ALTER TABLE wall_history ADD KEY `w_wip_ppid_ed` (wiki_id, wall_user_ip, parent_page_id, event_date);
 ALTER TABLE wall_history ADD KEY `w_wid_ppid_ed` (wiki_id, wall_user_id, parent_page_id, event_date);
-*/
+
+ALTER TABLE wall_history ADD KEY `w_wip_ns_user` (wiki_id, post_ns, event_date, post_user_id);
+ALTER TABLE wall_history ADD KEY `w_wip_ns_page` (wiki_id, page_id);
+
+alter table wall_history add post_ns int(11) DEFAULT NULL;
+alter table wall_history add deleted_or_removed int(1) DEFAULT 0;

@@ -12,7 +12,10 @@ class WallNotificationsExternalController extends WikiaController {
 		$this->helper = F::build('WallHelper', array());
 	}
 	
-	public function getUpdateCounts() {
+	public function getUpdateCounts() {			
+		$wne = F::build('WallNotificationsEveryone', array());
+		$wne->processQueue($this->wg->user->getId());
+			
 		$wn = F::build('WallNotifications', array());
 		$this->getUpdateCountsInternal($wn);
 		return true;
@@ -60,7 +63,7 @@ class WallNotificationsExternalController extends WikiaController {
 				$all[$k]['sitename'] = $app->wg->Lang->truncate($wikiSitename, (self::WALL_WIKI_NAME_MAX_LEN - 3) );
 			}
 		}
-
+			
 		//solution for problem with cross wiki notification and no wikia domain.
 		$notificationKey = uniqid(); 
 		

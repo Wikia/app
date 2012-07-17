@@ -121,6 +121,16 @@ class BodyController extends WikiaController {
 		$latestActivityKey = $wgUser->isAnon() ? 1250 : 1300;
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
+		// Forum Extension
+		if (!empty($this->wg->EnableForumExt) && !empty($this->wg->IsForum)) {
+			$railModuleList = array (
+				1002 => array('LatestActivity', 'Index', null),
+				1001 => array('Forum', 'forumActivityModule', null),
+				1000 => array('Forum', 'forumParticipationModule', null),
+			);
+			return $railModuleList;
+		}
+
 		if($namespace == NS_SPECIAL) {
 			if (ArticleAdLogic::isSearch()) {
 				if (empty($this->wg->EnableWikiaHomePageExt)) {
@@ -177,13 +187,6 @@ class BodyController extends WikiaController {
 					1501 => array('Search', 'Index', null),
 					1500 => array('PageLayoutBuilderForm', 'Index', null)
 				);
-			} else if ( $wgTitle->isSpecial('Forum')) {
-				$railModuleList = array (
-					1500 => array('Search', 'Index', null),
-					$latestActivityKey => array('LatestActivity', 'Index', null),
-				);
-
-				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = array();
@@ -457,6 +460,11 @@ class BodyController extends WikiaController {
 		} else {
 			$this->displayAdminDashboard = false;
 			$this->displayAdminDashboardChromedArticle = false;
+		}
+
+		// Forum Extension
+		if (!empty($this->wg->EnableForumExt) && !empty($this->wg->IsForum)) {
+			$this->wg->SuppressPageHeader = true;
 		}
 
 		$namespace = $wgTitle->getNamespace();

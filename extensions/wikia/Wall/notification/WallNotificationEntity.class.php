@@ -1,7 +1,6 @@
 <?php
 
 class WallNotificationEntity {
-	const TITLE_MAX_LEN = 24;
 	
 	public $id;
 	public $data; // data stored in memcache
@@ -72,7 +71,7 @@ class WallNotificationEntity {
 		$app = F::app();
 		
 		$walluser = $ac->getWallOwner();
-		$authoruser = $ac->getUser();
+		$authoruser = User::newFromId($rev->getUser());
 		
 		if(empty($walluser)) {
 			error_log('WALL_NO_OWNER: (entityId)'.$this->id);
@@ -120,7 +119,7 @@ class WallNotificationEntity {
 
 		$this->data->wall_userid = $walluser->getId();		
 		$this->data->wall_displayname = $this->data->wall_username;
-		
+		//TODO: double ?
 		$this->data->title_id = $ac->getTitle()->getArticleId();
 		
 		$this->data_non_cached->title = $ac->getTitle();
@@ -131,6 +130,7 @@ class WallNotificationEntity {
 		$this->data_non_cached->parent_title_dbkey = '';
 		
 		$this->data_non_cached->msg_text = $ac->getText();
+		$this->data->notifyeveryone = $ac->getNotifyeveryone();
 		
 		if( !empty($acParent) ) {
 			$acParent->load();
@@ -153,16 +153,18 @@ class WallNotificationEntity {
 				$this->data->parent_username = $this->data->parent_displayname = $app->wf->Msg('oasis-anon-user');
 				$this->data->parent_user_id = 0;
 			}
+			
 			$this->data_non_cached->thread_title_full = $acParent->getMetaTitle();
-			$this->data->thread_title = $this->helper->shortenText($acParent->getMetaTitle(), self::TITLE_MAX_LEN);
+			$this->data->thread_title = $acParent->getMetaTitle();
 			$this->data_noncached->parent_title_dbkey = $acParent->getTitle()->getDBkey();
 			$this->data->parent_id = $acParent->getTitle()->getArticleId();
 			$this->data->url = $acParent->getMessagePageUrl();
+			 
 		} else {
 			$this->data->url = $ac->getMessagePageUrl();
 			$this->data->parent_username = $walluser->getName();
 			$this->data_non_cached->thread_title_full = $ac->getMetaTitle();
-			$this->data->thread_title = $this->helper->shortenText($ac->getMetaTitle(), self::TITLE_MAX_LEN);
+			$this->data->thread_title = $ac->getMetaTitle();
 		}
 		
 		return true;
@@ -201,7 +203,7 @@ class WallNotificationEntity {
 	 * Helper functions
 	 */
 	public function getMemcKey() {
-		return F::App()->runFunction( 'wfSharedMemcKey', __CLASS__, "v31", $this->id, 'notification' );
+		return F::App()->runFunction( 'wfSharedMemcKey', __CLASS__, "v32", $this->id, 'notification' );
 	}
 
 	public function getCache() {

@@ -23,6 +23,52 @@ class WallExternalController extends WikiaController {
 		
 	}
 	
+	public function votersModal() {
+		$mw =  F::build('WallMessage', array($this->request->getVal('id')), 'newFromId');
+		
+		$this->response->setVal('list', 
+			$this->app->renderView( 'WallExternalController', 'votersListItems', 
+				array( 'from' => 0, 'mw' => $mw, 'id' => $this->request->getVal('id') ) 
+		));
+		
+		$this->response->setVal('count', $mw->getVoteCount()); 
+	}
+	
+	public function votersListItems() {
+		//TODO: imaplmant load more button
+		
+		$mw = $this->request->getVal('mw');
+		if(empty($mw)) {
+			$mw =  F::build('WallMessage', array($this->request->getVal('id')), 'newFromId');
+		}
+		
+		$from = (int) $this->request->getVal( 'from', 0 );
+		
+		$list = $mw->getVotersList($from, 1000);
+		
+		if(count($list) == 26) {
+			$this->response->setVal( 'hasmore', true );
+		} else {
+			$this->response->setVal( 'hasmore', false );
+		}
+		
+		$out = array();
+		for( $i = 0; $i < min(count($list),24); $i++ ) {
+			$user = User::newFromId( $list[$i] );
+			if(!empty($user)) {
+				$out[] = array(
+					'profilepage' =>  $user->getUserPage()->getFullUrl(),
+					'name' => $user->getName(),
+					'avatar' => AvatarService::getAvatarUrl($user->getName(), 50)
+				);
+			}
+		}
+		
+		$this->response->setVal( 'hasmore', false );
+		$this->response->setVal( 'last', $from );
+		$this->response->setVal( 'list', $out );
+	}
+	
 	public function switchWatch() {
 		$this->response->setVal('status', false);
 		$isWatched = $this->request->getVal('isWatched');
@@ -47,7 +93,8 @@ class WallExternalController extends WikiaController {
 
 		$titleMeta = $this->request->getVal('messagetitle', null);
 		$titleMeta = substr($titleMeta, 0, 200);
-
+		$notifyEveryone = $this->request->getVal('notifyeveryone', false) == 1;
+		
 		$body = $this->getConvertedContent($this->request->getVal('body'));
 
 		$helper = F::build('WallHelper', array());
@@ -63,7 +110,7 @@ class WallExternalController extends WikiaController {
 		}
 		
 		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace')), 'newFromText');  
-		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta), 'buildNewMessageAndPost');
+		$wallMessage = F::build('WallMessage', array($body, $title, $this->wg->User, $titleMeta, false, true, $notifyEveryone), 'buildNewMessageAndPost');
 		
 		if( $wallMessage === false ) {
 			error_log('WALL_NOAC_ON_POST (acStatus)'.print_r($acStatus,1));
@@ -200,13 +247,31 @@ class WallExternalController extends WikiaController {
 		}
 	}
 
+	public function vote() {
+		$id = $this->request->getVal('id');
+		$dir  = $this->request->getVal('dir');
+		
+		$mw =  F::build('WallMessage', array($id), 'newFromId');
+	
+		if(!empty($mw)) {
+			if($dir == 1) {
+				$this->response->setVal('count', $mw->vote($this->wg->User));
+			}
+
+			if($dir == -1) {
+				$this->response->setVal('count', $mw->removeVote($this->wg->User));
+			}
+		}
+
+	}
+
+
 	public function editMessage() {
+		//TODO: remove call to ac !!!
 		$msgid = $this->request->getVal('msgid');
+		$mw =  F::build('WallMessage', array($msgid), 'newFromId');
 		
-		//TODO: remove call to ac
-		$ac = ArticleComment::newFromId($msgid);
-		
-		if(empty($ac)) {
+		if(empty($mw)) {
 			// most likely scenario - can't create AC, because message was already
 			// deleted before we tried to edit it
 			// client(javascript) should reload user's page
@@ -216,13 +281,27 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 		
-		$ac->load();
-		$data = $ac->getData();
-
-		$this->response->setVal('htmlorwikitext', $this->getConvertedContent($data['rawtext']));
+		$rawtext = $mw->getRawText();
+		$this->response->setVal('htmlorwikitext', $this->getConvertedContent($rawtext));
 		$this->response->setVal('status', true);
 		
 		return true;
+	}
+	
+	public function notifyEveryoneSave() {
+		$msgid = $this->request->getVal('msgid');
+		$dir = $this->request->getVal('dir');
+		$mw =  F::build('WallMessage', array($msgid), 'newFromId');
+		
+		if($dir == 1) {
+			$mw->setNotifyeveryone(true, true);
+			$this->response->setVal('newdir', 0);
+			$this->response->setVal('newmsg', wfMsg('wall-message-unnotifyeveryone'));
+		} else {
+			$mw->setNotifyeveryone(false, true);
+			$this->response->setVal('newdir', 1);
+			$this->response->setVal('newmsg', wfMsg('wall-message-notifyeveryone'));
+		}
 	}
 	
 	public function editMessageSave() {
@@ -299,13 +378,17 @@ class WallExternalController extends WikiaController {
 			return true;	
 		}
 		
-		$this->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $reply, 'isreply' => true ) ));
+		$this->replyToMessageBuildResponse($this, $reply);
 			
 		// after successfully posting a reply		
 		// remove notification for this thread (if user is following it)
 		$wn = F::build('WallNotifications', array());
 		$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $this->request->getVal('parent'));		
 		
+	}
+	
+	protected function replyToMessageBuildResponse($context, $reply) {
+		$context->response->setVal('message', $this->app->renderView( 'WallController', 'message', array( 'comment' => $reply, 'isreply' => true ) ));
 	}
 
 	private function getDisplayName() {
@@ -339,11 +422,5 @@ class WallExternalController extends WikiaController {
 		//workaround to prevent index data expose
 		$title = F::build('Title', array($this->request->getVal('pagetitle'), $this->request->getVal('pagenamespace') ), 'newFromText');
 		$this->response->setVal( 'html', $this->app->renderView( 'WallController', 'index', array('title' => $title, 'page' => $this->request->getVal('page', 1) ) )); 
-
-		// TODO: Tomek: please set caching here.
-		//$this->response->setCacheValidity( 3600, 3600,  array(
-		//	WikiaResponse::CACHE_TARGET_BROWSER,
-		//	WikiaResponse::CACHE_TARGET_VARNISH,
-		//));
-	}
+	} 
 }

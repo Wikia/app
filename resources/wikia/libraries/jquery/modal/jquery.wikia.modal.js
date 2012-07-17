@@ -56,22 +56,27 @@ $.fn.extend({
 
 		// needed here for getModalTopOffset()
 		wrapper.data('settings', settings);
+		
+		if(!settings.noHeadline) {
+			//set up headline
+			var headline = wrapper.find("h1:first");
+			
+			console.log(headline);
+
+			if (headline.exists()) {
+				headline.remove();
+			} else {
+				// no <h1> found - use title attribute (backward compatibility with Monaco)
+				headline = $('<h1>').html($(this).attr('title') || '');
+			}
+
+			console.log(headline);
+
+			// add headline
+			headline.prependTo(wrapper);
+		}
 
 		if (skin == "oasis") {
-			if(!settings.noHeadline) {
-				//set up headline
-				var headline = wrapper.find("h1:first");
-
-				if (headline.exists()) {
-					headline.remove();
-				} else {
-					// no <h1> found - use title attribute (backward compatibility with Monaco)
-					headline = $('<h1>').html($(this).attr('title') || '');
-				}
-
-				// add headline
-				headline.prependTo(wrapper);
-			}
 
 			// find tabs with .modal-tabs class and move them outside modal content
 			var modalTabs = wrapper.find('.modal-tabs');
@@ -96,22 +101,20 @@ $.fn.extend({
 				zIndex: zIndex + 1
 			}).css("margin-left", -wrapper.outerWidth()/2);
 
-			//add close button
-			if (settings.showCloseButton) {
-				wrapper.prepend('<button class="close wikia-chiclet-button"><img src="' + stylepath + '/oasis/images/icon_close.png"></button>');
-			}
-
 		} else {
 			wrapper
-				.prepend('<h1 class="modalTitle color1"><img src="'+wgBlankImgUrl+'" class="sprite close" />' + this.attr('title') + '</h1>')
-				.width(settings.width);
-			wrapper
+				.width(settings.width)
 				.css({
 					marginLeft: -wrapper.outerWidth() / 2,
 					top: wrapper.getModalTopOffset(),
 					zIndex: zIndex + 1
 				})
 				.fadeIn("fast");
+		}
+		
+		//add close button
+		if (settings.showCloseButton) {
+			wrapper.prepend('<button class="close wikia-chiclet-button"><img src="' + stylepath + '/oasis/images/icon_close.png"></button>');
 		}
 
 		wrapper.log('makeModal: #' + id);

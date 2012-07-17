@@ -14,4 +14,7 @@
 	<? if (!empty($isRemoved) || !empty($isAdminDeleted)): ?>
 		<span class="crumb removed"><?= '('.wfMsg('wall-thread-'.($isAdminDeleted ? 'deleted' : 'removed')).')' ?></span>
 	<? endif; ?>
+        <? if (!empty($isNotifyeveryone)): ?>
+                <span class="crumb removed">(<?= wfMsg('wall-thread-isnotifyeveryone'); ?>)</span>
+        <? endif; ?>
 </div>

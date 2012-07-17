@@ -1,122 +1,325 @@
-@import '../../../../skins/oasis/css/core/color';
-@import '../../../../skins/oasis/css/mixins/border-radius';
-@import '../../../../skins/oasis/css/mixins/clearfix';
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/opacity";
 
-@import '../../Wall/css/WallColors';
+// TODO: all of these should be consolidated and put into oasis
+@import "../../Wall/css/WallColors";
+@import "../../Wall/css/WallDimensions";
+@import "ForumColors";
 
 .Forum {
-	h4 {
-		font-weight: bold;
-		margin: 0;
+
+	textarea {
+		font: inherit;
 	}
 
-	.activity {
-		color: $color-alternate-text;
-		list-style: none;
-		margin: 0;
-		position: absolute;
-		right: 0;
-		top: 0;
+	.BreadCrumbs {
+		@include clearfix;
+		font-size: 14px;
+		line-height: 14px;
 
-		li {
-			display: inline;
-			margin: 0;
+		.crumb {
+			float: left;
+		}
+
+		.separator {
+			padding: 0 7px;
+		}
+
+		.removed {
+			color: $color-alternate-text;
+			padding-left: 7px;
 		}
 	}
 
-	.board {
-		margin: 1em 0 0 0;
-		position: relative;
-	}
+	.DiscussionBox {
+		margin: 10px 0 20px 0;
 
-	.boards {
-		list-style: none;
-		margin: 0;
-	}
-
-	.last-post {
-		color: $color-alternate-text;
-		margin: 0;
-	}
-}
-
-// Hacked in for now
-#Forum .Board .comments {
-	margin: 0 20px;
-
-	.msg-body,
-	.replies,
-	.speech-bubble-avatar {
-		display: none;
-	}
-
-	.speech-bubble-message {
-		@include border-radius(0);
-		background: transparent;
-		border: 0;
-		margin: 0;
-		padding: 0;
-		padding-bottom: 5px;
-
-		&:after {
+		textarea {
+			@include box-sizing;
+			background-color: $color-wall-input-new;
 			border: 0;
-		}
+			color: $color-text;
 
-		&:before {
-			border: 0;
-			content: normal;
-		}
+			// Chrome needs this to get rid of empty space below textarea
+			display: block;
+			font-size: 13px;
+			line-height: 20px;
+			outline: none;
+			overflow: hidden;
+			padding: 5px 10px;
+			resize: none;
+			width: 100%;
 
-		.buttonswrapper {
-			display: none;
-		}
-
-		.edited-by {
-			font-size: 12px;
-			font-weight: normal;
-			margin: 5px 0;
-
-			&:before {
-				content: "Started by:";
+			&.body {
+				height: 70px;
 			}
 
-			a {
-				color: $color-text;
-				font-weight: bold;
+			&.title {
+				height: 30px;
+			}
 
-				&.subtle {
-					display: none;
+			&:focus {
+				@include box-shadow(0px, 0px, 4px, $color-wall-input-focus-shadow);
+				background-color: $color-wall-input-focus;
+				color: $color-text;
+			}
+
+			// These have to be separated to work
+			&:-moz-placeholder {
+				color: $color-wall-text-placeholder;
+			}
+
+			&::-webkit-input-placeholder {
+				color: $color-wall-text-placeholder;
+			}
+		}
+
+		.avatar {
+			float: left;
+		}
+
+		.body-container {
+			@include clearfix;
+			display: none;
+			margin-top: 10px;
+		}
+
+		.buttons {
+			float: right;
+			margin-top: 10px;
+			.submit {
+				float: right;
+			}
+		}
+
+		.heading {
+			font-size: 13px;
+			line-height: 13px;
+			margin: 0 0 5px 0;
+		}
+
+		.highlight {
+			margin: 0 5px;
+		}
+
+		.message {
+			@include border-radius(0);
+			border: 0;
+			background-color: $color-wall-bubble;
+			margin: 0 0 0 60px;
+			padding: 10px;
+			position: relative;
+
+			&:before {
+				border: 5px solid $color-wall-bubble;
+				border-bottom-color: transparent;
+				border-left-color: transparent;
+				content: ' ';
+				height: 0;
+				position: absolute;
+				left: -10px;
+				top: 10px;
+				width: 0px;
+			}
+
+			&.loading {
+				.message-container {
+					@include opacity(50);
+				}
+
+				.throbber {
+					display: block;
 				}
 			}
 		}
 
-		.msg-title a {
-			color: $color-links;
+		.notify-everyone {
+			margin: 0 5px 0 0;
+		}
 
-			&:hover {
-				text-decoration: underline;
+		.throbber {
+			background: url(/skins/common/images/ajax.gif) 50% 50% no-repeat; /* $wgCdnStylePath */
+			display: none;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+
+		.title-container {
+			position: relative;
+
+			.no-title-warning {
+				@include border-radius($wall-border-radius);
+				background-color: $color-wall-error;
+				display: none;
+				font-size: 12px;
+				line-height: 20px;
+				position: absolute;
+				right: 5px;
+				text-align: center;
+				top: 5px;
+				width: 200px;
+				z-index: 1;
 			}
 		}
 
-		.replyCount {
-			border-left: 1px solid $color-wall-border;
-			margin-left: 5px;
-			padding-left: 5px;
-			text-decoration: none;
+		.toolbar {
+			float: left;
 		}
 	}
-
-	.SpeechBubble .buttons {
-		right: 0;
+	
+	.Pagination {
+		margin-top: 20px;
 	}
 
-	> .message {
-		padding-bottom: 0;
+	.ThreadList {
+		list-style: none;
+		margin: 0;
+
+		h4 {
+			font-size: 13px;
+			font-weight: normal;
+			line-height: 16px;
+			margin: 0 0 5px 0;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+
+		.activity {
+			@include clearfix;
+			list-style: none;
+			margin: 0;
+
+			li {
+				font-size: 12px;
+				float: left;
+				line-height: 15px;
+				margin: 0;
+				width: 75px;
+
+				&.follow {
+					color: $color-links;
+					cursor: pointer;
+				}
+
+				&.following {
+					color: $color-text;
+				}
+			}
+		}
+
+		.avatar {
+			border: 0;
+			float: left;
+			margin-right: 5px;
+		}
+
+		.last-post {
+			color: $color-alternate-text;
+			font-size: 11px;
+			line-height: 15px;
+			margin: 0;
+		}
+
+		.thread {
+			@include clearfix;
+			border-bottom: 1px dotted $color-page-border;
+			margin: 0;
+			padding: 6px 5px 8px;
+
+			&:hover {
+				background-color: $Forum-color-board-thread-hover;
+			}
+		}
+
+		.thread-left {
+			float: left;
+			width: 405px;
+		}
+
+		.thread-right {
+			float: right;
+			margin-left: 20px;
+			text-align: right;
+			width: 225px;
+		}
+
+		.timestamp {
+			display: block;
+		}
 	}
 }
 
-.WikiaPageHeader {
-	h2 {
-		display: none;
+.WikiaPage .WikiaPageHeader {
+	@include clearfix;
+	border-bottom: 1px solid $color-page-border;
+	margin: 0 10px 10px 10px;
+	padding: 0 0 10px 0;
+
+	h1 {
+		float: left;
+	}
+
+	.header-right {
+		float: right;
+	}
+
+	.tally {
+		float: left;
+		margin: 0;
+		padding: 0 20px;
+
+		&.last {
+			border-left: 1px solid $color-wall-border;
+		}
+
+		> span {
+			float: left;
+		}
+	}
+}
+
+.WikiaSearchHeader {
+	float: left;
+
+	.WikiaSearch {
+		margin-bottom: 0;
+	}
+}
+
+.WikiaRail .ForumActivityModule,
+.WikiaRail .ForumParticipationModule {
+	.subtle  {
+		margin-left: 3px;
+	}
+	h1 {
+		margin-bottom: 15px;
+	}
+	li {
+		font-size: 11px;
+		margin-bottom: 10px;
+		padding-left: 30px;
+		position: relative;
+		.avatar {
+			left: 0;
+			position: absolute;
+			top: 1px;
+		}	
+		h2 {
+			font-size: 13px;
+			font-weight: normal;
+			margin: 0 0 3px 0;
+			overflow: hidden;
+			padding: 0;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 	}
 }

@@ -18,6 +18,8 @@ class WallMessage {
 		$app = F::App();
 		//TODO: inject this
 		$this->cityId = $app->wg->CityId;
+		
+		$this->helper = F::build('WallHelper', array());
 	}
 
 	static public function newFromId($id, $master = false) {
@@ -47,7 +49,7 @@ class WallMessage {
 			return $title;
 	}
 
-	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $notify = true ) {
+	static public function buildNewMessageAndPost( $body, $page, $user, $metaTitle = '', $parent = false, $notify = true, $notifyEveryone = false) {
 		
 		if($page instanceof Title ) {
 			$userPageTitle = $page;
@@ -65,7 +67,12 @@ class WallMessage {
 		}
 
 		if( $parent === false ) {
-			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, false , array('title' => $metaTitle ) ), 'doPost' );
+			$metaData = array('title' => $metaTitle );
+			if($notifyEveryone) {
+				$metaData['notify_everyone'] = time();
+			}
+			
+			$acStatus = F::build( 'ArticleComment', array( $body, $user, $userPageTitle, false , $metaData ), 'doPost' );
 		} else {
 			if( !$parent->canReply() ) {
 				return false;
@@ -105,7 +112,13 @@ class WallMessage {
 			$class->sendNotificationAboutLastRev();
 		}
 		
+		if($parent === false && $notifyEveryone) {
+			$class->notifyEveryone();	
+		}
+		
 		$class->addWatch($user);
+
+		wfRunHooks( 'AfterBuildNewMessageAndPost', array(&$class) );
 		
 		return $class;
 	}
@@ -165,6 +178,12 @@ class WallMessage {
 		$this->addWatch($user);
 		return $this->getArticleComment()->parseText($body);
 	}
+	
+	public function doSaveMetadata($user) {
+		$body = $this->getRawText(true);
+	
+		return $this->doSaveComment($body, $user);
+	}
 
 	protected function can($user, $prev ) {
 		if(!empty(self::$permissionsCache[$prev][$user->getName()])) {
@@ -192,14 +211,68 @@ class WallMessage {
 		return $this->can($user, 'walladmindelete') || $this->isWallOwner($user);
 	}
 
-	public function getMetaTitle(){
+	public function getMetaTitle() {
 		return $this->getArticleComment()->getMetadata('title');
 	}
 
+	
+	public function getNotifyeveryone() {
+		$out = (int ) $this->getArticleComment()->getMetadata('notify_everyone');
+		$ageInDays = (time() - $out)/(60*60*24);
+
+		if( $ageInDays < 30  ){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public function canNotifyeveryone() {
+		if($this->isMain()) {
+			if(!$this->isAllowedNotifyEveryone()) {
+				return false;
+			}
+			return !$this->getNotifyeveryone();	
+		}
+		return false;
+	}
+	
+	public function canUnnotifyeveryone() {
+		if($this->isMain()) {
+			if(!$this->isAllowedNotifyEveryone()) {
+				return false;
+			}
+			return $this->getNotifyeveryone();	
+		}
+		return false;		
+	}	
+	public function setNotifyeveryone($notifyeveryone, $save = false ) {
+		if($this->isMain()) {
+			if(!$this->isAllowedNotifyEveryone()) {
+				return false;
+			}
+			$app = F::App();
+			$wne = F::build('WallNotificationsEveryone', array());
+			$this->load(true);	
+			if($notifyeveryone) {		
+				$this->getArticleComment()->setMetaData('notify_everyone', time());
+				$this->doSaveMetadata($app->wg->User);
+				$rev = $this->getArticleComment()->mLastRevision;
+				$notif = F::build('WallNotificationEntity', array($rev, $this->cityId), 'createFromRev');
+				$wne->addNotificationToQueue($notif);
+			} else {
+				$this->getArticleComment()->removeMetadata('notify_everyone');
+				$pageId = $this->getArticleComment()->getTitle()->getArticleId();
+				$wne->removeNotificationFromQueue($pageId);
+				$this->doSaveMetadata($app->wg->User);
+			}
+		}
+	}
+	
 	public function setMetaTitle($title) {
 		if($this->isMain()) {
-			return $this->getArticleComment()->setMetaData('title', $title);
-		}
+				$this->getArticleComment()->setMetaData('title', $title);				
+		} 
 		return false;
 	}
 
@@ -284,8 +357,7 @@ class WallMessage {
 
 		if( $articleId === 0 && $title instanceof Title ) {
 		//message was deleted and never restored
-			$helper = F::build('WallHelper', array());
-			$articleId = $helper->getArticleId_forDeleted($title->getText(), $articleData);
+			$articleId = $this->helper->getArticleId_forDeleted($title->getText(), $articleData);
 		}
 
 		if( $articleId === false ) {
@@ -400,6 +472,13 @@ class WallMessage {
 		}
 		return null;
 	}
+	
+	public function getRawText($master = false) {
+		$this->load($master);
+		$data = $this->getData();
+		return $data['rawtext'];
+		
+	}
 
 	public function getEditor(){
 		$user = User::newFromId($this->getArticleComment()->mLastRevision->getUser());
@@ -411,7 +490,57 @@ class WallMessage {
 		if (!$r) return null; // BugId:22821
 		return wfTimestamp($format, $r->getTimestamp());
 	}
+	
+	public function notifyEveryone() {
+		$rev = $this->getArticleComment()->mLastRevision;
+		
+		if(empty($rev)) {
+			return true;
+		}
+		
+		$notif = F::build('WallNotificationEntity', array($rev, $this->cityId), 'createFromRev');
+			
+		/*
+		 * experimental notfieverone
+		 */
+		
+		$wne = F::build('WallNotificationsEveryone', array());
+		$wne->addNotificationToQueue($notif);
+	}
+	
+	public function getVoteHelper() {
+		$app = F::App();
+		return F::build('VoteHelper', array($app->wg->User, $this->title->getArticleId()));
+	}
+	
+	public function vote($user) {
+		if(!$this->canVotes($user)) {
+			return false;
+		}
+		
+		$this->getVoteHelper()->addVote();
+	}
+	
+	public function removeVote($user) {
+		if(!$this->canVotes($user)) {
+			return false;
+		}
+		
+		$this->getVoteHelper()->removeVote();
+	}
+	
+	public function isVoted() {
+		return $this->getVoteHelper()->isVoted(); 
+	}
 
+	public function getVoteCount() {
+		return $this->getVoteHelper()->getVoteCount();
+	}
+	
+	public function getVotersList() {
+		return $this->getVoteHelper()->getVotersList();
+	}
+			
 	public function isEdited() {
 		return $this->getArticleComment()->mLastRevId != $this->getArticleComment()->mFirstRevId;
 	}
@@ -892,8 +1021,20 @@ class WallMessage {
 		$this->load();
 		$lastRevId = $this->getArticleComment()->mLastRevId;
 		if(!empty($lastRevId)){
-			$helper = F::build('WallHelper', array());
-			$helper->sendNotification($lastRevId);
+			$this->helper->sendNotification($lastRevId);
 		}
+	}
+	
+	public function showVotes() {
+		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallVotesNS);	
+	}
+
+	public function canVotes(User $user) {
+		return $this->showVotes() && $user->isLoggedIn() && !$user->isBlocked(); 
+	}
+	
+	public function isAllowedNotifyEveryone() {
+		$app = F::App();
+		return $this->helper->isAllowedNotifyEveryone($this->title->getNamespace(), $app->wg->User);
 	}
 }

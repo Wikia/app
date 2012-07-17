@@ -77,18 +77,36 @@ class Wall {
 				uasort($this->threads, array($this, 'sortMostactive'));
 				$this->sliceThreads( $page );
 				return $this->threads;
+			case 'mr': // most replies in 7 days first
+				$this->loadThreads();
+				$this->checkWhichThreadsAreCached();
+				$this->preloadThreadsGrouped();
+				$this->preloadThreadReplyScore();
+				uasort($this->threads, array($this, 'sortMostReply'));
+				$this->sliceThreads( $page );
+				return $this->threads;
 		}
 		
 	}
-	
+
 	public function sortLastReply( $a, $b ) {
 		return ($a->getLastReplyTimestamp() < $b->getLastReplyTimestamp() ) ? 1 : -1;
 	}
-	
+
 	public function sortMostactive( $a, $b ) {
 		return ($a->getScore() < $b->getScore() ) ? 1 : -1;
 	}
-	
+
+	public function sortMostReply( $a, $b ) {
+		if ( $a->getReplyScore() < $b->getReplyScore() ) {
+			return 1;
+		} else if ( $a->getReplyScore() > $b->getReplyScore() ) {
+			return -1;
+		} else {
+			return $this->sortLastReply( $a, $b );
+		}
+	}
+
 	public function getThreadHistoryCount() {
 		if(is_null($this->mThreadsHistory)) {
 			$this->loadWallThreadsHistory();
@@ -127,6 +145,14 @@ class Wall {
 		}
 	}
 	
+	private function preloadThreadReplyScore() {
+		// preload reply score of threads (and cache in thread object)
+		// to prevent changing object when sorting
+		foreach( $this->threads as $thread ) {
+			$thread->getReplyScore();
+		}
+	}
+
 	private function sliceThreads( $page ) {
 		if(!empty($this->mMaxPerPage)) {
 			$this->threads = array_slice($this->threads, $this->mMaxPerPage * ($page - 1), $this->mMaxPerPage, true);
@@ -144,7 +170,6 @@ class Wall {
 	
 	private function loadThreads() {
 		$this->threads = array();
-
 		foreach( $this->mThreadMapping as $tTitle => $tId ) {
 			$thread = WallThread::newFromId( $tId );
 			$this->threads[$tId] = $thread;
@@ -158,7 +183,7 @@ class Wall {
 		if( $forceReload === false ) {
 			$val = $cache->get( $key );
 		}
-		
+
 		if( empty($val) ) {
 			// if forcing reload use master server
 			$this->LoadThreadListFromDB( $forceReload );
@@ -178,8 +203,11 @@ class Wall {
 		// get list of threads (article IDs) on Message Wall
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 		
-		// page_latest condition is for BugId:22821
-		$query = "
+		$query = '';
+		wfRunHooks( 'WallLoadThreadListFromDB', array( $this->mTitle, &$query ) );
+		if ( empty($query) ) {
+			// page_latest condition is for BugId:22821
+			$query = "
 		select page.page_id, page.page_title from page
 		left join page_wikia_props
 		on page.page_id = page_wikia_props.page_id
@@ -187,12 +215,12 @@ class Wall {
 		     or page_wikia_props.propname = ".WPP_WALL_REMOVE."
 		     or page_wikia_props.propname = ".WPP_WALL_ARCHIVE.")
 		where page_wikia_props.page_id is null
-		and page.page_title" . $dbr->buildLike( sprintf( "%s/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . "
-		and page.page_title not like '%@%@%'  
+		and page.page_title" . $dbr->buildLike( sprintf( "%s/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . " 
 		and page.page_title NOT " . $dbr->buildLike( sprintf( "%s/%s%%/%s", $this->mTitle->getDBkey(), ARTICLECOMMENT_PREFIX, ARTICLECOMMENT_PREFIX ), $dbr->anyString() ) . " 
 		and page.page_namespace = ".MWNamespace::getTalk($this->mTitle->getNamespace())."
 		and page.page_latest > 0
 		order by page.page_id desc";
+		}
 
 		$res = $dbr->query( $query );
 		
@@ -263,9 +291,15 @@ class Wall {
 		// load data for threads on the notCached list
 		// send it to objects on threads list
 		if( count($this->notCached) == 0 ) return;
-		
+
+		$return = false;
+		wfRunHooks( 'WallPreloadThreadsGrouped', array( $this->mTitle, $master, $this->notCached, &$this->mThreadMapping, &$this->threads, &$return ) );
+		if ( $return ) {
+			return;
+		}
+
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
-		
+
 		$table = array( 'page' );
 		$vars = array( 'page_id', 'page_title' );
 		$conds = array();
@@ -307,7 +341,7 @@ class Wall {
 	}
 
 	private function getWallThreadListKey() {
-		return  wfSharedMemcKey( 'wall-threadlist-key-v005'.time(), __CLASS__, $this->mCityId, $this->mTitle->getDBkey(), $this->mTitle->getNamespace());
+		return  __CLASS__ . '-'.$this->mCityId.'-wall-threadlist-key-v003-' . $this->mTitle->getDBkey().'-'.$this->mTitle->getNamespace();
 	}
 	
 	private function getCache() {

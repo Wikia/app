@@ -8,3 +8,5 @@ $wgExtensionNamespacesFiles['Wall'] = __DIR__ . '/Wall.namespaces.php';
 wfLoadExtensionNamespaces( 'Wall', array( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) );
 
 $wgWallNS = array(NS_USER_WALL);
+$wgWallVotesNS = array();
+$wgWallNotifyEveryoneNS = array();

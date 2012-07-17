@@ -51,7 +51,7 @@ $wgGroupPermissions['sysop']['commentedit'] = true;
 $wgGroupPermissions['sysop']['commentdelete'] = true;
 
 if (!empty($wgEnableWallExt) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
-	
+
 	$wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';
 	$wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';
 	$wgHooks['ArticleRevisionUndeleted'][] = 'ArticleCommentList::undeleteComments';
@@ -89,9 +89,9 @@ if (!empty($wgEnableWallExt) || !empty($wgEnableArticleCommentsExt) || !empty($w
 	$wgHooks['ParserFirstCallInit'][] = 'ArticleComment::metadataParserInit';
 
 	$wgHooks['WikiaMobileAssetsPackages'][] = 'ArticleCommentInit::onWikiaMobileAssetsPackages';
-	
+
 	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentsController::onBeforePageDisplay';
-	$wgHooks['SkinAfterContent'][] = 'ArticleCommentsController::onSkinAfterContent';	
+	$wgHooks['SkinAfterContent'][] = 'ArticleCommentsController::onSkinAfterContent';
 }
 
 //JSMEssages setup
@@ -118,18 +118,16 @@ function efBeforePageDisplayArticleComments (&$vars) {
 		if ($app->wg->EnableMiniEditorExtForArticleComments && !$isMobile) {
 			$app->sendRequest('MiniEditor', 'loadAssets', array(
 				'loadOnDemand' => true,
-				'loadOnDemandAssets' => array(
-					'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
-				),
 				'additionalAssets' => array(
-					'/extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss'
+					'/extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss',
+					'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
 				)
 			));
 		}
-	}	
+	}
 	return true;
 }
-	
+
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ArticleCommentsAjax';
 
