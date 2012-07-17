@@ -61,16 +61,12 @@ $.fn.extend({
 			//set up headline
 			var headline = wrapper.find("h1:first");
 			
-			console.log(headline);
-
 			if (headline.exists()) {
 				headline.remove();
 			} else {
 				// no <h1> found - use title attribute (backward compatibility with Monaco)
 				headline = $('<h1>').html($(this).attr('title') || '');
 			}
-
-			console.log(headline);
 
 			// add headline
 			headline.prependTo(wrapper);
