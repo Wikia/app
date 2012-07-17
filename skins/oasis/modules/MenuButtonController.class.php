@@ -20,6 +20,7 @@ class MenuButtonController extends WikiaController {
 	var $wgBlankImgUrl;
 
 	var $action;
+	var $nofollow;
 	var $actionName;
 	var $actionAccessKey;
 	var $class;
@@ -51,6 +52,10 @@ class MenuButtonController extends WikiaController {
 		}
 		else {
 			$this->actionName = 'edit';
+		}
+
+		if (isset($data['nofollow'])) {
+			$this->nofollow = $data['nofollow'];
 		}
 
 		$this->actionAccessKey = MenuButtonController::accessKey($this->actionName);

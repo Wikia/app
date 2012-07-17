@@ -21,6 +21,7 @@
 			),
 			'name' => 'comment',
 			'class' => 'comments secondary',
+			'nofollow' => true
 		));
 	}
 ?>
