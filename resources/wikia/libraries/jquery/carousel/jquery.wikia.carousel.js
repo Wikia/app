@@ -298,7 +298,7 @@
 
 			if(options.itemClick) {
 				dom.carousel.on('click', 'li', function(e) {
-					setAsActive($this.index());
+					setAsActive($(this).index());
 					options.itemClick.call(this, e);
 				});
 			}
