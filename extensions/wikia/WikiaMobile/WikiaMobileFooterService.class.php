@@ -19,6 +19,7 @@ class WikiaMobileFooterService extends WikiaService {
 	}
 
 	private function getLinkFromMessage( $msgName ){
+		//I guess this is more of a cleanup function to remove unneeded markup?
 		return str_replace(
 			array( '<p>', '</p>' ),
 			'',

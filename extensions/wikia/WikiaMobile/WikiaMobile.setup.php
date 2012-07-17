@@ -32,9 +32,9 @@ $app->wg->append(
  * classes
  */
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileHooks.class.php", 'WikiaMobileHooks' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryItem' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryItemsCollection' );
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryContents' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryItem' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryItemsCollection' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryContents' );
 $app->wg->set( 'wgAutoloadClasses', "{$dir}/ResourceVariablesGetter.class.php", 'ResourceVariablesGetter' );
 
 /**
@@ -53,7 +53,8 @@ $app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileErrorService.class.php", 
 /**
  * models
  */
-$app->wg->set( 'wgAutoloadClasses', "{$dir}/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryModel' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileCategoryModel.class.php", 'WikiaMobileCategoryModel' );
+$app->wg->set( 'wgAutoloadClasses', "{$dir}/models/WikiaMobileStatsModel.class.php", 'WikiaMobileStatsModel' );
 
 /**
  * controllers

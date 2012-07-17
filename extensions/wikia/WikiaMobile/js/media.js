@@ -186,10 +186,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 
 	function setupImage(){
 		var image = images[current];
-
 		loader.hide(currentImage);
-
-		console.log(image);
 
 		if(image.isVideo) {// video
 			var imgTitle = 'File:' + image.name;
@@ -431,7 +428,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		if(imagesLength > 1 && !galleryInited) {
 			Wikia.getMultiTypePackage({
 				styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
-				scripts: 'mediagallery_wikiamobile_js',
+				scripts: 'wikiamobile_mediagallery_js',
 				ttl: 604800,
 				callback: function(res){
 					Wikia.processScript(res.scripts[0]);
