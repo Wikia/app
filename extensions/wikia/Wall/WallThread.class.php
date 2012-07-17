@@ -13,13 +13,14 @@ class WallThread {
  		private $data->threadActivityScore = false;
 		private $data->threadLastReplyTimestamp = false;
 	 */
-	
+
 	public function __construct() {
 		$this->data = null;
 		$this->data->threadReplyIds = false;
 		$this->data->threadReplyObjs = false;
 		$this->data->threadActivityScore = false;
 		$this->data->threadLastReplyTimestamp = false;
+		$this->data->threadReplyScore = false;
 		$this->mCached = null;
 		$this->mCityId = F::app()->wg->CityId;
 	}
@@ -68,10 +69,12 @@ class WallThread {
 		$this->data->threadReplyObjs = false;
 		$this->data->threadActivityScore = false;
 		$this->data->threadLastReplyTimestamp = false;
-		
+		$this->data->threadReplyScore = false;
+
 		$this->data->threadReplyIds = $ids;
 		$this->data->threadActivityScore = $this->_getScore();
 		$this->data->threadLastReplyTimestamp = $this->_getLastReplyTimestamp();
+		$this->data->threadReplyScore = $this->_getReplyScore();
 		
 		$this->saveToMemcache();
 	}
@@ -90,6 +93,15 @@ class WallThread {
 		return $this->data->threadLastReplyTimestamp;
 	}
 	
+	public function getReplyScore() {
+		if( !($this->data->threadReplyScore === false) ) {
+			return $this->data->threadReplyScore;
+		}
+		$this->data->threadReplyScore = $this->_getReplyScore();
+
+		return $this->data->threadReplyScore;
+	}
+
 	private function _getScore() {
 		// score is used for Most Active thread sorting
 		if($this->data->threadReplyObjs === false) $this->loadReplyObjs();
@@ -110,7 +122,7 @@ class WallThread {
 		$score += $this->timestampToScore( $mainMsg->getCreateTimeRAW() );
 		return $score;
 	}
-	
+
 	private function _getLastReplyTimestamp() {
 		if($this->data->threadReplyObjs === false) $this->loadReplyObjs();
 		if(count($this->data->threadReplyObjs) > 0) {
@@ -126,7 +138,40 @@ class WallThread {
 		return $last->getCreateTimeRAW();
 	
 	}
-	
+
+	// get reply score - score is used for Most Replies in 7 day sorting ( from comment_index table )
+	private function _getReplyScore() {
+		wfProfileIn( __METHOD__ );
+
+		$score = 0;
+		$startPeriod = wfTimestamp( TS_MW, strtotime( '-7 day' ) );
+		$lastReply = $this->getLastReplyTimestamp();
+		if ( $lastReply >= $startPeriod ) {
+			if ( $this->data->threadReplyObjs === false ) {
+				$this->loadReplyObjs();
+			}
+
+			if ( !empty($this->data->threadReplyObjs) ) {
+				$db = wfGetDB( DB_SLAVE );
+				$score = $db->selectField(
+					array( 'comments_index' ),
+					array( 'count(distinct comment_id) cnt' ),
+					array(
+						'parent_comment_id' => $this->mThreadId,
+						'deleted' => 0,
+						'removed' => 0,
+						'created_at > '.$startPeriod,
+					),
+					__METHOD__
+				);
+			}
+		}
+
+		wfProfileIn( __METHOD__ );
+
+		return intval( $score );
+	}
+
 	private function loadReplyObjs() {
 		if( $this->data->threadReplyIds === false )
 			$this->loadReplyIdsFromDB();
@@ -134,7 +179,7 @@ class WallThread {
 		foreach( $this->data->threadReplyIds as $id ) {
 			$wm = WallMessage::newFromId( $id, $this->mForceMaster );
 			if($wm instanceof WallMessage && !$wm->isAdminDelete()) {
-				$this->data->threadReplyObjs[ $id ] = $wm; 
+				$this->data->threadReplyObjs[ $id ] = $wm;
 			}
 		}
 	}
@@ -145,29 +190,32 @@ class WallThread {
 		// (fetch for many threads at once, set with ->setReplies)
 
 		$title = Title::newFromId( $this->mThreadId );
-		
+
 		if( empty($title) ) {
 			$title = Title::newFromId( $this->mThreadId, Title::GAID_FOR_UPDATE );
 		}
 
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
-		$table = array( 'page' );
-		$vars = array( 'page_id' );
-		$conds[]  = "page_title" . $dbr->buildLike( sprintf( "%s/%s", $title->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() );
-		$conds[] = "page_latest > 0";	// BugId:22821
-		$conds['page_namespace'] = MWNamespace::getTalk($title->getNamespace());
-		$options = array( 'ORDER BY' => 'page_id ASC' );
-		$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
+		$list = false;
+		wfRunHooks( 'WallThreadLoadReplyIdsFromDB', array( $title, $master, &$list ) );
+		if ( !is_array($list) ) {
+			$table = array( 'page' );
+			$vars = array( 'page_id' );
+			$conds[]  = "page_title" . $dbr->buildLike( sprintf( "%s/%s", $title->getDBkey(), ARTICLECOMMENT_PREFIX ), $dbr->anyString() );
+			$conds[] = "page_latest > 0";	// BugId:22821
+			$conds['page_namespace'] = MWNamespace::getTalk($title->getNamespace());
+			$options = array( 'ORDER BY' => 'page_id ASC' );
+			$res = $dbr->select( $table, $vars, $conds, __METHOD__, $options);
 
-		$list = array();
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			array_push($list, $row->page_id);
+			$list = array();
+			while ( $row = $dbr->fetchObject( $res ) ) {
+				array_push($list, $row->page_id);
+			}
 		}
 		$this->setReplies( $list );
-
 	}
-	
+
 	public function invalidateCache() {
 		// invalidate cache at Thread level (new reply or reply removed in thread)
 		$this->mForceMaster = true;
@@ -175,7 +223,7 @@ class WallThread {
 	}
 	
 	private function getThreadKey() {
-		return wfSharedMemcKey( __CLASS__, 'thread-key-v09', $this->mCityId, $this->mThreadId);
+		return  __CLASS__ . '-'.$this->mCityId.'-thread-key-v11-' . $this->mThreadId;
 	}
 	
 	private function getCache() {
@@ -213,7 +261,7 @@ class WallThread {
 			$this->loadReplyObjs();
 		return $this->data->threadReplyObjs;
 	}
-	
+
 }
 
 ?>

@@ -33,10 +33,15 @@ class ForumNotificationPlugin {
 			
 			
 			$msgid = "forum-notification-user$userCount-reply-to-$replyTo";
+		} else {
+			$msgid = 'forum-notification-newmsg-on-followed-wall';
 			
-			$msg = wfMsgExt($msgid, array( 'parsemag'), $params);
+			$params['$1'] = $nc->getDisplayname($data->msg_author_displayname);
+			$params['$2'] = $data->wall_displayname;
 		}
 
+		$msg = wfMsgExt($msgid, array( 'parsemag'), $params);
+		
 		return true;
 	}
 

@@ -102,7 +102,7 @@ class WallHistoryController extends WallController {
 	}
 	
 	private function historyPreExecute() {
-		$this->response->addAsset('wallhistoryjs');
+		$this->response->addAsset('wall_history_js');
 		$this->response->addAsset('extensions/wikia/Wall/css/WallHistory.scss');
 		
 		if( $this->isThreadLevel ) {

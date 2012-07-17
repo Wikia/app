@@ -289,7 +289,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 	{
 		global $wgDBname;
         $page = $vote = null;
-
+        
         #--- initial parameters (dbname, limit, offset ...)
 		extract($this->getInitialParams());
 
@@ -300,6 +300,10 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$user_id = $this->getUser()->getId();
 		$browserId = $this->getBrowser();
 
+		if(!wfRunHooks( 'ArticleBeforeVote', array( &$user_id, &$page, $vote ) )) {
+			return true;
+		}
+		        
         #--- database instance - DB_MASTER
 		$db =& $this->getDB();
         $db->selectDB( (!defined(WIKIA_API_QUERY_DBNAME))?WIKIA_API_QUERY_DBNAME:$wgDBname );
@@ -681,6 +685,8 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$this->setCacheKey ($lcache_key, 'P', $page);
 		$this->setCacheKey ($lcache_key, 'UB', $browserId);
 		$this->deleteCacheData($lcache_key);
+		
+		//Refresh cache
 	}
 
 	#---

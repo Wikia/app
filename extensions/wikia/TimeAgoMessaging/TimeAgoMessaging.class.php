@@ -30,6 +30,7 @@ class TimeAgoMessaging {
 
 			$messages = array();
 			$keys = array(
+				'year',
 				'month',
 				'day',
 				'hour',

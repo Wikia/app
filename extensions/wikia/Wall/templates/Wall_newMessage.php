@@ -24,14 +24,17 @@
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render(); 
 			endif; ?>
+			<?php if($notify_everyone): ?>
+				<?php //never use in wall just for example?>
+				<input type="checkbox" name="NotifyEveryone" id="NotifyEveryone" value="1" />
+			<?php endif; ?>
 			<div id="WallMessageBodyButtons" class="speech-bubble-buttons" data-space-type="buttons">
-				<button id="WallMessageSubmit" disabled="disabled" style="display: none"<?
+				<label class="highlight">
+					<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" />
+				</label>
+				<button id="WallMessageSubmit" disabled="disabled"<?
 					if ( $loginToEditProtectedPage ): ?> class="wall-require-login" data="<?= $ajaxLoginUrl; ?>"<? endif;
 				?>><?= wfMsg('wall-button-to-submit-comment') ?></button>
-				<? /* ?>
-				<button id="WallMessagePreview" disabled="disabled" style="display: none" class="secondary"><?= wfMsg('wall-button-to-preview-comment') ?></button>
-				<button id="WallMessagePreviewCancel" style="display: none" class="secondary"><?= wfMsg('wall-button-to-cancel-preview') ?></button>
-				<? */ ?>
 				<div class="loadingAjax"></div>
 			</div>
 			<? if ( $wg->EnableMiniEditorExtForWall ):

@@ -1,12 +1,8 @@
-/*
- * Message reply functions
- */
+(function($) {
 
-var WallReplyMessageForm = $.createClass(WallMessageForm, {
+Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 	constructor: function(page, model) {
-		WallNewMessageForm.superclass.constructor.apply(this, arguments);
-
-		this.wall = $('#Wall');
+		Wall.ReplyMessageForm.superclass.constructor.apply(this, arguments);
 
 		this.settings = {
 			reply: {
@@ -18,115 +14,109 @@ var WallReplyMessageForm = $.createClass(WallMessageForm, {
 			}
 		};
 
-		this.init();
+		this.initElements();
+		this.initEvents();
 
 		this.model.bind('pageLoaded', this.proxy(function(page, data) {
-			this.init(page);
+			this.initEvents(page);
 		}));
 	},
 
-	init: function() {
-		this.wall
-			.on('click', '.replyButton', this.proxy(this.replyToMessage))
-			.on('keydown keyup change', '.new-reply .body', this.proxy(this.change))
-			.on('focus', '.new-reply .body', this.proxy(this.focus))
-			.on('blur', '.new-reply .body', this.proxy(this.blur))
-			.find('.new-reply .body').autoResize(this.settings.reply);
+	initElements: function() {
+		this.replyWrapper = '.new-reply';
+
+		// Relative to replyWrapper
+		this.replyButton = '.replyButton';
+		this.replyBody = '.body';
+		this.replyThread = '.comments > .SpeechBubble';
+
+		// Relative to replyThread
+		this.replyThreadFollow = '.follow';
+		this.replyThreadMessages = 'ul .message';
+		this.replyThreadCount = 'ul .load-more .count';
+	},
+
+	initEvents: function() {
+		$(this.replyWrapper)
+			.on('click', this.replyButton, this.proxy(this.replyToMessage))
+			.on('keydown keyup change', this.replyBody, this.proxy(this.change))
+			.on('focus', this.replyBody, this.proxy(this.focus))
+			.on('blur', this.replyBody, this.proxy(this.blur))
+			.find(this.replyBody).autoResize(this.settings.reply);
 	},
 
 	focus: function(e) {
-		var el = $(e.target).closest('.SpeechBubble');
-		$('.replyButton', el).show();
-		el.css({ 'margin-bottom': '40px'});
-		$('.speech-bubble-message', el).stop().css({'margin-left':'40px'});
-		$('.speech-bubble-avatar', el).show();
-		$('textarea',el).css('line-height','inherit');
+		$(e.target).closest(this.replyWrapper).addClass('open');
 		this.track('wall/message/reply_field');
 	},
 
 	change: function(e) {
-		var target = $(e.target);
-		var content = !target.hasClass('placeholder') && target.val().length > 0;
+		var target = $(e.target),
+			hasContent = target.val() != '';
 
-		if (content && !target.hasClass('content')) {
-			target.closest('.SpeechBubble').find('.replyButton').removeAttr('disabled');
+		if (hasContent && !target.hasClass('placeholder') && !target.hasClass('content')) {
 			target.addClass('content');
-			var el = target.closest('.SpeechBubble');
-			$('button', el ).removeAttr('disabled');
+			target.closest(this.replyWrapper).find(this.replyButton).removeAttr('disabled');
 
-		} else if(!content && target.hasClass('content')) {
-			target.closest('.SpeechBubble').find('.replyButton').attr('disabled', 'disabled');
+		} else if (!hasContent) {
 			target.removeClass('content');
-			var el = target.closest('.SpeechBubble');
-			$('button', el ).attr('disabled','disabled');
+			target.closest(this.replyWrapper).find(this.replyButton).attr('disabled', true);
 		}
 	},
 
 	blur: function(e) {
-		var content = !$(e.target).hasClass('placeholder') && $(e.target).val().length > 0;
+		var target = $(e.target);
 
-		if(!content) {
-			var el = $(e.target).closest('.SpeechBubble');
-			$('button', el ).hide();
-			$(el).css({ 'margin-bottom': '0px'});
-			$('.speech-bubble-message', el).animate({'margin-left':'0px'},150);
-			$('.speech-bubble-avatar', el)
-				.css('position','absolute')
-				.fadeOut(150);
-			$('textarea',el).css('line-height','normal');
-		} 
-	},
-
-	disable: function(el) {
-		$('textarea', el).attr('disabled', 'disabled');
-		$('.replyButton', el).attr('disabled', 'disabled');
-		$('.loadingAjax', el).show();
-		$('.speech-bubble-message', el).addClass('loading');
-	},
-
-	enable: function(el) {
-		$('textarea', el).removeAttr('disabled');
-		$('.replyButton', el).removeClass('loading').removeAttr('disabled');
-		$('.loadingAjax', el).hide();
-		$('.speech-bubble-message', el).removeClass('loading');
-	},
-
-	replyToMessage: function(e, href) {
-		var main = $(e.target).closest('.comments > .SpeechBubble');
-		var newreply = $(e.target).closest('.SpeechBubble');
-		this.disable(newreply);
-
-		if ($(e.target).hasClass('wall-require-login'))  {
-			//do nothing -- ajax combo box will take care of it starting from now
-			this.loginBeforeAction(this.proxy(function() {
-				this.doReplyToMessage(main, newreply, true);
-			}));
-
-		} else {
-			this.doReplyToMessage(main, newreply, false);
+		if (!target.hasClass('content')) {
+			target.closest(this.replyWrapper).removeClass('open');
 		}
 	},
 
-	doReplyToMessage: function(main, newreply, reload) {
-		this.model.postReply(this.page, newreply.find('textarea').val(), this.getFormat(), main.attr('data-id'), this.proxy(function(msg) {
-			this.enable(newreply);
+	disable: function(replyWrapper) {
+		replyWrapper.addClass('loading');
+		replyWrapper.find(this.replyBody).attr('disabled', true);
+		replyWrapper.find(this.replyButton).attr('disabled', true);
+	},
 
-			main.find('textarea').val('').trigger('blur');
+	enable: function(replyWrapper) {
+		replyWrapper.removeClass('loading');
+		replyWrapper.find(this.replyBody).removeAttr('disabled');
+		replyWrapper.find(this.replyButton).removeAttr('disabled');
+	},
 
-			var newmsg = $(msg).insertBefore(main.find('ul li.new-reply')).hide().fadeIn('slow');
-			
+	replyToMessage: function(e) {
+		var target = $(e.target),
+			thread = target.closest(this.replyThread);
+			reply = target.closest(this.replyWrapper);
+
+		this.disable(reply);
+
+		if (target.hasClass('wall-require-login'))  {
+			this.loginBeforeAction(this.proxy(function() {
+				this.doReplyToMessage(thread, reply, true);
+			}));
+
+		} else {
+			this.doReplyToMessage(thread, reply, false);
+		}
+	},
+
+	doReplyToMessage: function(thread, reply, reload) {
+		this.model.postReply(this.page, reply.find(this.replyBody).val(), this.getFormat(), thread.attr('data-id'), this.proxy(function(newMessage) {
+			newMessage = $(newMessage);
+
+			this.enable(reply);
+
+			reply.find(this.replyBody).val('').trigger('blur');
+			newMessage.insertBefore(reply).hide().fadeIn('slow').find('.timeago').timeago();
+
 			if (window.skin && window.skin != 'monobook') {
-				WikiaButtons.init(newmsg);
+				WikiaButtons.init(newMessage);
 			}
 
-			$('.timeago',newmsg).timeago();
+			thread.find(this.replyThreadCount).html(thread.find(this.replyThreadMessages).length);
+			thread.find(this.replyThreadFollow).text($.msg('wikiafollowedpages-following')).removeClass('secondary');
 
-			main.find('ul li.load-more .count').html(main.find('ul li.message').length);
-			$('.speech-bubble-message', newreply).css({'margin-left':'0px'});
-			$('.speech-bubble-avatar', newreply).hide();
-			$('.follow', main).text($.msg('wikiafollowedpages-following')).removeClass('secondary');
-
-			//click tracking
 			this.track('wall/message/reply_post');
 
 			if (reload) {
@@ -135,3 +125,7 @@ var WallReplyMessageForm = $.createClass(WallMessageForm, {
 		}));
 	}
 });
+
+Wall.settings.classBindings.replyMessageForm = Wall.ReplyMessageForm;
+
+})(jQuery);

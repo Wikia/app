@@ -8,39 +8,63 @@
 $messages = array();
 
 $messages['en'] = array(
-	'forum-specialpage-title' => '$1 Forum',
-	'forum-forum-title' => '$1 Forum',
-	'forum-board-title' => '$1 board',
-	'forum-thread-title' => '$1 board',
+	'forum-forum-title' => 'Forum',
+	'forum-total-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Discussion in this Forum|Threads in this Discussions}}',
+	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Active Discussion|Active Discussions}}',
+
+	/* Heading Bar */
+	'forum-header-total-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Thread<br> in this Forum|Threads<br> in this Forum}}</span>',
+	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Active<br> Discussion|Active<br> Discussions}}</span>',
+
+	/* Forum:Special (Index) */
 	'forum-specialpage-blurb-heading' => 'Welcome to our Alpha Forums',
 	'forum-specialpage-blurb' => '<p>This is the very first version of Wikia\'s new forum extension. We\'re looking to add lots of great features over the coming months, but we wanted to get our alpha to you as soon as possible so that you can start to play with it. We will use the feedback provided in the boards below to figure out which features are the most important to you.<br /> Enjoy!</p>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|thread|threads}}',
 	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|post|posts}}',
-	'forum-specialpage-board-lastpostby' => 'last post by',
-	'forum-placeholder-message' => 'Post a new message to the $1 board',
+	'forum-specialpage-board-lastpostby' => 'Last post by',
+
+	/* Forum Board */
+	'forum-board-title' => '$1 board',
+	'forum-board-thread-follow' => 'Follow',
+	'forum-board-thread-following' => 'Following',
+	'forum-board-thread-kudos' => '$1 Kudos',
+	'forum-board-thread-replies' => '$1 Replies',
+	'forum-board-thread-unfollow' => 'Unfollow',
+
+	/* Forum Thread */
+	'forum-thread-title' => '$1 board',
+	'forum-thread-reply-placeholder' => 'Post a reply',
+	'forum-thread-reply-post' => 'Reply',
+
+	/* Sorting */
+	'forum-sorting-option-newest-replies' => 'Most Recent',
+	'forum-sorting-option-popular-threads' => 'Most Popular',
+	'forum-sorting-option-most-replies' => 'Most Active in 7 Days',
+
+	/* New Discussion */
+	'forum-discussion-post' => 'Post',
+	'forum-discussion-highlight' => 'Highlight this discussion',
+	'forum-discussion-placeholder-title' => 'What do you want to talk about?',
+	'forum-discussion-placeholder-message' => 'Post a new message to the $1 board',
 
 	/* Notification */
-
-	'forum-notification-user1-reply-to-your' => '$1 replied to your thread on the $3 board', 
+	'forum-notification-user1-reply-to-your' => '$1 replied to your thread on the $3 board',
 	'forum-notification-user2-reply-to-your' => '$1 and $2 replied to your thread on the $3 board',
 	'forum-notification-user3-reply-to-your' => '$1 and others replied to your thread the $3 board',
-
-	'forum-notification-user1-reply-to-someone' => '$1 replied on the $3 board', 
+	'forum-notification-user1-reply-to-someone' => '$1 replied on the $3 board',
 	'forum-notification-user2-reply-to-someone' => '$1 and $2 replied on the $3 board',
 	'forum-notification-user3-reply-to-someone' => '$1 and others replied on the $3 board',
+	
+	'forum-notification-newmsg-on-followed-wall' => '$1 left a new message on the $2 board',
 
 	/* Mail message */
 	'forum-mail-notification-new-someone' => '$AUTHOR_NAME wrote a new thread on $WIKI\'s $BOARDNAME board.',
 	'forum-mail-notification-new-your' => '$AUTHOR_NAME wrote a new thread on $WIKI\'s $BOARDNAME board.',
-
 	'forum-mail-notification-reply-your' => '$AUTHOR_NAME replied to your thread on $WIKI\'s $BOARDNAME board',
 	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME replied on $WIKI\'s $BOARDNAME board',
-
 	'forum-mail-notification-html-greeting' => 'Hi $1,',
 	'forum-mail-notification-html-button' => 'See the conversation',
-
 	'forum-mail-notification-subject' => '$1 -- $2',
-
 	'forum-mail-notification-body' => 'Hi $WATCHER,
 
 $SUBJECT
@@ -75,6 +99,17 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	/* WikiActivity */
 	'forum-wiki-activity-msg' => 'on the $1',
 	'forum-wiki-activity-msg-name' => '$1 board',
+	
+	/* Forum Activity Module */
+	'forum-activity-module-heading' => 'Forum Activity',
+	'forum-activity-module-posted' => '$1 posted a reply $2',
+	'forum-activity-module-started' => '$1 started a discussion $2',
+
+	/* Forum Participation Module */
+	'forum-participation-module-heading' => 'Who\'s Here',
+	'forum-participation-module-kudos' => 'gave [[$1|kudos]] $2',
+	'forum-participation-module-posted' => 'posted a <a href="$1">reply</a> $2',
+	'forum-participation-module-started' => 'started a <a href="$1">discussion</a>$2',
 
 	/* Contribution/RC */
 	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> on the <a href="$3">$4 board</a>',
@@ -87,7 +122,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-recentchanges-restored-reply' => 'restored reply on "[[$1|$2]]" to the [[$3|$4 Board]]',
 	'forum-recentchanges-deleted-thread' => 'deleted thread "[[$1|$2]]" from the [[$3|$4 Board]]',
 	'forum-recentchanges-deleted-reply' => 'deleted reply from "[[$1|$2]]" from the [[$3|$4 Board]]',
-
 	'forum-recentchanges-deleted-reply-title' => 'A post',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forum Board',
 	'forum-recentchanges-thread-group' => '$1 on the <a href="$2">$3 Board</a>',
@@ -96,20 +130,27 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 );
 
 $messages['qqq'] = array(
-	'forum-title' => 'The main title for the forum.',
+	'forum-forum-title' => 'The main title for the forum.',
 	'forum-board-title' => 'appears in the header of board page',
-	
+
 	'forum-specialpage-title' => 'Appears as the main title of the forum and also in the browser title bar.',
 	'forum-specialpage-blurb-heading' => 'Heading for the introduction text.',
 	'forum-specialpage-blurb' => 'A short description of the forum.',
 	'forum-specialpage-board-threads' => 'The count of threads on a board. Parameters: * $1 - the number of threads.',
 	'forum-specialpage-board-posts' => 'The count of posts on a board. Parameters: * $1 - the number of posts.',
 	'forum-specialpage-board-lastpostby' => '',
-	
+
 	'forum-notification-user1-reply-to-your' => 'Notification when someone replies on your thread. Parameters:
 * $1 is a username (GENDER is supported in this message).',
 	'forum-notification-user1-reply-to-your' => "Notification when 2 users reply on the logged in user's thread. Parameters:
 * $1 and $2 are names of users that replied (GENDER is supported in this message).",
 	'forum-notification-user1-reply-to-your' => "Notification when 3 or more users reply on the logged in user's thread. Parameters:
 * $1 is the first user who replied (GENDER is supported in this message).",
+
+	'forum-activity-module-heading' => 'Forum Activity right rail module heading',
+	'forum-activity-module-posted' => '$1 is username, $2 is url to user page, $3 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
+	'forum-participation-module-heading' => 'Forum Participation right rail module heading.  Informal, and state "there are these people here"',
+	'forum-participation-module-kudos' => 'Gives state of kudos user activity by event and time.  $1 is a url link to the kudos event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
+	'forum-participation-module-posted' => 'Gives state of posted user activity by event and time.  $1 is a url link to the posted event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
+	'forum-participation-module-started' => 'Gives state of started user activity by event and time.  $1 is a url link to the started event page.  $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
 );

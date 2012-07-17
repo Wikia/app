@@ -555,7 +555,7 @@ var ArticleComments = {
 				// Initialize the editor
 				$element.miniEditor({
 					config: {
-						animations: window.WallAnimations,
+						animations: MiniEditor.Wall.Animations,
 						mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
 					},
 					events: events

@@ -1,6 +1,8 @@
-var WallMessageForm = $.createClass(Observable, {
+(function(window, $) {
+
+Wall.MessageForm = $.createClass(Observable, {
 	constructor: function(page, model) {
-		WallMessageForm.superclass.constructor.apply(this,arguments);
+		Wall.MessageForm.superclass.constructor.apply(this,arguments);
 		this.model = model;
 		this.page = page;
 		this.wall = $('#Wall');
@@ -20,7 +22,7 @@ var WallMessageForm = $.createClass(Observable, {
 	},
 
 	getFormat: function() {
-		// gets overrided if MiniEditor is enabled
+		// gets overriden if MiniEditor is enabled
 		return '';
 	},
 		
@@ -36,3 +38,5 @@ var WallMessageForm = $.createClass(Observable, {
 		return $.proxy(func, this);
 	}
 });
+
+})(window, jQuery);

@@ -12,6 +12,8 @@ $color-wall-input-focus: lighten($color-page, 6%);
 $color-wall-input-focus-shadow: mix($color-buttons, $color-page, 100%);
 $color-wall-input-new: mix($color-wall-bubble, $color-wall-input, 20%);
 $color-wall-text-placeholder: mix($color-text, $color-page, 50%);
+$color-wall-shadow: darken($color-page, 12%);
+$color-wall-error: mix($color-wall-input, $color-error, 70%);
 
 // dark theme
 @if $is-dark-wiki {
@@ -21,6 +23,7 @@ $color-wall-text-placeholder: mix($color-text, $color-page, 50%);
 	$color-wall-input: lighten($color-page, 5%);
 	$color-wall-input-focus: lighten($color-page, 10%);
 	$color-wall-input-new: mix($color-wall-bubble, $color-wall-input, 30%);
+	$color-wall-shadow: darken($color-page, 7%);
 
 	// very dark theme
 	@if lightness($color-wall-bubble) < 30 {

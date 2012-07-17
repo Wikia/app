@@ -1,0 +1,3 @@
+jQuery(function($) {
+	$('#Wall').wikiaWall();
+});

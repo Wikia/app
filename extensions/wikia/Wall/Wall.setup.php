@@ -34,6 +34,9 @@ $app->registerClass('WallRailHelper', $dir . '/WallRailHelper.class.php');
 $app->registerClass('WallRailController', $dir . '/WallRailController.class.php');
 $app->registerClass('WallHelper', $dir . '/WallHelper.class.php');
 $app->registerClass('WallHistory', $dir . '/WallHistory.class.php');
+$app->registerClass('WallBaseController', $dir . '/WallBaseController.class.php');
+$app->registerClass('VoteHelper', $dir . '/VoteHelper.class.php');
+
 
 // register task in task manager
 if (function_exists( "extAddBatchTask" ) ) {
@@ -41,7 +44,7 @@ if (function_exists( "extAddBatchTask" ) ) {
 }
 
 
-include($dir . '/WallNotifications.setup.php');
+include($dir . '/notification/WallNotifications.setup.php');
 
 
 $app->registerExtensionMessageFile('Wall', $dir . '/Wall.i18n.php');
@@ -117,6 +120,14 @@ $app->registerHook('ArticleSaveComplete', 'WallHooksHelper', 'onArticleSaveCompl
 //add script in monobook
 $app->registerHook('SkinAfterBottomScripts', 'WallHooksHelper', 'onSkinAfterBottomScripts');
 
+//cancel API vote adding
+$app->registerHook('ArticleBeforeVote', 'WallHooksHelper', 'onArticleBeforeVote');
+
+// vote invalidation
+$app->registerHook('BlockIpComplete', 'WallHooksHelper', 'onBlockIpComplete');
+$app->registerHook('UnBlockIpComplete', 'WallHooksHelper', 'onBlockIpComplete');
+
+
 F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-notifications',
 	'wall-notifications-reminder',
@@ -138,6 +149,7 @@ F::build('JSMessages')->registerPackage('Wall', array(
 	'wall-delete-error-content',
 	'wall-button-to-cancel-preview',
 	'wall-button-to-preview-comment',
+	'wall-votes-modal-title',
 	'wall-button-done-source',
 	'wall-action-*',
 	'wall-message-source',
@@ -147,6 +159,7 @@ F::build('JSMessages')->registerPackage('Wall', array(
 /**
  * extension related configuration
  */
+
 
 define( 'WALL_EMAIL_NOEMAIL', -1);
 define( 'WALL_EMAIL_EVERY', 1);
@@ -163,9 +176,43 @@ $userProfileNamespaces[] = NS_USER_TALK;
 $userProfileNamespaces[] = NS_USER_WALL;
 $app->getLocalRegistry()->set('UserProfileNamespaces', $userProfileNamespaces);
 
-
 define( 'WH_EDIT', 0);
 define( 'WH_NEW', 1);
 define( 'WH_DELETE', 2);
 define( 'WH_REMOVE', 4);
 define( 'WH_RESTORE', 5);
+
+
+//wall
+$wgGroupPermissions['*']['walldelete'] = false;
+$wgGroupPermissions['util']['walldelete'] = true;
+
+$wgGroupPermissions['*']['walladmindelete'] = false;
+$wgGroupPermissions['staff']['walladmindelete'] = true;
+$wgGroupPermissions['vstf']['walladmindelete'] = true;
+$wgGroupPermissions['helper']['walladmindelete'] = true;
+$wgGroupPermissions['sysop']['walladmindelete'] = true;
+
+$wgGroupPermissions['*']['wallremove'] = false;
+$wgGroupPermissions['user']['wallremove'] = true;
+
+$wgGroupPermissions['*']['walledit'] = false;
+$wgGroupPermissions['staff']['walledit'] = true;
+$wgGroupPermissions['vstf']['walledit'] = true;
+$wgGroupPermissions['helper']['walledit'] = true;
+$wgGroupPermissions['sysop']['walledit'] = true;
+
+$wgGroupPermissions['*']['editwallarchivedpages'] = false;
+$wgGroupPermissions['sysop']['editwallarchivedpages'] = true;
+$wgGroupPermissions['vstf']['editwallarchivedpages'] = true;
+$wgGroupPermissions['staff']['editwallarchivedpages'] = true;
+$wgGroupPermissions['helper']['editwallarchivedpages'] = true;
+
+$wgGroupPermissions['*']['wallshowwikiaemblem'] = false;
+$wgGroupPermissions['staff']['wallshowwikiaemblem'] = true;
+
+$wgGroupPermissions['*']['notifyeveryone'] = false;
+$wgGroupPermissions['sysop']['notifyeveryone'] = true;
+$wgGroupPermissions['vstf']['notifyeveryone'] = true;
+$wgGroupPermissions['staff']['notifyeveryone'] = true;
+$wgGroupPermissions['helper']['notifyeveryone'] = true;

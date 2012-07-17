@@ -85,7 +85,9 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 					// if set, don't let tooltip to be wider than this value
 					maxWidth: false,
 					// If set to true, tooltip will stay open while hovering over the message.
-					hoverStay: false
+					hoverStay: false,
+					// If set to true, the tooltip will not cache
+					nocache: false
 				},
 				options
 			);
@@ -147,102 +149,114 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 	 */
 	jQuery.__wikiaTooltipOnMouseEnter = function(){
 		var elm = $(this);
-		var options = elm.data('tooltip-options');
-		var tooltip = elm.data('tooltip-cached');
-        var timers = elm.data('timers');
-		var position = {};
-
-		if(typeof tooltip === 'undefined'){
-			tooltip = elm.data('tooltip-value');
-
-			switch(typeof tooltip){
-				case 'object':
-					break;
-				case 'function':
-					tooltip = tooltip(elm);
-
-					if(typeof tooltip === 'object') {
-						break;
-					}
-				default:
-					//could use HTML5 details tag, but support for Monobook is preferred
-					tooltip = $('<div>' + tooltip.toString() + '</div>');
-					// If we're setting a width, we want to allow the text to wrap
-					if(!options.maxWidth){
-					    position['white-space'] = 'nowrap';
-					}
-					$('body').append(tooltip);
-					break;
-			}
-
-			if(!tooltip.hasClass(options.className)) {
-				tooltip.addClass(options.className);
-			}
-
-			elm
-				.data('tooltip-cached', tooltip)
-				.removeData('tooltip-cached-position');
-		}
-
-		var globalPosition = (options.relativeToParent) ? elm.position() : elm.offset();
-		var cachedPosition = elm.data('tooltip-cached-position');
-
-		if(typeof cachedPosition === 'undefined' ||
-			((typeof cachedPosition !== 'undefined') &&
-				(globalPosition.top != cachedPosition.top || globalPosition.left != cachedPosition.left ) &&
-				options.position !== 'absolute'
-			)
-		){
-			switch(options.position){
-				case 'absolute':
-					position.top = options.top;
-					position.left = options.left;
-					break;
-				case 'auto':
-				case 'relative':
-				default:
-					switch(options.side){
-						case 'bottom':
-							position.top = globalPosition.top + elm.outerHeight(options.includeMargin);
-							position.left = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+		var delayHandle = elm.data('delayhandle');
+		
+		if(!delayHandle) {
+			delayHandle = setTimeout(function() {
+				var options = elm.data('tooltip-options');
+				var tooltip = elm.data('tooltip-cached');
+		        var timers = elm.data('timers');
+				var position = {};
+				
+				if(options.nocache && typeof tooltip !== 'undefined') {
+					tooltip.remove();
+					tooltip = undefined;
+				}
+		
+				if(typeof tooltip === 'undefined'){
+					tooltip = elm.data('tooltip-value');
+		
+					switch(typeof tooltip){
+						case 'object':
 							break;
-						case 'left':
-							position.left = globalPosition.left - tooltip.outerWidth(options.includeMargin);
-							position.top = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
-							break;
-						case 'right':
-							position.left = globalPosition.left + elm.outerWidth(options.includeMargin);
-							position.top = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
-							break;
-						case 'top':
+						case 'function':
+							tooltip = tooltip(elm);
+		
+							if(typeof tooltip === 'object') {
+								break;
+							}
 						default:
-							position.top = globalPosition.top - tooltip.outerHeight(options.includeMargin);
-							position.left = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+							//could use HTML5 details tag, but support for Monobook is preferred
+							tooltip = $('<div>' + tooltip.toString() + '</div>');
+							// If we're setting a width, we want to allow the text to wrap
+							if(!options.maxWidth){
+							    position['white-space'] = 'nowrap';
+							}
+							$('body').append(tooltip);
 							break;
 					}
-
-					break;
-			}
-
-			if(options.position === 'relative'){
-				position.top += options.top;
-				position.left += options.left;
-			}
-
-			elm.data('tooltip-cached-position', globalPosition);
-			tooltip.css(position);
-		}
-
-		if(options.maxWidth){
-			tooltip.css('width',options.maxWidth);
-		}
-
-		tooltip.show();
-
-		// If hoverStay is set, clear timout for hiding message
-		// because we just hovered over the trigger element
-		if(options.hoverStay) {
-			timers.clearTime();
+		
+					if(tooltip && !tooltip.hasClass(options.className)) {
+						tooltip.addClass(options.className);
+					}
+		
+					elm.removeData('tooltip-cached-position').data('tooltip-cached', tooltip);
+				}
+		
+				var globalPosition = (options.relativeToParent) ? elm.position() : elm.offset();
+				var cachedPosition = elm.data('tooltip-cached-position');
+		
+				if(typeof cachedPosition === 'undefined' ||
+					((typeof cachedPosition !== 'undefined') &&
+						(globalPosition.top != cachedPosition.top || globalPosition.left != cachedPosition.left ) &&
+						options.position !== 'absolute'
+					)
+				){
+					switch(options.position){
+						case 'absolute':
+							position.top = options.top;
+							position.left = options.left;
+							break;
+						case 'auto':
+						case 'relative':
+						default:
+							switch(options.side){
+								case 'bottom':
+									position.top = globalPosition.top + elm.outerHeight(options.includeMargin);
+									position.left = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+									break;
+								case 'left':
+									position.left = globalPosition.left - tooltip.outerWidth(options.includeMargin);
+									position.top = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+									break;
+								case 'right':
+									position.left = globalPosition.left + elm.outerWidth(options.includeMargin);
+									position.top = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+									break;
+								case 'top':
+								default:
+									position.top = globalPosition.top - tooltip.outerHeight(options.includeMargin);
+									position.left = jQuery.__wikiaTooltipGetAlignedPosition(options, globalPosition, elm, tooltip);
+									break;
+							}
+		
+							break;
+					}
+		
+					if(options.position === 'relative'){
+						position.top += options.top;
+						position.left += options.left;
+					}
+		
+					elm.data('tooltip-cached-position', globalPosition);
+					tooltip.css(position);
+				}
+		
+				if(options.maxWidth){
+					tooltip.css('width',options.maxWidth);
+				}
+		
+				tooltip.show();
+		
+				// If hoverStay is set, clear timout for hiding message
+				// because we just hovered over the trigger element
+				if(options.hoverStay) {
+					timers.clearTime();
+				}
+				
+				elm.data('delayhandle', false);
+			}, 250);
+			elm.data('delayhandle', delayHandle);
 		}
 	};
 
@@ -251,20 +265,28 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 	 */
 	jQuery.__wikiaTooltipOnMouseLeave = function(){
         var elm = $(this),
+        	delayHandle = elm.data('delayhandle'),
             options = elm.data('tooltip-options'),
             tooltip = elm.data('tooltip-cached'),
             timers = elm.data('timers');
-
-            // If hoverStay is set, start timeout for hiding message.
-            if(options.hoverStay){
-                timers.setTime();
-                tooltip.mouseenter(function(){
-                    timers.clearTime();
-                }).mouseleave(function(){
-                    timers.setTime();
-                });
-            } else {
-                 tooltip.hide();
+            
+            elm.data('delayhandle', false);
+            if(delayHandle) {
+            	clearTimeout(delayHandle);
+            }
+            
+            if(tooltip) {	
+	            // If hoverStay is set, start timeout for hiding message.
+	            if(options.hoverStay){
+	                timers.setTime();
+	                tooltip.mouseenter(function(){
+	                    timers.clearTime();
+	                }).mouseleave(function(){
+	                    timers.setTime();
+	                });
+	            } else {
+	                 tooltip.hide();
+	            }
             }
 	};
 

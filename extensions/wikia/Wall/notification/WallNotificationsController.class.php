@@ -5,6 +5,8 @@
 
 class WallNotificationsController extends WikiaController {
 
+	const NOTIFICATION_TITLE_LIMIT = 48;
+
 	public function __construct() {
 		$this->app = F::App();
 	}
@@ -18,9 +20,8 @@ class WallNotificationsController extends WikiaController {
 			
 			$this->response->addAsset('extensions/wikia/Wall/js/WallNotifications.js');
 			$this->response->addAsset('extensions/wikia/Wall/css/WallNotifications.scss');
-				
 		}
-
+		
 		$this->response->setVal('user', $this->wg->User);
 		
 		wfProfileOut(__METHOD__);
@@ -107,7 +108,7 @@ class WallNotificationsController extends WikiaController {
 		$this->response->setVal( 'url', $this->fixNotificationURL($data->url) );
 		$this->response->setVal( 'msg', $msg );
 		$this->response->setVal( 'authors', $authors );
-		$this->response->setVal( 'title',  $data->title );
+		$this->response->setVal( 'title', $data->title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
 	}
 	
@@ -135,8 +136,6 @@ class WallNotificationsController extends WikiaController {
 	}	
 	
 	public function Notification() {
-		
-		
 		$notify = $this->request->getVal('notify');
 		if(empty($notify['grouped'][0])) {
 			// do not render this notification, it's bugged
@@ -172,11 +171,10 @@ class WallNotificationsController extends WikiaController {
 
 		$msg = "";
 		wfRunHooks('NotificationGetNotificationMessage', array(&$this, &$msg, $notify['grouped'][0]->isMain(), $data, $authors,$userCount,  $this->wg->User->getName()) ); 
-		
+
 		if(empty($msg)) {
 			$msg = $this->getNotificationMessage($notify['grouped'][0]->isMain(), $data, $authors,$userCount,  $this->wg->User->getName());			
 		}
-
 		
 		$unread = $this->request->getVal('unread');
 		$this->response->setVal( 'unread', $unread );
@@ -186,8 +184,12 @@ class WallNotificationsController extends WikiaController {
 		if ( empty( $data->url ) ) $data->url = '';
 		$this->response->setVal( 'url', $this->fixNotificationURL($data->url) );
 		$this->response->setVal( 'authors', array_reverse($authors) );
-		$this->response->setVal( 'title',  $data->thread_title );
+		$this->response->setVal( 'title', $data->thread_title );
 		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
+		
+		if($unread && $data->notifyeveryone) {
+			$this->response->getView()->setTemplate( 'WallNotificationsController', 'NotifyEveryone' );						
+		}
 	}
 	
 	private function getNotificationMessage($isMain, $data, $authors, $userCount, $myName) {

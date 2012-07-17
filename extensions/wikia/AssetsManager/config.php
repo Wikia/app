@@ -68,8 +68,6 @@ $config['oasis_noads_extensions_js'] = array(
 	)
 );
 
-
-
 /** Site specific CSS **/
 
 $config['site_anon_css'] = array(
@@ -134,6 +132,7 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/jquery.wikia.js',
 		'//resources/wikia/libraries/jquery/nirvana/jquery.wikia.nirvana.js',
 		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
+		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
@@ -205,7 +204,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/WikiaForm.js',
 	)
 );
-
 
 //anon JS
 // Note: Owen moved getSiteJS call from both anon_js and user_js to OasisController::loadJS
@@ -493,9 +491,8 @@ $config['eplrte'] = array(
 	)
 );
 
-/** MiniRTE **/
+/** MiniEditor **/
 
-// Javascript for the MiniEditor
 $config['mini_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -526,13 +523,12 @@ $config['mini_editor_js'] = array(
 	)
 );
 
-// Javascript for the MiniEditor with RTE enabled
 $config['mini_editor_rte_js'] = array(
-		'type' => AssetsManager::TYPE_JS,
-		'assets' => array(
-				'#group_mini_editor_js',
-				'#group_rte'
-		)
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_mini_editor_js',
+		'#group_rte'
+	)
 );
 
 /** Chat **/
@@ -552,7 +548,6 @@ $config['chat_js'] = array(
 		'//extensions/wikia/Chat/js/views/views.js'
 	)
 );
-
 
 $config['chat_js2'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -621,28 +616,64 @@ $config['photopop'] = array(
 
 /** MessageWall **/
 
-$config['walljs'] = array(
+$config['wall_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//resources/wikia/libraries/jquery/autoresize/jquery.autoresize.js',
 		'//extensions/wikia/Wall/js/Wall.js',
 		'//extensions/wikia/Wall/js/WallPagination.js',
 		'//extensions/wikia/Wall/js/WallBackendBridge.js',
 		'//extensions/wikia/Wall/js/WallMessageForm.js',
-
 		'//extensions/wikia/Wall/js/WallNewMessageForm.js',
 		'//extensions/wikia/Wall/js/WallEditMessageForm.js',
 		'//extensions/wikia/Wall/js/WallReplyMessageForm.js',
 		'//extensions/wikia/Wall/js/WallSortingBar.js',
-		'//resources/wikia/libraries/jquery/autoresize/jquery.autoresize.js'
+		'//extensions/wikia/Wall/js/WallSetup.js'
 	)
 );
 
-$config['wallhistoryjs'] = array(
+$config['wall_mini_editor_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/MiniEditor/js/Wall/Wall.Setup.js',
+		'//extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js',
+		'//extensions/wikia/MiniEditor/js/Wall/Wall.EditMessageForm.js',
+		'//extensions/wikia/MiniEditor/js/Wall/Wall.NewMessageForm.js',
+		'//extensions/wikia/MiniEditor/js/Wall/Wall.ReplyMessageForm.js'
+	)
+);
+
+$config['wall_history_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/Wall/js/Wall.js',
 		'//extensions/wikia/Wall/js/WallHistory.js',
 		'//extensions/wikia/Wall/js/WallSortingBar.js'
+	)
+);
+
+/** Forum **/
+
+$config['forum_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_wall_js',
+		'//extensions/wikia/Forum/js/Forum.js',
+		'//extensions/wikia/Forum/js/ForumNewMessageForm.js',
+		'//extensions/wikia/Forum/js/ForumSortingBar.js',
+		'//extensions/wikia/Forum/js/ForumReplyMessageForm.js'
+	)
+);
+
+$config['forum_mini_editor_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_wall_mini_editor_js',
+		'//extensions/wikia/MiniEditor/js/Forum/Forum.Setup.js',
+//		'//extensions/wikia/MiniEditor/js/Forum/Forum.Animations.js',
+//		'//extensions/wikia/MiniEditor/js/Forum/Forum.EditMessageForm.js',
+		'//extensions/wikia/MiniEditor/js/Forum/Forum.NewMessageForm.js',
+//		'//extensions/wikia/MiniEditor/js/Forum/Forum.ReplyMessageForm.js'
 	)
 );
 
