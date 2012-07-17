@@ -22,6 +22,7 @@
 
 (function($, window) {
 	$.fn.carousel = function(options) {
+		var $this = $(this);
 		// All available options for this plugin
 		var defaults = {
 			transitionSpeed: 500,
@@ -40,16 +41,16 @@
 
 		// Any dom elements that will be reused
 		var dom = {
-			wrapper: $(this),
-			carousel: $(this).find('.carousel'),
-			items: $(this).find('.carousel li'),
-			container: $(this).children('div:first'),
-			next: $(this).siblings('.' + options.nextClass),
-			previous: $(this).siblings('.' + options.prevClass)
+			wrapper: $this,
+			carousel: $this.find('.carousel'),
+			items: $this.find('.carousel li'),
+			container: $this.children('div:first'),
+			next: $this.siblings('.' + options.nextClass),
+			previous: $this.siblings('.' + options.prevClass)
 		};
 
 		var constants = {
-			viewPortWidth: $(this).outerWidth(),
+			viewPortWidth: $this.outerWidth(),
 			itemWidth: dom.items.first().outerWidth(true), // item width including margin
 			carouselWidth: 0, // updated on init
 			minLeft: 0 // updated on init
@@ -297,7 +298,7 @@
 
 			if(options.itemClick) {
 				dom.carousel.on('click', 'li', function(e) {
-					setAsActive($(this).index());
+					setAsActive($this.index());
 					options.itemClick.call(this, e);
 				});
 			}
