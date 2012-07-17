@@ -132,7 +132,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			
 			// As long as a URL was just replaced, check for a new match in the resulting code.
 			while($wasChanged) {
-				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n;]*?)([, ]url[^\n;]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$wgCdnStylePath.'\\2\\3\\4', $this->$
+				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n;]*?)([, ]url[^\n;]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$wgCdnStylePath.'\\2\\3\\4', $this->$mContent);
 				if($changedCss != $this->mContent) {
 					$wasChanged = true;
 					$this->mContent = $changedCss;
