@@ -7,11 +7,19 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
 
 function wfJSVariablesTopScripts(Array $vars) {
-	global $wgWikiFactoryTags;
+	global $wgWikiFactoryTags, $wgDBname, $wgMedusaSlot;
+	
+	// ads need it
 	$vars['wgAfterContentAndJS'] = array();
 	if(isset($wgWikiFactoryTags) && is_array($wgWikiFactoryTags)) {
 		$vars['wgWikiFactoryTagIds'] = array_keys( $wgWikiFactoryTags );
 		$vars['wgWikiFactoryTagNames'] = array_values( $wgWikiFactoryTags );
+	}
+	
+	// analytics needs it
+	$vars['wgDBname'] = $wgDBname;
+	if (!empty($wgMedusaSlot)) {
+		$vars['wgMedusaSlot'] = 'slot' . $wgMedusaSlot;
 	}
 
 	return true;
@@ -42,10 +50,6 @@ function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	$skinName = get_class($skin);
 	if (is_array($wgEnableAjaxLogin) && in_array($skinName, $wgEnableAjaxLogin)) {
 		$vars['wgEnableAjaxLogin'] = true;
-	}
-	$vars['wgDBname'] = $wgDBname;
-	if (!empty($wgMedusaSlot)) {
-		$vars['wgMedusaSlot'] = 'slot' . $wgMedusaSlot;
 	}
 
 	$vars['wgBlankImgUrl'] = $wgBlankImgUrl;
