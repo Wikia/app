@@ -78,7 +78,7 @@
 					<label for="mediaToolCustomMedia"><?= wfMsg('mediatool-custom-thumbnail') ?></label><br/>
 					<div id="mediaToolMediaSizeSlider" class="WikiaSlider media-size-slider"></div>
 					<span id="mediaToolMediaSize">
-						<input type="text" id="mediaToolMediaSizeInput" class="media-size-input" name="mediaToolMediaSizeInput" value="" onchange="" onkeyup="" /> px
+						<input type="text" id="mediaToolMediaSizeInput" class="media-size-input" name="mediaToolMediaSizeInput" value="" onchange="" onkeyup="" maxlength="4"/> px
 					<span>
 				</div>
 

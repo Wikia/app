@@ -50,9 +50,9 @@
 	}
 
 	.media-item-details {
-		padding-top: 25px;
-		margin: 25px 0;
 		border-top: 1px solid $color-page-border;
+		margin: 25px 0;
+		padding: 25px 65px 65px 0px;
 
 		&:before {
 			border-color: transparent transparent $color-page transparent;
@@ -65,6 +65,16 @@
 			top: -51px;
 			visibility: visible;
 			width: 0px;
+		}
+
+		.article-details {
+			float: left;
+			width: 250px;
+		}
+
+		.file-details {
+			float: right;
+			width: 250px;
 		}
 
 	}
@@ -120,7 +130,7 @@
 
 		.media-size-input {
 			height: 16px;
-			width: 36px;
+			width: 26px;
 		}
 
 		.media-size-slider {
