@@ -70,12 +70,12 @@ class WikiaMobileHooks extends WikiaObject{
 			//converting categoryArticle to Article to avoid circular reference in CategoryPage::view
 			F::build( 'Article', array( $categoryPage->getTitle() ) )->view();
 
-			$scripts = F::build( 'AssetsManager' ,array(), 'getInstance')->getURL( array( 'categorypage_wikiamobile_js' ) );
+			$scripts = F::build( 'AssetsManager' ,array(), 'getInstance')->getURL( array( 'wikiamobile_categorypage_js' ) );
 
 			$this->wg->Out->setPageTitle( $categoryPage->getTitle()->getText() . ' <span id=catTtl>Category Page</span>');
 
 			$this->wg->Out->setHTMLTitle( $categoryPage->getTitle()->getText() );
-			
+
 			$this->wg->Out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'categoryExhibition', array( 'categoryPage' => $categoryPage ) ) );
 			$this->wg->Out->addHTML( $this->app->renderView( 'WikiaMobileCategoryService', 'alphabeticalList', array( 'categoryPage' => $categoryPage ) ) );
 

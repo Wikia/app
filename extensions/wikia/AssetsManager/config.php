@@ -260,6 +260,14 @@ $config['wikiamobile_scss'] = array(
 	)
 );
 
+$config['wikiamobile_404_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/WikiaMobile/css/404.scss',
+	)
+);
+
 //loaded at the top of the page in the head section
 $config['wikiamobile_js_head'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -268,24 +276,36 @@ $config['wikiamobile_js_head'] = array(
 		'//resources/wikia/libraries/zepto/zepto-0.8.js',
 		'//resources/wikia/libraries/modil/modil.js',
 		'//resources/wikia/modules/cookies.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/log.js',
 		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
 );
 
 //loaded at the bottom of the page in the body section
-$config['wikiamobile_js_body'] = array(
+$config['wikiamobile_js_body_minimal'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		//platform core components go first
+		//modules
 		'//resources/wikia/modules/cache.js',
-		'//resources/wikia/modules/querystring.js',
-		'//resources/wikia/modules/log.js',
 
 		// deferred.js - jQuery-free implementation (BugId:34943)
 		'//resources/wikia/libraries/deferred/deferred.js',
 		'//resources/wikia/libraries/deferred/deferred.api.js',
 
+		//tracker
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
+		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
+	)
+);
+
+//loaded at the bottom of the page in the body section
+$config['wikiamobile_js_body_full'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'#group_wikiamobile_js_body_minimal',
 		//feature detection and polyfills go second
 		'//resources/wikia/libraries/modernizr/modernizr.wikiamobile.js',
 		'//resources/wikia/polyfills/outerhtml.js',
@@ -297,13 +317,9 @@ $config['wikiamobile_js_body'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.wikiamobile.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
-		//framework
+		//framework extensions
 		'//resources/wikia/libraries/zepto/zepto.getcss.js',
 		'//resources/wikia/libraries/zepto/zepto.wikiamobile.js',
-
-		//tracker
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker_config.js',
-		'//extensions/wikia/WikiaTracker/js/WikiaTracker.js',
 
 		//modules
 		'//extensions/wikia/WikiaMobile/js/track.js',
@@ -323,11 +339,6 @@ $config['wikiamobile_js_body'] = array(
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
-
-		//extensions with assets to load on every page
-		//TODO: move to assets hook
-		//We are not using it anywhere now
-		//'//extensions/wikia/UserLogin/js/UserLogin.wikiamobile.js',
 	)
 );
 
@@ -339,7 +350,7 @@ $config['wikiamobile_js_ads'] = array(
 	)
 );
 
-$config['mediagallery_wikiamobile_js'] = array(
+$config['wikiamobile_mediagallery_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
@@ -363,19 +374,11 @@ $config['wikiamobile_scroll_js'] = array(
 	)
 );
 
-$config['categorypage_wikiamobile_js'] = array(
+$config['wikiamobile_categorypage_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaMobile/js/category_page.js',
-	)
-);
-
-$config['wikiamobile_404_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'//extensions/wikia/WikiaMobile/css/404.scss',
 	)
 );
 

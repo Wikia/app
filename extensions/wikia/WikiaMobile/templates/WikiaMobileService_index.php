@@ -2,7 +2,7 @@
 <html lang=<?= $languageCode ;?> dir=<?= $languageDirection ;?><? if ( !empty( $appCacheManifestPath ) ) :?> manifest=<?= $appCacheManifestPath ;?><? endif ;?>>
 <head>
 	<title><?= htmlspecialchars( $pageTitle ) ;?></title>
-	<? if( !$showAllowRobotsMetaTag ): ?>
+	<? if( !$allowRobots ): ?>
 	<meta name=robots content='noindex, nofollow'>
 	<?endif; ?>
 	<meta http-equiv=Content-Type content="<?= $mimeType ;?>; charset=<?= $charSet ;?>">
@@ -19,9 +19,7 @@
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>">
 	<?= $trackingCode ;?>
-	<? if( isset($advert) ): ?>
-		<?= $advert ;?>
-	<?endif; ?>
+	<?= $advertisement ;?>
 	<?= $wikiaNavigation ;?>
 	<?= $pageContent ;?>
 	<?= $wikiaFooter ;?>
