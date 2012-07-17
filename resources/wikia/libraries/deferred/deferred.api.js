@@ -8,10 +8,11 @@
  * @author macbre
  */
 
-(function(deferred, $) {
+(function (deferred, $) {
+	'use strict';
 
 	$.Deferred = deferred.deferred;
-	$.when = function() {
+	$.when = function () {
 		return deferred.all(arguments);
 	};
 
@@ -19,22 +20,23 @@
 	$.Deferred.prototype.done = $.Deferred.prototype.then;
 
 	// jQuery specific "wrapping" promise object
-	$.Deferred.prototype.promise = function() {
+	$.Deferred.prototype.promise = function () {
 		var self = this;
+
 		return {
-			always: function(callback) {
+			always: function (callback) {
 				return self.both(callback);
 			},
-			done: function(callback) {
+			done: function (callback) {
 				return self.then(callback);
 			},
-			fail: function(errback) {
+			fail: function (errback) {
 				return self.fail(errback);
 			},
-			then: function(callback, errback) {
+			then: function (callback, errback) {
 				return self.then(callback, errback);
 			}
 		};
 	};
 
-})(deferred, Zepto);
+}(deferred, Zepto));
