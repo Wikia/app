@@ -293,8 +293,19 @@ class OasisController extends WikiaController {
 					array( $this->app->wg->ResourceBasePath, 'resources/' ),
 				);
 			}
+
+			// BugId:38195 - don't minify already minfiied assets
+			if (strpos($url, '/__am/') !== false) {
+				return $url;
+			}
+
 			foreach ($map as $item) {
 				list( $prefix, $replacement ) = $item;
+
+				// BugId: 38195 - wgExtensionPath / stylePath / ResourceBasePath do not end with a slash
+				// add one to remove double slashes in resulting URL
+				$prefix .= '/';
+
 				if (startsWith($url, $prefix)) {
 					$nurl = substr($url,strlen($prefix));
 					$matches = array();
@@ -430,10 +441,10 @@ class OasisController extends WikiaController {
 EOT;
 		if ($this->jsAtBottom) {
 			$jsLoader .= <<<EOT
-				if ( typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || (window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)))) { 
-					toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.oasis_noads_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); 
-				} else { 
-					toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references); 
+				if ( typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || (window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)))) {
+					toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.oasis_noads_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
+				} else {
+					toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
 				}
 EOT;
 		}
@@ -477,12 +488,12 @@ EOT;
 
 			$jquery_ads = json_encode($jquery_ads);
 			$this->adsABtesting = <<<EOT
-				<script type="text/javascript">/*<![CDATA[*/ 
-					(function(){ 
-						if (typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED))) { 
+				<script type="text/javascript">/*<![CDATA[*/
+					(function(){
+						if (typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED))) {
 							wsl.loadScript([].concat(window.getJqueryUrl()).concat({$jquery_ads}));
-						} 
-					})(); 
+						}
+					})();
 				/*]]>*/</script>
 EOT;
 		}
