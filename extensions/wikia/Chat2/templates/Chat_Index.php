@@ -84,7 +84,7 @@
 		<img src="<%= avatarSrc %>"/>
 		<span class="username"><%= name %></span>
 		<div class="details">
-			<span class="status">Away</span>
+			<span class="status"><?= wfMsg('chat-status-away'); ?></span>
 		</div>
 		<% if(isPrivate) { %>
 			<span id="MsgCount_<%= roomId %>" class="splotch">0</span>
