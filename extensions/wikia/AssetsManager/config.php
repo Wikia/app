@@ -445,10 +445,9 @@ $config['monobook_js'] = array(
 
 /** Article Comments **/
 
-global $wgArticleCommentsEnabledSkins;
 $config['articlecomments_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => $wgArticleCommentsEnabledSkins,
+	'skin' => array('oasis', 'monobook'),
 	'assets' => array(
 		'//extensions/wikia/ArticleComments/js/ArticleComments.js'
 	)
