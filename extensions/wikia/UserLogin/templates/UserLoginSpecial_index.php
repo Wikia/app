@@ -85,6 +85,6 @@
 	echo wfRenderModule('WikiaForm', 'Index', array('form' => $form));
 
 	// 3rd party providers buttons
-	if (!$isMonobook) echo $app->renderView('UserLoginSpecial', 'Providers');
+	if (!$isMonobookOrUncyclo) echo $app->renderView('UserLoginSpecial', 'Providers');
 ?>
 </div>
