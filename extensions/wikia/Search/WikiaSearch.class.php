@@ -269,7 +269,7 @@ class WikiaSearch extends WikiaObject {
 		$html = $this->wg->Out->getHTML();
 
 		$isVideo = false;
-		if (($file = $this->wf->findFile( $this->wg->Title->getText() ))
+		if ( $this->wgTitle->getNamespace() == NS_FILE && ($file = $this->wf->findFile( $this->wg->Title->getText() ))
 			&& WikiaFileHelper::isVideoFile( $file )) {
 			$metadata = $file->getMetadata();
 			$metadata = unserialize( $metadata );
