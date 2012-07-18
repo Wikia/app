@@ -303,10 +303,8 @@ class AssetsManager {
 	public function getOneCommonURL(/* string */ $filePath, /* boolean */ $minify = null) {
 		global $wgCdnRootUrl;
 		if ($minify !== null ? $minify : $this->mMinify) {
-			// Remove cachebuster (if any) from common host path, because one will be
-			// added by call to getAMLocalURL()
-			//$commonHost = preg_replace('#/__cb[0-9]+(/common/)?$#','',$this->mCommonHost);
-			return $wgCdnRootUrl . $this->getAMLocalURL('one', $filePath,array('minify'=>1));
+			// Using $wgCdnRootUrl here because it doesn't contain a cb value (getAMLocalURL will add one)
+			return $wgCdnRootUrl . $this->getAMLocalURL('one', $filePath, array('minify' => 1));
 		} else {
 			// We always need to use common host for static assets since it has
 			// the information about the slot which is otherwise not available
