@@ -223,4 +223,50 @@ class WikiService extends WikiaModel {
 		return $userEdits;
 	}
 
+	/**
+	 * get number of images on the wiki
+	 * @return integer totalImages
+	 */
+	public function getTotalImages( $wikiId = 0 ) {
+		$this->wf->ProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$memKey = $this->getMemcKeyTotalImages( $wikiId );
+		$totalImages = $this->wg->Memc->get( $memKey );
+		if ( $totalImages === false ) {
+			$totalImages = 0;
+			$dbname = WikiFactory::IDtoDB( $wikiId );
+			if ( !empty($dbname) ) {
+				$db = $this->wf->GetDB( DB_SLAVE, array(), $dbname );
+
+				$row = $db->selectRow(
+					array( 'image' ), 
+					array( 'count(*) cnt' ),
+					array( "img_media_type in ('".MEDIATYPE_BITMAP."', '".MEDIATYPE_DRAWING."')" ),
+					__METHOD__
+				);
+
+				if ( $row ) {
+					$totalImages = intval( $row->cnt );
+				}
+
+				$this->wg->Memc->set( $memKey, $totalImages, 60*60*24 );
+			}
+		}
+
+		$this->wf->ProfileOut( __METHOD__ );
+
+		return $totalImages;
+	}
+
+	protected function getMemcKeyTotalImages( $wikiId ) {
+		return $this->wf->SharedMemcKey( 'wiki_total_images', $wikiId );
+	}
+
+	public function invalidateCacheTotalImages( $wikiId = 0 ) {
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$memkey = $this->getMemcKeyTotalImages( $wikiId );
+		$this->wg->Memc->delete( $memKey );
+	}
+
 }
