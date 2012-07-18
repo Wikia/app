@@ -32,7 +32,8 @@ $messages['en'] = array(
 	'mediatool-file-description' => 'File Description',
 	'mediatool-follow-media' => 'Follow this media',
 	'mediatool-article-details' => 'Article Details',
-	'mediatool-media-caption' => 'Caption'
+	'mediatool-media-caption' => 'Caption',
+	'mediatool-added-by' => 'Added by'
 );
 
 /** Message documentation (Message documentation)
@@ -67,5 +68,6 @@ $messages['qqq'] = array(
 	'mediatool-file-description' => 'Label for the file description text area placed in the Preview area - on Edit Media tab',
 	'mediatool-follow-media' => 'Label for the follow media checkbox placed in the Preview area - on Edit Media tab',
 	'mediatool-article-details' => 'Header for the right-hand set of inputs placed on Edit Media tab in the Preview area',
-	'mediatool-media-caption' => 'Label for the caption input placed in the Preview area - on Edit Media tab'
+	'mediatool-media-caption' => 'Label for the caption input placed in the Preview area - on Edit Media tab',
+	'mediatool-added-by' => 'Label for the media uploader placed inside the border in Preview area'
 );
