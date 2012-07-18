@@ -622,12 +622,6 @@ var Lightbox = {
 			deferredList.push( deferredInfo );
 		}
 
-		// add more thumbs to carousel if we need them
-		if(Lightbox.current.thumbs.length < Lightbox.thumbLoadCount) {
-			// asynchronous 
-			Lightbox.getMediaThumbs.wikiPhotos();
-		}
-		
 		// Set current carousel index
 		var readableTitle = Lightbox.current.title.split('_').join(" ");				
 		for(var i = 0; i < Lightbox.current.thumbs.length; i++) {
@@ -744,6 +738,12 @@ var Lightbox = {
 
 		// Make sure we have our i18n message before initializing the carousel plugin
 		$.when.apply(this, deferredList).done(function() {
+			// add more thumbs to carousel if we need them
+			if(Lightbox.current.thumbs.length < Lightbox.thumbLoadCount) {
+				// asynchronous 
+				Lightbox.getMediaThumbs.wikiPhotos(); // uses Lightbox.to to this is called in promise pattern  
+			}
+			
 			// Do insert of placeholder thumb now that we know the number of backfill items 
 			var placeholder = $('#LightboxCarouselMore').mustache({
 				text: Lightbox.backfillCountMessage
