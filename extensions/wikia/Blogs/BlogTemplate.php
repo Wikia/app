@@ -1,7 +1,6 @@
 <?php
 
 $wgAjaxExportList[] = "BlogTemplateClass::axShowCurrentPage";
-$wgHooks['LanguageGetMagic'][] = "BlogTemplateClass::setMagicWord";
 /* register as a parser function {{BLOGTPL_TAG}} and a tag <BLOGTPL_TAG> */
 $wgHooks['ParserFirstCallInit'][] = "BlogTemplateClass::setParserHook";
 
@@ -323,14 +322,6 @@ class BlogTemplateClass {
 		"/<(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)(.*)>(.*)<\/(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)>/siU",
 		"/<(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)(.*)>(.*)<\/(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)>/siU",
 	);
-
-	public static function setMagicWord( &$magicWords, $langCode ) {
-		wfProfileIn( __METHOD__ );
-		/* add the magic word */
-		$magicWords[ BLOGTPL_TAG ] = array( 0, BLOGTPL_TAG );
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
 
 	public static function setParserHook( &$parser ) {
 		wfProfileIn( __METHOD__ );
@@ -1392,7 +1383,7 @@ class BlogTemplateClass {
 						$offset = $count * $offset;
 						/* set new value of offset */
 						$params['offset'] = $offset;
-						
+
 						/* run parser */
 						$result = self::parseTag( $input, $params, $wgParser );
 					}
