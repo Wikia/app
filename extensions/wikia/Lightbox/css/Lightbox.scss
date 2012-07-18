@@ -27,10 +27,8 @@ $color-shadow: #aaa;
 }
 
 $color-more: mix($color-page, $color-text, 25%);
-$color-more-shadow: lighten($color-more, 40%);
 $color-more-border: darken($color-page, 20%);
 @if $is-dark-wiki {
-	$color-more-shadow: darken($color-more, 50%);
 	$color-more-border: lighten($color-page, 10%);
 }
 $color-lightbox-border: mix($color-page-border, $color-page, 75%);
@@ -357,7 +355,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 						padding: 5px 10px 0 14px;
 						vertical-align: middle;
 						&:before {
-							@include box-shadow( 0px, 0px, 5px, $color-more-shadow, false, 1px);
+							@include box-shadow( 0px, 0px, 5px, $color-shadow, false, 1px);
 							content: " ";
 							border-left: 1px solid $color-more-border;
 							display: block;
