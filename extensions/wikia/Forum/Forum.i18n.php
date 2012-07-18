@@ -109,7 +109,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-participation-module-heading' => 'Who\'s Here',
 	'forum-participation-module-kudos' => 'gave [[$1|kudos]] $2',
 	'forum-participation-module-posted' => 'posted a <a href="$1">reply</a> $2',
-	'forum-participation-module-started' => 'started a <a href="$1">discussion</a>$2',
+	'forum-participation-module-started' => 'started a <a href="$1">discussion</a> $2',
 
 	/* Contribution/RC */
 	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> on the <a href="$3">$4 board</a>',
