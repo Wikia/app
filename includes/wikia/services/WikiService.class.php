@@ -265,7 +265,7 @@ class WikiService extends WikiaModel {
 
 	public function invalidateCacheTotalImages( $wikiId = 0 ) {
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
-		$memkey = $this->getMemcKeyTotalImages( $wikiId );
+		$memKey = $this->getMemcKeyTotalImages( $wikiId );
 		$this->wg->Memc->delete( $memKey );
 	}
 
