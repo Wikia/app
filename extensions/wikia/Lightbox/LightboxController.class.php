@@ -495,7 +495,7 @@ class LightboxController extends WikiaController {
 		$timestamp = $this->wf->Timestamp( TS_MW );
 		if ( !empty($latestPhotos) && is_array($latestPhotos) ) {
 			foreach( $latestPhotos as $photo ) {
-				if ( !$thumb['isVideoThumb'] ) {
+				if ( !$photo['isVideoThumb'] ) {
 					$photoTimestamp = $this->wf->Timestamp( TS_MW, $photo['date'] );
 					if ( $photoTimestamp < $timestamp ) {
 						$timestamp = $photoTimestamp;
