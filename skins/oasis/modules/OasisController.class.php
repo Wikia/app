@@ -283,6 +283,8 @@ class OasisController extends WikiaController {
 	 * @return string
 	 */
 	private function minifySingleAsset( $url ) {
+		// commented out - causes BugId:38455 et consortes
+		/**
 		global $wgAllInOne;
 		if ( !empty( $wgAllInOne ) ) {
 			static $map;
@@ -317,6 +319,7 @@ class OasisController extends WikiaController {
 				}
 			}
 		}
+		**/
 		return $url;
 	}
 
