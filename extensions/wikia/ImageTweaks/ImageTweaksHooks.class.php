@@ -127,52 +127,56 @@ class ImageTweaksHooks extends WikiaObject {
 			 */
 			self::$isWikiaMobile
 		) {
-			if ( !empty( $file ) ) {
-				$title = $file->getTitle();
+			if ( is_array( $linkAttribs ) ) {
+				if ( !empty( $file ) ) {
+					$title = $file->getTitle();
 
-				if ( $title instanceof Title ) {
-					$linkAttribs['data-image-name'] = $title->getText();
+					if ( $title instanceof Title ) {
+						$linkAttribs['data-image-name'] = $title->getText();
+					}
+
+					$linkAttribs['href'] = $this->wf->ReplaceImageServer($file->getFullUrl());
 				}
 
-				$linkAttribs['href'] = $file->getFullUrl();
-			}
+				/**
+				 * data-link start
+				 * this will work only for the WikiaMobile skin due to the
+				 * bool check wrapping this scope
+				 *
+				 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+				 */
+				$link = null;
 
-			/**
-			 * data-link start
-			 * this will work only for the WikiaMobile skin due to the
-			 * bool check wrapping this scope
-			 *
-			 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
-			 */
-			$link = null;
+				if ( !empty ( $options['custom-url-link'] ) ) {
+					$link = $options['custom-url-link'];
+				} elseif (
+					!empty( $options['custom-title-link'] ) &&
+					$options['custom-title-link'] instanceof Title
+				) {
+					$title = $options['custom-title-link'];
+					$linkAttribs['title'] = $title->getFullText();
+					$link = $title->getLinkUrl();
+				} elseif ( !empty( $options['file-link'] ) && empty( $options['desc-link'] ) ) {
+					$linkAttribs['href'] = $this->wf->ReplaceImageServer( $file->getURL(), $file->getTimestamp() );
+				}
 
-			if ( !empty ( $options['custom-url-link'] ) ) {
-				$link = $options['custom-url-link'];
-			} elseif (
-				!empty( $options['custom-title-link'] ) &&
-				$options['custom-title-link'] instanceof Title
-			) {
-				$title = $options['custom-title-link'];
-				$linkAttribs['title'] = $title->getFullText();
-				$link = $title->getLinkUrl();
-			}
+				if ( !empty ( $link ) ) {
+					$linkAttribs['data-link'] = $link;
+				}
+				/**
+				 * data-link end
+				 */
 
-			if ( !empty ( $link ) ) {
-				$linkAttribs['data-link'] = $link;
-			}
-			/**
-			 * data-link end
-			 */
+				//override any previous value if title is passed as an option
+				if ( !empty( $options['title'] ) ) {
+					$linkAttribs['title'] = $options['title'];
+				}
 
-			//override any previous value if title is passed as an option
-			if ( !empty( $options['title'] ) ) {
-				$linkAttribs['title'] = $options['title'];
-			}
-
-			//WikiaMobile: apply the image class if another is not defined
-			//other skins don't get here due to the boolean check at the top
-			if ( empty( $linkAttribs['class'] ) ) {
-				$linkAttribs['class'] = 'image';
+				//WikiaMobile: apply the image class if another is not defined
+				//other skins don't get here due to the boolean check at the top
+				if ( empty( $linkAttribs['class'] ) ) {
+					$linkAttribs['class'] = 'image';
+				}
 			}
 
 			//remove the empty alt attribute which we print pretty everywhere (meh)
