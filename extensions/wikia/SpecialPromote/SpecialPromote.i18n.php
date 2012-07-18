@@ -14,21 +14,20 @@ $messages['en'] = array(
 	'promote-title' => 'Promote',
 	'promote-introduction-header' => 'Promote your wiki on wikia.com',
 
-	'promote-introduction-copy' => 'Using this tool allows you to promote your wiki by making it eligible to appear on wikia.com!
-	 	Choose an images that identify your wiki and write an introduction to tell people more about your wikis topic.',
+	'promote-introduction-copy' => "This page allows you to promote your wiki by making it eligible to appear on www.wikia.com! Add images and a summary to introduce your wiki to visitors on Wikia's main page. Find more tips here.",
 
-	'promote-description' => 'Describe your wiki',
+	'promote-description' => 'Description',
 	'promote-description-header' => 'Headline',
 	'promote-description-header-explanation' => 'Something as simple as "Learn more about the Bacon Wiki" or "Welcome to the Bacon Wiki" is great!',
 
-	'promote-description-about' => 'Description',
-	'promote-description-about-explanation' => 'This is your chance to tell people more about your wiki. Include information about the subject of the wiki, a summary of your wiki\'s topic and let people know that anyone can contribute.',
+	'promote-description-about' => "What's your wiki about?",
+	'promote-description-about-explanation' => "Write a summary about your wiki's topic.  Don't be afraid to make it detailed, you want to get visitors excited about the topic and make sure they have a clear idea of what your wiki is all about.",
 
 	'promote-upload' => 'Add Images',
 	'promote-upload-main-photo-header' => 'Main Image',
-	'promote-upload-main-photo-explanation' => 'This is the main image that will represent your wiki on wikia.com. Choose an image that will show people what the wiki is about. You can always change it to keep it current.',
-	'promote-upload-additional-photos-header' => 'More Images',
-	'promote-upload-additional-photos-explanation' => ' Add a few more images that show people more about your wiki\'s topic. You can add up to nine. Adding more images makes your wiki look more interesting and engaging to potential visitors.',
+	'promote-upload-main-photo-explanation' => "This image defines your wiki.  It will be the main image we use to represent your wiki on wikia.com so make sure it's a great one! Don't forget, you can always update this image so it's current and most represents your wiki.",
+	'promote-upload-additional-photos-header' => 'Additional Images',
+	'promote-upload-additional-photos-explanation' => 'Adding more images makes your wiki look more interesting and engaging to potential visitors.You can add up to nine images here, and we strongly recommend you hit the limit!',
 
 	'promote-publish' => 'Publish',
 
@@ -38,35 +37,34 @@ $messages['en'] = array(
 	'promote-modify-photo' => 'Modify',
 
 	'promote-upload-main-image-form-modal-title' => 'Main Image',
-	'promote-upload-main-image-form-modal-copy' => 'Upload an image to represent your wiki. Your image should be a ".png" file with a minimum size of 480x320.',
+	'promote-upload-main-image-form-modal-copy' => "Upload an image that represents your wiki's topic. Make sure it's a \".png\" file with a minimum size of 480x320.",
 	'promote-upload-additional-image-form-modal-title' => 'More Images',
-	'promote-upload-additional-image-form-modal-copy' => 'Upload additional images that represent your wiki',
+	'promote-upload-additional-image-form-modal-copy' => "Upload additional images to tell people more about your wiki's topic. Make sure your images are \".png\" files with a minimum size of 480x320.",
 	'promote-upload-form-modal-cancel' => 'Cancel',
 
 	'promote-upload-submit-button' => 'Submit',
 
-	'promote-error-less-characters-than-minimum' => 'You entered $1 characters, but $2 is the minimum',
-	'promote-error-more-characters-than-maximum' => 'You entered $1 characters, but $2 is the maximum',
+	'promote-error-less-characters-than-minimum' => 'Oops! Your headline needs to be at least $2 characters.',
+	'promote-error-more-characters-than-maximum' => 'Oops! Your headline needs to be $2 characters or less.',
 	'promote-error-upload-unknown-error' => 'Unknown upload error',
-	'promote-error-upload-filetype-error' => 'Wrong file type (should be PNG)',
-	'promote-error-upload-dimensions-error' => 'Wrong file dimensions - file should be at least 480x320px',
+	'promote-error-upload-filetype-error' => 'Make sure your file is saved as a ".png"',
+	'promote-error-upload-dimensions-error' => '',
 	'promote-error-too-many-images' => 'Oops! You already have nine images. Remove some if you want to add more.',
-	'promote-error-upload-type' => "Wrong upload type.",
+	'promote-error-upload-type' => "Oops! Wrong upload type.",
 	'promote-error-upload-form' => "Wrong upload type in getUploadForm.",
 
 	'promote-manual-file-size-error' => 'Main image has a minimum size of 480x320px.',
 	'promote-manual-upload-error' => 'This file cannot be uploaded manually. Please use Admin Upload Tool.',
-	'promote-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
+	'promote-wrong-rights' => "Darn, looks like you don't have permission to access this page. Make sure you're logged in!",
 
-	'promote-image-rejected' => 'Rejected',
+	 'promote-image-rejected' => 'Rejected',
 	'promote-image-accepted' => 'Accepted',
 	'promote-image-in-review' => 'In review',
 
 	'promote-statusbar-icon' => 'Status',
-	'promote-statusbar-inreview' => 'One or more of your images are currently in review. Your wiki will appear on www.wikia.com when the images have been approved.',
-	'promote-statusbar-approved' => 'Your wiki is currently being promoted on www.wikia.com!',
+	'promote-statusbar-inreview' => 'One or more of your images are currently in review. Your wiki will appear on www.wikia.com when images have been approved.',
+	'promote-statusbar-approved' => 'Woohoo! $WIKINAME is promoted on www.wikia.com!',
 	'promote-statusbar-rejected' => 'One or more of your images was not approved. Find out why.',
-
 );
 
 $messages['qqq'] = array(
