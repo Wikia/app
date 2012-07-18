@@ -165,7 +165,7 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		}
 
 		//if url contains image=imageName - open modal with this image
-		if(shrImg > -1) setTimeout(function(){openModal(shrImg)}, 2000);
+		if(shrImg > -1) setTimeout(function(){openModal(shrImg);}, 2000);
 
 		$(document.body).delegate('.infobox .image, figure, .wkImgStk', clickEvent, function(event){
 			event.preventDefault();
@@ -524,5 +524,5 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		cleanup: function(){
 			removeZoom();
 		}
-	}
+	};
 });

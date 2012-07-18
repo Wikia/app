@@ -238,13 +238,6 @@ class ThumbnailImage extends MediaTransformOutput {
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
-		/**
-		 * Note: if title is empty and alt is not, make the title empty, don't
-		 * use alt; only use alt if title is not set
-		 * wikia change, Inez
-		 */
-		$title = !isset( $options['title'] ) ? $alt : $options['title'];
-
 		$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
 
 		if ( !empty( $options['custom-url-link'] ) ) {
@@ -263,16 +256,15 @@ class ThumbnailImage extends MediaTransformOutput {
 			);
 		} elseif ( !empty( $options['desc-link'] ) ) {
 			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
-			# Wikia change begin
-			# @author: Marooned, Federico "Lox" Lucignano
-			# Images SEO project
-			if( F::app()->checkSkin( array( 'oasis', 'wikiamobile' ) ) ) {
-				$linkAttribs['data-image-name'] = $this->file->getTitle()->getText();
-				$linkAttribs['href'] = $this->file->getFullUrl();
-			}
-			# Wikia change end */
 		} elseif ( !empty( $options['file-link'] ) ) {
+			/**
+			 * Wikia change begin
+			 * @author ?
+			 */
 			$linkAttribs = array( 'href' => wfReplaceImageServer( $this->file->getURL(), $this->file->getTimestamp() ) );
+			/**
+			 * Wikia change end
+			 */
 		} else {
 			$linkAttribs = false;
 		}
@@ -289,7 +281,20 @@ class ThumbnailImage extends MediaTransformOutput {
 		if ( !empty( $options['img-class'] ) ) {
 			$attribs['class'] = $options['img-class'];
 		}
-		return $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
+
+		/**
+		 * Wikia change begin
+		 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+		 */
+		$html = $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
+
+		//give extensions a chance to modify the markup
+		wfRunHooks( 'ThumbnailImageHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
+
+		return $html;
+		/**
+		 * Wikia change end
+		 */
 	}
 
 }

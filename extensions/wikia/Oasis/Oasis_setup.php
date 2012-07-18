@@ -26,7 +26,6 @@ function wfOasisSetup() {
 	$wgHooks['EditPageMakeGlobalVariablesScript'][] = 'WikiNavigationController::onEditPageMakeGlobalVariablesScript';
 	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosController::onImageDelete';
 	$wgHooks['MakeHeadline'][] = 'ContentDisplayController::onMakeHeadline';
-	$wgHooks['MakeThumbLink2'][] = 'ContentDisplayController::renderPictureAttribution';
 	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosController::onMessageCacheReplace';
 	$wgHooks['MessageCacheReplace'][] = 'WikiNavigationController::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayController::onShowEditLink';
