@@ -349,7 +349,10 @@ CKEDITOR.plugins.add('rte-media',
                         initialBasketContent.push( item );
                     });
 
-					window.MediaTool.showModal.call(window.MediaTool, function(wikiText) {
+                    var mediaSettings = data.params;
+					if (!mediaSettings.thumbnail) mediaSettings.thumbnail = false;
+
+                    window.MediaTool.showModal.call(window.MediaTool, function(wikiText) {
 						self.addWikiText( wikiText, $(editedElement) );
 					}, data.params, initialBasketContent);
                 });
