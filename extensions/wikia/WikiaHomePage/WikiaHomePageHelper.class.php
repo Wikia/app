@@ -375,9 +375,9 @@ class WikiaHomePageHelper extends WikiaModel {
 		$this->wf->ProfileIn(__METHOD__);
 
 		$dataGetter = F::build('WikiDataGetterForSpecialPromote');
-		return $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 
 		$this->wf->ProfileOut(__METHOD__);
+		return $this->getWikiInfo($wikiId, $langCode, $dataGetter);
 	}
 
 	public function getWikiInfoForVisualization($wikiId, $langCode) {
