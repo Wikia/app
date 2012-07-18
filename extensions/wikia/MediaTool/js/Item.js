@@ -21,7 +21,7 @@ MediaTool.Item = $.createClass(Observable,{
 		this.title = title;
 		this.thumbHtml = thumbHtml;
 		this.thumbUrl = thumbUrl;
-		this.ratio = 16/9;
+		this.ratio = 1.7777778; // 16/9
 	},
 
 	renderThumbHtml: function() {
