@@ -194,6 +194,9 @@ var LightboxLoader = {
 				method:		'lightboxModalContent',
 				type:		'GET',
 				format: 'html',
+				data: {
+					lightboxVersion: 1 // update this when we change the template
+				},
 				callback: function(html) {
 					LightboxLoader.templateHtml = html;
 					deferredTemplate.resolve();
