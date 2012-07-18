@@ -24,7 +24,8 @@ class LatestPhotosController extends WikiaController {
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// get the count of images on this wiki
-		$this->total = SiteStats::images();
+		$wikiService = F::build( 'WikiService' );
+		$this->total = $wikiService->getTotalImages();
 
 		// Pull the list of images from memcache first
 		// FIXME: create and use service (see RT #79288)
@@ -256,8 +257,9 @@ class LatestPhotosController extends WikiaController {
 			$wgMemc->set(LatestPhotosController::memcacheKey(), $thumbUrls, 10);
 	}
 
-	public static function onImageUpload( $image ){
+	public static function onImageUpload( $image, $reupload, $hasDescription ){
 		self::avoidUpdateRace();
+		self::invalidateCacheWikiTotalImages( $image, $reupload );
 		return true;
 	}
 
@@ -278,6 +280,7 @@ class LatestPhotosController extends WikiaController {
 	public static function onImageDelete(&$file, $oldimage, $article, $user, $reason) {
 		global $wgMemc;
 		$wgMemc->delete(LatestPhotosController::memcacheKey());
+		self::invalidateCacheWikiTotalImages( $file, false );
 		return true;
 	}
 
@@ -290,6 +293,14 @@ class LatestPhotosController extends WikiaController {
 		}
 
 		return true;
+	}
+
+	protected static function invalidateCacheWikiTotalImages( $file, $reupload ) {
+		$title = $file->getTitle();
+		if ( $title instanceof Title && !WikiaFileHelper::isVideoFile($file) && !$reupload ) {
+			$wikiService = F::build( 'WikiService' );
+			$wikiService->invalidateCacheTotalImages();
+		}
 	}
 
 }
