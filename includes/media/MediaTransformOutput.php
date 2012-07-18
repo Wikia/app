@@ -257,14 +257,7 @@ class ThumbnailImage extends MediaTransformOutput {
 		} elseif ( !empty( $options['desc-link'] ) ) {
 			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
 		} elseif ( !empty( $options['file-link'] ) ) {
-			/**
-			 * Wikia change begin
-			 * @author ?
-			 */
-			$linkAttribs = array( 'href' => wfReplaceImageServer( $this->file->getURL(), $this->file->getTimestamp() ) );
-			/**
-			 * Wikia change end
-			 */
+			$linkAttribs = array( 'href' => $this->file->getURL() );
 		} else {
 			$linkAttribs = false;
 		}
