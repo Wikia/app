@@ -210,7 +210,12 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			}
 		});
 		$('#mediaToolMediaSizeInput').on('blur', function() {
-			var val = parseInt($('#mediaToolMediaSizeInput').val(), 10);
+			var numberVal = $('#mediaToolMediaSizeInput').val().replace(/[^0-9]/g, '');
+			var val = parseInt(numberVal, 10);
+			if (isNaN(val)) {
+				numberVal = val = cart.getMediaSize();
+			}
+			if (numberVal != $('#mediaToolMediaSizeInput').val()) $('#mediaToolMediaSizeInput').val(numberVal);
 			if ((val >= minMediaSize) && (val <= maxMediaSize)) {
 				cart.setMediaSize(val);
 			} else {
@@ -219,8 +224,10 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			}
 		}).on('keyup', function() {
 			var val = parseInt($('#mediaToolMediaSizeInput').val(), 10);
-			if ((val >= minMediaSize) && (val <= maxMediaSize)) {
-				cart.setMediaSize(val);
+			if (!isNaN(val)) {
+				if ((val >= minMediaSize) && (val <= maxMediaSize)) {
+					cart.setMediaSize(val);
+				}
 			}
 		});
 		$('#mediaToolLargeMedia').on('click', function() {
