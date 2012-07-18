@@ -9,6 +9,24 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgHooks["MakeGlobalVariablesScript"][] = "wfAdEngineSetupJSVars";
+$wgHooks['WikiaSkinTopScripts'][] = 'wfAdEngineSetupTopVars';
+
+function wfAdEngineSetupTopVars($vars) {
+	global $wgCityId;
+
+	wfProfileIn(__METHOD__);
+
+	// ArticleAdLogic
+	$vars['adLogicPageType'] = ArticleAdLogic::getPageType();
+
+	// category/hub
+	$catInfo = HubService::getComscoreCategory($wgCityId);
+	$vars['cscoreCat'] = $catInfo->cat_name;
+
+	wfProfileOut(__METHOD__);
+
+	return true;
+}
 
 function wfAdEngineSetupJSVars($vars) {
 	wfProfileIn(__METHOD__);
@@ -16,7 +34,7 @@ function wfAdEngineSetupJSVars($vars) {
 	global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 		$wgAdDriverCookieLifetime, $wgHighValueCountries, $wgDartCustomKeyValues,
 		$wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
-		$wgCityId, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
+		$wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 		$wgEnableKruxTargeting, $wgLoadAdDriverOnLiftiumInit;
 
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
@@ -32,8 +50,6 @@ function wfAdEngineSetupJSVars($vars) {
 	// category/hub
 	$cat = AdEngine::getCachedCategory();
 	$vars["cityShort"] = $cat['short'];
-	$catInfo = HubService::getComscoreCategory($wgCityId);
-	$vars['cscoreCat'] = $catInfo->cat_name;
 
 	// AdDriver
 	$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
@@ -46,9 +62,6 @@ function wfAdEngineSetupJSVars($vars) {
 	if (!empty($wgAdDriverUseExpiryStorage)) $vars["wgAdDriverUseExpiryStorage"] = $wgAdDriverUseExpiryStorage;
 	if (!empty($wgAdDriverUseCookie))        $vars["wgAdDriverUseCookie"] = $wgAdDriverUseCookie;
 	if (!empty($wgLoadAdDriverOnLiftiumInit)) $vars['wgLoadAdDriverOnLiftiumInit'] = $wgLoadAdDriverOnLiftiumInit;
-
-	// ArticleAdLogic
-	$vars['adLogicPageType'] = ArticleAdLogic::getPageType();
 
 	// Custom KeyValues (for DART requests)
 	$vars['wgDartCustomKeyValues'] = $wgDartCustomKeyValues;
