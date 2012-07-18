@@ -10,16 +10,15 @@
 			</li>
 			<li>
 				<ul id="GlobalNavigation" class="GlobalNavigation<?= $wg->GlobalHeaderVerticalColors ? ' vertical-colors' : '' ?>" data-hash="<?= $menuNodesHash ?>">
-					<? if(is_array($topNavMenuItems)):
-							foreach($topNavMenuItems as $topNavIndex): ?>
+					<? if(is_array($topNavMenuItems)): ?>
+						<? foreach($topNavMenuItems as $topNavIndex): ?>
 								<? $topNavItem = $menuNodes[$topNavIndex] ?>
 								<li class="topNav <?= str_replace(' ', '_', $topNavItem['text']) ?>" data-index="<?= $topNavIndex?>">
 									<a href="<?= $topNavItem['href'] ?>"><?= $topNavItem['text'] ?><img src="<?= $wg->BlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
 									<ul class="subnav"></ul>
 								</li>
-					<? 		endforeach
-						endif
-					?>
+						<? endforeach ?>
+					<? endif ?>
 				</ul>
 			</li>
 		</ul>
@@ -29,4 +28,3 @@
 	<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-left" width="0" height="0">
 	<img src="<?= $wg->BlankImgUrl ?>" class="banner-corner-right" width="0" height="0">
 </header>
-	
