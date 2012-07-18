@@ -866,8 +866,8 @@ class WikiaPhotoGallery extends ImageGallery {
 						'src' => (($image['thumbnail']) ? $image['thumbnail'] : null),
 						'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
 						'class' => 'thumbimage',
-						'width' => isset($thumbParams) ? $thumbParams['width'] : $image['width'],
-						'height' => isset($thumbParams) ? $thumbParams['height'] : $image['height'],
+						//'width' => isset($thumbParams) ? $thumbParams['width'] : $image['width'], // TODO: reinstate this with some WPG refactoring (BugId:38660)
+						//'height' => isset($thumbParams) ? $thumbParams['height'] : $image['height'],
 					);
 
 					if (!empty($image['caption'])) {
