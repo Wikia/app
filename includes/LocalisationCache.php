@@ -83,10 +83,10 @@ class LocalisationCache {
 	 * All item keys
 	 */
 	static public $allKeys = array(
-		'fallback', 'namespaceNames', 'bookstoreList',
+		'fallback', 'namespaceNames', 'mathNames', 'bookstoreList',
 		'magicWords', 'messages', 'rtl', 'capitalizeAllNouns', 'digitTransformTable',
 		'separatorTransformTable', 'fallback8bitEncoding', 'linkPrefixExtension',
-		'linkTrail', 'namespaceAliases',
+		'defaultUserOptionOverrides', 'linkTrail', 'namespaceAliases',
 		'dateFormats', 'datePreferences', 'datePreferenceMigrationMap',
 		'defaultDateFormat', 'extraUserToggles', 'specialPageAliases',
 		'imageFiles', 'preloadedMessages', 'namespaceGenderAliases',
@@ -97,8 +97,9 @@ class LocalisationCache {
 	 * Keys for items which consist of associative arrays, which may be merged
 	 * by a fallback sequence.
 	 */
-	static public $mergeableMapKeys = array( 'messages', 'namespaceNames',
-		'dateFormats', 'imageFiles', 'preloadedMessages',
+	static public $mergeableMapKeys = array( 'messages', 'namespaceNames', 'mathNames',
+		'dateFormats', 'defaultUserOptionOverrides', 'magicWords', 'imageFiles',
+		'preloadedMessages',
 	);
 
 	/**
@@ -132,7 +133,8 @@ class LocalisationCache {
 	/**
 	 * Keys which are loaded automatically by initLanguage()
 	 */
-	static public $preloadedKeys = array( 'dateFormats', 'namespaceNames' );
+	static public $preloadedKeys = array( 'dateFormats', 'namespaceNames',
+		'defaultUserOptionOverrides' );
 
 	var $mergeableKeys = null;
 
@@ -610,7 +612,7 @@ class LocalisationCache {
 			if ( $coreData['fallbackSequence'][$len - 1] !== 'en' ) {
 				$coreData['fallbackSequence'][] = 'en';
 			}
-
+			
 			# Load the fallback localisation item by item and merge it
 			foreach ( $coreData['fallbackSequence'] as $fbCode ) {
 				# Load the secondary localisation from the source file to
@@ -630,6 +632,9 @@ class LocalisationCache {
 					}
 
 					if ( is_null( $coreData[$key] ) || $this->isMergeableKey( $key ) ) {
+						# <Wikia> Load also Wikia messages and merge it with keys from messages directory
+						$fbData[$key] = $this->getItem( $coreData['fallback'], $key );
+						# </Wikia>
 						$this->mergeItem( $key, $coreData[$key], $fbData[$key] );
 					}
 				}
