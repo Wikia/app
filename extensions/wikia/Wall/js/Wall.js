@@ -279,12 +279,8 @@ var Wall = $.createClass(Object, {
 					id: id
 				},
 				callback: function(data) {
-					$.showModal( $.msg('wall-votes-modal-title'), data, {
-						'id': 'WallVotersModal',
-						'width': 300,
-						'callback' : function(){
-	
-						}
+					$(data).makeModal({
+						'width': 300
 					});
 				}
 			});
