@@ -44,6 +44,7 @@ $.fn.extend({
 		else {
 			this.wrap('<div class="modalWrapper" id="'+id+'"></div>');
 			wrapper = this.closest(".modalWrapper");
+			wrapper.appendTo('#positioned_elements');
 		}
 
 		// macbre: addcustom CSS class to popup wrapper
