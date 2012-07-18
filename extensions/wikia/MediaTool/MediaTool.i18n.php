@@ -26,7 +26,13 @@ $messages['en'] = array(
 	'mediatool-custom-thumbnail' => 'Custom',
 	'mediatool-thumbnail-style' => 'Thumbnail Style',
 	'mediatool-thumbnail-size' => 'Thumbnail Size',
-	'mediatool-media-position' => 'Media Position'
+	'mediatool-media-position' => 'Media Position',
+	'mediatool-file-details' => 'File Details',
+	'mediatool-file-name' => 'File name',
+	'mediatool-file-description' => 'File Description',
+	'mediatool-follow-media' => 'Follow this media',
+	'mediatool-article-details' => 'Article Details',
+	'mediatool-media-caption' => 'Caption'
 );
 
 /** Message documentation (Message documentation)
@@ -53,7 +59,13 @@ $messages['qqq'] = array(
 	'mediatool-large-thumbnail' => 'Label for large thumbnail radio button, $1 is replaced with the thumbnail size',
 	'mediatool-small-thumbnail' =>  'Label for small thumbnail radio button, $1 is replaced with the thumbnail size',
 	'mediatool-custom-thumbnail' => 'Label for custom thumbnail radio button',
-	'mediatool-thumbnail-style' => 'Title of thumbnail style section of Media Options (on Edit Media tab)',
-	'mediatool-thumbnail-size' => 'Title of thumbnail size section of Media Options (on Edit Media tab)',
-	'mediatool-media-position' => 'Title of media position section of Media Options (on Edit Media tab)'
+	'mediatool-thumbnail-style' => 'Title of thumbnail style section of Media Options - on Edit Media tab',
+	'mediatool-thumbnail-size' => 'Title of thumbnail size section of Media Options - on Edit Media tab',
+	'mediatool-media-position' => 'Title of media position section of Media Options - on Edit Media tab',
+	'mediatool-file-details' => 'Header for the left-hand set of inputs placed on Edit Media tab in the Preview area',
+	'mediatool-file-name' => 'Label for the file name input placed in the Preview area - on Edit Media tab',
+	'mediatool-file-description' => 'Label for the file description text area placed in the Preview area - on Edit Media tab',
+	'mediatool-follow-media' => 'Label for the follow media checkbox placed in the Preview area - on Edit Media tab',
+	'mediatool-article-details' => 'Header for the right-hand set of inputs placed on Edit Media tab in the Preview area',
+	'mediatool-media-caption' => 'Label for the caption input placed in the Preview area - on Edit Media tab'
 );
