@@ -119,7 +119,8 @@ class AdEngine {
 		'9' => 'Liftium',
 		'10' => 'AdDriver',
 		'11' => 'LiftDNA',
-		'-1' => 'Null'
+		'12' => 'DARTGP',
+ 		'-1' => 'Null'
 	);
 
 	private $slots = array();
@@ -464,6 +465,7 @@ class AdEngine {
 			case 'liftium': return AdProviderLiftium::getInstance();
 			case 'addriver': return AdProviderAdDriver::getInstance();
 			case 'liftdna': return AdProviderLiftDNA::getInstance();
+			case 'dartgp': return AdProviderDARTGP::getInstance();
 			case 'null': return new AdProviderNull('Slot disabled in WF', false);
 			default: return new AdProviderNull('Unrecognized provider id', true);
 		}
