@@ -50,9 +50,11 @@
 	}
 
 	.media-item-details {
+		@include clearfix;
 		border-top: 1px solid $color-page-border;
+		border-bottom: 1px solid $color-page-border;
 		margin: 25px 0;
-		padding: 25px 65px 65px 0px;
+		padding: 25px 65px 20px 65px;
 
 		&:before {
 			border-color: transparent transparent $color-page transparent;
@@ -60,21 +62,30 @@
 			border-width: 8px;
 			content: '';
 			height: 0px;
-			left: 28px;
+			left: -188px;
 			position: relative;
 			top: -51px;
 			visibility: visible;
 			width: 0px;
 		}
 
+		&:last-child {
+			border-bottom: 0;
+			padding-bottom: 0;
+		}
+
 		.article-details {
-			float: left;
+			float: right;
 			width: 250px;
 		}
 
 		.file-details {
-			float: right;
+			float: left;
 			width: 250px;
+		}
+
+		input[type="checkbox"] {
+			margin-left:0
 		}
 
 	}
