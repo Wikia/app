@@ -62,25 +62,4 @@ class AchievementsController extends WikiaController {
 			$this->customize_url = Skin::makeSpecialUrl("AchievementsCustomize");
 		}
 	}
-
-	/**
-	 * adds the hock for own JavaScript variables in the document
-	 */
-	public function __construct() {
-		global $wgHooks;
-		$wgHooks['MakeGlobalVariablesScript'][] = 'AchievementsController::addAchievementsJSVariables';
-	}
-
-	/**
-	 * adds JavaScript variables inside the page source, cl
-	 *
-	 * @param mixed $vars the main vars for the JavaScript printout
-	 *
-	 */
-	static function addAchievementsJSVariables (&$vars) {
-		$lang_view_all = wfMsg('achievements-viewall-oasis');
-		$lang_view_less = wfMsg('achievements-viewless');
-		$vars['wgAchievementsMoreButton'] = array($lang_view_all, $lang_view_less);
-		return true;
-	}
 }

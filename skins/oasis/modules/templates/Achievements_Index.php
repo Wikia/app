@@ -54,7 +54,7 @@
 			</ul>
 
 			<? if ( count( $ownerBadges ) > $max_badges ) :?>
-				<a class="more view-all"><span><?= wfMsg('achievements-viewall-oasis', $ownerName) ?></span> <img src="<?= $wg->BlankImgUrl; ?>" class="chevron"> </a>
+				<a class="more view-all" data-msg-show="<?= wfMsg('achievements-viewall-oasis') ?>" data-msg-hide="<?= wfMsg('achievements-viewless') ?>" ><span><?= wfMsg('achievements-viewall-oasis', $ownerName) ?></span> <img src="<?= $wg->BlankImgUrl; ?>" class="chevron"> </a>
 			<? endif ;?>
 		</div>
 	<? endif ;?>
