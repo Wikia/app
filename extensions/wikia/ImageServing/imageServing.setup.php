@@ -25,11 +25,7 @@ $app->registerClass('ImageServingDriverCategoryNS', $dir . 'drivers/ImageServing
 $app->registerClass('ImageServingDriverUserNS', $dir . 'drivers/ImageServingDriverUserNS.class.php');
 $app->registerClass('ImageServingDriverFileNS', $dir . 'drivers/ImageServingDriverFileNS.class.php');
 
-/* if city id null = internal/staff */
-
-if(!empty($wgCityId)) {
-	$app->registerClass('ImageServingController', $dir . 'ImageServingController.class.php');	
-}
+$app->registerClass('ImageServingController', $dir . 'ImageServingController.class.php');
 
 
 $wgImageServingDrivers = array( 
