@@ -108,7 +108,7 @@ class WallHistory extends WikiaModel {
 		);
 	}
 	
-	public function  getLastPosts($ns) {
+	public function  getLastPosts($ns, $count = 5) {
 		
 		$where = array(
 			'action' => WH_NEW,
@@ -117,10 +117,10 @@ class WallHistory extends WikiaModel {
 			'deleted_or_removed' => 0
 		);
 		
-		return $this->loadFromDB($where, 10, 0, 'desc');
+		return $this->loadFromDB($where, $count, 0, 'desc');
 	}
 	
-	public function getLastUsers($ns) {
+	public function getLastUsers($ns, $count = 10) {
 		$db =  $this->getDatawareDB(DB_SLAVE);
 		
 		$res = $db->select(
@@ -161,10 +161,7 @@ class WallHistory extends WikiaModel {
 			'revision_id' => $in
 		);
 		
-//		'action' => WH_NEW,
-//		'deleted_or_removed' => 0
-		
-		return $this->loadFromDB($where, 10, 0, 'desc');
+		return $this->loadFromDB($where, $count, 0, 'desc');
 	}
 	
 	public function get($user, $sort, $parent_page_id = 0) {
