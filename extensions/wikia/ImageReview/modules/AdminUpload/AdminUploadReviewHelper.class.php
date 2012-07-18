@@ -33,7 +33,8 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 				$sqlWhere[ImageReviewStatuses::STATE_APPROVED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$approvalList [] = $image;
 
-				$targetWikiId = $this->getTargetWikiId($image['lang']);
+				$visualization = F::build('CityVisualization');
+				$targetWikiId = $visualization->getTargetWikiId($image['lang']);
 
 				if (empty($taskAdditionList[$targetWikiId])) {
 					$taskAdditionList[$targetWikiId] = array();

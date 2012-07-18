@@ -429,11 +429,59 @@ class SpecialPromoteHelper extends WikiaObject {
 			);
 		}
 	}
-	
-	public function checkWikiStatus($WikiId, $langCode) {
-		$cityVisualization = F::build('CityVisualization');
+
+	protected function checkWikiStatus($WikiId, $langCode) {
 		$visualization = F::build('CityVisualization');
-		$wikiData = $visualization->getWikiDataForVisualization($WikiId, $langCode);
-		return !empty($wikiData['main_image']);
+		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
+		$wikiDataSpecialPromote = $this->homePageHelper->getWikiInfoForSpecialPromote($WikiId, $langCode);
+		$additionalImages = $this->getAdditionalImages();
+		$hasImagesRejected = false;
+		$hasImagesInReview = false;
+		if (!empty($wikiDataVisualization['main_image'])) {
+			$isFeatured = true;
+		}
+		elseif (empty($wikiDataVisualization['main_image'])) {
+			$isFeatured = false;
+		}
+		if ($additionalImages) {
+			foreach($additionalImages as $image) {
+				switch($image['review_status']) {
+					case ImageReviewStatuses::STATE_REJECTED:
+						$hasImagesRejected = true;
+						break;
+					case ImageReviewStatuses::STATE_IN_REVIEW:
+					case ImageReviewStatuses::STATE_QUESTIONABLE:
+					case ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW:
+						$hasImagesInReview = true;
+						break;
+				}
+			}
+		}
+		return array(
+			"hasImagesRejected" => $hasImagesRejected,
+			"hasImagesInReview" => $hasImagesInReview,
+			"isFeatured" => $isFeatured
+		);
+	}
+
+	public function getWikiStatusMessage($WikiId, $langCode) {
+		$wikiStatus = $this->checkWikiStatus($WikiId, $langCode);
+		if ($wikiStatus["hasImagesRejected"]) {
+			$wikiStatusMessage = wfMsg('promote-statusbar-rejected');
+		}
+		elseif ($wikiStatus["hasImagesInReview"]) {
+			$wikiStatusMessage = wfMsg('promote-statusbar-inreview');
+		}
+		elseif ($wikiStatus["isFeatured"]) {
+			$wikiStatusMessage = wfMsgExt(
+				'promote-statusbar-approved',
+				array('parsemag', 'parseinline'),
+				$this->wg->Sitename
+			);
+		}
+		else {
+			$wikiStatusMessage = null;
+		}
+		return $wikiStatusMessage;
 	}
 }

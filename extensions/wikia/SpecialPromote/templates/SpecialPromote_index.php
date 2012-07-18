@@ -6,7 +6,7 @@
 			</span>
 			<span class="status-arrow"></span>
 		</div>
-		<?= $wikiStatus ? strtr( wfMsg('promote-statusbar-approved'), $approvedParams ) : wfMsg('promote-statusbar-inreview') ?>
+		<?= $wikiStatus ?>
 	</div>
 	<p class='introduction'>
 		<strong><?= wfMsg('promote-introduction-header'); ?></strong><br/>
