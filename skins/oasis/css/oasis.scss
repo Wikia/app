@@ -57,16 +57,16 @@
 
 // Ubiquitous modules that should be combined here to save space. Each file should contain a comment w/its name so we can see what was packaged. //
 @import "modules/LatestPhotos";
-@import "extensions/wikia/Blogs/css/oasis"; // SASS imports are relative to the current file
-@import "extensions/wikia/RelatedPages/RelatedPages";
+@import "../../../extensions/wikia/Blogs/css/oasis"; // SASS imports are relative to the current file
+@import "../../../extensions/wikia/RelatedPages/RelatedPages";
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
 @import "/extensions/FBConnect/css/fbModal.css";
 @import "/extensions/wikia/AjaxLogin/AjaxLogin.css";
-@import "extensions/wikia/UserLogin/css/UserLoginGlobal";
-@import "extensions/wikia/VideoHandlers/css/VideoHandlers";
-@import "extensions/wikia/MiniEditor/css/MiniEditor";
-@import "extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments";
+@import "../../../extensions/wikia/UserLogin/css/UserLoginGlobal";
+@import "../../../extensions/wikia/VideoHandlers/css/VideoHandlers";
+@import "../../../extensions/wikia/MiniEditor/css/MiniEditor";
+@import "../../../extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments";
 
 // WikiaPhotoGallery - slideshows slidding (BugId:1296)
 // TODO: load on demand using JSView
-@import "extensions/wikia/WikiaPhotoGallery/css/slideshow";
+@import "../../../extensions/wikia/WikiaPhotoGallery/css/slideshow";
