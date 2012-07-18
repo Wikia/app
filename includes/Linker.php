@@ -611,6 +611,12 @@ class Linker {
 		if ( $fp['align'] != '' ) {
 			$s = "<div class=\"float{$fp['align']}\">{$s}</div>";
 		}
+
+		/* Wikia change begin - @author: Federico "Lox" Lucignano */
+		/* Give extensions the ability to add HTML to full size unframed images */
+		wfRunHooks( 'ImageAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, &$s ) );
+		/* Wikia change end */
+
 		return str_replace( "\n", ' ', $prefix . $s . $postfix );
 	}
 
@@ -744,14 +750,7 @@ class Linker {
 			$url = wfAppendQuery( $url, 'page=' . urlencode( $page ) );
 		}
 
-		/* Wikia change begin - @author: Marooned */
-		/* Images SEO project */
-		if ( F::app()->checkSkin( array( 'oasis', 'wikiamobile' ) ) ) {
-			$s = "<figure class=\"thumb t{$fp['align']} thumbinner\" style=\"width:{$outerWidth}px;\">";
-		} else {
-			$s = "<div class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
-		}
-		/* Wikia change end */
+		$s = "<div class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
 
 		if ( !$exists ) {
 			$s .= self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
@@ -780,55 +779,14 @@ class Linker {
 							'width' => 15,
 							'height' => 11,
 							'alt' => "" ) ) ) );
-
-				/* Wikia change begin - @author: christian, Marooned */
-				/* Change img src from magnify-clip.png to blank.gif. Image is set via CSS Background */
-				$zoomIcon =  Html::rawElement( 'a', array(
-					'href' => $url,
-					'class' => "internal sprite details magnify",
-					'title' => wfMsg( 'thumbnail-more' ) ), '' );
-				/* Wikia change end */
 			}
 		}
-		$app = F::app();
-
-		if ( $app->checkSkin( array( 'oasis', 'wikiamobile' ) ) ) {
-			$showCaption = !empty( $fp['caption'] );
-			$isOasis = $app->checkSkin( 'oasis' );
-
-			if ( $isOasis ) {
-				$s .= $zoomIcon;
-			}
-
-			if ( $isOasis || $showCaption ) {
-				$s .= '<figcaption class="thumbcaption">'; 
-			}
-
-			if ( $showCaption ) {
-				$s .= $fp['caption'];
-			}
-
-			//picture attribution placeholder is processed only by Oasis
-			if ( $isOasis ) {
-				$s .= '<!-- picture-attribution -->';
-			}
-
-			if ( $isOasis || $showCaption ) {
-				$s .= '</figcaption>';
-			}
-
-			$s .= '</figure>';
-		}
-		else {
-			$s .= '  <div class="thumbcaption">' . $zoomIcon . $fp['caption'] . "</div></div></div>";
-		}
-		/* Wikia change end */
+		$s .= '  <div class="thumbcaption">' . $zoomIcon . $fp['caption'] . "</div></div></div>";
 
 		/* Wikia change begin - @author: macbre */
 		/* Give extensions ability to add HTML to thumbed / framed images */
 		/* @author: wladek - added outerWidth parameter for BugId: 3734 */
-		$skin = RequestContext::getMain()->getSkin();
-		wfRunHooks('MakeThumbLink2', array($skin, $title, $file, $frameParams, $handlerParams, &$s, $outerWidth));
+		wfRunHooks( 'ThumbnailAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $params, $zoomIcon, $url,  $time, &$s ) );
 		/* Wikia change end */
 
 		return str_replace( "\n", ' ', $s );

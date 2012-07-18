@@ -5,7 +5,7 @@
 		padding: 5px;
 		border-top: 1px solid $border-color;
 		border-bottom: 1px solid $border-color;
-		
+
 		.image {
 			display: block;
 			margin-bottom: -7px;
@@ -21,5 +21,25 @@
 
 img {
 	max-width: 100%;
-	height: auto;
+
+	&.lazy {
+		display: none;
+	}
+
+	&.fit {
+		height: auto;
+	}
+}
+
+.js {
+	img {
+		&.lazy {
+			background-size: 70px;
+			display: inline;
+
+			&.imgPlcHld {
+				background-color: $imagePlaceholderBackground;
+			}
+		}
+	}
 }

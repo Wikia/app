@@ -12,7 +12,26 @@ define('sections', ['events', 'track'], function(ev, track){
 		article = d.getElementById('mw-content-text'),
 		page = d.getElementById('wkMainCnt'),
 		fragment = d.createDocumentFragment();
-		click = ev.click;
+		click = ev.click,
+		callbacks = {
+			open: [],
+			close: []
+		};
+
+		function fireEvent(event, target){
+			var stack = callbacks[event];
+			len = stack.length;
+
+			if(len > 0){
+				setTimeout(function(){
+					var x = 0;
+
+					for(; x < len; x++){
+						stack[x].call(target);
+					}
+				}, 0);
+			}
+		}
 
 	function init(){
 		//avoid running if there are no sections which are direct children of the article section
@@ -45,6 +64,7 @@ define('sections', ['events', 'track'], function(ev, track){
 
 						currentSection = d.createElement('section');
 						currentSection.className = 'artSec';
+						currentSection.setAttribute('data-index', x);
 						node = node.cloneNode(true);
 
 						node.className += ' collSec';
@@ -78,6 +98,8 @@ define('sections', ['events', 'track'], function(ev, track){
 				this.className += ' open';
 				next.className += ' open';
 			}
+
+			 fireEvent((isOpen) ? 'close' : 'open', next);
 		}).on(click, '.goBck', function(){
 			var parent = this.parentElement,
 				prev = parent.previousElementSibling;
@@ -86,11 +108,31 @@ define('sections', ['events', 'track'], function(ev, track){
 
 			parent.className = parent.className.replace(' open', '');
 			prev.className = prev.className.replace(' open', '');
+			next.className = next.className.replace(' open', '');
+			fireEvent('close', parent);
 			prev.scrollIntoView();
 		});
 	}
 
 	return {
-		init: init
+		init: init,
+		addEventListener: function(event, callback){
+			if(callbacks[event]){
+				callbacks[event].push(callback);
+			}
+		},
+		removeEventListener: function(event, callback){
+			if(callbacks[event]){
+				var stack = callbacks[event],
+					len = stack.lenght;
+
+				while(len--){
+					if(stack[len] === callback){
+						stack.splice(len, 1);
+						return;
+					}
+				}
+			}
+		}
 	}
 })

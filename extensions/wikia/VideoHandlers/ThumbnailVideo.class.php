@@ -55,7 +55,7 @@ class ThumbnailVideo extends ThumbnailImage {
 	 */
 	function renderAsThumbnailImage($options) {
 
-		$thumb = F::build( 
+		$thumb = F::build(
 			'ThumbnailImage',
 			array(
 				"file" => $this->getFile(),
@@ -93,9 +93,9 @@ class ThumbnailVideo extends ThumbnailImage {
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
 		}
-	
+
 		if ( !empty( F::app()->wg->RTEParserEnabled ) ) {
-			return $this->renderAsThumbnailImage($options);		
+			return $this->renderAsThumbnailImage($options);
 		}
 
 		wfProfileIn( __METHOD__ );
@@ -103,7 +103,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
 		$useThmbnailInfoBar = false;
-		
+
 		/**
 		 * Note: if title is empty and alt is not, make the title empty, don't
 		 * use alt; only use alt if title is not set
@@ -156,15 +156,15 @@ class ThumbnailVideo extends ThumbnailImage {
 	        if ( !empty($options['usePreloading']) ) {
 	            $attribs['data-src'] = $this->url;
 	        }
-		
+
 		if ( $this->file instanceof OldLocalFile ) {
 			$archive_name = $this->file->getArchiveName();
 			if ( !empty( $archive_name ) ) {
 				$linkAttribs['href'] .= '?t='.$this->file->getTimestamp();
 				$linkAttribs['data-timestamp'] = $this->file->getTimestamp();
 			}
-		}		
-		
+		}
+
 		if ( !empty( $options['valign'] ) ) {
 			$attribs['style'] = "vertical-align: {$options['valign']}";
 		}
@@ -216,9 +216,9 @@ class ThumbnailVideo extends ThumbnailImage {
 				"class"		=> "Wikia-video-title-bar",
 				"style"		=> "width: {$this->width}px; margin-left: -{$this->width}px;"
 			);
-			
+
 			$videoTitle = $attribs['data-video'];
-			
+
 			$infoVars = array();
 			$userName = $this->file->getUser();
 			if (!is_null($userName)) {
@@ -248,9 +248,12 @@ class ThumbnailVideo extends ThumbnailImage {
 			foreach ( $infoVars as $key => $value ) {
 				$html = str_replace('{'.$key.'}', $value, $html);
 			}
-
 		}
-                wfProfileOut( __METHOD__ );
+
+		//give extensions a chance to modify the markup
+		wfRunHooks( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
+        wfProfileOut( __METHOD__ );
+
 		return $html;
 	}
 

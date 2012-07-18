@@ -5,11 +5,11 @@
 WikiaTracker.trackEvent(
 	'trackingevent',
 	{
- 		ga_category: 'wikiamobile-view',
- 		ga_action: WikiaTracker.ACTIONS.VIEW
- 	},
- 	'both'
- );
+		ga_category: 'wikiamobile-view',
+		ga_action: WikiaTracker.ACTIONS.VIEW
+	},
+	'both'
+);
 
 //init
 $(function(){
@@ -90,5 +90,7 @@ $(function(){
 					style: 'right:0;'
 				});
 			}
+
+			require('lazyload');
 		});
 });

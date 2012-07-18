@@ -337,6 +337,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/sections.js',
 		'//extensions/wikia/WikiaMobile/js/share.js',
 		'//extensions/wikia/WikiaMobile/js/tables.js',
+		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',

@@ -1,3 +1,5 @@
+@import "../../WikiaMobile/css/variables";
+
 .wkSlider{
 	margin: 10px auto;
 	width: 570px;
@@ -6,7 +8,7 @@
 	.img{
 		//placeholder moved to image_placeholder.scss
 		display: inline-block;
-		background-color: #EEE;
+		background-color: $imagePlaceholderBackground;
 		background-size: 25%;
 		-webkit-transition: opacity .3s;
 		width: 280px;

@@ -236,7 +236,8 @@ $wgAutoloadClasses['ThemeDesignerHelper'] = $IP."/extensions/wikia/ThemeDesigner
 $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorController.class.php';
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 
-// TODO:move this inclusion to CommonExtensions?
+// TODO:move this inclusions to CommonExtensions?
+require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
 /**
