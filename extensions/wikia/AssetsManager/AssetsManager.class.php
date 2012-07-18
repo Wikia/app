@@ -39,8 +39,8 @@ class AssetsManager {
 
 	public static function getInstance() {
 		if( self::$mInstance == false ) {
-			global $wgCdnStylePath, $wgStyleVersion, $wgAllInOne, $wgRequest;
-			self::$mInstance = new AssetsManager($wgCdnStylePath, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
+			global $wgCdnRootUrl, $wgStyleVersion, $wgAllInOne, $wgRequest;
+			self::$mInstance = new AssetsManager($wgCdnRootUrl, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
 		}
 		return self::$mInstance;
 	}
@@ -57,7 +57,7 @@ class AssetsManager {
 
 		$vars['sassParams'] = $params;
 		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;
-		$vars['wgCdnRootUrl'] = $wgCdnRootUrl; // TODO: wgCdnStylePath?
+		$vars['wgCdnRootUrl'] = $wgCdnRootUrl;
 
 		return true;
 	}
@@ -176,8 +176,7 @@ class AssetsManager {
 						// We always need to use common host for static assets since it has
 						// the information about the slot which is otherwise not available
 						// in varnish (BugId: 33905)
-//						$urls[] =  ( !empty( $local ) ) ? $this->mCommonHost . $this->getOneLocalURL( $asset ) : $this->getOneCommonURL( $asset );
-						$urls[] =  $this->getOneCommonURL( $asset );
+						$urls[] =  ( !empty( $local ) ) ? $this->mCommonHost . $this->getOneLocalURL( $asset ) : $this->getOneCommonURL( $asset );
 					}
 				}
 			}
@@ -234,8 +233,7 @@ class AssetsManager {
 	 * @author Inez Korczyński <korczynski@gmail.com>
  	 */
 	public function getSassCommonURL(/* string */ $scssFilePath, /* boolean */ $minify = null) {
-		global $wgCdnRootUrl;
-		return $this->getSassURL( $scssFilePath, $wgCdnRootUrl, $minify );
+		return $this->getSassURL( $scssFilePath, $this->mCommonHost, $minify );
 	}
 
 	/**
@@ -274,8 +272,7 @@ class AssetsManager {
 	}
 
 	public function getSassGroupCommonURL( $groupName, $minify = null ){
-		global $wgCdnRootUrl;
-		return $this->getSassGroupURL( $groupName, $wgCdnRootUrl, $minify );
+		return $this->getSassGroupURL( $groupName, $this->mCommonHost, $minify );
 	}
 
 	/**
@@ -302,10 +299,7 @@ class AssetsManager {
 	 */
 	public function getOneCommonURL(/* string */ $filePath, /* boolean */ $minify = null) {
 		if ($minify !== null ? $minify : $this->mMinify) {
-			// Remove cachebuster (if any) from common host path, because one will be
-			// added by call to getAMLocalURL()
-			$commonHost = preg_replace('#/__cb[0-9]+$#','',$this->mCommonHost);
-			return $commonHost . $this->getAMLocalURL('one', $filePath,array('minify'=>1));
+			return $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
 		} else {
 			// We always need to use common host for static assets since it has
 			// the information about the slot which is otherwise not available
@@ -371,7 +365,7 @@ class AssetsManager {
 					// We always need to use common host for static assets since it has
 					// the information about the slot which is otherwise not available
 					// in varnish (BugId: 33905)
-					$URLs[] = $this->getOneCommonURL($asset,$minify);
+					$URLs[] = $this->mCommonHost . $this->getOneLocalURL($asset, $minify);
 				}
 			}
 		}
@@ -404,9 +398,8 @@ class AssetsManager {
 	 * @return array Array of one or many full common URLs, uses not wiki specific host
  	 */
 	public function getGroupCommonURL(/* string */ $groupName, /* array */ $params = array(), /* boolean */ $combine = null, /* boolean */ $minify = null)  {
-		global $wgCdnRootUrl;
 		if (($combine !== null ? $combine : $this->mCombine) || ($minify !== null ? $minify : $this->mMinify)) {
-			return $this->getGroupURL($groupName, $params, $wgCdnRootUrl, $combine, $minify);
+			return $this->getGroupURL($groupName, $params, $this->mCommonHost, $combine, $minify);
 		} else {
 			return $this->getGroupURL($groupName, $params, '', $combine, $minify);
 		}
@@ -446,9 +439,8 @@ class AssetsManager {
 	 * @return array Array of one or many full common URLs, uses not wiki specific host
  	 */
 	public function getGroupsCommonURL( Array $groupNames, /* array */ $params = array(), /* boolean */ $combine = null, /* boolean */ $minify = null ) {
-		global $wgCdnRootUrl;
 		if ( ( $combine !== null ? $combine : $this->mCombine ) || ( $minify !== null ? $minify : $this->mMinify ) ) {
-			return $this->getGroupsURL( $groupNames, $params, $wgCdnRootUrl, $combine, $minify );
+			return $this->getGroupsURL( $groupNames, $params, $this->mCommonHost, $combine, $minify );
 		} else {
 			return $this->getGroupsURL( $groupNames, $params, '', $combine, $minify );
 		}
