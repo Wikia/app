@@ -4,7 +4,7 @@
 	<a href="#" class="internal sprite details magnify" title="View photo details"></a>
 	<figcaption class="thumbcaption">
 		<div class="picture-attribution">
-			<img src="{{avatarUrl}}" class="avatar" alt="{{name}}" height="16" width="16">Added by
+			<img src="{{avatarUrl}}" class="avatar" alt="{{name}}" height="16" width="16"><?= wfMsg('mediatool-added-by'); ?>
 			<a href="{{userPageUrl}}">{{name}}</a>
 		</div>
 	</figcaption>
