@@ -262,7 +262,7 @@
 	border-bottom: 1px solid $color-page-border;
 	margin: 0 10px 10px 10px;
 	padding: 0 0 10px 0;
-
+	
 	h1 {
 		float: left;
 	}
@@ -311,5 +311,7 @@
 	}
 	.subtle {
 		margin-left: 3px;
+		font-size: 11px;
+		color: $color-text;
 	}
 }
