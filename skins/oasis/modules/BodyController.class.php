@@ -124,7 +124,6 @@ class BodyController extends WikiaController {
 		// Forum Extension
 		if (!empty($this->wg->EnableForumExt) && !empty($this->wg->IsForum)) {
 			$railModuleList = array (
-				1002 => array('LatestActivity', 'Index', null),
 				1001 => array('Forum', 'forumActivityModule', null),
 				1000 => array('Forum', 'forumParticipationModule', null),
 			);

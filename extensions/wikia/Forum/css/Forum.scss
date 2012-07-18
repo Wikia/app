@@ -297,9 +297,12 @@
 .WikiaRail .ForumActivityModule,
 .WikiaRail .ForumParticipationModule {
 	em {
+		display: inherit;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		white-space: nowrap;
+		a {
+			white-space: nowrap;
+		}
 	}
 	h1 {
 		margin-bottom: 15px;
@@ -310,8 +313,8 @@
 		top: 7px;
 	}
 	.subtle {
-		margin-left: 3px;
-		font-size: 11px;
 		color: $color-text;
+		font-size: 11px;
+		margin-left: 3px;		
 	}
 }
