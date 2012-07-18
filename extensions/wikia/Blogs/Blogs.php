@@ -56,6 +56,7 @@ $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
  */
 $wgExtensionMessagesFiles['Blogs'] = $dir . '/Blogs.i18n.php';
 $wgExtensionMessagesFiles['BlogsAliases'] = $dir . '/Blogs.alias.php';
+$wgExtensionMessagesFiles['BlogsMagic'] = $dir . '/Blogs.i18n.magic.php';
 
 /**
  * permissions (eventually will be moved to CommonSettings.php)
