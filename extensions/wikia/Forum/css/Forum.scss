@@ -296,30 +296,20 @@
 
 .WikiaRail .ForumActivityModule,
 .WikiaRail .ForumParticipationModule {
-	.subtle  {
-		margin-left: 3px;
+	em {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	h1 {
 		margin-bottom: 15px;
 	}
-	li {
-		font-size: 11px;
-		margin-bottom: 10px;
-		padding-left: 30px;
-		position: relative;
-		.avatar {
-			left: 0;
-			position: absolute;
-			top: 1px;
-		}	
-		h2 {
-			font-size: 13px;
-			font-weight: normal;
-			margin: 0 0 3px 0;
-			overflow: hidden;
-			padding: 0;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
+	.avatar {
+		left: 0;
+		position: absolute;
+		top: 7px;
+	}
+	.subtle {
+		margin-left: 3px;
 	}
 }
