@@ -886,8 +886,9 @@ class WebRequest {
 		global $wgScriptExtension;
 		$extWhitelist[] = ltrim( $wgScriptExtension, '.' );
 		/* Wikia change begin BugId: 34550
-		 * Allow /wiki/ urls to serve user javascript */
+		 * Allow /wiki/ urls to serve user javascript/css */
 		$extWhitelist[] = 'js';
+		$extWhitelist[] = 'css';
 		/* Wikia change end */
 		if ( IEUrlExtension::areServerVarsBad( $_SERVER, $extWhitelist ) ) {
 			if ( !$this->wasPosted() ) {
