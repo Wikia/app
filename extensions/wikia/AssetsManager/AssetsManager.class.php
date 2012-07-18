@@ -301,11 +301,12 @@ class AssetsManager {
 	 * @return string Full common URL to one file, uses not wiki specific host
 	 */
 	public function getOneCommonURL(/* string */ $filePath, /* boolean */ $minify = null) {
+		global $wgCdnRootUrl;
 		if ($minify !== null ? $minify : $this->mMinify) {
 			// Remove cachebuster (if any) from common host path, because one will be
 			// added by call to getAMLocalURL()
-			$commonHost = preg_replace('#/__cb[0-9]+$#','',$this->mCommonHost);
-			return $commonHost . $this->getAMLocalURL('one', $filePath,array('minify'=>1));
+			//$commonHost = preg_replace('#/__cb[0-9]+(/common/)?$#','',$this->mCommonHost);
+			return $wgCdnRootUrl . $this->getAMLocalURL('one', $filePath,array('minify'=>1));
 		} else {
 			// We always need to use common host for static assets since it has
 			// the information about the slot which is otherwise not available
