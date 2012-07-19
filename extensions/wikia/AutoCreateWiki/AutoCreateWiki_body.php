@@ -859,7 +859,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "subdomain"  ] = $this->mWikiData[ "name"];
 		$this->mWikiData[ "redirect"   ] = $this->mWikiData[ "name"];
 
-		$this->mWikiData[ "path"       ] = "/usr/wikia/docroot/wiki.factory";
+		$this->mWikiData[ "path"       ] = "slot1";
 		$this->mWikiData[ "testWiki"   ] = false;
 
 		$this->mWikiData[ "images_url" ] = $this->prepareDirValue();
