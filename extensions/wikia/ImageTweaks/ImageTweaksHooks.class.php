@@ -1,7 +1,7 @@
 <?php
 
 class ImageTweaksHooks extends WikiaObject {
-	const WIKIAMOBILE_IMAGE_CLASS = 'lazy';
+	const WIKIAMOBILE_IMAGE_CLASSES = 'imgPlcHld lazy';
 
 	static private $isWikiaMobile = null;
 	static private $isOasis = null;
@@ -194,7 +194,7 @@ class ImageTweaksHooks extends WikiaObject {
 				$lazyImageAttribs = $imageAttribs;
 				$lazyImageAttribs['data-src'] = $lazyImageAttribs['src'];
 				$lazyImageAttribs['src'] = $this->wf->BlankImgUrl();
-				$lazyImageAttribs['class'] = ( ( !empty( $lazyImageAttribs['class'] ) ) ? "{$lazyImageAttribs['class']} " : '' ) . self::WIKIAMOBILE_IMAGE_CLASS;
+				$lazyImageAttribs['class'] = ( ( !empty( $lazyImageAttribs['class'] ) ) ? "{$lazyImageAttribs['class']} " : '' ) . self::WIKIAMOBILE_IMAGE_CLASSES;
 
 				$contents = Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$contents}</noscript>";
 			}
@@ -218,7 +218,7 @@ class ImageTweaksHooks extends WikiaObject {
 			$lazyImageAttribs = $imageAttribs;
 			$lazyImageAttribs['data-src'] = $lazyImageAttribs['src'];
 			$lazyImageAttribs['src'] = $this->wf->BlankImgUrl();
-			$lazyImageAttribs['class'] = ( ( !empty( $lazyImageAttribs['class'] ) ) ? "{$lazyImageAttribs['class']} " : '' ) . self::WIKIAMOBILE_IMAGE_CLASS;
+			$lazyImageAttribs['class'] = ( ( !empty( $lazyImageAttribs['class'] ) ) ? "{$lazyImageAttribs['class']} " : '' ) . self::WIKIAMOBILE_IMAGE_CLASSES;
 
 			$html = str_replace( $origImg, Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$origImg}</noscript>", $html );
 		}

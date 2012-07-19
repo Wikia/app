@@ -13,8 +13,8 @@ WikiaTracker.trackEvent(
 
 //init
 $(function(){
-	require(['media', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'sections', 'share', 'popover', 'cookies', 'ads'],
-		function(media, qs, topbar, toc, events, hideURLBar, tables, sections, share, popover, cookies, ads){
+	require(['media', 'querystring', 'topbar', 'toc', 'events', 'hideURLBar', 'tables', 'sections', 'share', 'popover', 'cookies', 'ads', 'lazyload'],
+		function(media, qs, topbar, toc, events, hideURLBar, tables, sections, share, popover, cookies, ads, lazyLoad){
 			var d = document,
 				clickEvent = events.click;
 
@@ -91,6 +91,30 @@ $(function(){
 				});
 			}
 
-			require('lazyload');
+			var processedSections = {};
+
+			//Image lazy loading
+			$(window).on('load', function () {
+				lazyLoad(
+					document.getElementsByClassName('lazy'),
+					'imgPlcHld',
+					'fit'
+				);
+
+				sections.addEventListener('open', function () {
+					var self = this,
+						id = self.getAttribute('data-index');
+
+					if (id !== null && id !== undefined && !processedSections[id]) {
+						lazyLoad(
+							self.getElementsByClassName('lazy'),
+							'imgPlcHld',
+							'fit'
+						);
+
+						processedSections[id] = true;
+					}
+				});
+			});
 		});
 });
