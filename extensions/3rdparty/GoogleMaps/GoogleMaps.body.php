@@ -842,7 +842,7 @@ JAVASCRIPT;
 		var mapIcons = {};
 
 		function addLoadEvent(func) {
-			if ( typeof skin != 'undefined' && skin == 'monaco' ) {
+			if ( window.skin === 'monaco' ) {
 				wgAfterContentAndJS.push(function() {
 					$(func);
 				});
