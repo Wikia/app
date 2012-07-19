@@ -553,13 +553,17 @@ $.openPopup = function(url, name, moduleName, width, height) {
 		showComboAjaxForPlaceHolder(false, "", function() {
 			AjaxLogin.doSuccess = function() {
 				$('.modalWrapper').children().not('.close').not('.modalContent').not('h1').remove();
-				$('.modalContent').load(
-					wgServer +
-					wgScript +
-					'?action=ajax&rs=moduleProxy&moduleName=' + moduleName + '&actionName=AnonLoginSuccess&outputType=html'
-				);
+				
+				$.nirvana.sendRequest({
+					controller: moduleName,
+					method: 'AnonLoginSuccess',
+					format: 'html',
+					callback: function(html) {
+						$('.modalContent').html(html);
+					}
+				});
 			}
-		}, false, message); // show the 'login required for this action' message.
+		}, false); 
 	}
 }
 
