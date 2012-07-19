@@ -11,7 +11,20 @@ var ChatRailModule = {
 		// Since caching of modules is not ironed out yet (currently I think they all cache for 24 hours), make a cb based on the minute:
 		var currentTime = new Date();
 		var minuteTimestamp = currentTime.getFullYear() + currentTime.getMonth() + currentTime.getDate() + currentTime.getHours() + currentTime.getMinutes();
-		$(".ChatModule").load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=Contents&outputType=html&username=' + encodeURIComponent(wgUserName) + '&cb=' + minuteTimestamp, ChatRailModule.userStatsMenuInit);
+		
+		$.nirvana.sendRequest({
+			controller: 'ChatRail',
+			method: 'Contents',
+			format: 'html',
+			data: {
+				username: encodeURIComponent(wgUserName),
+				cb: minuteTimestamp  	
+			},
+			callback: function(html) {
+				$(".ChatModule").html(html);
+				ChatRailModule.userStatsMenuInit();
+			}
+		});
 	},
 	
 	userStatsMenuInit: function() {

@@ -553,17 +553,22 @@ var ThemeDesigner = {
 		$().log(ThemeDesigner.settings, 'ThemeDesigner');
 
 		// send current settings to backend
-		$.post(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ThemeDesigner&actionName=SaveSettings&outputType=data',
-			{'settings': ThemeDesigner.settings},
-			function(data) {
+		
+		$.nirvana.sendRequest({
+			controller: 'ThemeDesigner',
+			method: 'SaveSettings',
+			data: {
+				 settings: ThemeDesigner.settings 	
+			},
+			callback: function(data) {
 				// BugId:1349
 				ThemeDesigner.purgeReturnToPage(function() {
 					if (returnTo) {
 						document.location = returnTo; // redirect to article from which ThemeDesigner was triggered
 					}
 				});
-			},
-			'json');
+			}
+		});		
 	},
 
 	navigationClick: function(event) {
