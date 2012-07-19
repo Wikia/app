@@ -25,7 +25,7 @@ class GlobalHeaderController extends WikiaController {
 
 		$this->menuNodes = $menuNodes;
 
-		$this->app->wf->ProfileIn(__METHOD__);
+		$this->app->wf->ProfileOut(__METHOD__);
 	}
 
 	public function index() {
