@@ -137,7 +137,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$bot = $wgUser->isAllowed('bot') && $wgRequest->getBool('bot',true);
 		$status = $editPage->internalAttemptSave( $result, $bot );
 
-		switch( $status ) {
+		switch( $status->value ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				if( count( $aPageProps ) ) {
