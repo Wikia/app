@@ -29,7 +29,7 @@ Modernizr.addTest('positionfixed', function(){
 		//Android lte 2.1: Platform is Android and Webkit version is less than 533 (Android 2.2)
 		( ua.indexOf( "Android" ) > -1 && wkversion && wkversion < 533 )
 		||
-		// Firefox Mobile before 6.0 - 
+		// Firefox Mobile before 6.0 -
 		( ffversion && ffversion < 6 )
 		||
 		// WebOS less than 3

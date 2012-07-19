@@ -237,6 +237,7 @@ AdConfig.DART.getMobileUrl = function(slotname, size, useIframe, adProvider) {
 		AdConfig.DART.getCategories() +
 		AdConfig.DART.getLocKV(slotname) +
 		AdConfig.DART.getDcoptKV(slotname) +
+		'positionfixed=' + ((Modernizr.positionfixed) ? 'css' : 'js') + ';' +
 		mtfIFPath +
 		'src=' + src + ';' +
 		'ord=' + AdConfig.DART.ord + ';' +
