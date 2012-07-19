@@ -41,7 +41,6 @@
 			</span>
 			<input type="hidden" id="user" value="<?= $user['id']; ?>" />
 		<? endif; ?>
-		
 		<div class="masthead-info-lower">
 			<div class="tally">
 				<? if( !empty($user['registration']) ): ?>
@@ -148,7 +147,6 @@
 				<? if( !empty($user['occupation']) ): ?>
 					<li><?= wfMsg('user-identity-box-occupation', array( '$1' => $user['occupation'] )); ?></li>
 				<? elseif( !empty($user['showZeroStates']) ): ?>
-				<li><?='A'.$user['showZeroStates'].'B' ?></li>
 					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
 					<li><?= wfMsg('user-identity-box-zero-state-occupation'); ?></li>
 					<? endif; ?>
