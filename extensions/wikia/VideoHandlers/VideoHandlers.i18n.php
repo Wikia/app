@@ -5,6 +5,7 @@
 
 $messages = array();
 $messages['en'] = array(
+	'wikia-videohandlers-desc' => 'Handling of videos withtin MediaWiki file architecture',
 	'videohandler' => 'Video handler',
 	'prototype-videohandler-extension-desc' => 'Prototype video handler',
 	'movieclips-videohandler-extension-desc' => 'MovieClips video handler',    
@@ -15,10 +16,11 @@ $messages['en'] = array(
 	'videohandler-unknown-title' => 'Unknown title',
 	'videohandler-video-details' => '$1 (provider: $2)',
 	'videohandler-category' => 'Videos',
-        'videohandler-description' => 'Description'
+    'videohandler-description' => 'Description'
 );
 
 $messages['qqq'] = array(
+	'wikia-videohandlers-desc' => 'Description of module used for credits page',
 	'videohandler-video-details' => 'Parameters:
 * $1 is a link to the video on its source page, with the label being the original title of the video
 * $2 is a link to the provider\'s homepage (e.g. [http://youtube.com/ youtube.com])',
