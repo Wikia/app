@@ -70,7 +70,7 @@ var Wall = $.createClass(Object, {
 			}, {nocache: true});
 			$('.voting-controls .vote').wikiaTooltip(function(el) {
 				var el = $(el);
-				if(el.hasClass('voted')) {
+				if(el.hasClass('voted') || el.hasClass('inprogress')) {
 					return $('#WallTooltipMeta .tooltip-votes-voted').text();
 				} else {
 					return $('#WallTooltipMeta .tooltip-votes-vote').text();
@@ -235,7 +235,6 @@ var Wall = $.createClass(Object, {
 				}
 				target.toggleClass('voted')
 					.removeClass('inprogress');
-				target.trigger('mouseenter.wikiaTooltip');
 			});
 		}
 	},
@@ -250,6 +249,7 @@ var Wall = $.createClass(Object, {
 		}
 		
 		target.addClass('inprogress');
+		target.trigger('mouseenter.wikiaTooltip');
 		
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',

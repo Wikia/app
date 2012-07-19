@@ -185,6 +185,10 @@ if(typeof jQuery.fn.wikiaTooltip === 'undefined'){
 							$('body').append(tooltip);
 							break;
 					}
+					
+					if($.isEmptyObject(tooltip)) {
+						return;	// return and do nothing if object is empty
+					}
 		
 					if(tooltip && !tooltip.hasClass(options.className)) {
 						tooltip.addClass(options.className);
