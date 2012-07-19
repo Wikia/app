@@ -835,11 +835,14 @@ JAVASCRIPT;
 	 * @return string - the javascript string
 	 **/
 	function getEssentialJS ( ) {
+		/**
+		 * Wikia change start
+		 */
 		$js = <<<JAVASCRIPT
 		var mapIcons = {};
 
 		function addLoadEvent(func) {
-			if (skin == 'monaco') {
+			if ( typeof skin != 'undefined' && skin == 'monaco' ) {
 				wgAfterContentAndJS.push(function() {
 					$(func);
 				});
@@ -848,6 +851,10 @@ JAVASCRIPT;
 			}
 		}
 JAVASCRIPT;
+
+		/**
+		 * Wikia change end
+		 */
 
 		// replace multiple spaces with a single space and strip newlines and tabs (make sure no tabs
 		// are used within a line of code!)
