@@ -193,7 +193,7 @@ class ImageTweaksHooks extends WikiaObject {
 				 */
 				$lazyImageAttribs = $imageAttribs;
 				$lazyImageAttribs['data-src'] = $lazyImageAttribs['src'];
-				$lazyImageAttribs['src'] = $this->wf->BlankImgUrl();
+				$lazyImageAttribs['src'] = $this->wg->BlankImgUrl;
 				$lazyImageAttribs['class'] = ( ( !empty( $lazyImageAttribs['class'] ) ) ? "{$lazyImageAttribs['class']} " : '' ) . self::WIKIAMOBILE_IMAGE_CLASSES;
 
 				$contents = Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$contents}</noscript>";
