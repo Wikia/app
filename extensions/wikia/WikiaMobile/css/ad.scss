@@ -1,6 +1,11 @@
 @import 'variables';
 @import 'mixins/transition';
 
+//variables
+$slotHeigth: 50px;
+$slotBorder: 2px;
+$slotColor: #666;
+
 #wkAdPlc {
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
@@ -10,17 +15,17 @@
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	background-color: rgba(0,0,0,.6);
+	background-color: $slotColor;
 	z-index: $top-layer-z-index;
 	-webkit-transition: opacity .75s, -webkit-transform .75s;
 
 	& > *:nth-last-child(n+2) {
 		width: 320px;
-		height: 50px;
-		max-height: 50px;
+		height: $slotHeigth;
+		max-height: $slotHeigth;
 		position: absolute !important;
 		margin-left: -160px !important;
-		bottom: 0;
+		bottom: $slotBorder;
 		left: 50%;
 	}
 
@@ -28,10 +33,18 @@
 	    opacity: 0;
 	 	-webkit-transform: translate3d(0,75px,0);
 	}
+
+	&.show {
+		height: $slotHeigth + ($slotBorder * 2) !important;
+	}
+
+	&.fixed {
+		position: fixed;
+	}
 }
 
 #wkAdCls {
-	background-color: rgba(0,0,0,.6);
+	background-color: $slotColor;
 	border-radius: 5px 0 0 0;
 	color: white;
 	text-transform: uppercase;
@@ -43,6 +56,7 @@
 	top: -20px;
 	display: none;
 
+	//TODO: @Jakub, what is this exactly?
 	&:after {
 		content: '';
 		position: absolute;
@@ -51,7 +65,7 @@
 		height: 40px;
 		width: 100%;
 	}
-	
+
 	&.show {
 		display: block;
 	}
