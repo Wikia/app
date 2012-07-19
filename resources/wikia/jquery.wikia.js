@@ -569,13 +569,22 @@ $(function() {
 	window.wgWikiaDOMReady = true;
 });
 
+var $window = $(window);
+
 // page loading time: onLoad
-$(window).bind('load', function() {
+$window.bind('load', function() {
 	if (typeof wgNow != 'undefined') {
 		var loadTime = (new Date()).getTime() - wgNow.getTime();
 		$().log('window onload after ' + loadTime + ' ms', window.skin);
 	}
 });
+
+// The 'scrollstop' event will fire 100ms after a user stops scrolling.
+// This event should be used in place of scroll whenever possible.
+// See: http://ejohn.org/blog/learning-from-twitter/
+$window.on( 'scroll', $.debounce( 100, function( event ) {
+	$window.trigger( 'scrollstop', [ event ] );
+}));
 
 // These functions are deprecated, but we will keep aliases around for old code and user scripts
 $.toJSON = JSON.stringify; /* JSlint ignore */
