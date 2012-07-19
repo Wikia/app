@@ -62,6 +62,7 @@ $wgResourceModules['wikia.yui'] = array(
 $wgResourceModules['wikia.monobook'] = array(
 	'styles' => array(
 		'skins/wikia/shared.css',
+		'skins/wikia/css/Monobook.css',
 		'resources/wikia/libraries/yui/container/assets/container.css',
 		'resources/wikia/libraries/yui/logger/assets/logger.css',
 		'resources/wikia/libraries/yui/tabview/assets/tabview.css',
