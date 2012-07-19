@@ -13,11 +13,6 @@ class RelatedPagesController extends WikiaController {
 
 		$relatedPages = RelatedPages::getInstance();
 
-		// skip, if users uses monobook fb#38076
-		if( $this->app->checkSkin( 'monobook' ) ) {
-			$this->skipRendering = true;
-		}
-
 		// check for mainpage
 		if( Wikia::isMainPage() ) {
 			$this->skipRendering = true;
@@ -46,7 +41,8 @@ class RelatedPagesController extends WikiaController {
 		if( !$this->skipRendering ) {
 			$mKey = wfMemcKey('mOasisRelatedPages', $wgTitle->getArticleId());
 			$this->pages = $wgMemc->get($mKey);
-			if (empty($this->pages)) {
+			$this->srcAttrName = $this->app->checkSkin( 'monobook' ) ? 'src' : 'data-src';
+			if( empty($this->pages) ) {
 				$this->pages = $relatedPages->get( $wgTitle->getArticleId() );
 				if(count($this->pages) > 0) {
 					$wgMemc->set($mKey, $this->pages, 3 * 3600);
