@@ -1214,7 +1214,7 @@ class CityListPager {
 		$sth = $dbr->select(
 			array( "city_domains" ),
 			array( "distinct city_id" ),
-			array( "city_domain " . $dbr->buildLike( $dbs->anyString(), $this->mPart, $dbs->anyString() ) ),
+			array( "city_domain " . $dbr->buildLike( $dbr->anyString(), $this->mPart, $dbs->anyString() ) ),
 			__METHOD__,
 			array(
 				"ORDER BY" => "city_id",
