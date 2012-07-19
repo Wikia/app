@@ -256,21 +256,6 @@ $.fn.hasParent = function(selector) {
 	return this.first().parent().closest(selector).exists();
 }
 
-// macbre: page loading times (onDOMready / window onLoad)
-$(function() {
-	if (typeof wgNow != 'undefined') {
-		var loadTime = (new Date()).getTime() - wgNow.getTime();
-		$().log('DOM ready after ' + loadTime + ' ms', window.skin);
-	}
-});
-
-$(window).bind('load', function() {
-	if (typeof wgNow != 'undefined') {
-		var loadTime = (new Date()).getTime() - wgNow.getTime();
-		$().log('window onload after ' + loadTime + ' ms', window.skin);
-	}
-});
-
 /**
  * @author Marcin Maciejewski <marcin@wikia-inc.com>
  *
@@ -567,12 +552,29 @@ $.openPopup = function(url, name, moduleName, width, height) {
 	}
 }
 
+// Anything that needs DOM ready should go in here
 $(function() {
+	// page loading time: onDomReady
+	if (typeof wgNow != 'undefined') {
+		var loadTime = (new Date()).getTime() - wgNow.getTime();
+		$().log('DOM ready after ' + loadTime + ' ms', window.skin);
+	}
+
 	//beacon_id cookie
 	if ( window.beacon_id ) {
 		$.cookies.set( 'wikia_beacon_id', window.beacon_id, { path: wgCookiePath, domain: wgCookieDomain });
 	}
-	window.wgWikiaDOMReady = true;	// for selenium tests
+
+	// For selenium tests
+	window.wgWikiaDOMReady = true;
+});
+
+// page loading time: onLoad
+$(window).bind('load', function() {
+	if (typeof wgNow != 'undefined') {
+		var loadTime = (new Date()).getTime() - wgNow.getTime();
+		$().log('window onload after ' + loadTime + ' ms', window.skin);
+	}
 });
 
 // These functions are deprecated, but we will keep aliases around for old code and user scripts
