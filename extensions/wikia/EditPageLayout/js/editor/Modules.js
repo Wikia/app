@@ -60,7 +60,7 @@
 
 		// can be overriden if markup has to be created in some other way
 		renderHtml: function() {
-			return $.tmpl(this.getTemplate(),this.getData());
+			return Mustache.render(this.getTemplate(),this.getData());
 		},
 
 		// renders the element and returns it as a jQuery wrapped object

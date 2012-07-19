@@ -7,7 +7,7 @@
 		getItems: function() {
 			return this.items;
 		},
-		template: '<span class="<%=className%>"><% for ( var i = 0; i < elements.length; i++ ) { %><%=elements[i]%><% } %></span>',
+		template: '<span class="{{className}}">{{#elements}}{{{.}}}{{/elements}}</span>',
 		getData: function() {
 			var items = this.getItems(),
 				elements = [];
