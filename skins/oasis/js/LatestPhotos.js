@@ -14,7 +14,7 @@ var UploadPhotos = {
 		if(evt) {
 			evt.preventDefault();
 		}
-		
+
 		$.nirvana.sendRequest({
 			controller: 'UploadPhotos',
 			method: 'Index',
@@ -24,6 +24,7 @@ var UploadPhotos = {
 				cb: wgCurRevisionId,
 				uselang: wgUserLanguage
 			},
+			type: 'get',
 			callback: function(html) {
 				// pre-cache dom elements
 				UploadPhotos.d = $(html).makeModal(UploadPhotos.doptions);
@@ -44,13 +45,13 @@ var UploadPhotos = {
 				UploadPhotos.dfcache = {};
 				UploadPhotos.wpLicense = $('#wpLicense');
 				UploadPhotos.wpLicenseTarget = $('#mw-license-preview');
-	
+
 				// event handlers
 				UploadPhotos.filepath.change(UploadPhotos.filePathSet);
 				UploadPhotos.destfile.blur(UploadPhotos.destFileSet);
 				UploadPhotos.advanced.click(function(evt) {
 					evt.preventDefault();
-	
+
 					//set correct text for link and arrow direction
 					if (UploadPhotos.options.is(":visible")) {
 						UploadPhotos.advanced.text(UploadPhotos.advanced.data("more"));
@@ -59,7 +60,7 @@ var UploadPhotos = {
 						UploadPhotos.advanced.text(UploadPhotos.advanced.data("fewer"));
 						UploadPhotos.advancedChevron.addClass("up");
 					}
-	
+
 					UploadPhotos.options.slideToggle("fast");
 				});
 				UploadPhotos.destfile.keyup(function() {
@@ -69,7 +70,7 @@ var UploadPhotos = {
 					UploadPhotos.dftimer = setTimeout(UploadPhotos.destFileSet, 500);
 				});
 				UploadPhotos.wpLicense.change(function() {
-	
+
 					var license = $(this).val();
 					if(license == ""){
 						// user selected first option or a disabled option
@@ -77,9 +78,9 @@ var UploadPhotos = {
 						UploadPhotos.wpLicenseTarget.html("");
 						return;
 					}
-	
+
 					var title = UploadPhotos.destfile.val() || 'File:Sample.jpg';
-	
+
 					$.get(
 						mw.util.wikiScript('api'),
 						{
@@ -95,11 +96,11 @@ var UploadPhotos = {
 						"json"
 					);
 				});
-	
+
 				$.tracker.byStr('action/uploadphoto/dialog');
 			}
 		});
-		
+
 		if (!UploadPhotos.libinit) {
 			$.loadJQueryAIM();
 			UploadPhotos.libinit = true;
