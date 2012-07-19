@@ -45,15 +45,22 @@ class MediaToolController extends WikiaController {
 				$item = F::build('MediaToolItem');
 
 				$item->setIsVideo(true);
-				$item->setTitleText($wrapper->getTitle());
-				$item->setUploader($this->wg->User);
-				$item->setThumbUrl($wrapper->getThumbnailUrl());
-				$item->setThumbHtml(false);
+				if($wrapper instanceof WikiaApiWrapper) {
+					$item->setTitle($wrapper->getFile()->getTitle());
+				}
+				else {
+					$item->setTitleText($wrapper->getTitle());
+					$item->setUploader($this->wg->User);
+					$item->setThumbUrl($wrapper->getThumbnailUrl());
+					$item->setThumbHtml(false);
+				}
+
 				$item->setRemoteUrl($videoUrl);
 				$item->setDuration($this->helper->secToMMSS($metaData['duration']));
 
 				$data = $item->toArray();
 				$data['status'] = self::RESPONSE_STATUS_OK;
+
 			}
 			else {
 				$data['status'] = self::RESPONSE_STATUS_ERROR;
