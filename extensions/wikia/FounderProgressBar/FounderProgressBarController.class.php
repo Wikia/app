@@ -448,6 +448,9 @@ class FounderProgressBarController extends WikiaController {
 			if (isset($activityFull['list'][$task_id])) {
 				$bonusTask["task_count"] = $activityFull['list'][$task_id]["task_count"];
 				$bonusTask["task_completed"] = $activityFull['list'][$task_id]["task_completed"];
+				if(is_int($activityFull['list'][$task_id]["task_timestamp"])) {
+					$activityFull['list'][$task_id]["task_timestamp"] = strtotime($activityFull['list'][$task_id]["task_timestamp"]);
+				}
 				$bonusTask["task_timestamp"] = $this->wf->TimeFormatAgo($activityFull['list'][$task_id]["task_timestamp"]);
 				$bonusTask["task_locked"] = 0;	
 			} else {				
