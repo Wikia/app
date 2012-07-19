@@ -243,9 +243,10 @@ class RepoGroup {
 		}
 
 		$result = $this->localRepo->findBySha1( $hash );
-		foreach ( $this->foreignRepos as $repo ) {
-			$result = array_merge( $result, $repo->findBySha1( $hash ) );
-		}
+		// temporary - disabling feature to test load on video151
+		//foreach ( $this->foreignRepos as $repo ) {
+		//	$result = array_merge( $result, $repo->findBySha1( $hash ) );
+		//}
 		return $result;
 	}
 
