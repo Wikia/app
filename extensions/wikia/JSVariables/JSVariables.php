@@ -22,6 +22,11 @@ function wfJSVariablesTopScripts(Array $vars) {
 		$vars['wgMedusaSlot'] = 'slot' . $wgMedusaSlot;
 	}
 
+	// c&p from OutputPage::getJSVars with an old 1.16 name
+	$title = F::app()->wg->Title;
+	$lang = $title->getPageLanguage();
+	$vars['wgContentLanguage'] = $lang->getCode();
+	
 	return true;
 }
 
