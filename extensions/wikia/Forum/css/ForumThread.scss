@@ -4,7 +4,7 @@
  * The functionality of Forum Thread is exactly the same as Wall.
  * Forum Thread is a css haxx of Wall Thread.
  */
-.Wall.Thread {
+#Wall.Thread {
 	.avatar {
 		border: 0;
 	}
@@ -34,9 +34,10 @@
 			.new-reply {
 				.speech-bubble-avatar {
 					display: block;
+					float: left;
 				}
 				.speech-bubble-message {
-					margin-left: 40px;
+					margin-left: 35px;
 				}
 			}
 		}
