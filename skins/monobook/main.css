@@ -1168,6 +1168,10 @@ div.mw-lag-warn-high {
 	position: absolute;
 }
 
+#positioned_elements .modalWrapper .neutral.modalToolbar {
+	float: right;
+}
+
 #positioned_elements .modalWrapper .close {
 	background-color: black;
 	cursor: pointer;
