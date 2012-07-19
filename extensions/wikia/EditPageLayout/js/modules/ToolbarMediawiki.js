@@ -11,7 +11,7 @@
 
 		toolbarBuilt: false,
 
-		template: '<div class="cke_toolbar_source" id="cke_toolbar_source_<%= id %>"></div>',
+		template: '<div class="cke_toolbar_source" id="cke_toolbar_source_{{id}}"></div>',
 
 		getData: function() {
 			return {

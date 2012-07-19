@@ -10,9 +10,10 @@
 			'Signature'
 		],
 		storageEntry: 'wgFormatToolbarExpandState',
+		
 		buttonsTemplate: '<div class="cke_toolbar_expand">' +
-			'<a class="expand"><label><%=more%></label><span>+</span></a>' +
-			'<a class="collapse"><label><%=less%></label><span>-</span></a>' +
+			'<a class="expand"><label>{{more}}</label><span>+</span></a>' +
+			'<a class="collapse"><label>{{less}}</label><span>-</span></a>' +
 			'</div>',
 
 		afterAttach: function() {
@@ -21,7 +22,7 @@
 				more: $.msg('editpagelayout-more'),
 				less: $.msg('editpagelayout-less')
 			};
-			this.buttons = $($.tmpl(this.buttonsTemplate, buttonsData));
+			this.buttons = $(Mustache.render(this.buttonsTemplate, buttonsData));
 			this.buttons.insertAfter(this.el);
 
 			this.expandButton = this.buttons.find('.expand');

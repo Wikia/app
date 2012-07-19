@@ -5,7 +5,7 @@
 	WE.modules.License = $.createClass(WE.modules.base,{
 		modes: true,
 		headerClass: 'license',
-		template: '<p class="<%=wrapperClass%>"><%=text%></p>',
+		template: '<p class="{{wrapperClass}}">{{{text}}}</p>',
 		defaultLicense: 'CC-BY-SA',
 		getData: function() {
 			var icons = '',

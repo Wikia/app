@@ -329,7 +329,7 @@ class EditPageLayoutHelper {
 		return array(
 			// >> 3rd party libraries
 			'resources/wikia/libraries/jquery/md5/jquery.md5.js',
-			'resources/wikia/libraries/jquery/tmpl/jquery.tmpl.js',
+			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/uniqueId/jquery.uniqueId.js',
 			// >> editor stack loaders and configurers
 			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
