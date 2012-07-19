@@ -274,11 +274,20 @@ $config['wikiamobile_js_head'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
+		//libraries/frameworks
 		'//resources/wikia/libraries/zepto/zepto-0.8.js',
 		'//resources/wikia/libraries/modil/modil.js',
+
+		//core modules
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/log.js',
+
+		//feature detection (it's here since it's required by advertisement core)
+		'//resources/wikia/libraries/modernizr/modernizr.wikiamobile.js',
+		'//resources/wikia/libraries/modernizr/feature-detects/positionfixed.wikiamobile.js',
+
+		//advertisement core
 		'//extensions/wikia/AdEngine/AdConfig.js'
 	)
 );
@@ -307,11 +316,13 @@ $config['wikiamobile_js_body_full'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'#group_wikiamobile_js_body_minimal',
-		//feature detection and polyfills go second
-		'//resources/wikia/libraries/modernizr/modernizr.wikiamobile.js',
-		'//resources/wikia/polyfills/outerhtml.js',
-		'//resources/wikia/libraries/modernizr/feature-detects/positionfixed.wikiamobile.js',
+
+		//feature detection
 		'//resources/wikia/libraries/modernizr/feature-detects/overflow.wikiamobile.js',
+
+		//polyfills
+		'//resources/wikia/polyfills/outerhtml.js',
+
 
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
