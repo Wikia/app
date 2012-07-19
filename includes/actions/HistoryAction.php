@@ -79,7 +79,7 @@ class HistoryAction extends FormlessAction {
 
 		/* Wikia change @author Tomek */
 		if( !wfRunHooks('BeforePageHistory', array(&$this->page, &$wgOut)) ) {
-			return true;
+			return;
 		}
 		/* End of Wikia change */
 
