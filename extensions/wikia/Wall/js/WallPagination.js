@@ -8,7 +8,7 @@ Wall.Pagination = $.createClass(Observable, {
 		this.model = model;
 
 		this.$wall = $('#Wall');
-		this.$page = this.$wall.find('.comments');
+		this.$page = this.$wall.find('.comments, .ThreadList');
 
 		this.$wall.on('click', '.Pagination a', this.proxy(this.switchPage));
 
@@ -27,6 +27,7 @@ Wall.Pagination = $.createClass(Observable, {
 
 	onPageLoaded: function(page, pagination) {
 		this.scrollUp();
+		
 		this.$page.html(page.html()).animate({ opacity: 1 }, 'slow');
 		this.$wall.find('.Pagination').html(pagination.html());
 		this.fire('afterPageLoaded');			

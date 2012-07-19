@@ -15,7 +15,7 @@ Wall.BackendBridge = $.createClass(Observable, {
 			},
 			callback: this.proxy(function(data) {
 				var html = data.html,
-					page = $('.comments', html),
+					page = $('.comments, .ThreadList', html),
 					pagination = $('.Pagination', html);
 
 				if ($.isFunction(callback)) {

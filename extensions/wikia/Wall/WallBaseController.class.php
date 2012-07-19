@@ -331,7 +331,7 @@ class WallBaseController extends ArticleCommentsController {
 		$wall->setSorting($this->getSortingSelected() );
 		
 		$this->threads = $wall->getThreads($page);
-
+		
 		$this->countComments = $wall->getThreadCount();
 		
 		$this->title = $this->wg->Title;
