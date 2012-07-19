@@ -244,7 +244,7 @@ class JSMessages {
 	 *   - JS object in <head> section of the page (INLINE mode)
 	 *   - JS requested via <script> tag at the bottom of the page (EXTERNAL mode)
 	 */
-	public function onMakeGlobalVariablesScript($vars) {
+	public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin) {
 		$this->app->wf->ProfileIn(__METHOD__);
 		$this->log(__METHOD__, 'preparing list of inline messages...');
 
@@ -261,6 +261,7 @@ class JSMessages {
 		$this->log(__METHOD__, 'preparing list of external packages...');
 
 		$url = $this->getExternalPackagesUrl();
+
 		if ($url != "") {
 			// request a script
 			$this->app->wg->Out->addScript(Html::linkedScript($url));
@@ -269,7 +270,7 @@ class JSMessages {
 		$this->app->wf->ProfileOut(__METHOD__);
 		return true;
 	}
-
+	
 	/**
 	 * Return the URL of the ajax-call to load all of the JS messages packages (enqueued as "external")
 	 *
