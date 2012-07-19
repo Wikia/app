@@ -334,6 +334,36 @@ WikiaTracker._track = function(page, profile, sample, events) {
 	return true;
 };
 
+// TODO refactor back into trackEvent
+WikiaTracker.trackAdEvent = function(eventName, data, trackingMethod) {
+		var logGroup = 'WikiaTracker.trackAdEvent',
+		gaqArgs = [];
+
+		var ga_category = data['ga_category'],
+			ga_action = data['ga_action'],
+			ga_label = data['ga_label'],
+			ga_value = data['ga_value'];
+
+		//GA parameters need to be enqueued in the correct order
+		if(ga_category)
+			gaqArgs.push(ga_category);
+
+		if(ga_action)
+			gaqArgs.push(ga_action);
+
+		if(ga_label)
+			gaqArgs.push(ga_label);
+
+		if(ga_value)
+			gaqArgs.push(ga_value);
+
+		if(trackingMethod == 'ga' || trackingMethod == 'both') {
+			Wikia.log(eventName + ' ' + gaqArgs.join('/') + ' [GA track]', 'info', logGroup);
+
+			window.gaTrackAdEvent(ga_category, ga_action, ga_label, ga_value, true);
+		}
+};
+
 WikiaTracker._simpleHash = function(s, tableSize) {
 		var i, hash = 0;
 		for (i = 0; i < s.length; i++) {
