@@ -37,18 +37,21 @@ var GlobalModal = {
 	},
 
 	showAdopt: function() {
-		$.get(wgScript, {
-			action: 'ajax',
-			rs: 'moduleProxy',
-			moduleName: 'AutomaticWikiAdoption',
-			actionName: 'AdoptWelcomeDialog',
-			outputType: 'html',
-			cb: wgCurRevisionId
-		}, function(html) {
-			$(html).makeModal({width: 500, height: 400});
+		$.when(
+			$.getResources([$.getSassCommonURL('/extensions/wikia/AutomaticWikiAdoption/css/AutomaticWikiAdoption.scss')]),
+			$.nirvana.sendRequest({
+				controller: 'AutomaticWikiAdoption',
+				method: 'AdoptWelcomeDialog',
+				format: 'html',
+				data: {
+					rs: 'moduleProxy',
+					cb: wgCurRevisionId
+				}
+			})
+		).then(function(sass, nirvanaData) {
+			var html = nirvanaData[0] // while using .when/.then pattern ajax returns jQuery XHR object and html is at index [0] 
+			$(html).makeModal({width: 500, height: 400});  
 		});
-		var sassUrl = $.getSassCommonURL('/extensions/wikia/AutomaticWikiAdoption/css/AutomaticWikiAdoption.scss');
-		$.getCSS(sassUrl);
 	}
 }
 
