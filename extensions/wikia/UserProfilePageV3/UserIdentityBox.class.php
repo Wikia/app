@@ -126,8 +126,14 @@ class UserIdentityBox {
 
 			$data = call_user_func(array($this, $dataType), $data);
 
+			if(!( $iEdits || $this->shouldDisplayFullMasthead() )) { 
+				$data = $this->getEmptyData($data); 
+			} 
+			
 			$data = $this->getInternationalizedRegistrationDate($wikiId, $data);
-			$data['edits'] = $this->app->wg->Lang->formatNum($data['edits']);
+			if(!empty($data['edits'])) {
+				$data['edits'] = $this->app->wg->Lang->formatNum($data['edits']);				
+			}
 
 			//other data operations
 			$this->getUserGroup($data);
