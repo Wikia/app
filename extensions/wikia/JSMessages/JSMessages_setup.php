@@ -27,7 +27,7 @@ $app->registerClass('JSMessagesHelper', $dir . '/JSMessagesHelper.class.php');
 $app->registerClass('JSMessagesController', $dir . '/JSMessagesController.class.php');
 
 // hooks
-$app->registerHook('MakeGlobalVariablesScript', 'JSMessages', 'onMakeGlobalVariablesScript');
+$app->registerHook('WikiaSkinTopScripts', 'JSMessages', 'onWikiaSkinTopScripts');
 $app->registerHook('MessageCacheReplace', 'JSMessagesHelper', 'onMessageCacheReplace');
 
 // register instances

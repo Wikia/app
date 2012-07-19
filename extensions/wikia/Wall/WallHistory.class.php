@@ -58,14 +58,21 @@ class WallHistory extends WikiaModel {
 		if(!($feed instanceof WallNotificationAdminEntity)) {
 			return false;	
 		}
+		
+		$title = Title::newFromId($feed->data->message_id); 
+		
+		if(empty($title)) {
+			return false;
+		}
+		
 		$this->internalAdd( 
 			$feed->data->user_wallowner_id, 
 			'', //it is always loged in user 
 			$feed->data->user_removing_id,
 			'',
 			$feed->data->is_reply,
-			$feed->data->title_id,
-			$feed->data->article_title_ns,
+			$feed->data->message_id,
+			$title->getNamespace(),
 			$feed->data->parent_id,
 			$feed->data->title,
 			$action, 

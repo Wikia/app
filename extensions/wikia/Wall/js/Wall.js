@@ -420,77 +420,30 @@ var Wall = $.createClass(Object, {
 			}
 		}
 
-		if(this.isMonobook) {
-			this.confirmActionMonobook(id, mode, msg, target, wallMsg, target);
-		} else {
-			$.confirm({
-				title: title,
-				content: msg,
-				cancelMsg: cancelmsg,
-				okMsg: okmsg,
-				width: 400,
-				onOk: this.proxy(function() {
-					var formdata = $('.modalWrapper form').serializeArray();
-					this.doAction(id, mode, wallMsg, target, formdata );
-				})
-			});
+		$.confirm({
+			title: title,
+			content: msg,
+			cancelMsg: cancelmsg,
+			okMsg: okmsg,
+			width: 400,
+			onOk: this.proxy(function() {
+				var formdata = $('.modalWrapper form').serializeArray();
+				this.doAction(id, mode, wallMsg, target, formdata );
+			})
+		});
 
-			if(mode != 'rev') {
+		if(mode != 'rev') {
+			$('#WikiaConfirmOk').attr('disabled', 'disabled');
+		}
+
+		$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
+			var target = $(e.target);
+			if(target.val().length > 0) {
+				$('#WikiaConfirmOk').removeAttr('disabled');
+			} else {
 				$('#WikiaConfirmOk').attr('disabled', 'disabled');
 			}
-
-			$('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
-				var target = $(e.target);
-				if(target.val().length > 0) {
-					$('#WikiaConfirmOk').removeAttr('disabled');
-				} else {
-					$('#WikiaConfirmOk').attr('disabled', 'disabled');
-				}
-			});
-		}
-	},
-
-	confirmActionMonobook: function(id, mode, msg, target, wallMsg, formdata) {
-		if( mode == 'rev' ) {
-			var answer = confirm(msg);
-			if(answer){
-				this.doAction(id, 'rev', wallMsg);
-			}
-		} if( mode == 'restore' || mode == 'admin' || mode == 'adminnotify' || mode == 'remove' || mode == 'removenotify' ) {
-			var formdata = [];
-
-			if(mode == 'adminnotify' || mode == 'removenotify') {
-				formdata.push({name:'notify-admin', 'value': true});
-			} else {
-				formdata.push({name:'notify-admin', 'value': false});
-			}
-
-			do {
-				var reply = prompt( $.msg('wall-confirm-monobook-' + mode.replace('notify','')) , "");
-				if(reply === null) {
-					return ;
-				}
-
-				if(reply.length < 1 && mode !=  'restore') {
-					alert( $.msg('wall-confirm-monobook-lack-of-reason') );
-				} else {
-					break;
-				}
-
-			} while(1);
-
-			formdata.push({name:'reason', 'value': reply});
-
-			if(mode == 'adminnotify'){
-				mode = 'admin';
-			}
-
-			if(mode == 'removenotify'){
-				mode = 'remove';
-			}
-
-			this.doAction(id, mode, wallMsg, target, formdata);
-		}
+		});
 	},
 
 	/*

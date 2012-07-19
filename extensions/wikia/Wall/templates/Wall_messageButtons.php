@@ -64,12 +64,10 @@
 				 
 				<? if( $canRemove ): ?>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="remove-message" data-mode="remove"><?= wfMsg('wall-message-remove'); ?> </a>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="remove-message" data-mode="removenotify"><?= wfMsg('wall-message-notify'); ?> </a>
 				<? endif; ?>
 
 				<? if( $canAdminDelete ): ?>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="admin-delete-message" data-mode="admin"><?= wfMsg('wall-message-delete'); ?> </a>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="admin-delete-message" data-mode="adminnotify"><?= wfMsg('wall-message-notify'); ?> </a>
 				<?php endif;?>
 
 				<?php if( $canDelete ): ?> 
