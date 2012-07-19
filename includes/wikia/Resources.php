@@ -66,5 +66,6 @@ $wgResourceModules['wikia.monobook'] = array(
 		'resources/wikia/libraries/yui/container/assets/container.css',
 		'resources/wikia/libraries/yui/logger/assets/logger.css',
 		'resources/wikia/libraries/yui/tabview/assets/tabview.css',
+		'extensions/wikia/RelatedPages/RelatedPages.monobook.css',
 	)
 );

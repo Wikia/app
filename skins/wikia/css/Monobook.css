@@ -264,7 +264,7 @@ body.ajax * {
 }
 
 /* Hide features - #139478, #139477 */
-.RelatedPagesModule, .category-gallery {
+.category-gallery {
 	display: none;
 }
 
