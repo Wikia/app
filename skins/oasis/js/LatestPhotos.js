@@ -14,90 +14,92 @@ var UploadPhotos = {
 		if(evt) {
 			evt.preventDefault();
 		}
-
-		$.get(wgScript, {
-			action: 'ajax',
-			rs: 'moduleProxy',
-			moduleName: 'UploadPhotos',
-			actionName: 'Index',
-			outputType: 'html',
-			title: wgPageName,
-			cb: wgCurRevisionId,
-			uselang: wgUserLanguage
-		}, function(html) {
-			// pre-cache dom elements
-			UploadPhotos.d = $(html).makeModal(UploadPhotos.doptions);
-			UploadPhotos.destfile = UploadPhotos.d.find("input[name=wpDestFile]");
-			UploadPhotos.filepath = UploadPhotos.d.find("input[name=wpUploadFile]");
-			UploadPhotos.status = UploadPhotos.d.find("div.status");
-			UploadPhotos.advanced = UploadPhotos.d.find(".advanced a");
-			UploadPhotos.advancedChevron = UploadPhotos.d.find(".advanced .chevron");
-			UploadPhotos.options = UploadPhotos.d.find(".options");
-			UploadPhotos.uploadbutton = UploadPhotos.d.find("input[type=submit]");
-			UploadPhotos.step1 = UploadPhotos.d.find(".step-1");
-			UploadPhotos.step2 = UploadPhotos.d.find(".step-2");
-			UploadPhotos.conflict = UploadPhotos.d.find(".conflict");
-			UploadPhotos.ignore = UploadPhotos.d.find("input[name=wpIgnoreWarning]");
-			UploadPhotos.override = UploadPhotos.d.find(".override");
-			UploadPhotos.overrideinput = UploadPhotos.override.find("input");
-			UploadPhotos.ajaxwait = UploadPhotos.d.find(".ajaxwait");
-			UploadPhotos.dfcache = {};
-			UploadPhotos.wpLicense = $('#wpLicense');
-			UploadPhotos.wpLicenseTarget = $('#mw-license-preview');
-
-			// event handlers
-			UploadPhotos.filepath.change(UploadPhotos.filePathSet);
-			UploadPhotos.destfile.blur(UploadPhotos.destFileSet);
-			UploadPhotos.advanced.click(function(evt) {
-				evt.preventDefault();
-
-				//set correct text for link and arrow direction
-				if (UploadPhotos.options.is(":visible")) {
-					UploadPhotos.advanced.text(UploadPhotos.advanced.data("more"));
-					UploadPhotos.advancedChevron.removeClass("up");
-				} else {
-					UploadPhotos.advanced.text(UploadPhotos.advanced.data("fewer"));
-					UploadPhotos.advancedChevron.addClass("up");
-				}
-
-				UploadPhotos.options.slideToggle("fast");
-			});
-			UploadPhotos.destfile.keyup(function() {
-				if(UploadPhotos.dftimer) {
-					clearTimeout(UploadPhotos.dftimer);
-				}
-				UploadPhotos.dftimer = setTimeout(UploadPhotos.destFileSet, 500);
-			});
-			UploadPhotos.wpLicense.change(function() {
-
-				var license = $(this).val();
-				if(license == ""){
-					// user selected first option or a disabled option
-					$(this).attr('selectedIndex', 0);
-					UploadPhotos.wpLicenseTarget.html("");
-					return;
-				}
-
-				var title = UploadPhotos.destfile.val() || 'File:Sample.jpg';
-
-				$.get(
-					mw.util.wikiScript('api'),
-					{
-						action: 'parse',
-						text: '{{' + license + '}}',
-						title: title,
-						prop: 'text',
-						format: 'json'
-					},
-					function(data) {
-						UploadPhotos.wpLicenseTarget.html(data.parse.text['*']);
-					},
-					"json"
-				);
-			});
-
-			$.tracker.byStr('action/uploadphoto/dialog');
+		
+		$.nirvana.sendRequest({
+			controller: 'UploadPhotos',
+			method: 'Index',
+			format: 'html',
+			data: {
+				title: wgPageName,
+				cb: wgCurRevisionId,
+				uselang: wgUserLanguage
+			},
+			callback: function(html) {
+				// pre-cache dom elements
+				UploadPhotos.d = $(html).makeModal(UploadPhotos.doptions);
+				UploadPhotos.destfile = UploadPhotos.d.find("input[name=wpDestFile]");
+				UploadPhotos.filepath = UploadPhotos.d.find("input[name=wpUploadFile]");
+				UploadPhotos.status = UploadPhotos.d.find("div.status");
+				UploadPhotos.advanced = UploadPhotos.d.find(".advanced a");
+				UploadPhotos.advancedChevron = UploadPhotos.d.find(".advanced .chevron");
+				UploadPhotos.options = UploadPhotos.d.find(".options");
+				UploadPhotos.uploadbutton = UploadPhotos.d.find("input[type=submit]");
+				UploadPhotos.step1 = UploadPhotos.d.find(".step-1");
+				UploadPhotos.step2 = UploadPhotos.d.find(".step-2");
+				UploadPhotos.conflict = UploadPhotos.d.find(".conflict");
+				UploadPhotos.ignore = UploadPhotos.d.find("input[name=wpIgnoreWarning]");
+				UploadPhotos.override = UploadPhotos.d.find(".override");
+				UploadPhotos.overrideinput = UploadPhotos.override.find("input");
+				UploadPhotos.ajaxwait = UploadPhotos.d.find(".ajaxwait");
+				UploadPhotos.dfcache = {};
+				UploadPhotos.wpLicense = $('#wpLicense');
+				UploadPhotos.wpLicenseTarget = $('#mw-license-preview');
+	
+				// event handlers
+				UploadPhotos.filepath.change(UploadPhotos.filePathSet);
+				UploadPhotos.destfile.blur(UploadPhotos.destFileSet);
+				UploadPhotos.advanced.click(function(evt) {
+					evt.preventDefault();
+	
+					//set correct text for link and arrow direction
+					if (UploadPhotos.options.is(":visible")) {
+						UploadPhotos.advanced.text(UploadPhotos.advanced.data("more"));
+						UploadPhotos.advancedChevron.removeClass("up");
+					} else {
+						UploadPhotos.advanced.text(UploadPhotos.advanced.data("fewer"));
+						UploadPhotos.advancedChevron.addClass("up");
+					}
+	
+					UploadPhotos.options.slideToggle("fast");
+				});
+				UploadPhotos.destfile.keyup(function() {
+					if(UploadPhotos.dftimer) {
+						clearTimeout(UploadPhotos.dftimer);
+					}
+					UploadPhotos.dftimer = setTimeout(UploadPhotos.destFileSet, 500);
+				});
+				UploadPhotos.wpLicense.change(function() {
+	
+					var license = $(this).val();
+					if(license == ""){
+						// user selected first option or a disabled option
+						$(this).attr('selectedIndex', 0);
+						UploadPhotos.wpLicenseTarget.html("");
+						return;
+					}
+	
+					var title = UploadPhotos.destfile.val() || 'File:Sample.jpg';
+	
+					$.get(
+						mw.util.wikiScript('api'),
+						{
+							action: 'parse',
+							text: '{{' + license + '}}',
+							title: title,
+							prop: 'text',
+							format: 'json'
+						},
+						function(data) {
+							UploadPhotos.wpLicenseTarget.html(data.parse.text['*']);
+						},
+						"json"
+					);
+				});
+	
+				$.tracker.byStr('action/uploadphoto/dialog');
+			}
 		});
+		
 		if (!UploadPhotos.libinit) {
 			$.loadJQueryAIM();
 			UploadPhotos.libinit = true;
