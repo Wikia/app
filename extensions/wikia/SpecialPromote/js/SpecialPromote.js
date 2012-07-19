@@ -163,7 +163,7 @@ SpecialPromote.prototype = {
 		addPhotoBtn.parent().removeClass('error');
 
 		try {
-			this.getUploadForm({uploadType: uploadType,lang: window.wgUserLang});
+			this.getUploadForm({uploadType: uploadType,lang: window.wgUserLanguage});
 		}
 		catch(error) {
 			this.errorHandler(error);
@@ -181,7 +181,7 @@ SpecialPromote.prototype = {
 			this.getUploadForm({
 				uploadType: target.data('image-type'),
 				imageIndex: target.data('image-index'),
-				lang: window.wgUserLang
+				lang: window.wgUserLanguage
 			});
 		}
 		catch(error) {
