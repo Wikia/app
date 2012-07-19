@@ -36,7 +36,8 @@ define('ads', ['events'], function(ev){
 				adExist = function(){
 					if(adSlot.childElementCount > 3){
 						close.className = 'show';
-						adSlotStyle.height = '50px';
+						adSlot.className += ' show';
+
 						close.addEventListener(click, function() {
 							//track('ad/close');
 							adSlot.className += ' anim';
@@ -45,7 +46,7 @@ define('ads', ['events'], function(ev){
 						}, false);
 
 						if(Modernizr.positionfixed){
-							adSlotStyle.position = 'fixed';
+							adSlot.className += ' fixed';
 						}else{
 							w.addEventListener('scroll', moveSlot);
 						}
