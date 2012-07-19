@@ -14,35 +14,35 @@ $messages['en'] = array(
 	'userlogin-remembermypassword' => 'Stay logged in',
 	'userlogin-error-noname' => 'Oops, please fill in the username field.',
 	'userlogin-error-sessionfailure' => 'Your log in session has timed out. Please log in again.',
-	'userlogin-error-nosuchuser' => "We don't recognize this name. Don't forget usernames are case sensitive.",
+	'userlogin-error-nosuchuser' => 'Hm, we don\'t recognize this name. Don\'t forget usernames are case sensitive.',
 	'userlogin-error-wrongpassword' => 'Oops, wrong password. Make sure caps lock is off and try again.',
 	'userlogin-error-wrongpasswordempty' => 'Oops, please fill in the password field.',
 	'userlogin-error-resetpass_announce' => 'Looks like you used a temporary password. Pick a new password here to continue logging in.',
-	'userlogin-error-login-throttled' => 'You have tried to log in with the wrong password too many times. Wait a while before trying again.',
-	'userlogin-error-login-userblocked' => "Your username has been blocked and cannot be used to log in.",
+	'userlogin-error-login-throttled' => 'You\'ve tried to log in with the wrong password too many times. Wait a while before trying again.',
+	'userlogin-error-login-userblocked' => 'Your username has been blocked and can\'t be used to log in.',
 	'userlogin-error-edit-account-closed-flag' => 'Your account has been disabled by Wikia.',
 	'userlogin-error-cantcreateaccount-text' => 'Your IP address is not allowed to create new accounts.',
 	'userlogin-error-userexists' => 'Someone already has this username. Try a different one!',
-	'userlogin-error-invalidemailaddress' => 'Please enter a valid e-mail address.',
+	'userlogin-error-invalidemailaddress' => 'Please enter a valid email address.',
 	'userlogin-get-account' => 'Don\'t have an account? [[Special:UserSignup|Sign up]]',
 
 	// signup
 	'userlogin-error-invalid-username' => 'Invalid username',
-	'userlogin-error-userlogin-unable-info' => 'Sorry, we are not able to register your account at this time.',
+	'userlogin-error-userlogin-unable-info' => 'Sorry, we\'re not able to register your account at this time.',
 	'userlogin-error-user-not-allowed' => 'This username is not allowed.',
-	'userlogin-error-captcha-createaccount-fail' => 'The word you entered did not match the word in the box, try again!',
-	'userlogin-error-userlogin-bad-birthday' => 'Oops, please fill out month, day and year.',
-	'userlogin-error-externaldberror' => 'Sorry! Our site is currently having an issue. Please try again later.',
-	'userlogin-error-noemailtitle' => 'Please enter a valid e-mail address.',
+	'userlogin-error-captcha-createaccount-fail' => 'The word you entered didn\'t match the word in the box, try again!',
+	'userlogin-error-userlogin-bad-birthday' => 'Oops, please fill out month, day, and year.',
+	'userlogin-error-externaldberror' => 'Sorry! Our site is currently having an issue, please try again later.',
+	'userlogin-error-noemailtitle' => 'Please enter a valid email address.',
 	'userlogin-error-acct_creation_throttle_hit' => 'Sorry, this IP address has created too many accounts today. Please try again later.',
 
 	// mail password
 	'userlogin-error-resetpass_forbidden' => 'Passwords cannot be changed',
-	'userlogin-error-blocked-mailpassword' => 'You cannot request a new password because this IP address is blocked by Wikia.',
-	'userlogin-error-throttled-mailpassword' => 'We have already sent a password reminder to this account in the last {{PLURAL:$1|hour|$1 hours}}. Please check your email.',
-	'userlogin-error-mail-error' => 'Oops, there was a problem sending you e-mail. Please [[Special:Contact/general|contact us]].',
-	'userlogin-password-email-sent' => 'We have sent a new password to the e-mail address for $1.',
-	'userlogin-error-unconfirmed-user' => 'Sorry, you have not confirmed your e-mail address. Please confirm your e-mail address first.',
+	'userlogin-error-blocked-mailpassword' => 'You can\'t request a new password because this IP address is blocked by Wikia.',
+	'userlogin-error-throttled-mailpassword' => 'We\'ve already sent a password reminder to this account in the last {{PLURAL:$1|hour|$1 hours}}. Please check your email.',
+	'userlogin-error-mail-error' => 'Oops, there was a problem sending your email. Please [[Special:Contact/general|contact us]].',
+	'userlogin-password-email-sent' => 'We\'ve sent a new password to the email address for $1.',
+	'userlogin-error-unconfirmed-user' => 'Sorry, you have not confirmed your email. Please confirm your email first.',
 
 	// change password page
 	'userlogin-password-page-title' => 'Change your password',
@@ -56,7 +56,7 @@ $messages['en'] = array(
 	'userlogin-password-email-greeting' => 'Hi $USERNAME,',
 	'userlogin-password-email-content' => 'Please use this temporary password to log in to Wikia: "$NEWPASSWORD"
 <br/><br/>
-If you did not request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
+If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
 <br /><br />
 Questions or concerns? Feel free to contact us.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
@@ -64,7 +64,7 @@ Questions or concerns? Feel free to contact us.',
 
 Please use this temporary password to log in to Wikia: "$3"
 
-If you did not request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
+If you didn\'t request a new password, don\'t worry! Your account is safe and secure. You can ignore this email and continue log in to Wikia with your old password.
 
 Questions or concerns? Feel free to contact us.
 

@@ -13,20 +13,20 @@ $messages['en'] = array(
 
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
 	'usersignup-error-invalid-user' => 'Invalid user. Please login first.',
-	'usersignup-error-invalid-email' => 'Please enter a valid e-mail address.',
+	'usersignup-error-invalid-email' => 'Please enter a valid email address.',
 	'usersignup-error-symbols-in-username' => 'Oops, your username can only contain letters and numbers.',
-	'usersignup-error-empty-email' => 'Oops, please fill in your e-mail address.',
+	'usersignup-error-empty-email' => 'Oops, please fill in your email address.',
 	'usersignup-error-empty-username' => 'Oops, please fill in the username field.',
-	'usersignup-error-already-confirmed' => "You've already confirmed this e-mail address.",
+	'usersignup-error-already-confirmed' => "You've already confirmed this email address.",
 	'usersignup-error-throttled-email' => "Oops, you've requested too many confirmation emails be sent to you today. Try again in a little while.",
 	'usersignup-error-too-many-changes' => "You've reached the maximum limit for email changes today. Please try again later.",
 	'usersignup-error-password-length' => "Oops, your password is too long. Please choose a password that's 50 characters or less.",
-	'usersignup-error-confirmed-user' => 'Looks like you\'ve already confirmed your e-mail address for $1!  Check our your [$2 user profile].', // why is this an external link? should be internal, use interwiki if needed
+	'usersignup-error-confirmed-user' => 'Looks like you\'ve already confirmed your email address for $1!  Check our your [$2 user profile].', // why is this an external link? should be internal, use interwiki if needed
 
 	// Facebook sign-up
 	'usersignup-facebook-heading' => 'Finish Signing Up',
 	'usersignup-facebook-create-account' => 'Create account',
-	'usersignup-facebook-email-tooltip' => 'If you would like to use a different e-mail address you can change it later in your Preferences.',
+	'usersignup-facebook-email-tooltip' => 'If you\'d like to use a different email address you can change it later in your Preferences.',
 	'usersignup-facebook-have-an-account-heading' => 'Already have an account?',
 	'usersignup-facebook-have-an-account' => 'Connect your existing Wikia username with Facebook instead.',
 	'usersignup-facebook-proxy-email' => 'Anonymous Facebook email',
@@ -36,22 +36,22 @@ $messages['en'] = array(
 	'usersignup-user-pref-confirmemail_send' => 'Resend my confirmation email',
 	'usersignup-user-pref-emailauthenticated' => 'Thanks! Your email was confirmed on $2 at $3.',
 	'usersignup-user-pref-emailnotauthenticated' => 'Check your email and click the confirmation link to finish changing your email to: $1',
-	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Oh, no! Your email is unconfirmed. Email features will not work until you confirm your e-mail address.',
-	'usersignup-user-pref-reconfirmation-email-sent' => 'Almost there! We\'ve sent a new confirmation email to $1. Check your email and click on the link to finish confirming your e-mail address.',
-	'usersignup-user-pref-noemailprefs' => 'Looks like we do not have an e-mail address for you. Please enter an e-mail address above.',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Oh, no! Your email is unconfirmed. Email features won\'t work until you confirm your email address.',
+	'usersignup-user-pref-reconfirmation-email-sent' => 'Almost there! We\'ve sent a new confirmation email to $1. Check your email and click on the link to finish confirming your email address.',
+	'usersignup-user-pref-noemailprefs' => 'Looks like we don\'t have an email address for you. Please enter an email address above.',
 
 	// Special:ConfirmEmail
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Oh, no! Your email is unconfirmed. We\'ve sent you an email, click the confirmation link there to confirm.',
-	'usersignup-user-pref-confirmemail_noemail' => 'Looks like we do not have an e-mail address for you. Go to [[Special:Preferences|user preferences]] to enter one.',
+	'usersignup-user-pref-confirmemail_noemail' => 'Looks like we don\'t have an email address for you. Go to [[Special:Preferences|user preferences]] to enter one.',
 
 	// confirm email
 	'usersignup-confirm-page-title' => 'Confirm your email',
 	'usersignup-confirm-email-resend-email' => "Send me another confirmation email",
-	'usersignup-confirm-email-change-email-content' => "I want to use a different e-mail address.",
-	'usersignup-confirm-email-change-email' => 'Change my e-mail address',
+	'usersignup-confirm-email-change-email-content' => "I want to use a different email address.",
+	'usersignup-confirm-email-change-email' => 'Change my email address',
 	'usersignup-confirm-email-new-email-label' => 'New email',
 	'usersignup-confirm-email-update' => 'Update',
-	'usersignup-confirm-email-tooltip' => 'Did you enter an e-mail address that you can\'t confirm, or do you want to use a different e-mail address? Don\'t worry, use the link below to change your e-mail address and get a new confirmation email.',
+	'usersignup-confirm-email-tooltip' => 'Did you enter an email address that you can\'t confirm, or do you want to use a different email address? Don\'t worry, use the link below to change your email address and get a new confirmation email.',
 	'usersignup-resend-email-heading-success' => 'New email sent',
 	'usersignup-resend-email-heading-failure' => 'Email not re-sent',
 	'usersignup-confirm-page-heading-confirmed-user' => 'Congrats!',
@@ -66,13 +66,13 @@ $messages['en'] = array(
 Click the confirmation link in your email to finish creating your account.",  // intentional line break
 	'usersignup-confirmation-email_subject' => 'Almost there! Confirm your Wikia account',
 	'usersignup-confirmation-email-greeting' => 'Hi $USERNAME,',
-	'usersignup-confirmation-email-content' => 'You\'re one step away from creating your account on Wikia! Click the link below to confirm your e-mail address and get started.
+	'usersignup-confirmation-email-content' => 'You\'re one step away from creating your account on Wikia! Click the link below to confirm your email address and get started.
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'The Wikia Team',
 	'usersignup-confirmation-email_body' => 'Hi $2,
 
-You\'re one step away from creating your account on Wikia! Click the link below to confirm your e-mail address and get started.
+You\'re one step away from creating your account on Wikia! Click the link below to confirm your email address and get started.
 
 $3
 
@@ -86,22 +86,22 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-confirmation-email_body-HTML' => '',
 
 	// reconfirmation email
-	'usersignup-reconfirmation-email-sent' => "Your e-mail address has been changed to $1. We've sent you a new confirmation email. Please confirm the new e-mail address.",
-	'usersignup-reconfirmation-email_subject' => 'Confirm your e-mail address change on Wikia',
+	'usersignup-reconfirmation-email-sent' => "Your email address has been changed to $1. We've sent you a new confirmation email. Please confirm the new email address.",
+	'usersignup-reconfirmation-email_subject' => 'Confirm your email address change on Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Hi $USERNAME',
-	'usersignup-reconfirmation-email-content' => 'Please click the link below to confirm your change of e-mail address on Wikia.
+	'usersignup-reconfirmation-email-content' => 'Please click the link below to confirm your change of email address on Wikia.
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 
-You\'ll continue to recieve email at your old e-mail address until you confirm this one.',
+You\'ll continue to recieve email at your old email address until you confirm this one.',
 	'usersignup-reconfirmation-email-signature' => 'The Wikia Team',
 	'usersignup-reconfirmation-email_body' => 'Hi $2,
 
-Please click the link below to confirm your change of e-mail address on Wikia.
+Please click the link below to confirm your change of email address on Wikia.
 
 $3
 
-You\'ll continue to recieve email at your old e-mail address until you confirm this one.
+You\'ll continue to recieve email at your old email address until you confirm this one.
 
 The Wikia Team
 
