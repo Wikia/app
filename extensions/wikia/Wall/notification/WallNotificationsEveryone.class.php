@@ -99,8 +99,8 @@ class WallNotificationsEveryone extends WallNotifications{
 		$cacheKey = $this->getGlobalCacheBusterKey();
 		$val = time();
 		$this->app->getGlobal('wgMemc')->set($cacheKey, $val);
-	 	return $val;
 		wfProfileOut(__METHOD__);
+	 	return $val;
 	}
 	
 	public function getGlobalCacheBuster() {
@@ -111,8 +111,8 @@ class WallNotificationsEveryone extends WallNotifications{
 			wfProfileOut(__METHOD__);
 			return $this->setGlobalCacheBuster();	
 		}
-		return $val;
 		wfProfileOut(__METHOD__);
+		return $val;
 	}
 	
 	
@@ -126,7 +126,6 @@ class WallNotificationsEveryone extends WallNotifications{
 				'user_id' => $userId,
 				'entity_key' => $entityKey
 		), __METHOD__ );
-		
 		
 		wfProfileOut(__METHOD__);
 	}
