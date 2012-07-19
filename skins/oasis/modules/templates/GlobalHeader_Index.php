@@ -13,7 +13,7 @@
 					<? if(is_array($topNavMenuItems)): ?>
 						<? foreach($topNavMenuItems as $topNavIndex): ?>
 								<? $topNavItem = $menuNodes[$topNavIndex] ?>
-								<li class="topNav <?= str_replace(' ', '_', $topNavItem['text']) ?>" data-index="<?= $topNavIndex?>">
+								<li class="topNav <?= str_replace(' ', '_', $topNavItem['text']) ?> <?php if( isset($topNavItem['class']) ) { echo str_replace(' ', '_', $topNavItem['class']); } ?>" data-index="<?= $topNavIndex?>">
 									<a href="<?= $topNavItem['href'] ?>"><?= $topNavItem['text'] ?><img src="<?= $wg->BlankImgUrl; ?>" class="chevron" height="0" width="0"></a>
 									<ul class="subnav"></ul>
 								</li>
