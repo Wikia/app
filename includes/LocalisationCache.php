@@ -618,6 +618,7 @@ class LocalisationCache {
 				# Load the secondary localisation from the source file to
 				# avoid infinite cycles on cyclic fallbacks
 				$fbFilename = Language::getMessagesFileName( $fbCode );
+				$fbAddFileName = Language::getAdditionalMessagesFileName(  $fbCode, 'core' );
 
 				if ( !file_exists( $fbFilename ) ) {
 					continue;
@@ -626,15 +627,24 @@ class LocalisationCache {
 				$deps[] = new FileDependency( $fbFilename );
 				$fbData = $this->readPHPFile( $fbFilename, 'core' );
 
+				// wikia changes begin
+				if ( file_exists( $fbAddFileName ) ) {
+					$deps[] = new FileDependency( $fbAddFileName );
+					$addData = $this->readPHPFile( $fbAddFileName, 'core' );
+
+					if(!empty($addData['messages'])) {
+						$fbData['messages'] = array_merge($fbData['messages'], $addData['messages']);
+					}
+				}
+				// wikia changes end
+				wfDebug( __METHOD__.": got fallback localisation for $fbcode from source\n" );
+                        
 				foreach ( self::$allKeys as $key ) {
 					if ( !isset( $fbData[$key] ) ) {
 						continue;
 					}
 
 					if ( is_null( $coreData[$key] ) || $this->isMergeableKey( $key ) ) {
-						# <Wikia> Load also Wikia messages and merge it with keys from messages directory
-						$fbData[$key] = $this->getItem( $coreData['fallback'], $key );
-						# </Wikia>
 						$this->mergeItem( $key, $coreData[$key], $fbData[$key] );
 					}
 				}
