@@ -290,11 +290,12 @@ class OasisController extends WikiaController {
 				$map = array(
 					array( $this->app->wg->ExtensionsPath, 'extensions/' ),
 					array( $this->app->wg->StylePath, 'skins/' ),
-					array( $this->app->wg->ResourceBasePath, 'resources/' ),
+					// $wgResourceBasePath = $wgCdnStylePath (there's no /resources in it)
+					array( $this->app->wg->ResourceBasePath . '/resources', 'resources/' ),
 				);
 			}
 
-			// BugId:38195 - don't minify already minfiied assets
+			// BugId:38195 - don't minify already minified assets
 			if (strpos($url, '/__am/') !== false) {
 				return $url;
 			}
