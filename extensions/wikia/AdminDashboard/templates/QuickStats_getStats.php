@@ -28,7 +28,7 @@
 			</tr>
 			<tr>
 				<td colspan="<?= isset($totals['likes']) ? 5 : 4 ?>" class="supplemental-info">
-					<?= wfMsgExt('quickstats-see-more-stats-link', 'parseinline') ?>
+					<?= wfMsgExt('quickstats-see-more-stats-link', array('parseinline')) ?>
 				</td>
 			</tr>
 		</tfoot>
