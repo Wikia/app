@@ -154,14 +154,14 @@ class CreateBlogPage extends SpecialBlogPage {
 				break;
 
 			default:
-				Wikia::log( __METHOD__, "editpage", $status );
-				if( $status == EditPage::AS_READ_ONLY_PAGE_LOGGED ) {
+				Wikia::log( __METHOD__, "editpage", $status->value );
+				if( $status->value == EditPage::AS_READ_ONLY_PAGE_LOGGED ) {
 					$sMsg = wfMsg('create-blog-cant-edit');
 				}
 				else {
 					$sMsg = wfMsg('create-blog-spam');
 				}
-				$this->mFormErrors[] = $sMsg . "($status)";
+				$this->mFormErrors[] = $sMsg . '(' . $status->value . ')';
 				$this->renderForm();
 				break;
 		}

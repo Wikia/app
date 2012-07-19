@@ -157,14 +157,14 @@ class CreateBlogPage extends SpecialCustomEditPage {
 
 			default:
 				Wikia::log( __METHOD__, "editpage", $status->value );
-				if( $status == EditPage::AS_READ_ONLY_PAGE_LOGGED ) {
+				if( $status->value == EditPage::AS_READ_ONLY_PAGE_LOGGED ) {
 					$sMsg = wfMsg('create-blog-cant-edit');
 				}
 				else {
 					$sMsg = wfMsg('create-blog-spam');
 				}
 				//FIXME: Member has protected access
-				$this->mFormErrors[] = $sMsg . "($status)";
+				$this->mFormErrors[] = $sMsg . '(' . $status->value . ')';
 				break;
 		}
 	}
