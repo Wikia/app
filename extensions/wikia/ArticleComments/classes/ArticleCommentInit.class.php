@@ -63,12 +63,6 @@ class ArticleCommentInit {
 			return false;
 		}
 
-		//disable on redirect pages (RT#44315)
-		if ( $title->isRedirect() ) {
-			wfProfileOut(__METHOD__);
-			return false;
-		}
-
 		//disable on pages that cant be read (RT#49525)
 		if ( !$title->userCan('read') ) {
 			wfProfileOut(__METHOD__);
