@@ -147,11 +147,5 @@ exports.rules  = [
 				? ('Not cached jQuery selector found - ' + selector)
 				: false;
 		}
-	},
-	// detect $.tmpl - use Mustache instead
-	{
-		name: '$.tmpl',
-		regexp: /\$.tmpl\(/,
-		reason: 'Use of $.tmpl (use Mustache instead)'
 	}
 ];
