@@ -1816,16 +1816,16 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		foreach($this->mImages as $val) {
 			$img = wfFindFile( $val[0], false );
+			$bigVersion = $img->transform( array("width" => 320, "height" => 480) );
 
 			if( !empty( $img ) ) {
 				$pics[] = array(
-					//image
-					$img->transform( array("width" => "320", "height" => "480") )->url,
-					//thumbnail
-					$img->transform( array("width" => "140", "height" => "140") )->url,
-					$val[1],
-					//name
-					$val[0]->getText() );
+					'width' => $bigVersion->getWidth(),
+					'height' => $bigVersion->getHeight(),
+					'url' => $bigVersion->getUrl(),
+					'thumbURL' => $img->transform( array("width" => 140, "height" => 140) )->getUrl(),
+					'tag' => $val[1],
+					'name' => $val[0]->getText() );
 			}
 		}
 

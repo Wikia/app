@@ -1,12 +1,6 @@
-<section class="wkImgStk thumb" data-img-count=<?= $count ;?>>
-	<img src="<?= wfBlankImgUrl() ;?>" class="galPlcHld lazy" data-src="<?= $images[0][0] ;?>"/>
-	<noscript><img src="<?= $images[0][0] ;?>"/></noscript>
-	<? if( $count ) :?>
-		<ul>
+<? if( $count ) :?>
+<section class="wkImgStk thumb" data-img-count=<?= $count ;?>><img src="<?= wfBlankImgUrl() ;?>" class="imgPlcHld lazy" data-src="<?= $images[0]['url'] ;?>" width=<?= $images[0]['width'] ;?> height=<?= $images[0]['height'] ;?>><noscript><img src="<?= $images[0]['url'] ;?>"  width=<?= $images[0]['width'] ;?> height=<?= $images[0]['height'] ;?>></noscript><ul>
 		<? foreach ( $images as $val) :?>
-			<li data-img='<?= $val[0];?>' data-thumb='<?= $val[1] ;?>' data-name='<?= $val[3] ;?>'><?= $val[2] ;?></li>
-		<? endforeach ;?>
-		</ul>
-	<? endif ;?>
-	<footer class=thumbcaption><?= $footerText ;?></footer>
-</section>
+			<li data-img='<?= $val['url'];?>' data-thumb='<?= $val['thumbURL'] ;?>' data-name='<?= $val['name'] ;?>'><?= $val['tag'] ;?></li>
+		<? endforeach ;?></ul><footer class=thumbcaption><?= $footerText ;?></footer></section>
+<? endif ;?>
