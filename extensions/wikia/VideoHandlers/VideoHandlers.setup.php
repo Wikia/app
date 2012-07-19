@@ -2,10 +2,25 @@
 
 /**
  * @author Jakub Kurcek <jakub at wikia-inc.com>
+ * @author Will Lee <wlee at wikia-inc.com>
+ * @author Piotr Bablok <pbablok at wikia-inc.com>
+ * @author Jacek Jursza <jacek at wikia-inc.com>
  * @date 2011-12-06
  * @copyright Copyright (C) 2010 Jakub Kurcek, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
+
+$wgExtensionCredits['videohandlers'][] = array(
+	'name' => 'VideoHandlers',
+	'author' => array(
+		"Jakub Kurcek <jakub at wikia-inc.com>",
+		"Will Lee <wlee at wikia-inc.com>",
+		"Piotr Bablok <pbablok at wikia-inc.com>",
+		"Jacek Jursza <jacek at wikia-inc.com>",
+	),
+	'url' => 'http://video.wikia.com',
+	'descriptionmsg' => 'wikia-videohandlers-desc',
+);
 
 /**
  * setup
