@@ -11,7 +11,7 @@ var WikiaFooterApp = {
 
 		// avoid stack overflow in IE (RT #98938)
 		if (this.toolbar.exists() || this.gn.exists()) {
-			if($.support.positionFixed){
+			if(!( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} || (navigator.userAgent.match(/android/i) != null))){
 				this.addScrollEvent();
 				this.addResizeEvent();
 			}
