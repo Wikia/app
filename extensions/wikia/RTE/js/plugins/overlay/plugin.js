@@ -184,14 +184,11 @@ CKEDITOR.plugins.add('rte-overlay',
 		// render media caption
 		var captionContent = (typeof data.params != 'undefined') && (data.params.captionParsed || data.params.caption);
 		if (captionContent && isFramed) {
-			var captionTop = parseInt(node.attr('height') + 7);
-			var captionWidth = node.attr('width');
+			var captionTop = parseInt(node.innerHeight());
+			var captionWidth = parseInt(node.innerWidth());
 
-			// IE8-
-			if (CKEDITOR.env.ie && CKEDITOR.env.version <= 7) {
-				captionTop -= 25; /* padding-top (25px) */
-				captionWidth -= 6; /* padding (3px) * 2 */
-			}
+			captionTop -= 25; /* padding-top (25px) */
+			captionWidth -= 10; /* (padding (3px) + border(1px) + spacing(1px)) * 2 */
 
 			var caption = $('<div>').
 				addClass('RTEMediaCaption').
