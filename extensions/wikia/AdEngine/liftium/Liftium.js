@@ -1329,7 +1329,7 @@ Liftium.init = function (callback) {
 	}
 
 
-	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "init"]), 'liftium.init');
+	WikiaTracker.trackAdEvent('liftium.init', {'ga_category':'init', 'ga_action':'init'}, 'ga');
 
 	Liftium.trackQcseg();
 
@@ -1953,7 +1953,7 @@ Liftium.sendBeacon = function (){
 
 	// Track the beacons with GA
 
-	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "beacon"]), 'liftium.beacon');
+	WikiaTracker.trackAdEvent('liftium.init', {'ga_category':'beacon', 'ga_action':'beacon'}, 'ga');
 
 	// Call the unit tests
 	if (window.LiftiumTest && typeof window.LiftiumTest.afterBeacon == "function"){
