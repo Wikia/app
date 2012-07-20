@@ -6,9 +6,10 @@ var HelloWorld = {
 				controller: 'HelloWorld',
 				method: 'index',
 				format: 'html',
-				type: 'get'
-			}, function(html) {
-				$('#HelloWorldAjax').append(html);
+				type: 'get',
+				callback: function(html) {
+					$('#HelloWorldAjax').append(html);
+				}
 			});
 		});
 	}
