@@ -667,7 +667,10 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 		 */
 		getValue : function()
 		{
-			return this.$.value;
+			// wikia change start: remove placeholder text (BugId:35209)
+			var value = this.$.value;
+			return ( CKEDITOR.env.ie && this.$.getAttribute( 'placeholder' ) == value ) ? '' : value;
+			// wikia change end
 		},
 
 		/**
