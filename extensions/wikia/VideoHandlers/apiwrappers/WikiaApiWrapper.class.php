@@ -39,7 +39,7 @@ class WikiaApiWrapper extends ApiWrapper {
 		return $this->file;
 	}
 
-	public function isFileExists() {
+	public function fileExists() {
 		return !empty( $this->file );
 	}
 
@@ -50,7 +50,7 @@ class WikiaApiWrapper extends ApiWrapper {
 
 		if(preg_match($pattern, $url, $matches)) {
 			$wrapper = new WikiaApiWrapper( 1, array(), $matches[2] );
-			if( $wrapper->isFileExists() ) {
+			if( $wrapper->fileExists() ) {
 				wfProfileOut( __METHOD__ );
 				return $wrapper;
 			}
@@ -81,8 +81,8 @@ class WikiaApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	public function getMimeType() {
-		return 'FILE';
+	public function getProvider() {
+		return $this->file->getProviderName();
 	}
 
 	public function getVideoId() {
