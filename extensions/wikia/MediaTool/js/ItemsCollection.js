@@ -76,7 +76,7 @@ MediaTool.ItemsCollection = $.createClass(MediaTool.Collection,{
 		MediaTool.callBackend('getRecentMedia', {}, function(items) {
 			self.items = [];
 			$.each(items, function(i, item) {
-				var newItem = new MediaTool.Item((item.origin+'-'+item.hash), item);
+				var newItem = new MediaTool.Item( item );
 
 				self.items.push(newItem);
 			});

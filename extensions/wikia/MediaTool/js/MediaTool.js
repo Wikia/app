@@ -26,7 +26,7 @@ var MediaTool = MediaTool || (function () {
 	var smallMediaSize = 250
 	var largeMediaSize = 300;
 	var defaultMediaSettings = { align:'left', alt:"", caption:"", thumbnail:true, width:300 };
-	var watchCreations = false;		// todo: use this to set the follow checkbox for new items
+	var watchCreations = false;
 
 	function loadResources() {
 		return resourceLoaderCache = resourceLoaderCache ||
