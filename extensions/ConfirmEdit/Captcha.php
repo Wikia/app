@@ -472,6 +472,14 @@ class SimpleCaptcha {
 			# The CAPTCHA was already checked and approved
 			return true;
 		}
+		
+		#<Wikia>
+		$result = null;                                                                                                                                                                  
+		if( !wfRunHooks( 'ConfirmEdit::onConfirmEdit', array( &$this, &$editPage, $newtext, $section, $merged, &$result ) ) ) {                                                          
+			return $result;                                                                                                                                                          
+		}
+		#</Wikia>
+                
 		if ( !$this->doConfirmEdit( $editPage, $newtext, $section, $merged ) ) {
 			$editPage->showEditForm( array( &$this, 'editCallback' ) );
 			return false;
