@@ -68,9 +68,10 @@ function createComment($title = null, $commenter = null, $text = null) {
 	$editPage->edittime = $article->getTimestamp();
 	$editPage->textbox1 = $text;
 	$retval = $editPage->internalAttemptSave( $result );
-	Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
 
-	return array( $retval, $article );
+	$value = $retval->value;
+
+	Wikia::log( __METHOD__, "editpage", "Returned value {$value}" );
+
+	return array( $value, $article );
 }
-
-?>
