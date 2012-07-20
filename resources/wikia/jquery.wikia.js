@@ -543,6 +543,7 @@ $.openPopup = function(url, name, moduleName, width, height) {
 					controller: moduleName,
 					method: 'AnonLoginSuccess',
 					format: 'html',
+					type: 'get',
 					callback: function(html) {
 						$('.modalContent').html(html);
 					}
