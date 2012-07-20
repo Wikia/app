@@ -2030,12 +2030,12 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
 |fLetter     = $fLetter
 |song        = $song
 |language    = $language
-|youtube     =
-|goear       =
-|asin        =
-|iTunes      =
-|musicbrainz =
-|allmusic    =
+|youtube     = 
+|goear       = 
+|asin        = 
+|iTunes      = 
+|musicbrainz = 
+|allmusic    = 
 }}";
 			$summary = "Page ".(($pageExists)?"edited":"created")." using the [[LyricWiki:API|LyricWiki API]]";
 			if($isSandbox){
