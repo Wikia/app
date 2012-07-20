@@ -17,11 +17,11 @@ MediaTool.Item = $.createClass(Observable,{
 	name: null,
 	description: null,
 
-	constructor: function(id, itemData) {
+	constructor: function( itemData ) {
 		MediaTool.Item.superclass.constructor.call(this);
 		this.renderer = new MediaTool.Renderer();
 
-		this.id = id;
+		this.id = this.createId( itemData.origin, itemData.hash );
 		this.title = itemData.title;
 		this.thumbHtml = itemData.thumbHtml;
 		this.thumbUrl = itemData.thumbUrl;
@@ -53,6 +53,11 @@ MediaTool.Item = $.createClass(Observable,{
 
 	getHeight: function( width ) {
 		return Math.floor( width / this.ratio );
+	},
+
+	createId: function( origin, hash ) {
+		if (origin !== "online") origin = "wiki";
+		return origin + '-' + hash;
 	}
 
 });

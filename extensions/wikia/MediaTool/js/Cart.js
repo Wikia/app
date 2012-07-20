@@ -61,10 +61,10 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 	},
 
 	createItem: function( itemData, itemTemplate ) {
-		var itemId = itemData.origin+'-'+itemData.hash;
+		var itemId = MediaTool.Item.createId( itemData.origin, itemData.hash);
 
 		if(!this.exists(itemId)) {
-			var item = new MediaTool.Item(itemId, itemData );
+			var item = new MediaTool.Item( itemData );
 			item.duration = itemData.duration;
 			item.remoteUrl = itemData.remoteUrl;
 
