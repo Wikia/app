@@ -20,7 +20,6 @@
  * @return bool
  */
 function wfIsBadImage( $name, $contextTitle = false, $blacklist = null ) {
-	return false; // temporary - disabling feature to test load on video151
 	static $badImageCache = null; // based on bad_image_list msg
 	wfProfileIn( __METHOD__ );
 
