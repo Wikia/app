@@ -1,4 +1,4 @@
-var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
+var MediaTool = MediaTool || (function () {
 
 	/** @private **/
 	var cart = null;
@@ -23,7 +23,10 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 	var sliderMaxMediaSize = 660;
 	var minMediaSize = 1;
 	var maxMediaSize = 9999;
+	var smallMediaSize = 250
+	var largeMediaSize = 300;
 	var defaultMediaSettings = { align:'left', alt:"", caption:"", thumbnail:true, width:300 };
+	var watchCreations = false;		// todo: use this to set the follow checkbox for new items
 
 	function loadResources() {
 		return resourceLoaderCache = resourceLoaderCache ||
@@ -33,6 +36,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 					$.loadMustache(),
 					$.loadJQueryUI(),
 					callBackend('getTemplates', function (resp) {
+						//@todo: pass cb call in parameters (for caching)
 						templateDialog = resp['dialog'];
 						templateCart = resp['cart'];
 						itemPreviewTpl = resp['itemPreviewTpl'];
@@ -40,7 +44,12 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 						itemPreviewInputsTpl = resp['itemPreviewInputsTpl'];
 						templateItemsList = $("<div>").html(resp['itemsList']).find('#mediaToolBasketTemplate').html();
 						templateItem = $("<div>").html(resp['itemsList']).find('#mediaToolBasketItemTemplate').html();
-					})
+					}),
+					callBackend('getData', function(resp) {
+							//@todo: recentMedia should be fetched in this call
+							watchCreations = resp['watchCreations'];
+						}
+					)
 
 				).done(dfd.resolve);
 			}).promise();
@@ -105,7 +114,9 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 					'itemslist':$.mustache(templateItemsList, {
 						'title':'Media recently added to wiki',
 						'items':itemsCollection.items
-					})
+					}),
+					largeMediaLabel: $.msg('mediatool-large-thumbnail', largeMediaSize),
+					smallMediaLabel: $.msg('mediatool-small-thumbnail', smallMediaSize)
 				}
 			);
 			dialogWrapper = $.showModal('MUT', processedhtml, { width:970, className:"MediaToolModal" });
@@ -120,7 +131,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 			renderer.setWikiTextCallback(wikiTextCallback);
 
 			if ( typeof initialBasketContent  != "undefined" && initialBasketContent.length ) {
-				useInitialBasketContent( initialBasketContent, 'wiki' );
+				useInitialBasketContent( initialBasketContent );
 				renderPreview();
 
 			} else {
@@ -129,12 +140,12 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		});
 	}
 
-	function useInitialBasketContent( basketContent, source ) {
+	function useInitialBasketContent( basketContent ) {
 
 		var self = this;
 
 		$( basketContent).each( function(i, item) {
-			cart.createItem(item, templateItem, source);
+			cart.createItem(item, templateItem);
 		});
 		//TODO: switch to "Edit media tab"
 		changeCurrentView( "edit" );
@@ -326,7 +337,7 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 
 		callBackend('getVideoMetadata', { videoUrl: videoUrl }, function(response) {
 			if(response.status == 'ok') {
-				cart.createItem(response, templateItem, 'online');
+				cart.createItem(response, templateItem);
 				$('#mediatool-online-url').val('');
 			}
 			else {
@@ -402,8 +413,11 @@ var MediaTool = MediaTool || (function (smallMediaSize, largeMediaSize) {
 		},
 		getRenderer: function() {
 			return renderer;
+		},
+		getUserFollowSetting: function() {
+			return watchCreations;
 		}
 	});
 
 	return new MediaToolClass;
-})(wgMediaToolSmallMedia, wgMediaToolLargeMedia);
+})();

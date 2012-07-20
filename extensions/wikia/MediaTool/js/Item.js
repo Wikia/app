@@ -6,21 +6,38 @@ MediaTool.Item = $.createClass(Observable,{
 	thumbUrl: null,
 	remoteUrl: null,
 	editable: false,
-	origin: 'wiki',
+	origin: 'local',
 	isVideo: true,
 	duration: '00:00',
 	renderer: null,
 	ratio: 1,
 	uploader: null,
+	caption: '',
+	isFollowed: null,
+	name: null,
+	description: null,
 
-	constructor: function(id, title, thumbHtml, thumbUrl) {
+	constructor: function(id, itemData) {
 		MediaTool.Item.superclass.constructor.call(this);
 		this.renderer = new MediaTool.Renderer();
 
 		this.id = id;
-		this.title = title;
-		this.thumbHtml = thumbHtml;
-		this.thumbUrl = thumbUrl;
+		this.title = itemData.title;
+		this.thumbHtml = itemData.thumbHtml;
+		this.thumbUrl = itemData.thumbUrl;
+		this.isVideo = itemData.isVideo;
+		this.origin = itemData.origin;
+		this.caption = itemData.caption;
+		if (this.origin === "local") {
+			this.isFollowed =  itemData.isFollowed;
+		} else if (this.origin === "online") {
+			this.isFollowed =  MediaTool.getUserFollowSetting();
+		}
+		this.description = itemData.description;
+		this.name = itemData.name;
+
+		this.uploader = new MediaTool.User(itemData.uploaderId, itemData.uploaderName, itemData.uploaderPage, itemData.uploaderAvatar);
+
 		this.ratio = 1.7777778; // 16/9
 	},
 

@@ -7,8 +7,6 @@
 class MediaToolController extends WikiaController {
 	const RESPONSE_STATUS_OK = 'ok';
 	const RESPONSE_STATUS_ERROR  = 'error';
-	const MEDIA_SIZE_SMALL = 250;
-	const MEDIA_SIZE_LARGE = 300;
 
 	/**
 	 * @var MediaToolhelper
@@ -211,6 +209,7 @@ class MediaToolController extends WikiaController {
 	public function itemPreviewInputs() {}
 
 	public function getTemplates() {
+		//TODO: this should be cachable in browser, use cb in request
 		$this->response->setFormat('json');
 
 		$this->response->setVal('dialog', $this->app->renderView( 'MediaTool', 'getModalContent' ) );
@@ -219,6 +218,13 @@ class MediaToolController extends WikiaController {
 		$this->response->setVal('itemPreviewTpl', $this->app->renderView( 'MediaTool', 'itemPreview' ) );
 		$this->response->setVal('itemPreviewBorderTpl', $this->app->renderView( 'MediaTool', 'itemPreviewBorder' ) );
 		$this->response->setVal('itemPreviewInputsTpl', $this->app->renderView( 'MediaTool', 'itemPreviewInputs' ) );
+	}
+
+	public function getData() {
+		//TODO: this shouldn't be cached in browser
+		$this->response->setFormat('json');
+
+		$this->response->setVal('watchCreations', F::app()->wg->User->getOption( 'watchcreations' ) );
 	}
 
 
