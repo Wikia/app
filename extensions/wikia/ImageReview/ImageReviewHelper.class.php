@@ -514,9 +514,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					$data[$row['reviewer_id']] = array(
 						'name' => $user->getName(),
 						'total' => 0,
-						ImageReviewHelper::STATE_APPROVED => 0,
-						ImageReviewHelper::STATE_REJECTED => 0,
-						ImageReviewHelper::STATE_QUESTIONABLE => 0,
+						ImageReviewStatuses::STATE_APPROVED => 0,
+						ImageReviewStatuses::STATE_REJECTED => 0,
+						ImageReviewStatuses::STATE_QUESTIONABLE => 0,
 					);
 				}
 				$data[$row['reviewer_id']][$row['review_state']] = $row['count'];
