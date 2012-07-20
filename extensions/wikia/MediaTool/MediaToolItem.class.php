@@ -22,6 +22,8 @@ class MediaToolItem extends WikiaObject {
 	protected $thumbHtml = null;
 	protected $remoteUrl;
 	protected $duration;
+	protected $description = '';
+
 	/**
 	 * @var User
 	 */
@@ -57,6 +59,30 @@ class MediaToolItem extends WikiaObject {
 	}
 
 	/**
+	 * @param string $description
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getOrigin() {
+		if($this->hasFile()) {
+			return 'local'; //@todo: implement 'remote' for remote repos (like video wiki)
+		}
+		return 'online';
+	}
+
+	/**
 	 * @param bool $isVideo
 	 */
 	public function setIsVideo($isVideo) {
@@ -68,6 +94,16 @@ class MediaToolItem extends WikiaObject {
 	 */
 	public function isVideo() {
 		return $this->isVideo;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isFollowed() {
+		if($this->hasFile()) {
+			return false; //@todo: implement for local files (remote and online will ignore this)
+		}
+		return null;
 	}
 
 	public function setRemoteUrl($remoteUrl) {
@@ -101,6 +137,7 @@ class MediaToolItem extends WikiaObject {
 	public function setTitle(Title $title) {
 		$this->title = $title;
 		$this->setHash(md5($title->getFullText()));
+		$this->setDescription("fake description");
 		if($this->hasFile()) {
 			$this->setIsVideo( WikiaFileHelper::isFileTypeVideo( $this->getFile() ) );
 		}
@@ -204,6 +241,10 @@ class MediaToolItem extends WikiaObject {
 			'thumbUrl' => $this->getThumbUrl(),
 			'remoteUrl' => $this->getRemoteUrl(),
 			'duration' => $this->getDuration(),
+			'isFollowed' => $this->isFollowed(),
+			'name' => is_null($this->titleText) ? $this->getTitle()->getText() : $this->titleText,
+			'description' => $this->getDescription(),
+			'origin' => $this->getOrigin(),
 		);
 
 		if( $this->hasUploader() ) {

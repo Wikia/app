@@ -60,16 +60,13 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 		this.appendItem($item, itemObject);
 	},
 
-	createItem: function( itemData, itemTemplate, itemOrigin ) {
-		var itemId = itemOrigin+'-'+itemData.hash;
+	createItem: function( itemData, itemTemplate ) {
+		var itemId = itemData.origin+'-'+itemData.hash;
 
 		if(!this.exists(itemId)) {
-			var item = new MediaTool.Item(itemId, itemData.title, itemData.thumbHtml, itemData.thumbUrl);
-			item.isVideo = itemData.isVideo;
-			item.origin = itemOrigin;
+			var item = new MediaTool.Item(itemId, itemData );
 			item.duration = itemData.duration;
 			item.remoteUrl = itemData.remoteUrl;
-			item.uploader = new MediaTool.User(itemData.uploaderId, itemData.uploaderName, itemData.uploaderPage, itemData.uploaderAvatar);
 
 			item.renderThumbHtml();
 

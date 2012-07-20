@@ -71,9 +71,9 @@
 				<div class="media-tool-media-size">
 					<h4><?= wfMsg('mediatool-thumbnail-size'); ?></h4>
 					<input type="radio" name="mediasize" id="mediaToolLargeMedia"/>
-					<label for="mediaToolLargeMedia"><?= wfMsg('mediatool-large-thumbnail', MediaToolController::MEDIA_SIZE_LARGE) ?></label><br/>
+					<label for="mediaToolLargeMedia">{{largeMediaLabel}}</label><br/>
 					<input type="radio" name="mediasize" id="mediaToolSmallMedia"/>
-					<label for="mediaToolSmallMedia"><?= wfMsg('mediatool-small-thumbnail', MediaToolController::MEDIA_SIZE_SMALL) ?></label><br/>
+					<label for="mediaToolSmallMedia">{{smallMediaLabel}}</label><br/>
 					<input type="radio" name="mediasize" id="mediaToolCustomMedia"/>
 					<label for="mediaToolCustomMedia"><?= wfMsg('mediatool-custom-thumbnail') ?></label><br/>
 					<div id="mediaToolMediaSizeSlider" class="WikiaSlider media-size-slider"></div>

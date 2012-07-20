@@ -76,11 +76,7 @@ MediaTool.ItemsCollection = $.createClass(MediaTool.Collection,{
 		MediaTool.callBackend('getRecentMedia', {}, function(items) {
 			self.items = [];
 			$.each(items, function(i, item) {
-				var newItem = new MediaTool.Item(('wiki-'+item.hash), item.title, item.thumbHtml, item.thumbUrl);
-
-				newItem.isVideo = item.isVideo;
-				newItem.origin = 'wiki';
-				newItem.uploader = new MediaTool.User(item.uploaderId, item.uploaderName, item.uploaderPage, item.uploaderAvatar);
+				var newItem = new MediaTool.Item((item.origin+'-'+item.hash), item);
 
 				self.items.push(newItem);
 			});

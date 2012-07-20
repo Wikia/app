@@ -39,7 +39,17 @@ MediaTool.Renderer = $.createClass(Observable,{
 			});
 		}
 		return $.mustache(params.inputsTpl, {
-			itemPreview: itemPreview
+			itemPreview: itemPreview,
+			itemTitle: item.title,
+			itemCaption: item.caption,
+			canEditName: (item.origin === "online"),
+			itemName: item.name,
+			itemId: item.id,
+			itemOrigin: item.origin,
+			canFollow: (item.origin !== "remote"),
+			itemIsFollowed: item.isFollowed,
+			itemCaption: item.caption,
+			itemDescription: item.description
 		});
 	}
 
