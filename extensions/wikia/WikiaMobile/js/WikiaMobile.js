@@ -91,10 +91,14 @@ $(function(){
 				});
 			}
 
-			var processedSections = {};
+			var processedSections = {},
+				origOnLoad = window.onload;
 
 			//Image lazy loading
-			$(window).on('load', function () {
+			//window.addEventListener('load') doesn't work on iOS 4.x
+			//this is the only supported way to bind to that event
+			//and DOMReady is too early
+			window.onload = function () {
 				lazyLoad(
 					document.getElementsByClassName('lazy'),
 					'imgPlcHld',
@@ -115,6 +119,11 @@ $(function(){
 						processedSections[id] = true;
 					}
 				});
-			});
-		});
+
+				if (origOnLoad instanceof Function) {
+					origOnLoad();
+				}
+			};
+		}
+	);
 });
