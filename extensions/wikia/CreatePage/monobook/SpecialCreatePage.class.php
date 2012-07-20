@@ -155,7 +155,7 @@ class SpecialCreatePage extends SpecialEditPage {
 
 		$result = false;
 		$status = $editPage->internalAttemptSave( $result );
-		switch( $status ) {
+		switch( $status->value ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 			case EditPage::AS_ARTICLE_WAS_DELETED:

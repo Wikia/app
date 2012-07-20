@@ -380,7 +380,7 @@ if(!$funcsOnly){
 		'encoded',
 		'Gets the hometown for an artist'
 	);
-	
+
 	$server->register('getTopSongs',
 		array('limit' => 'xsd:string'),
 		array('topSongs' => 'tns:TopSongsArray'),
@@ -570,7 +570,7 @@ function searchArtists($searchString){
 				}
 			}
 		}
-		
+
 		// Limit the number of results returned to what was specified.
 		$retVal = array_slice($retVal, 0, $MAX_RESULTS);
 	}
@@ -580,8 +580,8 @@ function searchArtists($searchString){
 } // end searchArtists()
 
 /**
- * Given the album to search for, returns an array which contains 
- * associative arrays whose keys are 'artist', 'album', 'year'. 
+ * Given the album to search for, returns an array which contains
+ * associative arrays whose keys are 'artist', 'album', 'year'.
  */
 function searchAlbums($artist, $album, $year){
 	$id = requestStarted(__METHOD__, "$artist|$album|$year");
@@ -678,7 +678,7 @@ function getSOTD(){
 				$song = "";
 			}
 		}
-	
+
 		// TODO: Could memcache this result since the getSong will be called a bunch for this song & it shouldn't change for a day.
 		$retVal = getSong($artist, $song);
 
@@ -881,7 +881,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				print (!$debug?"":"found:\n$page");
 				if($finalName != $artistTitle){
 					print (!$debug?"":"Artist redirect found to \"$finalName\". Applying to song \"$song\".\n");
-					
+
 					// If the redirect is just to different capitalization, then use the special
 					// caps instead of letting lw_getTitle() overwrite this capitalization-change.
 					if(strtolower($finalName) == strtolower($artistTitle)){
@@ -1000,7 +1000,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 
 				logSoapFailure($origArtistSql, $origSongSql, $lookedForSql);
 			}
-			
+
 			// If there was no result, give it another try without the hyphen trick.
 			if(($retVal['lyrics'] == $defaultLyrics) && ($lastHyphen !== false)){ // this logic should be kept even if isOuterRequest is false (ie: Gracenote should be tried with and without the hyphen trick
 				print (!$debug?"":"Trying again but assuming hyphens are part of the song name...\n");
@@ -1017,7 +1017,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					$retVal = $gnRetVal;
 				}
 			}
-			
+
 			// Done looking for matches, there is either a match or not at this point.
 			// Do cleanup tasks like recording stats & truncating lyrics for copyright reasons.
 			// Fallback search is done afterwards.
@@ -1066,7 +1066,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				//	print "UTF8-song: ".(utf8_compliant($song)?"true":"false")."<br/>";
 				//	print "UTF8-lyrics: ".(utf8_compliant($lyrics)?"true":"false")."<br/>";
 				//}
-				
+
 				// Determine if this result was from the takedown list (must be done before truncating to a snippet, below).
 				$retVal['isOnTakedownList'] = (0 < preg_match("/\{\{gracenote[ _]takedown\}\}/", $retVal['lyrics']));
 
@@ -1107,7 +1107,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 		$retVal['isOnTakedownList'] = ($retVal['isOnTakedownList'] ? "1" : "0"); // turn it into a string
 		requestFinished($id);
 	}
-	
+
 	wfProfileOut( __METHOD__ );
 	return $retVal;
 } // end getSong()
@@ -1154,14 +1154,14 @@ function getArtist($artist){
 				$years = $matches[3];
 				for($index = 0; $index < count($artists); $index++){
 					$albumPageTitle = $artists[$index].":".$albums[$index]." (".$years[$index].")";
-					
+
 					// Grab the content of the album page and stuff it in where the link was.
 					$line = $lines[$index];
 					$albumContent = lw_getPage($albumPageTitle);
 
 					// Strip out headings from the album page (the discogrphy parser expects headings to be the album names).
 					$albumContent = preg_replace("/==[^\n]*==/", "", $albumContent);
-					
+
 					$albumContent = "== $line ==\n$albumContent"; // needs to have the album header there so that it can be parsed.
 					$content = str_replace($line, $albumContent, $content);
 				}
@@ -1187,7 +1187,7 @@ function getArtist($artist){
 	if($isUTF === false){
 		$retVal['artist'] = utf8_encode($retVal['artist']);
 	}
-	
+
 	// If configured to do so, fallback to full wiki search.
 	if($wgRequest->getBool('fallbackSearch') && (count($retVal['albums']) == 0)){
 		$retVal['searchResults'] = lw_getSearchResults("$artist");
@@ -1417,7 +1417,7 @@ function lw_getTracksFromWikiText($artist, $albumNames, $listing){
  * itself an array of the page-titles (as strings) of all of the songs on the album (in the order that they appear
  * on the album). The image returned will be the album cover or other appropriate image (such as the image of the artist) if
  * a suitable match can be found.  If no suitable match can be found, an empty string will be returned.
- * 
+ *
  * TODO: Right now there are no guarantees about image dimensions. Should we make this method promise to only return square images
  * and use ImageServing/ImageService to do that even for the Artist images (which are the fallback)?
  */
@@ -1591,13 +1591,13 @@ function getTopSongs($limit){
 				}
 				if(0 < preg_match("/<itms:link>(.*?)<\/itms:link>/i", $item, $itemMatches)){
 					$link = htmlspecialchars_decode($itemMatches[1]);
-					
+
 					// Convert the iTunes URL into one with our affiliate link built into it.
 					$matches = array();
 					if(0 < preg_match("/[^w]id([0-9]+).*?[^w]i=([0-9]+)/i", $link, $matches)){
 						$id = $matches[1];
 						$i = $matches[2];
-						
+
 						$link = "http://click.linksynergy.com/fs-bin/stat?id=gRMzf83mih4&amp;offerid=78941&amp;type=3&amp;subid=0&amp;tmpid=1826&amp;RD_PARM1=http%253A%252F%252Fitunes.apple.com%252Fus%252Falbum%252F";
 						$link .= "id$id%253Fi%253D3$i";
 						$link .= "%2526partnerId%253D30";
@@ -1637,7 +1637,7 @@ $finalName = "$artist:$song";
 
 	// Trim the array to the size desired by the client.
 	$retVal = array_slice($retVal, 0, $limit);
-	
+
 	requestFinished($id);
 	wfProfileOut( __METHOD__ );
 
@@ -2003,7 +2003,7 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
 				$mainAlbum = array_shift($onAlbums);
 				$mainAlbumName = $mainAlbum['album']." (".$mainAlbum['year'].")";
 				$content .= "{{Song|$mainAlbumName|$artist|star=green}}\n";
-				
+
 				// If there are additional albums, they go in the AddAlb template.
 				if(count($onAlbums) > 0){
 					$content .= "{{AddAlb\n";
@@ -2030,12 +2030,12 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
 |fLetter     = $fLetter
 |song        = $song
 |language    = $language
-|youtube     = 
-|goear       = 
-|asin        = 
-|iTunes      = 
-|musicbrainz = 
-|allmusic    = 
+|youtube     =
+|goear       =
+|asin        =
+|iTunes      =
+|musicbrainz =
+|allmusic    =
 }}";
 			$summary = "Page ".(($pageExists)?"edited":"created")." using the [[LyricWiki:API|LyricWiki API]]";
 			if($isSandbox){
@@ -2195,14 +2195,14 @@ function lw_getTitle($artist, $song='', $applyUnicode=true, $allowAllCaps=true){
 	if($applyUnicode){
 		$title = utf8_encode($title);
 	}
-	
+
 	$title = str_replace("|", "/", $title); # TODO: Figure out if this is the right solution.
 	$title = preg_replace('/([-\("\.\/:_])([a-z])/e', '"$1".strtoupper("$2")', $title);
 	$title = preg_replace('/\b(O)[\']([a-z])/ei', '"$1".strtoupper("\'$2")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.  Does it to "O'Riley" but not "I'm" or "Don't"
 	$title = preg_replace('/( \()[\']([a-z])/ei', '"$1".strtoupper("\'$2")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
 	$title = preg_replace('/ [\']([a-z])/ei', '" ".strtoupper("\'$1")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
 	$title = strtr($title, " ", "_"); // Warning: multiple-byte substitutions don't seem to work here, so smart-quotes can't be fixed in this line.
-	
+
 	// Naming conventions. See: http://www.lyricwiki.org/LyricWiki:Page_names
 	// Common contractions.  Our standards USE the contractions.
 	$title = preg_replace("/Aint([^a-z]|$)/", "Ain't$1", $title);
@@ -2237,7 +2237,7 @@ function lw_pageExists($pageTitle, $ns=NS_MAIN, $debug=false){
 		// the page_namespace='$ns' speeds it up significantly since it can then use the index on page_namespace,page_title
 		$queryString = "SELECT /* LyricWiki API server.php::lw_pageExists() */ COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='$ns'";
 		print (!$debug?"":"Query for looking up the page:\n$queryString\n");
-		
+
 		$retVal = (0 < lw_simpleQuery($queryString));
 		$EXIST_CACHE["$ns:$pageTitle"] = $retVal;
 	}
@@ -2295,9 +2295,9 @@ function lw_getPage($pageTitle, &$finalName='', $debug=false, $page_namespace=NS
 function lw_createPage($titleObj, $content, $summary="Page created using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]"){
 	global $wgUser;
 	wfProfileIn( __METHOD__ );
-	
+
 	$retVal = "";
-	
+
 	if($titleObj == null){
 		$retVal = "Title object was null in lw_createPage. This probably means that the string used to create it was invalid (which could be caused by bad unicode characters).";
 	} else if(is_string($titleObj)){
@@ -2307,18 +2307,20 @@ function lw_createPage($titleObj, $content, $summary="Page created using [[Lyric
 	} else {
 		// Create the Article object.
 		$article = new Article($titleObj);
-		
+
 		$result = null;
 
 		$editPage = new EditPage( $article );
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = $content;
-		
+
 		$bot = $wgUser->isAllowed('bot');
 			//this function calls Article::onArticleCreate which clears cache for article and it's talk page - NOTE: I don't know what this comment refers to... it was coppied from /extensions/wikia/ArticleComments/ArticleComment.class.php
 		$status = $editPage->internalAttemptSave( $result, $bot );
 
-		if(($status == EditPage::AS_SUCCESS_NEW_ARTICLE) || ($status == EditPage::AS_SUCCESS_UPDATE)){
+		$value = $status->value;
+
+		if(($value == EditPage::AS_SUCCESS_NEW_ARTICLE) || ($value == EditPage::AS_SUCCESS_UPDATE)){
 			$retVal = true;
 		} else {
 			$retVal = $status;
@@ -2435,7 +2437,7 @@ function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
 	if( !wfReadOnly() ) {
 		GLOBAL $wgMemc, $wgRequest;
 		$NUM_FAILS_TO_SPOOL = 10;
-		
+
 		// Store the soapfailures from mobile requests in a diff. table so that we know what users are
 		// searching for in that specific use-case.
 		$fullApiAuth = $wgRequest->getVal('fullApiAuth', '');
