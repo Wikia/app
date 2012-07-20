@@ -12,6 +12,6 @@
 	<div class="article-details">
 		<h4><?= wfMsg('mediatool-article-details'); ?></h4>
 		<label><?= wfMsg('mediatool-media-caption'); ?></label><br/>
-		<input name="{{itemId}}-caption" value="{{itemCaption}}" />
+		<input name="{{itemId}}-caption" value="{{itemCaption}}" class="media-tool-item-caption" />
 	</div>
 </div>

@@ -250,6 +250,7 @@ var MediaTool = MediaTool || (function () {
 		$('#mediaToolCustomMedia').on('click', function() {
 			cart.setMediaSize(cart.getMediaSize());
 		});
+
 	}
 
 	function onChangeTab() {
@@ -377,6 +378,13 @@ var MediaTool = MediaTool || (function () {
 		$(".media-tool-preview", dialogWrapper).on("click", "a.video", function (e) {
 			videoPreview.thumbnailClickAction($(e.target));
 			isVideoPlayerDisplayed = true;
+		});
+
+		$(".media-tool-content").on("blur", "input.media-tool-item-caption", function (e) {
+			var fieldName = $(e.target).attr("name");
+			var cartItemId = fieldName.substr(0, fieldName.lastIndexOf("-"));
+			var item = cart.getItem(cartItemId);
+			if (item) item.caption = $(e.target).val();
 		});
 
 		initMediaSizeActions.call(self);

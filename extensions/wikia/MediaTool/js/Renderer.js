@@ -93,7 +93,8 @@ MediaTool.MainRenderer = $.createClass(MediaTool.Renderer,{
 		var result = '';
 		var mediaStyle = (cart.getThumbnailStyle() ? '|thumb' : '') + '|' + cart.getMediaLocation() + '|' + cart.getMediaSize() + 'px';
 		$.each(cart.items, function(i, item) {
-			result += "[[" + item.title + mediaStyle + "]]\n";
+			var caption = (item.caption) ? "|" + item.caption : "";
+			result += "[[" + item.title + mediaStyle + caption + "]]\n";
 		});
 		return result;
 	},
