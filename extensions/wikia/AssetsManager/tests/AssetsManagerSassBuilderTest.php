@@ -41,7 +41,7 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 
 		// test base64 encoding
 		$this->assertNotContains('blank.gif', $builder->getContent());
-		$this->assertContains('data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw==', $builder->getContent());
+		$this->assertContains('data:image/gif;base64,', $builder->getContent());
 		$this->assertNotContains('/* base64 */', $builder->getContent());
 	}
 }
