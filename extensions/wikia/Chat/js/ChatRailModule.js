@@ -16,6 +16,7 @@ var ChatRailModule = {
 			controller: 'ChatRail',
 			method: 'Contents',
 			format: 'html',
+			type: 'get',
 			data: {
 				username: encodeURIComponent(wgUserName),
 				cb: minuteTimestamp  	

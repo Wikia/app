@@ -43,6 +43,7 @@ var GlobalModal = {
 				controller: 'AutomaticWikiAdoption',
 				method: 'AdoptWelcomeDialog',
 				format: 'html',
+				type: 'get',
 				data: {
 					rs: 'moduleProxy',
 					cb: wgCurRevisionId
