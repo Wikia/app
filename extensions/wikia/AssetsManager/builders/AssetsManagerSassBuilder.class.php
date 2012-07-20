@@ -7,6 +7,8 @@
 
 class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
+	const CACHE_VERSION = 1;
+
 	public function __construct(WebRequest $request) {
 		global $wgDevelEnvironment;
 		$wgDevelEnvironment ? $timeStart = microtime( true ) : null;
@@ -27,7 +29,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		$hash = wfAssetManagerGetSASShash( $this->mOid );
 		$inputHash = md5(urldecode(http_build_query($this->mParams, '', ' ')));
 
-		$cacheId = "/Sass-$inputHash-$hash";
+		$cacheId = "/Sass-$inputHash-$hash-" . self::CACHE_VERSION;
 
 		$memc = F::App()->wg->Memc;
 
