@@ -45,13 +45,12 @@ var GlobalModal = {
 				format: 'html',
 				type: 'get',
 				data: {
-					rs: 'moduleProxy',
 					cb: wgCurRevisionId
 				}
 			})
 		).then(function(sass, nirvanaData) {
-			var html = nirvanaData[0] // while using .when/.then pattern ajax returns jQuery XHR object and html is at index [0] 
-			$(html).makeModal({width: 500, height: 400});  
+			var html = nirvanaData[0] // while using .when/.then pattern ajax returns jQuery XHR object and html is at index [0]
+			$(html).makeModal({width: 500, height: 400});
 		});
 	}
 }
