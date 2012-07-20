@@ -173,9 +173,11 @@ $app->registerClass('YoutubeVideoHandler', $dir . '/handlers/YoutubeVideoHandler
 $app->registerClass('YoutubeApiWrapper', $dir . '/apiwrappers/YoutubeApiWrapper.class.php');
 $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 
-$app->registerClass('WikiaVideoHandler', $dir . '/handlers/WikiaVideoHandler.class.php');
+/*
+//$app->registerClass('WikiaVideoHandler', $dir . '/handlers/WikiaVideoHandler.class.php');
 $app->registerClass('WikiaApiWrapper', $dir . '/apiwrappers/WikiaApiWrapper.class.php');
-$wgMediaHandlers['FILE'] = 'WikiaVideoHandler';
+//$wgMediaHandlers['FILE'] = 'WikiaVideoHandler';
+*/
 
 /**
  * Feed ingesters
@@ -199,8 +201,10 @@ $wgVideoMigrationProviderMap = array(
 	21 => 'Screenplay',
 	22 => 'Movieclips',
 	23 => 'Realgravity',
+	/*
 	// a trick to make video.wikia and local files accessible via wrappers:
 	24 => 'Wikia'
+	*/
 );
 
 
