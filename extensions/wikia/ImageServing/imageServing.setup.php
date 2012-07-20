@@ -28,7 +28,7 @@ $app->registerClass('ImageServingDriverFileNS', $dir . 'drivers/ImageServingDriv
 $app->registerClass('ImageServingController', $dir . 'ImageServingController.class.php');
 
 
-$wgImageServingDrivers = array( 
+$wgImageServingDrivers = array(
 	 NS_USER => 'ImageServingDriverUserNS',
 	 NS_FILE => 'ImageServingDriverFileNS',
 	 NS_CATEGORY => 'ImageServingDriverCategoryNS'
@@ -50,11 +50,8 @@ if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
 $wgExtensionMessagesFiles['ImageServing'] = $dir . 'ImageServing.i18n.php';
 
 /* Adds imageCrop api to lists */
-if ( !empty( $wgEnablePartnerFeedExt ) ) {
-	global $wgAPIModules;
-	$wgAutoloadClasses[ "WikiaApiCroppedImage"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiCroppedImage.php";
-	$wgAPIModules[ "imagecrop" ] = "WikiaApiCroppedImage";
-}
+$wgAutoloadClasses[ "WikiaApiCroppedImage"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiCroppedImage.php";
+$wgAPIModules[ "imagecrop" ] = "WikiaApiCroppedImage";
 
 // Load the MediaWiki API endpoint for ImageServing
 $wgAutoloadClasses[ "WikiaApiImageServing"         ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiImageServing.php";
