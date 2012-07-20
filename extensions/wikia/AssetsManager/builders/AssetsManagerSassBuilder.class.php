@@ -107,8 +107,8 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		wfProfileIn(__METHOD__);
 
 		$matches = array();
-		$importRegexOne = "/@import ['\\\"]([^\\n]*?\\.css)['\\\"]([^\\n]*?)(\\n|;|$)/is"; // since this stored is in a string, remember to escape quotes, slashes, etc.
-		$importRegexTwo = "/@import url[\\( ]['\\\"]?([^\\n]*?\\.css)['\\\"]?[ \\)]([^\\n]*?)(\\n|;|$)/is";
+		$importRegexOne = "/@import ['\\\"]([^\\n]*\\.css)['\\\"]([^\\n]*)(\\n|$)/is"; // since this stored is in a string, remember to escape quotes, slashes, etc.
+		$importRegexTwo = "/@import url[\\( ]['\\\"]?([^\\n]*\\.css)['\\\"]?[ \\)]([^\\n]*)(\\n|$)/is";
 		if ((0 < preg_match_all($importRegexOne, $this->mContent, $matches, PREG_SET_ORDER)) || (0 < preg_match_all($importRegexTwo, $this->mContent, $matches, PREG_SET_ORDER))) {
 			foreach($matches as $match) {
 				$lineMatched = $match[0];
@@ -117,7 +117,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				$this->mContent = str_replace($lineMatched, $fileContents, $this->mContent);
 			}
 		}
-	
+
 		wfProfileOut(__METHOD__);
 	}
 
@@ -129,11 +129,11 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 			// Because of fonts in CSS, we have to allow for lines with multiple url()s in them.
 			// This will rewrite all but the last URL on the line (the last regex will fix the final URL and remove the special comment).
 			$wasChanged = true;
-			
-			// As long as a URL was just replaced, check for a new match in the resulting code.
+
+			// TODO: refactor?
 			while($wasChanged) {
-				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n;]*?)([, ]url[^\n;]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$wgCdnStylePath.'\\2\\3\\4', $this->mContent);
-				if (($changedCss != $this->mContent) && ($changedCss != null)) {
+				$changedCss = preg_replace("/([\(][\"']?)(\/[^\n]*?)([, ]url[^\n]*?)(\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\/)/is", '\\1'.$wgCdnStylePath.'\\2\\3\\4', $this->mContent);
+				if($changedCss != $this->mContent) {
 					$wasChanged = true;
 					$this->mContent = $changedCss;
 				} else {
@@ -141,7 +141,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 				}
 			}
 
-			$this->mContent = preg_replace("/([\(][\"']?)(\/[^\n;]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$wgCdnStylePath.'\\2', $this->mContent);
+			$this->mContent = preg_replace("/([\(][\"']?)(\/[^\n]*?)\s*\/\*\s*[\\\$]?wgCdnStylePath\s*\*\//is", '\\1'.$wgCdnStylePath.'\\2', $this->mContent);
 		}
 
 		wfProfileOut(__METHOD__);
@@ -153,7 +153,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	private function base64Processing() {
 		wfProfileIn(__METHOD__);
 
-		$this->mContent = preg_replace_callback("/([, ]url[^\n;]*?)(\s*\/\*\s*base64\s*\*\/)/is", function($matches) {
+		$this->mContent = preg_replace_callback("/([, ]url[^\n]*?)(\s*\/\*\s*base64\s*\*\/)/is", function($matches) {
 			global $IP;
 			$fileName = $IP . trim(substr($matches[1], 4, -1), '\'"() ');
 
