@@ -7,7 +7,6 @@
  * @author Marcin Maciejewski
  * @author Saipetch Kongkatong
  * @author Sebastian Marzjan
- *
  */
 
 $dir = dirname(__FILE__) . '/';
@@ -41,10 +40,6 @@ $app->registerClass('WikiaHomePageController', $dir.'WikiaHomePageController.cla
 $app->registerClass('WikiaHomePageSpecialController', $dir.'WikiaHomePageSpecialController.class.php');
 $app->registerClass('WikiaHomePageHelper', $dir.'WikiaHomePageHelper.class.php');
 $app->registerClass('CityVisualization', $dir.'CityVisualization.class.php');
-
-
-
-
 
 //special page
 $app->registerSpecialPage('WikiaHomePage', 'WikiaHomePageSpecialController');

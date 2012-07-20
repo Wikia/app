@@ -25,7 +25,6 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 				$details[ 'status' ] = self::FILEDIMENSIONS_ERROR;
 			}
 
-
 			// check file type (just by extension)
 			if ( !$this->checkFileExtension( $this->mFinalExtension, array( 'png' ) ) ) {
 				$details[ 'status' ] = self::FILETYPE_ERROR;
@@ -34,7 +33,6 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 
 		return $details;
 	}
-
 
 	public function performUpload() {
 		global $wgUser;
@@ -76,7 +74,7 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 			strtolower(self::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-9.' . self::VISUALIZATION_ADDITIONAL_IMAGES_EXT),
 		);
 
-		if(in_array($destName,$visualizationImageNames)) {
+		if( in_array($destName, $visualizationImageNames) ) {
 			return true;
 		}
 		return false;

@@ -12,7 +12,7 @@ class CityVisualization extends WikiaModel {
 	const GERMAN_CORPORATE_SITE_ID = 111264;
 	const ENGLISH_CORPORATE_SITE_ID = 80433;
 
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.30';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.31';
 
 	public function getList($corpWikiId, $contLang) {
 		$this->wf->ProfileIn(__METHOD__);
@@ -162,6 +162,11 @@ class CityVisualization extends WikiaModel {
 
 	public function purgeVisualizationWikisListCache($corpWikiId, $langCode) {
 		$memcKey = $this->getVisualizationWikisListDataCacheKey($corpWikiId, $langCode);
+		$this->wg->Memc->set($memcKey, null);
+	}
+
+	public function purgeWikiPromoteDataCache($wikiId, $langCode) {
+		$memcKey = $this->getWikiPromoteDataCacheKey($wikiId, $langCode);
 		$this->wg->Memc->set($memcKey, null);
 	}
 
@@ -373,7 +378,7 @@ class CityVisualization extends WikiaModel {
 
 			$imageIndex = 0;
 			$matches = array();
-			if (preg_match('/Wikia-Visualization-Add-([0-9])\.jpg/', $image, $matches)) {
+			if (preg_match('/Wikia-Visualization-Add-([0-9])\.*/', $image, $matches)) {
 				$imageIndex = intval($matches[1]);
 			}
 

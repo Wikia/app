@@ -67,7 +67,6 @@ $wgGroupPermissions['staff']['promote'] = true;
 $wgGroupPermissions['sysop']['promote'] = true;
 $wgGroupPermissions['bureaucrat']['promote'] = true;
 
-
 $wgLogTypes[] = 'promote';
 $wgLogNames['promote'] = 'promote-log-name';
 $wgLogHeaders['promote'] = 'promote-log-header';
