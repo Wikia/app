@@ -554,7 +554,7 @@ $(function() {
 		</td>
 		<td><button class="wikia-button" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></button><?
 				?><div id="wk-busy-cache" style="margin-left:1em; display: none;">
-					<img src="http://images.wikia.com/common/skins/common/images/ajax.gif" width="16" height="16" alt="Wait..." border="0" />
+					<img src="<?= $wgStylePath ?>/common/images/ajax.gif" width="16" height="16" alt="Wait..." border="0" />
 				</div></td>
 		</tr></table>
 		<ul>
