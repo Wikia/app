@@ -28,7 +28,7 @@ class ImageTweaksHooks extends WikiaObject {
 			$imageHTML = null;
 
 			if ( !$exists ) {
-				$imageHTML = Linker::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
+				$imageHTML = Linker::makeBrokenImageLinkObj( $title, $frameParams['title'], '', '', '', $time == true );
 				$zoomIcon = '';
 			} elseif ( !$thumb ) {
 				$imageHTML = htmlspecialchars( wfMsg( 'thumbnail_error', '' ) );
