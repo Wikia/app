@@ -1,18 +1,24 @@
 /**
  * Consistent events on touch and touchless devices
  *
- * @author Jakub "Student" Olek
+ * @author Jakub "Student" Olek <jakubolek@wikia-inc.com>
+ * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
+/*global window, define*/
 
-define('events', function(){
-	var w = window;
+define('events', function () {
+	'use strict';
+
+	var w = window,
+		//undefined, helps minification
+		u;
 
 	return {
-		click: ('ontap' in w) ? 'tap' : 'click',
-		size: ('onorientationchange' in w) ? 'orientationchange' : 'resize',
-		touch: ('ontouchstart' in w) ? 'touchstart' : 'mousedown',
-		move: ('ontouchmove' in w) ? 'touchmove' : 'mousemove',
-		end: ('ontouchend' in w) ? 'touchend' : 'mouseup',
-		cancel: ('ontouchcancel' in w) ? 'touchcancel' : 'mouseup'
-	}
+		click: (w.ontap !== u) ? 'tap' : 'click',
+		size: (w.onorientationchange !== u) ? 'orientationchange' : 'resize',
+		touch: (w.ontouchstart !== u) ? 'touchstart' : 'mousedown',
+		move: (w.ontouchmove !== u) ? 'touchmove' : 'mousemove',
+		end: (w.ontouchend !== u) ? 'touchend' : 'mouseup',
+		cancel: (w.ontouchcancel !== u) ? 'touchcancel' : 'mouseup'
+	};
 });
