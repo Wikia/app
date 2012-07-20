@@ -10,7 +10,9 @@ $wgExtensionCredits['specialpage'][] = array(
     'descriptionmsg' => 'wikiMap-desc'
 );
 
+$wgExtensionMessagesFiles['WikiMapAliases'] = $dir . 'WikiMap.alias.php';
+
 $app->registerClass('wikiMap', $dir . 'wikiMap.class.php');
 $app->registerClass('wikiMapSpecialController', $dir . 'wikiMapSpecialController.class.php');
-$app->registerSpecialPage('wikiMap', 'wikiMapSpecialController');
+$app->registerSpecialPage('WikiMap', 'wikiMapSpecialController');
 $app->registerExtensionMessageFile('wikiMap', $dir . 'wikiMap.i18n.php');

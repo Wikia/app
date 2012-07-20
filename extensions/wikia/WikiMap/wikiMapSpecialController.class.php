@@ -2,7 +2,7 @@
 class wikiMapSpecialController extends WikiaSpecialPageController {
 
     public function __construct() {
-        parent::__construct( 'wikiMap', '', false );
+        parent::__construct( 'WikiMap', '', false );
     }
 
     public function init() {
@@ -13,12 +13,10 @@ class wikiMapSpecialController extends WikiaSpecialPageController {
     public function index() {
         $this->response->addAsset('extensions/wikia/WikiMap/js/d3.v2.min.js');
         $this->response->addAsset('extensions/wikia/WikiMap/js/jquery.xcolor.min.js');
-
-
+        $this->response->addAsset('extensions/wikia/WikiMap/js/wikiMapIndexContent.js');
 
         $parameter = $this->getPar();
-        $parameterNoSpaces = str_replace('_', ' ',$parameter);
-       // var_dump($this->getPar());
+        $parameterSpaces = str_replace('_', ' ',$parameter);
 
         $wikiId = $this->getVal( 'wikiId', $this->wg->CityId );
         $this->wg->Out->setPageTitle( $this->wf->msg('wikiMap-specialpage-title'));
@@ -27,10 +25,23 @@ class wikiMapSpecialController extends WikiaSpecialPageController {
             $this->setVal( 'header', $this->wf->msg('wikiMap-title-nonparam'));
         }
         else {
-            $this->setVal( 'header', $this->wf->msg('wikiMap-category') . $parameterNoSpaces );
+            $artPath = $this->app->wg->get('wgArticlePath');
+            $path = str_replace('$1', 'Category:', $artPath);
+            $path.=$parameter;
+
+            $output = '<a href="' . $path . '">' . $this->wf->msg('wikiMap-category') . $parameterSpaces . '</a>';
+            $this->setVal( 'header', $output);
+
+
+
+           // $this->setVal( 'header', $this->wf->msg('wikiMap-category') . $parameterNoSpaces . ']]');
         }
+        $this->setVal( 'categoriesHeader', $this->wf->msg('wikiMap-categoriesHeader'));
+
         $this->setVal( 'res', $this->businessLogic->getArticles($parameter));
+        //$this->setVal( 'path', $this->app->wg->get('wgArticlePath'));
         $this->setVal( 'colourArray', $this->businessLogic->getColours());
+        $this->setVal( 'categories', $this->businessLogic->getListOfCategories());
 
     }
 }
