@@ -134,7 +134,12 @@ var ThemeDesigner = {
 		$("#fix-background").change(function() {
 			ThemeDesigner.set("background-fixed", $(this).attr("checked") ? "true" : "false");
 		});
-
+		
+		// submit handler for uploading custom background image	
+		$('#BackgroundImageForm').submit(function(){
+			$.AIM.submit(this, ThemeDesigner.backgroundImageUploadCallback);
+		});
+		
 		var currentVal = ThemeDesigner.settings["page-opacity"];
 		var base = 70;
 		$("#OpacitySlider").slider({
@@ -174,7 +179,7 @@ var ThemeDesigner = {
 
 			ThemeDesigner.track('wordmark/choose');
 		});
-
+		
 		//grapic wordmark button
 		$("#WordmarkTab").find(".graphic").find(".preview").find("a").click(function(event) {
 			event.preventDefault();
@@ -186,6 +191,11 @@ var ThemeDesigner = {
 
 			ThemeDesigner.track('wordmark/nowordmark');
 		});
+		
+		// submit handler for uploading custom logo image
+		$('#WordMarkUploadForm').submit(function() {
+			$.AIM.submit(this, ThemeDesigner.wordmarkUploadCallback);
+		});
 
         //remove favicon link
 		$("#WordmarkTab").find(".favicon").find(".preview").find("a").click(function(event) {
@@ -196,6 +206,11 @@ var ThemeDesigner = {
 			$('#FaviconUploadForm')[0].reset();
 
 			ThemeDesigner.track('favicon/faviconwordmark');
+		});
+		
+		// submit handler for uploading favicon image
+		$('#FaviconUploadForm').submit(function() {
+			$.AIM.submit(this, ThemeDesigner.faviconUploadCallback);
 		});
 	},
 

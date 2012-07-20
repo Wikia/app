@@ -49,6 +49,9 @@ var UploadPhotos = {
 				// event handlers
 				UploadPhotos.filepath.change(UploadPhotos.filePathSet);
 				UploadPhotos.destfile.blur(UploadPhotos.destFileSet);
+				UploadPhotos.d.find('form').submit(function() {
+					$.AIM.submit(this, UploadPhotos.uploadCallback);
+				});
 				UploadPhotos.advanced.click(function(evt) {
 					evt.preventDefault();
 
