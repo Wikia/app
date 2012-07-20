@@ -17,76 +17,141 @@ class wikiMap extends WikiaObject {
 
         $this->app->wf->profileIn( __METHOD__ );
 
-        $result = SassUtil::getOasisSettings();
-        $colours['line'] = $result['color-buttons'];
-        $colours['labels'] = $result['color-links'];
-        $colours['body'] = $result['color-page'];
+            $result = SassUtil::getOasisSettings();
+            $colours['line'] = $result['color-buttons'];
+            $colours['labels'] = $result['color-links'];
+            $colours['body'] = $result['color-page'];
 
         $this->app->wf->profileOut( __METHOD__ );
         return $colours;
 
     }
-    public function getArticles($Category){
+
+    public function getListOfCategories(){
+
         $this->app->wf->profileIn( __METHOD__ );
 
-        $result = null;
+        $key = $this->app->wf->MemcKey( 'wikiMap', 'categories' );
+        $data = $this->app->wg->memc->get($key);
 
-        //If there is no parameter specified, wikiMap will base on list of articles with most revisions
-        if(is_null($Category)){
-            $result = ApiService::call(array('action' =>'query',
-                'list' => 'querypage',
-                'qppage' => 'Mostrevisions',
-                'qplimit' => '120'
-            ));
-            $result=$result['query']['querypage']['results'];
-            //var_dump($result);
-            $res = array();
-            $map = array();
-            foreach ($result as $i => $item){
-                if ($item['ns']==0){
-                    $res[] = array('title' => $item['title'], 'id' => $item['value'], 'connections' => array());
-                    $map[$item['title']] = $i;
-                }
-            }
+        if (is_array($data)){
+            $out = $data;
         }
-
         else
         {
-
-            //Getting list of articles belonging to specified category using API
             $result = ApiService::call(array('action' =>'query',
-                                'list' => 'categorymembers',
-                                'cmtitle' => 'Category:' . $Category,
-                                'cmnamespace' => '0',
-                                'cmlimit' => '120'
+                'list' => 'querypage',
+                'qppage' => 'Mostpopularcategories',
+                'qplimit' => '20'));
+            $result=$result['query']['querypage']['results'];
+            $i=0;
+            foreach($result as $item){
+                $res[] = array('title' => $item['title'], 'titleNoSpaces' => str_replace(' ', '_', $item['title']));
+                $i++;
+            }
+            $out = array('data' => $res, 'length' => $i);
+            $this->app->wg->memc->set($key, $out, 86400);
+        }
+        $this->app->wf->profileOut( __METHOD__ );
+        return $out;
+    }
+
+    public function getArticles($Category){
+
+        $this->app->wf->profileIn( __METHOD__ );
+        $result = null;
+
+        $key = $this->app->wf->MemcKey( 'wikiMap', 'articles', $Category );
+        $data = $this->app->wg->memc->get($key);
+
+        if (is_array($data)){
+            $new = $data;
+        }
+        else
+        {
+            //If there is no parameter specified, wikiMap will base on list of articles with most revisions
+            if(is_null($Category)){
+                $result = ApiService::call(array('action' =>'query',
+                    'list' => 'querypage',
+                    'qppage' => 'Mostrevisions',
+                    'qplimit' => '120'
                 ));
+                $result=$result['query']['querypage']['results'];
+                $res = array();
+                $map = array();
+                foreach ($result as $i => $item){
+                    if ($item['ns']==0){
+                        $title = F::build('Title',array($item['title']),'newFromText');
+                        if($title instanceof Title)  {
+                            $articleId = $title->getArticleId();
+                            $res[] = array('title' => $item['title'], 'id' => $articleId, 'connections' => array());
+                            $map[$item['title']] = $i;
+                        }
+                    }
+                }
+                $new = $this->query($res, $map);
+                $this->app->wg->memc->set($key, $new, 86400);
+            }
 
-            //Preparing arrays to be used as parameters for next method
-            $result = $result['query']['categorymembers'];
+            else{
 
-        $res = array();
-        $map = array();
-        foreach ($result as $i => $item){
-                    $res[] = array('title' => $item['title'], 'id' => $item['pageid'], 'connections' => array());
-                    $map[$item['title']] = $i;
+                //Getting list of articles belonging to specified category using API
+                $result = ApiService::call(array('action' =>'query',
+                                    'list' => 'categorymembers',
+                                    'cmtitle' => 'Category:' . $Category,
+                                    'cmnamespace' => '0',
+                                    'cmlimit' => '5000'
+                    ));
+
+                //Preparing arrays to be used as parameters for next method
+                $result = $result['query']['categorymembers'];
+
+                foreach ($result as $item){
+                    $ids[] = $item['pageid'];
+                }
+                $dbr = $this->getDB();
+                $newquery = $dbr->select(
+                    array( 'revision', 'page' ),
+                    array( 'page_id',
+                        'page_title AS title',
+                        'COUNT(*) AS value'),
+                    array( 'page_id = rev_page', 'page_id' => $ids),
+                    __METHOD__,
+                    array ( 'HAVING' => 'COUNT(*) > 1',
+                    'GROUP BY' => 'page_title',
+                    'ORDER BY' => 'value desc',
+                    'LIMIT' => '120')
+                );
+                while ($row = $this->getDB()->fetchObject($newquery)){
+                    $resultSecondQuery[] = $row;
+                };
+                $res = array();
+                $map = array();
+                foreach ($resultSecondQuery as $i => $item){
+                    $articleTitle = str_replace('_', ' ',$item->title);
+                    $res[] = array('title' => $articleTitle, 'id' => $item->page_id, 'connections' => array());
+                    $map[$articleTitle] = $i;
+                }
+
+                $new = $this->query($res, $map);
+                $this->app->wg->memc->set($key, $new, 900);
+            }
+
         }
-        }
+        //var_dump($new);
+
         $max=0;
-
-
-        $new = $this->query($res, $map);
         foreach($new as $item){
             $localMax = count($item['connections']);
             if ($localMax>$max) $max=$localMax;
         }
-        //var_dump($max);
 
         $this->app->wf->profileOut( __METHOD__ );
         return array('nodes' => $new, 'length' =>count($new), 'max' => $max);
     }
 
     //Method that performs query to database and format the data
-    public function query($item, $map){
+    private function query($item, $map){
 
         $this->app->wf->profileIn( __METHOD__ );
 
@@ -95,6 +160,8 @@ class wikiMap extends WikiaObject {
         for($i = 0; $i<count($item); $i++){
             $withoutSpace[$i] = str_replace(' ', '_', $item[$i]['title']);
             $keys[$i] = $item[$i]['id'];
+            $keysRev[$item[$i]['id']] = $i;
+
             $revertIDs[$item[$i]['id']] = $item[$i]['title'];
         }
 
@@ -106,8 +173,9 @@ class wikiMap extends WikiaObject {
             __METHOD__);
 
         while ($row = $this->getDB()->fetchObject($result)){
-            $item[$map[str_replace('_', ' ', $row->pl_title)]]['connections'][] = $map[$revertIDs[$row->pl_from]];
+            $item[$keysRev[$row->pl_from]]['connections'][] = $map[str_replace('_', ' ', $row->pl_title)];
         };
+
 
         $this->app->wf->profileOut( __METHOD__ );
         return $item;
