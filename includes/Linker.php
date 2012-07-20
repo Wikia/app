@@ -752,6 +752,15 @@ class Linker {
 
 		$s = "<div class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
 
+		/**
+		 * Wikia change begin - author Federico
+		 * allow access tot he $params variable
+		 */
+		$params = array();
+		/**
+		 * Wikia change end
+		 */
+
 		if ( !$exists ) {
 			$s .= self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
 			$zoomIcon = '';
