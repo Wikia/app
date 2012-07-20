@@ -76,10 +76,9 @@ class MediaToolItem extends WikiaObject {
 	 * @return string
 	 */
 	public function getOrigin() {
-		if($this->hasFile()) {
-			return ($this->getFile()->isLocal()) ? "local" : "remote";
-		}
-		return 'online';
+		//todo: this whole titleText checking looks like a hack :(
+		if (!is_null($this->titleText) || (!$this->hasFile())) return "online";
+		return ($this->getFile()->isLocal()) ? "local" : "remote";
 	}
 
 	/**
@@ -137,7 +136,7 @@ class MediaToolItem extends WikiaObject {
 	public function setTitle(Title $title) {
 		$this->title = $title;
 		$this->setHash(md5($title->getFullText()));
-		$this->setDescription("fake description");
+		$this->setDescription("fake description for existing media");
 		if($this->hasFile()) {
 			$this->setIsVideo( WikiaFileHelper::isFileTypeVideo( $this->getFile() ) );
 		}

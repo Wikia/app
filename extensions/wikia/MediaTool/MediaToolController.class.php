@@ -48,6 +48,7 @@ class MediaToolController extends WikiaController {
 				}
 				else {
 					$item->setTitleText($wrapper->getTitle());
+					$item->setDescription("fake description for online media");
 					$item->setUploader($this->wg->User);
 					$item->setThumbUrl($wrapper->getThumbnailUrl());
 					$item->setThumbHtml(false);
@@ -143,7 +144,8 @@ class MediaToolController extends WikiaController {
 		$data = array();
 		$data[] = F::build('MediaToolItem', array( 'title' => Title::newFromText('Battlefield 3 Myth Busting Episode 2 by Fhrope (Battlefield 3 Gameplay Commentary)', NS_FILE) ))->toArray();
 		$data[] = F::build('MediaToolItem', array( 'title' => Title::newFromText('256.jpeg', NS_FILE) ))->toArray();
-
+		//$data[] = F::build('MediaToolItem', array( 'title' => Title::newFromText('Aunt Bam\'s Place (2012) - Home Video Trailer for Aunt Bam\'s Place', NS_FILE) ))->toArray();
+		//$data[] = F::build('MediaToolItem', array( 'title' => Title::newFromText('Dream_Theater_-_Octavarium', NS_FILE) ))->toArray();
 		$this->response->setData( $data );
 	}
 
