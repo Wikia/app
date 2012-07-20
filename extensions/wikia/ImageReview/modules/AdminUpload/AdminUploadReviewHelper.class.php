@@ -28,7 +28,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 			ImageReviewStatuses::STATE_QUESTIONABLE => array(),
 		);
 
-		foreach ($images as $image) {
+		foreach( $images as $image ) {
 			if ($image['state'] == ImageReviewStatuses::STATE_APPROVED) {
 				$sqlWhere[ImageReviewStatuses::STATE_APPROVED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$approvalList [] = $image;
@@ -36,7 +36,7 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 				$visualization = F::build('CityVisualization');
 				$targetWikiId = $visualization->getTargetWikiId($image['lang']);
 
-				if (empty($taskAdditionList[$targetWikiId])) {
+				if( empty($taskAdditionList[$targetWikiId]) ) {
 					$taskAdditionList[$targetWikiId] = array();
 				}
 				if (empty($taskAdditionList[$targetWikiId][$image['wikiId']])) {

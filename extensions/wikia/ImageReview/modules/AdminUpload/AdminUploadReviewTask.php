@@ -18,6 +18,8 @@ class AdminUploadReviewTask extends BatchTask {
 
 	protected $helper;
 	protected $model;
+	protected $corporatePagesIds = array(80433, 111264);
+	protected $dbNamesToBeSkipped = array('wikiaglobal', 'dewiki');
 
 	function __construct($params = array()) {
 		$this->mType = 'adminuploadreview';
@@ -67,7 +69,6 @@ class AdminUploadReviewTask extends BatchTask {
 
 	function uploadImages($targetWikiId, $wikis) {
 		$targetWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $targetWikiId);
-		$fileNamespace = MWNamespace::getCanonicalName(NS_FILE);
 
 		foreach($wikis as $sourceWikiId => $images) {
 			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
@@ -76,8 +77,10 @@ class AdminUploadReviewTask extends BatchTask {
 				$result = $this->uploadSingleImage($image['id'], $image['name'], $targetWikiId, $sourceWikiId);
 
 				if( $result['status'] === 0 ) {
-					$uploadedImgName = str_replace( $fileNamespace.':', '', $result['title']);
-					$uploadedImages[] = $uploadedImgName;
+					$uploadedImages[] = array(
+						'id' => $result['id'],
+						'name' => $result['name'],
+					);
 				}
 			}
 
@@ -96,6 +99,12 @@ class AdminUploadReviewTask extends BatchTask {
 					F::app()->wg->Memc->set($memcKey, null);
 				}
 			}
+		}
+
+		if( !empty($uploadedImages) && in_array($sourceWikiId, $this->corporatePagesIds) ) {
+		//if wikis have been added by import script
+			$this->addImagesToPromoteDb($targetWikiId, $targetWikiLang, $uploadedImages);
+			$this->model->purgeWikiPromoteDataCache($targetWikiId, $targetWikiLang);
 		}
 
 		if( !empty($uploadedImages) ) {
@@ -126,8 +135,6 @@ class AdminUploadReviewTask extends BatchTask {
 			return array('status' => 1);
 		}
 
-		$city_path = WikiFactory::getVarValueByName("wgScript", $targetWikiId);
-
 		$dbname = WikiFactory::IDtoDB($sourceWikiId);
 		$destinationName = $this->getNameWithWiki($destinationName, $dbname);
 
@@ -143,12 +150,15 @@ class AdminUploadReviewTask extends BatchTask {
 		if( $retval ) {
 			$this->log('Upload error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
 		} else {
-			$this->log('Upload successful: <a href="' . $city_url . $city_path . '/?title=' . wfEscapeWikiText($output) . '">' . $city_url . $city_path . '/?title=' . $output . '</a>');
+			$this->log('Upload successful: '.$output);
 		}
+
+		$output = json_decode($output);
 
 		return array(
 			'status' => $retval,
-			'title' => $output,
+			'name' => $output->name,
+			'id' => $output->id, //page_id
 		);
 	}
 
@@ -225,18 +235,23 @@ class AdminUploadReviewTask extends BatchTask {
 	}
 
 	protected function getNameWithWiki($destinationName, $wikiDBname) {
-		$destinationFileNameArr = explode('.', $destinationName);
-		$destinationFileExt = array_pop($destinationFileNameArr);
+		if( !in_array($wikiDBname, $this->dbNamesToBeSkipped) ) {
+			$destinationFileNameArr = explode('.', $destinationName);
+			$destinationFileExt = array_pop($destinationFileNameArr);
 
-		array_splice($destinationFileNameArr, 1, 0, array(',', $wikiDBname));
+			array_splice($destinationFileNameArr, 1, 0, array(',', $wikiDBname));
 
-		return implode('', $destinationFileNameArr).'.'.$destinationFileExt;
+			return implode('', $destinationFileNameArr).'.'.$destinationFileExt;
+		} else {
+			return $destinationName;
+		}
 	}
 
 	protected function getImagesToUpdateInDb($images) {
 		$data = array();
 
-		foreach($images as $imageName) {
+		foreach($images as $image) {
+			$imageName = $image['name'];
 			if( $this->getImageType($imageName) === 'main' ) {
 				$data['city_main_image'] = $imageName;
 			}
@@ -280,6 +295,59 @@ class AdminUploadReviewTask extends BatchTask {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * @desc Adding data of wikis imported on wikia.com by import script
+	 *
+	 * @param $targetWikiId
+	 * @param $targetWikiLang
+	 * @param $images
+	 */
+	protected function addImagesToPromoteDb($targetWikiId, $targetWikiLang, $images) {
+		global $wgExternalSharedDB;
+
+		foreach( $images as $image ) {
+			$imageData = new stdClass();
+
+			$imageName = $image['name'];
+			$imageIndex = 0;
+			$matches = array();
+			if( preg_match('/Wikia-Visualization-Add-([0-9])\.*/', $imageName, $matches) ) {
+				$imageIndex = intval($matches[1]);
+			}
+
+			$imageData->city_id = $targetWikiId;
+			$imageData->page_id = $image['id'];
+			$imageData->city_lang_code = $targetWikiLang;
+			$imageData->image_index = $imageIndex;
+			$imageData->image_name = $imageName;
+			$imageData->image_review_status = ImageReviewStatuses::STATE_APPROVED;
+			$imageData->last_edited = date('Y-m-d H:i:s');
+			$imageData->review_start = null;
+			$imageData->review_end = null;
+			$imageData->reviewer_id = null;
+
+			$imagesToAdd[] = $imageData;
+		}
+
+		$dbm = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		$dbm->begin(__METHOD__);
+
+		foreach( $imagesToAdd as $image ) {
+			$insertArray = array();
+
+			foreach( $image as $field => $value ) {
+				$insertArray[$field] = $value;
+			}
+
+			$dbm->insert(
+				'city_visualization_images',
+				$insertArray
+			);
+		}
+
+		$dbm->commit(__METHOD__);
 	}
 
 	function getForm($title, $errors = false) {

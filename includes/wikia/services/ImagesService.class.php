@@ -101,6 +101,7 @@ class ImagesService extends Service {
 
 		return array(
 			'status' => $result->ok,
+			'page_id' => $title->getArticleID(),
 			'errors' => $result->errors,
 		);
 	}
