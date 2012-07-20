@@ -322,7 +322,9 @@ function wfWikiFeeds() {
 
 							$feedDate = 0;
 							foreach ($Feed->items as $i) {
-								if ($i->mArticle->mTimestamp > $feedDate) $feedDate = $i->mArticle->mTimestamp;
+								if ($i->mArticle->getTimestamp() > $feedDate) {
+									$feedDate = $i->mArticle->getTimestamp();
+								}
 							}
 
 							$Feed->lastUpdated = wfTimestamp(TS_UNIX, $feedDate);
@@ -780,7 +782,7 @@ function wfWikiFeeds() {
 
         $this->mArticle->fetchContent($this->mRevId);
 
-        $this->publishTime = wfTimestamp(TS_UNIX, $this->mArticle->mTimestamp);
+        $this->publishTime = wfTimestamp(TS_UNIX, $this->mArticle->getTimestamp());
         $this->title = $this->mTitle->getFullText();
 
         if ($rcid == 0) {
