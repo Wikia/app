@@ -77,7 +77,7 @@ class MediaToolItem extends WikiaObject {
 	 */
 	public function getOrigin() {
 		if($this->hasFile()) {
-			return 'local'; //@todo: implement 'remote' for remote repos (like video wiki)
+			return ($this->getFile()->isLocal()) ? "local" : "remote";
 		}
 		return 'online';
 	}
@@ -100,8 +100,8 @@ class MediaToolItem extends WikiaObject {
 	 * @return bool
 	 */
 	public function isFollowed() {
-		if($this->hasFile()) {
-			return false; //@todo: implement for local files (remote and online will ignore this)
+		if ($this->getOrigin() == "local") {
+			return $this->getTitle()->userIsWatching();
 		}
 		return null;
 	}
