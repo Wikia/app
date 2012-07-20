@@ -147,7 +147,6 @@ var MediaTool = MediaTool || (function () {
 		$( basketContent).each( function(i, item) {
 			cart.createItem(item, templateItem);
 		});
-		//TODO: switch to "Edit media tab"
 		changeCurrentView( "edit" );
 	}
 
