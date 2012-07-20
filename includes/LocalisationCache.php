@@ -637,7 +637,7 @@ class LocalisationCache {
 					}
 				}
 				// wikia changes end
-				wfDebug( __METHOD__.": got fallback localisation for $fbcode from source\n" );
+				wfDebug( __METHOD__.": got fallback localisation for $fbCode from source\n" );
                         
 				foreach ( self::$allKeys as $key ) {
 					if ( !isset( $fbData[$key] ) ) {
