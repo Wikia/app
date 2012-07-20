@@ -287,7 +287,7 @@ EOT
 	public static function getUserData($userName, $wikiId, $wikiUrl, $checkingBlocks = false) {
 		wfProfileIn( __METHOD__ );
 
-		global $wgMemc;
+		global $wgMemc, $wgStylePath;
 
 		$cachedData = $wgMemc->get( LookupUserPage::getUserLookupMemcKey($userName, $wikiId) );
 		if( !empty($cachedData) ) {
@@ -308,14 +308,14 @@ EOT
 		} else {
 			if( $checkingBlocks === false ) {
 				$result = '<span class="user-groups-placeholder">'.
-							'<img src="/skins/common/images/ajax.gif" />'.
+							'<img src="' . $wgStylePath . '/common/images/ajax.gif" />'.
 							'<input type="hidden" class="name" value="'.$userName.'" />'.
 							'<input type="hidden" class="wikiId" value="'.$wikiId.'" />'.
 							'<input type="hidden" class="wikiUrl" value="'.$wikiUrl.'" />'.
 							'</span>';
 			} else {
 				$result = '<span class="user-blocked-placeholder-'.$wikiId.'">'.
-							'<img src="/skins/common/images/ajax.gif" />'.
+							'<img src="' . $wgStylePath .'/common/images/ajax.gif" />'.
 							'</span>';
 			}
 

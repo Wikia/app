@@ -245,7 +245,7 @@ class WikiFactoryPage extends SpecialPage {
 	 * @return nothing
 	 */
 	public function doWikiForm() {
-		global $wgOut, $wgRequest;
+		global $wgOut, $wgRequest, $wgStylePath;
 		global $wgDevelEnvironment;
 
 		$info = null;
@@ -363,7 +363,8 @@ class WikiFactoryPage extends SpecialPage {
 			"wikiRequest" => $oWikiRequest,
 			"variableName"=> $this->mVariableName,
 			"isDevel"     => $wgDevelEnvironment,
-			'wikiFactoryUrl' => Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl()
+			'wikiFactoryUrl' => Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl(),
+			'wgStylePath' => $wgStylePath,
 		);
 		if( $this->mTab === 'info' ) {
 			$vars[ 'founder_id' ] = $this->mWiki->city_founding_user;

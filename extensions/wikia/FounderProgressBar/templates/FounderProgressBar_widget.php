@@ -69,7 +69,7 @@
 		<? if($showCompletionMessage) { ?>
 			<p class="completion-message">
 				<button class="close wikia-chiclet-button">
-					<img src="/skins/oasis/images/icon_close.png">
+					<img src="<?= $wg->StylePath ?>/oasis/images/icon_close.png">
 				</button>
 				<?= wfMsg('founderprogressbar-completion-message') ?>
 			</p>
