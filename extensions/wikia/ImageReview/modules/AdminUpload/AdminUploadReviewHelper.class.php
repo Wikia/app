@@ -497,4 +497,19 @@ class AdminUploadReviewHelper extends ImageReviewHelperBase {
 
 		return $url;
 	}
+
+	protected function getOrder($order) {
+		switch ($order) {
+			case self::ORDER_PRIORITY_LATEST:
+				$ret = 'last_edited desc';
+				break;
+			case self::ORDER_OLDEST:
+				$ret = 'last_edited asc';
+				break;
+			case self::ORDER_LATEST:
+			default:
+				$ret = 'last_edited desc';
+		}
+		return $ret;
+	}
 }
