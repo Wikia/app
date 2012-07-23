@@ -40,6 +40,7 @@ $messages['en'] = array(
 	"wikifactory-label-eznamespace" => "EZNamespace",
 	"wikifactory-label-compare" => "Compare",
 	"right-wikifactory" => "Change internal settings for wikis",
+	'action-wikifactory' => 'change internal settings for wikis',
 	'wikifactory-domain-edit' => 'edit this URL',
 	'wikifactory-domain-remove' => 'remove this URL from wiki',
 	'wikifactory-domain-setmain' => 'put this URL into wgServer',
@@ -57,7 +58,7 @@ $messages['en'] = array(
 	"closewiki-return" => "Back to $1",
 	'wikifactory-button-saveparse' => "Parse &amp; Save changes",
 	'wikifactory-button-save' => 'Save changes',
-        'wikifactory-public-status-change-default-reason' => 'Status changed from the Domains tab.',
+	'wikifactory-public-status-change-default-reason' => 'Status changed from the Domains tab.',
 // metrics
 	"awc-metrics-language-top-list" => "de,en,es,fr,it,ja,pl,pt,pt-br,zh",
 	"awc-metrics-wikis" => "Display Wikis",
@@ -181,6 +182,7 @@ $messages['qqq'] = array(
 	'closed-hide-dumps' => 'The exact meaning is: "Hide database dump and hide image dump", i.e. both are dumps.',
 	'closed-reason' => '{{Identical|Reason}}',
 	'newwikisgraph' => 'Title of a special page',
+	'action-wikifactory' => '{{doc-action|wikifactory}}',
 );
 
 /** Afrikaans (Afrikaans)
