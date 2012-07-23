@@ -16,6 +16,34 @@
  * Test it using: $('<time datetime="2012-07-06T14:23:57Z">').timeago()
  */
 (function ($) {
+	function distance(date) {
+		return (new Date().getTime() - date.getTime());
+	}
+
+	function inWords(date) {
+		return $t.inWords(distance(date));
+	}
+
+	function refresh() {
+		var data = prepareData(this);
+		if (!isNaN(data.datetime)) {
+			$(this).text(inWords(data.datetime));
+		}
+		return this;
+	}
+
+	function prepareData(element) {
+		element = $(element);
+		if (!element.data("timeago")) {
+			element.data("timeago", { datetime:$t.datetime(element) });
+			var text = $.trim(element.text());
+			if (text.length > 0) {
+				element.attr("title", text);
+			}
+		}
+		return element.data("timeago");
+	}
+
 	$.timeago = function (timestamp) {
 		if (timestamp instanceof Date) {
 			return inWords(timestamp);
@@ -25,6 +53,7 @@
 			return inWords($.timeago.datetime(timestamp));
 		}
 	};
+
 	var $t = $.timeago;
 
 	$.extend($.timeago, {
@@ -54,16 +83,16 @@
 				return string.replace(/%d/i, number);
 			}
 
-			var words = seconds < 45 && substitute('seconds', Math.round(seconds)) ||
-				seconds < 90 && substitute('minute', 1) ||
-				minutes < 45 && substitute('minutes', Math.round(minutes)) ||
-				minutes < 90 && substitute('hour', 1) ||
-				hours < 24 && substitute('hours', Math.round(hours)) ||
-				hours < 48 && substitute('day', 1) ||
-				days < 30 && substitute('days', Math.floor(days)) ||
-				days < 60 && substitute('month', 1) ||
-				days < 365 && substitute('months', Math.floor(days / 30)) ||
-				years < 2 && substitute('year', 1) ||
+			var words = (seconds < 45 && substitute('seconds', Math.round(seconds))) ||
+				(seconds < 90 && substitute('minute', 1)) ||
+				(minutes < 45 && substitute('minutes', Math.round(minutes))) ||
+				(minutes < 90 && substitute('hour', 1)) ||
+				(hours < 24 && substitute('hours', Math.round(hours))) ||
+				(hours < 48 && substitute('day', 1)) ||
+				(days < 30 && substitute('days', Math.floor(days))) ||
+				(days < 60 && substitute('month', 1)) ||
+				(days < 365 && substitute('months', Math.floor(days / 30))) ||
+				(years < 2 && substitute('year', 1)) ||
 				substitute('years', Math.floor(years));
 
 			return words;
@@ -77,9 +106,11 @@
 			return new Date(s);
 		},
 		datetime:function (elem) {
+			var node = $(elem);
+
 			// jQuery's `is()` doesn't play well with HTML5 in IE
-			var isTime = $(elem).get(0).tagName.toLowerCase() === "time"; // $(elem).is("time");
-			var iso8601 = isTime ? $(elem).attr("datetime") : $(elem).attr("title");
+			var isTime = node.get(0).tagName.toLowerCase() === "time"; // $(elem).is("time");
+			var iso8601 = isTime ? node.attr("datetime") : node.attr("title");
 			return $t.parse(iso8601);
 		}
 	});
@@ -96,34 +127,6 @@
 		}
 		return self;
 	};
-
-	function refresh() {
-		var data = prepareData(this);
-		if (!isNaN(data.datetime)) {
-			$(this).text(inWords(data.datetime));
-		}
-		return this;
-	}
-
-	function prepareData(element) {
-		element = $(element);
-		if (!element.data("timeago")) {
-			element.data("timeago", { datetime:$t.datetime(element) });
-			var text = $.trim(element.text());
-			if (text.length > 0) {
-				element.attr("title", text);
-			}
-		}
-		return element.data("timeago");
-	}
-
-	function inWords(date) {
-		return $t.inWords(distance(date));
-	}
-
-	function distance(date) {
-		return (new Date().getTime() - date.getTime());
-	}
 
 	// fix for IE6 suckage
 	document.createElement("abbr");
