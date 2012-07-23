@@ -20,8 +20,8 @@ $messages['en'] = array(
 	'wikiasearch2-results' => '$1 {{PLURAL:$1|result|results}}',
 	'wikiasearch2-pages' => '$1 {{PLURAL:$1|page|pages}}',
 	'wikiasearch2-search-on-wiki' => 'Search within this wiki',
-	'wikiasearch2-results-count' => 'About $1 {{PLURAL:$1|result|results}} for $2',
-	'wikiasearch2-results-for' => 'Results for $1',
+	'wikiasearch2-results-count' => 'About $1 {{PLURAL:$1|result|results}} for $2 from {{SITENAME}}',
+	'wikiasearch2-results-for' => 'Results for $1 from {{SITENAME}}',
 	'wikiasearch2-global-search-headline' => 'Find wikis on Wikia',
 	'wikiasearch2-wiki-search-headline' => 'Search this wiki',
 	'wikiasearch2-advanced-search' => 'Advanced Search Options',
@@ -45,8 +45,8 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'wikiasearch2-page-title-with-query' => 'The message is used as the title of the page (appears in the title bar of a browser window). Parameters: $1 - a keyword or a search term searched for; $2 - the name of the wiki.',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'The message says "search this wiki" as opposed to "search all Wikia network". Parameters:
-* $1 is the name of the wiki to be searched.',
-	'wikiasearch2-results-count' => 'Parameters: $1 - a number of items in the search results list; $2 - a keyword or a search term searched for.',
+* $1 is the name of the wiki to be searched; {{SITENAME}} - see: http://www.mediawiki.org/wiki/Manual:$wgSitename.',
+	'wikiasearch2-results-count' => 'Parameters: $1 - a number of items in the search results list; $2 - a keyword or a search term searched for; {{SITENAME}} - see: http://www.mediawiki.org/wiki/Manual:$wgSitename.',
 	'wikiasearch2-results-for' => 'Parameter: $1 - a keyword or a search term searched for.',
 	'wikiasearch2-enable-go-search' => 'Preferences setting next to a checkbox which asks you whether you want to enable Go-Search (going directly to a page title match in search) or not. Default = off',
 	'wikiasearch2-search-ads-header' => 'Heading displayed above search advertisements.',
