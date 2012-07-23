@@ -164,31 +164,31 @@ $config['oasis_wikia_js'] = array(
 /** Oasis **/
 
 $config['oasis_shared_js_user'] = array(
-    'type' => AssetsManager::TYPE_JS,
-    'assets' => array(
-        '#group_oasis_shared_js',
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_shared_js',
 		'#group_oasis_user_js',
 	)
 );
 
 $config['oasis_shared_js_anon'] = array(
-    'type' => AssetsManager::TYPE_JS,
-    'assets' => array(
-        '#group_oasis_shared_js',
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_shared_js',
 		'#group_oasis_anon_js',
 	)
 );
 
 //core shared JS
 $config['oasis_shared_js'] = array(
-    'type' => AssetsManager::TYPE_JS,
-    'assets' => array(
-        // shared libraries
-        '#group_oasis_jquery',
-        '#group_oasis_wikia_js',
-        '#group_oasis_nojquery_shared_js',
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		// shared libraries
+		'#group_oasis_jquery',
+		'#group_oasis_wikia_js',
+		'#group_oasis_nojquery_shared_js',
 		'#group_oasis_extensions_js',
-    )
+	)
 );
 
 
