@@ -3,7 +3,7 @@
 	<ul>
 		<?php foreach($participants as $value): ?>
 			<li>
-				<?= AvatarService::renderAvatar($value['user']->getName(), 24); ?>
+				<?= AvatarService::renderAvatar($value['user']->getName(), 20); ?>
 				<em>
 					<a href="<?php echo $value['user']->getUserPage()->getFullUrl(); ?>"><?php echo $value['display_username'] ?></a>
 					<?php if($value['user']->getId() == 0): ?>

@@ -3,7 +3,7 @@
 	<ul>
 		<?php foreach($posts as $value): ?>
 		<li>
-			<?= AvatarService::renderAvatar($value['user']->getName(), 24); ?>
+			<?= AvatarService::renderAvatar($value['user']->getName(), 20); ?>
 			<em>
 				<a href="<?= $value['wall_message']->getMessagePageUrl(); ?>"><?= $value['metatitle']; ?></a>
 			</em>
