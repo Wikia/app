@@ -596,6 +596,14 @@ class Linker {
 			$thumb = false;
 		}
 
+		/**
+		 * Wikia change begin
+		 */
+		$params = array();
+		/**
+		 * Wikia change end
+		 */
+
 		if ( !$thumb ) {
 			$s = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
 		} else {
