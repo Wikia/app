@@ -7,7 +7,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
 
 function wfJSVariablesTopScripts(Array $vars) {
-	global $wgWikiFactoryTags, $wgDBname, $wgMedusaSlot;
+	global $wgWikiFactoryTags, $wgDBname, $wgCityId, $wgMedusaSlot;
 	
 	// ads need it
 	$vars['wgAfterContentAndJS'] = array();
@@ -18,21 +18,28 @@ function wfJSVariablesTopScripts(Array $vars) {
 	
 	// analytics needs it
 	$vars['wgDBname'] = $wgDBname;
+	$vars['wgCityId'] = $wgCityId;
 	if (!empty($wgMedusaSlot)) {
 		$vars['wgMedusaSlot'] = 'slot' . $wgMedusaSlot;
 	}
-
+	
 	// c&p from OutputPage::getJSVars with an old 1.16 name
 	$title = F::app()->wg->Title;
 	$lang = $title->getPageLanguage();
 	$vars['wgContentLanguage'] = $lang->getCode();
-	
+
+	// c&p from OutputPage::getJSVars with a new name
+	$user = F::app()->wg->User;
+	if ($user->isAnon()) {
+		$vars['wgIsAnon'] = true;
+	}
+
 	return true;
 }
 
 function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
-	global $wgMemc, $wgCityId, $wgEnableAjaxLogin, $wgPrivateTracker, $wgExtensionsPath,
+	global $wgMemc, $wgEnableAjaxLogin, $wgPrivateTracker, $wgExtensionsPath,
 		$wgArticle, $wgStyleVersion, $wgSitename, $wgDisableAnonymousEditing,
 		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath;
 
@@ -49,8 +56,6 @@ function wfMakeGlobalVariablesScript(Array $vars, OutputPage $out) {
 	    $vars['wgCatId'] = 0;
 	    $vars['wgParentCatId'] = 0;
 	}
-
-	$vars['wgCityId'] = $wgCityId;
 
 	$skinName = get_class($skin);
 	if (is_array($wgEnableAjaxLogin) && in_array($skinName, $wgEnableAjaxLogin)) {
