@@ -4,6 +4,10 @@
     </h1>
 </div>
 <div id="wikiMap"></div>
+<div id="checkBoxContainer">
+    <input type="checkbox" id="animationCheckbox">
+    <?echo $animation;?>
+</div>
 <div id="categoriesContainer">
     <h2>
         <?=$categoriesHeader?>

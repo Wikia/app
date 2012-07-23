@@ -18,7 +18,6 @@ class wikiMapSpecialController extends WikiaSpecialPageController {
         $parameter = $this->getPar();
         $parameterSpaces = str_replace('_', ' ',$parameter);
 
-        $wikiId = $this->getVal( 'wikiId', $this->wg->CityId );
         $this->wg->Out->setPageTitle( $this->wf->msg('wikiMap-specialpage-title'));
         // setting response data
         if (is_null($parameter)){
@@ -32,14 +31,11 @@ class wikiMapSpecialController extends WikiaSpecialPageController {
             $output = '<a href="' . $path . '">' . $this->wf->msg('wikiMap-category') . $parameterSpaces . '</a>';
             $this->setVal( 'header', $output);
 
-
-
-           // $this->setVal( 'header', $this->wf->msg('wikiMap-category') . $parameterNoSpaces . ']]');
         }
         $this->setVal( 'categoriesHeader', $this->wf->msg('wikiMap-categoriesHeader'));
+        $this->setVal( 'animation', $this->wf->msg('wikiMap-animation'));
 
         $this->setVal( 'res', $this->businessLogic->getArticles($parameter));
-        //$this->setVal( 'path', $this->app->wg->get('wgArticlePath'));
         $this->setVal( 'colourArray', $this->businessLogic->getColours());
         $this->setVal( 'categories', $this->businessLogic->getListOfCategories());
 

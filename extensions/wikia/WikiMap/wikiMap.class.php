@@ -138,7 +138,6 @@ class wikiMap extends WikiaObject {
             }
 
         }
-        //var_dump($new);
 
         $max=0;
         foreach($new as $item){
