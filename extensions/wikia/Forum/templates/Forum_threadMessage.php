@@ -19,7 +19,7 @@
 		<h4 class="msg-title">
 			<?= $feedtitle ?>
 		</h4>
-		<? if ($wg->EnableMiniEditorExtForForum): ?>
+		<? if ($wg->EnableMiniEditorExtForWall): ?>
 			<?= $app->getView('MiniEditorController', 'Header', array(
 				'attributes' => array(
 					'data-min-height' => 100,
@@ -29,7 +29,7 @@
 			<?= $app->getView('MiniEditorController', 'Editor_Header')->render() ?>
 		<? endif ?>
 			<div class="msg-body"><?= $body ?></div>
-			<? if ($wg->EnableMiniEditorExtForForum): ?>
+			<? if ($wg->EnableMiniEditorExtForWall): ?>
 				<?= $app->getView('MiniEditorController', 'Editor_Footer')->render() ?>
 			<? endif ?>
 			<!--
@@ -59,7 +59,7 @@
 					<? endif ?>
 				</a>
 			</div>
-		<? if ($wg->EnableMiniEditorExtForForum): ?>
+		<? if ($wg->EnableMiniEditorExtForWall): ?>
 			<?= $app->getView('MiniEditorController', 'Footer')->render() ?>
 		<? endif ?>
 		<div class="throbber"></div>
