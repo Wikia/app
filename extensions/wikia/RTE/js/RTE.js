@@ -326,7 +326,6 @@
 
 	// Create overlayNode when the DOM is ready
 	$(function() {
-		$('body').addClass('javascript');
 		RTE.overlayNode.appendTo('body');
 	});
 

@@ -65,6 +65,9 @@ class MiniEditorController extends WikiaController {
 			}
 		}
 
+		// We have to leave this in here because it includes RTE
+		$this->response->addAsset('extensions/wikia/MiniEditor/css/MiniEditor.scss');
+
 		// Additional assets
 		foreach($additionalAssets as $asset) {
 			$this->response->addAsset($asset);
