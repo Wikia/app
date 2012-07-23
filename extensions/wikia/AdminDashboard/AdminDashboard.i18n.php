@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'admindashboard-loading' => 'Loading…',
 	'admindashboard-title' => '{{SITENAME}} Dashboard',
 	'admindashboard-header' => 'Admin Dashboard',
 	'admindashboard-toolbar-link' => 'Admin',

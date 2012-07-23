@@ -47,7 +47,7 @@ var AdminDashboard = {
 		resetAll: function() {
 			AdminDashboard.ui.deselectAllTabs();
 			AdminDashboard.ui.hideAllSections();
-			AdminDashboard.section.contentarea.html('Loading...');	//i18n this later
+			AdminDashboard.section.contentarea.html( $.msg( 'admindashboard-loading' ) );
 			AdminDashboard.wikiaArticle.removeClass('AdminDashboardChromedArticle expanded');
 			$('.AdminDashboardDrawer, .AdminDashboardNavigation, .AdminDashboardArticleHeader').remove();
 			if(typeof FounderProgressList != 'undefined') {
