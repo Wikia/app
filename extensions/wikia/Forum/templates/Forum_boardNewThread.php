@@ -4,7 +4,7 @@
 		<blockquote class="message">
 			<div class="message-container">
 				<h4 class="heading">Start a Discussion</h4>
-				<? if ($wg->EnableMiniEditorExtForForum): ?>
+				<? if ($wg->EnableMiniEditorExtForWall): ?>
 					<?= $app->getView('MiniEditorController', 'Header', array(
 						'attributes' => array(
 							'data-min-height' => 200,
@@ -17,11 +17,11 @@
 					<span class="no-title-warning"><?= wfMsg('wall-no-title-warning') ?></span>
 				</div>
 				<div class="body-container">
-					<? if ($wg->EnableMiniEditorExtForForum): ?>
+					<? if ($wg->EnableMiniEditorExtForWall): ?>
 						<?= $app->getView('MiniEditorController', 'Editor_Header')->render() ?>
 					<? endif ?>
 					<textarea class="body" data-space-type="editarea" placeholder="<?= $wall_message ?>"></textarea>
-					<? if ($wg->EnableMiniEditorExtForForum): ?>
+					<? if ($wg->EnableMiniEditorExtForWall): ?>
 						<?= $app->getView('MiniEditorController', 'Editor_Footer')->render() ?>
 					<? endif ?>
 					<div class="buttons" data-space-type="buttons">
@@ -35,7 +35,7 @@
 						<?php endif; ?>
 					</div>
 				</div>
-				<? if ($wg->EnableMiniEditorExtForForum): ?>
+				<? if ($wg->EnableMiniEditorExtForWall): ?>
 					<?= $app->getView('MiniEditorController', 'Footer')->render() ?>
 				<? endif ?>
 			</div>
