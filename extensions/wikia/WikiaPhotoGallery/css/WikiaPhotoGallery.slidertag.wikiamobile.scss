@@ -8,6 +8,7 @@
 	.img{
 		//placeholder moved to image_placeholder.scss
 		display: inline-block;
+		position: relative;
 		background-color: $imagePlaceholderBackground;
 		background-size: 25%;
 		-webkit-transition: opacity .3s;
