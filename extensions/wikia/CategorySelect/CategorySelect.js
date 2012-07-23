@@ -20,9 +20,11 @@ function csTrack(fakeUrl) {
 
 function positionSuggestBox() {
 	if(csType != 'module') {
-		$('#csSuggestContainer').
-			css('top', ($('#csCategoryInput').get(0).offsetTop + $('#csCategoryInput').height() + 5) + 'px').
-			css('left', Math.min($('#csCategoryInput').get(0).offsetLeft, ($(window).width() - $('#csItemsContainer').get(0).offsetLeft - $('#csSuggestContainer').width() - 10)) + 'px');
+		var $csCategoryInput = $('#csCategoryInput');
+		var $csSuggestContainer = $('#csSuggestContainer');
+		$csSuggestContainer.
+			css('top', ($csCategoryInput.get(0).offsetTop + $csCategoryInput.height() + 5) + 'px').
+			css('left', Math.min($csCategoryInput.get(0).offsetLeft, ($(window).width() - $('#csItemsContainer').get(0).offsetLeft - $csSuggestContainer.width() - 10)) + 'px');
 	}
 }
 
@@ -152,8 +154,9 @@ function replaceAddToInput(e) {
 }
 
 function addAddCategoryButton() {
-	if ($('#csAddCategoryButton').length > 0) {
-		$('#csAddCategoryButton').show();
+	var $csAddCategoryButton = $('#csAddCategoryButton');
+	if ($csAddCategoryButton.length > 0) {
+		$csAddCategoryButton.show();
 	} else {
 		if(csType != 'module') {
 			elementA = document.createElement('span');
@@ -333,8 +336,9 @@ function initializeCategories(cats) {
 	}
 
 	//inform PHP what source should it use [this field exists only in 'edit page' mode]
-	if ($('#wpCategorySelectSourceType').length > 0 && window.csMode === 'json') {
-		$('#wpCategorySelectSourceType').attr('value', 'json');
+	var $wpCategorySelectSourceType = $('#wpCategorySelectSourceType');
+	if ($wpCategorySelectSourceType.length > 0 && window.csMode === 'json') {
+		$wpCategorySelectSourceType.attr('value', 'json');
 	}
 
 	// Only on view page, not on edit page
@@ -354,8 +358,9 @@ function initializeDragAndDrop() {
 			revert: 200,
 			start: function(event, ui) {
 				var srcEl = ui.item;
-				var width = ( parseInt($(srcEl).css('width') ) +  3 ) + 'px';
-				$(srcEl).css('width', width);
+				var $srcEl = $(srcEl);
+				var width = ( parseInt($srcEl.css('width') ) +  3 ) + 'px';
+				$srcEl.css('width', width);
 				csDraggingEvent = true;
 			},
 			stop: function(event, ui) {
@@ -594,10 +599,11 @@ function initSourceModeSuggest() {
 
 function initHandlers() {
 	//handle [enter] for non existing categories
-	$('#csCategoryInput').keypress(inputKeyPress);
-	$('#csCategoryInput').blur(inputBlur);
+	var $csCategoryInput = $('#csCategoryInput');
+	$csCategoryInput.keypress(inputKeyPress);
+	$csCategoryInput.blur(inputBlur);
 	if(csType == 'module') {
-		$('#csCategoryInput').focus(inputFocus);
+		$csCategoryInput.focus(inputFocus);
 	}
 
 	//TODO: add foucs
@@ -652,8 +658,9 @@ function showCSpanel() {
 function csSave() {
 	csTrack('saveCategory');
 
-	if ($('#csCategoryInput').attr('value') != '') {
-		addCategory($('#csCategoryInput').attr('value'));
+	var $csCategoryInput = $('#csCategoryInput');
+	if ($csCategoryInput.attr('value') != '') {
+		addCategory($csCategoryInput.attr('value'));
 	}
 	var pars = 'rs=CategorySelectAjaxSaveCategories&rsargs[]=' + wgArticleId + '&rsargs[]=' + encodeURIComponent(JSON.stringify(categories));
 	$.ajax({
