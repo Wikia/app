@@ -95,6 +95,7 @@ $wgSpecialPages['Chat'] = 'SpecialChat';
 
 // i18n
 $wgExtensionMessagesFiles['Chat'] = $dir.'/Chat.i18n.php';
+$wgExtensionMessagesFiles['Chatfailover'] = $dir.'/Chatfailover.i18n.php';
 $wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir.'/ChatDefaultEmoticons.i18n.php';
 
 // hooks

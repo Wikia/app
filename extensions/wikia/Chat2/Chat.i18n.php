@@ -102,31 +102,7 @@ $messages['en'] = array(
     'group-bannedfromchat' => 'Banned from chat',
     'group-bannedfromchat-member' => 'Banned from chat',
     'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
-    
-    
-    'chatfailover' => 'Chatfailover control center',
-    
-    'chat-failover-warning-title' => 'Read this carefully !!!',
-    
-    'chat-failover-warning' => "This special page allows you to switch the chat to failover mode.
-<br /><br />If you're not an engineer, performing this operation requires consultation.<br /><br />
-		If chat is operating allready in failover mode and the chat app is not working: DO not switch it beck to regular mode without consultating an operations engineer",
-    
-    'chat-failover-server-list' => 'Chat servers in use:',
-    
-    'chat-failover-operating-failover' => 'Chat is operating now in: <span>failover mode</span>',
-    'chat-failover-operating-regular' => 'Chat is operating now in: <span>regular mode</span>',
-    
-    'chat-failover-reason' => 'To switch mode enter a reason and press button',
-    
-    'chat-failover-switchmode-failover' => 'To switch to regular mode',
-    'chat-failover-switchmode-regular' => 'To switch to failover mode',
-    
-    'chat-failover-mode-areyousure' => 'Do you understands the consequences of this operation ???',
-    'chat-failover-reason-empty' => 'Reason can not be empty',
-    
-    'chat-failover-log-entry' => "$1 Chat operating mode changed by user [[User:$2]] to $3. '''Reason''': $4",
-    
+        
     'chat-ban-option-list' => '2 hours:2 hours,1 day:1 day,3 days:3 days,1 week:1 week,2 weeks:2 weeks,1 month:1 month,3 months:3 months,6 months:6 months,1 year:1 year,infinite:infinite',
     
     'chat-ban-log-change-ban-link' => 'change ban',
