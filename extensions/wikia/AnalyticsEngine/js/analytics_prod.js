@@ -6,7 +6,7 @@
  * @preserve Copyright(c) 2012 Cardinal Path
  * @author Eduardo Cereto <ecereto@cardinalpath.com>
  *
- * @version: prod_8
+ * @version: prod_9
  */
 
 (function(window, undefined) {
@@ -27,7 +27,7 @@
         // Special Wikis account - UA-32132943-1
         _gaq.push(['special._setAccount', 'UA-32132943-1']); // PROD
         //_gaq.push(['special._setAccount', 'UA-32132943-2']); // DEV
-        _gaq.push(['_setSampleRate', '100']); // No Sampling
+        _gaq.push(['special._setSampleRate', '100']); // No Sampling
     }
 
     /**
