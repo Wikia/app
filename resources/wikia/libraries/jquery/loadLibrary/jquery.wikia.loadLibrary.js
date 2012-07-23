@@ -101,7 +101,7 @@ $.loadGoogleMaps = function(callback) {
 		};
 
 	// Google Maps API is loaded
-	if (typeof (window.google && google.maps) != 'undefined') {
+	if (typeof (window.google && window.google.maps) != 'undefined') {
 		onLoaded();
 	}
 	else {
@@ -113,7 +113,7 @@ $.loadGoogleMaps = function(callback) {
 		// load GoogleMaps main JS and provide a name of the callback to be called when API is fully initialized
 		$.loadLibrary('GoogleMaps',
 			'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
-			typeof (window.google && google.maps)
+			typeof (window.google && window.google.maps)
 		).
 		// error handling
 		fail(function() {
