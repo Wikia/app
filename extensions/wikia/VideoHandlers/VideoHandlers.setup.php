@@ -173,12 +173,6 @@ $app->registerClass('YoutubeVideoHandler', $dir . '/handlers/YoutubeVideoHandler
 $app->registerClass('YoutubeApiWrapper', $dir . '/apiwrappers/YoutubeApiWrapper.class.php');
 $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 
-/*
-//$app->registerClass('WikiaVideoHandler', $dir . '/handlers/WikiaVideoHandler.class.php');
-$app->registerClass('WikiaApiWrapper', $dir . '/apiwrappers/WikiaApiWrapper.class.php');
-//$wgMediaHandlers['FILE'] = 'WikiaVideoHandler';
-*/
-
 /**
  * Feed ingesters
  */

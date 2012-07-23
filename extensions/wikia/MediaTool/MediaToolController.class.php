@@ -43,23 +43,30 @@ class MediaToolController extends WikiaController {
 				$item = F::build('MediaToolItem');
 
 				$item->setIsVideo(true);
-				if($wrapper instanceof WikiaApiWrapper) {
-					$item->setTitle($wrapper->getFile()->getTitle());
-				}
-				else {
-					$item->setTitleText($wrapper->getTitle());
-					$item->setDescription("fake description for online media");
-					$item->setUploader($this->wg->User);
-					$item->setThumbUrl($wrapper->getThumbnailUrl());
-					$item->setThumbHtml(false);
-				}
+				$item->setTitleText($wrapper->getTitle());
+				$item->setDescription("fake description for online media");
+				$item->setUploader($this->wg->User);
+				$item->setThumbUrl($wrapper->getThumbnailUrl());
+				$item->setThumbHtml(false);
 
 				$item->setRemoteUrl($videoUrl);
 				$item->setDuration($this->helper->secToMMSS($metaData['duration']));
 
 				$data = $item->toArray();
 				$data['status'] = self::RESPONSE_STATUS_OK;
+			}
+			elseif( $file = $this->helper->getFileFromUrl( $videoUrl ) ) {
+				// local file or premium video
 
+				/** @var $item MediaToolItem */
+				$item = F::build('MediaToolItem');
+
+				$item->setIsVideo(true);
+				$item->setTitle($file->getTitle());
+				$item->setRemoteUrl($videoUrl);
+
+				$data = $item->toArray();
+				$data['status'] = self::RESPONSE_STATUS_OK;
 			}
 			else {
 				$data['status'] = self::RESPONSE_STATUS_ERROR;
