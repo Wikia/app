@@ -37,8 +37,9 @@ var RelatedVideos = {
 
 		var importantContentHeight = $('#WikiaArticle').height();
 		importantContentHeight += $('#WikiaArticleComments').height();
-		if ( !this.onRightRail && $('span[data-placeholder="RelatedVideosModule"]').length != 0 ){
-			$('span[data-placeholder="RelatedVideosModule"]').replaceWith( relatedVideosModule );
+		var $RelatedVideosPlaceholder = $('span[data-placeholder="RelatedVideosModule"]');
+		if ( !this.onRightRail && $RelatedVideosPlaceholder.length != 0 ){
+			$RelatedVideosPlaceholder.replaceWith( relatedVideosModule );
 		}
 		if (
 				(!this.isHubExtEnabled && (this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold)) 
@@ -166,10 +167,11 @@ var RelatedVideos = {
 		this.rvAddModal = modal;
 		this.rvAddPos = 1;
 		this.rvAddMax = Math.ceil(($('.item',this.rvAddModal).length)/3);
-		$(this.rvAddModal).delegate( '.scrollleft', 'click', RelatedVideos.modalScrollLeft );
-		$(this.rvAddModal).delegate( '.scrollright', 'click', RelatedVideos.modalScrollRight );
-		$(this.rvAddModal).delegate( '.add-this-video', 'click', RelatedVideos.modalAddVideo );
-        $(this.rvAddModal).delegate( 'a.video', 'click', RelatedVideos.previewVideo );
+		var $rvAddModal = $(this.rvAddModal);
+		$rvAddModal.delegate( '.scrollleft', 'click', RelatedVideos.modalScrollLeft );
+		$rvAddModal.delegate( '.scrollright', 'click', RelatedVideos.modalScrollRight );
+		$rvAddModal.delegate( '.add-this-video', 'click', RelatedVideos.modalAddVideo );
+        $rvAddModal.delegate( 'a.video', 'click', RelatedVideos.previewVideo );
         this.updateModalScrollButtons();
 	},
 
@@ -332,8 +334,9 @@ var RelatedVideos = {
 		var rl = this;
 		$('div.item a.video-thumbnail img',this.rvModule).each( function (i) {
 			if ( i < ( ( RelatedVideos.currentRoom + (rl.videosPerPage-1) ) * rl.videosPerPage ) ){
-				if ( $(this).attr( 'data-src' ) != "" ){
-					$(this).attr( 'src', $(this).attr( 'data-src' ) );
+				var $thisJquery = $(this);
+				if ( $thisJquery.attr( 'data-src' ) != "" ){
+					$thisJquery.attr( 'src', $thisJquery.attr( 'data-src' ) );
 				}
 			}
 		});
@@ -401,12 +404,13 @@ var RelatedVideos = {
 
 	displayVideoModal : function(e) {
 		e.preventDefault();
-		var url = $(this).attr('data-ref');
-		var external = $(this).attr('data-external');
-		var link = $(this).attr('href');
+		var $thisJquery = $(this);
+		var url = $thisJquery.attr('data-ref');
+		var external = $thisJquery.attr('data-external');
+		var link = $thisJquery.attr('href');
 		
 		if( RelatedVideos.isHubVideos ) {
-			var wikiLink = $(this).attr('data-wiki');
+			var wikiLink = $thisJquery.attr('data-wiki');
 			var controlerName = 'RelatedHubsVideosController';
 		} else {
 			var wikiLink = '';
@@ -497,14 +501,15 @@ var RelatedVideos = {
 	},
 
 	enableVideoSubmit: function(){
-		$('#relatedvideos-add-video').undelegate( '.rv-add-form', 'submit').removeClass('loading');
-		$('#relatedvideos-add-video').delegate( '.rv-add-form', 'submit', RelatedVideos.addVideoConfirm );
-
+		var $relatedVideosAddVideo = $('#relatedvideos-add-video');
+		$relatedVideosAddVideo.undelegate( '.rv-add-form', 'submit').removeClass('loading');
+		$relatedVideosAddVideo.delegate( '.rv-add-form', 'submit', RelatedVideos.addVideoConfirm );
 	},
 
 	preventVideoSubmit: function(){
-		$('#relatedvideos-add-video').undelegate( '.rv-add-form', 'submit').addClass('loading');
-		$('#relatedvideos-add-video').delegate(
+		var $relatedVideosAddVideo = $('#relatedvideos-add-video');
+		$relatedVideosAddVideo.undelegate( '.rv-add-form', 'submit').addClass('loading');
+		$relatedVideosAddVideo.delegate(
 			'.rv-add-form',
 			'submit',
 			function( e ){
@@ -537,8 +542,9 @@ var RelatedVideos = {
 						id: 'relatedvideos-add-video',
 						width: RelatedVideos.modalWidth,
 						callback : function(){
-							$(RelatedVideos.rvModule).undelegate( '.addVideo', 'click' );
-							$(RelatedVideos.rvModule).delegate( '.addVideo', 'click', RelatedVideos.addVideoModal );
+							var $rvModule = $(RelatedVideos.rvModule);
+							$rvModule.undelegate( '.addVideo', 'click' );
+							$rvModule.delegate( '.addVideo', 'click', RelatedVideos.addVideoModal );
 							RelatedVideos.enableVideoSubmit();
 							RelatedVideos.initModalScroll('.modalContent');
 						}
@@ -573,16 +579,17 @@ var RelatedVideos = {
 					'both'
 				);
 				GlobalNotification.hide();
+				var $relatedVideosAddVideo = $('#relatedvideos-add-video');
 				if ( formRes.error ) {
-					$('#relatedvideos-add-video').addClass( 'error-mode' );
+					$relatedVideosAddVideo.addClass( 'error-mode' );
 					RelatedVideos.enableVideoSubmit();
 					RelatedVideos.injectCaruselElementError( formRes.error );
 				} else if ( formRes.html ){
-					$('#relatedvideos-add-video').removeClass( 'error-mode' );
-					$('#relatedvideos-add-video').closest('.modalWrapper').closeModal();
+					$relatedVideosAddVideo.removeClass( 'error-mode' );
+					$relatedVideosAddVideo.closest('.modalWrapper').closeModal();
 					RelatedVideos.injectCaruselElement( formRes.html );
 				} else {
-					$('#relatedvideos-add-video').addClass( 'error-mode' );
+					$relatedVideosAddVideo.addClass( 'error-mode' );
 					RelatedVideos.enableVideoSubmit();
 					RelatedVideos.injectCaruselElementError( $('#relatedvideos-add-video .somethingWentWrong').html() );
 				}
