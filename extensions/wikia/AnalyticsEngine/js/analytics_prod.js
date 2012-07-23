@@ -6,7 +6,7 @@
  * @preserve Copyright(c) 2012 Cardinal Path
  * @author Eduardo Cereto <ecereto@cardinalpath.com>
  *
- * @version: prod_9
+ * @version: prod_9.1
  */
 
 (function(window, undefined) {
@@ -89,7 +89,7 @@
                   ['_setCustomVar', 3, 'Hub', window.cscoreCat, 3],
                   ['_setCustomVar', 4, 'Skin', window.skin, 3],
                   ['_setCustomVar', 5, 'LoginStatus',
-                      !!window.wgUserName ? 'user' : 'anon', 3]);
+                      window.wgIsAnon ? 'anon' : 'user', 3]);
 
     /**** Medium-Priority CVs ****/
     _gaqWikiaPush(['_setCustomVar', 8, 'PageType',
@@ -120,7 +120,7 @@
               ['ads._setCustomVar', 3, 'Hub', window.cscoreCat, 3],
               ['ads._setCustomVar', 4, 'Skin', window.skin, 3],
               ['ads._setCustomVar', 5, 'LoginStatus',
-                  !!window.wgUserName ? 'user' : 'anon', 3]);
+                  window.wgIsAnon ? 'anon' : 'user', 3]);
 
     /**** Medium-Priority CVs ****/
     _gaq.push(['ads._setCustomVar', 8, 'PageType',
