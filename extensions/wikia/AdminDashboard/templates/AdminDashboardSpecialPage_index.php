@@ -157,7 +157,7 @@
 			<?= $advancedSection ?>
 		</section>
 		<section id="AdminDashboardContentArea">
-			Loading...
+			<?= wfMsg( 'admindashboard-loading' ) ?>
 		</section>
 	</section>
 </section>
