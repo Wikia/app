@@ -16,16 +16,16 @@ var WallNotifications = $.createClass(Object, {
 		if($('.wall-notifications-monobook').length > 0) {
 			$('.wall-notifications-monobook').first()
 				.append('<span class="count">(?)</span>')
+				.click( this.proxy( this.clickNotificationsMonobook ) )
 				.parent()
 				.append('<table id="wall-notifications-dropdown"><tr><td><ul id="wall-notifications-inner"></ul></td></tr></table>')
-				.click( this.proxy( this.clickNotificationsMonobook ) )
 				.click( this.proxy( this.updateCounts ) )
 				.click( this.proxy( this.fetchForCurrentWiki ) );
 			var bgcolor = $('#wall-notifications-dropdown').css('background-color');
 			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)') {
 				bgcolor = $('body').css('background-color');
 			}
-			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)') {
+			if(bgcolor == 'none' || bgcolor == '' || bgcolor == 'inherit' || bgcolor == 'rgba(0, 0, 0, 0)' || bgcolor == 'transparent') {
 				bgcolor = 'white';
 			}
 			
