@@ -108,25 +108,6 @@ F::build('JSMessages')->registerPackage( 'WikiaMobileComments', array(
 	'wikiamobile-article-comments-login-post'
 ));
 
-// FIXME: make this a class method or something
-$wgHooks['BeforePageDisplay'][] = 'efBeforePageDisplayArticleComments';
-function efBeforePageDisplayArticleComments (&$vars) {
-	if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
-		// Load MiniEditor assets, if enabled (don't enable for Mobile)
-		$app = F::app();
-		$isMobile = $app->checkSkin( 'wikiamobile' );
-		if ($app->wg->EnableMiniEditorExtForArticleComments && !$isMobile) {
-			$app->sendRequest('MiniEditor', 'loadAssets', array(
-				'loadOnDemand' => true,
-				'loadOnDemandAssets' => array(
-					'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
-				)
-			));
-		}
-	}
-	return true;
-}
-
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ArticleCommentsAjax';
 

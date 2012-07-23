@@ -164,21 +164,33 @@ class ArticleCommentsController extends WikiaController {
 
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	public static function onSkinAfterContent( &$afterContentHookText ) {
 		global $wgArticleCommentsContent;
 		if(!empty($wgArticleCommentsContent)) {
 			$afterContentHookText .= $wgArticleCommentsContent;
 		}
 		return true;
-	} 
-	
+	}
+
 	public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin) {
 		global $wgArticleCommentsContent;
 		// Display comments on content and blog pages
 		if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
 			$wgArticleCommentsContent = wfRenderModule('ArticleComments');
+
+			$app = F::app();
+
+			// Load MiniEditor assets (except for mobile)
+			if ($app->wg->EnableMiniEditorExtForArticleComments && !$app->checkSkin( 'wikiamobile' )) {
+				$app->sendRequest('MiniEditor', 'loadAssets', array(
+					'loadOnDemand' => true,
+					'loadOnDemandAssets' => array(
+						'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
+					)
+				));
+			}
 		}
-		return true;	
+		return true;
 	}
 }
