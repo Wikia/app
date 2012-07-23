@@ -165,7 +165,12 @@ class WallHistory extends WikiaModel {
 		}
 		
 		$where = array(
-			'revision_id' => $in
+			'revision_id' => $in,
+                        'action' => WH_NEW,
+                        'post_ns' => $ns,
+                        'wiki_id' => $this->wikiId, 
+                        'deleted_or_removed' => 0
+
 		);
 		
 		return $this->loadFromDB($where, $count, 0, 'desc');
