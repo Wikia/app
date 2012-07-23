@@ -163,6 +163,22 @@ $config['oasis_wikia_js'] = array(
 
 /** Oasis **/
 
+$config['oasis_shared_js_user'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'assets' => array(
+        '#group_oasis_shared_js',
+		'#group_oasis_user_js',
+	)
+);
+
+$config['oasis_shared_js_anon'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'assets' => array(
+        '#group_oasis_shared_js',
+		'#group_oasis_anon_js',
+	)
+);
+
 //core shared JS
 $config['oasis_shared_js'] = array(
     'type' => AssetsManager::TYPE_JS,
@@ -171,7 +187,28 @@ $config['oasis_shared_js'] = array(
         '#group_oasis_jquery',
         '#group_oasis_wikia_js',
         '#group_oasis_nojquery_shared_js',
+		'#group_oasis_extensions_js',
     )
+);
+
+
+
+
+
+$config['oasis_nojquery_shared_js_user'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_nojquery_shared_js',
+		'#group_oasis_user_js',
+	)
+);
+
+$config['oasis_nojquery_shared_js_anon'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_oasis_nojquery_shared_js',
+		'#group_oasis_anon_js',
+	)
 );
 
 $config['oasis_nojquery_shared_js'] = array(
@@ -207,6 +244,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/SharingToolbar.js',
 		'//skins/oasis/js/ContributeMenu.js',
 		'//skins/oasis/js/WikiaForm.js',
+		'#group_oasis_noads_extensions_js', // the only time this group is used currently is inside of this _nojquery_ package, for Ad-Loading experiment
 	)
 );
 

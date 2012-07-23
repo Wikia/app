@@ -418,11 +418,12 @@ class OasisController extends WikiaController {
 		}
 
 		$assets = array();
-		$assets['oasis_shared_js'] = $this->assetsManager->getURL( 'oasis_shared_js' );
-		$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL( 'oasis_nojquery_shared_js' );
-		$assets['oasis_noads_extensions_js'] = $this->assetsManager->getURL( 'oasis_noads_extensions_js' );
-		$assets['oasis_extensions_js']= $this->assetsManager->getURL( 'oasis_extensions_js' );
-		$assets['oasis_user_anon'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_user_js' : 'oasis_anon_js');
+
+		// Load the combined JS
+		$assets['oasis_shared_js'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_shared_js_user' : 'oasis_shared_js_anon' );
+
+		// jQueryless version - appears only to be used by the ad-experiment at the moment.
+		$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
 
 		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
 			foreach ( $assets as $group => $urls ) {
@@ -443,15 +444,15 @@ EOT;
 		if ($this->jsAtBottom) {
 			$jsLoader .= <<<EOT
 				if ( typeof window.EXP_AD_LOAD_TIMING != 'undefined' && (window.wgLoadAdDriverOnLiftiumInit || (window.getTreatmentGroup && (getTreatmentGroup(EXP_AD_LOAD_TIMING) == TG_AS_WRAPPERS_ARE_RENDERED)))) {
-					toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.oasis_noads_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
+					toload = wsl_assets.oasis_nojquery_shared_js.concat(wsl_assets.references);
 				} else {
-					toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
+					toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
 				}
 EOT;
 		}
 		else {
 			$jsLoader .= <<<EOT
-				var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.oasis_extensions_js, wsl_assets.oasis_user_anon, wsl_assets.references);
+				var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
 EOT;
 		}
 		$jsLoader .= <<<EOT
