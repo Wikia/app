@@ -1212,9 +1212,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			array(
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
 			),
-			array(
-				'$.loadJQuerySlideshow'
-			),
+			array(),
 			'WikiaPhotoGallerySlideshow.init',
 			array('id' => $id, 'width' => $width, 'height' => $height)
 		);
@@ -1778,9 +1776,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			array(
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
 			),
-			array(
-				'$.loadJQuerySlideshow'
-			),
+			array(),
 			'WikiaPhotoGallerySlideshow.init',
 			array('id' => $id, 'width' => $width, 'height'=> $height)
 		);
