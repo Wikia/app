@@ -127,6 +127,7 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+		'//resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 
 		// polyfills
 		'//resources/wikia/polyfills/jquery.wikia.placeholder.js',

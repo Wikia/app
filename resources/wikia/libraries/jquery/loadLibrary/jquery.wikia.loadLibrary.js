@@ -87,10 +87,6 @@ $.loadMustache = function(callback) {
 	return mw.loader.use('jquery.mustache').done(callback);
 };
 
-$.loadJQuerySlideshow = function(callback) {
-	return mw.loader.use('jquery.slideshow').done(callback);
-};
-
 $.loadGoogleMaps = function(callback) {
 	var dfd = new jQuery.Deferred(),
 		onLoaded = function() {

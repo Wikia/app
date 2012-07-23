@@ -36,10 +36,6 @@ $wgResourceModules['jquery.autocomplete'] = array(
 	'scripts' => 'resources/wikia/libraries/jquery/autocomplete/jquery.autocomplete.js'
 );
 
-$wgResourceModules['jquery.slideshow'] = array(
-	'scripts' => 'resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js'
-);
-
 // moved here from AssetsManager by wladek
 $wgResourceModules['wikia.yui'] = array(
 	'scripts' => array(
