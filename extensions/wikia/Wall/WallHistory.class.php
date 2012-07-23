@@ -204,6 +204,9 @@ class WallHistory extends WikiaModel {
 	}
 	
 	protected function getWhere($user, $parent_page_id = 0) {
+		$query = array( 
+			'wiki_id' => $this->wikiId 
+		);
 		if( $parent_page_id === 0 ) {
 			$query[] = 'parent_page_id is null';
 		} else {
