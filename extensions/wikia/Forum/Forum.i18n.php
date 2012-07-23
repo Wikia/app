@@ -17,8 +17,8 @@ $messages['en'] = array(
 	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Active<br> Discussion|Active<br> Discussions}}</span>',
 
 	/* Forum:Special (Index) */
-	'forum-specialpage-blurb-heading' => 'Welcome to our Alpha Forums',
-	'forum-specialpage-blurb' => '<p>This is the very first version of Wikia\'s new forum extension. We\'re looking to add lots of great features over the coming months, but we wanted to get our alpha to you as soon as possible so that you can start to play with it. We will use the feedback provided in the boards below to figure out which features are the most important to you.<br /> Enjoy!</p>',
+	'forum-specialpage-blurb-heading' => 'Welcome to {{SITENAME}} Forum!',
+	'forum-specialpage-blurb' => 'This is an early demo of Wikia\'s new Forum feature. If you\'ve got ideas or questions about the feature, please start a thread on the [[Board:General Discussion|General Discussion board]]. Have fun!',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|thread|threads}}',
 	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|post|posts}}',
 	'forum-specialpage-board-lastpostby' => 'Last post by',
