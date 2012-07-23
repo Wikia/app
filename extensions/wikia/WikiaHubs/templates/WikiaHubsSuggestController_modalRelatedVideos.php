@@ -10,7 +10,9 @@
 				'name' => 'videourl',
 				'isRequired' => true,
 				'label' => wfMsg('wikiahubs-suggest-video-what-video'),
-				'value' => wfMsg('wikiahubs-suggest-video-what-video-default-value'),
+				'attributes' => array(
+					'placeholder' => wfMsg('wikiahubs-suggest-video-what-video-default-value')
+				)
 			),
 			array(
 				'class' => 'wikiname default-value',
@@ -18,7 +20,9 @@
 				'name' => 'wikiname',
 				'isRequired' => true,
 				'label' => wfMsg('wikiahubs-suggest-video-which-wiki'),
-				'value' => wfMsg('wikiahubs-suggest-video-which-wiki-default-value'),
+				'attributes' => array(
+					'placeholder' => wfMsg('wikiahubs-suggest-video-what-video-default-value')
+				)
 			),
 			array(
 				'class' => 'submit-button',
