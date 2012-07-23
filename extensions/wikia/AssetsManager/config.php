@@ -725,7 +725,7 @@ $config['relatedvideos_js_tooltips'] = array(
 
 $config['relatedvideos_scss'] = array(
 		'type' => AssetsManager::TYPE_SCSS,
-		'skin' => array( 'monobook', 'oasis', 'wikiamobile' ),
+		'skin' => array( 'monobook', 'oasis' ), //we have no support for relatedvideos in wikiamobile skin as for now
 		'assets' => array(
 			'//extensions/wikia/RelatedVideos/css/RelatedVideos.scss'
 		)
