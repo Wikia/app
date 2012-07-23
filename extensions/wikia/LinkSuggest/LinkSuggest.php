@@ -42,7 +42,7 @@ function wfLinkSuggestGetPreferences($user, &$preferences) {
 
 $wgHooks['EditForm::MultiEdit:Form'][] = 'AddLinkSuggest';
 function AddLinkSuggest($a, $b, $c, $d) {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgHooks;
+	global $wgOut, $wgExtensionsPath, $wgUser, $wgHooks;
 	wfProfileIn(__METHOD__);
 
 	if($wgUser->getOption('disablelinksuggest') != true) {
@@ -132,7 +132,7 @@ function getLinkSuggest() {
 
 	if (strlen($query) < 3) {
 		// enforce minimum character limit on server side
-		$out = $wgRequest->getText('format') == 'json' 
+		$out = $wgRequest->getText('format') == 'json'
 			 ? json_encode(array('suggestions'=>array(),'redirects'=>array()))
 			 : '';
 	} else if ($cached = $wgMemc->get($key)) {
@@ -169,7 +169,7 @@ function getLinkSuggest() {
 		}
 
 		if ($namespace !== null && $query === '') {
-			$out = $wgRequest->getText('format') == 'json' 
+			$out = $wgRequest->getText('format') == 'json'
 				 ? json_encode(array('suggestions'=>array(),'redirects'=>array()))
 				 : '';
 
@@ -223,7 +223,7 @@ function getLinkSuggest() {
 
 		$titleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
 
-		if ($row->page_is_redirect == 0) { 
+		if ($row->page_is_redirect == 0) {
 
 			if (!in_array($titleFormatted, $results)) {
 				$results[] = $titleFormatted;
@@ -234,11 +234,11 @@ function getLinkSuggest() {
 				unset($redirects[$flippedRedirs[$titleFormatted]]);
 			}
 
-		} else { 
+		} else {
 
 			$redirTitleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->rd_title);
 
-			if (!in_array($redirTitleFormatted, $results)) { 
+			if (!in_array($redirTitleFormatted, $results)) {
 
 				$results[] = $redirTitleFormatted;
 				$redirects[$redirTitleFormatted] = $titleFormatted;
@@ -255,7 +255,7 @@ function getLinkSuggest() {
 
 		$titleFormatted = wfLinkSuggestFormatTitle($row->page_namespace, $row->page_title);
 
-		if ($row->page_is_redirect == 0) { 
+		if ($row->page_is_redirect == 0) {
 
 			// remove any instances of original array's value
 			$resultsFlipped = array_flip($results);
@@ -285,17 +285,17 @@ function getLinkSuggest() {
 
 	$db->freeResult( $res );
 
-	// bugid 29988: include special pages 
+	// bugid 29988: include special pages
 	// (registered in SpecialPage::$mList, not in the DB like a normal page)
 	if (($namespaces == array('-1')) && (strlen($query) > 0)) {
 		$specialPagesByAlpha = SpecialPageFactory::getList();
 		ksort($specialPagesByAlpha, SORT_STRING);
-		array_walk( $specialPagesByAlpha, 
+		array_walk( $specialPagesByAlpha,
 					function($val,$key) use (&$results, $query) {
 						if (strtolower(substr($key, 0, strlen($query))) === strtolower($query)) {
 							$results[] = wfLinkSuggestFormatTitle('-1', $key);
 						}
-					} 
+					}
 				  );
 	}
 
@@ -325,7 +325,7 @@ function getLinkSuggest() {
 	}
 
 	// 15 minutes times four (one hour, but easier to slice and dice)
-	$wgMemc->set($key, $out, 4 * 900); 
+	$wgMemc->set($key, $out, 4 * 900);
 
 	wfProfileOut(__METHOD__);
 	return linkSuggestAjaxResponse($out);

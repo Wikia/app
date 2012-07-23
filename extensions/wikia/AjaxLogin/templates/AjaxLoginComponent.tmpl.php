@@ -1,13 +1,13 @@
 <?php
 	// Template for the login compontent of the ComboAjaxLogin form(s).
-	global $wgBlankImgUrl, $wgEnableEmail, $wgAuth, $wgExtensionsPath, $wgStyleVersion, $wgStylePath;
+	global $wgBlankImgUrl, $wgEnableEmail, $wgAuth, $wgExtensionsPath, $wgStylePath;
 
 	$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 	$link = $titleObj->getLocalUrl('type=signup');
 ?>
 
-<link rel="stylesheet" type="text/css" href="<?php print $wgStylePath; ?>/common/wikia_ui/tabs.css?<?php print $wgStyleVersion; ?>" />
-<link rel="stylesheet" type="text/css" href="<?php print $wgExtensionsPath; ?>/wikia/AjaxLogin/AjaxLogin.css?<?php print $wgStyleVersion; ?>" />
+<link rel="stylesheet" type="text/css" href="<?php print $wgStylePath; ?>/common/wikia_ui/tabs.css" />
+<link rel="stylesheet" type="text/css" href="<?php print $wgExtensionsPath; ?>/wikia/AjaxLogin/AjaxLogin.css" />
 <div id="userloginErrorBox3" <?php if(strlen($loginerror) > 0): ?> style="display: block;" <?php endif;?>>
 	<div id="wpError">
 		<?php echo $loginerror; ?>

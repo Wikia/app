@@ -45,7 +45,7 @@ class PartnerFeed extends SpecialPage {
 
 			header( "Cache-Control: s-maxage=".( 60*60*12 ) );
 			header( "X-Pass-Cache-Control: max-age=".( 60*60*12 ) );
-			
+
 			switch( $feedType ){
 				case 'AchivementsLeaderboard':
 					$this->FeedAchivementsLeaderboard( $feed );
@@ -165,7 +165,7 @@ class PartnerFeed extends SpecialPage {
 			$wgOut, $wgExtensionsPath, $wgRequest;
 
 		$userAvatarSize = 48;
-		
+
 		$aReturn = ApiService::call(
 			array(
 				'action' => 'query',
@@ -188,7 +188,7 @@ class PartnerFeed extends SpecialPage {
 			} else {
 				$action = 'created';
 			};
-			
+
 			$feedArray[] = array(
 				'title' => $val['title'],
 				'description' => $val['user'].' '.$action.' the '.$val['title'],
@@ -210,7 +210,7 @@ class PartnerFeed extends SpecialPage {
  *
  */
 	private function FeedRecentBlogPosts ( $format ){
-		
+
 		global	$wgParser, $wgUser, $wgServer, $wgOut, $wgExtensionsPath,
 			$wgRequest, $wgEnableBlogArticles;
 
@@ -337,7 +337,7 @@ class PartnerFeed extends SpecialPage {
  * @param format string 'rss' or 'atom'
  */
 	private function FeedRecentImages ( $format ){
-		
+
 		global $wgTitle, $wgLang, $wgRequest;
 
 		// local settings
@@ -363,26 +363,26 @@ class PartnerFeed extends SpecialPage {
 		);
 
 		$thumbSize = $wgRequest->getText ( "size", false );
-		
+
 		if ( $defaultWidth ){
 			$thumbSize = ( integer )$thumbSize;
 		}
 
 		$feedArray = array();
-		
+
 		while ( $row = $dbw->fetchObject( $res ) ) {
-			
+
 			$tmpTitle = Title::newFromText( $row->img_name, NS_FILE );
 			$image = wfFindFile( $tmpTitle );
-			
+
 			if ( !$image ) continue;
-			
+
 			$testImage = wfReplaceImageServer(
 				$image->getThumbUrl(
 					$imageServing->getCut($row->img_width, $row->img_height)."-".$image->getName()
 				)
 			);
-			
+
 			$feedArray[] = array (
 				'title' => '',
 				'description' => $row->img_name,
@@ -410,7 +410,7 @@ class PartnerFeed extends SpecialPage {
 
 		$hubTitle = $wgRequest->getVal( 'hub' );
 		$allowedHubs = $this->allowedHubs();
-		
+
 		if ( isset( $allowedHubs[ $hubTitle ] ) && !is_array( $allowedHubs[ $hubTitle ] ) ){
 			$oTitle = Title::newFromText( $hubTitle, 150 );
 		} else {
@@ -420,7 +420,7 @@ class PartnerFeed extends SpecialPage {
 		$feedArray = $this->PrepareHotContentFeed( $hubId, $forceReload );
 		$this->showFeed( $format, wfMsg( 'feed-title-hot-content', $oTitle->getText() ), $feedArray );
 	}
-	
+
 /**
  * @author Jakub Kurcek
  * @param hubId integer
@@ -442,7 +442,7 @@ class PartnerFeed extends SpecialPage {
 		if ( $forceRefresh ) $this->clearCache( $hubId );
 		$memcFeedArray = $this->getFromCache( $hubId );
 		if ( $memcFeedArray == null  || !empty($stopCache) ){
-		
+
 			$datafeeds = new WikiaStatsAutoHubsConsumerDB( DB_SLAVE );
 			$out = $datafeeds->getTopArticles($hubId, $lang, $resultsNumber);
 			$feedArray = array();
@@ -492,7 +492,7 @@ class PartnerFeed extends SpecialPage {
 			}
 			$httpResultArr = json_decode( $httpResult );
 
-			// in case of proper data ( even empty ) 
+			// in case of proper data ( even empty )
 			if ( isset( $httpResultArr->image->imagecrop ) ){
 				return $httpResultArr->image->imagecrop;
 			};
@@ -511,7 +511,7 @@ class PartnerFeed extends SpecialPage {
 	public function ReloadHotContentFeed ( $hubId ){
 
 		$this->PrepareHotContentFeed( (integer) $hubId , true);
-		
+
 	}
 
 /**
@@ -522,7 +522,7 @@ class PartnerFeed extends SpecialPage {
  * Caching functions.
  */
 	private function getKey( $hubId ) {
-		
+
 		return wfSharedMemcKey( 'widgetbox_hub_hotcontent', $hubId );
 	}
 
@@ -552,7 +552,7 @@ class PartnerFeed extends SpecialPage {
 /**
  * @author Jakub Kurcek
  *
- * Returns array of accepted hubs. 
+ * Returns array of accepted hubs.
  */
 
 	public function allowedHubs (){
@@ -560,16 +560,14 @@ class PartnerFeed extends SpecialPage {
 		global $wgHubsPages;
 		return $wgHubsPages['en'];
 	}
-	
+
 /**
  * @author Jakub Kurcek
  * @param format string 'rss' or 'atom'
  */
 	private function FeedAchivementsLeaderboard ( $format ) {
 
-		global	$wgEnableAchievementsExt, $wgLang, $wgServer, $wgOut,
-			$wgExtensionsPath, $wgStyleVersion, $wgSupressPageTitle,
-			$wgUser, $wgWikiaBotLikeUsers, $wgJsMimeType;
+		global	$wgEnableAchievementsExt, $wgLang;
 
 		if ( empty($wgEnableAchievementsExt) ){
 			$this->showMenu();
@@ -636,9 +634,9 @@ class PartnerFeed extends SpecialPage {
  * returns RSS/Atom feed
  */
 	private function showFeed( $format, $subtitle, $feedData ) {
-		
+
 		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgTitle, $wgSitename;
-		
+
 		wfProfileIn( __METHOD__ );
 		$sFeedName = self::getFeedClass( $format );
 		$feed = new $sFeedName( wfMsg('feed-main-title'),  $subtitle, $wgTitle->getFullUrl() );
@@ -652,7 +650,7 @@ class PartnerFeed extends SpecialPage {
 				$val['author'],
 				'',
 				$val['otherTags']
-				
+
 			);
 			$feed->outItem( $item );
 		}
@@ -661,7 +659,7 @@ class PartnerFeed extends SpecialPage {
 	}
 
 	private static function getFeedClass ( $format ){
-		
+
 		if ( $format == 'atom' ){
 			return 'PartnerAtomFeed';
 		} else {

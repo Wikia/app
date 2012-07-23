@@ -14,7 +14,7 @@
 $wgAvailableRights[] = 'mailerlog';
 $wgGroupPermissions['staff']['mailerlog'] = true;
 $wgSpecialPages[ "MailerLog" ] = "SpecialMailerLog";
-	
+
 class SpecialMailerLog extends UnlistedSpecialPage {
 	private static $link_cache = array();
 
@@ -23,7 +23,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgUser, $wgCityId, $wgRequest, $wgStyleVersion, $wgStylePath, $wgScriptPath;
+		global $wgOut, $wgUser, $wgRequest, $wgStylePath;
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 
@@ -43,7 +43,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 
 		// Create an array of filters based on was was passed to us
 		$filter = self::getFilters(&$query, &$filter_roster);
-	
+
 		// Set sorting and page length
 		$sort     = $wgRequest->getVal('new_sort', $wgRequest->getVal('sort', 'created'));
 		$sort_dir = $wgRequest->getVal('new_sort_dir', $wgRequest->getVal('sort_dir', 'desc'));
@@ -98,7 +98,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 								   );
 			}
 		}
-		
+
 		$titleObj = SpecialPage::getTitleFor( "MailerLog" );
 		$scriptURL = $titleObj->getLocalURL();
 
@@ -121,7 +121,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	private function getBody ( $raw_body ) {
 		// PHP doesn't seem to support backreferences in the pattern so this regex could
 		// techinally be fooled if something looking like a boundary string appears within
@@ -134,10 +134,10 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		} else {
 			$body = $raw_body;
 		}
-		
+
 		return $body;
 	}
-	
+
 	private function shortenStr ( $body ) {
 
 		// Match 70 chars plus up to 10 remaining non-whitespace (to finish any words)
@@ -149,7 +149,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 
 		return $body_short;
 	}
-	
+
 	private function getUserURL ( $email ) {
 		$dbr_user = wfGetDB( DB_SLAVE );
 
@@ -233,7 +233,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 			if ($transmitted_unit == 'week')    $filter_roster['TransmittedUnitWeeks'] = 1;
 			$filter_roster['TransmittedNum'] = $transmitted_num;
 		}
-		
+
 		$filter_wiki_name = $wgRequest->getVal('new_filter_wiki_name', null);
 		if ($filter_wiki_name) {
 			$filter_wiki_name = preg_replace('!^http://|/$!', '', $filter_wiki_name);
@@ -263,9 +263,9 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 											   'off'   => 'off_filter_wiki_id');
 			}
 		}
-		
+
 		if ($wgRequest->getVal('off_filter_dst', null) && !isset($forced_dst)) $filter_dst = null;
-		
+
 		if ($filter_dst) {
 			$filter[] = "dst = '$filter_dst'";
 			if (!isset($forced_dst)) {
@@ -296,7 +296,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		$filter_errors = $wgRequest->getVal('new_filter_errors',
 											$wgRequest->getVal('filter_errors', null));
 		if ($wgRequest->getVal('off_filter_errors', null)) $filter_errors = null;
-		
+
 		if ($filter_errors) {
 			$filter[] = 'error_msg IS NOT NULL';
 			$query[] = "filter_errors=$filter_errors";
@@ -305,7 +305,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 
 		return $filter;
 	}
-	
+
 	private static function do_query() {
 		global $wgRequest;
 		if ($wgRequest->getVal('mailer_log'))
@@ -322,7 +322,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 			return TRUE;
 		if ($wgRequest->getVal('new_filter_dst'))
 			return TRUE;
-		
+
 		return FALSE;
 	}
 }

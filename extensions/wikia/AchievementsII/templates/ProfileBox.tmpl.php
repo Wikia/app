@@ -1,7 +1,7 @@
 <?php
-global $wgExtensionsPath, $wgStyleVersion;
+global $wgExtensionsPath;
 ?>
-<script src="<?= $wgExtensionsPath.'/wikia/AchievementsII/js/achievements.js?'.$wgStyleVersion ?>"></script>
+<script src="<?= $wgExtensionsPath ?>/wikia/AchievementsII/js/achievements.js"></script>
 <?php
 if(count($ownerBadges) == 0) {
 	echo '<h2 class="dark_text_2 first">'.$title_no.'</h2>'.wfMsg('achievements-no-badges');

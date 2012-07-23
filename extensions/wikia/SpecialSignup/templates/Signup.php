@@ -21,9 +21,9 @@ class SignupTemplate extends QuickTemplate {
 
 	function execute() {
 
-		global $wgOut, $wgStylePath, $wgStyleVersion, $wgBlankImgUrl;
+		global $wgOut, $wgStylePath, $wgBlankImgUrl;
 
-		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css?' . $wgStyleVersion . "\" />\n");
+		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css' . "\" />\n");
 
 		if (!array_key_exists('message', $this->data)) {
 			$this->data['message'] = "";
@@ -58,7 +58,7 @@ if( $wgUser->isAllowed('createaccount') ) {
 		} ?>
 		<img alt="status" class="sprite error" src="<?php print $wgBlankImgUrl; ?>"/>
 		<span id="userloginInnerErrorBox">
-			
+
 		</span>
 </div>
 

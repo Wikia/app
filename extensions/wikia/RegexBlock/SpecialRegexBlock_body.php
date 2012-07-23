@@ -42,7 +42,7 @@ class RegexBlockForm extends SpecialPage
     }
 
 	public function execute( $subpage ) {
-        global $wgUser, $wgOut, $wgRequest, $wgExtensionsPath, $wgStyleVersion;
+        global $wgUser, $wgOut, $wgRequest, $wgExtensionsPath;
 
         if ( $wgUser->isBlocked() ) {
             $wgOut->blockedPage();
@@ -64,7 +64,7 @@ class RegexBlockForm extends SpecialPage
         $wgOut->setRobotpolicy( 'noindex,nofollow' );
         $wgOut->setPageTitle( wfMsg("regexblock_title") );
         $wgOut->setArticleRelated( false );
-		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/RegexBlock/RegexBlock.css?'.$wgStyleVersion.'" />' . "\n");
+		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/RegexBlock/RegexBlock.css" />' . "\n");
 
         $this->mPosted = $wgRequest->wasPosted();
         $this->mAction = $wgRequest->getVal( 'action' );

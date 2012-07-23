@@ -71,10 +71,10 @@ function VETArticleSave( $article, $user, $text, $summary) {
 }
 
 function VETSetup($editform) {
-	global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser;
+	global $wgOut, $wgExtensionsPath, $wgHooks, $wgUser;
 	if( in_array(get_class($wgUser->getSkin()), array('SkinMonaco', 'SkinOasis')) ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
-		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js?'.$wgStyleVersion.'"></script>');
+		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/VideoEmbedTool/js/VET.js"></script>');
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/VideoEmbedTool/css/VET.scss'));
 		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/core/WikiaSlider.scss'));
 	}
