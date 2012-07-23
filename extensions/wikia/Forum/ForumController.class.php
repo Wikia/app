@@ -128,14 +128,12 @@ class ForumController extends WallBaseController {
 	}
 
 	protected function addMiniEditorAssets() {
-		if ($this->wg->EnableMiniEditorExtForForum) {
-			$this->sendRequest('MiniEditor', 'loadAssets', array(
-				'additionalAssets' => array(
-					'forum_mini_editor_js',
-					'extensions/wikia/MiniEditor/css/Wall/Wall.scss'
-				)
-			));
-		}
+		$this->sendRequest('MiniEditor', 'loadAssets', array(
+			'additionalAssets' => array(
+				'forum_mini_editor_js',
+				'extensions/wikia/MiniEditor/css/Wall/Wall.scss'
+			)
+		));
 	}
 
 	// get sorting options
