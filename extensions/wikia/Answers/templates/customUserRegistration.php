@@ -23,12 +23,12 @@ class customUsercreateTemplate extends QuickTemplate {
 			'msg' => $msg,
 		);
 	}
-	
+
 	function execute() {
 
-		global $wgOut, $wgStylePath, $wgStyleVersion, $wgValidateUserName;
+		global $wgOut, $wgStylePath;
 
-		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css?' . $wgStyleVersion . "\" />\n");
+		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css' . "\" />\n");
 
 		if (!array_key_exists('message', $this->data)) {
 			$this->data['message'] = "";
@@ -97,7 +97,7 @@ class customUsercreateTemplate extends QuickTemplate {
 	?>
 		<tr>
 			<td class="mw-input">
-				<?php $this->msg( 'yourdomainname' ) ?><br/>	
+				<?php $this->msg( 'yourdomainname' ) ?><br/>
 				<select name="wpDomain" value="<?php $this->text( 'domain' ) ?>">
 					<?php echo $doms ?>
 				</select>
@@ -131,9 +131,9 @@ class customUsercreateTemplate extends QuickTemplate {
 			foreach ( $this->data['extraInput'] as $inputItem ) { ?>
 		<tr>
 			<td class="mw-input">
-			<?php 
+			<?php
 				if ( !empty( $inputItem['msg'] ) && $inputItem['type'] != 'checkbox' ) {
-					?><label for="<?php 
+					?><label for="<?php
 					echo htmlspecialchars( $inputItem['name'] ); ?>"><?php
 					$this->msgWiki( $inputItem['msg'] ) ?></label><?php
 				}
@@ -141,17 +141,17 @@ class customUsercreateTemplate extends QuickTemplate {
 				<input type="<?php echo htmlspecialchars( $inputItem['type'] ) ?>" name="<?php
 				echo htmlspecialchars( $inputItem['name'] ); ?>"
 					tabindex="<?php echo $tabIndex++; ?>"
-					value="<?php 
+					value="<?php
 				if ( $inputItem['type'] != 'checkbox' ) {
 					echo htmlspecialchars( $inputItem['value'] );
 				} else {
 					echo '1';
-				}					
+				}
 					?>" id="<?php echo htmlspecialchars( $inputItem['name'] ); ?>"
-					<?php 
+					<?php
 				if ( $inputItem['type'] == 'checkbox' && !empty( $inputItem['value'] ) )
-					echo 'checked="checked"'; 
-					?> /> <?php 
+					echo 'checked="checked"';
+					?> /> <?php
 					if ( $inputItem['type'] == 'checkbox' && !empty( $inputItem['msg'] ) ) {
 						?>
 				<label for="<?php echo htmlspecialchars( $inputItem['name'] ); ?>"><?php
@@ -160,8 +160,8 @@ class customUsercreateTemplate extends QuickTemplate {
 				?>
 			</td>
 		</tr>
-<?php				
-				
+<?php
+
 			}
 		}
 ?>

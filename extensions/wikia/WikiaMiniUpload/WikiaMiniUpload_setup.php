@@ -18,12 +18,12 @@ $wgExtensionMessagesFiles['WikiaMiniUpload'] = $dir.'/WikiaMiniUpload.i18n.php';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'WMUSetup';
 
 function WMUSetup($editform) {
-	global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser;
+	global $wgOut, $wgExtensionsPath, $wgHooks, $wgUser;
 
 	if( in_array(get_class($wgUser->getSkin()), array('SkinMonaco', 'SkinOasis')) ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'WMUSetupVars';
-		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/WikiaMiniUpload/js/WMU.js?'.$wgStyleVersion.'"></script>');
-		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/WikiaMiniUpload/css/WMU.css?'.$wgStyleVersion.'" />');
+		$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/WikiaMiniUpload/js/WMU.js?"></script>');
+		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'.$wgExtensionsPath.'/wikia/WikiaMiniUpload/css/WMU.css" />');
 		if (isset ($editform->ImageSeparator)) {
 			$sep = $editform->ImageSeparator ;
 			$marg = 'margin-left:5px;' ;

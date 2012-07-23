@@ -50,10 +50,8 @@ class ContactForm extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgLang, $wgRequest;
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+		global $wgRequest, $wgOut;
 		global $wgUser, $wgCaptchaClass, $wgServer;
-		global $wgAbTesting;
 
 		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
 		$extPath = F::app()->wg->extensionsPath;

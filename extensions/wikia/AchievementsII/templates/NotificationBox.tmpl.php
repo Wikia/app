@@ -1,7 +1,7 @@
 <?php
-global $wgExtensionsPath, $wgStyleVersion;
-?>	
-<link href="<?= $wgExtensionsPath.'/wikia/AchievementsII/css/notification.css?'.$wgStyleVersion ?>" type="text/css" rel="stylesheet">
+global $wgExtensionsPath;
+?>
+<link href="<?= $wgExtensionsPath ?>/wikia/AchievementsII/css/notification.css" type="text/css" rel="stylesheet">
 <?php
 $badgeName = htmlspecialchars($badge->getName());
 ?>
@@ -19,9 +19,9 @@ $badgeName = htmlspecialchars($badge->getName());
 
 <script>
 	wgAfterContentAndJS.push(
-		function() {			
+		function() {
 			$(function() {
-			
+
 				var trackFunc = function(e) {
 					window.jQuery.tracker.byStr('Achievements/notification/yourprofile');
 				};
@@ -34,7 +34,7 @@ $badgeName = htmlspecialchars($badge->getName());
 				});
 
 				$('.AchievementsNotification').slideDown('slow');
-				setTimeout(function() {$('.AchievementsNotification').slideUp('slow');}, 10000);				
+				setTimeout(function() {$('.AchievementsNotification').slideUp('slow');}, 10000);
 				window.jQuery.tracker.byStr('Achievements/notification/appears');
 			});
 		}

@@ -1296,7 +1296,6 @@ class BlogTemplateClass {
 	}
 
 	private static function __getPager($iTotal, $iPage) {
-		global $wgUser;
 		global $wgExtensionsPath, $wgStyleVersion;
 		wfProfileIn( __METHOD__ );
 

@@ -40,12 +40,10 @@ class SpecialApiGate extends SpecialPage {
 	 * @param $subpage Mixed: string if any subpage provided, else null
 	 */
 	public function execute( $subpage ) {
-		global $wgOut, $wgRequest, $IP, $wgUser, $API_GATE_DIR, $wgCityId, $WIKIA_CITYID_APIWIKI;
+		global $wgOut, $wgRequest, $wgUser, $wgCityId, $WIKIA_CITYID_APIWIKI;
 		wfProfileIn( __METHOD__ );
 
 		// NOTE: We can't include CSS from the /lib directry (there is no symlink to /lib from the document-root on the apaches). We'll have to separate the CSS later when we can.
-		//global $wgStyleVersion;
-		//$wgOut->addStyle('../lib/ApiGate/css/apiGate.css?'.$wgStyleVersion ); // since this is outside of wgExtensionsPath, it doesn't have the cachebuster embedded in it automatically
 		global $wgExtensionsPath;
 		$wgOut->addStyle( $wgExtensionsPath . '/wikia/SpecialApiGate/css/apiGate.css', 'screen' );
 
@@ -78,7 +76,7 @@ class SpecialApiGate extends SpecialPage {
 				break;
 			case self::SUBPAGE_REGISTER:
 				$mainSectionHtml .= $this->getBreadcrumbHtml();
-			
+
 				// Users must be logged in to get an API key
 				if( !$wgUser->isLoggedIn() ){
 					$wgOut->setPageTitle( wfMsg( 'apigate-nologin' ) );
@@ -132,7 +130,7 @@ class SpecialApiGate extends SpecialPage {
 
 		wfProfileOut( __METHOD__ );
 	} // end execute()
-	
+
 	/**
 	 * Returns HTML (as a string) for the "breadcrumb" links which in the case of this SpecialPage will
 	 * just be links from the subpages back to the main Control Panel.
@@ -161,13 +159,13 @@ class SpecialApiGate extends SpecialPage {
 	 * This performs its function by returning HTML.
 	 *
 	 * @param data - optional associative array where keys are variable names (and values are the values for that variable) to be exported to templates.
-	 * @return 
+	 * @return
 	 */
 	public function subpage_landingPage( $data = array() ){
 		wfProfileIn( __METHOD__ );
 		global $wgUser, $APIGATE_LINK_ROOT;
 		$html = "";
-		
+
 		if( !$wgUser->isLoggedIn() ){
 			global $wgOut;
 			$wgOut->setPageTitle( wfMsg( 'apigate-nologin' ) );
@@ -448,7 +446,7 @@ class SpecialApiGate extends SpecialPage {
 	 */
 	public static function onPersonalUrls(&$personalUrls, &$title) {
 		wfProfileIn( __METHOD__ );
-		
+
 		if( SpecialApiGate::shouldShowUserLink() ) {
 			$personalUrls['apiGate']['href'] = SpecialPage::getTitleFor("ApiGate")->getFullURL();
 			$personalUrls['apiGate']['text'] = wfMsg( 'apigate-userlink' );
@@ -457,7 +455,7 @@ class SpecialApiGate extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 		return true;
 	} // end onPersonalUrls()
-	
+
 	/**
 	 * Hook for adding API Gate user link (which was added to personalUrls by onPersonalUrls()) to the Oasis user-links dropdown.
 	 */
@@ -481,7 +479,7 @@ class SpecialApiGate extends SpecialPage {
 		global $wgCityId, $wgUser;
 		global $WIKIA_CITYID_APIWIKI;
 		wfProfileIn( __METHOD__ );
-		
+
 		$showLink = false;
 		if($wgCityId == $WIKIA_CITYID_APIWIKI){
 			$showLink = true;
@@ -495,8 +493,8 @@ class SpecialApiGate extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 		return $showLink;
 	} // end shouldShowUserLink()
-	
-	
+
+
 	/**
 	 * Returns the HTML for the chart of apiKey requests per time-period provided.
 	 *
@@ -512,7 +510,7 @@ class SpecialApiGate extends SpecialPage {
 
 		global $wgCacheBuster;
 		$uniqueMemCacheKey = wfMemcKey( "ApiGate:KeyStats:$apiKey:$period:$wgCacheBuster" );
-		
+
 		switch($period){
 			case "hourly":
 				$period = "60 Minute"; // rewrite to make this use the format that the Wikia stats processing expects. - TODO: Just use period_ids or constants everywhere.
@@ -543,7 +541,7 @@ class SpecialApiGate extends SpecialPage {
 		if(isset( $PERIOD_ID_BY_STR[ ucfirst($period) ] )){
 			$periodId = $PERIOD_ID_BY_STR[ ucfirst($period) ];
 		}
-		
+
 		// Build the query.
 		if( $aggregate ){
 			$queryString = "SELECT SUM(events) as number, time_id as creation_date FROM $tableName WHERE period_id=$periodId GROUP BY creation_date ORDER BY creation_date";

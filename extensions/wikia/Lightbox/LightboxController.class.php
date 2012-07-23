@@ -18,17 +18,17 @@ class LightboxController extends WikiaController {
 
 	/**
 	 * get lightbox madal content
-	 */	
+	 */
 	public function lightboxModalContent() {
 		$this->showAds = false; //$this->wg->User->isAnon() || $this->wg->User->getOption('showAds'); /* TODO: Re-enable once ad ops fixes ads (BugId:32950) and (BugId:33370)
 
-		// set cache control to 1 day 
-		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)); 
+		// set cache control to 1 day
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	public function lightboxModalContentError() {
 		// set cache control to 1 day
-		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)); 
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	/**
@@ -85,7 +85,7 @@ class LightboxController extends WikiaController {
 		}
 		return $thumbs;
 	}
-	
+
 	/**
 	* creates a single carousel thumb entry
 	* @entry - must have 'title'(image title) and 'type'(image|video) defined
@@ -120,7 +120,7 @@ class LightboxController extends WikiaController {
 		}
 		return self::$imageserving;
 	}
- 	
+
 
 
 	/**
@@ -153,7 +153,7 @@ class LightboxController extends WikiaController {
 		if ( !( $title instanceof Title ) ) {
 			return;
 		}
-		
+
 		$data = WikiaFileHelper::getMediaDetail($title, array('imageMaxWidth'  => 1000,
 									'contextWidth'   => $this->request->getVal('width', 660),
 									'contextHeight'  => $this->request->getVal('height', 360),
@@ -201,7 +201,7 @@ class LightboxController extends WikiaController {
 		// set cache control to 1 hour
 		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
-	
+
 	/**
 	 * @brief - Returns pre-formatted social sharing urls and codes
 	 * @requestParam string fileTitle
@@ -287,9 +287,9 @@ class LightboxController extends WikiaController {
 		$this->networks = $networks;
 		$this->fileTitle = str_replace("_"," ",$fileTitle);
 		$this->imageUrl = $thumbUrl;
-		
+
 		// set cache control to 1 day
-		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)); 
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	/**
@@ -391,7 +391,7 @@ class LightboxController extends WikiaController {
 
 		$this->wf->ProfileOut( __METHOD__ );
 	}
-	
+
 	/**
 	 * get list of images
 	 * @param integer $limit
@@ -452,7 +452,7 @@ class LightboxController extends WikiaController {
 	 */
 	protected function getLatestPhotos() {
 		$this->wf->ProfileIn( __METHOD__ );
-		
+
 		$memKey = $this->wf->MemcKey( 'lightbox', 'latest_photos' );
 		$latestPhotos = $this->wg->Memc->get( $memKey );
 		if ( !is_array($latestPhotos) ) {
@@ -486,8 +486,6 @@ class LightboxController extends WikiaController {
 	 */
 	protected function getTimestamp() {
 		$this->wf->ProfileIn( __METHOD__ );
-
-		$latestPhotoNames = array();
 
 		$response = $this->sendRequest( 'LatestPhotosController', 'executeIndex' );
 		$latestPhotos = $response->getVal( 'thumbUrls', '' );
