@@ -204,120 +204,105 @@ var SuggestModal = {
 	},
 
 	suggestArticle: function () {
-		$.get(window.wgScriptPath + '/wikia.php', {
+		$.nirvana.sendRequest({
 			controller: 'WikiaHubsSuggestController',
 			method: 'modalArticle',
-			format: 'html'
-		}, function (html) {
-			var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
-			var wikiaForm = new WikiaForm(modal.find('form'));
-
-			modal.find('input[name=articleurl]').focus(function () {
-				if ($(this).parent().is('.default-value')) {
-					$(this).val('');
-					$(this).parent().removeClass('default-value');
-				}
-			});
-
-			// show submit button
-			SuggestModal.showSubmit(modal);
-			modal.find('button.submit').click(function (e) {
-				e.preventDefault();
-				var articleurl = modal.find('input[name=articleurl]').val();
-				var reason = modal.find('textarea[name=reason]').val();
-				$.nirvana.sendRequest({
-					controller: 'WikiaHubsSuggestController',
-					method: 'modalArticle',
-					format: 'json',
-					data: {
-						hubname: window.wgPageName,
-						articleurl: articleurl,
-						reason: reason,
-						submit: 1
-					},
-					callback: function (res) {
-						if (res['result'] == 'ok') {
-							modal.find('.WikiaForm').replaceWith('<p>' + res['msg'] + '</p>');
-							modal.find('.close-button').show();
-						} else if (res['result'] == 'error') {
-							wikiaForm.clearInputError('articleurl');
-							wikiaForm.clearInputError('reason');
-							wikiaForm.showInputError(res['errParam'], res['msg']);
-						} else {
-							// TODO: show error message
-							GlobalNotification.show('Something is wrong', 'error');
+			format: 'html',
+			type: 'get',
+			callback: function (html) {
+				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
+				var wikiaForm = new WikiaForm(modal.find('form'));
+	
+				// show submit button
+				SuggestModal.showSubmit(modal);
+				modal.find('button.submit').click(function (e) {
+					e.preventDefault();
+					var articleurl = modal.find('input[name=articleurl]').val();
+					var reason = modal.find('textarea[name=reason]').val();
+					$.nirvana.sendRequest({
+						controller: 'WikiaHubsSuggestController',
+						method: 'modalArticle',
+						format: 'json',
+						data: {
+							hubname: window.wgPageName,
+							articleurl: articleurl,
+							reason: reason,
+							submit: 1
+						},
+						callback: function (res) {
+							if (res['result'] == 'ok') {
+								modal.find('.WikiaForm').replaceWith('<p>' + res['msg'] + '</p>');
+								modal.find('.close-button').show();
+							} else if (res['result'] == 'error') {
+								wikiaForm.clearInputError('articleurl');
+								wikiaForm.clearInputError('reason');
+								wikiaForm.showInputError(res['errParam'], res['msg']);
+							} else {
+								// TODO: show error message
+								GlobalNotification.show('Something is wrong', 'error');
+							}
 						}
-					}
+					});
 				});
-			});
-
-			modal.find('button.cancel').click(function (e) {
-				e.preventDefault();
-				SuggestModal.closeModal(modal);
-			});
+	
+				modal.find('button.cancel').click(function (e) {
+					e.preventDefault();
+					SuggestModal.closeModal(modal);
+				});
+			}
 		});
 	},
 
 	suggestVideo: function () {
-		$.get(window.wgScriptPath + '/wikia.php', {
+		$.nirvana.sendRequest({
 			controller: 'WikiaHubsSuggestController',
 			method: 'modalRelatedVideos',
-			format: 'html'
-		}, function (html) {
-			var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
-			var wikiaForm = new WikiaForm(modal.find('form'));
-
-			modal.find('input[name=videourl]').focus(function () {
-				if ($(this).parent().is('.default-value')) {
-					$(this).val('');
-					$(this).parent().removeClass('default-value');
-				}
-			});
-
-			modal.find('input[name=wikiname]').focus(function () {
-				if ($(this).parent().is('.default-value')) {
-					$(this).val('');
-					$(this).parent().removeClass('default-value');
-				}
-			});
-
-			// show submit button
-			SuggestModal.showSubmit(modal);
-
-			modal.find('button.submit').click(function (e) {
-				e.preventDefault();
-				var videourl = modal.find('input[name=videourl]').val();
-				var wikiname = modal.find('input[name=wikiname]').val();
-				$.nirvana.sendRequest({
-					controller: 'WikiaHubsSuggestController',
-					method: 'modalRelatedVideos',
-					format: 'json',
-					data: {
-						hubname: window.wgPageName,
-						videourl: videourl,
-						wikiname: wikiname,
-						submit: 1
-					},
-					callback: function (res) {
-						if (res['result'] == 'ok') {
-							modal.find('.WikiaForm').replaceWith('<p>' + res['msg'] + '</p>');
-							modal.find('.close-button').show();
-						} else if (res['result'] == 'error') {
-							wikiaForm.clearInputError('videourl');
-							wikiaForm.clearInputError('wikiname');
-							wikiaForm.showInputError(res['errParam'], res['msg']);
-						} else {
-							// TODO: show error message
-							GlobalNotification.show('Something is wrong', 'error');
+			format: 'html',
+			type: 'get',
+			callback: function (html) {
+				var modal = $(html).makeModal({width: 490, onClose: SuggestModal.closeModal});
+				var wikiaForm = new WikiaForm(modal.find('form'));
+				
+				modal.find('input[name=videourl], input[name=wikiname]').placeholder();
+						
+				// show submit button
+				SuggestModal.showSubmit(modal);
+	
+				modal.find('button.submit').click(function (e) {
+					e.preventDefault();
+					var videourl = modal.find('input[name=videourl]').val();
+					var wikiname = modal.find('input[name=wikiname]').val();
+					$.nirvana.sendRequest({
+						controller: 'WikiaHubsSuggestController',
+						method: 'modalRelatedVideos',
+						format: 'json',
+						data: {
+							hubname: window.wgPageName,
+							videourl: videourl,
+							wikiname: wikiname,
+							submit: 1
+						},
+						callback: function (res) {
+							if (res['result'] == 'ok') {
+								modal.find('.WikiaForm').replaceWith('<p>' + res['msg'] + '</p>');
+								modal.find('.close-button').show();
+							} else if (res['result'] == 'error') {
+								wikiaForm.clearInputError('videourl');
+								wikiaForm.clearInputError('wikiname');
+								wikiaForm.showInputError(res['errParam'], res['msg']);
+							} else {
+								// TODO: show error message
+								GlobalNotification.show('Something is wrong', 'error');
+							}
 						}
-					}
+					});
 				});
-			});
-
-			modal.find('button.cancel').click(function (e) {
-				e.preventDefault();
-				SuggestModal.closeModal(modal);
-			});
+	
+				modal.find('button.cancel').click(function (e) {
+					e.preventDefault();
+					SuggestModal.closeModal(modal);
+				});
+			}		
 		});
 	},
 
