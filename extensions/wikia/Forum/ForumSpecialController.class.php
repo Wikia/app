@@ -20,7 +20,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$this->wg->Out->setPageTitle($this->wf->msg('forum-forum-title', $this->wg->Sitename));
 
-		$this->blurb = $this->wf->Msg('forum-specialpage-blurb');
+		$this->blurb = $this->wf->MsgExt('forum-specialpage-blurb', 'parse');
 		$this->blurbHeading = $this->wf->Msg('forum-specialpage-blurb-heading');
 		$this->lastPostBy = $this->wf->Msg('forum-specialpage-board-lastpostby');
 
