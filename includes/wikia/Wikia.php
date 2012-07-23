@@ -705,7 +705,7 @@ class Wikia {
 	 * @param       Array    filters
 	 */
 	static public function addRecentChangesFilters( $RC, &$filters ) {
-		$filters['hidelogs'] = 'rcshowhidelogs';
+		$filters['hidelogs'] = array( 'default' => false, 'msg' => 'rcshowhidelogs' );
 
 		return true;
 	}
