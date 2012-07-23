@@ -121,7 +121,7 @@ HoverMenu.prototype.handleShowNav = function(event) {
 			this.showNav(event.currentTarget);
 		}
 	}
-}
+};
 
 HoverMenu.prototype.mouseout = function(event) {
 	var self = this;
@@ -136,8 +136,6 @@ HoverMenu.prototype.mouseout = function(event) {
 		//Start mouseoutTimer
 		this.mouseoutTimer = setTimeout(function() {
 			$(event.currentTarget).children("ul").removeClass("show");
-			if (!$(".modalWrapper:visible").length) {
-			}
 		}, this.settings.mouseoutDelay);
 
 	} else {
