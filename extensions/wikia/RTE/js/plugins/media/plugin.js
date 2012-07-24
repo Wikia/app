@@ -345,16 +345,16 @@ CKEDITOR.plugins.add('rte-media',
 
                 window.MediaTool.callBackend('getMediaItems', {mediaList:[data.title]}, function(items) {
 
-                    $.each(items, function(i, item) {
-                        initialBasketContent.push( item );
-                    });
+			$.each(items, function(i, item) {
+				item.caption = data.params.caption;
+				initialBasketContent.push( item );
+			});
+			var mediaSettings = data.params;
+			if (!mediaSettings.thumbnail) mediaSettings.thumbnail = false;
 
-                    var mediaSettings = data.params;
-					if (!mediaSettings.thumbnail) mediaSettings.thumbnail = false;
-
-                    window.MediaTool.showModal.call(window.MediaTool, function(wikiText) {
-						self.addWikiText( wikiText, $(editedElement) );
-					}, data.params, initialBasketContent);
+			window.MediaTool.showModal.call(window.MediaTool, function(wikiText) {
+				self.addWikiText( wikiText, $(editedElement) );
+			}, data.params, initialBasketContent);
                 });
             }
         });
