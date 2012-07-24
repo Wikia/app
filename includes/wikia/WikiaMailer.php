@@ -49,7 +49,7 @@ class WikiaMailer extends UserMailer {
 class WikiaSendgridMailer {
 	
 	static public function send ( $headers, $to, $from, $subject, $body, $priority = 0, $attachments = null ) {
-		global $wgEnotifMaxRecips, $wgOutputEncoding;
+		global $wgEnotifMaxRecips;
 
 		wfProfileIn( __METHOD__ );
 		require_once( 'Mail.php' );
@@ -121,6 +121,7 @@ class WikiaSendgridMailer {
 
 		$chunks = array_chunk( (array)$to, $wgEnotifMaxRecips );
 		foreach ($chunks as $chunk) {
+			$headers['To'] = $chunk;
 			$status = self::sendWithPear( $mail_object, $chunk, $headers, $body );
 			if ( !$status->isOK() ) {
 				wfRestoreWarnings();
