@@ -2,12 +2,15 @@
     <h1>
         <?echo $header;?>
     </h1>
+    <h3>
+        <?echo $artCount;?>
+    </h3>
 </div>
 <div id="wikiMap"></div>
-<div id="checkBoxContainer">
+<label id="checkBoxContainer">
     <input type="checkbox" id="animationCheckbox">
     <?echo $animation;?>
-</div>
+</label>
 <div id="categoriesContainer">
     <h2>
         <?=$categoriesHeader?>
@@ -25,3 +28,5 @@
 
 
 </script>
+
+

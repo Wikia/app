@@ -939,3 +939,12 @@ $config['mediatool'] = array(
 		'//extensions/wikia/MediaTool/js/VideoPreview.js'
 	)
 );
+/** WikiMap Extension **/
+$config['wiki_map_js'] = array(
+    'type' => AssetsManager::TYPE_JS,
+    'assets' => array(
+        '//extensions/wikia/WikiMap/js/d3.v2.js',
+        '//extensions/wikia/WikiMap/js/jquery.xcolor.js',
+        '//extensions/wikia/WikiMap/js/wikiMapIndexContent.js'
+    )
+);
