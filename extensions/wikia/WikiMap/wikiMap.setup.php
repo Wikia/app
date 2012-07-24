@@ -5,7 +5,7 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
     'path' => __FILE__,
-    'name' => 'WikiMap',
+    'name' => '[[Special:WikiMap|WikiMap]]',
     'author' => 'Piotr Ożga',
     'descriptionmsg' => 'wikiMap-desc'
 );
