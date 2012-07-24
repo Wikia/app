@@ -11,7 +11,7 @@
 <?= wfRenderModule('Ad', 'Index', array('slotname' => 'HOME_INVISIBLE_TOP')) ?>
 <?= wfRenderModule('GlobalHeader') ?>
 
-<section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?>">
+<section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= empty($isGridLayoutEnabled) ? '' : ' WikiaGrid' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?= wfRenderModule('Notifications', 'Confirmation') ?>
@@ -74,7 +74,7 @@
 			<?= F::app()->renderView( 'ForumController', 'header' ) ?>
 		<? endif ?>
 
-		<article id="WikiaMainContent" class="WikiaMainContent">
+		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) && $railModulesExist ? ' grid-4 alpha' : '' ?>">
 			<?php
 				// Needs to be above page header so it can suppress page header
 				if ($displayAdminDashboard) {
@@ -156,7 +156,7 @@
 		</article><!-- WikiaMainContent -->
 
 	<?php
-		if (count($railModuleList) > 0) {
+		if ($railModulesExist) {
 			echo wfRenderModule('Rail', 'Index', array('railModuleList' => $railModuleList));
 		}
 	?>

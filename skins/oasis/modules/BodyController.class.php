@@ -48,6 +48,17 @@ class BodyController extends WikiaController {
 		global $wgArticle;
 		return (get_class ($wgArticle) == "AutoHubsPagesArticle");
 	}
+	
+	/**
+	 * Returns if current layout should be applying gridlayout
+	 */
+	public static function isGridLayoutEnabled() {
+		$app = F::app();
+		if( in_array( MWNamespace::getSubject($app->wg->Title->getNamespace()), $app->wg->WallNS) ) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Decide whether to show user pages header on current page
@@ -415,12 +426,18 @@ class BodyController extends WikiaController {
 				}
 			}
 		}
+		
+		$this->railModulesExist = true;
 
 		// use one column layout for pages with no right rail modules
 		if (count($this->railModuleList ) == 0) {
 			OasisController::addBodyClass('oasis-one-column');
 			$this->headerModuleParams = array ('showSearchBox' => true);
+			$this->railModulesExist = false;
 		}
+		
+		// determine if WikiaGridLayout needs to be enabled
+		$this->isGridLayoutEnabled = self::isGridLayoutEnabled();
 
 		// if we are on a special search page, pull in the css file and don't render a header
 		if($wgTitle && $wgTitle->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault) {
@@ -508,7 +525,5 @@ class BodyController extends WikiaController {
 		}
 		wfProfileOut(__METHOD__);
 	}
-
-
 
 }
