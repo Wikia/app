@@ -282,13 +282,20 @@ class VideoFileUploader {
 	 * @param $requestedTitle if new Video will be created you can optionally request
 	 *  it's title (otherwise Video name from provider is used)
 	 */
-	public static function URLtoTitle( $url, $sTitle = '' ) {
+	public static function URLtoTitle( $url, $sTitle = '', $sDescription = '' ) {
 
 		wfProfileIn( __METHOD__ );
 		$oTitle = null;
 		$oUploader = new self();
 		$oUploader->setExternalUrl( $url );
 		$oUploader->setTargetTitle( $sTitle );
+		if ( !empty($sDescription) ) {
+			$categoryVideosTxt = self::getCategoryVideosWikitext();
+			if ( strpos( $sDescription, $categoryVideosTxt ) === false ) {
+				$sDescription .= $categoryVideosTxt;
+			}
+			$oUploader->setDescription( $sDescription );
+		}
 		if ( $oUploader->upload( $oTitle ) ) {
 			wfProfileOut( __METHOD__ );
 			return $oTitle;

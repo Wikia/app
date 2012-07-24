@@ -90,7 +90,7 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 
 		$.each(this.items, function(i, item) {
 			if(item.origin == 'online') {
-				urls.push(item.remoteUrl);
+				urls.push( { url:item.remoteUrl, description:item.description, name:item.name, isFollowed:item.isFollowed } );
 			}
 		});
 
