@@ -149,7 +149,7 @@ class NewWikisPage extends AlphabeticPager {
 		}
 
 		if ( $this->firstChar != "" ) {
-			$like = $this->mDb->buildLike( sprintf( "%s/", strtoupper( $this->firstChar ) ), $this->mDb->anyString() );
+			$like = $this->mDb->buildLike( sprintf( "%s", strtoupper( $this->firstChar ) ), $this->mDb->anyString() );
 			$query['conds'][] = "upper(city_title) $like";
 		}
 		if( $this->lang != "" ) {
