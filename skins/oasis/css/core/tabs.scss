@@ -23,26 +23,16 @@ ol.tabs {
 			@include border-radius-nw(4px);
 			@include border-radius-ne(4px);
 			border: 1px solid transparent;
-			color: $color-text;
+			cursor: pointer;
 			display: inline-block;
 			font-size: 14px;
 			line-height: 23px;
 			padding: 6px 12px 3px;
 			position: relative;
 			top: 1px;
-			cursor: pointer;
-			&:hover {
-				text-decoration: none;
-			}
 		}
 		.chevron {
 			display: none;
-		}
-	}
-	li:not(.disabled) {
-		a:hover {
-			background-color: $color-tab-hover-background;
-			padding-bottom: 2px;
 		}
 	}
 	.selected {
@@ -55,10 +45,10 @@ ol.tabs {
 			}
 			background: $color-page;
 			color: $color-text;
-			font-weight: bold;
 			cursor: text;
+			font-weight: bold;
+			text-decoration: none;
 			&:hover {
-				background-color: $color-page;
 				padding-bottom: 3px;
 			}
 		}
