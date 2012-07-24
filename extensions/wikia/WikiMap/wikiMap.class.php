@@ -109,6 +109,7 @@ class wikiMap extends WikiaObject {
                 $result = $result['query']['categorymembers'];
 
                 foreach ($result as $item){
+                    //var_dump($item);
                     $ids[] = $item['pageid'];
                 }
                 $allArticlesCount = count($ids);
@@ -120,8 +121,7 @@ class wikiMap extends WikiaObject {
                         'COUNT(*) AS value'),
                     array( 'page_id = rev_page', 'page_id' => $ids),
                     __METHOD__,
-                    array ( 'HAVING' => 'COUNT(*) > 1',
-                    'GROUP BY' => 'page_title',
+                    array ('GROUP BY' => 'page_title',
                     'ORDER BY' => 'value desc',
                     'LIMIT' => '120')
                 );
@@ -131,6 +131,7 @@ class wikiMap extends WikiaObject {
                 $res = array();
                 $map = array();
                 foreach ($resultSecondQuery as $i => $item){
+                    //var_dump($item);
                     $articleTitle = str_replace('_', ' ',$item->title);
                     $res[] = array('title' => $articleTitle, 'id' => $item->page_id, 'connections' => array());
                     $map[$articleTitle] = $i;
