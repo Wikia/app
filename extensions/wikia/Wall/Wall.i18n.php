@@ -604,7 +604,7 @@ $messages['qqq'] = array(
 	'wall-history-action-thread-history' => 'wall history page, link to view thread history',
 	'wall-thread-history-title' => 'heading on thread history page',
 	'wall-thread-history-thread-created' => 'thread history page. GENDER is supported in this message. Parameters:
-* $1 is thread title
+* $1 is preferred name
 * $2 is username.',
 	'wall-thread-history-reply-created' => 'thread history page item. GENDER is supported in this message. Parameters:
 * $1 is preferred name
