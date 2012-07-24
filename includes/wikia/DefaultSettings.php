@@ -917,3 +917,9 @@ $wgResourceLoaderAssetsSkinMapping = array(
 );
 
 $wgWikiaHubsPages = array();
+
+/**
+ * @see https://wikia.fogbugz.com/default.asp?36946
+ * core mediawiki feature variable
+ */
+$wgArticleCountMethod = "comma";
