@@ -13,8 +13,9 @@ var WallNotifications = $.createClass(Object, {
 		setTimeout( this.proxy( this.updateCounts ), 300);
 		//setInterval( this.proxy( this.updateLoop ), 15000);
 		
-		if($('.wall-notifications-monobook').length > 0) {
-			$('.wall-notifications-monobook').first()
+		var $wallNotificationsMonobook = $('.wall-notifications-monobook');
+		if($wallNotificationsMonobook.length > 0) {
+			$wallNotificationsMonobook.first()
 				.append('<span class="count">(?)</span>')
 				.click( this.proxy( this.clickNotificationsMonobook ) )
 				.parent()
@@ -206,8 +207,9 @@ var WallNotifications = $.createClass(Object, {
 		e.preventDefault();
 		$('#wall-notifications-markasread-sub-opts').show();
 		$('#wall-notifications-dropdown').show();
-		var height = $('#wall-notifications-markasread').outerHeight()+4;
-		$('#wall-notifications-markasread').closest('li').css({'height':height});
+		var $markAsRead = $('#wall-notifications-markasread');
+		var height = $markAsRead.outerHeight()+4;
+		$markAsRead.closest('li').css({'height':height});
 		$('#wall-notifications-markasread-sub').addClass('disabled');
 		
 		//click tracking
