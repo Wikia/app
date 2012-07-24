@@ -15,6 +15,11 @@
 
 		$parentPage = null;
 		if( $title instanceof Title ) {
+			// create message wall if not exist
+			if ( !$title->exists() && $namespace == NS_USER_WALL ) {
+				$title = WallMessage::addMessageWall( $title );
+				echo ".....Wall message NOT found.\n\tAdded wall message '$titleText' (".$title->getArticleID().")";
+			}
 			$parentPage = ArticleComment::newFromTitle( $title );
 		}
 
