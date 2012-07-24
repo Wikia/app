@@ -17,7 +17,7 @@ class UploadPhotosController extends WikiaController {
 	}
 
 	/**
-	 * This method hacks the normal moduleProxy() chain because of AIM and application/json mimetype incompatibility
+	 * This method hacks the normal nirvana dispatcher chain because of AIM and application/json mimetype incompatibility
 	 * Talk to Hyun or Inez
 	 */
 	public function executeUpload($params) {

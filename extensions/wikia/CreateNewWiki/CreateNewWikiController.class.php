@@ -71,7 +71,7 @@ class CreateNewWikiController extends WikiaController {
 
 	/**
 	 * Ajax call to validate domain.
-	 * Called via moduleproxy
+	 * Called via nirvana dispatcher
 	 */
 	public function executeCheckDomain() {
 		wfProfileIn(__METHOD__);
