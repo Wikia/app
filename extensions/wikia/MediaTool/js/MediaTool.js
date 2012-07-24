@@ -385,6 +385,25 @@ var MediaTool = MediaTool || (function () {
 			var item = cart.getItem(cartItemId);
 			if (item) item.caption = $(e.target).val();
 		});
+		$(".media-tool-content").on("blur", "textarea.media-tool-item-description", function (e) {
+			var fieldName = $(e.target).attr("name");
+			var cartItemId = fieldName.substr(0, fieldName.lastIndexOf("-"));
+			var item = cart.getItem(cartItemId);
+			if (item) item.description = $(e.target).val();
+		});
+		$(".media-tool-content").on("blur", "input.media-tool-item-name", function (e) {
+			var fieldName = $(e.target).attr("name");
+			var cartItemId = fieldName.substr(0, fieldName.lastIndexOf("-"));
+			var item = cart.getItem(cartItemId);
+			if (item) item.name = $(e.target).val();
+		});
+		$(".media-tool-content").on("change", ".media-tool-item-follow", function (e) {
+			var fieldName = $(e.target).attr("name");
+			var cartItemId = fieldName.substr(0, fieldName.lastIndexOf("-"));
+			var item = cart.getItem(cartItemId);
+			if (item) item.isFollowed = $(e.target).attr("checked") == "checked" ? 1 : 0;
+		});
+
 
 		initMediaSizeActions.call(self);
 	}

@@ -160,17 +160,31 @@ class MediaToolController extends WikiaController {
 		$this->response->setFormat('json');
 
 		$videoUrl = $this->request->getVal('url');
+		$videoDescription = $this->request->getVal('description');
+		$videoName = $this->request->getVal('name');
+		$isFollowed = $this->request->getVal('isFollowed');
 		$response = array( 'status' => self::RESPONSE_STATUS_ERROR );
 
-		if(!empty($videoUrl)) {
+		if( !empty( $videoUrl ) ) {
 			$videoMetadataResponse = $this->sendSelfRequest( 'getVideoMetadata', array( 'videoUrl' => $videoUrl ) );
 			$videoMetaData = $videoMetadataResponse->getData();
-			if($videoMetaData['status'] == self::RESPONSE_STATUS_OK) {
+			if ( !empty( $videoName ) ) {
+				$videoMetaData['title'] = $videoName;
+			}
+			if( $videoMetaData['status'] == self::RESPONSE_STATUS_OK ) {
 				/** @var $result Title */
-				$result = VideoFileUploader::URLtoTitle( $videoUrl, $videoMetaData['title'] );
+				$result = VideoFileUploader::URLtoTitle( $videoUrl, $videoMetaData['title'], $videoDescription );
 				if( $result instanceof Title ) {
 					$response['status'] = self::RESPONSE_STATUS_OK;
 					$response['title'] = $result->getPrefixedDBkey();
+
+					$oVideoTitle = Title::newFromDBkey( $response['title'], NS_FILE );
+					if ( (int)$isFollowed == 1 ) {
+						WatchAction::doWatch( $oVideoTitle, F::app()->wg->User );
+					} else {
+						WatchAction::doUnwatch( $oVideoTitle, F::app()->wg->User );
+					}
+
 				}
 				else {
 					$response['msg'] = wfMsg('mediatool-error-upload-failed');
@@ -193,9 +207,9 @@ class MediaToolController extends WikiaController {
 		$results = array();
 		if(is_array($videoUrls)) {
 			foreach($videoUrls as $videoUrl) {
-				$response = $this->sendSelfRequest('uploadVideo', array( 'url' => $videoUrl ));
+				$response = $this->sendSelfRequest('uploadVideo', $videoUrl );
 				$result = array();
-				$result['url'] = $videoUrl;
+				$result['url'] = $videoUrl['url'];
 				$result['status'] = $response->getVal('status');
 				if($response->getVal('status') == self::RESPONSE_STATUS_OK) {
 					$result['title'] = $response->getVal('title');
