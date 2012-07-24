@@ -22,6 +22,7 @@ $messages['en'] = array(
 	'wikiamobile-feedback' => 'Feedback',
 	'wikiamobile-back' => 'Back',
 	'wikiamobile-hide-section' => 'hide',
+	'wikiamobile-profile' => 'Profile',
 
 	//footer
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',

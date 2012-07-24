@@ -82,8 +82,8 @@ class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	public static function markTestIncomplete($message = '') {
 		Wikia::log(__METHOD__, '', $message);
-        parent::markTestIncomplete($message);
-    }
+		parent::markTestIncomplete($message);
+	}
 }
 
 class WikiaAppMock {
@@ -112,7 +112,7 @@ class WikiaAppMock {
 		$globalRegistryMock->expects( $this->testCase->any() )
 			->method( 'get' )
 			->will( $this->testCase->returnCallback(array( $this, 'getGlobalCallback')) );
-		
+
 		if( in_array( 'runFunction', $this->methods ) ) {
 			$functionWrapperMock = $this->testCase->getMock( 'WikiaFunctionWrapper', array_keys($this->mockedFunctions) );
 			foreach( $this->mockedFunctions as $functionName => $functionData ) {
@@ -133,7 +133,7 @@ class WikiaAppMock {
 	public function mockGlobalVariable($globalName, $returnValue) {
 		if(!in_array( 'getGlobal', $this->methods )) {
 			$this->methods[] = 'getGlobal';
-		}		
+		}
 		$this->mockedGlobals[$globalName] = array( 'value' => $returnValue );
 	}
 

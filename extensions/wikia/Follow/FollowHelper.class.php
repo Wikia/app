@@ -578,6 +578,10 @@ class FollowHelper {
 	static public function renderUserProfile(&$out) {
 		global $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgUser;
 		wfProfileIn(__METHOD__);
+		if( F::app()->checkSkin( 'wikiamobile' ) ){
+			return true;
+		}
+
 		if( ($wgUser->getId() != 0) && ($wgRequest->getVal( "hide_followed", 0) == 1) ) {
 			$wgUser->setOption( "hidefollowedpages", true );
 			$wgUser->saveSettings();

@@ -49,6 +49,7 @@ $app->registerHook('ArticleSaveComplete', 'UserProfilePageController', 'onArticl
 //TODO: we'll implement interview later
 //$app->registerHook('GetRailModuleSpecialPageList', 'InterviewSpecialPageController', 'onGetRailModuleSpecialPageList' );
 $app->registerHook('GetRailModuleList', 'UserProfilePageRailHelper', 'onGetRailModuleList');
+$app->registerHook('WikiaMobileAssetsPackages', 'UserProfilePageController', 'onWikiaMobileAssetsPackages');
 
 $app->registerHook('ArticleSaveComplete', 'Masthead', 'userMastheadInvalidateCache');
 

@@ -85,4 +85,29 @@ class UserProfilePageTest extends WikiaBaseTest {
 			}
 		}
 	}
+
+	protected function setUpMobileSkin( $mobileSkin ) {
+		$this->skinOrg = RequestContext::getMain()->getSkin();
+		RequestContext::getMain()->setSkin( $mobileSkin );
+	}
+
+	protected function tearDownMobileSkin() {
+		RequestContext::getMain()->setSkin( $this->skinOrg );
+	}
+
+	public function testWikiaMobileUserProfilePageTemplate() {
+		$mobileSkin = Skin::newFromKey( 'wikiamobile' );
+
+		$this->setUpMobileSkin( $mobileSkin );
+
+		$response = $this->app->sendRequest( 'UserProfilePage', 'index', array( 'format' => 'html' ) );
+		$response->toString();
+
+		$this->assertEquals(
+			dirname( $this->app->wg->AutoloadClasses['UserProfilePageController'] ) . '/templates/UserProfilePage_WikiaMobileIndex.php',
+			$response->getView()->getTemplatePath()
+		);
+
+		$this->tearDownMobileSkin();
+	}
 }

@@ -51,6 +51,22 @@
 	#wkLgn{
 		background-color: white;
 	}
+
+	li{
+		a{
+			font-weight: bold;
+		}
+		a:before {
+			background-size: 16px;
+			float:right;
+			height:16px;
+			width:16px;
+			margin:5px;
+			-webkit-transform:rotate(-90deg);
+			-moz-transform:rotate(-90deg);
+			transform:rotate(-90deg);
+		}
+	}
 }
 
 #wkLogOut{
@@ -143,12 +159,12 @@
 
 		ul {
 			display: block;
+			list-style: none;
+			margin: 0;
+			padding: 0;
 			position: absolute;
 			top: 30px;
 			width: 100%;
-			margin: 0;
-			padding: 0;
-			list-style: none;
 			color:  $link-color;
 			background-color: white;
 			@include transition(-webkit-transform .6s);
