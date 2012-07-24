@@ -202,7 +202,7 @@ var SuggestModal = {
 			}
 		});
 	},
-
+	
 	suggestArticle: function () {
 		$.nirvana.sendRequest({
 			controller: 'WikiaHubsSuggestController',
@@ -215,6 +215,7 @@ var SuggestModal = {
 	
 				// show submit button
 				SuggestModal.showSubmit(modal);
+				
 				modal.find('button.submit').click(function (e) {
 					e.preventDefault();
 					var articleurl = modal.find('input[name=articleurl]').val();
