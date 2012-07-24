@@ -29,7 +29,7 @@ $messages['ar'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'إنشاء صفحة نقاش تلقائيا',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -63,7 +63,7 @@ $messages['de'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Diskussionsseite automatisch erstellt',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -96,7 +96,7 @@ $messages['fr'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Page de discussion créée automatiquement',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -104,12 +104,20 @@ $messages['gl'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Páxina de conversa creada automaticamente',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
 	'sharedhelp-desc' => 'Bjerje strony z [[w:c:Help|Help Wikia]] a zasuwa je do mjenoweho ruma {{ns:help}} w tutym wikiju',
 	'sharedhelp-autotalkcreate-summary' => 'Awtomatisce wutworjena diskusijna strona',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'sharedhelp-desc' => 'A [[w:c:Help|Help Wikia]] oldalait illeszti be az {{ns:help}} névtérbe ezen a wikin',
+	'sharedhelp-autotalkcreate-summary' => 'Automatikusan létrehozott vitalap',
 );
 
 /** Interlingua (interlingua)

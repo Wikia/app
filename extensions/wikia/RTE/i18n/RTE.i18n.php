@@ -44,7 +44,7 @@ $messages['ar'] = array(
 	'rte-edgecase-comment' => 'تعليقات HTML',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -249,7 +249,7 @@ $messages['fr'] = array(
 	'prefs-rte' => 'Éditeur de texte enrichi',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -271,6 +271,30 @@ $messages['gl'] = array(
 	'rte-enablerichtexteditormessage' => 'O editor de texto enriquecido está activado!',
 	'rte-first-run-notice' => 'Fixemos algunhas melloras no editor. Para obter máis información, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news bótelle un ollo ás notas de publicación].',
 	'prefs-rte' => 'Editor de texto enriquecido',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'rte-desc' => 'CKeditor integrációja a MediaWikibe',
+	'rte-no-js-fallback' => 'A vizuális szerkesztő nem működik, ha a Javascript ki van kapcsolva. Kérlek, engedélyezd a böngészőbeállításaidban vagy konfiguráld [[Special:Preferences|beállításaidat]] a régi MediaWiki szerkesztő használatára',
+	'rte-edgecase-info-title' => 'Forráskód-nézet szükséges',
+	'rte-edgecase-info' => 'A vizuális szerkesztés ki van kapcsolva, mert az oldal összetett kódot tartalmaz.',
+	'rte-edgecase-comment' => 'HTML megjegyzések',
+	'rte-edgecase-triplecurls' => 'Sablonparaméterek',
+	'rte-edgecase-nowysiwyg' => '"nincs WYSIWYG" parancs',
+	'rte-edgecase-complex-description' => 'külső URL-cím vagy sablon egy hivatkozáson belül',
+	'rte-edgecase-template-with-link' => 'sablon egy hivatkozással paraméterként',
+	'rte-edgecase-syntax' => 'nem engedélyezett szintaxis',
+	'rte-edgecase-image-with-link' => 'kép hivatkozással a leírásában',
+	'rte-edgecase-redirect' => 'átirányító oldal',
+	'rte-edgecase-templateintable' => 'egy táblázat sablonnal a meghatározásában',
+	'rte-edgecase-unclosed-tags' => 'Lezáratlan HTML-címke',
+	'enablerichtexteditor' => 'Vizuális módban történő szerkesztés engedélyezése (a forráskód-nézettel együtt)',
+	'rte-enablerichtexteditormessage' => 'Vizuális szerkesztő engedélyezve!',
+	'rte-first-run-notice' => 'Néhány fejlesztést végeztünk el a szerkesztőn. Ha többet szeretnél tudni, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news olvasd el a bejelentést].',
+	'prefs-rte' => 'Vizuális szerkesztő',
 );
 
 /** Interlingua (interlingua)
@@ -453,19 +477,19 @@ $messages['pl'] = array(
 	'rte-no-js-fallback' => 'Rozszerzony edytor tekstu działa tylko gdy włączona jest obsługa JavaScript. Włącz obsługę JavaScript w ustawieniach przeglądarki lub przywróć tradycyjny edytor MediaWiki w swoich [[Special:Preferences|preferencjach]].',
 	'rte-edgecase-info-title' => 'Wymagany tryb źródła',
 	'rte-edgecase-info' => 'Edycja w trybie wizualnym została wyłączona dla tej strony, ponieważ zawiera ona zbyt skomplikowany kod.',
-	'rte-edgecase-comment' => 'komentarze w kodzie HTML',
+	'rte-edgecase-comment' => 'komentarze HTML',
 	'rte-edgecase-triplecurls' => 'parametry szablonu',
-	'rte-edgecase-nowysiwyg' => 'dyrektywę "no wysiwyg"',
+	'rte-edgecase-nowysiwyg' => 'polecenie "no wysiwyg"',
 	'rte-edgecase-complex-description' => 'link zewnętrzny lub szablon wewnątrz opisu linku',
 	'rte-edgecase-template-with-link' => 'szablon z linkiem jako parametrem',
 	'rte-edgecase-syntax' => 'niedozwoloną składnię',
-	'rte-edgecase-image-with-link' => 'grafikę z linkiem w opisie',
+	'rte-edgecase-image-with-link' => 'obraz z linkiem w opisie',
 	'rte-edgecase-redirect' => 'przekierowanie',
 	'rte-edgecase-templateintable' => 'definicję tabeli zawierającą wywołanie szablonu',
-	'rte-edgecase-unclosed-tags' => 'niezamknięte tagi HTML',
+	'rte-edgecase-unclosed-tags' => 'niezamknięty tag HTML',
 	'enablerichtexteditor' => 'Włącz edytor wizualny (jako dodatek do trybu źródłowego)',
 	'rte-enablerichtexteditormessage' => 'Edytor wizualny został włączony!',
-	'rte-first-run-notice' => 'Wprowadziliśmy kilka usprawnień w edytorze. Aby dowiedzieć się więcej, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news przeczytaj ogłoszenie].',
+	'rte-first-run-notice' => 'Wprowadziliśmy kilka usprawnień w edytorze. Aby dowiedzieć się więcej, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news przeczytaj ten wpis].',
 	'prefs-rte' => 'Edytor Wizualny',
 );
 
@@ -624,7 +648,7 @@ $messages['tl'] = array(
 	'rte-edgecase-redirect' => 'pamalit ng kapupuntahan',
 	'rte-edgecase-templateintable' => 'isang tablang may pantawag ng suleras sa kahulugan',
 	'rte-edgecase-unclosed-tags' => 'hindi naisarang tatak ng HTML',
-	'enablerichtexteditor' => 'Paganahin ang Patnugot ng Mayamang Teksto',
+	'enablerichtexteditor' => 'Paganahin ang pamamatnugot na nasa gawi na nakakakita (bilang karagdagan sa gawi ng pinagmumulan)',
 	'rte-enablerichtexteditormessage' => 'Pinagana na ang Patnugot ng Mayamang Teksto!',
 	'rte-first-run-notice' => 'Mayroon kaming ilang mga pagpapainam sa patnugot. Upang makaalam ng mas marami, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news basahin ang pahayag].',
 	'prefs-rte' => 'Patnugot ng Mayamang Teksto',

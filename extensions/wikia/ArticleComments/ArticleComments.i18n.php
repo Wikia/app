@@ -117,7 +117,7 @@ $messages['ar'] = array(
 	'article-comments-anonymous' => 'مستخدم مجهول',
 	'article-comments-comments' => 'التعليقات ($1)',
 	'article-comments-post' => 'أرسل تعليقا',
-	'article-comments-cancel' => 'إلغاء',
+	'article-comments-cancel' => 'ألغِ',
 	'article-comments-delete' => 'احذف',
 	'article-comments-edit' => 'عدّل',
 	'article-comments-history' => 'التاريخ',
@@ -176,6 +176,19 @@ Wikia
 <li>هل تريد التحكم في رسائل البريد المرسلة إليك؟ <a href="{{fullurl:Special:Preferences}}">قم بتحديث التفضيلات الخاصة بك<a>.</li>
 </ul>
 </p>',
+);
+
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'article-comments-cancel' => 'বাতিল কৰক',
+	'article-comments-delete' => 'বিলোপ কৰক',
+	'article-comments-edit' => 'সম্পাদনা কৰক',
+	'article-comments-history' => 'ইতিহাস',
+	'article-comments-prev-page' => 'পূৰ্বৱৰ্তী',
+	'article-comments-next-page' => 'পৰৱৰ্তী',
+	'wikiamobile-article-comments-show' => 'দেখুৱাওক',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -494,9 +507,31 @@ Wikia',
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'article-comments-anonymous' => 'Karbero anonim',
 	'article-comments-comments' => 'Vatışi ($1)',
+	'article-comments-post' => 'Mışewri bıvurne',
+	'article-comments-cancel' => 'Bıterkne',
+	'article-comments-delete' => 'besterne',
+	'article-comments-edit' => 'bıvurne',
+	'article-comments-history' => 'Ravêrden',
+	'article-comments-error' => 'Mışewre qeyd nêbı',
 	'article-comments-toc-item' => 'Vatışi',
+	'article-comments-vote' => 'Rey çek',
+	'article-comments-reply' => 'Cewab bıde',
+	'article-comments-show-all' => 'Cıwaba pêron bımocne',
+	'article-comments-prev-page' => 'Verên',
+	'article-comments-next-page' => 'Bahdoyên',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-more' => 'Zewbi buwane',
+	'wikiamobile-article-comments-prev' => 'Bahdoyêni buwane',
 	'wikiamobile-article-comments-none' => 'Vatış çıno',
+	'wikiamobile-article-comments-view' => 'Cewabi bıvin',
+	'wikiamobile-article-comments-replies' => 'cewabi',
+	'wikiamobile-article-comments-post-reply' => 'Cewab bırşe',
+	'wikiamobile-article-comments-post' => 'Bırş',
+	'wikiamobile-article-comments-placeholder' => 'Mışewre bırşe',
+	'wikiamobile-article-comments-show' => 'Bımocne',
+	'wikiamobile-article-comments-login-post' => 'Mışewre rıştışi rê şıma ra recay ma qeyd bê',
 	'enotif_body_article_comment-HTML' => '<p>Bırayo  $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR ena vatış "$PAGETITLE".
@@ -662,6 +697,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Ilkea
+ * @author Lukkipoika
  * @author Tm T
  * @author Tofu II
  */
@@ -677,20 +713,43 @@ $messages['fi'] = array(
 	'article-comments-undeleted-comment' => 'Kommenttia ei poistettu blogisivulta $1',
 	'article-comments-rc-comment' => 'Artikkelin kommentti (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Artikkelin kommentit ([[$1]])',
+	'article-comments-fblogin' => 'Voisitko <a href="$1" rel="nofollow">kirjautua sisään ja yhdistää Facebookiin</a> kommentoidaksesi tätä wikiä!',
+	'article-comments-fbconnect' => 'Voisitko <a href="$1">yhdistää tämän käyttäjätilin Facebookiin</a> kommentoidaksesi!',
 	'article-comments-rc-blog-comment' => 'Blogin kommentti (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'Blogin kommentit ([[$1]])',
 	'article-comments-login' => '<a href="$1">Kirjaudu sisään</a> kommetoidaksesi',
 	'article-comments-toc-item' => 'Kommentit',
 	'article-comments-comment-cannot-add' => 'Et voi lisätä kommenttia tähän artikkeliin.',
+	'article-comments-vote' => 'Äänestä',
 	'article-comments-reply' => 'Vastaus',
 	'article-comments-show-all' => 'Näytä kaikki kommentit',
 	'article-comments-prev-page' => 'Edell.',
 	'article-comments-next-page' => 'Seuraava',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'Ylemmän tason artikkeli/kommentti on poistettu.',
+	'article-comments-empty-comment' => "Et voi lähettää tyhjää kommenttia. <a href='$1'>Poistaisitko kommentin sen sijaan?</a>",
 	'wikiamobile-article-comments-header' => '<span class=cnt id=wkArtCnt>$1</span> kommenttia',
 	'wikiamobile-article-comments-more' => 'Lataa lisää',
 	'wikiamobile-article-comments-prev' => 'Lataa edelliset',
 	'wikiamobile-article-comments-none' => 'Ei kommentteja',
+	'wikiamobile-article-comments-view' => 'Näytä kommentit',
+	'wikiamobile-article-comments-replies' => 'Vastaukset',
+	'wikiamobile-article-comments-post-reply' => 'Lähetä vastaus',
+	'wikiamobile-article-comments-post' => 'Lähetä',
+	'wikiamobile-article-comments-placeholder' => 'Lähetä kommentti',
+	'wikiamobile-article-comments-show' => 'Näytä',
+	'wikiamobile-article-comments-login-post' => 'Kirjaudu sisään kommentoidaksesi.',
+	'enotif_subject_article_comment' => '$PAGEEDITOR on kommentoinut: "$PAGETITLE" {{SITENAME}}ssä.',
+	'enotif_body_article_comment' => 'Hyvä $WATCHINGUSERNAME,
+
+$PAGEEDITOR teki kommentin sivulle "$PAGETITLE".
+
+Nähdäksesi kommentin paina:
+$PAGETILE_URL
+
+Vieraile ja muokkaa usein...
+
+Wikia',
 );
 
 /** French (français)
@@ -764,7 +823,7 @@ Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Ut
 <div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -834,12 +893,18 @@ Wikia
 
 /** Hebrew (עברית)
  * @author Ofekalef
+ * @author Yova
  */
 $messages['he'] = array(
+	'article-comments-anonymous' => 'משתמש אנונימי',
+	'article-comments-comments' => 'תגובות ($1)',
+	'article-comments-post' => 'פרסם תגובה',
+	'article-comments-cancel' => 'ביטול',
 	'article-comments-delete' => 'מחיקה',
 	'article-comments-edit' => 'עריכה',
 	'article-comments-history' => 'היסטוריה',
 	'article-comments-error' => 'לא ניתן היה לשמור את התגובה',
+	'article-comments-fblogin' => 'אנא <a href="$1" rel="nofollow">התחבר בעזרת פייסבוק</a> על מנת לפרסם תגובה בוויקי זו!',
 	'article-comments-show-all' => 'הצגת כל התגובות',
 );
 
@@ -1051,7 +1116,7 @@ $messages['it'] = array(
 	'wikiamobile-article-comments-prev' => 'Carica precedenti',
 	'wikiamobile-article-comments-none' => 'Nessun commento',
 	'wikiamobile-article-comments-view' => 'Visualizza risposte',
-	'wikiamobile-article-comments-replies' => 'Risposte',
+	'wikiamobile-article-comments-replies' => 'risposte',
 	'wikiamobile-article-comments-post-reply' => 'Rispondi',
 	'wikiamobile-article-comments-post' => 'Posta',
 	'wikiamobile-article-comments-placeholder' => 'Commenta',
@@ -1207,11 +1272,12 @@ $messages['lb'] = array(
 	'article-comments-prev-page' => 'Vireg',
 	'article-comments-next-page' => 'Nächst',
 	'wikiamobile-article-comments-none' => 'Keng Bemierkungen',
+	'wikiamobile-article-comments-view' => 'Äntwerte kucken',
 	'wikiamobile-article-comments-replies' => 'Äntwerten',
 	'wikiamobile-article-comments-show' => 'Weisen',
 );
 
-/** Lezghian (Лезги)
+/** Lezghian (лезги)
  * @author Migraghvi
  */
 $messages['lez'] = array(
@@ -1272,10 +1338,13 @@ $messages['lt'] = array(
 	'article-comments-prev-page' => 'Ankstesnis',
 	'article-comments-next-page' => 'Sekantis',
 	'article-comments-page-spacer' => '&#160...&#160',
-	'wikiamobile-article-comments-header' => 'Komentarai ($1)',
+	'wikiamobile-article-comments-header' => 'komentarai <span class=cnt id=wkArtCnt>$1</span>',
 	'wikiamobile-article-comments-more' => 'Įkelti daugiau',
 	'wikiamobile-article-comments-prev' => 'Įkelti ankstesni',
 	'wikiamobile-article-comments-none' => 'Nėra komentarų',
+	'wikiamobile-article-comments-post' => 'Rašyti',
+	'wikiamobile-article-comments-placeholder' => 'Rašyti komentarą',
+	'wikiamobile-article-comments-show' => 'Rodyti',
 );
 
 /** Lushai (Mizo ţawng)
@@ -1717,6 +1786,10 @@ $messages['ps'] = array(
 	'article-comments-show-all' => 'ټولې تبصرې ښکاره کول',
 	'article-comments-prev-page' => 'پخوانی',
 	'article-comments-next-page' => 'راتلونکی',
+	'wikiamobile-article-comments-view' => 'ځوابونه کتل',
+	'wikiamobile-article-comments-replies' => 'ځوابونه',
+	'wikiamobile-article-comments-post-reply' => 'يو ځواب ورکول',
+	'wikiamobile-article-comments-show' => 'ښکاره کول',
 );
 
 /** Portuguese (português)
@@ -2139,6 +2212,8 @@ $messages['tl'] = array(
 	'wikiamobile-article-comments-post-reply' => 'Magpaskil ng isang tugon',
 	'wikiamobile-article-comments-post' => 'Ipaskil',
 	'wikiamobile-article-comments-placeholder' => 'Magpaskil ng puna',
+	'wikiamobile-article-comments-show' => 'Ipakita',
+	'wikiamobile-article-comments-login-post' => 'Mangyaring lumagda upang makapagpaskil ng isang puna.',
 	'enotif_subject_article_comment' => 'Pumuna ang $PAGEEDITOR sa "$PAGETITLE" sa {{SITENAME}}',
 	'enotif_body_article_comment' => 'Minamahal na $WATCHINGUSERNAME,
 
@@ -2255,7 +2330,7 @@ $messages['uk'] = array(
 	'wikiamobile-article-comments-none' => 'немає коментарів',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

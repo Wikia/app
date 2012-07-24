@@ -74,7 +74,7 @@ $messages['fr'] = array(
 	'wikiagameguides-desc' => 'Modules de l’application mobile Wikia Game Guides',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -141,7 +141,7 @@ $messages['nl'] = array(
  * @author Sovq
  */
 $messages['pl'] = array(
-	'wikiagameguides-desc' => 'moduły aplikacji Wikia Game Guides dla urządzeń mobilnych',
+	'wikiagameguides-desc' => 'Aplikacje Wikia Game Guides dla urządzeń mobilnych',
 );
 
 /** Piedmontese (Piemontèis)

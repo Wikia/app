@@ -89,7 +89,7 @@ $messages['fr'] = array(
 	'cacheepoch-no-wf' => "WikiFactory n'est pas activé sur ce wiki. Impossible de modifier wgCacheEpoch.",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -102,6 +102,20 @@ $messages['gl'] = array(
 	'cacheepoch-not-updated' => 'Non se puido actualizar wgCacheEpoch.',
 	'cacheepoch-wf-reason' => 'Valor actualizado mediante Special:CacheEpoch',
 	'cacheepoch-no-wf' => 'WikiFactory non está activado neste wiki. Non se pode de cambiar wgCacheEpoch.',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'cacheepoch-desc' => 'Felületet biztosít a wgCacheEpoch megváltoztatására wikinként',
+	'cacheepoch-header' => 'wgCacheEpoch növelése',
+	'cacheepoch-value' => 'A wgCacheEpoch jelenlegi értéke "$1". Nyomd meg a gombot az aktuális időre való átállításhoz.',
+	'cacheepoch-submit' => 'Az érték frissítése',
+	'cacheepoch-updated' => 'a frissített wgCacheEpoch: "$1 ".',
+	'cacheepoch-not-updated' => 'A wgCacheEpoch frissítése sikertelen volt.',
+	'cacheepoch-wf-reason' => 'Érték frissítve a Special:CacheEpochon keresztül',
+	'cacheepoch-no-wf' => 'A WikiFactory nincs engedélyezve ezen a wikin. A wgCacheEpoch nem változtatható meg.',
 );
 
 /** Interlingua (interlingua)
@@ -188,9 +202,10 @@ $messages['nl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
-	'cacheepoch-desc' => 'Zapewnia interfejs do zmiany wgCacheEpoch na wiki.',
+	'cacheepoch-desc' => 'Udostępnia interfejs do zmiany wgCacheEpoch na wiki.',
 	'cacheepoch' => 'Pamięć podręczna interfejsu Epoch',
 	'cacheepoch-header' => 'Powiększenie wgCacheEpoch',
 	'cacheepoch-value' => 'Bieżąca wartość wgCacheEpoch to " $1 ". Naciśnij przycisk, aby ustawić ją na bieżący znacznik czasu.',
@@ -249,10 +264,19 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'cacheepoch-desc' => 'Предоставляет интерфейс для изменения wgCacheEpoch на вики.',
+	'cacheepoch' => 'Интерфейс кэша Epoch',
+	'cacheepoch-header' => 'Увеличить wgCacheEpoch',
+	'cacheepoch-value' => 'Текущее значение wgCacheEpoch - "$1". Нажмите на кнопку, чтобы обновить.',
 	'cacheepoch-submit' => 'Обновить значение',
+	'cacheepoch-updated' => 'wgCacheEpoch обновлен до "$1".',
+	'cacheepoch-not-updated' => 'Не удалось обновить wgCacheEpoch.',
+	'cacheepoch-wf-reason' => 'Значение обновлено через Special:CacheEpoch',
+	'cacheepoch-no-wf' => 'WikiFactory на этой вики не включен. Не удается изменить wgCacheEpoch.',
 );
 
 /** Swedish (svenska)
@@ -274,7 +298,15 @@ $messages['sv'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'cacheepoch-desc' => 'Nagbibigay ng isang ugnayang-mukha para sa pagbago ng wgCacheEpoch sa bawat wiki.',
+	'cacheepoch' => 'Ugnayang-mukha ng Cache Epoch',
+	'cacheepoch-header' => 'Damihan ang wgCacheEpoch',
+	'cacheepoch-value' => 'Ang pangkasalukuyang halaga ng wgCacheEpoch ay "$1". Pindutin ang pindutan upang itakda ito sa pangkasalukuyang tatak ng oras.',
 	'cacheepoch-submit' => 'Isapanahon ang halaga',
+	'cacheepoch-updated' => 'Isinapanahon ang wgCacheEpoch upang maging "$1".',
+	'cacheepoch-not-updated' => 'Nabigo ang pagsasapanahon ng wgCacheEpoch.',
+	'cacheepoch-wf-reason' => 'Isinapanahon ang halaga sa pamamagitan ng Special:CacheEpoch',
+	'cacheepoch-no-wf' => 'Hindi pinagagana ang WikiFactory sa wiking ito.  Hindi nagawang baguhin ang wgCacheEpoch.',
 );
 
 /** Ukrainian (українська)

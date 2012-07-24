@@ -73,8 +73,10 @@ Please leave me a message if I can help with anything!",
 
 /** Message documentation (Message documentation)
  * @author PtM
+ * @author TK-999
  */
 $messages['qqq'] = array(
+	'welcome-user-page' => '$1 is the name of the user whose page the base layout is being added to.',
 	'welcome-message-wall-user' => '$1 is the name of the page the user edited that tirggered the welcome',
 	'welcome-message-wall-user-staff' => '$1 is the name of the page edited to trigger the welcome',
 	'welcome-message-wall-anon' => '$1 is the name of the page the user edited that tirggered the welcome',
@@ -124,6 +126,66 @@ Demat, Degemer mat war {{SITENAME}}; Trugarez da vezañ kemmet ar bajenn [[:$1]]
 M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ ar [[wikia:Forum:Community Central Forum|foromoù Kreiz ar Gumuniezh]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|forom skoazellañ]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
+);
+
+/** Catalan (català)
+ * @author BroOk
+ */
+$messages['ca'] = array(
+	'welcome-user-page' => "==Sobre mi==
+
+''Aquesta es la teva pàgina d'usuari. Edita-la per parlar sobre tu a la comunitat!
+
+==Les meves contribucions==
+
+* [[Special:Contributions/$1|Contribucions de l'usuari]]
+
+==Les meves pàgines preferides==
+
+* Afegeix aquí enllaços cap a les teves pàgines preferides d'aquest wiki!
+* Pàgina preferida #2
+* Pàgina preferida #3",
+	'welcome-message-user' => 'Hola, benvingut/da a {{SITENAME}}! Moltes gràcies per la teva edició a [[:$1]].
+
+Si us plau, deixa un missatge a la [[$2|meva discussió]] si et puc ajudar en alguna cosa! $3',
+	'welcome-message-anon' => "Hola, benvingut/da a {{SITENAME}}! Moltes gràcies per la teva edició a [[:$1]].
+
+Per què no et '''[[Special:Userlogin|crees un compte i t'identifiques?]]''' D'aquesta manera serà molt més fàcil saber quines pàgines has editat i se t'atribuirà la teva feina; a més, et serà molt més fàcil comunicar-te amb la resta de comunitat.
+
+Si us plau, deixa un missatge a la [[$2|meva discussió]] si et puc ajudar en alguna cosa! $3",
+	'welcome-message-log' => 'Benvinguda',
+	'welcome-message-user-staff' => '==Benvingut==
+
+Hola, benvingut a {{SITENAME}}! Gràcies per editar a la pàgina [[:$1]].
+
+Si necessites ajuda i no hi ha administradors locals aquí, pots visitar els [[wikia:Forum:Community Central Forum|fòrums de la Central de Wikia]] (en anglès) o els [[wikia:c:ca:Forum:Índex|fòrums de la Central de Wikia catalana]] . $3',
+	'welcome-message-anon-staff' => "==Benvingut==
+
+Hola, benvingut a {{SITENAME}}. Gràcies per editar a la pàgina [[:$1]].
+
+Si us plau, '''[[Special:UserLogin|registra't i crea't un nom d'usuari]]'''. És una forma molt senzilla de mantenir un registre de les teves contribucions i t'ajudarà a comunicar-te amb la comunitat.
+
+Si necessites ajuda i no hi ha administradors locals aquí, pots visitar els [[wikia:Forum:Community Central Forum|fòrums de la Central de Wikia]] (en anglès) o els [[wikia:c:ca:Forum:Índex|fòrums de la Central de Wikia catalana]] . $3",
+	'staffsig-text' => "$1<staff /> <small>([[w:forums|fòrums d'ajuda]] | [[w:sblog|blog]])</small>",
+	'hawelcomeedit' => 'HAWelcomeEdit',
+	'welcome-message-wall-user' => "Hola, benvingut/da a {{SITENAME}}! Moltes gràcies per la teva edició a [[:$1]].
+
+Si us plau, si tens algun dubte deixa un missatge al meu mur i t'intentaré ajudar.",
+	'welcome-message-wall-user-staff' => "Hola, benvingut/da a {{SITENAME}}! Moltes gràcies per la teva edició a [[:$1]].
+
+Si necessites ajuda i no hi ha cap administrador local per aquí, pots visitar els [[w:c:es:Forum:Índex|fòrums de la Central de Wikia en català]] o els [[w:c:es:Foro:Índice|de la Central de Wikia en espanyol]. També et pot interessar revisar el nostre [[w:c:es:Blog:Noticias_de_Wikia|blog de l'staff]] per estar informat de les últimes notícies i novetats de Wikia.
+
+Diverteix-te editant!",
+	'welcome-message-wall-anon' => "Hola, benvingut/da a {{SITENAME}}! Moltes gràcies per la teva edició a [[:$1]].
+
+Per què no et '''[[Special:Userlogin|crees un compte i t'identifiques?]]''' D'aquesta manera serà molt més fàcil saber quines pàgines has editat i se t'atribuirà la teva feina; a més, et serà molt més fàcil comunicar-te amb la resta de comunitat.
+
+Si us plau, deixa un missatge al meu mur si et puc ajudar en alguna cosa!",
+	'welcome-message-wall-anon-staff' => "Hola, benvingut/da a {{SITENAME}}! Moltes gràcies per la teva edició a [[:$1]].
+
+Per què no et '''[[Special:Userlogin|crees un compte i t'identifiques?]]''' D'aquesta manera serà molt més fàcil saber quines pàgines has editat i se t'atribuirà la teva feina; a més, et serà molt més fàcil comunicar-te amb la resta de comunitat.
+
+Si us plau, deixa un missatge al meu mur si et puc ajudar en qualsevol cosa!",
 );
 
 /** Czech (česky)
@@ -483,7 +545,7 @@ Veuillez me laisser un message si je peux vous aider pour quoi que ce soit !",
 Veuillez me laisser un message si je peux vous aider pour quoi que ce soit !",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -575,6 +637,7 @@ $messages['he'] = array(
 
 /** Hungarian (magyar)
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'welcome-user-page' => "== Magamról ==
@@ -583,7 +646,7 @@ $messages['hu'] = array(
 
 == Közreműködéseim  ==
 
-* [[Special:Contributions/{{PAGENAME}}|Felhasználó közreműködései]]
+* [[Special:Contributions/$1|Felhasználó közreműködései]]
 
 == Kedvenc lapjaim ==
 
@@ -611,6 +674,15 @@ Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon tett
 '''[[Special:Userlogin|Kérlek regisztrálj egy felhasználónevet, és jelentkezz be.]]'''. Így könnyen tudod majd követni a  szerkesztéseidet, és segít a közösséggel való kommunikációban.
 
 Ha segítségre van szükséged, és nincsenek helyi adminisztrátorok, látogasd meg a [[wikia:Forum:Community Central Forum|Community Central Wiki fórumait]] $3",
+	'staffsig-text' => '$1<staff /> <small>([[w:forums|segítségkérési fórum]] | [[w:sblog|blog]])</small>',
+	'welcome-message-wall-user' => 'Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon végzett szerkesztésedet.
+
+Kérlek, hagyj nekem üzenetet, ha segíthetek valamiben.',
+	'welcome-message-wall-user-staff' => 'Szia, üdvözlünk a(z) {{SITENAME}} wikin! Köszönjük a(z) [[:$1]] lapon végzett szerkesztésedet.
+
+Ha segítségre van szükséged, és nincsenek itt helyi adminisztrátorok, meglátogathatod [[wikia:Forum:Community Central Forum|a Community Central fórumait]]. Megtekintheted a [[w:c:community:Blog:Wikia_Staff_Blog|személyzeti]] blogot is, hogy naprakész maradj a Wikia friss híreivel és eseményeivel kapcsolatban.
+
+Jó szerkesztést!',
 );
 
 /** Interlingua (interlingua)
@@ -1118,8 +1190,8 @@ $messages['pl'] = array(
 	'welcome-user-page' => "== O mnie ==
 ''To Twoja strona użytkownika. Edytuj ją i powiedz społeczności coś o sobie!''
 
-== Mój wkład ==
-* [[Special:Contributions/$1|wkład]]
+== Moje edycje ==
+* [[Special:Contributions/$1|Edycje]]
 
 == Moje ulubione strony ==
 * Dodaj tu linki do swoich ulubionych stron!
@@ -1326,6 +1398,7 @@ Se você necessita de ajuda e não encontra administradores locais, talvez queir
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
@@ -1366,6 +1439,7 @@ $messages['ru'] = array(
 
 Если вам нужна помощь, а локальные администраторы отсутствуют, вы можете посетить [[wikia:Forum:Community Central Forum|форумы Центральной вики сообщества]] $3",
 	'staffsig-text' => '$1<staff /> <small>([[w:forums|справочный форум]] | [[w:sblog|блог]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Здравствуйте, добро пожаловать {{SITENAME}}! Спасибо за ваши правки на странице [[:$1]].
 
 Пожалуйста, оставьте мне сообщение если я могу чем-нибудь помочь!',
@@ -1547,13 +1621,13 @@ $messages['th'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
-	'welcome-user-page' => "==Tungkol sa akin==
+	'welcome-user-page' => "==Patungkol sa akin==
 
-''Ito ang iyong pahina ng tagagamit. Pakibago ang pahinang ito upang makapagsabi sa pamayanan ng hinggil sa sarili mo!''
+''Ito ang iyong pahina ng tagagamit. Paki baguhin ang pahinang ito upang makapagsabi sa pamayanan ng hinggil sa sarili mo!''
 
 ==Mga ambag ko==
 
-* [[Special:Contributions/{{PAGENAME}}|Mga ambag ng tagagamit]]
+* [[Special:Contributions/$1|User contributions|Mga ambag ng tagagamit]]
 
 ==Mga paborito kong pahina==
 
@@ -1565,7 +1639,7 @@ $messages['tl'] = array(
 Mangyaring mag-iwan ng isang mensahe sa [[$2|pahina ko ng usapan]] kung makakatulong ako sa anumang bagay! $3',
 	'welcome-message-anon' => "Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahinang [[:$1]].
 
-'''[[Special:Userlogin|Mangyaring lumagda at lumikha ng isang pangalan ng tagagamit]]'''. Isa itong madaling paraan upang masubaybay ang mga ambag mo at makatutulong sa iyong makipag-ugnayan sa iba pang nasa pamayanan.
+'''[[Special:Userlogin|Mangyaring lumagda at lumikha ng isang pangalan ng tagagamit]]'''. Isa itong madaling paraan upang masubaybayan ang mga ambag mo at makatutulong sa iyong makipag-ugnayan sa iba pang nasa pamayanan.
 
 Mangyaring mag-iwan ng isang mensahe sa [[$2|pahina ko ng talakayan]] kung makakatulong ako sa anumang bagay! $3",
 	'welcome-message-log' => 'maligayang binabati ang bagong tagaambag',
@@ -1584,6 +1658,25 @@ Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pah
 Kung kailangan mo ng tulong, at walang katutubong mga tagapangasiwa dito, maaaring naisin mong
 dalawin ang [[wikia:Forum:Community Central Forum|mga poro sa Wiki ng Pangunahing Pamayanan]] $3",
 	'staffsig-text' => ' $1<staff /> <small>([[w:forums|poro ng tulong]] | [[w:sblog|blog]])</small>',
+	'hawelcomeedit' => 'HAWelcomeEdit',
+	'welcome-message-wall-user' => 'Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahina ng [[:$1]].
+
+Mangyaring iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!',
+	'welcome-message-wall-user-staff' => 'Hoy, maligayang pagdating sa {{SITENAME}}! Salamat sa binago mo sa pahina ng [[:$1]].
+
+Kung kailangan mo ng tulong, at walang katutubong mga tagapangasiwa rito, maaaring naisin mong dalawin ang [[wikia:Forum:Community Central Forum|mga porum na nasa Lunduyang Wiki ng Pamayanan]]. Maaari mo ring tingnan at suriin ang aming [[w:c:community:Blog:Wikia_Staff_Blog|blog ng Tauhan]] upang manatiling nakakaalam sa pinakahuling mga balita at mga kaganapan sa paligid ng Wikia.
+
+Maligayang pamamatnugot!',
+	'welcome-message-wall-anon' => "Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahina ng [[:$1]].
+
+'''[[Special:Userlogin|Paki lumagda at lumikha ng isang pangalan ng tagagamit]]'''. Isa itong madaling paraan upang masubaybayan ang mga ambag mo at makatutulong sa iyong makipag-ugnayan sa iba pang nasa pamayanan.
+
+Mangyaring iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!",
+	'welcome-message-wall-anon-staff' => "Kumusta, maligayang pagdating sa {{SITENAME}}! Salamat sa pamamatnugot mo sa pahina ng [[:$1]].
+
+'''[[Special:Userlogin|Paki lumagda at lumikha ng isang pangalan ng tagagamit]]'''. Isa itong madaling paraan upang masubaybayan ang mga ambag mo at makatutulong sa iyong makipag-ugnayan sa iba pang nasa pamayanan.
+
+Paki iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!",
 );
 
 /** Tatar (Cyrillic script) (татарча)

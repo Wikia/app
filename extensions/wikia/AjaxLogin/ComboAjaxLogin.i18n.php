@@ -329,7 +329,7 @@ Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
 	'comboajaxlogin-ajaxerror' => 'Wikia ne répond pas. Veuillez vérifier votre connexion réseau.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -503,6 +503,13 @@ $messages['lb'] = array(
 	'comboajaxlogin-actionmsg' => "Fir dës Aktioun ze maache musst Dir Iech d'éischt aloggen oder e Benotzerkont opmaachen",
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Zréck',
 	'comboajaxlogin-connectmarketing-forward' => 'Ufänken &raquo;',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'comboajaxlogin-createlog' => 'Prisijungti arba sukurti sąskaitą',
 );
 
 /** Macedonian (македонски)
@@ -937,11 +944,10 @@ $messages['tl'] = array(
 <li>Buong pagtaban sa kung ano ang nailathala</li>
 </ul>',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Lumagda sa pamamagitan ng Pang-ugnay ng Facebook</h1>',
-	'comboajaxlogin-connectmarketing-oasis' => '<h1>Iugnay ang iyong akawnt sa Wikia sa Facebook</h1>
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Ikabit ang iyong akawnt ng Wikia sa Facebook</h1>
 <ul>
-<li>Panatilihin ang iyong pangkasalukuyang pangalan ng tagagamit, kasaysayan, mga pamamatnugot... walang mababago maliban sa kung paano lumalagda</li>
-<li>Ipamahagi ang iyong mga ginagawa sa Wikia sa iyong mga kaibigang nasa Facebook</li>
-<li>Buong pagtaban sa kung ano ang nailathala</li>
+<li>Panatilihin ang iyong pangkasalukuyang pangalan ng tagagamit, kasaysayan, mga pamamatnugot... walang mababago maliban sa kung paano ka lumalagdang papasok</li>
+<li>Ibahagi ang gawain sa Wikia sa mga kaibigan mong nasa Facebook, na may buong pagtaban sa kung ano ang nailalathala</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Bumalik',
 	'comboajaxlogin-connectmarketing-forward' => 'Magsimula &raquo;',
@@ -950,6 +956,12 @@ $messages['tl'] = array(
 Kapag natapos ka na, maginhawa kang makakalagda na ginagamit ang anumang pindutan ng Ugnay sa Facebook.',
 	'comboajaxlogin-post-not-understood' => 'May kamalian sa paraan ng pagkakayari ng pormularyong ito.
 Pakisubukan uli o [[Special:Contact|iulat ito]].',
+	'comboajaxlogin-readonlytext' => '<h2>Paumanhin!</h2>
+<p>Hindi ka makakalikha ng isang akawnt sa sandaling ito - babangon kami at tatakbong muli sa loob ng ilang saglit. Narito ang kung ano ang nagaganap:<br /><em>$1</em></p>
+<p>Paki suriin ang <a href="http://twitter.com/wikia">Twitter</a> o ang <a href="http://facebook.com/wikia">Facebook</a> para sa mas marami pang kabatiran.
+<br />
+(Kung mayroon ka nang isang akawnt, maaari kang <a href="#">lumagdang papasok</a> ayon sa pangkaraniwan, subalit hindi mo magagawang makapamatnugot.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Hindi tumutugon ang Wikia. Paki suriin ang pagkakabit ng iyong lambat na panggawain.',
 );
 
 /** Tatar (Cyrillic script) (татарча)

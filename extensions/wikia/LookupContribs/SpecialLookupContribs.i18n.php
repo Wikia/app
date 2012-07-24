@@ -126,7 +126,7 @@ $messages['az'] = array(
 	'lookupcontribsfinal' => 'son',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -182,7 +182,7 @@ $messages['br'] = array(
 	'lookupcontribsrecordspager' => "Diskwel enrolladennoù '''$1''' da '''$2''' war '''$3'''.",
 	'lookupcontribscontribs' => 'degasadennoù',
 	'lookupcontribsnbrresult' => "Niver a zisoc'hoù :",
-	'lookupcontribsnext' => 'da-heul',
+	'lookupcontribsnext' => "war-lerc'h",
 	'lookupcontribsprevious' => 'kent',
 	'lookupcontribspageremoved' => 'Dilamet :',
 	'lookupcontribsrestore' => 'assevel',
@@ -198,7 +198,7 @@ $messages['br'] = array(
 	'lookupcontribsall' => 'pep tra',
 );
 
-/** Chechen (Нохчийн)
+/** Chechen (нохчийн)
  * @author Sasan700
  */
 $messages['ce'] = array(
@@ -428,7 +428,7 @@ $messages['fr'] = array(
 	'lookupcontribsall' => 'tout',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -518,14 +518,23 @@ Ellenőrizd a megadott felhasználónevet a gépelési hibák kiszűrése véget
 	'lookupcontribscontribslink' => 'közreműködési oldal',
 	'lookupcontribsdetails' => 'Részletek:',
 	'lookupcontribslastedited' => 'Legutóbbi szerkesztés',
+	'lookupcontribsrecordspager' => "'''$1'''-tól '''$2'''-ig az összesen '''$3''' feljegyzésből",
+	'lookupcontribscontribs' => 'közreműködések',
 	'lookupcontribsnbrresult' => 'Találatok száma:',
 	'lookupcontribsnext' => 'következő',
 	'lookupcontribsprevious' => 'előző',
 	'lookupcontribspageremoved' => 'Eltávolítva:',
 	'lookupcontribsrestore' => 'visszaállítás',
 	'lookupcontribslog' => 'napló',
+	'lookupcontribshist' => 'laptörténet',
 	'lookupcontribsdiff' => 'eltérés',
+	'right-lookupcontribs' => 'Felhasználó globális közreműködéseinek megtekintése',
 	'lookupcontribsshowpages' => 'Összes lap ($1 névter)',
+	'lookupcontribscontent' => 'tartalom',
+	'lookupcontribscontribtitleforuser' => 'Az alábbi felhasználó közreműködései:',
+	'lookupcontribsnormal' => 'Legutóbbi',
+	'lookupcontribsfinal' => 'végső',
+	'lookupcontribsall' => 'összes',
 );
 
 /** Interlingua (interlingua)
@@ -648,7 +657,7 @@ $messages['ku-latn'] = array(
 	'lookupcontribsgo' => 'Biçe',
 	'lookupcontribswikititle' => 'Sernav',
 	'lookupcontribswikioptions' => 'Vebijêrk',
-	'lookupcontribscontent' => 'naverrok',
+	'lookupcontribscontent' => 'naverok',
 	'lookupcontribsnormal' => 'niha',
 	'lookupcontribsall' => 'hemû',
 );
@@ -1010,13 +1019,13 @@ Aby wyświetlić listę, podaj nazwę użytokwnika.',
 	'lookupcontribsselectfor' => 'Wybierz dla:',
 	'lookupcontribsdisplaymode' => 'Wyświetl jako:',
 	'lookupcontribsselectmodenormal' => 'najnowsze edycje tego użytkownika',
-	'lookupcontribsselectmodefinal' => 'ostatnie edycje tego użytkownika',
+	'lookupcontribsselectmodefinal' => 'ostateczne edycje tego użytkownika',
 	'lookupcontribsselectmodeall' => 'wszystkie edycje tego użytkownika',
-	'lookupcontribsfullurls' => 'Pełne adresy URL',
-	'lookupcontribslinks' => 'linki wkładu',
+	'lookupcontribsfullurls' => 'pełne adresy URL',
+	'lookupcontribslinks' => 'edycje - linki',
 	'lookupcontribsgo' => 'Idź',
 	'lookupcontribsinvaliduser' => '<p class="error">Użytkownik "<b>$1</b>" nie istnieje.
-Sprawdź nazwę użytkonika.</p>',
+Sprawdź nazwę użytkownika.</p>',
 	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" nie jest poprawnym trybem wyświetlania.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" nie jest poprawnym trybem.</p>',
 	'lookupcontribsselectwikis' => 'Wybierz wiki:',
@@ -1028,23 +1037,23 @@ Sprawdź nazwę użytkonika.</p>',
 	'lookupcontribswikiurl' => 'Adres URL',
 	'lookupcontribswikititle' => 'Tytuł',
 	'lookupcontribswikioptions' => 'Opcje',
-	'lookupcontribscontribslink' => 'Link wkładu',
+	'lookupcontribscontribslink' => 'Edycje - link',
 	'lookupcontribsdetails' => 'Zobacz szczegóły dotyczące:',
 	'lookupcontribslastedited' => 'Ostatnio edytowano',
 	'lookupcontribsrecordspager' => "Wyniki od '''$1''' do '''$2''' z '''$3'''.",
 	'lookupcontribscontribs' => 'edycje',
 	'lookupcontribsnbrresult' => 'Liczba wyników:',
-	'lookupcontribsnext' => 'następny',
-	'lookupcontribsprevious' => 'poprzedni',
+	'lookupcontribsnext' => 'następna',
+	'lookupcontribsprevious' => 'poprzednia',
 	'lookupcontribspageremoved' => 'Usunięto:',
-	'lookupcontribsrestore' => 'Przywróć',
+	'lookupcontribsrestore' => 'przywróć',
 	'lookupcontribslog' => 'log',
 	'lookupcontribshist' => 'hist',
 	'lookupcontribsdiff' => 'różn.',
 	'right-lookupcontribs' => 'Wyświetlić globalne edycje użytkownika',
 	'lookupcontribsshowpages' => 'Wszystkie strony (w przestrzeni nazw $1)',
 	'lookupcontribscontent' => 'zawartość',
-	'lookupcontribscontribtitleforuser' => 'Wkład użytkownika:',
+	'lookupcontribscontribtitleforuser' => 'Edycje użytkownika:',
 	'lookupcontribsnormal' => 'ostatnie',
 	'lookupcontribsfinal' => 'ostateczne',
 	'lookupcontribsall' => 'wszystko',
@@ -1466,6 +1475,7 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'lookupcontribscontribslink' => 'Kawing sa mga ambag',
 	'lookupcontribsdetails' => 'Tingnan ang mga detalye para sa:',
 	'lookupcontribslastedited' => 'Huling binago',
+	'lookupcontribsrecordspager' => "Ipinapakita ang '''$1''' hanggang '''$2''' ng '''$3''' mga rekord.",
 	'lookupcontribscontribs' => 'mga ambag',
 	'lookupcontribsnbrresult' => 'Bilang ng mga resulta:',
 	'lookupcontribsnext' => 'susunod',
@@ -1478,6 +1488,7 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'right-lookupcontribs' => 'Tingnan ang pandaigdigang pamamatnugot ng tagagamit',
 	'lookupcontribsshowpages' => 'Lahat ng mga pahina ($1 mga puwang na pampangalan)',
 	'lookupcontribscontent' => 'nilalaman',
+	'lookupcontribscontribtitleforuser' => 'Mga ambag para sa tagagamit:',
 	'lookupcontribsnormal' => 'kamakailan',
 	'lookupcontribsfinal' => 'pangwakas',
 	'lookupcontribsall' => 'lahat',

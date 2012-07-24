@@ -139,6 +139,20 @@ $messages['ar'] = array(
 كتابة عنوان المقطع الثاني من مقالك هنا.',
 );
 
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'createpage-sp-title' => 'এখন নতুন পৃষ্ঠা সৃষ্টি কৰক',
+	'createpage_title' => 'এখন নতুন পৃষ্ঠা সৃষ্টি কৰক',
+	'createpage_title_caption' => 'শীৰ্ষক',
+	'createpage_enter_text' => 'পাঠ্য:',
+	'createpage_empty_title_error' => 'শিৰোনামাৰ প্ৰয়োজন',
+	'createpage_invalid_title_error' => 'ভুল শীৰ্ষক',
+	'createpage-dialog-title' => 'এখন নতুন পৃষ্ঠা সৃষ্টি কৰক',
+	'createpage-dialog-blank' => 'উকা পৃষ্ঠা',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
@@ -147,7 +161,7 @@ $messages['az'] = array(
 	'createpage_enter_text' => 'Mətn:',
 );
 
-/** Bashkir (Башҡортса)
+/** Bashkir (башҡортса)
  * @author Рустам Нурыев
  */
 $messages['ba'] = array(
@@ -602,7 +616,7 @@ $messages['fr'] = array(
 Écrivez la deuxième section de votre article ici.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -724,6 +738,16 @@ Elmehetsz a(z) <a href="$1 ">$2</a>-höz, vagy átnevezheted az oldalt.',
 Kérünk, használj más címet.',
 	'createpage-error-article-blocked' => 'Sajnáljuk, jelenleg nem hozhatod létre ezt az oldalt.',
 	'tog-createpagedefaultblank' => 'Üres lap alapértelmezett használata új oldal létrehozásakor',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+Írd az oldalad első bekezdését ide.
+
+==Címsor==
+
+Írd az oldalad első szakaszát ide.
+
+==Címsor==
+
+Írd az oldalad második szakaszát ide.',
 );
 
 /** Interlingua (interlingua)
@@ -993,6 +1017,33 @@ Schreiwt déi éischt Sektioun vun Ärem Artikel hei.
 == Iwwerschrëft vun der Sektioun ==
 
 Schreiwt déi zweet Sektioun vun Ärem Artikel hei.',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'createpage-sp-title' => 'Sukurti naują puslapį',
+	'createpage_title' => 'Sukurti naują puslapį',
+	'createpage_title_caption' => 'Pavadinimas',
+	'createpage_enter_text' => 'Tekstas:',
+	'createpage_empty_title_error' => 'Pavadinimas būtinas',
+	'createpage_empty_article_body_error' => 'Puslapio tekstas privalomas',
+	'createpage_invalid_title_error' => 'Neleistinas pavadinimas',
+	'createpage-dialog-title' => 'Sukurti naują puslapį',
+	'createpage-dialog-choose' => 'Pasirinkite puslapio maketą:',
+	'createpage-dialog-format' => 'Standartinis maketas',
+	'createpage-dialog-blank' => 'Tuščias puslapis',
+	'createpage-error-empty-title' => 'Prašome parašyti puslapio pavadinimą',
+	'createpage-error-invalid-title' => 'Atsiprašome, puslapio pavadinimas yra negalimas.
+Prašome naudoti kitą pavadinimą.',
+	'createpage-error-article-exists' => 'Puslapis su šiuo pavadinmu jau egzistuoja.
+Jūs galite eiti į <a href="$1">$2</a>, arba pervadinti savo puslapį',
+	'createpage-error-article-spam' => 'Atsiprašome, puslapio pavadinimas buvo atmestas mūsų šlamšto filtro.
+Prašome naudoti kitą pavadinimą.',
+	'createpage-error-article-blocked' => 'Atsiprašome, jūs negalite sukurti šio puslapį šiuo metu.',
+	'tog-createpagedefaultblank' => 'Naudoti tuščia puslapį kaip numatytąjį kuriant naują puslapį',
+	'tog-createpagepopupdisabled' => 'Išjungti "Sukurti naują straipsnį" srautą (Nerekomenduojama)',
 );
 
 /** Lushai (Mizo ţawng)
@@ -1413,6 +1464,7 @@ $messages['ps'] = array(
 	'createpage_enter_text' => 'متن:',
 	'createpage_invalid_title_error' => 'ناسم سرليک',
 	'createpage-dialog-title' => 'يوه نوې ليکنه ليکل',
+	'createpage-dialog-message2' => 'څه يې نومول غواړې؟',
 	'createpage-dialog-blank' => 'تش مخ',
 	'createpage-error-empty-title' => 'لطفاً خپل مخ ته يو سرليک وليکۍ.',
 	'newpagelayout' => '[[دوتنه:Placeholder|ښي|300px]]
@@ -1430,6 +1482,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author Rhaijin
  */
 $messages['pt'] = array(
 	'createpage-desc' => 'Permite criar uma página nova usando o editor WYSIWYG da Wikia',
@@ -1475,6 +1528,7 @@ Escreva aqui a segunda secção da sua página.',
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  * @author Jesielt
+ * @author Rhaijin
  * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
@@ -1505,7 +1559,7 @@ Você pode ir a <a href="$1">$2</a>, ou renomear a sua página.',
 Por favor, use um título diferente.',
 	'createpage-error-article-blocked' => 'Desculpe-nos, você está impossibilitado de criar aquele artigo agora.',
 	'tog-createpagedefaultblank' => 'Usar uma página em branco como padrão para criar uma nova página',
-	'tog-createpagepopupdisabled' => 'Desativar o processo "Criar uma nova página" (Não recomendado)',
+	'tog-createpagepopupdisabled' => 'Desactivar a janela flutuante Criar Página',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Escreva o primeiro parágrafo do seu artigo aqui.
 
@@ -1740,7 +1794,7 @@ $messages['tl'] = array(
 	'createpage-desc' => 'Nagpapahintulot upang makalikha ng isang bagong pahina na gumagamit ng patnugot na WYSIWYG ng Wikia',
 	'createpage-sp-title' => 'Lumikha ng isang bagong artikulo',
 	'createpage_title' => 'Lumikha ng isang bagong artikulo',
-	'createpage_title_caption' => 'Pamagat:',
+	'createpage_title_caption' => 'Pamagat',
 	'createpage_enter_text' => 'Teksto:',
 	'createpage_empty_title_error' => 'Kailangan ang pamagat',
 	'createpage_empty_article_body_error' => 'Kailangan ang teksto ng artikulo',
@@ -1764,7 +1818,7 @@ Maaari kang pumunta sa <a href="$1">$2</a>, o palitan ang pangalan ng pahina mo.
 Mangyaring gumamit ng ibang pamagat.',
 	'createpage-error-article-blocked' => 'Paumanhin, hindi mo nagawang likhaing artikulong iyan sa ngayon.',
 	'tog-createpagedefaultblank' => 'Gamitin ang pahinang walang laman para sa paglikha ng isang bagong pahina',
-	'tog-createpagepopupdisabled' => 'Huwag Paganahin ang biglaang-pampalitaw na Gumawa ng Pahina',
+	'tog-createpagepopupdisabled' => 'Huwag paganahin ang daloy na "Lumikha ng isang bagong pahina" (Hindi Iminumungkahi)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Isulat ang unang talata ng iyong artikulo dito.
 
@@ -1872,7 +1926,7 @@ $messages['uk'] = array(
 Напишіть тут другий розділ вашої статті.',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

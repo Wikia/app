@@ -129,7 +129,7 @@ $messages['fr'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|Les messages de la communauté ont été mis à jour]].',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -143,7 +143,7 @@ $messages['he'] = array(
 	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Community Messages עודכנה]].',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -191,7 +191,7 @@ $messages['it'] = array(
  */
 $messages['ksh'] = array(
 	'communitymessages-desc' => 'Zohsazprojramm för Hölp met de Gemeinschafs_Nohreeshte',
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Gemeinschafs_Nohreeshte sinn_er om neuere Shtand]]',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Jemeinschafs_Nohreeschte es om neuere Shtand]].',
 );
 
 /** Macedonian (македонски)
@@ -308,7 +308,7 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'communitymessages-desc' => 'Dugtong na pantulong para sa mga Mensahe ng Pamayanan',
-	'communitymessages-notice-msg' => '[[Special:ActivityFeed|Naisapanahon na ang mga Mensahe ng Pamayanan]].',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|Naisapanahon na ang mga Mensahe ng Pamayanan]].',
 );
 
 /** Tatar (Cyrillic script) (татарча)

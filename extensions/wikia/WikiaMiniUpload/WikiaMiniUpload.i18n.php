@@ -194,7 +194,7 @@ U kan nie hier beelde byvoeg nie.',
 	'wmu-file-error' => "'n Fout het tydens die oplaai-proses voorgekom. Probeer asseblief weer.",
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -286,7 +286,7 @@ $messages['az'] = array(
 	'wmu-gallery' => 'Qalereya',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -551,7 +551,7 @@ $messages['ca'] = array(
 	'wmu-file-error' => 'Hi va haver un error amb el procés de càrrega, ho sento. Si us plau provi una altra vegada.',
 );
 
-/** Chechen (Нохчийн)
+/** Chechen (нохчийн)
  * @author Sasan700
  */
 $messages['ce'] = array(
@@ -675,7 +675,7 @@ $messages['cy'] = array(
 	'wmu-success' => '<h1>Llwyddiant</h1>Cafodd eich delwedd ei mewnosod.',
 	'wmu-success-placeholder' => '<h1>Llwyddiant</h1>',
 	'wmu-return' => "Dychweler i'r Golygu",
-	'wmu-back' => 'yn ôl',
+	'wmu-back' => 'Dewis llun arall',
 	'wmu-close' => 'cau',
 	'wmu-warn1' => 'Mae angen ysgrifennu chwiliad yn gyntaf!',
 	'wmu-warn2' => 'Mae angen dewis ffeil yn gyntaf!',
@@ -1144,7 +1144,7 @@ $messages['fr'] = array(
 	'wmu-file-error' => 'Une erreur est survenue lors de l’importation. Veuillez réessayer.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1302,19 +1302,29 @@ $messages['he'] = array(
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'wmu-upload-image' => 'Kép feltöltése',
+	'wmu-title' => 'Kép feltöltése',
 	'wmu-upload' => 'Feltöltés',
+	'wmu-notlogged' => 'Jelentkezz be, vagy regisztrálj, hogy képeket tölthess fel a számítógépedről.',
 	'wmu-find' => 'Keresés',
 	'wmu-thiswiki' => 'Ez a wiki',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Feltöltés',
 	'wmu-find-btn' => 'Keresés',
+	'wmu-flickr-inf' => 'Megfelelő licencű szabad képek keresése és importálása a Flickr-ről.',
+	'wmu-conflict-inf' => '<h1>Hoppá! Egy ilyen nevű fájl már létezik.</h1>Mit szeretnél tenni vele (<b>$1</b>)?',
 	'wmu-rename' => 'Kép átnevezése',
 	'wmu-existing' => 'Már létező kép használata',
+	'wmu-overwrite' => 'A meglévő kép felülírása a tiéddel',
 	'wmu-insert' => 'Beillesztés',
+	'wmu-details-inf' => '<h1>Fájlrészletek</h1>Add meg a fájl nevét. Legyen leíró jellegű.',
 	'wmu-name' => 'Név',
 	'wmu-license' => 'Licenc',
+	'wmu-licensing' => 'Licenc',
+	'wmu-details-inf2' => '<h1>Cikk-beállítások</h1>Konfiguráld a fájl oldalakban történő megjelenítésére vonatkozó beállításokat.',
 	'wmu-size' => 'Méret',
 	'wmu-thumbnail' => 'Bélyegkép',
 	'wmu-fullsize' => 'Teljes méret ($1×$2 képpont)',
@@ -1329,19 +1339,45 @@ $messages['hu'] = array(
 	'wmu-flickr2' => 'Flickr képek ($1 találat)',
 	'wmu-insert3' => 'Kép beillesztése',
 	'wmu-recent-inf' => 'Frissen feltöltött képek',
+	'wmu-thiswiki2' => 'Képek ezen a wikin ($1 találat)',
 	'wmu-success' => '<h1>Siker</h1>A kép beillesztve.',
 	'wmu-success-placeholder' => '<h1>Siker</h1>',
 	'wmu-return' => 'Vissza a szerkesztéshez',
-	'wmu-back' => 'vissza',
+	'wmu-back' => 'Másik kép választása',
 	'wmu-close' => 'bezárás',
+	'wmu-warn1' => 'Először add meg a lekérdezést!',
+	'wmu-warn2' => 'Először válaszd ki a fájlt!',
+	'wmu-warn3' => 'Először add meg a fájl nevét!',
 	'wmu-imagelink' => '<b>Újdonság!</b> Képek hozzáadása',
 	'wmu-imagebutton' => 'Kép hozzáadása',
+	'wmu-license-cc' => 'Creative Commons Attribution-Share Alike 3.0 licenc alatt',
+	'wmu-bad-extension' => 'Nem engedélyezett fájltípust próbáltál feltölteni. Kérlek, próbáld újra.',
+	'wmu-filetype-missing' => 'A feltöltött fájl kiterjesztése hiányzik.',
+	'wmu-filetype-incorrect' => 'A feltöltött fájl kiterjesztése hibás.',
 	'wmu-hide-license-msg' => 'licenc szövegének elrejtése',
 	'wmu-show-license-msg' => 'licenc szövegének megjelenítése',
+	'wmu-max-thumb' => 'a miniatűr túllépte a maximális méretét, visszaváltás az eredti méretre',
+	'wmu-notallowed' => 'Nem tölthetsz fel képeket erre a wikire.',
+	'wmu-readonly' => 'Pillanatnyilag nem tölthetsz fel képeket, mivel a wiki csak olvasható állapotban van.',
 	'wmu-placeholder' => 'Helyfoglaló',
 	'wmu-gallery' => 'Galéria',
+	'wmu-columns' => '$1 oszlop',
 	'wmu-column' => 'Oszlopok',
+	'wmu-added-from-plc' => 'Kép hozzáadása a helyőrzőn keresztül',
+	'wmu-uploaddisabled' => 'A fájlfeltöltés le van tiltva ezen a wikin',
+	'wmu-gallery-success' => 'Hozzáadtál egy képet egy új galériához. Kattints alulra további képek hozzáadásához, vagy a galéria beillesztéséhez.',
 	'wmu-gallery-btn1' => 'Másik kép hozzáadása',
+	'wmu-gallery-btn2' => 'Galéria beszúrása a lapba',
+	'wmu-no-preview' => 'Nem szúrhatsz be képet az oldalról előnézeti módban',
+	'wmu-no-protect' => 'Ez az oldal védett, ezért nem adhatsz hozzá képet',
+	'wmu-no-rights' => 'Nincs jogod képeket hozzáadni ehhez az oldalhoz.',
+	'wmu-more-options' => 'További beállítások',
+	'wmu-fewer-options' => 'Kevesebb beállítási lehetőség',
+	'wmu-replace-default-caption' => 'alapértelmezett felirat cseréje',
+	'wmu-appearance-in-article' => 'Megjelenés az oldalon',
+	'wmu-alignment' => 'Igazítás',
+	'wmu-file-protected' => 'Ez a kép védett',
+	'wmu-file-error' => 'Hiba történt a feltöltési folyamat során, elnézést kérünk. Kérlek, próbáld újra.',
 );
 
 /** Interlingua (interlingua)
@@ -1606,8 +1642,13 @@ $messages['kn'] = array(
 	'wmu-name' => 'ಹೆಸರು',
 );
 
-/** Korean (한국어) */
+/** Korean (한국어)
+ * @author 아라
+ */
 $messages['ko'] = array(
+	'wmu-find' => '찾기',
+	'wmu-find-btn' => '찾기',
+	'wmu-license' => '라이선스',
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
 );
 
@@ -2255,6 +2296,7 @@ $messages['ps'] = array(
 	'wmu-insert' => 'ورټومبل',
 	'wmu-name' => 'نوم',
 	'wmu-license' => 'منښتليک',
+	'wmu-licensing' => 'منښتليک',
 	'wmu-size' => 'کچه',
 	'wmu-thumbnail' => 'بټنوک',
 	'wmu-layout' => 'ليدنمخ',
@@ -2612,7 +2654,7 @@ $messages['sv'] = array(
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Ladda upp',
 	'wmu-find-btn' => 'Hitta',
-	'wmu-flickr-inf' => 'Sök ordentligt licensierade fria bilder från Flickr och importera dem till din wiki.',
+	'wmu-flickr-inf' => 'Sök ordentligt efter licensierade fria bilder från Flickr och importera dem till din wiki.',
 	'wmu-conflict-inf' => '<h1>Hoppsan, en fil med det namnet finns redan.</h1>Vad sägs som <b>$1</b>?',
 	'wmu-rename' => 'Byt namn på din bild',
 	'wmu-existing' => 'Använd befintlig bild',
@@ -2723,6 +2765,7 @@ $messages['tet'] = array(
  */
 $messages['tl'] = array(
 	'wmu-upload-image' => 'Ikarga ang Larawan',
+	'wmu-title' => 'Ikargang Papaitaas ang Larawan',
 	'wmu-upload' => 'Ikarga',
 	'wmu-notlogged' => 'Lumagda o magpatala upang makapagkarga ng mga larawan mula sa kompyuter mo.',
 	'wmu-find' => 'Hanapin',
@@ -2759,7 +2802,7 @@ $messages['tl'] = array(
 	'wmu-success' => '<h1>Tagumpay</h1>Naisingit na ang larawan mo.',
 	'wmu-success-placeholder' => '<h1>Tagumpay</h1>',
 	'wmu-return' => 'Magbalik sa pamamatnugot',
-	'wmu-back' => 'bumalik',
+	'wmu-back' => 'Pumili ng ibang larawan',
 	'wmu-close' => 'isara',
 	'wmu-warn1' => 'Kailangan mo munang tukuyin ang tanong!',
 	'wmu-warn2' => 'Kailangan mo munang pumili ng talaksan!',
@@ -2792,6 +2835,8 @@ $messages['tl'] = array(
 	'wmu-replace-default-caption' => 'palitan ang likas na nakatakdang paliwanag',
 	'wmu-appearance-in-article' => 'Hitsura sa loob ng Artikulo',
 	'wmu-alignment' => 'Talatag',
+	'wmu-file-protected' => 'Nakaprutekta ang larawang ito',
+	'wmu-file-error' => 'Mayroong isang kamalian sa proseso ng pagkakargang papaitaas, paumanhin. Paki subukan ulit.',
 );
 
 /** Turkish (Türkçe)

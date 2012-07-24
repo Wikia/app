@@ -120,6 +120,7 @@ $messages['diq'] = array(
  * @author Benfutbol10
  * @author Ciencia Al Poder
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'lightbox_details_tooltip' => 'Ver detalles de la imagen',
@@ -139,8 +140,8 @@ $1
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Compartir',
 	'lightbox-share-button-embed' => 'Insertar',
-	'lightbox-share-email-label' => 'Enviar por e-mail esta imagen a un amigo',
-	'lightbox-share-email-page-label' => 'Enviar por e-mail esta página a un amigo',
+	'lightbox-share-email-label' => 'Enviar por correo electrónico esta imagen a un amigo',
+	'lightbox-share-email-page-label' => 'Enviar por correo electrónico esta página a un amigo',
 	'lightbox-share-email-page-label-address' => 'Dirección de correo electrónico',
 	'lightbox-share-email-ok-caption' => 'Confirmación',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|correo ha|correos han}} sido enviado.',
@@ -198,7 +199,7 @@ $messages['fr'] = array(
 	'lightbox-standard-link' => 'Lien standard',
 	'lightbox-blog-link' => 'Lien de blog',
 	'lightbox-send' => 'Envoyer',
-	'lightbox-share-description' => 'Photo de $1 sur $2',
+	'lightbox-share-description' => 'Image de $1 sur $2',
 	'lightbox-share-email-subject' => '$1 vous a envoyé une photo sur Wikia',
 	'lightbox-share-email-body' => "Bonjour,
 
@@ -223,7 +224,7 @@ Détails : $2',
 	'lightbox-visit-the-wiki' => 'Visiter le wiki :',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -255,6 +256,40 @@ Detalles: $2',
 	'lightbox-share-email-error-login' => 'Para enviar correos ten que rexistrarse',
 	'lightbox-share-email-error-noaddress' => 'Non se especificou ningún enderezo.',
 	'lightbox-visit-the-wiki' => 'Visite o wiki:',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'lightbox_details_tooltip' => 'Kép részleteinek megtekintése',
+	'lightbox-forum' => 'Fórum',
+	'lightbox-standard-link' => 'Szabványos hivatkozás',
+	'lightbox-blog-link' => 'Blog hivatkozás',
+	'lightbox-send' => 'Küldés',
+	'lightbox-share-description' => 'Kép a(z) "$1" oldalon a(z) $2-n',
+	'lightbox-share-email-subject' => '$1 fényképet küldött neked a Wikián',
+	'lightbox-share-email-body' => 'Szia!
+
+Valaki szeretne neked egy fényképet mutatni a Wikián. Tekintsd meg:
+
+$1
+
+- A Wikia csapat',
+	'lightbox-share-button-email' => 'E-mail',
+	'lightbox-share-button-www' => 'Megosztás',
+	'lightbox-share-button-embed' => 'Beágyazás',
+	'lightbox-share-email-label' => 'Kép elküldése egy ismerősnek',
+	'lightbox-share-email-page-label' => 'Oldal elküldése egy ismerősnek',
+	'lightbox-share-email-page-label-address' => 'E-mail cím',
+	'lightbox-share-email-ok-caption' => 'Megerősítés',
+	'lightbox-share-email-ok-content' => 'Az {{PLURAL:$1|e-mailt|e-maileket}} elküldtük..',
+	'lightbox-share-email-error-caption' => 'Hiba',
+	'lightbox-share-email-error-content' => 'Hiba történt az e-mail{{PLURAL:$1||ek}} küldése közben.
+Részletek: $2',
+	'lightbox-share-email-error-login' => 'E-mailek küldéséhez be kell jelentkezned',
+	'lightbox-share-email-error-noaddress' => 'Nem adtál meg címeket.',
+	'lightbox-visit-the-wiki' => 'Látogasd meg a wikit:',
 );
 
 /** Interlingua (interlingua)
@@ -324,6 +359,19 @@ $1
 詳細: $2',
 	'lightbox-share-email-error-login' => 'メールを送信するにはログインする必要があります',
 	'lightbox-share-email-error-noaddress' => 'メールアドレスが指定されていません',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'lightbox-forum' => 'Forum',
+	'lightbox-send' => 'Schécken',
+	'lightbox-share-description' => 'Foto op $1 op $2',
+	'lightbox-share-email-subject' => 'De Benotzer $1 huet Iech eng Foto op Wikia geschéckt',
+	'lightbox-share-email-ok-caption' => 'Confirmatioun',
+	'lightbox-share-email-error-caption' => 'Feeler',
+	'lightbox-share-email-error-noaddress' => 'Dir hutt keng Adress uginn.',
 );
 
 /** Macedonian (македонски)
@@ -477,20 +525,20 @@ $messages['pfl'] = array(
  * @author Sovq
  */
 $messages['pl'] = array(
-	'lightbox_details_tooltip' => 'Pokaż szczegóły zdjęcia',
+	'lightbox_details_tooltip' => 'Pokaż szczegóły obrazu',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standardowy link',
 	'lightbox-blog-link' => 'Link do bloga',
 	'lightbox-send' => 'Wyślij',
-	'lightbox-share-description' => 'Zdjęcie na stronie $1 na $2',
-	'lightbox-share-email-subject' => '$1 wysłał ci zdjęcie na Wikia',
-	'lightbox-share-email-body' => 'Cześć,
+	'lightbox-share-description' => 'Obraz na stronie $1 na $2',
+	'lightbox-share-email-subject' => '$1 wysłał(a) Ci zdjęcie na Wikii',
+	'lightbox-share-email-body' => 'Witaj,
 
 Ktoś chciał pokazać Ci obraz na Wikii. Zobacz:
 
 $1
 
--Zespół Wikia',
+- Zespół Wikii',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Podziel się',
 	'lightbox-share-button-embed' => 'Osadź',
@@ -498,7 +546,7 @@ $1
 	'lightbox-share-email-page-label' => 'Poleć tę stronę znajomemu',
 	'lightbox-share-email-page-label-address' => 'Adres e‐mail',
 	'lightbox-share-email-ok-caption' => 'Potwierdzenie',
-	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mail został wysłany|E-maile zostały wysłane|E-maili zostało wysłanych}}.',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mail został wysłany|E-maile zostały wysłane}}.',
 	'lightbox-share-email-error-caption' => 'Błąd',
 	'lightbox-share-email-error-content' => 'Błąd przy wysyłce {{PLURAL:$1|e-maila|e-maili}}.
 Szczegóły: $2',
@@ -592,6 +640,40 @@ Detaljer: $2',
  */
 $messages['te'] = array(
 	'lightbox-share-email-page-label-address' => 'ఈమెయిలు చిరునామా',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'lightbox_details_tooltip' => 'Tingnan ang mga detalye ng larawan',
+	'lightbox-forum' => 'Porum',
+	'lightbox-standard-link' => 'Pamantayang kawing',
+	'lightbox-blog-link' => 'Kawing sa blog',
+	'lightbox-send' => 'Ipadala',
+	'lightbox-share-description' => 'Litrato sa loob ng $1 doon sa $2',
+	'lightbox-share-email-subject' => 'Pinadalhan ka ni $1 ng isang larawan doon sa Wikia',
+	'lightbox-share-email-body' => 'Kumusta,
+
+Mayroong isang tao na nais kang pakitaan ng isang litrato roon sa Wikia. Tingnan mo iyon:
+
+$1
+
+- Ang pangkat ng Wikia',
+	'lightbox-share-button-email' => 'E-liham',
+	'lightbox-share-button-www' => 'Ibahagi',
+	'lightbox-share-button-embed' => 'Ibaon',
+	'lightbox-share-email-label' => 'Ipadala ito sa isang kaibigan sa pamamagitan ng e-liham',
+	'lightbox-share-email-page-label' => 'Ipadala ang pahinang ito sa isang kaibigan sa pamamagitan ng e-liham',
+	'lightbox-share-email-page-label-address' => 'Tirahan ng e-liham',
+	'lightbox-share-email-ok-caption' => 'Kumpirmasyon',
+	'lightbox-share-email-ok-content' => 'Naipadala na ang {{PLURAL:$1|E-liham|mga E-liham}}.',
+	'lightbox-share-email-error-caption' => 'Kamalian',
+	'lightbox-share-email-error-content' => 'Kamalian sa pagpapadala ng {{PLURAL:$1|e-liham|mga e-liham}}.
+Mga detalye: $2',
+	'lightbox-share-email-error-login' => 'Upang makapagpadala ng mga e-liham kailangan mong lumagdang papasok',
+	'lightbox-share-email-error-noaddress' => 'Walang tinukoy na mga tirahan.',
+	'lightbox-visit-the-wiki' => 'Dalawin ang wiki:',
 );
 
 /** Turkish (Türkçe)

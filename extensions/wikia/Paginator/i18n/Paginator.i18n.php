@@ -87,7 +87,7 @@ $messages['fr'] = array(
 	'paginator-back' => 'Précédent',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -287,6 +287,14 @@ $messages['uk'] = array(
 $messages['vi'] = array(
 	'paginator-next' => 'Tiếp theo',
 	'paginator-back' => 'Quay lại',
+);
+
+/** Walloon (walon)
+ * @author Srtxg
+ */
+$messages['wa'] = array(
+	'paginator-next' => 'Shuvant',
+	'paginator-back' => 'En erî',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

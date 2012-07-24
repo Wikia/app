@@ -309,7 +309,7 @@ $messages['af'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Selekteer',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -484,7 +484,7 @@ $messages['az'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Seç',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -1463,7 +1463,7 @@ Beschreiben Sie dieses Foto.",
  */
 $messages['diq'] = array(
 	'wikiaPhotoGallery-back' => 'Peyd bê',
-	'wikiaPhotoGallery-finish' => 'Qedyin',
+	'wikiaPhotoGallery-finish' => 'Qediya',
 	'wikiaPhotoGallery-feed-caption' => '$1, sera <a href="$2">$3</a>',
 	'wikiaPhotoGallery-lightbox-caption' => "$1'i sera",
 	'wikiaPhotoGallery-error-caption' => 'Xırab',
@@ -2037,7 +2037,7 @@ Décrivez cette photo.",
 	'galery-slider-read-more' => 'En savoir plus &gt;',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -2407,25 +2407,56 @@ $messages['he'] = array(
  * @author Alquen
  * @author Dani
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'wikiaphotogallery-desc' => 'Felületet biztosít galériák és diavetítések kezelésére az oldalakon',
 	'wikiaPhotoGallery-back' => 'Vissza',
 	'wikiaPhotoGallery-finish' => 'Befejezés',
+	'wikiaPhotoGallery-feed-caption' => '$1, <a href="$2">$3</a> használatával',
+	'wikiaPhotoGallery-lightbox-caption' => 'A(z) $1 hírcsatornán keresztül',
+	'wikiaPhotoGallery-add-gallery' => 'Képgaléria vagy diavetítés beszúrása',
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Egy fotó hozzáadása a galériához',
+	'wikiaPhotoGallery-edit-abort' => 'Az általad kezdeményezett módosítást megakadályozta egy bővítmény.',
 	'wikiaPhotoGallery-edit-summary' => 'Galéria szerkesztése',
 	'wikiaPhotoGallery-error-caption' => 'Hiba',
+	'wikiaPhotoGallery-error-outdated' => 'A galériát szerkesztették, miközben az oldalt olvastad.
+Kérlek, frissítsd az oldalt és próbálkozz újra.',
+	'wikiaPhotoGallery-error-wrong-title' => 'Nincs cím a megadott cikkazonosítóhoz',
+	'wikiaPhotoGallery-error-user-rights' => 'Felhasználói jog hiba.',
+	'wikiaPhotoGallery-upload-title' => 'Kép keresése és feltöltése',
+	'wikiaPhotoGallery-upload-info-choose-list' => "''' VAGY ''' választhatsz innen:",
+	'wikiaPhotoGallery-upload-info-images-label' => 'képek erről az oldalról',
+	'wikiaPhotoGallery-upload-info-upload' => "'''Vagy''' feltöltesz egy képet a számítógépedről,",
+	'wikiaPhotoGallery-upload-info-uploaded-label' => 'legújabb képek',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Feltöltés',
-	'wikiaPhotoGallery-upload-uploadbutton' => 'Feltöltés',
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Kép feltöltése',
 	'wikiaPhotoGallery-upload-findtitle' => 'Keresés',
 	'wikiaPhotoGallery-upload-findbutton' => 'Keresés',
+	'wikiaPhotoGallery-upload-filestitle-pre' => 'Legutóbb feltöltött fájlok',
+	'wikiaPhotoGallery-upload-filestitle-post' => 'Képek ezen a wikin ($1 találat)',
 	'wikiaPhotoGallery-upload-page-next' => 'Következő 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Előző 8',
 	'wikiaPhotoGallery-upload-filesinsert' => 'Fotó beillesztése',
+	'wikiaPhotoGallery-upload-error-title' => 'A feltöltésedet nem sikerült befejezni',
 	'wikiaPhotoGallery-upload-error-bad-extension' => 'Ezt a fájltípust nem lehet használni.',
+	'wikiaPhotoGallery-upload-error-filename-incorrect' => 'A fájlnév az oldalcímekben nem engedélyezett karaktereket tartalmaz.
+Kérlek, nevezd át a fájlt és próbálkozz újra.',
+	'wikiaPhotoGallery-upload-error-filetype-incorrect' => 'A fájl kiterjesztése hibás.',
+	'wikiaPhotoGallery-upload-error-filetype missing' => 'A fájl kiterjesztése hiányzik.',
+	'wikiaPhotoGallery-upload-error-readonly' => 'Pillanatnyilag nem tölthetsz fel képeket, mivel a wiki csak olvasható állapotban van.',
+	'wikiaPhotoGallery-upload-error-conflict-intro' => 'Ilyen nevű fájl már létezik.
+Mit szeretnél tenni?',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => 'A feltöltött fájl kiterjesztése hiányzik.',
+	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Kép átnevezése',
+	'wikiaPhotoGallery-upload-error-conflict-reuse' => 'Meglévő kép használata',
+	'wikiaPhotoGallery-upload-error-conflict-overwrite' => 'A meglévő kép felülírása a tiéddel',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Beszúrás',
+	'wikiaPhotoGallery-upload-select-images' => 'Kiválasztás',
 	'wikiaPhotoGallery-photooptions-title' => 'Fotó beállításai',
 	'wikiaPhotoGallery-photooptions-done' => 'Kész',
-	'wikiaPhotoGallery-preview-title' => 'Galéria szerkesztése',
+	'wikiaPhotoGallery-preview-no-images' => 'Nem találtunk képet a kijelölt RSS-hírcsatornában',
+	'wikiaPhotoGallery-preview-title' => 'Galériaszerkesztő',
 	'wikiaPhotoGallery-preview-hover-modify' => 'módosítás',
 	'wikiaPhotoGallery-preview-hover-delete' => 'törlés',
 	'wikiaPhotoGallery-preview-previewtitle' => 'Galéria előnézete',
@@ -2433,19 +2464,34 @@ $messages['hu'] = array(
 	'wikiaPhotoGallery-preview-add-caption' => 'Felirat hozzáadása',
 	'wikiaPhotoGallery-preview-add-description' => 'Leírás hozzáadása',
 	'wikiaPhotoGallery-preview-add-link' => 'Hivatkozás hozzáadása',
+	'wikiaPhotoGallery-preview-placeholder-caption' => 'A felirat itt fog megjelenni',
+	'wikiaPhotoGallery-preview-link-tooltip' => 'A kép a(z) $1 oldalra hivatkozik',
+	'wikiaPhotoGallery-preview-feed-label' => 'Az alábbi URL-című RSS-hírcsatornából:',
 	'wikiaPhotoGallery-preview-tab-layout' => 'Elrendezés',
 	'wikiaPhotoGallery-preview-size' => 'Kép mérete',
 	'wikiaPhotoGallery-preview-px' => 'px',
 	'wikiaPhotoGallery-preview-size-smaller' => 'kisebb',
 	'wikiaPhotoGallery-preview-size-larger' => 'nagyobb',
+	'wikiaPhotoGallery-preview-columns' => 'Oszlopok száma',
+	'wikiaPhotoGallery-preview-columns-dynamic' => 'Oldalméretnyi',
 	'wikiaPhotoGallery-preview-position' => 'Galéria pozíciója',
 	'wikiaPhotoGallery-preview-position-left' => 'Balra',
 	'wikiaPhotoGallery-preview-position-center' => 'Középre',
 	'wikiaPhotoGallery-preview-position-right' => 'Jobbra',
+	'wikiaPhotoGallery-preview-spacing' => 'Képek térköze',
 	'wikiaPhotoGallery-preview-spacing-small' => 'Kicsi',
 	'wikiaPhotoGallery-preview-spacing-medium' => 'Közepes',
 	'wikiaPhotoGallery-preview-spacing-large' => 'Nagy',
 	'wikiaPhotoGallery-preview-orientation' => 'Fénykép tájolása',
+	'wikiaPhotoGallery-preview-orientation-square-tooltip' => 'Képek levágása négyzet alakúra',
+	'wikiaPhotoGallery-preview-orientation-landscape-tooltip' => 'Képek vágása tájkép stílusban',
+	'wikiaPhotoGallery-preview-orientation-portrait-tooltip' => 'Képek vágása portréstílusban',
+	'wikiaPhotoGallery-preview-orientation-none-tooltip' => 'Képek eredeti alakjának megtartása',
+	'wikiaPhotoGallery-preview-crop-sub' => 'Képek vágása a rácshoz illeszkedően',
+	'wikiaPhotoGallery-preview-tab-theme' => 'Szegélyek és feliratok',
+	'wikiaPhotoGallery-preview-captionposition' => 'Felirat helyzete',
+	'wikiaPhotoGallery-preview-captionposition-within' => 'A képen belül',
+	'wikiaPhotoGallery-preview-captionposition-below' => 'A kép alatt',
 	'wikiaPhotoGallery-preview-captionalignment' => 'Felirat igazítása',
 	'wikiaPhotoGallery-preview-captionalignment-left' => 'Balra',
 	'wikiaPhotoGallery-preview-captionalignment-center' => 'Középre',
@@ -2468,21 +2514,76 @@ $messages['hu'] = array(
 	'wikiaPhotoGallery-preview-captions-center' => 'középre',
 	'wikiaPhotoGallery-preview-captions-right' => 'jobbra',
 	'wikiaPhotoGallery-conflict-title' => 'Szerkesztési ütközés történt',
+	'wikiaPhotoGallery-conflict-help' => 'Lent található a szerkesztésed által létrehozott wikiszöveg.
+Ezt másold, kattints a(z) "$1"-re, és illeszd be a megfelelő helyre a változtatásaid visszaállításához.
+Másik lehetőségként a(z) "$2"-re kattintva megtekintheted az oldalt frissített formájában.',
+	'wikiaPhotoGallery-conflict-edit' => 'Váltás szerkesztési módba',
+	'wikiaPhotoGallery-conflict-view' => 'Aktuális oldal megtekintése',
+	'wikiaPhotoGallery-preview-delete-title' => 'Eltávolítod ezt a képet?',
+	'wikiaPhotoGallery-preview-delete' => 'Biztosan el szeretnéd távolítani ezt a képet ebből a galériából?',
 	'wikiaPhotoGallery-preview-saving-title' => 'Mentés folyamatban',
+	'wikiaPhotoGallery-preview-saving-intro' => 'Várj, amíg elmentjük a galériádat.',
 	'wikiaPhotoGallery-quit-title' => 'Kilépés a galéria-szerkesztőből',
 	'wikiaPhotoGallery-quit-intro' => 'Biztos vagy benne, hogy ki szeretnél lépni a galéria-szerkesztőből?',
 	'wikiaPhotoGallery-quit-savequit' => 'Mentés és kilépés',
 	'wikiaPhotoGallery-quit-quitonly' => 'Változtatások eldobása és kilépés',
+	'wikiaPhotoGallery-slideshow-view-popout-tooltip' => 'Diavetítés kibontása',
 	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Kép hozzáadása',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Következő fénykép',
 	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'Előző kép',
+	'wikiaPhotoGallery-slideshow-view-title' => 'Diavetítés',
+	'wikiaPhotoGallery-slideshow-view-number' => '$1. (összesen: $2)',
+	'wikiaPhotoGallery-slideshow-view-startslideshow' => 'Diavetítés lejátszása',
+	'wikiaPhotoGallery-slideshow-view-stopslideshow' => 'Diavetítés megállítása',
+	'wikiaPhotoGallery-slideshow-view-details-tooltip' => 'Kép részleteinek megtekintése',
+	'wikiaPhotoGallery-slideshow-view-link-overlay' => '$1 meglátogatása',
+	'wikiaPhotoGallery-choice-title' => 'Diavetítés vagy galéria hozzáadása',
+	'wikiaPhotoGallery-choice-intro' => 'Diavetítést vagy képgalériát szeretnél létrehozni?',
+	'wikiaPhotoGallery-choice-slideshow' => 'Diavetítés létrehozása',
+	'wikiaPhotoGallery-choice-gallery' => 'Galéria létrehozása',
+	'wikiaPhotoGallery-choice-slider' => 'Főoldali csúszka létrehozása',
+	'wikiaPhotoGallery-slideshowpreview-title' => 'Diavetítés-szerkesztő',
+	'wikiaPhotoGallery-slideshowpreview-optionstitle' => 'Diavetítés beállításai',
+	'wikiaPhotoGallery-slideshowpreview-size' => 'Diavetítés szélessége:',
 	'wikiaPhotoGallery-slideshowpreview-size-smaller' => 'kisebb',
 	'wikiaPhotoGallery-slideshowpreview-size-larger' => 'nagyobb',
+	'wikiaPhotoGallery-slideshowpreview-crop' => 'Intelligens vágás használata a fehér térköz megszüntetéséhez',
+	'wikiaPhotoGallery-slideshowpreview-recentuploads' => 'Automatikusan frissülő diavetítés létrehozása az új képekből',
+	'wikiaPhotoGallery-slideshowpreview-photostitle' => 'Diavetítés képei',
+	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Kép hozzáadása',
+	'wikiaPhotoGallery-slideshowpreview-position' => 'Diavetítés helyzete',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Balra',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Középre',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Jobbra',
+	'wikiaPhotoGallery-sliderpreview-photostitle' => 'Csúszka képei',
+	'wikiaPhotoGallery-sliderpreview-optionstitle' => 'Csúszka beállításai',
+	'wikiaPhotoGallery-sliderpreview-choosetype' => 'Csúszka menüjének helyzete',
+	'wikiaPhotoGallery-sliderpreview-choosetype-bottom-tooltip' => 'Vízszintes miniatűrök',
+	'wikiaPhotoGallery-sliderpreview-choosetype-right-tooltip' => 'Függőleges miniatűrök',
+	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Kép hozzáadása',
+	'wikiaPhotoGallery-sliderpreview-title' => 'Csúszkaszerkesztő',
+	'wikiaPhotoGallery-upload-title-slideshow' => 'Diavetítés-szerkesztő &mdash; Kép keresése és feltöltése',
+	'wikiaPhotoGallery-upload-title-gallery' => 'Galériaszerkesztő &mdash; Kép keresése és feltöltése',
+	'wikiaPhotoGallery-upload-title-slider' => 'Csúszkaszerkesztő &mdash; Kép keresése és feltöltése',
+	'wikiaPhotoGallery-upload-uploadtext' => "'''Vagy''' tölts fel egy képet a számítógépedről,",
+	'wikiaPhotoGallery-upload-existingtext' => "'''vagy''' kattints ide fényképek választáshoz az alábbi forrásokból:",
+	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'ez az oldal',
+	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'legutóbbi feltöltések',
+	'wikiaPhotoGallery-upload-selectbutton' => 'Kiválasztás',
+	'wikiaPhotoGallery-photooptions-title-slideshow' => 'Diavetítés-szerkesztő &mdash; Felirat és hivatkozás hozzáadása',
+	'wikiaPhotoGallery-photooptions-title-gallery' => 'Galériaszerkesztő &mdash, Felirat és hivatkozás hozzáadása',
+	'wikiaPhotoGallery-photooptions-captiontitle' => 'Képfelirat hozzáadása a fényképhez (nem kötelező)',
+	'wikiaPhotoGallery-photooptions-captionsub' => 'Írd le a képet',
 	'wikiaPhotoGallery-photooptions-linktitle' => 'Lap hivatkozása',
+	'wikiaPhotoGallery-photooptions-linksub' => 'A képre való kattintáskor menjen az alábbi oldalra:',
+	'wikiaPhotoGallery-photooptions-linktext' => 'Hivatkozáshoz megjelenítendő szöveg.',
+	'wikiaPhotoGallery-photooptions-linkurl' => 'Hivatkozzon ide: (illeszd be a lap nevét vagy URL-címét)',
 	'wikiaPhotoGallery-photooptions-description' => 'Kép adatai.',
+	'wikiaPhotoGallery-search-tooltip' => 'Képek keresése ezen a wikin',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Rossz képméret. A képek minimális mérete 660 × 360 pixel.',
+	'wikiaPhotoGallery-upload-image-size' => 'A képek minimális mérete 660 × 360 pixel',
+	'wikiaPhotoGallery-not-displayed' => 'Nem jelenik meg',
+	'galery-slider-read-more' => 'Tovább >',
 );
 
 /** Interlingua (interlingua)
@@ -3019,6 +3120,14 @@ $messages['kn'] = array(
 	'wikiaPhotoGallery-preview-position-left' => 'ಎಡ',
 	'wikiaPhotoGallery-preview-position-right' => 'ಬಲ',
 	'wikiaPhotoGallery-preview-spacing-small' => 'ಸಣ್ಣದು',
+);
+
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'wikiaPhotoGallery-upload-findtitle' => '찾기',
+	'wikiaPhotoGallery-upload-findbutton' => '찾기',
 );
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
@@ -4405,6 +4514,7 @@ Dësnò, a peul ësgnaché "$2" për vëdde la pàgina ant soa forma modificà.'
  */
 $messages['ps'] = array(
 	'wikiaPhotoGallery-back' => 'پر شا کېدل',
+	'wikiaPhotoGallery-finish' => 'پای',
 	'wikiaPhotoGallery-viewmode-addphoto' => 'دې انځورتون کې يو انځور ورګډول',
 	'wikiaPhotoGallery-error-caption' => 'ستونزه',
 	'wikiaPhotoGallery-upload-title' => 'انځور موندل او پورته کول',
@@ -4444,6 +4554,7 @@ $messages['ps'] = array(
 	'wikiaPhotoGallery-preview-captions-right' => 'ښي',
 	'wikiaPhotoGallery-conflict-view' => 'اوسنی مخ کتل',
 	'wikiaPhotoGallery-preview-delete-title' => 'دا انځور ليرې کوۍ؟',
+	'wikiaPhotoGallery-preview-saving-title' => 'د خوندي کېدلو په حال کې',
 	'wikiaPhotoGallery-quit-savequit' => 'خوندي کول او بندول',
 	'wikiaPhotoGallery-slideshow-view-addphoto' => 'انځور ورګډول',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'بل انځور',
@@ -5413,6 +5524,7 @@ $messages['tl'] = array(
 	'wikiaPhotoGallery-error-caption' => 'Kamalian',
 	'wikiaPhotoGallery-error-outdated' => 'Nabago ang galeryang ito habang tinitingnan mo ang pahina.
 Pakisariwa ang pahina at subukan uli.',
+	'wikiaPhotoGallery-error-wrong-title' => 'Walang pamagat para sa ibinigay na ID ng artikulo',
 	'wikiaPhotoGallery-error-user-rights' => 'Kamalian sa mga karapatan ng tagagamit.',
 	'wikiaPhotoGallery-upload-title' => 'Maghanap at Magkarga ng Larawan',
 	'wikiaPhotoGallery-upload-info-choose-list' => "'''O''' piliin ang:",
@@ -5505,7 +5617,7 @@ Ano ang nais mong gawin?',
 	'wikiaPhotoGallery-preview-captions-right' => 'Kanan',
 	'wikiaPhotoGallery-conflict-title' => 'Naganap ang isang salungatan sa pagbago',
 	'wikiaPhotoGallery-conflict-help' => 'Ibinigay namin sa ibaba ang wikitekstong nalikha ng pagbabago mo.
-Maaari mong kopyahin ang tekstong ito, pindutin ang "$1" at idikit ito sa tamang lugar upang maipanumbalik ang mga pagbabago mo.  Bilang kahalili, maaari mong pinduting ang "$2" upang makita ang pahina sa naisapanahong anyo nito.',
+Maaari mong kopyahin ang tekstong ito, pindutin ang "$1" at idikit ito sa tamang lugar upang maipanumbalik ang mga pagbabago mo.  Bilang kahalili, maaari mong pindutin ang "$2" upang makita ang pahina sa naisapanahong anyo nito.',
 	'wikiaPhotoGallery-conflict-edit' => 'Modalidad ng pagdalaw sa pagbabago',
 	'wikiaPhotoGallery-conflict-view' => 'Tingnan ang kasalukuyang pahina',
 	'wikiaPhotoGallery-preview-delete-title' => 'Alisin ang larawang ito?',
@@ -5570,8 +5682,8 @@ Ilarawan ang litratong ito.",
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Kawing sa (idikit ang pangalan ng pahina o URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Mga detalye ng larawan.',
 	'wikiaPhotoGallery-search-tooltip' => 'Maghanap ng mga larawan sa wiking ito',
-	'wikiaPhotoGallery-upload-image-size-error' => 'Maling sukat ng larawan. Ang mga larawan ay dapat na 673px na katabi ng 410px.',
-	'wikiaPhotoGallery-upload-image-size' => 'Ang mga larawan ay dapat na 673 px na katabi ng 410 px.',
+	'wikiaPhotoGallery-upload-image-size-error' => 'Maling sukat ng larawan. Ang mga larawan ay dapat na 660px na katabi ng 360px o mas malaki.',
+	'wikiaPhotoGallery-upload-image-size' => 'Ang mga larawan ay dapat na 673px na katabi ng 360 px o mas malaki.',
 	'wikiaPhotoGallery-not-displayed' => 'Hindi ipinapakita',
 	'galery-slider-read-more' => 'Magbasa pa >',
 );

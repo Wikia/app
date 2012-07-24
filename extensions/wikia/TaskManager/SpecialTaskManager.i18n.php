@@ -26,7 +26,7 @@ $messages['af'] = array(
 	'taskmanager_tasklist' => 'Keer terug na taaklys',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -59,6 +59,7 @@ $messages['ca'] = array(
 
 /** Czech (česky)
  * @author Dontlietome7
+ * @author Jezevec
  */
 $messages['cs'] = array(
 	'taskmanager' => 'Zobrazit a spravovat úlohy na pozadí',
@@ -66,6 +67,8 @@ $messages['cs'] = array(
 	'taskmanager_tasklist' => 'Návrat do seznamu úkolů',
 	'right-taskmanager' => 'Lze zobrazit úlohy na pozadí',
 	'right-taskmanager-action' => 'Lze spravovat úlohy na pozadí',
+	'taskmanager-invert' => 'Invertovat výběr',
+	'action-taskmanager' => 'zobrazit a spravovat úlohy na pozadí',
 );
 
 /** German (Deutsch)
@@ -79,6 +82,7 @@ $messages['de'] = array(
 	'right-taskmanager' => 'Darf Hintergrund-Tasks anzeigen',
 	'right-taskmanager-action' => 'Darf Hintergrund-Tasks verwalten',
 	'taskmanager-invert' => 'Auswahl umkehren',
+	'action-taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
 );
 
 /** Spanish (español)
@@ -93,6 +97,7 @@ $messages['es'] = array(
 	'right-taskmanager' => 'Puede mostrar tareas en segundo plano',
 	'right-taskmanager-action' => 'Puede administrar tareas en segundo plano',
 	'taskmanager-invert' => 'Invertir',
+	'action-taskmanager' => 'Muestra y administra tareas en segundo plano',
 );
 
 /** Finnish (suomi)
@@ -116,9 +121,10 @@ $messages['fr'] = array(
 	'right-taskmanager' => 'Peut afficher les tâches en arrière-plan',
 	'right-taskmanager-action' => 'Peut gérer les tâches en arrière-plan',
 	'taskmanager-invert' => 'Inverser la sélection',
+	'action-taskmanager' => "afficher et gérer les tâches d'arrière-plan",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -128,6 +134,7 @@ $messages['gl'] = array(
 	'right-taskmanager' => 'Pode ver as tarefas en segundo plano',
 	'right-taskmanager-action' => 'Pode xestionar as tarefas en segundo plano',
 	'taskmanager-invert' => 'Inverter a selección',
+	'action-taskmanager' => 'mostrar e xestionar as tarefas de fondo',
 );
 
 /** Hebrew (עברית) */
@@ -137,7 +144,7 @@ $messages['he'] = array(
 	'taskmanager_tasklist' => 'חזרה לרשימת המשימות',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -148,11 +155,16 @@ $messages['hsb'] = array(
 
 /** Hungarian (magyar)
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'taskmanager' => 'Háttérfeladatok megjelenítése és kezelése',
 	'taskmanager_title' => 'Háttérfeladatok megjelenítése és kezelése',
 	'taskmanager_tasklist' => 'Vissza a feladatlistához',
+	'right-taskmanager' => 'Megjelenítheti a háttérfeladatokat',
+	'right-taskmanager-action' => 'Kezelheti a háttérfeladatokat',
+	'taskmanager-invert' => 'Kijelölés megfordítása',
+	'action-taskmanager' => 'háttérfeladatok megjelenítése és kezelése',
 );
 
 /** Interlingua (interlingua)
@@ -165,6 +177,7 @@ $messages['ia'] = array(
 	'right-taskmanager' => 'Pote examinar le processos de secunde plano',
 	'right-taskmanager-action' => 'Pote gerer le processos de secunde plano',
 	'taskmanager-invert' => 'Inverter selection',
+	'action-taskmanager' => 'monstrar e gerer processos de fundo',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -220,6 +233,7 @@ $messages['mk'] = array(
 	'right-taskmanager' => 'Може да прикажува позадински задачи',
 	'right-taskmanager-action' => 'Може да раководи со позадински задачи',
 	'taskmanager-invert' => 'Обратен избор',
+	'action-taskmanager' => 'приказ на и раководење со позадински задачи',
 );
 
 /** Malay (Bahasa Melayu)
@@ -232,6 +246,7 @@ $messages['ms'] = array(
 	'right-taskmanager' => 'Boleh memaparkan tugasan latar belakang',
 	'right-taskmanager-action' => 'Boleh menguruskan tugasan latar belakang',
 	'taskmanager-invert' => 'Songsangkan pilihan',
+	'action-taskmanager' => 'paparkan dan uruskan tugas-tugas latar belakang',
 );
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
@@ -245,6 +260,7 @@ $messages['nb'] = array(
 	'right-taskmanager' => 'Kan vise bakgrunnsprosesser',
 	'right-taskmanager-action' => 'Kan ta hånd om bakgrunnsprosesser',
 	'taskmanager-invert' => 'Inverter valg',
+	'action-taskmanager' => 'vis og administrer bakgrunnsoppgaver',
 );
 
 /** Dutch (Nederlands)
@@ -257,6 +273,7 @@ $messages['nl'] = array(
 	'right-taskmanager' => 'Kan achtergrondtaken bekijken',
 	'right-taskmanager-action' => 'Kan achtergrondtaken beheren',
 	'taskmanager-invert' => 'Selectie omkeren',
+	'action-taskmanager' => 'achtergrondtaken weergeven en beheren',
 );
 
 /** Occitan (occitan)
@@ -276,9 +293,10 @@ $messages['pl'] = array(
 	'taskmanager' => 'Zarządzanie zadaniami uruchamianymi w tle',
 	'taskmanager_title' => 'Zarządzanie zadaniami uruchamianymi w tle',
 	'taskmanager_tasklist' => 'Wróc do listy zadań',
-	'right-taskmanager' => 'Można wyświetlić zadania w tle',
-	'right-taskmanager-action' => 'Można zarządzać zadaniami w tle',
+	'right-taskmanager' => 'Może wyświetlić zadania w tle',
+	'right-taskmanager-action' => 'Może zarządzać zadaniami w tle',
 	'taskmanager-invert' => 'Odwróć zaznaczenie',
+	'action-taskmanager' => 'pokaż i zarządzaj zadaniami uruchamianymi w tle',
 );
 
 /** Piedmontese (Piemontèis)
@@ -291,6 +309,7 @@ $messages['pms'] = array(
 	'taskmanager_tasklist' => "Artorna a la Lista dj'Atività",
 	'right-taskmanager' => "A peul mosté j'operassion an slë sfond",
 	'right-taskmanager-action' => "A peul gestì j'operassion an slë sfond",
+	'taskmanager-invert' => 'Anvertì la selession',
 );
 
 /** Portuguese (português)
@@ -328,6 +347,7 @@ $messages['ru'] = array(
 	'right-taskmanager' => 'Может просматривать фоновые задачи',
 	'right-taskmanager-action' => 'Может управлять фоновыми задачами',
 	'taskmanager-invert' => 'Обратить выбранное',
+	'action-taskmanager' => 'просмотр и управление фоновыми заданиями',
 );
 
 /** Sinhala (සිංහල)
@@ -380,6 +400,8 @@ $messages['tl'] = array(
 	'taskmanager_tasklist' => 'Bumalik sa Talaan ng Gawain',
 	'right-taskmanager' => 'Maaaring ipakita ang mga gawaing panlikuran',
 	'right-taskmanager-action' => 'Maaaring pamahalaan ang mga gawaing panlikuran',
+	'taskmanager-invert' => 'Baligtarin ang pilian',
+	'action-taskmanager' => 'ipakita at pamahalaan ang mga gawaing panlikuran',
 );
 
 /** Turkish (Türkçe)

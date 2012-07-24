@@ -78,13 +78,22 @@ $messages['fr'] = array(
 	'site-layout' => 'Apparences du site',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
 	'skinchooser-desc' => 'Permite aos usuarios seleccionar a aparencia nas súas preferencias',
 	'new-look' => 'Nova aparencia de Wika',
 	'site-layout' => 'Deseño do sitio',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'skinchooser-desc' => 'Lehetővé teszi a felhasználóknak a felület kiválasztását beállításaik között',
+	'new-look' => 'Új Wikia megjelenés',
+	'site-layout' => 'Oldalelrendezések',
 );
 
 /** Interlingua (interlingua)

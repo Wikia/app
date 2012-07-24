@@ -22,7 +22,7 @@ $messages['az'] = array(
 	'tog-disablelinksuggest' => 'İlkin kod rejimində keçid təklifini göstərmə',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -45,10 +45,12 @@ $messages['ca'] = array(
 
 /** Czech (česky)
  * @author Darth Daron
+ * @author Jezevec
  * @author Mormegil
  */
 $messages['cs'] = array(
 	'tog-disablelinksuggest' => 'Nezobrazovat návrhy odkazů ve zdrojovém módu',
+	'tog-redirected-from' => '&ndash; přesměrováno z $1',
 );
 
 /** German (Deutsch)
@@ -85,7 +87,7 @@ $messages['fr'] = array(
 	'tog-redirected-from' => '&ndash; Redirigé depuis $1',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -107,7 +109,7 @@ $messages['he'] = array(
 	'tog-disablelinksuggest' => 'ביטול הצגת הצעות לקישורים',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -167,7 +169,8 @@ $messages['km'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'tog-disablelinksuggest' => 'Donn kein Vörschlääsch för Lenks aanzeije',
+	'tog-disablelinksuggest' => 'Donn en dä Quälle-Aat kein Vörschlääsch för Lenks aanzeije',
+	'tog-redirected-from' => '&ndash; ömjeleidt vun $1',
 );
 
 /** Ladino (Ladino) */
@@ -241,8 +244,8 @@ $messages['oc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'tog-disablelinksuggest' => 'Nie pokazuj sugerowanych linków w trybie źródłowym.',
-	'tog-redirected-from' => '&ndash; Przekierowano z $1',
+	'tog-disablelinksuggest' => 'Nie pokazuj sugestii linków w trybie źródłowym.',
+	'tog-redirected-from' => '&ndash; przekierowano z $1',
 );
 
 /** Piedmontese (Piemontèis)
@@ -286,6 +289,7 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'tog-disablelinksuggest' => 'Не показывать предложения ссылок в режиме Исходного кода',
+	'tog-redirected-from' => '&ndash; перенаправление с $1',
 );
 
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
@@ -309,6 +313,7 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'tog-disablelinksuggest' => 'Visa inte länkförslag i källäge',
+	'tog-redirected-from' => '&ndash; omdirigerad från $1',
 );
 
 /** Thai (ไทย)
@@ -322,7 +327,8 @@ $messages['th'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
-	'tog-disablelinksuggest' => 'Huwag ipakita ang mungkahing kawing',
+	'tog-disablelinksuggest' => 'Huwag ipakitang nasa gawi ng Pinagmulan ang mungkahing kawing',
+	'tog-redirected-from' => '&ndash; pinalitan ang kapupuntahan magmula sa $1',
 );
 
 /** Turkish (Türkçe)

@@ -92,7 +92,7 @@ $messages['az'] = array(
 	'multilookupwikiurl' => 'URL',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -129,7 +129,7 @@ $messages['br'] = array(
 	'multilookupselectuser' => "Klask kontoù gant ar memes chomlec'h IP war wikioù liesseurt",
 	'multilookupgo' => 'Mont',
 	'multilookupnotspecify' => "N'ho peus meneget chomlec'h IP ebet",
-	'multilookupnext' => 'da-heul',
+	'multilookupnext' => "war-lerc'h",
 	'multilookupprevious' => 'kent',
 	'multilookupnbrresult' => "Niver a zisoc'hoù :",
 	'multilookupinvalidresults' => "Disoc'h fall !",
@@ -181,7 +181,7 @@ $messages['ca'] = array(
 	'right-multilookup' => "Cercar informació d'usuaris en múltiples wikis",
 );
 
-/** Chechen (Нохчийн)
+/** Chechen (нохчийн)
  * @author Sasan700
  */
 $messages['ce'] = array(
@@ -191,6 +191,7 @@ $messages['ce'] = array(
 /** German (Deutsch)
  * @author Kghbln
  * @author LWChris
+ * @author PtM
  * @author The Evil IP address
  */
 $messages['de'] = array(
@@ -218,6 +219,7 @@ $messages['de'] = array(
 	'multilookuplastedithdr' => 'Letzte Bearbeitung',
 	'multilookuprecordspager' => "Zeige '''$1''' bis '''$2''' von '''$3''' Einträgen.",
 	'right-multilookup' => 'Multiaccount-Suche auf mehreren Wikis',
+	'action-multilookup' => 'Multi-Account-Suche über mehrere Wikis',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -245,6 +247,7 @@ $messages['diq'] = array(
  * @author Ciencia Al Poder
  * @author Crazymadlover
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'specialmultiplelookup-desc' => 'Proporciona búsqueda de información de usuario en múltiples wikis',
@@ -271,6 +274,7 @@ $messages['es'] = array(
 	'multilookuplastedithdr' => 'Última edición',
 	'multilookuprecordspager' => "Mostrando '''$1''' a '''$2''' de '''$3''' registros.",
 	'right-multilookup' => 'Información de búsqueda de usuarios en múltiples wikis',
+	'action-multilookup' => 'Búsqueda múltiple',
 );
 
 /** Finnish (suomi)
@@ -291,6 +295,7 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  * @author Slamduck
  * @author Verdy p
@@ -320,9 +325,10 @@ $messages['fr'] = array(
 	'multilookuplastedithdr' => 'Dernière modification',
 	'multilookuprecordspager' => "Affichage des enregistrements '''$1''' à '''$2''' sur '''$3'''.",
 	'right-multilookup' => 'Rechercher des informations sur les utilisateurs dans plusieurs wikis',
+	'action-multilookup' => 'rechercher des informations sur les utilisateurs dans plusieurs wikis',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -350,26 +356,37 @@ $messages['gl'] = array(
 	'multilookuplastedithdr' => 'Última edición',
 	'multilookuprecordspager' => "Mostrando os rexistros do '''$1''' ao '''$2''' dun total de '''$3'''.",
 	'right-multilookup' => 'Procurar información sobre usuarios en varios wikis',
+	'action-multilookup' => 'procurar información sobre usuarios en varios wikis',
 );
 
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'specialmultiplelookup-desc' => 'Lehetővé teszi felhasználói információk több wikin történő keresését',
+	'multilookupselectuser' => 'Azonos IP-címmel rendelkező felhasználók keresése több wikin',
 	'multilookupgo' => 'Menj',
+	'multilookupnotspecify' => 'Nem adtál meg IP-címet.',
 	'multilookupnext' => 'következő',
 	'multilookupprevious' => 'előző',
 	'multilookupnbrresult' => 'Találatok száma:',
 	'multilookupinvalidresults' => 'Érvénytelen eredmények!',
 	'multilookupnoresultfound' => 'Nincs találat!',
 	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'közreműködési oldal',
 	'multilookupdetails' => 'Részletek megtekintése',
+	'multilookuplistwikiainfo' => 'Azon wikik listája, amelyeken a megadott IP-címmel rendelkező felhasználók szerkesztettek: <b>$1</b>',
+	'multilookupinvaliduser' => '<p class="error">Nem létezik "<b>$1</b>" IP-cím. Ellenőrizd, nincs-e gépelési hiba a megadott IP-címben.</p>',
+	'multilookuplastedit' => 'Utolsó szerkesztés erről az IP-címről:',
 	'multilookupwikidbname' => 'Adatbázisnév',
 	'multilookupwikiurl' => 'URL-cím',
 	'multilookupwikititle' => 'Cím',
 	'multilookupwikioptions' => 'Beállítások',
 	'multilookuplastedithdr' => 'Legutolsó szerkesztés',
+	'multilookuprecordspager' => "'''$1'''-tól '''$2'''-ig az összesen '''$3''' feljegyzésből",
+	'right-multilookup' => 'Információk keresése felhasználókról több wikin át',
 );
 
 /** Interlingua (interlingua)
@@ -400,6 +417,7 @@ $messages['ia'] = array(
 	'multilookuplastedithdr' => 'Ultime modification',
 	'multilookuprecordspager' => "Monstra lineas '''$1''' a '''$2''' de '''$3'''.",
 	'right-multilookup' => 'Cercar information super usatores in multiple wikis',
+	'action-multilookup' => 'cercar information super usatores in multiple wikis',
 );
 
 /** Ingush (ГӀалгӀай)
@@ -492,6 +510,7 @@ $messages['mk'] = array(
 	'multilookuplastedithdr' => 'Последно уредување',
 	'multilookuprecordspager' => "Прикажувам '''$1''' до '''$2''' од вкупно '''$3''' записи.",
 	'right-multilookup' => 'Преглед на информации за корисници во повеќе викија',
+	'action-multilookup' => 'проверка на информации за корисници на повеќе викија наеднаш',
 );
 
 /** Malay (Bahasa Melayu)
@@ -522,6 +541,7 @@ $messages['ms'] = array(
 	'multilookuplastedithdr' => 'Suntingan terkini',
 	'multilookuprecordspager' => "Menunjukkan '''$1''' hingga '''$2''' daripada '''$3''' rekod.",
 	'right-multilookup' => 'Cari maklumat pengguna di pelbagai wiki',
+	'action-multilookup' => 'cari maklumat pengguna di berbilang wiki',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -566,6 +586,7 @@ $messages['nb'] = array(
 	'multilookuplastedithdr' => 'Sist redigert',
 	'multilookuprecordspager' => "Viser '''$1''' til '''$2''' av '''$3''' oppføringer.",
 	'right-multilookup' => 'Slå opp informasjon om brukere på flere wikier',
+	'action-multilookup' => 'slå opp informasjon om brukere på flere wikier',
 );
 
 /** Dutch (Nederlands)
@@ -597,6 +618,7 @@ Controleer het opgegeven IP-adres; mogelijk hebt u een invoerfout gemaakt.</p>',
 	'multilookuplastedithdr' => 'Laatste bewerking',
 	'multilookuprecordspager' => "Resultaten '''$1''' tot '''$2''' van '''$3''' worden weergegeven.",
 	'right-multilookup' => "Gebruikersinformatie in meerdere wiki's opzoeken",
+	'action-multilookup' => "gegevens over gebruikers op meerdere wiki's opzoeken",
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -622,12 +644,13 @@ $messages['pfl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'specialmultiplelookup-desc' => 'Jednoczesne wyszukiwanie użytkownika w wielu wiki',
-	'multilookup' => 'Wyszukaj w wielu wiki',
-	'multilookupstitle' => 'Wyszukiwanie w wielu wiki',
+	'specialmultiplelookup-desc' => 'Jednoczesne wyszukiwanie użytkownika na wielu wiki',
+	'multilookup' => 'Wyszukaj na wielu wiki',
+	'multilookupstitle' => 'Wyszukiwanie na wielu wiki',
 	'multilookupselectuser' => 'Wyszukaj konta o tym samym adresie IP na wielu wiki',
 	'multilookupgo' => 'Dalej',
 	'multilookupnotspecify' => 'Nie podano jeszcze adresu IP.',
@@ -637,18 +660,19 @@ $messages['pl'] = array(
 	'multilookupinvalidresults' => 'Nieprawidłowe wyniki!',
 	'multilookupnoresultfound' => 'Nie znaleziono żadnych wyników!',
 	'multilookupwiki' => 'Wiki',
-	'multilookuplink' => 'Link do wkładu',
+	'multilookuplink' => 'Link do edycji',
 	'multilookupdetails' => 'Pokaż szczegóły',
-	'multilookuplistwikiainfo' => 'Lista stron Wiki, na których były wykonywane edycje przez użytkowników z adresu IP <b>$1</b>',
+	'multilookuplistwikiainfo' => 'Lista wiki, na których były wykonywane edycje przez użytkowników z adresu IP <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">Adres IP „<b>$1</b>“ nie istnieje. Sprawdź czy w podanym adresie IP nie ma literówki.</p>',
 	'multilookuplastedit' => 'Ostatnia edycja z tego adresu IP',
-	'multilookupwikidbname' => 'Nazwa DB',
+	'multilookupwikidbname' => 'Nazwa bazy danych',
 	'multilookupwikiurl' => 'Adres URL',
 	'multilookupwikititle' => 'Tytuł',
 	'multilookupwikioptions' => 'Opcje',
 	'multilookuplastedithdr' => 'Ostatnia edycja',
-	'multilookuprecordspager' => "Pokazano od '''$1''' do '''$2''' z '''$3''' recordów.",
+	'multilookuprecordspager' => "Pokazano od '''$1''' do '''$2''' z '''$3''' wpisów.",
 	'right-multilookup' => 'Wyszukiwanie informacji o użytkowniku na wielu wiki',
+	'action-multilookup' => 'Szukaj informacji o użytkownikach na wielu wiki',
 );
 
 /** Piedmontese (Piemontèis)
@@ -799,6 +823,7 @@ $messages['ru'] = array(
 	'multilookuplastedithdr' => 'Последняя правка',
 	'multilookuprecordspager' => "Показано от '''$1''' до '''$2''' из '''$3''' записей.",
 	'right-multilookup' => 'просмотр сведений об участниках в нескольких вики',
+	'action-multilookup' => 'просмотр сведений об участниках в нескольких вики',
 );
 
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
@@ -901,6 +926,7 @@ $messages['tl'] = array(
 	'multilookuplastedithdr' => 'Huling pagbago',
 	'multilookuprecordspager' => "Ipinapakita ang '''$1''' hanggang '''$2''' ng '''$3''' mga rekord.",
 	'right-multilookup' => 'Kabatirang panghanap sa mga tagagamit na nasa maramihang mga wiki',
+	'action-multilookup' => 'tumingin ng kabatiran hinggil sa mga tagagamit sa loob ng maramihang mga wiki',
 );
 
 /** толышә зывон (толышә зывон)

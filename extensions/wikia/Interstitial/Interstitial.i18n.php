@@ -108,7 +108,7 @@ $messages['fr'] = array(
 	'exitstitial-button' => 'Ignorer cette annonce',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -129,6 +129,7 @@ $messages['hu'] = array(
 	'interstitial-default-campaign-code' => 'A Wikia szeret téged!',
 	'interstitial-skip-ad' => 'Hirdetés átugrása',
 	'interstitial-already-logged-in-no-link' => 'Már bejelentkeztél és nincs cél beállítva.',
+	'interstitial-disabled-no-link' => 'Nincsen cél megadva, és az oldalközi hirdetések nem engedélyezettek ezen a wikin.',
 	'interstitial-link-away' => 'Itt nincs semmi látnivaló!<br /><br />Szeretnél a [[{{MediaWiki:Mainpage}}|főoldalra]] vagy egy [[Special:Random|véletlenszerű oldalra]] menni?',
 	'exitstitial-register' => '<a href="#" class="register">Regisztrálj</a> vagy <a href="#" class="login">lépj be</a> a hirdetések átugrásához.',
 	'exitstitial-button' => 'Hirdetés átugrása',
@@ -225,7 +226,7 @@ $messages['pl'] = array(
 	'interstitial-already-logged-in-no-link' => 'Jesteś już zalogowany i nie ustawiono lokalizacji docelowej.',
 	'interstitial-disabled-no-link' => 'Nie ustawiono docelowej lokalizacji a strony pośrednie nie są włączone na tej wiki.',
 	'interstitial-link-away' => 'Nie ma tu nic do oglądania! <br /><br />Może chcesz zobaczyć [[{{MediaWiki:Mainpage}}|Stronę główną]] lub [[Special:Random|losową stronę]]?',
-	'exitstitial-register' => '<a href="#" class="register">Zarejestruj się</a> lub <a href="#" class="login">zaloguj</a> żeby pomijać reklamy.',
+	'exitstitial-register' => '<a href="#" class="register">Zarejestruj się</a> lub <a href="#" class="login">zaloguj</a> żeby ominąć reklamy.',
 	'exitstitial-button' => 'Pomiń reklamę',
 );
 

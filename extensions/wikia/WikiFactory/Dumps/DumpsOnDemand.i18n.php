@@ -60,7 +60,7 @@ $messages['ar'] = array(
 	'dump-database-info-more' => 'الرجاء <a href="http://community.wikia.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -296,7 +296,7 @@ $messages['fr'] = array(
 	'dump-database-info-more' => 'Voyez <a href="http://community.wikia.com/wiki/Help:Database_download">ceci</a> pour plus d\'informations',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -428,7 +428,7 @@ $messages['kn'] = array(
 	'dump-database-info-more' => 'ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ <a href="http://community.wikia.com/wiki/Help:Database_download">ನೋಡಿ</a>',
 );
 
-/** Karachay-Balkar (Къарачай-Малкъар)
+/** Karachay-Balkar (къарачай-малкъар)
  * @author Къарачайлы
  */
 $messages['krc'] = array(
@@ -470,6 +470,18 @@ $messages['mk'] = array(
 	'dump-database-request-already-submitted' => 'Базната резерва е побарана неодамна (пред помалку од 7 дена)',
 	'dump-database-request-requested' => 'Барањето за базната резерва е испратено',
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Погледајте тука</a> за повеќе информации',
+);
+
+/** Marathi (मराठी)
+ * @author Sau6402
+ */
+$messages['mr'] = array(
+	'dump-database-curr-pages' => 'सध्याची पाने',
+	'dump-database-full-pages' => 'सध्याची पाने आणि इतिहास',
+	'dump-database-full-pages-info' => '(चेतावणी:हि संचिका मोठी असु शकते)',
+	'dump-database-request' => 'सुधारित आवृत्तीची विनंती',
+	'dump-database-request-submit' => 'मागणी पाठवा',
+	'dump-database-info-more' => 'कृपया अधिक माहितीसाठी हे<a href="http://community.wikia.com/wiki/Help:Database_download">पाहा</a>',
 );
 
 /** Malay (Bahasa Melayu)

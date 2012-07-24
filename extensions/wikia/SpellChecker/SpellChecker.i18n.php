@@ -155,7 +155,7 @@ $messages['fr'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Suggestions d’orthographe pour « $1 » : $2',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -175,10 +175,13 @@ $messages['gl'] = array(
 /** Hungarian (magyar)
  * @author Dani
  * @author Misibacsi
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'enablespellchecker' => 'Helyesírás&ndash;ellenőrzés engedélyezése vizuális módban',
 	'spellchecker-info' => 'Helyesírás-ellenőrző információ',
 	'spellchecker-info-languages' => 'Elérhető nyelvek ($1)',
+	'spellchecker-info-provider' => 'Szolgáltató',
 	'spellchecker-info-dictionaries' => 'Rendelkezésre álló szótárak',
 	'spellchecker-info-spellcheck-text' => 'Ellenőrzendő szöveg',
 	'spellchecker-info-spellcheck-languages' => 'Nyelv',
@@ -304,9 +307,10 @@ $messages['nl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
-	'spellchecker-desc' => 'Zapewnia interfejs sprawdzania pisowni dla modułu PHP enchant',
+	'spellchecker-desc' => 'Udostępnia interfejs sprawdzania pisowni dla modułu PHP enchant',
 	'enablespellchecker' => 'Włącz sprawdzenie pisowni w trybie wizualnym',
 	'spellchecker-info' => 'Informacje sprawdzania pisowni',
 	'spellchecker-info-languages' => 'Dostępne języki ($1)',
@@ -405,6 +409,7 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
  * @author Ravichandra
  * @author Veeven
  */
@@ -412,7 +417,7 @@ $messages['te'] = array(
 	'spellchecker-info-languages' => 'అందుబాటులో ఉన్న భాషలు ($1)',
 	'spellchecker-info-dictionaries' => 'అందుబాటులో ఉన్న నిఘంటువులు',
 	'spellchecker-info-spellcheck-languages' => 'భాష',
-	'spellchecker-info-spellcheck-submit' => 'అక్షరక్రమ తనిఖీ',
+	'spellchecker-info-spellcheck-submit' => 'అక్షరక్రమ సరిజూపు',
 );
 
 /** Tagalog (Tagalog)

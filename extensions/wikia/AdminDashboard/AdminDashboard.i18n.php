@@ -103,6 +103,17 @@ $messages['qqq'] = array(
 	'admindashboard-control-multiple-upload-tooltip' => 'tooltip/hover describing special:multipleupload',
 );
 
+/** Magyar (magázó) (Magyar (magázó))
+ * @author TK-999
+ */
+$messages['hu-formal'] = array(
+	'admindashboard-control-theme-designer-tooltip' => 'A tématervezővel megváltoztathatja a wiki színeit, hátterét és még sok mást.',
+	'admindashboard-control-user-list-tooltip' => 'A wikin részt vett felhasználók listájának megtekintése',
+	'admindashboard-control-user-rights-tooltip' => 'A wikin résztvevő felhasználók jogainak módosítása.',
+	'admindashboard-control-community-corner-tooltip' => 'Változtassa meg a wikid közösségi sarkát a felhasználók figyelmének felhívására.',
+	'admindashboard-control-add-blog-tooltip' => 'Blogbejegyzés hozzáadása a wikihez.',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author ترجمان05
@@ -144,6 +155,24 @@ $messages['ar'] = array(
 	'admindashboard-control-add-photo-tooltip' => 'أضف صورا جديدة إلى الويكي الخاص بك.',
 	'admindashboard-control-multiple-upload-label' => 'أضف صورا متعددة',
 	'admindashboard-back-to-dashboard' => 'العودة إلى لوحة التحكم',
+);
+
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'admindashboard-toolbar-link' => 'প্ৰশাসক',
+	'admindashboard-tab-advanced' => 'উচ্চতৰ',
+	'admindashboard-tab-general' => 'সাধাৰণ',
+	'admindashboard-controls-wiki-header' => 'ৱিকি',
+	'admindashboard-control-recent-changes-label' => 'শেহতীয়া সাল-সলনি',
+	'admindashboard-controls-community-header' => 'সম্প্ৰদায়',
+	'admindashboard-control-user-list-label' => 'সদস্য তালিকা',
+	'admindashboard-control-invite-label' => 'নিমন্ত্ৰণ',
+	'admindashboard-control-help-label' => 'সহায়',
+	'admindashboard-control-help-tooltip' => 'সাহায্য সন্ধান',
+	'admindashboard-control-categories-list-label' => 'সকলোবোৰ শ্ৰেণী',
+	'admindashboard-control-add-photo-label' => 'চিত্ৰ যোগ কৰক',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -529,7 +558,7 @@ $messages['fr'] = array(
 	'admindashboard-back-to-dashboard' => 'Retour au tableau de bord',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -580,11 +609,26 @@ $messages['gl'] = array(
  * @author Amire80
  * @author Deror avi
  * @author Ofekalef
+ * @author Yova
  */
 $messages['he'] = array(
+	'admindashboard-toolbar-link' => 'מפעיל מערכת',
+	'admindashboard-tab-advanced' => 'Cמתקדם',
+	'admindashboard-tab-general' => 'כללי',
 	'admindashboard-controls-wiki-header' => 'ויקי',
+	'admindashboard-control-theme-designer-label' => 'מעצב ערכות נושא',
+	'admindashboard-control-theme-designer-tooltip' => 'מעצב ערכות הנושא מאפשר לך להתאים אישית את הצבעים, הרקע ודברים נוספים בוויקי שלך.',
 	'admindashboard-control-recent-changes-label' => 'שינויים אחרונים',
+	'admindashboard-control-recent-changes-tooltip' => '"שינויים אחרונים" מציג את כלל השינויים שנעשו בוויקי שלך בזמן נתון.',
 	'admindashboard-controls-community-header' => 'קהילה',
+	'admindashboard-control-user-list-label' => 'רשימת משתמשים',
+	'admindashboard-control-user-list-tooltip' => 'צפה ברשימה מלאה של כל המשתמשים שהשתתפו בבניית הוויקי שלך.',
+	'admindashboard-control-user-rights-label' => 'הרשאות משתמש',
+	'admindashboard-control-user-rights-tooltip' => 'הוספה והסרה של הרשאות למשתמשים בוויקי שלך.',
+	'admindashboard-control-group-rights-label' => 'הרשאות קבוצה',
+	'admindashboard-control-group-rights-tooltip' => 'סקירה של ההרשאות לקבוצות המשתמשים השונות.',
+	'admindashboard-control-invite-label' => 'הזמנה',
+	'admindashboard-control-invite-tooltip' => 'תזמין/י אנשים אחרים להשתמש בוויקי זו.',
 	'admindashboard-control-help-label' => 'עזרה',
 	'admindashboard-control-help-tooltip' => 'למציאת עזרה.',
 	'admindashboard-control-community-corner-label' => 'שער הקהילה',
@@ -607,12 +651,13 @@ $messages['he'] = array(
  */
 $messages['hu'] = array(
 	'admindashboard-title' => '{{SITENAME}} Műszerfal',
+	'admindashboard-header' => 'Adminisztrációs panel',
 	'admindashboard-toolbar-link' => 'Adminisztrátor',
 	'admindashboard-tab-advanced' => 'Részletes',
 	'admindashboard-tab-general' => 'Általános',
 	'admindashboard-controls-wiki-header' => 'Wiki',
-	'admindashboard-control-theme-designer-label' => 'Tématervező',
-	'admindashboard-control-theme-designer-tooltip' => 'A tématervezővel megváltoztathtod a wikid színeit, hátterét és még sok mást.',
+	'admindashboard-control-theme-designer-label' => 'Stílustervező',
+	'admindashboard-control-theme-designer-tooltip' => 'A stílustervezővel megváltoztathtod a wikid színeit, hátterét és még sok mást.',
 	'admindashboard-control-recent-changes-label' => 'Friss változtatások',
 	'admindashboard-control-recent-changes-tooltip' => 'A "Friss változtatások" oldal megjeleníti a wikin zajlott összes változást az idő függvényében.',
 	'admindashboard-control-top-navigation-label' => 'Navigáció',
@@ -745,16 +790,17 @@ $messages['id'] = array(
  * @author Beta16
  * @author Karika
  * @author Lexaeus 94
+ * @author Minerva Titani
  * @author Ximo17
  */
 $messages['it'] = array(
 	'admindashboard-title' => 'Cruscotto di {{SITENAME}}',
-	'admindashboard-header' => "Cruscotto dell'amministratore",
+	'admindashboard-header' => 'Pannello di controllo Admin',
 	'admindashboard-toolbar-link' => 'Amministratore',
 	'admindashboard-tab-advanced' => 'Avanzato',
 	'admindashboard-tab-general' => 'Generale',
 	'admindashboard-controls-wiki-header' => 'Wiki',
-	'admindashboard-control-theme-designer-label' => 'Designer di Temi',
+	'admindashboard-control-theme-designer-label' => 'Theme designer',
 	'admindashboard-control-theme-designer-tooltip' => 'Il Designer di Temi ti permette di personalizzare sul tuo wiki i colori, lo sfondo e tanto altro.',
 	'admindashboard-control-recent-changes-label' => 'Ultime modifiche',
 	'admindashboard-control-recent-changes-tooltip' => 'Modifiche Recenti mostra tutte le modifiche apportate sul tuo wiki un una cronologia singola.',
@@ -947,6 +993,7 @@ $messages['lt'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'admindashboard-loading' => 'Вчитувам...',
 	'admindashboard-title' => 'Табла на {{SITENAME}}',
 	'admindashboard-header' => 'Администраторска табла',
 	'admindashboard-toolbar-link' => 'Админ',
@@ -1142,6 +1189,13 @@ $messages['pfl'] = array(
 	'admindashboard-controls-wiki-header' => 'Wiki',
 );
 
+/** Pali (पाळि)
+ * @author Anand Vivek Satpathi
+ */
+$messages['pi'] = array(
+	'admindashboard-controls-wiki-header' => 'विकि',
+);
+
 /** Polish (polski)
  * @author Cloudissimo
  * @author Sovq
@@ -1201,6 +1255,7 @@ $messages['ps'] = array(
 	'admindashboard-tab-advanced' => 'پرمختللی',
 	'admindashboard-tab-general' => 'ټولګړی',
 	'admindashboard-controls-wiki-header' => 'ويکي',
+	'admindashboard-control-recent-changes-label' => 'وروستي بدلونونه',
 	'admindashboard-controls-community-header' => 'ټولنه',
 	'admindashboard-control-user-list-label' => 'د کارن لړليک',
 	'admindashboard-control-user-rights-label' => 'د کارن رښتې',
@@ -1466,6 +1521,7 @@ $messages['te'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'admindashboard-loading' => 'Ikinakarga…',
 	'admindashboard-title' => 'Tapalodo ng {{SITENAME}}',
 	'admindashboard-header' => 'Tapalodo ng Tagapangasiwa',
 	'admindashboard-toolbar-link' => 'Tagapangasiwa',
@@ -1630,7 +1686,7 @@ $messages['uk'] = array(
 	'admindashboard-back-to-dashboard' => 'Повернутися до Панелі керування',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

@@ -100,7 +100,7 @@ $messages['be'] = array(
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 статыстыка]',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
@@ -332,7 +332,7 @@ $messages['fr'] = array(
 	'textregex-return-mainpage' => '[{{SERVER}}$1 revenir à la liste]',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -367,25 +367,37 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'textregex' => 'Szövegbeli regex',
+	'textregex-desc' => 'Nem kívánt kifejezések [[Special:textregex/XXXX|szűrése]] a szerkesztett oldalakon, reguláris kifejezések alkalmazásával',
 	'textregex-page-title' => 'Nemkívánatos kifejezések listája',
+	'textregex-error-unblocking' => 'Hiba történt a(z) ($1) blokkolásának megszüntetése közben.
+Próbáld meg újra.',
 	'textregex-currently-blocked' => "'''Jelenleg blokkolt kifejezések:'''",
 	'textregex_nocurrently-blocked' => 'Nem találhatóak blokkolt kifejezések',
 	'textregex-addedby-user' => 'hozzáadta $1 ekkor: $2',
+	'textregex-remove-url' => '[{{SERVER}}$1&id=$2 eltávolítás]',
+	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 statisztikák]',
 	'textregex-unblock-succ' => 'A blokk feloldása sikeres',
 	'textregex-block-succ' => 'A blokk sikeres',
+	'textregex-unblock-message' => "A(z) '''$1''' kifejezést eltávolítottuk a nemkívánatos kifejezések közül.",
+	'textregex-block-message' => "A(z) '''$1''' kifejezés bekerült a nemkívánatos kifejezések közé.",
 	'textregex-regex-block' => 'Blokkolandó kifejezés:',
 	'textregex-submit-regex' => 'Reguláris kifejezés hozzáadása',
 	'textregex-empty-regex' => 'Adj meg egy megfelelő blokkolandó kifejezést.',
 	'textregex-invalid-regex' => 'Érvénytelen reguláris kifejezés.',
 	'textregex-already-added' => '„$1” már hozzáadva',
 	'textregex-nodata-found' => 'Nem található adat',
+	'textregex-stats-record' => "a(z) ''$1'' szót $2 használta a(z) $3 lapon (''megjegyzés: $4'')",
 	'textregex-select-subpage' => 'Válassz egyet a reguláris kifejezések listájából:',
 	'textregex-select-default' => '–– kiválasztás ––',
 	'textregex-create-subpage' => 'vagy új lista készítése:',
 	'textregex-select-regexlist' => 'ugrás a listára',
 	'textregex-invalid-regexid' => 'Érvénytelen reguláris kifejezés azonosító',
+	'textregex-phrase-statistics' => "Statisztikák a(z) \"'''\$1'''\" kifejezésre (előfordulások száma: \$2)",
+	'textregex-return-mainpage' => '[{{SERVER}}$1 visszatérés a listához]',
 );
 
 /** Interlingua (interlingua)
@@ -599,6 +611,7 @@ Probeer het opnieuw.',
 );
 
 /** Polish (polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -620,7 +633,7 @@ Spróbuj jeszcze raz.',
 	'textregex-submit-regex' => 'Dodaj wyrażenie',
 	'textregex-empty-regex' => 'Podaj wyrażenie do zablokowania.',
 	'textregex-invalid-regex' => 'Nieprawidłowe wyrażenie regularne.',
-	'textregex-already-added' => '„$1” jest już zablokowane',
+	'textregex-already-added' => '„$1” jest już dodane',
 	'textregex-nodata-found' => 'Nie odnaleziono danych',
 	'textregex-stats-record' => "słowo ''$1'' zostało użyte przez $2 o $3 (''komentarz – $4'')",
 	'textregex-select-subpage' => 'Wybierz jedną z list wyrażeń',

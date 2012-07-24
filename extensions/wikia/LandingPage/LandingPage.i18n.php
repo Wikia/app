@@ -152,7 +152,7 @@ $messages['fr'] = array(
 	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia?uselang=fr',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  * @author Xanocebreiro
  */
@@ -200,7 +200,7 @@ $messages['id'] = array(
 	'landingpage-buttons-learn-more' => 'Selengkapnya &gt;',
 );
 
-/** Kazakh (Cyrillic script) (‪Қазақша (кирил)‬)
+/** Kazakh (Cyrillic script) (‪қазақша (кирил)‬)
  * @author MrKarahanly
  */
 $messages['kk-cyrl'] = array(
@@ -226,6 +226,7 @@ $messages['ksh'] = array(
 	'landingpage-start-exploring' => 'Wells De erömloore?',
 	'landingpage-start-exploring-text' => 'Söhk noh Dinge leevste Saache udder blädder onge en de Jemeinschaff ier Favoritte.',
 	'landingpage-readfaq' => 'Häs De Froore? Liß uns Sigg met öff jeshtallte Froore &gt;',
+	'landingpage-text' => 'Bei Wikia kanns De <strong>met ander Lück zesamme kumme</strong>, di desällve <strong>Leideschaffte un Enträße</strong> wi Do han. Fengk Ding Jropp, maach Aanmärkonge und Änderonge, Do kanns esujaa <strong>Ding eije Websait</strong> opboue udder en eije Jemeinschaff aanfange.',
 	'landingpage-buttons-learn-more' => 'Mieh eruß fenge &gt;',
 );
 
@@ -317,10 +318,10 @@ $messages['nl-informal'] = array(
  */
 $messages['pl'] = array(
 	'landingpage' => 'Witamy na Wikii',
-	'landingpage-start-exploring' => 'Gotowy do przeglądania?',
+	'landingpage-start-exploring' => 'Gotów na przeglądanie?',
 	'landingpage-start-exploring-text' => 'Poszukaj wybranego tematu lub przejrzyj najczęściej wyszukiwane.',
 	'landingpage-readfaq' => 'Masz pytania? Przejrzyj nasz FAQ &gt;',
-	'landingpage-text' => 'Na Wikii można <strong>komunikować się z innymi osobami</strong> dzielącymi Twoje <strong>pasje i zainteresowania</strong>. Znajdź swoją społeczność, komentuj i edytuj, czy nawet <strong>załóż własną stronę</strong> i społeczność.',
+	'landingpage-text' => 'Na Wikii można <strong>komunikować się z innymi osobami</strong> dzielącymi Twoje <strong>pasje i zainteresowania</strong>. Znajdź swoją społeczność, komentuj i edytuj, a nawet <strong>utwórz własną stronę</strong> i społeczność.',
 	'landingpage-buttons-learn-more' => 'Dowiedz się więcej &gt;',
 	'landingpage-buttons-about-wikia-url' => 'http://www.community.wikia.com/wiki/About_Wikia?uselang=pl',
 );
@@ -415,6 +416,10 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'landingpage' => 'Maligayang Pagdating sa Wikia',
+	'landingpage-start-exploring' => 'Nakahanda nang magsimulang manggalugad?',
+	'landingpage-start-exploring-text' => 'Hanapin ang paborito mong paksa o tumingin-tingin ng ilang mga paborito ng pamayanan na nasa ibaba.',
+	'landingpage-readfaq' => 'May mga katanungan? Basahin ang aming Mga Malimit Itanong &gt;',
+	'landingpage-text' => "Sa Wikia ay maaari kang <strong>makipag-ugnayan sa mga tao</strong> na makikisalamuha sa iyong mga <strong>mga kahumalingan at mga kinawiwilihan</strong>. Hanapin ang pangkat mo, gumawa ng mga puna at mga pamamatnugot, kahi't na ang <strong>magsimula ng sarili mong pook sa sangkasaputan</strong> at pamayanan.",
 	'landingpage-buttons-learn-more' => 'Umalam ng marami pa &gt;',
 );
 

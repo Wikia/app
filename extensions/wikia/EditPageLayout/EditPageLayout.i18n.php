@@ -99,6 +99,7 @@ $messages['en'] = array(
  * @author Claudia Hattitten
  * @author McDutchie
  * @author Siebrand
+ * @author TK-999
  */
 $messages['qqq'] = array(
 	'editpagelayout-helpLink-url' => 'See interwiki links (below categories) on http://help.wikia.com/wiki/Help:Editing for eventually an appropiate page name. {{doc-important|Do not change the "<tt>Help:</tt>" part.}}',
@@ -108,7 +109,11 @@ $messages['qqq'] = array(
 	'editpagelayout-pageControls-summaryLabel' => 'This is the default text in the entry field for the edit summary. It disappears when you click on the edit field to make room for typing the summary. This message should probably be translated in the imperative rather than in the infinitive.',
 	'editpagelayout-edit-summary-label' => "Label that appears above the input for summarizing the edit you're making.",
 	'editpagelayout-subject-headline-label' => "When you add a section to an existing page, this is the label that appears above the input to add a subject or headline to the section you're adding.",
+	'wikia-editor-media-image' => 'Label for edit page button that brings up a mini upload interface',
+	'wikia-editor-media-gallery' => 'Label for edit page button that brings up the Gallery Builder',
+	'wikia-editor-media-slideshow' => 'Label for edit page button that brings up the Slideshow Builder',
 	'wikia-editor-media-slider' => 'This refers to a special kind of slideshow which is intended for the main page. See http://help.wikia.com/wiki/Help:Galleries_and_slideshows#Creating_a_main_page_slider.',
+	'wikia-editor-media-video' => 'Label for edit page button that brings up the video upload wizard',
 	'wikia-editor-source-bold-tooltip' => 'Tooltip for the button used to bold text in source mode.',
 	'wikia-editor-source-italic-tooltip' => 'Tooltip for the button used to italicize text in source mode.',
 	'wikia-editor-source-link-tooltip' => 'Tooltip for the button used to add a link in source mode.',
@@ -369,6 +374,7 @@ $messages['cs'] = array(
  * @author LWChris
  * @author MF-Warburg
  * @author MtaÄ
+ * @author PtM
  * @author SVG
  * @author Tiin
  */
@@ -399,11 +405,13 @@ $messages['de'] = array(
 	'wikia-editor-media-slideshow' => 'Diashow',
 	'wikia-editor-media-slider' => 'Slider',
 	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Video',
 	'wikia-editor-media-image-tooltip' => 'Foto hinzufügen',
 	'wikia-editor-media-gallery-tooltip' => 'Galerie hinzufügen',
 	'wikia-editor-media-slideshow-tooltip' => 'Diashow hinzufügen',
 	'wikia-editor-media-slider-tooltip' => 'Slider hinzufügen',
 	'wikia-editor-media-video-tooltip' => 'Video hinzufügen',
+	'wikia-editor-media-mut-tooltip' => 'Video hinzufügen (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Fett',
 	'wikia-editor-source-italic-tooltip' => 'Kursiv',
 	'wikia-editor-source-link-tooltip' => 'Link hinzufügen',
@@ -457,7 +465,15 @@ $messages['de-formal'] = array(
 	'restore-edits-diff-notice' => "Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die Sie nicht veröffentlicht hatten. Allerdings ist seitdem die Seite aktualisiert worden. Was möchten Sie tun?: <a class='notice-action restoreeditlink'>Meine Änderungen verwerfen und mit der aktuellen Textversion beginnen</a> oder <a class='notice-action difflink'>einen Vergleich der Änderungen mit der aktuellen Seite ansehen.</a>",
 );
 
+/** Zazaki (Zazaki)
+ * @author Mirzali
+ */
+$messages['diq'] = array(
+	'editpagelayout-blocked-user' => 'Nameyê karberi ya zi adresa IPê şıma kılit biya.',
+);
+
 /** Spanish (español)
+ * @author Armando-Martin
  * @author Benfutbol10
  * @author Ciencia Al Poder
  * @author DJ Nietzsche
@@ -490,11 +506,13 @@ $messages['es'] = array(
 	'wikia-editor-media-slideshow' => 'Presentación de diapositivas',
 	'wikia-editor-media-slider' => 'Deslizador',
 	'wikia-editor-media-video' => 'Vídeo',
+	'wikia-editor-media-mut' => 'Vídeo',
 	'wikia-editor-media-image-tooltip' => 'Añadir imagen',
 	'wikia-editor-media-gallery-tooltip' => 'Añadir galería',
 	'wikia-editor-media-slideshow-tooltip' => 'Añadir presentación',
 	'wikia-editor-media-slider-tooltip' => 'Añadir diapositiva',
 	'wikia-editor-media-video-tooltip' => 'Añadir vídeo',
+	'wikia-editor-media-mut-tooltip' => 'Añadir vídeo (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Negrita',
 	'wikia-editor-source-italic-tooltip' => 'Itálica',
 	'wikia-editor-source-link-tooltip' => 'Añadir enlace',
@@ -631,11 +649,13 @@ $messages['fr'] = array(
 	'wikia-editor-media-slideshow' => 'Diaporama',
 	'wikia-editor-media-slider' => 'Carrousel',
 	'wikia-editor-media-video' => 'Vidéo',
+	'wikia-editor-media-mut' => 'Vidéo',
 	'wikia-editor-media-image-tooltip' => 'Ajouter une image',
 	'wikia-editor-media-gallery-tooltip' => 'Ajouter une galerie',
 	'wikia-editor-media-slideshow-tooltip' => 'Ajouter un diaporama',
 	'wikia-editor-media-slider-tooltip' => 'Ajouter un carrousel',
 	'wikia-editor-media-video-tooltip' => 'Ajouter une vidéo',
+	'wikia-editor-media-mut-tooltip' => 'Ajouter une vidéo (version bêta)',
 	'wikia-editor-source-bold-tooltip' => 'Gras',
 	'wikia-editor-source-italic-tooltip' => 'Italique',
 	'wikia-editor-source-link-tooltip' => 'Ajouter un lien',
@@ -680,7 +700,7 @@ $messages['fr'] = array(
 	'tog-forceeditsummary' => 'M’avertir si je n’ai laissé aucun résumé de modification',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -710,11 +730,13 @@ $messages['gl'] = array(
 	'wikia-editor-media-slideshow' => 'Presentación de diapositivas',
 	'wikia-editor-media-slider' => 'Presentador de diapositivas',
 	'wikia-editor-media-video' => 'Vídeo',
+	'wikia-editor-media-mut' => 'Vídeo',
 	'wikia-editor-media-image-tooltip' => 'Engadir unha foto',
 	'wikia-editor-media-gallery-tooltip' => 'Engadir unha galería',
 	'wikia-editor-media-slideshow-tooltip' => 'Engadir unha presentación de diapositivas',
 	'wikia-editor-media-slider-tooltip' => 'Engadir un presentador de diapositivas',
 	'wikia-editor-media-video-tooltip' => 'Engadir un vídeo',
+	'wikia-editor-media-mut-tooltip' => 'Engadir un vídeo (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Negra',
 	'wikia-editor-source-italic-tooltip' => 'Cursiva',
 	'wikia-editor-source-link-tooltip' => 'Engadir unha ligazón',
@@ -837,11 +859,72 @@ $messages['hu'] = array(
 	'editpagelayout-notificationsLink-none' => 'Értesítések',
 	'editpagelayout-edit-title' => 'Cím szerkesztése',
 	'editpagelayout-edit-info' => 'Adatok szerkesztése',
+	'editpagelayout-diff-header' => 'A különbségek ([[{{MediaWiki:Editpagelayout-diff-header-url}}|segítség]])',
 	'editpagelayout-myedit-header' => 'Ez a szerkesztésed. Másold át változtatásaidat a fenti szövegdobozba!',
 	'editpagelayout-captcha-title' => 'Captcha',
 	'editpagelayout-pageControls-pageLink' => 'Vissza az oldalra',
 	'editpagelayout-pageControls-minorEdit' => 'Apró szerkesztés',
 	'editpagelayout-pageControls-summaryLabel' => 'Szerkesztés összefoglalása',
+	'editpagelayout-pageControls-newSectionLabel' => 'Címsor hozzáadása',
+	'editpagelayout-pageControls-back' => 'Vissza a szerkesztőhöz',
+	'editpagelayout-pageControls-changes' => 'Változások',
+	'editpagelayout-blocked-user' => 'A felhasználónevedet vagy IP-címedet blokkolták',
+	'editpagelayout-edit-summary-label' => 'Szerkesztés összefoglalása',
+	'editpagelayout-subject-headline-label' => 'Tárgy/címsor:',
+	'wikia-editor-media-image' => 'Kép',
+	'wikia-editor-media-gallery' => 'Képgaléria',
+	'wikia-editor-media-slideshow' => 'Diavetítés',
+	'wikia-editor-media-slider' => 'Csúszka',
+	'wikia-editor-media-video' => 'Videó',
+	'wikia-editor-media-mut' => 'Videó',
+	'wikia-editor-media-image-tooltip' => 'Kép hozzáadása',
+	'wikia-editor-media-gallery-tooltip' => 'Képgaléria hozzáadása',
+	'wikia-editor-media-slideshow-tooltip' => 'Diavetítés hozzáadása',
+	'wikia-editor-media-slider-tooltip' => 'Csúszka hozzáadása',
+	'wikia-editor-media-video-tooltip' => 'Videó hozzáadása',
+	'wikia-editor-media-mut-tooltip' => 'Videó hozzáadása (béta)',
+	'wikia-editor-source-bold-tooltip' => 'Félkövér',
+	'wikia-editor-source-italic-tooltip' => 'Dőlt',
+	'wikia-editor-source-link-tooltip' => 'Hivatkozás hozzáadása',
+	'wikia-editor-modules-templates-title' => 'Sablonok',
+	'wikia-editor-modules-templates-add-tooltip' => '"$1" sablon hozzáadása',
+	'wikia-editor-modules-templates-otherTemplates' => 'Egyéb sablonok hozzáadása',
+	'wikia-editor-modules-templates-showUsedList' => 'Használt sablonok listájának megjelenítése',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Használt sablonok listája',
+	'wikia-editor-modules-templates-makeLayout' => 'Új elrendezés létrehozása ebből az oldalból',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Új elrendezés létrehozása ebből az oldalból',
+	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Ez el fog vinni a szerkesztőtől az elrendezés létrehozásához. Minden nem mentett módosítás elvész.',
+	'wikia-editor-modules-license-text' => '$1 A hozzájárulásokat $3 licenc alatt tesszük közzé. <a href="$2">Részletek.</a>',
+	'wikia-editor-modules-insert-title' => 'Szolgáltatások és média hozzáadása',
+	'wikia-editor-modules-categories-title' => 'Kategóriák',
+	'wikia-editor-loadingStates-loading' => 'Szerkesztő betöltése…',
+	'wikia-editor-loadingStates-toSource' => 'Váltás forráskód-nézetbe...',
+	'wikia-editor-loadingStates-toVisual' => 'Váltás vizuális nézetbe...',
+	'wikia-editor-loadingStates-saving' => 'Szerkesztés mentése',
+	'wikia-editor-edittools-caption' => 'több',
+	'wikia-editor-edittools-dialog-title' => 'Wikiszöveg parancsikonok',
+	'wikia-editor-notices-dialog-title' => 'Értesítés részletei',
+	'wikia-editor-preview-editSummary' => 'Szerkesztés összefoglalója: $1',
+	'wikia-editor-leaveconfirm-message' => 'Néhány el nem mentett módosítást végeztél. Biztosan mentés nélkül szeretnél távozni?',
+	'nonunicodebrowser-notice' => "'''Figyelem: a böngészõd nem Unicode-kompatibilis.'''",
+	'rev-deleted-text-notice' => "Figyelem: Az oldal ezen változatát '''törölték'''. [További információ]",
+	'readonlywarning-notice' => "'''Figyelem: Az adatbázist karbantartás miatt zárolták.''' A szerkesztés ennek végeztével folythatható. [További információ]",
+	'userinvalidcssjstitle-notice' => "'''Figyelem:''' Nincs \"\$1\" felület. [További információ]",
+	'semiprotectedpagewarning-notice' => "'''Megjegyzés:''' Az oldal védelem alatt áll, csak regisztrált felhasználók szerkeszthetik. A szerkesztéshez lehet, hogy be kell lépned. [További információ]",
+	'protectedpagewarning-notice' => "'''Megjegyzés:''' Az oldal védelem alatt áll, csak adminisztrátorok szerkeszthetik. A helyi adminisztrátorok módosíthatják ezt az állapotot. [További információ]",
+	'titleprotectedwarning-notice' => "'''Note:''' Az oldal védelem alatt áll, csak adminisztrátorok hozhatják létre. A helyi adminisztrátorok módosíthatják ezt az állapotot. [További információ]",
+	'recreate-moveddeleted-warn-notice' => "'''Megjegyzés:''' Egy korábban már törölt oldalt fogsz újra létrehozni. [További információ]",
+	'restore-edits-notice' => "Üdv újra! Visszaállítottunk náhány általad nem mentett módosítást. <a class='notice-action restoreeditlink'>Változtatásaim törlése és új szerkesztés kezdése</a>",
+	'restore-edits-diff-notice' => "Üdv újra! Visszaállítottunk néhány általad nem mentett módosítást. Az oldal azonban változott azóta. Mit szeretnél tenni: <a class='notice-action restoreeditlink'>törölni a változtatásaidat és új szerkesztés kezdése a friss szöveggel</a> vagy <a class='notice-action difflink'>összevetni a változtatásaidat az új oldallal</a>?",
+	'prefs-general' => 'Általános',
+	'prefs-starting-an-edit' => 'Szerkesztés indítása',
+	'prefs-editing-experience' => 'Szerkesztési tapasztalat',
+	'prefs-monobook-layout' => 'Csak MonoBook elrendezés',
+	'prefs-editarea-size' => 'Szerkesztési ablak mérete (csak MonoBook elrendezésben)',
+	'tog-editsection' => 'Szakaszok szerkesztési hivatkozásainak megjelenítése',
+	'tog-editwidth' => 'Szerkesztési mező tágítása képernyőszélességre forráskód-nézetben',
+	'tog-minordefault' => 'Alapértelmezetten minden szerkesztésemet jelölje aprónak',
+	'tog-forceeditsummary' => 'Figyelmeztessen, ha nem adok meg szerkesztési összefoglalót',
 );
 
 /** Interlingua (interlingua)
@@ -874,11 +957,13 @@ $messages['ia'] = array(
 	'wikia-editor-media-slideshow' => 'Presentation de diapositivas',
 	'wikia-editor-media-slider' => 'Glissator',
 	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Video',
 	'wikia-editor-media-image-tooltip' => 'Adder photo',
 	'wikia-editor-media-gallery-tooltip' => 'Adder galeria',
 	'wikia-editor-media-slideshow-tooltip' => 'Adder presentation de diapositivas',
 	'wikia-editor-media-slider-tooltip' => 'Adder glissator',
 	'wikia-editor-media-video-tooltip' => 'Adder video',
+	'wikia-editor-media-mut-tooltip' => 'Adder video (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Grasse',
 	'wikia-editor-source-italic-tooltip' => 'Italic',
 	'wikia-editor-source-link-tooltip' => 'Adder ligamine',
@@ -1032,6 +1117,7 @@ $messages['km'] = array(
 /** Korean (한국어)
  * @author Freebiekr
  * @author Infinity
+ * @author 아라
  */
 $messages['ko'] = array(
 	'editpagelayout-more' => '더 보기',
@@ -1073,9 +1159,9 @@ $messages['ko'] = array(
 	'wikia-editor-modules-templates-otherTemplates' => '다른 틀 삽입',
 	'wikia-editor-modules-templates-showUsedList' => '사용중인 틀 목록 보기',
 	'wikia-editor-modules-templates-showUsedList-dialog-title' => '사용중인 틀 목록',
-	'wikia-editor-modules-templates-makeLayout' => '이 문서에서 새 레이아웃 생성',
-	'wikia-editor-modules-templates-makeLayout-confirmation-title' => '이 문서로 새 레이아웃 생성',
-	'wikia-editor-modules-templates-makeLayout-confirmation-text' => '레이아웃을 생성하기 위해 이 페이지를 떠납니다. 저장되지 않은 편집을 잃을 수 있습니다.',
+	'wikia-editor-modules-templates-makeLayout' => '이 문서에서 새 레이아웃 만들기',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => '이 문서로 새 레이아웃 만들기',
+	'wikia-editor-modules-templates-makeLayout-confirmation-text' => '레이아웃을 만들기 위해 이 페이지를 떠납니다. 저장되지 않은 편집을 잃을 수 있습니다.',
 	'wikia-editor-modules-license-text' => '$1 기여한 것에는 $3 라이선스가 부여됩니다. <a href="$2">자세히 보기</a>',
 	'wikia-editor-modules-insert-title' => '기능 및 미디어 추가',
 	'wikia-editor-modules-categories-title' => '분류',
@@ -1130,6 +1216,28 @@ $messages['lb'] = array(
 	'tog-forceeditsummary' => 'Mech warnen, wann en beim Späicheren de Resumé eidel loossen',
 );
 
+/** Lithuanian (lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'editpagelayout-more' => 'daugiau',
+	'editpagelayout-less' => 'mažiau',
+	'editpagelayout-notificationsLink-none' => 'Pranešimai',
+	'editpagelayout-captcha-title' => 'Captcha',
+	'editpagelayout-pageControls-pageLink' => 'grįžti į puslapį',
+	'editpagelayout-pageControls-minorEdit' => 'Smulkus keitimas',
+	'editpagelayout-pageControls-changes' => 'Pakeitimai',
+	'editpagelayout-blocked-user' => 'Jūsų vartotojo vardas ar IP adresas buvo užblokuotas',
+	'wikia-editor-media-image' => 'Pavaikslėlis',
+	'wikia-editor-media-gallery' => 'Galerija',
+	'wikia-editor-media-slideshow' => 'Skaidrių peržiūra',
+	'wikia-editor-media-video' => 'Vaizdo įrašas',
+	'wikia-editor-media-mut' => 'Vaizdo įrašas',
+	'wikia-editor-media-image-tooltip' => 'Pridėti Nuotrauką',
+	'wikia-editor-media-gallery-tooltip' => 'Pridėti Galeriją',
+	'wikia-editor-media-slideshow-tooltip' => 'Pridėti Skaidrių peržiūrą',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -1160,11 +1268,13 @@ $messages['mk'] = array(
 	'wikia-editor-media-slideshow' => 'Подвижна галерија',
 	'wikia-editor-media-slider' => 'Лизгач',
 	'wikia-editor-media-video' => 'Видео',
+	'wikia-editor-media-mut' => 'Видео',
 	'wikia-editor-media-image-tooltip' => 'Додај слика',
 	'wikia-editor-media-gallery-tooltip' => 'Додај галерија',
 	'wikia-editor-media-slideshow-tooltip' => 'Додај подвижна галерија',
 	'wikia-editor-media-slider-tooltip' => 'Додај лизгач',
 	'wikia-editor-media-video-tooltip' => 'Додај видео',
+	'wikia-editor-media-mut-tooltip' => 'Додај видео (бета)',
 	'wikia-editor-source-bold-tooltip' => 'Задебелено',
 	'wikia-editor-source-italic-tooltip' => 'Закосено',
 	'wikia-editor-source-link-tooltip' => 'Додај врска',
@@ -1239,11 +1349,13 @@ $messages['ms'] = array(
 	'wikia-editor-media-slideshow' => 'Tayangan slaid',
 	'wikia-editor-media-slider' => 'Gelangsar',
 	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Video',
 	'wikia-editor-media-image-tooltip' => 'Bubuh Gambar',
 	'wikia-editor-media-gallery-tooltip' => 'Bubuh Galeri',
 	'wikia-editor-media-slideshow-tooltip' => 'Buat Tayangan Slaid',
 	'wikia-editor-media-slider-tooltip' => 'Buat Gelangsar',
 	'wikia-editor-media-video-tooltip' => 'Bubuh Video',
+	'wikia-editor-media-mut-tooltip' => 'Tambahkan Video (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Tebal',
 	'wikia-editor-source-italic-tooltip' => 'Condong',
 	'wikia-editor-source-link-tooltip' => 'Bubuh Pautan',
@@ -1319,11 +1431,13 @@ $messages['nb'] = array(
 	'wikia-editor-media-slideshow' => 'Lysbilder',
 	'wikia-editor-media-slider' => 'Glidebryter',
 	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Video',
 	'wikia-editor-media-image-tooltip' => 'Legg til bilde',
 	'wikia-editor-media-gallery-tooltip' => 'Legg til galleri',
 	'wikia-editor-media-slideshow-tooltip' => 'Legg til lysbildeserie',
 	'wikia-editor-media-slider-tooltip' => 'Legg til glidebryter',
 	'wikia-editor-media-video-tooltip' => 'Legg til video',
+	'wikia-editor-media-mut-tooltip' => 'Legg til video (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Fet',
 	'wikia-editor-source-italic-tooltip' => 'Kursiv',
 	'wikia-editor-source-link-tooltip' => 'Legg til lenke',
@@ -1369,6 +1483,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author AvatarTeam
  * @author McDutchie
  * @author SPQRobin
  * @author Siebrand
@@ -1401,11 +1516,13 @@ $messages['nl'] = array(
 	'wikia-editor-media-slideshow' => 'Diapresentatie',
 	'wikia-editor-media-slider' => 'Afbeeldingenschuiver',
 	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Video',
 	'wikia-editor-media-image-tooltip' => 'Foto toevoegen',
 	'wikia-editor-media-gallery-tooltip' => 'Galerij toevoegen',
 	'wikia-editor-media-slideshow-tooltip' => 'Diavoorstelling toevoegen',
 	'wikia-editor-media-slider-tooltip' => 'Schuifdiashow toevoegen',
 	'wikia-editor-media-video-tooltip' => 'Video toevoegen',
+	'wikia-editor-media-mut-tooltip' => 'Video toevoegen (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Vet',
 	'wikia-editor-source-italic-tooltip' => 'Cursief',
 	'wikia-editor-source-link-tooltip' => 'Verwijzing toevoegen',
@@ -1497,11 +1614,13 @@ $messages['pl'] = array(
 	'wikia-editor-media-slideshow' => 'Pokaz slajdów',
 	'wikia-editor-media-slider' => 'Slider',
 	'wikia-editor-media-video' => 'Filmy',
+	'wikia-editor-media-mut' => 'Film',
 	'wikia-editor-media-image-tooltip' => 'Dodaj obraz',
 	'wikia-editor-media-gallery-tooltip' => 'Dodaj galerię',
 	'wikia-editor-media-slideshow-tooltip' => 'Dodaj pokaz slajdów',
 	'wikia-editor-media-slider-tooltip' => 'Dodaj slider',
 	'wikia-editor-media-video-tooltip' => 'Dodaj film',
+	'wikia-editor-media-mut-tooltip' => 'Dodaj film (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Pogrubienie',
 	'wikia-editor-source-italic-tooltip' => 'Kursywa',
 	'wikia-editor-source-link-tooltip' => 'Dodaj link',
@@ -1513,7 +1632,7 @@ $messages['pl'] = array(
 	'wikia-editor-modules-templates-makeLayout' => 'Utwórz układ na bazie tej strony',
 	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Utwórz układ na bazie tej strony',
 	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Zostaniesz przeniesiony na stronę edycji układu. Zmiany w tym artykule nie zostaną zapisane.',
-	'wikia-editor-modules-license-text' => '$1 Wkład udostępniony na licencji $3. <a href="$2">Więcej informacji.</a>',
+	'wikia-editor-modules-license-text' => '$1 Edycje udostępnione na licencji $3. <a href="$2">Więcej informacji.</a>',
 	'wikia-editor-modules-insert-title' => 'Dodaj opcje i media',
 	'wikia-editor-modules-categories-title' => 'Kategorie',
 	'wikia-editor-loadingStates-loading' => 'Wczytuję edytor...',
@@ -1551,14 +1670,19 @@ $messages['pl'] = array(
  */
 $messages['ps'] = array(
 	'editpagelayout-more' => 'نور مالومات',
+	'editpagelayout-notificationsLink-none' => 'يادګيرنې',
 	'editpagelayout-edit-title' => 'سرليک سمول',
+	'editpagelayout-edit-info' => 'مالومات سمول',
 	'editpagelayout-pageControls-changes' => 'بدلونونه',
 	'wikia-editor-media-image' => 'انځور',
 	'wikia-editor-media-gallery' => 'انځورتون',
 	'wikia-editor-media-video' => 'ويډيو',
+	'wikia-editor-media-mut' => 'ويډيو',
 	'wikia-editor-media-image-tooltip' => 'انځور ورګډول',
 	'wikia-editor-media-gallery-tooltip' => 'انځورتون ورګډول',
 	'wikia-editor-media-video-tooltip' => 'ويډيو ورګډول',
+	'wikia-editor-source-link-tooltip' => 'تړنه ورګډول',
+	'wikia-editor-modules-templates-title' => 'کينډۍ',
 	'wikia-editor-modules-categories-title' => 'وېشنيزې',
 	'wikia-editor-edittools-caption' => 'نور',
 	'prefs-general' => 'ټولګړی',
@@ -1567,6 +1691,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author Rhaijin
  */
 $messages['pt'] = array(
 	'editpagelayout-more' => 'mais',
@@ -1673,11 +1798,13 @@ $messages['ru'] = array(
 	'wikia-editor-media-slideshow' => 'Слайдшоу',
 	'wikia-editor-media-slider' => 'Слайдер',
 	'wikia-editor-media-video' => 'Видео',
+	'wikia-editor-media-mut' => 'Видео',
 	'wikia-editor-media-image-tooltip' => 'Добавить изображение',
 	'wikia-editor-media-gallery-tooltip' => 'Добавить галерею',
 	'wikia-editor-media-slideshow-tooltip' => 'Добавить слайдшоу',
 	'wikia-editor-media-slider-tooltip' => 'Добавить слайдер',
 	'wikia-editor-media-video-tooltip' => 'Добавить видео',
+	'wikia-editor-media-mut-tooltip' => 'Добавить видео (бета-версия)',
 	'wikia-editor-source-bold-tooltip' => 'Полужирный',
 	'wikia-editor-source-italic-tooltip' => 'Курсив',
 	'wikia-editor-source-link-tooltip' => 'Добавить ссылку',
@@ -1752,11 +1879,13 @@ $messages['sv'] = array(
 	'wikia-editor-media-slideshow' => 'Bildspel',
 	'wikia-editor-media-slider' => 'Reglage',
 	'wikia-editor-media-video' => 'Video',
+	'wikia-editor-media-mut' => 'Videoklipp',
 	'wikia-editor-media-image-tooltip' => 'Lägg till foto',
 	'wikia-editor-media-gallery-tooltip' => 'Lägg till galleri',
 	'wikia-editor-media-slideshow-tooltip' => 'Lägg till bildspel',
 	'wikia-editor-media-slider-tooltip' => 'Lägg till reglage',
 	'wikia-editor-media-video-tooltip' => 'Lägg till video',
+	'wikia-editor-media-mut-tooltip' => 'Lägg till videoklipp (beta)',
 	'wikia-editor-source-bold-tooltip' => 'Fet',
 	'wikia-editor-source-italic-tooltip' => 'Kursiv',
 	'wikia-editor-source-link-tooltip' => 'Lägg till länk',
@@ -1802,13 +1931,125 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
  * @author Veeven
  */
 $messages['te'] = array(
+	'editpagelayout-helpLink-url' => 'Help:దిద్దుబాటు',
+	'editpagelayout-notificationsLink-none' => 'చూడవలసినవి',
+	'editpagelayout-edit-title' => 'పైపేరును మార్చండి',
+	'editpagelayout-edit-info' => 'మందలను సరిదిద్దండి',
+	'editpagelayout-myedit-header' => 'ఇది మీ దిద్దుబాటు. మీ మార్పులను పైనున్న పెట్టెలో అచ్చం చేయండి.',
+	'editpagelayout-captcha-title' => 'ముద్ద అక్షరాలు',
+	'editpagelayout-pageControls-pageLink' => 'పుటకు తిరిగిపొండి',
+	'editpagelayout-pageControls-minorEdit' => 'చిన్న మార్పు',
+	'editpagelayout-pageControls-summaryLabel' => 'మీ దిద్దుబాట్ల సారాన్ని చేర్చండి',
+	'editpagelayout-pageControls-newSectionLabel' => 'ఈ ముక్క తలవరుసను చేర్చండి',
+	'editpagelayout-pageControls-back' => 'తిరిగి దిద్దరికి',
 	'editpagelayout-pageControls-changes' => 'మార్పులు',
+	'editpagelayout-blocked-user' => 'మీ వాడుకరి పేరు లేదా ఐపీ జాడ అడ్డుకోబడినది',
+	'editpagelayout-edit-summary-label' => 'సారమును దిద్దండి',
+	'editpagelayout-subject-headline-label' => 'ముచ్చట/తలవరుస',
+	'wikia-editor-media-image' => 'బొమ్మ',
+	'wikia-editor-media-gallery' => 'చూపుచోటు',
+	'wikia-editor-media-slideshow' => 'ముక్కల వరుస చూపు',
+	'wikia-editor-media-video' => 'కదిలేబొమ్మ',
+	'wikia-editor-media-image-tooltip' => 'బొమ్మను చేర్చండి',
+	'wikia-editor-media-gallery-tooltip' => 'చూపుచోటును చేర్చండి',
+	'wikia-editor-source-bold-tooltip' => 'బొద్దు',
+	'wikia-editor-source-link-tooltip' => 'లంకెను చేర్చు',
 	'wikia-editor-modules-templates-title' => 'మూసలు',
-	'wikia-editor-modules-categories-title' => 'వర్గాలు',
+	'wikia-editor-modules-templates-add-tooltip' => '"$1" మూసను చేర్చు',
+	'wikia-editor-modules-templates-otherTemplates' => 'ఇతర మూసలను చేర్చండి',
+	'wikia-editor-modules-templates-showUsedList' => 'వాడిన మూసల జాబితాను చూపుము',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'వాడిన మూసల జాబితా',
+	'wikia-editor-modules-categories-title' => 'గుంపులు',
+	'wikia-editor-loadingStates-loading' => 'దిద్దరిని తెస్తున్నాము',
+	'wikia-editor-loadingStates-saving' => 'మీ దిద్దుబాటును ఎల్లరికెరుకజేయుచున్నాము...',
+	'wikia-editor-edittools-dialog-title' => 'వికిటెక్స్ట్ అడ్డదారులు',
+	'wikia-editor-notices-dialog-title' => 'చూడవలసినదాని వివరాలు',
 	'prefs-general' => 'సాధారణం',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'editpagelayout-more' => 'mas marami',
+	'editpagelayout-less' => 'mas kaunti',
+	'editpagelayout-helpLink-url' => 'Help:Pamamatnugot',
+	'editpagelayout-helpLink' => 'Kailangan ng [[{{MediaWiki:Editpagelayout-helpLink-url}}|Tulong?]]',
+	'editpagelayout-notificationsLink' => '<span>$1</span> {{PLURAL:$1|Notification|Mga pagpapabatid}}',
+	'editpagelayout-notificationsLink-none' => 'Mga pagpapabatid',
+	'editpagelayout-edit-title' => 'Baguhin ang pamagat',
+	'editpagelayout-edit-info' => 'Baguhin ang kabatiran',
+	'editpagelayout-diff-header-url' => 'Help:Kaibahan',
+	'editpagelayout-diff-header' => 'Mga pagkakaiba ([[{{MediaWiki:Editpagelayout-diff-header-url}}|tulong]])',
+	'editpagelayout-myedit-header' => 'Ito ay mga pamamatnugot mo. Kopyahin ang mga pagbabago mo papunta sa kahong nasa itaas!',
+	'editpagelayout-captcha-title' => 'Captcha',
+	'editpagelayout-pageControls-pageLink' => 'bumalik sa pahina',
+	'editpagelayout-pageControls-minorEdit' => 'Maliit na pagbabago',
+	'editpagelayout-pageControls-summaryLabel' => 'Magdagdag ng isang buod ng pamamatnugot mo',
+	'editpagelayout-pageControls-newSectionLabel' => 'Idagdag ang ulong pambungad ng seksiyon',
+	'editpagelayout-pageControls-back' => 'Bumalik sa patnugot',
+	'editpagelayout-pageControls-changes' => 'Mga pagbabago',
+	'editpagelayout-blocked-user' => 'Hinarang ang iyong pangalan ng tagagamit o tirahan ng IP',
+	'editpagelayout-edit-summary-label' => 'Buod ng Pamamatnugot',
+	'editpagelayout-subject-headline-label' => 'Paksa/ulong pambungad:',
+	'wikia-editor-media-image' => 'Litrato',
+	'wikia-editor-media-gallery' => 'Galeriya',
+	'wikia-editor-media-slideshow' => 'Palabas na dumudulas',
+	'wikia-editor-media-slider' => 'Pampadulas',
+	'wikia-editor-media-video' => 'Bidyo',
+	'wikia-editor-media-mut' => 'Bidyo',
+	'wikia-editor-media-image-tooltip' => 'Magdagdag ng Larawan',
+	'wikia-editor-media-gallery-tooltip' => 'Magdagdag ng Galeriya',
+	'wikia-editor-media-slideshow-tooltip' => 'Magdagdag ng Palabas na Dumudulas',
+	'wikia-editor-media-slider-tooltip' => 'Magdagdag ng Pampadulas',
+	'wikia-editor-media-video-tooltip' => 'Magdagdag ng Bidyo',
+	'wikia-editor-media-mut-tooltip' => 'Magdagdag ng Bidyo (beta)',
+	'wikia-editor-source-bold-tooltip' => 'Makapal',
+	'wikia-editor-source-italic-tooltip' => 'Nakapahilis',
+	'wikia-editor-source-link-tooltip' => 'Magdagdag ng Kawing',
+	'wikia-editor-modules-templates-title' => 'Mga suleras',
+	'wikia-editor-modules-templates-add-tooltip' => 'Magdagdag ng Suleras na "$1"',
+	'wikia-editor-modules-templates-otherTemplates' => 'Magdagdag ng ibang mga suleras',
+	'wikia-editor-modules-templates-showUsedList' => 'Ipakita ang lista ng ginagamit na mga suleras',
+	'wikia-editor-modules-templates-showUsedList-dialog-title' => 'Lista ng ginagamit na mga suleras',
+	'wikia-editor-modules-templates-makeLayout' => 'Gumawa ng bagong kalatagan magmula sa pahinang ito',
+	'wikia-editor-modules-templates-makeLayout-confirmation-title' => 'Lumikha ng isang kalatagan magmula sa pahinang ito',
+	'wikia-editor-modules-templates-makeLayout-confirmation-text' => 'Ilalayo ka nito magmula sa pahina ng pamamatnugot upang makalikha ng isang kalatagan magmula sa pahinang ito. Subalit, mawawala mo ang anumang mga pagbabagong hindi nasagip.',
+	'wikia-editor-modules-license-text' => 'Mga ambag na $1 na nilisensiyahan bilang $3. <a href="$2">Marami pang mga detalye.</a>',
+	'wikia-editor-modules-insert-title' => 'Magdagdag ng mga tampok at midya',
+	'wikia-editor-modules-categories-title' => 'Mga kategorya',
+	'wikia-editor-loadingStates-loading' => 'Ikinakarga ang pampatnugot',
+	'wikia-editor-loadingStates-toSource' => 'Lumilipat sa gawi ng pinagmulan...',
+	'wikia-editor-loadingStates-toVisual' => 'Lumilipat sa gawi na pampaningin...',
+	'wikia-editor-loadingStates-saving' => 'Inilalathala ang binago mo',
+	'wikia-editor-edittools-caption' => 'marami pa',
+	'wikia-editor-edittools-dialog-title' => 'Mga mas madadaling mga paraan sa teksto ng wiki',
+	'wikia-editor-notices-dialog-title' => 'Mga detalye ng pagpapabatid',
+	'wikia-editor-preview-editSummary' => 'Buod ng Pamamatnugot: $1',
+	'wikia-editor-leaveconfirm-message' => 'Gumawa ka ng ilang mga pagbabagong hindi nailathala. Nakakatiyak ka bang nais mong lumisan na hindi nailalathala ang mga ito?',
+	'nonunicodebrowser-notice' => "'''Babala: Ang pantingin-tingin mo ay hindi alinsunod sa Unikodigo.'''",
+	'rev-deleted-text-notice' => "Babala: Ang pagbabago sa pahinang ito ay '''nabura'''. [Marami pang kabatiran]",
+	'readonlywarning-notice' => "'''Babala: Ang kalipunan ng dato ay ikinandado para sa pagpapanatili.''' Manunumbalik ang pagka nakakapamatnugot kapag nabuo na ito. [Marami pang kabatiran]",
+	'userinvalidcssjstitle-notice' => "'''Babala:''' Walang pabalat na \"\$1\". [Marami pang kabatiran]",
+	'semiprotectedpagewarning-notice' => "'''Babala:''' Ikinandado ang pahinang ito upang nakarehistrong mga tagagamit lamang ang makakapamatnugot nito. Maaaring kailanganin mong lumagdang papasok upang makapamatnugot. [Marami pang kabatiran]",
+	'protectedpagewarning-notice' => "'''Paunawa:''' Ikinandado ang pahinang ito upang mga tagapangasiwa lamang ang makapamatnugot nito. Mababago ng katutubong mga tagapangasiwa ang katayuang ito. [Marami pang kabatiran]",
+	'titleprotectedwarning-notice' => "'''Paunawa:''' Ikinandao ang pahinang ito upang mga tagapangasiwa lamang ang makalikha nito. Mababago ng katutubong mga tagapangasiwa ang katayuang ito. [Marami pang kabatiran]",
+	'recreate-moveddeleted-warn-notice' => "'''Paunawa:''' Muli mong nililikha ang isang pahina na nabura na dati. [Marami pang kabatiran]",
+	'restore-edits-notice' => "Maligayang pagbabalik! Nagpanumbalik kami ng ilan sa mga pagbabagong hindi mo inilathala. <a class='notice-action restoreeditlink'>Burahin ang mga binago ko at magsimula ng isang bagong pamamatnugot</a>",
+	'restore-edits-diff-notice' => "Maligayang pagbabalik! Nagpanumbalik kami ng ilan sa mga pagbabagong hindi mo inilathala. Subalit, naisapanahon na ang pahina magmula noon. Nais mo bang: <a class='notice-action restoreeditlink'>Burahin ang mga binago ko at magsimula sa pamamagitan ng pinaka huling teksto</a> o <a class='notice-action difflink'>Tingnan ang isang paghahambing ng mga pagbabago sa pamamagitan ng pinaka huling pahina</a>",
+	'prefs-general' => 'Pangkalahatan',
+	'prefs-starting-an-edit' => 'Pagsisimula ng isang pagbabago',
+	'prefs-editing-experience' => 'Karanasan sa pamamatnugot',
+	'prefs-monobook-layout' => 'Latag ng MonoBook lamang',
+	'prefs-editarea-size' => 'Sukat ng bintana ng pamamatnugot (latag ng MonoBook lamang)',
+	'tog-editsection' => 'Ipakita ang mga kawing sa pamamatnugot ng seksiyon',
+	'tog-editwidth' => 'Palaparin ang kahong pampatnugot ng nasa gawi na Pampinagmulan upang mapuno ang buong panooran',
+	'tog-minordefault' => 'Markahan ang lahat ng mga pagbabago bilang "maliit" ayon sa likas na pagkakatakda',
+	'tog-forceeditsummary' => 'Udyukin ako kapag nakapag-iwan ako ng isang buod sa pamamatnugot na walang laman',
 );
 
 /** толышә зывон (толышә зывон)
@@ -1844,7 +2085,7 @@ $messages['uk'] = array(
 	'wikia-editor-media-slideshow-tooltip' => 'Додати слайдшоу',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

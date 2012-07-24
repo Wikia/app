@@ -15,6 +15,14 @@ $messages['br'] = array(
 	'campfire-licensed-under' => 'Dindan an aotre-implijout $1',
 );
 
+/** Czech (česky)
+ * @author Jezevec
+ */
+$messages['cs'] = array(
+	'campfire-page-header' => '$1 od $2',
+	'campfire-licensed-under' => 'Licencováno pod $1',
+);
+
 /** German (Deutsch)
  * @author Jan Luca
  */
@@ -47,7 +55,7 @@ $messages['fr'] = array(
 	'campfire-licensed-under' => 'Sous licence $1',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -166,6 +174,14 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'campfire-page-header' => '$1 från $2',
 	'campfire-licensed-under' => 'Gjord tillgänglig under licensen $1',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'campfire-page-header' => '$1 mula sa $2',
+	'campfire-licensed-under' => 'Nakalisensiya sa ilalim ng $1',
 );
 
 /** Tatar (Cyrillic script) (татарча)

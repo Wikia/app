@@ -33,7 +33,7 @@ $messages['ar'] = array(
 	'sitemap-desc' => 'توليد خرائط مواقع ليكي على الطاير',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -76,7 +76,7 @@ $messages['fr'] = array(
 	'sitemap-desc' => 'Générer à la volée des plans du site pour le wiki',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -194,10 +194,11 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'sitemap-desc' => 'Generuje w locie mapę witryny wiki',
+	'sitemap-desc' => 'Generuje na szybką mapę wiki',
 );
 
 /** Piedmontese (Piemontèis)

@@ -212,7 +212,7 @@ $messages['fr'] = array(
 	'cloakcheck-process-edits-no' => 'L’utilisateur n’a pas suffisamment de modifications.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -235,15 +235,20 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'cloakcheck-form-username' => 'Felhasználónév:',
 	'cloakcheck-form-check' => 'Felhasználónév ellenőrzése',
+	'cloakcheck-process-empty' => 'A felhasználónév nem maradhat üresen.',
+	'cloakcheck-process-notexist' => 'A felhasználónév nem létezik.',
 	'cloakcheck-process-username' => 'Felhasználónév: $1',
 	'cloakcheck-process-accountage-yes' => 'A fiók elég idős.',
 	'cloakcheck-process-accountage-no' => 'A fiók túlságosan új.',
 	'cloakcheck-process-emailconf-yes' => 'E-mail cím megerősítve.',
 	'cloakcheck-process-emailconf-no' => 'E-mail cím nincs megerősítve.',
+	'cloakcheck-process-edits-yes' => 'A felhasználó elegendő szerkesztéssel rendelkezik.',
+	'cloakcheck-process-edits-no' => 'A felhasználó nem rendelkezik elegendő szerkesztéssel.',
 );
 
 /** Interlingua (interlingua)
@@ -319,6 +324,17 @@ $messages['lb'] = array(
 	'cloakcheck-process-accountage-yes' => 'De Benotzerkont ass al genuch.',
 	'cloakcheck-process-accountage-no' => 'De Benotzerkont ass ze nei.',
 	'cloakcheck-process-edits-yes' => 'De Benotzer huet genuch Ännerungen.',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'cloakcheck-form-username' => 'Naudotojo vardas:',
+	'cloakcheck-process-notexist' => 'Vartotojo vardas neegzistuoja.',
+	'cloakcheck-process-username' => 'Vartotojo vardas: $1',
+	'cloakcheck-process-emailconf-yes' => 'El. pašto adresas patvirtintas.',
+	'cloakcheck-process-emailconf-no' => 'El. pašto adresas nepatvirtintas.',
 );
 
 /** Macedonian (македонски)
@@ -468,6 +484,7 @@ $messages['pms'] = array(
 $messages['ps'] = array(
 	'cloakcheck-form-username' => 'کارن-نوم:',
 	'cloakcheck-process-username' => 'کارن-نوم: $1',
+	'cloakcheck-process-accountage-no' => 'ګڼون لا تر اوسه نوی دی.',
 );
 
 /** Portuguese (português)
@@ -529,12 +546,17 @@ $messages['ro'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Eleferen
  * @author Kuzura
  */
 $messages['ru'] = array(
+	'cloakcheck' => 'Проверка прав на IRC-невидимость',
+	'cloakcheck-desc' => 'Предоставляет интерфейс для проверки требований для IRC-невидимости',
+	'right-cloakcheck' => 'Может проверять информацию о IRC-невидимости других пользователей',
 	'cloakcheck-form-username' => 'Имя участника:',
 	'cloakcheck-form-check' => 'Проверить имя пользователя',
+	'cloakcheck-form-check-self' => 'Проверить права на IRC-невидимость',
 	'cloakcheck-process-empty' => 'Поле с именем участника не должно быть пустым',
 	'cloakcheck-process-notexist' => 'Участника с таким именем не существует.',
 	'cloakcheck-process-username' => 'Имя участника: $1',
@@ -604,6 +626,7 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'cloakcheck' => 'Pagsusuri ng pagkamaaari ng balabal na IRC',
 	'cloakcheck-desc' => 'Nagbibigay ng lahat-nasa-isang ugnayang-mukha upang matiyak ang mga kailangan para sa isang balabal na IRC',
+	'right-cloakcheck' => 'Maaaring suriin ang kabatirang may kaugnayan sa balabal na pangkubli ng IRC sa ibabaw ng ibang mga tagagamit',
 	'cloakcheck-form-username' => 'Pangalan ng tagagamit:',
 	'cloakcheck-form-check' => 'Suriin ang pangalan ng tagagamit',
 	'cloakcheck-form-check-self' => 'Suriin ang pagkamaaari ng balabal na IRC',

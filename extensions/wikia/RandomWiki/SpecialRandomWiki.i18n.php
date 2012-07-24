@@ -29,7 +29,7 @@ $messages['ar'] = array(
 	'randomwiki' => 'ويكي عشوائية',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -117,7 +117,7 @@ $messages['fr'] = array(
 	'randomwiki' => 'Un wiki au hasard',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -342,6 +342,14 @@ $messages['uk'] = array(
 $messages['vi'] = array(
 	'randomwiki-desc' => 'Hãy để người dùng khám phá một wiki ngẫu nhiên',
 	'randomwiki' => 'Wiki ngẫu nhiên',
+);
+
+/** Walloon (walon)
+ * @author Srtxg
+ */
+$messages['wa'] = array(
+	'randomwiki-desc' => "Permete ås uzeus d' discovri on wiki a l' astcheyance",
+	'randomwiki' => "Wiki a l' astcheyance",
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

@@ -148,7 +148,7 @@ $messages['fr'] = array(
 	'stafflog-filter-type-wikifactory' => 'Statut du wiki',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -167,6 +167,24 @@ $messages['gl'] = array(
 	'stafflog-filter-type-piggyback' => 'Acceso non autorizado',
 	'stafflog-filter-type-renameuser' => 'Cambios no nome de usuario',
 	'stafflog-filter-type-wikifactory' => 'Estado do wiki',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'stafflog-desc' => 'Központosított naplózás a személyzetnek',
+	'stafflog' => 'Személyzeti napló',
+	'stafflog-blockmsg' => '$1 $2 megkísérelte blokkolni $3-t a(z) $4-n. Indoklás: $5',
+	'right-stafflog' => 'Megtekintheti a személyzeti naplót',
+	'stafflog-wiki-status-change' => '$1 megváltoztatta a(z) $2 állapotát $3-ra. Indoklás: $4',
+	'stafflog-filter-label' => 'Szűrő',
+	'stafflog-filter-user' => 'Felhasználó:',
+	'stafflog-filter-type' => 'Típus:',
+	'stafflog-filter-apply' => 'Szűrő alkalmazása',
+	'stafflog-filter-type-block' => 'Blokkok',
+	'stafflog-filter-type-renameuser' => 'Felhasználók átnevezései',
+	'stafflog-filter-type-wikifactory' => 'Wiki állapota',
 );
 
 /** Interlingua (interlingua)
@@ -297,6 +315,7 @@ $messages['nl'] = array(
  * @author BeginaFelicysym
  * @author Nandy
  * @author Odder
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'stafflog-desc' => 'Scentralizowane logowanie dla personelu',
@@ -304,14 +323,14 @@ $messages['pl'] = array(
 	'stafflog-blockmsg' => '$1 $2 próbował zablokować użytkownika z grupy Staff $3 na wiki $4. Powód: $5',
 	'stafflog-piggybackloginmsg' => 'Podłączenie $1 - użytkownik $2 zalogowany jako $3',
 	'stafflog-piggybacklogoutmsg' => 'Podłączenie $1 - użytkownik $2 wylogowany z konta $3',
-	'right-stafflog' => 'Można wyświetlić rejestr aktywności dla grupy <tt>staff</tt>',
+	'right-stafflog' => 'Może wyświetlić stafflog',
 	'stafflog-wiki-status-change' => '$1 zmienił status  $2  na  $3 . Przyczyna: $4',
 	'stafflog-filter-label' => 'Filtr',
 	'stafflog-filter-user' => 'Użytkownik:',
 	'stafflog-filter-type' => 'Typ:',
-	'stafflog-filter-apply' => 'Zastosuj filtry',
+	'stafflog-filter-apply' => 'Zastosuj filtr',
 	'stafflog-filter-type-block' => 'Blokady',
-	'stafflog-filter-type-piggyback' => 'Podłączenie',
+	'stafflog-filter-type-piggyback' => 'Piggyback',
 	'stafflog-filter-type-renameuser' => 'Zmiany nazwy użytkownika',
 	'stafflog-filter-type-wikifactory' => 'Stan wiki',
 );
@@ -342,7 +361,9 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'stafflog-filter-label' => 'چاڼګر',
 	'stafflog-filter-user' => 'کارن:',
+	'stafflog-filter-type-block' => 'بنديزونه',
 );
 
 /** Portuguese (português)
@@ -386,6 +407,7 @@ $messages['ru'] = array(
 	'stafflog-filter-type' => 'Тип:',
 	'stafflog-filter-apply' => 'Применить фильтр',
 	'stafflog-filter-type-block' => 'Блокировки',
+	'stafflog-filter-type-piggyback' => 'Вход',
 	'stafflog-filter-type-renameuser' => 'Переименование участника',
 	'stafflog-filter-type-wikifactory' => 'Статус вики',
 );
@@ -419,6 +441,15 @@ $messages['tl'] = array(
 	'stafflog-piggybackloginmsg' => '$1 Pakikisakay - si tagagamit na $2 ay lumagda bilang si $3',
 	'stafflog-piggybacklogoutmsg' => '$1 Pakikisakay - si tagagamit na $2 ay umalis sa pagkakalagda mula sa akawnt ni $3',
 	'right-stafflog' => 'Maaaring tingnan ang talaan ng tauhan',
+	'stafflog-wiki-status-change' => 'Binago ni $1 ang katayuan ng $2 upang maging $3. Dahilan: $4',
+	'stafflog-filter-label' => 'Pansala',
+	'stafflog-filter-user' => 'Tagagamit:',
+	'stafflog-filter-type' => 'Uri:',
+	'stafflog-filter-apply' => 'Ilapat ang pansala',
+	'stafflog-filter-type-block' => 'Mga pagharang',
+	'stafflog-filter-type-piggyback' => 'Pakikisakay sa likod',
+	'stafflog-filter-type-renameuser' => 'Mga muling pagpapangalan ng tagagamit',
+	'stafflog-filter-type-wikifactory' => 'Katayuan ng wiki',
 );
 
 /** Ukrainian (українська)

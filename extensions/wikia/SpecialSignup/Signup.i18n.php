@@ -20,6 +20,13 @@ $messages['ar'] = array(
 	'signup' => 'إنشاء حساب',
 );
 
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'signup' => 'সদস্য ভুক্তি',
+);
+
 /** Bengali (বাংলা)
  * @author Usarker
  */
@@ -83,7 +90,7 @@ $messages['fr'] = array(
 	'signup' => 'Connexion',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -93,8 +100,10 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'signup-desc' => 'Létrehozza a(z) [[{{#Special:Signup}}]] aliast a(z) [[{{#Special:UserLogin}}/signup]] oldal részére',
 	'signup' => 'Regisztráció',
 );
 

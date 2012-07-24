@@ -66,7 +66,7 @@ $messages['fr'] = array(
 	'imageserving-desc' => 'Sélectionne les images dans un ensemble défini de pages, en fonction des besoins visuels',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -76,6 +76,13 @@ $messages['gl'] = array(
 /** Hebrew (עברית) */
 $messages['he'] = array(
 	'imageserving-desc' => 'בחירת תמונות ממערך מסוים של דפים בהתאם לדרישות החזותיות',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'imageserving-desc' => 'Vizuális követelmények alapján képeket választ ki egy megadott lapokból álló tömbből',
 );
 
 /** Interlingua (interlingua) */

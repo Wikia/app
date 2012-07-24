@@ -93,7 +93,7 @@ $messages['fr'] = array(
 	'userdata-no-wf' => "WikiFactory n'est pas activé sur ce wiki. Impossible de modifier wgUserData.",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -111,11 +111,19 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'userdata' => 'Felhasználói adatok lekérése',
 	'userdata-userid-label' => 'Add meg a felhasználó azonosítóját:',
 	'userdata-submit' => 'Adatok lekérése',
+	'specialuserdata-desc' => 'Felületet biztosít a wgUserData wikinkénti megváltoztatására',
+	'userdata-header' => 'wgUserData növelése',
+	'userdata-value' => 'A wgUserData jelenlegi értéke "$1". Nyomd meg a gombot az aktuális időre való átállításhoz.',
+	'userdata-updated' => 'wgUserData frissítve "$1" értékre.',
+	'userdata-not-updated' => 'A wgUserData frissítése sikertelen volt.',
+	'userdata-wf-reason' => 'Érték frissítve az [[Special:UserData|UserData]] használatával',
+	'userdata-no-wf' => 'A WikiFactory nincs engedélyezve ezen a wikin. A wgUserData nem változtatható meg.',
 );
 
 /** Interlingua (interlingua)
@@ -207,10 +215,11 @@ $messages['nl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
 	'userdata' => 'Pobierz dane użytkownika',
-	'userdata-userid-label' => 'Podaj identyfikator użytkownika:',
+	'userdata-userid-label' => 'Podaj ID użytkownika:',
 	'userdata-submit' => 'Pobieranie danych',
 	'specialuserdata-desc' => 'Zapewnia interfejs do zmiany wgUserData na wiki.',
 	'userdata-header' => 'Powiększanie wgUserData',
@@ -255,12 +264,20 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Kuzura
  */
 $messages['ru'] = array(
 	'userdata' => 'Получить данные участника',
 	'userdata-userid-label' => 'Предоставить ID участника:',
 	'userdata-submit' => 'Получить данные',
+	'specialuserdata-desc' => 'Предотавляет интерфейс для изменения wgUserData на вики.',
+	'userdata-header' => 'Увеличить wgUserData',
+	'userdata-value' => 'Текущее значение wgUserData - "$1". Нажмите на кнопку, чтобы установить текущую отметку времени.',
+	'userdata-updated' => 'wgUserData обновлен до "$1".',
+	'userdata-not-updated' => 'Не удалось обновить wgUserData.',
+	'userdata-wf-reason' => 'Значение обновляется через [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory на этой вики не включен. Не удается изменить wgUserData.',
 );
 
 /** Swedish (svenska)
@@ -281,6 +298,15 @@ $messages['sv'] = array(
 	'userdata-no-wf' => 'WikiFactory är inte aktiverad på denna wiki. Det är inte möjligt att ändra wgUserData.',
 );
 
+/** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
+ */
+$messages['te'] = array(
+	'userdata' => 'వాడుకరి మందలను తెమ్ము',
+	'userdata-userid-label' => 'అందించు వాడుకరి గుర్తింపు:',
+	'userdata-submit' => 'మందలను తెమ్ము',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -290,7 +316,7 @@ $messages['tl'] = array(
 	'userdata-submit' => 'Kunin ang dato',
 	'specialuserdata-desc' => 'Nagbibigay ng isang ugnayang-mukha para sa pagbago ng wgUserData sa bawat wiki.',
 	'userdata-header' => 'Dagdagan ang wgUserData',
-	'userdata-value' => '"$1" ang pangkasalukuyang halaga ng wgUserData. Pindutin ang pindutan upang itakda ito sa pangkasalukuyang tatak ng oras.',
+	'userdata-value' => 'Ang pangkasalukuyang halaga ng wgUserData ay "$1". Pindutin ang pindutan upang itakda ito sa pangkasalukuyang tatak ng oras.',
 	'userdata-updated' => 'Isinapanahon ang wgUserData upang maging "$1".',
 	'userdata-not-updated' => 'Nabigong maisapanahon ang wgUserData.',
 	'userdata-wf-reason' => 'Naisapanahon ang halaga sa pamamagitan ng [[Special:UserData|Dato ng Tagagamit]]',

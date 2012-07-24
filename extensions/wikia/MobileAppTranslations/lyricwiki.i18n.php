@@ -342,7 +342,7 @@ $messages['fr'] = array(
 	'ringtone-matcher-by-song' => 'Envoyer la sonnerie %s sur votre mobile',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -784,6 +784,7 @@ $messages['pfl'] = array(
 );
 
 /** Polish (polski)
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -794,7 +795,7 @@ $messages['pl'] = array(
 	'app-tab-sotd' => 'PD',
 	'app-async-error-title' => 'Ups',
 	'app-async-error-message' => 'Chwilowy problem z połączeniem. Spróbuj ponownie później.',
-	'app-nonetwork-dialog-title' => 'Brak Internetu',
+	'app-nonetwork-dialog-title' => 'Brak sieci',
 	'app-nonetwork-dialog-message' => 'Nie wykryto połączenia Internetowego.',
 	'app-nonetwork-dialog-close-button' => 'Ok',
 	'search-go' => 'Szukaj!',
@@ -865,6 +866,7 @@ $messages['pt-br'] = array(
 
 /** Russian (русский)
  * @author Byulent
+ * @author DCamer
  * @author Kuzura
  * @author Lvova
  */
@@ -889,6 +891,7 @@ $messages['ru'] = array(
 	'login-password-hint' => 'Пароль',
 	'login-submit-button' => 'Вход',
 	'about-heading' => 'LyricWiki',
+	'about-credits' => '%s',
 	'about-heading-tips' => 'Поиск',
 	'about-tips-0' => 'Начните набирать имя исполнителя, чтобы увидеть варианты.',
 	'about-tips-1' => 'Картинки на главном экране отображают Топ 9 песен на iTunes прямо сейчас.',
@@ -900,6 +903,7 @@ $messages['ru'] = array(
 	'about-rate-0-android' => 'Если вам нравится это приложение, пожалуйста, оцените его в 5 звёзд на Android Market!',
 	'about-rate-0-ios' => 'Если вам нравится это приложение, пожалуйста, оцените его в 5 звёзд на App Store!',
 	'gracenote-takedown' => 'К сожалению мы не лицензированы для отображения полного текста для этой песни на данный момент (это происходит на менее, чем 1% из наших песен). Пожалуйста, попробуйте снова на следующей неделе.',
+	'lyrics-artist-byline' => '%s',
 	'ringtone-matcher-by-song' => 'Отправить  %s  рингтон для вашей группы',
 );
 
@@ -954,6 +958,46 @@ $messages['te'] = array(
 	'login-username-hint' => 'వాడుకరి పేరు',
 	'login-password-hint' => 'సంకేతపదం',
 	'about-heading-licensing' => 'కాపీహక్కులు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'app-loading' => 'Ikinakarga...',
+	'app-tab-search' => 'Maghanap',
+	'app-tab-about' => 'Patungkol',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'Awit sa Araw na Ito',
+	'app-async-error-title' => 'Ay naku po',
+	'app-async-error-message' => 'Pansamantalang suliranin sa pagkakakabit. Paki tukuyin ulit mamaya.',
+	'app-nonetwork-dialog-title' => 'Hindi makuha ang lambat-gawaan',
+	'app-nonetwork-dialog-message' => 'Walang napansing pagkakakabit sa lambat-gawaan.',
+	'app-nonetwork-dialog-close-button' => "Ayos 'yan",
+	'search-go' => 'Gawin na!',
+	'search-hint-text' => "halimbawa 'John Lennon:Imagine'",
+	'search-no-match-found' => 'Walang natagpuang pagtutugma.',
+	'search-no-match-found-query' => 'Naghanap ng: %s',
+	'search-results-title' => 'Mga resulta ng paghahanap para sa: %s',
+	'login-label' => 'Lumagda sa LyricWiki',
+	'login-username-hint' => 'Pangalan ng tagagamit',
+	'login-password-hint' => 'Hudyat',
+	'login-submit-button' => 'Lumagda',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => 'ni %s',
+	'about-heading-tips' => 'Hinahanap',
+	'about-tips-0' => 'Magsimulang makinilyahin ang isang pangalan ng artista upang kusang mabuo habang tinitipa.',
+	'about-tips-1' => 'Ang mga litrato sa pangunahing panooran ay ang Nangungunang 9 ng mga awitin sa iTunes sa ngayon.',
+	'about-heading-licensing' => 'Mga karapatan sa kopya',
+	'about-licensing-0' => 'ang aplikasyong ito ay 100% makabatas. Ang angkop na kabayaran ay binabayaran sa mga may hawak ng mga karapatan ng awitin sa pamamagitan ng Gracenote - katulad noong nasa pook na pangsakasaputan ng LyricWiki.',
+	'about-heading-feedback' => 'Tugon',
+	'about-feedback-0' => 'Nais mong magsabi sa amin ng patungkol sa aplikasyon? Padalhan ako ng elektronikong liham: %s',
+	'about-heading-rate' => 'Paki antasan ang aplikasyon!',
+	'about-rate-0-android' => 'Kung nagustuhan mo ang aplikasyong ito, paki antasan ito ng 5 mga bituin sa loob ng Pamilihan ng Android!',
+	'about-rate-0-ios' => 'Kung naibigan mo ang aplikasyong ito, paki antasan ito ng 5 mga bituin sa Tindahan ng App!',
+	'gracenote-takedown' => 'Ngek! Sa kasamaang palad, wala kaming lisensiya upang maipakita ang buong mag titik para sa kantang ito sa ngayon (nangyayari ito sa mas mababa kaysa sa 1% ng mga awitin namin). Paki subukang muli sa susunod na linggo.',
+	'lyrics-artist-byline' => 'ni %s',
+	'ringtone-matcher-by-song' => 'Ipadala ang Tunog ng Kiriring na %s sa iyong Teleponong Pangselula',
 );
 
 /** толышә зывон (толышә зывон)

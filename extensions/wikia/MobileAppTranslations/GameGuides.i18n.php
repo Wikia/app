@@ -102,13 +102,14 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Inkowik
+ * @author Kghbln
  * @author LWChris
  * @author Laximilian scoken
  * @author Tim Bartel
  * @author Welathêja
  */
 $messages['de'] = array(
-	'activityindicator-message' => 'Lade...',
+	'activityindicator-message' => 'Lade …',
 	'window-wikis-title' => 'Wikia Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Suchen unsere beliebtesten Spiele...',
 	'window-category-load-batch' => 'Mehr',
@@ -179,7 +180,7 @@ $messages['fr'] = array(
 	'error-json-parse' => 'Une erreur est survenue avec les données retournées par nos serveurs, désolé.\\nVeuillez réessayer.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -436,11 +437,12 @@ $messages['pfl'] = array(
 
 /** Polish (polski)
  * @author Jakub Olek <bukaj.kelo(at)gmail.com>
+ * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'activityindicator-message' => 'Wczytywanie...',
-	'window-wikis-title' => 'Przewodniki Gier Wikia',
+	'activityindicator-message' => 'Ładowanie...',
+	'window-wikis-title' => 'Przewodniki Wikia Game Guides',
 	'window-wikis-wikilist-search-hint' => 'Nasze Najlepsze Gry',
 	'window-category-load-batch' => 'Więcej',
 	'window-article-button-close' => 'Zamknij',
@@ -558,6 +560,31 @@ $messages['te'] = array(
 	'window-article-menu-cancel-label' => 'రద్దుచేయి',
 	'searchview-no-results' => '"%s"కి ఫలితాలేమీ లేవు',
 	'alert-download-updated-wikis-button-ok' => 'సరే',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'activityindicator-message' => 'Ikinakarga...',
+	'window-wikis-title' => 'Mga Gabay sa Palaro ng Wikia',
+	'window-wikis-wikilist-search-hint' => 'Hanapin ang aming Pangunahing mga Laro...',
+	'window-category-load-batch' => 'Marami pa',
+	'window-article-button-close' => 'Isara',
+	'window-article-button-back' => 'Bumalik',
+	'window-article-menu-search-label' => 'Maghanap',
+	'window-article-menu-dashboard-label' => 'Mga nilalaman ng patnubay',
+	'window-article-menu-cancel-label' => 'Huwag ituloy',
+	'searchview-no-results' => 'Walang mga resulta para sa "%s"',
+	'searchview-button-back-list' => 'Bumalik sa listahan',
+	'searchview-button-back-article' => 'Bumalik sa artikulo',
+	'searchbar-hint' => 'Hanapin ang %s...',
+	'alert-download-updated-wikis-message' => 'Isasapanahon ang listahan ng makukuhang mga gabay.',
+	'alert-download-updated-wikis-button-ok' => 'Sige',
+	'error-update-required' => 'Makukuha at kailangan ang isang pagsasapanahon para sa aplikasyong ito.',
+	'error-no-connection' => 'Walang makuhang pagkakakabit sa internet.\\nPaki subukan ulit.',
+	'error-server' => 'Tumugon ang aming mga tagapaghain na may kamalian, paumanhin.\\nPaki subukan ulit.',
+	'error-json-parse' => 'Mayroong isang suliranin sa datong ibinalik magmula sa aming mga tagapaghain, paumanhin.\\nPaki subukan ulit.',
 );
 
 /** толышә зывон (толышә зывон)

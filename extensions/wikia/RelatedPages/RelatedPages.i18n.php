@@ -37,7 +37,7 @@ $messages['az'] = array(
 	'wikiarelatedpages-heading' => 'Daha ətraflı',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
@@ -109,7 +109,7 @@ $messages['fr'] = array(
 	'wikiarelatedpages-heading' => 'Pour aller plus loin',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -219,11 +219,12 @@ $messages['nl'] = array(
 );
 
 /** Polish (polski)
+ * @author Sovq
  * @author Sp5uhe
  * @author TOR
  */
 $messages['pl'] = array(
-	'wikiarelatedpages-desc' => 'Dodaje do stron spis stron pokrewnych',
+	'wikiarelatedpages-desc' => 'Dodaje do stron zestawienie stron podobnych',
 	'wikiarelatedpages-heading' => 'Podobne strony',
 );
 

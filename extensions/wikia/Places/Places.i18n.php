@@ -137,7 +137,7 @@ $messages['fr'] = array(
 	'places-category-switch-off' => 'Activer le balisage géographique',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -333,12 +333,19 @@ $messages['pl'] = array(
 	'places-geolocation-modal-add-title' => 'Dodaj umiejscowienie',
 	'places-geolocation-modal-error-title' => 'Błąd',
 	'places-geolocation-modal-error' => 'Wystąpił błąd podczas próby określenia twojej pozycji:<br />$1',
-	'places-geolocation-modal-not-available' => 'O jejciu! Ta funkcja jest obecnie dostępna tylko na urządzeniach przenośnych.<br /><br />Chcesz sprawdzić? Odwiedź tę stronę za pomocą wybranego urządzenia przenośnego.',
+	'places-geolocation-modal-not-available' => 'Ta funkcja jest obecnie dostępna tylko na urządzeniach przenośnych.<br /><br />Chcesz ją wypróbować? Odwiedź tę stronę za pomocą wybranego urządzenia przenośnego.',
 	'places-error-no-article' => 'Musisz określić stronę',
 	'places-error-place-already-exists' => 'Ta strona jest już geo oznaczona',
-	'places-updated-geolocation' => 'Geooznaczyć tę stronę',
+	'places-updated-geolocation' => 'Geooznaczono tę stronę',
 	'places-category-switch' => 'Wyłącz geotagowanie',
 	'places-category-switch-off' => 'Włącz geotagowanie',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'places-editor-search' => 'پلټل',
 );
 
 /** Portuguese (português)
@@ -428,11 +435,67 @@ $messages['te'] = array(
 	'places-geolocation-modal-error-title' => 'లోపం',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'places' => 'Mga lugar sa wiking ito',
+	'places-desc' => 'Nagbibigay ng <nowiki><place> at <places></nowiki> mga kalawit ng banghay para sa pagtatatak na pangheograpiya ng mga pahina at isang [[Special:Places|mapa ng lahat ng mga pahinang natatakan]]',
+	'places-in-category' => 'Mga lugar na nasa loob ng kategoryang $1',
+	'places-on-map' => '{{PLURAL:$1|$1 lugar|$1 mga lugar}} sa ibabaw ng mapang ito',
+	'places-modal-go-to-special' => 'Nagpapakita ng  {{PLURAL:$1|$1 lugar|$1 mga lugar}} ([[Special:Places|tingnan lahat]])',
+	'places-toolbar-button-tooltip' => 'Lagitikin upang makapagdagdag ng tatak na pangheograpiya sa pahinang ito',
+	'places-toolbar-button-address' => 'Paki magbigay ng tirahan na gagamitin bilang isang tatak na pangheograpiya para sa pahinang ito',
+	'places-editor-search' => 'Humanap',
+	'places-editor-title-create-new' => 'Magdagdag ng isang tatak na pangheograpiya',
+	'places-editor-title-edit' => 'Baguhin ang isang tatak na pangheograpiya',
+	'places-editor-show-my-location' => 'Dalhin ako sa kinalalagyan ko',
+	'places-editor-geoposition' => 'Kasalukuyang kinalalagyang pangheograpiya:',
+	'places-geolocation-button-label' => 'Idagdag ang kinalalagyan',
+	'places-geolocation-modal-add-title' => 'Idagdag ang kinalalagyan',
+	'places-geolocation-modal-error-title' => 'Kamalian',
+	'places-geolocation-modal-error' => 'Nagkaroon ng isang kamalian habang sinusubukang alamin ang kinaroroonan mo:<br />$1',
+	'places-geolocation-modal-not-available' => 'Naku! Ang tampok na ito ay kasalukuyang makukuha lamang sa mga aparatong naililipat-lipat.<br /><br />Nais mo itong subukan? Dalawin lang ang pahinang ito na ginagamit ang iyong napiling aparatong naililipat-lipat.',
+	'places-error-no-article' => 'Dapat kang tumukoy ng isang pahina',
+	'places-error-place-already-exists' => 'Nalagyan na ang pahinang ito ng tatak na pangheograpiya',
+	'places-updated-geolocation' => 'Nalagyan na ang pahinang ito ng tatak na pangheograpiya',
+	'places-category-switch' => 'Huwag paganahin ang paglalagay ng tatak na pangheograpiya',
+	'places-category-switch-off' => 'Paganahin ang paglalagay ng tatak na pangheograpiya',
+);
+
 /** Ukrainian (українська)
  * @author A1
  */
 $messages['uk'] = array(
 	'places' => 'Місця на цій wiki',
+);
+
+/** Walloon (walon)
+ * @author Srtxg
+ */
+$messages['wa'] = array(
+	'places' => 'Plaeces sol wiki',
+	'places-desc' => 'Fornixh li sopoirt po des etiketes <nowiki><place> et <places></nowiki> po marker des eplaeçmints djeyografikes, eyet ene [[Special:Places|mape di totes les markêyès plaeces]].',
+	'places-in-category' => 'Plaeces del categoreye $1',
+	'places-on-map' => '{{PLURAL:$1|$1 eplaeçmint|$1 eplaeçmints}} sol mape',
+	'places-modal-go-to-special' => 'Håyner {{PLURAL:$1|$1 eplaeçmint|$1 eplaeçmints}} ([[Special:Places|vey totafwait]])',
+	'places-toolbar-button-tooltip' => "Clitchîz po radjouter ene etikete d' eplaeçmint djeyografike",
+	'places-toolbar-button-address' => "Dinez s' i vs plait l' adresse a-z eployî come etikete djeyografike po cisse pådje ci",
+	'places-editor-search' => 'Cweri',
+	'places-editor-title-create-new' => 'Radjouter etikete djeyografike',
+	'places-editor-title-edit' => 'Candjî etikete djeyografike',
+	'places-editor-show-my-location' => 'Potchî al plaece da minne',
+	'places-editor-geoposition' => 'Eplaeçmint pol moumint:',
+	'places-geolocation-button-label' => 'Radjouter eplaeçmint',
+	'places-geolocation-modal-add-title' => 'Radjouter eplaeçmint',
+	'places-geolocation-modal-error-title' => 'Aroke',
+	'places-geolocation-modal-error' => "Åk n' a nén stî tot sayant d' trover vost eplaeçmint:<br />$1",
+	'places-geolocation-modal-not-available' => "Waye! Cisse fonccionalité la n' egzistêye pol moumint ki so des axhlåves.<br /><br />Voloz vs sayî? I vs sufixh d' aler so cisse pådje ci avou èn éndjin mobile.",
+	'places-error-no-article' => 'Vos dvoz dner ene pådje',
+	'places-error-place-already-exists' => 'Cisse pådje ci a ddja ene etikete djeyografike',
+	'places-updated-geolocation' => 'Eplaeçmint djeyografike metou sol pådje',
+	'places-category-switch' => 'Dismete les etiketes djeyografikes',
+	'places-category-switch-off' => 'Permete les etiketes djeyografikes',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

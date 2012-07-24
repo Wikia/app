@@ -318,7 +318,7 @@ $messages['fr'] = array(
 	'photopop-game-download-error-text' => 'Une erreur est survenue en téléchargeant les données de jeu, veuillez réessayer.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -382,6 +382,39 @@ $messages['gl'] = array(
 	'photopop-game-download-progress-text' => 'Descargando o xogo...',
 	'photopop-game-update-progress-text' => 'Actualizando o xogo...',
 	'photopop-game-download-error-text' => 'Houbo un erro ao descargar os datos do xogo; inténteo de novo.',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'photopop-setup-category-label' => 'Kategória',
+	'photopop-setup-category-tip' => 'Írd ide a kategória nevét...',
+	'photopop-setup-icon-label' => 'Játékprogram ikonja (120 × 120 pixel)',
+	'photopop-setup-watermark-label' => 'Vízjel',
+	'photopop-setup-submit-label' => 'Frissítés',
+	'photopop-current-settings-title' => 'Aktuális beállítások',
+	'photpop-category-none' => 'HIÁNYZIK',
+	'photopop-error-category-non-existing' => 'A megadott kategória nem létezik',
+	'photopop-error-field-compulsory' => 'A mező kitöltése kötelező',
+	'photopop-error-db-error' => 'Hiba történt, a program nem mentette a beállításokat',
+	'photopop-settings-saved' => 'A beállítások mentése megtörtént',
+	'photopop-image-preview' => 'Képek előnézete:',
+	'photopop-game-round' => 'kör',
+	'photopop-game-correct' => 'Helyes',
+	'photopop-game-points' => 'pont',
+	'photopop-game-total' => 'összesen',
+	'photopop-game-score' => 'Eredmény',
+	'photopop-game-wiki' => 'wiki',
+	'photopop-game-date' => 'dátum',
+	'photopop-game-timeup' => 'Lejárt az idő!',
+	'photopop-game-please-wait' => 'Kérlek várj…',
+	'photopop-game-loading-image' => 'Kép betöltése... <br />Kérlek, várj',
+	'photopop-game-loading' => 'Betöltés…',
+	'photopop-game-highscore' => 'Eredményjelző',
+	'photopop-game-highscores' => 'Ranglista',
+	'photopop-game-finished' => 'Kész!',
+	'photopop-game-image-load-error' => 'A képet nem tudtuk betölteni. Sajnáljuk, kérlek, próbáld újra.',
 );
 
 /** Interlingua (interlingua)
@@ -455,6 +488,37 @@ $messages['ia'] = array(
  */
 $messages['ku-latn'] = array(
 	'photopop-setup-category-label' => 'Kategorî',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'photopop-setup-category-label' => 'Kategorie',
+	'photopop-setup-watermark-label' => 'Waasserzeechen',
+	'photopop-setup-submit-label' => 'Aktualiséieren',
+	'photopop-current-settings-title' => 'Aktuell Astellungen',
+	'photopop-settings-saved' => "D'Astellunge goufe gespäichert",
+	'photopop-game-correct' => 'Richteg',
+	'photopop-game-points' => 'Punkten',
+	'photopop-game-wiki' => 'Wiki',
+	'photopop-game-date' => 'Datum',
+	'photopop-game-loading' => 'Lueden...',
+	'photopop-game-progress' => 'Fotoen',
+	'photopop-game-finished' => 'fäerdeg!',
+	'photopop-game-month-0' => 'Jan.',
+	'photopop-game-month-1' => 'Feb.',
+	'photopop-game-month-2' => 'Mäe.',
+	'photopop-game-month-3' => 'Abr.',
+	'photopop-game-month-4' => 'Mee',
+	'photopop-game-month-5' => 'Jun.',
+	'photopop-game-month-6' => 'Jul.',
+	'photopop-game-month-7' => 'Aug.',
+	'photopop-game-month-8' => 'Sep.',
+	'photopop-game-month-9' => 'Okt.',
+	'photopop-game-month-10' => 'Nov.',
+	'photopop-game-month-11' => 'Dez.',
+	'photopop-game-error-text' => 'Et ass e Feeler geschitt, probéiert w.e.g. nach eng Kéier.',
 );
 
 /** Macedonian (македонски)
@@ -739,7 +803,7 @@ $messages['pl'] = array(
 	'photopop-setup-category-label' => 'Kategoria',
 	'photopop-setup-category-tip' => 'Wprowadź nazwę kategorii...',
 	'photopop-setup-icon-label' => 'Ikona (120px x 120px)',
-	'photopop-setup-icon-tip' => 'Wprowadź tytuł artykułu pliku...',
+	'photopop-setup-icon-tip' => 'Wprowadź tytuł strony pliku...',
 	'photopop-setup-watermark-label' => 'Znak wodny',
 	'photopop-setup-watermark-tip' => 'Wprowadź tytuł artykułu pliku...',
 	'photopop-setup-submit-label' => 'Aktualizuj',
@@ -770,10 +834,10 @@ $messages['pl'] = array(
 	'photopop-game-progress' => 'obrazy',
 	'photopop-game-finished' => 'gotowe!',
 	'photopop-game-image-load-error' => 'Nie załadowano obrazu. Przepraszamy, spróbuj ponownie.',
-	'photopop-game-tutorial-intro' => 'Pacnij w ekran by zerknąć na tajemniczy obrazek pod spodem.',
-	'photopop-game-tutorial-continue' => 'Gdy już odpowiedź jest podana, wybierz przycisk "dalej", aby kontynuować do nowego obrazu.',
+	'photopop-game-tutorial-intro' => 'Kliknij w ekran by zerknąć na ukryty obrazek pod spodem.',
+	'photopop-game-tutorial-continue' => 'Gdy odpowiedź zostanie ujawniona, kliknij przycisk "dalej", aby kontynuować do nowego obrazu.',
 	'photopop-game-tutorial-drawer' => 'Im mniej zerknięć na obrazek, im mniej strzałów w ciemno i mniej czasu zajęła ci odpowiedź, tym lepszy twój wynik!',
-	'photopop-game-tutorial-tile' => 'Pacnij przycisk "odpowiedź" aby strzelić w ciemno.',
+	'photopop-game-tutorial-tile' => 'Kliknij przycisk "odpowiedź" aby strzelić w ciemno.',
 	'photopop-game-new-highscore' => 'Nowy rekord',
 	'photopop-game-paused' => 'Gra wstrzymana',
 	'photopop-game-loading-assets' => 'Ładowanie plików gry',
@@ -977,6 +1041,72 @@ $messages['sv'] = array(
 	'photopop-game-download-progress-text' => 'Laddar ned spel...',
 	'photopop-game-update-progress-text' => 'Uppdaterar spel...',
 	'photopop-game-download-error-text' => 'Ett fel uppstod när speldata skulle laddas ned, var god försök igen.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'photopop-setup-title' => 'Paghahanda ng Photo Pop',
+	'photopop-setup-category-label' => 'Kategorya',
+	'photopop-setup-category-tip' => 'Magpasok ng isang pangalan ng kategorya...',
+	'photopop-setup-icon-label' => 'Larawang kumakatawan sa laro (120px x 120px)',
+	'photopop-setup-icon-tip' => 'Magpasok ng isang pamagat ng artikulo ng talaksan...',
+	'photopop-setup-watermark-label' => 'Marka ng tubig',
+	'photopop-setup-watermark-tip' => 'Magpasok ng isang pamagat ng artikulo ng talaksan...',
+	'photopop-setup-submit-label' => 'Isapanahon',
+	'photopop-current-settings-title' => 'Pangkasalukuyang mga katakdaan',
+	'photpop-category-none' => 'hindi mailalapat',
+	'photopop-error-category-non-existing' => 'Hindi umiiral ang tinukoy na kategorya',
+	'photopop-error-field-compulsory' => 'Ang hanay ay sapilitan',
+	'photopop-error-file-non-existing' => 'Hindi umiiral ang tinukoy na artikulo ng talaksan',
+	'photopop-error-db-error' => 'Naganap ang isang kamalian, hindi nasagip ang mga pagtatakda',
+	'photopop-settings-saved' => 'Nasagip ang mga katakdaan',
+	'photopop-image-preview' => 'Paunang pagtingin sa mga imahe:',
+	'photopop-game-round' => 'Bilog',
+	'photopop-game-correct' => 'Tama',
+	'photopop-game-points' => 'mga puntos',
+	'photopop-game-total' => 'kabuuan',
+	'photopop-game-score' => 'puntos',
+	'photopop-game-wiki' => 'wiki',
+	'photopop-game-date' => 'petsa',
+	'photopop-game-timeup' => 'tapos na ang oras!',
+	'photopop-game-please-wait' => 'Paki maghintay',
+	'photopop-game-loading-image' => 'Ikinakarga ang imahe... <br />Paki maghintay',
+	'photopop-game-loading' => 'Ikinakarga...',
+	'photopop-game-highscore' => 'Mataas na puntos',
+	'photopop-game-highscores' => 'matataas na mga puntos',
+	'photopop-game-continue' => 'Ito ay:',
+	'photopop-game-yougot' => 'Nakakuha ka ng',
+	'photopop-game-outof' => 'mula sa',
+	'photopop-game-progress' => 'mga litrato',
+	'photopop-game-finished' => 'tapos na!',
+	'photopop-game-image-load-error' => 'Hindi maikarga ang imahe. Nagpapaumanhin kami, paki subukan ulit.',
+	'photopop-game-tutorial-intro' => 'Tapikin ang panooran upang masilip ang lihim na imaheng nasa ilalim.',
+	'photopop-game-tutorial-continue' => 'Pagkaraang maibunyag ang sagot, tapikin ang pindutang "susunod" upang magpatuloy na papunta sa isang bagong imahe.',
+	'photopop-game-tutorial-drawer' => 'Kung mas mangilan-ngilang pagsilip na gagawin mo, mas mangilan-ngilan ang magagawa mong paghula, at kung mas kakaunti ang panahong gagamitin mo, mas malaki ang puntos mo!',
+	'photopop-game-tutorial-tile' => 'Tapikin ang pindutang "sagot" upang makagawa ng paghula.',
+	'photopop-game-new-highscore' => 'Bagong mataas na puntos',
+	'photopop-game-paused' => 'Inihinto nang panandalian ang laro',
+	'photopop-game-loading-assets' => 'Ikinakarga ang mga ari-arian ng laro',
+	'photopop-game-month-0' => 'Ene',
+	'photopop-game-month-1' => 'Peb',
+	'photopop-game-month-2' => 'Mar',
+	'photopop-game-month-3' => 'Abr',
+	'photopop-game-month-4' => 'May',
+	'photopop-game-month-5' => 'Hun',
+	'photopop-game-month-6' => 'Hul',
+	'photopop-game-month-7' => 'Ago',
+	'photopop-game-month-8' => 'Set',
+	'photopop-game-month-9' => 'Okt',
+	'photopop-game-month-10' => 'Nob',
+	'photopop-game-month-11' => 'Dis',
+	'photopop-game-no-highscore' => 'Walang matataas na mga puntos',
+	'photopop-game-error-text' => 'Naganap ang isang kamalian, paki subukan ulit.',
+	'photopop-game-error-network-text' => 'Tila walang kuneksiyon sa internet, paki buhayin ang iyong kuneksiyon sa Wi-Fi o mobil.',
+	'photopop-game-download-progress-text' => 'Ikinakargang paibaba ang laro...',
+	'photopop-game-update-progress-text' => 'Isinasapanahon ang laro...',
+	'photopop-game-download-error-text' => 'Isang kamalian ang naganap habang ikinakargang paibaba ang dato ng laro, paki subukan ulit.',
 );
 
 /** толышә зывон (толышә зывон)
