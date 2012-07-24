@@ -185,3 +185,13 @@ if (document.cookie.indexOf('foo')) {
 // not cached jQuery selectors
 var foo = $('#bar').attr('data-foo'),
 	bar = $('#bar').attr('data-bar');
+
+// ignore the following (sample code in comments):
+
+// > jQuery('selector').bind( 'someevent', jQuery.debounce( delay, [ at_begin, ] callback ) );
+// > jQuery('selector').unbind( 'someevent', callback );
+
+/*
+ *	$('#test').wikiaTooltip('this is a tooltip aligned top-left');
+ *	$('#test').wikiaTooltip('and this is a tooltip aligned bottom-right', {side: 'bottom', align: 'right'});
+ */
