@@ -9,24 +9,28 @@ var ProfileSync = {
 			ProfileSync.removeColumn(this);
 		});
 	},
-	
+
 	addTrackclicking: function() {
-		$('#FacebookProfileSyncSave').trackClick('facebookprofilesync/save');
-		$('#FacebookProfileSyncSave').trackClick('facebookprofilesync/save/' + $('#FacebookProfileSyncUserNameWiki').val());
+		var node = $('#FacebookProfileSyncSave');
+
+		node.trackClick('facebookprofilesync/save');
+		node.trackClick('facebookprofilesync/save/' + $('#FacebookProfileSyncUserNameWiki').val());
 	},
-	
+
 	removedId: '',
-	
+
 	removeColumn: function(obj) {
-		var colunn = $(obj).parent().parent();
-		ProfileSync.removedId = $(obj).attr('id');
-		
-		$(colunn).hide('fast', function(id) {
-			$(colunn).remove();
+		var node = $(obj),
+			column = node.parent().parent();
+
+		ProfileSync.removedId = node.attr('id');
+
+		column.hide('fast', function(id) {
+			column.remove();
 			ProfileSync.track(ProfileSync.removedId);
 		});
 	},
-	
+
 	track: function(fakeUrl) {
 		$.tracker.byStr('facebookprofilesync/' + fakeUrl);
 	}
