@@ -76,6 +76,7 @@ class wikiMap extends WikiaObject {
                     'qppage' => 'Mostrevisions',
                     'qplimit' => '120'
                 ));
+
                 $result=$result['query']['querypage']['results'];
                 $res = array();
                 $map = array();
@@ -89,7 +90,8 @@ class wikiMap extends WikiaObject {
                         }
                     }
                 }
-                $new = $this->query($res, $map);
+                $query = $this->query($res, $map);
+                $new = array( 'nodes' => $query, 'all' => 0);
                 $this->app->wg->memc->set($key, $new, 86400);
             }
 
@@ -109,6 +111,7 @@ class wikiMap extends WikiaObject {
                 foreach ($result as $item){
                     $ids[] = $item['pageid'];
                 }
+                $allArticlesCount = count($ids);
                 $dbr = $this->getDB();
                 $newquery = $dbr->select(
                     array( 'revision', 'page' ),
@@ -133,20 +136,21 @@ class wikiMap extends WikiaObject {
                     $map[$articleTitle] = $i;
                 }
 
-                $new = $this->query($res, $map);
+
+                $new = array( 'nodes' => $this->query($res, $map), 'all' => $allArticlesCount);
                 $this->app->wg->memc->set($key, $new, 900);
             }
 
         }
 
         $max=0;
-        foreach($new as $item){
+        foreach($new['nodes'] as $item){
             $localMax = count($item['connections']);
             if ($localMax>$max) $max=$localMax;
         }
 
         $this->app->wf->profileOut( __METHOD__ );
-        return array('nodes' => $new, 'length' =>count($new), 'max' => $max);
+        return array('nodes' => $new['nodes'], 'length' =>count($new['nodes']), 'max' => $max, 'all' => $new['all']);
     }
 
     //Method that performs query to database and format the data
