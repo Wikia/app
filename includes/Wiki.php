@@ -362,7 +362,7 @@ class MediaWiki {
 	 * @return mixed an Article, or a string to redirect to another URL
 	 */
 	private function initializeArticle() {
-		global $wgDisableHardRedirects;
+		global $wgDisableHardRedirects, $wgTitle;
 
 		wfProfileIn( __METHOD__ );
 
@@ -422,6 +422,8 @@ class MediaWiki {
 						$article = $rarticle;
 						$this->context->setTitle( $target );
 						$this->context->setWikiPage( $article->getPage() );
+						// in MW 1.16 $wgTitle = $target, so we added it here too
+						$wgTitle = $target;
 					}
 				}
 			} else {
