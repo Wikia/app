@@ -5,7 +5,7 @@
 
 $messages = array();
 $messages['en'] = array(
-	'wikia-videohandlers-desc' => 'Handling of videos withtin MediaWiki file architecture',
+	'wikia-videohandlers-desc' => 'Handling of videos within MediaWiki file architecture',
 	'videohandler' => 'Video handler',
 	'prototype-videohandler-extension-desc' => 'Prototype video handler',
 	'movieclips-videohandler-extension-desc' => 'MovieClips video handler',    
