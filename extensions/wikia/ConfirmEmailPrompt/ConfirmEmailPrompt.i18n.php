@@ -58,7 +58,7 @@ $messages['fr'] = array(
 	'confirmemailprompt-error' => 'Est-ce votre adresse de courriel : <strong>$1</strong> ? [[$2|Confirmer]] ou [[$3|la changer]].',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -161,6 +161,14 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'confirmemailprompt-desc' => 'Visar ett varningsmeddelande om en användare har en obekräftad e-postadress',
 	'confirmemailprompt-error' => 'Är detta din e-postadress: <strong>$1</strong>? [[$2|Bekräfta den]] eller [[$3|ändra den]].',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'confirmemailprompt-desc' => 'Nagpapakita ng isang mensahe ng babala kapag ang isang tagagamit ay mayroong isang hindi pa natitiyak na tirahan ng e-liham',
+	'confirmemailprompt-error' => 'Ito ba ang iyong tirahang e-liham: <strong>$1</strong>? [[$2|Tiyakin ito]] o [[$3|baguhin ito]].',
 );
 
 /** Tatar (Cyrillic script) (татарча)

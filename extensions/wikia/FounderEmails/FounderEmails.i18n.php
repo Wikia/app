@@ -366,11 +366,13 @@ You can always head over to wiki activity to view all of the exciting changes be
 
 /** Message documentation (Message documentation)
  * @author McDutchie
+ * @author Nemo bis
  * @author Siebrand
  * @author Umherirrender
  */
 $messages['qqq'] = array(
 	'founderemails-desc' => '{{desc}}',
+	'founderemails-email-first-edit-headline' => '* "they" is a [[w:Singular they|singular they]]',
 	'founderemails-email-views-digest-subject' => '"views" means site views/visits.',
 	'founderemails-pref-views-digest' => 'Parameters:
 * $1 is a wiki name',
@@ -1025,7 +1027,7 @@ Eine Menge passiert auf deiner Seite heute! Schau mal auf $MYHOMEURL vorbei, um 
 	'founderemails-email-lot-happening-greeting' => 'Hey $USERNAME,',
 	'founderemails-email-lot-happening-headline' => 'Glückwunsch! Heute ist viel los bei $WIKINAME!',
 	'founderemails-email-lot-happening-content' => 'Wenn du es noch nicht getan hast, kannst du zu den letzten Aktivitäten gehen und nachschauen welche großartige Arbeit verrichtet wurde. Da so viel los ist, willst du vielleicht auch die E-Mail-Benachrichtigungs-Einstellungen auf Zusammenfassungs-Modus ändern. Im Zusammenfassungs-Modus erhältst du eine Mail, die alle Aktivitäten des Tages im Wiki auflistet.',
-	'founderemails-email-lot-happening-signature' => 'Das Wikia Team',
+	'founderemails-email-lot-happening-signature' => 'Das Wikia-Team',
 	'founderemails-email-lot-happening-button' => 'Aktivitäten ansehen',
 	'founderemails-email-footer-line1' => 'Um aktuelle Ereignisse in Wikia mitzubekommen, besuche <a style="color:#2a87d5;text-decoration:none;" href="http://de.community.wikia.com">de.community.wikia.com</a>',
 	'founderemails-email-footer-line2' => 'Willst du steuern, welche E-Mails du bekommst? Gehe zu deinen <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Einstellungen</a>.',
@@ -1790,7 +1792,7 @@ L\'équipe Wikia',
 	'founderemails-email-first-edit-greeting' => 'Bonjour $USERNAME,',
 	'founderemails-email-first-edit-headline' => 'Super ! $EDITORNAME vient de faire sa toute première modification sur $WIKINAME.',
 	'founderemails-email-first-edit-content' => 'Rendez-vous sur $PAGETITLE pour voir ce qu’il a ajouté.',
-	'founderemails-email-first-edit-signature' => "L'équipe de Wikia",
+	'founderemails-email-first-edit-signature' => '— L’équipe Wikia',
 	'founderemails-email-first-edit-button' => 'Vérifier !',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Bonjour $USERNAME,</p>
 
@@ -1821,7 +1823,7 @@ L’équipe Wikia',
 	'founderemails-email-general-edit-greeting' => 'Bonjour $USERNAME,',
 	'founderemails-email-general-edit-headline' => '$EDITORNAME vient de faire une autre modification sur $PAGETITLE sur $WIKINAME.',
 	'founderemails-email-general-edit-content' => 'Rendez-vous sur $PAGETITLE pour vérifier ce qu’il a ajouté.',
-	'founderemails-email-general-edit-signature' => "L'équipe Wikia",
+	'founderemails-email-general-edit-signature' => '— L’équipe Wikia',
 	'founderemails-email-general-edit-button' => 'Vérifier !',
 	'founderemails-email-page-edited-reg-user-body-HTML' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Bonjour $USERNAME,</p>
 
@@ -1849,7 +1851,7 @@ L’équipe Wikia',
 	'founderemails-email-anon-edit-greeting' => 'Bonjour $USERNAME,',
 	'founderemails-email-anon-edit-headline' => 'Un contributeur Wikia vient de modifier $PAGETITLE sur $WIKINAME.',
 	'founderemails-email-anon-edit-content' => 'Les contributeurs Wikia sont des gens qui effectuent des modifications sans être connectés avec un compte Wikia. Allez voir ce que ce mystérieux ami a ajouté !',
-	'founderemails-email-anon-edit-signature' => "L'équipe de Wikia",
+	'founderemails-email-anon-edit-signature' => '— L’équipe Wikia',
 	'founderemails-email-anon-edit-button' => 'Vérifier !',
 	'founderemails-email-page-edited-anon-body-HTML' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Bonjour $USERNAME,</p>
 
@@ -2071,7 +2073,7 @@ Il y a beaucoup de choses qui se passent sur votre wiki, aujourd\'hui ! Rendez-v
 	'founderemails-email-lot-happening-greeting' => 'Bonjour $USERNAME,',
 	'founderemails-email-lot-happening-headline' => 'Félicitations ! Il se passe beaucoup de choses sur $WIKINAME aujourd’hui !',
 	'founderemails-email-lot-happening-content' => "Si vous ne l’avez pas déjà fait, vous pouvez aller sur l'activité du wiki pour voir l’excellent travail qui est fourni. Puisqu’il se passe beaucoup de choses, vous pouvez également modifier vos préférences de courriel pour passer en mode résumé. Avec le mode résumé activé vous recevrez un courriel par jour qui liste toute l’activité sur votre wiki.",
-	'founderemails-email-lot-happening-signature' => "L'équipe Wikia",
+	'founderemails-email-lot-happening-signature' => '— L’équipe Wikia',
 	'founderemails-email-lot-happening-button' => 'Voir l’activité',
 	'founderemails-email-footer-line1' => 'Pour voir les derniers évènements sur Wikia, rendez-vous sur <a style="color:#2a87d5;text-decoration:none;" href="http://communaute.wikia.com">communaute.wikia.com</a>',
 	'founderemails-email-footer-line2' => 'Vous souhaitez contrôler les courriels que vous recevez ? Allez à vos <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">préférences</a>',
@@ -2127,7 +2129,7 @@ L’équipe Wikia',
 	'founderemails-email-views-digest-greeting' => 'Bonjour $USERNAME,',
 	'founderemails-email-views-digest-headline' => '$WIKINAME a été vu par $1 {{PLURAL:$1|personne|personnes}} aujourd’hui.',
 	'founderemails-email-views-digest-content' => 'Continuez d’ajouter du contenu et promouvoir votre wiki pour encourager plus de gens à lire, modifier et faire passer le mot.',
-	'founderemails-email-views-digest-signature' => "L'équipe Wikia",
+	'founderemails-email-views-digest-signature' => '— L’équipe Wikia',
 	'founderemails-email-views-digest-button' => 'Ajouter plus de pages',
 	'founderemails-email-complete-digest-subject' => 'L’activité récente sur $WIKINAME',
 	'founderemails-email-complete-digest-body' => 'Bonjour $USERNAME,
@@ -2159,7 +2161,7 @@ L’équipe Wikia',
 	'founderemails-email-complete-digest-content3' => 'Accueillez les nouveaux sur votre wiki en laissant un message sur leur page de discussion.
 <br /><br />
 Vous pouvez toujours vous rendre sur l’activité du wiki pour voir les modifications effectuées $WIKINAME. Consultez-la souvent, en tant que fondateur votre communauté compte sur vous pour aider à diriger et maintenir le wiki.',
-	'founderemails-email-complete-digest-signature' => "L'équipe Wikia",
+	'founderemails-email-complete-digest-signature' => '— L’équipe Wikia',
 	'founderemails-email-complete-digest-button' => 'Aller à l’activité du wiki',
 	'founderemails-pref-joins' => "Envoyez-moi un courriel quand quelqu'un rejoint $1",
 	'founderemails-pref-edits' => "Envoyez-moi un courriel quand quelqu'un modifie $1",
@@ -2171,7 +2173,7 @@ Vous pouvez toujours vous rendre sur l’activité du wiki pour voir les modific
 	'founderemails-pref-complete-digest-v2' => '...un compte-rendu quotidien des premières fois, modifications et vues est prêt',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -2508,11 +2510,29 @@ Sempre pode pasar pola actividade do wiki para ollar todos os cambios que se est
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'founderemails-desc' => 'Segít tájékoztatni a wiki alapítóit a rajta történt változásokról',
 	'tog-founderemailsenabled' => 'Küldj emailt róla, mit csinálnak a többiek (csak alapítók)',
-	'founderemails-email-user-registered-subject' => 'Valaki regisztrált a wikiden!',
+	'founderemails-email-user-registered-subject' => 'Valaki csatlakozott a(z) $WIKINAME wikihez',
+	'founderemails-email-user-registered-body' => 'Szia, $USERNAME!
+
+Gratulálunk! $EDITORNAME éppen most csatlakozott a(z) $WIKINAME wikihez.
+
+Használd ki a lehetőséget, hogy üdvözöld és szerkesztésre bátorítsd őt. Minél többször teszed ezt, annál vígabban és gyorsabban fog nőni a wikid.
+
+$EDITORPAGEURL
+
+A Wikia csapat',
+	'founderemails-email-user-registered-greeting' => 'Szia, $USERNAME!',
+	'founderemails-email-user-registered-headline' => 'Gratulálunk! $EDITORNAME éppen most csatlakozott a(z) $WIKINAME wikihez.',
+	'founderemails-email-user-registered-content' => 'Használd ki a lehetőséget, hogy üdvözöld és szerkesztésre bátorítsd őt. Minél többször teszed ezt, annál vígabban és gyorsabban fog nőni a wikid.',
+	'founderemails-email-user-registered-signature' => 'A Wikia csapat',
+	'founderemails-email-user-registered-button' => 'Üdvözöld őt!',
+	'founderemails-email-user-registered-body-HTML' => 'Szia, $USERNAME!<br /><br />
+Úgy tűnik, $EDITORNAME regisztrált a wikidre! Ugorj be <a href="$EDITORTALKPAGEURL">a vitalapjára</a> és köszönj neki!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- A Wikia csapat</div>',
 	'founderemails-email-0-days-passed-subject' => 'Üdvözlünk a Wikián!',
 	'founderemails-email-0-days-passed-body' => 'Gratulálunk a(z) $WIKINAME létrehozásához ‒ tagja lettél a Wikia közösségnek!
 
@@ -3224,6 +3244,13 @@ $messages['kn'] = array(
 	'founderemails-answers-email-page-edited-anon-subject' => 'ಯಾರೋ ನಿಮ್ಮ ತಾಣವನ್ನು ಬದಲಾಯಿಸಿದರು!',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'founderemails-email-first-edit-headline' => 'Joot. Uns Metmaacher $EDITORNAME hät sing eetste Änderong op $WIKINAME jemaat.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -3394,7 +3421,7 @@ $PAGEURL
 	'founderemails-email-general-edit-headline' => 'Корисникот $USERNAME штотуку изврши друго уредување на страницата $WIKINAME на $PAGETITLE.',
 	'founderemails-email-general-edit-content' => 'Појдете на $PAGETITLE за да проверите што е додадено.',
 	'founderemails-email-general-edit-signature' => 'Екипата на Викија',
-	'founderemails-email-general-edit-button' => 'Check it out!',
+	'founderemails-email-general-edit-button' => 'Погледајте го!',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Здраво $USERNAME,<br /><br />
 Регистрираниот корисник $EDITORNAME го уреди вашето вики! Зошто не пуштите поздрав на неговата <a href="$EDITORTALKPAGEURL">страница за разговор</a>?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
@@ -4874,8 +4901,8 @@ $PAGEURL
 
 Zespół Wikii',
 	'founderemails-email-first-edit-greeting' => 'Witaj $USERNAME,',
-	'founderemails-email-first-edit-headline' => 'Bardzo dobrze! $EDITORNAME dokonał(a) swojej pierwszej edycji na $WIKINAME.',
-	'founderemails-email-first-edit-content' => 'Udaj się na $PAGETITLE by sprawdzić, co zostało dodane.',
+	'founderemails-email-first-edit-headline' => 'Świetnie! $EDITORNAME dokonał(a) swojej pierwszej edycji na $WIKINAME.',
+	'founderemails-email-first-edit-content' => 'Odwiedź stronę $PAGETITLE by sprawdzić, co zostało dodane.',
 	'founderemails-email-first-edit-signature' => 'Zespół Wikii',
 	'founderemails-email-first-edit-button' => 'Sprawdź!',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Witaj $USERNAME,<br /><br />
@@ -4899,7 +4926,7 @@ Zespół Wikii',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Witaj $USERNAME,<br /><br />
 Wygląda na to, że zarejestrowany użytkownik $EDITORNAME edytował Twoją wiki! Możesz wykorzystać tę okazję aby przywitać się na jego/jej <a href="$EDITORTALKPAGEURL">stronie dyskusji</a><br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Zespół Wikii</div>',
-	'founderemails-email-page-edited-anon-subject' => 'Tajemniczy przyjaciel dokonał zmian na $WIKINAME',
+	'founderemails-email-page-edited-anon-subject' => 'Niezarejestrowany użytkownik dokonał zmian na $WIKINAME',
 	'founderemails-email-page-edited-anon-body' => 'Witaj $USERNAME,
 
 Wygląda na to, że niezarejestrowany użytkownik dokonał zmiany $PAGETITLE na $WIKINAME.
@@ -5240,14 +5267,19 @@ A-i é un mucc ëd ròba capità su soa wiki ancheuj! Ch\'a vada ansima a $MYHOM
  */
 $messages['ps'] = array(
 	'founderemails-email-user-registered-subject' => 'يو نوی غړی د $WIKINAME سره يوځای شو',
+	'founderemails-email-user-registered-greeting' => 'سلامونه $USERNAME،',
+	'founderemails-email-user-registered-signature' => 'د ويکيا ډله',
 	'founderemails-email-0-days-passed-subject' => 'ويکييا ته ښه راغلۍ!',
 	'founderemails-email-first-edit-greeting' => 'سلامونه $USERNAME،',
+	'founderemails-email-first-edit-signature' => 'د ويکيا ډله',
 	'founderemails-email-first-edit-button' => 'وې آزمويۍ!',
 	'founderemails-email-general-edit-greeting' => 'سلامونه $USERNAME،',
+	'founderemails-email-general-edit-signature' => 'د ويکيا ډله',
 	'founderemails-email-general-edit-button' => 'وې آزمويۍ!',
 	'founderemails-email-anon-edit-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-anon-edit-signature' => 'د ويکيا ډله',
 	'founderemails-email-anon-edit-button' => 'وې آزمويۍ!',
+	'founderemails-email-lot-happening-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-lot-happening-signature' => 'د ويکيا ډله',
 	'founderemails-email-0-day-addpages-heading' => 'مخونه ورګډول.',
 	'founderemails-email-0-day-addpages-button' => 'يو مخ ورګډول',
@@ -5261,12 +5293,13 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author Rhaijin
  * @author Waldir
  */
 $messages['pt'] = array(
 	'founderemails-desc' => 'Ajuda a informar os fundadores acerca das mudanças na sua wiki',
 	'tog-founderemailsenabled' => 'Enviar-me por correio electrónico actualizações sobre aquilo que os outros têm feito (só para fundadores)',
-	'founderemails-email-user-registered-subject' => 'Alguém registou uma conta na sua wiki!',
+	'founderemails-email-user-registered-subject' => 'Alguém novo juntou $ WikiName',
 	'founderemails-email-user-registered-body' => 'Olá $USERNAME,
 
 Parece que o utilizador $EDITORNAME se registou na sua wiki! Que tal ir à página de discussão $EDITORTALKPAGEURL e dizer-lhe olá?
@@ -6143,47 +6176,342 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'founderemails-desc' => 'Tumutulong sa pagpapabatid sa mga tagapagtatag tungkol sa mga pagbabago sa kanilang wiki',
 	'tog-founderemailsenabled' => 'Padalhan ako ng mga pagsasapanahon sa pamamagitan ng e-liham kung ano ang ginagawa ng ibang mga tao (mga tagapagtatag lamang)',
-	'founderemails-email-user-registered-subject' => 'May isang taong nagpatala ng akawnt sa wiki mo!',
-	'founderemails-email-user-registered-body' => 'Hoy $USERNAME,
+	'founderemails-email-user-registered-subject' => 'May isang bagong tao na sumali sa $WIKINAME',
+	'founderemails-email-user-registered-body' => 'Kumusta $USERNAME,
 
-Tila nagpatala si $EDITORNAME sa wiki mo! Bakit hindi ka dumalaw sa kanilang pahina ng usapang $EDITORTALKPAGEURL upang magsabi ng pagbati?
+Maligayang bati! Sumali na si $EDITORNAME sa $WIKINAME.
 
--- Ang Pangkat ng Wikia',
+Gamitin ang pagkakataong ito upang tanggapin sila nang malugod sa wiki mo at hikayatin silang tumulong sa pamamatnugot. Mas masaya ang marami, at mas matulin ang paglaki ng wiki.
+
+$EDITORPAGEURL
+
+Ang Pangkat ng Wikia',
+	'founderemails-email-user-registered-greeting' => 'Kumusta $USERNAME,',
+	'founderemails-email-user-registered-headline' => 'Maligayang bati! Sumali na si $EDITORNAME sa $WIKINAME.',
+	'founderemails-email-user-registered-content' => 'Gamitin ang pagkakataong ito upang tanggapin sila ng malugod sa wiki mo at himukin silang tumulong sa pamamatnugot. Mas marami mas masaya, at mas mabilis na lalaki ang wiki mo.',
+	'founderemails-email-user-registered-signature' => 'Ang Pangkat ng Wikia',
+	'founderemails-email-user-registered-button' => 'Tanggapin Sila Nang Malugod',
 	'founderemails-email-user-registered-body-HTML' => 'Hoy $USERNAME,<br /><br />
 Tila nagpatala si $EDITORNAME sa iyong wiki! Bakit hindi ka dumalaw sa kanilang<a href="$EDITORTALKPAGEURL">pahina ng usapan</a> upang magsabi ng pagbati?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Maligayang pagdating sa Wikia!',
-	'founderemails-email-0-days-passed-body' => 'Maligayang bati sa paglikha ng $WIKINAME - isa ka nang bahagi ng pamayanan ng Wikia!
+	'founderemails-email-0-days-passed-body' => 'Ikinagagalak ka naming makilala $USERNAME,
 
--- Ang Pangkat ng Wikia',
+Maligayang bati sa paglikha ng $WIKINAME, $WIKIURL.
+
+Narito ang mangilan-ngilang makakatulong na mga payo upang makapagsimula ka na:
+
+Magdagdag ng mga pahina. Ang isang wiki ay pangkalahatang patungkol sa pagpapamahagi ng kabatiran hinggil sa natatangi mong paksa.
+
+Magdagdag ng mga larawan. Ang mga pahina ay palagiang mas mainam kapag mayroon silang mga pampaningin! Magdagdag ng mga litrato sa mga pahina mo at sa iyong pangunahing pahina.
+
+Ipasadya ang iyong tema. Ipasadya ang tema ng wiki mo at markang pananalita upang magawang bukod-tangi! Gamitin ang Tagapagdisenyo ng Tema upang makapagdagdag ng pasadyang mga kulay sa wiki mo at gawin itong natatangi sa iyong paksa.
+
+Hindi ka namin iiwang nag-iisa at nangangatog. Naririto kami upang tulungan kang gawing matagumpay ang $WIKINAME sa bawat hakbang na tatahakin. Dalawin ang http://community.wikia.com para sa mga porum, payo at tulong, o upang elektronikong mailiham sa amin ang mga katanungan mo!
+
+Maligayang pagbubuo ng wiki! Ang Pangkat ng Wikia
+
+___________________________________________
+
+Upang makita at masuri ang pinaka huling mga pangyayari sa Wikia, dalawin ang http://community.wikia.com
+Nais kontrolin ang kung aling mga e-liham ang tatanggapin mo? Magpunta sa: http://messaging.wikia.com/wiki/Special:Preferences.
+Pindutin ang sumusunod na kawing upang huwag nang magpasipi mula sa lahat ng mga e-liham ng Wikia: $UNSUBSCRIBEURL',
 	'founderemails-email-0-days-passed-body-HTML' => 'Maligayang bati sa paglikha ng <strong>$WIKINAME</strong> - isa ka nang bahagi ng pamayanan ng Wikia!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
-	'founderemails-email-3-days-passed-subject' => 'Sinusuri sa',
-	'founderemails-email-3-days-passed-body' => 'Hoy diyan $USERNAME,
+	'founderemails-email-3-days-passed-subject' => 'Kumusta na ba ang lagay ng mga bagay-bagay sa wiki mo?',
+	'founderemails-email-3-days-passed-body' => 'Kumusta na riyan $USERNAME,
 
-Ngayong ilang araw ka nang nasa wiki mo, iniisip namang baka nais mong suriin ang mangilan-ngilang mga bagay na magagawa mo. 
+Nais naming mangumusta at tingnan kung ano na ba ang lagay doon sa $WIKINAME, $WIKIURL.
 
--- Ang Pangkat ng Wikia',
+3 mga araw na ang nakalilipas magmula noong magsimula ka at inisip naming sumaglit upang
+mag-alok ng ilan pang mga payo hinggil sa pagbubuo ng iyong wiki:
+
+Linisin ang iyong pangunahing pahina. Ang pangunahing pahina ang isa sa unang mga bagay 
+na nakikita ng mga tao kapag dumadalaw sila sa $WIKINAME. Mag-iwan ng isang magandang
+bakas sa pamamagitan ng pagsusulat ng isang madetalyeng buod ng kung patungkol saan ang
+iyong paksa at pagdaragdag ng isang palabas na dumudulas, galeriya, o pampadulas ng litrato. 
+
+Magdagdag ng higit na mas marami pang mga litrato. Isa sa pinaka mahusay na mga paraan 
+upang magawang lumalagitik, kumakaluskos, at bumubusa ay ang "pagdaragdag ng ilang mga
+larawan".
+
+Maghanap ng inspirasyon. Huwag mangambang tanawin at suriin ang iba pang mga wiki upang 
+makita kung paano nila naitatag ang kanilang pangunahing pahina, mga pahina ng mga artikulo
+at marami pa. Narito ang ilan sa aming mga paborito: Muppet Wiki, Pop Tarts Wiki, Monster High 
+Wiki.
+
+Kailangan ang tulong sa pag-alam kung paano gumagana ang isang bagay? Palagi kaming naririto
+para sa iyo! Halika\'t humingi sa amin ng tulong at payo roon sa http://community.wikia.com.
+
+Ipagpatuloy ang mahusay na gawain!
+Ang Pangkat ng Wikia
+
+
+Upang makita at masuri ang pinaka huling mga pangyayari sa Wikia, dalawin ang community.wikia.com
+Nais kontrolin kung aling mga elektronikong liham ang tatanggapin mo? Magpunta sa iyong 
+http://community.wikia.com/wiki/Special:Preferences',
 	'founderemails-email-3-days-passed-body-HTML' => 'Hoy diyan $USERNAME,<br /><br />
 Ngayon ilang araw ka nang nasa wiki mo, iniisip naming baka nais mong suriin ang mangilan-ngilang ibang mga bagay na magagawa mo.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
-	'founderemails-email-10-days-passed-subject' => 'Kumusta na ang mga bagay-bagay sa wiki mo?',
-	'founderemails-email-10-days-passed-body' => 'Hoy $USERNAME,
+	'founderemails-email-10-days-passed-subject' => 'Maligayang ika-10 araw na anibersaryo!',
+	'founderemails-email-10-days-passed-body' => 'Kumusta na ba $USERNAME?
 
-Matagal-tagal na rin magmula noong magsimula ka ng isang wiki sa Wikia - umaasa kaming mabuti naman ang pagtakbo niyon! Nais sana naming mamahagi ng ilang panghuling mga piraso upang maging parang isang tahanan ang wiki mo.
+Aba, talagang lumilipad ang oras! 10 mga araw na ang nakalipas magmula noong simulan mo ang $WIKINAME, $WIKIURL.
+
+Hikayating makilahok ang iba pang mga tao sa iyong proyekto at ipagmagaling ang lahat ng kagila-gilalas na gawaing ginagawa mo!
+Naririto ang ilang mga pamamaraan upang maikalat ang balita:
+
+Hindi ka ba pinagpayuhan ng nanay mo na Magpamahagi? Gamitin ang pindutang Ibahagi na nasa ibabaw ng pangunahing pahina ng
+pangunahing pahina ng wiki mo, mga pahina ng artikulo at mga litrato upang maipagmalaki ang mga ito sa mga kaibigan mo at mga
+Tagasunod sa Facebook, Twitter o iba pang sikat na mga pook.
+
+Gamitin ang kapangyarihan ng elektronikong liham. Padalhan ng e-liham ang iba mo pang mga kakilala na mahuhumaling sa paksa mo
+o magnanais na tulungan ka, katulad ng isang kaibigan mula sa paaralan o isang kasamahan sa hanapbuhay. Maaari mo ring ipadala sa
+pamamagitan ng e-liham ang partikular na mga litrato mula sa iyong wiki na ginagamit ang pindutan ng e-liham.
+
+Makipiling sa kahalintulad na mga pook sa sangkasaputan. Humingi ng tulong mula sa mga tao na nasa ibang mga porum o mga pook sa sangkasaputan
+na hinggil sa paksa mo, sa pamamagitan ng pagpapaskil sa kanilang mga porum o mga puna. Kung maaari, makipag-ugnayan sa tagapangasiwa at tingnan
+kung interesado sila sa pakikisalo ng kawing — ilalagay nila ang kawing ng wiki mo sa kanilang websayt kapag inilagay mo ang kanilang kawing sa wiki mo.
+
+Mahihingan mo rin ng tulong ang iba pang mga Wikidista na tumulong sa wiki mo sa pamamagitan ng pagpapaskil sa loob ng mga porum na nasa http://community.wikia.com.  
+
+Ipagpatuloy ang mahusay na gawain!
+
+Ang Pangkat ng Wikia
+
+___________________________________________
+
+Upang matingnan at masuri ang pinaka huling mga kaganapan sa Wikia, dumalaw sa http://community.wikia.com
+Nais kontrolin kung aling mga elektronikong liham ang matatanggap mo? Magpunta sa: http://messaging.wikia.com/wiki/Special:Preferences.
+Pindutin ang sumusunod na kawing upang huwag nang magpasipi mula sa lahat ng mga e-liham ng Wikia: $UNSUBSCRIBEURL',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Mayroong isang bagong pamamatnugot ang $WIKINAME!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Kumusta $USERNAME,
+
+Ayos! Kagagawa lamang ni $EDITORNAME ng pinaka una nilang pagbabago sa $WIKINAME.
+
+Magpunta na sa $PAGETITLE upang matanaw kung ano ang idinagdag nila.
+
+$PAGEURL
+
+Ang Pangkat ng Wikia',
+	'founderemails-email-first-edit-greeting' => 'Kumusta $USERNAME,',
+	'founderemails-email-first-edit-headline' => 'Oo! Nakagawa na si $EDITORNAME ng pinaka una nilang pagbabago sa $WIKINAME.',
+	'founderemails-email-first-edit-content' => 'Magtungo sa $PAGETITLE upang matingnan at suriin kung ano ang idinagdag nila.',
+	'founderemails-email-first-edit-signature' => 'Ang Pangkat ng Wikia',
+	'founderemails-email-first-edit-button' => 'Tingnan at suriin ito!',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Hoy $USERNAME,<br /><br />
+Mukhang namatnugot sa wiki mo sa unang pagkakataon ang nakarehistrong tagagamit na si $EDITORNAME! Dalawin mo kaya ang kanilang <a href="$EDITORTALKPAGEURL">pahina ng usapan</a> upang mangumusta?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
+	'founderemails-email-page-edited-reg-user-subject' => 'Bagong pamamatnugot sa $WIKINAME!',
+	'founderemails-email-page-edited-reg-user-body' => 'Kumusta $USERNAME,
+
+Kagagawa lang ni $EDITORNAME ng isa pang pagbabago sa $WIKINAME hinggil sa $PAGETITLE.
+
+Pumunta sa $PAGETITLE upang makita kung ano ang binago nila.
+
+$PAGEURL
+
+Ang Pangkat ng Wikia',
+	'founderemails-email-general-edit-greeting' => 'Kumusta $USERNAME,',
+	'founderemails-email-general-edit-headline' => 'Gumawa si $EDITORNAME ng isa pang pamamatnugot sa $WIKINAME doon sa $PAGETITLE.',
+	'founderemails-email-general-edit-content' => 'Magtungo sa $PAGETITLE upang matingnan at suriin kung ano ang idinagdag nila.',
+	'founderemails-email-general-edit-signature' => 'Ang Pangkat ng Wikia',
+	'founderemails-email-general-edit-button' => 'Tingnan at suriin ito!',
+	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hoy $USERNAME,<br /><br />
+Mukhang namatnugot sa wiki mo sa unang pagkakataon ang nakarehistrong tagagamit na si $EDITORNAME! Dumalaw ka kaya sa kanilang <a href="$EDITORTALKPAGEURL">pahina ng usapan</a> upang mangumusta?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
+	'founderemails-email-page-edited-anon-subject' => 'Isang hindi malirip na kaibigan ang namatnugot ng $WIKINAME',
+	'founderemails-email-page-edited-anon-body' => 'Kumusta $USERNAME,
+
+Isang Tagapag-ambag sa Wikia ang kagagawa pa lamang ng ng isang pagbabago sa $PAGETITLE doon sa $WIKINAME.
+
+Ang mga Tagapag-ambag sa Wikia ay mga tao na gumagawa ng mga pagbabago na hindi lumalagdang papasok sa isang akawnt ng Wikia. Sumige at tingnan ang kung ano ang idinagdag ng hindi malirip na kaibigang ito!
+
+$PAGEURL
+
+Ang Pangkat ng Wikia',
+	'founderemails-email-anon-edit-greeting' => 'Kumusta $USERNAME,',
+	'founderemails-email-anon-edit-headline' => 'Isang Tagapag-ambag sa Wikia ang kagagawa pa lamang ng isang pagbabago sa $PAGETITLE doon sa $WIKINAME.',
+	'founderemails-email-anon-edit-content' => 'Ang mga Tagapag-ambag ng Wikia ay mga tao na gumagawa ng mga pamamatnugot na hindi lumalagdang papasok sa isang akawnt ng Wikia. Pumunta at tingnan kung ano ang idinagdag ng hindi malirip na kaibigang ito!',
+	'founderemails-email-anon-edit-signature' => 'Ang Pangkat ng Wikia',
+	'founderemails-email-anon-edit-button' => 'Tingnan at suriin ito!',
+	'founderemails-email-page-edited-anon-body-HTML' => 'Hoy $USERNAME,<br /><br />
+Mukhang mayroong isang tao na namatnugot sa wiki mo! Bakit hindi mo kaya <a href="$MYHOMEURL">siyasatin ito</a> upang makita kung ano ang nabago?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
+	'founderemails-answers-email-user-registered-subject' => 'May isang taong nagpatala ng isang akawnt sa iyong wiki ng QA!',
+	'founderemails-answers-email-user-registered-body' => 'Hoy $USERNAME,
+
+Mukhang nagparehistro na si $EDITORNAME sa wiki mo! E kung dumalaw ka kaya sa kanilang pahina ng usapan na $EDITORTALKPAGEURL upang mangumusta?
 
 -- Ang Pangkat ng Wikia',
-	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Binago ng nakatalang tagagamit ang wiki mo sa unang pagkakataon!',
-	'founderemails-email-page-edited-reg-user-subject' => 'Binago ng nagpatalang tagagamit ang wiki mo!',
-	'founderemails-email-page-edited-anon-subject' => 'May taong nagbago ng wiki mo!',
-	'founderemails-answers-email-user-registered-subject' => 'May isang taong nagpatala ng isang akawnt sa iyong wiki ng QA!',
+	'founderemails-answers-email-user-registered-body-HTML' => 'Hoy $USERNAME,<br /><br />
+Tila nagpatala si $EDITORNAME sa iyong wiki! Bakit hindi ka dumalaw sa kanilang<a href="$EDITORTALKPAGEURL">pahina ng usapan</a> upang magsabi ng pagbati?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Maligayang pagdating sa Wikia ng QA!',
+	'founderemails-answers-email-0-days-passed-body' => 'Maligayang pagbati sa paglikha ng $WIKINAME - bahagi ka na ngayon ng pamayanan ng Wikia!
+
+-- Ang Pamayanan ng Wikia',
+	'founderemails-answers-email-0-days-passed-body-HTML' => 'Maligayang bati sa paglikha ng <strong>$WIKINAME</strong> - isa ka nang bahagi ng pamayanan ng Wikia!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
 	'founderemails-answers-email-3-days-passed-subject' => 'Sinusuri sa',
+	'founderemails-answers-email-3-days-passed-body' => 'Hoy ka diyan $USERNAME,
+
+Ngayon may iilang ka araw ka na sa loob ng wiki mo, naisip namin na maaaring gustuhin mong siyasatin ang mangilan-ngilang iba pang mga bagay na maaari mong gawin.
+
+-- Ang Pangkat ng Wikia',
+	'founderemails-answers-email-3-days-passed-body-HTML' => 'Hoy diyan $USERNAME,<br /><br />
+Ngayon ilang araw ka nang nasa wiki mo, iniisip naming baka nais mong suriin ang mangilan-ngilang ibang mga bagay na magagawa mo.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
 	'founderemails-answers-email-10-days-passed-subject' => 'Kumusta ang mga bagay-bagay sa iyong wiki?',
+	'founderemails-answers-email-10-days-passed-body' => 'Hoy $USERNAME,
+
+May katagalan na rin magmula noong simulan mo ang iyong wiki sa Wikia - umaasa kaming mabuti ang lagay nito! Nais sana naming magbahagi ng mangilan-ngilang panghuling maliliit na mga piraso upang makatulong na magawang parang tahanan ang wiki mo.
+
+-- Ang Pangkat ng Wikia',
+	'founderemails-answers-email-10-days-passed-body-HTML' => 'Hoy $USERNAME,<br /><br />
+May bahagyang katagalan na rin magmula noong pasimulan mo ang isang wiki sa Wikia - umaasa kaming mabuti ang kalagayan nito! Nagnanais kaming magbahagi ng ilan-ilang maliliit na mga butil upang makatulong na magawang kahalintulad ng isang tahanan ang iyong wiki.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Binago ng nakapagpatalang tagagamit ang sityo mo sa unang pagkakataon!',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'Hoy $USERNAME,
+
+Mukhang ang nakarehistrong tagagamit na si $EDITORNAME ay nakapamatnugot na sa wiki mo sa unang pagkakataon! Dalawin mo kaya ang kanilang pahina ng usapan ($EDITORTALKPAGEURL) upang magsabi ng kumusta?
+
+-- Ang Pangkat ng Wikia',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => 'Hoy $USERNAME,<br /><br />
+Mukhang namatnugot sa wiki mo sa unang pagkakataon ang nakarehistrong tagagamit na si $EDITORNAME! Dalawin mo kaya ang kanilang <a href="$EDITORTALKPAGEURL">pahina ng usapan</a> upang mangumusta?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
 	'founderemails-answers-email-page-edited-reg-user-subject' => 'Binago ng nagpatalang tagagamit ang iyong sityo!',
+	'founderemails-answers-email-page-edited-reg-user-body' => 'Hoy $USERNAME,
+
+Mukhang ang nakarehistrong tagagamit na si $EDITORNAME ay namatnugot na sa wiki mo! Dalawin mo kaya ang kanilang pahina ng usapan ($EDITORTALKPAGEURL) upang bumati ng kumusta?
+
+-- Ang Pangkat ng Wikia',
+	'founderemails-answers-email-page-edited-reg-user-body-HTML' => 'Hoy $USERNAME,<br /><br />
+Mukhang namatnugot sa wiki mo sa unang pagkakataon ang nakarehistrong tagagamit na si $EDITORNAME! Dumalaw ka kaya sa kanilang <a href="$EDITORTALKPAGEURL">pahina ng usapan</a> upang mangumusta?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
 	'founderemails-answers-email-page-edited-anon-subject' => 'May tao na nagbago ng iyong sityo!',
-	'founderemails-lot-happening-subject' => 'Maraming nagaganap sa sityo mo ngayong araw na ito!',
+	'founderemails-answers-email-page-edited-anon-body' => 'Hoy $USERNAME,
+
+Mukhang mayroong isang tao na namatnugot sa wiki mo! Siyasatin mo kaya ito $MYHOMEURL upang matanaw kung ano ang nagbago?
+
+-- Ang Pangkat ng Wikia',
+	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hoy $USERNAME,<br /><br />
+Mukhang mayroong isang tao na namatnugot sa wiki mo! Bakit hindi mo kaya <a href="$MYHOMEURL">siyasatin ito</a> upang makita kung ano ang nabago?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
+	'founderemails-lot-happening-subject' => 'Nag-aalab na ang $WIKINAME!',
+	'founderemails-lot-happening-body' => 'Hoy $USERNAME,
+
+Maligayang bati, marami nang nagaganap doon sa $WIKINAME, $WIKIURL.
+
+Kung hindi pa nagagawa, makakapunta ka sa Gawain ng Wiki at tingnan ang lahat ng kahanga-hangang mga gawaing nangyayari.
+
+Dahil sa napakarami ng mga nagaganap, maaaring nais mo ring baguhin ang iyong kanaisan ng e-liham upang maging nasa gawi ng pagbubuod. Sa pamamagitan ng pagbuhay sa gawi na nagbubuod, makakatanggap ka ng isang elektronikong liham na nagtatala ng lahat ng mga gawain sa wiki mo sa bawat isang araw.
+
+Ang Pangkat ng Wikia',
+	'founderemails-lot-happening-body-HTML' => 'Hoy $USERNAME,<br /><br />
+Maraming mga nangyayari sa wiki mo ngayong araw na ito! Dumalaw sa $MYHOMEURL makita kung ano ang nagaganap.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
+	'founderemails-email-lot-happening-greeting' => 'Kumusta $USERNAME,',
+	'founderemails-email-lot-happening-headline' => 'Maligayang bati, maraming mga nagaganap doon sa $WIKINAME ngayong araw na ito!',
+	'founderemails-email-lot-happening-content' => 'Kung hindi mo pa nagagawa, maaari kang pumunta sa Gawain ng Wiki at tingnan ang lahat ng dakilang mga gawain na nagaganap. Dahil mayroong napakaraming mga nangyayari, maaaring gustuhin mong baguhin ang iyong mga kanaisan ng e-liham upang maging nasa gawi ng pagbubuod. Sa pamamagitan ng pagbuhay sa gawi na nagbubuod, makakatanggap ka ng isang elektronikong liham na naglilista ng lahat ng mga gawain sa wiki mo sa bawat isang araw.',
+	'founderemails-email-lot-happening-signature' => 'Ang Pangkat ng Wikia',
+	'founderemails-email-lot-happening-button' => 'Tingnan Ang Mga Gawain',
+	'founderemails-email-footer-line1' => 'Upang masiyasat ang pinaka huling mga kaganapan sa Wikia, dalawin ang <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'founderemails-email-footer-line2' => 'Nais mong tabanan ang tinatanggap mong mga e-liham? Pumunta sa iyong <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Mga nais</a>',
+	'founderemails-email-0-day-heading' => 'Ikinagagalak ka naming makilala $USERNAME,',
+	'founderemails-email-0-day-congratulations' => 'Maligayang pagbati sa pagkakalikha ng $HDWIKINAME!',
+	'founderemails-email-0-day-tips-heading' => 'Narito ang isang mangilan-ngilang makakatulong ng mga payo upang makapagsimula ka na:',
+	'founderemails-email-0-day-addpages-heading' => 'Magdagdag ng mga pahina.',
+	'founderemails-email-0-day-addpages-content' => 'Ang wiki ay patungkol na lahat sa pagpapamahagi ng kabatiran hinggil sa iyong namumukod-tanging paksa. Lumikha ng mga pahina sa pamamagitan ng pagpindot sa <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPAGEURL">"Magdagdag ng Isang Pahina"</a> at magpuno ng mas marami pang tiyak na impormasyon hinggil sa paksa mo.',
+	'founderemails-email-0-day-addpages-button' => 'Magdagdag ng isang Pahina',
+	'founderemails-email-0-day-addphotos-heading' => 'Magdagdag ng mga larawan.',
+	'founderemails-email-0-day-addphotos-content' => 'Palaging mas mainam ang mga pahina kapag mayroong mga pampaningin ang mga ito! Magdagdag ng mga litrato sa mga pahina mo at sa iyong pangunahing pahina. Maaari mong lagitikin ang <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">"Magdagdag ng isang Litrato"</a> upang makapagdagdag ng isang litrato, ng isang galeriya ng larawan, o ng isang palabas na dumudulas.',
+	'founderemails-email-0-day-addphotos-button' => 'Magdagdag ng isang Larawan',
+	'founderemails-email-0-day-customizetheme-heading' => 'Ipasadya ang tema mo.',
+	'founderemails-email-0-day-customizetheme-content' => 'Ipasadya ang tema at markang pananalita ng wiki mo upang maging katangi-tangi ang iyong wiki! Gamitin ang <a style="color:#2a87d5;text-decoration:none;" href="$CUSTOMIZETHEMEURL">Tagapagdisenyo ng Tema</a> upang makapagdagdag ng pasadyang mga kulay sa wiki mo at gawin itong bukod-tangi para sa iyong paksa.',
+	'founderemails-email-0-day-customizetheme-button' => 'Ipasadya',
+	'founderemails-email-0-day-wikiahelps-text' => '<span style="color:#2a87d5;font-weight:bold">Hindi ka namin iiwanang nangangatog.</span>  Naririto kami upang matulungan kang gawing matagumpay ang $WIKINAME sa bawat hakbang sa landas. Dalawin ang <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> para sa mga porum, payo, at tulong, o upang <a style="color:#2a87d5;text-decoration:none;" href="http://www.wikia.com/Special:Contact">padalhan kami ng elektronikong liham</a> upang makapagtanung-tanong ka!',
+	'founderemails-email-0-day-wikiahelps-signature' => 'Maligayang pagbubuo ng wiki!<br />Ang Pangkat ng Wikia',
+	'founderemails-email-3-day-heading' => 'Kumusta ka $USERNAME,',
+	'founderemails-email-3-day-congratulations' => 'Nais sana naming mangumusta at tingnan kung ano na ba ang kalagayan ng mga bagay-bagay doon sa $HDWIKINAME.',
+	'founderemails-email-3-day-tips-heading' => '3 mga araw na ang nakalilipas magmula nang magsimula ka at naisip naming dumalaw upang mag-alok ng ilan pang mga payo hinggil sa pagbubuo ng wiki mo:',
+	'founderemails-email-3-day-editmainpage-heading' => 'Linisin ang iyong pangunahing pahina.',
+	'founderemails-email-3-day-editmainpage-content' => 'Isa ang pangunahing pahina sa unang mga bagay na makikita ng mga tao kapag dumadalaw sila sa <a href="$WIKIURL" style="color:#2a87d5;text-decoration:none;">$WIKINAME</a>. Gumawa ng isang mabuting unang kakintalan sa pamamagitan ng pagsusulat ng isang madetalyeng buod ng kung sa ano patungkol ang paksa mo at pagdaragdag ng isang palabas na dumudulas, galeriya, o pampadulas ng litrato.',
+	'founderemails-email-3-day-editmainpage-button' => 'Linisin Ito',
+	'founderemails-email-3-day-addphotos-heading' => 'Magdagdag ng mas marami pang mga litrato.',
+	'founderemails-email-3-day-addphotos-content' => 'Isa sa pinaka mabisang mga paraan upang magawang lumagitik, kumaluskos, at lumagutok ang mga pahina mo ay ang <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">"magdagdag ng ilang mga litrato"</a>.',
+	'founderemails-email-3-day-addphotos-button' => 'Magdagdag ng mga Litrato',
+	'founderemails-email-3-day-explore-heading' => 'Maghanap ng pamukaw-sigla.',
+	'founderemails-email-3-day-explore-content' => 'Huwag matakot na siyasatin ang iba pang mga wiki upang makita kung paano nila naitatag ang kanilang pangunahing pahina, mga pahina ng artikulo at marami pang iba. Naririto ang ilan sa aming mga kinagigiliwan: <a style="color:#2a87d5;text-decoration:none;" href="http://muppets.wikia.com">Muppet Wiki</a>, <a style="color:#2a87d5;text-decoration:none;" href="http://poptarts.wikia.com">Pop Tarts Wiki</a>, <a style="color:#2a87d5;text-decoration:none;" href="http://monsterhigh.wikia.com">Monster High Wiki</a>.',
+	'founderemails-email-3-day-explore-button' => 'Manggalugad',
+	'founderemails-email-3-day-wikiahelps-text' => 'Nangangailangan ng tulong sa pag-alam kung paano gumagana ang isang bagay? Palagi kaming naririto para sa iyo! Halika at humingi sa amin ng tulong at payo roon sa <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
+	'founderemails-email-3-day-wikiahelps-signature' => 'Ipagpatuloy ang mahusay na gawain!<br />Ang Pangkat ng Wikia',
+	'founderemails-email-10-day-heading' => 'Kumusta ka na ba $USERNAME?',
+	'founderemails-email-10-day-congratulations' => 'Aba, ang bilis talaga ng panahon! 10 araw na pala ang nakalipas magmula noong simulan mo ang $HDWIKINAME.',
+	'founderemails-email-10-day-tips-heading' => 'Hikayatin ang ibang mga tao na makisangkot sa proyekto mo at at ipagmagaling ang lahat ng kagila-gilalas na mga gawaing ginagawa mo! Narito ang ilang mga paraan upang maikalat ang balita:',
+	'founderemails-email-10-day-share-heading' => 'Hindi ka ba pinagsabihan ng nanay mo Magpamahagi?',
+	'founderemails-email-10-day-share-content' => 'Gamitin ang pindutang Ibahagi na nasa ibabaw ng pangunahing pahina ng wiki mo, mga artikulo ng pahina at mga larawan upang ipagmagaling ang mga ito sa mga kaibigan at mga tagasunod mo sa Facebook.',
+	'founderemails-email-10-day-email-heading' => 'Gamitin ang kapangyarihan ng elektronikong liham.',
+	'founderemails-email-10-day-email-content' => 'Magpadala ng elektronikong liham sa iba mo pang mga kakilala na mahiligin sa iyong paksa o nagnanais na makatulong sa iyo, katulad ng isang kaibigan mula sa paaralan o isang kasamahan sa hanapbuhay. Maaari ka ring magpadala ng partikular na mga litrato sa pamamagitan ng elektronikong liham magmula sa wiki mo na ginagamit ang pindutan ng e-liham',
+	'founderemails-email-10-day-join-heading' => 'Makiisa sa kahalintulad na mga pook sa sangkasaputan.',
+	'founderemails-email-10-day-join-content' => 'Humingi ng tulong sa mga tao na nasa ibang mga porum o websayt na patungkol sa paksa mo sa pamamagitan ng pagpapaskil sa loob ng mga porum nila o mga puna. Kung maaari, makipag-ugnayan sa tagapangasiwa at tingnan kung nanaisin nila ang pagsasalo ng kawing &mdash; ilalagay nila ang iyong kawing ng wiki sa kanilang websayt kung ilalagay mo ang kanilang kawing sa iyong wiki.',
+	'founderemails-email-10-day-wikiahelps-text' => 'Maaari mo ring hilingin sa iba pang mga Wikidista na tumulong sa wiki mo sa pamamagitan ng pagpapaskil sa loob ng mga porum na nasa <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
+	'founderemails-email-10-day-wikiahelps-signature' => 'Ipagpatuloy ang mabuting gawain!<br />Ang Pangkat ng Wikia',
+	'founderemails-email-views-digest-subject' => 'Ang mga pagtingin sa $WIKINAME ngayong araw na ito',
+	'founderemails-email-views-digest-body' => 'Hoy $USERNAME,
+
+Ngayon araw na ito, ang $WIKINAME ay tiningnan ng $1 {{PLURAL:$1|tao|mga tao}}.
+
+Magpatuloy sa pagdaragdag ng bagong nilalaman at sa pagtataguyod ng wiki mo upang mahikayat na magbasa, mamatnugot, at magpakalat ng balita ang mas marami pang mga tao.
+
+$WIKIURL
+
+Ang Pangkat ng Wikia',
+	'founderemails-email-views-digest-greeting' => 'Kumusta $USERNAME,',
+	'founderemails-email-views-digest-headline' => 'Ngayon araw na ito, si $WIKINAME ay tiningnan ng $1 {{PLURAL:$1|tao|mga tao}}.',
+	'founderemails-email-views-digest-content' => 'Magpatuloy sa pagdaragdag ng bagong nilalaman at pagtataguyod ng wiki mo upang mahikayat ang mas marami pang mga tao na magbasa, mamatnugot at magpakalat ng balita.',
+	'founderemails-email-views-digest-signature' => 'Ang Pangkat ng Wikia',
+	'founderemails-email-views-digest-button' => 'Magdagdag ng mas marami pang mga pahina',
+	'founderemails-email-complete-digest-subject' => 'Ang pinakahuling paggalaw sa $WIKINAME',
+	'founderemails-email-complete-digest-body' => 'Kumusta $USERNAME,
+
+Panahon na para sa iyong pang-araw-araw na dosis ng gawain mula sa $WIKINAME, $WIKIURL.
+
+$1 {{PLURAL:$1|tao|mga tao}} ang tumingin sa wiki mo.
+
+Ipagpatuloy ang kahanga-hangang gawain ng pagdaragdag ng kahali-halinang nilalaman na mababasa ng mga tao!
+
+$2 {{PLURAL:$2|pamamatnugot|mga pamamatnugot}} ang nagawa.
+
+Ang masasayang mga wiki ay nakagagawa ng maliligayang mga wiki. Tiyakin na pasasalamat mo ang iyong mga patnugot at pana-panahong kukumustahin sila.
+
+$3 {{PLURAL:$3|tao|mga tao}} ang sumali sa wiki.
+
+Tanggapin nang malugod sa wiki mo ang bagong mga tao sa pamamagitan ng isang mensahe sa pahina ng pakikipag-usap.
+
+Palagi kang makakapunta sa gawain ng wiki upang matanaw ang lahat ng nakakapukaw na mga pagbabagong ginagawa sa $WIKINAME. Mangumusta nang madalas, bilang tagapatatag tinatanaw ka ng iyong pamayanan na makakatulong sa paggabay at pagpapatakbo ng wiki.
+
+Ang Pangkat ng Wikia',
+	'founderemails-email-complete-digest-greeting' => 'Kumusta $USERNAME,',
+	'founderemails-email-complete-digest-headline' => 'Oras na para sa iyong pang-araw-araw na dosis ng gawain mula sa $WIKINAME.',
+	'founderemails-email-complete-digest-content-heading1' => '$1 {{PLURAL:$1|tao|mga tao}} ang tumingin sa wiki mo.',
+	'founderemails-email-complete-digest-content1' => 'Ipagpatuloy ang mahusay na gawain ng pagdaragdag ng kahali-halinang nilalaman na mababasa ng mga tao!',
+	'founderemails-email-complete-digest-content-heading2' => '$1 {{PLURAL:$1|pamamatnugot ang|mga pamamatnugot ang}} nagawa.',
+	'founderemails-email-complete-digest-content2' => 'Ang maliligayang mga patnugot ay gumagawa ng kasiya-siyang mga wiki. Tiyakin na mapasalamatan ang mga patnugot mo at makipag-ugnayan sa kanila sa pana-panahon.',
+	'founderemails-email-complete-digest-content-heading3' => '$1 {{PLURAL:$1|tao|mga tao}} ang sumali sa wiki mo.',
+	'founderemails-email-complete-digest-content3' => 'Malugod na tanggapin ang bagong mga tao sa iyong wiki sa pamamagitan ng isang mensahe sa pahina ng usapan.
+<br /><br />
+Palagi kang makakapunta sa gawain ng wiki upang makita ang lahat ng nakakapukaw na mga pagbabagong ginagawa sa $WIKINAME. Mangumusta nang madalas, bilang tagapagtatag ng pamayanan mo, tinatanaw ka ng pamayanan mo na tutulong sa pagpatnubay at pagpapatakbo ng wiki.',
+	'founderemails-email-complete-digest-signature' => 'Ang Pangkat ng Wikia',
+	'founderemails-email-complete-digest-button' => 'Pumunta sa gawain ng wiki',
+	'founderemails-pref-joins' => 'Padalhan ako ng e-liham kapag sumali ang isang tao sa $1',
+	'founderemails-pref-edits' => 'Padalhan ako ng e-liham kapag may isang tao na namatnugot ng $1',
+	'founderemails-pref-views-digest' => 'Padalhan ako ng isang pang-araw-araw na e-liham na nagsasabi sa akin kung ilang ulit na natingnan ang $1',
+	'founderemails-pref-complete-digest' => 'Padalhan ako ng isang pang-araw-araw na buod ng gawain sa $1',
+	'founderemails-pref-joins-v2' => '...sumali ang isang tao',
+	'founderemails-pref-edits-v2' => '...namamatnugot ang isang tao',
+	'founderemails-pref-views-digest-v2' => '...nakahanda na ang isang pang-araw-araw na buod ng kabuuang mga pagtanaw',
+	'founderemails-pref-complete-digest-v2' => '...nakahanda na ang isang Pang-araw-araw na Buod ng mga pagsali, mga pamamatnugot, at mga pagtanaw',
 );
 
 /** Tatar (Cyrillic script) (татарча)

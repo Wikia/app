@@ -68,7 +68,7 @@ $messages['af'] = array(
 	'categoryselect-error-db-locked' => 'Databasis is gesluit.',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -77,6 +77,7 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'categoryselect-desc' => 'يوفر واجهة لإدارة التصنيفات في مقالة دون تعديل كامل المقالة',
@@ -92,7 +93,7 @@ $messages['ar'] = array(
 	'categoryselect-edit-summary' => 'إضافة التصانيف',
 	'categoryselect-empty-name' => 'يوفر إسم التصنيف (الجزء قبل |)',
 	'categoryselect-button-save' => 'سجل',
-	'categoryselect-button-cancel' => 'إلغاء',
+	'categoryselect-button-cancel' => 'ألغِ',
 	'categoryselect-error-not-exist' => 'المقالة [id=$1] لا وجود لها',
 	'categoryselect-error-user-rights' => 'خطأ في حقوق المستخدم',
 	'categoryselect-error-db-locked' => 'قاعدة البيانات مغلقة',
@@ -143,7 +144,7 @@ $messages['bar'] = array(
 	'tog-disablecategoryselect' => 'Vaoahfochts Kategorisiern ausschoiden',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -399,7 +400,7 @@ $messages['fr'] = array(
 	'tog-disablecategoryselect-v2' => "Désactiver le module Catégorie (s'applique uniquement si le mode d'édition visuelle est désactivé)",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -599,6 +600,21 @@ $messages['ja'] = array(
 $messages['kn'] = array(
 	'categoryselect-button-save' => 'ಉಳಿಸಿ',
 	'categoryselect-button-cancel' => 'ರದ್ದು ಮಾಡು',
+);
+
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'categoryselect-button-save' => '저장',
+	'categoryselect-button-cancel' => '취소',
+);
+
+/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'categoryselect-button-cancel' => 'Betal bike',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -863,6 +879,8 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'categoryselect-addcategory-button' => 'وېشنيزه ورګډول',
+	'categoryselect-addcategory-edit' => 'يوه وېشنيزه ورګډول',
+	'categoryselect-edit-summary' => 'وېشنيزې ورګډول',
 	'categoryselect-button-save' => 'خوندي کول',
 	'categoryselect-button-cancel' => 'ناګارل',
 );
@@ -1050,11 +1068,13 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'categoryselect-desc' => 'Nagbibigay ng isang hangganang-mukha para sa pamamahala ng mga kategorya sa loob ng artikulo na hindi binabago ang buong artikulo.',
 	'categoryselect-code-view' => 'Tingin sa kodigo',
+	'categoryselect-code-view-placeholder' => 'Dito magdagdag ng mga kategorya, halimbawa na ang [[Category:Name|Kategorya:Pangalan]]',
 	'categoryselect-visual-view' => 'Tanawing nakikita',
 	'categoryselect-infobox-caption' => 'Mga mapagpipilian ng kategorya',
 	'categoryselect-infobox-category' => 'Ibigay ang pangalan ng kategorya',
 	'categoryselect-infobox-sortkey' => 'Gawing naka-abakada ang artikulong ito sa pahina ng kategoryang "$1" sa ilalim ng pangalang:',
 	'categoryselect-addcategory-button' => 'Idagdag ang kategorya',
+	'categoryselect-addcategory-edit' => 'Magdagdag ng isang kategorya',
 	'categoryselect-suggest-hint' => 'Pindutin ang Ipasok pagkatapos',
 	'categoryselect-tooltip' => "'''Bago!''' Kahon ng kasangkapan na pantatak ng Kategorya. Subukan ito o tingnan ang [[Help:CategorySelect|tulong]] upang makaalam pa ng marami",
 	'categoryselect-unhandled-syntax' => 'Nakapuna ng hindi nahahawakang sintaks - hindi maaari ang pagbabalik sa modalidad na natatanaw.',
@@ -1066,7 +1086,8 @@ $messages['tl'] = array(
 	'categoryselect-error-user-rights' => 'Kamalian sa mga karapatan ng tagagamit.',
 	'categoryselect-error-db-locked' => 'Nakakandado ang kalipunan ng dato',
 	'categoryselect-edit-abort' => 'Ang pagbabagong sinubok mong gawin ay pinigil ng isang kawil ng dugtong',
-	'tog-disablecategoryselect' => 'Huwag Paganahin ang Pagtatatak ng Kategorya',
+	'tog-disablecategoryselect' => 'Huwag Paganahin ang modulo ng Kategorya (mailalapat lang kapag hindi pinagagana ang pamamatnugot na nasa gawi na nakikita)',
+	'tog-disablecategoryselect-v2' => 'Huwag paganahin ang modyul ng Kategorya (nailalapat lamang kapag hindi pinagagana ang pamamatnugot na nasa gawi na nakikita)',
 );
 
 /** толышә зывон (толышә зывон)
@@ -1126,7 +1147,7 @@ $messages['ur'] = array(
 	'categoryselect-button-cancel' => 'منسوخ',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
@@ -1186,6 +1207,7 @@ $messages['zh-hans'] = array(
 	'categoryselect-code-view' => '代码视图',
 	'categoryselect-code-view-placeholder' => '在此添加分类，例如[[Category:名称]]',
 	'categoryselect-visual-view' => '预览视图',
+	'categoryselect-infobox-category' => '输入类别的名称：',
 	'categoryselect-addcategory-button' => '添加分类',
 	'categoryselect-addcategory-edit' => '添加分类',
 	'categoryselect-suggest-hint' => '完成时按Enter键',

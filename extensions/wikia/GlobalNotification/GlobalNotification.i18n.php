@@ -51,7 +51,7 @@ $messages['fr'] = array(
 	'globalnotification-general-ajax-failure' => 'Le navigateur n’a pas pu se connecter à Wikia. Veuillez réessayer plus tard.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -61,8 +61,10 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Misibacsi
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'globalnotification-desc' => 'Rendszereseményekről, például AJAX hibákról szóló értesítéseket jelenít meg.',
 	'globalnotification-general-ajax-failure' => 'A böngésző nem tud kapcsolódni ide: Wikia.  Próbálkozzon később.',
 );
 
@@ -120,7 +122,7 @@ $messages['nl'] = array(
  */
 $messages['pl'] = array(
 	'globalnotification-desc' => 'Wyświetla komunikaty systemowe dla zdarzeń takich jak błędy AJAX',
-	'globalnotification-general-ajax-failure' => 'Przeglądarka nie była w stanie połączyć się z Wikia. Spróbuj później.',
+	'globalnotification-general-ajax-failure' => 'Przeglądarka nie była w stanie połączyć się z Wikią. Spróbuj później.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -154,6 +156,14 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'globalnotification-desc' => 'Visar systemmeddelanden för händelser som AJAX-fel',
 	'globalnotification-general-ajax-failure' => 'Webbläsaren kunde inte ansluta till Wikia. Försök igen senare.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'globalnotification-desc' => 'Nagpapakita ng mga pagpapabatid ng sistema para sa mga kaganapang katulad ng mga kabiguan ng AJAX',
+	'globalnotification-general-ajax-failure' => 'Hindi makakunekta sa Wikia ang pantingin-tingin. Subukan ulit mamaya.',
 );
 
 /** Tatar (Cyrillic script) (татарча)

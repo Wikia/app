@@ -677,14 +677,12 @@ $messages['qqq'] = array(
 	'wallshowsource-toggle-v2' => 'Preferences checkbox.',
 	'wallshowsource-toggle' => 'Preferences checkbox.',
 	'walldelete-toggle' => 'Preferences checkbox.',
-
 	'wall-message-notifyeveryone' => 'Dropdown menu for admin, option to  Highlight this thread',
 	'wall-message-unnotifyeveryone' => 'Dropdown menu for admin, Un-highlight this thread',
 	'wall-message-notifyeveryone-tooltip' => 'tooltip on checkbox instructing users they can highlight the thread if checked',
-	
 	'wall-votes-modal-showmore' => 'It is display in kudos modal (mainly forums)',
 	'wall-votes-modal-title' => 'Kudos modal title (mainly forums)',
-	'wall-votes-modal-title-desc' => 'description in user title (mainly forums).  $1 contains number of people, take note of plural.', 
+	'wall-votes-modal-title-desc' => 'description in user title (mainly forums).  $1 contains number of people, take note of plural.',
 	'wall-votes-number' => 'kudos number on message (mainly forums)',
 	'wall-votes-number-tooltip' => 'tooltip tooltip under numbers of Kudos',
 	'wall-votes-vote-tooltip' => 'hover tooltip instructing users they can vote',
@@ -956,7 +954,7 @@ ___________________________________________<br />
 	'wallshowsource-toggle-v2' => 'Aktiviere Option {{int:user-action-menu-view-source}} auf Nachrichtenseiten-Posts',
 	'wallshowsource-toggle' => 'Aktiviere {{int:user-action-menu-view-source}} für Nachrichtenseiten-Posts',
 	'walldelete-toggle' => 'Aktiviere Versionslöschung für Nachrichtenseiten-Posts',
-	'wall-notifications-notifyeveryone' => 'show in notfication dropdown for Highlighted messages, $1 - name of admin'
+	'wall-notifications-notifyeveryone' => 'show in notfication dropdown for Highlighted messages, $1 - name of admin',
 );
 
 /** Zazaki (Zazaki)
@@ -1007,7 +1005,7 @@ $messages['diq'] = array(
 	'wall-history-title' => 'tarixê dêsi',
 	'wall-history-summary-label' => 'Xulasa',
 	'wall-history-rail-wall' => 'dês',
-	'wall-history-rail-contribs' => 'iştıraki',
+	'wall-history-rail-contribs' => 'iştiraqi',
 	'wall-history-rail-block' => 'kılit ke',
 	'wall-history-action-view' => 'bıvin',
 	'wall-history-action-restore' => 'Timar bike',
@@ -1161,7 +1159,6 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-recentchanges-deleted-thread' => 'borrado el tema "[[$1|$2]]" del muro de [[$3|$4]]',
 	'wall-recentchanges-deleted-reply' => 'borrada la respuesta "[[$1|$2]]" del muro de [[$3|$4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Una respuesta en el muro de mensajes',
-	'wall-recentchanges-edit' => '(mensaje editado)',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Muro de mensajes',
 	'wall-recentchanges-thread-group' => '$1 en el <a href="$2">Muro de $3</a>',
 	'wall-recentchanges-history-link' => 'Historial del muro',
@@ -1277,6 +1274,7 @@ ___________________________________________<br />
 
 /** Finnish (suomi)
  * @author Ilkea
+ * @author Lukkipoika
  */
 $messages['fi'] = array(
 	'wall-no-title' => 'Ei otsikkoa',
@@ -1419,6 +1417,7 @@ Tätä ei voi peruuttaa.',
 	'wall-recentchanges-restored-reply' => 'palautettiin keskusteluun  "[[$1|$2]]" kuuluva vastaus [[$3|$4 seinälle]]',
 	'wall-recentchanges-deleted-thread' => 'poistettiin keskustelu  "[[$1|$2]]" [[$3|$4 seinältä]]',
 	'wall-recentchanges-deleted-reply' => 'poistettiin keskustelun "[[$1|$2]]" vastaus [[$3|$4 seinältä]]',
+	'wall-removed-reply' => 'Tämä vastaus on poistettu',
 );
 
 /** French (français)
@@ -1678,7 +1677,7 @@ modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:
 	'walldelete-toggle' => 'Permettre la suppression des versions pour les messages du Mur de discussion',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1877,7 +1876,7 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'mail-notification-reply-your' => '$AUTHOR_NAME respondeu á súa mensaxe en $WIKI.',
 	'mail-notification-reply-his' => '$AUTHOR_NAME respondeu a unha mensaxe en $WIKI.',
 	'mail-notification-reply-someone' => '$AUTHOR_NAME respondeu á mensaxe de $PARENT_AUTHOR_NAME en $WIKI.',
-	'mail-notification-html-greeting' => 'Boas $1,',
+	'mail-notification-html-greeting' => 'Boas, $1:',
 	'mail-notification-html-button' => 'Ollar a conversa',
 	'mail-notification-subject' => '$1 -- $2',
 	'mail-notification-html-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
@@ -1897,33 +1896,33 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 </a>',
 	'mail-notification-html-footer-line1' => 'Para botar unha ollada aos últimos acontecementos en Wikia, visite <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Quere controlar os correos electrónicos que recibe? Vaia ás súas <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencias</a>',
-	'mail-notification-body' => 'Boas $WATCHER,
-	
+	'mail-notification-body' => 'Boas $WATCHER:
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Ollar a conversa($MESSAGE_LINK)
- 
+
 O equipo de Wikia
 
 ___________________________________________
-* Atope axuda e consellos central da comunidade: http://community.wikia.com
+* Atope axuda e consellos na central da comunidade: http://community.wikia.com
 * Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar
 as preferencias de correo electrónico aquí: http://community.wikia.com/Special:Preferences',
-	'mail-notification-body-HTML' => 'Boas $WATCHER,
-			<p>$SUBJECT.</p> 
-			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
-			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p> 			
-			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Ollar a conversa</a></p>
-			<p>O equipo de Wikia</p>
+	'mail-notification-body-HTML' => 'Boas $WATCHER:
+<p>$SUBJECT.</p>
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_HTML</p>
+<p>-- $AUTHOR_SIGNATURE<p>
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Ollar a conversa</a></p>
+<p>O equipo de Wikia</p>
 ___________________________________________<br />
-* Atope axuda e consellos central da comunidade: http://community.wikia.com
+* Atope axuda e consellos na central da comunidade: http://community.wikia.com
 * Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar
 as preferencias de correo electrónico aquí: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => 'Muro de mensaxes',
@@ -1935,6 +1934,240 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'wallshowsource-toggle-v2' => 'Activar a opción "{{int:user-action-menu-view-source}}" nas mensaxes do muro',
 	'wallshowsource-toggle' => 'Activar "{{int:user-action-menu-view-source}}" nas mensaxes do muro',
 	'walldelete-toggle' => 'Activar o borrado de revisións nas mensaxes do muro',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'wall-no-title' => 'Nincs cím',
+	'wall-message-loadmore' => 'Összes ($1) válasz megtekintése',
+	'wall-message-wall' => 'Üzenőfal',
+	'wall-message-wall-shorten' => 'üzenőfala',
+	'wall-message-unfollow' => 'Követés abbahagyása',
+	'wall-message-undoremove' => 'Visszavonás',
+	'wall-message-edited' => '<a href="$3" >Szerkesztette</a> <a class="username" href="$1">$2</a>',
+	'wall-message-mywall' => 'Az üzenőfalam',
+	'wall-toolbar-history' => 'Laptörténet',
+	'wall-message-notify' => 'Adminisztrátor értesítése',
+	'wall-message-remove' => 'Eltávolítás',
+	'wall-message-elseswall' => '$1 üzenőfala',
+	'wall-message-no-permission' => 'Nincsen jogosultságod ezen művelet végrehajtására az üzeneten',
+	'wall-thread-removed' => 'Eltávolított',
+	'wall-thread-deleted' => 'Törölt',
+	'wall-default-title' => 'Üzenet $1 felhasználótól',
+	'wall-no-title-warning' => '← Nem adtál meg semmilyen címet',
+	'wall-desc' => 'Felhasználói vitalapok cseréje',
+	'wall-disabled-desc' => 'Üzenőfal funkcionalitása a kiterjesztést nem engedélyező wikiken',
+	'wall-placeholder-topic' => 'Miről szól ez?',
+	'wall-placeholder-message' => 'Új üzenet küldése $1 üzenőfalára',
+	'wall-placeholder-message-anon' => 'Új üzenet küldése erre a falra',
+	'wall-placeholder-reply' => 'Válasz küldése',
+	'wall-button-to-preview-comment' => 'Előnézet',
+	'wall-button-to-cancel-preview' => 'Szerkesztés',
+	'wall-button-to-submit-comment' => 'Küldés',
+	'wall-button-to-submit-reply' => 'Válasz',
+	'wall-button-to-submit-comment-no-topic' => 'Küldés cím nélkül',
+	'wall-button-save-changes' => 'Módosítások mentése',
+	'wall-button-cancel-changes' => 'Mégse',
+	'wall-button-done-source' => 'Kész',
+	'wall-message-edit' => 'Szerkesztés',
+	'wall-message-more' => 'Több',
+	'wall-message-delete' => 'Törlés',
+	'wall-message-removed-thread-because' => '$1 eltávolította ezt a beszélgetésfolyamot az alábbi indoklással:',
+	'wall-message-deleted-thread-because' => '$1 törölte ezt a beszélgetésfolyamot az alábbi indoklással:',
+	'wall-message-restore-thread' => 'Beszélgetésfolyam visszaállítása',
+	'wall-message-removed-reply-because' => '$1 eltávolította ezt a választ az alábbi indoklással:',
+	'wall-message-deleted-reply-because' => '$1 törölte ezt a választt az alábbi indoklással:',
+	'wall-message-restore-reply' => 'Válasz visszaállítása',
+	'wall-delete-reason' => 'Felhasználói/adminisztratív művelet',
+	'wall-user-talk-page-archive-anchor' => 'Archivált felhasználói vitalap megtekintése',
+	'wall-user-talk-archive-page-title' => 'Felhasználói vitalap archívuma',
+	'wall-action-all-confirm-cancel' => 'Mégse',
+	'wall-action-all-confirm-notify' => 'Adminisztrátor értesítése',
+	'wall-action-remove-reply-title' => 'Válasz eltávolítása',
+	'wall-action-remove-thread-title' => 'Beszélgetésfolyam eltávolítása',
+	'wall-confirm-monobook-remove' => 'Kérlek, indokold meg az eltávolítást.
+
+Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
+	'wall-confirm-monobook-admin' => 'Kérlek, indokold meg a törlést.
+
+Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
+	'wall-confirm-monobook-restore' => 'Kérlek, indokold meg a visszaállítást',
+	'wall-delete-error-title' => 'Hiba',
+	'wall-delete-error-content' => 'Az üzenetet korábban törölték, és már nem létezik.',
+	'wall-confirm-monobook-lack-of-reason' => 'Kérlek, indokold meg a beszélgetésfolyam/válasz eltávolítását.',
+	'wall-action-remove-confirm' => 'Kérlek, indokold meg az eltávolítást:',
+	'wall-action-remove-thread-confirm-info' => 'Ez a beszélgetésfolyam és az indoklásod megmarad a wiki történetében.',
+	'wall-action-remove-reply-confirm-info' => 'Ez a válasz és az indoklásod megmarad a wiki történetében.',
+	'wall-action-remove-confirm-ok' => 'Eltávolítás',
+	'wall-action-admin-thread-title' => 'Beszélgetésfolyam törlése',
+	'wall-action-admin-reply-title' => 'Válasz törlése',
+	'wall-action-admin-confirm' => 'Kérlek, indokold meg a törlést:',
+	'wall-action-admin-thread-confirm-info' => 'Ez a beszélgetésfolyam és az indoklásod megmarad a wiki történetében.',
+	'wall-action-admin-reply-confirm-info' => 'Ez a beszélgetésfolyam és az indoklásod megmarad a wiki történetében. Csak adminisztrátorok tekinthetik majd meg ezt a beszélgetésfolyamot.',
+	'wall-action-admin-confirm-ok' => 'Törlés',
+	'wall-action-restore-thread-title' => 'Beszélgetésfolyam visszaállítása',
+	'wall-action-restore-reply-title' => 'Válasz visszaállítása',
+	'wall-action-restore-confirm' => 'Kérlek, indokold meg a visszaállítást',
+	'wall-action-restore-confirm-ok' => 'Visszaállítás',
+	'wall-action-rev-reply-confirm' => 'Biztosan törölni szeretnéd ezt az üzenetet?',
+	'wall-action-rev-confirm-ok' => 'Igen, törölje',
+	'wall-notifications' => 'Értesítések',
+	'wall-notifications-all' => 'Összes értesítés',
+	'wall-notifications-markasread' => 'Az összes megjelölése olvasottként',
+	'wall-notifications-markasread-all-wikis' => 'Mindegyik wikin',
+	'wall-notifications-markasread-this-wiki' => 'Ezen a wikin',
+	'wall-notifications-empty' => 'Nincsenek értesítések',
+	'wall-notifications-loading' => 'Értesítések betöltése',
+	'wall-notifications-reminder' => '<span>$1</span> olvasatlan értesítésed van',
+	'wall-notifications-wall-disabled' => 'Az üzenőfal le van tiltva ezen a wikin. Az értesítések nem tölthetők be.',
+	'wn-user1-reply-you-your-wall' => '$1 válaszolt az üzenetedre az üzenőfaladon',
+	'wn-user2-reply-you-your-wall' => '$1 és $2 válaszolt az üzenetedre az üzenőfaladon',
+	'wn-user3-reply-you-your-wall' => '$1 és mások válaszoltak az üzenetedre az üzenőfaladon',
+	'wn-user1-reply-self-your-wall' => '$1 válaszolt egy üzenetre az üzenőfaladon',
+	'wn-user2-reply-self-your-wall' => '$1 és $2 válaszolt egy üzenetre az üzenőfaladon',
+	'wn-user3-reply-self-your-wall' => '$1 és mások válaszoltak egy üzenetre az üzenőfaladon',
+	'wn-user1-reply-other-your-wall' => '$1 válaszolt $2 üzenetére az üzenőfaladon',
+	'wn-user2-reply-other-your-wall' => '$1 és $2 válaszolt $3 üzenetére az üzenőfaladon',
+	'wn-user3-reply-other-your-wall' => '$1 és mások válaszoltak $2 üzenetére az üzenőfaladon',
+	'wn-user1-reply-you-other-wall' => '$1 válaszolt az üzenetedre $2 üzenőfalán',
+	'wn-user2-reply-you-other-wall' => '$1 és $2 válaszolt az üzenetedre $3 üzenőfalán',
+	'wn-user3-reply-you-other-wall' => '$1 és mások válaszoltak az üzenetedre $3 üzenőfalán',
+	'wn-user1-reply-self-other-wall' => '$1 válaszolt egy üzenetre $2 üzenőfalán',
+	'wn-user2-reply-self-other-wall' => '$1 és $2 válaszolt egy üzenetre $3 üzenőfalán',
+	'wn-user3-reply-self-other-wall' => '$1 és mások válaszoltak egy üzenetre $2 üzenőfalán',
+	'wn-user1-reply-other-other-wall' => '$1 válaszolt $2 üzenetére $3 üzenőfalán',
+	'wn-user2-reply-other-other-wall' => '$1 és $2 válaszolt $3 üzenetére $4 üzenőfalán',
+	'wn-user3-reply-other-other-wall' => '$1 és mások válaszoltak $2 üzenetére $3 üzenőfalán',
+	'wn-user1-reply-you-a-wall' => '$1 válaszolt az üzenetedre',
+	'wn-user2-reply-you-a-wall' => '$1 és $2 válaszolt az üzenetedre',
+	'wn-user3-reply-you-a-wall' => '$1 és mások válaszoltak az üzenetedre',
+	'wn-user1-reply-self-a-wall' => '$1 válaszolt egy üzenetre',
+	'wn-user2-reply-self-a-wall' => '$1 és $2 válaszolt egy üzenetre',
+	'wn-user3-reply-self-a-wall' => '$1 és mások válaszoltak egy üzenetre',
+	'wn-user1-reply-other-a-wall' => '$1 válaszolt $2 üzenetére',
+	'wn-user2-reply-other-a-wall' => '$1 és $2 válaszolt $3 üzenetére',
+	'wn-user3-reply-other-a-wall' => '$1 és mások válaszoltak $3 üzenetére',
+	'wn-newmsg-onmywall' => '$1 új üzenetet hagyott az üzenőfaladon',
+	'wn-newmsg' => 'Új üzenetet hagytál $1 üzenőfalán',
+	'wn-newmsg-on-followed-wall' => '$1 új üzenetet hagyott $2 üzenőfalán',
+	'wn-admin-thread-deleted' => 'Beszélgetésfolyam eltávolítása $1 üzenőfaláról',
+	'wn-admin-reply-deleted' => 'Egy választ eltávolítottak egy beszélgetésfolyamból $1 üzenőfalán',
+	'wn-owner-thread-deleted' => 'Egy beszélgetésfolyamot eltávolítottak az üzenőfaladról',
+	'wn-owner-reply-deleted' => 'Egy választ eltávolítottak egy beszélgetésfolyamból az üzenőfaladon',
+	'wall-sorting-newest-threads' => 'Legújabb beszélgetésfolyamok',
+	'wall-sorting-oldest-threads' => 'Legrégebbi beszélgetésfolyamok',
+	'wall-sorting-newest-replies' => 'Legújabb válaszok',
+	'wall-sorting-most-active' => 'Legaktívabbak',
+	'wall-sorting-archived' => 'Archivált',
+	'tog-enotifwallthread' => '&hellip;valaki válaszol egy általam követett üzenőfali beszélegetésfolyamon',
+	'tog-enotifmywall' => '&hellip;valaki új üzenetet hagy az üzenőfalamon',
+	'wall-deleted-msg-pagetitle' => 'Üzenet törölve',
+	'wall-deleted-msg-text' => 'A megtekinteni kívánt üzenetet törölték.',
+	'wall-deleted-msg-return-to' => 'Visszatérés $1 üzenőfalára',
+	'wall-deleted-msg-view' => '(Megtekintés/Visszaállítás)',
+	'wall-recentchanges-new-message' => '<a href="$1">$2 üzenőfalán</a>',
+	'wall-recentchanges-edit' => '(üzenet szerkesztése)',
+	'wall-recentchanges-removed-thread' => 'eltávolította a(z) "[[$1|$2]]" beszélgetésfolyamot [[$3|$4 üzenőfaláról]]',
+	'wall-recentchanges-removed-reply' => 'eltávolított egy választ a(z) "[[$1|$2]]" beszélgetésfolyamból [[$3|$4 üzenőfalán]]',
+	'wall-recentchanges-restored-thread' => 'visszaállította a(z) "[[$1|$2]]" beszélgetésfolyamot [[$3|$4 üzenőfalára]]',
+	'wall-recentchanges-restored-reply' => 'visszaállított egy választ a(z) "[[$1|$2]]" beszélgetésfolyamra [[$3|$4 üzenőfalán]]',
+	'wall-recentchanges-deleted-thread' => 'törölte a(z) "[[$1|$2]]" beszélgetésfolyamot [[$3|$4 üzenőfaláról]]',
+	'wall-recentchanges-deleted-reply' => 'törölt egy választ a(z) "[[$1|$2]]" beszélgetésfolyamból [[$3|$4 üzenőfalán]]',
+	'wall-recentchanges-deleted-reply-title' => 'Egy válasz az üzenőfalon',
+	'wall-recentchanges-namespace-selector-message-wall' => 'Üzenőfal',
+	'wall-recentchanges-thread-group' => '$1 <a href="$2">$3 üzenőfalán</a>',
+	'wall-recentchanges-history-link' => 'üzenőfal laptörténete',
+	'wall-recentchanges-thread-history-link' => 'beszélgetésfolyam laptörténete',
+	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> <a href="$3">$4 üzenőfalán</a>',
+	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> <a href="$3">$4 üzenőfalán</a>',
+	'wall-message-not-found' => 'Ez az üzenet nem található. Ha ez a hibaüzenet jelenik meg, kérlek lépj kapcsolatba a Wikiával a [[Special:Contact]] használatával, és szolgáltass részletes információt a hiba reprodukálásról. Köszönjük!',
+	'wall-message-staff-text' => 'Ez a felhasználó a Wikia személyzet tagja',
+	'wall-ipballowusertalk' => 'Engedélyezze a felhasználónak a saját üzenőfalára való írást a blokk időtartama alatt',
+	'wall-ipbwatchuser' => 'Felhasználói profil és üzenőfal követése',
+	'wall-wiki-activity-on' => '$1',
+	'wall-wiki-activity-wall-owner' => '$1 üzenőfalán',
+	'wall-removed-thread-undo' => 'A beszélgetésfolyam el lett távolítva. $1',
+	'wall-removed-reply-undo' => 'A válasz el lett távolítva. $1',
+	'wall-removed-reply' => 'Ezt a választ eltávolították.',
+	'wall-deleted-thread-undo' => 'A beszélgetésfolyamot törölték. $1',
+	'wall-deleted-reply-undo' => 'A választ törlődött. $1',
+	'wall-deleted-reply' => 'Ezt a választ törölték',
+	'wall-history' => 'Laptörténet',
+	'wall-history-title' => 'üzenőfal laptörténete',
+	'wall-history-who-involved-wall-title' => 'Ki vesz részt ezen az üzenőfalon?',
+	'wall-history-who-involved-thread-title' => 'Ki vesz részt ebben a beszélgetésfolyamban?',
+	'wall-history-thread-created' => '"$1"-t létrehozta $2',
+	'wall-history-thread-removed' => '"$1"-t eltávolította $2',
+	'wall-history-thread-restored' => '"$1"-t visszaállította $2',
+	'wall-history-thread-admin-deleted' => '"$1"-t törölte $2',
+	'wall-history-sorting-newest-first' => 'Legújabbat előre',
+	'wall-history-sorting-oldest-first' => 'Legrégebbit előre',
+	'wall-history-summary-label' => 'Összefoglaló',
+	'wall-history-rail-wall' => 'üzenőfal',
+	'wall-history-rail-contribs' => 'közreműködések',
+	'wall-history-rail-block' => 'blokkolás',
+	'wall-history-action-view' => 'megjelenítés',
+	'wall-history-action-restore' => 'visszaállítás',
+	'wall-history-action-thread-history' => 'beszélgetésfolyam laptörténete',
+	'wall-thread-history-title' => 'beszélgetésfolyam laptörténete',
+	'wall-thread-history-thread-created' => '"$1" $2 hozta létre ezt a beszélgetésfolyamot',
+	'wall-thread-history-reply-created' => '$1 $2 válaszolt',
+	'wall-thread-history-thread-removed' => '$1 $2 eltávolította ezt a beszélgetésfolyamot',
+	'wall-thread-history-reply-removed' => '$1 $2 eltávolította $3 válaszát ($5)',
+	'wall-thread-history-thread-restored' => '$1 $2 visszaállította ezt a beszélgetésfolyamot',
+	'wall-thread-history-reply-restored' => '$1 $2 visszaállította $3 válaszát ($5)',
+	'wall-thread-history-thread-deleted' => '$1 $2 törölte ezt a beszélgetésfolyamot',
+	'wall-thread-history-thread-edited' => '$1 $2 szerkesztette $3 üzenetét ($5)',
+	'wall-thread-history-reply-edited' => '$1 $2 szerkesztette $3 üzenetét ($5)',
+	'wall-history-action-restore-reply' => 'Válasz visszaállítása',
+	'wall-history-action-restore-thread' => 'Beszélgetésfolyam visszaállítása',
+	'wall-message-not-found-in-db' => 'Nem találtuk meg ezt az üzenetet az adatbázisunkban, sajnáljuk.',
+	'mail-notification-new-someone' => '$AUTHOR_NAME új üzenetet írt a(z) $WIKI wikin.',
+	'mail-notification-new-your' => '$AUTHOR_NAME új üzenetet hagyott neked a(z) $WIKI wikin.',
+	'mail-notification-reply-your' => '$AUTHOR_NAME válaszolt az üzenetedre a(z) $WIKI wikin.',
+	'mail-notification-reply-his' => '$AUTHOR_NAME válaszolt egy üzenetre a(z) $WIKI wikin.',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME válaszolt $PARENT_AUTHOR_NAME üzenetére a(z) $WIKI wikin.',
+	'mail-notification-html-greeting' => 'Szia, $1!',
+	'mail-notification-html-button' => 'Tekintsd meg a beszélgetést!',
+	'mail-notification-html-footer-line1' => 'A Wikia legfrissebb eseményeinek megtekintéséhez látogass el a <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> oldalra.',
+	'mail-notification-html-footer-line2' => 'Szeretnéd módosítani a kapott e-mailekre vonatkozó beállításaidat? Változtass a <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">beállításaidon</a>',
+	'mail-notification-body' => 'Szia, $WATCHER!
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+Tekintsd meg a beszélgetést!($MESSAGE_LINK)
+
+A Wikia csapat
+
+___________________________________________
+* Segítséget és tanácsot a Community Central wikin találsz: http://community.wikia.com
+* Kevesebb üzenetet szeretnél tőlünk? Itt leiratkozhatsz vagy megváltoztathatod az e-mailekre vonatkozó beállításaidat: http://community.wikia.com/Special:Preferences',
+	'mail-notification-body-HTML' => 'Hi $WATCHER,
+			<p>$SUBJECT.</p>
+			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+			<p>$MESSAGE_HTML</p>
+			<p>-- $AUTHOR_SIGNATURE<p>
+			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Tekintsd meg a beszélgetést!</a></p>
+			<p>A Wikia csapat</p>
+___________________________________________<br />
+* Segítséget és tanácsot a Community Central wikin találsz: http://community.wikia.com
+* Kevesebb üzenetet szeretnél tőlünk? Itt leiratkozhatsz, vagy megváltoztathatod az e-mailekre vonatkozó beállításaidat: http://community.wikia.com/Special:Preferences',
+	'prefs-email-wall-v2' => 'Üzenőfal',
+	'tog-enotifwallthread-v2' => 'E-mail küldése&hellip;',
+	'tog-enotifmywall-every' => 'Minden üzenet és válasz után',
+	'tog-enotifmywall-sincevisited' => 'Beszélgetésfolyamonként egyszer, az utolsó látogatásom után',
+	'tog-enotifmywall-reminder' => 'Napi emlékeztető e-mailben',
+	'tog-enotifmywall-noemail' => 'Soha. Ne küldjön semmilyen üzenőfallal kapcsolatos e-mailt',
+	'wallshowsource-toggle-v2' => '"{{int:user-action-menu-view-source}}" lehetőség engedélyezése az üzenőfali bejegyzéseken',
+	'wallshowsource-toggle' => '"{{int:user-action-menu-view-source}}" lehetőség engedélyezése az üzenőfali bejegyzéseken',
 );
 
 /** Interlingua (interlingua)
@@ -2258,7 +2491,7 @@ $messages['ja'] = array(
 	'wall-action-restore-confirm-ok' => '復帰',
 	'wall-action-rev-thread-title' => 'このスレッドを版指定削除しますか？',
 	'wall-action-rev-reply-title' => 'この返信を版指定削除しますか？',
-	'wall-action-rev-reply-confirm' => '本当にこのメッセージを削除しますか？',
+	'wall-action-rev-reply-confirm' => 'このメッセージを本当に削除しますか？',
 	'wall-action-rev-thread-confirm' => '本当にこのスレッドおよびその履歴を版指定削除しますか？この操作は取り消せません。',
 	'wall-action-rev-confirm-ok' => 'はい、削除します',
 	'wall-notifications' => '通知',
@@ -2437,6 +2670,7 @@ $messages['mk'] = array(
 	'wall-message-elseswall' => 'ѕидот на $1',
 	'wall-message-no-permission' => 'Немате дозволи за да го извршите ова дејство врз пораката',
 	'wall-thread-removed' => 'Отстрането',
+	'wall-thread-isnotifyeveryone' => 'Истакнато',
 	'wall-thread-deleted' => 'Избришано',
 	'wall-default-title' => 'Порака од $1',
 	'wall-no-title-warning' => '← Не наведовте никаков наслов',
@@ -2537,7 +2771,7 @@ $messages['mk'] = array(
 	'wn-user3-reply-other-a-wall' => '$1 и други одговорија на пораката на $3',
 	'wn-newmsg-onmywall' => '$1 ви остави порака на вашиот ѕид',
 	'wn-newmsg' => 'Оставивте порака на ѕидот на $1',
-	'wn-newmsg-on-followed-wall' => '$1 остави нова порака на ѕидот на $2.',
+	'wn-newmsg-on-followed-wall' => '$1 остави нова порака на ѕидот на $2',
 	'wn-admin-thread-deleted' => 'Нишката е отстранета од ѕидот на $1',
 	'wn-admin-reply-deleted' => 'Одговорот е отстранет од нишката на ѕидот на $1',
 	'wn-owner-thread-deleted' => 'Нишката е отстранета од вашиот ѕид',
@@ -2675,6 +2909,17 @@ ___________________________________________<br />
 	'wallshowsource-toggle-v2' => 'Овозможи ја можноста {{int:user-action-menu-view-source}} на објавите на Ѕидот за пораки',
 	'wallshowsource-toggle' => 'Овозможи {{int:user-action-menu-view-source}} на пораките на Ѕидот за пораки',
 	'walldelete-toggle' => 'Овозможи бришење на ревизии на објави на Ѕидот за пораки',
+	'wall-notifications-notifyeveryone' => 'Истакнал: $1',
+	'wall-message-notifyeveryone' => 'Истакни ја нишкава',
+	'wall-message-unnotifyeveryone' => 'Одистакни ја нишкава',
+	'wall-message-notifyeveryone-tooltip' => 'За оваа нишка ќе биде известен секој што е најавен на викито.',
+	'wall-votes-modal-showmore' => 'Погледајте ги другите што дале кудос',
+	'wall-votes-modal-title' => 'Кудос',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Едно лице|$1 лица}} ѝ дале кудос на поракава',
+	'wall-votes-number' => '$1 кудоси',
+	'wall-votes-number-tooltip' => 'Погледајте кој сè ѝ дал кудос на поракава',
+	'wall-votes-vote-tooltip' => 'Дај ѝ кудос на поракава',
+	'wall-votes-voted-tooltip' => 'На поракава ѝ дадовте кудос!',
 );
 
 /** Malay (Bahasa Melayu)
@@ -2936,7 +3181,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'walldelete-toggle' => 'Hidupkan ciri Hapus semakan pada pos-pos Papan Pesanan',
 );
 
-/** Norwegian Bokmål (norsk (bokmål))
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
 $messages['nb'] = array(
@@ -3335,23 +3580,8 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-message-staff-text' => 'Deze gebruiker is een medewerker van Wikia',
 	'wall-ipballowusertalk' => 'Deze gebruiker toestaan berichten op het eigen prikbord te plaatsen gedurende de blokkade',
 	'wall-ipbwatchuser' => 'Het profiel van deze gebruiker en hun prikbord volgen',
-	'wall-recentchanges-wall-group' => '$1 op de <a href="$2">muur van $3</a>',
-	'wall-recentchanges-wall-history-link' => 'muurgeschiedenis',
-	'wall-recentchanges-thread-history-link' => 'draadgeschiedenis',
-	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> op de <a href="$3">muur van $4</a>',
-	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> op de <a href="$3">muur van $4</a>',
-	'wall-message-not-found' => 'Dit bericht is niet aangetroffen. Als u deze foutmelding ziet, neem dan alstublieft [[Special:Contact|contact op met Wikia]] en lever zoveel mogelijk details aan over hoe het mogelijk is deze foutmelding tevoorschijn te laten komen. Alvast bedankt!',
-	'wall-message-staff-text' => 'Deze gebruiker is een medewerker van Wikia',
-	'wall-ipballowusertalk' => 'Deze gebruiker toestaan berichten op de eigen muur te plaatsen gedurende de blokkade',
-	'wall-ipbwatchuser' => 'Het profiel van deze gebruiker en hun berichtenmuur volgen',
 	'wall-wiki-activity-on' => 'op $1',
 	'wall-wiki-activity-wall-owner' => 'Prikbord van $1',
-	'wall-removed-thread-undo' => 'Deze draad is verwijderd. $1',
-	'wall-removed-reply-undo' => 'Dit antwoord is verwijderd. $1',
-	'wall-removed-reply' => 'Dit antwoord is verwijderd',
-	'wall-deleted-thread-undo' => 'Deze draad is verwijderd. $1',
-	'wall-deleted-reply-undo' => 'Dit antwoord is verwijderd. $1',
-	'wall-deleted-reply' => 'Dit antwoord is verwijderd',
 	'wall-removed-thread-undo' => 'Deze draad is verwijderd. $1',
 	'wall-removed-reply-undo' => 'Dit antwoord is verwijderd. $1',
 	'wall-removed-reply' => 'Dit antwoord is verwijderd',
@@ -3598,12 +3828,12 @@ Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 	'wall-deleted-msg-view' => '(pokaż/przywróć)',
 	'wall-recentchanges-new-message' => 'na <a href="$1">tablicy użytkownika $2</a>',
 	'wall-recentchanges-edit' => '(edytowano wiadomość)',
-	'wall-recentchanges-removed-thread' => 'usunął wątek "[[$1|$2]]" z [[$3|Tablicy użytkownika $4]]',
-	'wall-recentchanges-removed-reply' => 'usunął odpowiedź w "[[$1|$2]]" z [[$3|Tablicy użytkownika $4]]',
-	'wall-recentchanges-restored-thread' => 'przywrócił wątek "[[$1|$2]]" na [[$3|Tablicy użytkownika $4]]',
-	'wall-recentchanges-restored-reply' => 'przywrócił odpowiedź w "[[$1|$2]]" na [[$3|Tablicy użytkownika $4]]',
-	'wall-recentchanges-deleted-thread' => 'skasował wątek "[[$1|$2]]" z [[$3|Tablicy użytkownika $4]]',
-	'wall-recentchanges-deleted-reply' => 'skasował odpowiedź w "[[$1|$2]]" z [[$3|Tablicy użytkownika $4]]',
+	'wall-recentchanges-removed-thread' => 'usunął/usunęła wątek "[[$1|$2]]" z [[$3|Tablicy użytkownika $4]]',
+	'wall-recentchanges-removed-reply' => 'usunął/usunęła odpowiedź w "[[$1|$2]]" z [[$3|Tablicy użytkownika $4]]',
+	'wall-recentchanges-restored-thread' => 'przywrócił(a) wątek "[[$1|$2]]" na [[$3|Tablicy użytkownika $4]]',
+	'wall-recentchanges-restored-reply' => 'przywrócił(a) odpowiedź w "[[$1|$2]]" na [[$3|Tablicy użytkownika $4]]',
+	'wall-recentchanges-deleted-thread' => 'skasował(a) wątek "[[$1|$2]]" z [[$3|Tablicy użytkownika $4]]',
+	'wall-recentchanges-deleted-reply' => 'skasował(a) odpowiedź w "[[$1|$2]]" z [[$3|Tablicy użytkownika $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Odpowiedź na tablicy wiadomości',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Tablica Wiadomości',
 	'wall-recentchanges-thread-group' => '$1 na <a href="$2">Tablicy $3</a>',
@@ -3678,7 +3908,7 @@ Ten wątek i jego historia nadal będą dostępne w historii wiki.',
 <a href="http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
-	'mail-notification-html-footer-line1' => 'Aby dowiedzieć się co nowego na Wikii, odwiedź <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'mail-notification-html-footer-line1' => 'Aby dowiedzieć się co nowego na Wikii, odwiedź <a style="color:#2a87d5;text-decoration:none;" href="http://spolecznosc.wikia.com">spolecznosc.wikia.com</a>',
 	'mail-notification-html-footer-line2' => 'Chcesz zmienić ustawienia przysyłanych wiadomości? Idź do swoich <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">preferencji</a>',
 	'mail-notification-body' => 'Witaj $WATCHER,
 	
@@ -3695,7 +3925,7 @@ Przejdź do wiadomości($MESSAGE_LINK)
 Zespół Wikia
 
 ___________________________________________
-* Znajdź pomoc na Wiki Społeczności: http://spolecznosc.wikia.com
+* Znajdź pomoc w Centrum Społeczności: http://spolecznosc.wikia.com
 * Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body-HTML' => 'Witaj $WATCHER,
 <p>$SUBJECT.</p> 
@@ -3705,7 +3935,7 @@ ___________________________________________
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Przejdź do wiadomości</a></p>
 <p>Zespół Wikia</p>
 ___________________________________________<br />
-* Znajdź pomoc na Wiki Społeczności: http://spolecznosc.wikia.com
+* Znajdź pomoc w Centrum Społeczności: http://spolecznosc.wikia.com
 * Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => 'Tablica Wiadomości',
 	'tog-enotifwallthread-v2' => 'Wyślij e-mail gdy…',
@@ -3733,6 +3963,7 @@ $messages['ps'] = array(
 	'wall-message-remove' => 'غورځول',
 	'wall-message-elseswall' => 'د $1 دېوال',
 	'wall-thread-deleted' => 'ړنګ شو',
+	'wall-placeholder-reply' => 'يو ځواب ورکول',
 	'wall-button-to-preview-comment' => 'مخليدنه',
 	'wall-button-to-cancel-preview' => 'سمول',
 	'wall-button-to-submit-reply' => 'ځوابول',
@@ -3748,10 +3979,15 @@ $messages['ps'] = array(
 	'wall-action-remove-confirm-ok' => 'غورځول',
 	'wall-action-admin-reply-title' => 'دا ځواب ړنګول',
 	'wall-action-admin-confirm-ok' => 'ړنګول',
+	'wall-action-restore-confirm-ok' => 'بيازېرمل',
 	'wall-action-rev-confirm-ok' => 'هو، ړنګ دې شي',
+	'wall-notifications' => 'يادګيرنې',
+	'wall-notifications-all' => 'ټولې يادګيرنې',
+	'wall-notifications-markasread' => 'ټول لوستی په نخښه کول',
 	'wall-notifications-markasread-all-wikis' => 'ټولې ويکي ګانې',
 	'wall-notifications-markasread-this-wiki' => 'همدا ويکي',
 	'wall-sorting-newest-replies' => 'نوي ځوابونه',
+	'wall-sorting-most-active' => 'تر ټولو ډېر فعال',
 	'wall-sorting-archived' => 'خونديځ شوي',
 	'wall-recentchanges-namespace-selector-message-wall' => 'پيغام دېوال',
 	'wall-recentchanges-history-link' => 'د دېوال پېښليک',
@@ -3759,12 +3995,17 @@ $messages['ps'] = array(
 	'wall-wiki-activity-wall-owner' => 'د $1 دېوال',
 	'wall-history' => 'پېښليک',
 	'wall-history-title' => 'د دېوال پېښليک',
+	'wall-history-sorting-newest-first' => 'لومړی تر ټولو نوی',
+	'wall-history-sorting-oldest-first' => 'لومړی تر ټولو زوړ',
 	'wall-history-summary-label' => 'لنډيز',
 	'wall-history-rail-wall' => 'دېوال',
 	'wall-history-rail-contribs' => 'ونډې',
 	'wall-history-rail-block' => 'بنديز لګول',
 	'wall-history-action-view' => 'کتل',
+	'wall-history-action-restore' => 'بيازېرمل',
+	'mail-notification-html-greeting' => 'سلامونه $1،',
 	'prefs-email-wall-v2' => 'پيغام دېوال',
+	'tog-enotifwallthread-v2' => 'برېښليک راولېږه…',
 );
 
 /** Portuguese (português)
@@ -4176,6 +4417,8 @@ ___________________________________________<br />
 	'tog-enotifmywall-sincevisited' => 'только о теме, которую я посещал последней',
 	'tog-enotifmywall-reminder' => 'с ежедневным напоминанием',
 	'tog-enotifmywall-noemail' => 'не отправлять мне эл. письма со Стены обсуждения',
+	'wallshowsource-toggle-v2' => 'Включить {{int:user-action-menu-view-source}} опцию для сообщений на Стене обсуждения',
+	'wallshowsource-toggle' => 'Включить {{int:user-action-menu-view-source}} для сообщений на Стене обсуждения',
 	'walldelete-toggle' => 'Включить просмотр постов, удалённых со Стены обсуждения',
 );
 
@@ -4459,6 +4702,259 @@ $messages['ta'] = array(
 	'wall-action-all-confirm-cancel' => 'ரத்து செய்',
 	'wall-delete-error-title' => 'பிழை',
 	'wall-action-remove-confirm-ok' => 'நீக்குக',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wall-no-title' => 'Walang pamagat',
+	'wall-message-loadmore' => 'Tingnan ang lahat ng $1 {{PLURAL:$1|tugon|mga tugon}}',
+	'wall-message-wall' => 'Dingding ng Mensahe',
+	'wall-message-wall-shorten' => 'dingding',
+	'wall-message-unfollow' => 'Huwag sundan',
+	'wall-message-undoremove' => 'Ibalik',
+	'wall-message-edited' => '<a href="$3" >Pinatnugutan ni</a> <a class="username" href="$1">$2</a>',
+	'wall-message-mywall' => 'Dingding ko',
+	'wall-toolbar-history' => 'Kasaysayan',
+	'wall-message-notify' => 'Ipabatid sa tagapangasiwa',
+	'wall-message-remove' => 'Tanggalin',
+	'wall-message-rev-delete' => 'Pagbuburang pangrebisyon',
+	'wall-message-elseswall' => 'Dingding ni $1',
+	'wall-message-no-permission' => 'Wala kang mga kapahintulutan upang maisagawa ang galaw na ito sa ibabaw ng mensahe',
+	'wall-thread-removed' => 'Tinanggal na',
+	'wall-thread-isnotifyeveryone' => 'Pagpapaliwanag',
+	'wall-thread-deleted' => 'Nabura na',
+	'wall-default-title' => 'Mensahe mula kay $1',
+	'wall-no-title-warning' => '← Hindi ka tumukoy ng anumang pamagat',
+	'wall-desc' => 'Pagpapalit ng pahina ng usapan ng tagagamit',
+	'wall-disabled-desc' => 'Katungkulan ng Dingding ng Mensahe para sa mga wiki na hindi pinagagana ang pandugtong ng Dingding',
+	'wall-placeholder-topic' => 'Patungkol ba sa ano ito?',
+	'wall-placeholder-message' => 'Magpaskil ng isang bagong mensahe sa dingding ni $1',
+	'wall-placeholder-message-anon' => 'Magpaskil ng isang bagong mensahe sa dingding na ito',
+	'wall-placeholder-reply' => 'Magpaskil ng isang tugon',
+	'wall-button-to-preview-comment' => 'Paunang tingin',
+	'wall-button-to-cancel-preview' => 'Baguhin',
+	'wall-button-to-submit-comment' => 'Ipaskil',
+	'wall-button-to-submit-reply' => 'Tugon',
+	'wall-button-to-submit-comment-no-topic' => 'Magpaskil na walang isang pamagat',
+	'wall-button-save-changes' => 'Sagipin ang mga pagbabago',
+	'wall-button-cancel-changes' => 'Huwag ituloy',
+	'wall-button-done-source' => 'Nagawa na',
+	'wall-message-edit' => 'Baguhin',
+	'wall-message-more' => 'Marami pa',
+	'wall-message-delete' => 'Burahin',
+	'wall-message-removed-thread-because' => 'Tinanggal ni $1 ang sinulid na ito dahil:',
+	'wall-message-deleted-thread-because' => 'Binura ni $1 ang sinulid na ito dahil:',
+	'wall-message-restore-thread' => 'Papanumbalikin ang Sinulid',
+	'wall-message-removed-reply-because' => 'Tinanggal ni $1 ang katugunang ito dahil:',
+	'wall-message-deleted-reply-because' => 'Binura ni $1 ang katugunang ito dahil:',
+	'wall-message-restore-reply' => 'Papanumbalikin ang Katugunan',
+	'wall-delete-reason' => 'Galaw ng tagagamit/tagapangasiwa',
+	'wall-user-talk-page-archive-anchor' => 'Tingnan ang sinupnay na pahina ng usapan',
+	'wall-user-talk-archive-page-title' => 'Supnayan_ng_usapan_ng_tagagamit',
+	'wall-action-all-confirm-cancel' => 'Huwag ituloy',
+	'wall-action-all-confirm-notify' => 'Ipabatid sa isang tagapangasiwa',
+	'wall-action-remove-reply-title' => 'Tanggalin ang katugunang ito',
+	'wall-action-remove-thread-title' => 'Tanggalin ang sinulid na ito',
+	'wall-confirm-monobook-remove' => 'Paki sabihin sa amin kung bakit nais mong tanggalin ito.
+
+Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysayan ng wiki.',
+	'wall-confirm-monobook-admin' => 'Paki sabihin sa amin kung bakit nais mong tanggalin ito.
+
+Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysayan ng wiki.',
+	'wall-confirm-monobook-restore' => 'Paki sabihin sa amin kung bakit nais mong papanumbalikin ito',
+	'wall-delete-error-title' => 'Kamalian',
+	'wall-delete-error-content' => 'Dati nang binura ang mensahe at hindi na ito umiiral.',
+	'wall-confirm-monobook-lack-of-reason' => 'Paki magbigay ng isang dahilan para sa pagtatanggal ng sinulid/katugunang ito.',
+	'wall-action-remove-confirm' => 'Paki sabihin sa amin kung bakit nais mong burahin ito:',
+	'wall-action-remove-thread-confirm-info' => 'Ang sinulid na ito at ang buod mo ay lilitaw pa rin sa loob ng kasaysayan ng wiki.',
+	'wall-action-remove-reply-confirm-info' => 'Ang katugunang ito at ang buod mo ay lilitaw pa rin sa loob ng kasaysayan ng wiki.',
+	'wall-action-remove-confirm-ok' => 'Tanggalin',
+	'wall-action-admin-thread-title' => 'Tanggalin ang sinulid na ito',
+	'wall-action-admin-reply-title' => 'Tanggalin ang katugunang ito',
+	'wall-action-admin-confirm' => 'Paki sabihin sa amin kung bakit nais mong burahin ito:',
+	'wall-action-admin-thread-confirm-info' => 'Ang sinulid na ito at ang buod mo ay lilitaw pa rin sa loob ng kasaysayan ng wiki',
+	'wall-action-admin-reply-confirm-info' => 'Ang sinulid na ito at ang buod mo ay lilitaw pa rin sa loob ng kasaysayan ng wiking ito. Mga tagapangasiwa lamang ang makakagawang tumingin sa sinulid na ito.',
+	'wall-action-admin-confirm-ok' => 'Burahin',
+	'wall-action-restore-thread-title' => 'Papanumbalikin ang sinulid na ito',
+	'wall-action-restore-reply-title' => 'Papanumbalikin ang katugunang ito',
+	'wall-action-restore-confirm' => 'Paki sabihin sa amin kung bakit nais mong papanumbalikin ito:',
+	'wall-action-restore-confirm-ok' => 'Papanumbalikin',
+	'wall-action-rev-thread-title' => 'Burahin na pangrebisyon ang sinulid na ito?',
+	'wall-action-rev-reply-title' => 'Burahin na pangrebisyon ang katugunang ito?',
+	'wall-action-rev-reply-confirm' => 'Nakatitiyak ka bang nais mong burahin ang mensaheng ito?',
+	'wall-action-rev-thread-confirm' => 'Nakatitiyak ka bang nais mong burahin na pangrebisyon ang sinulid na ito at ang lahat ng kasaysayan nito magmula sa wiki? Hindi na ito mababawi pa.',
+	'wall-action-rev-confirm-ok' => 'Oo, burahin',
+	'wall-notifications' => 'Mga pagpapabatid',
+	'wall-notifications-all' => 'Lahat ng mga Pagpapabatid',
+	'wall-notifications-markasread' => 'Tatakan ang lahat bilang nabasa na',
+	'wall-notifications-markasread-all-wikis' => 'Lahat ng mga wiki',
+	'wall-notifications-markasread-this-wiki' => 'Ang wiking ito',
+	'wall-notifications-empty' => 'Walang mga pagpapabatid',
+	'wall-notifications-loading' => 'Ikinakarga ang mga pagpapabatid',
+	'wall-notifications-reminder' => 'Mayroon kang <span>$1</span> hindi pa nababasang {{PLURAL:$1|pagpapabatid|mga pagpapabatid}}',
+	'wall-notifications-wall-disabled' => 'Hindi pinagagana ang Dingding ng Mensahe sa wiking ito. Hindi nagawang ikarga ang mga pagpapabatid.',
+	'wn-user1-reply-you-your-wall' => 'Tumugon si $1 sa mensahe mo na nasa ibabaw ng iyong dingding',
+	'wn-user2-reply-you-your-wall' => 'Tumugon sina $1 at $2 sa mensahe mo na nasa ibabaw ng iyong dingding',
+	'wn-user3-reply-you-your-wall' => 'Tumugon si $1 at iba pa sa iyong mensahe na nasa ibabaw ng dingding mo',
+	'wn-user1-reply-self-your-wall' => 'Tumugon si $1 sa isang mensahe na nasa ibabaw ng iyong dingding',
+	'wn-user2-reply-self-your-wall' => 'Tumugon sina $1 at $2 sa isang mensahe na nasa ibabaw ng iyong dingding',
+	'wn-user3-reply-self-your-wall' => 'Tumugon si $1 at iba pa sa isang mensahe na nasa ibabaw ng dingding mo',
+	'wn-user1-reply-other-your-wall' => 'Tumugon si $1 sa mensahe ni $2 na nasa ibabaw ng iyong dingding',
+	'wn-user2-reply-other-your-wall' => 'Tumugon sina $1 at $2 sa mensahe ni $3 na nasa ibabaw ng iyong dingding',
+	'wn-user3-reply-other-your-wall' => 'Tumugon si $1 at iba pa sa mensahe ni $2 na nasa ibabaw ng dingding mo',
+	'wn-user1-reply-you-other-wall' => 'Tumugon si $1 sa mensahe mo na nasa ibabaw ng dingding ni $2',
+	'wn-user2-reply-you-other-wall' => 'Tumugon sina $1 at $2 sa mensahe mo na nasa ibabaw ng dingding ni $3',
+	'wn-user3-reply-you-other-wall' => 'Tumugon si $1 at iba pa sa iyong mensahe na nasa ibabaw ng dingding ni $3',
+	'wn-user1-reply-self-other-wall' => 'Tumugon si $1 sa isang mensaheng nasa ibabaw ng dingding ni $2',
+	'wn-user2-reply-self-other-wall' => 'Tumugon sina $1 at $2 sa isang mensaheng nasa ibabaw ng dingding ni $3',
+	'wn-user3-reply-self-other-wall' => 'Tumugon si $1 at iba pa sa isang mensaheng nasa ibabaw ng dingding ni $2',
+	'wn-user1-reply-other-other-wall' => 'Tumugon si $1 sa mensahe ni $2 na nasa ibabaw ng dingding ni $3',
+	'wn-user2-reply-other-other-wall' => 'Tumugon sina $1 at $2 sa mensahe ni $3 na nasa ibabaw ng dingding ni $4',
+	'wn-user3-reply-other-other-wall' => 'Tumugon si $1 at iba pa sa mensahe ni $2 na nasa ibabaw ng dingding ni $3',
+	'wn-user1-reply-you-a-wall' => 'Tumugon si $1 sa mensahe mo',
+	'wn-user2-reply-you-a-wall' => 'Tumugon sina $1 at $2 sa mensahe mo',
+	'wn-user3-reply-you-a-wall' => 'Tumugon si $1 at iba pa sa mensahe mo',
+	'wn-user1-reply-self-a-wall' => 'Tumugon si $1 sa isang mensahe',
+	'wn-user2-reply-self-a-wall' => 'Tumugon sina $1 at $2 sa isang mensahe',
+	'wn-user3-reply-self-a-wall' => 'Tumugon si $1 at iba pa sa isang mensahe',
+	'wn-user1-reply-other-a-wall' => 'Tumugon si $1 sa mensahe ni $2',
+	'wn-user2-reply-other-a-wall' => 'Tumugon sina $1 at $2 sa isang mensahe ni $3',
+	'wn-user3-reply-other-a-wall' => 'Tumugon si $1 at iba pa sa mensahe ni $3',
+	'wn-newmsg-onmywall' => 'Nag-iwan si $1 ng isang bagong mensahe sa ibabaw ng dingding mo',
+	'wn-newmsg' => 'Nag-iwan ka ng isang bagong mensahe sa ibabaw ng dingding ni $1',
+	'wn-newmsg-on-followed-wall' => 'Nag-iwan si $1 ng isang bagong mensahe sa ibabaw ng dingding ni $2',
+	'wn-admin-thread-deleted' => 'Tinanggal ang sinulid mula sa dingding ni $1',
+	'wn-admin-reply-deleted' => 'Tinanggal ang tugon mula sa sinulid na nasa ibabaw ng dingding ni $1',
+	'wn-owner-thread-deleted' => 'Tinanggal ang sinulid mula sa dingding mo',
+	'wn-owner-reply-deleted' => 'Tinanggal ang tugon mula sa sinulid na nasa ibabaw ng dingding mo',
+	'wall-sorting-newest-threads' => 'Pinakabagong mga sinulid',
+	'wall-sorting-oldest-threads' => 'Pinakalumang mga sinulid',
+	'wall-sorting-newest-replies' => 'Pinakabagong mga tugon',
+	'wall-sorting-most-active' => 'Pinakamasigla',
+	'wall-sorting-archived' => 'Nasinop na',
+	'tog-enotifwallthread' => '...tumutugon ang isang tao sa isang sinulid ng Dingding ng Mensaheng sinusundan ko',
+	'tog-enotifmywall' => '...nagpapaskil ang isang tao sa isang bagong mensahe sa ibabaw ng aking dingding',
+	'wall-deleted-msg-pagetitle' => 'Nabura ang mensahe',
+	'wall-deleted-msg-text' => 'Nabura ang mensaheng sinusubukan mong tingnan.',
+	'wall-deleted-msg-return-to' => 'Bumalik sa dingding ni $1.',
+	'wall-deleted-msg-view' => '(Tingnan/Papanumbalikin)',
+	'wall-recentchanges-new-message' => 'sa ibabaw ng <a href="$1">dingding ni $2</a>',
+	'wall-recentchanges-edit' => '(binagong mensahe)',
+	'wall-recentchanges-removed-thread' => 'tinanggal ang sinulid na "[[$1|$2]]" mula sa [[$3|dingding ni $4]]',
+	'wall-recentchanges-removed-reply' => 'tinanggal ang tugon mula sa "[[$1|$2]]" magmula sa [[$3|dingding ni $4]]',
+	'wall-recentchanges-restored-thread' => 'ipinanumbalik ang sinulid na "[[$1|$2]]" papunta sa [[$3|dingding ni $4]]',
+	'wall-recentchanges-restored-reply' => 'ipinanumbalik ang tugon na "[[$1|$2]]" papunta sa [[$3|dingding ni $4]]',
+	'wall-recentchanges-deleted-thread' => 'binura ang sinulid na "[[$1|$2]]" mula sa [[$3|dingding ni $4]]',
+	'wall-recentchanges-deleted-reply' => 'binura ang tugon mula sa "[[$1|$2]]" magmula sa [[$3|dingding ni $4]]',
+	'wall-recentchanges-deleted-reply-title' => 'Isang tugon sa ibabaw ng dingding ng mensahe',
+	'wall-recentchanges-namespace-selector-message-wall' => 'Dingding ng Mensahe',
+	'wall-recentchanges-thread-group' => 'ang $1 na nasa ibabaw ng <a href="$2">dingding ni $3</a>',
+	'wall-recentchanges-history-link' => 'kasaysayan ng pahina',
+	'wall-recentchanges-thread-history-link' => 'kasaysayan ng sinulid',
+	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> na nasa ibabaw ng <a href="$3">dingding ni $4</a>',
+	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> na nasa ibabaw ng <a href="$3">dingding ni $4</a>',
+	'wall-message-not-found' => "Hindi matagpuan ang mensaheng ito. Kapag nakita mo ang kamaliang ito, paki makipag-ugnayan sa Wikia roon sa [[Special:Contact|Natatangi:Makipag-ugnayan]] at magbigay ng maraming mga detalye hangga't maaari patungkol sa kung paano naibubunga ang depektong ito. Salamat!",
+	'wall-message-staff-text' => 'Ang tagagamit na ito ay isang kasapi sa tauhan ng Wikia',
+	'wall-ipballowusertalk' => 'Pahintulutan ang tagagamit na ito na magpaskil sa sarili nilang Dingding ng Mensahe habang hinaharangan',
+	'wall-ipbwatchuser' => 'Bantayan ang balangkas ng katangian ng tagagamit na ito at sundan ang kanilang Dingding ng Mensahe',
+	'wall-wiki-activity-on' => 'sa kay $1',
+	'wall-wiki-activity-wall-owner' => 'Dingding ni $1',
+	'wall-removed-thread-undo' => 'Natanggal na ang sinulid na ito. $1',
+	'wall-removed-reply-undo' => 'Natanggal na ang tugon na ito. $1',
+	'wall-removed-reply' => 'Natanggal na ang tugon na ito',
+	'wall-deleted-thread-undo' => 'Nabura na ang sinulid na ito. $1',
+	'wall-deleted-reply-undo' => 'Nabura na ang tugon na ito. $1',
+	'wall-deleted-reply' => 'Nabura na ang tugon na ito',
+	'wall-history' => 'Kasaysayan',
+	'wall-history-title' => 'kasaysayan ng dingding',
+	'wall-history-who-involved-wall-title' => 'Sino ba ang kasangkot sa dingding na ito?',
+	'wall-history-who-involved-thread-title' => 'Sino ba ang kasangkot sa sinulid na ito?',
+	'wall-history-thread-created' => 'Ang $1 ay nilikha ni $2',
+	'wall-history-thread-removed' => 'Ang $1 ay tinanggal ni $2',
+	'wall-history-thread-restored' => 'Ang $1 ay ipinanumbalik ni $2',
+	'wall-history-thread-admin-deleted' => 'Ang $1 ay binura ni $2',
+	'wall-history-sorting-newest-first' => 'Pinakabago muna',
+	'wall-history-sorting-oldest-first' => 'Pinakaluma muna',
+	'wall-history-summary-label' => 'Buod',
+	'wall-history-rail-wall' => 'dingding',
+	'wall-history-rail-contribs' => 'mga ambag',
+	'wall-history-rail-block' => 'harangin',
+	'wall-history-action-view' => 'tingnan',
+	'wall-history-action-restore' => 'papanumbalikin',
+	'wall-history-action-thread-history' => 'kasaysayan ng sinulid',
+	'wall-thread-history-title' => 'kasaysayan ng sinulid',
+	'wall-thread-history-thread-created' => 'Nilikha ni $2 ang sinulid na ito $1',
+	'wall-thread-history-reply-created' => 'Nag-iwan si $1 $2 ng isang katugunan',
+	'wall-thread-history-thread-removed' => 'Tinanggal ni $1 $2 ang sinulid na ito',
+	'wall-thread-history-reply-removed' => 'Tinanggal ni $1 $2 ang tugon na $5 ni $3',
+	'wall-thread-history-thread-restored' => 'Ipinanumbalik ni $1 $2 ang sinulid na ito',
+	'wall-thread-history-reply-restored' => 'Ipinanumbalik ni $1 $2 ang tugon na $5 ni $3',
+	'wall-thread-history-thread-deleted' => 'Binura ni $1 $2 ang sinulid na ito',
+	'wall-thread-history-thread-edited' => 'Binago ni $1 $2 ang mensaheng $5 ni $3',
+	'wall-thread-history-reply-edited' => 'Binago ni $1 $2 ang mensaheng $5 ni $3',
+	'wall-history-action-restore-reply' => 'papanumbalikin ang katugunan',
+	'wall-history-action-restore-thread' => 'papanumbalikin ang sinulid',
+	'wall-message-not-found-in-db' => 'Hindi namin matagpuan ang mensaheng pandingding na ito sa loob ng aming kalipunan ng dato, paumanhin.',
+	'mail-notification-new-someone' => 'Nagsulat si $AUTHOR_NAME ng isang bagong mensahe sa $WIKI.',
+	'mail-notification-new-your' => 'Nag-iwan si $AUTHOR_NAME ng isang bagong mensahe sa $WIKI.',
+	'mail-notification-reply-your' => 'Tumugon si $AUTHOR_NAME sa isang mensahe mong nasa $WIKI.',
+	'mail-notification-reply-his' => 'Tumugon si $AUTHOR_NAME sa isang mensahe na nasa $WIKI.',
+	'mail-notification-reply-someone' => 'Si $AUTHOR_NAME ay tumugon sa mensahe ni $PARENT_AUTHOR_NAME na nasa $WIKI.',
+	'mail-notification-html-greeting' => 'Kumusta $1,',
+	'mail-notification-html-button' => 'Tingnan ang pag-uusap',
+	'mail-notification-html-footer-line1' => 'Upang matingnan ang pinaka huling mga kaganapan sa Wikia, dalawin ang <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'mail-notification-html-footer-line2' => 'Nais mong kontrolin ang tinatanggap mong mga e-liham? Pumunta sa iyong <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Mga nais</a>',
+	'mail-notification-body' => 'Kumusta $WATCHER,
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+Tingnan ang pag-uusap($MESSAGE_LINK)
+
+Ang Pangkat ng Wikia
+
+___________________________________________
+* Maghanap ng tulong at payo sa Lunduyan ng Pamayanan: http://community.wikia.com
+* Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin 
+ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/Special:Preferences',
+	'mail-notification-body-HTML' => 'Kumusta $WATCHER,
+<p>$SUBJECT.</p>
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_HTML</p>
+<p>-- $AUTHOR_SIGNATURE<p>
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Tingnan ang pag-uusap</a></p>
+<p>Ang Pangkat ng Wikia</p>
+___________________________________________<br />
+* Maghanap ng tulong at payo sa Lunduyan ng Pamayanan: http://community.wikia.com
+* Nais tumanggap ng mas kakaunting mga mensahe mula sa amin? Maaari kang huwag nang magpasipi o baguhin 
+ang iyong mga kanaisan ng elektronikong liham dito: http://community.wikia.com/Special:Preferences',
+	'prefs-email-wall-v2' => 'Dingding ng Mensahe',
+	'tog-enotifwallthread-v2' => 'Padalhan ako ng e-liham...',
+	'tog-enotifmywall-every' => 'Para sa bawat mensahe at sagot',
+	'tog-enotifmywall-sincevisited' => 'Isa bawat sinulid magmula noong huling pagdalaw ko',
+	'tog-enotifmywall-reminder' => 'Na mayroong isang pang-araw-araw na e-liham na paalala',
+	'tog-enotifmywall-noemail' => 'Huwag kailanman. Huwag akong padalhan ng anumang mga e-liham ng Dingding ng Mensahe',
+	'wallshowsource-toggle-v2' => 'Paganahin ang maaaring piliin na {{int:user-action-menu-view-source}} sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
+	'wallshowsource-toggle' => 'Paganahin ang {{int:user-action-menu-view-source}} sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
+	'walldelete-toggle' => 'Paganahin ang pagbura ng Rebisyon sa ibabaw ng mga pagpapaskil sa Dingding ng Mensahe',
+	'wall-notifications-notifyeveryone' => 'Pinagliwanag ni $1',
+	'wall-message-notifyeveryone' => 'Pagliwanagin ang sinulid na ito',
+	'wall-message-unnotifyeveryone' => 'Huwag nang pagliwanagin ang sinulid na ito',
+	'wall-message-notifyeveryone-tooltip' => 'Bawat isang nakalagdang tao sa wiki ay pababatiran ng hinggil sa sinulid na ito',
+	'wall-votes-modal-showmore' => 'Tingnan ang iba pa na nagbigay ng Kudos',
+	'wall-votes-modal-title' => 'Kudos',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Isang tao|$1 mga tao}} ang nagbigay ng Kudos sa mensaheng ito',
+	'wall-votes-number' => '$1 Kudos',
+	'wall-votes-number-tooltip' => 'Tingnan kung sino ang nagbigay ng Kudos sa mensaheng ito',
+	'wall-votes-vote-tooltip' => 'Magbigay ng Kudos sa mensaheng ito',
+	'wall-votes-voted-tooltip' => 'Binigyan mo ng Kudos ang mensaheng ito!',
 );
 
 /** толышә зывон (толышә зывон)
@@ -4837,7 +5333,7 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 	'wall-history-action-restore' => 'rapexhî',
 );
 
-/** Simplified Chinese (中文（简体）)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Dimension
  */
 $messages['zh-hans'] = array(

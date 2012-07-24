@@ -330,7 +330,7 @@ $messages['diq'] = array(
 	'wikiaquiz-game-cadence-1' => 'Şo!',
 	'wikiaquiz-game-question-label' => 'PERS',
 	'wikiaquiz-game-next-button' => 'Perso Bahdoyên',
-	'wikiaquiz-game-finish-button' => 'Qedyin',
+	'wikiaquiz-game-finish-button' => 'Qediya',
 	'wikiaquiz-game-your-score' => 'SKORÊ ŞIMA',
 	'wikiaquiz-game-continue-button' => 'Dewam ke',
 	'wikiaquiz-game-mute' => 'Bêveng',
@@ -483,7 +483,7 @@ $messages['fr'] = array(
 	'wikiaquiz-game-mute' => 'Muet',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -547,6 +547,61 @@ $messages['gl'] = array(
 	'wikiaquiz-game-email-error' => 'Houbo un erro ao enviar o correo electrónico: $1',
 	'wikiaquiz-game-challenge' => 'Desafíe aos seus amigos para que participen!',
 	'wikiaquiz-game-mute' => 'Silenciar',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'wikiaquiz-desc' => 'Egyszerű lehetőséget biztosít a kvízek létrehozására és kezelésére',
+	'wikiaquiz-createquiz-headline' => 'Kvíz létrehozása',
+	'wikiaquiz-editquiz-headline' => 'Kvíz szerkesztése',
+	'wikiaquiz-createquizarticle-headline' => 'Kvízkérdések és -válaszok létrehozása',
+	'wikiaquiz-editquizarticle-headline' => 'Kvízkérdések és -válaszok szerkesztése',
+	'wikiaquiz-title-label' => 'Cím',
+	'wikiaquiz-requireemail-label' => 'Kötelezze a játékost egy e-mail cím megadására a játék végén',
+	'wikiaquiz-moreinfoarticle-label' => 'Szócikk',
+	'wikiaquiz-moreinfolinktext-label' => 'Hivatkozás szövege',
+	'wikiaquiz-question-label' => 'Kérdés',
+	'wikiaquiz-image-label' => 'Kép (nem kötelező)',
+	'wikiaquiz-video-label' => 'Videó (nem kötelező, kép helyébe lép)',
+	'wikiaquiz-explanation-label' => 'Válasz magyarázata (nem kötelező)',
+	'wikiaquiz-quiz-label' => 'Kvíz',
+	'wikiaquiz-questions-label' => 'Kérdések',
+	'wikiaquiz-answers-label' => 'Válaszok',
+	'wikiaquiz-answer-label' => 'Válasz',
+	'wikiaquiz-addnewitem-label' => 'Új elem hozzáadása',
+	'wikiaquiz-cancel-label' => 'Mégse',
+	'wikiaquiz-publish-label' => 'Közzététel',
+	'wikiaquiz-error-duplicate-quiz' => 'Már létezik egy ilyen nevű kvíz.',
+	'wikiaquiz-error-duplicate-question' => 'Már létezik ilyen nevű kérdés.',
+	'wikiaquiz-error-invalid-question' => 'A kérdés szövege érvénytelen.',
+	'wikiaquiz-error-invalid-image' => 'A kép érvénytelen: $1',
+	'wikiaquiz-error-invalid-video' => 'A videó érvénytelen: $1',
+	'wikiaquiz-error-missing-answers' => 'Legalább egy választ kell adnod.',
+	'wikiaquiz-error-invalid-correct-answer' => 'Meg kell adnod egy helyes választ.',
+	'wikiaquiz-error-invalid-quiz' => 'A kvíz neve érvénytelen.',
+	'wikiaquiz-error-invalid-article' => 'A cikk azonosítója érvénytelen.',
+	'wikiaquiz-error-invalid-article-with-details' => 'A cikk érvénytelen: $1',
+	'wikiaquiz-game-start-button' => 'Játék indítása',
+	'wikiaquiz-game-cadence-3' => 'Vigyázz',
+	'wikiaquiz-game-cadence-2' => 'Kész',
+	'wikiaquiz-game-cadence-1' => 'Rajt!',
+	'wikiaquiz-game-question-label' => 'KÉRDÉS',
+	'wikiaquiz-game-next-button' => 'Következő kérdés',
+	'wikiaquiz-game-finish-button' => 'Befejezés',
+	'wikiaquiz-game-correct-label' => 'Helyes! Király vagy.',
+	'wikiaquiz-game-congratulations' => 'Remek munka, $1!',
+	'wikiaquiz-game-congratulations-anon' => 'Remek munka!',
+	'wikiaquiz-game-your-score' => 'A PONTSZÁMOD',
+	'wikiaquiz-game-continue-button' => 'Folytatás',
+	'wikiaquiz-game-thanks' => 'Köszönjük, hogy játszottál!',
+	'wikiaquiz-game-provide-email' => 'Kérlek, add meg az e-mail címed',
+	'wikiaquiz-game-email-placeholder' => 'aneved@azemailszolgáltatód.com',
+	'wikiaquiz-game-email-button' => 'Ingyenes dolgok küldése',
+	'wikiaquiz-game-email-valid-please' => 'Kérlek, érvényes e-mail címet adj meg.',
+	'wikiaquiz-game-email-error' => 'Hiba történt az e-mail küldése közben: $1',
+	'wikiaquiz-game-mute' => 'Elnémítás',
 );
 
 /** Interlingua (interlingua)
@@ -777,12 +832,13 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Infinity
+ * @author 아라
  */
 $messages['ko'] = array(
 	'wikiaquiz-desc' => '퀴즈를 생성하고 관리할 수 있는 편리한 방법을 제공',
 	'wikiaquiz-createquiz-headline' => '퀴즈 만들기',
 	'wikiaquiz-editquiz-headline' => '퀴즈 편집',
-	'wikiaquiz-createquizarticle-headline' => '퀴즈 질문과 정답 생성',
+	'wikiaquiz-createquizarticle-headline' => '퀴즈 질문과 정답 만들기',
 	'wikiaquiz-editquizarticle-headline' => '퀴즈 질문과 정답 편집',
 	'wikiaquiz-title-label' => '제목',
 	'wikiaquiz-titlescreentext-label' => '첫 화면 글',
@@ -1249,6 +1305,8 @@ $messages['ps'] = array(
 	'wikiaquiz-game-cadence-3' => 'چمتو شه',
 	'wikiaquiz-game-cadence-1' => 'ورځه!',
 	'wikiaquiz-game-question-label' => 'پوښتنه',
+	'wikiaquiz-game-next-button' => 'بله پوښتنه',
+	'wikiaquiz-game-finish-button' => 'پای',
 	'wikiaquiz-game-mute' => 'ټپول',
 );
 
@@ -1563,6 +1621,72 @@ $messages['te'] = array(
 	'wikiaquiz-game-cadence-1' => 'వెళ్ళు!',
 	'wikiaquiz-game-next-button' => 'తర్వాతి ప్రశ్న',
 	'wikiaquiz-game-continue-button' => 'కొనసాగించు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'wikiaquiz-desc' => 'Nagbibigay ng isang maginhawang paraan upang lumikha at mamahala ng mga pagsusulit',
+	'wikiaquiz-createquiz-headline' => 'Lumikha ng Pagsusulit',
+	'wikiaquiz-editquiz-headline' => 'Baguhin ang Pagsusulit',
+	'wikiaquiz-createquizarticle-headline' => 'Likhain ang Tanong at mga Sagot sa Pagsusulit',
+	'wikiaquiz-editquizarticle-headline' => 'Baguhin ang Tanong at mga Sagot sa Pagsusulit',
+	'wikiaquiz-title-label' => 'Pamagat',
+	'wikiaquiz-titlescreentext-label' => 'Teksto ng pamagat ng panooran',
+	'wikiaquiz-fbrecommendationtext-label' => 'Paglalarawan sa pagrerekomenda ng Facebook',
+	'wikiaquiz-titlescreenimages-label' => 'Mga imahe ng pamagat ng panooran',
+	'wikiaquiz-moreinfoheading-label' => 'Mas marami pang pamuhatan ng kabatiran',
+	'wikiaquiz-requireemail-label' => 'Ipakailangan sa manlalaro na magpasok ng isang tirahan ng e-liham sa wakas ng laro',
+	'wikiaquiz-moreinfolinks-label' => 'Mas marami pang mga kawing na pangkabatiran',
+	'wikiaquiz-moreinfoarticle-label' => 'Artikulo',
+	'wikiaquiz-moreinfolinktext-label' => 'Tekso ng Kawing',
+	'wikiaquiz-question-label' => 'Katanungan',
+	'wikiaquiz-image-label' => 'Larawan (maaaring wala)',
+	'wikiaquiz-video-label' => 'Bidyo (maaaring wala, humahalili sa Larawan)',
+	'wikiaquiz-explanation-label' => 'Paliwanag sa kasagutan (maaaring wala)',
+	'wikiaquiz-quiz-label' => 'Pagsusulit',
+	'wikiaquiz-questions-label' => 'Mga Katanungan',
+	'wikiaquiz-answers-label' => 'Mga Kasagutan',
+	'wikiaquiz-answer-label' => 'Kasagutan',
+	'wikiaquiz-correct-label' => 'Tama?',
+	'wikiaquiz-addnewitem-label' => 'Magdagdag ng bagong bagay',
+	'wikiaquiz-cancel-label' => 'Huwag ituloy',
+	'wikiaquiz-publish-label' => 'Ilathala',
+	'wikiaquiz-error-duplicate-quiz' => 'Umiiral na ang isang pagsusulit na may ganiyang pangalan.',
+	'wikiaquiz-error-duplicate-question' => 'Umiiral na ang isang tanong na may ganiyang pangalan.',
+	'wikiaquiz-error-invalid-question' => 'Hindi katanggap-tanggap ang teksto ng katanungan.',
+	'wikiaquiz-error-invalid-image' => 'Hindi katanggap-tanggap ang imahe: $1',
+	'wikiaquiz-error-invalid-video' => 'Hindi katanggap-tanggap ang bidyo: $1',
+	'wikiaquiz-error-missing-answers' => 'Dapat kang magbigay ng kahit na isang kasagutan.',
+	'wikiaquiz-error-invalid-correct-answer' => 'Dapat kang tumukoy ng isang tamang sagot.',
+	'wikiaquiz-error-invalid-quiz' => 'Hindi katanggap-tanggap ang pangalan ng pagsusulit.',
+	'wikiaquiz-error-invalid-article' => 'Hindi katanggap-tanggap ang ID ng artikulo.',
+	'wikiaquiz-error-invalid-article-with-details' => 'Hindi katanggap-tanggap ang artikulo: $1',
+	'wikiaquiz-game-start-button' => 'Simulan ang Laro',
+	'wikiaquiz-game-cadence-3' => 'Nakahanda na',
+	'wikiaquiz-game-cadence-2' => 'Itakda',
+	'wikiaquiz-game-cadence-1' => 'Sige!',
+	'wikiaquiz-game-question-label' => 'TANONG',
+	'wikiaquiz-game-next-button' => 'Susunod na Tanong',
+	'wikiaquiz-game-finish-button' => 'Tapusin na',
+	'wikiaquiz-game-correct-label' => 'Tama! Ang husay mo.',
+	'wikiaquiz-game-incorrect-label' => 'MALI. Kulelat.',
+	'wikiaquiz-game-congratulations' => 'Ang galing-galing mo, $1!',
+	'wikiaquiz-game-congratulations-anon' => 'Mahusay!',
+	'wikiaquiz-game-your-score' => 'ANG PUNTOS MO AY',
+	'wikiaquiz-game-continue-button' => 'Magpatuloy',
+	'wikiaquiz-game-thanks' => 'Salamat sa paglalaro!',
+	'wikiaquiz-game-provide-email' => 'Paki ipasok ang iyong tirahan ng e-liham',
+	'wikiaquiz-game-email-placeholder' => 'pangalanmo@e-lihammo.com',
+	'wikiaquiz-game-email-button' => 'Padalhan ako ng mga bagay na walang bayad',
+	'wikiaquiz-game-email-valid-please' => 'Paki magpasok ng isang katanggap-tanggap na tirahan ng e-liham.',
+	'wikiaquiz-game-email-token-mismatch' => 'Ay! Hindi magkatugma ang kahalip',
+	'wikiaquiz-game-email-subject' => 'Salamat sa ipinasa mo!',
+	'wikiaquiz-game-email-body' => 'Isa itong e-liham ng paniniyak. Natanggap namin ang iyong pagpapasa at pababatiran ka kung nagwagi ka!',
+	'wikiaquiz-game-email-error' => 'Nagkaroon ng isang kamalian habang ipinapadala ang e-liham na ito: $1',
+	'wikiaquiz-game-challenge' => 'Hamunin mong maglaro ang mga kaibigan mo!',
+	'wikiaquiz-game-mute' => 'Walang tunog',
 );
 
 /** Ukrainian (українська)

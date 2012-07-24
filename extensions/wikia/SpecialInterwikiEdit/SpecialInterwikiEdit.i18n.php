@@ -50,6 +50,15 @@ $messages['ar'] = array(
 	'iwedit-update' => 'حدّث',
 );
 
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'interwikiedit' => 'আন্তঃৱিকি সম্পাদক',
+	'iwedit-title' => 'আন্তঃৱিকি সম্পাদক',
+	'iwedit-update' => 'আপডেট',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
@@ -71,7 +80,7 @@ $messages['bar'] = array(
 	'iwedit-success' => '<p>Link-Erzeigung erfoigreich.</p>',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -194,7 +203,7 @@ $messages['fr'] = array(
 	'iwedit-success' => '<p>Le lien a été créé avec succès.</p>',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -377,7 +386,7 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'interwikiedit' => 'Edycja interwiki',
-	'iwedit-title' => 'Edytor interwiki',
+	'iwedit-title' => 'Edycja interwiki',
 	'iwedit-language-interwikis' => 'tylko interwiki języków',
 	'iwedit-all-interwikis' => 'wszystkie interwiki',
 	'iwedit-update' => 'Aktualizacja',

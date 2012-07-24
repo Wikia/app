@@ -365,7 +365,7 @@ Afegeix pàgines a aquesta llista fent clic a "{{int:watch}}" a la part superior
 	'wikiafollowedpages-userpage-hide' => 'amaga',
 );
 
-/** Chechen (Нохчийн)
+/** Chechen (нохчийн)
  * @author Sasan700
  */
 $messages['ce'] = array(
@@ -942,7 +942,7 @@ Merci de visiter ce site et de le modifier régulièrement...
 <div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1183,16 +1183,28 @@ $messages['hu'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'MediaWiki-lapok ( $1 )',
 	'wikiafollowedpages-special-heading-media' => 'Képek és videók ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 lap)',
+	'wikiafollowedpages-special-heading-wall' => 'Üzenőfalak ($1)',
+	'wikiafollowedpages-special-empty' => 'Az általad figyelt lapok listája üres.
+Adj hozzá lapokat az azok tetején található "{{int:watch}}" gombra kattintva!',
+	'wikiafollowedpages-special-anon' => 'Kérlek, [[Special:Signup|lépj be]] a figyelőlistád megtekintéséhez.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Összes >',
 	'wikiafollowedpages-special-seeall' => 'Összes >',
 	'wikiafollowedpages-special-showall' => 'Összes >',
 	'wikiafollowedpages-special-showmore' => 'Továbbiak',
 	'wikiafollowedpages-special-title' => 'Követett lapok',
 	'wikiafollowedpages-special-delete-tooltip' => 'Lap eltávolítása',
+	'wikiafollowedpages-special-hidden' => 'Ezen felhasználó figyelőlistája nem nyilvános.',
+	'wikiafollowedpages-special-hidden-unhide' => 'Lista megjelenítéséhe.',
 	'wikiafollowedpages-special-blog-by' => 'írta: $1',
 	'wikiafollowedpages-masthead' => 'Követett lapok',
 	'wikiafollowedpages-following' => 'Követés',
+	'wikiafollowedpages-special-title-userbar' => 'Követett lapok',
+	'tog-enotiffollowedpages' => 'E-mail küldése, ha egy általam követett lapot megváltoztatnak',
+	'tog-enotiffollowedminoredits' => 'E-mal küldése, ha apró változtatásokat végeznek az általam követett lapokon',
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Haladó beállítások',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Csak figyelőlista',
+	'tog-hidefollowedpages' => 'Az általam követett lapok listájának elrejtése mindenki elől',
+	'wikiafollowedpages-userpage-heading' => 'Követett lapok',
 	'wikiafollowedpages-userpage-more' => 'Tovább',
 	'wikiafollowedpages-userpage-hide' => 'elrejtés',
 );
@@ -1466,7 +1478,7 @@ $messages['kn'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
-	'wikiafollowedpages-special-heading-category' => 'Kategoriyan ($1)',
+	'wikiafollowedpages-special-heading-category' => 'Kategorî ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Gotaran ($1)',
 	'wikiafollowedpages-userpage-hide' => 'veşêre',
 );
@@ -1668,7 +1680,7 @@ Senaraikan laman yang ingin dipantau dengan mengklik "{{int:watch}}" di bahagian
 	'wikiafollowedpages-special-hidden-unhide' => 'Dedahkan seranai ini.',
 	'wikiafollowedpages-special-blog-by' => 'oleh $1',
 	'wikiafollowedpages-masthead' => 'Laman yang dipantau',
-	'wikiafollowedpages-following' => 'Memantau',
+	'wikiafollowedpages-following' => 'Diikuti',
 	'wikiafollowedpages-special-title-userbar' => 'Laman yang dipantau',
 	'tog-enotiffollowedpages' => 'E-mel saya apabila berlaku perubahan pada laman yang dipantau',
 	'tog-enotiffollowedminoredits' => 'E-mel saya untuk suntingan kecil dalam laman pantauan saya',
@@ -2294,6 +2306,7 @@ $messages['ps'] = array(
 	'wikiafollowedpages-masthead' => 'څارلي مخونه',
 	'wikiafollowedpages-following' => 'د څار لاندې',
 	'wikiafollowedpages-special-title-userbar' => 'څارلي مخونه',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'پرمختللې خوښنې',
 	'wikiafollowedpages-userpage-heading' => 'هغه مخونه چې زه يې څارم',
 	'wikiafollowedpages-userpage-more' => 'نور',
 	'wikiafollowedpages-userpage-hide' => 'پټول',
@@ -2303,6 +2316,7 @@ $messages['ps'] = array(
  * @author Giro720
  * @author Hamilton Abreu
  * @author Luckas Blade
+ * @author Rhaijin
  */
 $messages['pt'] = array(
 	'follow-desc' => 'Melhorias da funcionalidade de páginas vigiadas',
@@ -2336,7 +2350,7 @@ Adicione páginas à lista clicando "{{int:watch}}" no topo de uma página.',
 	'tog-enotiffollowedminoredits' => 'Notificar-me por correio electrónico quando uma página seguida sofrer uma edição menor',
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Opções avançadas',
 	'prefs-wikiafollowedpages-prefs-watchlist' => 'Só a lista de páginas vigiadas',
-	'tog-hidefollowedpages' => 'Tornar privada a minha lista de páginas seguidas',
+	'tog-hidefollowedpages' => 'Tornar privada a minha lista de paginas seguidas',
 	'follow-categoryadd-summary' => 'Página adicionada à categoria',
 	'follow-bloglisting-summary' => 'Mensagem publicada numa página de blogue',
 	'wikiafollowedpages-userpage-heading' => 'Páginas que estou a seguir',
@@ -2415,6 +2429,7 @@ Visite-nos sempre e edite muito...
  * @author Aristóbulo
  * @author Caio1478
  * @author Luckas Blade
+ * @author Rhaijin
  */
 $messages['pt-br'] = array(
 	'follow-desc' => 'Melhorias da funcionalidade de páginas vigiadas',
@@ -2830,6 +2845,7 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'follow-desc' => 'Mga pagpapainam para sa katungkulang-gawain ng talaan ng binabantayan',
+	'prefs-basic' => 'Saligang mga mapagpipilian',
 	'wikiafollowedpages-special-heading-category' => 'Mga kategorya ($1)',
 	'wikiafollowedpages-special-heading-article' => 'Mga artikulo ($1)',
 	'wikiafollowedpages-special-heading-blogs' => 'Mga blog at mga pagpapaskil ($1)',
@@ -2840,8 +2856,9 @@ $messages['tl'] = array(
 	'wikiafollowedpages-special-heading-mediawiki' => 'Mga pahina ng MediaWiki ($1)',
 	'wikiafollowedpages-special-heading-media' => 'Mga larawan at mga bidyo ($1)',
 	'wikiafollowedpages-special-namespace' => '($1 pahina)',
-	'wikiafollowedpages-special-empty' => 'Ang talaang ito ng sinusundan mga pahina ng tagagamit ay walang laman.
-Idagdag ang mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:watch}}" na nasa itaas ng isang pahina.',
+	'wikiafollowedpages-special-heading-wall' => 'Mga Dingding ng Mensahe ($1)',
+	'wikiafollowedpages-special-empty' => 'Walang laman ang talaan ng sinusundan mong mga pahina.
+Magdagdag ng mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:watch}}" na nasa itaas ng isang pahina.',
 	'wikiafollowedpages-special-anon' => 'Paki [[Special:Signup|lumagda]] upang makalikha o tanawin ang iyong talaan ng sinusundang mga pahina.',
 	'oasis-wikiafollowedpages-special-seeall' => 'Tingnan lahat >',
 	'wikiafollowedpages-special-seeall' => 'Tingnan lahat >',
@@ -2857,7 +2874,9 @@ Idagdag ang mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:watc
 	'wikiafollowedpages-special-title-userbar' => 'Sinusundang mga pahina',
 	'tog-enotiffollowedpages' => 'Padalhan ako ng e-liham kapag ang isang pahinang sinusundan ko ay nabago',
 	'tog-enotiffollowedminoredits' => 'Padalhan ako ng e-liham para sa maliliit na mga pagbabago sa mga pahinang sinusundan ko',
-	'tog-hidefollowedpages' => 'Gawing pribado ang aking mga talaan ng sinusundang mga pahina',
+	'prefs-wikiafollowedpages-prefs-advanced' => 'Masulong na mga mapagpipilian',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Listahan ng binabantayan lamang',
+	'tog-hidefollowedpages' => 'Ikubli mula sa lahat ng tao ang aking mga talaan ng sinusundang mga pahina',
 	'follow-categoryadd-summary' => 'Idinagdag ang pahina sa kategorya',
 	'follow-bloglisting-summary' => 'Ipinaskil ang blog sa pahina ng blog',
 	'wikiafollowedpages-userpage-heading' => 'Mga pahinang sinusundan ko',
@@ -2865,7 +2884,7 @@ Idagdag ang mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:watc
 	'wikiafollowedpages-userpage-more' => 'Mas marami pa',
 	'wikiafollowedpages-userpage-hide' => 'itago',
 	'wikiafollowedpages-userpage-empty' => 'Walang laman ang talaan ng sinusundang mga pahina ng tagagamit na ito.
-Idagdag ang mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:watch}}" na nasa itaas ng isang pahina.',
+Magdagdag ng mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:watch}}" na nasa itaas ng isang pahina.',
 	'enotif_subject_categoryadd' => 'Ang pahinang $PAGETITLE ng {{SITENAME}} ay naidagdag na ni $PAGEEDITOR sa $CATEGORYNAME',
 	'enotif_body_categoryadd' => 'Mahal na $ WATCHINGUSERNAME, 
 
@@ -3089,7 +3108,7 @@ ___________________________________________
 </p>',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

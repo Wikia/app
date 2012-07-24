@@ -74,13 +74,22 @@ $messages['fr'] = array(
 	'scribeeventsrecords' => 'Enregistrements',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
 	'scribe-desc' => '[[Special:Scribeevents|Ferramenta]] para procurar un título de páxina específico a través de varios wikis',
 	'scribeevents' => 'Acontecementos recentes',
 	'scribeeventsrecords' => 'Rexistros',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'scribe-desc' => 'Egy bizonyos oldalcím több wikin történő keresésére szolgáló [[Special:Scribeevents|eszköz]]',
+	'scribeevents' => 'Legutóbbi események',
+	'scribeeventsrecords' => 'Feljegyzések',
 );
 
 /** Interlingua (interlingua) */
@@ -149,9 +158,10 @@ $messages['nl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
-	'scribe-desc' => '[[Special:Scribeevents|Narzędzie]] do odnalezienia określonego tytułu strony w różnych wiki',
+	'scribe-desc' => '[[Special:Scribeevents|Narzędzie]] do odnalezienia określonego tytułu strony na różnych wiki',
 	'scribeevents' => 'Ostatnie wydarzenia',
 	'scribeeventsrecords' => 'Wpisy',
 );
@@ -215,6 +225,7 @@ $messages['ta'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'scribe-desc' => '[[Special:Scribeevents|Kasangkapan]] upang makapaghanap ng isang tiyak na pamagat ng pahina sa ibayo ng mga wiki',
 	'scribeevents' => 'Kamakailang mga kaganapan',
 	'scribeeventsrecords' => 'Mga rekord',
 );

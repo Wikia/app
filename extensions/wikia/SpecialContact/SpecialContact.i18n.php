@@ -322,7 +322,7 @@ Si vous préférez utiliser la messagerie électronique classique ou souhaitez j
 	'specialcontact-submitcomplete' => 'Merci d’avoir contacté Wikia.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -358,8 +358,17 @@ Se prefire usar o correo electrónico ou necesita enviar ficheiros adxuntos, pod
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'contact' => 'Lépj kapcsolatba a Wikiával',
+	'specialcontact-wikia' => 'Lépj kapcsolatba a Wikiával',
+	'specialcontact-pagetitle' => 'Lépj kapcsolatba a Wikiával',
+	'specialcontact-intro' => 'Ezen az űrlapon a [[w:project:Staff|Wikia személyzetével]] léphetsz kapcsolata. A wiki adminisztrátorai [[Special:ListAdmins|itt]] találhatóak.
+
+	További információt a problémák jelentéséről [[w:project:Report_a_problem|itt]] találhatsz, vagy írhatsz a [[w:Forum:Index|Wikia közösségi fórumaiba]] felhasználói támogatásért.
+
+Amennyiben a hagyományos e-mailt kedveled vagy csatolt fájlokat is szeretnél küldeni, a  [mailto:community@wikia.com community@wikia.com] e-mail címen is elérhetsz minket.',
 	'specialcontact-username' => 'Felhasználónév',
 	'specialcontact-wikiname' => 'Melyik wiki',
 	'specialcontact-realname' => 'Neved:',
@@ -367,8 +376,19 @@ $messages['hu'] = array(
 	'specialcontact-problem' => 'Tárgy',
 	'specialcontact-problemdesc' => 'Üzenet',
 	'specialcontact-mail' => 'Küldés a Wikiára',
+	'specialcontact-filledin' => 'Ezt az információt a felhasználói beállításaidból töltöttük be',
+	'specialcontact-ccme' => 'Küldje el nekem ezen üzenet másolatát',
+	'specialcontact-ccdisabled' => 'Letiltva: Kérlek, érvényesítsd az e-mail címedet ezen funkció használatához',
 	'specialcontact-notyou' => 'Nem te vagy?',
+	'specialcontact-captchainfo' => 'Add meg a képen látható szöveget.',
 	'specialcontact-captchatitle' => 'Elmosott szó',
+	'specialcontact-formtitle' => 'Lépj kapcsolatba a Wikia támogatási személyzetével',
+	'specialcontact-nomessage' => 'Kérlek, adj meg egy üzenetet',
+	'specialcontact-captchafail' => 'Hibás vagy hiányzó ellenőrző kód.',
+	'specialcontact-mailsub' => 'Wikia kapcsolatfelvételi e-mail',
+	'specialcontact-mailsubcc' => 'Wikia kapcsolatfelvételi e-mail másolata',
+	'specialcontact-ccheader' => 'Ez a Wikia támogatásnak elküldött üzeneted másolata',
+	'specialcontact-submitcomplete' => 'Köszönjük, hogy kapcsolatba léptél a Wikiával.',
 );
 
 /** Interlingua (interlingua)
@@ -401,7 +421,7 @@ Si tu prefere usar e-mail normal o ha annexos, tu pote contactar nos a [mailto:c
 	'specialcontact-captchafail' => 'Codice de confirmation incorrecte o mancante.',
 	'specialcontact-mailsub' => 'Message de contacto con Wikia',
 	'specialcontact-mailsubcc' => 'Copia del message de contacto con Wikia',
-	'specialcontact-ccheader' => 'Isto es un copia de tu message que esseva inviate al personal de supporto de Wikia',
+	'specialcontact-ccheader' => 'Isto es un copia del message que tu ha inviate al personal de supporto de Wikia.',
 	'specialcontact-submitcomplete' => 'Gratias pro contactar Wikia.',
 );
 
@@ -624,6 +644,7 @@ Als je liever gebruik maakt van e-mail of bijlagen wilt meesturen, stuur dan een
 
 /** Polish (polski)
  * @author Cloudissimo
+ * @author Sovq
  * @author Woytecr
  */
 $messages['pl'] = array(
@@ -647,7 +668,7 @@ Jeżeli wolisz skorzystać ze zwykłego sposobu kontaktu e-mail lub posiadasz za
 	'specialcontact-ccdisabled' => 'Zablokowane: Proszę potwierdź swój adres e-mail, żeby móc korzystać z tej funkcji',
 	'specialcontact-notyou' => 'Nie ty?',
 	'specialcontact-captchainfo' => 'Przepisz słowo z obrazka.',
-	'specialcontact-captchatitle' => 'Nieczytelne słowo',
+	'specialcontact-captchatitle' => 'Zamazane słowo',
 	'specialcontact-formtitle' => 'Skontaktuj się z Zespołem Wikii',
 	'specialcontact-nomessage' => 'Prosimy o wpisanie tekstu wiadomości',
 	'specialcontact-captchafail' => 'Niepoprawny lub nie wpisany kod potwierdzający.',

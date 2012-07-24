@@ -54,7 +54,7 @@ $messages['az'] = array(
 	'ajaxpoll-submit' => 'Səs ver!',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -143,6 +143,11 @@ $messages['de-formal'] = array(
  * @author Erdemaslancan
  */
 $messages['diq'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;rey pêro',
+	'ajaxpoll-thankyou' => 'Qan dê reyan şıma rê teşekur kemê!',
+	'ajaxpoll-error' => 'Reya şıma karfinayış dı xırabin vıciyê, Şıma ra recay fına bıcerbnê.',
+	'ajaxpoll-summary' => '$1 sera $2 anket vıraşt u $3 merduman rey dê.',
+	'ajaxpoll-submit' => 'Rey Bıdê!',
 	'ajaxpoll-closed' => 'Anket racneya yo, newqe bewni reanketa',
 	'ajaxpoll-submitting' => 'Tay pıpawe, reya şımaya qeyd bena',
 );
@@ -220,7 +225,7 @@ $messages['fr'] = array(
 	'ajaxpoll-submitting' => "Veuillez patienter pendant l'envoi de votre vote...",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(

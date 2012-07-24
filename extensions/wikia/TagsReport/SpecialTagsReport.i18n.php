@@ -48,7 +48,7 @@ $messages['az'] = array(
 	'tagsreportmainnspace' => 'Əsas',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -198,7 +198,7 @@ $messages['fr'] = array(
 	'tagsreportgenerated' => 'Généré le $1 à $2',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -237,13 +237,19 @@ $messages['he'] = array(
 
 /** Hungarian (magyar)
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'tagsreport' => 'Címkejelentés',
+	'tagsreporttitle' => 'Címkejelentés',
 	'tagsreportselecttag' => 'Címke kiválasztása:',
 	'tagsreportgo' => 'Megjelenítés',
+	'tagsreportnotspecify' => 'Még nem választottál ki különleges címkét',
 	'tagsreportnoresults' => 'Nincs találat',
+	'tagsreportmainnspace' => 'Fő',
 	'tagsreportpages' => '(<strong>$1</strong> lap)',
-	'tagsreportgenerated' => 'Készült: $1 $2',
+	'tagsreportpagesfound' => '<strong>$1</strong> különleges címkét (DPL, YouTube stb.) tartalmazó oldal található',
+	'tagsreportgenerated' => 'Létrehozva: $1 $2',
 );
 
 /** Interlingua (interlingua)
@@ -310,7 +316,7 @@ $messages['ja'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
-	'tagsreportgo' => 'Nîşan bide',
+	'tagsreportgo' => 'nîşan bide',
 	'tagsreportnoresults' => 'Tu encam nehate dîtin',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|page|pages}})',
 );
@@ -600,7 +606,7 @@ $messages['uk'] = array(
 	'tagsreportgenerated' => 'Створено $1 о $2',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

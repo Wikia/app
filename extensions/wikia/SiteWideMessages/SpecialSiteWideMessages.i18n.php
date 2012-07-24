@@ -198,7 +198,7 @@ Dit kan nie ongedaan gemaak word nie!',
 	'swm-lang-other' => 'alle oorblywende tale',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -282,6 +282,13 @@ $messages['ar'] = array(
 	'swm-lang-other' => 'جميع اللغات المتبقية',
 );
 
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'swm-button-preview' => '[খচৰা চাওক]',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vago
@@ -321,7 +328,7 @@ $messages['az'] = array(
 	'swm-no' => 'Xeyr',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -491,7 +498,7 @@ $messages['bs'] = array(
 	'swm-no' => 'Ne',
 );
 
-/** Chechen (Нохчийн)
+/** Chechen (нохчийн)
  * @author Sasan700
  */
 $messages['ce'] = array(
@@ -566,7 +573,7 @@ $messages['cs'] = array(
 	'swm-lang-other' => 'všechny zbývající jazyky',
 );
 
-/** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
 $messages['cu'] = array(
@@ -661,6 +668,7 @@ $messages['de'] = array(
 	'swm-error-empty-group' => 'Gib den Namen der Gruppe ein.',
 	'swm-error-invalid-time' => 'Ungültige Zeitangabe',
 	'swm-lang-other' => 'alle verbleibenden Sprachen',
+	'action-messagetool' => 'wiki-weite Nachrichten versenden',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -824,6 +832,7 @@ $messages['es'] = array(
 	'swm-error-empty-group' => 'Introduce el nombre del grupo.',
 	'swm-error-invalid-time' => 'La fecha y hora suministrada no es válida.',
 	'swm-lang-other' => 'Todos los idiomas restantes',
+	'action-messagetool' => 'Mensajes de amplia difusión',
 );
 
 /** Basque (euskara)
@@ -998,9 +1007,10 @@ $messages['fr'] = array(
 	'swm-error-empty-group' => 'Entrez le nom du groupe.',
 	'swm-error-invalid-time' => 'Durée fournie non valide.',
 	'swm-lang-other' => 'toutes les langues restantes',
+	'action-messagetool' => 'envoyer des messages à tout le site',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -1074,6 +1084,7 @@ $messages['gl'] = array(
 	'swm-error-empty-group' => 'Escriba o nome do grupo.',
 	'swm-error-invalid-time' => 'A hora proporcionada non é válida.',
 	'swm-lang-other' => 'todas as linguas restantes',
+	'action-messagetool' => 'enviar a mensaxe global do sitio',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -1091,6 +1102,7 @@ $messages['ha'] = array(
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'swm-label-preview' => 'Előnézet',
@@ -1102,13 +1114,19 @@ $messages['hu'] = array(
 	'swm-label-recipient-wikis' => 'Wikik',
 	'swm-label-recipient-users' => 'Felhasználók',
 	'swm-label-expiration' => 'Lejárati idő',
+	'swm-label-expiration-hint' => '<i>Válassz lejárati időt a legördülő listából vagy írj be egy időpontot kézzel annak felülírásához. Az időt az alábbi formátumban kell beírni: 2012-04-01 00:00:00</i>',
 	'swm-label-mode-wikis-all' => 'Összes wiki',
 	'swm-label-mode-wikis-hub' => 'Kiválasztott hub',
+	'swm-label-mode-wikis-cluster' => 'Kijelölt fürt',
 	'swm-label-mode-wikis-wiki' => 'Kiválasztott wiki',
 	'swm-label-mode-users-all' => 'Összes felhasználó',
 	'swm-label-mode-users-active' => 'Aktív szerkesztők',
 	'swm-label-mode-users-group' => 'A csoporthoz tartozó felhasználók',
+	'swm-label-mode-users-group-hint' => '<i>Válassz egy csoportot a legördülő listából vagy írd be manuálisan a lista felülírásához.</i>',
 	'swm-label-mode-users-user' => 'Kiválasztott felhasználó',
+	'swm-label-mode-users-user-hint' => '<i>Ez a beállítás figyelmen kívül hagyja a "Wikik" csoport kijelöléseit.</i>',
+	'swm-label-mode-users-user-multi' => 'A felhasználók listája',
+	'swm-label-mode-users-user-multi-hint' => '<i>Írj be egy&ndash;egy felhasználónevet soronként. Ez a beállítás figyelmen kívül hagyja a "Wikik" csoport kijelöléseit.</i>',
 	'swm-label-content' => 'Tartalom',
 	'swm-label-comment' => 'Megjegyzés',
 	'swm-label-language' => 'Nyelv',
@@ -1208,6 +1226,7 @@ $messages['ia'] = array(
 	'swm-error-empty-group' => 'Entra le nomine del gruppo.',
 	'swm-error-invalid-time' => 'Le hora fornite es invalide.',
 	'swm-lang-other' => 'tote le linguas restante',
+	'action-messagetool' => 'inviar messages a tote le sito',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -1380,12 +1399,19 @@ $messages['kn'] = array(
 	'swm-list-table-lang' => 'ಭಾಷೆಗಳು',
 );
 
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'swm-button-save' => '[ 저장 ]',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
 	'swm-label-recipient-users' => 'Metmaacher',
-	'swm-label-comment' => 'Aanmerkung',
+	'swm-label-comment' => 'Aanmärkong',
 	'swm-button-new' => '[ Neu ]',
 );
 
@@ -1393,12 +1419,22 @@ $messages['ksh'] = array(
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'swm-label-edit' => 'Biguherîne',
 	'swm-label-list' => 'Lîste',
+	'swm-label-recipient-users' => 'Bikarhêner',
+	'swm-label-mode-users-all' => 'Hemû bikarhêner',
 	'swm-label-content' => 'Naverok',
 	'swm-label-language' => 'Ziman',
+	'swm-button-preview' => '[ Pêşdîtin ]',
+	'swm-button-send' => '[ Bişîne ]',
+	'swm-button-save' => '[ Tomar bike ]',
+	'swm-button-new' => '[ Nû ]',
+	'swm-msg-sent-ok' => '<h3>Peyam hate şandin.</h3>',
 	'swm-list-no-messages' => 'Mesaj tune ne.',
-	'swm-list-table-group' => 'Grûp',
-	'swm-list-table-content' => 'Naverrok',
+	'swm-list-table-group' => 'Kom',
+	'swm-list-table-content' => 'Naverok',
+	'swm-list-table-tools' => 'Amûr',
+	'swm-list-table-lang' => 'Ziman',
 	'swm-yes' => 'Erê',
 	'swm-no' => 'Na',
 );
@@ -1409,6 +1445,7 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'swm-label-edit' => 'Änneren',
 	'swm-label-remove' => 'Ewechhuelen',
+	'swm-label-sent' => 'Geschéckt',
 	'swm-label-list' => 'Lëscht',
 	'swm-label-recipient-wikis' => 'Wikien:',
 	'swm-label-recipient-users' => 'Benotzer',
@@ -1416,12 +1453,18 @@ $messages['lb'] = array(
 	'swm-label-mode-users-all' => 'All Benotzer',
 	'swm-label-mode-users-active' => 'Aktiv Benotzer',
 	'swm-label-mode-users-user' => 'Erausgesichte Benotzer',
+	'swm-label-mode-users-user-multi' => 'Lëscht vun de Benotzer',
+	'swm-label-mode-users-anon' => 'All anonym Benotzer',
 	'swm-label-content' => 'Inhalt',
 	'swm-label-comment' => 'Bemierkung',
 	'swm-label-language' => 'Sprooch',
+	'swm-button-send' => '[ Schécken ]',
 	'swm-button-save' => '[ Späicheren ]',
 	'swm-button-new' => '[ Nei ]',
+	'swm-list-no-messages' => 'Keng Messagen.',
+	'swm-list-table-wiki' => 'Wiki',
 	'swm-list-table-group' => 'Grupp',
+	'swm-list-table-content' => 'Inhalt',
 	'swm-list-table-lang' => 'Sproochen',
 	'swm-yes' => 'Jo',
 	'swm-no' => 'Neen',
@@ -1505,6 +1548,7 @@ $messages['mk'] = array(
 	'swm-error-empty-group' => 'Внесете го името на групата.',
 	'swm-error-invalid-time' => 'Наведено е неважечко време.',
 	'swm-lang-other' => 'сите преостанати јазици',
+	'action-messagetool' => 'испрати пораки ширум викито',
 );
 
 /** Mongolian (монгол)
@@ -1591,6 +1635,7 @@ $messages['ms'] = array(
 	'swm-error-empty-group' => 'Isikan nama kumpulan.',
 	'swm-error-invalid-time' => 'Waktu yang dinyatakan tidak sah.',
 	'swm-lang-other' => 'semua bahasa yang tinggal',
+	'action-messagetool' => 'hantar pesanan ke seluruh tapak sesawang',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -1703,6 +1748,7 @@ $messages['nb'] = array(
 	'swm-error-empty-group' => 'Skriv inn navnet på gruppen.',
 	'swm-error-invalid-time' => 'Ugyldig tidspunkt oppgitt.',
 	'swm-lang-other' => 'alle gjenværende språk',
+	'action-messagetool' => 'send sideomfattende meldinger',
 );
 
 /** Nepali (नेपाली)
@@ -1792,6 +1838,7 @@ Dit kan niet ongedaan gemaakt worden.',
 	'swm-error-empty-group' => 'Voer de naam van de groep in.',
 	'swm-error-invalid-time' => 'Er is een ongeldige tijd opgegeven.',
 	'swm-lang-other' => 'alle overgebleven talen',
+	'action-messagetool' => 'berichten over de hele site versturen',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -1834,15 +1881,15 @@ $messages['pfl'] = array(
  * @author Sovq
  */
 $messages['pl'] = array(
-	'sitewidemessages' => 'Komunikaty ogólne',
-	'swm-page-title-editor' => 'Komunikaty ogólne :: Edytor',
-	'swm-page-title-preview' => 'Komunikaty ogólne :: Podgląd',
-	'swm-page-title-send' => 'Komunikaty ogólne :: Wyślij',
-	'swm-page-title-sent' => 'Komunikaty ogólne :: Wysłano',
-	'swm-page-title-dismiss' => 'Komunikaty ogólne :: Odrzuć',
-	'swm-page-title-list' => 'Komunikaty ogólne :: Lista',
+	'sitewidemessages' => 'Komunikaty globalne',
+	'swm-page-title-editor' => 'Komunikaty globalne :: Edytor',
+	'swm-page-title-preview' => 'Komunikaty globalne :: Podgląd',
+	'swm-page-title-send' => 'Komunikaty globalne :: Wyślij',
+	'swm-page-title-sent' => 'Komunikaty globalne :: Wysłano',
+	'swm-page-title-dismiss' => 'Komunikaty globalne :: Odrzuć',
+	'swm-page-title-list' => 'Komunikaty globalne :: Lista',
 	'swm-label-preview' => 'Podgląd',
-	'swm-label-edit' => 'Edycja',
+	'swm-label-edit' => 'Edytuj',
 	'swm-label-remove' => 'Usuń',
 	'swm-label-sent' => 'Wysłano',
 	'swm-label-list' => 'Lista',
@@ -1904,6 +1951,7 @@ $messages['pl'] = array(
 	'swm-error-empty-group' => 'Wprowadź nazwę grupy.',
 	'swm-error-invalid-time' => 'Niewłaściwy format czasu.',
 	'swm-lang-other' => 'wszystkie pozostałe języki',
+	'action-messagetool' => 'wyślij komunikaty globalne',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2167,6 +2215,7 @@ $messages['ro'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -2243,6 +2292,7 @@ $messages['ru'] = array(
 	'swm-error-empty-group' => 'Введите название группы.',
 	'swm-error-invalid-time' => 'Недопустимое время.',
 	'swm-lang-other' => 'все остальные языки',
+	'action-messagetool' => 'отправить уведомление для всего сайта',
 );
 
 /** Slovenian (slovenščina)
@@ -2451,8 +2501,10 @@ $messages['tl'] = array(
 	'swm-label-recipient-wikis' => 'Mga wiki',
 	'swm-label-recipient-users' => 'Mga tagagamit',
 	'swm-label-expiration' => 'Oras ng pagwawakas',
+	'swm-label-expiration-hint' => '<i>Pumili ng isang oras ng pagkawalang-bisa mula sa pambagsak na paibaba o kinakamay na magsulat ng isang oras upang mapangibabawan ang piliang nasa pambagsak na paibaba. Ang oras na isinulat ng kamay ay dapat na nasa anyong 2012-04-01 00:00:00</i>',
 	'swm-label-mode-wikis-all' => 'Lahat ng mga wiki',
 	'swm-label-mode-wikis-hub' => 'Napiling sentro ng aktibidad',
+	'swm-label-mode-wikis-cluster' => 'Napiling kumpol',
 	'swm-label-mode-wikis-wiki' => 'Napiling wiki',
 	'swm-label-mode-users-all' => 'Lahat ng mga tagagamit',
 	'swm-label-mode-users-active' => 'Masisiglang mga tagagamit',
@@ -2460,6 +2512,10 @@ $messages['tl'] = array(
 	'swm-label-mode-users-group-hint' => '<i>Pumili ng isang pangkat mula sa pahulog-baba o kinakamay na isulat ang pangalan upang mapatungan ang pilian sa pahulog-baba.</i>',
 	'swm-label-mode-users-user' => 'Napiling tagagamit',
 	'swm-label-mode-users-user-hint' => '<i>Hindi pinapansin ng piliang ito ang mapagpipiliang nasa loob ng pangkat na "Mga wiki".</i>',
+	'swm-label-mode-users-user-multi' => 'Listahan ng mga tagagamit',
+	'swm-label-mode-users-user-multi-hint' => '<i.Magpasok ng isang pangalan ng tagagamit sa bawat guhit. Ang mapagpipiliang ito ay hindi pumapansin sa napili na nasa loob ng pangkat na "Mga wiki".',
+	'swm-label-mode-users-anon' => 'Lahat ng hindi nagpapakilalang mga tagagamit',
+	'swm-label-mode-users-anon-hint' => '<i>Ang piniling ito ay pangkasalukuyang gumagana lamang sa piling ng "Lahat ng mga wiki" o ang "Opsiyon ng napiling wiki".',
 	'swm-label-content' => 'Nilalaman',
 	'swm-label-comment' => 'Puna',
 	'swm-label-dismissed' => 'Binitiwan na',
@@ -2493,10 +2549,13 @@ $messages['tl'] = array(
 	'swm-no' => 'Hindi',
 	'swm-error-no-such-wiki' => 'Walang ganyang wiki!',
 	'swm-error-no-such-user' => 'Hindi umiiral ang tinukoy na tagagamit!',
+	'swm-error-no-user-list' => 'Dapat na magbigay ng kahit na isang tagagamit',
 	'swm-error-empty-message' => 'Ipasok ang nilalaman ng mensahe.',
 	'swm-error-long-message' => 'Ang mga mensahe ay may hangganang 500 mga panitik.',
 	'swm-error-empty-group' => 'Ipasok ang pangalan ng pangkat.',
+	'swm-error-invalid-time' => 'Hindi katanggap-tanggap ang oras na ibinigay.',
 	'swm-lang-other' => 'lahat ng natitirang mga wika',
+	'action-messagetool' => 'magpadala ng mga mensahe na pangkabuuan ng pook',
 );
 
 /** толышә зывон (толышә зывон)

@@ -119,10 +119,12 @@ Head to Wikia to check out the changes! $1
 
 /** Message documentation (Message documentation)
  * @author Purodha
+ * @author Siebrand
  */
 $messages['qqq'] = array(
 	'toplists-desc' => '{{desc}}',
 	'toplists-category' => 'The name for the category that lists all the Top 10 Lists on a wiki',
+	'action-toplists-create-edit-list' => '{{doc-action|toplists-create-edit}}',
 	'toplits-image-browser-selected-picture' => '$1 is the title of the image page.',
 	'toplists-list-vote-up' => 'Keep this as short as possible. Everything exceeding allowed lenght will be cutted out!',
 );
@@ -151,7 +153,7 @@ $messages['ar'] = array(
 	'toplists-error-empty-item-name' => 'لا يمكن أن يكون اسم عنصر القائمة فارغة.',
 	'toplists-item-cannot-delete' => 'فشل في حذف هذا البند.',
 	'toplists-error-image-already-exists' => 'صورة مع نفس الاسم موجود مسبقا.',
-	'toplists-error-add-item-anon' => 'ولا يسمح للمستخدمين المجهولين إضافة عناصر إلى القوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 "> الدخول</a> أو <a href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .',
+	'toplists-error-add-item-anon' => 'ولا يسمح للمستخدمين المجهولين إضافة عناصر إلى القوائم. الرجاء <a class="ajaxLogin" id="login" href="<span class="notranslate">$ 1 "> الدخول</a> أو <a class="ajaxLogin" id="signup" href="<span class="notranslate">$ 2 "> تسجيل حساب جديد</a> .',
 	'toplists-error-add-item-permission' => 'خطأ في إذن الوصول: الحساب الخاص بك لم يتم منح الحق في إنشاء عناصر جديدة.',
 	'toplists-error-add-item-list-not-exists' => '"$1" لا توجد في قائمة أعلى 10',
 	'toplists-upload-error-unknown' => 'حدث خطأ أثناء معالجة طلب التحميل. يرجى المحاولة مرة أخرى.',
@@ -395,7 +397,7 @@ Oznamování změn seznamu si můžete <a href="$4">odhlásit</a>.',
  */
 $messages['de'] = array(
 	'toplists-desc' => 'Top 10 Listen',
-	'right-toplists-create-edit-list' => 'Erstelle und bearbeite Top 10 Listen',
+	'right-toplists-create-edit-list' => 'Erstelle und bearbeite Top-10-Listen',
 	'right-toplists-create-item' => 'Erstelle und füge Einträge zu einer Top 10 Liste hinzu',
 	'right-toplists-edit-item' => 'Elemente in einer Top 10 Liste bearbeiten',
 	'right-toplists-delete-item' => 'Elemente aus einer Top 10 Liste löschen',
@@ -417,6 +419,7 @@ $messages['de'] = array(
 	'toplists-error-add-item-permission' => 'Keine ausreichenden Rechte: Mit deinem Benutzerkonto kannst du keine neuen Einträge erstellen.',
 	'toplists-error-add-item-list-not-exists' => 'Die Top 10 Liste "$1" existiert nicht.',
 	'toplists-upload-error-unknown' => 'Beim Verarbeiten der Upload Anfrage ist ein Fehler aufgetreten. Bitte versuche es erneut.',
+	'action-toplists-create-edit-list' => 'Erstelle und bearbeite Top-10-Listen',
 	'toplists-editor-title-label' => 'Name der Liste',
 	'toplists-editor-title-placeholder' => 'Gib der Liste einen Namen',
 	'toplists-editor-related-article-label' => 'Verwandte Seite <small>(optional, aber wählt ein Bild)</small>',
@@ -528,6 +531,7 @@ $messages['es'] = array(
 	'toplists-error-add-item-permission' => 'Error de permisos: No se ha concedido el derecho a tu cuenta para crear nuevos elementos.',
 	'toplists-error-add-item-list-not-exists' => 'Los 10 mejores "$1" no existe.',
 	'toplists-upload-error-unknown' => 'Ha ocurrido un error mientras procesábamos tu petición de subida. Por favor, inténtalo de nuevo.',
+	'action-toplists-create-edit-list' => 'Crea y edita páginas Top 10',
 	'toplists-editor-title-label' => 'Nombre de la lista',
 	'toplists-editor-title-placeholder' => 'Introduce un nombre para la lista',
 	'toplists-editor-related-article-label' => 'Página relacionada <small>(opcional, pero selecciona una imagen)</small>',
@@ -719,6 +723,7 @@ $messages['fr'] = array(
 	'toplists-error-add-item-permission' => 'Erreur de permission : Votre compte n’a pas les droits pour créer de nouveaux éléments.',
 	'toplists-error-add-item-list-not-exists' => 'La liste de top 10 « $1 » n’existe pas.',
 	'toplists-upload-error-unknown' => 'Une erreur s’est produite lors du traitement de la demande d’import. Veuillez réessayer.',
+	'action-toplists-create-edit-list' => 'créer et modifier des pages de liste de top 10',
 	'toplists-editor-title-label' => 'Nom de la liste',
 	'toplists-editor-title-placeholder' => 'Saisissez un nom pour la liste',
 	'toplists-editor-related-article-label' => 'Page connexe <small>(optionnel, mais définit une image)</small>',
@@ -779,7 +784,7 @@ Vous pouvez <a href="$4">vous désinscrire</a> des modifications de cette liste.
 	'toplists-create-button-msg' => 'Créer une liste',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  * @author Xanocebreiro
  */
@@ -807,6 +812,7 @@ $messages['gl'] = array(
 	'toplists-error-add-item-permission' => 'Erro de permisos: A súa conta non ten os dereitos necesarios para crear novos elementos.',
 	'toplists-error-add-item-list-not-exists' => 'A lista dos 10 mellores "$1" non existe.',
 	'toplists-upload-error-unknown' => 'Houbo un erro ao procesar a petición de subida. Inténteo de novo.',
+	'action-toplists-create-edit-list' => 'crear e editar as páxinas dos 10 mellores',
 	'toplists-editor-title-label' => 'Nome da lista',
 	'toplists-editor-title-placeholder' => 'Escriba un nome para a lista',
 	'toplists-editor-related-article-label' => 'Páxina relacionada <small>(opcional, pero selecciona unha imaxe)</small>',
@@ -867,11 +873,15 @@ Pode <a href="$4">cancelar a subscrición</a> dos cambios feitos na lista.',
 	'toplists-create-button-msg' => 'Crear unha lista',
 );
 
-/** Hungarian (magyar) */
+/** Hungarian (magyar)
+ * @author TK-999
+ */
 $messages['hu'] = array(
 	'toplists-desc' => 'Top 10-es lista',
 	'right-toplists-create-edit-list' => 'Top 10-es lista létrehozása és szerkesztése',
 	'right-toplists-create-item' => 'Top 10-es lista létrehozása és elemek hozzáadása',
+	'right-toplists-edit-item' => 'Top 10-es lista elemeinek szerkesztése',
+	'right-toplists-delete-item' => 'Top 10-es lista elemeinek törlése',
 	'createtoplist' => 'Új Top 10-es lista létrehozása',
 	'edittoplist' => 'Top 10-es lista szerkesztése',
 	'toplists-category' => 'Top 10-es listák',
@@ -889,10 +899,13 @@ $messages['hu'] = array(
 	'toplists-error-add-item-anon' => 'Névtelen felhasználók nem jogosultak elemek hozzáadásához a listákhoz. Kérjük, <a class="ajaxLogin" id="login" href="$1">jelentkezzen be,</a> vagy <a href="$2">regisztráljon</a>.',
 	'toplists-error-add-item-permission' => 'Jogosultsági hiba: a felhasználói fiók nem rendelkezik engedéllyel új elemek létrehozásához.',
 	'toplists-error-add-item-list-not-exists' => 'A "$ 1" Top 10-es lista nem létezik.',
+	'toplists-upload-error-unknown' => 'Hiba történt a feltöltési kérés feldolgozása közben. Kérlek, próbáld újra.',
 	'toplists-editor-title-label' => 'A lista neve',
 	'toplists-editor-title-placeholder' => 'Írja be a lista nevét',
 	'toplists-editor-related-article-label' => 'Kapcsolódó oldal <small>(nem kötelező, de kiválaszt egy képet)</small>',
 	'toplists-editor-related-article-placeholder' => 'Adja meg egy létező lap nevét',
+	'toplists-editor-description-label' => 'A Top 10-es listád rövid leírása',
+	'toplists-editor-description-placeholder' => 'Adj meg egy leírást',
 	'toplists-editor-image-browser-tooltip' => 'Kép hozzáadása',
 	'toplists-editor-remove-item-tooltip' => 'Az elem törlése',
 	'toplists-editor-drag-item-tooltip' => 'A sorrend módosításához húzza át az elemet',
@@ -920,10 +933,19 @@ $messages['hu'] = array(
 	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />szavazat|$1<br />szavazatok}}',
 	'toplists-list-created-by' => '[[Felhasználó:$1|$1]] által',
 	'toplists-list-vote-up' => 'Szavazás',
+	'toplists-list-hotitem-count' => '$1 szavazat a(z) $2-ben',
 	'toplists-list-add-item-label' => 'Elem hozzáadása',
+	'toplists-list-add-item-name-label' => 'Folytasd a listát&hellip;',
 	'toplists-list-item-voted' => 'Szavazat elküldve',
 	'toplists-createpage-dialog-label' => 'Top 10-es lista',
 	'toplists-email-subject' => 'A Top 10-es lista megváltozott',
+	'toplists-seconds' => '$1 másodperc',
+	'toplists-minutes' => '$1 perc',
+	'toplists-hours' => '$1 óra',
+	'toplists-days' => '$1 nap',
+	'toplists-weeks' => '$1 hét',
+	'toplists-msg-fb-OnRateArticle-short' => 'szavazott egy Top 10-es listán a $WIKINAME-n!',
+	'toplists-create-heading' => '<em>Új!</em> Saját Top 10 létrehozása',
 	'toplists-create-button-msg' => 'Lista létrehozása',
 );
 
@@ -954,6 +976,7 @@ $messages['ia'] = array(
 	'toplists-error-add-item-permission' => 'Error de permission: Tu conto non ha le derecto de crear nove elementos.',
 	'toplists-error-add-item-list-not-exists' => 'Le lista Top 10 "$1" non existe.',
 	'toplists-upload-error-unknown' => 'Un error occurreva durante le tractamento del requesta de incargamento, per favor reproba.',
+	'action-toplists-create-edit-list' => 'crear e modificar paginas de lista Top 10',
 	'toplists-editor-title-label' => 'Nomine del lista',
 	'toplists-editor-title-placeholder' => 'Entra un nomine pro le lista',
 	'toplists-editor-related-article-label' => 'Pagina connexe <small>(optional, ma selige un imagine)</small>',
@@ -1162,6 +1185,7 @@ $messages['mk'] = array(
 	'toplists-error-add-item-permission' => 'Грешка во дозволите. Вашата сметка нема добиено право за создавање на нови ставки.',
 	'toplists-error-add-item-list-not-exists' => 'Не постои список на 10 предводници со наслов „$1“.',
 	'toplists-upload-error-unknown' => 'Се појави грешка при обработката на барањето за подигање. Обидете се повторно.',
+	'action-toplists-create-edit-list' => 'создајте или уредете страници списокот на 10 предводници',
 	'toplists-editor-title-label' => 'Презиме',
 	'toplists-editor-title-placeholder' => 'Внесете име на списокот',
 	'toplists-editor-related-article-label' => 'Поврзана страница <small>(по избор, но одбира слика)</small>',
@@ -1249,6 +1273,7 @@ $messages['ms'] = array(
 	'toplists-error-add-item-permission' => 'Perhatian: Akaun anda tidak diberikan kebenaran untuk mencipta item baru.',
 	'toplists-error-add-item-list-not-exists' => 'Senarai 10 Teratas "$1" tidak wujud.',
 	'toplists-upload-error-unknown' => 'Ralat terjadi ketika permohonan muat naik sedang diproses. Sila cuba lagi.',
+	'action-toplists-create-edit-list' => 'cipta dan sunting laman senarai 10 Teratas',
 	'toplists-editor-title-label' => 'Nama senarai',
 	'toplists-editor-title-placeholder' => 'Isikan nama untuk senarai',
 	'toplists-editor-related-article-label' => 'Laman berkaitan <small>(tidak wajib, tetapi memilih gambar)</small>',
@@ -1348,6 +1373,7 @@ $messages['nb'] = array(
 	'toplists-error-add-item-permission' => 'Tillatelsesfeil: Kontoen din har ikke blitt gitt rettighetene til å opprette nye elementer.',
 	'toplists-error-add-item-list-not-exists' => 'Topp 10-listen «$1» eksisterer ikke.',
 	'toplists-upload-error-unknown' => 'En feil har oppstått under behandlingen av opplastningsforespørselen, vennligst prøv igjen.',
+	'action-toplists-create-edit-list' => 'opprett og rediger Topp 10-listesider',
 	'toplists-editor-title-label' => 'Listenavn',
 	'toplists-editor-title-placeholder' => 'Oppgi et navn til listen',
 	'toplists-editor-related-article-label' => 'Relatert side <small>(valgfritt, men velger et bilde)</small>',
@@ -1435,6 +1461,7 @@ $messages['nl'] = array(
 	'toplists-error-add-item-permission' => 'Rechtenprobleem: uw gebruiker heeft geen rechten om nieuwe items aan te maken.',
 	'toplists-error-add-item-list-not-exists' => 'De Top 10 lijst "$1" bestaat niet.',
 	'toplists-upload-error-unknown' => 'Er is een fout opgetreden bij het verwerken van de uploadverzoek. Probeer het nog een keer.',
+	'action-toplists-create-edit-list' => 'Top-10 lijsten aan te maken en te bewerken',
 	'toplists-editor-title-label' => 'Lijstnaam',
 	'toplists-editor-title-placeholder' => 'Voer een naam in voor de lijst',
 	'toplists-editor-related-article-label' => 'Gerelateerde pagina <small>(optioneel, maar selecteert een afbeelding)</small>',
@@ -1546,13 +1573,14 @@ $messages['pl'] = array(
 	'toplists-error-add-item-permission' => 'Błąd uprawnień: twoje konto nie posiada praw do tworzenia nowych elementów.',
 	'toplists-error-add-item-list-not-exists' => 'Lista Top 10 "$1" nie istnieje.',
 	'toplists-upload-error-unknown' => 'Wystąpił błąd podczas przetwarzania żądania przesłania. Spróbuj ponownie.',
+	'action-toplists-create-edit-list' => 'utwórz i edytuj listy Top 10',
 	'toplists-editor-title-label' => 'Nazwa listy',
 	'toplists-editor-title-placeholder' => 'Wprowadź nazwę listy',
 	'toplists-editor-related-article-label' => 'Strona powiązana<small>(opcjonalne, ale wybiera obraz)</small>',
 	'toplists-editor-related-article-placeholder' => 'Wprowadź nazwę istniejącej strony',
 	'toplists-editor-description-label' => 'Krótki opis Twojej listy Top 10',
 	'toplists-editor-description-placeholder' => 'Wprowadź opis',
-	'toplists-editor-image-browser-tooltip' => 'Dodaj grafikę',
+	'toplists-editor-image-browser-tooltip' => 'Dodaj obraz',
 	'toplists-editor-remove-item-tooltip' => 'Usuń element',
 	'toplists-editor-drag-item-tooltip' => 'Przeciągnij, aby zmienić kolejność',
 	'toplists-editor-add-item-label' => 'Dodaj nowy element',
@@ -1585,13 +1613,13 @@ $messages['pl'] = array(
 	'toplists-list-item-voted' => 'Głosowało',
 	'toplists-createpage-dialog-label' => 'Lista Top 10',
 	'toplists-email-subject' => 'Zmieniono listę Top 10',
-	'toplists-email-body' => 'Witam z Wikia!
+	'toplists-email-body' => 'Witaj!
 
-Lista <a href="$1">$2</a> na Wikia została zmieniona.
+Lista <a href="$1">$2</a> na Wikii została zmieniona.
 
  $3
 
-Przejdź na Wikia by sprawdzić zmiany! $1
+Przejdź na Wikię by sprawdzić zmiany! $1
 
 - Wikia
 
@@ -1601,8 +1629,8 @@ Możesz <a href="$4">anulować subskrypcję</a> zmian na liście.',
 	'toplists-hours' => '$1 {{PLURAL:$1|godzina|godziny|godzin}}',
 	'toplists-days' => '$1 {{PLURAL:$1|dzień|dni}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|tydzień|tygodnie|tygodni}}',
-	'toplists-msg-fb-OnRateArticle-short' => 'zagłosowało na liście Top 10 na $WIKINAME!',
-	'toplists-create-heading' => '<em>Nowość!</em> Utwórz własne Top Dziesięć',
+	'toplists-msg-fb-OnRateArticle-short' => 'zagłosował(a) na liście Top 10 na $WIKINAME!',
+	'toplists-create-heading' => '<em>Nowość!</em> Utwórz własną Listę Top 10',
 	'toplists-create-button-msg' => 'Utwórz listę',
 );
 
@@ -1709,6 +1737,7 @@ $messages['ps'] = array(
 	'toplists-update-button' => 'لړليک خوندي کول',
 	'toplists-cancel-button' => 'ناګارل',
 	'toplists-image-browser-upload-btn' => 'ټاکل',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />رايه|$1<br />رايې}}',
 	'toplists-list-created-by' => 'د [[User:$1|$1]] لخوا',
 	'toplists-list-add-item-label' => 'توکی ورګډول',
 	'toplists-createpage-dialog-label' => 'د سر 10 لړليکونه',
@@ -1846,6 +1875,7 @@ $messages['ru'] = array(
 	'toplists-error-add-item-permission' => 'Ошибка прав: Вашей учетной записи не было предоставлено право на создание новых элементов.',
 	'toplists-error-add-item-list-not-exists' => 'Список топ-10 с названием "$1" не существует.',
 	'toplists-upload-error-unknown' => 'Произошла ошибка при обработке запроса загрузки. Пожалуйста, попробуйте еще раз.',
+	'action-toplists-create-edit-list' => 'создать и отредактировать страницы списков Топ 10',
 	'toplists-editor-title-label' => 'Название списка',
 	'toplists-editor-title-placeholder' => 'Введите имя списка',
 	'toplists-editor-related-article-label' => 'Связанные страницы <small>(необязательно, но выбирает изображение)</small>',
@@ -1987,6 +2017,7 @@ $messages['sv'] = array(
 	'toplists-error-add-item-permission' => 'Tillståndsfel: Ditt konto har inte beviljats rätten att skapa nya objekt.',
 	'toplists-error-add-item-list-not-exists' => 'Topp 10-listan "$1" finns inte.',
 	'toplists-upload-error-unknown' => 'Ett fel uppstod vid bearbetningen av uppladdningen. Försök igen.',
+	'action-toplists-create-edit-list' => 'skapa och redigera Topp 10-listsidor',
 	'toplists-editor-title-label' => 'Listnamn',
 	'toplists-editor-title-placeholder' => 'Ange ett namn för listan',
 	'toplists-editor-related-article-label' => 'Relaterad sida <small>(valfritt, men väljer en bild)</small>',
@@ -2064,7 +2095,7 @@ $messages['te'] = array(
  */
 $messages['tl'] = array(
 	'toplists-desc' => 'Mga talaan ng pinakamatataas na 10',
-	'right-toplists-create-edit-list' => 'Likhain at baguhin ang mga pahina ng talaan ng Pinakamataas na 10',
+	'right-toplists-create-edit-list' => 'Likhain at baguhin ang mga pahina ng talaan ng Nangungunang 10',
 	'right-toplists-create-item' => 'Lumikha at idagdag ang mga bagay sa isang pahina ng talaan ng Pinakamataas na 10',
 	'right-toplists-edit-item' => 'Baguhin ang mga bagay na nasa loob ng isang pahina ng talaan ng Nangungunang 10',
 	'right-toplists-delete-item' => 'Magbura ng mga bagay na nasa loob ng isang pahina ng talaan ng Nangungunang 10',
@@ -2086,10 +2117,13 @@ $messages['tl'] = array(
 	'toplists-error-add-item-permission' => 'Kamalian sa pahintulot: Ang akawnt mo ay hindi nabigyan ng karapatan upang lumikha ng bagong mga bagay.',
 	'toplists-error-add-item-list-not-exists' => 'Hindi umiiral ang talaan ng Pinakamataas na 10 ng "$1".',
 	'toplists-upload-error-unknown' => 'Naganap ang isang kamalian habang isinasagawa ang hiling ng pagkakargang papaitaas. Mangyaring subukan muli.',
+	'action-toplists-create-edit-list' => 'likhain at baguhin ang mga pahina ng talaan ng Nangungunang 10',
 	'toplists-editor-title-label' => 'Pangalan ng talaan',
 	'toplists-editor-title-placeholder' => 'Magpasok ng isang pangalan para sa talaan',
 	'toplists-editor-related-article-label' => 'Kaugnay na pahina <small>(maaaring wala, subalit pumipili ng isang larawan)</small>',
 	'toplists-editor-related-article-placeholder' => 'Magpasok ng isang umiiral na pangalan ng pahina',
+	'toplists-editor-description-label' => 'Isang maiksing paglalarawan ng iyong Listahan ng Nangungunang 10',
+	'toplists-editor-description-placeholder' => 'Magpasok ng isang paglalarawan',
 	'toplists-editor-image-browser-tooltip' => 'Magdagdag ng isang larawan',
 	'toplists-editor-remove-item-tooltip' => 'Tanggalin ang bagay',
 	'toplists-editor-drag-item-tooltip' => 'Kaladkarin upang baguhin ang pagkakasunud-sunod',
@@ -2140,6 +2174,7 @@ Tumungo sa Wikia upang suriin ang mga pagbabago! $1
 	'toplists-days' => '$1 {{PLURAL:$1|araw|mga araw}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|linggo|mga linggo}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'ay bumoto sa isang talaan ng Pinakamataas na 10 sa $WIKINAME!',
+	'toplists-create-heading' => '<em>Bago!</em> Lumikha Ng Sarili Mong Nangungunang Sampu',
 	'toplists-create-button-msg' => 'Lumikha ng isang talaan',
 );
 

@@ -138,11 +138,13 @@ $messages['es'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Lukkipoika
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'category-exhibition-page-header' => 'Sivut luokassa $1',
+	'category-exhibition-blogs-header' => 'Blogiartikkelit',
 );
 
 /** French (français) */
@@ -159,7 +161,7 @@ $messages['fr'] = array(
 	'category-exhibition-display-new' => 'Affichage de la catégorie en exposition',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -379,6 +381,15 @@ $messages['pl'] = array(
 	'category-exhibition-display-new' => 'Widok - galeria',
 );
 
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'category-exhibition-alphabetical' => 'د ابېڅو له مخې',
+	'category-exhibition-mostvisited' => 'ډېر کتل شوی',
+	'category-exhibition-subcategories-header' => 'څېرمه وېشنيزې',
+);
+
 /** Portuguese (português) */
 $messages['pt'] = array(
 	'category-exhibition-sorttype' => 'Tipo de ordenação:',
@@ -482,6 +493,11 @@ $messages['tl'] = array(
 	'category-exhibition-mostvisited' => 'Pinaka dinadalaw',
 	'category-exhibition-recentedits' => 'Kamakailang binago',
 	'category-exhibition-page-header' => 'Mga pahina sa kategoryang "$1"',
+	'category-exhibition-subcategories-header' => 'Kabahaging mga kategorya',
+	'category-exhibition-media-header' => 'Mga midya sa kategoryang "$1"',
+	'category-exhibition-blogs-header' => 'Mga paskil na pamblog',
+	'category-exhibition-display-old' => 'Pagtanaw sa Listahan ng Kategorya',
+	'category-exhibition-display-new' => 'Tanawin ng Pagtatanghal ng Kategorya',
 );
 
 /** Turkish (Türkçe)

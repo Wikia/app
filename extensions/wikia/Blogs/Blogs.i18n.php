@@ -219,7 +219,7 @@ Kies asseblief 'n ander naam.",
 	'blog-by' => '$1 deur $2',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -414,7 +414,7 @@ $messages['be'] = array(
 	'blog-comment-history' => 'гісторыя',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -787,7 +787,7 @@ $messages['diq'] = array(
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Vatış nê vacya yo',
 	'blog-voting-label' => 'Deya',
-	'blog-comments-anonymous' => 'Qarbero anonim',
+	'blog-comments-anonymous' => 'Karbero anonim',
 	'blog-comment-delete' => 'besterne',
 	'blog-comment-hide' => 'bınımne',
 	'blog-comment-unhide' => 'menımne',
@@ -1031,6 +1031,7 @@ $messages['fa'] = array(
  * @author Centerlink
  * @author Crt
  * @author Ilkea
+ * @author Lukkipoika
  * @author VezonThunder
  */
 $messages['fi'] = array(
@@ -1068,7 +1069,7 @@ $messages['fi'] = array(
 	'create-blog-listing-title' => 'Luo uusi blogilista',
 	'create-blog-listing-form-title' => 'Mikä on blogilista?',
 	'create-blog-listing-form-info' => 'Blogilistoja käytetään listaamaan eri kirjoittajien artikkeleita samalle sivulle.
-Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fan Fiction" tai voit jopa yhdistää useita luokkia.',
+Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fanifiktiot" tai voit jopa yhdistää useita luokkia.',
 	'create-blog-listing-page-title' => 'Blogilistan otsikko',
 	'create-blog-listing-preview' => 'Esikatsele',
 	'create-blog-listing-authors' => 'Hae tämän kirjoittajan blogiartikkelit (pilkuilla eroteltuina)',
@@ -1131,7 +1132,7 @@ Luo blogilistalle sivuja luokkiin, kuten "Barack Obama", "Fan Fiction" tai voit 
 	'blog-create-next-label' => 'Luo uusi blogiartikkeli',
 	'blog-create-listing-label' => 'Luo blogilista',
 	'blog-refresh-label' => 'Päivitä',
-	'blog-widgets-label' => 'Vimpaimien hallinta',
+	'blog-widgets-label' => 'Widgetin hallinta',
 	'blog-listing-zero-other' => 'Tämä käyttäjä ei ole vielä kirjoittanut yhtään blogimerkintää!',
 	'blog-listing-created' => 'Blogi-luettelointisivu luotu',
 	'blog-userblog' => 'Käyttäjän $1 blogi',
@@ -1273,7 +1274,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-by' => '$1 par $2',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -4008,6 +4009,7 @@ $messages['tl'] = array(
 	'create-blog-post-recent-listing-title' => 'Kamakailang mga pagpapaskil',
 	'create-blog-post-recent-listing-log' => 'Nilikha ang artikulo para sa kamakailang mga paskil na pamblog',
 	'create-blog-post-title' => 'Lumikha ng isang bagong paskil na pamblog',
+	'create-blog-post-title-edit' => 'Baguhin ang isang paskil na blog',
 	'create-blog-form-title' => 'Ano ba ang isang paskil na pamblog?',
 	'create-blog-form-post-text' => 'Teksto ng blog',
 	'create-blog-form-info' => 'Ang mga paskil na pamblog ay isang mainam na paraan sa pagpapamahagi ng balita, mga opinyon, malikhaing mga piyesa sa pamayanan.',
@@ -4220,7 +4222,7 @@ $messages['uk'] = array(
 	'blogs-reportproblem' => 'Повідомити про проблему',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

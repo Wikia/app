@@ -22,7 +22,7 @@ $messages['af'] = array(
 	'tog-watchlistsubpages' => 'Volg subbladsye',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -88,12 +88,20 @@ $messages['fr'] = array(
 	'tog-watchlistsubpages' => 'Suivre les sous-pages',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
 	'wikia-watchsubpages-desc' => 'Seguimento automático para as subpáxinas',
 	'tog-watchlistsubpages' => 'Seguir as subpáxinas',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'wikia-watchsubpages-desc' => 'Aloldalak automatikus követése',
+	'tog-watchlistsubpages' => 'Aloldalak követése',
 );
 
 /** Interlingua (interlingua)

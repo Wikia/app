@@ -46,7 +46,7 @@ $messages['fr'] = array(
 	'centralhelpsearch-placeholder' => "Rechercher dans l'aide&hellip;",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -163,6 +163,14 @@ $messages['ru'] = array(
 $messages['sv'] = array(
 	'centralhelpsearch-desc' => 'Låter införandet av ett formulär för att söka i Community Central Help',
 	'centralhelpsearch-placeholder' => 'Sök hjälp&hellip;',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'centralhelpsearch-desc' => 'Pahintulutan ang pagsasama ng isang pormularyo upang makapaghanap ng Lunduyang Pantulong ng Pamayanan',
+	'centralhelpsearch-placeholder' => 'Maghanap ng Tulong...',
 );
 
 /** Tatar (Cyrillic script) (татарча)

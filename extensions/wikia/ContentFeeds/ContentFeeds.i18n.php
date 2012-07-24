@@ -126,7 +126,7 @@ $messages['fr'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erreur : le corps de la page est nécessaire',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -196,6 +196,13 @@ $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
 	'contentfeeds-firstfewarticles-tag-next' => 'Weider',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feeler: De Säitentitel ass obligatoresch',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'contentfeeds-firstfewarticles-tag-next' => 'Kitas',
 );
 
 /** Macedonian (македонски) */
@@ -395,11 +402,14 @@ $messages['te'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'contentfeeds-desc' => 'Nagbibigay ng mayaman at nasa panahong kabatiran sa pamamagitan ng samu\'t saring mga tatak o mga "pakain"',
+	'contentfeeds-newimages-rss-title' => 'Pakain na RSS para sa {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Pasubo mula sa $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Likhain ang una mong iilang mga pahina!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Pamagat',
 	'contentfeeds-firstfewarticles-tag-next' => 'Susunod',
-	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kamalian: Kailangan ang  isang pamagat ng pahina',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kamalian: Kailangan ang isang pamagat ng pahina',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Kamalian: Kailangan ang isang katawan ng pahina',
 );
 
 /** толышә зывон (толышә зывон)
@@ -421,7 +431,7 @@ $messages['tt-cyrl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Хата: мәкалә тексты кирәк',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

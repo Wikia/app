@@ -164,7 +164,7 @@ $messages['fr'] = array(
 	'feed-title-recentchanges' => 'Modifications récentes',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  * @author Xanocebreiro
  */
@@ -368,22 +368,23 @@ $messages['nl'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Sovq
  */
 $messages['pl'] = array(
-	'partner-feed-achievements-leaderboard' => 'Ranking osiągnięć poszczególnych Wiki',
-	'partner-feed-earned-badges' => 'Niedawno osiągnięte odznaki dla określonego typu Wiki',
+	'partner-feed-achievements-leaderboard' => 'Ranking odznaczeń na wiki',
+	'partner-feed-earned-badges' => 'Niedawno przyznane odznaczenia dla określonego typu wiki',
 	'partner-feed-recent-blog-posts' => 'Ostatnie wpisy na blogach związane z promocją',
-	'partner-feed-latest-images' => 'Galerie z najnowszymi wczytanymi obrazami',
-	'partner-feed-hotcontent' => 'Centra aktywności treści uszeregowane według liczby edytorów',
+	'partner-feed-latest-images' => 'Galerie z najnowszymi przesłanymi obrazami',
+	'partner-feed-hotcontent' => 'Portale uszeregowane według liczby edytorów',
 	'partner-feed-recent-blog-comments' => 'Ostatnie komentarze dotyczące określonego wpisu na blogu.',
 	'partner-feed-recent-changes' => 'Ostatnie zmiany',
 	'partnerfeed' => 'Subskrybuj kanał',
-	'error-no-article' => 'Błąd: Nie przekazano parametru "article"',
+	'error-no-article' => 'Błąd: Brak parametru "artykuł"',
 	'feed-title-blogposts' => 'Ostatnie wpisy na blogu',
-	'feed-title-recent-badges' => 'Ostatnie odznaki',
+	'feed-title-recent-badges' => 'Ostatnie odznaczenia',
 	'feed-title-recent-images' => 'Najnowsze obrazy',
-	'feed-title-leaderboard' => 'Ranking odznak',
-	'feed-main-title' => 'Kanał partnera Wikia',
+	'feed-title-leaderboard' => 'Ranking odznaczeń',
+	'feed-main-title' => 'Kanał partnerów Wikii',
 	'all-blog-posts' => 'wszystkie kategorie',
 	'blog-posts-from-listing' => 'z wykazu: $1',
 	'feed-title-hot-content' => 'Gorące treści - $1',
@@ -421,6 +422,8 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'partner-feed-recent-changes' => 'وروستي بدلونونه',
+	'feed-title-recent-images' => 'تازه انځورونه',
 	'all-blog-posts' => 'ټولې وېشنيزې',
 );
 
@@ -476,6 +479,7 @@ $messages['pt-br'] = array(
 );
 
 /** Russian (русский)
+ * @author DCamer
  * @author Eleferen
  * @author Kuzura
  */
@@ -487,11 +491,13 @@ $messages['ru'] = array(
 	'partner-feed-hotcontent' => 'Портал / по вертикали "Hot Content" отсортировано по количеству редакторов',
 	'partner-feed-recent-blog-comments' => 'Последние комментарии, связанные с указанным блогом.',
 	'partner-feed-recent-changes' => 'Свежие правки',
+	'partnerfeed' => 'Партнерская рассылка',
 	'error-no-article' => 'Ошибка: нет "статьи" с такими параметрами',
 	'feed-title-blogposts' => 'Последние записи в блоге',
 	'feed-title-recent-badges' => 'Последние значки',
 	'feed-title-recent-images' => 'Последние изображения',
 	'feed-title-leaderboard' => 'Лидеры по наградам',
+	'feed-main-title' => 'Партнерская рассылка Wikia',
 	'all-blog-posts' => 'все категории',
 	'blog-posts-from-listing' => 'из списка: $1',
 	'feed-title-hot-content' => 'Топ контент - $1',
@@ -559,6 +565,8 @@ $messages['tl'] = array(
 	'partner-feed-earned-badges' => 'Kamakailang nakamit na mga tsapa para sa isang partikular na Wiki',
 	'partner-feed-recent-blog-posts' => 'Kamakailang mga pagpapaskil na blog kaugnay ng isang patalastas',
 	'partner-feed-latest-images' => 'Tanghalan ng pinakabagong mga larawan na naikargang papaitaas',
+	'partner-feed-hotcontent' => 'Pusod / lagusan ng "Maiinit na mga Nilalaman" ayon sa pagkakaranggo sa pamamagitan ng bilang ng mga patnugot',
+	'partner-feed-recent-blog-comments' => 'Kamakailang mga puna na may kaugnayan sa tinukoy na paskil na blog.',
 	'partner-feed-recent-changes' => 'Kamakailang mga pagbabago',
 	'partnerfeed' => 'Pakain ng katambal',
 	'error-no-article' => 'Kamalian: Walang pumasang mga parametro ng "artikulo"',

@@ -311,7 +311,7 @@ $messages['fr'] = array(
 	'wikiapoll-error-invalid-title' => 'L’intitulé de la question n’est pas valide.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -333,12 +333,23 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'wikiapoll-desc' => 'Egyszerű lehetőséget biztosít szavazási felületek létrehozására és kezelésére',
+	'wikiapoll-people-voted' => '$1 fő szavazott',
+	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Köszönjük!',
 	'wikiapoll-vote' => 'Szavazás!',
+	'wikiapoll-votes' => '$1 szavazat',
+	'wikiapoll-createpoll-headline' => 'Szavazási felület létrehozása',
+	'wikiapoll-editpoll-headline' => 'Szavazási felület szerkesztése',
+	'wikiapoll-question-label' => 'Kérdés',
+	'wikiapoll-addnewitem-label' => 'Új elem hozzáadása',
 	'wikiapoll-cancel-label' => 'Mégse',
 	'wikiapoll-publish-label' => 'Közzététel',
+	'wikiapoll-error-duplicate' => 'Már létezik egy ilyen nevű szavazási felület.',
+	'wikiapoll-error-invalid-title' => 'A kérdés szövege érvénytelen.',
 );
 
 /** Interlingua (interlingua)
@@ -713,7 +724,7 @@ $messages['tl'] = array(
 	'wikiapoll-createpoll-headline' => 'Likhain ang Botohan',
 	'wikiapoll-editpoll-headline' => 'Baguhin ang Botohan',
 	'wikiapoll-question-label' => 'Katanungan',
-	'wikiapoll-addnewitem-label' => 'Magdagdag ang bagong bagay',
+	'wikiapoll-addnewitem-label' => 'Magdagdag ng bagong bagay',
 	'wikiapoll-cancel-label' => 'Huwag ituloy',
 	'wikiapoll-publish-label' => 'Ilathala',
 	'wikiapoll-error-duplicate' => 'Umiiral na ang ganyang botohan na may ganyang pangalan.',

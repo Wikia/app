@@ -51,6 +51,7 @@ Zkontrolujte správné zadání jména.',
 
 /** German (Deutsch)
  * @author LWChris
+ * @author PtM
  */
 $messages['de'] = array(
 	'piggybac-desc' => 'Als anderer Benutzer anmelden',
@@ -64,9 +65,12 @@ Bitte Schreibweise überprüfen.',
 	'piggyback-firstlogout' => 'Bitte zuerst zurück auf dein Benutzerkonto abmelden.',
 	'piggyback-itisyou' => 'Du kannst dich nicht selbst huckepack nehmen.',
 	'piggyback-issysopto' => 'Du kannst keinen Benutzer mit dem Huckepack-Recht Huckepack nehmen.',
+	'action-piggyback' => 'als anderer Benutzer anmelden',
 );
 
-/** Spanish (español) */
+/** Spanish (español)
+ * @author Armando-Martin
+ */
 $messages['es'] = array(
 	'piggybac-desc' => 'Permite iniciar sesión con la cuenta de otro usuario',
 	'piggyback' => 'Personificar',
@@ -79,6 +83,7 @@ Verifica tu escritura.',
 	'piggyback-firstlogout' => 'Por favor, primero cierra sesión a tu cuenta.',
 	'piggyback-itisyou' => 'No puedes personificarte a ti mismo.',
 	'piggyback-issysopto' => 'No puedes personificar a un usuario con el derecho de personificar.',
+	'action-piggyback' => 'Iniciar sesión como otro usuario',
 );
 
 /** Finnish (suomi)
@@ -88,7 +93,9 @@ $messages['fi'] = array(
 	'piggyback-wronguser' => '$1 ei ole sinun käyttäjätunnuksesi',
 );
 
-/** French (français) */
+/** French (français)
+ * @author Wyz
+ */
 $messages['fr'] = array(
 	'piggybac-desc' => 'Permet de s’identifier avec le compte d’un autre utilisateur',
 	'piggyback' => 'Accès superposé',
@@ -101,9 +108,10 @@ Vérifiez l'orthographe.",
 	'piggyback-firstlogout' => 'Veuillez d’abord vous déconnecter de votre compte.',
 	'piggyback-itisyou' => 'Vous ne pouvez pas vous connecter de manière superposée sur votre propre compte.',
 	'piggyback-issysopto' => 'Vous ne pouvez pas vous connecter de manière superposée sur le compte d’un utilisateur ayant lui-même ce droit.',
+	'action-piggyback' => 'se connecter sous un autre compte utilisateur',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -118,9 +126,12 @@ Comprobe a ortografía.',
 	'piggyback-firstlogout' => 'Saia primeiro da conta e volva á súa.',
 	'piggyback-itisyou' => 'Non pode acceder sen autorización á súa propia conta.',
 	'piggyback-issysopto' => 'Non pode acceder sen autorización á conta dun usuario con dereitos de acceso sen autorización.',
+	'action-piggyback' => 'conectarse como outro usuario',
 );
 
-/** Interlingua (interlingua) */
+/** Interlingua (interlingua)
+ * @author McDutchie
+ */
 $messages['ia'] = array(
 	'piggybac-desc' => 'Permitte aperir session como altere usator',
 	'piggyback' => 'Portacontos',
@@ -133,6 +144,7 @@ Verifica le orthographia.',
 	'piggyback-firstlogout' => 'Per favor primo claude session pro retornar a tu conto.',
 	'piggyback-itisyou' => 'Non es possibile portar le proprie conto.',
 	'piggyback-issysopto' => 'Non es possibile portar le conto de un usator con le derecto al portacontos.',
+	'action-piggyback' => 'aperir session como un altere usator',
 );
 
 /** Japanese (日本語)
@@ -158,7 +170,9 @@ $messages['lb'] = array(
 	'piggyback-otherusername' => 'Anere Benotzernumm:',
 );
 
-/** Macedonian (македонски) */
+/** Macedonian (македонски)
+ * @author Bjankuloski06
+ */
 $messages['mk'] = array(
 	'piggybac-desc' => 'Овозможува да се најавите како друг корисник („на ушка“)',
 	'piggyback' => 'На ушка',
@@ -171,6 +185,7 @@ $messages['mk'] = array(
 	'piggyback-firstlogout' => 'Најпрвин одјавете се за да се вратите назад на вашата сметка.',
 	'piggyback-itisyou' => 'Не можете да се качите на ушка самите на себе.',
 	'piggyback-issysopto' => 'Не можете да се качите на ушка на корисник со право за качување на ушка.',
+	'action-piggyback' => 'најава како друг корисник',
 );
 
 /** Malayalam (മലയാളം)
@@ -196,9 +211,12 @@ Sila semak ejaan anda.',
 	'piggyback-firstlogout' => 'Sila log keluar balik ke akaun anda terlebih dahulu.',
 	'piggyback-itisyou' => 'Anda tidak boleh menggendong diri sendiri.',
 	'piggyback-issysopto' => 'Anda tidak boleh menggendong pengguna dengan hak menggendong.',
+	'action-piggyback' => 'log masuk sebagai pengguna lain',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬) */
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
+ * @author Audun
+ */
 $messages['nb'] = array(
 	'piggybac-desc' => 'Tillater å logge på som en annen bruker',
 	'piggyback' => 'Operer som annen bruker',
@@ -211,6 +229,7 @@ Sjekk stavemåten.',
 	'piggyback-firstlogout' => 'Vennligst først logg deg inn på kontoen din igjen.',
 	'piggyback-itisyou' => 'Du kan ikke operere som deg selv.',
 	'piggyback-issysopto' => 'Du kan ikke operere som en bruker med rett til å operere som andre brukere.',
+	'action-piggyback' => 'logg på som en annen bruker',
 );
 
 /** Dutch (Nederlands)
@@ -228,6 +247,7 @@ Controleer uw schrijfwijze.',
 	'piggyback-firstlogout' => 'Meld eerst af om weer te werken met uw eigen gebruiker.',
 	'piggyback-itisyou' => 'U kunt piggyback niet op uzelf gebruiken.',
 	'piggyback-issysopto' => 'U kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
+	'action-piggyback' => 'aanmelden als een andere gebruiker',
 );
 
 /** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
@@ -257,9 +277,10 @@ W nazwie użytkownika ma znaczenie wielkość znaków.
 Sprawdź poprawność wpisanej nazwy.',
 	'piggyback-wronguser' => '$1 nie jest twoją nazwą użytkownika',
 	'piggyback-loginprompt' => 'Wprowadź ponownie nazwę użytkownika i hasło.',
-	'piggyback-firstlogout' => 'Prosimy najpierw wylogować się z powrotem do twojego konta.',
+	'piggyback-firstlogout' => 'Najpierw wyloguj się z powrotem do twojego konta.',
 	'piggyback-itisyou' => 'Nie możesz podłączyć się pod samego siebie.',
 	'piggyback-issysopto' => 'Nie możesz podłączyć się pod użytkownika posiadającego prawo do podłączania.',
+	'action-piggyback' => 'zaloguj się jako inny użytkownik',
 );
 
 /** Piedmontese (Piemontèis)
@@ -318,6 +339,7 @@ Verifique a ortografia.',
  */
 $messages['ru'] = array(
 	'piggybac-desc' => 'Позволяет войти в качестве другого пользователя',
+	'piggyback' => 'Вход',
 	'piggyback-otherusername' => 'Имя другого участника:',
 	'piggyback-nosuchuser' => 'Не существует участника с именем «$1».
 Имя участника чувствительно к регистру символов.
@@ -327,6 +349,7 @@ $messages['ru'] = array(
 	'piggyback-firstlogout' => 'Сначала войдите в свою учётную запись.',
 	'piggyback-itisyou' => 'Вы не можете использоватьpiggyback на себе.',
 	'piggyback-issysopto' => 'Вы не можете использовать piggyback на участниках с доступом к piggyback.',
+	'action-piggyback' => 'войти как другой участник',
 );
 
 /** Swedish (svenska)
@@ -342,12 +365,31 @@ Kontrollera stavningen.',
 	'piggyback-wronguser' => '$1 är inte ditt användarnamn',
 	'piggyback-loginprompt' => 'Vänligen ange ditt användarnamn och lösenord.',
 	'piggyback-firstlogout' => 'Var god logga ut tillbaka till ditt konto.',
+	'action-piggyback' => 'logga in som en annan användare',
 );
 
 /** Telugu (తెలుగు) */
 $messages['te'] = array(
 	'piggyback-otherusername' => 'ఇతర వాడుకరిపేరు:',
 	'piggyback-wronguser' => '$1 అన్నది మీ వాడుకరి పేరు కాదు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'piggybac-desc' => 'Nagpapahintulot na lumagda bilang ibang tagagamit',
+	'piggyback' => 'Pakikisakay sa likod',
+	'piggyback-otherusername' => 'Ibang pangalan ng tagagamit:',
+	'piggyback-nosuchuser' => 'Walang tagagamit na may pangalang "$1".
+Maramdamin sa pagtipa ang mga pangalan ng tagagamit.
+Suriin ang iyong pagbabaybay.',
+	'piggyback-wronguser' => 'Hindi iyo ang pangalang pangtagagamit na $1',
+	'piggyback-loginprompt' => 'Paki ipasok na muli ang iyong pangalan ng tagagamit at hudyat.',
+	'piggyback-firstlogout' => 'Paki una munang lumagdang palabas na pabalik sa akawnt mo.',
+	'piggyback-itisyou' => 'Hindi ka maaaring sumakay sa likod ng sarili mo.',
+	'piggyback-issysopto' => 'Hindi mo maaaring sakyan ang likod ng isang tagagamit na mayroong karapatan na makisakay sa likod.',
+	'action-piggyback' => 'lumagdang papasok bilang ibang tagagamit',
 );
 
 /** Simplified Chinese (‪中文（简体）‬)

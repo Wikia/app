@@ -165,6 +165,7 @@ $messages['qqq'] = array(
 	'wikifactory-label-masstags' => 'Label for a tab that contains a form, allowing staff to apply tags in bulk. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
 	'wikifactory-label-findtags' => 'Label for a tab that contains a form, allowing staff to find wikis by tag. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
 	'right-wikifactory' => '{{doc-right|wikifactory}}',
+	'action-wikifactory' => '{{doc-action|wikifactory}}',
 	'closewiki-nbr-wiki' => 'What is $1? If it is a number it should support PLURAL',
 	'closewiki-unknown' => '{{Identical|Unknown}}',
 	'awc-metrics-nbr-result' => '{{Identical|Result}}',
@@ -182,7 +183,6 @@ $messages['qqq'] = array(
 	'closed-hide-dumps' => 'The exact meaning is: "Hide database dump and hide image dump", i.e. both are dumps.',
 	'closed-reason' => '{{Identical|Reason}}',
 	'newwikisgraph' => 'Title of a special page',
-	'action-wikifactory' => '{{doc-action|wikifactory}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -299,7 +299,7 @@ Kom asseblief later terug.",
 	'closed-reason' => 'Rede:',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -455,7 +455,7 @@ $messages['az'] = array(
 	'closed-reason' => 'Səbəb:',
 );
 
-/** Bashkir (Башҡортса)
+/** Bashkir (башҡортса)
  * @author ҒатаУлла
  */
 $messages['ba'] = array(
@@ -562,7 +562,7 @@ $messages['be'] = array(
 	'closed-reason' => 'Прычына:',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -925,6 +925,7 @@ $messages['bs'] = array(
 );
 
 /** Catalan (català)
+ * @author BroOk
  * @author Gemmaa
  * @author Paucabot
  * @author SMP
@@ -1031,13 +1032,13 @@ $messages['ca'] = array(
 	'awc-metrics-close-checked' => 'revisio comprovada',
 	'awc-metrics-exact-match' => 'concordança exacta',
 	'awc-metrics-recordspager' => "S'estan mostrant ' ' $1 ' ' per ' ' $2 ' ' de ' ' $3 ' ' records",
-	'closed-wiki' => 'Tancar la wiki',
-	'closed-wiki-info' => "S'ha tancat aquesta wiki",
-	'disabled-wiki-info' => "S'ha tancat aquesta wiki",
-	'closed-wiki-dump-exists' => 'Si us plau, feu clic a [ $1  aquí] si voleu recuperar el seu contingut.<br>(Si el seu wiki recentment es va tancar, pot trigar un període curt de temps per als fitxers a generar)',
-	'closed-wiki-dump-noexists' => "S'ha tancat aquest wiki. Bolcat de contingut estaran disponible dins de 24 hores. Si us plau comprovi altra vegada.",
-	'closed-wiki-create-wiki' => 'Crear una nova wiki',
-	'closed-wiki-policy' => 'Veure política de prop de Wikia',
+	'closed-wiki' => 'Wiki tancat',
+	'closed-wiki-info' => "S'ha tancat aquest wiki",
+	'disabled-wiki-info' => 'Aquest wiki ha estat inhabilitat',
+	'closed-wiki-dump-exists' => "Si us plau, fes clic a [$1  aquí] si vols recuperar el seu contingut.<br/> (Si el teu wiki s'ha tancat fa poc, pot trigar un període curt de temps a generar fitxers)",
+	'closed-wiki-dump-noexists' => "S'ha tancat aquest wiki. La descàrrega de contingut estarà disponible d'aquí 24 hores. Si us plau, comprova-ho una altra vegada més tard.",
+	'closed-wiki-create-wiki' => 'Crear un nou wiki',
+	'closed-wiki-policy' => 'Veure Política de Tancament de Wikia',
 	'closed-create-dump' => 'Crear un abocador de base de dades',
 	'closed-create-image-archive' => "Creació d'un arxiu d'imatge",
 	'closed-delete-database-images' => 'Suprimeix la base de dades i imatges',
@@ -1055,7 +1056,7 @@ $messages['ca'] = array(
 	'newwikisgraph-param-other' => 'Altres',
 );
 
-/** Chechen (Нохчийн)
+/** Chechen (нохчийн)
  * @author Sasan700
  */
 $messages['ce'] = array(
@@ -1198,7 +1199,7 @@ $messages['cs'] = array(
 	'newwikisgraph-report-title' => 'Wiki tvorba po dnech',
 );
 
-/** Kashubian (Kaszëbsczi) */
+/** Kashubian (kaszëbsczi) */
 $messages['csb'] = array(
 	'wf_city_title' => 'Titel',
 	'wf_city_lang' => 'Jãzëk',
@@ -1432,6 +1433,7 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'closewiki' => 'Wiki racnê',
@@ -1441,7 +1443,7 @@ $messages['diq'] = array(
 	'wf_city_created' => 'Vıraziya',
 	'wf_city_public' => 'Weziyet',
 	'wf_city_lang' => 'Zıwan',
-	'wf_cc_name' => 'Kategori',
+	'wf_cc_name' => 'Kategoriye',
 	'wikifactory-label-info' => 'Zanışe',
 	'wikifactory-label-variables2' => 'Seran',
 	'wikifactory-label-domains' => 'Domaini',
@@ -1935,7 +1937,7 @@ $messages['fr'] = array(
 	'newwikisgraph-param-other' => 'Autre',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -2116,6 +2118,7 @@ $messages['he'] = array(
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'wikifactorypagetitle' => 'Wikigyár beállító',
@@ -2146,12 +2149,21 @@ $messages['hu'] = array(
 	'wikifactory-label-compare' => 'Összehasonlítás',
 	'right-wikifactory' => 'Wikik belső beállításainak megváltoztatása',
 	'wikifactory-domain-edit' => ' URL-cím szerkesztése',
+	'wikifactory-domain-remove' => 'URL eltávolítása a wikiről',
+	'wikifactory-domain-setmain' => 'a wgServer felülírása ezzel az URL-címmel',
+	'closewiki-check-and-confirm' => 'Ellenőrizzd a wikiket, és erősítsd meg a művelet',
 	'closewiki-redirect-to' => 'Átirányítás ide:',
+	'closewiki-message' => 'domain név: $1',
 	'closewiki-nbr-wiki' => '$1 wiki',
+	'closewiki-wiki-closed' => "A(z) '''$1''' wikit bezárták ($2)",
+	'closewiki-wiki-closed_removed' => "A(z) '''$1''' wikit bezárták és törlésre készítik elő ($2)",
+	'closewiki-wiki-closed_redirect' => "A(z) '''$1''' wikit bezárták ($2) és átírányításként funkcionál az alábbi címre: $3",
 	'closewiki-dump-url' => 'Adatbázis dump: $1',
 	'closewiki-images-url' => 'Képarchívum: $1',
 	'closewiki-unknown' => 'Ismeretlen',
 	'closewiki-return' => 'Vissza ide: $1',
+	'wikifactory-button-save' => 'Változtatások mentése',
+	'wikifactory-public-status-change-default-reason' => 'Állapotváltoztatás a Tartományok lapról.',
 	'awc-metrics-wikis' => 'Wikik megjelenítése',
 	'awc-metrics-select' => 'Wikik megjelenítése:',
 	'awc-metrics-by-language' => 'nyelvek szerint:',
@@ -2178,7 +2190,7 @@ $messages['hu'] = array(
 	'awc-metrics-db-size' => 'Adatbázisméret',
 	'awc-metrics-images' => 'Képek',
 	'awc-metrics-all-users' => 'Regisztrált<br />felhasználók',
-	'awc-metrics-all-users-edit-main-ns' => 'Reg. felhasználók<br />(NS_MAIN)',
+	'awc-metrics-all-users-edit-main-ns' => 'Reg. felhasználók<br />(tartalom névterek)',
 	'awc-metrics-pageviews' => 'Oldal-<br />megtekintések',
 	'awc-metrics-statistics' => 'Statisztikák (az összes hónap átlaga)',
 	'awc-metrics-close' => 'Bezárás',
@@ -2190,15 +2202,32 @@ $messages['hu'] = array(
 	'awc-metrics-hubs' => 'Új wikik (havonta)',
 	'awc-metrics-news-day' => 'Új wikik (naponta)',
 	'awc-metrics-this-month' => 'ez a hónap',
+	'awc-metrics-close-listed' => 'Felsorolt összes bezárása',
+	'awc-metrics-close-checked' => 'Kijelöltek bezárása',
 	'awc-metrics-exact-match' => 'pontos találat',
+	'awc-metrics-recordspager' => "'''$1'''-tól '''$2'''-ig az összesen '''$3''' feljegyzésből",
 	'closed-wiki' => 'Bezárt Wiki',
+	'closed-wiki-info' => 'Ezt a wikit bezárták',
+	'disabled-wiki-info' => 'Ezt a wikit letiltották.',
+	'closed-wiki-dump-exists' => '[$1 Letöltheted] a tartalmát, ha szeretnéd.<br />(Ha a wikidet nemrég zárták be, egy kis időt igénybe vehet a fájlok generálása)',
+	'closed-wiki-dump-noexists' => 'Ezt a wikit bezárták. A tartalom 24 órán belül elérhető lesz. Kérlek, majd ellenőrizd újra.',
 	'closed-wiki-create-wiki' => 'Új wiki létrehozása',
+	'closed-wiki-policy' => 'A Wikia bezárási rendjének megtekintése',
 	'closed-create-dump' => 'Adatbázis dump készítése',
+	'closed-create-image-archive' => 'Képarchívum létrehozása',
 	'closed-delete-database-images' => 'Adatbázis és képek törlése',
 	'closed-delete-images' => 'Képek törlése',
+	'closed-free-url' => 'URL-cím szabaddá tétele egy új alapítónak',
+	'closed-hide-dumps' => 'Adatbázis- és képarchívumok elrejtése',
 	'closed-redirect-url' => 'URL átirányítása',
 	'closed-confirm-btn' => 'Bezárás megerősítése',
+	'closed-redirect-alert' => 'Kérlek, add meg az átirányítás új URL-címét!',
 	'closed-reason' => 'Indoklás:',
+	'newwikisgraph' => 'Új wikik grafikonja',
+	'newwikisgraph-report-title' => 'wikialapítások naponta',
+	'newwikisgraph-wikis-created' => 'létrehozott wiki',
+	'newwikisgraph-param-all' => 'Összes',
+	'newwikisgraph-param-other' => 'Egyéb',
 );
 
 /** Armenian (Հայերեն)
@@ -2653,7 +2682,14 @@ $messages['kn'] = array(
 	'closed-reason' => 'ಕಾರಣ:',
 );
 
-/** Karachay-Balkar (Къарачай-Малкъар)
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'closewiki-unknown' => '알 수 없음',
+);
+
+/** Karachay-Balkar (къарачай-малкъар)
  * @author Iltever
  * @author Къарачайлы
  */
@@ -2884,7 +2920,8 @@ $messages['mk'] = array(
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-eznamespace' => 'Именски простор EZ',
 	'wikifactory-label-compare' => 'Спореди',
-	'right-wikifactory' => 'Променете ги внатрешните нагодувања на викијата',
+	'right-wikifactory' => 'Промена на внатрешните поставки на викијата',
+	'action-wikifactory' => 'за менување на внатрешните поставки на викијата',
 	'wikifactory-domain-edit' => 'уреди ја ова URL-адреса',
 	'wikifactory-domain-remove' => 'отстрани ја оваа URL-адреса од викито',
 	'wikifactory-domain-setmain' => 'стави ја оваа URL-адреса во wgServer',
@@ -3002,6 +3039,88 @@ $messages['ml'] = array(
  */
 $messages['mn'] = array(
 	'closed-reason' => 'Шалтгаан:',
+);
+
+/** Marathi (मराठी)
+ * @author Sau6402
+ */
+$messages['mr'] = array(
+	'closewiki' => 'विकि बंद करा',
+	'wf_city_url' => 'पत्ता',
+	'wf_city_id' => 'आय.डी',
+	'wf_city_title' => 'शीर्षक',
+	'wf_city_created' => 'बनविलेली',
+	'wf_city_founding_user' => 'संस्थापक',
+	'wf_city_founding_email' => 'संस्थापकाचे इमेल',
+	'wf_city_public' => 'स्थिती',
+	'wf_city_lang' => 'भाषा',
+	'wf_cc_name' => 'वर्ग',
+	'wikifactory-label-info' => 'माहिती',
+	'wikifactory-label-variables' => 'चल',
+	'wikifactory-label-variables2' => 'साधारण',
+	'wikifactory-label-domains' => 'डोमेन (प्रक्षेत्र)',
+	'wikifactory-label-return' => 'यादीकडे परत',
+	'wikifactory-label-clog' => 'बदलांची नोंद',
+	'wikifactory-label-actions' => 'क्रिया',
+	'wikifactory-label-google' => 'गुगलचे अवजार',
+	'wikifactory-label-close' => 'बंद',
+	'wikifactory-label-tags' => 'खुणा',
+	'wikifactory-label-tags2' => 'खुणा',
+	'wikifactory-label-findtags' => 'नोंद शोधा',
+	'wikifactory-label-compare' => 'तुलना',
+	'wikifactory-domain-remove' => 'हि URL विकीतून काधून टाका',
+	'closewiki-message' => 'डोमेन(प्रक्षेत्र) नाव $1',
+	'closewiki-confirm-button' => "$2 मधले '$1'हे नक्की करा",
+	'closewiki-nbr-wiki' => '$1 विकि',
+	'closewiki-wiki-closed' => '"$1" बंद होते ($2)',
+	'awc-metrics-wikis' => 'विकि प्रस्तुत करा',
+	'awc-metrics-select' => 'विकि दाखवा:',
+	'awc-metrics-by-language' => 'भाषे प्रमाणे:',
+	'awc-metrics-category' => 'आणि वर्ग:',
+	'awc-metrics-all' => 'सर्व विकी',
+	'awc-metrics-all-languages' => 'सर्व भाषा',
+	'awc-metrics-search' => 'शोध विकल्प:',
+	'awc-metrics-one-week' => '<1 आठवड्या पूर्वी बनवले आहे',
+	'awc-metrics-two-weeks' => '< 2 आठवड्यान पूर्वी बनवले आहे',
+	'awc-metrics-three-weeks' => '<3 आठवड्यान पूर्वी बनवले आहे',
+	'awc-metrics-one-months' => '<1 महिन्या पूर्वी बनवले आहे',
+	'awc-metrics-two-months' => '<2 महिन्यान पूर्वी बनवले आहे',
+	'awc-metrics-three-months' => '<3 महिन्यान पूर्वी बनवले आहे',
+	'awc-metrics-half-year' => '<6 महिन्यान पूर्वी बनवले आहे',
+	'awc-metrics-by-email' => 'किंवा (सदस्य इमेल)',
+	'awc-metrics-by-user' => 'शोधले (सदस्य नावाने)',
+	'awc-metrics-by-title' => 'आणि शीर्षकाच्या सुरुवातीला:',
+	'awc-metrics-by-domains' => 'आणि डोमेन(प्रक्षेत्र) मधे :',
+	'awc-metrics-not-found' => 'विकि सापडले नाही',
+	'awc-metrics-nbr-result' => 'निकाल:',
+	'awc-metrics-created-between' => '$1 (YYYY/MM/DD) आणि $2 (YYYY/MM/DD)या मधे बनवीले गेले आहे',
+	'awc-metrics-wikians' => 'विकियन<br />(>10 संपादने)',
+	'awc-metrics-articles' => 'लेख',
+	'awc-metrics-edits' => 'संपादने',
+	'awc-metrics-db-size' => 'डीबीचा आकार',
+	'awc-metrics-images' => 'चित्रे',
+	'awc-metrics-pageviews' => 'पाने <br />पहिली',
+	'awc-metrics-statistics' => 'सांख्यिकी (सर्व महिन्यांची सरासरी)',
+	'awc-metrics-close' => 'बंद',
+	'awc-metrics-close-action' => 'बंद',
+	'awc-metrics-active' => 'सक्रीय',
+	'awc-metrics-closed' => 'बंद केलेले',
+	'awc-metrics-removed' => 'काढले',
+	'awc-metrics-hubs' => 'नवीन विकि (महिन्यावारी)',
+	'awc-metrics-news-day' => 'नवीन विकि (रोजचे)',
+	'awc-metrics-sum-month' => 'मोजणी(दर महिन्याची)',
+	'awc-metrics-sum-day' => 'मोजणी(दर दिवशी)',
+	'awc-metrics-fewer-than' => 'त्यात त्याहून कमी  {{PLURAL:$1|$1 लेख|$1 लेख}} आहेत,',
+	'awc-metrics-edits-label' => '$2 मधे {{PLURAL:$1|$1 संपादन|$1 संपादने}},',
+	'awc-metrics-this-month' => 'या महिन्यात',
+	'awc-metrics-last-month' => 'शेवटचा {{PLURAL:$1|महिना|$1 महिने}}',
+	'closed-confirm-btn' => 'बंद सुनिश्चित करा',
+	'closed-reason' => 'कारण:',
+	'newwikisgraph' => 'नवीन विकि आलेख',
+	'newwikisgraph-report-title' => 'विकि निर्मिती दिवसानुसार',
+	'newwikisgraph-wikis-created' => 'विकि तयार झालेले आहे',
+	'newwikisgraph-param-all' => 'सर्व',
+	'newwikisgraph-param-other' => 'इतर',
 );
 
 /** Malay (Bahasa Melayu)
@@ -3798,10 +3917,12 @@ $messages['ps'] = array(
 	'wf_city_lang' => 'ژبه',
 	'wf_cc_name' => 'وېشنيزه',
 	'wikifactory-label-info' => 'مالومات',
+	'wikifactory-label-variables2' => 'ټولګړی',
 	'wikifactory-label-domains' => 'شپولونه',
 	'wikifactory-label-google' => 'د ګووګل اوزار',
 	'wikifactory-label-close' => 'تړل',
 	'wikifactory-label-compare' => 'پرتلل',
+	'closewiki-message' => 'شپول نوم $1',
 	'closewiki-nbr-wiki' => '$1 ويکي ګانې',
 	'closewiki-images-url' => 'د انځورونو خونديځ: $1',
 	'closewiki-unknown' => 'ناجوت',
@@ -4228,7 +4349,9 @@ $messages['ru'] = array(
 	'closewiki-images-url' => 'Архив изображений: $1',
 	'closewiki-unknown' => 'Неизвестно',
 	'closewiki-return' => 'Назад к $1',
+	'wikifactory-button-saveparse' => 'Проанализировать и сохранить',
 	'wikifactory-button-save' => 'Сохранить изменения',
+	'wikifactory-public-status-change-default-reason' => 'Статус изменён для вкладки Домены.',
 	'awc-metrics-wikis' => 'Показать вики',
 	'awc-metrics-select' => 'Показать вики:',
 	'awc-metrics-by-language' => 'по языку:',
@@ -4605,18 +4728,30 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Jprmvnvijay5
  * @author Veeven
  */
 $messages['te'] = array(
 	'wf_city_url' => 'చిరునామా',
 	'wf_city_title' => 'శీర్షిక',
+	'wf_city_founding_user' => 'నాటినవారు',
+	'wf_city_founding_email' => 'నాటినవారి ఈ-తపా',
 	'wf_city_public' => 'స్థితి',
 	'wf_city_lang' => 'భాష',
 	'wf_cc_name' => 'వర్గం',
+	'wikifactory-label-info' => 'మందల',
+	'wikifactory-label-variables' => 'మారునవి',
+	'wikifactory-label-domains' => 'సీమలు',
+	'wikifactory-label-return' => 'జాబితాకు తిరిగిపొండి',
 	'wikifactory-label-actions' => 'చర్యలు',
 	'wikifactory-label-google' => 'గూగుల్ పనిముట్లు',
 	'wikifactory-label-close' => 'మూసివేయి',
+	'wikifactory-label-tags' => 'తోకపేర్లు',
+	'wikifactory-label-tags2' => 'తోకపేర్లు',
+	'wikifactory-label-masstags' => 'మంద తోకపేర్లు',
+	'wikifactory-label-findtags' => 'తోకపేర్లు కనుగొను',
 	'closewiki-nbr-wiki' => '$1 వికీలు',
+	'awc-metrics-by-language' => 'భాషను బట్టి:',
 	'awc-metrics-all' => 'అన్ని వికీలు',
 	'awc-metrics-all-languages' => 'అన్ని భాషలు',
 	'awc-metrics-search' => 'అన్వేషణ ఎంపికలు:',
@@ -4625,10 +4760,14 @@ $messages['te'] = array(
 	'awc-metrics-articles-per-day' => 'వ్యాసాలు<br />(రోజుకి సగటు)',
 	'awc-metrics-edits' => 'మార్పులు',
 	'awc-metrics-close' => 'మూసివేయి',
+	'awc-metrics-redirected' => 'మూసివేయబడి తిరిగిదారిమళ్ళించబడినది',
 	'awc-metrics-hubs' => 'కొత్త వికీలు (నెలసరి)',
 	'awc-metrics-news-day' => 'కొత్త వికీలు (దినసరి)',
+	'awc-metrics-sum-month' => 'లెక్కించు (నెల ఒక్కింటికి)',
+	'awc-metrics-sum-day' => 'లెక్కించు (నాడు ఒక్కింటికి)',
 	'awc-metrics-this-month' => 'ఈ నెల',
 	'awc-metrics-last-month' => 'గత {{PLURAL:$1|నెల|$1 నెలలు}}',
+	'closed-confirm-btn' => 'మూసివేతను కాయము చేయుడి',
 	'closed-reason' => 'కారణం:',
 );
 
@@ -4674,6 +4813,7 @@ $messages['tl'] = array(
 	'wikifactory-label-ezsharedupload' => 'Kargang EZShare',
 	'wikifactory-label-compare' => 'Paghambingin',
 	'right-wikifactory' => 'Baguhin ang mga katakdang panloob para sa mga wiki',
+	'action-wikifactory' => 'baguhin ang mga katakdang panloob para sa mga wiki',
 	'wikifactory-domain-edit' => 'baguhin ang URL na ito',
 	'wikifactory-domain-remove' => 'tanggalin ang URL na ito mula sa wiki',
 	'wikifactory-domain-setmain' => 'ilagay ang URL na ito sa wgServer',
@@ -4689,6 +4829,9 @@ $messages['tl'] = array(
 	'closewiki-images-url' => 'Sinupan ng larawan: $1',
 	'closewiki-unknown' => 'Hindi alam',
 	'closewiki-return' => 'Bumalik sa $1',
+	'wikifactory-button-saveparse' => 'Banghayin at Sagipin ang mga pagbabago',
+	'wikifactory-button-save' => 'Sagipin ang mga pagbabago',
+	'wikifactory-public-status-change-default-reason' => 'Binago ang katayuan mula sa laylayan ng mga Nasasakupan.',
 	'awc-metrics-wikis' => 'Ipakita ang mga wiki',
 	'awc-metrics-select' => 'Ipakita ang mga wiki:',
 	'awc-metrics-by-language' => 'ayon sa wika:',
@@ -4745,7 +4888,7 @@ $messages['tl'] = array(
 	'closed-wiki' => 'Isinarang Wiki',
 	'closed-wiki-info' => 'Isinara na ang wiking ito',
 	'disabled-wiki-info' => 'Hindi na pinagagana ang wiking ito',
-	'closed-wiki-dump-exists' => 'Mangyarin pindutin [$1 dito] kung nais mong kuhaning muli ang iyong nilalaman',
+	'closed-wiki-dump-exists' => 'Maaari mong [$1 bawiin ang nilalaman mo] kung gusto mo.<br />(Kung ang wiki mo ay kamakailang isinara, maaaring umabot ng isang maiksing panahon ng oras para malikha ang mga talaksan)',
 	'closed-wiki-dump-noexists' => 'Isinara na ang wiking ito.  Makukuha ang tapunan ng nilalaman sa loob ng 24 mga oras.  Mangyaring bumalik mamaya.',
 	'closed-wiki-create-wiki' => 'Lumikha ng isang bagong wiki',
 	'closed-wiki-policy' => 'Tingnan ang Patakaran ng Wikia sa Pagsasara',
@@ -4759,6 +4902,11 @@ $messages['tl'] = array(
 	'closed-confirm-btn' => 'Tiyakin ang pagsasara',
 	'closed-redirect-alert' => 'Pakilagay ang bagong URL ng pagpapunta sa iba!',
 	'closed-reason' => 'Dahilan:',
+	'newwikisgraph' => 'Talangguhit ng Bagong mga Wiki',
+	'newwikisgraph-report-title' => 'mga paglikha ng wiki ayon sa araw',
+	'newwikisgraph-wikis-created' => 'nalikhang mga wiki',
+	'newwikisgraph-param-all' => 'Lahat',
+	'newwikisgraph-param-other' => 'Iba Pa',
 );
 
 /** Tatar (Cyrillic script) (татарча)

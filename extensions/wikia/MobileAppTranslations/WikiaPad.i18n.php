@@ -131,7 +131,7 @@ $messages['fr'] = array(
 	'browser-loading-message' => 'Chargement...',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -145,6 +145,22 @@ $messages['gl'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'Aceptar',
 	'tab-search-loading-message' => 'Procurando...',
 	'browser-loading-message' => 'Cargando...',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'main-tab-discover' => 'Felfedezés',
+	'main-tab-personal' => 'Személyes Wikia',
+	'main-tab-search' => 'Keresés',
+	'main-tab-offline' => 'Kapcsolat nélküli mód',
+	'tab-discover-loading-message' => 'Betöltés…',
+	'tab-discover-no-network-dialog-title' => 'A hálózat nem érhető el',
+	'tab-discover-no-network-dialog-message' => 'Nincs érzékelhető hálózati kapcsolat.',
+	'tab-discover-no-network-dialog-close-button' => 'OK',
+	'tab-search-loading-message' => 'Keresés...',
+	'browser-loading-message' => 'Betöltés…',
 );
 
 /** Interlingua (interlingua)
@@ -268,7 +284,7 @@ $messages['nl'] = array(
  */
 $messages['pl'] = array(
 	'main-tab-discover' => 'Odkryj',
-	'main-tab-personal' => 'Moje Wikia',
+	'main-tab-personal' => 'Moja Wikia',
 	'main-tab-search' => 'Szukaj',
 	'main-tab-offline' => 'Offline',
 	'tab-discover-loading-message' => 'Trwa ładowanie...',
@@ -347,6 +363,22 @@ $messages['te'] = array(
 	'main-tab-personal' => 'నా వికియా',
 	'main-tab-search' => 'అన్వేషణ',
 	'tab-discover-no-network-dialog-close-button' => 'సరే',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'main-tab-discover' => 'Tuklasin',
+	'main-tab-personal' => 'Wikia Ko',
+	'main-tab-search' => 'Maghanap',
+	'main-tab-offline' => 'Hindi nakaugnay sa internet',
+	'tab-discover-loading-message' => 'Ikinakarga...',
+	'tab-discover-no-network-dialog-title' => 'Hindi makuha ang lambat-gawaan',
+	'tab-discover-no-network-dialog-message' => 'Walang napansing pagkakakabit sa lambat-gawaan',
+	'tab-discover-no-network-dialog-close-button' => 'Okey',
+	'tab-search-loading-message' => 'Hinahanap...',
+	'browser-loading-message' => 'Nagkakarga...',
 );
 
 /** толышә зывон (толышә зывон)

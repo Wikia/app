@@ -62,7 +62,7 @@ $messages['az'] = array(
 	'wva-add' => 'Əlavə et',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -129,6 +129,7 @@ $messages['ca'] = array(
 );
 
 /** Czech (česky)
+ * @author Jezevec
  * @author Mormegil
  * @author Mr. Richard Bolla
  */
@@ -143,6 +144,7 @@ $messages['cs'] = array(
 	'wva-notlogged' => 'Pro vkládání videí se musíte přihlásit nebo zaregistrovat.',
 	'wva-notallowed' => 'Na této wiki nemůžete vkládat videa.',
 	'wva-protected' => 'Toto video je zamčeno.',
+	'wva-thumbnail-upload-failed' => 'Vložení videa selhalo, nelze získat odpovídající miniaturu',
 );
 
 /** German (Deutsch)
@@ -278,7 +280,7 @@ $messages['fr'] = array(
 	'wva-thumbnail-upload-failed' => 'La vidéo incluse a échouée, impossible de trouver la bonne miniature',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -314,12 +316,20 @@ $messages['he'] = array(
 
 /** Hungarian (magyar)
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'wva-success' => 'A(z) $1 videóoldalt sikeresen létrehoztad.',
+	'wva-success-replaced' => 'A(z) $1 videóoldalt sikeresen lecserélted.',
+	'wva-failure' => 'Kérlek, érvényes paramétereket adj meg.',
 	'wva-name' => 'Add meg a nevet:',
 	'wva-url' => 'Add meg az URL-t:',
 	'wva-add' => 'Hozzáadás',
 	'wva-title' => 'Videó gyors hozzáadása URL alapján',
+	'wva-notlogged' => 'Lépj be vagy regisztrálj a videók beszúrásához.',
+	'wva-notallowed' => 'Nem szúrhatsz be videókat ezen a wikin.',
+	'wva-protected' => 'Ez a videó védett.',
+	'wva-thumbnail-upload-failed' => 'Nem sikerült a videó beágyazása&mdash;a megfelelő miniatűr előállítása nem volt lehetséges.',
 );
 
 /** Interlingua (interlingua)
@@ -419,7 +429,7 @@ $messages['kn'] = array(
 	'wva-add' => 'ಸೇರಿಸು',
 );
 
-/** Karachay-Balkar (Къарачай-Малкъар)
+/** Karachay-Balkar (къарачай-малкъар)
  * @author Къарачайлы
  */
 $messages['krc'] = array(
@@ -745,6 +755,7 @@ $messages['tl'] = array(
 	'wva-notlogged' => 'Kailangan mong lumagda o magpatala upang makapagsingit ng mga bidyo.',
 	'wva-notallowed' => 'Hindi ka makapagsisingit ng mga bidyo sa wiking ito.',
 	'wva-protected' => 'Ang bidyo ay nakaprutekta.',
+	'wva-thumbnail-upload-failed' => 'Nabigo ang pagbabaon ng bidyo, hindi nagawang ang pagkuha ng naaangkop na kagyat',
 );
 
 /** толышә зывон (толышә зывон)

@@ -30,6 +30,13 @@ $messages['qqq'] = array(
 	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
 );
 
+/** Tati (Tati)
+ * @author Erdemaslancan
+ */
+$messages['ttt'] = array(
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|istatistikan diyin]]',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */
@@ -43,6 +50,17 @@ $messages['ar'] = array(
 	'quickstats-totals-label' => 'المجموع',
 	'quickstats-see-more-stats-link' => '[[خاص:WikiStats|شاهد المزيد من الإحصائيات]]',
 	'quickstats-number-shortening' => '$1K',
+);
+
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'quickstats-header-date' => 'তাৰিখ',
+	'quickstats-header-edits' => 'সম্পাদনাসমূহ',
+	'quickstats-header-photos' => 'চিত্ৰসমূহ',
+	'quickstats-header-likes' => 'পছন্দসমূহ',
+	'quickstats-totals-label' => 'মুঠ',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -143,7 +161,7 @@ $messages['diq'] = array(
 	'quickstats-header-photos' => 'Fotrafi',
 	'quickstats-header-likes' => 'Rındeni',
 	'quickstats-totals-label' => 'Pero piya',
-	'quickstats-see-more-stats-link' => '[[Xısusi:Wikistatik|istatistiki bıvin]]',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|istatistiki bıvin]]',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
@@ -221,7 +239,7 @@ $messages['fr'] = array(
 	'quickstats-number-shortening-billions' => '$1 Mrd',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -231,6 +249,7 @@ $messages['gl'] = array(
 	'quickstats-header-edits' => 'Edicións',
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-header-likes' => 'Gústame',
+	'quickstats-date-format' => 'd de M',
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ollar máis estatísticas]]',
 	'quickstats-number-shortening' => '$1K',
@@ -240,6 +259,7 @@ $messages['gl'] = array(
 
 /** Hebrew (עברית)
  * @author Deror avi
+ * @author Yova
  */
 $messages['he'] = array(
 	'quickstats-header-label' => 'סטטיסטיקה מהירה',
@@ -247,8 +267,12 @@ $messages['he'] = array(
 	'quickstats-header-views' => 'צפיות',
 	'quickstats-header-edits' => 'עריכות',
 	'quickstats-header-photos' => 'תמונות',
+	'quickstats-header-likes' => 'לייקים',
 	'quickstats-totals-label' => 'סה"כ',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|לצפיה בסטטיסטיקות נוספות]]',
+	'quickstats-number-shortening' => '$1 אלפים',
+	'quickstats-number-shortening-millions' => '$1 מיליונים',
+	'quickstats-number-shortening-billions' => '$1 מיליארדים',
 );
 
 /** Hungarian (magyar)
@@ -379,6 +403,8 @@ $messages['lt'] = array(
 	'quickstats-header-likes' => 'Patinka',
 	'quickstats-totals-label' => 'Viso',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Macedonian (македонски)
@@ -707,7 +733,7 @@ $messages['uk'] = array(
 	'quickstats-number-shortening' => '$1K',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(

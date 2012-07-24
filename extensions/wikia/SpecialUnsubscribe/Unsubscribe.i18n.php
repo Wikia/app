@@ -123,15 +123,16 @@ $messages['diq'] = array(
 /** Spanish (español)
  * @author Bola
  * @author VegaDark
+ * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'unsubscribe' => 'Darse de baja',
-	'unsubscribe-badaccess' => 'Lo sentimos, esta página no puede ser usada directamente. Por favor sigue el enlace desde tu e-mail.',
+	'unsubscribe-badaccess' => 'Lo sentimos, esta página no puede ser usada directamente. Por favor sigue el enlace desde tu correo electrónico.',
 	'unsubscribe-badtoken' => 'Lo sentimos, hubo un problema con la seguridad.',
-	'unsubscribe-bademail' => 'Lo sentimos, hubo un problema con el e-mail.',
+	'unsubscribe-bademail' => 'Lo sentimos, hubo un problema con el correo electrónico.',
 	'unsubscribe-badtime' => 'Lo sentimos, el enlace ha expirado. Por favor, usa un enlace con menos de siete días de antigüedad.',
-	'unsubscribe-nousers' => 'No se encontraron usuarios con esa dirección de e-mail.',
-	'unsubscribe-noconfusers' => 'No se encontraron usuarios confirmados con esa dirección de e-mail.',
+	'unsubscribe-nousers' => 'No se encontraron usuarios con esa dirección de correo electrónico.',
+	'unsubscribe-noconfusers' => 'No se encontraron usuarios confirmados con esa dirección de correo electrónico.',
 	'unsubscribe-confirm-legend' => 'Confirmar',
 	'unsubscribe-confirm-text' => '¿Dar de baja todas las cuentas con <code>$1</code>?',
 	'unsubscribe-confirm-button' => 'Sí, estoy totalmente seguro/a',
@@ -178,7 +179,7 @@ $messages['fr'] = array(
 	'unsubscribe-preferences-notice' => 'Les courriels ont été désactivés pour votre compte. Aller sur l’onglet de profil utilisateur pour les réactiver.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -201,12 +202,23 @@ $messages['gl'] = array(
 
 /** Hungarian (magyar)
  * @author Dani
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'unsubscribe' => 'Leiratkozás',
+	'unsubscribe-badaccess' => 'Sajnáljuk, ez a lap nem érhető el közvetlenül. Kérlek, használd az e-mailben küldött hivatkozást.',
+	'unsubscribe-badtoken' => 'Sajnáljuk, de probléma történt a biztonsági kapocssal.',
+	'unsubscribe-bademail' => 'Sajnáljuk, de probléma volt az e-maillel.',
+	'unsubscribe-badtime' => 'Sajnáljuk, de a hivatkozás lejárt. Kérlek, hogy hét napnál frissebb hivatkozást használj.',
+	'unsubscribe-nousers' => 'Nem található a megadott e-mail címmel rendelkező felhasználó',
+	'unsubscribe-noconfusers' => 'Nem található a megadott e-mail címmel rendelkező megerősített felhasználó.',
 	'unsubscribe-confirm-legend' => 'Megerősítés',
 	'unsubscribe-confirm-button' => 'Igen, biztos vagyok benne',
+	'unsubscribe-working' => '$1 felhasználó leiratkoztatása $2-nek',
+	'unsubscribe-working-problem' => 'hiba történt $1 felhasználói adatainak betöltése közben',
 	'unsubscribe-working-done' => 'Kész!',
+	'unsubscribe-preferences-toggle' => 'Leiratkozás az összes Wikia e-mailról (töröld a lenti beállítások eléréséhez)',
+	'unsubscribe-preferences-notice' => 'A felhasználói fiókodnak szánt e-mailek le lettek tiltva. Bekapcsolásukhoz látogass el a "Felhasználói profil" fülre.',
 );
 
 /** Interlingua (interlingua)
@@ -264,6 +276,8 @@ $messages['ksh'] = array(
 	'unsubscribe-working' => 'Mer sen de $1 {{PLURAL:$1|Abonnomang|Abonnomangs}} för $2 am ußdraare&nbsp;…',
 	'unsubscribe-working-problem' => 'Mer han e Probleem beim Laade vun däm Metmaacher $1 singe Daate,',
 	'unsubscribe-working-done' => 'Fäädesch.',
+	'unsubscribe-preferences-toggle' => 'Donn Desch vun alle <i lang="en">e-mails</i> vun Wikia afmälde (Donn dat heh nit ußwähle, öm aan di ander Müjjeleschkeite onge draan ze kumme)',
+	'unsubscribe-preferences-notice' => 'För Desch sin <i lang="en">e-mails</i> afjeschalldt. Jangk op Ding Enschtällonge, döh kanns De se widder aanschallde.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -398,6 +412,7 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'unsubscribe-confirm-button' => 'هو، زه ډاډه يم',
 	'unsubscribe-working-done' => 'بشپړ.',
 );
 
@@ -522,6 +537,8 @@ $messages['tl'] = array(
 	'unsubscribe-working' => 'Hindi na patatanggapin ng sipi ang $1 {{PLURAL:$1|akawnt|mga akawnt}} para sa $2',
 	'unsubscribe-working-problem' => 'may suliranin sa pagkakarga ng kabatiran ng tagagamit para sa: $1',
 	'unsubscribe-working-done' => 'Buo na.',
+	'unsubscribe-preferences-toggle' => 'Huwag nang magpasipi mula sa lahat ng mga e-liham mula sa Wikia (huwag na itong piliin upang mapuntahan ang mga mapagpipiliang nasa ibaba)',
+	'unsubscribe-preferences-notice' => 'Hindi na pinagagana ang mga e-liham para sa akawnt mo. Dalawin ang laylayan ng Balangkas-Katangian ng Tagagamit upang muling paganahin ang mga ito.',
 );
 
 /** Ukrainian (українська)

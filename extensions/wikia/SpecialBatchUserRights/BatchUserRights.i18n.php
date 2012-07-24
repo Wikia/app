@@ -143,7 +143,7 @@ Aucune action ne sera effectuée.
 Le reste de la page se chargera normalement ce qui vous permettra de voir si certains noms d’utilisateurs ne peuvent pas être chargés.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -414,7 +414,7 @@ Resten av sidan kommer att tillåtas att köras bara så att du lätt kan se om 
  */
 $messages['tl'] = array(
 	'batchuserrights' => 'Mga karapatan ng tagagamit ng langkay',
-	'batchuserrights-desc' => 'Nagpapahintulot  ng pagdaragdag ng isa o mas marami pang mga tagagamit sa isang pangkat sa pamamagitan ng isang galaw',
+	'batchuserrights-desc' => 'Nagpapahintulot ng pagdaragdag ng isa o mas marami pang mga tagagamit papunta sa isang pangkat sa pamamagitan ng isang galaw',
 	'batchuserrights-names' => 'Mga pangalan ng tagagamit na pagdaragdagan ng pangkat na ito (isa bawat guhit):',
 	'batchuserrights-intro' => 'Ang pahinang ito ay kaagad na magpapahintulot sa iyo na magdagdag ng isang pangkat sa maramihang mga tagagamit.
 Para sa mga kadahilanang pangkaligtasan, ang talaan ng maidaragdag na mga pangkat ay nakatakda sa kaayusan ng dugtong at hindi mababago sa loob ng wiki.

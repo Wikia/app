@@ -19,13 +19,14 @@ $messages['en'] = array(
     'videohandler-description' => 'Description'
 );
 
+/** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'wikia-videohandlers-desc' => 'Description of module used for credits page',
-	'videohandler-video-details' => 'Parameters:
-* $1 is a link to the video on its source page, with the label being the original title of the video
-* $2 is a link to the provider\'s homepage (e.g. [http://youtube.com/ youtube.com])',
 	'videohandler-error-missing-parameter' => 'Says, that a certain parameter is missing in the input data.
-* $1 is the exact name of the missing parameter, as the computer would expect.'
+* $1 is the exact name of the missing parameter, as the computer would expect.',
+	'videohandler-video-details' => "Parameters:
+* $1 is a link to the video on its source page, with the label being the original title of the video
+* $2 is a link to the provider's homepage (e.g. [http://youtube.com/ youtube.com])",
 );
 
 /** Afrikaans (Afrikaans)
@@ -35,7 +36,7 @@ $messages['af'] = array(
 	'videohandler-category' => "Video's",
 );
 
-/** Azerbaijani (Azərbaycanca)
+/** Azerbaijani (azərbaycanca)
  * @author Sortilegus
  * @author Vago
  */
@@ -43,7 +44,7 @@ $messages['az'] = array(
 	'videohandler-category' => 'Videolar',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -51,14 +52,14 @@ $messages['be-tarask'] = array(
 	'videohandler-category' => 'Відэа',
 );
 
-/** Bulgarian (Български)
+/** Bulgarian (български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'videohandler-category' => 'Видео',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
  */
@@ -66,14 +67,14 @@ $messages['br'] = array(
 	'videohandler-category' => 'Videoioù',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author Palapa
  */
 $messages['bs'] = array(
 	'videohandler-category' => 'Videa',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Gemmaa
  * @author Paucabot
  */
@@ -81,7 +82,7 @@ $messages['ca'] = array(
 	'videohandler-category' => 'Vídeos',
 );
 
-/** Czech (Česky)
+/** Czech (česky)
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
@@ -98,6 +99,7 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author Inkowik
  * @author LWChris
+ * @author PtM
  * @author Tiin
  */
 $messages['de'] = array(
@@ -111,6 +113,7 @@ $messages['de'] = array(
 	'videohandler-unknown-title' => 'Unbekannter Titel',
 	'videohandler-video-details' => '$1 (Provider: $2)',
 	'videohandler-category' => 'Videos',
+	'videohandler-description' => 'Beschreibung',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -120,7 +123,7 @@ $messages['de-formal'] = array(
 	'videohandler-category' => 'Videos',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Bola
  * @author Ciencia Al Poder
  * @author Fitoschido
@@ -138,23 +141,22 @@ $messages['es'] = array(
 	'videohandler-unknown-title' => 'Título desconocido',
 	'videohandler-video-details' => '$1 (proveedor: $2)',
 	'videohandler-category' => 'Vídeos',
+	'videohandler-description' => 'Descripción',
 );
 
-/** Basque (Euskara)
+/** Basque (euskara)
  * @author An13sa
  */
 $messages['eu'] = array(
 	'videohandler-category' => 'Bideoak',
 );
 
-
-
 /** Persian (فارسی) */
 $messages['fa'] = array(
 	'videohandler-category' => 'ویدیو‌ها',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  */
@@ -162,7 +164,7 @@ $messages['fi'] = array(
 	'videohandler-category' => 'Videot',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Wyz
  */
@@ -177,9 +179,10 @@ $messages['fr'] = array(
 	'videohandler-unknown-title' => 'Titre inconnu',
 	'videohandler-video-details' => '$1 (hébergeur : $2)',
 	'videohandler-category' => 'Vidéos',
+	'videohandler-description' => 'Description',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -193,6 +196,7 @@ $messages['gl'] = array(
 	'videohandler-unknown-title' => 'Título descoñecido',
 	'videohandler-video-details' => '$1 (provedor: $2)',
 	'videohandler-category' => 'Vídeos',
+	'videohandler-description' => 'Descrición',
 );
 
 /** Hebrew (עברית)
@@ -202,11 +206,21 @@ $messages['he'] = array(
 	'videohandler-category' => 'סרטוני וידאו',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
+ * @author TK-999
  */
 $messages['hu'] = array(
+	'videohandler' => 'Videókezelő',
+	'prototype-videohandler-extension-desc' => 'Prototype videókezelő',
+	'movieclips-videohandler-extension-desc' => 'MovieClips videókezelő',
+	'screenplay-videohandler-extension-desc' => 'Screnplay videókezelő',
+	'youtube-videohandler-extension-desc' => 'YouTube videókezelő',
+	'videohandler-error-video-no-exist' => 'A cím által meghatározott videó nem létezik',
+	'videohandler-unknown-title' => 'Ismeretlen cím',
+	'videohandler-video-details' => '$1 (szolgáltató: $2 )',
 	'videohandler-category' => 'Videók',
+	'videohandler-description' => 'Leírás',
 );
 
 /** Armenian (Հայերեն)
@@ -216,11 +230,20 @@ $messages['hy'] = array(
 	'videohandler-category' => 'Տեսանյութեր',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'videohandler' => 'Gestor de videos',
+	'prototype-videohandler-extension-desc' => 'Gestor de videos Prototype',
+	'movieclips-videohandler-extension-desc' => 'Gestor de videos MovieClips',
+	'screenplay-videohandler-extension-desc' => 'Gestor de videos ScreenPlay',
+	'youtube-videohandler-extension-desc' => 'Gestor de videos YouTube',
+	'videohandler-error-video-no-exist' => 'Le video specificate per le titulo non existe',
+	'videohandler-unknown-title' => 'Titulo incognite',
+	'videohandler-video-details' => '$1 (fornitor: $2)',
 	'videohandler-category' => 'Videos',
+	'videohandler-description' => 'Description',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -231,7 +254,7 @@ $messages['id'] = array(
 	'videohandler-category' => 'Video',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author HalphaZ
  */
 $messages['it'] = array(
@@ -253,7 +276,7 @@ $messages['ka'] = array(
 	'videohandler-category' => 'ვიდეოები',
 );
 
-/** Karachay-Balkar (Къарачай-Малкъар)
+/** Karachay-Balkar (къарачай-малкъар)
  * @author Къарачайлы
  */
 $messages['krc'] = array(
@@ -267,10 +290,11 @@ $messages['lb'] = array(
 	'videohandler-category' => 'Videoen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'wikia-videohandlers-desc' => 'Поставување на видеа во рамките на податотечната архитектура на МедијаВики',
 	'videohandler' => 'Поставување на видеа',
 	'prototype-videohandler-extension-desc' => 'Прототипен поставувач на видеа',
 	'movieclips-videohandler-extension-desc' => 'Поставувач на видеа од MovieClips',
@@ -281,6 +305,7 @@ $messages['mk'] = array(
 	'videohandler-unknown-title' => 'Непознат наслов',
 	'videohandler-video-details' => '$1 (добавувач: $2)',
 	'videohandler-category' => 'Видеоснимки',
+	'videohandler-description' => 'Опис',
 );
 
 /** Malay (Bahasa Melayu)
@@ -297,17 +322,29 @@ $messages['ms'] = array(
 	'videohandler-unknown-title' => 'Tajuk tidak diketahui',
 	'videohandler-video-details' => '$1 (penyedia: $2)',
 	'videohandler-category' => 'Video',
+	'videohandler-description' => 'Keterangan',
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
+	'videohandler' => 'Videobehandler',
+	'prototype-videohandler-extension-desc' => 'Prototype-videobehandler',
+	'movieclips-videohandler-extension-desc' => 'MovieClips-videobehandler',
+	'screenplay-videohandler-extension-desc' => 'Screenplay-videobehandler',
+	'youtube-videohandler-extension-desc' => 'YouTube-videobehandler',
+	'videohandler-error-missing-parameter' => 'Påkrevd parameter «$1» mangler',
+	'videohandler-error-video-no-exist' => 'Video spesifisert med tittel eksisterer ikke',
+	'videohandler-unknown-title' => 'Ukjent tittel',
+	'videohandler-video-details' => '$1 (leverandør: $2)',
 	'videohandler-category' => 'Videoer',
+	'videohandler-description' => 'Beskrivelse',
 );
 
 /** Dutch (Nederlands)
+ * @author AvatarTeam
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -317,6 +354,7 @@ $messages['nl'] = array(
 	'videohandler-unknown-title' => 'Onbekende titel',
 	'videohandler-video-details' => '$1 (provider: $2)',
 	'videohandler-category' => "Video's",
+	'videohandler-description' => 'Beschrijving',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -326,7 +364,7 @@ $messages['pa'] = array(
 	'videohandler-category' => 'ਵਿਡੀਓ',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Marcin Łukasz Kiejzik
  * @author Sovq
  * @author Sp5uhe
@@ -343,6 +381,7 @@ $messages['pl'] = array(
 	'videohandler-unknown-title' => 'Nieznany tytuł',
 	'videohandler-video-details' => '$1 (z $2)',
 	'videohandler-category' => 'Filmy',
+	'videohandler-description' => 'Opis',
 );
 
 /** Piedmontese (Piemontèis)
@@ -360,7 +399,7 @@ $messages['ps'] = array(
 	'videohandler-category' => 'ويډيوګانې',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Crazymadlover
  * @author Hamilton Abreu
  */
@@ -368,21 +407,21 @@ $messages['pt'] = array(
 	'videohandler-category' => 'Vídeos',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Daemorris
  */
 $messages['pt-br'] = array(
 	'videohandler-category' => 'Vídeos',
 );
 
-/** Romanian (Română)
+/** Romanian (română)
  * @author Stelistcristi
  */
 $messages['ro'] = array(
 	'videohandler-category' => 'Videoclipuri',
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Eleferen
  * @author Kuzura
  * @author Lockal
@@ -399,6 +438,7 @@ $messages['ru'] = array(
 	'videohandler-unknown-title' => 'Неизвестное название',
 	'videohandler-video-details' => '$1 (источник: $2)',
 	'videohandler-category' => 'Видео',
+	'videohandler-description' => 'Описание',
 );
 
 /** Sinhala (සිංහල)
@@ -408,14 +448,14 @@ $messages['si'] = array(
 	'videohandler-category' => 'වීඩියෝ',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
 	'videohandler-category' => 'Videoposnetki',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
@@ -425,19 +465,38 @@ $messages['sr-ec'] = array(
 	'videohandler-category' => 'Видео-снимци',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'videohandler' => 'Videohanterare',
+	'prototype-videohandler-extension-desc' => 'Videohanterare för Prototype',
+	'movieclips-videohandler-extension-desc' => 'Videohanterare för MovieClips',
+	'screenplay-videohandler-extension-desc' => 'Videohanterare för Screnplay',
+	'youtube-videohandler-extension-desc' => 'Videohanterare för YouTube',
+	'videohandler-unknown-title' => 'Okänd titel',
+	'videohandler-video-details' => '$1 (leverantör: $2)',
 	'videohandler-category' => 'Videoklipp',
+	'videohandler-description' => 'Beskrivning',
 );
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
 $messages['tl'] = array(
+	'wikia-videohandlers-desc' => 'Pag-aasikaso ng mga bidyo na nasa loob ng arkitektura ng talaksan ng MediaWiki',
+	'videohandler' => 'Tagahawak ng bidyo',
+	'prototype-videohandler-extension-desc' => 'Prototipong tagahawak ng bidyo',
+	'movieclips-videohandler-extension-desc' => 'Tagahawak ng bidyo ng MovieClips',
+	'screenplay-videohandler-extension-desc' => 'Tagahawak ng bidyo ng Screnplay',
+	'youtube-videohandler-extension-desc' => 'Tagahawak ng bidyo ng YouTube',
+	'videohandler-error-missing-parameter' => 'Nawawala ang kailangang parametrong "$1"',
+	'videohandler-error-video-no-exist' => 'Hindi umiiral ang bidyo na tinukoy ayon sa pamagat',
+	'videohandler-unknown-title' => 'Hindi nalalamang pamagat',
+	'videohandler-video-details' => '$1 (tagapagbigay: $2)',
 	'videohandler-category' => 'Mga bidyo',
+	'videohandler-description' => 'Paglalarawan',
 );
 
 /** Turkish (Türkçe)
@@ -447,7 +506,7 @@ $messages['tr'] = array(
 	'videohandler-category' => 'Videolar',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author A1
  * @author Prima klasy4na
  * @author Тест
@@ -456,10 +515,11 @@ $messages['uk'] = array(
 	'videohandler-category' => 'Відео',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  * @author Yanmiao liu
  */
 $messages['zh-hans'] = array(
 	'videohandler-category' => '视频',
 );
+

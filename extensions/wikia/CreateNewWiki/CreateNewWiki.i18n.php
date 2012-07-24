@@ -686,6 +686,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Ilkea
+ * @author Lukkipoika
  * @author Tofu II
  * @author VezonThunder
  */
@@ -739,7 +740,7 @@ $messages['fi'] = array(
 	'cnw-upgrade-headline' => 'Haluatko päivittää?',
 	'cnw-upgrade-creative' => 'Päivittämällä Wikia Plus:san pystyt poistamaan mainokset <span class="wiki-name"></span>, ainutkertainen mahdollisuus ainoastaan uusille perustajille.',
 	'cnw-upgrade-marketing' => 'Wikia Plus on hyvä valinta:<ul>
-<li>Ammattailais Wikeille</li>
+<li>Ammattilais-Wikeille</li>
 <li>Voittoatavoittelemattomille</li>
 <li>Perheille</li>
 <li>Kouluille</li>
@@ -850,7 +851,7 @@ Mettez à niveau via PayPal pour obtenir un wiki sans publicité pour seulement 
 	'cnw-error-bot-header' => 'Vous avez été détecté comme étant un robot',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -997,6 +998,7 @@ $messages['he'] = array(
 /** Hungarian (magyar)
  * @author Dani
  * @author Dj
+ * @author TK-999
  */
 $messages['hu'] = array(
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wikikészítő varázsló]]',
@@ -1018,8 +1020,15 @@ $messages['hu'] = array(
 	'cnw-call-to-login' => 'Itt bejelentkezhetsz',
 	'cnw-auth-headline' => 'Bejelentkezés',
 	'cnw-auth-headline2' => 'Regisztráció',
+	'cnw-auth-creative' => 'Lépj be a felhasználói fiókodba, hogy folytathasd a wikid építését.',
+	'cnw-auth-signup-creative' => 'Szükséged lesz egy felhasználói fiókra a wikid építésének folytatásához.<br />Egy perc alatt regisztrálhatsz!',
 	'cnw-auth-facebook-signup' => 'Regisztráció Facebookkal',
 	'cnw-auth-facebook-login' => 'Bejelentkezés Facebookkal',
+	'cnw-userauth-headline' => 'Van már felhasználói fiókod?',
+	'cnw-userauth-creative' => 'Bejelentkezés',
+	'cnw-userauth-marketing-heading' => 'Még nem regisztráltál?',
+	'cnw-userauth-marketing-body' => 'Felhasználói fiókra van szükséged, hogy wikit hozhass létre a Wikián. Csak egy percbe telik a [[Special:UserSignup|regisztráció]]!',
+	'cnw-userauth-signup-button' => 'Regisztráció',
 	'cnw-desc-headline' => 'Miről szól a wiki?',
 	'cnw-desc-creative' => 'Írd körül a témát',
 	'cnw-desc-placeholder' => 'Ez a wiki kezdőlapján fog megjelenni.',
@@ -1037,14 +1046,34 @@ $messages['hu'] = array(
 	'cnw-desc-wiki-submit-error' => 'Válassz egy kategóriát',
 	'cnw-theme-headline' => 'Válassz egy témát',
 	'cnw-theme-creative' => 'Válassz az alábbi témák közöl. Ha kiválasztasz egy témát, akkor annak látható lesz az előnézeti képe.',
+	'cnw-theme-instruction' => 'Saját stílusodat később is megtervezheted a "My Tools" eszköztáron keresztül.',
+	'cnw-upgrade-headline' => 'Szeretnél frissíteni?',
+	'cnw-upgrade-creative' => 'A Wikia Plus szolgáltatásra váltás lehetővé teszi a hirdetések eltávolítását a <span class="wiki-name"></span> wikiről; ez egy egyszeri lehetőség csak új alapítók számára.',
+	'cnw-upgrade-marketing' => 'A Wikia Plus remek megoldás:<ul>
+<li>professzionális wikinek,</li>
+<li>nonprofit szervezeteknek,</li>
+<li>családoknak,</li>
+<li>iskoláknak,</li>
+<li>személyes projekteknek.</li>
+</ul>
+Válts a PayPal használatával, hogy havi 4.95 dollárért hirdetésmentes wikit kapj!',
+	'cnw-upgrade-now' => 'Válts most',
+	'cnw-upgrade-decline' => 'Nem, köszönöm, menjen tovább a wikihez',
+	'cnw-welcome-headline' => 'Gratulálunk!A(z) $1 létrehozása sikerült.',
+	'cnw-welcome-instruction1' => 'Kattints a lenti gombra, hogy elkezdd a lapok hozzáadását a wikidhez.',
+	'cnw-welcome-instruction2' => 'Ezt a gombot wiki-szerte láthatod, és bármikor használhatod új lap létrehozásához.',
+	'cnw-welcome-help' => 'Keress válaszokat, tanácsot és sok mást a <a href="http://community.wikia.com">Community Central</a> wikin.',
+	'cnw-error-general' => 'Valami hiba történt a wikid létrehozása közben. Kérlek, próbáld újra később.',
 	'cnw-error-general-heading' => 'Hiba új wiki létrehozásakor',
 	'cnw-error-database' => 'Adatbázis hiba: $1',
 	'cnw-badword-header' => 'Hoppácska',
 	'cnw-badword-msg' => 'Szia, légyszíves tartózkodj a csúnya és tiltott szavak használatától a Wiki leírásban: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki korlátot elérte',
+	'cnw-error-wiki-limit' => 'Szia! Naponta csak {{PLURAL:$1|egy|$1}} wikit hozhatsz létre. Várj 24 órát, mielőtt alapítanál egy újabbat.',
 	'cnw-error-blocked-header' => 'Letiltott fiók',
 	'cnw-error-blocked' => '$1 letiltotta a fiókodat. A megadott indok: $2. (Tiltás azonosító: $3)',
 	'cnw-error-torblock' => 'Wiki létrehozása Tor hálózatból nem engedélyezett.',
+	'cnw-error-bot' => 'Lehetséges botként azonosítottunk  Amennyiben tévedtünk, kérlek, lépj kapcsolatba velünk, elmondva, hogy helytelenül botként azonosítottunk, és segítünk a wikid létrehozásában: [http://www.wikia.com/Special:Contact/general Kapcsolat]',
 	'cnw-error-bot-header' => 'Botként azonosítva',
 );
 
@@ -1289,10 +1318,35 @@ $messages['lb'] = array(
 );
 
 /** Lithuanian (lietuvių)
+ * @author Eitvys200
  * @author Vpovilaitis
  */
 $messages['lt'] = array(
+	'cnw-next' => 'Kitas',
+	'cnw-back' => 'Atgal',
+	'cnw-or' => 'arba',
+	'cnw-title' => 'Sukurti Naują Wiki',
 	'cnw-name-wiki-headline' => 'Sukurti naują Wiki',
+	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-login' => 'Prisijungti',
+	'cnw-signup' => 'Sukurti Sąskaitą',
+	'cnw-signup-prompt' => 'Reikia sąskaitos?',
+	'cnw-login-prompt' => 'Jau turite sąskaitą?',
+	'cnw-auth-facebook-signup' => 'Registruotis su Facebook',
+	'cnw-auth-facebook-login' => 'Prisijungti su Facebook',
+	'cnw-userauth-creative' => 'Prisijungti',
+	'cnw-userauth-signup-button' => 'Registracija',
+	'cnw-desc-headline' => 'Apie ką jūsų wiki?',
+	'cnw-desc-creative' => 'Aprašykite savo temą',
+	'cnw-desc-tip1' => 'Patarimas',
+	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-choose' => 'Pasirinkite kategoriją',
+	'cnw-desc-select-one' => 'Pasirinkite vieną',
+	'cnw-desc-change-lang' => 'keisti',
+	'cnw-desc-wiki-submit-error' => 'Prašome pasirinkti kategoriją',
+	'cnw-welcome-headline' => 'Sveikiname! $1 buvo sukurtas',
+	'cnw-error-wiki-limit-header' => 'Pasiektas Wiki limitas',
+	'cnw-error-blocked-header' => 'Sąskaita užblokuota',
 );
 
 /** Macedonian (македонски)
@@ -1749,7 +1803,7 @@ Uaktualnij poprzez PayPal aby utworzyć wiki wolną od reklam za jedyne $4.95 na
 	'cnw-welcome-headline' => 'Gratulacje! $1 została utworzona',
 	'cnw-welcome-instruction1' => 'Kliknij na poniższy przycisk aby zacząć dodawanie stron do Twojej wiki',
 	'cnw-welcome-instruction2' => 'Znajdziesz ten przycisk w wielu miejscach na Twojej wiki, użyj go, jeżeli chcesz dodać nową stronę.',
-	'cnw-welcome-help' => 'Znajdź odpowiedzi, porady i więcej na <a href="http://spolecznosc.wikia.com">Wiki Społeczności</a>',
+	'cnw-welcome-help' => 'Znajdź odpowiedzi, porady i więcej w <a href="http://spolecznosc.wikia.com">Centrum Społeczności</a>.',
 	'cnw-error-general' => 'Coś poszło nie tak podczas tworzenia wiki. Proszę spróbuj ponownie później.',
 	'cnw-error-general-heading' => 'Błąd kreatora wiki',
 	'cnw-error-database' => 'Błąd bazy danych:$1',
@@ -1801,6 +1855,7 @@ $messages['ps'] = array(
 	'cnw-desc-wiki-submit-error' => 'يوه وېشنيزه وټاکۍ',
 	'cnw-theme-headline' => 'خپل ويکي سکښتل',
 	'cnw-welcome-headline' => 'بختور مو شه، د $1 ويکي جوړ شو',
+	'cnw-error-blocked-header' => 'پر ګڼون بنديز ولګېد',
 );
 
 /** Portuguese (português)
@@ -2282,6 +2337,11 @@ $messages['tl'] = array(
 	'cnw-auth-signup-creative' => 'Kakailanganin mo ang isang akawnt upang makapagpatuloy sa pagbubuo ng wiki mo.<br />Isang minuto lang ang kailangan sa pagpapatala!',
 	'cnw-auth-facebook-signup' => 'Magpatalang may Facebook',
 	'cnw-auth-facebook-login' => 'Lumagdang may Facebook',
+	'cnw-userauth-headline' => 'Mayroon nang akawnt?',
+	'cnw-userauth-creative' => 'Lumagda',
+	'cnw-userauth-marketing-heading' => 'Wala pang akawnt?',
+	'cnw-userauth-marketing-body' => 'Kailangan mo ang isang akawnt upang makalikha ng isang wiki sa Wikia. Gugugol lamang ito ng isang minuto upang [[Special:UserSignup|makapagpatala]]!',
+	'cnw-userauth-signup-button' => 'Magpatala',
 	'cnw-desc-headline' => 'Tungkol ba saan ang wiki mo?',
 	'cnw-desc-creative' => 'Ilarawan ang paksa mo',
 	'cnw-desc-placeholder' => 'Lilitaw ito sa pangunahing pahina ng wiki mo.',
@@ -2314,8 +2374,20 @@ Magpataas ng antas sa pamamagitan ng PayPal upang makakuha ng wiking walang anun
 	'cnw-upgrade-decline' => 'Salamat ngunit ayaw ko, magpatuloy sa aking wiki',
 	'cnw-welcome-headline' => 'Maligayang bati! Nalikha na ang $1',
 	'cnw-welcome-instruction1' => 'Pindutin ang pindutang nasa ibaba upang makapagsimulang magdagdag ng mga pahina sa wiki mo.',
-	'cnw-welcome-instruction2' => 'Makikita mo ang pinduting ito sa kabuuan ng wiki mo, gamitin ito anumang oras na nais mong magdagdag ng isang bagong pahina.',
+	'cnw-welcome-instruction2' => 'Makikita mo ang pindutang ito sa kabuuan ng wiki mo, gamitin ito anumang oras na nais mong magdagdag ng isang bagong pahina.',
 	'cnw-welcome-help' => 'Maghanap ng mga sagot, mga payo, at marami pa sa <a href="http://community.wikia.com">Lunduyan ng Pamayanan</a>.',
+	'cnw-error-general' => 'May masamang bagay na nangyari habang nililikha ang wiki mo. Paki subukan ulit mamaya.',
+	'cnw-error-general-heading' => 'Kamalian sa Paglikha ng Bagong Wiki',
+	'cnw-error-database' => 'Kamalian ng Kalipunan ng Dato: $1',
+	'cnw-badword-header' => 'Aba riyan',
+	'cnw-badword-msg' => 'Hoy, paki tumigil mula sa paggamit ng ganitong masasamang mga salita o ipinagbabawal na mga salita sa loob ng iyong Paglalarawan ng Wiki: $1',
+	'cnw-error-wiki-limit-header' => 'Naabot na ang hangganan ng wiki',
+	'cnw-error-wiki-limit' => 'Kumusta, nakahangga ka lamang sa {{PLURAL:$1|$1 paglikha ng wiki|$1 paglikha ng mga wiki}} bawat araw. Maghintay ng 24 mga oras bago lumikha ng ibang wiki.',
+	'cnw-error-blocked-header' => 'Hinarang ang akawnt',
+	'cnw-error-blocked' => 'Hinadlangan ka ni $1. Ang ibinigay na dahilan ay: $2. (ID ng pagharang para sa pagsangguni: $3)',
+	'cnw-error-torblock' => 'Hindi pinapayagan ang paglikha ng mga wiki sa pamamagitan ng Network ng Tor.',
+	'cnw-error-bot' => 'Napansin namin na maaaring ikaw ay isang bot.  Kung nagawa kami ng kamalian, paki makipag-ugnayan sa amin na naglalarawan na ikaw napasinungalingan mapansin bilang isang bot, at tutulungan ka namin sa paglikha ng wiki mo: [http://www.wikia.com/Special:Contact/general Makipag-ugnayan sa Amin]',
+	'cnw-error-bot-header' => 'Natiktikan na isa ka palang bot',
 );
 
 /** толышә зывон (толышә зывон)
@@ -2472,7 +2544,7 @@ $messages['uk'] = array(
 	'cnw-error-bot-header' => 'Ми вважаємо, що ви бот',
 );
 
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
 $messages['vep'] = array(
