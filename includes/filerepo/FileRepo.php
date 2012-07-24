@@ -39,6 +39,17 @@ class FileRepo {
 	var $descriptionCacheExpiry, $url, $thumbUrl;
 	var $hashLevels, $deletedHashLevels;
 
+	// Wikia Change
+	// when repository is accessed as remote repo
+	// do we support redirects and duplicates check?
+	// EXPLANATION:
+	// the reason those values are checked in RepoGroup and not directly in FileRepo are twofold:
+	// a) they shouldn't affect repository when it's a local repository
+	// b) there are many classes that are derrived from LocalRepo and RepoGroup catches all uses
+	//    in one place
+	var $checkRedirects, $checkDuplicates;
+	// Wikia Change End
+
 	/**
 	 * Factory functions for creating new files
 	 * Override these in the base class
@@ -76,6 +87,16 @@ class FileRepo {
 				$this->$var = $info[$var];
 			}
 		}
+
+		// Wikia Change
+		// only affects repository when working as remote repo
+		$this->checkRedirects = isset( $info['checkRedirects'] )
+			? $info['checkRedirects']
+			: true;
+		$this->checkDuplicates = isset( $info['checkDuplicates'] )
+			? $info['checkDuplicates']
+			: true;
+		// Wikia Change End
 
 		// Optional settings that have a default
 		$this->initialCapital = isset( $info['initialCapital'] )

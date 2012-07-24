@@ -200,6 +200,12 @@ class RepoGroup {
 			return $redir;
 		}
 		foreach ( $this->foreignRepos as $repo ) {
+			// Wikia Change
+			if( empty($repo->checkRedirects) ) {
+				continue;
+			}
+			// Wikia Change End
+
 			$redir = $repo->checkRedirect( $title );
 			if ( $redir ) {
 				return $redir;
@@ -244,6 +250,12 @@ class RepoGroup {
 
 		$result = $this->localRepo->findBySha1( $hash );
 		foreach ( $this->foreignRepos as $repo ) {
+			// Wikia Change
+			if( empty($repo->checkDuplicates) ) {
+				continue;
+			}
+			// Wikia Change End
+
 			$result = array_merge( $result, $repo->findBySha1( $hash ) );
 		}
 		return $result;
