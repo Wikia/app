@@ -154,19 +154,21 @@ var UploadPhotos = {
 			if (UploadPhotos.dfcache[df]) {
 				UploadPhotos.destFileInputSet(UploadPhotos.dfcache[df]);
 			} else {
-				$.get(wgScript, {
-					wpDestFile: UploadPhotos.destfile.val(),
-					action: 'ajax',
-					rs: 'moduleProxy',
-					moduleName: 'UploadPhotos',
-					actionName: 'ExistsWarning',
-					outputType: 'html',
-					title: wgPageName,
-					cb: wgCurRevisionId,
-					uselang: wgUserLanguage
-				}, function(html) {
-					UploadPhotos.dfcache[df] = html;
-					UploadPhotos.destFileInputSet(html);
+				$.nirvana.sendRequest({
+					controller: 'UploadPhotos',
+					method: 'ExistsWarning',
+					format: 'html',
+					type: 'get',
+					data: {
+						title: wgPageName,
+						cb: wgCurRevisionId,
+						uselang: wgUserLanguage,
+						wpDestFile: UploadPhotos.destfile.val()
+					},
+					callback: function(html) {
+						UploadPhotos.dfcache[df] = html;
+						UploadPhotos.destFileInputSet(html);
+					}
 				});
 			}
 		}
