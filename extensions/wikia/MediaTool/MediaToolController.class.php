@@ -109,13 +109,13 @@ class MediaToolController extends WikiaController {
 			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
 			$apiwrapper = $awf->getApiWrapper( $remoteUrl );
 
-			if( !empty($apiwrapper) ) { // try ApiWrapper first - is it from partners?
+			if ( !empty($apiwrapper) ) { // try ApiWrapper first - is it from partners?
 
 				$provider = $apiwrapper->getMimeType();
 				$image = new WikiaLocalFile( $oTitle, RepoGroup::singleton()->getLocalRepo() );
 				$image->forceMime( $provider );
 				$image->setVideoId( $apiwrapper->getVideoId() );
-				$image->setProps(array('mime'=>$provider ));
+				$image->setProps( array( 'mime'=>$provider ) );
 			}
 
 		} else {
@@ -124,14 +124,14 @@ class MediaToolController extends WikiaController {
 		}
 
 
-		$maxWidth = $this->request->getInt('maxwidth', 500);
+		$maxWidth = $this->request->getInt( 'maxwidth', 500 );
 		$embedCode = $image->getEmbedCode( $maxWidth, true, true );
 		$asset = $image->getPlayerAssetUrl();
-		if ( empty($asset) ) {
+		if ( empty( $asset ) ) {
 			$html = $embedCode;
 			$jsonData = '';
 		} else {
-			$html = ''; // You can still add here some code, it will be displayed under the video
+			$html = '';
 			$jsonData = $embedCode;
 		}
 

@@ -136,7 +136,10 @@ class MediaToolItem extends WikiaObject {
 	public function setTitle(Title $title) {
 		$this->title = $title;
 		$this->setHash(md5($title->getFullText()));
-		$this->setDescription("fake description for existing media");
+
+		$filePage =  F::build( 'ImagePage', array($title) );
+		$this->setDescription( $filePage->getContent() );
+
 		if($this->hasFile()) {
 			$this->setIsVideo( WikiaFileHelper::isFileTypeVideo( $this->getFile() ) );
 		}
