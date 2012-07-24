@@ -98,7 +98,7 @@ class LocalisationCache {
 	 * by a fallback sequence.
 	 */
 	static public $mergeableMapKeys = array( 'messages', 'namespaceNames', 'mathNames',
-		'dateFormats', 'defaultUserOptionOverrides', 'magicWords', 'imageFiles',
+		'dateFormats', 'defaultUserOptionOverrides', 'imageFiles',
 		'preloadedMessages',
 	);
 
