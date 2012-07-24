@@ -39,7 +39,7 @@ var TopListsEditor = {
 				handle: '.ItemDrag',
 				placeholder: 'DragPlaceholder',
 				axis: 'y',
-				cursorAt: 'right',
+				cursorAt: {right: 1},
 				cursor: 'move',
 				opacity: 0.5,
 				revert: 200,
