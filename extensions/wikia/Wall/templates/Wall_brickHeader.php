@@ -1,18 +1,18 @@
 <div class="BreadCrumbs">
 	<? foreach($path as $key => $val ): ?>
 		<? if(!empty($val['url'])):?>
-				<a href="<?= $val['url'] ?>" title="<?= $val['title'] ?>"><?= $val['title'] ?></a>
+			<a href="<?= $val['url'] ?>" title="<?= $val['title'] ?>"><?= $val['title'] ?></a>
 		<? else: ?>
 			<?= $val['title'] ?>
 		<? endif; ?>
 		<? if ($key < (count($path) - 1)): ?>
-			&gt;
+			<span class="separator">&gt;</span>
 		<? endif; ?>
 	<? endforeach; ?>
 	<? if (!empty($isRemoved) || !empty($isAdminDeleted)): ?>
-		<?= '('.wfMsg('wall-thread-'.($isAdminDeleted ? 'deleted' : 'removed')).')' ?>
+		<span class="removed"><?= '('.wfMsg('wall-thread-'.($isAdminDeleted ? 'deleted' : 'removed')).')' ?></span>
 	<? endif; ?>
-    <? if (!empty($isNotifyeveryone)): ?>
-            (<?= wfMsg('wall-thread-isnotifyeveryone'); ?>)
-    <? endif; ?>
+        <? if (!empty($isNotifyeveryone)): ?>
+                <span class="removed">(<?= wfMsg('wall-thread-isnotifyeveryone'); ?>)</span>
+        <? endif; ?>
 </div>
