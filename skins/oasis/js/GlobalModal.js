@@ -49,7 +49,7 @@ var GlobalModal = {
 				}
 			})
 		).then(function(sass, nirvanaData) {
-			var html = nirvanaData[0] // while using .when/.then pattern ajax returns jQuery XHR object and html is at index [0]
+			var html = nirvanaData[0]; // while using .when/.then pattern ajax returns jQuery XHR object and html is at index [0]
 			$(html).makeModal({width: 500, height: 400});
 		});
 	}
