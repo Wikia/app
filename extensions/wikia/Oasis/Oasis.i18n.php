@@ -3654,7 +3654,7 @@ $messages['pt-br'] = array(
 	'oasis-activity-header' => 'Wiki Atividade recente',
 	'oasis-related-video-header' => 'Vídeos relacionados',
 	'oasis-related-video-by-5min' => 'por 5min Video',
-	'oasis-total-articles-mainpage' => '! FUZZY FORMATNUM <em> {{$ 1}} </em> <span> {{PLURAL: $ 1 | página <br /> este wiki | <br /> páginas neste wiki}} </span>',
+	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM: $1 }}</em><span> {{PLURAL:$1| página sobre<br>Esta wiki|pages em<br>Este wiki}}</span>',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|foto nessa wiki|fotos nessa wiki}}</span>',
 	'oasis-latest-photos-more' => 'Ver mais >',
 	'oasis-latest-photos-inner-message' => 'Ver todas as fotos',
