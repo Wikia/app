@@ -61,6 +61,10 @@ class UserProfilePageController extends WikiaController {
 			$this->response->setBody($pageBody);
 		}
 
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->overrideTemplate( 'WikiaMobileIndex' );
+		}
+
 		$this->app->wf->ProfileOut(__METHOD__);
 	}
 
@@ -127,6 +131,10 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$this->response->addAsset('resources/wikia/libraries/aim/jquery.aim.js');
+
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->overrideTemplate( 'WikiaMobileRenderUserIdentityBox' );
+		}
 
 		$this->app->wf->ProfileOut(__METHOD__);
 	}
@@ -1256,6 +1264,14 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal('error', wfMsg('user-identity-remove-fail'));
 
 		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	//WikiaMobile hook to add assets so they are minified and concatenated
+	public function onWikiaMobileAssetsPackages( &$jsHeadPackages, &$jsBodyPackages, &$scssPackages){
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$scssPackages[] = 'userprofilepage_scss_wikiamobile';
+		}
 		return true;
 	}
 }

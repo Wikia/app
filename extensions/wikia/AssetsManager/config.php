@@ -815,6 +815,15 @@ $config['userlogin_facebook_js_wikiamobile'] = array(
 		)
 );
 
+/** UserProfilePage **/
+$config['userprofilepage_scss_wikiamobile'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/UserProfilePageV3/css/UserProfilePage.wikiamobile.scss'
+	)
+);
+
 /** WikiaHomepage **/
 
 $config['wikiahomepage_scss_wikiamobile'] = array(
