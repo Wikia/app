@@ -38,9 +38,8 @@
 .WikiaNotifications {
 	bottom: 30px;
 	margin: 0 10px;
-	margin-right: -$width-outside / 2 + 4;
 	position: absolute;
-	right: 50%;
+	right: 0;
 	li {
 		display: table-cell;
 		padding: 4px 4px 0;
