@@ -29,7 +29,7 @@ if(!empty($wgReadOnly)){
 							<li class="profile"><a href="<?= $chatter['profileUrl'] ?>">User Profile</a></li>
 							<li class="contribs"><a href="<?= $chatter['contribsUrl'] ?>">Contributions</a></li>
 						</ul>
-					</div>				
+					</div>
 				</li>
 			<? } ?>
 		</ul>
@@ -56,7 +56,7 @@ if(!empty($wgReadOnly)){
 					persistModal: true,
 					callback: function() {
 						$('.modalWrapper').children().not('.close').not('.modalContent').not('h1').remove();
-						$('.modalContent').load(wgServer + wgScript + '?action=ajax&rs=moduleProxy&moduleName=ChatRail&actionName=AnonLoginSuccess&outputType=html');
+						$('.modalContent').load(wgServer + wgScriptPath + '/wikia.php?controller=ChatRail&method=AnonLoginSuccess&format=html&uselang=' + wgUserLanguage);
 					}
 				});
 			}
