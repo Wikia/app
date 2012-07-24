@@ -1,4 +1,4 @@
-<div id="WikiaRail" class="WikiaRail">
+<div id="WikiaRail" class="WikiaRail<?= !empty($isGridLayoutEnabled) ? ' grid-2' : '' ?>">
 
 	<?php
 		// sort in reverse order (highest priority displays first)
