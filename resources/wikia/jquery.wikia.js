@@ -538,7 +538,7 @@ $.openPopup = function(url, name, moduleName, width, height) {
 		showComboAjaxForPlaceHolder(false, "", function() {
 			AjaxLogin.doSuccess = function() {
 				$('.modalWrapper').children().not('.close').not('.modalContent').not('h1').remove();
-				
+
 				$.nirvana.sendRequest({
 					controller: moduleName,
 					method: 'AnonLoginSuccess',
@@ -549,7 +549,7 @@ $.openPopup = function(url, name, moduleName, width, height) {
 					}
 				});
 			}
-		}, false); 
+		}, false);
 	}
 }
 

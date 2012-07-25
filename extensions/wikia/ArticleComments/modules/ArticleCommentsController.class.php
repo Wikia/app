@@ -4,6 +4,7 @@ class ArticleCommentsController extends WikiaController {
 
 	public function executeIndex() {
 		$this->wf->ProfileIn(__METHOD__);
+
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
 			$isMobile = $this->app->checkSkin( 'wikiamobile' );
 
@@ -44,6 +45,7 @@ class ArticleCommentsController extends WikiaController {
 			}
 
 			$this->getCommentsData( $this->wg->Title, $this->wg->request->getInt( 'page', 1 ) );
+			$this->showComments = $this->countCommentsNested === 0 || empty( $this->wg->ArticleCommentsLoadOnDemand );
 
 			if ( $isMobile ) {
 				$this->forward( __CLASS__, 'WikiaMobileIndex', false );
@@ -53,12 +55,25 @@ class ArticleCommentsController extends WikiaController {
 		$this->wf->ProfileOut(__METHOD__);
 	}
 
+	public function executeContent() {
+		$articleId = $this->request->getVal( 'articleId', 0 );
+
+		if ( !empty( $articleId ) ) {
+			$title = Title::newFromID( $articleId );
+
+		} else {
+			$title = $this->wg->title;
+		}
+
+		$this->getCommentsData( $title, $this->request->getVal( 'page', 1 ) );
+	}
+
 	/**
 	 * Overrides the main template for the WikiaMobile skin
 	 *
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com?
 	 **/
-	public function executeWikiaMobileIndex(){
+	public function executeWikiaMobileIndex() {
 		/** render WikiaMobile template**/
 
 		//unfortunately the only way to get the total number of comments (required in the skin) is to load them
@@ -74,7 +89,7 @@ class ArticleCommentsController extends WikiaController {
 	 *
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com?
 	 **/
-	public function executeWikiaMobileComment(){/** render WikiaMobile template**/}
+	public function executeWikiaMobileComment() {/** render WikiaMobile template**/}
 
 	/**
 	 * Renders the contents of a page of comments including post button/form and prev/next page
@@ -82,7 +97,7 @@ class ArticleCommentsController extends WikiaController {
 	 *
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com?
 	 **/
-	public function executeWikiaMobileCommentsPage(){
+	public function executeWikiaMobileCommentsPage() {
 		$this->wf->profileIn( __METHOD__ );
 		$articleID = $this->request->getInt( 'articleID' );
 		$title = null;
@@ -173,23 +188,28 @@ class ArticleCommentsController extends WikiaController {
 		return true;
 	}
 
-	public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin) {
+	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
 		global $wgArticleCommentsContent;
-		// Display comments on content and blog pages
-		if ( class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck() ) {
-			$wgArticleCommentsContent = wfRenderModule('ArticleComments');
 
+		// Display comments on content and blog pages
+		if ( class_exists( 'ArticleCommentInit' ) && ArticleCommentInit::ArticleCommentCheck() ) {
 			$app = F::app();
+			$wgArticleCommentsContent = $app->sendRequest( 'ArticleComments', 'index' );
 
 			// Load MiniEditor assets (except for mobile)
-			if ($app->wg->EnableMiniEditorExtForArticleComments && !$app->checkSkin( 'wikiamobile' )) {
-				$app->sendRequest('MiniEditor', 'loadAssets', array(
-					'loadOnDemand' => true,
-					'loadOnDemandAssets' => array(
-						'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
-					)
-				));
+			// TODO: see if we can figure out a way to delay loading MiniEditor assets until
+			// the article comments are lazy loaded.
+			if ( $app->wg->EnableMiniEditorExtForArticleComments && !$app->checkSkin( 'wikiamobile' ) ) {
+				$app->sendRequest( 'MiniEditor', 'loadAssets', array( 'loadOnDemand' => true ));
 			}
+		}
+		return true;
+	}
+
+	public static function onMakeGlobalVariablesScript( &$vars ) {
+		$app = F::app();
+		if ( !empty( $app->wg->ArticleCommentsLoadOnDemand ) ) {
+			$vars[ 'wgArticleCommentsLoadOnDemand' ] = true;
 		}
 		return true;
 	}
