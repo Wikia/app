@@ -97,11 +97,30 @@ class MediaToolController extends WikiaController {
 	public function checkVideoName() {
 		$this->response->setFormat('json');
 		$data = array();
+		$data['status'] = self::RESPONSE_STATUS_ERROR;
 
 		$name = $this->request->getVal('name');
 
-		$data['status'] = self::RESPONSE_STATUS_ERROR;
-		$data['msg'] = wfMsg('mediatool-error-invalid-name');
+		if(!empty($name)) {
+			$title = F::build('Title', array($name, NS_FILE), 'newFromText');
+
+			if($title instanceof Title) {
+				$item = F::build('MediaToolItem', array( 'title' => $title ));
+				if(!$item->hasFile()) {
+					$data['status'] = self::RESPONSE_STATUS_OK;
+				}
+				else {
+					$data['msg'] = wfMsg('mediatool-error-file-already-exists');
+				}
+			}
+			else {
+				$data['msg'] = wfMsg('mediatool-error-invalid-name');
+			}
+		}
+		else {
+			$data['msg'] = wfMsg('mediatool-error-empty-name');
+		}
+
 
 		//$data['name'] = $name;
 
