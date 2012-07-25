@@ -482,15 +482,14 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		position: relative;
 		top: -5px;
 		img {
-			@include opacity(50);
-			background-image: url("/extensions/wikia/Forum/image.php?file=imageGenerator/kudo_20x20.png&r=" + red($color-buttons) + "&g=" + green($color-buttons) + "&b=" + blue($color-buttons) );
+			@include opacity(20);
+			background-image: url("/extensions/wikia/Forum/imageGenerator/kudo_20x20.png");	/* $wgCdnStylePath */
 			cursor: pointer;
 		}
 		&.inprogress, 
 		&.voted {
 			img {
-				@include opacity(100);
-				background-image: url("/extensions/wikia/Forum/image.php?file=imageGenerator/kudo_20x20.png&r=" + red($color-buttons) + "&g=" + green($color-buttons) + "&b=" + blue($color-buttons) );
+				@include opacity(50);
 			}
 		}
 	}
