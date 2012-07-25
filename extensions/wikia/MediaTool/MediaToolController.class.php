@@ -110,7 +110,7 @@ class MediaToolController extends WikiaController {
 					$data['status'] = self::RESPONSE_STATUS_OK;
 				}
 				else {
-					$data['msg'] = wfMsg('mediatool-error-file-already-exists');
+					$data['msg'] = wfMsg('mediatool-error-file-name-already-exists');
 				}
 			}
 			else {
