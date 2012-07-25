@@ -2,7 +2,7 @@
 class wikiMapSpecialController extends WikiaSpecialPageController {
 
     public function __construct() {
-        parent::__construct( 'WikiMap', '', false );
+        parent::__construct( 'WikiMap', '', false , false, "default", true/*$includable*/);
     }
 
     public function init() {
@@ -11,8 +11,8 @@ class wikiMapSpecialController extends WikiaSpecialPageController {
     }
 
     public function index() {
-        $this->response->addAsset('extensions/wikia/WikiMap/js/d3.v2.min.js');
-        $this->response->addAsset('extensions/wikia/WikiMap/js/jquery.xcolor.min.js');
+        $this->response->addAsset('extensions/wikia/WikiMap/js/d3.v2.js');
+        $this->response->addAsset('extensions/wikia/WikiMap/js/jquery.xcolor.js');
         $this->response->addAsset('extensions/wikia/WikiMap/js/wikiMapIndexContent.js');
 
        // $this->response->addAsset('wiki_map_js');
@@ -48,6 +48,7 @@ class wikiMapSpecialController extends WikiaSpecialPageController {
         $this->setVal( 'categoriesHeader', $this->wf->msg('wikiMap-categoriesHeader'));
         $this->setVal( 'animation', $this->wf->msg('wikiMap-animation'));
 
+        $this->setVal( 'namespace', $this->businessLogic->getActualNamespace());
         $this->setVal( 'res', $resultNodes);
         $this->setVal( 'colourArray', $this->businessLogic->getColours());
         $this->setVal( 'categories', $this->businessLogic->getListOfCategories());

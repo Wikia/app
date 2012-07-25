@@ -22,8 +22,11 @@
     var colour = <? echo json_encode($colourArray); ?>;
     var data = <? echo json_encode($res); ?>;
     var categories = <? echo json_encode($categories); ?>;
-    $(function () {
-        WikiMapIndexContent.init(colour, data, categories);
+    var ns = <? echo json_encode($namespace); ?>;
+    wgAfterContentAndJS.push(function(){
+        $(function () {
+            WikiMapIndexContent.init(colour, data, categories, ns);
+        });
     });
 
 

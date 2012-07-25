@@ -56,6 +56,12 @@ class wikiMap extends WikiaObject {
         return $out;
     }
 
+    public function getActualNamespace(){
+
+        return $this->app->wg->Title->getNamespace();
+
+    }
+
     public function getArticles($Category){
 
         $this->app->wf->profileIn( __METHOD__ );
