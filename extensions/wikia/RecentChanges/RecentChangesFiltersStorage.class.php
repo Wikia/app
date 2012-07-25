@@ -25,7 +25,7 @@ class RecentChangesFiltersStorage {
 		}
 		
 		if(empty($values)) {
-			return array('all');
+			return array();
 		}
 		
 		if(!$onlyFromThisWiki) {
@@ -34,13 +34,13 @@ class RecentChangesFiltersStorage {
 		
 		$out = array();
 		foreach($values as $val) {
-			if(!empty($this->namespaces[$val])){
+			if( isset($this->namespaces[$val])){
 				$out[] = $val;	
 			}
 		}
 		
 		if(empty($out)) {
-			return array('all');
+			return array();
 		}
 		
 		return $out;
@@ -48,9 +48,6 @@ class RecentChangesFiltersStorage {
 
 	protected function buildUserOption($old, $new) {
 		$new = array_flip($new);
-		if(isset($new['all'])) {
-			return array();
-		}
 		
 		if(empty($old)) {
 			return $new;
