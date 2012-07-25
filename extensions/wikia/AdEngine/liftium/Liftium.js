@@ -359,12 +359,14 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement){
 
 	// this is a(n ugly?) shortcut, the right name would be slotname's parent div
 	var placement = iframeElement.id.replace(/_iframe$/, "");
-	WikiaTracker.track(Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", sizeOrSlot + "_" + placement]), 'liftium.slot');
-	
+	WikiaTracker.trackAdEvent('liftium.slot', {'ga_category':sizeOrSlot, 'ga_action':placement, 'ga_label':'liftium'}, 'ga');
+
+	/* ???	
 	var track_string = Liftium.buildTrackUrl([LiftiumOptions.pubid, "slot", sizeOrSlot + "_" + placement]);
 	if (track_string.indexOf('unknown') != -1) {
 		_wtq.push([null, 'liftium.varia', ['error', 'fb_15045', track_string]]);
 	}
+	*/
 
 	var t = Liftium.getNextTag(slotname);
 	if (!t) {
@@ -1589,7 +1591,8 @@ Liftium.markLastAdAsRejected = function (slotname){
 
 	var time = Liftium.debugTime() - Liftium.slotTimer2[slotname + "-" + tag_id];
 	Liftium.d("slotTimer2 end for #" + tag_id + " in " + slotname + " after " + time + " ms", 3);
-	WikiaTracker.track([LiftiumOptions.pubid, "hop", tag_id, Liftium.formatTrackTime(time, 5)], 'liftium.hop');
+	var net_id = Liftium.chain[slotname][i].network_id;
+	WikiaTracker.trackAdEvent('liftium.hop', {'ga_category':'net ' + net_id, 'ga_action':'tag ' + tag_id, 'ga_label':Liftium.formatTrackTime(time, 5)}, 'ga');
 };
 
 
