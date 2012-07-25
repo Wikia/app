@@ -195,6 +195,7 @@ $config['oasis_nojquery_shared_js_user'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_nojquery_shared_js',
+		'#group_oasis_noads_extensions_js', // the only time this group is used currently is inside of this _nojquery_ package, for Ad-Loading experiment
 		'#group_oasis_user_js',
 	)
 );
@@ -203,6 +204,7 @@ $config['oasis_nojquery_shared_js_anon'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_nojquery_shared_js',
+		'#group_oasis_noads_extensions_js', // the only time this group is used currently is inside of this _nojquery_ package, for Ad-Loading experiment
 		'#group_oasis_anon_js',
 	)
 );
@@ -240,7 +242,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/SharingToolbar.js',
 		'//skins/oasis/js/ContributeMenu.js',
 		'//skins/oasis/js/WikiaForm.js',
-		'#group_oasis_noads_extensions_js', // the only time this group is used currently is inside of this _nojquery_ package, for Ad-Loading experiment
 	)
 );
 
