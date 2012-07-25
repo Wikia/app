@@ -10,6 +10,10 @@ class MediaToolItem extends WikiaObject {
 	 */
 	protected $isVideo = true;
 	/**
+	 * @var bool
+	 */
+	protected $isPremium = null;
+	/**
 	 * @var Title
 	 */
 	protected $title = null;
@@ -162,6 +166,10 @@ class MediaToolItem extends WikiaObject {
 		}
 	}
 
+	public function hasTitle() {
+		return ($this->title instanceof Title);
+	}
+
 	public function getFile() {
 		if( empty( $this->file ) ) {
 			$this->file = wfFindFile( $this->getTitle() );
@@ -234,6 +242,26 @@ class MediaToolItem extends WikiaObject {
 		$this->thumbHtml = $thumbHtml;
 	}
 
+	/**
+	 * @param bool $isPremium
+	 */
+	public function setIsPremium($isPremium) {
+		$this->isPremium = $isPremium;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isPremium() {
+		if(($this->isPremium === null) && $this->hasTitle()) {
+			$this->isPremium = ($this->getFile()->repo instanceof WikiaForeignDBViaLBRepo);
+		}
+		else {
+			$this->isPremium = false;
+		}
+		return $this->isPremium;
+	}
+
 	public function toArray() {
 		$array = array(
 			'isVideo' => $this->isVideo(),
@@ -244,6 +272,7 @@ class MediaToolItem extends WikiaObject {
 			'remoteUrl' => $this->getRemoteUrl(),
 			'duration' => $this->getDuration(),
 			'isFollowed' => $this->isFollowed(),
+			'isPremium' => $this->isPremium(),
 			'name' => is_null($this->titleText) ? $this->getTitle()->getText() : $this->titleText,
 			'description' => $this->getDescription(),
 			'origin' => $this->getOrigin(),

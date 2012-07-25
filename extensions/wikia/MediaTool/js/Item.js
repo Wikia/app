@@ -9,6 +9,7 @@ MediaTool.Item = $.createClass(Observable,{
 	origin: 'local',
 	changed: false,
 	isVideo: true,
+	isPremium: false,
 	duration: '00:00',
 	renderer: null,
 	ratio: 1,
