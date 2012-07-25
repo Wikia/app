@@ -8,6 +8,16 @@
 	margin: 10px;
 	padding-top: 10px;
 
+	&.on-demand {
+		#article-comments-counter-recent {
+			display: none;
+		}
+
+		.controls li a {
+			border-left: 0;
+		}
+	}
+
 	h1 {
 		font-size: 22px;
 		margin-left: 5px;
@@ -59,10 +69,27 @@
 		display: none;
 	}
 
+	.article-comments-wrapper {
+		&.loading {
+			background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+
+			.show-comments {
+				visibility: hidden;
+			}
+		}
+	}
+
 	#article-comments {
 		border-top: 1px solid $color-page-border;
 		margin-top: 10px;
 		padding-top: 15px;
+
+		.show-comments {
+			display: block;
+			font-size: 14px;
+			padding: 10px;
+			text-align: center;
+		}
 	}
 
 	form {

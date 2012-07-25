@@ -63,7 +63,7 @@ class ArticleCommentsAjax {
 				if ( $response !== false ) {
 					$status = $response[0];
 					$article = $response[1];
-					
+
 					return ArticleComment::doAfterPost($status, $article, $parentId );
 				}
 			}
@@ -190,7 +190,7 @@ class ArticleCommentsAjax {
 		if ( !$commentingAllowed ) {
 			return $result;
 		}
- 
+
 		$response = ArticleComment::doPost( self::getConvertedContent($wgRequest->getVal('wpArticleComment')), $wgUser, $title, $parentId );
 
 		if ( $response !== false ) {
@@ -213,7 +213,7 @@ class ArticleCommentsAjax {
 			$commentsHTML = $response[2]['text'];
 
 			$result = array('text' => $commentsHTML, 'counter' => $countAll);
-			
+
 			if ( $parentId ) {
 				$result['parentId'] = $parentId;
 			}

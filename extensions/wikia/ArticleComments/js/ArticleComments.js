@@ -1,9 +1,19 @@
+(function( window, $ ) {
+
+// This file is included on every page.
+// If we aren't on an article page, halt execution here.
+// TODO: revisit this at some point when we have dependency loading.
+if ( !window.wgIsArticle ) {
+	return;
+}
+
 var ArticleComments = {
 	processing: false,
 	clickedElementSelector: "",
 	mostRecentCount: 0,
 	messagesLoaded: false,
-	miniEditorEnabled: typeof wgEnableMiniEditorExt != 'undefined' && skin == 'oasis',
+	miniEditorEnabled: typeof window.wgEnableMiniEditorExt != 'undefined' && skin == 'oasis',
+	loadOnDemand: typeof window.wgArticleCommentsLoadOnDemand != 'undefined',
 	initCompleted: false,
 
 	init: function() {
@@ -586,5 +596,57 @@ var ArticleComments = {
 	}
 };
 
-//on content ready
-wgAfterContentAndJS.push(ArticleComments.init);
+// Initialize on demand
+if (ArticleComments.loadOnDemand) {
+	$(function() {
+		var $window = $(window),
+			$comments = $('#article-comments'),
+			$commentsWrapper = $comments.closest('.article-comments-wrapper'),
+			$showComments = $('#show-article-comments'),
+			belowTheFold = function() {
+				return $comments.offset().top >= ($window.scrollTop() + $window.height());
+			};
+
+		$showComments.on('click.ArticleCommentsLoadOnDemand', function(event) {
+			$showComments.off('click.ArticleCommentsLoadOnDemand');
+			$commentsWrapper.addClass('loading');
+
+			$.nirvana.sendRequest({
+				controller: 'ArticleCommentsController',
+				method: 'Content',
+				format: 'html',
+				type: 'GET',
+				data: {
+					articleId: window.wgArticleId,
+					page: $comments.data('page')
+				},
+				callback: function(html) {
+					$('.WikiaArticleComments').removeClass('on-demand');
+					$commentsWrapper.removeClass('loading');
+					$comments.hide().html(html).fadeIn();
+					ArticleComments.init();
+				}
+			});
+
+			event.preventDefault();
+		});
+
+		if (belowTheFold()) {
+			$window.on('scrollstop.ArticleCommentsLoadOnDemand', function(event) {
+				if (!belowTheFold()) {
+					$showComments.trigger('click');
+					$window.off('scrollstop.ArticleCommentsLoadOnDemand');
+				}
+			});
+		}
+	});
+
+// Initialize on content ready
+} else {
+	wgAfterContentAndJS.push(ArticleComments.init);
+}
+
+// Exports
+window.ArticleComments = ArticleComments;
+
+})( this, jQuery );
