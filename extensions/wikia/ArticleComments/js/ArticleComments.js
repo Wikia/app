@@ -1,9 +1,12 @@
+(function( window, $ ) {
+
 var ArticleComments = {
 	processing: false,
 	clickedElementSelector: "",
 	mostRecentCount: 0,
 	messagesLoaded: false,
-	miniEditorEnabled: typeof wgEnableMiniEditorExt != 'undefined' && skin == 'oasis',
+	miniEditorEnabled: typeof window.wgEnableMiniEditorExt != 'undefined' && skin == 'oasis',
+	loadOnDemand: typeof window.wgArticleCommentsLoadOnDemand != 'undefined',
 	initCompleted: false,
 
 	init: function() {
@@ -586,5 +589,48 @@ var ArticleComments = {
 	}
 };
 
-//on content ready
-wgAfterContentAndJS.push(ArticleComments.init);
+// Initialize on demand
+if (ArticleComments.loadOnDemand) {
+	$(function() {
+		var $window = $(window),
+			$element = $('#show-article-comments'),
+			belowTheFold = function() {
+				return $element.offset().top >= ($window.scrollTop() + $window.height());
+			};
+
+		$element.on('click.ArticleCommentsLoadOnDemand', function(event) {
+			$element.off('click.ArticleCommentsLoadOnDemand');
+/*
+			$.nirvana.sendRequest({
+				controller: 'ArticleCommentsController',
+				method: 'CommentList',
+				format: 'html',
+				type: 'GET',
+				callback: function(html) {
+					console.log(html);
+				}
+			});
+*/
+			event.preventDefault();
+		});
+
+		if (belowTheFold()) {
+			$window.on('scrollstop.ArticleCommentsLoadOnDemand', function(event) {
+				if (!belowTheFold()) {
+				console.log('scrollstop');
+					$element.trigger('click');
+					$window.off('scrollstop.ArticleCommentsLoadOnDemand');
+				}
+			});
+		}
+	});
+
+// Initialize on content ready
+} else {
+	wgAfterContentAndJS.push(ArticleComments.init);
+}
+
+// Exports
+window.ArticleComments = ArticleComments;
+
+})( this, jQuery );

@@ -389,7 +389,7 @@ class ArticleCommentList {
 
 		$commentListHTML = '';
 		if(!empty($wgTitle)) {
-			$commentListHTML = F::app()->getView('ArticleComments', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false  ))->render();
+			$commentListHTML = F::app()->getView('ArticleCommentsController', 'CommentList', array('commentListRaw' => $comments, 'page' => $page, 'useMaster' => false  ))->render();
 		}
 
 		$commentingAllowed = true;

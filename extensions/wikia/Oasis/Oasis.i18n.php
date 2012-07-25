@@ -103,7 +103,9 @@ $messages['en'] = array(
 	'oasis-toolbar-devinfo' => 'Developer Info', // BugId:5497
 
 	'oasis-comments-header' => '$1 {{PLURAL:$1|comment|comments}}',
+	'oasis-comments-show' => 'Show comments',
 	'oasis-comments-showing-most-recent' => 'Showing $1 most recent',
+	'oasis-comments-user-prompt' => 'Logged in as $1',
 	'oasis-comments-anonymous-prompt' => 'Anonymous User<br /> <a href="#" class="ajaxLogin">Log in?</a>',
 	'oasis-comments-show-all' => 'Show all',
 	'oasis-comments-added-by' => '$1 by $2',
