@@ -67,6 +67,7 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 			var item = new MediaTool.Item( itemData );
 			item.duration = itemData.duration;
 			item.remoteUrl = itemData.remoteUrl;
+			item.isPremium = itemData.isPremium;
 
 			item.renderThumbHtml();
 

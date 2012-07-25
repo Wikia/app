@@ -94,9 +94,21 @@ class MediaToolController extends WikiaController {
 		$this->response->setData( $data );
 	}
 
+	public function checkVideoName() {
+		$this->response->setFormat('json');
+		$data = array();
+
+		$name = $this->request->getVal('name');
+
+		$data['status'] = self::RESPONSE_STATUS_ERROR;
+		$data['msg'] = wfMsg('mediatool-error-invalid-name');
+
+		//$data['name'] = $name;
+
+		$this->response->setData( $data );
+	}
+
 	public function getEmbedCode() {
-
-
 		$this->response->setFormat('json');
 
 		$imgTitle = $this->request->getVal('imgTitle');
