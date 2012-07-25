@@ -70,7 +70,12 @@ class MediaToolController extends WikiaController {
 			}
 			else {
 				$data['status'] = self::RESPONSE_STATUS_ERROR;
-				$data['msg'] = wfMsg('mediatool-error-unknown-video-provider');
+				if( empty($this->wg->allowNonPremiumVideos) ) {
+					$data['msg'] = wfMsg('mediatool-error-provider-not-allowed');
+				}
+				else {
+					$data['msg'] = wfMsg('mediatool-error-unknown-video-provider');
+				}
 			}
 		}
 		else {
