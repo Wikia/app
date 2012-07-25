@@ -27,9 +27,6 @@ class RecentChangesController extends WikiaController {
 		$all = $this->getVal( 'all',  null );
 		$selected = $this->getVal( 'selected', array() );
 		$namespaces = $this->wf->GetNamespaces();
-		if( !is_null( $all ) ) {
-			$namespaces = array( 'all' => $this->wf->Msg( 'namespacesall' ) ) + $namespaces;
-		}
 
 		$options = array();
 		foreach( $namespaces as $index => $name ) {
