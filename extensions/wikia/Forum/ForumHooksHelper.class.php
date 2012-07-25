@@ -202,7 +202,7 @@ class ForumHooksHelper {
 				FROM comments_index
 				LEFT JOIN page ON comment_id = page_id
 				WHERE parent_page_id = $boardId and parent_comment_id = 0 and deleted = 0 and removed = 0 and archived = 0
-				ORDER BY comment_id
+				ORDER BY comment_id desc
 SQL;
 		}
 
@@ -272,7 +272,7 @@ SQL;
 	public function onWallThreadLoadReplyIdsFromDB( $title, $master, &$list ) {
 		$app = F::App();
 
-		if ( $title->getNamespace() != NS_WIKIA_FORUM_BOARD_THREAD || empty($app->wg->EnableCommentsIndex) ) {
+		if ( empty( $title ) || $title->getNamespace() != NS_WIKIA_FORUM_BOARD_THREAD || empty($app->wg->EnableCommentsIndex) ) {
 			return true;
 		}
 
