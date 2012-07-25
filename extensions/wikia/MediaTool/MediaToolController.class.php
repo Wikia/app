@@ -121,9 +121,6 @@ class MediaToolController extends WikiaController {
 			$data['msg'] = wfMsg('mediatool-error-empty-name');
 		}
 
-
-		//$data['name'] = $name;
-
 		$this->response->setData( $data );
 	}
 
