@@ -92,7 +92,6 @@ if (!empty($wgEnableWallExt) || !empty($wgEnableArticleCommentsExt) || !empty($w
 
 	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentsController::onBeforePageDisplay';
 	$wgHooks['SkinAfterContent'][] = 'ArticleCommentsController::onSkinAfterContent';
-	$wgHooks['MakeGlobalVariablesScript'][] = 'ArticleCommentsController::onMakeGlobalVariablesScript';
 }
 
 //JSMEssages setup

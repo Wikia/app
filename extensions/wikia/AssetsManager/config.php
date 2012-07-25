@@ -191,6 +191,10 @@ $config['oasis_shared_js'] = array(
 	)
 );
 
+
+
+
+
 $config['oasis_nojquery_shared_js_user'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -498,8 +502,7 @@ $config['articlecomments_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array('oasis', 'monobook'),
 	'assets' => array(
-		'//extensions/wikia/ArticleComments/js/ArticleComments.js',
-		'//extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
+		'//extensions/wikia/ArticleComments/js/ArticleComments.js'
 	)
 );
 
