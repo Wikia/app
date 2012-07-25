@@ -336,6 +336,7 @@ var MediaTool = MediaTool || (function () {
 		var videoUrl = $('#mediatool-online-url').val();
 
 		callBackend('getVideoMetadata', { videoUrl: videoUrl }, function(response) {
+
 			if(response.status == 'ok') {
 				cart.createItem(response, templateItem);
 				$('#mediatool-online-url').val('');
@@ -400,13 +401,12 @@ var MediaTool = MediaTool || (function () {
 			var name = $(e.target).val();
 
 			callBackend('checkVideoName', { name: name }, function(r) {
-				console.log(r);
 				if(r.status == 'ok') {
 					var item = cart.getItem(cartItemId);
 					if (item) item.name = name;
 				}
 				else {
-					mt.fire('error', r.msg);
+					mt.fire('error', r);
 				}
 			});
 
