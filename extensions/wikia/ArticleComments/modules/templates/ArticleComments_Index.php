@@ -1,3 +1,6 @@
+<? if ( $wg->EnableMiniEditorExtForArticleComments ): ?>
+	<?= $app->renderView( 'MiniEditorController', 'Setup' ) ?>
+<? endif ?>
 <section id="WikiaArticleComments" class="WikiaArticleComments noprint<?= !$showComments ? ' on-demand' : '' ?>">
 	<ul class="controls">
 		<li id="article-comments-counter-recent"><?= wfMsg( 'oasis-comments-showing-most-recent', count( $commentListRaw ) ) ?></li>
