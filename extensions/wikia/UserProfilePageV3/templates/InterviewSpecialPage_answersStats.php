@@ -1,5 +1,4 @@
 <h2><?= wfMsg( 'userprofilepage-answers-stats-title' ); ?></h2>
-<p><?= wfMsg( 'userprofilepage-answers-stats-info' ); ?></p>
 <br />
 <?php foreach( $questions as $question ): ?>
 	<div>
