@@ -1,13 +1,13 @@
-(function(){if (!Date.now) Date.now = function() {
-  return +new Date;
-};
+(function(){if (!Date.now) {Date.now = function() {
+  return +new Date();
+};}
 try {
   document.createElement("div").style.setProperty("opacity", 0, "");
 } catch (error) {
   var d3_style_prototype = CSSStyleDeclaration.prototype,
       d3_style_setProperty = d3_style_prototype.setProperty;
   d3_style_prototype.setProperty = function(name, value, priority) {
-    d3_style_setProperty.call(this, name, value + "", priority);
+    d3_style_setProperty.call(this, name, value, priority);
   };
 }
 d3 = {version: "2.9.6"}; // semver
@@ -535,11 +535,11 @@ d3.xml = function(url, mime, callback) {
   d3.xhr(url, mime, ready);
 };
 var d3_nsPrefix = {
-  svg: "http://www.w3.org/2000/svg",
-  xhtml: "http://www.w3.org/1999/xhtml",
-  xlink: "http://www.w3.org/1999/xlink",
-  xml: "http://www.w3.org/XML/1998/namespace",
-  xmlns: "http://www.w3.org/2000/xmlns/"
+  svg: "http:\/\/www.w3.org/2000/svg",
+  xhtml: "http:\/\/www.w3.org/1999/xhtml",
+  xlink: "http:\/\/www.w3.org/1999/xlink",
+  xml: "http:\/\/www.w3.org/XML/1998/namespace",
+  xmlns: "http:\/\/www.w3.org/2000/xmlns/"
 };
 
 d3.ns = {
@@ -3852,7 +3852,7 @@ d3.svg.chord = function() {
   }
 
   function arc(r, p, a) {
-    return "A" + r + "," + r + " 0 " + +(a > Math.PI) + ",1 " + p;
+    return "A" + r + "," + r + " 0 " + (+(a > Math.PI)) + ",1 " + p;
   }
 
   function curve(r0, p0, r1, p1) {
@@ -8954,7 +8954,7 @@ function d3_time_parseFullYear(date, string, i) {
 function d3_time_parseYear(date, string, i) {
   d3_time_numberRe.lastIndex = 0;
   var n = d3_time_numberRe.exec(string.substring(i, i + 2));
-  return n ? (date.y = d3_time_century() + +n[0], i += n[0].length) : -1;
+  return n ? (date.y = d3_time_century() + (+n[0]), i += n[0].length) : -1;
 }
 
 function d3_time_century() {
@@ -9402,5 +9402,5 @@ d3_time_scaleUTCMethods.year = function(extent, m) {
 
 d3.time.scale.utc = function() {
   return d3_time_scale(d3.scale.linear(), d3_time_scaleUTCMethods, d3_time_scaleUTCFormat);
-};
-})();
+}
+}());
