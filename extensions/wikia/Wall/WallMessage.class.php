@@ -975,13 +975,13 @@ class WallMessage {
 		// check memcache
 		$cache = $this->getCache();
 		$val = $cache->get( $id );
-		if($val !== null) {
-			$this->propsCache[$id] = $val;
+		if($val !== false) {
+			$this->propsCache[$id] = ($val == 1);
 			return $val;
-		}
+		} 
 
 		$this->propsCache[$id] = wfGetWikiaPageProp($prop, $this->getId());
-		$cache->set( $id, $this->propsCache[$id] );
+		$cache->set( $id, $this->propsCache[$id] ? 1:0 );
 		return $this->propsCache[$id];
 	}
 
@@ -990,7 +990,7 @@ class WallMessage {
 	}
 
 	protected function getPropCacheKey($prop, $id) {
-		return __CLASS__ . '_' . $this->cityId . '_' . $prop . '_' .  $this->getId();
+		return  wfMemcKey(__CLASS__, $this->cityId, $prop, $this->getId(), 'v1');
 	}
 
 	private function getCache() {
