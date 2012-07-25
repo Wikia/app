@@ -1812,9 +1812,9 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		foreach($this->mImages as $val) {
 			$img = wfFindFile( $val[0], false );
-			$bigVersion = $img->transform( array("width" => 320, "height" => 480) );
 
 			if( !empty( $img ) ) {
+				$bigVersion = $img->transform( array("width" => 320, "height" => 480) );
 				$pics[] = array(
 					'width' => $bigVersion->getWidth(),
 					'height' => $bigVersion->getHeight(),
