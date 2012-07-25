@@ -86,16 +86,22 @@ MediaTool.Cart = $.createClass(MediaTool.Collection,{
 
 	uploadRemoteItems: function() {
 		var urls = [];
+		var toUpdate = [];
 		var self = this;
 
 		$.each(this.items, function(i, item) {
 			if(item.origin == 'online') {
 				urls.push( { url:item.remoteUrl, description:item.description, name:item.name, isFollowed:item.isFollowed } );
+			} else {
+				if ( item.changed == true ) {
+					toUpdate.push( { description:item.description, name:item.name, isFollowed:item.isFollowed } );
+				}
 			}
+
 		});
 
-		if(urls.length > 0) {
-			MediaTool.callBackend('uploadVideos', { urls: urls }, function(result) {
+		if(urls.length > 0 || toUpdate.length >0) {
+			MediaTool.callBackend('uploadVideos', { urls: urls, toUpdate: toUpdate }, function(result) {
 				$.each(result, function(i, r) {
 					var item = self.findByRemoteUrl(r.url);
 					if(item != null) {

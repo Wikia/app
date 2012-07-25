@@ -33,7 +33,8 @@ $messages['en'] = array(
 	'mediatool-follow-media' => 'Follow this media',
 	'mediatool-article-details' => 'Article Details',
 	'mediatool-media-caption' => 'Caption',
-	'mediatool-added-by' => 'Added by'
+	'mediatool-added-by' => 'Added by',
+	'mediatool-media-edit-description-summary' => 'Edit from MediaTool'
 );
 
 /** Message documentation (Message documentation)

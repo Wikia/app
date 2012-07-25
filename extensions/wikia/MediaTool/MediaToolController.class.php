@@ -156,6 +156,14 @@ class MediaToolController extends WikiaController {
 		$this->response->setData( $data );
 	}
 
+	protected function setWatchOptions( Title $oTitle, $watch ) {
+		if ( (int) $watch == 1 ) {
+			WatchAction::doWatch( $oTitle, F::app()->wg->User );
+		} else {
+			WatchAction::doUnwatch( $oTitle, F::app()->wg->User );
+		}
+	}
+
 	public function uploadVideo() {
 		$this->response->setFormat('json');
 
@@ -179,11 +187,7 @@ class MediaToolController extends WikiaController {
 					$response['title'] = $result->getPrefixedDBkey();
 
 					$oVideoTitle = Title::newFromDBkey( $response['title'], NS_FILE );
-					if ( (int)$isFollowed == 1 ) {
-						WatchAction::doWatch( $oVideoTitle, F::app()->wg->User );
-					} else {
-						WatchAction::doUnwatch( $oVideoTitle, F::app()->wg->User );
-					}
+					self::setWatchOptions( $oVideoTitle, $isFollowed );
 
 				}
 				else {
@@ -200,28 +204,58 @@ class MediaToolController extends WikiaController {
 		$this->response->setData( $response );
 	}
 
+	public function modifyMedia() {
+
+		$mediaDescription = $this->request->getVal( 'description' );
+		$isFollowed = $this->request->getVal( 'isFollowed' );
+		$mediaName = $this->request->getVal( 'name' );
+
+		$oTitle = Title::newFromText( $mediaName, NS_FILE );
+		$oArticle = Article::newFromTitle( $oTitle, $this->context );
+
+		self::setWatchOptions( $oTitle, $isFollowed );
+
+		$isVideo = WikiaFileHelper::isFileTypeVideo( $oTitle );
+		if ( $isVideo ) {
+			$categoryVideosTxt = VideoFileUploader::getCategoryVideosWikitext();
+			if ( strpos( $mediaDescription, $categoryVideosTxt ) === false ) {
+				$mediaDescription .= $categoryVideosTxt;
+			}
+		}
+
+		$oArticle->doEdit( $mediaDescription, wfMsg( 'mediatool-media-edit-description-summary' ) );
+	}
+
 	public function uploadVideos() {
-		$this->response->setFormat('json');
-		$videoUrls = $this->request->getVal('urls');
+		$this->response->setFormat( 'json' );
+		$videoUrls = $this->request->getVal( 'urls' );
+		$toUpdate = $this->request->getVal( 'toUpdate' );
 
 		$results = array();
-		if(is_array($videoUrls)) {
-			foreach($videoUrls as $videoUrl) {
-				$response = $this->sendSelfRequest('uploadVideo', $videoUrl );
+		if( is_array( $videoUrls ) ) {
+			foreach( $videoUrls as $videoUrl ) {
+				$response = $this->sendSelfRequest( 'uploadVideo', $videoUrl );
 				$result = array();
 				$result['url'] = $videoUrl['url'];
-				$result['status'] = $response->getVal('status');
+				$result['status'] = $response->getVal( 'status' );
 				if($response->getVal('status') == self::RESPONSE_STATUS_OK) {
-					$result['title'] = $response->getVal('title');
+					$result['title'] = $response->getVal( 'title' );
 				}
 				else {
-					$result['msg'] = $response->getVal('msg');
+					$result['msg'] = $response->getVal( 'msg' );
 				}
 				$results[] = $result;
 			}
 		}
 
-		$this->response->setData($results);
+		if ( is_array( $toUpdate ) ) {
+
+			foreach( $toUpdate as $item ) {
+				$response = $this->sendSelfRequest( 'modifyMedia', $item );
+			}
+		}
+
+		$this->response->setData( $results );
 	}
 
 	public function getModalContent() {}

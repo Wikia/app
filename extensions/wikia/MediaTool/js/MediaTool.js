@@ -389,7 +389,10 @@ var MediaTool = MediaTool || (function () {
 			var fieldName = $(e.target).attr("name");
 			var cartItemId = fieldName.substr(0, fieldName.lastIndexOf("-"));
 			var item = cart.getItem(cartItemId);
-			if (item) item.description = $(e.target).val();
+			if (item) {
+				item.description = $(e.target).val();
+				item.changed = true;
+			}
 		});
 		$(".media-tool-content").on("blur", "input.media-tool-item-name", function (e) {
 			var fieldName = $(e.target).attr("name");
@@ -401,7 +404,10 @@ var MediaTool = MediaTool || (function () {
 			var fieldName = $(e.target).attr("name");
 			var cartItemId = fieldName.substr(0, fieldName.lastIndexOf("-"));
 			var item = cart.getItem(cartItemId);
-			if (item) item.isFollowed = $(e.target).attr("checked") == "checked" ? 1 : 0;
+			if (item) {
+				item.isFollowed = $(e.target).attr("checked") == "checked" ? 1 : 0;
+				item.changed = true;
+			}
 		});
 
 
