@@ -53,7 +53,6 @@ $config['oasis_ads_js'] = array(
 $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#group_articlecomments_js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/ImageLightbox/ImageLightbox.js',
@@ -63,6 +62,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js', // TODO: do we need to load this for logged-in?  answer: yes, we allow logged in users to create account without logging out
 		'//extensions/wikia/UserLogin/js/UserLoginModal.js', // TODO: do we need to load this for logged-in?  answer: maybe
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
+		'#group_articlecomments_js', // needs to load after MiniEditor
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/Meebo/meebo.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
