@@ -73,7 +73,6 @@ var WikiMapIndexContent = {
         this.chosen = $.xcolor.red(colour.line);
 
         //Drawing text labels
-        var self = this;
         $.each(this.nodes, function (index, value) {
 
                 if (index == halfNodes) {
