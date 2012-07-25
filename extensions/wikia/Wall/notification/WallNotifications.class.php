@@ -273,7 +273,7 @@ class WallNotifications {
 		}
 
 		if(!empty($notification->data->article_title_ns)) {
-			$users = $this->getWatchlist($notification->data->wall_username, $title, $notification->data->article_title_ns);			
+			$users = $this->getWatchlist($notification->data->wall_username, $title, $notification->data->article_title_ns);
 		} else {
 			$users = $this->getWatchlist($notification->data->wall_username, $title);
 		}
@@ -340,7 +340,7 @@ class WallNotifications {
 			)) {
 
 				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
-				$watcherName = $watcher->getName();	
+				$watcherName = $watcher->getName();
 
 				if( $notification->data->msg_author_username == $notification->data->msg_author_displayname) {
 					$author_signature = $notification->data->msg_author_username;
@@ -371,7 +371,7 @@ class WallNotifications {
 						'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
 					);
 				}
-		
+
 				if(!($watcher->getBoolOption('unsubscribed') === true)) {
 					$this->sendEmail($watcher, $data);
 				}
@@ -397,7 +397,7 @@ class WallNotifications {
 		$keys[] = '$SUBJECT';
 		$values[] = $subject;
 
-		$data['$SUBJECT'] = $subject; 
+		$data['$SUBJECT'] = $subject;
 		$html = $this->app->getView('WallExternal', 'mail', array('data' => $data))->render();
 		$text = str_replace($keys, $values, $text);
 
@@ -642,12 +642,13 @@ class WallNotifications {
 		$this->cleanEntitiesFromDB();
 	}
 
-	protected function sleep($userId, $wikiId){
+
+	protected function sleep( $count ){
 		$time = 100000 - $count*1000; //change priority of process with access to resource
-		if($time < 0) {
+		if( $time < 0 ) {
 			$time = 0;
 		}
-		usleep(100000 + $time);
+		usleep( 100000 + $time );
 	}
 
 	protected function remNotificationFromData(&$data, $uniqueId) {
