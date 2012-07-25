@@ -300,6 +300,11 @@ class OasisController extends WikiaController {
 				return $url;
 			}
 
+			// don't minify already minified JS files
+			if (strpos($url, '.min.js') !== false) {
+				return $url;
+			}
+
 			foreach ($map as $item) {
 				list( $prefix, $replacement ) = $item;
 
