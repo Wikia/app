@@ -952,7 +952,7 @@ class ExtParserFunctions {
 		}
 
 		# adjust for multibyte strings
-		$inLen += strlen( $inStr ) - self::mwSplit( $parser, $inStr, $a );
+		$inLen += mb_strlen( $inStr ) - self::mwSplit( $parser, $inStr, $a );
 
 		# pad
 		return str_pad( $inStr, $inLen, $inWith, $direction );
