@@ -163,9 +163,8 @@
 
 	a {
 		color: $color-links;
-		border-right: solid 1px $color-links;
-		padding: 0 5px;
-		margin: 0 5px;
+		padding: 2px 8px;
+		margin: 0 4px;
 
 		&.accent {
 			color: White;
@@ -175,11 +174,11 @@
 }
 
 #article-comments-pagination-link-prev {
-	border: none;
-	margin-right: 10px;
+	border-right: solid 1px $color-links;
+	padding-right: 16px;
 }
 
 #article-comments-pagination-link-next {
-	border: none;
-	margin-left: 10px;
+	border-left: solid 1px $color-links;
+	padding-left: 16px;
 }
