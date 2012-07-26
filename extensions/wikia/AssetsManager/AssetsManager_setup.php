@@ -28,6 +28,7 @@ $wgAutoloadClasses['AssetsManagerController'] = $dir.'AssetsManagerController.cl
 
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
+$wgHooks['UserLoadFromSession'][] = 'AssetsManagerClearCookie';
 $wgHooks['UserGetRights'][] = 'onUserGetRights';
 
 
