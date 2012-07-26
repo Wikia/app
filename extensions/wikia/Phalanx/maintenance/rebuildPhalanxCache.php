@@ -23,6 +23,8 @@ foreach ( $aTypes as $iType ) {
 		$wgMemc->delete( "phalanx:{$iType}:{$sLanguage}" );
 		// Fill the cache with the current data from DB_MASTER.
 		Phalanx::getFromFilter( $iType, $sLanguage, true );
+		// Touch.
+		Phalanx::setLastUpdate();
 	}
 }
 
