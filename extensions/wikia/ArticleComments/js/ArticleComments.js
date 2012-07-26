@@ -599,6 +599,14 @@ var ArticleComments = {
 // Initialize on demand
 if (ArticleComments.loadOnDemand) {
 	$(function() {
+		var $wrapper = $('.WikiaArticleComments');
+
+		// Not loading on demand. Work around for cases where there are no comments.
+		if (!$wrapper.hasClass('on-demand')) {
+			ArticleComments.init();
+			return;
+		}
+
 		var $window = $(window),
 			$comments = $('#article-comments'),
 			$commentsWrapper = $comments.closest('.article-comments-wrapper'),
@@ -621,7 +629,7 @@ if (ArticleComments.loadOnDemand) {
 					page: $comments.data('page')
 				},
 				callback: function(html) {
-					$('.WikiaArticleComments').removeClass('on-demand');
+					$wrapper.removeClass('on-demand');
 					$commentsWrapper.removeClass('loading');
 					$comments.hide().html(html).fadeIn();
 					ArticleComments.init();
