@@ -155,6 +155,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 							);
 		}
 		else {
+			// for caching, hopefully
+			$params['fq'] = "wid:{$onWikiId}";
 
 			$nsQuery = '';
 			foreach($this->namespaces as $namespace) {
@@ -168,6 +170,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		if (!$includeRedirects) {
 			$queryClauses[] = "is_redirect:false";
+			$params['fq'] = (isset($params['fq']) ? $params['fq'] . ' AND ' : '') . 'is_redirect:false';
 		}
 
 
@@ -200,7 +203,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		try {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
 		}
-		catch (Exception $exception) {
+		catch (Exception $exception) { 
 				if (!$skipBoostFunctions) {
 					$methodOptions['skipBoostFunctions'] = true;
 
@@ -250,7 +253,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$docs = empty( $response->response->docs ) ? array() : $response->response->docs;
 
 		// @todo replace Apache_Solr_Service with something more sensible. maybe homegrown.
-		if (empty($docs) && $response->grouped !== null) {
+		if (empty($docs) && isset($response->grouped) && $response->grouped !== null) {
 			$docs = array();
 			foreach ($response->grouped->host->doclist->docs as $doc) {
 				$solrDoc = new Apache_Solr_Document();
