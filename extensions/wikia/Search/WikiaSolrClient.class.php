@@ -10,6 +10,39 @@ class WikiaSolrClient extends WikiaSearchClient {
 	protected $isInterWiki = false;
 	protected $articleMatch;
 	protected $paginatedSearch = false;
+	private static $languageFields  = array('title',
+											'html',
+											'wikititle',
+											'first500',
+											'beginningText',
+											'headings',
+											'redirect_titles',
+											'categories',
+											);
+
+	private static $dynamicUnstoredFields = array('headings', 'first500', 'beginningText');
+
+	private static $multiValuedFields = array('categories', 'redirect_titles', 'headings');
+
+	private static $requestedFields = array('id',
+											'wikiarticles',
+											'bytes',
+											'words',
+											'wikititle',
+											'wikipages',
+											'pageid',
+											'url',
+											'wid',
+											'canonical',
+											'hub',
+											'lang',
+											'host',
+											'ns',
+											'indexed',
+											'backlinks',
+											'title',
+											'score',
+											);
 
 	const DEFAULT_RESULTSET_START = 0;
 	const DEFAULT_RESULTSET_SIZE = 20;
@@ -23,10 +56,12 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	/**
 	 *  $methodOptions supports the following possible values:
-	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = true, $solrDebugWikiId = false, $spellCheck, $hub
+	 *  $start=0, $size=20, $cityId = 0, $skipBoostFunctions=false, $namespaces, $isInterWiki, $includeRedirects = false, $solrDebugWikiId = false, $hub, $spellCheckHappened
 	 **/
 	public function search( $query,  array $methodOptions = array() ) {
 		wfProfileIn(__METHOD__);
+
+		global $wgLanguageCode, $wgWikiaSearchSupportedLanguages;
 
 		extract($methodOptions);
 
@@ -34,10 +69,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$size               = isset($size)               ? $size               : self::DEFAULT_RESULTSET_SIZE;
 		$cityId             = isset($cityId)             ? $cityId             : self::DEFAULT_CITYID;
 		$skipBoostFunctions = isset($skipBoostFunctions) ? $skipBoostFunctions : false;
-		$includeRedirects   = isset($includeRedirects)   ? $includeRedirects   : true;
+		$includeRedirects   = isset($includeRedirects)   ? $includeRedirects   : false;
 		$rank               = isset($rank)               ? $rank               : 'default';
 		$solrDebugWikiId    = isset($solrDebugWikiId)    ? $solrDebugWikiId    : false;
-		$spellCheck         = isset($spellCheck)         ? $spellCheck         : false;
 		$hub				= isset($hub)				 ? $hub				   : false;
 		$spellCheckHappened = isset($spellCheckHappened) ? $spellCheckHappened : false;
 
@@ -60,12 +94,15 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		$this->isInterWiki = isset($isInterWiki) ? $isInterWiki : false;
 
+		$fields = array();
+		array_walk(self::$requestedFields, function($val) use(&$fields) { $fields[] = WikiaSolrClient::field($val); } );
+
 		$params = array(
 						# html makes the response too big
-				'fl' => 'wikiarticles,bytes,words,wikititle,wikipages,pageid,url,wid,canonical,hub,lang,host,ns,indexed,title,score,backlinks',
-				'qf' => 'title^5 html',
+				'fl' => implode(',', $fields),
+				'qf' => sprintf('%s^5 %s %s^2.5', self::field('title'), self::field('html'), self::field('redirect_titles')),
 				'hl' => 'true',
-				'hl.fl' => 'html,title', // highlight field
+				'hl.fl' => sprintf('%s,%s', self::field('html'), self::field('redirect_titles')), // highlight field
 				'hl.requireFieldMatch' => 'true',
 				'hl.snippets' => '1', // number of snippets per field
 				'hl.fragsize' => '150', // snippet size in characters
@@ -82,73 +119,98 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$queryClauses = array();
 		$sanitizedQuery = $this->sanitizeQuery($query);
 
-		if ($spellCheck) {
-			$params += array('spellcheck' => 'true',
-							 'spellcheck.onlyMorePopular' => 'true',
-							 'spellcheck.collate' => 'true',
-							 'spellcheck.q' => $sanitizedQuery
-							);
-		}
+
+		$params += array('spellcheck' => 'true',
+						 'spellcheck.onlyMorePopular' => 'true',
+						 'spellcheck.collate' => 'true',
+						 'spellcheck.q' => $sanitizedQuery, 
+						 'spellcheck.dictionary' => (in_array($wgLanguageCode, $wgWikiaSearchSupportedLanguages) ? $wgLanguageCode : 'default'),
+						 'spellcheck.maxCollationTries' => '75',
+						 'spellcheck.count' => '75',
+						 'spellcheck.collateExtendedResults' => 'true',
+						 'spellcheck.maxCollations' => '10',
+						);
 
 		$onWikiId = ( !empty( $solrDebugWikiId ) ) ? $solrDebugWikiId : $cityId;
 
-		if( $this->isInterWiki ) {
-			$queryClauses += $this->getInterWikiQueryClauses($hub);
-		}
-		else {
-
-		  $nsQuery = '';
-		  foreach($this->namespaces as $namespace) {
-		    $nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
-		  }
-		  
-		  $queryClauses[] = "({$nsQuery})";
-
-		  if (!$includeRedirects) {
-		    $queryClauses[] = "canonical:['' TO *]";
-		  }
-
-		  array_unshift($queryClauses, "wid: {$onWikiId}");
-		}
-
 		$queryNoQuotes = self::sanitizeQuery(preg_replace("/['\"]/", '', $query));
 
-		$boostQueries = array('html:\"'.$queryNoQuotes.'\"^5',
-				      'title:\"'.$queryNoQuotes.'\"^10');
+		$boostQueries = array(	self::valueForField('html', $queryNoQuotes, array('boost'=>5, 'quote'=>'\"')),
+								self::valueForField('redirect_titles', $queryNoQuotes, array('boost'=>10, 'quote'=>'\"')),
+								self::valueForField('title', $queryNoQuotes, array('boost'=>10, 'quote'=>'\"')),
+							 );
 
 		$boostFunctions = array();
 
-		if ($this->isInterWiki) {
-		  // this is still pretty important!
-		  $boostQueries[] = 'wikititle:\"'.$queryNoQuotes.'\"^15';
 
-		  # we can do this because the host is a text field
-		  if (!$this->includeAnswers($query)) {
-		    $boostQueries[] = '-host:\"answers\"^10';
-		    $boostQueries[] = '-host:\"respuestas\"^10';
-		  }
+		if( $this->isInterWiki ) {
+			$queryClauses += $this->getInterWikiQueryClauses($hub);
 
-		  if (!$skipBoostFunctions) {
-		    $boostFunctions = array_merge($boostFunctions, $this->getInterWikiBoostFunctions());
-		  }
+			// this is still pretty important!
+			$boostQueries[] = self::valueForField('wikititle', $queryNoQuotes, array('boost'=>15, 'quote'=>'\"'));
 
+			# we can do this because the host is a text field
+			if (!$this->includeAnswers($query)) {
+				$boostQueries[] = '-host:\"answers\"^10';
+				$boostQueries[] = '-host:\"respuestas\"^10';
+			}
+
+			if (!$skipBoostFunctions) {
+				$boostFunctions = array_merge($boostFunctions, $this->getInterWikiBoostFunctions());
+			}
+
+			$params += array(	'group' => 'true',
+								'group.field' => 'host',
+								'group.limit' => '4',
+								'group.start' => $start,
+								'group.rows' => 40,
+								'group.format' => 'simple' //@todo implement grouped format?
+							);
+		}
+		else {
+			$params['fq'] = "wid:{$onWikiId}";
+			$params['spellcheck.collateParam.fq'] = "wid:{$onWikiId}";
+
+			$nsQuery = '';
+			foreach($this->namespaces as $namespace) {
+				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
+			}
+		  
+			$queryClauses[] = "({$nsQuery})";
+
+			$queryClauses[] = '_val_:"log(views)"^3';
+			$queryClauses[] = '_val_:"log(activeusers)"';
+			$queryClauses[] = '_val_:"log(backlinks)"^2';
+
+			array_unshift($queryClauses, "wid:{$onWikiId}");
 		}
 
-		$dismaxParams = array('qf'	=>	"'html^0.8 title^5'",
-				      'pf'	=>	"'html^0.8 title^5'",
-				      'ps'	=>	'3',
-				      'tie'	=>	'0.01',
-				      'bq'	=>	"\'".implode(' ', $boostQueries)."\'",
-				      'mm'      =>      '66%'
-				     );
+		if (!$includeRedirects) {
+			$queryClauses[] = "is_redirect:false";
+		}
 
-		if (!empty($boostFunctions)) {
-		  $dismaxParams['bf'] = sprintf("'%s'", implode(' ', $boostFunctions));
+
+		$queryFields = array('html'=>1.5, 'title'=>5, 'redirect_titles'=>4, 'categories'=>'0.8', 'htmlNoNorms'=>2);
+
+		$qfString = "\'";
+		array_walk($queryFields, function($val, $key) use (&$qfString) { $qfString .= WikiaSolrClient::field($key)."^{$val} "; }) ;
+		$qfString .= "\'";
+
+		$dismaxParams = array(	'qf'	=>	$qfString,
+								'pf'	=>	$qfString,
+								'ps'	=>	'3',
+								'tie'	=>	'0.01',
+								'bq'	=>	"\'".implode(' ', $boostQueries)."\'",
+								'mm'    =>  '66%'
+								);
+
+		if (!empty($boostFunctions) && !$skipBoostFunctions) {
+			$dismaxParams['bf'] = sprintf("'%s'", implode(' ', $boostFunctions));
 		}
 
 		array_walk($dismaxParams, function($val,$key) use (&$paramString) {$paramString .= "{$key}={$val} "; });
 
-		$queryClauses[] = sprintf('_query_:"{!dismax %s}%s"',
+		$queryClauses[] = sprintf('_query_:"{!edismax %s}%s"',
 					  $paramString,
 					  $sanitizedQuery);
 
@@ -158,12 +220,12 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$response = $this->solrClient->search($sanitizedQuery, $start, $size, $params);
 		}
 		catch (Exception $exception) {
-		  if (!$skipBoostFunctions) {
-		    $methodOptions['skipBoostFunctions'] = true;
+				if (!$skipBoostFunctions) {
+					$methodOptions['skipBoostFunctions'] = true;
 
-				wfProfileOut(__METHOD__);
-				return $this->search($query, $methodOptions);
-		  }
+					wfProfileOut(__METHOD__);
+					return $this->search($query, $methodOptions);
+				}
 		}
 
 		if (!isset($response)) {
@@ -177,32 +239,47 @@ class WikiaSolrClient extends WikiaSearchClient {
 					      );
 		} 
 
-		if ( $response instanceOf Apache_Solr_Response &&
-		     empty($response->response->docs)) {
+		$docs = $this->isInterWiki ? $response->grouped->host->doclist->docs : $response->response->docs;
 
-			if ($spellCheck && 
-				! empty($this->articleMatch) &&
+		// @todo: this is just for automated spelling correction. we should also provide "did you mean"
+		if ( $response instanceOf Apache_Solr_Response &&
+		     empty($docs)) {
+
+			if (  empty($this->articleMatch) &&
 				! $spellCheckHappened &&
-				! empty($response->spellcheck->suggestions) && 
-				! empty($response->spellcheck->suggestions->collation)
+				! empty($response->spellcheck->collations)
 				) {
 
-				$newQuery = $response->spellcheck->suggestions->collation;
+				$collationsByHits = array();
 
-				// stop infinite loop... i know this is stupid, but we're gutting this come 3.6
+				foreach ($response->spellcheck->collations as $collation) {
+					$collationsByHits[(int)$collation->hits] = $collation->collationQuery;
+				}
+				ksort($collationsByHits);
+
+				$newQuery = end($collationsByHits);
+
 				$methodOptions['spellCheckHappened'] = true;
 
 				return $this->search($newQuery, $methodOptions);
-			} else if (!$spellCheck && empty($this->articleMatch)) {
-				#research with spellcheck @todo spellcheck request handler
-				$methodOptions['spellCheck'] = true;
-				return $this->search($query, $methodOptions);
-			}
+			} 
 			
 		} 
 
 		$docs = empty( $response->response->docs ) ? array() : $response->response->docs;
-		
+
+		// @todo replace Apache_Solr_Service with something more sensible. maybe homegrown.
+		if (empty($docs) && $response->grouped !== null) {
+			$docs = array();
+			foreach ($response->grouped->host->doclist->docs as $doc) {
+				$solrDoc = new Apache_Solr_Document();
+				foreach ($doc as $key=>$val) {
+					$solrDoc->{$key} = $val;
+				}
+				$docs[] = $solrDoc;
+			}
+		}
+
 		if (is_object($response->highlighting)) {
 			$highlighting = get_object_vars($response->highlighting);
 		} else if (is_array($response->highlighting)) {
@@ -210,8 +287,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 		$highlighting = empty($highlighting) ? array() : $highlighting;
 
-		$numFound = $response->response->numFound ?: 0;
-		$resultsStart = $response->response->start ?: 0;
+		$numFound = $response->response === null ? ($response->grouped === null ? 0 : $response->grouped->host->doclist->numFound) : $response->response->numFound;
+
+		$resultsStart = $response->response === null ? 0 : $response->response->start;
 
 		$results = $this->getWikiaResults( $docs, $highlighting );
 
@@ -262,6 +340,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 		foreach($solrDocs as $doc) {
+
 			$id = 'c'.$doc->wid.'p'.$doc->pageid;
 			if ($articleMatchId == $id) {
 			  continue;
@@ -269,8 +348,20 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 			$result = F::build( 'WikiaSearchResult', array( 'id' => $id ) );
 			$result->setCityId($doc->wid);
-			$result->setTitle($doc->title);
-			$result->setText($solrHighlighting[$doc->url]->html[0]);
+
+			$titleKey = self::field('title');
+			$result->setTitle($doc->{$titleKey});
+
+			$text = '';
+			$snippetField = self::field('html');
+
+			if (   isset($solrHighlighting[$doc->id]) 
+				&& isset($solrHighlighting[$doc->id]->{$snippetField}) 
+				&& isset($solrHighlighting[$doc->id]->{$snippetField}[0])) {
+				$text = $solrHighlighting[$doc->id]->{$snippetField}[0];
+			} 
+
+			$result->setText($text);
 			$result->setUrl(urldecode($doc->url));
 			$result->setScore(($doc->score) ?: 0);
 			$result->setVar('ns', $doc->ns);
@@ -284,52 +375,16 @@ class WikiaSolrClient extends WikiaSearchClient {
 			$result->setVar('cityArticlesNum', $doc->wikiarticles);
 			$result->setVar('position', $position);
 			$result->setVar('cityHost', 'http://'.$doc->host);
-			$result->setVar('wikititle', $doc->wikititle);
+
+			$wikiTitleKey = self::field('wikititle');
+			$result->setVar('wikititle', $doc->{$wikiTitleKey});
 
 			$results[] = $result;
 			$position++;
 		}
-
-		$deDupedResults = $this->deDupeResults($results);
-
 		wfProfileOut(__METHOD__);
-		return $deDupedResults;
+		return $results;
 	}
-
-	private function deDupeResults(Array $results) {
-		wfProfileIn(__METHOD__);
-
-		$canonicals = array();
-		$deDupedResults = array();
-
-		/**
-		 * @var $result WikiaSearchResult
-		 */
-		foreach($results as $result) {
-			if(!isset($canonicals[$result->getCityId()])) {
-				$canonicals[$result->getCityId()] = array();
-			}
-
-			$hadCanonical = $result->hasCanonical();
-
-			if($hadCanonical) {
-				$result->deCanonize();
-			}
-
-			if(!in_array($result->getTitle(), $canonicals[$result->getCityId()])) {
-				$canonicals[$result->getCityId()][] = $result->getTitle();
-				$deDupedResults[md5($result->getCityId().$result->getVar('ns').$result->getTitle())] = $result;
-			}
-			else if (!$hadCanonical) {
-				// redirect was first for this document, replace it
-				$deDupedResults[md5($result->getCityId().$result->getVar('ns').$result->getTitle())] = $result;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return array_values($deDupedResults);
-	}
-
 
 	/**
 	 * any query string transformation before sending to backend should be placed here
@@ -369,25 +424,27 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 	public function getInterWikiQueryClauses($hub = false)
 	{
-	  $queryClauses = array();
+		global $wgContLang;
 
-	  $widQuery = '';
+		$queryClauses = array();
 
-	  foreach ($this->getInterWikiSearchExcludedWikis() as $excludedWikiId) {
-	    $widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $excludedWikiId;
-	  }
+		$widQuery = '';
+
+		foreach ($this->getInterWikiSearchExcludedWikis() as $excludedWikiId) {
+			$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $excludedWikiId;
+		}
 	  
-	  $queryClauses[] = $widQuery;
+		$queryClauses[] = $widQuery;
 
-	  $queryClauses[] = "lang:en";
+		$queryClauses[] = "lang:".$wgContLang->mCode;
 
-	  $queryClauses[] = "iscontent:true";
+		$queryClauses[] = "iscontent:true";
 
-	  if ($hub) {
-		$queryClauses[] = "hub:".$this->sanitizeQuery($hub);
-	  }
+		if ($hub) {
+			$queryClauses[] = "hub:".$this->sanitizeQuery($hub);
+		}
 
-	  return $queryClauses;
+		return $queryClauses;
 
 	}
 
@@ -500,6 +557,35 @@ class WikiaSolrClient extends WikiaSearchClient {
 	public function searchByLuceneQuery($query, $start, $size, $params)
 	{
 	  return $this->solrClient->search($query, $start, $size, $params);
+	}
+
+
+	public static function valueForField ( $field, $value, array $params = array() )
+	{
+		$boostVal = isset($params['boost']) && $params['boost'] !== false ? '^'.$params['boost'] : '';
+
+		$evaluate = isset($params['quote']) && $params['quote'] !== false ? "(%s:{$params['quote']}%s{$params['quote']})%s" : '(%s:%s)%s';
+
+		return sprintf( $evaluate, self::field( $field ), $value, $boostVal );
+	}
+
+	public static function field ( $field )
+	{
+		global $wgLanguageCode, $wgWikiaSearchSupportedLanguages;
+		$lang = preg_replace('/-.*/', '', $wgLanguageCode);
+		if ( in_array($field, self::$languageFields) &&
+			 in_array($wgLanguageCode, $wgWikiaSearchSupportedLanguages) ) {
+
+			$us = in_array($field, self::$dynamicUnstoredFields) ? '_us' : '';
+
+			$mv = in_array($field, self::$multiValuedFields) ? '_mv' : '';
+
+			$field .= $us . $mv . '_' . $lang;
+
+		}
+
+		return $field;
+
 	}
 
 }

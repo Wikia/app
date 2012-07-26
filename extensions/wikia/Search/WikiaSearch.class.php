@@ -4,7 +4,7 @@ class WikiaSearch extends WikiaObject {
 
 	const RESULTS_PER_PAGE = 10;
 	const RESULTS_PER_WIKI = 4;
-	const GROUP_RESULTS_SEARCH_LIMIT = 500;
+	const GROUP_RESULTS_SEARCH_LIMIT = 40;
 	const GROUP_RESULTS_CACHE_TTL = 900; // 15 mins
 	const WIKIPAGES_CACHE_TTL = 604800; // 7 days
 	const VIDEO_WIKI_ID = 298117;
