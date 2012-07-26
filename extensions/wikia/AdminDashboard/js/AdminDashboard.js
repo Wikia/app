@@ -5,11 +5,11 @@ var AdminDashboard = {
 	init: function() {
 		// precache
 		AdminDashboard.cc = $('#AdminDashboard');
-		
+
 		if(AdminDashboard.cc.length == 0) {
 			return;
 		}
-		
+
 		AdminDashboard.allControls = AdminDashboard.cc.find('.control');
 		AdminDashboard.tabs = $('#AdminDashboardTabs');
 		AdminDashboard.allTabs = AdminDashboard.tabs.find('.tab');
@@ -18,11 +18,11 @@ var AdminDashboard = {
 		AdminDashboard.section.advanced = $('#AdminDashboardAdvanced');
 		AdminDashboard.section.contentarea = $('#AdminDashboardContentArea');
 		AdminDashboard.wikiaArticle = $('#WikiaArticle');
-		
+
 		// events
 		AdminDashboard.allControls.hover(function() {
 			var el = $(this);
-			AdminDashboard.tooltip = $(this).closest('.control-section').find('header .dashboard-tooltip');
+			AdminDashboard.tooltip = el.closest('.control-section').find('header .dashboard-tooltip');
 			AdminDashboard.tooltip.text(el.data('tooltip'));
 		}, function() {
 			AdminDashboard.tooltip.text('');
@@ -89,7 +89,7 @@ var AdminDashboardTracking = {
 			} else {
 				node = target.closest('a');
 			}
-			
+
 			if(node) {
 				var tracking = node.data('tracking');
 				if(tracking) {
@@ -97,7 +97,7 @@ var AdminDashboardTracking = {
 				}
 			}
 		});
-		
+
 		$('#AdminDashboardHeader nav a').bind('click', function(e) {
 			var target = $(e.target);
 			if(target.hasClass('text')) {
