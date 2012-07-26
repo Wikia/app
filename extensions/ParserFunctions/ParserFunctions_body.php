@@ -890,10 +890,35 @@ class ExtParserFunctions {
 	}
 
 	/**
+	 * Splits the string into its component parts using preg_match_all().
+	 * $chars is set to the resulting array of multibyte characters.
+	 * Returns count($chars).
+	 * copied from StringFunctions by eloy
+	 */
+	static protected function mwSplit( &$parser, $str, &$chars ) {
+		# Get marker prefix & suffix
+		$prefix = preg_quote( $parser->mUniqPrefix, '/' );
+		if ( defined( 'Parser::MARKER_SUFFIX' ) ) {
+			$suffix = preg_quote( Parser::MARKER_SUFFIX, '/' );
+		} elseif ( isset( $parser->mMarkerSuffix ) ) {
+			$suffix = preg_quote( $parser->mMarkerSuffix, '/' );
+		} elseif ( defined( 'MW_PARSER_VERSION' ) && strcmp( MW_PARSER_VERSION, '1.6.1' ) > 0 ) {
+			$suffix = "QINU\x07";
+		} else {
+			$suffix = 'QINU';
+		}
+
+		# Treat strip markers as single multibyte characters
+		$count = preg_match_all( '/' . $prefix . '.*?' . $suffix . '|./su', $str, $arr );
+		$chars = $arr[0];
+		return $count;
+	}
+
+	/**
 	 * {{#pad:value|length|with|direction}}
 	 * Note: Length of the resulting string is limited.
 	 *
-	 * copied from StringFunctions
+	 * copied from StringFunctions by eloy
 	 */
 	static function runPad( &$parser, $inStr = '', $inLen = 0, $inWith = '', $inDirection = '' ) {
 		global $wgPFStringLengthLimit;
