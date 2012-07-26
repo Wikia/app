@@ -507,22 +507,16 @@ class TopListHelper {
 						} else {
 							$ret[ 'success' ] = true;
 
-							$source = new ImageServing(
-								null,
-								120,
-								array(
-									"w" => 3,
-									"h" => 2
-								)
-							);
+							$file = $upload->getLocalFile();
 
-							$thumbs = $source->getThumbnails( array( $upload->getLocalFile() ) );
-							$pictureName = $upload->getTitle()->getText();
+							if ( !empty($file) ) {
 
-							if( !empty( $thumbs[ $pictureName ] ) ) {
-								$ret[ 'name' ] = $thumbs[ $pictureName ][ 'name' ];
-								$ret[ 'url' ] = $thumbs[ $pictureName ][ 'url' ];
+								$thumb = $file->transform( array('width'=>120), 0 );
+								$pictureName = $upload->getTitle()->getText();
+								$pictureUrl = $thumb->getUrl();
 							}
+							$ret[ 'name' ] = $pictureName;
+							$ret[ 'url' ] = $pictureUrl;
 						}
 					}
 				}
