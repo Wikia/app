@@ -1938,7 +1938,8 @@ class WallHooksHelper {
 	}
 
 	public static function onBlockIpComplete( $block, $user ) {
-		if($block->getTarget()->isLoggedIn()) {
+		$blockTarget = $block->getTarget();
+		if ( $blockTarget instanceof User && $blockTarget->isLoggedIn() ) {
 			$vote = new VoteHelper($block->getTarget(), null);
 			$vote->invalidateUser();
 		}
