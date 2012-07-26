@@ -6,6 +6,8 @@
 ////// Author: William Lee (wlee@wikia-inc.com)                      //////
 ///////////////////////////////////////////////////////////////////////////
 
+ini_set( 'display_errors', 'stdout' );
+
 $optionsWithArgs = array( 'u', 's', 'e' );
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
