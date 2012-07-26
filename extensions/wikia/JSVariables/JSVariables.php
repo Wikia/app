@@ -16,7 +16,7 @@ function wfJSVariablesTopScripts(Array $vars) {
 		$vars['wgWikiFactoryTagNames'] = array_values( $wgWikiFactoryTags );
 	}
 	
-	// analytics needs it
+	// analytics needs it (from here till the end of the function)
 	$vars['wgDBname'] = $wgDBname;
 	$vars['wgCityId'] = $wgCityId;
 	if (!empty($wgMedusaSlot)) {
@@ -28,11 +28,15 @@ function wfJSVariablesTopScripts(Array $vars) {
 	$lang = $title->getPageLanguage();
 	$vars['wgContentLanguage'] = $lang->getCode();
 
-	// c&p from OutputPage::getJSVars with a new name
+	// c&p from OutputPage::getJSVars, it's needed earlier
 	$user = F::app()->wg->User;
-	if ($user->isAnon()) {
-		$vars['wgIsAnon'] = true;
+	if (!$user->isAnon()) {
+		$vars['wgUserName'] = $user->getName();
 	}
+	
+	// missing in 1.19
+	$skin = RequestContext::getMain()->getSkin();
+	$vars['skin'] = $skin->getSkinName();
 
 	return true;
 }
