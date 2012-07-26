@@ -3,6 +3,10 @@
 
 @import "../../WikiaStyleGuide/css/DropdownColors";
 
+.rc-conntent {
+	min-height: 200px;
+}
+
 .mw-recentchanges-table {
 	@include clearfix;
 

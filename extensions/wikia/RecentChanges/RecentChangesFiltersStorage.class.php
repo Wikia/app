@@ -40,7 +40,8 @@ class RecentChangesFiltersStorage {
 		}
 		
 		if(empty($out)) {
-			return array();
+			//if nothing is selected we are selecting all
+			return array_keys($this->namespaces);
 		}
 		
 		return $out;

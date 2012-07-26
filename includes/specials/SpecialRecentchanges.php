@@ -563,7 +563,9 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			--$limit;
 		}
 		$s .= $list->endRecentChangesList();
-		$this->getOutput()->addHTML( $s );
+		
+		
+		$this->getOutput()->addHTML( Xml::openElement( 'div', array( 'class' => 'rc-conntent' )) .  $s . Xml::closeElement('div') );
 	}
 
 	/**
@@ -697,24 +699,30 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		# start wikia change
 		$nsSelect = '';
 		wfRunHooks( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
+
 		if ( empty($nsSelect) ) {
 			$nsSelect = Html::namespaceSelector(
 				array( 'selected' => $opts['namespace'], 'all' => '' ),
 				array( 'name' => 'namespace', 'id' => 'namespace' )
 			);
+
+			# end wikia change
+			$nsLabel = Xml::label( wfMsg( 'namespace' ), 'namespace' );
+			$invert = Xml::checkLabel(
+				wfMsg( 'invert' ), 'invert', 'nsinvert',
+				$opts['invert'],
+				array( 'title' => wfMsg( 'tooltip-invert' ) )
+			);
+			$associated = Xml::checkLabel(
+				wfMsg( 'namespace_association' ), 'associated', 'nsassociated',
+				$opts['associated'],
+				array( 'title' => wfMsg( 'tooltip-namespace_association' ) )
+			);
+		} else {
+			$invert = "";
+			$associated = "";
+			$nsLabel = "";
 		}
-		# end wikia change
-		$nsLabel = Xml::label( wfMsg( 'namespace' ), 'namespace' );
-		$invert = Xml::checkLabel(
-			wfMsg( 'invert' ), 'invert', 'nsinvert',
-			$opts['invert'],
-			array( 'title' => wfMsg( 'tooltip-invert' ) )
-		);
-		$associated = Xml::checkLabel(
-			wfMsg( 'namespace_association' ), 'associated', 'nsassociated',
-			$opts['associated'],
-			array( 'title' => wfMsg( 'tooltip-namespace_association' ) )
-		);
 		return array( $nsLabel, "$nsSelect $invert $associated" );
 	}
 
