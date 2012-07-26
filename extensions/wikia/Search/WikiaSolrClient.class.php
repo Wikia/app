@@ -171,7 +171,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 
-		$queryFields = array('html'=>1.5, 'title'=>5, 'categories'=>'0.8', 'htmlNoNorms'=>2);
+		$queryFields = array('html'=>1.5, 'title'=>5);
 
 		$qfString = "\'";
 		array_walk($queryFields, function($val, $key) use (&$qfString) { $qfString .= WikiaSolrClient::field($key)."^{$val} "; }) ;
