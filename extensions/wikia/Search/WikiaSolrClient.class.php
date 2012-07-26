@@ -100,9 +100,9 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$params = array(
 						# html makes the response too big
 				'fl' => implode(',', $fields),
-				'qf' => sprintf('%s^5 %s %s^2.5', self::field('title'), self::field('html'), self::field('redirect_titles')),
+				'qf' => sprintf('%s^5 %s', self::field('title'), self::field('html')), 
 				'hl' => 'true',
-				'hl.fl' => sprintf('%s,%s', self::field('html'), self::field('redirect_titles')), // highlight field
+				'hl.fl' => sprintf('%s', self::field('html')),
 				'hl.requireFieldMatch' => 'true',
 				'hl.snippets' => '1', // number of snippets per field
 				'hl.fragsize' => '150', // snippet size in characters
@@ -124,7 +124,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$queryNoQuotes = self::sanitizeQuery(preg_replace("/['\"]/", '', $query));
 
 		$boostQueries = array(	self::valueForField('html', $queryNoQuotes, array('boost'=>5, 'quote'=>'\"')),
-								self::valueForField('redirect_titles', $queryNoQuotes, array('boost'=>10, 'quote'=>'\"')),
 								self::valueForField('title', $queryNoQuotes, array('boost'=>10, 'quote'=>'\"')),
 							 );
 
@@ -172,7 +171,7 @@ class WikiaSolrClient extends WikiaSearchClient {
 		}
 
 
-		$queryFields = array('html'=>1.5, 'title'=>5, 'redirect_titles'=>4, 'categories'=>'0.8', 'htmlNoNorms'=>2);
+		$queryFields = array('html'=>1.5, 'title'=>5, 'categories'=>'0.8', 'htmlNoNorms'=>2);
 
 		$qfString = "\'";
 		array_walk($queryFields, function($val, $key) use (&$qfString) { $qfString .= WikiaSolrClient::field($key)."^{$val} "; }) ;
