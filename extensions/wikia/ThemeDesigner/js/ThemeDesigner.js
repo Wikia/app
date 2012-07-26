@@ -104,8 +104,7 @@ var ThemeDesigner = {
 		// click handler for themes thumbnails
 		$("#ThemeTab").find(".slider").find("li").click(function() {
 			// highlight selected theme
-			$(this).parent().find(".selected").removeClass("selected");
-			$(this).addClass("selected");
+			$(this).parent().find(".selected").removeClass("selected").end().end().addClass("selected");
 
 			ThemeDesigner.set("theme", $(this).attr("data-theme"));
 
@@ -134,12 +133,12 @@ var ThemeDesigner = {
 		$("#fix-background").change(function() {
 			ThemeDesigner.set("background-fixed", $(this).attr("checked") ? "true" : "false");
 		});
-		
-		// submit handler for uploading custom background image	
+
+		// submit handler for uploading custom background image
 		$('#BackgroundImageForm').submit(function(){
 			$.AIM.submit(this, ThemeDesigner.backgroundImageUploadCallback);
 		});
-		
+
 		var currentVal = ThemeDesigner.settings["page-opacity"];
 		var base = 70;
 		$("#OpacitySlider").slider({
@@ -179,7 +178,7 @@ var ThemeDesigner = {
 
 			ThemeDesigner.track('wordmark/choose');
 		});
-		
+
 		//grapic wordmark button
 		$("#WordmarkTab").find(".graphic").find(".preview").find("a").click(function(event) {
 			event.preventDefault();
@@ -191,7 +190,7 @@ var ThemeDesigner = {
 
 			ThemeDesigner.track('wordmark/nowordmark');
 		});
-		
+
 		// submit handler for uploading custom logo image
 		$('#WordMarkUploadForm').submit(function() {
 			$.AIM.submit(this, ThemeDesigner.wordmarkUploadCallback);
@@ -207,7 +206,7 @@ var ThemeDesigner = {
 
 			ThemeDesigner.track('favicon/faviconwordmark');
 		});
-		
+
 		// submit handler for uploading favicon image
 		$('#FaviconUploadForm').submit(function() {
 			$.AIM.submit(this, ThemeDesigner.faviconUploadCallback);
@@ -215,15 +214,19 @@ var ThemeDesigner = {
 	},
 
 	wordmarkShield: function() {
+		var shield = $("#wordmark-shield");
+
 		if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
-			$("#wordmark-shield")
-			.css({
-				height: $("#wordmark-shield").parent().outerHeight(true),
-				width: $("#wordmark-shield").parent().outerWidth(true)
-			})
-			.show();
+			var parent = shield.parent();
+
+			shield
+				.css({
+					height: parent.outerHeight(true),
+					width: parent.outerWidth(true)
+					})
+				.show();
 		} else {
-			$("#wordmark-shield").hide();
+			shield.hide();
 		}
 	},
 
@@ -372,10 +375,10 @@ var ThemeDesigner = {
 		$("#ColorNameForm").unbind();
 		$("#ThemeDesignerPicker")
 			.removeClass("color image")
-			.find(".user").remove();
+			.find(".user").remove().end()
+			.find(".color li").remove().end()
+			.find(".image li").unbind("click");
 		$("#color-name").val("").blur();
-		$("#ThemeDesignerPicker").find(".color").find(".swatches").find("li").remove();
-		$("#ThemeDesignerPicker").find(".image").find(".swatches").find("li").unbind("click");
 	},
 
 	/**
@@ -568,12 +571,12 @@ var ThemeDesigner = {
 		$().log(ThemeDesigner.settings, 'ThemeDesigner');
 
 		// send current settings to backend
-		
+
 		$.nirvana.sendRequest({
 			controller: 'ThemeDesigner',
 			method: 'SaveSettings',
 			data: {
-				 settings: ThemeDesigner.settings 	
+				 settings: ThemeDesigner.settings
 			},
 			callback: function(data) {
 				// BugId:1349
@@ -583,7 +586,7 @@ var ThemeDesigner = {
 					}
 				});
 			}
-		});		
+		});
 	},
 
 	navigationClick: function(event) {
@@ -707,15 +710,17 @@ var ThemeDesigner = {
 
 			$().log('applySettings, updateSkinPreview');
 
+			var wordmark = $("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark");
+
 			if (ThemeDesigner.settings["wordmark-type"] == "text") {
-				$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
+				wordmark
 					.removeClass()
 					.addClass("wordmark")
 					.addClass(ThemeDesigner.settings["wordmark-font-size"])
 					.find("a")
 						.text(ThemeDesigner.settings["wordmark-text"])
 			} else if (ThemeDesigner.settings["wordmark-type"] == "graphic") {
-				$("#PreviewFrame").contents().find("#WikiHeader").find(".wordmark")
+				wordmark
 					.addClass("graphic")
 					.find("a")
 						.html('')
