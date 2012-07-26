@@ -433,30 +433,42 @@ class SpecialPromoteHelper extends WikiaObject {
 	protected function checkWikiStatus($WikiId, $langCode) {
 		$visualization = F::build('CityVisualization');
 		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
-		$wikiDataSpecialPromote = $this->homePageHelper->getWikiInfoForSpecialPromote($WikiId, $langCode);
+		$wikiDataPromote = $visualization->getWikiDataForPromote($WikiId, $langCode);
+		$mainImage = $this->getMainImage();
 		$additionalImages = $this->getAdditionalImages();
 		$hasImagesRejected = false;
 		$hasImagesInReview = false;
+
 		if (!empty($wikiDataVisualization['main_image'])) {
 			$isFeatured = true;
-		}
-		elseif (empty($wikiDataVisualization['main_image'])) {
+		} else {
 			$isFeatured = false;
+		}
+
+		$imageStatuses = array();
+		if($mainImage) {
+			$imageStatuses []= $mainImage['review_status'];
 		}
 		if ($additionalImages) {
 			foreach($additionalImages as $image) {
-				switch($image['review_status']) {
-					case ImageReviewStatuses::STATE_REJECTED:
-						$hasImagesRejected = true;
-						break;
-					case ImageReviewStatuses::STATE_IN_REVIEW:
-					case ImageReviewStatuses::STATE_QUESTIONABLE:
-					case ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW:
-						$hasImagesInReview = true;
-						break;
-				}
+				$imageStatuses []= $image['review_status'];
 			}
 		}
+
+		foreach($imageStatuses as $status) {
+			switch($status) {
+				case ImageReviewStatuses::STATE_REJECTED:
+					$hasImagesRejected = true;
+					break;
+				case ImageReviewStatuses::STATE_UNREVIEWED:
+				case ImageReviewStatuses::STATE_IN_REVIEW:
+				case ImageReviewStatuses::STATE_QUESTIONABLE:
+				case ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW:
+					$hasImagesInReview = true;
+					break;
+			}
+		}
+
 		return array(
 			"hasImagesRejected" => $hasImagesRejected,
 			"hasImagesInReview" => $hasImagesInReview,
@@ -466,11 +478,12 @@ class SpecialPromoteHelper extends WikiaObject {
 
 	public function getWikiStatusMessage($WikiId, $langCode) {
 		$wikiStatus = $this->checkWikiStatus($WikiId, $langCode);
+
 		if ($wikiStatus["hasImagesRejected"]) {
-			$wikiStatusMessage = wfMsg('promote-statusbar-rejected');
+			$wikiStatusMessage = wfMsgExt('promote-statusbar-rejected',array('parsemag', 'parseinline'));
 		}
 		elseif ($wikiStatus["hasImagesInReview"]) {
-			$wikiStatusMessage = wfMsg('promote-statusbar-inreview');
+			$wikiStatusMessage = wfMsgExt('promote-statusbar-inreview',array('parsemag', 'parseinline'));
 		}
 		elseif ($wikiStatus["isFeatured"]) {
 			$wikiStatusMessage = wfMsgExt(
