@@ -47,6 +47,10 @@ class ArticleCommentsController extends WikiaController {
 			$this->getCommentsData( $this->wg->Title, $this->wg->request->getInt( 'page', 1 ) );
 			$this->showComments = $this->countCommentsNested === 0 || empty( $this->wg->ArticleCommentsLoadOnDemand );
 
+			if ( !$this->showComments ) {
+				$this->response->setJsVar( 'wgArticleCommentsLoadOnDemand', true );
+			}
+
 			if ( $isMobile ) {
 				$this->forward( __CLASS__, 'WikiaMobileIndex', false );
 			}
@@ -202,14 +206,6 @@ class ArticleCommentsController extends WikiaController {
 			if ( $app->wg->EnableMiniEditorExtForArticleComments && !$app->checkSkin( 'wikiamobile' ) ) {
 				$app->sendRequest( 'MiniEditor', 'loadAssets', array( 'loadOnDemand' => true ));
 			}
-		}
-		return true;
-	}
-
-	public static function onMakeGlobalVariablesScript( &$vars ) {
-		$app = F::app();
-		if ( !empty( $app->wg->ArticleCommentsLoadOnDemand ) ) {
-			$vars[ 'wgArticleCommentsLoadOnDemand' ] = true;
 		}
 		return true;
 	}
