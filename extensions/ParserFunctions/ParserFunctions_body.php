@@ -888,4 +888,49 @@ class ExtParserFunctions {
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
+
+	/**
+	 * {{#pad:value|length|with|direction}}
+	 * Note: Length of the resulting string is limited.
+	 *
+	 * copied from StringFunctions
+	 */
+	static function runPad( &$parser, $inStr = '', $inLen = 0, $inWith = '', $inDirection = '' ) {
+		global $wgPFStringLengthLimit;
+
+		# direction
+		switch ( strtolower( $inDirection ) ) {
+			case 'center':
+				$direction = STR_PAD_BOTH;
+				break;
+			case 'right':
+				$direction = STR_PAD_RIGHT;
+				break;
+			case 'left':
+			default:
+				$direction = STR_PAD_LEFT;
+				break;
+		}
+
+		# prevent markers in padding
+		$a = explode( $parser->mUniqPrefix, $inWith, 2 );
+		if ( $a[0] === '' ) {
+			$inWith = ' ';
+		} else {
+			$inWith = $a[0];
+		}
+
+		# limit pad length
+		$inLen = intval( $inLen );
+		if ( $wgPFStringLengthLimit > 0 ) {
+			$inLen = min( $inLen, $wgPFStringLengthLimit );
+		}
+
+		# adjust for multibyte strings
+		$inLen += strlen( $inStr ) - self::mwSplit( $parser, $inStr, $a );
+
+		# pad
+		return str_pad( $inStr, $inLen, $inWith, $direction );
+	}
+
 }
