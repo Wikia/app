@@ -48,7 +48,7 @@ $messages['en'] = array(
 	'promote-error-more-characters-than-maximum' => 'Oops! Your headline needs to be $2 characters or less.',
 	'promote-error-upload-unknown-error' => 'Unknown upload error',
 	'promote-error-upload-filetype-error' => 'Make sure your file is saved as a ".png"',
-	'promote-error-upload-dimensions-error' => '',
+	'promote-error-upload-dimensions-error' => 'Wrong file dimensions - file should be at least 480x320px',
 	'promote-error-too-many-images' => 'Oops! You already have nine images. Remove some if you want to add more.',
 	'promote-error-upload-type' => "Oops! Wrong upload type.",
 	'promote-error-upload-form' => "Wrong upload type in getUploadForm.",
@@ -64,7 +64,7 @@ $messages['en'] = array(
 	'promote-statusbar-icon' => 'Status',
 	'promote-statusbar-inreview' => 'One or more of your images are currently in review. Your wiki will appear on [http://www.wikia.com www.wikia.com] when images have been approved.',
 	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com www.wikia.com]!',
-	'promote-statusbar-rejected' => 'One or more of your images was not approved. Find out why.',
+	'promote-statusbar-rejected' => 'One or more of your images was not approved. [[Special:Contact Find out why]]',
 );
 
 $messages['qqq'] = array(
