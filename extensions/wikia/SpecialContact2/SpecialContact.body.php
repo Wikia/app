@@ -215,12 +215,22 @@ class ContactForm extends SpecialPage {
 		$subject = wfMsg('specialcontact-mailsub') . (( !empty($this->mProblem) )? ' - ' . $this->mProblem : '');
 
 		$screenshot = $wgRequest->getFileTempname( 'wpScreenshot' );
-
+		$magic = MimeMagic::singleton();
+					
 		$screenshots = array();
 		if ( !empty( $screenshot ) ) {
 			foreach ( $screenshot as $image ) {
 				if ( !empty( $image ) ) {
-					$screenshots[] = $image;
+					$extList = '';
+					$mime = $magic->guessMimeType( $image );
+					if ( $mime !== 'unknown/unknown' ) {
+							# Get a space separated list of extensions
+							$extList = $magic->getExtensionsForType( $mime );
+							$ext_file = strtok( $extList, ' ' );
+					} else {
+							$mime = 'application/octet-stream';
+					}
+					$screenshots[] = array( 'file' => $image, 'ext' => $ext_file, 'mime' => $mime );
 				}
 			}
 

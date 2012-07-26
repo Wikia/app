@@ -86,21 +86,6 @@ class WikiaSendgridMailer {
 		$mime = new Mail_mime();
 		$mime->setTXTBody( $email_body_txt );
 
-		# send email with attachements
-		if ( !empty( $attachments ) ) {
-			if ( !is_array( $attachments ) ) {
-				$attachments = array( $attachments );
-			}
-
-			foreach ( $attachments as $filename ) {
-				if ( !file_exists( $filename ) ) {
-					continue;
-				}
-				$name = basename( $filename );
-				$mime->addAttachment( $filename, 'application/octet-stream', $name );
-			}
-		}
-
 		$params = array( 
 			'head_charset' => 'UTF-8',
  			'html_charset' => 'UTF-8', 
@@ -109,11 +94,32 @@ class WikiaSendgridMailer {
 			'html_encoding' => '8bit'
 		);
 		
+		# send email with attachements
+		if ( !empty( $attachments ) ) {
+			if ( !is_array( $attachments ) ) {
+				$attachments = array( $attachments );
+			}
+			
+			foreach ( $attachments as $file ) {
+				$filename = $file['file'];
+				$ext_filename = $file['ext'];
+				if ( !file_exists( $filename ) ) {
+					continue;
+				}
+				$name = $filename; #basename( $filename );
+				if ( $ext_filename ) {
+					$name = $filename . "." . $ext_filename;
+				}
+				$mime->addAttachment( $filename, $file['mime'], $name );
+			}
+		}
+		
 		# Old version (1.16 MW with Wikia changes) of sendHTML method
 		if ( $email_body_html ) {
 			$mime->setHTMLBody( $email_body_html );
 			//do not ever try to call these lines in reverse order
-		}	
+		}
+
 		$body = $mime->get( $params );
 
 		$headers = $mime->headers( $headers );
