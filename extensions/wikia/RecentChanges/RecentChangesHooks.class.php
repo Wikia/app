@@ -15,7 +15,6 @@ class RecentChangesHooks {
 
 		$response = $app->sendRequest( 'RecentChangesController', 'dropdownNamespaces', array( 'all' => $all ) );
 		$html = $response->getVal( 'html', '' );
-
 		return true;
 	}
 
