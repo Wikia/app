@@ -22,7 +22,7 @@ class PhalanxHelper {
 	 *
 	 * @return boolean: true on success, false on failure
 	 */
-	static public function update( $data ) {
+	static public function update( $data, $updateCache = false ) {
 		global $wgExternalSharedDB, $wgMemc;
 		$result = false;
 		wfProfileIn( __METHOD__ );
@@ -43,7 +43,9 @@ class PhalanxHelper {
 
 			$dbw->commit();
 
-			self::updateCache($oldData, $data);
+			if ( $updateCache ) {
+				self::updateCache($oldData, $data);
+			}
 			self::logEdit($oldData,$data);
 		}
 
@@ -56,7 +58,7 @@ class PhalanxHelper {
 	 *
 	 * @return boolean: true on success, false on failure
 	 */
-	static public function save( $data ) {
+	static public function save( $data, $updateCache = false ) {
 		global $wgExternalSharedDB, $wgMemc;
 		$result = false;
 		wfProfileIn( __METHOD__ );
@@ -73,7 +75,9 @@ class PhalanxHelper {
 
 			$dbw->commit();
 
-			self::updateCache(null, $data);
+			if ( $updateCache ) {
+				self::updateCache(null, $data);
+			}
 			self::logAdd($data);
 		}
 
@@ -215,7 +219,7 @@ class PhalanxHelper {
 	}
 
 
-	static public function removeFilter( $blockId ) {
+	static public function removeFilter( $blockId, $updateCache = false ) {
 		global $wgExternalSharedDB, $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -238,7 +242,9 @@ class PhalanxHelper {
 
 		$dbw->commit();
 
-		self::updateCache($data, null);
+		if ( $updateCache ) {
+			self::updateCache($data, null);
+		}
 		self::logDelete($data);
 
 		$result = array(
