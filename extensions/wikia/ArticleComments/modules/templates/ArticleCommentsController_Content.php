@@ -45,7 +45,7 @@
 	<p class="no-comments-allowed"><?= wfMsg( 'article-comments-comment-cannot-add' ) ?> </p>
 <? endif ?>
 <? if ( $countComments ): ?>
-	<div class="article-comments-pagination upper-pagination"><div><?= $pagination ?></div></div>
+	<div class="article-comments-pagination upper-pagination"><?= $pagination ?></div>
 <? endif ?>
 <?= $app->getView( 'ArticleComments', 'CommentList', array(
 		'commentListRaw' => $commentListRaw,
@@ -54,5 +54,5 @@
 	))->render()
 ?>
 <? if ( $countComments ): ?>
-	<div class="article-comments-pagination"><div><?= $pagination ?></div></div>
+	<div class="article-comments-pagination"><?= $pagination ?></div>
 <? endif ?>

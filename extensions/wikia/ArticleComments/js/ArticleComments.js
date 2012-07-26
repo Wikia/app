@@ -11,7 +11,6 @@ var $window = $(window);
 
 var ArticleComments = {
 	processing: false,
-	clickedElementSelector: "",
 	mostRecentCount: 0,
 	messagesLoaded: false,
 	miniEditorEnabled: typeof window.wgEnableMiniEditorExt != 'undefined' && skin == 'oasis',
@@ -51,10 +50,6 @@ var ArticleComments = {
 		ArticleComments.initCompleted = true;
 	},
 
-	log: function(msg) {
-		$().log(msg, 'ArticleComments');
-	},
-
 	track: function(fakeUrl) {
 		//blogs
 		if (wgNamespaceNumber == 500 || wgNamespaceNumber == 501) {
@@ -86,7 +81,6 @@ var ArticleComments = {
 	},
 
 	edit: function(e) {
-		ArticleComments.log('begin: edit');
 		e.preventDefault();
 		ArticleComments.track('edit');
 		if (ArticleComments.processing) { return; }
@@ -156,13 +150,11 @@ var ArticleComments = {
 		}
 
 		ArticleComments.processing = true;
-		ArticleComments.log('end: edit');
 	},
 
 	cancelEdit: function(e) {
 		var commentId = e.data.id;
 
-		ArticleComments.log('begin: cancel edit');
 		e.preventDefault();
 
 		if (ArticleComments.miniEditorEnabled) {
@@ -172,12 +164,9 @@ var ArticleComments = {
 		$('#article-comm-div-form-' + commentId).hide();
 		$(e.data.target).closest('.buttons').show();
 		$('#comm-text-' + commentId).show();
-
-		ArticleComments.log('end: cancel edit');
 	},
 
 	saveEdit: function(e) {
-		ArticleComments.log('begin: saveEdit');
 		e.preventDefault();
 		ArticleComments.track('editSave');
 		if (ArticleComments.processing) { return; }
@@ -241,12 +230,9 @@ var ArticleComments = {
 
 			ArticleComments.processing = true;
 		}
-
-		ArticleComments.log('end: saveEdit');
 	},
 
 	reply: function(e) {
-		ArticleComments.log('begin: reply');
 		e.preventDefault();
 		ArticleComments.track('reply');
 		if (ArticleComments.processing) { return; }
@@ -309,11 +295,9 @@ var ArticleComments = {
 		});
 
 		ArticleComments.processing = true;
-		ArticleComments.log('end: reply');
 	},
 
 	postComment: function(e) {
-		ArticleComments.log('begin: postComment');
 		e.preventDefault();
 		ArticleComments.track('post');
 
@@ -431,23 +415,22 @@ var ArticleComments = {
 		} else {
 			makeRequest();
 		}
-
-		ArticleComments.log('end: postComment');
 	},
 
 	setPage: function(e) {
-		ArticleComments.log('begin: setPage');
 		e.preventDefault();
+
 		var page = parseInt($(this).attr('page'));
 		var $commentsList = $('#article-comments-ul').addClass('loading');
-
 		var trackingPage = page;
 		var id = $(this).attr('id');
+
 		if (id == 'article-comments-pagination-link-prev') {
 			trackingPage = 'prev';
 		} else if (id == 'article-comments-pagination-link-next') {
 			trackingPage = 'next';
 		}
+
 		ArticleComments.track('pageSwitch/' + trackingPage);
 		$('#article-comments-pagination-link-' + trackingPage).blur();
 
@@ -462,27 +445,14 @@ var ArticleComments = {
 				$commentsList.html(json.text);
 				var $articleCommentsPagination = $('.article-comments-pagination');
 				if ($articleCommentsPagination.exists()) {
-					$articleCommentsPagination.find('div').html(json.pagination);
-
-					if(ArticleComments.clickedElementSelector == "" || !$(ArticleComments.clickedElementSelector).exists()) {
-						ArticleComments.clickedElementSelector = '.article-comments-pagination';
-					}
+					$articleCommentsPagination.html(json.pagination);
 				}
+
 				ArticleComments.addHover();
-
-				if(ArticleComments.clickedElementSelector != "") {
-					var docViewTop = $window.scrollTop();
-					var docViewBottom = docViewTop + $window.height();
-					var elemTop = $(ArticleComments.clickedElementSelector).eq(0).offset().top;
-					if(elemTop < docViewTop || elemTop > docViewBottom) {
-						$('html, body').animate({ scrollTop: elemTop }, 1);
-					}
-				}
 			}
-			ArticleComments.clickedElementSelector = "";
+
 			ArticleComments.processing = false;
 		});
-		ArticleComments.log('end: setPage');
 	},
 
 	linkDelete: function() {
@@ -506,13 +476,11 @@ var ArticleComments = {
 	},
 
 	changeOrder: function() {
-		ArticleComments.log('begin: changeOrder');
 		if ($(this).hasClass('desc')) {
 			ArticleComments.track('orderSwitch/newestFirst');
 		} else {
 			ArticleComments.track('orderSwitch/newestLast');
 		}
-		ArticleComments.log('end: changeOrder');
 	},
 
 	// Used to initialize MiniEditor
@@ -597,12 +565,27 @@ var ArticleComments = {
 
 	getSaveConversionFormat: function(element) {
 		return ArticleComments.miniEditorEnabled ? MiniEditor.getSaveConversionFormat(element) : '';
+	},
+
+	scrollToElement: function(element) {
+		var $element = $(element);
+		var docViewTop = $window.scrollTop();
+		var docViewBottom = docViewTop + $window.height();
+		var elementTop = $element.offset().top;
+
+		if (elementTop < docViewTop || elementTop > docViewBottom) {
+			$('html, body').animate({
+				scrollTop: elementTop
+			}, 1);
+		}
 	}
 };
 
 if (ArticleComments.loadOnDemand) {
 	$(function() {
-		var $comments = $('#article-comments'),
+		var hash = window.location.hash,
+			permalink = /^#comm-/.test(hash),
+			$comments = $('#article-comments'),
 			$commentsWrapper = $('.article-comments-wrapper');
 
 		var belowTheFold = function() {
@@ -624,12 +607,16 @@ if (ArticleComments.loadOnDemand) {
 					$commentsWrapper.removeClass('loading');
 					$comments.hide().html(html).fadeIn();
 					ArticleComments.init();
+
+					if (permalink) {
+						ArticleComments.scrollToElement(hash);
+					}
 				}
 			});
 		};
 
-		// Load comments as they become visible
-		if (belowTheFold()) {
+		// Load comments as they become visible (unless we are requesting a permalink comment)
+		if (!permalink && belowTheFold()) {
 			$window.on('scrollstop.ArticleCommentsLoadOnDemand', function(event) {
 				if (!belowTheFold()) {
 					$window.off('scrollstop.ArticleCommentsLoadOnDemand');
