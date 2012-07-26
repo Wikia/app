@@ -38,6 +38,7 @@ $wgHooks['UserGetRights'][] = 'onUserGetRights';
  */
 
 function onUserGetRights( $user, &$aRights ) {
+	global $wgRequest;
 	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint' ) {
 		$aRights[] = 'read';	
 	}
