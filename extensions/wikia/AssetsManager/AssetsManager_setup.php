@@ -28,7 +28,20 @@ $wgAutoloadClasses['AssetsManagerController'] = $dir.'AssetsManagerController.cl
 
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
-$wgHooks['UserLoadFromSession'][] = 'AssetsManagerClearCookie';
+$wgHooks['UserGetRights'][] = 'onUserGetRights';
+
+
+/*
+ * Add read right to all am reqest. 
+ * That is solving problems with Loading Assets  
+ */
+
+function onUserGetRights( $user, &$aRights ) {
+	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint' ) {
+		$aRights[] = 'read';	
+	}
+	return true;
+}
 
 function AssetsManagerClearCookie( $user, &$result ) {
 	global $wgRequest;
