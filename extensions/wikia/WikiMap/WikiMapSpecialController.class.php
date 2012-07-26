@@ -6,7 +6,7 @@ class WikiMapSpecialController extends WikiaSpecialPageController {
     }
 
     public function init() {
-        $this->businessLogic = F::build( 'WikiMap', array( 'currentTitle' => $this->app->wg->Title ) );
+        $this->businessLogic = F::build( 'WikiMapModel', array( 'currentTitle' => $this->app->wg->Title ) );
 
     }
 
