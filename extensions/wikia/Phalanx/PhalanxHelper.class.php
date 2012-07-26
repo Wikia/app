@@ -22,7 +22,7 @@ class PhalanxHelper {
 	 *
 	 * @return boolean: true on success, false on failure
 	 */
-	static public function update( $data, $updateCache = false ) {
+	static public function update( $data, $updateCache = true ) {
 		global $wgExternalSharedDB, $wgMemc;
 		$result = false;
 		wfProfileIn( __METHOD__ );
@@ -58,7 +58,7 @@ class PhalanxHelper {
 	 *
 	 * @return boolean: true on success, false on failure
 	 */
-	static public function save( $data, $updateCache = false ) {
+	static public function save( $data, $updateCache = true ) {
 		global $wgExternalSharedDB, $wgMemc;
 		$result = false;
 		wfProfileIn( __METHOD__ );
@@ -219,7 +219,7 @@ class PhalanxHelper {
 	}
 
 
-	static public function removeFilter( $blockId, $updateCache = false ) {
+	static public function removeFilter( $blockId, $updateCache = true ) {
 		global $wgExternalSharedDB, $wgUser, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
