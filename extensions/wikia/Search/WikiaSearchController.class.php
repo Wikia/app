@@ -57,8 +57,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$redirs = $this->request->getBool('redirs');
 		}
 		else {
-			// include redirects by default
-			$redirs = true;
+			// don't include redirects by default
+			$redirs = false;
 		}
 
 		$namespaces = array();
@@ -73,6 +73,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$isCorporateWiki = !empty($this->wg->EnableWikiaHomePageExt);
+
 		//  Check for crossWikia value set in url.  Otherwise, check if we're on the corporate wiki
 		$isInterWiki = $crossWikia ? true : $isCorporateWiki;
 
@@ -106,8 +107,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		 	$this->wikiaSearch->setNamespaces( $namespaces );
 			$this->wikiaSearch->setSkipCache( $skipCache );
-			// @todo turn it back on, when backend will be fixed
-			//$this->wikiaSearch->setIncludeRedirects( $redirs );
+			$this->wikiaSearch->setIncludeRedirects( $redirs );
 
 			$params = array('page'=>$page,
 					'length'=>self::RESULTS_PER_PAGE,

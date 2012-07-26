@@ -235,6 +235,13 @@ class Apache_Solr_Response
 	 */
 	protected function _parseData()
 	{
+		// solr's default json response writer sucks, but i don't feel like writing a new one for this one tiny bug
+		$collationCount = 0;
+
+		while (substr_count($this->_rawResponse, '"collation":{')) {
+			$this->_rawResponse = preg_replace('/("collation)(":{)/', '"collation'.$collationCount++.'":{', $this->_rawResponse, 1);
+		}
+
 		//An alternative would be to use Zend_Json::decode(...)
 		$data = json_decode($this->_rawResponse);
 
@@ -272,6 +279,16 @@ class Apache_Solr_Response
 			}
 
 			$data->response->docs = $documents;
+		}
+
+		// added by a frustrated wikian
+		if (isset($data->spellcheck) && isset($data->spellcheck->suggestions)) {
+
+			$data->spellcheck->collations = array();
+
+			for ($i = 0; $i < $collationCount; $i++) {
+				$data->spellcheck->collations[] = $data->spellcheck->suggestions->{'collation'.$i};
+			}
 		}
 
 		$this->_parsedData = $data;

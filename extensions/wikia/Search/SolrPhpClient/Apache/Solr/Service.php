@@ -81,7 +81,7 @@ class Apache_Solr_Service
 	/**
 	 * Response version we support
 	 */
-	const SOLR_VERSION = '1.2';
+	const SOLR_VERSION = '3.6';
 
 	/**
 	 * Response writer we support
