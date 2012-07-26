@@ -223,9 +223,12 @@ Feature: $feature
 $message
 MSG;
 
-		$message .= $message . "\n\n---\nBrowser data: " . $_SERVER['HTTP_USER_AGENT'];
+		$message .= "\n\n---\nBrowser data: " . $_SERVER['HTTP_USER_AGENT'];
 
-		return UserMailer::send( $wg->app->EmergencyContact, $user->getEmail(), $title, $message );
+		$mailUser = new MailAddress( $user->getEmail() );
+		$mailCommunity = new MailAddress( $this->wg->SpecialContactEmail, 'Wikia Support' );
+
+		return UserMailer::send( $mailCommunity, $mailUser, $title, $message, $mailUser, null, 'WikiFeatures' );
 	}	
 	
 }
