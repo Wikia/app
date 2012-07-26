@@ -8,7 +8,7 @@
  */
 
 // MediaWiki
-include "{$IP}/maintenance/commandLine.inc";
+include __DIR__ . '/../../../../maintenance/commandLine.inc';
 
 // Phalanx caches its blocks by the type and by the language. Let's
 // get supported types and languages.
@@ -23,9 +23,9 @@ foreach ( $aTypes as $iType ) {
 		$wgMemc->delete( "phalanx:{$iType}:{$sLanguage}" );
 		// Fill the cache with the current data from DB_MASTER.
 		Phalanx::getFromFilter( $iType, $sLanguage, true );
-		// Touch.
-		Phalanx::setLastUpdate();
 	}
+	// Touch.
+	Phalanx::setLastUpdate();
 }
 
 exit( 0 );
