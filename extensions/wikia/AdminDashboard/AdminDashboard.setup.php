@@ -30,3 +30,8 @@ $wgGroupPermissions['staff']['admindashboard'] = true;
 $wgGroupPermissions['sysop']['admindashboard'] = true;
 $wgGroupPermissions['bureaucrat']['admindashboard'] = true;
 $wgGroupPermissions['helper']['admindashboard'] = true;
+
+// register messages package for JS (BugId:41451)
+F::build('JSMessages')->registerPackage('AdminDashboard', array(
+	'admindashboard-loading',
+));
