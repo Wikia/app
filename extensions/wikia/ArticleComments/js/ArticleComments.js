@@ -7,6 +7,8 @@ if ( !window.wgIsArticle ) {
 	return;
 }
 
+var $window = $(window);
+
 var ArticleComments = {
 	processing: false,
 	clickedElementSelector: "",
@@ -437,6 +439,7 @@ var ArticleComments = {
 		ArticleComments.log('begin: setPage');
 		e.preventDefault();
 		var page = parseInt($(this).attr('page'));
+		var $commentsList = $('#article-comments-ul').addClass('loading');
 
 		var trackingPage = page;
 		var id = $(this).attr('id');
@@ -453,8 +456,10 @@ var ArticleComments = {
 			order: $('#article-comm-order').attr('value')
 
 		}, function(json) {
+			$commentsList.removeClass('loading');
+
 			if (!json.error) {
-				$('#article-comments-ul').html(json.text);
+				$commentsList.html(json.text);
 				var $articleCommentsPagination = $('.article-comments-pagination');
 				if ($articleCommentsPagination.exists()) {
 					$articleCommentsPagination.find('div').html(json.pagination);
@@ -466,7 +471,6 @@ var ArticleComments = {
 				ArticleComments.addHover();
 
 				if(ArticleComments.clickedElementSelector != "") {
-					var $window = $(window);
 					var docViewTop = $window.scrollTop();
 					var docViewBottom = docViewTop + $window.height();
 					var elemTop = $(ArticleComments.clickedElementSelector).eq(0).offset().top;
@@ -596,29 +600,16 @@ var ArticleComments = {
 	}
 };
 
-// Initialize on demand
 if (ArticleComments.loadOnDemand) {
 	$(function() {
-		var $wrapper = $('.WikiaArticleComments');
+		var $comments = $('#article-comments'),
+			$commentsWrapper = $('.article-comments-wrapper');
 
-		// Not loading on demand. Work around for cases where there are no comments.
-		if (!$wrapper.hasClass('on-demand')) {
-			ArticleComments.init();
-			return;
-		}
+		var belowTheFold = function() {
+			return $comments.offset().top >= ($window.scrollTop() + $window.height());
+		};
 
-		var $window = $(window),
-			$comments = $('#article-comments'),
-			$commentsWrapper = $comments.closest('.article-comments-wrapper'),
-			$showComments = $('#show-article-comments'),
-			belowTheFold = function() {
-				return $comments.offset().top >= ($window.scrollTop() + $window.height());
-			};
-
-		$showComments.on('click.ArticleCommentsLoadOnDemand', function(event) {
-			$showComments.off('click.ArticleCommentsLoadOnDemand');
-			$commentsWrapper.addClass('loading');
-
+		var loadComments = function() {
 			$.nirvana.sendRequest({
 				controller: 'ArticleCommentsController',
 				method: 'Content',
@@ -626,30 +617,32 @@ if (ArticleComments.loadOnDemand) {
 				type: 'GET',
 				data: {
 					articleId: window.wgArticleId,
-					page: $comments.data('page')
+					page: $comments.data('page'),
+					useskin: window.skin
 				},
 				callback: function(html) {
-					$wrapper.removeClass('on-demand');
 					$commentsWrapper.removeClass('loading');
 					$comments.hide().html(html).fadeIn();
 					ArticleComments.init();
 				}
 			});
+		};
 
-			event.preventDefault();
-		});
-
+		// Load comments as they become visible
 		if (belowTheFold()) {
 			$window.on('scrollstop.ArticleCommentsLoadOnDemand', function(event) {
 				if (!belowTheFold()) {
-					$showComments.trigger('click');
 					$window.off('scrollstop.ArticleCommentsLoadOnDemand');
+					loadComments();
 				}
 			});
+
+		// Comments are already visible, load them now
+		} else {
+			loadComments();
 		}
 	});
 
-// Initialize on content ready
 } else {
 	wgAfterContentAndJS.push(ArticleComments.init);
 }
