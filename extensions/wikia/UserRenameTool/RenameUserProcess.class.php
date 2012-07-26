@@ -610,7 +610,8 @@ class RenameUserProcess {
 				'reason' => 'User rename process requested',
 				'lang' => null,
 				'type' => Phalanx::TYPE_USER
-			));
+			),
+			false /* do not rebuild the cache */ );
 
 			if(!$this->mPhalanxBlockId) {
 				$this->addLog("Creation of the block failed.");
@@ -887,7 +888,7 @@ class RenameUserProcess {
 		//remove phalanx user block
 
 		if($this->mPhalanxBlockId){
-			$ret = PhalanxHelper::removeFilter($this->mPhalanxBlockId);
+			$ret = PhalanxHelper::removeFilter($this->mPhalanxBlockId, false /* do not touch Phalanx's cache */ );
 
 			if($ret['error'] == true) {
 				$this->addLog("Error removing Phalanx user block with ID {$this->mPhalanxBlockId}");
