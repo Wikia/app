@@ -38,6 +38,8 @@ $magicWords['en'] = array(
 	'replace' => array( 0, 'replace' ),
 	'explode' => array( 0, 'explode' ),
 	'urldecode' => array( 0, 'urldecode' ),
+	# added by wikia
+	'pad' => array( 0, 'pad' )
 );
 
 /** Arabic (العربية) */

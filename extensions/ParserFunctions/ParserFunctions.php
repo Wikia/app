@@ -100,6 +100,7 @@ function wfRegisterParserFunctions( $parser ) {
 		$parser->setFunctionHook( 'replace',   'ExtParserFunctions::runReplace'   );
 		$parser->setFunctionHook( 'explode',   'ExtParserFunctions::runExplode'   );
 		$parser->setFunctionHook( 'urldecode', 'ExtParserFunctions::runUrlDecode' );
+		$parser->setFunctionHook( 'pad',       'ExtParserFunctions::runPad' );
 	}
 
 	if( $wgPFEnableConvert ) {
