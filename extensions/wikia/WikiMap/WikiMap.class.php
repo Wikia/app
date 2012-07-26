@@ -1,5 +1,5 @@
 <?php
-class wikiMap extends WikiaObject {
+class WikiMap extends WikiaObject {
     private $title = null;
 
     public function __construct(Title $currentTitle = null) {
