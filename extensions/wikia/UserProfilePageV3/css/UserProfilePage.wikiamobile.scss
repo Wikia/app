@@ -17,8 +17,9 @@
 	@include linear-gradient(rgb(38,148,225), rgb(17,105,178));
 	border-radius: 5px 5px 0 0;
 	color: white;
-	overflow: auto;
+	overflow: hidden;
 	width: 100%;
+	word-wrap: break-word;
 }
 
 em{
@@ -32,10 +33,12 @@ em{
 }
 .mstHgr{
 	padding: 10px;
+	margin-left: 73px;
 }
 .mstNm{
 	display: inline;
 	font-size: 22px;
+	margin-right: 10px;
 }
 .mstRn, .mstEd{
 	font-size: 14px;
@@ -56,11 +59,11 @@ em{
 	border-radius: 5px;
 	display: inline-block;
 	line-height: 20px;
-	margin-left: 10px;
 	padding: 2px 5px;
 	position: relative;
 	text-transform: uppercase;
 	top: -3px;
+	margin-top: 3px;
 }
 .mstInf{
 	font-size: 14px;
@@ -81,10 +84,14 @@ em{
 	}
 }
 
-.mstLi{
+.mstSectLi{
 	padding-top: 16px;
+
 	&:first-child {
 		padding-top: 0;
 	}
 }
 
+.mstLi {
+	padding-top: 5px;
+}

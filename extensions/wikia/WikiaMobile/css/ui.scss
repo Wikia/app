@@ -33,7 +33,7 @@
 	margin: 10px;
 	color: #6A6A6A;
 	@include linear-gradient(rgb(253,253,251), rgb(239,239,239));
-	
+
 	&.main {
 		@include linear-gradient(rgb(38,148,225), rgb(17,105,178));
 		color: white;
@@ -70,12 +70,11 @@
 
 	li {
 		border-bottom: 1px solid $border-color;
-		padding: 0 10px;
 
 		& > a, & > span {
 			display: block;
 			width: 100%;
-			padding: 12px 0;
+			padding: 12px 10px;
 		}
 
 		&:last-child {

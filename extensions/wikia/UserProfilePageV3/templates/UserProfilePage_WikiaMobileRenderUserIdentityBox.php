@@ -27,22 +27,30 @@
 	<div class=mstInf>
 		<ul class=mstUl>
 			<? if( !empty($user['location']) ): ?>
-				<li class=mstLi itemprop=address><?= wfMsg('user-identity-box-location', array( '$1' => $user['location'] )); ?></li>
+				<li class=mstSectLi itemprop=address><?= wfMsg('user-identity-box-location', array( '$1' => $user['location'] )); ?></li>
 			<? endif; ?>
 			<? if( !empty($user['birthday']) ): ?>
-				<li class=mstLi><?= wfMsg('user-identity-box-was-born-on', array( '$1' => F::app()->wg->Lang->getMonthName( intval($user['birthday']['month']) ), '$2' => $user['birthday']['day'] )); ?></li>
+				<li class=mstSectLi><?= wfMsg('user-identity-box-was-born-on', array( '$1' => F::app()->wg->Lang->getMonthName( intval($user['birthday']['month']) ), '$2' => $user['birthday']['day'] )); ?></li>
 			<? endif; ?>
 			<? if( !empty($user['occupation']) ): ?>
-				<li class=mstLi><?= wfMsg('user-identity-box-occupation', array( '$1' => $user['occupation'] )); ?></li>
+				<li class=mstSectLi><?= wfMsg('user-identity-box-occupation', array( '$1' => $user['occupation'] )); ?></li>
 			<? endif; ?>
 			<? if( !empty($user['gender']) ): ?>
-				<li class=mstLi><?= wfMsg('user-identity-i-am', array( '$1' => $user['gender'] )); ?></li>
+				<li class=mstSectLi><?= wfMsg('user-identity-i-am', array( '$1' => $user['gender'] )); ?></li>
 			<? endif; ?>
 			<? if( (!array_key_exists('hideEditsWikis', $user) || !$user['hideEditsWikis']) && !empty($user['topWikis']) && is_array($user['topWikis']) ): ?>
-				<li class=mstLi><span><?= wfMsg('user-identity-box-fav-wikis'); ?></span>
+				<li class=mstSectLi><span><?= wfMsg('user-identity-box-fav-wikis'); ?></span>
 					<ul class=mstUl>
-						<? foreach($user['topWikis'] as $wiki): ?>
-						<li class=mstLi><a href="<?= $wiki['wikiUrl']; ?>"><?= $wiki['wikiName']; ?></a></li>
+						<? foreach($user['topWikis'] as $wiki) :?>
+						<?
+							//the data produced by the controller contains the link to the User page on a wiki
+							//but what we need is the URL of the wiki only, since the data is there no need to
+							//make it bigger, just extract the useful bits
+							$tokens = explode( '/', $wiki['wikiUrl'], 4 );//get [http,,www.wikia.com,all_the_rest]
+							array_pop( $tokens );//drop all_the_rest from the tokens
+							$wikiURL = implode( '/', $tokens );//stick it back together
+						?>
+						<li class=mstLi><a href="<?= $wikiURL; ?>"><?= $wiki['wikiName']; ?></a></li>
 						<? endforeach; ?>
 					</ul>
 				</li>
