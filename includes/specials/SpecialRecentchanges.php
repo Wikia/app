@@ -564,8 +564,9 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		}
 		$s .= $list->endRecentChangesList();
 		
-		
+		/* Wikia Change */
 		$this->getOutput()->addHTML( Xml::openElement( 'div', array( 'class' => 'rc-conntent' )) .  $s . Xml::closeElement('div') );
+		/* Wikia Change END*/
 	}
 
 	/**
@@ -698,6 +699,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 	protected function namespaceFilterForm( FormOptions $opts ) {
 		# start wikia change
 		$nsSelect = '';
+		/* Wikia Change */
 		wfRunHooks( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
 
 		if ( empty($nsSelect) ) {
@@ -723,6 +725,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			$associated = "";
 			$nsLabel = "";
 		}
+		/* Wikia Change end*/
 		return array( $nsLabel, "$nsSelect $invert $associated" );
 	}
 
