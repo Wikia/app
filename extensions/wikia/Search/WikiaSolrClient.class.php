@@ -119,18 +119,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 		$queryClauses = array();
 		$sanitizedQuery = $this->sanitizeQuery($query);
 
-
-		$params += array('spellcheck' => 'true',
-						 'spellcheck.onlyMorePopular' => 'true',
-						 'spellcheck.collate' => 'true',
-						 'spellcheck.q' => $sanitizedQuery, 
-						 'spellcheck.dictionary' => (in_array($wgLanguageCode, $wgWikiaSearchSupportedLanguages) ? $wgLanguageCode : 'default'),
-						 'spellcheck.maxCollationTries' => '75',
-						 'spellcheck.count' => '75',
-						 'spellcheck.collateExtendedResults' => 'true',
-						 'spellcheck.maxCollations' => '10',
-						);
-
 		$onWikiId = ( !empty( $solrDebugWikiId ) ) ? $solrDebugWikiId : $cityId;
 
 		$queryNoQuotes = self::sanitizeQuery(preg_replace("/['\"]/", '', $query));
@@ -168,8 +156,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 							);
 		}
 		else {
-			$params['fq'] = "wid:{$onWikiId}";
-			$params['spellcheck.collateParam.fq'] = "wid:{$onWikiId}";
 
 			$nsQuery = '';
 			foreach($this->namespaces as $namespace) {
@@ -177,10 +163,6 @@ class WikiaSolrClient extends WikiaSearchClient {
 			}
 		  
 			$queryClauses[] = "({$nsQuery})";
-
-			$queryClauses[] = '_val_:"log(views)"^3';
-			$queryClauses[] = '_val_:"log(activeusers)"';
-			$queryClauses[] = '_val_:"log(backlinks)"^2';
 
 			array_unshift($queryClauses, "wid:{$onWikiId}");
 		}
