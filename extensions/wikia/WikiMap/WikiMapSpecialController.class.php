@@ -1,19 +1,19 @@
 <?php
-class wikiMapSpecialController extends WikiaSpecialPageController {
+class WikiMapSpecialController extends WikiaSpecialPageController {
 
     public function __construct() {
         parent::__construct( 'WikiMap', '', false , false, "default", true/*$includable*/);
     }
 
     public function init() {
-        $this->businessLogic = F::build( 'wikiMap', array( 'currentTitle' => $this->app->wg->Title ) );
+        $this->businessLogic = F::build( 'WikiMap', array( 'currentTitle' => $this->app->wg->Title ) );
 
     }
 
     public function index() {
         $this->response->addAsset('extensions/wikia/WikiMap/js/d3.v2.js');
         $this->response->addAsset('extensions/wikia/WikiMap/js/jquery.xcolor.js');
-        $this->response->addAsset('extensions/wikia/WikiMap/js/wikiMapIndexContent.js');
+        $this->response->addAsset('extensions/wikia/WikiMap/js/WikiMapIndexContent.js');
 
        // $this->response->addAsset('wiki_map_js');
 
