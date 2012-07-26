@@ -69,15 +69,8 @@
 	}
 }
 
-#wkLogOut{
-	width: 100%;
-	line-height: 50px;
+.logout{
 	background-color: #F2F2F2;
-	border: none;
-	font-size: large;
-	color: $link-color;
-	display: block;
-	padding-left: 10px;
 }
 
 #wkTopNav {
@@ -134,7 +127,7 @@
 		background-position: center;
 		background-size: 50%;
 	}
-	
+
 	.wkPrfHead{
 		font-weight: 100;
 		background: $searchOpenBackground;
@@ -145,7 +138,7 @@
 			text-transform: uppercase;
 			padding-left: 10px;
 		}
-		
+
 		.avatar{
 			margin: -3px 10px 0 4px;
 			vertical-align: middle;
@@ -191,7 +184,7 @@
 		#wkNavBack {
 			display: block;
 		}
-		
+
 		.lvl3 {
 			top: 0;
 			left: 100%;

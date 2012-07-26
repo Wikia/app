@@ -126,13 +126,13 @@ class UserIdentityBox {
 
 			$data = call_user_func(array($this, $dataType), $data);
 
-			if(!( $iEdits || $this->shouldDisplayFullMasthead() )) { 
-				$data = $this->getEmptyData($data); 
-			} 
-			
+			if(!( $iEdits || $this->shouldDisplayFullMasthead() )) {
+				$data = $this->getEmptyData($data);
+			}
+
 			$data = $this->getInternationalizedRegistrationDate($wikiId, $data);
 			if(!empty($data['edits'])) {
-				$data['edits'] = $this->app->wg->Lang->formatNum($data['edits']);				
+				$data['edits'] = $this->app->wg->Lang->formatNum($data['edits']);
 			}
 
 			//other data operations
@@ -640,12 +640,12 @@ class UserIdentityBox {
 				$editCount = $row->edits;
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
 				$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
+
 				if ($wikiTitle) {
 					$wikiUrl = $wikiTitle->getFullUrl();
 					$wikis[$wikiId] = array('id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount);
 				}
 			}
-
 		}
 
 		$this->app->wf->ProfileOut(__METHOD__);
@@ -722,6 +722,7 @@ class UserIdentityBox {
 
 		$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
 		$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
+
 		if ($wikiTitle instanceof Title) {
 			$wikiUrl = $wikiTitle->getFullUrl();
 
@@ -811,6 +812,7 @@ class UserIdentityBox {
 			if (!$this->isTopWikiHidden($wikiId) && ($wikiId != $this->app->wg->CityId)) {
 				$wikiName = F::build('WikiFactory', array('wgSitename', $wikiId), 'getVarValueByName');
 				$wikiTitle = F::build('GlobalTitle', array($this->user->getName(), NS_USER_TALK, $wikiId), 'newFromText');
+
 				if ($wikiTitle) {
 					$wikiUrl = $wikiTitle->getFullUrl();
 					$wikis[$wikiId] = array('id' => $wikiId, 'wikiName' => $wikiName, 'wikiUrl' => $wikiUrl, 'edits' => $editCount);
