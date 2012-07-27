@@ -3,6 +3,7 @@
 @import "../../../../skins/oasis/css/mixins/arrow";
 @import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/opacity";
 
 @import "DropdownColors";
 
@@ -21,6 +22,10 @@
 		overflow-x: hidden;
 		overflow-y: auto;
 		z-index: $zTop;
+	}
+	
+	&.disable {
+		@include opacity(50);
 	}
 
 	.dropdown-list {

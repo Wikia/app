@@ -35,20 +35,15 @@ class RecentChangesHooks {
 
 		$rcfs = new RecentChangesFiltersStorage($app->wg->User);
 		$selected = $rcfs->get();
+		
 		if ( empty($selected) ) {
-			return true;
-		}
-
-		$opts->setValue( 'namespace', $selected );
-
-		if ( in_array('all', $selected) ) {
-			$opts->setValue( 'namespace', null );
 			return true;
 		}
 
 		$db = $app->wf->GetDB( DB_SLAVE );
 		$cond = 'rc_namespace IN ('.$db->makeList( $selected ).')';
 
+		
 		$flag = true;
 		foreach( $conds as $key => &$value ) {
 			if ( strpos($value, 'rc_namespace') !== false ) {
