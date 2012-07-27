@@ -5,22 +5,12 @@ jQuery(function($) {
 			this.$dropdown = this.$table.find('.WikiaDropdown');
 			this.$submit = this.$table.find('input[type="submit"]');
 			this.$submit.on('click.RecentChangesDropdown', $.proxy(this.saveFilters, this));
-			this.$selectAll = this.$dropdown.find('.select-all');
-			this.$selectAll.on('change', $.proxy(this.selectAll, this));
 
 			this.dropdown = new Wikia.MultiSelectDropdown(this.$dropdown);
 			this.dropdown.on('change', $.proxy(this.onChange, this));
-
-			this.$selectAll.prop('checked', this.everythingSelected());
+			
 		},
-		everythingSelected: function() {
-			return this.dropdown.getItems().length == this.dropdown.getSelectedItems().length;
-		},
-		onChange: function(event) {
-			if (this.$selectAll.is(':checked')) {
-				this.$selectAll.toggleClass('modified', !this.everythingSelected());
-			}	
-		},
+		
 		saveFilters: function(event) {
 			var self = this;
 
@@ -38,14 +28,6 @@ jQuery(function($) {
 					window.location.reload();
 				}
 			});
-		},
-		selectAll: function(event) {
-			var checked = this.$selectAll.removeClass('modified').is(':checked');
-
-			this.dropdown
-				.getItems()
-				.toggleClass('selected', checked)
-				.find(':checkbox').prop('checked', checked);
 		}
 	};
 

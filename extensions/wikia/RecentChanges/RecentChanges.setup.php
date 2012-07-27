@@ -18,9 +18,6 @@ $app->registerClass('RecentChangesController', $dir . 'RecentChangesController.c
 $app->registerClass('RecentChangesHooks', $dir . 'RecentChangesHooks.class.php');
 $app->registerClass('RecentChangesFiltersStorage', $dir . 'RecentChangesFiltersStorage.class.php');
 
-// i18n mapping
-$app->registerExtensionMessageFile('RecentChanges', $dir.'RecentChanges.i18n.php');
-
 // Hooks
 $app->registerHook('onGetNamespaceCheckbox', 'RecentChangesHooks', 'onGetNamespaceCheckbox');
 $app->registerHook('SpecialRecentChangesQuery', 'RecentChangesHooks', 'onGetRecentChangeQuery');
