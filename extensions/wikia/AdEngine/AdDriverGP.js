@@ -20,7 +20,7 @@ var AdDriverGP = {
 			'adj' + '/' +
 			'ow-wikia.com' + '/' + 'wka.' + window.cityShort + ';' +
 			'pos=' + AdDriverGP.slotMap[slotname].pos + ';' +
-			/* (window.wgDartCustomKeyValues ? window.wgDartCustomKeyValues + ';' : '') + */
+			(window.wgDartCustomKeyValues ? this.rebuildKV(window.wgDartCustomKeyValues) + ';' : '' ) +
 			'tile=' + AdDriverGP.slotMap[slotname].tile + ';' +
 			(AdDriverGP.slotMap[slotname].dcopt ? 'dcopt=' + AdDriverGP.slotMap[slotname].dcopt + ';' : '') + 
 			'sz=' + size + ';' +
@@ -28,6 +28,33 @@ var AdDriverGP = {
 
 		this.log(url);
 		return url;
+	},
+	
+	// from: egnre=action;egnre=adventure;egnre=drama;egnre=scifi;media=tv
+	// to: egnre=action,adventure,drama,scifi;media=tv
+	// TODO: cache it
+	rebuildKV: function(kv) {
+		this.log('rebuildKV', kv);
+
+		if (kv.indexOf(';') == -1) return kv;
+
+		kv = kv.split(';');
+		kv.sort;
+
+		var out = '', last_k = '';
+		for (var i=0; i < kv.length; i++) {
+			var k_v = kv[i].split('=');
+			if (k_v[0] == last_k) {
+				out = out + ',' + k_v[1];
+			} else {
+				out = out + ';' + k_v[0] + '=' + k_v[1];
+				last_k = k_v[0];
+			}
+		}
+
+		out = out.substring(1);
+		this.log(out);
+		return out;
 	},
 	
 	log: function(msg, obj) {
