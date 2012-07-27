@@ -12,6 +12,7 @@ var LightboxLoader = {
 	inlineVideos: $(),	// jquery array of inline videos
 	inlineVideoLinks: $(),	// jquery array of inline video links
 	lightboxLoading: false,
+	inlineVideoTrackingTimeout: 0,
 	pageAds: $('#TOP_RIGHT_BOXAD'), // if more ads start showing up over lightbox, add them here
 	defaults: {
 		// start with default modal options
@@ -23,6 +24,7 @@ var LightboxLoader = {
 		height: 628,
 		videoHeight: 360,
 		onClose: function() {
+			// Reset lightbox
 			$(window).off('.Lightbox');
 			LightboxLoader.lightboxLoading = false;
 			// Reset carousel
@@ -35,19 +37,30 @@ var LightboxLoader = {
 			Lightbox.ads.adIsShowing = false;
 			// Re-show box ad
 			LightboxLoader.pageAds.css('visibility','visible');
+			// Reset tracking
+			Lightbox.clearTrackingTimeouts();
 		}
 	},
 	videoThumbWidthThreshold: 320,
 	log: function(content) {
 		$().log(content, "LightboxLoader");
 	},
-	track: function(action, label, value) {
-		WikiaTracker.trackEvent(null, {
+	track: function(action, label, value, data) {
+		// @param data - any extra params we want to pass to internal tracking
+		// Don't add willy nilly though... check with Jonathan.  
+		var ga_params  = {		
 			ga_category: 'lightbox',
 			ga_action: action,
 			ga_label: label || '',
-			ga_value: value || 0
-		}, 'internal');
+			ga_value: value || 0,
+			liztest: true
+		}
+		
+		trackParams = $.extend({}, data || {}, ga_params);
+		
+		console.log(trackParams);
+
+		WikiaTracker.trackEvent(null, trackParams, 'internal');
 	},
 	init: function() {
 		var article;
@@ -234,10 +247,14 @@ var LightboxLoader = {
 			LightboxLoader.inlineVideoLinks = target.add(LightboxLoader.inlineVideoLinks);
 			LightboxLoader.inlineVideos = videoReference.add(LightboxLoader.inlineVideos);
 			
-			LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'video-inline');
+			LightboxLoader.inlineVideoTrackingTimeout = setTimeout(function() {
+				LightboxLoader.track(WikiaTracker.ACTIONS.VIEW, 'video-inline', null, {title:json.fileTitle, provider: json.providerName});
+			}, 5000);
+
 		});
 	},
 	removeInlineVideos: function() {
+		clearTimeout(LightboxLoader.inlineVideoTrackingTimeout);
 		LightboxLoader.inlineVideos.remove();
 		LightboxLoader.inlineVideoLinks.show();
 	},
@@ -288,6 +305,16 @@ var LightboxLoader = {
 };
 
 $(function() {
+	// Fix thumbnail overlay styles in IE8 (max-width/overflow hidden bug) (BugId:42229)
+	// TODO: this probably belongs in the VideoHandlers extension
+	if($.browser.msie && $.browser.version=="8.0") {
+		$('#WikiaArticle').find('.info-overlay-title').each(function() {
+			var $this = $(this),
+				width = $this.css('max-width');
+			$this.css('width', width);
+		});
+	}
+
 	if (!window.wgEnableLightboxExt) {
 		return;
 	}

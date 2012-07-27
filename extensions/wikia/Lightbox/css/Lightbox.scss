@@ -79,6 +79,9 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		display: none;
 		z-index: 2;
 	}
+	.more-info h1 {
+		float: left;
+	}
 	.more-info, .share {
 		display: none;
 		padding: 20px 30px;
@@ -496,16 +499,32 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				@include sprite-Lightbox('share'+$sprite-normal);	
 			}		
 		}
-		.see-full-size-link {
-			border-left: 1px solid $color-shadow;
-			font-size: 11px;
-			margin-left: 10px;
-			padding-left: 10px;
-		}
 		.user-details {
 			clear: left;
 			width: 650px;
 		}
+	}
+	.see-full-size-link, .video-views {
+		border-left: 1px solid $color-shadow;
+		font-size: 11px;
+		margin-left: 10px;
+		padding-left: 10px;
+	}
+	&.video-lightbox {
+		.see-full-size-link {
+			display: none;
+		}
+		.video-views {
+			font-size: 12px;
+		}
+	}
+	&.image-lightbox {
+		.video-views {
+			display: none;
+		}
+	}
+	b {
+		font-weight: bold;
 	}
 }
 

@@ -1,5 +1,5 @@
 <?
-	$maxDescriptionLength = 70;
+	$maxDescriptionLength = 50;
 ?>
 <div class="item">
 	<?= $videoThumb ?>
@@ -10,8 +10,6 @@
 			: $video['title'];
 		?>
 		</a>
-	</div>
-	<div class="options">
-		<a class="remove" href="#"><img src="<?=wfBlankImgUrl();?>" /></a>
+		<span class="video-views"><?= wfMsg('related-videos-video-views', $wg->ContLang->formatNum($video['views'])) ?></span>
 	</div>
 </div>

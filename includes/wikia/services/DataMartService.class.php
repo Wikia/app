@@ -25,7 +25,7 @@
 		 * @param integer $wikiId
 		 * @return array $pageviews [ array( 'YYYY-MM-DD' => pageviews ) ]
 		 */
-		protected static function getPageviews( $periodId, $startDate, $endDate=null, $wikiId=null ) {
+		protected static function getPageviews( $periodId, $startDate, $endDate = null, $wikiId = null ) {
 			$app = F::app(); 
 
 			$app->wf->ProfileIn( __METHOD__ );
@@ -68,22 +68,22 @@
 		}
 
 		// get daily pageviews
-		public static function getPageviewsDaily( $startDate, $endDate=null, $wikiId=null ) {
-			$pageviews = self::getPageviews( self::PERIOD_ID_DAILY, $startDate, $endDate, $wikiId  );
+		public static function getPageviewsDaily( $startDate, $endDate = null, $wikiId = null ) {
+			$pageviews = self::getPageviews( self::PERIOD_ID_DAILY, $startDate, $endDate, $wikiId );
 
 			return $pageviews;
 		}
 
 		// get weekly pageviews
-		public static function getPageviewsWeekly( $startDate, $endDate=null, $wikiId=null ) {
-			$pageviews = self::getPageviews( self::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId  );
+		public static function getPageviewsWeekly( $startDate, $endDate = null, $wikiId = null ) {
+			$pageviews = self::getPageviews( self::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId );
 
 			return $pageviews;
 		}
 
 		// get monthly pageviews
-		public static function getPageviewsMonthly( $startDate, $endDate=null, $wikiId=null ) {
-			$pageviews = self::getPageviews( self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId  );
+		public static function getPageviewsMonthly( $startDate, $endDate = null, $wikiId = null ) {
+			$pageviews = self::getPageviews( self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId );
 
 			return $pageviews;
 		}
@@ -95,7 +95,7 @@
 		 * @param integer $public (optional)
 		 * @return array $topWikis [ array( wikiId => pageviews ) ]
 		 */
-		public static function getTopWikisByPageviews( $limit=200, $lang=null, $public=null ) {
+		public static function getTopWikisByPageviews( $limit = 200, $lang = null, $public = null ) {
 			$app = F::app(); 
 
 			$app->wf->ProfileIn( __METHOD__ );
@@ -163,7 +163,7 @@
 		 * @return array $events [ array( 'YYYY-MM-DD' => pageviews ) ]
 		 * Note: number of edits includes number of creates
 		 */
-		protected static function getEventsByWikiId( $periodId, $startDate, $endDate=null, $wikiId=null, $eventType=null ) {
+		protected static function getEventsByWikiId( $periodId, $startDate, $endDate = null, $wikiId = null, $eventType = null ) {
 			$app = F::app(); 
 
 			$app->wf->ProfileIn( __METHOD__ );
@@ -220,24 +220,152 @@
 		}
 
 		// get daily edits
-		public static function getEditsDaily( $startDate, $endDate=null, $wikiId=null ) {
-			$edits = self::getEventsByWikiId( self::PERIOD_ID_DAILY, $startDate, $endDate, $wikiId, 'edits'  );
+		public static function getEditsDaily( $startDate, $endDate = null, $wikiId = null ) {
+			$edits = self::getEventsByWikiId( self::PERIOD_ID_DAILY, $startDate, $endDate, $wikiId, 'edits' );
 
 			return $edits;
 		}
 
 		// get weekly edits
-		public static function getEditsWeekly( $startDate, $endDate=null, $wikiId=null ) {
-			$edits = self::getEventsByWikiId( self::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId, 'edits'  );
+		public static function getEditsWeekly( $startDate, $endDate = null, $wikiId = null ) {
+			$edits = self::getEventsByWikiId( self::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId, 'edits' );
 
 			return $edits;
 		}
 
 		// get monthly edits
-		public static function getEditsMonthly( $startDate, $endDate=null, $wikiId=null ) {
-			$edits = self::getEventsByWikiId( self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId, 'edits'  );
+		public static function getEditsMonthly( $startDate, $endDate = null, $wikiId = null ) {
+			$edits = self::getEventsByWikiId( self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId, 'edits' );
 
 			return $edits;
+		}
+
+		/**
+		 * get video views by video title
+		 * @param string $title
+		 * @param integer $periodId
+		 * @param string $startDate [YYYY-MM-DD]
+		 * @param string $endDate [YYYY-MM-DD]
+		 * @param integer $wikiId
+		 * @return array $videoviews [ array( 'YYYY-MM-DD' => videoviews ) ]
+		 */
+		protected static function getVideoViewsByTitle( $title, $periodId, $startDate, $endDate = null, $wikiId = null ) {
+			$app = F::app();
+
+			$app->wf->ProfileIn( __METHOD__ );
+
+			if ( empty($wikiId) ) {
+				$wikiId = $app->wg->CityId;
+			}
+
+			if ( empty($endDate) ) {
+				$endDate = date( 'Y-m-d', strtotime('-1 day') );
+			}
+
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'video_views', $wikiId, $periodId, $startDate, $endDate, md5($title) );
+			$videoViews = $app->wg->Memc->get( $memKey );
+			if (!is_array($videoViews) ) {
+				$videoViews = array();
+				if ( !empty($app->wg->StatsDBEnabled) ) {
+					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+
+					$result = $db->select(
+							array( 'rollup_wiki_video_views' ),
+							array( "date_format(time_id,'%Y-%m-%d') as date, views as cnt" ),
+							array(
+								'period_id'   => $periodId,
+								'wiki_id'     => $wikiId,
+								'video_title' => $title,
+								"time_id between '$startDate' and '$endDate'"
+							),
+							__METHOD__
+					);
+
+					while ( $row = $db->fetchObject($result) ) {
+						$videoViews[ $row->date ] = $row->cnt;
+					}
+
+					$app->wg->Memc->set( $memKey, $videoViews, 60*60*12 );
+				}
+			}
+
+			$app->wf->ProfileOut( __METHOD__ );
+
+			return $videoViews;
+		}
+
+		// get daily video views by video title
+		public static function getVideoViewsByTitleDaily( $title, $startDate, $endDate = null, $wikiId = null ) {
+			$videoViews = self::getVideoViewsByTitle( $title, self::PERIOD_ID_DAILY, $startDate, $endDate, $wikiId );
+
+			return $videoViews;
+		}
+
+		// get monthly video views by video title
+		public static function getVideoViewsByTitleMonthly( $title, $startDate, $endDate = null, $wikiId = null ) {
+			$videoViews = self::getVideoViewsByTitle( $title, self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId );
+
+			return $videoViews;
+		}
+
+		/**
+		 * get total video views by video title
+		 * @param string $title
+		 * @param integer $periodId
+		 * @param string $startDate [YYYY-MM-DD]
+		 * @param string $endDate [YYYY-MM-DD]
+		 * @param integer $wikiId
+		 * @return array $videoviews [ array( 'YYYY-MM-DD' => videoviews ) ]
+		 */
+		public static function getVideoViewsByTitleTotal( $title, $startDate = null, $endDate = null, $wikiId = null ) {
+			$app = F::app();
+
+			$app->wf->ProfileIn( __METHOD__ );
+
+			if ( empty($wikiId) ) {
+				$wikiId = $app->wg->CityId;
+			}
+
+			if ( empty($endDate) ) {
+				$endDate = date( 'Y-m-d', strtotime('-1 day') );
+			}
+
+			if ( empty($startDate) ) {
+				$startDate = '2012-07-01'; // start tracking video view
+			}
+
+			$memKey = $app->wf->SharedMemcKey( 'datamart', 'total_video_views', $wikiId, $startDate, $endDate, md5($title) );
+			$videoViews = $app->wg->Memc->get( $memKey );
+			if ( $videoViews === false ) {
+				$periodId = self::PERIOD_ID_MONTHLY;
+				$videoViews = 0;
+
+				if ( !empty($app->wg->StatsDBEnabled) ) {
+					$db = $app->wf->GetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+
+					$row = $db->selectRow(
+							array( 'rollup_wiki_video_views' ),
+							array( 'ifnull(sum(views),0) as cnt' ),
+							array(
+								'period_id'   => $periodId,
+								'wiki_id'     => $wikiId,
+								'video_title' => $title,
+								"time_id between '$startDate' and '$endDate'"
+							),
+							__METHOD__
+					);
+
+					if ( $row ) {
+						$videoViews = $row->cnt;
+					}
+
+					$app->wg->Memc->set( $memKey, $videoViews, 60*60*12 );
+				}
+			}
+
+			$app->wf->ProfileOut( __METHOD__ );
+
+			return $videoViews;
 		}
 
 	}

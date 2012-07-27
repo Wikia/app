@@ -16,7 +16,8 @@ $messages['en'] = array(
 	'videohandler-unknown-title' => 'Unknown title',
 	'videohandler-video-details' => '$1 (provider: $2)',
 	'videohandler-category' => 'Videos',
-    'videohandler-description' => 'Description'
+    'videohandler-description' => 'Description',
+	'videohandler-video-views' => '$1 {{PLURAL:$1|view|views}}',
 );
 
 /** Message documentation (Message documentation) */
@@ -27,6 +28,7 @@ $messages['qqq'] = array(
 	'videohandler-video-details' => "Parameters:
 * $1 is a link to the video on its source page, with the label being the original title of the video
 * $2 is a link to the provider's homepage (e.g. [http://youtube.com/ youtube.com])",
+	'videohandler-video-views' => 'video views. $1 is number of video views.',
 );
 
 /** Afrikaans (Afrikaans)

@@ -48,12 +48,9 @@ var RelatedVideos = {
 		) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
 			relatedVideosModule.delegate( 'a.video-play', 'click', RelatedVideos.displayVideoModal );
-			relatedVideosModule.delegate( 'a.added-by', 'click', RelatedVideos.handleAddedByClick );
 			relatedVideosModule.delegate( '.scrollright', 'click', RelatedVideos.scrollright );
 			relatedVideosModule.delegate( '.scrollleft', 'click', RelatedVideos.scrollleft );
 			relatedVideosModule.delegate( '.addVideo', 'click', RelatedVideos.addVideoLoginWrapper );
-			relatedVideosModule.delegate( '.remove', 'click', RelatedVideos.removeVideoLoginWrapper );
-			relatedVideosModule.delegate( '.requestvideos button', 'click', RelatedVideos.handleRequestButtonClick );
 			$('body').delegate( '#relatedvideos-video-player-embed-show', 'click', function() {
 				$('#relatedvideos-video-player-embed-code').show();
 				$('#relatedvideos-video-player-embed-show').hide();
@@ -65,10 +62,10 @@ var RelatedVideos = {
 			}
 			RelatedVideos.trackItemImpressions(RelatedVideos.currentRoom);
 			RelatedVideos.checkButtonState();
-			$('.addVideo',this.rvModule).wikiaTooltip( $('.addVideoTooltip',this.rvModule).html() );
-			if(this.onRightRail) {
-				$('.remove',this.rvModule).wikiaTooltip( $('.removeVideoTooltip',this.rvModule).html() );
-			}
+			$('.addVideo',this.rvModule).tooltip({
+				placement: 'top',
+				delay: { show: 500, hide: 100 }
+			});
 		}
 		WikiaTracker.trackEvent(
 			'trackingevent',
@@ -78,20 +75,6 @@ var RelatedVideos = {
 			},
 			'both'
 		);
-	},
-	
-	handleAddedByClick : function(e) {
-		var owner = $(this).attr('data-owner');
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			{
-				'ga_category':RelatedVideos.gaCat,
-				'ga_action':WikiaTracker.ACTIONS.CLICK_LINK_TEXT,
-				'ga_label':'added-by',
-				'username':owner
-			},
-			'both'
-		);		
 	},
 
 	// Scrolling modal items
@@ -620,89 +603,6 @@ var RelatedVideos = {
 	injectCaruselElementError: function( error ){
 		$( '#relatedvideos-add-video .rv-error td' ).html( error );
 	},
-
-	// Remove Video
-
-	removeVideoLoginWrapper: function( e ){
-		e.preventDefault();
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			{
-				'ga_category':RelatedVideos.gaCat,
-				'ga_action':WikiaTracker.ACTIONS.REMOVE,
-				'ga_label':'remove-video'
-			},
-			'both'
-		);
-		RelatedVideos.loginWrapper( RelatedVideos.removeVideoClick, this );
-	},
-
-	removeVideoClick: function( target ){
-		var parentItem = $(target).parents('.item');
-		var item = $(parentItem).find('a.video-thumbnail');
-		var title = item.attr('data-ref');
-		$.confirm({
-			content: $( '.deleteConfirm',RelatedVideos.rvModule ).html(),
-			onOk: function(){
-				RelatedVideos.removeVideoItem( parentItem );
-				WikiaTracker.trackEvent(
-					'trackingevent',
-					{
-						'ga_category':RelatedVideos.gaCat,
-						'ga_action':WikiaTracker.ACTIONS.REMOVE,
-						'ga_label':'remove-video-success',
-						'video_title':title
-					},
-					'both'
-				);
-			}
-		});
-	},
-
-	removeVideoItem: function( parentItem ){
-		$( parentItem ).fadeTo( 'slow', 0 );
-		var item = $(parentItem).find('a.video-thumbnail');
-		$.nirvana.postJson(
-			'RelatedVideosController',
-			'removeVideo',
-			{
-				external:	item.attr('data-external'),
-				title:		item.attr('data-ref'),
-				articleId:	wgArticleId
-			},
-			function( formRes ) {
-				if ( formRes.error ) {
-					$.showModal( '', formRes.error, {
-						'width': RelatedVideos.modalWidth,
-						callback: function(){
-							$( parentItem ).fadeTo( 'slow', 1 );
-						}
-					});
-				} else {
-					$(parentItem).remove();
-					RelatedVideos.recalculateLength();
-					RelatedVideos.showImages();
-					RelatedVideos.regroup();
-				}
-
-			},
-			function(){
-				RelatedVideos.showError();
-			}
-		);
-	},
-	
-	handleRequestButtonClick : function(e) {
-		WikiaTracker.trackEvent(
-			'trackingevent',
-			{
-				'ga_category':RelatedVideos.gaCat,
-				'ga_action':WikiaTracker.ACTIONS.TAKE_SURVEY,
-				'ga_label':'request-new-videos'
-			},
-			'both'
-		);		
-	}
 
 };
 

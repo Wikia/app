@@ -20,21 +20,21 @@ class RelatedVideosHookHandler {
 	public function onBeforePageDisplay( $out, $skin ) {
 		wfProfileIn(__METHOD__);
 
-		$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
-		$scssPackage = 'relatedvideos_scss';
-		$jsPackage = 'relatedvideos_js';
+		if( get_class($skin) == 'SkinOasis' ) {
+			$assetsManager = F::build( 'AssetsManager', array(), 'getInstance' );
+			$scssPackage = 'relatedvideos_scss';
+			$jsPackage = 'relatedvideos_js';
 
-		if ( get_class( F::app()->wg->user->getSkin() ) == 'SkinOasis' ) {
 			$scssPackage = 'relatedvideos_scss_tooltips';
 			$jsPackage = 'relatedvideos_js_tooltips';
-		}
 
-		foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
-			$out->addStyle( $url );
-		}
-
-		foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
-			$out->addScript( "<script src=\"{$url}\"></script>" );
+			foreach ( $assetsManager->getURL( $scssPackage ) as $url ) {
+				$out->addStyle( $url );
+			}
+	
+			foreach ( $assetsManager->getURL( $jsPackage ) as $url ) {
+				$out->addScript( "<script src=\"{$url}\"></script>" );
+			}
 		}
 
 		wfProfileOut(__METHOD__);

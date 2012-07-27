@@ -9,7 +9,7 @@ $messages['en'] = array(
 	'related-videos-remove' => 'Remove',
 	'related-videos-add-video' => 'Add a video',
 	'related-videos-leave-feedback' => 'Leave feedback',
-	'related-videos-add-video-to-this-page' => 'Add a video to this page',
+	'related-videos-add-video-to-this-wiki' => 'Add a video to this wiki',
 	'related-videod-add-video-ok' => 'Add',
 	'related-videod-add-video-label-name' => 'Enter the full URL, from any of the supported sites.',
 	'related-videod-add-video-label-all' => 'See all',
@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'related-videos-wiki-summary-whitelist' => 'Added [[:$2|$1]] to Related Videos.',
 	'related-videos-update-summary-blacklist' => 'Related Videos blacklist updated',
 	'related-videos-update-summary-whitelist' => 'Related Videos whitelist updated',
-	'related-videos-tooltip-add' => 'Add a video to this page',
+	'related-videos-tooltip-add' => 'Add a video to this wiki',
 	'related-videos-tooltip-remove' => 'Remove this video',
 	'related-videos-tooltip-embed' => 'Paste this URL in the video embed tool',
 	'related-videos-beta-feature' => 'beta',
@@ -48,8 +48,7 @@ $messages['en'] = array(
 	'related-videos-add-this' => 'Add this video',
 	'related-videos-back' => 'Back to the list',
 	'related-videos-empty' => 'Be the first to add a video',
-	'related-videos-requestbutton' => 'Take our Video Survey',
-	'related-videos-requesttext' => 'Take our Video Survey',
+	'related-videos-video-views' => '$1 {{PLURAL:$1|view|views}}',
 
 	//popular videos on hubs
 	'related-videos-hubs-suggested-by' => 'Suggested by $1',
@@ -625,8 +624,6 @@ $messages['nl'] = array(
 	'related-videos-pagination' => '$1 van $2',
 	'related-videos-back' => 'Terug naar de lijst',
 	'related-videos-empty' => 'Wees de eerste om een video toe te voegen',
-	'related-videos-requestbutton' => "Nieuwe video's aanvragen",
-	'related-videos-requesttext' => 'Wat wilt u graag zien?',
 	'related-videos-hubs-suggested-by' => 'Voorgesteld door $1',
 );
 

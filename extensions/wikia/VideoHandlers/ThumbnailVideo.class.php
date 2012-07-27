@@ -205,6 +205,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			if ( !empty( $extraBorder ) ) $playButtonHeight += ( $extraBorder*2 );
 			$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $playButtonHeight );
 			$html .= Xml::element( 'img', $attribs, '', true );
+			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $this->file->getTitle() );
 
 		$html .= ( $linkAttribs && isset($linkAttribs['href']) ) ? Xml::closeElement( 'a' ) : '';
 

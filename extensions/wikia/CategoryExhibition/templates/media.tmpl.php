@@ -24,6 +24,9 @@
 							echo "height:".$row['dimensions']['h']."px; ";
 						};
 					?>" />
+					<? if( $row['useVideoOverlay'] == true ) {
+						echo WikiaFileHelper::videoInfoOverlay( $row['dimensions']['w'], $row['data-ref'] );
+					} ?>
 				</a>
 			</span>
 			<? } ?>

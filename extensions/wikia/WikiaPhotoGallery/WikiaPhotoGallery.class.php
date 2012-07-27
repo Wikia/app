@@ -845,20 +845,15 @@ class WikiaPhotoGallery extends ImageGallery {
 						( ( !empty( $tempLeftMargin ) ) ? " margin-left:".$tempLeftMargin."px;" : null );
 				}
 
-				$html .= Xml::openElement(
-					'a',
-					array(
-						'class' => $image['classes'],
-						'data-image-name' => $image['linkTitle'],
-						'href' => $image['link'],
-						'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
-						'style' => (!empty($image['thumbnail'])? '' : "height:{$image['height']}px;")
-					)
-				);
 				if (!empty($image['thumbnail'])) {
 
 					if ( WikiaFileHelper::isFileTypeVideo( $fileObject ) ) {
-						$html .= WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
+						$thumbHtml = WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
+						$image['classes'] .= ' video';
+						$videoOverlay = WikiaFileHelper::videoInfoOverlay( $image['width'], $image['linkTitle'] );
+					} else {
+						$thumbHtml = '';
+						$videoOverlay = '';
 					}
 
 					$imgAttribs = array(
@@ -874,10 +869,23 @@ class WikiaPhotoGallery extends ImageGallery {
 						$imgAttribs['data-caption'] = $image['caption'];
 					}
 
-					$html .= Xml::openElement('img', $imgAttribs);
+					$thumbHtml .= Xml::openElement('img', $imgAttribs);
+					$thumbHtml .= $videoOverlay;
 				} else {
-					$html .= $image['linkTitle'];
+					$thumbHtml = $image['linkTitle'];
 				}
+
+				$html .= Xml::openElement(
+					'a',
+					array(
+						'class' => $image['classes'],
+						'data-image-name' => $image['linkTitle'],
+						'href' => $image['link'],
+						'title' => $image['linkTitle']. (isset($image['bytes'])?' ('.$skin->formatSize($image['bytes']).')':""),
+						'style' => (!empty($image['thumbnail'])? '' : "height:{$image['height']}px;")
+					)
+				);
+				$html .= $thumbHtml;
 				$html .= Xml::closeElement('a');
 				if ( $orientation != 'none' ) {
 					$html .= Xml::closeElement('p');

@@ -173,6 +173,10 @@ $app->registerClass('YoutubeVideoHandler', $dir . '/handlers/YoutubeVideoHandler
 $app->registerClass('YoutubeApiWrapper', $dir . '/apiwrappers/YoutubeApiWrapper.class.php');
 $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 
+$app->registerClass('GamestarVideoHandler', $dir . '/handlers/GamestarVideoHandler.class.php');
+$app->registerClass('GamestarApiWrapper', $dir . '/apiwrappers/GamestarApiWrapper.class.php');
+$wgMediaHandlers['video/gamestar'] = 'GamestarVideoHandler';
+
 /**
  * Feed ingesters
  */
@@ -197,8 +201,9 @@ $wgVideoMigrationProviderMap = array(
 	23 => 'Realgravity',
 	/*
 	// a trick to make video.wikia and local files accessible via wrappers:
-	24 => 'Wikia'
+	24 => 'Wikia',
 	*/
+	25 => 'Gamestar',
 );
 
 

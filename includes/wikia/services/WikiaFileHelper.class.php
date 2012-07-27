@@ -124,7 +124,81 @@ class WikiaFileHelper extends Service {
 		);
 		return  Xml::element( 'span', $playButton, '', false );
 	}
-	
+
+	public static function videoInfoOverlay( $width, $title = null ) {
+		$html = '';
+		if ( $width > 230 && !empty($title) ) {
+			if ( is_string($title) ) {
+				$media = F::build('Title', array($title, NS_FILE), 'newFromText');
+			} else {
+				$media = $title;
+			}
+
+			$file = wfFindFile( $media );
+			if ( !empty($file) ) {
+				// video title
+				$width = $width - 60;
+				$videoTitle = $media->getText();
+				$content = self::videoOverlayTitle( $videoTitle, $width );
+
+				// video duration
+				$duration = $file->getHandler()->getFormattedDuration();
+				$content .= self::videoOverlayDuration( $duration );
+				$content .= '<br />';
+
+				// video views
+				$views = DataMartService::getVideoViewsByTitleTotal( $videoTitle );
+				$content .= self::videoOverlayViews( $views );
+
+				// info
+				$attribs = array(
+					"class" => "info-overlay",
+				);
+
+				$html = Xml::tags( 'span', $attribs, $content );
+			}
+		}
+
+		return $html;
+	}
+
+	// get html for title for video overlay
+	public static function videoOverlayTitle( $title, $width ) {
+		$attribs = array(
+			'class' => 'info-overlay-title',
+			'style' => 'max-width:'.$width.'px;',
+		);
+
+		return Xml::element( 'span', $attribs, $title, false );
+	}
+
+	// get html for duration for video overlay
+	public static function videoOverlayDuration( $duration ) {
+		$html = '';
+		if ( !empty($duration) ) {
+			$attribs = array(
+				'class' => 'info-overlay-duration',
+			);
+
+			$html = Xml::element( 'span', $attribs, "($duration)", false );
+		}
+
+		return $html;
+	}
+
+	// get html for views for video overlay
+	public static function videoOverlayViews( $views ) {
+		$app = F::app();
+
+		$attribs = array(
+			'class' => 'info-overlay-views',
+		);
+
+		$views = $app->wf->Msg( 'videohandler-video-views', $app->wg->Lang->formatNum($views) );
+
+		return Xml::element( 'span', $attribs, $views, false );
+	}
+
 	/*
 	 * Checks if user wants to have old image bahaviour
 	 * @return boolean
@@ -226,6 +300,8 @@ class WikiaFileHelper extends Service {
 			'userName' => '',
 			'userPageUrl' => '',
 			'articles' => array(),
+			'providerName' => '',
+			'videoViews' => 0,
 			'exists' => false
 		);
 
@@ -256,6 +332,7 @@ class WikiaFileHelper extends Service {
 					}
 					$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true);
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
+					$data['videoViews'] = DataMartService::getVideoViewsByTitleTotal( $fileTitle->getText() );
 
 					$mediaPage = F::build( 'WikiaVideoPage', array($fileTitle) );
 
@@ -276,6 +353,10 @@ class WikiaFileHelper extends Service {
 				$data['userThumbUrl'] = F::build( 'AvatarService', array($user, $config['userAvatarWidth'] ), 'getAvatarUrl' );
 				$data['userPageUrl'] = $user->getUserPage()->getFullURL();
 				$data['description']  = $mediaPage->getContent();
+
+				if ( WikiaFileHelper::isFileTypeVideo($file) ) {
+					$data['providerName'] = $file->getProviderName();
+				}
 
 				$mediaQuery =  F::build( 'ArticlesUsingMediaQuery' , array( $fileTitle ) );
 				$articlesData = $mediaQuery->getArticleList();

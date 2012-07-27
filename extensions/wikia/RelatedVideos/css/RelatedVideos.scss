@@ -36,23 +36,23 @@ $color-related-videos-background: darken($color-page, 20%);
 }
 
 .RelatedVideos {
-	@include clearfix;
-	display: inline-block;
-	width: 660px;
-	height: 230px;
+	//@include clearfix;
+	//display: inline-block;
+	//width: 660px;
+	//height: 230px;
 
-	.messageHolder {
-		display: none;
-	}
+//	.messageHolder {
+//		display: none;
+//	}
 
-	.add-this-video {
+	/*.add-this-video {
 		position: absolute;
 		bottom: 10px;
 		text-align: center;
 		width: 100%;
 		margin: -5px; // correcting padding from parent
 		cursor: pointer;
-	}
+	}*/
 
 	img.sprite {
 		background-color: transparent;
@@ -76,31 +76,31 @@ $color-related-videos-background: darken($color-page, 20%);
 	}
 
 	.RVHeader {
-		border: 1px solid $color-page-border;
-		height: 38px;
-		em {
-			font-style: normal;
-		}
+		//border: 1px solid $color-page-border;
+		//height: 38px;
+		//em {
+	//		font-style: normal;
+	//	}
 		.tally {
-			float: left;
-			margin: 5px 0 5px 10px;
-			display: inline-block;
+//			float: left;
+//			margin: 5px 0px;
+//			display: inline-block;
 		}
 		.button {
-			margin-top: 8px;
-			display: inline-block;
-			float: left;
-			&.secondary{
-				float: right;
-				margin-right:5px;
-			}
+//			margin-top: 8px;
+//			display: inline-block;
+//			float: left;
+//			&.secondary{
+//				float: right;
+//				margin-right:5px;
+//			}
 		}
-		.feedback {
-			line-height: 38px;
-			margin-right: 11px;
-			float: right;
-		}
-		.beta {
+//		.feedback {
+//			line-height: 38px;
+//			margin-right: 11px;
+//			float: right;
+//		}
+/*		.beta {
 			@include border-radius(4px);
 			font-size: 11px;
 			line-height: 14px;
@@ -112,7 +112,7 @@ $color-related-videos-background: darken($color-page, 20%);
 			margin-top: 13px;
 			padding: 0px 5px;
 			text-decoration: none;
-		}
+		}*/
 	}
 
 	.RVBody {
@@ -160,6 +160,11 @@ $color-related-videos-background: darken($color-page, 20%);
           margin-top:10px;
           margin-bottom:10px;
         }
+        .video-views {
+        	display: block;
+        	font-weight: normal;
+        	margin-top: 7px;
+        }
 		.wrapper {
 			position: absolute;
 			width: 580px;
@@ -169,14 +174,14 @@ $color-related-videos-background: darken($color-page, 20%);
 				width: 500000px;
 				position: relative;
 				div.item {
-					vertical-align: top;
-					padding: 5px;
-					height: 175px;
-					width: 160px;
-					margin: 11px;
-					display: inline-block;
-					float: left;
-					position: relative;
+					//vertical-align: top;
+					//padding: 5px;
+					//height: 175px;
+					//width: 160px;
+					//margin: 11px;
+					//display: inline-block;
+					//float: left;
+					//position: relative;
 					.description{
 						width: 160px;
 						line-height: 15px;
@@ -265,21 +270,6 @@ $color-related-videos-background: darken($color-page, 20%);
 							width: 11px;
 							height: 14px;
 							background-image: url(/extensions/wikia/RelatedVideos/images/TrashCan.png); /* wgCdnStylePath */
-						}
-					}
-					&:hover{
-						border: 1px solid $color-page-border;
-						margin: 10px;
-						@include box-shadow( -1px, 1px, 3px, darken( $color-page, 9%) );
-						background-image: none;
-						border: 1px solid mix($color-page,$color-page-border,25%);
-						@if lightness($color-page) < 50 {
-							border: 1px solid mix($color-page,$color-page-border,50%);
-							background: mix($color-page,$color-page-border,75%);
-							@include box-shadow( 0px, 2px, 5px, darken( $color-page, 7%) );
-						}
-						.options {
-							display: block;
 						}
 					}
 				}
@@ -416,71 +406,79 @@ $color-related-videos-background: darken($color-page, 20%);
 		height: auto;
 		margin: 0;
 		h1 {
-			margin-bottom: 0;
+			margin-bottom: 12px;
+			padding: 0;
+		}
+		.messageHolder {
+			display: none;
 		}
 		.RVHeader {
 			border: none;
 			height: 38px;
 			.addVideo {
+				display: inline-block;
 				position: relative;
 				float: right;
-				margin-right: 0px;
-				padding-left: 40px;
+				margin: 2px 0px 0px;
+    			padding: 0 7px 0 33px;
 				img {
 					position: absolute;
-					left: 5px;
+					left: 3px;
 				}
 			}
 			.tally {
-				margin-bottom: 15px;
-				margin-left: 4px;
-				.fixedwidth {
-					width: 80px;
-				}
+				display: inline-block;
+				float: left;
+				margin: 0px;
+				padding: 0;
+			}
+			.fixedwidth {
+				width: 80px;
 			}
 		}
 		.RVBody {
 			height: auto;
 			clear: both;
-			padding: 2px;
 			.novideos { padding: 7px; }
 			.wrapper {
-				width: 278px;
+				width: 268px;
 				position: static;
 				left: 0;
 				div.item {
-					&:hover {
-						border: 1px solid $color-page-border;
-					}
-					border: 1px solid transparent;
+					@include clearfix;
+					//border: 1px solid transparent;
 					display: block;
-					float: none;
-					width: 100px;
+					//float: none;
+					//width: 100px;
 					height: 90px;
-					padding-left: 160px;
-					padding-right: 13px;
+					//padding-left: 160px;
+					//padding-right: 13px;
 					margin: 0;
 					.new {
 						top: 14px;
 					}
 					.video-thumbnail {
-						width: 150px;
 						display: block;
-						position: absolute;
-						left: 5px;
-						top: 5px;
+						float: left;
+						margin-right: 10px;
+						width: 150px;
+						//position: absolute;
+						//left: 5px;
+						//top: 5px;
 						.playButton {
 							width: 150px;
 						}
 					}
 					.description {
-						display: inline-block;
+						display: block;
+						float: left;
 						max-height: 80px;
-						width: auto;
+						width: 108px;
 						padding-top: 2px;
 						font-size: 11px;
+						margin: 0;
 					}
-					.info {
+					/*.info {
 						display: inline-block;
 					}
 					.options {
@@ -490,7 +488,7 @@ $color-related-videos-background: darken($color-page, 20%);
 						bottom: auto;
 						position: absolute;
 						float: none;
-					}
+					}*/
 				}
 				div.action {
 				    cursor: pointer;
@@ -577,7 +575,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				}
 			}
 			.paginationbar {
-				margin: 10px 5px 20px 5px;
+				margin: 20px 0px;
 				height: 25px;
 				.pagecount {
 					line-height: 25px;
