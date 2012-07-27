@@ -21,8 +21,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med,
 		paginationStyle,
 		paginationWidth,
 		current,
-		imgsPerPage = 9,
-		width;
+		imgsPerPage = 9;
 
 	modalWrapper.addEventListener('tap', function (ev) {
 		var target = ev.target;
@@ -119,7 +118,9 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med,
 			imgL = images.length,
 			//how many placeholders need to be added
 			//to keep gallery tiles in correct places
-			x = (Math.ceil(imgL/cols)*cols)-imgL;
+			x = (Math.ceil(imgL / cols) * cols) - imgL,
+			thumb,
+			isVideo;
 
 		imgsPerPage = cols * ~~((gal.offsetHeight - 50)/imagesize);
 		pagesNum = 0;
@@ -134,12 +135,17 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med,
 				dots += '<div class="dot'+((current == pagesNum) ? ' curr':'')+'" id=dot'+pagesNum+'><div></div></div>';
 			}
 
+			isVideo = images[i].isVideo;
+			thumb = images[i].thumb;
+
+			//no thumb available, generate one
+			if (!thumb) {
+				thumb = thumbnailer.getThumbURL(images[i].image, (isVideo ? 'video' : 'image'), MAX_THUMB_SIZE, MAX_THUMB_SIZE);
+			}
+
 			pages[pagesNum] += '<div class="galPlc img' +
-				(images[i].isVideo ? ' video' : '') +
-				((goToImg == i) ? ' this' : '') +
-				//use thumb if is available if not use full image
-				'" data-img="' + (images[i].thumb || thumbnailer.getThumbURL(images[i].image, 'video', MAX_THUMB_SIZE, MAX_THUMB_SIZE)) +
-				'" id=img' + i + '></div>';
+				(isVideo ? ' video' : '') +
+				((goToImg == i) ? ' this' : '') + '" data-img="' + thumb + '" id=img' + i + '></div>';
 		}
 
 		//add placeholders
