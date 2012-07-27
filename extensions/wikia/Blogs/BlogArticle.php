@@ -654,7 +654,7 @@ class BlogArticle extends Article {
 	 * @access public
 	 * @static
 	 */
-	static public function UnwatchBlogComments(&$oUser, &$oArticle) {
+	static public function UnwatchBlogComments($oUser, $oArticle) {
 		wfProfileIn( __METHOD__ );
 
 		if ( wfReadOnly() ) {
