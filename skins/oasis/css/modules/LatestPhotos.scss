@@ -161,10 +161,12 @@
 		&.previous {
 			height: 82px;
 			float: left;
+			margin-left: -8px;
 		}
 		&.next {
 			height: 82px;
 			float: right;
+			margin-right: -8px;
 		}
 		&.disabled {
 			@include opacity(40);
@@ -202,8 +204,8 @@
 
 	.carousel-container {
 		height: 90px;
-		left: 2px;
-		overflow: hidden; // /** for testing **/
+		left: 5px;
+		overflow: hidden;
 		position: relative;
 		width: 258px;
 		div {
@@ -222,7 +224,6 @@
 			height: 82px;
 			margin: {
 				right: 2px;
-				bottom: 40px;
 			}
 			position: relative;
 			width: 82px;

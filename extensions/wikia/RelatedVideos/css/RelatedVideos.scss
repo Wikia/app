@@ -453,7 +453,7 @@ $color-related-videos-background: darken($color-page, 20%);
 					height: 90px;
 					//padding-left: 160px;
 					//padding-right: 13px;
-					margin: 0;
+					margin: 0 0 15px 0;
 					.new {
 						top: 14px;
 					}
@@ -548,20 +548,20 @@ $color-related-videos-background: darken($color-page, 20%);
 			}
 			.scrollleft {
 				float: left;
-				padding: 0 4px;
+				padding: 0;
 				img {
 					border-color: transparent $color-buttons transparent transparent;
-					margin: 5px -4px;
+					margin: 3px 0 0 -9px;
 				 	border-width: 9px;
 			 	}
 			}
 			.scrollright {
 				float: right;
-				padding: 0 4px;
+				padding: 0;
 				img {
 					border-color: transparent transparent transparent $color-buttons;
-					margin: 5px 5px;
-					border-width: 8px;
+					margin: 3px -9px 0 0;
+					border-width: 9px;
 				}
 			}
 			.scrollleft.inactive {
@@ -575,7 +575,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				}
 			}
 			.paginationbar {
-				margin: 20px 0px;
+				margin: 0 0 20px 0px;
 				height: 25px;
 				.pagecount {
 					line-height: 25px;
