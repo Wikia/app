@@ -19,6 +19,7 @@ var AdDriverGP = {
 			'.doubleclick.net/' +
 			'adj' + '/' +
 			'ow-wikia.com' + '/' + 'wka.' + window.cityShort + ';' +
+			's1=' + '_' + window.wgDBname + ';' +
 			'pos=' + AdDriverGP.slotMap[slotname].pos + ';' +
 			(window.wgDartCustomKeyValues ? this.rebuildKV(window.wgDartCustomKeyValues) + ';' : '' ) +
 			'tile=' + AdDriverGP.slotMap[slotname].tile + ';' +
