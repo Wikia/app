@@ -188,59 +188,60 @@ define('media', ['modal', 'loader', 'querystring', 'popover', 'track', 'events',
 		var image = images[current];
 		loader.hide(currentImage);
 
-		if(image.isVideo) {// video
-			var imgTitle = 'File:' + image.name;
+		//inject the content only if it was not already there in the page
+		//to avoid refresh the contents (it triggers a full
+		//reload of iframe contents for videos)
+		if (!pager.getCurrent().innerHTML) {
+			if(image.isVideo) {// video
+				var imgTitle = image.name;
+				currentImageStyle.backgroundImage = '';
 
-			currentImageStyle.backgroundImage = '';
-			if(videoCache[imgTitle]){
-				currentImage.innerHTML = '<table id=wkVi><tr><td>'+videoCache[imgTitle]+'</td></tr></table>';
+				if(videoCache[imgTitle]){
+					currentImage.innerHTML = '<table id=wkVi><tr><td>'+videoCache[imgTitle]+'</td></tr></table>';
+				}else{
+					loader.show(currentImage, {
+						center: true
+					});
+
+					$.nirvana.sendRequest({
+						type: 'get',
+						format: 'json',
+						controller: 'VideoHandlerController',
+						method: 'getEmbedCode',
+						data: {
+							articleId: wgArticleId,
+							title: imgTitle,
+							width: window.innerWidth - 100
+						},
+						callback: function(data) {
+							loader.hide(currentImage);
+							videoCache[imgTitle] = data.embedCode;
+							currentImage.innerHTML = '<table id=wkVi><tr><td>' + data.embedCode + '</td></tr></table>';
+						}
+					});
+				}
 			}else{
-				loader.show(currentImage, {
-					center: true
-				});
+				var img = new Image();
+				img.src = image.image;
 
-				$.ajax({
-					url: wgScript,
-					data: {
-						action: 'ajax',
-						method: 'ajax',
-						rs: 'ImageLightboxAjax',
-						maxheight: window.innerHeight,
-						maxwidth: window.innerWidth - 100,
-						pageName: wgPageName,
-						share: 0,
-						title: imgTitle,
-						showEmbedCodeInstantly: true
-					},
-					dataType: 'json',
-					success: function(res) {
+				if(!img.complete){
+					img.onload = function(){
 						loader.hide(currentImage);
-						videoCache[imgTitle] = res.html;
-						currentImage.innerHTML = '<table id=wkVi><tr><td>'+res.html+'</td></tr></table>';
-					}
-				});
-			}
-		}else{
-			var img = new Image();
-			img.src = image.image;
+					};
 
-			if(!img.complete){
-				img.onload = function(){
-					loader.hide(currentImage);
-				};
+					img.onerror = function(){
+						loader.hide(currentImage);
+						modal.setCaption($.msg('wikiamobile-image-not-loaded'));
+						modal.showUI();
+						currentImage.style.backgroundImage = '';
+						currentImage.style.backgroundSize = '50%';
+						currentImage.className += ' imgPlcHld';
+					};
 
-				img.onerror = function(){
-					loader.hide(currentImage);
-					modal.setCaption($.msg('wikiamobile-image-not-loaded'));
-					modal.showUI();
-					currentImage.style.backgroundImage = '';
-					currentImage.style.backgroundSize = '50%';
-					currentImage.className += ' imgPlcHld';
-				};
-
-				loader.show(currentImage, {
-					center: true
-				});
+					loader.show(currentImage, {
+						center: true
+					});
+				}
 			}
 		}
 

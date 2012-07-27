@@ -3,7 +3,7 @@
  *
  * @author Jakub "Student" Olek
  */
-define('pager', function() {
+define('pager', function () {
 	var tr = ('ontransitionend' in window) ? 'transitionEnd' : ('onwebkittransitionend' in window) ?  'webkitTransitionEnd' : false,
 		addTransitionEnd = (function(){
 			return (tr) ?
@@ -240,6 +240,9 @@ define('pager', function() {
 					wrapper.removeEventListener('touchend', onTouchEnd, true);
 					wrapper.removeEventListener('touchcancel', onTouchEnd, true);
 					window.removeEventListener('resize', onResize);
+				},
+				getCurrent: function () {
+					return current;
 				}
 			};
 		}else {
