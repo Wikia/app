@@ -10,6 +10,7 @@ if ( !window.wgIsArticle ) {
 var $window = $(window);
 
 var ArticleComments = {
+	animations: {}, // Used by MiniEditor
 	processing: false,
 	mostRecentCount: 0,
 	messagesLoaded: false,
@@ -18,6 +19,10 @@ var ArticleComments = {
 	initCompleted: false,
 
 	init: function() {
+		var $articleComments = $('#article-comments');
+		var $articleCommFbMonit = $('#article-comm-fbMonit');
+		var $fbCommentMessage = $('#fbCommentMessage')
+
 		if (ArticleComments.miniEditorEnabled) {
 			var newcomment = $('#article-comm');
 
@@ -30,20 +35,21 @@ var ArticleComments = {
 			}
 		}
 
-		$('#article-comm-submit').bind('click', {source: '#article-comm'}, ArticleComments.actionProxy(ArticleComments.postComment));
-		var $articleComments = $('#article-comments');
-		$articleComments.on('click','.article-comm-delete', ArticleComments.linkDelete);
-		$articleComments.on('click','.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
-		$articleComments.on('click','.article-comm-history', ArticleComments.linkHistory);
-		$articleComments.on('click','.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
-		$('#article-comm-order').find('a').bind('click', ArticleComments.actionProxy(ArticleComments.changeOrder));
+		$articleComments.on('click', '.article-comm-delete', ArticleComments.linkDelete);
+		$articleComments.on('click', '.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
+		$articleComments.on('click', '.article-comm-history', ArticleComments.linkHistory);
+		$articleComments.on('click', '.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
 
-		$('#article-comments-pagination').find('div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));
-		/*$articleComments.delegate('.SpeechBubble', 'mouseover',  function(){$(this).find('.tools').css('visibility', 'visible');});
-		$articleComments.delegate('.SpeechBubble', 'mouseout',  function(){$(this).find('.tools').css('visibility', 'hidden');});*/
-		var $articleCommFbMonit = $('#article-comm-fbMonit');
-		$articleCommFbMonit.mouseenter(function() {$('#fbCommentMessage').fadeIn( 'slow' );});
-		$articleCommFbMonit.mouseleave(function() {$('#fbCommentMessage').fadeOut( 'slow' );});
+		$('#article-comm-order').find('a').bind('click', ArticleComments.actionProxy(ArticleComments.changeOrder));
+		$('#article-comm-submit').bind('click', { source: '#article-comm' }, ArticleComments.actionProxy(ArticleComments.postComment));
+
+		$articleCommFbMonit.mouseenter(function() {
+			$fbCommentMessage.fadeIn('slow');
+		});
+
+		$articleCommFbMonit.mouseleave(function() {
+			$fbCommentMessage.fadeOut('slow');
+		});
 
 		ArticleComments.addHover();
 		ArticleComments.showEditLink();
@@ -65,7 +71,7 @@ var ArticleComments = {
 
 			// Prevent the action if MiniEditor is enabled and loading
 			if (ArticleComments.miniEditorEnabled && MiniEditor.editorIsLoading) {
-				ArticleComments.log('Event cancelled because editor is loading: ', e);
+				$().log('Event cancelled because editor is loading: ', e);
 				return true;
 			}
 
@@ -592,25 +598,30 @@ if (ArticleComments.loadOnDemand) {
 			return $comments.offset().top >= ($window.scrollTop() + $window.height());
 		};
 
-		var loadComments = function() {
-			$.nirvana.sendRequest({
-				controller: 'ArticleCommentsController',
-				method: 'Content',
-				format: 'html',
-				type: 'GET',
-				data: {
-					articleId: window.wgArticleId,
-					page: $comments.data('page'),
-					useskin: window.skin
-				},
-				callback: function(html) {
-					$commentsWrapper.removeClass('loading');
-					$comments.hide().html(html).fadeIn();
-					ArticleComments.init();
-
-					if (permalink) {
-						ArticleComments.scrollToElement(hash);
+		var loadAssets = function() {
+			$.when(
+				$.getResources([$.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss')]),
+				$.nirvana.sendRequest({
+					controller: 'ArticleCommentsController',
+					method: 'Content',
+					format: 'html',
+					type: 'GET',
+					data: {
+						articleId: window.wgArticleId,
+						page: $comments.data('page'),
+						useskin: window.skin
+					},
+					callback: function(html) {
+						$comments.hide().html(html);
 					}
+				})
+			).then(function() {
+				$commentsWrapper.removeClass('loading');
+				$comments.fadeIn();
+				ArticleComments.init();
+
+				if (permalink) {
+					ArticleComments.scrollToElement(hash);
 				}
 			});
 		};
@@ -620,13 +631,13 @@ if (ArticleComments.loadOnDemand) {
 			$window.on('scrollstop.ArticleCommentsLoadOnDemand', function(event) {
 				if (!belowTheFold()) {
 					$window.off('scrollstop.ArticleCommentsLoadOnDemand');
-					loadComments();
+					loadAssets();
 				}
 			});
 
 		// Comments are already visible, load them now
 		} else {
-			loadComments();
+			loadAssets();
 		}
 	});
 

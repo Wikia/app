@@ -21,8 +21,6 @@ $.nirvana = {
 			throw "Only Json,Jsonp and Html format are allowed";
 		}
 
-		$().log(data, 'request to nirvana');
-
 		var url = (typeof attr.scriptPath == 'undefined') ? wgScriptPath : attr.scriptPath;
 
 		return $.ajax({

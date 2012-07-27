@@ -201,10 +201,13 @@ class ArticleCommentsController extends WikiaController {
 			$wgArticleCommentsContent = $app->sendRequest( 'ArticleComments', 'index' );
 
 			// Load MiniEditor assets (except for mobile)
-			// TODO: see if we can figure out a way to delay loading MiniEditor assets until
-			// the article comments are lazy loaded.
 			if ( $app->wg->EnableMiniEditorExtForArticleComments && !$app->checkSkin( 'wikiamobile' ) ) {
-				$app->sendRequest( 'MiniEditor', 'loadAssets', array( 'loadOnDemand' => true ));
+				$app->sendRequest( 'MiniEditor', 'loadAssets', array(
+					'loadOnDemand' => true,
+					'loadOnDemandAssets' => array(
+						'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
+					)
+				));
 			}
 		}
 		return true;

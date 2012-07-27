@@ -116,10 +116,6 @@ $config['jquery'] = array(
 $config['oasis_jquery'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-//		jQuery is now loaded via ResourceLoader
-//		'#function_AssetsConfig::getJQueryUrl',
-//		deprecated - @see BugId:36211
-//		'//resources/jquery/jquery.json.js',
 
 		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
@@ -139,9 +135,11 @@ $config['oasis_jquery'] = array(
 		'//resources/wikia/libraries/jquery/carousel/jquery.wikia.carousel.js',
 		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
+
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
+
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
 	)
@@ -212,10 +210,8 @@ $config['oasis_nojquery_shared_js_anon'] = array(
 $config['oasis_nojquery_shared_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+
 		// shared libraries
-        # the two following are loaded using ResourceLoader
-//		'//skins/common/wikibits.js'
-//		'//skins/common/ajax.js',
 		'//skins/oasis/js/tracker.js',
 		'//resources/wikia/libraries/my.class/my.class.js',
 		'//resources/wikia/modules/querystring.js',
@@ -224,6 +220,7 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
+
 		// oasis specific files
 		'//skins/oasis/js/hoverMenu.js',
 		'//skins/oasis/js/PageHeader.js',
@@ -499,8 +496,7 @@ $config['articlecomments_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array('oasis', 'monobook'),
 	'assets' => array(
-		'//extensions/wikia/ArticleComments/js/ArticleComments.js',
-		'//extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
+		'//extensions/wikia/ArticleComments/js/ArticleComments.js'
 	)
 );
 
