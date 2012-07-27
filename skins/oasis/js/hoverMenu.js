@@ -61,6 +61,8 @@ HoverMenu.prototype.mouseover = function(event) {
 				return $(this).data('index');
 			}).get();
 
+		globalNavigationMenusCached = true;
+
 		$.nirvana.sendRequest({
 			controller: 'GlobalHeaderController',
 			method: 'menuItemsAll',
@@ -76,7 +78,7 @@ HoverMenu.prototype.mouseover = function(event) {
 						return $(this).data('index') == index;
 					}).find('.subnav').html(html);
 				});
-				globalNavigationMenusCached = true;
+
 				this.handleShowNav(event);
 			}, this)
 		});
@@ -96,8 +98,8 @@ HoverMenu.prototype.handleShowNav = function(event) {
 		//Delay before showing subnav.
 		this.mouseoverTimer = setTimeout(function() {
 			self.showNav(event.currentTarget);
-			self.mouseoverTimerRunning = false;
 		}, this.settings.mouseoverDelay);
+
 		this.mouseoverTimerRunning = true;
 
 	//Mouse IS coming from within the nav
@@ -112,9 +114,7 @@ HoverMenu.prototype.handleShowNav = function(event) {
 			//Start new timer
 			this.mouseoverTimer = setTimeout(function() {
 				self.showNav(event.currentTarget);
-				self.mouseoverTimerRunning = false;
 			}, this.settings.mouseoverDelay);
-			this.mouseoverTimerRunning = true;
 
 		//Mouseover timer isn't running, so show subnavs immediately
 		} else {
@@ -126,8 +126,8 @@ HoverMenu.prototype.handleShowNav = function(event) {
 HoverMenu.prototype.mouseout = function(event) {
 	var self = this;
 
+	//Mouse has exited the nav.
 	if ($(event.relatedTarget).closest(this.selector).length == 0) {
-		//Mouse has exited the nav.
 
 		//Stop mouseoverTimer
 		clearTimeout(this.mouseoverTimer);
@@ -135,11 +135,11 @@ HoverMenu.prototype.mouseout = function(event) {
 
 		//Start mouseoutTimer
 		this.mouseoutTimer = setTimeout(function() {
-			$(event.currentTarget).children("ul").removeClass("show");
+			self.hideNav();
 		}, this.settings.mouseoutDelay);
 
+	//Mouse is still within the nav
 	} else {
-		//Mouse is still within the nav
 
 		//Hide nav immediately
 		this.hideNav();
@@ -149,6 +149,7 @@ HoverMenu.prototype.mouseout = function(event) {
 HoverMenu.prototype.showNav = function(parent) {
 	var nav = $(parent).children('ul');
 	window.HoverMenuGlobal.hideAll();
+	this.mouseoverTimerRunning = false;
 
 	if (nav.exists()) {
 		nav.addClass("show");
