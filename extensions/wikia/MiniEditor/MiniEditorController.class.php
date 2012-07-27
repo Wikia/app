@@ -38,6 +38,9 @@ class MiniEditorController extends WikiaController {
 
 		} else {
 
+			// Required styles
+			$this->response->addAsset('extensions/wikia/MiniEditor/css/MiniEditor.scss');
+
 			// Load javascript variables
 			$response = $this->sendSelfRequest('makeGlobalVariables');
 			$jsvars = $response->getData();
@@ -64,9 +67,6 @@ class MiniEditorController extends WikiaController {
 				$this->response->setJsVar($var, $value);
 			}
 		}
-
-		// We have to leave this in here because it includes RTE
-		$this->response->addAsset('extensions/wikia/MiniEditor/css/MiniEditor.scss');
 
 		// Additional assets
 		foreach($additionalAssets as $asset) {
@@ -121,8 +121,7 @@ class MiniEditorController extends WikiaController {
 		if ($app->wg->EnableWikiaMiniUploadExt) {
 			WMUSetupVars(&$vars);
 		}
-//TODO: fix the cache problem
-//		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+
 		$this->response->setData($vars);
 	}
 }
