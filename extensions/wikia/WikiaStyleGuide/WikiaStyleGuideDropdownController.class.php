@@ -14,5 +14,6 @@ class WikiaStyleGuideDropdownController extends WikiaController {
 		$this->options = $this->getVal('options', array());
 		$this->selected = $this->getVal('selected', array());
 		$this->toolbar = $this->getVal('toolbar', '');
+		$this->selectAll = $this->getVal('selectAll', '');
 	}
 }

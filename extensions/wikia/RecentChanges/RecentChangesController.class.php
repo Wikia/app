@@ -46,7 +46,7 @@ class RecentChangesController extends WikiaController {
 		$this->html = $this->app->renderView( 'WikiaStyleGuideDropdownController', 'multiSelect', array(
 			'options' => $options,
 			'selected' => $selected,
-			'toolbar' => $this->app->getView( 'RecentChangesController', 'dropdown_toolbar' )->render()
+			'selectAll' => true
 		));		
 	}
 }
