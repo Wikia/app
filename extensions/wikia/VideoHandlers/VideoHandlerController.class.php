@@ -1,13 +1,13 @@
 <?php
 
 class VideoHandlerController extends WikiaController {
-	
+
 	public function getEmbedCode() {
 		$articleId = $this->getVal('articleId', '');
 		$title = $this->getVal('title', '');
 		$width = $this->getVal('width', '');
 		$autoplay = $this->getVal('autoplay', false);
-		
+
 		$error = '';
 		if (empty($title)) {
 			$error = $this->wf->msgForContent('videohandler-error-missing-parameter', 'title');
@@ -27,9 +27,9 @@ class VideoHandlerController extends WikiaController {
 					$embedCode = $file->getEmbedCode($articleId, $width, $autoplay, true);
 					$this->setVal('videoId', $videoId);
 					$this->setVal('asset', $assetUrl);
-					$this->setVal('embedCode', $embedCode);					
+					$this->setVal('embedCode', $embedCode);
 					//@todo support json embed code
-				}				
+				}
 			}
 		}
 
@@ -49,7 +49,7 @@ class VideoHandlerController extends WikiaController {
 		if ( empty( $sTitle ) ){
 			$this->setVal( 'error', 1 );
 		}
-		
+
 		$sTitle = VideoFileUploader::sanitizeTitle($sTitle, '_');
 
 		$this->setVal(
