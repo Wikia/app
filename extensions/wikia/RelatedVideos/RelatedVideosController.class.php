@@ -155,6 +155,8 @@ class RelatedVideosController extends WikiaController {
 				)
 			);
 
+			$video['views'] = DataMartService::getVideoViewsByTitleTotal( $videoTitle->getText() );
+
 			$this->setVal( 'videoThumb', $videoThumb );
 			$this->setVal( 'video', $video );
 			$this->setVal( 'preloaded', $preloaded );

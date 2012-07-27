@@ -41,7 +41,10 @@ window.WikiaTracker = (function(){
 		TAKE_SURVEY: 'take-survey',
 
 		// View
-		VIEW: 'view'
+		VIEW: 'view',
+		
+		// Sharing view email, social network, etc
+		SHARE: 'share'
 	},
 	mainEventName = "trackingevent",
 	actionsReverse = {};

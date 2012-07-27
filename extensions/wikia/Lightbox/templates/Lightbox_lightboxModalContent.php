@@ -62,6 +62,7 @@
 		<button class="more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></button>
 		<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
 		<a href="{{rawImageUrl}}" class="see-full-size-link" target="_blank"><?= wfMsg('lightbox-header-see-full-size-image') ?></a>
+		<span class="video-views">{{{views}}}</span>
 		<div class="user-details caption">
 			{{#caption}}<p>{{caption}}</p>{{/caption}}
 			<img class="avatar" src="{{userThumbUrl}}">
@@ -107,6 +108,7 @@
 			</div>
 			<div class="more-info-details">
 				<h1><a href="{{fileUrl}}" target="_blank">{{fileTitle}}</a></h1>
+				<span class="video-views">{{{views}}}</span>
 				<div class="user-details">
 					<img class="avatar" src="{{userThumbUrl}}">
 					<?= wfMsg('lightbox-header-added-by', '<a href="{{userPageUrl}}" target="_blank">{{userName}}</a>') ?>

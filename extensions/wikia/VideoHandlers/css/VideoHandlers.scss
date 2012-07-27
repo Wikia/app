@@ -2,6 +2,8 @@
 
 @import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/border-radius";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
+@import "../../../../skins/oasis/css/mixins/background-opacity";
 
 .WikiaPage a.image.video {
 	display: inline-block;
@@ -44,6 +46,44 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
     @include border-radius(4px);
 }
 
+.video {
+	.info-overlay {
+		@include background-opacity(#000, 50); 
+		@include box-sizing;
+		color: #FFF;
+		display: block;
+		font-family: "Helvetica", "Arial", sans-serif;
+		font-size: 12px;
+		height: 40px;
+		line-height: 17px;
+		margin-top: -40px;
+		padding: 4px 5px;
+		position: relative;
+		text-align: left;
+		.info-overlay-title {
+			display: block;
+			font-size: 14px;
+			font-weight: bold;
+			float: left;
+			overflow: hidden;
+			padding-right: 3px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.info-overlay-duration {
+			display: inline-block;
+			padding-top: 1px;
+			font-size: 12px;
+			font-weight: bold;
+		}
+	}
+	&:hover {
+		text-decoration: none;
+		.info-overlay {
+			text-decoration: none !important;
+		}
+	}
+}
 
 .Wikia-video-title-bar {
    background-color:black;

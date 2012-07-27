@@ -26,7 +26,8 @@ $messages['en'] = array(
 	'lightbox-email-form-header' => 'Email',
 	'lightbox-pin-carousel-tooltip' => 'Pin top and bottom bars in place',
 	'lightbox-unpin-carousel-tooltip' => 'Unpin top and bottom bars',
-	'lightbox-carousel-more-items' => '<span>$1</span> {{PLURAL:$1|more item|more items}} on this wiki', 
+	'lightbox-carousel-more-items' => '<span>$1</span> {{PLURAL:$1|more item|more items}} on this wiki',
+	'lightbox-video-views' => '<b>$1</b> {{PLURAL:$1|view|views}}',
 	
 	/* /new stuff */
 

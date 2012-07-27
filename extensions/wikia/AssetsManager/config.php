@@ -753,7 +753,8 @@ $config['relatedvideos_js_tooltips'] = array(
 	'skin' => 'oasis',
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//resources/wikia/libraries/jquery/tooltip/jquery.wikia.tooltip.js',
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
+		'//resources/wikia/libraries/bootstrap/popover.js',
 		'#group_relatedvideos_js'
 	)
 );
@@ -770,7 +771,7 @@ $config['relatedvideos_scss_tooltips'] = array(
 		'type' => AssetsManager::TYPE_SCSS,
 		'skin' => 'oasis',
 		'assets' => array(
-			'//skins/oasis/css/modules/WikiaTooltip.scss',
+			'//resources/wikia/libraries/bootstrap/tooltip.scss',
 			'#group_relatedvideos_scss'
 		)
 );

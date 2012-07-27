@@ -136,6 +136,7 @@ class LightboxController extends WikiaController {
 	 * @responseParam string userName - user name
 	 * @responseParam string userPageUrl - url to user profile page
 	 * @responseParam array articles - array of articles that has title and url
+	 * @responseParam string providerName - provider name for videos or '' for others
 	 */
 	public function getMediaDetail() {
 		$fileTitle = $this->request->getVal('fileTitle', '');
@@ -182,7 +183,8 @@ class LightboxController extends WikiaController {
 		}
 
 		// file details
-		$this->fileTitle = str_replace("_"," ",$fileTitle);
+		$this->views = $this->wf->Msg( 'lightbox-video-views', $this->wg->Lang->formatNum($data['videoViews']) );
+		$this->fileTitle = $title->getText();
 		$this->mediaType = $data['mediaType'];
 		$this->videoEmbedCode = $data['videoEmbedCode'];
 		$this->playerAsset = $data['playerAsset'];
@@ -196,10 +198,11 @@ class LightboxController extends WikiaController {
 		$this->isPostedIn = $isPostedIn;
 		$this->smallerArticleList = $smallerArticleList;
 		$this->articleListIsSmaller = $articleListIsSmaller;
+		$this->providerName = $data['providerName'];
 		$this->exists = $data['exists'];
 
 		// set cache control to 1 hour
-		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
+		//$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	/**
