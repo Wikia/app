@@ -154,6 +154,7 @@ $config['oasis_wikia_js'] = array(
 		'//resources/wikia/modules/querystring.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/thumbnailer.js'
 	)
 );
 
@@ -401,6 +402,7 @@ $config['wikiamobile_mediagallery_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
+		'//resources/wikia/modules/thumbnailer.js',
 		'//extensions/wikia/WikiaMobile/js/mediagallery.js'
 	)
 );

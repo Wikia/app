@@ -4,8 +4,10 @@
  *
  * @author Jakub "Student" Olek
  */
-define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
-	var imagesize,
+define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med, mod, pag, thumbnailer) {
+	var
+		MAX_THUMB_SIZE = 140,
+		imagesize,
 		d = document,
 		pager,
 		gal,
@@ -108,7 +110,7 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 
 		width = gal.offsetWidth;
 		if(width > 600) {
-			imagesize = 145; //width + margin
+			imagesize = MAX_THUMB_SIZE + 5; //width + margin
 		}else{
 			imagesize = 105; //width + margin
 		}
@@ -136,7 +138,7 @@ define('mediagallery', ['media', 'modal', 'pager'], function(med, mod, pag) {
 				(images[i].isVideo ? ' video' : '') +
 				((goToImg == i) ? ' this' : '') +
 				//use thumb if is available if not use full image
-				'" data-img="' + (images[i].thumb || images[i].image) +
+				'" data-img="' + (images[i].thumb || thumbnailer.getThumbURL(images[i].image, 'video', MAX_THUMB_SIZE, MAX_THUMB_SIZE) +
 				'" id=img' + i + '></div>';
 		}
 

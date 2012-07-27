@@ -273,29 +273,12 @@ $.fn.stopThrobbing = function() {
 /*
 	Generate URL to thumbnail from different URL to thumbnail :)
 	New URL has different parameters (fixed width and height)
+
+	@TODO: This code has been moved to a "shareable" module by the Mobile team (/resources/wikia/modules/thumbnailer.js,
+	remove this proxy function and replace its calls directly with Wikia.Thumbnailer
  */
 $.thumbUrl2ThumbUrl = function( url, type, width, height ) {
-	if(url.indexOf('/thumb/') > 0) { // URL points to thumbnail
-		// remove current resize part of thumbnail
-		url = url.replace(/\/[0-9]+px\-/,'/');
-		// remove crop part of thumbnail (if it exists)
-		url = url.replace(/\/[0-9]+(\,|%2C)[0-9]+(\,|%2C)[0-9]+(\,|%2C)[0-9]+\-/,'/');
-	} else { // direct image link
-		// convert URL to thumbnail type of URL
-		url = url.replace('/images/','/images/thumb/');
-		url += '/' + url.split('/').slice(-1)[0];
-	}
-
-	// add parameters to the URL
-	var urlArray = url.split('/');
-	var last = urlArray.slice(-1)[0];
-	if(type=='video') {
-		urlArray[urlArray.length-1] = width + 'x' + height + '-' + last + '.png';
-	} else {
-		urlArray[urlArray.length-1] = width + 'x' + height + 'x2-' + last + '.png';
-	}
-	url = urlArray.join('/');
-	return url;
+	return Wikia.Thumbnailer.getThumbURL(url, type, width, height);
 }
 
 $.htmlentities = function ( s ) {
