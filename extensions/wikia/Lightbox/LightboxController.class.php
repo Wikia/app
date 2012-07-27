@@ -162,8 +162,6 @@ class LightboxController extends WikiaController {
 									'maxHeight'	 => 395
 							));
 
-		// create a truncated list, and mark it if necessary (this is mostly for display, because mustache is a logicless templating system)
-		// TODO: hyun - maybe move this to JS?
 		$articles = $data['articles'];
 		$isPostedIn = false; // Bool to tell mustache to print "posted in" section
 		$smallerArticleList = array();
@@ -176,6 +174,7 @@ class LightboxController extends WikiaController {
 			for($i = 0; $i < $numOfArticles; $i++) {
 				$readableTitles[] = str_replace("_"," ",$articles[$i]);
 				if($i < 2) {
+					// Create truncated list for lightbox header
 					$smallerArticleList[] = $readableTitles[$i];
 				}
 			}
