@@ -49,6 +49,15 @@ Wikia.Dropdown = $.createClass(Observable, {
 		
 		this.fire('bindEvents');
 	},
+	
+	disable: function() {
+		this.close();
+		this.$wrapper.addClass('disable');
+	},
+	
+	enable: function() {
+		this.$wrapper.removeClass('disable');
+	},
 
 	close: function() {
 		this.$wrapper.toggleClass('open closed');
@@ -56,6 +65,10 @@ Wikia.Dropdown = $.createClass(Observable, {
 	},
 
 	open: function() {
+		if(this.$wrapper.hasClass('disable')) {
+			return true;
+		}
+
 		this.$wrapper.toggleClass('open closed');
 		this.fire('open');
 	},
@@ -182,9 +195,13 @@ Wikia.MultiSelectDropdown = $.createClass(Wikia.Dropdown, {
 	selectAll: function(event) {
 		var checked = this.$selectAll.removeClass('modified').is(':checked');
 
+		this.doSelectAll(checked);
+	},
+	
+	doSelectAll: function(checked) {
 		this.getItems()
-			.toggleClass('selected', checked)
-			.find(':checkbox').prop('checked', checked);
+		.toggleClass('selected', checked)
+		.find(':checkbox').prop('checked', checked);		
 	},
 
 	// Change the height of the dropdown between a minimum and maximum height
