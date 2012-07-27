@@ -24,8 +24,8 @@ then
 fi
 
 nowunix=`date '+%s'`
-startdate='2007-01-01'
-provider='ign'
+startdate='2001-01-01'
+provider='screenplay'
 logfile='/tmp/ingestion.log'
 
 while [ 1 ]
@@ -37,7 +37,8 @@ do
 	from=`date -d "$startdate $counter sec" '+%s'`
 	to=`date -d "$startdate $endtime sec" '+%s'`
 
-	SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/docroot/wiki.factory/LocalSettings.php -e $to -s $from $provider | tee -a $logfile || exit
+	#SERVER_ID=298117 php ./ingestPartnerVideoWithData.php --conf=/usr/wikia/slot2/docroot/LocalSettings.php -d -e $to -s $from $provider | tee -a $logfile || exit
+	/usr/wikia/backend/bin/withcity --maintenance-script="wikia/ingestPartnerVideoWithData.php -e $to -s $from $provider" --usedb=video151 | tee -a $logfile
 
 	counter=$(( $counter + 60 * 60 * 24 * 28 ))
 	from=`date -d "$startdate $counter sec" '+%s'`
