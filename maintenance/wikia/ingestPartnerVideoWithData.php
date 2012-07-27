@@ -1,5 +1,8 @@
 <?php
 
+ini_set( 'display_errors', 'stdout' );
+
+
 ///////////////////////////////////////////////////////////////////////////
 ////// ingestPartnerVideoWithData.php                                //////
 ////// ingest video from all premium partners using WikiFactory data //////
