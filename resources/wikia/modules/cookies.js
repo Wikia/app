@@ -47,9 +47,9 @@
 
 			return cookies;
 		}
-		
+
 		/** @public **/
-		
+
 		return {
 			get: function(name){
 				var val = fetchCookies()[name];
@@ -61,9 +61,9 @@
 				var expDate,
 					cookieString = '',
 					data = [];
-				
+
 				options = options || {};
-				
+
 				if(typeof value == 'undefined' || value === null){
 					value = '';
 					options.expires = -1;
@@ -76,9 +76,9 @@
 					}else if(options.expires instanceof Date){
 						expDate = options.expires;
 					}
-					
+
 					//use expires attribute, max-age is not supported by IE
-					data.push('; expires=' + expDate.toUTCString()); 
+					data.push('; expires=' + expDate.toUTCString());
 				}
 
 				options.path && data.push('; path=' + options.path);

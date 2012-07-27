@@ -40,7 +40,7 @@
 			levelsMap = [];
 
 		for(var p in levels){
-			var v = levels[p]
+			var v = levels[p];
 
 			if(v)
 				levelsMap[v] = p;
@@ -58,12 +58,12 @@
 				level = levelsMap[level];
 			}
 
-			level = level.toLowerCase()
+			level = level.toLowerCase();
 			levelID = levels[level];
 			group = group || 'Unknown source';
 
 			if(
-			   !enabled ||
+				!enabled ||
 				(typeof msg == "undefined") ||
 				(levelID > outputLevel) ||
 				(groupsCount > 0 && !(group in groups))
@@ -97,7 +97,7 @@
 			for(x = 0; x < selectedGroups.length; x++){
 				var g = selectedGroups[x];
 
-				if(g != ''){
+				if(g !== ''){
 					groups[g] = '';
 					groupsCount++;
 				}
@@ -120,4 +120,4 @@
 
 		return logMessage;
 	}
-})();
+}());
