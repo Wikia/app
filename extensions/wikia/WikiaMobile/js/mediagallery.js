@@ -138,7 +138,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'thumbnailer'], function(med,
 				(images[i].isVideo ? ' video' : '') +
 				((goToImg == i) ? ' this' : '') +
 				//use thumb if is available if not use full image
-				'" data-img="' + (images[i].thumb || thumbnailer.getThumbURL(images[i].image, 'video', MAX_THUMB_SIZE, MAX_THUMB_SIZE) +
+				'" data-img="' + (images[i].thumb || thumbnailer.getThumbURL(images[i].image, 'video', MAX_THUMB_SIZE, MAX_THUMB_SIZE)) +
 				'" id=img' + i + '></div>';
 		}
 
