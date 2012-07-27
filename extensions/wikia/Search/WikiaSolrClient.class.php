@@ -381,7 +381,8 @@ class WikiaSolrClient extends WikiaSearchClient {
 
 		// escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
 		// added html entity decoding now that we're doing extra work to prevent xss o
-		$query = Apache_Solr_Service::escape(html_entity_decode($query,  ENT_COMPAT, 'UTF-8'));
+		// we're also removing tildes because they cause dismax to start fuzzy querying, which is way to expensive
+		$query = Apache_Solr_Service::escape(html_entity_decode(str_replace('~', '', $query),  ENT_COMPAT, 'UTF-8'));
 
 		return $query;
 	}
