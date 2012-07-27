@@ -32,7 +32,7 @@ class ArticlesUsingMediaQuery
 
 			$data = $this->memc->get( $this->getMemcKey() );
 
-			if ( !is_null($data) ) {
+			if ( $data !== false ) {
 				return $data;
 			}
 		}
